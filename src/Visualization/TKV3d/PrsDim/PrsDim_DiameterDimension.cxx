@@ -15,8 +15,6 @@ namespace
   static const char16_t THE_DIAMETER_SYMBOL(0x00D8);
 }
 
-//=================================================================================================
-
 PrsDim_DiameterDimension::PrsDim_DiameterDimension(const gp_Circ& theCircle)
     : PrsDim_Dimension(PrsDim_KOD_DIAMETER)
 {
@@ -25,8 +23,6 @@ PrsDim_DiameterDimension::PrsDim_DiameterDimension(const gp_Circ& theCircle)
   SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol_Before);
   SetFlyout(0.0);
 }
-
-//=================================================================================================
 
 PrsDim_DiameterDimension::PrsDim_DiameterDimension(const gp_Circ& theCircle, const gp_Pln& thePlane)
     : PrsDim_Dimension(PrsDim_KOD_DIAMETER)
@@ -38,8 +34,6 @@ PrsDim_DiameterDimension::PrsDim_DiameterDimension(const gp_Circ& theCircle, con
   SetFlyout(0.0);
 }
 
-//=================================================================================================
-
 PrsDim_DiameterDimension::PrsDim_DiameterDimension(const TopoDS_Shape& theShape)
     : PrsDim_Dimension(PrsDim_KOD_DIAMETER)
 {
@@ -48,8 +42,6 @@ PrsDim_DiameterDimension::PrsDim_DiameterDimension(const TopoDS_Shape& theShape)
   SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol_Before);
   SetFlyout(0.0);
 }
-
-//=================================================================================================
 
 PrsDim_DiameterDimension::PrsDim_DiameterDimension(const TopoDS_Shape& theShape,
                                                    const gp_Pln&       thePlane)
@@ -62,8 +54,6 @@ PrsDim_DiameterDimension::PrsDim_DiameterDimension(const TopoDS_Shape& theShape,
   SetFlyout(0.0);
 }
 
-//=================================================================================================
-
 gp_Pnt PrsDim_DiameterDimension::AnchorPoint()
 {
   if (!IsValid())
@@ -73,8 +63,6 @@ gp_Pnt PrsDim_DiameterDimension::AnchorPoint()
 
   return myAnchorPoint;
 }
-
-//=================================================================================================
 
 void PrsDim_DiameterDimension::SetMeasuredGeometry(const gp_Circ& theCircle)
 {
@@ -96,8 +84,6 @@ void PrsDim_DiameterDimension::SetMeasuredGeometry(const gp_Circ& theCircle)
 
   SetToUpdate();
 }
-
-//=================================================================================================
 
 void PrsDim_DiameterDimension::SetMeasuredGeometry(const TopoDS_Shape& theShape)
 {
@@ -123,15 +109,11 @@ void PrsDim_DiameterDimension::SetMeasuredGeometry(const TopoDS_Shape& theShape)
   SetToUpdate();
 }
 
-//=================================================================================================
-
 bool PrsDim_DiameterDimension::CheckPlane(const gp_Pln& thePlane) const
 {
-  // Check if the circle center point belongs to plane.
+
   return thePlane.Contains(myCircle.Location(), Precision::Confusion());
 }
-
-//=================================================================================================
 
 void PrsDim_DiameterDimension::ComputePlane()
 {
@@ -143,11 +125,9 @@ void PrsDim_DiameterDimension::ComputePlane()
   myPlane = gp_Pln(gp_Ax3(myCircle.Position()));
 }
 
-//=================================================================================================
-
 void PrsDim_DiameterDimension::ComputeAnchorPoint()
 {
-  // Anchor point is an intersection of dimension plane and circle.
+
   occ::handle<Geom_Circle> aCircle = new Geom_Circle(myCircle);
   occ::handle<Geom_Plane>  aPlane  = new Geom_Plane(myPlane);
   GeomAPI_IntCS            anIntersector(aCircle, aPlane);
@@ -157,7 +137,6 @@ void PrsDim_DiameterDimension::ComputeAnchorPoint()
     return;
   }
 
-  // The circle lays on the plane.
   if (anIntersector.NbPoints() != 2)
   {
     myAnchorPoint     = ElCLib::Value(0.0, myCircle);
@@ -168,44 +147,31 @@ void PrsDim_DiameterDimension::ComputeAnchorPoint()
   gp_Pnt aFirstPoint  = anIntersector.Point(1);
   gp_Pnt aSecondPoint = anIntersector.Point(2);
 
-  // Choose one of two intersection points that stands with
-  // positive direction of flyout.
-  // An anchor point is supposed to be the left attachment point.
   gp_Dir aFirstDir = gce_MakeDir(aFirstPoint, myCircle.Location());
   gp_Dir aDir      = myPlane.Axis().Direction() ^ aFirstDir;
   myAnchorPoint =
     (gp_Vec(aDir) * gp_Vec(myCircle.Position().Direction()) > 0.0) ? aFirstPoint : aSecondPoint;
 }
 
-//=================================================================================================
-
 const TCollection_AsciiString& PrsDim_DiameterDimension::GetModelUnits() const
 {
   return myDrawer->DimLengthModelUnits();
 }
-
-//=================================================================================================
 
 const TCollection_AsciiString& PrsDim_DiameterDimension::GetDisplayUnits() const
 {
   return myDrawer->DimLengthDisplayUnits();
 }
 
-//=================================================================================================
-
 void PrsDim_DiameterDimension::SetModelUnits(const TCollection_AsciiString& theUnits)
 {
   myDrawer->SetDimLengthModelUnits(theUnits);
 }
 
-//=================================================================================================
-
 void PrsDim_DiameterDimension::SetDisplayUnits(const TCollection_AsciiString& theUnits)
 {
   myDrawer->SetDimLengthDisplayUnits(theUnits);
 }
-
-//=================================================================================================
 
 double PrsDim_DiameterDimension::ComputeValue() const
 {
@@ -216,8 +182,6 @@ double PrsDim_DiameterDimension::ComputeValue() const
 
   return myCircle.Radius() * 2.0;
 }
-
-//=================================================================================================
 
 void PrsDim_DiameterDimension::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                        const occ::handle<Prs3d_Presentation>& thePresentation,
@@ -237,8 +201,6 @@ void PrsDim_DiameterDimension::Compute(const occ::handle<PrsMgr_PresentationMana
   DrawLinearDimension(thePresentation, theMode, aFirstPnt, aSecondPnt);
 }
 
-//=================================================================================================
-
 void PrsDim_DiameterDimension::ComputeFlyoutSelection(
   const occ::handle<SelectMgr_Selection>&   theSelection,
   const occ::handle<SelectMgr_EntityOwner>& theEntityOwner)
@@ -255,8 +217,6 @@ void PrsDim_DiameterDimension::ComputeFlyoutSelection(
   ComputeLinearFlyouts(theSelection, theEntityOwner, aFirstPnt, aSecondPnt);
 }
 
-//=================================================================================================
-
 void PrsDim_DiameterDimension::ComputeSidePoints(const gp_Circ& theCircle,
                                                  gp_Pnt&        theFirstPnt,
                                                  gp_Pnt&        theSecondPnt)
@@ -267,14 +227,10 @@ void PrsDim_DiameterDimension::ComputeSidePoints(const gp_Circ& theCircle,
   theSecondPnt = theCircle.Location().Translated(-aRadiusVector);
 }
 
-//=================================================================================================
-
 bool PrsDim_DiameterDimension::IsValidCircle(const gp_Circ& theCircle) const
 {
   return (theCircle.Radius() * 2.0) > Precision::Confusion();
 }
-
-//=================================================================================================
 
 bool PrsDim_DiameterDimension::IsValidAnchor(const gp_Circ& theCircle,
                                              const gp_Pnt&  theAnchor) const
@@ -287,8 +243,6 @@ bool PrsDim_DiameterDimension::IsValidAnchor(const gp_Circ& theCircle,
          && aCirclePlane.Contains(theAnchor, Precision::Confusion());
 }
 
-//=================================================================================================
-
 gp_Pnt PrsDim_DiameterDimension::GetTextPosition() const
 {
   if (IsTextPositionCustom())
@@ -296,11 +250,8 @@ gp_Pnt PrsDim_DiameterDimension::GetTextPosition() const
     return myFixedTextPosition;
   }
 
-  // Counts text position according to the dimension parameters
   return GetTextPositionForLinear(myAnchorPoint, myCircle.Location());
 }
-
-//=================================================================================================
 
 void PrsDim_DiameterDimension::SetTextPosition(const gp_Pnt& theTextPos)
 {

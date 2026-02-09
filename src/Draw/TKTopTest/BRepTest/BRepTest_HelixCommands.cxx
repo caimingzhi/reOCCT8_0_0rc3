@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DBRep.hpp>
 #include <Draw.hpp>
@@ -55,7 +44,6 @@ static int comphelix2(Draw_Interpretor&, int, const char**);
 static int helix2(Draw_Interpretor&, int, const char**);
 static int spiral2(Draw_Interpretor&, int, const char**);
 
-// Helper function to display helix results
 static void DisplayHelixResult(Draw_Interpretor&             theDI,
                                const HelixBRep_BuilderHelix& theBuilder,
                                const char*                   theName)
@@ -74,17 +62,15 @@ static void DisplayHelixResult(Draw_Interpretor&             theDI,
   }
 }
 
-//=================================================================================================
-
 void BRepTest::HelixCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
   if (done)
     return;
   done = true;
-  // Chapters name
+
   const char* g = "Helix commands";
-  // Commands
+
   theCommands.Add("setaxis", "setaxis x y z Nx Ny Nz Xx Xy Xz", __FILE__, setaxis, g);
   theCommands.Add("comphelix",
                   "comphelix name np D1 [Di...] H1 [Hi...] P1 [Pi...] PF1 [PFi...]",
@@ -110,8 +96,6 @@ void BRepTest::HelixCommands(Draw_Interpretor& theCommands)
   theCommands.Add("spiral2", "spiral2 name np D1 D2 P1 [Pi...] N1 [Ni...]", __FILE__, spiral2, g);
 }
 
-//=================================================================================================
-
 int setaxis(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 10)
@@ -136,9 +120,6 @@ int setaxis(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//
-//=================================================================================================
-
 int comphelix(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 8)
@@ -155,10 +136,10 @@ int comphelix(Draw_Interpretor& di, int n, const char** a)
        << "\n";
     return 1;
   }
-  //
+
   int                    i, aNb, ic;
   HelixBRep_BuilderHelix aBH;
-  //
+
   aNb = Draw::Atoi(a[2]);
   if (n != 3 + (aNb + 1) + aNb * 3)
   {
@@ -213,8 +194,6 @@ int comphelix(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int helix(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 7)
@@ -231,10 +210,10 @@ int helix(Draw_Interpretor& di, int n, const char** a)
        << "\n";
     return 1;
   }
-  //
+
   int                    i, aNb, ic;
   HelixBRep_BuilderHelix aBH;
-  //
+
   aNb = Draw::Atoi(a[2]);
   if (n != 3 + 1 + aNb * 3)
   {
@@ -286,8 +265,6 @@ int helix(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int spiral(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 8)
@@ -304,10 +281,10 @@ int spiral(Draw_Interpretor& di, int n, const char** a)
        << "\n";
     return 1;
   }
-  //
+
   int                    i, aNb, ic;
   HelixBRep_BuilderHelix aBH;
-  //
+
   aNb = Draw::Atoi(a[2]);
   if (n != 3 + 2 + aNb * 3)
   {
@@ -362,8 +339,6 @@ int spiral(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int comphelix2(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 7)
@@ -376,10 +351,10 @@ int comphelix2(Draw_Interpretor& di, int n, const char** a)
     di << "        " << "N1, N2, ...  (must be np values) - numbers of turns" << "\n";
     return 1;
   }
-  //
+
   int                    i, aNb, ic;
   HelixBRep_BuilderHelix aBH;
-  //
+
   aNb = Draw::Atoi(a[2]);
   if (n != 3 + (aNb + 1) + aNb * 2)
   {
@@ -415,8 +390,6 @@ int comphelix2(Draw_Interpretor& di, int n, const char** a)
     ++ic;
   }
 
-  //
-
   aBH.SetParameters(theHelixAxis, aDiams, aPitches, aNbTurns);
 
   aBH.Perform();
@@ -424,8 +397,6 @@ int comphelix2(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 int helix2(Draw_Interpretor& di, int n, const char** a)
 {
@@ -439,10 +410,10 @@ int helix2(Draw_Interpretor& di, int n, const char** a)
     di << "        " << "N1, N2, ...  (must be np values) - numbers of turns" << "\n";
     return 1;
   }
-  //
+
   int                    i, aNb, ic;
   HelixBRep_BuilderHelix aBH;
-  //
+
   aNb = Draw::Atoi(a[2]);
   if (n != 3 + 1 + aNb * 2)
   {
@@ -483,8 +454,6 @@ int helix2(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int spiral2(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 7)
@@ -497,10 +466,10 @@ int spiral2(Draw_Interpretor& di, int n, const char** a)
     di << "        " << "N1, N2, ...  (must be np values) - numbers of turns" << "\n";
     return 1;
   }
-  //
+
   int                    i, aNb, ic;
   HelixBRep_BuilderHelix aBH;
-  //
+
   aNb = Draw::Atoi(a[2]);
   if (n != 3 + 2 + aNb * 2)
   {

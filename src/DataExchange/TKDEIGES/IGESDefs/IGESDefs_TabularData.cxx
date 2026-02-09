@@ -11,8 +11,7 @@ IGESDefs_TabularData::IGESDefs_TabularData() = default;
 
 void IGESDefs_TabularData::Init(const int nbProps,
                                 const int propType,
-                                /*     const int nbDeps, */
-                                /*     const int nbIndeps, */
+
                                 const occ::handle<NCollection_HArray1<int>>&         typesInd,
                                 const occ::handle<NCollection_HArray1<int>>&         nbValuesInd,
                                 const occ::handle<IGESBasic_HArray1OfHArray1OfReal>& valuesInd,
@@ -24,8 +23,7 @@ void IGESDefs_TabularData::Init(const int nbProps,
     throw Standard_DimensionMismatch("IGESDefs_TabularData : Init");
   theNbPropertyValues = nbProps;
   thePropertyType     = propType;
-  /*     theNbDependents = nbDeps; */
-  /*     theNbIndependents = nbIndeps; */
+
   theTypeOfIndependentVariables = typesInd;
   theNbValues                   = nbValuesInd;
   theIndependentValues          = valuesInd;
@@ -40,7 +38,7 @@ int IGESDefs_TabularData::NbPropertyValues() const
 
 int IGESDefs_TabularData::ComputedNbPropertyValues() const
 {
-  return theNbPropertyValues; // not smart ... to improve
+  return theNbPropertyValues;
 }
 
 bool IGESDefs_TabularData::OwnCorrect()
@@ -87,9 +85,7 @@ occ::handle<NCollection_HArray1<double>> IGESDefs_TabularData::DependentValues(c
   return theDependentValues->Value(num);
 }
 
-// UNFINISHED
-// Array limits not sure.
-double IGESDefs_TabularData::DependentValue(const int /*variablenum*/, const int /*valuenum*/) const
+double IGESDefs_TabularData::DependentValue(const int, const int) const
 {
   double val = 0.;
   return val;

@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OSD_Path.hpp>
 #include <Standard_ConstructionError.hpp>
@@ -80,10 +68,10 @@ static void VmsExtract(const TCollection_AsciiString& what,
   buffer = what;
 
   if (buffer.Search("\"") != -1)
-  { // a username to extract
+  {
 
     if (buffer.Value(1) != '"')
-    { // Begins with Node
+    {
       node = buffer.Token("\"");
       buffer.Remove(1, node.Length());
     }
@@ -91,53 +79,49 @@ static void VmsExtract(const TCollection_AsciiString& what,
       node = "";
 
     username = buffer.Token("\" ");
-    buffer.Remove(1, username.Length() + 2); // Removes <<"username ' ' or '"' >>
+    buffer.Remove(1, username.Length() + 2);
 
     if (buffer.Search("\"") != -1)
-    { // a password to extract
+    {
       password = buffer.Token("\"");
-      buffer.Remove(1, password.Length() + 1); // removes <<password">>
+      buffer.Remove(1, password.Length() + 1);
     }
 
-    // If we found a node then we must find "::"
     if (buffer.Search("::") != -1)
-      buffer.Remove(1, 2); // Removes <<::>>
+      buffer.Remove(1, 2);
   }
-  else // No name or password
-    if (buffer.Search("::") != -1)
-    { // a node to extract
-      node = buffer.Token(":");
-      buffer.Remove(1, node.Length() + 2); // Removes <<node::>
-    }
+  else if (buffer.Search("::") != -1)
+  {
+    node = buffer.Token(":");
+    buffer.Remove(1, node.Length() + 2);
+  }
 
   if (buffer.Search(":") != -1)
-  { // a disk to extract
+  {
     disk = buffer.Token(":");
-    buffer.Remove(1, disk.Length() + 1); // Removes <<disk:>>
+    buffer.Remove(1, disk.Length() + 1);
   }
   else
     disk = "";
 
-  // Analyse trek
-
   if (buffer.Search("[") != -1)
-  { // There is atrek to extract
+  {
     trek = buffer.Token("[]");
 
     if (trek.Value(1) == '.')
-      trek.Remove(1, 1); // Removes first '.'
+      trek.Remove(1, 1);
     else
-      trek.Insert(1, '|'); // Add root
+      trek.Insert(1, '|');
 
-    trek.ChangeAll('.', '|'); // Translates to portable syntax
+    trek.ChangeAll('.', '|');
     trek.ChangeAll('-', '^');
 
     pos = trek.Search("000000");
     if (pos != -1)
     {
-      trek.Remove(pos, 6); // on VMS [000000] is the root
+      trek.Remove(pos, 6);
       if (trek.Search("||") != -1)
-        trek.Remove(1, 1); // When [000000.xxx] -> ||xxx
+        trek.Remove(1, 1);
     }
 
     name = buffer.Token("]", 2);
@@ -155,8 +139,6 @@ static void VmsExtract(const TCollection_AsciiString& what,
     ext = "";
 }
 
-//=================================================================================================
-
 static void UnixExtract(const TCollection_AsciiString& what,
                         TCollection_AsciiString&       node,
                         TCollection_AsciiString&       username,
@@ -167,22 +149,22 @@ static void UnixExtract(const TCollection_AsciiString& what,
 {
 
   int                     pos;
-  TCollection_AsciiString buffer; // To manipulate 'what' without modifying it
+  TCollection_AsciiString buffer;
 
   Standard_PCharacter p;
   buffer = what;
 
-  #ifdef TOTO // Username, password and node are no longer given in the string (LD)
+  #ifdef TOTO
 
   if (buffer.Search("@") != -1)
-  { // There is a name to extract
+  {
     username = buffer.Token("\"@");
-    buffer.Remove(1, username.Length() + 1); // Removes << user@ >>
+    buffer.Remove(1, username.Length() + 1);
 
     if (buffer.Search("\"") != -1)
-    { // There is a password to extract
+    {
       password = buffer.Token("\"");
-      buffer.Remove(1, password.Length() + 2); // Removes << "password" >>
+      buffer.Remove(1, password.Length() + 2);
     }
   }
   else
@@ -191,25 +173,24 @@ static void UnixExtract(const TCollection_AsciiString& what,
     password = "";
   }
 
-  #endif // node must be given (for DBT, DM) (ADN 29/8/96)
+  #endif
 
   if (buffer.Search(":/") != -1)
-  { // There is a node to extract
+  {
     node = buffer.Token(":/");
-    buffer.Remove(1, node.Length() + 1); // Removes << node: >>
+    buffer.Remove(1, node.Length() + 1);
   }
   else
     node = "";
 
   username = "";
   password = "";
-  //  node = "";
 
   trek = buffer;
 
-  trek.ChangeAll('/', '|'); // Translates to portable syntax
+  trek.ChangeAll('/', '|');
 
-  pos = trek.SearchFromEnd("|"); // Extract name
+  pos = trek.SearchFromEnd("|");
   if (pos != -1)
   {
     p    = (Standard_PCharacter)trek.ToCString();
@@ -218,39 +199,23 @@ static void UnixExtract(const TCollection_AsciiString& what,
       trek.Remove(pos + 1, name.Length());
   }
   else
-  { // No '|' means no trek but a name
+  {
     name = buffer;
     trek = "";
   }
 
   pos = trek.Search("..");
   while (pos != -1)
-  { // Changes every ".." by '^'
+  {
     trek.SetValue(pos, '^');
     trek.Remove(pos + 1, 1);
     pos = trek.Search("..");
   }
 
-  pos = name.SearchFromEnd("."); // LD : debug
-  if (pos != -1)                 // There is an extension to extract
+  pos = name.SearchFromEnd(".");
+  if (pos != -1)
     ext = name.Split(pos - 1);
-
-  // if (name.Search(".") != -1){ // There is an extension to extract
-  //   if ( name.Value(1) == '.' ) {
-  //     ext = name;
-  //     name.Clear();
-  //   }
-  //   else {
-  //     ext = name.Token(".",2);
-  //     ext.Insert(1,'.');            // Prepends 'dot'
-  //     pos = name.Search(".");     // Removes extension from buffer
-  //     if (pos != -1)
-  //       name.Remove(pos,ext.Length());
-  //   }
-  // }
 }
-
-//=================================================================================================
 
 static void DosExtract(const TCollection_AsciiString& what,
                        TCollection_AsciiString&       disk,
@@ -266,10 +231,10 @@ static void DosExtract(const TCollection_AsciiString& what,
   buffer = what;
 
   if (buffer.Search(":") != -1)
-  { // There is a disk to extract
+  {
     disk = buffer.Token(":");
     disk += ":";
-    buffer.Remove(1, disk.Length()); // Removes <<disk:>>
+    buffer.Remove(1, disk.Length());
   }
 
   trek = buffer;
@@ -278,13 +243,13 @@ static void DosExtract(const TCollection_AsciiString& what,
 
   pos = trek.Search("..");
   while (pos != -1)
-  { // Changes every ".." by '^'
+  {
     trek.SetValue(pos, '^');
     trek.Remove(pos + 1, 1);
     pos = trek.Search("..");
   }
 
-  pos = trek.SearchFromEnd("|"); // Extract name
+  pos = trek.SearchFromEnd("|");
   if (pos != -1)
   {
     p    = (Standard_PCharacter)trek.ToCString();
@@ -293,17 +258,15 @@ static void DosExtract(const TCollection_AsciiString& what,
       trek.Remove(pos + 1, name.Length());
   }
   else
-  { // No '|' means no trek but a name
+  {
     name = buffer;
     trek = "";
   }
 
   pos = name.SearchFromEnd(".");
-  if (pos != -1) // There is an extension to extract
+  if (pos != -1)
     ext = name.Split(pos - 1);
 }
-
-//=================================================================================================
 
 static void MacExtract(const TCollection_AsciiString& what,
                        TCollection_AsciiString&,
@@ -315,21 +278,19 @@ static void MacExtract(const TCollection_AsciiString& what,
   int                 pos;
   Standard_PCharacter p;
 
-  // I don't know how to distinguish a disk from a trek !
-
   trek = what;
 
   pos = trek.Search("::");
   while (pos != -1)
-  { // Changes every "::" by '^'
+  {
     trek.SetValue(pos, '^');
     trek.Remove(pos + 1, 1);
     pos = trek.Search("::");
   }
 
-  trek.ChangeAll(':', '|'); // Translates to portable syntax
+  trek.ChangeAll(':', '|');
 
-  pos = trek.SearchFromEnd("|"); // Extract name
+  pos = trek.SearchFromEnd("|");
   if (pos != -1)
   {
     p    = (Standard_PCharacter)trek.ToCString();
@@ -337,7 +298,7 @@ static void MacExtract(const TCollection_AsciiString& what,
     trek.Remove(trek.Search(name), name.Length());
   }
   else
-  { // No '|' means no trek but a name
+  {
     name = what;
     trek = "";
   }
@@ -349,7 +310,6 @@ OSD_Path::OSD_Path(const TCollection_AsciiString& aDependentName, const OSD_SysT
   mySysDep = whereAmI();
 
   OSD_SysType todo;
-  //  int i,l;
 
   if (aSysType == OSD_Default)
   {
@@ -458,7 +418,7 @@ void OSD_Path::UpTrek()
   aHowmany = tok.Length();
   myTrek.Remove(awhere, aHowmany);
 
-  awhere = myTrek.Search("||"); // Searches leaving "||"
+  awhere = myTrek.Search("||");
   if (awhere != -1)
     myTrek.Remove(awhere);
 }
@@ -466,7 +426,7 @@ void OSD_Path::UpTrek()
 void OSD_Path::DownTrek(const TCollection_AsciiString& aName)
 {
   myTrek += aName;
-  // Pb signale par GG : pour ne pas avoir "||" ;
+
   if (aName.ToCString()[aName.Length() - 1] != '|')
     myTrek += "|";
 }
@@ -475,7 +435,7 @@ int OSD_Path::TrekLength() const
 {
   int cpt = 0;
 
-  while (myTrek.Token("|", cpt + 1) != "") // Counts token separated by '|'
+  while (myTrek.Token("|", cpt + 1) != "")
     cpt++;
 
   return (cpt);
@@ -496,7 +456,7 @@ void OSD_Path::RemoveATrek(const int thewhere)
   aHowmany = tok.Length();
   myTrek.Remove(posit, aHowmany);
 
-  posit = myTrek.Search("||"); // Searches leaving "||"
+  posit = myTrek.Search("||");
   if (posit != -1)
     myTrek.Remove(posit);
 }
@@ -515,7 +475,7 @@ void OSD_Path::RemoveATrek(const TCollection_AsciiString& aName)
   {
     myTrek.Remove(awhere, aName.Length());
 
-    awhere = myTrek.Search("||"); // Searches leaving "||"
+    awhere = myTrek.Search("||");
     if (awhere != -1)
       myTrek.Remove(awhere);
   }
@@ -546,16 +506,10 @@ void OSD_Path::InsertATrek(const TCollection_AsciiString& aName, const int thewh
   myTrek.Insert(wwhere, what);
 }
 
-// The 4 following methods will be PUBLIC in the future
-
-// Converts a VMS disk to other system syntax
-
 static void VMSDisk2Other(TCollection_AsciiString& Disk)
 {
   Disk.RemoveAll('$');
 }
-
-// Convert a Trek to VMS syntax
 
 static void P2VMS(TCollection_AsciiString& Way)
 {
@@ -564,19 +518,17 @@ static void P2VMS(TCollection_AsciiString& Way)
   if (length == 0)
     return;
 
-  if (Way.Value(1) == '|') // If begin with '|' remove '|'
+  if (Way.Value(1) == '|')
     if (Way.Value(1) != '\0')
       Way.Remove(1, 1);
     else
-      Way = "000000"; // Si uniquement la racine -> [000000]
+      Way = "000000";
   else if (Way.Length() != 0)
-    Way.Insert(1, '|'); // Else insert '|' at beginning if not empty;
+    Way.Insert(1, '|');
 
   Way.ChangeAll('|', '.');
   Way.ChangeAll('^', '-');
 }
-
-// Convert a Trek to MAC syntax
 
 static void P2MAC(TCollection_AsciiString& Way)
 {
@@ -584,7 +536,7 @@ static void P2MAC(TCollection_AsciiString& Way)
   Way.ChangeAll('|', ':');
 
   l = (int)Way.Length();
-  for (i = 1; i <= l; i++) // Replace '^' by "::"
+  for (i = 1; i <= l; i++)
     if (Way.Value(i) == '^')
     {
       Way.SetValue(i, ':');
@@ -594,8 +546,6 @@ static void P2MAC(TCollection_AsciiString& Way)
     }
 }
 
-// Convert a Trek to UNIX syntax
-
 static void P2UNIX(TCollection_AsciiString& Way)
 {
   int i, l;
@@ -604,24 +554,19 @@ static void P2UNIX(TCollection_AsciiString& Way)
   if (length == 0)
     return;
 
-  // if (Way.Value(length) == '|') // If Finishes with "|" removes it
-  // Way.Trunc(length-1);
-
   Way.ChangeAll('|', '/');
 
   l = (int)Way.Length();
-  for (i = 1; i <= l; i++) // Replace '^' by "../"
+  for (i = 1; i <= l; i++)
     if (Way.Value(i) == '^')
     {
       Way.SetValue(i, '.');
       Way.Insert(i + 1, '.');
-      // Way.Insert(i+2,'/');
+
       i += 1;
       l += 1;
     }
 }
-
-// Convert a Trek to DOS like syntax
 
 static void P2DOS(TCollection_AsciiString& Way)
 {
@@ -631,13 +576,13 @@ static void P2DOS(TCollection_AsciiString& Way)
   if (len == 0)
     return;
 
-  if (Way.Value(len) == '|') // If Finishes with "|" removes it
+  if (Way.Value(len) == '|')
     Way.Trunc(len - 1);
 
   Way.ChangeAll('|', '\\');
 
   l = (int)Way.Length();
-  for (i = 1; i <= l; i++) // Replace '^' by ".."
+  for (i = 1; i <= l; i++)
     if (Way.Value(i) == '^')
     {
       Way.SetValue(i, '.');
@@ -646,8 +591,6 @@ static void P2DOS(TCollection_AsciiString& Way)
       l++;
     }
 }
-
-// Convert a path to system dependent syntax
 
 void OSD_Path::SystemName(TCollection_AsciiString& FullName, const OSD_SysType aType) const
 {
@@ -673,16 +616,16 @@ void OSD_Path::SystemName(TCollection_AsciiString& FullName, const OSD_SysType a
     case OSD_VMS:
       pNode = myNode;
 
-      P2VMS(Way); // Convert path
+      P2VMS(Way);
 
       if (myNode.Length() != 0)
-        FullName += myNode; // Append Node
+        FullName += myNode;
 
       if (myUserName.Length() != 0)
-      { // Append User name
+      {
 
         if (pNode.Length() == 0)
-        { // If a user name but no node, catenate "0"
+        {
           pNode = "0";
           FullName += pNode;
         }
@@ -691,7 +634,7 @@ void OSD_Path::SystemName(TCollection_AsciiString& FullName, const OSD_SysType a
         FullName += myUserName;
 
         if (myPassword.Length() != 0)
-        { // Append password
+        {
           FullName += " ";
           FullName += myPassword;
         }
@@ -703,19 +646,18 @@ void OSD_Path::SystemName(TCollection_AsciiString& FullName, const OSD_SysType a
         FullName += "::";
 
       if (myDisk.Length() != 0)
-      { // Append Disk
+      {
         FullName += myDisk;
         FullName += ":";
       }
 
-      if (Way.Length() != 0) // Append VMS path
+      if (Way.Length() != 0)
         FullName = FullName + "[" + Way + "]" + myName + myExtension;
 
-      //   FullName.UpperCase();
       break;
 
     case OSD_OS2:
-    case OSD_WindowsNT: // MSDOS-like syntax
+    case OSD_WindowsNT:
     {
       int length = (int)myDisk.Length();
 
@@ -725,16 +667,14 @@ void OSD_Path::SystemName(TCollection_AsciiString& FullName, const OSD_SysType a
         if (myDisk.Length() != 0)
         {
 
-          if ((length == 1 && IsAlphabetic(myDisk.Value(1))) || // 'A/a' to 'Z/z'
-              (length == 2 && IsAlphabetic(myDisk.Value(1))
-               && myDisk.Value(2) == ':') // 'A:' to 'Z:'
-              )                           // This is a MSDOS disk syntax
+          if ((length == 1 && IsAlphabetic(myDisk.Value(1)))
+              || (length == 2 && IsAlphabetic(myDisk.Value(1)) && myDisk.Value(2) == ':'))
           {
             FullName += myDisk;
             if (myDisk.Value(length) != ':')
               FullName += ":";
           }
-          else // This is an assigned Disk
+          else
           {
             FullName += "\\";
             pDisk = myDisk;
@@ -750,11 +690,11 @@ void OSD_Path::SystemName(TCollection_AsciiString& FullName, const OSD_SysType a
 
       FullName += myName;
       FullName += myExtension;
-      //    FullName.UpperCase();
+
       break;
     }
 
-    case OSD_MacOs: // Mackintosh-like syntax
+    case OSD_MacOs:
       if (myDisk.Length() != 0)
       {
         FullName += myDisk;
@@ -765,42 +705,36 @@ void OSD_Path::SystemName(TCollection_AsciiString& FullName, const OSD_SysType a
       FullName += myExtension;
       break;
 
-    default: // UNIX-like syntax
+    default:
 
-      // Syntax :
-      //             user"password"@host:/disk/xxx/xxx/filename
       P2UNIX(Way);
 
       if (myUserName.Length() != 0 && myNode.Length() != 0)
-      {                         // If USER name
-        FullName += myUserName; // appends user name
+      {
+        FullName += myUserName;
 
         if (myPassword.Length() != 0)
-          FullName = FullName + "\"" + myPassword + "\""; // a password if not empty
+          FullName = FullName + "\"" + myPassword + "\"";
 
-        FullName += "@"; // and character '@'
+        FullName += "@";
       }
 
       if (myNode.Length() != 0)
-      { // Appends HOST name
+      {
         FullName += myNode;
         FullName += ":";
       }
 
       if (myDisk.Length() != 0)
-      { // Appends Disk name as path
+      {
         FullName += "/";
         pDisk = myDisk;
         VMSDisk2Other(pDisk);
         FullName += pDisk;
       }
 
-      //    if (FullName.Length()) {                     // Adds a "/" if necessary
-      //      FullName += "/";
-      //    }
-
       if (Way.Length() != 0)
-      { // Appends a path if not empty
+      {
         FullName += Way;
       }
 
@@ -808,24 +742,24 @@ void OSD_Path::SystemName(TCollection_AsciiString& FullName, const OSD_SysType a
       {
         if (FullName.Value(FullName.Length()) != '/')
         {
-          FullName += "/"; // Adds a / if necessary
+          FullName += "/";
         }
       }
 
       if (myName.Length())
-      { // Adds the file name
+      {
         FullName += myName;
       }
 
       if (myExtension.Length())
-      { // Adds the extension
+      {
         FullName += myExtension;
       }
       break;
   }
 }
 
-  #ifdef TOTO // A reactiver...
+  #ifdef TOTO
 
 void OSD_Path::SetSystemName(const TCollection_AsciiString& aDependentName,
                              const OSD_SysType              aSysType)
@@ -858,8 +792,6 @@ TCollection_AsciiString OSD_Path::Trek() const
 {
   return (myTrek);
 }
-
-// Return extension (suffix) of file/directory name
 
 TCollection_AsciiString OSD_Path::Extension() const
 {
@@ -908,10 +840,6 @@ void OSD_Path::SetExtension(const TCollection_AsciiString& aName)
 
 #else
 
-//------------------------------------------------------------------------
-//-------------------  Windows sources for OSD_Path -------------------
-//------------------------------------------------------------------------
-
   #include <Standard_ProgramError.hpp>
 
   #include <windows.h>
@@ -926,7 +854,7 @@ OSD_Path ::OSD_Path()
     : myUNCFlag(false),
       mySysDep(OSD_WindowsNT)
 {
-} // end constructor ( 1 )
+}
 
 OSD_Path ::OSD_Path(const TCollection_AsciiString& aDependentName, const OSD_SysType aSysType)
     : myUNCFlag(false),
@@ -978,14 +906,12 @@ OSD_Path ::OSD_Path(const TCollection_AsciiString& aDependentName, const OSD_Sys
     else
 
       __trek[j] = chr;
-
-  } // end for
+  }
   __trek[j]                    = '\0';
   TCollection_AsciiString trek = __trek;
   _remove_dup(trek);
   myTrek = trek;
-
-} // end constructor ( 2 )
+}
 
 OSD_Path ::OSD_Path(const TCollection_AsciiString& aNode,
                     const TCollection_AsciiString& aUsername,
@@ -999,8 +925,7 @@ OSD_Path ::OSD_Path(const TCollection_AsciiString& aNode,
 {
 
   SetValues(aNode, aUsername, aPassword, aDisk, aTrek, aName, anExtension);
-
-} // end constructor ( 3 )
+}
 
 void OSD_Path ::Values(TCollection_AsciiString& aNode,
                        TCollection_AsciiString& aUsername,
@@ -1017,11 +942,10 @@ void OSD_Path ::Values(TCollection_AsciiString& aNode,
   aDisk     = myDisk;
   aTrek     = myTrek;
   if (!aTrek.IsEmpty() && aTrek.Value(aTrek.Length()) != '|')
-    aTrek += "|"; // (LD)
+    aTrek += "|";
   aName       = myName;
   anExtension = myExtension;
-
-} // end OSD_Path :: Values
+}
 
 void OSD_Path ::SetValues(const TCollection_AsciiString& aNode,
                           const TCollection_AsciiString& aUsername,
@@ -1045,8 +969,7 @@ void OSD_Path ::SetValues(const TCollection_AsciiString& aNode,
     myExtension.Insert(1, '.');
 
   _remove_dup(myTrek);
-
-} // end OSD_Path :: SetValues
+}
 
 void OSD_Path ::SystemName(TCollection_AsciiString& FullName, const OSD_SysType aType) const
 {
@@ -1078,8 +1001,7 @@ void OSD_Path ::SystemName(TCollection_AsciiString& FullName, const OSD_SysType 
     else
 
       trek[j - 1] = chr;
-
-  } // end for
+  }
 
   fullPath = myDisk + TCollection_AsciiString(trek);
 
@@ -1095,8 +1017,7 @@ void OSD_Path ::SystemName(TCollection_AsciiString& FullName, const OSD_SysType 
   else
 
     FullName.Clear();
-
-} // end OSD_Path :: SystemName
+}
 
 void OSD_Path ::UpTrek()
 {
@@ -1112,12 +1033,10 @@ void OSD_Path ::UpTrek()
 
     while (myTrek.Value(pos) == '|' && pos != 1)
       --pos;
-
-  } // end if
+  }
 
   myTrek.Trunc(pos);
-
-} // end OSD_Path :: UpTrek
+}
 
 void OSD_Path ::DownTrek(const TCollection_AsciiString& aName)
 {
@@ -1131,8 +1050,7 @@ void OSD_Path ::DownTrek(const TCollection_AsciiString& aName)
   myTrek += aName;
 
   _remove_dup(myTrek);
-
-} // end OSD_Path :: DownTrek
+}
 
 int OSD_Path ::TrekLength() const
 {
@@ -1152,12 +1070,10 @@ int OSD_Path ::TrekLength() const
       break;
 
     ++retVal;
-
-  } // end while
+  }
 
   return retVal;
-
-} // end TrekLength
+}
 
 void OSD_Path ::RemoveATrek(const int thewhere)
 {
@@ -1174,8 +1090,7 @@ void OSD_Path ::RemoveATrek(const int thewhere)
 
     flag = true;
     myTrek.Insert(1, '|');
-
-  } // end if
+  }
 
   i = myTrek.Location(thewhere, '|', 1, myTrek.Length());
 
@@ -1189,14 +1104,12 @@ void OSD_Path ::RemoveATrek(const int thewhere)
       j = myTrek.Length() + 1;
 
     myTrek.Remove(i, j - i);
-
-  } // end if
+  }
 
   if (flag)
 
     myTrek.Remove(1);
-
-} // end OSD_Path :: RemoveATrek ( 1 )
+}
 
 void OSD_Path ::RemoveATrek(const TCollection_AsciiString& aName)
 {
@@ -1210,8 +1123,7 @@ void OSD_Path ::RemoveATrek(const TCollection_AsciiString& aName)
 
     flag = true;
     myTrek.Insert(1, '|');
-
-  } // end if
+  }
 
   myTrek += '|';
 
@@ -1238,8 +1150,7 @@ void OSD_Path ::RemoveATrek(const TCollection_AsciiString& aName)
   if (myTrek.Value(myTrek.Length()) == '|')
 
     myTrek.Trunc(myTrek.Length() - 1);
-
-} // end OSD_Path :: RemoveATrek ( 2 )
+}
 
 TCollection_AsciiString OSD_Path ::TrekValue(const int thewhere) const
 {
@@ -1254,8 +1165,7 @@ TCollection_AsciiString OSD_Path ::TrekValue(const int thewhere) const
   retVal = trek.Token("|", thewhere);
 
   return retVal;
-
-} // end OSD_Path :: TrekValue
+}
 
 void OSD_Path ::InsertATrek(const TCollection_AsciiString& aName, const int thewhere)
 {
@@ -1269,8 +1179,7 @@ void OSD_Path ::InsertATrek(const TCollection_AsciiString& aName, const int thew
 
     flag = true;
     myTrek.Insert(1, '|');
-
-  } // end if
+  }
 
   myTrek += '|';
 
@@ -1284,8 +1193,7 @@ void OSD_Path ::InsertATrek(const TCollection_AsciiString& aName, const int thew
       tmp += '|';
 
     myTrek.Insert(pos + 1, tmp);
-
-  } // end if
+  }
 
   if (flag)
 
@@ -1296,36 +1204,31 @@ void OSD_Path ::InsertATrek(const TCollection_AsciiString& aName, const int thew
     myTrek.Trunc(myTrek.Length() - 1);
 
   _remove_dup(myTrek);
-
-} // end OSD_Path :: InsertATrek
+}
 
 TCollection_AsciiString OSD_Path ::Node() const
 {
 
   return myNode;
-
-} // end OSD_Path :: Node
+}
 
 TCollection_AsciiString OSD_Path ::UserName() const
 {
 
   return myUserName;
-
-} // end OSD_Path :: UserName
+}
 
 TCollection_AsciiString OSD_Path ::Password() const
 {
 
   return myPassword;
-
-} // end OSD_Path :: Password
+}
 
 TCollection_AsciiString OSD_Path ::Disk() const
 {
 
   return myDisk;
-
-} // end OSD_Path :: Disk
+}
 
 TCollection_AsciiString OSD_Path ::Trek() const
 {
@@ -1333,52 +1236,45 @@ TCollection_AsciiString OSD_Path ::Trek() const
   TCollection_AsciiString retVal;
   retVal = myTrek;
   if (!retVal.IsEmpty() && retVal.Value(retVal.Length()) != '|')
-    retVal += "|"; // (LD)
+    retVal += "|";
   return retVal;
-
-} // end OSD_Path :: Trek
+}
 
 TCollection_AsciiString OSD_Path ::Name() const
 {
 
   return myName;
-
-} // end OSD_Path :: Name
+}
 
 TCollection_AsciiString OSD_Path ::Extension() const
 {
 
   return myExtension;
-
-} // end OSD_Path :: Extension
+}
 
 void OSD_Path ::SetNode(const TCollection_AsciiString& aName)
 {
 
   myNode = aName;
-
-} // end OSD_Path :: SetNode
+}
 
 void OSD_Path ::SetUserName(const TCollection_AsciiString& aName)
 {
 
   myUserName = aName;
-
-} // end OSD_Path :: SetUserName
+}
 
 void OSD_Path ::SetPassword(const TCollection_AsciiString& aName)
 {
 
   myPassword = aName;
-
-} // end OSD_Path :: SetPassword
+}
 
 void OSD_Path ::SetDisk(const TCollection_AsciiString& aName)
 {
 
   myDisk = aName;
-
-} // end OSD_Path :: SetDisk
+}
 
 void OSD_Path ::SetTrek(const TCollection_AsciiString& aName)
 {
@@ -1386,22 +1282,19 @@ void OSD_Path ::SetTrek(const TCollection_AsciiString& aName)
   myTrek = aName;
 
   _remove_dup(myTrek);
-
-} // end OSD_Path :: SetTrek
+}
 
 void OSD_Path ::SetName(const TCollection_AsciiString& aName)
 {
 
   myName = aName;
-
-} // end OSD_Path :: SetName
+}
 
 void OSD_Path ::SetExtension(const TCollection_AsciiString& aName)
 {
 
   myExtension = aName;
-
-} // end OSD_Path :: SetExtension
+}
 
 static void __fastcall _test_raise(OSD_SysType type, const char* str)
 {
@@ -1416,10 +1309,8 @@ static void __fastcall _test_raise(OSD_SysType type, const char* str)
     strcat(buff, " (): unknown system type");
 
     throw Standard_ProgramError(buff);
-
-  } // end if
-
-} // end _test_raise
+  }
+}
 
 static void __fastcall _remove_dup(TCollection_AsciiString& str)
 {
@@ -1442,8 +1333,7 @@ static void __fastcall _remove_dup(TCollection_AsciiString& str)
     else
 
       ++pos;
-
-  } // end while
+  }
 
   if (orgLen > 1 && len > 0 && str.Value(len) == '|')
     str.Remove(len);
@@ -1465,23 +1355,15 @@ static void __fastcall _remove_dup(TCollection_AsciiString& str)
     else
 
       ++pos;
+  }
+}
 
-  } // end while
-
-  // if (  orgLen > 1 && len > 0 && str.Value ( len ) == '^'  ) str.Remove ( len );
-
-} // end _remove_dup
-
-#endif // Windows sources for OSD_Path
-
-//=================================================================================================
+#endif
 
 static bool Analyse_VMS(const TCollection_AsciiString& theName)
 {
   return theName.Search("/") == -1 && theName.Search("@") == -1 && theName.Search("\\") == -1;
 }
-
-//=================================================================================================
 
 static bool Analyse_DOS(const TCollection_AsciiString& theName)
 {
@@ -1490,14 +1372,10 @@ static bool Analyse_DOS(const TCollection_AsciiString& theName)
          && theName.Search(">") == -1 && theName.Search("|") == -1;
 }
 
-//=================================================================================================
-
 static bool Analyse_MACOS(const TCollection_AsciiString& theName)
 {
   return theName.Search(":") == -1 ? theName.Length() <= 31 : true;
 }
-
-//=================================================================================================
 
 bool OSD_Path::IsValid(const TCollection_AsciiString& theDependentName,
                        const OSD_SysType              theSysType)
@@ -1520,10 +1398,6 @@ bool OSD_Path::IsValid(const TCollection_AsciiString& theDependentName,
       return true;
   }
 }
-
-// ---------------------------------------------------------------------------
-
-// Elimine les separateurs inutiles
 
 static int RemoveExtraSeparator(TCollection_AsciiString& aString)
 {
@@ -1550,8 +1424,6 @@ static int RemoveExtraSeparator(TCollection_AsciiString& aString)
   return len;
 }
 
-// ---------------------------------------------------------------------------
-
 TCollection_AsciiString OSD_Path::RelativePath(const TCollection_AsciiString& aDirPath,
                                                const TCollection_AsciiString& aAbsFilePath)
 {
@@ -1563,7 +1435,7 @@ TCollection_AsciiString OSD_Path::RelativePath(const TCollection_AsciiString& aD
   FilePath = aAbsFilePath;
 
   if (aDirPath.Search(":") == 2)
-  { // Cas WNT
+  {
     Wnt = true;
     if (FilePath.Search(":") != 2 || UpperCase(aDirPath.Value(1)) != UpperCase(FilePath.Value(1)))
       return EmptyString;
@@ -1573,12 +1445,10 @@ TCollection_AsciiString OSD_Path::RelativePath(const TCollection_AsciiString& aD
       return EmptyString;
   }
   else
-  { // Cas Unix
+  {
     if (aDirPath.Value(1) != '/' || FilePath.Value(1) != '/')
       return EmptyString;
   }
-
-  // Eliminer les separateurs redondants
 
   len = RemoveExtraSeparator(FilePath);
 
@@ -1628,8 +1498,6 @@ TCollection_AsciiString OSD_Path::RelativePath(const TCollection_AsciiString& aD
   }
 }
 
-// ---------------------------------------------------------------------------
-
 TCollection_AsciiString OSD_Path::AbsolutePath(const TCollection_AsciiString& aDirPath,
                                                const TCollection_AsciiString& aRelFilePath)
 {
@@ -1666,16 +1534,12 @@ TCollection_AsciiString OSD_Path::AbsolutePath(const TCollection_AsciiString& aD
   return DirPath;
 }
 
-// void OSD_Path::ExpandedName(TCollection_AsciiString& aName)
 void OSD_Path::ExpandedName(TCollection_AsciiString&) {}
 
-// bool LocateExecFile(OSD_Path& aPath)
 bool LocateExecFile(OSD_Path&)
 {
   return false;
 }
-
-//=================================================================================================
 
 void OSD_Path::FolderAndFileFromPath(const TCollection_AsciiString& theFilePath,
                                      TCollection_AsciiString&       theFolder,
@@ -1709,15 +1573,13 @@ void OSD_Path::FolderAndFileFromPath(const TCollection_AsciiString& theFilePath,
   }
 }
 
-//=================================================================================================
-
 void OSD_Path::FileNameAndExtension(const TCollection_AsciiString& theFilePath,
                                     TCollection_AsciiString&       theName,
                                     TCollection_AsciiString&       theExtension)
 {
-  // clang-format off
-  const int THE_EXT_MAX_LEN = 20; // this method is supposed to be used with normal extension
-  // clang-format on
+
+  const int THE_EXT_MAX_LEN = 20;
+
   const int aLen = theFilePath.Length();
   for (int anExtLen = 1; anExtLen < aLen && anExtLen < THE_EXT_MAX_LEN; ++anExtLen)
   {

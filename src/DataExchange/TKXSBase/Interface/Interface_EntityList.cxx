@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityCluster.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -19,19 +8,12 @@
 #include <Standard_OutOfRange.hpp>
 #include <Standard_Transient.hpp>
 
-// An EntityList is basically a well-wrapped "Handle":
-// If it is null, the list is empty
-// If it is an Entity, the list includes this entity and nothing else
-// If it is an EntityCluster, it defines (with its possible Next) the content
-// of the list
 Interface_EntityList::Interface_EntityList() = default;
 
 void Interface_EntityList::Clear()
 {
   theval.Nullify();
 }
-
-//  ....                EDITIONS (add-remove)                ....
 
 void Interface_EntityList::Append(const occ::handle<Standard_Transient>& ent)
 {
@@ -44,19 +26,14 @@ void Interface_EntityList::Append(const occ::handle<Standard_Transient>& ent)
   }
   occ::handle<Interface_EntityCluster> aValEC = occ::down_cast<Interface_EntityCluster>(theval);
   if (!aValEC.IsNull())
-    aValEC->Append(ent); // EntityCluster
+    aValEC->Append(ent);
   else
-  { // reste InterfaceEntity ...
+  {
     occ::handle<Interface_EntityCluster> ec = new Interface_EntityCluster(theval);
     ec->Append(ent);
     theval = ec;
   }
 }
-
-// Difference with Append : we optimize, avoiding recursion
-// Indeed, when an EntityCluster is full, Append transmits to Next
-// Here, EntityList keeps control, the processing time remains the same
-// With which, the order is not guaranteed
 
 void Interface_EntityList::Add(const occ::handle<Standard_Transient>& ent)
 {
@@ -69,23 +46,19 @@ void Interface_EntityList::Add(const occ::handle<Standard_Transient>& ent)
   }
   occ::handle<Interface_EntityCluster> aValEC = occ::down_cast<Interface_EntityCluster>(theval);
   if (!aValEC.IsNull())
-  { // EntityCluster
+  {
     if (aValEC->IsLocalFull())
       theval = new Interface_EntityCluster(ent, aValEC);
     else
       aValEC->Append(ent);
   }
   else
-  { // reste InterfaceEntity ...
+  {
     occ::handle<Interface_EntityCluster> ec = new Interface_EntityCluster(theval);
     ec->Append(ent);
     theval = ec;
   }
 }
-
-//  Remove : By Identification of Item to remove, or by Rank
-//  Identification : Item removed wherever it is
-//  N.B.: The list can become empty ... cf return Remove from Cluster
 
 void Interface_EntityList::Remove(const occ::handle<Standard_Transient>& ent)
 {
@@ -100,13 +73,11 @@ void Interface_EntityList::Remove(const occ::handle<Standard_Transient>& ent)
   }
   occ::handle<Interface_EntityCluster> ec = occ::down_cast<Interface_EntityCluster>(theval);
   if (ec.IsNull())
-    return; // A single Entity and not the right one
+    return;
   bool res = ec->Remove(ent);
   if (res)
     theval.Nullify();
 }
-
-//  Remove by rank : test OutOfRange
 
 void Interface_EntityList::Remove(const int num)
 {
@@ -125,8 +96,6 @@ void Interface_EntityList::Remove(const int num)
     theval.Nullify();
 }
 
-//  ....                    UNIT ACCESS TO DATA                    ....
-
 bool Interface_EntityList::IsEmpty() const
 {
   return (theval.IsNull());
@@ -138,7 +107,7 @@ int Interface_EntityList::NbEntities() const
     return 0;
   occ::handle<Interface_EntityCluster> ec = occ::down_cast<Interface_EntityCluster>(theval);
   if (ec.IsNull())
-    return 1; // A single Entity
+    return 1;
   return ec->NbEntities();
 }
 
@@ -148,7 +117,7 @@ const occ::handle<Standard_Transient>& Interface_EntityList::Value(const int num
     throw Standard_OutOfRange("Interface EntityList : Value");
   occ::handle<Interface_EntityCluster> ec = occ::down_cast<Interface_EntityCluster>(theval);
   if (!ec.IsNull())
-    return ec->Value(num); // EntityCluster
+    return ec->Value(num);
   else if (num != 1)
     throw Standard_OutOfRange("Interface EntityList : Value");
   return theval;
@@ -162,14 +131,12 @@ void Interface_EntityList::SetValue(const int num, const occ::handle<Standard_Tr
     throw Standard_OutOfRange("Interface EntityList : SetValue");
   occ::handle<Interface_EntityCluster> ec = occ::down_cast<Interface_EntityCluster>(theval);
   if (!ec.IsNull())
-    ec->SetValue(num, ent); // EntityCluster
+    ec->SetValue(num, ent);
   else if (num != 1)
     throw Standard_OutOfRange("Interface EntityList : SetValue");
   else
     theval = ent;
 }
-
-//  ....                Interrogations Generales                ....
 
 void Interface_EntityList::FillIterator(Interface_EntityIterator& iter) const
 {
@@ -177,7 +144,7 @@ void Interface_EntityList::FillIterator(Interface_EntityIterator& iter) const
     return;
   occ::handle<Interface_EntityCluster> ec = occ::down_cast<Interface_EntityCluster>(theval);
   if (!ec.IsNull())
-    ec->FillIterator(iter); // EntityCluster;
+    ec->FillIterator(iter);
   else
     iter.GetOneItem(theval);
 }
@@ -189,7 +156,7 @@ int Interface_EntityList::NbTypedEntities(const occ::handle<Standard_Type>& atyp
     return 0;
   occ::handle<Interface_EntityCluster> ec = occ::down_cast<Interface_EntityCluster>(theval);
   if (!ec.IsNull())
-  { // EntityCluster
+  {
     while (!ec.IsNull())
     {
       for (int i = ec->NbLocal(); i > 0; i--)
@@ -203,7 +170,7 @@ int Interface_EntityList::NbTypedEntities(const occ::handle<Standard_Type>& atyp
     }
   }
   else
-  { // Une seule Entite
+  {
     if (theval->IsKind(atype))
       res = 1;
   }
@@ -220,7 +187,7 @@ occ::handle<Standard_Transient> Interface_EntityList::TypedEntity(
     throw Interface_InterfaceError("Interface EntityList : TypedEntity , none found");
   occ::handle<Interface_EntityCluster> ec = occ::down_cast<Interface_EntityCluster>(theval);
   if (!ec.IsNull())
-  { // EntityCluster
+  {
     while (!ec.IsNull())
     {
       for (int i = ec->NbLocal(); i > 0; i--)
@@ -245,7 +212,7 @@ occ::handle<Standard_Transient> Interface_EntityList::TypedEntity(
     throw Interface_InterfaceError("Interface EntityList : TypedEntity ,out of range");
   }
   else
-  { // InterfaceEntity
+  {
     if (!theval->IsKind(atype))
       throw Interface_InterfaceError("Interface EntityList : TypedEntity , none found");
     entres = theval;

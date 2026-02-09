@@ -19,8 +19,6 @@ public:
 
   Standard_EXPORT TopOpeBRepBuild_EdgeBuilder();
 
-  //! Creates a EdgeBuilder to find the areas of
-  //! the shapes described by <LS> using the classifier <LC>.
   Standard_EXPORT TopOpeBRepBuild_EdgeBuilder(TopOpeBRepBuild_PaveSet&        LS,
                                               TopOpeBRepBuild_PaveClassifier& LC,
                                               const bool                      ForceClass = false);

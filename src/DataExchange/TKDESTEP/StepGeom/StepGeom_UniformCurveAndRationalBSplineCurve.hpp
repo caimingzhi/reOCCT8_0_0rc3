@@ -18,7 +18,6 @@ class StepGeom_UniformCurveAndRationalBSplineCurve : public StepGeom_BSplineCurv
 {
 
 public:
-  //! Returns a UniformCurveAndRationalBSplineCurve
   Standard_EXPORT StepGeom_UniformCurveAndRationalBSplineCurve();
 
   Standard_EXPORT void Init(

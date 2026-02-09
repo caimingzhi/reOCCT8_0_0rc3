@@ -5,11 +5,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepVisual_AnnotationCurveOccurrence.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWAnnotationCurveOccurrence::RWStepVisual_RWAnnotationCurveOccurrence() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWAnnotationCurveOccurrence::ReadStep(
   const occ::handle<StepData_StepReaderData>&              data,
@@ -18,15 +14,12 @@ void RWStepVisual_RWAnnotationCurveOccurrence::ReadStep(
   const occ::handle<StepVisual_AnnotationCurveOccurrence>& ent) const
 {
 
-  // Number of Parameter Control
   if (!data->CheckNbParams(num, 3, ach, "styled_item"))
     return;
 
-  // Inherited field : name
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // Inherited field : styles
   occ::handle<NCollection_HArray1<occ::handle<StepVisual_PresentationStyleAssignment>>> aStyles;
   occ::handle<StepVisual_PresentationStyleAssignment>                                   anent2;
   int                                                                                   nsub2;
@@ -46,24 +39,19 @@ void RWStepVisual_RWAnnotationCurveOccurrence::ReadStep(
     }
   }
 
-  // Inherited field : item
   occ::handle<Standard_Transient> aItem;
   data->ReadEntity(num, 3, "item", ach, STANDARD_TYPE(Standard_Transient), aItem);
 
-  // Initialisation of the read entity
   ent->Init(aName, aStyles, aItem);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWAnnotationCurveOccurrence::WriteStep(
   StepData_StepWriter&                                     SW,
   const occ::handle<StepVisual_AnnotationCurveOccurrence>& ent) const
 {
-  // Inherited field : name
+
   SW.Send(ent->Name());
 
-  // Inherited field : styles
   SW.OpenSub();
   for (int i2 = 1; i2 <= ent->NbStyles(); i2++)
   {
@@ -71,12 +59,8 @@ void RWStepVisual_RWAnnotationCurveOccurrence::WriteStep(
   }
   SW.CloseSub();
 
-  // Inherited field : item
-
   SW.Send(ent->Item());
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWAnnotationCurveOccurrence::Share(
   const occ::handle<StepVisual_AnnotationCurveOccurrence>& ent,

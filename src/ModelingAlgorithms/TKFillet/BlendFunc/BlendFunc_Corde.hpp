@@ -9,11 +9,6 @@
 
 class math_Matrix;
 
-//! This function calculates point (pts) on the curve of
-//! intersection between the normal to a curve (guide)
-//! in a chosen parameter and a surface (surf), so
-//! that pts was at a given distance from the guide.
-//! X(1),X(2) are the parameters U,V of pts on surf.
 class BlendFunc_Corde
 {
 public:
@@ -26,43 +21,24 @@ public:
 
   Standard_EXPORT void SetDist(const double Dist);
 
-  //! computes the values <F> of the Function for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Value(const math_Vector& X, math_Vector& F);
 
-  //! returns the values <D> of the derivatives for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Derivatives(const math_Vector& X, math_Matrix& D);
 
   Standard_EXPORT const gp_Pnt& PointOnS() const;
 
-  //! returns the point of parameter <Param> on CGuide
   Standard_EXPORT const gp_Pnt& PointOnGuide() const;
 
-  //! returns the normal to CGuide at Ptgui.
   Standard_EXPORT const gp_Vec& NPlan() const;
 
-  //! Returns True when it is not possible to compute
-  //! the tangent vectors at PointOnS.
   Standard_EXPORT bool IsTangencyPoint() const;
 
-  //! Returns the tangent vector at PointOnS, in 3d space.
   Standard_EXPORT const gp_Vec& TangentOnS() const;
 
-  //! Returns the tangent vector at PointOnS, in the
-  //! parametric space of the first surface.
   Standard_EXPORT const gp_Vec2d& Tangent2dOnS() const;
 
-  //! Derived of the function compared to the parameter
-  //! of the guideline
   Standard_EXPORT void DerFguide(const math_Vector& Sol, gp_Vec2d& DerF);
 
-  //! Returns False if Sol is not solution else returns
-  //! True and updates the fields tgs and tg2d
   Standard_EXPORT bool IsSolution(const math_Vector& Sol, const double Tol);
 
 private:

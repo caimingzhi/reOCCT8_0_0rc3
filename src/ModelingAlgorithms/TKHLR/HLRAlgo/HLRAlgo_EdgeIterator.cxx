@@ -5,8 +5,6 @@
 #include <HLRAlgo_EdgeIterator.hpp>
 #include <HLRAlgo_EdgeStatus.hpp>
 
-//=================================================================================================
-
 HLRAlgo_EdgeIterator::HLRAlgo_EdgeIterator()
     : myNbVis(0),
       myNbHid(0),
@@ -20,8 +18,6 @@ HLRAlgo_EdgeIterator::HLRAlgo_EdgeIterator()
       myHidTolEnd(0.0)
 {
 }
-
-//=================================================================================================
 
 void HLRAlgo_EdgeIterator::InitHidden(HLRAlgo_EdgeStatus& status)
 {
@@ -44,8 +40,6 @@ void HLRAlgo_EdgeIterator::InitHidden(HLRAlgo_EdgeStatus& status)
       && myHidEnd + myHidTolEnd >= myHidStart - myHidTolStart)
     NextHidden();
 }
-
-//=================================================================================================
 
 void HLRAlgo_EdgeIterator::NextHidden()
 {

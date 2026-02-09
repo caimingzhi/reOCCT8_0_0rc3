@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -32,27 +21,18 @@ void RWStepGeom_RWTrimmedCurve::ReadStep(const occ::handle<StepData_StepReaderDa
                                          const occ::handle<StepGeom_TrimmedCurve>&   ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 6, ach, "trimmed_curve"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- own field : basisCurve ---
-
   occ::handle<StepGeom_Curve> aBasisCurve;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
   data->ReadEntity(num, 2, "basis_curve", ach, STANDARD_TYPE(StepGeom_Curve), aBasisCurve);
 
-  // --- own field : trim1 ---
-
   occ::handle<StepGeom_CartesianPoint> aCartesianPoint;
-  // double aParameterValue; //szv#4:S4163:12Mar99 unused
 
   occ::handle<NCollection_HArray1<StepGeom_TrimmingSelect>> aTrim1;
   int                                                       nsub3;
@@ -63,13 +43,11 @@ void RWStepGeom_RWTrimmedCurve::ReadStep(const occ::handle<StepData_StepReaderDa
     for (int i3 = 1; i3 <= nb3; i3++)
     {
       StepGeom_TrimmingSelect aTrim1Item;
-      // szv#4:S4163:12Mar99 `bool stat3a =` not needed
+
       if (data->ReadEntity(nsub3, i3, "trim_1", ach, aTrim1Item))
         aTrim1->SetValue(i3, aTrim1Item);
     }
   }
-
-  // --- own field : trim2 ---
 
   occ::handle<NCollection_HArray1<StepGeom_TrimmingSelect>> aTrim2;
   int                                                       nsub4;
@@ -81,19 +59,15 @@ void RWStepGeom_RWTrimmedCurve::ReadStep(const occ::handle<StepData_StepReaderDa
     {
 
       StepGeom_TrimmingSelect aTrim2Item;
-      // szv#4:S4163:12Mar99 `bool stat4a =` not needed
+
       if (data->ReadEntity(nsub4, i4, "trim_2", ach, aTrim2Item))
         aTrim2->SetValue(i4, aTrim2Item);
     }
   }
 
-  // --- own field : senseAgreement ---
-
   bool aSenseAgreement;
-  // szv#4:S4163:12Mar99 `bool stat5 =` not needed
-  data->ReadBoolean(num, 5, "sense_agreement", ach, aSenseAgreement);
 
-  // --- own field : masterRepresentation ---
+  data->ReadBoolean(num, 5, "sense_agreement", ach, aSenseAgreement);
 
   StepGeom_TrimmingPreference aMasterRepresentation = StepGeom_tpCartesian;
   if (data->ParamType(num, 6) == Interface_ParamEnum)
@@ -107,8 +81,6 @@ void RWStepGeom_RWTrimmedCurve::ReadStep(const occ::handle<StepData_StepReaderDa
   else
     ach->AddFail("Parameter #6 (master_representation) is not an enumeration");
 
-  //--- Initialisation of the read entity ---
-
   ent->Init(aName, aBasisCurve, aTrim1, aTrim2, aSenseAgreement, aMasterRepresentation);
 }
 
@@ -116,15 +88,9 @@ void RWStepGeom_RWTrimmedCurve::WriteStep(StepData_StepWriter&                  
                                           const occ::handle<StepGeom_TrimmedCurve>& ent) const
 {
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
 
-  // --- own field : basisCurve ---
-
   SW.Send(ent->BasisCurve());
-
-  // --- own field : trim1 ---
 
   SW.OpenSub();
   for (int i2 = 1; i2 <= ent->NbTrim1(); i2++)
@@ -133,8 +99,6 @@ void RWStepGeom_RWTrimmedCurve::WriteStep(StepData_StepWriter&                  
   }
   SW.CloseSub();
 
-  // --- own field : trim2 ---
-
   SW.OpenSub();
   for (int i3 = 1; i3 <= ent->NbTrim2(); i3++)
   {
@@ -142,11 +106,7 @@ void RWStepGeom_RWTrimmedCurve::WriteStep(StepData_StepWriter&                  
   }
   SW.CloseSub();
 
-  // --- own field : senseAgreement ---
-
   SW.SendBoolean(ent->SenseAgreement());
-
-  // --- own field : masterRepresentation ---
 
   SW.SendEnum(RWStepGeom_RWTrimmingPreference::ConvertToString(ent->MasterRepresentation()));
 }

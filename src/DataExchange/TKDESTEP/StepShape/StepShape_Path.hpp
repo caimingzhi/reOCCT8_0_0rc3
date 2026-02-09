@@ -15,7 +15,6 @@ class StepShape_Path : public StepShape_TopologicalRepresentationItem
 {
 
 public:
-  //! Returns a Path
   Standard_EXPORT StepShape_Path();
 
   Standard_EXPORT void Init(

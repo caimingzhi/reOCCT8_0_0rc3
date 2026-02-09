@@ -8,29 +8,17 @@
 #include <gp_Pnt2d.hpp>
 class Geom2dGcc_QCurve;
 
-//! This class implements the algorithms used to
-//! create 2d line tangent to a curve QualifiedCurv and
-//! doing an angle Angle with a line TheLin.
-//! The angle must be in Radian.
 class Geom2dGcc_Lin2dTanOblIter
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! This class implements the algorithm used to
-  //! create 2d line tangent to a curve and doing an
-  //! angle Angle with the line TheLin.
-  //! Angle must be in Radian.
-  //! Param2 is the initial guess on the curve QualifiedCurv.
-  //! Tolang is the angular tolerance.
   Standard_EXPORT Geom2dGcc_Lin2dTanOblIter(const Geom2dGcc_QCurve& Qualified1,
                                             const gp_Lin2d&         TheLin,
                                             const double            Param1,
                                             const double            TolAng,
                                             const double            Angle = 0);
 
-  //! This method returns true when there is a solution
-  //! and false in the other cases.
   Standard_EXPORT bool IsDone() const;
 
   Standard_EXPORT gp_Lin2d ThisSolution() const;

@@ -27,7 +27,7 @@ bool GeomFill_PolynomialConvertor::Initialized() const
 void GeomFill_PolynomialConvertor::Init()
 {
   if (myinit)
-    return; // On n'initialise qu'une fois
+    return;
   int                                      ii, jj;
   double                                   terme;
   math_Matrix                              H(1, Ordre, 1, Ordre), B(1, Ordre, 1, Ordre);
@@ -39,7 +39,6 @@ void GeomFill_PolynomialConvertor::Init()
                                              new (NCollection_HArray2<double>)(1, Ordre, 1, Ordre),
                                            Inter = new (NCollection_HArray2<double>)(1, 1, 1, 2);
 
-  // Calcul de B
   Inter->SetValue(1, 1, -1);
   Inter->SetValue(1, 2, 1);
   TrueInter->SetValue(1, -1);
@@ -51,16 +50,11 @@ void GeomFill_PolynomialConvertor::Init()
     Coeffs->SetValue(ii + (ii - 1) * Ordre, 1);
   }
 
-  // Convertion ancienne formules
   occ::handle<NCollection_HArray1<int>> Ncf = new (NCollection_HArray1<int>)(1, 1);
   Ncf->Init(Ordre);
 
   Convert_CompPolynomialToPoles AConverter(1, 1, 8, 8, Ncf, Coeffs, Inter, TrueInter);
-  /*  Convert_CompPolynomialToPoles
-       AConverter(8, Ordre-1,  Ordre-1,
-              Coeffs,
-              Inter,
-              TrueInter); En attente du bon Geomlite*/
+
   AConverter.Poles(Poles1d);
 
   for (jj = 1; jj <= Ordre; jj++)
@@ -69,20 +63,19 @@ void GeomFill_PolynomialConvertor::Init()
     {
       terme = Poles1d->Value(ii, jj);
       if (std::abs(terme - 1) < 1.e-9)
-        terme = 1; // petite retouche
+        terme = 1;
       if (std::abs(terme + 1) < 1.e-9)
         terme = -1;
       B(ii, jj) = terme;
     }
   }
-  // Calcul de H
+
   myinit = PLib::HermiteCoefficients(-1, 1, Ordre / 2 - 1, Ordre / 2 - 1, H);
   H.Transpose();
 
   if (!myinit)
     return;
 
-  // reste l'essentiel
   BH = B * H;
 }
 
@@ -103,10 +96,8 @@ void GeomFill_PolynomialConvertor::Section(const gp_Pnt&               FirstPnt,
   beta2 = beta * beta;
   beta3 = beta * beta2;
 
-  // Calcul de la transformation
   gp_Mat M(V1.X(), V2.X(), 0, V1.Y(), V2.Y(), 0, V1.Z(), V2.Z(), 0);
 
-  // Calcul des contraintes  -----------
   Vx(1) = 1;
   Vy(1) = 0;
   Vx(2) = 0;
@@ -124,7 +115,6 @@ void GeomFill_PolynomialConvertor::Section(const gp_Pnt&               FirstPnt,
   Vx(8) = beta3 * Sin_b;
   Vy(8) = -beta3 * Cos_b;
 
-  // Calcul des poles
   Px = BH * Vx;
   Py = BH * Vy;
   gp_XYZ pnt;
@@ -160,13 +150,11 @@ void GeomFill_PolynomialConvertor::Section(const gp_Pnt&               FirstPnt,
   beta2 = beta * beta;
   beta3 = beta * beta2;
 
-  // Calcul des  transformations
   gp_Mat M(V1.X(), V2.X(), 0, V1.Y(), V2.Y(), 0, V1.Z(), V2.Z(), 0);
   V1Prim = DFirstPnt - DCenter;
   V2     = (DDir ^ V1) + (Dir ^ V1Prim);
   gp_Mat MPrim(V1Prim.X(), V2.X(), 0, V1Prim.Y(), V2.Y(), 0, V1Prim.Z(), V2.Z(), 0);
 
-  // Calcul des contraintes  -----------
   Vx(1) = 1;
   Vy(1) = 0;
   Vx(2) = 0;
@@ -202,7 +190,6 @@ void GeomFill_PolynomialConvertor::Section(const gp_Pnt&               FirstPnt,
   DVx(8) = b2_bprim * (3 * Sin_b + 2 * beta * Cos_b);
   DVy(8) = b2_bprim * (2 * beta * Sin_b - 3 * Cos_b);
 
-  // Calcul des poles
   Px  = BH * Vx;
   Py  = BH * Vy;
   DPx = BH * DVx;
@@ -255,7 +242,6 @@ void GeomFill_PolynomialConvertor::Section(const gp_Pnt&               FirstPnt,
   beta3  = beta * beta2;
   bprim2 = bprim * bprim;
 
-  // Calcul des  transformations
   gp_Mat M(V1.X(), V2.X(), 0, V1.Y(), V2.Y(), 0, V1.Z(), V2.Z(), 0);
   V1Prim = DFirstPnt - DCenter;
   V2     = (DDir ^ V1) + (Dir ^ V1Prim);
@@ -268,7 +254,6 @@ void GeomFill_PolynomialConvertor::Section(const gp_Pnt&               FirstPnt,
 
   gp_Mat MSecn(V1Secn.X(), V2.X(), 0, V1Secn.Y(), V2.Y(), 0, V1Secn.Z(), V2.Z(), 0);
 
-  // Calcul des contraintes  -----------
   Vx(1) = 1;
   Vy(1) = 0;
   Vx(2) = 0;
@@ -328,7 +313,6 @@ void GeomFill_PolynomialConvertor::Section(const gp_Pnt&               FirstPnt,
 
   D2Vy(8) = aux * (2 * beta * Sin_b - 3 * Cos_b) + 4 * beta2 * bprim2 * (2 * Sin_b + beta * Cos_b);
 
-  // Calcul des poles
   Px   = BH * Vx;
   Py   = BH * Vy;
   DPx  = BH * DVx;

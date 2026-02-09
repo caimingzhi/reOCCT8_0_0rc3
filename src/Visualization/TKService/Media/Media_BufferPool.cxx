@@ -18,22 +18,16 @@ extern "C"
 
 IMPLEMENT_STANDARD_RTTIEXT(Media_BufferPool, Standard_Transient)
 
-//=================================================================================================
-
 Media_BufferPool::Media_BufferPool()
     : myPool(nullptr),
       myBufferSize(0)
 {
 }
 
-//=================================================================================================
-
 Media_BufferPool::~Media_BufferPool()
 {
   Release();
 }
-
-//=================================================================================================
 
 void Media_BufferPool::Release()
 {
@@ -46,8 +40,6 @@ void Media_BufferPool::Release()
     myBufferSize = 0;
   }
 }
-
-//=================================================================================================
 
 bool Media_BufferPool::Init(int theBufferSize)
 {
@@ -68,8 +60,6 @@ bool Media_BufferPool::Init(int theBufferSize)
   myBufferSize = theBufferSize;
   return myPool != nullptr;
 }
-
-//=================================================================================================
 
 AVBufferRef* Media_BufferPool::GetBuffer()
 {

@@ -11,7 +11,6 @@ class StepShape_OrientedEdge;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for OrientedEdge
 class RWStepShape_RWOrientedEdge
 {
 public:

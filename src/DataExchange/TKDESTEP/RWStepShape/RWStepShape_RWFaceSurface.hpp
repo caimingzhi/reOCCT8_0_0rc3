@@ -11,7 +11,6 @@ class StepShape_FaceSurface;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for FaceSurface
 class RWStepShape_RWFaceSurface
 {
 public:

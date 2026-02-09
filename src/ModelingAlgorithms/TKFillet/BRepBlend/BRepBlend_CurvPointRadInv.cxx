@@ -3,8 +3,6 @@
 #include <gp_Pnt.hpp>
 #include <math_Matrix.hpp>
 
-//=================================================================================================
-
 BRepBlend_CurvPointRadInv::BRepBlend_CurvPointRadInv(const occ::handle<Adaptor3d_Curve>& C1,
                                                      const occ::handle<Adaptor3d_Curve>& C2)
     : curv1(C1),
@@ -13,28 +11,22 @@ BRepBlend_CurvPointRadInv::BRepBlend_CurvPointRadInv(const occ::handle<Adaptor3d
 {
 }
 
-//=================================================================================================
-
 void BRepBlend_CurvPointRadInv::Set(const int Choix)
 {
   choix = Choix;
 }
-
-//=================================================================================================
 
 int BRepBlend_CurvPointRadInv::NbEquations() const
 {
   return 2;
 }
 
-//=================================================================================================
-
 bool BRepBlend_CurvPointRadInv::Value(const math_Vector& X, math_Vector& F)
 {
   double theD;
   gp_Pnt ptcur1, ptcur2;
   gp_Vec d1cur1, d1cur2;
-  gp_XYZ nplan; //, ref;
+  gp_XYZ nplan;
   curv1->D1(X(1), ptcur1, d1cur1);
   nplan = d1cur1.Normalized().XYZ();
   theD  = -(nplan.Dot(ptcur1.XYZ()));
@@ -43,8 +35,6 @@ bool BRepBlend_CurvPointRadInv::Value(const math_Vector& X, math_Vector& F)
   F(2) = nplan.Dot(ptcur2.XYZ()) + theD;
   return true;
 }
-
-//=================================================================================================
 
 bool BRepBlend_CurvPointRadInv::Derivatives(const math_Vector& X, math_Matrix& D)
 {
@@ -69,8 +59,6 @@ bool BRepBlend_CurvPointRadInv::Derivatives(const math_Vector& X, math_Matrix& D
   return true;
 }
 
-//=================================================================================================
-
 bool BRepBlend_CurvPointRadInv::Values(const math_Vector& X, math_Vector& F, math_Matrix& D)
 {
   Value(X, F);
@@ -79,22 +67,16 @@ bool BRepBlend_CurvPointRadInv::Values(const math_Vector& X, math_Vector& F, mat
   return true;
 }
 
-//=================================================================================================
-
 void BRepBlend_CurvPointRadInv::Set(const gp_Pnt& P)
 {
   point = P;
 }
-
-//=================================================================================================
 
 void BRepBlend_CurvPointRadInv::GetTolerance(math_Vector& Tolerance, const double Tol) const
 {
   Tolerance(1) = curv1->Resolution(Tol);
   Tolerance(2) = curv2->Resolution(Tol);
 }
-
-//=================================================================================================
 
 void BRepBlend_CurvPointRadInv::GetBounds(math_Vector& InfBound, math_Vector& SupBound) const
 {
@@ -103,8 +85,6 @@ void BRepBlend_CurvPointRadInv::GetBounds(math_Vector& InfBound, math_Vector& Su
   InfBound(2) = curv2->FirstParameter();
   SupBound(2) = curv2->LastParameter();
 }
-
-//=================================================================================================
 
 bool BRepBlend_CurvPointRadInv::IsSolution(const math_Vector& Sol, const double Tol)
 {

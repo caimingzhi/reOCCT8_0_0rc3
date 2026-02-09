@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <STEPConstruct_RenderingProperties.hpp>
 
@@ -27,14 +16,12 @@
 
 #include <gtest/gtest.h>
 
-// Test fixture for STEPConstruct_RenderingProperties tests
 class STEPConstruct_RenderingPropertiesTest : public ::testing::Test
 {
 protected:
-  //! Set up function called before each test
   void SetUp() override
   {
-    // Create some common colors and values for testing
+
     mySurfaceColor     = Quantity_Color(0.8, 0.5, 0.2, Quantity_TOC_RGB);
     myTransparency     = 0.25;
     myAmbientFactor    = 0.3;
@@ -44,23 +31,19 @@ protected:
     mySpecularColor    = Quantity_Color(0.9, 0.9, 0.9, Quantity_TOC_RGB);
   }
 
-  //! Helper function to create a STEP rendering properties object for testing
   occ::handle<StepVisual_SurfaceStyleRenderingWithProperties> CreateStepRenderingProperties()
   {
-    // Create the surface color
+
     occ::handle<TCollection_HAsciiString> aColorName = new TCollection_HAsciiString("");
     occ::handle<StepVisual_Colour>        aSurfaceColor =
       STEPConstruct_Styles::EncodeColor(mySurfaceColor);
 
-    // Create transparency property
     occ::handle<StepVisual_SurfaceStyleTransparent> aTransp =
       new StepVisual_SurfaceStyleTransparent();
     aTransp->Init(myTransparency);
 
-    // Create specular color
     occ::handle<StepVisual_Colour> aSpecColor = STEPConstruct_Styles::EncodeColor(mySpecularColor);
 
-    // Create reflectance model
     occ::handle<StepVisual_SurfaceStyleReflectanceAmbientDiffuseSpecular> aReflectance =
       new StepVisual_SurfaceStyleReflectanceAmbientDiffuseSpecular();
     aReflectance->Init(myAmbientFactor,
@@ -69,7 +52,6 @@ protected:
                        mySpecularExponent,
                        aSpecColor);
 
-    // Create the properties array with two entries: transparency and reflectance
     occ::handle<NCollection_HArray1<StepVisual_RenderingPropertiesSelect>> aProps =
       new NCollection_HArray1<StepVisual_RenderingPropertiesSelect>(1, 2);
 
@@ -80,7 +62,6 @@ protected:
     aProps->SetValue(1, aRps1);
     aProps->SetValue(2, aRps2);
 
-    // Create and return the final object
     occ::handle<StepVisual_SurfaceStyleRenderingWithProperties> aResult =
       new StepVisual_SurfaceStyleRenderingWithProperties();
     aResult->Init(StepVisual_ssmNormalShading, aSurfaceColor, aProps);
@@ -88,32 +69,26 @@ protected:
     return aResult;
   }
 
-  //! Helper function to create a common material for testing
   XCAFDoc_VisMaterialCommon CreateMaterial()
   {
     XCAFDoc_VisMaterialCommon aMaterial;
 
-    // Set basic properties
     aMaterial.DiffuseColor = mySurfaceColor;
     aMaterial.Transparency = static_cast<float>(myTransparency);
 
-    // Calculate ambient color based on ambient factor
     aMaterial.AmbientColor = Quantity_Color(mySurfaceColor.Red() * myAmbientFactor,
                                             mySurfaceColor.Green() * myAmbientFactor,
                                             mySurfaceColor.Blue() * myAmbientFactor,
                                             Quantity_TOC_RGB);
 
-    // Set specular properties
     aMaterial.SpecularColor = mySpecularColor;
     aMaterial.Shininess     = (float)(mySpecularExponent / 128.0);
 
-    // Mark as defined
     aMaterial.IsDefined = true;
 
     return aMaterial;
   }
 
-  //! Compare two colors with tolerance
   bool AreColorsEqual(const Quantity_Color& theC1,
                       const Quantity_Color& theC2,
                       const double          theTol = 0.01)
@@ -123,17 +98,15 @@ protected:
            && (std::abs(theC1.Blue() - theC2.Blue()) <= theTol);
   }
 
-  // Test member variables
-  Quantity_Color mySurfaceColor;     //!< Surface color for testing
-  Quantity_Color mySpecularColor;    //!< Specular color for testing
-  double         myTransparency;     //!< Transparency value for testing
-  double         myAmbientFactor;    //!< Ambient reflectance factor for testing
-  double         myDiffuseFactor;    //!< Diffuse reflectance factor for testing
-  double         mySpecularFactor;   //!< Specular reflectance factor for testing
-  double         mySpecularExponent; //!< Specular exponent value for testing
+  Quantity_Color mySurfaceColor;
+  Quantity_Color mySpecularColor;
+  double         myTransparency;
+  double         myAmbientFactor;
+  double         myDiffuseFactor;
+  double         mySpecularFactor;
+  double         mySpecularExponent;
 };
 
-// Test default constructor
 TEST_F(STEPConstruct_RenderingPropertiesTest, DefaultConstructor)
 {
   STEPConstruct_RenderingProperties aProps;
@@ -149,13 +122,11 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, DefaultConstructor)
   EXPECT_EQ(aProps.RenderingMethod(), StepVisual_ssmNormalShading);
 }
 
-// Test RGBA color constructor
 TEST_F(STEPConstruct_RenderingPropertiesTest, RGBAConstructor)
 {
-  // Create an RGBA color with alpha = 0.75 (transparency = 0.25)
+
   Quantity_ColorRGBA aRgba(mySurfaceColor, 0.75);
 
-  // Create rendering properties from RGBA
   STEPConstruct_RenderingProperties aProps(aRgba);
 
   EXPECT_TRUE(aProps.IsDefined());
@@ -168,7 +139,6 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, RGBAConstructor)
   EXPECT_EQ(aProps.RenderingMethod(), StepVisual_ssmNormalShading);
 }
 
-// Test StepVisual_SurfaceStyleRenderingWithProperties constructor
 TEST_F(STEPConstruct_RenderingPropertiesTest, StepRenderingPropertiesConstructor)
 {
   occ::handle<StepVisual_SurfaceStyleRenderingWithProperties> aStepProps =
@@ -193,7 +163,6 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, StepRenderingPropertiesConstructor
   EXPECT_EQ(aProps.RenderingMethod(), StepVisual_ssmNormalShading);
 }
 
-// Test XCAFDoc_VisMaterialCommon constructor
 TEST_F(STEPConstruct_RenderingPropertiesTest, MaterialConstructor)
 {
   XCAFDoc_VisMaterialCommon aMaterial = CreateMaterial();
@@ -209,26 +178,22 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, MaterialConstructor)
 
   EXPECT_TRUE(AreColorsEqual(aProps.SurfaceColor(), mySurfaceColor));
   EXPECT_NEAR(aProps.Transparency(), myTransparency, 0.001);
-  EXPECT_NEAR(aProps.AmbientReflectance(), myAmbientFactor, 0.02); // Slightly larger tolerance
+  EXPECT_NEAR(aProps.AmbientReflectance(), myAmbientFactor, 0.02);
   EXPECT_NEAR(aProps.DiffuseReflectance(), 1.0, 0.001);
 }
 
-// Test setting reflectance properties
 TEST_F(STEPConstruct_RenderingPropertiesTest, SetReflectanceProperties)
 {
   STEPConstruct_RenderingProperties aProps;
 
-  // Initialize with basic color and transparency
   aProps.Init(mySurfaceColor, myTransparency);
   EXPECT_TRUE(aProps.IsDefined());
 
-  // Set ambient reflectance
   aProps.SetAmbientReflectance(myAmbientFactor);
   EXPECT_TRUE(aProps.IsAmbientReflectanceDefined());
   EXPECT_NEAR(aProps.AmbientReflectance(), myAmbientFactor, 0.001);
   EXPECT_FALSE(aProps.IsDiffuseReflectanceDefined());
 
-  // Set ambient and diffuse reflectance
   aProps.SetAmbientAndDiffuseReflectance(myAmbientFactor, myDiffuseFactor);
   EXPECT_TRUE(aProps.IsAmbientReflectanceDefined());
   EXPECT_TRUE(aProps.IsDiffuseReflectanceDefined());
@@ -236,7 +201,6 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, SetReflectanceProperties)
   EXPECT_NEAR(aProps.DiffuseReflectance(), myDiffuseFactor, 0.001);
   EXPECT_FALSE(aProps.IsSpecularReflectanceDefined());
 
-  // Set all reflectance properties
   aProps.SetAmbientDiffuseAndSpecularReflectance(myAmbientFactor,
                                                  myDiffuseFactor,
                                                  mySpecularFactor,
@@ -256,7 +220,6 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, SetReflectanceProperties)
   EXPECT_TRUE(AreColorsEqual(aProps.SpecularColour(), mySpecularColor));
 }
 
-// Test creating STEP rendering properties
 TEST_F(STEPConstruct_RenderingPropertiesTest, CreateRenderingProperties)
 {
   STEPConstruct_RenderingProperties aProps;
@@ -273,7 +236,6 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, CreateRenderingProperties)
   ASSERT_FALSE(aStepProps.IsNull());
   EXPECT_EQ(aStepProps->RenderingMethod(), StepVisual_ssmNormalShading);
 
-  // Verify properties through re-parsing
   STEPConstruct_RenderingProperties aParsedProps(aStepProps);
 
   EXPECT_TRUE(aParsedProps.IsDefined());
@@ -286,7 +248,6 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, CreateRenderingProperties)
   EXPECT_TRUE(AreColorsEqual(aParsedProps.SpecularColour(), mySpecularColor));
 }
 
-// Test creating XCAFDoc_VisMaterialCommon
 TEST_F(STEPConstruct_RenderingPropertiesTest, CreateXCAFMaterial)
 {
   STEPConstruct_RenderingProperties aProps;
@@ -300,35 +261,28 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, CreateXCAFMaterial)
   XCAFDoc_VisMaterialCommon aMaterial = aProps.CreateXCAFMaterial();
   EXPECT_TRUE(aMaterial.IsDefined);
 
-  // Check basic properties
   EXPECT_TRUE(AreColorsEqual(aMaterial.DiffuseColor, mySurfaceColor));
   EXPECT_NEAR(aMaterial.Transparency, myTransparency, 0.001);
 
-  // Check calculated ambient color
   Quantity_Color anExpectedAmbient(mySurfaceColor.Red() * myAmbientFactor,
                                    mySurfaceColor.Green() * myAmbientFactor,
                                    mySurfaceColor.Blue() * myAmbientFactor,
                                    Quantity_TOC_RGB);
   EXPECT_TRUE(AreColorsEqual(aMaterial.AmbientColor, anExpectedAmbient));
 
-  // Check specular properties
   EXPECT_TRUE(AreColorsEqual(aMaterial.SpecularColor, mySpecularColor));
   EXPECT_NEAR(aMaterial.Shininess, mySpecularExponent / 128.0, 0.01);
 }
 
-// Test bidirectional conversion
 TEST_F(STEPConstruct_RenderingPropertiesTest, BidirectionalConversion)
 {
-  // Start with an XCAFDoc_VisMaterialCommon
+
   XCAFDoc_VisMaterialCommon aOriginalMaterial = CreateMaterial();
 
-  // Convert to rendering properties
   STEPConstruct_RenderingProperties aProps(aOriginalMaterial);
 
-  // Convert back to material
   XCAFDoc_VisMaterialCommon aConvertedMaterial = aProps.CreateXCAFMaterial();
 
-  // Verify that the converted material matches the original
   EXPECT_TRUE(aConvertedMaterial.IsDefined);
 
   EXPECT_TRUE(AreColorsEqual(aConvertedMaterial.DiffuseColor, aOriginalMaterial.DiffuseColor));
@@ -340,12 +294,10 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, BidirectionalConversion)
   EXPECT_NEAR(aConvertedMaterial.Shininess, aOriginalMaterial.Shininess, 0.05);
 }
 
-// Test Init method with RGBA color
 TEST_F(STEPConstruct_RenderingPropertiesTest, InitWithRGBAColor)
 {
   STEPConstruct_RenderingProperties aProps;
 
-  // Create an RGBA color with alpha = 0.6 (transparency = 0.4)
   Quantity_ColorRGBA aRgba(Quantity_Color(0.3, 0.6, 0.9, Quantity_TOC_RGB), 0.6f);
 
   aProps.Init(aRgba);
@@ -360,12 +312,10 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, InitWithRGBAColor)
   EXPECT_NEAR(aProps.Transparency(), 0.4, 0.001);
 }
 
-// Test Init method with custom rendering method
 TEST_F(STEPConstruct_RenderingPropertiesTest, InitWithCustomRenderingMethod)
 {
   STEPConstruct_RenderingProperties aProps;
 
-  // Initialize with phong shading
   aProps.Init(mySurfaceColor, myTransparency);
   aProps.SetRenderingMethod(StepVisual_ssmDotShading);
 
@@ -375,19 +325,15 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, InitWithCustomRenderingMethod)
   EXPECT_EQ(aProps.RenderingMethod(), StepVisual_ssmDotShading);
 }
 
-// Test the IsMaterialConvertible method
 TEST_F(STEPConstruct_RenderingPropertiesTest, MaterialConvertible)
 {
   STEPConstruct_RenderingProperties aProps;
 
-  // Initially shouldn't be convertible
   EXPECT_FALSE(aProps.IsMaterialConvertible());
 
-  // After setting basic properties, still shouldn't be convertible
   aProps.Init(mySurfaceColor, myTransparency);
   EXPECT_FALSE(aProps.IsMaterialConvertible());
 
-  // After setting all required properties, should be convertible
   aProps.SetAmbientDiffuseAndSpecularReflectance(myAmbientFactor,
                                                  myDiffuseFactor,
                                                  mySpecularFactor,
@@ -397,18 +343,15 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, MaterialConvertible)
   EXPECT_TRUE(aProps.IsMaterialConvertible());
 }
 
-// Test with null inputs
 TEST_F(STEPConstruct_RenderingPropertiesTest, NullInputs)
 {
   STEPConstruct_RenderingProperties aProps;
 
-  // Creating from null STEP rendering properties
   occ::handle<StepVisual_SurfaceStyleRenderingWithProperties> nullProps;
   aProps.Init(nullProps);
 
   EXPECT_FALSE(aProps.IsDefined());
 
-  // Creating from null XCAF material
   XCAFDoc_VisMaterialCommon nullMaterial;
   nullMaterial.IsDefined = false;
 
@@ -416,7 +359,6 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, NullInputs)
   EXPECT_FALSE(propsFromNull.IsDefined());
 }
 
-// Test creating STEP rendering properties with ambient only
 TEST_F(STEPConstruct_RenderingPropertiesTest, CreateAmbientOnlyProperties)
 {
   STEPConstruct_RenderingProperties aProps;
@@ -428,7 +370,6 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, CreateAmbientOnlyProperties)
 
   ASSERT_FALSE(aStepProps.IsNull());
 
-  // Verify properties through re-parsing
   STEPConstruct_RenderingProperties aParsedProps(aStepProps);
 
   EXPECT_TRUE(aParsedProps.IsDefined());
@@ -441,7 +382,6 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, CreateAmbientOnlyProperties)
   EXPECT_NEAR(aParsedProps.AmbientReflectance(), myAmbientFactor, 0.001);
 }
 
-// Test creating STEP rendering properties with ambient and diffuse
 TEST_F(STEPConstruct_RenderingPropertiesTest, CreateAmbientAndDiffuseProperties)
 {
   STEPConstruct_RenderingProperties aProps;
@@ -453,7 +393,6 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, CreateAmbientAndDiffuseProperties)
 
   ASSERT_FALSE(aStepProps.IsNull());
 
-  // Verify properties through re-parsing
   STEPConstruct_RenderingProperties aParsedProps(aStepProps);
 
   EXPECT_TRUE(aParsedProps.IsDefined());
@@ -467,46 +406,36 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, CreateAmbientAndDiffuseProperties)
   EXPECT_NEAR(aParsedProps.DiffuseReflectance(), myDiffuseFactor, 0.001);
 }
 
-// Test handling of non-standard specular color
 TEST_F(STEPConstruct_RenderingPropertiesTest, NonStandardSpecularColor)
 {
-  // Create a material with custom specular color not matching diffuse
+
   XCAFDoc_VisMaterialCommon aMaterial = CreateMaterial();
-  Quantity_Color aCustomSpecular(0.1, 0.8, 0.2, Quantity_TOC_RGB); // Very different from diffuse
+  Quantity_Color            aCustomSpecular(0.1, 0.8, 0.2, Quantity_TOC_RGB);
   aMaterial.SpecularColor = aCustomSpecular;
 
-  // Convert to rendering properties
   STEPConstruct_RenderingProperties aProps(aMaterial);
 
-  // Verify specular color is preserved as actual color, not just a factor
   EXPECT_TRUE(aProps.IsSpecularColourDefined());
   EXPECT_TRUE(AreColorsEqual(aProps.SpecularColour(), aCustomSpecular));
 
-  // Verify converting back preserves the special color
   XCAFDoc_VisMaterialCommon aReconvertedMaterial = aProps.CreateXCAFMaterial();
   EXPECT_TRUE(AreColorsEqual(aReconvertedMaterial.SpecularColor, aCustomSpecular, 0.05));
 }
 
-// Test extreme values for properties
 TEST_F(STEPConstruct_RenderingPropertiesTest, ExtremeValues)
 {
   STEPConstruct_RenderingProperties aProps;
 
-  // Test with full transparency
   aProps.Init(mySurfaceColor, 1.0);
   EXPECT_NEAR(aProps.Transparency(), 1.0, 0.001);
 
-  // Test with extreme reflectance values
   aProps.SetAmbientDiffuseAndSpecularReflectance(0.0, 2.0, 1.0, 256.0, mySpecularColor);
 
-  // Values should be clamped when creating material
   XCAFDoc_VisMaterialCommon aMaterial = aProps.CreateXCAFMaterial();
 
-  // Ambient should be 0
   EXPECT_NEAR(aMaterial.AmbientColor.Red(), 0.0, 0.001);
   EXPECT_NEAR(aMaterial.AmbientColor.Green(), 0.0, 0.001);
   EXPECT_NEAR(aMaterial.AmbientColor.Blue(), 0.0, 0.001);
 
-  // Shininess should be reasonable value (256/128 = 2, clamped to 1.0)
   EXPECT_NEAR(aMaterial.Shininess, 1.0, 0.1);
 }

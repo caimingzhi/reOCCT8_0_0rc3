@@ -4,11 +4,7 @@
 #include <StepFEA_FeaAxis2Placement3d.hpp>
 #include <StepFEA_ParametricCurve3dElementCoordinateSystem.hpp>
 
-//=================================================================================================
-
 StepFEA_CurveElementEndCoordinateSystem::StepFEA_CurveElementEndCoordinateSystem() = default;
-
-//=================================================================================================
 
 int StepFEA_CurveElementEndCoordinateSystem::CaseNum(
   const occ::handle<Standard_Transient>& ent) const
@@ -24,23 +20,17 @@ int StepFEA_CurveElementEndCoordinateSystem::CaseNum(
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepFEA_FeaAxis2Placement3d> StepFEA_CurveElementEndCoordinateSystem::
   FeaAxis2Placement3d() const
 {
   return occ::down_cast<StepFEA_FeaAxis2Placement3d>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepFEA_AlignedCurve3dElementCoordinateSystem> StepFEA_CurveElementEndCoordinateSystem::
   AlignedCurve3dElementCoordinateSystem() const
 {
   return occ::down_cast<StepFEA_AlignedCurve3dElementCoordinateSystem>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepFEA_ParametricCurve3dElementCoordinateSystem>
   StepFEA_CurveElementEndCoordinateSystem::ParametricCurve3dElementCoordinateSystem() const

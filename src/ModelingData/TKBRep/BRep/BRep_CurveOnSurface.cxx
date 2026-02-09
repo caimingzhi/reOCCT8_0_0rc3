@@ -10,8 +10,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_CurveOnSurface, BRep_GCurve)
 
-//=================================================================================================
-
 BRep_CurveOnSurface::BRep_CurveOnSurface(const occ::handle<Geom2d_Curve>& PC,
                                          const occ::handle<Geom_Surface>& S,
                                          const TopLoc_Location&           L)
@@ -21,24 +19,18 @@ BRep_CurveOnSurface::BRep_CurveOnSurface(const occ::handle<Geom2d_Curve>& PC,
 {
 }
 
-//=================================================================================================
-
 void BRep_CurveOnSurface::D0(const double U, gp_Pnt& P) const
 {
-  // should be D0 NYI
+
   gp_Pnt2d P2d = myPCurve->Value(U);
   P            = mySurface->Value(P2d.X(), P2d.Y());
   P.Transform(myLocation.Transformation());
 }
 
-//=================================================================================================
-
 bool BRep_CurveOnSurface::IsCurveOnSurface() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool BRep_CurveOnSurface::IsCurveOnSurface(const occ::handle<Geom_Surface>& S,
                                            const TopLoc_Location&           L) const
@@ -46,28 +38,20 @@ bool BRep_CurveOnSurface::IsCurveOnSurface(const occ::handle<Geom_Surface>& S,
   return (S == mySurface) && (L == myLocation);
 }
 
-//=================================================================================================
-
 const occ::handle<Geom_Surface>& BRep_CurveOnSurface::Surface() const
 {
   return mySurface;
 }
-
-//=================================================================================================
 
 const occ::handle<Geom2d_Curve>& BRep_CurveOnSurface::PCurve() const
 {
   return myPCurve;
 }
 
-//=================================================================================================
-
 void BRep_CurveOnSurface::PCurve(const occ::handle<Geom2d_Curve>& C)
 {
   myPCurve = C;
 }
-
-//=================================================================================================
 
 occ::handle<BRep_CurveRepresentation> BRep_CurveOnSurface::Copy() const
 {
@@ -78,8 +62,6 @@ occ::handle<BRep_CurveRepresentation> BRep_CurveOnSurface::Copy() const
 
   return C;
 }
-
-//=================================================================================================
 
 void BRep_CurveOnSurface::Update()
 {
@@ -96,8 +78,6 @@ void BRep_CurveOnSurface::Update()
     myPCurve->D0(l, myUV2);
   }
 }
-
-//=================================================================================================
 
 void BRep_CurveOnSurface::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

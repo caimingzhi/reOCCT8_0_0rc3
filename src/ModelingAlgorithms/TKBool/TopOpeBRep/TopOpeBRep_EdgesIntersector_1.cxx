@@ -11,8 +11,6 @@
 #include <TopOpeBRepDS_Transition.hpp>
 #include <TopOpeBRepTool_ShapeTool.hpp>
 
-//=================================================================================================
-
 const IntRes2d_IntersectionSegment& TopOpeBRep_EdgesIntersector::Segment1() const
 {
   if (!IsPointOfSegment1())
@@ -21,15 +19,11 @@ const IntRes2d_IntersectionSegment& TopOpeBRep_EdgesIntersector::Segment1() cons
   return mylseg.Value(iseg);
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_EdgesIntersector::IsOpposite1() const
 {
   bool b = Segment1().IsOpposite();
   return b;
 }
-
-//=================================================================================================
 
 void TopOpeBRep_EdgesIntersector::InitPoint1()
 {
@@ -39,30 +33,24 @@ void TopOpeBRep_EdgesIntersector::InitPoint1()
   myIsVertexValue      = false;
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_EdgesIntersector::MorePoint1() const
 {
   return myPointIndex <= myTrueNbPoints;
 }
-
-//=================================================================================================
 
 void TopOpeBRep_EdgesIntersector::NextPoint1()
 {
   myPointIndex++;
 }
 
-//=================================================================================================
-
 const IntRes2d_IntersectionPoint& TopOpeBRep_EdgesIntersector::Point1() const
 {
   if (!IsPointOfSegment1())
-  { // point is an intersection point
+  {
     return mylpnt.Value(myPointIndex);
   }
   else
-  { // point is a point of segment
+  {
     int i = myPointIndex - myNbPoints - 1;
     if (i % 2 == 0)
       return Segment1().FirstPoint();
@@ -71,16 +59,14 @@ const IntRes2d_IntersectionPoint& TopOpeBRep_EdgesIntersector::Point1() const
   }
 }
 
-//=================================================================================================
-
 TopOpeBRep_P2Dstatus TopOpeBRep_EdgesIntersector::Status1() const
 {
   if (!IsPointOfSegment1())
-  { // point is an intersection point
+  {
     return TopOpeBRep_P2DINT;
   }
   else
-  { // point is a point of segment
+  {
     int i = myPointIndex - myNbPoints - 1;
     if (i % 2 == 0)
       return TopOpeBRep_P2DSGF;
@@ -89,22 +75,16 @@ TopOpeBRep_P2Dstatus TopOpeBRep_EdgesIntersector::Status1() const
   }
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_EdgesIntersector::IsPointOfSegment1() const
 {
   bool b = (myPointIndex > myNbPoints);
   return b;
 }
 
-//=================================================================================================
-
 int TopOpeBRep_EdgesIntersector::Index1() const
 {
   return myPointIndex;
 }
-
-//=================================================================================================
 
 TopOpeBRepDS_Config TopOpeBRep_EdgesIntersector::EdgesConfig1() const
 {
@@ -118,8 +98,6 @@ TopOpeBRepDS_Config TopOpeBRep_EdgesIntersector::EdgesConfig1() const
   }
   return c;
 }
-
-//=================================================================================================
 
 TopOpeBRepDS_Transition TopOpeBRep_EdgesIntersector::Transition1(
   const int                Index,
@@ -154,7 +132,7 @@ TopOpeBRepDS_Transition TopOpeBRep_EdgesIntersector::Transition1(
     return TR;
   }
 
-  pextremity = false; // JYL290998 corr regr cto100K1 fex6 fex4 : 5eme inters E/E
+  pextremity = false;
 
   const IntRes2d_IntersectionPoint& IP = Point1();
   const IntRes2d_Transition& T = (Index == 1) ? IP.TransitionOfFirst() : IP.TransitionOfSecond();
@@ -189,14 +167,12 @@ TopOpeBRepDS_Transition TopOpeBRep_EdgesIntersector::Transition1(
         case IntRes2d_Unknown:
         {
 
-          // get posindex = position on of point on edge <Index>
           IntRes2d_Position posindex = (Index == 1) ? IP.TransitionOfFirst().PositionOnCurve()
                                                     : IP.TransitionOfSecond().PositionOnCurve();
 
           if (pointofsegment)
           {
 
-            // get posother = position of point on the other edge
             IntRes2d_Position posother = (Index == 1) ? IP.TransitionOfSecond().PositionOnCurve()
                                                       : IP.TransitionOfFirst().PositionOnCurve();
 
@@ -207,11 +183,11 @@ TopOpeBRepDS_Transition TopOpeBRep_EdgesIntersector::Transition1(
                 staB = staINON;
                 staA = staINON;
               }
-              else // Middle/Middle is impossible
+              else
                 throw Standard_Failure("TopOpeBRep_EdgesIntersector : Situation Unknown MM");
             }
             else
-            { // posother = Head or End
+            {
               bool opposite = IsOpposite1();
               if (opposite)
               {
@@ -240,13 +216,11 @@ TopOpeBRepDS_Transition TopOpeBRep_EdgesIntersector::Transition1(
                 }
               }
             }
-          } // point is a segment point
+          }
 
           else
-          { // point is not a segment point
-            // two edges intersect on a vertex
-            // the vertex is shared by the two edges
-            // the edges are tangent on vertex.
+          {
+
             pextremity = true;
             shaA = shaB = TopAbs_EDGE;
 
@@ -261,22 +235,19 @@ TopOpeBRepDS_Transition TopOpeBRep_EdgesIntersector::Transition1(
               staA = staINON;
             }
             else
-            { // Middle is impossible
+            {
               throw Standard_Failure("TopOpeBRep_EdgesIntersector : Situation Unknown M");
             }
-          } // point is not a segment point
-
-        } // T.Situation == IntRes2d_Unknown
+          }
+        }
         break;
-
-      } // switch T.Situation()
+      }
       break;
 
     case IntRes2d_Undecided:
       throw Standard_Failure("TopOpeBRep_EdgesIntersector : TransitionType Undecided");
       break;
-
-  } // switch TransitionType()
+  }
 
   TopOpeBRepDS_Transition TR;
   if (pur1d || pextremity)
@@ -284,28 +255,17 @@ TopOpeBRepDS_Transition TopOpeBRep_EdgesIntersector::Transition1(
     TR.Set(staB, staA, shaB, shaA);
   }
   else
-  { // +ooOO
+  {
     bool composori = false;
     composori      = composori || ((Index == 1) && (!myf2surf1F_sameoriented));
     composori      = composori || ((Index == 2) && (!myf1surf1F_sameoriented));
-    // Index = 1  <==> on demande la transition sur
-    // une arete de la 1ere face par rapport a une arete orientee de
-    // la 2eme face.
-    // EdgeOrientation est l'orientation d'une arete de la 2eme face
-    // de l'appel SetFaces(), i.e ume arete de la face dont la surface
-    // n'est PAS la surface de reference de l'intersecteur 2d.
-    // Cette orientation d'arete dans la face doit etre composee avec
-    // l'orientation relative de la topologie de la 2eme face par rapport
-    // a la topologie de la 1ere face orientee FORWARD (car la
-    // geometrie naturelle de la 1ere face est la reference).
+
     TopAbs_Orientation eori = EdgeOrientation;
     if (composori)
     {
       eori = TopAbs::Reverse(eori);
     }
 
-    // retournement des etats en fonction de l'orientation de l'arete
-    // croisee dans l'espace geometrique de reference.
     TR.Set(staB, staA, shaB, shaA);
     if (eori == TopAbs_REVERSED)
     {
@@ -315,8 +275,6 @@ TopOpeBRepDS_Transition TopOpeBRep_EdgesIntersector::Transition1(
   return TR;
 }
 
-//=================================================================================================
-
 double TopOpeBRep_EdgesIntersector::Parameter1(const int Index) const
 {
   if (Index == 1)
@@ -325,16 +283,12 @@ double TopOpeBRep_EdgesIntersector::Parameter1(const int Index) const
     return Point1().ParamOnSecond();
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_EdgesIntersector::IsVertex1(const int Index)
 {
-  // check if last IsVertex1() call has been performed
-  // on current point and with same <Index>.
+
   if (myIsVertexPointIndex == myPointIndex && myIsVertexIndex == Index)
     return myIsVertexValue;
 
-  // search if current point is a vertex of edge <Index>
   myIsVertexValue = false;
   IntRes2d_Position pos;
   if (Index == 1)
@@ -344,8 +298,7 @@ bool TopOpeBRep_EdgesIntersector::IsVertex1(const int Index)
 
   if (pos == IntRes2d_Middle)
   {
-    // search for an INTERNAL vertex on edge <Index> with
-    // a 2d parameter <parV> equal to current point parameter <par>
+
     double             par = Parameter1(Index);
     const TopoDS_Edge* pE  = nullptr;
     pE                     = (Index == 1) ? &myEdge1 : &myEdge2;
@@ -353,7 +306,7 @@ bool TopOpeBRep_EdgesIntersector::IsVertex1(const int Index)
     TopExp_Explorer    ex;
     for (ex.Init(E, TopAbs_VERTEX); ex.More(); ex.Next())
     {
-      //    for (TopExp_Explorer ex(E,TopAbs_VERTEX); ex.More(); ex.Next()) {
+
       const TopoDS_Vertex& V = TopoDS::Vertex(ex.Current());
       if (V.Orientation() == TopAbs_INTERNAL)
       {
@@ -368,7 +321,7 @@ bool TopOpeBRep_EdgesIntersector::IsVertex1(const int Index)
     }
   }
   else
-  { // pos = head or end
+  {
     TopoDS_Vertex V1, V2;
     if (Index == 1)
       TopExp::Vertices(myEdge1, V1, V2);
@@ -384,19 +337,13 @@ bool TopOpeBRep_EdgesIntersector::IsVertex1(const int Index)
       myIsVertexValue  = true;
       myIsVertexVertex = V2;
     }
-    // ... else myIsVertexValue has been set to False
   }
 
-  // memorize that IsVertex1() has been called :
-  //  - on point myPointIndex
-  //  - on edge <Index>
   myIsVertexPointIndex = myPointIndex;
   myIsVertexIndex      = Index;
 
   return myIsVertexValue;
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& TopOpeBRep_EdgesIntersector::Vertex1(const int Index)
 {
@@ -404,8 +351,6 @@ const TopoDS_Shape& TopOpeBRep_EdgesIntersector::Vertex1(const int Index)
     throw Standard_Failure("TopOpeBRep_EdgesIntersector : Vertex1");
   return myIsVertexVertex;
 }
-
-//=================================================================================================
 
 gp_Pnt TopOpeBRep_EdgesIntersector::Value1() const
 {

@@ -3,102 +3,79 @@
 #include <Quantity_Color.hpp>
 #include <Standard_Assert.hpp>
 
-//! The pair of Quantity_Color and Alpha component (1.0 opaque, 0.0 transparent).
 class Quantity_ColorRGBA
 {
 public:
-  //! Creates a color with the default value.
   Quantity_ColorRGBA()
       : myAlpha(1.0f)
   {
   }
 
-  //! Creates the color with specified RGB value.
   constexpr explicit Quantity_ColorRGBA(const Quantity_Color& theRgb)
       : myRgb(theRgb),
         myAlpha(1.0f)
   {
   }
 
-  //! Creates the color with specified RGBA values.
   constexpr Quantity_ColorRGBA(const Quantity_Color& theRgb, float theAlpha)
       : myRgb(theRgb),
         myAlpha(theAlpha)
   {
   }
 
-  //! Creates the color from RGBA vector.
   explicit Quantity_ColorRGBA(const NCollection_Vec4<float>& theRgba)
       : myRgb(theRgba.rgb()),
         myAlpha(theRgba.a())
   {
   }
 
-  //! Creates the color from RGBA values.
   Quantity_ColorRGBA(float theRed, float theGreen, float theBlue, float theAlpha)
       : myRgb(theRed, theGreen, theBlue, Quantity_TOC_RGB),
         myAlpha(theAlpha)
   {
   }
 
-  //! Assign new values to the color.
   void SetValues(float theRed, float theGreen, float theBlue, float theAlpha) noexcept
   {
     myRgb.SetValues(theRed, theGreen, theBlue, Quantity_TOC_RGB);
     myAlpha = theAlpha;
   }
 
-  //! Return RGB color value.
   constexpr const Quantity_Color& GetRGB() const noexcept { return myRgb; }
 
-  //! Modify RGB color components without affecting alpha value.
   constexpr Quantity_Color& ChangeRGB() noexcept { return myRgb; }
 
-  //! Assign RGB color components without affecting alpha value.
   constexpr void SetRGB(const Quantity_Color& theRgb) noexcept { myRgb = theRgb; }
 
-  //! Return alpha value (1.0 means opaque, 0.0 means fully transparent).
   constexpr float Alpha() const noexcept { return myAlpha; }
 
-  //! Assign the alpha value.
   constexpr void SetAlpha(const float theAlpha) noexcept { myAlpha = theAlpha; }
 
-  //! Return the color as vector of 4 float elements.
   operator const NCollection_Vec4<float>&() const noexcept
   {
     return *reinterpret_cast<const NCollection_Vec4<float>*>(this);
   }
 
-  //! Returns true if the distance between colors is greater than Epsilon().
   bool IsDifferent(const Quantity_ColorRGBA& theOther) const noexcept
   {
     return myRgb.IsDifferent(theOther.GetRGB())
            || std::abs(myAlpha - theOther.myAlpha) > (float)Quantity_Color::Epsilon();
   }
 
-  //! Returns true if the distance between colors is greater than Epsilon().
   bool operator!=(const Quantity_ColorRGBA& theOther) const noexcept
   {
     return IsDifferent(theOther);
   }
 
-  //! Two colors are considered to be equal if their distance is no greater than Epsilon().
   bool IsEqual(const Quantity_ColorRGBA& theOther) const noexcept
   {
     return myRgb.IsEqual(theOther.GetRGB())
            && std::abs(myAlpha - theOther.myAlpha) <= (float)Quantity_Color::Epsilon();
   }
 
-  //! Two colors are considered to be equal if their distance is no greater than Epsilon().
   bool operator==(const Quantity_ColorRGBA& theOther) const noexcept { return IsEqual(theOther); }
 
 public:
-  //! Finds color from predefined names.
-  //! For example, the name of the color which corresponds to "BLACK" is Quantity_NOC_BLACK.
-  //! An alpha component is set to 1.0.
-  //! @param theColorNameString the color name
-  //! @param theColor a found color
-  //! @return false if the color name is unknown, or true if the search by color name was successful
   static bool ColorFromName(const char* theColorNameString, Quantity_ColorRGBA& theColor) noexcept
   {
     Quantity_ColorRGBA aColor;
@@ -110,19 +87,10 @@ public:
     return true;
   }
 
-  //! Parses the string as a hex color (like "#FF0" for short sRGB color, "#FF0F" for short sRGBA
-  //! color,
-  //! "#FFFF00" for RGB color, or "#FFFF00FF" for RGBA color)
-  //! @param theHexColorString the string to be parsed
-  //! @param theColor a color that is a result of parsing
-  //! @param theAlphaComponentIsOff the flag that indicates if a color alpha component is presented
-  //! in the input string (false) or not (true)
-  //! @return true if parsing was successful, or false otherwise
   Standard_EXPORT static bool ColorFromHex(const char* const   theHexColorString,
                                            Quantity_ColorRGBA& theColor,
                                            const bool          theAlphaComponentIsOff = false);
 
-  //! Returns hex sRGBA string in format "#RRGGBBAA".
   static TCollection_AsciiString ColorToHex(const Quantity_ColorRGBA& theColor,
                                             const bool theToPrefixHash = true) noexcept
   {
@@ -139,7 +107,6 @@ public:
   }
 
 public:
-  //! Convert linear RGB components into sRGB using OpenGL specs formula.
   static NCollection_Vec4<float> Convert_LinearRGB_To_sRGB(
     const NCollection_Vec4<float>& theRGB) noexcept
   {
@@ -149,7 +116,6 @@ public:
                                    theRGB.a());
   }
 
-  //! Convert sRGB components into linear RGB using OpenGL specs formula.
   static NCollection_Vec4<float> Convert_sRGB_To_LinearRGB(
     const NCollection_Vec4<float>& theRGB) noexcept
   {
@@ -160,10 +126,8 @@ public:
   }
 
 public:
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
-  //! Inits the content of me from the stream
   Standard_EXPORT bool InitFromJson(const Standard_SStream& theSStream, int& theStreamPos);
 
 private:

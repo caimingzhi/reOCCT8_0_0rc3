@@ -4,7 +4,6 @@
 #include <AdvApp2Var_Data_f2c.hpp>
 #include <AdvApp2Var_EvaluatorFunc2Var.hpp>
 
-//
 class AdvApp2Var_ApproxF2var
 {
 public:

@@ -8,7 +8,6 @@
 #include <Standard_Boolean.hpp>
 class gp_Trsf2d;
 
-//! Polygon of PointOnBis
 class Bisector_PolyBis
 {
 public:

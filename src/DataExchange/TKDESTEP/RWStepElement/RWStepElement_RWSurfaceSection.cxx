@@ -4,11 +4,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepElement_SurfaceSection.hpp>
 
-//=================================================================================================
-
 RWStepElement_RWSurfaceSection::RWStepElement_RWSurfaceSection() = default;
-
-//=================================================================================================
 
 void RWStepElement_RWSurfaceSection::ReadStep(
   const occ::handle<StepData_StepReaderData>&    data,
@@ -16,11 +12,9 @@ void RWStepElement_RWSurfaceSection::ReadStep(
   occ::handle<Interface_Check>&                  ach,
   const occ::handle<StepElement_SurfaceSection>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "surface_section"))
     return;
-
-  // Own fields of SurfaceSection
 
   StepElement_MeasureOrUnspecifiedValue aOffset;
   data->ReadEntity(num, 1, "offset", ach, aOffset);
@@ -31,18 +25,13 @@ void RWStepElement_RWSurfaceSection::ReadStep(
   StepElement_MeasureOrUnspecifiedValue aNonStructuralMassOffset;
   data->ReadEntity(num, 3, "non_structural_mass_offset", ach, aNonStructuralMassOffset);
 
-  // Initialize entity
   ent->Init(aOffset, aNonStructuralMass, aNonStructuralMassOffset);
 }
-
-//=================================================================================================
 
 void RWStepElement_RWSurfaceSection::WriteStep(
   StepData_StepWriter&                           SW,
   const occ::handle<StepElement_SurfaceSection>& ent) const
 {
-
-  // Own fields of SurfaceSection
 
   SW.Send(ent->Offset().Value());
 
@@ -51,18 +40,7 @@ void RWStepElement_RWSurfaceSection::WriteStep(
   SW.Send(ent->NonStructuralMassOffset().Value());
 }
 
-//=================================================================================================
-
 void RWStepElement_RWSurfaceSection::Share(const occ::handle<StepElement_SurfaceSection>&,
                                            Interface_EntityIterator&) const
 {
-
-  // Own fields of SurfaceSection
-  /*  CKY 17JUN04. Content is made of REAL and ENUM. No entity !
-    iter.AddItem (ent->Offset().Value());
-
-    iter.AddItem (ent->NonStructuralMass().Value());
-
-    iter.AddItem (ent->NonStructuralMassOffset().Value());
-  */
 }

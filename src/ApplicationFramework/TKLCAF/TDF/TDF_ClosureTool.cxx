@@ -9,22 +9,12 @@
 #include <NCollection_Map.hpp>
 #include <NCollection_List.hpp>
 
-//=======================================================================
-// function : Closure
-// purpose  : Builds the transitive closure without attribute filter.
-//=======================================================================
-
 void TDF_ClosureTool::Closure(const occ::handle<TDF_DataSet>& aDataSet)
 {
-  TDF_IDFilter    Filter(false); // "Keep all"
-  TDF_ClosureMode Mode;          // All modes are set to true.
+  TDF_IDFilter    Filter(false);
+  TDF_ClosureMode Mode;
   TDF_ClosureTool::Closure(aDataSet, Filter, Mode);
 }
-
-//=======================================================================
-// function : Closure
-// purpose  : Builds the transitive closure with an attribute filter.
-//=======================================================================
 
 void TDF_ClosureTool::Closure(const occ::handle<TDF_DataSet>& aDataSet,
                               const TDF_IDFilter&             aFilter,
@@ -34,13 +24,11 @@ void TDF_ClosureTool::Closure(const occ::handle<TDF_DataSet>& aDataSet,
   NCollection_Map<occ::handle<TDF_Attribute>>& attMap  = aDataSet->Attributes();
   NCollection_List<TDF_Label>&                 rootLst = aDataSet->Roots();
 
-  // Memorizes the roots for future uses.
   rootLst.Clear();
   NCollection_Map<TDF_Label>::Iterator labMItr(labMap);
   for (; labMItr.More(); labMItr.Next())
     rootLst.Append(labMItr.Key());
 
-  // Iterates on roots.
   NCollection_List<TDF_Label>::Iterator labLItr(rootLst);
   for (; labLItr.More(); labLItr.Next())
   {
@@ -52,11 +40,6 @@ void TDF_ClosureTool::Closure(const occ::handle<TDF_DataSet>& aDataSet,
   }
 }
 
-//=======================================================================
-// function : Closure
-// purpose  : Internal closure method.
-//=======================================================================
-
 void TDF_ClosureTool::Closure(const TDF_Label&                             aLabel,
                               NCollection_Map<TDF_Label>&                  aLabMap,
                               NCollection_Map<occ::handle<TDF_Attribute>>& anAttMap,
@@ -67,10 +50,9 @@ void TDF_ClosureTool::Closure(const TDF_Label&                             aLabe
   for (TDF_ChildIterator childItr(aLabel, true); childItr.More(); childItr.Next())
   {
     const TDF_Label& locLab = childItr.Value();
-    // On ne peut faire cette optimisation car il faudrait d'abord
-    // qu'aucun label donne comme Root ne soit fils d'un autre label root!
+
     if (locLab.HasAttribute())
-    { // && aLabMap.Add(locLab)) {
+    {
       aLabMap.Add(locLab);
       upLab = locLab.Father();
       while (aLabMap.Add(upLab))
@@ -79,11 +61,6 @@ void TDF_ClosureTool::Closure(const TDF_Label&                             aLabe
     }
   }
 }
-
-//=======================================================================
-// function : LabelAttributes
-// purpose  : Internal method: adds the attributes to <aDataSet>.
-//=======================================================================
 
 void TDF_ClosureTool::LabelAttributes(const TDF_Label&                             aLabel,
                                       NCollection_Map<TDF_Label>&                  aLabMap,
@@ -96,7 +73,6 @@ void TDF_ClosureTool::LabelAttributes(const TDF_Label&                          
   NCollection_Map<occ::handle<TDF_Attribute>>::Iterator attMItr;
   NCollection_Map<TDF_Label>::Iterator                  labMItr;
 
-  // Attributes directly attached to the label.
   for (TDF_AttributeIterator attItr(aLabel); attItr.More(); attItr.Next())
   {
     const occ::handle<TDF_Attribute> locAtt1 = attItr.Value();
@@ -104,20 +80,13 @@ void TDF_ClosureTool::LabelAttributes(const TDF_Label&                          
     {
       if (anAttMap.Add(locAtt1))
       {
-        // locAtt1 not yet in the map.
 
-        // Labels & Attributes referenced by the attribute.
         tmpDataSet = new TDF_DataSet();
         if (aMode.References())
         {
-          // 1 - The referenced attributes
-          // 1.1 - A referenced attribute has a label : adds the label;
-          // 1.2 - A referenced attribute has no label : adds the attribute;
-          // 2 - Adds the referenced labels.
 
           locAtt1->References(tmpDataSet);
 
-          // 1 - The referenced attributes
           const NCollection_Map<occ::handle<TDF_Attribute>>& tmpAttMap = tmpDataSet->Attributes();
           for (attMItr.Initialize(tmpAttMap); attMItr.More(); attMItr.Next())
           {
@@ -129,20 +98,18 @@ void TDF_ClosureTool::LabelAttributes(const TDF_Label&                          
               BindLabel                = !locLab2.IsNull();
               if (BindLabel)
               {
-                // 1.1 - A referenced attribute has a label.
+
                 if (aLabMap.Add(locLab2))
                   TDF_ClosureTool::Closure(locLab2, aLabMap, anAttMap, aFilter, aMode);
               }
               else
               {
-                // 1.2 - A referenced attribute has no label.
-                // We suppose locAtt2 has no referenced attribute itself.
+
                 anAttMap.Add(locAtt2);
               }
             }
           }
 
-          // 2 - Adds the referenced labels.
           const NCollection_Map<TDF_Label>& tmpLabMap = tmpDataSet->Labels();
           for (labMItr.Initialize(tmpLabMap); labMItr.More(); labMItr.Next())
           {

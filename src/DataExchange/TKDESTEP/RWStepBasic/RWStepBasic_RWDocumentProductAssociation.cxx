@@ -5,11 +5,7 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWDocumentProductAssociation::RWStepBasic_RWDocumentProductAssociation() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWDocumentProductAssociation::ReadStep(
   const occ::handle<StepData_StepReaderData>&              data,
@@ -17,11 +13,9 @@ void RWStepBasic_RWDocumentProductAssociation::ReadStep(
   occ::handle<Interface_Check>&                            ach,
   const occ::handle<StepBasic_DocumentProductAssociation>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "document_product_association"))
     return;
-
-  // Own fields of DocumentProductAssociation
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -48,18 +42,13 @@ void RWStepBasic_RWDocumentProductAssociation::ReadStep(
   StepBasic_ProductOrFormationOrDefinition aRelatedProduct;
   data->ReadEntity(num, 4, "related_product", ach, aRelatedProduct);
 
-  // Initialize entity
   ent->Init(aName, hasDescription, aDescription, aRelatingDocument, aRelatedProduct);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWDocumentProductAssociation::WriteStep(
   StepData_StepWriter&                                     SW,
   const occ::handle<StepBasic_DocumentProductAssociation>& ent) const
 {
-
-  // Own fields of DocumentProductAssociation
 
   SW.Send(ent->Name());
 
@@ -75,14 +64,10 @@ void RWStepBasic_RWDocumentProductAssociation::WriteStep(
   SW.Send(ent->RelatedProduct().Value());
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWDocumentProductAssociation::Share(
   const occ::handle<StepBasic_DocumentProductAssociation>& ent,
   Interface_EntityIterator&                                iter) const
 {
-
-  // Own fields of DocumentProductAssociation
 
   iter.AddItem(ent->RelatingDocument());
 

@@ -6,33 +6,24 @@
 class Adaptor3d_TopolTool;
 class IntPatch_Line;
 
-//! Splits given Line.
 class GeomInt_LineConstructor
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   GeomInt_LineConstructor();
 
-  //! Initializes me by two surfaces and corresponding
-  //! tools which represent boundaries of surfaces
   void Load(const occ::handle<Adaptor3d_TopolTool>& D1,
             const occ::handle<Adaptor3d_TopolTool>& D2,
             const occ::handle<GeomAdaptor_Surface>& S1,
             const occ::handle<GeomAdaptor_Surface>& S2);
 
-  //! Splits line
   Standard_EXPORT void Perform(const occ::handle<IntPatch_Line>& L);
 
-  //! Returns True if splitting was successful
   bool IsDone() const;
 
-  //! Returns number of splits
   int NbParts() const;
 
-  //! Return first and last parameters
-  //! for given index of split
   void Part(const int I, double& WFirst, double& WLast) const;
 
 protected:
@@ -49,14 +40,10 @@ private:
 
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 inline GeomInt_LineConstructor::GeomInt_LineConstructor()
     : done(false)
 {
 }
-
-//=================================================================================================
 
 inline void GeomInt_LineConstructor::Load(const occ::handle<Adaptor3d_TopolTool>& D1,
                                           const occ::handle<Adaptor3d_TopolTool>& D2,
@@ -69,14 +56,10 @@ inline void GeomInt_LineConstructor::Load(const occ::handle<Adaptor3d_TopolTool>
   myHS2  = S2;
 }
 
-//=================================================================================================
-
 inline bool GeomInt_LineConstructor::IsDone() const
 {
   return done;
 }
-
-//=================================================================================================
 
 inline int GeomInt_LineConstructor::NbParts() const
 {
@@ -86,8 +69,6 @@ inline int GeomInt_LineConstructor::NbParts() const
   }
   return (seqp.Length() / 2);
 }
-
-//=================================================================================================
 
 inline void GeomInt_LineConstructor::Part(const int I, double& WFirst, double& WLast) const
 {

@@ -1,19 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// LPA, JCV  07/92 passage sur C1.
-// JCV 07/92 Introduction de la method Dump
 
 #include <gp_Cone.hpp>
 
@@ -34,8 +19,7 @@ void gp_Cone::Coefficients(double& A1,
                            double& C3,
                            double& D) const
 {
-  // Dans le repere du cone :
-  // X**2 + Y**2 - (radius + Z * std::tan(semiAngle))**2 = 0.0
+
   gp_Trsf T;
   T.SetTransformation(pos);
   double KAng = std::tan(semiAngle);

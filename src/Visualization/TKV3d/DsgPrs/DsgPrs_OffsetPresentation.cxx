@@ -41,12 +41,12 @@ void DsgPrs_OffsetPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   }
   else
   {
-    // std::cout<<"DsgPrs_OffsetPresentation Cote nulle"<<std::endl;
+
     DimNulle = true;
     L3       = gp_Lin(Proj1, aDirection);
     gp_Vec v4(Proj1, OffsetPoint);
     gp_Dir d4(v4);
-    L4 = gp_Lin(Proj1, d4); // normale
+    L4 = gp_Lin(Proj1, d4);
   }
   double parmin, parmax, parcur;
   parmin      = ElCLib::Parameter(L3, Proj1);
@@ -75,7 +75,6 @@ void DsgPrs_OffsetPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   gp_Pnt PointMin = ElCLib::Value(parmin, L3);
   gp_Pnt PointMax = ElCLib::Value(parmax, L3);
 
-  // trait de cote : 1er groupe
   occ::handle<Graphic3d_ArrayOfSegments> aPrims = new Graphic3d_ArrayOfSegments(6);
   aPrims->AddVertex(PointMin);
   aPrims->AddVertex(PointMax);
@@ -104,7 +103,6 @@ void DsgPrs_OffsetPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
     if (outside)
       arrdir.Reverse();
 
-    // fleche 1 : 2eme groupe
     Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                       Proj1,
                       arrdir,
@@ -114,7 +112,6 @@ void DsgPrs_OffsetPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
     aPresentation->NewGroup();
     aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
-    // ball 1 : 3eme groupe
     Quantity_Color                        aColor = LA->LineAspect()->Aspect()->Color();
     occ::handle<Graphic3d_AspectMarker3d> aMarkerAsp =
       new Graphic3d_AspectMarker3d(Aspect_TOM_O, aColor, 1.0);
@@ -125,18 +122,15 @@ void DsgPrs_OffsetPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
 
     aPresentation->NewGroup();
 
-    // texte : 4eme groupe
     Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, offp);
   }
 
   aPresentation->NewGroup();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
-  // trait de rappel 1 : 5eme groupe
   aPrims->AddVertex(AttachmentPoint1);
   aPrims->AddVertex(Proj1);
 
-  // trait de rappel 2 : 6eme groupe
   aPrims->AddVertex(AttachmentPoint2);
   aPrims->AddVertex(Proj2);
 
@@ -145,11 +139,11 @@ void DsgPrs_OffsetPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
 
 void DsgPrs_OffsetPresentation::AddAxes(const occ::handle<Prs3d_Presentation>& aPresentation,
                                         const occ::handle<Prs3d_Drawer>&       aDrawer,
-                                        const TCollection_ExtendedString& /*aText*/,
+                                        const TCollection_ExtendedString&,
                                         const gp_Pnt& AttachmentPoint1,
                                         const gp_Pnt& AttachmentPoint2,
                                         const gp_Dir& aDirection,
-                                        const gp_Dir& /*aDirection2*/,
+                                        const gp_Dir&,
                                         const gp_Pnt& OffsetPoint)
 {
   gp_Lin L1(AttachmentPoint1, aDirection);
@@ -168,7 +162,6 @@ void DsgPrs_OffsetPresentation::AddAxes(const occ::handle<Prs3d_Presentation>& a
   aPresentation->NewGroup();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(AxeAsp);
 
-  // trait d'axe : 1er groupe
   occ::handle<Graphic3d_ArrayOfSegments> aPrims = new Graphic3d_ArrayOfSegments(2);
   aPrims->AddVertex(AttachmentPoint1);
   aPrims->AddVertex(Proj1);
@@ -181,13 +174,11 @@ void DsgPrs_OffsetPresentation::AddAxes(const occ::handle<Prs3d_Presentation>& a
   Axe2Asp->SetWidth(4.);
   aPresentation->CurrentGroup()->SetPrimitivesAspect(Axe2Asp);
 
-  // trait d'axe: 2eme groupe
   aPrims = new Graphic3d_ArrayOfSegments(2);
   aPrims->AddVertex(AttachmentPoint2);
   aPrims->AddVertex(Proj2);
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // anneau : 3eme et 4eme groupes
   occ::handle<Graphic3d_ArrayOfPoints> anArrayOfPoints = new Graphic3d_ArrayOfPoints(1);
   anArrayOfPoints->AddVertex(Proj2.X(), Proj2.Y(), Proj2.Z());
 
@@ -195,7 +186,7 @@ void DsgPrs_OffsetPresentation::AddAxes(const occ::handle<Prs3d_Presentation>& a
   occ::handle<Graphic3d_AspectMarker3d> MarkerAsp = new Graphic3d_AspectMarker3d();
   MarkerAsp->SetType(Aspect_TOM_O);
   MarkerAsp->SetScale(4.);
-  // MarkerAsp->SetColor(Quantity_Color(Quantity_NOC_RED));
+
   MarkerAsp->SetColor(acolor);
   aPresentation->CurrentGroup()->SetPrimitivesAspect(MarkerAsp);
   aPresentation->CurrentGroup()->AddPrimitiveArray(anArrayOfPoints);
@@ -204,7 +195,7 @@ void DsgPrs_OffsetPresentation::AddAxes(const occ::handle<Prs3d_Presentation>& a
   occ::handle<Graphic3d_AspectMarker3d> Marker2Asp = new Graphic3d_AspectMarker3d();
   Marker2Asp->SetType(Aspect_TOM_O);
   Marker2Asp->SetScale(2.);
-  // Marker2Asp->SetColor(Quantity_Color(Quantity_NOC_GREEN));
+
   Marker2Asp->SetColor(acolor);
   aPresentation->CurrentGroup()->SetPrimitivesAspect(Marker2Asp);
   aPresentation->CurrentGroup()->AddPrimitiveArray(anArrayOfPoints);

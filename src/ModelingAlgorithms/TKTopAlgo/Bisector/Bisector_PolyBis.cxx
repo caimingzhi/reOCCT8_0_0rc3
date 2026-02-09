@@ -3,14 +3,10 @@
 #include <gp.hpp>
 #include <gp_Trsf2d.hpp>
 
-//=================================================================================================
-
 Bisector_PolyBis::Bisector_PolyBis()
 {
   nbPoints = 0;
 }
-
-//=================================================================================================
 
 void Bisector_PolyBis::Append(const Bisector_PointOnBis& P)
 {
@@ -18,49 +14,30 @@ void Bisector_PolyBis::Append(const Bisector_PointOnBis& P)
   thePoints[nbPoints] = P;
 }
 
-//=================================================================================================
-
 int Bisector_PolyBis::Length() const
 {
   return nbPoints;
 }
-
-//=================================================================================================
 
 bool Bisector_PolyBis::IsEmpty() const
 {
   return (nbPoints == 0);
 }
 
-//=================================================================================================
-
 const Bisector_PointOnBis& Bisector_PolyBis::Value(const int Index) const
 {
   return thePoints[Index];
 }
-
-//=================================================================================================
 
 const Bisector_PointOnBis& Bisector_PolyBis::First() const
 {
   return thePoints[1];
 }
 
-//=================================================================================================
-
 const Bisector_PointOnBis& Bisector_PolyBis::Last() const
 {
   return thePoints[nbPoints];
 }
-
-//=================================================================================================
-
-// const PointOnBis& Bisector_PolyBis::Points()
-//{
-//  return thePoints;
-//}
-
-//=================================================================================================
 
 int Bisector_PolyBis::Interval(const double U) const
 {
@@ -99,8 +76,6 @@ int Bisector_PolyBis::Interval(const double U) const
   }
   return IntU;
 }
-
-//=================================================================================================
 
 void Bisector_PolyBis::Transform(const gp_Trsf2d& T)
 {

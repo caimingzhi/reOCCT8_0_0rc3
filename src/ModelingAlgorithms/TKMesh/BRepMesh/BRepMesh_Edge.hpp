@@ -2,58 +2,37 @@
 
 #include <Standard.hpp>
 #include <BRepMesh_DegreeOfFreedom.hpp>
-// Copyright (c) 2013 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
 #include <Standard.hpp>
 #include <Standard_HashUtils.hpp>
 #include <Standard_DefineAlloc.hpp>
 
-//! Light weighted structure representing simple link.
 class BRepMesh_OrientedEdge
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Default constructor.
   BRepMesh_OrientedEdge()
       : myFirstNode(-1),
         myLastNode(-1)
   {
   }
 
-  //! Constructs a link between two vertices.
   BRepMesh_OrientedEdge(const int theFirstNode, const int theLastNode)
       : myFirstNode(theFirstNode),
         myLastNode(theLastNode)
   {
   }
 
-  //! Returns index of first node of the Link.
   int FirstNode() const { return myFirstNode; }
 
-  //! Returns index of last node of the Link.
   int LastNode() const { return myLastNode; }
 
-  //! Checks this and other edge for equality.
-  //! @param theOther edge to be checked against this one.
-  //! @return TRUE if edges have the same orientation, FALSE if not.
   bool IsEqual(const BRepMesh_OrientedEdge& theOther) const
   {
     return (myFirstNode == theOther.myFirstNode && myLastNode == theOther.myLastNode);
   }
 
-  //! Alias for IsEqual.
   bool operator==(const BRepMesh_OrientedEdge& Other) const { return IsEqual(Other); }
 
 private:
@@ -70,7 +49,7 @@ namespace std
     {
       union Combination
       {
-        unsigned short Arr[2]; // Node can be represented as a short
+        unsigned short Arr[2];
         uint32_t       Hash;
 
       } aCombination;
@@ -84,17 +63,14 @@ namespace std
 
 #include <Standard_HashUtils.hpp>
 
-//! Light weighted structure representing link of the mesh.
 class BRepMesh_Edge : public BRepMesh_OrientedEdge
 {
 public:
-  //! Default constructor.
   BRepMesh_Edge()
       : myMovability(BRepMesh_Deleted)
   {
   }
 
-  //! Constructs a link between two vertices.
   BRepMesh_Edge(const int                      theFirstNode,
                 const int                      theLastNode,
                 const BRepMesh_DegreeOfFreedom theMovability)
@@ -103,24 +79,15 @@ public:
   {
   }
 
-  //! Returns movability flag of the Link.
   BRepMesh_DegreeOfFreedom Movability() const { return myMovability; }
 
-  //! Sets movability flag of the Link.
-  //! @param theMovability flag to be set.
   void SetMovability(const BRepMesh_DegreeOfFreedom theMovability) { myMovability = theMovability; }
 
-  //! Checks if the given edge and this one have the same orientation.
-  //! @param theOther edge to be checked against this one.
-  //! \return TRUE if edges have the same orientation, FALSE if not.
   bool IsSameOrientation(const BRepMesh_Edge& theOther) const
   {
     return BRepMesh_OrientedEdge::IsEqual(theOther);
   }
 
-  //! Checks for equality with another edge.
-  //! @param theOther edge to be checked against this one.
-  //! @return TRUE if equal, FALSE if not.
   bool IsEqual(const BRepMesh_Edge& theOther) const
   {
     if (myMovability == BRepMesh_Deleted || theOther.myMovability == BRepMesh_Deleted)
@@ -130,7 +97,6 @@ public:
            || (FirstNode() == theOther.LastNode() && LastNode() == theOther.FirstNode());
   }
 
-  //! Alias for IsEqual.
   bool operator==(const BRepMesh_Edge& Other) const { return IsEqual(Other); }
 
 private:
@@ -146,7 +112,7 @@ namespace std
     {
       union Combination
       {
-        unsigned short Arr[2]; // Node can be represented as a short
+        unsigned short Arr[2];
         uint32_t       Hash;
 
       } aCombination;

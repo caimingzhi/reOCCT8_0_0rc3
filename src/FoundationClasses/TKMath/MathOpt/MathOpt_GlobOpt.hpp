@@ -16,32 +16,28 @@ namespace MathOpt
 {
   using namespace MathUtils;
 
-  //! Global optimization strategy selection.
   enum class GlobalStrategy
   {
-    PSO,                  //!< Particle Swarm Optimization only
-    MultiStart,           //!< Multiple local optimizations from random starts
-    PSOHybrid,            //!< PSO followed by local refinement
-    DifferentialEvolution //!< Differential Evolution algorithm
+    PSO,
+    MultiStart,
+    PSOHybrid,
+    DifferentialEvolution
   };
 
-  //! Configuration for global optimization.
   struct GlobalConfig : NDimConfig
   {
-    GlobalStrategy Strategy      = GlobalStrategy::PSOHybrid; //!< Algorithm to use
-    int            NbPopulation  = 40;                        //!< Population/swarm size
-    int            NbStarts      = 10;    //!< Number of random starts (for MultiStart)
-    double         MutationScale = 0.8;   //!< Mutation scale (for DE)
-    double         CrossoverProb = 0.9;   //!< Crossover probability (for DE)
-    unsigned int   Seed          = 12345; //!< Random seed
+    GlobalStrategy Strategy      = GlobalStrategy::PSOHybrid;
+    int            NbPopulation  = 40;
+    int            NbStarts      = 10;
+    double         MutationScale = 0.8;
+    double         CrossoverProb = 0.9;
+    unsigned int   Seed          = 12345;
 
-    //! Default constructor.
     GlobalConfig()
         : NDimConfig(1.0e-8, 200, true)
     {
     }
 
-    //! Constructor with strategy.
     GlobalConfig(GlobalStrategy theStrategy, int theMaxIter = 200)
         : NDimConfig(1.0e-8, theMaxIter, true),
           Strategy(theStrategy)
@@ -49,18 +45,6 @@ namespace MathOpt
     }
   };
 
-  //! Differential Evolution algorithm for global optimization.
-  //!
-  //! DE is a stochastic, population-based optimization algorithm.
-  //! It uses mutation, crossover, and selection operations to evolve
-  //! a population of candidate solutions.
-  //!
-  //! @tparam Function type with Value(const math_Vector&, double&) method
-  //! @param theFunc function to minimize
-  //! @param theLowerBounds lower bounds
-  //! @param theUpperBounds upper bounds
-  //! @param theConfig optimization configuration
-  //! @return result containing best solution found
   template <typename Function>
   VectorResult DifferentialEvolution(Function&           theFunc,
                                      const math_Vector&  theLowerBounds,
@@ -83,14 +67,11 @@ namespace MathOpt
     const double aF  = theConfig.MutationScale;
     const double aCR = theConfig.CrossoverProb;
 
-    // Random number generator
     math_BullardGenerator aRNG(theConfig.Seed);
 
-    // Population: vector of candidate solutions
     NCollection_Vector<math_Vector> aPopulation;
     math_Vector                     aFitness(0, aNP - 1);
 
-    // Initialize population
     for (int i = 0; i < aNP; ++i)
     {
       aPopulation.Append(math_Vector(aLower, aUpper));
@@ -109,7 +90,6 @@ namespace MathOpt
       aFitness(i) = aFit;
     }
 
-    // Find best
     int    aBestIdx   = 0;
     double aBestValue = aFitness(0);
     for (int i = 1; i < aNP; ++i)
@@ -121,17 +101,15 @@ namespace MathOpt
       }
     }
 
-    // Trial vector
     math_Vector aTrial(aLower, aUpper);
 
-    // Evolution loop
     for (int anIter = 0; anIter < theConfig.MaxIterations; ++anIter)
     {
       aResult.NbIterations = anIter + 1;
 
       for (int i = 0; i < aNP; ++i)
       {
-        // Select 3 distinct random indices different from i
+
         int a, b, c;
         do
         {
@@ -146,17 +124,16 @@ namespace MathOpt
           c = static_cast<int>(aRNG.NextReal() * aNP);
         } while (c == i || c == a || c == b);
 
-        // Mutation and crossover
         int jRand = aLower + static_cast<int>(aRNG.NextReal() * aN);
 
         for (int j = aLower; j <= aUpper; ++j)
         {
           if (aRNG.NextReal() < aCR || j == jRand)
           {
-            // Mutation: DE/rand/1
+
             double aVal =
               aPopulation.Value(a)(j) + aF * (aPopulation.Value(b)(j) - aPopulation.Value(c)(j));
-            // Clamp to bounds
+
             aTrial(j) = MathUtils::Clamp(aVal, theLowerBounds(j), theUpperBounds(j));
           }
           else
@@ -165,7 +142,6 @@ namespace MathOpt
           }
         }
 
-        // Selection
         double aTrialFitness;
         if (!theFunc.Value(aTrial, aTrialFitness))
         {
@@ -185,7 +161,6 @@ namespace MathOpt
         }
       }
 
-      // Check convergence
       double aMaxDiff = 0.0;
       for (int i = 0; i < aNP; ++i)
       {
@@ -204,18 +179,6 @@ namespace MathOpt
     return aResult;
   }
 
-  //! Multi-start local optimization.
-  //!
-  //! Runs multiple local optimizations from random starting points
-  //! and returns the best result found. Uses Powell's method for
-  //! local optimization (gradient-free).
-  //!
-  //! @tparam Function type with Value(const math_Vector&, double&) method
-  //! @param theFunc function to minimize
-  //! @param theLowerBounds lower bounds
-  //! @param theUpperBounds upper bounds
-  //! @param theConfig optimization configuration
-  //! @return result containing best solution found
   template <typename Function>
   VectorResult MultiStart(Function&           theFunc,
                           const math_Vector&  theLowerBounds,
@@ -240,7 +203,6 @@ namespace MathOpt
     double      aBestValue = std::numeric_limits<double>::max();
     bool        aFound     = false;
 
-    // Configure Powell optimization for local refinement
     Config aPowellConfig;
     aPowellConfig.Tolerance     = theConfig.Tolerance;
     aPowellConfig.XTolerance    = theConfig.Tolerance;
@@ -253,7 +215,7 @@ namespace MathOpt
 
     for (int s = 0; s < theConfig.NbStarts; ++s)
     {
-      // Random starting point within bounds
+
       math_Vector aStart(aLower, aUpper);
       for (int i = aLower; i <= aUpper; ++i)
       {
@@ -261,19 +223,17 @@ namespace MathOpt
         aStart(i) = theLowerBounds(i) + r * (theUpperBounds(i) - theLowerBounds(i));
       }
 
-      // Run local optimization from this starting point
       VectorResult aLocalResult = Powell(theFunc, aStart, aPowellConfig);
 
       if (aLocalResult.IsDone() && aLocalResult.Value)
       {
-        // Clamp solution to bounds
+
         math_Vector aSol = *aLocalResult.Solution;
         for (int i = aLower; i <= aUpper; ++i)
         {
           aSol(i) = MathUtils::Clamp(aSol(i), theLowerBounds(i), theUpperBounds(i));
         }
 
-        // Re-evaluate at clamped point
         double aValue;
         if (theFunc.Value(aSol, aValue) && aValue < aBestValue)
         {
@@ -284,7 +244,7 @@ namespace MathOpt
       }
       else
       {
-        // Powell failed, just evaluate at starting point
+
         double aValue;
         if (theFunc.Value(aStart, aValue) && aValue < aBestValue)
         {
@@ -307,17 +267,6 @@ namespace MathOpt
     return aResult;
   }
 
-  //! Unified global optimization interface.
-  //!
-  //! Selects appropriate algorithm based on configuration and
-  //! provides a consistent interface for all global optimization methods.
-  //!
-  //! @tparam Function type with Value(const math_Vector&, double&) method
-  //! @param theFunc function to minimize
-  //! @param theLowerBounds lower bounds for each variable
-  //! @param theUpperBounds upper bounds for each variable
-  //! @param theConfig solver configuration
-  //! @return result containing best solution found
   template <typename Function>
   VectorResult GlobalMinimum(Function&           theFunc,
                              const math_Vector&  theLowerBounds,
@@ -341,7 +290,7 @@ namespace MathOpt
 
       case GlobalStrategy::PSOHybrid:
       {
-        // Run PSO first for global exploration
+
         PSOConfig aPSOConfig;
         aPSOConfig.NbParticles   = theConfig.NbPopulation;
         aPSOConfig.MaxIterations = theConfig.MaxIterations / 2;
@@ -355,7 +304,6 @@ namespace MathOpt
           return aPSOResult;
         }
 
-        // Local refinement using Powell (gradient-free)
         Config aPowellConfig;
         aPowellConfig.Tolerance     = theConfig.Tolerance;
         aPowellConfig.XTolerance    = theConfig.Tolerance;
@@ -367,7 +315,7 @@ namespace MathOpt
         if (aLocalResult.IsDone() && aLocalResult.Value && aPSOResult.Value
             && *aLocalResult.Value < *aPSOResult.Value)
         {
-          // Clamp to bounds
+
           const int   aLower = theLowerBounds.Lower();
           const int   aUpper = theLowerBounds.Upper();
           math_Vector aSol   = *aLocalResult.Solution;
@@ -377,7 +325,6 @@ namespace MathOpt
           }
           aLocalResult.Solution = aSol;
 
-          // Re-evaluate at clamped point
           double aValue;
           if (theFunc.Value(aSol, aValue))
           {

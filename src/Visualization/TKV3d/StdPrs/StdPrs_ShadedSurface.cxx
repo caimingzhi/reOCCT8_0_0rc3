@@ -9,8 +9,6 @@
 #include <StdPrs_ShadedSurface.hpp>
 #include <NCollection_Array1.hpp>
 
-//=================================================================================================
-
 void StdPrs_ShadedSurface::Add(const occ::handle<Prs3d_Presentation>& thePrs,
                                const Adaptor3d_Surface&               theSurface,
                                const occ::handle<Prs3d_Drawer>&       theDrawer)
@@ -20,7 +18,6 @@ void StdPrs_ShadedSurface::Add(const occ::handle<Prs3d_Presentation>& thePrs,
   N1     = N1 < 3 ? 3 : N1;
   N2     = N2 < 3 ? 3 : N2;
 
-  // If the surface is closed, the faces from back-side are not traced:
   occ::handle<Graphic3d_Group> aGroup = thePrs->CurrentGroup();
   aGroup->SetGroupPrimitivesAspect(theDrawer->ShadingAspect()->Aspect());
   aGroup->SetClosed(theSurface.IsUClosed() && theSurface.IsVClosed());

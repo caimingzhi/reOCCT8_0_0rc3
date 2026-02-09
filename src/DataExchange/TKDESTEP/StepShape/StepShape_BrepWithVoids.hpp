@@ -16,7 +16,6 @@ class StepShape_BrepWithVoids : public StepShape_ManifoldSolidBrep
 {
 
 public:
-  //! Returns a BrepWithVoids
   Standard_EXPORT StepShape_BrepWithVoids();
 
   Standard_EXPORT void Init(

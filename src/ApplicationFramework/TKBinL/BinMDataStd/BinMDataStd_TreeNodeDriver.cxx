@@ -7,22 +7,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_TreeNodeDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_TreeNodeDriver::BinMDataStd_TreeNodeDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_TreeNodeDriver::NewEmpty() const
 {
   return (new TDataStd_TreeNode());
 }
-
-//=================================================================================================
 
 bool BinMDataStd_TreeNodeDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                        const occ::handle<TDF_Attribute>& theTarget,
@@ -30,7 +24,6 @@ bool BinMDataStd_TreeNodeDriver::Paste(const BinObjMgt_Persistent&       theSour
 {
   occ::handle<TDataStd_TreeNode> aT = occ::down_cast<TDataStd_TreeNode>(theTarget);
 
-  // read int fields
   int i, aNb;
   for (i = 0; i < 4; ++i)
   {
@@ -44,7 +37,7 @@ bool BinMDataStd_TreeNodeDriver::Paste(const BinObjMgt_Persistent&       theSour
       aNode = occ::down_cast<TDataStd_TreeNode>(theRelocTable.Find(aNb));
     else
     {
-      aNode = occ::down_cast<TDataStd_TreeNode>(aT->NewEmpty()); // already with tree ID
+      aNode = occ::down_cast<TDataStd_TreeNode>(aT->NewEmpty());
       theRelocTable.Bind(aNb, aNode);
     }
     switch (i)
@@ -66,7 +59,6 @@ bool BinMDataStd_TreeNodeDriver::Paste(const BinObjMgt_Persistent&       theSour
     }
   }
 
-  // tree id
   Standard_GUID aGUID;
   if (!(theSource >> aGUID))
     return false;
@@ -75,8 +67,6 @@ bool BinMDataStd_TreeNodeDriver::Paste(const BinObjMgt_Persistent&       theSour
   return true;
 }
 
-//=================================================================================================
-
 void BinMDataStd_TreeNodeDriver::Paste(
   const occ::handle<TDF_Attribute>&                        theSource,
   BinObjMgt_Persistent&                                    theTarget,
@@ -84,7 +74,6 @@ void BinMDataStd_TreeNodeDriver::Paste(
 {
   occ::handle<TDataStd_TreeNode> aS = occ::down_cast<TDataStd_TreeNode>(theSource);
 
-  // first write int fields
   int i, aNb;
   for (i = 0; i < 4; ++i)
   {
@@ -109,10 +98,9 @@ void BinMDataStd_TreeNodeDriver::Paste(
     if (aNode.IsNull())
       aNb = -1;
     else
-      aNb = theRelocTable.Add(aNode); // create and/or get index
+      aNb = theRelocTable.Add(aNode);
     theTarget.PutInteger(aNb);
   }
 
-  // tree id
   theTarget << aS->ID();
 }

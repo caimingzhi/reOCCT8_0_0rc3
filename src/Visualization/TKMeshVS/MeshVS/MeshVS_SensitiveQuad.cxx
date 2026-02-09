@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_SensitiveQuad, Select3D_SensitiveEntity)
 
-//=================================================================================================
-
 MeshVS_SensitiveQuad::MeshVS_SensitiveQuad(const occ::handle<SelectMgr_EntityOwner>& theOwner,
                                            const NCollection_Array1<gp_Pnt>&         theQuadVerts)
     : Select3D_SensitiveEntity(theOwner)
@@ -14,8 +12,6 @@ MeshVS_SensitiveQuad::MeshVS_SensitiveQuad(const occ::handle<SelectMgr_EntityOwn
     myVertices[aVertIdx] = theQuadVerts.Value(aLowerIdx + aVertIdx);
   }
 }
-
-//=================================================================================================
 
 MeshVS_SensitiveQuad::MeshVS_SensitiveQuad(const occ::handle<SelectMgr_EntityOwner>& theOwner,
                                            const gp_Pnt&                             thePnt1,
@@ -30,8 +26,6 @@ MeshVS_SensitiveQuad::MeshVS_SensitiveQuad(const occ::handle<SelectMgr_EntityOwn
   myVertices[3] = thePnt4;
 }
 
-//=================================================================================================
-
 occ::handle<Select3D_SensitiveEntity> MeshVS_SensitiveQuad::GetConnected()
 {
   return new MeshVS_SensitiveQuad(myOwnerId,
@@ -41,14 +35,10 @@ occ::handle<Select3D_SensitiveEntity> MeshVS_SensitiveQuad::GetConnected()
                                   myVertices[3]);
 }
 
-//=======================================================================
-// function : Matches
-// purpose  : Checks whether the box overlaps current selecting volume
-//=======================================================================
 bool MeshVS_SensitiveQuad::Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                    SelectBasics_PickResult&             thePickResult)
 {
-  if (!theMgr.IsOverlapAllowed()) // check for inclusion
+  if (!theMgr.IsOverlapAllowed())
   {
     if (theMgr.GetActiveSelectionType() == SelectMgr_SelectionType_Polyline)
     {
@@ -73,7 +63,6 @@ bool MeshVS_SensitiveQuad::Matches(SelectBasics_SelectingVolumeManager& theMgr,
     return true;
   }
 
-  // check for overlap
   SelectBasics_PickResult aPickResult1, aPickResult2;
   if (!theMgr.OverlapsTriangle(myVertices[0],
                                myVertices[1],
@@ -94,8 +83,6 @@ bool MeshVS_SensitiveQuad::Matches(SelectBasics_SelectingVolumeManager& theMgr,
   return true;
 }
 
-//=================================================================================================
-
 gp_Pnt MeshVS_SensitiveQuad::CenterOfGeometry() const
 {
   gp_XYZ aSum(0.0, 0.0, 0.0);
@@ -106,8 +93,6 @@ gp_Pnt MeshVS_SensitiveQuad::CenterOfGeometry() const
 
   return aSum / 4.0;
 }
-
-//=================================================================================================
 
 Select3D_BndBox3d MeshVS_SensitiveQuad::BoundingBox()
 {

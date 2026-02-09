@@ -16,22 +16,13 @@ class gp_Vec2d;
 class TopoDS_Edge;
 class TCollection_AsciiString;
 
-//! a bound is a wire, a boundelement is an edge.
-//! The ShapeSet stores :
-//! - a list of wire (bounds),
-//! - a list of edge (boundelements) to start reconstructions,
-//! - a map of vertex giving the list of edge incident to a vertex.
 class TopOpeBRepBuild_WireEdgeSet : public TopOpeBRepBuild_ShapeSet
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates a WireEdgeSet to build edges connected by vertices
-  //! on face F. Edges of the WireEdgeSet must have a representation
-  //! on surface of face F.
   Standard_EXPORT TopOpeBRepBuild_WireEdgeSet(const TopoDS_Shape& F, void* const Addr = nullptr);
 
-  //! value of field myFace
   Standard_EXPORT const TopoDS_Face& Face() const;
 
   Standard_EXPORT void AddShape(const TopoDS_Shape& S) override;
@@ -42,8 +33,6 @@ public:
 
   Standard_EXPORT void InitNeighbours(const TopoDS_Shape& E) override;
 
-  //! Build the list of neighbour edges of edge myCurrentShape
-  //! Initialize iterator of neighbour edges to edge myCurrentShape
   Standard_EXPORT void FindNeighbours() override;
 
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& MakeNeighboursList(
@@ -78,11 +67,6 @@ public:
              const TCollection_AsciiString&        sa = "") const override;
 
 private:
-  //! Indicates whether vertex V is a good connexity vertex between
-  //! edges E1 and E2.
-  //! i.e, returns True if V is shared by E1 and E2 and if V has different
-  //! orientations on E1 and E2.
-  //! If V is shared by E1 and E2, returns the orientation of V on E1 and E2
   Standard_EXPORT bool VertexConnectsEdges(const TopoDS_Shape& V,
                                            const TopoDS_Shape& E1,
                                            const TopoDS_Shape& E2,
@@ -101,13 +85,10 @@ private:
                                gp_Pnt2d&           p2,
                                gp_Vec2d&           v2) const;
 
-  //! indicates if the edge <E> is a closing edge of myFace
   Standard_EXPORT bool IsClosed(const TopoDS_Shape& E) const;
 
-  //! indicates if the edge <E> is a closing edge on U of myFace
   Standard_EXPORT bool IsUClosed(const TopoDS_Shape& E) const;
 
-  //! indicates if the edge <E> is a closing edge on V of myFace
   Standard_EXPORT bool IsVClosed(const TopoDS_Shape& E) const;
 
   Standard_EXPORT TCollection_AsciiString SNameVEE(const TopoDS_Shape& V,

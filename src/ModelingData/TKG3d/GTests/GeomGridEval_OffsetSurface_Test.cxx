@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -44,10 +33,9 @@ namespace
 
 TEST(GeomGridEval_OffsetSurfaceTest, PlaneOffset)
 {
-  // Plane at Z=0
+
   occ::handle<Geom_Plane> aPlane = new Geom_Plane(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
 
-  // Offset by 10.0 -> Plane at Z=10
   occ::handle<Geom_OffsetSurface> anOffset = new Geom_OffsetSurface(aPlane, 10.0);
 
   GeomGridEval_OffsetSurface anEval(anOffset);
@@ -70,11 +58,10 @@ TEST(GeomGridEval_OffsetSurfaceTest, PlaneOffset)
 
 TEST(GeomGridEval_OffsetSurfaceTest, CylinderOffset)
 {
-  // Cylinder radius 5
+
   occ::handle<Geom_CylindricalSurface> aCyl =
     new Geom_CylindricalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 5.0);
 
-  // Offset by 2.0 -> Cylinder radius 7 (outward)
   occ::handle<Geom_OffsetSurface> anOffset = new Geom_OffsetSurface(aCyl, 2.0);
 
   GeomGridEval_OffsetSurface anEval(anOffset);
@@ -91,7 +78,6 @@ TEST(GeomGridEval_OffsetSurfaceTest, CylinderOffset)
       gp_Pnt aExpected = anOffset->Value(aUParams.Value(i), aVParams.Value(j));
       EXPECT_NEAR(aGrid.Value(i, j).Distance(aExpected), 0.0, THE_TOLERANCE);
 
-      // Check radius from Z axis
       double aDist = std::sqrt(aGrid.Value(i, j).X() * aGrid.Value(i, j).X()
                                + aGrid.Value(i, j).Y() * aGrid.Value(i, j).Y());
       EXPECT_NEAR(aDist, 7.0, THE_TOLERANCE);
@@ -101,7 +87,7 @@ TEST(GeomGridEval_OffsetSurfaceTest, CylinderOffset)
 
 TEST(GeomGridEval_OffsetSurfaceTest, DerivativeD1)
 {
-  // Cylinder offset
+
   occ::handle<Geom_CylindricalSurface> aCyl =
     new Geom_CylindricalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 5.0);
   occ::handle<Geom_OffsetSurface> anOffset = new Geom_OffsetSurface(aCyl, 2.0);
@@ -130,7 +116,7 @@ TEST(GeomGridEval_OffsetSurfaceTest, DerivativeD1)
 
 TEST(GeomGridEval_OffsetSurfaceTest, NestedDispatch)
 {
-  // Test that GeomGridEval_Surface correctly dispatches to GeomGridEval_OffsetSurface
+
   occ::handle<Geom_Plane>         aPlane   = new Geom_Plane(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_OffsetSurface> anOffset = new Geom_OffsetSurface(aPlane, 5.0);
 
@@ -138,9 +124,6 @@ TEST(GeomGridEval_OffsetSurfaceTest, NestedDispatch)
   anEval.Initialize(anOffset);
 
   EXPECT_TRUE(anEval.IsInitialized());
-  // Assuming GetType() returns OffsetSurface or similar identifier
-  // (GeomGridEval_Surface::GetType logic might need checking, usually delegates to adaptor or
-  // stored type) Since we added OffsetSurface to variant, it should be supported.
 
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 1.0, 3);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 1.0, 3);
@@ -154,7 +137,7 @@ TEST(GeomGridEval_OffsetSurfaceTest, NestedDispatch)
 
 TEST(GeomGridEval_OffsetSurfaceTest, DerivativeD2)
 {
-  // Cylinder offset
+
   occ::handle<Geom_CylindricalSurface> aCyl =
     new Geom_CylindricalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 5.0);
   occ::handle<Geom_OffsetSurface> anOffset = new Geom_OffsetSurface(aCyl, 2.0);
@@ -186,7 +169,7 @@ TEST(GeomGridEval_OffsetSurfaceTest, DerivativeD2)
 
 TEST(GeomGridEval_OffsetSurfaceTest, DerivativeD3)
 {
-  // Cylinder offset
+
   occ::handle<Geom_CylindricalSurface> aCyl =
     new Geom_CylindricalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 5.0);
   occ::handle<Geom_OffsetSurface> anOffset = new Geom_OffsetSurface(aCyl, 2.0);
@@ -234,7 +217,7 @@ TEST(GeomGridEval_OffsetSurfaceTest, DerivativeD3)
 
 TEST(GeomGridEval_OffsetSurfaceTest, DerivativeDN_U1V0)
 {
-  // Cylinder offset
+
   occ::handle<Geom_CylindricalSurface> aCyl =
     new Geom_CylindricalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 5.0);
   occ::handle<Geom_OffsetSurface> anOffset = new Geom_OffsetSurface(aCyl, 2.0);
@@ -246,8 +229,6 @@ TEST(GeomGridEval_OffsetSurfaceTest, DerivativeDN_U1V0)
 
   NCollection_Array2<gp_Vec> aGrid = anEval.EvaluateGridDN(aUParams, aVParams, 1, 0);
 
-  // Use Geom_OffsetSurface::DN as reference (GeomAdaptor_Surface::DN doesn't
-  // properly handle offset surfaces - it returns base surface derivatives)
   for (int i = 1; i <= 5; ++i)
   {
     for (int j = 1; j <= 3; ++j)
@@ -260,7 +241,7 @@ TEST(GeomGridEval_OffsetSurfaceTest, DerivativeDN_U1V0)
 
 TEST(GeomGridEval_OffsetSurfaceTest, DerivativeDN_U0V1)
 {
-  // Cylinder offset
+
   occ::handle<Geom_CylindricalSurface> aCyl =
     new Geom_CylindricalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 5.0);
   occ::handle<Geom_OffsetSurface> anOffset = new Geom_OffsetSurface(aCyl, 2.0);
@@ -284,7 +265,7 @@ TEST(GeomGridEval_OffsetSurfaceTest, DerivativeDN_U0V1)
 
 TEST(GeomGridEval_OffsetSurfaceTest, DerivativeDN_U1V1)
 {
-  // Cylinder offset
+
   occ::handle<Geom_CylindricalSurface> aCyl =
     new Geom_CylindricalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 5.0);
   occ::handle<Geom_OffsetSurface> anOffset = new Geom_OffsetSurface(aCyl, 2.0);
@@ -308,7 +289,7 @@ TEST(GeomGridEval_OffsetSurfaceTest, DerivativeDN_U1V1)
 
 TEST(GeomGridEval_OffsetSurfaceTest, DerivativeDN_U2V0)
 {
-  // Cylinder offset
+
   occ::handle<Geom_CylindricalSurface> aCyl =
     new Geom_CylindricalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 5.0);
   occ::handle<Geom_OffsetSurface> anOffset = new Geom_OffsetSurface(aCyl, 2.0);
@@ -332,7 +313,7 @@ TEST(GeomGridEval_OffsetSurfaceTest, DerivativeDN_U2V0)
 
 TEST(GeomGridEval_OffsetSurfaceTest, DerivativeDN_PlaneOffset)
 {
-  // Plane offset - simpler case for testing
+
   occ::handle<Geom_Plane>         aPlane   = new Geom_Plane(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_OffsetSurface> anOffset = new Geom_OffsetSurface(aPlane, 10.0);
 
@@ -341,7 +322,6 @@ TEST(GeomGridEval_OffsetSurfaceTest, DerivativeDN_PlaneOffset)
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 10.0, 5);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 10.0, 5);
 
-  // Test DN(1,0) and DN(0,1) - use Geom_OffsetSurface::DN as reference
   NCollection_Array2<gp_Vec> aGridU = anEval.EvaluateGridDN(aUParams, aVParams, 1, 0);
   NCollection_Array2<gp_Vec> aGridV = anEval.EvaluateGridDN(aUParams, aVParams, 0, 1);
 
@@ -356,7 +336,6 @@ TEST(GeomGridEval_OffsetSurfaceTest, DerivativeDN_PlaneOffset)
     }
   }
 
-  // For a plane offset, 2nd and higher derivatives should be zero
   NCollection_Array2<gp_Vec> aGrid2U = anEval.EvaluateGridDN(aUParams, aVParams, 2, 0);
   for (int i = 1; i <= 5; ++i)
   {
@@ -369,25 +348,22 @@ TEST(GeomGridEval_OffsetSurfaceTest, DerivativeDN_PlaneOffset)
 
 TEST(GeomGridEval_OffsetSurfaceTest, IsolineU_CompareToGeomD0)
 {
-  // Cylinder offset
+
   occ::handle<Geom_CylindricalSurface> aCyl =
     new Geom_CylindricalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 5.0);
   occ::handle<Geom_OffsetSurface> anOffset = new Geom_OffsetSurface(aCyl, 2.0);
 
   GeomGridEval_OffsetSurface anEval(anOffset);
 
-  // U-isoline: 1 U param, multiple V params (triggers isoline path)
   NCollection_Array1<double> aUParams(1, 1);
   aUParams.SetValue(1, M_PI / 4);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 5.0, 15);
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Note: RowLength() = V count (columns), ColLength() = U count (rows)
   EXPECT_EQ(aGrid.RowLength(), 15);
   EXPECT_EQ(aGrid.ColLength(), 1);
 
-  // Compare against Geom_OffsetSurface::D0
   for (int j = 1; j <= 15; ++j)
   {
     gp_Pnt aExpected;
@@ -398,25 +374,22 @@ TEST(GeomGridEval_OffsetSurfaceTest, IsolineU_CompareToGeomD0)
 
 TEST(GeomGridEval_OffsetSurfaceTest, IsolineV_CompareToGeomD0)
 {
-  // Cylinder offset
+
   occ::handle<Geom_CylindricalSurface> aCyl =
     new Geom_CylindricalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 5.0);
   occ::handle<Geom_OffsetSurface> anOffset = new Geom_OffsetSurface(aCyl, 2.0);
 
   GeomGridEval_OffsetSurface anEval(anOffset);
 
-  // V-isoline: multiple U params, 1 V param (triggers isoline path)
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 15);
   NCollection_Array1<double> aVParams(1, 1);
   aVParams.SetValue(1, 2.5);
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Note: RowLength() = V count (columns), ColLength() = U count (rows)
   EXPECT_EQ(aGrid.RowLength(), 1);
   EXPECT_EQ(aGrid.ColLength(), 15);
 
-  // Compare against Geom_OffsetSurface::D0
   for (int i = 1; i <= 15; ++i)
   {
     gp_Pnt aExpected;
@@ -427,13 +400,12 @@ TEST(GeomGridEval_OffsetSurfaceTest, IsolineV_CompareToGeomD0)
 
 TEST(GeomGridEval_OffsetSurfaceTest, IsolinePlane_CompareToGeomD0)
 {
-  // Plane offset (simple case)
+
   occ::handle<Geom_Plane>         aPlane   = new Geom_Plane(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_OffsetSurface> anOffset = new Geom_OffsetSurface(aPlane, 3.0);
 
   GeomGridEval_OffsetSurface anEval(anOffset);
 
-  // U-isoline on plane offset
   NCollection_Array1<double> aUParams(1, 1);
   aUParams.SetValue(1, 5.0);
   NCollection_Array1<double> aVParams = CreateUniformParams(-10.0, 10.0, 20);

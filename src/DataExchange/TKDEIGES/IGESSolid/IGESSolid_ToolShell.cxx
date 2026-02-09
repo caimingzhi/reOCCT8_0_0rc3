@@ -18,28 +18,18 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-// MGE 03/08/98
-//=================================================================================================
-
 IGESSolid_ToolShell::IGESSolid_ToolShell() = default;
-
-//=================================================================================================
 
 void IGESSolid_ToolShell::ReadOwnParams(const occ::handle<IGESSolid_Shell>&         ent,
                                         const occ::handle<IGESData_IGESReaderData>& IR,
                                         IGESData_ParamReader&                       PR) const
 {
 
-  // MGE 03/08/98
+  int nbfaces = 0;
 
-  // bool abool; //szv#4:S4163:12Mar99 moved down
-  int nbfaces = 0; // szv#4:S4163:12Mar99 `i` moved in for
-  // occ::handle<IGESSolid_Face> aface; //szv#4:S4163:12Mar99 moved down
   occ::handle<NCollection_HArray1<occ::handle<IGESSolid_Face>>> tempFaces;
   occ::handle<NCollection_HArray1<int>>                         tempOrientation;
 
-  // st = PR.ReadInteger(PR.Current(), Msg200, nbfaces); //szv#4:S4163:12Mar99 moved in if
-  // st = PR.ReadInteger(PR.Current(), "Number of faces", nbfaces);
   bool sb = PR.ReadInteger(PR.Current(), nbfaces);
   if (sb && nbfaces > 0)
   {
@@ -52,9 +42,7 @@ void IGESSolid_ToolShell::ReadOwnParams(const occ::handle<IGESSolid_Shell>&     
     IGESData_Status aStatus;
     for (int i = 1; i <= nbfaces; i++)
     {
-      // st = PR.ReadEntity(IR, PR.Current(),Msg201, STANDARD_TYPE(IGESSolid_Face), aface);
-      // //szv#4:S4163:12Mar99 moved in if st = PR.ReadEntity(IR, PR.Current(), "Faces",
-      // STANDARD_TYPE(IGESSolid_Face), aface);
+
       if (PR.ReadEntity(IR, PR.Current(), aStatus, STANDARD_TYPE(IGESSolid_Face), aface))
         tempFaces->SetValue(i, aface);
       else
@@ -88,8 +76,7 @@ void IGESSolid_ToolShell::ReadOwnParams(const occ::handle<IGESSolid_Shell>&     
           }
         }
       }
-      // st = PR.ReadBoolean(PR.Current(), Msg180, abool); //szv#4:S4163:12Mar99 moved in if
-      // st = PR.ReadBoolean(PR.Current(), "Orientation flags", abool);
+
       if (PR.ReadBoolean(PR.Current(), Msg180, abool))
         tempOrientation->SetValue(i, (abool ? 1 : 0));
     }
@@ -104,8 +91,6 @@ void IGESSolid_ToolShell::ReadOwnParams(const occ::handle<IGESSolid_Shell>&     
   ent->Init(tempFaces, tempOrientation);
 }
 
-//=================================================================================================
-
 void IGESSolid_ToolShell::WriteOwnParams(const occ::handle<IGESSolid_Shell>& ent,
                                          IGESData_IGESWriter&                IW) const
 {
@@ -119,8 +104,6 @@ void IGESSolid_ToolShell::WriteOwnParams(const occ::handle<IGESSolid_Shell>& ent
   }
 }
 
-//=================================================================================================
-
 void IGESSolid_ToolShell::OwnShared(const occ::handle<IGESSolid_Shell>& ent,
                                     Interface_EntityIterator&           iter) const
 {
@@ -128,8 +111,6 @@ void IGESSolid_ToolShell::OwnShared(const occ::handle<IGESSolid_Shell>& ent,
   for (int i = 1; i <= nbfaces; i++)
     iter.GetOneItem(ent->Face(i));
 }
-
-//=================================================================================================
 
 void IGESSolid_ToolShell::OwnCopy(const occ::handle<IGESSolid_Shell>& another,
                                   const occ::handle<IGESSolid_Shell>& ent,
@@ -149,10 +130,7 @@ void IGESSolid_ToolShell::OwnCopy(const occ::handle<IGESSolid_Shell>& another,
   ent->Init(tempFaces, tempOrientation);
 }
 
-//=================================================================================================
-
-IGESData_DirChecker IGESSolid_ToolShell::DirChecker(
-  const occ::handle<IGESSolid_Shell>& /* ent */) const
+IGESData_DirChecker IGESSolid_ToolShell::DirChecker(const occ::handle<IGESSolid_Shell>&) const
 {
   IGESData_DirChecker DC(514, 1, 2);
 
@@ -165,17 +143,10 @@ IGESData_DirChecker IGESSolid_ToolShell::DirChecker(
   return DC;
 }
 
-//=================================================================================================
-
 void IGESSolid_ToolShell::OwnCheck(const occ::handle<IGESSolid_Shell>& ent,
                                    const Interface_ShareTool&,
                                    occ::handle<Interface_Check>& ach) const
 {
-  // MGE 03/08/98
-  // Building of messages
-  //========================================
-  // Message_Msg Msg200("XSTEP_200");
-  //========================================
 
   if (ent->NbFaces() <= 0)
   {
@@ -183,8 +154,6 @@ void IGESSolid_ToolShell::OwnCheck(const occ::handle<IGESSolid_Shell>& ent,
     ach->SendFail(Msg200);
   }
 }
-
-//=================================================================================================
 
 void IGESSolid_ToolShell::OwnDump(const occ::handle<IGESSolid_Shell>& ent,
                                   const IGESData_IGESDumper&          dumper,

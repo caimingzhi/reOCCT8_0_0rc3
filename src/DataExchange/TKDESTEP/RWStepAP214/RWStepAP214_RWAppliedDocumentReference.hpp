@@ -11,7 +11,6 @@ class StepAP214_AppliedDocumentReference;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AppliedDocumentReference
 class RWStepAP214_RWAppliedDocumentReference
 {
 public:

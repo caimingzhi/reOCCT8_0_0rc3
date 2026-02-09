@@ -12,7 +12,6 @@ class StepShape_ManifoldSolidBrep : public StepShape_SolidModel
 {
 
 public:
-  //! Returns a ManifoldSolidBrep
   Standard_EXPORT StepShape_ManifoldSolidBrep();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

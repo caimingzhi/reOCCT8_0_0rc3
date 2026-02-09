@@ -1,7 +1,6 @@
 #include <Contap_HCurve2dTool.hpp>
 #include <Geom2d_BezierCurve.hpp>
 
-//============================================================
 int Contap_HCurve2dTool::NbSamples(const occ::handle<Adaptor2d_Curve2d>& C,
                                    const double                          U0,
                                    const double                          U1)

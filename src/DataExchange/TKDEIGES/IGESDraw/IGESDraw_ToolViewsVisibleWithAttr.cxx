@@ -28,7 +28,6 @@ void IGESDraw_ToolViewsVisibleWithAttr::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&       IR,
   IGESData_ParamReader&                             PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   int                                                                    tempNbBlocks, tempNbEntity;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_ViewKindEntity>>> tempViewEntities;
@@ -39,11 +38,9 @@ void IGESDraw_ToolViewsVisibleWithAttr::ReadOwnParams(
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>     tempDisplayEntities;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_LineFontEntity>>> tempLineDefinitions;
 
-  // st = PR.ReadInteger(PR.Current(), "Number Of Blocks", tempNbBlocks); //szv#4:S4163:12Mar99
-  // moved in if
   if (PR.ReadInteger(PR.Current(), "Number Of Blocks", tempNbBlocks))
   {
-    // Initialise HArray1 only if there is no error reading its Length
+
     if (tempNbBlocks <= 0)
       PR.AddFail("Number Of Blocks : Not Positive");
     else
@@ -60,23 +57,19 @@ void IGESDraw_ToolViewsVisibleWithAttr::ReadOwnParams(
   }
 
   if (PR.DefinedElseSkip())
-    PR.ReadInteger(PR.Current(),
-                   "Number of Entities Displayed",
-                   tempNbEntity); // szv#4:S4163:12Mar99 `st=` not needed
+    PR.ReadInteger(PR.Current(), "Number of Entities Displayed", tempNbEntity);
   else
   {
     tempNbEntity = 0;
     PR.AddWarning("Number of Entities Displayed : undefined, set to Zero");
   }
-  // Initialise HArray1 only if there is no error reading its Length
+
   if (tempNbEntity < 0)
     PR.AddFail("Number Of Entities Displayed : Less than Zero");
 
-  // Read the HArray1 only if its Length was read without any Error
   if (!(tempViewEntities.IsNull()))
   {
-    // Assumption : When tempViewEntities != NULL, all other parallel
-    //              arrays are also non-NULL
+
     int I;
     for (I = 1; I <= tempNbBlocks; I++)
     {
@@ -87,8 +80,6 @@ void IGESDraw_ToolViewsVisibleWithAttr::ReadOwnParams(
       occ::handle<IGESGraph_Color>         tempColorDef;
       int                                  tempLineWeightValue;
 
-      // st = PR.ReadEntity(IR, PR.Current(), "View Entity",
-      // STANDARD_TYPE(IGESData_ViewKindEntity), tempView); //szv#4:S4163:12Mar99 moved in if
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "View Entity",
@@ -96,14 +87,9 @@ void IGESDraw_ToolViewsVisibleWithAttr::ReadOwnParams(
                         tempView))
         tempViewEntities->SetValue(I, tempView);
 
-      // st = PR.ReadInteger(PR.Current(), "Line Font Value", tempLineFont); //szv#4:S4163:12Mar99
-      // moved in if
       if (PR.ReadInteger(PR.Current(), "Line Font Value", tempLineFont))
         tempLineFonts->SetValue(I, tempLineFont);
 
-      // st = PR.ReadEntity(IR, PR.Current(), "Line Font Definition",
-      // STANDARD_TYPE(IGESData_LineFontEntity),
-      // tempEntity1, true); //szv#4:S4163:12Mar99 moved in if
       if (tempLineFont == 0
           && PR.ReadEntity(IR,
                            PR.Current(),
@@ -114,11 +100,11 @@ void IGESDraw_ToolViewsVisibleWithAttr::ReadOwnParams(
         tempLineDefinitions->SetValue(I, tempEntity1);
 
       int curnum = PR.CurrentNumber();
-      //  Reading Color : Value (>0) or Definition (<0 = D.E. Pointer)
+
       if (PR.DefinedElseSkip())
-        // clang-format off
-	PR.ReadInteger( PR.Current(), "Color Value", tempColorValue); //szv#4:S4163:12Mar99 `st=` not needed
-      // clang-format on
+
+        PR.ReadInteger(PR.Current(), "Color Value", tempColorValue);
+
       else
       {
         tempColorValue = 0;
@@ -136,27 +122,14 @@ void IGESDraw_ToolViewsVisibleWithAttr::ReadOwnParams(
       else
         tempColorValues->SetValue(I, tempColorValue);
 
-      // st = PR.ReadInteger(PR.Current(), "Line Weight Value",
-      // tempLineWeightValue); //szv#4:S4163:12Mar99 moved in if
       if (PR.ReadInteger(PR.Current(), "Line Weight Value", tempLineWeightValue))
         tempLineWeights->SetValue(I, tempLineWeightValue);
     }
   }
 
-  // Read the HArray1 only if its Length was read without any Error
   if (tempNbEntity > 0)
   {
-    PR.ReadEnts(IR,
-                PR.CurrentList(tempNbEntity),
-                "Displayed Entities",
-                tempDisplayEntities); // szv#4:S4163:12Mar99 `st=` not needed
-    /*
-        tempDisplayEntities = new NCollection_HArray1<occ::handle<IGESData_IGESEntity>> (1,
-       tempNbEntity); int I; for (I = 1; I <= tempNbEntity; I++) { occ::handle<IGESData_IGESEntity>
-       tempEntity3; st = PR.ReadEntity(IR, PR.Current(), "Entity", tempEntity3); if (st)
-       tempDisplayEntities->SetValue(I, tempEntity3);
-        }
-    */
+    PR.ReadEnts(IR, PR.CurrentList(tempNbEntity), "Displayed Entities", tempDisplayEntities);
   }
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
@@ -182,9 +155,9 @@ void IGESDraw_ToolViewsVisibleWithAttr::WriteOwnParams(
   {
     IW.Send(ent->ViewItem(I));
     IW.Send(ent->LineFontValue(I));
-    IW.Send(ent->FontDefinition(I)); // controlled by LineFontValue, both sent
+    IW.Send(ent->FontDefinition(I));
     if (ent->IsColorDefinition(I))
-      IW.Send(ent->ColorDefinition(I), true); // negative
+      IW.Send(ent->ColorDefinition(I), true);
     else
       IW.Send(ent->ColorValue(I));
     IW.Send(ent->LineWeightItem(I));
@@ -208,7 +181,6 @@ void IGESDraw_ToolViewsVisibleWithAttr::OwnShared(
     if (ent->IsColorDefinition(I))
       iter.GetOneItem(ent->ColorDefinition(I));
   }
-  //  Displayed -> Implied
 }
 
 void IGESDraw_ToolViewsVisibleWithAttr::OwnImplied(
@@ -264,7 +236,7 @@ void IGESDraw_ToolViewsVisibleWithAttr::OwnCopy(
     int tempLineWeight = another->LineWeightItem(I);
     tempLineWeights->SetValue(I, tempLineWeight);
   }
-  //  Displayed -> Implied : set an empty list by default
+
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> tempDisplayEntities;
   ent->Init(tempViewEntities,
             tempLineFonts,
@@ -307,7 +279,7 @@ void IGESDraw_ToolViewsVisibleWithAttr::OwnRenew(
 }
 
 IGESData_DirChecker IGESDraw_ToolViewsVisibleWithAttr::DirChecker(
-  const occ::handle<IGESDraw_ViewsVisibleWithAttr>& /*ent*/) const
+  const occ::handle<IGESDraw_ViewsVisibleWithAttr>&) const
 {
   IGESData_DirChecker DC(402, 4);
   DC.Structure(IGESData_DefVoid);
@@ -328,7 +300,7 @@ void IGESDraw_ToolViewsVisibleWithAttr::OwnCheck(
   occ::handle<Interface_Check>& ach) const
 {
   int nb = ent->NbViews();
-  int i; // svv Jan 10 2000 : porting on DEC
+  int i;
   for (i = 1; i <= nb; i++)
   {
     if (ent->LineFontValue(i) != 0 && ent->IsFontDefinition(i))
@@ -373,7 +345,7 @@ void IGESDraw_ToolViewsVisibleWithAttr::OwnDump(
     << "Line Weights             :\n"
     << "Count of View Blocks : " << ent->NbViews() << "\n";
   if (level > 4)
-  { // Level = 4 : nothing to Dump. Level = 5 & 6 : same Dump
+  {
     int I;
     int upper = ent->NbViews();
     for (I = 1; I <= upper; I++)
@@ -412,7 +384,7 @@ void IGESDraw_ToolViewsVisibleWithAttr::OwnDump(
 bool IGESDraw_ToolViewsVisibleWithAttr::OwnCorrect(
   const occ::handle<IGESDraw_ViewsVisibleWithAttr>& ent) const
 {
-  //  The displayed entities must reference <ent>. They have priority.
+
   bool                                        res     = false;
   int                                         nb      = ent->NbDisplayedEntities();
   const occ::handle<IGESData_ViewKindEntity>& entcomp = ent;

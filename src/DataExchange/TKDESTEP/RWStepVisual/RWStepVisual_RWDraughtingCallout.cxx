@@ -5,11 +5,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepVisual_DraughtingCallout.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWDraughtingCallout::RWStepVisual_RWDraughtingCallout() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWDraughtingCallout::ReadStep(
   const occ::handle<StepData_StepReaderData>&      data,
@@ -20,11 +16,9 @@ void RWStepVisual_RWDraughtingCallout::ReadStep(
   if (!data->CheckNbParams(num, 2, ach, "draughting_callout"))
     return;
 
-  // Inherited field : name
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // Own field: contents
   occ::handle<NCollection_HArray1<StepVisual_DraughtingCalloutElement>> aContents;
   StepVisual_DraughtingCalloutElement                                   anEnt;
   int                                                                   nbSub;
@@ -39,20 +33,16 @@ void RWStepVisual_RWDraughtingCallout::ReadStep(
     }
   }
 
-  // Initialisation of the read entity
   ent->Init(aName, aContents);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWDraughtingCallout::WriteStep(
   StepData_StepWriter&                             SW,
   const occ::handle<StepVisual_DraughtingCallout>& ent) const
 {
-  // Inherited field: name
+
   SW.Send(ent->Name());
 
-  // Own field: contents
   SW.OpenSub();
   for (int i = 1; i <= ent->NbContents(); i++)
   {
@@ -61,12 +51,10 @@ void RWStepVisual_RWDraughtingCallout::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWDraughtingCallout::Share(const occ::handle<StepVisual_DraughtingCallout>& ent,
                                              Interface_EntityIterator& iter) const
 {
-  // Own field: contents
+
   int i, nb = ent->NbContents();
   for (i = 1; i <= nb; i++)
     iter.AddItem(ent->ContentsValue(i).Value());

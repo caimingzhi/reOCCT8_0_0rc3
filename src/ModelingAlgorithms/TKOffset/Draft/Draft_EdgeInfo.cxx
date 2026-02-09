@@ -5,8 +5,6 @@
 #include <gp_Pnt.hpp>
 #include <TopoDS_Face.hpp>
 
-//=================================================================================================
-
 Draft_EdgeInfo::Draft_EdgeInfo()
     : myNewGeom(false),
       myTgt(false),
@@ -14,16 +12,12 @@ Draft_EdgeInfo::Draft_EdgeInfo()
 {
 }
 
-//=================================================================================================
-
 Draft_EdgeInfo::Draft_EdgeInfo(const bool HasNewGeometry)
     : myNewGeom(HasNewGeometry),
       myTgt(false),
       myTol(0)
 {
 }
-
-//=================================================================================================
 
 void Draft_EdgeInfo::Add(const TopoDS_Face& F)
 {
@@ -38,14 +32,10 @@ void Draft_EdgeInfo::Add(const TopoDS_Face& F)
   myTol = std::max(myTol, BRep_Tool::Tolerance(F));
 }
 
-//=================================================================================================
-
 void Draft_EdgeInfo::RootFace(const TopoDS_Face& F)
 {
   myRootFace = F;
 }
-
-//=================================================================================================
 
 void Draft_EdgeInfo::Tangent(const gp_Pnt& P)
 {
@@ -53,98 +43,66 @@ void Draft_EdgeInfo::Tangent(const gp_Pnt& P)
   myPt  = P;
 }
 
-//=================================================================================================
-
 bool Draft_EdgeInfo::IsTangent(gp_Pnt& P) const
 {
   P = myPt;
   return myTgt;
 }
 
-//=================================================================================================
-
 bool Draft_EdgeInfo::NewGeometry() const
 {
   return myNewGeom;
 }
-
-//=================================================================================================
 
 void Draft_EdgeInfo::SetNewGeometry(const bool NewGeom)
 {
   myNewGeom = NewGeom;
 }
 
-//=================================================================================================
-
 const occ::handle<Geom_Curve>& Draft_EdgeInfo::Geometry() const
 {
   return myGeom;
 }
-
-//=================================================================================================
 
 const TopoDS_Face& Draft_EdgeInfo::FirstFace() const
 {
   return myFirstF;
 }
 
-//=================================================================================================
-
 const TopoDS_Face& Draft_EdgeInfo::SecondFace() const
 {
   return mySeconF;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve>& Draft_EdgeInfo::ChangeGeometry()
 {
   return myGeom;
 }
 
-//=======================================================================
-// function : occ::handle<Geom2d_Curve>&
-// purpose  :
-//=======================================================================
-
 const occ::handle<Geom2d_Curve>& Draft_EdgeInfo::FirstPC() const
 {
   return myFirstPC;
 }
-
-//=======================================================================
-// function : occ::handle<Geom2d_Curve>&
-// purpose  :
-//=======================================================================
 
 const occ::handle<Geom2d_Curve>& Draft_EdgeInfo::SecondPC() const
 {
   return mySeconPC;
 }
 
-//=================================================================================================
-
 occ::handle<Geom2d_Curve>& Draft_EdgeInfo::ChangeFirstPC()
 {
   return myFirstPC;
 }
-
-//=================================================================================================
 
 occ::handle<Geom2d_Curve>& Draft_EdgeInfo::ChangeSecondPC()
 {
   return mySeconPC;
 }
 
-//=================================================================================================
-
 const TopoDS_Face& Draft_EdgeInfo::RootFace() const
 {
   return myRootFace;
 }
-
-//=================================================================================================
 
 void Draft_EdgeInfo::Tolerance(const double tol)
 {

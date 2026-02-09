@@ -10,8 +10,6 @@
 #include <NCollection_Array2.hpp>
 #include <NCollection_HArray2.hpp>
 
-//! contains all the parameters for approximation
-//! (tolerancy, computing option, ...)
 class AdvApp2Var_Context
 {
 public:

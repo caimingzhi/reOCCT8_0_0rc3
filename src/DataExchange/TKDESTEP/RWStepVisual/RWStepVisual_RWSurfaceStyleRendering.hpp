@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_SurfaceStyleRendering;
 
-//! Read & Write tool for SurfaceStyleRendering
 class RWStepVisual_RWSurfaceStyleRendering
 {
 public:

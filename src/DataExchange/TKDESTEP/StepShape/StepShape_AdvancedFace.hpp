@@ -9,7 +9,6 @@ class StepShape_AdvancedFace : public StepShape_FaceSurface
 {
 
 public:
-  //! Returns a AdvancedFace
   Standard_EXPORT StepShape_AdvancedFace();
 
   DEFINE_STANDARD_RTTIEXT(StepShape_AdvancedFace, StepShape_FaceSurface)

@@ -10,8 +10,6 @@
 #include <MeshVS_Tool.hpp>
 #include <Precision.hpp>
 
-//=================================================================================================
-
 occ::handle<Graphic3d_AspectFillArea3d> MeshVS_Tool::CreateAspectFillArea3d(
   const occ::handle<MeshVS_Drawer>& theDr,
   const Graphic3d_MaterialAspect&   Mat,
@@ -73,8 +71,6 @@ occ::handle<Graphic3d_AspectFillArea3d> MeshVS_Tool::CreateAspectFillArea3d(
   return anAsp;
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_AspectFillArea3d> MeshVS_Tool::CreateAspectFillArea3d(
   const occ::handle<MeshVS_Drawer>& theDr,
   const bool                        UseDefaults)
@@ -100,8 +96,6 @@ occ::handle<Graphic3d_AspectFillArea3d> MeshVS_Tool::CreateAspectFillArea3d(
 
   return aFill;
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_AspectLine3d> MeshVS_Tool::CreateAspectLine3d(
   const occ::handle<MeshVS_Drawer>& theDr,
@@ -132,8 +126,6 @@ occ::handle<Graphic3d_AspectLine3d> MeshVS_Tool::CreateAspectLine3d(
   return anAsp;
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_AspectMarker3d> MeshVS_Tool::CreateAspectMarker3d(
   const occ::handle<MeshVS_Drawer>& theDr,
   const bool                        UseDefaults)
@@ -163,8 +155,6 @@ occ::handle<Graphic3d_AspectMarker3d> MeshVS_Tool::CreateAspectMarker3d(
   return anAsp;
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_AspectText3d> MeshVS_Tool::CreateAspectText3d(
   const occ::handle<MeshVS_Drawer>& theDr,
   const bool                        UseDefaults)
@@ -182,7 +172,7 @@ occ::handle<Graphic3d_AspectText3d> MeshVS_Tool::CreateAspectText3d(
   Font_FontAspect          aFontAspect = Font_FA_Regular;
   int                      aStyleI     = (int)Aspect_TOST_NORMAL;
   int                      aDispTextI  = (int)Aspect_TODT_NORMAL;
-  // Bold font is used by default for better text readability
+
   int aFontAspectI = (int)Font_FA_Bold;
 
   if (!theDr->GetColor(MeshVS_DA_TextColor, aTColor) && !UseDefaults)
@@ -218,8 +208,6 @@ occ::handle<Graphic3d_AspectText3d> MeshVS_Tool::CreateAspectText3d(
   anAsp->SetTextFontAspect(aFontAspect);
   return anAsp;
 }
-
-//=================================================================================================
 
 bool MeshVS_Tool::GetNormal(const NCollection_Array1<double>& Nodes, gp_Vec& Norm)
 {
@@ -282,8 +270,6 @@ bool MeshVS_Tool::GetNormal(const NCollection_Array1<double>& Nodes, gp_Vec& Nor
 
   return res;
 }
-
-//=================================================================================================
 
 bool MeshVS_Tool::GetAverageNormal(const NCollection_Array1<double>& Nodes, gp_Vec& Norm)
 {

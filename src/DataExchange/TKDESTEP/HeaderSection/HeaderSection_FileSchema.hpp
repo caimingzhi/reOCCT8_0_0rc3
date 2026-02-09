@@ -13,7 +13,6 @@ class HeaderSection_FileSchema : public Standard_Transient
 {
 
 public:
-  //! Returns a FileSchema
   Standard_EXPORT HeaderSection_FileSchema();
 
   Standard_EXPORT void Init(

@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -43,12 +32,11 @@ class TKHelixTest : public ::testing::Test
 protected:
   void SetUp() override
   {
-    // Default axis setup
+
     myAxis      = gp_Ax3(gp_Pnt(0., 0., 0.), gp_Dir(gp_Dir::D::Z), gp_Dir(gp_Dir::D::X));
     myTolerance = 1.e-4;
   }
 
-  // Helper method to count shapes in a TopoDS_Shape
   int CountShapes(const TopoDS_Shape& theShape, const TopAbs_ShapeEnum theType) const
   {
     int aCount = 0;
@@ -59,7 +47,6 @@ protected:
     return aCount;
   }
 
-  // Helper method to compute wire length
   double ComputeWireLength(const TopoDS_Shape& theWire) const
   {
     GProp_GProps aLProps;
@@ -71,25 +58,22 @@ protected:
   double myTolerance;
 };
 
-// Test HelixGeom_HelixCurve analytical implementation
 TEST_F(TKHelixTest, HelixGeomHelixCurve_Basic)
 {
   HelixGeom_HelixCurve aHelix;
 
-  // Test default parameters
   EXPECT_DOUBLE_EQ(aHelix.FirstParameter(), 0.0);
   EXPECT_DOUBLE_EQ(aHelix.LastParameter(), 2.0 * M_PI);
 
-  // Test point calculation
   gp_Pnt aP0 = aHelix.Value(0.0);
-  EXPECT_DOUBLE_EQ(aP0.X(), 1.0); // RStart = 1.0 by default
+  EXPECT_DOUBLE_EQ(aP0.X(), 1.0);
   EXPECT_DOUBLE_EQ(aP0.Y(), 0.0);
   EXPECT_DOUBLE_EQ(aP0.Z(), 0.0);
 
   gp_Pnt aP1 = aHelix.Value(M_PI);
   EXPECT_DOUBLE_EQ(aP1.X(), -1.0);
   EXPECT_NEAR(aP1.Y(), 0.0, 1e-15);
-  EXPECT_DOUBLE_EQ(aP1.Z(), M_PI / (2.0 * M_PI)); // Pitch / (2*PI) * t
+  EXPECT_DOUBLE_EQ(aP1.Z(), M_PI / (2.0 * M_PI));
 }
 
 TEST_F(TKHelixTest, HelixGeomHelixCurve_CustomParameters)
@@ -100,36 +84,31 @@ TEST_F(TKHelixTest, HelixGeomHelixCurve_CustomParameters)
   EXPECT_DOUBLE_EQ(aHelix.FirstParameter(), 0.0);
   EXPECT_DOUBLE_EQ(aHelix.LastParameter(), 4.0 * M_PI);
 
-  // Test point at start
   gp_Pnt aP0 = aHelix.Value(0.0);
-  EXPECT_DOUBLE_EQ(aP0.X(), 5.0); // RStart = 5.0
+  EXPECT_DOUBLE_EQ(aP0.X(), 5.0);
   EXPECT_DOUBLE_EQ(aP0.Y(), 0.0);
   EXPECT_DOUBLE_EQ(aP0.Z(), 0.0);
 
-  // Test point at end (2 full turns)
   gp_Pnt aP1 = aHelix.Value(4.0 * M_PI);
   EXPECT_DOUBLE_EQ(aP1.X(), 5.0);
   EXPECT_NEAR(aP1.Y(), 0.0, 1e-14);
-  EXPECT_DOUBLE_EQ(aP1.Z(), 20.0); // 2 turns * pitch(10)
+  EXPECT_DOUBLE_EQ(aP1.Z(), 20.0);
 }
 
 TEST_F(TKHelixTest, HelixGeomHelixCurve_TaperedHelix)
 {
   HelixGeom_HelixCurve aHelix;
-  double               aTaperAngle = 0.1; // Small taper angle
+  double               aTaperAngle = 0.1;
   aHelix.Load(0.0, 2.0 * M_PI, 5.0, 2.0, aTaperAngle, true);
 
-  // At start
   gp_Pnt aP0 = aHelix.Value(0.0);
   EXPECT_DOUBLE_EQ(aP0.X(), 2.0);
 
-  // At end - radius should be larger due to taper
   gp_Pnt aP1             = aHelix.Value(2.0 * M_PI);
   double aExpectedRadius = 2.0 + (5.0 / (2.0 * M_PI)) * tan(aTaperAngle) * (2.0 * M_PI);
   EXPECT_DOUBLE_EQ(aP1.X(), aExpectedRadius);
 }
 
-// Test HelixGeom_BuilderHelixCoil
 TEST_F(TKHelixTest, HelixGeomBuilderHelixCoil_Basic)
 {
   HelixGeom_BuilderHelixCoil aBuilder;
@@ -147,7 +126,6 @@ TEST_F(TKHelixTest, HelixGeomBuilderHelixCoil_Basic)
   occ::handle<Geom_Curve> aCurve = aCurves(1);
   EXPECT_FALSE(aCurve.IsNull());
 
-  // Test curve endpoints
   gp_Pnt aP1, aP2;
   aCurve->D0(aCurve->FirstParameter(), aP1);
   aCurve->D0(aCurve->LastParameter(), aP2);
@@ -161,7 +139,6 @@ TEST_F(TKHelixTest, HelixGeomBuilderHelixCoil_Basic)
   EXPECT_NEAR(aP2.Z(), 5.0, myTolerance);
 }
 
-// Test HelixGeom_BuilderHelix
 TEST_F(TKHelixTest, HelixGeomBuilderHelix_SingleCoil)
 {
   HelixGeom_BuilderHelix aBuilder;
@@ -187,7 +164,6 @@ TEST_F(TKHelixTest, HelixGeomBuilderHelix_MultipleCoils)
   aBuilder.SetPosition(aPosition);
   aBuilder.SetTolerance(myTolerance);
 
-  // 3 full turns
   aBuilder.SetCurveParameters(0.0, 6.0 * M_PI, 10.0, 5.0, 0.0, true);
 
   aBuilder.Perform();
@@ -195,15 +171,13 @@ TEST_F(TKHelixTest, HelixGeomBuilderHelix_MultipleCoils)
   EXPECT_EQ(aBuilder.ErrorStatus(), 0);
 
   const NCollection_Sequence<occ::handle<Geom_Curve>>& aCurves = aBuilder.Curves();
-  EXPECT_EQ(aCurves.Length(), 3); // Should split into 3 coils
+  EXPECT_EQ(aCurves.Length(), 3);
 }
 
-// Test HelixBRep_BuilderHelix - Pure Cylindrical Helix
 TEST_F(TKHelixTest, HelixBRepBuilder_PureCylindricalHelix)
 {
   HelixBRep_BuilderHelix aBuilder;
 
-  // Single part helix with diameter 100, height 100, pitch 20
   NCollection_Array1<double> aHeights(1, 1);
   aHeights(1) = 100.0;
 
@@ -211,7 +185,7 @@ TEST_F(TKHelixTest, HelixBRepBuilder_PureCylindricalHelix)
   aPitches(1) = 20.0;
 
   NCollection_Array1<bool> aIsPitches(1, 1);
-  aIsPitches(1) = true; // Pitch mode
+  aIsPitches(1) = true;
 
   aBuilder.SetParameters(myAxis, 100.0, aHeights, aPitches, aIsPitches);
   aBuilder.SetApproxParameters(myTolerance, 8, GeomAbs_C1);
@@ -224,25 +198,21 @@ TEST_F(TKHelixTest, HelixBRepBuilder_PureCylindricalHelix)
   EXPECT_FALSE(aResult.IsNull());
   EXPECT_EQ(aResult.ShapeType(), TopAbs_WIRE);
 
-  // Check number of edges
   int aNbEdges = CountShapes(aResult, TopAbs_EDGE);
   EXPECT_GT(aNbEdges, 0);
 
-  // Compute wire length - should be approximately sqrt(circumference^2 + height^2) * turns
   double aWireLength     = ComputeWireLength(aResult);
   double aCircumference  = M_PI * 100.0;
-  double aTurns          = 100.0 / 20.0; // height/pitch
+  double aTurns          = 100.0 / 20.0;
   double aExpectedLength = aTurns * sqrt(aCircumference * aCircumference + 20.0 * 20.0);
 
-  EXPECT_NEAR(aWireLength, aExpectedLength, aExpectedLength * 0.01); // 1% tolerance
+  EXPECT_NEAR(aWireLength, aExpectedLength, aExpectedLength * 0.01);
 }
 
-// Test HelixBRep_BuilderHelix - Spiral Helix
 TEST_F(TKHelixTest, HelixBRepBuilder_SpiralHelix)
 {
   HelixBRep_BuilderHelix aBuilder;
 
-  // Single part spiral with diameter changing from 100 to 20
   NCollection_Array1<double> aHeights(1, 1);
   aHeights(1) = 100.0;
 
@@ -267,12 +237,10 @@ TEST_F(TKHelixTest, HelixBRepBuilder_SpiralHelix)
   EXPECT_GT(aNbEdges, 0);
 }
 
-// Test HelixBRep_BuilderHelix - Multi-part Helix
 TEST_F(TKHelixTest, HelixBRepBuilder_MultiPartHelix)
 {
   HelixBRep_BuilderHelix aBuilder;
 
-  // 3-part helix with different diameters
   NCollection_Array1<double> aDiams(1, 4);
   aDiams(1) = 100.0;
   aDiams(2) = 80.0;
@@ -306,20 +274,18 @@ TEST_F(TKHelixTest, HelixBRepBuilder_MultiPartHelix)
   EXPECT_EQ(aResult.ShapeType(), TopAbs_WIRE);
 
   int aNbEdges = CountShapes(aResult, TopAbs_EDGE);
-  EXPECT_GT(aNbEdges, 2); // Should have multiple edges for multiple parts
+  EXPECT_GT(aNbEdges, 2);
 }
 
-// Test HelixBRep_BuilderHelix - Number of Turns Interface
 TEST_F(TKHelixTest, HelixBRepBuilder_NumberOfTurnsInterface)
 {
   HelixBRep_BuilderHelix aBuilder;
 
-  // Single part helix using number of turns
   NCollection_Array1<double> aPitches(1, 1);
   aPitches(1) = 20.0;
 
   NCollection_Array1<double> aNbTurns(1, 1);
-  aNbTurns(1) = 5.0; // 5 turns
+  aNbTurns(1) = 5.0;
 
   aBuilder.SetParameters(myAxis, 100.0, aPitches, aNbTurns);
   aBuilder.SetApproxParameters(myTolerance, 8, GeomAbs_C1);
@@ -331,7 +297,6 @@ TEST_F(TKHelixTest, HelixBRepBuilder_NumberOfTurnsInterface)
   const TopoDS_Shape& aResult = aBuilder.Shape();
   EXPECT_FALSE(aResult.IsNull());
 
-  // Wire length should correspond to 5 turns
   double aWireLength     = ComputeWireLength(aResult);
   double aCircumference  = M_PI * 100.0;
   double aExpectedLength = 5.0 * sqrt(aCircumference * aCircumference + 20.0 * 20.0);
@@ -339,40 +304,35 @@ TEST_F(TKHelixTest, HelixBRepBuilder_NumberOfTurnsInterface)
   EXPECT_NEAR(aWireLength, aExpectedLength, aExpectedLength * 0.01);
 }
 
-// Test HelixGeom_Tools static methods
 TEST_F(TKHelixTest, HelixGeomTools_ApprHelix)
 {
   occ::handle<Geom_BSplineCurve> aBSpline;
   double                         aMaxError;
 
-  int aResult = HelixGeom_Tools::ApprHelix(0.0,         // T1
-                                           2.0 * M_PI,  // T2
-                                           10.0,        // Pitch
-                                           5.0,         // Start radius
-                                           0.0,         // Taper angle
-                                           true,        // Clockwise
-                                           myTolerance, // Tolerance
-                                           aBSpline,    // Result
-                                           aMaxError    // Max error
-  );
+  int aResult = HelixGeom_Tools::ApprHelix(0.0,
+                                           2.0 * M_PI,
+                                           10.0,
+                                           5.0,
+                                           0.0,
+                                           true,
+                                           myTolerance,
+                                           aBSpline,
+                                           aMaxError);
 
-  EXPECT_EQ(aResult, 0); // Success
+  EXPECT_EQ(aResult, 0);
   EXPECT_FALSE(aBSpline.IsNull());
   EXPECT_LE(aMaxError, myTolerance);
 
-  // Test curve properties
   EXPECT_GT(aBSpline->Degree(), 0);
   EXPECT_GT(aBSpline->NbPoles(), 0);
 }
 
-// Test Error Conditions
 TEST_F(TKHelixTest, HelixBRepBuilder_ErrorConditions)
 {
   HelixBRep_BuilderHelix aBuilder;
 
-  // Test with invalid height (too small)
   NCollection_Array1<double> aHeights(1, 1);
-  aHeights(1) = 1.e-6; // Very small height
+  aHeights(1) = 1.e-6;
 
   NCollection_Array1<double> aPitches(1, 1);
   aPitches(1) = 10.0;
@@ -385,7 +345,7 @@ TEST_F(TKHelixTest, HelixBRepBuilder_ErrorConditions)
 
   aBuilder.Perform();
 
-  EXPECT_NE(aBuilder.ErrorStatus(), 0); // Should have error
+  EXPECT_NE(aBuilder.ErrorStatus(), 0);
 }
 
 TEST_F(TKHelixTest, HelixBRepBuilder_ZeroPitch)
@@ -396,7 +356,7 @@ TEST_F(TKHelixTest, HelixBRepBuilder_ZeroPitch)
   aHeights(1) = 100.0;
 
   NCollection_Array1<double> aPitches(1, 1);
-  aPitches(1) = 0.0; // Zero pitch
+  aPitches(1) = 0.0;
 
   NCollection_Array1<bool> aIsPitches(1, 1);
   aIsPitches(1) = true;
@@ -406,10 +366,9 @@ TEST_F(TKHelixTest, HelixBRepBuilder_ZeroPitch)
 
   aBuilder.Perform();
 
-  EXPECT_NE(aBuilder.ErrorStatus(), 0); // Should have error
+  EXPECT_NE(aBuilder.ErrorStatus(), 0);
 }
 
-// Test Tolerance Reached
 TEST_F(TKHelixTest, HelixBRepBuilder_ToleranceReached)
 {
   HelixBRep_BuilderHelix aBuilder;

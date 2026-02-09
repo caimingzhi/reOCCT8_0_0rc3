@@ -17,7 +17,6 @@ class TDF_Label;
 class TNaming_Iterator;
 class TNaming_NamedShape;
 
-//! Iterates on all the ascendants of a shape
 class TNaming_OldShapeIterator
 {
 public:
@@ -29,10 +28,8 @@ public:
 
   Standard_EXPORT TNaming_OldShapeIterator(const TopoDS_Shape& aShape, const TDF_Label& access);
 
-  //! Iterates from the current Shape in <anIterator>
   Standard_EXPORT TNaming_OldShapeIterator(const TNaming_OldShapeIterator& anIterator);
 
-  //! Iterates from the current Shape in <anIterator>
   Standard_EXPORT TNaming_OldShapeIterator(const TNaming_Iterator& anIterator);
 
   bool More() const;
@@ -45,8 +42,6 @@ public:
 
   Standard_EXPORT const TopoDS_Shape& Shape() const;
 
-  //! True if the new shape is a modification (split,
-  //! fuse,etc...) of the old shape.
   Standard_EXPORT bool IsModification() const;
 
   friend class TNaming_Tool;

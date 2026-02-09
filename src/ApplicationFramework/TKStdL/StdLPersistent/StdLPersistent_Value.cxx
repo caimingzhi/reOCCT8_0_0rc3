@@ -1,35 +1,16 @@
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <StdLPersistent_Value.hpp>
 
 #include <TCollection_HExtendedString.hpp>
 #include <Standard_GUID.hpp>
 
-//=======================================================================
-// function : ImportAttribute
-// purpose  : Import transient attribute from the persistent data
-//=======================================================================
 template <class AttribClass>
 void StdLPersistent_Value::integer<AttribClass>::ImportAttribute()
 {
   this->myTransient->Set(this->myData);
 }
 
-//=======================================================================
-// function : ImportAttribute
-// purpose  : Import transient attribute from the persistent data
-//=======================================================================
 template <class AttribClass, class HStringClass>
 void StdLPersistent_Value::string<AttribClass, HStringClass>::ImportAttribute()
 {
@@ -41,10 +22,6 @@ void StdLPersistent_Value::string<AttribClass, HStringClass>::ImportAttribute()
   }
 }
 
-//=======================================================================
-// function : ImportAttribute
-// purpose  : Import transient attribute from the persistent data
-//=======================================================================
 template <>
 void StdLPersistent_Value::string<TDF_Reference>::ImportAttribute()
 {
@@ -57,19 +34,11 @@ void StdLPersistent_Value::string<TDF_Reference>::ImportAttribute()
   }
 }
 
-//=======================================================================
-// function : ImportAttribute
-// purpose  : Import transient attribute from the persistent data
-//=======================================================================
 template <>
 void StdLPersistent_Value::string<TDataStd_UAttribute>::ImportAttribute()
 {
 }
 
-//=======================================================================
-// function : CreateAttribute
-// purpose  : Create an empty transient attribute
-//=======================================================================
 occ::handle<TDF_Attribute> StdLPersistent_Value::UAttribute::CreateAttribute()
 {
   string<TDataStd_UAttribute, StdLPersistent_HString::Extended>::CreateAttribute();
@@ -85,7 +54,6 @@ occ::handle<TDF_Attribute> StdLPersistent_Value::UAttribute::CreateAttribute()
   return this->myTransient;
 }
 
-//=======================================================================
 occ::handle<TDF_Attribute> StdLPersistent_Value::Integer::CreateAttribute()
 {
   integer<TDataStd_Integer>::CreateAttribute();
@@ -98,7 +66,6 @@ occ::handle<TDF_Attribute> StdLPersistent_Value::Integer::CreateAttribute()
   return this->myTransient;
 }
 
-//=======================================================================
 occ::handle<TDF_Attribute> StdLPersistent_Value::Name::CreateAttribute()
 {
   string<TDataStd_Name>::CreateAttribute();
@@ -111,7 +78,6 @@ occ::handle<TDF_Attribute> StdLPersistent_Value::Name::CreateAttribute()
   return this->myTransient;
 }
 
-//=======================================================================
 occ::handle<TDF_Attribute> StdLPersistent_Value::AsciiString::CreateAttribute()
 {
   string<TDataStd_AsciiString, StdLPersistent_HString::Ascii>::CreateAttribute();

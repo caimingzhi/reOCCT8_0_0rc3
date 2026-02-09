@@ -11,7 +11,6 @@ class StepBasic_ConversionBasedUnitAndSolidAngleUnit;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ConversionBasedUnitAndSolidAngleUnit
 class RWStepBasic_RWConversionBasedUnitAndSolidAngleUnit
 {
 public:

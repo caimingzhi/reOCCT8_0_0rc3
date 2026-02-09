@@ -1,23 +1,8 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// #ifndef OCCT_DEBUG
+
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
-
-// #endif
 
 #include <math_BracketMinimum.hpp>
 #include <math_BrentMinimum.hpp>
@@ -25,10 +10,6 @@
 #include <math_Function.hpp>
 #include <math_MultipleVarFunctionWithGradient.hpp>
 
-// l'utilisation de math_BrentMinumim pur trouver un minimum dans une direction
-// donnee n'est pas du tout optimale. voir peut etre interpolation cubique
-// classique et aussi essayer "recherche unidimensionnelle economique"
-// PROGRAMMATION MATHEMATIQUE (theorie et algorithmes) tome1 page 82.
 class DirFunctionTer : public math_Function
 {
 
@@ -98,8 +79,6 @@ static bool MinimizeDirection(math_Vector& P, math_Vector& Dir, double& Result, 
   return false;
 }
 
-//=================================================================================================
-
 math_FRPR::math_FRPR(const math_MultipleVarFunctionWithGradient& theFunction,
                      const double                                theTolerance,
                      const int                                   theNbIterations,
@@ -119,11 +98,7 @@ math_FRPR::math_FRPR(const math_MultipleVarFunctionWithGradient& theFunction,
 {
 }
 
-//=================================================================================================
-
 math_FRPR::~math_FRPR() = default;
-
-//=================================================================================================
 
 void math_FRPR::Perform(math_MultipleVarFunctionWithGradient& F, const math_Vector& StartingPoint)
 {
@@ -184,13 +159,13 @@ void math_FRPR::Perform(math_MultipleVarFunctionWithGradient& F, const math_Vect
     for (j = 1; j <= n; j++)
     {
       gg += g(j) * g(j);
-      //	   dgg += TheGradient(j)*TheGradient(j);  //for Fletcher-Reeves
-      dgg += (TheGradient(j) + g(j)) * TheGradient(j); // for Polak-Ribiere
+
+      dgg += (TheGradient(j) + g(j)) * TheGradient(j);
     }
 
     if (gg == 0.0)
     {
-      // Unlikely. If gradient is exactly 0 then we are already done.
+
       Done      = false;
       TheStatus = math_FunctionError;
       return;
@@ -205,8 +180,6 @@ void math_FRPR::Perform(math_MultipleVarFunctionWithGradient& F, const math_Vect
   TheStatus = math_TooManyIterations;
   return;
 }
-
-//=================================================================================================
 
 void math_FRPR::Dump(Standard_OStream& o) const
 {

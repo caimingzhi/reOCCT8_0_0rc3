@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -32,30 +21,20 @@ void RWStepGeom_RWRationalBSplineSurface::ReadStep(
   const occ::handle<StepGeom_RationalBSplineSurface>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 9, ach, "rational_b_spline_surface"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- inherited field : uDegree ---
-
   int aUDegree;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
   data->ReadInteger(num, 2, "u_degree", ach, aUDegree);
 
-  // --- inherited field : vDegree ---
-
   int aVDegree;
-  // szv#4:S4163:12Mar99 `bool stat3 =` not needed
-  data->ReadInteger(num, 3, "v_degree", ach, aVDegree);
 
-  // --- inherited field : controlPointsList ---
+  data->ReadInteger(num, 3, "v_degree", ach, aVDegree);
 
   occ::handle<NCollection_HArray2<occ::handle<StepGeom_CartesianPoint>>> aControlPointsList;
   occ::handle<StepGeom_CartesianPoint>                                   anent4;
@@ -73,7 +52,7 @@ void RWStepGeom_RWRationalBSplineSurface::ReadStep(
       {
         for (int j4 = 1; j4 <= nbj4; j4++)
         {
-          // szv#4:S4163:12Mar99 `bool stat4 =` not needed
+
           if (data->ReadEntity(nsi4,
                                j4,
                                "cartesian_point",
@@ -85,8 +64,6 @@ void RWStepGeom_RWRationalBSplineSurface::ReadStep(
       }
     }
   }
-
-  // --- inherited field : surfaceForm ---
 
   StepGeom_BSplineSurfaceForm aSurfaceForm = StepGeom_bssfPlaneSurf;
   if (data->ParamType(num, 5) == Interface_ParamEnum)
@@ -100,25 +77,17 @@ void RWStepGeom_RWRationalBSplineSurface::ReadStep(
   else
     ach->AddFail("Parameter #5 (surface_form) is not an enumeration");
 
-  // --- inherited field : uClosed ---
-
   StepData_Logical aUClosed;
-  // szv#4:S4163:12Mar99 `bool stat6 =` not needed
+
   data->ReadLogical(num, 6, "u_closed", ach, aUClosed);
 
-  // --- inherited field : vClosed ---
-
   StepData_Logical aVClosed;
-  // szv#4:S4163:12Mar99 `bool stat7 =` not needed
+
   data->ReadLogical(num, 7, "v_closed", ach, aVClosed);
 
-  // --- inherited field : selfIntersect ---
-
   StepData_Logical aSelfIntersect;
-  // szv#4:S4163:12Mar99 `bool stat8 =` not needed
-  data->ReadLogical(num, 8, "self_intersect", ach, aSelfIntersect);
 
-  // --- own field : weightsData ---
+  data->ReadLogical(num, 8, "self_intersect", ach, aSelfIntersect);
 
   occ::handle<NCollection_HArray2<double>> aWeightsData;
   double                                   aWeightsDataItem;
@@ -135,15 +104,13 @@ void RWStepGeom_RWRationalBSplineSurface::ReadStep(
       {
         for (int j9 = 1; j9 <= nbj9; j9++)
         {
-          // szv#4:S4163:12Mar99 `bool stat9 =` not needed
+
           if (data->ReadReal(nsi9, j9, "weights_data", ach, aWeightsDataItem))
             aWeightsData->SetValue(i9, j9, aWeightsDataItem);
         }
       }
     }
   }
-
-  //--- Initialisation of the read entity ---
 
   ent->Init(aName,
             aUDegree,
@@ -161,19 +128,11 @@ void RWStepGeom_RWRationalBSplineSurface::WriteStep(
   const occ::handle<StepGeom_RationalBSplineSurface>& ent) const
 {
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
-
-  // --- inherited field uDegree ---
 
   SW.Send(ent->UDegree());
 
-  // --- inherited field vDegree ---
-
   SW.Send(ent->VDegree());
-
-  // --- inherited field controlPointsList ---
 
   SW.OpenSub();
   for (int i4 = 1; i4 <= ent->NbControlPointsListI(); i4++)
@@ -189,23 +148,13 @@ void RWStepGeom_RWRationalBSplineSurface::WriteStep(
   }
   SW.CloseSub();
 
-  // --- inherited field surfaceForm ---
-
   SW.SendEnum(RWStepGeom_RWBSplineSurfaceForm::ConvertToString(ent->SurfaceForm()));
-
-  // --- inherited field uClosed ---
 
   SW.SendLogical(ent->UClosed());
 
-  // --- inherited field vClosed ---
-
   SW.SendLogical(ent->VClosed());
 
-  // --- inherited field selfIntersect ---
-
   SW.SendLogical(ent->SelfIntersect());
-
-  // --- own field : weightsData ---
 
   SW.OpenSub();
   for (int i9 = 1; i9 <= ent->NbWeightsDataI(); i9++)
@@ -249,10 +198,7 @@ void RWStepGeom_RWRationalBSplineSurface::Check(
   int nbCPLV = ent->NbControlPointsListJ();
   int i;
   int j;
-  //  std::cout << "RationalBSplineCurve: nbWgtU=" << nbWgtU << " nbCPLU: " <<
-  //    nbCPLU << std::endl;
-  //  std::cout << "                      nbWgtV=" << nbWgtV << " nbCPLV: " <<
-  //    nbCPLV << std::endl;
+
   if (nbWgtU != nbCPLU)
   {
     ach->AddFail("ERROR: No.of ControlPoints not equal No.of Weights in U");

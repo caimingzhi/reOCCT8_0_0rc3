@@ -6,8 +6,6 @@
 #include <ShapeUpgrade_UnifySameDomain.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 BRepAlgoAPI_BuilderAlgo::BRepAlgoAPI_BuilderAlgo()
     : myNonDestructive(false),
       myGlue(BOPAlgo_GlueOff),
@@ -18,8 +16,6 @@ BRepAlgoAPI_BuilderAlgo::BRepAlgoAPI_BuilderAlgo()
       myBuilder(nullptr)
 {
 }
-
-//=================================================================================================
 
 BRepAlgoAPI_BuilderAlgo::BRepAlgoAPI_BuilderAlgo(const BOPAlgo_PaveFiller& aPF)
     : myNonDestructive(false),
@@ -32,14 +28,10 @@ BRepAlgoAPI_BuilderAlgo::BRepAlgoAPI_BuilderAlgo(const BOPAlgo_PaveFiller& aPF)
   myDSFiller = (BOPAlgo_PaveFiller*)&aPF;
 }
 
-//=================================================================================================
-
 BRepAlgoAPI_BuilderAlgo::~BRepAlgoAPI_BuilderAlgo()
 {
   Clear();
 }
-
-//=================================================================================================
 
 void BRepAlgoAPI_BuilderAlgo::Clear()
 {
@@ -61,32 +53,25 @@ void BRepAlgoAPI_BuilderAlgo::Clear()
     mySimplifierHistory.Nullify();
 }
 
-//=================================================================================================
-
 void BRepAlgoAPI_BuilderAlgo::Build(const Message_ProgressRange& theRange)
 {
-  // Setting not done status
+
   NotDone();
-  // Destroy the tools if necessary
+
   Clear();
   Message_ProgressScope aPS(theRange, "Performing General Fuse operation", 100);
-  // If necessary perform intersection of the argument shapes
+
   IntersectShapes(myArguments, aPS.Next(70));
   if (HasErrors())
     return;
 
-  // Initialization of the Building tool
   myBuilder = new BOPAlgo_Builder(myAllocator);
-  // Set arguments to builder
+
   myBuilder->SetArguments(myArguments);
-  // Build the result basing on intersection results
+
   BuildResult(aPS.Next(30));
 }
 
-//=======================================================================
-// function : IntersectShapes
-// purpose  : Intersects the given shapes with the intersection tool
-//=======================================================================
 void BRepAlgoAPI_BuilderAlgo::IntersectShapes(const NCollection_List<TopoDS_Shape>& theArgs,
                                               const Message_ProgressRange&          theRange)
 {
@@ -96,56 +81,49 @@ void BRepAlgoAPI_BuilderAlgo::IntersectShapes(const NCollection_List<TopoDS_Shap
   if (myDSFiller)
     delete myDSFiller;
 
-  // Create new Filler
   myDSFiller = new BOPAlgo_PaveFiller(myAllocator);
-  // Set arguments for intersection
+
   myDSFiller->SetArguments(theArgs);
-  // Set options for intersection
+
   myDSFiller->SetRunParallel(myRunParallel);
 
   myDSFiller->SetFuzzyValue(myFuzzyValue);
   myDSFiller->SetNonDestructive(myNonDestructive);
   myDSFiller->SetGlue(myGlue);
   myDSFiller->SetUseOBB(myUseOBB);
-  // Set Face/Face intersection options to the intersection algorithm
+
   SetAttributes();
-  // Perform intersection
+
   myDSFiller->Perform(theRange);
-  // Check for the errors during intersection
+
   GetReport()->Merge(myDSFiller->GetReport());
 }
 
-//=======================================================================
-// function : BuildResult
-// purpose  : Builds the result shape
-//=======================================================================
 void BRepAlgoAPI_BuilderAlgo::BuildResult(const Message_ProgressRange& theRange)
 {
-  // Set options to the builder
+
   myBuilder->SetRunParallel(myRunParallel);
 
   myBuilder->SetCheckInverted(myCheckInverted);
   myBuilder->SetToFillHistory(myFillHistory);
-  // Perform building of the result with pre-calculated intersections
+
   myBuilder->PerformWithFiller(*myDSFiller, theRange);
-  // Merge the warnings of the Building part
+
   GetReport()->Merge(myBuilder->GetReport());
-  // Check for the errors
+
   if (myBuilder->HasErrors())
     return;
-  // Set done status
+
   Done();
-  // Get the result shape
+
   myShape = myBuilder->Shape();
-  // Fill history
+
   if (myFillHistory)
   {
     myHistory = new BRepTools_History;
     myHistory->Merge(myBuilder->History());
   }
 }
-
-//=================================================================================================
 
 void BRepAlgoAPI_BuilderAlgo::SimplifyResult(const bool   theUnifyEdges,
                                              const bool   theUnifyFaces,
@@ -157,25 +135,22 @@ void BRepAlgoAPI_BuilderAlgo::SimplifyResult(const bool   theUnifyEdges,
   if (!theUnifyEdges && !theUnifyFaces)
     return;
 
-  // Simplification tool
   ShapeUpgrade_UnifySameDomain anUnifier(myShape, theUnifyEdges, theUnifyFaces, true);
-  // Pass options
+
   anUnifier.SetLinearTolerance(myFuzzyValue);
   anUnifier.SetAngularTolerance(theAngularTol);
   anUnifier.SetSafeInputMode(myNonDestructive);
   anUnifier.AllowInternalEdges(false);
-  // Perform simplification
+
   anUnifier.Build();
-  // Overwrite result with simplified shape
+
   myShape = anUnifier.Shape();
-  // Keep simplification history
+
   mySimplifierHistory = anUnifier.History();
   if (myFillHistory)
-    // Merge simplification history into result history
+
     myHistory->Merge(mySimplifierHistory);
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepAlgoAPI_BuilderAlgo::Modified(const TopoDS_Shape& theS)
 {
@@ -185,8 +160,6 @@ const NCollection_List<TopoDS_Shape>& BRepAlgoAPI_BuilderAlgo::Modified(const To
   return myGenerated;
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& BRepAlgoAPI_BuilderAlgo::Generated(const TopoDS_Shape& theS)
 {
   if (myFillHistory && myHistory)
@@ -195,35 +168,25 @@ const NCollection_List<TopoDS_Shape>& BRepAlgoAPI_BuilderAlgo::Generated(const T
   return myGenerated;
 }
 
-//=================================================================================================
-
 bool BRepAlgoAPI_BuilderAlgo::IsDeleted(const TopoDS_Shape& theS)
 {
   return (myFillHistory && myHistory ? myHistory->IsRemoved(theS) : false);
 }
-
-//=================================================================================================
 
 bool BRepAlgoAPI_BuilderAlgo::HasModified() const
 {
   return (myFillHistory && myHistory ? myHistory->HasModified() : false);
 }
 
-//=================================================================================================
-
 bool BRepAlgoAPI_BuilderAlgo::HasGenerated() const
 {
   return (myFillHistory && myHistory ? myHistory->HasGenerated() : false);
 }
 
-//=================================================================================================
-
 bool BRepAlgoAPI_BuilderAlgo::HasDeleted() const
 {
   return (myFillHistory && myHistory ? myHistory->HasRemoved() : false);
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepAlgoAPI_BuilderAlgo::SectionEdges()
 {
@@ -231,23 +194,22 @@ const NCollection_List<TopoDS_Shape>& BRepAlgoAPI_BuilderAlgo::SectionEdges()
   if (myBuilder == nullptr)
     return myGenerated;
 
-  // Fence map to avoid duplicated section edges in the result list
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMFence;
-  // Intersection results
+
   const BOPDS_PDS& pDS = myDSFiller->PDS();
-  // Iterate on all Face/Face interferences and take section edges
+
   NCollection_Vector<BOPDS_InterfFF>& aFFs  = pDS->InterfFF();
   const int                           aNbFF = aFFs.Length();
   for (int i = 0; i < aNbFF; ++i)
   {
     BOPDS_InterfFF& aFFi = aFFs(i);
-    // Section curves between pair of faces
+
     const NCollection_Vector<BOPDS_Curve>& aSectionCurves = aFFi.Curves();
     const int                              aNbC           = aSectionCurves.Length();
     for (int j = 0; j < aNbC; ++j)
     {
       const BOPDS_Curve& aCurve = aSectionCurves(j);
-      // Section edges created from the curve
+
       const NCollection_List<occ::handle<BOPDS_PaveBlock>>&    aSectionEdges = aCurve.PaveBlocks();
       NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator aItPB(aSectionEdges);
       for (; aItPB.More(); aItPB.Next())
@@ -256,7 +218,7 @@ const NCollection_List<TopoDS_Shape>& BRepAlgoAPI_BuilderAlgo::SectionEdges()
         const TopoDS_Shape&                 aSE = pDS->Shape(aPB->Edge());
         if (!aMFence.Add(aSE))
           continue;
-        // Take into account simplification of the result shape
+
         if (mySimplifierHistory)
         {
           if (mySimplifierHistory->IsRemoved(aSE))

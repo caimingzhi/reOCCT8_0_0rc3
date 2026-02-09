@@ -4,8 +4,6 @@
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_HashUtils.hpp>
 
-//! The class is to provide the pair of indices of interfering shapes.
-
 class BOPDS_Pair
 {
 public:
@@ -17,7 +15,6 @@ public:
   {
   }
 
-  //
   BOPDS_Pair(const int theIndex1, const int theIndex2)
       : myIndex1(theIndex1),
         myIndex2(theIndex2)
@@ -26,32 +23,24 @@ public:
 
   ~BOPDS_Pair() = default;
 
-  //
-  //! Sets the indices
   void SetIndices(const int theIndex1, const int theIndex2)
   {
     myIndex1 = theIndex1;
     myIndex2 = theIndex2;
   }
 
-  //
-  //! Gets the indices
   void Indices(int& theIndex1, int& theIndex2) const
   {
     theIndex1 = myIndex1;
     theIndex2 = myIndex2;
   }
 
-  //
-  //! Operator less
   bool operator<(const BOPDS_Pair& theOther) const
   {
     return ((myIndex1 != theOther.myIndex1) ? (myIndex1 < theOther.myIndex1)
                                             : (myIndex2 < theOther.myIndex2));
   }
 
-  //
-  //! Returns true if the Pair is equal to <the theOther>
   bool IsEqual(const BOPDS_Pair& theOther) const
   {
     return (myIndex1 == theOther.myIndex1 && myIndex2 == theOther.myIndex2)
@@ -72,7 +61,7 @@ namespace std
   {
     size_t operator()(const BOPDS_Pair& thePair) const noexcept
     {
-      // Combine two int values into a single hash value.
+
       int aCombination[2];
       thePair.Indices(aCombination[0], aCombination[1]);
       if (aCombination[0] > aCombination[1])

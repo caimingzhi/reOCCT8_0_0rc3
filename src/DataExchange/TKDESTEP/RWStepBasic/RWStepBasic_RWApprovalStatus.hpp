@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_ApprovalStatus;
 class StepData_StepWriter;
 
-//! Read & Write Module for ApprovalStatus
 class RWStepBasic_RWApprovalStatus
 {
 public:

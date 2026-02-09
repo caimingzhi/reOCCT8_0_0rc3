@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_KinematicTopologyNetworkStructure;
 
-//! Read & Write tool for KinematicTopologyNetworkStructure
 class RWStepKinematics_RWKinematicTopologyNetworkStructure
 {
 public:

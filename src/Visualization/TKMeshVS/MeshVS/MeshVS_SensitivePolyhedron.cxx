@@ -11,8 +11,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_SensitivePolyhedron, Select3D_SensitiveEntity)
 
-//=================================================================================================
-
 MeshVS_SensitivePolyhedron::MeshVS_SensitivePolyhedron(
   const occ::handle<SelectMgr_EntityOwner>&                          theOwner,
   const NCollection_Array1<gp_Pnt>&                                  theNodes,
@@ -47,8 +45,6 @@ MeshVS_SensitivePolyhedron::MeshVS_SensitivePolyhedron(
   myCenter.Divide(theNodes.Length());
 }
 
-//=================================================================================================
-
 occ::handle<Select3D_SensitiveEntity> MeshVS_SensitivePolyhedron::GetConnected()
 {
   occ::handle<MeshVS_SensitivePolyhedron> aNewEnt =
@@ -56,8 +52,6 @@ occ::handle<Select3D_SensitiveEntity> MeshVS_SensitivePolyhedron::GetConnected()
 
   return aNewEnt;
 }
-
-//=================================================================================================
 
 bool MeshVS_SensitivePolyhedron::Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                          SelectBasics_PickResult&             thePickResult)
@@ -81,23 +75,15 @@ bool MeshVS_SensitivePolyhedron::Matches(SelectBasics_SelectingVolumeManager& th
   return true;
 }
 
-//=======================================================================
-// function : NbSubElements
-// purpose  : Returns the amount of nodes of polyhedron
-//=======================================================================
 int MeshVS_SensitivePolyhedron::NbSubElements() const
 {
   return myNodes->Length();
 }
 
-//=================================================================================================
-
 Select3D_BndBox3d MeshVS_SensitivePolyhedron::BoundingBox()
 {
   return myBndBox;
 }
-
-//=================================================================================================
 
 gp_Pnt MeshVS_SensitivePolyhedron::CenterOfGeometry() const
 {

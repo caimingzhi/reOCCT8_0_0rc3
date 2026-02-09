@@ -52,15 +52,11 @@ public:
   Standard_EXPORT static const char* MagicNumber();
 
 protected:
-  //! read from the current position to the end of line.
   Standard_EXPORT void ReadLine(TCollection_AsciiString& buffer) override;
 
-  //! read extended chars (unicode) from the current position to the end of line.
   Standard_EXPORT void ReadExtendedLine(TCollection_ExtendedString& buffer) override;
 
-  //! write from the current position to the end of line.
   Standard_EXPORT void WriteExtendedLine(const TCollection_ExtendedString& buffer) override;
 
-  //! read from the first none space character position to the end of line.
   Standard_EXPORT void ReadString(TCollection_AsciiString& buffer) override;
 };

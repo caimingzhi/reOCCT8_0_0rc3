@@ -3,16 +3,12 @@
 #include <TopOpeBRepDS_Interference.hpp>
 #include <TopOpeBRepDS_PointIterator.hpp>
 
-//=================================================================================================
-
 TopOpeBRepDS_PointIterator::TopOpeBRepDS_PointIterator(
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& L)
     : TopOpeBRepDS_InterferenceIterator(L)
 {
   Match();
 }
-
-//=================================================================================================
 
 bool TopOpeBRepDS_PointIterator::MatchInterference(
   const occ::handle<TopOpeBRepDS_Interference>& I) const
@@ -22,14 +18,10 @@ bool TopOpeBRepDS_PointIterator::MatchInterference(
   return r;
 }
 
-//=================================================================================================
-
 int TopOpeBRepDS_PointIterator::Current() const
 {
   return Value()->Geometry();
 }
-
-//=================================================================================================
 
 TopAbs_Orientation TopOpeBRepDS_PointIterator::Orientation(const TopAbs_State S) const
 {
@@ -38,8 +30,6 @@ TopAbs_Orientation TopOpeBRepDS_PointIterator::Orientation(const TopAbs_State S)
   TopAbs_Orientation                     o = T.Orientation(S);
   return o;
 }
-
-//=================================================================================================
 
 double TopOpeBRepDS_PointIterator::Parameter() const
 {
@@ -59,21 +49,15 @@ double TopOpeBRepDS_PointIterator::Parameter() const
   }
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_PointIterator::IsVertex() const
 {
   return (Value()->GeometryType() == TopOpeBRepDS_VERTEX);
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_PointIterator::IsPoint() const
 {
   return (Value()->GeometryType() == TopOpeBRepDS_POINT);
 }
-
-//=================================================================================================
 
 bool TopOpeBRepDS_PointIterator::DiffOriented() const
 {
@@ -89,8 +73,6 @@ bool TopOpeBRepDS_PointIterator::DiffOriented() const
   }
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_PointIterator::SameOriented() const
 {
   const occ::handle<TopOpeBRepDS_Interference>& I = Value();
@@ -104,8 +86,6 @@ bool TopOpeBRepDS_PointIterator::SameOriented() const
     throw Standard_ProgramError("TopOpeBRepDS_PointIterator::SameOriented()");
   }
 }
-
-//=================================================================================================
 
 int TopOpeBRepDS_PointIterator::Support() const
 {

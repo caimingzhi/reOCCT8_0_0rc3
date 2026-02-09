@@ -4,14 +4,10 @@
 #include <ShapeUpgrade_WireDivide.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 ShapeUpgrade_ShapeDivideAngle::ShapeUpgrade_ShapeDivideAngle(const double MaxAngle)
 {
   InitTool(MaxAngle);
 }
-
-//=================================================================================================
 
 ShapeUpgrade_ShapeDivideAngle::ShapeUpgrade_ShapeDivideAngle(const double        MaxAngle,
                                                              const TopoDS_Shape& S)
@@ -20,24 +16,18 @@ ShapeUpgrade_ShapeDivideAngle::ShapeUpgrade_ShapeDivideAngle(const double       
   InitTool(MaxAngle);
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_ShapeDivideAngle::InitTool(const double MaxAngle)
 {
   occ::handle<ShapeUpgrade_FaceDivide> tool = GetSplitFaceTool();
   tool->SetSplitSurfaceTool(new ShapeUpgrade_SplitSurfaceAngle(MaxAngle));
-  tool->SetWireDivideTool(nullptr); // no splitting of wire
+  tool->SetWireDivideTool(nullptr);
   SetSplitFaceTool(tool);
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_ShapeDivideAngle::SetMaxAngle(const double MaxAngle)
 {
   InitTool(MaxAngle);
 }
-
-//=================================================================================================
 
 double ShapeUpgrade_ShapeDivideAngle::MaxAngle() const
 {

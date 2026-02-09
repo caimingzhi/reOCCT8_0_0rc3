@@ -10,7 +10,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_MediaPlayer, AIS_InteractiveObject)
 
-//! Create an array of triangles defining a rectangle.
 static occ::handle<Graphic3d_ArrayOfTriangles> createRectangleArray(
   const NCollection_Vec2<int>& theLower,
   const NCollection_Vec2<int>& theUpper,
@@ -26,8 +25,6 @@ static occ::handle<Graphic3d_ArrayOfTriangles> createRectangleArray(
   aRectTris->AddEdges(1, 3, 4);
   return aRectTris;
 }
-
-//=================================================================================================
 
 AIS_MediaPlayer::AIS_MediaPlayer()
     : myFramePair(new Graphic3d_MediaTextureSet()),
@@ -51,15 +48,11 @@ AIS_MediaPlayer::AIS_MediaPlayer()
   myFrameAspect->SetTextureSet(myFramePair);
 }
 
-//=================================================================================================
-
 AIS_MediaPlayer::~AIS_MediaPlayer()
 {
-  // stop threads
+
   myFramePair.Nullify();
 }
-
-//=================================================================================================
 
 void AIS_MediaPlayer::OpenInput(const TCollection_AsciiString& thePath, bool theToWait)
 {
@@ -71,8 +64,6 @@ void AIS_MediaPlayer::OpenInput(const TCollection_AsciiString& thePath, bool the
   myFramePair->OpenInput(thePath, theToWait);
   SynchronizeAspects();
 }
-
-//=================================================================================================
 
 bool AIS_MediaPlayer::PresentFrame(const NCollection_Vec2<int>& theLeftCorner,
                                    const NCollection_Vec2<int>& theMaxSize)
@@ -111,8 +102,6 @@ bool AIS_MediaPlayer::PresentFrame(const NCollection_Vec2<int>& theLeftCorner,
   }
   return toRedraw;
 }
-
-//=================================================================================================
 
 bool AIS_MediaPlayer::updateSize(const NCollection_Vec2<int>& theLeftCorner,
                                  const NCollection_Vec2<int>& theMaxSize)
@@ -167,8 +156,6 @@ bool AIS_MediaPlayer::updateSize(const NCollection_Vec2<int>& theLeftCorner,
   return true;
 }
 
-//=================================================================================================
-
 void AIS_MediaPlayer::PlayPause()
 {
   if (myFramePair->PlayerContext().IsNull())
@@ -181,8 +168,6 @@ void AIS_MediaPlayer::PlayPause()
   myFramePair->PlayerContext()->PlayPause(isPaused, aProgress, aDuration);
 }
 
-//=================================================================================================
-
 void AIS_MediaPlayer::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                               const occ::handle<Prs3d_Presentation>& thePrs,
                               const int                              theMode)
@@ -193,7 +178,6 @@ void AIS_MediaPlayer::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     return;
   }
 
-  // main frame
   {
     occ::handle<Graphic3d_ArrayOfTriangles> aTris =
       createRectangleArray(myFrameBottomLeft,
@@ -204,8 +188,6 @@ void AIS_MediaPlayer::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     aMainGroup->AddPrimitiveArray(aTris);
   }
 }
-
-//=================================================================================================
 
 void AIS_MediaPlayer::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSel,
                                        const int                               theMode)

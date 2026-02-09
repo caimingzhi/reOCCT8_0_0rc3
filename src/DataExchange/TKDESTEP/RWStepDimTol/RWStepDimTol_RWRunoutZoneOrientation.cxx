@@ -4,11 +4,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepDimTol_RunoutZoneOrientation.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWRunoutZoneOrientation::RWStepDimTol_RWRunoutZoneOrientation() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWRunoutZoneOrientation::ReadStep(
   const occ::handle<StepData_StepReaderData>&          data,
@@ -16,21 +12,16 @@ void RWStepDimTol_RWRunoutZoneOrientation::ReadStep(
   occ::handle<Interface_Check>&                        ach,
   const occ::handle<StepDimTol_RunoutZoneOrientation>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 1, ach, "runout_zone_orientation"))
     return;
-
-  // Own fields of RunoutZoneOrientation
 
   occ::handle<StepBasic_PlaneAngleMeasureWithUnit> anAngle;
   data
     ->ReadEntity(num, 1, "angle", ach, STANDARD_TYPE(StepBasic_PlaneAngleMeasureWithUnit), anAngle);
 
-  // Initialize entity
   ent->Init(anAngle);
 }
-
-//=================================================================================================
 
 void RWStepDimTol_RWRunoutZoneOrientation::WriteStep(
   StepData_StepWriter&                                 SW,

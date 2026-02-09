@@ -7,9 +7,6 @@
 #include <Standard_Integer.hpp>
 #include <ShapeFix_Root.hpp>
 
-//! Two wires have common vertex - this case is valid in BRep model
-//! and isn't valid in STEP => before writing into STEP it is necessary
-//! to split this vertex (each wire must has one vertex)
 class ShapeFix_SplitCommonVertex : public ShapeFix_Root
 {
 

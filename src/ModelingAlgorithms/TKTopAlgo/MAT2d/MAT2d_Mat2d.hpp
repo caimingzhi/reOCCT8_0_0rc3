@@ -14,46 +14,31 @@ class MAT_ListOfBisector;
 class MAT2d_Tool2d;
 class MAT_Bisector;
 
-//! this class contains the generic algorithm of
-//! computation of the bisecting locus.
 class MAT2d_Mat2d
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor.
   Standard_EXPORT MAT2d_Mat2d(const bool IsOpenResult = false);
 
   Standard_EXPORT ~MAT2d_Mat2d();
 
-  //! Algorithm of computation of the bisecting locus.
   Standard_EXPORT void CreateMat(MAT2d_Tool2d& aTool);
 
-  //! Algorithm of computation of the bisecting locus for
-  //! open wire.
   Standard_EXPORT void CreateMatOpen(MAT2d_Tool2d& aTool);
 
-  //! Returns <TRUE> if CreateMat has succeeded.
   Standard_EXPORT bool IsDone() const;
 
-  //! Initialize an iterator on the set of the roots
-  //! of the trees of bisectors.
   Standard_EXPORT void Init();
 
-  //! Return False if there is no more roots.
   Standard_EXPORT bool More() const;
 
-  //! Move to the next root.
   Standard_EXPORT void Next();
 
-  //! Returns the current root.
   Standard_EXPORT occ::handle<MAT_Bisector> Bisector() const;
 
-  //! Returns True if there are semi_infinite bisectors.
-  //! So there is a tree for each semi_infinte bisector.
   Standard_EXPORT bool SemiInfinite() const;
 
-  //! Returns the total number of bisectors.
   Standard_EXPORT int NumberOfBisectors() const;
 
 private:

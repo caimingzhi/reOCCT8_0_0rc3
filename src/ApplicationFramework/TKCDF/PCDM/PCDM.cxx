@@ -9,8 +9,6 @@
 #include <Resource_Manager.hpp>
 #include <TCollection_AsciiString.hpp>
 
-//=================================================================================================
-
 PCDM_TypeOfFileDriver PCDM::FileDriverType(const TCollection_AsciiString&   aFileName,
                                            occ::handle<Storage_BaseDriver>& aBaseDriver)
 {
@@ -36,14 +34,11 @@ PCDM_TypeOfFileDriver PCDM::FileDriverType(const TCollection_AsciiString&   aFil
   }
 }
 
-//=================================================================================================
-
 PCDM_TypeOfFileDriver PCDM::FileDriverType(Standard_IStream&                theIStream,
                                            occ::handle<Storage_BaseDriver>& theBaseDriver)
 {
   TCollection_AsciiString aReadMagicNumber;
 
-  // read magic number from the file
   if (theIStream.good())
   {
     aReadMagicNumber = Storage_BaseDriver::ReadMagicNumber(theIStream);
@@ -66,7 +61,7 @@ PCDM_TypeOfFileDriver PCDM::FileDriverType(Standard_IStream&                theI
   }
   else if (aReadMagicNumber.Search("<?xml") != -1)
   {
-    // skip xml declaration
+
     char aChar = ' ';
     while (theIStream.good() && !theIStream.eof() && aChar != '>')
     {

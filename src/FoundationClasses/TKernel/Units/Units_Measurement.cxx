@@ -4,15 +4,11 @@
 #include <Units_Token.hpp>
 #include <Units_UnitSentence.hpp>
 
-//=================================================================================================
-
 Units_Measurement::Units_Measurement()
 {
   themeasurement = 0.;
   myHasToken     = false;
 }
-
-//=================================================================================================
 
 Units_Measurement::Units_Measurement(const double avalue, const occ::handle<Units_Token>& atoken)
 {
@@ -20,8 +16,6 @@ Units_Measurement::Units_Measurement(const double avalue, const occ::handle<Unit
   thetoken       = atoken;
   myHasToken     = true;
 }
-
-//=================================================================================================
 
 Units_Measurement::Units_Measurement(const double avalue, const char* aunit)
 {
@@ -42,8 +36,6 @@ Units_Measurement::Units_Measurement(const double avalue, const char* aunit)
     myHasToken = true;
   }
 }
-
-//=================================================================================================
 
 void Units_Measurement::Convert(const char* aunit)
 {
@@ -75,35 +67,25 @@ void Units_Measurement::Convert(const char* aunit)
 #endif
 }
 
-//=================================================================================================
-
 Units_Measurement Units_Measurement::Integer() const
 {
   return Units_Measurement((int)themeasurement, thetoken);
 }
-
-//=================================================================================================
 
 Units_Measurement Units_Measurement::Fractional() const
 {
   return Units_Measurement(themeasurement - (int)themeasurement, thetoken);
 }
 
-//=================================================================================================
-
 double Units_Measurement::Measurement() const
 {
   return themeasurement;
 }
 
-//=================================================================================================
-
 occ::handle<Units_Token> Units_Measurement::Token() const
 {
   return thetoken;
 }
-
-//=================================================================================================
 
 Units_Measurement Units_Measurement::Add(const Units_Measurement& ameasurement) const
 {
@@ -118,8 +100,6 @@ Units_Measurement Units_Measurement::Add(const Units_Measurement& ameasurement) 
   return Units_Measurement(value, token);
 }
 
-//=================================================================================================
-
 Units_Measurement Units_Measurement::Subtract(const Units_Measurement& ameasurement) const
 {
   double            value;
@@ -133,16 +113,12 @@ Units_Measurement Units_Measurement::Subtract(const Units_Measurement& ameasurem
   return Units_Measurement(value, token);
 }
 
-//=================================================================================================
-
 Units_Measurement Units_Measurement::Multiply(const Units_Measurement& ameasurement) const
 {
   double                   value = themeasurement * ameasurement.Measurement();
   occ::handle<Units_Token> token = thetoken * ameasurement.Token();
   return Units_Measurement(value, token);
 }
-
-//=================================================================================================
 
 Units_Measurement Units_Measurement::Multiply(const double avalue) const
 {
@@ -151,16 +127,12 @@ Units_Measurement Units_Measurement::Multiply(const double avalue) const
   return Units_Measurement(value, token);
 }
 
-//=================================================================================================
-
 Units_Measurement Units_Measurement::Divide(const Units_Measurement& ameasurement) const
 {
   double                   value = themeasurement / ameasurement.Measurement();
   occ::handle<Units_Token> token = thetoken / ameasurement.Token();
   return Units_Measurement(value, token);
 }
-
-//=================================================================================================
 
 Units_Measurement Units_Measurement::Divide(const double avalue) const
 {
@@ -169,8 +141,6 @@ Units_Measurement Units_Measurement::Divide(const double avalue) const
   return Units_Measurement(value, token);
 }
 
-//=================================================================================================
-
 Units_Measurement Units_Measurement::Power(const double anexponent) const
 {
   double                   value = pow(themeasurement, anexponent);
@@ -178,14 +148,10 @@ Units_Measurement Units_Measurement::Power(const double anexponent) const
   return Units_Measurement(value, token);
 }
 
-//=================================================================================================
-
 bool Units_Measurement::HasToken() const
 {
   return myHasToken;
 }
-
-//=================================================================================================
 
 void Units_Measurement::Dump() const
 {
@@ -194,20 +160,11 @@ void Units_Measurement::Dump() const
 }
 
 #ifdef BUG
-//=======================================================================
-// function : operator*
-// purpose  :
-//=======================================================================
 
 Units_Measurement operator*(const double avalue, const Units_Measurement& ameasurement)
 {
   return ameasurement * avalue;
 }
-
-//=======================================================================
-// function : operator/
-// purpose  :
-//=======================================================================
 
 Units_Measurement operator/(const double avalue, const Units_Measurement& ameasurement)
 {

@@ -4,12 +4,8 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWProductDefinitionRelationship::RWStepBasic_RWProductDefinitionRelationship() =
   default;
-
-//=================================================================================================
 
 void RWStepBasic_RWProductDefinitionRelationship::ReadStep(
   const occ::handle<StepData_StepReaderData>&                 data,
@@ -17,11 +13,9 @@ void RWStepBasic_RWProductDefinitionRelationship::ReadStep(
   occ::handle<Interface_Check>&                               ach,
   const occ::handle<StepBasic_ProductDefinitionRelationship>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 5, ach, "product_definition_relationship"))
     return;
-
-  // Own fields of ProductDefinitionRelationship
 
   occ::handle<TCollection_HAsciiString> aId;
   data->ReadString(num, 1, "id", ach, aId);
@@ -46,7 +40,6 @@ void RWStepBasic_RWProductDefinitionRelationship::ReadStep(
   StepBasic_ProductDefinitionOrReference aRelatedProductDefinition;
   data->ReadEntity(num, 5, "related_product_definition", ach, aRelatedProductDefinition);
 
-  // Initialize entity
   ent->Init(aId,
             aName,
             hasDescription,
@@ -55,14 +48,10 @@ void RWStepBasic_RWProductDefinitionRelationship::ReadStep(
             aRelatedProductDefinition);
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWProductDefinitionRelationship::WriteStep(
   StepData_StepWriter&                                        SW,
   const occ::handle<StepBasic_ProductDefinitionRelationship>& ent) const
 {
-
-  // Own fields of ProductDefinitionRelationship
 
   SW.Send(ent->Id());
 
@@ -80,14 +69,10 @@ void RWStepBasic_RWProductDefinitionRelationship::WriteStep(
   SW.Send(ent->RelatedProductDefinitionAP242().Value());
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWProductDefinitionRelationship::Share(
   const occ::handle<StepBasic_ProductDefinitionRelationship>& ent,
   Interface_EntityIterator&                                   iter) const
 {
-
-  // Own fields of ProductDefinitionRelationship
 
   iter.AddItem(ent->RelatingProductDefinitionAP242().Value());
 

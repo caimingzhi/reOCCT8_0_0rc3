@@ -1,11 +1,9 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_PointOnPlanarCurvePairWithRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_PointOnPlanarCurvePairWithRange,
                            StepKinematics_PointOnPlanarCurvePair)
-
-//=================================================================================================
 
 StepKinematics_PointOnPlanarCurvePairWithRange::StepKinematics_PointOnPlanarCurvePairWithRange()
 {
@@ -16,8 +14,6 @@ StepKinematics_PointOnPlanarCurvePairWithRange::StepKinematics_PointOnPlanarCurv
   defLowerLimitRoll  = false;
   defUpperLimitRoll  = false;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnPlanarCurvePairWithRange::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -104,15 +100,11 @@ void StepKinematics_PointOnPlanarCurvePairWithRange::Init(
     myUpperLimitRoll = 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_TrimmedCurve> StepKinematics_PointOnPlanarCurvePairWithRange::
   RangeOnPairCurve() const
 {
   return myRangeOnPairCurve;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnPlanarCurvePairWithRange::SetRangeOnPairCurve(
   const occ::handle<StepGeom_TrimmedCurve>& theRangeOnPairCurve)
@@ -120,56 +112,40 @@ void StepKinematics_PointOnPlanarCurvePairWithRange::SetRangeOnPairCurve(
   myRangeOnPairCurve = theRangeOnPairCurve;
 }
 
-//=================================================================================================
-
 double StepKinematics_PointOnPlanarCurvePairWithRange::LowerLimitYaw() const
 {
   return myLowerLimitYaw;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnPlanarCurvePairWithRange::SetLowerLimitYaw(const double theLowerLimitYaw)
 {
   myLowerLimitYaw = theLowerLimitYaw;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PointOnPlanarCurvePairWithRange::HasLowerLimitYaw() const
 {
   return defLowerLimitYaw;
 }
-
-//=================================================================================================
 
 double StepKinematics_PointOnPlanarCurvePairWithRange::UpperLimitYaw() const
 {
   return myUpperLimitYaw;
 }
 
-//=================================================================================================
-
 void StepKinematics_PointOnPlanarCurvePairWithRange::SetUpperLimitYaw(const double theUpperLimitYaw)
 {
   myUpperLimitYaw = theUpperLimitYaw;
 }
-
-//=================================================================================================
 
 bool StepKinematics_PointOnPlanarCurvePairWithRange::HasUpperLimitYaw() const
 {
   return defUpperLimitYaw;
 }
 
-//=================================================================================================
-
 double StepKinematics_PointOnPlanarCurvePairWithRange::LowerLimitPitch() const
 {
   return myLowerLimitPitch;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnPlanarCurvePairWithRange::SetLowerLimitPitch(
   const double theLowerLimitPitch)
@@ -177,21 +153,15 @@ void StepKinematics_PointOnPlanarCurvePairWithRange::SetLowerLimitPitch(
   myLowerLimitPitch = theLowerLimitPitch;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PointOnPlanarCurvePairWithRange::HasLowerLimitPitch() const
 {
   return defLowerLimitPitch;
 }
 
-//=================================================================================================
-
 double StepKinematics_PointOnPlanarCurvePairWithRange::UpperLimitPitch() const
 {
   return myUpperLimitPitch;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnPlanarCurvePairWithRange::SetUpperLimitPitch(
   const double theUpperLimitPitch)
@@ -199,21 +169,15 @@ void StepKinematics_PointOnPlanarCurvePairWithRange::SetUpperLimitPitch(
   myUpperLimitPitch = theUpperLimitPitch;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PointOnPlanarCurvePairWithRange::HasUpperLimitPitch() const
 {
   return defUpperLimitPitch;
 }
 
-//=================================================================================================
-
 double StepKinematics_PointOnPlanarCurvePairWithRange::LowerLimitRoll() const
 {
   return myLowerLimitRoll;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnPlanarCurvePairWithRange::SetLowerLimitRoll(
   const double theLowerLimitRoll)
@@ -221,29 +185,21 @@ void StepKinematics_PointOnPlanarCurvePairWithRange::SetLowerLimitRoll(
   myLowerLimitRoll = theLowerLimitRoll;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PointOnPlanarCurvePairWithRange::HasLowerLimitRoll() const
 {
   return defLowerLimitRoll;
 }
-
-//=================================================================================================
 
 double StepKinematics_PointOnPlanarCurvePairWithRange::UpperLimitRoll() const
 {
   return myUpperLimitRoll;
 }
 
-//=================================================================================================
-
 void StepKinematics_PointOnPlanarCurvePairWithRange::SetUpperLimitRoll(
   const double theUpperLimitRoll)
 {
   myUpperLimitRoll = theUpperLimitRoll;
 }
-
-//=================================================================================================
 
 bool StepKinematics_PointOnPlanarCurvePairWithRange::HasUpperLimitRoll() const
 {

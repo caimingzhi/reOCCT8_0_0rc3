@@ -12,7 +12,6 @@ class StepGeom_PointOnSurface : public StepGeom_Point
 {
 
 public:
-  //! Returns a PointOnSurface
   Standard_EXPORT StepGeom_PointOnSurface();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

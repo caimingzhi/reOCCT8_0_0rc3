@@ -17,10 +17,9 @@
 IGESDefs_ToolUnitsData::IGESDefs_ToolUnitsData() = default;
 
 void IGESDefs_ToolUnitsData::ReadOwnParams(const occ::handle<IGESDefs_UnitsData>& ent,
-                                           const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                           const occ::handle<IGESData_IGESReaderData>&,
                                            IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
 
   int                                                                     nbval;
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> unitTypes;
@@ -44,17 +43,12 @@ void IGESDefs_ToolUnitsData::ReadOwnParams(const occ::handle<IGESDefs_UnitsData>
       occ::handle<TCollection_HAsciiString> unitValue;
       double                                unitScale;
 
-      // st = PR.ReadText(PR.Current(), "Type of Unit", unitType); //szv#4:S4163:12Mar99 moved in if
       if (PR.ReadText(PR.Current(), "Type of Unit", unitType))
         unitTypes->SetValue(i, unitType);
 
-      // st = PR.ReadText(PR.Current(), "Value of Unit", unitValue); //szv#4:S4163:12Mar99 moved in
-      // if
       if (PR.ReadText(PR.Current(), "Value of Unit", unitValue))
         unitValues->SetValue(i, unitValue);
 
-      // st = PR.ReadReal(PR.Current(), "Scale of Unit", unitScale); //szv#4:S4163:12Mar99 moved in
-      // if
       if (PR.ReadReal(PR.Current(), "Scale of Unit", unitScale))
         unitScales->SetValue(i, unitScale);
     }
@@ -77,14 +71,14 @@ void IGESDefs_ToolUnitsData::WriteOwnParams(const occ::handle<IGESDefs_UnitsData
   }
 }
 
-void IGESDefs_ToolUnitsData::OwnShared(const occ::handle<IGESDefs_UnitsData>& /* ent */,
-                                       Interface_EntityIterator& /* iter */) const
+void IGESDefs_ToolUnitsData::OwnShared(const occ::handle<IGESDefs_UnitsData>&,
+                                       Interface_EntityIterator&) const
 {
 }
 
 void IGESDefs_ToolUnitsData::OwnCopy(const occ::handle<IGESDefs_UnitsData>& another,
                                      const occ::handle<IGESDefs_UnitsData>& ent,
-                                     Interface_CopyTool& /* TC */) const
+                                     Interface_CopyTool&) const
 {
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> unitTypes;
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> unitValues;
@@ -110,8 +104,7 @@ void IGESDefs_ToolUnitsData::OwnCopy(const occ::handle<IGESDefs_UnitsData>& anot
   ent->Init(unitTypes, unitValues, unitScales);
 }
 
-IGESData_DirChecker IGESDefs_ToolUnitsData::DirChecker(
-  const occ::handle<IGESDefs_UnitsData>& /* ent */) const
+IGESData_DirChecker IGESDefs_ToolUnitsData::DirChecker(const occ::handle<IGESDefs_UnitsData>&) const
 {
   IGESData_DirChecker DC(316, 0);
   DC.Structure(IGESData_DefVoid);
@@ -125,14 +118,14 @@ IGESData_DirChecker IGESDefs_ToolUnitsData::DirChecker(
   return DC;
 }
 
-void IGESDefs_ToolUnitsData::OwnCheck(const occ::handle<IGESDefs_UnitsData>& /* ent */,
+void IGESDefs_ToolUnitsData::OwnCheck(const occ::handle<IGESDefs_UnitsData>&,
                                       const Interface_ShareTool&,
-                                      occ::handle<Interface_Check>& /* ach */) const
+                                      occ::handle<Interface_Check>&) const
 {
 }
 
 void IGESDefs_ToolUnitsData::OwnDump(const occ::handle<IGESDefs_UnitsData>& ent,
-                                     const IGESData_IGESDumper& /* dumper */,
+                                     const IGESData_IGESDumper&,
                                      Standard_OStream& S,
                                      const int         level) const
 {

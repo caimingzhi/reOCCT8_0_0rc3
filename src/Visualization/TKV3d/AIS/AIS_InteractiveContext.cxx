@@ -38,7 +38,6 @@ namespace
     occ::handle<NCollection_Shared<NCollection_IndexedMap<occ::handle<SelectMgr_EntityOwner>>>>>::
     Iterator AIS_MapIteratorOfMapOfObjectOwners;
 
-  //! Initialize default highlighting attributes.
   static void initDefaultHilightAttributes(const occ::handle<Prs3d_Drawer>& theDrawer,
                                            const Quantity_Color&            theColor)
   {
@@ -89,13 +88,9 @@ namespace
     theDrawer->PointAspect()->SetTypeOfMarker(Aspect_TOM_O_POINT);
     theDrawer->PointAspect()->SetScale(2.0);
 
-    // the triangulation should be computed using main presentation attributes,
-    // and should not be overridden by highlighting
     theDrawer->SetAutoTriangulation(false);
   }
 } // namespace
-
-//=================================================================================================
 
 AIS_InteractiveContext::AIS_InteractiveContext(const occ::handle<V3d_Viewer>& MainViewer)
     : myMainPM(new PrsMgr_PresentationManager(MainViewer->StructureManager())),
@@ -156,11 +151,9 @@ AIS_InteractiveContext::AIS_InteractiveContext(const occ::handle<V3d_Viewer>& Ma
   InitAttributes();
 }
 
-//=================================================================================================
-
 AIS_InteractiveContext::~AIS_InteractiveContext()
 {
-  // clear the current selection
+
   mySelection->Clear();
   mgrSelector.Nullify();
 
@@ -182,8 +175,6 @@ AIS_InteractiveContext::~AIS_InteractiveContext()
   }
 }
 
-//=================================================================================================
-
 occ::handle<V3d_View> AIS_InteractiveContext::LastActiveView() const
 {
   if (myLastActiveView == nullptr || myMainVwr.IsNull())
@@ -191,7 +182,6 @@ occ::handle<V3d_View> AIS_InteractiveContext::LastActiveView() const
     return occ::handle<V3d_View>();
   }
 
-  // as a precaution - check that myLastActiveView pointer is a valid active View
   for (NCollection_List<occ::handle<V3d_View>>::Iterator aViewIter =
          myMainVwr->ActiveViewIterator();
        aViewIter.More();
@@ -205,15 +195,11 @@ occ::handle<V3d_View> AIS_InteractiveContext::LastActiveView() const
   return occ::handle<V3d_View>();
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::UpdateCurrentViewer()
 {
   if (!myMainVwr.IsNull())
     myMainVwr->Update();
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::DisplayedObjects(
   NCollection_List<occ::handle<AIS_InteractiveObject>>& theListOfIO) const
@@ -230,8 +216,6 @@ void AIS_InteractiveContext::DisplayedObjects(
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::DisplayedObjects(
   const AIS_KindOfInteractive                           theKind,
   const int                                             theSign,
@@ -240,15 +224,11 @@ void AIS_InteractiveContext::DisplayedObjects(
   ObjectsByDisplayStatus(theKind, theSign, PrsMgr_DisplayStatus_Displayed, theListOfIO);
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::ErasedObjects(
   NCollection_List<occ::handle<AIS_InteractiveObject>>& theListOfIO) const
 {
   ObjectsByDisplayStatus(PrsMgr_DisplayStatus_Erased, theListOfIO);
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::ErasedObjects(
   const AIS_KindOfInteractive                           theKind,
@@ -257,8 +237,6 @@ void AIS_InteractiveContext::ErasedObjects(
 {
   ObjectsByDisplayStatus(theKind, theSign, PrsMgr_DisplayStatus_Erased, theListOfIO);
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::ObjectsByDisplayStatus(
   const PrsMgr_DisplayStatus                            theStatus,
@@ -275,8 +253,6 @@ void AIS_InteractiveContext::ObjectsByDisplayStatus(
     }
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::ObjectsByDisplayStatus(
   const AIS_KindOfInteractive                           theKind,
@@ -304,8 +280,6 @@ void AIS_InteractiveContext::ObjectsByDisplayStatus(
     }
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::ObjectsInside(
   NCollection_List<occ::handle<AIS_InteractiveObject>>& theListOfIO,
@@ -341,8 +315,6 @@ void AIS_InteractiveContext::ObjectsInside(
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::ObjectsForView(
   NCollection_List<occ::handle<AIS_InteractiveObject>>& theListOfIO,
   const occ::handle<V3d_View>&                          theView,
@@ -371,8 +343,6 @@ void AIS_InteractiveContext::ObjectsForView(
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::Display(const occ::handle<AIS_InteractiveObject>& theIObj,
                                      const bool                                theToUpdateViewer)
 {
@@ -385,8 +355,6 @@ void AIS_InteractiveContext::Display(const occ::handle<AIS_InteractiveObject>& t
   GetDefModes(theIObj, aDispMode, aHiMod, aSelMode);
   Display(theIObj, aDispMode, myIsAutoActivateSelMode ? aSelMode : -1, theToUpdateViewer);
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::SetViewAffinity(const occ::handle<AIS_InteractiveObject>& theIObj,
                                              const occ::handle<V3d_View>&              theView,
@@ -401,8 +369,6 @@ void AIS_InteractiveContext::SetViewAffinity(const occ::handle<AIS_InteractiveOb
   occ::handle<Graphic3d_CView>        aViewImpl  = theView->View();
   anAffinity->SetVisible(aViewImpl->Identification(), theIsVisible);
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::Display(const occ::handle<AIS_InteractiveObject>& theIObj,
                                      const int                                 theDispMode,
@@ -430,12 +396,12 @@ void AIS_InteractiveContext::Display(const occ::handle<AIS_InteractiveObject>& t
   if (!myObjects.IsBound(theIObj))
   {
     setObjectStatus(theIObj, PrsMgr_DisplayStatus_Displayed, theDispMode, theSelectionMode);
-    theIObj->ViewAffinity()->SetVisible(true); // reset view affinity mask
+    theIObj->ViewAffinity()->SetVisible(true);
     myMainVwr->StructureManager()->RegisterObject(theIObj, theIObj->ViewAffinity());
     myMainPM->Display(theIObj, theDispMode);
     if (theSelectionMode != -1)
     {
-      const occ::handle<SelectMgr_SelectableObject>& anObj = theIObj; // to avoid ambiguity
+      const occ::handle<SelectMgr_SelectableObject>& anObj = theIObj;
       if (!mgrSelector->Contains(anObj))
       {
         mgrSelector->Load(theIObj);
@@ -447,9 +413,6 @@ void AIS_InteractiveContext::Display(const occ::handle<AIS_InteractiveObject>& t
   {
     occ::handle<AIS_GlobalStatus> aStatus = myObjects(theIObj);
 
-    // Mark the presentation modes hidden of interactive object different from aDispMode.
-    // Then make sure aDispMode is displayed and maybe highlighted.
-    // Finally, activate selection mode <SelMode> if not yet activated.
     const int anOldMode = aStatus->DisplayMode();
     if (anOldMode != theDispMode)
     {
@@ -470,7 +433,7 @@ void AIS_InteractiveContext::Display(const occ::handle<AIS_InteractiveObject>& t
     }
     if (theSelectionMode != -1)
     {
-      const occ::handle<SelectMgr_SelectableObject>& anObj = theIObj; // to avoid ambiguity
+      const occ::handle<SelectMgr_SelectableObject>& anObj = theIObj;
       if (!mgrSelector->Contains(anObj))
       {
         mgrSelector->Load(theIObj);
@@ -489,8 +452,6 @@ void AIS_InteractiveContext::Display(const occ::handle<AIS_InteractiveObject>& t
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::Load(const occ::handle<AIS_InteractiveObject>& theIObj,
                                   const int                                 theSelMode)
 {
@@ -508,19 +469,16 @@ void AIS_InteractiveContext::Load(const occ::handle<AIS_InteractiveObject>& theI
                     PrsMgr_DisplayStatus_Erased,
                     aDispMode,
                     theSelMode != -1 ? theSelMode : aSelModeDef);
-    theIObj->ViewAffinity()->SetVisible(true); // reset view affinity mask
+    theIObj->ViewAffinity()->SetVisible(true);
     myMainVwr->StructureManager()->RegisterObject(theIObj, theIObj->ViewAffinity());
   }
 
-  // Register theIObj in the selection manager to prepare further activation of selection
-  const occ::handle<SelectMgr_SelectableObject>& anObj = theIObj; // to avoid ambiguity
+  const occ::handle<SelectMgr_SelectableObject>& anObj = theIObj;
   if (!mgrSelector->Contains(anObj))
   {
     mgrSelector->Load(theIObj);
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::Erase(const occ::handle<AIS_InteractiveObject>& theIObj,
                                    const bool                                theToUpdateViewer)
@@ -542,8 +500,6 @@ void AIS_InteractiveContext::Erase(const occ::handle<AIS_InteractiveObject>& the
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::EraseAll(const bool theToUpdateViewer)
 {
   for (NCollection_DataMap<occ::handle<AIS_InteractiveObject>,
@@ -562,8 +518,6 @@ void AIS_InteractiveContext::EraseAll(const bool theToUpdateViewer)
     myMainVwr->Update();
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::DisplayAll(const bool theToUpdateViewer)
 {
@@ -585,8 +539,6 @@ void AIS_InteractiveContext::DisplayAll(const bool theToUpdateViewer)
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::DisplaySelected(const bool theToUpdateViewer)
 {
   for (NCollection_List<occ::handle<SelectMgr_EntityOwner>>::Iterator aSelIter(
@@ -604,8 +556,6 @@ void AIS_InteractiveContext::DisplaySelected(const bool theToUpdateViewer)
     myMainVwr->Update();
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::EraseSelected(const bool theToUpdateViewer)
 {
@@ -627,8 +577,6 @@ void AIS_InteractiveContext::EraseSelected(const bool theToUpdateViewer)
   }
 }
 
-//=================================================================================================
-
 PrsMgr_DisplayStatus AIS_InteractiveContext::DisplayStatus(
   const occ::handle<AIS_InteractiveObject>& theIObj) const
 {
@@ -639,8 +587,6 @@ PrsMgr_DisplayStatus AIS_InteractiveContext::DisplayStatus(
   const occ::handle<AIS_GlobalStatus>* aStatus = myObjects.Seek(theIObj);
   return aStatus != nullptr ? theIObj->DisplayStatus() : PrsMgr_DisplayStatus_None;
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::Remove(const occ::handle<AIS_InteractiveObject>& theIObj,
                                     const bool                                theToUpdateViewer)
@@ -662,8 +608,6 @@ void AIS_InteractiveContext::Remove(const occ::handle<AIS_InteractiveObject>& th
   ClearGlobal(theIObj, theToUpdateViewer);
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::RemoveAll(const bool theToUpdateViewer)
 {
   ClearDetected();
@@ -682,8 +626,6 @@ void AIS_InteractiveContext::RemoveAll(const bool theToUpdateViewer)
     myMainVwr->Update();
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::HilightWithColor(const occ::handle<AIS_InteractiveObject>& theObj,
                                               const occ::handle<Prs3d_Drawer>&          theStyle,
@@ -715,8 +657,6 @@ void AIS_InteractiveContext::HilightWithColor(const occ::handle<AIS_InteractiveO
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::Unhilight(const occ::handle<AIS_InteractiveObject>& theObj,
                                        const bool                                theToUpdateViewer)
 {
@@ -740,20 +680,12 @@ void AIS_InteractiveContext::Unhilight(const occ::handle<AIS_InteractiveObject>&
   }
 }
 
-//=======================================================================
-// function : IsHilighted
-// purpose  : Returns true if the objects global status is set to highlighted.
-//=======================================================================
 bool AIS_InteractiveContext::IsHilighted(const occ::handle<AIS_InteractiveObject>& theObj) const
 {
   const occ::handle<AIS_GlobalStatus>* aStatus = myObjects.Seek(theObj);
   return aStatus != nullptr && (*aStatus)->IsHilighted();
 }
 
-//=======================================================================
-// function : IsHilighted
-// purpose  : Returns true if the owner is highlighted with selection style.
-//=======================================================================
 bool AIS_InteractiveContext::IsHilighted(const occ::handle<SelectMgr_EntityOwner>& theOwner) const
 {
   if (theOwner.IsNull() || !theOwner->HasSelectable())
@@ -775,8 +707,6 @@ bool AIS_InteractiveContext::IsHilighted(const occ::handle<SelectMgr_EntityOwner
   return theOwner->IsHilighted(myMainPM, aHiMode);
 }
 
-//=================================================================================================
-
 bool AIS_InteractiveContext::HighlightStyle(const occ::handle<AIS_InteractiveObject>& theObj,
                                             occ::handle<Prs3d_Drawer>& theStyle) const
 {
@@ -790,8 +720,6 @@ bool AIS_InteractiveContext::HighlightStyle(const occ::handle<AIS_InteractiveObj
   theStyle.Nullify();
   return false;
 }
-
-//=================================================================================================
 
 bool AIS_InteractiveContext::HighlightStyle(const occ::handle<SelectMgr_EntityOwner>& theOwner,
                                             occ::handle<Prs3d_Drawer>& theStyle) const
@@ -809,10 +737,7 @@ bool AIS_InteractiveContext::HighlightStyle(const occ::handle<SelectMgr_EntityOw
     }
     else
     {
-      // since part selection style is not stored in global status,
-      // check if the object has own selection style. If not, it can
-      // only be highlighted with default selection style (because
-      // sub-intensity does not modify any selection states)
+
       theStyle = getSelStyle(anObj, theOwner);
     }
     return true;
@@ -824,8 +749,6 @@ bool AIS_InteractiveContext::HighlightStyle(const occ::handle<SelectMgr_EntityOw
   }
 }
 
-//=================================================================================================
-
 bool AIS_InteractiveContext::IsDisplayed(const occ::handle<AIS_InteractiveObject>& theObj) const
 {
   if (theObj.IsNull())
@@ -834,8 +757,6 @@ bool AIS_InteractiveContext::IsDisplayed(const occ::handle<AIS_InteractiveObject
   const occ::handle<AIS_GlobalStatus>* aStatus = myObjects.Seek(theObj);
   return aStatus != nullptr && theObj->DisplayStatus() == PrsMgr_DisplayStatus_Displayed;
 }
-
-//=================================================================================================
 
 bool AIS_InteractiveContext::IsDisplayed(const occ::handle<AIS_InteractiveObject>& theIObj,
                                          const int                                 theMode) const
@@ -849,8 +770,6 @@ bool AIS_InteractiveContext::IsDisplayed(const occ::handle<AIS_InteractiveObject
   return aStatus != nullptr && theIObj->DisplayStatus() == PrsMgr_DisplayStatus_Displayed
          && (*aStatus)->DisplayMode() == theMode;
 }
-
-//=================================================================================================
 
 Graphic3d_DisplayPriority AIS_InteractiveContext::DisplayPriority(
   const occ::handle<AIS_InteractiveObject>& theIObj) const
@@ -875,8 +794,6 @@ Graphic3d_DisplayPriority AIS_InteractiveContext::DisplayPriority(
   return Graphic3d_DisplayPriority_INVALID;
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::SetDisplayPriority(const occ::handle<AIS_InteractiveObject>& theIObj,
                                                 const Graphic3d_DisplayPriority thePriority)
 {
@@ -900,8 +817,6 @@ void AIS_InteractiveContext::SetDisplayPriority(const occ::handle<AIS_Interactiv
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::Redisplay(const occ::handle<AIS_InteractiveObject>& theIObj,
                                        const bool                                theToUpdateViewer,
                                        const bool                                theAllModes)
@@ -910,10 +825,8 @@ void AIS_InteractiveContext::Redisplay(const occ::handle<AIS_InteractiveObject>&
   RecomputeSelectionOnly(theIObj);
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::Redisplay(const AIS_KindOfInteractive theKOI,
-                                       const int /*theSign*/,
+                                       const int,
                                        const bool theToUpdateViewer)
 {
   bool isRedisplayed = false;
@@ -938,8 +851,6 @@ void AIS_InteractiveContext::Redisplay(const AIS_KindOfInteractive theKOI,
     myMainVwr->Update();
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::RecomputePrsOnly(const occ::handle<AIS_InteractiveObject>& theIObj,
                                               const bool theToUpdateViewer,
@@ -968,8 +879,6 @@ void AIS_InteractiveContext::RecomputePrsOnly(const occ::handle<AIS_InteractiveO
     theIObj->RecomputeTransformation(myMainVwr->ActiveViewIterator().Value()->Camera());
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::RecomputeSelectionOnly(const occ::handle<AIS_InteractiveObject>& theIO)
 {
@@ -1000,8 +909,6 @@ void AIS_InteractiveContext::RecomputeSelectionOnly(const occ::handle<AIS_Intera
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::Update(const occ::handle<AIS_InteractiveObject>& theIObj,
                                     const bool                                theUpdateViewer)
 {
@@ -1023,8 +930,6 @@ void AIS_InteractiveContext::Update(const occ::handle<AIS_InteractiveObject>& th
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::SetLocation(const occ::handle<AIS_InteractiveObject>& theIObj,
                                          const TopLoc_Location&                    theLoc)
 {
@@ -1044,7 +949,6 @@ void AIS_InteractiveContext::SetLocation(const occ::handle<AIS_InteractiveObject
     return;
   }
 
-  // first reset the previous location to properly clean everything...
   if (theIObj->HasTransformation())
   {
     theIObj->ResetTransformation();
@@ -1054,16 +958,12 @@ void AIS_InteractiveContext::SetLocation(const occ::handle<AIS_InteractiveObject
 
   mgrSelector->Update(theIObj, false);
 
-  // if the object or its part is highlighted dynamically, it is necessary to apply location
-  // transformation to its highlight structure immediately
   if (!myLastPicked.IsNull() && myLastPicked->IsSameSelectable(theIObj))
   {
     const int aHiMod = theIObj->HasHilightMode() ? theIObj->HilightMode() : 0;
     myLastPicked->UpdateHighlightTrsf(myMainVwr, myMainPM, aHiMod);
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::ResetLocation(const occ::handle<AIS_InteractiveObject>& theIObj)
 {
@@ -1076,22 +976,16 @@ void AIS_InteractiveContext::ResetLocation(const occ::handle<AIS_InteractiveObje
   mgrSelector->Update(theIObj, false);
 }
 
-//=================================================================================================
-
 bool AIS_InteractiveContext::HasLocation(const occ::handle<AIS_InteractiveObject>& theIObj) const
 {
   return !theIObj.IsNull() && theIObj->HasTransformation();
 }
-
-//=================================================================================================
 
 TopLoc_Location AIS_InteractiveContext::Location(
   const occ::handle<AIS_InteractiveObject>& theIObj) const
 {
   return theIObj->Transformation();
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::SetDisplayMode(const int theMode, const bool theToUpdateViewer)
 {
@@ -1142,8 +1036,6 @@ void AIS_InteractiveContext::SetDisplayMode(const int theMode, const bool theToU
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::SetDisplayMode(const occ::handle<AIS_InteractiveObject>& theIObj,
                                             const int                                 theMode,
                                             const bool theToUpdateViewer)
@@ -1167,7 +1059,6 @@ void AIS_InteractiveContext::SetDisplayMode(const occ::handle<AIS_InteractiveObj
     return;
   }
 
-  // erase presentations for all display modes different from <aMode>
   const int anOldMode = aStatus->DisplayMode();
   if (anOldMode != theMode)
   {
@@ -1196,8 +1087,6 @@ void AIS_InteractiveContext::SetDisplayMode(const occ::handle<AIS_InteractiveObj
   }
   theIObj->SetDisplayMode(theMode);
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::UnsetDisplayMode(const occ::handle<AIS_InteractiveObject>& theIObj,
                                               const bool theToUpdateViewer)
@@ -1248,8 +1137,6 @@ void AIS_InteractiveContext::UnsetDisplayMode(const occ::handle<AIS_InteractiveO
   theIObj->UnsetDisplayMode();
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::SetCurrentFacingModel(
   const occ::handle<AIS_InteractiveObject>& theIObj,
   const Aspect_TypeOfFacingModel            theModel)
@@ -1259,8 +1146,6 @@ void AIS_InteractiveContext::SetCurrentFacingModel(
     theIObj->SetCurrentFacingModel(theModel);
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::SetColor(const occ::handle<AIS_InteractiveObject>& theIObj,
                                       const Quantity_Color&                     theColor,
@@ -1280,8 +1165,6 @@ void AIS_InteractiveContext::SetColor(const occ::handle<AIS_InteractiveObject>& 
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::IsoOnTriangulation(const bool theIsEnabled,
                                                 const occ::handle<AIS_InteractiveObject>& theObject)
 {
@@ -1293,8 +1176,6 @@ void AIS_InteractiveContext::IsoOnTriangulation(const bool theIsEnabled,
   theObject->SetIsoOnTriangulation(theIsEnabled);
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::SetDeviationCoefficient(
   const occ::handle<AIS_InteractiveObject>& theIObj,
   const double                              theCoefficient,
@@ -1305,7 +1186,6 @@ void AIS_InteractiveContext::SetDeviationCoefficient(
     return;
   }
 
-  // to be modified after the related methods of AIS_Shape are passed to InteractiveObject
   setContextToObject(theIObj);
   if (theIObj->Type() != AIS_KindOfInteractive_Object
       && theIObj->Type() != AIS_KindOfInteractive_Shape)
@@ -1326,8 +1206,6 @@ void AIS_InteractiveContext::SetDeviationCoefficient(
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::SetDeviationAngle(const occ::handle<AIS_InteractiveObject>& theIObj,
                                                const double                              theAngle,
                                                const bool theToUpdateViewer)
@@ -1337,7 +1215,6 @@ void AIS_InteractiveContext::SetDeviationAngle(const occ::handle<AIS_Interactive
     return;
   }
 
-  // To be modified after the related methods of AIS_Shape are passed to InteractiveObject
   setContextToObject(theIObj);
   if (theIObj->Type() != AIS_KindOfInteractive_Shape)
   {
@@ -1357,8 +1234,6 @@ void AIS_InteractiveContext::SetDeviationAngle(const occ::handle<AIS_Interactive
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::SetAngleAndDeviation(const occ::handle<AIS_InteractiveObject>& theIObj,
                                                   const double theAngle,
                                                   const bool   theToUpdateViewer)
@@ -1368,7 +1243,6 @@ void AIS_InteractiveContext::SetAngleAndDeviation(const occ::handle<AIS_Interact
     return;
   }
 
-  // To be modified after the related methods of AIS_Shape are passed to InteractiveObject
   setContextToObject(theIObj);
   if (theIObj->Type() != AIS_KindOfInteractive_Shape)
   {
@@ -1388,8 +1262,6 @@ void AIS_InteractiveContext::SetAngleAndDeviation(const occ::handle<AIS_Interact
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::UnsetColor(const occ::handle<AIS_InteractiveObject>& theIObj,
                                         const bool                                theToUpdateViewer)
 {
@@ -1406,14 +1278,10 @@ void AIS_InteractiveContext::UnsetColor(const occ::handle<AIS_InteractiveObject>
   }
 }
 
-//=================================================================================================
-
 bool AIS_InteractiveContext::HasColor(const occ::handle<AIS_InteractiveObject>& theIObj) const
 {
   return theIObj->HasColor();
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::Color(const occ::handle<AIS_InteractiveObject>& theIObj,
                                    Quantity_Color&                           theColor) const
@@ -1421,14 +1289,10 @@ void AIS_InteractiveContext::Color(const occ::handle<AIS_InteractiveObject>& the
   theIObj->Color(theColor);
 }
 
-//=================================================================================================
-
 double AIS_InteractiveContext::Width(const occ::handle<AIS_InteractiveObject>& theIObj) const
 {
   return theIObj->Width();
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::SetWidth(const occ::handle<AIS_InteractiveObject>& theIObj,
                                       const double                              theWidth,
@@ -1466,8 +1330,6 @@ void AIS_InteractiveContext::SetWidth(const occ::handle<AIS_InteractiveObject>& 
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::UnsetWidth(const occ::handle<AIS_InteractiveObject>& theIObj,
                                         const bool                                theToUpdateViewer)
 {
@@ -1483,8 +1345,6 @@ void AIS_InteractiveContext::UnsetWidth(const occ::handle<AIS_InteractiveObject>
     UpdateCurrentViewer();
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::SetMaterial(const occ::handle<AIS_InteractiveObject>& theIObj,
                                          const Graphic3d_MaterialAspect&           theMaterial,
@@ -1504,8 +1364,6 @@ void AIS_InteractiveContext::SetMaterial(const occ::handle<AIS_InteractiveObject
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::UnsetMaterial(const occ::handle<AIS_InteractiveObject>& theIObj,
                                            const bool theToUpdateViewer)
 {
@@ -1520,8 +1378,6 @@ void AIS_InteractiveContext::UnsetMaterial(const occ::handle<AIS_InteractiveObje
     UpdateCurrentViewer();
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::SetTransparency(const occ::handle<AIS_InteractiveObject>& theIObj,
                                              const double                              theValue,
@@ -1552,8 +1408,6 @@ void AIS_InteractiveContext::SetTransparency(const occ::handle<AIS_InteractiveOb
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::UnsetTransparency(const occ::handle<AIS_InteractiveObject>& theIObj,
                                                const bool theToUpdateViewer)
 {
@@ -1569,8 +1423,6 @@ void AIS_InteractiveContext::UnsetTransparency(const occ::handle<AIS_Interactive
     UpdateCurrentViewer();
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::SetSelectedAspect(const occ::handle<Prs3d_BasicAspect>& theAspect,
                                                const bool theToUpdateViewer)
@@ -1594,8 +1446,6 @@ void AIS_InteractiveContext::SetSelectedAspect(const occ::handle<Prs3d_BasicAspe
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::SetLocalAttributes(const occ::handle<AIS_InteractiveObject>& theIObj,
                                                 const occ::handle<Prs3d_Drawer>&          theDrawer,
                                                 const bool theToUpdateViewer)
@@ -1610,8 +1460,6 @@ void AIS_InteractiveContext::SetLocalAttributes(const occ::handle<AIS_Interactiv
   Update(theIObj, theToUpdateViewer);
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::UnsetLocalAttributes(const occ::handle<AIS_InteractiveObject>& theIObj,
                                                   const bool theToUpdateViewer)
 {
@@ -1624,8 +1472,6 @@ void AIS_InteractiveContext::UnsetLocalAttributes(const occ::handle<AIS_Interact
   theIObj->UnsetAttributes();
   Update(theIObj, theToUpdateViewer);
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::Status(const occ::handle<AIS_InteractiveObject>& theIObj,
                                     TCollection_ExtendedString&               theStatus) const
@@ -1674,8 +1520,6 @@ void AIS_InteractiveContext::Status(const occ::handle<AIS_InteractiveObject>& th
   theStatus += "\t ____________________________________________";
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::GetDefModes(const occ::handle<AIS_InteractiveObject>& theIObj,
                                          int&                                      theDispMode,
                                          int&                                      theHiMode,
@@ -1694,8 +1538,6 @@ void AIS_InteractiveContext::GetDefModes(const occ::handle<AIS_InteractiveObject
   theHiMode  = theIObj->HasHilightMode() ? theIObj->HilightMode() : theDispMode;
   theSelMode = theIObj->GlobalSelectionMode();
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::EraseGlobal(const occ::handle<AIS_InteractiveObject>& theIObj,
                                          const bool theToUpdateviewer)
@@ -1716,7 +1558,6 @@ void AIS_InteractiveContext::EraseGlobal(const occ::handle<AIS_InteractiveObject
     clearDynamicHighlight();
   }
 
-  // make sure highlighting presentations are properly erased
   theIObj->ErasePresentations(false);
 
   if (IsSelected(theIObj) && aStatus->DisplayMode() != aDispMode)
@@ -1737,8 +1578,6 @@ void AIS_InteractiveContext::EraseGlobal(const occ::handle<AIS_InteractiveObject
     myMainVwr->Update();
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::unselectOwners(const occ::handle<AIS_InteractiveObject>& theObject)
 {
@@ -1761,17 +1600,14 @@ void AIS_InteractiveContext::unselectOwners(const occ::handle<AIS_InteractiveObj
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::ClearGlobal(const occ::handle<AIS_InteractiveObject>& theIObj,
                                          const bool theToUpdateviewer)
 {
   occ::handle<AIS_GlobalStatus> aStatus;
   if (theIObj.IsNull() || !myObjects.Find(theIObj, aStatus))
   {
-    // for cases when reference shape of connected interactives was not displayed
-    // but its selection primitives were calculated
-    const occ::handle<SelectMgr_SelectableObject>& anObj = theIObj; // to avoid ambiguity
+
+    const occ::handle<SelectMgr_SelectableObject>& anObj = theIObj;
     mgrSelector->Remove(anObj);
     return;
   }
@@ -1779,9 +1615,8 @@ void AIS_InteractiveContext::ClearGlobal(const occ::handle<AIS_InteractiveObject
   unselectOwners(theIObj);
 
   myMainPM->Erase(theIObj, -1);
-  theIObj->ErasePresentations(true); // make sure highlighting presentations are properly erased
+  theIObj->ErasePresentations(true);
 
-  // Object removes from Detected sequence
   for (int aDetIter = NCollection_Sequence<int>::Lower(); aDetIter <= myDetectedSeq.Upper();)
   {
     occ::handle<SelectMgr_EntityOwner> aPicked = MainSelector()->Picked(myDetectedSeq(aDetIter));
@@ -1809,12 +1644,11 @@ void AIS_InteractiveContext::ClearGlobal(const occ::handle<AIS_InteractiveObject
     }
   }
 
-  // remove IO from the selection manager to avoid memory leaks
-  const occ::handle<SelectMgr_SelectableObject>& anObj = theIObj; // to avoid ambiguity
+  const occ::handle<SelectMgr_SelectableObject>& anObj = theIObj;
   mgrSelector->Remove(anObj);
 
   setObjectStatus(theIObj, PrsMgr_DisplayStatus_None, -1, -1);
-  theIObj->ViewAffinity()->SetVisible(true); // reset view affinity mask
+  theIObj->ViewAffinity()->SetVisible(true);
   myMainVwr->StructureManager()->UnregisterObject(theIObj);
 
   if (!myLastPicked.IsNull())
@@ -1831,8 +1665,6 @@ void AIS_InteractiveContext::ClearGlobal(const occ::handle<AIS_InteractiveObject
     myMainVwr->Update();
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::ClearGlobalPrs(const occ::handle<AIS_InteractiveObject>& theIObj,
                                             const int                                 theMode,
@@ -1862,8 +1694,6 @@ void AIS_InteractiveContext::ClearGlobalPrs(const occ::handle<AIS_InteractiveObj
   }
 }
 
-//=================================================================================================
-
 bool AIS_InteractiveContext::ClearDetected(bool theToRedrawImmediate)
 {
   myCurDetected    = 0;
@@ -1884,8 +1714,6 @@ bool AIS_InteractiveContext::ClearDetected(bool theToRedrawImmediate)
   return toUpdate;
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::SetIsoNumber(const int theNb, const AIS_TypeOfIso theType)
 {
   switch (theType)
@@ -1903,8 +1731,6 @@ void AIS_InteractiveContext::SetIsoNumber(const int theNb, const AIS_TypeOfIso t
   }
 }
 
-//=================================================================================================
-
 int AIS_InteractiveContext::IsoNumber(const AIS_TypeOfIso theType)
 {
   switch (theType)
@@ -1921,24 +1747,16 @@ int AIS_InteractiveContext::IsoNumber(const AIS_TypeOfIso theType)
   return 0;
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::SetPixelTolerance(const int thePrecision)
 {
   MainSelector()->SetPixelTolerance(thePrecision);
 }
-
-//=================================================================================================
 
 int AIS_InteractiveContext::PixelTolerance() const
 {
   return MainSelector()->PixelTolerance();
 }
 
-//=======================================================================
-// function : SetSelectionSensitivity
-// purpose  : Allows to manage sensitivity of a particular selection of interactive object theObject
-//=======================================================================
 void AIS_InteractiveContext::SetSelectionSensitivity(
   const occ::handle<AIS_InteractiveObject>& theObject,
   const int                                 theMode,
@@ -1947,23 +1765,18 @@ void AIS_InteractiveContext::SetSelectionSensitivity(
   mgrSelector->SetSelectionSensitivity(theObject, theMode, theNewSensitivity);
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::InitAttributes()
 {
   Graphic3d_MaterialAspect aMat(Graphic3d_NameOfMaterial_Brass);
   myDefaultDrawer->ShadingAspect()->SetMaterial(aMat);
 
-  //  myDefaultDrawer->ShadingAspect()->SetColor(Quantity_NOC_GRAY70);
   occ::handle<Prs3d_LineAspect> aLineAspect = myDefaultDrawer->HiddenLineAspect();
   aLineAspect->SetColor(Quantity_NOC_GRAY20);
   aLineAspect->SetWidth(1.0);
   aLineAspect->SetTypeOfLine(Aspect_TOL_DASH);
 
-  // tolerance to 2 pixels...
   SetPixelTolerance(2);
 
-  // Customizing the drawer for trihedrons and planes...
   occ::handle<Prs3d_DatumAspect> aTrihAspect = myDefaultDrawer->DatumAspect();
   const double                   aLength     = 100.0;
   aTrihAspect->SetAxisLength(aLength, aLength, aLength);
@@ -1978,23 +1791,17 @@ void AIS_InteractiveContext::InitAttributes()
   aPlaneAspect->EdgesAspect()->SetColor(Quantity_NOC_SKYBLUE);
 }
 
-//=================================================================================================
-
 double AIS_InteractiveContext::TrihedronSize() const
 {
   return myDefaultDrawer->DatumAspect()->AxisLength(Prs3d_DatumParts_XAxis);
 }
 
-//=================================================================================================
-
-void AIS_InteractiveContext::SetTrihedronSize(const double theVal, const bool /*updateviewer*/)
+void AIS_InteractiveContext::SetTrihedronSize(const double theVal, const bool)
 {
   myDefaultDrawer->DatumAspect()->SetAxisLength(theVal, theVal, theVal);
   Redisplay(AIS_KindOfInteractive_Datum, 3, false);
   Redisplay(AIS_KindOfInteractive_Datum, 4, true);
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::SetPlaneSize(const double theValX,
                                           const double theValY,
@@ -2004,14 +1811,10 @@ void AIS_InteractiveContext::SetPlaneSize(const double theValX,
   Redisplay(AIS_KindOfInteractive_Datum, 7, theToUpdateViewer);
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::SetPlaneSize(const double theVal, const bool theToUpdateViewer)
 {
   SetPlaneSize(theVal, theVal, theToUpdateViewer);
 }
-
-//=================================================================================================
 
 bool AIS_InteractiveContext::PlaneSize(double& theX, double& theY) const
 {
@@ -2019,8 +1822,6 @@ bool AIS_InteractiveContext::PlaneSize(double& theX, double& theY) const
   theY = myDefaultDrawer->PlaneAspect()->PlaneYLength();
   return (std::abs(theX - theY) <= Precision::Confusion());
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::SetZLayer(const occ::handle<AIS_InteractiveObject>& theIObj,
                                        const Graphic3d_ZLayerId                  theLayerId)
@@ -2031,27 +1832,17 @@ void AIS_InteractiveContext::SetZLayer(const occ::handle<AIS_InteractiveObject>&
   theIObj->SetZLayer(theLayerId);
 }
 
-//=================================================================================================
-
 Graphic3d_ZLayerId AIS_InteractiveContext::GetZLayer(
   const occ::handle<AIS_InteractiveObject>& theIObj) const
 {
   return !theIObj.IsNull() ? theIObj->ZLayer() : Graphic3d_ZLayerId_UNKNOWN;
 }
 
-//=======================================================================
-// function : RebuildSelectionStructs
-// purpose  : Rebuilds 1st level of BVH selection forcibly
-//=======================================================================
 void AIS_InteractiveContext::RebuildSelectionStructs()
 {
   MainSelector()->RebuildObjectsTree(true);
 }
 
-//=======================================================================
-// function : Disconnect
-// purpose  : Disconnects selectable object from an assembly and updates selection structures
-//=======================================================================
 void AIS_InteractiveContext::Disconnect(
   const occ::handle<AIS_InteractiveObject>& theAssembly,
   const occ::handle<AIS_InteractiveObject>& theObjToDisconnect)
@@ -2063,12 +1854,12 @@ void AIS_InteractiveContext::Disconnect(
     theObj->Disconnect(theObjToDisconnect);
     if (!myObjects.IsBound(theObjToDisconnect))
     {
-      // connected presentation might contain displayed presentations
+
       myMainPM->Erase(theObjToDisconnect, -1);
       theObjToDisconnect->ErasePresentations(true);
     }
 
-    const occ::handle<SelectMgr_SelectableObject>& anObj = theObjToDisconnect; // to avoid ambiguity
+    const occ::handle<SelectMgr_SelectableObject>& anObj = theObjToDisconnect;
     mgrSelector->Remove(anObj);
   }
   else if (theAssembly->IsInstance(STANDARD_TYPE(AIS_ConnectedInteractive))
@@ -2077,23 +1868,17 @@ void AIS_InteractiveContext::Disconnect(
     occ::handle<AIS_ConnectedInteractive> theObj(
       occ::down_cast<AIS_ConnectedInteractive>(theAssembly));
     theObj->Disconnect();
-    const occ::handle<SelectMgr_SelectableObject>& anObj = theObj; // to avoid ambiguity
+    const occ::handle<SelectMgr_SelectableObject>& anObj = theObj;
     mgrSelector->Remove(anObj);
   }
   else
     return;
 }
 
-//=======================================================================
-// function : FitSelected
-// purpose  : Fits the view corresponding to the bounds of selected objects
-//=======================================================================
 void AIS_InteractiveContext::FitSelected(const occ::handle<V3d_View>& theView)
 {
   FitSelected(theView, 0.01, true);
 }
-
-//=================================================================================================
 
 Bnd_Box AIS_InteractiveContext::BoundingBoxOfSelection(const occ::handle<V3d_View>& theView) const
 {
@@ -2151,10 +1936,6 @@ Bnd_Box AIS_InteractiveContext::BoundingBoxOfSelection(const occ::handle<V3d_Vie
   return aBndSelected;
 }
 
-//=======================================================================
-// function : FitSelected
-// purpose  : Fits the view corresponding to the bounds of selected objects
-//=======================================================================
 void AIS_InteractiveContext::FitSelected(const occ::handle<V3d_View>& theView,
                                          const double                 theMargin,
                                          const bool                   theToUpdate)
@@ -2165,8 +1946,6 @@ void AIS_InteractiveContext::FitSelected(const occ::handle<V3d_View>& theView,
     theView->FitAll(aBndSelected, theMargin, theToUpdate);
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::SetTransformPersistence(
   const occ::handle<AIS_InteractiveObject>&   theObject,
@@ -2192,14 +1971,10 @@ void AIS_InteractiveContext::SetTransformPersistence(
   }
 }
 
-//=================================================================================================
-
 gp_Pnt AIS_InteractiveContext::GravityPoint(const occ::handle<V3d_View>& theView) const
 {
   return theView->GravityPoint();
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::setContextToObject(const occ::handle<AIS_InteractiveObject>& theObj)
 {
@@ -2228,8 +2003,6 @@ void AIS_InteractiveContext::setContextToObject(const occ::handle<AIS_Interactiv
     }
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::setObjectStatus(const occ::handle<AIS_InteractiveObject>& theIObj,
                                              const PrsMgr_DisplayStatus                theStatus,
@@ -2268,8 +2041,6 @@ void AIS_InteractiveContext::setObjectStatus(const occ::handle<AIS_InteractiveOb
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::highlightWithColor(const occ::handle<SelectMgr_EntityOwner>& theOwner,
                                                 const occ::handle<V3d_Viewer>&            theViewer)
 {
@@ -2287,8 +2058,6 @@ void AIS_InteractiveContext::highlightWithColor(const occ::handle<SelectMgr_Enti
   theOwner->HilightWithColor(myMainPM, aStyle, aHiMode);
   myMainPM->EndImmediateDraw(theViewer.IsNull() ? myMainVwr : theViewer);
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::highlightSelected(const occ::handle<SelectMgr_EntityOwner>& theOwner)
 {
@@ -2320,8 +2089,6 @@ void AIS_InteractiveContext::highlightSelected(const occ::handle<SelectMgr_Entit
   }
   highlightOwners(anOwners, occ::handle<Prs3d_Drawer>());
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::highlightGlobal(const occ::handle<AIS_InteractiveObject>& theObj,
                                              const occ::handle<Prs3d_Drawer>&          theStyle,
@@ -2363,14 +2130,10 @@ void AIS_InteractiveContext::highlightGlobal(const occ::handle<AIS_InteractiveOb
   highlightOwners(anOwners, theStyle);
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::unhighlightSelected(const bool theIsToHilightSubIntensity)
 {
   unhighlightOwners(mySelection->Objects(), theIsToHilightSubIntensity);
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::unhighlightOwners(
   const NCollection_List<occ::handle<SelectMgr_EntityOwner>>& theOwners,
@@ -2424,8 +2187,6 @@ void AIS_InteractiveContext::unhighlightOwners(
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::unhighlightGlobal(const occ::handle<AIS_InteractiveObject>& theObj)
 {
   if (theObj.IsNull())
@@ -2445,13 +2206,11 @@ void AIS_InteractiveContext::unhighlightGlobal(const occ::handle<AIS_Interactive
   unhighlightOwners(anOwners);
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::turnOnSubintensity(const occ::handle<AIS_InteractiveObject>& theObject,
                                                 const int  theDispMode,
                                                 const bool theIsDisplayedOnly) const
 {
-  // the only differ with selection highlight is color, so sync transparency values
+
   const occ::handle<Prs3d_Drawer>& aSubStyle = myStyles[Prs3d_TypeOfHighlight_SubIntensity];
   aSubStyle->SetTransparency(myStyles[Prs3d_TypeOfHighlight_Selected]->Transparency());
 
@@ -2492,35 +2251,27 @@ void AIS_InteractiveContext::turnOnSubintensity(const occ::handle<AIS_Interactiv
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::highlightWithSubintensity(
   const occ::handle<AIS_InteractiveObject>& theObject,
   const int                                 theMode) const
 {
-  // the only differ with selection highlight is color, so
-  // sync transparency values
+
   myStyles[Prs3d_TypeOfHighlight_SubIntensity]->SetTransparency(
     myStyles[Prs3d_TypeOfHighlight_Selected]->Transparency());
 
   myMainPM->Color(theObject, myStyles[Prs3d_TypeOfHighlight_SubIntensity], theMode);
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::highlightWithSubintensity(
   const occ::handle<SelectMgr_EntityOwner>& theOwner,
   const int                                 theMode) const
 {
-  // the only differ with selection highlight is color, so
-  // sync transparency values
+
   myStyles[Prs3d_TypeOfHighlight_SubIntensity]->SetTransparency(
     myStyles[Prs3d_TypeOfHighlight_Selected]->Transparency());
 
   theOwner->HilightWithColor(myMainPM, myStyles[Prs3d_TypeOfHighlight_SubIntensity], theMode);
 }
-
-//=================================================================================================
 
 bool AIS_InteractiveContext::isSlowHiStyle(const occ::handle<SelectMgr_EntityOwner>& theOwner,
                                            const occ::handle<V3d_Viewer>& theViewer) const
@@ -2535,8 +2286,6 @@ bool AIS_InteractiveContext::isSlowHiStyle(const occ::handle<SelectMgr_EntityOwn
   return false;
 }
 
-//=================================================================================================
-
 AIS_StatusOfDetection AIS_InteractiveContext::MoveTo(const int                    theXPix,
                                                      const int                    theYPix,
                                                      const occ::handle<V3d_View>& theView,
@@ -2550,8 +2299,6 @@ AIS_StatusOfDetection AIS_InteractiveContext::MoveTo(const int                  
   return moveTo(theView, theToRedrawOnUpdate);
 }
 
-//=================================================================================================
-
 AIS_StatusOfDetection AIS_InteractiveContext::MoveTo(const gp_Ax1&                theAxis,
                                                      const occ::handle<V3d_View>& theView,
                                                      const bool theToRedrawOnUpdate)
@@ -2564,8 +2311,6 @@ AIS_StatusOfDetection AIS_InteractiveContext::MoveTo(const gp_Ax1&              
   return moveTo(theView, theToRedrawOnUpdate);
 }
 
-//=================================================================================================
-
 AIS_StatusOfDetection AIS_InteractiveContext::moveTo(const occ::handle<V3d_View>& theView,
                                                      const bool theToRedrawOnUpdate)
 {
@@ -2574,12 +2319,9 @@ AIS_StatusOfDetection AIS_InteractiveContext::moveTo(const occ::handle<V3d_View>
   myDetectedSeq.Clear();
   myLastActiveView = theView.get();
 
-  // preliminaries
   AIS_StatusOfDetection aStatus        = AIS_SOD_Nothing;
   bool                  toUpdateViewer = false;
 
-  // filling of myAISDetectedSeq sequence storing information about detected AIS objects
-  // (the objects must be AIS_Shapes)
   const int aDetectedNb    = MainSelector()->NbPicked();
   int       aNewDetected   = 0;
   bool      toIgnoreDetTop = false;
@@ -2607,23 +2349,12 @@ AIS_StatusOfDetection AIS_InteractiveContext::moveTo(const occ::handle<V3d_View>
   {
     myCurHighlighted = NCollection_Sequence<int>::Lower();
 
-    // Does nothing if previously detected object is equal to the current one.
-    // However in advanced selection modes the owners comparison
-    // is not effective because in that case only one owner manage the
-    // selection in current selection mode. It is necessary to check the current detected
-    // entity and hilight it only if the detected entity is not the same as
-    // previous detected (IsForcedHilight call)
     occ::handle<SelectMgr_EntityOwner> aNewPickedOwner = MainSelector()->Picked(aNewDetected);
     if (aNewPickedOwner == myLastPicked && !aNewPickedOwner->IsForcedHilight())
     {
       return myLastPicked->IsSelected() ? AIS_SOD_Selected : AIS_SOD_OnlyOneDetected;
     }
 
-    // Previously detected object is unhilighted if it is not selected or hilighted
-    // with selection color if it is selected. Such highlighting with selection color
-    // is needed only if myToHilightSelected flag is true. In this case previously detected
-    // object has been already highlighted with myHilightColor during previous MoveTo()
-    // method call. As result it is necessary to rehighligt it with mySelectionColor.
     if (!myLastPicked.IsNull() && myLastPicked->HasSelectable())
     {
       if (isSlowHiStyle(myLastPicked, theView->Viewer()))
@@ -2635,10 +2366,8 @@ AIS_StatusOfDetection AIS_InteractiveContext::moveTo(const occ::handle<V3d_View>
       toUpdateViewer = true;
     }
 
-    // initialize myLastPicked field with currently detected object
     myLastPicked = aNewPickedOwner;
 
-    // highlight detected object if it is not selected or myToHilightSelected flag is true
     if (myLastPicked->HasSelectable())
     {
       if (myAutoHilight && (!myLastPicked->IsSelected() || myToHilightSelected))
@@ -2657,8 +2386,7 @@ AIS_StatusOfDetection AIS_InteractiveContext::moveTo(const occ::handle<V3d_View>
   }
   else
   {
-    // previously detected object is unhighlighted if it is not selected or highlighted
-    // with selection color if it is selected
+
     aStatus = AIS_SOD_Nothing;
     if (myAutoHilight && !myLastPicked.IsNull() && myLastPicked->HasSelectable())
     {
@@ -2696,8 +2424,6 @@ AIS_StatusOfDetection AIS_InteractiveContext::moveTo(const occ::handle<V3d_View>
   return aStatus;
 }
 
-//=================================================================================================
-
 AIS_StatusOfPick AIS_InteractiveContext::AddSelect(
   const occ::handle<SelectMgr_EntityOwner>& theObject)
 {
@@ -2708,8 +2434,6 @@ AIS_StatusOfPick AIS_InteractiveContext::AddSelect(
          : (aSelNum == 1) ? AIS_SOP_OneSelected
                           : AIS_SOP_SeveralSelected;
 }
-
-//=================================================================================================
 
 AIS_StatusOfPick AIS_InteractiveContext::SelectRectangle(const NCollection_Vec2<int>& thePntMin,
                                                          const NCollection_Vec2<int>& thePntMax,
@@ -2737,8 +2461,6 @@ AIS_StatusOfPick AIS_InteractiveContext::SelectRectangle(const NCollection_Vec2<
   return Select(aPickedOwners, theSelScheme);
 }
 
-//=================================================================================================
-
 AIS_StatusOfPick AIS_InteractiveContext::SelectPolygon(
   const NCollection_Array1<gp_Pnt2d>& thePolyline,
   const occ::handle<V3d_View>&        theView,
@@ -2765,8 +2487,6 @@ AIS_StatusOfPick AIS_InteractiveContext::SelectPolygon(
   return Select(aPickedOwners, theSelScheme);
 }
 
-//=================================================================================================
-
 AIS_StatusOfPick AIS_InteractiveContext::SelectPoint(const NCollection_Vec2<int>& thePnt,
                                                      const occ::handle<V3d_View>& theView,
                                                      const AIS_SelectionScheme    theSelScheme)
@@ -2792,12 +2512,9 @@ AIS_StatusOfPick AIS_InteractiveContext::SelectPoint(const NCollection_Vec2<int>
   return Select(aPickedOwners, theSelScheme);
 }
 
-//=================================================================================================
-
 AIS_StatusOfPick AIS_InteractiveContext::SelectDetected(const AIS_SelectionScheme theSelScheme)
 {
-  // For all selection schemes, allowing to select an object,
-  // HandleMouseClick is available
+
   if (theSelScheme != AIS_SelectionScheme_Remove && theSelScheme != AIS_SelectionScheme_Clear
       && !myLastPicked.IsNull())
   {
@@ -2821,8 +2538,6 @@ AIS_StatusOfPick AIS_InteractiveContext::SelectDetected(const AIS_SelectionSchem
   return Select(aPickedOwners, theSelScheme);
 }
 
-//=================================================================================================
-
 AIS_StatusOfPick AIS_InteractiveContext::Select(const int                    theXPMin,
                                                 const int                    theYPMin,
                                                 const int                    theXPMax,
@@ -2840,8 +2555,6 @@ AIS_StatusOfPick AIS_InteractiveContext::Select(const int                    the
   return aStatus;
 }
 
-//=================================================================================================
-
 AIS_StatusOfPick AIS_InteractiveContext::Select(const NCollection_Array1<gp_Pnt2d>& thePolyline,
                                                 const occ::handle<V3d_View>&        theView,
                                                 const bool theToUpdateViewer)
@@ -2854,8 +2567,6 @@ AIS_StatusOfPick AIS_InteractiveContext::Select(const NCollection_Array1<gp_Pnt2
   return aStatus;
 }
 
-//=================================================================================================
-
 AIS_StatusOfPick AIS_InteractiveContext::Select(const bool theToUpdateViewer)
 {
   AIS_StatusOfPick aStatus = SelectDetected();
@@ -2866,8 +2577,6 @@ AIS_StatusOfPick AIS_InteractiveContext::Select(const bool theToUpdateViewer)
   return aStatus;
 }
 
-//=================================================================================================
-
 AIS_StatusOfPick AIS_InteractiveContext::ShiftSelect(const bool theToUpdateViewer)
 {
   AIS_StatusOfPick aStatus = SelectDetected(AIS_SelectionScheme_XOR);
@@ -2877,8 +2586,6 @@ AIS_StatusOfPick AIS_InteractiveContext::ShiftSelect(const bool theToUpdateViewe
   }
   return aStatus;
 }
-
-//=================================================================================================
 
 AIS_StatusOfPick AIS_InteractiveContext::ShiftSelect(const int                    theXPMin,
                                                      const int                    theYPMin,
@@ -2898,8 +2605,6 @@ AIS_StatusOfPick AIS_InteractiveContext::ShiftSelect(const int                  
   return aStatus;
 }
 
-//=================================================================================================
-
 AIS_StatusOfPick AIS_InteractiveContext::ShiftSelect(
   const NCollection_Array1<gp_Pnt2d>& thePolyline,
   const occ::handle<V3d_View>&        theView,
@@ -2913,8 +2618,6 @@ AIS_StatusOfPick AIS_InteractiveContext::ShiftSelect(
   return aStatus;
 }
 
-//=================================================================================================
-
 AIS_StatusOfPick AIS_InteractiveContext::Select(
   const NCollection_Array1<occ::handle<SelectMgr_EntityOwner>>& theOwners,
   const AIS_SelectionScheme                                     theSelScheme)
@@ -2925,7 +2628,6 @@ AIS_StatusOfPick AIS_InteractiveContext::Select(
   {
     clearDynamicHighlight();
 
-    // collect currently selected owners
     for (NCollection_List<occ::handle<SelectMgr_EntityOwner>>::Iterator anOwnerIter(
            mySelection->Objects());
          anOwnerIter.More();
@@ -2942,27 +2644,27 @@ AIS_StatusOfPick AIS_InteractiveContext::Select(
 
   if (myAutoHilight)
   {
-    // collect lists of owners to unhighlight (unselected) and to highlight (selected)
+
     NCollection_List<occ::handle<SelectMgr_EntityOwner>> anOwnersToUnhighlight, anOwnersToHighlight;
     for (NCollection_List<occ::handle<SelectMgr_EntityOwner>>::Iterator anOwnerIter(
            mySelection->Objects());
          anOwnerIter.More();
          anOwnerIter.Next())
     {
-      // add newly selected owners
+
       const occ::handle<SelectMgr_EntityOwner>& anOwner = anOwnerIter.Value();
       if (!aSelOwnerMap.RemoveKey(anOwner))
       {
-        // newly selected owner
+
         anOwnersToHighlight.Append(anOwner);
       }
       else
       {
-        // already selected owner
+
         if (!anOwner->IsAutoHilight() && theSelScheme != AIS_SelectionScheme_XOR
             && theSelScheme != AIS_SelectionScheme_Add)
         {
-          // hack to perform AIS_InteractiveObject::ClearSelected() before highlighting
+
           anOwnersToUnhighlight.Append(anOwner);
           anOwnersToHighlight.Append(anOwner);
         }
@@ -2978,7 +2680,7 @@ AIS_StatusOfPick AIS_InteractiveContext::Select(
          anOwnerIter.More();
          anOwnerIter.Next())
     {
-      // owners removed from selection
+
       const occ::handle<SelectMgr_EntityOwner>& anOwner = anOwnerIter.Value();
       anOwnersToUnhighlight.Append(anOwner);
     }
@@ -2993,11 +2695,9 @@ AIS_StatusOfPick AIS_InteractiveContext::Select(
                           : AIS_SOP_SeveralSelected;
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::HilightSelected(const bool theToUpdateViewer)
 {
-  // In case of selection without using local context
+
   clearDynamicHighlight();
 
   highlightOwners(mySelection->Objects(), occ::handle<Prs3d_Drawer>());
@@ -3007,8 +2707,6 @@ void AIS_InteractiveContext::HilightSelected(const bool theToUpdateViewer)
     UpdateCurrentViewer();
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::highlightOwners(
   const NCollection_List<occ::handle<SelectMgr_EntityOwner>>& theOwners,
@@ -3075,8 +2773,6 @@ void AIS_InteractiveContext::highlightOwners(
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::UnhilightSelected(const bool theToUpdateViewer)
 {
   unhighlightSelected();
@@ -3086,8 +2782,6 @@ void AIS_InteractiveContext::UnhilightSelected(const bool theToUpdateViewer)
     UpdateCurrentViewer();
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::ClearSelected(const bool theToUpdateViewer)
 {
@@ -3113,8 +2807,6 @@ void AIS_InteractiveContext::ClearSelected(const bool theToUpdateViewer)
   }
 }
 
-//=================================================================================================
-
 bool AIS_InteractiveContext::isDetected(const occ::handle<AIS_InteractiveObject>& theObject)
 {
   for (int aDetIter = NCollection_Sequence<int>::Lower(); aDetIter <= myDetectedSeq.Upper();
@@ -3135,10 +2827,6 @@ bool AIS_InteractiveContext::isDetected(const occ::handle<AIS_InteractiveObject>
   return false;
 }
 
-//=======================================================================
-// function : SetSelected
-// purpose  : Sets the whole object as selected and highlights it with selection color
-//=======================================================================
 void AIS_InteractiveContext::SetSelected(const occ::handle<AIS_InteractiveObject>& theObject,
                                          const bool theToUpdateViewer)
 {
@@ -3198,7 +2886,6 @@ void AIS_InteractiveContext::SetSelected(const occ::handle<AIS_InteractiveObject
     }
   }
 
-  // added to avoid untimely viewer update...
   const occ::handle<AIS_InteractiveObject> anObj =
     occ::down_cast<AIS_InteractiveObject>(anOwner->Selectable());
   mySelection->ClearAndSelect(anOwner, myFilters, isDetected(anObj));
@@ -3225,10 +2912,6 @@ void AIS_InteractiveContext::SetSelected(const occ::handle<AIS_InteractiveObject
   }
 }
 
-//=======================================================================
-// function : SetSelected
-// purpose  : Sets the whole object as selected and highlights it with selection color
-//=======================================================================
 void AIS_InteractiveContext::SetSelected(const occ::handle<SelectMgr_EntityOwner>& theOwner,
                                          const bool theToUpdateViewer)
 {
@@ -3281,8 +2964,6 @@ void AIS_InteractiveContext::SetSelected(const occ::handle<SelectMgr_EntityOwner
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::AddOrRemoveSelected(
   const occ::handle<AIS_InteractiveObject>& theObject,
   const bool                                theToUpdateViewer)
@@ -3299,11 +2980,6 @@ void AIS_InteractiveContext::AddOrRemoveSelected(
   }
 }
 
-//=======================================================================
-// function : AddOrRemoveSelected
-// purpose  : Allows to highlight or unhighlight the owner given depending on
-//           its selection status
-//=======================================================================
 void AIS_InteractiveContext::AddOrRemoveSelected(const occ::handle<SelectMgr_EntityOwner>& theOwner,
                                                  const bool theToUpdateViewer)
 {
@@ -3351,8 +3027,6 @@ void AIS_InteractiveContext::AddOrRemoveSelected(const occ::handle<SelectMgr_Ent
   }
 }
 
-//=================================================================================================
-
 bool AIS_InteractiveContext::SetSelectedState(const occ::handle<SelectMgr_EntityOwner>& theEntity,
                                               const bool theIsSelected)
 {
@@ -3390,8 +3064,6 @@ bool AIS_InteractiveContext::SetSelectedState(const occ::handle<SelectMgr_Entity
   }
 }
 
-//=================================================================================================
-
 bool AIS_InteractiveContext::IsSelected(const occ::handle<AIS_InteractiveObject>& theObj) const
 {
   if (theObj.IsNull())
@@ -3422,16 +3094,12 @@ bool AIS_InteractiveContext::IsSelected(const occ::handle<AIS_InteractiveObject>
   return false;
 }
 
-//=================================================================================================
-
 occ::handle<AIS_InteractiveObject> AIS_InteractiveContext::FirstSelectedObject() const
 {
   return !mySelection->Objects().IsEmpty()
            ? occ::down_cast<AIS_InteractiveObject>(mySelection->Objects().First()->Selectable())
            : occ::handle<AIS_InteractiveObject>();
 }
-
-//=================================================================================================
 
 bool AIS_InteractiveContext::HasSelectedShape() const
 {
@@ -3444,8 +3112,6 @@ bool AIS_InteractiveContext::HasSelectedShape() const
     occ::down_cast<StdSelect_BRepOwner>(mySelection->Value());
   return !anOwner.IsNull() && anOwner->HasShape();
 }
-
-//=================================================================================================
 
 TopoDS_Shape AIS_InteractiveContext::SelectedShape() const
 {
@@ -3463,8 +3129,6 @@ TopoDS_Shape AIS_InteractiveContext::SelectedShape() const
 
   return anOwner->Shape().Located(anOwner->Location() * anOwner->Shape().Location());
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::EntityOwners(
   occ::handle<NCollection_Shared<NCollection_IndexedMap<occ::handle<SelectMgr_EntityOwner>>>>&
@@ -3518,23 +3182,17 @@ void AIS_InteractiveContext::EntityOwners(
   }
 }
 
-//=================================================================================================
-
 bool AIS_InteractiveContext::HasDetectedShape() const
 {
   occ::handle<StdSelect_BRepOwner> anOwner = occ::down_cast<StdSelect_BRepOwner>(myLastPicked);
   return !anOwner.IsNull() && anOwner->HasShape();
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& AIS_InteractiveContext::DetectedShape() const
 {
   occ::handle<StdSelect_BRepOwner> anOwner = occ::down_cast<StdSelect_BRepOwner>(myLastPicked);
   return anOwner->Shape();
 }
-
-//=================================================================================================
 
 int AIS_InteractiveContext::HilightNextDetected(const occ::handle<V3d_View>& theView,
                                                 const bool                   theToRedrawImmediate)
@@ -3568,8 +3226,6 @@ int AIS_InteractiveContext::HilightNextDetected(const occ::handle<V3d_View>& the
   return myCurHighlighted;
 }
 
-//=================================================================================================
-
 int AIS_InteractiveContext::HilightPreviousDetected(const occ::handle<V3d_View>& theView,
                                                     const bool theToRedrawImmediate)
 {
@@ -3602,15 +3258,11 @@ int AIS_InteractiveContext::HilightPreviousDetected(const occ::handle<V3d_View>&
   return myCurHighlighted;
 }
 
-//=================================================================================================
-
 occ::handle<SelectMgr_EntityOwner> AIS_InteractiveContext::DetectedCurrentOwner() const
 {
   return MoreDetected() ? MainSelector()->Picked(myDetectedSeq(myCurDetected))
                         : occ::handle<SelectMgr_EntityOwner>();
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& AIS_InteractiveContext::DetectedCurrentShape() const
 {
@@ -3623,16 +3275,12 @@ const TopoDS_Shape& AIS_InteractiveContext::DetectedCurrentShape() const
     : AIS_InteractiveContext_myDummyShape;
 }
 
-//=================================================================================================
-
 occ::handle<AIS_InteractiveObject> AIS_InteractiveContext::DetectedCurrentObject() const
 {
   return MoreDetected() ? occ::down_cast<AIS_InteractiveObject>(
                             MainSelector()->Picked(myDetectedSeq(myCurDetected))->Selectable())
                         : occ::handle<AIS_InteractiveObject>();
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::SetSelectionModeActive(
   const occ::handle<AIS_InteractiveObject>& theObj,
@@ -3745,8 +3393,6 @@ void AIS_InteractiveContext::SetSelectionModeActive(
   (*aStat)->AddSelectionMode(theMode);
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::Activate(const int theMode, const bool theIsForce)
 {
   NCollection_List<occ::handle<AIS_InteractiveObject>> aDisplayedObjects;
@@ -3760,8 +3406,6 @@ void AIS_InteractiveContext::Activate(const int theMode, const bool theIsForce)
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::Deactivate(const int theMode)
 {
   NCollection_List<occ::handle<AIS_InteractiveObject>> aDisplayedObjects;
@@ -3773,8 +3417,6 @@ void AIS_InteractiveContext::Deactivate(const int theMode)
     Deactivate(anIter.Value(), theMode);
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::Deactivate()
 {
@@ -3788,8 +3430,6 @@ void AIS_InteractiveContext::Deactivate()
     Deactivate(anIter.Value());
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::ActivatedModes(const occ::handle<AIS_InteractiveObject>& theObj,
                                             NCollection_List<int>&                    theList) const
@@ -3805,8 +3445,6 @@ void AIS_InteractiveContext::ActivatedModes(const occ::handle<AIS_InteractiveObj
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::SubIntensityOn(const occ::handle<AIS_InteractiveObject>& theObj,
                                             const bool theToUpdateViewer)
 {
@@ -3816,8 +3454,6 @@ void AIS_InteractiveContext::SubIntensityOn(const occ::handle<AIS_InteractiveObj
     myMainVwr->Update();
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::SubIntensityOff(const occ::handle<AIS_InteractiveObject>& theObj,
                                              const bool theToUpdateViewer)
@@ -3847,14 +3483,10 @@ void AIS_InteractiveContext::SubIntensityOff(const occ::handle<AIS_InteractiveOb
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::DisplayActiveSensitive(const occ::handle<V3d_View>& theView)
 {
   MainSelector()->DisplaySensitive(theView);
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::DisplayActiveSensitive(
   const occ::handle<AIS_InteractiveObject>& theObj,
@@ -3874,21 +3506,15 @@ void AIS_InteractiveContext::DisplayActiveSensitive(
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveContext::ClearActiveSensitive(const occ::handle<V3d_View>& theView)
 {
   MainSelector()->ClearSensitive(theView);
 }
 
-//=================================================================================================
-
 bool AIS_InteractiveContext::IsImmediateModeOn() const
 {
   return myMainPM->IsImmediateModeOn();
 }
-
-//=================================================================================================
 
 bool AIS_InteractiveContext::BeginImmediateDraw()
 {
@@ -3899,8 +3525,6 @@ bool AIS_InteractiveContext::BeginImmediateDraw()
   }
   return false;
 }
-
-//=================================================================================================
 
 bool AIS_InteractiveContext::ImmediateAdd(const occ::handle<AIS_InteractiveObject>& theObj,
                                           const int                                 theMode)
@@ -3913,8 +3537,6 @@ bool AIS_InteractiveContext::ImmediateAdd(const occ::handle<AIS_InteractiveObjec
   return false;
 }
 
-//=================================================================================================
-
 bool AIS_InteractiveContext::EndImmediateDraw(const occ::handle<V3d_View>& theView)
 {
   if (myMainPM->IsImmediateModeOn())
@@ -3925,8 +3547,6 @@ bool AIS_InteractiveContext::EndImmediateDraw(const occ::handle<V3d_View>& theVi
   return false;
 }
 
-//=================================================================================================
-
 bool AIS_InteractiveContext::EndImmediateDraw()
 {
   if (myMainPM->IsImmediateModeOn())
@@ -3936,8 +3556,6 @@ bool AIS_InteractiveContext::EndImmediateDraw()
   }
   return false;
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::SetPolygonOffsets(const occ::handle<AIS_InteractiveObject>& theObj,
                                                const int                                 theMode,
@@ -3961,15 +3579,11 @@ void AIS_InteractiveContext::SetPolygonOffsets(const occ::handle<AIS_Interactive
   }
 }
 
-//=================================================================================================
-
 bool AIS_InteractiveContext::HasPolygonOffsets(
   const occ::handle<AIS_InteractiveObject>& theObj) const
 {
   return !theObj.IsNull() && theObj->HasPolygonOffsets();
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::PolygonOffsets(const occ::handle<AIS_InteractiveObject>& theObj,
                                             int&                                      theMode,
@@ -3981,8 +3595,6 @@ void AIS_InteractiveContext::PolygonOffsets(const occ::handle<AIS_InteractiveObj
     theObj->PolygonOffsets(theMode, theFactor, theUnits);
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveContext::DumpJson(Standard_OStream& theOStream, int) const
 {

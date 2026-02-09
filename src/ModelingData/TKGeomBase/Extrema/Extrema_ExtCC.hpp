@@ -10,7 +10,6 @@
 #include <Extrema_POnCurv.hpp>
 #include <gp_Pnt.hpp>
 
-//! Type alias for 3D curve-curve extremum computation.
 using Extrema_ECC = Extrema_GGenExtCC<Adaptor3d_Curve,
                                       Extrema_CurveTool,
                                       Adaptor3d_Curve,
@@ -27,8 +26,6 @@ class Adaptor3d_Curve;
 class Extrema_POnCurv;
 class Extrema_ExtElC;
 
-//! It calculates all the distance between two curves.
-//! These distances can be maximum or minimum.
 class Extrema_ExtCC
 {
 public:
@@ -36,13 +33,11 @@ public:
 
   Standard_EXPORT Extrema_ExtCC(const double TolC1 = 1.0e-10, const double TolC2 = 1.0e-10);
 
-  //! It calculates all the distances.
   Standard_EXPORT Extrema_ExtCC(const Adaptor3d_Curve& C1,
                                 const Adaptor3d_Curve& C2,
                                 const double           TolC1 = 1.0e-10,
                                 const double           TolC2 = 1.0e-10);
 
-  //! It calculates all the distances.
   Standard_EXPORT Extrema_ExtCC(const Adaptor3d_Curve& C1,
                                 const Adaptor3d_Curve& C2,
                                 const double           U1,
@@ -52,13 +47,11 @@ public:
                                 const double           TolC1 = 1.0e-10,
                                 const double           TolC2 = 1.0e-10);
 
-  //! Initializes but does not perform algorithm.
   Standard_EXPORT void Initialize(const Adaptor3d_Curve& C1,
                                   const Adaptor3d_Curve& C2,
                                   const double           TolC1 = 1.0e-10,
                                   const double           TolC2 = 1.0e-10);
 
-  //! Initializes but does not perform algorithm.
   Standard_EXPORT void Initialize(const Adaptor3d_Curve& C1,
                                   const Adaptor3d_Curve& C2,
                                   const double           U1,
@@ -81,26 +74,16 @@ public:
 
   Standard_EXPORT void Perform();
 
-  //! Returns True if the distances are found.
   Standard_EXPORT bool IsDone() const;
 
-  //! Returns the number of extremum distances.
   Standard_EXPORT int NbExt() const;
 
-  //! Returns True if the two curves are parallel.
   Standard_EXPORT bool IsParallel() const;
 
-  //! Returns the value of the Nth extremum square distance.
   Standard_EXPORT double SquareDistance(const int N = 1) const;
 
-  //! Returns the points of the Nth extremum distance.
-  //! P1 is on the first curve, P2 on the second one.
   Standard_EXPORT void Points(const int N, Extrema_POnCurv& P1, Extrema_POnCurv& P2) const;
 
-  //! if the curve is a trimmed curve,
-  //! dist11 is a square distance between the point on C1
-  //! of parameter FirstParameter and the point of
-  //! parameter FirstParameter on C2.
   Standard_EXPORT void TrimmedSquareDistances(double& dist11,
                                               double& distP12,
                                               double& distP21,
@@ -110,14 +93,11 @@ public:
                                               gp_Pnt& P21,
                                               gp_Pnt& P22) const;
 
-  //! Set flag for single extrema computation. Works on parametric solver only.
   Standard_EXPORT void SetSingleSolutionFlag(const bool theSingleSolutionFlag);
 
-  //! Get flag for single extrema computation. Works on parametric solver only.
   Standard_EXPORT bool GetSingleSolutionFlag() const;
 
 protected:
-  //! Prepares the extrema result(s) for analytical cases (line, circle, ellipsis etc.)
   Standard_EXPORT void PrepareResults(const Extrema_ExtElC& AlgExt,
                                       const bool            theIsInverse,
                                       const double          Ut11,
@@ -125,22 +105,18 @@ protected:
                                       const double          Ut21,
                                       const double          Ut22);
 
-  //! Prepares the extrema result(s) for general cases (e.g. with B-spline curves).
   Standard_EXPORT void PrepareResults(const Extrema_ECC& AlgExt,
                                       const double       Ut11,
                                       const double       Ut12,
                                       const double       Ut21,
                                       const double       Ut22);
 
-  //! Prepares the extrema result(s) in case when the given curves are parallel.
   Standard_EXPORT void PrepareParallelResult(const double theUt11,
                                              const double theUt12,
                                              const double theUt21,
                                              const double theUt22,
                                              const double theSqDist);
 
-  // Clears all found extremas.
-  // This method does not change any flags (e.g. Done or IsParallel)
   void ClearSolutions()
   {
     mySqDist.Clear();
@@ -148,12 +124,11 @@ protected:
   }
 
 private:
-  // disallow copies
   Extrema_ExtCC(Extrema_ExtCC&)            = delete;
   Extrema_ExtCC& operator=(Extrema_ExtCC&) = delete;
 
 private:
-  bool                                  myIsFindSingleSolution; // Default value is false.
+  bool                                  myIsFindSingleSolution;
   Extrema_ECC                           myECC;
   bool                                  myDone;
   bool                                  myIsParallel;

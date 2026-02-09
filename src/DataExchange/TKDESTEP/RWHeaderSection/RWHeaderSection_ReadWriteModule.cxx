@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <HeaderSection_FileDescription.hpp>
 #include <HeaderSection_FileName.hpp>
@@ -33,13 +22,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(RWHeaderSection_ReadWriteModule, StepData_ReadWriteModule)
 
-// -- General Declarations (Recognize, StepType) ---
-static constexpr std::string_view PasReco; // neutralise StartEntity de SW
+static constexpr std::string_view PasReco;
 static constexpr std::string_view Reco_FileName("FILE_NAME");
 static constexpr std::string_view Reco_FileDescription("FILE_DESCRIPTION");
 static constexpr std::string_view Reco_FileSchema("FILE_SCHEMA");
-
-// -- Definition of the libraries --
 
 RWHeaderSection_ReadWriteModule::RWHeaderSection_ReadWriteModule()
 {
@@ -47,8 +33,6 @@ RWHeaderSection_ReadWriteModule::RWHeaderSection_ReadWriteModule()
   StepData_WriterLib::SetGlobal(this, protocol);
   Interface_ReaderLib::SetGlobal(this, protocol);
 }
-
-// --- Case Recognition ---
 
 int RWHeaderSection_ReadWriteModule::CaseStep(const TCollection_AsciiString& key) const
 {
@@ -61,7 +45,6 @@ int RWHeaderSection_ReadWriteModule::CaseStep(const TCollection_AsciiString& key
   return 0;
 }
 
-// --- External Mapping Case Recognition ---
 #ifdef OCCT_DEBUG
 int RWHeaderSection_ReadWriteModule::CaseStep(
   const NCollection_Sequence<TCollection_AsciiString>& types) const
@@ -81,9 +64,7 @@ int RWHeaderSection_ReadWriteModule::CaseStep(
 }
 #endif
 
-// --- External Mapping Recognition ---
-
-bool RWHeaderSection_ReadWriteModule::IsComplex(const int /*CN*/) const
+bool RWHeaderSection_ReadWriteModule::IsComplex(const int) const
 {
   return false;
 }
@@ -102,8 +83,6 @@ const std::string_view& RWHeaderSection_ReadWriteModule::StepType(const int CN) 
       return PasReco;
   }
 }
-
-// -- Reading of a file --
 
 void RWHeaderSection_ReadWriteModule::ReadStep(const int                                   CN,
                                                const occ::handle<StepData_StepReaderData>& data,
@@ -165,8 +144,6 @@ void RWHeaderSection_ReadWriteModule::ReadStep(const int                        
   return;
 }
 
-// -- Writing of a file --
-
 void RWHeaderSection_ReadWriteModule::WriteStep(const int                              CN,
                                                 StepData_StepWriter&                   SW,
                                                 const occ::handle<Standard_Transient>& ent) const
@@ -213,9 +190,7 @@ void RWHeaderSection_ReadWriteModule::WriteStep(const int                       
       DeclareAndCast(StepData_UndefinedEntity, und, ent);
       if (und.IsNull())
         break;
-      //  Parentheses gerees par StepWriter lui-meme
-      //   car en recevant le type PasReco, StepWriter ne l'affiche pas,
-      //   mais il gere les parentheses comme si de rien n etait
+
       if (und->IsComplex())
         SW.StartComplex();
       und->WriteParams(SW);

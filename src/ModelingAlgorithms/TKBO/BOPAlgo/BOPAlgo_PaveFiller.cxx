@@ -10,10 +10,7 @@
 
 namespace
 {
-  //=======================================================================
-  // function : BOPAlgo_PIOperation
-  // purpose  : List of operations to be supported by the Progress Indicator
-  //=======================================================================
+
   enum BOPAlgo_PIOperation
   {
     PIOperation_Prepare = 0,
@@ -34,8 +31,6 @@ namespace
   };
 } // namespace
 
-//=================================================================================================
-
 BOPAlgo_PaveFiller::BOPAlgo_PaveFiller()
 
 {
@@ -46,8 +41,6 @@ BOPAlgo_PaveFiller::BOPAlgo_PaveFiller()
   myAvoidBuildPCurve = false;
   myGlue             = BOPAlgo_GlueOff;
 }
-
-//=================================================================================================
 
 BOPAlgo_PaveFiller::BOPAlgo_PaveFiller(const occ::handle<NCollection_BaseAllocator>& theAllocator)
     : BOPAlgo_Algo(theAllocator),
@@ -64,56 +57,40 @@ BOPAlgo_PaveFiller::BOPAlgo_PaveFiller(const occ::handle<NCollection_BaseAllocat
   myGlue             = BOPAlgo_GlueOff;
 }
 
-//=================================================================================================
-
 BOPAlgo_PaveFiller::~BOPAlgo_PaveFiller()
 {
   Clear();
 }
-
-//=================================================================================================
 
 void BOPAlgo_PaveFiller::SetNonDestructive(const bool bFlag)
 {
   myNonDestructive = bFlag;
 }
 
-//=================================================================================================
-
 bool BOPAlgo_PaveFiller::NonDestructive() const
 {
   return myNonDestructive;
 }
-
-//=================================================================================================
 
 void BOPAlgo_PaveFiller::SetGlue(const BOPAlgo_GlueEnum theGlue)
 {
   myGlue = theGlue;
 }
 
-//=================================================================================================
-
 BOPAlgo_GlueEnum BOPAlgo_PaveFiller::Glue() const
 {
   return myGlue;
 }
-
-//=================================================================================================
 
 void BOPAlgo_PaveFiller::SetIsPrimary(const bool bFlag)
 {
   myIsPrimary = bFlag;
 }
 
-//=================================================================================================
-
 bool BOPAlgo_PaveFiller::IsPrimary() const
 {
   return myIsPrimary;
 }
-
-//=================================================================================================
 
 void BOPAlgo_PaveFiller::Clear()
 {
@@ -131,35 +108,25 @@ void BOPAlgo_PaveFiller::Clear()
   myIncreasedSS.Clear();
 }
 
-//=================================================================================================
-
 const BOPDS_DS& BOPAlgo_PaveFiller::DS()
 {
   return *myDS;
 }
-
-//=================================================================================================
 
 BOPDS_PDS BOPAlgo_PaveFiller::PDS()
 {
   return myDS;
 }
 
-//=================================================================================================
-
 const occ::handle<IntTools_Context>& BOPAlgo_PaveFiller::Context()
 {
   return myContext;
 }
 
-//=================================================================================================
-
 void BOPAlgo_PaveFiller::SetSectionAttribute(const BOPAlgo_SectionAttribute& theSecAttr)
 {
   mySectionAttribute = theSecAttr;
 }
-
-//=================================================================================================
 
 void BOPAlgo_PaveFiller::Init(const Message_ProgressRange& theRange)
 {
@@ -168,7 +135,7 @@ void BOPAlgo_PaveFiller::Init(const Message_ProgressRange& theRange)
     AddError(new BOPAlgo_AlertTooFewArguments);
     return;
   }
-  //
+
   Message_ProgressScope aPS(theRange, "Initialization of Intersection algorithm", 1);
   NCollection_List<TopoDS_Shape>::Iterator aIt(myArguments);
   for (; aIt.More(); aIt.Next())
@@ -179,46 +146,37 @@ void BOPAlgo_PaveFiller::Init(const Message_ProgressRange& theRange)
       return;
     }
   }
-  //
-  // 0 Clear
+
   Clear();
-  //
-  // 1.myDS
+
   myDS = new BOPDS_DS(myAllocator);
   myDS->SetArguments(myArguments);
   myDS->Init(myFuzzyValue);
-  //
-  // 2 myContext
+
   myContext = new IntTools_Context;
-  //
-  // 3.myIterator
+
   myIterator = new BOPDS_Iterator(myAllocator);
   myIterator->SetRunParallel(myRunParallel);
   myIterator->SetDS(myDS);
   myIterator->Prepare(myContext, myUseOBB, myFuzzyValue);
-  //
-  // 4 NonDestructive flag
+
   SetNonDestructive();
 }
-
-//=================================================================================================
 
 void BOPAlgo_PaveFiller::Perform(const Message_ProgressRange& theRange)
 {
   try
   {
     OCC_CATCH_SIGNALS
-    //
+
     PerformInternal(theRange);
   }
-  //
+
   catch (Standard_Failure const&)
   {
     AddError(new BOPAlgo_AlertIntersectionFailed);
   }
 }
-
-//=================================================================================================
 
 void BOPAlgo_PaveFiller::PerformInternal(const Message_ProgressRange& theRange)
 {
@@ -230,44 +188,43 @@ void BOPAlgo_PaveFiller::PerformInternal(const Message_ProgressRange& theRange)
     return;
   }
 
-  // Compute steps of the PI
   BOPAlgo_PISteps aSteps(PIOperation_Last);
   analyzeProgress(95, aSteps);
-  //
+
   Prepare(aPS.Next(aSteps.GetStep(PIOperation_Prepare)));
   if (HasErrors())
   {
     return;
   }
-  // 00
+
   PerformVV(aPS.Next(aSteps.GetStep(PIOperation_PerformVV)));
   if (HasErrors())
   {
     return;
   }
-  // 01
+
   PerformVE(aPS.Next(aSteps.GetStep(PIOperation_PerformVE)));
   if (HasErrors())
   {
     return;
   }
-  //
+
   UpdatePaveBlocksWithSDVertices();
-  // 11
+
   PerformEE(aPS.Next(aSteps.GetStep(PIOperation_PerformEE)));
   if (HasErrors())
   {
     return;
   }
   UpdatePaveBlocksWithSDVertices();
-  // 02
+
   PerformVF(aPS.Next(aSteps.GetStep(PIOperation_PerformVF)));
   if (HasErrors())
   {
     return;
   }
   UpdatePaveBlocksWithSDVertices();
-  // 12
+
   PerformEF(aPS.Next(aSteps.GetStep(PIOperation_PerformEF)));
   if (HasErrors())
   {
@@ -276,64 +233,60 @@ void BOPAlgo_PaveFiller::PerformInternal(const Message_ProgressRange& theRange)
   UpdatePaveBlocksWithSDVertices();
   UpdateInterfsWithSDVertices();
 
-  // Repeat Intersection with increased vertices
   RepeatIntersection(aPS.Next(aSteps.GetStep(PIOperation_RepeatIntersection)));
   if (HasErrors())
     return;
-  // Force intersection of edges after increase
-  // of the tolerance values of their vertices
+
   ForceInterfEE(aPS.Next(aSteps.GetStep(PIOperation_ForceInterfEE)));
   if (HasErrors())
   {
     return;
   }
-  // Force Edge/Face intersection after increase
-  // of the tolerance values of their vertices
+
   ForceInterfEF(aPS.Next(aSteps.GetStep(PIOperation_ForceInterfEF)));
   if (HasErrors())
   {
     return;
   }
-  //
-  // 22
+
   PerformFF(aPS.Next(aSteps.GetStep(PIOperation_PerformFF)));
   if (HasErrors())
   {
     return;
   }
-  //
+
   UpdateBlocksWithSharedVertices();
-  //
+
   myDS->RefineFaceInfoIn();
-  //
+
   MakeSplitEdges(aPS.Next(aSteps.GetStep(PIOperation_MakeSplitEdges)));
   if (HasErrors())
   {
     return;
   }
-  //
+
   UpdatePaveBlocksWithSDVertices();
-  //
+
   MakeBlocks(aPS.Next(aSteps.GetStep(PIOperation_MakeBlocks)));
   if (HasErrors())
   {
     return;
   }
-  //
+
   CheckSelfInterference();
-  //
+
   UpdateInterfsWithSDVertices();
   myDS->ReleasePaveBlocks();
   myDS->RefineFaceInfoOn();
-  //
+
   RemoveMicroEdges();
-  //
+
   MakePCurves(aPS.Next(aSteps.GetStep(PIOperation_MakePCurves)));
   if (HasErrors())
   {
     return;
   }
-  //
+
   ProcessDE(aPS.Next(aSteps.GetStep(PIOperation_ProcessDE)));
   if (HasErrors())
   {
@@ -341,11 +294,9 @@ void BOPAlgo_PaveFiller::PerformInternal(const Message_ProgressRange& theRange)
   }
 }
 
-//=================================================================================================
-
 void BOPAlgo_PaveFiller::RepeatIntersection(const Message_ProgressRange& theRange)
 {
-  // Find all vertices with increased tolerance
+
   NCollection_Map<int>  anExtraInterfMap;
   const int             aNbS = myDS->NbSourceShapes();
   Message_ProgressScope aPS(theRange, "Repeat intersection", 3);
@@ -354,14 +305,13 @@ void BOPAlgo_PaveFiller::RepeatIntersection(const Message_ProgressRange& theRang
     const BOPDS_ShapeInfo& aSI = myDS->ShapeInfo(i);
     if (aSI.ShapeType() != TopAbs_VERTEX)
       continue;
-    // Check if the tolerance of the original vertex has been increased
+
     if (myIncreasedSS.Contains(i))
     {
       anExtraInterfMap.Add(i);
       continue;
     }
 
-    // Check if the vertex created a new vertex with greater tolerance
     int nVSD;
     if (!myDS->HasShapeSD(i, nVSD))
       continue;
@@ -373,10 +323,7 @@ void BOPAlgo_PaveFiller::RepeatIntersection(const Message_ProgressRange& theRang
   if (anExtraInterfMap.IsEmpty())
     return;
 
-  // Update iterator of pairs of shapes with interfering boxes
   myIterator->IntersectExt(anExtraInterfMap);
-
-  // Perform intersections with vertices
 
   PerformVV(aPS.Next());
   if (HasErrors())
@@ -396,8 +343,6 @@ void BOPAlgo_PaveFiller::RepeatIntersection(const Message_ProgressRange& theRang
   UpdateInterfsWithSDVertices();
 }
 
-//=================================================================================================
-
 void BOPAlgo_PaveFiller::fillPIConstants(const double theWhole, BOPAlgo_PISteps& theSteps) const
 {
   if (!myNonDestructive)
@@ -406,11 +351,9 @@ void BOPAlgo_PaveFiller::fillPIConstants(const double theWhole, BOPAlgo_PISteps&
   }
 }
 
-//=================================================================================================
-
 void BOPAlgo_PaveFiller::fillPISteps(BOPAlgo_PISteps& theSteps) const
 {
-  // Get number of all intersecting pairs
+
   int aVVSize = 0, aVESize = 0, aEESize = 0, aVFSize = 0, aEFSize = 0, aFFSize = 0;
 
   myIterator->Initialize(TopAbs_VERTEX, TopAbs_VERTEX);

@@ -38,11 +38,6 @@
 #include <TopoDS_Shape.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//=======================================================================
-// function : Insert
-// purpose  : explore the faces and insert them
-//=======================================================================
-
 void HLRTopoBRep_DSFiller::Insert(
   const TopoDS_Shape&                                                              S,
   Contap_Contour&                                                                  FO,
@@ -53,7 +48,7 @@ void HLRTopoBRep_DSFiller::Insert(
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> ShapeMap;
   TopExp_Explorer                                        ex(S, TopAbs_FACE);
   DS.Clear();
-  bool withPCurve = true; // instead of nbIso != 0;
+  bool withPCurve = true;
   int  f          = 0;
 
   while (ex.More())
@@ -92,37 +87,18 @@ void HLRTopoBRep_DSFiller::Insert(
   ProcessEdges(DS);
 }
 
-//=======================================================================
-// function : InsertFace
-// purpose  : private, insert the outlines of a face
-//=======================================================================
-
-void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
+void HLRTopoBRep_DSFiller::InsertFace(const int,
                                       const TopoDS_Face& F,
                                       Contap_Contour&    FO,
                                       HLRTopoBRep_Data&  DS,
                                       const bool         withPCurve)
 {
-  // Insert the intersections of FO in DS
 
   const double                    tol  = BRep_Tool::Tolerance(F);
   NCollection_List<TopoDS_Shape>& IntL = DS.AddIntL(F);
   NCollection_List<TopoDS_Shape>& OutL = DS.AddOutL(F);
 
   TopoDS_Vertex VF, VL;
-  /*
-  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> VM;
-  TopExp_Explorer ex(F,TopAbs_EDGE);
-  while (ex.More()) {
-    const TopoDS_Edge& E = TopoDS::Edge(ex.Current());
-    if (BRep_Tool::IsClosed(E,F)) {
-      TopExp::Vertices(E,VF,VL);
-      VM.Add(VF);
-      VM.Add(VL);
-    }
-    ex.Next();
-  }
-  */
 
   const int NbLines = FO.NbLines();
   int       CurLine;
@@ -133,11 +109,10 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
     int                CurPoint;
     if (Line.TypeContour() == Contap_Restriction)
     {
-      // OutLine on restriction
+
       TopoDS_Edge E = (*(BRepAdaptor_Curve2d*)(Line.Arc().get())).Edge();
       OutL.Append(E);
       TopExp::Vertices(E, VF, VL);
-      // insert the Internal points.
 
       for (CurPoint = 1; CurPoint <= NbPoints; CurPoint++)
       {
@@ -215,88 +190,15 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
 
               case Contap_Walking:
               {
-                // copy the points
+
                 int ipF = int(parF);
                 int ipL = int(parL);
 
                 if (ipL - ipF < 1)
                 {
                   InsuffisantNumberOfPoints = true;
-                  // std::cout<<"\n !! Pb ds HLRTopoBRep_DSFiller.cxx (Contour App Nbp
-                  // <3)"<<std::endl;
                 }
-                /*
-                        else if(ipL-ipF < 6) {
-                          // compute the tangents
-                          Contap_SurfFunction& SFunc =
-                            FO.SurfaceFunction();
 
-                          bool isTg1,isTg2;
-                          gp_Vec tg1,tg2;
-                          gp_Vec2d uv1,uv2;
-                          math_Vector UV(1,2),F(1,1);
-
-                          Line.Point(ipF).ParametersOnS2(UV(1),UV(2));
-                          SFunc.Value(UV,F);
-                          isTg1 = SFunc.IsTangent();
-                          if (!isTg1) {
-                            tg1 = SFunc.Direction3d();
-                            if (withPCurve) uv1 = SFunc.Direction2d();
-                          }
-
-                          Line.Point(ipL).ParametersOnS2(UV(1),UV(2));
-                          SFunc.Value(UV,F);
-                          isTg2 = SFunc.IsTangent();
-                          if (!isTg2) {
-                            tg2 = SFunc.Direction3d();
-                            if (withPCurve) uv2 = SFunc.Direction2d();
-                          }
-                          // interpolate
-                          int nbp = ipL - ipF + 1;
-                          AppDef_MultiLine MLine(nbp);
-                          int nb2d = 0;
-                          if (withPCurve)  nb2d = 1;
-
-                          for (int i = 1; i <= nbp; i++) {
-                            AppDef_MultiPointConstraint MP(1, nb2d);
-                            MP.SetPoint(1,Line.Point(i + ipF - 1).Value());
-                            if (withPCurve) {
-                              Line.Point(i + ipF - 1).ParametersOnS2(UV(1),UV(2));
-                              MP.SetPoint2d(2,gp_Pnt2d(UV(1),UV(2)));
-                            }
-
-                            if (i == 1   && !isTg1) {
-                              MP.SetTang  (1,tg1);
-                              if (withPCurve) MP.SetTang2d(2,uv1);
-                            }
-                            if (i == nbp && !isTg2) {
-                              MP.SetTang  (1,tg2);
-                              if (withPCurve) MP.SetTang2d(2,uv2);
-                            }
-                            MLine.SetValue(i,MP);
-                          }
-                          AppDef_BSplineCompute interp;
-                          interp.Interpol(MLine);
-                          AppParCurves_MultiBSpCurve TheCurve = interp.Value();
-                          int Degree = TheCurve.Degree();
-                          NCollection_Array1<gp_Pnt>   Poles(1,TheCurve.NbPoles());
-                          TheCurve.Curve(1,Poles);
-                          C   = new Geom_BSplineCurve(Poles,
-                                          TheCurve.Knots(),
-                                          TheCurve.Multiplicities(),
-                                          Degree);
-                          if (withPCurve) {
-                            NCollection_Array1<gp_Pnt2d> Pol2d(1,TheCurve.NbPoles());
-                            TheCurve.Curve(2,Pol2d);
-                            C2d = new Geom2d_BSplineCurve(Pol2d,
-                                          TheCurve.Knots(),
-                                          TheCurve.Multiplicities(),
-                                          Degree);
-                          }
-                          first = 0;
-                          last = 1;
-                        }
-                */
                 else if (ipL - ipF < 5)
                 {
                   const int                  nbp = ipL - ipF + 1;
@@ -417,9 +319,6 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
                   else if (TOL2d > 0.1)
                     TOL2d = 0.1;
 
-                  //-- std::cout<<"\nHLRTopoBRep_DSFiller : nbp="<<nbp<<"  Tol3d="<<TOL3d<<"
-                  // Tol2d="<<TOL2d<<std::endl;
-
                   Approx.SetParameters(TOL3d, TOL2d, dmin, dmax, niter, 30, tg);
                   Approx.Perform(AppLine, true, true, false, 1, nbp);
                   if (!Approx.IsDone())
@@ -460,8 +359,6 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
               break;
             }
 
-            // compute the PCurve
-            // make the edge
             if (!InsuffisantNumberOfPoints)
             {
               TopoDS_Edge  E;
@@ -478,7 +375,6 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
                 B.UpdateEdge(E, C2d, F, BRep_Tool::Tolerance(F));
               }
 
-              // add the edge in the DS
               if (!E.IsNull())
                 IntL.Append(E);
             }
@@ -488,7 +384,6 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
     }
   }
 
-  // Correction of internal outlines: unite coinciding vertices
   const double                             SqTol = tol * tol;
   NCollection_List<TopoDS_Shape>::Iterator itl1(IntL);
   for (; itl1.More(); itl1.Next())
@@ -529,11 +424,6 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
   }
 }
 
-//=======================================================================
-// function : MakeVertex
-// purpose  : private, make a vertex from an intersection point
-//=======================================================================
-
 TopoDS_Vertex HLRTopoBRep_DSFiller::MakeVertex(const Contap_Point& P,
                                                const double        tol,
                                                HLRTopoBRep_Data&   DS)
@@ -547,7 +437,7 @@ TopoDS_Vertex HLRTopoBRep_DSFiller::MakeVertex(const Contap_Point& P,
   }
   else
   {
-    // if on arc, insert in the DS
+
     if (P.IsOnArc())
     {
       const TopoDS_Edge& E   = (*(BRepAdaptor_Curve2d*)(P.Arc().get())).Edge();
@@ -579,7 +469,7 @@ TopoDS_Vertex HLRTopoBRep_DSFiller::MakeVertex(const Contap_Point& P,
       }
       DS.AddOutV(V);
     }
-    // if internal create a vertex and insert in the DS
+
     else
     {
       B.MakeVertex(V, P.Value(), tol);
@@ -591,12 +481,6 @@ TopoDS_Vertex HLRTopoBRep_DSFiller::MakeVertex(const Contap_Point& P,
   }
   return V;
 }
-
-//=======================================================================
-// function : InsertVertex
-// purpose  : private, insert a vertex from an internal intersection point
-//           on resctriction
-//=======================================================================
 
 void HLRTopoBRep_DSFiller::InsertVertex(const Contap_Point& P,
                                         const double        tol,
@@ -638,11 +522,6 @@ void HLRTopoBRep_DSFiller::InsertVertex(const Contap_Point& P,
   }
   DS.AddIntV(V);
 }
-
-//=======================================================================
-// function : ProcessEdges
-// purpose  : private, split edges with outline vertices
-//=======================================================================
 
 void HLRTopoBRep_DSFiller::ProcessEdges(HLRTopoBRep_Data& DS)
 {

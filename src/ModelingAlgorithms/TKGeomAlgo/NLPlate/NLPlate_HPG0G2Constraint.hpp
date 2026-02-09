@@ -9,8 +9,6 @@ class gp_XY;
 class gp_XYZ;
 class Plate_D1;
 
-//! define a PinPoint G0+G2 Constraint used to load a Non Linear
-//! Plate
 class NLPlate_HPG0G2Constraint : public NLPlate_HPG0G1Constraint
 {
 

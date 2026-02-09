@@ -12,15 +12,12 @@ class TCollection_HAsciiString;
 class StepDimTol_GeometricToleranceTarget;
 class StepRepr_ShapeAspect;
 
-//! Representation of STEP entity GeometricToleranceWithDatumReference
 class StepDimTol_GeometricToleranceWithDatumReference : public StepDimTol_GeometricTolerance
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT StepDimTol_GeometricToleranceWithDatumReference();
 
-  //! Initialize all fields (own and inherited) AP214
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>& theGeometricTolerance_Name,
     const occ::handle<TCollection_HAsciiString>& theGeometricTolerance_Description,
@@ -28,7 +25,6 @@ public:
     const occ::handle<StepRepr_ShapeAspect>&     theGeometricTolerance_TolerancedShapeAspect,
     const occ::handle<NCollection_HArray1<occ::handle<StepDimTol_DatumReference>>>& theDatumSystem);
 
-  //! Initialize all fields (own and inherited) AP242
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>& theGeometricTolerance_Name,
     const occ::handle<TCollection_HAsciiString>& theGeometricTolerance_Description,
@@ -36,19 +32,15 @@ public:
     const StepDimTol_GeometricToleranceTarget&   theGeometricTolerance_TolerancedShapeAspect,
     const occ::handle<NCollection_HArray1<StepDimTol_DatumSystemOrReference>>& theDatumSystem);
 
-  //! Returns field DatumSystem AP214
   Standard_EXPORT occ::handle<NCollection_HArray1<occ::handle<StepDimTol_DatumReference>>>
                   DatumSystem() const;
 
-  //! Returns field DatumSystem AP242
   Standard_EXPORT occ::handle<NCollection_HArray1<StepDimTol_DatumSystemOrReference>>
                   DatumSystemAP242() const;
 
-  //! Set field DatumSystem AP214
   Standard_EXPORT void SetDatumSystem(
     const occ::handle<NCollection_HArray1<occ::handle<StepDimTol_DatumReference>>>& theDatumSystem);
 
-  //! Set field DatumSystem AP242
   Standard_EXPORT void SetDatumSystem(
     const occ::handle<NCollection_HArray1<StepDimTol_DatumSystemOrReference>>& theDatumSystem);
 

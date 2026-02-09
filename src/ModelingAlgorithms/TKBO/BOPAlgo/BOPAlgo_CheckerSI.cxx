@@ -18,8 +18,6 @@
 #include <TopoDS_Shape.hpp>
 #include <TopTools_ShapeMapHasher.hpp>
 
-//=================================================================================================
-
 class BOPAlgo_FaceSelfIntersect : public IntTools_FaceFace, public BOPAlgo_ParallelAlgo
 {
 
@@ -33,28 +31,20 @@ public:
   {
   }
 
-  //
   ~BOPAlgo_FaceSelfIntersect() override = default;
 
-  //
   void SetIndex(const int nF) { myIF = nF; }
 
-  //
   int IndexOfFace() const { return myIF; }
 
-  //
   void SetFace(const TopoDS_Face& aF) { myF = aF; }
 
-  //
   const TopoDS_Face& Face() const { return myF; }
 
-  //
   void SetTolF(const double aTolF) { myTolF = aTolF; }
 
-  //
   double TolF() const { return myTolF; }
 
-  //
   void Perform() override
   {
     Message_ProgressScope aPS(myProgressRange, nullptr, 1);
@@ -65,20 +55,13 @@ public:
     IntTools_FaceFace::Perform(myF, myF, myRunParallel);
   }
 
-  //
 protected:
   int         myIF;
   double      myTolF;
   TopoDS_Face myF;
 };
 
-// end of definition of class BOPAlgo_FaceSelfIntersect
-
-//=======================================================================
-
 typedef NCollection_Vector<BOPAlgo_FaceSelfIntersect> BOPAlgo_VectorOfFaceSelfIntersect;
-
-//=================================================================================================
 
 BOPAlgo_CheckerSI::BOPAlgo_CheckerSI()
 
@@ -88,16 +71,12 @@ BOPAlgo_CheckerSI::BOPAlgo_CheckerSI()
   SetAvoidBuildPCurve(true);
 }
 
-//=================================================================================================
-
 BOPAlgo_CheckerSI::~BOPAlgo_CheckerSI() = default;
-
-//=================================================================================================
 
 void BOPAlgo_CheckerSI::SetLevelOfCheck(const int theLevel)
 {
   int aNbLists;
-  //
+
   aNbLists = BOPDS_DS::NbInterfTypes();
   if (theLevel >= 0 && theLevel < aNbLists)
   {
@@ -105,90 +84,79 @@ void BOPAlgo_CheckerSI::SetLevelOfCheck(const int theLevel)
   }
 }
 
-//=================================================================================================
-
-void BOPAlgo_CheckerSI::Init(const Message_ProgressRange& /*theRange*/)
+void BOPAlgo_CheckerSI::Init(const Message_ProgressRange&)
 {
   Clear();
-  //
-  // 1. myDS
+
   myDS = new BOPDS_DS(myAllocator);
   myDS->SetArguments(myArguments);
   myDS->Init(myFuzzyValue);
-  //
-  // 2 myContext
+
   myContext = new IntTools_Context;
-  //
-  // 3.myIterator
+
   BOPDS_PIteratorSI theIterSI = new BOPDS_IteratorSI(myAllocator);
   theIterSI->SetDS(myDS);
   theIterSI->Prepare(myContext, myUseOBB, myFuzzyValue);
   theIterSI->UpdateByLevelOfCheck(myLevelOfCheck);
-  //
+
   myIterator = theIterSI;
 }
-
-//=================================================================================================
 
 void BOPAlgo_CheckerSI::Perform(const Message_ProgressRange& theRange)
 {
   try
   {
     OCC_CATCH_SIGNALS
-    //
+
     if (myArguments.Extent() != 1)
     {
       AddError(new BOPAlgo_AlertMultipleArguments);
       return;
     }
-    //
+
     Message_ProgressScope aPS(theRange, "Checking shape on self-intersection", 10);
-    // Perform intersection of sub shapes
+
     BOPAlgo_PaveFiller::Perform(aPS.Next(8));
     if (UserBreak(aPS))
     {
       return;
     }
-    //
+
     CheckFaceSelfIntersection(aPS.Next());
 
     Message_ProgressScope aPSZZ(aPS.Next(), nullptr, 4);
-    // Perform intersection with solids
+
     if (!HasErrors())
       PerformVZ(aPSZZ.Next());
-    //
+
     if (!HasErrors())
       PerformEZ(aPSZZ.Next());
-    //
+
     if (!HasErrors())
       PerformFZ(aPSZZ.Next());
-    //
+
     if (!HasErrors())
       PerformZZ(aPSZZ.Next());
-    //
+
     if (HasErrors())
       return;
 
-    // Treat the intersection results
     PostTreat();
   }
-  //
+
   catch (Standard_Failure const&)
   {
     AddError(new BOPAlgo_AlertIntersectionFailed);
   }
 }
 
-//=================================================================================================
-
 void BOPAlgo_CheckerSI::PostTreat()
 {
   int        i, aNb, n1, n2;
   BOPDS_Pair aPK;
-  //
+
   NCollection_Map<BOPDS_Pair>& aMPK = *((NCollection_Map<BOPDS_Pair>*)&myDS->Interferences());
 
-  // 0
   NCollection_Vector<BOPDS_InterfVV>& aVVs = myDS->InterfVV();
   aNb                                      = aVVs.Length();
   for (i = 0; i != aNb; ++i)
@@ -202,8 +170,7 @@ void BOPAlgo_CheckerSI::PostTreat()
     aPK.SetIndices(n1, n2);
     aMPK.Add(aPK);
   }
-  //
-  // 1
+
   NCollection_Vector<BOPDS_InterfVE>& aVEs = myDS->InterfVE();
   aNb                                      = aVEs.Length();
   for (i = 0; i != aNb; ++i)
@@ -217,8 +184,7 @@ void BOPAlgo_CheckerSI::PostTreat()
     aPK.SetIndices(n1, n2);
     aMPK.Add(aPK);
   }
-  //
-  // 2
+
   NCollection_Vector<BOPDS_InterfEE>& aEEs = myDS->InterfEE();
   aNb                                      = aEEs.Length();
   for (i = 0; i != aNb; ++i)
@@ -232,8 +198,7 @@ void BOPAlgo_CheckerSI::PostTreat()
     aPK.SetIndices(n1, n2);
     aMPK.Add(aPK);
   }
-  //
-  // 3
+
   NCollection_Vector<BOPDS_InterfVF>& aVFs = myDS->InterfVF();
   aNb                                      = aVFs.Length();
   for (i = 0; i != aNb; ++i)
@@ -247,8 +212,7 @@ void BOPAlgo_CheckerSI::PostTreat()
     aPK.SetIndices(n1, n2);
     aMPK.Add(aPK);
   }
-  //
-  // 4
+
   NCollection_Vector<BOPDS_InterfEF>& aEFs = myDS->InterfEF();
   aNb                                      = aEFs.Length();
   for (i = 0; i != aNb; ++i)
@@ -266,18 +230,17 @@ void BOPAlgo_CheckerSI::PostTreat()
     aPK.SetIndices(n1, n2);
     aMPK.Add(aPK);
   }
-  //
-  // 5
+
   NCollection_Vector<BOPDS_InterfFF>& aFFs = myDS->InterfFF();
   aNb                                      = aFFs.Length();
   for (i = 0; i != aNb; ++i)
   {
     bool bTangentFaces, bFlag;
     int  aNbC, aNbP, j, iFound;
-    //
+
     const BOPDS_InterfFF& aFF = aFFs(i);
     aFF.Indices(n1, n2);
-    //
+
     bTangentFaces                              = aFF.TangentFaces();
     aNbP                                       = aFF.Points().Length();
     const NCollection_Vector<BOPDS_Curve>& aVC = aFF.Curves();
@@ -286,9 +249,9 @@ void BOPAlgo_CheckerSI::PostTreat()
     {
       continue;
     }
-    //
+
     iFound = (n1 == n2) ? 1 : 0;
-    // case of self-intersection inside one face
+
     if (!iFound)
     {
       if (bTangentFaces)
@@ -315,23 +278,21 @@ void BOPAlgo_CheckerSI::PostTreat()
         }
       }
     }
-    //
+
     if (!iFound)
     {
       continue;
     }
-    //
+
     aPK.SetIndices(n1, n2);
     aMPK.Add(aPK);
   }
-  //
-  //
-  // 6
+
   NCollection_Vector<BOPDS_InterfVZ>& aVZs = myDS->InterfVZ();
   aNb                                      = aVZs.Length();
   for (i = 0; i != aNb; ++i)
   {
-    //
+
     const BOPDS_InterfVZ& aVZ = aVZs(i);
     aVZ.Indices(n1, n2);
     if (myDS->IsNewShape(n1) || myDS->IsNewShape(n2))
@@ -341,45 +302,40 @@ void BOPAlgo_CheckerSI::PostTreat()
     aPK.SetIndices(n1, n2);
     aMPK.Add(aPK);
   }
-  //
-  // 7
+
   NCollection_Vector<BOPDS_InterfEZ>& aEZs = myDS->InterfEZ();
   aNb                                      = aEZs.Length();
   for (i = 0; i != aNb; ++i)
   {
-    //
+
     const BOPDS_InterfEZ& aEZ = aEZs(i);
     aEZ.Indices(n1, n2);
     aPK.SetIndices(n1, n2);
     aMPK.Add(aPK);
   }
-  //
-  // 8
+
   NCollection_Vector<BOPDS_InterfFZ>& aFZs = myDS->InterfFZ();
   aNb                                      = aFZs.Length();
   for (i = 0; i != aNb; ++i)
   {
-    //
+
     const BOPDS_InterfFZ& aFZ = aFZs(i);
     aFZ.Indices(n1, n2);
     aPK.SetIndices(n1, n2);
     aMPK.Add(aPK);
   }
-  //
-  // 9
+
   NCollection_Vector<BOPDS_InterfZZ>& aZZs = myDS->InterfZZ();
   aNb                                      = aZZs.Length();
   for (i = 0; i != aNb; ++i)
   {
-    //
+
     const BOPDS_InterfZZ& aZZ = aZZs(i);
     aZZ.Indices(n1, n2);
     aPK.SetIndices(n1, n2);
     aMPK.Add(aPK);
   }
 }
-
-//=================================================================================================
 
 void BOPAlgo_CheckerSI::CheckFaceSelfIntersection(const Message_ProgressRange& theRange)
 {
@@ -397,13 +353,12 @@ void BOPAlgo_CheckerSI::CheckFaceSelfIntersection(const Message_ProgressRange& t
 
   Message_ProgressScope aPSOuter(theRange, nullptr, 1);
 
-  //
   for (int i = 0; i < aNbS; i++)
   {
     const BOPDS_ShapeInfo& aSI = myDS->ShapeInfo(i);
     if (aSI.ShapeType() != TopAbs_FACE)
       continue;
-    //
+
     const TopoDS_Face&  aF = (*(TopoDS_Face*)(&aSI.Shape()));
     BRepAdaptor_Surface BAsurf(aF, false);
     GeomAbs_SurfaceType aSurfType = BAsurf.GetType();
@@ -423,7 +378,7 @@ void BOPAlgo_CheckerSI::CheckFaceSelfIntersection(const Message_ProgressRange& t
     double aTolF = BRep_Tool::Tolerance(aF);
 
     BOPAlgo_FaceSelfIntersect& aFaceSelfIntersect = aVFace.Appended();
-    //
+
     aFaceSelfIntersect.SetRunParallel(myRunParallel);
     aFaceSelfIntersect.SetIndex(i);
     aFaceSelfIntersect.SetFace(aF);
@@ -438,18 +393,18 @@ void BOPAlgo_CheckerSI::CheckFaceSelfIntersection(const Message_ProgressRange& t
   {
     aVFace.ChangeValue(iF).SetProgressRange(aPSParallel.Next());
   }
-  //======================================================
+
   BOPTools_Parallel::Perform(myRunParallel, aVFace);
-  //======================================================
+
   if (UserBreak(aPSOuter))
   {
     return;
   }
-  //
+
   for (int k = 0; k < aNbFace; k++)
   {
     BOPAlgo_FaceSelfIntersect& aFaceSelfIntersect = aVFace(k);
-    //
+
     int nF = aFaceSelfIntersect.IndexOfFace();
 
     bool bIsDone = aFaceSelfIntersect.IsDone();
@@ -457,10 +412,10 @@ void BOPAlgo_CheckerSI::CheckFaceSelfIntersection(const Message_ProgressRange& t
     {
       const NCollection_Sequence<IntTools_Curve>&       aCvsX  = aFaceSelfIntersect.Lines();
       const NCollection_Sequence<IntTools_PntOn2Faces>& aPntsX = aFaceSelfIntersect.Points();
-      //
+
       int aNbCurves = aCvsX.Length();
       int aNbPoints = aPntsX.Length();
-      //
+
       if (aNbCurves || aNbPoints)
       {
         aPK.SetIndices(nF, nF);

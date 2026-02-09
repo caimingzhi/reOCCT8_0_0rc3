@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IGESBasic_Group.hpp>
 #include <IGESBasic_SingleParent.hpp>
@@ -37,19 +26,17 @@ IGESSelect_SelectBasicGeom::IGESSelect_SelectBasicGeom(const int mode)
   thegeom = mode;
 }
 
-bool IGESSelect_SelectBasicGeom::Explore(const int /*level*/,
+bool IGESSelect_SelectBasicGeom::Explore(const int,
                                          const occ::handle<Standard_Transient>& ent,
-                                         const Interface_Graph& /*G*/,
+                                         const Interface_Graph&,
                                          Interface_EntityIterator& explored) const
 {
-  //  thegeom > 0 : curves3d   < 0 : surfaces   == 0 : curves3d + surfaces libres
 
   DeclareAndCast(IGESData_IGESEntity, igesent, ent);
   if (igesent.IsNull())
     return false;
   int igt = igesent->TypeNumber();
 
-  //   CompositeCurve : a decomposer ?
   if (igt == 102 && thegeom == 2)
   {
     DeclareAndCast(IGESGeom_CompositeCurve, cmc, ent);
@@ -59,22 +46,16 @@ bool IGESSelect_SelectBasicGeom::Explore(const int /*level*/,
     return true;
   }
 
-  //   Lignes en general. Attention CopiousData, aux variantes "habillage"
   if (igt == 106)
     return (igesent->FormNumber() < 20);
   if ((igt >= 100 && igt <= 106) || igt == 110 || igt == 112 || igt == 116 || igt == 126
       || igt == 130)
     return (thegeom >= 0);
 
-  //   Surfaces LIBRES, car il n y a pas d autre moyen de les reperer
-  //   (l ideal serait de prendre les bords naturels)
-  //   Ou surfaces debarassees de leurs contours
   if (igt == 114 || igt == 118 || igt == 120 || igt == 122 || igt == 128 || igt == 140
       || igt == 190)
     return (thegeom <= 0);
 
-  //   Plan 108
-  //   mode surface : on retourne tout le Plane sinon c est inexploitable
   if (igt == 108)
   {
     DeclareAndCast(IGESGeom_Plane, pln, ent);
@@ -84,9 +65,8 @@ bool IGESSelect_SelectBasicGeom::Explore(const int /*level*/,
   }
 
   if (igt == 116)
-    return (thegeom >= 0); // on point, ca va bien ...
+    return (thegeom >= 0);
 
-  //   TrimmedSurface 144
   if (igt == 144)
   {
     DeclareAndCast(IGESGeom_TrimmedSurface, trs, ent);
@@ -102,7 +82,6 @@ bool IGESSelect_SelectBasicGeom::Explore(const int /*level*/,
     return true;
   }
 
-  //   CurveOnSurface 142
   if (igt == 142 && thegeom >= 0)
   {
     DeclareAndCast(IGESGeom_CurveOnSurface, crf, ent);
@@ -110,7 +89,6 @@ bool IGESSelect_SelectBasicGeom::Explore(const int /*level*/,
     return true;
   }
 
-  //   Boundary 141
   if (igt == 141 && thegeom >= 0)
   {
     DeclareAndCast(IGESGeom_Boundary, bnd, ent);
@@ -120,7 +98,6 @@ bool IGESSelect_SelectBasicGeom::Explore(const int /*level*/,
     return (nb > 0);
   }
 
-  //   BoundedSurface 143
   if (igt == 143)
   {
     DeclareAndCast(IGESGeom_BoundedSurface, bns, ent);
@@ -137,7 +114,6 @@ bool IGESSelect_SelectBasicGeom::Explore(const int /*level*/,
     return true;
   }
 
-  //  SingleParent
   if (igt == 402 && igesent->FormNumber() == 9)
   {
     DeclareAndCast(IGESBasic_SingleParent, sp, ent);
@@ -150,7 +126,6 @@ bool IGESSelect_SelectBasicGeom::Explore(const int /*level*/,
     return true;
   }
 
-  //  Groups ... en dernier de la serie 402
   if (igt == 402)
   {
     DeclareAndCast(IGESBasic_Group, gr, ent);
@@ -162,7 +137,6 @@ bool IGESSelect_SelectBasicGeom::Explore(const int /*level*/,
     return true;
   }
 
-  //  ManifoldSolid 186  -> Shells
   if (igt == 186)
   {
     DeclareAndCast(IGESSolid_ManifoldSolid, msb, ent);
@@ -173,7 +147,6 @@ bool IGESSelect_SelectBasicGeom::Explore(const int /*level*/,
     return true;
   }
 
-  //  Shell 514 -> Faces
   if (igt == 514)
   {
     DeclareAndCast(IGESSolid_Shell, sh, ent);
@@ -183,7 +156,6 @@ bool IGESSelect_SelectBasicGeom::Explore(const int /*level*/,
     return true;
   }
 
-  //  Face 510 -> Loops
   if (igt == 510)
   {
     DeclareAndCast(IGESSolid_Face, fc, ent);
@@ -198,7 +170,6 @@ bool IGESSelect_SelectBasicGeom::Explore(const int /*level*/,
     return true;
   }
 
-  //  Loop 508 -> Curves 3D (enfin !)  mais via EdgeList ...
   if (igt == 508 && thegeom >= 0)
   {
     DeclareAndCast(IGESSolid_Loop, lp, ent);
@@ -214,7 +185,6 @@ bool IGESSelect_SelectBasicGeom::Explore(const int /*level*/,
     return true;
   }
 
-  //  Pas trouve
   return false;
 }
 
@@ -237,7 +207,6 @@ bool IGESSelect_SelectBasicGeom::SubCurves(const occ::handle<IGESData_IGESEntity
     return false;
   int igt = ent->TypeNumber();
 
-  //   CompositeCurve : a decomposer ?
   if (igt == 102)
   {
     DeclareAndCast(IGESGeom_CompositeCurve, cmc, ent);
@@ -247,13 +216,11 @@ bool IGESSelect_SelectBasicGeom::SubCurves(const occ::handle<IGESData_IGESEntity
     return true;
   }
 
-  //   Lignes en general. Attention CopiousData, aux variantes "habillage"
   if (igt == 106)
     return (ent->FormNumber() < 20);
   if ((igt >= 100 && igt <= 106) || igt == 110 || igt == 112 || igt == 116 || igt == 126
       || igt == 130)
     return true;
 
-  //  Sinon
   return false;
 }

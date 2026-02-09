@@ -9,25 +9,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_IntegerArrayDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_IntegerArrayDriver::BinMDataStd_IntegerArrayDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_IntegerArray)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_IntegerArrayDriver::NewEmpty() const
 {
   return new TDataStd_IntegerArray();
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 
 bool BinMDataStd_IntegerArrayDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                            const occ::handle<TDF_Attribute>& theTarget,
@@ -56,8 +47,7 @@ bool BinMDataStd_IntegerArrayDriver::Paste(const BinObjMgt_Persistent&       the
       aDelta = (aDeltaValue != 0);
   }
 #ifdef OCCT_DEBUG
-  // std::cout << "Current Document Format Version = " <<
-  // theRelocTable.GetHeaderData()->StorageVersion().IntegerValue() <<std::endl;
+
 #endif
   anAtt->SetDelta(aDelta);
 
@@ -66,11 +56,6 @@ bool BinMDataStd_IntegerArrayDriver::Paste(const BinObjMgt_Persistent&       the
                               theRelocTable.GetHeaderData()->StorageVersion().IntegerValue());
   return true;
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 
 void BinMDataStd_IntegerArrayDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
@@ -87,7 +72,6 @@ void BinMDataStd_IntegerArrayDriver::Paste(
   theTarget.PutIntArray(aPtr, aLength);
   theTarget << (uint8_t)(anAtt->GetDelta() ? 1 : 0);
 
-  // process user defined guid
   if (anAtt->ID() != TDataStd_IntegerArray::GetID())
     theTarget << anAtt->ID();
 }

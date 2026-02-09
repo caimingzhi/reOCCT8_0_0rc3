@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Prs3d_DatumAspect.hpp>
 
@@ -18,15 +6,13 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Prs3d_DatumAspect, Prs3d_BasicAspect)
 
-//=================================================================================================
-
 Prs3d_DatumAspect::Prs3d_DatumAspect()
     : myAxes(Prs3d_DatumAxes_XYZAxes),
       myToDrawLabels(true),
       myToDrawArrows(true)
 {
-  const double         aDefaultLength = 100.0; // default axis length, the same as in context
-  const Quantity_Color aDefaultColor(Quantity_NOC_LIGHTSTEELBLUE4); // default axis color
+  const double         aDefaultLength = 100.0;
+  const Quantity_Color aDefaultColor(Quantity_NOC_LIGHTSTEELBLUE4);
 
   myAttributes[Prs3d_DatumAttribute_XAxisLength]                = aDefaultLength;
   myAttributes[Prs3d_DatumAttribute_YAxisLength]                = aDefaultLength;
@@ -49,7 +35,7 @@ Prs3d_DatumAspect::Prs3d_DatumAspect()
       aColor = myArrowAspect->Aspect()->Color();
     }
 
-    if (aPart != Prs3d_DatumParts_Origin) // origin point is used only in shading mode
+    if (aPart != Prs3d_DatumParts_Origin)
     {
       myLineAspects[aPart] = new Prs3d_LineAspect(aColor, Aspect_TOL_SOLID, 1.0);
     }
@@ -63,8 +49,6 @@ Prs3d_DatumAspect::Prs3d_DatumAspect()
   myTextAspects[Prs3d_DatumParts_YAxis] = new Prs3d_TextAspect();
   myTextAspects[Prs3d_DatumParts_ZAxis] = new Prs3d_TextAspect();
 }
-
-//=================================================================================================
 
 bool Prs3d_DatumAspect::DrawDatumPart(Prs3d_DatumParts thePart) const
 {
@@ -96,8 +80,6 @@ bool Prs3d_DatumAspect::DrawDatumPart(Prs3d_DatumParts thePart) const
   return false;
 }
 
-//=================================================================================================
-
 double Prs3d_DatumAspect::AxisLength(Prs3d_DatumParts thePart) const
 {
   switch (thePart)
@@ -113,8 +95,6 @@ double Prs3d_DatumAspect::AxisLength(Prs3d_DatumParts thePart) const
   }
   return 0.0;
 }
-
-//=================================================================================================
 
 Prs3d_DatumParts Prs3d_DatumAspect::ArrowPartForAxis(Prs3d_DatumParts thePart)
 {
@@ -134,8 +114,6 @@ Prs3d_DatumParts Prs3d_DatumAspect::ArrowPartForAxis(Prs3d_DatumParts thePart)
   }
   return Prs3d_DatumParts_None;
 }
-
-//=================================================================================================
 
 void Prs3d_DatumAspect::CopyAspectsFrom(const occ::handle<Prs3d_DatumAspect>& theOther)
 {
@@ -162,8 +140,6 @@ void Prs3d_DatumAspect::CopyAspectsFrom(const occ::handle<Prs3d_DatumAspect>& th
     }
   }
 }
-
-//=================================================================================================
 
 void Prs3d_DatumAspect::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

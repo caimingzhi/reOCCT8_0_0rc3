@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_TessellatedWire;
 
-//! Read & Write tool for TessellatedWire
 class RWStepVisual_RWTessellatedWire
 {
 

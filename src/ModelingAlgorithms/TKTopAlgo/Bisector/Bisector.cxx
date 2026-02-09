@@ -3,8 +3,6 @@
 #include <gp_Pnt2d.hpp>
 #include <gp_Vec2d.hpp>
 
-//=================================================================================================
-
 bool Bisector::IsConvex(const occ::handle<Geom2d_Curve>& Cu, const double Sign)
 {
 

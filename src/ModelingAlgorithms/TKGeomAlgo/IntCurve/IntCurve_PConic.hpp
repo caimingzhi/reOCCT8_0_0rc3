@@ -12,9 +12,6 @@ class gp_Parab2d;
 class gp_Hypr2d;
 class gp_Lin2d;
 
-//! This class represents a conic from gp as a
-//! parametric curve ( in order to be used by the
-//! class PConicTool from IntCurve).
 class IntCurve_PConic
 {
 public:
@@ -32,22 +29,14 @@ public:
 
   Standard_EXPORT IntCurve_PConic(const gp_Lin2d& L);
 
-  //! EpsX is a internal tolerance used in math
-  //! algorithms, usually about 1e-10
-  //! (See FunctionAllRoots for more details)
   Standard_EXPORT void SetEpsX(const double EpsDist);
 
-  //! Accuracy is the number of samples used to
-  //! approximate the parametric curve on its domain.
   Standard_EXPORT void SetAccuracy(const int Nb);
 
   int Accuracy() const;
 
   double EpsX() const;
 
-  //! The Conics are manipulated as objects which only
-  //! depend on three parameters : Axis and two Real from Standards.
-  //! Type Curve is used to select the correct Conic.
   GeomAbs_CurveType TypeCurve() const;
 
   const gp_Ax22d& Axis2() const;

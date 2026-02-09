@@ -12,11 +12,7 @@
 #include <StepRepr_ShapeAspectRelationship.hpp>
 #include <StepShape_DimensionalSize.hpp>
 
-//=================================================================================================
-
 StepAP242_IdAttributeSelect::StepAP242_IdAttributeSelect() = default;
-
-//=================================================================================================
 
 int StepAP242_IdAttributeSelect::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {

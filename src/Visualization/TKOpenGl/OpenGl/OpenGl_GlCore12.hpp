@@ -2,13 +2,12 @@
 
 #include <OpenGl_GlCore11.hpp>
 
-//! OpenGL 1.2 core based on 1.1 version.
 struct OpenGl_GlCore12 : public OpenGl_GlCore11Fwd
 {
 private:
   typedef OpenGl_GlCore11Fwd theBaseClass_t;
 
-public: //! @name OpenGL 1.2 additives to 1.1
+public:
   using theBaseClass_t::glBlendColor;
   using theBaseClass_t::glBlendEquation;
 

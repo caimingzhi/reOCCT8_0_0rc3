@@ -1,34 +1,7 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// szv#4 S4163
 
 #include <Interface_IntList.hpp>
 
-//   Data organization :
-//   theents value : 0 no reference
-//    > 0 : one reference, here is the value; no list
-//    < 0 : a list of references; we store <rank>, it starts at <rank>+1
-//   the list is in therefs and is thus constituted :
-//   list of negative values, ending with a positive value :
-//   from <rank>+1 to <rank>+nb , <rank>+1 to <rank>+nb-1 are negative and
-//    <rank>+nb is negative
-//   a zero means : free space
-//   Pre-reservation : <rank> notes the current number, in strict positive
-//   It must then be incremented at each addition
-//   Contextual usage, you must call SetNumber(num < 0) to exploit this
-//   info and Add(ref < 0) to manage it.
-//   If it is not present, we switch to current mode
 Interface_IntList::Interface_IntList()
 {
   thenbe = thenbr = thenum = thecount = therank = 0;
@@ -42,7 +15,7 @@ Interface_IntList::Interface_IntList(const int nbe)
 Interface_IntList::Interface_IntList(const Interface_IntList& other, const bool copied)
 {
   thenbe = other.NbEntities();
-  thenum = thecount = therank = 0; // szv#4:S4163:12Mar99 initialization needed
+  thenum = thecount = therank = 0;
   other.Internals(thenbr, theents, therefs);
   if (copied)
   {
@@ -98,8 +71,7 @@ void Interface_IntList::SetNbEntities(const int nbe)
 
 void Interface_IntList::SetNumber(const int number)
 {
-  //  Pre-reservation usage : to be requested specifically ! -> optimization
-  //   <preres> verifies that the pre-reservation is valid
+
   if (number < 0)
   {
     if (thenum == -number || number < -thenbe)
@@ -127,7 +99,7 @@ void Interface_IntList::SetNumber(const int number)
     if (preres)
       return;
   }
-  //  Current usage. The following in current usage or if no pre-reservation
+
   else if (number > 0)
   {
     if (thenum == number || number > thenbe)
@@ -171,7 +143,7 @@ void Interface_IntList::SetNumber(const int number)
   {
     thecount = 0;
     therank  = -1;
-  } // val == -1 reste
+  }
 }
 
 int Interface_IntList::Number() const
@@ -221,14 +193,14 @@ void Interface_IntList::SetRedefined(const bool mode)
 
 void Interface_IntList::Reservate(const int count)
 {
-  //  Reservate (-count) = Reservate (count) + allocation on current entity + 1
+
   if (count < 0)
   {
     Reservate(-count - 1);
     if (thenum == 0)
       return;
     thenbr++;
-    therefs->SetValue(thenbr, 0); // will contain the number ...
+    therefs->SetValue(thenbr, 0);
     therank = thenbr;
     theents->SetValue(thenum, -thenbr);
     thenbr -= count;
@@ -236,7 +208,7 @@ void Interface_IntList::Reservate(const int count)
   }
   int up, oldup = 0;
   if (thenbr == 0)
-  { //  i.e. not yet allocated ...
+  {
     up = thenbe / 2 + 1;
     if (up < 2)
       up = 2;
@@ -244,11 +216,11 @@ void Interface_IntList::Reservate(const int count)
       up = count * 3 / 2;
     therefs = new NCollection_HArray1<int>(0, up);
     therefs->Init(0);
-    thenbr = 2; // we start after (convenience of addressing)
+    thenbr = 2;
   }
   oldup = therefs->Upper();
   if (thenbr + count < oldup)
-    return; // OK
+    return;
   up = oldup * 3 / 2 + count;
   if (up < 2)
     up = 2;
@@ -263,7 +235,7 @@ void Interface_IntList::Add(const int ref)
 {
   if (thenum == 0)
     return;
-  //   ref < 0 : pre-reservation
+
   if (ref < 0)
   {
     Add(-ref);
@@ -296,20 +268,20 @@ void Interface_IntList::Add(const int ref)
     thecount++;
   }
   else if (thenbr == therank + thecount)
-  { // free space at end
+  {
     therefs->SetValue(thenbr, -therefs->Value(thenbr));
     therefs->SetValue(thenbr + 1, ref);
     thenbr++;
     thecount++;
   }
   else if (therefs->Value(therank + thecount + 1) == 0)
-  { // free space after
+  {
     therefs->SetValue(therank + thecount, -therefs->Value(therank + thecount));
     therefs->SetValue(therank + thecount + 1, ref);
     thecount++;
   }
   else
-  { // copy further !
+  {
     Reservate(thecount + 2);
     int rank = therank;
     therank  = thenbr;
@@ -360,13 +332,13 @@ int Interface_IntList::Value(const int num) const
 
 bool Interface_IntList::Remove(const int)
 {
-  return false; // not yet implemented
+  return false;
 }
 
 void Interface_IntList::Clear()
 {
   if (thenbr == 0)
-    return; // already clear
+    return;
   int i, low, up;
   low = theents->Lower();
   up  = theents->Upper();

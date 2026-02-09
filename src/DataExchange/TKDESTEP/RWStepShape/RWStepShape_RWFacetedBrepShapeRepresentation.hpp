@@ -11,7 +11,6 @@ class StepShape_FacetedBrepShapeRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for FacetedBrepShapeRepresentation
 class RWStepShape_RWFacetedBrepShapeRepresentation
 {
 public:

@@ -32,15 +32,12 @@ public:
                                         const int  NbIncrements          = 4,
                                         const bool UVSliding             = false);
 
-  //! returns True if all has been correctly done.
   Standard_EXPORT bool IsDone() const;
 
   Standard_EXPORT void destroy();
 
   ~NLPlate_NLPlate() { destroy(); }
 
-  //! reset the Plate in the initial state
-  //! ( same as after Create((Surface))
   Standard_EXPORT void Init();
 
   Standard_EXPORT gp_XYZ Evaluate(const gp_XY& point2d) const;

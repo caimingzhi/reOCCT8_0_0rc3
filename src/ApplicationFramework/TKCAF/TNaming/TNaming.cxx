@@ -30,9 +30,6 @@
 #include <NCollection_List.hpp>
 #include <NCollection_Map.hpp>
 
-// CopyShape
-//=================================================================================================
-
 static void MapShapes(const TopoDS_Shape& SCible,
                       const TopoDS_Shape& SSource,
                       NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& M)
@@ -48,8 +45,6 @@ static void MapShapes(const TopoDS_Shape& SCible,
     isource.Next();
   }
 }
-
-//=================================================================================================
 
 static void MapShapes(const TDF_Label& LCible,
                       const TDF_Label& LSource,
@@ -83,8 +78,6 @@ static void MapShapes(const TDF_Label& LCible,
   }
 }
 
-//=================================================================================================
-
 static void SubstituteShape(
   const TopoDS_Shape&                                                              oldShape,
   const TopoDS_Shape&                                                              newShape,
@@ -105,8 +98,6 @@ static void SubstituteShape(
   amap.UnBind(oldShape);
   amap.Bind(newShape, pos);
 }
-
-//=================================================================================================
 
 TopoDS_Shape TNaming::MakeShape(const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& MS)
 {
@@ -132,15 +123,12 @@ TopoDS_Shape TNaming::MakeShape(const NCollection_Map<TopoDS_Shape, TopTools_Sha
   return TopoDS_Shape();
 }
 
-//=================================================================================================
-
 void TNaming::Substitute(
   const TDF_Label&                                                          LSource,
   const TDF_Label&                                                          LCible,
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& M)
 {
-  // attention pour etre en parallele au niveau structure il faut que Lciblble corresponde au
-  // premier fils recopie
+
   MapShapes(LCible, LSource, M);
   occ::handle<TNaming_UsedShapes> US;
   LCible.Root().FindAttribute(TNaming_UsedShapes::GetID(), US);
@@ -153,8 +141,6 @@ void TNaming::Substitute(
   }
 }
 
-//=================================================================================================
-
 bool TNaming::SubstituteSShape(const TDF_Label& Lab, const TopoDS_Shape& From, TopoDS_Shape& To)
 {
   occ::handle<TNaming_UsedShapes> US;
@@ -166,13 +152,11 @@ bool TNaming::SubstituteSShape(const TDF_Label& Lab, const TopoDS_Shape& From, T
   pos = amap.ChangeFind(To);
   if (!amap.UnBind(To))
     return false;
-  // update shape
+
   To.Orientation(From.Orientation());
   pos->Shape(To);
   return amap.Bind(To, pos);
 }
-
-//=================================================================================================
 
 static bool Rebuild(const TopoDS_Shape&                                                       S,
                     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& M)
@@ -184,7 +168,6 @@ static bool Rebuild(const TopoDS_Shape&                                         
   BRep_Builder    B;
   TopoDS_Iterator iteS(S.Oriented(TopAbs_FORWARD));
 
-  // Reconstruction des sous shapes si necessaire.
   for (; iteS.More(); iteS.Next())
   {
     const TopoDS_Shape& SS = iteS.Value();
@@ -197,7 +180,6 @@ static bool Rebuild(const TopoDS_Shape&                                         
     return true;
   }
 
-  // Reconstruction de S
   TopoDS_Shape NewS = S.Oriented(TopAbs_FORWARD);
   NewS.EmptyCopy();
   if (NewS.ShapeType() == TopAbs_EDGE)
@@ -217,15 +199,11 @@ static bool Rebuild(const TopoDS_Shape&                                         
   return IsModified;
 }
 
-//=================================================================================================
-
 void TNaming::Update(const TDF_Label&                                                          L,
                      NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& M)
 
 {
-  // Reconstruction des shapes de L suite aux substitutions decrites dans la map M.
-  //  ex : si une face est remplacee par une autre il faut reconstruire les shapes
-  //       qui contiennent cette face.
+
   occ::handle<TNaming_UsedShapes> US;
   L.Root().FindAttribute(TNaming_UsedShapes::GetID(), US);
   NCollection_DataMap<TopoDS_Shape, TNaming_PtrRefShape, TopTools_ShapeMapHasher>& amap = US->Map();
@@ -248,16 +226,11 @@ void TNaming::Update(const TDF_Label&                                           
     }
   }
 
-  // IF the shapes in sub-labels are sub-shapes of L's shapes,
-  // if L's shapes have not changed, the sub-label shapes will not
-  // be changed either.
   for (TDF_ChildIterator ciL(L); ciL.More(); ciL.Next())
   {
     TNaming::Update(ciL.Value(), M);
   }
 }
-
-//=================================================================================================
 
 static void BuildCompound(TopoDS_Compound& C, const TDF_Label& L)
 {
@@ -278,8 +251,6 @@ static void BuildCompound(TopoDS_Compound& C, const TDF_Label& L)
     BuildCompound(C, ciL.Value());
   }
 }
-
-//=================================================================================================
 
 static void BuildMap(const TDF_Label&          L,
                      BRepBuilderAPI_Transform& Transformer,
@@ -305,8 +276,6 @@ static void BuildMap(const TDF_Label&          L,
     BuildMap(ciL.Value(), Transformer, M);
   }
 }
-
-//=================================================================================================
 
 static void LoadNamedShape(TNaming_Builder&    B,
                            TNaming_Evolution   Evol,
@@ -345,8 +314,6 @@ static void LoadNamedShape(TNaming_Builder&    B,
   }
 }
 
-//=================================================================================================
-
 void TNaming::Displace(const TDF_Label& L, const TopLoc_Location& Loc, const bool WithOld)
 {
 
@@ -356,7 +323,7 @@ void TNaming::Displace(const TDF_Label& L, const TopLoc_Location& Loc, const boo
   TNaming_Iterator               it(L);
 
   if (it.More())
-  { // dp on continue de visiter les fils meme s'il y a pas de shape
+  {
     Evol = it.Evolution();
     for (; it.More(); it.Next())
     {
@@ -387,8 +354,6 @@ void TNaming::Displace(const TDF_Label& L, const TopLoc_Location& Loc, const boo
     Displace(ciL.Value(), Loc, WithOld);
   }
 }
-
-//=================================================================================================
 
 static void Replace(
   const TDF_Label&                                                                L,
@@ -428,42 +393,26 @@ static void Replace(
   }
 }
 
-//=================================================================================================
-
 void TNaming::Transform(const TDF_Label& L, const gp_Trsf& T)
 {
 
-  //--------------------------------------------------------------------
-  // Construction du compound qui contient tous les shapes sous le label
-  // et ses fils.
-  //--------------------------------------------------------------------
   TopoDS_Compound CompShape;
   BRep_Builder    B;
   B.MakeCompound(CompShape);
 
   BuildCompound(CompShape, L);
 
-  //----------------------------
-  // Transformation du compound.
-  //-----------------------------
   BRepBuilderAPI_Transform Transformer(CompShape, T);
 
-  //-----------------------------------------------------------
-  // Remplacement des shapes initiaux par les shapes transformes.
-  //-----------------------------------------------------------
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> M;
   BuildMap(L, Transformer, M);
   Replace(L, M);
 }
 
-//=================================================================================================
-
 void TNaming::IDList(NCollection_List<Standard_GUID>& anIDList)
 {
   anIDList.Append(TNaming_NamedShape::GetID());
 }
-
-//=================================================================================================
 
 void TNaming::Replicate(const occ::handle<TNaming_NamedShape>& NS,
                         const gp_Trsf&                         T,
@@ -473,29 +422,23 @@ void TNaming::Replicate(const occ::handle<TNaming_NamedShape>& NS,
   TNaming::Replicate(SH, T, L);
 }
 
-//=================================================================================================
-
 void TNaming::Replicate(const TopoDS_Shape& SH, const gp_Trsf& T, const TDF_Label& L)
 {
-  // transform
+
   BRepBuilderAPI_Transform opeTrsf(T);
   if (SH.ShapeType() == TopAbs_FACE || SH.ShapeType() == TopAbs_WIRE)
   {
-    opeTrsf.Perform(SH, true); // for the prism pattern
+    opeTrsf.Perform(SH, true);
   }
   else
   {
     opeTrsf.Perform(SH, false);
   }
   const TopoDS_Shape& newSH = opeTrsf.Shape();
-  // BRepLib::UpdateTolerances(newSH, true);
-
-  // principal shape
 
   TNaming_Builder Builder(L);
   Builder.Generated(SH, newSH);
 
-  // sub shape
   TopAbs_ShapeEnum SST = TopAbs_FACE;
   if (SH.ShapeType() == TopAbs_FACE || SH.ShapeType() == TopAbs_WIRE)
     SST = TopAbs_EDGE;
@@ -509,8 +452,6 @@ void TNaming::Replicate(const TopoDS_Shape& SH, const gp_Trsf& T, const TDF_Labe
   }
 }
 
-//=================================================================================================
-
 static TopoDS_Shape ShapeCopy(
   const TopoDS_Shape&                                                       S,
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& M)
@@ -519,11 +460,7 @@ static TopoDS_Shape ShapeCopy(
     return S;
   if (M.IsBound(S))
     return M(S);
-  //----------------------------
-  // construction de la copie.
-  // 1- copie des sous shapes.
-  // 2- reconstruction du TShape
-  //----------------------------
+
   BRep_Builder    B;
   TopoDS_Iterator it(S.Oriented(TopAbs_FORWARD));
 
@@ -559,8 +496,6 @@ static TopoDS_Shape ShapeCopy(
   M.Bind(S, NewS);
   return NewS;
 }
-
-//=================================================================================================
 
 void TNaming::ChangeShapes(
   const TDF_Label&                                                          L,
@@ -600,8 +535,6 @@ void TNaming::ChangeShapes(
   }
 }
 
-//=================================================================================================
-
 Standard_OStream& TNaming::Print(const TNaming_Evolution EVOL, Standard_OStream& s)
 {
   switch (EVOL)
@@ -637,8 +570,6 @@ Standard_OStream& TNaming::Print(const TNaming_Evolution EVOL, Standard_OStream&
   }
   return s;
 }
-
-//=================================================================================================
 
 Standard_OStream& TNaming::Print(const TNaming_NameType NAME, Standard_OStream& s)
 {
@@ -714,8 +645,6 @@ Standard_OStream& TNaming::Print(const TNaming_NameType NAME, Standard_OStream& 
   return s;
 }
 
-//=================================================================================================
-
 Standard_OStream& TNaming::Print(const TDF_Label& ACCESS, Standard_OStream& s)
 {
   occ::handle<TNaming_UsedShapes> US;
@@ -728,8 +657,6 @@ Standard_OStream& TNaming::Print(const TDF_Label& ACCESS, Standard_OStream& s)
   }
   return US->Dump(s);
 }
-
-//=================================================================================================
 
 static void BuildMapIn(const TopoDS_Shape&                              Context,
                        const TopAbs_ShapeEnum                           StopType,
@@ -757,7 +684,7 @@ static void BuildMapIn(const TopoDS_Shape&                              Context,
       BuildMapIn(exp.Current(), StopType, Map);
     }
   }
-  // fix for NMT case
+
   if (Context.ShapeType() < StopType)
   {
     TopoDS_Iterator it(Context);
@@ -766,16 +693,11 @@ static void BuildMapIn(const TopoDS_Shape&                              Context,
       if (it.Value().Orientation() != TopAbs_FORWARD && it.Value().Orientation() != TopAbs_REVERSED)
       {
         Map.Bind(it.Value(), Context);
-        // std::cout << "INTERNAL || EXTERNAL Orientation found" <<std::endl;
       }
     }
   }
 }
 
-//=======================================================================
-// function : BuildMapC0
-// purpose  : builds data map: key - context, C0 - top context
-//=======================================================================
 static void BuildMapC0(const TopoDS_Shape&                              Context,
                        const TopoDS_Shape&                              C0,
                        const TopAbs_ShapeEnum                           StopType,
@@ -804,10 +726,6 @@ static void BuildMapC0(const TopoDS_Shape&                              Context,
   }
 }
 
-//=======================================================================
-// function : BuildMap
-// purpose  : builds data map: key - context
-//=======================================================================
 static void BuildMap(const TopoDS_Shape&                              Context,
                      const TopAbs_ShapeEnum                           StopType,
                      NCollection_DataMap<TopoDS_Shape, TopoDS_Shape>& Map)
@@ -833,10 +751,6 @@ static void BuildMap(const TopoDS_Shape&                              Context,
   }
 }
 
-//=======================================================================
-// function : FindUniqueContext
-// purpose  : Find unique context of selection
-//=======================================================================
 TopoDS_Shape TNaming::FindUniqueContext(const TopoDS_Shape& Selection, const TopoDS_Shape& Context)
 {
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape> aMap;
@@ -856,11 +770,6 @@ TopoDS_Shape TNaming::FindUniqueContext(const TopoDS_Shape& Selection, const Top
   return TopoDS_Shape();
 }
 
-//=======================================================================
-// function : FindUniqueContexts
-// purpose  : Find unique context of selection which is pure concatenation
-//         : of atomic shapes (Compound)
-//=======================================================================
 TopoDS_Shape TNaming::FindUniqueContextSet(const TopoDS_Shape& Selection,
                                            const TopoDS_Shape& Context,
                                            occ::handle<NCollection_HArray1<TopoDS_Shape>>& Arr)
@@ -934,10 +843,6 @@ TopoDS_Shape TNaming::FindUniqueContextSet(const TopoDS_Shape& Selection,
   return TopoDS_Shape();
 }
 
-//=======================================================================
-// function : OuterWire
-// purpose  : Returns True & <theWire> if Outer wire is found.
-//=======================================================================
 bool TNaming::OuterWire(const TopoDS_Face& theFace, TopoDS_Wire& theWire)
 {
   TopoDS_Face       aFx;
@@ -959,10 +864,8 @@ bool TNaming::OuterWire(const TopoDS_Face& theFace, TopoDS_Wire& theWire)
       break;
   }
   theWire = aWx;
-  return !bFlag; // if bFlag == True -  not found
+  return !bFlag;
 }
-
-//=================================================================================================
 
 static bool IsInternal(const TopoDS_Shape& aSx)
 {
@@ -978,10 +881,6 @@ static bool IsInternal(const TopoDS_Shape& aSx)
   return bInternal;
 }
 
-//=======================================================================
-// function : OuterShell
-// purpose  : returns True & <theShell>, if Outer shell is found
-//=======================================================================
 bool TNaming::OuterShell(const TopoDS_Solid& theSolid, TopoDS_Shell& theShell)
 {
   TopoDS_Solid aSDx;
@@ -989,7 +888,7 @@ bool TNaming::OuterShell(const TopoDS_Solid& theSolid, TopoDS_Shell& theShell)
   TopAbs_State aState;
   bool         bFound(false);
   double       aTol(1.e-7);
-  //
+
   BRep_Builder                aBB;
   BRepClass3d_SolidClassifier aSC;
   TopoDS_Iterator             aIt(theSolid);
@@ -1001,16 +900,16 @@ bool TNaming::OuterShell(const TopoDS_Solid& theSolid, TopoDS_Shell& theShell)
       continue;
     if (IsInternal(aSx))
       continue;
-    //
+
     aSHx = *((TopoDS_Shell*)&aSx);
-    //
+
     aSDx = theSolid;
     aSDx.EmptyCopy();
-    //
+
     aBB.Add(aSDx, aSHx);
-    //
+
     aSC.Load(aSDx);
-    // BRepClass3d_SolidClassifier& aSC=aCtx.SolidClassifier(aSDx);
+
     aSC.PerformInfinitePoint(aTol);
     aState = aSC.State();
     if (aState == TopAbs_OUT)

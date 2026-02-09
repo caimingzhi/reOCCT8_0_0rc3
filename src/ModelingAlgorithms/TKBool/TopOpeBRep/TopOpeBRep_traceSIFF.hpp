@@ -61,6 +61,4 @@ private:
   bool                    myopen;
 };
 
-// #ifdef OCCT_DEBUG
 #endif
-// #define _TopOpeBRep_traceSIFF_HeaderFile

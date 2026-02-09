@@ -18,8 +18,6 @@ namespace
   const Quantity_Color THE_DEFAULT_COLOR        = Quantity_NOC_WHITE;
 } // namespace
 
-//=================================================================================================
-
 AIS_CameraFrustum::AIS_CameraFrustum()
     : myPoints(0, Graphic3d_Camera::FrustumVerticesNB)
 {
@@ -36,14 +34,10 @@ AIS_CameraFrustum::AIS_CameraFrustum()
   SetDisplayMode(AIS_Shaded);
 }
 
-//=================================================================================================
-
 bool AIS_CameraFrustum::AcceptDisplayMode(const int theMode) const
 {
   return theMode == AIS_Shaded || theMode == AIS_WireFrame;
 }
-
-//=================================================================================================
 
 void AIS_CameraFrustum::SetCameraFrustum(const occ::handle<Graphic3d_Camera>& theCamera)
 {
@@ -60,8 +54,6 @@ void AIS_CameraFrustum::SetCameraFrustum(const occ::handle<Graphic3d_Camera>& th
   SetToUpdate();
 }
 
-//=================================================================================================
-
 void AIS_CameraFrustum::SetColor(const Quantity_Color& theColor)
 {
   AIS_InteractiveObject::SetColor(theColor);
@@ -69,8 +61,6 @@ void AIS_CameraFrustum::SetColor(const Quantity_Color& theColor)
   myDrawer->LineAspect()->SetColor(theColor);
   SynchronizeAspects();
 }
-
-//=================================================================================================
 
 void AIS_CameraFrustum::UnsetColor()
 {
@@ -86,16 +76,12 @@ void AIS_CameraFrustum::UnsetColor()
   SynchronizeAspects();
 }
 
-//=================================================================================================
-
 void AIS_CameraFrustum::UnsetTransparency()
 {
   myDrawer->ShadingAspect()->SetTransparency(0.0f);
   myDrawer->SetTransparency(0.0f);
   SynchronizeAspects();
 }
-
-//=================================================================================================
 
 void AIS_CameraFrustum::fillTriangles()
 {
@@ -108,18 +94,13 @@ void AIS_CameraFrustum::fillTriangles()
                                                  aPlaneTriangleVertsNb * aPlanesNb);
     myTriangles->SetVertice(Graphic3d_Camera::FrustumVerticesNB, gp_Pnt(0.0, 0.0, 0.0));
 
-    // Triangles go in order (clockwise vertices traversing for correct normal):
-    // (0, 2, 1), (3, 1, 2)
     const int aLookup1_clockwise[] = {0, 1, 0, 1, 0, 1};
     const int aLookup2_clockwise[] = {0, 0, 1, 1, 1, 0};
-    // Triangles go in order (counterclockwise vertices traversing for correct normal):
-    // (1, 2, 0), (2, 1, 3)
+
     const int aLookup1_anticlockwise[] = {0, 1, 0, 1, 0, 1};
     const int aLookup2_anticlockwise[] = {1, 0, 0, 0, 1, 1};
     int       aShifts[]                = {0, 0, 0};
 
-    // Planes go in order:
-    // LEFT, RIGHT, BOTTOM, TOP, NEAR, FAR
     for (int aFaceIdx = 0; aFaceIdx < 3; ++aFaceIdx)
     {
       for (int i = 0; i < 2; ++i)
@@ -152,8 +133,6 @@ void AIS_CameraFrustum::fillTriangles()
   }
 }
 
-//=================================================================================================
-
 void AIS_CameraFrustum::fillBorders()
 {
   if (myBorders.IsNull())
@@ -164,14 +143,10 @@ void AIS_CameraFrustum::fillBorders()
                                               aPlaneSegmVertsNb * aPlanesNb);
     myBorders->SetVertice(Graphic3d_Camera::FrustumVerticesNB, gp_Pnt(0.0, 0.0, 0.0));
 
-    // Segments go in order:
-    // (0, 2), (2, 3), (3, 1), (1, 0)
     const int aLookup1[] = {0, 1, 1, 1, 1, 0, 0, 0};
     const int aLookup2[] = {0, 0, 0, 1, 1, 1, 1, 0};
     int       aShifts[]  = {0, 0, 0};
 
-    // Planes go in order:
-    // LEFT, RIGHT, BOTTOM, TOP, NEAR, FAR
     for (int aFaceIdx = 0; aFaceIdx < 3; ++aFaceIdx)
     {
       for (int i = 0; i < 2; ++i)
@@ -195,8 +170,6 @@ void AIS_CameraFrustum::fillBorders()
     myBorders->SetVertice(aPointIter + 1, gp_Pnt(aPnt.x(), aPnt.y(), aPnt.z()));
   }
 }
-
-//=================================================================================================
 
 void AIS_CameraFrustum::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                 const occ::handle<Prs3d_Presentation>& thePrs,
@@ -226,8 +199,6 @@ void AIS_CameraFrustum::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     }
   }
 }
-
-//=================================================================================================
 
 void AIS_CameraFrustum::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection,
                                          const int                               theMode)

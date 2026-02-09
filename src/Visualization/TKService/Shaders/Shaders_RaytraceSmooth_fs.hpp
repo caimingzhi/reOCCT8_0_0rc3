@@ -80,5 +80,3 @@ static const char Shaders_RaytraceSmooth_fs[] =
   "\n"
   "#endif\n"
   "}\n";
-
-// clang-format on

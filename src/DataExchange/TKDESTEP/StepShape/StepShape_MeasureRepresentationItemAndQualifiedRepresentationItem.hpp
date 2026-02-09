@@ -14,9 +14,6 @@ class StepBasic_MeasureValueMember;
 class StepBasic_Unit;
 class StepShape_ValueQualifier;
 
-//! Added for Dimensional Tolerances
-//! Complex Type between MeasureRepresentationItem and
-//! QualifiedRepresentationItem
 class StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem
     : public StepRepr_RepresentationItem
 {

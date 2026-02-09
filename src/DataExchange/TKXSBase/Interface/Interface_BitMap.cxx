@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_BitMap.hpp>
 #include <TCollection_AsciiString.hpp>
@@ -61,12 +50,12 @@ void Interface_BitMap::Initialize(const Interface_BitMap& other, const bool copi
 void Interface_BitMap::Reservate(const int moreflags)
 {
   int nb      = theflags->Upper();
-  int nbflags = nb / thenbwords - 1; // flag 0 not counted ...
+  int nbflags = nb / thenbwords - 1;
   if (nbflags >= thenbflags + moreflags)
     return;
   int                                   nbw   = thenbwords * (thenbflags + moreflags + 2);
   occ::handle<NCollection_HArray1<int>> flags = new NCollection_HArray1<int>(0, nbw);
-  int                                   i; // svv Jan11 2000 : porting on DEC
+  int                                   i;
   for (i = 0; i <= nb; i++)
     flags->SetValue(i, theflags->Value(i));
   for (i = nb + 1; i <= nbw; i++)
@@ -186,8 +175,6 @@ int Interface_BitMap::FlagNumber(const char* name) const
       return i;
   return 0;
 }
-
-//  Values ...
 
 bool Interface_BitMap::Value(const int item, const int flag) const
 {

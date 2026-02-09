@@ -40,8 +40,6 @@
 #ifdef OCCT_DEBUG
   #include <OSD_Chronometer.hpp>
 
-// variables for performances
-
 OSD_Chronometer cl_total, cl_extent, cl_perfsetofsurf, cl_perffilletonvertex, cl_filds,
   cl_reconstruction, cl_setregul, cl_perform1corner, cl_perform2corner, cl_performatend,
   cl_perform3corner, cl_performmore3corner;
@@ -58,8 +56,6 @@ extern void ChFi3d_InitChron(OSD_Chronometer& ch);
 extern void ChFi3d_ResultChron(OSD_Chronometer& ch, double& time);
 extern bool ChFi3d_GettraceCHRON();
 #endif
-
-//=================================================================================================
 
 static void CompleteDS(TopOpeBRepDS_DataStructure& DStr, const TopoDS_Shape& S)
 {
@@ -103,7 +99,6 @@ static void CompleteDS(TopOpeBRepDS_DataStructure& DStr, const TopoDS_Shape& S)
     }
   }
 
-  // set the range on the DS Curves
   for (int ic = 1; ic <= DStr.NbCurves(); ic++)
   {
     double parmin = RealLast(), parmax = RealFirst();
@@ -119,11 +114,7 @@ static void CompleteDS(TopOpeBRepDS_DataStructure& DStr, const TopoDS_Shape& S)
   }
 }
 
-//=================================================================================================
-
 ChFi3d_Builder::~ChFi3d_Builder() = default;
-
-//=================================================================================================
 
 void ChFi3d_Builder::ExtentAnalyse()
 {
@@ -132,7 +123,7 @@ void ChFi3d_Builder::ExtentAnalyse()
   {
     nbs                      = myVDataMap(iv).Extent();
     const TopoDS_Vertex& Vtx = myVDataMap.FindKey(iv);
-    // nbedges = ChFi3d_NumberOfEdges(Vtx, myVEMap);
+
     nbedges = ChFi3d_NumberOfSharpEdges(Vtx, myVEMap, myEFMap);
     switch (nbs)
     {
@@ -153,12 +144,10 @@ void ChFi3d_Builder::ExtentAnalyse()
   }
 }
 
-//=================================================================================================
-
 void ChFi3d_Builder::Compute()
 {
 
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
   t_total              = 0;
   t_extent             = 0;
   t_perfsetofsurf      = 0;
@@ -211,7 +200,6 @@ void ChFi3d_Builder::Compute()
   done                             = true;
   hasresult                        = false;
 
-  // filling of myVDatatMap
   NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator itel;
 
   for (itel.Initialize(myListStripe); itel.More(); itel.Next())
@@ -225,15 +213,14 @@ void ChFi3d_Builder::Compute()
     else if (itel.Value()->Spine()->LastStatus() == ChFiDS_FreeBoundary)
       ExtentOneCorner(itel.Value()->Spine()->LastVertex(), itel.Value());
   }
-  // preanalysis to evaluate the extensions.
+
   ExtentAnalyse();
 
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
   ChFi3d_ResultChron(cl_extent, t_extent);
   ChFi3d_InitChron(cl_perfsetofsurf);
 #endif
 
-  // Construction of the stripe of fillet on each stripe.
   for (itel.Initialize(myListStripe); itel.More(); itel.Next())
   {
     itel.Value()->Spine()->SetErrorStatus(ChFiDS_Ok);
@@ -259,12 +246,11 @@ void ChFi3d_Builder::Compute()
   }
   done = (badstripes.IsEmpty());
 
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
   ChFi3d_ResultChron(cl_perfsetofsurf, t_perfsetofsurf);
   ChFi3d_InitChron(cl_perffilletonvertex);
 #endif
 
-  // construct fillets on each vertex + feed the Ds
   if (done)
   {
     int j;
@@ -293,7 +279,7 @@ void ChFi3d_Builder::Compute()
       done = badvertices.IsEmpty();
   }
 
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
   ChFi3d_ResultChron(cl_perffilletonvertex, t_perffilletonvertex);
   ChFi3d_InitChron(cl_filds);
 #endif
@@ -319,14 +305,13 @@ void ChFi3d_Builder::Compute()
     for (itel.Initialize(myListStripe), i1 = 0; itel.More(); itel.Next(), i1++)
     {
       const occ::handle<ChFiDS_Stripe>& st = itel.Value();
-      // 05/02/02 akm vvv : (OCC119) First we'll check ain't there
-      //                    intersections between fillets
+
       NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator itel1;
       int                                                    i2;
       for (itel1.Initialize(myListStripe), i2 = 0; itel1.More(); itel1.Next(), i2++)
       {
         if (i2 <= i1)
-          // Do not twice intersect the stripes
+
           continue;
         occ::handle<ChFiDS_Stripe> aCheckStripe = itel1.Value();
         try
@@ -346,14 +331,14 @@ void ChFi3d_Builder::Compute()
           break;
         }
       }
-      // 05/02/02 akm ^^^
+
       int solidindex = st->SolidIndex();
       ChFi3d_FilDS(solidindex, st, DStr, myRegul, tolapp3d, tol2d);
       if (!done)
         break;
     }
 
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
     ChFi3d_ResultChron(cl_filds, t_filds);
     ChFi3d_InitChron(cl_reconstruction);
 #endif
@@ -362,8 +347,7 @@ void ChFi3d_Builder::Compute()
     {
       BRep_Builder B1;
       CompleteDS(DStr, myShape);
-      // Update tolerances on vertex to max adjacent edges or
-      // Update tolerances on degenerated edge to max of adjacent vertexes.
+
       TopOpeBRepDS_CurveExplorer cex(DStr);
       for (; cex.More(); cex.Next())
       {
@@ -455,8 +439,7 @@ void ChFi3d_Builder::Compute()
             B1.Add(myShapeResult, curshape);
           else
           {
-            // If the old type of Shape is Shell, Shell is placed instead of Solid,
-            // However there is a problem for compound of open Shell.
+
             while (its.More())
             {
               const TopAbs_ShapeEnum letype = curshape.ShapeType();
@@ -497,24 +480,21 @@ void ChFi3d_Builder::Compute()
           }
         }
       }
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
       ChFi3d_ResultChron(cl_reconstruction, t_reconstruction);
       ChFi3d_InitChron(cl_setregul);
 #endif
 
-      // Regularities are coded after cutting.
       SetRegul();
 
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
       ChFi3d_ResultChron(cl_setregul, t_setregul);
 #endif
     }
   }
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
   ChFi3d_ResultChron(cl_total, t_total);
 #endif
-
-  // display of time for perfs
 
 #ifdef OCCT_DEBUG
   if (ChFi3d_GettraceCHRON())
@@ -581,15 +561,13 @@ void ChFi3d_Builder::Compute()
     std::cout << "-temps ChFi3d_sameparameter " << t_sameparam << "s" << std::endl << std::endl;
   }
 #endif
-  //
-  // Inspect the new faces to provide sameparameter
-  // if it is necessary
+
   if (IsDone())
   {
     double                                   SameParTol = Precision::Confusion();
     int                                      aNbSurfaces, iF;
     NCollection_List<TopoDS_Shape>::Iterator aIt;
-    //
+
     aNbSurfaces = myDS->NbSurfaces();
 
     for (iF = 1; iF <= aNbSurfaces; ++iF)
@@ -606,11 +584,6 @@ void ChFi3d_Builder::Compute()
   }
 }
 
-//=======================================================================
-// function : PerformSingularCorner
-// purpose  : Load vertex and degenerated edges.
-//=======================================================================
-
 void ChFi3d_Builder::PerformSingularCorner(const int Index)
 {
   NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator It;
@@ -624,18 +597,17 @@ void ChFi3d_Builder::PerformSingularCorner(const int Index)
   for (It.Initialize(myVDataMap(Index)), i = 0; It.More(); It.Next(), i++)
   {
     stripe = It.Value();
-    // SurfData concerned and its CommonPoints,
+
     int  sens                     = 0;
     int  num                      = ChFi3d_IndexOfSurfData(Vtx, stripe, sens);
     bool isfirst                  = (sens == 1);
     Fd                            = stripe->SetOfSurfData()->Sequence().Value(num);
     const ChFiDS_CommonPoint& CV1 = Fd->Vertex(isfirst, 1);
     const ChFiDS_CommonPoint& CV2 = Fd->Vertex(isfirst, 2);
-    // Is it always degenerated ?
+
     if (CV1.Point().IsEqual(CV2.Point(), 0))
     {
-      // if yes the vertex is stored in the stripe
-      // and the edge at end is created
+
       if (i == 0)
         Ivtx = ChFi3d_IndexPointInDS(CV1, DStr);
       double                    tolreached;
@@ -684,8 +656,6 @@ void ChFi3d_Builder::PerformSingularCorner(const int Index)
   }
 }
 
-//=================================================================================================
-
 void ChFi3d_Builder::PerformFilletOnVertex(const int Index)
 {
 
@@ -703,42 +673,24 @@ void ChFi3d_Builder::PerformFilletOnVertex(const int Index)
   {
     stripe = It.Value();
     sp     = stripe->Spine();
-    // SurfData and its CommonPoints,
+
     int sens                      = 0;
     int num                       = ChFi3d_IndexOfSurfData(Vtx, stripe, sens);
     isfirst                       = (sens == 1);
     Fd                            = stripe->SetOfSurfData()->Sequence().Value(num);
     const ChFiDS_CommonPoint& CV1 = Fd->Vertex(isfirst, 1);
     const ChFiDS_CommonPoint& CV2 = Fd->Vertex(isfirst, 2);
-    // Is it always degenerated ?
+
     if (CV1.Point().IsEqual(CV2.Point(), 0))
       nondegenere = false;
     else
       toujoursdegenere = false;
   }
 
-  // calcul du nombre de faces = nombre d'aretes
-  /*  NCollection_List<TopoDS_Shape>::Iterator ItF,JtF,ItE;
-    int nbf = 0, jf = 0;
-    for (ItF.Initialize(myVFMap(Vtx)); ItF.More(); ItF.Next()){
-      jf++;
-      int kf = 1;
-      const TopoDS_Shape& cur = ItF.Value();
-      for (JtF.Initialize(myVFMap(Vtx)); JtF.More() && (kf < jf); JtF.Next(), kf++){
-        if(cur.IsSame(JtF.Value())) break;
-      }
-      if(kf == jf) nbf++;
-    }
-    int nba=myVEMap(Vtx).Extent();
-    for (ItE.Initialize(myVEMap(Vtx)); ItE.More(); ItE.Next()){
-      const TopoDS_Edge& cur = TopoDS::Edge(ItE.Value());
-      if (BRep_Tool::Degenerated(cur)) nba--;
-    }
-    nba=nba/2;*/
   int nba = ChFi3d_NumberOfSharpEdges(Vtx, myVEMap, myEFMap);
 
   if (nondegenere)
-  { // Normal processing
+  {
     switch (i)
     {
       case 1:
@@ -747,7 +699,7 @@ void ChFi3d_Builder::PerformFilletOnVertex(const int Index)
           return;
         if (nba > 3)
         {
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
           ChFi3d_InitChron(cl_performatend);
 #endif
           PerformIntersectionAtEnd(Index);
@@ -757,14 +709,14 @@ void ChFi3d_Builder::PerformFilletOnVertex(const int Index)
         }
         else
         {
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
           ChFi3d_InitChron(cl_perform1corner);
 #endif
           if (MoreSurfdata(Index))
             PerformMoreSurfdata(Index);
           else
             PerformOneCorner(Index);
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
           ChFi3d_ResultChron(cl_perform1corner, t_perform1corner);
 #endif
         }
@@ -774,21 +726,21 @@ void ChFi3d_Builder::PerformFilletOnVertex(const int Index)
       {
         if (nba > 3)
         {
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
           ChFi3d_InitChron(cl_performmore3corner);
 #endif
           PerformMoreThreeCorner(Index, i);
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
           ChFi3d_ResultChron(cl_performmore3corner, t_performmore3corner);
 #endif
         }
         else
         {
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
           ChFi3d_InitChron(cl_perform2corner);
 #endif
           PerformTwoCorner(Index);
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
           ChFi3d_ResultChron(cl_perform2corner, t_perform2corner);
 #endif
         }
@@ -798,21 +750,21 @@ void ChFi3d_Builder::PerformFilletOnVertex(const int Index)
       {
         if (nba > 3)
         {
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
           ChFi3d_InitChron(cl_performmore3corner);
 #endif
           PerformMoreThreeCorner(Index, i);
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
           ChFi3d_ResultChron(cl_performmore3corner, t_performmore3corner);
 #endif
         }
         else
         {
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
           ChFi3d_InitChron(cl_perform3corner);
 #endif
           PerformThreeCorner(Index);
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
           ChFi3d_ResultChron(cl_perform3corner, t_perform3corner);
 #endif
         }
@@ -820,26 +772,24 @@ void ChFi3d_Builder::PerformFilletOnVertex(const int Index)
       break;
       default:
       {
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
         ChFi3d_InitChron(cl_performmore3corner);
 #endif
         PerformMoreThreeCorner(Index, i);
-#ifdef OCCT_DEBUG // perf
+#ifdef OCCT_DEBUG
         ChFi3d_ResultChron(cl_performmore3corner, t_performmore3corner);
 #endif
       }
     }
   }
   else
-  { // Single case processing
+  {
     if (toujoursdegenere)
       PerformSingularCorner(Index);
     else
-      PerformMoreThreeCorner(Index, i); // Last chance...
+      PerformMoreThreeCorner(Index, i);
   }
 }
-
-//=================================================================================================
 
 void ChFi3d_Builder::Reset()
 {
@@ -862,8 +812,6 @@ void ChFi3d_Builder::Reset()
       myListStripe.Remove(itel);
   }
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& ChFi3d_Builder::Generated(const TopoDS_Shape& EouV)
 {

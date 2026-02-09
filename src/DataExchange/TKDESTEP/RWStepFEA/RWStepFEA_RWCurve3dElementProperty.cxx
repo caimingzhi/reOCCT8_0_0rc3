@@ -10,11 +10,7 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWCurve3dElementProperty::RWStepFEA_RWCurve3dElementProperty() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWCurve3dElementProperty::ReadStep(
   const occ::handle<StepData_StepReaderData>&        data,
@@ -22,11 +18,9 @@ void RWStepFEA_RWCurve3dElementProperty::ReadStep(
   occ::handle<Interface_Check>&                      ach,
   const occ::handle<StepFEA_Curve3dElementProperty>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 5, ach, "curve3d_element_property"))
     return;
-
-  // Own fields of Curve3dElementProperty
 
   occ::handle<TCollection_HAsciiString> aPropertyId;
   data->ReadString(num, 1, "property_id", ach, aPropertyId);
@@ -95,18 +89,13 @@ void RWStepFEA_RWCurve3dElementProperty::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aPropertyId, aDescription, aIntervalDefinitions, aEndOffsets, aEndReleases);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWCurve3dElementProperty::WriteStep(
   StepData_StepWriter&                               SW,
   const occ::handle<StepFEA_Curve3dElementProperty>& ent) const
 {
-
-  // Own fields of Curve3dElementProperty
 
   SW.Send(ent->PropertyId());
 
@@ -137,14 +126,10 @@ void RWStepFEA_RWCurve3dElementProperty::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWCurve3dElementProperty::Share(
   const occ::handle<StepFEA_Curve3dElementProperty>& ent,
   Interface_EntityIterator&                          iter) const
 {
-
-  // Own fields of Curve3dElementProperty
 
   for (int i1 = 1; i1 <= ent->IntervalDefinitions()->Length(); i1++)
   {

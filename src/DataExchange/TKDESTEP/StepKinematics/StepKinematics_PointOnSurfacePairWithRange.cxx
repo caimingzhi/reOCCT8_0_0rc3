@@ -1,11 +1,9 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_PointOnSurfacePairWithRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_PointOnSurfacePairWithRange,
                            StepKinematics_PointOnSurfacePair)
-
-//=================================================================================================
 
 StepKinematics_PointOnSurfacePairWithRange::StepKinematics_PointOnSurfacePairWithRange()
 {
@@ -16,8 +14,6 @@ StepKinematics_PointOnSurfacePairWithRange::StepKinematics_PointOnSurfacePairWit
   defLowerLimitRoll  = false;
   defUpperLimitRoll  = false;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnSurfacePairWithRange::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -102,15 +98,11 @@ void StepKinematics_PointOnSurfacePairWithRange::Init(
     myUpperLimitRoll = 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_RectangularTrimmedSurface> StepKinematics_PointOnSurfacePairWithRange::
   RangeOnPairSurface() const
 {
   return myRangeOnPairSurface;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnSurfacePairWithRange::SetRangeOnPairSurface(
   const occ::handle<StepGeom_RectangularTrimmedSurface>& theRangeOnPairSurface)
@@ -118,126 +110,90 @@ void StepKinematics_PointOnSurfacePairWithRange::SetRangeOnPairSurface(
   myRangeOnPairSurface = theRangeOnPairSurface;
 }
 
-//=================================================================================================
-
 double StepKinematics_PointOnSurfacePairWithRange::LowerLimitYaw() const
 {
   return myLowerLimitYaw;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnSurfacePairWithRange::SetLowerLimitYaw(const double theLowerLimitYaw)
 {
   myLowerLimitYaw = theLowerLimitYaw;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PointOnSurfacePairWithRange::HasLowerLimitYaw() const
 {
   return defLowerLimitYaw;
 }
-
-//=================================================================================================
 
 double StepKinematics_PointOnSurfacePairWithRange::UpperLimitYaw() const
 {
   return myUpperLimitYaw;
 }
 
-//=================================================================================================
-
 void StepKinematics_PointOnSurfacePairWithRange::SetUpperLimitYaw(const double theUpperLimitYaw)
 {
   myUpperLimitYaw = theUpperLimitYaw;
 }
-
-//=================================================================================================
 
 bool StepKinematics_PointOnSurfacePairWithRange::HasUpperLimitYaw() const
 {
   return defUpperLimitYaw;
 }
 
-//=================================================================================================
-
 double StepKinematics_PointOnSurfacePairWithRange::LowerLimitPitch() const
 {
   return myLowerLimitPitch;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnSurfacePairWithRange::SetLowerLimitPitch(const double theLowerLimitPitch)
 {
   myLowerLimitPitch = theLowerLimitPitch;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PointOnSurfacePairWithRange::HasLowerLimitPitch() const
 {
   return defLowerLimitPitch;
 }
-
-//=================================================================================================
 
 double StepKinematics_PointOnSurfacePairWithRange::UpperLimitPitch() const
 {
   return myUpperLimitPitch;
 }
 
-//=================================================================================================
-
 void StepKinematics_PointOnSurfacePairWithRange::SetUpperLimitPitch(const double theUpperLimitPitch)
 {
   myUpperLimitPitch = theUpperLimitPitch;
 }
-
-//=================================================================================================
 
 bool StepKinematics_PointOnSurfacePairWithRange::HasUpperLimitPitch() const
 {
   return defUpperLimitPitch;
 }
 
-//=================================================================================================
-
 double StepKinematics_PointOnSurfacePairWithRange::LowerLimitRoll() const
 {
   return myLowerLimitRoll;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnSurfacePairWithRange::SetLowerLimitRoll(const double theLowerLimitRoll)
 {
   myLowerLimitRoll = theLowerLimitRoll;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PointOnSurfacePairWithRange::HasLowerLimitRoll() const
 {
   return defLowerLimitRoll;
 }
-
-//=================================================================================================
 
 double StepKinematics_PointOnSurfacePairWithRange::UpperLimitRoll() const
 {
   return myUpperLimitRoll;
 }
 
-//=================================================================================================
-
 void StepKinematics_PointOnSurfacePairWithRange::SetUpperLimitRoll(const double theUpperLimitRoll)
 {
   myUpperLimitRoll = theUpperLimitRoll;
 }
-
-//=================================================================================================
 
 bool StepKinematics_PointOnSurfacePairWithRange::HasUpperLimitRoll() const
 {

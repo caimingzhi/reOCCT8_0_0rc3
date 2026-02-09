@@ -6,25 +6,9 @@
 #include <gp_Vec.hpp>
 #include <Precision.hpp>
 
-//! @file Geom_RevolutionUtils.hpp
-//! @brief Shared utility functions for surface of revolution evaluation.
-//!
-//! This file provides both direct calculation functions (accepting pre-computed curve values)
-//! and template functions for evaluating points and derivatives on surfaces of revolution.
-//! The template functions work with both Geom_Curve (for Geom_SurfaceOfRevolution)
-//! and Adaptor3d_Curve (for GeomAdaptor_SurfaceOfRevolution).
-//!
-//! Revolution surface: P(U,V) = Rotation(Axis, U) * BasisCurve(V)
-//! where U is the rotation angle and V is the parameter along the basis curve.
-
 namespace Geom_RevolutionUtils
 {
 
-  //! Calculates point on surface of revolution from pre-computed curve point.
-  //! @param theCurvePt Pre-computed curve point C(V)
-  //! @param theU Rotation angle parameter
-  //! @param theAxis Rotation axis
-  //! @param theP [out] Evaluated surface point
   inline void CalculateD0(const gp_Pnt& theCurvePt,
                           const double  theU,
                           const gp_Ax1& theAxis,
@@ -36,14 +20,6 @@ namespace Geom_RevolutionUtils
     theP.Transform(aRotation);
   }
 
-  //! Calculates point and first derivatives on surface of revolution from pre-computed curve D1.
-  //! @param theCurvePt Pre-computed curve point C(V)
-  //! @param theCurveD1 Pre-computed curve first derivative C'(V)
-  //! @param theU Rotation angle parameter
-  //! @param theAxis Rotation axis
-  //! @param theP [out] Evaluated surface point
-  //! @param theD1U [out] First derivative with respect to U (rotation)
-  //! @param theD1V [out] First derivative with respect to V (along curve)
   inline void CalculateD1(const gp_Pnt& theCurvePt,
                           const gp_Vec& theCurveD1,
                           const double  theU,
@@ -54,11 +30,9 @@ namespace Geom_RevolutionUtils
   {
     theP = theCurvePt;
 
-    // Vector from center of rotation to the point on rotated curve
     gp_XYZ aCQ = theCurvePt.XYZ() - theAxis.Location().XYZ();
     theD1U     = gp_Vec(theAxis.Direction().XYZ().Crossed(aCQ));
-    // If the point is placed on the axis of revolution then derivatives on U are undefined.
-    // Manually set them to zero.
+
     if (theD1U.SquareMagnitude() < Precision::SquareConfusion())
     {
       theD1U.SetCoord(0.0, 0.0, 0.0);
@@ -72,19 +46,6 @@ namespace Geom_RevolutionUtils
     theD1V.Transform(aRotation);
   }
 
-  //! Calculates point, first and second derivatives on surface of revolution from pre-computed
-  //! curve D2.
-  //! @param theCurvePt Pre-computed curve point C(V)
-  //! @param theCurveD1 Pre-computed curve first derivative C'(V)
-  //! @param theCurveD2 Pre-computed curve second derivative C''(V)
-  //! @param theU Rotation angle parameter
-  //! @param theAxis Rotation axis
-  //! @param theP [out] Evaluated surface point
-  //! @param theD1U [out] First derivative with respect to U
-  //! @param theD1V [out] First derivative with respect to V
-  //! @param theD2U [out] Second derivative with respect to U
-  //! @param theD2V [out] Second derivative with respect to V
-  //! @param theD2UV [out] Mixed second derivative
   inline void CalculateD2(const gp_Pnt& theCurvePt,
                           const gp_Vec& theCurveD1,
                           const gp_Vec& theCurveD2,
@@ -99,12 +60,10 @@ namespace Geom_RevolutionUtils
   {
     theP = theCurvePt;
 
-    // Vector from center of rotation to the point on rotated curve
     gp_XYZ        aCQ  = theCurvePt.XYZ() - theAxis.Location().XYZ();
     const gp_XYZ& aDir = theAxis.Direction().XYZ();
     theD1U             = gp_Vec(aDir.Crossed(aCQ));
-    // If the point is placed on the axis of revolution then derivatives on U are undefined.
-    // Manually set them to zero.
+
     if (theD1U.SquareMagnitude() < Precision::SquareConfusion())
     {
       theD1U.SetCoord(0.0, 0.0, 0.0);
@@ -124,24 +83,6 @@ namespace Geom_RevolutionUtils
     theD2UV.Transform(aRotation);
   }
 
-  //! Calculates point and all derivatives up to third order on surface of revolution from
-  //! pre-computed curve D3.
-  //! @param theCurvePt Pre-computed curve point C(V)
-  //! @param theCurveD1 Pre-computed curve first derivative C'(V)
-  //! @param theCurveD2 Pre-computed curve second derivative C''(V)
-  //! @param theCurveD3 Pre-computed curve third derivative C'''(V)
-  //! @param theU Rotation angle parameter
-  //! @param theAxis Rotation axis
-  //! @param theP [out] Evaluated surface point
-  //! @param theD1U [out] First derivative with respect to U
-  //! @param theD1V [out] First derivative with respect to V
-  //! @param theD2U [out] Second derivative with respect to U
-  //! @param theD2V [out] Second derivative with respect to V
-  //! @param theD2UV [out] Mixed second derivative
-  //! @param theD3U [out] Third derivative with respect to U
-  //! @param theD3V [out] Third derivative with respect to V
-  //! @param theD3UUV [out] Mixed third derivative (UUV)
-  //! @param theD3UVV [out] Mixed third derivative (UVV)
   inline void CalculateD3(const gp_Pnt& theCurvePt,
                           const gp_Vec& theCurveD1,
                           const gp_Vec& theCurveD2,
@@ -161,12 +102,10 @@ namespace Geom_RevolutionUtils
   {
     theP = theCurvePt;
 
-    // Vector from center of rotation to the point on rotated curve
     gp_XYZ        aCQ  = theCurvePt.XYZ() - theAxis.Location().XYZ();
     const gp_XYZ& aDir = theAxis.Direction().XYZ();
     theD1U             = gp_Vec(aDir.Crossed(aCQ));
-    // If the point is placed on the axis of revolution then derivatives on U are undefined.
-    // Manually set them to zero.
+
     if (theD1U.SquareMagnitude() < Precision::SquareConfusion())
     {
       theD1U.SetCoord(0.0, 0.0, 0.0);
@@ -194,23 +133,13 @@ namespace Geom_RevolutionUtils
     theD3UVV.Transform(aRotation);
   }
 
-  //! Calculates N-th derivative on surface of revolution from pre-computed curve data.
-  //! For pure V derivatives (theDerU == 0): uses theCurveDN directly.
-  //! For mixed or pure U derivatives: uses theCurvePtOrDN as the base vector.
-  //! @param theCurvePtOrDN For theDerV == 0: curve point C(V); otherwise: curve derivative
-  //! C^(theDerV)(V)
-  //! @param theU Rotation angle parameter
-  //! @param theAxis Rotation axis
-  //! @param theDerU Derivative order with respect to U
-  //! @param theDerV Derivative order with respect to V
-  //! @return The derivative vector
   inline gp_Vec CalculateDN(const gp_Vec& theCurvePtOrDN,
                             const double  theU,
                             const gp_Ax1& theAxis,
                             const int     theDerU,
                             const int     theDerV)
   {
-    // theDerV is part of the interface contract - caller provides different data based on its value
+
     (void)theDerV;
 
     gp_Trsf aRotation;
@@ -219,13 +148,12 @@ namespace Geom_RevolutionUtils
     gp_Vec aResult;
     if (theDerU == 0)
     {
-      // Pure V derivative: just rotate the curve derivative
+
       aResult = theCurvePtOrDN;
     }
     else
     {
-      // For theDerV == 0: theCurvePtOrDN is (P - AxisLocation) as a vector
-      // For theDerV > 0: theCurvePtOrDN is the curve derivative
+
       const gp_XYZ& aDir = theAxis.Direction().XYZ();
       if (theDerU % 4 == 1)
       {
@@ -249,13 +177,6 @@ namespace Geom_RevolutionUtils
     return aResult;
   }
 
-  //! Evaluates point on surface of revolution.
-  //! @tparam CurveType Type supporting D0(param, point) method
-  //! @param theU Rotation angle parameter
-  //! @param theV Parameter along the basis curve
-  //! @param theBasis Basis curve
-  //! @param theAxis Rotation axis
-  //! @param theP [out] Evaluated point
   template <typename CurveType>
   inline void D0(const double     theU,
                  const double     theV,
@@ -268,15 +189,6 @@ namespace Geom_RevolutionUtils
     CalculateD0(aCurvePt, theU, theAxis, theP);
   }
 
-  //! Evaluates point and first derivatives on surface of revolution.
-  //! @tparam CurveType Type supporting D1(param, point, vec) method
-  //! @param theU Rotation angle parameter
-  //! @param theV Parameter along the basis curve
-  //! @param theBasis Basis curve
-  //! @param theAxis Rotation axis
-  //! @param theP [out] Evaluated point
-  //! @param theD1U [out] First derivative with respect to U (rotation)
-  //! @param theD1V [out] First derivative with respect to V (along curve)
   template <typename CurveType>
   inline void D1(const double     theU,
                  const double     theV,
@@ -292,18 +204,6 @@ namespace Geom_RevolutionUtils
     CalculateD1(aCurvePt, aCurveD1, theU, theAxis, theP, theD1U, theD1V);
   }
 
-  //! Evaluates point, first and second derivatives on surface of revolution.
-  //! @tparam CurveType Type supporting D2(param, point, vec, vec) method
-  //! @param theU Rotation angle parameter
-  //! @param theV Parameter along the basis curve
-  //! @param theBasis Basis curve
-  //! @param theAxis Rotation axis
-  //! @param theP [out] Evaluated point
-  //! @param theD1U [out] First derivative with respect to U
-  //! @param theD1V [out] First derivative with respect to V
-  //! @param theD2U [out] Second derivative with respect to U
-  //! @param theD2V [out] Second derivative with respect to V
-  //! @param theD2UV [out] Mixed second derivative
   template <typename CurveType>
   inline void D2(const double     theU,
                  const double     theV,
@@ -332,22 +232,6 @@ namespace Geom_RevolutionUtils
                 theD2UV);
   }
 
-  //! Evaluates point and all derivatives up to third order on surface of revolution.
-  //! @tparam CurveType Type supporting D3(param, point, vec, vec, vec) method
-  //! @param theU Rotation angle parameter
-  //! @param theV Parameter along the basis curve
-  //! @param theBasis Basis curve
-  //! @param theAxis Rotation axis
-  //! @param theP [out] Evaluated point
-  //! @param theD1U [out] First derivative with respect to U
-  //! @param theD1V [out] First derivative with respect to V
-  //! @param theD2U [out] Second derivative with respect to U
-  //! @param theD2V [out] Second derivative with respect to V
-  //! @param theD2UV [out] Mixed second derivative
-  //! @param theD3U [out] Third derivative with respect to U
-  //! @param theD3V [out] Third derivative with respect to V
-  //! @param theD3UUV [out] Mixed third derivative (UUV)
-  //! @param theD3UVV [out] Mixed third derivative (UVV)
   template <typename CurveType>
   inline void D3(const double     theU,
                  const double     theV,
@@ -385,15 +269,6 @@ namespace Geom_RevolutionUtils
                 theD3UVV);
   }
 
-  //! Evaluates N-th derivative on surface of revolution.
-  //! @tparam CurveType Type supporting D0, DN methods
-  //! @param theU Rotation angle parameter
-  //! @param theV Parameter along the basis curve
-  //! @param theBasis Basis curve
-  //! @param theAxis Rotation axis
-  //! @param theDerU Derivative order with respect to U
-  //! @param theDerV Derivative order with respect to V
-  //! @return The derivative vector
   template <typename CurveType>
   inline gp_Vec DN(const double     theU,
                    const double     theV,

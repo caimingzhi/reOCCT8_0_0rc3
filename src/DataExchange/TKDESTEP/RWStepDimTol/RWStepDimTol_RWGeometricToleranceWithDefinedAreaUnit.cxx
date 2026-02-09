@@ -7,12 +7,8 @@
 #include <StepData_StepWriter.hpp>
 #include <StepDimTol_GeometricToleranceWithDefinedAreaUnit.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit::
   RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit::ReadStep(
   const occ::handle<StepData_StepReaderData>&                          data,
@@ -20,11 +16,9 @@ void RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit::ReadStep(
   occ::handle<Interface_Check>&                                        ach,
   const occ::handle<StepDimTol_GeometricToleranceWithDefinedAreaUnit>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 7, ach, "geometric_tolerance_with_defined_area_unit"))
     return;
-
-  // inherited fields from GeometricTolerance
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "geometric_tolerance.name", ach, aName);
@@ -47,8 +41,6 @@ void RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit::ReadStep(
                    ach,
                    aTolerancedShapeAspect);
 
-  // inherited fields from GeometricToleranceWithDefinedUnit
-
   occ::handle<StepBasic_LengthMeasureWithUnit> anUnitSize;
   data->ReadEntity(num,
                    5,
@@ -57,7 +49,6 @@ void RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit::ReadStep(
                    STANDARD_TYPE(StepBasic_LengthMeasureWithUnit),
                    anUnitSize);
 
-  // own fields of GeometricToleranceWithDefinedAreaUnit
   StepDimTol_AreaUnitType aType = StepDimTol_Circular;
   if (data->ParamType(num, 6) == Interface_ParamEnum)
   {
@@ -84,7 +75,6 @@ void RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit::ReadStep(
                      STANDARD_TYPE(StepBasic_LengthMeasureWithUnit),
                      aSecondUnitSize);
 
-  // Initialize entity
   ent->Init(aName,
             aDescription,
             aMagnitude,
@@ -95,14 +85,10 @@ void RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit::ReadStep(
             aSecondUnitSize);
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit::WriteStep(
   StepData_StepWriter&                                                 SW,
   const occ::handle<StepDimTol_GeometricToleranceWithDefinedAreaUnit>& ent) const
 {
-
-  // inherited fields from GeometricTolerance
 
   SW.Send(ent->Name());
 
@@ -112,11 +98,7 @@ void RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit::WriteStep(
 
   SW.Send(ent->TolerancedShapeAspect().Value());
 
-  // inherited fields from GeometricToleranceWithDefinedUnit
-
   SW.Send(ent->UnitSize());
-
-  // own fields of GeometricToleranceWithDefinedAreaUnit
 
   switch (ent->AreaType())
   {
@@ -137,14 +119,10 @@ void RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit::WriteStep(
     SW.SendUndef();
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit::Share(
   const occ::handle<StepDimTol_GeometricToleranceWithDefinedAreaUnit>& ent,
   Interface_EntityIterator&                                            iter) const
 {
-
-  // inherited fields from GeometricTolerance
 
   iter.AddItem(ent->Magnitude());
 

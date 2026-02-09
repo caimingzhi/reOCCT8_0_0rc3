@@ -26,10 +26,6 @@
 #include <TopoDS_Vertex.hpp>
 #include <TopoDS_Wire.hpp>
 
-// PLANTAGE IsOuterBound, 15-SEP-1998
-// static int numpb = 0;
-//=================================================================================================
-
 double ShapeAnalysis::AdjustByPeriod(const double Val, const double ToVal, const double Period)
 {
   double diff = Val - ToVal;
@@ -42,14 +38,10 @@ double ShapeAnalysis::AdjustByPeriod(const double Val, const double ToVal, const
   return (diff > 0 ? -P : P) * floor(D / P + 0.5);
 }
 
-//=================================================================================================
-
 double ShapeAnalysis::AdjustToPeriod(const double Val, const double ValMin, const double ValMax)
 {
   return AdjustByPeriod(Val, 0.5 * (ValMin + ValMax), ValMax - ValMin);
 }
-
-//=================================================================================================
 
 void ShapeAnalysis::FindBounds(const TopoDS_Shape& shape, TopoDS_Vertex& V1, TopoDS_Vertex& V2)
 {
@@ -59,17 +51,8 @@ void ShapeAnalysis::FindBounds(const TopoDS_Shape& shape, TopoDS_Vertex& V1, Top
   if (shape.ShapeType() == TopAbs_WIRE)
   {
     TopoDS_Wire W = TopoDS::Wire(shape);
-    // invalid work with reversed wires replaced on TopExp
+
     TopExp::Vertices(W, V1, V2);
-    // invalid work with reversed wires
-    /*TopoDS_Iterator iterWire(W);
-    //szv#4:S4163:12Mar99 optimized
-    if (iterWire.More()) {
-      TopoDS_Edge E = TopoDS::Edge (iterWire.Value());
-      V1 = EA.FirstVertex (E); iterWire.Next();
-      for ( ; iterWire.More(); iterWire.Next() ) E = TopoDS::Edge (iterWire.Value());
-      V2 = EA.LastVertex (E);
-    }*/
   }
   else if (shape.ShapeType() == TopAbs_EDGE)
   {
@@ -80,15 +63,11 @@ void ShapeAnalysis::FindBounds(const TopoDS_Shape& shape, TopoDS_Vertex& V1, Top
     V1 = V2 = TopoDS::Vertex(shape);
 }
 
-//=================================================================================================
-
 template <class HSequence>
 static inline void ReverseSeq(HSequence& Seq)
 {
   Seq.Reverse();
 }
-
-//=================================================================================================
 
 double ShapeAnalysis::TotCross2D(const occ::handle<ShapeExtend_WireData>& sewd,
                                  const TopoDS_Face&                       aFace)
@@ -126,21 +105,18 @@ double ShapeAnalysis::TotCross2D(const occ::handle<ShapeExtend_WireData>& sewd,
   return totcross;
 }
 
-//=================================================================================================
-
 double ShapeAnalysis::ContourArea(const TopoDS_Wire& theWire)
-// const occ::handle<ShapeExtend_WireData>& sewd)
 
 {
   int    nbc = 0;
   gp_Pnt fuv, luv, uv0;
-  // double totcross=0;
+
   gp_XYZ          aTotal(0., 0., 0.);
   TopoDS_Iterator aIte(theWire, false);
-  // for(i=1; i<=sewd->NbEdges(); i++) {
+
   for (; aIte.More(); aIte.Next())
   {
-    TopoDS_Edge             edge = TopoDS::Edge(aIte.Value()); // sewd->Edge(i);
+    TopoDS_Edge             edge = TopoDS::Edge(aIte.Value());
     double                  first, last;
     occ::handle<Geom_Curve> c3d = BRep_Tool::Curve(edge, first, last);
     if (!c3d.IsNull())
@@ -161,17 +137,15 @@ double ShapeAnalysis::ContourArea(const TopoDS_Wire& theWire)
       for (; j <= aSeqPnt.Length(); j++)
       {
         luv = aSeqPnt.Value(j);
-        aTotal += luv.XYZ() ^ fuv.XYZ(); //
+        aTotal += luv.XYZ() ^ fuv.XYZ();
         fuv = luv;
       }
     }
   }
-  aTotal += uv0.XYZ() ^ fuv.XYZ(); //
+  aTotal += uv0.XYZ() ^ fuv.XYZ();
   double anArea = aTotal.Modulus() * 0.5;
   return anArea;
 }
-
-//=================================================================================================
 
 bool ShapeAnalysis::IsOuterBound(const TopoDS_Face& face)
 {
@@ -184,7 +158,7 @@ bool ShapeAnalysis::IsOuterBound(const TopoDS_Face& face)
     W = TopoDS::Wire(exp.Current());
     nbw++;
   }
-  // skl 08.04.2002
+
   if (nbw == 1)
   {
     occ::handle<ShapeExtend_WireData> sewd     = new ShapeExtend_WireData(W);
@@ -202,12 +176,6 @@ bool ShapeAnalysis::IsOuterBound(const TopoDS_Face& face)
   }
 }
 
-//=======================================================================
-// function : OuterWire
-// purpose  : Returns positively oriented wire in the face.
-//           If there is no one - returns the last wire of the face.
-//=======================================================================
-
 TopoDS_Wire ShapeAnalysis::OuterWire(const TopoDS_Face& theFace)
 {
   TopoDS_Face aF = theFace;
@@ -219,11 +187,9 @@ TopoDS_Wire ShapeAnalysis::OuterWire(const TopoDS_Face& theFace)
     TopoDS_Wire aWire = TopoDS::Wire(anIt.Value());
     anIt.Next();
 
-    // if current wire is the last one, return it without analysis
     if (!anIt.More())
       return aWire;
 
-    // Check if the wire has positive area
     occ::handle<ShapeExtend_WireData> aSEWD    = new ShapeExtend_WireData(aWire);
     double                            anArea2d = ShapeAnalysis::TotCross2D(aSEWD, aF);
     if (anArea2d >= 0.)
@@ -231,8 +197,6 @@ TopoDS_Wire ShapeAnalysis::OuterWire(const TopoDS_Face& theFace)
   }
   return TopoDS_Wire();
 }
-
-//=================================================================================================
 
 void ShapeAnalysis::GetFaceUVBounds(const TopoDS_Face& F,
                                     double&            UMin,

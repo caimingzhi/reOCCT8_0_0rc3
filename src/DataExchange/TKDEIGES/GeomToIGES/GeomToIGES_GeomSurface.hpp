@@ -22,22 +22,6 @@ class Geom_SurfaceOfLinearExtrusion;
 class Geom_SurfaceOfRevolution;
 class Geom_OffsetSurface;
 
-//! This class implements the transfer of the Surface Entity from Geom
-//! To IGES. These can be:
-//! . BoundedSurface
-//! * BSplineSurface
-//! * BezierSurface
-//! * RectangularTrimmedSurface
-//! . ElementarySurface
-//! * Plane
-//! * CylindricalSurface
-//! * ConicalSurface
-//! * SphericalSurface
-//! * ToroidalSurface
-//! . SweptSurface
-//! * SurfaceOfLinearExtrusion
-//! * SurfaceOfRevolution
-//! . OffsetSurface
 class GeomToIGES_GeomSurface : public GeomToIGES_GeomEntity
 {
 public:
@@ -45,13 +29,8 @@ public:
 
   Standard_EXPORT GeomToIGES_GeomSurface();
 
-  //! Creates a tool GeomSurface ready to run and sets its
-  //! fields as GE's.
   Standard_EXPORT GeomToIGES_GeomSurface(const GeomToIGES_GeomEntity& GE);
 
-  //! Transfer a GeometryEntity which answer True to the
-  //! member : BRepToIGES::IsGeomSurface(Geometry). If this
-  //! Entity could not be converted, this member returns a NullEntity.
   Standard_EXPORT occ::handle<IGESData_IGESEntity> TransferSurface(
     const occ::handle<Geom_Surface>& start,
     const double                     Udeb,
@@ -192,19 +171,14 @@ public:
     const double                             Vdeb,
     const double                             Vfin);
 
-  //! Returns the value of "TheLength"
   Standard_EXPORT double Length() const;
 
-  //! Returns Brep mode flag.
   Standard_EXPORT bool GetBRepMode() const;
 
-  //! Sets BRep mode flag.
   Standard_EXPORT void SetBRepMode(const bool flag);
 
-  //! Returns flag for writing elementary surfaces
   Standard_EXPORT bool GetAnalyticMode() const;
 
-  //! Setst flag for writing elementary surfaces
   Standard_EXPORT void SetAnalyticMode(const bool flag);
 
 private:

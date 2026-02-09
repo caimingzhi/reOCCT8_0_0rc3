@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDoc_Material.hpp>
 
@@ -23,19 +12,13 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDoc_Material, TDF_Attribute)
 
-//=================================================================================================
-
 XCAFDoc_Material::XCAFDoc_Material() = default;
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc_Material::GetID()
 {
   static Standard_GUID MatID("efd212f8-6dfd-11d4-b9c8-0060b0ee281b");
   return MatID;
 }
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_Material> XCAFDoc_Material::Set(
   const TDF_Label&                             label,
@@ -55,8 +38,6 @@ occ::handle<XCAFDoc_Material> XCAFDoc_Material::Set(
   return A;
 }
 
-//=================================================================================================
-
 void XCAFDoc_Material::Set(const occ::handle<TCollection_HAsciiString>& aName,
                            const occ::handle<TCollection_HAsciiString>& aDescription,
                            const double                                 aDensity,
@@ -70,49 +51,35 @@ void XCAFDoc_Material::Set(const occ::handle<TCollection_HAsciiString>& aName,
   myDensValType = aDensValType;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> XCAFDoc_Material::GetName() const
 {
   return myName;
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> XCAFDoc_Material::GetDescription() const
 {
   return myDescription;
 }
 
-//=================================================================================================
-
 double XCAFDoc_Material::GetDensity() const
 {
   return myDensity;
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> XCAFDoc_Material::GetDensName() const
 {
   return myDensName;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> XCAFDoc_Material::GetDensValType() const
 {
   return myDensValType;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_Material::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 void XCAFDoc_Material::Restore(const occ::handle<TDF_Attribute>& With)
 {
@@ -123,17 +90,13 @@ void XCAFDoc_Material::Restore(const occ::handle<TDF_Attribute>& With)
   myDensValType = occ::down_cast<XCAFDoc_Material>(With)->GetDensValType();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XCAFDoc_Material::NewEmpty() const
 {
   return new XCAFDoc_Material();
 }
 
-//=================================================================================================
-
 void XCAFDoc_Material::Paste(const occ::handle<TDF_Attribute>& Into,
-                             const occ::handle<TDF_RelocationTable>& /*RT*/) const
+                             const occ::handle<TDF_RelocationTable>&) const
 {
   occ::down_cast<XCAFDoc_Material>(Into)->Set(myName,
                                               myDescription,
@@ -141,8 +104,6 @@ void XCAFDoc_Material::Paste(const occ::handle<TDF_Attribute>& Into,
                                               myDensName,
                                               myDensValType);
 }
-
-//=================================================================================================
 
 void XCAFDoc_Material::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

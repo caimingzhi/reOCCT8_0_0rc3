@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Draw_ProgressIndicator.hpp>
 
@@ -28,8 +17,6 @@
 #include <ctime>
 IMPLEMENT_STANDARD_RTTIEXT(Draw_ProgressIndicator, Message_ProgressIndicator)
 
-//=================================================================================================
-
 Draw_ProgressIndicator::Draw_ProgressIndicator(const Draw_Interpretor& di,
                                                double                  theUpdateThreshold)
     : myTclMode(DefaultTclMode()),
@@ -45,21 +32,17 @@ Draw_ProgressIndicator::Draw_ProgressIndicator(const Draw_Interpretor& di,
 {
 }
 
-//=================================================================================================
-
 Draw_ProgressIndicator::~Draw_ProgressIndicator()
 {
   Reset();
 }
-
-//=================================================================================================
 
 void Draw_ProgressIndicator::Reset()
 {
   Message_ProgressIndicator::Reset();
   if (myShown)
   {
-    // eval will reset current string result - backup it beforehand
+
     const TCollection_AsciiString aTclResStr(myDraw->Result());
     myDraw->Eval("destroy .xprogress");
     *myDraw << aTclResStr;
@@ -70,14 +53,11 @@ void Draw_ProgressIndicator::Reset()
   myStartTime    = 0;
 }
 
-//=================================================================================================
-
 void Draw_ProgressIndicator::Show(const Message_ProgressScope& theScope, const bool force)
 {
   if (!myGraphMode && !myTclMode && !myConsoleMode)
     return;
 
-  // remember time of the first call to Show as process start time
   if (!myStartTime)
   {
     if (!myStartTime)
@@ -88,16 +68,13 @@ void Draw_ProgressIndicator::Show(const Message_ProgressScope& theScope, const b
     }
   }
 
-  // unless show is forced, show updated state only if at least 1% progress has been reached since
-  // the last update
   double aPosition = GetPosition();
   if (!force && (1. - aPosition) > Precision::Confusion()
       && std::abs(aPosition - myLastPosition) < myUpdateThreshold)
-    return; // return if update interval has not elapsed
+    return;
 
   myLastPosition = aPosition;
 
-  // Prepare textual progress info
   std::stringstream aText;
   aText.setf(std::ios::fixed, std::ios::floatfield);
   aText.precision(0);
@@ -109,10 +86,9 @@ void Draw_ProgressIndicator::Show(const Message_ProgressScope& theScope, const b
   {
     const Message_ProgressScope* aPS = it.Value();
     if (!aPS->Name())
-      continue; // skip unnamed scopes
+      continue;
     aText << " " << aPS->Name() << ": ";
 
-    // print progress info differently for finite and infinite scopes
     double aVal = aPS->Value();
     if (aPS->IsInfinite())
     {
@@ -131,11 +107,9 @@ void Draw_ProgressIndicator::Show(const Message_ProgressScope& theScope, const b
     }
   }
 
-  // Show graphic progress bar.
-  // It will be updated only within GUI thread.
   if (myGraphMode && myGuiThreadId == OSD_Thread::Current())
   {
-    // In addition, write elapsed/estimated/remaining time
+
     if (GetPosition() > 0.01)
     {
       time_t aTimeT;
@@ -145,7 +119,6 @@ void Draw_ProgressIndicator::Show(const Message_ProgressScope& theScope, const b
             << (aTime - myStartTime) / GetPosition() << " sec";
     }
 
-    // eval will reset current string result - backup it beforehand
     const TCollection_AsciiString aTclResStr(myDraw->Result());
     if (!myShown)
     {
@@ -178,7 +151,6 @@ void Draw_ProgressIndicator::Show(const Message_ProgressScope& theScope, const b
     *myDraw << aTclResStr;
   }
 
-  // Print textual progress info
   if (myTclMode && myDraw)
   {
     *myDraw << aText.str().c_str() << "\n";
@@ -189,20 +161,17 @@ void Draw_ProgressIndicator::Show(const Message_ProgressScope& theScope, const b
   }
 }
 
-//=================================================================================================
-
 bool Draw_ProgressIndicator::UserBreak()
 {
   if (StopIndicator() == this)
   {
-    //    std::cout << "Progress Indicator - User Break: " << StopIndicator() << ", " << (void*)this
-    //    << std::endl;
+
     myBreak = true;
     myDraw->Eval("XProgress -stop 0");
   }
   else
   {
-    // treatment of Ctrl-Break signal
+
     try
     {
       OSD::ControlBreak();
@@ -215,67 +184,35 @@ bool Draw_ProgressIndicator::UserBreak()
   return myBreak;
 }
 
-//=======================================================================
-// function : SetTclMode
-// purpose  : Sets Tcl output mode (on/off)
-//=======================================================================
-
 void Draw_ProgressIndicator::SetTclMode(const bool theTclMode)
 {
   myTclMode = theTclMode;
 }
-
-//=======================================================================
-// function : GetTclMode
-// purpose  : Returns Tcl output mode (on/off)
-//=======================================================================
 
 bool Draw_ProgressIndicator::GetTclMode() const
 {
   return myTclMode;
 }
 
-//=======================================================================
-// function : SetConsoleMode
-// purpose  : Sets Console output mode (on/off)
-//=======================================================================
-
 void Draw_ProgressIndicator::SetConsoleMode(const bool theMode)
 {
   myConsoleMode = theMode;
 }
-
-//=======================================================================
-// function : GetConsoleMode
-// purpose  : Returns Console output mode (on/off)
-//=======================================================================
 
 bool Draw_ProgressIndicator::GetConsoleMode() const
 {
   return myConsoleMode;
 }
 
-//=======================================================================
-// function : SetGraphMode
-// purpose  : Sets graphical output mode (on/off)
-//=======================================================================
-
 void Draw_ProgressIndicator::SetGraphMode(const bool theGraphMode)
 {
   myGraphMode = theGraphMode;
 }
 
-//=======================================================================
-// function : GetGraphMode
-// purpose  : Returns graphical output mode (on/off)
-//=======================================================================
-
 bool Draw_ProgressIndicator::GetGraphMode() const
 {
   return myGraphMode;
 }
-
-//=================================================================================================
 
 bool& Draw_ProgressIndicator::DefaultTclMode()
 {
@@ -283,23 +220,17 @@ bool& Draw_ProgressIndicator::DefaultTclMode()
   return defTclMode;
 }
 
-//=================================================================================================
-
 bool& Draw_ProgressIndicator::DefaultConsoleMode()
 {
   static bool defConsoleMode = false;
   return defConsoleMode;
 }
 
-//=================================================================================================
-
 bool& Draw_ProgressIndicator::DefaultGraphMode()
 {
   static bool defGraphMode = false;
   return defGraphMode;
 }
-
-//=================================================================================================
 
 void*& Draw_ProgressIndicator::StopIndicator()
 {

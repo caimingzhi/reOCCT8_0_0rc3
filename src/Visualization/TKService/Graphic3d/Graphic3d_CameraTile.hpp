@@ -5,40 +5,32 @@
 #include <Standard_Integer.hpp>
 #include <Standard_OStream.hpp>
 
-//! Class defines the area (Tile) inside a view.
 class Graphic3d_CameraTile
 {
 public:
-  NCollection_Vec2<int> TotalSize; //!< total size of the View area, in pixels
-  NCollection_Vec2<int> TileSize;  //!< size of the Tile, in pixels
-  // clang-format off
-  NCollection_Vec2<int> Offset;    //!< the lower-left corner of the Tile relative to the View area (or upper-left if IsTopDown is true), in pixels
-  bool            IsTopDown; //!< indicate the offset coordinate system - lower-left (default) or top-down
-  // clang-format on
+  NCollection_Vec2<int> TotalSize;
+  NCollection_Vec2<int> TileSize;
+
+  NCollection_Vec2<int> Offset;
+  bool                  IsTopDown;
 
 public:
-  //! Default constructor.
-  //! Initializes the empty Tile of zero size and lower-left offset orientation.
-  //! Such Tile is considered uninitialized (invalid).
   Graphic3d_CameraTile()
       : IsTopDown(false)
   {
   }
 
-  //! Return true if Tile has been defined.
   bool IsValid() const
   {
     return TotalSize.x() > 0 && TotalSize.y() > 0 && TileSize.x() > 0 && TileSize.y() > 0;
   }
 
-  //! Return offset position from lower-left corner.
   NCollection_Vec2<int> OffsetLowerLeft() const
   {
     return NCollection_Vec2<int>(Offset.x(),
                                  !IsTopDown ? Offset.y() : TotalSize.y() - Offset.y() - 1);
   }
 
-  //! Return the copy cropped by total size
   Graphic3d_CameraTile Cropped() const
   {
     Graphic3d_CameraTile aTile = *this;
@@ -57,7 +49,6 @@ public:
     return aTile;
   }
 
-  //! Equality check.
   bool operator==(const Graphic3d_CameraTile& theOther) const
   {
     const NCollection_Vec2<int> anOffset1 = OffsetLowerLeft();
@@ -67,6 +58,5 @@ public:
            && anOffset1.x() == anOffset2.x() && anOffset1.y() == anOffset2.y();
   }
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 };

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_EditForm.hpp>
 #include <Interface_TypedValue.hpp>
@@ -53,11 +42,6 @@ STEPEdit_EditSDR::STEPEdit_EditSDR()
 
   occ::handle<Interface_TypedValue> ac_ap = new Interface_TypedValue("Application");
   SetValue(11, ac_ap, "Appli");
-
-  //  ?? :
-  // occ::handle<TCollection_HAsciiString> StepPDR_SDRtool::PDSname() const
-  // occ::handle<TCollection_HAsciiString> StepPDR_SDRtool::PDSdescription() const
-  // occ::handle<TCollection_HAsciiString> StepPDR_SDRtool::PDdescription() const
 }
 
 TCollection_AsciiString STEPEdit_EditSDR::Label() const
@@ -65,14 +49,14 @@ TCollection_AsciiString STEPEdit_EditSDR::Label() const
   return TCollection_AsciiString("STEP : Product Data (SDR)");
 }
 
-bool STEPEdit_EditSDR::Recognize(const occ::handle<IFSelect_EditForm>& /*form*/) const
+bool STEPEdit_EditSDR::Recognize(const occ::handle<IFSelect_EditForm>&) const
 {
-  // il faut 10 parametres
+
   return true;
 }
 
 occ::handle<TCollection_HAsciiString> STEPEdit_EditSDR::StringValue(
-  const occ::handle<IFSelect_EditForm>& /*form*/,
+  const occ::handle<IFSelect_EditForm>&,
   const int num) const
 {
   occ::handle<TCollection_HAsciiString> str;

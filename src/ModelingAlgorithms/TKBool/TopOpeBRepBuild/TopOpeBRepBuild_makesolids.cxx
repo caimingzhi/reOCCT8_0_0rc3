@@ -11,10 +11,8 @@
 #include <NCollection_IndexedMap.hpp>
 
 #ifdef OCCT_DEBUG
-Standard_EXPORT void debgsobu(const int /*iSO*/) {}
+Standard_EXPORT void debgsobu(const int) {}
 #endif
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder::GSFSMakeSolids(const TopoDS_Shape&             SOF,
                                              TopOpeBRepBuild_ShellFaceSet&   SFS,
@@ -34,10 +32,7 @@ void TopOpeBRepBuild_Builder::GSFSMakeSolids(const TopoDS_Shape&             SOF
   TopOpeBRepBuild_SolidBuilder SOBU;
   SOBU.InitSolidBuilder(SFS, ForceClass);
   GSOBUMakeSolids(SOF, SOBU, LOSO);
-
-} // GSFSMakeSolids
-
-//=================================================================================================
+}
 
 void TopOpeBRepBuild_Builder::GSOBUMakeSolids(const TopoDS_Shape&             SOF,
                                               TopOpeBRepBuild_SolidBuilder&   SOBU,
@@ -84,7 +79,6 @@ void TopOpeBRepBuild_Builder::GSOBUMakeSolids(const TopoDS_Shape&             SO
         }
       }
 
-      // caractere closed du nouveau shell newShell
       if (!isold)
       {
         bool closed = true;
@@ -112,7 +106,7 @@ void TopOpeBRepBuild_Builder::GSOBUMakeSolids(const TopoDS_Shape&             SO
           }
         }
         myBuildTool.Closed(newShell, closed);
-      } // !isold
+      }
 
       myBuildTool.AddSolidShell(newSolid, newShell);
     }
@@ -146,6 +140,5 @@ void TopOpeBRepBuild_Builder::GSOBUMakeSolids(const TopoDS_Shape&             SO
     NCollection_List<TopoDS_Shape> newSolidLOS;
     RegularizeSolid(SOF, newSolid, newSolidLOS);
     LOSO.Append(newSolidLOS);
-    //    LOSO.Append(newSolid);
   }
-} // GSOBUMakeSolids
+}

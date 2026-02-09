@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_EditForm.hpp>
 #include <IFSelect_Editor.hpp>
@@ -237,7 +226,7 @@ int IFSelect_Editor::NameNumber(const char* name) const
   int res;
   if (thenames.Find(name, res))
     return res;
-  res = atoi(name); // if it's an integer, we try it
+  res = atoi(name);
   if (res < 1 || res > NbValues())
     res = 0;
   return res;
@@ -259,25 +248,25 @@ occ::handle<IFSelect_ListEditor> IFSelect_Editor::ListEditor(const int num) cons
 }
 
 occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> IFSelect_Editor::
-  ListValue(const occ::handle<IFSelect_EditForm>& /*form*/, const int /*num*/) const
+  ListValue(const occ::handle<IFSelect_EditForm>&, const int) const
 {
   occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> list;
   return list;
 }
 
-bool IFSelect_Editor::Update(const occ::handle<IFSelect_EditForm>& /*form*/,
-                             const int /*num*/,
-                             const occ::handle<TCollection_HAsciiString>& /*newval*/,
-                             const bool /*enforce*/) const
+bool IFSelect_Editor::Update(const occ::handle<IFSelect_EditForm>&,
+                             const int,
+                             const occ::handle<TCollection_HAsciiString>&,
+                             const bool) const
 {
   return true;
 }
 
 bool IFSelect_Editor::UpdateList(
-  const occ::handle<IFSelect_EditForm>& /*form*/,
-  const int /*num*/,
-  const occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>>& /*newval*/,
-  const bool /*enforce*/) const
+  const occ::handle<IFSelect_EditForm>&,
+  const int,
+  const occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>>&,
+  const bool) const
 {
   return true;
 }

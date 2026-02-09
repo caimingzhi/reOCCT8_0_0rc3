@@ -11,7 +11,6 @@ class StepVisual_SurfaceStyleSilhouette;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SurfaceStyleSilhouette
 class RWStepVisual_RWSurfaceStyleSilhouette
 {
 public:

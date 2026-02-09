@@ -22,11 +22,6 @@
 #include <BRepBuilderAPI_FindPlane.hpp>
 #include <BRep_Builder.hpp>
 
-//=======================================================================
-// function : chfi2d
-// purpose  : 2d fillets and chamfers
-//=======================================================================
-
 static int chfi2d(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
@@ -35,7 +30,6 @@ static int chfi2d(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  // set up the algorithm
   TopoDS_Shape F = DBRep::Get(a[2], TopAbs_FACE);
   if (F.IsNull())
   {
@@ -60,8 +54,6 @@ static int chfi2d(Draw_Interpretor& di, int n, const char** a)
     TopoDS_Edge  E1 = TopoDS::Edge(aLocalEdge);
     aLocalEdge      = DBRep::Get(a[i + 1], TopAbs_EDGE);
     TopoDS_Edge E2  = TopoDS::Edge(aLocalEdge);
-    //    TopoDS_Edge E1 = TopoDS::Edge(DBRep::Get(a[i],TopAbs_EDGE));
-    //    TopoDS_Edge E2 = TopoDS::Edge(DBRep::Get(a[i+1],TopAbs_EDGE));
 
     if (E1.IsNull() || E2.IsNull())
     {
@@ -181,13 +173,6 @@ static int chfi2d(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : fillet2d
-// purpose  : A method to find a plane for 2 edges.
-//         : It may return a NULL object of the plane is not found
-//         : (the edge are located not in a plane).
-//=======================================================================
-
 static occ::handle<Geom_Plane> findPlane(const TopoDS_Shape& S)
 {
   occ::handle<Geom_Plane>  plane;
@@ -206,11 +191,6 @@ static occ::handle<Geom_Plane> findPlane(const TopoDS_Shape& E1, const TopoDS_Sh
   B.Add(C, E2);
   return findPlane(C);
 }
-
-//=======================================================================
-// function : findCommonPoint
-// purpose  : Find a common (or the most close) point of two edges.
-//=======================================================================
 
 static gp_Pnt findCommonPoint(const TopoDS_Shape& E1, const TopoDS_Shape& E2)
 {
@@ -242,8 +222,7 @@ static gp_Pnt findCommonPoint(const TopoDS_Shape& E1, const TopoDS_Shape& E2)
 
 static gp_Pnt findCommonPoint(const TopoDS_Shape& W)
 {
-  // The common point for two edges inside a wire
-  // is a sharing vertex of two edges.
+
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> vertices;
   TopExp_Explorer                                        aExp(W, TopAbs_VERTEX);
   for (; aExp.More(); aExp.Next())
@@ -253,14 +232,8 @@ static gp_Pnt findCommonPoint(const TopoDS_Shape& W)
       return BRep_Tool::Pnt(TopoDS::Vertex(aExp.Current()));
     }
   }
-  return gp::Origin(); // not found
+  return gp::Origin();
 }
-
-//=======================================================================
-// function : fillet2d
-// purpose  : Fillet 2d based on Newton method (recursive, iteration)
-// usage    : fillet2d result wire (or edge1 edge2) radius
-//=======================================================================
 
 static int fillet2d(Draw_Interpretor& di, int n, const char** a)
 {
@@ -273,20 +246,18 @@ static int fillet2d(Draw_Interpretor& di, int n, const char** a)
   TopoDS_Shape E1, E2, W;
   if (n == 5)
   {
-    // Get the edges.
+
     E1 = DBRep::Get(a[2], TopAbs_EDGE, true);
     E2 = DBRep::Get(a[3], TopAbs_EDGE, true);
   }
   else
   {
-    // Get the wire.
+
     W = DBRep::Get(a[2], TopAbs_WIRE, true);
   }
 
-  // Get the radius value.
   const double radius = Atof(n == 5 ? a[4] : a[3]);
 
-  // Find plane of the edges.
   occ::handle<Geom_Plane> hPlane = n == 5 ? findPlane(E1, E2) : findPlane(W);
   if (hPlane.IsNull())
   {
@@ -294,7 +265,6 @@ static int fillet2d(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  // Algo.
   ChFi2d_FilletAPI algo;
   gp_Pln           plane = hPlane->Pln();
   if (n == 5)
@@ -315,10 +285,8 @@ static int fillet2d(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  // Find a common point of the edges.
   gp_Pnt common = n == 5 ? findCommonPoint(E1, E2) : findCommonPoint(W);
 
-  // Get the number of solutions (usually it is equal to 1).
   int nbSolutions = algo.NbResults(common);
   if (!nbSolutions)
   {
@@ -326,8 +294,7 @@ static int fillet2d(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  // Get the result for the "nearest" solution (near the common point).
-  TopoDS_Edge M1, M2; // modified E1 and E2
+  TopoDS_Edge M1, M2;
   TopoDS_Edge fillet = algo.Result(common, M1, M2);
   if (fillet.IsNull())
   {
@@ -335,16 +302,14 @@ static int fillet2d(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  // Set result for DRAW.
   DBRep::Set(a[1], fillet);
 
-  // Update neighbour edges in DRAW.
   if (n == 5)
   {
     DBRep::Set(a[2], M1);
     DBRep::Set(a[3], M2);
   }
-  else // recreate the wire using the fillet
+  else
   {
     BRepBuilderAPI_MakeWire mkWire(M1, fillet, M2);
     if (mkWire.IsDone())
@@ -354,12 +319,6 @@ static int fillet2d(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=======================================================================
-// function : chamfer2d
-// purpose  : Chamfer 2d.
-// usage    : chamfer2d result wire (or edge1 edge2) length1 length2
-//=======================================================================
 
 static int chamfer2d(Draw_Interpretor& di, int n, const char** a)
 {
@@ -373,7 +332,7 @@ static int chamfer2d(Draw_Interpretor& di, int n, const char** a)
   TopoDS_Shape E1, E2;
   if (n == 6)
   {
-    // Get the edges.
+
     E1 = DBRep::Get(a[2], TopAbs_EDGE, true);
     E2 = DBRep::Get(a[3], TopAbs_EDGE, true);
   }
@@ -382,11 +341,9 @@ static int chamfer2d(Draw_Interpretor& di, int n, const char** a)
     W = DBRep::Get(a[2], TopAbs_WIRE, true);
   }
 
-  // Get the lengths.
   const double length1 = (n == 6) ? Atof(a[4]) : Atof(a[3]);
   const double length2 = (n == 6) ? Atof(a[5]) : Atof(a[4]);
 
-  // Algo.
   ChFi2d_ChamferAPI algo;
   if (n == 6)
   {
@@ -400,11 +357,9 @@ static int chamfer2d(Draw_Interpretor& di, int n, const char** a)
     algo.Init(w);
   }
 
-  // Prepare the chamfer.
   algo.Perform();
 
-  // Get the result.
-  TopoDS_Edge M1, M2; // modified E1 and E2
+  TopoDS_Edge M1, M2;
   TopoDS_Edge chamfer = algo.Result(M1, M2, length1, length2);
   if (chamfer.IsNull())
   {
@@ -414,14 +369,13 @@ static int chamfer2d(Draw_Interpretor& di, int n, const char** a)
 
   if (n == 6)
   {
-    // Set result for DRAW.
+
     DBRep::Set(a[1], chamfer);
 
-    // Update neighbour edges in DRAW.
     DBRep::Set(a[2], M1);
     DBRep::Set(a[3], M2);
   }
-  else // recreate the wire using the chamfer
+  else
   {
     BRepBuilderAPI_MakeWire mkWire(M1, chamfer, M2);
     if (mkWire.IsDone())
@@ -432,8 +386,6 @@ static int chamfer2d(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 void BRepTest::Fillet2DCommands(Draw_Interpretor& theCommands)
 {

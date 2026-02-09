@@ -39,8 +39,6 @@ static int GeomAbsToInteger(const GeomAbs_Shape gcont)
   return cont;
 }
 
-//=================================================================================================
-
 GeomAbs_Shape GeomLProp::Continuity(const occ::handle<Geom_Curve>& C1,
                                     const occ::handle<Geom_Curve>& C2,
                                     const double                   u1,
@@ -165,8 +163,6 @@ GeomAbs_Shape GeomLProp::Continuity(const occ::handle<Geom_Curve>& C1,
   }
   return cont;
 }
-
-//=================================================================================================
 
 GeomAbs_Shape GeomLProp::Continuity(const occ::handle<Geom_Curve>& C1,
                                     const occ::handle<Geom_Curve>& C2,

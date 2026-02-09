@@ -13,7 +13,6 @@ class StepBasic_ConversionBasedUnitAndRatioUnit : public StepBasic_ConversionBas
 {
 
 public:
-  //! Returns a ConversionBasedUnitAndRatioUnit
   Standard_EXPORT StepBasic_ConversionBasedUnitAndRatioUnit();
 
   Standard_EXPORT void Init(const occ::handle<StepBasic_DimensionalExponents>& aDimensions,

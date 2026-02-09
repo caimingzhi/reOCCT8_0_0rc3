@@ -3,24 +3,16 @@
 #include <Geom2dLProp_FuncCurNul.hpp>
 #include <gp_Pnt2d.hpp>
 
-//=================================================================================================
-
 Geom2dLProp_FuncCurNul::Geom2dLProp_FuncCurNul(const occ::handle<Geom2d_Curve>& C)
     : theCurve(C)
 {
 }
 
-//=============================================================================
-// function : Value
-// purpose : F = (V1^V2.Z)/||V1||*||V2||
-//=============================================================================
 bool Geom2dLProp_FuncCurNul::Value(const double X, double& F)
 {
   double D;
   return Values(X, F, D);
 }
-
-//=================================================================================================
 
 bool Geom2dLProp_FuncCurNul::Derivative(const double X, double& D)
 {
@@ -28,10 +20,6 @@ bool Geom2dLProp_FuncCurNul::Derivative(const double X, double& D)
   return Values(X, F, D);
 }
 
-//=============================================================================
-// function : Values
-// purpose : F = (V1^V2.Z)/||V1||*||V2||
-//=============================================================================
 bool Geom2dLProp_FuncCurNul::Values(const double X, double& F, double& D)
 {
   gp_Pnt2d P1;
@@ -46,11 +34,6 @@ bool Geom2dLProp_FuncCurNul::Values(const double X, double& F, double& D)
 
   F = 0.;
   D = 0.;
-
-  /*
-    if (std::abs(CP1) < 1.e-4) {
-      return true;
-    } else */
 
   if (NV2 < 1.e-4)
   {

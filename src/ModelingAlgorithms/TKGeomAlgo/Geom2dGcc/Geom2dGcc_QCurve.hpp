@@ -8,7 +8,6 @@
 #include <Geom2dAdaptor_Curve.hpp>
 #include <Standard_Boolean.hpp>
 
-//! Creates a qualified 2d line.
 class Geom2dGcc_QCurve
 {
 public:
@@ -21,20 +20,12 @@ public:
 
   Standard_EXPORT GccEnt_Position Qualifier() const;
 
-  //! Returns true if the solution is unqualified and false in the
-  //! other cases.
   Standard_EXPORT bool IsUnqualified() const;
 
-  //! Returns true if the solution is Enclosing the Curv and false in
-  //! the other cases.
   Standard_EXPORT bool IsEnclosing() const;
 
-  //! Returns true if the solution is Enclosed in the Curv and false in
-  //! the other cases.
   Standard_EXPORT bool IsEnclosed() const;
 
-  //! Returns true if the solution is Outside the Curv and false in
-  //! the other cases.
   Standard_EXPORT bool IsOutside() const;
 
 private:

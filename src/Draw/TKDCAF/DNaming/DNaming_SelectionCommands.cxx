@@ -23,11 +23,9 @@
 #include <DBRep_DrawableShape.hpp>
 #include <cstdio>
 
-//=================================================================================================
-
 static void Display(const char* Name, const TopoDS_Shape& S)
 {
-  // char* name = Name;
+
   static int    nbIsos  = 2;
   static double size    = 100.;
   static int    discret = 30;
@@ -37,19 +35,16 @@ static void Display(const char* Name, const TopoDS_Shape& S)
   Draw::Set(Name, D);
 }
 
-//=================================================================================================
-
-// static void DumpNaming (const occ::handle<TNaming_Naming>& naming)
 static void DumpNaming(const occ::handle<TNaming_Naming>& naming, Draw_Interpretor& di)
 {
   TCollection_AsciiString Entry;
   const TNaming_Name&     AName = naming->GetName();
-  // TNaming::Print(AName.Type(),std::cout);
+
   Standard_SStream aStream1;
   TNaming::Print(AName.Type(), aStream1);
   di << aStream1;
   di << " ";
-  // TopAbs::Print(AName.ShapeType(),std::cout);
+
   Standard_SStream aStream2;
   TopAbs::Print(AName.ShapeType(), aStream2);
   di << aStream2;
@@ -65,11 +60,6 @@ static void DumpNaming(const occ::handle<TNaming_Naming>& naming, Draw_Interpret
     di << " Stop " << Entry.ToCString();
   }
 }
-
-//=======================================================================
-// function : SelectShape ou SelectGeometry
-// purpose  : "Select DF entry shape [context [orient]]",
-//=======================================================================
 
 static int DNaming_Select(Draw_Interpretor& di, int n, const char** a)
 {
@@ -101,9 +91,6 @@ static int DNaming_Select(Draw_Interpretor& di, int n, const char** a)
   di << "DNaming_Select : Error\n";
   return 1;
 }
-
-// #define DEB_SELN 1
-//=================================================================================================
 
 bool FillValidMap(const TDF_Label& theLabel, NCollection_Map<TDF_Label>& theValidMap)
 {
@@ -151,11 +138,6 @@ bool FillValidMap(const TDF_Label& theLabel, NCollection_Map<TDF_Label>& theVali
   return extRefFound;
 }
 
-//=======================================================================
-// function : SolveSelection
-// purpose  : "SolveSelection DF entry",
-//=======================================================================
-
 static int DNaming_SolveSelection(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 3)
@@ -201,10 +183,6 @@ static int DNaming_SolveSelection(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=======================================================================
-// function : DumpSelection
-// purpose  : DumpSelection DF entry (R)"
-//=======================================================================
 static int DNaming_DumpSelection(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 3 || n == 4)
@@ -249,10 +227,6 @@ static int DNaming_DumpSelection(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=======================================================================
-// function : ArgsSelection
-// purpose  : ArgsSelection DF entry"
-//=======================================================================
 static int DNaming_ArgsSelection(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 3)
@@ -286,8 +260,6 @@ static int DNaming_ArgsSelection(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=================================================================================================
-
 static void CollectAttachment(const TDF_Label&                                  root,
                               const occ::handle<TNaming_Naming>&                naming,
                               NCollection_Map<occ::handle<TNaming_NamedShape>>& attachment)
@@ -314,11 +286,6 @@ static void CollectAttachment(const TDF_Label&                                  
     }
   }
 }
-
-//=======================================================================
-// function : Attachment
-// purpose  : Attachment DF entry"
-//=======================================================================
 
 static int DNaming_Attachment(Draw_Interpretor& di, int n, const char** a)
 {
@@ -363,8 +330,6 @@ static int DNaming_Attachment(Draw_Interpretor& di, int n, const char** a)
   di << "DNaming_Attachment : Error\n";
   return 1;
 }
-
-//=================================================================================================
 
 void DNaming::SelectionCommands(Draw_Interpretor& theCommands)
 {

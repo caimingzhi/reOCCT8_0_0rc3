@@ -11,7 +11,6 @@ class StepBasic_ApprovalDateTime;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ApprovalDateTime
 class RWStepBasic_RWApprovalDateTime
 {
 public:

@@ -1,15 +1,4 @@
-// Copyright (c) 2017-2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <RWMesh_MaterialMap.hpp>
 
@@ -23,8 +12,6 @@
 #include <TDF_Label.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(RWMesh_MaterialMap, Standard_Transient)
-
-//=================================================================================================
 
 RWMesh_MaterialMap::RWMesh_MaterialMap(const TCollection_AsciiString& theFile)
     : myFileName(theFile),
@@ -42,11 +29,7 @@ RWMesh_MaterialMap::RWMesh_MaterialMap(const TCollection_AsciiString& theFile)
   }
 }
 
-//=================================================================================================
-
 RWMesh_MaterialMap::~RWMesh_MaterialMap() = default;
-
-//=================================================================================================
 
 TCollection_AsciiString RWMesh_MaterialMap::AddMaterial(const XCAFPrs_Style& theStyle)
 {
@@ -85,7 +68,7 @@ TCollection_AsciiString RWMesh_MaterialMap::AddMaterial(const XCAFPrs_Style& the
   }
   else
   {
-    aMatKey        = myNbMaterials++; // starts from 0
+    aMatKey        = myNbMaterials++;
     aMatNameSuffix = myKeyPrefix;
     aMatName       = aMatNameSuffix + aMatKey;
   }
@@ -113,8 +96,6 @@ TCollection_AsciiString RWMesh_MaterialMap::AddMaterial(const XCAFPrs_Style& the
   DefineMaterial(theStyle, aMatKey, aMatName);
   return aMatKey;
 }
-
-//=================================================================================================
 
 bool RWMesh_MaterialMap::copyFileTo(const TCollection_AsciiString& theFileSrc,
                                     const TCollection_AsciiString& theFileDst)
@@ -149,8 +130,6 @@ bool RWMesh_MaterialMap::copyFileTo(const TCollection_AsciiString& theFileSrc,
   }
 }
 
-//=================================================================================================
-
 bool RWMesh_MaterialMap::CopyTexture(TCollection_AsciiString&          theResTexture,
                                      const occ::handle<Image_Texture>& theTexture,
                                      const TCollection_AsciiString&    theKey)
@@ -179,8 +158,6 @@ bool RWMesh_MaterialMap::CopyTexture(TCollection_AsciiString&          theResTex
   theResTexture                             = myTexFolderShort + aTexFileName;
   return theTexture->WriteImage(aResTexFile);
 }
-
-//=================================================================================================
 
 bool RWMesh_MaterialMap::CreateTextureFolder()
 {
@@ -219,7 +196,7 @@ bool RWMesh_MaterialMap::CreateTextureFolder()
   aTexDir.Build(aProt);
   if (aTexDir.Failed())
   {
-    // fallback to the same folder as output model file
+
     Message::SendFail() << "Failed to create textures folder '" << myTexFolder << "'";
     myTexFolder = myFolder;
     myTexFolderShort.Clear();

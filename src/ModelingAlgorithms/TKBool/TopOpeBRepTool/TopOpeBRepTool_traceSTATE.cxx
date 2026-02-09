@@ -68,5 +68,4 @@ Standard_EXPORT bool TopOpeBRepTool_GettraceCL2DPR()
   return TopOpeBRepTool_CL2DPR.Get();
 }
 
-// #ifdef OCCT_DEBUG
 #endif

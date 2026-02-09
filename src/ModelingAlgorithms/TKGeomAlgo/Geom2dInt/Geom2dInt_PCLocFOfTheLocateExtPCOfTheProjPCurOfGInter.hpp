@@ -8,7 +8,6 @@
 #include <gp_Pnt2d.hpp>
 #include <gp_Vec2d.hpp>
 
-//! Type alias for 2D curve extremum function using Geom2dInt_Geom2dCurveTool.
 using Geom2dInt_PCLocFOfTheLocateExtPCOfTheProjPCurOfGInter =
   Extrema_GFuncExtPC<Adaptor2d_Curve2d,
                      Geom2dInt_Geom2dCurveTool,

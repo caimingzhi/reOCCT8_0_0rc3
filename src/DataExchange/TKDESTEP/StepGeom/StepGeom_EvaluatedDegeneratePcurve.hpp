@@ -13,7 +13,6 @@ class StepGeom_EvaluatedDegeneratePcurve : public StepGeom_DegeneratePcurve
 {
 
 public:
-  //! Returns a EvaluatedDegeneratePcurve
   Standard_EXPORT StepGeom_EvaluatedDegeneratePcurve();
 
   Standard_EXPORT void Init(

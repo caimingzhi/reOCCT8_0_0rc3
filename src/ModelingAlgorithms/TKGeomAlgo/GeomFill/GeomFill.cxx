@@ -21,23 +21,12 @@
 #include <gp_Vec.hpp>
 #include <Precision.hpp>
 
-//=================================================================================================
-
 occ::handle<Geom_Surface> GeomFill::Surface(const occ::handle<Geom_Curve>& Curve1,
                                             const occ::handle<Geom_Curve>& Curve2)
 
 {
   occ::handle<Geom_Curve>   TheCurve1, TheCurve2;
   occ::handle<Geom_Surface> Surf;
-
-  // recherche du type de la surface resultat:
-  // les surfaces reglees particulieres sont :
-  //     - les plans
-  //     - les cylindres
-  //     - les cones
-  // dans ces trois cas les courbes doivent etre de meme type :
-  //     - ou 2 droites
-  //     - ou 2 cercles
 
   double a1 = 0, a2 = 0, b1 = 0, b2 = 0;
   bool   Trim1 = false, Trim2 = false;
@@ -67,7 +56,7 @@ occ::handle<Geom_Surface> GeomFill::Surface(const occ::handle<Geom_Curve>& Curve
   }
 
   bool IsDone = false;
-  // Les deux courbes sont des droites.
+
   if (TheCurve1->IsKind(STANDARD_TYPE(Geom_Line)) && TheCurve2->IsKind(STANDARD_TYPE(Geom_Line))
       && Trim1 && Trim2)
   {
@@ -109,7 +98,6 @@ occ::handle<Geom_Surface> GeomFill::Surface(const occ::handle<Geom_Curve>& Curve
     }
   }
 
-  // Les deux courbes sont des cercles.
   else if (TheCurve1->IsKind(STANDARD_TYPE(Geom_Circle))
            && TheCurve2->IsKind(STANDARD_TYPE(Geom_Circle)))
   {
@@ -120,7 +108,6 @@ occ::handle<Geom_Surface> GeomFill::Surface(const occ::handle<Geom_Curve>& Curve
     gp_Ax3 A1 = C1.Position();
     gp_Ax3 A2 = C2.Position();
 
-    // first, A1 & A2 must be coaxials
     if (A1.Axis().IsCoaxial(A2.Axis(), Precision::Angular(), Precision::Confusion()))
     {
       double V = gp_Vec(A1.Location(), A2.Location()).Dot(gp_Vec(A1.Direction()));
@@ -164,8 +151,6 @@ occ::handle<Geom_Surface> GeomFill::Surface(const occ::handle<Geom_Curve>& Curve
 
   return Surf;
 }
-
-//=================================================================================================
 
 void GeomFill::GetShape(const double                  MaxAng,
                         int&                          NbPoles,
@@ -211,12 +196,6 @@ void GeomFill::GetShape(const double                  MaxAng,
   }
 }
 
-//=======================================================================
-// function : GetMinimalWeights
-// purpose  : On suppose les extremum de poids sont obtenus pour les
-//           extremums d'angles (A verifier eventuelement pour Quasi-Angular)
-//=======================================================================
-
 void GeomFill::GetMinimalWeights(const Convert_ParameterisationType TConv,
                                  const double                       MinAng,
                                  const double                       MaxAng,
@@ -250,8 +229,6 @@ void GeomFill::GetMinimalWeights(const Convert_ParameterisationType TConv,
   }
 }
 
-//=================================================================================================
-
 void GeomFill::Knots(const Convert_ParameterisationType TConv, NCollection_Array1<double>& TKnots)
 {
   if ((TConv != Convert_QuasiAngular) && (TConv != Convert_Polynomial))
@@ -270,8 +247,6 @@ void GeomFill::Knots(const Convert_ParameterisationType TConv, NCollection_Array
     TKnots(2) = 1.;
   }
 }
-
-//=================================================================================================
 
 void GeomFill::Mults(const Convert_ParameterisationType TConv, NCollection_Array1<int>& TMults)
 {
@@ -292,7 +267,7 @@ void GeomFill::Mults(const Convert_ParameterisationType TConv, NCollection_Array
 
     default:
     {
-      // Cas rational classsique
+
       int i;
       TMults(TMults.Lower()) = 3;
       for (i = TMults.Lower() + 1; i <= TMults.Upper() - 1; i++)
@@ -303,12 +278,6 @@ void GeomFill::Mults(const Convert_ParameterisationType TConv, NCollection_Array
     }
   }
 }
-
-//=======================================================================
-// function : GetTolerance
-// purpose  : Determiner la Tolerance 3d permetant de respecter la Tolerance
-//           de continuite G1.
-//=======================================================================
 
 double GeomFill::GetTolerance(const Convert_ParameterisationType TConv,
                               const double                       AngleMin,
@@ -321,34 +290,24 @@ double GeomFill::GetTolerance(const Convert_ParameterisationType TConv,
   occ::handle<Geom_Circle>       popCircle = new Geom_Circle(C);
   occ::handle<Geom_TrimmedCurve> Sect =
     new Geom_TrimmedCurve(popCircle, 0., std::max(AngleMin, 0.02));
-  // 0.02 est proche d'1 degree, en desous on ne se preocupe pas de la tngence
-  // afin d'eviter des tolerances d'approximation tendant vers 0 !
+
   occ::handle<Geom_BSplineCurve> CtoBspl = GeomConvert::CurveToBSplineCurve(Sect, TConv);
   double                         Dist;
   Dist = CtoBspl->Pole(1).Distance(CtoBspl->Pole(2)) + SpatialTol;
   return Dist * AngularTol / 2;
 }
 
-//===========================================================================
-// function : GetCircle
-// purpose  : Calculs les poles et poids d'un cercle definie par ses extremites
-//           et son rayon.
-//   On evite (si possible) de passer par les convertions pour
-//  1) Des problemes de performances.
-//  2) Assurer la coherance entre cette methode est celle qui donne la derive
-//============================================================================
 void GeomFill::GetCircle(const Convert_ParameterisationType TConv,
-                         const gp_Vec&               ns1,   // Normal rentrente au premier point
-                         const gp_Vec&               ns2,   // Normal rentrente au second point
-                         const gp_Vec&               nplan, // Normal au plan
-                         const gp_Pnt&               pts1,
-                         const gp_Pnt&               pts2,
-                         const double                Rayon, // Rayon (doit etre positif)
-                         const gp_Pnt&               Center,
-                         NCollection_Array1<gp_Pnt>& Poles,
-                         NCollection_Array1<double>& Weights)
+                         const gp_Vec&                      ns1,
+                         const gp_Vec&                      ns2,
+                         const gp_Vec&                      nplan,
+                         const gp_Pnt&                      pts1,
+                         const gp_Pnt&                      pts2,
+                         const double                       Rayon,
+                         const gp_Pnt&                      Center,
+                         NCollection_Array1<gp_Pnt>&        Poles,
+                         NCollection_Array1<double>&        Weights)
 {
-  // La classe de convertion
 
   int    i, jj;
   double Cosa, Sina, Angle, Alpha, Cosas2, lambda;
@@ -370,7 +329,7 @@ void GeomFill::GetCircle(const Convert_ParameterisationType TConv,
     Sina = 0;
   }
   Angle = std::acos(Cosa);
-  // Recadrage sur ]-pi/2, 3pi/2]
+
   if (Sina < 0.)
   {
     if (Cosa > 0.)
@@ -398,8 +357,7 @@ void GeomFill::GetCircle(const Convert_ParameterisationType TConv,
     }
     default:
     {
-      // Cas Rational, on utilise une expression directe beaucoup plus
-      // performente que GeomConvert
+
       int NbSpan = (Poles.Length() - 1) / 2;
 
       Poles(low)   = pts1;
@@ -474,7 +432,7 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
     Sina = 0;
   }
   Angle = std::acos(Cosa);
-  // Recadrage sur ]-pi/2, 3pi/2]
+
   if (Sina < 0.)
   {
     if (Cosa > 0.)
@@ -493,7 +451,6 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
       (dnplan.Dot(ns1.Crossed(ns2)) + nplan.Dot(dn1w.Crossed(ns2) + ns1.Crossed(dn2w))) / Cosa;
   }
 
-  // Aux Extremites.
   Poles(low)   = pts1;
   Poles(upp)   = pts2;
   Weights(low) = 1;
@@ -535,58 +492,56 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
     }
 
     default:
-      // Cas rationel classique
+
+    {
+      np2  = nplan.Crossed(ns1);
+      dnp2 = dnplan.Crossed(ns1).Added(nplan.Crossed(dn1w));
+
+      Alpha  = Angle / ((double)(NbSpan));
+      Cosas2 = std::cos(Alpha / 2);
+      Sinas2 = std::sin(Alpha / 2);
+
+      for (i = 1, jj = low + 2; i <= NbSpan - 1; i++, jj += 2)
       {
-        np2  = nplan.Crossed(ns1);
-        dnp2 = dnplan.Crossed(ns1).Added(nplan.Crossed(dn1w));
+        lambda = ((double)(i)) * Alpha;
+        Cosa   = std::cos(lambda);
+        Sina   = std::sin(lambda);
+        temp.SetLinearForm(Cosa - 1, ns1, Sina, np2);
+        Poles(jj).SetXYZ(pts1.XYZ() + Rayon * temp.XYZ());
 
-        Alpha  = Angle / ((double)(NbSpan));
-        Cosas2 = std::cos(Alpha / 2);
-        Sinas2 = std::sin(Alpha / 2);
-
-        for (i = 1, jj = low + 2; i <= NbSpan - 1; i++, jj += 2)
-        {
-          lambda = ((double)(i)) * Alpha;
-          Cosa   = std::cos(lambda);
-          Sina   = std::sin(lambda);
-          temp.SetLinearForm(Cosa - 1, ns1, Sina, np2);
-          Poles(jj).SetXYZ(pts1.XYZ() + Rayon * temp.XYZ());
-
-          DPoles(jj).SetLinearForm(DRayon, temp, tang1);
-          temp.SetLinearForm(-Sina, ns1, Cosa, np2);
-          temp.Multiply(((double)(i)) / ((double)(NbSpan)) * DAngle);
-          temp.Add(((Cosa - 1) * dn1w).Added(Sina * dnp2));
-          DPoles(jj) += Rayon * temp;
-        }
-
-        lambda  = 1. / (2. * Cosas2 * Cosas2);
-        Dlambda = (lambda * Sinas2 * DAngle) / (Cosas2 * NbSpan);
-
-        for (i = 1, jj = low; i <= NbSpan; i++, jj += 2)
-        {
-          temp.SetXYZ(Poles(jj).XYZ() + Poles(jj + 2).XYZ() - 2. * Center.XYZ());
-          Poles(jj + 1).SetXYZ(Center.XYZ() + lambda * temp.XYZ());
-          DPoles(jj + 1).SetLinearForm(Dlambda,
-                                       temp,
-                                       1. - 2 * lambda,
-                                       DCenter,
-                                       lambda,
-                                       (DPoles(jj) + DPoles(jj + 2)));
-        }
-
-        // Les poids
-        Dlambda = -Sinas2 * DAngle / (2 * NbSpan);
-        for (i = low; i < upp; i += 2)
-        {
-          Weights(i)      = 1.;
-          Weights(i + 1)  = Cosas2;
-          DWeights(i)     = 0.;
-          DWeights(i + 1) = Dlambda;
-        }
+        DPoles(jj).SetLinearForm(DRayon, temp, tang1);
+        temp.SetLinearForm(-Sina, ns1, Cosa, np2);
+        temp.Multiply(((double)(i)) / ((double)(NbSpan)) * DAngle);
+        temp.Add(((Cosa - 1) * dn1w).Added(Sina * dnp2));
+        DPoles(jj) += Rayon * temp;
       }
+
+      lambda  = 1. / (2. * Cosas2 * Cosas2);
+      Dlambda = (lambda * Sinas2 * DAngle) / (Cosas2 * NbSpan);
+
+      for (i = 1, jj = low; i <= NbSpan; i++, jj += 2)
+      {
+        temp.SetXYZ(Poles(jj).XYZ() + Poles(jj + 2).XYZ() - 2. * Center.XYZ());
+        Poles(jj + 1).SetXYZ(Center.XYZ() + lambda * temp.XYZ());
+        DPoles(jj + 1).SetLinearForm(Dlambda,
+                                     temp,
+                                     1. - 2 * lambda,
+                                     DCenter,
+                                     lambda,
+                                     (DPoles(jj) + DPoles(jj + 2)));
+      }
+
+      Dlambda = -Sinas2 * DAngle / (2 * NbSpan);
+      for (i = low; i < upp; i += 2)
+      {
+        Weights(i)      = 1.;
+        Weights(i + 1)  = Cosas2;
+        DWeights(i)     = 0.;
+        DWeights(i + 1) = Dlambda;
+      }
+    }
       return true;
   }
-  //  return false;
 }
 
 bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
@@ -641,7 +596,7 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
     Sina = 0;
   }
   Angle = std::acos(Cosa);
-  // Recadrage sur ]-pi/2, 3pi/2]
+
   if (Sina < 0.)
   {
     if (Cosa > 0.)
@@ -670,7 +625,6 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
                   / (Cosa * Cosa);
   }
 
-  // Aux Extremites.
   Poles(low)   = pts1;
   Poles(upp)   = pts2;
   Weights(low) = 1;
@@ -794,7 +748,6 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
         D2Poles(jj + 1) += (1 - 2 * lambda) * D2Center;
       }
 
-      // Les poids
       Dlambda  = -Sinas2 * DAngle / (2 * NbSpan);
       D2lambda = -Sinas2 * D2Angle / (2 * NbSpan) - Cosas2 * std::pow(DAngle / (2 * NbSpan), 2);
 

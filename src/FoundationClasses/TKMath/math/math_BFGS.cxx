@@ -1,23 +1,8 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// #ifndef OCCT_DEBUG
+
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
-
-// #endif
 
 #include <math_BFGS.hpp>
 #include <math_BracketMinimum.hpp>
@@ -27,12 +12,6 @@
 #include <math_MultipleVarFunctionWithGradient.hpp>
 #include <Precision.hpp>
 
-// l'utilisation de math_BrentMinumim pur trouver un minimum dans une direction
-// donnee n'est pas du tout optimale. voir peut etre interpolation cubique
-// classique et aussi essayer "recherche unidimensionnelle economique"
-// PROGRAMMATION MATHEMATIQUE (theorie et algorithmes) tome1 page 82.
-
-// Target function for 1D problem, point and direction are known.
 class DirFunction : public math_FunctionWithDerivative
 {
 
@@ -43,7 +22,6 @@ class DirFunction : public math_FunctionWithDerivative
   math_MultipleVarFunctionWithGradient* F;
 
 public:
-  //! Ctor.
   DirFunction(math_Vector&                          V1,
               math_Vector&                          V2,
               math_Vector&                          V3,
@@ -57,7 +35,6 @@ public:
   {
   }
 
-  //! Sets point and direction.
   void Initialize(const math_Vector& p0, const math_Vector& dir) const
   {
     *P0  = p0;
@@ -107,11 +84,6 @@ public:
   }
 };
 
-//=============================================================================
-// function : ComputeInitScale
-// purpose  : Compute the appropriate initial value of scale factor to apply
-//           to the direction to approach to the minimum of the function
-//=============================================================================
 static bool ComputeInitScale(const double       theF0,
                              const math_Vector& theDir,
                              const math_Vector& theGr,
@@ -130,13 +102,6 @@ static bool ComputeInitScale(const double       theF0,
   return true;
 }
 
-//=============================================================================
-// function : ComputeMinMaxScale
-// purpose  : For a given point and direction, and bounding box,
-//           find min and max scale factors with which the point reaches borders
-//           if we apply translation Point+Dir*Scale.
-// return   : True if found, False if point is out of bounds.
-//=============================================================================
 static bool ComputeMinMaxScale(const math_Vector& thePoint,
                                const math_Vector& theDir,
                                const math_Vector& theLeft,
@@ -150,36 +115,34 @@ static bool ComputeMinMaxScale(const math_Vector& thePoint,
     const double aRight = theRight(anIdx) - thePoint(anIdx);
     if (std::abs(theDir(anIdx)) > RealSmall())
     {
-      // Use PConfusion to get off a little from the bounds to prevent
-      // possible refuse in Value function.
+
       const double aLScale = (aLeft + Precision::PConfusion()) / theDir(anIdx);
       const double aRScale = (aRight - Precision::PConfusion()) / theDir(anIdx);
       if (std::abs(aLeft) < Precision::PConfusion())
       {
-        // Point is on the left border.
+
         theMaxScale = std::min(theMaxScale, std::max(0., aRScale));
         theMinScale = std::max(theMinScale, std::min(0., aRScale));
       }
       else if (std::abs(aRight) < Precision::PConfusion())
       {
-        // Point is on the right border.
+
         theMaxScale = std::min(theMaxScale, std::max(0., aLScale));
         theMinScale = std::max(theMinScale, std::min(0., aLScale));
       }
       else if (aLeft * aRight < 0)
       {
-        // Point is inside allowed range.
+
         theMaxScale = std::min(theMaxScale, std::max(aLScale, aRScale));
         theMinScale = std::max(theMinScale, std::min(aLScale, aRScale));
       }
       else
-        // point is out of bounds
+
         return false;
     }
     else
     {
-      // Direction is parallel to the border.
-      // Check that the point is not out of bounds
+
       if (aLeft > Precision::PConfusion() || aRight < -Precision::PConfusion())
       {
         return false;
@@ -189,11 +152,6 @@ static bool ComputeMinMaxScale(const math_Vector& thePoint,
   return true;
 }
 
-//=============================================================================
-// function : MinimizeDirection
-// purpose  : Solves 1D minimization problem when point and directions
-//           are known.
-//=============================================================================
 static bool MinimizeDirection(math_Vector&       P,
                               double             F0,
                               math_Vector&       Gr,
@@ -208,19 +166,17 @@ static bool MinimizeDirection(math_Vector&       P,
   if (!ComputeInitScale(F0, Dir, Gr, lambda))
     return false;
 
-  // by default the scaling range is unlimited
   double aMinLambda = -Precision::Infinite();
   double aMaxLambda = Precision::Infinite();
   if (isBounds)
   {
-    // limit the scaling range taking into account the bounds
+
     if (!ComputeMinMaxScale(P, Dir, theLeft, theRight, aMinLambda, aMaxLambda))
       return false;
 
     if (aMinLambda > -Precision::PConfusion() && aMaxLambda < Precision::PConfusion())
     {
-      // Point is on the border and the direction shows outside.
-      // Make direction to go along the border
+
       for (int anIdx = 1; anIdx <= theLeft.Upper(); anIdx++)
       {
         if ((std::abs(P(anIdx) - theRight(anIdx)) < Precision::PConfusion() && Dir(anIdx) > 0.0)
@@ -230,7 +186,6 @@ static bool MinimizeDirection(math_Vector&       P,
         }
       }
 
-      // re-compute scale values with new direction
       if (!ComputeInitScale(F0, Dir, Gr, lambda))
         return false;
       if (!ComputeMinMaxScale(P, Dir, theLeft, theRight, aMinLambda, aMaxLambda))
@@ -253,7 +208,7 @@ static bool MinimizeDirection(math_Vector&       P,
   Bracket.Perform(F);
   if (Bracket.IsDone())
   {
-    // find minimum inside the bracket
+
     double ax, xx, bx, Fax, Fxx, Fbx;
     Bracket.Values(ax, xx, bx);
     Bracket.FunctionValues(Fax, Fxx, Fbx);
@@ -273,8 +228,7 @@ static bool MinimizeDirection(math_Vector&       P,
   }
   else if (isBounds)
   {
-    // Bracket definition is failure. If the bounds are defined then
-    // set current point to intersection with bounds
+
     double aFMin, aFMax;
     if (!F.Value(aMinLambda, aFMin))
       return false;
@@ -298,10 +252,6 @@ static bool MinimizeDirection(math_Vector&       P,
   return false;
 }
 
-//=============================================================================
-// function : Perform
-// purpose  : Performs minimization problem using BFGS method.
-//=============================================================================
 void math_BFGS::Perform(math_MultipleVarFunctionWithGradient& F, const math_Vector& StartingPoint)
 {
   const int n    = TheLocation.Length();
@@ -411,18 +361,12 @@ void math_BFGS::Perform(math_MultipleVarFunctionWithGradient& F, const math_Vect
   return;
 }
 
-//=============================================================================
-// function : IsSolutionReached
-// purpose  : Checks whether solution reached or not.
-//=============================================================================
 bool math_BFGS::IsSolutionReached(math_MultipleVarFunctionWithGradient&) const
 {
 
   return 2.0 * fabs(TheMinimum - PreviousMinimum)
          <= XTol * (fabs(TheMinimum) + fabs(PreviousMinimum) + EPSZ);
 }
-
-//=================================================================================================
 
 math_BFGS::math_BFGS(const int    NbVariables,
                      const double Tolerance,
@@ -444,11 +388,7 @@ math_BFGS::math_BFGS(const int    NbVariables,
 {
 }
 
-//=================================================================================================
-
 math_BFGS::~math_BFGS() = default;
-
-//=================================================================================================
 
 void math_BFGS::Dump(Standard_OStream& o) const
 {
@@ -465,10 +405,6 @@ void math_BFGS::Dump(Standard_OStream& o) const
     o << " Status = not Done because " << (int)TheStatus << "\n";
 }
 
-//=============================================================================
-// function : SetBoundary
-// purpose  : Set boundaries for conditional optimization
-//=============================================================================
 void math_BFGS::SetBoundary(const math_Vector& theLeftBorder, const math_Vector& theRightBorder)
 {
   myLeft            = theLeftBorder;

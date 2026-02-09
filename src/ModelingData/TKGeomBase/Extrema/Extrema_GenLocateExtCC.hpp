@@ -7,28 +7,12 @@
 #include <math_Vector.hpp>
 #include <StdFail_NotDone.hpp>
 
-//! Template class for locating local extremum of distance between two curves.
-//! Searches for a pair of parameter values (U,V) such that dist(C1(u),C2(v))
-//! passes through an extremum, and (U,V) is the solution closest to (U0,V0).
-//!
-//! @tparam TheCurve   Curve type (e.g., Adaptor3d_Curve, Adaptor2d_Curve2d)
-//! @tparam TheTool    Tool for curve operations
-//! @tparam ThePOnC    Point on curve type
-//! @tparam TheCCLocF  Function type for curve-curve local extremum
 template <typename TheCurve, typename TheTool, typename ThePOnC, typename TheCCLocF>
 class Extrema_GenLocateExtCC
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Calculates the distance between two curves C1 and C2.
-  //! Searches for a local extremum starting from initial parameters (U0, V0).
-  //! @param theC1   First curve
-  //! @param theC2   Second curve
-  //! @param theU0   Initial parameter on first curve
-  //! @param theV0   Initial parameter on second curve
-  //! @param theTolU Tolerance on parameter of first curve
-  //! @param theTolV Tolerance on parameter of second curve
   Extrema_GenLocateExtCC(const TheCurve& theC1,
                          const TheCurve& theC2,
                          const double    theU0,
@@ -92,10 +76,8 @@ public:
     }
   }
 
-  //! Returns True if the distance is found.
   bool IsDone() const { return myDone; }
 
-  //! Returns the value of the extremum square distance.
   double SquareDistance() const
   {
     if (!IsDone())
@@ -105,9 +87,6 @@ public:
     return mySqDist;
   }
 
-  //! Returns the points of the extremum distance.
-  //! @param theP1 Point on first curve
-  //! @param theP2 Point on second curve
   void Point(ThePOnC& theP1, ThePOnC& theP2) const
   {
     if (!IsDone())

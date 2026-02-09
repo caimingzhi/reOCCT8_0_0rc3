@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_Type.hpp>
 #include <StepGeom_RationalBSplineSurface.hpp>
@@ -35,10 +24,10 @@ void StepGeom_UniformSurfaceAndRationalBSplineSurface::Init(
   const occ::handle<StepGeom_UniformSurface>&                                   aUniformSurface,
   const occ::handle<StepGeom_RationalBSplineSurface>& aRationalBSplineSurface)
 {
-  // --- classe own fields ---
+
   uniformSurface         = aUniformSurface;
   rationalBSplineSurface = aRationalBSplineSurface;
-  // --- classe inherited fields ---
+
   StepGeom_BSplineSurface::Init(aName,
                                 aUDegree,
                                 aVDegree,
@@ -60,7 +49,6 @@ void StepGeom_UniformSurfaceAndRationalBSplineSurface::Init(
   const StepData_Logical                                                        aSelfIntersect,
   const occ::handle<NCollection_HArray2<double>>&                               aWeightsData)
 {
-  // --- classe inherited fields ---
 
   StepGeom_BSplineSurface::Init(aName,
                                 aUDegree,
@@ -70,8 +58,6 @@ void StepGeom_UniformSurfaceAndRationalBSplineSurface::Init(
                                 aUClosed,
                                 aVClosed,
                                 aSelfIntersect);
-
-  // --- ANDOR component fields ---
 
   rationalBSplineSurface = new StepGeom_RationalBSplineSurface();
   rationalBSplineSurface->Init(aName,
@@ -83,8 +69,6 @@ void StepGeom_UniformSurfaceAndRationalBSplineSurface::Init(
                                aVClosed,
                                aSelfIntersect,
                                aWeightsData);
-
-  // --- ANDOR component fields ---
 
   uniformSurface = new StepGeom_UniformSurface();
   uniformSurface->Init(aName,
@@ -121,8 +105,6 @@ occ::handle<StepGeom_RationalBSplineSurface> StepGeom_UniformSurfaceAndRationalB
   return rationalBSplineSurface;
 }
 
-//--- Specific Methods for AND classe field access ---
-
 void StepGeom_UniformSurfaceAndRationalBSplineSurface::SetWeightsData(
   const occ::handle<NCollection_HArray2<double>>& aWeightsData)
 {
@@ -150,5 +132,3 @@ int StepGeom_UniformSurfaceAndRationalBSplineSurface::NbWeightsDataJ() const
 {
   return rationalBSplineSurface->NbWeightsDataJ();
 }
-
-//--- Specific Methods for AND classe field access ---

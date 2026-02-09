@@ -5,7 +5,6 @@
 
 #include <Standard_Integer.hpp>
 
-//! Data structure of a set of Hiding Triangles.
 class HLRAlgo_PolyHidingData
 {
 public:

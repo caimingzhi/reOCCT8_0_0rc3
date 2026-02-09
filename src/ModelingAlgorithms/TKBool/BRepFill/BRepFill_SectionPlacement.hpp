@@ -9,19 +9,16 @@
 #include <Standard_Integer.hpp>
 class BRepFill_LocationLaw;
 
-//! Place a shape in a local axis coordinate
 class BRepFill_SectionPlacement
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Automatic placement
   Standard_EXPORT BRepFill_SectionPlacement(const occ::handle<BRepFill_LocationLaw>& Law,
                                             const TopoDS_Shape&                      Section,
                                             const bool WithContact    = false,
                                             const bool WithCorrection = false);
 
-  //! Placement on vertex
   Standard_EXPORT BRepFill_SectionPlacement(const occ::handle<BRepFill_LocationLaw>& Law,
                                             const TopoDS_Shape&                      Section,
                                             const TopoDS_Shape&                      Vertex,

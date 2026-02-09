@@ -4,22 +4,16 @@
 #include <LProp_AnalyticCurInf.hpp>
 #include <NCollection_Array1.hpp>
 
-//=================================================================================================
-
 Geom2dLProp_CurAndInf2d::Geom2dLProp_CurAndInf2d()
     : isDone(false)
 {
 }
-
-//=================================================================================================
 
 void Geom2dLProp_CurAndInf2d::Perform(const occ::handle<Geom2d_Curve>& C)
 {
   PerformCurExt(C);
   PerformInf(C);
 }
-
-//=================================================================================================
 
 void Geom2dLProp_CurAndInf2d::PerformCurExt(const occ::handle<Geom2d_Curve>& C)
 {
@@ -53,7 +47,7 @@ void Geom2dLProp_CurAndInf2d::PerformCurExt(const occ::handle<Geom2d_Curve>& C)
       }
       else
       {
-        // Decoupage en intervalles C3.
+
         isDone                           = true;
         int                        NbInt = CC.NbIntervals(GeomAbs_C3);
         NCollection_Array1<double> Param(1, NbInt + 1);
@@ -77,8 +71,6 @@ void Geom2dLProp_CurAndInf2d::PerformCurExt(const occ::handle<Geom2d_Curve>& C)
     break;
   }
 }
-
-//=================================================================================================
 
 void Geom2dLProp_CurAndInf2d::PerformInf(const occ::handle<Geom2d_Curve>& C)
 {
@@ -108,7 +100,7 @@ void Geom2dLProp_CurAndInf2d::PerformInf(const occ::handle<Geom2d_Curve>& C)
       }
       else
       {
-        // Decoupage en intervalles C3.
+
         isDone                           = true;
         int                        NbInt = CC.NbIntervals(GeomAbs_C3);
         NCollection_Array1<double> Param(1, NbInt + 1);
@@ -133,8 +125,6 @@ void Geom2dLProp_CurAndInf2d::PerformInf(const occ::handle<Geom2d_Curve>& C)
     break;
   }
 }
-
-//=================================================================================================
 
 bool Geom2dLProp_CurAndInf2d::IsDone() const
 {

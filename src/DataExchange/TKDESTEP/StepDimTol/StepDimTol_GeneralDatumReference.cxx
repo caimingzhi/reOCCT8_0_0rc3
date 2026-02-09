@@ -6,11 +6,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_GeneralDatumReference, StepRepr_ShapeAspect)
 
-//=================================================================================================
-
 StepDimTol_GeneralDatumReference::StepDimTol_GeneralDatumReference() = default;
-
-//=================================================================================================
 
 void StepDimTol_GeneralDatumReference::Init(
   const occ::handle<TCollection_HAsciiString>&                               theName,

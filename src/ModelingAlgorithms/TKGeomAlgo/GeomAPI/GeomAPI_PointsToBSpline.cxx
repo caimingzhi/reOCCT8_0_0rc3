@@ -13,14 +13,10 @@
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 GeomAPI_PointsToBSpline::GeomAPI_PointsToBSpline()
 {
   myIsDone = false;
 }
-
-//=================================================================================================
 
 GeomAPI_PointsToBSpline::GeomAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt>& Points,
                                                  const int                         DegMin,
@@ -31,8 +27,6 @@ GeomAPI_PointsToBSpline::GeomAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt
   myIsDone = false;
   Init(Points, DegMin, DegMax, Continuity, Tol3D);
 }
-
-//=================================================================================================
 
 GeomAPI_PointsToBSpline::GeomAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt>& Points,
                                                  const Approx_ParametrizationType  ParType,
@@ -45,8 +39,6 @@ GeomAPI_PointsToBSpline::GeomAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt
   Init(Points, ParType, DegMin, DegMax, Continuity, Tol3D);
 }
 
-//=================================================================================================
-
 GeomAPI_PointsToBSpline::GeomAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt>& Points,
                                                  const NCollection_Array1<double>& Params,
                                                  const int                         DegMin,
@@ -57,8 +49,6 @@ GeomAPI_PointsToBSpline::GeomAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt
   myIsDone = false;
   Init(Points, Params, DegMin, DegMax, Continuity, Tol3D);
 }
-
-//=================================================================================================
 
 GeomAPI_PointsToBSpline::GeomAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt>& Points,
                                                  const double                      W1,
@@ -72,8 +62,6 @@ GeomAPI_PointsToBSpline::GeomAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt
   Init(Points, W1, W2, W3, DegMax, Continuity, Tol3D);
 }
 
-//=================================================================================================
-
 void GeomAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt>& Points,
                                    const int                         DegMin,
                                    const int                         DegMax,
@@ -84,8 +72,6 @@ void GeomAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt>& Points,
   Init(Points, Approx_ChordLength, DegMin, DegMax, Continuity, Tol3D);
 }
 
-//=================================================================================================
-
 void GeomAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt>& Points,
                                    const Approx_ParametrizationType  ParType,
                                    const int                         DegMin,
@@ -93,7 +79,7 @@ void GeomAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt>& Points,
                                    const GeomAbs_Shape               Continuity,
                                    const double                      Tol3D)
 {
-  double Tol2D = 0.; // dummy argument for BSplineCompute.
+  double Tol2D = 0.;
 
   int  nbit       = 2;
   bool UseSquares = false;
@@ -135,8 +121,6 @@ void GeomAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt>& Points,
   myIsDone = true;
 }
 
-//=================================================================================================
-
 void GeomAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt>& Points,
                                    const NCollection_Array1<double>& Params,
                                    const int                         DegMin,
@@ -147,7 +131,7 @@ void GeomAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt>& Points,
   if (Params.Length() != Points.Length())
     throw Standard_OutOfRange("GeomAPI_PointsToBSpline::Init() - invalid input");
 
-  double      Tol2D = 0.; // dummy argument for BSplineCompute.
+  double      Tol2D = 0.;
   int         Nbp   = Params.Length();
   math_Vector theParams(1, Nbp);
   theParams(1)   = 0.;
@@ -200,8 +184,6 @@ void GeomAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt>& Points,
   myIsDone = true;
 }
 
-//=================================================================================================
-
 void GeomAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt>& Points,
                                    const double                      W1,
                                    const double                      W2,
@@ -215,8 +197,6 @@ void GeomAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt>& Points,
   int nbit = 2;
   if (Tol3D <= 1.e-3)
     nbit = 0;
-
-  // Variational algo
 
   AppDef_MultiLine multL(NbPoint);
   for (i = 1; i <= NbPoint; ++i)
@@ -238,10 +218,8 @@ void GeomAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt>& Points,
 
   AppDef_Variational Variation(multL, 1, NbPoint, TABofCC);
 
-  //===================================
   int  theMaxSegments = 1000;
   bool theWithMinMax  = false;
-  //===================================
 
   Variation.SetMaxDegree(DegMax);
   Variation.SetContinuity(Continuity);
@@ -288,11 +266,6 @@ void GeomAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt>& Points,
   myIsDone = true;
 }
 
-//=======================================================================
-// function : occ::handle<Geom_BSplineCurve>&
-// purpose  :
-//=======================================================================
-
 const occ::handle<Geom_BSplineCurve>& GeomAPI_PointsToBSpline::Curve() const
 {
   if (!myIsDone)
@@ -300,14 +273,10 @@ const occ::handle<Geom_BSplineCurve>& GeomAPI_PointsToBSpline::Curve() const
   return myCurve;
 }
 
-//=================================================================================================
-
 GeomAPI_PointsToBSpline::operator occ::handle<Geom_BSplineCurve>() const
 {
   return myCurve;
 }
-
-//=================================================================================================
 
 bool GeomAPI_PointsToBSpline::IsDone() const
 {

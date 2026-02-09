@@ -11,13 +11,12 @@ IntTools_SurfaceRangeLocalizeData::IntTools_SurfaceRangeLocalizeData()
   myNbSampleV = 1;
   myMinRangeU = 0.;
   myMinRangeV = 0.;
-  //  Modified by skv - Thu Nov  3 11:58:24 2005 Optimization Begin
+
   myDeflection = 0.;
   myUIndMin    = 0;
   myUIndMax    = 0;
   myVIndMin    = 0;
   myVIndMax    = 0;
-  //  Modified by skv - Thu Nov  3 11:58:24 2005 Optimization End
 }
 
 IntTools_SurfaceRangeLocalizeData::IntTools_SurfaceRangeLocalizeData(const int    theNbSampleU,
@@ -29,13 +28,12 @@ IntTools_SurfaceRangeLocalizeData::IntTools_SurfaceRangeLocalizeData(const int  
   myNbSampleV = theNbSampleV;
   myMinRangeU = theMinRangeU;
   myMinRangeV = theMinRangeV;
-  //  Modified by skv - Thu Nov  3 11:58:24 2005 Optimization Begin
+
   myDeflection = 0.;
   myUIndMin    = 0;
   myUIndMax    = 0;
   myVIndMin    = 0;
   myVIndMax    = 0;
-  //  Modified by skv - Thu Nov  3 11:58:24 2005 Optimization End
 }
 
 IntTools_SurfaceRangeLocalizeData::IntTools_SurfaceRangeLocalizeData(
@@ -55,7 +53,7 @@ IntTools_SurfaceRangeLocalizeData& IntTools_SurfaceRangeLocalizeData::Assign(
   myMapRangeOut = Other.myMapRangeOut;
   myMapBox.Clear();
   myMapBox = Other.myMapBox;
-  //  Modified by skv - Thu Nov  3 11:58:24 2005 Optimization Begin
+
   myDeflection = Other.myDeflection;
   myUIndMin    = Other.myUIndMin;
   myUIndMax    = Other.myUIndMax;
@@ -70,14 +68,13 @@ IntTools_SurfaceRangeLocalizeData& IntTools_SurfaceRangeLocalizeData::Assign(
 
   if (!Other.myGridPoints.IsNull())
     myGridPoints = Other.myGridPoints;
-  //  Modified by skv - Thu Nov  3 11:58:24 2005 Optimization End
+
   return *(this);
 }
 
 void IntTools_SurfaceRangeLocalizeData::AddOutRange(const IntTools_SurfaceRangeSample& theRange)
 {
   myMapRangeOut.Add(theRange);
-  //   myMapBox.UnBind(theRange);
 }
 
 void IntTools_SurfaceRangeLocalizeData::AddBox(const IntTools_SurfaceRangeSample& theRange,
@@ -118,7 +115,6 @@ void IntTools_SurfaceRangeLocalizeData::RemoveRangeOutAll()
   myMapRangeOut.Clear();
 }
 
-//  Modified by skv - Thu Nov  3 11:58:24 2005 Optimization Begin
 void IntTools_SurfaceRangeLocalizeData::SetRangeUGrid(const int theNbUGrid)
 {
   myUIndMin = 0;
@@ -174,7 +170,6 @@ void IntTools_SurfaceRangeLocalizeData::SetFrame(const double theUMin,
   int aLmI;
   int aLen = myUParams->Length();
 
-  // Compute frame along U.
   for (i = 1; i <= aLen; i++)
   {
     if (myUIndMin == 0 && theUMin < myUParams->Value(i))
@@ -189,7 +184,6 @@ void IntTools_SurfaceRangeLocalizeData::SetFrame(const double theUMin,
   if (myUIndMin == 0)
     myUIndMin = aLen + 1;
 
-  // Compute frame along V.
   aLen = myVParams->Length();
 
   for (i = 1; i <= aLen; i++)
@@ -256,5 +250,3 @@ void IntTools_SurfaceRangeLocalizeData::ClearGrid()
   if (!myGridPoints.IsNull())
     myGridPoints.Nullify();
 }
-
-//  Modified by skv - Thu Nov  3 11:58:24 2005 Optimization End

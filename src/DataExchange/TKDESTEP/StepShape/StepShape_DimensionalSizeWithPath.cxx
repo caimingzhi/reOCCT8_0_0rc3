@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_DimensionalSizeWithPath, StepShape_DimensionalSize)
 
-//=================================================================================================
-
 StepShape_DimensionalSizeWithPath::StepShape_DimensionalSizeWithPath() = default;
-
-//=================================================================================================
 
 void StepShape_DimensionalSizeWithPath::Init(
   const occ::handle<StepRepr_ShapeAspect>&     aDimensionalSize_AppliesTo,
@@ -20,14 +16,10 @@ void StepShape_DimensionalSizeWithPath::Init(
   thePath = aPath;
 }
 
-//=================================================================================================
-
 occ::handle<StepRepr_ShapeAspect> StepShape_DimensionalSizeWithPath::Path() const
 {
   return thePath;
 }
-
-//=================================================================================================
 
 void StepShape_DimensionalSizeWithPath::SetPath(const occ::handle<StepRepr_ShapeAspect>& aPath)
 {

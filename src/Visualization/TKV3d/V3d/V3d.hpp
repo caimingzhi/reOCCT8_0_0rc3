@@ -10,15 +10,11 @@
 class Graphic3d_Group;
 class V3d_View;
 
-//! This package contains the set of commands and services
-//! of the 3D Viewer. It provides a set of high level commands
-//! to control the views and viewing modes.
 class V3d
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Determines the orientation vector corresponding to the predefined orientation type.
   static gp_Dir GetProjAxis(const V3d_TypeOfOrientation theOrientation)
   {
     switch (theOrientation)
@@ -79,11 +75,6 @@ public:
     return gp_Dir(0, 0, 0);
   }
 
-  //! Compute the graphic structure of arrow.
-  //! X0,Y0,Z0 : coordinate of the arrow.
-  //! DX,DY,DZ : Direction of the arrow.
-  //! Alpha    : Angle of arrow.
-  //! Lng      : Length of arrow.
   Standard_EXPORT static void ArrowOfRadius(const occ::handle<Graphic3d_Group>& garrow,
                                             const double                        X0,
                                             const double                        Y0,
@@ -94,10 +85,6 @@ public:
                                             const double                        Alpha,
                                             const double                        Lng);
 
-  //! Compute the graphic structure of circle.
-  //! X0,Y0,Z0 : Center of circle.
-  //! VX,VY,VZ : Axis of circle.
-  //! Radius   : Radius of circle.
   Standard_EXPORT static void CircleInPlane(const occ::handle<Graphic3d_Group>& gcircle,
                                             const double                        X0,
                                             const double                        Y0,
@@ -110,15 +97,8 @@ public:
   Standard_EXPORT static void SwitchViewsinWindow(const occ::handle<V3d_View>& aPreviousView,
                                                   const occ::handle<V3d_View>& aNextView);
 
-  //! Returns the string name for a given orientation type.
-  //! @param theType orientation type
-  //! @return string identifier from the list Xpos, Ypos, Zpos and others
   Standard_EXPORT static const char* TypeOfOrientationToString(V3d_TypeOfOrientation theType);
 
-  //! Returns the orientation type from the given string identifier (using case-insensitive
-  //! comparison).
-  //! @param theTypeString string identifier
-  //! @return orientation type or V3d_TypeOfOrientation if string identifier is invalid
   static V3d_TypeOfOrientation TypeOfOrientationFromString(const char* theTypeString)
   {
     V3d_TypeOfOrientation aType = V3d_Xpos;
@@ -126,11 +106,6 @@ public:
     return aType;
   }
 
-  //! Determines the shape type from the given string identifier (using case-insensitive
-  //! comparison).
-  //! @param theTypeString string identifier
-  //! @param theType detected shape type
-  //! @return TRUE if string identifier is known
   Standard_EXPORT static bool TypeOfOrientationFromString(const char*            theTypeString,
                                                           V3d_TypeOfOrientation& theType);
 };

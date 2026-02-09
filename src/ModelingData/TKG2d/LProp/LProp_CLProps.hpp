@@ -62,7 +62,7 @@ void LProp_CLProps::SetParameter(const double U)
 void LProp_CLProps::SetCurve(const Curve& C)
 {
   myCurve = C;
-  myCN    = 4; // Tool::Continuity(C); RLE
+  myCN    = 4;
 }
 
 const Pnt& LProp_CLProps::Value() const
@@ -110,8 +110,6 @@ bool LProp_CLProps::IsTangentDefined()
   else if (myTangentStatus >= LProp_Defined)
     return true;
 
-  // tangentStatus == Lprop_Undecided
-  // we have to calculate the first non null derivative
   const double Tol = myLinTol * myLinTol;
 
   Vec V;
@@ -132,21 +130,21 @@ bool LProp_CLProps::IsTangentDefined()
         case 3:
           V = D3();
           break;
-      } // switch(Order)
+      }
 
       if (V.SquareMagnitude() > Tol)
       {
         mySignificantFirstDerivativeOrder = Order;
         myTangentStatus                   = LProp_Defined;
         return true;
-      } // if(V.SquareMagnitude() > Tol)
-    } // if(cn >= Order)
+      }
+    }
     else
     {
       myTangentStatus = LProp_Undefined;
       return false;
-    } // else of "if(cn >= Order)" condition
-  } // while (Order < 4)
+    }
+  }
 
   return false;
 }
@@ -192,17 +190,16 @@ void LProp_CLProps::Tangent(Dir& D)
       V = -V;
 
     D = Dir(V);
-  } // else if (mySignificantFirstDerivativeOrder > 1)
+  }
 }
 
 double LProp_CLProps::Curvature()
 {
   bool isDefined = IsTangentDefined();
-  (void)isDefined; // trick to avoid compiler warning on variable unised in Release mode; note that
-                   // IsTangentDefined() must be called always
+  (void)isDefined;
+
   LProp_NotDefined_Raise_if(!isDefined, "LProp_CLProps::CurvatureNotDefined()");
 
-  // if the first derivative is null the curvature is infinite.
   if (mySignificantFirstDerivativeOrder > 1)
     return RealLast();
 
@@ -210,7 +207,6 @@ double LProp_CLProps::Curvature()
   double DD1 = myDerivArr[0].SquareMagnitude();
   double DD2 = myDerivArr[1].SquareMagnitude();
 
-  // if the second derivative is null the curvature is null.
   if (DD2 <= Tol)
   {
     myCurvature = 0.0;
@@ -218,8 +214,7 @@ double LProp_CLProps::Curvature()
   else
   {
     double N = myDerivArr[0].CrossSquareMagnitude(myDerivArr[1]);
-    // if d[0] and d[1] are colinear the curvature is null.
-    // double t = N/(DD1*DD2);
+
     double t = N / DD1 / DD2;
     if (t <= Tol)
     {
@@ -243,10 +238,6 @@ void LProp_CLProps::Normal(Dir& D)
                            "Curvature is null or infinity");
   }
 
-  // we used here the following vector relation
-  // a ^ (b ^ c) = b(ac) - c(ab)
-  // Norm = d[0] ^ (d[1] ^ d[0])
-
   Vec Norm = myDerivArr[1] * (myDerivArr[0] * myDerivArr[0])
              - myDerivArr[0] * (myDerivArr[0] * myDerivArr[1]);
   D = Dir(Norm);
@@ -258,10 +249,6 @@ void LProp_CLProps::CentreOfCurvature(Pnt& P)
   {
     throw LProp_NotDefined();
   }
-
-  // we used here the following vector relation
-  // a ^ (b ^ c) = b(ac) - c(ab)
-  // Norm = d[0] ^ (d[1] ^ d[0])
 
   Vec Norm = myDerivArr[1] * (myDerivArr[0] * myDerivArr[0])
              - myDerivArr[0] * (myDerivArr[0] * myDerivArr[1]);

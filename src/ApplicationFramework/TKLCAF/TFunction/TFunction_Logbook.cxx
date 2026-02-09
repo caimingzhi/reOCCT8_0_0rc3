@@ -8,20 +8,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TFunction_Logbook, TDF_Attribute)
 
-//=======================================================================
-// function : GetID
-// purpose  : Static method to get an ID
-//=======================================================================
 const Standard_GUID& TFunction_Logbook::GetID()
 {
   static Standard_GUID TFunction_LogbookID("CF519724-5CA4-4B90-835F-8919BE1DDE4B");
   return TFunction_LogbookID;
 }
-
-//=======================================================================
-// function : Set
-// purpose  : Finds or creates a Scope attribute
-//=======================================================================
 
 occ::handle<TFunction_Logbook> TFunction_Logbook::Set(const TDF_Label& Access)
 {
@@ -34,27 +25,15 @@ occ::handle<TFunction_Logbook> TFunction_Logbook::Set(const TDF_Label& Access)
   return S;
 }
 
-//=======================================================================
-// function : ID
-// purpose  : Returns GUID of the function
-//=======================================================================
-
 const Standard_GUID& TFunction_Logbook::ID() const
 {
   return GetID();
 }
 
-//=================================================================================================
-
 TFunction_Logbook::TFunction_Logbook()
     : isDone(false)
 {
 }
-
-//=======================================================================
-// function : Clear
-// purpose  : Clears the valid and modified labels
-//=======================================================================
 
 void TFunction_Logbook::Clear()
 {
@@ -67,20 +46,10 @@ void TFunction_Logbook::Clear()
   }
 }
 
-//=======================================================================
-// function : IsEmpty
-// purpose  : Returns true if the nothing is recorded in the logbook
-//=======================================================================
-
 bool TFunction_Logbook::IsEmpty() const
 {
   return (myTouched.IsEmpty() && myImpacted.IsEmpty() && myValid.IsEmpty());
 }
-
-//=======================================================================
-// function : IsModified
-// purpose  : Returns true if the label is modified
-//=======================================================================
 
 bool TFunction_Logbook::IsModified(const TDF_Label& L, const bool WithChildren) const
 {
@@ -101,8 +70,6 @@ bool TFunction_Logbook::IsModified(const TDF_Label& L, const bool WithChildren) 
   }
   return false;
 }
-
-//=================================================================================================
 
 void TFunction_Logbook::SetValid(const TDF_Label& L, const bool WithChildren)
 {
@@ -129,8 +96,6 @@ void TFunction_Logbook::SetValid(const NCollection_Map<TDF_Label>& Ls)
   }
 }
 
-//=================================================================================================
-
 void TFunction_Logbook::SetImpacted(const TDF_Label& L, const bool WithChildren)
 {
   Backup();
@@ -145,11 +110,9 @@ void TFunction_Logbook::SetImpacted(const TDF_Label& L, const bool WithChildren)
   }
 }
 
-//=================================================================================================
-
 void TFunction_Logbook::GetValid(NCollection_Map<TDF_Label>& Ls) const
 {
-  // Copy valid labels.
+
   NCollection_Map<TDF_Label>::Iterator itrm(myValid);
   for (; itrm.More(); itrm.Next())
   {
@@ -158,50 +121,36 @@ void TFunction_Logbook::GetValid(NCollection_Map<TDF_Label>& Ls) const
   }
 }
 
-//=======================================================================
-// function : Restore
-// purpose  : Undos (and redos) the attribute.
-//=======================================================================
-
 void TFunction_Logbook::Restore(const occ::handle<TDF_Attribute>& other)
 {
   occ::handle<TFunction_Logbook> logbook = occ::down_cast<TFunction_Logbook>(other);
 
-  // Status.
   isDone = logbook->isDone;
 
-  // Valid labels
   NCollection_Map<TDF_Label>::Iterator itrm;
   for (itrm.Initialize(logbook->myValid); itrm.More(); itrm.Next())
   {
     myValid.Add(itrm.Key());
   }
-  // Touched labels
+
   for (itrm.Initialize(logbook->myTouched); itrm.More(); itrm.Next())
   {
     myTouched.Add(itrm.Key());
   }
-  // Impacted labels
+
   for (itrm.Initialize(logbook->myImpacted); itrm.More(); itrm.Next())
   {
     myImpacted.Add(itrm.Key());
   }
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : Method for Copy mechanism
-//=======================================================================
-
 void TFunction_Logbook::Paste(const occ::handle<TDF_Attribute>&       into,
                               const occ::handle<TDF_RelocationTable>& RT) const
 {
   occ::handle<TFunction_Logbook> logbook = occ::down_cast<TFunction_Logbook>(into);
 
-  // Status.
   logbook->isDone = isDone;
 
-  // Touched.
   logbook->myTouched.Clear();
   NCollection_Map<TDF_Label>::Iterator itr(myTouched);
   for (; itr.More(); itr.Next())
@@ -217,7 +166,6 @@ void TFunction_Logbook::Paste(const occ::handle<TDF_Attribute>&       into,
     }
   }
 
-  // Impacted.
   logbook->myImpacted.Clear();
   itr.Initialize(myImpacted);
   for (; itr.More(); itr.Next())
@@ -233,7 +181,6 @@ void TFunction_Logbook::Paste(const occ::handle<TDF_Attribute>&       into,
     }
   }
 
-  // Valid.
   logbook->myValid.Clear();
   itr.Initialize(myValid);
   for (; itr.More(); itr.Next())
@@ -250,17 +197,10 @@ void TFunction_Logbook::Paste(const occ::handle<TDF_Attribute>&       into,
   }
 }
 
-//=======================================================================
-// function : NewEmpty
-// purpose  : Returns new empty graph node attribute
-//=======================================================================
-
 occ::handle<TDF_Attribute> TFunction_Logbook::NewEmpty() const
 {
   return new TFunction_Logbook();
 }
-
-//=================================================================================================
 
 Standard_OStream& TFunction_Logbook::Dump(Standard_OStream& stream) const
 {

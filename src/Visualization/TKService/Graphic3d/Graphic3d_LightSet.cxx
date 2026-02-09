@@ -1,15 +1,4 @@
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Graphic3d_LightSet.hpp>
 
@@ -19,16 +8,9 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_LightSet, Standard_Transient)
 
 namespace
 {
-  //! Suffixes identifying light source type.
-  static const char THE_LIGHT_KEY_LETTERS[Graphic3d_TypeOfLightSource_NB] = {
-    'a', // Graphic3d_TypeOfLightSource_Ambient
-    'd', // Graphic3d_TypeOfLightSource_Directional
-    'p', // Graphic3d_TypeOfLightSource_Positional
-    's'  // Graphic3d_TypeOfLightSource_Spot
-  };
-} // namespace
 
-//=================================================================================================
+  static const char THE_LIGHT_KEY_LETTERS[Graphic3d_TypeOfLightSource_NB] = {'a', 'd', 'p', 's'};
+}
 
 Graphic3d_LightSet::Graphic3d_LightSet()
     : myAmbient(0.0f, 0.0f, 0.0f, 0.0f),
@@ -40,8 +22,6 @@ Graphic3d_LightSet::Graphic3d_LightSet()
   memset(myLightTypes, 0, sizeof(myLightTypes));
   memset(myLightTypesEnabled, 0, sizeof(myLightTypesEnabled));
 }
-
-//=================================================================================================
 
 bool Graphic3d_LightSet::Add(const occ::handle<Graphic3d_CLight>& theLight)
 {
@@ -63,8 +43,6 @@ bool Graphic3d_LightSet::Add(const occ::handle<Graphic3d_CLight>& theLight)
   return true;
 }
 
-//=================================================================================================
-
 bool Graphic3d_LightSet::Remove(const occ::handle<Graphic3d_CLight>& theLight)
 {
   const int anIndToRemove = myLights.FindIndex(theLight);
@@ -79,13 +57,11 @@ bool Graphic3d_LightSet::Remove(const occ::handle<Graphic3d_CLight>& theLight)
   return true;
 }
 
-//=================================================================================================
-
 size_t Graphic3d_LightSet::UpdateRevision()
 {
   if (myCacheRevision == myRevision)
   {
-    // check implicit updates of light sources
+
     for (NCollection_IndexedDataMap<occ::handle<Graphic3d_CLight>, size_t>::Iterator aLightIter(
            myLights);
          aLightIter.More();

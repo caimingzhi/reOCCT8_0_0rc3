@@ -1,46 +1,8 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-/*
-Par Gauss le calcul d'une integrale simple se transforme en sommation des
-valeurs de la fonction donnee aux <Order> points de Gauss affectee des poids
-de Gauss.
 
-Les points et poids de Gauss sont stockes dans GaussPoints.cxx.
-Les points sont compris entre les valeurs -1 et +1, ce qui necessite un
-changement de variable pour les faire varier dans l'intervalle [Lower, Upper].
-
-On veut calculer Integrale( f(u)* du) entre a et b.
-
-Etapes du calcul:
-
-1- calcul de la fonction au ieme point de Gauss (apres changement de variable).
-
-2- multiplication de cette valeur par le ieme poids de Gauss.
-
-3- sommation de toutes ces valeurs.
-
-4- retour a l'intervalle [Lower, Upper] de notre integrale.
-
-*/
-
-// #ifndef OCCT_DEBUG
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
-
-// #endif
 
 #include <math.hpp>
 #include <math_Function.hpp>
@@ -69,9 +31,9 @@ math_GaussSingleIntegration::math_GaussSingleIntegration(math_Function& F,
 {
   int theOrder = std::min(math::GaussPointsMax(), Order);
 
-  const int IterMax    = 13; // Max number of iteration
-  int       NIter      = 1;  // current number of iteration
-  int       NbInterval = 1;  // current number of subintervals
+  const int IterMax    = 13;
+  int       NIter      = 1;
+  int       NbInterval = 1;
   double    dU, OldLen, Len;
 
   Perform(F, Lower, Upper, theOrder);
@@ -108,26 +70,22 @@ void math_GaussSingleIntegration::Perform(math_Function& F,
   math_Vector GaussW(1, Order);
   Done = false;
 
-  // Recuperation des points de Gauss dans le fichier GaussPoints.
   math::GaussPoints(Order, GaussP);
   math::GaussWeights(Order, GaussW);
 
-  // Calcul de l'integrale aux points de Gauss :
-
-  // Changement de variable pour la mise a l'echelle [Lower, Upper] :
   xm  = 0.5 * (Upper + Lower);
   xr  = 0.5 * (Upper - Lower);
   Val = 0.;
 
   int ind = Order / 2, ind1 = (Order + 1) / 2;
   if (ind1 > ind)
-  { // odder case
+  {
     Ok1 = F.Value(xm, Val);
     if (!Ok1)
       return;
     Val *= GaussW(ind1);
   }
-  // Sommation sur tous les points de Gauss: avec utilisation de la symetrie.
+
   for (j = 1; j <= ind; j++)
   {
     dx  = xr * GaussP(j);
@@ -137,11 +95,11 @@ void math_GaussSingleIntegration::Perform(math_Function& F,
     Ok1 = F.Value(xm + dx, F2);
     if (!Ok1)
       return;
-    // Multiplication par les poids de Gauss.
+
     double FT = F1 + F2;
     Val += GaussW(j) * FT;
   }
-  // Mise a l'echelle de l'intervalle [Lower, Upper]
+
   Val *= xr;
   Done = true;
 }

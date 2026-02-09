@@ -16,18 +16,11 @@
 #include <NCollection_DataMap.hpp>
 #include <BOPDS_PDS.hpp>
 
-//! Trims sets of faces in the corner to make proper parts of pipe
 class BRepFill_TrimShellCorner
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Constructor: takes faces to intersect,
-  //! type of transition (it can be RightCorner or RoundCorner)
-  //! and axis of bisector plane
-  //! theIntersectPointCrossDirection : prev path direction at the origin point of theAxeOfBisPlane
-  //! cross next path direction at the origin point of theAxeOfBisPlane. used when EE has more than
-  //! one vertices
   Standard_EXPORT BRepFill_TrimShellCorner(
     const occ::handle<NCollection_HArray2<TopoDS_Shape>>& theFaces,
     const BRepFill_TransitionStyle                        theTransition,

@@ -9,7 +9,6 @@ class StepVisual_PreDefinedCurveFont : public StepVisual_PreDefinedItem
 {
 
 public:
-  //! Returns a PreDefinedCurveFont
   Standard_EXPORT StepVisual_PreDefinedCurveFont();
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_PreDefinedCurveFont, StepVisual_PreDefinedItem)

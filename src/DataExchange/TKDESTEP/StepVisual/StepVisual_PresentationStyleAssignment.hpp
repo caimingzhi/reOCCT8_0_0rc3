@@ -13,7 +13,6 @@ class StepVisual_PresentationStyleAssignment : public Standard_Transient
 {
 
 public:
-  //! Returns a PresentationStyleAssignment
   Standard_EXPORT StepVisual_PresentationStyleAssignment();
 
   Standard_EXPORT void Init(

@@ -34,8 +34,6 @@
 Standard_IMPORT Draw_Viewer dout;
 #endif
 
-//=================================================================================================
-
 static int proj(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 4)
@@ -75,24 +73,8 @@ static int proj(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int appro(Draw_Interpretor& di, int n, const char** a)
 {
-  // Approximation et interpolation 2d
-
-  // 2dappro
-  //     - affiche la tolerance
-  // 2dappro tol
-  //     - change la tolerance
-  // 2dappro result nbpoint
-  //     - saisie interactive
-  // 2dappro result nbpoint curve
-  //     - calcule des points sur la courbe
-  // 2dappro result nbpoint x1 y1 x2 y2 ..
-  //     - tableau de points
-  // 2dappro result nbpoint x1 dx y1 y2 ..
-  //     - tableau de points (x1,y1) (x1+dx,y2) ... avec x = t
 
   static double Tol2d = 1.e-6;
   if (n < 3)
@@ -117,7 +99,7 @@ static int appro(Draw_Interpretor& di, int n, const char** a)
 
   if (n == 3)
   {
-    // saisie interactive
+
     int id, XX, YY, b;
     dout.Select(id, XX, YY, b);
     double zoom = dout.Zoom(id);
@@ -140,7 +122,7 @@ static int appro(Draw_Interpretor& di, int n, const char** a)
   {
     if (n == 4)
     {
-      // points sur courbe
+
       occ::handle<Geom2d_Curve> GC = DrawTrSurf::GetCurve2d(a[3]);
       if (GC.IsNull())
         return 1;
@@ -158,11 +140,11 @@ static int appro(Draw_Interpretor& di, int n, const char** a)
 
     else
     {
-      // test points ou ordonnees
+
       int nc = n - 3;
       if (nc == 2 * Nb)
       {
-        // points
+
         nc = 3;
         for (i = 1; i <= Nb; i++)
         {
@@ -172,7 +154,7 @@ static int appro(Draw_Interpretor& di, int n, const char** a)
       }
       else if (nc - 2 == Nb)
       {
-        // YValues
+
         hasPoints = false;
         nc        = 5;
         X0        = Draw::Atof(a[3]);
@@ -187,7 +169,7 @@ static int appro(Draw_Interpretor& di, int n, const char** a)
       else
         return 1;
     }
-    // display the points
+
     for (i = 1; i <= Nb; i++)
     {
       mark = new Draw_Marker2D(Points(i), Draw_X, Draw_vert);
@@ -244,8 +226,6 @@ static int appro(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int extrema(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 3)
@@ -278,8 +258,7 @@ static int extrema(Draw_Interpretor& di, int n, const char** a)
 
   if (aNExtr == 0 || isInfinitySolutions)
   {
-    // Infinity solutions flag may be set with 0 number of
-    // solutions in analytic extrema Curve/Curve.
+
     if (isInfinitySolutions)
       di << "Infinite number of extremas, distance = " << Ex.LowerDistance() << "\n";
     else
@@ -313,15 +292,12 @@ static int extrema(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int intersect(Draw_Interpretor& di, int n, const char** a)
 {
   occ::handle<Geom2d_Curve> C1, C2;
   double                    Tol         = 0.001;
   bool                      bPrintState = false;
 
-  // Retrieve other parameters if any
   for (int i = 1; i < n; ++i)
   {
     if (!strcmp(a[i], "-tol"))
@@ -365,12 +341,12 @@ static int intersect(Draw_Interpretor& di, int n, const char** a)
   Geom2dAPI_InterCurveCurve Intersector;
   if (!C2.IsNull())
   {
-    // Curves intersection
+
     Intersector.Init(C1, C2, Tol);
   }
   else
   {
-    // Self-intersection of the curve
+
     Intersector.Init(C1, Tol);
   }
 
@@ -389,10 +365,10 @@ static int intersect(Draw_Interpretor& di, int n, const char** a)
   int aNbPoints = Intersector.NbPoints();
   for (int i = 1; i <= aNbPoints; i++)
   {
-    // API simplified result
+
     gp_Pnt2d P = Intersector.Point(i);
     di << "Intersection point " << i << " : " << P.X() << " " << P.Y() << "\n";
-    // Intersection extended results from intersection tool
+
     const IntRes2d_IntersectionPoint& aPInt = anIntTool.Point(i);
     di << "parameter on the fist: " << aPInt.ParamOnFirst();
     di << " parameter on the second: " << aPInt.ParamOnSecond() << "\n";
@@ -422,8 +398,6 @@ static int intersect(Draw_Interpretor& di, int n, const char** a)
   dout.Flush();
   return 0;
 }
-
-//=================================================================================================
 
 static int intersect_ana(Draw_Interpretor& di, int n, const char** a)
 {
@@ -456,8 +430,6 @@ static int intersect_ana(Draw_Interpretor& di, int n, const char** a)
   dout.Flush();
   return 0;
 }
-
-//=================================================================================================
 
 static int intconcon(Draw_Interpretor& di, int n, const char** a)
 {
@@ -560,8 +532,6 @@ static int intconcon(Draw_Interpretor& di, int n, const char** a)
   dout.Flush();
   return 0;
 }
-
-//=================================================================================================
 
 static int deviation(Draw_Interpretor& theDI, int theNArg, const char** theArgv)
 {

@@ -28,7 +28,7 @@ void IGESDefs_ToolAttributeDef::ReadOwnParams(const occ::handle<IGESDefs_Attribu
                                               const occ::handle<IGESData_IGESReaderData>& IR,
                                               IGESData_ParamReader&                       PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   occ::handle<TCollection_HAsciiString>                             aName;
   int                                                               aListType;
   occ::handle<NCollection_HArray1<int>>                             attrTypes;
@@ -40,11 +40,10 @@ void IGESDefs_ToolAttributeDef::ReadOwnParams(const occ::handle<IGESDefs_Attribu
   int                                                               fn = ent->FormNumber();
 
   if (PR.DefinedElseSkip())
-    // clang-format off
-    PR.ReadText(PR.Current(), "Attribute Table Name", aName); //szv#4:S4163:12Mar99 `st=` not needed
 
-  PR.ReadInteger(PR.Current(), "Attribute List Type", aListType); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+    PR.ReadText(PR.Current(), "Attribute Table Name", aName);
+
+  PR.ReadInteger(PR.Current(), "Attribute List Type", aListType);
 
   bool st = PR.ReadInteger(PR.Current(), "Number of Attributes", nbval);
   if (st && nbval > 0)
@@ -66,11 +65,9 @@ void IGESDefs_ToolAttributeDef::ReadOwnParams(const occ::handle<IGESDefs_Attribu
       int attrType;
       int attrValueDataType;
       int avc;
-      //  Value according type
+
       occ::handle<NCollection_HArray1<occ::handle<IGESGraph_TextDisplayTemplate>>> attrValuePointer;
 
-      // st = PR.ReadInteger(PR.Current(), "Attribute Type", attrType); //szv#4:S4163:12Mar99 moved
-      // in if
       if (PR.ReadInteger(PR.Current(), "Attribute Type", attrType))
         attrTypes->SetValue(i, attrType);
 
@@ -129,15 +126,14 @@ void IGESDefs_ToolAttributeDef::ReadOwnParams(const occ::handle<IGESDefs_Attribu
             {
               case 0:
               {
-                PR.SetCurrentNumber(PR.CurrentNumber() + 1); // skip
-                ////			attrValue->SetValue(j, NULL);    by default
+                PR.SetCurrentNumber(PR.CurrentNumber() + 1);
+
                 break;
               }
               case 1:
               {
                 int temp;
-                // st = PR.ReadInteger(PR.Current(), "Attribute Value", temp); //szv#4:S4163:12Mar99
-                // moved in if
+
                 if (PR.ReadInteger(PR.Current(), "Attribute Value", temp))
                   attrInt->SetValue(j, temp);
               }
@@ -145,8 +141,7 @@ void IGESDefs_ToolAttributeDef::ReadOwnParams(const occ::handle<IGESDefs_Attribu
               case 2:
               {
                 double temp;
-                // st = PR.ReadReal(PR.Current(), "Attribute Value", temp); //szv#4:S4163:12Mar99
-                // moved in if
+
                 if (PR.ReadReal(PR.Current(), "Attribute Value", temp))
                   attrReal->SetValue(j, temp);
               }
@@ -154,8 +149,7 @@ void IGESDefs_ToolAttributeDef::ReadOwnParams(const occ::handle<IGESDefs_Attribu
               case 3:
               {
                 occ::handle<TCollection_HAsciiString> temp;
-                // st = PR.ReadText(PR.Current(), "Attribute Value", temp); //szv#4:S4163:12Mar99
-                // moved in if
+
                 if (PR.ReadText(PR.Current(), "Attribute Value", temp))
                   attrStr->SetValue(j, temp);
               }
@@ -163,20 +157,18 @@ void IGESDefs_ToolAttributeDef::ReadOwnParams(const occ::handle<IGESDefs_Attribu
               case 4:
               {
                 occ::handle<IGESData_IGESEntity> temp;
-                // st = PR.ReadEntity(IR, PR.Current(), "Attribute Value", temp);
-                // //szv#4:S4163:12Mar99 moved in if
+
                 if (PR.ReadEntity(IR, PR.Current(), "Attribute Value", temp))
                   attrEnt->SetValue(j, temp);
               }
               break;
               case 5:
-                PR.SetCurrentNumber(PR.CurrentNumber() + 1); // skip
+                PR.SetCurrentNumber(PR.CurrentNumber() + 1);
                 break;
               case 6:
               {
                 bool temp;
-                // st = PR.ReadBoolean(PR.Current(), "Attribute Value", temp); //szv#4:S4163:12Mar99
-                // moved in if
+
                 if (PR.ReadBoolean(PR.Current(), "Attribute Value", temp))
                   attrInt->SetValue(j, (temp ? 1 : 0));
               }
@@ -185,9 +177,7 @@ void IGESDefs_ToolAttributeDef::ReadOwnParams(const occ::handle<IGESDefs_Attribu
             if (fn == 2)
             {
               occ::handle<IGESGraph_TextDisplayTemplate> tempText;
-              // st = PR.ReadEntity(IR,PR.Current(),"Attribute Val. Pointer",
-              // STANDARD_TYPE(IGESGraph_TextDisplayTemplate), tempText); //szv#4:S4163:12Mar99
-              // moved in if
+
               if (PR.ReadEntity(IR,
                                 PR.Current(),
                                 "Attribute Val. Pointer",
@@ -409,7 +399,7 @@ void IGESDefs_ToolAttributeDef::OwnCopy(const occ::handle<IGESDefs_AttributeDef>
 }
 
 IGESData_DirChecker IGESDefs_ToolAttributeDef::DirChecker(
-  const occ::handle<IGESDefs_AttributeDef>& /* ent */) const
+  const occ::handle<IGESDefs_AttributeDef>&) const
 {
   IGESData_DirChecker DC(322, 0, 2);
   DC.Structure(IGESData_DefVoid);

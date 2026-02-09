@@ -7,14 +7,10 @@
 #include <Standard_Integer.hpp>
 #include <NCollection_List.hpp>
 
-// Angular precision (sinus) below that value two right segments
-// are considered as having a potential zone of tangency.
 namespace
 {
   static const double PRCANG = Precision::Angular();
 }
-
-//=================================================================================================
 
 Intf_InterferencePolygon2d::Intf_InterferencePolygon2d()
     : Intf_Interference(false),
@@ -23,11 +19,6 @@ Intf_InterferencePolygon2d::Intf_InterferencePolygon2d()
       nbso(0)
 {
 }
-
-//=======================================================================
-// function : Intf_InterferencePolygon2d
-// purpose  : Constructor of the interference between two Polygon.
-//=======================================================================
 
 Intf_InterferencePolygon2d::Intf_InterferencePolygon2d(const Intf_Polygon2d& Obje1,
                                                        const Intf_Polygon2d& Obje2)
@@ -49,11 +40,6 @@ Intf_InterferencePolygon2d::Intf_InterferencePolygon2d(const Intf_Polygon2d& Obj
   }
 }
 
-//=======================================================================
-// function : Intf_InterferencePolygon2d
-// purpose  : Constructor of the auto interference of a Polygon.
-//=======================================================================
-
 Intf_InterferencePolygon2d::Intf_InterferencePolygon2d(const Intf_Polygon2d& Obje)
     : Intf_Interference(true),
       oClos(false),
@@ -68,8 +54,6 @@ Intf_InterferencePolygon2d::Intf_InterferencePolygon2d(const Intf_Polygon2d& Obj
   Interference(Obje);
   Clean();
 }
-
-//=================================================================================================
 
 void Intf_InterferencePolygon2d::Perform(const Intf_Polygon2d& Obje1, const Intf_Polygon2d& Obje2)
 {
@@ -87,8 +71,6 @@ void Intf_InterferencePolygon2d::Perform(const Intf_Polygon2d& Obje1, const Intf
   }
 }
 
-//=================================================================================================
-
 void Intf_InterferencePolygon2d::Perform(const Intf_Polygon2d& Obje)
 {
   SelfInterference(true);
@@ -101,17 +83,10 @@ void Intf_InterferencePolygon2d::Perform(const Intf_Polygon2d& Obje)
   Clean();
 }
 
-//=======================================================================
-// function : Pnt2dValue
-// purpose  : Give the section point of range Index in the interference.
-//=======================================================================
-
 gp_Pnt2d Intf_InterferencePolygon2d::Pnt2dValue(const int Index) const
 {
   return gp_Pnt2d((mySPoins(Index)).Pnt().X(), (mySPoins(Index)).Pnt().Y());
 }
-
-//=================================================================================================
 
 void Intf_InterferencePolygon2d::Interference(const Intf_Polygon2d& Obje1,
                                               const Intf_Polygon2d& Obje2)
@@ -146,8 +121,6 @@ void Intf_InterferencePolygon2d::Interference(const Intf_Polygon2d& Obje1,
   }
 }
 
-//=================================================================================================
-
 void Intf_InterferencePolygon2d::Interference(const Intf_Polygon2d& Obje)
 {
   Bnd_Box2d bSO;
@@ -180,14 +153,9 @@ void Intf_InterferencePolygon2d::Interference(const Intf_Polygon2d& Obje)
   }
 }
 
-//=================================================================================================
-
 void Intf_InterferencePolygon2d::Clean()
 {
 
-  // The zones of tangency that concerns only one couple of segments are
-  // conserved if the angle between the segments is less than <PRCANG> and
-  // if there is no real point of intersection EDGE/EDGE:
   int         nbIt  = myTZones.Length();
   int         decal = 0;
   int         addr1, addr2;
@@ -252,8 +220,6 @@ void Intf_InterferencePolygon2d::Clean()
     }
   }
 
-  // The points of intersection located in the tangency zone are
-  // removed from the list :
   nbIt  = mySPoins.Length();
   decal = 0;
 
@@ -271,8 +237,6 @@ void Intf_InterferencePolygon2d::Clean()
   }
 }
 
-//=================================================================================================
-
 void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
                                            const int       iObje2,
                                            const gp_Pnt2d& BegO,
@@ -283,7 +247,7 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
   if (SelfIntf)
   {
     if (std::abs(iObje1 - iObje2) <= 1)
-      return; //-- Ajout du 15 jan 98
+      return;
   }
 
   int                                     nbpi = 0;
@@ -293,7 +257,6 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
   gp_XY                                   segT = EndT.XY() - BegT.XY();
   gp_XY                                   segO = EndO.XY() - BegO.XY();
 
-  // If the length of segment is zero, nothing is done
   double lgT = std::sqrt(segT * segT);
   if (lgT <= 0.)
     return;
@@ -301,19 +264,15 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
   if (lgO <= 0.)
     return;
 
-  // Direction of parsing of segments
   double sigPS = (segO * segT) > 0.0 ? 1.0 : -1.0;
 
-  // Precision of calculation
   double floatgap = Epsilon(lgO + lgT);
 
-  // Angle between two straight lines and radius of interference
   double sinTeta = (segO.CrossMagnitude(segT) / lgO) / lgT;
   double rayIntf = 0.;
   if (sinTeta > 0.)
     rayIntf = Tolerance / sinTeta;
 
-  // Interference <begO> <segT>
   double dbOT  = ((BegO.XY() - BegT.XY()) ^ segT) / lgT;
   double dbObT = BegO.Distance(BegT);
   double dbOeT = BegO.Distance(EndT);
@@ -345,7 +304,6 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
     }
   }
 
-  // Interference <endO> <segT>
   double deOT  = ((EndO.XY() - BegT.XY()) ^ segT) / lgT;
   double deObT = EndO.Distance(BegT);
   double deOeT = EndO.Distance(EndT);
@@ -383,7 +341,6 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
     }
   }
 
-  // Interference <begT> <segO>
   double dbTO = ((BegT.XY() - BegO.XY()) ^ segO) / lgO;
   if (std::abs(dbTO) <= Tolerance)
   {
@@ -397,7 +354,6 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
     }
   }
 
-  // Interference <endT> <segO>
   double deTO = ((EndT.XY() - BegO.XY()) ^ segO) / lgO;
   if (std::abs(deTO) <= Tolerance)
   {
@@ -431,7 +387,6 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
     else if (nbpi == 0)
       return;
 
-    // If there is no interference it is necessary to take the points segment by segment
     if (nbpi == 0 && sinTeta > PRCANG)
     {
       nbpi++;
@@ -448,7 +403,6 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
                           sinTeta));
     }
 
-    // Otherwise it is required to check if there is no other
     else if (rayIntf >= Tolerance)
     {
       double deltaO = rayIntf / lgO;
@@ -480,7 +434,7 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
         }
       }
       else
-      { // nbpi>0
+      {
         if (nbpi == 1)
         {
           bool ok = true;
@@ -518,7 +472,7 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
           }
         }
         else
-        { // plus d une singularite
+        {
           double parOmin = parO[1];
           double parOmax = parO[1];
           double parTmin = parT[1];
@@ -617,7 +571,6 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
     }
   }
 
-  //-- lbr : The points too close to each other are suspended
   bool suppr;
   do
   {
@@ -732,9 +685,7 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
         LIndex.Append(ltz);
       }
     }
-    //------------------------------------------------------------------------
-    //--   The list is parsed in ascending order by index, zone and tg
-    //--
+
     if (LIndex.IsEmpty())
     {
       myTZones.Append(TheTZ);

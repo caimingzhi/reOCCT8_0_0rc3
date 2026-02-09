@@ -7,10 +7,6 @@
 #include <StepGeom_CylindricalSurface.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d' une conical_surface de prostep a partir d' une
-// CylindricalSurface de Geom
-//=============================================================================
 GeomToStep_MakeCylindricalSurface::GeomToStep_MakeCylindricalSurface(
   const occ::handle<Geom_CylindricalSurface>& CS,
   const StepData_Factors&                     theLocalFactors)
@@ -28,10 +24,6 @@ GeomToStep_MakeCylindricalSurface::GeomToStep_MakeCylindricalSurface(
   theCylindricalSurface = CSstep;
   done                  = true;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_CylindricalSurface>& GeomToStep_MakeCylindricalSurface::Value() const
 {

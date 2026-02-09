@@ -31,8 +31,6 @@ static bool IsRadius(const BRepAdaptor_Curve&   aCurve,
                      const BRepAdaptor_Surface& aSurface,
                      const double               aCriteria);
 
-//=================================================================================================
-
 IntTools_EdgeFace::IntTools_EdgeFace()
 {
   myFuzzyValue            = Precision::Confusion();
@@ -42,8 +40,6 @@ IntTools_EdgeFace::IntTools_EdgeFace()
   myMinDistance           = RealLast();
 }
 
-//=================================================================================================
-
 bool IntTools_EdgeFace::IsCoincident()
 {
   int    i, iCnt;
@@ -52,12 +48,12 @@ bool IntTools_EdgeFace::IsCoincident()
   gp_Pnt       aP;
   TopAbs_State aState;
   gp_Pnt2d     aP2d;
-  //
+
   GeomAPI_ProjectPointOnSurf& aProjector = myContext->ProjPS(myFace);
 
   int aNbSeg = 23;
   if (myC.GetType() == GeomAbs_Line && myS.GetType() == GeomAbs_Plane)
-    aNbSeg = 2; // Check only three points for Line/Plane intersection
+    aNbSeg = 2;
 
   const double aTresh                   = 0.5;
   const int    aTreshIdxF               = RealToInt((aNbSeg + 1) * 0.25),
@@ -67,25 +63,23 @@ bool IntTools_EdgeFace::IsCoincident()
   aT1              = myRange.First();
   aT2              = myRange.Last();
   double aBndShift = 0.01 * (aT2 - aT1);
-  // Shifting first and last curve points in order to avoid projection
-  // on surface boundary and rejection projection point with minimal distance
+
   aT1 += aBndShift;
   aT2 -= aBndShift;
   dT = (aT2 - aT1) / aNbSeg;
-  //
+
   bool isClassified = false;
   iCnt              = 0;
   for (i = 0; i <= aNbSeg; ++i)
   {
     aT = aT1 + i * dT;
     aP = myC.Value(aT);
-    //
+
     aProjector.Perform(aP);
     if (!aProjector.IsDone())
     {
       continue;
     }
-    //
 
     aD = aProjector.LowerDistance();
     if (aD > myCriteria)
@@ -95,19 +89,8 @@ bool IntTools_EdgeFace::IsCoincident()
       else
         continue;
     }
-    //
 
     ++iCnt;
-
-    // We classify only three points: in the begin, in the
-    // end and in the middle of the edge.
-    // However, exact middle point (when i == (aNbSeg + 1)/2)
-    // can be unprojectable. Therefore, it will not be able to
-    // be classified. Therefore, points with indexes in
-    //[aTreshIdxF, aTreshIdxL] range are made available
-    // for classification.
-    // isClassified == TRUE if MIDDLE point has been chosen and
-    // classified correctly.
 
     if (((0 < i) && (i < aTreshIdxF)) || ((aTreshIdxL < i) && (i < aNbSeg)))
       continue;
@@ -128,12 +111,10 @@ bool IntTools_EdgeFace::IsCoincident()
     if (i != 0)
       isClassified = true;
   }
-  //
+
   const double aCoeff = (double)iCnt / ((double)aNbSeg + 1);
   return (aCoeff > aTresh);
 }
-
-//=================================================================================================
 
 void IntTools_EdgeFace::CheckData()
 {
@@ -147,29 +128,24 @@ void IntTools_EdgeFace::CheckData()
   }
 }
 
-//=================================================================================================
-
 bool IntTools_EdgeFace::IsProjectable(const double aT) const
 {
   bool   bFlag;
   gp_Pnt aPC;
-  //
+
   myC.D0(aT, aPC);
   bFlag = myContext->IsValidPointForFace(aPC, myFace, myCriteria);
-  //
+
   return bFlag;
 }
-
-//=================================================================================================
 
 double IntTools_EdgeFace::DistanceFunction(const double t)
 {
   double aD;
 
-  //
   gp_Pnt P;
   myC.D0(t, P);
-  //
+
   bool bIsEqDistance;
 
   bIsEqDistance = IntTools_EdgeFace::IsEqDistance(P, myS, 1.e-7, aD);
@@ -179,7 +155,6 @@ double IntTools_EdgeFace::DistanceFunction(const double t)
     return aD;
   }
 
-  //
   bool bFlag = false;
 
   GeomAPI_ProjectPointOnSurf& aLocProj = myContext->ProjPS(myFace);
@@ -190,7 +165,6 @@ double IntTools_EdgeFace::DistanceFunction(const double t)
   {
     aD = aLocProj.LowerDistance();
   }
-  //
 
   if (!bFlag)
   {
@@ -198,15 +172,9 @@ double IntTools_EdgeFace::DistanceFunction(const double t)
     return 99.;
   }
 
-  //
-  //   aD=aProjector.LowerDistance();
-  //
   aD = aD - myCriteria;
   return aD;
 }
-
-//
-//=================================================================================================
 
 bool IntTools_EdgeFace::IsEqDistance(const gp_Pnt&              aP,
                                      const BRepAdaptor_Surface& aBAS,
@@ -269,22 +237,19 @@ bool IntTools_EdgeFace::IsEqDistance(const gp_Pnt&              aP,
   return !bRetFlag;
 }
 
-//
-//=================================================================================================
-
 int IntTools_EdgeFace::MakeType(IntTools_CommonPrt& aCommonPrt)
 {
   double af1, al1;
   double df1, tm;
   bool   bAllNullFlag;
-  //
+
   bAllNullFlag = aCommonPrt.AllNullFlag();
   if (bAllNullFlag)
   {
     aCommonPrt.SetType(TopAbs_EDGE);
     return 0;
   }
-  //
+
   aCommonPrt.Range1(af1, al1);
 
   {
@@ -327,8 +292,6 @@ int IntTools_EdgeFace::MakeType(IntTools_CommonPrt& aCommonPrt)
   return 0;
 }
 
-//=================================================================================================
-
 bool IntTools_EdgeFace::CheckTouch(const IntTools_CommonPrt& aCP, double& aTx)
 {
   double aTF, aTL, Tol, U1f, U1l, V1f, V1l, af, al, aDist2, aMinDist2;
@@ -337,20 +300,18 @@ bool IntTools_EdgeFace::CheckTouch(const IntTools_CommonPrt& aCP, double& aTx)
 
   aCP.Range1(aTF, aTL);
 
-  //
   double aCR;
   aCR = myC.Resolution(myCriteria);
   if ((std::abs(aTF - myRange.First()) < aCR) && (std::abs(aTL - myRange.Last()) < aCR))
   {
-    return theflag; // EDGE
+    return theflag;
   }
-  //
 
   Tol = Precision::PConfusion();
 
   const occ::handle<Geom_Curve>&   Curve   = BRep_Tool::Curve(myC.Edge(), af, al);
   const occ::handle<Geom_Surface>& Surface = BRep_Tool::Surface(myS.Face());
-  //   Surface->Bounds(U1f,U1l,V1f,V1l);
+
   U1f = myS.FirstUParameter();
   U1l = myS.LastUParameter();
   V1f = myS.FirstVParameter();
@@ -391,7 +352,7 @@ bool IntTools_EdgeFace::CheckTouch(const IntTools_CommonPrt& aCP, double& aTx)
       }
       else
       {
-        // modified by NIZHNY-MKK  Thu Jul 21 11:35:32 2005.BEGIN
+
         IntCurveSurface_HInter anExactIntersector;
 
         occ::handle<GeomAdaptor_Curve>   aCurve   = new GeomAdaptor_Curve(TheCurve);
@@ -412,7 +373,6 @@ bool IntTools_EdgeFace::CheckTouch(const IntTools_CommonPrt& aCP, double& aTx)
             }
           }
         }
-        // modified by NIZHNY-MKK  Thu Jul 21 11:35:40 2005.END
       }
     }
     else
@@ -468,46 +428,43 @@ bool IntTools_EdgeFace::CheckTouch(const IntTools_CommonPrt& aCP, double& aTx)
   return theflag;
 }
 
-//=================================================================================================
-
 void IntTools_EdgeFace::Perform()
 {
   int                i, aNb;
   IntTools_CommonPrt aCommonPrt;
-  //
+
   aCommonPrt.SetEdge1(myEdge);
-  //
+
   myErrorStatus = 0;
   CheckData();
   if (myErrorStatus)
   {
     return;
   }
-  //
+
   if (myContext.IsNull())
   {
     myContext = new IntTools_Context;
   }
-  //
+
   myIsDone = false;
   myC.Initialize(myEdge);
   GeomAbs_CurveType aCurveType;
   aCurveType = myC.GetType();
-  //
-  // Prepare myCriteria
+
   double aFuzz = myFuzzyValue / 2.;
   double aTolF = BRep_Tool::Tolerance(myFace) + aFuzz;
   double aTolE = BRep_Tool::Tolerance(myEdge) + aFuzz;
   if (aCurveType == GeomAbs_BSplineCurve || aCurveType == GeomAbs_BezierCurve)
   {
-    //--- 5112
+
     double diff1 = (aTolE / aTolF);
     double diff2 = (aTolF / aTolE);
     if (diff1 > 100 || diff2 > 100)
     {
       myCriteria = std::max(aTolE, aTolF);
     }
-    else //--- 5112
+    else
       myCriteria = 1.5 * aTolE + aTolF;
   }
   else
@@ -528,12 +485,12 @@ void IntTools_EdgeFace::Perform()
       return;
     }
   }
-  //
+
   IntTools_BeanFaceIntersector anIntersector(myC, myS, aTolE, aTolF);
   anIntersector.SetBeanParameters(myRange.First(), myRange.Last());
-  //
+
   anIntersector.SetContext(myContext);
-  //
+
   anIntersector.Perform();
 
   if (anIntersector.MinimalSquareDistance() < RealLast())
@@ -560,19 +517,19 @@ void IntTools_EdgeFace::Perform()
   for (i = 1; i <= aNb; i++)
   {
     IntTools_CommonPrt& aCP = mySeqOfCommonPrts.ChangeValue(i);
-    //
+
     double aTx1, aTx2;
     gp_Pnt aPx1, aPx2;
-    //
+
     aCP.Range1(aTx1, aTx2);
     myC.D0(aTx1, aPx1);
     myC.D0(aTx2, aPx2);
     aCP.SetBoundingPoints(aPx1, aPx2);
-    //
+
     MakeType(aCP);
   }
   {
-    // Line\Cylinder's Common Parts treatment
+
     GeomAbs_CurveType   aCType;
     GeomAbs_SurfaceType aSType;
     TopAbs_ShapeEnum    aType;
@@ -595,7 +552,6 @@ void IntTools_EdgeFace::Perform()
           {
             aCP.SetType(TopAbs_VERTEX);
             aCP.SetVertexParameter1(aTx);
-            // aCP.SetRange1 (aTx, aTx);
           }
         }
         else if (aType == TopAbs_VERTEX)
@@ -604,13 +560,10 @@ void IntTools_EdgeFace::Perform()
           if (bIsTouch)
           {
             aCP.SetVertexParameter1(aTx);
-            // aCP.SetRange1 (aTx, aTx);
           }
         }
       }
     }
-
-    // Circle\Plane's Common Parts treatment
 
     if (aCType == GeomAbs_Circle && aSType == GeomAbs_Plane)
     {
@@ -630,7 +583,6 @@ void IntTools_EdgeFace::Perform()
             {
               aCP.SetType(TopAbs_VERTEX);
               aCP.SetVertexParameter1(aTx);
-              // aCP.SetRange1 (aTx, aTx);
             }
           }
           else if (aType == TopAbs_VERTEX)
@@ -639,7 +591,6 @@ void IntTools_EdgeFace::Perform()
             if (bIsTouch)
             {
               aCP.SetVertexParameter1(aTx);
-              // aCP.SetRange1 (aTx, aTx);
             }
           }
         }
@@ -649,8 +600,6 @@ void IntTools_EdgeFace::Perform()
   myIsDone = true;
 }
 
-//=================================================================================================
-
 bool IntTools_EdgeFace::CheckTouchVertex(const IntTools_CommonPrt& aCP, double& aTx)
 {
   double            aTF, aTL, Tol, U1f, U1l, V1f, V1l;
@@ -658,16 +607,16 @@ bool IntTools_EdgeFace::CheckTouchVertex(const IntTools_CommonPrt& aCP, double& 
   bool              theflag = false;
   int               aNbExt, i, iLower;
   GeomAbs_CurveType aType;
-  //
+
   aCP.Range1(aTF, aTL);
   aType = myC.GetType();
-  //
+
   aEpsT = 8.e-5;
   if (aType == GeomAbs_Line)
   {
     aEpsT = 9.e-5;
   }
-  //
+
   aTm    = 0.5 * (aTF + aTL);
   aDist2 = DistanceFunction(aTm);
   aDist2 *= aDist2;
@@ -729,7 +678,7 @@ bool IntTools_EdgeFace::CheckTouchVertex(const IntTools_CommonPrt& aCP, double& 
   anExtrema.Points(iLower, aPOnC, aPOnS);
 
   aTx = aPOnC.Parameter();
-  ///
+
   if (fabs(aTx - aTF) < aEpsT)
   {
     return theflag;
@@ -747,8 +696,6 @@ bool IntTools_EdgeFace::CheckTouchVertex(const IntTools_CommonPrt& aCP, double& 
 
   return theflag;
 }
-
-//=================================================================================================
 
 bool IsCoplanar(const BRepAdaptor_Curve& aCurve, const BRepAdaptor_Surface& aSurface)
 {
@@ -774,8 +721,6 @@ bool IsCoplanar(const BRepAdaptor_Curve& aCurve, const BRepAdaptor_Surface& aSur
   }
   return bFlag;
 }
-
-//=================================================================================================
 
 bool IsRadius(const BRepAdaptor_Curve&   aCurve,
               const BRepAdaptor_Surface& aSurface,
@@ -803,9 +748,6 @@ bool IsRadius(const BRepAdaptor_Curve&   aCurve,
   }
   return bFlag;
 }
-
-//
-//=================================================================================================
 
 int AdaptiveDiscret(const int                  iDiscret,
                     const BRepAdaptor_Curve&   aCurve,

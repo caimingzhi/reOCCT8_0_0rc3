@@ -5,24 +5,18 @@
 #include <BRepTools_ReShape.hpp>
 #include <TopTools_LocationSet.hpp>
 
-//! Removes location datums, which satisfy conditions:
-//! aTrsf.IsNegative() || (std::abs(std::abs(aTrsf.ScaleFactor()) - 1.) >
-//! TopLoc_Location::ScalePrec()) from all locations of shape and its subshapes
 class BRepTools_PurgeLocations
 {
 
 public:
   Standard_EXPORT BRepTools_PurgeLocations();
 
-  //! Removes all locations correspondingly to criterium from theShape.
   Standard_EXPORT bool Perform(const TopoDS_Shape& theShape);
 
-  //! Returns shape with removed locations.
   Standard_EXPORT const TopoDS_Shape& GetResult() const;
 
   Standard_EXPORT bool IsDone() const;
 
-  //! Returns modified shape obtained from initial shape.
   TopoDS_Shape ModifiedShape(const TopoDS_Shape& theInitShape) const;
 
 private:

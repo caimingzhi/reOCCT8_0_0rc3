@@ -10,11 +10,6 @@ class StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve;
 class Geom_BSplineCurve;
 class Geom2d_BSplineCurve;
 
-//! This class implements the mapping between classes
-//! BSplineCurve from Geom, Geom2d and the class
-//! BSplineCurveWithKnotsAndRationalBSplineCurve from StepGeom
-//! which describes a rational_bspline_curve_with_knots from
-//! Prostep
 class GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve : public GeomToStep_Root
 {
 public:

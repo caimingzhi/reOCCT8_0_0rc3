@@ -2,12 +2,10 @@
 
 #include <Graphic3d_Buffer.hpp>
 
-//! Bounds buffer.
 class Graphic3d_BoundBuffer : public NCollection_Buffer
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_BoundBuffer, NCollection_Buffer)
 public:
-  //! Empty constructor.
   Graphic3d_BoundBuffer(const occ::handle<NCollection_BaseAllocator>& theAlloc)
       : NCollection_Buffer(theAlloc),
         Colors(nullptr),
@@ -17,7 +15,6 @@ public:
   {
   }
 
-  //! Allocates new empty array
   bool Init(const int theNbBounds, const bool theHasColors)
   {
     Colors      = nullptr;
@@ -45,7 +42,6 @@ public:
     return true;
   }
 
-  //! Dumps the content of me into the stream
   void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override
   {
     OCCT_DUMP_TRANSIENT_CLASS_BEGIN(theOStream)
@@ -59,8 +55,8 @@ public:
   }
 
 public:
-  NCollection_Vec4<float>* Colors;      //!< pointer to facet color values
-  int*                     Bounds;      //!< pointer to bounds array
-  int                      NbBounds;    //!< number of bounds
-  int                      NbMaxBounds; //!< number of allocated bounds
+  NCollection_Vec4<float>* Colors;
+  int*                     Bounds;
+  int                      NbBounds;
+  int                      NbMaxBounds;
 };

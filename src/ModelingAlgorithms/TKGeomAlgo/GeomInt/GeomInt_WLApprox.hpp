@@ -116,21 +116,17 @@ private:
 
   Standard_EXPORT void UpdateTolReached();
 
-  //! Fill data structure for intersection approximation.
   Standard_EXPORT void fillData(const occ::handle<IntPatch_WLine>& theLine);
 
-  //! Prepare data structure for further computations.
   Standard_EXPORT void prepareDS(const bool theApproxXYZ,
                                  const bool theApproxU1V1,
                                  const bool theApproxU2V2,
                                  const int  indicemin,
                                  const int  indicemax);
 
-  //! Build knot sequence.
   Standard_EXPORT void buildKnots(const occ::handle<IntPatch_WLine>& theline,
                                   void* const                        thePtrSVSurf);
 
-  //! Build curve.
   Standard_EXPORT void buildCurve(const occ::handle<IntPatch_WLine>& theline,
                                   void* const                        thePtrSVSurf);
 

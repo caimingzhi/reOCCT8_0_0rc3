@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// pdn 24.12.98 t3d_opt.stp: treatment of unsorted uncertanties
 
 #include "RWStepBasic_RWSiUnitAndLengthUnit.hpp"
 #include <StepBasic_DimensionalExponents.hpp>
@@ -32,35 +19,28 @@ void RWStepBasic_RWSiUnitAndLengthUnit::ReadStep(
   occ::handle<Interface_Check>&                     ach,
   const occ::handle<StepBasic_SiUnitAndLengthUnit>& ent) const
 {
-  int  num    = 0; // num0;
+  int  num    = 0;
   bool sorted = data->NamedForComplex("LENGTH_UNIT", "LNGUNT", num0, num, ach);
 
-  // --- Instance of plex component LengthUnit ---
   if (!data->CheckNbParams(num, 0, ach, "length_unit"))
     return;
 
   if (!sorted)
-    num = 0; // pdn unsorted case
+    num = 0;
   sorted &= data->NamedForComplex("NAMED_UNIT", "NMDUNT", num0, num, ach);
 
-  // --- Instance of common supertype NamedUnit ---
   if (!data->CheckNbParams(num, 1, ach, "named_unit"))
     return;
 
-  // --- field : dimensions ---
-  // --- this field is redefined ---
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
   data->CheckDerived(num, 1, "dimensions", ach, false);
 
   if (!sorted)
-    num = 0; // pdn unsorted case
+    num = 0;
   data->NamedForComplex("SI_UNIT", "SUNT", num0, num, ach);
 
-  // --- Instance of plex component SiUnit ---
   if (!data->CheckNbParams(num, 2, ach, "si_unit"))
     return;
 
-  // --- field : prefix ---
   StepBasic_SiPrefix aPrefix    = StepBasic_spExa;
   bool               hasAprefix = false;
   if (data->IsParamDefined(num, 1))
@@ -82,7 +62,6 @@ void RWStepBasic_RWSiUnitAndLengthUnit::ReadStep(
     }
   }
 
-  // --- field : name ---
   StepBasic_SiUnitName aName;
   if (data->ParamType(num, 2) == Interface_ParamEnum)
   {
@@ -99,7 +78,6 @@ void RWStepBasic_RWSiUnitAndLengthUnit::ReadStep(
     return;
   }
 
-  //--- Initialisation of the red entity ---
   ent->Init(hasAprefix, aPrefix, aName);
 }
 
@@ -108,26 +86,19 @@ void RWStepBasic_RWSiUnitAndLengthUnit::WriteStep(
   const occ::handle<StepBasic_SiUnitAndLengthUnit>& ent) const
 {
 
-  // --- Instance of plex component LengthUnit ---
   SW.StartEntity("LENGTH_UNIT");
 
-  // --- Instance of common supertype NamedUnit ---
   SW.StartEntity("NAMED_UNIT");
 
-  // --- field : dimensions ---
-  // --- redefined field ---
   SW.SendDerived();
 
-  // --- Instance of plex component SiUnit ---
   SW.StartEntity("SI_UNIT");
 
-  // --- field : prefix ---
   bool hasAprefix = ent->HasPrefix();
   if (hasAprefix)
     SW.SendEnum(RWStepBasic_RWSiPrefix::ConvertToString(ent->Prefix()));
   else
     SW.SendUndef();
 
-  // --- field : name ---
   SW.SendEnum(RWStepBasic_RWSiUnitName::ConvertToString(ent->Name()));
 }

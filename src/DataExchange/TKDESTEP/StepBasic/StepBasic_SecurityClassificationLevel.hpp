@@ -10,7 +10,6 @@ class StepBasic_SecurityClassificationLevel : public Standard_Transient
 {
 
 public:
-  //! Returns a SecurityClassificationLevel
   Standard_EXPORT StepBasic_SecurityClassificationLevel();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName);

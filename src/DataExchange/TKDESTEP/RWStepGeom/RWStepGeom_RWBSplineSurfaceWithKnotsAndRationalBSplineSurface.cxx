@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -43,27 +32,21 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::ReadStep(
   const occ::handle<StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface>& ent) const
 {
 
-  int num = 0; // num0
+  int num = 0;
   data->NamedForComplex("BOUNDED_SURFACE", "BNDSRF", num0, num, ach);
 
-  //	num = data->NextForComplex(num);
   data->NamedForComplex("B_SPLINE_SURFACE", "BSPSR", num0, num, ach);
-
-  // --- Instance of common supertype BSplineSurface ---
 
   if (!data->CheckNbParams(num, 7, ach, "b_spline_surface"))
     return;
-  // --- field : uDegree ---
 
   int aUDegree;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadInteger(num, 1, "u_degree", ach, aUDegree);
-  // --- field : vDegree ---
 
   int aVDegree;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
   data->ReadInteger(num, 2, "v_degree", ach, aVDegree);
-  // --- field : controlPointsList ---
 
   occ::handle<NCollection_HArray2<occ::handle<StepGeom_CartesianPoint>>> aControlPointsList;
   occ::handle<StepGeom_CartesianPoint>                                   anent3;
@@ -82,7 +65,7 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::ReadStep(
         int nsi3 = data->ParamNumber(nsub3, i3);
         for (int j3 = 1; j3 <= nbj3; j3++)
         {
-          // szv#4:S4163:12Mar99 `bool stat3 =` not needed
+
           if (data->ReadEntity(nsi3,
                                j3,
                                "cartesian_point",
@@ -95,8 +78,6 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::ReadStep(
     }
   }
 
-  // --- field : surfaceForm ---
-
   StepGeom_BSplineSurfaceForm aSurfaceForm = StepGeom_bssfPlaneSurf;
   if (data->ParamType(num, 4) == Interface_ParamEnum)
   {
@@ -108,31 +89,23 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::ReadStep(
   }
   else
     ach->AddFail("Parameter #4 (surface_form) is not an enumeration");
-  // --- field : uClosed ---
 
   StepData_Logical aUClosed;
-  // szv#4:S4163:12Mar99 `bool stat5 =` not needed
+
   data->ReadLogical(num, 5, "u_closed", ach, aUClosed);
-  // --- field : vClosed ---
 
   StepData_Logical aVClosed;
-  // szv#4:S4163:12Mar99 `bool stat6 =` not needed
+
   data->ReadLogical(num, 6, "v_closed", ach, aVClosed);
-  // --- field : selfIntersect ---
 
   StepData_Logical aSelfIntersect;
-  // szv#4:S4163:12Mar99 `bool stat7 =` not needed
+
   data->ReadLogical(num, 7, "self_intersect", ach, aSelfIntersect);
 
-  //	num = data->NextForComplex(num);
   data->NamedForComplex("B_SPLINE_SURFACE_WITH_KNOTS", "BSSWK", num0, num, ach);
-
-  // --- Instance of plex component BSplineSurfaceWithKnots ---
 
   if (!data->CheckNbParams(num, 5, ach, "b_spline_surface_with_knots"))
     return;
-
-  // --- field : uMultiplicities ---
 
   occ::handle<NCollection_HArray1<int>> aUMultiplicities;
   int                                   aUMultiplicitiesItem;
@@ -143,13 +116,11 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::ReadStep(
     aUMultiplicities = new NCollection_HArray1<int>(1, nb8);
     for (int i8 = 1; i8 <= nb8; i8++)
     {
-      // szv#4:S4163:12Mar99 `bool stat8 =` not needed
+
       if (data->ReadInteger(nsub8, i8, "u_multiplicities", ach, aUMultiplicitiesItem))
         aUMultiplicities->SetValue(i8, aUMultiplicitiesItem);
     }
   }
-
-  // --- field : vMultiplicities ---
 
   occ::handle<NCollection_HArray1<int>> aVMultiplicities;
   int                                   aVMultiplicitiesItem;
@@ -160,13 +131,11 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::ReadStep(
     aVMultiplicities = new NCollection_HArray1<int>(1, nb9);
     for (int i9 = 1; i9 <= nb9; i9++)
     {
-      // szv#4:S4163:12Mar99 `bool stat9 =` not needed
+
       if (data->ReadInteger(nsub9, i9, "v_multiplicities", ach, aVMultiplicitiesItem))
         aVMultiplicities->SetValue(i9, aVMultiplicitiesItem);
     }
   }
-
-  // --- field : uKnots ---
 
   occ::handle<NCollection_HArray1<double>> aUKnots;
   double                                   aUKnotsItem;
@@ -177,13 +146,11 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::ReadStep(
     aUKnots  = new NCollection_HArray1<double>(1, nb10);
     for (int i10 = 1; i10 <= nb10; i10++)
     {
-      // szv#4:S4163:12Mar99 `bool stat10 =` not needed
+
       if (data->ReadReal(nsub10, i10, "u_knots", ach, aUKnotsItem))
         aUKnots->SetValue(i10, aUKnotsItem);
     }
   }
-
-  // --- field : vKnots ---
 
   occ::handle<NCollection_HArray1<double>> aVKnots;
   double                                   aVKnotsItem;
@@ -194,13 +161,11 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::ReadStep(
     aVKnots  = new NCollection_HArray1<double>(1, nb11);
     for (int i11 = 1; i11 <= nb11; i11++)
     {
-      // szv#4:S4163:12Mar99 `bool stat11 =` not needed
+
       if (data->ReadReal(nsub11, i11, "v_knots", ach, aVKnotsItem))
         aVKnots->SetValue(i11, aVKnotsItem);
     }
   }
-
-  // --- field : knotSpec ---
 
   StepGeom_KnotType aKnotSpec = StepGeom_ktUniformKnots;
   if (data->ParamType(num, 5) == Interface_ParamEnum)
@@ -214,18 +179,12 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::ReadStep(
   else
     ach->AddFail("Parameter #5 (knot_spec) is not an enumeration");
 
-  //	num = data->NextForComplex(num);
   data->NamedForComplex("GEOMETRIC_REPRESENTATION_ITEM", "GMRPIT", num0, num, ach);
 
-  //	num = data->NextForComplex(num);
   data->NamedForComplex("RATIONAL_B_SPLINE_SURFACE", "RBSS", num0, num, ach);
-
-  // --- Instance of plex component RationalBSplineSurface ---
 
   if (!data->CheckNbParams(num, 1, ach, "rational_b_spline_surface"))
     return;
-
-  // --- field : weightsData ---
 
   occ::handle<NCollection_HArray2<double>> aWeightsData;
   double                                   aWeightsDataItem;
@@ -243,7 +202,7 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::ReadStep(
         int nsi13 = data->ParamNumber(nsub13, i13);
         for (int j13 = 1; j13 <= nbj13; j13++)
         {
-          // szv#4:S4163:12Mar99 `bool stat13 =` not needed
+
           if (data->ReadReal(nsi13, j13, "weights_data", ach, aWeightsDataItem))
             aWeightsData->SetValue(i13, j13, aWeightsDataItem);
         }
@@ -251,12 +210,7 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::ReadStep(
     }
   }
 
-  //	num = data->NextForComplex(num);
   data->NamedForComplex("REPRESENTATION_ITEM", "RPRITM", num0, num, ach);
-
-  // --- Instance of plex component RepresentationItem ---
-
-  // --- field : name ---
 
   occ::handle<TCollection_HAsciiString> aName;
 
@@ -266,14 +220,11 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::ReadStep(
   }
   else
   {
-    // szv#4:S4163:12Mar99 `bool stat14 =` not needed
+
     data->ReadString(num, 1, "name", ach, aName);
   }
 
-  //	num = data->NextForComplex(num);
   data->NamedForComplex("SURFACE", "SRFC", num0, num, ach);
-
-  //--- Initialisation of the red entity ---
 
   ent->Init(aName,
             aUDegree,
@@ -296,20 +247,13 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::WriteStep(
   const occ::handle<StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface>& ent) const
 {
 
-  // --- Instance of plex component BoundedSurface ---
-
   SW.StartEntity("BOUNDED_SURFACE");
 
-  // --- Instance of common supertype BSplineSurface ---
-
   SW.StartEntity("B_SPLINE_SURFACE");
-  // --- field : uDegree ---
 
   SW.Send(ent->UDegree());
-  // --- field : vDegree ---
 
   SW.Send(ent->VDegree());
-  // --- field : controlPointsList ---
 
   SW.OpenSub();
   for (int i3 = 1; i3 <= ent->NbControlPointsListI(); i3++)
@@ -324,22 +268,16 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::WriteStep(
     SW.CloseSub();
   }
   SW.CloseSub();
-  // --- field : surfaceForm ---
+
   SW.SendEnum(RWStepGeom_RWBSplineSurfaceForm::ConvertToString(ent->SurfaceForm()));
-  // --- field : uClosed ---
 
   SW.SendLogical(ent->UClosed());
-  // --- field : vClosed ---
 
   SW.SendLogical(ent->VClosed());
-  // --- field : selfIntersect ---
 
   SW.SendLogical(ent->SelfIntersect());
 
-  // --- Instance of plex component BSplineSurfaceWithKnots ---
-
   SW.StartEntity("B_SPLINE_SURFACE_WITH_KNOTS");
-  // --- field : uMultiplicities ---
 
   SW.OpenSub();
   for (int i8 = 1; i8 <= ent->NbUMultiplicities(); i8++)
@@ -347,7 +285,6 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::WriteStep(
     SW.Send(ent->UMultiplicitiesValue(i8));
   }
   SW.CloseSub();
-  // --- field : vMultiplicities ---
 
   SW.OpenSub();
   for (int i9 = 1; i9 <= ent->NbVMultiplicities(); i9++)
@@ -355,7 +292,6 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::WriteStep(
     SW.Send(ent->VMultiplicitiesValue(i9));
   }
   SW.CloseSub();
-  // --- field : uKnots ---
 
   SW.OpenSub();
   for (int i10 = 1; i10 <= ent->NbUKnots(); i10++)
@@ -363,7 +299,6 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::WriteStep(
     SW.Send(ent->UKnotsValue(i10));
   }
   SW.CloseSub();
-  // --- field : vKnots ---
 
   SW.OpenSub();
   for (int i11 = 1; i11 <= ent->NbVKnots(); i11++)
@@ -371,18 +306,12 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::WriteStep(
     SW.Send(ent->VKnotsValue(i11));
   }
   SW.CloseSub();
-  // --- field : knotSpec ---
 
   SW.SendEnum(RWStepGeom_RWKnotType::ConvertToString(ent->KnotSpec()));
 
-  // --- Instance of plex component GeometricRepresentationItem ---
-
   SW.StartEntity("GEOMETRIC_REPRESENTATION_ITEM");
 
-  // --- Instance of plex component RationalBSplineSurface ---
-
   SW.StartEntity("RATIONAL_B_SPLINE_SURFACE");
-  // --- field : weightsData ---
 
   SW.OpenSub();
   for (int i13 = 1; i13 <= ent->NbWeightsDataI(); i13++)
@@ -398,14 +327,9 @@ void RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface::WriteStep(
   }
   SW.CloseSub();
 
-  // --- Instance of plex component RepresentationItem ---
-
   SW.StartEntity("REPRESENTATION_ITEM");
-  // --- field : name ---
 
   SW.Send(ent->Name());
-
-  // --- Instance of plex component Surface ---
 
   SW.StartEntity("SURFACE");
 }

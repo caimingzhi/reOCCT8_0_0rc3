@@ -3,23 +3,17 @@
 #include <TopoDS_Face.hpp>
 #include <TopOpeBRep_PointClassifier.hpp>
 
-//=================================================================================================
-
 TopOpeBRep_PointClassifier::TopOpeBRep_PointClassifier()
 {
   myHSurface = new BRepAdaptor_Surface();
   Init();
 }
 
-//=================================================================================================
-
 void TopOpeBRep_PointClassifier::Init()
 {
   myTopolToolMap.Clear();
   myState = TopAbs_UNKNOWN;
 }
-
-//=================================================================================================
 
 void TopOpeBRep_PointClassifier::Load(const TopoDS_Face& F)
 {
@@ -36,8 +30,6 @@ void TopOpeBRep_PointClassifier::Load(const TopoDS_Face& F)
   }
 }
 
-//=================================================================================================
-
 TopAbs_State TopOpeBRep_PointClassifier::Classify(const TopoDS_Face& F,
                                                   const gp_Pnt2d&    P2d,
                                                   const double       Tol)
@@ -48,8 +40,6 @@ TopAbs_State TopOpeBRep_PointClassifier::Classify(const TopoDS_Face& F,
 
   return myState;
 }
-
-//=================================================================================================
 
 TopAbs_State TopOpeBRep_PointClassifier::State() const
 {

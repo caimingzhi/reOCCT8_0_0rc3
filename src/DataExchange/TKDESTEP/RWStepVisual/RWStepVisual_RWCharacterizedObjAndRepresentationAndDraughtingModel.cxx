@@ -6,12 +6,8 @@
 #include <StepRepr_RepresentationContext.hpp>
 #include <StepVisual_CharacterizedObjAndRepresentationAndDraughtingModel.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWCharacterizedObjAndRepresentationAndDraughtingModel::
   RWStepVisual_RWCharacterizedObjAndRepresentationAndDraughtingModel() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWCharacterizedObjAndRepresentationAndDraughtingModel::ReadStep(
   const occ::handle<StepData_StepReaderData>&                                        data,
@@ -24,11 +20,9 @@ void RWStepVisual_RWCharacterizedObjAndRepresentationAndDraughtingModel::ReadSte
   if (!data->CheckNbParams(num, 3, ach, "shape_aspect"))
     return;
 
-  // name
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // items
   occ::handle<NCollection_HArray1<occ::handle<StepRepr_RepresentationItem>>> anItems;
   occ::handle<StepRepr_RepresentationItem>                                   anItem;
   int                                                                        nsub;
@@ -48,7 +42,6 @@ void RWStepVisual_RWCharacterizedObjAndRepresentationAndDraughtingModel::ReadSte
     }
   }
 
-  // context_of_items
   occ::handle<StepRepr_RepresentationContext> aContextOfItems;
   data->ReadEntity(num,
                    3,
@@ -57,11 +50,8 @@ void RWStepVisual_RWCharacterizedObjAndRepresentationAndDraughtingModel::ReadSte
                    STANDARD_TYPE(StepRepr_RepresentationContext),
                    aContextOfItems);
 
-  // Initialize the entity
   ent->Init(aName, anItems, aContextOfItems);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWCharacterizedObjAndRepresentationAndDraughtingModel::WriteStep(
   StepData_StepWriter&                                                               SW,
@@ -82,8 +72,6 @@ void RWStepVisual_RWCharacterizedObjAndRepresentationAndDraughtingModel::WriteSt
   SW.CloseSub();
   SW.Send(ent->ContextOfItems());
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWCharacterizedObjAndRepresentationAndDraughtingModel::Share(
   const occ::handle<StepVisual_CharacterizedObjAndRepresentationAndDraughtingModel>& ent,

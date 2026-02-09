@@ -9,8 +9,6 @@
 #include <Standard_DomainError.hpp>
 #include <Standard_NotImplemented.hpp>
 
-//=================================================================================================
-
 BlendFunc_Corde::BlendFunc_Corde(const occ::handle<Adaptor3d_Surface>& S,
                                  const occ::handle<Adaptor3d_Curve>&   CG)
     : surf(S),
@@ -22,14 +20,10 @@ BlendFunc_Corde::BlendFunc_Corde(const occ::handle<Adaptor3d_Surface>& S,
 {
 }
 
-//=================================================================================================
-
 void BlendFunc_Corde::SetDist(const double Dist)
 {
   dis = Dist;
 }
-
-//=================================================================================================
 
 void BlendFunc_Corde::SetParam(const double Param)
 {
@@ -38,11 +32,6 @@ void BlendFunc_Corde::SetParam(const double Param)
   nplan  = d1gui.Normalized();
   theD   = -(nplan.XYZ().Dot(ptgui.XYZ()));
 }
-
-//=======================================================================
-// function : Value
-// purpose  : returns F(U,V)
-//=======================================================================
 
 bool BlendFunc_Corde::Value(const math_Vector& X, math_Vector& F)
 {
@@ -55,11 +44,6 @@ bool BlendFunc_Corde::Value(const math_Vector& X, math_Vector& F)
 
   return true;
 }
-
-//=======================================================================
-// function : Derivatives
-// purpose  : D = grad F(U,V)
-//=======================================================================
 
 bool BlendFunc_Corde::Derivatives(const math_Vector& X, math_Matrix& D)
 {
@@ -74,35 +58,25 @@ bool BlendFunc_Corde::Derivatives(const math_Vector& X, math_Matrix& D)
   return true;
 }
 
-//=================================================================================================
-
 const gp_Pnt& BlendFunc_Corde::PointOnS() const
 {
   return pts;
 }
-
-//=================================================================================================
 
 const gp_Pnt& BlendFunc_Corde::PointOnGuide() const
 {
   return ptgui;
 }
 
-//=================================================================================================
-
 const gp_Vec& BlendFunc_Corde::NPlan() const
 {
   return nplan;
 }
 
-//=================================================================================================
-
 bool BlendFunc_Corde::IsTangencyPoint() const
 {
   return istangent;
 }
-
-//=================================================================================================
 
 const gp_Vec& BlendFunc_Corde::TangentOnS() const
 {
@@ -111,16 +85,12 @@ const gp_Vec& BlendFunc_Corde::TangentOnS() const
   return tgs;
 }
 
-//=================================================================================================
-
 const gp_Vec2d& BlendFunc_Corde::Tangent2dOnS() const
 {
   if (istangent)
     throw Standard_DomainError("BlendFunc_Corde::Tangent2dOnS");
   return tg2d;
 }
-
-//=================================================================================================
 
 void BlendFunc_Corde::DerFguide(const math_Vector& Sol, gp_Vec2d& DerF)
 {
@@ -135,8 +105,6 @@ void BlendFunc_Corde::DerFguide(const math_Vector& Sol, gp_Vec2d& DerF)
   DerF.SetX(dnplan.Dot(temp) - nplan.Dot(d1gui));
   DerF.SetY(-2. * d1gui.Dot(temp));
 }
-
-//=================================================================================================
 
 bool BlendFunc_Corde::IsSolution(const math_Vector& Sol, const double Tol)
 {
@@ -157,9 +125,6 @@ bool BlendFunc_Corde::IsSolution(const math_Vector& Sol, const double Tol)
 
     secmember(1) = nplan.Dot(d1gui) - dnplan.Dot(temp);
     secmember(2) = 2. * d1gui.Dot(temp);
-
-    //  gradsol*der = secmember
-    //  with  der(1) = dU/dW, der(2) = dU/dW, W is the guide parameter
 
     math_Gauss Resol(gradsol);
     if (Resol.IsDone())

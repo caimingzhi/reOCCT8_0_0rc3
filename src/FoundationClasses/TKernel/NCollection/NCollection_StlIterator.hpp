@@ -3,40 +3,29 @@
 #include <Standard_Assert.hpp>
 #include <iterator>
 
-//! Helper class that allows to use NCollection iterators as STL iterators.
-//! NCollection iterator can be extended to STL iterator of any category by
-//! adding necessary methods: STL forward iterator requires IsEqual method,
-//! STL bidirectional iterator requires Previous method, and STL random access
-//! iterator requires Offset and Differ methods. See NCollection_Vector as
-//! example of declaring custom STL iterators.
 template <class Category, class BaseIterator, class ItemType, bool IsConstant>
 class NCollection_StlIterator
 {
 public:
-  // Since C++20 inheritance from std::iterator is deprecated, so define predefined types manually:
   using iterator_category = Category;
   using value_type        = ItemType;
   using difference_type   = ptrdiff_t;
   using pointer           = typename std::conditional<IsConstant, const ItemType*, ItemType*>::type;
   using reference         = typename std::conditional<IsConstant, const ItemType&, ItemType&>::type;
 
-  //! Default constructor
   NCollection_StlIterator() = default;
 
-  //! Constructor from NCollection iterator
   NCollection_StlIterator(const BaseIterator& theIterator)
       : myIterator(theIterator)
   {
   }
 
-  //! Cast from non-const variant to const one
   NCollection_StlIterator(
     const NCollection_StlIterator<Category, BaseIterator, ItemType, false>& theIterator)
       : myIterator(theIterator.Iterator())
   {
   }
 
-  //! Assignment of non-const iterator to const one
   NCollection_StlIterator& operator=(
     const NCollection_StlIterator<Category, BaseIterator, ItemType, false>& theIterator)
   {
@@ -44,16 +33,11 @@ public:
     return *this;
   }
 
-  //! Access to NCollection iterator instance
   const BaseIterator& Iterator() const noexcept { return myIterator; }
 
-  //! Access to NCollection iterator instance
   BaseIterator& ChangeIterator() noexcept { return myIterator; }
 
-protected: //! @name methods related to forward STL iterator
-  // Note: Here we use SFINAE (Substitution failure is not an error) to choose
-  // an appropriate method based on template arguments (at instantiation time).
-
+protected:
   template <bool Condition>
   typename std::enable_if<!Condition, ItemType&>::type Reference() const
   {
@@ -66,31 +50,25 @@ protected: //! @name methods related to forward STL iterator
     return myIterator.Value();
   }
 
-public: //! @name methods related to forward STL iterator
-  //! Test for equality
+public:
   bool operator==(const NCollection_StlIterator& theOther) const
   {
     return myIterator.More() == theOther.myIterator.More()
            && (!myIterator.More() || myIterator.IsEqual(theOther.myIterator));
   }
 
-  //! Test for inequality
   bool operator!=(const NCollection_StlIterator& theOther) const { return !(*this == theOther); }
 
-  //! Get reference to current item
   typename NCollection_StlIterator::reference operator*() const { return Reference<IsConstant>(); }
 
-  //! Dereferencing operator
   typename NCollection_StlIterator::pointer operator->() const { return &Reference<IsConstant>(); }
 
-  //! Prefix increment
   NCollection_StlIterator& operator++()
   {
     myIterator.Next();
     return *this;
   }
 
-  //! Postfix increment
   NCollection_StlIterator operator++(int)
   {
     const NCollection_StlIterator theOld(*this);
@@ -98,8 +76,7 @@ public: //! @name methods related to forward STL iterator
     return theOld;
   }
 
-public: //! @name methods related to bidirectional STL iterator
-  //! Prefix decrement
+public:
   NCollection_StlIterator& operator--()
   {
     Standard_STATIC_ASSERT(
@@ -109,7 +86,6 @@ public: //! @name methods related to bidirectional STL iterator
     return *this;
   }
 
-  //! Postfix decrement
   NCollection_StlIterator operator--(int)
   {
     NCollection_StlIterator theOld(*this);
@@ -117,8 +93,7 @@ public: //! @name methods related to bidirectional STL iterator
     return theOld;
   }
 
-public: //! @name methods related to random access STL iterator
-  //! Move forward
+public:
   NCollection_StlIterator& operator+=(typename NCollection_StlIterator::difference_type theOffset)
   {
     Standard_STATIC_ASSERT(
@@ -127,7 +102,6 @@ public: //! @name methods related to random access STL iterator
     return *this;
   }
 
-  //! Addition
   NCollection_StlIterator operator+(
     typename NCollection_StlIterator::difference_type theOffset) const
   {
@@ -135,13 +109,11 @@ public: //! @name methods related to random access STL iterator
     return aTemp += theOffset;
   }
 
-  //! Move backward
   NCollection_StlIterator& operator-=(typename NCollection_StlIterator::difference_type theOffset)
   {
     return *this += -theOffset;
   }
 
-  //! Decrease
   NCollection_StlIterator operator-(
     typename NCollection_StlIterator::difference_type theOffset) const
   {
@@ -149,7 +121,6 @@ public: //! @name methods related to random access STL iterator
     return aTemp += -theOffset;
   }
 
-  //! Difference
   typename NCollection_StlIterator::difference_type operator-(
     const NCollection_StlIterator& theOther) const
   {
@@ -158,26 +129,20 @@ public: //! @name methods related to random access STL iterator
     return myIterator.Differ(theOther.myIterator);
   }
 
-  //! Get item at offset from current
   typename NCollection_StlIterator::reference operator[](
     typename NCollection_StlIterator::difference_type theOffset) const
   {
     return *(*this + theOffset);
   }
 
-  //! Comparison
   bool operator<(const NCollection_StlIterator& theOther) const { return (*this - theOther) < 0; }
 
-  //! Comparison
   bool operator>(const NCollection_StlIterator& theOther) const { return theOther < *this; }
 
-  //! Comparison
   bool operator<=(const NCollection_StlIterator& theOther) const { return !(theOther < *this); }
 
-  //! Comparison
   bool operator>=(const NCollection_StlIterator& theOther) const { return !(*this < theOther); }
 
 private:
-  //! NCollection iterator
   BaseIterator myIterator;
 };

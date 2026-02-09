@@ -14,15 +14,11 @@ enum Extrema_ElementType
 
 class gp_Pnt;
 
-//! Data container for point on surface parameters. These parameters
-//! are required to compute an initial approximation for extrema
-//! computation.
 class Extrema_POnSurfParams : public Extrema_POnSurf
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! empty constructor
   Extrema_POnSurfParams()
       : mySqrDistance(0.),
         myElementType(Extrema_Node),
@@ -31,8 +27,6 @@ public:
   {
   }
 
-  //! Creation of a point on surface with parameter
-  //! values on the surface and a Pnt from gp.
   Extrema_POnSurfParams(const double theU, const double theV, const gp_Pnt& thePnt)
       : Extrema_POnSurf(theU, theV, thePnt),
         mySqrDistance(0.),
@@ -42,29 +36,20 @@ public:
   {
   }
 
-  //! Sets the square distance from this point to another one
-  //! (e.g. to the point to be projected).
   void SetSqrDistance(const double theSqrDistance) { mySqrDistance = theSqrDistance; }
 
-  //! Query the square distance from this point to another one.
   double GetSqrDistance() const { return mySqrDistance; }
 
-  //! Sets the element type on which this point is situated.
   void SetElementType(const Extrema_ElementType theElementType) { myElementType = theElementType; }
 
-  //! Query the element type on which this point is situated.
   Extrema_ElementType GetElementType() const { return myElementType; }
 
-  //! Sets the U and V indices of an element that contains
-  //! this point.
   void SetIndices(const int theIndexU, const int theIndexV)
   {
     myIndexU = theIndexU;
     myIndexV = theIndexV;
   }
 
-  //! Query the U and V indices of an element that contains
-  //! this point.
   void GetIndices(int& theIndexU, int& theIndexV) const
   {
     theIndexU = myIndexU;

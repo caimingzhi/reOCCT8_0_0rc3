@@ -21,8 +21,6 @@ extern "C"
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_MediaTexture, Graphic3d_Texture2D)
 
-//=================================================================================================
-
 Graphic3d_MediaTexture::Graphic3d_MediaTexture(std::mutex& theMutex, int thePlane)
     : Graphic3d_Texture2D("", Graphic3d_TypeOfTexture_2D),
       myMutex(theMutex),
@@ -33,8 +31,6 @@ Graphic3d_MediaTexture::Graphic3d_MediaTexture(std::mutex& theMutex, int thePlan
   myParams->SetFilter(Graphic3d_TOTF_BILINEAR);
   myParams->SetTextureUnit(Graphic3d_TextureUnit(int(Graphic3d_TextureUnit_0) + thePlane));
 }
-
-//=================================================================================================
 
 occ::handle<Image_PixMap> Graphic3d_MediaTexture::GetImage(
   const occ::handle<Image_SupportedFormats>&)

@@ -1,15 +1,4 @@
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Hatch_Hatcher.hpp>
 #include <Graphic3d_Group.hpp>
@@ -30,8 +19,6 @@
 #include <NCollection_HSequence.hpp>
 #include <NCollection_List.hpp>
 
-//=================================================================================================
-
 void StdPrs_WFRestrictedFace::Add(
   const occ::handle<Prs3d_Presentation>&                        thePresentation,
   const occ::handle<BRepAdaptor_Surface>&                       theFace,
@@ -45,7 +32,6 @@ void StdPrs_WFRestrictedFace::Add(
   int              aNbPoints = theDrawer->Discretisation();
   StdPrs_ToolRFace aToolRst(theFace);
 
-  // Compute bounds of the restriction
   double    aUMin, aUMax, aVMin, aVMax;
   int       anI;
   gp_Pnt2d  aPoint1, aPoint2;
@@ -59,14 +45,13 @@ void StdPrs_WFRestrictedFace::Add(
   if (!aBndBox.IsVoid())
     aBndBox.Get(aUMin, aVMin, aUMax, aVMax);
   else
-  { // No pcurves -- take natural bounds
+  {
     aUMin = theFace->Surface().FirstUParameter();
     aVMin = theFace->Surface().FirstVParameter();
     aUMax = theFace->Surface().LastUParameter();
     aVMax = theFace->Surface().LastVParameter();
   }
 
-  // Load the isos
   Hatch_Hatcher anIsoBuild(1.e-5, aToolRst.IsOriented());
   bool          isFaceUClosed = theFace->IsUClosed();
   bool          isFaceVClosed = theFace->IsVClosed();
@@ -108,7 +93,6 @@ void StdPrs_WFRestrictedFace::Add(
     }
   }
 
-  // Trim the isos
   double anU1, anU2, anU, aDU;
 
   for (aToolRst.Init(); aToolRst.More(); aToolRst.Next())
@@ -143,7 +127,6 @@ void StdPrs_WFRestrictedFace::Add(
     }
   }
 
-  // Draw the isos
   Adaptor3d_IsoCurve anIsoCurve;
   anIsoCurve.Load(theFace);
   occ::handle<Geom_Curve>    aBCurve;
@@ -184,8 +167,6 @@ void StdPrs_WFRestrictedFace::Add(
           aBCurve = aGeomBSurface->VIso(anIsoCoord);
         }
 
-        // Note that the isos are the part of the shape, it will be displayed after a computation
-        // the whole shape NbPoints = 30 - default parameter for computation of such curves
         StdPrs_Curve::Add(thePresentation,
                           GeomAdaptor_Curve(aBCurve),
                           b1,
@@ -212,8 +193,6 @@ void StdPrs_WFRestrictedFace::Add(
   }
 }
 
-//=================================================================================================
-
 bool StdPrs_WFRestrictedFace::Match(const double                            theX,
                                     const double                            theY,
                                     const double                            theZ,
@@ -230,7 +209,6 @@ bool StdPrs_WFRestrictedFace::Match(const double                            theX
   int              aNbPoints = theDrawer->Discretisation();
   StdPrs_ToolRFace aToolRst(theFace);
 
-  // Compute bounds of the restriction
   double anUMin, anUMax, aVMin, aVMax;
   double anU, aV, aStep;
   int    anI, anNbP = 10;
@@ -284,7 +262,6 @@ bool StdPrs_WFRestrictedFace::Match(const double                            theX
     }
   }
 
-  // Load the isos
   Hatch_Hatcher anIsoBuild(1.e-5, aToolRst.IsOriented());
   bool          anUClosed = theFace->IsUClosed();
   bool          aVClosed  = theFace->IsVClosed();
@@ -326,7 +303,6 @@ bool StdPrs_WFRestrictedFace::Match(const double                            theX
     }
   }
 
-  // Trim the isos
   double anU1, anU2, aDU;
 
   for (aToolRst.Init(); aToolRst.More(); aToolRst.Next())
@@ -360,8 +336,6 @@ bool StdPrs_WFRestrictedFace::Match(const double                            theX
         anIsoBuild.Trim(aPoint2, aPoint1);
     }
   }
-
-  // Draw the isos
 
   Adaptor3d_IsoCurve anIso;
   anIso.Load(theFace);
@@ -397,8 +371,6 @@ bool StdPrs_WFRestrictedFace::Match(const double                            theX
   return false;
 }
 
-//=================================================================================================
-
 void StdPrs_WFRestrictedFace::Add(const occ::handle<Prs3d_Presentation>&  thePresentation,
                                   const occ::handle<BRepAdaptor_Surface>& theFace,
                                   const occ::handle<Prs3d_Drawer>&        theDrawer)
@@ -413,8 +385,6 @@ void StdPrs_WFRestrictedFace::Add(const occ::handle<Prs3d_Presentation>&  thePre
                                theDrawer,
                                aCurves);
 }
-
-//=================================================================================================
 
 void StdPrs_WFRestrictedFace::AddUIso(const occ::handle<Prs3d_Presentation>&  thePresentation,
                                       const occ::handle<BRepAdaptor_Surface>& theFace,
@@ -431,8 +401,6 @@ void StdPrs_WFRestrictedFace::AddUIso(const occ::handle<Prs3d_Presentation>&  th
                                aCurves);
 }
 
-//=================================================================================================
-
 void StdPrs_WFRestrictedFace::AddVIso(const occ::handle<Prs3d_Presentation>&  thePresentation,
                                       const occ::handle<BRepAdaptor_Surface>& theFace,
                                       const occ::handle<Prs3d_Drawer>&        theDrawer)
@@ -447,8 +415,6 @@ void StdPrs_WFRestrictedFace::AddVIso(const occ::handle<Prs3d_Presentation>&  th
                                theDrawer,
                                aCurves);
 }
-
-//=================================================================================================
 
 bool StdPrs_WFRestrictedFace::Match(const double                            theX,
                                     const double                            theY,
@@ -470,8 +436,6 @@ bool StdPrs_WFRestrictedFace::Match(const double                            theX
                                         theDrawer);
 }
 
-//=================================================================================================
-
 bool StdPrs_WFRestrictedFace::MatchUIso(const double                            theX,
                                         const double                            theY,
                                         const double                            theZ,
@@ -491,8 +455,6 @@ bool StdPrs_WFRestrictedFace::MatchUIso(const double                            
                                         theDrawer->VIsoAspect()->Number(),
                                         theDrawer);
 }
-
-//=================================================================================================
 
 bool StdPrs_WFRestrictedFace::MatchVIso(const double                            theX,
                                         const double                            theY,

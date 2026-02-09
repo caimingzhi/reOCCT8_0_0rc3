@@ -20,16 +20,12 @@ void RWStepGeom_RWSurfaceCurveAndBoundedCurve::ReadStep(
   const occ::handle<StepGeom_SurfaceCurveAndBoundedCurve>& ent) const
 {
 
-  // BOUNDED_CURVE: skip
   int num1 = num;
 
-  // CURVE: skip
   num1 = data->NextForComplex(num1);
 
-  // GEOMETRIC_REPRESENTATION_ITEM: skip
   num1 = data->NextForComplex(num1);
 
-  // REPRESENTATION_ITEM: read name
   num1 = data->NextForComplex(num1);
   if (!data->CheckNbParams(num1, 1, ach, "representation_item"))
     return;
@@ -37,16 +33,13 @@ void RWStepGeom_RWSurfaceCurveAndBoundedCurve::ReadStep(
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num1, 1, "name", ach, aName);
 
-  // SURFACE_CURVE: read data
   num1 = data->NextForComplex(num1);
   if (!data->CheckNbParams(num1, 3, ach, "surface_curve"))
     return;
 
-  // --- own field : curve3d ---
   occ::handle<StepGeom_Curve> aCurve3d;
   data->ReadEntity(num1, 1, "curve_3d", ach, STANDARD_TYPE(StepGeom_Curve), aCurve3d);
 
-  // --- own field : associatedGeometry ---
   occ::handle<NCollection_HArray1<StepGeom_PcurveOrSurface>> aAssociatedGeometry;
   StepGeom_PcurveOrSurface                                   aAssociatedGeometryItem;
   int                                                        nsub3;
@@ -56,13 +49,12 @@ void RWStepGeom_RWSurfaceCurveAndBoundedCurve::ReadStep(
     aAssociatedGeometry = new NCollection_HArray1<StepGeom_PcurveOrSurface>(1, nb3);
     for (int i3 = 1; i3 <= nb3; i3++)
     {
-      // szv#4:S4163:12Mar99 `bool stat3 =` not needed
+
       if (data->ReadEntity(nsub3, i3, "associated_geometry", ach, aAssociatedGeometryItem))
         aAssociatedGeometry->SetValue(i3, aAssociatedGeometryItem);
     }
   }
 
-  // --- own field : masterRepresentation ---
   StepGeom_PreferredSurfaceCurveRepresentation aMasterRepresentation = StepGeom_pscrCurve3d;
   if (data->ParamType(num1, 3) == Interface_ParamEnum)
   {
@@ -75,8 +67,6 @@ void RWStepGeom_RWSurfaceCurveAndBoundedCurve::ReadStep(
   }
   else
     ach->AddFail("Parameter #3 (master_representation) is not an enumeration");
-
-  //--- Initialisation of the read entity ---
 
   ent->Init(aName, aCurve3d, aAssociatedGeometry, aMasterRepresentation);
   ent->BoundedCurve() = new StepGeom_BoundedCurve;
@@ -95,13 +85,10 @@ void RWStepGeom_RWSurfaceCurveAndBoundedCurve::WriteStep(
   SW.StartEntity("REPRESENTATION_ITEM");
   SW.Send(ent->Name());
 
-  // --- Instance of plex component BoundedCurve ---
   SW.StartEntity("SURFACE_CURVE");
 
-  // --- own field : curve3d ---
   SW.Send(ent->Curve3d());
 
-  // --- own field : associatedGeometry ---
   SW.OpenSub();
   for (int i3 = 1; i3 <= ent->NbAssociatedGeometry(); i3++)
   {
@@ -112,7 +99,6 @@ void RWStepGeom_RWSurfaceCurveAndBoundedCurve::WriteStep(
   }
   SW.CloseSub();
 
-  // --- own field : masterRepresentation ---
   SW.SendEnum(
     RWStepGeom_RWPreferredSurfaceCurveRepresentation::ConvertToString(ent->MasterRepresentation()));
 }

@@ -1,6 +1,5 @@
 #pragma once
 
-//! gives successive stages of reading an entity (see ParamReader)
 enum IGESData_ReadStage
 {
   IGESData_ReadDir,

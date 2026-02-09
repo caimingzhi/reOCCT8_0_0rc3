@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_CopyTool.hpp>
@@ -105,7 +94,7 @@ void StepData_UndefinedEntity::ReadRecord(const occ::handle<StepData_StepReaderD
     }
     else if (partyp == Interface_ParamText)
     {
-      //    Return integre a supprimer silya
+
       int lval = (int)strlen(val);
       int mval = -1;
       for (int j = 0; j < lval; j++)
@@ -149,7 +138,7 @@ void StepData_UndefinedEntity::WriteParams(StepData_StepWriter& SW) const
     if (partyp == Interface_ParamSub)
     {
       DeclareAndCast(StepData_UndefinedEntity, und, thecont->ParamEntity(i));
-      und->StepType(); // svv #2
+      und->StepType();
       if (und->IsSub())
         SW.OpenTypedSub(und->StepType());
       und->WriteParams(SW);
@@ -164,8 +153,7 @@ void StepData_UndefinedEntity::WriteParams(StepData_StepWriter& SW) const
     else
       SW.SendString(thecont->ParamValue(i)->ToCString());
   }
-  //  if (IsSub()) return;
-  //  SW.NewLine(true);
+
   if (thenext.IsNull())
     return;
   thenext->WriteParams(SW);
@@ -174,7 +162,7 @@ void StepData_UndefinedEntity::WriteParams(StepData_StepWriter& SW) const
 void StepData_UndefinedEntity::GetFromAnother(const occ::handle<StepData_UndefinedEntity>& another,
                                               Interface_CopyTool&                          TC)
 {
-  //  DeclareAndCast(StepData_UndefinedEntity,another,other);
+
   thetype = new TCollection_HAsciiString(another->StepType());
   thecont = new Interface_UndefinedContent;
   thecont->GetFromAnother(another->UndefinedContent(), TC);

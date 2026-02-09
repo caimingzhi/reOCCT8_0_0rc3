@@ -10,12 +10,10 @@ class TDF_Label;
 class TDF_RelocationTable;
 class XCAFDimTolObjects_DatumObject;
 
-// resolve name collisions with WinAPI headers
 #ifdef GetObject
   #undef GetObject
 #endif
 
-//! attribute to store datum
 class XCAFDoc_Datum : public TDF_Attribute
 {
 
@@ -42,11 +40,8 @@ public:
 
   Standard_EXPORT occ::handle<TCollection_HAsciiString> GetIdentification() const;
 
-  //! Returns dimension object data taken from the paren's label and its sub-labels.
   Standard_EXPORT occ::handle<XCAFDimTolObjects_DatumObject> GetObject() const;
 
-  //! Updates parent's label and its sub-labels with data taken from theDatumObject.
-  //! Old data associated with the label will be lost.
   Standard_EXPORT void SetObject(const occ::handle<XCAFDimTolObjects_DatumObject>& theDatumObject);
 
   Standard_EXPORT const Standard_GUID& ID() const override;
@@ -58,7 +53,6 @@ public:
   Standard_EXPORT void Paste(const occ::handle<TDF_Attribute>&       Into,
                              const occ::handle<TDF_RelocationTable>& RT) const override;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(XCAFDoc_Datum, TDF_Attribute)

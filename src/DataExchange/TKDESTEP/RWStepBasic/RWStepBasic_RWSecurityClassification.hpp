@@ -11,7 +11,6 @@ class StepBasic_SecurityClassification;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SecurityClassification
 class RWStepBasic_RWSecurityClassification
 {
 public:

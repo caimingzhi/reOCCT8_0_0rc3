@@ -9,77 +9,29 @@
 #include <NCollection_Sequence.hpp>
 #include <Standard_ErrorHandler.hpp>
 
-//=================================================================================================
-
 HLRBRep_Hider::HLRBRep_Hider(const occ::handle<HLRBRep_Data>& DS)
     : myDS(DS)
 {
 }
 
-//=================================================================================================
-
 void HLRBRep_Hider::OwnHiding(const int) {}
-
-//=================================================================================================
 
 void HLRBRep_Hider::Hide(
   const int                                                                        FI,
   NCollection_DataMap<TopoDS_Shape, BRepTopAdaptor_Tool, TopTools_ShapeMapHasher>& MST)
 {
-  // *****************************************************************
-  //
-  // This algorithm hides a set of edges stored in the data structure <myDS>
-  // with the hiding face number FI in <myDS>.
-  //
-  // Outline of the algorithm
-  //
-  //   1. Loop on the Edges (not hidden and not rejected by the face minmax)
-  //
-  //       The rejections depending of the face are
-  //          - Edge above the face
-  //          - Edge belonging to the face
-  //          - Edge rejected by a wire minmax
-  //
-  //       Compute interferences with the not rejected edges of the face.
-  //           Store IN and ON interferences in two sorted lists
-  //               ILHidden and ILOn
-  //       If ILOn is not empty
-  //           Resolve ComplexTransitions in ILOn
-  //           Resolve ON Intersections in ILOn
-  //             An On interference may become
-  //               IN  : Move it from ILOn to ILHidden
-  //               OUT : Remove it from ILOn
-  //       If ILHidden and ILOn are empty
-  //           intersect the edge with the face and classify the Edge.
-  //               - if inside and under the face hide it.
-  //       Else
-  //         If ILHidden is not empty
-  //           Resolve ComplexTransitions in ILHidden
-  //           Build Hidden parts of the edge
-  //               - Hide them
-  //           Build visible parts of the edge
-  //           Build Parts of the edge under the boundary of the face
-  //               - Hide them as Boundary
-  //         If ILOn is not empty
-  //           Build ON parts of the edge
-  //               - Hide them as ON parts
-  //           Build Parts of the edge on the boundary of the face
-  //               - Hide them as ON parts on Boundary
-  //
-  //
-  // *****************************************************************
 
   myDS->InitEdge(FI, MST);
-  if (!myDS->MoreEdge()) // there is nothing to do
-    return;              // **********************
+  if (!myDS->MoreEdge())
+    return;
   if (myDS->IsBadFace())
     return;
-  HLRBRep_EdgeInterferenceTool          EIT(myDS); // List of Intersections
+  HLRBRep_EdgeInterferenceTool          EIT(myDS);
   NCollection_Array1<HLRBRep_EdgeData>& myEData = myDS->EDataArray();
 
   for (; myDS->MoreEdge(); myDS->NextEdge())
-  {                       // loop on the Edges
-    int E = myDS->Edge(); // *****************
+  {
+    int E = myDS->Edge();
 
     try
     {
@@ -89,9 +41,7 @@ void HLRBRep_Hider::Hide(
       NCollection_List<HLRAlgo_Interference> ILOn;
       EIT.LoadEdge();
 
-      for (myDS->InitInterference(); // intersections with face-edges
-           myDS->MoreInterference(); // *****************************
-           myDS->NextInterference())
+      for (myDS->InitInterference(); myDS->MoreInterference(); myDS->NextInterference())
       {
         if (myDS->RejectedInterference())
         {
@@ -118,7 +68,6 @@ void HLRBRep_Hider::Hide(
         }
       }
 
-      //-- ============================================================
       bool Modif;
       do
       {
@@ -137,8 +86,7 @@ void HLRBRep_Hider::Hide(
               int                   numseg2 = Int2.Intersection().SegIndex();
               if (numseg1 + numseg2 == 0)
               {
-                //--printf("\nHidden Traitement du segment %d  %d\n",numseg1,numseg2);
-                // fflush(stdout);
+
                 TopAbs_State stbef1, staft1, stbef2, staft2;
                 Int1.Boundary().State3D(stbef1, staft1);
                 Int2.Boundary().State3D(stbef2, staft2);
@@ -149,8 +97,7 @@ void HLRBRep_Hider::Hide(
                     if (stbef1 == stbef2 && staft1 == staft2 && stbef1 != TopAbs_ON
                         && staft1 != TopAbs_ON)
                     {
-                      //-- printf("\n Index1 = %d  Index2 =
-                      //%d\n",Int1.Intersection().Index(),Int2.Intersection().Index());
+
                       int nind = -1;
                       if (Int1.Intersection().Index() != 0)
                       {
@@ -175,7 +122,7 @@ void HLRBRep_Hider::Hide(
 
                       if (nind != -1)
                       {
-                        //-- printf("\n Segment Supprime\n"); fflush(stdout);
+
                         HLRAlgo_Intersection& inter = Int1.ChangeIntersection();
                         inter.SegIndex(nind);
                         double p1 = Int1.Intersection().Parameter();
@@ -203,24 +150,19 @@ void HLRBRep_Hider::Hide(
         }
       } while (Modif);
 
-      //-- ============================================================
-
       if (!ILOn.IsEmpty())
-      { // process the interferences on ILOn
-        // *********************************
+      {
 
-        HLRBRep_EdgeIList::ProcessComplex // complex transition on ILOn
-          (ILOn, EIT);                    // **************************
+        HLRBRep_EdgeIList::ProcessComplex(ILOn, EIT);
 
         NCollection_List<HLRAlgo_Interference>::Iterator It(ILOn);
 
         while (It.More())
-        { // process Intersections on the Face
-          // *********************************
+        {
 
           HLRAlgo_Interference& Int = It.ChangeValue();
-          TopAbs_State          stbef, staft;   // read the 3d states
-          Int.Boundary().State3D(stbef, staft); // ******************
+          TopAbs_State          stbef, staft;
+          Int.Boundary().State3D(stbef, staft);
 
           switch (Int.Transition())
           {
@@ -276,19 +218,19 @@ void HLRBRep_Hider::Hide(
                       ILOn.Remove(It);
                       break;
                     case TopAbs_ON:
-                      Int.Transition(TopAbs_FORWARD);    // FORWARD  in ILOn,
-                      HLRBRep_EdgeIList::AddInterference // REVERSED in ILHidden
-                        (ILHidden,
-                         HLRAlgo_Interference(Int.Intersection(),
-                                              Int.Boundary(),
-                                              Int.Orientation(),
-                                              TopAbs_REVERSED,
-                                              Int.BoundaryTransition()),
-                         EIT);
+                      Int.Transition(TopAbs_FORWARD);
+                      HLRBRep_EdgeIList::AddInterference(
+                        ILHidden,
+                        HLRAlgo_Interference(Int.Intersection(),
+                                             Int.Boundary(),
+                                             Int.Orientation(),
+                                             TopAbs_REVERSED,
+                                             Int.BoundaryTransition()),
+                        EIT);
                       It.Next();
                       break;
                     case TopAbs_OUT:
-                      Int.Transition(TopAbs_REVERSED); // set REVERSED
+                      Int.Transition(TopAbs_REVERSED);
                       HLRBRep_EdgeIList::AddInterference(ILHidden, Int, EIT);
                       ILOn.Remove(It);
                       break;
@@ -304,15 +246,15 @@ void HLRBRep_Hider::Hide(
                   switch (staft)
                   {
                     case TopAbs_IN:
-                      Int.Transition(TopAbs_REVERSED);   // REVERSED in ILOn,
-                      HLRBRep_EdgeIList::AddInterference // REVERSED in ILHidden
-                        (ILHidden,
-                         HLRAlgo_Interference(Int.Intersection(),
-                                              Int.Boundary(),
-                                              Int.Orientation(),
-                                              TopAbs_FORWARD,
-                                              Int.BoundaryTransition()),
-                         EIT);
+                      Int.Transition(TopAbs_REVERSED);
+                      HLRBRep_EdgeIList::AddInterference(
+                        ILHidden,
+                        HLRAlgo_Interference(Int.Intersection(),
+                                             Int.Boundary(),
+                                             Int.Orientation(),
+                                             TopAbs_FORWARD,
+                                             Int.BoundaryTransition()),
+                        EIT);
                       break;
                     case TopAbs_ON:
                       break;
@@ -331,12 +273,12 @@ void HLRBRep_Hider::Hide(
                   switch (staft)
                   {
                     case TopAbs_IN:
-                      Int.Transition(TopAbs_FORWARD); // set FORWARD
+                      Int.Transition(TopAbs_FORWARD);
                       HLRBRep_EdgeIList::AddInterference(ILHidden, Int, EIT);
                       ILOn.Remove(It);
                       break;
                     case TopAbs_ON:
-                      Int.Transition(TopAbs_FORWARD); // FORWARD  in ILOn
+                      Int.Transition(TopAbs_FORWARD);
                       It.Next();
                       break;
                     case TopAbs_OUT:
@@ -363,8 +305,8 @@ void HLRBRep_Hider::Hide(
       if (ILHidden.IsEmpty() && ILOn.IsEmpty() && !hasOut)
       {
         HLRBRep_EdgeData& ed = myEData(E);
-        TopAbs_State      st = myDS->Compare(E, ed); // Classification
-        if (st == TopAbs_IN || st == TopAbs_ON)      // **************
+        TopAbs_State      st = myDS->Compare(E, ed);
+        if (st == TopAbs_IN || st == TopAbs_ON)
           ed.Status().HideAll();
       }
       else
@@ -380,14 +322,13 @@ void HLRBRep_Hider::Hide(
         if (!ILHidden.IsEmpty())
         {
 
-          HLRBRep_EdgeIList::ProcessComplex // complex transition on ILHidden
-            (ILHidden, EIT);                // ******************************
+          HLRBRep_EdgeIList::ProcessComplex(ILHidden, EIT);
           int level = 0;
-          if (!myDS->SimpleHidingFace())                     // Level at Start
-            level = myDS->HidingStartLevel(E, ed, ILHidden); // **************
+          if (!myDS->SimpleHidingFace())
+            level = myDS->HidingStartLevel(E, ed, ILHidden);
 
           NCollection_List<HLRAlgo_Interference>::Iterator It(ILHidden);
-          if (myDS->SimpleHidingFace()) // remove excess interferences
+          if (myDS->SimpleHidingFace())
           {
             NCollection_Sequence<double> ToRemove;
             TopAbs_Orientation           PrevTrans = TopAbs_EXTERNAL;
@@ -432,12 +373,11 @@ void HLRBRep_Hider::Hide(
               if (!found)
                 It.Next();
             }
-          } // remove excess interferences
+          }
 
           It.Initialize(ILHidden);
           while (It.More())
-          { // suppress multi-inside Intersections
-            // ***********************************
+          {
 
             const HLRAlgo_Interference& Int = It.Value();
             switch (Int.Transition())
@@ -473,15 +413,14 @@ void HLRBRep_Hider::Hide(
                 break;
             }
           }
-          if (ILHidden.IsEmpty()) // Edge hidden
-            ES.HideAll();         // ***********
+          if (ILHidden.IsEmpty())
+            ES.HideAll();
           else
             foundHidden = true;
         }
 
         if (!ILHidden.IsEmpty())
         {
-          // IFV
 
           TopAbs_State aBuildIN    = TopAbs_IN;
           bool         IsSuspicion = true;
@@ -517,8 +456,8 @@ void HLRBRep_Hider::Hide(
 
           HLRBRep_EdgeBuilder EB(IL);
 
-          EB.Builds(aBuildIN); // build hidden parts
-                               // ******************
+          EB.Builds(aBuildIN);
+
           while (EB.MoreEdges())
           {
             p1            = 0.;
@@ -557,34 +496,26 @@ void HLRBRep_Hider::Hide(
                 p1 = pmin;
               if (p2 > pmax)
                 p2 = pmax;
-              // HLRBRep_EdgeData& ed = myEData(E);
-              // TopAbs_State st = myDS->Compare(E,ed);              // Classification
             }
 
             TopAbs_State aTestState = TopAbs_IN;
             if (IsSuspicion)
             {
-              // int aNbp = 1;
-              // aTestState = myDS->SimplClassify(E, ed, aNbp, p1, p2);
+
               int tmplevel = 0;
               aTestState   = myDS->Classify(E, ed, true, tmplevel, (p1 + p2) / 2.);
             }
 
             if (aTestState != TopAbs_OUT)
             {
-              ES.Hide(p1,
-                      tol1,
-                      p2,
-                      tol2,
-                      false,  // under  the Face
-                      false); // inside the Face
+              ES.Hide(p1, tol1, p2, tol2, false, false);
             }
 
             EB.NextEdge();
           }
 
-          EB.Builds(TopAbs_ON); // build parts under the boundary
-                                // ******************************
+          EB.Builds(TopAbs_ON);
+
           while (EB.MoreEdges())
           {
             p1            = 0.;
@@ -620,19 +551,13 @@ void HLRBRep_Hider::Hide(
             TopAbs_State aTestState = TopAbs_IN;
             if (IsSuspicion)
             {
-              // int aNbp = 1;
-              // aTestState = myDS->SimplClassify(E, ed, aNbp, p1, p2);
+
               int tmplevel = 0;
               aTestState   = myDS->Classify(E, ed, true, tmplevel, (p1 + p2) / 2.);
             }
 
             if (aTestState != TopAbs_OUT)
-              ES.Hide(p1,
-                      tol1,
-                      p2,
-                      tol2,
-                      false, // under the Face
-                      true); // on the boundary
+              ES.Hide(p1, tol1, p2, tol2, false, true);
 
             EB.NextEdge();
           }
@@ -641,15 +566,14 @@ void HLRBRep_Hider::Hide(
         if (!ILOn.IsEmpty())
         {
           int level = 0;
-          if (!myDS->SimpleHidingFace())                 // Level at Start
-            level = myDS->HidingStartLevel(E, ed, ILOn); // **************
+          if (!myDS->SimpleHidingFace())
+            level = myDS->HidingStartLevel(E, ed, ILOn);
           if (level > 0)
           {
             NCollection_List<HLRAlgo_Interference>::Iterator It(ILOn);
 
             while (It.More())
-            { // suppress multi-inside Intersections
-              // ***********************************
+            {
 
               const HLRAlgo_Interference& Int = It.Value();
               switch (Int.Transition())
@@ -679,8 +603,8 @@ void HLRBRep_Hider::Hide(
                   break;
               }
             }
-            if (ILOn.IsEmpty() && !foundHidden) // Edge hidden
-              ES.HideAll();                     // ***********
+            if (ILOn.IsEmpty() && !foundHidden)
+              ES.HideAll();
           }
         }
 
@@ -689,8 +613,8 @@ void HLRBRep_Hider::Hide(
           HLRBRep_VertexList  IL(EIT, ILOn);
           HLRBRep_EdgeBuilder EB(IL);
 
-          EB.Builds(TopAbs_IN); // build parts on the Face
-                                // ***********************
+          EB.Builds(TopAbs_IN);
+
           while (EB.MoreEdges())
           {
             p1            = 0.;
@@ -723,17 +647,12 @@ void HLRBRep_Hider::Hide(
               continue;
             }
 
-            ES.Hide(p1,
-                    tol1,
-                    p2,
-                    tol2,
-                    true,   // on     the Face
-                    false); // inside the Face
+            ES.Hide(p1, tol1, p2, tol2, true, false);
             EB.NextEdge();
           }
 
-          EB.Builds(TopAbs_ON); // build hidden parts under the boundary
-                                // *************************************
+          EB.Builds(TopAbs_ON);
+
           while (EB.MoreEdges())
           {
             p1            = 0.;
@@ -766,12 +685,7 @@ void HLRBRep_Hider::Hide(
               continue;
             }
 
-            ES.Hide(p1,
-                    tol1,
-                    p2,
-                    tol2,
-                    true,  // on the Face
-                    true); // on the boundary
+            ES.Hide(p1, tol1, p2, tol2, true, true);
             EB.NextEdge();
           }
         }

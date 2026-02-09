@@ -14,26 +14,6 @@
 #include <NCollection_Array2.hpp>
 #include <Standard_Integer.hpp>
 
-//=======================================================================
-// function : Arrange
-// purpose  : Internal Use Only
-//            This function is used to prepare the Filling: The Curves
-//            are arranged in this way:
-//                      CC3
-//                  ----->-----
-//                 |           |
-//                 |           |
-//                 |           |
-//             CC4 ^           ^ CC2
-//                 |           |
-//                 |           |
-//                  ----->-----
-//                   CC1 = C1
-//
-//            In case a curve CCx is degenerated to start and end at
-//            the same point, it is inserted before the curvature leaves
-//            the point.
-//=======================================================================
 static bool Arrange(const occ::handle<Geom_BSplineCurve>& C1,
                     const occ::handle<Geom_BSplineCurve>& C2,
                     const occ::handle<Geom_BSplineCurve>& C3,
@@ -58,12 +38,11 @@ static bool Arrange(const occ::handle<Geom_BSplineCurve>& C1,
   {
     Trouve = false;
 
-    // search for a degenerated curve = point, which would match first
     for (j = i; j <= 3 && !Trouve; j++)
     {
       if (GC[j]->StartPoint().Distance(GC[j]->EndPoint()) < Tol)
       {
-        // this is a degenerated line, does it match the last endpoint?
+
         if (GC[j]->StartPoint().Distance(GC[i - 1]->EndPoint()) < Tol)
         {
           Dummy  = GC[i];
@@ -74,7 +53,6 @@ static bool Arrange(const occ::handle<Geom_BSplineCurve>& C1,
       }
     }
 
-    // if no degenerated curve matched, try an ordinary one as next curve
     if (!Trouve)
     {
       for (j = i; j <= 3 && !Trouve; j++)
@@ -97,7 +75,6 @@ static bool Arrange(const occ::handle<Geom_BSplineCurve>& C1,
       }
     }
 
-    // if still non matched -> error, the algorithm cannot finish
     if (!Trouve)
     {
       return false;
@@ -111,8 +88,6 @@ static bool Arrange(const occ::handle<Geom_BSplineCurve>& C1,
 
   return true;
 }
-
-//=================================================================================================
 
 static int SetSameDistribution(occ::handle<Geom_BSplineCurve>& C1,
                                occ::handle<Geom_BSplineCurve>& C2)
@@ -235,11 +210,7 @@ static int SetSameDistribution(occ::handle<Geom_BSplineCurve>& C1,
   return C1->NbPoles();
 }
 
-//=================================================================================================
-
 GeomFill_BSplineCurves::GeomFill_BSplineCurves() = default;
-
-//=================================================================================================
 
 GeomFill_BSplineCurves::GeomFill_BSplineCurves(const occ::handle<Geom_BSplineCurve>& C1,
                                                const occ::handle<Geom_BSplineCurve>& C2,
@@ -250,8 +221,6 @@ GeomFill_BSplineCurves::GeomFill_BSplineCurves(const occ::handle<Geom_BSplineCur
   Init(C1, C2, C3, C4, Type);
 }
 
-//=================================================================================================
-
 GeomFill_BSplineCurves::GeomFill_BSplineCurves(const occ::handle<Geom_BSplineCurve>& C1,
                                                const occ::handle<Geom_BSplineCurve>& C2,
                                                const occ::handle<Geom_BSplineCurve>& C3,
@@ -260,8 +229,6 @@ GeomFill_BSplineCurves::GeomFill_BSplineCurves(const occ::handle<Geom_BSplineCur
   Init(C1, C2, C3, Type);
 }
 
-//=================================================================================================
-
 GeomFill_BSplineCurves::GeomFill_BSplineCurves(const occ::handle<Geom_BSplineCurve>& C1,
                                                const occ::handle<Geom_BSplineCurve>& C2,
                                                const GeomFill_FillingStyle           Type)
@@ -269,15 +236,13 @@ GeomFill_BSplineCurves::GeomFill_BSplineCurves(const occ::handle<Geom_BSplineCur
   Init(C1, C2, Type);
 }
 
-//=================================================================================================
-
 void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
                                   const occ::handle<Geom_BSplineCurve>& C2,
                                   const occ::handle<Geom_BSplineCurve>& C3,
                                   const occ::handle<Geom_BSplineCurve>& C4,
                                   const GeomFill_FillingStyle           Type)
 {
-  // On ordonne les courbes
+
   occ::handle<Geom_BSplineCurve> CC1, CC2, CC3, CC4;
 
   constexpr double Tol = Precision::Confusion();
@@ -288,7 +253,6 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
 
   Standard_ConstructionError_Raise_if(!IsOK, " GeomFill_BSplineCurves: Courbes non jointives");
 
-  // Mise en conformite des degres
   int Deg1 = CC1->Degree();
   int Deg2 = CC2->Degree();
   int Deg3 = CC3->Degree();
@@ -304,7 +268,6 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
   if (Deg4 < DegV)
     CC4->IncreaseDegree(DegV);
 
-  // Mise en conformite des distributions de noeuds
   int NbUPoles = SetSameDistribution(CC1, CC3);
   int NbVPoles = SetSameDistribution(CC2, CC4);
 
@@ -323,7 +286,6 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
   CC3->Poles(P3);
   CC4->Poles(P4);
 
-  // Traitement des courbes rationelles
   bool isRat = (CC1->IsRational() || CC2->IsRational() || CC3->IsRational() || CC4->IsRational());
 
   NCollection_Array1<double> W1(1, NbUPoles);
@@ -390,7 +352,6 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
   NbVPoles = Caro.NbVPoles();
   NCollection_Array2<gp_Pnt> Poles(1, NbUPoles, 1, NbVPoles);
 
-  // Creation de la surface
   int                        NbUKnot = CC1->NbKnots();
   NCollection_Array1<double> UKnots(1, NbUKnot);
   NCollection_Array1<int>    UMults(1, NbUKnot);
@@ -425,8 +386,6 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
   }
 }
 
-//=================================================================================================
-
 void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
                                   const occ::handle<Geom_BSplineCurve>& C2,
                                   const occ::handle<Geom_BSplineCurve>& C3,
@@ -457,8 +416,6 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
   Init(C1, C2, C3, C4, Type);
 }
 
-//=================================================================================================
-
 void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
                                   const occ::handle<Geom_BSplineCurve>& C2,
                                   const GeomFill_FillingStyle           Type)
@@ -480,7 +437,6 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
     if (CC2->Degree() < DegU)
       CC2->IncreaseDegree(DegU);
 
-    // Mise en conformite des distributions de noeuds
     int                        NbPoles = SetSameDistribution(CC1, CC2);
     NCollection_Array2<gp_Pnt> Poles(1, NbPoles, 1, 2);
     NCollection_Array1<gp_Pnt> P1(1, NbPoles);
@@ -498,7 +454,7 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
     NCollection_Array1<int>    UMults(1, NbUKnots);
     CC1->Knots(UKnots);
     CC1->Multiplicities(UMults);
-    //    int NbVKnots = 2;
+
     NCollection_Array1<double> VKnots(1, 2);
     NCollection_Array1<int>    VMults(1, 2);
     VKnots(1) = 0;
@@ -506,7 +462,6 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
     VMults(1) = 2;
     VMults(2) = 2;
 
-    // Traitement des courbes rationelles
     if (isRat)
     {
       NCollection_Array2<double> Weights(1, NbPoles, 1, 2);

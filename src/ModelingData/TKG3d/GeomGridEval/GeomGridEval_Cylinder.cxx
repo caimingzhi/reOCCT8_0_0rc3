@@ -1,23 +1,10 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GeomGridEval_Cylinder.hpp>
 
 #include <gp_Cylinder.hpp>
 
 #include <cmath>
-
-//==================================================================================================
 
 GeomGridEval_Cylinder::Data GeomGridEval_Cylinder::extractData() const
 {
@@ -42,16 +29,12 @@ GeomGridEval_Cylinder::Data GeomGridEval_Cylinder::extractData() const
           aCyl.Radius()};
 }
 
-//==================================================================================================
-
 GeomGridEval_Cylinder::UContext GeomGridEval_Cylinder::computeUContext(const Data& theData,
                                                                        double      theU)
 {
   const double cosU = std::cos(theU);
   const double sinU = std::sin(theU);
 
-  // DirU = cosU*XDir + sinU*YDir (circle point direction at angle U)
-  // dDirU = -sinU*XDir + cosU*YDir (derivative of DirU w.r.t. U)
   return {cosU,
           sinU,
           cosU * theData.XX + sinU * theData.YX,
@@ -62,24 +45,19 @@ GeomGridEval_Cylinder::UContext GeomGridEval_Cylinder::computeUContext(const Dat
           -sinU * theData.XZ + cosU * theData.YZ};
 }
 
-//==================================================================================================
-
 gp_Pnt GeomGridEval_Cylinder::computeD0(const Data& theData, const UContext& theUCtx, double theV)
 {
-  // P = Center + R * DirU + v * ZDir
+
   return gp_Pnt(theData.CX + theData.Radius * theUCtx.dirUX + theV * theData.ZX,
                 theData.CY + theData.Radius * theUCtx.dirUY + theV * theData.ZY,
                 theData.CZ + theData.Radius * theUCtx.dirUZ + theV * theData.ZZ);
 }
 
-//==================================================================================================
-
 GeomGridEval::SurfD1 GeomGridEval_Cylinder::computeD1(const Data&     theData,
                                                       const UContext& theUCtx,
                                                       double          theV)
 {
-  // D1U = R * dDirU
-  // D1V = ZDir
+
   return {gp_Pnt(theData.CX + theData.Radius * theUCtx.dirUX + theV * theData.ZX,
                  theData.CY + theData.Radius * theUCtx.dirUY + theV * theData.ZY,
                  theData.CZ + theData.Radius * theUCtx.dirUZ + theV * theData.ZZ),
@@ -89,15 +67,11 @@ GeomGridEval::SurfD1 GeomGridEval_Cylinder::computeD1(const Data&     theData,
           gp_Vec(theData.ZX, theData.ZY, theData.ZZ)};
 }
 
-//==================================================================================================
-
 GeomGridEval::SurfD2 GeomGridEval_Cylinder::computeD2(const Data&     theData,
                                                       const UContext& theUCtx,
                                                       double          theV)
 {
-  // D2U = R * (-DirU) = -R * DirU
-  // D2V = 0
-  // D2UV = 0
+
   const gp_Vec aZero(0.0, 0.0, 0.0);
 
   return {gp_Pnt(theData.CX + theData.Radius * theUCtx.dirUX + theV * theData.ZX,
@@ -114,16 +88,11 @@ GeomGridEval::SurfD2 GeomGridEval_Cylinder::computeD2(const Data&     theData,
           aZero};
 }
 
-//==================================================================================================
-
 GeomGridEval::SurfD3 GeomGridEval_Cylinder::computeD3(const Data&     theData,
                                                       const UContext& theUCtx,
                                                       double          theV)
 {
-  // D3U = R * (-dDirU) = -D1U
-  // D3V = 0
-  // D3UUV = 0
-  // D3UVV = 0
+
   const gp_Vec aZero(0.0, 0.0, 0.0);
 
   return {gp_Pnt(theData.CX + theData.Radius * theUCtx.dirUX + theV * theData.ZX,
@@ -146,18 +115,12 @@ GeomGridEval::SurfD3 GeomGridEval_Cylinder::computeD3(const Data&     theData,
           aZero};
 }
 
-//==================================================================================================
-
 gp_Vec GeomGridEval_Cylinder::computeDN(const Data&     theData,
                                         const UContext& theUCtx,
-                                        double /*theV*/,
+                                        double,
                                         int theNU,
                                         int theNV)
 {
-  // For cylinder P(u,v) = C + R*(cos(u)*X + sin(u)*Y) + v*Z:
-  // - V derivatives: only D_{0,1} = Z is non-zero, all D_{nu,nv} = 0 for nv >= 2
-  // - Mixed derivatives D_{nu,1} = 0 for nu >= 1 (Z term has no U dependence)
-  // - Pure U derivatives cycle with period 4
 
   if (theNV > 1)
   {
@@ -173,8 +136,6 @@ gp_Vec GeomGridEval_Cylinder::computeDN(const Data&     theData,
     return gp_Vec(0.0, 0.0, 0.0);
   }
 
-  // Pure U derivatives (theNV == 0, theNU >= 1)
-  // d^n/du^n of DirU cycles: DirU, dDirU, -DirU, -dDirU
   const int aPhase = theNU % 4;
 
   double dirX, dirY, dirZ;
@@ -210,8 +171,6 @@ gp_Vec GeomGridEval_Cylinder::computeDN(const Data&     theData,
   return gp_Vec(theData.Radius * dirX, theData.Radius * dirY, theData.Radius * dirZ);
 }
 
-//==================================================================================================
-
 NCollection_Array2<gp_Pnt> GeomGridEval_Cylinder::EvaluateGrid(
   const NCollection_Array1<double>& theUParams,
   const NCollection_Array1<double>& theVParams) const
@@ -241,8 +200,6 @@ NCollection_Array2<gp_Pnt> GeomGridEval_Cylinder::EvaluateGrid(
 
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array2<GeomGridEval::SurfD1> GeomGridEval_Cylinder::EvaluateGridD1(
   const NCollection_Array1<double>& theUParams,
@@ -274,8 +231,6 @@ NCollection_Array2<GeomGridEval::SurfD1> GeomGridEval_Cylinder::EvaluateGridD1(
   return aResult;
 }
 
-//==================================================================================================
-
 NCollection_Array2<GeomGridEval::SurfD2> GeomGridEval_Cylinder::EvaluateGridD2(
   const NCollection_Array1<double>& theUParams,
   const NCollection_Array1<double>& theVParams) const
@@ -306,8 +261,6 @@ NCollection_Array2<GeomGridEval::SurfD2> GeomGridEval_Cylinder::EvaluateGridD2(
   return aResult;
 }
 
-//==================================================================================================
-
 NCollection_Array2<GeomGridEval::SurfD3> GeomGridEval_Cylinder::EvaluateGridD3(
   const NCollection_Array1<double>& theUParams,
   const NCollection_Array1<double>& theVParams) const
@@ -337,8 +290,6 @@ NCollection_Array2<GeomGridEval::SurfD3> GeomGridEval_Cylinder::EvaluateGridD3(
 
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array2<gp_Vec> GeomGridEval_Cylinder::EvaluateGridDN(
   const NCollection_Array1<double>& theUParams,
@@ -373,8 +324,6 @@ NCollection_Array2<gp_Vec> GeomGridEval_Cylinder::EvaluateGridDN(
   return aResult;
 }
 
-//==================================================================================================
-
 NCollection_Array1<gp_Pnt> GeomGridEval_Cylinder::EvaluatePoints(
   const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
 {
@@ -396,8 +345,6 @@ NCollection_Array1<gp_Pnt> GeomGridEval_Cylinder::EvaluatePoints(
 
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::SurfD1> GeomGridEval_Cylinder::EvaluatePointsD1(
   const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
@@ -421,8 +368,6 @@ NCollection_Array1<GeomGridEval::SurfD1> GeomGridEval_Cylinder::EvaluatePointsD1
   return aResult;
 }
 
-//==================================================================================================
-
 NCollection_Array1<GeomGridEval::SurfD2> GeomGridEval_Cylinder::EvaluatePointsD2(
   const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
 {
@@ -445,8 +390,6 @@ NCollection_Array1<GeomGridEval::SurfD2> GeomGridEval_Cylinder::EvaluatePointsD2
   return aResult;
 }
 
-//==================================================================================================
-
 NCollection_Array1<GeomGridEval::SurfD3> GeomGridEval_Cylinder::EvaluatePointsD3(
   const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
 {
@@ -468,8 +411,6 @@ NCollection_Array1<GeomGridEval::SurfD3> GeomGridEval_Cylinder::EvaluatePointsD3
 
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<gp_Vec> GeomGridEval_Cylinder::EvaluatePointsDN(
   const NCollection_Array1<gp_Pnt2d>& theUVPairs,

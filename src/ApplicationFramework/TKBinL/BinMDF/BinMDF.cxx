@@ -4,8 +4,6 @@
 #include <BinMDF_TagSourceDriver.hpp>
 #include <Message_Messenger.hpp>
 
-//=================================================================================================
-
 void BinMDF::AddDrivers(const occ::handle<BinMDF_ADriverTable>& aDriverTable,
                         const occ::handle<Message_Messenger>&   aMsgDrv)
 {

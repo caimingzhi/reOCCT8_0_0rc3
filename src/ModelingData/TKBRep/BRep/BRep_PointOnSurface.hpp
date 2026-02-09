@@ -7,7 +7,6 @@
 class Geom_Surface;
 class TopLoc_Location;
 
-//! Representation by two parameters on a surface.
 class BRep_PointOnSurface : public BRep_PointsOnSurface
 {
 

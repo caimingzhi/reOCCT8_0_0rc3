@@ -17,8 +17,6 @@ class TopoDS_Face;
 class TopoDS_Shape;
 class TopoDS_Vertex;
 
-//! Stores the results of the OutLine and IsoLine
-//! processes.
 class HLRTopoBRep_Data
 {
 public:
@@ -26,23 +24,16 @@ public:
 
   Standard_EXPORT HLRTopoBRep_Data();
 
-  //! Clear of all the maps.
   Standard_EXPORT void Clear();
 
-  //! Clear of all the data not needed during and after
-  //! the hiding process.
   Standard_EXPORT void Clean();
 
-  //! Returns True if the Edge is split.
   Standard_EXPORT bool EdgeHasSplE(const TopoDS_Edge& E) const;
 
-  //! Returns True if the Face has internal outline.
   Standard_EXPORT bool FaceHasIntL(const TopoDS_Face& F) const;
 
-  //! Returns True if the Face has outlines on restriction.
   Standard_EXPORT bool FaceHasOutL(const TopoDS_Face& F) const;
 
-  //! Returns True if the Face has isolines.
   Standard_EXPORT bool FaceHasIsoL(const TopoDS_Face& F) const;
 
   Standard_EXPORT bool IsSplEEdgeEdge(const TopoDS_Edge& E1, const TopoDS_Edge& E2) const;
@@ -55,23 +46,16 @@ public:
 
   Standard_EXPORT TopoDS_Shape NewSOldS(const TopoDS_Shape& New) const;
 
-  //! Returns the list of the edges.
   const NCollection_List<TopoDS_Shape>& EdgeSplE(const TopoDS_Edge& E) const;
 
-  //! Returns the list of the internal OutLines.
   const NCollection_List<TopoDS_Shape>& FaceIntL(const TopoDS_Face& F) const;
 
-  //! Returns the list of the OutLines on restriction.
   const NCollection_List<TopoDS_Shape>& FaceOutL(const TopoDS_Face& F) const;
 
-  //! Returns the list of the IsoLines.
   const NCollection_List<TopoDS_Shape>& FaceIsoL(const TopoDS_Face& F) const;
 
-  //! Returns True if V is an outline vertex on a
-  //! restriction.
   bool IsOutV(const TopoDS_Vertex& V) const;
 
-  //! Returns True if V is an internal outline vertex.
   bool IsIntV(const TopoDS_Vertex& V) const;
 
   Standard_EXPORT void AddOldS(const TopoDS_Shape& NewS, const TopoDS_Shape& OldS);
@@ -96,7 +80,6 @@ public:
 
   const TopoDS_Edge& Edge() const;
 
-  //! Start an iteration on the vertices of E.
   Standard_EXPORT void InitVertex(const TopoDS_Edge& E);
 
   bool MoreVertex() const;
@@ -107,7 +90,6 @@ public:
 
   Standard_EXPORT double Parameter() const;
 
-  //! Insert before the current position.
   Standard_EXPORT void InsertBefore(const TopoDS_Vertex& V, const double P);
 
   Standard_EXPORT void Append(const TopoDS_Vertex& V, const double P);
@@ -133,84 +115,60 @@ private:
 #include <TopoDS_Edge.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//=================================================================================================
-
 inline const NCollection_List<TopoDS_Shape>& HLRTopoBRep_Data::EdgeSplE(const TopoDS_Edge& E) const
 {
   return mySplE(E);
 }
-
-//=================================================================================================
 
 inline const NCollection_List<TopoDS_Shape>& HLRTopoBRep_Data::FaceIntL(const TopoDS_Face& F) const
 {
   return myData(F).FaceIntL();
 }
 
-//=================================================================================================
-
 inline const NCollection_List<TopoDS_Shape>& HLRTopoBRep_Data::FaceOutL(const TopoDS_Face& F) const
 {
   return myData(F).FaceOutL();
 }
-
-//=================================================================================================
 
 inline const NCollection_List<TopoDS_Shape>& HLRTopoBRep_Data::FaceIsoL(const TopoDS_Face& F) const
 {
   return myData(F).FaceIsoL();
 }
 
-//=================================================================================================
-
 inline bool HLRTopoBRep_Data::IsOutV(const TopoDS_Vertex& V) const
 {
   return myOutV.Contains(V);
 }
-
-//=================================================================================================
 
 inline bool HLRTopoBRep_Data::IsIntV(const TopoDS_Vertex& V) const
 {
   return myIntV.Contains(V);
 }
 
-//=================================================================================================
-
 inline void HLRTopoBRep_Data::AddOutV(const TopoDS_Vertex& V)
 {
   myOutV.Add(V);
 }
-
-//=================================================================================================
 
 inline void HLRTopoBRep_Data::AddIntV(const TopoDS_Vertex& V)
 {
   myIntV.Add(V);
 }
 
-//=================================================================================================
-
 inline bool HLRTopoBRep_Data::MoreEdge() const
 {
   return myEIterator.More();
 }
-
-//=================================================================================================
 
 inline const TopoDS_Edge& HLRTopoBRep_Data::Edge() const
 {
   return TopoDS::Edge(myEIterator.Key());
 }
 
-//=================================================================================================
-
 inline bool HLRTopoBRep_Data::MoreVertex() const
 {
   return myVIterator.More();
 }
-
-//=================================================================================================
 
 inline void HLRTopoBRep_Data::NextVertex()
 {

@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ElCLib.hpp>
 #include <GccAna_Circ2dTanOnRad.hpp>
@@ -23,18 +11,6 @@
 #include <IntAna2d_IntPoint.hpp>
 #include <Standard_NegativeValue.hpp>
 
-//=========================================================================
-//   Circle tangent to a point   Point1.                                  +
-//          center on circle     OnCirc.                                  +
-//          radius               Radius.                                  +
-//                                                                        +
-//  Initialize the table of solutions cirsol and all fields.              +
-//  Eliminate cases not being the solution.                               +
-//  Create the circle with center in Point1 of radius Radius.             +
-//  Intersect this circle with OnCirc and obtain the center points        +
-//  of found solutions.                                                   +
-//  Create solutions cirsol.                                              +
-//=========================================================================
 GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const gp_Pnt2d&  Point1,
                                              const gp_Circ2d& OnCirc,
                                              const double     Radius,
@@ -85,7 +61,7 @@ GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const gp_Pnt2d&  Point1,
                                    .XY()),
                   dirx);
       cirsol(1) = gp_Circ2d(axe, Radius);
-      //      ================================
+
       qualifier1(1) = GccEnt_noqualifier;
       TheSame1(1)   = 0;
       pnttg1sol(1)  = Point1;
@@ -108,7 +84,7 @@ GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const gp_Pnt2d&  Point1,
             NbrSol++;
             gp_Pnt2d Center(Intp.Point(i).Value());
             cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-            //           =======================================================
+
             qualifier1(1) = GccEnt_noqualifier;
             TheSame1(1)   = 0;
             pnttg1sol(1)  = Point1;

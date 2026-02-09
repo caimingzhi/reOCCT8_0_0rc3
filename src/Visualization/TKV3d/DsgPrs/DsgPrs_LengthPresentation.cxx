@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DsgPrs_LengthPresentation.hpp>
 
@@ -76,7 +64,6 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   gp_Pnt PointMin = ElCLib::Value(parmin, L3);
   gp_Pnt PointMax = ElCLib::Value(parmax, L3);
 
-  // face processing : 1st group
   occ::handle<Graphic3d_ArrayOfSegments> aPrims = new Graphic3d_ArrayOfSegments(6);
   aPrims->AddVertex(PointMin);
   aPrims->AddVertex(PointMax);
@@ -88,7 +75,6 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   if (outside)
     arrdir.Reverse();
 
-  // arrow 1 : 2nd group
   Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                     Proj1,
                     arrdir,
@@ -98,7 +84,6 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   aPresentation->NewGroup();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
-  // arrow 2 : 3rd group
   Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                     Proj2,
                     arrdir.Reversed(),
@@ -107,26 +92,18 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
 
   aPresentation->NewGroup();
 
-  // text : 4th group
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, offp);
 
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
-  // processing of call 1 : 5th group
   aPrims->AddVertex(AttachmentPoint1);
   aPrims->AddVertex(Proj1);
 
-  // processing of call 2 : 6th group
   aPrims->AddVertex(AttachmentPoint2);
   aPrims->AddVertex(Proj2);
 
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 }
-
-//==================================================================================
-// function : Add
-// purpose  : Adds presentation of length dimension between two planar faces
-//==================================================================================
 
 void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                     const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -155,7 +132,6 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
                                                EndOfArrow2,
                                                DirOfArrow1);
 
-  // Parameters for length's line
   gp_Lin LengthLine(OffsetPoint, DirOfArrow1);
   double Par1 = ElCLib::Parameter(LengthLine, EndOfArrow1);
   double Par2 = ElCLib::Parameter(LengthLine, EndOfArrow2);
@@ -171,13 +147,11 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
     LastPoint  = EndOfArrow2;
   }
 
-  // Creating the length's line
   occ::handle<Graphic3d_ArrayOfSegments> aPrims = new Graphic3d_ArrayOfSegments(6);
 
   aPrims->AddVertex(FirstPoint);
   aPrims->AddVertex(LastPoint);
 
-  // Add presentation of arrows
   DsgPrs::ComputeSymbol(aPresentation,
                         LA,
                         EndOfArrow1,
@@ -186,24 +160,16 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
                         DirOfArrow1.Reversed(),
                         ArrowPrs);
 
-  // Drawing the text
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, OffsetPoint);
 
-  // Line from AttachmentPoint1 to end of Arrow1
   aPrims->AddVertex(AttachmentPoint1);
   aPrims->AddVertex(EndOfArrow1);
 
-  // Line from AttachmentPoint2 to end of Arrow2
   aPrims->AddVertex(AttachmentPoint2);
   aPrims->AddVertex(EndOfArrow2);
 
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 }
-
-//=========================================================================================
-// function : Add
-// purpose  : adds presentation of length between two edges, vertex and edge or two vertices
-//=========================================================================================
 
 void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                     const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -250,7 +216,6 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   gp_Pnt PointMin = ElCLib::Value(parmin, L3);
   gp_Pnt PointMax = ElCLib::Value(parmax, L3);
 
-  // processing of face
   occ::handle<Graphic3d_ArrayOfSegments> aPrims = new Graphic3d_ArrayOfSegments(6);
 
   aPrims->AddVertex(PointMin);
@@ -263,27 +228,18 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   if (outside)
     arrdir.Reverse();
 
-  // processing of call  1
   aPrims->AddVertex(AttachmentPoint1);
   aPrims->AddVertex(Proj1);
 
-  // processing of call 2
   aPrims->AddVertex(AttachmentPoint2);
   aPrims->AddVertex(Proj2);
 
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // text
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, offp);
 
-  // symbols at the extremities of the face
   DsgPrs::ComputeSymbol(aPresentation, LA, Proj1, Proj2, arrdir, arrdir.Reversed(), ArrowPrs);
 }
-
-//==================================================================================
-// function : Add
-// purpose  : Adds presentation of length dimension between two curvilinear faces
-//==================================================================================
 
 void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                     const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -333,13 +289,11 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
     LastPoint  = EndOfArrow2;
   }
 
-  // Creating the length's line
   occ::handle<Graphic3d_ArrayOfPrimitives> aPrims = new Graphic3d_ArrayOfSegments(2);
   aPrims->AddVertex(FirstPoint);
   aPrims->AddVertex(LastPoint);
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // Add presentation of arrows
   DsgPrs::ComputeSymbol(aPresentation,
                         LA,
                         AttachmentPoint1,
@@ -348,10 +302,8 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
                         DirOfArrow1.Reversed(),
                         ArrowPrs);
 
-  // Drawing the text
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, OffsetPoint);
 
-  // Two curves from end of Arrow2 to AttachmentPoint2
   double Alpha, delta;
   int    NodeNumber;
 
@@ -376,11 +328,6 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
   }
 }
-
-//================================
-// Function:
-// Purpose: Rob 26-mar-96
-//=================================
 
 void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPrs,
                                     const occ::handle<Prs3d_Drawer>&       aDrawer,

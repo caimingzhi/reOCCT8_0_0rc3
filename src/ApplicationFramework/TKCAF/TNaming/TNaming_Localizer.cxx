@@ -13,7 +13,7 @@
 #include <NCollection_IndexedDataMap.hpp>
 
 #ifdef OCCT_DEBUG
-  // #define MDTV_DEB_SC
+
   #ifdef OCCT_DEBUG_SC
     #include <TDF_Tool.hpp>
     #include <TDF_Label.hpp>
@@ -55,7 +55,6 @@ static void LWrite(const TopoDS_Shape& shape, const char* filename)
   save.close();
 }
 
-//=======================================================================
 static void LWriteNSOnLabel(const occ::handle<TNaming_NamedShape>& NS, const char* filename)
 {
   if (!NS.IsNull() && !NS->IsEmpty())
@@ -80,10 +79,6 @@ static void LWriteNSOnLabel(const occ::handle<TNaming_NamedShape>& NS, const cha
 }
   #endif
 #endif
-//=======================================================================
-// function : FindFeatureInAncestors
-// purpose  : Cherche les ancetres de S qui sont sous des labels
-//=======================================================================
 
 void TNaming_Localizer::FindFeaturesInAncestors(
   const TopoDS_Shape&                                     S,
@@ -116,7 +111,7 @@ void TNaming_Localizer::FindFeaturesInAncestors(
       occ::handle<TNaming_NamedShape> NS = TNaming_Tool::NamedShape(AS, myUS->Label());
       if (!NS.IsNull())
       {
-        //      if (TNaming_Tool::HasLabel(myUS,AS)) {
+
         AncInFeature.Add(AS);
       }
       else if (AS.ShapeType() > TopAbs_FACE)
@@ -135,14 +130,12 @@ void TNaming_Localizer::FindFeaturesInAncestors(
   else
   {
 #ifdef OCCT_DEBUG
-    // clang-format off
-    std::cout <<" TNaming_Localization : S n est pas dans le solide"<<std::endl;//S is not in the solid
-// clang-format on
+
+    std::cout << " TNaming_Localization : S n est pas dans le solide" << std::endl;
+
 #endif
   }
 }
-
-//=================================================================================================
 
 const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& TNaming_Localizer::SubShapes(
   const TopoDS_Shape&    In,
@@ -152,7 +145,7 @@ const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& TNaming_Localizer:
   NCollection_List<TopoDS_Shape>::Iterator itS(myShapeWithSubShapes);
   NCollection_List<NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>>::Iterator itSS(
     mySubShapes);
-  //  bool Found = false;
+
   for (; itS.More(); itS.Next(), itSS.Next())
   {
     if (In.IsSame(itS.Value()))
@@ -188,8 +181,6 @@ const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& TNaming_Localizer:
   return SubShapes;
 }
 
-//=================================================================================================
-
 const NCollection_IndexedDataMap<TopoDS_Shape,
                                  NCollection_List<TopoDS_Shape>,
                                  TopTools_ShapeMapHasher>&
@@ -199,14 +190,12 @@ const NCollection_IndexedDataMap<TopoDS_Shape,
   NCollection_List<NCollection_IndexedDataMap<TopoDS_Shape,
                                               NCollection_List<TopoDS_Shape>,
                                               TopTools_ShapeMapHasher>>::Iterator itA(myAncestors);
-  //  bool Found = false;
+
   for (; itS.More(); itS.Next(), itA.Next())
   {
     if (In.IsSame(itS.Value()))
     {
-      //-----------------------
-      // Ancetres existent.
-      //-----------------------
+
       NCollection_IndexedDataMap<TopoDS_Shape,
                                  NCollection_List<TopoDS_Shape>,
                                  TopTools_ShapeMapHasher>& Anc = itA.ChangeValue();
@@ -224,9 +213,7 @@ const NCollection_IndexedDataMap<TopoDS_Shape,
       }
       else
       {
-        //----------------------------
-        // Completion des ancetres.
-        //----------------------------
+
         TopAbs_ShapeEnum TA = TopAbs_FACE;
         if (TS == TopAbs_EDGE)
           TA = TopAbs_FACE;
@@ -246,9 +233,7 @@ const NCollection_IndexedDataMap<TopoDS_Shape,
       return Anc;
     }
   }
-  //-----------------------------------
-  // Construction des ancetres
-  //-----------------------------------
+
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     emptyAnc;
   myShapeWithAncestors.Prepend(In);
@@ -275,8 +260,6 @@ const NCollection_IndexedDataMap<TopoDS_Shape,
   return myAncestors.First();
 }
 
-//=================================================================================================
-
 bool TNaming_Localizer::IsNew(const TopoDS_Shape& S, const occ::handle<TNaming_NamedShape>& NS)
 {
   TNaming_Iterator itLab(NS);
@@ -297,30 +280,23 @@ bool TNaming_Localizer::IsNew(const TopoDS_Shape& S, const occ::handle<TNaming_N
   return false;
 }
 
-//=================================================================================================
-
 void TNaming_Localizer::GoBack(const TopoDS_Shape&                                S,
                                const TDF_Label&                                   Lab,
                                const TNaming_Evolution                            Evol,
                                NCollection_List<TopoDS_Shape>&                    LBS,
                                NCollection_List<occ::handle<TNaming_NamedShape>>& LBNS)
 {
-  //  int TrDef;
 
   TNaming_OldShapeIterator it(S, myCurTrans, myUS);
   TopoDS_Shape             Sol;
   if (!it.More())
   {
-    //-----------------------------------------------------------
-    // Pas d'ascendants => Recherche et exploration  du contenant
-    //----------------------------------------------------------
+
     const TDF_Label& Father = Lab.Father();
     TNaming_Iterator itLab(Father);
     if (itLab.More())
       Sol = itLab.OldShape();
-    //-------------------------------------------
-    // Recherche des ancetres dans des features.
-    //-------------------------------------------
+
     if (!Sol.IsNull())
     {
       NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> AncInFeature;
@@ -338,7 +314,7 @@ void TNaming_Localizer::GoBack(const TopoDS_Shape&                              
   {
     for (; it.More(); it.Next())
     {
-      //      if (it.NamedShape()->Evolution() != TNaming_SELECTED) {
+
       if (it.NamedShape()->Evolution() == Evol)
       {
         occ::handle<TNaming_NamedShape> NS = TNaming_Tool::NamedShape(it.Shape(), Lab);
@@ -358,93 +334,12 @@ void TNaming_Localizer::GoBack(const TopoDS_Shape&                              
   }
 }
 
-/*
-//=================================================================================================
-
-void TNaming_Localizer::Backward (const TopoDS_Shape&  S,
-                  NCollection_Map<TDF_Label>&        Primitives,
-                  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& ValidShapes)
-{
-  int  PrevTrans = myCurTrans - 1;
-  int  TrDef;
-  TDF_Label         Lab      = TNaming_Tool::Label (myUS, S, TrDef);
-  TNaming_Evolution Evol     = Evolution(Lab);
-
-  NCollection_List<TopoDS_Shape>  LBS;
-  NCollection_List<TDF_Label>         LBLab;
-
-  GoBack(S,Lab,LBS,LBLab);
-
-  NCollection_List<TopoDS_Shape>::Iterator itLBS  (LBS);
-  NCollection_List<TDF_Label>::Iterator        itLBLab(LBLab);
-
-  if (LBS.IsEmpty()) {
-    Primitives.Add(Lab);
-  }
-  for ( ; itLBS.More(); itLBS.Next(), itLBLab.Next()) {
-    const TopoDS_Shape& OS    = itLBS.Value();
-    const TDF_Label&    LabOS = itLBLab.Value();
-
-    Evol = Evolution(LabOS);
-
-    if (TNaming_Tool::ValidUntil(OS,myUS) >= myCurTrans) {
-      //---------------------------------------------------------
-      // Le Shape est valid dans la transaction myCurTrans => STOP
-      //---------------------------------------------------------
-      ValidShapes.Add(OS);
-    }
-    else if (Evol == TNaming_PRIMITIVE) {
-      Primitives.Add(LabOS);
-    }
-    else if ((Evol == TNaming_GENERATED) && IsNewInLab (OS,LabOS,PrevTrans)) {
-      //--------------------------------------------------------------
-      // Passage  par une generation
-      // le shape dans myCurTrans descendra d un element de cet attribut.
-      // Localisation de OS dans la transaction courrante.
-      // les shapes obtenus seront des antecedants du shape cherche.
-      //--------------------------------------------------------------
-
-      // A faire seulememt si OS est un newShape dans LabOS.
-      TNaming_ShapesSet ResGen;
-      TopoDS_Shape      PrevIn;
-      TDF_Label         Father  = LabOS.Father();
-      TNaming_Iterator  itLab(Father,PrevTrans);
-      for (; itLab.More(); itLab.Next()) {
-    PrevIn= itLab.OldShape();
-    break;
-      }
-      Localize(PrevIn,LabOS,OS,ResGen);
-      for (TNaming_IteratorOnShapesSet itLoc(ResGen); itLoc.More(); itLoc.Next()) {
-    ValidShapes.Add(itLoc.Value());
-      }
-    }
-    else if (Evol == TNaming_SELECTED) {
-      //PAS FINI.
-      TNaming_ShapesSet ResSel;
-      TopoDS_Shape      PrevIn,CurIn;
-//      FindIn  (LabOS,PrevIn,CurIn);
-      Localize(PrevIn,CurIn,OS,ResSel);
-      for (TNaming_IteratorOnShapesSet itLoc(ResSel); itLoc.More(); itLoc.Next()) {
-    ValidShapes.Add(itLoc.Value());
-      }
-    }
-    else {
-      Backward(itLBS.Value(),Primitives,ValidShapes);
-    }
-  }
-}
-*/
-
-//=================================================================================================
-
 occ::handle<TNaming_NamedShape> NamedShape(const TDF_Label& Lab)
 {
   occ::handle<TNaming_NamedShape> NS;
   Lab.FindAttribute(TNaming_NamedShape::GetID(), NS);
   return NS;
 }
-
-//=================================================================================================
 
 void TNaming_Localizer::Backward(const occ::handle<TNaming_NamedShape>&                  NS,
                                  const TopoDS_Shape&                                     S,
@@ -486,59 +381,9 @@ void TNaming_Localizer::Backward(const occ::handle<TNaming_NamedShape>&         
   }
 }
 
-//=================================================================================================
-
 #ifdef OCCT_DEBUG
-/*static bool StoreValid (const TopoDS_Shape&        S,
-                    const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& ShapeOfSol,
-                    TopAbs_ShapeEnum           TargetType,
-                    TNaming_ShapesSet&         Res)
-{
-  bool Valid = false;
 
-  if (ShapeOfSol.Contains(S)) {
-    if (S.ShapeType() == TargetType) {
-      Res.Add(S);
-      return true;
-    }
-    else  if (S.ShapeType() < TargetType) {
-      for (TopExp_Explorer exp(S,TargetType); exp.More(); exp.Next()) {
-    const TopoDS_Shape& SS = exp.Current();
-    Res.Add(SS);
-    Valid = true;
-      }
-    }
-  }
-  return Valid;
-}*/
 #endif
-
-/*
-//=================================================================================================
-
-void TNaming_Localizer::GoForward(const TopoDS_Shape&               S,
-                  const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>&        Target,
-                  const TopAbs_ShapeEnum            TargetType,
-                  TNaming_ShapesSet&                Res)
-
-{
-  int TrDef;
-  TDF_Label Lab = TNaming_Tool::Label (myUS, S, TrDef);
-  if (StoreValid (S, Target, TargetType, Res)) {
-    return;
-  }
-  TNaming_Evolution        Evol = Evolution(Lab);
-  TNaming_NewShapeIterator NewIt(S,myCurTrans,myUS);
-
-  for ( ; NewIt.More(); NewIt.Next()) {
-    const TopoDS_Shape& NS = NewIt.Shape();
-    GoForward ( NS, Target, TargetType, Res);
-  }
-}
-
-*/
-
-//=================================================================================================
 
 void TNaming_Localizer::FindNeighbourg(
   const TopoDS_Shape&                                     Sol,
@@ -555,25 +400,17 @@ void TNaming_Localizer::FindNeighbourg(
   if (TA == TopAbs_EDGE)
     TS = TopAbs_VERTEX;
   if (TA == TopAbs_VERTEX)
-    TS = TopAbs_VERTEX; // szy 30.03.10
+    TS = TopAbs_VERTEX;
   const NCollection_IndexedDataMap<TopoDS_Shape,
                                    NCollection_List<TopoDS_Shape>,
                                    TopTools_ShapeMapHasher>& Anc = Ancestors(Sol, TS);
-  // szy 30.03.10 to process case when Candidate is of type Vertex
-  //  if (TA == TopAbs_VERTEX) {
-  // #ifdef OCCT_DEBUG
-  //    std::cout <<"construction voisins des vertex impossible"<<std::endl;
-  // #endif
-  //    return;
-  //  }
+
   for (TopExp_Explorer Exp(S, TS); Exp.More(); Exp.Next())
   {
     const TopoDS_Shape& SS = Exp.Current();
     if (!Anc.Contains(SS))
     {
-      //----------------------------------------------------
-      // Construction des ancetres
-      //----------------------------------------------------
+
       break;
     }
     else
@@ -590,11 +427,7 @@ void TNaming_Localizer::FindNeighbourg(
   }
 }
 
-//=================================================================================================
-
 TNaming_Localizer::TNaming_Localizer() = default;
-
-//=================================================================================================
 
 void TNaming_Localizer::Init(const occ::handle<TNaming_UsedShapes>& US, const int CurTrans)
 {
@@ -602,103 +435,9 @@ void TNaming_Localizer::Init(const occ::handle<TNaming_UsedShapes>& US, const in
   myCurTrans = CurTrans;
 }
 
-//=================================================================================================
-
 #ifdef OCCT_DEBUG
-/*static void Explode (TNaming_ShapesSet& Res,
-             TopAbs_ShapeEnum   TS,
-             TNaming_ShapesSet& ResGoodType)
-{
-  TNaming_IteratorOnShapesSet it(Res);
-  for ( ; it.More(); it.Next()) {
-    const TopoDS_Shape& S = it.Value();
-    TopExp_Explorer exp(S,TS);
-    for (; exp.More(); exp.Next()) {
-      ResGoodType.Add(exp.Current());
-    }
-  }
-} */
+
 #endif
-
-/*
-//=================================================================================================
-
-void TNaming_Localizer::Localize(const TopoDS_Shape& PrevIn,
-                 const TopoDS_Shape& CurIn ,
-                 const TopoDS_Shape& S,
-                 TNaming_ShapesSet& Res)
-{
-  Res.Clear();
-  NCollection_Map<TDF_Label>                 Primitives;
-  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>          ValidShapes;
-  int             PrevTrans = myCurTrans-1;
-
-  const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& CurSubShapes = SubShapes
-(CurIn,S.ShapeType());
-
-  bool HasLabel = TNaming_Tool::HasLabel(myUS,S);
-
-  if (HasLabel) {
-    int  TrDef;
-    TDF_Label         Lab      = TNaming_Tool::Label (myUS, S, TrDef);
-    TNaming_Evolution Evol     = Evolution(Lab);
-    if (Evol == TNaming_PRIMITIVE) {
-      //------------------------
-      // Label est une primitive
-      //------------------------
-      Primitives.Add(Lab);
-      Forward  (CurSubShapes,S.ShapeType(),Primitives,ValidShapes,Res);
-      return;
-    }
-    if ((Evol == TNaming_GENERATED) && IsNewInLab (S,Lab,PrevTrans)) {
-      Localize(PrevIn,Lab,S,Res);
-      return;
-    }
-  }
-
-  if (HasLabel && HasAscendant(myUS,S,PrevTrans)) {
-    //-------------------
-    // Remontee Descente.
-    //-------------------
-    Backward (S, Primitives, ValidShapes);
-    Forward  (CurSubShapes,S.ShapeType(),Primitives,ValidShapes,Res);
-  }
-  else {
-    //----------------------------------------------
-    // Localisation des ancetres.
-    //----------------------------------------------
-    NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> AncInFeature;
-    FindFeaturesInAncestors (S, PrevIn, AncInFeature);
-    NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator itF(AncInFeature);
-    bool First = true;
-
-    for ( ; itF.More(); itF.Next()) {
-      const TopoDS_Shape& AncOfS = itF.Key();
-      TNaming_ShapesSet   ResAnc;
-
-      Localize (PrevIn, CurIn, AncOfS, ResAnc);
-
-      //---------------------------
-      // Res = Commun des resultats
-      //---------------------------
-      if (First) {
-    Explode (ResAnc,S.ShapeType(),Res);
-    First = 0;
-      }
-      else {
-    TNaming_ShapesSet ResGoodType;
-    Explode (ResAnc,S.ShapeType(),ResGoodType);
-    Res.Filter(ResGoodType);
-      }
-    }
-  }
-}
-*/
-
-//=======================================================================
-// function : FindGenerator
-// purpose  : Finds all generators of the <S> kept in <NS>
-//=======================================================================
 
 void TNaming_Localizer::FindGenerator(const occ::handle<TNaming_NamedShape>& NS,
                                       const TopoDS_Shape&                    S,
@@ -714,18 +453,9 @@ void TNaming_Localizer::FindGenerator(const occ::handle<TNaming_NamedShape>& NS,
     if (it.Label() == LabNS)
     {
       theListOfGenerators.Append(it.Shape());
-      //      break; //szy 16.10.03
     }
   }
 }
-
-//=======================================================================
-// function : FindShapeContext
-// purpose  : Finds context of the shape <S>.
-//         : Looks for all oldshapes kept at father label of <NS>.
-//         : If <S> validated as subshape of one of the old shapes -
-//         : this oldshape is Context.
-//=======================================================================
 
 void TNaming_Localizer::FindShapeContext(const occ::handle<TNaming_NamedShape>& NS,
                                          const TopoDS_Shape&                    S,
@@ -741,9 +471,9 @@ void TNaming_Localizer::FindShapeContext(const occ::handle<TNaming_NamedShape>& 
   TNaming_Iterator               itLab(Father);
   for (; itLab.More(); itLab.Next())
   {
-    aList.Append(itLab.OldShape()); // szy
+    aList.Append(itLab.OldShape());
   }
-  // szy
+
   NCollection_List<TopoDS_Shape>::Iterator it(aList);
   bool                                     found = false;
   for (; it.More(); it.Next())
@@ -775,7 +505,7 @@ void TNaming_Localizer::FindShapeContext(const occ::handle<TNaming_NamedShape>& 
       }
     }
   }
-  // end szy
+
   if (!SC.IsNull())
   {
     occ::handle<TNaming_NamedShape> aNS = TNaming_Tool::NamedShape(SC, Father);
@@ -804,187 +534,3 @@ void TNaming_Localizer::FindShapeContext(const occ::handle<TNaming_NamedShape>& 
     }
   }
 }
-
-/*
-//=================================================================================================
-
-void TNaming_Localizer::Localize(const TopoDS_Shape& PrevIn,
-                 const TDF_Label&    InLab ,
-                 const TopoDS_Shape& S,
-                 TNaming_ShapesSet& Res)
-{
-  Res.Clear();
-  NCollection_Map<TDF_Label>                 Primitives;
-  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>          ValidShapes;
-  int             PrevTrans = myCurTrans - 1;
-
-  //---------------------------------------------
-  // Recuperation du nouveau contenant generateur.
-  //---------------------------------------------
-  TopoDS_Shape      CurIn;
-  TDF_Label         Father  = InLab.Father();
-  TNaming_Iterator  itLab(Father,myCurTrans);
-  for (; itLab.More(); itLab.Next()) {
-    CurIn= itLab.OldShape();
-    break;
-  }
-
-  bool First = 1;
-  TNaming_OldShapeIterator OldIt(S, PrevTrans,myUS);
-
-  for (; OldIt.More(); OldIt.Next()) {
-    if (OldIt.Label().IsEqual(InLab)) {
-      TNaming_ShapesSet RO;
-      TNaming_ShapesSet RInLab;
-      const TopoDS_Shape& OS = OldIt.Shape();
-      //---------------------------------
-      // Localisation des generateurs.
-      //---------------------------------
-      Localize(PrevIn,CurIn ,OS, RO);
-
-      //--------------------------------------------------------------------
-      // Resultat = intersection des descendants(dans InLab) des generateurs
-      //--------------------------------------------------------------------
-      TNaming_IteratorOnShapesSet itRO(RO);
-      for (; itRO.More(); itRO.Next()) {
-    const TopoDS_Shape& CO = itRO.Value();
-    TNaming_NewShapeIterator NewIt(CO,myCurTrans,myUS);
-    for (; NewIt.More(); NewIt.Next()) {
-      if (NewIt.Label().IsEqual(InLab)) {
-        if (First) Res.Add(NewIt.Shape());
-        else {
-          RInLab.Add(NewIt.Shape());
-        }
-      }
-    }
-      }
-      if (!First) Res.Filter(RInLab);
-      First = false;
-    }
-  }
-}
-
-//=================================================================================================
-
-void  TNaming_Localizer::Forward(const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>&
-CurSubShapes, const TopAbs_ShapeEnum      TS, const NCollection_Map<TDF_Label>&         Primitives,
-                 const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>&  ValidShapes,
-                 TNaming_ShapesSet&          Res)
-{
-  //-------------------------------------------------------
-  // Descente dans la transaction courrante = myCurTrans
-  //----------------------------------------------------------
-  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator itV(ValidShapes);
-  bool  First = 1;
-  bool  YaFromValid      = 0;
-  bool  YaFromPrimitives = 0;
-
-  for (; itV.More(); itV.Next()) {
-    YaFromValid = 1;
-    const TopoDS_Shape& NS = itV.Key();
-    if (First) {
-      GoForward  (NS, CurSubShapes, TS, Res);
-      First = 0;
-    }
-    else {
-      TNaming_ShapesSet   ResNS;
-      GoForward  (NS, CurSubShapes, TS, ResNS);
-      Res.Filter(ResNS);
-    }
-  }
-
-  NCollection_Map<TDF_Label>::Iterator itP(Primitives);
-  TNaming_ShapesSet ResPrim;
-
-  for ( ; itP.More(); itP.Next()) {
-    YaFromPrimitives = 1;
-    const TDF_Label&  Lab = itP.Key();
-    TNaming_Iterator  itL(Lab,myCurTrans);
-    TNaming_ShapesSet ResLab;
-
-    for (; itL.More(); itL.Next()) {
-      const TopoDS_Shape& NS = itL.NewShape();
-      GoForward  (NS, CurSubShapes, TS, ResLab);
-    }
-    if (First) {
-      ResPrim = ResLab;
-      First   = 0;
-    }
-    else
-      ResPrim.Filter(ResLab);
-  }
-
-  if (YaFromValid) {
-    if (YaFromPrimitives) {
-      Res.Filter(ResPrim);
-    }
-  }
-  else {
-    Res = ResPrim;
-  }
-}
-
-//=================================================================================================
-
-void TNaming_Localizer::FilterByNeighbourgs(const TopoDS_Shape& PrevIn,
-                        const TopoDS_Shape& CurIn ,
-                        const TopoDS_Shape& S,
-                        TNaming_ShapesSet& Res)
-{
-  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>         Neighbourg;
-  TopAbs_ShapeEnum            TA = S.ShapeType();
-  TopAbs_ShapeEnum            TS = TopAbs_ShapeEnum (S.ShapeType()+1);
-  NCollection_DataMap<TopoDS_Shape, TNaming_ShapesSet, TopTools_ShapeMapHasher> MapShapeRes;
-  const NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>,
-TopTools_ShapeMapHasher>& PreAnc = Ancestors(PrevIn,TS);
-
-  //--------------------------------
-  // Construction des Voisins.
-  //--------------------------------
-  FindNeighbourg (PrevIn,PreAnc,S,Neighbourg);
-  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator itNeig(Neighbourg);
-
-  TNaming_ShapesSet NewNeig;
-  for (; itNeig.More(); itNeig.Next()) {
-    const TopoDS_Shape& Neig = itNeig.Key();
-    //--------------------------------------------
-    // Localisation des voisins.
-    //--------------------------------------------
-    if (!MapShapeRes.IsBound(Neig)) {
-      TNaming_ShapesSet ResNeig;
-      Localize(PrevIn,CurIn,Neig,ResNeig);
-      MapShapeRes.Bind(Neig,ResNeig);
-      NewNeig.Add(ResNeig);
-    }
-    else {
-      NewNeig.Add(MapShapeRes(Neig));
-    }
-  }
-
-  //---------------------------------------------
-  // Filtre la solution par le resultat du voisin.
-  // ie : F est solution si ses voisins dans CurSol
-  //      sont dans les descendants des voisins
-  //---------------------------------------------
-  TNaming_ShapesSet Reject;
-  TNaming_IteratorOnShapesSet itRes(Res);
-
-  const NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>,
-TopTools_ShapeMapHasher>& CurAnc = Ancestors(CurIn,TS);
-
-  for (; itRes.More(); itRes.Next()) {
-    const TopoDS_Shape& Cand = itRes.Value();
-    NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> Neighbourg;
-    FindNeighbourg (CurIn,CurAnc,Cand,Neighbourg);
-    NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator itNeig(Neighbourg);
-    for (; itNeig.More(); itNeig.Next()) {
-      const TopoDS_Shape& Neig = itNeig.Key();
-      if (!NewNeig.Contains(Neig))  {
-    Reject.Add(Cand);
-    break;
-      }
-    }
-  }
-  Res.Remove(Reject);
-}
-*/

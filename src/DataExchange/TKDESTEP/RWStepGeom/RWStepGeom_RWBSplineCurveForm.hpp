@@ -12,9 +12,6 @@ namespace RWStepGeom_RWBSplineCurveForm
   static constexpr char bscfUnspecified[]   = ".UNSPECIFIED.";
   static constexpr char bscfHyperbolicArc[] = ".HYPERBOLIC_ARC.";
 
-  //! Convert StepGeom_BSplineCurveForm to string
-  //! @param theSourceEnum The StepGeom_BSplineCurveForm value to convert
-  //! @return The corresponding string representation or nullptr if not found
   inline const char* ConvertToString(const StepGeom_BSplineCurveForm theSourceEnum)
   {
     switch (theSourceEnum)
@@ -35,10 +32,6 @@ namespace RWStepGeom_RWBSplineCurveForm
     return nullptr;
   }
 
-  //! Convert string to StepGeom_BSplineCurveForm
-  //! @param theFormString The string to convert
-  //! @param theResultEnum The corresponding StepGeom_BSplineCurveForm value
-  //! @return true if the conversion was successful, false otherwise
   inline bool ConvertToEnum(const char* theFormString, StepGeom_BSplineCurveForm& theResultEnum)
   {
     if (IsEqual(theFormString, bscfEllipticArc))

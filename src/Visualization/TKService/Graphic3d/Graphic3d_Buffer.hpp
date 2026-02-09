@@ -1,18 +1,5 @@
 #pragma once
 
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <NCollection_Vec2.hpp>
 
 #include <Standard_TypeDef.hpp>
@@ -24,40 +11,33 @@
 #include <NCollection_Mat4.hpp>
 #include <Standard_Integer.hpp>
 
-//! Range of values defined as Start + Length pair.
 struct Graphic3d_BufferRange
 {
-  int Start;  //!< first element within the range
-  int Length; //!< number of elements within the range
+  int Start;
+  int Length;
 
-  //! Empty constructor.
   Graphic3d_BufferRange()
       : Start(0),
         Length(0)
   {
   }
 
-  //! Constructor.
   Graphic3d_BufferRange(int theStart, int theLength)
       : Start(theStart),
         Length(theLength)
   {
   }
 
-  //! Return TRUE if range is empty.
   bool IsEmpty() const { return Length == 0; }
 
-  //! Return the Upper element within the range
   int Upper() const { return Start + Length - 1; }
 
-  //! Clear the range.
   void Clear()
   {
     Start  = 0;
     Length = 0;
   }
 
-  //! Add another range to this one.
   void Unite(const Graphic3d_BufferRange& theRange)
   {
     if (IsEmpty())
@@ -86,39 +66,35 @@ struct Graphic3d_BufferRange
 #include <NCollection_Buffer.hpp>
 #include <Standard_NotImplemented.hpp>
 
-//! Type of attribute in Vertex Buffer
 enum Graphic3d_TypeOfAttribute
 {
-  Graphic3d_TOA_POS = 0, //!< vertex position
-  Graphic3d_TOA_NORM,    //!< normal
-  Graphic3d_TOA_UV,      //!< texture coordinates
-  Graphic3d_TOA_COLOR,   //!< per-vertex color
-  Graphic3d_TOA_CUSTOM,  //!< custom attributes
+  Graphic3d_TOA_POS = 0,
+  Graphic3d_TOA_NORM,
+  Graphic3d_TOA_UV,
+  Graphic3d_TOA_COLOR,
+  Graphic3d_TOA_CUSTOM,
 };
 
-//! Type of the element in Vertex or Index Buffer
 enum Graphic3d_TypeOfData
 {
-  Graphic3d_TOD_USHORT, //!< unsigned 16-bit integer
-  Graphic3d_TOD_UINT,   //!< unsigned 32-bit integer
-  Graphic3d_TOD_VEC2,   //!< 2-components float vector
-  Graphic3d_TOD_VEC3,   //!< 3-components float vector
-  Graphic3d_TOD_VEC4,   //!< 4-components float vector
-  Graphic3d_TOD_VEC4UB, //!< 4-components unsigned byte vector
-  Graphic3d_TOD_FLOAT,  //!< float value
+  Graphic3d_TOD_USHORT,
+  Graphic3d_TOD_UINT,
+  Graphic3d_TOD_VEC2,
+  Graphic3d_TOD_VEC3,
+  Graphic3d_TOD_VEC4,
+  Graphic3d_TOD_VEC4UB,
+  Graphic3d_TOD_FLOAT,
 };
 
-//! Vertex attribute definition.
 struct Graphic3d_Attribute
 {
-  // clang-format off
-  Graphic3d_TypeOfAttribute Id;       //!< attribute identifier in vertex shader, 0 is reserved for vertex position
-  // clang-format on
-  Graphic3d_TypeOfData DataType; //!< vec2,vec3,vec4,vec4ub
+
+  Graphic3d_TypeOfAttribute Id;
+
+  Graphic3d_TypeOfData DataType;
 
   int Stride() const { return Stride(DataType); }
 
-  //! @return size of attribute of specified data type
   static int Stride(const Graphic3d_TypeOfData theType)
   {
     switch (theType)
@@ -142,50 +118,38 @@ struct Graphic3d_Attribute
   }
 };
 
-//! Buffer of vertex attributes.
 class Graphic3d_Buffer : public NCollection_Buffer
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_Buffer, NCollection_Buffer)
 public:
-  //! Return default vertex data allocator.
   Standard_EXPORT static const occ::handle<NCollection_BaseAllocator>& DefaultAllocator();
 
 public:
-  //! Empty constructor.
   Graphic3d_Buffer(const occ::handle<NCollection_BaseAllocator>& theAlloc)
       : NCollection_Buffer(theAlloc),
         Stride(0),
         NbElements(0),
         NbAttributes(0)
   {
-    //
   }
 
-  //! Return number of initially allocated elements which can fit into this buffer,
-  //! while NbElements can be overwritten to smaller value.
   int NbMaxElements() const { return Stride != 0 ? int(mySize / size_t(Stride)) : 0; }
 
-  //! @return array of attributes definitions
   const Graphic3d_Attribute* AttributesArray() const
   {
     return (Graphic3d_Attribute*)(myData + mySize);
   }
 
-  //! @return attribute definition
   const Graphic3d_Attribute& Attribute(const int theAttribIndex) const
   {
     return AttributesArray()[theAttribIndex];
   }
 
-  //! @return attribute definition
   Graphic3d_Attribute& ChangeAttribute(const int theAttribIndex)
   {
     return *((Graphic3d_Attribute*)(myData + mySize) + theAttribIndex);
   }
 
-  //! Find attribute index.
-  //! @param theAttrib attribute to find
-  //! @return attribute index or -1 if not found
   int FindAttribute(Graphic3d_TypeOfAttribute theAttrib) const
   {
     for (int anAttribIter = 0; anAttribIter < NbAttributes; ++anAttribIter)
@@ -199,9 +163,7 @@ public:
     return -1;
   }
 
-  //! @name data accessors for interleaved array
 public:
-  //! @return data offset to specified attribute
   int AttributeOffset(const int theAttribIndex) const
   {
     int anOffset = 0;
@@ -212,45 +174,33 @@ public:
     return anOffset;
   }
 
-  //! @return data for specified attribute
   const uint8_t* Data(const int theAttribIndex) const
   {
     return myData + AttributeOffset(theAttribIndex);
   }
 
-  //! @return data for specified attribute
   uint8_t* ChangeData(const int theAttribIndex) { return myData + AttributeOffset(theAttribIndex); }
 
-  //! Access specified element.
   inline const uint8_t* value(const int theElem) const { return myData + Stride * size_t(theElem); }
 
-  //! Access specified element.
   inline uint8_t* changeValue(const int theElem) { return myData + Stride * size_t(theElem); }
 
-  //! Access element with specified position and type.
   template <typename Type_t>
   inline const Type_t& Value(const int theElem) const
   {
     return *reinterpret_cast<const Type_t*>(value(theElem));
   }
 
-  //! Access element with specified position and type.
   template <typename Type_t>
   inline Type_t& ChangeValue(const int theElem)
   {
     return *reinterpret_cast<Type_t*>(changeValue(theElem));
   }
 
-  //! @name general accessors
 public:
   using NCollection_Buffer::ChangeData;
   using NCollection_Buffer::Data;
 
-  //! Return the attribute data with stride size specific to this attribute.
-  //! @param theAttrib       attribute to find
-  //! @param theAttribIndex  index of found attribute
-  //! @param theAttribStride stride in bytes between values of this attribute within returned data
-  //! pointer
   uint8_t* ChangeAttributeData(Graphic3d_TypeOfAttribute theAttrib,
                                int&                      theAttribIndex,
                                size_t&                   theAttribStride)
@@ -258,11 +208,6 @@ public:
     return (uint8_t*)AttributeData(theAttrib, theAttribIndex, theAttribStride);
   }
 
-  //! Return the attribute data with stride size specific to this attribute.
-  //! @param theAttrib       attribute to find
-  //! @param theAttribIndex  index of found attribute
-  //! @param theAttribStride stride in bytes between values of this attribute within returned data
-  //! pointer
   const uint8_t* AttributeData(Graphic3d_TypeOfAttribute theAttrib,
                                int&                      theAttribIndex,
                                size_t&                   theAttribStride) const
@@ -305,7 +250,6 @@ public:
   }
 
 public:
-  //! Release buffer.
   void release()
   {
     Free();
@@ -314,7 +258,6 @@ public:
     NbAttributes = 0;
   }
 
-  //! Allocates new empty array
   bool Init(const int theNbElems, const Graphic3d_Attribute* theAttribs, const int theNbAttribs)
   {
     release();
@@ -350,39 +293,27 @@ public:
     return true;
   }
 
-  //! Allocates new empty array
   bool Init(const int theNbElems, const NCollection_Array1<Graphic3d_Attribute>& theAttribs)
   {
     return Init(theNbElems, &theAttribs.First(), theAttribs.Size());
   }
 
 public:
-  //! Flag indicating that attributes in the buffer are interleaved; TRUE by default.
-  //! Requires sub-classing for creating a non-interleaved buffer (advanced usage).
   virtual bool IsInterleaved() const { return true; }
 
-  //! Return TRUE if data can be invalidated; FALSE by default.
-  //! Requires sub-classing for creating a mutable buffer (advanced usage).
   virtual bool IsMutable() const { return false; }
 
-  //! Return invalidated range; EMPTY by default.
-  //! Requires sub-classing for creating a mutable buffer (advanced usage).
   virtual Graphic3d_BufferRange InvalidatedRange() const { return Graphic3d_BufferRange(); }
 
-  //! Reset invalidated range.
-  //! Requires sub-classing for creating a mutable buffer (advanced usage).
   virtual void Validate() {}
 
-  //! Invalidate entire buffer.
   virtual void Invalidate() {}
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
 public:
-  // clang-format off
-  int Stride;       //!< the distance to the attributes of the next vertex within interleaved array
-  int NbElements;   //!< number of the elements (@sa NbMaxElements() specifying the number of initially allocated number of elements)
-  // clang-format on
-  int NbAttributes; //!< number of vertex attributes
+  int Stride;
+  int NbElements;
+
+  int NbAttributes;
 };

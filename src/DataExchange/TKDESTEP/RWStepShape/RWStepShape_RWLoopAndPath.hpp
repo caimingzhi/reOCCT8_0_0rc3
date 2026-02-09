@@ -11,7 +11,6 @@ class StepShape_LoopAndPath;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for LoopAndPath
 class RWStepShape_RWLoopAndPath
 {
 public:

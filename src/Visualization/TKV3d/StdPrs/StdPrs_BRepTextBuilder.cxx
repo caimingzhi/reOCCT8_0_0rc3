@@ -2,8 +2,6 @@
 
 #include <Font_TextFormatter.hpp>
 
-//=================================================================================================
-
 TopoDS_Shape StdPrs_BRepTextBuilder::Perform(StdPrs_BRepFont&                       theFont,
                                              const occ::handle<Font_TextFormatter>& theFormatter,
                                              const gp_Ax3&                          thePenLoc)
@@ -40,8 +38,6 @@ TopoDS_Shape StdPrs_BRepTextBuilder::Perform(StdPrs_BRepFont&                   
 
   return aResult;
 }
-
-//=================================================================================================
 
 TopoDS_Shape StdPrs_BRepTextBuilder::Perform(StdPrs_BRepFont&                        theFont,
                                              const NCollection_String&               theString,

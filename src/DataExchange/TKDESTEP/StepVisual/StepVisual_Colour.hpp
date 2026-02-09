@@ -9,7 +9,6 @@ class StepVisual_Colour : public Standard_Transient
 {
 
 public:
-  //! Returns a Colour
   Standard_EXPORT StepVisual_Colour();
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_Colour, Standard_Transient)

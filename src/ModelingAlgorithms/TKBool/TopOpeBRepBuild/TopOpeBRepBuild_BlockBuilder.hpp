@@ -33,7 +33,6 @@ public:
 
   Standard_EXPORT TopOpeBRepBuild_BlockIterator BlockIterator() const;
 
-  //! Returns the current element of <BI>.
   Standard_EXPORT const TopoDS_Shape& Element(const TopOpeBRepBuild_BlockIterator& BI) const;
 
   Standard_EXPORT const TopoDS_Shape& Element(const int I) const;

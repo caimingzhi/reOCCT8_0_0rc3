@@ -12,97 +12,42 @@ class TopoDS_Shape;
 class gp_Circ;
 class LocOpe_PntFace;
 
-//! This class provides the intersection between an
-//! axis or a circle and the faces of a shape. The
-//! intersection points are sorted in increasing
-//! parameter along the axis.
 class LocOpe_CurveShapeIntersector
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor.
   LocOpe_CurveShapeIntersector();
 
-  //! Creates and performs the intersection between
-  //! <Ax1> and <S>.
   LocOpe_CurveShapeIntersector(const gp_Ax1& Axis, const TopoDS_Shape& S);
 
-  //! Creates and performs the intersection between
-  //! <C> and <S>.
   LocOpe_CurveShapeIntersector(const gp_Circ& C, const TopoDS_Shape& S);
 
-  //! Performs the intersection between <Ax1 and <S>.
   Standard_EXPORT void Init(const gp_Ax1& Axis, const TopoDS_Shape& S);
 
-  //! Performs the intersection between <Ax1 and <S>.
   Standard_EXPORT void Init(const gp_Circ& C, const TopoDS_Shape& S);
 
-  //! Returns <true> if the intersection has
-  //! been done.
   bool IsDone() const;
 
-  //! Returns the number of intersection point.
   int NbPoints() const;
 
-  //! Returns the intersection point of range <Index>.
-  //! The points are sorted in increasing order of
-  //! parameter along the axis.
   const LocOpe_PntFace& Point(const int Index) const;
 
-  //! Searches the first intersection point located
-  //! after the parameter <From>, which orientation is
-  //! not TopAbs_EXTERNAL. If found, returns
-  //! <true>. <Or> contains the orientation of
-  //! the point, <IndFrom> and <IndTo> represents the
-  //! interval of index in the sequence of intersection
-  //! point corresponding to the point. (IndFrom <= IndTo).
-  //!
-  //! Otherwise, returns <false>.
   Standard_EXPORT bool LocalizeAfter(const double        From,
                                      TopAbs_Orientation& Or,
                                      int&                IndFrom,
                                      int&                IndTo) const;
 
-  //! Searches the first intersection point located
-  //! before the parameter <From>, which orientation is
-  //! not TopAbs_EXTERNAL. If found, returns
-  //! <true>. <Or> contains the orientation of
-  //! the point, <IndFrom> and <IndTo> represents the
-  //! interval of index in the sequence of intersection
-  //! point corresponding to the point (IndFrom <= IndTo).
-  //!
-  //! Otherwise, returns <false>.
   Standard_EXPORT bool LocalizeBefore(const double        From,
                                       TopAbs_Orientation& Or,
                                       int&                IndFrom,
                                       int&                IndTo) const;
 
-  //! Searches the first intersection point located
-  //! after the index <FromInd> (>= FromInd + 1), which
-  //! orientation is not TopAbs_EXTERNAL. If found,
-  //! returns <true>. <Or> contains the
-  //! orientation of the point, <IndFrom> and <IndTo>
-  //! represents the interval of index in the sequence
-  //! of intersection point corresponding to the point.
-  //! (IndFrom <= IndTo).
-  //!
-  //! Otherwise, returns <false>.
   Standard_EXPORT bool LocalizeAfter(const int           FromInd,
                                      TopAbs_Orientation& Or,
                                      int&                IndFrom,
                                      int&                IndTo) const;
 
-  //! Searches the first intersection point located
-  //! before the index <FromInd> ( <= FromInd -1), which
-  //! orientation is not TopAbs_EXTERNAL. If found,
-  //! returns <true>. <Or> contains the
-  //! orientation of the point, <IndFrom> and <IndTo>
-  //! represents the interval of index in the sequence
-  //! of intersection point corresponding to the point
-  //! (IndFrom <= IndTo).
-  //!
-  //! Otherwise, returns <false>.
   Standard_EXPORT bool LocalizeBefore(const int           FromInd,
                                       TopAbs_Orientation& Or,
                                       int&                IndFrom,
@@ -115,14 +60,10 @@ private:
 
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 inline LocOpe_CurveShapeIntersector::LocOpe_CurveShapeIntersector()
     : myDone(false)
 {
 }
-
-//=================================================================================================
 
 inline LocOpe_CurveShapeIntersector::LocOpe_CurveShapeIntersector(const gp_Ax1&       Axis,
                                                                   const TopoDS_Shape& S)
@@ -130,22 +71,16 @@ inline LocOpe_CurveShapeIntersector::LocOpe_CurveShapeIntersector(const gp_Ax1& 
   Init(Axis, S);
 }
 
-//=================================================================================================
-
 inline LocOpe_CurveShapeIntersector::LocOpe_CurveShapeIntersector(const gp_Circ&      C,
                                                                   const TopoDS_Shape& S)
 {
   Init(C, S);
 }
 
-//=================================================================================================
-
 inline bool LocOpe_CurveShapeIntersector::IsDone() const
 {
   return myDone;
 }
-
-//=================================================================================================
 
 inline int LocOpe_CurveShapeIntersector::NbPoints() const
 {
@@ -155,8 +90,6 @@ inline int LocOpe_CurveShapeIntersector::NbPoints() const
   }
   return myPoints.Length();
 }
-
-//=================================================================================================
 
 inline const LocOpe_PntFace& LocOpe_CurveShapeIntersector::Point(const int I) const
 {

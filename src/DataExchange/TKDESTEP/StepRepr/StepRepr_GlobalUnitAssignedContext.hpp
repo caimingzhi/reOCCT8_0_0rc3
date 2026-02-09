@@ -15,7 +15,6 @@ class StepRepr_GlobalUnitAssignedContext : public StepRepr_RepresentationContext
 {
 
 public:
-  //! Returns a GlobalUnitAssignedContext
   Standard_EXPORT StepRepr_GlobalUnitAssignedContext();
 
   Standard_EXPORT void Init(

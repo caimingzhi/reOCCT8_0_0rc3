@@ -199,7 +199,7 @@ namespace
     if (aSplitPos > 0)
     {
       convertToDatumParts(theValue.SubString(aSplitPos + 1, theValue.Length()), theParts);
-      if (aSplitPos == 1) // first symbol
+      if (aSplitPos == 1)
       {
         return;
       }
@@ -246,7 +246,7 @@ namespace
     if (aSplitPos > 0)
     {
       convertToDatumAttributes(theValue.SubString(aSplitPos + 1, theValue.Length()), theAttributes);
-      if (aSplitPos == 1) // first symbol
+      if (aSplitPos == 1)
       {
         return;
       }
@@ -313,7 +313,6 @@ namespace
       aMapOfArgs(aParseKey)->Append(anArg);
     }
 
-    // Check parameters
     if ((aMapOfArgs.IsBound("xaxis") && !aMapOfArgs.IsBound("zaxis"))
         || (!aMapOfArgs.IsBound("xaxis") && aMapOfArgs.IsBound("zaxis")))
     {
@@ -410,7 +409,7 @@ namespace
       }
 
       convertToDatumParts(aValues->Value(1), aParts);
-      aValues->Remove(1); // datum part is processed
+      aValues->Remove(1);
       Quantity_Color aColor;
       if (!convertToColor(aValues, aColor))
       {
@@ -439,7 +438,7 @@ namespace
       if (!aValues->IsEmpty() && convertToDatumPart(aValues->First(), aDatumPart)
           && aDatumPart >= Prs3d_DatumParts_XAxis && aDatumPart <= Prs3d_DatumParts_ZAxis)
       {
-        aValues->Remove(1); // datum part is processed
+        aValues->Remove(1);
       }
 
       Quantity_Color aColor;
@@ -466,7 +465,7 @@ namespace
           && ((aDatumPart >= Prs3d_DatumParts_XArrow && aDatumPart <= Prs3d_DatumParts_ZArrow)
               || (aDatumPart >= Prs3d_DatumParts_XAxis && aDatumPart <= Prs3d_DatumParts_ZAxis)))
       {
-        aValues->Remove(1); // datum part is processed
+        aValues->Remove(1);
       }
 
       Quantity_Color aColor;
@@ -523,8 +522,7 @@ namespace
     {
       Prs3d_DatumParts aDatumPart = Prs3d_DatumParts_None;
       if (aValues->Size() >= 2 && convertToDatumPart(aValues->Value(1), aDatumPart)
-          && aDatumPart >= Prs3d_DatumParts_XAxis
-          && aDatumPart <= Prs3d_DatumParts_ZAxis) // labels are set to axes only
+          && aDatumPart >= Prs3d_DatumParts_XAxis && aDatumPart <= Prs3d_DatumParts_ZAxis)
       {
         theTrihedron->SetLabel(aDatumPart, aValues->Value(2));
       }
@@ -550,7 +548,6 @@ namespace
     return true;
   }
 
-  //! Auxiliary function to parse font aspect style argument
   static bool parseFontStyle(const TCollection_AsciiString& theArg, Font_FontAspect& theAspect)
   {
     if (theArg == "regular" || *theArg.ToCString() == 'r')
@@ -577,7 +574,6 @@ namespace
     return false;
   }
 
-  //! Auxiliary function to parse font strict level argument
   static int parseFontStrictLevel(const int         theArgNb,
                                   const char**      theArgVec,
                                   Font_StrictLevel& theLevel)
@@ -607,12 +603,7 @@ namespace
   }
 } // namespace
 
-//==============================================================================
-// function : Vtrihedron 2d
-// purpose  : Create a plane with a 2D  trihedron from a faceselection
-// Draw arg : vtri2d  name
-//==============================================================================
-static int VTrihedron2D(Draw_Interpretor& /*theDI*/, int theArgsNum, const char** theArgVec)
+static int VTrihedron2D(Draw_Interpretor&, int theArgsNum, const char** theArgVec)
 {
   if (ViewerTest::CurrentView().IsNull())
   {
@@ -669,8 +660,6 @@ static int VTrihedron2D(Draw_Interpretor& /*theDI*/, int theArgsNum, const char*
   return 0;
 }
 
-//=================================================================================================
-
 static int VTrihedron(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
 {
   if (ViewerTest::CurrentView().IsNull())
@@ -713,7 +702,6 @@ static int VTrihedron(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
     return 1;
   }
 
-  // Redisplay a dimension after parameter changing.
   if (ViewerTest::GetAISContext()->IsDisplayed(aTrihedron))
   {
     ViewerTest::GetAISContext()->Redisplay(aTrihedron, toUpdate);
@@ -726,14 +714,6 @@ static int VTrihedron(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
   return 0;
 }
 
-//==============================================================================
-// function : VSize
-// author   : ege
-// purpose  : Change the size of a named or selected trihedron
-//           if no name : it affects the trihedrons which are selected otherwise nothing is donne
-//           if no value, the value is set at 100 by default
-// Draw arg : vsize [name] [size]
-//==============================================================================
 static int VSize(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (TheAISContext().IsNull())
@@ -836,19 +816,12 @@ static int VSize(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//==============================================================================
-
-//==============================================================================
-// function : VPlaneTrihedron
-// purpose  : Create a plane from a trihedron selection. If no arguments are set, the default
-// Draw arg : vplanetri  name
-//==============================================================================
 #include <AIS_Plane.hpp>
 
 static int VPlaneTrihedron(Draw_Interpretor& di, int argc, const char** argv)
 
 {
-  // Verification des arguments
+
   if (argc != 2)
   {
     di << argv[0] << " error\n";
@@ -881,31 +854,15 @@ static int VPlaneTrihedron(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//==============================================================================
-// Fonction        First click      2de click
-//
-// vaxis           vertex           vertex
-//                 edge             None
-// vaxispara       edge             vertex
-// vaxisortho      edge             Vertex
-// vaxisinter      Face             Face
-//==============================================================================
-
-//==============================================================================
-// function : VAxisBuilder
-// purpose  :
-// Draw arg : vaxis AxisName Xa Ya Za Xb Yb Zb
-//==============================================================================
 #include <TopoDS_Edge.hpp>
 #include <Geom_Line.hpp>
 
 static int VAxisBuilder(Draw_Interpretor& di, int argc, const char** argv)
 {
-  // Declarations
+
   bool                    HasArg;
   TCollection_AsciiString name;
 
-  // Verification
   if (argc < 2 || argc > 8)
   {
     di << " Syntaxe error\n";
@@ -918,8 +875,6 @@ static int VAxisBuilder(Draw_Interpretor& di, int argc, const char** argv)
   NCollection_List<TopoDS_Shape> aShapes;
   ViewerTest::GetSelectedShapes(aShapes);
 
-  // Cas ou il y a des arguments
-  // Purpose: Teste le constructeur AIS_Axis::AIS_Axis(x: Line from Geom)
   if (HasArg)
   {
     double coord[6];
@@ -936,11 +891,9 @@ static int VAxisBuilder(Draw_Interpretor& di, int argc, const char** argv)
     TheAISContext()->Display(TheAxis, true);
   }
 
-  // Pas d'arguments
   else
   {
-    // fonction vaxis
-    // Purpose: Teste le constructeur AIS_Axis::AIS_Axis (x:Axis1Placement from Geom)
+
     if (!strcasecmp(argv[0], "vaxis"))
     {
       if (aShapes.Extent() != 2 && aShapes.Extent() != 1)
@@ -965,7 +918,6 @@ static int VAxisBuilder(Draw_Interpretor& di, int argc, const char** argv)
           return 1;
         }
 
-        // Construction de l'axe
         gp_Pnt                           A = BRep_Tool::Pnt(TopoDS::Vertex(aShapeA));
         gp_Pnt                           B = BRep_Tool::Pnt(TopoDS::Vertex(aShapeB));
         gp_Vec                           V(A, B);
@@ -991,9 +943,6 @@ static int VAxisBuilder(Draw_Interpretor& di, int argc, const char** argv)
       }
     }
 
-    // Fonction axispara
-    // Purpose: Teste le constructeur AIS_Axis::AIS_Axis(x: Axis2Placement from Geom, y: TypeOfAxis
-    // from AIS)
     else if (!strcasecmp(argv[0], "vaxispara"))
     {
       if (aShapes.Extent() != 2)
@@ -1024,7 +973,6 @@ static int VAxisBuilder(Draw_Interpretor& di, int argc, const char** argv)
       TheAISContext()->Display(TheAxis, true);
     }
 
-    // Fonction axisortho
     else
     {
       if (aShapes.Extent() != 2)
@@ -1041,7 +989,6 @@ static int VAxisBuilder(Draw_Interpretor& di, int argc, const char** argv)
         return 1;
       }
 
-      // Construction de l'axe
       TopoDS_Edge   ed = TopoDS::Edge(aShapeA);
       gp_Pnt        B  = BRep_Tool::Pnt(TopoDS::Vertex(aShapeB));
       TopoDS_Vertex Va, Vc;
@@ -1059,15 +1006,6 @@ static int VAxisBuilder(Draw_Interpretor& di, int argc, const char** argv)
   }
   return 0;
 }
-
-//==============================================================================
-// Fonction        First click      Result
-//
-// vpoint          vertex           AIS_Point=Vertex
-//                 edge             AIS_Point=Middle of the edge
-//==============================================================================
-
-//=================================================================================================
 
 #include <AIS_Point.hpp>
 #include <Geom_CartesianPoint.hpp>
@@ -1130,7 +1068,7 @@ static int VPointBuilder(Draw_Interpretor&, int theArgNb, const char** theArgVec
         aPnt = BRep_Tool::Pnt(TopoDS::Vertex(aShapeA));
         break;
       }
-      case TopAbs_EDGE: // edge middle point
+      case TopAbs_EDGE:
       {
         const TopoDS_Edge& anEdge = TopoDS::Edge(aShapeA);
         TopoDS_Vertex      aVertPair[2];
@@ -1169,33 +1107,12 @@ static int VPointBuilder(Draw_Interpretor&, int theArgNb, const char** theArgVec
   return 0;
 }
 
-//==============================================================================
-// Function        1st click   2de click  3de click
-// vplane          Vertex      Vertex     Vertex
-//                 Vertex      Edge
-//                 Edge        Vertex
-//                 Face
-// vplanepara      Face        Vertex
-//                 Vertex      Face
-// vplaneortho     Face        Edge
-//                 Edge        Face
-//==============================================================================
-
-//==============================================================================
-// function : VPlaneBuilder
-// purpose  : Build an AIS_Plane from selected entities or Named AIS components
-// Draw arg : vplane PlaneName [AxisName]  [PointName] [TypeOfSensitivity]
-//                            [PointName] [PointName] [PointName] [TypeOfSensitivity]
-//                            [PlaneName] [PointName] [TypeOfSensitivity]
-//==============================================================================
-
-static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
+static int VPlaneBuilder(Draw_Interpretor&, int argc, const char** argv)
 {
-  // Declarations
+
   bool                    hasArg;
   TCollection_AsciiString aName;
 
-  // Verification
   if (argc < 2 || argc > 6)
   {
     Message::SendFail("Syntax error: wrong number of arguments");
@@ -1205,7 +1122,6 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
 
   aName = argv[1];
 
-  // There are some arguments
   if (hasArg)
   {
     occ::handle<AIS_InteractiveObject> aShapeA;
@@ -1215,11 +1131,10 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       return 1;
     }
 
-    // The first argument is an AIS_Point
     if (!aShapeA.IsNull() && aShapeA->Type() == AIS_KindOfInteractive_Datum
         && aShapeA->Signature() == 1)
     {
-      // The second argument must also be an AIS_Point
+
       occ::handle<AIS_InteractiveObject> aShapeB;
       if (argc < 5 || !GetMapOfAIS().Find2(argv[3], aShapeB))
       {
@@ -1227,7 +1142,6 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         return 1;
       }
 
-      // If B is not an AIS_Point
       if (aShapeB.IsNull() || aShapeB->Type() != AIS_KindOfInteractive_Datum
           || aShapeB->Signature() != 1)
       {
@@ -1235,7 +1149,6 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         return 1;
       }
 
-      // The third object is an AIS_Point
       occ::handle<AIS_InteractiveObject> aShapeC;
       if (!GetMapOfAIS().Find2(argv[4], aShapeC))
       {
@@ -1243,7 +1156,6 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         return 1;
       }
 
-      // If C is not an AIS_Point
       if (aShapeC.IsNull() || aShapeC->Type() != AIS_KindOfInteractive_Datum
           || aShapeC->Signature() != 1)
       {
@@ -1251,8 +1163,6 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         return 1;
       }
 
-      // Treatment of objects A, B, C
-      // Downcast an AIS_IO to AIS_Point
       occ::handle<AIS_Point> anAISPointA = occ::down_cast<AIS_Point>(aShapeA);
       occ::handle<AIS_Point> anAISPointB = occ::down_cast<AIS_Point>(aShapeB);
       occ::handle<AIS_Point> anAISPointC = occ::down_cast<AIS_Point>(aShapeC);
@@ -1264,12 +1174,11 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       occ::handle<Geom_CartesianPoint> aCartPointC =
         occ::down_cast<Geom_CartesianPoint>(anAISPointC->Component());
 
-      // Verification that the three points are different
       if (std::abs(aCartPointB->X() - aCartPointA->X()) <= Precision::Confusion()
           && std::abs(aCartPointB->Y() - aCartPointA->Y()) <= Precision::Confusion()
           && std::abs(aCartPointB->Z() - aCartPointA->Z()) <= Precision::Confusion())
       {
-        // B=A
+
         Message::SendFail("Error: same points");
         return 1;
       }
@@ -1277,7 +1186,7 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
           && std::abs(aCartPointC->Y() - aCartPointA->Y()) <= Precision::Confusion()
           && std::abs(aCartPointC->Z() - aCartPointA->Z()) <= Precision::Confusion())
       {
-        // C=A
+
         Message::SendFail("Error: same points");
         return 1;
       }
@@ -1285,7 +1194,7 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
           && std::abs(aCartPointC->Y() - aCartPointB->Y()) <= Precision::Confusion()
           && std::abs(aCartPointC->Z() - aCartPointB->Z()) <= Precision::Confusion())
       {
-        // C=B
+
         Message::SendFail("Error: same points");
         return 1;
       }
@@ -1294,7 +1203,6 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       gp_Pnt B = aCartPointB->Pnt();
       gp_Pnt C = aCartPointC->Pnt();
 
-      // Construction of AIS_Plane
       GC_MakePlane                   MkPlane(A, B, C);
       const occ::handle<Geom_Plane>& aGeomPlane = MkPlane.Value();
       occ::handle<AIS_Plane>         anAISPlane = new AIS_Plane(aGeomPlane);
@@ -1317,18 +1225,17 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       }
       TheAISContext()->Display(anAISPlane, true);
     }
-    // The first argument is an AIS_Axis
-    // Creation of a plane orthogonal to the axis through a point
+
     else if (aShapeA->Type() == AIS_KindOfInteractive_Datum && aShapeA->Signature() == 2)
     {
-      // The second argument should be an AIS_Point
+
       occ::handle<AIS_InteractiveObject> aShapeB;
       if (argc != 4 || !GetMapOfAIS().Find2(argv[3], aShapeB))
       {
         Message::SendFail("Syntax error: 2d name is not displayed");
         return 1;
       }
-      // If B is not an AIS_Point
+
       if (aShapeB.IsNull() || aShapeB->Type() != AIS_KindOfInteractive_Datum
           || aShapeB->Signature() != 1)
       {
@@ -1336,7 +1243,6 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         return 1;
       }
 
-      // Treatment of objects A and B
       occ::handle<AIS_Axis>  anAISAxisA  = occ::down_cast<AIS_Axis>(aShapeA);
       occ::handle<AIS_Point> anAISPointB = occ::down_cast<AIS_Point>(aShapeB);
 
@@ -1350,7 +1256,6 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       gp_Dir D = anAxis.Direction();
       gp_Pnt B = aCartPointB->Pnt();
 
-      // Construction of AIS_Plane
       occ::handle<Geom_Plane> aGeomPlane = new Geom_Plane(B, D);
       occ::handle<AIS_Plane>  anAISPlane = new AIS_Plane(aGeomPlane, B);
       GetMapOfAIS().Bind(anAISPlane, aName);
@@ -1372,18 +1277,17 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       }
       TheAISContext()->Display(anAISPlane, true);
     }
-    // The first argument is an AIS_Plane
-    // Creation of a plane parallel to the plane passing through the point
+
     else if (aShapeA->Type() == AIS_KindOfInteractive_Datum && aShapeA->Signature() == 7)
     {
-      // The second argument should be an AIS_Point
+
       occ::handle<AIS_InteractiveObject> aShapeB;
       if (argc != 4 || !GetMapOfAIS().Find2(argv[3], aShapeB))
       {
         Message::SendFail("Syntax error: 2d name is not displayed");
         return 1;
       }
-      // B should be an AIS_Point
+
       if (aShapeB.IsNull() || aShapeB->Type() != AIS_KindOfInteractive_Datum
           || aShapeB->Signature() != 1)
       {
@@ -1391,7 +1295,6 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         return 1;
       }
 
-      // Treatment of objects A and B
       occ::handle<AIS_Plane> anAISPlaneA = occ::down_cast<AIS_Plane>(aShapeA);
       occ::handle<AIS_Point> anAISPointB = occ::down_cast<AIS_Point>(aShapeB);
 
@@ -1402,7 +1305,6 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         occ::down_cast<Geom_CartesianPoint>(aGeomPointB);
       gp_Pnt B = aCartPointB->Pnt();
 
-      // Construction of an AIS_Plane
       occ::handle<AIS_Plane> anAISPlane = new AIS_Plane(aNewGeomPlane, B);
       GetMapOfAIS().Bind(anAISPlane, aName);
       if (argc == 5)
@@ -1423,21 +1325,19 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       }
       TheAISContext()->Display(anAISPlane, true);
     }
-    // Error
+
     else
     {
       Message::SendFail("Syntax error: 1st object is not an AIS");
       return 1;
     }
   }
-  // There are no arguments
+
   else
   {
     NCollection_List<TopoDS_Shape> aShapes;
     ViewerTest::GetSelectedShapes(aShapes);
 
-    // Function vplane
-    // Test the constructor AIS_Plane::AIS_Plane(Geom_Plane, bool )
     if (!strcasecmp(argv[0], "vplane"))
     {
       if (aShapes.Extent() < 1 || aShapes.Extent() > 3)
@@ -1460,14 +1360,13 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
             return 1;
           }
 
-          // Verify that the vertex is not on the edge ShapeB
           TopoDS_Edge   anEdgeB = TopoDS::Edge(aShapeB);
           TopoDS_Vertex aVertA  = TopoDS::Vertex(aShapeA);
 
           BRepExtrema_ExtPC OrthoProj(aVertA, anEdgeB);
           if (OrthoProj.SquareDistance(1) < Precision::Approximation())
           {
-            // The vertex is on the edge
+
             Message::SendFail("Error: point is on the edge");
             return 1;
           }
@@ -1533,14 +1432,13 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
           return 1;
         }
 
-        // Check that the vertex aShapeB is not on the edge
         TopoDS_Edge   anEdgeA = TopoDS::Edge(aShapeA);
         TopoDS_Vertex aVertB  = TopoDS::Vertex(aShapeB);
 
         BRepExtrema_ExtPC OrthoProj(aVertB, anEdgeA);
         if (OrthoProj.SquareDistance(1) < Precision::Approximation())
         {
-          // The vertex is on the edge
+
           Message::SendFail("Error point is on the edge");
           return 1;
         }
@@ -1582,9 +1480,6 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       }
     }
 
-    // Function vPlanePara
-    // ===================
-    // test the constructor AIS_Plane::AIS_Plane(Geom_Plane,gp_Pnt)
     else if (!strcasecmp(argv[0], "vplanepara"))
     {
       if (aShapes.Extent() != 2)
@@ -1613,7 +1508,7 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       if (aSurface.GetType() == GeomAbs_Plane)
       {
         gp_Pln aPlane = aSurface.Plane();
-        // Construct a plane parallel to aGeomPlane through A
+
         aPlane.SetLocation(A);
         occ::handle<Geom_Plane> aGeomPlane = new Geom_Plane(aPlane);
         occ::handle<AIS_Plane>  aAISPlane  = new AIS_Plane(aGeomPlane, A);
@@ -1627,9 +1522,6 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       }
     }
 
-    // Function vplaneortho
-    // ====================
-    // test the constructor AIS_Plane::AIS_Plane(Geom_Plane,gp_Pnt,gp_Pnt,gp_Pnt)
     else
     {
       if (aShapes.Extent() != 2)
@@ -1652,7 +1544,6 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         return 1;
       }
 
-      // Construction of plane
       TopoDS_Edge   anEdgeA = TopoDS::Edge(*aShapeA);
       TopoDS_Vertex aVAa, aVAb;
       TopExp::Vertices(anEdgeA, aVAa, aVAb);
@@ -1661,31 +1552,31 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       gp_Vec ab(Aa, Ab);
 
       gp_Dir Dab(ab);
-      // Creation of rotation axis
+
       gp_Ax1 aRotAxis(Aa, Dab);
 
       TopoDS_Face aFace = TopoDS::Face(*aShapeB);
-      // The edge must be parallel to the face
+
       BRepExtrema_ExtPF aHeightA(aVAa, aFace);
       BRepExtrema_ExtPF aHeightB(aVAb, aFace);
-      // Compare to heights
+
       if (fabs(sqrt(aHeightA.SquareDistance(1)) - sqrt(aHeightB.SquareDistance(1)))
           > Precision::Confusion())
       {
-        // the edge is not parallel to the face
+
         Message::SendFail("Error: the edge is not parallel to the face");
         return 1;
       }
-      // the edge is OK
+
       BRepAdaptor_Surface aSurface(aFace, false);
       if (aSurface.GetType() == GeomAbs_Plane)
       {
         gp_Pln aPlane = aSurface.Plane();
-        // It rotates a half turn round the axis of rotation
+
         aPlane.Rotate(aRotAxis, M_PI / 2);
 
         occ::handle<Geom_Plane> aGeomPlane = new Geom_Plane(aPlane);
-        // constructed aGeomPlane parallel to a plane containing the edge (center mid-edge)
+
         gp_Pnt aMiddle((Aa.X() + Ab.X()) / 2, (Aa.Y() + Ab.Y()) / 2, (Aa.Z() + Ab.Z()) / 2);
         occ::handle<AIS_Plane> anAISPlane = new AIS_Plane(aGeomPlane, aMiddle);
         GetMapOfAIS().Bind(anAISPlane, aName);
@@ -1701,9 +1592,7 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
-static int VChangePlane(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** theArgVec)
+static int VChangePlane(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
 {
   occ::handle<AIS_InteractiveContext> aContextAIS = ViewerTest::GetAISContext();
   if (aContextAIS.IsNull())
@@ -1818,22 +1707,11 @@ static int VChangePlane(Draw_Interpretor& /*theDi*/, int theArgsNb, const char**
   return 0;
 }
 
-//==============================================================================
-// Fonction  vline
-// ---------------  Uniquement par parametre. Pas de selection dans le viewer.
-//==============================================================================
-
-//==============================================================================
-// function : VLineBuilder
-// purpose  : Build an AIS_Line
-// Draw arg : vline LineName  [AIS_PointName] [AIS_PointName]
-//                           [Xa] [Ya] [Za]   [Xb] [Yb] [Zb]
-//==============================================================================
 #include <AIS_Line.hpp>
 
 static int VLineBuilder(Draw_Interpretor& di, int argc, const char** argv)
 {
-  if (argc == 4) // parameters: AIS_Point AIS_Point
+  if (argc == 4)
   {
     occ::handle<AIS_InteractiveObject> aShapeA, aShapeB;
     GetMapOfAIS().Find2(argv[2], aShapeA);
@@ -1856,7 +1734,7 @@ static int VLineBuilder(Draw_Interpretor& di, int argc, const char** argv)
     if (aCartPointB->X() == aCartPointA->X() && aCartPointB->Y() == aCartPointA->Y()
         && aCartPointB->Z() == aCartPointA->Z())
     {
-      // B=A
+
       di << "vline error: same points\n";
       return 1;
     }
@@ -1865,7 +1743,7 @@ static int VLineBuilder(Draw_Interpretor& di, int argc, const char** argv)
     GetMapOfAIS().Bind(anAISLine, argv[1]);
     TheAISContext()->Display(anAISLine, true);
   }
-  else if (argc == 8) // parametres 6 reals
+  else if (argc == 8)
   {
     double aCoord[6] = {};
     for (int i = 0; i <= 2; ++i)
@@ -1883,7 +1761,7 @@ static int VLineBuilder(Draw_Interpretor& di, int argc, const char** argv)
     GetMapOfAIS().Bind(anAISLine, argv[1]);
     TheAISContext()->Display(anAISLine, true);
   }
-  else if (argc == 2) // selection in 3D viewer
+  else if (argc == 2)
   {
     NCollection_List<TopoDS_Shape> aShapes;
     ViewerTest::GetSelectedShapes(aShapes);
@@ -1901,7 +1779,6 @@ static int VLineBuilder(Draw_Interpretor& di, int argc, const char** argv)
       return 1;
     }
 
-    // Construction de la line
     gp_Pnt A = BRep_Tool::Pnt(TopoDS::Vertex(aShapeA));
     gp_Pnt B = BRep_Tool::Pnt(TopoDS::Vertex(aShapeB));
 
@@ -1921,17 +1798,6 @@ static int VLineBuilder(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//==============================================================================
-// class   : FilledCircle
-// purpose : creates filled circle based on AIS_InteractiveObject
-//           and Geom_Circle.
-//           This class is used to check method Matches() of class
-//           Select3D_SensitiveCircle with member myFillStatus = true,
-//           because none of AIS classes provides creation of
-//           Select3D_SensitiveCircle with member myFillStatus = true
-//           (look method ComputeSelection() )
-//==============================================================================
-
 occ::handle<Geom_Circle> CreateCircle(gp_Pnt theCenter, double theRadius)
 {
   gp_Ax2                   anAxes(theCenter, gp_Dir(gp_Vec(0., 0., 1.)));
@@ -1943,7 +1809,6 @@ occ::handle<Geom_Circle> CreateCircle(gp_Pnt theCenter, double theRadius)
 class FilledCircle : public AIS_InteractiveObject
 {
 public:
-  // CASCADE RTTI
   DEFINE_STANDARD_RTTI_INLINE(FilledCircle, AIS_InteractiveObject);
 
   FilledCircle(const occ::handle<Geom_Circle>& theCircle,
@@ -1958,7 +1823,6 @@ public:
 private:
   TopoDS_Face ComputeFace();
 
-  // Virtual methods implementation
   void Compute(const occ::handle<PrsMgr_PresentationManager>& thePrsMgr,
                const occ::handle<Prs3d_Presentation>&         thePrs,
                const int                                      theMode) override;
@@ -1992,11 +1856,10 @@ FilledCircle::FilledCircle(const gp_Pnt& theCenter,
 
 TopoDS_Face FilledCircle::ComputeFace()
 {
-  // Create edge from myCircle
+
   BRepBuilderAPI_MakeEdge anEdgeMaker(myCircle->Circ(), myUStart, myUEnd);
   TopoDS_Edge             anEdge = anEdgeMaker.Edge();
 
-  // Create wire from anEdge
   BRepBuilderAPI_MakeWire aWireMaker;
   if (std::abs(std::abs(myUEnd - myUStart) - 2.0 * M_PI) > gp::Resolution())
   {
@@ -2012,7 +1875,6 @@ TopoDS_Face FilledCircle::ComputeFace()
   }
   TopoDS_Wire aWire = aWireMaker.Wire();
 
-  // Create face from aWire
   BRepBuilderAPI_MakeFace aFaceMaker(aWire);
   TopoDS_Face             aFace = aFaceMaker.Face();
 
@@ -2035,8 +1897,7 @@ void FilledCircle::Compute(const occ::handle<PrsMgr_PresentationManager>&,
   StdPrs_ShadedShape::Add(thePrs, aFace, myDrawer);
 }
 
-void FilledCircle::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection,
-                                    const int /*theMode*/)
+void FilledCircle::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection, const int)
 {
   occ::handle<SelectMgr_EntityOwner>    anEntityOwner = new SelectMgr_EntityOwner(this);
   occ::handle<Select3D_SensitiveEntity> aSensitiveCircle;
@@ -2055,18 +1916,6 @@ void FilledCircle::ComputeSelection(const occ::handle<SelectMgr_Selection>& theS
   theSelection->Add(aSensitiveCircle);
 }
 
-//==============================================================================
-// Fonction  vcircle
-// -----------------  Uniquement par parametre. Pas de selection dans le viewer.
-//==============================================================================
-
-//==============================================================================
-// function : VCircleBuilder
-// purpose  : Build an AIS_Circle
-// Draw arg : vcircle CircleName PlaneName PointName Radius IsFilled UStart UEnd
-//                              PointName PointName PointName IsFilled UStart UEnd
-//==============================================================================
-
 void DisplayCircle(const occ::handle<Geom_Circle>& theGeomCircle,
                    const TCollection_AsciiString&  theName,
                    const bool                      isFilled,
@@ -2083,8 +1932,6 @@ void DisplayCircle(const occ::handle<Geom_Circle>& theGeomCircle,
     aCircle = new AIS_Circle(theGeomCircle, theUStart, theUEnd, false);
   }
 
-  // Check if there is an object with given name
-  // and remove it from context
   if (GetMapOfAIS().IsBound2(theName))
   {
     occ::handle<AIS_InteractiveObject> anInterObj = GetMapOfAIS().Find2(theName);
@@ -2092,14 +1939,12 @@ void DisplayCircle(const occ::handle<Geom_Circle>& theGeomCircle,
     GetMapOfAIS().UnBind2(theName);
   }
 
-  // Bind the circle to its name
   GetMapOfAIS().Bind(aCircle, theName);
 
-  // Display the circle
   TheAISContext()->Display(aCircle, true);
 }
 
-static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
+static int VCircleBuilder(Draw_Interpretor&, int argc, const char** argv)
 {
   if (argc > 8 || argc < 2)
   {
@@ -2128,7 +1973,6 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
     GetMapOfAIS().Find2(argv[2], aShapeA);
     GetMapOfAIS().Find2(argv[3], aShapeB);
 
-    // Arguments: AIS_Point AIS_Point AIS_Point
     if (!aShapeA.IsNull() && !aShapeB.IsNull() && aShapeA->Type() == AIS_KindOfInteractive_Datum
         && aShapeA->Signature() == 1)
     {
@@ -2143,14 +1987,13 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         return 1;
       }
 
-      // Verify that the three points are different
       occ::handle<Geom_CartesianPoint> aCartPointA =
         occ::down_cast<Geom_CartesianPoint>(anAISPointA->Component());
       occ::handle<Geom_CartesianPoint> aCartPointB =
         occ::down_cast<Geom_CartesianPoint>(anAISPointB->Component());
       occ::handle<Geom_CartesianPoint> aCartPointC =
         occ::down_cast<Geom_CartesianPoint>(anAISPointC->Component());
-      // Test A=B
+
       if (std::abs(aCartPointA->X() - aCartPointB->X()) <= Precision::Confusion()
           && std::abs(aCartPointA->Y() - aCartPointB->Y()) <= Precision::Confusion()
           && std::abs(aCartPointA->Z() - aCartPointB->Z()) <= Precision::Confusion())
@@ -2158,7 +2001,7 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         Message::SendFail("Error: Same points");
         return 1;
       }
-      // Test A=C
+
       if (std::abs(aCartPointA->X() - aCartPointC->X()) <= Precision::Confusion()
           && std::abs(aCartPointA->Y() - aCartPointC->Y()) <= Precision::Confusion()
           && std::abs(aCartPointA->Z() - aCartPointC->Z()) <= Precision::Confusion())
@@ -2166,7 +2009,7 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         Message::SendFail("Error: Same points");
         return 1;
       }
-      // Test B=C
+
       if (std::abs(aCartPointB->X() - aCartPointC->X()) <= Precision::Confusion()
           && std::abs(aCartPointB->Y() - aCartPointC->Y()) <= Precision::Confusion()
           && std::abs(aCartPointB->Z() - aCartPointC->Z()) <= Precision::Confusion())
@@ -2174,7 +2017,7 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         Message::SendFail("Error: Same points");
         return 1;
       }
-      // Construction of the circle
+
       GC_MakeCircle aCir =
         GC_MakeCircle(aCartPointA->Pnt(), aCartPointB->Pnt(), aCartPointC->Pnt());
       occ::handle<Geom_Circle> aGeomCircle;
@@ -2191,7 +2034,6 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       DisplayCircle(aGeomCircle, aName, isFilled, anUStart, anUEnd);
     }
 
-    // Arguments: AIS_Plane AIS_Point Real
     else if (aShapeA->Type() == AIS_KindOfInteractive_Datum && aShapeA->Signature() == 7)
     {
       occ::handle<AIS_Plane> anAISPlane  = occ::down_cast<AIS_Plane>(aShapeA);
@@ -2202,7 +2044,6 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         return 1;
       }
 
-      // Check that the radius is >= 0
       const double anR = Draw::Atof(argv[4]);
       if (anR <= 0)
       {
@@ -2210,7 +2051,6 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         return 1;
       }
 
-      // Recover the normal to the plane
       occ::handle<Geom_Plane>          aGeomPlane  = anAISPlane->Component();
       occ::handle<Geom_Point>          aGeomPointB = anAISPointB->Component();
       occ::handle<Geom_CartesianPoint> aCartPointB =
@@ -2240,9 +2080,9 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       return 1;
     }
   }
-  else // No arguments: selection in the viewer
+  else
   {
-    // Get the name of the circle
+
     TCollection_AsciiString aName(argv[1]);
 
     NCollection_List<TopoDS_Shape> aShapes;
@@ -2270,12 +2110,10 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       anIter.Next();
       const TopoDS_Shape& aShapeC = anIter.Value();
 
-      // Get isFilled
       bool isFilled;
       std::cout << "Enter filled status (0 or 1)\n";
       std::cin >> isFilled;
 
-      // Construction of the circle
       gp_Pnt A = BRep_Tool::Pnt(TopoDS::Vertex(aShapeA));
       gp_Pnt B = BRep_Tool::Pnt(TopoDS::Vertex(aShapeB));
       gp_Pnt C = BRep_Tool::Pnt(TopoDS::Vertex(aShapeC));
@@ -2298,7 +2136,6 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
     {
       const TopoDS_Shape& aShapeB = aShapes.Last();
 
-      // Recover the radius
       double aRad = 0.0;
       do
       {
@@ -2306,12 +2143,10 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         std::cin >> aRad;
       } while (aRad <= 0);
 
-      // Get filled status
       bool isFilled;
       std::cout << "Enter filled status (0 or 1)\n";
       std::cin >> isFilled;
 
-      // Recover the normal to the plane. tag
       TopoDS_Face             aFace = TopoDS::Face(aShapeA);
       BRepAdaptor_Surface     aSurface(aFace, false);
       gp_Pln                  aPlane     = aSurface.Plane();
@@ -2320,10 +2155,8 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       gp_Ax1                  aGpAxe     = aGpPlane.Axis();
       gp_Dir                  aDir       = aGpAxe.Direction();
 
-      // Recover the center
       gp_Pnt aCenter = BRep_Tool::Pnt(TopoDS::Vertex(aShapeB));
 
-      // Construct the circle
       GC_MakeCircle            aCir = GC_MakeCircle(aCenter, aDir, aRad);
       occ::handle<Geom_Circle> aGeomCircle;
       try
@@ -2347,8 +2180,6 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int VDrawText(Draw_Interpretor& theDI, int theArgsNb, const char** theArgVec)
 {
@@ -2713,12 +2544,6 @@ static int VDrawText(Draw_Interpretor& theDI, int theArgsNb, const char** theArg
 #include <utility>
 class AIS_InteractiveObject;
 
-//===============================================================================================
-// function : CalculationOfSphere
-// author   : psn
-// purpose  : Create a Sphere
-//===============================================================================================
-
 occ::handle<Poly_Triangulation> CalculationOfSphere(double X,
                                                     double Y,
                                                     double Z,
@@ -2729,10 +2554,10 @@ occ::handle<Poly_Triangulation> CalculationOfSphere(double X,
   double mCenter[3] = {X, Y, Z};
   int    mThetaResolution;
   int    mPhiResolution;
-  double mStartTheta = 0;   // StartTheta;
-  double mEndTheta   = 360; // EndTheta;
-  double mStartPhi   = 0;   // StartPhi;
-  double mEndPhi     = 180; // EndPhi;
+  double mStartTheta = 0;
+  double mEndTheta   = 360;
+  double mStartPhi   = 0;
+  double mEndPhi     = 180;
   res                = res < 4 ? 4 : res;
 
   mThetaResolution = res;
@@ -2763,7 +2588,6 @@ occ::handle<Poly_Triangulation> CalculationOfSphere(double X,
 
   deltaTheta = (localEndTheta - localStartTheta) / localThetaResolution;
 
-  // Change the ivars based on pieces.
   int start, end;
   start                = piece * localThetaResolution / numPieces;
   end                  = (piece + 1) * localThetaResolution / numPieces;
@@ -2771,7 +2595,6 @@ occ::handle<Poly_Triangulation> CalculationOfSphere(double X,
   localStartTheta      = localStartTheta + (double)(start)*deltaTheta;
   localThetaResolution = end - start;
 
-  // Create north pole if needed
   int number_point      = 0;
   int number_pointArray = 0;
 
@@ -2786,7 +2609,6 @@ occ::handle<Poly_Triangulation> CalculationOfSphere(double X,
     numPoles++;
   }
 
-  // Check data, determine increments, and convert to radians
   startTheta = (localStartTheta < localEndTheta ? localStartTheta : localEndTheta);
   startTheta *= M_PI / 180.0;
   endTheta = (localEndTheta > localStartTheta ? localEndTheta : localStartTheta);
@@ -2809,7 +2631,6 @@ occ::handle<Poly_Triangulation> CalculationOfSphere(double X,
   jStart = (mStartPhi <= 0.0 ? 1 : 0);
   jEnd   = (mEndPhi >= 180.0 ? mPhiResolution - 1 : mPhiResolution);
 
-  // Create intermediate points
   for (i = 0; i < localThetaResolution; i++)
   {
     for (j = jStart; j < jEnd; j++)
@@ -2818,21 +2639,19 @@ occ::handle<Poly_Triangulation> CalculationOfSphere(double X,
     }
   }
 
-  // Generate mesh connectivity
   base = phiResolution * localThetaResolution;
 
   int number_triangle = 0;
   if (mStartPhi <= 0.0)
-  { // around north pole
+  {
     number_triangle += localThetaResolution;
   }
 
   if (mEndPhi >= 180.0)
-  { // around south pole
+  {
     number_triangle += localThetaResolution;
   }
 
-  // bands in-between poles
   for (i = 0; i < localThetaResolution; i++)
   {
     for (j = 0; j < (phiResolution - 1); j++)
@@ -2852,7 +2671,6 @@ occ::handle<Poly_Triangulation> CalculationOfSphere(double X,
     polyTriangulation->SetNode(1, gp_Pnt(x[0], x[1], x[2]));
   }
 
-  // Create south pole if needed
   if (mEndPhi >= 180.0)
   {
     x[0] = mCenter[0];
@@ -2883,7 +2701,7 @@ occ::handle<Poly_Triangulation> CalculationOfSphere(double X,
   numPoles        = 3;
   number_triangle = 1;
   if (mStartPhi <= 0.0)
-  { // around north pole
+  {
     for (i = 0; i < localThetaResolution; i++)
     {
       pts[0] = phiResolution * i + numPoles;
@@ -2895,7 +2713,7 @@ occ::handle<Poly_Triangulation> CalculationOfSphere(double X,
   }
 
   if (mEndPhi >= 180.0)
-  { // around south pole
+  {
     numOffset = phiResolution - 1 + numPoles;
     for (i = 0; i < localThetaResolution; i++)
     {
@@ -2906,8 +2724,6 @@ occ::handle<Poly_Triangulation> CalculationOfSphere(double X,
       number_triangle++;
     }
   }
-
-  // bands in-between poles
 
   for (i = 0; i < localThetaResolution; i++)
   {
@@ -2960,14 +2776,9 @@ occ::handle<Poly_Triangulation> CalculationOfSphere(double X,
   return polyTriangulation;
 }
 
-//===============================================================================================
-// function : VDrawSphere
-// author   : psn
-// purpose  : Create an AIS shape.
-//===============================================================================================
-static int VDrawSphere(Draw_Interpretor& /*di*/, int argc, const char** argv)
+static int VDrawSphere(Draw_Interpretor&, int argc, const char** argv)
 {
-  // check for errors
+
   occ::handle<AIS_InteractiveContext> aContextAIS = ViewerTest::GetAISContext();
   if (aContextAIS.IsNull())
   {
@@ -2982,7 +2793,6 @@ static int VDrawSphere(Draw_Interpretor& /*di*/, int argc, const char** argv)
     return 1;
   }
 
-  // read the arguments
   TCollection_AsciiString aShapeName(argv[1]);
   int                     aResolution = Draw::Atoi(argv[2]);
   double                  aCenterX    = (argc > 5) ? Draw::Atof(argv[3]) : 0.0;
@@ -2992,7 +2802,6 @@ static int VDrawSphere(Draw_Interpretor& /*di*/, int argc, const char** argv)
   bool                    toShowEdges = (argc > 7) ? Draw::Atoi(argv[7]) == 1 : false;
   bool                    toPrintInfo = (argc > 8) ? Draw::Atoi(argv[8]) == 1 : true;
 
-  // remove AIS object with given name from map
   VDisplayAISObject(aShapeName, occ::handle<AIS_InteractiveObject>());
 
   if (toPrintInfo)
@@ -3002,11 +2811,8 @@ static int VDrawSphere(Draw_Interpretor& /*di*/, int argc, const char** argv)
   const int aNumberPoints    = aShape->GetTriangulation()->NbNodes();
   const int aNumberTriangles = aShape->GetTriangulation()->NbTriangles();
 
-  // stupid initialization of Green color in RGBA space as integer
-  // probably wrong for big-endian CPUs
   const NCollection_Vec4<uint8_t> aColor(0, 255, 0, 0);
 
-  // setup colors array per vertex
   occ::handle<NCollection_HArray1<int>> aColorArray =
     new NCollection_HArray1<int>(1, aNumberPoints);
   for (int aNodeId = 1; aNodeId <= aNumberPoints; ++aNodeId)
@@ -3015,16 +2821,15 @@ static int VDrawSphere(Draw_Interpretor& /*di*/, int argc, const char** argv)
   }
   aShape->SetColors(aColorArray);
 
-  // show statistics
-  int aPointsSize  = aNumberPoints * 3 * sizeof(float);      // 3x GLfloat
-  int aNormalsSize = aNumberPoints * 3 * sizeof(float);      // 3x GLfloat
-                                                             // clang-format off
-  int aColorsSize      = aNumberPoints * 3 * sizeof(float);  // 3x GLfloat without alpha
-                                                             // clang-format on
-  int aTrianglesSize   = aNumberTriangles * 3 * sizeof(int); // 3x GLint
+  int aPointsSize  = aNumberPoints * 3 * sizeof(float);
+  int aNormalsSize = aNumberPoints * 3 * sizeof(float);
+
+  int aColorsSize = aNumberPoints * 3 * sizeof(float);
+
+  int aTrianglesSize   = aNumberTriangles * 3 * sizeof(int);
   int aPolyConnectSize = aNumberPoints * 4 + aNumberTriangles * 6 * 4;
   int aTotalSize       = aPointsSize + aNormalsSize + aColorsSize + aTrianglesSize;
-  aTotalSize >>= 20; // MB
+  aTotalSize >>= 20;
   aNormalsSize >>= 20;
   aColorsSize >>= 20;
   aTrianglesSize >>= 20;
@@ -3040,7 +2845,6 @@ static int VDrawSphere(Draw_Interpretor& /*di*/, int argc, const char** argv)
               << "Amount of graphic card memory required: " << aTotalSize << " Mb\n";
   }
 
-  // Setting material properties, very important for desirable visual result!
   Graphic3d_MaterialAspect aMat(Graphic3d_NameOfMaterial_Plastified);
   aMat.SetAmbientColor(Quantity_Color(NCollection_Vec3<float>(0.04f)));
   aMat.SetSpecularColor(Quantity_Color(NCollection_Vec3<float>(0.50f)));
@@ -3060,8 +2864,6 @@ static int VDrawSphere(Draw_Interpretor& /*di*/, int argc, const char** argv)
   VDisplayAISObject(aShapeName, aShape);
   return 0;
 }
-
-//=================================================================================================
 
 static int VComputeHLR(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
@@ -3204,7 +3006,7 @@ static int VComputeHLR(Draw_Interpretor&, int theArgNb, const char** theArgVec)
     aHLRToShape.Update(aPolyAlgo);
 
     aVisible[HLRBRep_Sharp]   = aHLRToShape.VCompound();
-    aVisible[HLRBRep_OutLine] = aHLRToShape.OutLineVCompound(); // extract visible outlines
+    aVisible[HLRBRep_OutLine] = aHLRToShape.OutLineVCompound();
     aVisible[HLRBRep_Rg1Line] = aHLRToShape.Rg1LineVCompound();
     if (toShowCNEdges)
     {
@@ -3250,9 +3052,6 @@ static int VComputeHLR(Draw_Interpretor&, int theArgNb, const char** theArgVec)
       }
       aHidden[HLRBRep_IsoLine] = aHLRToShape.IsoLineHCompound();
     }
-    // extract 3d
-    // aVisible[HLRBRep_Sharp]   = aHLRToShape.CompoundOfEdges (HLRBRep_Sharp, true,
-    // true); aVisible[HLRBRep_OutLine] = aHLRToShape.OutLineVCompound3d();
   }
 
   TopoDS_Compound aCompRes, aCompVis, aCompHid;
@@ -3274,7 +3073,6 @@ static int VComputeHLR(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   aBuilder.Add(aCompRes, aCompVis);
   aBuilder.Add(aCompRes, aCompHid);
 
-  // create an AIS shape and display it
   if (!ViewerTest::GetAISContext().IsNull())
   {
     occ::handle<AIS_ColoredShape> anObject = new AIS_ColoredShape(aCompRes);
@@ -3301,9 +3099,6 @@ static int VComputeHLR(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   return 0;
 }
 
-// This class is a wrap for Graphic3d_ArrayOfPrimitives; it is used for
-// manipulating and displaying such an array with AIS context
-
 class MyPArrayObject : public AIS_InteractiveObject
 {
 
@@ -3320,7 +3115,6 @@ public:
     Init(thePrimType, theDesc, theMarkerAspect, false);
   }
 
-  //! Initialize the array from specified description.
   bool Init(Graphic3d_TypeOfPrimitiveArray                                   thePrimType,
             const occ::handle<NCollection_HArray1<TCollection_AsciiString>>& theDesc,
             const occ::handle<Graphic3d_AspectMarker3d>&                     theMarkerAspect,
@@ -3330,8 +3124,6 @@ public:
 
   bool AcceptDisplayMode(const int theMode) const override { return theMode == 0; }
 
-  //! Sets color to this interactive object
-  //! @param theColor the color to be set
   void SetColor(const Quantity_Color& theColor) override;
 
 private:
@@ -3348,12 +3140,8 @@ private:
     int                                                              theArgCount,
     int                                                              theMaxArgs);
 
-  //! Sets color for the shading aspect of the drawer used in this interactive object
-  //! @param theColor the color to be set
   void setColorForShadingAspect(const Quantity_Color& theColor);
 
-  //! Replaces shading aspect from myDrawer->Link() with the own shading aspect of myDrawer for this
-  //! interactive object
   void replaceShadingAspect();
 
 protected:
@@ -3393,7 +3181,6 @@ bool MyPArrayObject::Init(Graphic3d_TypeOfPrimitiveArray thePrimType,
     myPArray.Nullify();
   }
 
-  // Parsing array description
   int                  aVertexNum = 0, aBoundNum = 0, aEdgeNum = 0;
   Graphic3d_ArrayFlags anArrayFlags = Graphic3d_ArrayFlags_None;
 
@@ -3413,22 +3200,20 @@ bool MyPArrayObject::Init(Graphic3d_TypeOfPrimitiveArray thePrimType,
       anArrayFlags |= Graphic3d_ArrayFlags_AttribsMutable;
       anArrayFlags |= Graphic3d_ArrayFlags_IndexesMutable;
     }
-    // vertex command
+
     else if (CheckInputCommand("v", theDesc, anArgIndex, 3, anArgsCount))
     {
-      // vertex has a normal or normal with color or texel
+
       if (CheckInputCommand("n", theDesc, anArgIndex, 3, anArgsCount))
       {
         anArrayFlags = anArrayFlags | Graphic3d_ArrayFlags_VertexNormal;
       }
 
-      // vertex has a color
       if (CheckInputCommand("c", theDesc, anArgIndex, 3, anArgsCount))
       {
         anArrayFlags = anArrayFlags | Graphic3d_ArrayFlags_VertexColor;
       }
 
-      // vertex has a texel
       if (CheckInputCommand("t", theDesc, anArgIndex, 2, anArgsCount))
       {
         anArrayFlags = anArrayFlags | Graphic3d_ArrayFlags_VertexTexel;
@@ -3436,10 +3221,10 @@ bool MyPArrayObject::Init(Graphic3d_TypeOfPrimitiveArray thePrimType,
 
       aVertexNum++;
     }
-    // bound command
+
     else if (CheckInputCommand("b", theDesc, anArgIndex, 1, anArgsCount))
     {
-      // bound has color
+
       if (CheckInputCommand("c", theDesc, anArgIndex, 3, anArgsCount))
       {
         anArrayFlags = anArrayFlags | Graphic3d_ArrayFlags_BoundColor;
@@ -3447,12 +3232,12 @@ bool MyPArrayObject::Init(Graphic3d_TypeOfPrimitiveArray thePrimType,
 
       aBoundNum++;
     }
-    // edge command
+
     else if (CheckInputCommand("e", theDesc, anArgIndex, 1, anArgsCount))
     {
       aEdgeNum++;
     }
-    // unknown command
+
     else
       anArgIndex++;
   }
@@ -3513,13 +3298,12 @@ bool MyPArrayObject::Init(Graphic3d_TypeOfPrimitiveArray thePrimType,
       break;
     }
 
-    // skip beautifiers (syntax is not actually validated)
     if (aCommand == "-deinterleaved" || aCommand == "-mutable" || aCommand.Value(1) == '('
         || aCommand.Value(1) == ')' || aCommand.Value(1) == ',')
     {
       ++anArgIndex;
     }
-    // vertex command
+
     else if (CheckInputCommand("v", theDesc, anArgIndex, 3, anArgsCount))
     {
       const NCollection_Vec3<float> aVert((float)theDesc->Value(anArgIndex - 3).RealValue(),
@@ -3536,7 +3320,6 @@ bool MyPArrayObject::Init(Graphic3d_TypeOfPrimitiveArray thePrimType,
         aVertIndex = myPArray->AddVertex(aVert);
       }
 
-      // vertex has a normal or normal with color or texel
       if (CheckInputCommand("n", theDesc, anArgIndex, 3, anArgsCount))
       {
         const NCollection_Vec3<float> aNorm((float)theDesc->Value(anArgIndex - 3).RealValue(),
@@ -3559,7 +3342,7 @@ bool MyPArrayObject::Init(Graphic3d_TypeOfPrimitiveArray thePrimType,
         myPArray->SetVertexTexel(aVertIndex, aTex.x(), aTex.y());
       }
     }
-    // bounds command
+
     else if (CheckInputCommand("b", theDesc, anArgIndex, 1, anArgsCount))
     {
       int aVertCount = theDesc->Value(anArgIndex - 1).IntegerValue();
@@ -3573,13 +3356,13 @@ bool MyPArrayObject::Init(Graphic3d_TypeOfPrimitiveArray thePrimType,
       else
         myPArray->AddBound(aVertCount);
     }
-    // edge command
+
     else if (CheckInputCommand("e", theDesc, anArgIndex, 1, anArgsCount))
     {
       const int anEdge = theDesc->Value(anArgIndex - 1).IntegerValue();
       myPArray->AddEdge(anEdge);
     }
-    // unknown command
+
     else
     {
       Message::SendFail() << "Syntax error: unknown argument '" << theDesc->Value(anArgIndex)
@@ -3589,8 +3372,6 @@ bool MyPArrayObject::Init(Graphic3d_TypeOfPrimitiveArray thePrimType,
   }
   return true;
 }
-
-//=================================================================================================
 
 void MyPArrayObject::SetColor(const Quantity_Color& theColor)
 {
@@ -3668,7 +3449,7 @@ bool MyPArrayObject::CheckInputCommand(
   int                                                              theArgCount,
   int                                                              theMaxArgs)
 {
-  // check if there is more elements than expected
+
   if (theArgIndex >= theMaxArgs)
     return false;
 
@@ -3677,10 +3458,8 @@ bool MyPArrayObject::CheckInputCommand(
   if (aStrCommand.Search(theCommand) != 1 || theArgIndex + (theArgCount - 1) >= theMaxArgs)
     return false;
 
-  // go to the first data element
   theArgIndex++;
 
-  // check data if it can be converted to numeric
   for (int aElement = 0; aElement < theArgCount; aElement++, theArgIndex++)
   {
     aStrCommand = theArgsArray->Value(theArgIndex);
@@ -3691,8 +3470,6 @@ bool MyPArrayObject::CheckInputCommand(
   return true;
 }
 
-//=================================================================================================
-
 void MyPArrayObject::setColorForShadingAspect(const Quantity_Color& theColor)
 {
   if (myDrawer->SetupOwnShadingAspect())
@@ -3701,8 +3478,6 @@ void MyPArrayObject::setColorForShadingAspect(const Quantity_Color& theColor)
   }
   myDrawer->ShadingAspect()->SetColor(theColor);
 }
-
-//=================================================================================================
 
 void MyPArrayObject::replaceShadingAspect()
 {
@@ -3716,11 +3491,6 @@ void MyPArrayObject::replaceShadingAspect()
                               myDrawer->ShadingAspect()->Aspect());
   replaceAspects(anAspectReplacementMap);
 }
-
-//=============================================================================
-// function : VDrawPArray
-// purpose  : Draws primitives array from list of vertexes, bounds, edges
-//=============================================================================
 
 static int VDrawPArray(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -3736,7 +3506,6 @@ static int VDrawPArray(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  // read the arguments
   int                     anArgIndex = 1;
   TCollection_AsciiString aName(argv[anArgIndex++]);
   TCollection_AsciiString anArrayType(argv[anArgIndex++]);
@@ -3860,10 +3629,9 @@ static int VDrawPArray(Draw_Interpretor& di, int argc, const char** argv)
     anAspPoints = new Graphic3d_AspectMarker3d(Aspect_TOM_POINT, Quantity_NOC_YELLOW, 1.0f);
   }
 
-  // create primitives array object
   if (aPObject.IsNull())
   {
-    // register the object in map
+
     aPObject = new MyPArrayObject(aPrimType, anArgsArray, anAspPoints);
     VDisplayAISObject(aName, aPObject);
   }
@@ -3877,7 +3645,7 @@ static int VDrawPArray(Draw_Interpretor& di, int argc, const char** argv)
 
 namespace
 {
-  //! Auxiliary function for parsing translation vector - either 2D or 3D.
+
   static int parseTranslationVec(int theArgNb, const char** theArgVec, gp_Vec& theVec)
   {
     if (theArgNb < 2)
@@ -3906,11 +3674,6 @@ namespace
     return 2;
   }
 } // namespace
-
-//=======================================================================
-// function : VSetLocation
-// purpose  : Change location of AIS interactive object
-//=======================================================================
 
 static int VSetLocation(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -4217,7 +3980,7 @@ static int VSetLocation(Draw_Interpretor& theDI, int theArgNb, const char** theA
     }
     else if (aCmdName == "vsetlocation")
     {
-      // compatibility with old syntax
+
       gp_Vec aLocVec;
       int    aNbParsed = parseTranslationVec(theArgNb - anArgIter, theArgVec + anArgIter, aLocVec);
       if (aNbParsed == 0)
@@ -4269,7 +4032,6 @@ static int VSetLocation(Draw_Interpretor& theDI, int theArgNb, const char** theA
   return 0;
 }
 
-//! Find displayed object.
 static occ::handle<AIS_InteractiveObject> findConnectedObject(
   const TCollection_AsciiString& theName)
 {
@@ -4289,7 +4051,6 @@ static occ::handle<AIS_InteractiveObject> findConnectedObject(
     return aMultiCon;
   }
 
-  // replace already displayed object with connected one
   TheAISContext()->Remove(aPrs, false);
   occ::handle<AIS_ConnectedInteractive> aConnected = new AIS_ConnectedInteractive();
   if (aPrs->HasDisplayMode())
@@ -4305,11 +4066,7 @@ static occ::handle<AIS_InteractiveObject> findConnectedObject(
   return aConnected;
 }
 
-//===============================================================================================
-// function : VConnect
-// purpose  : Creates and displays AIS_ConnectedInteractive object from input object and location
-//===============================================================================================
-static int VConnect(Draw_Interpretor& /*di*/, int argc, const char** argv)
+static int VConnect(Draw_Interpretor&, int argc, const char** argv)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
   if (aContext.IsNull())
@@ -4323,7 +4080,6 @@ static int VConnect(Draw_Interpretor& /*di*/, int argc, const char** argv)
     return 1;
   }
 
-  // Get values
   int                                           anArgIter = 1;
   const TCollection_AsciiString                 aName(argv[anArgIter++]);
   occ::handle<AIS_MultipleConnectedInteractive> aMultiConObject;
@@ -4383,7 +4139,6 @@ static int VConnect(Draw_Interpretor& /*di*/, int argc, const char** argv)
     return 1;
   }
 
-  // Create transformation
   gp_Trsf aTrsf;
   aTrsf.SetTranslationPart(gp_Vec(Draw::Atof(argv[anArgIter + 0]),
                                   Draw::Atof(argv[anArgIter + 1]),
@@ -4397,11 +4152,7 @@ static int VConnect(Draw_Interpretor& /*di*/, int argc, const char** argv)
   return 0;
 }
 
-//===============================================================================================
-// function : VConnectTo
-// purpose  : Creates and displays AIS_ConnectedInteractive object from input object and location
-//===============================================================================================
-static int VConnectTo(Draw_Interpretor& /*di*/, int argc, const char** argv)
+static int VConnectTo(Draw_Interpretor&, int argc, const char** argv)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
   ViewerTest_AutoUpdater              anUpdateTool(aContext, ViewerTest::CurrentView());
@@ -4444,7 +4195,6 @@ static int VConnectTo(Draw_Interpretor& /*di*/, int argc, const char** argv)
     GetMapOfAIS().Bind(aConnectedOrig, anOriginObjectName);
   }
 
-  // Create transformation
   gp_Trsf aTrsf;
   aTrsf.SetTranslationPart(gp_Vec(Draw::Atof(argv[anArgIter + 0]),
                                   Draw::Atof(argv[anArgIter + 1]),
@@ -4459,7 +4209,7 @@ static int VConnectTo(Draw_Interpretor& /*di*/, int argc, const char** argv)
     anArg.LowerCase();
     if (anArg == "-nodisplay")
     {
-      // bind connected object without displaying it
+
       occ::handle<AIS_InteractiveObject> anObj;
       if (GetMapOfAIS().Find2(aName, anObj))
       {
@@ -4481,8 +4231,6 @@ static int VConnectTo(Draw_Interpretor& /*di*/, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int VDisconnect(Draw_Interpretor& di, int argc, const char** argv)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
@@ -4503,7 +4251,6 @@ static int VDisconnect(Draw_Interpretor& di, int argc, const char** argv)
   TCollection_AsciiString anObject(argv[2]);
   int                     anObjectNumber = Draw::Atoi(argv[2]);
 
-  // find objects
   NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>, TCollection_AsciiString>& aMap =
     GetMapOfAIS();
   occ::handle<AIS_MultipleConnectedInteractive> anAssembly;
@@ -4523,7 +4270,7 @@ static int VDisconnect(Draw_Interpretor& di, int argc, const char** argv)
   occ::handle<AIS_InteractiveObject> anIObj;
   if (!aMap.Find2(anObject, anIObj))
   {
-    // try to interpret second argument as child number
+
     if (anObjectNumber > 0 && anObjectNumber <= anAssembly->Children().Size())
     {
       int aCounter = 1;
@@ -4552,8 +4299,6 @@ static int VDisconnect(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int VAddConnected(Draw_Interpretor&, int argc, const char** argv)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
@@ -4575,7 +4320,6 @@ static int VAddConnected(Draw_Interpretor&, int argc, const char** argv)
   const double                  aZ = Draw::Atof(argv[4]);
   const TCollection_AsciiString anObjectName(argv[5]);
 
-  // find object
   NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>, TCollection_AsciiString>& aMap =
     GetMapOfAIS();
   occ::handle<AIS_MultipleConnectedInteractive> anAssembly;
@@ -4607,9 +4351,7 @@ static int VAddConnected(Draw_Interpretor&, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
-static int VListConnected(Draw_Interpretor& /*di*/, int argc, const char** argv)
+static int VListConnected(Draw_Interpretor&, int argc, const char** argv)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
   if (aContext.IsNull())
@@ -4627,7 +4369,6 @@ static int VListConnected(Draw_Interpretor& /*di*/, int argc, const char** argv)
 
   TCollection_AsciiString aName(argv[1]);
 
-  // find object
   NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>, TCollection_AsciiString>& aMap =
     GetMapOfAIS();
   occ::handle<AIS_MultipleConnectedInteractive> anAssembly;
@@ -4677,8 +4418,6 @@ static int VListConnected(Draw_Interpretor& /*di*/, int argc, const char** argv)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int VChild(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
@@ -4775,8 +4514,6 @@ static int VChild(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
   return 0;
 }
 
-//=================================================================================================
-
 static int VParent(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
@@ -4811,11 +4548,9 @@ static int VParent(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
   return 0;
 }
 
-//=================================================================================================
-
-static int VSetSelectionMode(Draw_Interpretor& /*di*/, int theNbArgs, const char** theArgv)
+static int VSetSelectionMode(Draw_Interpretor&, int theNbArgs, const char** theArgv)
 {
-  // Check errors
+
   occ::handle<AIS_InteractiveContext> anAISContext = ViewerTest::GetAISContext();
   if (anAISContext.IsNull())
   {
@@ -4905,13 +4640,9 @@ static int VSetSelectionMode(Draw_Interpretor& /*di*/, int theNbArgs, const char
   return 0;
 }
 
-//=================================================================================================
-
-static int VSelectionNext(Draw_Interpretor& /*theDI*/,
-                          int /*theArgsNb*/,
-                          const char** /*theArgVec*/)
+static int VSelectionNext(Draw_Interpretor&, int, const char**)
 {
-  // Check errors
+
   occ::handle<AIS_InteractiveContext> anAISContext = ViewerTest::GetAISContext();
   occ::handle<V3d_View>               aView        = ViewerTest::CurrentView();
 
@@ -4925,13 +4656,9 @@ static int VSelectionNext(Draw_Interpretor& /*theDI*/,
   return 0;
 }
 
-//=================================================================================================
-
-static int VSelectionPrevious(Draw_Interpretor& /*theDI*/,
-                              int /*theArgsNb*/,
-                              const char** /*theArgVec*/)
+static int VSelectionPrevious(Draw_Interpretor&, int, const char**)
 {
-  // Check errors
+
   occ::handle<AIS_InteractiveContext> anAISContext = ViewerTest::GetAISContext();
   occ::handle<V3d_View>               aView        = ViewerTest::CurrentView();
 
@@ -4945,12 +4672,7 @@ static int VSelectionPrevious(Draw_Interpretor& /*theDI*/,
   return 0;
 }
 
-//===========================================================================
-// function : VTriangle
-// Draw arg : vtriangle Name PointName PointName PointName
-// purpose  : creates and displays Triangle
-//===========================================================================
-static int VTriangle(Draw_Interpretor& /*di*/, int argc, const char** argv)
+static int VTriangle(Draw_Interpretor&, int argc, const char** argv)
 {
   const bool                               isTri = TCollection_AsciiString(argv[0]) == "vtriangle";
   occ::handle<Graphic3d_ArrayOfPrimitives> aPrims;
@@ -5011,11 +4733,7 @@ static int VTriangle(Draw_Interpretor& /*di*/, int argc, const char** argv)
   return 0;
 }
 
-//===========================================================================
-// function : VTorus
-// purpose  : creates and displays a torus or torus segment
-//===========================================================================
-static int VTorus(Draw_Interpretor& /*di*/, int theNbArgs, const char** theArgVec)
+static int VTorus(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
   if (ViewerTest::GetAISContext().IsNull())
   {
@@ -5082,23 +4800,18 @@ static int VTorus(Draw_Interpretor& /*di*/, int theNbArgs, const char** theArgVe
     }
     else if (aMajorRad < 0.0 && Draw::ParseReal(theArgVec[anArgIter], aMajorRad))
     {
-      //
     }
     else if (aMinorRad < 0.0 && Draw::ParseReal(theArgVec[anArgIter], aMinorRad))
     {
-      //
     }
     else if (anAngles[0] < 0.0 && Draw::ParseReal(theArgVec[anArgIter], anAngles[0]))
     {
-      //
     }
     else if (anAngles[1] < 0.0 && Draw::ParseReal(theArgVec[anArgIter], anAngles[1]))
     {
-      //
     }
     else if (anAngles[2] < 0.0 && Draw::ParseReal(theArgVec[anArgIter], anAngles[2]))
     {
-      //
     }
     else
     {
@@ -5148,11 +4861,7 @@ static int VTorus(Draw_Interpretor& /*di*/, int theNbArgs, const char** theArgVe
   return 0;
 }
 
-//===========================================================================
-// function : VCylinder
-// purpose  : creates and displays a cylinder
-//===========================================================================
-static int VCylinder(Draw_Interpretor& /*di*/, int theNbArgs, const char** theArgVec)
+static int VCylinder(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
   if (ViewerTest::GetAISContext().IsNull())
   {
@@ -5209,15 +4918,12 @@ static int VCylinder(Draw_Interpretor& /*di*/, int theNbArgs, const char** theAr
     }
     else if (aBotRad < 0.0 && Draw::ParseReal(theArgVec[anArgIter], aBotRad))
     {
-      //
     }
     else if (aTopRad < 0.0 && Draw::ParseReal(theArgVec[anArgIter], aTopRad))
     {
-      //
     }
     else if (aHeight < 0.0 && Draw::ParseReal(theArgVec[anArgIter], aHeight))
     {
-      //
     }
     else
     {
@@ -5239,11 +4945,7 @@ static int VCylinder(Draw_Interpretor& /*di*/, int theNbArgs, const char** theAr
   return 0;
 }
 
-//===========================================================================
-// function : VSphere
-// purpose  : creates and displays a sphere
-//===========================================================================
-static int VSphere(Draw_Interpretor& /*di*/, int theNbArgs, const char** theArgVec)
+static int VSphere(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
   if (ViewerTest::GetAISContext().IsNull())
   {
@@ -5284,7 +4986,6 @@ static int VSphere(Draw_Interpretor& /*di*/, int theNbArgs, const char** theArgV
     }
     else if (aRad < 0.0 && Draw::ParseReal(theArgVec[anArgIter], aRad))
     {
-      //
     }
     else
     {
@@ -5306,11 +5007,6 @@ static int VSphere(Draw_Interpretor& /*di*/, int theNbArgs, const char** theArgV
   return 0;
 }
 
-//=======================================================================
-// function : VObjZLayer
-// purpose  : Set or get z layer id for presentable object
-//=======================================================================
-
 static int VObjZLayer(Draw_Interpretor& di, int argc, const char** argv)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
@@ -5320,12 +5016,10 @@ static int VObjZLayer(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  // get operation
   TCollection_AsciiString aOperation;
   if (argc >= 2)
     aOperation = TCollection_AsciiString(argv[1]);
 
-  // check for correct arguments
   if ((argc != 4 || !aOperation.IsEqual("set")) && (argc != 3 || !aOperation.IsEqual("get")))
   {
     di << "Usage : " << argv[0] << " set/get object [layerid]\n";
@@ -5335,7 +5029,6 @@ static int VObjZLayer(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  // find object
   TCollection_AsciiString            aName(argv[2]);
   occ::handle<AIS_InteractiveObject> anInterObj;
   GetMapOfAIS().Find2(aName, anInterObj);
@@ -5345,7 +5038,6 @@ static int VObjZLayer(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  // process operation
   if (aOperation.IsEqual("set"))
   {
     int aLayerId = Draw::Atoi(argv[3]);
@@ -5359,11 +5051,7 @@ static int VObjZLayer(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
-// function : VPolygonOffset
-// purpose  : Set or get polygon offset parameters
-//=======================================================================
-static int VPolygonOffset(Draw_Interpretor& /*di*/, int argc, const char** argv)
+static int VPolygonOffset(Draw_Interpretor&, int argc, const char** argv)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
   if (aContext.IsNull())
@@ -5383,7 +5071,6 @@ static int VPolygonOffset(Draw_Interpretor& /*di*/, int argc, const char** argv)
     return 1;
   }
 
-  // find object
   occ::handle<AIS_InteractiveObject> anInterObj;
   if (argc >= 2)
   {
@@ -5433,7 +5120,6 @@ static int VPolygonOffset(Draw_Interpretor& /*di*/, int argc, const char** argv)
   return 0;
 }
 
-// This class is used for testing markers.
 class ViewerTest_MarkersArrayObject : public AIS_InteractiveObject
 {
 
@@ -5500,7 +5186,7 @@ void ViewerTest_MarkersArrayObject::Compute(const occ::handle<PrsMgr_Presentatio
 
 void ViewerTest_MarkersArrayObject::ComputeSelection(
   const occ::handle<SelectMgr_Selection>& theSelection,
-  const int /*theMode*/)
+  const int)
 {
   occ::handle<SelectMgr_EntityOwner> anEntityOwner = new SelectMgr_EntityOwner(this);
 
@@ -5529,10 +5215,6 @@ void ViewerTest_MarkersArrayObject::ComputeSelection(
   }
 }
 
-//=======================================================================
-// function : VMarkersTest
-// purpose  : Draws an array of markers for testing purposes.
-//=======================================================================
 static int VMarkersTest(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
@@ -5622,13 +5304,9 @@ static int VMarkersTest(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   return 0;
 }
 
-//=======================================================================
-// function : TextToBrep
-// purpose  : Tool for conversion text to occt-shapes
-//=======================================================================
-static int TextToBRep(Draw_Interpretor& /*theDI*/, int theArgNb, const char** theArgVec)
+static int TextToBRep(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
-  // Check arguments
+
   if (theArgNb < 3)
   {
     Message::SendFail() << "Error: " << theArgVec[0] << " - invalid syntax";
@@ -5817,8 +5495,6 @@ static int TextToBRep(Draw_Interpretor& /*theDI*/, int theArgNb, const char** th
   DBRep::Set(aName, aBuilder.Perform(aFont, aText, aPenAx3, aHJustification, aVJustification));
   return 0;
 }
-
-//=================================================================================================
 
 struct FontComparator
 {
@@ -6074,7 +5750,7 @@ static int VFont(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 
   if (toPrintList)
   {
-    // just print the list of available fonts
+
     bool                                                 isFirst = true;
     const NCollection_List<occ::handle<Font_SystemFont>> aFonts  = aMgr->GetAvailableFonts();
     std::vector<occ::handle<Font_SystemFont>>            aFontsSorted;
@@ -6116,11 +5792,6 @@ static int VFont(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
   return 0;
 }
 
-//=======================================================================
-// function : VVertexMode
-// purpose  : Switches vertex display mode for AIS_Shape or displays the current value
-//=======================================================================
-
 static int VVertexMode(Draw_Interpretor& theDI, int theArgNum, const char** theArgs)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
@@ -6130,7 +5801,6 @@ static int VVertexMode(Draw_Interpretor& theDI, int theArgNum, const char** theA
     return 1;
   }
 
-  // No arguments --> print the current default vertex draw mode
   if (theArgNum == 1)
   {
     Prs3d_VertexDrawMode aCurrMode = aContext->DefaultDrawer()->VertexDrawMode();
@@ -6139,8 +5809,6 @@ static int VVertexMode(Draw_Interpretor& theDI, int theArgNum, const char** theA
     return 0;
   }
 
-  // -set argument --> change the default vertex draw mode and the mode for all displayed or given
-  // object(s)
   TCollection_AsciiString aParam(theArgs[1]);
   if (aParam == "-set")
   {
@@ -6160,7 +5828,6 @@ static int VVertexMode(Draw_Interpretor& theDI, int theArgNum, const char** theA
     bool                                                 aRedrawNeeded = false;
     NCollection_List<occ::handle<AIS_InteractiveObject>> anObjs;
 
-    // No object(s) specified -> use all displayed
     if (theArgNum == 3)
     {
       theDI << "Setting the default vertex draw mode and updating all displayed objects...\n";
@@ -6203,17 +5870,12 @@ static int VVertexMode(Draw_Interpretor& theDI, int theArgNum, const char** theA
     return 1;
   }
 
-  // One argument (object name) --> print the current vertex draw mode for the object
   Prs3d_VertexDrawMode aCurrMode = anObject->Attributes()->VertexDrawMode();
   theDI << "Object's vertex draw mode: "
         << (aCurrMode == Prs3d_VDM_Isolated ? "'isolated'" : "'all'") << "\n";
   return 0;
 }
 
-//=======================================================================
-// function : VPointCloud
-// purpose  : Create interactive object for arbitrary set of points.
-//=======================================================================
 static int VPointCloud(Draw_Interpretor& theDI, int theArgNum, const char** theArgs)
 {
   if (theArgNum < 2)
@@ -6237,7 +5899,6 @@ static int VPointCloud(Draw_Interpretor& theDI, int theArgNum, const char** theA
   double                  aDistRadius   = 0.0;
   int                     aDistNbPoints = 0;
 
-  // parse options
   bool   toRandColors = false;
   bool   hasNormals = true, hasUV = false;
   bool   isDensityPoints = false;
@@ -6339,7 +6000,6 @@ static int VPointCloud(Draw_Interpretor& theDI, int theArgNum, const char** theA
     aFlags |= Graphic3d_ArrayFlags_VertexTexel;
   }
 
-  // generate arbitrary set of points
   occ::handle<Graphic3d_ArrayOfPoints> anArrayPoints;
   if (!aShape.IsNull())
   {
@@ -6446,17 +6106,11 @@ static int VPointCloud(Draw_Interpretor& theDI, int theArgNum, const char** theA
     return 1;
   }
 
-  // set array of points in point cloud object
   occ::handle<AIS_PointCloud> aPointCloud = new AIS_PointCloud();
   aPointCloud->SetPoints(anArrayPoints);
   ViewerTest::Display(aName, aPointCloud);
   return 0;
 }
-
-//=======================================================================
-// function : VPriority
-// purpose  : Prints or sets the display priority for an object
-//=======================================================================
 
 static int VPriority(Draw_Interpretor& theDI, int theArgNum, const char** theArgs)
 {
@@ -6524,7 +6178,6 @@ static int VPriority(Draw_Interpretor& theDI, int theArgNum, const char** theArg
   return 0;
 }
 
-//! Auxiliary class for command vnormals.
 class MyShapeWithNormals : public AIS_Shape
 {
   DEFINE_STANDARD_RTTI_INLINE(MyShapeWithNormals, AIS_Shape);
@@ -6537,7 +6190,6 @@ public:
   bool   ToOrient;
 
 public:
-  //! Main constructor.
   MyShapeWithNormals(const TopoDS_Shape& theShape)
       : AIS_Shape(theShape),
         NormalLength(10),
@@ -6549,7 +6201,6 @@ public:
   }
 
 protected:
-  //! Compute presentation.
   void Compute(const occ::handle<PrsMgr_PresentationManager>& thePrsMgr,
                const occ::handle<Prs3d_Presentation>&         thePrs,
                const int                                      theMode) override
@@ -6604,10 +6255,6 @@ protected:
   }
 };
 
-//=======================================================================
-// function : VNormals
-// purpose  : Displays/Hides normals calculated on shape geometry or retrieved from triangulation
-//=======================================================================
 static int VNormals(Draw_Interpretor& theDI, int theArgNum, const char** theArgs)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
@@ -6734,8 +6381,6 @@ static int VNormals(Draw_Interpretor& theDI, int theArgNum, const char** theArgs
   return 0;
 }
 
-//=================================================================================================
-
 void ViewerTest::ObjectCommands(Draw_Interpretor& theCommands)
 {
   const char* aGroup    = "AIS Viewer";
@@ -6744,7 +6389,7 @@ void ViewerTest::ObjectCommands(Draw_Interpretor& theCommands)
     [&](const char* theName, Draw_Interpretor::CommandFunction theFunc, const char* theHelp)
   { theCommands.Add(theName, theHelp, aFileName, theFunc, aGroup); };
 
-  addCmd("vtrihedron", VTrihedron, /* [vtrihedron] */ R"(
+  addCmd("vtrihedron", VTrihedron, R"(
 vtrihedron name
            [-dispMode {wireframe|shading} ]
            [-origin x y z ]
@@ -6784,59 +6429,59 @@ Creates/changes *AIS_Trihedron* object.
  -arrowColor sets color properties of trihedron arrows;
  -priority   allows to change default selection priority
              of trihedron components.
-)" /* [vtrihedron] */);
+)");
 
-  addCmd("vtri2d", VTrihedron2D, /* [vtri2d] */ R"(
+  addCmd("vtri2d", VTrihedron2D, R"(
 vtri2d Name : Creates a plane with a 2D trihedron from an interactively selected face.
-)" /* [vtri2d] */);
+)");
 
-  addCmd("vplanetri", VPlaneTrihedron, /* [vplanetri] */ R"(
+  addCmd("vplanetri", VPlaneTrihedron, R"(
 vplanetri name
 Create a plane from a trihedron selection.
 If no arguments are set, the default plane is created.
-)" /* [vplanetri] */);
+)");
 
-  addCmd("vsize", VSize, /* [vsize] */ R"(
+  addCmd("vsize", VSize, R"(
 vsize [name(Default=Current)] [size(Default=100)]
 Changes the size of a named or selected trihedron.
 If the name is not defined: it affects the selected trihedrons otherwise nothing is done.
 If the value is not defined: it is set to 100 by default.
-)" /* [vsize] */);
+)");
 
-  addCmd("vaxis", VAxisBuilder, /* [vaxis] */ R"(
+  addCmd("vaxis", VAxisBuilder, R"(
 vaxis name [Xa] [Ya] [Za] [Xb] [Yb] [Zb]
 Creates an axis. If  the values are not defined,
 an axis is created by interactive selection of two vertices or one edge.
-)" /* [vaxis] */);
+)");
 
-  addCmd("vaxispara", VAxisBuilder, /* [vaxispara] */ R"(
+  addCmd("vaxispara", VAxisBuilder, R"(
 vaxispara name
 Creates an axis by interactive selection of an edge and a vertex.
-)" /* [vaxispara] */);
+)");
 
-  addCmd("vaxisortho", VAxisBuilder, /* [vaxisortho] */ R"(
+  addCmd("vaxisortho", VAxisBuilder, R"(
 vaxisortho name
 Creates an axis by interactive selection of an edge and a vertex.
 The axis will be orthogonal to the selected edge.
-)" /* [vaxisortho] */);
+)");
 
-  addCmd("vpoint", VPointBuilder, /* [vpoint] */ R"(
+  addCmd("vpoint", VPointBuilder, R"(
 vpoint name [X Y [Z]] [-2d] [-nosel]
 Creates a point from coordinates.
 If the values are not defined, a point is created from selected vertex or edge (center).
  -2d    defines on-screen 2D point from top-left window corner;
  -nosel creates non-selectable presentation.
-)" /* [vpoint] */);
+)");
 
-  addCmd("vplane", VPlaneBuilder, /* [vplane] */ R"(
+  addCmd("vplane", VPlaneBuilder, R"(
 vplane PlaneName [AxisName/PlaneName/PointName]
        [PointName/PointName/PointName] [Nothing/Nothing/PointName] [TypeOfSensitivity {0|1}]
 Creates a plane from named or interactively selected entities. TypeOfSensitivity:
   0 - Interior;
   1 - Boundary.
-)" /* [vplane] */);
+)");
 
-  addCmd("vchangeplane", VChangePlane, /* [vchangeplane] */ R"(
+  addCmd("vchangeplane", VChangePlane, R"(
 vchangeplane plane_name
              [x=center_x y=center_y z=center_z]
              [dx=dir_x dy=dir_y dz=dir_z]
@@ -6849,31 +6494,31 @@ Changes parameters of the plane:
  - sx sy     - plane sizes
  - noupdate  - do not update/redisplay the plane in context
 Please enter coordinates in format "param=value" in arbitrary order.
-)" /* [vchangeplane] */);
+)");
 
-  addCmd("vplanepara", VPlaneBuilder, /* [vplanepara] */ R"(
+  addCmd("vplanepara", VPlaneBuilder, R"(
 vplanepara  PlaneName
 Creates a plane from interactively selected vertex and face.
-)" /* [vplanepara] */);
+)");
 
-  addCmd("vplaneortho", VPlaneBuilder, /* [vplaneortho] */ R"(
+  addCmd("vplaneortho", VPlaneBuilder, R"(
 vplaneortho  PlaneName
 Creates a plane from interactive selected face and coplanar edge.
-)" /* [vplaneortho] */);
+)");
 
-  addCmd("vline", VLineBuilder, /* [vline] */ R"(
+  addCmd("vline", VLineBuilder, R"(
 vline LineName [Xa/PointName] [Ya/PointName] [Za] [Xb] [Yb] [Zb]
 Creates a line from coordinates, named or interactively selected vertices.
-)" /* [vline] */);
+)");
 
-  addCmd("vcircle", VCircleBuilder, /* [vcircle] */ R"(
+  addCmd("vcircle", VCircleBuilder, R"(
 vcircle CircleName [PointName PointName PointName IsFilled] [UStart UEnd]
                    [PlaneName PointName Radius IsFilled] [UStart UEnd]
 Creates a circle from named or interactively selected entities.
 Parameter IsFilled is defined as 0 or 1.
-)" /* [vcircle] */);
+)");
 
-  addCmd("vdrawtext", VDrawText, /* [vdrawtext] */ R"(
+  addCmd("vdrawtext", VDrawText, R"(
 vdrawtext name text
           [-pos X Y Z]={0 0 0}
           [-color {R G B|name}]=yellow
@@ -6896,13 +6541,13 @@ Display text label at specified position.
 Within -perspos, X and Y define the coordinate origin in 2d space relative to the view window.
 Example: X=0 Y=0 is center, X=1 Y=1 is upper right corner etc...
 Z coordinate defines the gap from border of view window (except center position).
-)" /* [vdrawtext] */);
+)");
 
-  addCmd("vdrawsphere", VDrawSphere, /* [vdrawsphere] */ R"(
+  addCmd("vdrawsphere", VDrawSphere, R"(
 vdrawsphere shapeName Fineness [X=0.0 Y=0.0 Z=0.0] [Radius=100.0] [ToShowEdges=0] [ToPrintInfo=1]
-)" /* [vdrawsphere] */);
+)");
 
-  addCmd("vlocation", VSetLocation, /* [vlocation] */ R"(
+  addCmd("vlocation", VSetLocation, R"(
 vlocation name
     [-reset] [-copyFrom otherName]
     [-translate    X Y [Z]] [-rotate    x y z dx dy dz angle] [-scale    [X Y Z] scale]
@@ -6922,25 +6567,25 @@ Object local transformation management:
  -setLocation  overrides translation part
  -setRotation  overrides rotation part with specified quaternion
  -setScale     overrides scale factor
-)" /* [vlocation] */);
+)");
 
-  addCmd("vsetlocation", VSetLocation, /* [vsetlocation] */ R"(
+  addCmd("vsetlocation", VSetLocation, R"(
 Alias for vlocation
-)" /* [vsetlocation] */);
+)");
 
-  addCmd("vchild", VChild, /* [vchild] */ R"(
+  addCmd("vchild", VChild, R"(
 vchild parent [-add] [-remove] [-ignoreParentTrsf {0|1}] child1 [child2] [...]
 Command for testing low-level presentation connections.
 vconnect command should be used instead.
-)" /* [vchild] */);
+)");
 
-  addCmd("vparent", VParent, /* [vparent] */ R"(
+  addCmd("vparent", VParent, R"(
 vparent parent [-ignoreVisu]
 Command for testing object properties as parent in the hierarchy.
  -ignoreVisu do not propagate the visual state (display/erase/color) to children objects
-)" /* [vparent] */);
+)");
 
-  addCmd("vcomputehlr", VComputeHLR, /* [vcomputehlr] */ R"(
+  addCmd("vcomputehlr", VComputeHLR, R"(
 vcomputehlr shapeInput hlrResult [-algoType {algo|polyAlgo}=polyAlgo]
     [eyeX eyeY eyeZ dirX dirY dirZ upX upY upZ]
     [-showTangentEdges {on|off}=off] [-nbIsolines N=0] [-showHiddenEdges {on|off}=off]
@@ -6954,9 +6599,9 @@ Arguments:
  -nbIsolines include isolines
  -showHiddenEdges include hidden edges
 Use vtop to see projected HLR shape.
-)" /* [vcomputehlr] */);
+)");
 
-  addCmd("vdrawparray", VDrawPArray, /* [vdrawparray] */ R"(
+  addCmd("vdrawparray", VDrawPArray, R"(
 vdrawparray name TypeOfArray={points|segments|polylines|triangles
                    |trianglefans|trianglestrips|quads|quadstrips|polygons}
             [-deinterleaved|-mutable]
@@ -6966,36 +6611,36 @@ vdrawparray name TypeOfArray={points|segments|polylines|triangles
             [-shape shapeName] [-patch]
 Commands create an Interactive Object for specified Primitive Array definition
 with the main purpose is covering various combinations by tests.
-)" /* [vdrawparray] */);
+)");
 
-  addCmd("vconnect", VConnect, /* [vconnect] */ R"(
+  addCmd("vconnect", VConnect, R"(
 vconnect name Xo Yo Zo object1 object2 ... [color=NAME]
 Creates and displays AIS_ConnectedInteractive object from input object and location.
-)" /* [vconnect] */);
+)");
 
-  addCmd("vconnectto", VConnectTo, /* [vconnectto] */ R"(
+  addCmd("vconnectto", VConnectTo, R"(
 vconnectto instance_name Xo Yo Zo object [-nodisplay|-noupdate|-update]
 Makes an instance 'instance_name' of 'object' with position (Xo Yo Zo).
  -nodisplay - only creates interactive object, but not displays it.
-)" /* [vconnectto] */);
+)");
 
-  addCmd("vdisconnect", VDisconnect, /* [vdisconnect] */ R"(
+  addCmd("vdisconnect", VDisconnect, R"(
 vdisconnect assembly_name {object_name|object_number|'all'}
 Disconnects all objects from assembly or disconnects object by name or number.
 Use vlistconnected to enumerate assembly children.
-)" /* [vdisconnect] */);
+)");
 
-  addCmd("vaddconnected", VAddConnected, /* [vaddconnected] */ R"(
+  addCmd("vaddconnected", VAddConnected, R"(
 vaddconnected assembly_name object_name
 Adds object to assembly.
-)" /* [vaddconnected] */);
+)");
 
-  addCmd("vlistconnected", VListConnected, /* [vlistconnected] */ R"(
+  addCmd("vlistconnected", VListConnected, R"(
 vlistconnected assembly_name
 Lists objects in assembly.
-)" /* [vlistconnected] */);
+)");
 
-  addCmd("vselmode", VSetSelectionMode, /* [vselmode] */ R"(
+  addCmd("vselmode", VSetSelectionMode, R"(
 vselmode [object] selectionMode {on|off}
          [{-add|-set|-globalOrLocal}=-globalOrLocal]
 Switches selection mode for the specified object or for all objects in context.
@@ -7009,27 +6654,27 @@ Additional options:
  -globalOrLocal (default) if new mode is Global selection mode,
                 then active local selection modes will be deactivated
                 and the samthen active local selection modes will be deactivated
-)" /* [vselmode] */);
+)");
 
-  addCmd("vselnext", VSelectionNext, /* [vselnext] */ R"(
+  addCmd("vselnext", VSelectionNext, R"(
 vselnext : hilight next detected
-)" /* [vselnext] */);
+)");
 
-  addCmd("vselprev", VSelectionPrevious, /* [vselprev] */ R"(
+  addCmd("vselprev", VSelectionPrevious, R"(
 vselnext : hilight previous detected
-)" /* [vselprev] */);
+)");
 
-  addCmd("vtriangle", VTriangle, /* [vtriangle] */ R"(
+  addCmd("vtriangle", VTriangle, R"(
 vtriangle Name PointName PointName PointName
 Creates and displays a filled triangle from named points.
-)" /* [vtriangle] */);
+)");
 
-  addCmd("vsegment", VTriangle, /* [vsegment] */ R"(
+  addCmd("vsegment", VTriangle, R"(
 vsegment Name PointName PointName
 Creates and displays a segment from named points.
-)" /* [vsegment] */);
+)");
 
-  addCmd("vtorus", VTorus, /* [vtorus] */ R"(
+  addCmd("vtorus", VTorus, R"(
 vtorus name [R1 R2 [Angle1=0 Angle2=360] [Angle=360]]
        [-radius R1] [-pipeRadius R2]
        [-pipeAngle Angle=360] [-segmentAngle1 Angle1=0 -segmentAngle2 Angle2=360]
@@ -7041,9 +6686,9 @@ Parameters of the torus:
  - Angle1 first angle to create a torus ring segment
  - Angle2 second angle to create a torus ring segment
  - Angle  angle to create a torus pipe segment
-)" /* [vtorus] */);
+)");
 
-  addCmd("vcylinder", VCylinder, /* [vcylinder] */ R"(
+  addCmd("vcylinder", VCylinder, R"(
 vcylinder name [R1 R2 Height] [-height H] [-radius R] [-bottomRadius R1 -topRadius R2]
                [-nbSlices Number=100] [-noupdate]
 Creates and displays a cylinder.
@@ -7051,28 +6696,28 @@ Parameters of the cylinder:
  - R1     cylinder bottom radius
  - R2     cylinder top radius
  - Height cylinder height
-)" /* [vcylinder] */);
+)");
 
-  addCmd("vsphere", VSphere, /* [vsphere] */ R"(
+  addCmd("vsphere", VSphere, R"(
 vsphere name [-radius] R
              [-nbSlices Number=100] [-nbStacks Number=100] [-noupdate]
 Creates and displays a sphere.
-)" /* [vsphere] */);
+)");
 
-  addCmd("vobjzlayer", VObjZLayer, /* [vobjzlayer] */ R"(
+  addCmd("vobjzlayer", VObjZLayer, R"(
 vobjzlayer : set/get object [layerid] - set or get z layer id for the interactive object
-)" /* [vobjzlayer] */);
+)");
 
-  addCmd("vpolygonoffset", VPolygonOffset, /* [vpolygonoffset] */ R"(
+  addCmd("vpolygonoffset", VPolygonOffset, R"(
 vpolygonoffset [object [mode factor units]]
 Sets/gets polygon offset parameters for an object; without arguments prints the default values
-)" /* [vpolygonoffset] */);
+)");
 
-  addCmd("vmarkerstest", VMarkersTest, /* [vmarkerstest] */ R"(
+  addCmd("vmarkerstest", VMarkersTest, R"(
 vmarkerstest: name X Y Z [PointsOnSide=10] [MarkerType=0] [Scale=1.0] [FileName=ImageFile]
-)" /* [vmarkerstest] */);
+)");
 
-  addCmd("text2brep", TextToBRep, /* [text2brep] */ R"(
+  addCmd("text2brep", TextToBRep, R"(
 text2brep name text"
           [-pos X=0 Y=0 Z=0]"
           [-halign {left|center|right}=left]"
@@ -7082,9 +6727,9 @@ text2brep name text"
           [-font font=Courier] [-strict {strict|aliases|any}=any]"
           [-composite {on|off}=off]"
           [-plane NormX NormY NormZ DirX DirY DirZ]",
-)" /* [text2brep] */);
+)");
 
-  addCmd("vfont", VFont, /* [vfont] */ R"(
+  addCmd("vfont", VFont, R"(
 vfont [-add pathToFont [fontName] [regular,bold,italic,boldItalic=undefined] [singleStroke]]
       [-strict {any|aliases|strict}] [-find fontName [regular,bold,italic,boldItalic=undefined]]
       [-verbose {on|off}]
@@ -7096,16 +6741,16 @@ vfont [-add pathToFont [fontName] [regular,bold,italic,boldItalic=undefined] [si
 Work with font registry - register font, list available fonts, find font.
  -findAll  is same as -find, but can print more than one font when mask is passed.
  -findInfo is same as -find, but prints complete font information instead of family name.
-)" /* [vfont] */);
+)");
 
-  addCmd("vvertexmode", VVertexMode, /* [vvertexmode] */ R"(
+  addCmd("vvertexmode", VVertexMode, R"(
 vvertexmode [name | -set {isolated|all|inherited} [name1 name2 ...]]
 Sets the vertex draw mode for the specified object(s)
 or sets default vertex draw mode and updates the mode for all displayed objects.
 Prints the default vertex draw mode without -set parameter.
-)" /* [vvertexmode] */);
+)");
 
-  addCmd("vpointcloud", VPointCloud, /* [vpointcloud] */ R"(
+  addCmd("vpointcloud", VPointCloud, R"(
 vpointcloud name shape [-randColor {0|1}]=0 [-normals {0|1}]=1 [-uv {0|1}]=0
             [-distance Value]=0.0 [-density Value] [-tolerance Value]
 Create an interactive object for arbitrary set of points from triangulated shape.
@@ -7123,16 +6768,16 @@ Additional options:
  -density   density of points to generate randomly on surface;
  -tolerance cloud generator's tolerance; default value is Precision::Confusion();
 
-)" /* [vpointcloud] */);
+)");
 
-  addCmd("vpriority", VPriority, /* [vpriority] */ R"(
+  addCmd("vpriority", VPriority, R"(
 vpriority [-noupdate|-update] name [value]
 Prints or sets the display priority for an object.
-)" /* [vpriority] */);
+)");
 
-  addCmd("vnormals", VNormals, /* [vnormals] */ R"(
+  addCmd("vnormals", VNormals, R"(
 vnormals Shape [{on|off}=on] [-length {10}] [-nbAlongU {1}] [-nbAlongV {1}] [-nbAlong {1}]
                [-useMesh] [-oriented {0}1}=0]
 Displays/Hides normals calculated on shape geometry or retrieved from triangulation
-)" /* [vnormals] */);
+)");
 }

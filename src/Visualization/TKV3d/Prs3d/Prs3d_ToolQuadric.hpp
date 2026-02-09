@@ -3,19 +3,16 @@
 #include <Graphic3d_ArrayOfTriangles.hpp>
 #include <Poly_Triangulation.hpp>
 
-//! Base class to build 3D surfaces presentation of quadric surfaces.
 class Prs3d_ToolQuadric
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Return number of triangles for presentation with the given params.
   static int TrianglesNb(const int theSlicesNb, const int theStacksNb)
   {
     return theSlicesNb * theStacksNb * 2;
   }
 
-  //! Return number of vertices for presentation with the given params.
   static int VerticesNb(const int  theSlicesNb,
                         const int  theStacksNb,
                         const bool theIsIndexed = true)
@@ -25,41 +22,23 @@ public:
   }
 
 public:
-  //! Generate primitives for 3D quadric surface presentation.
-  //! @param[in] theTrsf  optional transformation to apply
-  //! @return generated triangulation
   Standard_EXPORT occ::handle<Graphic3d_ArrayOfTriangles> CreateTriangulation(
     const gp_Trsf& theTrsf) const;
 
-  //! Generate primitives for 3D quadric surface presentation.
-  //! @param[in] theTrsf  optional transformation to apply
-  //! @return generated triangulation
   Standard_EXPORT occ::handle<Poly_Triangulation> CreatePolyTriangulation(
     const gp_Trsf& theTrsf) const;
 
-  //! Generate primitives for 3D quadric surface and fill the given array.
-  //! @param[in][out] theArray  the array of vertices;
-  //!                           when NULL, function will create an indexed array;
-  //!                           when not NULL, triangles will be appended to the end of array
-  //!                           (will raise an exception if reserved array size is not large enough)
-  //! @param[in] theTrsf  optional transformation to apply
   Standard_EXPORT void FillArray(occ::handle<Graphic3d_ArrayOfTriangles>& theArray,
                                  const gp_Trsf&                           theTrsf) const;
 
-  //! Return number of triangles in generated presentation.
   int TrianglesNb() const { return mySlicesNb * myStacksNb * 2; }
 
-  //! Return number of vertices in generated presentation.
   int VerticesNb(bool theIsIndexed = true) const
   {
     return theIsIndexed ? (mySlicesNb + 1) * (myStacksNb + 1) : TrianglesNb() * 3;
   }
 
 public:
-  //! Generate primitives for 3D quadric surface presentation.
-  //! @param[out] theArray  generated array of triangles
-  //! @param[out] theTriangulation  generated triangulation
-  //! @param[in] theTrsf  optional transformation to apply
   Standard_DEPRECATED(
     "Deprecated method, CreateTriangulation() and CreatePolyTriangulation() should be used instead")
   Standard_EXPORT void FillArray(occ::handle<Graphic3d_ArrayOfTriangles>& theArray,
@@ -67,13 +46,11 @@ public:
                                  const gp_Trsf&                           theTrsf) const;
 
 protected:
-  //! Redefine this method to generate vertex at given parameters.
   virtual gp_Pnt Vertex(const double theU, const double theV) const = 0;
 
-  //! Redefine this method to generate normal at given parameters.
   virtual gp_Dir Normal(const double theU, const double theV) const = 0;
 
 protected:
-  int mySlicesNb; //!< number of slices within U parameter
-  int myStacksNb; //!< number of stacks within V parameter
+  int mySlicesNb;
+  int myStacksNb;
 };

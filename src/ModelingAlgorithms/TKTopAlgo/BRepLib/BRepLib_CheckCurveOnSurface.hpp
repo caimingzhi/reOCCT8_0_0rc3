@@ -2,58 +2,36 @@
 
 #include <GeomLib_CheckCurveOnSurface.hpp>
 
-//! Computes the max distance between edge and its 2d representation on the face.
-//! This class is not intended to process non-sameparameter edges.
-
 class BRepLib_CheckCurveOnSurface
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Default constructor
   BRepLib_CheckCurveOnSurface()
       : myIsParallel(false)
   {
   }
 
-  //! Constructor
   Standard_EXPORT BRepLib_CheckCurveOnSurface(const TopoDS_Edge& theEdge,
                                               const TopoDS_Face& theFace);
 
-  //! Sets the data for the algorithm
   Standard_EXPORT void Init(const TopoDS_Edge& theEdge, const TopoDS_Face& theFace);
 
-  //! Performs the calculation
-  //! If myIsParallel == true then computation will be performed in parallel.
   Standard_EXPORT void Perform();
 
-  //! Returns true if the max distance has been found
   bool IsDone() const { return myCOnSurfGeom.ErrorStatus() == 0; }
 
-  //! Sets parallel flag
   void SetParallel(const bool theIsParallel) { myIsParallel = theIsParallel; }
 
-  //! Returns true if parallel flag is set
   bool IsParallel() { return myIsParallel; }
 
-  //! Returns error status
-  //! The possible values are:
-  //! 0 - OK;
-  //! 1 - null curve or surface or 2d curve;
-  //! 2 - invalid parametric range;
-  //! 3 - error in calculations.
   int ErrorStatus() const { return myCOnSurfGeom.ErrorStatus(); }
 
-  //! Returns max distance
   double MaxDistance() const { return myCOnSurfGeom.MaxDistance(); }
 
-  //! Returns parameter in which the distance is maximal
   double MaxParameter() const { return myCOnSurfGeom.MaxParameter(); }
 
 protected:
-  //! Computes the max distance for the 3d curve of <myCOnSurfGeom>
-  //! and 2d curve <theCurveOnSurface>
-  //! If isMultiThread == true then computation will be performed in parallel.
   Standard_EXPORT void Compute(const occ::handle<Adaptor3d_CurveOnSurface>& theCurveOnSurface);
 
 private:

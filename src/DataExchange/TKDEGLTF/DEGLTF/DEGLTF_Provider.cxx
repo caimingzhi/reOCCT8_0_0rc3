@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DEGLTF_Provider.hpp>
 
@@ -22,7 +11,6 @@
 
 namespace
 {
-  //=================================================================================================
 
   static void SetReaderParameters(RWGltf_CafReader&                            theReader,
                                   const occ::handle<DEGLTF_ConfigurationNode>& theNode)
@@ -48,18 +36,12 @@ namespace
 
 IMPLEMENT_STANDARD_RTTIEXT(DEGLTF_Provider, DE_Provider)
 
-//=================================================================================================
-
 DEGLTF_Provider::DEGLTF_Provider() = default;
-
-//=================================================================================================
 
 DEGLTF_Provider::DEGLTF_Provider(const occ::handle<DE_ConfigurationNode>& theNode)
     : DE_Provider(theNode)
 {
 }
-
-//=================================================================================================
 
 bool DEGLTF_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
@@ -70,8 +52,6 @@ bool DEGLTF_Provider::Read(const TCollection_AsciiString&       thePath,
   return Read(thePath, theDocument, theProgress);
 }
 
-//=================================================================================================
-
 bool DEGLTF_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
                             occ::handle<XSControl_WorkSession>&  theWS,
@@ -80,8 +60,6 @@ bool DEGLTF_Provider::Write(const TCollection_AsciiString&       thePath,
   (void)theWS;
   return Write(thePath, theDocument, theProgress);
 }
-
-//=================================================================================================
 
 bool DEGLTF_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
@@ -114,8 +92,6 @@ bool DEGLTF_Provider::Read(const TCollection_AsciiString&       thePath,
   return true;
 }
 
-//=================================================================================================
-
 bool DEGLTF_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
                             const Message_ProgressRange&         theProgress)
@@ -146,7 +122,7 @@ bool DEGLTF_Provider::Write(const TCollection_AsciiString&       thePath,
       << ": Target format doesn't support custom units. Model will be scaled to Meters (unit: "
       << aNode->GlobalParameters.LengthUnit << ")";
   }
-  aConverter.SetOutputLengthUnit(1.); // gltf units always Meters
+  aConverter.SetOutputLengthUnit(1.);
   aConverter.SetOutputCoordinateSystem(aNode->InternalParameters.FileCS);
 
   NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString> aFileInfo;
@@ -178,8 +154,6 @@ bool DEGLTF_Provider::Write(const TCollection_AsciiString&       thePath,
   return true;
 }
 
-//=================================================================================================
-
 bool DEGLTF_Provider::Read(const TCollection_AsciiString&      thePath,
                            TopoDS_Shape&                       theShape,
                            occ::handle<XSControl_WorkSession>& theWS,
@@ -189,8 +163,6 @@ bool DEGLTF_Provider::Read(const TCollection_AsciiString&      thePath,
   return Read(thePath, theShape, theProgress);
 }
 
-//=================================================================================================
-
 bool DEGLTF_Provider::Write(const TCollection_AsciiString&      thePath,
                             const TopoDS_Shape&                 theShape,
                             occ::handle<XSControl_WorkSession>& theWS,
@@ -199,8 +171,6 @@ bool DEGLTF_Provider::Write(const TCollection_AsciiString&      thePath,
   (void)theWS;
   return Write(thePath, theShape, theProgress);
 }
-
-//=================================================================================================
 
 bool DEGLTF_Provider::Read(const TCollection_AsciiString& thePath,
                            TopoDS_Shape&                  theShape,
@@ -224,8 +194,6 @@ bool DEGLTF_Provider::Read(const TCollection_AsciiString& thePath,
   return true;
 }
 
-//=================================================================================================
-
 bool DEGLTF_Provider::Write(const TCollection_AsciiString& thePath,
                             const TopoDS_Shape&            theShape,
                             const Message_ProgressRange&   theProgress)
@@ -236,14 +204,10 @@ bool DEGLTF_Provider::Write(const TCollection_AsciiString& thePath,
   return Write(thePath, aDoc, theProgress);
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DEGLTF_Provider::GetFormat() const
 {
   return TCollection_AsciiString("GLTF");
 }
-
-//=================================================================================================
 
 TCollection_AsciiString DEGLTF_Provider::GetVendor() const
 {

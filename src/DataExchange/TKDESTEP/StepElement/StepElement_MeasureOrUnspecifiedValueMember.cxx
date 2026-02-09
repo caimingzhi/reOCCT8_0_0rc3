@@ -6,21 +6,15 @@ IMPLEMENT_STANDARD_RTTIEXT(StepElement_MeasureOrUnspecifiedValueMember, StepData
 static const char* aContextDependedMeasure = "CONTEXT_DEPENDENT_MEASURE";
 static const char* anUnspecifiedValue      = "UNSPECIFIED_VALUE";
 
-//=================================================================================================
-
 StepElement_MeasureOrUnspecifiedValueMember::StepElement_MeasureOrUnspecifiedValueMember()
     : mycase(0)
 {
 }
 
-//=================================================================================================
-
 bool StepElement_MeasureOrUnspecifiedValueMember::HasName() const
 {
   return mycase > 0;
 }
-
-//=================================================================================================
 
 const char* StepElement_MeasureOrUnspecifiedValueMember::Name() const
 {
@@ -36,9 +30,7 @@ const char* StepElement_MeasureOrUnspecifiedValueMember::Name() const
   return "";
 }
 
-//=================================================================================================
-
-static int CompareNames(const char* name, int& /*numen*/)
+static int CompareNames(const char* name, int&)
 {
   int thecase = 0;
   if (!name || name[0] == '\0')
@@ -54,8 +46,6 @@ static int CompareNames(const char* name, int& /*numen*/)
   return thecase;
 }
 
-//=================================================================================================
-
 bool StepElement_MeasureOrUnspecifiedValueMember::SetName(const char* name)
 {
   int numit = 0;
@@ -64,8 +54,6 @@ bool StepElement_MeasureOrUnspecifiedValueMember::SetName(const char* name)
     SetInteger(numit);
   return (mycase > 0);
 }
-
-//=================================================================================================
 
 bool StepElement_MeasureOrUnspecifiedValueMember::Matches(const char* name) const
 {

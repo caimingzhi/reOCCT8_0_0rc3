@@ -7,12 +7,8 @@
 #include <StepRepr_RepresentationItem.hpp>
 #include <StepShape_ConnectedFaceShapeRepresentation.hpp>
 
-//=================================================================================================
-
 RWStepShape_RWConnectedFaceShapeRepresentation::RWStepShape_RWConnectedFaceShapeRepresentation() =
   default;
-
-//=================================================================================================
 
 void RWStepShape_RWConnectedFaceShapeRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&                    data,
@@ -20,11 +16,9 @@ void RWStepShape_RWConnectedFaceShapeRepresentation::ReadStep(
   occ::handle<Interface_Check>&                                  ach,
   const occ::handle<StepShape_ConnectedFaceShapeRepresentation>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "connected_face_shape_representation"))
     return;
-
-  // Inherited fields of Representation
 
   occ::handle<TCollection_HAsciiString> aRepresentation_Name;
   data->ReadString(num, 1, "representation.name", ach, aRepresentation_Name);
@@ -58,18 +52,13 @@ void RWStepShape_RWConnectedFaceShapeRepresentation::ReadStep(
                    STANDARD_TYPE(StepRepr_RepresentationContext),
                    aRepresentation_ContextOfItems);
 
-  // Initialize entity
   ent->Init(aRepresentation_Name, aRepresentation_Items, aRepresentation_ContextOfItems);
 }
-
-//=================================================================================================
 
 void RWStepShape_RWConnectedFaceShapeRepresentation::WriteStep(
   StepData_StepWriter&                                           SW,
   const occ::handle<StepShape_ConnectedFaceShapeRepresentation>& ent) const
 {
-
-  // Inherited fields of Representation
 
   SW.Send(ent->StepRepr_Representation::Name());
 
@@ -85,14 +74,10 @@ void RWStepShape_RWConnectedFaceShapeRepresentation::WriteStep(
   SW.Send(ent->StepRepr_Representation::ContextOfItems());
 }
 
-//=================================================================================================
-
 void RWStepShape_RWConnectedFaceShapeRepresentation::Share(
   const occ::handle<StepShape_ConnectedFaceShapeRepresentation>& ent,
   Interface_EntityIterator&                                      iter) const
 {
-
-  // Inherited fields of Representation
 
   for (int i1 = 1; i1 <= ent->StepRepr_Representation::NbItems(); i1++)
   {

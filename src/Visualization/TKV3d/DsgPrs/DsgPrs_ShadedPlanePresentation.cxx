@@ -6,8 +6,6 @@
 #include <Prs3d_Presentation.hpp>
 #include <Prs3d_ShadingAspect.hpp>
 
-//=================================================================================================
-
 void DsgPrs_ShadedPlanePresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                          const occ::handle<Prs3d_Drawer>&       aDrawer,
                                          const gp_Pnt&                          aPt1,

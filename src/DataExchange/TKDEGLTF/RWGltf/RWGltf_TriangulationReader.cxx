@@ -1,16 +1,4 @@
-// Author: Kirill Gavrilov
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <RWGltf_TriangulationReader.hpp>
 
@@ -34,7 +22,7 @@ namespace
   static const float THE_NORMAL_PREC2     = 0.001f;
 
 #ifdef HAVE_DRACO
-  //! Return array type from Draco attribute type.
+
   static RWGltf_GltfArrayType arrayTypeFromDraco(draco::GeometryAttribute::Type theType)
   {
     switch (theType)
@@ -52,7 +40,6 @@ namespace
     }
   }
 
-  //! Return layout from Draco number of components.
   static RWGltf_GltfAccessorLayout layoutFromDraco(int8_t theNbComps)
   {
     switch (theNbComps)
@@ -69,7 +56,6 @@ namespace
     return RWGltf_GltfAccessorLayout_UNKNOWN;
   }
 
-  //! Return component type from Draco data type.
   static RWGltf_GltfAccessorCompType compTypeFromDraco(draco::DataType theType)
   {
     switch (theType)
@@ -85,12 +71,10 @@ namespace
       case draco::DT_INT32:
       case draco::DT_UINT32:
         return RWGltf_GltfAccessorCompType_UInt32;
-      // case draco::DT_INT64:
-      // case draco::DT_UINT64:
+
       case draco::DT_FLOAT32:
         return RWGltf_GltfAccessorCompType_Float32;
-      // case draco::DT_FLOAT64:
-      // case draco::DT_BOOL:
+
       default:
         return RWGltf_GltfAccessorCompType_UNKNOWN;
     }
@@ -100,19 +84,13 @@ namespace
 
 IMPLEMENT_STANDARD_RTTIEXT(RWGltf_TriangulationReader, RWMesh_TriangulationReader)
 
-//=================================================================================================
-
 RWGltf_TriangulationReader::RWGltf_TriangulationReader() = default;
-
-//=================================================================================================
 
 void RWGltf_TriangulationReader::reportError(const TCollection_AsciiString& theText) const
 {
   Message::SendFail(TCollection_AsciiString("File '") + myFileName + "' defines invalid glTF!\n"
                     + theText);
 }
-
-//=================================================================================================
 
 bool RWGltf_TriangulationReader::LoadStreamData(
   const occ::handle<RWMesh_TriangulationSource>& theSourceMesh,
@@ -137,8 +115,6 @@ bool RWGltf_TriangulationReader::LoadStreamData(
   return true;
 }
 
-//=================================================================================================
-
 bool RWGltf_TriangulationReader::readStreamData(
   const occ::handle<RWGltf_GltfLatePrimitiveArray>& theSourceGltfMesh,
   const RWGltf_GltfPrimArrayData&                   theGltfData,
@@ -154,8 +130,6 @@ bool RWGltf_TriangulationReader::readStreamData(
                     theGltfData.Accessor,
                     theGltfData.Type);
 }
-
-//=================================================================================================
 
 bool RWGltf_TriangulationReader::readFileData(
   const occ::handle<RWGltf_GltfLatePrimitiveArray>& theSourceGltfMesh,
@@ -186,8 +160,6 @@ bool RWGltf_TriangulationReader::readFileData(
   }
   return true;
 }
-
-//=================================================================================================
 
 bool RWGltf_TriangulationReader::loadStreamData(
   const occ::handle<RWMesh_TriangulationSource>& theSourceMesh,
@@ -223,8 +195,6 @@ bool RWGltf_TriangulationReader::loadStreamData(
   }
   return wasLoaded;
 }
-
-//=================================================================================================
 
 bool RWGltf_TriangulationReader::readDracoBuffer(
   const occ::handle<RWGltf_GltfLatePrimitiveArray>& theSourceGltfMesh,
@@ -292,7 +262,6 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
     return false;
   }
 
-  // copy vertex attributes
   for (int32_t anAttrIter = 0; anAttrIter < aDracoStat.value()->num_attributes(); ++anAttrIter)
   {
     const draco::PointAttribute*      anAttrib    = aDracoStat.value()->attribute(anAttrIter);
@@ -395,7 +364,6 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
             return false;
           }
 
-          // Y should be flipped (relative to image layout used by OCCT)
           float aTexY = 1.0f - aVec2->y();
           setNodeUV(theDestMesh, THE_LOWER_NODE_INDEX + aVertIter, gp_Pnt2d(aVec2->x(), aTexY));
         }
@@ -408,7 +376,6 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
     }
   }
 
-  // copy triangles
   int aLastTriIndex = 0;
   for (int aFaceIter = 0; aFaceIter < aNbTris; ++aFaceIter)
   {
@@ -459,8 +426,6 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
 #endif
 }
 
-//=================================================================================================
-
 bool RWGltf_TriangulationReader::load(const occ::handle<RWMesh_TriangulationSource>& theSourceMesh,
                                       const occ::handle<Poly_Triangulation>&         theDestMesh,
                                       const occ::handle<OSD_FileSystem>& theFileSystem) const
@@ -497,7 +462,7 @@ bool RWGltf_TriangulationReader::load(const occ::handle<RWMesh_TriangulationSour
     {
       if (hasCompressed)
       {
-        // already decoded (compressed stream defines all attributes at once)
+
         continue;
       }
       if (!readDracoBuffer(aSourceGltfMesh, aData, theDestMesh, theFileSystem))
@@ -505,7 +470,6 @@ bool RWGltf_TriangulationReader::load(const occ::handle<RWMesh_TriangulationSour
         return false;
       }
 
-      // keep decoding - there are might be uncompressed attributes in addition to compressed
       hasCompressed = true;
     }
     else if (!readFileData(aSourceGltfMesh, aData, theDestMesh, theFileSystem))
@@ -515,8 +479,6 @@ bool RWGltf_TriangulationReader::load(const occ::handle<RWMesh_TriangulationSour
   }
   return true;
 }
-
-//=================================================================================================
 
 bool RWGltf_TriangulationReader::finalizeLoading(
   const occ::handle<RWMesh_TriangulationSource>& theSourceMesh,
@@ -533,7 +495,7 @@ bool RWGltf_TriangulationReader::finalizeLoading(
     if (!aSourceGltfMesh.IsNull()
         && aSourceGltfMesh->PrimitiveMode() == RWGltf_GltfPrimitiveMode_Triangles)
     {
-      // reconstruct indexes
+
       const int aNbTris = theDestMesh->NbNodes() / 3;
       if (!setNbTriangles(theDestMesh, aNbTris))
       {
@@ -555,8 +517,6 @@ bool RWGltf_TriangulationReader::finalizeLoading(
   return RWMesh_TriangulationReader::finalizeLoading(theSourceMesh, theDestMesh);
 }
 
-//=================================================================================================
-
 bool RWGltf_TriangulationReader::readBuffer(
   const occ::handle<RWGltf_GltfLatePrimitiveArray>& theSourceMesh,
   const occ::handle<Poly_Triangulation>&            theDestMesh,
@@ -567,8 +527,6 @@ bool RWGltf_TriangulationReader::readBuffer(
 {
   return ReadStream(theSourceMesh, theDestMesh, theStream, theAccessor, theType);
 }
-
-//=================================================================================================
 
 bool RWGltf_TriangulationReader::ReadStream(
   const occ::handle<RWGltf_GltfLatePrimitiveArray>& theSourceMesh,
@@ -995,7 +953,6 @@ bool RWGltf_TriangulationReader::ReadStream(
           return false;
         }
 
-        // Y should be flipped (relative to image layout used by OCCT)
         aVec2->y() = 1.0f - aVec2->y();
         setNodeUV(theDestMesh, THE_LOWER_NODE_INDEX + aVertIter, gp_Pnt2d(aVec2->x(), aVec2->y()));
       }

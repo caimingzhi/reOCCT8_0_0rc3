@@ -25,38 +25,31 @@ public:
 
   Standard_EXPORT Contap_Contour(const gp_Pnt& Eye);
 
-  //! Creates the contour in a given direction.
   Standard_EXPORT Contap_Contour(const occ::handle<Adaptor3d_Surface>&   Surf,
                                  const occ::handle<Adaptor3d_TopolTool>& Domain,
                                  const gp_Vec&                           Direction);
 
-  //! Creates the contour in a given direction.
   Standard_EXPORT Contap_Contour(const occ::handle<Adaptor3d_Surface>&   Surf,
                                  const occ::handle<Adaptor3d_TopolTool>& Domain,
                                  const gp_Vec&                           Direction,
                                  const double                            Angle);
 
-  //! Creates the contour for a perspective view.
   Standard_EXPORT Contap_Contour(const occ::handle<Adaptor3d_Surface>&   Surf,
                                  const occ::handle<Adaptor3d_TopolTool>& Domain,
                                  const gp_Pnt&                           Eye);
 
-  //! Creates the contour in a given direction.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Surface>&   Surf,
                                const occ::handle<Adaptor3d_TopolTool>& Domain);
 
-  //! Creates the contour in a given direction.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Surface>&   Surf,
                                const occ::handle<Adaptor3d_TopolTool>& Domain,
                                const gp_Vec&                           Direction);
 
-  //! Creates the contour in a given direction.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Surface>&   Surf,
                                const occ::handle<Adaptor3d_TopolTool>& Domain,
                                const gp_Vec&                           Direction,
                                const double                            Angle);
 
-  //! Creates the contour for a perspective view.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Surface>&   Surf,
                                const occ::handle<Adaptor3d_TopolTool>& Domain,
                                const gp_Pnt&                           Eye);
@@ -69,15 +62,12 @@ public:
 
   bool IsDone() const;
 
-  //! Returns true if the is no line.
   bool IsEmpty() const;
 
   int NbLines() const;
 
   const Contap_Line& Line(const int Index) const;
 
-  //! Returns a reference on the internal SurfaceFunction.
-  //! This is used to compute tangents on the lines.
   Contap_SurfFunction& SurfaceFunction();
 
 private:

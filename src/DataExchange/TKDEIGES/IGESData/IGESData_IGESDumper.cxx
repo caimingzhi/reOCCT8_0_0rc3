@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IGESData_ColorEntity.hpp>
 #include <IGESData_IGESDumper.hpp>
@@ -38,7 +27,7 @@ IGESData_IGESDumper::IGESData_IGESDumper(const occ::handle<IGESData_IGESModel>& 
 void IGESData_IGESDumper::PrintDNum(const occ::handle<IGESData_IGESEntity>& ent,
                                     Standard_OStream&                       S) const
 {
-  //   Display guaranteed on 12 characters 12345/D24689
+
   int num = 0;
   if (!ent.IsNull())
   {
@@ -46,7 +35,7 @@ void IGESData_IGESDumper::PrintDNum(const occ::handle<IGESData_IGESEntity>& ent,
       S << "    D???    ";
     else if ((num = themodel->Number(ent)) == 0)
       S << "    0:D?????";
-    // throw Interface_InterfaceError("IGESDumper : PrintDNum");
+
     else
     {
       S << Interface_MSG::Blanks(num, 9) << num << ":D" << 2 * num - 1
@@ -60,7 +49,7 @@ void IGESData_IGESDumper::PrintDNum(const occ::handle<IGESData_IGESEntity>& ent,
 void IGESData_IGESDumper::PrintShort(const occ::handle<IGESData_IGESEntity>& ent,
                                      Standard_OStream&                       S) const
 {
-  //  PrintDNum(ent,S);
+
   if (!ent.IsNull())
   {
     int num = 0;
@@ -84,7 +73,7 @@ void IGESData_IGESDumper::Dump(const occ::handle<IGESData_IGESEntity>& ent,
   if (own < 3)
     diratt = own - 1;
   if (att == 0)
-    att = diratt; // -1 signifie : ne rien sortir
+    att = diratt;
 
   if (own < 0)
     return;
@@ -102,12 +91,12 @@ void IGESData_IGESDumper::Dump(const occ::handle<IGESData_IGESEntity>& ent,
   {
     PrintDNum(ent, S);
     return;
-  } // affichage auxiliaire
+  }
   if (own == 1)
   {
     PrintShort(ent, S);
     return;
-  } // affichage auxiliaire
+  }
 
   if (own > 0)
     S << "****    Dump IGES, level " << own << " ( ";
@@ -136,13 +125,12 @@ void IGESData_IGESDumper::Dump(const occ::handle<IGESData_IGESEntity>& ent,
   }
   S << " )    ****\n";
 
-  // ****    Entity 1234:D2467  **  Type:102 Form:56  **  CompositeCurve  **
   S << "\n****    Entity ";
   PrintShort(ent, S);
   S << "\n";
 
   S << "              Directory Part\n";
-  // **      Status :   Blank:1    Subordinate:2    UseFlag:3    Hierarchy:4
+
   if (own >= 2)
     S << "**      Status Number :   Blank:" << ent->BlankStatus()
       << "    Subordinate:" << ent->SubordinateStatus() << "    UseFlag:" << ent->UseFlag()
@@ -239,7 +227,6 @@ void IGESData_IGESDumper::Dump(const occ::handle<IGESData_IGESEntity>& ent,
     }
   }
 
-  //   Attached data : Properties, Associativities, and Sharings
   if (att < 0)
     return;
   Interface_EntityIterator iter   = ent->Properties();

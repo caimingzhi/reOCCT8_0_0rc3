@@ -54,5 +54,3 @@ static const char Shaders_PBREnvBaking_vs[] =
   "  ViewDirection = cubemapVectorTransform (aDir, uYCoeff, uZCoeff);\n"
   "  gl_Position = vec4 (occVertex.xy, 0.0, 1.0);\n"
   "}\n";
-
-// clang-format on

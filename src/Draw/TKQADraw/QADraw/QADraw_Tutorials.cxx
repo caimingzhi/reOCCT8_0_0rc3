@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <QADraw.hpp>
 
@@ -40,8 +29,6 @@
 namespace
 {
 
-  //! Custom AIS object from dox/samples/ais_object.md tutorial.
-  //! Make sure to update tutorial after modifications in this code!
   class MyAisObject : public AIS_InteractiveObject
   {
     DEFINE_STANDARD_RTTI_INLINE(MyAisObject, AIS_InteractiveObject)
@@ -77,8 +64,6 @@ namespace
 
   MyAisObject::MyAisObject()
   {
-    // highlighting might use different display mode (see tutorial)
-    // SetHilightMode (MyDispMode_Highlight);
 
     myDrawer->SetupOwnShadingAspect();
     myDrawer->ShadingAspect()->SetMaterial(Graphic3d_NameOfMaterial_Silver);
@@ -94,11 +79,7 @@ namespace
     TopoDS_Shape aShape = BRepPrimAPI_MakeCylinder(aRadius, aHeight);
     if (theMode == MyDispMode_Main)
     {
-      // use standard shape builders
-      // StdPrs_ShadedShape::Add (thePrs, aShape, myDrawer);
-      // StdPrs_WFShape::Add (thePrs, aShape, myDrawer); // add wireframe
 
-      // use quadric builders for cylinder surface and disks
       const int          aNbSlices = 25;
       Prs3d_ToolCylinder aCyl(aRadius, aRadius, aHeight, aNbSlices, aNbSlices);
       Prs3d_ToolDisk     aDisk(0.0, aRadius, 25, 1);
@@ -118,25 +99,8 @@ namespace
       occ::handle<Graphic3d_Group> aGroupTris = thePrs->NewGroup();
       aGroupTris->SetGroupPrimitivesAspect(myDrawer->ShadingAspect()->Aspect());
       aGroupTris->AddPrimitiveArray(aTris);
-      aGroupTris->SetClosed(true); // will allow backface culling / capping for our solid object
+      aGroupTris->SetClosed(true);
 
-      // manually tessellated disk
-      /*occ::handle<Graphic3d_ArrayOfTriangles> aTris2 =
-        new Graphic3d_ArrayOfTriangles (aNbSlices + 1, aNbSlices * 3,
-      Graphic3d_ArrayFlags_VertexNormal); aTris2->AddVertex (gp_Pnt (0.0, 0.0, aHeight), gp::DZ());
-      for (int aSliceIter = 0; aSliceIter < aNbSlices; ++aSliceIter)
-      {
-        double anAngle = M_PI * 2.0 * double(aSliceIter) / double(aNbSlices);
-        aTris2->AddVertex (gp_Pnt (Cos (anAngle) * aRadius, Sin (anAngle) * aRadius, aHeight),
-      gp::DZ());
-      }
-      for (int aSliceIter = 0; aSliceIter < aNbSlices; ++aSliceIter)
-      {
-        aTris2->AddEdges (1, aSliceIter + 2, aSliceIter + 1 < aNbSlices ? (aSliceIter + 3) : 2);
-      }
-      aGroupTris->AddPrimitiveArray (aTris2);*/
-
-      // manually tessellate cylinder section as a polyline
       occ::handle<Graphic3d_ArrayOfSegments> aSegs =
         new Graphic3d_ArrayOfSegments(4, 4 * 2, Graphic3d_ArrayFlags_None);
       aSegs->AddVertex(gp_Pnt(0.0, -aRadius, 0.0));
@@ -160,7 +124,6 @@ namespace
     }
   }
 
-  //! Custom AIS owner.
   class MyAisOwner : public SelectMgr_EntityOwner
   {
     DEFINE_STANDARD_RTTI_INLINE(MyAisOwner, SelectMgr_EntityOwner)
@@ -241,11 +204,6 @@ namespace
 
       aPrs->SetZLayer(Graphic3d_ZLayerId_Top);
       thePrsMgr->AddToImmediateList(aPrs);
-
-      // occ::handle<Prs3d_PresentationShadow> aShadow = new Prs3d_PresentationShadow
-      // (thePrsMgr->StructureManager(), myPrs); aShadow->SetZLayer (Graphic3d_ZLayerId_Top);
-      // aShadow->Highlight (theStyle);
-      // thePrsMgr->AddToImmediateList (aShadow);
     }
     else
     {
@@ -326,15 +284,9 @@ namespace
       new Select3D_SensitivePrimitiveArray(anOwner);
     aSensTri->InitTriangulation(aTris->Attributes(), aTris->Indices(), TopLoc_Location());
     theSel->Add(aSensTri);
-
-    // occ::handle<SelectMgr_EntityOwner> anOwner = new SelectMgr_EntityOwner (this);
-    // occ::handle<Select3D_SensitiveBox> aSensBox = new Select3D_SensitiveBox (anOwner, aBox);
-    // theSel->Add (aSensBox);
   }
 
 } // namespace
-
-//=================================================================================================
 
 static int QATutorialAisObject(Draw_Interpretor& theDi, int theNbArgs, const char** theArgVec)
 {
@@ -356,8 +308,6 @@ static int QATutorialAisObject(Draw_Interpretor& theDi, int theNbArgs, const cha
   ViewerTest::Display(aPrsName, aPrs);
   return 0;
 }
-
-//=================================================================================================
 
 void QADraw::TutorialCommands(Draw_Interpretor& theCommands)
 {

@@ -3,11 +3,7 @@
 #include <StepBasic_ProductDefinitionFormation.hpp>
 #include <StepRepr_ConfigurationDesignItem.hpp>
 
-//=================================================================================================
-
 StepRepr_ConfigurationDesignItem::StepRepr_ConfigurationDesignItem() = default;
-
-//=================================================================================================
 
 int StepRepr_ConfigurationDesignItem::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -20,14 +16,10 @@ int StepRepr_ConfigurationDesignItem::CaseNum(const occ::handle<Standard_Transie
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ProductDefinition> StepRepr_ConfigurationDesignItem::ProductDefinition() const
 {
   return occ::down_cast<StepBasic_ProductDefinition>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_ProductDefinitionFormation> StepRepr_ConfigurationDesignItem::
   ProductDefinitionFormation() const

@@ -11,7 +11,6 @@ class StepRepr_RepresentationMap;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for RepresentationMap
 class RWStepRepr_RWRepresentationMap
 {
 public:

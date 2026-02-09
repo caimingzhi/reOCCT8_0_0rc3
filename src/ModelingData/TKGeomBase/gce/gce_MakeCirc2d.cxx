@@ -10,31 +10,9 @@
 #include <IntAna2d_IntPoint.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   Creation d un cercle 2d de gp passant par trois points.              +
-//   Trois cas de figures :                                               +
-//      1/ Les trois points sont confondus.                               +
-//      -----------------------------------                               +
-//      Le resultat est le cercle centre en Point1 de rayon zero.         +
-//      2/ Deux des trois points sont confondus.                          +
-//      ----------------------------------------                          +
-//      On cree la mediatrice a deux points non confondus ainsi que la    +
-//      droite passant par ces deux points.                               +
-//      La solution a pour centre l intersection de ces deux droite et    +
-//      pour rayon la distance entre ce centre et l un des trois points.  +
-//      3/ Les trois points sont distinct.                                +
-//      ----------------------------------                                +
-//      On cree la mediatrice a P1P2 ainsi que la mediatrice a P1P3.      +
-//      La solution a pour centre l intersection de ces deux droite et    +
-//      pour rayon la distance entre ce centre et l un des trois points.  +
-//=========================================================================
 gce_MakeCirc2d::gce_MakeCirc2d(const gp_Pnt2d& P1, const gp_Pnt2d& P2, const gp_Pnt2d& P3)
 {
   gp_Dir2d dirx(gp_Dir2d::D::X);
-
-  //=========================================================================
-  //   Traitement.                                                          +
-  //=========================================================================
 
   double dist1 = P1.Distance(P2);
   double dist2 = P1.Distance(P3);
@@ -106,10 +84,6 @@ gce_MakeCirc2d::gce_MakeCirc2d(const gp_Pnt2d& P1, const gp_Pnt2d& P2, const gp_
   }
 }
 
-//==========================================================================
-//   Creation d un gp_Circ2d par son Axe <XAxis> et son rayon  <Radius>.   +
-//==========================================================================
-
 gce_MakeCirc2d::gce_MakeCirc2d(const gp_Ax2d& XAxis, const double Radius, const bool Sense)
 {
   if (Radius >= 0.)
@@ -122,10 +96,6 @@ gce_MakeCirc2d::gce_MakeCirc2d(const gp_Ax2d& XAxis, const double Radius, const 
     TheError = gce_NegativeRadius;
   }
 }
-
-//==========================================================================
-//   Creation d un gp_Circ2d par son Repere <Axis> et son rayon  <Radius>. +
-//==========================================================================
 
 gce_MakeCirc2d::gce_MakeCirc2d(const gp_Ax22d& Axis, const double Radius)
 {
@@ -140,11 +110,6 @@ gce_MakeCirc2d::gce_MakeCirc2d(const gp_Ax22d& Axis, const double Radius)
   }
 }
 
-//==========================================================================
-//   Creation d un gp_Circ2d par son centre <Center> et son rayon          +
-//   <Radius>.                                                             +
-//==========================================================================
-
 gce_MakeCirc2d::gce_MakeCirc2d(const gp_Pnt2d& Center, const double Radius, const bool Sense)
 {
   if (Radius >= 0.)
@@ -158,32 +123,17 @@ gce_MakeCirc2d::gce_MakeCirc2d(const gp_Pnt2d& Center, const double Radius, cons
   }
 }
 
-//==========================================================================
-//   Creation d un gp_Circ2d par son centre <Center> et un point de sa     +
-//   circonference <Point>.                                                +
-//==========================================================================
-
 gce_MakeCirc2d::gce_MakeCirc2d(const gp_Pnt2d& Center, const gp_Pnt2d& Point, const bool Sense)
 {
   TheCirc2d = gp_Circ2d(gp_Ax2d(Center, gp_Dir2d(gp_Dir2d::D::X)), Point.Distance(Center), Sense);
   TheError  = gce_Done;
 }
 
-//==========================================================================
-//   Creation d un cercle <TheCirc2d> concentrique a <Circ> passant par le +
-//   point <Point1>.                                                       +
-//==========================================================================
-
 gce_MakeCirc2d::gce_MakeCirc2d(const gp_Circ2d& Circ, const gp_Pnt2d& Point)
 {
   TheCirc2d = gp_Circ2d(Circ.Axis(), Point.Distance(Circ.Location()));
   TheError  = gce_Done;
 }
-
-//==========================================================================
-//   Creation d un cercle <TheCirc2d> concentrique a <Circ> a une distance +
-//   <Dist1>.                                                              +
-//==========================================================================
 
 gce_MakeCirc2d::gce_MakeCirc2d(const gp_Circ2d& Circ, const double Dist1)
 {

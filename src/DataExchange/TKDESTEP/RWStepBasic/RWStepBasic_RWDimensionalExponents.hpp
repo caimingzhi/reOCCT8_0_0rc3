@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_DimensionalExponents;
 class StepData_StepWriter;
 
-//! Read & Write Module for DimensionalExponents
 class RWStepBasic_RWDimensionalExponents
 {
 public:

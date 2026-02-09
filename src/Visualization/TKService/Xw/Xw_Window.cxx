@@ -8,14 +8,12 @@
 #if defined(HAVE_XLIB)
   #include <X11/Xlib.h>
   #include <X11/Xutil.h>
-// #include <X11/XF86keysym.h>
+
 #endif
 
 #include <Aspect_DisplayConnection.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Xw_Window, Aspect_Window)
-
-//=================================================================================================
 
 Xw_Window::Xw_Window(const occ::handle<Aspect_DisplayConnection>& theXDisplay,
                      const char*                                  theTitle,
@@ -77,7 +75,6 @@ Xw_Window::Xw_Window(const occ::handle<Aspect_DisplayConnection>& theXDisplay,
     throw Aspect_WindowDefinitionError("Xw_Window, Unable to create window");
   }
 
-  // if parent - desktop
   XSizeHints aSizeHints;
   aSizeHints.x      = myXLeft;
   aSizeHints.y      = myYTop;
@@ -94,14 +91,6 @@ Xw_Window::Xw_Window(const occ::handle<Aspect_DisplayConnection>& theXDisplay,
                          0,
                          &aSizeHints);
 
-  /*XTextProperty aTitleProperty;
-  aTitleProperty.encoding = None;
-  char* aTitle = (char* )theTitle;
-  Xutf8TextListToTextProperty(aDisp, &aTitle, 1, XUTF8StringStyle, &aTitleProperty);
-  XSetWMName      (aDisp, (Window )myXWindow, &aTitleProperty);
-  XSetWMProperties(aDisp, (Window )myXWindow, &aTitleProperty, &aTitleProperty, NULL, 0, NULL, NULL,
-  NULL);*/
-
   XFlush(aDisp);
 #else
   (void)theTitle;
@@ -111,8 +100,6 @@ Xw_Window::Xw_Window(const occ::handle<Aspect_DisplayConnection>& theXDisplay,
   }
 #endif
 }
-
-//=================================================================================================
 
 Xw_Window::Xw_Window(const occ::handle<Aspect_DisplayConnection>& theXDisplay,
                      const Aspect_Drawable                        theXWin,
@@ -154,11 +141,9 @@ Xw_Window::Xw_Window(const occ::handle<Aspect_DisplayConnection>& theXDisplay,
 
   DoResize();
 #else
-  // throw Standard_NotImplemented("Xw_Window, not implemented");
+
 #endif
 }
-
-//=================================================================================================
 
 Xw_Window::~Xw_Window()
 {
@@ -169,8 +154,6 @@ Xw_Window::~Xw_Window()
 #endif
   }
 }
-
-//=================================================================================================
 
 bool Xw_Window::IsMapped() const
 {
@@ -193,8 +176,6 @@ bool Xw_Window::IsMapped() const
 #endif
 }
 
-//=================================================================================================
-
 void Xw_Window::Map() const
 {
   if (IsVirtual() || myXWindow == 0)
@@ -207,8 +188,6 @@ void Xw_Window::Map() const
   XFlush(myDisplay->GetDisplay());
 #endif
 }
-
-//=================================================================================================
 
 void Xw_Window::Unmap() const
 {
@@ -223,8 +202,6 @@ void Xw_Window::Unmap() const
                  DefaultScreen(myDisplay->GetDisplay()));
 #endif
 }
-
-//=================================================================================================
 
 Aspect_TypeOfResize Xw_Window::DoResize()
 {
@@ -297,8 +274,6 @@ Aspect_TypeOfResize Xw_Window::DoResize()
 #endif
 }
 
-//=================================================================================================
-
 double Xw_Window::Ratio() const
 {
   if (IsVirtual() || myXWindow == 0)
@@ -316,8 +291,6 @@ double Xw_Window::Ratio() const
   return 1.0;
 #endif
 }
-
-//=================================================================================================
 
 void Xw_Window::Position(int& theX1, int& theY1, int& theX2, int& theY2) const
 {
@@ -352,8 +325,6 @@ void Xw_Window::Position(int& theX1, int& theY1, int& theX2, int& theY2) const
 #endif
 }
 
-//=================================================================================================
-
 void Xw_Window::Size(int& theWidth, int& theHeight) const
 {
   if (IsVirtual() || myXWindow == 0)
@@ -373,8 +344,6 @@ void Xw_Window::Size(int& theWidth, int& theHeight) const
 #endif
 }
 
-//=================================================================================================
-
 void Xw_Window::SetTitle(const TCollection_AsciiString& theTitle)
 {
   if (myXWindow != 0)
@@ -386,8 +355,6 @@ void Xw_Window::SetTitle(const TCollection_AsciiString& theTitle)
 #endif
   }
 }
-
-//=================================================================================================
 
 void Xw_Window::InvalidateContent(const occ::handle<Aspect_DisplayConnection>& theDisp)
 {
@@ -410,8 +377,6 @@ void Xw_Window::InvalidateContent(const occ::handle<Aspect_DisplayConnection>& t
   (void)theDisp;
 #endif
 }
-
-//=================================================================================================
 
 Aspect_VKey Xw_Window::VirtualKeyFromNative(unsigned long theKey)
 {
@@ -466,12 +431,11 @@ Aspect_VKey Xw_Window::VirtualKeyFromNative(unsigned long theKey)
       return Aspect_VKey_Backspace;
     case XK_Tab:
       return Aspect_VKey_Tab;
-    // case XK_Linefeed:
+
     case XK_Return:
     case XK_KP_Enter:
       return Aspect_VKey_Enter;
-    // case XK_Pause:
-    //   return Aspect_VKey_Pause;
+
     case XK_Escape:
       return Aspect_VKey_Escape;
     case XK_Home:
@@ -490,24 +454,20 @@ Aspect_VKey Xw_Window::VirtualKeyFromNative(unsigned long theKey)
       return Aspect_VKey_PageDown;
     case XK_End:
       return Aspect_VKey_End;
-    // case XK_Insert:
-    //   return Aspect_VKey_Insert;
+
     case XK_Menu:
       return Aspect_VKey_Menu;
     case XK_Num_Lock:
       return Aspect_VKey_Numlock;
-    // case XK_KP_Delete:
-    //   return Aspect_VKey_NumDelete;
+
     case XK_KP_Multiply:
       return Aspect_VKey_NumpadMultiply;
     case XK_KP_Add:
       return Aspect_VKey_NumpadAdd;
-    // case XK_KP_Separator:
-    //   return Aspect_VKey_Separator;
+
     case XK_KP_Subtract:
       return Aspect_VKey_NumpadSubtract;
-    // case XK_KP_Decimal:
-    //   return Aspect_VKey_Decimal;
+
     case XK_KP_Divide:
       return Aspect_VKey_NumpadDivide;
     case XK_Shift_L:
@@ -516,42 +476,39 @@ Aspect_VKey Xw_Window::VirtualKeyFromNative(unsigned long theKey)
     case XK_Control_L:
     case XK_Control_R:
       return Aspect_VKey_Control;
-    // case XK_Caps_Lock:
-    //   return Aspect_VKey_CapsLock;
+
     case XK_Alt_L:
     case XK_Alt_R:
       return Aspect_VKey_Alt;
-    // case XK_Super_L:
-    // case XK_Super_R:
-    //   return Aspect_VKey_Super;
+
     case XK_Delete:
       return Aspect_VKey_Delete;
 
-    case 0x1008FF11: // XF86AudioLowerVolume
+    case 0x1008FF11:
       return Aspect_VKey_VolumeDown;
-    case 0x1008FF12: // XF86AudioMute
+    case 0x1008FF12:
       return Aspect_VKey_VolumeMute;
-    case 0x1008FF13: // XF86AudioRaiseVolume
+    case 0x1008FF13:
       return Aspect_VKey_VolumeUp;
 
-    case 0x1008FF14: // XF86AudioPlay
+    case 0x1008FF14:
       return Aspect_VKey_MediaPlayPause;
-    case 0x1008FF15: // XF86AudioStop
+    case 0x1008FF15:
       return Aspect_VKey_MediaStop;
-    case 0x1008FF16: // XF86AudioPrev
+    case 0x1008FF16:
       return Aspect_VKey_MediaPreviousTrack;
-    case 0x1008FF17: // XF86AudioNext
+    case 0x1008FF17:
       return Aspect_VKey_MediaNextTrack;
 
-    case 0x1008FF18: // XF86HomePage
+    case 0x1008FF18:
       return Aspect_VKey_BrowserHome;
-    case 0x1008FF26: // XF86Back
+    case 0x1008FF26:
       return Aspect_VKey_BrowserBack;
-    case 0x1008FF27: // XF86Forward
+    case 0x1008FF27:
       return Aspect_VKey_BrowserForward;
-    case 0x1008FF28: // XF86Stop
+    case 0x1008FF28:
       return Aspect_VKey_BrowserStop;
-    case 0x1008FF29: // XF86Refresh
+    case 0x1008FF29:
       return Aspect_VKey_BrowserRefresh;
   }
 #else
@@ -560,11 +517,9 @@ Aspect_VKey Xw_Window::VirtualKeyFromNative(unsigned long theKey)
   return Aspect_VKey_UNKNOWN;
 }
 
-//=================================================================================================
-
 bool Xw_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
                                XEvent&
-#if defined(HAVE_XLIB) // msvc before VS2015 had problems with (void )theMsg
+#if defined(HAVE_XLIB)
                                  theMsg
 #endif
 )
@@ -572,7 +527,6 @@ bool Xw_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
 #if defined(HAVE_XLIB)
   Display* aDisplay = myDisplay->GetDisplay();
 
-  // Handle event for the chosen display connection
   switch (theMsg.type)
   {
     case ClientMessage:
@@ -601,7 +555,6 @@ bool Xw_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
         theListener.ProcessExpose();
       }
 
-      // remove all the ExposureMask and process them at once
       for (int aNbMaxEvents = XPending(aDisplay); aNbMaxEvents > 0; --aNbMaxEvents)
       {
         if (!XCheckWindowEvent(aDisplay, (Window)myXWindow, ExposureMask, &theMsg))
@@ -614,7 +567,7 @@ bool Xw_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
     }
     case ConfigureNotify:
     {
-      // remove all the StructureNotifyMask and process them at once
+
       for (int aNbMaxEvents = XPending(aDisplay); aNbMaxEvents > 0; --aNbMaxEvents)
       {
         if (!XCheckWindowEvent(aDisplay, (Window)myXWindow, StructureNotifyMask, &theMsg))
@@ -710,7 +663,6 @@ bool Xw_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
         return false;
       }
 
-      // remove all the ButtonMotionMask and process them at once
       for (int aNbMaxEvents = XPending(aDisplay); aNbMaxEvents > 0; --aNbMaxEvents)
       {
         if (!XCheckWindowEvent(aDisplay,

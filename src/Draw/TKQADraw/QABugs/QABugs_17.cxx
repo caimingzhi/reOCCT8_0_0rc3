@@ -42,10 +42,9 @@
 
 #include <Standard_ErrorHandler.hpp>
 
-static int BUC60842(Draw_Interpretor& di, int /*argc*/, const char** /*argv*/)
+static int BUC60842(Draw_Interpretor& di, int, const char**)
 {
   char abuf[16];
-  // char * abuf = new char[16];
 
   const char* st = abuf;
 
@@ -205,7 +204,6 @@ static int BUC60970(Draw_Interpretor& di, int argc, const char** argv)
     bRepSpineWire.Add(TopoDS::Wire(exp_.Current()));
   }
 
-  // printf("total no of wires are ............. %d\n", i);
   di << "total no of wires are ............. " << i << "\n";
 
   TopoDS_Wire spineWire = bRepSpineWire.Wire();
@@ -256,11 +254,6 @@ static int BUC60915_1(Draw_Interpretor& di, int argc, const char** argv)
   }
   occ::handle<AIS_InteractiveContext> context = ViewerTest::GetAISContext();
 
-  // The following dimension code has problems regarding arrow_size. The desired effect is not
-  // produced.
-  /***************************************/
-  // First view
-  /***************************************/
   gp_Pnt                             p1 = gp_Pnt(602.51, 50., 0.);
   gp_Pnt                             p2 = gp_Pnt(602.51, 200., 0.);
   gp_Pnt                             p3 = gp_Pnt(102.51, 200., 0.);
@@ -283,47 +276,35 @@ static int BUC60915_1(Draw_Interpretor& di, int argc, const char** argv)
   occ::handle<Prs3d_DimensionAspect> anAspect = new Prs3d_DimensionAspect();
   anAspect->MakeArrows3d(true);
   anAspect->ArrowAspect()->SetAngle(M_PI / 180.0 * 10.0);
-  /***************************************/
-  // dimension "L 502.51"
-  /***************************************/
+
   occ::handle<PrsDim_LengthDimension> len = new PrsDim_LengthDimension(V2, V3, pln->Pln());
   anAspect->ArrowAspect()->SetLength(30.0);
   len->SetDimensionAspect(anAspect);
   context->Display(len, false);
-  /***************************************/
-  // dimension "L 90"
-  /***************************************/
+
   occ::handle<PrsDim_LengthDimension> len1 = new PrsDim_LengthDimension(V7, V4, pln->Pln());
   len1->SetDimensionAspect(anAspect);
   len1->SetFlyout(30.0);
   anAspect->ArrowAspect()->SetLength(100.0);
   context->Display(len1, false);
-  /***************************************/
-  // dimension "L 150"
-  /***************************************/
+
   occ::handle<PrsDim_LengthDimension> len2 = new PrsDim_LengthDimension(V1, V2, pln->Pln());
   len2->SetDimensionAspect(anAspect);
   context->Display(len2, false);
-  /***************************************/
-  // dimension "R 88.58"
-  /***************************************/
+
   gp_Circ     cir = gp_Circ(gp_Ax2(gp_Pnt(191.09, -88.58, 0), gp_Dir(gp_Dir::D::Z)), 88.58);
   TopoDS_Edge E1 = BRepBuilderAPI_MakeEdge(cir, gp_Pnt(191.09, 0, 0.), gp_Pnt(191.09, -177.16, 0.));
   occ::handle<PrsDim_RadiusDimension> dim1 = new PrsDim_RadiusDimension(E1);
   dim1->SetDimensionAspect(anAspect);
   context->Display(dim1, false);
-  /***************************************/
-  // dimension "R 43.80"
-  /***************************************/
+
   gp_Circ     cir1   = gp_Circ(gp_Ax2(gp_Pnt(191.09, -88.58, 0), gp_Dir(gp_Dir::D::Z)), 43.80);
   TopoDS_Edge E_cir1 = BRepBuilderAPI_MakeEdge(cir1);
   dim1               = new PrsDim_RadiusDimension(E_cir1);
   anAspect->ArrowAspect()->SetLength(60.0);
   dim1->SetDimensionAspect(anAspect);
   context->Display(dim1, false);
-  /***************************************/
-  // dimension "R 17.86"
-  /***************************************/
+
   gp_Circ     cir2   = gp_Circ(gp_Ax2(gp_Pnt(566.11, -88.58, 0), gp_Dir(gp_Dir::D::NZ)), 17.86);
   TopoDS_Edge E_cir2 = BRepBuilderAPI_MakeEdge(cir2);
   dim1               = new PrsDim_RadiusDimension(E_cir2);
@@ -334,7 +315,7 @@ static int BUC60915_1(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-static int OCC138(Draw_Interpretor& di, int /*argc*/, const char** argv)
+static int OCC138(Draw_Interpretor& di, int, const char** argv)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
   if (aContext.IsNull())
@@ -377,7 +358,7 @@ static int OCC138(Draw_Interpretor& di, int /*argc*/, const char** argv)
   return 0;
 }
 
-static int OCC138LC(Draw_Interpretor& di, int /*argc*/, const char** argv)
+static int OCC138LC(Draw_Interpretor& di, int, const char** argv)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
   if (aContext.IsNull())
@@ -422,8 +403,6 @@ static int OCC138LC(Draw_Interpretor& di, int /*argc*/, const char** argv)
 
 #include <BRepBndLib.hpp>
 
-//=================================================================================================
-
 static int OCC566(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
@@ -452,8 +431,6 @@ static int OCC566(Draw_Interpretor& di, int n, const char** a)
 }
 
 #include <BRepFilletAPI_MakeFillet.hpp>
-
-//=================================================================================================
 
 static int OCC570(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -487,16 +464,12 @@ static int OCC570(Draw_Interpretor& di, int argc, const char** argv)
       BRepFilletAPI_MakeFillet mkFillet(aBox);
       mkFillet.SetContinuity(GeomAbs_C1, .001);
 
-      // Setup variable fillet data
       NCollection_Array1<gp_Pnt2d> t_pnt(1, 4);
       t_pnt.SetValue(1, gp_Pnt2d(0.0, 5.0));
       t_pnt.SetValue(2, gp_Pnt2d(0.3, 15.0));
       t_pnt.SetValue(3, gp_Pnt2d(0.7, 15.0));
       t_pnt.SetValue(4, gp_Pnt2d(1.0, 5.0));
 
-      // HERE:
-      // It is impossible to build fillet if at least one edge
-      // with variable radius is added!!! If all are constant, everything is ok.
       mkFillet.Add(t_pnt, e1);
       mkFillet.Add(5.0, e2);
       mkFillet.Add(t_pnt, e3);
@@ -590,7 +563,7 @@ static int UPDATEVOL(Draw_Interpretor& di, int narg, const char** a)
     Rad = Draw::Atof(a[2 * ii + 1]);
     uandr.ChangeValue(ii).SetCoord(Par, Rad);
   }
-  // HELPDESK: Add law creation
+
   const bool aLawMode = !strcmp(a[0], "OCC570evollaw");
   if (aLawMode)
   {
@@ -635,8 +608,6 @@ static int BUILDEVOL(Draw_Interpretor& di, int, const char**)
 #include <Geom_TrimmedCurve.hpp>
 #include <GeomFill_NSections.hpp>
 #include <BRepBuilderAPI_MakeFace.hpp>
-
-//=================================================================================================
 
 static int OCC606(Draw_Interpretor& di, int n, const char** a)
 {
@@ -697,8 +668,6 @@ static int OCC606(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int OCC813(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -710,8 +679,6 @@ static int OCC813(Draw_Interpretor& di, int argc, const char** argv)
   const char* str;
   double      U = Draw::Atof(argv[1]);
   double      V = Draw::Atof(argv[2]);
-
-  // Between ellipse and point:
 
   occ::handle<Geom_Ellipse> ell =
     new Geom_Ellipse(gp_Ax2(gp_Pnt(1262.224429, 425.040878, 363.609716),
@@ -745,7 +712,6 @@ static int OCC813(Draw_Interpretor& di, int argc, const char** argv)
     aContext->Display(aisp, false);
   }
 
-  // This does not give any solutions.
   Geom2dGcc_Lin2d2Tan lintan(qcur, pt2d, 0.1);
   di << "OCC813 nb of solutions = " << lintan.NbSolutions() << "\n";
 
@@ -774,8 +740,6 @@ static int OCC813(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int OCC814(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc > 1)
@@ -785,8 +749,6 @@ static int OCC814(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   const char* str;
-
-  // Between Ellipse and Circle:
 
   occ::handle<Geom_Circle>  cir = new Geom_Circle(gp_Ax2(gp_Pnt(823.687192, 502.366825, 478.960440),
                                                         gp_Dir(0.173648, 0.984808, 0.000000),
@@ -831,7 +793,6 @@ static int OCC814(Draw_Interpretor& di, int argc, const char** argv)
   Geom2dGcc_QualifiedCurve qcur(acur, GccEnt_outside);
   Geom2dGcc_QualifiedCurve qfromcur(afromcur, GccEnt_outside);
 
-  // This does not give any solutions.
   Geom2dGcc_Lin2d2Tan lintan(qcur, qfromcur, 0.1);
   di << "OCC814 nb of solutions = " << lintan.NbSolutions() << "\n";
 
@@ -862,8 +823,6 @@ static int OCC814(Draw_Interpretor& di, int argc, const char** argv)
 
 #include <ShapeFix_Wire.hpp>
 
-//=================================================================================================
-
 static int OCC884(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3 || argc > 5)
@@ -872,7 +831,7 @@ static int OCC884(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  TopoDS_Shape shape = DBRep::Get(argv[2]); // read the shape
+  TopoDS_Shape shape = DBRep::Get(argv[2]);
 
   TopExp_Explorer exp(shape, TopAbs_EDGE);
   if (!exp.More())
@@ -886,7 +845,6 @@ static int OCC884(Draw_Interpretor& di, int argc, const char** argv)
   builder.MakeWire(wire);
   builder.Add(wire, TopoDS::Edge(exp.Current()));
 
-  // HelpDesk: Create planar face if possible
   TopoDS_Face face = BRepBuilderAPI_MakeFace(wire, true);
 
   occ::handle<ShapeAnalysis_Wire> advWA = new ShapeAnalysis_Wire;
@@ -930,7 +888,7 @@ static int OCC884(Draw_Interpretor& di, int argc, const char** argv)
   sfw->SetFace(face);
 
   if (argc > 3)
-    sfw->SetPrecision(Draw::Atof(argv[3]) /*0.1*/);
+    sfw->SetPrecision(Draw::Atof(argv[3]));
   if (argc > 4)
     sfw->SetMaxTolerance(Draw::Atof(argv[4]));
   di << "Info: Precision is set to " << sfw->Precision() << "\n";
@@ -939,7 +897,7 @@ static int OCC884(Draw_Interpretor& di, int argc, const char** argv)
   sfw->ModifyTopologyMode()          = true;
   sfw->ModifyGeometryMode()          = true;
   sfw->FixSelfIntersectingEdgeMode() = 1;
-  // printf("Info: FixSelfIntersection = %d\n",sfw->FixSelfIntersection());
+
   di << "Info: FixSelfIntersection = " << (int)sfw->FixSelfIntersection() << "\n";
 
   DBRep::Set(argv[1], sfw->Wire());
@@ -947,7 +905,6 @@ static int OCC884(Draw_Interpretor& di, int argc, const char** argv)
   status = ShapeExtend_OK;
   if (sfw->StatusSelfIntersection(status))
     di << "Info: ShapeExtend_OK : No intersection found\n";
-  // printf("Info: ShapeExtend_OK : No intersection found\n");
 
   status = ShapeExtend_FAIL1;
   if (sfw->StatusSelfIntersection(status))
@@ -998,10 +955,6 @@ static int OCC884(Draw_Interpretor& di, int argc, const char** argv)
 #include <TopoDS_Solid.hpp>
 #include <BRepFeat_MakeDPrism.hpp>
 
-//=======================================================================
-// function : OCCN1
-// purpose  : FEATURE OPERATION (BOSS and SLOT)
-//=======================================================================
 static int OCCN1(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 4)
@@ -1034,8 +987,6 @@ static int OCCN1(Draw_Interpretor& di, int argc, const char** argv)
 
   BRepBuilderAPI_MakeFace face(twire);
   const TopoDS_Face&      tface = face.Face();
-  ////////occ::handle<AIS_Shape> face_ais = new AIS_Shape( tface );
-  ////////aContext->Display(face_ais);
 
   TopoDS_Solid        box;
   BRepPrimAPI_MakeBox block(gp_Pnt(-50, -50, -150), 150, 150, 100);
@@ -1058,8 +1009,6 @@ static int OCCN1(Draw_Interpretor& di, int argc, const char** argv)
 #include <BRepPrimAPI_MakeCylinder.hpp>
 #include <BRepPrimAPI_MakeSphere.hpp>
 #include <BRepAlgoAPI_Section.hpp>
-
-//=================================================================================================
 
 static int OCCN2(Draw_Interpretor& di, int argc, const char** argv)
 {

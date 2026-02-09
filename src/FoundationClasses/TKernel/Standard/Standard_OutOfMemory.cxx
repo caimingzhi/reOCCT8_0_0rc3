@@ -4,27 +4,21 @@
 #include <cstdlib>
 #include <cstring>
 
-//=================================================================================================
-
 Standard_OutOfMemory::Standard_OutOfMemory(const char* theMessage)
 {
   myBuffer[0] = '\0';
-  // call explicitly own method (non-virtual call)
+
   Standard_OutOfMemory::SetMessageString(theMessage);
 }
-
-//=================================================================================================
 
 const char* Standard_OutOfMemory::what() const noexcept
 {
   return myBuffer;
 }
 
-//=================================================================================================
-
 void Standard_OutOfMemory::SetMessageString(const char* theMessage)
 {
-  // restrict length of the message by buffer size
+
   const size_t aLength = (theMessage ? std::min(std::strlen(theMessage), sizeof(myBuffer) - 1) : 0);
 
   myBuffer[aLength] = '\0';

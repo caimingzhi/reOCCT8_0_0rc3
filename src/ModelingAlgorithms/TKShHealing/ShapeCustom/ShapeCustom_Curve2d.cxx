@@ -11,8 +11,6 @@
 #include <ShapeCustom_Curve2d.hpp>
 #include <Standard_ErrorHandler.hpp>
 
-//=================================================================================================
-
 static gp_Lin2d GetLine(const gp_Pnt2d& P1,
                         const gp_Pnt2d& P2,
                         const double    c1,
@@ -27,8 +25,6 @@ static gp_Lin2d GetLine(const gp_Pnt2d& P1,
   cl = ElCLib::Parameter(alin, P2);
   return alin;
 }
-
-//=================================================================================================
 
 bool ShapeCustom_Curve2d::IsLinear(const NCollection_Array1<gp_Pnt2d>& thePoles,
                                    const double                        tolerance,
@@ -77,8 +73,6 @@ bool ShapeCustom_Curve2d::IsLinear(const NCollection_Array1<gp_Pnt2d>& thePoles,
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<Geom2d_Line> ShapeCustom_Curve2d::ConvertToLine2d(
   const occ::handle<Geom2d_Curve>& theCurve,
   const double                     c1,
@@ -93,7 +87,7 @@ occ::handle<Geom2d_Line> ShapeCustom_Curve2d::ConvertToLine2d(
   gp_Pnt2d                 P2     = theCurve->Value(c2);
   double                   dPreci = theTolerance * theTolerance;
   if (P1.SquareDistance(P2) < dPreci)
-    return aLine2d; // it is not a line
+    return aLine2d;
 
   occ::handle<Geom2d_BSplineCurve> bsc = occ::down_cast<Geom2d_BSplineCurve>(theCurve);
   if (!bsc.IsNull())
@@ -102,7 +96,7 @@ occ::handle<Geom2d_Line> ShapeCustom_Curve2d::ConvertToLine2d(
     NCollection_Array1<gp_Pnt2d> Poles(1, nbPoles);
     bsc->Poles(Poles);
     if (!ShapeCustom_Curve2d::IsLinear(Poles, theTolerance, theDeviation))
-      return aLine2d; // non
+      return aLine2d;
     gp_Lin2d alin = GetLine(P1, P2, c1, cf, cl);
     aLine2d       = new Geom2d_Line(alin);
     return aLine2d;
@@ -115,7 +109,7 @@ occ::handle<Geom2d_Line> ShapeCustom_Curve2d::ConvertToLine2d(
     NCollection_Array1<gp_Pnt2d> Poles(1, nbPoles);
     bzc->Poles(Poles);
     if (!ShapeCustom_Curve2d::IsLinear(Poles, theTolerance, theDeviation))
-      return aLine2d; // non
+      return aLine2d;
     gp_Lin2d alin = GetLine(P1, P2, c1, cf, cl);
     aLine2d       = new Geom2d_Line(alin);
     return aLine2d;
@@ -124,14 +118,12 @@ occ::handle<Geom2d_Line> ShapeCustom_Curve2d::ConvertToLine2d(
   return aLine2d;
 }
 
-//=================================================================================================
-
 bool ShapeCustom_Curve2d::SimplifyBSpline2d(occ::handle<Geom2d_BSplineCurve>& theBSpline2d,
                                             const double                      theTolerance)
 {
   int aInitNbK;
   int NbK = aInitNbK = theBSpline2d->NbKnots();
-  // search knot to remove
+
   bool IsToRemove = true;
   int  aKnotIndx  = NbK - 1;
   while (IsToRemove && NbK > 2)
@@ -143,10 +135,10 @@ bool ShapeCustom_Curve2d::SimplifyBSpline2d(occ::handle<Geom2d_BSplineCurve>& th
       double   U     = theBSpline2d->Knot(aKnotIndx);
       gp_Vec2d aVec1 = theBSpline2d->LocalDN(U, aKnotIndx - 1, aKnotIndx, DegMult);
       gp_Vec2d aVec2 = theBSpline2d->LocalDN(U, aKnotIndx, aKnotIndx + 1, DegMult);
-      // check the derivations are have the "same" angle
+
       if (aVec1.IsParallel(aVec2, Precision::Angular()))
       {
-        // remove knot
+
         try
         {
           OCC_CATCH_SIGNALS

@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <NCollection_Map.hpp>
 #include <NCollection_MapAlgo.hpp>
@@ -20,7 +9,7 @@
 
 TEST(NCollection_MapTest, DefaultConstructor)
 {
-  // Default constructor should create an empty map
+
   NCollection_Map<int> aMap(101);
 
   EXPECT_TRUE(aMap.IsEmpty());
@@ -31,7 +20,7 @@ TEST(NCollection_MapTest, DefaultConstructor)
 
 TEST(NCollection_MapTest, ConstructorWithBuckets)
 {
-  // Constructor with number of buckets
+
   const int            nbBuckets = 100;
   NCollection_Map<int> aMap(nbBuckets);
 
@@ -45,19 +34,15 @@ TEST(NCollection_MapTest, AddAndContains)
 {
   NCollection_Map<int> aMap;
 
-  // Test Add method
   EXPECT_TRUE(aMap.Add(10));
   EXPECT_TRUE(aMap.Add(20));
   EXPECT_TRUE(aMap.Add(30));
 
-  // Adding duplicates should return false
   EXPECT_FALSE(aMap.Add(10));
   EXPECT_FALSE(aMap.Add(20));
 
-  // Map size should account for unique elements only
   EXPECT_EQ(3, aMap.Size());
 
-  // Test Contains
   EXPECT_TRUE(aMap.Contains(10));
   EXPECT_TRUE(aMap.Contains(20));
   EXPECT_TRUE(aMap.Contains(30));
@@ -71,14 +56,12 @@ TEST(NCollection_MapTest, Remove)
   aMap.Add(20);
   aMap.Add(30);
 
-  // Test Remove
   EXPECT_TRUE(aMap.Remove(20));
   EXPECT_EQ(2, aMap.Size());
   EXPECT_FALSE(aMap.Contains(20));
   EXPECT_TRUE(aMap.Contains(10));
   EXPECT_TRUE(aMap.Contains(30));
 
-  // Try to remove non-existent element
   EXPECT_FALSE(aMap.Remove(40));
   EXPECT_EQ(2, aMap.Size());
 }
@@ -92,7 +75,6 @@ TEST(NCollection_MapTest, Clear)
 
   EXPECT_FALSE(aMap.IsEmpty());
 
-  // Test Clear
   aMap.Clear();
   EXPECT_TRUE(aMap.IsEmpty());
   EXPECT_EQ(0, aMap.Size());
@@ -108,17 +90,14 @@ TEST(NCollection_MapTest, Assignment)
   aMap1.Add(20);
   aMap1.Add(30);
 
-  // Test assignment operator
   NCollection_Map<int> aMap2;
   aMap2 = aMap1;
 
-  // Check both maps have the same content
   EXPECT_EQ(aMap1.Size(), aMap2.Size());
   EXPECT_TRUE(aMap2.Contains(10));
   EXPECT_TRUE(aMap2.Contains(20));
   EXPECT_TRUE(aMap2.Contains(30));
 
-  // Modify original map to ensure deep copy
   aMap1.Add(40);
   aMap1.Remove(10);
 
@@ -137,10 +116,8 @@ TEST(NCollection_MapTest, IteratorAccess)
   aMap.Add(20);
   aMap.Add(30);
 
-  // Test iteration using OCCT iterator
   NCollection_Map<int>::Iterator it(aMap);
 
-  // Create set to check all keys are visited
   std::set<int> foundKeys;
 
   for (; it.More(); it.Next())
@@ -148,7 +125,6 @@ TEST(NCollection_MapTest, IteratorAccess)
     foundKeys.insert(it.Value());
   }
 
-  // Check all keys were visited
   EXPECT_EQ(3, foundKeys.size());
   EXPECT_TRUE(foundKeys.find(10) != foundKeys.end());
   EXPECT_TRUE(foundKeys.find(20) != foundKeys.end());
@@ -159,26 +135,21 @@ TEST(NCollection_MapTest, Resize)
 {
   NCollection_Map<int> aMap(10);
 
-  // Add elements
   for (int i = 0; i < 100; ++i)
   {
     aMap.Add(i);
   }
 
-  // Check initial state
   EXPECT_EQ(100, aMap.Size());
 
-  // Before resize, remember which elements are contained
   std::vector<int> elements;
   for (NCollection_Map<int>::Iterator it(aMap); it.More(); it.Next())
   {
     elements.push_back(it.Value());
   }
 
-  // Test Resize
   aMap.ReSize(200);
 
-  // Resize shouldn't change the map contents
   EXPECT_EQ(100, aMap.Size());
   for (const auto& element : elements)
   {
@@ -190,10 +161,8 @@ TEST(NCollection_MapTest, ExhaustiveIterator)
 {
   const int NUM_ELEMENTS = 1000;
 
-  // Create a map with many elements to test iterator efficiency
   NCollection_Map<int> aMap;
 
-  // Add many elements
   for (int i = 0; i < NUM_ELEMENTS; ++i)
   {
     aMap.Add(i);
@@ -201,7 +170,6 @@ TEST(NCollection_MapTest, ExhaustiveIterator)
 
   EXPECT_EQ(NUM_ELEMENTS, aMap.Size());
 
-  // Count elements using iterator
   int                            count = 0;
   int                            sum   = 0;
   NCollection_Map<int>::Iterator it(aMap);
@@ -213,7 +181,6 @@ TEST(NCollection_MapTest, ExhaustiveIterator)
 
   EXPECT_EQ(NUM_ELEMENTS, count);
 
-  // Calculate expected sum: 0 + 1 + 2 + ... + (NUM_ELEMENTS-1)
   int expectedSum = (NUM_ELEMENTS * (NUM_ELEMENTS - 1)) / 2;
   EXPECT_EQ(expectedSum, sum);
 }

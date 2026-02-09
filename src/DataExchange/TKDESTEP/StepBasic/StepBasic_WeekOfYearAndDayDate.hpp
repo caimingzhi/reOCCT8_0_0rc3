@@ -10,7 +10,6 @@ class StepBasic_WeekOfYearAndDayDate : public StepBasic_Date
 {
 
 public:
-  //! Returns a WeekOfYearAndDayDate
   Standard_EXPORT StepBasic_WeekOfYearAndDayDate();
 
   Standard_EXPORT void Init(const int  aYearComponent,

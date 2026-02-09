@@ -20,9 +20,6 @@ ProjLib_PrjResolve::ProjLib_PrjResolve(const Adaptor3d_Curve&   C,
   mySurface  = &S;
 }
 
-// void ProjLib_PrjResolve::Perform(const double t, const double U, const
-// double  V, const gp_Pnt2d& Tol2d, const gp_Pnt2d& Inf, const gp_Pnt2d& Sup, const
-// double FuncTol, const bool StrictInside)
 void ProjLib_PrjResolve::Perform(const double    t,
                                  const double    U,
                                  const double    V,
@@ -68,15 +65,9 @@ void ProjLib_PrjResolve::Perform(const double    t,
 
   ProjLib_PrjFunc F(myCurve, FixVal, mySurface, myFix);
 
-  //  int option = 1;//2;
-  //  if (option == 1) {
-  //    math_FunctionSetRoot S1 (F, Start,Tol, BInf, BSup);
-  //    if (!S1.IsDone()) { return; }
-  //  }
-  //  else {
   math_NewtonFunctionSetRoot SR(F, Tol, FuncTol);
   SR.Perform(F, Start, BInf, BSup);
-  //    if (!SR.IsDone()) { return; }
+
   if (!SR.IsDone())
   {
     math_FunctionSetRoot S1(F, Tol);
@@ -88,14 +79,13 @@ void ProjLib_PrjResolve::Perform(const double    t,
 
   mySolution.SetXY(F.Solution().XY());
 
-  // computation of myDone
   myDone = true;
 
   double ExtraU, ExtraV;
-  //  if(!StrictInside) {
+
   ExtraU = 2. * Tol2d.X();
   ExtraV = 2. * Tol2d.Y();
-  //  }
+
   if (mySolution.X() > Inf.X() - Tol2d.X() && mySolution.X() < Inf.X())
     mySolution.SetX(Inf.X());
   if (mySolution.X() > Sup.X() && mySolution.X() < Sup.X() + Tol2d.X())

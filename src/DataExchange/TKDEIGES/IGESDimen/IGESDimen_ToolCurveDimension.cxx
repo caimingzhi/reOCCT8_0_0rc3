@@ -21,7 +21,6 @@ void IGESDimen_ToolCurveDimension::ReadOwnParams(const occ::handle<IGESDimen_Cur
                                                  const occ::handle<IGESData_IGESReaderData>&  IR,
                                                  IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   occ::handle<IGESDimen_GeneralNote> note;
   occ::handle<IGESData_IGESEntity>   firstCurve;
@@ -35,39 +34,38 @@ void IGESDimen_ToolCurveDimension::ReadOwnParams(const occ::handle<IGESDimen_Cur
                 PR.Current(),
                 "General Note Entity",
                 STANDARD_TYPE(IGESDimen_GeneralNote),
-                note); // szv#4:S4163:12Mar99 `st=` not needed
+                note);
 
-  // clang-format off
-  PR.ReadEntity(IR, PR.Current(), "First Curve Entity", firstCurve); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadEntity(IR, PR.Current(), "First Curve Entity", firstCurve);
 
-  PR.ReadEntity(IR,
-                PR.Current(),
-                "Second Curve Entity",
-                secondCurve,
-                true); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR, PR.Current(), "Second Curve Entity", secondCurve, true);
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "First Leader Entity",
                 STANDARD_TYPE(IGESDimen_LeaderArrow),
-                firstLeader); // szv#4:S4163:12Mar99 `st=` not needed
+                firstLeader);
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "Second Leader Entity",
                 STANDARD_TYPE(IGESDimen_LeaderArrow),
-                secondLeader); // szv#4:S4163:12Mar99 `st=` not needed
+                secondLeader);
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "First Witness Entity",
-                // clang-format off
-		 STANDARD_TYPE(IGESDimen_WitnessLine), firstWitness, true); //szv#4:S4163:12Mar99 `st=` not needed
 
-  PR.ReadEntity (IR,PR.Current(),"Second Witness Entity",
-		 STANDARD_TYPE(IGESDimen_WitnessLine), secondWitness, true); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+                STANDARD_TYPE(IGESDimen_WitnessLine),
+                firstWitness,
+                true);
+
+  PR.ReadEntity(IR,
+                PR.Current(),
+                "Second Witness Entity",
+                STANDARD_TYPE(IGESDimen_WitnessLine),
+                secondWitness,
+                true);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(note, firstCurve, secondCurve, firstLeader, secondLeader, firstWitness, secondWitness);
@@ -115,7 +113,7 @@ void IGESDimen_ToolCurveDimension::OwnCopy(const occ::handle<IGESDimen_CurveDime
 }
 
 IGESData_DirChecker IGESDimen_ToolCurveDimension::DirChecker(
-  const occ::handle<IGESDimen_CurveDimension>& /*ent*/) const
+  const occ::handle<IGESDimen_CurveDimension>&) const
 {
   IGESData_DirChecker DC(204, 0);
   DC.Structure(IGESData_DefVoid);

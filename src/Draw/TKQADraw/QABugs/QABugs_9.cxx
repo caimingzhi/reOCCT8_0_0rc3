@@ -14,7 +14,7 @@
 #include <BRepBuilderAPI_MakeFace.hpp>
 #include <GC_MakeTrimmedCone.hpp>
 
-static int BUC60857(Draw_Interpretor& di, int /*argc*/, const char** argv)
+static int BUC60857(Draw_Interpretor& di, int, const char** argv)
 {
   double R1 = 8, R2 = 16;
   gp_Pnt P1(0, 0, 20), P2(0, 0, 45);

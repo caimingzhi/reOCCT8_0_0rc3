@@ -15,7 +15,6 @@ class StepVisual_CurveStyleFont : public Standard_Transient
 {
 
 public:
-  //! Returns a CurveStyleFont
   Standard_EXPORT StepVisual_CurveStyleFont();
 
   Standard_EXPORT void Init(

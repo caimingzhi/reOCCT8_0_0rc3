@@ -11,7 +11,6 @@ class StepShape_VertexPoint;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for VertexPoint
 class RWStepShape_RWVertexPoint
 {
 public:

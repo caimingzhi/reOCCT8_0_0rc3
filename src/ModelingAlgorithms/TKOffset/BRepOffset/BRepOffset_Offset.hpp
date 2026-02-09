@@ -15,16 +15,10 @@
 class TopoDS_Edge;
 class TopoDS_Vertex;
 
-// resolve name collisions with X11 headers
 #ifdef Status
   #undef Status
 #endif
 
-//! This class compute elemenary offset surface.
-//! Evaluate the offset generated :
-//! 1 - from a face.
-//! 2 - from an edge.
-//! 3 - from a vertex.
 class BRepOffset_Offset
 {
 public:
@@ -37,18 +31,6 @@ public:
                                     const bool             OffsetOutside = true,
                                     const GeomAbs_JoinType JoinType      = GeomAbs_Arc);
 
-  //! This method will be called when you want to share
-  //! the edges soon generated from an other face.
-  //! e.g. when two faces are tangents the common edge
-  //! will generate only one edge ( no pipe).
-  //!
-  //! The Map will be fill as follow:
-  //!
-  //! Created(E) = E'
-  //! with:
-  //! E = an edge of <Face>
-  //! E' = the image of E in the offsetting of another
-  //! face sharing E with a continuity at least G1
   Standard_EXPORT BRepOffset_Offset(
     const TopoDS_Face&                                                              Face,
     const double                                                                    Offset,
@@ -74,8 +56,6 @@ public:
                                     const double        Tol        = 1.0e-4,
                                     const GeomAbs_Shape Conti      = GeomAbs_C1);
 
-  //! Tol and Conti are only used if Polynomial is True
-  //! (Used to perform the approximation)
   Standard_EXPORT BRepOffset_Offset(const TopoDS_Vertex&                  Vertex,
                                     const NCollection_List<TopoDS_Shape>& LEdge,
                                     const double                          Offset,
@@ -113,8 +93,6 @@ public:
                             const double        Tol        = 1.0e-4,
                             const GeomAbs_Shape Conti      = GeomAbs_C1);
 
-  //! Tol and Conti are only used if Polynomial is True
-  //! (Used to perform the approximation)
   Standard_EXPORT void Init(const TopoDS_Vertex&                  Vertex,
                             const NCollection_List<TopoDS_Shape>& LEdge,
                             const double                          Offset,
@@ -122,7 +100,6 @@ public:
                             const double                          Tol        = 1.0e-4,
                             const GeomAbs_Shape                   Conti      = GeomAbs_C1);
 
-  //! Only used in Rolling Ball. Pipe on Free Boundary
   Standard_EXPORT void Init(const TopoDS_Edge& Edge, const double Offset);
 
   const TopoDS_Shape& InitialShape() const;

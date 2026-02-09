@@ -13,7 +13,6 @@
 
 #include <TopOpeBRepTool_GEOMETRY.hpp>
 
-// ----------------------------------------------------------------------
 Standard_EXPORT void FUN_tool_bounds(const TopoDS_Edge& E, double& f, double& l)
 {
   BRepAdaptor_Curve BAC(E);
@@ -21,7 +20,6 @@ Standard_EXPORT void FUN_tool_bounds(const TopoDS_Edge& E, double& f, double& l)
   l = BAC.LastParameter();
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT int FUN_tool_getindex(const Extrema_ExtPC& ponc)
 {
   double Dist2, Dist2Min = ponc.SquareDistance(1);
@@ -39,7 +37,6 @@ Standard_EXPORT int FUN_tool_getindex(const Extrema_ExtPC& ponc)
   return myIndex;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT int FUN_tool_getindex(const Extrema_ExtPC2d& ponc)
 {
   double Dist2, Dist2Min = ponc.SquareDistance(1);
@@ -57,7 +54,6 @@ Standard_EXPORT int FUN_tool_getindex(const Extrema_ExtPC2d& ponc)
   return myIndex;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
                                        const double             tole,
                                        const BRepAdaptor_Curve& BAC,
@@ -66,7 +62,7 @@ Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
                                        double&                  param,
                                        double&                  dist)
 {
-  // <True> if projection succeeds,and sets <param> to parameter of <P> on <C>.
+
   Extrema_ExtPC ponc(P, BAC, pmin, pmax);
   bool          ok    = ponc.IsDone();
   int           nbext = 0;
@@ -98,7 +94,6 @@ Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
   return true;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
                                        const BRepAdaptor_Curve& BAC,
                                        const double             pmin,
@@ -106,19 +101,18 @@ Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
                                        double&                  param,
                                        double&                  dist)
 {
-  // <True> if projection succeeds,and sets <param> to parameter of <P> on <C>.
+
   double tole = BAC.Tolerance();
   bool   ok   = FUN_tool_projPonC(P, tole, BAC, pmin, pmax, param, dist);
   return ok;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
                                        const BRepAdaptor_Curve& BAC,
                                        double&                  param,
                                        double&                  dist)
 {
-  // <True> if projection succeeds,and sets <param> to parameter of <P> on <C>.
+
   double tole = BAC.Tolerance();
   double pmin = BAC.FirstParameter();
   double pmax = BAC.LastParameter();
@@ -126,7 +120,6 @@ Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
   return ok;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
                                          const double               tole,
                                          const BRepAdaptor_Curve2d& BAC2D,
@@ -135,7 +128,7 @@ Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
                                          double&                    param,
                                          double&                    dist)
 {
-  // <True> if projection succeeds,and sets <param> to parameter of <P> on <C>.
+
   bool ok = false;
 
   gp_Pnt2d           P2D;
@@ -173,7 +166,6 @@ Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
   return true;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
                                          const BRepAdaptor_Curve2d& BAC2D,
                                          const double               pmin,
@@ -181,19 +173,18 @@ Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
                                          double&                    param,
                                          double&                    dist)
 {
-  // <True> if projection succeeds,and sets <param> to parameter of <P> on <C>.
+
   double tole = BRep_Tool::Tolerance(BAC2D.Edge());
   bool   ok   = FUN_tool_projPonC2D(P, tole, BAC2D, pmin, pmax, param, dist);
   return ok;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
                                          const BRepAdaptor_Curve2d& BAC2D,
                                          double&                    param,
                                          double&                    dist)
 {
-  // <True> if projection succeeds,and sets <param> to parameter of <P> on <C>.
+
   double tole = BRep_Tool::Tolerance(BAC2D.Edge());
   double pmin = BAC2D.FirstParameter();
   double pmax = BAC2D.LastParameter();
@@ -201,7 +192,6 @@ Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
   return ok;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_projPonS(const gp_Pnt&                    P,
                                        const occ::handle<Geom_Surface>& S,
                                        gp_Pnt2d&                        UV,
@@ -211,14 +201,14 @@ Standard_EXPORT bool FUN_tool_projPonS(const gp_Pnt&                    P,
 {
   double                     UMin, UMax, VMin, VMax;
   GeomAPI_ProjectPointOnSurf PonS;
-  //
+
   S->Bounds(UMin, UMax, VMin, VMax);
   PonS.Init(S, UMin, UMax, VMin, VMax, anExtAlgo);
   Extrema_ExtPS& anExtPS = const_cast<Extrema_ExtPS&>(PonS.Extrema());
   anExtPS.SetFlag(anExtFlag);
-  //
+
   PonS.Perform(P);
-  //
+
   if (!PonS.Extrema().IsDone())
     return false;
   if (PonS.NbPoints() == 0)
@@ -230,9 +220,6 @@ Standard_EXPORT bool FUN_tool_projPonS(const gp_Pnt&                    P,
   return true;
 }
 
-//=================================================================================================
-
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_projPonE(const gp_Pnt&      P,
                                        const double       tole,
                                        const TopoDS_Edge& E,
@@ -259,7 +246,6 @@ Standard_EXPORT bool FUN_tool_projPonE(const gp_Pnt&      P,
   return true;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_projPonE(const gp_Pnt&      P,
                                        const TopoDS_Edge& E,
                                        double&            param,
@@ -270,15 +256,13 @@ Standard_EXPORT bool FUN_tool_projPonE(const gp_Pnt&      P,
   return ok;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_projPonboundedF(const gp_Pnt&      P,
                                               const TopoDS_Face& F,
                                               gp_Pnt2d&          UV,
                                               double&            dist)
 {
   dist = 1.;
-  // ! projecting point on surf does not take into account the face's
-  // restriction
+
   BRepLib_MakeVertex mv(P);
   TopoDS_Vertex      V = mv.Vertex();
   BRepExtrema_ExtPF  PonF(V, F);
@@ -288,7 +272,6 @@ Standard_EXPORT bool FUN_tool_projPonboundedF(const gp_Pnt&      P,
   if (npt == 0)
     return false;
 
-  // tri
   double dmin2 = 1.e14;
   int    imin  = 0;
   for (int i = 1; i <= npt; i++)
@@ -310,7 +293,6 @@ Standard_EXPORT bool FUN_tool_projPonboundedF(const gp_Pnt&      P,
   return true;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_projPonF(const gp_Pnt&         P,
                                        const TopoDS_Face&    F,
                                        gp_Pnt2d&             UV,

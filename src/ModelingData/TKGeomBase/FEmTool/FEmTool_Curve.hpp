@@ -11,7 +11,6 @@
 #include <NCollection_Array2.hpp>
 #include <PLib_HermitJacobi.hpp>
 
-//! Curve defined by Polynomial Elements.
 class FEmTool_Curve : public Standard_Transient
 {
 
@@ -36,7 +35,6 @@ public:
 
   Standard_EXPORT void GetElement(const int IndexOfElement, NCollection_Array2<double>& Coeffs);
 
-  //! returns coefficients of all elements in canonical base.
   Standard_EXPORT void GetPolynom(NCollection_Array1<double>& Coeffs);
 
   Standard_EXPORT int NbElements() const;

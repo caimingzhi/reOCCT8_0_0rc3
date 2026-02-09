@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveCurve, Select3D_SensitivePoly)
 
-//=================================================================================================
-
 Select3D_SensitiveCurve::Select3D_SensitiveCurve(
   const occ::handle<SelectMgr_EntityOwner>&       theOwnerId,
   const occ::handle<NCollection_HArray1<gp_Pnt>>& thePoints)
@@ -16,8 +14,6 @@ Select3D_SensitiveCurve::Select3D_SensitiveCurve(
   SetSensitivityFactor(3);
 }
 
-//=================================================================================================
-
 Select3D_SensitiveCurve::Select3D_SensitiveCurve(
   const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
   const NCollection_Array1<gp_Pnt>&         thePoints)
@@ -25,8 +21,6 @@ Select3D_SensitiveCurve::Select3D_SensitiveCurve(
 {
   SetSensitivityFactor(3);
 }
-
-//=================================================================================================
 
 occ::handle<Select3D_SensitiveEntity> Select3D_SensitiveCurve::GetConnected()
 {

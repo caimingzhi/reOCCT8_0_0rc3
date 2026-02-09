@@ -14,7 +14,6 @@ class StepShape_GeometricSet : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a GeometricSet
   Standard_EXPORT StepShape_GeometricSet();
 
   Standard_EXPORT void Init(

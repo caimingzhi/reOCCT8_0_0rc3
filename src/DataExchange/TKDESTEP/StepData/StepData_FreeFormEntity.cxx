@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <MoniTool_Macros.hpp>
 #include <Standard_Type.hpp>
@@ -21,7 +10,7 @@ IMPLEMENT_STANDARD_RTTIEXT(StepData_FreeFormEntity, Standard_Transient)
 
 void StepData_FreeFormEntity::SetStepType(const char* typenam)
 {
-  // Set the STEP entity type name for this free-form entity
+
   thetype.Clear();
   thetype.AssignCat(typenam);
 }
@@ -54,7 +43,7 @@ occ::handle<StepData_FreeFormEntity> StepData_FreeFormEntity::Next() const
 
 bool StepData_FreeFormEntity::IsComplex() const
 {
-  // A complex entity is one that has additional entity parts linked via 'next'
+
   return (!thenext.IsNull());
 }
 
@@ -85,20 +74,20 @@ occ::handle<NCollection_HSequence<TCollection_AsciiString>> StepData_FreeFormEnt
 
 bool StepData_FreeFormEntity::Reorder(occ::handle<StepData_FreeFormEntity>& ent)
 {
-  // Reorder complex entities to ensure alphabetical sorting of entity types
+
   if (ent.IsNull())
     return false;
   if (!ent->IsComplex())
     return false;
-  bool                                 afr = false; // flag: any reordering needed
+  bool                                 afr = false;
   occ::handle<StepData_FreeFormEntity> e1  = ent;
   occ::handle<StepData_FreeFormEntity> e2  = ent->Next();
-  // Check if entities are already in alphabetical order
+
   while (!e2.IsNull())
   {
     if (strcmp(e1->StepType(), e2->StepType()) > 0)
     {
-      afr = true; // Found out-of-order pair
+      afr = true;
       break;
     }
     e1 = e2;
@@ -106,7 +95,7 @@ bool StepData_FreeFormEntity::Reorder(occ::handle<StepData_FreeFormEntity>& ent)
   }
   if (!afr)
     return afr;
-  //  Reordering using a dictionary (map) to sort entity types alphabetically
+
   e1 = ent;
   e2.Nullify();
   NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transient>> dic;
@@ -115,7 +104,7 @@ bool StepData_FreeFormEntity::Reorder(occ::handle<StepData_FreeFormEntity>& ent)
     dic.Bind(e1->StepType(), e1);
     e1 = e1->Next();
   }
-  //  First clear the current 'next' links to break the chain...
+
   for (NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transient>>::Iterator iter(
          dic);
        iter.More();
@@ -125,7 +114,7 @@ bool StepData_FreeFormEntity::Reorder(occ::handle<StepData_FreeFormEntity>& ent)
     if (!e1.IsNull())
       e1->SetNext(e2);
   }
-  //  ... then rebuild the chain in alphabetical order
+
   e1.Nullify();
   for (NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transient>>::Iterator iter(
          dic);
@@ -144,7 +133,7 @@ bool StepData_FreeFormEntity::Reorder(occ::handle<StepData_FreeFormEntity>& ent)
 
 void StepData_FreeFormEntity::SetNbFields(const int nb)
 {
-  // Initialize the array of fields for this entity
+
   if (nb <= 0)
     thefields.Nullify();
   else

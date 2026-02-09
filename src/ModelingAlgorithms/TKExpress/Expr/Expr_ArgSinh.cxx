@@ -64,13 +64,11 @@ occ::handle<Expr_GeneralExpression> Expr_ArgSinh::Derivative(
   occ::handle<Expr_GeneralExpression> derop = op->Derivative(X);
 
   occ::handle<Expr_Square> sq = new Expr_Square(Expr::CopyShare(op));
-  // X2 + 1
+
   occ::handle<Expr_Sum> thesum = sq->ShallowSimplified() + 1.0;
 
-  // sqrt(X2 + 1)
   occ::handle<Expr_SquareRoot> theroot = new Expr_SquareRoot(thesum->ShallowSimplified());
 
-  // ArgSinh'(F(X)) = F'(X)/sqrt(F(X)2+1)
   occ::handle<Expr_Division> thediv = derop / theroot->ShallowSimplified();
 
   return thediv->ShallowSimplified();

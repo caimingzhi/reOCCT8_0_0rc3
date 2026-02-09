@@ -10,14 +10,10 @@
 #include <Standard_NullObject.hpp>
 #include <Standard_OutOfRange.hpp>
 
-//=================================================================================================
-
 Geom2dAPI_InterCurveCurve::Geom2dAPI_InterCurveCurve()
 {
   myIsDone = false;
 }
-
-//=================================================================================================
 
 Geom2dAPI_InterCurveCurve::Geom2dAPI_InterCurveCurve(const occ::handle<Geom2d_Curve>& C1,
                                                      const occ::handle<Geom2d_Curve>& C2,
@@ -26,15 +22,11 @@ Geom2dAPI_InterCurveCurve::Geom2dAPI_InterCurveCurve(const occ::handle<Geom2d_Cu
   Init(C1, C2, Tol);
 }
 
-//=================================================================================================
-
 Geom2dAPI_InterCurveCurve::Geom2dAPI_InterCurveCurve(const occ::handle<Geom2d_Curve>& C1,
                                                      const double                     Tol)
 {
   Init(C1, Tol);
 }
-
-//=================================================================================================
 
 void Geom2dAPI_InterCurveCurve::Init(const occ::handle<Geom2d_Curve>& C1,
                                      const occ::handle<Geom2d_Curve>& C2,
@@ -49,8 +41,6 @@ void Geom2dAPI_InterCurveCurve::Init(const occ::handle<Geom2d_Curve>& C1,
   myIsDone      = myIntersector.IsDone();
 }
 
-//=================================================================================================
-
 void Geom2dAPI_InterCurveCurve::Init(const occ::handle<Geom2d_Curve>& C1, const double Tol)
 {
   myCurve1 = occ::down_cast<Geom2d_Curve>(C1->Copy());
@@ -61,8 +51,6 @@ void Geom2dAPI_InterCurveCurve::Init(const occ::handle<Geom2d_Curve>& C1, const 
   myIsDone      = myIntersector.IsDone();
 }
 
-//=================================================================================================
-
 int Geom2dAPI_InterCurveCurve::NbPoints() const
 {
   if (myIsDone)
@@ -70,8 +58,6 @@ int Geom2dAPI_InterCurveCurve::NbPoints() const
   else
     return 0;
 }
-
-//=================================================================================================
 
 gp_Pnt2d Geom2dAPI_InterCurveCurve::Point(const int Index) const
 {
@@ -81,8 +67,6 @@ gp_Pnt2d Geom2dAPI_InterCurveCurve::Point(const int Index) const
   return (myIntersector.Point(Index)).Value();
 }
 
-//=================================================================================================
-
 int Geom2dAPI_InterCurveCurve::NbSegments() const
 {
   if (myIsDone)
@@ -90,31 +74,6 @@ int Geom2dAPI_InterCurveCurve::NbSegments() const
   else
     return 0;
 }
-
-//=======================================================================
-// function : Segment
-// purpose  :
-//  If aSeg.IsOpposite() == TRUE
-//
-//                U1            U2
-//    Curve 1:    *------------>*
-//
-//                V2            V1
-//    Curve 2:    *<------------*
-//
-//    Segment:  FirstPoint--->LastPoint
-//
-//
-//  If aSeg.IsOpposite() == FALSE
-//
-//                U1            U2
-//    Curve 1:    *------------>*
-//
-//                V1            V2
-//    Curve 2:    *------------>*
-//
-//    Segment:  FirstPoint--->LastPoint
-//=======================================================================
 
 void Geom2dAPI_InterCurveCurve::Segment(const int                  theIndex,
                                         occ::handle<Geom2d_Curve>& theCurve1,

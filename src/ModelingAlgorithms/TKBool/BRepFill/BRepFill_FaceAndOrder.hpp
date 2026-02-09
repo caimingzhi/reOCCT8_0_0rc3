@@ -7,7 +7,6 @@
 #include <TopoDS_Face.hpp>
 #include <GeomAbs_Shape.hpp>
 
-//! A structure containing Face and Order of constraint
 class BRepFill_FaceAndOrder
 {
 public:

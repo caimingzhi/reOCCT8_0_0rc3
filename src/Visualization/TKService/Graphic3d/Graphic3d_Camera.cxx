@@ -16,23 +16,19 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Camera, Standard_Transient)
 
 namespace
 {
-  // (degrees -> radians) * 0.5
+
   constexpr double DTR_HALF = 0.5 * 0.0174532925;
 
-  // default property values
   constexpr double DEFAULT_ZNEAR = 0.001;
   constexpr double DEFAULT_ZFAR  = 3000.0;
 
-  // atomic state counter
   static std::atomic<size_t> THE_STATE_COUNTER(0);
 
-  // z-range tolerance compatible with for floating point.
   static double zEpsilon()
   {
     return FLT_EPSILON;
   }
 
-  // relative z-range tolerance compatible with for floating point.
   static double zEpsilon(const double theValue)
   {
     double anAbsValue = std::abs(theValue);
@@ -45,7 +41,6 @@ namespace
     return FLT_EPSILON * std::pow(FLT_RADIX, aExp);
   }
 
-  //! Convert camera definition to Ax3
   gp_Ax3 cameraToAx3(const Graphic3d_Camera& theCamera)
   {
     const gp_Dir aBackDir = -theCamera.Direction();
@@ -55,8 +50,6 @@ namespace
     return gp_Ax3(gp_Pnt(0.0, 0.0, 0.0), aZAxis, anXAxis);
   }
 } // namespace
-
-//=================================================================================================
 
 Graphic3d_Camera::Graphic3d_Camera()
     : myUp(0.0, 1.0, 0.0),
@@ -84,8 +77,6 @@ Graphic3d_Camera::Graphic3d_Camera()
 {
   myWorldViewProjState.Initialize(++THE_STATE_COUNTER, ++THE_STATE_COUNTER, this);
 }
-
-//=================================================================================================
 
 Graphic3d_Camera::Graphic3d_Camera(const occ::handle<Graphic3d_Camera>& theOther)
     : myUp(0.0, 1.0, 0.0),
@@ -115,8 +106,6 @@ Graphic3d_Camera::Graphic3d_Camera(const occ::handle<Graphic3d_Camera>& theOther
 
   Copy(theOther);
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::CopyMappingData(const occ::handle<Graphic3d_Camera>& theOtherCamera)
 {
@@ -149,8 +138,6 @@ void Graphic3d_Camera::CopyMappingData(const occ::handle<Graphic3d_Camera>& theO
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::CopyOrientationData(const occ::handle<Graphic3d_Camera>& theOtherCamera)
 {
   if (!myEye.IsEqual(theOtherCamera->Eye(), 0.0) || !myUp.IsEqual(theOtherCamera->Up(), 0.0)
@@ -166,23 +153,17 @@ void Graphic3d_Camera::CopyOrientationData(const occ::handle<Graphic3d_Camera>& 
   SetAxialScale(theOtherCamera->AxialScale());
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::Copy(const occ::handle<Graphic3d_Camera>& theOther)
 {
   CopyMappingData(theOther);
   CopyOrientationData(theOther);
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::SetIdentityOrientation()
 {
   SetEyeAndCenter(gp_Pnt(0.0, 0.0, 0.0), gp_Pnt(0.0, 0.0, -1.0));
   SetUp(gp_Dir(gp_Dir::D::Y));
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::MoveEyeTo(const gp_Pnt& theEye)
 {
@@ -194,8 +175,6 @@ void Graphic3d_Camera::MoveEyeTo(const gp_Pnt& theEye)
   myEye = theEye;
   InvalidateOrientation();
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::SetEyeAndCenter(const gp_Pnt& theEye, const gp_Pnt& theCenter)
 {
@@ -212,8 +191,6 @@ void Graphic3d_Camera::SetEyeAndCenter(const gp_Pnt& theEye, const gp_Pnt& theCe
   }
   InvalidateOrientation();
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::SetEye(const gp_Pnt& theEye)
 {
@@ -232,8 +209,6 @@ void Graphic3d_Camera::SetEye(const gp_Pnt& theEye)
   InvalidateOrientation();
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::SetCenter(const gp_Pnt& theCenter)
 {
   const double aDistance = myEye.Distance(theCenter);
@@ -250,8 +225,6 @@ void Graphic3d_Camera::SetCenter(const gp_Pnt& theCenter)
   InvalidateOrientation();
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::SetUp(const gp_Dir& theUp)
 {
   if (Up().IsEqual(theUp, 0.0))
@@ -262,8 +235,6 @@ void Graphic3d_Camera::SetUp(const gp_Dir& theUp)
   myUp = theUp;
   InvalidateOrientation();
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::SetAxialScale(const gp_XYZ& theAxialScale)
 {
@@ -279,8 +250,6 @@ void Graphic3d_Camera::SetAxialScale(const gp_XYZ& theAxialScale)
   InvalidateOrientation();
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::SetDistance(const double theDistance)
 {
   if (myDistance == theDistance)
@@ -294,8 +263,6 @@ void Graphic3d_Camera::SetDistance(const double theDistance)
   InvalidateOrientation();
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::SetDirectionFromEye(const gp_Dir& theDir)
 {
   if (myDirection.IsEqual(theDir, 0.0))
@@ -306,8 +273,6 @@ void Graphic3d_Camera::SetDirectionFromEye(const gp_Dir& theDir)
   myDirection = theDir;
   InvalidateOrientation();
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::SetDirection(const gp_Dir& theDir)
 {
@@ -321,8 +286,6 @@ void Graphic3d_Camera::SetDirection(const gp_Dir& theDir)
   myEye                = aCenter.XYZ() - theDir.XYZ() * myDistance;
   InvalidateOrientation();
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::SetScale(const double theScale)
 {
@@ -351,8 +314,6 @@ void Graphic3d_Camera::SetScale(const double theScale)
   InvalidateProjection();
 }
 
-//=================================================================================================
-
 double Graphic3d_Camera::Scale() const
 {
   switch (myProjType)
@@ -360,16 +321,10 @@ double Graphic3d_Camera::Scale() const
     case Projection_Orthographic:
       return myScale;
 
-    // case Projection_Perspective  :
-    // case Projection_Stereo       :
-    // case Projection_MonoLeftEye  :
-    // case Projection_MonoRightEye :
     default:
       return Distance() * 2.0 * myFOVyTan;
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::SetProjectionType(const Projection theProjectionType)
 {
@@ -397,8 +352,6 @@ void Graphic3d_Camera::SetProjectionType(const Projection theProjectionType)
   InvalidateProjection();
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::SetFOVy(const double theFOVy)
 {
   if (FOVy() == theFOVy)
@@ -413,8 +366,6 @@ void Graphic3d_Camera::SetFOVy(const double theFOVy)
   InvalidateProjection();
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::SetFOV2d(const double theFOV)
 {
   if (FOV2d() == theFOV)
@@ -425,8 +376,6 @@ void Graphic3d_Camera::SetFOV2d(const double theFOV)
   myFOV2d = theFOV;
   InvalidateProjection();
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::SetZRange(const double theZNear, const double theZFar)
 {
@@ -448,8 +397,6 @@ void Graphic3d_Camera::SetZRange(const double theZNear, const double theZFar)
   InvalidateProjection();
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::SetAspect(const double theAspect)
 {
   if (Aspect() == theAspect)
@@ -462,8 +409,6 @@ void Graphic3d_Camera::SetAspect(const double theAspect)
 
   InvalidateProjection();
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::SetZFocus(const FocusType theType, const double theZFocus)
 {
@@ -478,8 +423,6 @@ void Graphic3d_Camera::SetZFocus(const FocusType theType, const double theZFocus
   InvalidateProjection();
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::SetIOD(const IODType theType, const double theIOD)
 {
   if (GetIODType() == theType && IOD() == theIOD)
@@ -493,8 +436,6 @@ void Graphic3d_Camera::SetIOD(const IODType theType, const double theIOD)
   InvalidateProjection();
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::SetTile(const Graphic3d_CameraTile& theTile)
 {
   if (myTile == theTile)
@@ -506,25 +447,18 @@ void Graphic3d_Camera::SetTile(const Graphic3d_CameraTile& theTile)
   InvalidateProjection();
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::OrthogonalizeUp()
 {
   SetUp(OrthogonalizedUp());
 }
-
-//=================================================================================================
 
 gp_Dir Graphic3d_Camera::OrthogonalizedUp() const
 {
   gp_Dir aDir  = Direction();
   gp_Dir aLeft = aDir.Crossed(Up());
 
-  // recompute up as: up = left x direction
   return aLeft.Crossed(aDir);
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::Transform(const gp_Trsf& theTrsf)
 {
@@ -539,13 +473,10 @@ void Graphic3d_Camera::Transform(const gp_Trsf& theTrsf)
   InvalidateOrientation();
 }
 
-//=================================================================================================
-
 static NCollection_Vec4<double> safePointCast(const gp_Pnt& thePnt)
 {
   double aLim = 1e15f;
 
-  // have to deal with values greater then max float
   gp_Pnt       aSafePoint = thePnt;
   const double aBigFloat  = aLim * 0.1f;
   if (std::abs(aSafePoint.X()) > aLim)
@@ -555,31 +486,25 @@ static NCollection_Vec4<double> safePointCast(const gp_Pnt& thePnt)
   if (std::abs(aSafePoint.Z()) > aLim)
     aSafePoint.SetZ(aSafePoint.Z() >= 0 ? aBigFloat : -aBigFloat);
 
-  // convert point
   NCollection_Vec4<double> aPnt(aSafePoint.X(), aSafePoint.Y(), aSafePoint.Z(), 1.0);
 
   return aPnt;
 }
-
-//=================================================================================================
 
 gp_Pnt Graphic3d_Camera::Project(const gp_Pnt& thePnt) const
 {
   const NCollection_Mat4<double>& aViewMx = OrientationMatrix();
   const NCollection_Mat4<double>& aProjMx = ProjectionMatrix();
 
-  // use compatible type of point
   NCollection_Vec4<double> aPnt = safePointCast(thePnt);
 
-  aPnt = aViewMx * aPnt; // convert to view coordinate space
-  aPnt = aProjMx * aPnt; // convert to projection coordinate space
+  aPnt = aViewMx * aPnt;
+  aPnt = aProjMx * aPnt;
 
   const double aInvW = 1.0 / double(aPnt.w());
 
   return gp_Pnt(aPnt.x() * aInvW, aPnt.y() * aInvW, aPnt.z() * aInvW);
 }
-
-//=================================================================================================
 
 gp_Pnt Graphic3d_Camera::UnProject(const gp_Pnt& thePnt) const
 {
@@ -589,40 +514,33 @@ gp_Pnt Graphic3d_Camera::UnProject(const gp_Pnt& thePnt) const
   NCollection_Mat4<double> aInvView;
   NCollection_Mat4<double> aInvProj;
 
-  // this case should never happen
   if (!aViewMx.Inverted(aInvView) || !aProjMx.Inverted(aInvProj))
   {
     return gp_Pnt(0.0, 0.0, 0.0);
   }
 
-  // use compatible type of point
   NCollection_Vec4<double> aPnt = safePointCast(thePnt);
 
-  aPnt = aInvProj * aPnt; // convert to view coordinate space
-  aPnt = aInvView * aPnt; // convert to world coordinate space
+  aPnt = aInvProj * aPnt;
+  aPnt = aInvView * aPnt;
 
   const double aInvW = 1.0 / double(aPnt.w());
 
   return gp_Pnt(aPnt.x() * aInvW, aPnt.y() * aInvW, aPnt.z() * aInvW);
 }
-
-//=================================================================================================
 
 gp_Pnt Graphic3d_Camera::ConvertView2Proj(const gp_Pnt& thePnt) const
 {
   const NCollection_Mat4<double>& aProjMx = ProjectionMatrix();
 
-  // use compatible type of point
   NCollection_Vec4<double> aPnt = safePointCast(thePnt);
 
-  aPnt = aProjMx * aPnt; // convert to projection coordinate space
+  aPnt = aProjMx * aPnt;
 
   const double aInvW = 1.0 / double(aPnt.w());
 
   return gp_Pnt(aPnt.x() * aInvW, aPnt.y() * aInvW, aPnt.z() * aInvW);
 }
-
-//=================================================================================================
 
 gp_Pnt Graphic3d_Camera::ConvertProj2View(const gp_Pnt& thePnt) const
 {
@@ -630,39 +548,32 @@ gp_Pnt Graphic3d_Camera::ConvertProj2View(const gp_Pnt& thePnt) const
 
   NCollection_Mat4<double> aInvProj;
 
-  // this case should never happen, but...
   if (!aProjMx.Inverted(aInvProj))
   {
     return gp_Pnt(0, 0, 0);
   }
 
-  // use compatible type of point
   NCollection_Vec4<double> aPnt = safePointCast(thePnt);
 
-  aPnt = aInvProj * aPnt; // convert to view coordinate space
+  aPnt = aInvProj * aPnt;
 
   const double aInvW = 1.0 / double(aPnt.w());
 
   return gp_Pnt(aPnt.x() * aInvW, aPnt.y() * aInvW, aPnt.z() * aInvW);
 }
-
-//=================================================================================================
 
 gp_Pnt Graphic3d_Camera::ConvertWorld2View(const gp_Pnt& thePnt) const
 {
   const NCollection_Mat4<double>& aViewMx = OrientationMatrix();
 
-  // use compatible type of point
   NCollection_Vec4<double> aPnt = safePointCast(thePnt);
 
-  aPnt = aViewMx * aPnt; // convert to view coordinate space
+  aPnt = aViewMx * aPnt;
 
   const double aInvW = 1.0 / double(aPnt.w());
 
   return gp_Pnt(aPnt.x() * aInvW, aPnt.y() * aInvW, aPnt.z() * aInvW);
 }
-
-//=================================================================================================
 
 gp_Pnt Graphic3d_Camera::ConvertView2World(const gp_Pnt& thePnt) const
 {
@@ -675,21 +586,18 @@ gp_Pnt Graphic3d_Camera::ConvertView2World(const gp_Pnt& thePnt) const
     return gp_Pnt(0, 0, 0);
   }
 
-  // use compatible type of point
   NCollection_Vec4<double> aPnt = safePointCast(thePnt);
 
-  aPnt = aInvView * aPnt; // convert to world coordinate space
+  aPnt = aInvView * aPnt;
 
   const double aInvW = 1.0 / double(aPnt.w());
 
   return gp_Pnt(aPnt.x() * aInvW, aPnt.y() * aInvW, aPnt.z() * aInvW);
 }
 
-//=================================================================================================
-
 gp_XYZ Graphic3d_Camera::ViewDimensions(const double theZValue) const
 {
-  // view plane dimensions
+
   double aSize = IsOrthographic() ? myScale : (2.0 * theZValue * myFOVyTan);
   double aSizeX, aSizeY;
   if (myAspect > 1.0)
@@ -703,11 +611,8 @@ gp_XYZ Graphic3d_Camera::ViewDimensions(const double theZValue) const
     aSizeY = aSize / myAspect;
   }
 
-  // and frustum depth
   return gp_XYZ(aSizeX, aSizeY, myZFar - myZNear);
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::Frustum(gp_Pln& theLeft,
                                gp_Pln& theRight,
@@ -763,63 +668,45 @@ void Graphic3d_Camera::Frustum(gp_Pln& theLeft,
   theTop    = gp_Pln(aPntTop, aDirTop);
 }
 
-//=================================================================================================
-
 const NCollection_Mat4<double>& Graphic3d_Camera::OrientationMatrix() const
 {
   return UpdateOrientation(myMatricesD).Orientation;
 }
-
-//=================================================================================================
 
 const NCollection_Mat4<float>& Graphic3d_Camera::OrientationMatrixF() const
 {
   return UpdateOrientation(myMatricesF).Orientation;
 }
 
-//=================================================================================================
-
 const NCollection_Mat4<double>& Graphic3d_Camera::ProjectionMatrix() const
 {
   return UpdateProjection(myMatricesD).MProjection;
 }
-
-//=================================================================================================
 
 const NCollection_Mat4<float>& Graphic3d_Camera::ProjectionMatrixF() const
 {
   return UpdateProjection(myMatricesF).MProjection;
 }
 
-//=================================================================================================
-
 const NCollection_Mat4<double>& Graphic3d_Camera::ProjectionStereoLeft() const
 {
   return UpdateProjection(myMatricesD).LProjection;
 }
-
-//=================================================================================================
 
 const NCollection_Mat4<float>& Graphic3d_Camera::ProjectionStereoLeftF() const
 {
   return UpdateProjection(myMatricesF).LProjection;
 }
 
-//=================================================================================================
-
 const NCollection_Mat4<double>& Graphic3d_Camera::ProjectionStereoRight() const
 {
   return UpdateProjection(myMatricesD).RProjection;
 }
 
-//=================================================================================================
-
 const NCollection_Mat4<float>& Graphic3d_Camera::ProjectionStereoRightF() const
 {
   return UpdateProjection(myMatricesF).RProjection;
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::ResetCustomProjection()
 {
@@ -832,8 +719,6 @@ void Graphic3d_Camera::ResetCustomProjection()
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::StereoProjection(NCollection_Mat4<double>& theProjL,
                                         NCollection_Mat4<double>& theHeadToEyeL,
                                         NCollection_Mat4<double>& theProjR,
@@ -842,8 +727,6 @@ void Graphic3d_Camera::StereoProjection(NCollection_Mat4<double>& theProjL,
   stereoProjection(theProjL, theHeadToEyeL, theProjR, theHeadToEyeR);
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::StereoProjectionF(NCollection_Mat4<float>& theProjL,
                                          NCollection_Mat4<float>& theHeadToEyeL,
                                          NCollection_Mat4<float>& theProjR,
@@ -851,8 +734,6 @@ void Graphic3d_Camera::StereoProjectionF(NCollection_Mat4<float>& theProjL,
 {
   stereoProjection(theProjL, theHeadToEyeL, theProjR, theHeadToEyeR);
 }
-
-//=================================================================================================
 
 template <typename Elem_t>
 void Graphic3d_Camera::stereoProjection(NCollection_Mat4<Elem_t>& theProjL,
@@ -875,7 +756,7 @@ void Graphic3d_Camera::stereoProjection(NCollection_Mat4<Elem_t>& theProjL,
   const double aIOD = myIODType == IODType_Relative ? myIOD * Distance() : myIOD;
   if (aIOD != 0.0)
   {
-    // X translation to cancel parallax
+
     theHeadToEyeL.InitIdentity();
     theHeadToEyeL.SetColumn(3,
                             NCollection_Vec3<Elem_t>(Elem_t(0.5 * aIOD), Elem_t(0.0), Elem_t(0.0)));
@@ -886,8 +767,6 @@ void Graphic3d_Camera::stereoProjection(NCollection_Mat4<Elem_t>& theProjL,
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::SetCustomStereoFrustums(const Aspect_FrustumLRBT<double>& theFrustumL,
                                                const Aspect_FrustumLRBT<double>& theFrustumR)
 {
@@ -897,8 +776,6 @@ void Graphic3d_Camera::SetCustomStereoFrustums(const Aspect_FrustumLRBT<double>&
   myIsCustomProjMatLR = false;
   InvalidateProjection();
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::SetCustomStereoProjection(const NCollection_Mat4<double>& theProjL,
                                                  const NCollection_Mat4<double>& theHeadToEyeL,
@@ -914,16 +791,12 @@ void Graphic3d_Camera::SetCustomStereoProjection(const NCollection_Mat4<double>&
   InvalidateProjection();
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::SetCustomMonoProjection(const NCollection_Mat4<double>& theProj)
 {
   myCustomProjMatM   = theProj;
   myIsCustomProjMatM = true;
   InvalidateProjection();
 }
-
-//=================================================================================================
 
 template <typename Elem_t>
 void Graphic3d_Camera::computeProjection(NCollection_Mat4<Elem_t>& theProjM,
@@ -935,7 +808,6 @@ void Graphic3d_Camera::computeProjection(NCollection_Mat4<Elem_t>& theProjM,
   theProjL.InitIdentity();
   theProjR.InitIdentity();
 
-  // sets top of frustum based on FOVy and near clipping plane
   Elem_t aScale   = static_cast<Elem_t>(myScale);
   Elem_t aZNear   = static_cast<Elem_t>(myZNear);
   Elem_t aZFar    = static_cast<Elem_t>(myZFar);
@@ -959,7 +831,6 @@ void Graphic3d_Camera::computeProjection(NCollection_Mat4<Elem_t>& theProjM,
     aDYHalf /= anAspect;
   }
 
-  // sets right of frustum based on aspect ratio
   Aspect_FrustumLRBT<Elem_t> anLRBT;
   anLRBT.Left   = -aDXHalf;
   anLRBT.Right  = aDXHalf;
@@ -1050,7 +921,7 @@ void Graphic3d_Camera::computeProjection(NCollection_Mat4<Elem_t>& theProjM,
 
       if (theToAddHeadToEye && !myIsCustomProjMatLR && aIOD != Elem_t(0.0))
       {
-        // X translation to cancel parallax
+
         theProjL.Translate(NCollection_Vec3<Elem_t>(Elem_t(0.5) * aIOD, Elem_t(0.0), Elem_t(0.0)));
         theProjR.Translate(NCollection_Vec3<Elem_t>(Elem_t(-0.5) * aIOD, Elem_t(0.0), Elem_t(0.0)));
       }
@@ -1067,15 +938,13 @@ void Graphic3d_Camera::computeProjection(NCollection_Mat4<Elem_t>& theProjM,
   }
 }
 
-//=================================================================================================
-
 template <typename Elem_t>
 Graphic3d_Camera::TransformMatrices<Elem_t>& Graphic3d_Camera::UpdateOrientation(
   TransformMatrices<Elem_t>& theMatrices) const
 {
   if (theMatrices.IsOrientationValid())
   {
-    return theMatrices; // for inline accessors
+    return theMatrices;
   }
 
   theMatrices.InitOrientation();
@@ -1098,10 +967,8 @@ Graphic3d_Camera::TransformMatrices<Elem_t>& Graphic3d_Camera::UpdateOrientation
 
   LookOrientation(anEye, aViewDir, anUp, anAxialScale, theMatrices.Orientation);
 
-  return theMatrices; // for inline accessors
+  return theMatrices;
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::InvalidateProjection()
 {
@@ -1110,8 +977,6 @@ void Graphic3d_Camera::InvalidateProjection()
   myWorldViewProjState.ProjectionState() = ++THE_STATE_COUNTER;
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::InvalidateOrientation()
 {
   myMatricesD.ResetOrientation();
@@ -1119,27 +984,23 @@ void Graphic3d_Camera::InvalidateOrientation()
   myWorldViewProjState.WorldViewState() = ++THE_STATE_COUNTER;
 }
 
-//=================================================================================================
-
 template <typename Elem_t>
 void Graphic3d_Camera::orthoProj(NCollection_Mat4<Elem_t>&         theOutMx,
                                  const Aspect_FrustumLRBT<Elem_t>& theLRBT,
                                  const Elem_t                      theNear,
                                  const Elem_t                      theFar) const
 {
-  // row 0
+
   theOutMx.ChangeValue(0, 0) = Elem_t(2.0) / (theLRBT.Right - theLRBT.Left);
   theOutMx.ChangeValue(0, 1) = Elem_t(0.0);
   theOutMx.ChangeValue(0, 2) = Elem_t(0.0);
   theOutMx.ChangeValue(0, 3) = -(theLRBT.Right + theLRBT.Left) / (theLRBT.Right - theLRBT.Left);
 
-  // row 1
   theOutMx.ChangeValue(1, 0) = Elem_t(0.0);
   theOutMx.ChangeValue(1, 1) = Elem_t(2.0) / (theLRBT.Top - theLRBT.Bottom);
   theOutMx.ChangeValue(1, 2) = Elem_t(0.0);
   theOutMx.ChangeValue(1, 3) = -(theLRBT.Top + theLRBT.Bottom) / (theLRBT.Top - theLRBT.Bottom);
 
-  // row 2
   theOutMx.ChangeValue(2, 0) = Elem_t(0.0);
   theOutMx.ChangeValue(2, 1) = Elem_t(0.0);
   if (myIsZeroToOneDepth)
@@ -1153,14 +1014,11 @@ void Graphic3d_Camera::orthoProj(NCollection_Mat4<Elem_t>&         theOutMx,
     theOutMx.ChangeValue(2, 3) = -(theFar + theNear) / (theFar - theNear);
   }
 
-  // row 3
   theOutMx.ChangeValue(3, 0) = Elem_t(0.0);
   theOutMx.ChangeValue(3, 1) = Elem_t(0.0);
   theOutMx.ChangeValue(3, 2) = Elem_t(0.0);
   theOutMx.ChangeValue(3, 3) = Elem_t(1.0);
 }
-
-//=================================================================================================
 
 template <typename Elem_t>
 void Graphic3d_Camera::perspectiveProj(NCollection_Mat4<Elem_t>&         theOutMx,
@@ -1168,19 +1026,17 @@ void Graphic3d_Camera::perspectiveProj(NCollection_Mat4<Elem_t>&         theOutM
                                        const Elem_t                      theNear,
                                        const Elem_t                      theFar) const
 {
-  // column 0
+
   theOutMx.ChangeValue(0, 0) = (Elem_t(2.0) * theNear) / (theLRBT.Right - theLRBT.Left);
   theOutMx.ChangeValue(1, 0) = Elem_t(0.0);
   theOutMx.ChangeValue(2, 0) = Elem_t(0.0);
   theOutMx.ChangeValue(3, 0) = Elem_t(0.0);
 
-  // column 1
   theOutMx.ChangeValue(0, 1) = Elem_t(0.0);
   theOutMx.ChangeValue(1, 1) = (Elem_t(2.0) * theNear) / (theLRBT.Top - theLRBT.Bottom);
   theOutMx.ChangeValue(2, 1) = Elem_t(0.0);
   theOutMx.ChangeValue(3, 1) = Elem_t(0.0);
 
-  // column 2
   theOutMx.ChangeValue(0, 2) = (theLRBT.Right + theLRBT.Left) / (theLRBT.Right - theLRBT.Left);
   theOutMx.ChangeValue(1, 2) = (theLRBT.Top + theLRBT.Bottom) / (theLRBT.Top - theLRBT.Bottom);
   if (myIsZeroToOneDepth)
@@ -1193,7 +1049,6 @@ void Graphic3d_Camera::perspectiveProj(NCollection_Mat4<Elem_t>&         theOutM
   }
   theOutMx.ChangeValue(3, 2) = Elem_t(-1.0);
 
-  // column 3
   theOutMx.ChangeValue(0, 3) = Elem_t(0.0);
   theOutMx.ChangeValue(1, 3) = Elem_t(0.0);
   if (myIsZeroToOneDepth)
@@ -1207,8 +1062,6 @@ void Graphic3d_Camera::perspectiveProj(NCollection_Mat4<Elem_t>&         theOutM
   theOutMx.ChangeValue(3, 3) = Elem_t(0.0);
 }
 
-//=================================================================================================
-
 template <typename Elem_t>
 void Graphic3d_Camera::stereoEyeProj(NCollection_Mat4<Elem_t>&         theOutMx,
                                      const Aspect_FrustumLRBT<Elem_t>& theLRBT,
@@ -1221,14 +1074,11 @@ void Graphic3d_Camera::stereoEyeProj(NCollection_Mat4<Elem_t>&         theOutMx,
   Elem_t aDx = theEyeIndex == Aspect_Eye_Left ? Elem_t(0.5) * theIOD : Elem_t(-0.5) * theIOD;
   Elem_t aDXStereoShift = aDx * theNear / theZFocus;
 
-  // construct eye projection matrix
   Aspect_FrustumLRBT<Elem_t> aLRBT = theLRBT;
   aLRBT.Left                       = theLRBT.Left + aDXStereoShift;
   aLRBT.Right                      = theLRBT.Right + aDXStereoShift;
   perspectiveProj(theOutMx, aLRBT, theNear, theFar);
 }
-
-//=================================================================================================
 
 template <typename Elem_t>
 void Graphic3d_Camera::LookOrientation(const NCollection_Vec3<Elem_t>& theEye,
@@ -1240,11 +1090,9 @@ void Graphic3d_Camera::LookOrientation(const NCollection_Vec3<Elem_t>& theEye,
   NCollection_Vec3<Elem_t> aForward = theFwdDir;
   aForward.Normalize();
 
-  // side = forward x up
   NCollection_Vec3<Elem_t> aSide = NCollection_Vec3<Elem_t>::Cross(aForward, theUpDir);
   aSide.Normalize();
 
-  // recompute up as: up = side x forward
   NCollection_Vec3<Elem_t> anUp = NCollection_Vec3<Elem_t>::Cross(aSide, aForward);
 
   NCollection_Mat4<Elem_t> aLookMx;
@@ -1264,32 +1112,23 @@ void Graphic3d_Camera::LookOrientation(const NCollection_Vec3<Elem_t>& theEye,
   theOutMx.Multiply(anAxialScaleMx);
 }
 
-//=================================================================================================
-
 bool Graphic3d_Camera::FitMinMax(const Bnd_Box& theBox,
                                  const double   theResolution,
                                  const bool     theToEnlargeIfLine)
 {
-  // Check bounding box for validness
+
   if (theBox.IsVoid())
   {
-    return false; // bounding box is out of bounds...
+    return false;
   }
 
-  // Apply "axial scaling" to the bounding points.
-  // It is not the best approach to make this scaling as a part of fit all operation,
-  // but the axial scale is integrated into camera orientation matrix and the other
-  // option is to perform frustum plane adjustment algorithm in view camera space,
-  // which will lead to a number of additional world-view space conversions and
-  // losing precision as well.
   const gp_Pnt aBndMin = theBox.CornerMin().XYZ().Multiplied(myAxialScale);
   const gp_Pnt aBndMax = theBox.CornerMax().XYZ().Multiplied(myAxialScale);
   if (aBndMax.IsEqual(aBndMin, RealEpsilon()))
   {
-    return false; // nothing to fit all
+    return false;
   }
 
-  // Prepare camera frustum planes.
   gp_Pln                     aFrustumPlaneArray[6];
   NCollection_Array1<gp_Pln> aFrustumPlane(aFrustumPlaneArray[0], 1, 6);
   Frustum(aFrustumPlane[1],
@@ -1299,12 +1138,10 @@ bool Graphic3d_Camera::FitMinMax(const Bnd_Box& theBox,
           aFrustumPlane[5],
           aFrustumPlane[6]);
 
-  // Prepare camera up, side, direction vectors.
   const gp_Dir aCamUp   = OrthogonalizedUp();
   const gp_Dir aCamDir  = Direction();
   const gp_Dir aCamSide = aCamDir ^ aCamUp;
 
-  // Prepare scene bounding box parameters.
   const gp_Pnt aBndCenter = (aBndMin.XYZ() + aBndMax.XYZ()) / 2.0;
 
   gp_Pnt                     aBndCornerArray[8];
@@ -1318,36 +1155,17 @@ bool Graphic3d_Camera::FitMinMax(const Bnd_Box& theBox,
   aBndCorner[7].SetCoord(aBndMax.X(), aBndMax.Y(), aBndMin.Z());
   aBndCorner[8].SetCoord(aBndMax.X(), aBndMax.Y(), aBndMax.Z());
 
-  // Perspective-correct camera projection vector, matching the bounding box is determined
-  // geometrically. Knowing the initial shape of a frustum it is possible to match it to a bounding
-  // box. Then, knowing the relation of camera projection vector to the frustum shape it is possible
-  // to set up perspective-correct camera projection matching the bounding box. These steps support
-  // non-asymmetric transformations of view-projection space provided by camera. The zooming can be
-  // done by calculating view plane size matching the bounding box at center of the bounding box.
-  // The only limitation here is that the scale of camera should define size of its view plane
-  // passing through the camera center, and the center of camera should be on the same line with the
-  // center of bounding box.
-
-  // The following method is applied:
-  // 1) Determine normalized asymmetry of camera projection vector by frustum planes.
-  // 2) Determine new location of frustum planes, "matching" the bounding box.
-  // 3) Determine new camera projection vector using the normalized asymmetry.
-  // 4) Determine new zooming in view space.
-
-  // 1. Determine normalized projection asymmetry (if any).
   double anAssymX = std::tan((aCamSide).Angle(aFrustumPlane[1].Axis().Direction()))
                     - std::tan((-aCamSide).Angle(aFrustumPlane[2].Axis().Direction()));
   double anAssymY = std::tan((aCamUp).Angle(aFrustumPlane[3].Axis().Direction()))
                     - std::tan((-aCamUp).Angle(aFrustumPlane[4].Axis().Direction()));
 
-  // 2. Determine how far should be the frustum planes placed from center
-  //    of bounding box, in order to match the bounding box closely.
   double                     aFitDistanceArray[6];
   NCollection_Array1<double> aFitDistance(aFitDistanceArray[0], 1, 6);
   aFitDistance.Init(0.0);
   for (int anI = aFrustumPlane.Lower(); anI <= aFrustumPlane.Upper(); ++anI)
   {
-    // Measure distances from center of bounding box to its corners towards the frustum plane.
+
     const gp_Dir& aPlaneN = aFrustumPlane[anI].Axis().Direction();
 
     double& aFitDist = aFitDistance[anI];
@@ -1356,22 +1174,7 @@ bool Graphic3d_Camera::FitMinMax(const Bnd_Box& theBox,
       aFitDist = std::max(aFitDist, gp_Vec(aBndCenter, aBndCorner[aJ]).Dot(aPlaneN));
     }
   }
-  // The center of camera is placed on the same line with center of bounding box.
-  // The view plane section crosses the bounding box at its center.
-  // To compute view plane size, evaluate coefficients converting "point -> plane distance"
-  // into view section size between the point and the frustum plane.
-  //       proj
-  //       /|\   right half of frame     //
-  //        |                           //
-  //  point o<--  distance * coeff  -->//---- (view plane section)
-  //         \                        //
-  //      (distance)                 //
-  //                ~               //
-  //                 (distance)    //
-  //                           \/\//
-  //                            \//
-  //                            //
-  //                      (frustum plane)
+
   aFitDistance[1] *=
     std::sqrt(1 + std::pow(std::tan(aCamSide.Angle(aFrustumPlane[1].Axis().Direction())), 2.0));
   aFitDistance[2] *=
@@ -1389,8 +1192,6 @@ bool Graphic3d_Camera::FitMinMax(const Bnd_Box& theBox,
   double aViewSizeYv = aFitDistance[3] + aFitDistance[4];
   double aViewSizeZv = aFitDistance[5] + aFitDistance[6];
 
-  // 3. Place center of camera on the same line with center of bounding
-  //    box applying corresponding projection asymmetry (if any).
   double anAssymXv      = anAssymX * aViewSizeXv * 0.5;
   double anAssymYv      = anAssymY * aViewSizeYv * 0.5;
   double anOffsetXv     = (aFitDistance[2] - aFitDistance[1]) * 0.5 + anAssymXv;
@@ -1406,14 +1207,12 @@ bool Graphic3d_Camera::FitMinMax(const Bnd_Box& theBox,
 
   if (aViewSizeXv < theResolution && aViewSizeYv < theResolution)
   {
-    // Bounding box collapses to a point or thin line going in depth of the screen
+
     if (aViewSizeXv < theResolution || !theToEnlargeIfLine)
     {
-      return false; // This is just one point or line and zooming has no effect.
+      return false;
     }
 
-    // Looking along line and "theToEnlargeIfLine" is requested.
-    // Fit view to see whole scene on rotation.
     aViewSizeXv = aViewSizeZv;
     aViewSizeYv = aViewSizeZv;
   }
@@ -1430,8 +1229,6 @@ bool Graphic3d_Camera::FitMinMax(const Bnd_Box& theBox,
   return true;
 }
 
-//=================================================================================================
-
 bool Graphic3d_Camera::ZFitAll(const double   theScaleFactor,
                                const Bnd_Box& theMinMax,
                                const Bnd_Box& theGraphicBB,
@@ -1440,10 +1237,6 @@ bool Graphic3d_Camera::ZFitAll(const double   theScaleFactor,
 {
   Standard_ASSERT_RAISE(theScaleFactor > 0.0, "Zero or negative scale factor is not allowed.");
 
-  // Method changes zNear and zFar parameters of camera so as to fit graphical structures
-  // by their graphical boundaries. It precisely fits min max boundaries of primary application
-  // objects (second argument), while it can sacrifice the real graphical boundaries of the
-  // scene with infinite or helper objects (third argument) for the sake of perspective projection.
   if (theGraphicBB.IsVoid())
   {
     theZNear = DEFAULT_ZNEAR;
@@ -1451,7 +1244,6 @@ bool Graphic3d_Camera::ZFitAll(const double   theScaleFactor,
     return false;
   }
 
-  // Measure depth of boundary points from camera eye.
   NCollection_Sequence<gp_Pnt> aPntsToMeasure;
 
   double aGraphicBB[6];
@@ -1484,7 +1276,6 @@ bool Graphic3d_Camera::ZFitAll(const double   theScaleFactor,
     aPntsToMeasure.Append(gp_Pnt(aMinMax[3], aMinMax[4], aMinMax[5]));
   }
 
-  // Camera eye plane.
   gp_Dir aCamDir = Direction();
   gp_Pnt aCamEye = myEye;
   gp_Pln aCamPln(aCamEye, aCamDir);
@@ -1496,7 +1287,6 @@ bool Graphic3d_Camera::ZFitAll(const double   theScaleFactor,
 
   const gp_XYZ& anAxialScale = myAxialScale;
 
-  // Get minimum and maximum distances to the eye plane.
   int                                    aCounter = 0;
   NCollection_Sequence<gp_Pnt>::Iterator aPntIt(aPntsToMeasure);
   for (; aPntIt.More(); aPntIt.Next())
@@ -1509,7 +1299,6 @@ bool Graphic3d_Camera::ZFitAll(const double   theScaleFactor,
 
     double aDistance = aCamPln.Distance(aMeasurePnt);
 
-    // Check if the camera is intruded into the scene.
     gp_Vec aVecToMeasurePnt(aCamEye, aMeasurePnt);
     if (aVecToMeasurePnt.Magnitude() > gp::Resolution()
         && aCamDir.IsOpposite(aVecToMeasurePnt, M_PI * 0.5))
@@ -1517,8 +1306,6 @@ bool Graphic3d_Camera::ZFitAll(const double   theScaleFactor,
       aDistance *= -1;
     }
 
-    // The first eight points are from theGraphicBB, the last eight points are from theMinMax (can
-    // be absent).
     double& aChangeMinDist = aCounter >= 8 ? aModelMinDist : aGraphMinDist;
     double& aChangeMaxDist = aCounter >= 8 ? aModelMaxDist : aGraphMaxDist;
     aChangeMinDist         = std::min(aDistance, aChangeMinDist);
@@ -1526,17 +1313,15 @@ bool Graphic3d_Camera::ZFitAll(const double   theScaleFactor,
     aCounter++;
   }
 
-  // Compute depth of bounding box center.
   double aMidDepth  = (aGraphMinDist + aGraphMaxDist) * 0.5;
   double aHalfDepth = (aGraphMaxDist - aGraphMinDist) * 0.5;
 
-  // Compute enlarged or shrank near and far z ranges.
   double aZNear = aMidDepth - aHalfDepth * theScaleFactor;
   double aZFar  = aMidDepth + aHalfDepth * theScaleFactor;
 
   if (!IsOrthographic())
   {
-    // Everything is behind the perspective camera.
+
     if (aZFar < zEpsilon())
     {
       theZNear = DEFAULT_ZNEAR;
@@ -1545,63 +1330,27 @@ bool Graphic3d_Camera::ZFitAll(const double   theScaleFactor,
     }
   }
 
-  //
-  // Consider clipping errors due to double to single precision floating-point conversion.
-  //
-
-  // Model to view transformation performs translation of points against eye position
-  // in three dimensions. Both point coordinate and eye position values are converted from
-  // double to single precision floating point numbers producing conversion errors.
-  // Epsilon (Mod) * 3.0 should safely compensate precision error for z coordinate after
-  // translation assuming that the:
-  // Epsilon (Eye.Mod()) * 3.0 > Epsilon (Eye.X()) + Epsilon (Eye.Y()) + Epsilon (Eye.Z()).
   double aEyeConf = 3.0 * zEpsilon(myEye.XYZ().Modulus());
 
-  // Model to view transformation performs rotation of points according to view direction.
-  // New z coordinate is computed as a multiplication of point's x, y, z coordinates by the
-  // "forward" direction vector's x, y, z coordinates. Both point's and "z" direction vector's
-  // values are converted from double to single precision floating point numbers producing
-  // conversion errors.
-  // Epsilon (Mod) * 6.0 should safely compensate the precision errors for the multiplication
-  // of point coordinates by direction vector.
   gp_Pnt aGraphicMin = theGraphicBB.CornerMin();
   gp_Pnt aGraphicMax = theGraphicBB.CornerMax();
 
   double aModelConf =
     6.0 * zEpsilon(aGraphicMin.XYZ().Modulus()) + 6.0 * zEpsilon(aGraphicMax.XYZ().Modulus());
 
-  // Compensate floating point conversion errors by increasing zNear, zFar to avoid clipping.
   aZNear -= zEpsilon(aZNear) + aEyeConf + aModelConf;
   aZFar += zEpsilon(aZFar) + aEyeConf + aModelConf;
 
   if (!IsOrthographic())
   {
-    // For perspective projection, the value of z in normalized device coordinates is non-linear
-    // function of eye z coordinate. For fixed-point depth representation resolution of z in
-    // model-view space will grow towards zFar plane and its scale depends mostly on how far is
-    // zNear against camera's eye. The purpose of the code below is to select most appropriate zNear
-    // distance to balance between clipping (less zNear, more chances to observe closely small
-    // models without clipping) and resolution of depth. A well applicable criteria to this is a
-    // ratio between resolution of z at center of model boundaries and the distance to that center
-    // point. The ratio is chosen empirically and validated by tests database. It is considered to
-    // be ~0.001 (0.1%) for 24 bit depth buffer, for less depth bitness the zNear will be placed
-    // similarly giving lower resolution. Approximation of the formula for respectively large z
-    // range is: zNear = [z * (1 + k) / (k * c)], where: z - distance to center of model boundaries;
-    // k - chosen ratio, c - capacity of depth buffer;
-    // k = 0.001, k * c = 1677.216, (1 + k) / (k * c) ~ 5.97E-4
-    //
-    // The function uses center of model boundaries computed from "theMinMax" boundaries (instead of
-    // using real graphical boundaries of all displayed objects). That means that it can sacrifice
-    // resolution of presentation of non primary ("infinite") application graphical objects in favor
-    // of better perspective projection of the small applicative objects measured with "theMinMax"
-    // values.
+
     double aZRange = isFiniteMinMax ? aModelMaxDist - aModelMinDist : aGraphMaxDist - aGraphMinDist;
     double aZMin   = isFiniteMinMax ? aModelMinDist : aGraphMinDist;
     double aZ      = aZMin < 0 ? aZRange / 2.0 : aZRange / 2.0 + aZMin;
     double aZNearMin = aZ * 5.97E-4;
     if (aZNear < aZNearMin)
     {
-      // Clip zNear according to the minimum value matching the quality.
+
       aZNear = aZNearMin;
       if (aZFar < aZNear)
       {
@@ -1610,14 +1359,12 @@ bool Graphic3d_Camera::ZFitAll(const double   theScaleFactor,
     }
     else
     {
-      // Compensate zNear conversion errors for perspective projection.
+
       aZNear -= aZFar * zEpsilon(aZNear) / (aZFar - zEpsilon(aZNear));
     }
 
-    // Compensate zFar conversion errors for perspective projection.
     aZFar += zEpsilon(aZFar);
 
-    // Ensure that after all the zNear is not a negative value.
     if (aZNear < zEpsilon())
     {
       aZNear = zEpsilon();
@@ -1631,8 +1378,6 @@ bool Graphic3d_Camera::ZFitAll(const double   theScaleFactor,
   return true;
 }
 
-//=================================================================================================
-
 void Graphic3d_Camera::Interpolate(const occ::handle<Graphic3d_Camera>& theStart,
                                    const occ::handle<Graphic3d_Camera>& theEnd,
                                    const double                         theT,
@@ -1640,7 +1385,7 @@ void Graphic3d_Camera::Interpolate(const occ::handle<Graphic3d_Camera>& theStart
 {
   if (std::abs(theT - 1.0) < Precision::Confusion())
   {
-    // just copy end-point transformation
+
     theCamera->Copy(theEnd);
     return;
   }
@@ -1651,7 +1396,6 @@ void Graphic3d_Camera::Interpolate(const occ::handle<Graphic3d_Camera>& theStart
     return;
   }
 
-  // apply rotation
   {
     gp_Ax3  aCamStart = cameraToAx3(*theStart);
     gp_Ax3  aCamEnd   = cameraToAx3(*theEnd);
@@ -1668,7 +1412,6 @@ void Graphic3d_Camera::Interpolate(const occ::handle<Graphic3d_Camera>& theStart
     theCamera->Transform(aTrsfRot);
   }
 
-  // apply translation
   {
     gp_XYZ aCenter =
       NCollection_Lerp<gp_XYZ>::Interpolate(theStart->Center().XYZ(), theEnd->Center().XYZ(), theT);
@@ -1706,7 +1449,6 @@ void Graphic3d_Camera::Interpolate(const occ::handle<Graphic3d_Camera>& theStart
     theCamera->SetEyeAndCenter(anEye, aCenter);
   }
 
-  // apply scaling
   if (std::abs(theStart->Scale() - theEnd->Scale()) > Precision::Confusion()
       && theStart->IsOrthographic())
   {
@@ -1715,8 +1457,6 @@ void Graphic3d_Camera::Interpolate(const occ::handle<Graphic3d_Camera>& theStart
     theCamera->SetScale(aScale);
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::FrustumPoints(NCollection_Array1<NCollection_Vec3<double>>& thePoints,
                                      const NCollection_Mat4<double>& theModelWorld) const
@@ -1734,13 +1474,12 @@ void Graphic3d_Camera::FrustumPoints(NCollection_Array1<NCollection_Vec3<double>
   double aNear = myZNear, aFar = myZFar;
   if (!IsOrthographic())
   {
-    // handle perspective projection
-    // Near plane
+
     nLeft   = aNear * (aProjectionMat.GetValue(0, 2) - 1.0) / aProjectionMat.GetValue(0, 0);
     nRight  = aNear * (aProjectionMat.GetValue(0, 2) + 1.0) / aProjectionMat.GetValue(0, 0);
     nTop    = aNear * (aProjectionMat.GetValue(1, 2) + 1.0) / aProjectionMat.GetValue(1, 1);
     nBottom = aNear * (aProjectionMat.GetValue(1, 2) - 1.0) / aProjectionMat.GetValue(1, 1);
-    // Far plane
+
     fLeft   = aFar * (aProjectionMat.GetValue(0, 2) - 1.0) / aProjectionMat.GetValue(0, 0);
     fRight  = aFar * (aProjectionMat.GetValue(0, 2) + 1.0) / aProjectionMat.GetValue(0, 0);
     fTop    = aFar * (aProjectionMat.GetValue(1, 2) + 1.0) / aProjectionMat.GetValue(1, 1);
@@ -1748,8 +1487,7 @@ void Graphic3d_Camera::FrustumPoints(NCollection_Array1<NCollection_Vec3<double>
   }
   else
   {
-    // handle orthographic projection
-    // Near plane
+
     nLeft   = (1.0 + aProjectionMat.GetValue(0, 3)) / (-aProjectionMat.GetValue(0, 0));
     fLeft   = nLeft;
     nRight  = (1.0 - aProjectionMat.GetValue(0, 3)) / aProjectionMat.GetValue(0, 0);
@@ -1790,8 +1528,6 @@ void Graphic3d_Camera::FrustumPoints(NCollection_Array1<NCollection_Vec3<double>
   aTmpPnt = anInvWorldView * aLeftBottomFar;
   thePoints.SetValue(FrustumVert_LeftBottomFar, aTmpPnt.xyz() / aTmpPnt.w());
 }
-
-//=================================================================================================
 
 void Graphic3d_Camera::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

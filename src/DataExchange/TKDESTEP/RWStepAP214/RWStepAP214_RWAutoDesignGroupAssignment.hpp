@@ -11,7 +11,6 @@ class StepAP214_AutoDesignGroupAssignment;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AutoDesignGroupAssignment
 class RWStepAP214_RWAutoDesignGroupAssignment
 {
 public:

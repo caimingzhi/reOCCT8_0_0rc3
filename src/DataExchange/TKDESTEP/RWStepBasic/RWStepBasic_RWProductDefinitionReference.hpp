@@ -11,7 +11,6 @@ class StepBasic_ProductDefinitionReference;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ProductDefinitionReference
 class RWStepBasic_RWProductDefinitionReference
 {
 public:

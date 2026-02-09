@@ -7,21 +7,16 @@ struct JacobiCoefficientsCache
   int           Degree;
 };
 
-// ===== Coefficient arrays for NivConstr = 0 (C0) =====
-
-// NivConstr=0, Degree=0 (array size: 1)
 static constexpr double TNorm_C0_D0[1] = {9.68245836551854255347e-01};
 static constexpr double CofA_C0_D0[1]  = {0.0};
 static constexpr double CofB_C0_D0[1]  = {0.0};
 static constexpr double Denom_C0_D0[1] = {0.0};
 
-// NivConstr=0, Degree=1 (array size: 2)
 static constexpr double TNorm_C0_D1[2] = {9.68245836551854255347e-01, 8.53912563829966608786e-01};
 static constexpr double CofA_C0_D1[2]  = {0.0, 0.0};
 static constexpr double CofB_C0_D1[2]  = {0.0, 0.0};
 static constexpr double Denom_C0_D1[2] = {0.0, 0.0};
 
-// NivConstr=0, Degree=2 (array size: 3)
 static constexpr double TNorm_C0_D2[3] = {9.68245836551854255347e-01,
                                           8.53912563829966608786e-01,
                                           8.38525491562421176894e-01};
@@ -29,7 +24,6 @@ static constexpr double CofA_C0_D2[3]  = {0.0, 0.0, 3.36000000000000000000e+02};
 static constexpr double CofB_C0_D2[3]  = {0.0, 0.0, -1.44000000000000000000e+02};
 static constexpr double Denom_C0_D2[3] = {0.0, 0.0, 6.94444444444444405895e-03};
 
-// NivConstr=0, Degree=3 (array size: 4)
 static constexpr double TNorm_C0_D3[4] = {9.68245836551854255347e-01,
                                           8.53912563829966608786e-01,
                                           8.38525491562421176894e-01,
@@ -47,7 +41,6 @@ static constexpr double Denom_C0_D3[4] = {0.0,
                                           6.94444444444444405895e-03,
                                           2.97619047619047602526e-03};
 
-// NivConstr=0, Degree=4 (array size: 5)
 static constexpr double TNorm_C0_D4[5] = {9.68245836551854255347e-01,
                                           8.53912563829966608786e-01,
                                           8.38525491562421176894e-01,
@@ -69,7 +62,6 @@ static constexpr double Denom_C0_D4[5] = {0.0,
                                           2.97619047619047602526e-03,
                                           1.56250000000000008674e-03};
 
-// NivConstr=0, Degree=5 (array size: 6)
 static constexpr double TNorm_C0_D5[6] = {9.68245836551854255347e-01,
                                           8.53912563829966608786e-01,
                                           8.38525491562421176894e-01,
@@ -95,7 +87,6 @@ static constexpr double Denom_C0_D5[6] = {0.0,
                                           1.56250000000000008674e-03,
                                           9.25925925925925961263e-04};
 
-// NivConstr=0, Degree=6 (array size: 7)
 static constexpr double TNorm_C0_D6[7] = {9.68245836551854255347e-01,
                                           8.53912563829966608786e-01,
                                           8.38525491562421176894e-01,
@@ -125,7 +116,6 @@ static constexpr double Denom_C0_D6[7] = {0.0,
                                           9.25925925925925961263e-04,
                                           5.95238095238095291789e-04};
 
-// NivConstr=0, Degree=7 (array size: 8)
 static constexpr double TNorm_C0_D7[8] = {9.68245836551854255347e-01,
                                           8.53912563829966608786e-01,
                                           8.38525491562421176894e-01,
@@ -159,7 +149,6 @@ static constexpr double Denom_C0_D7[8] = {0.0,
                                           5.95238095238095291789e-04,
                                           4.05844155844155870909e-04};
 
-// NivConstr=0, Degree=8 (array size: 9)
 static constexpr double TNorm_C0_D8[9] = {9.68245836551854255347e-01,
                                           8.53912563829966608786e-01,
                                           8.38525491562421176894e-01,
@@ -197,7 +186,6 @@ static constexpr double Denom_C0_D8[9] = {0.0,
                                           4.05844155844155870909e-04,
                                           2.89351851851851835790e-04};
 
-// NivConstr=0, Degree=9 (array size: 10)
 static constexpr double TNorm_C0_D9[10] = {9.68245836551854255347e-01,
                                            8.53912563829966608786e-01,
                                            8.38525491562421176894e-01,
@@ -239,7 +227,6 @@ static constexpr double Denom_C0_D9[10] = {0.0,
                                            2.89351851851851835790e-04,
                                            2.13675213675213675028e-04};
 
-// NivConstr=0, Degree=10 (array size: 11)
 static constexpr double TNorm_C0_D10[11] = {9.68245836551854255347e-01,
                                             8.53912563829966608786e-01,
                                             8.38525491562421176894e-01,
@@ -285,7 +272,6 @@ static constexpr double Denom_C0_D10[11] = {0.0,
                                             2.13675213675213675028e-04,
                                             1.62337662337662337522e-04};
 
-// NivConstr=0, Degree=11 (array size: 12)
 static constexpr double TNorm_C0_D11[12] = {9.68245836551854255347e-01,
                                             8.53912563829966608786e-01,
                                             8.38525491562421176894e-01,
@@ -335,7 +321,6 @@ static constexpr double Denom_C0_D11[12] = {0.0,
                                             1.62337662337662337522e-04,
                                             1.26262626262626262517e-04};
 
-// NivConstr=0, Degree=12 (array size: 13)
 static constexpr double TNorm_C0_D12[13] = {9.68245836551854255347e-01,
                                             8.53912563829966608786e-01,
                                             8.38525491562421176894e-01,
@@ -389,7 +374,6 @@ static constexpr double Denom_C0_D12[13] = {0.0,
                                             1.26262626262626262517e-04,
                                             1.00160256410256406781e-04};
 
-// NivConstr=0, Degree=13 (array size: 14)
 static constexpr double TNorm_C0_D13[14] = {9.68245836551854255347e-01,
                                             8.53912563829966608786e-01,
                                             8.38525491562421176894e-01,
@@ -447,7 +431,6 @@ static constexpr double Denom_C0_D13[14] = {0.0,
                                             1.00160256410256406781e-04,
                                             8.08015513897866814426e-05};
 
-// NivConstr=0, Degree=14 (array size: 15)
 static constexpr double TNorm_C0_D14[15] = {9.68245836551854255347e-01,
                                             8.53912563829966608786e-01,
                                             8.38525491562421176894e-01,
@@ -509,7 +492,6 @@ static constexpr double Denom_C0_D14[15] = {0.0,
                                             8.08015513897866814426e-05,
                                             6.61375661375661420263e-05};
 
-// NivConstr=0, Degree=15 (array size: 16)
 static constexpr double TNorm_C0_D15[16] = {9.68245836551854255347e-01,
                                             8.53912563829966608786e-01,
                                             8.38525491562421176894e-01,
@@ -575,7 +557,6 @@ static constexpr double Denom_C0_D15[16] = {0.0,
                                             6.61375661375661420263e-05,
                                             5.48245614035087729522e-05};
 
-// NivConstr=0, Degree=16 (array size: 17)
 static constexpr double TNorm_C0_D16[17] = {9.68245836551854255347e-01,
                                             8.53912563829966608786e-01,
                                             8.38525491562421176894e-01,
@@ -645,7 +626,6 @@ static constexpr double Denom_C0_D16[17] = {0.0,
                                             5.48245614035087729522e-05,
                                             4.59558823529411758328e-05};
 
-// NivConstr=0, Degree=17 (array size: 18)
 static constexpr double TNorm_C0_D17[18] = {9.68245836551854255347e-01,
                                             8.53912563829966608786e-01,
                                             8.38525491562421176894e-01,
@@ -719,7 +699,6 @@ static constexpr double Denom_C0_D17[18] = {0.0,
                                             4.59558823529411758328e-05,
                                             3.89044506691565533359e-05};
 
-// NivConstr=0, Degree=18 (array size: 19)
 static constexpr double TNorm_C0_D18[19] = {9.68245836551854255347e-01,
                                             8.53912563829966608786e-01,
                                             8.38525491562421176894e-01,
@@ -797,7 +776,6 @@ static constexpr double Denom_C0_D18[19] = {0.0,
                                             3.89044506691565533359e-05,
                                             3.32270069112174400009e-05};
 
-// NivConstr=0, Degree=19 (array size: 20)
 static constexpr double TNorm_C0_D19[20] = {
   9.68245836551854255347e-01, 8.53912563829966608786e-01, 8.38525491562421176894e-01,
   8.49632273398321369307e-01, 8.70823365174208774420e-01, 8.96421457000795229852e-01,
@@ -867,7 +845,6 @@ static constexpr double Denom_C0_D19[20] = {0.0,
                                             3.32270069112174400009e-05,
                                             2.86041189931350128589e-05};
 
-// NivConstr=0, Degree=20 (array size: 21)
 static constexpr double TNorm_C0_D20[21] = {
   9.68245836551854255347e-01, 8.53912563829966608786e-01, 8.38525491562421176894e-01,
   8.49632273398321369307e-01, 8.70823365174208774420e-01, 8.96421457000795229852e-01,
@@ -940,7 +917,6 @@ static constexpr double Denom_C0_D20[21] = {0.0,
                                             2.86041189931350128589e-05,
                                             2.48015873015873015658e-05};
 
-// NivConstr=0, Degree=21 (array size: 22)
 static constexpr double TNorm_C0_D21[22] = {
   9.68245836551854255347e-01, 8.53912563829966608786e-01, 8.38525491562421176894e-01,
   8.49632273398321369307e-01, 8.70823365174208774420e-01, 8.96421457000795229852e-01,
@@ -1017,7 +993,6 @@ static constexpr double Denom_C0_D21[22] = {0.0,
                                             2.48015873015873015658e-05,
                                             2.16450216450216450029e-05};
 
-// NivConstr=0, Degree=22 (array size: 23)
 static constexpr double TNorm_C0_D22[23] = {
   9.68245836551854255347e-01, 8.53912563829966608786e-01, 8.38525491562421176894e-01,
   8.49632273398321369307e-01, 8.70823365174208774420e-01, 8.96421457000795229852e-01,
@@ -1097,7 +1072,6 @@ static constexpr double Denom_C0_D22[23] = {0.0,
                                             2.16450216450216450029e-05,
                                             1.90027363940407421450e-05};
 
-// NivConstr=0, Degree=23 (array size: 24)
 static constexpr double TNorm_C0_D23[24] = {
   9.68245836551854255347e-01, 8.53912563829966608786e-01, 8.38525491562421176894e-01,
   8.49632273398321369307e-01, 8.70823365174208774420e-01, 8.96421457000795229852e-01,
@@ -1180,7 +1154,6 @@ static constexpr double Denom_C0_D23[24] = {0.0,
                                             1.90027363940407421450e-05,
                                             1.67740203972088029586e-05};
 
-// NivConstr=0, Degree=24 (array size: 25)
 static constexpr double TNorm_C0_D24[25] = {
   9.68245836551854255347e-01, 8.53912563829966608786e-01, 8.38525491562421176894e-01,
   8.49632273398321369307e-01, 8.70823365174208774420e-01, 8.96421457000795229852e-01,
@@ -1267,7 +1240,6 @@ static constexpr double Denom_C0_D24[25] = {0.0,
                                             1.67740203972088029586e-05,
                                             1.48809523809523809395e-05};
 
-// NivConstr=0, Degree=25 (array size: 26)
 static constexpr double TNorm_C0_D25[26] = {
   9.68245836551854255347e-01, 8.53912563829966608786e-01, 8.38525491562421176894e-01,
   8.49632273398321369307e-01, 8.70823365174208774420e-01, 8.96421457000795229852e-01,
@@ -1357,7 +1329,6 @@ static constexpr double Denom_C0_D25[26] = {0.0,
                                             1.48809523809523809395e-05,
                                             1.32625994694960220265e-05};
 
-// NivConstr=0, Degree=26 (array size: 27)
 static constexpr double TNorm_C0_D26[27] = {
   9.68245836551854255347e-01, 8.53912563829966608786e-01, 8.38525491562421176894e-01,
   8.49632273398321369307e-01, 8.70823365174208774420e-01, 8.96421457000795229852e-01,
@@ -1450,7 +1421,6 @@ static constexpr double Denom_C0_D26[27] = {0.0,
                                             1.32625994694960220265e-05,
                                             1.18708452041785367487e-05};
 
-// NivConstr=0, Degree=27 (array size: 28)
 static constexpr double TNorm_C0_D27[28] = {
   9.68245836551854255347e-01, 8.53912563829966608786e-01, 8.38525491562421176894e-01,
   8.49632273398321369307e-01, 8.70823365174208774420e-01, 8.96421457000795229852e-01,
@@ -1547,7 +1517,6 @@ static constexpr double Denom_C0_D27[28] = {0.0,
                                             1.18708452041785367487e-05,
                                             1.06673493770267969371e-05};
 
-// NivConstr=0, Degree=28 (array size: 29)
 static constexpr double TNorm_C0_D28[29] = {
   9.68245836551854255347e-01, 8.53912563829966608786e-01, 8.38525491562421176894e-01,
   8.49632273398321369307e-01, 8.70823365174208774420e-01, 8.96421457000795229852e-01,
@@ -1647,7 +1616,6 @@ static constexpr double Denom_C0_D28[29] = {0.0,
                                             1.06673493770267969371e-05,
                                             9.62130541871921193115e-06};
 
-// NivConstr=0, Degree=29 (array size: 30)
 static constexpr double TNorm_C0_D29[30] = {
   9.68245836551854255347e-01, 8.53912563829966608786e-01, 8.38525491562421176894e-01,
   8.49632273398321369307e-01, 8.70823365174208774420e-01, 8.96421457000795229852e-01,
@@ -1750,7 +1718,6 @@ static constexpr double Denom_C0_D29[30] = {0.0,
                                             9.62130541871921193115e-06,
                                             8.70776732845698438125e-06};
 
-// NivConstr=0, Degree=30 (array size: 31)
 static constexpr double TNorm_C0_D30[31] = {
   9.68245836551854255347e-01, 8.53912563829966608786e-01, 8.38525491562421176894e-01,
   8.49632273398321369307e-01, 8.70823365174208774420e-01, 8.96421457000795229852e-01,
@@ -1857,21 +1824,16 @@ static constexpr double Denom_C0_D30[31] = {0.0,
                                             8.70776732845698438125e-06,
                                             7.90638836179633192720e-06};
 
-// ===== Coefficient arrays for NivConstr = 1 (C1) =====
-
-// NivConstr=1, Degree=0 (array size: 1)
 static constexpr double TNorm_C1_D0[1] = {1.10926495933117807979e+00};
 static constexpr double CofA_C1_D0[1]  = {0.0};
 static constexpr double CofB_C1_D0[1]  = {0.0};
 static constexpr double Denom_C1_D0[1] = {0.0};
 
-// NivConstr=1, Degree=1 (array size: 2)
 static constexpr double TNorm_C1_D1[2] = {1.10926495933117807979e+00, 7.35803132638071843985e-01};
 static constexpr double CofA_C1_D1[2]  = {0.0, 0.0};
 static constexpr double CofB_C1_D1[2]  = {0.0, 0.0};
 static constexpr double Denom_C1_D1[2] = {0.0, 0.0};
 
-// NivConstr=1, Degree=2 (array size: 3)
 static constexpr double TNorm_C1_D2[3] = {1.10926495933117807979e+00,
                                           7.35803132638071843985e-01,
                                           5.96212000885591120181e-01};
@@ -1879,7 +1841,6 @@ static constexpr double CofA_C1_D2[3]  = {0.0, 0.0, 1.32000000000000000000e+03};
 static constexpr double CofB_C1_D2[3]  = {0.0, 0.0, -6.00000000000000000000e+02};
 static constexpr double Denom_C1_D2[3] = {0.0, 0.0, 2.50000000000000005204e-03};
 
-// NivConstr=1, Degree=3 (array size: 4)
 static constexpr double TNorm_C1_D3[4] = {1.10926495933117807979e+00,
                                           7.35803132638071843985e-01,
                                           5.96212000885591120181e-01,
@@ -1897,7 +1858,6 @@ static constexpr double Denom_C1_D3[4] = {0.0,
                                           2.50000000000000005204e-03,
                                           1.26262626262626273359e-03};
 
-// NivConstr=1, Degree=4 (array size: 5)
 static constexpr double TNorm_C1_D4[5] = {1.10926495933117807979e+00,
                                           7.35803132638071843985e-01,
                                           5.96212000885591120181e-01,
@@ -1919,7 +1879,6 @@ static constexpr double Denom_C1_D4[5] = {0.0,
                                           1.26262626262626273359e-03,
                                           7.44047619047619006316e-04};
 
-// NivConstr=1, Degree=5 (array size: 6)
 static constexpr double TNorm_C1_D5[6] = {1.10926495933117807979e+00,
                                           7.35803132638071843985e-01,
                                           5.96212000885591120181e-01,
@@ -1945,7 +1904,6 @@ static constexpr double Denom_C1_D5[6] = {0.0,
                                           7.44047619047619006316e-04,
                                           4.80769230769230795919e-04};
 
-// NivConstr=1, Degree=6 (array size: 7)
 static constexpr double TNorm_C1_D6[7] = {1.10926495933117807979e+00,
                                           7.35803132638071843985e-01,
                                           5.96212000885591120181e-01,
@@ -1975,7 +1933,6 @@ static constexpr double Denom_C1_D6[7] = {0.0,
                                           4.80769230769230795919e-04,
                                           3.30687830687830669474e-04};
 
-// NivConstr=1, Degree=7 (array size: 8)
 static constexpr double TNorm_C1_D7[8] = {1.10926495933117807979e+00,
                                           7.35803132638071843985e-01,
                                           5.96212000885591120181e-01,
@@ -2009,7 +1966,6 @@ static constexpr double Denom_C1_D7[8] = {0.0,
                                           3.30687830687830669474e-04,
                                           2.38095238095238095032e-04};
 
-// NivConstr=1, Degree=8 (array size: 9)
 static constexpr double TNorm_C1_D8[9] = {1.10926495933117807979e+00,
                                           7.35803132638071843985e-01,
                                           5.96212000885591120181e-01,
@@ -2047,7 +2003,6 @@ static constexpr double Denom_C1_D8[9] = {0.0,
                                           2.38095238095238095032e-04,
                                           1.77556818181818186746e-04};
 
-// NivConstr=1, Degree=9 (array size: 10)
 static constexpr double TNorm_C1_D9[10] = {1.10926495933117807979e+00,
                                            7.35803132638071843985e-01,
                                            5.96212000885591120181e-01,
@@ -2089,7 +2044,6 @@ static constexpr double Denom_C1_D9[10] = {0.0,
                                            1.77556818181818186746e-04,
                                            1.36165577342047943452e-04};
 
-// NivConstr=1, Degree=10 (array size: 11)
 static constexpr double TNorm_C1_D10[11] = {1.10926495933117807979e+00,
                                             7.35803132638071843985e-01,
                                             5.96212000885591120181e-01,
@@ -2135,7 +2089,6 @@ static constexpr double Denom_C1_D10[11] = {0.0,
                                             1.36165577342047943452e-04,
                                             1.06837606837606837514e-04};
 
-// NivConstr=1, Degree=11 (array size: 12)
 static constexpr double TNorm_C1_D11[12] = {1.10926495933117807979e+00,
                                             7.35803132638071843985e-01,
                                             5.96212000885591120181e-01,
@@ -2185,7 +2138,6 @@ static constexpr double Denom_C1_D11[12] = {0.0,
                                             1.06837606837606837514e-04,
                                             8.54408749145591314310e-05};
 
-// NivConstr=1, Degree=12 (array size: 13)
 static constexpr double TNorm_C1_D12[13] = {1.10926495933117807979e+00,
                                             7.35803132638071843985e-01,
                                             5.96212000885591120181e-01,
@@ -2239,7 +2191,6 @@ static constexpr double Denom_C1_D12[13] = {0.0,
                                             8.54408749145591314310e-05,
                                             6.94444444444444443842e-05};
 
-// NivConstr=1, Degree=13 (array size: 14)
 static constexpr double TNorm_C1_D13[14] = {1.10926495933117807979e+00,
                                             7.35803132638071843985e-01,
                                             5.96212000885591120181e-01,
@@ -2297,7 +2248,6 @@ static constexpr double Denom_C1_D13[14] = {0.0,
                                             6.94444444444444443842e-05,
                                             5.72344322344322343826e-05};
 
-// NivConstr=1, Degree=14 (array size: 15)
 static constexpr double TNorm_C1_D14[15] = {1.10926495933117807979e+00,
                                             7.35803132638071843985e-01,
                                             5.96212000885591120181e-01,
@@ -2359,7 +2309,6 @@ static constexpr double Denom_C1_D14[15] = {0.0,
                                             5.72344322344322343826e-05,
                                             4.77463712757830396503e-05};
 
-// NivConstr=1, Degree=15 (array size: 16)
 static constexpr double TNorm_C1_D15[16] = {1.10926495933117807979e+00,
                                             7.35803132638071843985e-01,
                                             5.96212000885591120181e-01,
@@ -2425,7 +2374,6 @@ static constexpr double Denom_C1_D15[16] = {0.0,
                                             4.77463712757830396503e-05,
                                             4.02576489533011284559e-05};
 
-// NivConstr=1, Degree=16 (array size: 17)
 static constexpr double TNorm_C1_D16[17] = {1.10926495933117807979e+00,
                                             7.35803132638071843985e-01,
                                             5.96212000885591120181e-01,
@@ -2495,7 +2443,6 @@ static constexpr double Denom_C1_D16[17] = {0.0,
                                             4.02576489533011284559e-05,
                                             3.42653508771929805540e-05};
 
-// NivConstr=1, Degree=17 (array size: 18)
 static constexpr double TNorm_C1_D17[18] = {1.10926495933117807979e+00,
                                             7.35803132638071843985e-01,
                                             5.96212000885591120181e-01,
@@ -2569,7 +2516,6 @@ static constexpr double Denom_C1_D17[18] = {0.0,
                                             3.42653508771929805540e-05,
                                             2.94117647058823537527e-05};
 
-// NivConstr=1, Degree=18 (array size: 19)
 static constexpr double TNorm_C1_D18[19] = {1.10926495933117807979e+00,
                                             7.35803132638071843985e-01,
                                             5.96212000885591120181e-01,
@@ -2647,7 +2593,6 @@ static constexpr double Denom_C1_D18[19] = {0.0,
                                             2.94117647058823537527e-05,
                                             2.54375254375254363740e-05};
 
-// NivConstr=1, Degree=19 (array size: 20)
 static constexpr double TNorm_C1_D19[20] = {
   1.10926495933117807979e+00, 7.35803132638071843985e-01, 5.96212000885591120181e-01,
   5.25573666170051412294e-01, 4.84554978083719889437e-01, 4.58891029747302503505e-01,
@@ -2717,7 +2662,6 @@ static constexpr double Denom_C1_D19[20] = {0.0,
                                             2.54375254375254363740e-05,
                                             2.21513379408116244085e-05};
 
-// NivConstr=1, Degree=20 (array size: 21)
 static constexpr double TNorm_C1_D20[21] = {
   1.10926495933117807979e+00, 7.35803132638071843985e-01, 5.96212000885591120181e-01,
   5.25573666170051412294e-01, 4.84554978083719889437e-01, 4.58891029747302503505e-01,
@@ -2790,7 +2734,6 @@ static constexpr double Denom_C1_D20[21] = {0.0,
                                             2.21513379408116244085e-05,
                                             1.94099378881987584837e-05};
 
-// NivConstr=1, Degree=21 (array size: 22)
 static constexpr double TNorm_C1_D21[22] = {
   1.10926495933117807979e+00, 7.35803132638071843985e-01, 5.96212000885591120181e-01,
   5.25573666170051412294e-01, 4.84554978083719889437e-01, 4.58891029747302503505e-01,
@@ -2867,7 +2810,6 @@ static constexpr double Denom_C1_D21[22] = {0.0,
                                             1.94099378881987584837e-05,
                                             1.71045429666119326985e-05};
 
-// NivConstr=1, Degree=22 (array size: 23)
 static constexpr double TNorm_C1_D22[23] = {
   1.10926495933117807979e+00, 7.35803132638071843985e-01, 5.96212000885591120181e-01,
   5.25573666170051412294e-01, 4.84554978083719889437e-01, 4.58891029747302503505e-01,
@@ -2947,7 +2889,6 @@ static constexpr double Denom_C1_D22[23] = {0.0,
                                             1.71045429666119326985e-05,
                                             1.51515151515151511632e-05};
 
-// NivConstr=1, Degree=23 (array size: 24)
 static constexpr double TNorm_C1_D23[24] = {
   1.10926495933117807979e+00, 7.35803132638071843985e-01, 5.96212000885591120181e-01,
   5.25573666170051412294e-01, 4.84554978083719889437e-01, 4.58891029747302503505e-01,
@@ -3030,7 +2971,6 @@ static constexpr double Denom_C1_D23[24] = {0.0,
                                             1.51515151515151511632e-05,
                                             1.34858129248031079298e-05};
 
-// NivConstr=1, Degree=24 (array size: 25)
 static constexpr double TNorm_C1_D24[25] = {
   1.10926495933117807979e+00, 7.35803132638071843985e-01, 5.96212000885591120181e-01,
   5.25573666170051412294e-01, 4.84554978083719889437e-01, 4.58891029747302503505e-01,
@@ -3117,7 +3057,6 @@ static constexpr double Denom_C1_D24[25] = {0.0,
                                             1.34858129248031079298e-05,
                                             1.20563271604938264912e-05};
 
-// NivConstr=1, Degree=25 (array size: 26)
 static constexpr double TNorm_C1_D25[26] = {
   1.10926495933117807979e+00, 7.35803132638071843985e-01, 5.96212000885591120181e-01,
   5.25573666170051412294e-01, 4.84554978083719889437e-01, 4.58891029747302503505e-01,
@@ -3207,7 +3146,6 @@ static constexpr double Denom_C1_D25[26] = {0.0,
                                             1.20563271604938264912e-05,
                                             1.08225108225108225014e-05};
 
-// NivConstr=1, Degree=26 (array size: 27)
 static constexpr double TNorm_C1_D26[27] = {
   1.10926495933117807979e+00, 7.35803132638071843985e-01, 5.96212000885591120181e-01,
   5.25573666170051412294e-01, 4.84554978083719889437e-01, 4.58891029747302503505e-01,
@@ -3300,7 +3238,6 @@ static constexpr double Denom_C1_D26[27] = {0.0,
                                             1.08225108225108225014e-05,
                                             9.75191137462942736274e-06};
 
-// NivConstr=1, Degree=27 (array size: 28)
 static constexpr double TNorm_C1_D27[28] = {
   1.10926495933117807979e+00, 7.35803132638071843985e-01, 5.96212000885591120181e-01,
   5.25573666170051412294e-01, 4.84554978083719889437e-01, 4.58891029747302503505e-01,
@@ -3397,7 +3334,6 @@ static constexpr double Denom_C1_D27[28] = {0.0,
                                             9.75191137462942736274e-06,
                                             8.81834215167548424825e-06};
 
-// NivConstr=1, Degree=28 (array size: 29)
 static constexpr double TNorm_C1_D28[29] = {
   1.10926495933117807979e+00, 7.35803132638071843985e-01, 5.96212000885591120181e-01,
   5.25573666170051412294e-01, 4.84554978083719889437e-01, 4.58891029747302503505e-01,
@@ -3497,7 +3433,6 @@ static constexpr double Denom_C1_D28[29] = {0.0,
                                             8.81834215167548424825e-06,
                                             8.00051203277009727929e-06};
 
-// NivConstr=1, Degree=29 (array size: 30)
 static constexpr double TNorm_C1_D29[30] = {
   1.10926495933117807979e+00, 7.35803132638071843985e-01, 5.96212000885591120181e-01,
   5.25573666170051412294e-01, 4.84554978083719889437e-01, 4.58891029747302503505e-01,
@@ -3600,7 +3535,6 @@ static constexpr double Denom_C1_D29[30] = {0.0,
                                             8.00051203277009727929e-06,
                                             7.28098788443616005983e-06};
 
-// NivConstr=1, Degree=30 (array size: 31)
 static constexpr double TNorm_C1_D30[31] = {
   1.10926495933117807979e+00, 7.35803132638071843985e-01, 5.96212000885591120181e-01,
   5.25573666170051412294e-01, 4.84554978083719889437e-01, 4.58891029747302503505e-01,
@@ -3707,21 +3641,16 @@ static constexpr double Denom_C1_D30[31] = {0.0,
                                             7.28098788443616005983e-06,
                                             6.64540138224348732256e-06};
 
-// ===== Coefficient arrays for NivConstr = 2 (C2) =====
-
-// NivConstr=2, Degree=0 (array size: 1)
 static constexpr double TNorm_C2_D0[1] = {1.21091229812484768580e+00};
 static constexpr double CofA_C2_D0[1]  = {0.0};
 static constexpr double CofB_C2_D0[1]  = {0.0};
 static constexpr double Denom_C2_D0[1] = {0.0};
 
-// NivConstr=2, Degree=1 (array size: 2)
 static constexpr double TNorm_C2_D1[2] = {1.21091229812484768580e+00, 6.69977594907897988641e-01};
 static constexpr double CofA_C2_D1[2]  = {0.0, 0.0};
 static constexpr double CofB_C2_D1[2]  = {0.0, 0.0};
 static constexpr double Denom_C2_D1[2] = {0.0, 0.0};
 
-// NivConstr=2, Degree=2 (array size: 3)
 static constexpr double TNorm_C2_D2[3] = {1.21091229812484768580e+00,
                                           6.69977594907897988641e-01,
                                           4.71767630582710706388e-01};
@@ -3729,7 +3658,6 @@ static constexpr double CofA_C2_D2[3]  = {0.0, 0.0, 3.36000000000000000000e+03};
 static constexpr double CofB_C2_D2[3]  = {0.0, 0.0, -1.56800000000000000000e+03};
 static constexpr double Denom_C2_D2[3] = {0.0, 0.0, 1.27551020408163255128e-03};
 
-// NivConstr=2, Degree=3 (array size: 4)
 static constexpr double TNorm_C2_D3[4] = {1.21091229812484768580e+00,
                                           6.69977594907897988641e-01,
                                           4.71767630582710706388e-01,
@@ -3747,7 +3675,6 @@ static constexpr double Denom_C2_D3[4] = {0.0,
                                           1.27551020408163255128e-03,
                                           6.94444444444444470947e-04};
 
-// NivConstr=2, Degree=4 (array size: 5)
 static constexpr double TNorm_C2_D4[5] = {1.21091229812484768580e+00,
                                           6.69977594907897988641e-01,
                                           4.71767630582710706388e-01,
@@ -3769,7 +3696,6 @@ static constexpr double Denom_C2_D4[5] = {0.0,
                                           6.94444444444444470947e-04,
                                           4.34027777777777753684e-04};
 
-// NivConstr=2, Degree=5 (array size: 6)
 static constexpr double TNorm_C2_D5[6] = {1.21091229812484768580e+00,
                                           6.69977594907897988641e-01,
                                           4.71767630582710706388e-01,
@@ -3795,7 +3721,6 @@ static constexpr double Denom_C2_D5[6] = {0.0,
                                           4.34027777777777753684e-04,
                                           2.94117647058823503646e-04};
 
-// NivConstr=2, Degree=6 (array size: 7)
 static constexpr double TNorm_C2_D6[7] = {1.21091229812484768580e+00,
                                           6.69977594907897988641e-01,
                                           4.71767630582710706388e-01,
@@ -3825,7 +3750,6 @@ static constexpr double Denom_C2_D6[7] = {0.0,
                                           2.94117647058823503646e-04,
                                           2.10437710437710428493e-04};
 
-// NivConstr=2, Degree=7 (array size: 8)
 static constexpr double TNorm_C2_D7[8] = {1.21091229812484768580e+00,
                                           6.69977594907897988641e-01,
                                           4.71767630582710706388e-01,
@@ -3859,7 +3783,6 @@ static constexpr double Denom_C2_D7[8] = {0.0,
                                           2.10437710437710428493e-04,
                                           1.56641604010025053961e-04};
 
-// NivConstr=2, Degree=8 (array size: 9)
 static constexpr double TNorm_C2_D8[9] = {1.21091229812484768580e+00,
                                           6.69977594907897988641e-01,
                                           4.71767630582710706388e-01,
@@ -3897,7 +3820,6 @@ static constexpr double Denom_C2_D8[9] = {0.0,
                                           1.56641604010025053961e-04,
                                           1.20192307692307698980e-04};
 
-// NivConstr=2, Degree=9 (array size: 10)
 static constexpr double TNorm_C2_D9[10] = {1.21091229812484768580e+00,
                                            6.69977594907897988641e-01,
                                            4.71767630582710706388e-01,
@@ -3939,7 +3861,6 @@ static constexpr double Denom_C2_D9[10] = {0.0,
                                            1.20192307692307698980e-04,
                                            9.44822373393801990225e-05};
 
-// NivConstr=2, Degree=10 (array size: 11)
 static constexpr double TNorm_C2_D10[11] = {1.21091229812484768580e+00,
                                             6.69977594907897988641e-01,
                                             4.71767630582710706388e-01,
@@ -3985,7 +3906,6 @@ static constexpr double Denom_C2_D10[11] = {0.0,
                                             9.44822373393801990225e-05,
                                             7.57575757575757575100e-05};
 
-// NivConstr=2, Degree=11 (array size: 12)
 static constexpr double TNorm_C2_D11[12] = {1.21091229812484768580e+00,
                                             6.69977594907897988641e-01,
                                             4.71767630582710706388e-01,
@@ -4035,7 +3955,6 @@ static constexpr double Denom_C2_D11[12] = {0.0,
                                             7.57575757575757575100e-05,
                                             6.17588932806324068889e-05};
 
-// NivConstr=2, Degree=12 (array size: 13)
 static constexpr double TNorm_C2_D12[13] = {1.21091229812484768580e+00,
                                             6.69977594907897988641e-01,
                                             4.71767630582710706388e-01,
@@ -4089,7 +4008,6 @@ static constexpr double Denom_C2_D12[13] = {0.0,
                                             6.17588932806324068889e-05,
                                             5.10620915032679754063e-05};
 
-// NivConstr=2, Degree=13 (array size: 14)
 static constexpr double TNorm_C2_D13[14] = {1.21091229812484768580e+00,
                                             6.69977594907897988641e-01,
                                             4.71767630582710706388e-01,
@@ -4147,7 +4065,6 @@ static constexpr double Denom_C2_D13[14] = {0.0,
                                             5.10620915032679754063e-05,
                                             4.27350427350427350057e-05};
 
-// NivConstr=2, Degree=14 (array size: 15)
 static constexpr double TNorm_C2_D14[15] = {1.21091229812484768580e+00,
                                             6.69977594907897988641e-01,
                                             4.71767630582710706388e-01,
@@ -4209,7 +4126,6 @@ static constexpr double Denom_C2_D14[15] = {0.0,
                                             4.27350427350427350057e-05,
                                             3.61480624638519350083e-05};
 
-// NivConstr=2, Degree=15 (array size: 16)
 static constexpr double TNorm_C2_D15[16] = {1.21091229812484768580e+00,
                                             6.69977594907897988641e-01,
                                             4.71767630582710706388e-01,
@@ -4275,7 +4191,6 @@ static constexpr double Denom_C2_D15[16] = {0.0,
                                             3.61480624638519350083e-05,
                                             3.08641975308641982570e-05};
 
-// NivConstr=2, Degree=16 (array size: 17)
 static constexpr double TNorm_C2_D16[17] = {1.21091229812484768580e+00,
                                             6.69977594907897988641e-01,
                                             4.71767630582710706388e-01,
@@ -4345,7 +4260,6 @@ static constexpr double Denom_C2_D16[17] = {0.0,
                                             3.08641975308641982570e-05,
                                             2.65731292517006792810e-05};
 
-// NivConstr=2, Degree=17 (array size: 18)
 static constexpr double TNorm_C2_D17[18] = {1.21091229812484768580e+00,
                                             6.69977594907897988641e-01,
                                             4.71767630582710706388e-01,
@@ -4419,7 +4333,6 @@ static constexpr double Denom_C2_D17[18] = {0.0,
                                             2.65731292517006792810e-05,
                                             2.30499723400331922563e-05};
 
-// NivConstr=2, Degree=18 (array size: 19)
 static constexpr double TNorm_C2_D18[19] = {1.21091229812484768580e+00,
                                             6.69977594907897988641e-01,
                                             4.71767630582710706388e-01,
@@ -4497,7 +4410,6 @@ static constexpr double Denom_C2_D18[19] = {0.0,
                                             2.30499723400331922563e-05,
                                             2.01288244766505642280e-05};
 
-// NivConstr=2, Degree=19 (array size: 20)
 static constexpr double TNorm_C2_D19[20] = {
   1.21091229812484768580e+00, 6.69977594907897988641e-01, 4.71767630582710706388e-01,
   3.71744221577204436713e-01, 3.12656210957019120578e-01, 2.74244615082074427725e-01,
@@ -4567,7 +4479,6 @@ static constexpr double Denom_C2_D19[20] = {0.0,
                                             2.01288244766505642280e-05,
                                             1.76853423882286369827e-05};
 
-// NivConstr=2, Degree=20 (array size: 21)
 static constexpr double TNorm_C2_D20[21] = {
   1.21091229812484768580e+00, 6.69977594907897988641e-01, 4.71767630582710706388e-01,
   3.71744221577204436713e-01, 3.12656210957019120578e-01, 2.74244615082074427725e-01,
@@ -4640,7 +4551,6 @@ static constexpr double Denom_C2_D20[21] = {0.0,
                                             1.76853423882286369827e-05,
                                             1.56250000000000003253e-05};
 
-// NivConstr=2, Degree=21 (array size: 22)
 static constexpr double TNorm_C2_D21[22] = {
   1.21091229812484768580e+00, 6.69977594907897988641e-01, 4.71767630582710706388e-01,
   3.71744221577204436713e-01, 3.12656210957019120578e-01, 2.74244615082074427725e-01,
@@ -4717,7 +4627,6 @@ static constexpr double Denom_C2_D21[22] = {0.0,
                                             1.56250000000000003253e-05,
                                             1.38750138750138750018e-05};
 
-// NivConstr=2, Degree=22 (array size: 23)
 static constexpr double TNorm_C2_D22[23] = {
   1.21091229812484768580e+00, 6.69977594907897988641e-01, 4.71767630582710706388e-01,
   3.71744221577204436713e-01, 3.12656210957019120578e-01, 2.74244615082074427725e-01,
@@ -4797,7 +4706,6 @@ static constexpr double Denom_C2_D22[23] = {0.0,
                                             1.38750138750138750018e-05,
                                             1.23786888492770842283e-05};
 
-// NivConstr=2, Degree=23 (array size: 24)
 static constexpr double TNorm_C2_D23[24] = {
   1.21091229812484768580e+00, 6.69977594907897988641e-01, 4.71767630582710706388e-01,
   3.71744221577204436713e-01, 3.12656210957019120578e-01, 2.74244615082074427725e-01,
@@ -4880,7 +4788,6 @@ static constexpr double Denom_C2_D23[24] = {0.0,
                                             1.23786888492770842283e-05,
                                             1.10913930789707191335e-05};
 
-// NivConstr=2, Degree=24 (array size: 25)
 static constexpr double TNorm_C2_D24[25] = {
   1.21091229812484768580e+00, 6.69977594907897988641e-01, 4.71767630582710706388e-01,
   3.71744221577204436713e-01, 3.12656210957019120578e-01, 2.74244615082074427725e-01,
@@ -4967,7 +4874,6 @@ static constexpr double Denom_C2_D24[25] = {0.0,
                                             1.10913930789707191335e-05,
                                             9.97765006385696102314e-06};
 
-// NivConstr=2, Degree=25 (array size: 26)
 static constexpr double TNorm_C2_D25[26] = {
   1.21091229812484768580e+00, 6.69977594907897988641e-01, 4.71767630582710706388e-01,
   3.71744221577204436713e-01, 3.12656210957019120578e-01, 2.74244615082074427725e-01,
@@ -5057,7 +4963,6 @@ static constexpr double Denom_C2_D25[26] = {0.0,
                                             9.97765006385696102314e-06,
                                             9.00900900900900948652e-06};
 
-// NivConstr=2, Degree=26 (array size: 27)
 static constexpr double TNorm_C2_D26[27] = {
   1.21091229812484768580e+00, 6.69977594907897988641e-01, 4.71767630582710706388e-01,
   3.71744221577204436713e-01, 3.12656210957019120578e-01, 2.74244615082074427725e-01,
@@ -5150,7 +5055,6 @@ static constexpr double Denom_C2_D26[27] = {0.0,
                                             9.00900900900900948652e-06,
                                             8.16246571764398669063e-06};
 
-// NivConstr=2, Degree=27 (array size: 28)
 static constexpr double TNorm_C2_D27[28] = {
   1.21091229812484768580e+00, 6.69977594907897988641e-01, 4.71767630582710706388e-01,
   3.71744221577204436713e-01, 3.12656210957019120578e-01, 2.74244615082074427725e-01,
@@ -5247,7 +5151,6 @@ static constexpr double Denom_C2_D27[28] = {0.0,
                                             8.16246571764398669063e-06,
                                             7.41927825261158631494e-06};
 
-// NivConstr=2, Degree=28 (array size: 29)
 static constexpr double TNorm_C2_D28[29] = {
   1.21091229812484768580e+00, 6.69977594907897988641e-01, 4.71767630582710706388e-01,
   3.71744221577204436713e-01, 3.12656210957019120578e-01, 2.74244615082074427725e-01,
@@ -5347,7 +5250,6 @@ static constexpr double Denom_C2_D28[29] = {0.0,
                                             7.41927825261158631494e-06,
                                             6.76406926406926406340e-06};
 
-// NivConstr=2, Degree=29 (array size: 30)
 static constexpr double TNorm_C2_D29[30] = {
   1.21091229812484768580e+00, 6.69977594907897988641e-01, 4.71767630582710706388e-01,
   3.71744221577204436713e-01, 3.12656210957019120578e-01, 2.74244615082074427725e-01,
@@ -5450,7 +5352,6 @@ static constexpr double Denom_C2_D29[30] = {0.0,
                                             6.76406926406926406340e-06,
                                             6.18413892049670980766e-06};
 
-// NivConstr=2, Degree=30 (array size: 31)
 static constexpr double TNorm_C2_D30[31] = {
   1.21091229812484768580e+00, 6.69977594907897988641e-01, 4.71767630582710706388e-01,
   3.71744221577204436713e-01, 3.12656210957019120578e-01, 2.74244615082074427725e-01,
@@ -5557,10 +5458,8 @@ static constexpr double Denom_C2_D30[31] = {0.0,
                                             6.18413892049670980766e-06,
                                             5.66893424036281190747e-06};
 
-// Pre-computed coefficient lookup table
-// [NivConstr 0-2][Degree 0-30] = 93 combinations
 static constexpr JacobiCoefficientsCache PrecomputedCoefficients[3][31] = {
-  // NivConstr = 0
+
   {{TNorm_C0_D0, CofA_C0_D0, CofB_C0_D0, Denom_C0_D0, 0},
    {TNorm_C0_D1, CofA_C0_D1, CofB_C0_D1, Denom_C0_D1, 1},
    {TNorm_C0_D2, CofA_C0_D2, CofB_C0_D2, Denom_C0_D2, 2},
@@ -5592,7 +5491,7 @@ static constexpr JacobiCoefficientsCache PrecomputedCoefficients[3][31] = {
    {TNorm_C0_D28, CofA_C0_D28, CofB_C0_D28, Denom_C0_D28, 28},
    {TNorm_C0_D29, CofA_C0_D29, CofB_C0_D29, Denom_C0_D29, 29},
    {TNorm_C0_D30, CofA_C0_D30, CofB_C0_D30, Denom_C0_D30, 30}},
-  // NivConstr = 1
+
   {{TNorm_C1_D0, CofA_C1_D0, CofB_C1_D0, Denom_C1_D0, 0},
    {TNorm_C1_D1, CofA_C1_D1, CofB_C1_D1, Denom_C1_D1, 1},
    {TNorm_C1_D2, CofA_C1_D2, CofB_C1_D2, Denom_C1_D2, 2},
@@ -5624,7 +5523,7 @@ static constexpr JacobiCoefficientsCache PrecomputedCoefficients[3][31] = {
    {TNorm_C1_D28, CofA_C1_D28, CofB_C1_D28, Denom_C1_D28, 28},
    {TNorm_C1_D29, CofA_C1_D29, CofB_C1_D29, Denom_C1_D29, 29},
    {TNorm_C1_D30, CofA_C1_D30, CofB_C1_D30, Denom_C1_D30, 30}},
-  // NivConstr = 2
+
   {{TNorm_C2_D0, CofA_C2_D0, CofB_C2_D0, Denom_C2_D0, 0},
    {TNorm_C2_D1, CofA_C2_D1, CofB_C2_D1, Denom_C2_D1, 1},
    {TNorm_C2_D2, CofA_C2_D2, CofB_C2_D2, Denom_C2_D2, 2},
@@ -5657,7 +5556,6 @@ static constexpr JacobiCoefficientsCache PrecomputedCoefficients[3][31] = {
    {TNorm_C2_D29, CofA_C2_D29, CofB_C2_D29, Denom_C2_D29, 29},
    {TNorm_C2_D30, CofA_C2_D30, CofB_C2_D30, Denom_C2_D30, 30}}};
 
-// Fast lookup function - simply returns reference to pre-computed data
 inline const JacobiCoefficientsCache& GetJacobiCoefficients(const int theNivConstr,
                                                             const int theDegree)
 {

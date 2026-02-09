@@ -5,7 +5,6 @@
 #include <TopoDS_Face.hpp>
 #include <DrawDim_Dimension.hpp>
 
-//! Dimensions between point, line and circle ON a plane
 class DrawDim_PlanarDimension : public DrawDim_Dimension
 {
 

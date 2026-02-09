@@ -14,7 +14,7 @@ Convert_GridPolynomialToPoles::Convert_GridPolynomialToPoles(
   const occ::handle<NCollection_HArray1<double>>& PolynomialVIntervals)
     : myDone(false)
 {
-  // Les Controles
+
   if ((NumCoeffPerSurface->Lower() != 1) || (NumCoeffPerSurface->Upper() != 2))
   {
     throw Standard_DomainError("Convert : Wrong Coefficients");
@@ -25,7 +25,6 @@ Convert_GridPolynomialToPoles::Convert_GridPolynomialToPoles(
     throw Standard_DomainError("Convert : Wrong Coefficients");
   }
 
-  // Les Degres
   myUDegree = NumCoeffPerSurface->Value(1) - 1;
   myVDegree = NumCoeffPerSurface->Value(2) - 1;
 
@@ -71,7 +70,6 @@ Convert_GridPolynomialToPoles::Convert_GridPolynomialToPoles(
   myUDegree       = 0;
   myVDegree       = 0;
 
-  // Les controles
   if ((NumCoeffPerSurface->LowerRow() != 1)
       || (NumCoeffPerSurface->UpperRow() != NbUSurfaces * NbVSurfaces)
       || (NumCoeffPerSurface->LowerCol() != 1) || (NumCoeffPerSurface->UpperCol() != 2))
@@ -86,7 +84,6 @@ Convert_GridPolynomialToPoles::Convert_GridPolynomialToPoles(
     throw Standard_DomainError("Convert : Wrong Coefficients");
   }
 
-  // Calcul des degree
   for (ii = 1; ii <= NbUSurfaces * NbVSurfaces; ii++)
   {
     if (NumCoeffPerSurface->Value(ii, 1) > myUDegree + 1)
@@ -124,7 +121,7 @@ void Convert_GridPolynomialToPoles::Perform(
   const occ::handle<NCollection_HArray1<double>>& TrueUIntervals,
   const occ::handle<NCollection_HArray1<double>>& TrueVIntervals)
 {
-  // (1) Construction des Tables monodimensionnelles ----------------------------
+
   occ::handle<NCollection_HArray1<double>> UParameters, VParameters;
   myUKnots                 = new (NCollection_HArray1<double>)(1, TrueUIntervals->Length());
   myUKnots->ChangeArray1() = TrueUIntervals->Array1();
@@ -134,8 +131,6 @@ void Convert_GridPolynomialToPoles::Perform(
   BuildArray(myUDegree, myUKnots, UContinuity, myUFlatKnots, myUMults, UParameters);
 
   BuildArray(myVDegree, myVKnots, VContinuity, myVFlatKnots, myVMults, VParameters);
-
-  // (2) Digitalisation -------------------------------------------------------
 
   int    ii, jj, Uindex = 0, Vindex = 0;
   int    Patch_Indice = 0;
@@ -177,7 +172,6 @@ void Convert_GridPolynomialToPoles::Perform(
       VValue =
         (1 - NValue) * PolynomialVIntervals->Value(1) + NValue * PolynomialVIntervals->Value(2);
 
-      // (2.1) Extraction du bon Patch
       if (Patch_Indice != Uindex + (myUKnots->Length() - 1) * (Vindex - 1))
       {
         int k1, k2, pos, ll = 1;
@@ -195,7 +189,6 @@ void Convert_GridPolynomialToPoles::Perform(
         }
       }
 
-      // (2.2) Positionnement en UValue,VValue
       PLib::EvalPoly2Var(UValue,
                          VValue,
                          0,
@@ -209,8 +202,6 @@ void Convert_GridPolynomialToPoles::Perform(
       myPoles->SetValue(ii, jj, gp_Pnt(Digit[0], Digit[1], Digit[2]));
     }
   }
-
-  // (3)Interpolation --------------------------------------------------------------
 
   int InversionProblem;
   BSplSLib::Interpolate(myUDegree,
@@ -234,7 +225,6 @@ void Convert_GridPolynomialToPoles::BuildArray(
 {
   int NumCurves = Knots->Length() - 1;
 
-  // Calcul des Multiplicites
   int ii;
   int multiplicities = Degree - Continuity;
   Mults              = new (NCollection_HArray1<int>)(1, Knots->Length());
@@ -246,7 +236,6 @@ void Convert_GridPolynomialToPoles::BuildArray(
   Mults->SetValue(1, Degree + 1);
   Mults->SetValue(NumCurves + 1, Degree + 1);
 
-  // Calcul des Noeuds Plats
   int num_flat_knots = multiplicities * (NumCurves - 1) + 2 * Degree + 2;
   FlatKnots          = new NCollection_HArray1<double>(1, num_flat_knots);
 
@@ -256,10 +245,8 @@ void Convert_GridPolynomialToPoles::BuildArray(
                          false,
                          FlatKnots->ChangeArray1());
 
-  // Calcul du nombre de Poles
   int num_poles = num_flat_knots - Degree - 1;
 
-  // Cacul des parametres d'interpolation
   Parameters = new (NCollection_HArray1<double>)(1, num_poles);
   BSplCLib::BuildSchoenbergPoints(Degree, FlatKnots->Array1(), Parameters->ChangeArray1());
 }

@@ -14,7 +14,6 @@
 #ifdef _WIN32
 Standard_IMPORT Draw_Viewer dout;
 #endif
-//=================================================================================================
 
 static int polytr(Draw_Interpretor& di, int n, const char** a)
 {
@@ -24,7 +23,6 @@ static int polytr(Draw_Interpretor& di, int n, const char** a)
   int nbNodes = Draw::Atoi(a[2]);
   int nbTri   = Draw::Atoi(a[3]);
 
-  // read the nodes
   int                        i, j = 4;
   NCollection_Array1<gp_Pnt> Nodes(1, nbNodes);
 
@@ -38,8 +36,6 @@ static int polytr(Draw_Interpretor& di, int n, const char** a)
     Nodes(i).SetCoord(Draw::Atof(a[j]), Draw::Atof(a[j + 1]), Draw::Atof(a[j + 2]));
     j += 3;
   }
-
-  // read the triangles
 
   NCollection_Array1<Poly_Triangle> Triangles(1, nbTri);
   for (i = 1; i <= nbTri; i++)
@@ -57,10 +53,8 @@ static int polytr(Draw_Interpretor& di, int n, const char** a)
 
   DrawTrSurf::Set(a[1], T);
 
-  return 0; // wnt
+  return 0;
 }
-
-//=================================================================================================
 
 static int polygon3d(Draw_Interpretor& di, int n, const char** a)
 {
@@ -69,7 +63,6 @@ static int polygon3d(Draw_Interpretor& di, int n, const char** a)
 
   int nbNodes = Draw::Atoi(a[2]);
 
-  // read the nodes
   int                        i, j = 3;
   NCollection_Array1<gp_Pnt> Nodes(1, nbNodes);
 
@@ -91,8 +84,6 @@ static int polygon3d(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int polygon2d(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 4)
@@ -100,7 +91,6 @@ static int polygon2d(Draw_Interpretor& di, int n, const char** a)
 
   int nbNodes = Draw::Atoi(a[2]);
 
-  // read the nodes
   int                          i, j = 3;
   NCollection_Array1<gp_Pnt2d> Nodes(1, nbNodes);
 
@@ -122,8 +112,6 @@ static int polygon2d(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int shnodes(Draw_Interpretor&, int n, const char** a)
 {
   if (n != 2)
@@ -139,10 +127,8 @@ static int shnodes(Draw_Interpretor&, int n, const char** a)
 
   dout.RepaintAll();
 
-  return 0; // wnt
+  return 0;
 }
-
-//=================================================================================================
 
 static int shtriangles(Draw_Interpretor&, int n, const char** a)
 {
@@ -154,10 +140,8 @@ static int shtriangles(Draw_Interpretor&, int n, const char** a)
   bool SHOWTRIANGLES = T->ShowTriangles();
   T->ShowTriangles(!SHOWTRIANGLES);
   dout.RepaintAll();
-  return 0; // wnt
+  return 0;
 }
-
-//=================================================================================================
 
 template <typename Poly, typename Point, typename PointArr>
 static inline void AddNode(const occ::handle<Poly>& thePolygon,
@@ -171,8 +155,6 @@ static inline void AddNode(const occ::handle<Poly>& thePolygon,
 
   theNodes.ChangeLast() = thePnt;
 }
-
-//=================================================================================================
 
 static int AddNode(Draw_Interpretor& theDI, int theNArg, const char** theArgVal)
 {
@@ -205,8 +187,6 @@ static int AddNode(Draw_Interpretor& theDI, int theNArg, const char** theArgVal)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int PolygonProps(Draw_Interpretor& theDI, int theNArg, const char** theArgVal)
 {
@@ -244,8 +224,6 @@ static int PolygonProps(Draw_Interpretor& theDI, int theNArg, const char** theAr
 
   return 0;
 }
-
-//=================================================================================================
 
 void GeometryTest::PolyCommands(Draw_Interpretor& theCommands)
 {

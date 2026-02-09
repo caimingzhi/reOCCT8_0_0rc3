@@ -9,11 +9,9 @@
 
 #include <stack>
 
-//! Auxiliary tool providing API for manipulation with BRepMesh_DataStructureOfDelaun.
 class BRepMesh_MeshTool : public Standard_Transient
 {
 public:
-  //! Helper functor intended to separate points to left and right from the constraint.
   class NodeClassifier
   {
   public:
@@ -56,22 +54,15 @@ public:
     bool                                               mySign;
   };
 
-  //! Constructor.
-  //! Initializes tool by the given data structure.
   Standard_EXPORT BRepMesh_MeshTool(
     const occ::handle<BRepMesh_DataStructureOfDelaun>& theStructure);
 
-  //! Destructor.
   Standard_EXPORT ~BRepMesh_MeshTool() override;
 
-  //! Returns data structure manipulated by this tool.
   const occ::handle<BRepMesh_DataStructureOfDelaun>& GetStructure() const { return myStructure; }
 
-  //! Dumps triangles to specified file.
   void DumpTriangles(const char* theFileName, IMeshData::MapOfInteger* theTriangles);
 
-  //! Adds new triangle with specified nodes to mesh.
-  //! Legalizes triangle in case if it violates circle criteria.
   void AddAndLegalizeTriangle(const int thePoint1, const int thePoint2, const int thePoint3)
   {
     int aEdges[3];
@@ -82,7 +73,6 @@ public:
     Legalize(aEdges[2]);
   }
 
-  //! Adds new triangle with specified nodes to mesh.
   void AddTriangle(const int thePoint1,
                    const int thePoint2,
                    const int thePoint3,
@@ -96,8 +86,6 @@ public:
     myStructure->AddElement(BRepMesh_Triangle(theEdges, aOri, BRepMesh_Free));
   }
 
-  //! Adds new link to mesh.
-  //! Updates link index and link orientation parameters.
   void AddLink(const int theFirstNode, const int theLastNode, int& theLinkIndex, bool& theLinkOri)
   {
     const int aLinkIt =
@@ -107,40 +95,28 @@ public:
     theLinkOri   = (aLinkIt > 0);
   }
 
-  //! Performs legalization of triangles connected to the specified link.
   Standard_EXPORT void Legalize(const int theLinkIndex);
 
-  //! Erases all elements connected to the specified artificial node.
-  //! In addition, erases the artificial node itself.
   Standard_EXPORT void EraseItemsConnectedTo(const int theNodeIndex);
 
-  //! Cleans frontier links from triangles to the right.
   Standard_EXPORT void CleanFrontierLinks();
 
-  //! Erases the given set of triangles.
-  //! Fills map of loop edges forming the contour surrounding the erased triangles.
   void EraseTriangles(const IMeshData::MapOfInteger&  theTriangles,
                       IMeshData::MapOfIntegerInteger& theLoopEdges);
 
-  //! Erases triangle with the given index and adds the free edges into the map.
-  //! When an edge is suppressed more than one time it is destroyed.
   Standard_EXPORT void EraseTriangle(const int                       theTriangleIndex,
                                      IMeshData::MapOfIntegerInteger& theLoopEdges);
 
-  //! Erases all links that have no elements connected to them.
   Standard_EXPORT void EraseFreeLinks();
 
-  //! Erases links from the specified map that have no elements connected to them.
   Standard_EXPORT void EraseFreeLinks(const IMeshData::MapOfIntegerInteger& theLinks);
 
-  //! Gives the list of edges with type defined by input parameter.
   Standard_EXPORT Handle(IMeshData::MapOfInteger) GetEdgesByType(
     const BRepMesh_DegreeOfFreedom theEdgeType) const;
 
   DEFINE_STANDARD_RTTIEXT(BRepMesh_MeshTool, Standard_Transient)
 
 private:
-  //! Returns True if the given point lies within circumcircle of the given triangle.
   bool checkCircle(const int (&aNodes)[3], const int thePoint)
   {
     const BRepMesh_Vertex& aVertex0 = myStructure->GetNode(aNodes[0]);
@@ -165,8 +141,6 @@ private:
     return false;
   }
 
-  //! Adds new triangle with the given nodes and updates
-  //! links stack by ones are not in used map.
   void addTriangleAndUpdateStack(const int                      theNode0,
                                  const int                      theNode1,
                                  const int                      theNode2,
@@ -185,9 +159,6 @@ private:
     }
   }
 
-  //! Iteratively erases triangles and their neighbours consisting
-  //! of free links using the given link as starting front.
-  //! Only triangles around the constraint's saddle nodes will be removed.
   void collectTrianglesOnFreeLinksAroundNodesOf(const BRepMesh_Edge&     theConstraint,
                                                 const int                theStartLink,
                                                 IMeshData::MapOfInteger& theTriangles);

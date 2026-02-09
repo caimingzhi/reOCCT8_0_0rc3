@@ -27,11 +27,6 @@ class TopoDS_Edge;
 class TopOpeBRepDS_Interference;
 class TopOpeBRepDS_ShapeWithState;
 
-//! The DataStructure stores :
-//!
-//! New geometries : points, curves, and surfaces.
-//! Topological shapes : vertices, edges, faces.
-//! The new geometries and the topological shapes have interferences.
 class TopOpeBRepDS_DataStructure
 {
 public:
@@ -39,10 +34,8 @@ public:
 
   Standard_EXPORT TopOpeBRepDS_DataStructure();
 
-  //! reset the data structure
   Standard_EXPORT void Init();
 
-  //! Insert a new surface. Returns the index.
   Standard_EXPORT int AddSurface(const TopOpeBRepDS_Surface& S);
 
   Standard_EXPORT void RemoveSurface(const int I);
@@ -55,7 +48,6 @@ public:
 
   Standard_EXPORT void ChangeKeepSurface(TopOpeBRepDS_Surface& S, const bool FindKeep);
 
-  //! Insert a new curve. Returns the index.
   Standard_EXPORT int AddCurve(const TopOpeBRepDS_Curve& S);
 
   Standard_EXPORT void RemoveCurve(const int I);
@@ -68,10 +60,8 @@ public:
 
   Standard_EXPORT void ChangeKeepCurve(TopOpeBRepDS_Curve& C, const bool FindKeep);
 
-  //! Insert a new point. Returns the index.
   Standard_EXPORT int AddPoint(const TopOpeBRepDS_Point& PDS);
 
-  //! Insert a new point. Returns the index.
   Standard_EXPORT int AddPointSS(const TopOpeBRepDS_Point& PDS,
                                  const TopoDS_Shape&       S1,
                                  const TopoDS_Shape&       S2);
@@ -86,10 +76,8 @@ public:
 
   Standard_EXPORT void ChangeKeepPoint(TopOpeBRepDS_Point& P, const bool FindKeep);
 
-  //! Insert a shape S. Returns the index.
   Standard_EXPORT int AddShape(const TopoDS_Shape& S);
 
-  //! Insert a shape S which ancestor is I = 1 or 2. Returns the index.
   Standard_EXPORT int AddShape(const TopoDS_Shape& S, const int I);
 
   Standard_EXPORT bool KeepShape(const int I, const bool FindKeep = true) const;
@@ -214,31 +202,20 @@ public:
 
   Standard_EXPORT int NbSectionEdges() const;
 
-  //! Returns the surface of index <I>.
   Standard_EXPORT const TopOpeBRepDS_Surface& Surface(const int I) const;
 
-  //! Returns the surface of index <I>.
   Standard_EXPORT TopOpeBRepDS_Surface& ChangeSurface(const int I);
 
-  //! Returns the Curve of index <I>.
   Standard_EXPORT const TopOpeBRepDS_Curve& Curve(const int I) const;
 
-  //! Returns the Curve of index <I>.
   Standard_EXPORT TopOpeBRepDS_Curve& ChangeCurve(const int I);
 
-  //! Returns the point of index <I>.
   Standard_EXPORT const TopOpeBRepDS_Point& Point(const int I) const;
 
-  //! Returns the point of index <I>.
   Standard_EXPORT TopOpeBRepDS_Point& ChangePoint(const int I);
 
-  //! returns the shape of index I stored in
-  //! the map myShapes, accessing a list of interference.
   Standard_EXPORT const TopoDS_Shape& Shape(const int I, const bool FindKeep = true) const;
 
-  //! returns the index of shape <S> stored in
-  //! the map myShapes, accessing a list of interference.
-  //! returns 0 if <S> is not in the map.
   Standard_EXPORT int Shape(const TopoDS_Shape& S, const bool FindKeep = true) const;
 
   Standard_EXPORT const TopoDS_Edge& SectionEdge(const int I, const bool FindKeep = true) const;
@@ -247,15 +224,8 @@ public:
 
   Standard_EXPORT bool IsSectionEdge(const TopoDS_Edge& E, const bool FindKeep = true) const;
 
-  //! Returns True if <S> has new geometries, i.e :
-  //! True si :
-  //! HasShape(S) True
-  //! S a une liste d'interferences non vide.
-  //! S = SOLID, FACE, EDGE : true/false
-  //! S = SHELL, WIRE, VERTEX : false.
   Standard_EXPORT bool HasGeometry(const TopoDS_Shape& S) const;
 
-  //! Returns True if <S> est dans myShapes
   Standard_EXPORT bool HasShape(const TopoDS_Shape& S, const bool FindKeep = true) const;
 
   Standard_EXPORT void SetNewSurface(const TopoDS_Shape& F, const occ::handle<Geom_Surface>& S);

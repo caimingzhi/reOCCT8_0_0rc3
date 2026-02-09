@@ -20,8 +20,6 @@ IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRep_FFDumper, Standard_Transient)
 static TCollection_AsciiString PRODINP("dinp ");
 #endif
 
-//=================================================================================================
-
 #ifndef OCCT_DEBUG
 TopOpeBRep_FFDumper::TopOpeBRep_FFDumper(const TopOpeBRep_PFacesFiller&)
 {
@@ -32,12 +30,10 @@ TopOpeBRep_FFDumper::TopOpeBRep_FFDumper(const TopOpeBRep_PFacesFiller& PFF)
 #endif
 }
 
-//=================================================================================================
-
 #ifndef OCCT_DEBUG
 void TopOpeBRep_FFDumper::Init(const TopOpeBRep_PFacesFiller&)
 {
-  // just shut up compiler warnings
+
   (void)myEn1;
   (void)myEn2;
   (void)myLineIndex;
@@ -69,8 +65,6 @@ void TopOpeBRep_FFDumper::Init(const TopOpeBRep_PFacesFiller& PFF)
 }
 #endif
 
-//=================================================================================================
-
 #ifndef OCCT_DEBUG
 void TopOpeBRep_FFDumper::DumpLine(const int)
 {
@@ -81,8 +75,6 @@ void TopOpeBRep_FFDumper::DumpLine(const int I)
   DumpLine(L);
 #endif
 }
-
-//=================================================================================================
 
 #ifndef OCCT_DEBUG
 void TopOpeBRep_FFDumper::DumpLine(const TopOpeBRep_LineInter&)
@@ -182,8 +174,6 @@ void TopOpeBRep_FFDumper::DumpLine(const TopOpeBRep_LineInter& LI)
 #endif
 }
 
-//=================================================================================================
-
 #ifndef OCCT_DEBUG
 void TopOpeBRep_FFDumper::DumpVP(const TopOpeBRep_VPointInter&)
 {
@@ -216,8 +206,6 @@ void TopOpeBRep_FFDumper::DumpVP(const TopOpeBRep_VPointInter& VP)
   }
 #endif
 }
-
-//=================================================================================================
 
 #ifndef OCCT_DEBUG
 void TopOpeBRep_FFDumper::DumpVP(const TopOpeBRep_VPointInter&, const int)
@@ -258,8 +246,6 @@ void TopOpeBRep_FFDumper::DumpVP(const TopOpeBRep_VPointInter& VP, const int ISI
 #endif
 }
 
-//=================================================================================================
-
 #ifndef OCCT_DEBUG
 int TopOpeBRep_FFDumper::ExploreIndex(const TopoDS_Shape&, const int) const
 {
@@ -276,8 +262,6 @@ int TopOpeBRep_FFDumper::ExploreIndex(const TopoDS_Shape& S, const int ISI) cons
   return r;
 }
 #endif
-
-//=================================================================================================
 
 #ifndef OCCT_DEBUG
 void TopOpeBRep_FFDumper::DumpDSP(const TopOpeBRep_VPointInter&,

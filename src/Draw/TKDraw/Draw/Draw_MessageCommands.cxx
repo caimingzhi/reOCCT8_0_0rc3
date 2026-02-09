@@ -1,15 +1,4 @@
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Draw.hpp>
 #include <Draw_Printer.hpp>
@@ -19,8 +8,6 @@
 #include <Message_PrinterToReport.hpp>
 #include <Message_Report.hpp>
 #include <NCollection_Shared.hpp>
-
-//=================================================================================================
 
 static bool printerType(const TCollection_AsciiString& theTypeName,
                         occ::handle<Standard_Type>&    theType)
@@ -49,8 +36,6 @@ static bool printerType(const TCollection_AsciiString& theTypeName,
   return false;
 }
 
-//=================================================================================================
-
 static occ::handle<Message_Printer> createPrinter(const occ::handle<Standard_Type>& theType,
                                                   Draw_Interpretor&                 theDI)
 {
@@ -77,8 +62,6 @@ static occ::handle<Message_Printer> createPrinter(const occ::handle<Standard_Typ
   return occ::handle<Message_Printer>();
 }
 
-//=================================================================================================
-
 static int SendMessage(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
   if (theArgNb < 2)
@@ -98,8 +81,6 @@ static int SendMessage(Draw_Interpretor& theDI, int theArgNb, const char** theAr
   return 0;
 }
 
-//=================================================================================================
-
 static int PrintMessenger(Draw_Interpretor& theDI, int, const char**)
 {
   const occ::handle<Message_Messenger>& aMessenger = Message::DefaultMessenger();
@@ -111,8 +92,6 @@ static int PrintMessenger(Draw_Interpretor& theDI, int, const char**)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int SetMessagePrinter(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -176,8 +155,6 @@ static int SetMessagePrinter(Draw_Interpretor& theDI, int theArgNb, const char**
   return 0;
 }
 
-//=================================================================================================
-
 static int ClearReport(Draw_Interpretor& theDI, int theArgNb, const char**)
 {
   if (theArgNb < 1)
@@ -196,8 +173,6 @@ static int ClearReport(Draw_Interpretor& theDI, int theArgNb, const char**)
   aReport->Clear();
   return 0;
 }
-
-//=================================================================================================
 
 static int SetReportMetric(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -227,8 +202,6 @@ static int SetReportMetric(Draw_Interpretor& theDI, int theArgNb, const char** t
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int CollectMetricMessages(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -274,8 +247,6 @@ static int CollectMetricMessages(Draw_Interpretor& theDI, int theArgNb, const ch
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int PrintReport(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {

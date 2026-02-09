@@ -10,8 +10,6 @@
 #include <NCollection_DataMap.hpp>
 #include <gp_Pnt.hpp>
 
-//! Defines a linear form (using Prism from BRepSweep)
-//! with modifications provided for the LinearForm feature.
 class LocOpe_LinearForm
 {
 public:
@@ -71,8 +69,6 @@ inline LocOpe_LinearForm::LocOpe_LinearForm()
 {
 }
 
-//=================================================================================================
-
 inline LocOpe_LinearForm::LocOpe_LinearForm(const TopoDS_Shape& Base,
                                             const gp_Vec&       V,
                                             const gp_Pnt&       Pnt1,
@@ -81,8 +77,6 @@ inline LocOpe_LinearForm::LocOpe_LinearForm(const TopoDS_Shape& Base,
 {
   Perform(Base, V, Pnt1, Pnt2);
 }
-
-//=================================================================================================
 
 inline LocOpe_LinearForm::LocOpe_LinearForm(const TopoDS_Shape& Base,
                                             const gp_Vec&       V,

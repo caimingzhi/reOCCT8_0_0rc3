@@ -1,6 +1,5 @@
 #include <IntPatch_HCurve2dTool.hpp>
 
-//============================================================
 int IntPatch_HCurve2dTool::NbSamples(const occ::handle<Adaptor2d_Curve2d>& C,
                                      const double                          U0,
                                      const double                          U1)
@@ -19,8 +18,7 @@ int IntPatch_HCurve2dTool::NbSamples(const occ::handle<Adaptor2d_Curve2d>& C,
     {
       nbs = C->NbKnots();
       nbs *= C->Degree();
-      // szv:nbs *= C->LastParameter() - C->FirstParameter();
-      // szv:nbs /= U1-U0;
+
       nbs *= U1 - U0;
       nbs /= C->LastParameter() - C->FirstParameter();
       if (nbs < 2.0)

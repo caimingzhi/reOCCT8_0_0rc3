@@ -7,50 +7,30 @@
 
 class OpenGl_Context;
 
-//! Stores parameters of OpenGL texture format.
 class OpenGl_TextureFormat
 {
 public:
-  //! Returns texture format for specified type and number of channels.
-  //! @tparam theCompType component type
-  //! @tparam theNbComps  number of components
   template <class theCompType, int theNbComps>
   static OpenGl_TextureFormat Create();
 
-  //! Find texture format suitable to specified image format.
-  //! @param[in] theCtx  OpenGL context defining supported texture formats
-  //! @param[in] theFormat  image format
-  //! @param[in] theIsColorMap  flag indicating color nature of image (to select sRGB texture)
-  //! @return found format or invalid format
   Standard_EXPORT static OpenGl_TextureFormat FindFormat(const occ::handle<OpenGl_Context>& theCtx,
                                                          Image_Format theFormat,
                                                          bool         theIsColorMap);
 
-  //! Find texture format suitable to specified internal (sized) texture format.
-  //! @param[in] theCtx  OpenGL context defining supported texture formats
-  //! @param[in] theSizedFormat  sized (internal) texture format (example: GL_RGBA8)
-  //! @return found format or invalid format
   Standard_EXPORT static OpenGl_TextureFormat FindSizedFormat(
     const occ::handle<OpenGl_Context>& theCtx,
     GLint                              theSizedFormat);
 
-  //! Find texture format suitable to specified compressed texture format.
-  //! @param[in] theCtx  OpenGL context defining supported texture formats
-  //! @param[in] theFormat  compressed texture format
-  //! @return found format or invalid format
   Standard_EXPORT static OpenGl_TextureFormat FindCompressedFormat(
     const occ::handle<OpenGl_Context>& theCtx,
     Image_CompressedFormat             theFormat,
     bool                               theIsColorMap);
 
-  //! Format pixel format enumeration.
   Standard_EXPORT static TCollection_AsciiString FormatFormat(GLint theInternalFormat);
 
-  //! Format data type enumeration.
   Standard_EXPORT static TCollection_AsciiString FormatDataType(GLint theDataType);
 
 public:
-  //! Empty constructor (invalid texture format).
   OpenGl_TextureFormat()
       : myImageFormat(Image_Format_UNKNOWN),
         myInternalFormat(0),
@@ -60,68 +40,51 @@ public:
   {
   }
 
-  //! Return TRUE if format is defined.
   bool IsValid() const { return myInternalFormat != 0 && myPixelFormat != 0 && myDataType != 0; }
 
-  //! Returns OpenGL internal format of the pixel data (example: GL_R32F).
   GLint InternalFormat() const { return myInternalFormat; }
 
-  //! Sets texture internal format.
   void SetInternalFormat(GLint theInternal) { myInternalFormat = theInternal; }
 
-  //! Returns OpenGL format of the pixel data (example: GL_RED).
   GLenum PixelFormat() const { return myPixelFormat; }
 
-  //! Sets OpenGL format of the pixel data.
   void SetPixelFormat(GLenum theFormat) { myPixelFormat = theFormat; }
 
-  //! Returns OpenGL data type of the pixel data (example: GL_FLOAT).
   GLint DataType() const { return myDataType; }
 
-  //! Sets OpenGL data type of the pixel data.
   void SetDataType(GLint theType) { myDataType = theType; }
 
-  //! Returns number of components (channels). Here for debugging purposes.
   GLint NbComponents() const { return myNbComponents; }
 
-  //! Sets number of components (channels).
   void SetNbComponents(GLint theNbComponents) { myNbComponents = theNbComponents; }
 
-  //! Return TRUE if internal texture format is sRGB(A).
   bool IsSRGB() const
   {
     return myInternalFormat == GL_SRGB8 || myInternalFormat == GL_SRGB8_ALPHA8;
   }
 
-  //! Returns image format (best match or Image_Format_UNKNOWN if no suitable fit).
   Image_Format ImageFormat() const { return myImageFormat; }
 
-  //! Sets image format.
   void SetImageFormat(Image_Format theFormat) { myImageFormat = theFormat; }
 
 public:
-  //! Returns OpenGL internal format of the pixel data (example: GL_R32F).
   GLint Internal() const { return myInternalFormat; }
 
-  //! Returns OpenGL format of the pixel data (example: GL_RED).
   GLenum Format() const { return myPixelFormat; }
 
 private:
-  Image_Format myImageFormat;    //!< image format
-  GLint        myInternalFormat; //!< OpenGL internal format of the pixel data
-  GLenum       myPixelFormat;    //!< OpenGL pixel format
-  GLint        myDataType;       //!< OpenGL data type of input pixel data
-  GLint        myNbComponents;   //!< number of channels for each pixel (from 1 to 4)
+  Image_Format myImageFormat;
+  GLint        myInternalFormat;
+  GLenum       myPixelFormat;
+  GLint        myDataType;
+  GLint        myNbComponents;
 };
 
-//! Selects preferable texture format for specified parameters.
 template <class T>
 struct OpenGl_TextureFormatSelector
 {
-  // Not implemented
 };
 
-//! Specialization for unsigned byte.
 template <>
 struct OpenGl_TextureFormatSelector<GLubyte>
 {
@@ -145,7 +108,6 @@ struct OpenGl_TextureFormatSelector<GLubyte>
   }
 };
 
-//! Specialization for unsigned short.
 template <>
 struct OpenGl_TextureFormatSelector<GLushort>
 {
@@ -169,7 +131,6 @@ struct OpenGl_TextureFormatSelector<GLushort>
   }
 };
 
-//! Specialization for float.
 template <>
 struct OpenGl_TextureFormatSelector<GLfloat>
 {
@@ -193,7 +154,6 @@ struct OpenGl_TextureFormatSelector<GLfloat>
   }
 };
 
-//! Specialization for unsigned int.
 template <>
 struct OpenGl_TextureFormatSelector<GLuint>
 {
@@ -217,7 +177,6 @@ struct OpenGl_TextureFormatSelector<GLuint>
   }
 };
 
-//! Specialization for signed byte.
 template <>
 struct OpenGl_TextureFormatSelector<GLbyte>
 {
@@ -241,7 +200,6 @@ struct OpenGl_TextureFormatSelector<GLbyte>
   }
 };
 
-//! Specialization for signed short.
 template <>
 struct OpenGl_TextureFormatSelector<GLshort>
 {
@@ -265,7 +223,6 @@ struct OpenGl_TextureFormatSelector<GLshort>
   }
 };
 
-//! Specialization for signed int.
 template <>
 struct OpenGl_TextureFormatSelector<GLint>
 {
@@ -288,8 +245,6 @@ struct OpenGl_TextureFormatSelector<GLint>
     }
   }
 };
-
-//=================================================================================================
 
 template <class theCompType, int theNbComps>
 inline OpenGl_TextureFormat OpenGl_TextureFormat::Create()

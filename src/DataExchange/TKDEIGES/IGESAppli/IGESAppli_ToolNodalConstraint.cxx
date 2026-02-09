@@ -23,7 +23,7 @@ void IGESAppli_ToolNodalConstraint::ReadOwnParams(const occ::handle<IGESAppli_No
                                                   const occ::handle<IGESData_IGESReaderData>&   IR,
                                                   IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   int                                                                 num, i;
   int                                                                 tempType;
   occ::handle<IGESAppli_Node>                                         tempNode;
@@ -34,7 +34,7 @@ void IGESAppli_ToolNodalConstraint::ReadOwnParams(const occ::handle<IGESAppli_No
     tempTabularDataProps = new NCollection_HArray1<occ::handle<IGESDefs_TabularData>>(1, num);
   else
     PR.AddFail("Number of cases: Not Positive");
-  // szv#4:S4163:12Mar99 `st=` not needed
+
   PR.ReadInteger(PR.Current(), "Type of Constraint", tempType);
   PR.ReadEntity(IR, PR.Current(), "Node", STANDARD_TYPE(IGESAppli_Node), tempNode);
 
@@ -42,7 +42,7 @@ void IGESAppli_ToolNodalConstraint::ReadOwnParams(const occ::handle<IGESAppli_No
     for (i = 1; i <= num; i++)
     {
       occ::handle<IGESDefs_TabularData> tempEntity;
-      // szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "Tabular Data Property",
@@ -93,7 +93,7 @@ void IGESAppli_ToolNodalConstraint::OwnCopy(const occ::handle<IGESAppli_NodalCon
 }
 
 IGESData_DirChecker IGESAppli_ToolNodalConstraint::DirChecker(
-  const occ::handle<IGESAppli_NodalConstraint>& /* ent */) const
+  const occ::handle<IGESAppli_NodalConstraint>&) const
 {
   IGESData_DirChecker DC(418, 0);
   DC.Structure(IGESData_DefVoid);

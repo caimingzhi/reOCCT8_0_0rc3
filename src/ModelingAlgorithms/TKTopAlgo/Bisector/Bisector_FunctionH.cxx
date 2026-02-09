@@ -3,8 +3,6 @@
 #include <gp_Pnt2d.hpp>
 #include <gp_Vec2d.hpp>
 
-//=================================================================================================
-
 Bisector_FunctionH::Bisector_FunctionH(const occ::handle<Geom2d_Curve>& C2,
                                        const gp_Pnt2d&                  P1,
                                        const gp_Vec2d&                  T1)
@@ -15,15 +13,10 @@ Bisector_FunctionH::Bisector_FunctionH(const occ::handle<Geom2d_Curve>& C2,
   curve2 = C2;
 }
 
-//=============================================================================
-// function : Value
-// purpose :
-//                F = P1P2.(||T2||T1 + T2)
-//=============================================================================
 bool Bisector_FunctionH::Value(const double X, double& F)
 {
-  gp_Pnt2d P2; // point sur C2.
-  gp_Vec2d T2; // tangente a C2 en V.
+  gp_Pnt2d P2;
+  gp_Vec2d T2;
   curve2->D1(X, P2, T2);
 
   double NormT2 = T2.Magnitude();
@@ -35,21 +28,17 @@ bool Bisector_FunctionH::Value(const double X, double& F)
   return true;
 }
 
-//=================================================================================================
-
 bool Bisector_FunctionH::Derivative(const double X, double& D)
 {
   double F;
   return Values(X, F, D);
 }
 
-//=================================================================================================
-
 bool Bisector_FunctionH::Values(const double X, double& F, double& D)
 {
-  gp_Pnt2d P2;  // point sur C2.
-  gp_Vec2d T2;  // tangente a C2 en V.
-  gp_Vec2d T2v; // derivee seconde a C2 en V.
+  gp_Pnt2d P2;
+  gp_Vec2d T2;
+  gp_Vec2d T2v;
 
   curve2->D2(X, P2, T2, T2v);
 

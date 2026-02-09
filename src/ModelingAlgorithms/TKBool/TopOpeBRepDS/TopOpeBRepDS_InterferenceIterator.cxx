@@ -1,7 +1,5 @@
 #include <TopOpeBRepDS_InterferenceIterator.hpp>
 
-//=================================================================================================
-
 TopOpeBRepDS_InterferenceIterator::TopOpeBRepDS_InterferenceIterator()
     : myGKDef(false),
       myGDef(false),
@@ -9,8 +7,6 @@ TopOpeBRepDS_InterferenceIterator::TopOpeBRepDS_InterferenceIterator()
       mySDef(false)
 {
 }
-
-//=================================================================================================
 
 TopOpeBRepDS_InterferenceIterator::TopOpeBRepDS_InterferenceIterator(
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& L)
@@ -22,8 +18,6 @@ TopOpeBRepDS_InterferenceIterator::TopOpeBRepDS_InterferenceIterator(
   Init(L);
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_InterferenceIterator::Init(
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& L)
 {
@@ -31,15 +25,11 @@ void TopOpeBRepDS_InterferenceIterator::Init(
   Match();
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_InterferenceIterator::GeometryKind(const TopOpeBRepDS_Kind GK)
 {
   myGKDef = true;
   myGK    = GK;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_InterferenceIterator::Geometry(const int G)
 {
@@ -47,23 +37,17 @@ void TopOpeBRepDS_InterferenceIterator::Geometry(const int G)
   myG    = G;
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_InterferenceIterator::SupportKind(const TopOpeBRepDS_Kind ST)
 {
   mySKDef = true;
   mySK    = ST;
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_InterferenceIterator::Support(const int S)
 {
   mySDef = true;
   myS    = S;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_InterferenceIterator::Match()
 {
@@ -80,8 +64,6 @@ void TopOpeBRepDS_InterferenceIterator::Match()
   }
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_InterferenceIterator::MatchInterference(
   const occ::handle<TopOpeBRepDS_Interference>& I) const
 {
@@ -92,14 +74,10 @@ bool TopOpeBRepDS_InterferenceIterator::MatchInterference(
   return (GK && SK && G && S);
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_InterferenceIterator::More() const
 {
   return myIterator.More();
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_InterferenceIterator::Next()
 {
@@ -110,14 +88,10 @@ void TopOpeBRepDS_InterferenceIterator::Next()
   }
 }
 
-//=================================================================================================
-
 const occ::handle<TopOpeBRepDS_Interference>& TopOpeBRepDS_InterferenceIterator::Value() const
 {
   return myIterator.Value();
 }
-
-//=================================================================================================
 
 NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator&
   TopOpeBRepDS_InterferenceIterator::ChangeIterator()

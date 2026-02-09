@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <StlAPI_Writer.hpp>
 
@@ -24,14 +13,10 @@
 #include <Poly_Triangulation.hpp>
 #include <fstream>
 
-//=================================================================================================
-
 StlAPI_Writer::StlAPI_Writer()
     : myASCIIMode(true)
 {
 }
-
-//=================================================================================================
 
 bool StlAPI_Writer::Write(const TopoDS_Shape&          theShape,
                           const char*                  theFileName,
@@ -46,8 +31,6 @@ bool StlAPI_Writer::Write(const TopoDS_Shape&          theShape,
   return Write(theShape, aStream, theProgress);
 }
 
-//=================================================================================================
-
 bool StlAPI_Writer::Write(const TopoDS_Shape&          theShape,
                           Standard_OStream&            theStream,
                           const Message_ProgressRange& theProgress)
@@ -55,7 +38,6 @@ bool StlAPI_Writer::Write(const TopoDS_Shape&          theShape,
   int aNbNodes     = 0;
   int aNbTriangles = 0;
 
-  // calculate total number of the nodes and triangles
   for (TopExp_Explorer anExpSF(theShape, TopAbs_FACE); anExpSF.More(); anExpSF.Next())
   {
     TopLoc_Location                 aLoc;
@@ -70,15 +52,14 @@ bool StlAPI_Writer::Write(const TopoDS_Shape&          theShape,
 
   if (aNbTriangles == 0)
   {
-    // No triangulation on the shape
+
     return false;
   }
 
-  // create temporary triangulation
   occ::handle<Poly_Triangulation> aMesh = new Poly_Triangulation(aNbNodes, aNbTriangles, false);
-  // count faces missing triangulation
+
   int aNbFacesNoTri = 0;
-  // fill temporary triangulation
+
   int aNodeOffset    = 0;
   int aTriangleOffet = 0;
   for (TopExp_Explorer anExpSF(theShape, TopAbs_FACE); anExpSF.More(); anExpSF.Next())
@@ -93,7 +74,6 @@ bool StlAPI_Writer::Write(const TopoDS_Shape&          theShape,
       continue;
     }
 
-    // copy nodes
     gp_Trsf aTrsf = aLoc.Transformation();
     for (int aNodeIter = 1; aNodeIter <= aTriangulation->NbNodes(); ++aNodeIter)
     {
@@ -102,7 +82,6 @@ bool StlAPI_Writer::Write(const TopoDS_Shape&          theShape,
       aMesh->SetNode(aNodeIter + aNodeOffset, aPnt);
     }
 
-    // copy triangles
     const TopAbs_Orientation anOrientation = anExpSF.Current().Orientation();
     for (int aTriIter = 1; aTriIter <= aTriangulation->NbTriangles(); ++aTriIter)
     {
@@ -112,13 +91,12 @@ bool StlAPI_Writer::Write(const TopoDS_Shape&          theShape,
       aTri.Get(anId[0], anId[1], anId[2]);
       if (anOrientation == TopAbs_REVERSED)
       {
-        // Swap 1, 2.
+
         int aTmpIdx = anId[1];
         anId[1]     = anId[2];
         anId[2]     = aTmpIdx;
       }
 
-      // Update nodes according to the offset.
       anId[0] += aNodeOffset;
       anId[1] += aNodeOffset;
       anId[2] += aNodeOffset;
@@ -136,7 +114,7 @@ bool StlAPI_Writer::Write(const TopoDS_Shape&          theShape,
 
   if (isDone && (aNbFacesNoTri > 0))
   {
-    // Print warning with number of faces missing triangulation
+
     TCollection_AsciiString aWarningMsg =
       TCollection_AsciiString("Warning: ") + TCollection_AsciiString(aNbFacesNoTri)
       + TCollection_AsciiString((aNbFacesNoTri == 1) ? " face has" : " faces have")

@@ -11,7 +11,6 @@ class StepShape_ManifoldSurfaceShapeRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ManifoldSurfaceShapeRepresentation
 class RWStepShape_RWManifoldSurfaceShapeRepresentation
 {
 public:

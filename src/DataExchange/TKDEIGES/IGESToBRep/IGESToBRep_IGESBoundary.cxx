@@ -20,18 +20,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESToBRep_IGESBoundary, Standard_Transient)
 
-//=================================================================================================
-
 IGESToBRep_IGESBoundary::IGESToBRep_IGESBoundary() = default;
-
-//=================================================================================================
 
 IGESToBRep_IGESBoundary::IGESToBRep_IGESBoundary(const IGESToBRep_CurveAndSurface& CS)
     : myCS(CS)
 {
 }
-
-//=================================================================================================
 
 void IGESToBRep_IGESBoundary::Init(const IGESToBRep_CurveAndSurface&       CS,
                                    const occ::handle<IGESData_IGESEntity>& entity,
@@ -48,8 +42,6 @@ void IGESToBRep_IGESBoundary::Init(const IGESToBRep_CurveAndSurface&       CS,
   myfilepreference = filepreference;
 }
 
-//=================================================================================================
-
 bool IGESToBRep_IGESBoundary::Transfer(
   bool&                                                                     okCurve,
   bool&                                                                     okCurve3d,
@@ -59,7 +51,7 @@ bool IGESToBRep_IGESBoundary::Transfer(
   const occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>& curves2d,
   const int                                                                 number)
 {
-  occ::handle<ShapeExtend_WireData> scurve3d, lsewd; // temporary objects
+  occ::handle<ShapeExtend_WireData> scurve3d, lsewd;
   return Transfer(okCurve,
                   okCurve3d,
                   okCurve2d,
@@ -73,8 +65,6 @@ bool IGESToBRep_IGESBoundary::Transfer(
                   lsewd);
 }
 
-//=================================================================================================
-
 bool IGESToBRep_IGESBoundary::Transfer(
   bool&                                                                     okCurve,
   bool&                                                                     okCurve3d,
@@ -85,7 +75,7 @@ bool IGESToBRep_IGESBoundary::Transfer(
   const int                                                                 number,
   occ::handle<ShapeExtend_WireData>&                                        lsewd)
 {
-  occ::handle<IGESData_IGESEntity> icurve3d; // temporary object
+  occ::handle<IGESData_IGESEntity> icurve3d;
   return Transfer(okCurve,
                   okCurve3d,
                   okCurve2d,
@@ -99,14 +89,7 @@ bool IGESToBRep_IGESBoundary::Transfer(
                   lsewd);
 }
 
-//=================================================================================================
-
-void IGESToBRep_IGESBoundary::Check(const bool, const bool, const bool, const bool)
-{
-  // Implemented in IGESControl_IGESBoundary, subject to refactoring
-}
-
-//=================================================================================================
+void IGESToBRep_IGESBoundary::Check(const bool, const bool, const bool, const bool) {}
 
 bool IGESToBRep_IGESBoundary::Transfer(
   bool&,
@@ -121,11 +104,10 @@ bool IGESToBRep_IGESBoundary::Transfer(
   const int                                                                 number,
   occ::handle<ShapeExtend_WireData>&                                        Gsewd)
 {
-  Gsewd = new ShapeExtend_WireData; // local translation (for mysewd)
-  // clang-format off
-  occ::handle<ShapeExtend_WireData> Gsewd3d = new ShapeExtend_WireData;//local translation (for mysewd3d)
-  occ::handle<ShapeExtend_WireData> Gsewd2d = new ShapeExtend_WireData;//local translation (for mysewd2d)
-  // clang-format on
+  Gsewd = new ShapeExtend_WireData;
+
+  occ::handle<ShapeExtend_WireData> Gsewd3d = new ShapeExtend_WireData;
+  occ::handle<ShapeExtend_WireData> Gsewd2d = new ShapeExtend_WireData;
 
   bool GTranslate3d = true, GTranslate2d = true, Preferred3d = true, Preferred2d = true;
 
@@ -152,7 +134,7 @@ bool IGESToBRep_IGESBoundary::Transfer(
 
   if (GTranslate3d && GTranslate2d)
   {
-    // Setting preference in the case of inconsistency between 3D and 2D
+
     if (myfilepreference == 2)
       Preferred3d = false;
     else if (myfilepreference == 3)
@@ -184,8 +166,7 @@ bool IGESToBRep_IGESBoundary::Transfer(
           Gsewd->Add(Gsewd3d->Wire());
         }
         else
-          Gsewd->Add(
-            Sh); // Gsewd = Gsewd3d is impossible to avoid sharing of sewd (UK1.igs entity 7)
+          Gsewd->Add(Sh);
       }
     }
   }
@@ -203,14 +184,13 @@ bool IGESToBRep_IGESBoundary::Transfer(
   }
   else if (GTranslate3d && GTranslate2d)
   {
-    // Translate both curves 3D and 2D
-    // Suppose that i-th segment in 2D curve corresponds to i-th segment in 3D curve
+
     for (int i = 1; i <= len3d; i++)
     {
       bool LTranslate3d = true, LTranslate2d = true;
 
       occ::handle<ShapeExtend_WireData> Lsewd3d = new ShapeExtend_WireData;
-      TC.SetBadCase(false); //: 27
+      TC.SetBadCase(false);
       if (usescurve)
         Lsewd3d->Add(scurve3d->Edge(i));
       else
@@ -249,7 +229,7 @@ bool IGESToBRep_IGESBoundary::Transfer(
         LTranslate3d = Preferred3d;
         LTranslate2d = Preferred2d;
       }
-      occ::handle<ShapeExtend_WireData> Lsewd; // Lsewd3d or Lsewd2d or Lsewd3d+pcurve
+      occ::handle<ShapeExtend_WireData> Lsewd;
       if (LTranslate3d && !LTranslate2d)
         Lsewd = Lsewd3d;
       else if (!LTranslate3d && LTranslate2d)
@@ -257,7 +237,7 @@ bool IGESToBRep_IGESBoundary::Transfer(
       else
       {
         Lsewd = Lsewd3d;
-        // copying pcurve to edge with 3D curve
+
         for (int iedge = 1; iedge <= Lsewd3d->NbEdges(); iedge++)
         {
           TopoDS_Edge edge3d = Lsewd3d->Edge(iedge), edge2d = Lsewd2d->Edge(iedge);
@@ -284,13 +264,6 @@ bool IGESToBRep_IGESBoundary::Transfer(
   return true;
 }
 
-//=======================================================================
-// function : ReverseCurves3d
-// purpose  : Reverses 3D curves of the edges in the wire and reverses
-//           the order of edges in the wire.
-//           Orientation of each edge is not changed
-//=======================================================================
-
 void IGESToBRep_IGESBoundary::ReverseCurves3d(const occ::handle<ShapeExtend_WireData>& sewd)
 {
   sewd->Reverse();
@@ -303,7 +276,7 @@ void IGESToBRep_IGESBoundary::ReverseCurves3d(const occ::handle<ShapeExtend_Wire
     TopLoc_Location         L;
     double                  p1, p2;
     occ::handle<Geom_Curve> curve = BRep_Tool::Curve(oldedge, L, p1, p2);
-    if (curve->IsPeriodic()) // #21
+    if (curve->IsPeriodic())
       ShapeBuild_Edge().MakeEdge(newedge,
                                  curve->Reversed(),
                                  L,
@@ -317,7 +290,7 @@ void IGESToBRep_IGESBoundary::ReverseCurves3d(const occ::handle<ShapeExtend_Wire
         std::max(curve->ReversedParameter(curve->LastParameter()), curve->ReversedParameter(p2)),
         std::min(curve->ReversedParameter(curve->FirstParameter()), curve->ReversedParameter(p1)));
     newedge.Orientation(TopAbs::Reverse(oldedge.Orientation()));
-    // sewd->Set (newedge, i);
+
     B.Add(W, newedge);
   }
   occ::handle<ShapeFix_Wire> sfw = new ShapeFix_Wire();
@@ -325,13 +298,6 @@ void IGESToBRep_IGESBoundary::ReverseCurves3d(const occ::handle<ShapeExtend_Wire
   sfw->FixConnected();
   sewd->Init(sfw->Wire());
 }
-
-//=======================================================================
-// function : ReverseCurves2d
-// purpose  : Reverses pcurves of the edges in the wire and reverses
-//           the order of edges in the wire.
-//           Orientation of each edge is also changed
-//=======================================================================
 
 void IGESToBRep_IGESBoundary::ReverseCurves2d(const occ::handle<ShapeExtend_WireData>& sewd,
                                               const TopoDS_Face&                       face)
@@ -343,7 +309,6 @@ void IGESToBRep_IGESBoundary::ReverseCurves2d(const occ::handle<ShapeExtend_Wire
     double                    p1, p2;
     occ::handle<Geom2d_Curve> curve = BRep_Tool::CurveOnSurface(oldedge, face, p1, p2);
 
-    // skl 24.04.2002 for OCC314
     if (curve->IsPeriodic())
       ShapeBuild_Edge().MakeEdge(newedge,
                                  curve->Reversed(),
@@ -351,13 +316,11 @@ void IGESToBRep_IGESBoundary::ReverseCurves2d(const occ::handle<ShapeExtend_Wire
                                  curve->ReversedParameter(p2),
                                  curve->ReversedParameter(p1));
     else
-      ShapeBuild_Edge().MakeEdge(
-        newedge,
-        curve->Reversed(),
-        face,
-        std::max(curve->FirstParameter(),
-                 curve->ReversedParameter(p2)), // BUC50001 entity 936 2DForced
-        std::min(curve->LastParameter(), curve->ReversedParameter(p1)));
+      ShapeBuild_Edge().MakeEdge(newedge,
+                                 curve->Reversed(),
+                                 face,
+                                 std::max(curve->FirstParameter(), curve->ReversedParameter(p2)),
+                                 std::min(curve->LastParameter(), curve->ReversedParameter(p1)));
     newedge.Orientation(oldedge.Orientation());
     sewd->Set(newedge, i);
   }

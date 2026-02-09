@@ -11,9 +11,6 @@
 #include <StepGeom_Vector.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d' un vector de prostep a partir d' un Vec de gp
-//=============================================================================
 GeomToStep_MakeVector::GeomToStep_MakeVector(const gp_Vec&           V,
                                              const StepData_Factors& theLocalFactors)
 {
@@ -21,10 +18,6 @@ GeomToStep_MakeVector::GeomToStep_MakeVector(const gp_Vec&           V,
   double lFactor = theLocalFactors.LengthFactor();
 #include "GeomToStep_MakeVector_gen.hpp"
 }
-
-//=============================================================================
-// Creation d' un vector de prostep a partir d' un Vec2d de gp
-//=============================================================================
 
 GeomToStep_MakeVector::GeomToStep_MakeVector(const gp_Vec2d&         V,
                                              const StepData_Factors& theLocalFactors)
@@ -34,10 +27,6 @@ GeomToStep_MakeVector::GeomToStep_MakeVector(const gp_Vec2d&         V,
   double   lFactor = 1.;
 #include "GeomToStep_MakeVector_gen.hpp"
 }
-
-//=============================================================================
-// Creation d' un vector de prostep a partir d' un Vector de Geom
-//=============================================================================
 
 GeomToStep_MakeVector::GeomToStep_MakeVector(const occ::handle<Geom_Vector>& GVector,
                                              const StepData_Factors&         theLocalFactors)
@@ -49,10 +38,6 @@ GeomToStep_MakeVector::GeomToStep_MakeVector(const occ::handle<Geom_Vector>& GVe
 #include "GeomToStep_MakeVector_gen.hpp"
 }
 
-//=============================================================================
-// Creation d' un vector de prostep a partir d' un Vector de Geom2d
-//=============================================================================
-
 GeomToStep_MakeVector::GeomToStep_MakeVector(const occ::handle<Geom2d_Vector>& GVector,
                                              const StepData_Factors&           theLocalFactors)
 {
@@ -63,10 +48,6 @@ GeomToStep_MakeVector::GeomToStep_MakeVector(const occ::handle<Geom2d_Vector>& G
   double   lFactor = 1.;
 #include "GeomToStep_MakeVector_gen.hpp"
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_Vector>& GeomToStep_MakeVector::Value() const
 {

@@ -9,7 +9,6 @@
 #include <gp_XYZ.hpp>
 #include <gp_XY.hpp>
 
-//! to Update OutLines.
 class HLRAlgo_PolyInternalNode : public Standard_Transient
 {
 public:

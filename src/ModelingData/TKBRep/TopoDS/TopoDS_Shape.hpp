@@ -5,34 +5,20 @@
 #include <TopoDS_TShape.hpp>
 #include <Standard_HashUtils.hpp>
 
-// resolve name collisions with X11 headers
 #ifdef Convex
   #undef Convex
 #endif
 
-//! Describes a shape which
-//! - references an underlying shape with the potential
-//! to be given a location and an orientation
-//! - has a location for the underlying shape, giving its
-//! placement in the local coordinate system
-//! - has an orientation for the underlying shape, in
-//! terms of its geometry (as opposed to orientation in
-//! relation to other shapes).
-//! Note: A Shape is empty if it references an underlying
-//! shape which has an empty list of shapes.
 class TopoDS_Shape
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates a NULL Shape referring to nothing.
   TopoDS_Shape()
       : myOrient(TopAbs_EXTERNAL)
   {
   }
 
-  //! Generalized move constructor, accepting also sub-classes
-  //! (TopoDS_Shape hierarchy declares only fake sub-classes with no extra fields).
   template <class T2>
   TopoDS_Shape(
     T2&& theOther,
@@ -43,7 +29,6 @@ public:
   {
   }
 
-  //! Generalized move assignment operator.
   template <class T2>
   typename std::enable_if<opencascade::std::is_base_of<TopoDS_Shape, T2>::value,
                           TopoDS_Shape>::type&
@@ -55,13 +40,8 @@ public:
     return *this;
   }
 
-  //! Returns true if this shape is null. In other words, it
-  //! references no underlying shape with the potential to
-  //! be given a location and an orientation.
   bool IsNull() const { return myTShape.IsNull(); }
 
-  //! Destroys the reference to the underlying shape
-  //! stored in this shape. As a result, this shape becomes null.
   void Nullify()
   {
     myTShape.Nullify();
@@ -69,12 +49,8 @@ public:
     myOrient = TopAbs_EXTERNAL;
   }
 
-  //! Returns the shape local coordinate system.
   const TopLoc_Location& Location() const { return myLocation; }
 
-  //! Sets the shape local coordinate system.
-  //! @param theLoc the new local coordinate system.
-  //! @param theRaiseExc flag to raise exception in case of transformation with scale or negative.
   void Location(const TopLoc_Location& theLoc, const bool theRaiseExc = false)
   {
     const gp_Trsf& aTrsf = theLoc.Transformation();
@@ -85,11 +61,6 @@ public:
     myLocation = theLoc;
   }
 
-  //! Returns a shape similar to <me> with the local
-  //! coordinate system set to <Loc>.
-  //! @param theLoc the new local coordinate system.
-  //! @param theRaiseExc flag to raise exception in case of transformation with scale or negative.
-  //! @return the located shape.
   TopoDS_Shape Located(const TopLoc_Location& theLoc, const bool theRaiseExc = false) const
   {
     TopoDS_Shape aShape(*this);
@@ -97,14 +68,10 @@ public:
     return aShape;
   }
 
-  //! Returns the shape orientation.
   TopAbs_Orientation Orientation() const { return myOrient; }
 
-  //! Sets the shape orientation.
   void Orientation(TopAbs_Orientation theOrient) { myOrient = theOrient; }
 
-  //! Returns a shape similar to <me> with the
-  //! orientation set to <Or>.
   TopoDS_Shape Oriented(TopAbs_Orientation theOrient) const
   {
     TopoDS_Shape aShape(*this);
@@ -112,67 +79,42 @@ public:
     return aShape;
   }
 
-  //! Returns a handle to the actual shape implementation.
   const occ::handle<TopoDS_TShape>& TShape() const { return myTShape; }
 
-  //! Returns the value of the TopAbs_ShapeEnum
-  //! enumeration that corresponds to this shape, for
-  //! example VERTEX, EDGE, and so on.
-  //! Exceptions
-  //! Standard_NullObject if this shape is null.
   TopAbs_ShapeEnum ShapeType() const { return myTShape->ShapeType(); }
 
-  //! Returns the free flag.
   bool Free() const { return myTShape->Free(); }
 
-  //! Sets the free flag.
   void Free(bool theIsFree) { myTShape->Free(theIsFree); }
 
-  //! Returns the locked flag.
   bool Locked() const { return myTShape->Locked(); }
 
-  //! Sets the locked flag.
   void Locked(bool theIsLocked) { myTShape->Locked(theIsLocked); }
 
-  //! Returns the modification flag.
   bool Modified() const { return myTShape->Modified(); }
 
-  //! Sets the modification flag.
   void Modified(bool theIsModified) { myTShape->Modified(theIsModified); }
 
-  //! Returns the checked flag.
   bool Checked() const { return myTShape->Checked(); }
 
-  //! Sets the checked flag.
   void Checked(bool theIsChecked) { myTShape->Checked(theIsChecked); }
 
-  //! Returns the orientability flag.
   bool Orientable() const { return myTShape->Orientable(); }
 
-  //! Sets the orientability flag.
   void Orientable(const bool theIsOrientable) { myTShape->Orientable(theIsOrientable); }
 
-  //! Returns the closedness flag.
   bool Closed() const { return myTShape->Closed(); }
 
-  //! Sets the closedness flag.
   void Closed(bool theIsClosed) { myTShape->Closed(theIsClosed); }
 
-  //! Returns the infinity flag.
   bool Infinite() const { return myTShape->Infinite(); }
 
-  //! Sets the infinity flag.
   void Infinite(bool theIsInfinite) { myTShape->Infinite(theIsInfinite); }
 
-  //! Returns the convexness flag.
   bool Convex() const { return myTShape->Convex(); }
 
-  //! Sets the convexness flag.
   void Convex(bool theIsConvex) { myTShape->Convex(theIsConvex); }
 
-  //! Multiplies the Shape location by thePosition.
-  //! @param thePosition the transformation to apply.
-  //! @param theRaiseExc flag to raise exception in case of transformation with scale or negative.
   void Move(const TopLoc_Location& thePosition, const bool theRaiseExc = false)
   {
     const gp_Trsf& aTrsf = thePosition.Transformation();
@@ -183,10 +125,6 @@ public:
     myLocation = thePosition * myLocation;
   }
 
-  //! Returns a shape similar to <me> with a location multiplied by thePosition.
-  //! @param thePosition the transformation to apply.
-  //! @param theRaiseExc flag to raise exception in case of transformation with scale or negative.
-  //! @return the moved shape.
   TopoDS_Shape Moved(const TopLoc_Location& thePosition, const bool theRaiseExc = false) const
   {
     TopoDS_Shape aShape(*this);
@@ -194,13 +132,8 @@ public:
     return aShape;
   }
 
-  //! Reverses the orientation, using the Reverse method
-  //! from the TopAbs package.
   void Reverse() { myOrient = TopAbs::Reverse(myOrient); }
 
-  //! Returns a shape similar to <me> with the
-  //! orientation reversed, using the Reverse method
-  //! from the TopAbs package.
   TopoDS_Shape Reversed() const
   {
     TopoDS_Shape aShape(*this);
@@ -208,13 +141,8 @@ public:
     return aShape;
   }
 
-  //! Complements the orientation, using the Complement
-  //! method from the TopAbs package.
   void Complement() { myOrient = TopAbs::Complement(myOrient); }
 
-  //! Returns a shape similar to <me> with the
-  //! orientation complemented, using the Complement
-  //! method from the TopAbs package.
   TopoDS_Shape Complemented() const
   {
     TopoDS_Shape aShape(*this);
@@ -222,13 +150,8 @@ public:
     return aShape;
   }
 
-  //! Updates the Shape Orientation by composition with theOrient,
-  //! using the Compose method from the TopAbs package.
   void Compose(TopAbs_Orientation theOrient) { myOrient = TopAbs::Compose(myOrient, theOrient); }
 
-  //! Returns a shape similar to <me> with the
-  //! orientation composed with theOrient, using the
-  //! Compose method from the TopAbs package.
   TopoDS_Shape Composed(TopAbs_Orientation theOrient) const
   {
     TopoDS_Shape aShape(*this);
@@ -236,26 +159,15 @@ public:
     return aShape;
   }
 
-  //! Returns the number of direct sub-shapes (children).
-  //! @sa TopoDS_Iterator for accessing sub-shapes
   int NbChildren() const { return myTShape.IsNull() ? 0 : myTShape->NbChildren(); }
 
-  //! Returns True if two shapes are partners, i.e. if
-  //! they share the same TShape. Locations and
-  //! Orientations may differ.
   bool IsPartner(const TopoDS_Shape& theOther) const { return (myTShape == theOther.myTShape); }
 
-  //! Returns True if two shapes are same, i.e. if they
-  //! share the same TShape with the same Locations.
-  //! Orientations may differ.
   bool IsSame(const TopoDS_Shape& theOther) const
   {
     return myTShape == theOther.myTShape && myLocation == theOther.myLocation;
   }
 
-  //! Returns True if two shapes are equal, i.e. if they
-  //! share the same TShape with the same Locations and
-  //! Orientations.
   bool IsEqual(const TopoDS_Shape& theOther) const
   {
     return myTShape == theOther.myTShape && myLocation == theOther.myLocation
@@ -264,19 +176,12 @@ public:
 
   bool operator==(const TopoDS_Shape& theOther) const { return IsEqual(theOther); }
 
-  //! Negation of the IsEqual method.
   bool IsNotEqual(const TopoDS_Shape& theOther) const { return !IsEqual(theOther); }
 
   bool operator!=(const TopoDS_Shape& theOther) const { return IsNotEqual(theOther); }
 
-  //! Replace <me> by a new Shape with the same
-  //! Orientation and Location and a new TShape with the
-  //! same geometry and no sub-shapes.
   void EmptyCopy() { myTShape = myTShape->EmptyCopy(); }
 
-  //! Returns a new Shape with the same Orientation and
-  //! Location and a new TShape with the same geometry
-  //! and no sub-shapes.
   TopoDS_Shape EmptyCopied() const
   {
     TopoDS_Shape aShape(*this);
@@ -286,19 +191,15 @@ public:
 
   void TShape(const occ::handle<TopoDS_TShape>& theTShape) { myTShape = theTShape; }
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
 protected:
-  //! Checks if the transformation contains scaling or negative values.
-  //! Raises an exception if the transformation is invalid.
-  //! @param theTrsf transformation to validate
   void validateTransformation(const gp_Trsf& theTrsf) const
   {
     if (std::abs(std::abs(theTrsf.ScaleFactor()) - 1.) > TopLoc_Location::ScalePrec()
         || theTrsf.IsNegative())
     {
-      // Exception
+
       throw Standard_DomainError("Transformation with scaling transformation is forbidden");
     }
   }

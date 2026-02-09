@@ -2,11 +2,7 @@
 #include <StepAP203_CertifiedItem.hpp>
 #include <StepRepr_SuppliedPartRelationship.hpp>
 
-//=================================================================================================
-
 StepAP203_CertifiedItem::StepAP203_CertifiedItem() = default;
-
-//=================================================================================================
 
 int StepAP203_CertifiedItem::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -16,8 +12,6 @@ int StepAP203_CertifiedItem::CaseNum(const occ::handle<Standard_Transient>& ent)
     return 1;
   return 0;
 }
-
-//=================================================================================================
 
 occ::handle<StepRepr_SuppliedPartRelationship> StepAP203_CertifiedItem::SuppliedPartRelationship()
   const

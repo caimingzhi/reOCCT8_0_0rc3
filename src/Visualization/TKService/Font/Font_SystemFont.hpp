@@ -6,40 +6,31 @@
 #include <Standard_Transient.hpp>
 #include <TCollection_AsciiString.hpp>
 
-//! This class stores information about the font, which is merely a file path and cached metadata
-//! about the font.
 class Font_SystemFont : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(Font_SystemFont, Standard_Transient)
 public:
-  //! Creates a new font object.
   Standard_EXPORT Font_SystemFont(const TCollection_AsciiString& theFontName);
 
-  //! Returns font family name (lower-cased).
   const TCollection_AsciiString& FontKey() const { return myFontKey; }
 
-  //! Returns font family name.
   const TCollection_AsciiString& FontName() const { return myFontName; }
 
-  //! Returns font file path.
   const TCollection_AsciiString& FontPath(Font_FontAspect theAspect) const
   {
     return myFilePaths[theAspect != Font_FontAspect_UNDEFINED ? theAspect
                                                               : Font_FontAspect_Regular];
   }
 
-  //! Returns font file path.
   int FontFaceId(Font_FontAspect theAspect) const
   {
     return myFaceIds[theAspect != Font_FontAspect_UNDEFINED ? theAspect : Font_FontAspect_Regular];
   }
 
-  //! Sets font file path for specific aspect.
   Standard_EXPORT void SetFontPath(Font_FontAspect                theAspect,
                                    const TCollection_AsciiString& thePath,
                                    const int                      theFaceId = 0);
 
-  //! Returns TRUE if dedicated file for specified font aspect has been defined.
   bool HasFontAspect(Font_FontAspect theAspect) const
   {
     return !myFilePaths[theAspect != Font_FontAspect_UNDEFINED ? theAspect
@@ -47,7 +38,6 @@ public:
               .IsEmpty();
   }
 
-  //! Returns any defined font file path.
   const TCollection_AsciiString& FontPathAny(Font_FontAspect theAspect,
                                              bool&           theToSynthesizeItalic,
                                              int&            theFaceId) const
@@ -95,18 +85,12 @@ public:
     return myFilePaths[Font_FontAspect_Regular];
   }
 
-  //! Return true if the FontName, FontAspect and FontSize are the same.
   Standard_EXPORT bool IsEqual(const occ::handle<Font_SystemFont>& theOtherFont) const;
 
-  //! Return TRUE if this is single-stroke (one-line) font, FALSE by default.
-  //! Such fonts define single-line glyphs instead of closed contours, so that they are rendered
-  //! incorrectly by normal software.
   bool IsSingleStrokeFont() const { return myIsSingleLine; }
 
-  //! Set if this font should be rendered as single-stroke (one-line).
   void SetSingleStrokeFont(bool theIsSingleLine) { myIsSingleLine = theIsSingleLine; }
 
-  //! Format font description.
   Standard_EXPORT TCollection_AsciiString ToString() const;
 
 public:
@@ -116,11 +100,11 @@ public:
   }
 
 private:
-  TCollection_AsciiString myFilePaths[Font_FontAspect_NB]; //!< paths to the font file
-  int                     myFaceIds[Font_FontAspect_NB];   //!< face ids per font file
-  TCollection_AsciiString myFontKey;                       //!< font family name, lower cased
-  TCollection_AsciiString myFontName;                      //!< font family name
-  bool                    myIsSingleLine; //!< single stroke font flag, FALSE by default
+  TCollection_AsciiString myFilePaths[Font_FontAspect_NB];
+  int                     myFaceIds[Font_FontAspect_NB];
+  TCollection_AsciiString myFontKey;
+  TCollection_AsciiString myFontName;
+  bool                    myIsSingleLine;
 };
 
 namespace std

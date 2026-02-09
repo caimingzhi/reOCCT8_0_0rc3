@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_StructureShadow, OpenGl_Structure)
 
-//=================================================================================================
-
 OpenGl_StructureShadow::OpenGl_StructureShadow(
   const occ::handle<Graphic3d_StructureManager>& theManager,
   const occ::handle<OpenGl_Structure>&           theStructure)
@@ -23,18 +21,13 @@ OpenGl_StructureShadow::OpenGl_StructureShadow(
   myInstancedStructure = const_cast<OpenGl_Structure*>(myParent->InstancedStructure());
   myTrsfPers           = myParent->TransformPersistence();
 
-  // reuse instanced structure API
   myInstancedStructure = myParent.operator->();
 }
-
-//=================================================================================================
 
 void OpenGl_StructureShadow::Connect(Graphic3d_CStructure&)
 {
   throw Standard_ProgramError("Error! OpenGl_StructureShadow::Connect() should not be called!");
 }
-
-//=================================================================================================
 
 void OpenGl_StructureShadow::Disconnect(Graphic3d_CStructure&)
 {

@@ -11,7 +11,6 @@ class Interface_Check;
 class StepVisual_DraughtingCallout;
 class StepData_StepWriter;
 
-//! Read & Write Module for DraughtingCallout
 class RWStepVisual_RWDraughtingCallout
 {
 public:

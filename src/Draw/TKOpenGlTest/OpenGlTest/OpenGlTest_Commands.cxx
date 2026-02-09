@@ -45,14 +45,9 @@ static occ::handle<OpenGl_Caps> getDefaultCaps()
 namespace
 {
 
-  //=======================================================================
-  // function : VUserDraw
-  // purpose  : Checks availability and operation of UserDraw feature
-  //=======================================================================
   class VUserDrawObj : public AIS_InteractiveObject
   {
   public:
-    // CASCADE RTTI
     DEFINE_STANDARD_RTTI_INLINE(VUserDrawObj, AIS_InteractiveObject);
 
     VUserDrawObj()
@@ -85,17 +80,13 @@ namespace
           myIObj->Render(theWorkspace);
       }
 
-      void Release(OpenGl_Context*) override
-      {
-        //
-      }
+      void Release(OpenGl_Context*) override {}
 
     public:
       DEFINE_STANDARD_ALLOC
     };
 
   private:
-    // Virtual methods implementation
     void Compute(const occ::handle<PrsMgr_PresentationManager>& thePrsMgr,
                  const occ::handle<Prs3d_Presentation>&         thePrs,
                  const int                                      theMode) override;
@@ -103,7 +94,6 @@ namespace
     void ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection,
                           const int                               theMode) override;
 
-    // Called by VUserDrawElement
     void Render(const occ::handle<OpenGl_Workspace>& theWorkspace) const;
 
   private:
@@ -134,7 +124,6 @@ namespace
     VUserDrawObj::Element* anElem = new VUserDrawObj::Element(this);
     aGroup->AddElement(anElem);
 
-    // invalidate bounding box of the scene
     thePrsMgr->StructureManager()->Update();
   }
 
@@ -161,7 +150,6 @@ namespace
   {
     const occ::handle<OpenGl_Context>& aCtx = theWorkspace->GetGlContext();
 
-    // To test linking against OpenGl_Workspace and all aspect classes
     const OpenGl_Aspects* aMA = theWorkspace->Aspects();
     aMA->Aspect()->MarkerType();
     NCollection_Vec4<float> aColor = theWorkspace->InteriorColor();
@@ -183,14 +171,13 @@ namespace
     occ::handle<OpenGl_VertexBuffer> aVertBuffer = new OpenGl_VertexBuffer();
     aVertBuffer->Init(aCtx, 3, 4, aVertArray[0].GetData());
 
-    // Finally draw something to make sure UserDraw really works
     aVertBuffer->BindAttribute(aCtx, Graphic3d_TOA_POS);
     aCtx->core11fwd->glDrawArrays(GL_LINE_LOOP, 0, aVertBuffer->GetElemsNb());
     aVertBuffer->UnbindAttribute(aCtx, Graphic3d_TOA_POS);
     aVertBuffer->Release(aCtx.get());
   }
 
-} // end of anonymous namespace
+} // namespace
 
 static int VUserDraw(Draw_Interpretor&, int argc, const char** argv)
 {
@@ -223,8 +210,6 @@ static int VUserDraw(Draw_Interpretor&, int argc, const char** argv)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int VGlShaders(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -296,7 +281,6 @@ static int VGlShaders(Draw_Interpretor& theDI, int theArgNb, const char** theArg
   return 0;
 }
 
-//! Auxiliary function for parsing glsl dump level argument.
 static bool parseGlslSourceFlag(const char* theArg, OpenGl_ShaderProgramDumpLevel& theGlslDumpLevel)
 {
   TCollection_AsciiString aTypeStr(theArg);
@@ -319,8 +303,6 @@ static bool parseGlslSourceFlag(const char* theArg, OpenGl_ShaderProgramDumpLeve
   }
   return true;
 }
-
-//=================================================================================================
 
 static int VGlDebug(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -353,7 +335,7 @@ static int VGlDebug(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
       aDebActive = isActive ? " (active)" : " (inactive)";
       if (isActive)
       {
-        // GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB
+
         aSyncActive =
           aGlCtx->core11fwd->glIsEnabled(0x8242) == GL_TRUE ? " (active)" : " (inactive)";
       }
@@ -456,7 +438,7 @@ static int VGlDebug(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     }
     else if (Draw::ParseOnOff(anArg, toEnableDebug) && (anArgIter + 1 == theArgNb))
     {
-      // simple alias to turn on almost everything
+
       aDefCaps->contextDebug     = toEnableDebug;
       aDefCaps->contextSyncDebug = toEnableDebug;
       aDefCaps->glslWarnings     = toEnableDebug;
@@ -487,8 +469,6 @@ static int VGlDebug(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
   return 0;
 }
 
-//=================================================================================================
-
 static int VVbo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
   const bool toSet    = (theArgNb > 1);
@@ -498,7 +478,6 @@ static int VVbo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
     getDefaultCaps()->vboDisable = toUseVbo;
   }
 
-  // get the context
   occ::handle<AIS_InteractiveContext> aContextAIS = ViewerTest::GetAISContext();
   if (aContextAIS.IsNull())
   {
@@ -524,8 +503,6 @@ static int VVbo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int VCaps(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -692,8 +669,6 @@ static int VCaps(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
   }
   return 0;
 }
-
-//=================================================================================================
 
 void OpenGlTest::Commands(Draw_Interpretor& theCommands)
 {

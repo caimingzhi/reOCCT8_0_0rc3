@@ -18,27 +18,19 @@
 #include <Message_Messenger.hpp>
 #include <Message_Msg.hpp>
 
-// MGE 31/07/98
-//=================================================================================================
-
 IGESGeom_ToolBoundedSurface::IGESGeom_ToolBoundedSurface() = default;
-
-//=================================================================================================
 
 void IGESGeom_ToolBoundedSurface::ReadOwnParams(const occ::handle<IGESGeom_BoundedSurface>& ent,
                                                 const occ::handle<IGESData_IGESReaderData>& IR,
                                                 IGESData_ParamReader& PR) const
 {
-  // MGE 31/07/98
 
-  // bool st; //szv#4:S4163:12Mar99 not needed
   int                                                              num, i;
   int                                                              tempType;
   occ::handle<IGESData_IGESEntity>                                 tempSurface;
   occ::handle<NCollection_HArray1<occ::handle<IGESGeom_Boundary>>> tempBounds;
   IGESData_Status                                                  aStatus;
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   if (!PR.ReadInteger(PR.Current(), tempType))
   {
     Message_Msg Msg165("XTSEP_165");
@@ -68,16 +60,7 @@ void IGESGeom_ToolBoundedSurface::ReadOwnParams(const occ::handle<IGESGeom_Bound
       }
     }
   }
-  // st = PR.ReadInteger(PR.Current(), Msg167, num); //szv#4:S4163:12Mar99 moved in if
-  /*
-    st = PR.ReadInteger(PR.Current(), "Bounded Surface Representation Type", tempType);
-    st = PR.ReadEntity(IR, PR.Current(), "Surface to be Bounded", tempSurface);
-    st = PR.ReadInteger(PR.Current(), "Number Of Boundary Entities", num);
-  */
 
-  // szv#4:S4163:12Mar99 optimized
-  // if (st && num > 0)  tempBounds = new NCollection_HArray1<occ::handle<IGESGeom_Boundary>>(1,
-  // num); if (st && num <= 0)  PR.SendFail(Msg167);
   if (PR.ReadInteger(PR.Current(), num) && (num > 0))
   {
     tempBounds = new NCollection_HArray1<occ::handle<IGESGeom_Boundary>>(1, num);
@@ -93,8 +76,7 @@ void IGESGeom_ToolBoundedSurface::ReadOwnParams(const occ::handle<IGESGeom_Bound
     for (i = 1; i <= num; i++)
     {
       occ::handle<IGESData_IGESEntity> tempEnt;
-      // st = PR.ReadEntity(IR, PR.Current(), Msg168, tempEnt); //szv#4:S4163:12Mar99 moved in if
-      // st = PR.ReadEntity(IR, PR.Current(), "Boundary Entities", tempEnt);
+
       if (PR.ReadEntity(IR, PR.Current(), aStatus, tempEnt))
         tempBounds->SetValue(i, occ::down_cast<IGESGeom_Boundary>(tempEnt));
       else
@@ -123,16 +105,13 @@ void IGESGeom_ToolBoundedSurface::ReadOwnParams(const occ::handle<IGESGeom_Bound
       }
     }
   }
-  // sln 28.09.2001, BUC61004, If(tempBounds.IsNull()) function ent->Init is not called in order to
-  // avoid exception
+
   if (!tempBounds.IsNull())
   {
     DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
     ent->Init(tempType, tempSurface, tempBounds);
   }
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolBoundedSurface::WriteOwnParams(const occ::handle<IGESGeom_BoundedSurface>& ent,
                                                  IGESData_IGESWriter& IW) const
@@ -145,8 +124,6 @@ void IGESGeom_ToolBoundedSurface::WriteOwnParams(const occ::handle<IGESGeom_Boun
     IW.Send(ent->Boundary(i));
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolBoundedSurface::OwnShared(const occ::handle<IGESGeom_BoundedSurface>& ent,
                                             Interface_EntityIterator&                   iter) const
 {
@@ -155,8 +132,6 @@ void IGESGeom_ToolBoundedSurface::OwnShared(const occ::handle<IGESGeom_BoundedSu
   for (num = ent->NbBoundaries(), i = 1; i <= num; i++)
     iter.GetOneItem(ent->Boundary(i));
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolBoundedSurface::OwnCopy(const occ::handle<IGESGeom_BoundedSurface>& another,
                                           const occ::handle<IGESGeom_BoundedSurface>& ent,
@@ -178,33 +153,24 @@ void IGESGeom_ToolBoundedSurface::OwnCopy(const occ::handle<IGESGeom_BoundedSurf
   ent->Init(tempType, tempSurface, tempBounds);
 }
 
-//=================================================================================================
-
 IGESData_DirChecker IGESGeom_ToolBoundedSurface::DirChecker(
-  const occ::handle<IGESGeom_BoundedSurface>& /* ent */) const
+  const occ::handle<IGESGeom_BoundedSurface>&) const
 {
   IGESData_DirChecker DC(143, 0);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
   DC.UseFlagRequired(0);
   DC.HierarchyStatusIgnored();
   return DC;
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolBoundedSurface::OwnCheck(const occ::handle<IGESGeom_BoundedSurface>& ent,
                                            const Interface_ShareTool&,
                                            occ::handle<Interface_Check>& ach) const
 {
-  // MGE 31/07/98
-  // Building of messages
-  //========================================
-  // Message_Msg Msg165("XTSEP_165");
-  //========================================
 
   if ((ent->RepresentationType() != 0) && (ent->RepresentationType() != 1))
   {
@@ -212,8 +178,6 @@ void IGESGeom_ToolBoundedSurface::OwnCheck(const occ::handle<IGESGeom_BoundedSur
     ach->SendFail(Msg165);
   }
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolBoundedSurface::OwnDump(const occ::handle<IGESGeom_BoundedSurface>& ent,
                                           const IGESData_IGESDumper&                  dumper,

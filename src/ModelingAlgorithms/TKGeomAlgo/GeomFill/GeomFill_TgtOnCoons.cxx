@@ -6,15 +6,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_TgtOnCoons, GeomFill_TgtField)
 
-//=================================================================================================
-
 GeomFill_TgtOnCoons::GeomFill_TgtOnCoons(const occ::handle<GeomFill_CoonsAlgPatch>& K, const int I)
     : myK(K),
       ibound(I)
 {
 }
-
-//=================================================================================================
 
 gp_Vec GeomFill_TgtOnCoons::Value(const double W) const
 {
@@ -57,8 +53,6 @@ gp_Vec GeomFill_TgtOnCoons::Value(const double W) const
   tgk.Add(n);
   return tgk;
 }
-
-//=================================================================================================
 
 gp_Vec GeomFill_TgtOnCoons::D1(const double W) const
 {
@@ -113,8 +107,6 @@ gp_Vec GeomFill_TgtOnCoons::D1(const double W) const
 
   return dtpur;
 }
-
-//=================================================================================================
 
 void GeomFill_TgtOnCoons::D1(const double W, gp_Vec& T, gp_Vec& DT) const
 {

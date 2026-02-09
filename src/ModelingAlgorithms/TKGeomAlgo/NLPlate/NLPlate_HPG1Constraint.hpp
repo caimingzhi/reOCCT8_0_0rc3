@@ -7,8 +7,6 @@
 #include <NLPlate_HGPPConstraint.hpp>
 class gp_XY;
 
-//! define a PinPoint (no G0) G1 Constraint used to load a Non
-//! Linear Plate
 class NLPlate_HPG1Constraint : public NLPlate_HGPPConstraint
 {
 

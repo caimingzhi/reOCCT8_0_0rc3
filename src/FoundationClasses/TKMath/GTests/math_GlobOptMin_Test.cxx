@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <math_GlobOptMin.hpp>
 #include <math_MultipleVarFunction.hpp>
@@ -26,7 +15,6 @@
 namespace
 {
 
-  // Simple quadratic function: f(x,y) = (x-1)^2 + (y-2)^2, minimum at (1, 2)
   class QuadraticFunction : public math_MultipleVarFunction
   {
   public:
@@ -41,7 +29,6 @@ namespace
     }
   };
 
-  // Multi-modal function with multiple local minima: f(x,y) = sin(x) + sin(y) + 0.1*(x^2 + y^2)
   class MultiModalFunction : public math_MultipleVarFunction
   {
   public:
@@ -56,7 +43,6 @@ namespace
     }
   };
 
-  // 1D function: f(x) = sin(x) + 0.5*sin(3*x) with multiple local minima
   class MultiModal1DFunction : public math_MultipleVarFunction
   {
   public:
@@ -70,7 +56,6 @@ namespace
     }
   };
 
-  // Rosenbrock function in 2D: f(x,y) = (1-x)^2 + 100*(y-x^2)^2
   class RosenbrockFunction : public math_MultipleVarFunction
   {
   public:
@@ -87,7 +72,6 @@ namespace
     }
   };
 
-  // Simple linear function: f(x,y) = x + y (minimum at bounds)
   class LinearFunction : public math_MultipleVarFunction
   {
   public:
@@ -100,11 +84,11 @@ namespace
     }
   };
 
-} // anonymous namespace
+} // namespace
 
 TEST(MathGlobOptMinTest, QuadraticFunctionOptimization)
 {
-  // Test global optimization on simple quadratic function
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -116,7 +100,7 @@ TEST(MathGlobOptMinTest, QuadraticFunctionOptimization)
   aUpperBorder(2) = 4.0;
 
   math_GlobOptMin aSolver(&aFunc, aLowerBorder, aUpperBorder);
-  aSolver.Perform(true); // Find single solution
+  aSolver.Perform(true);
 
   EXPECT_TRUE(aSolver.isDone()) << "Should successfully optimize quadratic function";
   EXPECT_GT(aSolver.NbExtrema(), 0) << "Should find at least one extremum";
@@ -131,7 +115,7 @@ TEST(MathGlobOptMinTest, QuadraticFunctionOptimization)
 
 TEST(MathGlobOptMinTest, MultiModalFunctionOptimization)
 {
-  // Test global optimization on multi-modal function
+
   MultiModalFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -143,12 +127,11 @@ TEST(MathGlobOptMinTest, MultiModalFunctionOptimization)
   aUpperBorder(2) = 5.0;
 
   math_GlobOptMin aSolver(&aFunc, aLowerBorder, aUpperBorder);
-  aSolver.Perform(false); // Find all solutions
+  aSolver.Perform(false);
 
   EXPECT_TRUE(aSolver.isDone()) << "Should successfully optimize multi-modal function";
   EXPECT_GE(aSolver.NbExtrema(), 1) << "Should find at least one extremum for multi-modal function";
 
-  // Check that at least one solution exists
   math_Vector aSol(1, 2);
   aSolver.Points(1, aSol);
   EXPECT_TRUE(aSol(1) >= -5.0 && aSol(1) <= 5.0) << "Solution should be within bounds";
@@ -157,7 +140,7 @@ TEST(MathGlobOptMinTest, MultiModalFunctionOptimization)
 
 TEST(MathGlobOptMinTest, OneDimensionalOptimization)
 {
-  // Test global optimization on 1D function
+
   MultiModal1DFunction aFunc;
 
   math_Vector aLowerBorder(1, 1);
@@ -167,7 +150,7 @@ TEST(MathGlobOptMinTest, OneDimensionalOptimization)
   aUpperBorder(1) = 2.0 * M_PI;
 
   math_GlobOptMin aSolver(&aFunc, aLowerBorder, aUpperBorder);
-  aSolver.Perform(false); // Find all solutions
+  aSolver.Perform(false);
 
   EXPECT_TRUE(aSolver.isDone()) << "Should successfully optimize 1D function";
   EXPECT_GT(aSolver.NbExtrema(), 0) << "Should find at least one extremum";
@@ -179,7 +162,7 @@ TEST(MathGlobOptMinTest, OneDimensionalOptimization)
 
 TEST(MathGlobOptMinTest, SingleSolutionSearch)
 {
-  // Test single solution search mode
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -191,7 +174,7 @@ TEST(MathGlobOptMinTest, SingleSolutionSearch)
   aUpperBorder(2) = 4.0;
 
   math_GlobOptMin aSolver(&aFunc, aLowerBorder, aUpperBorder);
-  aSolver.Perform(true); // Find single solution
+  aSolver.Perform(true);
 
   EXPECT_TRUE(aSolver.isDone()) << "Should find single solution";
   EXPECT_EQ(aSolver.NbExtrema(), 1) << "Should find exactly one extremum";
@@ -199,7 +182,7 @@ TEST(MathGlobOptMinTest, SingleSolutionSearch)
 
 TEST(MathGlobOptMinTest, AllSolutionsSearch)
 {
-  // Test all solutions search mode
+
   MultiModalFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -211,7 +194,7 @@ TEST(MathGlobOptMinTest, AllSolutionsSearch)
   aUpperBorder(2) = 3.0;
 
   math_GlobOptMin aSolver(&aFunc, aLowerBorder, aUpperBorder);
-  aSolver.Perform(false); // Find all solutions
+  aSolver.Perform(false);
 
   EXPECT_TRUE(aSolver.isDone()) << "Should find all solutions";
   EXPECT_GE(aSolver.NbExtrema(), 1) << "Should find at least one extremum";
@@ -219,7 +202,7 @@ TEST(MathGlobOptMinTest, AllSolutionsSearch)
 
 TEST(MathGlobOptMinTest, CustomTolerances)
 {
-  // Test with custom tolerances
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -232,13 +215,11 @@ TEST(MathGlobOptMinTest, CustomTolerances)
 
   math_GlobOptMin aSolver(&aFunc, aLowerBorder, aUpperBorder, 9, 1.0e-3, 1.0e-8);
 
-  // Test setting and getting tolerances
   double aDiscTol, aSameTol;
   aSolver.GetTol(aDiscTol, aSameTol);
   EXPECT_NEAR(aDiscTol, 1.0e-3, 1.0e-12) << "Discretization tolerance should match";
   EXPECT_NEAR(aSameTol, 1.0e-8, 1.0e-12) << "Same tolerance should match";
 
-  // Update tolerances
   aSolver.SetTol(1.0e-2, 1.0e-6);
   aSolver.GetTol(aDiscTol, aSameTol);
   EXPECT_NEAR(aDiscTol, 1.0e-2, 1.0e-12) << "Updated discretization tolerance should match";
@@ -250,7 +231,7 @@ TEST(MathGlobOptMinTest, CustomTolerances)
 
 TEST(MathGlobOptMinTest, LocalParamsReduction)
 {
-  // Test with local parameters (bounding box reduction)
+
   QuadraticFunction aFunc;
 
   math_Vector aGlobalLower(1, 2);
@@ -263,7 +244,6 @@ TEST(MathGlobOptMinTest, LocalParamsReduction)
 
   math_GlobOptMin aSolver(&aFunc, aGlobalLower, aGlobalUpper);
 
-  // Set local parameters (smaller search box)
   math_Vector aLocalLower(1, 2);
   aLocalLower(1) = 0.0;
   aLocalLower(2) = 1.0;
@@ -285,7 +265,7 @@ TEST(MathGlobOptMinTest, LocalParamsReduction)
 
 TEST(MathGlobOptMinTest, ContinuitySettings)
 {
-  // Test continuity settings
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -298,11 +278,9 @@ TEST(MathGlobOptMinTest, ContinuitySettings)
 
   math_GlobOptMin aSolver(&aFunc, aLowerBorder, aUpperBorder);
 
-  // Test default continuity
   int aDefaultCont = aSolver.GetContinuity();
   EXPECT_GE(aDefaultCont, 0) << "Default continuity should be non-negative";
 
-  // Set and test different continuity values
   aSolver.SetContinuity(1);
   EXPECT_EQ(aSolver.GetContinuity(), 1) << "Continuity should be set to 1";
 
@@ -315,7 +293,7 @@ TEST(MathGlobOptMinTest, ContinuitySettings)
 
 TEST(MathGlobOptMinTest, FunctionalMinimalValue)
 {
-  // Test functional minimal value setting
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -328,11 +306,9 @@ TEST(MathGlobOptMinTest, FunctionalMinimalValue)
 
   math_GlobOptMin aSolver(&aFunc, aLowerBorder, aUpperBorder);
 
-  // Test default minimal value
   double aDefaultMin = aSolver.GetFunctionalMinimalValue();
   EXPECT_EQ(aDefaultMin, -Precision::Infinite()) << "Default should be negative infinity";
 
-  // Set functional minimal value
   aSolver.SetFunctionalMinimalValue(-1.0);
   EXPECT_NEAR(aSolver.GetFunctionalMinimalValue(), -1.0, 1.0e-12)
     << "Functional minimal value should be set";
@@ -343,7 +319,7 @@ TEST(MathGlobOptMinTest, FunctionalMinimalValue)
 
 TEST(MathGlobOptMinTest, LipschitzConstantState)
 {
-  // Test Lipschitz constant state management
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -356,15 +332,12 @@ TEST(MathGlobOptMinTest, LipschitzConstantState)
 
   math_GlobOptMin aSolver(&aFunc, aLowerBorder, aUpperBorder);
 
-  // Test default state
   bool aDefaultState = aSolver.GetLipConstState();
   EXPECT_FALSE(aDefaultState) << "Default Lipschitz constant should be unlocked";
 
-  // Lock Lipschitz constant
   aSolver.SetLipConstState(true);
   EXPECT_TRUE(aSolver.GetLipConstState()) << "Lipschitz constant should be locked";
 
-  // Unlock Lipschitz constant
   aSolver.SetLipConstState(false);
   EXPECT_FALSE(aSolver.GetLipConstState()) << "Lipschitz constant should be unlocked";
 
@@ -374,7 +347,7 @@ TEST(MathGlobOptMinTest, LipschitzConstantState)
 
 TEST(MathGlobOptMinTest, RosenbrockOptimization)
 {
-  // Test on challenging Rosenbrock function
+
   RosenbrockFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -393,14 +366,14 @@ TEST(MathGlobOptMinTest, RosenbrockOptimization)
 
   math_Vector aSol(1, 2);
   aSolver.Points(1, aSol);
-  // Rosenbrock minimum is at (1,1) but may not be found exactly due to discretization
+
   EXPECT_TRUE(aSol(1) >= -2.0 && aSol(1) <= 2.0) << "Solution should be within bounds";
   EXPECT_TRUE(aSol(2) >= -1.0 && aSol(2) <= 3.0) << "Solution should be within bounds";
 }
 
 TEST(MathGlobOptMinTest, LinearFunctionOptimization)
 {
-  // Test on linear function (minimum at boundary)
+
   LinearFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -419,14 +392,14 @@ TEST(MathGlobOptMinTest, LinearFunctionOptimization)
 
   math_Vector aSol(1, 2);
   aSolver.Points(1, aSol);
-  // For linear function f(x,y) = x + y, minimum should be at (0, 0)
+
   EXPECT_NEAR(aSol(1), 0.0, 1.0e-1) << "Linear function minimum should be near lower bound";
   EXPECT_NEAR(aSol(2), 0.0, 1.0e-1) << "Linear function minimum should be near lower bound";
 }
 
 TEST(MathGlobOptMinTest, SetGlobalParamsMethod)
 {
-  // Test SetGlobalParams method
+
   QuadraticFunction aFunc1;
   LinearFunction    aFunc2;
 
@@ -438,13 +411,11 @@ TEST(MathGlobOptMinTest, SetGlobalParamsMethod)
   aUpperBorder1(1) = 3.0;
   aUpperBorder1(2) = 4.0;
 
-  // Create solver with first function
   math_GlobOptMin aSolver(&aFunc1, aLowerBorder1, aUpperBorder1);
   aSolver.Perform(true);
 
   EXPECT_TRUE(aSolver.isDone()) << "Should work with first function";
 
-  // Change to second function and different bounds
   math_Vector aLowerBorder2(1, 2);
   aLowerBorder2(1) = 0.0;
   aLowerBorder2(2) = 0.0;
@@ -461,7 +432,7 @@ TEST(MathGlobOptMinTest, SetGlobalParamsMethod)
 
 TEST(MathGlobOptMinTest, MultipleExtremaAccess)
 {
-  // Test accessing multiple extrema
+
   MultiModalFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -473,13 +444,12 @@ TEST(MathGlobOptMinTest, MultipleExtremaAccess)
   aUpperBorder(2) = 2.0;
 
   math_GlobOptMin aSolver(&aFunc, aLowerBorder, aUpperBorder);
-  aSolver.Perform(false); // Find all solutions
+  aSolver.Perform(false);
 
   EXPECT_TRUE(aSolver.isDone()) << "Should find multiple solutions";
   int aNbSol = aSolver.NbExtrema();
   EXPECT_GT(aNbSol, 0) << "Should have at least one solution";
 
-  // Test accessing all solutions
   for (int i = 1; i <= aNbSol; ++i)
   {
     math_Vector aSol(1, 2);
@@ -493,7 +463,7 @@ TEST(MathGlobOptMinTest, MultipleExtremaAccess)
 
 TEST(MathGlobOptMinTest, SmallSearchSpace)
 {
-  // Test with very small search space
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);

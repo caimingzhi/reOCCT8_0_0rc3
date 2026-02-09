@@ -11,7 +11,6 @@ class StepGeom_SurfacePatch : public Standard_Transient
 {
 
 public:
-  //! Returns a SurfacePatch
   Standard_EXPORT StepGeom_SurfacePatch();
 
   Standard_EXPORT void Init(const occ::handle<StepGeom_BoundedSurface>& aParentSurface,

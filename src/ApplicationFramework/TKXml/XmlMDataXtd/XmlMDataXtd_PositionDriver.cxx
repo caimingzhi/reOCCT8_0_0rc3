@@ -11,32 +11,23 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataXtd_PositionDriver, XmlMDF_ADriver)
 
-//=================================================================================================
-
 XmlMDataXtd_PositionDriver::XmlMDataXtd_PositionDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataXtd_PositionDriver::NewEmpty() const
 {
   return (new TDataXtd_Position());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDataXtd_PositionDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                        const occ::handle<TDF_Attribute>& theTarget,
                                        XmlObjMgt_RRelocationTable&) const
 {
   occ::handle<TDataXtd_Position> aTPos = occ::down_cast<TDataXtd_Position>(theTarget);
 
-  // position
   XmlObjMgt_DOMString aPosStr = XmlObjMgt::GetStringValue(theSource.Element());
   if (aPosStr == nullptr)
   {
@@ -48,7 +39,6 @@ bool XmlMDataXtd_PositionDriver::Paste(const XmlObjMgt_Persistent&       theSour
   double      aValue;
   const char* aValueStr = static_cast<const char*>(aPosStr.GetString());
 
-  // X
   if (!XmlObjMgt::GetReal(aValueStr, aValue))
   {
     TCollection_ExtendedString aMessageString =
@@ -60,7 +50,6 @@ bool XmlMDataXtd_PositionDriver::Paste(const XmlObjMgt_Persistent&       theSour
   }
   aPos.SetX(aValue);
 
-  // Y
   if (!XmlObjMgt::GetReal(aValueStr, aValue))
   {
     TCollection_ExtendedString aMessageString =
@@ -72,7 +61,6 @@ bool XmlMDataXtd_PositionDriver::Paste(const XmlObjMgt_Persistent&       theSour
   }
   aPos.SetY(aValue);
 
-  // Z
   if (!XmlObjMgt::GetReal(aValueStr, aValue))
   {
     TCollection_ExtendedString aMessageString =
@@ -89,10 +77,6 @@ bool XmlMDataXtd_PositionDriver::Paste(const XmlObjMgt_Persistent&       theSour
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMDataXtd_PositionDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                        XmlObjMgt_Persistent&             theTarget,
                                        XmlObjMgt_SRelocationTable&) const
@@ -101,7 +85,7 @@ void XmlMDataXtd_PositionDriver::Paste(const occ::handle<TDF_Attribute>& theSour
   if (!aTPos.IsNull())
   {
     gp_Pnt aPos = aTPos->GetPosition();
-    char   buf[75]; // (24 + 1) * 3
+    char   buf[75];
     Sprintf(buf, "%.17g %.17g %.17g", aPos.X(), aPos.Y(), aPos.Z());
     XmlObjMgt::SetStringValue(theTarget.Element(), buf);
   }

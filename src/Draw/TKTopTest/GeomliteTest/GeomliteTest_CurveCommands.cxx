@@ -71,7 +71,6 @@
 Standard_IMPORT Draw_Viewer dout;
 #endif
 
-// Class is used in fitcurve
 class CurveEvaluator : public AppCont_Function
 
 {
@@ -91,7 +90,7 @@ public:
   double LastParameter() const override { return myCurve->LastParameter(); }
 
   bool Value(const double theT,
-             NCollection_Array1<gp_Pnt2d>& /*thePnt2d*/,
+             NCollection_Array1<gp_Pnt2d>&,
              NCollection_Array1<gp_Pnt>& thePnt) const override
   {
     thePnt(1) = myCurve->Value(theT);
@@ -99,7 +98,7 @@ public:
   }
 
   bool D1(const double theT,
-          NCollection_Array1<gp_Vec2d>& /*theVec2d*/,
+          NCollection_Array1<gp_Vec2d>&,
           NCollection_Array1<gp_Vec>& theVec) const override
   {
     gp_Pnt aDummyPnt;
@@ -107,8 +106,6 @@ public:
     return true;
   }
 };
-
-//=================================================================================================
 
 static int anacurve(Draw_Interpretor&, int n, const char** a)
 {
@@ -265,8 +262,6 @@ static int anacurve(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int polecurve(Draw_Interpretor&, int n, const char** a)
 {
   int k, i;
@@ -353,8 +348,6 @@ static int polecurve(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int polecurve2d(Draw_Interpretor&, int n, const char** a)
 {
@@ -443,8 +436,6 @@ static int polecurve2d(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int reverse(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 2)
@@ -469,8 +460,6 @@ static int reverse(Draw_Interpretor&, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int cmovepole(Draw_Interpretor&, int n, const char** a)
 {
@@ -526,8 +515,6 @@ static int cmovepole(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int cmovetangent(Draw_Interpretor& di, int n, const char** a)
 {
@@ -621,8 +608,6 @@ static int cmovetangent(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int cmovepoint(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 5)
@@ -682,8 +667,6 @@ static int cmovepoint(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int cinsertknot(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4)
@@ -709,7 +692,7 @@ static int cinsertknot(Draw_Interpretor&, int n, const char** a)
 
   else
   {
-    // multiple insertion
+
     if (n % 2 != 0)
       return 1;
     int                        i, nbk = (n - 2) / 2;
@@ -730,8 +713,6 @@ static int cinsertknot(Draw_Interpretor&, int n, const char** a)
   Draw::Repaint();
   return 0;
 }
-
-//=================================================================================================
 
 static int csetknot(Draw_Interpretor&, int n, const char** a)
 {
@@ -766,8 +747,6 @@ static int csetknot(Draw_Interpretor&, int n, const char** a)
   Draw::Repaint();
   return 0;
 }
-
-//=================================================================================================
 
 static int cremknot(Draw_Interpretor& di, int n, const char** a)
 {
@@ -804,8 +783,6 @@ static int cremknot(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int increasedegree(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 3)
@@ -833,8 +810,6 @@ static int increasedegree(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int removepole(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
@@ -861,8 +836,6 @@ static int removepole(Draw_Interpretor& di, int n, const char** a)
   Draw::Repaint();
   return 0;
 }
-
-//=================================================================================================
 
 static int insertpole(Draw_Interpretor& di, int n, const char** a)
 {
@@ -898,8 +871,6 @@ static int insertpole(Draw_Interpretor& di, int n, const char** a)
   Draw::Repaint();
   return 0;
 }
-
-//=================================================================================================
 
 static int cfindp(Draw_Interpretor&, int n, const char** a)
 {
@@ -944,8 +915,6 @@ static int cfindp(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int csetperiodic(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 2)
@@ -975,8 +944,6 @@ static int csetperiodic(Draw_Interpretor&, int n, const char** a)
   Draw::Repaint();
   return 0;
 }
-
-//=================================================================================================
 
 static int value(Draw_Interpretor&, int n, const char** a)
 {
@@ -1032,8 +999,6 @@ static int value(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int value2d(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4)
@@ -1085,8 +1050,6 @@ static int value2d(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int segment(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4 || n > 5)
@@ -1118,8 +1081,6 @@ static int segment(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int setorigin(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 3)
@@ -1139,8 +1100,6 @@ static int setorigin(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int point(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4)
@@ -1158,8 +1117,6 @@ static int point(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int coord(Draw_Interpretor&, int n, const char** a)
 {
@@ -1185,8 +1142,6 @@ static int coord(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int minmaxcurandinf(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1239,10 +1194,6 @@ static int minmaxcurandinf(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
-// function :  shcurvature
-// purpose  :  affiche le peigne de courbure
-//=======================================================================
 static int shcurvature(Draw_Interpretor&, int argc, const char** argv)
 {
   if (argc < 2)
@@ -1265,10 +1216,6 @@ static int shcurvature(Draw_Interpretor&, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
-// function :  clcurvature
-// purpose  :  efface le peigne de courbure
-//=======================================================================
 static int clcurvature(Draw_Interpretor&, int argc, const char** argv)
 {
   if (argc < 2)
@@ -1290,10 +1237,6 @@ static int clcurvature(Draw_Interpretor&, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
-// function :  radiusmax
-// purpose  :  definit le rayon de courbure maximum a afficher
-//=======================================================================
 static int radiusmax(Draw_Interpretor&, int argc, const char** argv)
 {
   if (argc < 3)
@@ -1316,10 +1259,6 @@ static int radiusmax(Draw_Interpretor&, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
-// function :  radiusratio
-// purpose  :  definit le ratio du rayon de courbure a afficher
-//=======================================================================
 static int radiusratio(Draw_Interpretor&, int argc, const char** argv)
 {
   if (argc < 3)
@@ -1341,8 +1280,6 @@ static int radiusratio(Draw_Interpretor&, int argc, const char** argv)
   Draw::Repaint();
   return 0;
 }
-
-//=================================================================================================
 
 static int localprop(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1420,8 +1357,6 @@ static int localprop(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int rawcont(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 5)
@@ -1482,14 +1417,12 @@ static int rawcont(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int approxcurveonsurf(Draw_Interpretor& di, int n, const char** a)
 {
-  double        Tol        = 1.e-7;      // Tolerance (default 0.1mm)
-  GeomAbs_Shape Continuity = GeomAbs_C1; // Continuity order : 0, 1 or 2 (default 1)
-  int           MaxDeg     = 14;         // Maximum degree
-  int           MaxSeg     = 16; /*1*/   // Maximum number of segments
+  double        Tol        = 1.e-7;
+  GeomAbs_Shape Continuity = GeomAbs_C1;
+  int           MaxDeg     = 14;
+  int           MaxSeg     = 16;
 
   if (n > 8 || n < 4)
     return 1;
@@ -1534,21 +1467,14 @@ static int approxcurveonsurf(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=================================================================================================
-
 static int approxcurve(Draw_Interpretor& di, int n, const char** a)
 {
-  double        Tol        = 1.e-7;      // Tolerance (default 0.1mm)
-  GeomAbs_Shape Continuity = GeomAbs_C1; // Continuity order : 0, 1 or 2 (default 1)
-  int           MaxDeg     = 14;         // Maximum degree
-  int           MaxSeg     = 16;         // Maximum number of segments
+  double        Tol        = 1.e-7;
+  GeomAbs_Shape Continuity = GeomAbs_C1;
+  int           MaxDeg     = 14;
+  int           MaxSeg     = 16;
 
   int Case, shift;
-  // Case == 1 : 3d approximation without reparametrization
-  // Case == 2 : 2d approximation without reparametrization
-  // Case == 3 : 3d approximation with reparametrization
-  // Case == 4 : curve_on_surface approximation with reparametrization
-  // Case == 5 : 2 curves_on_surfaces approximation with reparametrization
 
   occ::handle<Geom_Curve>   curve;
   occ::handle<Geom2d_Curve> curve2d, curve2d2;
@@ -1559,7 +1485,7 @@ static int approxcurve(Draw_Interpretor& di, int n, const char** a)
 
   if (!strcmp(a[1], "-L"))
   {
-    // approximation with curvilinear abscissa reparametrization
+
     if (n > 11 || n < 4)
       return 1;
     Tol   = 1.e-4;
@@ -1571,7 +1497,7 @@ static int approxcurve(Draw_Interpretor& di, int n, const char** a)
     }
     else
     {
-      // approx curve_on_surface
+
       if (n < 5)
         return 1;
       curve2d = DrawTrSurf::GetCurve2d(a[3]);
@@ -1591,7 +1517,7 @@ static int approxcurve(Draw_Interpretor& di, int n, const char** a)
         }
         else
         {
-          // approx 2 curves_on_surfaces
+
           shift = 7;
           Case  = 5;
         }
@@ -1605,7 +1531,7 @@ static int approxcurve(Draw_Interpretor& di, int n, const char** a)
   }
   else
   {
-    // approximation without reparamitrization
+
     if (n > 7 || n < 3)
       return 1;
     shift = 3;
@@ -1649,7 +1575,7 @@ static int approxcurve(Draw_Interpretor& di, int n, const char** a)
     GeomConvert_ApproxCurve appr(curve, Tol, Continuity, MaxSeg, MaxDeg);
     if (appr.HasResult())
     {
-      // appr.Dump(std::cout);
+
       Standard_SStream aSStream;
       appr.Dump(aSStream);
       di << aSStream;
@@ -1663,7 +1589,7 @@ static int approxcurve(Draw_Interpretor& di, int n, const char** a)
     Geom2dConvert_ApproxCurve appr(curve2d, Tol, Continuity, MaxSeg, MaxDeg);
     if (appr.HasResult())
     {
-      // appr.Dump(std::cout);
+
       Standard_SStream aSStream;
       appr.Dump(aSStream);
       di << aSStream;
@@ -1678,7 +1604,7 @@ static int approxcurve(Draw_Interpretor& di, int n, const char** a)
     Approx_CurvilinearParameter  appr(HACur, Tol, Continuity, MaxDeg, MaxSeg);
     if (appr.HasResult())
     {
-      // appr.Dump(std::cout);
+
       Standard_SStream aSStream;
       appr.Dump(aSStream);
       di << aSStream;
@@ -1693,7 +1619,7 @@ static int approxcurve(Draw_Interpretor& di, int n, const char** a)
     Approx_CurvilinearParameter    appr(HACur2d, HASur, Tol, Continuity, MaxDeg, MaxSeg);
     if (appr.HasResult())
     {
-      // appr.Dump(std::cout);
+
       Standard_SStream aSStream;
       appr.Dump(aSStream);
       di << aSStream;
@@ -1712,7 +1638,7 @@ static int approxcurve(Draw_Interpretor& di, int n, const char** a)
       appr(HACur2d, HASur, HACur2d2, HASur2, Tol, Continuity, MaxDeg, MaxSeg);
     if (appr.HasResult())
     {
-      // appr.Dump(std::cout);
+
       Standard_SStream aSStream;
       appr.Dump(aSStream);
       di << aSStream;
@@ -1723,8 +1649,6 @@ static int approxcurve(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int fitcurve(Draw_Interpretor& di, int n, const char** a)
 {
@@ -1806,12 +1730,6 @@ static int fitcurve(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : newbspline
-// purpose  : reduce the multiplicity of the knots to their minimum
-//           compared to the degree of the curve
-//=======================================================================
-
 static int splitc1(Draw_Interpretor& di, int n, const char** c)
 
 {
@@ -1865,12 +1783,6 @@ static int splitc1(Draw_Interpretor& di, int n, const char** c)
   return 0;
 }
 
-//=======================================================================
-// function : splitc12d
-// purpose  : reduce the multiplicity of the knots to their minimum
-//           compared to the degree of the curve
-//=======================================================================
-
 static int splitc12d(Draw_Interpretor& di, int n, const char** c)
 
 {
@@ -1921,12 +1833,6 @@ static int splitc12d(Draw_Interpretor& di, int n, const char** c)
   return 0;
 }
 
-//=======================================================================
-// function : canceldenom
-// purpose  : set the value of the denominator cancel its first
-//           derivative on the boundaries of the surface if possible
-//=======================================================================
-
 static int canceldenom(Draw_Interpretor&, int n, const char** c)
 
 {
@@ -1946,11 +1852,6 @@ static int canceldenom(Draw_Interpretor&, int n, const char** c)
   DrawTrSurf::Set(c[1], BSurf);
   return 0;
 }
-
-//=======================================================================
-// function : length
-// purpose  : eval curve's length
-//=======================================================================
 
 static int length(Draw_Interpretor& di, int n, const char** a)
 {
@@ -1982,8 +1883,6 @@ static int length(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 void GeomliteTest::CurveCommands(Draw_Interpretor& theCommands)
 {
 
@@ -1996,7 +1895,6 @@ void GeomliteTest::CurveCommands(Draw_Interpretor& theCommands)
 
   const char* g;
 
-  // analytic curves
   g = "GEOMETRY curves creation";
 
   theCommands.Add("point", "point name x y [z]", __FILE__, point, g);

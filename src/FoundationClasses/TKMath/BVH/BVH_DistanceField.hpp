@@ -5,11 +5,6 @@
 template <class T, int N>
 class BVH_ParallelDistanceFieldBuilder;
 
-//! Tool object for building 3D distance field from the set of BVH triangulations.
-//! Distance field is a scalar field that measures the distance from a given point
-//! to some object, including optional information about the inside and outside of
-//! the structure. Distance fields are used as alternative surface representations
-//! (like polygons or NURBS).
 template <class T, int N>
 class BVH_DistanceField
 {
@@ -19,85 +14,61 @@ public:
   typedef typename BVH::VectorType<T, N>::Type BVH_VecNt;
 
 public:
-  //! Creates empty 3D distance field.
   BVH_DistanceField(const int theMaximumSize, const bool theComputeSign);
 
-  //! Releases resources of 3D distance field.
   virtual ~BVH_DistanceField();
 
-  //! Builds 3D distance field from BVH geometry.
   bool Build(BVH_Geometry<T, N>& theGeometry);
 
-  //! Returns parallel flag.
   inline bool IsParallel() const { return myIsParallel; }
 
-  //! Set parallel flag controlling possibility of parallel execution.
   inline void SetParallel(const bool isParallel) { myIsParallel = isParallel; }
 
 public:
-  //! Returns packed voxel data.
   const T* PackedData() const { return myVoxelData; }
 
-  //! Returns distance value for the given voxel.
   T& Voxel(const int theX, const int theY, const int theZ)
   {
     return myVoxelData[theX + (theY + theZ * myDimensionY) * myDimensionX];
   }
 
-  //! Returns distance value for the given voxel.
   T Voxel(const int theX, const int theY, const int theZ) const
   {
     return myVoxelData[theX + (theY + theZ * myDimensionY) * myDimensionX];
   }
 
-  //! Returns size of voxel grid in X dimension.
   int DimensionX() const { return myDimensionX; }
 
-  //! Returns size of voxel grid in Y dimension.
   int DimensionY() const { return myDimensionY; }
 
-  //! Returns size of voxel grid in Z dimension.
   int DimensionZ() const { return myDimensionZ; }
 
-  //! Returns size of single voxel.
   const BVH_VecNt& VoxelSize() const { return myVoxelSize; }
 
-  //! Returns minimum corner of voxel grid.
   const BVH_VecNt& CornerMin() const { return myCornerMin; }
 
-  //! Returns maximum corner of voxel grid.
   const BVH_VecNt& CornerMax() const { return myCornerMax; }
 
 protected:
-  //! Performs building of distance field for the given Z slices.
   void BuildSlices(BVH_Geometry<T, N>& theGeometry, const int theStartZ, const int theFinalZ);
 
 protected:
-  //! Array of voxels.
   T* myVoxelData;
 
-  //! Size of single voxel.
   BVH_VecNt myVoxelSize;
 
-  //! Minimum corner of voxel grid.
   BVH_VecNt myCornerMin;
 
-  //! Maximum corner of voxel grid.
   BVH_VecNt myCornerMax;
 
-  //! Size of voxel grid in X dimension.
   int myDimensionX;
 
-  //! Size of voxel grid in Y dimension.
   int myDimensionY;
 
-  //! Size of voxel grid in Z dimension.
   int myDimensionZ;
 
-  //! Size of voxel grid in maximum dimension.
   int myMaximumSize;
 
-  //! Enables/disables signing of distance field.
   bool myComputeSign;
 
   bool myIsParallel;
@@ -106,8 +77,6 @@ protected:
 #include <BVH_Triangulation.hpp>
 #include <OSD_Parallel.hpp>
 #include <BVH_Distance.hpp>
-
-//=================================================================================================
 
 template <class T, int N>
 BVH_DistanceField<T, N>::BVH_DistanceField(const int theMaximumSize, const bool theComputeSign)
@@ -123,10 +92,6 @@ BVH_DistanceField<T, N>::BVH_DistanceField(const int theMaximumSize, const bool 
   myVoxelData = new T[myMaximumSize * myMaximumSize * myMaximumSize];
 }
 
-// =======================================================================
-// function : ~BVH_DistanceField
-// purpose  :
-// =======================================================================
 template <class T, int N>
 BVH_DistanceField<T, N>::~BVH_DistanceField()
 {
@@ -143,10 +108,7 @@ BVH_DistanceField<T, N>::~BVH_DistanceField()
 
 namespace BVH
 {
-  //=======================================================================
-  // function : DistanceToBox
-  // purpose  : Computes squared distance from point to box
-  //=======================================================================
+
   template <class T, int N>
   T DistanceToBox(const typename VectorType<T, N>::Type& thePnt,
                   const typename VectorType<T, N>::Type& theMin,
@@ -170,10 +132,6 @@ namespace BVH
     return aNearestX * aNearestX + aNearestY * aNearestY + aNearestZ * aNearestZ;
   }
 
-  //=======================================================================
-  // function : DirectionToNearestPoint
-  // purpose  : Computes squared distance from point to triangle
-  // ======================================================================
   template <class T, int N>
   typename VectorType<T, N>::Type DirectionToNearestPoint(
     const typename VectorType<T, N>::Type& thePoint,
@@ -249,10 +207,6 @@ namespace BVH
     return thePoint - (theVertA * aU + theVertB * aV + theVertC * (static_cast<T>(1.0) - aU - aV));
   }
 
-  //=======================================================================
-  // function : SquareDistanceToPoint
-  // purpose  : Abstract class to compute squared distance from point to BVH tree
-  //=======================================================================
   template <class T, int N, class BVHSetType>
   class SquareDistanceToPoint
       : public BVH_Distance<T, N, typename VectorType<T, N>::Type, BVHSetType>
@@ -268,11 +222,9 @@ namespace BVH
     }
 
   public:
-    //! IsOutside
     bool IsOutside() const { return myIsOutside; }
 
   public:
-    //! Defines the rules for node rejection
     bool RejectNode(const BVH_VecNt& theCMin, const BVH_VecNt& theCMax, T& theMetric) const override
     {
       theMetric = DistanceToBox<T, N>(this->myObject, theCMin, theCMax);
@@ -280,17 +232,12 @@ namespace BVH
     }
 
   public:
-    //! Redefine the Stop to never stop the selection
     bool Stop() const override { return false; }
 
   protected:
     bool myIsOutside;
   };
 
-  //=======================================================================
-  // function : PointTriangulationSquareDistance
-  // purpose  : Computes squared distance from point to BVH triangulation
-  //=======================================================================
   template <class T, int N>
   class PointTriangulationSquareDistance
       : public SquareDistanceToPoint<T, N, BVH_Triangulation<T, N>>
@@ -299,14 +246,12 @@ namespace BVH
     typedef typename VectorType<T, N>::Type BVH_VecNt;
 
   public:
-    //! Constructor
     PointTriangulationSquareDistance()
         : SquareDistanceToPoint<T, N, BVH_Triangulation<T, N>>()
     {
     }
 
   public:
-    // Accepting the element
     bool Accept(const int theIndex, const T&) override
     {
       const BVH_Vec4i aTriangle = this->myBVHSet->Elements[theIndex];
@@ -341,10 +286,6 @@ namespace BVH
     }
   };
 
-  //=======================================================================
-  // function : SquareDistanceToObject
-  // purpose  : Computes squared distance from point to BVH triangulation
-  //=======================================================================
   template <class T, int N>
   T SquareDistanceToObject(BVH_Object<T, N>*                      theObject,
                            const typename VectorType<T, N>::Type& thePnt,
@@ -374,10 +315,6 @@ namespace BVH
     return aDistTool.Distance();
   }
 
-  //=======================================================================
-  // function : PointGeometrySquareDistance
-  // purpose  : Computes squared distance from point to BVH geometry
-  //=======================================================================
   template <class T, int N>
   class PointGeometrySquareDistance : public SquareDistanceToPoint<T, N, BVH_Geometry<T, N>>
   {
@@ -385,14 +322,12 @@ namespace BVH
     typedef typename VectorType<T, N>::Type BVH_VecNt;
 
   public:
-    //! Constructor
     PointGeometrySquareDistance()
         : SquareDistanceToPoint<T, N, BVH_Geometry<T, N>>()
     {
     }
 
   public:
-    // Accepting the element
     bool Accept(const int theIndex, const T&) override
     {
       bool    isOutside = true;
@@ -411,10 +346,6 @@ namespace BVH
     }
   };
 
-  //=======================================================================
-  // function : SquareDistanceToGeomerty
-  // purpose  : Computes squared distance from point to BVH geometry
-  //=======================================================================
   template <class T, int N>
   T SquareDistanceToGeomerty(BVH_Geometry<T, N>&                    theGeometry,
                              const typename VectorType<T, N>::Type& thePnt,
@@ -440,15 +371,12 @@ namespace BVH
 
 #undef BVH_DOT3
 
-//! Tool object for parallel construction of distance field (uses Intel TBB).
 template <class T, int N>
 class BVH_ParallelDistanceFieldBuilder
 {
 private:
-  //! Input BVH geometry.
   BVH_Geometry<T, N>* myGeometry;
 
-  //! Output distance field.
   BVH_DistanceField<T, N>* myOutField;
 
 public:
@@ -457,7 +385,6 @@ public:
       : myGeometry(theGeometry),
         myOutField(theOutField)
   {
-    //
   }
 
   void operator()(const int theIndex) const
@@ -466,10 +393,6 @@ public:
   }
 };
 
-// =======================================================================
-// function : BuildSlices
-// purpose  : Performs building of distance field for the given Z slices
-// =======================================================================
 template <class T, int N>
 void BVH_DistanceField<T, N>::BuildSlices(BVH_Geometry<T, N>& theGeometry,
                                           const int           theStartSlice,
@@ -498,10 +421,6 @@ void BVH_DistanceField<T, N>::BuildSlices(BVH_Geometry<T, N>& theGeometry,
   }
 }
 
-// =======================================================================
-// function : Build
-// purpose  : Builds 3D distance field from BVH geometry
-// =======================================================================
 template <class T, int N>
 bool BVH_DistanceField<T, N>::Build(BVH_Geometry<T, N>& theGeometry)
 {

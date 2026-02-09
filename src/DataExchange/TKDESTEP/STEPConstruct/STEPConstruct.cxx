@@ -13,8 +13,6 @@
 #include <TransferBRep.hpp>
 #include <TransferBRep_ShapeMapper.hpp>
 
-//=================================================================================================
-
 occ::handle<StepRepr_RepresentationItem> STEPConstruct::FindEntity(
   const occ::handle<Transfer_FinderProcess>& FinderProcess,
   const TopoDS_Shape&                        Shape)
@@ -31,8 +29,6 @@ occ::handle<StepRepr_RepresentationItem> STEPConstruct::FindEntity(
 #endif
   return item;
 }
-
-//=================================================================================================
 
 occ::handle<StepRepr_RepresentationItem> STEPConstruct::FindEntity(
   const occ::handle<Transfer_FinderProcess>& FinderProcess,
@@ -65,8 +61,6 @@ occ::handle<StepRepr_RepresentationItem> STEPConstruct::FindEntity(
   return item;
 }
 
-//=================================================================================================
-
 TopoDS_Shape STEPConstruct::FindShape(
   const occ::handle<Transfer_TransientProcess>&   TransientProcess,
   const occ::handle<StepRepr_RepresentationItem>& item)
@@ -79,8 +73,6 @@ TopoDS_Shape STEPConstruct::FindShape(
   }
   return S;
 }
-
-//=================================================================================================
 
 bool STEPConstruct::FindCDSR(
   const occ::handle<Transfer_Binder>&                         ComponentBinder,

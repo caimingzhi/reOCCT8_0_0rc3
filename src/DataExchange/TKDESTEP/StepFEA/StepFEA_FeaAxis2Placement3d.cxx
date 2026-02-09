@@ -5,11 +5,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaAxis2Placement3d, StepGeom_Axis2Placement3d)
 
-//=================================================================================================
-
 StepFEA_FeaAxis2Placement3d::StepFEA_FeaAxis2Placement3d() = default;
-
-//=================================================================================================
 
 void StepFEA_FeaAxis2Placement3d::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentationItem_Name,
@@ -33,28 +29,20 @@ void StepFEA_FeaAxis2Placement3d::Init(
   theDescription = aDescription;
 }
 
-//=================================================================================================
-
 StepFEA_CoordinateSystemType StepFEA_FeaAxis2Placement3d::SystemType() const
 {
   return theSystemType;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaAxis2Placement3d::SetSystemType(const StepFEA_CoordinateSystemType aSystemType)
 {
   theSystemType = aSystemType;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepFEA_FeaAxis2Placement3d::Description() const
 {
   return theDescription;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaAxis2Placement3d::SetDescription(
   const occ::handle<TCollection_HAsciiString>& aDescription)

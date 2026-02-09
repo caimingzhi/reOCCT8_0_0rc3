@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IntSurf.hpp>
 
@@ -19,12 +7,6 @@
 #include <Precision.hpp>
 #include <gp_Vec.hpp>
 
-//--------------------------------------------------------------
-//-- IntSurf::MakeTransition(Vtgint,Vtgrst,Normale,Transline,Transarc);
-//--
-//-- tgFirst   = Tangente Ligne Intersection
-//-- tgSecond  = Tangenet Restriction
-//-- Normale   = Normale a la surface
 void IntSurf::MakeTransition(const gp_Vec&       TgFirst,
                              const gp_Vec&       TgSecond,
                              const gp_Dir&       Normale,
@@ -32,9 +14,6 @@ void IntSurf::MakeTransition(const gp_Vec&       TgFirst,
                              IntSurf_Transition& TSecond)
 
 {
-
-  // Compute the mixed product of normal, tangent 1, tangent 2
-  // to get the type of transition.
 
   gp_Vec pvect(TgSecond.Crossed(TgFirst));
 
@@ -73,8 +52,6 @@ void IntSurf::MakeTransition(const gp_Vec&       TgFirst,
     }
   }
 }
-
-//=================================================================================================
 
 void IntSurf::SetPeriod(const occ::handle<Adaptor3d_Surface>& theFirstSurf,
                         const occ::handle<Adaptor3d_Surface>& theSecondSurf,

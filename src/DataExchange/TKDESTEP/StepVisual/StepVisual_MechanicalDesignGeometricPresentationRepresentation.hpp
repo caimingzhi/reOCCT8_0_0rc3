@@ -10,7 +10,6 @@ class StepVisual_MechanicalDesignGeometricPresentationRepresentation
 {
 
 public:
-  //! Returns a MechanicalDesignGeometricPresentationRepresentation
   Standard_EXPORT StepVisual_MechanicalDesignGeometricPresentationRepresentation();
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_MechanicalDesignGeometricPresentationRepresentation,

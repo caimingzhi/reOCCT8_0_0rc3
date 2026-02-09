@@ -5,76 +5,48 @@
 #include <IMeshData_Model.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//! Class implements functionality of model healer tool.
-//! Iterates over model's faces and checks consistency of their wires,
-//! i.e.whether wires are closed and do not contain self - intersections.
-//! In case if wire contains disconnected parts, ends of adjacent edges
-//! forming the gaps are connected in parametric space forcibly. The notion
-//! of this operation is to create correct discrete model defined relatively
-//! parametric space of target face taking into account connectivity and
-//! tolerances of 3D space only. This means that there are no specific
-//! computations are made for the sake of determination of U and V tolerance.
-//! Registers intersections on edges forming the face's shape and tries to
-//! amplify discrete representation by decreasing of deflection for the target edge.
-//! Checks can be performed in parallel mode.
 class BRepMesh_ModelHealer : public IMeshTools_ModelAlgo
 {
 public:
-  //! Constructor.
   Standard_EXPORT BRepMesh_ModelHealer();
 
-  //! Destructor.
   Standard_EXPORT ~BRepMesh_ModelHealer() override;
 
-  //! Functor API to discretize the given edge.
   void operator()(const int theEdgeIndex) const { process(theEdgeIndex); }
 
-  //! Functor API to discretize the given edge.
   void operator()(const IMeshData::IFaceHandle& theDFace) const { process(theDFace); }
 
   DEFINE_STANDARD_RTTIEXT(BRepMesh_ModelHealer, IMeshTools_ModelAlgo)
 
 protected:
-  //! Performs processing of edges of the given model.
   Standard_EXPORT bool performInternal(const occ::handle<IMeshData_Model>& theModel,
                                        const IMeshTools_Parameters&        theParameters,
                                        const Message_ProgressRange&        theRange) override;
 
 private:
-  //! Checks existing discretization of the face and updates data model.
   void process(const int theFaceIndex) const
   {
     const IMeshData::IFaceHandle& aDFace = myModel->GetFace(theFaceIndex);
     process(aDFace);
   }
 
-  //! Checks existing discretization of the face and updates data model.
   void process(const IMeshData::IFaceHandle& theDFace) const;
 
-  //! Amplifies discretization of edges in case if self-intersection problem has been found.
   void amplifyEdges();
 
-  //! Returns common vertex of two edges or null ptr in case if there is no such vertex.
   TopoDS_Vertex getCommonVertex(const IMeshData::IEdgeHandle& theEdge1,
                                 const IMeshData::IEdgeHandle& theEdge2) const;
 
-  //! Connects pcurves of previous and current edge on the specified face
-  //! according to topological connectivity. Uses next edge in order to
-  //! identify closest point in case of single vertex shared between both
-  //! ends of edge (degenerative edge)
   bool connectClosestPoints(const IMeshData::IPCurveHandle& thePrevDEdge,
                             const IMeshData::IPCurveHandle& theCurrDEdge,
                             const IMeshData::IPCurveHandle& theNextDEdge) const;
 
-  //! Chooses the most closest point to reference one from the given pair.
-  //! Returns square distance between reference point and closest one as
-  //! well as pointer to closest point.
   double closestPoint(gp_Pnt2d&  theRefPnt,
                       gp_Pnt2d&  theFristPnt,
                       gp_Pnt2d&  theSecondPnt,
                       gp_Pnt2d*& theClosestPnt) const
   {
-    // Find the most closest end-points.
+
     const double aSqDist1 = theRefPnt.SquareDistance(theFristPnt);
     const double aSqDist2 = theRefPnt.SquareDistance(theSecondPnt);
     if (aSqDist1 < aSqDist2)
@@ -87,9 +59,6 @@ private:
     return aSqDist2;
   }
 
-  //! Chooses the most closest points among the given to reference one from the given pair.
-  //! Returns square distance between reference point and closest one as
-  //! well as pointer to closest point.
   double closestPoints(gp_Pnt2d&  theFirstPnt1,
                        gp_Pnt2d&  theSecondPnt1,
                        gp_Pnt2d&  theFirstPnt2,
@@ -112,9 +81,6 @@ private:
     return aSqDist2;
   }
 
-  //! Adjusts the given pair of points supposed to be the same.
-  //! In addition, adjusts another end-point of an edge in order
-  //! to perform correct matching in case of gap.
   void adjustSamePoints(gp_Pnt2d*& theMajorSamePnt1,
                         gp_Pnt2d*& theMinorSamePnt1,
                         gp_Pnt2d*& theMajorSamePnt2,
@@ -135,13 +101,10 @@ private:
     *theMajorSamePnt2 = *theMinorSamePnt2;
   }
 
-  //! Connects ends of pcurves of face's wires according to topological coherency.
   void fixFaceBoundaries(const IMeshData::IFaceHandle& theDFace) const;
 
-  //! Returns True if check can be done in parallel.
   bool isParallel() const { return (myParameters.InParallel && myModel->FacesNb() > 1); }
 
-  //! Collects unique edges to be updated from face map. Clears data stored in face map.
   bool popEdgesToUpdate(IMeshData::MapOfIEdgePtr& theEdgesToUpdate);
 
 private:

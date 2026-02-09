@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_SelectPointed.hpp>
 #include <IFSelect_Transformer.hpp>
@@ -60,8 +49,6 @@ void IFSelect_SelectPointed::SetList(
     theitems.Append(list->Value(i));
 }
 
-//  ....    Editions
-
 bool IFSelect_SelectPointed::Add(const occ::handle<Standard_Transient>& item)
 {
   if (item.IsNull())
@@ -105,7 +92,7 @@ bool IFSelect_SelectPointed::Toggle(const occ::handle<Standard_Transient>& item)
 bool IFSelect_SelectPointed::AddList(
   const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& list)
 {
-  //   Optimized with a Map
+
   bool res = false;
   if (list.IsNull())
     return res;
@@ -146,8 +133,6 @@ bool IFSelect_SelectPointed::ToggleList(
     res |= Toggle(list->Value(i));
   return res;
 }
-
-//  ....   Consultations
 
 int IFSelect_SelectPointed::Rank(const occ::handle<Standard_Transient>& item) const
 {
@@ -199,8 +184,6 @@ void IFSelect_SelectPointed::Update(const occ::handle<IFSelect_Transformer>& trf
       theitems.SetValue(i, ento);
   }
 }
-
-//  ....  Actions Generales
 
 Interface_EntityIterator IFSelect_SelectPointed::RootResult(const Interface_Graph& G) const
 {

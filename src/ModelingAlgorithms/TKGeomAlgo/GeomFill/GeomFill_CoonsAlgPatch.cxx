@@ -8,8 +8,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_CoonsAlgPatch, Standard_Transient)
 
-//=================================================================================================
-
 GeomFill_CoonsAlgPatch::GeomFill_CoonsAlgPatch(const occ::handle<GeomFill_Boundary>& B1,
                                                const occ::handle<GeomFill_Boundary>& B2,
                                                const occ::handle<GeomFill_Boundary>& B3,
@@ -46,16 +44,12 @@ GeomFill_CoonsAlgPatch::GeomFill_CoonsAlgPatch(const occ::handle<GeomFill_Bounda
   c[3].SetXYZ(temp);
 }
 
-//=================================================================================================
-
 void GeomFill_CoonsAlgPatch::SetFunc(const occ::handle<Law_Function>& f1,
                                      const occ::handle<Law_Function>& f2)
 {
   a[0] = f1;
   a[1] = f2;
 }
-
-//=================================================================================================
 
 void GeomFill_CoonsAlgPatch::Func(occ::handle<Law_Function>& f1,
                                   occ::handle<Law_Function>& f2) const
@@ -64,9 +58,6 @@ void GeomFill_CoonsAlgPatch::Func(occ::handle<Law_Function>& f1,
   f2 = a[1];
 }
 
-//=================================================================================================
-
-// gp_Pnt GeomFill_CoonsAlgPatch::Value(const double U,
 gp_Pnt GeomFill_CoonsAlgPatch::Value(const double, const double V) const
 {
   double a0, a1, a2, a3;
@@ -109,8 +100,6 @@ gp_Pnt GeomFill_CoonsAlgPatch::Value(const double, const double V) const
 
   return gp_Pnt(cor);
 }
-
-//=================================================================================================
 
 gp_Vec GeomFill_CoonsAlgPatch::D1U(const double U, const double V) const
 {
@@ -160,8 +149,6 @@ gp_Vec GeomFill_CoonsAlgPatch::D1U(const double U, const double V) const
   return vbid;
 }
 
-//=================================================================================================
-
 gp_Vec GeomFill_CoonsAlgPatch::D1V(const double U, const double V) const
 {
   double a0, a1, a2, a3, bid;
@@ -209,8 +196,6 @@ gp_Vec GeomFill_CoonsAlgPatch::D1V(const double U, const double V) const
   vbid.SetXYZ(cor);
   return vbid;
 }
-
-//=================================================================================================
 
 gp_Vec GeomFill_CoonsAlgPatch::DUV(const double U, const double V) const
 {
@@ -263,21 +248,15 @@ gp_Vec GeomFill_CoonsAlgPatch::DUV(const double U, const double V) const
   return vbid;
 }
 
-//=================================================================================================
-
 const occ::handle<GeomFill_Boundary>& GeomFill_CoonsAlgPatch::Bound(const int I) const
 {
   return bound[I];
 }
 
-//=================================================================================================
-
 const gp_Pnt& GeomFill_CoonsAlgPatch::Corner(const int I) const
 {
   return c[I];
 }
-
-//=================================================================================================
 
 const occ::handle<Law_Function>& GeomFill_CoonsAlgPatch::Func(const int I) const
 {

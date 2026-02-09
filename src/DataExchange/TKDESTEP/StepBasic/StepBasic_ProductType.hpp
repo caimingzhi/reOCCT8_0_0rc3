@@ -9,7 +9,6 @@ class StepBasic_ProductType : public StepBasic_ProductRelatedProductCategory
 {
 
 public:
-  //! Returns a ProductType
   Standard_EXPORT StepBasic_ProductType();
 
   DEFINE_STANDARD_RTTIEXT(StepBasic_ProductType, StepBasic_ProductRelatedProductCategory)

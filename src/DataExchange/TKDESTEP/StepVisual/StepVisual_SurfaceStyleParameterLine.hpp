@@ -15,7 +15,6 @@ class StepVisual_SurfaceStyleParameterLine : public Standard_Transient
 {
 
 public:
-  //! Returns a SurfaceStyleParameterLine
   Standard_EXPORT StepVisual_SurfaceStyleParameterLine();
 
   Standard_EXPORT void Init(

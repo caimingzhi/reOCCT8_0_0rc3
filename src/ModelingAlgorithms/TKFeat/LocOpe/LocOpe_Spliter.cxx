@@ -28,19 +28,13 @@
 #include <NCollection_IndexedMap.hpp>
 #include <NCollection_Map.hpp>
 
-// #include <LocOpe_ProjectedWires.hxx>
-//   Modified by skv - Mon May 31 13:00:30 2004 OCC5865 Begin
-//  static void RebuildWires(NCollection_List<TopoDS_Shape>&);
 static void RebuildWires(NCollection_List<TopoDS_Shape>&, const occ::handle<LocOpe_WiresOnShape>&);
-//  Modified by skv - Mon May 31 13:00:31 2004 OCC5865 End
 
 static void Put(
   const TopoDS_Shape&,
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&);
 
 static void Select(const TopoDS_Edge&, NCollection_List<TopoDS_Shape>&);
-
-//=================================================================================================
 
 void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
 {
@@ -59,8 +53,6 @@ void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
                   mapFE;
   TopExp_Explorer exp, exp2;
-
-  // 1ere etape : substitution des vertex
 
   TopoDS_Vertex                  Vb;
   NCollection_List<TopoDS_Shape> lsubs;
@@ -97,8 +89,7 @@ void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
   theSubs.Build(myShape);
   if (theSubs.IsCopied(myShape))
   {
-    // on n`a fait que des substitutions de vertex. Donc chaque element
-    // est remplace par lui meme ou par un seul element du meme type.
+
     for (NCollection_DataMap<TopoDS_Shape,
                              NCollection_List<TopoDS_Shape>,
                              TopTools_ShapeMapHasher>::Iterator itdesc(myMap);
@@ -123,8 +114,6 @@ void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
   myRes = myMap(myShape).First();
   LocOpe_SplitShape theCFace(myRes);
 
-  // Adds every vertices lying on an edge of the shape, and prepares
-  // work to rebuild wires on each face
   TopoDS_Edge Ed;
   double      prm;
 
@@ -140,7 +129,7 @@ void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
         mapV.Add(vtx);
         if (PW->OnEdge(vtx, edg, Ed, prm))
         {
-          // on devrait verifier que le vtx n`existe pas deja sur l`edge
+
           if (!myMap.IsBound(Ed))
             continue;
           Ed = TopoDS::Edge(myMap(Ed).First());
@@ -151,7 +140,7 @@ void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
     TopoDS_Edge Ebis;
     if (PW->OnEdge(Ebis))
     {
-      //	Ebis = TopoDS::Edge(myMap(Ebis).First());
+
       EdgOnEdg.Bind(edg, Ebis);
     }
     else
@@ -172,25 +161,20 @@ void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
     }
   }
 
-  // Rebuilds wires on each face of the shape
-
   NCollection_List<TopoDS_Shape>::Iterator itl;
   for (int i = 1; i <= mapFE.Extent(); i++)
   {
     const TopoDS_Face&              fac    = TopoDS::Face(mapFE.FindKey(i));
     NCollection_List<TopoDS_Shape>& ledges = mapFE(i);
-    //  Modified by skv - Mon May 31 12:32:54 2004 OCC5865 Begin
-    //     RebuildWires(ledges);
+
     RebuildWires(ledges, PW);
-    //  Modified by skv - Mon May 31 12:32:54 2004 OCC5865 End
+
     if (theFacesWithSection.Contains(fac))
       theCFace.Add(ledges, fac);
     else
       for (itl.Initialize(ledges); itl.More(); itl.Next())
         theCFace.Add(TopoDS::Wire(itl.Value()), fac);
   }
-
-  // Mise a jour des descendants
 
   for (NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>::
          Iterator itdesc(myMap);
@@ -243,7 +227,6 @@ void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
        itee.Next())
   {
     const TopoDS_Edge& e1 = TopoDS::Edge(itee.Key());
-    // on recherche dans les descendants de e2 l`edge qui correspont a e1
 
     TopoDS_Vertex vf1, vl1, vf2, vl2;
     TopExp::Vertices(e1, vf1, vl1);
@@ -258,18 +241,16 @@ void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
         if (vf1.IsSame(vf2) && vl1.IsSame(vl2))
         {
           lsubs.Append(e2.Oriented(TopAbs_FORWARD));
-          //	break;
         }
         else if (vf1.IsSame(vl2) && vl1.IsSame(vf2))
         {
           lsubs.Append(e2.Oriented(TopAbs_REVERSED));
-          //	break;
         }
       }
       else
-      { // discrimination sur les tangentes
+      {
         if (vf2.IsSame(vl2) && vl2.IsSame(vl1))
-        { // tout au meme point
+        {
           TopLoc_Location         Loc;
           double                  f, l;
           gp_Pnt                  pbid;
@@ -293,7 +274,7 @@ void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
       }
     }
     if (lsubs.Extent() >= 2)
-    { // il faut faire un choix
+    {
       Select(e1, lsubs);
     }
     if (lsubs.Extent() == 1)
@@ -346,7 +327,6 @@ void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
     myRes = theSubs.Copy(myRes).First();
   }
 
-  ////remove superfluous vertices on degenerated edges
   theSubs.Clear();
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> Emap;
   TopExp::MapShapes(myRes, TopAbs_EDGE, Emap);
@@ -407,7 +387,6 @@ void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
   theSubs.Build(myRes);
   if (theSubs.IsCopied(myRes))
     myRes = theSubs.Copy(myRes).First();
-  ////
 
   myDLeft.Clear();
   myLeft.Clear();
@@ -444,38 +423,6 @@ void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
     }
   }
 
-  /* JAG : Ne peut pas marcher
-
-    bool full = mapV.IsEmpty();
-    while (!full) {
-      full = true;
-      itms.Initialize(mapV);
-      const TopoDS_Face& fac = TopoDS::Face(itms.Key());
-      for (exp.Init(fac,TopAbs_EDGE); exp.More(); exp.Next()) {
-        if (!mapE.Contains(exp.Current())) {
-      for (itl.Initialize(myLeft); itl.More(); itl.Next()) {
-        const TopoDS_Face& fac2 = TopoDS::Face(itl.Value());
-        for (exp2.Init(fac2,TopAbs_EDGE); exp2.More(); exp2.Next()) {
-          if (exp2.Current().IsSame(exp.Current())) {
-            myLeft.Append(fac);
-            mapV.Remove(fac);
-            full = mapV.IsEmpty();
-            break;
-          }
-        }
-        if (exp2.More()) {
-          break;
-        }
-      }
-      if (itl.More()) {
-        break;
-      }
-        }
-      }
-    }
-  */
-
-  // Map des edges ou les connexions sont possibles
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> Mapebord;
   for (itl.Initialize(myLeft); itl.More(); itl.Next())
   {
@@ -508,7 +455,7 @@ void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
       }
       if (exp.More())
       {
-        break; // face a gauche
+        break;
       }
     }
     if (itms.More())
@@ -533,8 +480,6 @@ void LocOpe_Spliter::Perform(const occ::handle<LocOpe_WiresOnShape>& PW)
   myDone = true;
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& LocOpe_Spliter::DescendantShapes(const TopoDS_Shape& F)
 {
   if (!myDone)
@@ -550,8 +495,6 @@ const NCollection_List<TopoDS_Shape>& LocOpe_Spliter::DescendantShapes(const Top
   }
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& LocOpe_Spliter::DirectLeft() const
 {
   if (!myDone)
@@ -560,8 +503,6 @@ const NCollection_List<TopoDS_Shape>& LocOpe_Spliter::DirectLeft() const
   }
   return myDLeft;
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& LocOpe_Spliter::Left() const
 {
@@ -572,23 +513,17 @@ const NCollection_List<TopoDS_Shape>& LocOpe_Spliter::Left() const
   return myLeft;
 }
 
-//=================================================================================================
-
-//  Modified by skv - Mon May 31 12:31:39 2004 OCC5865 Begin
-// static void RebuildWires(NCollection_List<TopoDS_Shape>& ledge)
 static void RebuildWires(NCollection_List<TopoDS_Shape>&         ledge,
                          const occ::handle<LocOpe_WiresOnShape>& PW)
 {
   LocOpe_BuildWires theBuild(ledge, PW);
-  //  Modified by skv - Mon May 31 12:31:40 2004 OCC5865 End
+
   if (!theBuild.IsDone())
   {
     throw Standard_ConstructionError();
   }
   ledge = theBuild.Result();
 }
-
-//=================================================================================================
 
 static void Put(
   const TopoDS_Shape& S,
@@ -608,12 +543,8 @@ static void Put(
   }
 }
 
-//=================================================================================================
-
 static void Select(const TopoDS_Edge& Ebase, NCollection_List<TopoDS_Shape>& lsubs)
 {
-
-  // Choix d`un point
 
   occ::handle<Geom_Curve> C;
   TopLoc_Location         Loc;
@@ -630,7 +561,7 @@ static void Select(const TopoDS_Edge& Ebase, NCollection_List<TopoDS_Shape>& lsu
   gp_Pnt Pt(C->Value((f + l) / 2.));
 
   GeomAPI_ProjectPointOnCurve proj;
-  //  for (NCollection_List<TopoDS_Shape>::Iterator itl(lsubs);
+
   NCollection_List<TopoDS_Shape>::Iterator itl(lsubs);
   for (; itl.More(); itl.Next())
   {

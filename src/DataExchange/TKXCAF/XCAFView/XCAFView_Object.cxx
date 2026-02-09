@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFView_Object, Standard_Transient)
 
-//=================================================================================================
-
 XCAFView_Object::XCAFView_Object()
 {
   myClippingExpression      = new TCollection_HAsciiString();
@@ -12,8 +10,6 @@ XCAFView_Object::XCAFView_Object()
   myViewVolumeSidesClipping = false;
   myGDTPoints               = nullptr;
 }
-
-//=================================================================================================
 
 XCAFView_Object::XCAFView_Object(const occ::handle<XCAFView_Object>& theObj)
 {

@@ -1,5 +1,5 @@
 #ifndef No_Exception
-// #define No_Exception
+
 #endif
 
 #include <gp_Ax3.hpp>
@@ -12,22 +12,12 @@
 #include <HLRAlgo_Projector.hpp>
 #include <Precision.hpp>
 
-// formula for derivating a perspective, from Mathematica
-//        X'[t]      X[t] Z'[t]
-// D1 =  -------- + -------------
-//           Z[t]          Z[t] 2
-//       1 - ----   f (1 - ----)
-//            f             f
-//=================================================================================================
-
 HLRAlgo_Projector::HLRAlgo_Projector()
     : myPersp(false),
       myFocus(0)
 {
   Scaled();
 }
-
-//=================================================================================================
 
 HLRAlgo_Projector::HLRAlgo_Projector(const gp_Ax2& CS)
     : myPersp(false),
@@ -38,8 +28,6 @@ HLRAlgo_Projector::HLRAlgo_Projector(const gp_Ax2& CS)
   SetDirection();
 }
 
-//=================================================================================================
-
 HLRAlgo_Projector::HLRAlgo_Projector(const gp_Ax2& CS, const double Focus)
     : myPersp(true),
       myFocus(Focus)
@@ -49,8 +37,6 @@ HLRAlgo_Projector::HLRAlgo_Projector(const gp_Ax2& CS, const double Focus)
   SetDirection();
 }
 
-//=================================================================================================
-
 HLRAlgo_Projector::HLRAlgo_Projector(const gp_Trsf& T, const bool Persp, const double Focus)
     : myPersp(Persp),
       myFocus(Focus),
@@ -59,8 +45,6 @@ HLRAlgo_Projector::HLRAlgo_Projector(const gp_Trsf& T, const bool Persp, const d
   Scaled();
   SetDirection();
 }
-
-//=================================================================================================
 
 HLRAlgo_Projector::HLRAlgo_Projector(const gp_Trsf&  T,
                                      const bool      Persp,
@@ -78,8 +62,6 @@ HLRAlgo_Projector::HLRAlgo_Projector(const gp_Trsf&  T,
   Scaled();
 }
 
-//=================================================================================================
-
 void HLRAlgo_Projector::Set(const gp_Trsf& T, const bool Persp, const double Focus)
 {
   myPersp      = Persp;
@@ -89,8 +71,6 @@ void HLRAlgo_Projector::Set(const gp_Trsf& T, const bool Persp, const double Foc
   SetDirection();
 }
 
-//=================================================================================================
-
 #include <gp_Mat.hpp>
 
 static int TrsfType(const gp_Trsf& Trsf)
@@ -99,7 +79,7 @@ static int TrsfType(const gp_Trsf& Trsf)
   if ((std::abs(Mat.Value(1, 1) - 1.0) < 1e-15) && (std::abs(Mat.Value(2, 2) - 1.0) < 1e-15)
       && (std::abs(Mat.Value(3, 3) - 1.0) < 1e-15))
   {
-    return (1); //-- top
+    return (1);
   }
   else if ((std::abs(Mat.Value(1, 1) - 0.7071067811865476) < 1e-15)
            && (std::abs(Mat.Value(1, 2) + 0.5) < 1e-15) && (std::abs(Mat.Value(1, 3) - 0.5) < 1e-15)
@@ -111,12 +91,12 @@ static int TrsfType(const gp_Trsf& Trsf)
            && (std::abs(Mat.Value(3, 2) - 0.7071067811865476) < 1e-15)
            && (std::abs(Mat.Value(3, 3) - 0.7071067811865476) < 1e-15))
   {
-    return (0); //--
+    return (0);
   }
   else if ((std::abs(Mat.Value(1, 1) - 1.0) < 1e-15) && (std::abs(Mat.Value(2, 3) - 1.0) < 1e-15)
            && (std::abs(Mat.Value(3, 2) + 1.0) < 1e-15))
   {
-    return (2); //-- front
+    return (2);
   }
   else if ((std::abs(Mat.Value(1, 1) - 0.7071067811865476) < 1e-15)
            && (std::abs(Mat.Value(1, 2) - 0.7071067811865476) < 1e-15)
@@ -128,7 +108,7 @@ static int TrsfType(const gp_Trsf& Trsf)
            && (std::abs(Mat.Value(3, 1) - 0.5) < 1e-15) && (std::abs(Mat.Value(3, 2) + 0.5) < 1e-15)
            && (std::abs(Mat.Value(3, 3) - 0.7071067811865476) < 1e-15))
   {
-    return (3); //-- axo
+    return (3);
   }
   return (-1);
 }
@@ -150,8 +130,6 @@ void HLRAlgo_Projector::Scaled(const bool On)
   myInvTrsf.Invert();
 }
 
-//=================================================================================================
-
 void HLRAlgo_Projector::Project(const gp_Pnt& P, gp_Pnt2d& Pout) const
 {
   if (myType != -1)
@@ -160,26 +138,26 @@ void HLRAlgo_Projector::Project(const gp_Pnt& P, gp_Pnt2d& Pout) const
     switch (myType)
     {
       case 0:
-      { //-- axono standard
+      {
         double x07 = P.X() * 0.7071067811865475;
         double y05 = P.Y() * 0.5;
         double z05 = P.Z() * 0.5;
         X          = x07 - y05 + z05;
         Y          = x07 + y05 - z05;
-        //-- Z=0.7071067811865475*(P.Y()+P.Z());
+
         break;
       }
       case 1:
-      { //-- top
+      {
         X = P.X();
-        Y = P.Y(); //-- Z=P.Z();
+        Y = P.Y();
         Pout.SetCoord(X, Y);
         break;
       }
       case 2:
       {
         X = P.X();
-        Y = P.Z(); //-- Z=-P.Y();
+        Y = P.Z();
         Pout.SetCoord(X, Y);
         break;
       }
@@ -190,7 +168,7 @@ void HLRAlgo_Projector::Project(const gp_Pnt& P, gp_Pnt2d& Pout) const
         X            = 0.7071067811865476 * (P.X() + P.Y());
         Y            = -xmy05 + z07;
         Pout.SetCoord(X, Y);
-        //-- Z= xmy05+z07;
+
         break;
       }
       default:
@@ -222,28 +200,6 @@ void HLRAlgo_Projector::Project(const gp_Pnt& P, gp_Pnt2d& Pout) const
   }
 }
 
-//=================================================================================================
-
-/*  ====== TYPE 0  (??)
-   (0.7071067811865476, -0.5               ,  0.4999999999999999)
-   (0.7071067811865475,  0.5000000000000001, -0.5              )
-   (0.0,                 0.7071067811865475,  0.7071067811865476)
-
-  ====== TYPE 1 (top)
-(1.0, 0.0, 0.0)
-(0.0, 1.0, 0.0)
-(0.0, 0.0, 1.0)
-
- ======= TYPE 2 (front)
-(1.0,  0.0                   , 0.0)
-(0.0,  1.110223024625157e-16 , 1.0)
-(0.0, -1.0                   , 1.110223024625157e-16)
-
- ======= TYPE 3
-( 0.7071067811865476, 0.7071067811865475, 0.0)
-(-0.5               , 0.5000000000000001, 0.7071067811865475)
-( 0.4999999999999999, -0.5              , 0.7071067811865476)
-*/
 void HLRAlgo_Projector::Project(const gp_Pnt& P, double& X, double& Y, double& Z) const
 {
   if (myType != -1)
@@ -251,7 +207,7 @@ void HLRAlgo_Projector::Project(const gp_Pnt& P, double& X, double& Y, double& Z
     switch (myType)
     {
       case 0:
-      { //-- axono standard
+      {
         double x07 = P.X() * 0.7071067811865475;
         double y05 = P.Y() * 0.5;
         double z05 = P.Z() * 0.5;
@@ -261,7 +217,7 @@ void HLRAlgo_Projector::Project(const gp_Pnt& P, double& X, double& Y, double& Z
         break;
       }
       case 1:
-      { //-- top
+      {
         X = P.X();
         Y = P.Y();
         Z = P.Z();
@@ -306,8 +262,6 @@ void HLRAlgo_Projector::Project(const gp_Pnt& P, double& X, double& Y, double& Z
   }
 }
 
-//=================================================================================================
-
 void HLRAlgo_Projector::Project(const gp_Pnt& P,
                                 const gp_Vec& D1,
                                 gp_Pnt2d&     Pout,
@@ -331,8 +285,6 @@ void HLRAlgo_Projector::Project(const gp_Pnt& P,
   }
 }
 
-//=================================================================================================
-
 gp_Lin HLRAlgo_Projector::Shoot(const double X, const double Y) const
 {
   gp_Lin L;
@@ -347,8 +299,6 @@ gp_Lin HLRAlgo_Projector::Shoot(const double X, const double Y) const
   L.Transform(myInvTrsf);
   return L;
 }
-
-//=================================================================================================
 
 void HLRAlgo_Projector::SetDirection()
 {
@@ -371,8 +321,6 @@ void HLRAlgo_Projector::SetDirection()
   gp_Vec2d D3(V3.X(), V3.Y());
   myD3.SetCoord(-D3.Y(), D3.X());
 }
-
-//=================================================================================================
 
 const gp_Trsf& HLRAlgo_Projector::Transformation() const
 {

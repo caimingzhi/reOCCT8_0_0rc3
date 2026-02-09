@@ -8,8 +8,6 @@
 #include <TopLoc_Location.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 BRepSweep_Revol::BRepSweep_Revol(const TopoDS_Shape& S,
                                  const gp_Ax1&       Ax,
                                  const double        D,
@@ -19,8 +17,6 @@ BRepSweep_Revol::BRepSweep_Revol(const TopoDS_Shape& S,
   Standard_ConstructionError_Raise_if(Angle(D) <= Precision::Angular(),
                                       "BRepSweep_Revol::Constructor");
 }
-
-//=================================================================================================
 
 BRepSweep_Revol::BRepSweep_Revol(const TopoDS_Shape& S, const gp_Ax1& Ax, const bool C)
     : myRotation(S.Oriented(TopAbs_FORWARD),
@@ -33,49 +29,35 @@ BRepSweep_Revol::BRepSweep_Revol(const TopoDS_Shape& S, const gp_Ax1& Ax, const 
 {
 }
 
-//=================================================================================================
-
 TopoDS_Shape BRepSweep_Revol::Shape()
 {
   return myRotation.Shape();
 }
-
-//=================================================================================================
 
 TopoDS_Shape BRepSweep_Revol::Shape(const TopoDS_Shape& aGenS)
 {
   return myRotation.Shape(aGenS);
 }
 
-//=================================================================================================
-
 TopoDS_Shape BRepSweep_Revol::FirstShape()
 {
   return myRotation.FirstShape();
 }
-
-//=================================================================================================
 
 TopoDS_Shape BRepSweep_Revol::FirstShape(const TopoDS_Shape& aGenS)
 {
   return myRotation.FirstShape(aGenS);
 }
 
-//=================================================================================================
-
 TopoDS_Shape BRepSweep_Revol::LastShape()
 {
   return myRotation.LastShape();
 }
 
-//=================================================================================================
-
 TopoDS_Shape BRepSweep_Revol::LastShape(const TopoDS_Shape& aGenS)
 {
   return myRotation.LastShape(aGenS);
 }
-
-//=================================================================================================
 
 Sweep_NumShape BRepSweep_Revol::NumShape(const double D) const
 {
@@ -91,8 +73,6 @@ Sweep_NumShape BRepSweep_Revol::NumShape(const double D) const
   return N;
 }
 
-//=================================================================================================
-
 TopLoc_Location BRepSweep_Revol::Location(const gp_Ax1& Ax, const double D) const
 {
   gp_Trsf gpt;
@@ -101,8 +81,6 @@ TopLoc_Location BRepSweep_Revol::Location(const gp_Ax1& Ax, const double D) cons
   return L;
 }
 
-//=================================================================================================
-
 gp_Ax1 BRepSweep_Revol::Axe(const gp_Ax1& Ax, const double D) const
 {
   gp_Ax1 A = Ax;
@@ -110,8 +88,6 @@ gp_Ax1 BRepSweep_Revol::Axe(const gp_Ax1& Ax, const double D) const
     A.Reverse();
   return A;
 }
-
-//=================================================================================================
 
 double BRepSweep_Revol::Angle(const double D) const
 {
@@ -123,21 +99,15 @@ double BRepSweep_Revol::Angle(const double D) const
   return d;
 }
 
-//=================================================================================================
-
 double BRepSweep_Revol::Angle() const
 {
   return myRotation.Angle();
 }
 
-//=================================================================================================
-
 gp_Ax1 BRepSweep_Revol::Axe() const
 {
   return myRotation.Axe();
 }
-
-//=================================================================================================
 
 bool BRepSweep_Revol::IsUsed(const TopoDS_Shape& aGenS) const
 {

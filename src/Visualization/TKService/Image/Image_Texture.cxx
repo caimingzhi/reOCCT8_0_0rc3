@@ -1,16 +1,4 @@
-// Author: Kirill Gavrilov
-// Copyright (c) 2015-2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Image_Texture.hpp>
 
@@ -23,21 +11,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Image_Texture, Standard_Transient)
 
-//=================================================================================================
-
 Image_Texture::Image_Texture(const TCollection_AsciiString& theFileName)
     : myImagePath(theFileName),
       myOffset(-1),
       myLength(-1)
 {
-  // share textures with unique file paths
+
   if (!theFileName.IsEmpty())
   {
     myTextureId = TCollection_AsciiString("texture://") + theFileName;
   }
 }
-
-//=================================================================================================
 
 Image_Texture::Image_Texture(const TCollection_AsciiString& theFileName,
                              int64_t                        theOffset,
@@ -46,7 +30,7 @@ Image_Texture::Image_Texture(const TCollection_AsciiString& theFileName,
       myOffset(theOffset),
       myLength(theLength)
 {
-  // share textures with unique file paths
+
   if (!theFileName.IsEmpty())
   {
     char aBuff[60];
@@ -54,8 +38,6 @@ Image_Texture::Image_Texture(const TCollection_AsciiString& theFileName,
     myTextureId = TCollection_AsciiString("texture://") + theFileName + aBuff;
   }
 }
-
-//=================================================================================================
 
 Image_Texture::Image_Texture(const occ::handle<NCollection_Buffer>& theBuffer,
                              const TCollection_AsciiString&         theId)
@@ -68,8 +50,6 @@ Image_Texture::Image_Texture(const occ::handle<NCollection_Buffer>& theBuffer,
     myTextureId = TCollection_AsciiString("texturebuf://") + theId;
   }
 }
-
-//=================================================================================================
 
 occ::handle<Image_CompressedPixMap> Image_Texture::ReadCompressedImage(
   const occ::handle<Image_SupportedFormats>& theSupported) const
@@ -92,13 +72,11 @@ occ::handle<Image_CompressedPixMap> Image_Texture::ReadCompressedImage(
   aFilePathLower.LowerCase();
   if (!aFilePathLower.EndsWith(".dds"))
   {
-    // do not waste time on file system access in case of wrong file extension
+
     return occ::handle<Image_CompressedPixMap>();
   }
   return Image_DDSParser::Load(theSupported, myImagePath, 0);
 }
-
-//=================================================================================================
 
 occ::handle<Image_PixMap> Image_Texture::ReadImage(const occ::handle<Image_SupportedFormats>&) const
 {
@@ -123,8 +101,6 @@ occ::handle<Image_PixMap> Image_Texture::ReadImage(const occ::handle<Image_Suppo
   return anImage;
 }
 
-//=================================================================================================
-
 occ::handle<Image_PixMap> Image_Texture::loadImageFile(const TCollection_AsciiString& thePath) const
 {
   occ::handle<Image_AlienPixMap> anImage = new Image_AlienPixMap();
@@ -134,8 +110,6 @@ occ::handle<Image_PixMap> Image_Texture::loadImageFile(const TCollection_AsciiSt
   }
   return anImage;
 }
-
-//=================================================================================================
 
 occ::handle<Image_PixMap> Image_Texture::loadImageBuffer(
   const occ::handle<NCollection_Buffer>& theBuffer,
@@ -158,8 +132,6 @@ occ::handle<Image_PixMap> Image_Texture::loadImageBuffer(
   }
   return anImage;
 }
-
-//=================================================================================================
 
 occ::handle<Image_PixMap> Image_Texture::loadImageOffset(const TCollection_AsciiString& thePath,
                                                          int64_t                        theOffset,
@@ -197,8 +169,6 @@ occ::handle<Image_PixMap> Image_Texture::loadImageOffset(const TCollection_Ascii
   return anImage;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString Image_Texture::MimeType() const
 {
   const TCollection_AsciiString aType = ProbeImageFileFormat();
@@ -220,8 +190,6 @@ TCollection_AsciiString Image_Texture::MimeType() const
   }
   return TCollection_AsciiString();
 }
-
-//=================================================================================================
 
 TCollection_AsciiString Image_Texture::ProbeImageFileFormat() const
 {
@@ -301,8 +269,6 @@ TCollection_AsciiString Image_Texture::ProbeImageFileFormat() const
   return "";
 }
 
-//=================================================================================================
-
 bool Image_Texture::WriteImage(const TCollection_AsciiString& theFile)
 {
   const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
@@ -328,8 +294,6 @@ bool Image_Texture::WriteImage(const TCollection_AsciiString& theFile)
   aFileOut.reset();
   return true;
 }
-
-//=================================================================================================
 
 bool Image_Texture::WriteImage(std::ostream& theStream, const TCollection_AsciiString& theFile)
 {
@@ -395,8 +359,6 @@ bool Image_Texture::WriteImage(std::ostream& theStream, const TCollection_AsciiS
   }
   return true;
 }
-
-//=================================================================================================
 
 void Image_Texture::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

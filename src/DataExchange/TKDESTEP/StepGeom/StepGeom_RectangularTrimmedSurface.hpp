@@ -13,7 +13,6 @@ class StepGeom_RectangularTrimmedSurface : public StepGeom_BoundedSurface
 {
 
 public:
-  //! Returns a RectangularTrimmedSurface
   Standard_EXPORT StepGeom_RectangularTrimmedSurface();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

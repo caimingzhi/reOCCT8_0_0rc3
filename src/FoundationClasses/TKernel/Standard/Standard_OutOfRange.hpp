@@ -4,7 +4,7 @@
 #include <Standard_RangeError.hpp>
 
 #if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
-  // suppress false-positive warnings produced by GCC optimizer
+
   #define Standard_OutOfRange_Always_Raise_if(CONDITION, MESSAGE)                                  \
     _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wstrict-overflow\"") if (    \
       CONDITION) throw Standard_OutOfRange(MESSAGE);                                               \

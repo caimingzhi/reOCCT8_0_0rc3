@@ -93,12 +93,10 @@ static int OCC426(Draw_Interpretor& di, int argc, const char** argv)
   TopoDS_Shape fuse32  = BRepAlgoAPI_Fuse(rs3, rs2).Shape();
   TopoDS_Shape fuse321 = BRepAlgoAPI_Fuse(fuse32, rs1).Shape();
 
-  // unify the faces of the Fuse result
   ShapeUpgrade_UnifySameDomain anUnify(fuse321, true, true, true);
   anUnify.Build();
   const TopoDS_Shape& aFuseUnif = anUnify.Shape();
 
-  // Give the mass calculation of the shape "aFuseUnif"
   GProp_GProps G;
   BRepGProp::VolumeProperties(aFuseUnif, G);
   di << " \n";
@@ -132,7 +130,7 @@ static int OCC426(Draw_Interpretor& di, int argc, const char** argv)
   di << "Adding Edges ..... \n";
   for (int i = 1; i <= edgemap.Extent(); i++)
   {
-    // std::cout << "Adding Edge : " << i << std::endl;
+
     TopoDS_Edge edg = TopoDS::Edge(edgemap.FindKey(i));
     if (!edg.IsNull())
       blend.Add(1, edg);
@@ -141,7 +139,6 @@ static int OCC426(Draw_Interpretor& di, int argc, const char** argv)
   di << " \n";
   blend.Build();
 
-  // DBRep::Set ( argv[1], fuse321 );
   DBRep::Set(argv[1], blend);
   DBRep::Set(argv[2], rs1);
   DBRep::Set(argv[3], rs2);
@@ -155,20 +152,18 @@ static int OCC426(Draw_Interpretor& di, int argc, const char** argv)
 
 #include <Geom_SurfaceOfRevolution.hpp>
 
-//=================================================================================================
-
 static int isPeriodic(Draw_Interpretor& di, int argc, const char** argv)
 {
   try
   {
     OCC_CATCH_SIGNALS
-    // 1. Verify amount of arguments of the command
+
     if (argc < 2)
     {
       di << "isperiodic FAULTY. Use : isperiodic surfaceOfRevolution";
       return 0;
     }
-    // 2. Retrieve surface
+
     occ::handle<Geom_Surface> aSurf = DrawTrSurf::GetSurface(argv[1]);
     if (aSurf.IsNull())
     {
@@ -182,7 +177,7 @@ static int isPeriodic(Draw_Interpretor& di, int argc, const char** argv)
       di << "isperiodic FAULTY. argument of command is not a surface of revolution";
       return 0;
     }
-    // 3. Verify whether entry surface is u-periodic and v-periodic
+
     if (aRevolSurf->IsUPeriodic())
     {
       di << "Surface is u-periodic \n";
@@ -212,8 +207,6 @@ static int isPeriodic(Draw_Interpretor& di, int argc, const char** argv)
 #include <Precision.hpp>
 #include <Extrema_ExtPS.hpp>
 #include <GeomAdaptor_Surface.hpp>
-
-//=================================================================================================
 
 static int OCC486(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -255,12 +248,12 @@ static int OCC486(Draw_Interpretor& di, int argc, const char** argv)
 
     if (nPSurf > 0)
     {
-      // double distMin = myExtPS.Value ( 1 );
+
       double distMin = myExtPS.SquareDistance(1);
       int    indMin  = 1;
       for (int sol = 2; sol <= nPSurf; sol++)
       {
-        // double dist = myExtPS.Value(sol);
+
         double dist = myExtPS.SquareDistance(sol);
         if (distMin > dist)
         {
@@ -303,8 +296,6 @@ static int OCC486(Draw_Interpretor& di, int argc, const char** argv)
 #include <BRepPrimAPI_MakePrism.hpp>
 #include <BRepOffsetAPI_DraftAngle.hpp>
 
-//=================================================================================================
-
 static int OCC712(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 3)
@@ -312,11 +303,7 @@ static int OCC712(Draw_Interpretor& di, int argc, const char** argv)
     di << "Usage : " << argv[0] << " draftAngle slabThick\n";
     return 1;
   }
-  // NOTE: Case:1 - draftAngle = 15, slabThick = 30 --> Fails
-  //       Case:2   draftAngle = 10, slabThick = 30 --> Ok
-  //       Case:3   draftAngle = 10, slabThick = 40 --> Ok
-  //
-  //       --------------------------------------------------
+
   double draftAngle = Draw::Atof(argv[1]);
   double slabThick  = Draw::Atof(argv[2]);
 
@@ -403,10 +390,10 @@ static int OCC712(Draw_Interpretor& di, int argc, const char** argv)
         }
       }
 
-      di << "All Faces added. Building... \n"; // std::cout.flush();
+      di << "All Faces added. Building... \n";
       draftSlab.Build();
-      di << "Build done...\n"; // std::cout.flush();
-      if (!draftSlab.IsDone()) //--------------> STEP:1
+      di << "Build done...\n";
+      if (!draftSlab.IsDone())
       {
         di << " Error in Build \n";
         return 1;
@@ -415,17 +402,13 @@ static int OCC712(Draw_Interpretor& di, int argc, const char** argv)
       DBRep::Set(argv[1], slabShape);
     }
   }
-  catch (Standard_Failure const&) //--------------------> STEP:2
+  catch (Standard_Failure const&)
   {
     di << " Error in Draft Slab \n";
     return 1;
   }
   return 0;
 }
-
-//=======================================================================
-//  performTriangulation
-//=======================================================================
 
 int performTriangulation(const TopoDS_Shape& aShape, Draw_Interpretor& di)
 {
@@ -466,8 +449,6 @@ int performTriangulation(const TopoDS_Shape& aShape, Draw_Interpretor& di)
 #include <BRepPrimAPI_MakeCylinder.hpp>
 #include <BRepPrimAPI_MakeCone.hpp>
 #include <BRepAlgoAPI_Cut.hpp>
-
-//=================================================================================================
 
 static int OCC822_1(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -536,10 +517,6 @@ static int OCC822_1(Draw_Interpretor& di, int argc, const char** argv)
 #include <BRepPrimAPI_MakeBox.hpp>
 #include <BRepPrimAPI_MakeSphere.hpp>
 
-//=======================================================================
-//  OCC822_2
-//=======================================================================
-
 static int OCC822_2(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 4)
@@ -591,10 +568,6 @@ static int OCC822_2(Draw_Interpretor& di, int argc, const char** argv)
 
   return 0;
 }
-
-//=======================================================================
-//  OCC823
-//=======================================================================
 
 static int OCC823(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -650,10 +623,6 @@ static int OCC823(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
-//  OCC824
-//=======================================================================
-
 static int OCC824(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 4)
@@ -708,10 +677,6 @@ static int OCC824(Draw_Interpretor& di, int argc, const char** argv)
 #include <GeomConvert.hpp>
 #include <Geom_BezierSurface.hpp>
 #include <BRepPrimAPI_MakeHalfSpace.hpp>
-
-//=======================================================================
-//  OCC825
-//=======================================================================
 
 static int OCC825(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -803,10 +768,6 @@ static int OCC825(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
-//  OCC826
-//=======================================================================
-
 static int OCC826(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 4)
@@ -872,10 +833,6 @@ static int OCC826(Draw_Interpretor& di, int argc, const char** argv)
 }
 
 #include <BRepPrimAPI_MakeTorus.hpp>
-
-//=======================================================================
-//  OCC827
-//=======================================================================
 
 static int OCC827(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -957,10 +914,6 @@ static int OCC827(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
-//  performBlend
-//=======================================================================
-
 int performBlend(const TopoDS_Shape& aShape, double rad, TopoDS_Shape& bShape, Draw_Interpretor& di)
 {
   int          status = 0;
@@ -1009,10 +962,6 @@ int performBlend(const TopoDS_Shape& aShape, double rad, TopoDS_Shape& bShape, D
 }
 
 #include <GC_MakeSegment.hpp>
-
-//=======================================================================
-//  OCC828
-//=======================================================================
 
 static int OCC828(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1088,15 +1037,6 @@ static int OCC828(Draw_Interpretor& di, int argc, const char** argv)
     }
     if (index < argc)
       DBRep::Set(argv[index++], slab.Shape());
-
-    //       std::cout << "Slab Successfully Created !   Now Blending ..." << std::endl;
-    //       TopoDS_Shape aShape;
-    //       int ret = performBlend(slab.Shape(), radius, aShape);
-    //       if (ret) return 1;
-    //       if (index < argc) DBRep::Set(argv[index++], aShape);
-
-    //       std::cout << "Blending Successfully Done !   Now Triangulating ..." << std::endl;
-    //       performTriangulation(aShape);
   }
   catch (Standard_Failure const&)
   {

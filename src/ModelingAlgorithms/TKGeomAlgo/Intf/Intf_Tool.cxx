@@ -17,8 +17,6 @@
 #include <Precision.hpp>
 #include <Standard_OutOfRange.hpp>
 
-//=================================================================================================
-
 Intf_Tool::Intf_Tool()
     : nbSeg(0)
 {
@@ -29,8 +27,6 @@ Intf_Tool::Intf_Tool()
   memset(zint, 0, sizeof(zint));
   memset(parint, 0, sizeof(parint));
 }
-
-//=================================================================================================
 
 void Intf_Tool::Lin2dBox(const gp_Lin2d& L2d, const Bnd_Box2d& domain, Bnd_Box2d& boxLin)
 {
@@ -82,7 +78,7 @@ void Intf_Tool::Lin2dBox(const gp_Lin2d& L2d, const Bnd_Box2d& domain, Bnd_Box2d
     xToSet = true;
   }
   else
-  { // Parallel to axis  X
+  {
     if (L2d.Location().XY().X() < xmin || xmax < L2d.Location().XY().X())
       return;
     Xmin   = L2d.Location().XY().X();
@@ -119,7 +115,7 @@ void Intf_Tool::Lin2dBox(const gp_Lin2d& L2d, const Bnd_Box2d& domain, Bnd_Box2d
     yToSet = true;
   }
   else
-  { // Parallel to axis  Y
+  {
     if (L2d.Location().XY().Y() < ymin || ymax < L2d.Location().XY().Y())
       return;
     Ymin   = L2d.Location().XY().Y();
@@ -149,8 +145,6 @@ void Intf_Tool::Lin2dBox(const gp_Lin2d& L2d, const Bnd_Box2d& domain, Bnd_Box2d
 
   boxLin.Update(Xmin, Ymin, Xmax, Ymax);
 }
-
-//=================================================================================================
 
 void Intf_Tool::Hypr2dBox(const gp_Hypr2d& theHypr2d, const Bnd_Box2d& domain, Bnd_Box2d& boxHypr2d)
 {
@@ -257,10 +251,6 @@ void Intf_Tool::Hypr2dBox(const gp_Hypr2d& theHypr2d, const Bnd_Box2d& domain, B
           else
             ipmax = (int)(endOnCurve[nbSeg - 1]);
 
-          // int ipmin=Max((int)(beginOnCurve[nbSeg-1]),
-          //		     -10);
-          // int ipmax=Min((int)(endOnCurve[nbSeg-1]),
-          //		     10);
           ipmin = ipmin * 10 + 1;
           ipmax = ipmax * 10 - 1;
           int ip, pas = 1;
@@ -284,8 +274,6 @@ void Intf_Tool::Hypr2dBox(const gp_Hypr2d& theHypr2d, const Bnd_Box2d& domain, B
     nbSeg           = 1;
   }
 }
-
-//=================================================================================================
 
 int Intf_Tool::Inters2d(const gp_Hypr2d& theCurv, const Bnd_Box2d& Domain)
 {
@@ -388,8 +376,6 @@ int Intf_Tool::Inters2d(const gp_Hypr2d& theCurv, const Bnd_Box2d& Domain)
   }
   return nbpi;
 }
-
-//=================================================================================================
 
 void Intf_Tool::Parab2dBox(const gp_Parab2d& theParab2d,
                            const Bnd_Box2d&  domain,
@@ -498,10 +484,6 @@ void Intf_Tool::Parab2dBox(const gp_Parab2d& theParab2d,
           else
             ipmax = (int)(endOnCurve[nbSeg - 1]);
 
-          // int ipmin=Max((int)(beginOnCurve[nbSeg-1]),
-          //		     -10);
-          // int ipmax=Min((int)(endOnCurve[nbSeg-1]),
-          //		     10);
           ipmin = ipmin * 10 + 1;
           ipmax = ipmax * 10 - 1;
           int ip, pas = 1;
@@ -525,8 +507,6 @@ void Intf_Tool::Parab2dBox(const gp_Parab2d& theParab2d,
     nbSeg           = 1;
   }
 }
-
-//=================================================================================================
 
 int Intf_Tool::Inters2d(const gp_Parab2d& theCurv, const Bnd_Box2d& Domain)
 {
@@ -630,8 +610,6 @@ int Intf_Tool::Inters2d(const gp_Parab2d& theCurv, const Bnd_Box2d& Domain)
   return nbpi;
 }
 
-//=================================================================================================
-
 void Intf_Tool::LinBox(const gp_Lin& L, const Bnd_Box& domain, Bnd_Box& boxLin)
 {
   nbSeg = 0;
@@ -682,7 +660,7 @@ void Intf_Tool::LinBox(const gp_Lin& L, const Bnd_Box& domain, Bnd_Box& boxLin)
     xToSet = true;
   }
   else
-  { // Perpendiculaire a l axe  X
+  {
     if (L.Location().XYZ().X() < xmin || xmax < L.Location().XYZ().X())
       return;
     Xmin   = L.Location().XYZ().X();
@@ -719,7 +697,7 @@ void Intf_Tool::LinBox(const gp_Lin& L, const Bnd_Box& domain, Bnd_Box& boxLin)
     yToSet = true;
   }
   else
-  { // Perpendiculaire a l axe  Y
+  {
     if (L.Location().XYZ().Y() < ymin || ymax < L.Location().XYZ().Y())
       return;
     Ymin   = L.Location().XYZ().Y();
@@ -756,7 +734,7 @@ void Intf_Tool::LinBox(const gp_Lin& L, const Bnd_Box& domain, Bnd_Box& boxLin)
     zToSet = true;
   }
   else
-  { // Perpendicular to axis Z
+  {
     if (L.Location().XYZ().Z() < zmin || zmax < L.Location().XYZ().Z())
       return;
     Zmin   = L.Location().XYZ().Z();
@@ -795,8 +773,6 @@ void Intf_Tool::LinBox(const gp_Lin& L, const Bnd_Box& domain, Bnd_Box& boxLin)
   boxLin.Update(Xmin, Ymin, Zmin, Xmax, Ymax, Zmax);
 }
 
-//=================================================================================================
-
 void Intf_Tool::HyprBox(const gp_Hypr& theHypr, const Bnd_Box& domain, Bnd_Box& boxHypr)
 {
   nbSeg = 0;
@@ -806,8 +782,7 @@ void Intf_Tool::HyprBox(const gp_Hypr& theHypr, const Bnd_Box& domain, Bnd_Box& 
   {
     boxHypr.SetWhole();
     nbSeg = 1;
-    // beginOnCurve[0]=-Precision::Infinite();
-    // endOnCurve[0]=Precision::Infinite();
+
     beginOnCurve[0] = -100.;
     endOnCurve[0]   = 100.;
     return;
@@ -816,17 +791,17 @@ void Intf_Tool::HyprBox(const gp_Hypr& theHypr, const Bnd_Box& domain, Bnd_Box& 
   {
     return;
   }
-  //
+
   int nbPi;
-  //
+
   nbPi = Inters3d(theHypr, domain);
   if (nbPi > 0)
   {
     int    npi;
     double Xmin, Ymin, Zmin, Xmax, Ymax, Zmax;
-    //
+
     domain.Get(Xmin, Ymin, Zmin, Xmax, Ymax, Zmax);
-    //
+
     for (npi = 0; npi < nbPi; npi++)
     {
       Xmin = std::min(Xmin, xint[npi]);
@@ -837,7 +812,7 @@ void Intf_Tool::HyprBox(const gp_Hypr& theHypr, const Bnd_Box& domain, Bnd_Box& 
       Zmax = std::max(Zmax, yint[npi]);
     }
     boxHypr.Update(Xmin, Ymin, Zmin, Xmax, Ymax, Zmax);
-    //
+
     gp_Pnt Pn;
     gp_Vec Tan;
     double sinan = 0;
@@ -873,27 +848,25 @@ void Intf_Tool::HyprBox(const gp_Hypr& theHypr, const Bnd_Box& domain, Bnd_Box& 
         {
           out                 = false;
           beginOnCurve[nbSeg] = parint[npi];
-          //// modified by jgv, 10.11.2009 /////
+
           endOnCurve[nbSeg] = 10.;
-          //////////////////////////////////////
+
           nbSeg++;
         }
         else
         {
           if (out)
           {
-            // modified by NIZNHY-PKV Fri Jul 11 13:59:10 2008f
+
             beginOnCurve[nbSeg] = -10.;
-            // beginOnCurve[nbSeg]=-Precision::Infinite();
-            // modified by NIZNHY-PKV Fri Jul 11 13:59:13 2008t
+
             nbSeg++;
           }
           endOnCurve[nbSeg - 1] = parint[npi];
           out                   = true;
-          //
-          // modified by NIZNHY-PKV Fri Jul 11 13:54:54 2008f
+
           double ipmin, ipmax, ip, pas;
-          //
+
           ipmin = -10.;
           if (beginOnCurve[nbSeg - 1] > ipmin)
           {
@@ -906,7 +879,7 @@ void Intf_Tool::HyprBox(const gp_Hypr& theHypr, const Bnd_Box& domain, Bnd_Box& 
           }
           ipmin = ipmin * 10. + 1.;
           ipmax = ipmax * 10. - 1.;
-          //
+
           pas = 1.;
           for (ip = ipmin; ip <= ipmax; ip += pas)
           {
@@ -917,41 +890,19 @@ void Intf_Tool::HyprBox(const gp_Hypr& theHypr, const Bnd_Box& domain, Bnd_Box& 
               pas = 1.;
             }
           }
-          /*
-          int ipmin=Max((int)(beginOnCurve[nbSeg-1]), -10);
-          int ipmax=Min((int)(endOnCurve[nbSeg-1]),    10);
-
-          ipmin=ipmin*10+1;
-          ipmax=ipmax*10-1;
-          int ip, pas=1;
-          for (ip=ipmin; ip<=ipmax; ip+=pas) {
-            boxHypr.Add(ElCLib::Value(double(ip)/10., theHypr));
-
-            if (std::abs(ip)<=10) {
-              pas=1;
-            }
-            else {
-              pas=10;
-            }
-          }
-          */
-          // modified by NIZNHY-PKV Fri Jul 11 13:55:04 2008t
         }
       }
     }
-  } // if (nbPi>0) {
+  }
   else if (!domain.IsOut(ElCLib::Value(0., theHypr)))
   {
     boxHypr = domain;
-    // beginOnCurve[0]=-Precision::Infinite();
-    // endOnCurve[0]=Precision::Infinite();
+
     beginOnCurve[0] = -100.;
     endOnCurve[0]   = 100.;
     nbSeg           = 1;
   }
 }
-
-//=================================================================================================
 
 int Intf_Tool::Inters3d(const gp_Hypr& theCurv, const Bnd_Box& Domain)
 {
@@ -1101,8 +1052,6 @@ int Intf_Tool::Inters3d(const gp_Hypr& theCurv, const Bnd_Box& Domain)
 
   int aNbDiffPoints = nbpi;
 
-  // Sort parint and check if parint contains several
-  // matched values. If that is true they will be deleted.
   for (int i = nbpi - 1; i > 0; i--)
   {
     for (int j = 0; j < i; j++)
@@ -1133,8 +1082,6 @@ int Intf_Tool::Inters3d(const gp_Hypr& theCurv, const Bnd_Box& Domain)
 
   return aNbDiffPoints;
 }
-
-//=================================================================================================
 
 int Intf_Tool::Inters3d(const gp_Parab& theCurv, const Bnd_Box& Domain)
 {
@@ -1284,8 +1231,6 @@ int Intf_Tool::Inters3d(const gp_Parab& theCurv, const Bnd_Box& Domain)
 
   int aNbDiffPoints = nbpi;
 
-  // Sort parint and check if parint contains several
-  // matched values. If that is true they will be deleted.
   for (int i = nbpi - 1; i > 0; i--)
   {
     for (int j = 0; j < i; j++)
@@ -1316,8 +1261,6 @@ int Intf_Tool::Inters3d(const gp_Parab& theCurv, const Bnd_Box& Domain)
 
   return aNbDiffPoints;
 }
-
-//=================================================================================================
 
 void Intf_Tool::ParabBox(const gp_Parab& theParab, const Bnd_Box& domain, Bnd_Box& boxParab)
 {
@@ -1438,22 +1381,16 @@ void Intf_Tool::ParabBox(const gp_Parab& theParab, const Bnd_Box& domain, Bnd_Bo
   }
 }
 
-//=================================================================================================
-
 int Intf_Tool::NbSegments() const
 {
   return nbSeg;
 }
-
-//=================================================================================================
 
 double Intf_Tool::BeginParam(const int SegmentNum) const
 {
   Standard_OutOfRange_Raise_if(SegmentNum < 1 || SegmentNum > nbSeg, "Intf_Tool::BeginParam");
   return beginOnCurve[SegmentNum - 1];
 }
-
-//=================================================================================================
 
 double Intf_Tool::EndParam(const int SegmentNum) const
 {

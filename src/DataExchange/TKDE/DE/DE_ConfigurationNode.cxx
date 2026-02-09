@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DE_ConfigurationNode.hpp>
 
@@ -24,14 +13,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DE_ConfigurationNode, Standard_Transient)
 
-//=================================================================================================
-
 DE_ConfigurationNode::DE_ConfigurationNode()
     : myIsEnabled(true)
 {
 }
-
-//=================================================================================================
 
 DE_ConfigurationNode::DE_ConfigurationNode(
   const occ::handle<DE_ConfigurationNode>& theConfigurationNode)
@@ -40,16 +25,12 @@ DE_ConfigurationNode::DE_ConfigurationNode(
   myIsEnabled      = theConfigurationNode->IsEnabled();
 }
 
-//=================================================================================================
-
 bool DE_ConfigurationNode::Load(const TCollection_AsciiString& theResourcePath)
 {
   occ::handle<DE_ConfigurationContext> aResource = new DE_ConfigurationContext();
   aResource->LoadFile(theResourcePath);
   return Load(aResource);
 }
-
-//=================================================================================================
 
 bool DE_ConfigurationNode::Save(const TCollection_AsciiString& theResourcePath) const
 {
@@ -79,8 +60,6 @@ bool DE_ConfigurationNode::Save(const TCollection_AsciiString& theResourcePath) 
   return true;
 }
 
-//=================================================================================================
-
 bool DE_ConfigurationNode::UpdateLoad(const bool theToImport, const bool theToKeep)
 {
   (void)theToImport;
@@ -88,28 +67,20 @@ bool DE_ConfigurationNode::UpdateLoad(const bool theToImport, const bool theToKe
   return true;
 }
 
-//=================================================================================================
-
 bool DE_ConfigurationNode::IsImportSupported() const
 {
   return false;
 }
-
-//=================================================================================================
 
 bool DE_ConfigurationNode::IsExportSupported() const
 {
   return false;
 }
 
-//=================================================================================================
-
 bool DE_ConfigurationNode::IsStreamSupported() const
 {
   return false;
 }
-
-//=================================================================================================
 
 bool DE_ConfigurationNode::CheckExtension(const TCollection_AsciiString& theExtension) const
 {
@@ -134,22 +105,16 @@ bool DE_ConfigurationNode::CheckExtension(const TCollection_AsciiString& theExte
   return false;
 }
 
-//=================================================================================================
-
 bool DE_ConfigurationNode::CheckContent(const occ::handle<NCollection_Buffer>& theBuffer) const
 {
   (void)theBuffer;
   return false;
 }
 
-//=================================================================================================
-
 void DE_ConfigurationNode::Register(const occ::handle<DE_Wrapper>& theWrapper) const
 {
   theWrapper->Bind(this);
 }
-
-//=================================================================================================
 
 void DE_ConfigurationNode::UnRegister(const occ::handle<DE_Wrapper>& theWrapper) const
 {

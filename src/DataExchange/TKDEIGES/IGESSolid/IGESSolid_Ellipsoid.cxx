@@ -14,9 +14,9 @@ void IGESSolid_Ellipsoid::Init(const gp_XYZ& aSize,
                                const gp_XYZ& anZAxis)
 {
   theSize   = aSize;
-  theCenter = aCenter; // default (0,0,0)
-  theXAxis  = anXAxis; // default (1,0,0)
-  theZAxis  = anZAxis; // default (0,0,1)
+  theCenter = aCenter;
+  theXAxis  = anXAxis;
+  theZAxis  = anZAxis;
   InitTypeAndForm(168, 0);
 }
 
@@ -78,7 +78,7 @@ gp_Dir IGESSolid_Ellipsoid::TransformedXAxis() const
 
 gp_Dir IGESSolid_Ellipsoid::YAxis() const
 {
-  return gp_Dir(theXAxis ^ theZAxis); // ^ overloaded
+  return gp_Dir(theXAxis ^ theZAxis);
 }
 
 gp_Dir IGESSolid_Ellipsoid::TransformedYAxis() const

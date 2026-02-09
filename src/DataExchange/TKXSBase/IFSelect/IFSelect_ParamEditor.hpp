@@ -15,30 +15,15 @@ class TCollection_HAsciiString;
 class Standard_Transient;
 class Interface_InterfaceModel;
 
-//! A ParamEditor gives access for edition to a list of TypedValue
-//! (i.e. of Static too)
-//! Its definition is made of the TypedValue to edit themselves,
-//! and can add some constants, which can then be displayed but
-//! not changed (for instance, system name, processor version ...)
-//!
-//! I.E. it gives a way of editing or at least displaying
-//! parameters as global
 class IFSelect_ParamEditor : public IFSelect_Editor
 {
 
 public:
-  //! Creates a ParamEditor, empty, with a maximum count of params
-  //! (default is 100)
-  //! And a label, by default it will be "Param Editor"
   Standard_EXPORT IFSelect_ParamEditor(const int nbmax = 100, const char* label = "");
 
-  //! Adds a TypedValue
-  //! By default, its short name equates its complete name, it can be made explicit
   Standard_EXPORT void AddValue(const occ::handle<Interface_TypedValue>& val,
                                 const char*                              shortname = "");
 
-  //! Adds a Constant Text, it will be Read Only
-  //! By default, its long name equates its shortname
   Standard_EXPORT void AddConstantText(const char* val,
                                        const char* shortname,
                                        const char* completename = "");
@@ -59,9 +44,6 @@ public:
                              const occ::handle<Standard_Transient>&       ent,
                              const occ::handle<Interface_InterfaceModel>& model) const override;
 
-  //! Returns a ParamEditor to work on the Static Parameters of
-  //! which names are listed in <list>
-  //! Null Handle if <list> is null or empty
   Standard_EXPORT static occ::handle<IFSelect_ParamEditor> StaticEditor(
     const occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>>& list,
     const char*                                                                      label = "");

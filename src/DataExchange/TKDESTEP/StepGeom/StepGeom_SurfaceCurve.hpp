@@ -15,7 +15,6 @@ class StepGeom_SurfaceCurve : public StepGeom_Curve
 {
 
 public:
-  //! Returns a SurfaceCurve
   Standard_EXPORT StepGeom_SurfaceCurve();
 
   Standard_EXPORT void Init(

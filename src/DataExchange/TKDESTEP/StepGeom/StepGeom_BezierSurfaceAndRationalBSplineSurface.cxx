@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_Type.hpp>
 #include <StepGeom_BezierSurface.hpp>
@@ -34,10 +23,10 @@ void StepGeom_BezierSurfaceAndRationalBSplineSurface::Init(
   const occ::handle<StepGeom_BezierSurface>&                                    aBezierSurface,
   const occ::handle<StepGeom_RationalBSplineSurface>& aRationalBSplineSurface)
 {
-  // --- classe own fields ---
+
   bezierSurface          = aBezierSurface;
   rationalBSplineSurface = aRationalBSplineSurface;
-  // --- classe inherited fields ---
+
   StepGeom_BSplineSurface::Init(aName,
                                 aUDegree,
                                 aVDegree,
@@ -59,7 +48,6 @@ void StepGeom_BezierSurfaceAndRationalBSplineSurface::Init(
   const StepData_Logical                                                        aSelfIntersect,
   const occ::handle<NCollection_HArray2<double>>&                               aWeightsData)
 {
-  // --- classe inherited fields ---
 
   StepGeom_BSplineSurface::Init(aName,
                                 aUDegree,
@@ -70,8 +58,6 @@ void StepGeom_BezierSurfaceAndRationalBSplineSurface::Init(
                                 aVClosed,
                                 aSelfIntersect);
 
-  // --- ANDOR component fields ---
-
   bezierSurface = new StepGeom_BezierSurface();
   bezierSurface->Init(aName,
                       aUDegree,
@@ -81,8 +67,6 @@ void StepGeom_BezierSurfaceAndRationalBSplineSurface::Init(
                       aUClosed,
                       aVClosed,
                       aSelfIntersect);
-
-  // --- ANDOR component fields ---
 
   rationalBSplineSurface = new StepGeom_RationalBSplineSurface();
   rationalBSplineSurface->Init(aName,
@@ -119,10 +103,6 @@ occ::handle<StepGeom_RationalBSplineSurface> StepGeom_BezierSurfaceAndRationalBS
 {
   return rationalBSplineSurface;
 }
-
-//--- Specific Methods for AND classe field access ---
-
-//--- Specific Methods for AND classe field access ---
 
 void StepGeom_BezierSurfaceAndRationalBSplineSurface::SetWeightsData(
   const occ::handle<NCollection_HArray2<double>>& aWeightsData)

@@ -31,11 +31,6 @@ static bool IsCaseAnalyticallyComputable(const GeomAbs_CurveType& theType,
 
 static gp_Pnt GetValue(const double U, const occ::handle<Adaptor3d_Curve>& C);
 
-//=======================================================================
-// function : Project
-// purpose  : Returns the projection of a point <Point> on a plane
-//           <ThePlane>  along a direction <TheDir>.
-//=======================================================================
 static gp_Pnt ProjectPnt(const gp_Ax2& ThePlane, const gp_Dir& TheDir, const gp_Pnt& Point)
 {
   gp_Vec PO(Point, ThePlane.Location());
@@ -45,8 +40,6 @@ static gp_Pnt ProjectPnt(const gp_Ax2& ThePlane, const gp_Dir& TheDir, const gp_
   P.SetXYZ(Point.XYZ() + Alpha * TheDir.XYZ());
   return P;
 }
-
-//=================================================================================================
 
 static bool IsOriginalPnt(const gp_Pnt& P, const Extrema_POnSurf* Points, const int NbPoints)
 {
@@ -59,8 +52,6 @@ static bool IsOriginalPnt(const gp_Pnt& P, const Extrema_POnSurf* Points, const 
   }
   return true;
 }
-
-//=================================================================================================
 
 void Extrema_ExtPExtS::MakePreciser(double&       U,
                                     const gp_Pnt& P,
@@ -120,8 +111,6 @@ void Extrema_ExtPExtS::MakePreciser(double&       U,
   }
 }
 
-//=============================================================================
-
 Extrema_ExtPExtS::Extrema_ExtPExtS()
     : myuinf(0.0),
       myusup(0.0),
@@ -138,8 +127,6 @@ Extrema_ExtPExtS::Extrema_ExtPExtS()
     mySqDist[anIdx] = RealLast();
   }
 }
-
-//=============================================================================
 
 Extrema_ExtPExtS::Extrema_ExtPExtS(const gp_Pnt&                                            theP,
                                    const occ::handle<GeomAdaptor_SurfaceOfLinearExtrusion>& theS,
@@ -168,8 +155,6 @@ Extrema_ExtPExtS::Extrema_ExtPExtS(const gp_Pnt&                                
 
   Perform(theP);
 }
-
-//=============================================================================
 
 Extrema_ExtPExtS::Extrema_ExtPExtS(const gp_Pnt&                                            theP,
                                    const occ::handle<GeomAdaptor_SurfaceOfLinearExtrusion>& theS,
@@ -201,8 +186,6 @@ Extrema_ExtPExtS::Extrema_ExtPExtS(const gp_Pnt&                                
   Perform(theP);
 }
 
-//=================================================================================================
-
 void Extrema_ExtPExtS::Initialize(const occ::handle<GeomAdaptor_SurfaceOfLinearExtrusion>& theS,
                                   const double                                             theUinf,
                                   const double                                             theUsup,
@@ -226,11 +209,11 @@ void Extrema_ExtPExtS::Initialize(const occ::handle<GeomAdaptor_SurfaceOfLinearE
   occ::handle<Adaptor3d_Curve> anACurve = theS->BasisCurve();
 
   myF.Initialize(*theS);
-  myC                        = anACurve;
-  myS                        = theS;
-  myPosition                 = GetPosition(myC);
-  myDirection                = theS->Direction();
-  myIsAnalyticallyComputable = // false;
+  myC         = anACurve;
+  myS         = theS;
+  myPosition  = GetPosition(myC);
+  myDirection = theS->Direction();
+  myIsAnalyticallyComputable =
     IsCaseAnalyticallyComputable(myC->GetType(), myPosition, myDirection);
 
   if (!myIsAnalyticallyComputable)
@@ -239,13 +222,10 @@ void Extrema_ExtPExtS::Initialize(const occ::handle<GeomAdaptor_SurfaceOfLinearE
   }
 }
 
-//=================================================================================================
-
 void Extrema_ExtPExtS::Perform(const gp_Pnt& P)
 {
-  const int NbExtMax = 4; // dimension of arrays
-                          // myPoint[] and mySqDist[]
-                          // For "analytical" case
+  const int NbExtMax = 4;
+
   myDone  = false;
   myNbExt = 0;
 
@@ -253,9 +233,9 @@ void Extrema_ExtPExtS::Perform(const gp_Pnt& P)
   {
     myExtPS.Perform(P);
     myDone = myExtPS.IsDone();
-    //  modified by NIZHNY-EAP Wed Nov 17 12:59:08 1999 ___BEGIN___
+
     myNbExt = myExtPS.NbExt();
-    //  modified by NIZHNY-EAP Wed Nov 17 12:59:09 1999 ___END___
+
     return;
   }
 
@@ -281,22 +261,20 @@ void Extrema_ExtPExtS::Perform(const gp_Pnt& P)
   {
     Extrema_POnCurv POC = anExt.Point(i);
     U                   = POC.Parameter();
-    //// modified by jgv, 23.12.2008 for OCC17194 ////
+
     if (myC->IsPeriodic())
     {
       double U2 = U;
       ElCLib::AdjustPeriodic(myuinf, myuinf + 2. * M_PI, Precision::PConfusion(), U, U2);
     }
-    //////////////////////////////////////////////////
+
     gp_Pnt E = POC.Value();
     Pe       = ProjectPnt(anOrtogSection, myDirection, E);
 
     if (isSimpleCase)
     {
       V = gp_Vec(E, Pe) * gp_Vec(myDirection);
-      // modified by NIZHNY-MKK  Thu Sep 18 14:46:14 2003.BEGIN
-      //       myPoint[++myNbExt] = Extrema_POnSurf(U, V, Pe);
-      //       myValue[myNbExt] = anExt.Value(i);
+
       myPoint[myNbExt]  = Extrema_POnSurf(U, V, Pe);
       mySqDist[myNbExt] = anExt.SquareDistance(i);
       myNbExt++;
@@ -304,12 +282,11 @@ void Extrema_ExtPExtS::Perform(const gp_Pnt& P)
       {
         break;
       }
-      // modified by NIZHNY-MKK  Thu Sep 18 14:46:18 2003.END
     }
     else
     {
       myF.SetPoint(P);
-      isMin = anExt.IsMin(i); //( Pp.Distance(GetValue(U+10,myC)) > anExt.Value(i) );
+      isMin = anExt.IsMin(i);
 
       MakePreciser(U, P, isMin, anOrtogSection);
       E  = GetValue(U, myC);
@@ -318,15 +295,13 @@ void Extrema_ExtPExtS::Perform(const gp_Pnt& P)
       UV(2) = V;
       math_FunctionSetRoot aFSR(myF, Tol);
       aFSR.Perform(myF, UV, UVinf, UVsup);
-      //      for (int k=1 ; k <= myF.NbExt();
+
       int k;
       for (k = 1; k <= myF.NbExt(); k++)
       {
         if (IsOriginalPnt(myF.Point(k).Value(), myPoint, myNbExt))
         {
-          // modified by NIZHNY-MKK  Thu Sep 18 14:46:41 2003.BEGIN
-          // 	  myPoint[++myNbExt] = myF.Point(k);
-          // 	  myValue[myNbExt] = myF.Value(k);
+
           myPoint[myNbExt]  = myF.Point(k);
           mySqDist[myNbExt] = myF.SquareDistance(k);
           myNbExt++;
@@ -334,15 +309,14 @@ void Extrema_ExtPExtS::Perform(const gp_Pnt& P)
           {
             break;
           }
-          // modified by NIZHNY-MKK  Thu Sep 18 14:46:43 2003.END
         }
       }
       if (myNbExt == NbExtMax)
       {
         break;
       }
-      // try symmetric point
-      myF.SetPoint(P); // To clear previous solutions
+
+      myF.SetPoint(P);
       U *= -1;
       MakePreciser(U, P, isMin, anOrtogSection);
       E  = GetValue(U, myC);
@@ -356,8 +330,7 @@ void Extrema_ExtPExtS::Perform(const gp_Pnt& P)
       {
         if (myF.SquareDistance(k) > Precision::Confusion() * Precision::Confusion())
         {
-          // Additional checking solution: FSR sometimes is wrong
-          // when starting point is far from solution.
+
           double                 dist = std::sqrt(myF.SquareDistance(k));
           math_Vector            Vals(1, 2);
           const Extrema_POnSurf& PonS = myF.Point(k);
@@ -389,9 +362,7 @@ void Extrema_ExtPExtS::Perform(const gp_Pnt& P)
         }
         if (IsOriginalPnt(myF.Point(k).Value(), myPoint, myNbExt))
         {
-          // modified by NIZHNY-MKK  Thu Sep 18 14:46:59 2003.BEGIN
-          // 	  myPoint[++myNbExt] = myF.Point(k);
-          // 	  myValue[myNbExt] = myF.Value(k);
+
           myPoint[myNbExt]  = myF.Point(k);
           mySqDist[myNbExt] = myF.SquareDistance(k);
           myNbExt++;
@@ -399,7 +370,6 @@ void Extrema_ExtPExtS::Perform(const gp_Pnt& P)
           {
             break;
           }
-          // modified by NIZHNY-MKK  Thu Sep 18 14:47:04 2003.END
         }
       }
       if (myNbExt == NbExtMax)
@@ -412,14 +382,10 @@ void Extrema_ExtPExtS::Perform(const gp_Pnt& P)
   return;
 }
 
-//=============================================================================
-
 bool Extrema_ExtPExtS::IsDone() const
 {
   return myDone;
 }
-
-//=============================================================================
 
 int Extrema_ExtPExtS::NbExt() const
 {
@@ -433,8 +399,6 @@ int Extrema_ExtPExtS::NbExt() const
     return myExtPS.NbExt();
 }
 
-//=============================================================================
-
 double Extrema_ExtPExtS::SquareDistance(const int N) const
 {
   if ((N < 1) || (N > NbExt()))
@@ -442,15 +406,12 @@ double Extrema_ExtPExtS::SquareDistance(const int N) const
     throw Standard_OutOfRange();
   }
   if (myIsAnalyticallyComputable)
-    // modified by NIZHNY-MKK  Thu Sep 18 14:48:39 2003.BEGIN
-    //     return myValue[N];
+
     return mySqDist[N - 1];
-  // modified by NIZHNY-MKK  Thu Sep 18 14:48:42 2003.END
+
   else
     return myExtPS.SquareDistance(N);
 }
-
-//=============================================================================
 
 const Extrema_POnSurf& Extrema_ExtPExtS::Point(const int N) const
 {
@@ -460,16 +421,13 @@ const Extrema_POnSurf& Extrema_ExtPExtS::Point(const int N) const
   }
   if (myIsAnalyticallyComputable)
   {
-    // modified by NIZHNY-MKK  Thu Sep 18 14:47:40 2003.BEGIN
-    //     return myPoint[N];
+
     return myPoint[N - 1];
   }
-  // modified by NIZHNY-MKK  Thu Sep 18 14:47:43 2003.END
+
   else
     return myExtPS.Point(N);
 }
-
-//=============================================================================
 
 static gp_Ax2 GetPosition(const occ::handle<Adaptor3d_Curve>& C)
 {
@@ -479,11 +437,9 @@ static gp_Ax2 GetPosition(const occ::handle<Adaptor3d_Curve>& C)
     {
       gp_Lin L   = C->Line();
       gp_Pln Pln = gp_Pln(L.Location(), L.Direction());
-      //: abv 30.05.02: OCC  - use constructor instead of Set...s() to avoid exception
+
       gp_Ax2 Pos(Pln.Location(), Pln.Position().Direction(), Pln.Position().XDirection());
-      //     Pos.SetAxis(Pln.XAxis());
-      //     Pos.SetXDirection(Pln.YAxis().Direction());
-      //     Pos.SetYDirection(Pln.Position().Direction());
+
       return Pos;
     }
     case GeomAbs_Circle:
@@ -498,8 +454,6 @@ static gp_Ax2 GetPosition(const occ::handle<Adaptor3d_Curve>& C)
       return gp_Ax2();
   }
 }
-
-//=============================================================================
 
 static void PerformExtPElC(Extrema_ExtPElC&                    E,
                            const gp_Pnt&                       P,
@@ -528,13 +482,11 @@ static void PerformExtPElC(Extrema_ExtPElC&                    E,
   }
 }
 
-//=================================================================================================
-
 static bool IsCaseAnalyticallyComputable(const GeomAbs_CurveType& theType,
                                          const gp_Ax2&            theCurvePos,
                                          const gp_Dir&            theSurfaceDirection)
 {
-  // check type
+
   switch (theType)
   {
     case GeomAbs_Line:
@@ -546,11 +498,9 @@ static bool IsCaseAnalyticallyComputable(const GeomAbs_CurveType& theType,
     default:
       return false;
   }
-  // check if it is a plane
+
   return std::abs(theCurvePos.Direction() * theSurfaceDirection) > gp::Resolution();
 }
-
-//=================================================================================================
 
 static gp_Pnt GetValue(const double U, const occ::handle<Adaptor3d_Curve>& C)
 {
@@ -570,27 +520,3 @@ static gp_Pnt GetValue(const double U, const occ::handle<Adaptor3d_Curve>& C)
       return gp_Pnt();
   }
 }
-
-//=================================================================================================
-
-// #ifdef OCCT_DEBUG
-// static double GetU(const gp_Vec& vec,
-//			  const gp_Pnt& P,
-//			  const occ::handle<Adaptor3d_Curve>& C)
-//{
-//  switch (C->GetType()) {
-//  case GeomAbs_Line:
-//    return ElCLib::Parameter(C->Line().Translated(vec), P);
-//  case GeomAbs_Circle:
-//    return ElCLib::Parameter(C->Circle().Translated(vec), P);
-//  case GeomAbs_Ellipse:
-//    return ElCLib::Parameter(C->Ellipse().Translated(vec), P);
-//  case GeomAbs_Hyperbola:
-//    return ElCLib::Parameter(C->Hyperbola().Translated(vec), P);
-//  case GeomAbs_Parabola:
-//    return ElCLib::Parameter(C->Parabola().Translated(vec), P);
-//  default:
-//    return 0;
-//  }
-//}
-// #endif

@@ -11,7 +11,7 @@ IMPLEMENT_STANDARD_RTTIEXT(OpenGl_FrameBuffer, OpenGl_NamedResource)
 
 namespace
 {
-  //! Checks whether two format arrays are equal or not.
+
   static bool operator==(const NCollection_Vector<int>& theFmt1,
                          const NCollection_Vector<int>& theFmt2)
   {
@@ -27,29 +27,18 @@ namespace
     return true;
   }
 
-  //! Return TRUE if GL_DEPTH_STENCIL_ATTACHMENT can be used.
   static bool hasDepthStencilAttach(const occ::handle<OpenGl_Context>& theCtx)
   {
 #ifdef __EMSCRIPTEN__
-    // supported since WebGL 2.0,
-    // while WebGL 1.0 + GL_WEBGL_depth_texture needs GL_DEPTH_STENCIL_ATTACHMENT
-    // and NOT separate GL_DEPTH_ATTACHMENT+GL_STENCIL_ATTACHMENT calls which is different to OpenGL
-    // ES 2.0 + extension
+
     return theCtx->IsGlGreaterEqual(3, 0) || theCtx->extPDS;
 #else
-    // supported since OpenGL ES 3.0,
-    // while OpenGL ES 2.0 + GL_EXT_packed_depth_stencil needs separate
-    // GL_DEPTH_ATTACHMENT+GL_STENCIL_ATTACHMENT calls
-    //
-    // available on desktop since OpenGL 3.0
-    // or OpenGL 2.0 + GL_ARB_framebuffer_object (GL_EXT_framebuffer_object is unsupported by OCCT)
+
     return theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES
            || theCtx->IsGlGreaterEqual(3, 0);
 #endif
   }
 } // namespace
-
-//=================================================================================================
 
 OpenGl_FrameBuffer::OpenGl_FrameBuffer(const TCollection_AsciiString& theResourceId)
     : OpenGl_NamedResource(theResourceId),
@@ -71,28 +60,20 @@ OpenGl_FrameBuffer::OpenGl_FrameBuffer(const TCollection_AsciiString& theResourc
   myColorTextures.Append(new OpenGl_Texture(theResourceId + ":color"));
 }
 
-//=================================================================================================
-
 OpenGl_FrameBuffer::~OpenGl_FrameBuffer()
 {
   Release(nullptr);
 }
-
-//=================================================================================================
 
 int OpenGl_FrameBuffer::GetSizeX() const
 {
   return !myColorTextures.IsEmpty() ? myColorTextures.First()->SizeX() : 0;
 }
 
-//=================================================================================================
-
 int OpenGl_FrameBuffer::GetSizeY() const
 {
   return !myColorTextures.IsEmpty() ? myColorTextures.First()->SizeY() : 0;
 }
-
-//=================================================================================================
 
 bool OpenGl_FrameBuffer::InitWrapper(
   const occ::handle<OpenGl_Context>&                       theGlContext,
@@ -172,8 +153,6 @@ bool OpenGl_FrameBuffer::InitWrapper(
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
                               const NCollection_Vec2<int>&       theSize,
                               const int                          theColorFormat,
@@ -187,8 +166,6 @@ bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
   }
   return Init(theGlContext, theSize, aColorFormats, theDepthFormat, theNbSamples);
 }
-
-//=================================================================================================
 
 bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
                               const NCollection_Vec2<int>&       theSize,
@@ -222,7 +199,6 @@ bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
     return false;
   }
 
-  // clean up previous state
   Release(theGlContext.operator->());
   if (myColorFormats.IsEmpty() && myDepthFormat == 0)
   {
@@ -234,13 +210,11 @@ bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
   myIsOwnDepth          = false;
   myIsOwnBuffer         = true;
 
-  // setup viewport sizes as is
   myVPSizeX        = theSize.x();
   myVPSizeY        = theSize.y();
   const int aSizeX = theSize.x() > 0 ? theSize.x() : 2;
   const int aSizeY = theSize.y() > 0 ? theSize.y() : 2;
 
-  // Create the textures (will be used as color buffer and depth-stencil buffer)
   if (theNbSamples != 0)
   {
     for (int aColorBufferIdx = 0; aColorBufferIdx < myColorTextures.Length(); ++aColorBufferIdx)
@@ -276,7 +250,6 @@ bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
     }
   }
 
-  // Build FBO and setup it as texture
   theGlContext->arbFBO->glGenFramebuffers(1, &myGlFBufferId);
   theGlContext->arbFBO->glBindFramebuffer(GL_FRAMEBUFFER, myGlFBufferId);
 
@@ -326,8 +299,6 @@ bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
                               const NCollection_Vec2<int>&       theSize,
                               const NCollection_Vector<int>&     theColorFormats,
@@ -362,7 +333,6 @@ bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
     return false;
   }
 
-  // clean up previous state
   Release(theGlContext.operator->());
   if (myColorFormats.IsEmpty() && myDepthFormat == 0)
   {
@@ -379,14 +349,12 @@ bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
   myIsOwnBuffer = true;
   myIsOwnDepth  = true;
 
-  // setup viewport sizes as is
   myVPSizeX              = theSize.x();
   myVPSizeY              = theSize.y();
   const int aSizeX       = theSize.x() > 0 ? theSize.x() : 2;
   const int aSizeY       = theSize.y() > 0 ? theSize.y() : 2;
   bool      hasStencilRB = false;
 
-  // Create the textures (will be used as color buffer and depth-stencil buffer)
   if (theNbSamples != 0)
   {
     for (int aColorBufferIdx = 0; aColorBufferIdx < myColorTextures.Length(); ++aColorBufferIdx)
@@ -428,8 +396,6 @@ bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
       }
     }
 
-    // extensions (GL_OES_packed_depth_stencil, GL_OES_depth_texture) + GL version might be used to
-    // determine supported formats instead of just trying to create such texture
     const OpenGl_TextureFormat aDepthFormat =
       OpenGl_TextureFormat::FindSizedFormat(theGlContext, myDepthFormat);
     if (aDepthFormat.IsValid()
@@ -471,7 +437,6 @@ bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
     }
   }
 
-  // Build FBO and setup it as texture
   theGlContext->arbFBO->glGenFramebuffers(1, &myGlFBufferId);
   theGlContext->arbFBO->glBindFramebuffer(GL_FRAMEBUFFER, myGlFBufferId);
   for (int aColorBufferIdx = 0; aColorBufferIdx < myColorTextures.Length(); ++aColorBufferIdx)
@@ -545,8 +510,6 @@ bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_FrameBuffer::InitLazy(const occ::handle<OpenGl_Context>& theGlContext,
                                   const NCollection_Vec2<int>&       theViewportSize,
                                   const int                          theColorFormat,
@@ -557,8 +520,6 @@ bool OpenGl_FrameBuffer::InitLazy(const occ::handle<OpenGl_Context>& theGlContex
   aColorFormats.Append(theColorFormat);
   return InitLazy(theGlContext, theViewportSize, aColorFormats, theDepthFormat, theNbSamples);
 }
-
-//=================================================================================================
 
 bool OpenGl_FrameBuffer::InitLazy(const occ::handle<OpenGl_Context>& theGlContext,
                                   const NCollection_Vec2<int>&       theViewportSize,
@@ -575,8 +536,6 @@ bool OpenGl_FrameBuffer::InitLazy(const occ::handle<OpenGl_Context>& theGlContex
 
   return Init(theGlContext, theViewportSize, theColorFormats, theDepthFormat, theNbSamples);
 }
-
-//=================================================================================================
 
 bool OpenGl_FrameBuffer::InitWithRB(const occ::handle<OpenGl_Context>& theGlCtx,
                                     const NCollection_Vec2<int>&       theSize,
@@ -596,8 +555,6 @@ bool OpenGl_FrameBuffer::InitWithRB(const occ::handle<OpenGl_Context>& theGlCtx,
                           0,
                           theColorRBufferFromWindow);
 }
-
-//=================================================================================================
 
 bool OpenGl_FrameBuffer::initRenderBuffer(const occ::handle<OpenGl_Context>& theGlCtx,
                                           const NCollection_Vec2<int>&       theSize,
@@ -628,7 +585,6 @@ bool OpenGl_FrameBuffer::initRenderBuffer(const occ::handle<OpenGl_Context>& the
     return false;
   }
 
-  // clean up previous state
   Release(theGlCtx.operator->());
   if (theNbSamples > theGlCtx->MaxMsaaSamples() || theNbSamples < 0)
   {
@@ -646,13 +602,11 @@ bool OpenGl_FrameBuffer::initRenderBuffer(const occ::handle<OpenGl_Context>& the
   myIsOwnBuffer = true;
   myIsOwnDepth  = true;
 
-  // setup viewport sizes as is
   myVPSizeX        = theSize.x();
   myVPSizeY        = theSize.y();
   const int aSizeX = theSize.x() > 0 ? theSize.x() : 2;
   const int aSizeY = theSize.y() > 0 ? theSize.y() : 2;
 
-  // Create the render-buffers
   if (theColorRBufferFromWindow != NO_RENDERBUFFER)
   {
     myGlColorRBufferId = theColorRBufferFromWindow;
@@ -748,7 +702,6 @@ bool OpenGl_FrameBuffer::initRenderBuffer(const occ::handle<OpenGl_Context>& the
     }
   }
 
-  // create FBO
   theGlCtx->arbFBO->glGenFramebuffers(1, &myGlFBufferId);
   theGlCtx->arbFBO->glBindFramebuffer(GL_FRAMEBUFFER, myGlFBufferId);
   if (myGlColorRBufferId != NO_RENDERBUFFER)
@@ -793,8 +746,6 @@ bool OpenGl_FrameBuffer::initRenderBuffer(const occ::handle<OpenGl_Context>& the
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_FrameBuffer::InitWrapper(const occ::handle<OpenGl_Context>& theGlCtx)
 {
   myNbSamples = 0;
@@ -803,7 +754,6 @@ bool OpenGl_FrameBuffer::InitWrapper(const occ::handle<OpenGl_Context>& theGlCtx
     return false;
   }
 
-  // clean up previous state
   Release(theGlCtx.operator->());
 
   GLint anFbo = GLint(NO_FRAMEBUFFER);
@@ -840,7 +790,6 @@ bool OpenGl_FrameBuffer::InitWrapper(const occ::handle<OpenGl_Context>& theGlCtx
   }
   else if (aColorType == GL_TEXTURE)
   {
-    // myColorTextures[0]->InitWrapper() - not implemented, just skip it
   }
   else if (aColorType != GL_NONE)
   {
@@ -862,7 +811,6 @@ bool OpenGl_FrameBuffer::InitWrapper(const occ::handle<OpenGl_Context>& theGlCtx
   }
   else if (aDepthType == GL_TEXTURE)
   {
-    // myDepthStencilTexture->InitWrapper() - not implemented, just skip it
   }
   else if (aDepthType != GL_NONE)
   {
@@ -874,7 +822,6 @@ bool OpenGl_FrameBuffer::InitWrapper(const occ::handle<OpenGl_Context>& theGlCtx
       "OpenGl_FrameBuffer::InitWrapper(), depth attachment of unsupported type has been skipped!");
   }
 
-  // retrieve dimensions
   GLuint aRBuffer = myGlColorRBufferId != NO_RENDERBUFFER ? myGlColorRBufferId : myGlDepthRBufferId;
   if (aRBuffer != NO_RENDERBUFFER)
   {
@@ -895,13 +842,11 @@ bool OpenGl_FrameBuffer::InitWrapper(const occ::handle<OpenGl_Context>& theGlCtx
   return true;
 }
 
-//=================================================================================================
-
 void OpenGl_FrameBuffer::Release(OpenGl_Context* theGlCtx)
 {
   if (isValidFrameBuffer())
   {
-    // application can not handle this case by exception - this is bug in code
+
     Standard_ASSERT_RETURN(
       !myIsOwnBuffer || theGlCtx != nullptr,
       "OpenGl_FrameBuffer destroyed without GL context! Possible GPU memory leakage...",
@@ -943,15 +888,11 @@ void OpenGl_FrameBuffer::Release(OpenGl_Context* theGlCtx)
   myVPSizeY = 0;
 }
 
-//=================================================================================================
-
 void OpenGl_FrameBuffer::SetupViewport(const occ::handle<OpenGl_Context>& theGlCtx)
 {
   const int aViewport[4] = {0, 0, myVPSizeX, myVPSizeY};
   theGlCtx->ResizeViewport(aViewport);
 }
-
-//=================================================================================================
 
 void OpenGl_FrameBuffer::ChangeViewport(const int theVPSizeX, const int theVPSizeY)
 {
@@ -959,15 +900,11 @@ void OpenGl_FrameBuffer::ChangeViewport(const int theVPSizeX, const int theVPSiz
   myVPSizeY = theVPSizeY;
 }
 
-//=================================================================================================
-
 void OpenGl_FrameBuffer::BindBuffer(const occ::handle<OpenGl_Context>& theGlCtx)
 {
   theGlCtx->arbFBO->glBindFramebuffer(GL_FRAMEBUFFER, myGlFBufferId);
   theGlCtx->SetFrameBufferSRGB(true);
 }
-
-//=================================================================================================
 
 void OpenGl_FrameBuffer::BindDrawBuffer(const occ::handle<OpenGl_Context>& theGlCtx)
 {
@@ -975,14 +912,10 @@ void OpenGl_FrameBuffer::BindDrawBuffer(const occ::handle<OpenGl_Context>& theGl
   theGlCtx->SetFrameBufferSRGB(true);
 }
 
-//=================================================================================================
-
 void OpenGl_FrameBuffer::BindReadBuffer(const occ::handle<OpenGl_Context>& theGlCtx)
 {
   theGlCtx->arbFBO->glBindFramebuffer(GL_READ_FRAMEBUFFER, myGlFBufferId);
 }
-
-//=================================================================================================
 
 void OpenGl_FrameBuffer::UnbindBuffer(const occ::handle<OpenGl_Context>& theGlCtx)
 {
@@ -997,8 +930,6 @@ void OpenGl_FrameBuffer::UnbindBuffer(const occ::handle<OpenGl_Context>& theGlCt
     theGlCtx->SetFrameBufferSRGB(false);
   }
 }
-
-//=================================================================================================
 
 inline size_t getAligned(const size_t theNumber, const size_t theAlignment)
 {
@@ -1019,8 +950,6 @@ inline void convertRowFromRgba(T*                     theRgbRow,
     anRgb.b()                     = anRgba.b();
   }
 }
-
-//=================================================================================================
 
 bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGlCtx,
                                     const occ::handle<OpenGl_FrameBuffer>& theFbo,
@@ -1172,7 +1101,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       break;
     case Image_Format_Alpha:
     case Image_Format_AlphaF:
-      return false; // GL_ALPHA is no more supported in core context
+      return false;
     case Image_Format_GrayF_half:
     case Image_Format_RGF_half:
     case Image_Format_UNKNOWN:
@@ -1192,7 +1121,6 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
     return false;
   }
 
-  // bind FBO if used
   if (!theFbo.IsNull() && theFbo->IsValid())
   {
     theFbo->BindBuffer(theGlCtx);
@@ -1205,10 +1133,8 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
     theGlCtx->core11fwd->glReadBuffer(aDrawBufferPrev);
   }
 
-  // setup alignment
-  // clang-format off
-  const GLint anAligment = std::min(GLint(theImage.MaxRowAligmentBytes()), 8); // limit to 8 bytes for OpenGL
-  // clang-format on
+  const GLint anAligment = std::min(GLint(theImage.MaxRowAligmentBytes()), 8);
+
   theGlCtx->core11fwd->glPixelStorei(GL_PACK_ALIGNMENT, anAligment);
   bool isBatchCopy = !theImage.IsTopDown();
 
@@ -1244,8 +1170,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
 
     for (size_t aRow = 0; aRow < theImage.SizeY(); ++aRow)
     {
-      // Image_PixMap rows indexation always starts from the upper corner
-      // while order in memory depends on the flag and processed by ChangeRow() method
+
       theGlCtx->core11fwd->glReadPixels(0,
                                         GLint(theImage.SizeY() - aRow - 1),
                                         GLsizei(theImage.SizeX()),
@@ -1270,11 +1195,10 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
   }
   else if (!isBatchCopy)
   {
-    // copy row by row
+
     for (size_t aRow = 0; aRow < theImage.SizeY(); ++aRow)
     {
-      // Image_PixMap rows indexation always starts from the upper corner
-      // while order in memory depends on the flag and processed by ChangeRow() method
+
       theGlCtx->core11fwd->glReadPixels(0,
                                         GLint(theImage.SizeY() - aRow - 1),
                                         GLsizei(theImage.SizeX()),
@@ -1318,8 +1242,6 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
 
   return !hasErrors;
 }
-
-//=================================================================================================
 
 size_t OpenGl_FrameBuffer::EstimatedDataSize() const
 {

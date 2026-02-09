@@ -20,34 +20,10 @@ class gp_Lin;
 class gp_Circ;
 class TopoDS_Vertex;
 
-// resolve name collisions with X11 headers
 #ifdef Status
   #undef Status
 #endif
 
-//! Contains information necessary for construction of
-//! a 3D fillet or chamfer:
-//!
-//! - guideline composed of edges of the solid, tangents
-//! between them, and borders by faces tangents
-//! between them.
-//!
-//! Tools for construction of the Sp
-//! by propagation from an edge of solid
-//! are provided in the Builder of Fil3d.
-//!
-//! The Spine contains among others the
-//! information about the nature of extremities
-//! of the fillet ( on free border , on section or closed ).
-//!
-//! IMPORTANT NOTE: the guideline represented
-//! in this way is not C2, although the path
-//! claims it. Several palliative workarounds
-//! (see the methods at the end) are planned,
-//! but they are not enough. It is necessary to change
-//! the approach and double the Spine of line C2 with
-//! the known consequences for management of
-//! interactions between KPart Blend in Fil3d.
 class ChFiDS_Spine : public Standard_Transient
 {
 
@@ -56,16 +32,12 @@ public:
 
   Standard_EXPORT ChFiDS_Spine(const double Tol);
 
-  //! store edges composing the guideline
   void SetEdges(const TopoDS_Edge& E);
 
-  //! store offset edges composing the offset guideline
   void SetOffsetEdges(const TopoDS_Edge& E);
 
-  //! store the edge at the first position before all others
   void PutInFirst(const TopoDS_Edge& E);
 
-  //! store the offset edge at the first position before all others
   void PutInFirstOffset(const TopoDS_Edge& E);
 
   int NbEdges() const;
@@ -74,12 +46,8 @@ public:
 
   const TopoDS_Edge& OffsetEdges(const int I) const;
 
-  //! stores if the start of a set of edges starts on a
-  //! section of free border or forms a closed contour
   void SetFirstStatus(const ChFiDS_State S);
 
-  //! stores if the end of a set of edges starts on a
-  //! section of free border or forms a closed contour
   void SetLastStatus(const ChFiDS_State S);
 
   Standard_EXPORT virtual void AppendElSpine(const occ::handle<ChFiDS_ElSpine>& Els);
@@ -102,12 +70,6 @@ public:
 
   Standard_EXPORT void SplitDone(const bool B);
 
-  //! prepare the guideline depending on the edges that
-  //! are elementary arks (take parameters from
-  //! a single curvilinear abscissa); to be able to call
-  //! methods on the geometry (first,last,value,d1,d2)
-  //! it is necessary to start with preparation otherwise an
-  //! exception will be raised
   Standard_EXPORT void Load();
 
   Standard_EXPORT double Resolution(const double R3d) const;
@@ -122,15 +84,10 @@ public:
 
   Standard_EXPORT void SetLastParameter(const double Par);
 
-  //! gives the total length of all arcs before the
-  //! number IndexSp
   Standard_EXPORT double FirstParameter(const int IndexSpine) const;
 
-  //! gives the total length till the ark with number
-  //! IndexSpine (inclus)
   Standard_EXPORT double LastParameter(const int IndexSpine) const;
 
-  //! gives the length of ark with number IndexSp
   Standard_EXPORT double Length(const int IndexSpine) const;
 
   Standard_EXPORT bool IsPeriodic() const;
@@ -158,7 +115,6 @@ public:
 
   Standard_EXPORT void SetCurrent(const int Index);
 
-  //! sets the current curve and returns it
   Standard_EXPORT const BRepAdaptor_Curve& CurrentElementarySpine(const int Index);
 
   int CurrentIndexOfElementarySpine() const;
@@ -169,26 +125,18 @@ public:
 
   Standard_EXPORT gp_Circ Circle() const;
 
-  //! returns if the set of edges starts on a free boundary
-  //! or if the first vertex is a breakpoint or if the set is
-  //! closed
   ChFiDS_State FirstStatus() const;
 
-  //! returns the state at the end of the set
   ChFiDS_State LastStatus() const;
 
   ChFiDS_State Status(const bool IsFirst) const;
 
-  //! returns the type of concavity in the connection
   ChFiDS_TypeOfConcavity GetTypeOfConcavity() const;
 
   void SetStatus(const ChFiDS_State S, const bool IsFirst);
 
-  //! sets the type of concavity in the connection
   void SetTypeOfConcavity(const ChFiDS_TypeOfConcavity theType);
 
-  //! returns if the set of edges starts (or end) on
-  //! Tangency point.
   bool IsTangencyExtremity(const bool IsFirst) const;
 
   void SetTangencyExtremity(const bool IsTangency, const bool IsFirst);
@@ -207,11 +155,8 @@ public:
 
   Standard_EXPORT bool HasLastTgt() const;
 
-  //! set a parameter reference for the approx.
   Standard_EXPORT void SetReference(const double W);
 
-  //! set a parameter reference for the approx, at the
-  //! middle of edge I.
   Standard_EXPORT void SetReference(const int I);
 
   Standard_EXPORT int Index(const double W, const bool Forward = true) const;
@@ -224,10 +169,8 @@ public:
 
   Standard_EXPORT ChFiDS_ErrorStatus ErrorStatus() const;
 
-  //! Return the mode of chamfers used
   Standard_EXPORT ChFiDS_ChamfMode Mode() const;
 
-  //! Return tolesp parameter
   Standard_EXPORT double GetTolesp() const;
 
   DEFINE_STANDARD_RTTIEXT(ChFiDS_Spine, Standard_Transient)
@@ -273,49 +216,35 @@ private:
 
 #include <TopoDS.hpp>
 
-//=================================================================================================
-
 inline void ChFiDS_Spine::SetTypeOfConcavity(const ChFiDS_TypeOfConcavity theType)
 {
   myTypeOfConcavity = theType;
 }
-
-//=================================================================================================
 
 inline void ChFiDS_Spine::SetFirstStatus(const ChFiDS_State S)
 {
   firstState = S;
 }
 
-//=================================================================================================
-
 inline void ChFiDS_Spine::SetLastStatus(const ChFiDS_State S)
 {
   lastState = S;
 }
-
-//=================================================================================================
 
 inline ChFiDS_TypeOfConcavity ChFiDS_Spine::GetTypeOfConcavity() const
 {
   return myTypeOfConcavity;
 }
 
-//=================================================================================================
-
 inline ChFiDS_State ChFiDS_Spine::FirstStatus() const
 {
   return firstState;
 }
 
-//=================================================================================================
-
 inline ChFiDS_State ChFiDS_Spine::LastStatus() const
 {
   return lastState;
 }
-
-//=================================================================================================
 
 inline void ChFiDS_Spine::SetStatus(const ChFiDS_State S, const bool IsFirst)
 {
@@ -325,8 +254,6 @@ inline void ChFiDS_Spine::SetStatus(const ChFiDS_State S, const bool IsFirst)
     lastState = S;
 }
 
-//=================================================================================================
-
 inline ChFiDS_State ChFiDS_Spine::Status(const bool IsFirst) const
 {
   if (IsFirst)
@@ -334,8 +261,6 @@ inline ChFiDS_State ChFiDS_Spine::Status(const bool IsFirst) const
   else
     return lastState;
 }
-
-//=================================================================================================
 
 inline void ChFiDS_Spine::SetTangencyExtremity(const bool IsTangency, const bool IsFirst)
 {
@@ -345,8 +270,6 @@ inline void ChFiDS_Spine::SetTangencyExtremity(const bool IsTangency, const bool
     lastistgt = IsTangency;
 }
 
-//=================================================================================================
-
 inline bool ChFiDS_Spine::IsTangencyExtremity(const bool IsFirst) const
 {
   if (IsFirst)
@@ -355,71 +278,51 @@ inline bool ChFiDS_Spine::IsTangencyExtremity(const bool IsFirst) const
     return lastistgt;
 }
 
-//=================================================================================================
-
 inline int ChFiDS_Spine::NbEdges() const
 {
   return spine.Length();
 }
-
-//=================================================================================================
 
 inline const TopoDS_Edge& ChFiDS_Spine::Edges(const int I) const
 {
   return TopoDS::Edge(spine.Value(I));
 }
 
-//=================================================================================================
-
 inline const TopoDS_Edge& ChFiDS_Spine::OffsetEdges(const int I) const
 {
   return TopoDS::Edge(offsetspine.Value(I));
 }
-
-//=================================================================================================
 
 inline void ChFiDS_Spine::SetEdges(const TopoDS_Edge& E)
 {
   spine.Append(E);
 }
 
-//=================================================================================================
-
 inline void ChFiDS_Spine::SetOffsetEdges(const TopoDS_Edge& E)
 {
   offsetspine.Append(E);
 }
-
-//=================================================================================================
 
 inline void ChFiDS_Spine::PutInFirst(const TopoDS_Edge& E)
 {
   spine.InsertBefore(1, E);
 }
 
-//=================================================================================================
-
 inline void ChFiDS_Spine::PutInFirstOffset(const TopoDS_Edge& E)
 {
   offsetspine.InsertBefore(1, E);
 }
-
-//=================================================================================================
 
 inline int ChFiDS_Spine::CurrentIndexOfElementarySpine() const
 {
   return indexofcurve;
 }
 
-//=================================================================================================
-
 inline ChFiDS_ChamfMode ChFiDS_Spine::Mode() const
 {
 
   return myMode;
 }
-
-//=================================================================================================
 
 inline double ChFiDS_Spine::GetTolesp() const
 {

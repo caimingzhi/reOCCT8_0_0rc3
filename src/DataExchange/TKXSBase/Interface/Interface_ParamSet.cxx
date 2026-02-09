@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// szv#4 S4163
 
 #include <Interface_FileParameter.hpp>
 #include <Interface_ParamList.hpp>
@@ -20,27 +7,22 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Interface_ParamSet, Standard_Transient)
 
-Interface_ParamSet::Interface_ParamSet(const int nres, const int) // nst)
+Interface_ParamSet::Interface_ParamSet(const int nres, const int)
 {
-  thelist  = new Interface_ParamList; // (nst,nst+nres+2);
+  thelist  = new Interface_ParamList;
   themxpar = nres;
   thenbpar = 0;
   thelnval = 0;
-  thelnres = 100;                // *20;  // 10 characters per Param (\0 included): reasonable
-  theval   = new char[thelnres]; // szv#4:S4163:12Mar99 `thelnres+1` chars was wrong
+  thelnres = 100;
+  theval   = new char[thelnres];
 }
-
-//  Append(CString): Character management according to <lnval>
-//  If lnval < 0, ParamSet passive, memory managed externally, ParamSet
-//                just refers to it
-//  Otherwise, copy to a local page
 
 int Interface_ParamSet::Append(const char*               val,
                                const int                 lnval,
                                const Interface_ParamType typ,
                                const int                 nument)
 {
-  //  Here, local String management
+
   thenbpar++;
   if (thenbpar > themxpar)
   {
@@ -49,7 +31,7 @@ int Interface_ParamSet::Append(const char*               val,
   }
   else if (lnval < 0)
   {
-    //    ..  External character management  ..
+
     Interface_FileParameter& FP = thelist->ChangeValue(thenbpar);
     FP.Init(val, typ);
     if (nument != 0)
@@ -57,19 +39,16 @@ int Interface_ParamSet::Append(const char*               val,
   }
   else
   {
-    //    ..  Local character management  ..
+
     int i;
     if (thelnval + lnval + 1 > thelnres)
     {
-      //      Insufficient character reservation: first increase
+
       int   newres = (int)(thelnres * 2 + lnval);
       char* newval = new char[newres];
       for (i = 0; i < thelnval; i++)
-        newval[i] = theval[i]; // szv#4:S4163:12Mar99 `<= thelnres` was wrong
-      //      and that's not all: must realign Params already recorded on
-      //      the old character reservation ...
-      // int delta = (int) (newval - theval);
-      // difference to apply
+        newval[i] = theval[i];
+
       char* poldVal = &theval[0];
       char* pnewVal = &newval[0];
       for (i = 1; i < thenbpar; i++)
@@ -78,19 +57,18 @@ int Interface_ParamSet::Append(const char*               val,
         Interface_ParamType      otyp  = OFP.ParamType();
         char*                    oval  = (char*)OFP.CValue();
         int                      delta = (int)(oval - poldVal);
-        // if (oval < theval || oval >= (theval+thelnres))
-        //   continue;  //hors reserve //szv#4:S4163:12Mar99 `oval >` was wrong
+
         int onum = OFP.EntityNumber();
-        OFP.Init(pnewVal + delta, otyp); // and there we go; we put back in the box
+        OFP.Init(pnewVal + delta, otyp);
         if (onum != 0)
           OFP.SetEntityNumber(onum);
       }
-      //      Confirm the new reservation
+
       delete[] theval;
       theval   = newval;
       thelnres = newres;
     }
-    //      Register this parameter
+
     for (i = 0; i < lnval; i++)
       theval[thelnval + i] = val[i];
     theval[thelnval + lnval] = '\0';
@@ -106,7 +84,6 @@ int Interface_ParamSet::Append(const char*               val,
 
 int Interface_ParamSet::Append(const Interface_FileParameter& FP)
 {
-  //  Here, FP ready: no memory management on String (too bad)
 
   thenbpar++;
   if (thenbpar > themxpar)
@@ -157,7 +134,7 @@ occ::handle<Interface_ParamList> Interface_ParamSet::Params(const int num, const
     n0  = 0;
     nbp = thenbpar;
     if (thenbpar <= themxpar)
-      return thelist; // and there you go
+      return thelist;
   }
   occ::handle<Interface_ParamList> list = new Interface_ParamList;
   if (nb == 0)
@@ -170,9 +147,9 @@ occ::handle<Interface_ParamList> Interface_ParamSet::Params(const int num, const
 
 void Interface_ParamSet::Destroy()
 {
-  //  if (!thenext.IsNull()) thenext->Destroy();
+
   thenext.Nullify();
-  //  "Manual" destruction (direct memory management)
+
   if (theval)
     delete[] theval;
   theval = nullptr;

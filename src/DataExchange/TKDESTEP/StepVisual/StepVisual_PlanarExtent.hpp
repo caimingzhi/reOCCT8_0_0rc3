@@ -11,7 +11,6 @@ class StepVisual_PlanarExtent : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a PlanarExtent
   Standard_EXPORT StepVisual_PlanarExtent();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

@@ -11,7 +11,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! Array of Integer attribute Driver.
 class BinMDataStd_IntegerArrayDriver : public BinMDF_ADriver
 {
 

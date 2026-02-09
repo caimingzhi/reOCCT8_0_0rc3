@@ -8,11 +8,7 @@
 #include <gp_Vec2d.hpp>
 #include <Precision.hpp>
 
-//=================================================================================================
-
 Bisector_FunctionInter::Bisector_FunctionInter() = default;
-
-//=================================================================================================
 
 Bisector_FunctionInter::Bisector_FunctionInter(const occ::handle<Geom2d_Curve>&   C,
                                                const occ::handle<Bisector_Curve>& B1,
@@ -23,8 +19,6 @@ Bisector_FunctionInter::Bisector_FunctionInter(const occ::handle<Geom2d_Curve>& 
   bisector2 = B2;
 }
 
-//=================================================================================================
-
 void Bisector_FunctionInter::Perform(const occ::handle<Geom2d_Curve>&   C,
                                      const occ::handle<Bisector_Curve>& B1,
                                      const occ::handle<Bisector_Curve>& B2)
@@ -33,8 +27,6 @@ void Bisector_FunctionInter::Perform(const occ::handle<Geom2d_Curve>&   C,
   bisector1 = B1;
   bisector2 = B2;
 }
-
-//=================================================================================================
 
 bool Bisector_FunctionInter::Value(const double X, double& F)
 {
@@ -47,15 +39,11 @@ bool Bisector_FunctionInter::Value(const double X, double& F)
   return true;
 }
 
-//=================================================================================================
-
 bool Bisector_FunctionInter::Derivative(const double X, double& D)
 {
   double F;
   return Values(X, F, D);
 }
-
-//=================================================================================================
 
 bool Bisector_FunctionInter::Values(const double X, double& F, double& D)
 {

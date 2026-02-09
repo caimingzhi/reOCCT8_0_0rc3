@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRep_Builder.hpp>
 #include <BRep_Tool.hpp>
@@ -50,10 +39,6 @@
 #include <TopoDS_Shape.hpp>
 #include <NCollection_Sequence.hpp>
 #include <NCollection_HSequence.hpp>
-
-// #include <GeomLProp_SLProps.hpp>
-// #include <ShapeFix_Wire.hpp>
-//=================================================================================================
 
 ShapeAnalysis_CheckSmallFace::ShapeAnalysis_CheckSmallFace()
 {
@@ -115,8 +100,6 @@ static bool MinMaxSmall(const double minx,
          && (dz <= toler || Precision::IsInfinite(dz));
 }
 
-//=================================================================================================
-
 int ShapeAnalysis_CheckSmallFace::IsSpotFace(const TopoDS_Face& F,
                                              gp_Pnt&            spot,
                                              double&            spotol,
@@ -125,11 +108,7 @@ int ShapeAnalysis_CheckSmallFace::IsSpotFace(const TopoDS_Face& F,
 
   double toler = tol;
   double tolv  = tol;
-  //  Compute tolerance to get : from greatest tol of vertices
-  //  In addition, also computes min-max of vertices
-  //  To finally compare mini-max box with tolerance
-  // gka Mar2000 Protection against faces without wires
-  // but they occur due to bugs in the algorithm itself, it needs to be fixed
+
   bool isWir = false;
   for (TopoDS_Iterator itw(F, false); itw.More(); itw.Next())
   {
@@ -161,7 +140,7 @@ int ShapeAnalysis_CheckSmallFace::IsSpotFace(const TopoDS_Face& F,
     }
 
     gp_Pnt pnt = BRep_Tool::Pnt(V);
-    // double x,y,z;
+
     MinMaxPnt(pnt, nbv, minx, miny, minz, maxx, maxy, maxz);
 
     if (tol < 0)
@@ -172,13 +151,9 @@ int ShapeAnalysis_CheckSmallFace::IsSpotFace(const TopoDS_Face& F,
     }
   }
 
-  //   Now, testing
   if (!MinMaxSmall(minx, miny, minz, maxx, maxy, maxz, toler))
     return 0;
 
-  //   All vertices are confused
-  //   Check edges (a closed edge may be a non-null length edge !)
-  //   By picking intermediate point on each one
   for (TopExp_Explorer ie(F, TopAbs_EDGE); ie.More(); ie.Next())
   {
     TopoDS_Edge             E = TopoDS::Edge(ie.Current());
@@ -201,8 +176,6 @@ int ShapeAnalysis_CheckSmallFace::IsSpotFace(const TopoDS_Face& F,
   return (same ? 2 : 1);
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_CheckSmallFace::CheckSpotFace(const TopoDS_Face& F, const double tol)
 {
   gp_Pnt spot;
@@ -224,27 +197,21 @@ bool ShapeAnalysis_CheckSmallFace::CheckSpotFace(const TopoDS_Face& F, const dou
   return true;
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_CheckSmallFace::IsStripSupport(const TopoDS_Face& F, const double tol)
 {
 
   double toler = tol;
   if (toler < 0)
-    toler = 1.e-07; // ?? better to compute tolerance zones
+    toler = 1.e-07;
 
   TopLoc_Location           loc;
   occ::handle<Geom_Surface> surf = BRep_Tool::Surface(F, loc);
   if (surf.IsNull())
     return false;
 
-  //  Checking on poles for bezier-bspline
-  //  A more general way is to check Values by scanning ISOS (slower)
-
   occ::handle<Geom_BSplineSurface> bs = occ::down_cast<Geom_BSplineSurface>(surf);
   occ::handle<Geom_BezierSurface>  bz = occ::down_cast<Geom_BezierSurface>(surf);
 
-  // int stat = 2;  // 2 : small in V direction
   if (!bs.IsNull() || !bz.IsNull())
   {
     bool cbz = (!bz.IsNull());
@@ -257,14 +224,13 @@ bool ShapeAnalysis_CheckSmallFace::IsStripSupport(const TopoDS_Face& F, const do
     {
       nbu = bs->NbUPoles(), nbv = bs->NbVPoles();
     }
-    // double dx = 0, dy = 0, dz = 0;
-    // double    x,y,z;
+
     double minx = 0., miny = 0., minz = 0., maxx = 0., maxy = 0., maxz = 0.;
     bool   issmall = true;
 
     for (iu = 1; iu <= nbu; iu++)
     {
-      //    for each U line, scan poles in V (V direction)
+
       int nb = 0;
       for (iv = 1; iv <= nbv; iv++)
       {
@@ -275,17 +241,17 @@ bool ShapeAnalysis_CheckSmallFace::IsStripSupport(const TopoDS_Face& F, const do
       {
         issmall = false;
         break;
-      } // small in V ?
+      }
     }
     if (issmall)
     {
       myStatusStrip = ShapeExtend::EncodeStatus(ShapeExtend_DONE2);
-      return issmall; // OK, small in V
+      return issmall;
     }
     issmall = true;
     for (iv = 1; iv <= nbv; iv++)
     {
-      //    for each V line, scan poles in U (U direction)
+
       int nb = 0;
       for (iu = 1; iu <= nbu; iu++)
       {
@@ -296,27 +262,24 @@ bool ShapeAnalysis_CheckSmallFace::IsStripSupport(const TopoDS_Face& F, const do
       {
         issmall = false;
         break;
-      } // small in U ?
+      }
     }
     if (issmall)
     {
       myStatusStrip = ShapeExtend::EncodeStatus(ShapeExtend_DONE1);
       return issmall;
-    } // OK, small in U
+    }
   }
 
   return false;
 }
-
-//=================================================================================================
 
 bool ShapeAnalysis_CheckSmallFace::CheckStripEdges(const TopoDS_Edge& E1,
                                                    const TopoDS_Edge& E2,
                                                    const double       tol,
                                                    double&            dmax) const
 {
-  //  We have the topological configuration OK : 2 edges, 2 vertices
-  //  But, are these two edges well confused ?
+
   double toler = tol;
   if (tol < 0)
   {
@@ -325,8 +288,6 @@ bool ShapeAnalysis_CheckSmallFace::CheckStripEdges(const TopoDS_Edge& E1,
       toler = tole / 2.;
   }
 
-  //   We project a list of points from each curve, on the opposite one,
-  //   we check the distance
   int nbint = 10;
 
   ShapeAnalysis_Curve SAC;
@@ -340,7 +301,7 @@ bool ShapeAnalysis_CheckSmallFace::CheckStripEdges(const TopoDS_Edge& E1,
   cf1                                = std::max(cf1, C1->FirstParameter());
   cl1                                = std::min(cl1, C1->LastParameter());
   occ::handle<Geom_TrimmedCurve> C1T = new Geom_TrimmedCurve(C1, cf1, cl1, true);
-  // pdn protection against feature in Trimmed_Curve
+
   cf1 = C1T->FirstParameter();
   cl1 = C1T->LastParameter();
   occ::handle<Geom_TrimmedCurve> CC;
@@ -363,8 +324,8 @@ bool ShapeAnalysis_CheckSmallFace::CheckStripEdges(const TopoDS_Edge& E1,
       CC  = C1T;
       C1T = C2T;
       C2T = CC;
-      cd1 = cd2; // smh added replacing step and replacing first
-      u   = cf2; // parameter
+      cd1 = cd2;
+      u   = cf2;
       f   = cf1;
       l   = cl1;
     }
@@ -372,10 +333,10 @@ bool ShapeAnalysis_CheckSmallFace::CheckStripEdges(const TopoDS_Edge& E1,
     {
       gp_Pnt p2, p1 = C1T->Value(u);
       double para;
-      // pdn Adaptor curve is used to avoid of enhancing of domain.
+
       GeomAdaptor_Curve GAC(C2T);
       double            dist = SAC.Project(GAC, p1, toler, p2, para);
-      // pdn check if parameter of projection is in the domain of the edge.
+
       if (para < f || para > l)
         return false;
       if (dist > dmax)
@@ -387,8 +348,6 @@ bool ShapeAnalysis_CheckSmallFace::CheckStripEdges(const TopoDS_Edge& E1,
   }
   return (dmax < toler);
 }
-
-//=================================================================================================
 
 bool ShapeAnalysis_CheckSmallFace::FindStripEdges(const TopoDS_Face& F,
                                                   TopoDS_Edge&       E1,
@@ -403,7 +362,7 @@ bool ShapeAnalysis_CheckSmallFace::FindStripEdges(const TopoDS_Face& F,
   {
     TopoDS_Edge E = TopoDS::Edge(ex.Current());
     if (nb == 1 && E.IsSame(E1))
-      continue; // ignore seam edge
+      continue;
     TopoDS_Vertex V1, V2;
     TopExp::Vertices(E, V1, V2);
     gp_Pnt p1, p2;
@@ -413,9 +372,8 @@ bool ShapeAnalysis_CheckSmallFace::FindStripEdges(const TopoDS_Face& F,
     if (toler <= 0)
       toler = (BRep_Tool::Tolerance(V1) + BRep_Tool::Tolerance(V2)) / 2.;
 
-    //    Extremities
     double dist = p1.Distance(p2);
-    //    Middle point
+
     double                  cf, cl;
     occ::handle<Geom_Curve> CC;
     CC                = BRep_Tool::Curve(E, cf, cl);
@@ -428,7 +386,7 @@ bool ShapeAnalysis_CheckSmallFace::FindStripEdges(const TopoDS_Face& F,
       isNullLength = false;
     }
     if (dist <= toler && isNullLength)
-      continue; // smh
+      continue;
     nb++;
     if (nb == 1)
       E1 = E;
@@ -437,7 +395,7 @@ bool ShapeAnalysis_CheckSmallFace::FindStripEdges(const TopoDS_Face& F,
     else
       return false;
   }
-  //   Now, check these two edge to define a strip !
+
   if (!E1.IsNull() && !E2.IsNull())
   {
     if (!CheckStripEdges(E1, E2, tol, dmax))
@@ -451,8 +409,6 @@ bool ShapeAnalysis_CheckSmallFace::FindStripEdges(const TopoDS_Face& F,
   return false;
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_CheckSmallFace::CheckSingleStrip(const TopoDS_Face& F,
                                                     TopoDS_Edge&       E1,
                                                     TopoDS_Edge&       E2,
@@ -461,8 +417,6 @@ bool ShapeAnalysis_CheckSmallFace::CheckSingleStrip(const TopoDS_Face& F,
   double toler = tol;
   double minx, miny, minz, maxx, maxy, maxz;
 
-  // In this case, we have 2 vertices and 2 great edges. Plus possibly 2 small
-  //    edges, one on each vertex
   TopoDS_Vertex V1, V2;
   int           nb = 0;
   for (TopExp_Explorer itv(F, TopAbs_VERTEX); itv.More(); itv.Next())
@@ -480,14 +434,12 @@ bool ShapeAnalysis_CheckSmallFace::CheckSingleStrip(const TopoDS_Face& F,
       return false;
   }
 
-  // Checking edges
-  // TopoDS_Edge E1,E2;
   nb = 0;
   for (TopExp_Explorer ite(F, TopAbs_EDGE); ite.More(); ite.Next())
   {
     TopoDS_Edge E = TopoDS::Edge(ite.Current());
     if (nb == 1 && E.IsSame(E1))
-      continue; // ignore seam edge
+      continue;
     TopoDS_Vertex VA, VB;
     TopExp::Vertices(E, VA, VB);
     if (tol < 0)
@@ -501,7 +453,6 @@ bool ShapeAnalysis_CheckSmallFace::CheckSingleStrip(const TopoDS_Face& F,
         toler = tolv;
     }
 
-    //    Edge on same vertex : small one ?
     if (VA.IsSame(VB))
     {
       double                  cf = 0., cl = 0.;
@@ -509,7 +460,7 @@ bool ShapeAnalysis_CheckSmallFace::CheckSingleStrip(const TopoDS_Face& F,
       if (!BRep_Tool::Degenerated(E))
         C3D = BRep_Tool::Curve(E, cf, cl);
       if (C3D.IsNull())
-        continue; // DGNR
+        continue;
       int    np  = 0;
       gp_Pnt deb = C3D->Value(cf);
       MinMaxPnt(deb, np, minx, miny, minz, maxx, maxy, maxz);
@@ -522,7 +473,7 @@ bool ShapeAnalysis_CheckSmallFace::CheckSingleStrip(const TopoDS_Face& F,
     }
     else
     {
-      //    Other case : two maximum allowed
+
       nb++;
       if (nb > 2)
         return false;
@@ -546,9 +497,8 @@ bool ShapeAnalysis_CheckSmallFace::CheckSingleStrip(const TopoDS_Face& F,
   }
 
   if (nb < 2)
-    return false; // only one vertex : cannot be a strip ...
+    return false;
 
-  //   Checking if E1 and E2 define a Strip
   double dmax;
   if (!CheckStripEdges(E1, E2, tol, dmax))
     return false;
@@ -556,31 +506,18 @@ bool ShapeAnalysis_CheckSmallFace::CheckSingleStrip(const TopoDS_Face& F,
   return true;
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_CheckSmallFace::CheckStripFace(const TopoDS_Face& F,
                                                   TopoDS_Edge&       E1,
                                                   TopoDS_Edge&       E2,
                                                   const double       tol)
 {
 
-  // int stat;
   if (CheckSingleStrip(F, E1, E2, tol))
-    return true; // it is a strip
+    return true;
 
-  //    IsStripSupport used as rejection. But this kind of test may be done
-  //    on ANY face, once we are SURE that FindStripEdges is reliable (and fast
-  //    enough)
-
-  //  ?? record a diagnostic StripFace, but without yet lists of edges
-  //  ??  Record Diagnostic "StripFace", no data (should be "Edges1" "Edges2")
-  //      but direction is known (1:U  2:V)
-  // TopoDS_Edge E1,E2;
   double dmax;
   return FindStripEdges(F, E1, E2, tol, dmax);
 }
-
-//=================================================================================================
 
 int ShapeAnalysis_CheckSmallFace::CheckSplittingVertices(
   const TopoDS_Face& F,
@@ -590,12 +527,11 @@ int ShapeAnalysis_CheckSmallFace::CheckSplittingVertices(
   TopoDS_Compound&                                                                      theAllVert)
 {
 
-  //  Prepare array of vertices with their locations //TopTools
   int nbv = 0, nbp = 0;
-  // TopoDS_Compound theAllVert;
+
   BRep_Builder theBuilder;
-  // theBuilder.MakeCompound(theAllVert);
-  TopExp_Explorer itv; // svv Jan11 2000 : porting on DEC
+
+  TopExp_Explorer itv;
   for (itv.Init(F, TopAbs_VERTEX); itv.More(); itv.Next())
     nbv++;
 
@@ -619,9 +555,8 @@ int ShapeAnalysis_CheckSmallFace::CheckSplittingVertices(
     vto.SetValue(nbp, unt);
   }
   nbv = nbp;
-  nbp = 0; // now, counting splitting vertices
+  nbp = 0;
 
-  //  Check edges : are vertices (other than extremities) confused with it ?
   ShapeAnalysis_Curve SAC;
   for (int iv = 1; iv <= nbv; iv++)
   {
@@ -646,18 +581,18 @@ int ShapeAnalysis_CheckSmallFace::CheckSplittingVertices(
       double param;
       double dist = SAC.Project(C3D, unp, unt * 10., proj, param, cf, cl);
       if (dist == 0.0)
-        continue; // smh
-      //  Splitting Vertex to record ?
+        continue;
+
       if (dist < unt)
       {
-        //  If Split occurs at beginning or end, it is not a split ...
+
         double fpar, lpar, eps = 1.e-06;
         if (param >= cl || param <= cf)
-          continue; // Out of range
+          continue;
         fpar = param - cf;
         lpar = param - cl;
         if ((std::abs(fpar) < eps) || (std::abs(lpar) < eps))
-          continue; // Near end or start
+          continue;
         listEdge.Append(E);
         listParam.Append(param);
         issplit = true;
@@ -717,8 +652,6 @@ static bool CheckPoles(const NCollection_Array2<gp_Pnt>& poles, int uorv, int ra
   return false;
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_CheckSmallFace::CheckPin(const TopoDS_Face& F, int& whatrow, int& sens)
 {
   TopLoc_Location           loc;
@@ -729,11 +662,8 @@ bool ShapeAnalysis_CheckSmallFace::CheckPin(const TopoDS_Face& F, int& whatrow, 
   double toler = myPrecision;
   if (toler < 0)
     toler = 1.e-4;
-  double tolpin = 1.e-9; // for sharp sharp pin
+  double tolpin = 1.e-9;
 
-  //  Checking the poles
-
-  //  Take the poles : they give good idea of sharpness of a pin
   int                              nbu = 0, nbv = 0;
   occ::handle<Geom_BSplineSurface> bs = occ::down_cast<Geom_BSplineSurface>(surf);
   occ::handle<Geom_BezierSurface>  bz = occ::down_cast<Geom_BezierSurface>(surf);
@@ -756,11 +686,9 @@ bool ShapeAnalysis_CheckSmallFace::CheckPin(const TopoDS_Face& F, int& whatrow, 
   if (!bz.IsNull())
     bz->Poles(allpoles);
 
-  //  Check each natural bound if it is a singularity (i.e. a pin)
-
   sens     = 0;
-  int stat = 0; // 0 none, 1 in U, 2 in V
-  whatrow  = 0; // 0 no row, else rank of row
+  int stat = 0;
+  whatrow  = 0;
   stat     = IsoStat(allpoles, 1, 1, tolpin, toler);
   if (stat)
   {
@@ -790,7 +718,7 @@ bool ShapeAnalysis_CheckSmallFace::CheckPin(const TopoDS_Face& F, int& whatrow, 
   }
 
   if (!sens)
-    return false; // no pin
+    return false;
 
   switch (stat)
   {
@@ -803,11 +731,10 @@ bool ShapeAnalysis_CheckSmallFace::CheckPin(const TopoDS_Face& F, int& whatrow, 
     default:
       break;
   }
-  //  std::cout<<(whatstat == 1 ? "Smooth" : "Sharp")<<" Pin on "<<(sens == 1 ? "U" : "V")<<" Row n0
-  //  "<<whatrow<<std::endl;
+
   if (stat == 1)
   {
-    // bool EqualPoles = false;
+
     if (CheckPoles(allpoles, 2, nbv) || CheckPoles(allpoles, 2, 1) || CheckPoles(allpoles, 1, nbu)
         || CheckPoles(allpoles, 1, 1))
       myStatusPin = ShapeExtend::EncodeStatus(ShapeExtend_DONE3);
@@ -826,8 +753,6 @@ static double TwistedNorm(const double x1,
   return (x1 * x2) + (y1 * y2) + (z1 * z2);
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_CheckSmallFace::CheckTwisted(const TopoDS_Face& F,
                                                 double&            paramu,
                                                 double&            paramv)
@@ -840,11 +765,9 @@ bool ShapeAnalysis_CheckSmallFace::CheckTwisted(const TopoDS_Face& F,
   double toler = myPrecision;
   if (toler < 0)
     toler = 1.e-4;
-  ////  GeomLProp_SLProps GLS (surf,2,toler);
+
   GeomAdaptor_Surface GAS(surf);
 
-  // to be done : on isos of the surface
-  //  and on edges, at least of outer wire
   int                        nbint = 5;
   NCollection_Array2<double> nx(1, nbint + 1, 1, nbint + 1);
   NCollection_Array2<double> ny(1, nbint + 1, 1, nbint + 1);
@@ -855,13 +778,11 @@ bool ShapeAnalysis_CheckSmallFace::CheckTwisted(const TopoDS_Face& F,
   double u = umin, du = (umax - umin) / nbint;
   double v = vmin, dv = (umax - umin) / nbint;
 
-  // gp_Dir norm;
   for (iu = 1; iu <= nbint; iu++)
   {
     for (iv = 1; iv <= nbint; iv++)
     {
-      //      GLS.SetParameters (u,v);
-      //      if (GLS.IsNormalDefined()) norm = GLS.Normal();
+
       gp_Pnt curp;
       gp_Vec V1, V2, VXnorm;
       GAS.D1(u, v, curp, V1, V2);
@@ -875,16 +796,11 @@ bool ShapeAnalysis_CheckSmallFace::CheckTwisted(const TopoDS_Face& F,
     v = vmin;
   }
 
-  //  Now, comparing normals on support surface, in both senses
-  //  In principle, it suffuces to check within outer bound
-
   for (iu = 1; iu < nbint; iu++)
   {
     for (iv = 1; iv < nbint; iv++)
     {
-      // We here check each normal (iu,iv) with (iu,iv+1) and with (iu+1,iv)
-      // if for each test, we have negative scalar product, this means angle > 90deg
-      // it is the criterion to say it is twisted
+
       if (TwistedNorm(nx(iu, iv),
                       ny(iu, iv),
                       nz(iu, iv),
@@ -908,24 +824,18 @@ bool ShapeAnalysis_CheckSmallFace::CheckTwisted(const TopoDS_Face& F,
     }
   }
 
-  //   Now, comparing normals on edges ... to be done
-
   return false;
 }
-
-//=================================================================================================
-
-// Warning: This function not tested on many examples
 
 bool ShapeAnalysis_CheckSmallFace::CheckPinFace(
   const TopoDS_Face&                                                        F,
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& mapEdges,
   const double                                                              toler)
 {
-  // ShapeFix_Wire sfw;
+
   TopExp_Explorer exp_w(F, TopAbs_WIRE);
   exp_w.More();
-  double                            coef1      = 0, coef2; // =0 for deleting warning (skl)
+  double                            coef1      = 0, coef2;
   TopoDS_Wire                       theCurWire = TopoDS::Wire(exp_w.Current());
   ShapeAnalysis_WireOrder           wi;
   ShapeAnalysis_Wire                sfw;
@@ -940,9 +850,7 @@ bool ShapeAnalysis_CheckSmallFace::CheckPinFace(
     newedges->Append(sbwd->Edge(wi.Ordered(i)));
   for (i = 1; i <= nb; i++)
     sbwd->Set(TopoDS::Edge(newedges->Value(i)), i);
-  // sfw.Init(theCurWire,  F, Precision::Confusion());
-  // sfw.FixReorder();
-  // theCurWire = sfw.Wire();
+
   theCurWire       = sbwd->Wire();
   i                = 1;
   bool        done = false;
@@ -961,7 +869,7 @@ bool ShapeAnalysis_CheckSmallFace::CheckPinFace(
       p1           = BRep_Tool::Pnt(V1);
       p2           = BRep_Tool::Pnt(V2);
       tol          = std::max(BRep_Tool::Tolerance(V1), BRep_Tool::Tolerance(V2));
-      if (toler > 0) // tol = std::max(tol, toler); gka
+      if (toler > 0)
         tol = toler;
       d1 = p1.Distance(p2);
       if (d1 == 0)
@@ -975,7 +883,7 @@ bool ShapeAnalysis_CheckSmallFace::CheckPinFace(
       i++;
       continue;
     }
-    // Check the length of edge
+
     theSecondEdge = TopoDS::Edge(exp_e.Current());
     V1            = TopExp::FirstVertex(theSecondEdge);
     V2            = TopExp::LastVertex(theSecondEdge);
@@ -988,8 +896,8 @@ bool ShapeAnalysis_CheckSmallFace::CheckPinFace(
       tol = toler;
     if (p1.Distance(p2) > tol)
       continue;
-    // If there are two pin edges, record them in diagnostic
-    d2 = p1.Distance(p2); // gka
+
+    d2 = p1.Distance(p2);
     if (d2 == 0)
       return false;
     if (d2 / tol >= 1)
@@ -1016,14 +924,9 @@ bool ShapeAnalysis_CheckSmallFace::CheckPinFace(
 
     theFirstEdge = theSecondEdge;
     coef1        = coef2;
-    // d1 = d2;
   }
   return done;
 }
-
-//=================================================================================================
-
-// Warning: This function not tested on many examples
 
 bool ShapeAnalysis_CheckSmallFace::CheckPinEdges(const TopoDS_Edge& theFirstEdge,
                                                  const TopoDS_Edge& theSecondEdge,
@@ -1039,14 +942,13 @@ bool ShapeAnalysis_CheckSmallFace::CheckPinEdges(const TopoDS_Edge& theFirstEdge
   gp_Pnt p1, p2, pp1, pp2, pv;
   double d1 = (cf1 - cl1) / coef1;
   double d2 = (cf2 - cl2) / coef2;
-  // double d1 = cf1-cl1/30; //10; gka
-  // double d2 = cf2-cl2/30; //10;
+
   p1  = C1->Value(cf1);
   p2  = C1->Value(cl1);
   pp1 = C2->Value(cf2);
   pp2 = C2->Value(cl2);
   double        tol;
-  double        paramc1 = 0, paramc2 = 0; // =0 for deleting warning (skl)
+  double        paramc1 = 0, paramc2 = 0;
   TopoDS_Vertex theSharedV = TopExp::LastVertex(theFirstEdge);
   if (toler == -1)
     tol = BRep_Tool::Tolerance(theSharedV);
@@ -1061,24 +963,7 @@ bool ShapeAnalysis_CheckSmallFace::CheckPinEdges(const TopoDS_Edge& theFirstEdge
     paramc2 = cf2;
   else if (pv.Distance(pp2) <= tol)
     paramc2 = cl2;
-  // Computing first derivative vectors and compare angle
-  //   gp_Vec V11, V12, V21, V22;
-  //   gp_Pnt tmp;
-  //   C1->D2(paramc1, tmp, V11, V21);
-  //   C2->D2(paramc2, tmp, V12, V22);
-  //   double angle1, angle2;
-  //   try{
-  //     angle1 = V11.Angle(V12);
-  //     angle2 = V21.Angle(V22);
-  //   }
-  //   catch (Standard_Failure)
-  //     {
-  //       std::cout << "Couldn't compute angle between derivative vectors"  <<std::endl;
-  //       return false;
-  //     }
-  //   std::cout << "angle1 "   << angle1<< std::endl;
-  //   std::cout << "angle2 "   << angle2<< std::endl;
-  //   if (angle1<=0.0001) return true;
+
   gp_Pnt proj;
   if (p1.Distance(p2) < pp1.Distance(pp2))
   {
@@ -1087,8 +972,6 @@ bool ShapeAnalysis_CheckSmallFace::CheckPinEdges(const TopoDS_Edge& theFirstEdge
       proj = C1->Value(paramc1 + (coef1 - 3) * d1);
     else
       proj = C1->Value(paramc1 - 3 * d1);
-    // proj = C1->Value(paramc1 + 9*d1);
-    // else proj = C1->Value(paramc1-d1);
   }
   else
   {
@@ -1097,8 +980,6 @@ bool ShapeAnalysis_CheckSmallFace::CheckPinEdges(const TopoDS_Edge& theFirstEdge
       proj = C2->Value(paramc2 + (coef2 - 3) * d2);
     else
       proj = C2->Value(paramc2 - 3 * d2);
-    // proj = C2->Value(paramc2 + 9*d2);
-    // else proj = C2->Value(paramc2 -d2);
   }
   double              param;
   GeomAdaptor_Curve   GAC(C3);
@@ -1107,14 +988,14 @@ bool ShapeAnalysis_CheckSmallFace::CheckPinEdges(const TopoDS_Edge& theFirstEdge
   gp_Pnt              result;
   ShapeAnalysis_Curve SAC;
   double              dist = SAC.Project(GAC, proj, tol, result, param);
-  // pdn check if parameter of projection is in the domain of the edge.
+
   if (param < f || param > l)
     return false;
   if (dist > tol)
     return false;
   if (dist <= tol)
   {
-    // Computing first derivative vectors and compare angle
+
     gp_Vec V11, V12, V21, V22;
     gp_Pnt tmp;
     C1->D2(paramc1, tmp, V11, V21);
@@ -1132,8 +1013,7 @@ bool ShapeAnalysis_CheckSmallFace::CheckPinEdges(const TopoDS_Edge& theFirstEdge
 #endif
       return false;
     }
-    //       std::cout << "angle1 "   << angle1<< std::endl;
-    //       std::cout << "angle2 "   << angle2<< std::endl;
+
     return (angle1 <= 0.001 && angle2 <= 0.01)
            || ((M_PI - angle2) <= 0.001 && (M_PI - angle2) <= 0.01);
   }

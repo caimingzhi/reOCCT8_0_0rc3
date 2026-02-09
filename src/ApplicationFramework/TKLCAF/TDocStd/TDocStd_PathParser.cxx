@@ -49,7 +49,7 @@ void TDocStd_PathParser::Parse()
     else
       return;
   }
-#endif //_WIN32
+#endif
   if (isTrek)
   {
     temp.Trunc(PointPosition - 1);

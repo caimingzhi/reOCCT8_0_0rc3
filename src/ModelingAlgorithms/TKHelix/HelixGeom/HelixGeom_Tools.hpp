@@ -5,34 +5,11 @@
 
 class Geom_BSplineCurve;
 
-//! Static utility class providing approximation algorithms for helix curves.
-//!
-//! This class contains static methods for:
-//! - Converting analytical helix curves to B-spline approximations
-//! - Generic curve approximation with specified tolerances and continuity
-//! - High-quality approximation suitable for CAD/CAM applications
-//!
-//! The approximation algorithms use advanced techniques to ensure:
-//! - Accurate representation within specified tolerances
-//! - Smooth continuity (C0, C1, C2) as required
-//! - Efficient B-spline parameterization
-//! - Robust handling of edge cases
 class HelixGeom_Tools
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Approximates a parametric helix curve using B-spline representation.
-  //! @param aT1 [in] Start parameter (angular position in radians)
-  //! @param aT2 [in] End parameter (angular position in radians)
-  //! @param aPitch [in] Helix pitch (vertical distance per 2*PI radians)
-  //! @param aRStart [in] Starting radius at parameter aT1
-  //! @param aTaperAngle [in] Taper angle in radians (0 = cylindrical helix)
-  //! @param aIsCW [in] True for clockwise, false for counter-clockwise
-  //! @param aTol [in] Approximation tolerance
-  //! @param theBSpl [out] Resulting B-spline curve
-  //! @param theMaxError [out] Maximum approximation error achieved
-  //! @return 0 on success, error code otherwise
   Standard_EXPORT static int ApprHelix(const double                    aT1,
                                        const double                    aT2,
                                        const double                    aPitch,
@@ -43,15 +20,6 @@ public:
                                        occ::handle<Geom_BSplineCurve>& theBSpl,
                                        double&                         theMaxError);
 
-  //! Approximates a generic 3D curve using B-spline representation.
-  //! @param theHC [in] Handle to the curve adaptor to approximate
-  //! @param theTol [in] Approximation tolerance
-  //! @param theCont [in] Required continuity (C0, C1, C2)
-  //! @param theMaxSeg [in] Maximum number of curve segments
-  //! @param theMaxDeg [in] Maximum degree of B-spline curve
-  //! @param theBSpl [out] Resulting B-spline curve
-  //! @param theMaxError [out] Maximum approximation error achieved
-  //! @return 0 on success, error code otherwise
   Standard_EXPORT static int ApprCurve3D(const occ::handle<Adaptor3d_Curve>& theHC,
                                          const double                        theTol,
                                          const GeomAbs_Shape                 theCont,

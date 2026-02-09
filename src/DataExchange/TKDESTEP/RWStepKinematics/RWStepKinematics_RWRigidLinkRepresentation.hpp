@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_RigidLinkRepresentation;
 
-//! Read & Write tool for RigidLinkRepresentation
 class RWStepKinematics_RWRigidLinkRepresentation
 {
 public:

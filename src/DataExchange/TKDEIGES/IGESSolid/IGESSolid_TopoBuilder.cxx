@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gp_XYZ.hpp>
 #include <IGESBasic_HArray1OfHArray1OfIGESEntity.hpp>
@@ -182,7 +171,7 @@ void IGESSolid_TopoBuilder::AddCurveUV(const occ::handle<IGESData_IGESEntity>& c
 
 void IGESSolid_TopoBuilder::EndEdge()
 {
-  //  transform thecuruv,theiso to array and put it in theeuv
+
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> curuv;
   occ::handle<NCollection_HArray1<int>>                              iso;
   if (!thecuruv->IsEmpty())
@@ -206,7 +195,7 @@ void IGESSolid_TopoBuilder::EndLoop()
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> edges, curves;
   occ::handle<IGESBasic_HArray1OfHArray1OfInteger>                   isol;
   occ::handle<IGESBasic_HArray1OfHArray1OfIGESEntity>                curvl;
-  int i, nb; // szv#4:S4163:12Mar99 nbuv not needed
+  int                                                                i, nb;
   nb = thee3d->Length();
   if (nb > 0)
   {
@@ -228,7 +217,7 @@ void IGESSolid_TopoBuilder::EndLoop()
       curves = GetCasted(NCollection_HArray1<occ::handle<IGESData_IGESEntity>>, thecuruv->Value(i));
       if (!curves.IsNull())
       {
-        // nbuv = curves->Length(); //szv#4:S4163:12Mar99 not needed
+
         enbuv->SetValue(i, nb);
         curvl->SetValue(i, curves);
         isol->SetValue(i, GetCasted(NCollection_HArray1<int>, theiso->Value(i)));

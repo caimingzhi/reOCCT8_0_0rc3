@@ -8,7 +8,6 @@
 #include <HLRBRep_PCLocFOfTheLocateExtPCOfTheProjPCurOfCInter.hpp>
 #include <Standard_TypeDef.hpp>
 
-//! Type alias for HLRBRep local extremum search.
 using HLRBRep_TheLocateExtPCOfTheProjPCurOfCInter =
   Extrema_GenLocateExtPC<HLRBRep_CurvePtr,
                          HLRBRep_CurveTool,

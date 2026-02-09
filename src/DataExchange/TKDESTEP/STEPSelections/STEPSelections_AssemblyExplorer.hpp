@@ -36,10 +36,8 @@ public:
   Standard_EXPORT occ::handle<Standard_Transient> FindItemWithNAUO(
     const occ::handle<StepRepr_NextAssemblyUsageOccurrence>& nauo) const;
 
-  //! Returns the number of root assemblies;
   int NbAssemblies() const;
 
-  //! Returns root of assenbly by its rank;
   occ::handle<STEPSelections_AssemblyComponent> Root(const int rank = 1) const;
 
 private:
@@ -53,8 +51,6 @@ inline int STEPSelections_AssemblyExplorer::NbAssemblies() const
 {
   return myRoots.Length();
 }
-
-//=================================================================================================
 
 inline occ::handle<STEPSelections_AssemblyComponent> STEPSelections_AssemblyExplorer::Root(
   const int rank) const

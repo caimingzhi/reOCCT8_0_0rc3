@@ -38,15 +38,10 @@ static occ::handle<StepGeom_Axis2Placement3d> MakeAxis2Placement3d(const gp_Pnt&
   return Axe;
 }
 
-//=============================================================================
-// Creation d' un axis2_placement_3d a l origine
-//=============================================================================
-
 GeomToStep_MakeAxis2Placement3d::GeomToStep_MakeAxis2Placement3d(
   const StepData_Factors& theLocalFactors)
 {
   gp_Ax2 A(gp_Pnt(0., 0., 0.), gp_Dir(gp_Dir::D::Z), gp_Dir(gp_Dir::D::X));
-  //   le reste inchange
 
   occ::handle<StepGeom_Axis2Placement3d> Axe = MakeAxis2Placement3d(A.Location(),
                                                                     A.Direction(),
@@ -56,10 +51,6 @@ GeomToStep_MakeAxis2Placement3d::GeomToStep_MakeAxis2Placement3d(
   theAxis2Placement3d                        = Axe;
   done                                       = true;
 }
-
-//=============================================================================
-// Creation d' un axis2_placement_3d de prostep a partir d' un Ax2 de gp
-//=============================================================================
 
 GeomToStep_MakeAxis2Placement3d::GeomToStep_MakeAxis2Placement3d(
   const gp_Ax2&           A,
@@ -74,10 +65,6 @@ GeomToStep_MakeAxis2Placement3d::GeomToStep_MakeAxis2Placement3d(
   done                                       = true;
 }
 
-//=============================================================================
-// Creation d' un axis2_placement_3d de prostep a partir d' un Ax3 de gp
-//=============================================================================
-
 GeomToStep_MakeAxis2Placement3d::GeomToStep_MakeAxis2Placement3d(
   const gp_Ax3&           A,
   const StepData_Factors& theLocalFactors)
@@ -91,17 +78,12 @@ GeomToStep_MakeAxis2Placement3d::GeomToStep_MakeAxis2Placement3d(
   done                                       = true;
 }
 
-//=============================================================================
-// Creation d' un axis2_placement_3d de prostep a partir d' un Trsf de gp
-//=============================================================================
-
 GeomToStep_MakeAxis2Placement3d::GeomToStep_MakeAxis2Placement3d(
   const gp_Trsf&          T,
   const StepData_Factors& theLocalFactors)
 {
   gp_Ax2 A(gp_Pnt(0., 0., 0.), gp_Dir(gp_Dir::D::Z), gp_Dir(gp_Dir::D::X));
   A.Transform(T);
-  //   le reste inchange
 
   occ::handle<StepGeom_Axis2Placement3d> Axe = MakeAxis2Placement3d(A.Location(),
                                                                     A.Direction(),
@@ -111,11 +93,6 @@ GeomToStep_MakeAxis2Placement3d::GeomToStep_MakeAxis2Placement3d(
   theAxis2Placement3d                        = Axe;
   done                                       = true;
 }
-
-//=============================================================================
-// Creation d' un axis2_placement_3d de prostep a partir d' un Axis2Placement
-// de Geom
-//=============================================================================
 
 GeomToStep_MakeAxis2Placement3d::GeomToStep_MakeAxis2Placement3d(
   const occ::handle<Geom_Axis2Placement>& Axis2,
@@ -132,10 +109,6 @@ GeomToStep_MakeAxis2Placement3d::GeomToStep_MakeAxis2Placement3d(
   theAxis2Placement3d                        = Axe;
   done                                       = true;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_Axis2Placement3d>& GeomToStep_MakeAxis2Placement3d::Value() const
 {

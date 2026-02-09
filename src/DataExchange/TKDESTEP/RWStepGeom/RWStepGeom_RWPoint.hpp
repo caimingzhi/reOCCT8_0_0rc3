@@ -10,7 +10,6 @@ class Interface_Check;
 class StepGeom_Point;
 class StepData_StepWriter;
 
-//! Read & Write Module for Point
 class RWStepGeom_RWPoint
 {
 public:

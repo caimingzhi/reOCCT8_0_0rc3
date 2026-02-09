@@ -11,18 +11,6 @@ namespace MathSys
 {
   using namespace MathUtils;
 
-  //! Newton-Raphson method for solving systems of nonlinear equations.
-  //!
-  //! Solves F(X) = 0 where F is a vector function of vector X.
-  //! The method iteratively improves an initial guess by solving
-  //! the linear system J(X)*dX = -F(X) where J is the Jacobian matrix.
-  //!
-  //! @param theFunc function set with derivatives (Jacobian)
-  //! @param theStart initial guess vector
-  //! @param theTolX tolerance for solution change ||X(n+1) - X(n)|| < tolX
-  //! @param theTolF tolerance for function values ||F(X)|| < tolF
-  //! @param theMaxIter maximum number of iterations
-  //! @return result containing solution vector if converged
   template <typename FuncSetType>
   VectorResult Newton(FuncSetType&       theFunc,
                       const math_Vector& theStart,
@@ -35,7 +23,6 @@ namespace MathSys
     const int aN = theFunc.NbVariables();
     const int aM = theFunc.NbEquations();
 
-    // Check dimensions
     if (aN != aM || theStart.Length() != aN || theTolX.Length() != aN)
     {
       aResult.Status = Status::InvalidInput;
@@ -45,16 +32,14 @@ namespace MathSys
     const int aLower = theStart.Lower();
     const int aUpper = theStart.Upper();
 
-    // Working vectors
     math_Vector aSol = theStart;
     math_Vector aF(aLower, aUpper);
     math_Vector aDeltaX(aLower, aUpper);
     math_Matrix aJacobian(aLower, aUpper, aLower, aUpper);
 
-    // Newton iteration
     for (size_t anIter = 0; anIter < theMaxIter; ++anIter)
     {
-      // Evaluate function and Jacobian
+
       if (!theFunc.Values(aSol, aF, aJacobian))
       {
         aResult.Status       = Status::NumericalError;
@@ -62,8 +47,6 @@ namespace MathSys
         return aResult;
       }
 
-      // Solve J * dX = -F
-      // Negate F for the right-hand side
       math_Vector aNegF(aLower, aUpper);
       for (int i = aLower; i <= aUpper; ++i)
       {
@@ -80,7 +63,6 @@ namespace MathSys
 
       aDeltaX = *aLinResult.Solution;
 
-      // Check X convergence before update
       bool aXConverged = true;
       for (int i = aLower; i <= aUpper; ++i)
       {
@@ -91,13 +73,11 @@ namespace MathSys
         }
       }
 
-      // Update solution
       for (int i = aLower; i <= aUpper; ++i)
       {
         aSol(i) += aDeltaX(i);
       }
 
-      // Re-evaluate function at new solution to check F convergence
       if (!theFunc.Value(aSol, aF))
       {
         aResult.Status       = Status::NumericalError;
@@ -105,7 +85,6 @@ namespace MathSys
         return aResult;
       }
 
-      // Check F convergence with updated function values
       bool aFConverged = true;
       for (int i = aLower; i <= aUpper; ++i)
       {
@@ -128,27 +107,12 @@ namespace MathSys
       aResult.NbIterations = anIter + 1;
     }
 
-    // Max iterations reached - return last solution
     aResult.Status   = Status::MaxIterations;
     aResult.Solution = aSol;
     aResult.Jacobian = aJacobian;
     return aResult;
   }
 
-  //! Newton-Raphson method with bounds constraints.
-  //!
-  //! Solves F(X) = 0 subject to InfBound <= X <= SupBound.
-  //! If the Newton step would take X outside bounds, the solution
-  //! is clamped to the boundary.
-  //!
-  //! @param theFunc function set with derivatives (Jacobian)
-  //! @param theStart initial guess vector
-  //! @param theInfBound lower bounds for solution
-  //! @param theSupBound upper bounds for solution
-  //! @param theTolX tolerance for solution change
-  //! @param theTolF tolerance for function values
-  //! @param theMaxIter maximum number of iterations
-  //! @return result containing solution vector if converged
   template <typename FuncSetType>
   VectorResult NewtonBounded(FuncSetType&       theFunc,
                              const math_Vector& theStart,
@@ -163,7 +127,6 @@ namespace MathSys
     const int aN = theFunc.NbVariables();
     const int aM = theFunc.NbEquations();
 
-    // Check dimensions
     if (aN != aM || theStart.Length() != aN || theTolX.Length() != aN || theInfBound.Length() != aN
         || theSupBound.Length() != aN)
     {
@@ -174,13 +137,11 @@ namespace MathSys
     const int aLower = theStart.Lower();
     const int aUpper = theStart.Upper();
 
-    // Working vectors
     math_Vector aSol = theStart;
     math_Vector aF(aLower, aUpper);
     math_Vector aDeltaX(aLower, aUpper);
     math_Matrix aJacobian(aLower, aUpper, aLower, aUpper);
 
-    // Clamp initial solution to bounds
     for (int i = aLower; i <= aUpper; ++i)
     {
       if (aSol(i) < theInfBound(i))
@@ -193,10 +154,9 @@ namespace MathSys
       }
     }
 
-    // Newton iteration
     for (size_t anIter = 0; anIter < theMaxIter; ++anIter)
     {
-      // Evaluate function and Jacobian
+
       if (!theFunc.Values(aSol, aF, aJacobian))
       {
         aResult.Status       = Status::NumericalError;
@@ -204,7 +164,6 @@ namespace MathSys
         return aResult;
       }
 
-      // Solve J * dX = -F
       math_Vector aNegF(aLower, aUpper);
       for (int i = aLower; i <= aUpper; ++i)
       {
@@ -221,7 +180,6 @@ namespace MathSys
 
       aDeltaX = *aLinResult.Solution;
 
-      // Check X convergence before update
       bool aXConverged = true;
       for (int i = aLower; i <= aUpper; ++i)
       {
@@ -232,7 +190,6 @@ namespace MathSys
         }
       }
 
-      // Update solution with bounds clamping
       for (int i = aLower; i <= aUpper; ++i)
       {
         aSol(i) += aDeltaX(i);
@@ -246,7 +203,6 @@ namespace MathSys
         }
       }
 
-      // Re-evaluate function at new solution to check F convergence
       if (!theFunc.Value(aSol, aF))
       {
         aResult.Status       = Status::NumericalError;
@@ -254,7 +210,6 @@ namespace MathSys
         return aResult;
       }
 
-      // Check F convergence with updated function values
       bool aFConverged = true;
       for (int i = aLower; i <= aUpper; ++i)
       {
@@ -277,21 +232,12 @@ namespace MathSys
       aResult.NbIterations = anIter + 1;
     }
 
-    // Max iterations reached
     aResult.Status   = Status::MaxIterations;
     aResult.Solution = aSol;
     aResult.Jacobian = aJacobian;
     return aResult;
   }
 
-  //! Simplified Newton method with uniform tolerances.
-  //!
-  //! @param theFunc function set with derivatives
-  //! @param theStart initial guess vector
-  //! @param theTolX uniform tolerance for all variables
-  //! @param theTolF tolerance for function values
-  //! @param theMaxIter maximum number of iterations
-  //! @return result containing solution vector if converged
   template <typename FuncSetType>
   VectorResult Newton(FuncSetType&       theFunc,
                       const math_Vector& theStart,

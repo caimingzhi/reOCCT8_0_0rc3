@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRepTools_CopyModification.hpp>
 
@@ -19,15 +8,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepTools_CopyModification, BRepTools_Modification)
 
-//=================================================================================================
-
 BRepTools_CopyModification::BRepTools_CopyModification(const bool copyGeom, const bool copyMesh)
     : myCopyGeom(copyGeom),
       myCopyMesh(copyMesh)
 {
 }
-
-//=================================================================================================
 
 bool BRepTools_CopyModification::NewSurface(const TopoDS_Face&         theFace,
                                             occ::handle<Geom_Surface>& theSurf,
@@ -46,8 +31,6 @@ bool BRepTools_CopyModification::NewSurface(const TopoDS_Face&         theFace,
   return true;
 }
 
-//=================================================================================================
-
 bool BRepTools_CopyModification::NewTriangulation(const TopoDS_Face&               theFace,
                                                   occ::handle<Poly_Triangulation>& theTri)
 {
@@ -62,13 +45,10 @@ bool BRepTools_CopyModification::NewTriangulation(const TopoDS_Face&            
   if (theTri.IsNull())
     return false;
 
-  // mesh is copied if and only if the geometry need to be copied too
   if (myCopyGeom)
     theTri = theTri->Copy();
   return true;
 }
-
-//=================================================================================================
 
 bool BRepTools_CopyModification::NewCurve(const TopoDS_Edge&       theEdge,
                                           occ::handle<Geom_Curve>& theCurve,
@@ -85,8 +65,6 @@ bool BRepTools_CopyModification::NewCurve(const TopoDS_Edge&       theEdge,
   return true;
 }
 
-//=================================================================================================
-
 bool BRepTools_CopyModification::NewPolygon(const TopoDS_Edge&           theEdge,
                                             occ::handle<Poly_Polygon3D>& thePoly)
 {
@@ -101,13 +79,10 @@ bool BRepTools_CopyModification::NewPolygon(const TopoDS_Edge&           theEdge
   if (thePoly.IsNull())
     return false;
 
-  // polygon is copied if and only if the geometry need to be copied too
   if (myCopyGeom)
     thePoly = thePoly->Copy();
   return true;
 }
-
-//=================================================================================================
 
 bool BRepTools_CopyModification::NewPolygonOnTriangulation(
   const TopoDS_Edge&                        theEdge,
@@ -126,13 +101,10 @@ bool BRepTools_CopyModification::NewPolygonOnTriangulation(
   if (thePoly.IsNull())
     return false;
 
-  // polygon is copied if and only if the geometry need to be copied too
   if (myCopyGeom)
     thePoly = thePoly->Copy();
   return true;
 }
-
-//=================================================================================================
 
 bool BRepTools_CopyModification::NewPoint(const TopoDS_Vertex& theVertex,
                                           gp_Pnt&              thePnt,
@@ -142,8 +114,6 @@ bool BRepTools_CopyModification::NewPoint(const TopoDS_Vertex& theVertex,
   theTol = BRep_Tool::Tolerance(theVertex);
   return true;
 }
-
-//=================================================================================================
 
 bool BRepTools_CopyModification::NewCurve2d(const TopoDS_Edge& theEdge,
                                             const TopoDS_Face& theFace,
@@ -162,23 +132,19 @@ bool BRepTools_CopyModification::NewCurve2d(const TopoDS_Edge& theEdge,
   return true;
 }
 
-//=================================================================================================
-
 bool BRepTools_CopyModification::NewParameter(const TopoDS_Vertex& theVertex,
                                               const TopoDS_Edge&   theEdge,
                                               double&              thePnt,
                                               double&              theTol)
 {
   if (theVertex.IsNull())
-    return false; // infinite edge may have Null vertex
+    return false;
 
   theTol = BRep_Tool::Tolerance(theVertex);
   thePnt = BRep_Tool::Parameter(theVertex, theEdge);
 
   return true;
 }
-
-//=================================================================================================
 
 GeomAbs_Shape BRepTools_CopyModification::Continuity(const TopoDS_Edge& theEdge,
                                                      const TopoDS_Face& theFace1,

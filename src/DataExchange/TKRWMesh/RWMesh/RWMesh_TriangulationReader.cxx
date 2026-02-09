@@ -1,15 +1,4 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <RWMesh_TriangulationReader.hpp>
 
@@ -20,7 +9,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWMesh_TriangulationReader, Standard_Transient)
 
 namespace
 {
-  //! Forms string with loading statistic.
+
   static TCollection_AsciiString loadingStatistic(const TCollection_AsciiString& thePrefix,
                                                   const int                      theExpectedNodesNb,
                                                   const int                      theLoadedNodesNb,
@@ -61,8 +50,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 void RWMesh_TriangulationReader::LoadingStatistic::PrintStatistic(
   const TCollection_AsciiString& thePrefix) const
 {
@@ -78,8 +65,6 @@ void RWMesh_TriangulationReader::LoadingStatistic::PrintStatistic(
   }
 }
 
-//=================================================================================================
-
 RWMesh_TriangulationReader::RWMesh_TriangulationReader()
     : myLoadingStatistic(nullptr),
       myIsDoublePrecision(false),
@@ -88,14 +73,10 @@ RWMesh_TriangulationReader::RWMesh_TriangulationReader()
 {
 }
 
-//=================================================================================================
-
 RWMesh_TriangulationReader::~RWMesh_TriangulationReader()
 {
   delete myLoadingStatistic;
 }
-
-//=================================================================================================
 
 bool RWMesh_TriangulationReader::Load(const occ::handle<RWMesh_TriangulationSource>& theSourceMesh,
                                       const occ::handle<Poly_Triangulation>&         theDestMesh,
@@ -119,8 +100,6 @@ bool RWMesh_TriangulationReader::Load(const occ::handle<RWMesh_TriangulationSour
   }
   return true;
 }
-
-//=================================================================================================
 
 bool RWMesh_TriangulationReader::finalizeLoading(
   const occ::handle<RWMesh_TriangulationSource>& theSourceMesh,
@@ -153,8 +132,6 @@ bool RWMesh_TriangulationReader::finalizeLoading(
   return true;
 }
 
-//=================================================================================================
-
 bool RWMesh_TriangulationReader::setNbEdges(const occ::handle<Poly_Triangulation>& theMesh,
                                             const int                              theNbTris,
                                             const bool theToCopyData) const
@@ -173,8 +150,6 @@ bool RWMesh_TriangulationReader::setNbEdges(const occ::handle<Poly_Triangulation
   }
   return false;
 }
-
-//=================================================================================================
 
 int RWMesh_TriangulationReader::setEdge(const occ::handle<Poly_Triangulation>& theMesh,
                                         const int                              theIndex,

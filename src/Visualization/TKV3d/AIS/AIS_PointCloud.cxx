@@ -16,8 +16,6 @@
 IMPLEMENT_STANDARD_RTTIEXT(AIS_PointCloudOwner, SelectMgr_EntityOwner)
 IMPLEMENT_STANDARD_RTTIEXT(AIS_PointCloud, AIS_InteractiveObject)
 
-//=================================================================================================
-
 AIS_PointCloudOwner::AIS_PointCloudOwner(const occ::handle<AIS_PointCloud>& theOrigin)
     : SelectMgr_EntityOwner((const occ::handle<SelectMgr_SelectableObject>&)theOrigin, 5),
       myDetPoints(new TColStd_HPackedMapOfInteger()),
@@ -25,18 +23,12 @@ AIS_PointCloudOwner::AIS_PointCloudOwner(const occ::handle<AIS_PointCloud>& theO
 {
 }
 
-//=================================================================================================
-
 AIS_PointCloudOwner::~AIS_PointCloudOwner() = default;
-
-//=================================================================================================
 
 bool AIS_PointCloudOwner::IsForcedHilight() const
 {
   return true;
 }
-
-//=================================================================================================
 
 void AIS_PointCloudOwner::HilightWithColor(const occ::handle<PrsMgr_PresentationManager>& thePrsMgr,
                                            const occ::handle<Prs3d_Drawer>&               theStyle,
@@ -122,8 +114,6 @@ void AIS_PointCloudOwner::HilightWithColor(const occ::handle<PrsMgr_Presentation
   }
 }
 
-//=================================================================================================
-
 void AIS_PointCloudOwner::Unhilight(const occ::handle<PrsMgr_PresentationManager>&, const int)
 {
   if (occ::handle<Prs3d_Presentation> aPrs =
@@ -133,15 +123,11 @@ void AIS_PointCloudOwner::Unhilight(const occ::handle<PrsMgr_PresentationManager
   }
 }
 
-//=================================================================================================
-
 void AIS_PointCloudOwner::Clear(const occ::handle<PrsMgr_PresentationManager>& thePrsMgr,
                                 const int                                      theMode)
 {
   SelectMgr_EntityOwner::Clear(thePrsMgr, theMode);
 }
-
-//=================================================================================================
 
 AIS_PointCloud::AIS_PointCloud()
 {
@@ -155,21 +141,16 @@ AIS_PointCloud::AIS_PointCloud()
     new Prs3d_PointAspect(Aspect_TOM_PLUS, Quantity_NOC_CYAN1, 1.0));
 }
 
-//=================================================================================================
-
 const occ::handle<Graphic3d_ArrayOfPoints> AIS_PointCloud::GetPoints() const
 {
   return myPoints;
 }
-
-//=================================================================================================
 
 Bnd_Box AIS_PointCloud::GetBoundingBox() const
 {
   return myBndBox;
 }
 
-//! Auxiliary method
 static inline Bnd_Box getBoundingBox(const occ::handle<Graphic3d_ArrayOfPoints>& thePoints)
 {
   Bnd_Box aBndBox;
@@ -186,15 +167,11 @@ static inline Bnd_Box getBoundingBox(const occ::handle<Graphic3d_ArrayOfPoints>&
   return aBndBox;
 }
 
-//=================================================================================================
-
 void AIS_PointCloud::SetPoints(const occ::handle<Graphic3d_ArrayOfPoints>& thePoints)
 {
   myPoints = thePoints;
   myBndBox = getBoundingBox(thePoints);
 }
-
-//=================================================================================================
 
 void AIS_PointCloud::SetPoints(const occ::handle<NCollection_HArray1<gp_Pnt>>&         theCoords,
                                const occ::handle<NCollection_HArray1<Quantity_Color>>& theColors,
@@ -211,7 +188,7 @@ void AIS_PointCloud::SetPoints(const occ::handle<NCollection_HArray1<gp_Pnt>>&  
   if ((!theNormals.IsNull() && theNormals->Length() != aNbPoints)
       || (!theColors.IsNull() && theColors->Length() != aNbPoints))
   {
-    // invalid input
+
     return;
   }
 
@@ -238,8 +215,6 @@ void AIS_PointCloud::SetPoints(const occ::handle<NCollection_HArray1<gp_Pnt>>&  
   myBndBox = getBoundingBox(myPoints);
 }
 
-//=================================================================================================
-
 void AIS_PointCloud::SetColor(const Quantity_Color& theColor)
 {
   AIS_InteractiveObject::SetColor(theColor);
@@ -247,8 +222,6 @@ void AIS_PointCloud::SetColor(const Quantity_Color& theColor)
   myDrawer->ShadingAspect()->SetColor(theColor);
   SynchronizeAspects();
 }
-
-//=================================================================================================
 
 void AIS_PointCloud::UnsetColor()
 {
@@ -286,8 +259,6 @@ void AIS_PointCloud::UnsetColor()
   SynchronizeAspects();
 }
 
-//=================================================================================================
-
 void AIS_PointCloud::SetMaterial(const Graphic3d_MaterialAspect& theMat)
 {
   hasOwnMaterial = true;
@@ -300,8 +271,6 @@ void AIS_PointCloud::SetMaterial(const Graphic3d_MaterialAspect& theMat)
   myDrawer->ShadingAspect()->SetTransparency(myDrawer->Transparency(), myCurrentFacingModel);
   SynchronizeAspects();
 }
-
-//=================================================================================================
 
 void AIS_PointCloud::UnsetMaterial()
 {
@@ -325,8 +294,6 @@ void AIS_PointCloud::UnsetMaterial()
   hasOwnMaterial = false;
   SynchronizeAspects();
 }
-
-//=================================================================================================
 
 void AIS_PointCloud::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                              const occ::handle<Prs3d_Presentation>& thePrs,
@@ -361,8 +328,6 @@ void AIS_PointCloud::Compute(const occ::handle<PrsMgr_PresentationManager>&,
   }
 }
 
-//=================================================================================================
-
 void AIS_PointCloud::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection,
                                       const int                               theMode)
 {
@@ -380,7 +345,6 @@ void AIS_PointCloud::ComputeSelection(const occ::handle<SelectMgr_Selection>& th
           anOwner = new AIS_PointCloudOwner(this);
         }
 
-        // split large point clouds into several groups
         const int aNbGroups = aPoints->Attributes()->NbElements > 500000 ? 8 : 1;
         occ::handle<Select3D_SensitivePrimitiveArray> aSensitive =
           new Select3D_SensitivePrimitiveArray(anOwner);

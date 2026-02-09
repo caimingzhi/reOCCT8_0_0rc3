@@ -38,11 +38,9 @@ public:
                                     const occ::handle<Adaptor3d_TopolTool>& Domain2,
                                     const occ::handle<ChFiDS_ElSpine>&      HGuide);
 
-  //! To define different domains for control and clipping.
   Standard_EXPORT void SetDomainsToRecadre(const occ::handle<Adaptor3d_TopolTool>& RecDomain1,
                                            const occ::handle<Adaptor3d_TopolTool>& RecDomain2);
 
-  //! To define singular points computed before walking.
   Standard_EXPORT void AddSingularPoint(const Blend_Point& P);
 
   Standard_EXPORT void Perform(Blend_Function&    F,

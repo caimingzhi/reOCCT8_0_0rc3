@@ -4,8 +4,6 @@
 #include <TopoDS_Face.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 BRepOffsetAPI_MakeFilling::BRepOffsetAPI_MakeFilling(const int    Degree,
                                                      const int    NbPtsOnCur,
                                                      const int    NbIter,
@@ -29,8 +27,6 @@ BRepOffsetAPI_MakeFilling::BRepOffsetAPI_MakeFilling(const int    Degree,
 {
 }
 
-//=================================================================================================
-
 void BRepOffsetAPI_MakeFilling::SetConstrParam(const double Tol2d,
                                                const double Tol3d,
                                                const double TolAng,
@@ -38,8 +34,6 @@ void BRepOffsetAPI_MakeFilling::SetConstrParam(const double Tol2d,
 {
   myFilling.SetConstrParam(Tol2d, Tol3d, TolAng, TolCurv);
 }
-
-//=================================================================================================
 
 void BRepOffsetAPI_MakeFilling::SetResolParam(const int  Degree,
                                               const int  NbPtsOnCur,
@@ -49,24 +43,16 @@ void BRepOffsetAPI_MakeFilling::SetResolParam(const int  Degree,
   myFilling.SetResolParam(Degree, NbPtsOnCur, NbIter, Anisotropie);
 }
 
-//=================================================================================================
-
 void BRepOffsetAPI_MakeFilling::SetApproxParam(const int MaxDeg, const int MaxSegments)
 {
   myFilling.SetApproxParam(MaxDeg, MaxSegments);
 }
-
-//=================================================================================================
 
 void BRepOffsetAPI_MakeFilling::LoadInitSurface(const TopoDS_Face& Surf)
 {
   myFilling.LoadInitSurface(Surf);
 }
 
-//=======================================================================
-// function : Add
-// purpose  : adds an edge as a constraint
-//======================================================================
 int BRepOffsetAPI_MakeFilling::Add(const TopoDS_Edge&  Constr,
                                    const GeomAbs_Shape Order,
                                    const bool          IsBound)
@@ -74,10 +60,6 @@ int BRepOffsetAPI_MakeFilling::Add(const TopoDS_Edge&  Constr,
   return myFilling.Add(Constr, Order, IsBound);
 }
 
-//=======================================================================
-// function : Add
-// purpose  : adds an edge with supporting face as a constraint
-//======================================================================
 int BRepOffsetAPI_MakeFilling::Add(const TopoDS_Edge&  Constr,
                                    const TopoDS_Face&  Support,
                                    const GeomAbs_Shape Order,
@@ -86,28 +68,16 @@ int BRepOffsetAPI_MakeFilling::Add(const TopoDS_Edge&  Constr,
   return myFilling.Add(Constr, Support, Order, IsBound);
 }
 
-//=======================================================================
-// function : Add
-// purpose  : adds a "free constraint": face without edge
-//======================================================================
 int BRepOffsetAPI_MakeFilling::Add(const TopoDS_Face& Support, const GeomAbs_Shape Order)
 {
   return myFilling.Add(Support, Order);
 }
 
-//=======================================================================
-// function : Add
-// purpose  : adds a point constraint
-//======================================================================
 int BRepOffsetAPI_MakeFilling::Add(const gp_Pnt& Point)
 {
   return myFilling.Add(Point);
 }
 
-//=======================================================================
-// function : Add
-// purpose  : adds a point constraint on a face
-//======================================================================
 int BRepOffsetAPI_MakeFilling::Add(const double        U,
                                    const double        V,
                                    const TopoDS_Face&  Support,
@@ -116,86 +86,47 @@ int BRepOffsetAPI_MakeFilling::Add(const double        U,
   return myFilling.Add(U, V, Support, Order);
 }
 
-//=======================================================================
-// function : Build
-// purpose  : builds the resulting face
-//======================================================================
-void BRepOffsetAPI_MakeFilling::Build(const Message_ProgressRange& /*theRange*/)
+void BRepOffsetAPI_MakeFilling::Build(const Message_ProgressRange&)
 {
   myFilling.Build();
   myShape = myFilling.Face();
 }
-
-//=================================================================================================
 
 bool BRepOffsetAPI_MakeFilling::IsDone() const
 {
   return myFilling.IsDone();
 }
 
-//=======================================================================
-// function : Generated
-// purpose  : returns the new edge (first in list) made from old edge "S"
-//=======================================================================
 const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_MakeFilling::Generated(const TopoDS_Shape& S)
 {
   return myFilling.Generated(S);
 }
 
-//==========================================================================
-// function : G0Error
-// purpose  : returns maximum distance from boundary to the resulting surface
-//==========================================================================
 double BRepOffsetAPI_MakeFilling::G0Error() const
 {
   return myFilling.G0Error();
 }
 
-//=======================================================================
-// function : G1Error
-// purpose  : returns maximum angle between the resulting surface
-//           and constraint surfaces at boundaries
-//======================================================================
 double BRepOffsetAPI_MakeFilling::G1Error() const
 {
   return myFilling.G1Error();
 }
 
-//=======================================================================
-// function : G2Error
-// purpose  : returns maximum difference of curvature between
-//           the resulting surface and constraint surfaces at boundaries
-//======================================================================
 double BRepOffsetAPI_MakeFilling::G2Error() const
 {
   return myFilling.G2Error();
 }
 
-//==========================================================================
-// function : G0Error
-// purpose  : returns maximum distance between the constraint number Index
-//           and the resulting surface
-//==========================================================================
 double BRepOffsetAPI_MakeFilling::G0Error(const int Index)
 {
   return myFilling.G0Error(Index);
 }
 
-//==========================================================================
-// function : G1Error
-// purpose  : returns maximum angle between the constraint number Index
-//           and the resulting surface
-//==========================================================================
 double BRepOffsetAPI_MakeFilling::G1Error(const int Index)
 {
   return myFilling.G1Error(Index);
 }
 
-//==========================================================================
-// function : G2Error
-// purpose  : returns maximum difference of curvature between
-//           the constraint number Index and the resulting surface
-//==========================================================================
 double BRepOffsetAPI_MakeFilling::G2Error(const int Index)
 {
   return myFilling.G2Error(Index);

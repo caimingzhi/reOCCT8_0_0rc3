@@ -8,7 +8,6 @@
 class gp_XY;
 class gp_Lin;
 
-//! constraint a point to belong to a straight line
 class Plate_LineConstraint
 {
 public:

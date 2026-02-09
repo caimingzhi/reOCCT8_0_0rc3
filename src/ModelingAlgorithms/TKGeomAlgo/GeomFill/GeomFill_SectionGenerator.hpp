@@ -13,9 +13,6 @@
 #include <gp_Pnt2d.hpp>
 #include <gp_Vec2d.hpp>
 
-//! gives the functions needed for instantiation from
-//! AppSurf in AppBlend. Allow to evaluate a surface
-//! passing by all the curves if the Profiler.
 class GeomFill_SectionGenerator : public GeomFill_Profiler
 {
 public:
@@ -31,9 +28,6 @@ public:
 
   Standard_EXPORT void Mults(NCollection_Array1<int>& TMults) const;
 
-  //! Used for the first and last section
-  //! The method returns true if the derivatives
-  //! are computed, otherwise it returns false.
   Standard_EXPORT bool Section(const int                     P,
                                NCollection_Array1<gp_Pnt>&   Poles,
                                NCollection_Array1<gp_Vec>&   DPoles,
@@ -47,8 +41,6 @@ public:
                                NCollection_Array1<gp_Pnt2d>& Poles2d,
                                NCollection_Array1<double>&   Weigths) const;
 
-  //! Returns the parameter of Section<P>, to impose it for the
-  //! approximation.
   Standard_EXPORT double Parameter(const int P) const;
 
 protected:

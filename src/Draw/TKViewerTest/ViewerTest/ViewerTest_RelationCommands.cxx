@@ -73,11 +73,6 @@ extern occ::handle<AIS_InteractiveContext>& TheAISContext();
 #define EdgeMask 0x02
 #define FaceMask 0x04
 
-//=======================================================================
-// function : Get3DPointAtMousePosition
-// purpose  : Calculates the 3D points corresponding to the mouse position
-//           in the plane of the view
-//=======================================================================
 static gp_Pnt Get3DPointAtMousePosition()
 {
   occ::handle<V3d_View> aView = ViewerTest::CurrentView();
@@ -95,7 +90,6 @@ static gp_Pnt Get3DPointAtMousePosition()
   aView->ConvertWithProj(aPixX, aPixY, aX, aY, aZ, aDX, aDY, aDZ);
   gp_Lin aLine(gp_Pnt(aX, aY, aZ), gp_Dir(aDX, aDY, aDZ));
 
-  // Compute intersection
   occ::handle<Geom_Line>  aGeomLine  = new Geom_Line(aLine);
   occ::handle<Geom_Plane> aGeomPlane = new Geom_Plane(aPlane);
   GeomAPI_IntCS           anIntersector(aGeomLine, aGeomPlane);
@@ -106,11 +100,6 @@ static gp_Pnt Get3DPointAtMousePosition()
   return anIntersector.Point(1);
 }
 
-//=======================================================================
-// function : Get3DPointAtMousePosition
-// purpose  : Calculates the 3D points corresponding to the mouse position
-//           in the plane of the view
-//=======================================================================
 static bool Get3DPointAtMousePosition(const gp_Pnt& theFirstPoint,
                                       const gp_Pnt& theSecondPoint,
                                       gp_Pnt&       theOutputPoint)
@@ -122,12 +111,10 @@ static bool Get3DPointAtMousePosition(const gp_Pnt& theFirstPoint,
   int    aPixX, aPixY;
   double aX, aY, aZ, aDx, aDy, aDz, aUx, aUy, aUz;
 
-  // Get 3D point in view coordinates and projection vector from the pixel point.
   ViewerTest::GetMousePosition(aPixX, aPixY);
   aView->ConvertWithProj(aPixX, aPixY, aX, aY, aZ, aDx, aDy, aDz);
   gp_Lin aProjLin(gp_Pnt(aX, aY, aZ), gp_Dir(aDx, aDy, aDz));
 
-  // Get plane
   gp_Vec aDimVec(theFirstPoint, theSecondPoint);
   aView->Up(aUx, aUy, aUz);
   gp_Vec aViewUp(aUx, aUy, aUz);
@@ -141,7 +128,6 @@ static bool Get3DPointAtMousePosition(const gp_Pnt& theFirstPoint,
   gp_Vec aDimNormal = aDimVec ^ aViewUp;
   gp_Pln aViewPlane = gce_MakePln(theFirstPoint, aDimNormal);
 
-  // Get intersection of view plane and projection line
   occ::handle<Geom_Plane> aPlane    = new Geom_Plane(aViewPlane);
   occ::handle<Geom_Line>  aProjLine = new Geom_Line(aProjLin);
   GeomAPI_IntCS           anIntersector(aProjLine, aPlane);
@@ -154,29 +140,6 @@ static bool Get3DPointAtMousePosition(const gp_Pnt& theFirstPoint,
   return true;
 }
 
-//=======================================================================
-// function : ParseDimensionParams
-// purpose  : Auxiliary function: sets aspect parameters for
-//           length, angle, radius and diameter dimension.
-//
-// draw args: -text [3d|2d] [wf|sh|wireframe|shading] [Size]
-//           -label [left|right|hcenter|hfit] [top|bottom|vcenter|vfit]
-//           -arrow [external|internal|fit] [Length(int)]
-//           -arrowangle ArrowAngle(degrees)
-//           -plane xoy|yoz|zox
-//           -flyout FloatValue -extension FloatValue
-//           -autovalue
-//           -value CustomRealValue
-//           -textvalue CustomTextValue
-//           -dispunits DisplayUnitsString
-//           -modelunits ModelUnitsString
-//           -showunits
-//           -hideunits
-//
-// Warning! flyout is not an aspect value, it is for dimension parameter
-// likewise text position, but text position override other parameters.
-// For text position changing use 'vmovedim'.
-//=======================================================================
 static int ParseDimensionParams(
   int                                                                    theArgNum,
   const char**                                                           theArgVec,
@@ -193,7 +156,6 @@ static int ParseDimensionParams(
 
   theIsCustomPlane = false;
 
-  // Begin from the second parameter: the first one is dimension name
   for (int anIt = theStartIndex; anIt < theArgNum; ++anIt)
   {
     TCollection_AsciiString aParam(theArgVec[anIt]);
@@ -204,7 +166,6 @@ static int ParseDimensionParams(
       continue;
     }
 
-    // Boolean flags
     if (aParam.IsEqual("-autovalue"))
     {
       theRealParams.Bind("autovalue", 1);
@@ -241,14 +202,12 @@ static int ParseDimensionParams(
       continue;
     }
 
-    // Before all non-boolean flags parsing check if a flag have at least one value.
     if (anIt + 1 >= theArgNum)
     {
       Message::SendFail() << "Error: " << aParam << " flag should have value.";
       return 1;
     }
 
-    // Non-boolean flags
     if (aParam.IsEqual("-shape") || aParam.IsEqual("-shapes"))
     {
       if (!theShapeList)
@@ -299,7 +258,7 @@ static int ParseDimensionParams(
         {
           theAspect->MakeTextShaded(true);
         }
-        else if (aValue.IsIntegerValue()) // text size
+        else if (aValue.IsIntegerValue())
         {
           theAspect->TextAspect()->SetHeight(Draw::Atoi(aValue.ToCString()));
         }
@@ -504,10 +463,6 @@ static int ParseDimensionParams(
   return 0;
 }
 
-//=======================================================================
-// function : SetDimensionParams
-// purpose  : Sets parameters for dimension
-//=======================================================================
 static void SetDimensionParams(
   const occ::handle<PrsDim_Dimension>&                                         theDim,
   const NCollection_DataMap<TCollection_AsciiString, double>&                  theRealParams,
@@ -544,13 +499,6 @@ static void SetDimensionParams(
   }
 }
 
-//=======================================================================
-// function : ParseAngleDimensionParams
-// purpose  : Auxiliary function: sets custom parameters for angle dimension.
-//
-// draw args: -type [interior|exterior]
-//           -showarrow [first|second|both|none]
-//=======================================================================
 static int ParseAngleDimensionParams(
   int                                                                    theArgNum,
   const char**                                                           theArgVec,
@@ -559,7 +507,6 @@ static int ParseAngleDimensionParams(
 {
   theStringParams.Clear();
 
-  // Begin from the second parameter: the first one is dimension name
   for (int anIt = theStartIndex; anIt < theArgNum; ++anIt)
   {
     TCollection_AsciiString aParam(theArgVec[anIt]);
@@ -571,7 +518,6 @@ static int ParseAngleDimensionParams(
       return 1;
     }
 
-    // Before all non-boolean flags parsing check if a flag have at least one value.
     if (anIt + 1 >= theArgNum)
     {
       Message::SendFail() << "Error: " << aParam << " flag should have value.";
@@ -600,10 +546,6 @@ static int ParseAngleDimensionParams(
   return 0;
 }
 
-//=======================================================================
-// function : SetAngleDimensionParams
-// purpose  : Sets parameters for angle dimension
-//=======================================================================
 static void SetAngleDimensionParams(
   const occ::handle<PrsDim_Dimension>&                                         theDim,
   const NCollection_DataMap<TCollection_AsciiString, TCollection_AsciiString>& theStringParams)
@@ -661,12 +603,7 @@ static void SetAngleDimensionParams(
   }
 }
 
-//=======================================================================
-// function : VDimBuilder
-// purpose  : Command for building dimension presentations: angle,
-//           length, radius, diameter
-//=======================================================================
-static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** theArgs)
+static int VDimBuilder(Draw_Interpretor&, int theArgsNb, const char** theArgs)
 {
   if (theArgsNb < 2)
   {
@@ -674,7 +611,6 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
     return 1;
   }
 
-  // Parse parameters
   TCollection_AsciiString aName(theArgs[1]);
 
   NCollection_List<occ::handle<AIS_InteractiveObject>> aShapes;
@@ -723,7 +659,6 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
     return 1;
   }
 
-  // Build dimension
   occ::handle<PrsDim_Dimension> aDim;
   switch (aKindOfDimension)
   {
@@ -743,20 +678,17 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
           return 1;
         }
 
-        // Adjust working plane
         TopoDS_Edge   anEdge = TopoDS::Edge(aFirstShapePrs->Shape());
         TopoDS_Vertex aFirst, aSecond;
         TopExp::Vertices(anEdge, aFirst, aSecond);
         aDim = new PrsDim_LengthDimension(anEdge, aWorkingPlane);
 
-        // Move standard plane (XOY, YOZ or ZOX) to the first point to make it working for dimension
         aWorkingPlane.SetLocation(occ::down_cast<PrsDim_LengthDimension>(aDim)->FirstPoint());
       }
       else if (aShapes.Extent() == 2)
       {
         TopoDS_Shape aShape1, aShape2;
 
-        // Getting shapes
         if (occ::handle<AIS_Point> aPntPrs = occ::down_cast<AIS_Point>(aShapes.First()))
         {
           aShape1 = aPntPrs->Vertex();
@@ -781,7 +713,6 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
           return 1;
         }
 
-        // Face-Face case
         occ::handle<PrsDim_LengthDimension> aLenDim = new PrsDim_LengthDimension();
         if (isPlaneCustom)
         {
@@ -870,7 +801,7 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
       }
       break;
     }
-    case PrsDim_KOD_RADIUS: // radius of the circle
+    case PrsDim_KOD_RADIUS:
     {
       gp_Pnt anAnchor;
       bool   hasAnchor = false;
@@ -956,7 +887,6 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
     }
   }
 
-  // Check dimension geometry
   if (!aDim->IsValid())
   {
     Message::SendFail() << "Error: dimension geometry is invalid, " << aDimType
@@ -975,7 +905,7 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
 
 namespace
 {
-  //! If the given shapes are edges then check whether they are parallel else return true.
+
   bool IsParallel(const TopoDS_Shape& theShape1, const TopoDS_Shape& theShape2)
   {
     if (theShape1.ShapeType() == TopAbs_EDGE && theShape2.ShapeType() == TopAbs_EDGE)
@@ -988,11 +918,7 @@ namespace
   }
 } // namespace
 
-//=======================================================================
-// function : VRelationBuilder
-// purpose  : Command for building relation presentation
-//=======================================================================
-static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** theArgs)
+static int VRelationBuilder(Draw_Interpretor&, int theArgsNb, const char** theArgs)
 {
   if (theArgsNb < 2)
   {
@@ -1048,7 +974,6 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
   NCollection_List<TopoDS_Shape> aShapes;
   ViewerTest::GetSelectedShapes(aShapes);
 
-  // Build relation.
   occ::handle<PrsDim_Relation> aRelation;
   switch (aKindOfRelation)
   {
@@ -1492,7 +1417,7 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
       TopoDS_Edge anEdgeA = TopoDS::Edge(aSelectedShapes[0]);
       if (aSelectedShapes[1].ShapeType() == TopAbs_EDGE)
       {
-        // 1 - edge,  2 - edge, 3 - edge.
+
         TopoDS_Edge anEdgeB = TopoDS::Edge(aSelectedShapes[1]);
         TopoDS_Edge anEdgeC = TopoDS::Edge(aSelectedShapes[2]);
 
@@ -1523,7 +1448,7 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
       }
       else
       {
-        // 1 - edge, 2 - vertex, 3 - vertex
+
         TopoDS_Vertex aVertexB = TopoDS::Vertex(aSelectedShapes[1]);
         TopoDS_Vertex aVertexC = TopoDS::Vertex(aSelectedShapes[2]);
 
@@ -1551,10 +1476,6 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
   return 0;
 }
 
-//=======================================================================
-// function : VDimParam
-// purpose  : Sets aspect parameters to dimension.
-//=======================================================================
 static int VDimParam(Draw_Interpretor& theDi, int theArgNum, const char** theArgVec)
 {
   if (theArgNum < 3)
@@ -1611,7 +1532,6 @@ static int VDimParam(Draw_Interpretor& theDi, int theArgNum, const char** theArg
     return 1;
   }
 
-  // Redisplay a dimension after parameter changing.
   if (ViewerTest::GetAISContext()->IsDisplayed(aDim))
   {
     ViewerTest::GetAISContext()->Redisplay(aDim, toUpdate);
@@ -1620,10 +1540,6 @@ static int VDimParam(Draw_Interpretor& theDi, int theArgNum, const char** theArg
   return 0;
 }
 
-//=======================================================================
-// function : VLengthParam
-// purpose  : Sets parameters to length dimension.
-//=======================================================================
 static int VLengthParam(Draw_Interpretor&, int theArgNum, const char** theArgVec)
 {
   if (theArgNum < 3)
@@ -1647,7 +1563,6 @@ static int VLengthParam(Draw_Interpretor&, int theArgNum, const char** theArgVec
     return 1;
   }
 
-  // parse direction value
   gp_Dir                  aDirection;
   int                     anArgumentIt = 2;
   TCollection_AsciiString aParam(theArgVec[anArgumentIt]);
@@ -1680,7 +1595,7 @@ static int VLengthParam(Draw_Interpretor&, int theArgNum, const char** theArgVec
         Message::SendFail() << "Error: wrong number of values for parameter '" << aParam << "'";
         return 1;
       }
-      // access coordinate arguments
+
       NCollection_Sequence<double> aCoords;
       for (; anArgumentIt < theArgNum; ++anArgumentIt)
       {
@@ -1691,7 +1606,7 @@ static int VLengthParam(Draw_Interpretor&, int theArgNum, const char** theArgVec
         }
         aCoords.Append(anArg.RealValue());
       }
-      // non-numeric argument too early
+
       if (aCoords.IsEmpty() || aCoords.Size() != 3)
       {
         Message::SendFail("Error: wrong number of direction arguments");
@@ -1708,7 +1623,6 @@ static int VLengthParam(Draw_Interpretor&, int theArgNum, const char** theArgVec
     return 1;
   }
 
-  // Redisplay a dimension after parameter changing.
   if (ViewerTest::GetAISContext()->IsDisplayed(aLengthDim))
   {
     ViewerTest::GetAISContext()->Redisplay(aLengthDim, true);
@@ -1717,10 +1631,6 @@ static int VLengthParam(Draw_Interpretor&, int theArgNum, const char** theArgVec
   return 0;
 }
 
-//=======================================================================
-// function : VAngleParam
-// purpose  : Sets aspect parameters to angle dimension.
-//=======================================================================
 static int VAngleParam(Draw_Interpretor& theDi, int theArgNum, const char** theArgVec)
 {
   if (theArgNum < 3)
@@ -1761,7 +1671,6 @@ static int VAngleParam(Draw_Interpretor& theDi, int theArgNum, const char** theA
     return 1;
   }
 
-  // Redisplay a dimension after parameter changing.
   if (ViewerTest::GetAISContext()->IsDisplayed(aDim))
   {
     ViewerTest::GetAISContext()->Redisplay(aDim, toUpdate);
@@ -1769,12 +1678,6 @@ static int VAngleParam(Draw_Interpretor& theDi, int theArgNum, const char** theA
   return 0;
 }
 
-//=======================================================================
-// function : VMoveDim
-// purpose  : Moves dimension or relation text label to defined or picked
-//           position and updates the object.
-// draw args: vmovedim [name] [x y z]
-//=======================================================================
 static int VMoveDim(Draw_Interpretor& theDi, int theArgNum, const char** theArgVec)
 {
   if (theArgNum > 5)
@@ -1783,7 +1686,6 @@ static int VMoveDim(Draw_Interpretor& theDi, int theArgNum, const char** theArgV
     return 1;
   }
 
-  // Parameters parsing
   bool isNameSet  = (theArgNum == 2 || theArgNum == 5);
   bool isPointSet = (theArgNum == 4 || theArgNum == 5);
 
@@ -1791,7 +1693,6 @@ static int VMoveDim(Draw_Interpretor& theDi, int theArgNum, const char** theArgV
   gp_Pnt                             aPoint(gp::Origin());
   int                                aMaxPickNum = 5;
 
-  // Find object
   if (isNameSet)
   {
     TCollection_AsciiString aName(theArgVec[1]);
@@ -1808,9 +1709,9 @@ static int VMoveDim(Draw_Interpretor& theDi, int theArgNum, const char** theArgV
       return 1;
     }
   }
-  else // Pick dimension or relation
+  else
   {
-    // Loop that will be handle picking.
+
     int          anArgNum  = 5;
     const char*  aBuffer[] = {"VPick", "X", "VPickY", "VPickZ", "VPickShape"};
     const char** anArgVec  = (const char**)aBuffer;
@@ -1845,13 +1746,12 @@ static int VMoveDim(Draw_Interpretor& theDi, int theArgNum, const char** theArgV
     }
   }
 
-  // Find point
   if (isPointSet)
   {
     aPoint = theArgNum == 4 ? gp_Pnt(atoi(theArgVec[1]), atoi(theArgVec[2]), atoi(theArgVec[3]))
                             : gp_Pnt(atoi(theArgVec[2]), atoi(theArgVec[3]), atoi(theArgVec[4]));
   }
-  else // Pick the point
+  else
   {
     int          aPickArgNum = 5;
     const char*  aPickBuff[] = {"VPick", "X", "VPickY", "VPickZ", "VPickShape"};
@@ -1861,7 +1761,6 @@ static int VMoveDim(Draw_Interpretor& theDi, int theArgNum, const char** theArgV
     {
     }
 
-    // Set text position, update relation or dimension.
     if (aPickedObj->Type() == AIS_KindOfInteractive_Relation)
     {
       occ::handle<PrsDim_Relation> aRelation = occ::down_cast<PrsDim_Relation>(aPickedObj);
@@ -1911,7 +1810,6 @@ static int VMoveDim(Draw_Interpretor& theDi, int theArgNum, const char** theArgV
     }
   }
 
-  // Set text position, update relation or dimension.
   if (occ::handle<PrsDim_Relation> aRelation = occ::down_cast<PrsDim_Relation>(aPickedObj))
   {
     aRelation->SetPosition(aPoint);
@@ -1927,8 +1825,6 @@ static int VMoveDim(Draw_Interpretor& theDi, int theArgNum, const char** theArgV
   return 0;
 }
 
-//=================================================================================================
-
 void ViewerTest::RelationCommands(Draw_Interpretor& theCommands)
 {
   const char* aGroup    = "AIS Viewer";
@@ -1937,7 +1833,7 @@ void ViewerTest::RelationCommands(Draw_Interpretor& theCommands)
     [&](const char* theName, Draw_Interpretor::CommandFunction theFunc, const char* theHelp)
   { theCommands.Add(theName, theHelp, aFileName, theFunc, aGroup); };
 
-  addCmd("vdimension", VDimBuilder, /* [vdimension] */ R"(
+  addCmd("vdimension", VDimBuilder, R"(
 vdimension name {-angle|-length|-radius|-diameter}
     [-shapes shape1 [shape2 [shape3]]
     [-selected]
@@ -1958,9 +1854,9 @@ vdimension name {-angle|-length|-radius|-diameter}
     [-showunits | -hideunits]
 Builds angle, length, radius and diameter dimensions.
 See also: vdimparam, vmovedim.
-)" /* [vdimension] */);
+)");
 
-  addCmd("vrelation", VRelationBuilder, /* [vrelation] */ R"(
+  addCmd("vrelation", VRelationBuilder, R"(
 vrelation name {-concentric|-equaldistance|-equalradius|-fix|
                 -identic|-offset|-parallel|-perpendicular|-tangent|-symmetric}
 Builds specific relation from selected objects:
@@ -1974,9 +1870,9 @@ Builds specific relation from selected objects:
  -perpendicular - 2 faces or 2 edges
  -tangent       - two coplanar edges (first the circular edge then the tangent edge) or two faces
  -symmetric     - 3 edges or 1 edge and 2 vertices
-)" /* [vrelation] */);
+)");
 
-  addCmd("vdimparam", VDimParam, /* [vdimparam] */ R"(
+  addCmd("vdimparam", VDimParam, R"(
 vdimparam name
     [-text 3d|2d wf|sh|wireframe|shading IntegerSize]
     [-font FontName]
@@ -1994,25 +1890,25 @@ vdimparam name
     [-showunits | -hideunits]
 Sets parameters for angle, length, radius and diameter dimensions.
 See also: vmovedim, vdimension.
-)" /* [vdimparam] */);
+)");
 
-  addCmd("vlengthparam", VLengthParam, /* [vlengthparam] */ R"(
+  addCmd("vlengthparam", VLengthParam, R"(
 vlengthparam name [-direction {ox|oy|oz|x y z|autodirection}]
 Sets parameters for length dimension.
 See also: vdimparam, vdimension.
-)" /* [vlengthparam] */);
+)");
 
-  addCmd("vangleparam", VAngleParam, /* [vangleparam] */ R"(
+  addCmd("vangleparam", VAngleParam, R"(
 vangleparam name [-type interior|exterior]
             [-showarrow first|second|both|none]
 Sets parameters for angle dimension.
 See also: vdimparam, vdimension.
-)" /* [vangleparam] */);
+)");
 
-  addCmd("vmovedim", VMoveDim, /* [vmovedim] */ R"(
+  addCmd("vmovedim", VMoveDim, R"(
 vmovedim [name] [x y z]
 Moves picked or named (if name defined)
 dimension to picked mouse position or input point.
 Text label of dimension 'name' is moved to position, another parts of dimension are adjusted.
-)" /* [vmovedim] */);
+)");
 }

@@ -13,7 +13,6 @@ class HeaderSection_FileName : public Standard_Transient
 {
 
 public:
-  //! Returns a FileName
   Standard_EXPORT HeaderSection_FileName();
 
   Standard_EXPORT void Init(

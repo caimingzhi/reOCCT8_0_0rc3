@@ -5,6 +5,4 @@
 #include <MAT_Edge.hpp>
 #include <MAT_ListOfEdge.hpp>
 
-//=================================================================================================
-
 void MAT_TListNodeOfListOfEdge::Dummy() const {}

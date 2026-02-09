@@ -6,22 +6,16 @@
 #include <StepDimTol_DatumSystem.hpp>
 #include <StepRepr_ProductDefinitionShape.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWDatumSystem::RWStepDimTol_RWDatumSystem() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWDatumSystem::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                           const int                                   num,
                                           occ::handle<Interface_Check>&               ach,
                                           const occ::handle<StepDimTol_DatumSystem>&  ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 5, ach, "datum_system"))
     return;
-
-  // Inherited fields of ShapeAspect
 
   occ::handle<TCollection_HAsciiString> aShapeAspect_Name;
   data->ReadString(num, 1, "shape_aspect.name", ach, aShapeAspect_Name);
@@ -47,8 +41,6 @@ void RWStepDimTol_RWDatumSystem::ReadStep(const occ::handle<StepData_StepReaderD
                     ach,
                     aShapeAspect_ProductDefinitional);
 
-  // Own fields of DatumSystem
-
   occ::handle<NCollection_HArray1<occ::handle<StepDimTol_DatumReferenceCompartment>>> aConstituents;
   occ::handle<StepDimTol_DatumReferenceCompartment>                                   anEnt;
   int                                                                                 nbSub;
@@ -69,7 +61,6 @@ void RWStepDimTol_RWDatumSystem::ReadStep(const occ::handle<StepData_StepReaderD
     }
   }
 
-  // Initialize entity
   ent->Init(aShapeAspect_Name,
             aShapeAspect_Description,
             aShapeAspect_OfShape,
@@ -77,13 +68,9 @@ void RWStepDimTol_RWDatumSystem::ReadStep(const occ::handle<StepData_StepReaderD
             aConstituents);
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWDatumSystem::WriteStep(StepData_StepWriter&                       SW,
                                            const occ::handle<StepDimTol_DatumSystem>& ent) const
 {
-
-  // Inherited fields of ShapeAspect
 
   SW.Send(ent->Name());
 
@@ -93,7 +80,6 @@ void RWStepDimTol_RWDatumSystem::WriteStep(StepData_StepWriter&                 
 
   SW.SendLogical(ent->ProductDefinitional());
 
-  // Own fields of DatumSystem
   int i, nb = ent->NbConstituents();
   SW.OpenSub();
   for (i = 1; i <= nb; i++)
@@ -101,17 +87,12 @@ void RWStepDimTol_RWDatumSystem::WriteStep(StepData_StepWriter&                 
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWDatumSystem::Share(const occ::handle<StepDimTol_DatumSystem>& ent,
                                        Interface_EntityIterator&                  iter) const
 {
 
-  // Inherited fields of ShapeAspect
-
   iter.AddItem(ent->OfShape());
 
-  // Own fields of DatumSystem
   int i, nb = ent->NbConstituents();
   for (i = 1; i <= nb; i++)
     iter.AddItem(ent->ConstituentsValue(i));

@@ -6,7 +6,6 @@
 #include <Draw_Color.hpp>
 #include <Standard_Transient.hpp>
 
-//! Display of an edge. Edge + color.
 class DBRep_Edge : public Standard_Transient
 {
 
@@ -33,21 +32,15 @@ inline const TopoDS_Edge& DBRep_Edge::Edge() const
   return myEdge;
 }
 
-//=================================================================================================
-
 inline void DBRep_Edge::Edge(const TopoDS_Edge& E)
 {
   myEdge = E;
 }
 
-//=================================================================================================
-
 inline const Draw_Color& DBRep_Edge::Color() const
 {
   return myColor;
 }
-
-//=================================================================================================
 
 inline void DBRep_Edge::Color(const Draw_Color& C)
 {

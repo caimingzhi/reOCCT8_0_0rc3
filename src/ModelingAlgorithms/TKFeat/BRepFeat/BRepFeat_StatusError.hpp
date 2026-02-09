@@ -1,6 +1,5 @@
 #pragma once
 
-//! Describes the error.
 enum BRepFeat_StatusError
 {
   BRepFeat_OK,

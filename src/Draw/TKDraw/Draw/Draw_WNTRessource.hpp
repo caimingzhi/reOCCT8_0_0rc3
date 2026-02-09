@@ -1,9 +1,5 @@
 #ifdef _WIN32
 
-  //{{NO_DEPENDENCIES}}
-  // Microsoft Developer Studio generated include file.
-  // Used by Draw.rc
-  //
   #define APPMENU 102
   #define IDI_ICON1 103
   #define ACCEL_ID 106
@@ -14,8 +10,6 @@
   #define IDM_WINDOW_NEXT 40005
   #define ID_COMMAND_SHOW 40006
 
-  // Next default values for new objects
-  //
   #ifdef APSTUDIO_INVOKED
     #ifndef APSTUDIO_READONLY_SYMBOLS
       #define _APS_NEXT_RESOURCE_VALUE 109

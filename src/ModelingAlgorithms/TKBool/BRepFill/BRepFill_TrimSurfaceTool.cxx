@@ -43,16 +43,6 @@ static bool Affich = false;
 static int  NBCALL = 0;
 #endif
 
-//=======================================================================
-// function : BRepFill_TrimSurfaceTool
-// purpose  : Initialisation with two neighbor faces
-//          Edge1 and Edge2 are parallel edges corresponding
-//          to minimum iso on F1 and F2 respectively.
-//          ie Edge1 is Umin or VMin on F1.
-//          Inv1 and Inv2 show if Edge1 and Edge2 are
-//          returned parallel.
-//=======================================================================
-
 BRepFill_TrimSurfaceTool::BRepFill_TrimSurfaceTool(const occ::handle<Geom2d_Curve>& Bis,
                                                    const TopoDS_Face&               Face1,
                                                    const TopoDS_Face&               Face2,
@@ -77,11 +67,6 @@ BRepFill_TrimSurfaceTool::BRepFill_TrimSurfaceTool(const occ::handle<Geom2d_Curv
 #endif
 }
 
-//=======================================================================
-// function : Bubble
-// purpose  : Order the sequence of points by increasing x.
-//=======================================================================
-
 static void Bubble(NCollection_Sequence<gp_Pnt>& Seq)
 {
   bool Invert   = true;
@@ -101,8 +86,6 @@ static void Bubble(NCollection_Sequence<gp_Pnt>& Seq)
     }
   }
 }
-
-//=================================================================================================
 
 static double EvalPhase(const TopoDS_Edge&         Edge,
                         const TopoDS_Face&         Face,
@@ -132,15 +115,13 @@ static double EvalPhase(const TopoDS_Edge&         Edge,
     return 0.;
 }
 
-//=================================================================================================
-
 static void EvalParameters(const TopoDS_Edge&               Edge,
                            const TopoDS_Face&               Face,
                            const occ::handle<Geom2d_Curve>& Bis,
                            NCollection_Sequence<gp_Pnt>&    Seq)
 {
   bool Degener = BRep_Tool::Degenerated(Edge);
-  // return curves 3d associated to edges.
+
   TopLoc_Location L;
   double          f, l;
 
@@ -151,11 +132,9 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
 
   int    NbPoints, NbSegments;
   double U1, U2;
-  gp_Pnt P; //,PSeq;
+  gp_Pnt P;
 
-  //  double Tol = Precision::Intersection();
-  //  modified by NIZHNY-EAP Wed Dec 22 15:00:51 1999 ___BEGIN___
-  double Tol  = 1.e-6; // BRepFill_Precision();
+  double Tol  = 1.e-6;
   double TolC = 0.;
 
   if (!Degener)
@@ -163,7 +142,7 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
     occ::handle<Geom_Curve> C = BRep_Tool::Curve(Edge, L, f, l);
     CT                        = new Geom_TrimmedCurve(C, f, l);
     CT->Transform(L.Transformation());
-    // projection of 3d curves in the plane xOy
+
     occ::handle<Geom2d_Curve> C2d = GeomProjLib::Curve2d(CT, Plane);
 
     Geom2dAdaptor_Curve AC(C2d);
@@ -180,10 +159,6 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
 
     if (NbPoints < 1)
     {
-      // try to elongate curves and enlarge tolerance
-
-      // don't do it rightaway from the beginning in order not to get
-      // extra solutions those would cause *Exception*: incoherent intersection
 
       GeomAbs_CurveType CType = AC.GetType(), BisType = ABis.GetType();
       bool              canElongateC = CType != GeomAbs_BezierCurve && CType != GeomAbs_BSplineCurve
@@ -213,7 +188,7 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
 
       NbPoints = Intersector.NbPoints();
     }
-    //  modified by NIZHNY-EAP Wed Dec 22 15:00:56 1999 ___END___
+
     if (NbPoints > 0)
     {
 
@@ -247,11 +222,9 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
         Seq.Append(P);
       }
     }
-    // Order the sequence by increasing parameter on the bissectrice.
+
     Bubble(Seq);
 
-    //  modified by NIZHNY-EAP Fri Dec 24 18:47:24 1999 ___BEGIN___
-    // Remove double points
     gp_Pnt P1, P2;
     for (int i = 1; i < NbPoints; i++)
     {
@@ -259,17 +232,14 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
       P2 = Seq.Value(i + 1);
       if (P2.X() - P1.X() < Tol)
       {
-        //	std::cout<<"REMOVE "<<P1.X()<<std::endl;
+
         Seq.Remove(i--);
         NbPoints--;
       }
     }
-    //  modified by NIZHNY-EAP Fri Dec 24 18:47:28 1999 ___END___
   }
   else
   {
-    // the edge is degenerated : the point and it is found if it is
-    // on the bissectrice.
 
     gp_Pnt   P3d = BRep_Tool::Pnt(TopExp::FirstVertex(Edge));
     gp_Pnt2d P2d(P3d.X(), P3d.Y());
@@ -277,15 +247,10 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
     double   UBis = Bis->FirstParameter();
     gp_Pnt2d PBis = Bis->Value(UBis);
 
-    //  modified by NIZHNY-EAP Wed Jan 12 11:41:30 2000 ___BEGIN___
-    // inside gp_Pnt2d::Distance
-    // Infinite * Infinite => Exception: DefaultNumericError
-    // Case encounered: UBis < Precision::Infinite()
-    // but PBis.X() > Precision::Infinite()
     if (Precision::IsPositiveInfinite(std::abs(PBis.X()))
         || Precision::IsPositiveInfinite(std::abs(PBis.Y())) || PBis.Distance(P2d) > Tol)
     {
-      //  modified by NIZHNY-EAP Wed Jan 12 11:41:40 2000 ___END___
+
       UBis = Bis->LastParameter();
       if (UBis >= Precision::Infinite())
         return;
@@ -294,7 +259,6 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
         return;
     }
 
-    // evaluate parameter intersection.
     occ::handle<Geom_Surface> GS = BRep_Tool::Surface(Face);
     GeomAdaptor_Surface       GAS(GS);
 
@@ -309,10 +273,7 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
         break;
       case GeomAbs_Cone:
       {
-        //----------------------------------------------------------
-        // if myFace1 is not at the same side of the apex as the point
-        // of parameter 0 0 on the cone => phase = M_PI.
-        //----------------------------------------------------------
+
         Axis  = GAS.Cone().Position();
         Phase = EvalPhase(Edge, Face, GAS, Axis);
         break;
@@ -325,10 +286,7 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
         break;
       case GeomAbs_SurfaceOfRevolution:
       {
-        //----------------------------------------------------------
-        // if myFace1 is not at the same side of the apex as the point
-        // of parameter 0 0 on the cone => phase = M_PI.
-        //----------------------------------------------------------
+
         occ::handle<Geom_SurfaceOfRevolution> GSRev = occ::down_cast<Geom_SurfaceOfRevolution>(GS);
         occ::handle<GeomAdaptor_Curve>        HC    = new GeomAdaptor_Curve(GSRev->BasisCurve());
         GeomAdaptor_SurfaceOfRevolution       ASRev(HC, GAS.AxeOfRevolution());
@@ -353,8 +311,6 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
   }
 }
 
-//=================================================================================================
-
 void BRepFill_TrimSurfaceTool::IntersectWith(const TopoDS_Edge&            EdgeOnF1,
                                              const TopoDS_Edge&            EdgeOnF2,
                                              NCollection_Sequence<gp_Pnt>& Points) const
@@ -375,11 +331,8 @@ void BRepFill_TrimSurfaceTool::IntersectWith(const TopoDS_Edge&            EdgeO
     PSeq = Points(i);
     PSeq.SetZ((Points2.Value(i)).Y());
     Points.SetValue(i, PSeq);
-    //    std::cout<<"BisPar "<<PSeq.X()<<std::endl;
   }
 }
-
-//=================================================================================================
 
 bool BRepFill_TrimSurfaceTool::IsOnFace(const gp_Pnt2d& Point) const
 {
@@ -388,19 +341,13 @@ bool BRepFill_TrimSurfaceTool::IsOnFace(const gp_Pnt2d& Point) const
 
   BRepIntCurveSurface_Inter Inter;
 
-  // eval if is on face 1
-  //  modified by NIZHNY-EAP Fri Jan 21 09:49:09 2000 ___BEGIN___
-  Inter.Init(myFace1, Line, 1e-6); // Precision::PConfusion());
+  Inter.Init(myFace1, Line, 1e-6);
   if (Inter.More())
     return true;
 
-  // eval if is on face 2
-  Inter.Init(myFace2, Line, 1e-6); // Precision::PConfusion());
+  Inter.Init(myFace2, Line, 1e-6);
   return Inter.More();
-  //  modified by NIZHNY-EAP Fri Jan 21 09:49:14 2000 ___END___
 }
-
-//=================================================================================================
 
 double BRepFill_TrimSurfaceTool::ProjOn(const gp_Pnt2d& Point, const TopoDS_Edge& Edge) const
 {
@@ -411,11 +358,9 @@ double BRepFill_TrimSurfaceTool::ProjOn(const gp_Pnt2d& Point, const TopoDS_Edge
   occ::handle<Geom_TrimmedCurve> CT = new Geom_TrimmedCurve(C1, f, l);
   CT->Transform(L.Transformation());
 
-  // projection of curves 3d in the plane xOy
   occ::handle<Geom_Plane>   Plane = new Geom_Plane(0, 0, 1, 0);
   occ::handle<Geom2d_Curve> C2d   = GeomProjLib::Curve2d(CT, Plane);
 
-  // evaluate the projection of the point on the curve.
   Geom2dAPI_ProjectPointOnCurve Projector(Point, C2d);
 #ifdef OCCT_DEBUG
   double Dist = Projector.LowerDistance();
@@ -430,8 +375,6 @@ double BRepFill_TrimSurfaceTool::ProjOn(const gp_Pnt2d& Point, const TopoDS_Edge
   double U = Projector.LowerDistanceParameter();
   return U;
 }
-
-//=================================================================================================
 
 void BRepFill_TrimSurfaceTool::Project(const double               U1,
                                        const double               U2,

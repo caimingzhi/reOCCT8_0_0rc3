@@ -3,11 +3,7 @@
 #include <StepVisual_DraughtingCallout.hpp>
 #include <StepVisual_StyledItem.hpp>
 
-//=================================================================================================
-
 StepVisual_AnnotationPlaneElement::StepVisual_AnnotationPlaneElement() = default;
-
-//=================================================================================================
 
 int StepVisual_AnnotationPlaneElement::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {

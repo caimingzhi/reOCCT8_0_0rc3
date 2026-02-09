@@ -15,8 +15,6 @@
 #include <Precision.hpp>
 #include <NCollection_Array2.hpp>
 
-//=================================================================================================
-
 void BlendFunc::GetShape(const BlendFunc_SectionShape  SShape,
                          const double                  MaxAng,
                          int&                          NbPoles,
@@ -37,7 +35,7 @@ void BlendFunc::GetShape(const BlendFunc_SectionShape  SShape,
         TConv = Convert_TgtThetaOver2_1;
       }
       else
-      { // QuasiAngular affin d'etre C1 (et meme beaucoup plus)
+      {
         NbPoles = 7;
         NbKnots = 2;
         Degree  = 6;
@@ -70,12 +68,6 @@ void BlendFunc::GetShape(const BlendFunc_SectionShape  SShape,
     break;
   }
 }
-
-//=======================================================================
-// function : GetMinimalWeights
-// purpose  : On suppose les extremum de poids sont obtenus pour les
-//           extremums d'angles (A verifier eventuelement pour Quasi-Angular)
-//=======================================================================
 
 void BlendFunc::GetMinimalWeights(const BlendFunc_SectionShape       SShape,
                                   const Convert_ParameterisationType TConv,
@@ -121,8 +113,6 @@ void BlendFunc::GetMinimalWeights(const BlendFunc_SectionShape       SShape,
   }
 }
 
-//=================================================================================================
-
 GeomAbs_Shape BlendFunc::NextShape(const GeomAbs_Shape S)
 {
   switch (S)
@@ -138,8 +128,6 @@ GeomAbs_Shape BlendFunc::NextShape(const GeomAbs_Shape S)
   }
   return GeomAbs_CN;
 }
-
-//=================================================================================================
 
 bool BlendFunc::ComputeNormal(const occ::handle<Adaptor3d_Surface>& Surf,
                               const gp_Pnt2d&                       p2d,
@@ -169,7 +157,7 @@ bool BlendFunc::ComputeNormal(const occ::handle<Adaptor3d_Surface>& Surf,
   const double       Umin = Surf->FirstUParameter();
   const double       Umax = Surf->LastUParameter();
   const double       Vmin = Surf->FirstVParameter();
-  const double       Vmax = Surf->LastVParameter(); // szv: was FirstVParameter!
+  const double       Vmax = Surf->LastVParameter();
   CSLib::Normal(MaxOrder,
                 DerNUV,
                 double(1.e-9),
@@ -190,8 +178,6 @@ bool BlendFunc::ComputeNormal(const occ::handle<Adaptor3d_Surface>& Surf,
   }
   return false;
 }
-
-//=================================================================================================
 
 bool BlendFunc::ComputeDNormal(const occ::handle<Adaptor3d_Surface>& Surf,
                                const gp_Pnt2d&                       p2d,
@@ -223,7 +209,7 @@ bool BlendFunc::ComputeDNormal(const occ::handle<Adaptor3d_Surface>& Surf,
   const double       Umin = Surf->FirstUParameter();
   const double       Umax = Surf->LastUParameter();
   const double       Vmin = Surf->FirstVParameter();
-  const double       Vmax = Surf->LastVParameter(); // szv: was FirstVParameter!
+  const double       Vmax = Surf->LastVParameter();
   CSLib::Normal(MaxOrder,
                 DerNUV,
                 double(1.e-9),

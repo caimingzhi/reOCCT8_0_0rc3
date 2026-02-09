@@ -2,8 +2,6 @@
 
 #include <TopoDS_Iterator.hpp>
 
-//=================================================================================================
-
 void TopoDS_Iterator::Initialize(const TopoDS_Shape& S, const bool cumOri, const bool cumLoc)
 {
   if (cumLoc)
@@ -28,8 +26,6 @@ void TopoDS_Iterator::Initialize(const TopoDS_Shape& S, const bool cumOri, const
       myShape.Move(myLocation, false);
   }
 }
-
-//=================================================================================================
 
 void TopoDS_Iterator::Next()
 {

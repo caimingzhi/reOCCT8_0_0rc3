@@ -4,12 +4,8 @@
 #include <StepData_StepWriter.hpp>
 #include <StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWFeaTangentialCoefficientOfLinearThermalExpansion::
   RWStepFEA_RWFeaTangentialCoefficientOfLinearThermalExpansion() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWFeaTangentialCoefficientOfLinearThermalExpansion::ReadStep(
   const occ::handle<StepData_StepReaderData>&                                  data,
@@ -17,50 +13,33 @@ void RWStepFEA_RWFeaTangentialCoefficientOfLinearThermalExpansion::ReadStep(
   occ::handle<Interface_Check>&                                                ach,
   const occ::handle<StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "fea_tangential_coefficient_of_linear_thermal_expansion"))
     return;
-
-  // Inherited fields of RepresentationItem
 
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   data->ReadString(num, 1, "representation_item.name", ach, aRepresentationItem_Name);
 
-  // Own fields of FeaTangentialCoefficientOfLinearThermalExpansion
-
   StepFEA_SymmetricTensor23d aFeaConstants;
   data->ReadEntity(num, 2, "fea_constants", ach, aFeaConstants);
 
-  // Initialize entity
   ent->Init(aRepresentationItem_Name, aFeaConstants);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWFeaTangentialCoefficientOfLinearThermalExpansion::WriteStep(
   StepData_StepWriter&                                                         SW,
   const occ::handle<StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion>& ent) const
 {
 
-  // Inherited fields of RepresentationItem
-
   SW.Send(ent->StepRepr_RepresentationItem::Name());
-
-  // Own fields of FeaTangentialCoefficientOfLinearThermalExpansion
 
   SW.Send(ent->FeaConstants().Value());
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWFeaTangentialCoefficientOfLinearThermalExpansion::Share(
   const occ::handle<StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion>& ent,
   Interface_EntityIterator&                                                    iter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Own fields of FeaTangentialCoefficientOfLinearThermalExpansion
 
   iter.AddItem(ent->FeaConstants().Value());
 }

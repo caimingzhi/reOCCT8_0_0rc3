@@ -8,9 +8,6 @@
 #include <Standard_Real.hpp>
 class gp_Pnt2d;
 
-//! template class for a topological tool.
-//! This tool is linked with the surface on which
-//! the classification has to be made.
 class IntStart_SITopolTool : public Standard_Transient
 {
 

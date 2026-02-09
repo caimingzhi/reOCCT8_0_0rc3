@@ -5,11 +5,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepDimTol_StraightnessTolerance.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWStraightnessTolerance::RWStepDimTol_RWStraightnessTolerance() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWStraightnessTolerance::ReadStep(
   const occ::handle<StepData_StepReaderData>&          data,
@@ -17,11 +13,9 @@ void RWStepDimTol_RWStraightnessTolerance::ReadStep(
   occ::handle<Interface_Check>&                        ach,
   const occ::handle<StepDimTol_StraightnessTolerance>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "straightness_tolerance"))
     return;
-
-  // Inherited fields of GeometricTolerance
 
   occ::handle<TCollection_HAsciiString> aGeometricTolerance_Name;
   data->ReadString(num, 1, "geometric_tolerance.name", ach, aGeometricTolerance_Name);
@@ -44,21 +38,16 @@ void RWStepDimTol_RWStraightnessTolerance::ReadStep(
                    ach,
                    aGeometricTolerance_TolerancedShapeAspect);
 
-  // Initialize entity
   ent->Init(aGeometricTolerance_Name,
             aGeometricTolerance_Description,
             aGeometricTolerance_Magnitude,
             aGeometricTolerance_TolerancedShapeAspect);
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWStraightnessTolerance::WriteStep(
   StepData_StepWriter&                                 SW,
   const occ::handle<StepDimTol_StraightnessTolerance>& ent) const
 {
-
-  // Inherited fields of GeometricTolerance
 
   SW.Send(ent->StepDimTol_GeometricTolerance::Name());
 
@@ -69,14 +58,10 @@ void RWStepDimTol_RWStraightnessTolerance::WriteStep(
   SW.Send(ent->StepDimTol_GeometricTolerance::TolerancedShapeAspect().Value());
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWStraightnessTolerance::Share(
   const occ::handle<StepDimTol_StraightnessTolerance>& ent,
   Interface_EntityIterator&                            iter) const
 {
-
-  // Inherited fields of GeometricTolerance
 
   iter.AddItem(ent->StepDimTol_GeometricTolerance::Magnitude());
 

@@ -11,7 +11,6 @@
 #include <Standard_Integer.hpp>
 class TopOpeBRepDS_HDataStructure;
 
-//! FaceInterferenceReducer
 class TopOpeBRepDS_FIR
 {
 public:

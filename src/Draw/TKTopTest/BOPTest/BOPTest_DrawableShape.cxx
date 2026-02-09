@@ -22,8 +22,6 @@
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(BOPTest_DrawableShape, DBRep_DrawableShape)
 
-//=================================================================================================
-
 BOPTest_DrawableShape::BOPTest_DrawableShape(const TopoDS_Shape& aShape,
                                              const Draw_Color&   FreeCol,
                                              const Draw_Color&   ConnCol,
@@ -40,25 +38,14 @@ BOPTest_DrawableShape::BOPTest_DrawableShape(const TopoDS_Shape& aShape,
   myTextColor = TextColor;
 }
 
-//=================================================================================================
-
 BOPTest_DrawableShape::BOPTest_DrawableShape(const TopoDS_Shape& aShape,
                                              const char*         Text,
                                              const Draw_Color&   TextColor)
-    : DBRep_DrawableShape(aShape,
-                          Draw_vert,
-                          Draw_jaune,
-                          Draw_rouge,
-                          Draw_bleu,
-                          100., // size
-                          2,    // nbIsos
-                          30)   // discret
+    : DBRep_DrawableShape(aShape, Draw_vert, Draw_jaune, Draw_rouge, Draw_bleu, 100., 2, 30)
 {
   myText      = new Draw_Text3D(Pnt(), Text, TextColor);
   myTextColor = TextColor;
 }
-
-//=================================================================================================
 
 gp_Pnt BOPTest_DrawableShape::Pnt() const
 {
@@ -83,7 +70,6 @@ gp_Pnt BOPTest_DrawableShape::Pnt() const
       break;
     }
   }
-  // si S final = compound --> P = 0 0 0
 
   switch (T)
   {
@@ -122,7 +108,7 @@ gp_Pnt BOPTest_DrawableShape::Pnt() const
     {
       BRepAdaptor_Surface SU(TopoDS::Face(S));
       BRepTools::UVBounds(TopoDS::Face(S), u1, u2, v1, v2);
-      //
+
       facpar = .2;
       u      = u1 + (u2 - u1) * facpar;
       v      = v1 + (v2 - v1) * facpar;
@@ -151,8 +137,6 @@ gp_Pnt BOPTest_DrawableShape::Pnt() const
   }
   return P;
 }
-
-//=================================================================================================
 
 void BOPTest_DrawableShape::DrawOn(Draw_Display& dis) const
 {

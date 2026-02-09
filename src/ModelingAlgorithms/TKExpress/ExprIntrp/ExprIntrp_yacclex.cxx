@@ -8,7 +8,7 @@ static int                     ExprIntrp_degree;
 extern char* ExprIntrptext;
 #else
 extern "C" char* ExprIntrptext;
-#endif // _WIN32
+#endif
 
 extern "C" void ExprIntrp_SetResult()
 {

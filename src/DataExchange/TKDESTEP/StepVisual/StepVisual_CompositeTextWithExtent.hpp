@@ -13,7 +13,6 @@ class StepVisual_CompositeTextWithExtent : public StepVisual_CompositeText
 {
 
 public:
-  //! Returns a CompositeTextWithExtent
   Standard_EXPORT StepVisual_CompositeTextWithExtent();
 
   Standard_EXPORT void Init(

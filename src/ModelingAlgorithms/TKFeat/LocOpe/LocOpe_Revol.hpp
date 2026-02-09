@@ -13,8 +13,6 @@
 #include <NCollection_Sequence.hpp>
 class Geom_Curve;
 
-//! Defines a prism (using Prism from BRepSweep)
-//! with modifications provided for the Prism feature.
 class LocOpe_Revol
 {
 public:

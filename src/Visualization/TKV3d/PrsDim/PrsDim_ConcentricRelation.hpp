@@ -5,21 +5,10 @@
 
 class Geom_Plane;
 
-//! A framework to define a constraint by a relation of
-//! concentricity between two or more interactive datums.
-//! The display of this constraint is also defined.
-//! A plane is used to create an axis along which the
-//! relation of concentricity can be extended.
 class PrsDim_ConcentricRelation : public PrsDim_Relation
 {
   DEFINE_STANDARD_RTTIEXT(PrsDim_ConcentricRelation, PrsDim_Relation)
 public:
-  //! Constructs the display object for concentric relations
-  //! between shapes.
-  //! This object is defined by the two shapes, aFShape
-  //! and aSShape and the plane aPlane.
-  //! aPlane is provided to create an axis along which the
-  //! relation of concentricity can be extended.
   Standard_EXPORT PrsDim_ConcentricRelation(const TopoDS_Shape&            aFShape,
                                             const TopoDS_Shape&            aSShape,
                                             const occ::handle<Geom_Plane>& aPlane);

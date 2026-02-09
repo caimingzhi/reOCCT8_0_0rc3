@@ -26,8 +26,6 @@ ShapeUpgrade_ConvertCurve3dToBezier::ShapeUpgrade_ConvertCurve3dToBezier()
   myConicMode   = true;
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_ConvertCurve3dToBezier::Compute()
 {
   mySegments->Clear();
@@ -106,9 +104,9 @@ void ShapeUpgrade_ConvertCurve3dToBezier::Compute()
     double                         Shift = 0.;
     if (myCurve->IsKind(STANDARD_TYPE(Geom_Conic)))
     {
-      // clang-format off
-      occ::handle<Geom_Curve> tcurve = new Geom_TrimmedCurve(myCurve,First,Last); //protection against parabols ets
-      // clang-format on
+
+      occ::handle<Geom_Curve> tcurve = new Geom_TrimmedCurve(myCurve, First, Last);
+
       GeomConvert_ApproxCurve approx(tcurve, Precision::Approximation(), GeomAbs_C1, 100, 6);
       if (approx.HasResult())
         aBSpline = approx.Curve();
@@ -156,7 +154,7 @@ void ShapeUpgrade_ConvertCurve3dToBezier::Compute()
     NCollection_Array1<double>            knots(1, nbArcs + 1);
     tool.Knots(knots);
     mySplitParams->Append(First + Shift);
-    int j; // svv Jan 10 2000 : porting on DEC
+    int j;
     for (j = 1; j <= nbArcs; j++)
     {
       double nextKnot = knots(j + 1) + Shift;
@@ -187,9 +185,7 @@ void ShapeUpgrade_ConvertCurve3dToBezier::Compute()
   myStatus = ShapeExtend::EncodeStatus(ShapeExtend_DONE1);
 }
 
-//=================================================================================================
-
-void ShapeUpgrade_ConvertCurve3dToBezier::Build(const bool /*Segment*/)
+void ShapeUpgrade_ConvertCurve3dToBezier::Build(const bool)
 {
   constexpr double prec = Precision::PConfusion();
   int              nb   = mySplitValues->Length();
@@ -221,15 +217,11 @@ void ShapeUpgrade_ConvertCurve3dToBezier::Build(const bool /*Segment*/)
   }
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<occ::handle<Geom_Curve>>> ShapeUpgrade_ConvertCurve3dToBezier::
   Segments() const
 {
   return mySegments;
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HSequence<double>> ShapeUpgrade_ConvertCurve3dToBezier::SplitParams() const
 {

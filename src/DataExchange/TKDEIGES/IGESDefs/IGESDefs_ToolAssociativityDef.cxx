@@ -19,12 +19,11 @@
 
 IGESDefs_ToolAssociativityDef::IGESDefs_ToolAssociativityDef() = default;
 
-void IGESDefs_ToolAssociativityDef::ReadOwnParams(
-  const occ::handle<IGESDefs_AssociativityDef>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /* IR */,
-  IGESData_ParamReader& PR) const
+void IGESDefs_ToolAssociativityDef::ReadOwnParams(const occ::handle<IGESDefs_AssociativityDef>& ent,
+                                                  const occ::handle<IGESData_IGESReaderData>&,
+                                                  IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   occ::handle<NCollection_HArray1<int>>            requirements;
   occ::handle<NCollection_HArray1<int>>            orders;
   occ::handle<NCollection_HArray1<int>>            numItems;
@@ -50,18 +49,12 @@ void IGESDefs_ToolAssociativityDef::ReadOwnParams(
       int                                   numItem;
       occ::handle<NCollection_HArray1<int>> item;
 
-      // st = PR.ReadInteger(PR.Current(), "Back Pointer Requirement", requirement);
-      // //szv#4:S4163:12Mar99 moved in if
       if (PR.ReadInteger(PR.Current(), "Back Pointer Requirement", requirement))
         requirements->SetValue(i, requirement);
 
-      // st = PR.ReadInteger(PR.Current(), "Ordered/Unordered Class", order); //szv#4:S4163:12Mar99
-      // moved in if
       if (PR.ReadInteger(PR.Current(), "Ordered/Unordered Class", order))
         orders->SetValue(i, order);
 
-      // st = PR.ReadInteger(PR.Current(),"No. of items per entry", numItem); //szv#4:S4163:12Mar99
-      // moved in if
       if (PR.ReadInteger(PR.Current(), "No. of items per entry", numItem))
       {
         int temp;
@@ -69,8 +62,7 @@ void IGESDefs_ToolAssociativityDef::ReadOwnParams(
         item = new NCollection_HArray1<int>(1, numItem);
         for (int j = 1; j <= numItem; j++)
         {
-          // int temp; //szv#4:S4163:12Mar99 moved out of for
-          // st = PR.ReadInteger(PR.Current(), "Item", temp); //szv#4:S4163:12Mar99 moved in if
+
           if (PR.ReadInteger(PR.Current(), "Item", temp))
             item->SetValue(j, temp);
         }
@@ -99,15 +91,14 @@ void IGESDefs_ToolAssociativityDef::WriteOwnParams(
   }
 }
 
-void IGESDefs_ToolAssociativityDef::OwnShared(
-  const occ::handle<IGESDefs_AssociativityDef>& /* ent */,
-  Interface_EntityIterator& /* iter */) const
+void IGESDefs_ToolAssociativityDef::OwnShared(const occ::handle<IGESDefs_AssociativityDef>&,
+                                              Interface_EntityIterator&) const
 {
 }
 
 void IGESDefs_ToolAssociativityDef::OwnCopy(const occ::handle<IGESDefs_AssociativityDef>& another,
                                             const occ::handle<IGESDefs_AssociativityDef>& ent,
-                                            Interface_CopyTool& /* TC */) const
+                                            Interface_CopyTool&) const
 {
 
   occ::handle<NCollection_HArray1<int>>            requirements;
@@ -145,7 +136,7 @@ void IGESDefs_ToolAssociativityDef::OwnCopy(const occ::handle<IGESDefs_Associati
 }
 
 IGESData_DirChecker IGESDefs_ToolAssociativityDef::DirChecker(
-  const occ::handle<IGESDefs_AssociativityDef>& /* ent */) const
+  const occ::handle<IGESDefs_AssociativityDef>&) const
 {
   IGESData_DirChecker DC(302, 5001, 9999);
   DC.Structure(IGESData_DefVoid);
@@ -159,15 +150,14 @@ IGESData_DirChecker IGESDefs_ToolAssociativityDef::DirChecker(
   return DC;
 }
 
-void IGESDefs_ToolAssociativityDef::OwnCheck(
-  const occ::handle<IGESDefs_AssociativityDef>& /* ent */,
-  const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /* ach */) const
+void IGESDefs_ToolAssociativityDef::OwnCheck(const occ::handle<IGESDefs_AssociativityDef>&,
+                                             const Interface_ShareTool&,
+                                             occ::handle<Interface_Check>&) const
 {
 }
 
 void IGESDefs_ToolAssociativityDef::OwnDump(const occ::handle<IGESDefs_AssociativityDef>& ent,
-                                            const IGESData_IGESDumper& /* dumper */,
+                                            const IGESData_IGESDumper&,
                                             Standard_OStream& S,
                                             const int         level) const
 {
@@ -181,7 +171,7 @@ void IGESDefs_ToolAssociativityDef::OwnDump(const occ::handle<IGESDefs_Associati
   S << std::endl;
   if (level > 4)
   {
-    // Warning : Item is a JAGGED Array
+
     int upper = ent->NbClassDefs();
     for (int i = 1; i <= upper; i++)
     {

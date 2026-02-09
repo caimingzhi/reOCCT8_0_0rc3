@@ -14,7 +14,7 @@ IMPLEMENT_STANDARD_RTTIEXT(STEPSelections_SelectGSCurves, IFSelect_SelectExplore
 namespace
 {
   thread_local int flag;
-} // namespace
+}
 
 STEPSelections_SelectGSCurves::STEPSelections_SelectGSCurves()
     : IFSelect_SelectExplore(-1)
@@ -22,7 +22,7 @@ STEPSelections_SelectGSCurves::STEPSelections_SelectGSCurves()
   flag = 1;
 }
 
-bool STEPSelections_SelectGSCurves::Explore(const int /*level*/,
+bool STEPSelections_SelectGSCurves::Explore(const int,
                                             const occ::handle<Standard_Transient>& start,
                                             const Interface_Graph&                 G,
                                             Interface_EntityIterator&              explored) const

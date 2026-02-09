@@ -20,7 +20,6 @@ void IGESDimen_ToolLinearDimension::ReadOwnParams(const occ::handle<IGESDimen_Li
                                                   const occ::handle<IGESData_IGESReaderData>&   IR,
                                                   IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   occ::handle<IGESDimen_GeneralNote> note;
   occ::handle<IGESDimen_LeaderArrow> firstLeader;
@@ -32,29 +31,34 @@ void IGESDimen_ToolLinearDimension::ReadOwnParams(const occ::handle<IGESDimen_Li
                 PR.Current(),
                 "General Note Entity",
                 STANDARD_TYPE(IGESDimen_GeneralNote),
-                note); // szv#4:S4163:12Mar99 `st=` not needed
+                note);
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "First Leader Entity",
                 STANDARD_TYPE(IGESDimen_LeaderArrow),
-                firstLeader); // szv#4:S4163:12Mar99 `st=` not needed
+                firstLeader);
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "Second Leader Entity",
                 STANDARD_TYPE(IGESDimen_LeaderArrow),
-                secondLeader); // szv#4:S4163:12Mar99 `st=` not needed
+                secondLeader);
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "First Witness Entity",
-                // clang-format off
-		STANDARD_TYPE(IGESDimen_WitnessLine), firstWitness, true); //szv#4:S4163:12Mar99 `st=` not needed
 
-  PR.ReadEntity(IR,PR.Current(),"Second Witness Entity",
-		STANDARD_TYPE(IGESDimen_WitnessLine), secondWitness, true); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+                STANDARD_TYPE(IGESDimen_WitnessLine),
+                firstWitness,
+                true);
+
+  PR.ReadEntity(IR,
+                PR.Current(),
+                "Second Witness Entity",
+                STANDARD_TYPE(IGESDimen_WitnessLine),
+                secondWitness,
+                true);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(note, firstLeader, secondLeader, firstWitness, secondWitness);
@@ -96,7 +100,7 @@ void IGESDimen_ToolLinearDimension::OwnCopy(const occ::handle<IGESDimen_LinearDi
 }
 
 IGESData_DirChecker IGESDimen_ToolLinearDimension::DirChecker(
-  const occ::handle<IGESDimen_LinearDimension>& /*ent*/) const
+  const occ::handle<IGESDimen_LinearDimension>&) const
 {
   IGESData_DirChecker DC(216, 0, 2);
   DC.Structure(IGESData_DefVoid);
@@ -107,9 +111,9 @@ IGESData_DirChecker IGESDimen_ToolLinearDimension::DirChecker(
   return DC;
 }
 
-void IGESDimen_ToolLinearDimension::OwnCheck(const occ::handle<IGESDimen_LinearDimension>& /*ent*/,
+void IGESDimen_ToolLinearDimension::OwnCheck(const occ::handle<IGESDimen_LinearDimension>&,
                                              const Interface_ShareTool&,
-                                             occ::handle<Interface_Check>& /*ach*/) const
+                                             occ::handle<Interface_Check>&) const
 {
 }
 

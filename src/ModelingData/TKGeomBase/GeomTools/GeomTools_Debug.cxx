@@ -8,10 +8,6 @@
 #include <Geom_Curve.hpp>
 #include <Geom2d_Curve.hpp>
 
-// This file defines global functions not declared in any public header,
-// intended for use from debugger prompt (Command Window in Visual Studio)
-
-//! Dump content of the geometric object to cout
 const char* GeomTools_Dump(void* theHandlePtr)
 {
   if (theHandlePtr == nullptr)
@@ -59,10 +55,6 @@ const char* GeomTools_Dump(void* theHandlePtr)
   }
 }
 
-// MSVC debugger cannot deal correctly with functions whose argunments
-// have non-standard types. Here we define alternative to the above functions
-// with good types with the hope that GDB on Linux or other debugger could
-// work with them (DBX could, on SUN Solaris).
 #ifndef _MSC_VER
 
 const char* GeomTools_Dump(const occ::handle<Standard_Transient>& theGeom)

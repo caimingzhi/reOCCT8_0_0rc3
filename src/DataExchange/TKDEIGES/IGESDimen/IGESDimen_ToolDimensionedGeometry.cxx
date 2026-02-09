@@ -19,36 +19,21 @@ void IGESDimen_ToolDimensionedGeometry::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&       IR,
   IGESData_ParamReader&                             PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   int                                                                tempNbDimen;
   occ::handle<IGESData_IGESEntity>                                   aDimEntity;
   int                                                                nbgeom = 0;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> GeomEntities;
 
-  // clang-format off
-  PR.ReadInteger(PR.Current(),"Number of Dimensions",tempNbDimen); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "Number of Dimensions", tempNbDimen);
 
-  PR.ReadInteger(PR.Current(),"number of entities",nbgeom); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "number of entities", nbgeom);
 
-  PR.ReadEntity(IR,PR.Current(),"Dimension Entity",aDimEntity); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadEntity(IR, PR.Current(), "Dimension Entity", aDimEntity);
 
   if (nbgeom > 0)
-    PR.ReadEnts(IR,
-                PR.CurrentList(nbgeom),
-                "Geometry Entities",
-                GeomEntities); // szv#4:S4163:12Mar99 `st=` not needed
-  /*
-      {
-        GeomEntities = new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1,nbgeom);
-        for (int i = 1; i <= nbgeom; i++)
-      {
-            occ::handle<IGESData_IGESEntity> anentity;
-            st = PR.ReadEntity(IR,PR.Current(),"Geometry Entity",anentity);
-        if (st) GeomEntities->SetValue(i,anentity);
-      }
-      }
-  */
+    PR.ReadEnts(IR, PR.CurrentList(nbgeom), "Geometry Entities", GeomEntities);
+
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempNbDimen, aDimEntity, GeomEntities);
 }
@@ -96,7 +81,7 @@ bool IGESDimen_ToolDimensionedGeometry::OwnCorrect(
 {
   if (ent->NbDimensions() == 1)
     return false;
-  //  force NbDimensions to 1 -> reconstruct
+
   int                                                                nb = ent->NbGeometryEntities();
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> EntArray =
     new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, nb);
@@ -107,9 +92,9 @@ bool IGESDimen_ToolDimensionedGeometry::OwnCorrect(
 }
 
 IGESData_DirChecker IGESDimen_ToolDimensionedGeometry::DirChecker(
-  const occ::handle<IGESDimen_DimensionedGeometry>& /* ent */) const
+  const occ::handle<IGESDimen_DimensionedGeometry>&) const
 {
-  IGESData_DirChecker DC(402, 13); // type no = 402; form no. = 13
+  IGESData_DirChecker DC(402, 13);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
@@ -135,9 +120,6 @@ void IGESDimen_ToolDimensionedGeometry::OwnDump(
   const int                                         level) const
 {
   S << "IGESDimen_DimensionedGeometry\n";
-
-  // int lower = 1; //szv#4:S4163:12Mar99 unused
-  //  int upper = ent->NbGeometryEntities();
 
   S << "Number of Dimensions : " << ent->NbDimensions() << "\n"
     << "Dimension Entity : ";

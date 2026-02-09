@@ -11,7 +11,6 @@ class StepShape_AdvancedBrepShapeRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AdvancedBrepShapeRepresentation
 class RWStepShape_RWAdvancedBrepShapeRepresentation
 {
 public:

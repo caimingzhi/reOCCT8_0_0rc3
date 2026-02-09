@@ -41,19 +41,18 @@ IMPLEMENT_STANDARD_RTTIEXT(StdPrs_BRepFont, Standard_Transient)
 
 namespace
 {
-  // pre-defined font rendering options
+
   static const unsigned int      THE_FONT_SIZE      = 72;
   static const unsigned int      THE_RESOLUTION_DPI = 4800;
   static const Font_FTFontParams THE_FONT_PARAMS(THE_FONT_SIZE, THE_RESOLUTION_DPI);
 
-  // compute scaling factor for specified font size
   inline double getScale(const double theSize)
   {
     return theSize / double(THE_FONT_SIZE) * 72.0 / double(THE_RESOLUTION_DPI);
   }
 
 #ifdef HAVE_FREETYPE
-  //! Auxiliary method to convert FT_Vector to gp_XY
+
   static gp_XY readFTVec(const FT_Vector& theVec,
                          const double     theScaleUnits,
                          const double     theWidthScaling = 1.0)
@@ -62,7 +61,6 @@ namespace
                  theScaleUnits * double(theVec.y) / 64.0);
   }
 
-  //! Auxiliary method for classification wire theW2 with respect to wire theW1
   static TopAbs_State classifyWW(const TopoDS_Wire& theW1,
                                  const TopoDS_Wire& theW2,
                                  const TopoDS_Face& theF)
@@ -103,8 +101,6 @@ namespace
 #endif
 } // namespace
 
-//=================================================================================================
-
 StdPrs_BRepFont::StdPrs_BRepFont()
     : myPrecision(Precision::Confusion()),
       myScaleUnits(1.0),
@@ -116,8 +112,6 @@ StdPrs_BRepFont::StdPrs_BRepFont()
   init();
 }
 
-//=================================================================================================
-
 void StdPrs_BRepFont::init()
 {
   mySurface                                   = new Geom_Plane(gp_Pln(gp::XOY()));
@@ -125,8 +119,6 @@ void StdPrs_BRepFont::init()
   occ::handle<Adaptor3d_Surface> aSurfAdaptor = new GeomAdaptor_Surface(mySurface);
   myCurvOnSurf.Load(aSurfAdaptor);
 }
-
-//=================================================================================================
 
 StdPrs_BRepFont::StdPrs_BRepFont(const NCollection_String& theFontPath,
                                  const double              theSize,
@@ -147,8 +139,6 @@ StdPrs_BRepFont::StdPrs_BRepFont(const NCollection_String& theFontPath,
   myFTFont     = new Font_FTFont();
   myFTFont->Init(theFontPath.ToCString(), THE_FONT_PARAMS, theFaceId);
 }
-
-//=================================================================================================
 
 StdPrs_BRepFont::StdPrs_BRepFont(const NCollection_String& theFontName,
                                  const Font_FontAspect     theFontAspect,
@@ -171,15 +161,11 @@ StdPrs_BRepFont::StdPrs_BRepFont(const NCollection_String& theFontName,
   myFTFont->FindAndInit(theFontName.ToCString(), theFontAspect, THE_FONT_PARAMS, theStrictLevel);
 }
 
-//=================================================================================================
-
 void StdPrs_BRepFont::Release()
 {
   myCache.Clear();
   myFTFont->Release();
 }
-
-//=================================================================================================
 
 occ::handle<StdPrs_BRepFont> StdPrs_BRepFont::FindAndCreate(
   const TCollection_AsciiString& theFontName,
@@ -195,8 +181,6 @@ occ::handle<StdPrs_BRepFont> StdPrs_BRepFont::FindAndCreate(
   return occ::handle<StdPrs_BRepFont>();
 }
 
-//=================================================================================================
-
 void StdPrs_BRepFont::SetCompositeCurveMode(const bool theToConcatenate)
 {
   if (myIsCompositeCurve != theToConcatenate)
@@ -205,8 +189,6 @@ void StdPrs_BRepFont::SetCompositeCurveMode(const bool theToConcatenate)
     myCache.Clear();
   }
 }
-
-//=================================================================================================
 
 bool StdPrs_BRepFont::Init(const NCollection_String& theFontPath,
                            const double              theSize,
@@ -221,8 +203,6 @@ bool StdPrs_BRepFont::Init(const NCollection_String& theFontPath,
   myCache.Clear();
   return myFTFont->Init(theFontPath.ToCString(), THE_FONT_PARAMS, theFaceId);
 }
-
-//=================================================================================================
 
 bool StdPrs_BRepFont::FindAndInit(const TCollection_AsciiString& theFontName,
                                   const Font_FontAspect          theFontAspect,
@@ -242,8 +222,6 @@ bool StdPrs_BRepFont::FindAndInit(const TCollection_AsciiString& theFontName,
                                theStrictLevel);
 }
 
-//=================================================================================================
-
 TopoDS_Shape StdPrs_BRepFont::RenderGlyph(const char32_t& theChar)
 {
   TopoDS_Shape                aShape;
@@ -252,8 +230,6 @@ TopoDS_Shape StdPrs_BRepFont::RenderGlyph(const char32_t& theChar)
   return aShape;
 }
 
-//=================================================================================================
-
 bool StdPrs_BRepFont::to3d(const occ::handle<Geom2d_Curve>& theCurve2d,
                            const GeomAbs_Shape              theContinuity,
                            occ::handle<Geom_Curve>&         theCurve3d)
@@ -261,7 +237,7 @@ bool StdPrs_BRepFont::to3d(const occ::handle<Geom2d_Curve>& theCurve2d,
   double aMaxDeviation   = 0.0;
   double anAverDeviation = 0.0;
   myCurve2dAdaptor->Load(theCurve2d);
-  const occ::handle<Adaptor2d_Curve2d>& aCurve = myCurve2dAdaptor; // to avoid ambiguity
+  const occ::handle<Adaptor2d_Curve2d>& aCurve = myCurve2dAdaptor;
   myCurvOnSurf.Load(aCurve);
   GeomLib::BuildCurve3d(myPrecision,
                         myCurvOnSurf,
@@ -274,13 +250,11 @@ bool StdPrs_BRepFont::to3d(const occ::handle<Geom2d_Curve>& theCurve2d,
   return !theCurve3d.IsNull();
 }
 
-//=================================================================================================
-
 bool StdPrs_BRepFont::buildFaces(const NCollection_Sequence<TopoDS_Wire>& theWires,
                                  TopoDS_Shape&                            theRes)
 {
 #ifdef HAVE_FREETYPE
-  // classify wires
+
   NCollection_DataMap<TopoDS_Shape, NCollection_Sequence<TopoDS_Wire>, TopTools_ShapeMapHasher>
                                                                   aMapOutInts;
   NCollection_DataMap<TopoDS_Shape, int, TopTools_ShapeMapHasher> aMapNbOuts;
@@ -326,7 +300,6 @@ bool StdPrs_BRepFont::buildFaces(const NCollection_Sequence<TopoDS_Wire>& theWir
     }
   }
 
-  // check out wires and remove "not out" wires from maps
   for (NCollection_DataMap<TopoDS_Shape, int, TopTools_ShapeMapHasher>::Iterator anOutIter(
          aMapNbOuts);
        anOutIter.More();
@@ -335,18 +308,17 @@ bool StdPrs_BRepFont::buildFaces(const NCollection_Sequence<TopoDS_Wire>& theWir
     const int aTmp = anOutIter.Value() % 2;
     if (aTmp > 0)
     {
-      // not out wire
+
       aMapOutInts.UnBind(anOutIter.Key());
     }
   }
 
-  // create faces for out wires
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> anUsedShapes;
   TopoDS_Compound                                        aFaceComp;
   myBuilder.MakeCompound(aFaceComp);
   for (; !aMapOutInts.IsEmpty();)
   {
-    // find out wire with max number of outs
+
     TopoDS_Shape aW;
     int          aMaxNbOuts = -1;
     for (NCollection_DataMap<TopoDS_Shape,
@@ -364,7 +336,6 @@ bool StdPrs_BRepFont::buildFaces(const NCollection_Sequence<TopoDS_Wire>& theWir
       }
     }
 
-    // create face for selected wire
     TopoDS_Face aNewF;
     myBuilder.MakeFace(aNewF, mySurface, myPrecision);
     myBuilder.Add(aNewF, aW);
@@ -409,8 +380,6 @@ bool StdPrs_BRepFont::buildFaces(const NCollection_Sequence<TopoDS_Wire>& theWir
 #endif
 }
 
-//=================================================================================================
-
 bool StdPrs_BRepFont::renderGlyph(const char32_t theChar, TopoDS_Shape& theShape)
 {
   theShape.Nullify();
@@ -432,9 +401,6 @@ bool StdPrs_BRepFont::renderGlyph(const char32_t theChar, TopoDS_Shape& theShape
   NCollection_Sequence<TopoDS_Wire> aWires;
   TopoDS_Compound                   aFaceCompDraft;
 
-  // Get orientation is useless since it doesn't retrieve any in-font information and just computes
-  // orientation. Because it fails in some cases - leave this to ShapeFix.
-  // const FT_Orientation anOrient = FT_Outline_Get_Orientation (&anOutline);
   for (short aContour = 0, aStartIndex = 0; aContour < anOutline->n_contours; ++aContour)
   {
     const FT_Vector* aPntList   = &anOutline->points[aStartIndex];
@@ -444,7 +410,7 @@ bool StdPrs_BRepFont::renderGlyph(const char32_t theChar, TopoDS_Shape& theShape
     aStartIndex                 = anEndIndex + 1;
     if (aPntsNb < 3 && !myFTFont->IsSingleStrokeFont())
     {
-      // closed contour can not be constructed from < 3 points
+
       continue;
     }
 
@@ -458,8 +424,6 @@ bool StdPrs_BRepFont::renderGlyph(const char32_t theChar, TopoDS_Shape& theShape
       !myFTFont->IsSingleStrokeFont() && FT_CURVE_TAG(aTags[aPntsNb - 1]) == FT_Curve_Tag_On;
     gp_XY aPntLine1 = aPntCurr;
 
-    // see http://freetype.sourceforge.net/freetype2/docs/glyphs/glyphs-6.html
-    // for a full description of FreeType tags.
     for (short aPntId = 0; aPntId < aPntsNb; ++aPntId)
     {
       aPntPrev = aPntCurr;
@@ -467,7 +431,6 @@ bool StdPrs_BRepFont::renderGlyph(const char32_t theChar, TopoDS_Shape& theShape
       aPntNext =
         readFTVec(aPntList[(aPntId + 1) % aPntsNb], myScaleUnits, myFTFont->WidthScaling());
 
-      // process tags
       if (FT_CURVE_TAG(aTags[aPntId]) == FT_Curve_Tag_On)
       {
         if (!isLineSeg)
@@ -512,14 +475,11 @@ bool StdPrs_BRepFont::renderGlyph(const char32_t theChar, TopoDS_Shape& theShape
         gp_XY aPntPrev2 = aPntPrev;
         gp_XY aPntNext2 = aPntNext;
 
-        // previous point is either the real previous point (an "on" point),
-        // or the midpoint between the current one and the previous "conic off" point
         if (FT_CURVE_TAG(aTags[(aPntId - 1 + aPntsNb) % aPntsNb]) == FT_Curve_Tag_Conic)
         {
           aPntPrev2 = (aPntCurr + aPntPrev) * 0.5;
         }
 
-        // next point is either the real next point or the midpoint
         if (FT_CURVE_TAG(aTags[(aPntId + 1) % aPntsNb]) == FT_Curve_Tag_Conic)
         {
           aPntNext2 = (aPntCurr + aPntNext) * 0.5;
@@ -624,7 +584,7 @@ bool StdPrs_BRepFont::renderGlyph(const char32_t theChar, TopoDS_Shape& theShape
     TopoDS_Wire aWireDraft = aWireMaker.Wire();
     if (!myFTFont->IsSingleStrokeFont())
     {
-      // collect all wires and set CCW orientation
+
       TopoDS_Face aFace;
       myBuilder.MakeFace(aFace, mySurface, myPrecision);
       myBuilder.Add(aFace, aWireDraft);
@@ -632,7 +592,7 @@ bool StdPrs_BRepFont::renderGlyph(const char32_t theChar, TopoDS_Shape& theShape
       TopAbs_State            aState = aClass2d.PerformInfinitePoint();
       if (aState != TopAbs_OUT)
       {
-        // need to reverse
+
         aWireDraft.Reverse();
       }
       aWires.Append(aWireDraft);

@@ -12,8 +12,6 @@ static const double Probing_Start = 0.123;
 static const double Probing_End   = 0.7;
 static const double Probing_Step  = 0.2111;
 
-//=================================================================================================
-
 BRepClass_FaceExplorer::BRepClass_FaceExplorer(const TopoDS_Face& F)
     : myFace(F),
       myCurEdgeInd(1),
@@ -29,8 +27,6 @@ BRepClass_FaceExplorer::BRepClass_FaceExplorer(const TopoDS_Face& F)
   myFace.Orientation(TopAbs_FORWARD);
 }
 
-//=================================================================================================
-
 void BRepClass_FaceExplorer::ComputeFaceBounds()
 {
   TopLoc_Location                  aLocation;
@@ -42,8 +38,6 @@ void BRepClass_FaceExplorer::ComputeFaceBounds()
     BRepTools::UVBounds(myFace, myUMin, myUMax, myVMin, myVMax);
   }
 }
-
-//=================================================================================================
 
 bool BRepClass_FaceExplorer::CheckPoint(gp_Pnt2d& thePoint)
 {
@@ -80,14 +74,10 @@ bool BRepClass_FaceExplorer::CheckPoint(gp_Pnt2d& thePoint)
   return true;
 }
 
-//=================================================================================================
-
 bool BRepClass_FaceExplorer::Reject(const gp_Pnt2d&) const
 {
   return false;
 }
-
-//=================================================================================================
 
 bool BRepClass_FaceExplorer::Segment(const gp_Pnt2d& P, gp_Lin2d& L, double& Par)
 {
@@ -96,8 +86,6 @@ bool BRepClass_FaceExplorer::Segment(const gp_Pnt2d& P, gp_Lin2d& L, double& Par
 
   return OtherSegment(P, L, Par);
 }
-
-//=================================================================================================
 
 bool BRepClass_FaceExplorer::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double& Par)
 {
@@ -126,7 +114,7 @@ bool BRepClass_FaceExplorer::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double
 
       if (!aC2d.IsNull())
       {
-        // Treatment of infinite cases.
+
         if (Precision::IsNegativeInfinite(aFPar))
         {
           if (Precision::IsPositiveInfinite(aLPar))
@@ -165,18 +153,13 @@ bool BRepClass_FaceExplorer::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double
             if (std::abs(aSinA) < SmallAngle)
             {
               isSmallAngle = true;
-              // The line from the input point P to the current point on edge
-              // is tangent to the edge curve. This condition is bad for classification.
-              // Therefore try to go to another point in the hope that there will be
-              // no tangent. If there tangent is preserved then leave the last point in
-              // order to get this edge chance to participate in classification.
+
               if (myCurEdgePar + Probing_Step < Probing_End)
                 continue;
             }
 
             L = gp_Lin2d(P, aLinDir);
 
-            // Check if ends of a curve lie on a line.
             aC2d->D0(aFPar, aPOnC);
             gp_Pnt2d aFPOnC = aPOnC;
             if (L.SquareDistance(aPOnC) > aTolParConf2)
@@ -187,7 +170,6 @@ bool BRepClass_FaceExplorer::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double
 
                 if (isSmallAngle)
                 {
-                  // Try to find minimal distance between curve and line
 
                   Geom2dAPI_ProjectPointOnCurve aProj;
                   aProj.Init(P, aC2d, aFPar, aLPar);
@@ -204,13 +186,13 @@ bool BRepClass_FaceExplorer::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double
                       aMinDist = aFDist;
                       aPOnC    = aFPOnC;
                     }
-                    //
+
                     if (aMinDist > aLDist)
                     {
                       aMinDist = aLDist;
                       aPOnC    = aLPOnC;
                     }
-                    //
+
                     if (aMinDist < Par)
                     {
                       Par = aMinDist;
@@ -237,36 +219,28 @@ bool BRepClass_FaceExplorer::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double
             }
           }
         }
-      } // if (!aC2d.IsNull()) {
-    } // if (anOrientation == TopAbs_FORWARD ...
+      }
+    }
 
-    // This curve is not valid for line construction. Go to another edge.
     myCurEdgeInd++;
     myCurEdgePar = Probing_Start;
   }
 
-  // nothing found, return an horizontal line
   Par = RealLast();
   L   = gp_Lin2d(P, gp_Dir2d(gp_Dir2d::D::X));
 
   return false;
 }
 
-//=================================================================================================
-
 void BRepClass_FaceExplorer::InitWires()
 {
   myWExplorer.Init(myFace, TopAbs_WIRE);
 }
 
-//=================================================================================================
-
 bool BRepClass_FaceExplorer::RejectWire(const gp_Lin2d&, const double) const
 {
   return false;
 }
-
-//=================================================================================================
 
 void BRepClass_FaceExplorer::InitEdges()
 {
@@ -275,14 +249,10 @@ void BRepClass_FaceExplorer::InitEdges()
   TopExp::MapShapesAndAncestors(myWExplorer.Current(), TopAbs_VERTEX, TopAbs_EDGE, myMapVE);
 }
 
-//=================================================================================================
-
 bool BRepClass_FaceExplorer::RejectEdge(const gp_Lin2d&, const double) const
 {
   return false;
 }
-
-//=================================================================================================
 
 void BRepClass_FaceExplorer::CurrentEdge(BRepClass_Edge& E, TopAbs_Orientation& Or) const
 {

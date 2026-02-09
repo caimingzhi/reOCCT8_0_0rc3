@@ -13,7 +13,6 @@ class StepAP214_AutoDesignPresentedItem : public StepVisual_PresentedItem
 {
 
 public:
-  //! Returns a AutoDesignPresentedItem
   Standard_EXPORT StepAP214_AutoDesignPresentedItem();
 
   Standard_EXPORT void Init(

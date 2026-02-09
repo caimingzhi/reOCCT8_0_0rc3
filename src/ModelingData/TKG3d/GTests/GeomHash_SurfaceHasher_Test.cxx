@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -42,10 +31,6 @@ protected:
   GeomHash_SurfaceHasher myHasher;
 };
 
-// ============================================================================
-// Plane Tests
-// ============================================================================
-
 TEST_F(GeomHash_SurfaceHasherTest, Plane_CopiedPlanes_SameHash)
 {
   gp_Ax3                  anAxis(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(0.0, 0.0, 1.0));
@@ -66,10 +51,6 @@ TEST_F(GeomHash_SurfaceHasherTest, Plane_DifferentPlanes_DifferentHash)
   EXPECT_NE(myHasher(aPlane1), myHasher(aPlane2));
   EXPECT_FALSE(myHasher(aPlane1, aPlane2));
 }
-
-// ============================================================================
-// Cylindrical Surface Tests
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, CylindricalSurface_CopiedSurfaces_SameHash)
 {
@@ -92,10 +73,6 @@ TEST_F(GeomHash_SurfaceHasherTest, CylindricalSurface_DifferentRadius_DifferentH
   EXPECT_FALSE(myHasher(aCyl1, aCyl2));
 }
 
-// ============================================================================
-// Conical Surface Tests
-// ============================================================================
-
 TEST_F(GeomHash_SurfaceHasherTest, ConicalSurface_CopiedSurfaces_SameHash)
 {
   gp_Ax3                           anAxis(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(0.0, 0.0, 1.0));
@@ -115,10 +92,6 @@ TEST_F(GeomHash_SurfaceHasherTest, ConicalSurface_DifferentAngle_DifferentHash)
   EXPECT_NE(myHasher(aCone1), myHasher(aCone2));
   EXPECT_FALSE(myHasher(aCone1, aCone2));
 }
-
-// ============================================================================
-// Spherical Surface Tests
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, SphericalSurface_CopiedSurfaces_SameHash)
 {
@@ -141,10 +114,6 @@ TEST_F(GeomHash_SurfaceHasherTest, SphericalSurface_DifferentRadius_DifferentHas
   EXPECT_FALSE(myHasher(aSphere1, aSphere2));
 }
 
-// ============================================================================
-// Toroidal Surface Tests
-// ============================================================================
-
 TEST_F(GeomHash_SurfaceHasherTest, ToroidalSurface_CopiedSurfaces_SameHash)
 {
   gp_Ax3                            anAxis(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(0.0, 0.0, 1.0));
@@ -164,10 +133,6 @@ TEST_F(GeomHash_SurfaceHasherTest, ToroidalSurface_DifferentRadii_DifferentHash)
   EXPECT_NE(myHasher(aTorus1), myHasher(aTorus2));
   EXPECT_FALSE(myHasher(aTorus1, aTorus2));
 }
-
-// ============================================================================
-// BezierSurface Tests
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, BezierSurface_CopiedSurfaces_SameHash)
 {
@@ -196,18 +161,13 @@ TEST_F(GeomHash_SurfaceHasherTest, BezierSurface_DifferentPoles_DifferentCompari
   aPoles2(1, 1) = gp_Pnt(0.0, 0.0, 0.0);
   aPoles2(1, 2) = gp_Pnt(1.0, 0.0, 0.0);
   aPoles2(2, 1) = gp_Pnt(0.0, 1.0, 0.0);
-  aPoles2(2, 2) = gp_Pnt(1.0, 1.0, 2.0); // Different
+  aPoles2(2, 2) = gp_Pnt(1.0, 1.0, 2.0);
 
   occ::handle<Geom_BezierSurface> aSurf1 = new Geom_BezierSurface(aPoles1);
   occ::handle<Geom_BezierSurface> aSurf2 = new Geom_BezierSurface(aPoles2);
 
-  // Hash may be same (metadata only), but comparison should differ
   EXPECT_FALSE(myHasher(aSurf1, aSurf2));
 }
-
-// ============================================================================
-// BSplineSurface Tests
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, BSplineSurface_CopiedSurfaces_SameHash)
 {
@@ -237,10 +197,6 @@ TEST_F(GeomHash_SurfaceHasherTest, BSplineSurface_CopiedSurfaces_SameHash)
   EXPECT_TRUE(myHasher(aSurf1, aSurf2));
 }
 
-// ============================================================================
-// SurfaceOfRevolution Tests
-// ============================================================================
-
 TEST_F(GeomHash_SurfaceHasherTest, SurfaceOfRevolution_CopiedSurfaces_SameHash)
 {
   occ::handle<Geom_Line> aLine = new Geom_Line(gp_Pnt(1.0, 0.0, 0.0), gp_Dir(0.0, 0.0, 1.0));
@@ -252,10 +208,6 @@ TEST_F(GeomHash_SurfaceHasherTest, SurfaceOfRevolution_CopiedSurfaces_SameHash)
   EXPECT_EQ(myHasher(aRev1), myHasher(aRev2));
   EXPECT_TRUE(myHasher(aRev1, aRev2));
 }
-
-// ============================================================================
-// SurfaceOfLinearExtrusion Tests
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, SurfaceOfLinearExtrusion_CopiedSurfaces_SameHash)
 {
@@ -269,10 +221,6 @@ TEST_F(GeomHash_SurfaceHasherTest, SurfaceOfLinearExtrusion_CopiedSurfaces_SameH
   EXPECT_EQ(myHasher(anExt1), myHasher(anExt2));
   EXPECT_TRUE(myHasher(anExt1, anExt2));
 }
-
-// ============================================================================
-// RectangularTrimmedSurface Tests
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, RectangularTrimmedSurface_CopiedSurfaces_SameHash)
 {
@@ -300,10 +248,6 @@ TEST_F(GeomHash_SurfaceHasherTest, RectangularTrimmedSurface_DifferentBounds_Dif
   EXPECT_FALSE(myHasher(aTrimmed1, aTrimmed2));
 }
 
-// ============================================================================
-// OffsetSurface Tests
-// ============================================================================
-
 TEST_F(GeomHash_SurfaceHasherTest, OffsetSurface_CopiedSurfaces_SameHash)
 {
   gp_Ax3                          anAxis(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(0.0, 0.0, 1.0));
@@ -325,10 +269,6 @@ TEST_F(GeomHash_SurfaceHasherTest, OffsetSurface_DifferentOffset_DifferentHash)
   EXPECT_NE(myHasher(anOffset1), myHasher(anOffset2));
   EXPECT_FALSE(myHasher(anOffset1, anOffset2));
 }
-
-// ============================================================================
-// Cross-type Tests
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, DifferentTypes_DifferentComparison)
 {
@@ -356,10 +296,6 @@ TEST_F(GeomHash_SurfaceHasherTest, SameObject_Equal)
   occ::handle<Geom_Plane> aPlane = new Geom_Plane(anAxis);
   EXPECT_TRUE(myHasher(aPlane, aPlane));
 }
-
-// ============================================================================
-// Weighted BSpline Surface Tests
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, BSplineSurface_Weighted_CopiedSurfaces_SameHash)
 {
@@ -413,7 +349,7 @@ TEST_F(GeomHash_SurfaceHasherTest, BSplineSurface_DifferentWeights_DifferentComp
   aWeights2(1, 1) = 1.0;
   aWeights2(1, 2) = 1.0;
   aWeights2(2, 1) = 1.0;
-  aWeights2(2, 2) = 3.0; // Different
+  aWeights2(2, 2) = 3.0;
 
   NCollection_Array1<double> aUKnots(1, 2), aVKnots(1, 2);
   aUKnots(1) = 0.0;
@@ -435,10 +371,6 @@ TEST_F(GeomHash_SurfaceHasherTest, BSplineSurface_DifferentWeights_DifferentComp
   EXPECT_FALSE(myHasher(aSurf1, aSurf2));
 }
 
-// ============================================================================
-// Weighted Bezier Surface Tests
-// ============================================================================
-
 TEST_F(GeomHash_SurfaceHasherTest, BezierSurface_Weighted_CopiedSurfaces_SameHash)
 {
   NCollection_Array2<gp_Pnt> aPoles(1, 2, 1, 2);
@@ -459,10 +391,6 @@ TEST_F(GeomHash_SurfaceHasherTest, BezierSurface_Weighted_CopiedSurfaces_SameHas
   EXPECT_EQ(myHasher(aSurf1), myHasher(aSurf2));
   EXPECT_TRUE(myHasher(aSurf1, aSurf2));
 }
-
-// ============================================================================
-// Axis Orientation Tests
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, Plane_DifferentNormal_DifferentHash)
 {
@@ -486,10 +414,6 @@ TEST_F(GeomHash_SurfaceHasherTest, CylindricalSurface_DifferentAxis_DifferentHas
   EXPECT_FALSE(myHasher(aCyl1, aCyl2));
 }
 
-// ============================================================================
-// Revolution with Different Basis Curve Tests
-// ============================================================================
-
 TEST_F(GeomHash_SurfaceHasherTest, SurfaceOfRevolution_DifferentBasisCurve_DifferentComparison)
 {
   occ::handle<Geom_Line> aLine1 = new Geom_Line(gp_Pnt(1.0, 0.0, 0.0), gp_Dir(0.0, 0.0, 1.0));
@@ -500,10 +424,6 @@ TEST_F(GeomHash_SurfaceHasherTest, SurfaceOfRevolution_DifferentBasisCurve_Diffe
 
   EXPECT_FALSE(myHasher(aRev1, aRev2));
 }
-
-// ============================================================================
-// Extrusion with Different Direction Tests
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, SurfaceOfLinearExtrusion_DifferentDirection_DifferentHash)
 {
@@ -519,10 +439,6 @@ TEST_F(GeomHash_SurfaceHasherTest, SurfaceOfLinearExtrusion_DifferentDirection_D
   EXPECT_FALSE(myHasher(anExt1, anExt2));
 }
 
-// ============================================================================
-// BSpline Surface with Different Knots Tests
-// ============================================================================
-
 TEST_F(GeomHash_SurfaceHasherTest, BSplineSurface_DifferentKnots_DifferentComparison)
 {
   NCollection_Array2<gp_Pnt> aPoles(1, 2, 1, 2);
@@ -535,7 +451,7 @@ TEST_F(GeomHash_SurfaceHasherTest, BSplineSurface_DifferentKnots_DifferentCompar
   aUKnots1(1) = 0.0;
   aUKnots1(2) = 1.0;
   aUKnots2(1) = 0.0;
-  aUKnots2(2) = 2.0; // Different
+  aUKnots2(2) = 2.0;
   aVKnots(1)  = 0.0;
   aVKnots(2)  = 1.0;
 
@@ -552,10 +468,6 @@ TEST_F(GeomHash_SurfaceHasherTest, BSplineSurface_DifferentKnots_DifferentCompar
 
   EXPECT_FALSE(myHasher(aSurf1, aSurf2));
 }
-
-// ============================================================================
-// Transformed Surface Tests
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, Plane_Translated_DifferentHash)
 {
@@ -579,10 +491,6 @@ TEST_F(GeomHash_SurfaceHasherTest, Sphere_Scaled_DifferentHash)
   EXPECT_NE(myHasher(aSphere1), myHasher(aSphere2));
   EXPECT_FALSE(myHasher(aSphere1, aSphere2));
 }
-
-// ============================================================================
-// UReversed/VReversed Surface Tests
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, BezierSurface_UReversed_DifferentComparison)
 {
@@ -611,10 +519,6 @@ TEST_F(GeomHash_SurfaceHasherTest, BezierSurface_VReversed_DifferentComparison)
 
   EXPECT_FALSE(myHasher(aSurf1, aSurf2));
 }
-
-// ============================================================================
-// Higher Degree BSpline Surface Tests
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, BSplineSurface_HigherDegree_CopiedSurfaces_SameHash)
 {
@@ -647,10 +551,6 @@ TEST_F(GeomHash_SurfaceHasherTest, BSplineSurface_HigherDegree_CopiedSurfaces_Sa
   EXPECT_TRUE(myHasher(aSurf1, aSurf2));
 }
 
-// ============================================================================
-// Cross-type Elementary Surface Tests
-// ============================================================================
-
 TEST_F(GeomHash_SurfaceHasherTest, Cylinder_vs_Cone_DifferentComparison)
 {
   gp_Ax3                               anAxis(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(0.0, 0.0, 1.0));
@@ -669,10 +569,6 @@ TEST_F(GeomHash_SurfaceHasherTest, Sphere_vs_Torus_DifferentComparison)
   EXPECT_FALSE(myHasher(aSphere, aTorus));
 }
 
-// ============================================================================
-// Trimmed vs Base Surface Tests
-// ============================================================================
-
 TEST_F(GeomHash_SurfaceHasherTest, RectangularTrimmedSurface_vs_BaseSurface_DifferentComparison)
 {
   gp_Ax3                                      anAxis(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(0.0, 0.0, 1.0));
@@ -682,10 +578,6 @@ TEST_F(GeomHash_SurfaceHasherTest, RectangularTrimmedSurface_vs_BaseSurface_Diff
 
   EXPECT_FALSE(myHasher(aPlane, aTrimmed));
 }
-
-// ============================================================================
-// Edge Cases - Degenerate/Special Values
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, Sphere_VerySmallRadius_CopiedSpheres_SameHash)
 {
@@ -720,10 +612,6 @@ TEST_F(GeomHash_SurfaceHasherTest, Plane_AtOrigin_vs_FarFromOrigin_DifferentHash
   EXPECT_FALSE(myHasher(aPlane1, aPlane2));
 }
 
-// ============================================================================
-// Revolution with Circle Basis (forms Torus-like)
-// ============================================================================
-
 TEST_F(GeomHash_SurfaceHasherTest, SurfaceOfRevolution_CircleBasis_CopiedSurfaces_SameHash)
 {
   gp_Ax2                                aCircleAxis(gp_Pnt(5.0, 0.0, 0.0), gp_Dir(0.0, 1.0, 0.0));
@@ -736,10 +624,6 @@ TEST_F(GeomHash_SurfaceHasherTest, SurfaceOfRevolution_CircleBasis_CopiedSurface
   EXPECT_EQ(myHasher(aRev1), myHasher(aRev2));
   EXPECT_TRUE(myHasher(aRev1, aRev2));
 }
-
-// ============================================================================
-// Offset Surface with Different Base
-// ============================================================================
 
 TEST_F(GeomHash_SurfaceHasherTest, OffsetSurface_DifferentBaseSurface_DifferentComparison)
 {

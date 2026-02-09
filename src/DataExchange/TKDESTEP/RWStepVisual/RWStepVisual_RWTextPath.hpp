@@ -11,9 +11,6 @@ namespace RWStepVisual_RWTextPath
   static constexpr char tpDown[]  = ".DOWN.";
   static constexpr char tpLeft[]  = ".LEFT.";
 
-  //! Convert StepVisual_TextPath to string
-  //! @param theSourceEnum The StepVisual_TextPath value to convert
-  //! @return The corresponding string representation or nullptr if not found
   inline const char* ConvertToString(const StepVisual_TextPath theSourceEnum)
   {
     switch (theSourceEnum)
@@ -30,10 +27,6 @@ namespace RWStepVisual_RWTextPath
     return nullptr;
   }
 
-  //! Convert string to StepVisual_TextPath
-  //! @param thePathStr The string to convert
-  //! @param theResultEnum The corresponding StepVisual_TextPath value
-  //! @return true if the conversion was successful, false otherwise
   inline bool ConvertToEnum(const char* thePathStr, StepVisual_TextPath& theResultEnum)
   {
     if (IsEqual(thePathStr, tpUp))

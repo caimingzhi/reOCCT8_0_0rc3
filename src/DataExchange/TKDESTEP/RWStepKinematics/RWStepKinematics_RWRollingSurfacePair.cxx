@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:16 2020
+
 
 #include "RWStepKinematics_RWRollingSurfacePair.hpp"
 
@@ -12,11 +12,7 @@
 #include <StepKinematics_KinematicJoint.hpp>
 #include <StepGeom_Surface.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWRollingSurfacePair::RWStepKinematics_RWRollingSurfacePair() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWRollingSurfacePair::ReadStep(
   const occ::handle<StepData_StepReaderData>&           theData,
@@ -24,16 +20,12 @@ void RWStepKinematics_RWRollingSurfacePair::ReadStep(
   occ::handle<Interface_Check>&                         theArch,
   const occ::handle<StepKinematics_RollingSurfacePair>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 9, theArch, "rolling_surface_pair"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
-
-  // Inherited fields of ItemDefinedTransformation
 
   occ::handle<TCollection_HAsciiString> aItemDefinedTransformation_Name;
   theData->ReadString(theNum,
@@ -74,8 +66,6 @@ void RWStepKinematics_RWRollingSurfacePair::ReadStep(
                       STANDARD_TYPE(StepRepr_RepresentationItem),
                       aItemDefinedTransformation_TransformItem2);
 
-  // Inherited fields of KinematicPair
-
   occ::handle<StepKinematics_KinematicJoint> aKinematicPair_Joint;
   theData->ReadEntity(theNum,
                       6,
@@ -83,8 +73,6 @@ void RWStepKinematics_RWRollingSurfacePair::ReadStep(
                       theArch,
                       STANDARD_TYPE(StepKinematics_KinematicJoint),
                       aKinematicPair_Joint);
-
-  // Inherited fields of SurfacePair
 
   occ::handle<StepGeom_Surface> aSurfacePair_Surface1;
   theData->ReadEntity(theNum,
@@ -105,7 +93,6 @@ void RWStepKinematics_RWRollingSurfacePair::ReadStep(
   bool aSurfacePair_Orientation;
   theData->ReadBoolean(theNum, 9, "surface_pair.orientation", theArch, aSurfacePair_Orientation);
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aItemDefinedTransformation_Name,
                hasItemDefinedTransformation_Description,
@@ -118,18 +105,12 @@ void RWStepKinematics_RWRollingSurfacePair::ReadStep(
                aSurfacePair_Orientation);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWRollingSurfacePair::WriteStep(
   StepData_StepWriter&                                  theSW,
   const occ::handle<StepKinematics_RollingSurfacePair>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Inherited fields of ItemDefinedTransformation
 
   theSW.Send(theEnt->ItemDefinedTransformation()->Name());
 
@@ -144,11 +125,7 @@ void RWStepKinematics_RWRollingSurfacePair::WriteStep(
 
   theSW.Send(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Own fields of KinematicPair
-
   theSW.Send(theEnt->Joint());
-
-  // Own fields of SurfacePair
 
   theSW.Send(theEnt->Surface1());
 
@@ -157,26 +134,16 @@ void RWStepKinematics_RWRollingSurfacePair::WriteStep(
   theSW.SendBoolean(theEnt->Orientation());
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWRollingSurfacePair::Share(
   const occ::handle<StepKinematics_RollingSurfacePair>& theEnt,
   Interface_EntityIterator&                             iter) const
 {
 
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of ItemDefinedTransformation
-
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem1());
 
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Inherited fields of KinematicPair
-
   iter.AddItem(theEnt->StepKinematics_KinematicPair::Joint());
-
-  // Inherited fields of SurfacePair
 
   iter.AddItem(theEnt->StepKinematics_SurfacePair::Surface1());
 

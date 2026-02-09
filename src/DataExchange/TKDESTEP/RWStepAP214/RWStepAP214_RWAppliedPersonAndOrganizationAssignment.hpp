@@ -11,7 +11,6 @@ class StepAP214_AppliedPersonAndOrganizationAssignment;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AppliedPersonAndOrganizationAssignment
 class RWStepAP214_RWAppliedPersonAndOrganizationAssignment
 {
 public:

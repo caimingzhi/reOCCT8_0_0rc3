@@ -2,11 +2,7 @@
 #include <TopOpeBRepBuild_PaveClassifier.hpp>
 #include <TopOpeBRepBuild_PaveSet.hpp>
 
-//=================================================================================================
-
 TopOpeBRepBuild_EdgeBuilder::TopOpeBRepBuild_EdgeBuilder() = default;
-
-//=================================================================================================
 
 TopOpeBRepBuild_EdgeBuilder::TopOpeBRepBuild_EdgeBuilder(TopOpeBRepBuild_PaveSet&        LS,
                                                          TopOpeBRepBuild_PaveClassifier& LC,
@@ -15,8 +11,6 @@ TopOpeBRepBuild_EdgeBuilder::TopOpeBRepBuild_EdgeBuilder(TopOpeBRepBuild_PaveSet
   InitEdgeBuilder(LS, LC, ForceClass);
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_EdgeBuilder::InitEdgeBuilder(TopOpeBRepBuild_LoopSet&        LS,
                                                   TopOpeBRepBuild_LoopClassifier& LC,
                                                   const bool                      ForceClass)
@@ -24,14 +18,10 @@ void TopOpeBRepBuild_EdgeBuilder::InitEdgeBuilder(TopOpeBRepBuild_LoopSet&      
   InitAreaBuilder(LS, LC, ForceClass);
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_EdgeBuilder::InitEdge()
 {
   InitArea();
 }
-
-//=================================================================================================
 
 bool TopOpeBRepBuild_EdgeBuilder::MoreEdge() const
 {
@@ -39,21 +29,15 @@ bool TopOpeBRepBuild_EdgeBuilder::MoreEdge() const
   return b;
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_EdgeBuilder::NextEdge()
 {
   NextArea();
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_EdgeBuilder::InitVertex()
 {
   InitLoop();
 }
-
-//=================================================================================================
 
 bool TopOpeBRepBuild_EdgeBuilder::MoreVertex() const
 {
@@ -61,14 +45,10 @@ bool TopOpeBRepBuild_EdgeBuilder::MoreVertex() const
   return b;
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_EdgeBuilder::NextVertex()
 {
   NextLoop();
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& TopOpeBRepBuild_EdgeBuilder::Vertex() const
 {
@@ -77,8 +57,6 @@ const TopoDS_Shape& TopOpeBRepBuild_EdgeBuilder::Vertex() const
   const TopoDS_Shape&                      V = PV->Vertex();
   return V;
 }
-
-//=================================================================================================
 
 double TopOpeBRepBuild_EdgeBuilder::Parameter() const
 {

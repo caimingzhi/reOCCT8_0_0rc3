@@ -11,7 +11,6 @@ class StepGeom_Polyline;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for Polyline
 class RWStepGeom_RWPolyline
 {
 public:

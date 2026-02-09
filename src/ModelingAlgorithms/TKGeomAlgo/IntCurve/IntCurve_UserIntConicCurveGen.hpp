@@ -11,8 +11,6 @@ IntCurve_UserIntConicCurveGen::IntCurve_UserIntConicCurveGen()
   done = false;
 }
 
-//=================================================================================================
-
 IntCurve_UserIntConicCurveGen::IntCurve_UserIntConicCurveGen(const gp_Lin2d&        Lin1,
                                                              const IntRes2d_Domain& D1,
                                                              const ThePCurve&       C2,
@@ -22,8 +20,6 @@ IntCurve_UserIntConicCurveGen::IntCurve_UserIntConicCurveGen(const gp_Lin2d&    
 {
   Perform(Lin1, D1, C2, D2, TolConf, Tol);
 }
-
-//=================================================================================================
 
 IntCurve_UserIntConicCurveGen::IntCurve_UserIntConicCurveGen(const gp_Circ2d&       Circ1,
                                                              const IntRes2d_Domain& D1,
@@ -35,8 +31,6 @@ IntCurve_UserIntConicCurveGen::IntCurve_UserIntConicCurveGen(const gp_Circ2d&   
   Perform(Circ1, D1, C2, D2, TolConf, Tol);
 }
 
-//=================================================================================================
-
 IntCurve_UserIntConicCurveGen::IntCurve_UserIntConicCurveGen(const gp_Parab2d&      Parab1,
                                                              const IntRes2d_Domain& D1,
                                                              const ThePCurve&       C2,
@@ -46,8 +40,6 @@ IntCurve_UserIntConicCurveGen::IntCurve_UserIntConicCurveGen(const gp_Parab2d&  
 {
   Perform(Parab1, D1, C2, D2, TolConf, Tol);
 }
-
-//=================================================================================================
 
 IntCurve_UserIntConicCurveGen::IntCurve_UserIntConicCurveGen(const gp_Elips2d&      Elips1,
                                                              const IntRes2d_Domain& D1,
@@ -59,8 +51,6 @@ IntCurve_UserIntConicCurveGen::IntCurve_UserIntConicCurveGen(const gp_Elips2d&  
   Perform(Elips1, D1, C2, D2, TolConf, Tol);
 }
 
-//=================================================================================================
-
 IntCurve_UserIntConicCurveGen::IntCurve_UserIntConicCurveGen(const gp_Hypr2d&       Hyper1,
                                                              const IntRes2d_Domain& D1,
                                                              const ThePCurve&       C2,
@@ -70,10 +60,6 @@ IntCurve_UserIntConicCurveGen::IntCurve_UserIntConicCurveGen(const gp_Hypr2d&   
 {
   Perform(Hyper1, D1, C2, D2, TolConf, Tol);
 }
-
-//-------------------------------------------------------------------------------------
-
-//=================================================================================================
 
 void IntCurve_UserIntConicCurveGen::Perform(const gp_Lin2d&        Lin1,
                                             const IntRes2d_Domain& D1,
@@ -128,8 +114,6 @@ void IntCurve_UserIntConicCurveGen::Perform(const gp_Lin2d&        Lin1,
     InternalPerform(Lin1, D1, C2, D2, TolConf, Tol, false);
   }
 }
-
-//=================================================================================================
 
 void IntCurve_UserIntConicCurveGen::Perform(const gp_Circ2d&       Circ1,
                                             const IntRes2d_Domain& D1,
@@ -186,8 +170,6 @@ void IntCurve_UserIntConicCurveGen::Perform(const gp_Circ2d&       Circ1,
   }
 }
 
-//=================================================================================================
-
 void IntCurve_UserIntConicCurveGen::Perform(const gp_Parab2d&      Parab1,
                                             const IntRes2d_Domain& D1,
                                             const ThePCurve&       C2,
@@ -241,8 +223,6 @@ void IntCurve_UserIntConicCurveGen::Perform(const gp_Parab2d&      Parab1,
     InternalPerform(Parab1, D1, C2, D2, TolConf, Tol, false);
   }
 }
-
-//=================================================================================================
 
 void IntCurve_UserIntConicCurveGen::Perform(const gp_Elips2d&      Elips1,
                                             const IntRes2d_Domain& D1,
@@ -298,8 +278,6 @@ void IntCurve_UserIntConicCurveGen::Perform(const gp_Elips2d&      Elips1,
   }
 }
 
-//=================================================================================================
-
 void IntCurve_UserIntConicCurveGen::Perform(const gp_Hypr2d&       Hyper1,
                                             const IntRes2d_Domain& D1,
                                             const ThePCurve&       C2,
@@ -354,14 +332,6 @@ void IntCurve_UserIntConicCurveGen::Perform(const gp_Hypr2d&       Hyper1,
   }
 }
 
-//----------------------------------------------------------------------
-//-- InternalPerform
-//-- Suppose des Courbes Lin...Hypr
-//-- Si Composite == True
-//--     Les Resultats sont Ajoutes
-//-- Sinon
-//--     Les Resultats sont Copies
-//----------------------------------------------------------------------
 void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Lin2d&        Lin1,
                                                     const IntRes2d_Domain& D1,
                                                     const ThePCurve&       C2,
@@ -467,8 +437,6 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Lin2d&        Lin1,
     break;
   }
 }
-
-//=================================================================================================
 
 void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Circ2d&       Circ1,
                                                     const IntRes2d_Domain& D1,
@@ -576,8 +544,6 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Circ2d&       Circ1
   }
 }
 
-//=================================================================================================
-
 void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Elips2d&      Elips1,
                                                     const IntRes2d_Domain& D1,
                                                     const ThePCurve&       C2,
@@ -683,8 +649,6 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Elips2d&      Elips
     break;
   }
 }
-
-//=================================================================================================
 
 void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Parab2d&      Parab1,
                                                     const IntRes2d_Domain& D1,
@@ -792,8 +756,6 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Parab2d&      Parab
   }
 }
 
-//=================================================================================================
-
 void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Hypr2d&       Hyper1,
                                                     const IntRes2d_Domain& D1,
                                                     const ThePCurve&       C2,
@@ -899,5 +861,3 @@ void IntCurve_UserIntConicCurveGen::InternalPerform(const gp_Hypr2d&       Hyper
     break;
   }
 }
-
-//--------------------------------------------------------------------------------

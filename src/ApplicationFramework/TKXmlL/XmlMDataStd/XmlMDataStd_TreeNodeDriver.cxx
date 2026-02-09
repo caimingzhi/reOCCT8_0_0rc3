@@ -12,22 +12,16 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_TreeNodeDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(TreeIdString, "treeid")
 IMPLEMENT_DOMSTRING(ChildrenString, "children")
 
-//=================================================================================================
-
 XmlMDataStd_TreeNodeDriver::XmlMDataStd_TreeNodeDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataStd_TreeNodeDriver::NewEmpty() const
 {
   return (new TDataStd_TreeNode());
 }
-
-//=================================================================================================
 
 bool XmlMDataStd_TreeNodeDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                        const occ::handle<TDF_Attribute>& theTarget,
@@ -36,7 +30,6 @@ bool XmlMDataStd_TreeNodeDriver::Paste(const XmlObjMgt_Persistent&       theSour
   occ::handle<TDataStd_TreeNode> aT        = occ::down_cast<TDataStd_TreeNode>(theTarget);
   const XmlObjMgt_Element&       anElement = theSource;
 
-  // tree id
   Standard_GUID       aGUID;
   XmlObjMgt_DOMString aGUIDStr = anElement.getAttribute(::TreeIdString());
   if (aGUIDStr.Type() == XmlObjMgt_DOMString::LDOM_NULL)
@@ -45,11 +38,10 @@ bool XmlMDataStd_TreeNodeDriver::Paste(const XmlObjMgt_Persistent&       theSour
     aGUID = Standard_GUID(static_cast<const char*>(aGUIDStr.GetString()));
   aT->SetTreeID(aGUID);
 
-  // children
   occ::handle<TDataStd_TreeNode> aTChild;
 
   XmlObjMgt_DOMString aChildrenStr = anElement.getAttribute(::ChildrenString());
-  if (aChildrenStr != nullptr) // void list is allowed
+  if (aChildrenStr != nullptr)
   {
     const char* aChildren = static_cast<const char*>(aChildrenStr.GetString());
     int         aNb       = 0;
@@ -58,7 +50,7 @@ bool XmlMDataStd_TreeNodeDriver::Paste(const XmlObjMgt_Persistent&       theSour
 
     while (aNb > 0)
     {
-      // Find or create TreeNode attribute with the given ID
+
       if (theRelocTable.IsBound(aNb))
       {
         aTChild = occ::down_cast<TDataStd_TreeNode>(theRelocTable.Find(aNb));
@@ -71,11 +63,9 @@ bool XmlMDataStd_TreeNodeDriver::Paste(const XmlObjMgt_Persistent&       theSour
         theRelocTable.Bind(aNb, aTChild);
       }
 
-      // Add the child to the current tree
       aTChild->SetTreeID(aGUID);
       aT->Append(aTChild);
 
-      // Get next child ID
       if (!XmlObjMgt::GetInteger(aChildren, aNb))
         aNb = 0;
     }
@@ -83,16 +73,12 @@ bool XmlMDataStd_TreeNodeDriver::Paste(const XmlObjMgt_Persistent&       theSour
   return true;
 }
 
-//=================================================================================================
-
 void XmlMDataStd_TreeNodeDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                        XmlObjMgt_Persistent&             theTarget,
                                        XmlObjMgt_SRelocationTable&       theRelocTable) const
 {
   occ::handle<TDataStd_TreeNode> aS = occ::down_cast<TDataStd_TreeNode>(theSource);
 
-  // tree id
-  // A not default ID is skipped for storage version 8 and newer.
   if (aS->ID() != TDataStd_TreeNode::GetDefaultTreeID()
       || theRelocTable.GetHeaderData()->StorageVersion().IntegerValue()
            < TDocStd_FormatVersion_VERSION_8)
@@ -103,16 +89,13 @@ void XmlMDataStd_TreeNodeDriver::Paste(const occ::handle<TDF_Attribute>& theSour
     theTarget.Element().setAttribute(::TreeIdString(), aGuidStr);
   }
 
-  // Find number of children.
   int nbChildren = aS->NbChildren();
 
-  // Allocate 11 digits for each ID (an integer) of the child + a space.
   int                          iChar = 0;
   NCollection_LocalArray<char> str;
   if (nbChildren)
     str.Allocate(11 * nbChildren + 1);
 
-  // form the string of numbers for the list of children
   occ::handle<TDataStd_TreeNode> aF = aS->First();
   while (!aF.IsNull())
   {
@@ -122,10 +105,8 @@ void XmlMDataStd_TreeNodeDriver::Paste(const occ::handle<TDF_Attribute>& theSour
       aNb = theRelocTable.Add(aF);
     }
 
-    // Add number to the long string.
     iChar += Sprintf(&(str[iChar]), "%d ", aNb);
 
-    // next child
     aF = aF->Next();
   }
 

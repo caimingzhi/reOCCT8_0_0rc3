@@ -23,13 +23,10 @@ class IntPatch_TheIWLineOfTheIWalking : public Standard_Transient
 public:
   Standard_EXPORT IntPatch_TheIWLineOfTheIWalking(const IntSurf_Allocator& theAllocator = nullptr);
 
-  //! reverse the points in the line. Hasfirst, HasLast are kept.
   Standard_EXPORT void Reverse();
 
-  //! Cut the line at the point of rank Index.
   void Cut(const int Index);
 
-  //! Add a point in the line.
   void AddPoint(const IntSurf_PntOn2S& P);
 
   void AddStatusFirst(const bool Closed, const bool HasFirst);
@@ -44,8 +41,7 @@ public:
   void AddStatusLast(const bool HasLast);
 
   void AddStatusLast(const bool HasLast, const int Index, const IntSurf_PathPoint& P);
-  //! associate the index of the point on the line with the index of the point
-  //! passing through the starting iterator
+
   void AddIndexPassing(const int Index);
 
   void SetTangentVector(const gp_Vec& V, const int Index);
@@ -54,62 +50,28 @@ public:
 
   void SetTangencyAtEnd(const bool IsTangent);
 
-  //! Returns the number of points of the line (including first
-  //! point and end point : see HasLastPoint and HasFirstPoint).
   int NbPoints() const;
 
-  //! Returns the point of range Index.
-  //! If index <= 0 or Index > NbPoints, an exception is raised.
   const IntSurf_PntOn2S& Value(const int Index) const;
 
-  //! Returns the LineOn2S contained in the walking line.
   const occ::handle<IntSurf_LineOn2S>& Line() const;
 
-  //! Returns True if the line is closed.
   bool IsClosed() const;
 
-  //! Returns True if the first point of the line is a
-  //! marching point. when HasFirstPoint==False the line
-  //! begins on the natural bound of the surface. The line
-  //! can be too long
   bool HasFirstPoint() const;
 
-  //! Returns True if the end point of the line is a
-  //! marching point (Point from IntWS).
-  //! when HasFirstPoint==False the line ends
-  //! on the natural bound of the surface. The line can be
-  //! too long.
   bool HasLastPoint() const;
 
-  //! Returns the first point of the line when it is a
-  //! marching point.
-  //! An exception is raised if HasFirstPoint returns False.
   const IntSurf_PathPoint& FirstPoint() const;
 
-  //! Returns the Index of first point of the line when it is a
-  //! marching point. This index is the index in the
-  //! PointStartIterator.
-  //! An exception is raised if HasFirstPoint returns False.
   int FirstPointIndex() const;
 
-  //! Returns the last point of the line when it is a
-  //! marching point.
-  //! An exception is raised if HasLastPoint returns False.
   const IntSurf_PathPoint& LastPoint() const;
 
-  //! Returns the index of last point of the line when it is a
-  //! marching point. This index is the index in the
-  //! PointStartIterator.
-  //! An exception is raised if HasLastPoint returns False.
   int LastPointIndex() const;
 
-  //! returns the number of points belonging to Pnts1 which are
-  //! passing point.
   int NbPassingPoint() const;
 
-  //! returns the index of the point belonging to the line which
-  //! is associated to the passing point belonging to Pnts1
-  //! an exception is raised if Index > NbPassingPoint()
   void PassingPoint(const int Index, int& IndexLine, int& IndexPnts) const;
 
   const gp_Vec& TangentVector(int& Index) const;
@@ -135,10 +97,6 @@ private:
   bool                                 istgtbeg;
   bool                                 istgtend;
 };
-
-//=================================================================================================
-// Inline implementations
-//=================================================================================================
 
 inline void IntPatch_TheIWLineOfTheIWalking::Cut(const int Index)
 {

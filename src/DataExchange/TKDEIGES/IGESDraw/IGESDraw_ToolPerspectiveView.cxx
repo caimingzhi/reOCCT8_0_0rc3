@@ -21,10 +21,9 @@
 IGESDraw_ToolPerspectiveView::IGESDraw_ToolPerspectiveView() = default;
 
 void IGESDraw_ToolPerspectiveView::ReadOwnParams(const occ::handle<IGESDraw_PerspectiveView>& ent,
-                                                 const occ::handle<IGESData_IGESReaderData>& /*IR*/,
+                                                 const occ::handle<IGESData_IGESReaderData>&,
                                                  IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   gp_XY  tempTopLeft, tempBottomRight;
   double tempLeft, tempRight, tempTop, tempBottom;
@@ -34,7 +33,6 @@ void IGESDraw_ToolPerspectiveView::ReadOwnParams(const occ::handle<IGESDraw_Pers
   double tempScaleFactor, tempViewPlaneDistance;
   double tempBackPlaneDistance, tempFrontPlaneDistance;
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadInteger(PR.Current(), "View Number", tempViewNumber);
   PR.ReadReal(PR.Current(), "Scale Number", tempScaleFactor);
   PR.ReadXYZ(PR.CurrentList(1, 3), "View Plane Normal Vector", tempViewNormalVector);
@@ -43,27 +41,18 @@ void IGESDraw_ToolPerspectiveView::ReadOwnParams(const occ::handle<IGESDraw_Pers
   PR.ReadXYZ(PR.CurrentList(1, 3), "View Up Vector", tempViewUpVector);
   PR.ReadReal(PR.Current(), "View Plane Distance", tempViewPlaneDistance);
 
-  // st = PR.ReadReal(PR.Current(), "Left Side Of Clipping Window", tempLeft); //szv#4:S4163:12Mar99
-  // moved in if
   if (PR.ReadReal(PR.Current(), "Left Side Of Clipping Window", tempLeft))
     tempTopLeft.SetX(tempLeft);
 
-  // st = PR.ReadReal(PR.Current(), "Right Side Of Clipping Window", tempRight);
-  // //szv#4:S4163:12Mar99 moved in if
   if (PR.ReadReal(PR.Current(), "Right Side Of Clipping Window", tempRight))
     tempBottomRight.SetX(tempRight);
 
-  // st = PR.ReadReal(PR.Current(), "Bottom Of Clipping Window", tempBottom); //szv#4:S4163:12Mar99
-  // moved in if
   if (PR.ReadReal(PR.Current(), "Bottom Of Clipping Window", tempBottom))
     tempBottomRight.SetY(tempBottom);
 
-  // st = PR.ReadReal(PR.Current(), "Top Of Clipping Window", tempTop); //szv#4:S4163:12Mar99 moved
-  // in if
   if (PR.ReadReal(PR.Current(), "Top Of Clipping Window", tempTop))
     tempTopLeft.SetY(tempTop);
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadInteger(PR.Current(), "Depth Clipping Indicator", tempDepthClip);
   PR.ReadReal(PR.Current(), "Back Plane Distance", tempBackPlaneDistance);
   PR.ReadReal(PR.Current(), "Front Plane Distance", tempFrontPlaneDistance);
@@ -110,14 +99,14 @@ void IGESDraw_ToolPerspectiveView::WriteOwnParams(const occ::handle<IGESDraw_Per
   IW.Send(ent->FrontPlaneDistance());
 }
 
-void IGESDraw_ToolPerspectiveView::OwnShared(const occ::handle<IGESDraw_PerspectiveView>& /*ent*/,
-                                             Interface_EntityIterator& /*iter*/) const
+void IGESDraw_ToolPerspectiveView::OwnShared(const occ::handle<IGESDraw_PerspectiveView>&,
+                                             Interface_EntityIterator&) const
 {
 }
 
 void IGESDraw_ToolPerspectiveView::OwnCopy(const occ::handle<IGESDraw_PerspectiveView>& another,
                                            const occ::handle<IGESDraw_PerspectiveView>& ent,
-                                           Interface_CopyTool& /*TC*/) const
+                                           Interface_CopyTool&) const
 {
   ent->Init(another->ViewNumber(),
             another->ScaleFactor(),
@@ -134,7 +123,7 @@ void IGESDraw_ToolPerspectiveView::OwnCopy(const occ::handle<IGESDraw_Perspectiv
 }
 
 IGESData_DirChecker IGESDraw_ToolPerspectiveView::DirChecker(
-  const occ::handle<IGESDraw_PerspectiveView>& /*ent*/) const
+  const occ::handle<IGESDraw_PerspectiveView>&) const
 {
   IGESData_DirChecker DC(410, 1);
   DC.Structure(IGESData_DefVoid);
@@ -162,7 +151,7 @@ void IGESDraw_ToolPerspectiveView::OwnCheck(const occ::handle<IGESDraw_Perspecti
 }
 
 void IGESDraw_ToolPerspectiveView::OwnDump(const occ::handle<IGESDraw_PerspectiveView>& ent,
-                                           const IGESData_IGESDumper& /*dumper*/,
+                                           const IGESData_IGESDumper&,
                                            Standard_OStream& S,
                                            const int         level) const
 {

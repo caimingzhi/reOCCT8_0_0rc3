@@ -9,32 +9,23 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_ExpressionDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_ExpressionDriver::BinMDataStd_ExpressionDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_ExpressionDriver::NewEmpty() const
 {
   return (new TDataStd_Expression());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool BinMDataStd_ExpressionDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                          const occ::handle<TDF_Attribute>& theTarget,
                                          BinObjMgt_RRelocationTable&       theRelocTable) const
 {
   occ::handle<TDataStd_Expression> aC = occ::down_cast<TDataStd_Expression>(theTarget);
 
-  // variables
   int nbvar;
   if (!(theSource >> nbvar) || nbvar < 0)
     return false;
@@ -58,7 +49,6 @@ bool BinMDataStd_ExpressionDriver::Paste(const BinObjMgt_Persistent&       theSo
     aList.Append(aV);
   }
 
-  // expression
   TCollection_ExtendedString aString;
   if (!(theSource >> aString))
     return false;
@@ -67,10 +57,6 @@ bool BinMDataStd_ExpressionDriver::Paste(const BinObjMgt_Persistent&       theSo
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void BinMDataStd_ExpressionDriver::Paste(
   const occ::handle<TDF_Attribute>&                        theSource,
   BinObjMgt_Persistent&                                    theTarget,
@@ -78,7 +64,6 @@ void BinMDataStd_ExpressionDriver::Paste(
 {
   occ::handle<TDataStd_Expression> aC = occ::down_cast<TDataStd_Expression>(theSource);
 
-  // variables
   const NCollection_List<occ::handle<TDF_Attribute>>& aList = aC->GetVariables();
   int                                                 nbvar = aList.Extent();
   theTarget << nbvar;
@@ -94,7 +79,6 @@ void BinMDataStd_ExpressionDriver::Paste(
     theTarget << aNb;
   }
 
-  // expression
   TCollection_ExtendedString aName = aC->Name();
   theTarget << aName;
 }

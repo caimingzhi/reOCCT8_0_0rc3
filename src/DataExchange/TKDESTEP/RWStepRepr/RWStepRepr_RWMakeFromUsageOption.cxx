@@ -5,11 +5,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepRepr_MakeFromUsageOption.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWMakeFromUsageOption::RWStepRepr_RWMakeFromUsageOption() = default;
-
-//=================================================================================================
 
 void RWStepRepr_RWMakeFromUsageOption::ReadStep(
   const occ::handle<StepData_StepReaderData>&      data,
@@ -17,11 +13,9 @@ void RWStepRepr_RWMakeFromUsageOption::ReadStep(
   occ::handle<Interface_Check>&                    ach,
   const occ::handle<StepRepr_MakeFromUsageOption>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 8, ach, "make_from_usage_option"))
     return;
-
-  // Inherited fields of ProductDefinitionRelationship
 
   occ::handle<TCollection_HAsciiString> aProductDefinitionRelationship_Id;
   data->ReadString(num,
@@ -66,8 +60,6 @@ void RWStepRepr_RWMakeFromUsageOption::ReadStep(
                    ach,
                    aProductDefinitionRelationship_RelatedProductDefinition);
 
-  // Own fields of MakeFromUsageOption
-
   int aRanking;
   data->ReadInteger(num, 6, "ranking", ach, aRanking);
 
@@ -77,7 +69,6 @@ void RWStepRepr_RWMakeFromUsageOption::ReadStep(
   occ::handle<Standard_Transient> aQuantity;
   data->ReadEntity(num, 8, "quantity", ach, STANDARD_TYPE(Standard_Transient), aQuantity);
 
-  // Initialize entity
   ent->Init(aProductDefinitionRelationship_Id,
             aProductDefinitionRelationship_Name,
             hasProductDefinitionRelationship_Description,
@@ -89,14 +80,10 @@ void RWStepRepr_RWMakeFromUsageOption::ReadStep(
             aQuantity);
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWMakeFromUsageOption::WriteStep(
   StepData_StepWriter&                             SW,
   const occ::handle<StepRepr_MakeFromUsageOption>& ent) const
 {
-
-  // Inherited fields of ProductDefinitionRelationship
 
   SW.Send(ent->StepBasic_ProductDefinitionRelationship::Id());
 
@@ -113,8 +100,6 @@ void RWStepRepr_RWMakeFromUsageOption::WriteStep(
 
   SW.Send(ent->StepBasic_ProductDefinitionRelationship::RelatedProductDefinitionAP242().Value());
 
-  // Own fields of MakeFromUsageOption
-
   SW.Send(ent->Ranking());
 
   SW.Send(ent->RankingRationale());
@@ -122,21 +107,15 @@ void RWStepRepr_RWMakeFromUsageOption::WriteStep(
   SW.Send(ent->Quantity());
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWMakeFromUsageOption::Share(const occ::handle<StepRepr_MakeFromUsageOption>& ent,
                                              Interface_EntityIterator& iter) const
 {
-
-  // Inherited fields of ProductDefinitionRelationship
 
   iter.AddItem(
     ent->StepBasic_ProductDefinitionRelationship::RelatingProductDefinitionAP242().Value());
 
   iter.AddItem(
     ent->StepBasic_ProductDefinitionRelationship::RelatedProductDefinitionAP242().Value());
-
-  // Own fields of MakeFromUsageOption
 
   iter.AddItem(ent->Quantity());
 }

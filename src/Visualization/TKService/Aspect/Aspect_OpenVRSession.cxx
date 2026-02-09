@@ -1,15 +1,4 @@
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Aspect_OpenVRSession.hpp>
 
@@ -29,7 +18,7 @@
 
 namespace
 {
-  //! Print OpenVR compositor error.
+
   static const char* getVRCompositorError(vr::EVRCompositorError theVRError)
   {
     switch (theVRError)
@@ -64,7 +53,6 @@ namespace
     return "UNKNOWN";
   }
 
-  //! Print OpenVR input error.
   static const char* getVRInputError(vr::EVRInputError theVRError)
   {
     switch (theVRError)
@@ -115,7 +103,6 @@ namespace
     return "UNKNOWN";
   }
 
-  //! Convert OpenVR mat4x4 into OCCT mat4x4.
   static NCollection_Mat4<double> mat44vr2Occ(const vr::HmdMatrix44_t& theMat4)
   {
     NCollection_Mat4<double> aMat4;
@@ -130,7 +117,6 @@ namespace
     return aMat4;
   }
 
-  //! Convert OpenVR mat3x4 into OCCT gp_Trsf.
   static gp_Trsf mat34vr2OccTrsf(const vr::HmdMatrix34_t& theMat4)
   {
     gp_Trsf aTrsf;
@@ -149,7 +135,6 @@ namespace
     return aTrsf;
   }
 
-  //! Convert OpenVR tracked pose.
   static Aspect_TrackedDevicePose poseVr2Occ(const vr::TrackedDevicePose_t& theVrPose,
                                              const double                   theUnitFactor)
   {
@@ -173,8 +158,6 @@ namespace
     return aPose;
   }
 
-  //! Find location of default actions manifest file (based on CSF_OCCTResourcePath or CASROOT
-  //! variables).
   TCollection_AsciiString defaultActionsManifestInit()
   {
     const TCollection_AsciiString THE_ACTIONS_JSON = "occtvr_actions.json";
@@ -216,31 +199,27 @@ IMPLEMENT_STANDARD_RTTIEXT(Aspect_OpenVRSession, Aspect_XRSession)
 struct Aspect_OpenVRSession::VRContext
 {
 #ifdef HAVE_OPENVR
-  // clang-format off
-  vr::TrackedDevicePose_t TrackedPoses[vr::k_unMaxTrackedDeviceCount]; //!< array of tracked devices poses
-  // clang-format on
-  vr::IVRSystem* System; //!< OpenVR session object
 
-  //! Empty constructor.
+  vr::TrackedDevicePose_t TrackedPoses[vr::k_unMaxTrackedDeviceCount];
+
+  vr::IVRSystem* System;
+
   VRContext()
       : System(nullptr)
   {
     memset(TrackedPoses, 0, sizeof(TrackedPoses));
   }
 
-  //! IVRSystem::PollNextEvent() wrapper.
   bool PollNextEvent(vr::VREvent_t& theEvent)
   {
     return System->PollNextEvent(&theEvent, sizeof(vr::VREvent_t));
   }
 
-  //! IVRSystem::GetControllerState() wrapper.
   bool GetControllerState(vr::VRControllerState_t& theState, vr::TrackedDeviceIndex_t theDevice)
   {
     return System->GetControllerState(theDevice, &theState, sizeof(vr::VRControllerState_t&));
   }
 
-  //! Retrieve string property from OpenVR.
   TCollection_AsciiString getVrTrackedDeviceString(vr::TrackedDeviceIndex_t  theDevice,
                                                    vr::TrackedDeviceProperty theProperty,
                                                    vr::TrackedPropertyError* theError = nullptr)
@@ -262,17 +241,15 @@ struct Aspect_OpenVRSession::VRContext
 };
 
 #ifdef HAVE_OPENVR
-//! Image wrapping vr::RenderModel_TextureMap_t.
+
 class Aspect_OpenVRSession::VRImagePixmap : public Image_PixMap
 {
 public:
-  //! Empty constructor.
   VRImagePixmap()
       : myVrTexture(nullptr)
   {
   }
 
-  //! Load the texture.
   bool Load(vr::TextureID_t theTexture, const TCollection_AsciiString& theVrModelName)
   {
     vr::RenderModel_TextureMap_t* aVrTexture = nullptr;
@@ -309,11 +286,9 @@ private:
   vr::RenderModel_TextureMap_t* myVrTexture;
 };
 
-//! Image_Texture extension using vr::VRRenderModels().
 class Aspect_OpenVRSession::VRTextureSource : public Image_Texture
 {
 public:
-  //! Main constructor.
   VRTextureSource(vr::TextureID_t theTextureId, const TCollection_AsciiString& theVrModelName)
       : Image_Texture(""),
         myVrTextureId(theTextureId),
@@ -323,7 +298,6 @@ public:
   }
 
 protected:
-  //! Read image.
   occ::handle<Image_PixMap> ReadImage(const occ::handle<Image_SupportedFormats>&) const override
   {
     occ::handle<VRImagePixmap> aPixmap = new VRImagePixmap();
@@ -340,8 +314,6 @@ private:
 };
 #endif
 
-//=================================================================================================
-
 bool Aspect_OpenVRSession::IsHmdPresent()
 {
 #ifdef HAVE_OPENVR
@@ -350,8 +322,6 @@ bool Aspect_OpenVRSession::IsHmdPresent()
   return false;
 #endif
 }
-
-//=================================================================================================
 
 TCollection_AsciiString Aspect_OpenVRSession::defaultActionsManifest()
 {
@@ -362,8 +332,6 @@ TCollection_AsciiString Aspect_OpenVRSession::defaultActionsManifest()
   return TCollection_AsciiString();
 #endif
 }
-
-//=================================================================================================
 
 Aspect_OpenVRSession::Aspect_OpenVRSession()
     : myContext(new VRContext())
@@ -485,15 +453,11 @@ Aspect_OpenVRSession::Aspect_OpenVRSession()
 #endif
 }
 
-//=================================================================================================
-
 Aspect_OpenVRSession::~Aspect_OpenVRSession()
 {
   closeVR();
   delete myContext;
 }
-
-//=================================================================================================
 
 void Aspect_OpenVRSession::closeVR()
 {
@@ -506,8 +470,6 @@ void Aspect_OpenVRSession::closeVR()
 #endif
 }
 
-//=================================================================================================
-
 void* Aspect_OpenVRSession::getVRSystem() const
 {
 #ifdef HAVE_OPENVR
@@ -517,14 +479,10 @@ void* Aspect_OpenVRSession::getVRSystem() const
 #endif
 }
 
-//=================================================================================================
-
 void Aspect_OpenVRSession::Close()
 {
   closeVR();
 }
-
-//=================================================================================================
 
 bool Aspect_OpenVRSession::IsOpen() const
 {
@@ -534,8 +492,6 @@ bool Aspect_OpenVRSession::IsOpen() const
   return false;
 #endif
 }
-
-//=================================================================================================
 
 bool Aspect_OpenVRSession::Open()
 {
@@ -556,13 +512,6 @@ bool Aspect_OpenVRSession::Open()
     return false;
   }
 
-  /*vr::IVRRenderModels* aRenderModels = (vr::IVRRenderModels* )vr::VR_GetGenericInterface
-  (vr::IVRRenderModels_Version, &aVrError); if (aRenderModels == NULL)
-  {
-    Message::SendFail (TCollection_AsciiString ("Unable to get render model interface: ") +
-  vr::VR_GetVRInitErrorAsEnglishDescription (aVrError));;
-  }*/
-
   NCollection_Vec2<uint32_t> aRenderSize;
   myContext->System->GetRecommendedRenderTargetSize(&aRenderSize.x(), &aRenderSize.y());
   myRendSize = NCollection_Vec2<int>(aRenderSize);
@@ -581,8 +530,6 @@ bool Aspect_OpenVRSession::Open()
   return false;
 #endif
 }
-
-//=================================================================================================
 
 bool Aspect_OpenVRSession::initInput()
 {
@@ -655,8 +602,6 @@ bool Aspect_OpenVRSession::initInput()
 #endif
 }
 
-//=================================================================================================
-
 TCollection_AsciiString Aspect_OpenVRSession::GetString(InfoString theInfo) const
 {
 #ifdef HAVE_OPENVR
@@ -688,8 +633,6 @@ TCollection_AsciiString Aspect_OpenVRSession::GetString(InfoString theInfo) cons
 #endif
   return TCollection_AsciiString();
 }
-
-//=================================================================================================
 
 int Aspect_OpenVRSession::NamedTrackedDevice(Aspect_XRTrackedDeviceRole theDevice) const
 {
@@ -724,8 +667,6 @@ int Aspect_OpenVRSession::NamedTrackedDevice(Aspect_XRTrackedDeviceRole theDevic
 #endif
   return -1;
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_ArrayOfTriangles> Aspect_OpenVRSession::loadRenderModel(
   int                         theDevice,
@@ -801,8 +742,6 @@ occ::handle<Graphic3d_ArrayOfTriangles> Aspect_OpenVRSession::loadRenderModel(
 #endif
 }
 
-//=================================================================================================
-
 NCollection_Mat4<double> Aspect_OpenVRSession::EyeToHeadTransform(Aspect_Eye theEye) const
 {
 #ifdef HAVE_OPENVR
@@ -825,8 +764,6 @@ NCollection_Mat4<double> Aspect_OpenVRSession::EyeToHeadTransform(Aspect_Eye the
   return NCollection_Mat4<double>();
 }
 
-//=================================================================================================
-
 NCollection_Mat4<double> Aspect_OpenVRSession::ProjectionMatrix(Aspect_Eye theEye,
                                                                 double     theZNear,
                                                                 double     theZFar) const
@@ -847,8 +784,6 @@ NCollection_Mat4<double> Aspect_OpenVRSession::ProjectionMatrix(Aspect_Eye theEy
 #endif
   return NCollection_Mat4<double>();
 }
-
-//=================================================================================================
 
 void Aspect_OpenVRSession::updateProjectionFrustums()
 {
@@ -875,17 +810,11 @@ void Aspect_OpenVRSession::updateProjectionFrustums()
   myAspect      = aTanHalfFov.x() / aTanHalfFov.y();
   myFieldOfView = 2.0 * std::atan(aTanHalfFov.y()) * 180.0 / M_PI;
 
-  // Intra-ocular Distance can be changed in runtime
-  // const vr::HmdMatrix34_t aLeftToHead  = myContext->System->GetEyeToHeadTransform (vr::Eye_Left);
-  // const vr::HmdMatrix34_t aRightToHead = myContext->System->GetEyeToHeadTransform
-  // (vr::Eye_Right); myIod = aRightToHead.m[0][3] - aLeftToHead.m[0][3];
   myIod = myContext->System->GetFloatTrackedDeviceProperty(vr::k_unTrackedDeviceIndex_Hmd,
                                                            vr::Prop_UserIpdMeters_Float);
   myIod *= myUnitFactor;
 #endif
 }
-
-//=================================================================================================
 
 void Aspect_OpenVRSession::SetTrackingOrigin(TrackingUniverseOrigin theOrigin)
 {
@@ -907,8 +836,6 @@ void Aspect_OpenVRSession::SetTrackingOrigin(TrackingUniverseOrigin theOrigin)
 #endif
   myTrackOrigin = theOrigin;
 }
-
-//=================================================================================================
 
 bool Aspect_OpenVRSession::WaitPoses()
 {
@@ -957,8 +884,6 @@ bool Aspect_OpenVRSession::WaitPoses()
 #endif
 }
 
-//=================================================================================================
-
 Aspect_XRDigitalActionData Aspect_OpenVRSession::GetDigitalActionData(
   const occ::handle<Aspect_XRAction>& theAction) const
 {
@@ -995,8 +920,6 @@ Aspect_XRDigitalActionData Aspect_OpenVRSession::GetDigitalActionData(
   return anActionData;
 }
 
-//=================================================================================================
-
 Aspect_XRAnalogActionData Aspect_OpenVRSession::GetAnalogActionData(
   const occ::handle<Aspect_XRAction>& theAction) const
 {
@@ -1031,8 +954,6 @@ Aspect_XRAnalogActionData Aspect_OpenVRSession::GetAnalogActionData(
 #endif
   return anActionData;
 }
-
-//=================================================================================================
 
 Aspect_XRPoseActionData Aspect_OpenVRSession::GetPoseActionDataForNextFrame(
   const occ::handle<Aspect_XRAction>& theAction) const
@@ -1079,8 +1000,6 @@ Aspect_XRPoseActionData Aspect_OpenVRSession::GetPoseActionDataForNextFrame(
   return anActionData;
 }
 
-//=================================================================================================
-
 void Aspect_OpenVRSession::triggerHapticVibrationAction(
   const occ::handle<Aspect_XRAction>& theAction,
   const Aspect_XRHapticActionData&    theParams)
@@ -1097,7 +1016,7 @@ void Aspect_OpenVRSession::triggerHapticVibrationAction(
     Aspect_XRHapticActionData aParams = theParams;
     if (!theParams.IsValid())
     {
-      // preset for aborting
+
       aParams.Duration  = 0.0f;
       aParams.Frequency = 1.0f;
       aParams.Amplitude = 0.1f;
@@ -1120,8 +1039,6 @@ void Aspect_OpenVRSession::triggerHapticVibrationAction(
 #endif
 }
 
-//=================================================================================================
-
 void Aspect_OpenVRSession::ProcessEvents()
 {
 #ifdef HAVE_OPENVR
@@ -1130,7 +1047,6 @@ void Aspect_OpenVRSession::ProcessEvents()
     return;
   }
 
-  // process OpenVR events
   vr::VREvent_t aVREvent = {};
   for (; myContext->PollNextEvent(aVREvent);)
   {
@@ -1148,7 +1064,6 @@ void Aspect_OpenVRSession::ProcessEvents()
     }
   }
 
-  // process OpenVR action state
   if (myActionSets.Extent() > 0)
   {
     NCollection_LocalArray<vr::VRActiveActionSet_t, 8> anActionSets(myActionSets.Extent());
@@ -1204,37 +1119,23 @@ void Aspect_OpenVRSession::ProcessEvents()
     }
   }
 
-  // process OpenVR controller state using deprecated API
-  // for (vr::TrackedDeviceIndex_t aDevIter = 0; aDevIter < vr::k_unMaxTrackedDeviceCount;
-  // ++aDevIter) {
-  //  vr::VRControllerState_t aCtrlState = {}; if (myContext->GetControllerState (aCtrlState,
-  //  aDevIter)) { aCtrlState.ulButtonPressed == 0; }
-  //}
 #endif
 }
-
-//=================================================================================================
 
 void Aspect_OpenVRSession::onTrackedDeviceActivated(int theDeviceIndex)
 {
   Message::SendTrace(TCollection_AsciiString("OpenVR, Device ") + theDeviceIndex + " attached");
 }
 
-//=================================================================================================
-
 void Aspect_OpenVRSession::onTrackedDeviceDeactivated(int theDeviceIndex)
 {
   Message::SendTrace(TCollection_AsciiString("OpenVR, Device ") + theDeviceIndex + " detached");
 }
 
-//=================================================================================================
-
 void Aspect_OpenVRSession::onTrackedDeviceUpdated(int theDeviceIndex)
 {
   Message::SendTrace(TCollection_AsciiString("OpenVR, Device ") + theDeviceIndex + " updated");
 }
-
-//=================================================================================================
 
 bool Aspect_OpenVRSession::SubmitEye(void*                  theTexture,
                                      Aspect_GraphicsLibrary theGraphicsLib,

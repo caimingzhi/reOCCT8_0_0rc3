@@ -41,7 +41,6 @@ public:
   DEFINE_STANDARD_RTTIEXT(HLRTopoBRep_OutLiner, Standard_Transient)
 
 private:
-  //! Builds faces from F and add them to S.
   Standard_EXPORT void ProcessFace(
     const TopoDS_Face&                                                               F,
     TopoDS_Shape&                                                                    S,
@@ -60,28 +59,20 @@ inline void HLRTopoBRep_OutLiner::OriginalShape(const TopoDS_Shape& OriS)
   myOriginalShape = OriS;
 }
 
-//=================================================================================================
-
 inline TopoDS_Shape& HLRTopoBRep_OutLiner::OriginalShape()
 {
   return myOriginalShape;
 }
-
-//=================================================================================================
 
 inline void HLRTopoBRep_OutLiner::OutLinedShape(const TopoDS_Shape& OutS)
 {
   myOutLinedShape = OutS;
 }
 
-//=================================================================================================
-
 inline TopoDS_Shape& HLRTopoBRep_OutLiner::OutLinedShape()
 {
   return myOutLinedShape;
 }
-
-//=================================================================================================
 
 inline HLRTopoBRep_Data& HLRTopoBRep_OutLiner::DataStructure()
 {

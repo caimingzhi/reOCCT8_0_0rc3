@@ -15,17 +15,15 @@
 IGESBasic_ToolName::IGESBasic_ToolName() = default;
 
 void IGESBasic_ToolName::ReadOwnParams(const occ::handle<IGESBasic_Name>& ent,
-                                       const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                       const occ::handle<IGESData_IGESReaderData>&,
                                        IGESData_ParamReader& PR) const
 {
   int                                   tempNbPropertyValues;
   occ::handle<TCollection_HAsciiString> tempName;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  // clang-format off
-  PR.ReadInteger(PR.Current(),"Number of property values",tempNbPropertyValues); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
-  PR.ReadText(PR.Current(), "Name", tempName); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "Number of property values", tempNbPropertyValues);
+
+  PR.ReadText(PR.Current(), "Name", tempName);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempNbPropertyValues, tempName);
@@ -38,14 +36,14 @@ void IGESBasic_ToolName::WriteOwnParams(const occ::handle<IGESBasic_Name>& ent,
   IW.Send(ent->Value());
 }
 
-void IGESBasic_ToolName::OwnShared(const occ::handle<IGESBasic_Name>& /* ent */,
-                                   Interface_EntityIterator& /* iter */) const
+void IGESBasic_ToolName::OwnShared(const occ::handle<IGESBasic_Name>&,
+                                   Interface_EntityIterator&) const
 {
 }
 
 void IGESBasic_ToolName::OwnCopy(const occ::handle<IGESBasic_Name>& another,
                                  const occ::handle<IGESBasic_Name>& ent,
-                                 Interface_CopyTool& /* TC */) const
+                                 Interface_CopyTool&) const
 {
   int                                   aNbPropertyValues;
   occ::handle<TCollection_HAsciiString> aName;
@@ -59,12 +57,12 @@ bool IGESBasic_ToolName::OwnCorrect(const occ::handle<IGESBasic_Name>& ent) cons
   bool res = (ent->NbPropertyValues() != 1);
   if (res)
     ent->Init(1, ent->Value());
-  return res; // nbpropertyvalues = 1
+  return res;
 }
 
-IGESData_DirChecker IGESBasic_ToolName::DirChecker(const occ::handle<IGESBasic_Name>& /*ent*/) const
+IGESData_DirChecker IGESBasic_ToolName::DirChecker(const occ::handle<IGESBasic_Name>&) const
 {
-  IGESData_DirChecker DC(406, 15); // Form no = 15 & Type = 406
+  IGESData_DirChecker DC(406, 15);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
@@ -82,9 +80,9 @@ void IGESBasic_ToolName::OwnCheck(const occ::handle<IGESBasic_Name>& ent,
 }
 
 void IGESBasic_ToolName::OwnDump(const occ::handle<IGESBasic_Name>& ent,
-                                 const IGESData_IGESDumper& /* dumper */,
+                                 const IGESData_IGESDumper&,
                                  Standard_OStream& S,
-                                 const int /* level */) const
+                                 const int) const
 {
   S << "IGESBasic_Name\n"
     << "Number of property values : " << ent->NbPropertyValues() << "\n"

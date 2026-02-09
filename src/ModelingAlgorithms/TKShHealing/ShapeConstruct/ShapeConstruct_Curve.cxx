@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Approx_Curve2d.hpp>
 #include <Approx_Curve3d.hpp>
@@ -38,9 +27,6 @@
 #include <Standard_ErrorHandler.hpp>
 #include <Standard_Failure.hpp>
 
-// sln 29.12.2001 OCC90 : Method FixKnots was added
-//=================================================================================================
-
 bool ShapeConstruct_Curve::AdjustCurve(const occ::handle<Geom_Curve>& C3D,
                                        const gp_Pnt&                  P1,
                                        const gp_Pnt&                  P2,
@@ -63,7 +49,7 @@ bool ShapeConstruct_Curve::AdjustCurve(const occ::handle<Geom_Curve>& C3D,
   if (C3D->IsKind(STANDARD_TYPE(Geom_Line)))
   {
     occ::handle<Geom_Line> L3D = occ::down_cast<Geom_Line>(C3D);
-    //   ATTENTION, P1 et P2 sont supposes tous deux pertinents ...
+
     gp_Vec avec(P1, P2);
     gp_Dir adir(avec);
     gp_Lin alin(P1, adir);
@@ -76,8 +62,6 @@ bool ShapeConstruct_Curve::AdjustCurve(const occ::handle<Geom_Curve>& C3D,
   return false;
 }
 
-//=================================================================================================
-
 bool ShapeConstruct_Curve::AdjustCurveSegment(const occ::handle<Geom_Curve>& C3D,
                                               const gp_Pnt&                  P1,
                                               const gp_Pnt&                  P2,
@@ -87,8 +71,7 @@ bool ShapeConstruct_Curve::AdjustCurveSegment(const occ::handle<Geom_Curve>& C3D
   if (C3D->IsKind(STANDARD_TYPE(Geom_BSplineCurve)))
   {
     occ::handle<Geom_BSplineCurve> BSPL = occ::down_cast<Geom_BSplineCurve>(C3D);
-    //    Forcer l extremite c est bien
-    //    Propager sur le reste, c est pas mal non plus
+
     if (U1 >= U2)
       return false;
     double UU1 = std::max(U1, BSPL->FirstParameter());
@@ -102,8 +85,7 @@ bool ShapeConstruct_Curve::AdjustCurveSegment(const occ::handle<Geom_Curve>& C3D
   if (C3D->IsKind(STANDARD_TYPE(Geom_Line)))
   {
     occ::handle<Geom_Line> L3D = occ::down_cast<Geom_Line>(C3D);
-    //   ATTENTION, P1 et P2 sont supposes tous deux pertinents ...
-    //   NB : on ne s aide pas de U1 et U2
+
     gp_Vec avec(P1, P2);
     gp_Dir adir(avec);
     gp_Lin alin(P1, adir);
@@ -115,8 +97,6 @@ bool ShapeConstruct_Curve::AdjustCurveSegment(const occ::handle<Geom_Curve>& C3D
 
   return false;
 }
-
-//=================================================================================================
 
 bool ShapeConstruct_Curve::AdjustCurve2d(const occ::handle<Geom2d_Curve>& C2D,
                                          const gp_Pnt2d&                  P1,
@@ -140,7 +120,7 @@ bool ShapeConstruct_Curve::AdjustCurve2d(const occ::handle<Geom2d_Curve>& C2D,
   if (C2D->IsKind(STANDARD_TYPE(Geom2d_Line)))
   {
     occ::handle<Geom2d_Line> L2D = occ::down_cast<Geom2d_Line>(C2D);
-    //   ATTENTION, P1 et P2 sont supposes tous deux pertinents ...
+
     gp_Vec2d avec(P1, P2);
     gp_Dir2d adir(avec);
     gp_Lin2d alin(P1, adir);
@@ -152,8 +132,6 @@ bool ShapeConstruct_Curve::AdjustCurve2d(const occ::handle<Geom2d_Curve>& C2D,
 
   return false;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_BSplineCurve> ShapeConstruct_Curve::ConvertToBSpline(
   const occ::handle<Geom_Curve>& C,
@@ -188,7 +166,7 @@ occ::handle<Geom_BSplineCurve> ShapeConstruct_Curve::ConvertToBSpline(
 
   if (!bspl.IsNull())
   {
-    // take segment if trim and range differ
+
     double fbsp = bspl->FirstParameter(), lbsp = bspl->LastParameter();
     bool   segment = false;
     if (first > fbsp + Precision::PConfusion())
@@ -221,7 +199,6 @@ occ::handle<Geom_BSplineCurve> ShapeConstruct_Curve::ConvertToBSpline(
     }
   }
 
-  // Approx is used for conics and when ordinary methods fail
   occ::handle<Geom_Curve> newc = C;
   if (!bspl.IsNull())
   {
@@ -246,8 +223,6 @@ occ::handle<Geom_BSplineCurve> ShapeConstruct_Curve::ConvertToBSpline(
   }
   return bspl;
 }
-
-//=================================================================================================
 
 occ::handle<Geom2d_BSplineCurve> ShapeConstruct_Curve::ConvertToBSpline(
   const occ::handle<Geom2d_Curve>& C,
@@ -283,7 +258,7 @@ occ::handle<Geom2d_BSplineCurve> ShapeConstruct_Curve::ConvertToBSpline(
 
   if (!bspl.IsNull())
   {
-    // take segment if trim and range differ
+
     double fbsp = bspl->FirstParameter(), lbsp = bspl->LastParameter();
     bool   segment = false;
     if (first > fbsp + Precision::PConfusion())
@@ -316,7 +291,6 @@ occ::handle<Geom2d_BSplineCurve> ShapeConstruct_Curve::ConvertToBSpline(
     }
   }
 
-  // Approx is used for conics and when ordinary methods fail
   occ::handle<Geom2d_Curve> newc = C;
   if (!bspl.IsNull())
   {
@@ -349,8 +323,6 @@ occ::handle<Geom2d_BSplineCurve> ShapeConstruct_Curve::ConvertToBSpline(
   return bspl;
 }
 
-//=================================================================================================
-
 bool ShapeConstruct_Curve::FixKnots(occ::handle<NCollection_HArray1<double>>& knots)
 {
   bool   Fixed   = false;
@@ -369,8 +341,6 @@ bool ShapeConstruct_Curve::FixKnots(occ::handle<NCollection_HArray1<double>>& kn
   }
   return Fixed;
 }
-
-//=================================================================================================
 
 bool ShapeConstruct_Curve::FixKnots(NCollection_Array1<double>& knots)
 {

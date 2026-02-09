@@ -9,7 +9,7 @@
 
 namespace
 {
-  //! Auxiliary sentry object managing stencil test.
+
   struct StencilTestSentry
   {
     StencilTestSentry(const occ::handle<OpenGl_Context>& theCtx)
@@ -18,7 +18,6 @@ namespace
     {
     }
 
-    //! Restore previous application state.
     ~StencilTestSentry()
     {
       if (myDepthFuncPrev != 0)
@@ -30,7 +29,6 @@ namespace
       }
     }
 
-    //! Prepare for rendering the clip planes.
     void Init()
     {
       if (myDepthFuncPrev == 0)
@@ -46,16 +44,12 @@ namespace
     GLint           myDepthFuncPrev;
   };
 
-  //! Render infinite capping plane.
-  //! @param theWorkspace [in] the GL workspace, context state.
-  //! @param thePlane [in] the graphical plane, for which the capping surface is rendered.
   static void renderPlane(const occ::handle<OpenGl_Workspace>&            theWorkspace,
                           const occ::handle<OpenGl_CappingPlaneResource>& thePlane)
   {
     const occ::handle<OpenGl_Context>& aContext       = theWorkspace->GetGlContext();
     const bool                         wasCullAllowed = theWorkspace->SetAllowFaceCulling(true);
 
-    // set identity model matrix
     aContext->ModelWorldState.Push();
     aContext->ModelWorldState.SetCurrent(thePlane->Orientation());
     aContext->ApplyModelViewMatrix();
@@ -68,7 +62,6 @@ namespace
     theWorkspace->SetAllowFaceCulling(wasCullAllowed);
   }
 
-  //! Render capping for specific structure.
   static void renderCappingForStructure(StencilTestSentry&                      theStencilSentry,
                                         const occ::handle<OpenGl_Workspace>&    theWorkspace,
                                         const OpenGl_Structure&                 theStructure,
@@ -90,11 +83,8 @@ namespace
         continue;
       }
 
-      // clear stencil only if something has been actually drawn
       theStencilSentry.Init();
 
-      // check if capping plane should be rendered within current pass (only opaque / only
-      // transparent)
       const OpenGl_Aspects* anObjAspectFace =
         aRenderPlane->ToUseObjectProperties() ? aGroupIter.Value()->GlAspects() : nullptr;
       thePlane->Update(aContext,
@@ -107,22 +97,18 @@ namespace
         continue;
       }
 
-      // suppress only opaque/transparent filter since for filling stencil the whole geometry should
-      // be drawn
       theWorkspace->SetRenderFilter(anAnyFilter);
 
-      // enable only the rendering plane to generate stencil mask
       aContext->ChangeClipping().DisableAllExcept(theClipChain, theSubPlaneIndex);
       aContext->ShaderManager()->UpdateClippingState();
 
       aContext->core11fwd->glClear(GL_STENCIL_BUFFER_BIT);
       const NCollection_Vec4<bool> aColorMaskBack = aContext->ColorMaskRGBA();
       aContext->SetColorMask(false);
-      // override aspects, disable culling
+
       theWorkspace->SetAspects(&theWorkspace->NoneCulling());
       theWorkspace->ApplyAspects();
 
-      // evaluate number of pair faces
       if (theWorkspace->UseZBuffer())
       {
         aContext->core11fwd->glDisable(GL_DEPTH_TEST);
@@ -134,7 +120,6 @@ namespace
       aContext->core11fwd->glStencilFunc(GL_ALWAYS, 1, 0x01);
       aContext->core11fwd->glStencilOp(GL_KEEP, GL_INVERT, GL_INVERT);
 
-      // render closed primitives
       if (aRenderPlane->ToUseObjectProperties())
       {
         aGroupIter.Value()->Render(theWorkspace);
@@ -150,15 +135,12 @@ namespace
         }
       }
 
-      // override material, cull back faces
       theWorkspace->SetAspects(&theWorkspace->FrontCulling());
       theWorkspace->ApplyAspects();
 
-      // enable all clip plane except the rendered one
       aContext->ChangeClipping().EnableAllExcept(theClipChain, theSubPlaneIndex);
       aContext->ShaderManager()->UpdateClippingState();
 
-      // render capping plane using the generated stencil mask
       aContext->SetColorMaskRGBA(aColorMaskBack);
       if (theWorkspace->UseDepthWrite())
       {
@@ -174,7 +156,6 @@ namespace
       theWorkspace->SetAspects(thePlane->AspectFace());
       renderPlane(theWorkspace, thePlane);
 
-      // turn on the current plane to restore initial state
       aContext->ChangeClipping().ResetCappingFilter();
       aContext->ShaderManager()->RevertClippingState();
       aContext->ShaderManager()->RevertClippingState();
@@ -192,31 +173,26 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 void OpenGl_CappingAlgo::RenderCapping(const occ::handle<OpenGl_Workspace>& theWorkspace,
                                        const OpenGl_Structure&              theStructure)
 {
   const occ::handle<OpenGl_Context>& aContext = theWorkspace->GetGlContext();
   if (!aContext->Clipping().IsCappingOn())
   {
-    // do not perform algorithm if there is nothing to render
+
     return;
   }
 
-  // remember current aspect face defined in workspace
   const OpenGl_Aspects* aFaceAsp = theWorkspace->Aspects();
 
-  // only filled primitives should be rendered
   const int aPrevFilter = theWorkspace->RenderFilter();
   theWorkspace->SetRenderFilter(aPrevFilter | OpenGl_RenderFilter_FillModeOnly);
   StencilTestSentry aStencilSentry(aContext);
 
-  // generate capping for every clip plane
   for (OpenGl_ClippingIterator aCappingIt(aContext->Clipping()); aCappingIt.More();
        aCappingIt.Next())
   {
-    // get plane being rendered
+
     const occ::handle<Graphic3d_ClipPlane>& aClipChain = aCappingIt.Value();
     if (!aClipChain->IsCapping() || aCappingIt.IsDisabled())
     {
@@ -227,12 +203,12 @@ void OpenGl_CappingAlgo::RenderCapping(const occ::handle<OpenGl_Workspace>& theW
     for (const Graphic3d_ClipPlane* aSubPlaneIter = aClipChain.get(); aSubPlaneIter != nullptr;
          aSubPlaneIter = aSubPlaneIter->ChainNextPlane().get(), ++aSubPlaneIndex)
     {
-      // get resource for the plane
+
       const TCollection_AsciiString&           aResId = aSubPlaneIter->GetId();
       occ::handle<OpenGl_CappingPlaneResource> aPlaneRes;
       if (!aContext->GetResource(aResId, aPlaneRes))
       {
-        // share and register for release once the resource is no longer used
+
         aPlaneRes = new OpenGl_CappingPlaneResource(aSubPlaneIter);
         aContext->ShareResource(aResId, aPlaneRes);
       }
@@ -244,13 +220,11 @@ void OpenGl_CappingAlgo::RenderCapping(const occ::handle<OpenGl_Workspace>& theW
                                 aSubPlaneIndex,
                                 aPlaneRes);
 
-      // set delayed resource release
       aPlaneRes.Nullify();
       aContext->ReleaseResource(aResId, true);
     }
   }
 
-  // restore rendering aspects
   theWorkspace->SetAspects(aFaceAsp);
   theWorkspace->SetRenderFilter(aPrevFilter);
 }

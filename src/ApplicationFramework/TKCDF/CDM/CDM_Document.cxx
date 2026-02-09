@@ -18,8 +18,6 @@ class CDM_MetaData;
 
 IMPLEMENT_STANDARD_RTTIEXT(CDM_Document, Standard_Transient)
 
-//=================================================================================================
-
 CDM_Document::CDM_Document()
     : myResourcesAreLoaded(false),
       myVersion(1),
@@ -34,27 +32,15 @@ CDM_Document::CDM_Document()
 {
 }
 
-//=================================================================================================
-
 CDM_Document::~CDM_Document()
 {
   if (!myMetaData.IsNull())
     myMetaData->UnsetDocument();
 }
 
-//=================================================================================================
-
-void CDM_Document::Update(const occ::handle<CDM_Document>& /*aToDocument*/,
-                          const int /*aReferenceIdentifier*/,
-                          void* const /*aModifContext*/)
-{
-}
-
-//=================================================================================================
+void CDM_Document::Update(const occ::handle<CDM_Document>&, const int, void* const) {}
 
 void CDM_Document::Update() {}
-
-//=================================================================================================
 
 bool CDM_Document::Update(TCollection_ExtendedString& ErrorString)
 {
@@ -63,8 +49,6 @@ bool CDM_Document::Update(TCollection_ExtendedString& ErrorString)
   return true;
 }
 
-//=================================================================================================
-
 bool CDM_Document::GetAlternativeDocument(const TCollection_ExtendedString& aFormat,
                                           occ::handle<CDM_Document>&        anAlternativeDocument)
 {
@@ -72,14 +56,10 @@ bool CDM_Document::GetAlternativeDocument(const TCollection_ExtendedString& aFor
   return aFormat == StorageFormat();
 }
 
-//=================================================================================================
-
 void CDM_Document::Extensions(NCollection_Sequence<TCollection_ExtendedString>& Extensions) const
 {
   Extensions.Clear();
 }
-
-//=================================================================================================
 
 int CDM_Document::CreateReference(const occ::handle<CDM_Document>& anOtherDocument)
 {
@@ -100,8 +80,6 @@ int CDM_Document::CreateReference(const occ::handle<CDM_Document>& anOtherDocume
   return r->ReferenceIdentifier();
 }
 
-//=================================================================================================
-
 void CDM_Document::RemoveAllReferences()
 {
   NCollection_List<occ::handle<CDM_Reference>>::Iterator it(myToReferences);
@@ -112,8 +90,6 @@ void CDM_Document::RemoveAllReferences()
   }
   myToReferences.Clear();
 }
-
-//=================================================================================================
 
 void CDM_Document::RemoveReference(const int aReferenceIdentifier)
 {
@@ -130,8 +106,6 @@ void CDM_Document::RemoveReference(const int aReferenceIdentifier)
   }
 }
 
-//=================================================================================================
-
 occ::handle<CDM_Document> CDM_Document::Document(const int aReferenceIdentifier) const
 {
   occ::handle<CDM_Document> theDocument;
@@ -147,8 +121,6 @@ occ::handle<CDM_Document> CDM_Document::Document(const int aReferenceIdentifier)
   }
   return theDocument;
 }
-
-//=================================================================================================
 
 occ::handle<CDM_Reference> CDM_Document::Reference(const int aReferenceIdentifier) const
 {
@@ -167,8 +139,6 @@ occ::handle<CDM_Reference> CDM_Document::Reference(const int aReferenceIdentifie
   return theReference;
 }
 
-//=================================================================================================
-
 bool CDM_Document::IsInSession(const int aReferenceIdentifier) const
 {
   if (aReferenceIdentifier == 0)
@@ -179,8 +149,6 @@ bool CDM_Document::IsInSession(const int aReferenceIdentifier) const
                                 "invalid reference identifier");
   return theReference->IsInSession();
 }
-
-//=================================================================================================
 
 bool CDM_Document::IsStored(const int aReferenceIdentifier) const
 {
@@ -193,8 +161,6 @@ bool CDM_Document::IsStored(const int aReferenceIdentifier) const
   return theReference->IsStored();
 }
 
-//=================================================================================================
-
 TCollection_ExtendedString CDM_Document::Name(const int aReferenceIdentifier) const
 {
   if (!IsStored(aReferenceIdentifier))
@@ -205,8 +171,6 @@ TCollection_ExtendedString CDM_Document::Name(const int aReferenceIdentifier) co
 
   return Reference(aReferenceIdentifier)->MetaData()->Name();
 }
-
-//=================================================================================================
 
 void CDM_Document::UpdateFromDocuments(void* const aModifContext) const
 {
@@ -254,21 +218,15 @@ void CDM_Document::UpdateFromDocuments(void* const aModifContext) const
   }
 }
 
-//=================================================================================================
-
 int CDM_Document::ToReferencesNumber() const
 {
   return myToReferences.Extent();
 }
 
-//=================================================================================================
-
 int CDM_Document::FromReferencesNumber() const
 {
   return myFromReferences.Extent();
 }
-
-//=================================================================================================
 
 bool CDM_Document::ShallowReferences(const occ::handle<CDM_Document>& aDocument) const
 {
@@ -280,8 +238,6 @@ bool CDM_Document::ShallowReferences(const occ::handle<CDM_Document>& aDocument)
   }
   return false;
 }
-
-//=================================================================================================
 
 bool CDM_Document::DeepReferences(const occ::handle<CDM_Document>& aDocument) const
 {
@@ -300,10 +256,7 @@ bool CDM_Document::DeepReferences(const occ::handle<CDM_Document>& aDocument) co
   return false;
 }
 
-//=================================================================================================
-
-int CDM_Document::CopyReference(const occ::handle<CDM_Document>& /*aFromDocument*/,
-                                const int aReferenceIdentifier)
+int CDM_Document::CopyReference(const occ::handle<CDM_Document>&, const int aReferenceIdentifier)
 {
   occ::handle<CDM_Reference> theReference = Reference(aReferenceIdentifier);
   if (!theReference.IsNull())
@@ -319,52 +272,38 @@ int CDM_Document::CopyReference(const occ::handle<CDM_Document>& /*aFromDocument
                              theReference->DocumentVersion(),
                              theReference->UseStorageConfiguration());
   }
-  return 0; // for NT ...
+  return 0;
 }
-
-//=================================================================================================
 
 void CDM_Document::Modify()
 {
   myVersion++;
 }
 
-//=================================================================================================
-
 void CDM_Document::UnModify()
 {
   myVersion = myStorageVersion;
 }
-
-//=================================================================================================
 
 int CDM_Document::Modifications() const
 {
   return myVersion;
 }
 
-//=================================================================================================
-
 void CDM_Document::SetModifications(const int Modifications)
 {
   myVersion = Modifications;
 }
-
-//=================================================================================================
 
 bool CDM_Document::IsUpToDate(const int aReferenceIdentifier) const
 {
   return Reference(aReferenceIdentifier)->IsUpToDate();
 }
 
-//=================================================================================================
-
 void CDM_Document::SetIsUpToDate(const int aReferenceIdentifier)
 {
   Reference(aReferenceIdentifier)->SetIsUpToDate();
 }
-
-//=================================================================================================
 
 void CDM_Document::SetComment(const TCollection_ExtendedString& aComment)
 {
@@ -372,28 +311,20 @@ void CDM_Document::SetComment(const TCollection_ExtendedString& aComment)
   myComments.Append(aComment);
 }
 
-//=================================================================================================
-
 void CDM_Document::AddComment(const TCollection_ExtendedString& aComment)
 {
   myComments.Append(aComment);
 }
-
-//=================================================================================================
 
 void CDM_Document::SetComments(const NCollection_Sequence<TCollection_ExtendedString>& aComments)
 {
   myComments = aComments;
 }
 
-//=================================================================================================
-
 void CDM_Document::Comments(NCollection_Sequence<TCollection_ExtendedString>& aComments) const
 {
   aComments = myComments;
 }
-
-//=================================================================================================
 
 const char16_t* CDM_Document::Comment() const
 {
@@ -402,21 +333,15 @@ const char16_t* CDM_Document::Comment() const
   return myComments(1).ToExtString();
 }
 
-//=================================================================================================
-
 bool CDM_Document::IsStored() const
 {
   return !myMetaData.IsNull();
 }
 
-//=================================================================================================
-
 int CDM_Document::StorageVersion() const
 {
   return myStorageVersion;
 }
-
-//=================================================================================================
 
 void CDM_Document::SetMetaData(const occ::handle<CDM_MetaData>& aMetaData)
 {
@@ -425,7 +350,6 @@ void CDM_Document::SetMetaData(const occ::handle<CDM_MetaData>& aMetaData)
 
     aMetaData->SetDocument(this);
 
-    // Update the document referencing this MetaData:
     NCollection_DataMap<TCollection_ExtendedString, occ::handle<CDM_MetaData>>::Iterator it(
       Application()->MetaDataLookUpTable());
     for (; it.More(); it.Next())
@@ -456,8 +380,6 @@ void CDM_Document::SetMetaData(const occ::handle<CDM_MetaData>& aMetaData)
     SetRequestedPreviousVersion(aMetaData->Version());
 }
 
-//=================================================================================================
-
 void CDM_Document::UnsetIsStored()
 {
   if (!myMetaData.IsNull())
@@ -465,8 +387,6 @@ void CDM_Document::UnsetIsStored()
     myMetaData->UnsetDocument();
   }
 }
-
-//=================================================================================================
 
 occ::handle<CDM_MetaData> CDM_Document::MetaData() const
 {
@@ -476,21 +396,15 @@ occ::handle<CDM_MetaData> CDM_Document::MetaData() const
   return myMetaData;
 }
 
-//=================================================================================================
-
 void CDM_Document::SetRequestedComment(const TCollection_ExtendedString& aComment)
 {
   myRequestedComment = aComment;
 }
 
-//=================================================================================================
-
 TCollection_ExtendedString CDM_Document::RequestedComment() const
 {
   return myRequestedComment.ToExtString();
 }
-
-//=================================================================================================
 
 TCollection_ExtendedString CDM_Document::Folder() const
 {
@@ -499,8 +413,6 @@ TCollection_ExtendedString CDM_Document::Folder() const
                                 "which is not stored");
   return myMetaData->Folder();
 }
-
-//=================================================================================================
 
 void CDM_Document::SetRequestedFolder(const TCollection_ExtendedString& aFolder)
 {
@@ -512,8 +424,6 @@ void CDM_Document::SetRequestedFolder(const TCollection_ExtendedString& aFolder)
   }
 }
 
-//=================================================================================================
-
 TCollection_ExtendedString CDM_Document::RequestedFolder() const
 {
   Standard_NoSuchObject_Raise_if(!myRequestedFolderIsDefined,
@@ -521,22 +431,16 @@ TCollection_ExtendedString CDM_Document::RequestedFolder() const
   return myRequestedFolder;
 }
 
-//=================================================================================================
-
 bool CDM_Document::HasRequestedFolder() const
 {
   return myRequestedFolderIsDefined;
 }
-
-//=================================================================================================
 
 void CDM_Document::SetRequestedName(const TCollection_ExtendedString& aName)
 {
   myRequestedName          = aName;
   myRequestedNameIsDefined = true;
 }
-
-//=================================================================================================
 
 TCollection_ExtendedString CDM_Document::RequestedName()
 {
@@ -551,15 +455,11 @@ TCollection_ExtendedString CDM_Document::RequestedName()
   return myRequestedName;
 }
 
-//=================================================================================================
-
 void CDM_Document::SetRequestedPreviousVersion(const TCollection_ExtendedString& aPreviousVersion)
 {
   myRequestedPreviousVersionIsDefined = true;
   myRequestedPreviousVersion          = aPreviousVersion;
 }
-
-//=================================================================================================
 
 TCollection_ExtendedString CDM_Document::RequestedPreviousVersion() const
 {
@@ -568,28 +468,20 @@ TCollection_ExtendedString CDM_Document::RequestedPreviousVersion() const
   return myRequestedPreviousVersion;
 }
 
-//=================================================================================================
-
 bool CDM_Document::HasRequestedPreviousVersion() const
 {
   return myRequestedPreviousVersionIsDefined;
 }
-
-//=================================================================================================
 
 void CDM_Document::UnsetRequestedPreviousVersion()
 {
   myRequestedPreviousVersionIsDefined = false;
 }
 
-//=================================================================================================
-
 bool CDM_Document::IsOpened() const
 {
   return !myApplication.IsNull();
 }
-
-//=================================================================================================
 
 bool CDM_Document::IsOpened(const int aReferenceIdentifier) const
 {
@@ -603,14 +495,10 @@ bool CDM_Document::IsOpened(const int aReferenceIdentifier) const
   return false;
 }
 
-//=================================================================================================
-
 void CDM_Document::Open(const occ::handle<CDM_Application>& anApplication)
 {
   myApplication = anApplication;
 }
-
-//=================================================================================================
 
 void CDM_Document::Close()
 {
@@ -646,8 +534,6 @@ void CDM_Document::Close()
   myApplication.Nullify();
 }
 
-//=================================================================================================
-
 CDM_CanCloseStatus CDM_Document::CanClose() const
 {
   if (!IsOpened())
@@ -670,22 +556,12 @@ CDM_CanCloseStatus CDM_Document::CanClose() const
   return CDM_CCS_OK;
 }
 
-//=================================================================================================
-
-bool CDM_Document::CanCloseReference(const occ::handle<CDM_Document>& /*aDocument*/,
-                                     const int /*(aReferenceIdent*/) const
+bool CDM_Document::CanCloseReference(const occ::handle<CDM_Document>&, const int) const
 {
   return true;
 }
 
-//=================================================================================================
-
-void CDM_Document::CloseReference(const occ::handle<CDM_Document>& /*aDocument*/,
-                                  const int /*aReferenceIdentifier*/)
-{
-}
-
-//=================================================================================================
+void CDM_Document::CloseReference(const occ::handle<CDM_Document>&, const int) {}
 
 const occ::handle<CDM_Application>& CDM_Document::Application() const
 {
@@ -695,21 +571,15 @@ const occ::handle<CDM_Application>& CDM_Document::Application() const
   return myApplication;
 }
 
-//=================================================================================================
-
 bool CDM_Document::IsModified() const
 {
   return Modifications() > StorageVersion();
 }
 
-//=================================================================================================
-
 Standard_OStream& CDM_Document::Print(Standard_OStream& anOStream) const
 {
   return anOStream;
 }
-
-//=================================================================================================
 
 void CDM_Document::CreateReference(const occ::handle<CDM_MetaData>&    aMetaData,
                                    const int                           aReferenceIdentifier,
@@ -738,8 +608,6 @@ void CDM_Document::CreateReference(const occ::handle<CDM_MetaData>&    aMetaData
   }
 }
 
-//=================================================================================================
-
 int CDM_Document::CreateReference(const occ::handle<CDM_MetaData>&    aMetaData,
                                   const occ::handle<CDM_Application>& anApplication,
                                   const int                           aDocumentVersion,
@@ -762,21 +630,15 @@ int CDM_Document::CreateReference(const occ::handle<CDM_MetaData>&    aMetaData,
   return r->ReferenceIdentifier();
 }
 
-//=================================================================================================
-
 void CDM_Document::AddToReference(const occ::handle<CDM_Reference>& aReference)
 {
   myToReferences.Append(aReference);
 }
 
-//=================================================================================================
-
 void CDM_Document::AddFromReference(const occ::handle<CDM_Reference>& aReference)
 {
   myFromReferences.Append(aReference);
 }
-
-//=================================================================================================
 
 void CDM_Document::RemoveFromReference(const int aReferenceIdentifier)
 {
@@ -791,8 +653,6 @@ void CDM_Document::RemoveFromReference(const int aReferenceIdentifier)
     }
   }
 }
-
-//=================================================================================================
 
 TCollection_ExtendedString GetResource(const TCollection_ExtendedString& aFormat,
                                        const TCollection_ExtendedString& anItem)
@@ -814,8 +674,6 @@ static void FIND(const occ::handle<Resource_Manager>& theDocumentResource,
     theValue = UTL::Value(theDocumentResource, theResourceName);
 }
 
-//=================================================================================================
-
 occ::handle<Resource_Manager> CDM_Document::StorageResource()
 {
   if (myApplication.IsNull())
@@ -827,8 +685,6 @@ occ::handle<Resource_Manager> CDM_Document::StorageResource()
   }
   return myApplication->Resources();
 }
-
-//=================================================================================================
 
 void CDM_Document::LoadResources()
 {
@@ -849,14 +705,9 @@ void CDM_Document::LoadResources()
     FIND(theDocumentResource, theResourceName, myDescriptionWasFound, myDescription);
 
     myResourcesAreLoaded = true;
-
-    //    std::cout << "resource Loaded: Format: " << theFormat << ", FileExtension:" <<
-    //    myFileExtension << ", Description:" << myDescription << std::endl;
   }
   return;
 }
-
-//=================================================================================================
 
 bool CDM_Document::FindFileExtension()
 {
@@ -864,15 +715,11 @@ bool CDM_Document::FindFileExtension()
   return myFileExtensionWasFound;
 }
 
-//=================================================================================================
-
 TCollection_ExtendedString CDM_Document::FileExtension()
 {
   LoadResources();
   return myFileExtension;
 }
-
-//=================================================================================================
 
 bool CDM_Document::FindDescription()
 {
@@ -880,15 +727,11 @@ bool CDM_Document::FindDescription()
   return myDescriptionWasFound;
 }
 
-//=================================================================================================
-
 TCollection_ExtendedString CDM_Document::Description()
 {
   LoadResources();
   return myDescription;
 }
-
-//=================================================================================================
 
 bool CDM_Document::IsReadOnly() const
 {
@@ -897,14 +740,10 @@ bool CDM_Document::IsReadOnly() const
   return false;
 }
 
-//=================================================================================================
-
 bool CDM_Document::IsReadOnly(const int aReferenceIdentifier) const
 {
   return Reference(aReferenceIdentifier)->IsReadOnly();
 }
-
-//=================================================================================================
 
 void CDM_Document::SetIsReadOnly()
 {
@@ -912,29 +751,21 @@ void CDM_Document::SetIsReadOnly()
     myMetaData->SetIsReadOnly();
 }
 
-//=================================================================================================
-
 void CDM_Document::UnsetIsReadOnly()
 {
   if (IsStored())
     myMetaData->UnsetIsReadOnly();
 }
 
-//=================================================================================================
-
 int CDM_Document::ReferenceCounter() const
 {
   return myActualReferenceIdentifier;
 }
 
-//=================================================================================================
-
 void CDM_Document::SetReferenceCounter(const int aReferenceCounter)
 {
   myActualReferenceIdentifier = aReferenceCounter;
 }
-
-//=================================================================================================
 
 void CDM_Document::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

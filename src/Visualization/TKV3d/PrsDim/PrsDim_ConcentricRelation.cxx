@@ -22,8 +22,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_ConcentricRelation, PrsDim_Relation)
 
-//=================================================================================================
-
 PrsDim_ConcentricRelation::PrsDim_ConcentricRelation(const TopoDS_Shape&            aFShape,
                                                      const TopoDS_Shape&            aSShape,
                                                      const occ::handle<Geom_Plane>& aPlane)
@@ -33,8 +31,6 @@ PrsDim_ConcentricRelation::PrsDim_ConcentricRelation(const TopoDS_Shape&        
   myPlane  = aPlane;
   myDir    = aPlane->Pln().Axis().Direction();
 }
-
-//=================================================================================================
 
 void PrsDim_ConcentricRelation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                         const occ::handle<Prs3d_Presentation>& aPresentation,
@@ -67,8 +63,6 @@ void PrsDim_ConcentricRelation::Compute(const occ::handle<PrsMgr_PresentationMan
     }
   }
 }
-
-//=================================================================================================
 
 void PrsDim_ConcentricRelation::ComputeEdgeVertexConcentric(
   const occ::handle<Prs3d_Presentation>& aPresentation)
@@ -108,8 +102,6 @@ void PrsDim_ConcentricRelation::ComputeEdgeVertexConcentric(
     PrsDim::ComputeProjVertexPresentation(aPresentation, myDrawer, V, P);
 }
 
-//=================================================================================================
-
 void PrsDim_ConcentricRelation::ComputeTwoVerticesConcentric(
   const occ::handle<Prs3d_Presentation>& aPresentation)
 {
@@ -131,8 +123,6 @@ void PrsDim_ConcentricRelation::ComputeTwoVerticesConcentric(
   if (!isOnPlanVertex2)
     PrsDim::ComputeProjVertexPresentation(aPresentation, myDrawer, V2, P2);
 }
-
-//=================================================================================================
 
 void PrsDim_ConcentricRelation::ComputeTwoEdgesConcentric(
   const occ::handle<Prs3d_Presentation>& aPresentation)
@@ -166,8 +156,6 @@ void PrsDim_ConcentricRelation::ComputeTwoEdgesConcentric(
 
   myCenter = gcirc1->Location();
 
-  // choose the radius equal to 1/5 of the smallest radius of
-  // 2 circles. Limit is imposed ( 0.02 by chance)
   double aRad1 = gcirc1->Radius();
   double aRad2 = gcirc2->Radius();
   myRad        = (aRad1 > aRad2) ? aRad2 : aRad1;
@@ -175,7 +163,6 @@ void PrsDim_ConcentricRelation::ComputeTwoEdgesConcentric(
   if (myRad > 15.)
     myRad = 15.;
 
-  // Calculate a point of circle of radius myRad
   gp_Dir vec(ptat11.XYZ() - myCenter.XYZ());
   gp_Vec vectrans(vec);
   myPnt = myCenter.Translated(vectrans.Multiplied(myRad));
@@ -205,27 +192,20 @@ void PrsDim_ConcentricRelation::ComputeTwoEdgesConcentric(
   }
 }
 
-//=================================================================================================
-
 void PrsDim_ConcentricRelation::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSelection,
                                                  const int)
 {
   occ::handle<SelectMgr_EntityOwner> anOwner = new SelectMgr_EntityOwner(this, 7);
 
-  // Creation of 2 sensitive circles
-
-  // the greater
   gp_Ax2                                anAx(myCenter, myDir);
   gp_Circ                               aCirc(anAx, myRad);
   occ::handle<Select3D_SensitiveCircle> sensit = new Select3D_SensitiveCircle(anOwner, aCirc);
   aSelection->Add(sensit);
 
-  // the smaller
   aCirc.SetRadius(myRad / 2);
   sensit = new Select3D_SensitiveCircle(anOwner, aCirc);
   aSelection->Add(sensit);
 
-  // Creation of 2 segments sensitive for the cross
   occ::handle<Select3D_SensitiveSegment> seg;
   gp_Pnt                                 otherPnt = myPnt.Mirrored(myCenter);
   seg = new Select3D_SensitiveSegment(anOwner, otherPnt, myPnt);

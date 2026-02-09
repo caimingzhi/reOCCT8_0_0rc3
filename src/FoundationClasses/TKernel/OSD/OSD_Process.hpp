@@ -10,58 +10,42 @@
 class Quantity_Date;
 class OSD_Path;
 
-// undefine SetCurrentDirectory that can be #defined by previous inclusion of windows.h
 #ifdef SetCurrentDirectory
   #undef SetCurrentDirectory
 #endif
 
-//! A set of system process tools
 class OSD_Process
 {
 public:
-  //! Return full path to the current process executable.
   Standard_EXPORT static TCollection_AsciiString ExecutablePath();
 
-  //! Return full path to the folder containing current process executable with trailing separator.
   Standard_EXPORT static TCollection_AsciiString ExecutableFolder();
 
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Initializes the object and prepare for a possible dump
   Standard_EXPORT OSD_Process();
 
-  //! Returns the terminal used (vt100, vt200 ,sun-cmd ...)
   Standard_EXPORT void TerminalType(TCollection_AsciiString& Name);
 
-  //! Gets system date.
   Standard_EXPORT Quantity_Date SystemDate();
 
-  //! Returns the user name.
   Standard_EXPORT TCollection_AsciiString UserName();
 
-  //! Returns True if the process user is the super-user.
   Standard_EXPORT bool IsSuperUser();
 
-  //! Returns the 'Process Id'
   Standard_EXPORT int ProcessId();
 
-  //! Returns the current path where the process is.
   Standard_EXPORT OSD_Path CurrentDirectory();
 
-  //! Changes the current process directory.
   Standard_EXPORT void SetCurrentDirectory(const OSD_Path& where);
 
-  //! Returns TRUE if an error occurs
   Standard_EXPORT bool Failed() const;
 
-  //! Resets error counter to zero
   Standard_EXPORT void Reset();
 
-  //! Raises OSD_Error
   Standard_EXPORT void Perror();
 
-  //! Returns error number if 'Failed' is TRUE.
   Standard_EXPORT int Error() const;
 
 private:

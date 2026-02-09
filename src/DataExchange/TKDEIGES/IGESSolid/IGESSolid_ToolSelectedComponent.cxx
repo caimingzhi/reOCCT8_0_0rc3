@@ -26,17 +26,14 @@ void IGESSolid_ToolSelectedComponent::ReadOwnParams(
 {
   occ::handle<IGESSolid_BooleanTree> tempEntity;
   gp_XYZ                             tempSelectPoint;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "Boolean Tree Entity",
                 STANDARD_TYPE(IGESSolid_BooleanTree),
-                tempEntity); // szv#4:S4163:12Mar99 `st=` not needed
+                tempEntity);
 
-  // clang-format off
-  PR.ReadXYZ(PR.CurrentList(1, 3), "Select Point", tempSelectPoint); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadXYZ(PR.CurrentList(1, 3), "Select Point", tempSelectPoint);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempEntity, tempSelectPoint);
@@ -69,7 +66,7 @@ void IGESSolid_ToolSelectedComponent::OwnCopy(
 }
 
 IGESData_DirChecker IGESSolid_ToolSelectedComponent::DirChecker(
-  const occ::handle<IGESSolid_SelectedComponent>& /* ent */) const
+  const occ::handle<IGESSolid_SelectedComponent>&) const
 {
   IGESData_DirChecker DC(182, 0);
 
@@ -84,10 +81,9 @@ IGESData_DirChecker IGESSolid_ToolSelectedComponent::DirChecker(
   return DC;
 }
 
-void IGESSolid_ToolSelectedComponent::OwnCheck(
-  const occ::handle<IGESSolid_SelectedComponent>& /* ent */,
-  const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /* ach */) const
+void IGESSolid_ToolSelectedComponent::OwnCheck(const occ::handle<IGESSolid_SelectedComponent>&,
+                                               const Interface_ShareTool&,
+                                               occ::handle<Interface_Check>&) const
 {
 }
 
@@ -98,7 +94,6 @@ void IGESSolid_ToolSelectedComponent::OwnDump(const occ::handle<IGESSolid_Select
 {
   S << "IGESSolid_SelectedComponent\n";
 
-  // the heading for boolean tree is in BooleanTree OwnDump
   S << "Boolean Tree Entity :\n";
   dumper.Dump(ent->Component(), S, (level <= 4) ? 0 : 1);
   S << "Selected Point       : ";

@@ -2,11 +2,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_AnnotationPlane, StepVisual_AnnotationOccurrence)
 
-//=================================================================================================
-
 StepVisual_AnnotationPlane::StepVisual_AnnotationPlane() = default;
-
-//=================================================================================================
 
 void StepVisual_AnnotationPlane::Init(
   const occ::handle<TCollection_HAsciiString>& theName,

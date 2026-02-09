@@ -8,19 +8,14 @@
 IMPLEMENT_STANDARD_RTTIEXT(XmlXCAFDrivers_DocumentRetrievalDriver,
                            XmlDrivers_DocumentRetrievalDriver)
 
-//=================================================================================================
-
 XmlXCAFDrivers_DocumentRetrievalDriver::XmlXCAFDrivers_DocumentRetrievalDriver() = default;
-
-//=================================================================================================
 
 occ::handle<XmlMDF_ADriverTable> XmlXCAFDrivers_DocumentRetrievalDriver::AttributeDrivers(
   const occ::handle<Message_Messenger>& theMsgDrv)
 {
-  // Standard drivers
+
   occ::handle<XmlMDF_ADriverTable> aTable = XmlDrivers::AttributeDrivers(theMsgDrv);
 
-  // Native drivers
   XmlMXCAFDoc::AddDrivers(aTable, theMsgDrv);
 
   return aTable;

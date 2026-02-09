@@ -1,42 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//-------------------------------------------------------------------
-//                Algorithm concerns the constant arrow
-// cases processed : parameterized curve
-//               the curve should be C2
-// provide a max arrow
-// algorithm of parameterized curve:
-//   calculation of the step of advancement is
-//             du = sqrt(8*fleche*||P'(u)||/||P'(u)^P''(u)||
-//   calculate each point such as u+Du
-//   check if the arrow is actually taken into account, if yes, continue
-//   otherwise correct the step
-//   si du cannot be calculated (null curvature, singularity on the curve)
-//   take a constant step to reach the last point or to go past it
-//   The last point is readjusted by the following criteria:
-//     if the last calculated parameter is <2*resolution, reframe the last point found
-//     between itself and the previous point and add the end point
-//     (avoid a concentration at the end)
-//     otherwise if the distance (last calculated point, end point)<arrow,
-//     replace the last calculated point by the end point
-//     otherwise calculate max arrow between the last but one calculated point
-//     and the end point; if this arrow is greater than the arrow
-//     replace the last point by this one and the end point
-//    CONTROLS OF ARROW AND THE LAST POINT ARE DONE ONLY IF withControl=true
-//   each iteration calculates at maximum 3 points
-//-------------------------------------------------------------------------
 
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_Curve.hpp>
@@ -74,8 +36,6 @@ static void D22d(void* const C, const double U, gp_Pnt& PP, gp_Vec& VV1, gp_Vec&
   VV2.SetCoord(V2.X(), V2.Y(), 0.);
 }
 
-//=================================================================================================
-
 void CPnts_UniformDeflection::Perform()
 {
   gp_Pnt P, P1, P2;
@@ -105,7 +65,7 @@ void CPnts_UniformDeflection::Perform()
     NormD1 = V1.Magnitude();
     if (NormD1 < myTolCur || V2.Magnitude() < myTolCur)
     {
-      // singularity on the tangent or null curvature
+
       myDu = std::min(myDwmax, 1.5 * myDu);
     }
     else
@@ -113,7 +73,7 @@ void CPnts_UniformDeflection::Perform()
       NormD2 = V2.CrossMagnitude(V1);
       if (NormD2 / NormD1 < myDeflection)
       {
-        // collinearity of derivatives
+
         myDu = std::min(myDwmax, 1.5 * myDu);
       }
       else
@@ -123,7 +83,6 @@ void CPnts_UniformDeflection::Perform()
       }
     }
 
-    // check if the arrow is observed if WithControl
     if (myControl)
     {
       myDu = std::min(myDu, myLastParam - myFirstParam);
@@ -144,9 +103,6 @@ void CPnts_UniformDeflection::Perform()
         V2     = gp_Vec(myPoints[myNbPoints], P1);
         NormD2 = V2.CrossMagnitude(V1) / NormD1;
 
-        // passing of arrow starting from which the redivision is done is arbitrary
-        // probably it will be necessary to readjust it (differentiate the first point
-        // from the others) this test does not work on the points of inflexion
         if (NormD2 > myDeflection / 5.0)
         {
           NormD2 = std::max(NormD2, 1.1 * myDeflection);
@@ -157,12 +113,12 @@ void CPnts_UniformDeflection::Perform()
     }
     myFirstParam += myDu;
     myFinish = myLastParam - myFirstParam < myTolCur || std::abs(myDu) < myTolCur ||
-               // to avoid less than double precision endless increment
+
                myDu < anEspilon;
   }
   if (myFinish)
   {
-    // the last point is corrected if control
+
     if (myControl && (myNbPoints == 1))
     {
       Un1 = myParams[0];
@@ -214,7 +170,7 @@ void CPnts_UniformDeflection::Perform()
           if ((VV.CrossMagnitude(gp_Vec(P2, P)) / NormD1 < myDeflection)
               && (Un1 >= myLastParam - myDwmax))
           {
-            // point n is removed
+
             myParams[1] = myLastParam;
             myPoints[1] = P1;
           }
@@ -249,8 +205,6 @@ void CPnts_UniformDeflection::Perform()
   }
 }
 
-//=================================================================================================
-
 CPnts_UniformDeflection::CPnts_UniformDeflection()
     : myDone(false),
       my3d(false),
@@ -268,8 +222,6 @@ CPnts_UniformDeflection::CPnts_UniformDeflection()
   memset(myParams, 0, sizeof(myParams));
 }
 
-//=================================================================================================
-
 CPnts_UniformDeflection::CPnts_UniformDeflection(const Adaptor3d_Curve& C,
                                                  const double           Deflection,
                                                  const double           Resolution,
@@ -277,8 +229,6 @@ CPnts_UniformDeflection::CPnts_UniformDeflection(const Adaptor3d_Curve& C,
 {
   Initialize(C, Deflection, Resolution, WithControl);
 }
-
-//=================================================================================================
 
 CPnts_UniformDeflection::CPnts_UniformDeflection(const Adaptor2d_Curve2d& C,
                                                  const double             Deflection,
@@ -288,8 +238,6 @@ CPnts_UniformDeflection::CPnts_UniformDeflection(const Adaptor2d_Curve2d& C,
   Initialize(C, Deflection, Resolution, WithControl);
 }
 
-//=================================================================================================
-
 void CPnts_UniformDeflection::Initialize(const Adaptor3d_Curve& C,
                                          const double           Deflection,
                                          const double           Resolution,
@@ -298,8 +246,6 @@ void CPnts_UniformDeflection::Initialize(const Adaptor3d_Curve& C,
   Initialize(C, Deflection, C.FirstParameter(), C.LastParameter(), Resolution, WithControl);
 }
 
-//=================================================================================================
-
 void CPnts_UniformDeflection::Initialize(const Adaptor2d_Curve2d& C,
                                          const double             Deflection,
                                          const double             Resolution,
@@ -307,8 +253,6 @@ void CPnts_UniformDeflection::Initialize(const Adaptor2d_Curve2d& C,
 {
   Initialize(C, Deflection, C.FirstParameter(), C.LastParameter(), Resolution, WithControl);
 }
-
-//=================================================================================================
 
 CPnts_UniformDeflection ::CPnts_UniformDeflection(const Adaptor3d_Curve& C,
                                                   const double           Deflection,
@@ -320,8 +264,6 @@ CPnts_UniformDeflection ::CPnts_UniformDeflection(const Adaptor3d_Curve& C,
   Initialize(C, Deflection, U1, U2, Resolution, WithControl);
 }
 
-//=================================================================================================
-
 CPnts_UniformDeflection ::CPnts_UniformDeflection(const Adaptor2d_Curve2d& C,
                                                   const double             Deflection,
                                                   const double             U1,
@@ -331,8 +273,6 @@ CPnts_UniformDeflection ::CPnts_UniformDeflection(const Adaptor2d_Curve2d& C,
 {
   Initialize(C, Deflection, U1, U2, Resolution, WithControl);
 }
-
-//=================================================================================================
 
 void CPnts_UniformDeflection::Initialize(const Adaptor3d_Curve& C,
                                          const double           Deflection,
@@ -363,8 +303,6 @@ void CPnts_UniformDeflection::Initialize(const Adaptor3d_Curve& C,
   Perform();
 }
 
-//=================================================================================================
-
 void CPnts_UniformDeflection::Initialize(const Adaptor2d_Curve2d& C,
                                          const double             Deflection,
                                          const double             U1,
@@ -393,8 +331,6 @@ void CPnts_UniformDeflection::Initialize(const Adaptor2d_Curve2d& C,
   myControl    = WithControl;
   Perform();
 }
-
-//=================================================================================================
 
 bool CPnts_UniformDeflection::More()
 {

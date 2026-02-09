@@ -16,7 +16,6 @@ class StepBasic_OrganizationalAddress : public StepBasic_Address
 {
 
 public:
-  //! Returns a OrganizationalAddress
   Standard_EXPORT StepBasic_OrganizationalAddress();
 
   Standard_EXPORT void Init(

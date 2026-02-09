@@ -16,9 +16,6 @@ class IntPatch_PolyArc : public IntPatch_Polygo
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates the polygon of the arc A on the surface S.
-  //! The arc is limited by the parameters Pfirst and Plast.
-  //! None of these parameters can be infinite.
   Standard_EXPORT IntPatch_PolyArc(const occ::handle<Adaptor2d_Curve2d>& A,
                                    const int                             NbSample,
                                    const double                          Pfirst,

@@ -26,8 +26,6 @@
 
 static bool FindCircle(const gp_Ax1&, const gp_Pnt&, gp_Circ&);
 
-//=================================================================================================
-
 LocOpe_Revol::LocOpe_Revol()
     : myAngle(0.0),
       myAngTra(0.0),
@@ -35,8 +33,6 @@ LocOpe_Revol::LocOpe_Revol()
       myDone(false)
 {
 }
-
-//=================================================================================================
 
 void LocOpe_Revol::Perform(const TopoDS_Shape& Base, const gp_Ax1& Axis, const double Angle)
 {
@@ -52,8 +48,6 @@ void LocOpe_Revol::Perform(const TopoDS_Shape& Base, const gp_Ax1& Axis, const d
   myIsTrans = false;
   IntPerf();
 }
-
-//=================================================================================================
 
 void LocOpe_Revol::Perform(const TopoDS_Shape& Base,
                            const gp_Ax1&       Axis,
@@ -72,8 +66,6 @@ void LocOpe_Revol::Perform(const TopoDS_Shape& Base,
   myIsTrans = true;
   IntPerf();
 }
-
-//=================================================================================================
 
 void LocOpe_Revol::IntPerf()
 {
@@ -116,7 +108,7 @@ void LocOpe_Revol::IntPerf()
 
   else
   {
-    // Cas base != FACE
+
     NCollection_IndexedDataMap<TopoDS_Shape,
                                NCollection_List<TopoDS_Shape>,
                                TopTools_ShapeMapHasher>
@@ -145,7 +137,7 @@ void LocOpe_Revol::IntPerf()
     }
     if (toremove)
     {
-      // Rajouter les faces de FirstShape et LastShape
+
       for (exp.Init(myFirstShape, TopAbs_FACE); exp.More(); exp.Next())
       {
         lfaces.Append(exp.Current());
@@ -180,7 +172,7 @@ void LocOpe_Revol::IntPerf()
 
   if (myIsTrans)
   {
-    // m-a-j des descendants
+
     TopExp_Explorer anExp;
     for (anExp.Init(myBase, TopAbs_EDGE); anExp.More(); anExp.Next())
     {
@@ -196,8 +188,6 @@ void LocOpe_Revol::IntPerf()
   myDone = true;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& LocOpe_Revol::Shape() const
 {
   if (!myDone)
@@ -207,28 +197,20 @@ const TopoDS_Shape& LocOpe_Revol::Shape() const
   return myRes;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& LocOpe_Revol::FirstShape() const
 {
   return myFirstShape;
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& LocOpe_Revol::LastShape() const
 {
   return myLastShape;
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& LocOpe_Revol::Shapes(const TopoDS_Shape& S) const
 {
   return myMap(S);
 }
-
-//=================================================================================================
 
 void LocOpe_Revol::Curves(NCollection_Sequence<occ::handle<Geom_Curve>>& Scurves) const
 {
@@ -248,8 +230,6 @@ void LocOpe_Revol::Curves(NCollection_Sequence<occ::handle<Geom_Curve>>& Scurves
     }
   }
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> LocOpe_Revol::BarycCurve() const
 {
@@ -272,8 +252,6 @@ occ::handle<Geom_Curve> LocOpe_Revol::BarycCurve() const
   }
   return theCi;
 }
-
-//=================================================================================================
 
 static bool FindCircle(const gp_Ax1& Ax, const gp_Pnt& Pt, gp_Circ& Ci)
 {

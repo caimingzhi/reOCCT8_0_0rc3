@@ -21,17 +21,14 @@ static int bcremove(Draw_Interpretor&, int, const char**);
 static int bcremoveint(Draw_Interpretor&, int, const char**);
 static int bcmakecontainers(Draw_Interpretor&, int, const char**);
 
-//=================================================================================================
-
 void BOPTest::CellsCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
   if (done)
     return;
   done = true;
-  // Chapter's name
+
   const char* g = "BOPTest commands";
-  // Commands
 
   theCommands.Add("bcbuild", "Cells builder. Use: bcbuild r", __FILE__, bcbuild, g);
   theCommands.Add("bcaddall",
@@ -66,8 +63,6 @@ void BOPTest::CellsCommands(Draw_Interpretor& theCommands)
                   g);
 }
 
-//=================================================================================================
-
 int bcbuild(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 2)
@@ -75,21 +70,21 @@ int bcbuild(Draw_Interpretor& di, int n, const char** a)
     di << "Cells builder. Use: bcbuild r\n";
     return 1;
   }
-  //
+
   BOPDS_PDS pDS = BOPTest_Objects::PDS();
   if (!pDS)
   {
     di << " prepare PaveFiller first\n";
     return 1;
   }
-  //
+
   NCollection_List<TopoDS_Shape>::Iterator aIt;
-  //
+
   BOPAlgo_PaveFiller& aPF = BOPTest_Objects::PaveFiller();
-  //
+
   BOPAlgo_CellsBuilder& aCBuilder = BOPTest_Objects::CellsBuilder();
   aCBuilder.Clear();
-  //
+
   NCollection_List<TopoDS_Shape>& aLSObj = BOPTest_Objects::Shapes();
   aIt.Initialize(aLSObj);
   for (; aIt.More(); aIt.Next())
@@ -97,7 +92,7 @@ int bcbuild(Draw_Interpretor& di, int n, const char** a)
     const TopoDS_Shape& aS = aIt.Value();
     aCBuilder.AddArgument(aS);
   }
-  //
+
   NCollection_List<TopoDS_Shape>& aLSTool = BOPTest_Objects::Tools();
   aIt.Initialize(aLSTool);
   for (; aIt.More(); aIt.Next())
@@ -105,13 +100,12 @@ int bcbuild(Draw_Interpretor& di, int n, const char** a)
     const TopoDS_Shape& aS = aIt.Value();
     aCBuilder.AddArgument(aS);
   }
-  //
-  // set the options to the algorithm
+
   bool             bRunParallel    = BOPTest_Objects::RunParallel();
   double           aTol            = BOPTest_Objects::FuzzyValue();
   bool             bNonDestructive = BOPTest_Objects::NonDestructive();
   BOPAlgo_GlueEnum aGlue           = BOPTest_Objects::Glue();
-  //
+
   aCBuilder.SetRunParallel(bRunParallel);
   aCBuilder.SetFuzzyValue(aTol);
   aCBuilder.SetNonDestructive(bNonDestructive);
@@ -119,11 +113,11 @@ int bcbuild(Draw_Interpretor& di, int n, const char** a)
   aCBuilder.SetCheckInverted(BOPTest_Objects::CheckInverted());
   aCBuilder.SetUseOBB(BOPTest_Objects::UseOBB());
   aCBuilder.SetToFillHistory(BRepTest_Objects::IsHistoryNeeded());
-  //
+
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
   aCBuilder.PerformWithFiller(aPF, aProgress->Start());
   BOPTest::ReportAlerts(aCBuilder.GetReport());
-  // Store the history of the Cells Builder into the session
+
   if (BRepTest_Objects::IsHistoryNeeded())
     BRepTest_Objects::SetHistory(aCBuilder.Arguments(), aCBuilder);
 
@@ -131,21 +125,19 @@ int bcbuild(Draw_Interpretor& di, int n, const char** a)
   {
     return 0;
   }
-  //
+
   BOPTest_Objects::SetBuilder(&aCBuilder);
-  //
+
   const TopoDS_Shape& aR = aCBuilder.GetAllParts();
   if (aR.IsNull())
   {
     di << "no parts were built\n";
     return 0;
   }
-  //
+
   DBRep::Set(a[1], aR);
   return 0;
 }
-
-//=================================================================================================
 
 int bcaddall(Draw_Interpretor& di, int n, const char** a)
 {
@@ -154,40 +146,37 @@ int bcaddall(Draw_Interpretor& di, int n, const char** a)
     di << "Add all parts to result. Use: bcaddall r [-m material [-u]]\n";
     return 1;
   }
-  //
+
   int  iMaterial = 0;
   bool bUpdate   = false;
-  //
+
   if (n > 3)
   {
     if (!strcmp(a[2], "-m"))
     {
       iMaterial = Draw::Atoi(a[3]);
     }
-    //
+
     if (n == 5)
     {
       bUpdate = !strcmp(a[4], "-u");
     }
   }
-  //
+
   BOPAlgo_CellsBuilder& aCBuilder = BOPTest_Objects::CellsBuilder();
-  //
+
   aCBuilder.ClearWarnings();
   aCBuilder.AddAllToResult(iMaterial, bUpdate);
   BOPTest::ReportAlerts(aCBuilder.GetReport());
-  //
+
   const TopoDS_Shape& aR = aCBuilder.Shape();
 
-  // Update the history of the Cells Builder
   if (BRepTest_Objects::IsHistoryNeeded())
     BRepTest_Objects::SetHistory(aCBuilder.Arguments(), aCBuilder);
 
   DBRep::Set(a[1], aR);
   return 0;
 }
-
-//=================================================================================================
 
 int bcremoveall(Draw_Interpretor& di, int n, const char**)
 {
@@ -196,19 +185,16 @@ int bcremoveall(Draw_Interpretor& di, int n, const char**)
     di << "Remove all parts from result. Use: bcremoveall\n";
     return 1;
   }
-  //
+
   BOPAlgo_CellsBuilder& aCBuilder = BOPTest_Objects::CellsBuilder();
-  //
+
   aCBuilder.RemoveAllFromResult();
 
-  // Update the history of the Cells Builder
   if (BRepTest_Objects::IsHistoryNeeded())
     BRepTest_Objects::SetHistory(aCBuilder.Arguments(), aCBuilder);
 
   return 0;
 }
-
-//=================================================================================================
 
 int bcadd(Draw_Interpretor& di, int n, const char** a)
 {
@@ -217,15 +203,15 @@ int bcadd(Draw_Interpretor& di, int n, const char** a)
     di << "Add parts to result. Use: bcadd r s1 (0,1) s2 (0,1) ... [-m material [-u]]\n";
     return 1;
   }
-  //
+
   NCollection_List<TopoDS_Shape> aLSToTake, aLSToAvoid;
   int                            i, iMaterial, iTake, n1;
   bool                           bUpdate;
-  //
+
   iMaterial = 0;
   bUpdate   = false;
   n1        = n;
-  //
+
   if (!strcmp(a[n - 3], "-m"))
   {
     iMaterial = Draw::Atoi(a[n - 2]);
@@ -237,7 +223,7 @@ int bcadd(Draw_Interpretor& di, int n, const char** a)
     iMaterial = Draw::Atoi(a[n - 1]);
     n1        = n - 2;
   }
-  //
+
   for (i = 2; i < n1; i += 2)
   {
     const TopoDS_Shape& aS = DBRep::Get(a[i]);
@@ -247,7 +233,7 @@ int bcadd(Draw_Interpretor& di, int n, const char** a)
       continue;
     }
     iTake = Draw::Atoi(a[i + 1]);
-    //
+
     if (iTake)
     {
       aLSToTake.Append(aS);
@@ -257,30 +243,27 @@ int bcadd(Draw_Interpretor& di, int n, const char** a)
       aLSToAvoid.Append(aS);
     }
   }
-  //
+
   if (aLSToTake.IsEmpty())
   {
     di << "No shapes from which to add the parts\n";
     return 1;
   }
-  //
+
   BOPAlgo_CellsBuilder& aCBuilder = BOPTest_Objects::CellsBuilder();
-  //
+
   aCBuilder.ClearWarnings();
   aCBuilder.AddToResult(aLSToTake, aLSToAvoid, iMaterial, bUpdate);
   BOPTest::ReportAlerts(aCBuilder.GetReport());
-  //
+
   const TopoDS_Shape& aR = aCBuilder.Shape();
 
-  // Update the history of the Cells Builder
   if (BRepTest_Objects::IsHistoryNeeded())
     BRepTest_Objects::SetHistory(aCBuilder.Arguments(), aCBuilder);
 
   DBRep::Set(a[1], aR);
   return 0;
 }
-
-//=================================================================================================
 
 int bcremove(Draw_Interpretor& di, int n, const char** a)
 {
@@ -289,10 +272,10 @@ int bcremove(Draw_Interpretor& di, int n, const char** a)
     di << "Remove parts from result. Use: bcremove r s1 (0,1) s2 (0,1) ...\n";
     return 1;
   }
-  //
+
   NCollection_List<TopoDS_Shape> aLSToTake, aLSToAvoid;
   int                            i, iTake;
-  //
+
   for (i = 2; i < n; i += 2)
   {
     const TopoDS_Shape& aS = DBRep::Get(a[i]);
@@ -302,7 +285,7 @@ int bcremove(Draw_Interpretor& di, int n, const char** a)
       return 1;
     }
     iTake = Draw::Atoi(a[i + 1]);
-    //
+
     if (iTake)
     {
       aLSToTake.Append(aS);
@@ -312,27 +295,24 @@ int bcremove(Draw_Interpretor& di, int n, const char** a)
       aLSToAvoid.Append(aS);
     }
   }
-  //
+
   if (aLSToTake.IsEmpty())
   {
     di << "No shapes from which to remove the parts\n";
     return 1;
   }
-  //
+
   BOPAlgo_CellsBuilder& aCBuilder = BOPTest_Objects::CellsBuilder();
   aCBuilder.RemoveFromResult(aLSToTake, aLSToAvoid);
-  //
+
   const TopoDS_Shape& aR = aCBuilder.Shape();
 
-  // Update the history of the Cells Builder
   if (BRepTest_Objects::IsHistoryNeeded())
     BRepTest_Objects::SetHistory(aCBuilder.Arguments(), aCBuilder);
 
   DBRep::Set(a[1], aR);
   return 0;
 }
-
-//=================================================================================================
 
 int bcremoveint(Draw_Interpretor& di, int n, const char** a)
 {
@@ -341,24 +321,21 @@ int bcremoveint(Draw_Interpretor& di, int n, const char** a)
     di << "Remove internal boundaries. Use: bcremoveint r\n";
     return 1;
   }
-  //
+
   BOPAlgo_CellsBuilder& aCBuilder = BOPTest_Objects::CellsBuilder();
-  //
+
   aCBuilder.ClearWarnings();
   aCBuilder.RemoveInternalBoundaries();
   BOPTest::ReportAlerts(aCBuilder.GetReport());
-  //
+
   const TopoDS_Shape& aR = aCBuilder.Shape();
 
-  // Update the history of the Cells Builder
   if (BRepTest_Objects::IsHistoryNeeded())
     BRepTest_Objects::SetHistory(aCBuilder.Arguments(), aCBuilder);
 
   DBRep::Set(a[1], aR);
   return 0;
 }
-
-//=================================================================================================
 
 int bcmakecontainers(Draw_Interpretor& di, int n, const char** a)
 {
@@ -367,12 +344,12 @@ int bcmakecontainers(Draw_Interpretor& di, int n, const char** a)
     di << "Make containers from the parts added to result. Use: bcmakecontainers r\n";
     return 1;
   }
-  //
+
   BOPAlgo_CellsBuilder& aCBuilder = BOPTest_Objects::CellsBuilder();
   aCBuilder.MakeContainers();
-  //
+
   const TopoDS_Shape& aR = aCBuilder.Shape();
-  //
+
   DBRep::Set(a[1], aR);
   return 0;
 }

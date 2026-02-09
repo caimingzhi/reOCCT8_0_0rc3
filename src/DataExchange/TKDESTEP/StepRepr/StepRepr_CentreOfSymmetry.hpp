@@ -5,7 +5,6 @@
 
 #include <StepRepr_DerivedShapeAspect.hpp>
 
-//! Added for Dimensional Tolerances
 class StepRepr_CentreOfSymmetry : public StepRepr_DerivedShapeAspect
 {
 

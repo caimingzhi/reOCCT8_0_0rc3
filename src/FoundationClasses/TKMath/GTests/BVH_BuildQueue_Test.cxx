@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -17,10 +6,6 @@
 
 #include <thread>
 #include <vector>
-
-// =============================================================================
-// BVH_BuildQueue Basic Tests
-// =============================================================================
 
 TEST(BVH_BuildQueueTest, DefaultConstructor)
 {
@@ -71,7 +56,7 @@ TEST(BVH_BuildQueueTest, FetchSingleItem)
 
   EXPECT_EQ(aResult, 42);
   EXPECT_TRUE(wasBusy);
-  EXPECT_TRUE(aQueue.HasBusyThreads()); // Thread became busy
+  EXPECT_TRUE(aQueue.HasBusyThreads());
   EXPECT_EQ(aQueue.Size(), 0);
 }
 
@@ -109,17 +94,14 @@ TEST(BVH_BuildQueueTest, ThreadCountTracking)
 
   bool wasBusy = false;
 
-  // First fetch - thread becomes busy
   aQueue.Fetch(wasBusy);
   EXPECT_TRUE(wasBusy);
   EXPECT_TRUE(aQueue.HasBusyThreads());
 
-  // Second fetch while already busy
   aQueue.Fetch(wasBusy);
   EXPECT_TRUE(wasBusy);
   EXPECT_TRUE(aQueue.HasBusyThreads());
 
-  // Fetch from empty queue while busy
   aQueue.Fetch(wasBusy);
   EXPECT_FALSE(wasBusy);
   EXPECT_FALSE(aQueue.HasBusyThreads());
@@ -178,10 +160,6 @@ TEST(BVH_BuildQueueTest, NegativeValues)
   EXPECT_EQ(aQueue.Fetch(wasBusy), -100);
   EXPECT_EQ(aQueue.Fetch(wasBusy), 0);
 }
-
-// =============================================================================
-// BVH_BuildQueue Thread Safety Tests
-// =============================================================================
 
 TEST(BVH_BuildQueueTest, ConcurrentEnqueue)
 {
@@ -267,7 +245,6 @@ TEST(BVH_BuildQueueTest, ConcurrentEnqueueAndFetch)
   std::atomic<int>         aFetchedCount{0};
   std::atomic<bool>        aDone{false};
 
-  // Producer threads
   for (int t = 0; t < aProducerCount; ++t)
   {
     aThreads.emplace_back(
@@ -280,7 +257,6 @@ TEST(BVH_BuildQueueTest, ConcurrentEnqueueAndFetch)
       });
   }
 
-  // Consumer threads
   for (int t = 0; t < aConsumerCount; ++t)
   {
     aThreads.emplace_back(
@@ -298,16 +274,13 @@ TEST(BVH_BuildQueueTest, ConcurrentEnqueueAndFetch)
       });
   }
 
-  // Wait for producers to finish
   for (int i = 0; i < aProducerCount; ++i)
   {
     aThreads[i].join();
   }
 
-  // Signal consumers that production is done
   aDone.store(true);
 
-  // Wait for consumers to finish
   for (int i = aProducerCount; i < aProducerCount + aConsumerCount; ++i)
   {
     aThreads[i].join();
@@ -316,10 +289,6 @@ TEST(BVH_BuildQueueTest, ConcurrentEnqueueAndFetch)
   EXPECT_EQ(aFetchedCount.load(), aProducerCount * aItemsPerProducer);
   EXPECT_EQ(aQueue.Size(), 0);
 }
-
-// =============================================================================
-// BVH_BuildQueue Edge Cases
-// =============================================================================
 
 TEST(BVH_BuildQueueTest, RepeatedFetchFromEmpty)
 {
@@ -368,8 +337,7 @@ TEST(BVH_BuildQueueTest, SingleThreadWorkflow)
 {
   BVH_BuildQueue aQueue;
 
-  // Simulate single-threaded BVH building workflow
-  aQueue.Enqueue(0); // Root node
+  aQueue.Enqueue(0);
 
   bool wasBusy = false;
   int  aNode   = aQueue.Fetch(wasBusy);
@@ -377,9 +345,8 @@ TEST(BVH_BuildQueueTest, SingleThreadWorkflow)
   EXPECT_EQ(aNode, 0);
   EXPECT_TRUE(wasBusy);
 
-  // After processing root, enqueue children
-  aQueue.Enqueue(1); // Left child
-  aQueue.Enqueue(2); // Right child
+  aQueue.Enqueue(1);
+  aQueue.Enqueue(2);
 
   EXPECT_EQ(aQueue.Size(), 2);
 

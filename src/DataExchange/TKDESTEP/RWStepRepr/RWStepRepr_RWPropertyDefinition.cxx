@@ -4,11 +4,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepRepr_PropertyDefinition.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWPropertyDefinition::RWStepRepr_RWPropertyDefinition() = default;
-
-//=================================================================================================
 
 void RWStepRepr_RWPropertyDefinition::ReadStep(
   const occ::handle<StepData_StepReaderData>&     data,
@@ -16,11 +12,9 @@ void RWStepRepr_RWPropertyDefinition::ReadStep(
   occ::handle<Interface_Check>&                   ach,
   const occ::handle<StepRepr_PropertyDefinition>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "property_definition"))
     return;
-
-  // Own fields of PropertyDefinition
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -39,18 +33,13 @@ void RWStepRepr_RWPropertyDefinition::ReadStep(
   StepRepr_CharacterizedDefinition aDefinition;
   data->ReadEntity(num, 3, "definition", ach, aDefinition);
 
-  // Initialize entity
   ent->Init(aName, hasDescription, aDescription, aDefinition);
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWPropertyDefinition::WriteStep(
   StepData_StepWriter&                            SW,
   const occ::handle<StepRepr_PropertyDefinition>& ent) const
 {
-
-  // Own fields of PropertyDefinition
 
   SW.Send(ent->Name());
 
@@ -64,13 +53,9 @@ void RWStepRepr_RWPropertyDefinition::WriteStep(
   SW.Send(ent->Definition().Value());
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWPropertyDefinition::Share(const occ::handle<StepRepr_PropertyDefinition>& ent,
                                             Interface_EntityIterator& iter) const
 {
-
-  // Own fields of PropertyDefinition
 
   iter.AddItem(ent->Definition().Value());
 }

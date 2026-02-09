@@ -46,27 +46,23 @@
 #endif
 #include <cstdio>
 
-//=================================================================================================
-
 static int edgesameparam(Draw_Interpretor& di, int argc, const char** argv)
 {
-  //  const char* arg1 = argv[1];
+
   const char* arg2(argc > 2 ? argv[2] : nullptr);
-  //        ****    Edge:SameParameter         ****
+
   if (argc < 2)
   {
     di << "shapename ,  option f to force, else only Edges not-SameParameter are computed\n";
-    return 1 /* Error */;
+    return 1;
   }
   TopoDS_Shape Shape = DBRep::Get(argv[1]);
 
   if (!ShapeFix::SameParameter(Shape, (argc > 2 && arg2[0] == 'f'), BRepBuilderAPI::Precision()))
     di << "Some edges were not processed\n";
   di << "\n";
-  return 0; // Done
+  return 0;
 }
-
-//=================================================================================================
 
 static int settolerance(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -77,7 +73,7 @@ static int settolerance(Draw_Interpretor& di, int argc, const char** argv)
        << "myshape > min : sets minimum tolerance to <min>\n"
        << "myshape min max : bounds tolerances between <min> and <max>\n"
        << "myshape mode=v-e-f other args : idem but only on vertex-edge-face\n";
-    return (argc < 2 ? 0 : 1 /* Error */);
+    return (argc < 2 ? 0 : 1);
   }
   const char*  arg1  = argv[1];
   const char*  arg2  = argv[2];
@@ -85,7 +81,7 @@ static int settolerance(Draw_Interpretor& di, int argc, const char** argv)
   if (Shape.IsNull())
   {
     di << "Shape unknown : " << arg1 << "\n";
-    return 1 /* Error */;
+    return 1;
   }
   char             mod2    = arg2[0];
   int              premarg = 2;
@@ -146,15 +142,13 @@ static int settolerance(Draw_Interpretor& di, int argc, const char** argv)
     di << "Tolerance Limited between " << tmin << " and " << tmax << "\n";
   ShapeFix_ShapeTolerance sat;
   sat.LimitTolerance(Shape, tmin, tmax, styp);
-  return 0; // Done
+  return 0;
 }
-
-//=================================================================================================
 
 static int stwire(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 2)
-  { // help
+  {
     di << "Donner nom shape depart + nom shape resultat + option\n";
     di << "Options de chargement :  x add connected  (sinon add simple)\n"
        << "Options de traitement :  l fix little/BRepBuilderAPI\n"
@@ -166,12 +160,11 @@ static int stwire(Draw_Interpretor& di, int argc, const char** argv)
   if (argc < 4)
   {
     di << "stwire tout court pour help\n";
-    return 1 /* Error */;
+    return 1;
   }
   const char* arg1 = argv[1];
   const char* arg2 = argv[2];
 
-  //  Options
   int i;
   int ox, ol, om, orint, oq, ov;
   ox = ol = om = orint = oq = ov = 0;
@@ -214,15 +207,14 @@ static int stwire(Draw_Interpretor& di, int argc, const char** argv)
   if (Shape.IsNull())
   {
     di << arg1 << " inconnu\n";
-    return 1 /* Error */;
+    return 1;
   }
 
-  //  On y va
   occ::handle<ShapeExtend_WireData> sbwd = new ShapeExtend_WireData;
   occ::handle<ShapeAnalysis_Wire>   saw  = new ShapeAnalysis_Wire;
   saw->Load(sbwd);
 
-  TopoDS_Shape awire; // en principe un Wire
+  TopoDS_Shape awire;
   if (Shape.ShapeType() == TopAbs_WIRE)
   {
     awire = Shape;
@@ -240,11 +232,8 @@ static int stwire(Draw_Interpretor& di, int argc, const char** argv)
     di << "Neither FACE nor WIRE : " << arg1 << "\n";
     di << "Considering as list of edges ...\n";
     awire = Shape;
-    //    return 1 /* Error */;
   }
 
-  // Chargement : normal ou par connected(oriented)
-  //  if (ox) {
   for (TopExp_Explorer exp(Shape, TopAbs_EDGE); exp.More(); exp.Next())
   {
     TopoDS_Edge E      = TopoDS::Edge(exp.Current());
@@ -255,21 +244,17 @@ static int stwire(Draw_Interpretor& di, int argc, const char** argv)
     else
       sbwd->Add(E);
   }
-  //  }
-  //  else sbwd->Init (awire);
 
   occ::handle<ShapeFix_Wire> sfw = new ShapeFix_Wire;
   sfw->Init(saw);
 
-  //   Traitement en cours
   if (ol)
   {
     int nb = sfw->NbEdges();
     for (i = 1; i <= nb; i++)
     {
       bool stat = sfw->FixSmall(i, true, 0.0);
-      // std::cout<<"FixSmall for"<<i<<(stat ? " done" : " not done"); //:sw <<"
-      // StatusFix="<<STW.StatusFix()<<"\n";
+
       di << "FixSmall for" << i;
       if (!stat)
       {
@@ -285,9 +270,8 @@ static int stwire(Draw_Interpretor& di, int argc, const char** argv)
     }
   }
 
-  //  Traitement
   if (orint)
-  { // reorder ?
+  {
     ShapeAnalysis_WireOrder WO((Shape.ShapeType() != TopAbs_FACE), BRepBuilderAPI::Precision());
 
     int stwo = saw->CheckOrder(WO);
@@ -305,10 +289,8 @@ static int stwire(Draw_Interpretor& di, int argc, const char** argv)
     }
     di << "Reorder not yet done\n";
     sfw->FixReorder(WO);
-    //   Mais on n execute pas
   }
 
-  //  Statistiques
   if (oq)
   {
     ShapeAnalysis_Edge sae;
@@ -345,7 +327,6 @@ static int stwire(Draw_Interpretor& di, int argc, const char** argv)
     }
   }
 
-  //  Resultat
   TopoDS_Wire result;
   if (ov)
   {
@@ -392,31 +373,7 @@ static int stwire(Draw_Interpretor& di, int argc, const char** argv)
     sfwv.Init(sawv);
     di << "Nb Fixed Vertex : " << sfwv.Fix() << "\n";
   }
-  /*
-  if (oc) {
-    if ( Shape.ShapeType() == TopAbs_FACE ) {
-      Correct_Wire CW ( TopoDS::Face(Shape) );
-      int i, nb = sbwd->NbEdges();
-      int num = 1;
-      for (i = 1; i <= nb; i ++)  CW.Add (sbwd->Edge(i));
-      CW.Perform ( saw->Precision() );
-      nb = CW.NbWires();
-      if (nb != 1) {
-    //  On prend celui qui a le plus d edges
-    int nbe, maxe = 0;
-    for (i = 1; i <= nb; i ++) {
-      TopoDS_Wire wir = CW.Wire(i);
-      nbe = 0;
-      for (TopoDS_Iterator ite(wir); ite.More(); ite.Next()) nbe ++;
-      if (nbe > maxe) { num = i; maxe = nbe; }
-    }
-    di<<"Correct_Wire produced "<<nb<<" Wires, taken n0 "<<num<<"\n";
-      }
-      result = CW.Wire (num);
-    }
-    else di << "Cannot apply Correct_Wire: face not defined\n";
-  }
-  */
+
   else if (om)
     result = sbwd->WireAPIMake();
   else
@@ -424,20 +381,18 @@ static int stwire(Draw_Interpretor& di, int argc, const char** argv)
   if (result.IsNull())
   {
     di << "Pas de resultat, desole\n";
-    return 1; // Fail
+    return 1;
   }
   DBRep::Set(arg2, result);
-  return 0; // Done
+  return 0;
 }
-
-//=================================================================================================
 
 static int reface(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
   {
     di << "Donner un nom de SHAPE (SHELL ou FACE) + un nom de RESULTAT\n";
-    return 1 /* Error */;
+    return 1;
   }
   const char*  arg1  = argv[1];
   const char*  arg2  = argv[2];
@@ -445,14 +400,14 @@ static int reface(Draw_Interpretor& di, int argc, const char** argv)
   if (Shape.IsNull())
   {
     di << "Shape unknown : " << arg1 << "\n";
-    return 1 /* Error */;
+    return 1;
   }
 
   bool rebuild = false;
 
   occ::handle<ShapeFix_Face> STF = new ShapeFix_Face;
-  //  Options ?
-  int i; // svv Jan11 2000 : porting on DEC
+
+  int i;
   for (i = 3; i < argc; i++)
   {
     bool valopt = true;
@@ -464,7 +419,7 @@ static int reface(Draw_Interpretor& di, int argc, const char** argv)
       opt    = argv[i][1];
       valopt = false;
     }
-    // std::cout<<(valopt ? ".." : ".. NO");
+
     if (!valopt)
     {
       di << ".. NO";
@@ -503,11 +458,8 @@ static int reface(Draw_Interpretor& di, int argc, const char** argv)
     TopoDS_Face F = TopoDS::Face(EF.Current());
     face          = F;
     bool newface  = false;
-    //    on va voir si ShapeTool_Face trouve qqchose a redire
-    //: sw    ShapeTool_Wire STW;
-    //: sw    STW.SetFace (F);
 
-    STF->Init(F); // qui fait tout
+    STF->Init(F);
     STF->Perform();
     face    = STF->Face();
     newface = STF->Status(ShapeExtend_DONE) || rebuild;
@@ -521,14 +473,12 @@ static int reface(Draw_Interpretor& di, int argc, const char** argv)
   {
     di << "Faces reprises par ShapeFix_Face : " << nbfc << "\n";
     DBRep::Set(arg2, resh.Apply(Shape, TopAbs_FACE, 2));
-    return 0; // Done
+    return 0;
   }
   else
     di << "ShapeFix_Face n a rien trouve a redire\n";
   return 0;
 }
-
-//=================================================================================================
 
 static int fixshape(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -654,8 +604,7 @@ static int fixshape(Draw_Interpretor& di, int argc, const char** argv)
     aBuilder.MakeCompound(aCompound);
     const NCollection_DataMap<TopoDS_Shape, NCollection_List<Message_Msg>, TopTools_ShapeMapHasher>&
       map = msg->MapShape();
-    // Counting the number of each type of fixes. If the switch '*?' store all modified shapes in
-    // compound.
+
     for (NCollection_DataMap<TopoDS_Shape, NCollection_List<Message_Msg>, TopTools_ShapeMapHasher>::
            Iterator it(map);
          it.More();
@@ -699,10 +648,8 @@ static int fixshape(Draw_Interpretor& di, int argc, const char** argv)
     }
   }
 
-  return 0; // Done
+  return 0;
 }
-
-//=================================================================================================
 
 int fixgaps(Draw_Interpretor& di, int n, const char** a)
 {
@@ -728,8 +675,6 @@ int fixgaps(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int fixsmall(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
@@ -754,8 +699,6 @@ int fixsmall(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int fixsmalledges(Draw_Interpretor& di, int n, const char** a)
 {
@@ -798,13 +741,11 @@ static int fixsmalledges(Draw_Interpretor& di, int n, const char** a)
                          theMultyEdges,
                          aModeDrop,
                          tolang);
-  // aSfwr->FixSmallEdges();
+
   TopoDS_Shape resShape = aSfwr->Shape();
   DBRep::Set(a[1], resShape);
   return 0;
 }
-
-//=================================================================================================
 
 int fixsmallfaces(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
@@ -837,8 +778,6 @@ int fixsmallfaces(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int checkoverlapedges(Draw_Interpretor& di, int n, const char** a)
 {
@@ -898,8 +837,6 @@ static int checkoverlapedges(Draw_Interpretor& di, int n, const char** a)
     di << "Edges are not overlapped\n";
   return 0;
 }
-
-//=================================================================================================
 
 static int checkfclass2d(Draw_Interpretor& di, int n, const char** a)
 {
@@ -1003,8 +940,6 @@ static int connectedges(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 void SWDRAW_ShapeFix::InitCommands(Draw_Interpretor& theCommands)
 {
   static int initactor = 0;
@@ -1034,8 +969,7 @@ void SWDRAW_ShapeFix::InitCommands(Draw_Interpretor& theCommands)
                   __FILE__,
                   fixshape,
                   g);
-  //  theCommands.Add ("testfill","result edge1 edge2",
-  //		   __FILE__,XSHAPE_testfill,g);
+
   theCommands.Add("fixwgaps", "result shape [toler=0]", __FILE__, fixgaps, g);
   theCommands.Add("fixsmall", "result shape [toler=1.]", __FILE__, fixsmall, g);
   theCommands.Add("fixsmalledges",

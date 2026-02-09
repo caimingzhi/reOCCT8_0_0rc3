@@ -8,8 +8,6 @@
 #include <TopOpeBRepDS_SurfaceCurveInterference.hpp>
 #include <TopOpeBRepDS_Transition.hpp>
 
-//=================================================================================================
-
 occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::MakeEdgeInterference(
   const TopOpeBRepDS_Transition& T,
   const TopOpeBRepDS_Kind        SK,
@@ -20,8 +18,6 @@ occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::MakeEdgeIn
 {
   return new TopOpeBRepDS_CurvePointInterference(T, SK, SI, GK, GI, P);
 }
-
-//=================================================================================================
 
 occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::MakeCurveInterference(
   const TopOpeBRepDS_Transition& T,
@@ -34,8 +30,6 @@ occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::MakeCurveI
   return new TopOpeBRepDS_CurvePointInterference(T, SK, SI, GK, GI, P);
 }
 
-//=================================================================================================
-
 occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::
   DuplicateCurvePointInterference(const occ::handle<TopOpeBRepDS_Interference>& I)
 {
@@ -46,8 +40,6 @@ occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::
                                                  I->Geometry(),
                                                  TopOpeBRepDS_InterferenceTool::Parameter(I));
 }
-
-//=================================================================================================
 
 occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::MakeFaceCurveInterference(
   const TopOpeBRepDS_Transition&   Transition,
@@ -63,8 +55,6 @@ occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::MakeFaceCu
                                                    PC);
 }
 
-//=================================================================================================
-
 occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::MakeSolidSurfaceInterference(
   const TopOpeBRepDS_Transition& Transition,
   const int                      SolidI,
@@ -77,8 +67,6 @@ occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::MakeSolidS
                                                    SurfaceI);
 }
 
-//=================================================================================================
-
 occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::MakeEdgeVertexInterference(
   const TopOpeBRepDS_Transition& Transition,
   const int                      EdgeI,
@@ -87,17 +75,14 @@ occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::MakeEdgeVe
   const TopOpeBRepDS_Config      C,
   const double                   param)
 {
-  // soit I l'EVI creee :
-  return new TopOpeBRepDS_EdgeVertexInterference(
-    Transition,    // transition en cheminant sur l'arete accedante a I
-    EdgeI,         // arete croisee par l'arete accedante, en V
-    VertexI,       // vertex geometrie de I
-    VertexIsBound, // vertex est il un sommet de l'arete accedante de I
-    C,             // orient. relative des aretes accedante et croisee.
-    param);        // parametre de V sur arete accedante de I
-}
 
-//=================================================================================================
+  return new TopOpeBRepDS_EdgeVertexInterference(Transition,
+                                                 EdgeI,
+                                                 VertexI,
+                                                 VertexIsBound,
+                                                 C,
+                                                 param);
+}
 
 occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::MakeFaceEdgeInterference(
   const TopOpeBRepDS_Transition& Transition,
@@ -109,19 +94,11 @@ occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::MakeFaceEd
   return new TopOpeBRepDS_FaceEdgeInterference(Transition, FaceI, EdgeI, EdgeIsBound, C);
 }
 
-//=======================================================================
-// function : Parameter
-// purpose  : only on I = CurvePointInterference
-//=======================================================================
 double TopOpeBRepDS_InterferenceTool::Parameter(const occ::handle<TopOpeBRepDS_Interference>& I)
 {
   return occ::down_cast<TopOpeBRepDS_CurvePointInterference>(I)->Parameter();
 }
 
-//=======================================================================
-// function : Parameter
-// purpose  : only on I = CurvePointInterference
-//=======================================================================
 void TopOpeBRepDS_InterferenceTool::Parameter(const occ::handle<TopOpeBRepDS_Interference>& I,
                                               const double                                  Par)
 {

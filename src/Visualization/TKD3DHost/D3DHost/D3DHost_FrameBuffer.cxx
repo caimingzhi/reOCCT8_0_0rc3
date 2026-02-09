@@ -10,8 +10,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(D3DHost_FrameBuffer, OpenGl_FrameBuffer)
 
-//=================================================================================================
-
 D3DHost_FrameBuffer::D3DHost_FrameBuffer()
     : myD3dSurf(NULL),
       myD3dSurfShare(NULL),
@@ -23,14 +21,10 @@ D3DHost_FrameBuffer::D3DHost_FrameBuffer()
 {
 }
 
-//=================================================================================================
-
 D3DHost_FrameBuffer::~D3DHost_FrameBuffer()
 {
   Release(NULL);
 }
-
-//=================================================================================================
 
 void D3DHost_FrameBuffer::Release(OpenGl_Context* theCtx)
 {
@@ -64,8 +58,6 @@ void D3DHost_FrameBuffer::Release(OpenGl_Context* theCtx)
   OpenGl_FrameBuffer::Release(theCtx);
 }
 
-//=================================================================================================
-
 bool D3DHost_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theCtx,
                                IDirect3DDevice9*                  theD3DDevice,
                                const bool                         theIsD3dEx,
@@ -78,8 +70,6 @@ bool D3DHost_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theCtx,
   }
   return InitD3dFallback(theCtx, theD3DDevice, theIsD3dEx, theSizeX, theSizeY, GL_DEPTH24_STENCIL8);
 }
-
-//=================================================================================================
 
 bool D3DHost_FrameBuffer::InitD3dFallback(const occ::handle<OpenGl_Context>& theCtx,
                                           IDirect3DDevice9*                  theD3DDevice,
@@ -120,8 +110,6 @@ bool D3DHost_FrameBuffer::InitD3dFallback(const occ::handle<OpenGl_Context>& the
   return isGlInit;
 }
 
-//=================================================================================================
-
 bool D3DHost_FrameBuffer::InitD3dInterop(const occ::handle<OpenGl_Context>& theCtx,
                                          IDirect3DDevice9*                  theD3DDevice,
                                          const bool                         theIsD3dEx,
@@ -151,8 +139,6 @@ bool D3DHost_FrameBuffer::InitD3dInterop(const occ::handle<OpenGl_Context>& theC
     return false;
   }
 
-  // Render target surface should be lockable on
-  // Windows XP and non-lockable on Windows Vista or higher
   if (theD3DDevice->CreateRenderTarget(aSizeX,
                                        aSizeY,
                                        D3DFMT_X8R8G8B8,
@@ -220,8 +206,6 @@ bool D3DHost_FrameBuffer::InitD3dInterop(const occ::handle<OpenGl_Context>& theC
   return true;
 }
 
-//=================================================================================================
-
 bool D3DHost_FrameBuffer::registerD3dBuffer(const occ::handle<OpenGl_Context>& theCtx)
 {
   const OpenGl_GlFunctions* aFuncs = theCtx->Functions();
@@ -271,8 +255,6 @@ bool D3DHost_FrameBuffer::registerD3dBuffer(const occ::handle<OpenGl_Context>& t
 
   return true;
 }
-
-//=================================================================================================
 
 void D3DHost_FrameBuffer::BindBuffer(const occ::handle<OpenGl_Context>& theCtx)
 {
@@ -344,8 +326,6 @@ void D3DHost_FrameBuffer::BindBuffer(const occ::handle<OpenGl_Context>& theCtx)
   }
 }
 
-//=================================================================================================
-
 void D3DHost_FrameBuffer::LockSurface(const occ::handle<OpenGl_Context>& theCtx)
 {
   if (++myLockCount > 1)
@@ -367,8 +347,6 @@ void D3DHost_FrameBuffer::LockSurface(const occ::handle<OpenGl_Context>& theCtx)
                         "D3DHost_FrameBuffer::LockSurface(), lock failed!");
   }
 }
-
-//=================================================================================================
 
 void D3DHost_FrameBuffer::UnlockSurface(const occ::handle<OpenGl_Context>& theCtx)
 {
@@ -402,7 +380,7 @@ void D3DHost_FrameBuffer::UnlockSurface(const occ::handle<OpenGl_Context>& theCt
                           myInitVPSizeY,
                           aLockedRect.Pitch))
     {
-      anImg.SetTopDown(!IsValid()); // flip in software if OpenGL FBO is unavailable
+      anImg.SetTopDown(!IsValid());
       myLockCount = 1;
       if (!BufferDump(theCtx, this, anImg, Graphic3d_BT_RGBA))
       {

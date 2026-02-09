@@ -4,11 +4,6 @@
 
 #include <IGESBasic_Group.hpp>
 
-//! defines GroupWithoutBackP, Type <402> Form <7>
-//! in package IGESBasic
-//! this class defines a Group without back pointers
-//!
-//! It inherits from Group
 class IGESBasic_GroupWithoutBackP : public IGESBasic_Group
 {
 

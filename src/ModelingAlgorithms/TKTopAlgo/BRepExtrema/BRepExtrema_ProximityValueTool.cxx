@@ -10,10 +10,6 @@
 #include <Poly_Connect.hpp>
 #include <TopoDS.hpp>
 
-//=======================================================================
-// function : BRepExtrema_ProximityValueTool
-// purpose  : Creates new uninitialized proximity tool
-//=======================================================================
 BRepExtrema_ProximityValueTool::BRepExtrema_ProximityValueTool()
     : myIsRefinementRequired1(false),
       myIsRefinementRequired2(false),
@@ -22,14 +18,10 @@ BRepExtrema_ProximityValueTool::BRepExtrema_ProximityValueTool()
       myNbSamples1(0),
       myNbSamples2(0)
 {
-  // Should be initialized later
+
   myIsInitS1 = myIsInitS2 = false;
 }
 
-//=======================================================================
-// function : BRepExtrema_ProximityValueTool
-// purpose  : Creates new proximity tool for the given element sets
-//=======================================================================
 BRepExtrema_ProximityValueTool::BRepExtrema_ProximityValueTool(
   const occ::handle<BRepExtrema_TriangleSet>& theSet1,
   const occ::handle<BRepExtrema_TriangleSet>& theSet2,
@@ -46,10 +38,6 @@ BRepExtrema_ProximityValueTool::BRepExtrema_ProximityValueTool(
   LoadTriangleSets(theSet1, theSet2);
 }
 
-//=======================================================================
-// function : LoadTriangleSets
-// purpose  : Loads the given element sets into the proximity tool
-//=======================================================================
 void BRepExtrema_ProximityValueTool::LoadTriangleSets(
   const occ::handle<BRepExtrema_TriangleSet>& theSet1,
   const occ::handle<BRepExtrema_TriangleSet>& theSet2)
@@ -60,10 +48,6 @@ void BRepExtrema_ProximityValueTool::LoadTriangleSets(
   MarkDirty();
 }
 
-//=======================================================================
-// function : calcEdgeRefinementStep
-// purpose  : Calculates the edge refinement step
-//=======================================================================
 static double calcEdgeRefinementStep(const TopoDS_Edge& theEdge, const int theNbNodes)
 {
   if (theNbNodes < 2)
@@ -74,11 +58,6 @@ static double calcEdgeRefinementStep(const TopoDS_Edge& theEdge, const int theNb
   return aLen / (double)(theNbNodes - 1);
 }
 
-//=======================================================================
-// function : calcFaceRefinementStep
-// purpose  : Calculates the face refinement step as an approximate square
-// (Shape area / number triangles) * 2
-//=======================================================================
 static double calcFaceRefinementStep(const TopoDS_Face& theFace, const int theNbTrg)
 {
   if (theNbTrg < 1)
@@ -90,10 +69,6 @@ static double calcFaceRefinementStep(const TopoDS_Face& theFace, const int theNb
   return 2 * (aArea / (double)theNbTrg);
 }
 
-//=======================================================================
-// function : getInfoForRefinement
-// purpose  : Gets shape data for further refinement
-//=======================================================================
 bool BRepExtrema_ProximityValueTool::getInfoForRefinement(const TopoDS_Shape& theShape,
                                                           TopAbs_ShapeEnum&   theShapeType,
                                                           int&                theNbNodes,
@@ -145,10 +120,6 @@ bool BRepExtrema_ProximityValueTool::getInfoForRefinement(const TopoDS_Shape& th
   return true;
 }
 
-//=======================================================================
-// function : LoadTriangleSets
-// purpose  : Loads the given list of subshapes into the proximity tool
-//=======================================================================
 void BRepExtrema_ProximityValueTool::LoadShapeLists(
   const NCollection_Vector<TopoDS_Shape>& theShapeList1,
   const NCollection_Vector<TopoDS_Shape>& theShapeList2)
@@ -165,10 +136,6 @@ void BRepExtrema_ProximityValueTool::LoadShapeLists(
   MarkDirty();
 }
 
-//=======================================================================
-// function : SetNbSamplePoints
-// purpose  : Sets number of sample points used for proximity calculation for each shape
-//=======================================================================
 void BRepExtrema_ProximityValueTool::SetNbSamplePoints(const int theSamples1, const int theSamples2)
 {
   myNbSamples1 = theSamples1;
@@ -177,10 +144,6 @@ void BRepExtrema_ProximityValueTool::SetNbSamplePoints(const int theSamples1, co
   MarkDirty();
 }
 
-//=======================================================================
-// function : computeProximityValue
-// purpose  : Returns the computed proximity value from first BVH to another one
-//=======================================================================
 double BRepExtrema_ProximityValueTool::computeProximityDist(
   const occ::handle<BRepExtrema_TriangleSet>& theSet1,
   const int                                   theNbSamples1,
@@ -212,10 +175,6 @@ double BRepExtrema_ProximityValueTool::computeProximityDist(
   return aProxDistTool.ProximityDistance();
 }
 
-//=======================================================================
-// function : getEdgeAdditionalVertices
-// purpose  : Gets additional vertices and their statuses on the edge with the input step
-//=======================================================================
 bool BRepExtrema_ProximityValueTool::getEdgeAdditionalVertices(
   const TopoDS_Edge&                  theEdge,
   const double                        theStep,
@@ -238,7 +197,7 @@ bool BRepExtrema_ProximityValueTool::getEdgeAdditionalVertices(
     return false;
 
   int aNbNodes = aGCPnts.NbPoints();
-  for (int aVertIdx = 2; aVertIdx < aNbNodes; ++aVertIdx) // don't add extreme points
+  for (int aVertIdx = 2; aVertIdx < aNbNodes; ++aVertIdx)
   {
     double aPar = aGCPnts.Parameter(aVertIdx);
     gp_Pnt aP   = aBAC.Value(aPar);
@@ -250,18 +209,6 @@ bool BRepExtrema_ProximityValueTool::getEdgeAdditionalVertices(
   return true;
 }
 
-//=======================================================================
-// function : doRecurTrgSplit
-// purpose  : Splits the triangle into two ones recursively, halving the longest side
-//           until the area of the current triangle > input step
-//! @param theTrg points of the triangle to be split
-//! @param theEdgesStatus status of triangle edges - on the border or middle of the face
-//! @param theTol telerance used in search of coincidence points
-//! @param theStep minimum area of the resulting triangle
-//! @param theAddVertices vertices obtained halving sides
-//! @param theAddStatuses status of obtained vertices - on the border or middle of the face,
-//! from triangulation of which the input triangle is
-//=======================================================================
 void BRepExtrema_ProximityValueTool::doRecurTrgSplit(
   const gp_Pnt (&theTrg)[3],
   const ProxPnt_Status (&theEdgesStatus)[3],
@@ -290,7 +237,7 @@ void BRepExtrema_ProximityValueTool::doRecurTrgSplit(
   myInspector.SetCurrent(aCenterOfMaxSide.Coord());
   myCells.Inspect(aBox.CornerMin().XYZ(), aBox.CornerMax().XYZ(), myInspector);
 
-  if (myInspector.IsNeedAdd()) // is point aCenterOfMaxSide unique
+  if (myInspector.IsNeedAdd())
   {
     BVH_Vec3d aBisectingPnt(aCenterOfMaxSide.X(), aCenterOfMaxSide.Y(), aCenterOfMaxSide.Z());
     theAddVertices.push_back(aBisectingPnt);
@@ -363,7 +310,6 @@ static void getNodesOfTrg(const int                              theTriIdx,
   theTrg[2] = aVtx3;
 }
 
-// Gets status of triangle edges - on the border or middle of the face
 static void getEdgesStatus(const int                              theTriIdx,
                            const occ::handle<Poly_Triangulation>& theTr,
                            ProxPnt_Status (&theEdgesStatus1)[3])
@@ -383,11 +329,6 @@ static void getEdgesStatus(const int                              theTriIdx,
   }
 }
 
-//=======================================================================
-// function : getFaceAdditionalVertices
-// purpose  : Gets additional vertices and their statuses on the face with the input step (triangle
-// square)
-//=======================================================================
 bool BRepExtrema_ProximityValueTool::getFaceAdditionalVertices(
   const TopoDS_Face&                  theFace,
   const double                        theStep,
@@ -418,37 +359,32 @@ bool BRepExtrema_ProximityValueTool::getFaceAdditionalVertices(
   return true;
 }
 
-//=======================================================================
-// function : getShapesVertices
-// purpose  : Gets additional vertices on shapes with refining a coarser one if it's needed
-//=======================================================================
 bool BRepExtrema_ProximityValueTool::getShapesAdditionalVertices()
 {
-  // estimate the density of meshes of shapes to add points to a coarcer one
-  // target steps for refinement
+
   double aStep1 = myStep1;
   double aStep2 = myStep2;
 
   if ((myShapeType1 == TopAbs_EDGE) && (myShapeType2 == TopAbs_EDGE))
   {
-    if (myNbSamples1 > myNbNodes1) // 1st edge needs refinement
+    if (myNbSamples1 > myNbNodes1)
     {
       aStep1                  = calcEdgeRefinementStep(TopoDS::Edge(myShape1), myNbSamples1);
       myIsRefinementRequired1 = true;
     }
 
-    if (myNbSamples2 > myNbNodes2) // 2nd edge needs refinement
+    if (myNbSamples2 > myNbNodes2)
     {
       aStep2                  = calcEdgeRefinementStep(TopoDS::Edge(myShape2), myNbSamples2);
       myIsRefinementRequired2 = true;
     }
 
-    if (aStep1 / aStep2 > 2.) // 1st edge needs refinement
+    if (aStep1 / aStep2 > 2.)
     {
       myIsRefinementRequired1 = true;
       aStep1                  = aStep2;
     }
-    else if (aStep2 / aStep1 > 2.) // 2nd edge needs refinement
+    else if (aStep2 / aStep1 > 2.)
     {
       myIsRefinementRequired2 = true;
       aStep2                  = aStep1;
@@ -472,12 +408,12 @@ bool BRepExtrema_ProximityValueTool::getShapesAdditionalVertices()
   }
   else if ((myShapeType1 == TopAbs_FACE) && (myShapeType2 == TopAbs_FACE))
   {
-    if (aStep1 / aStep2 > 2) // 1st face needs refinement
+    if (aStep1 / aStep2 > 2)
     {
       myIsRefinementRequired1 = true;
       aStep1                  = myStep2;
     }
-    else if (aStep2 / aStep1 > 2.) // 2nd face needs refinement
+    else if (aStep2 / aStep1 > 2.)
     {
       myIsRefinementRequired2 = true;
       aStep2                  = myStep1;
@@ -503,20 +439,14 @@ bool BRepExtrema_ProximityValueTool::getShapesAdditionalVertices()
   return true;
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Performs the computation of the proximity value
-//=======================================================================
 void BRepExtrema_ProximityValueTool::Perform(double& theTolerance)
 {
   if (!myIsInitS1 || !myIsInitS2 || (myShapeType1 != myShapeType2))
     return;
 
-  // get vertices on shapes with refining a coarser mesh if it's needed
   if (!getShapesAdditionalVertices())
     return;
 
-  // max(min) dist from the 1st shape to the 2nd one
   BVH_Vec3d      aP1_1, aP1_2;
   ProxPnt_Status aPointStatus1_1 = ProxPnt_Status::ProxPnt_Status_UNKNOWN;
   ProxPnt_Status aPointStatus1_2 = ProxPnt_Status::ProxPnt_Status_UNKNOWN;
@@ -536,7 +466,6 @@ void BRepExtrema_ProximityValueTool::Perform(double& theTolerance)
   if (aProximityDist1 < 0.)
     return;
 
-  // max(min) dist from the 2nd shape to t he 1st one
   BVH_Vec3d      aP2_1, aP2_2;
   ProxPnt_Status aPointStatus2_1 = ProxPnt_Status::ProxPnt_Status_UNKNOWN;
   ProxPnt_Status aPointStatus2_2 = ProxPnt_Status::ProxPnt_Status_UNKNOWN;
@@ -556,7 +485,6 @@ void BRepExtrema_ProximityValueTool::Perform(double& theTolerance)
   if (aProximityDist2 < 0.)
     return;
 
-  // min dist of the two max(min) dists
   if (aProximityDist1 < aProximityDist2)
   {
     myDistance = aProximityDist1;
@@ -578,10 +506,6 @@ void BRepExtrema_ProximityValueTool::Perform(double& theTolerance)
   theTolerance = myDistance;
 }
 
-//=======================================================================
-// function : Inspect
-// purpose  : Used for selection and storage of coinciding nodes
-//=======================================================================
 NCollection_CellFilter_Action BRepExtrema_VertexInspector::Inspect(const int theTarget)
 {
   myIsNeedAdd = true;

@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <math_GaussSingleIntegration.hpp>
 #include <math_KronrodSingleIntegration.hpp>
@@ -27,9 +16,6 @@
 namespace
 {
 
-  // Test function classes for numerical integration
-
-  // Constant function: f(x) = c
   class ConstantFunction : public math_Function
   {
   private:
@@ -41,14 +27,13 @@ namespace
     {
     }
 
-    bool Value(const double /*theX*/, double& theF) override
+    bool Value(const double, double& theF) override
     {
       theF = myValue;
       return true;
     }
   };
 
-  // Linear function: f(x) = ax + b
   class LinearFunction : public math_Function
   {
   private:
@@ -68,7 +53,6 @@ namespace
     }
   };
 
-  // Quadratic function: f(x) = ax^2 + bx + c
   class QuadraticFunction : public math_Function
   {
   private:
@@ -89,7 +73,6 @@ namespace
     }
   };
 
-  // Polynomial function: f(x) = x^n
   class PowerFunction : public math_Function
   {
   private:
@@ -108,7 +91,6 @@ namespace
     }
   };
 
-  // Trigonometric function: f(x) = sin(x)
   class SineFunction : public math_Function
   {
   public:
@@ -119,7 +101,6 @@ namespace
     }
   };
 
-  // Exponential function: f(x) = e^x
   class ExponentialFunction : public math_Function
   {
   public:
@@ -130,7 +111,6 @@ namespace
     }
   };
 
-  // Tests for math_GaussSingleIntegration
   TEST(MathIntegrationTest, GaussConstantFunction)
   {
     ConstantFunction aFunc(5.0);
@@ -142,7 +122,6 @@ namespace
 
     EXPECT_TRUE(anIntegrator.IsDone()) << "Gauss integration should succeed for constant function";
 
-    // Integral of constant 5 from 0 to 2 should be 5 * (2-0) = 10
     double anExpected = 5.0 * (anUpper - aLower);
     EXPECT_NEAR(anIntegrator.Value(), anExpected, 1.0e-12)
       << "Constant function integration should be exact";
@@ -150,16 +129,15 @@ namespace
 
   TEST(MathIntegrationTest, GaussLinearFunction)
   {
-    LinearFunction aFunc(2.0, 3.0); // f(x) = 2x + 3
+    LinearFunction aFunc(2.0, 3.0);
     double         aLower  = 1.0;
     double         anUpper = 4.0;
-    int            anOrder = 2; // Should be exact for linear functions
+    int            anOrder = 2;
 
     math_GaussSingleIntegration anIntegrator(aFunc, aLower, anUpper, anOrder);
 
     EXPECT_TRUE(anIntegrator.IsDone()) << "Gauss integration should succeed for linear function";
 
-    // Integral of 2x + 3 from 1 to 4: [x^2 + 3x] from 1 to 4 = (16 + 12) - (1 + 3) = 24
     double anExpected = 24.0;
     EXPECT_NEAR(anIntegrator.Value(), anExpected, 1.0e-12)
       << "Linear function integration should be exact with order 2";
@@ -167,16 +145,15 @@ namespace
 
   TEST(MathIntegrationTest, GaussQuadraticFunction)
   {
-    QuadraticFunction aFunc(1.0, -2.0, 1.0); // f(x) = x^2 - 2x + 1 = (x-1)^2
+    QuadraticFunction aFunc(1.0, -2.0, 1.0);
     double            aLower  = 0.0;
     double            anUpper = 2.0;
-    int               anOrder = 3; // Should be exact for quadratic functions
+    int               anOrder = 3;
 
     math_GaussSingleIntegration anIntegrator(aFunc, aLower, anUpper, anOrder);
 
     EXPECT_TRUE(anIntegrator.IsDone()) << "Gauss integration should succeed for quadratic function";
 
-    // Integral of (x-1)^2 from 0 to 2: [(x-1)^3/3] from 0 to 2 = (1/3) - (-1/3) = 2/3
     double anExpected = 2.0 / 3.0;
 
     EXPECT_NEAR(anIntegrator.Value(), anExpected, 1.0e-12)
@@ -194,7 +171,6 @@ namespace
 
     EXPECT_TRUE(anIntegrator.IsDone()) << "Gauss integration should succeed for sine function";
 
-    // Integral of sin(x) from 0 to PI: [-cos(x)] from 0 to PI = -(-1) - (-1) = 2
     double anExpected = 2.0;
     EXPECT_NEAR(anIntegrator.Value(), anExpected, 1.0e-10)
       << "Sine function integration should be accurate";
@@ -212,7 +188,6 @@ namespace
     EXPECT_TRUE(anIntegrator.IsDone())
       << "Gauss integration should succeed for exponential function";
 
-    // Integral of e^x from 0 to 1: [e^x] from 0 to 1 = e - 1 approximately 1.71828
     double anExpected = exp(1.0) - 1.0;
     EXPECT_NEAR(anIntegrator.Value(), anExpected, 1.0e-8)
       << "Exponential function integration should be accurate";
@@ -220,14 +195,12 @@ namespace
 
   TEST(MathIntegrationTest, GaussDifferentOrders)
   {
-    QuadraticFunction aFunc(1.0, 0.0, 0.0); // f(x) = x^2
+    QuadraticFunction aFunc(1.0, 0.0, 0.0);
     double            aLower  = 0.0;
     double            anUpper = 1.0;
 
-    // Expected result: integral of x^2 from 0 to 1 = [x^3/3] = 1/3
     double anExpected = 1.0 / 3.0;
 
-    // Test different orders
     std::vector<int> anOrders = {2, 3, 5, 10, 20};
 
     for (int anOrder : anOrders)
@@ -238,13 +211,13 @@ namespace
 
       if (anOrder >= 3)
       {
-        // Should be exact for order 3 and above (quadratic function)
+
         EXPECT_NEAR(anIntegrator.Value(), anExpected, 1.0e-12)
           << "High order integration should be exact for order " << anOrder;
       }
       else
       {
-        // Lower order might not be exact but should be reasonable
+
         EXPECT_NEAR(anIntegrator.Value(), anExpected, 1.0e-6)
           << "Low order integration should be reasonably accurate for order " << anOrder;
       }
@@ -253,7 +226,7 @@ namespace
 
   TEST(MathIntegrationTest, GaussWithTolerance)
   {
-    QuadraticFunction aFunc(1.0, 0.0, 0.0); // f(x) = x^2
+    QuadraticFunction aFunc(1.0, 0.0, 0.0);
     double            aLower     = 0.0;
     double            anUpper    = 1.0;
     int               anOrder    = 5;
@@ -270,7 +243,7 @@ namespace
 
   TEST(MathIntegrationTest, GaussNegativeInterval)
   {
-    LinearFunction aFunc(1.0, 0.0); // f(x) = x
+    LinearFunction aFunc(1.0, 0.0);
     double         aLower  = -2.0;
     double         anUpper = 2.0;
     int            anOrder = 3;
@@ -279,25 +252,22 @@ namespace
 
     EXPECT_TRUE(anIntegrator.IsDone()) << "Integration over symmetric interval should succeed";
 
-    // Integral of x from -2 to 2: [x^2/2] from -2 to 2 = 2 - 2 = 0
     EXPECT_NEAR(anIntegrator.Value(), 0.0, 1.0e-12)
       << "Symmetric odd function integral should be zero";
   }
 
-  // Tests for math_KronrodSingleIntegration
   TEST(MathIntegrationTest, KronrodConstantFunction)
   {
     ConstantFunction aFunc(3.0);
     double           aLower  = 1.0;
     double           anUpper = 5.0;
-    int              anOrder = 15; // Kronrod typically uses 15, 21, 31, etc.
+    int              anOrder = 15;
 
     math_KronrodSingleIntegration anIntegrator(aFunc, aLower, anUpper, anOrder);
 
     EXPECT_TRUE(anIntegrator.IsDone())
       << "Kronrod integration should succeed for constant function";
 
-    // Integral of constant 3 from 1 to 5 should be 3 * (5-1) = 12
     double anExpected = 3.0 * (anUpper - aLower);
     EXPECT_NEAR(anIntegrator.Value(), anExpected, 1.0e-12)
       << "Constant function integration should be exact";
@@ -305,7 +275,7 @@ namespace
 
   TEST(MathIntegrationTest, KronrodQuadraticFunction)
   {
-    QuadraticFunction aFunc(2.0, -1.0, 3.0); // f(x) = 2x^2 - x + 3
+    QuadraticFunction aFunc(2.0, -1.0, 3.0);
     double            aLower  = 0.0;
     double            anUpper = 1.0;
     int               anOrder = 15;
@@ -315,8 +285,6 @@ namespace
     EXPECT_TRUE(anIntegrator.IsDone())
       << "Kronrod integration should succeed for quadratic function";
 
-    // Integral of 2x^2 - x + 3 from 0 to 1: [2x^3/3 - x^2/2 + 3x] from 0 to 1 = 2/3 - 1/2 + 3 = 2/3
-    // - 3/6 + 18/6 = 4/6 + 18/6 - 3/6 = 19/6
     double anExpected = 19.0 / 6.0;
     EXPECT_NEAR(anIntegrator.Value(), anExpected, 1.0e-10)
       << "Quadratic function integration should be very accurate";
@@ -333,7 +301,6 @@ namespace
 
     EXPECT_TRUE(anIntegrator.IsDone()) << "Kronrod integration should succeed for sine function";
 
-    // Integral of sin(x) from 0 to PI/2: [-cos(x)] from 0 to PI/2 = 0 - (-1) = 1
     double anExpected = 1.0;
     EXPECT_NEAR(anIntegrator.Value(), anExpected, 1.0e-12)
       << "Sine function integration should be very accurate";
@@ -341,64 +308,52 @@ namespace
 
   TEST(MathIntegrationTest, GaussVsKronrodComparison)
   {
-    PowerFunction aFunc(4); // f(x) = x^4
+    PowerFunction aFunc(4);
     double        aLower  = 0.0;
     double        anUpper = 2.0;
 
-    // Expected: integral of x^4 from 0 to 2 = [x^5/5] from 0 to 2 = 32/5 = 6.4
     double anExpected = 32.0 / 5.0;
 
-    // Gauss integration
     math_GaussSingleIntegration aGaussIntegrator(aFunc, aLower, anUpper, 10);
     EXPECT_TRUE(aGaussIntegrator.IsDone()) << "Gauss integration should succeed";
 
-    // Kronrod integration
     math_KronrodSingleIntegration aKronrodIntegrator(aFunc, aLower, anUpper, 21);
     EXPECT_TRUE(aKronrodIntegrator.IsDone()) << "Kronrod integration should succeed";
 
-    // Both should be accurate
     EXPECT_NEAR(aGaussIntegrator.Value(), anExpected, 1.0e-10)
       << "Gauss integration should be accurate for x^4";
     EXPECT_NEAR(aKronrodIntegrator.Value(), anExpected, 1.0e-10)
       << "Kronrod integration should be accurate for x^4";
 
-    // Results should be similar (within tolerance)
     EXPECT_NEAR(aGaussIntegrator.Value(), aKronrodIntegrator.Value(), 1.0e-8)
       << "Gauss and Kronrod results should be similar";
   }
 
   TEST(MathIntegrationTest, DefaultConstructorAndPerform)
   {
-    // Test default constructor followed by separate computation
+
     math_GaussSingleIntegration anIntegrator1;
 
-    LinearFunction aFunc(1.0, 2.0); // f(x) = x + 2
+    LinearFunction aFunc(1.0, 2.0);
     double         aLower  = 0.0;
     double         anUpper = 3.0;
     int            anOrder = 5;
 
-    // Note: We can't call Perform directly in the public interface,
-    // so we test by creating with parameters after default construction
-    // This tests that the default constructor doesn't crash
-
     math_GaussSingleIntegration anIntegrator2(aFunc, aLower, anUpper, anOrder);
     EXPECT_TRUE(anIntegrator2.IsDone()) << "Integration after explicit construction should succeed";
 
-    // Integral of x + 2 from 0 to 3: [x^2/2 + 2x] from 0 to 3 = 9/2 + 6 = 10.5
     EXPECT_NEAR(anIntegrator2.Value(), 10.5, 1.0e-12) << "Linear function integral should be exact";
   }
 
-  // Tests for edge cases and error handling
   TEST(MathIntegrationTest, ZeroLengthInterval)
   {
     ConstantFunction aFunc(1.0);
     double           aLower  = 5.0;
-    double           anUpper = 5.0; // Same as lower
+    double           anUpper = 5.0;
     int              anOrder = 5;
 
     math_GaussSingleIntegration anIntegrator(aFunc, aLower, anUpper, anOrder);
 
-    // Integration over zero-length interval should give zero
     if (anIntegrator.IsDone())
     {
       EXPECT_NEAR(anIntegrator.Value(), 0.0, Precision::Confusion())
@@ -408,17 +363,16 @@ namespace
 
   TEST(MathIntegrationTest, ReverseInterval)
   {
-    LinearFunction aFunc(1.0, 0.0); // f(x) = x
+    LinearFunction aFunc(1.0, 0.0);
     double         aLower  = 2.0;
-    double         anUpper = 0.0; // Upper < Lower
+    double         anUpper = 0.0;
     int            anOrder = 5;
 
     math_GaussSingleIntegration anIntegrator(aFunc, aLower, anUpper, anOrder);
 
     if (anIntegrator.IsDone())
     {
-      // Integral from 2 to 0 should be negative of integral from 0 to 2
-      // Integral of x from 0 to 2 = [x^2/2] = 2, so from 2 to 0 = -2
+
       EXPECT_NEAR(anIntegrator.Value(), -2.0, 1.0e-12)
         << "Reverse interval should give negative result";
     }
@@ -426,19 +380,18 @@ namespace
 
   TEST(MathIntegrationTest, HighOrderIntegration)
   {
-    PowerFunction aFunc(10); // f(x) = x^10
+    PowerFunction aFunc(10);
     double        aLower  = 0.0;
     double        anUpper = 1.0;
-    int           anOrder = 30; // High order
+    int           anOrder = 30;
 
     math_GaussSingleIntegration anIntegrator(aFunc, aLower, anUpper, anOrder);
 
     EXPECT_TRUE(anIntegrator.IsDone()) << "High order integration should succeed";
 
-    // Integral of x^10 from 0 to 1 = [x^11/11] = 1/11
     double anExpected = 1.0 / 11.0;
     EXPECT_NEAR(anIntegrator.Value(), anExpected, 1.0e-12)
       << "High order integration of polynomial should be exact";
   }
 
-} // anonymous namespace
+} // namespace

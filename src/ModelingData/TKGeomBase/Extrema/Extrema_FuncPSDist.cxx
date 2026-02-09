@@ -3,22 +3,16 @@
 #include <gp_Vec.hpp>
 #include <math_Vector.hpp>
 
-//=================================================================================================
-
 Extrema_FuncPSDist::Extrema_FuncPSDist(const Adaptor3d_Surface& theS, const gp_Pnt& theP)
     : mySurf(theS),
       myP(theP)
 {
 }
 
-//=================================================================================================
-
 int Extrema_FuncPSDist::NbVariables() const
 {
   return 2;
 }
-
-//=================================================================================================
 
 bool Extrema_FuncPSDist::Value(const math_Vector& X, double& F)
 {
@@ -29,8 +23,6 @@ bool Extrema_FuncPSDist::Value(const math_Vector& X, double& F)
 
   return true;
 }
-
-//=================================================================================================
 
 bool Extrema_FuncPSDist::Gradient(const math_Vector& X, math_Vector& G)
 
@@ -50,8 +42,6 @@ bool Extrema_FuncPSDist::Gradient(const math_Vector& X, math_Vector& G)
   return true;
 }
 
-//=================================================================================================
-
 bool Extrema_FuncPSDist::Values(const math_Vector& X, double& F, math_Vector& G)
 {
   if (!IsInside(X))
@@ -70,8 +60,6 @@ bool Extrema_FuncPSDist::Values(const math_Vector& X, double& F, math_Vector& G)
 
   return true;
 }
-
-//=================================================================================================
 
 bool Extrema_FuncPSDist::IsInside(const math_Vector& X)
 {

@@ -11,7 +11,6 @@ class StepGeom_SurfaceReplica : public StepGeom_Surface
 {
 
 public:
-  //! Returns a SurfaceReplica
   Standard_EXPORT StepGeom_SurfaceReplica();
 
   Standard_EXPORT void Init(

@@ -3,14 +3,10 @@
 
 #define DEBUG_INTFSECTIONPOINT 0
 
-//=================================================================================================
-
 const gp_Pnt& Intf_SectionPoint::Pnt() const
 {
   return myPnt;
 }
-
-//=================================================================================================
 
 void Intf_SectionPoint::InfoFirst(Intf_PIType& Dim, int& Add1, int& Add2, double& Param) const
 {
@@ -20,16 +16,12 @@ void Intf_SectionPoint::InfoFirst(Intf_PIType& Dim, int& Add1, int& Add2, double
   Param = ParamObje;
 }
 
-//=================================================================================================
-
 void Intf_SectionPoint::InfoFirst(Intf_PIType& Dim, int& Add, double& Param) const
 {
   Dim   = DimenObje;
   Add   = IndexO2;
   Param = ParamObje;
 }
-
-//=================================================================================================
 
 void Intf_SectionPoint::InfoSecond(Intf_PIType& Dim, int& Add1, int& Add2, double& Param) const
 {
@@ -39,8 +31,6 @@ void Intf_SectionPoint::InfoSecond(Intf_PIType& Dim, int& Add1, int& Add2, doubl
   Param = ParamTool;
 }
 
-//=================================================================================================
-
 void Intf_SectionPoint::InfoSecond(Intf_PIType& Dim, int& Add, double& Param) const
 {
   Dim   = DimenTool;
@@ -48,14 +38,10 @@ void Intf_SectionPoint::InfoSecond(Intf_PIType& Dim, int& Add, double& Param) co
   Param = ParamTool;
 }
 
-//=================================================================================================
-
 double Intf_SectionPoint::Incidence() const
 {
   return Incide;
 }
-
-//=================================================================================================
 
 bool Intf_SectionPoint::IsOnSameEdge(const Intf_SectionPoint& Other) const
 {
@@ -116,8 +102,6 @@ bool Intf_SectionPoint::IsOnSameEdge(const Intf_SectionPoint& Other) const
   return isOn;
 }
 
-//=================================================================================================
-
 Intf_SectionPoint::Intf_SectionPoint()
     : myPnt(0., 0., 0.),
       DimenObje(Intf_EXTERNAL),
@@ -131,8 +115,6 @@ Intf_SectionPoint::Intf_SectionPoint()
       Incide(0.)
 {
 }
-
-//=================================================================================================
 
 Intf_SectionPoint::Intf_SectionPoint(const gp_Pnt&     Where,
                                      const Intf_PIType Dim1,
@@ -157,8 +139,6 @@ Intf_SectionPoint::Intf_SectionPoint(const gp_Pnt&     Where,
 {
 }
 
-//=================================================================================================
-
 Intf_SectionPoint::Intf_SectionPoint(const gp_Pnt2d&   Where,
                                      const Intf_PIType Dim1,
                                      const int         Addr1,
@@ -179,8 +159,6 @@ Intf_SectionPoint::Intf_SectionPoint(const gp_Pnt2d&   Where,
       Incide(Incid)
 {
 }
-
-//=================================================================================================
 
 void Intf_SectionPoint::Merge(Intf_SectionPoint& Other)
 {
@@ -214,8 +192,6 @@ void Intf_SectionPoint::Merge(Intf_SectionPoint& Other)
     ParamTool = Other.ParamTool;
   }
 }
-
-//=================================================================================================
 
 void Intf_SectionPoint::Dump(const int
 #if DEBUG_INTFSECTIONPOINT

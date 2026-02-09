@@ -1,21 +1,5 @@
 #include <Intrv_Interval.hpp>
 
-//                   **-----------****             Other
-//     ***-----*                                   Before
-//     ***------------*                            JustBefore
-//     ***-----------------*                       OverlappingAtStart
-//     ***--------------------------*              JustEnclosingAtEnd
-//     ***-------------------------------------*   Enclosing
-//                  ***----*                       JustOverlappingAtStart
-//                  ***-------------*              Similar
-//                  ***------------------------*   JustEnclosingAtStart
-//                         ***-*                   Inside
-//                         ***------*              JustOverlappingAtEnd
-//                         ***-----------------*   OverlappingAtEnd
-//                                  ***--------*   JustAfter
-//                                       ***---*   After
-//=================================================================================================
-
 Intrv_Interval::Intrv_Interval()
     : myStart(RealFirst()),
       myEnd(RealLast())
@@ -24,8 +8,6 @@ Intrv_Interval::Intrv_Interval()
   myTolEnd   = (float)Epsilon(RealLast());
 }
 
-//=================================================================================================
-
 Intrv_Interval::Intrv_Interval(const double Start, const double End)
     : myStart(Start),
       myEnd(End)
@@ -33,8 +15,6 @@ Intrv_Interval::Intrv_Interval(const double Start, const double End)
   myTolStart = (float)Epsilon(myStart);
   myTolEnd   = (float)Epsilon(myEnd);
 }
-
-//=================================================================================================
 
 Intrv_Interval::Intrv_Interval(const double Start,
                                const float  TolStart,
@@ -52,8 +32,6 @@ Intrv_Interval::Intrv_Interval(const double Start,
   if (myTolEnd < epsEnd)
     myTolEnd = epsEnd;
 }
-
-//=================================================================================================
 
 Intrv_Position Intrv_Interval::Position(const Intrv_Interval& Other) const
 {

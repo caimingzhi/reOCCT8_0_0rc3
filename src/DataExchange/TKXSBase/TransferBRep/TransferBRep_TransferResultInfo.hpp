@@ -6,24 +6,12 @@
 #include <Standard_Integer.hpp>
 #include <Standard_Transient.hpp>
 
-//! Data structure for storing information on transfer result.
-//! At the moment it dispatches information for the following types:
-//! - result,
-//! - result + warning(s),
-//! - result + fail(s),
-//! - result + warning(s) + fail(s)
-//! - no result,
-//! - no result + warning(s),
-//! - no result + fail(s),
-//! - no result + warning(s) + fail(s),
 class TransferBRep_TransferResultInfo : public Standard_Transient
 {
 
 public:
-  //! Creates object with all fields nullified.
   Standard_EXPORT TransferBRep_TransferResultInfo();
 
-  //! Resets all the fields.
   Standard_EXPORT void Clear();
 
   int& Result();
@@ -60,49 +48,35 @@ inline int& TransferBRep_TransferResultInfo::Result()
   return myR;
 }
 
-//=================================================================================================
-
 inline int& TransferBRep_TransferResultInfo::ResultWarning()
 {
   return myRW;
 }
-
-//=================================================================================================
 
 inline int& TransferBRep_TransferResultInfo::ResultFail()
 {
   return myRF;
 }
 
-//=================================================================================================
-
 inline int& TransferBRep_TransferResultInfo::ResultWarningFail()
 {
   return myRWF;
 }
-
-//=================================================================================================
 
 inline int& TransferBRep_TransferResultInfo::NoResult()
 {
   return myNR;
 }
 
-//=================================================================================================
-
 inline int& TransferBRep_TransferResultInfo::NoResultWarning()
 {
   return myNRW;
 }
 
-//=================================================================================================
-
 inline int& TransferBRep_TransferResultInfo::NoResultFail()
 {
   return myNRF;
 }
-
-//=================================================================================================
 
 inline int& TransferBRep_TransferResultInfo::NoResultWarningFail()
 {

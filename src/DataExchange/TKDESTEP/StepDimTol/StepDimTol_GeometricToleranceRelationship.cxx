@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_GeometricToleranceRelationship, Standard_Transient)
 
-//=================================================================================================
-
 StepDimTol_GeometricToleranceRelationship::StepDimTol_GeometricToleranceRelationship() = default;
-
-//=================================================================================================
 
 void StepDimTol_GeometricToleranceRelationship::Init(
   const occ::handle<TCollection_HAsciiString>&      theName,
@@ -26,14 +22,10 @@ void StepDimTol_GeometricToleranceRelationship::Init(
   myRelatedGeometricTolerance = theRelatedGeometricTolerance;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepDimTol_GeometricToleranceRelationship::Name() const
 {
   return myName;
 }
-
-//=================================================================================================
 
 void StepDimTol_GeometricToleranceRelationship::SetName(
   const occ::handle<TCollection_HAsciiString>& theName)
@@ -41,14 +33,10 @@ void StepDimTol_GeometricToleranceRelationship::SetName(
   myName = theName;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepDimTol_GeometricToleranceRelationship::Description() const
 {
   return myDescription;
 }
-
-//=================================================================================================
 
 void StepDimTol_GeometricToleranceRelationship::SetDescription(
   const occ::handle<TCollection_HAsciiString>& theDescription)
@@ -56,15 +44,11 @@ void StepDimTol_GeometricToleranceRelationship::SetDescription(
   myDescription = theDescription;
 }
 
-//=================================================================================================
-
 occ::handle<StepDimTol_GeometricTolerance> StepDimTol_GeometricToleranceRelationship::
   RelatingGeometricTolerance() const
 {
   return myRelatingGeometricTolerance;
 }
-
-//=================================================================================================
 
 void StepDimTol_GeometricToleranceRelationship::SetRelatingGeometricTolerance(
   const occ::handle<StepDimTol_GeometricTolerance>& theRelatingGeometricTolerance)
@@ -72,15 +56,11 @@ void StepDimTol_GeometricToleranceRelationship::SetRelatingGeometricTolerance(
   myRelatingGeometricTolerance = theRelatingGeometricTolerance;
 }
 
-//=================================================================================================
-
 occ::handle<StepDimTol_GeometricTolerance> StepDimTol_GeometricToleranceRelationship::
   RelatedGeometricTolerance() const
 {
   return myRelatedGeometricTolerance;
 }
-
-//=================================================================================================
 
 void StepDimTol_GeometricToleranceRelationship::SetRelatedGeometricTolerance(
   const occ::handle<StepDimTol_GeometricTolerance>& theRelatedGeometricTolerance)

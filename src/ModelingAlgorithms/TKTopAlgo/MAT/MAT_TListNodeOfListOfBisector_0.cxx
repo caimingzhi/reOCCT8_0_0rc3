@@ -5,6 +5,4 @@
 #include <MAT_Bisector.hpp>
 #include <MAT_ListOfBisector.hpp>
 
-//=================================================================================================
-
 void MAT_TListNodeOfListOfBisector::Dummy() const {}

@@ -5,11 +5,7 @@
 #include <StepDimTol_GeneralDatumReference.hpp>
 #include <StepDimTol_GeometricTolerance.hpp>
 
-//=================================================================================================
-
 StepDimTol_ToleranceZoneTarget::StepDimTol_ToleranceZoneTarget() = default;
-
-//=================================================================================================
 
 int StepDimTol_ToleranceZoneTarget::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {

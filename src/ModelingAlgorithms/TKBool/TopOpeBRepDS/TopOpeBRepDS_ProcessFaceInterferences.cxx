@@ -43,13 +43,6 @@ Standard_EXPORT bool FUN_Parameters(const double&       Param,
                                     double&             u,
                                     double&             v);
 
-//=======================================================================
-// 3D
-// purpose : The compute of transition face <F> /face <FS>,
-//           or edge <E>
-// prequesitory : <E> is IN 2dmatter(F) and IN 2dmatter(FS)
-//=======================================================================
-
 Standard_EXPORT bool FUN_mkTonF(const TopoDS_Face&       F,
                                 const TopoDS_Face&       FS,
                                 const TopoDS_Edge&       E,
@@ -60,7 +53,7 @@ Standard_EXPORT bool FUN_mkTonF(const TopoDS_Face&       F,
     return false;
   T.Set(TopAbs_UNKNOWN, TopAbs_UNKNOWN);
 
-  double tola = 1.e-6; // nyitol
+  double tola = 1.e-6;
   double f, l;
   FUN_tool_bounds(E, f, l);
   const double PAR_T = 0.456789;
@@ -69,12 +62,11 @@ Standard_EXPORT bool FUN_mkTonF(const TopoDS_Face&       F,
   bool         ok;
 
   ok = TopOpeBRepTool_TOOL::TggeomE(pmil, E, tgE);
-  // modified by NIZNHY-PKV Fri Aug  4 10:59:44 2000 f
+
   if (!ok)
   {
     return false;
   }
-  // modified by NIZNHY-PKV Fri Aug  4 10:59:48 2000 t
 
   gp_Pnt2d uvF;
   ok = FUN_tool_parF(E, pmil, F, uvF);
@@ -109,16 +101,14 @@ Standard_EXPORT bool FUN_mkTonF(const TopoDS_Face&       F,
   return true;
 }
 
-//------------------------------------------------------
-// FUN_edgeofface :  True si le edge E est un edge de F
 Standard_EXPORT bool FUN_edgeofface
-  //------------------------------------------------------
+
   (const TopoDS_Shape& E, const TopoDS_Shape& F)
 {
   bool            isv = false;
   TopExp_Explorer ex;
   for (ex.Init(F, TopAbs_EDGE); ex.More(); ex.Next())
-    //  for (TopExp_Explorer ex(F,TopAbs_EDGE); ex.More(); ex.Next())
+
     if (ex.Current().IsSame(E))
     {
       isv = true;
@@ -127,9 +117,8 @@ Standard_EXPORT bool FUN_edgeofface
   return isv;
 }
 
-//------------------------------------------------------
 Standard_EXPORT bool FUN_keepFinterference
-  //------------------------------------------------------
+
   (const TopOpeBRepDS_DataStructure&             DS,
    const occ::handle<TopOpeBRepDS_Interference>& I,
    const TopoDS_Shape&                           F)
@@ -143,7 +132,7 @@ Standard_EXPORT bool FUN_keepFinterference
   {
 
     const TopoDS_Shape& EG = DS.Shape(I->Geometry());
-    // I rejetee si son edge-geometrie est une arete de la face qui accede I.
+
     bool k3 = !::FUN_edgeofface(EG, F);
     res     = res && k3;
   }
@@ -151,17 +140,14 @@ Standard_EXPORT bool FUN_keepFinterference
   return res;
 }
 
-//------------------------------------------------------
 Standard_EXPORT void FUN_unkeepFdoubleGBoundinterferences
-  //------------------------------------------------------
+
   (NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI,
-   const TopOpeBRepDS_DataStructure& /*BDS*/,
+   const TopOpeBRepDS_DataStructure&,
    const int)
 {
-  //                 BDS.Shape(SIX);
-  NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it1;
 
-  // process interferences of LI with VERTEX geometry
+  NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it1;
 
   it1.Initialize(LI);
   while (it1.More())
@@ -226,7 +212,7 @@ Standard_EXPORT void FUN_unkeepFdoubleGBoundinterferences
       }
       else
         it2.Next();
-    } // it2.More()
+    }
 
     if (cond1)
     {
@@ -234,13 +220,11 @@ Standard_EXPORT void FUN_unkeepFdoubleGBoundinterferences
     }
     else
       it1.Next();
-  } // it1.More()
+  }
+}
 
-} // FUN_unkeepFdoubleGBoundinterferences
-
-//------------------------------------------------------
 Standard_EXPORT void FUN_resolveFUNKNOWN
-  //------------------------------------------------------
+
   (NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI,
    TopOpeBRepDS_DataStructure&                               BDS,
    const int                                                 SIX,
@@ -253,9 +237,6 @@ Standard_EXPORT void FUN_resolveFUNKNOWN
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it1;
 
   const TopoDS_Face& FF = TopoDS::Face(F);
-  //  double fE,lE; BRep_Tool::Range(EE,fE,lE);
-
-  // process interferences of LI with UNKNOWN transition
 
   for (it1.Initialize(LI); it1.More(); it1.Next())
   {
@@ -273,7 +254,7 @@ Standard_EXPORT void FUN_resolveFUNKNOWN
     bool idt  = (tsb1 == TopAbs_FACE && tsa1 == TopAbs_FACE && GT1 == TopOpeBRepDS_EDGE
                 && ST1 == TopOpeBRepDS_FACE);
     bool idi  = (isb1 == S1 && isa1 == S1);
-    bool etgf = idt && idi; // face tangent a une face en 1 edge
+    bool etgf = idt && idi;
     if (!etgf)
       continue;
 
@@ -287,14 +268,6 @@ Standard_EXPORT void FUN_resolveFUNKNOWN
 
     const TopoDS_Face& FS = TopoDS::Face(BDS.Shape(S1));
 
-    //    if (!go) continue;
-
-    // la face FF transitionne par la transition T1.IsUnknown()
-    // en l'arete EE par rapport a la face FS.
-    // range de EE = [fE,lE].
-    // EE est une arete de FF ou non.
-    // EE est une arete de section.
-    // EE est une arete de couture.
     bool        isEEGB = fei->GBound();
     bool        isEEsp = MEsp.IsBound(EE);
     TopoDS_Edge EEsp   = EE;
@@ -313,8 +286,7 @@ Standard_EXPORT void FUN_resolveFUNKNOWN
             isEEGB = false;
           if (n > 1)
           {
-            // MSV: treat the case of multiple splits:
-            //      select the split which lies on both faces
+
             NCollection_List<TopoDS_Shape>::Iterator it(los);
             for (; it.More(); it.Next())
             {
@@ -341,20 +313,18 @@ Standard_EXPORT void FUN_resolveFUNKNOWN
 
     TopAbs_State            stateb, statea;
     TopOpeBRepDS_Transition T;
-    bool                    ok = FUN_mkTonF(FF, FS, EEsp, T); // xpu230498
+    bool                    ok = FUN_mkTonF(FF, FS, EEsp, T);
     if (ok)
     {
       stateb = T.Before();
       statea = T.After();
-    } // xpu230498
+    }
     else
     {
       TopOpeBRepTool_PShapeClassifier pClass = nullptr;
       if (pClassif)
       {
-        // MSV: find Solids of the same object rank as FS
-        //      to determine transition relatively solid rather then face
-        //      if possible (see pb. in CFE002 C2, when SIX==13)
+
         int                 rankFS = BDS.AncestorRank(S1);
         const TopoDS_Shape& aSRef  = BDS.Shape(rankFS);
         TopExp_Explorer     ex(aSRef, TopAbs_SOLID);

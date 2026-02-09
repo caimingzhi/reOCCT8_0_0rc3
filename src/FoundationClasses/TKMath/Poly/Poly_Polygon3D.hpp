@@ -5,67 +5,34 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//! This class Provides a polygon in 3D space. It is generally an approximate representation of a
-//! curve. A Polygon3D is defined by a table of nodes. Each node is a 3D point. If the polygon is
-//! closed, the point of closure is repeated at the end of the table of nodes. If the polygon is an
-//! approximate representation of a curve, you can associate with each of its nodes the value of the
-//! parameter of the corresponding point on the curve.
 class Poly_Polygon3D : public Standard_Transient
 {
 public:
-  //! Constructs a 3D polygon with specific number of nodes.
   Standard_EXPORT Poly_Polygon3D(const int theNbNodes, const bool theHasParams);
 
-  //! Constructs a 3D polygon defined by the table of points, Nodes.
   Standard_EXPORT Poly_Polygon3D(const NCollection_Array1<gp_Pnt>& Nodes);
 
-  //! Constructs a 3D polygon defined by
-  //! the table of points, Nodes, and the parallel table of
-  //! parameters, Parameters, where each value of the table
-  //! Parameters is the parameter of the corresponding point
-  //! on the curve approximated by the constructed polygon.
-  //! Warning
-  //! Both the Nodes and Parameters tables must have the
-  //! same bounds. This property is not checked at construction time.
   Standard_EXPORT Poly_Polygon3D(const NCollection_Array1<gp_Pnt>& Nodes,
                                  const NCollection_Array1<double>& Parameters);
 
-  //! Creates a copy of current polygon
   Standard_EXPORT virtual occ::handle<Poly_Polygon3D> Copy() const;
 
-  //! Returns the deflection of this polygon
   double Deflection() const { return myDeflection; }
 
-  //! Sets the deflection of this polygon. See more on deflection in Poly_Polygon2D
   void Deflection(const double theDefl) { myDeflection = theDefl; }
 
-  //! Returns the number of nodes in this polygon.
-  //! Note: If the polygon is closed, the point of closure is
-  //! repeated at the end of its table of nodes. Thus, on a closed
-  //! triangle the function NbNodes returns 4.
   int NbNodes() const { return myNodes.Length(); }
 
-  //! Returns the table of nodes for this polygon.
   const NCollection_Array1<gp_Pnt>& Nodes() const { return myNodes; }
 
-  //! Returns the table of nodes for this polygon.
   NCollection_Array1<gp_Pnt>& ChangeNodes() { return myNodes; }
 
-  //! Returns the table of the parameters associated with each node in this polygon.
-  //! HasParameters function checks if parameters are associated with the nodes of this polygon.
   bool HasParameters() const { return !myParameters.IsNull(); }
 
-  //! Returns true if parameters are associated with the nodes
-  //! in this polygon.
   const NCollection_Array1<double>& Parameters() const { return myParameters->Array1(); }
 
-  //! Returns the table of the parameters associated with each node in this polygon.
-  //! ChangeParameters function returns the array as shared.
-  //! Therefore if the table is selected by reference you can, by simply modifying it,
-  //! directly modify the data structure of this polygon.
   NCollection_Array1<double>& ChangeParameters() const { return myParameters->ChangeArray1(); }
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT virtual void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
   DEFINE_STANDARD_RTTIEXT(Poly_Polygon3D, Standard_Transient)

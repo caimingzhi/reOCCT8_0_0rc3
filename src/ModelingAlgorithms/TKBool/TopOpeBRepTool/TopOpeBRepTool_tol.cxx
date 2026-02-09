@@ -35,7 +35,7 @@ Standard_EXPORT void FTOL_FaceTolerances(const Bnd_Box&             B1,
 {
   double aTolF1 = BRep_Tool::Tolerance(myFace1);
   double aTolF2 = BRep_Tool::Tolerance(myFace2);
-  //
+
   myTol1 = aTolF1 + aTolF2;
   myTol2 = myTol1;
 
@@ -88,7 +88,7 @@ Standard_EXPORT void FTOL_FaceTolerances(const Bnd_Box&             B1,
   if (dx < dz)
     dx = dz;
   if (dx > 1000000.0)
-    dx = 1000000.0; //-- if(dx>10000.0) dx=10000.0;
+    dx = 1000000.0;
 
   TopExp_Explorer ex;
   double          tolef1 = Precision::Confusion();
@@ -108,7 +108,6 @@ Standard_EXPORT void FTOL_FaceTolerances(const Bnd_Box&             B1,
   double tolef = tolef1;
   if (tolef2 > tolef)
     tolef = tolef2;
-  // jmb le 30 juillet 99. on ne multiplie pas la tolerance par la dimension de la piece
 
   Deflection = 0.01;
   MaxUV      = 0.01;
@@ -127,7 +126,7 @@ Standard_EXPORT void FTOL_FaceTolerances(const Bnd_Box&             B1,
   if (DP2 < DP1)
     DP = DP2;
   else
-    DP = DP1; //-- DP + petit
+    DP = DP1;
 
   MU0 = mySurface2.FirstUParameter();
   MU1 = mySurface2.LastUParameter();
@@ -136,18 +135,14 @@ Standard_EXPORT void FTOL_FaceTolerances(const Bnd_Box&             B1,
   DP1 = MU1 - MU0;
   DP2 = MV1 - MV0;
   if (DP2 > DP1)
-    DP1 = DP2; //-- DP1 + petit
+    DP1 = DP2;
   if (DP1 < DP)
-    DP = DP1; //-- DP + petit
+    DP = DP1;
 
   DP *= 0.01;
-  // jmb le 30 juillet 99
-  //  non ! laisser MMAXUV a 0.01
-  //   MMAXUV=DP;
 
 #ifdef OCCT_DEBUG
-//  printf("\n FaceTolerances3d : TOL1 = %5.5eg TOL2=%5.5eg DEFL=%5.5eg
-//  MAXUV=%5.5eg\n",MTOL1,MTOL2,MDEFLECTION,0.01);
+
 #endif
 
   if (MMAXUV < 1e-3)
@@ -161,12 +156,12 @@ Standard_EXPORT void FTOL_FaceTolerances(const Bnd_Box&             B1,
     MDEFLECTION = 0.1;
 
 #ifdef OCCT_DEBUG
-//  printf("TOL1 = %5.5eg TOL2=%5.5eg DEFL=%5.5eg MAXUV=%5.5eg\n",MTOL1,MTOL2,MDEFLECTION,MMAXUV);
+
 #endif
 
   Deflection = MDEFLECTION;
   MaxUV      = MMAXUV;
-} // FTOL_FaceTolerances
+}
 
 Standard_EXPORT void FTOL_FaceTolerances3d(const TopoDS_Face& myFace1,
                                            const TopoDS_Face& myFace2,

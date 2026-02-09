@@ -6,93 +6,44 @@
 #include <Standard.hpp>
 #include <Standard_Macro.hpp>
 
-//! Radius dimension. Can be constructed:
-//! - On generic circle.
-//! - On generic circle with user-defined anchor point on that circle.
-//! - On generic shape containing geometry that can be measured
-//!   by diameter dimension: circle wire, arc, circular face, etc.
-//! The anchor point is the location of left attachment point of
-//! dimension on the circle. It can be user-specified, or computed as
-//! middle point on the arc. The radius dimension always lies in the
-//! plane of the measured circle. The dimension is considered as
-//! invalid if the user-specified anchor point is not lying on the circle,
-//! if the radius of the circle is less than Precision::Confusion().
-//! In case if the dimension is built on the arbitrary shape,
-//! it can be considered as invalid if the shape does not contain
-//! circle geometry.
 class PrsDim_RadiusDimension : public PrsDim_Dimension
 {
   DEFINE_STANDARD_RTTIEXT(PrsDim_RadiusDimension, PrsDim_Dimension)
 public:
-  //! Create radius dimension for the circle geometry.
-  //! @param[in] theCircle  the circle to measure.
   Standard_EXPORT PrsDim_RadiusDimension(const gp_Circ& theCircle);
 
-  //! Create radius dimension for the circle geometry and define its
-  //! orientation by location of the first point on that circle.
-  //! @param[in] theCircle  the circle to measure.
-  //! @param[in] theAnchorPoint  the point to define the position
-  //!        of the dimension attachment on the circle.
   Standard_EXPORT PrsDim_RadiusDimension(const gp_Circ& theCircle, const gp_Pnt& theAnchorPoint);
 
-  //! Create radius dimension for the arbitrary shape (if possible).
-  //! @param[in] theShape  the shape to measure.
   Standard_EXPORT PrsDim_RadiusDimension(const TopoDS_Shape& theShape);
 
 public:
-  //! @return measured geometry circle.
   const gp_Circ& Circle() const { return myCircle; }
 
-  //! @return anchor point on circle for radius dimension.
   const gp_Pnt& AnchorPoint() const { return myAnchorPoint; }
 
-  //! @return the measured shape.
   const TopoDS_Shape& Shape() const { return myShape; }
 
 public:
-  //! Measure radius of the circle.
-  //! The dimension will become invalid if the radius of the circle
-  //! is less than Precision::Confusion().
-  //! @param[in] theCircle  the circle to measure.
   void SetMeasuredGeometry(const gp_Circ& theCircle)
   {
     SetMeasuredGeometry(theCircle, gp_Pnt(), false);
   }
 
-  //! Measure radius of the circle and orient the dimension so
-  //! the dimension lines attaches to anchor point on the circle.
-  //! The dimension will become invalid if the radius of the circle
-  //! is less than Precision::Confusion().
-  //! @param[in] theCircle  the circle to measure.
-  //! @param[in] theAnchorPoint  the point to attach the dimension lines, should be on the circle
-  //! @param[in] theHasAnchor    should be set TRUE if theAnchorPoint should be used
   Standard_EXPORT void SetMeasuredGeometry(const gp_Circ& theCircle,
                                            const gp_Pnt&  theAnchorPoint,
                                            const bool     theHasAnchor = true);
 
-  //! Measure radius on the passed shape, if applicable.
-  //! The dimension will become invalid if the passed shape is not
-  //! measurable or if measured diameter value is less than Precision::Confusion().
-  //! @param[in] theShape  the shape to measure.
   void SetMeasuredGeometry(const TopoDS_Shape& theShape)
   {
     SetMeasuredGeometry(theShape, gp_Pnt(), false);
   }
 
-  //! Measure radius on the passed shape, if applicable.
-  //! The dimension will become invalid if the passed shape is not
-  //! measurable or if measured diameter value is less than Precision::Confusion().
-  //! @param[in] theShape  the shape to measure.
-  //! @param[in] theAnchorPoint  the point to attach the dimension lines, should be on the circle
-  //! @param[in] theHasAnchor    should be set TRUE if theAnchorPoint should be used
   Standard_EXPORT void SetMeasuredGeometry(const TopoDS_Shape& theShape,
                                            const gp_Pnt&       theAnchorPoint,
                                            const bool          theHasAnchor = true);
 
-  //! @return the display units string.
   Standard_EXPORT const TCollection_AsciiString& GetDisplayUnits() const override;
 
-  //! @return the model units string.
   Standard_EXPORT const TCollection_AsciiString& GetModelUnits() const override;
 
   Standard_EXPORT void SetDisplayUnits(const TCollection_AsciiString& theUnits) override;
@@ -106,7 +57,6 @@ public:
 protected:
   Standard_EXPORT virtual void ComputePlane();
 
-  //! Checks if anchor point and the center of the circle are on the plane.
   Standard_EXPORT bool CheckPlane(const gp_Pln& thePlane) const override;
 
   Standard_EXPORT double ComputeValue() const override;

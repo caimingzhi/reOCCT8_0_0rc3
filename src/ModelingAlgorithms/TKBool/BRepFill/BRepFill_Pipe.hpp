@@ -23,12 +23,6 @@ class TopoDS_Vertex;
 class gp_Pnt;
 class BRepFill_Sweep;
 
-//! Create a shape by sweeping a shape (the profile)
-//! along a wire (the spine).
-//!
-//! For each edge or vertex from the spine the user
-//! may ask for the shape generated from each subshape
-//! of the profile.
 class BRepFill_Pipe
 {
 public:
@@ -58,38 +52,22 @@ public:
 
   Standard_EXPORT const TopoDS_Shape& LastShape() const;
 
-  //! Returns the list of shapes generated from the
-  //! shape <S>.
   Standard_EXPORT void Generated(const TopoDS_Shape& S, NCollection_List<TopoDS_Shape>& L);
 
-  //! Returns the face created from an edge of the spine
-  //! and an edge of the profile.
-  //! if the edges are not in the spine or the profile
   Standard_EXPORT TopoDS_Face Face(const TopoDS_Edge& ESpine, const TopoDS_Edge& EProfile);
 
-  //! Returns the edge created from an edge of the spine
-  //! and a vertex of the profile.
-  //! if the edge or the vertex are not in the spine or
-  //! the profile.
   Standard_EXPORT TopoDS_Edge Edge(const TopoDS_Edge& ESpine, const TopoDS_Vertex& VProfile);
 
-  //! Returns the shape created from the profile at the
-  //! position of the vertex VSpine.
-  //! if the vertex is not in the Spine
   Standard_EXPORT TopoDS_Shape Section(const TopoDS_Vertex& VSpine) const;
 
-  //! Create a Wire by sweeping the Point along the <spine>
-  //! if the <Spine> is undefined
   Standard_EXPORT TopoDS_Wire PipeLine(const gp_Pnt& Point);
 
 private:
-  //! Auxiliary recursive method used to build the result.
   Standard_EXPORT TopoDS_Shape MakeShape(const TopoDS_Shape& S,
                                          const TopoDS_Shape& theOriginalS,
                                          const TopoDS_Shape& FirstShape,
                                          const TopoDS_Shape& LastShape);
 
-  //! Auxiliary recursive method used to find the edge's index
   Standard_EXPORT int FindEdge(const TopoDS_Shape& S, const TopoDS_Edge& E, int& Init) const;
 
   Standard_EXPORT int FindVertex(const TopoDS_Shape& S, const TopoDS_Vertex& V, int& Init) const;

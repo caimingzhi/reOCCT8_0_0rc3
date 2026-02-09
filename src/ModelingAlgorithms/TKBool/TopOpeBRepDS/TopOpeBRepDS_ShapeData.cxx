@@ -1,8 +1,6 @@
 #include <TopOpeBRepDS_DataStructure.hpp>
 #include <TopOpeBRepDS_ShapeData.hpp>
 
-//=================================================================================================
-
 TopOpeBRepDS_ShapeData::TopOpeBRepDS_ShapeData()
     : mySameDomainRef(0),
       mySameDomainOri(TopOpeBRepDS_UNSHGEOMETRY),
@@ -14,15 +12,11 @@ TopOpeBRepDS_ShapeData::TopOpeBRepDS_ShapeData()
 {
 }
 
-//=================================================================================================
-
 const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& TopOpeBRepDS_ShapeData::
   Interferences() const
 {
   return myInterferences;
 }
-
-//=================================================================================================
 
 NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& TopOpeBRepDS_ShapeData::
   ChangeInterferences()
@@ -30,14 +24,10 @@ NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& TopOpeBRepDS_ShapeData
   return myInterferences;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_ShapeData::Keep() const
 {
   return myKeep;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_ShapeData::ChangeKeep(const bool b)
 {

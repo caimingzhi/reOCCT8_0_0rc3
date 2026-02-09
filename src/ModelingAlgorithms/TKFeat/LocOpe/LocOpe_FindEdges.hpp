@@ -40,18 +40,12 @@ private:
 
 #include <TopoDS.hpp>
 
-//=================================================================================================
-
 inline LocOpe_FindEdges::LocOpe_FindEdges() = default;
-
-//=================================================================================================
 
 inline LocOpe_FindEdges::LocOpe_FindEdges(const TopoDS_Shape& FFrom, const TopoDS_Shape& FTo)
 {
   Set(FFrom, FTo);
 }
-
-//=================================================================================================
 
 inline void LocOpe_FindEdges::InitIterator()
 {
@@ -59,28 +53,20 @@ inline void LocOpe_FindEdges::InitIterator()
   myItTo.Initialize(myLTo);
 }
 
-//=================================================================================================
-
 inline bool LocOpe_FindEdges::More() const
 {
   return myItFrom.More();
 }
-
-//=================================================================================================
 
 inline const TopoDS_Edge& LocOpe_FindEdges::EdgeFrom() const
 {
   return TopoDS::Edge(myItFrom.Value());
 }
 
-//=================================================================================================
-
 inline const TopoDS_Edge& LocOpe_FindEdges::EdgeTo() const
 {
   return TopoDS::Edge(myItTo.Value());
 }
-
-//=================================================================================================
 
 inline void LocOpe_FindEdges::Next()
 {

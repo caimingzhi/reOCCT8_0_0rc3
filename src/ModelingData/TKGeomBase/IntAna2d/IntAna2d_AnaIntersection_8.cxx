@@ -1,19 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//============================================ IntAna2d_AnaIntersection_8.cxx
-//============================================================================
 
 #include <gp_Circ2d.hpp>
 #include <gp_Hypr2d.hpp>
@@ -23,21 +8,6 @@
 #include <IntAna2d_Outils.hpp>
 #include <StdFail_NotDone.hpp>
 
-// -----------------------------------------------------------------
-// ------ Verification de la validite des points obtenus  ----------
-// --- Methode a implementer dans les autres routines si on constate
-// --- des problemes d'instabilite numerique sur
-// ---      * la construction des polynomes en t (t:parametre)
-// ---      * la resolution du polynome
-// ---      * le retour : parametre t -> point d'intersection
-// --- Probleme : A partir de quelle Tolerance un point n'est
-// ---            plus un point de la courbe. (f(x,y)=1e-10 ??)
-// ---            ne donne pas d'info. sur la dist. du pt a la courbe
-// -----------------------------------------------------------------
-// ------ Methode non implementee pour les autres Intersections
-// --- Si un probleme est constate : Dupliquer le code entre les
-// --- commentaires VERIF-VALID
-// -----------------------------------------------------------------
 void IntAna2d_AnaIntersection::Perform(const gp_Hypr2d& H, const IntAna2d_Conic& Conic)
 {
   bool   HIsDirect = H.IsDirect();
@@ -62,10 +32,6 @@ void IntAna2d_AnaIntersection::Perform(const gp_Hypr2d& H, const IntAna2d_Conic&
   double B_minor_radiusP2       = B * minor_radius * minor_radius;
   double C_2_major_minor_radius = C * 2.0 * major_radius * minor_radius;
 
-  // Parametre : t avec x=MajorRadius*Ch(t)  y=:minorRadius*Sh(t)
-  // Le polynome est reecrit en Exp(t)
-  // Suivent les Coeffs du polynome P multiplie par 4*Exp(t)^2
-
   px0 = A_major_radiusP2 - C_2_major_minor_radius + B_minor_radiusP2;
   px1 = 4.0 * (D * major_radius - E * minor_radius);
   px2 = 2.0 * (A_major_radiusP2 + 2.0 * F - B_minor_radiusP2);
@@ -76,7 +42,7 @@ void IntAna2d_AnaIntersection::Perform(const gp_Hypr2d& H, const IntAna2d_Conic&
 
   if (!Sol.IsDone())
   {
-    //-- std::cout<<" Done = False ds IntAna2d_AnaIntersection_8.cxx "<<std::endl;
+
     done = false;
     return;
   }
@@ -88,8 +54,7 @@ void IntAna2d_AnaIntersection::Perform(const gp_Hypr2d& H, const IntAna2d_Conic&
       done = true;
       return;
     }
-    // On a X=(CosH(t)*major_radius)/2 , Y=(SinH(t)*minor_radius)/2
-    //      la Resolution est en S=Exp(t)
+
     nbp                = Sol.NbSolutions();
     int nb_sol_valides = 0;
     for (i = 1; i <= nbp; i++)
@@ -99,12 +64,6 @@ void IntAna2d_AnaIntersection::Perform(const gp_Hypr2d& H, const IntAna2d_Conic&
       {
         tx = 0.5 * major_radius * (S + 1 / S);
         ty = 0.5 * minor_radius * (S - 1 / S);
-
-        //--- Est-on sur la bonne branche de l'Hyperbole
-        //--------------- VERIF-VALIDITE-INTERSECTION ----------
-        //--- On Suppose que l'ecart sur la courbe1 est nul
-        //--- (le point a ete obtenu par parametrage)
-        //--- ??? la tolerance a ete fixee a 1e-10 ?????????????
 
         nb_sol_valides++;
         Coord_Ancien_Repere(tx, ty, Axe_rep);

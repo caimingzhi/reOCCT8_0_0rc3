@@ -21,8 +21,6 @@ typedef gp_Vec2d    Vec2d;
 typedef gp_Trsf2d   Trsf2d;
 typedef gp_XY       XY;
 
-//=================================================================================================
-
 occ::handle<Geom2d_Geometry> Geom2d_Line::Copy() const
 {
   occ::handle<Geom2d_Line> L;
@@ -30,154 +28,110 @@ occ::handle<Geom2d_Geometry> Geom2d_Line::Copy() const
   return L;
 }
 
-//=================================================================================================
-
 Geom2d_Line::Geom2d_Line(const Ax2d& A)
     : pos(A)
 {
 }
-
-//=================================================================================================
 
 Geom2d_Line::Geom2d_Line(const gp_Lin2d& L)
     : pos(L.Position())
 {
 }
 
-//=================================================================================================
-
 Geom2d_Line::Geom2d_Line(const Pnt2d& P, const Dir2d& V)
     : pos(P, V)
 {
 }
-
-//=================================================================================================
 
 void Geom2d_Line::SetDirection(const Dir2d& V)
 {
   pos.SetDirection(V);
 }
 
-//=================================================================================================
-
 const gp_Dir2d& Geom2d_Line::Direction() const
 {
   return pos.Direction();
 }
-
-//=================================================================================================
 
 void Geom2d_Line::SetLin2d(const gp_Lin2d& L)
 {
   pos = L.Position();
 }
 
-//=================================================================================================
-
 void Geom2d_Line::SetLocation(const Pnt2d& P)
 {
   pos.SetLocation(P);
 }
-
-//=================================================================================================
 
 const gp_Pnt2d& Geom2d_Line::Location() const
 {
   return pos.Location();
 }
 
-//=================================================================================================
-
 void Geom2d_Line::SetPosition(const Ax2d& A)
 {
   pos = A;
 }
-
-//=================================================================================================
 
 const gp_Ax2d& Geom2d_Line::Position() const
 {
   return pos;
 }
 
-//=================================================================================================
-
 gp_Lin2d Geom2d_Line::Lin2d() const
 {
   return gp_Lin2d(pos);
 }
-
-//=================================================================================================
 
 void Geom2d_Line::Reverse()
 {
   pos.Reverse();
 }
 
-//=================================================================================================
-
 double Geom2d_Line::ReversedParameter(const double U) const
 {
   return (-U);
 }
-
-//=================================================================================================
 
 double Geom2d_Line::FirstParameter() const
 {
   return -Precision::Infinite();
 }
 
-//=================================================================================================
-
 double Geom2d_Line::LastParameter() const
 {
   return Precision::Infinite();
 }
-
-//=================================================================================================
 
 bool Geom2d_Line::IsClosed() const
 {
   return false;
 }
 
-//=================================================================================================
-
 bool Geom2d_Line::IsPeriodic() const
 {
   return false;
 }
-
-//=================================================================================================
 
 GeomAbs_Shape Geom2d_Line::Continuity() const
 {
   return GeomAbs_CN;
 }
 
-//=================================================================================================
-
 bool Geom2d_Line::IsCN(const int) const
 {
   return true;
 }
-
-//=================================================================================================
 
 void Geom2d_Line::D0(const double U, Pnt2d& P) const
 {
   P = ElCLib::LineValue(U, pos);
 }
 
-//=================================================================================================
-
 void Geom2d_Line::D1(const double U, Pnt2d& P, Vec2d& V1) const
 {
   ElCLib::LineD1(U, pos, P, V1);
 }
-
-//=================================================================================================
 
 void Geom2d_Line::D2(const double U, Pnt2d& P, Vec2d& V1, Vec2d& V2) const
 {
@@ -185,16 +139,12 @@ void Geom2d_Line::D2(const double U, Pnt2d& P, Vec2d& V1, Vec2d& V2) const
   V2.SetCoord(0.0, 0.0);
 }
 
-//=================================================================================================
-
 void Geom2d_Line::D3(const double U, Pnt2d& P, Vec2d& V1, Vec2d& V2, Vec2d& V3) const
 {
   ElCLib::LineD1(U, pos, P, V1);
   V2.SetCoord(0.0, 0.0);
   V3.SetCoord(0.0, 0.0);
 }
-
-//=================================================================================================
 
 Vec2d Geom2d_Line::DN(const double, const int N) const
 {
@@ -205,14 +155,10 @@ Vec2d Geom2d_Line::DN(const double, const int N) const
     return Vec2d(0.0, 0.0);
 }
 
-//=================================================================================================
-
 void Geom2d_Line::Transform(const Trsf2d& T)
 {
   pos.Transform(T);
 }
-
-//=================================================================================================
 
 double Geom2d_Line::TransformedParameter(const double U, const gp_Trsf2d& T) const
 {
@@ -221,14 +167,10 @@ double Geom2d_Line::TransformedParameter(const double U, const gp_Trsf2d& T) con
   return U * std::abs(T.ScaleFactor());
 }
 
-//=================================================================================================
-
 double Geom2d_Line::ParametricTransformation(const gp_Trsf2d& T) const
 {
   return std::abs(T.ScaleFactor());
 }
-
-//=================================================================================================
 
 double Geom2d_Line::Distance(const gp_Pnt2d& P) const
 {
@@ -236,8 +178,6 @@ double Geom2d_Line::Distance(const gp_Pnt2d& P) const
   gp_Lin2d L(pos);
   return L.Distance(P);
 }
-
-//=================================================================================================
 
 void Geom2d_Line::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

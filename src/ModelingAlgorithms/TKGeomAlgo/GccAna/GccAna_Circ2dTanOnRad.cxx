@@ -1,26 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// PRO12736 : bug quand OnLine // Ox, JCT 20/03/98
-//========================================================================
-//       circular tangent to element of type :      - Circle.            +
-//                                                  - Line.             +
-//                                                  - Point.             +
-//              center on second element of type :  - Circle.  +
-//                                                  - Line.   +
-//              of given radius : Radius.                             +
-//========================================================================
 
 #include <ElCLib.hpp>
 #include <GccAna_Circ2dTanOnRad.hpp>
@@ -37,21 +15,6 @@
 #include <NCollection_Array1.hpp>
 
 typedef math_DirectPolynomialRoots Roots;
-
-//=========================================================================
-//  Circle tangent  :  to circle Qualified1 (C1).                         +
-//         center   :  on straight line OnLine.                           +
-//         of radius :  Radius.                                           +
-//                                                                        +
-//  Initialise the table of solutions cirsol and all fields.              +
-//  Eliminate depending on the qualifier the cases not being solutions.   +
-//  Solve the equation of the second degree indicating that the found center +
-//  point (xc,yc) is at a distance Radius from circle C1 and              +
-//                     on straight line OnLine.                           +
-//  The solutions aret represented by circles :                           +
-//                   - with center Pntcen(xc,yc)                          +
-//                   - with radius Radius.                                +
-//=========================================================================
 
 GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const GccEnt_QualifiedCirc& Qualified1,
                                              const gp_Lin2d&             OnLine,
@@ -103,7 +66,7 @@ GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const GccEnt_QualifiedCirc& Qualifi
     double   y1 = center1.Y();
     if (Qualified1.IsEnclosed())
     {
-      //   ============================
+
       if (Tol < Radius - R1 + dist)
       {
         WellDone = true;
@@ -133,7 +96,7 @@ GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const GccEnt_QualifiedCirc& Qualifi
     }
     else if (Qualified1.IsEnclosing())
     {
-      //   ==================================
+
       if (R1 + dist - Radius > Tol)
       {
         WellDone = true;
@@ -163,7 +126,7 @@ GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const GccEnt_QualifiedCirc& Qualifi
     }
     else
     {
-      //   ====
+
       if (dist - R1 - Radius > Tol)
       {
         WellDone = false;
@@ -188,13 +151,13 @@ GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const GccEnt_QualifiedCirc& Qualifi
         {
           if (Qualified1.IsOutside())
           {
-            //         ===========================
+
             Coef(1) = (Radius + R1) * (Radius + R1);
             nbsol   = 1;
           }
           else
           {
-            //         ====
+
             Coef(1) = (Radius - R1) * (Radius - R1);
             Coef(2) = (Radius + R1) * (Radius + R1);
             nbsol   = 2;
@@ -205,7 +168,7 @@ GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const GccEnt_QualifiedCirc& Qualifi
     if (signe != 0)
     {
       cirsol(1) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-      //     ==================================================
+
       double distcc1 = Center.Distance(center1);
       if (!Qualified1.IsUnqualified())
       {
@@ -280,7 +243,7 @@ GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const GccEnt_QualifiedCirc& Qualifi
               continue;
             NbrSol++;
             cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-            //           =======================================================
+
             double distcc1 = Center.Distance(center1);
             if (!Qualified1.IsUnqualified())
             {

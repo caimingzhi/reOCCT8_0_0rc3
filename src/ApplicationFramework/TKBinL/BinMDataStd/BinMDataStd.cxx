@@ -24,8 +24,6 @@
 #include <BinMDF_ADriverTable.hpp>
 #include <Message_Messenger.hpp>
 
-//=================================================================================================
-
 void BinMDataStd::AddDrivers(const occ::handle<BinMDF_ADriverTable>& theDriverTable,
                              const occ::handle<Message_Messenger>&   theMsgDriver)
 {

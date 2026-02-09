@@ -20,7 +20,6 @@ class PCDM_ReadWriter_1 : public PCDM_ReadWriter
 public:
   Standard_EXPORT PCDM_ReadWriter_1();
 
-  //! returns PCDM_ReadWriter_1.
   Standard_EXPORT TCollection_AsciiString Version() const override;
 
   Standard_EXPORT void WriteReferenceCounter(

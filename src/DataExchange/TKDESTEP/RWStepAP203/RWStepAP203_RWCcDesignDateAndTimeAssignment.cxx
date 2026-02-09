@@ -10,12 +10,8 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepAP203_RWCcDesignDateAndTimeAssignment::RWStepAP203_RWCcDesignDateAndTimeAssignment() =
   default;
-
-//=================================================================================================
 
 void RWStepAP203_RWCcDesignDateAndTimeAssignment::ReadStep(
   const occ::handle<StepData_StepReaderData>&                 data,
@@ -23,11 +19,9 @@ void RWStepAP203_RWCcDesignDateAndTimeAssignment::ReadStep(
   occ::handle<Interface_Check>&                               ach,
   const occ::handle<StepAP203_CcDesignDateAndTimeAssignment>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "cc_design_date_and_time_assignment"))
     return;
-
-  // Inherited fields of DateAndTimeAssignment
 
   occ::handle<StepBasic_DateAndTime> aDateAndTimeAssignment_AssignedDateAndTime;
   data->ReadEntity(num,
@@ -45,8 +39,6 @@ void RWStepAP203_RWCcDesignDateAndTimeAssignment::ReadStep(
                    STANDARD_TYPE(StepBasic_DateTimeRole),
                    aDateAndTimeAssignment_Role);
 
-  // Own fields of CcDesignDateAndTimeAssignment
-
   occ::handle<NCollection_HArray1<StepAP203_DateTimeItem>> aItems;
   int                                                      sub3 = 0;
   if (data->ReadSubList(num, 3, "items", ach, sub3))
@@ -62,24 +54,17 @@ void RWStepAP203_RWCcDesignDateAndTimeAssignment::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aDateAndTimeAssignment_AssignedDateAndTime, aDateAndTimeAssignment_Role, aItems);
 }
-
-//=================================================================================================
 
 void RWStepAP203_RWCcDesignDateAndTimeAssignment::WriteStep(
   StepData_StepWriter&                                        SW,
   const occ::handle<StepAP203_CcDesignDateAndTimeAssignment>& ent) const
 {
 
-  // Inherited fields of DateAndTimeAssignment
-
   SW.Send(ent->StepBasic_DateAndTimeAssignment::AssignedDateAndTime());
 
   SW.Send(ent->StepBasic_DateAndTimeAssignment::Role());
-
-  // Own fields of CcDesignDateAndTimeAssignment
 
   SW.OpenSub();
   for (int i2 = 1; i2 <= ent->Items()->Length(); i2++)
@@ -90,20 +75,14 @@ void RWStepAP203_RWCcDesignDateAndTimeAssignment::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepAP203_RWCcDesignDateAndTimeAssignment::Share(
   const occ::handle<StepAP203_CcDesignDateAndTimeAssignment>& ent,
   Interface_EntityIterator&                                   iter) const
 {
 
-  // Inherited fields of DateAndTimeAssignment
-
   iter.AddItem(ent->StepBasic_DateAndTimeAssignment::AssignedDateAndTime());
 
   iter.AddItem(ent->StepBasic_DateAndTimeAssignment::Role());
-
-  // Own fields of CcDesignDateAndTimeAssignment
 
   for (int i3 = 1; i3 <= ent->Items()->Length(); i3++)
   {

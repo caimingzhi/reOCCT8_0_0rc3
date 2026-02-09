@@ -33,22 +33,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DNaming_PrismDriver, TFunction_Driver)
 
-// OCC
-// OCAF
-//=================================================================================================
-
 DNaming_PrismDriver::DNaming_PrismDriver() = default;
 
-//=======================================================================
-// function : Validate
-// purpose  : Validates labels of a function in <theLog>.
-//=======================================================================
 void DNaming_PrismDriver::Validate(occ::handle<TFunction_Logbook>&) const {}
 
-//=======================================================================
-// function : MustExecute
-// purpose  : Analyses in <theLog> if the loaded function must be executed
-//=======================================================================
 bool DNaming_PrismDriver::MustExecute(const occ::handle<TFunction_Logbook>&) const
 {
   return true;
@@ -68,8 +56,6 @@ static void Write(const TopoDS_Shape& shape, const char* filename)
 }
 #endif
 
-//=================================================================================================
-
 int DNaming_PrismDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
 {
   occ::handle<TFunction_Function> aFunction;
@@ -77,7 +63,6 @@ int DNaming_PrismDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
   if (aFunction.IsNull())
     return -1;
 
-  // Save location
   occ::handle<TNaming_NamedShape> aPrevPrism = DNaming::GetFunctionResult(aFunction);
   TopLoc_Location                 aLocation;
   if (!aPrevPrism.IsNull() && !aPrevPrism->IsEmpty())
@@ -85,7 +70,6 @@ int DNaming_PrismDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
     aLocation = aPrevPrism->Get().Location();
   }
 
-  // Basis for IPrism
   occ::handle<TDataStd_UAttribute> aBasObject = DNaming::GetObjectArg(aFunction, PRISM_BASIS);
   occ::handle<TNaming_NamedShape>  aBasisNS   = DNaming::GetObjectValue(aBasObject);
   if (aBasisNS.IsNull() || aBasisNS->IsEmpty())
@@ -101,9 +85,9 @@ int DNaming_PrismDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
     occ::handle<BRepCheck_Wire> aCheck = new BRepCheck_Wire(TopoDS::Wire(aBasis));
     if (aCheck->Closed(true) == BRepCheck_NoError)
     {
-      BRepBuilderAPI_MakeFace aMaker(TopoDS::Wire(aBasis), true); // Makes planar face
+      BRepBuilderAPI_MakeFace aMaker(TopoDS::Wire(aBasis), true);
       if (aMaker.IsDone())
-        aBASIS = aMaker.Face(); // aMaker.Face();
+        aBASIS = aMaker.Face();
     }
   }
   else if (aBasis.ShapeType() == TopAbs_FACE)
@@ -118,7 +102,7 @@ int DNaming_PrismDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
   bool                            anIsAttachment = false;
   if (DNaming::IsAttachment(aBasObject))
   {
-    aContextOfBasis = DNaming::GetAttachmentsContext(aBasObject); // a Context of Prism basis
+    aContextOfBasis = DNaming::GetAttachmentsContext(aBasObject);
     if (aContextOfBasis.IsNull() || aContextOfBasis->IsEmpty())
     {
       aFunction->SetFailure(WRONG_ARGUMENT);
@@ -127,7 +111,6 @@ int DNaming_PrismDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
     anIsAttachment = true;
   }
 
-  // Height
   double aHeight = DNaming::GetReal(aFunction, PRISM_HEIGHT)->Get();
   if (aHeight <= Precision::Confusion())
   {
@@ -135,16 +118,13 @@ int DNaming_PrismDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
     return -1;
   }
 
-  // Direction
   gp_Ax1 anAxis;
   DNaming::ComputeSweepDir(aBasis, anAxis);
 
-  // Reverse
   int aRev = DNaming::GetInteger(aFunction, PRISM_DIR)->Get();
   if (aRev)
     anAxis.Reverse();
 
-  // Calculate Vec - direction of extrusion
   gp_Vec aVEC(anAxis.Direction());
   aVEC = aVEC * aHeight;
 
@@ -189,13 +169,11 @@ int DNaming_PrismDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
     }
   }
 
-  // Naming
   if (anIsAttachment)
     LoadNamingDS(RESPOSITION(aFunction), aMakePrism, aBASIS, aContextOfBasis->Get());
   else
     LoadNamingDS(RESPOSITION(aFunction), aMakePrism, aBASIS, aBASIS);
 
-  // restore location
   if (!aLocation.IsIdentity())
     TNaming::Displace(RESPOSITION(aFunction), aLocation, true);
 
@@ -203,8 +181,6 @@ int DNaming_PrismDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
   aFunction->SetFailure(DONE);
   return 0;
 }
-
-//=================================================================================================
 
 void DNaming_PrismDriver::LoadNamingDS(const TDF_Label&       theResultLabel,
                                        BRepPrimAPI_MakePrism& MS,
@@ -229,7 +205,6 @@ void DNaming_PrismDriver::LoadNamingDS(const TDF_Label&       theResultLabel,
   else
     Builder.Generated(Context, MS.Shape());
 
-  // Insert lateral face : Face from Edge
   TNaming_Builder LateralFaceBuilder(theResultLabel.NewChild());
   DNaming::LoadAndOrientGeneratedShapes(MS, Basis, TopAbs_EDGE, LateralFaceBuilder, SubShapes);
 
@@ -246,13 +221,13 @@ void DNaming_PrismDriver::LoadNamingDS(const TDF_Label&       theResultLabel,
   }
   if (makeTopBottom)
   {
-    // Insert bottom face
+
     TopoDS_Shape BottomFace = MS.FirstShape();
     if (!BottomFace.IsNull())
     {
       if (BottomFace.ShapeType() != TopAbs_COMPOUND)
       {
-        TNaming_Builder BottomBuilder(theResultLabel.NewChild()); // 2
+        TNaming_Builder BottomBuilder(theResultLabel.NewChild());
         if (SubShapes.IsBound(BottomFace))
         {
           BottomFace = SubShapes(BottomFace);
@@ -270,13 +245,12 @@ void DNaming_PrismDriver::LoadNamingDS(const TDF_Label&       theResultLabel,
       }
     }
 
-    // Insert top face
     TopoDS_Shape TopFace = MS.LastShape();
     if (!TopFace.IsNull())
     {
       if (TopFace.ShapeType() != TopAbs_COMPOUND)
       {
-        TNaming_Builder TopBuilder(theResultLabel.NewChild()); // 3
+        TNaming_Builder TopBuilder(theResultLabel.NewChild());
         if (SubShapes.IsBound(TopFace))
         {
           TopFace = SubShapes(TopFace);

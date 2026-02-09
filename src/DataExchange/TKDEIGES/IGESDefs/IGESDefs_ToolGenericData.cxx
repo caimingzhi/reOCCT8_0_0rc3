@@ -24,18 +24,16 @@ void IGESDefs_ToolGenericData::ReadOwnParams(const occ::handle<IGESDefs_GenericD
                                              const occ::handle<IGESData_IGESReaderData>& IR,
                                              IGESData_ParamReader&                       PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   int                                                               i, num;
   int                                                               tempNbPropVal;
   occ::handle<TCollection_HAsciiString>                             tempName;
   occ::handle<NCollection_HArray1<int>>                             tempTypes;
   occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>> tempValues;
 
-  // clang-format off
-  PR.ReadInteger(PR.Current(), "Number of property values", tempNbPropVal); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadInteger(PR.Current(), "Number of property values", tempNbPropVal);
 
-  PR.ReadText(PR.Current(), "Property Name", tempName); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadText(PR.Current(), "Property Name", tempName);
 
   bool st = PR.ReadInteger(PR.Current(), "Number of TYPE/VALUEs", num);
   if (st && num > 0)
@@ -50,58 +48,53 @@ void IGESDefs_ToolGenericData::ReadOwnParams(const occ::handle<IGESDefs_GenericD
     for (i = 1; i <= num; i++)
     {
       int tempTyp;
-      PR.ReadInteger(PR.Current(), "Type code", tempTyp); // szv#4:S4163:12Mar99 `st=` not needed
+      PR.ReadInteger(PR.Current(), "Type code", tempTyp);
       tempTypes->SetValue(i, tempTyp);
       switch (tempTyp)
       {
-        case 0: // No value
+        case 0:
           PR.SetCurrentNumber(PR.CurrentNumber() + 1);
           break;
-        case 1: // Integer
+        case 1:
         {
           occ::handle<NCollection_HArray1<int>> tempObj;
-          // st = PR.ReadInts(PR.CurrentList(1), "Integer value", tempObj); //szv#4:S4163:12Mar99
-          // moved in if
+
           if (PR.ReadInts(PR.CurrentList(1), "Integer value", tempObj))
             tempValues->SetValue(i, tempObj);
         }
         break;
-        case 2: // Real
+        case 2:
         {
           occ::handle<NCollection_HArray1<double>> tempObj;
-          // st = PR.ReadReals(PR.CurrentList(1), "Real value", tempObj); //szv#4:S4163:12Mar99
-          // moved in if
+
           if (PR.ReadReals(PR.CurrentList(1), "Real value", tempObj))
             tempValues->SetValue(i, tempObj);
         }
         break;
-        case 3: // Character string
+        case 3:
         {
           occ::handle<TCollection_HAsciiString> tempObj;
-          // st = PR.ReadText(PR.Current(), "String value", tempObj); //szv#4:S4163:12Mar99 moved in
-          // if
+
           if (PR.ReadText(PR.Current(), "String value", tempObj))
             tempValues->SetValue(i, tempObj);
         }
         break;
-        case 4: // Pointer
+        case 4:
         {
           occ::handle<IGESData_IGESEntity> tempEntity;
-          // st = PR.ReadEntity(IR, PR.Current(), "Entity value", tempEntity); //szv#4:S4163:12Mar99
-          // moved in if
+
           if (PR.ReadEntity(IR, PR.Current(), "Entity value", tempEntity))
             tempValues->SetValue(i, tempEntity);
         }
         break;
-        case 5: // Not used
+        case 5:
           PR.SetCurrentNumber(PR.CurrentNumber() + 1);
           break;
-        case 6: // Logical
+        case 6:
         {
           occ::handle<NCollection_HArray1<int>> tempObj = new NCollection_HArray1<int>(1, 1);
           bool                                  tempBool;
-          // st = PR.ReadBoolean(PR.Current(), "Boolean value", tempBool); //szv#4:S4163:12Mar99
-          // moved in if
+
           if (PR.ReadBoolean(PR.Current(), "Boolean value", tempBool))
           {
             tempObj->SetValue(1, (tempBool ? 1 : 0));
@@ -182,36 +175,36 @@ void IGESDefs_ToolGenericData::OwnCopy(const occ::handle<IGESDefs_GenericData>& 
     tempTypes->SetValue(i, another->Type(i));
     switch (another->Type(i))
     {
-      case 0: // No value
+      case 0:
         break;
-      case 1: // Integer
+      case 1:
       {
         occ::handle<NCollection_HArray1<int>> tempObj = new NCollection_HArray1<int>(1, 1);
         tempObj->SetValue(1, another->ValueAsInteger(i));
         tempValues->SetValue(i, tempObj);
       }
       break;
-      case 2: // Real
+      case 2:
       {
         occ::handle<NCollection_HArray1<double>> tempObj = new NCollection_HArray1<double>(1, 1);
         tempObj->SetValue(1, another->ValueAsReal(i));
         tempValues->SetValue(i, tempObj);
       }
       break;
-      case 3: // Character string
+      case 3:
       {
         tempValues->SetValue(i, new TCollection_HAsciiString(another->ValueAsString(i)));
       }
       break;
-      case 4: // Pointer
+      case 4:
       {
         DeclareAndCast(IGESData_IGESEntity, tempObj, TC.Transferred(another->ValueAsEntity(i)));
         tempValues->SetValue(i, tempObj);
       }
       break;
-      case 5: // Not used
+      case 5:
         break;
-      case 6: // Logical
+      case 6:
       {
         occ::handle<NCollection_HArray1<int>> tempObj = new NCollection_HArray1<int>(1, 1);
         tempObj->SetValue(1, (another->ValueAsLogical(i) ? 1 : 0));
@@ -224,7 +217,7 @@ void IGESDefs_ToolGenericData::OwnCopy(const occ::handle<IGESDefs_GenericData>& 
 }
 
 IGESData_DirChecker IGESDefs_ToolGenericData::DirChecker(
-  const occ::handle<IGESDefs_GenericData>& /* ent */) const
+  const occ::handle<IGESDefs_GenericData>&) const
 {
   IGESData_DirChecker DC(406, 27);
   DC.Structure(IGESData_DefVoid);

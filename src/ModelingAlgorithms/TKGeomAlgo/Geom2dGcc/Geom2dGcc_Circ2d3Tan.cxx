@@ -47,10 +47,6 @@ Geom2dGcc_Circ2d3Tan::Geom2dGcc_Circ2d3Tan(const Geom2dGcc_QualifiedCurve& Quali
   GeomAbs_CurveType                Type2 = C2.GetType();
   GeomAbs_CurveType                Type3 = C3.GetType();
 
-  //=============================================================================
-  //                            Appel a GccAna.                                 +
-  //=============================================================================
-
   NbrSol = 0;
   if ((Type1 == GeomAbs_Line || Type1 == GeomAbs_Circle)
       && (Type2 == GeomAbs_Line || Type2 == GeomAbs_Circle)
@@ -278,10 +274,6 @@ Geom2dGcc_Circ2d3Tan::Geom2dGcc_Circ2d3Tan(const Geom2dGcc_QualifiedCurve&  Qual
   GeomAbs_CurveType                Type1 = C1.GetType();
   GeomAbs_CurveType                Type2 = C2.GetType();
 
-  //=============================================================================
-  //                            Appel a GccAna.                                 +
-  //=============================================================================
-
   NbrSol = 0;
   if ((Type1 == GeomAbs_Line || Type1 == GeomAbs_Circle)
       && (Type2 == GeomAbs_Line || Type2 == GeomAbs_Circle))
@@ -423,10 +415,6 @@ Geom2dGcc_Circ2d3Tan::Geom2dGcc_Circ2d3Tan(const Geom2dGcc_QualifiedCurve&  Qual
   const occ::handle<Geom2d_Curve>& CC1   = C1.Curve();
   GeomAbs_CurveType                Type1 = C1.GetType();
 
-  //=============================================================================
-  //                            Appel a GccAna.                                 +
-  //=============================================================================
-
   NbrSol = 0;
   if ((Type1 == GeomAbs_Line || Type1 == GeomAbs_Circle))
   {
@@ -521,10 +509,6 @@ Geom2dGcc_Circ2d3Tan::Geom2dGcc_Circ2d3Tan(const occ::handle<Geom2d_Point>& Poin
       pararg2(1, 2),
       pararg3(1, 2)
 {
-
-  //=============================================================================
-  //                            Appel a GccAna.                                 +
-  //=============================================================================
 
   NbrSol = 0;
   GccAna_Circ2d3Tan Circ(Point1->Pnt2d(), Point2->Pnt2d(), Point3->Pnt2d(), Tolerance);

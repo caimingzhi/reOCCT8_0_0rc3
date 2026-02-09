@@ -12,7 +12,6 @@ class StepBasic_ProductDefinitionReferenceWithLocalRepresentation
 {
 
 public:
-  //! Returns a ProductDefinitionReferenceWithLocalRepresentation
   Standard_EXPORT StepBasic_ProductDefinitionReferenceWithLocalRepresentation();
 
   Standard_EXPORT void Init(
@@ -22,10 +21,8 @@ public:
     const occ::handle<StepBasic_ProductDefinitionFormation>& theFormation,
     const occ::handle<StepBasic_ProductDefinitionContext>&   theFrameOfReference);
 
-  //! Returns field Source
   inline occ::handle<StepBasic_ExternalSource> Source() const { return mySource; }
 
-  //! Set field Source
   inline void SetSource(const occ::handle<StepBasic_ExternalSource>& theSource)
   {
     mySource = theSource;

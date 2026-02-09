@@ -10,7 +10,6 @@
 #include <IntCurveSurface_IntersectionPoint.hpp>
 #include <TopoDS_Face.hpp>
 
-//============================================================================
 BRepClass3d_Intersector3d::BRepClass3d_Intersector3d()
     : U(0.0),
       V(0.0),
@@ -21,9 +20,8 @@ BRepClass3d_Intersector3d::BRepClass3d_Intersector3d()
 {
 }
 
-//============================================================================
 void BRepClass3d_Intersector3d::Perform(const gp_Lin& L,
-                                        const double /*Prm*/,
+                                        const double,
                                         const double       Tol,
                                         const TopoDS_Face& Face)
 {
@@ -47,10 +45,9 @@ void BRepClass3d_Intersector3d::Perform(const gp_Lin& L,
   double V1 = surface.FirstVParameter();
   double V2 = surface.LastVParameter();
 
-  //--
   occ::handle<GeomAdaptor_Curve>   HLL      = new GeomAdaptor_Curve(LL);
   occ::handle<BRepAdaptor_Surface> Hsurface = new BRepAdaptor_Surface(surface);
-  //--
+
   HICS.Perform(HLL, Hsurface);
 
   W = RealLast();
@@ -98,11 +95,10 @@ void BRepClass3d_Intersector3d::Perform(const gp_Lin& L,
       {
         const IntCurveSurface_IntersectionPoint& HICSPoint = HICS.Point(index);
         double                                   HICSW     = HICSPoint.W();
-        //  Modified by skv - Fri Mar  4 12:07:34 2005 OCC7966 Begin
+
         if ((W > HICSW) && (HICSW > -Tol))
         {
-          // 	if(W > HICSW) {
-          //  Modified by skv - Fri Mar  4 12:07:34 2005 OCC7966 End
+
           hasapoint  = true;
           U          = HICSPoint.U();
           V          = HICSPoint.V();
@@ -119,8 +115,8 @@ void BRepClass3d_Intersector3d::Perform(const gp_Lin& L,
               transition = IntCurveSurface_In;
           }
         }
-      } //-- classifier state is IN or ON
+      }
       done = true;
-    } //-- Loop on Intersection points.
-  } //-- HICS.IsDone()
+    }
+  }
 }

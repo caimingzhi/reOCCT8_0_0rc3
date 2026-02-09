@@ -11,7 +11,6 @@ class StepShape_PlusMinusTolerance;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for PlusMinusTolerance
 class RWStepShape_RWPlusMinusTolerance
 {
 public:

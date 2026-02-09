@@ -1,18 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// JCV 16/10/91
 
 #include <Convert_SphereToBSplineSurface.hpp>
 #include <gp.hpp>
@@ -42,7 +28,6 @@ static void ComputePoles(const double                R,
 
   int i, j;
 
-  // Number of spans : maximum opening = 150 degrees ( = PI / 1.2 rds)
   int    nbUSpans = (int)std::trunc(1.2 * deltaU / M_PI) + 1;
   int    nbVSpans = (int)std::trunc(1.2 * deltaV / M_PI) + 1;
   double AlfaU    = deltaU / (nbUSpans * 2);
@@ -86,8 +71,6 @@ static void ComputePoles(const double                R,
   }
 }
 
-//=================================================================================================
-
 Convert_SphereToBSplineSurface::Convert_SphereToBSplineSurface(const gp_Sphere& Sph,
                                                                const double     U1,
                                                                const double     U2,
@@ -110,9 +93,7 @@ Convert_SphereToBSplineSurface::Convert_SphereToBSplineSurface(const gp_Sphere& 
   isvperiodic = false;
 
   int i, j;
-  // construction of the sphere in the reference mark xOy.
 
-  // Number of spans : maximum opening = 150 degrees ( = PI / 1.2 rds)
   int    nbUSpans = (int)std::trunc(1.2 * deltaU / M_PI) + 1;
   int    nbVSpans = (int)std::trunc(1.2 * deltaV / M_PI) + 1;
   double AlfaU    = deltaU / (nbUSpans * 2);
@@ -142,8 +123,6 @@ Convert_SphereToBSplineSurface::Convert_SphereToBSplineSurface(const gp_Sphere& 
   vmults(1)++;
   vmults(nbVKnots)++;
 
-  // Replace the bspline in the reference of the sphere.
-  // and calculate the weight of the bspline.
   double  W1, W2;
   gp_Trsf Trsf;
   Trsf.SetTransformation(Sph.Position(), gp::XOY());
@@ -167,8 +146,6 @@ Convert_SphereToBSplineSurface::Convert_SphereToBSplineSurface(const gp_Sphere& 
     }
   }
 }
-
-//=================================================================================================
 
 Convert_SphereToBSplineSurface::Convert_SphereToBSplineSurface(const gp_Sphere& Sph,
                                                                const double     Param1,
@@ -223,7 +200,7 @@ Convert_SphereToBSplineSurface::Convert_SphereToBSplineSurface(const gp_Sphere& 
     vmults(1)++;
     vmults(nbVKnots)++;
 
-    CosU = 0.5; // = std::cos(pi /3)
+    CosU = 0.5;
     CosV = std::cos(AlfaV);
   }
   else
@@ -253,12 +230,10 @@ Convert_SphereToBSplineSurface::Convert_SphereToBSplineSurface(const gp_Sphere& 
     umults(1)++;
     umults(nbUKnots)++;
 
-    CosV = 0.5; // = std::cos(pi /3)
+    CosV = 0.5;
     CosU = std::cos(AlfaU);
   }
 
-  // Replace the bspline in the mark of the sphere.
-  // and calculate the weight of bspline.
   gp_Trsf Trsf;
   Trsf.SetTransformation(Sph.Position(), gp::XOY());
 
@@ -282,8 +257,6 @@ Convert_SphereToBSplineSurface::Convert_SphereToBSplineSurface(const gp_Sphere& 
   }
 }
 
-//=================================================================================================
-
 Convert_SphereToBSplineSurface::Convert_SphereToBSplineSurface(const gp_Sphere& Sph)
     : Convert_ElementarySurfaceToBSplineSurface(MaxNbUPoles,
                                                 MaxNbVPoles,
@@ -303,8 +276,6 @@ Convert_SphereToBSplineSurface::Convert_SphereToBSplineSurface(const gp_Sphere& 
   nbUKnots = 4;
   nbVKnots = 3;
 
-  // Construction of the sphere in the reference mark xOy.
-
   double R = Sph.Radius();
 
   ComputePoles(R, 0., 2. * M_PI, -M_PI / 2., M_PI / 2., poles);
@@ -323,8 +294,6 @@ Convert_SphereToBSplineSurface::Convert_SphereToBSplineSurface(const gp_Sphere& 
   vmults(1) = vmults(3) = 3;
   vmults(2)             = 2;
 
-  // Replace the bspline in the mark of the sphere.
-  // and calculate the weight of the bspline.
   gp_Trsf Trsf;
   Trsf.SetTransformation(Sph.Position(), gp::XOY());
 

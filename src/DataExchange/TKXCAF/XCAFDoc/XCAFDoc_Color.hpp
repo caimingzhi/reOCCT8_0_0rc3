@@ -10,7 +10,6 @@ class TDF_Label;
 class Quantity_Color;
 class TDF_RelocationTable;
 
-//! attribute to store color
 class XCAFDoc_Color : public TDF_Attribute
 {
 
@@ -28,8 +27,6 @@ public:
   Standard_EXPORT static occ::handle<XCAFDoc_Color> Set(const TDF_Label&           label,
                                                         const Quantity_NameOfColor C);
 
-  //! Find, or create, a Color attribute and set it's value
-  //! the Color attribute is returned.
   Standard_EXPORT static occ::handle<XCAFDoc_Color> Set(const TDF_Label& label,
                                                         const double     R,
                                                         const double     G,
@@ -66,7 +63,6 @@ public:
   Standard_EXPORT void Paste(const occ::handle<TDF_Attribute>&       Into,
                              const occ::handle<TDF_RelocationTable>& RT) const override;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(XCAFDoc_Color, TDF_Attribute)

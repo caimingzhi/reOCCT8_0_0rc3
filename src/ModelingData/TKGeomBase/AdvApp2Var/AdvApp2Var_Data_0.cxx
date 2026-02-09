@@ -1,19 +1,6 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <AdvApp2Var_Data.hpp>
-
-//=================================================================================================
 
 mdnombr_1_& AdvApp2Var_Data::Getmdnombr()
 {
@@ -29,8 +16,6 @@ mdnombr_1_& AdvApp2Var_Data::Getmdnombr()
                                  90.};
   return s_mdnombr;
 }
-
-//=================================================================================================
 
 minombr_1_& AdvApp2Var_Data::Getminombr()
 {
@@ -91,8 +76,6 @@ minombr_1_& AdvApp2Var_Data::Getminombr()
   return s_minombr_1;
 }
 
-//=================================================================================================
-
 maovpar_1_& AdvApp2Var_Data::Getmaovpar()
 {
   static maovpar_1_ s_maovpar = {2.225073858507201e-307,
@@ -117,8 +100,6 @@ maovpar_1_& AdvApp2Var_Data::Getmaovpar()
                                  -32768};
   return s_maovpar;
 }
-
-//=================================================================================================
 
 maovpch_1_& AdvApp2Var_Data::Getmaovpch()
 {

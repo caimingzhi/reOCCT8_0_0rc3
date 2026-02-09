@@ -11,9 +11,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepFill_CurveConstraint, GeomPlate_CurveConstraint)
 
-//---------------------------------------------------------
-//         Constructeurs avec courbe sur surface
-//---------------------------------------------------------
 BRepFill_CurveConstraint ::BRepFill_CurveConstraint(
   const occ::handle<Adaptor3d_CurveOnSurface>& Boundary,
   const int                                    Tang,
@@ -53,9 +50,6 @@ BRepFill_CurveConstraint ::BRepFill_CurveConstraint(
   myLProp.SetSurface(Surf);
 }
 
-//---------------------------------------------------------
-//    Constructeurs avec courbe 3d (pour continuite G0 G-1)
-//---------------------------------------------------------
 BRepFill_CurveConstraint ::BRepFill_CurveConstraint(const occ::handle<Adaptor3d_Curve>& Boundary,
                                                     const int                           Tang,
                                                     const int                           NPt,

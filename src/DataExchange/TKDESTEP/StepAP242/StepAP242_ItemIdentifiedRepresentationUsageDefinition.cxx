@@ -18,12 +18,8 @@
 #include <StepRepr_ShapeAspectRelationship.hpp>
 #include <StepShape_DimensionalSize.hpp>
 
-//=================================================================================================
-
 StepAP242_ItemIdentifiedRepresentationUsageDefinition::
   StepAP242_ItemIdentifiedRepresentationUsageDefinition() = default;
-
-//=================================================================================================
 
 int StepAP242_ItemIdentifiedRepresentationUsageDefinition::CaseNum(
   const occ::handle<Standard_Transient>& ent) const

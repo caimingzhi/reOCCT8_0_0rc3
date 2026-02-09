@@ -5,36 +5,6 @@
 #include <math_Matrix.hpp>
 #include <Standard_TypeMismatch.hpp>
 
-/*----------------------------------------------------------------------------
- Si on note Du1s et Dv1s, les derivees en u1 et v1, les 2 fonctions a annuler sont:
- Si on note Du2s et Dv2s, les derivees en u2 et v2, les 2 fonctions a annuler sont:
- { F1(u1,v1,u2,v2) = (S1(u1,v1)-S2(u2,v2)).Du1s1(u1,v1) }
- { F2(u1,v1,u2,v2) = (S1(u1,v1)-S2(u2,v2)).Dv1s1(u1,v1) }
- { F3(u1,v1,u2,v2) = (S1(u1,v1)-S2(u2,v2)).Du2s2(u2,v2) }
- { F4(u1,v1,u2,v2) = (S1(u1,v1)-S2(u2,v2)).Dv2s2(u2,v2) }
- { du1f1(u1,v1,u2,v2) = Du1s1(u1,v1).Du1s1(u1,v1)+(S1(u1,v1)-S2(u2,v2)).Du1u1s1(u1,v1)
-                      = ||Du1s1(u1,v1)||**2      +(S1(u1,v1)-S2(u2,v2)).Du1u1s1(u1,v1) }
- { dv1f1(u1,v1,u2,v2) = Dv1s1(u1,v1).Du1s1(u1,v1)+(S1(u1,v1)-S2(u2,v2)).Du1v1s1(u1,v1) }
- { du2f1(u1,v1,u2,v2) = -Du2s2(u2,v2).Du1s1(u1,v1) }
- { dv2f1(u1,v1,u2,v2) = -Dv2s2(u2,v2).Du1s1(u1,v1) }
- { du1f2(u1,v1,u2,v2) = Du1s1(u1,v1).Dv1s1(u1,v1)+(S1(u1,v1)-S2(u2,v2)).Du1v1s1(u1,v1) }
- { dv1f2(u1,v1,u2,v2) = Dv1s1(u1,v1).Dv1s1(u1,v1)+(S1(u1,v1)-S2(u2,v2)).Dv1v1s1(u1,v1)
-                      = ||Dv1s1(u1,v1)||**2      +(S1(u1,v1)-S2(u2,v2)).Dv1v1s1(u1,v1) }
- { du2f2(u1,v1,u2,v2) = -Du2s2(u2,v2).Dv1s1(u1,v1) }
- { dv2f2(u1,v1,u2,v2) = -Dv2s2(u2,v2).Dv1s1(u1,v1) }
- { du1f3(u1,v1,u2,v2) = Du1s1(u1,v1).Du2s2(u2,v2) }
- { dv1f3(u1,v1,u2,v2) = Dv1s1(u1,v1).Du2s2(u2,v2) }
- { du2f3(u1,v1,u2,v2) = -Du2s2(u2,v2).Du2s2(u2,v2)+(S1(u1,v1)-S2(u2,v2)).Du2u2s2(u2,v2)
-                      = -||Du2s2(u2,v2)||**2      +(S1(u1,v1)-S2(u2,v2)).Du2u2s2(u2,v2) }
- { dv2f3(u1,v1,u2,v2) = -Dv2s2(u2,v2).Du2s2(u2,v2)+(S1(u1,v1)-S2(u2,v2)).Dv2u2s2(u2,v2) }
- { du1f4(u1,v1,u2,v2) = Du1s1(u1,v1).Dv2s2(u2,v2) }
- { dv1f4(u1,v1,u2,v2) = Dv1s1(u1,v1).Dv2s2(u2,v2) }
- { du2f4(u1,v1,u2,v2) = -Du2s2(u2,v2).Dv2s2(u2,v2)+(S1(u1,v1)-S2(u2,v2)).Du2v2s2(u2,v2) }
- { dv2f4(u1,v1,u2,v2) = -Dv2s2(u2,v2).Dv2s2(u2,v2)+(S1(u1,v1)-S2(u2,v2)).Dv2v2s2(u2,v2)
-                      = -||Dv2s2(u2,v2)||**2      +(S1(u1,v1)-S2(u2,v2)).Dv2v2s2(u2,v2) }
-----------------------------------------------------------------------------*/
-//=================================================================================================
-
 Extrema_FuncExtSS::Extrema_FuncExtSS()
     : myS1(nullptr),
       myS2(nullptr),
@@ -46,8 +16,6 @@ Extrema_FuncExtSS::Extrema_FuncExtSS()
   myS1init = false;
   myS2init = false;
 }
-
-//=================================================================================================
 
 Extrema_FuncExtSS::Extrema_FuncExtSS(const Adaptor3d_Surface& S1, const Adaptor3d_Surface& S2)
     : myU1(0.0),
@@ -61,8 +29,6 @@ Extrema_FuncExtSS::Extrema_FuncExtSS(const Adaptor3d_Surface& S1, const Adaptor3
   myS2init = true;
 }
 
-//=================================================================================================
-
 void Extrema_FuncExtSS::Initialize(const Adaptor3d_Surface& S1, const Adaptor3d_Surface& S2)
 {
   myS1     = &S1;
@@ -74,21 +40,15 @@ void Extrema_FuncExtSS::Initialize(const Adaptor3d_Surface& S1, const Adaptor3d_
   mySqDist.Clear();
 }
 
-//=================================================================================================
-
 int Extrema_FuncExtSS::NbVariables() const
 {
   return 4;
 }
 
-//=================================================================================================
-
 int Extrema_FuncExtSS::NbEquations() const
 {
   return 4;
 }
-
-//=================================================================================================
 
 bool Extrema_FuncExtSS::Value(const math_Vector& UV, math_Vector& F)
 {
@@ -113,15 +73,11 @@ bool Extrema_FuncExtSS::Value(const math_Vector& UV, math_Vector& F)
   return true;
 }
 
-//=================================================================================================
-
 bool Extrema_FuncExtSS::Derivatives(const math_Vector& UV, math_Matrix& Df)
 {
   math_Vector F(1, 4);
   return Values(UV, F, Df);
 }
-
-//=================================================================================================
 
 bool Extrema_FuncExtSS::Values(const math_Vector& UV, math_Vector& F, math_Matrix& Df)
 {
@@ -148,25 +104,23 @@ bool Extrema_FuncExtSS::Values(const math_Vector& UV, math_Vector& F, math_Matri
   Df(1, 3) = -Du2s2.Dot(Du1s1);
   Df(1, 4) = -Dv2s2.Dot(Du1s1);
 
-  Df(2, 1) = Df(1, 2); // Du1s1.Dot(Dv1s1) + P1P2.Dot(Du1v1s1);
+  Df(2, 1) = Df(1, 2);
   Df(2, 2) = Dv1s1.SquareMagnitude() + P1P2.Dot(Dv1v1s1);
   Df(2, 3) = -Du2s2.Dot(Dv1s1);
   Df(2, 4) = -Dv2s2.Dot(Dv1s1);
 
-  Df(3, 1) = -Df(1, 3); // Du1s1.Dot(Du2s2);
-  Df(3, 2) = -Df(2, 3); // Dv1s1.Dot(Du2s2);
+  Df(3, 1) = -Df(1, 3);
+  Df(3, 2) = -Df(2, 3);
   Df(3, 3) = -Du2s2.SquareMagnitude() + P1P2.Dot(Du2u2s2);
   Df(3, 4) = -Dv2s2.Dot(Du2s2) + P1P2.Dot(Du2v2s2);
 
-  Df(4, 1) = -Df(1, 4); // Du1s1.Dot(Dv2s2);
-  Df(4, 2) = -Df(2, 4); // Dv1s1.Dot(Dv2s2);
-  Df(4, 3) = Df(3, 4);  // -Du2s2.Dot(Dv2s2) + P1P2.Dot(Du2v2s2);
+  Df(4, 1) = -Df(1, 4);
+  Df(4, 2) = -Df(2, 4);
+  Df(4, 3) = Df(3, 4);
   Df(4, 4) = -Dv2s2.SquareMagnitude() + P1P2.Dot(Dv2v2s2);
 
   return true;
 }
-
-//=================================================================================================
 
 int Extrema_FuncExtSS::GetStateNumber()
 {
@@ -179,14 +133,10 @@ int Extrema_FuncExtSS::GetStateNumber()
   return 0;
 }
 
-//=================================================================================================
-
 int Extrema_FuncExtSS::NbExt() const
 {
   return mySqDist.Length();
 }
-
-//=================================================================================================
 
 double Extrema_FuncExtSS::SquareDistance(const int N) const
 {
@@ -195,16 +145,12 @@ double Extrema_FuncExtSS::SquareDistance(const int N) const
   return mySqDist.Value(N);
 }
 
-//=================================================================================================
-
 const Extrema_POnSurf& Extrema_FuncExtSS::PointOnS1(const int N) const
 {
   if (!myS1init || !myS2init)
     throw Standard_TypeMismatch();
   return myPoint1.Value(N);
 }
-
-//=================================================================================================
 
 const Extrema_POnSurf& Extrema_FuncExtSS::PointOnS2(const int N) const
 {

@@ -15,20 +15,6 @@ class TopoDS_Edge;
 class TopOpeBRepTool_C2DF;
 class TopoDS_Vertex;
 
-//! Fref is built on x-periodic surface (x=u,v).
-//! S built on Fref's geometry, should be UVClosed.
-//!
-//! Give us E, an edge of S. 2drep(E) is not UV connexed.
-//! We translate 2drep(E) in xdir*xperiod if necessary.
-//!
-//! call : TopOpeBRepTool_CORRISO Tool(Fref);
-//! Tool.Init(S);
-//! if (!Tool.UVClosed()) {
-//! // initialize EdsToCheck,nfybounds,stopatfirst
-//!
-//! Tool.EdgeWithFaultyUV(EdsToCheck,nfybounds,FyEds,stopatfirst);
-//! if (Tool.SetUVClosed()) S = Tool.GetnewS();
-//! }
 class TopOpeBRepTool_CORRISO
 {
 public:

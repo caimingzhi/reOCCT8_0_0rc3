@@ -11,7 +11,6 @@ class StepShape_RightAngularWedge : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a RightAngularWedge
   Standard_EXPORT StepShape_RightAngularWedge();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&  aName,

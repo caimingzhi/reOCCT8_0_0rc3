@@ -12,25 +12,17 @@ IMPLEMENT_DOMSTRING(DescrIndexString, "descr")
 IMPLEMENT_DOMSTRING(DensNameIndexString, "dens_name")
 IMPLEMENT_DOMSTRING(DensTypeIndexString, "dens_type")
 
-//=================================================================================================
-
 XmlMXCAFDoc_MaterialDriver::XmlMXCAFDoc_MaterialDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "Material")
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMXCAFDoc_MaterialDriver::NewEmpty() const
 {
   return (new XCAFDoc_Material());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMXCAFDoc_MaterialDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                        const occ::handle<TDF_Attribute>& theTarget,
                                        XmlObjMgt_RRelocationTable&) const
@@ -75,10 +67,6 @@ bool XmlMXCAFDoc_MaterialDriver::Paste(const XmlObjMgt_Persistent&       theSour
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMXCAFDoc_MaterialDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                        XmlObjMgt_Persistent&             theTarget,
                                        XmlObjMgt_SRelocationTable&) const

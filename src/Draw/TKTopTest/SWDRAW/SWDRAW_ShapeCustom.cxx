@@ -65,7 +65,7 @@ static int directfaces(Draw_Interpretor& di, int argc, const char** argv)
   if (argc < 3)
   {
     di << "Donner un nom de SHAPE + un nom de RESULTAT\n";
-    return 1 /* Error */;
+    return 1;
   }
   const char*  arg1  = argv[1];
   const char*  arg2  = argv[2];
@@ -73,7 +73,7 @@ static int directfaces(Draw_Interpretor& di, int argc, const char** argv)
   if (Shape.IsNull())
   {
     di << "Shape unknown : " << arg2 << "\n";
-    return 1 /* Error */;
+    return 1;
   }
 
   TopoDS_Shape result = ShapeCustom::DirectFaces(Shape);
@@ -89,7 +89,7 @@ static int directfaces(Draw_Interpretor& di, int argc, const char** argv)
   }
   di << "DirectFaces -> Result : " << arg1 << "\n";
   DBRep::Set(arg1, result);
-  return 0; // Done
+  return 0;
 }
 
 static int ckeckKnots(const NCollection_Array1<double>& theKnots, double theFirst, double theLast)
@@ -318,7 +318,7 @@ static int expshape(Draw_Interpretor& di, int argc, const char** argv)
   if (argc < 4)
   {
     di << "Incorrect number of arguments. Must be 3\n";
-    return 1 /* Error */;
+    return 1;
   }
   const char*   arg2   = argv[1];
   TopoDS_Shape  Shape  = DBRep::Get(arg2);
@@ -360,7 +360,7 @@ static int expshape(Draw_Interpretor& di, int argc, const char** argv)
   if (Shape.IsNull())
   {
     di << "Shape unknown: " << arg2 << "\n";
-    return 1 /* Error */;
+    return 1;
   }
   TopExp_Explorer Ex;
 
@@ -388,71 +388,66 @@ static int expshape(Draw_Interpretor& di, int argc, const char** argv)
     }
   }
   di << "Number of seam edges - " << nbSeam << "\n";
-  // if(NbSurf.Value(1,1) !=0)
+
   di << "Number of BSpline surfaces with degree more then " << Degree << " - " << NbSurf.Value(1, 1)
      << "\n";
-  // if(NbSurf.Value(1,2) !=0)
+
   di << "Number of BSpline surfaces with number of spans more then " << MaxSeg << " - "
      << NbSurf.Value(1, 2) << "\n";
-  // if(NbSurf.Value(1,3) !=0)
+
   di << "Number of Rational BSpline surfaces " << NbSurf.Value(1, 3) << "\n";
-  // if(NbSurf.Value(1,4) !=0)
+
   di << "Number of BSpline surfaces with continuity less than specified - " << NbSurf.Value(1, 4)
      << "\n";
-  // if(NbSurf.Value(2,1) !=0)
+
   di << "Number of Bezier surfaces with degree more then " << Degree << " - " << NbSurf.Value(2, 1)
      << "\n";
-  // if(NbSurf.Value(2,3) !=0)
+
   di << "Number of Rational Bezier surfaces  - " << NbSurf.Value(2, 3) << "\n";
-  // if(NbSurf.Value(2,4) !=0)
+
   di << "Number of Bezier surfaces with continuity less than specified - " << NbSurf.Value(2, 4)
      << "\n";
 
-  // if(NbSurf.Value(1,5) !=0)
   di << "Number of Planes - " << NbSurf.Value(1, 5) << "\n";
-  // if(NbSurf.Value(2,5) !=0)
+
   di << "Number of other surfaces - " << NbSurf.Value(2, 5) << "\n";
 
-  // if(NbCurv.Value(1,1) !=0)
   di << "Number of BSpline curves with degree more then " << Degree << " - " << NbCurv.Value(1, 1)
      << "\n";
-  // if(NbCurv.Value(1,2) !=0)
+
   di << "Number of BSpline curves with number of spans more then - " << MaxSeg << " - "
      << NbCurv.Value(1, 2) << "\n";
-  // if(NbCurv.Value(1,3) !=0)
+
   di << "Number of Rational BSpline curves " << NbCurv.Value(1, 3) << "\n";
-  // if(NbCurv.Value(1,4) !=0)
+
   di << "Number of  BSpline curves with less continuity - " << NbCurv.Value(1, 4) << "\n";
-  // if(NbCurv.Value(2,1) !=0)
+
   di << "Number of Bezier curves with degree more then - " << Degree << " - " << NbCurv.Value(2, 1)
      << "\n";
-  // if(NbCurv.Value(2,3) !=0)
+
   di << "Number of Rational Bezier curves  - " << NbCurv.Value(2, 3) << "\n";
-  // if(NbCurv.Value(2,4) !=0)
+
   di << "Number of  Bezier curves with less continuity - " << NbCurv.Value(2, 4) << "\n";
 
-  // if(NbCurv.Value(1,5) !=0)
   di << "Number of  other curves - " << NbCurv.Value(1, 5) << "\n";
 
-  // if(NbCurv2d.Value(1,1) !=0)
   di << "Number of BSpline pcurves with degree more then - " << Degree << " - "
      << NbCurv2d.Value(1, 1) << "\n";
-  // if(NbCurv2d.Value(1,2) !=0)
+
   di << "Number of BSpline pcurves with number of spans more then " << MaxSeg << " - "
      << NbCurv2d.Value(1, 2) << "\n";
-  // if(NbCurv2d.Value(1,3) !=0)
+
   di << "Number of Rational BSpline pcurves - " << NbCurv2d.Value(1, 3) << "\n";
-  // if(NbCurv2d.Value(1,4) !=0)
+
   di << "Number of  BSpline pcurves with less continuity - " << NbCurv2d.Value(1, 4) << "\n";
-  // if(NbCurv2d.Value(2,1) !=0)
+
   di << "Number of Bezier pcurves with degree more then " << Degree << " -  - "
      << NbCurv2d.Value(2, 1) << "\n";
-  // if(NbCurv2d.Value(2,3) !=0)
+
   di << "Number of Rational Bezier pcurves  - " << NbCurv2d.Value(2, 3) << "\n";
-  // if(NbCurv2d.Value(2,4) !=0)
+
   di << "Number of  Bezier pcurves with less continuity - " << NbCurv2d.Value(2, 4) << "\n";
 
-  // if(NbCurv2d.Value(1,5) !=0)
   di << "Number of  other pcurves - " << NbCurv2d.Value(1, 5) << "\n";
   return 0;
 }
@@ -462,14 +457,14 @@ static int scaleshape(Draw_Interpretor& di, int argc, const char** argv)
   if (argc != 4)
   {
     di << "Incorrect number of arguments. Must be 4\n";
-    return 1 /* Error */;
+    return 1;
   }
   const char*  arg2  = argv[2];
   TopoDS_Shape Shape = DBRep::Get(arg2);
   if (Shape.IsNull())
   {
     di << "Shape unknown: " << arg2 << "\n";
-    return 1 /* Error */;
+    return 1;
   }
 
   TopoDS_Shape result = ShapeCustom::ScaleShape(Shape, Draw::Atof(argv[3]));
@@ -492,14 +487,14 @@ static int BSplRes(Draw_Interpretor& di, int argc, const char** argv)
   if (argc < 11)
   {
     di << "Incorrect number of arguments. Must be 10\n";
-    return 1 /* Error */;
+    return 1;
   }
   const char*  arg2  = argv[2];
   TopoDS_Shape Shape = DBRep::Get(arg2);
   if (Shape.IsNull())
   {
     di << "Shape unknown: " << arg2 << "\n";
-    return 1 /* Error */;
+    return 1;
   }
   GeomAbs_Shape aCont3;
   if (strcmp(argv[7], "C0") == 0)
@@ -601,10 +596,8 @@ static int convtorevol(Draw_Interpretor& di, int argc, const char** argv)
   }
   di << "ConvertToRevolution -> Result : " << arg1 << "\n";
   DBRep::Set(arg1, result);
-  return 0; // Done
+  return 0;
 }
-
-//=================================================================================================
 
 void SWDRAW_ShapeCustom::InitCommands(Draw_Interpretor& theCommands)
 {

@@ -3,12 +3,9 @@
 #include <iostream>
 #include <vector>
 
-//! Auxiliary tool for buffered reading of lines from input stream.
 class Standard_ReadLineBuffer
 {
 public:
-  //! Constructor with initialization.
-  //! @param theMaxBufferSizeBytes the length of buffer to read (in bytes)
   Standard_ReadLineBuffer(size_t theMaxBufferSizeBytes)
       : myUseReadBufferLastStr(false),
         myIsMultilineMode(false),
@@ -16,14 +13,12 @@ public:
         myBufferPos(0),
         myBytesLastRead(0)
   {
-    // allocate read buffer
+
     myReadBuffer.resize(theMaxBufferSizeBytes);
   }
 
-  //! Destructor.
   virtual ~Standard_ReadLineBuffer() = default;
 
-  //! Clear buffer and cached values.
   void Clear()
   {
     myReadBufferLastStr.clear();
@@ -34,13 +29,6 @@ public:
     myBytesLastRead        = 0;
   }
 
-  //! Read next line from the stream.
-  //! @return pointer to the line or NULL on error / end of reading buffer
-  //!         (in case of NULL result theStream should be checked externally to identify the
-  //!         presence of errors).
-  //!          Empty lines will be returned also with zero length.
-  //! @param theStream [inout] - the stream to read from.
-  //! @param[out] theLineLength  - output parameter defined length of returned line.
   template <typename Stream_T>
   const char* ReadLine(Stream_T& theStream, size_t& theLineLength)
   {
@@ -48,17 +36,6 @@ public:
     return ReadLine(theStream, theLineLength, aReadData);
   }
 
-  //! Read next line from the stream.
-  //! @return pointer to the line or NULL on error / end of reading buffer
-  //!         (in case of NULL result theStream should be checked externally to identify the
-  //!         presence of errors).
-  //!          Empty lines will be returned also with zero length.
-  //! @param theStream [inout] - the stream to read from.
-  //! @param[out] theLineLength  - output parameter defined length of returned line.
-  //! @param[out] theReadData    - output parameter defined the number of elements successfully read
-  //! from the stream during this call,
-  //!                              it can be zero if no data was read and the line is taken from the
-  //!                              buffer.
   template <typename Stream_T>
   const char* ReadLine(Stream_T& theStream, size_t& theLineLength, int64_t& theReadData)
   {
@@ -71,10 +48,10 @@ public:
     {
       if (myBufferPos == 0 || myBufferPos >= (myBytesLastRead))
       {
-        // read new chunk from the stream
+
         if (!readStream(theStream, myReadBuffer.size(), myBytesLastRead))
         {
-          // error during file reading
+
           break;
         }
 
@@ -86,7 +63,7 @@ public:
         }
         else
         {
-          // end of the stream
+
           if (myUseReadBufferLastStr)
           {
             theLineLength          = myReadBufferLastStr.size();
@@ -100,12 +77,11 @@ public:
       size_t aStartLinePos  = myBufferPos;
       bool   isEndLineFound = false;
 
-      // read next line from myReadBuffer
       while (myBufferPos < myBytesLastRead)
       {
         if (myIsMultilineMode && myReadBuffer[myBufferPos] == '\\')
         {
-          // multi-line syntax
+
           if (myBufferPos + 1 == myBytesLastRead
               || (myBufferPos + 2 == myBytesLastRead && myReadBuffer[myBufferPos + 1] == '\r'))
           {
@@ -184,7 +160,7 @@ public:
       {
         if (myUseReadBufferLastStr)
         {
-          // append current string to the last "unfinished" string of the previous chunk
+
           myReadBufferLastStr.insert(myReadBufferLastStr.end(),
                                      myReadBuffer.begin() + aStartLinePos,
                                      myReadBuffer.begin() + myBufferPos);
@@ -201,8 +177,7 @@ public:
           theLineLength = myBufferPos - aStartLinePos;
           aResultLine   = &myReadBuffer.front() + aStartLinePos;
         }
-        // make string null terminated by replacing '\n' or '\r' (before '\n') symbol to null
-        // character.
+
         if (theLineLength > 1 && aResultLine[theLineLength - 2] == '\r')
         {
           aResultLine[theLineLength - 2] = '\0';
@@ -216,7 +191,7 @@ public:
       }
       else
       {
-        // save "unfinished" part of string to additional buffer
+
         if (aStartLinePos != myBufferPos)
         {
           if (myUseReadBufferLastStr)
@@ -237,26 +212,10 @@ public:
     return aResultLine;
   }
 
-  //! Returns TRUE when the Multiline Mode is on; FALSE by default.
-  //! Multiline modes joins several lines in file having \ at the end of line:
-  //! @code
-  //!   Line starts here, \ // line continuation character without this comment
-  //!   continues \         // line continuation character without this comment
-  //!   and ends.
-  //! @endcode
   bool IsMultilineMode() const { return myIsMultilineMode; }
 
-  //! Put gap space while merging lines within multiline syntax, so that the following sample:
-  //! @code
-  //! 1/2/3\      // line continuation character without this comment
-  //! 4/5/6
-  //! @endcode
-  //! Will become "1/2/3 4/5/6" when flag is TRUE, and "1/2/35/5/6" otherwise.
   bool ToPutGapInMultiline() const { return myToPutGapInMultiline; }
 
-  //! Sets or unsets the multi-line mode.
-  //! @param[in] theMultilineMode  multiline mode flag
-  //! @param[in] theToPutGap       put gap space while connecting lines (no gap otherwise)
   void SetMultilineMode(bool theMultilineMode, bool theToPutGap = true)
   {
     myIsMultilineMode     = theMultilineMode;
@@ -264,16 +223,12 @@ public:
   }
 
 protected:
-  //! Read from stl stream.
-  //! @return true if reading was finished without errors.
   bool readStream(std::istream& theStream, size_t theLen, size_t& theReadLen)
   {
     theReadLen = (size_t)theStream.read(&myReadBuffer.front(), theLen).gcount();
     return !theStream.bad();
   }
 
-  //! Read from FILE stream.
-  //! @return true if reading was finished without errors.
   bool readStream(FILE* theStream, size_t theLen, size_t& theReadLen)
   {
     theReadLen = ::fread(&myReadBuffer.front(), 1, theLen, theStream);
@@ -281,13 +236,12 @@ protected:
   }
 
 protected:
-  std::vector<char> myReadBuffer;        //!< Temp read buffer
-  std::vector<char> myReadBufferLastStr; //!< Part of last string of myReadBuffer
-  // clang-format off
-  bool              myUseReadBufferLastStr; //!< Flag to use myReadBufferLastStr during next line reading
-  bool              myIsMultilineMode;      //!< Flag to process of the special multi-line case at the end of the line
-  bool              myToPutGapInMultiline;  //!< Flag to put gap space while joining lines in multi-line syntax
-  size_t            myBufferPos;            //!< Current position in myReadBuffer
-  size_t            myBytesLastRead;        //!< The number of characters that were read last time from myReadBuffer.
-  // clang-format on
+  std::vector<char> myReadBuffer;
+  std::vector<char> myReadBufferLastStr;
+
+  bool   myUseReadBufferLastStr;
+  bool   myIsMultilineMode;
+  bool   myToPutGapInMultiline;
+  size_t myBufferPos;
+  size_t myBytesLastRead;
 };

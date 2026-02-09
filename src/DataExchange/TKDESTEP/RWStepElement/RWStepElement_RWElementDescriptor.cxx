@@ -4,11 +4,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepElement_ElementDescriptor.hpp>
 
-//=================================================================================================
-
 RWStepElement_RWElementDescriptor::RWStepElement_RWElementDescriptor() = default;
-
-//=================================================================================================
 
 void RWStepElement_RWElementDescriptor::ReadStep(
   const occ::handle<StepData_StepReaderData>&       data,
@@ -16,11 +12,9 @@ void RWStepElement_RWElementDescriptor::ReadStep(
   occ::handle<Interface_Check>&                     ach,
   const occ::handle<StepElement_ElementDescriptor>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "element_descriptor"))
     return;
-
-  // Own fields of ElementDescriptor
 
   StepElement_ElementOrder aTopologyOrder = StepElement_Linear;
   if (data->ParamType(num, 1) == Interface_ParamEnum)
@@ -41,18 +35,13 @@ void RWStepElement_RWElementDescriptor::ReadStep(
   occ::handle<TCollection_HAsciiString> aDescription;
   data->ReadString(num, 2, "description", ach, aDescription);
 
-  // Initialize entity
   ent->Init(aTopologyOrder, aDescription);
 }
-
-//=================================================================================================
 
 void RWStepElement_RWElementDescriptor::WriteStep(
   StepData_StepWriter&                              SW,
   const occ::handle<StepElement_ElementDescriptor>& ent) const
 {
-
-  // Own fields of ElementDescriptor
 
   switch (ent->TopologyOrder())
   {
@@ -70,10 +59,7 @@ void RWStepElement_RWElementDescriptor::WriteStep(
   SW.Send(ent->Description());
 }
 
-//=================================================================================================
-
 void RWStepElement_RWElementDescriptor::Share(const occ::handle<StepElement_ElementDescriptor>&,
                                               Interface_EntityIterator&) const
 {
-  // Own fields of ElementDescriptor
 }

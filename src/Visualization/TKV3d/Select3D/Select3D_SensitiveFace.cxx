@@ -4,10 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveFace, Select3D_SensitiveEntity)
 
-//==================================================
-// Function: Hide this constructor to the next version...
-// Purpose : simply avoid interfering with the version update
-//==================================================
 Select3D_SensitiveFace::Select3D_SensitiveFace(const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
                                                const NCollection_Array1<gp_Pnt>&         thePoints,
                                                const Select3D_TypeOfSensitivity          theType)
@@ -23,8 +19,6 @@ Select3D_SensitiveFace::Select3D_SensitiveFace(const occ::handle<SelectMgr_Entit
     myFacePoints = new Select3D_SensitivePoly(theOwnerId, thePoints, true);
   }
 }
-
-//=================================================================================================
 
 Select3D_SensitiveFace::Select3D_SensitiveFace(
   const occ::handle<SelectMgr_EntityOwner>&       theOwnerId,
@@ -43,11 +37,6 @@ Select3D_SensitiveFace::Select3D_SensitiveFace(
   }
 }
 
-//=======================================================================
-// function : GetPoints
-// purpose  : Initializes the given array theHArrayOfPnt by 3d
-//            coordinates of vertices of the face
-//=======================================================================
 void Select3D_SensitiveFace::GetPoints(occ::handle<NCollection_HArray1<gp_Pnt>>& theHArrayOfPnt)
 {
   if (myFacePoints->IsKind(STANDARD_TYPE(Select3D_SensitivePoly)))
@@ -60,30 +49,20 @@ void Select3D_SensitiveFace::GetPoints(occ::handle<NCollection_HArray1<gp_Pnt>>&
   }
 }
 
-//=======================================================================
-// function : BVH
-// purpose  : Builds BVH tree for the face
-//=======================================================================
 void Select3D_SensitiveFace::BVH()
 {
   myFacePoints->BVH();
 }
 
-//=======================================================================
-// function : Matches
-// purpose  : Checks whether the face overlaps current selecting volume
-//=======================================================================
 bool Select3D_SensitiveFace::Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                      SelectBasics_PickResult&             thePickResult)
 {
   return myFacePoints->Matches(theMgr, thePickResult);
 }
 
-//=================================================================================================
-
 occ::handle<Select3D_SensitiveEntity> Select3D_SensitiveFace::GetConnected()
 {
-  // Create a copy of this
+
   occ::handle<NCollection_HArray1<gp_Pnt>> aPoints;
   GetPoints(aPoints);
 
@@ -93,37 +72,20 @@ occ::handle<Select3D_SensitiveEntity> Select3D_SensitiveFace::GetConnected()
   return aNewEntity;
 }
 
-//=======================================================================
-// function : BoundingBox
-// purpose  : Returns bounding box of the face. If location transformation
-//            is set, it will be applied
-//=======================================================================
 Select3D_BndBox3d Select3D_SensitiveFace::BoundingBox()
 {
   return myFacePoints->BoundingBox();
 }
 
-//=======================================================================
-// function : CenterOfGeometry
-// purpose  : Returns center of the face. If location transformation
-//            is set, it will be applied
-//=======================================================================
 gp_Pnt Select3D_SensitiveFace::CenterOfGeometry() const
 {
   return myFacePoints->CenterOfGeometry();
 }
 
-//=======================================================================
-// function : NbSubElements
-// purpose  : Returns the amount of sub-entities (points or planar convex
-//            polygons)
-//=======================================================================
 int Select3D_SensitiveFace::NbSubElements() const
 {
   return myFacePoints->NbSubElements();
 }
-
-//=================================================================================================
 
 void Select3D_SensitiveFace::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

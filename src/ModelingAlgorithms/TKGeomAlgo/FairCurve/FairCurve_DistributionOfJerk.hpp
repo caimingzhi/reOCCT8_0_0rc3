@@ -12,7 +12,6 @@
 #include <gp_Pnt2d.hpp>
 #include <math_Vector.hpp>
 
-//! Compute the "Jerk" distribution.
 class FairCurve_DistributionOfJerk : public FairCurve_DistributionOfEnergy
 {
 public:
@@ -26,10 +25,6 @@ public:
     const FairCurve_BattenLaw&                        Law,
     const int                                         NbValAux = 0);
 
-  //! computes the values <F> of the functions for the
-  //! variable <X>.
-  //! returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Value(const math_Vector& X, math_Vector& F) override;
 
 private:

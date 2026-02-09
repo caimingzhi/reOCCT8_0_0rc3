@@ -18,17 +18,13 @@
 
 #include <cstdio>
 
-// MGE 29/07/98
 IGESGeom_ToolSplineCurve::IGESGeom_ToolSplineCurve() = default;
 
 void IGESGeom_ToolSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_SplineCurve>& ent,
-                                             const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                             const occ::handle<IGESData_IGESReaderData>&,
                                              IGESData_ParamReader& PR) const
 {
-  // MGE 29/07/98
-  // Building of messages
 
-  // bool st; //szv#4:S4163:12Mar99 not needed
   int                                      nbSegments;
   int                                      aType, aDegree, nbDimensions;
   occ::handle<NCollection_HArray1<double>> allBreakPoints;
@@ -39,7 +35,6 @@ void IGESGeom_ToolSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_SplineCu
   occ::handle<NCollection_HArray1<double>> allYvalues = new NCollection_HArray1<double>(1, 4);
   occ::handle<NCollection_HArray1<double>> allZvalues = new NCollection_HArray1<double>(1, 4);
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   if (!PR.ReadInteger(PR.Current(), aType))
   {
     Message_Msg Msg91("XSTEP_91");
@@ -55,14 +50,7 @@ void IGESGeom_ToolSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_SplineCu
     Message_Msg Msg93("XSTEP_93");
     PR.SendFail(Msg93);
   }
-  // st = PR.ReadInteger(PR.Current(), Msg94, nbSegments); //szv#4:S4163:12Mar99 moved in if
 
-  /*
-    st = PR.ReadInteger(PR.Current(), "Spline Type", aType);
-    st = PR.ReadInteger(PR.Current(), "Degree Continuity", aDegree);
-    st = PR.ReadInteger(PR.Current(), "Number Of Dimensions", nbDimensions);
-    st = PR.ReadInteger(PR.Current(), "Number Of Segments", nbSegments);
-  */
   if (PR.ReadInteger(PR.Current(), nbSegments))
   {
     if (nbSegments <= 0)
@@ -78,13 +66,8 @@ void IGESGeom_ToolSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_SplineCu
       allBreakPoints  = new NCollection_HArray1<double>(1, (nbSegments + 1));
     }
     Message_Msg Msg95("XSTEP_95");
-    // clang-format off
-    PR.ReadReals(PR.CurrentList(nbSegments + 1), Msg95, allBreakPoints); //szv#4:S4163:12Mar99 `st=` not needed
-    // clang-format on
-    /*
-        st = PR.ReadReals(PR.CurrentList(nbSegments + 1), "Break Points",
-                  allBreakPoints);
-    */
+
+    PR.ReadReals(PR.CurrentList(nbSegments + 1), Msg95, allBreakPoints);
   }
   else
   {
@@ -100,8 +83,7 @@ void IGESGeom_ToolSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_SplineCu
     int I;
     for (I = 1; I <= nbSegments; I++)
     {
-      // st = PR.ReadReals(PR.CurrentList(4),"X-Coordinate Polynomial",temp); //szv#4:S4163:12Mar99
-      // moved in if
+
       if (PR.ReadReals(PR.CurrentList(4), "X-Coordinate Polynomial", temp))
       {
         int J;
@@ -109,8 +91,6 @@ void IGESGeom_ToolSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_SplineCu
           allXPolynomials->SetValue(I, J, temp->Value(J));
       }
 
-      // st = PR.ReadReals(PR.CurrentList(4),"Y-Coordinate Polynomial",temp); //szv#4:S4163:12Mar99
-      // moved in if
       if (PR.ReadReals(PR.CurrentList(4), "Y-Coordinate Polynomial", temp))
       {
         int J;
@@ -118,8 +98,6 @@ void IGESGeom_ToolSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_SplineCu
           allYPolynomials->SetValue(I, J, temp->Value(J));
       }
 
-      // st = PR.ReadReals(PR.CurrentList(4),"Z-Coordinate Polynomial",temp); //szv#4:S4163:12Mar99
-      // moved in if
       if (PR.ReadReals(PR.CurrentList(4), "Z-Coordinate Polynomial", temp))
       {
         int J;
@@ -129,8 +107,6 @@ void IGESGeom_ToolSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_SplineCu
     }
   }
 
-  // st = PR.ReadReals(PR.CurrentList(4), "TerminatePoint X-Values", temp); //szv#4:S4163:12Mar99
-  // moved in if
   if (PR.ReadReals(PR.CurrentList(4), "TerminatePoint X-Values", temp))
   {
     int J;
@@ -138,8 +114,6 @@ void IGESGeom_ToolSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_SplineCu
       allXvalues->SetValue(J, temp->Value(J));
   }
 
-  // st = PR.ReadReals(PR.CurrentList(4), "TerminatePoint Y-Values", temp); //szv#4:S4163:12Mar99
-  // moved in if
   if (PR.ReadReals(PR.CurrentList(4), "TerminatePoint Y-Values", temp))
   {
     int J;
@@ -147,8 +121,6 @@ void IGESGeom_ToolSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_SplineCu
       allYvalues->SetValue(J, temp->Value(J));
   }
 
-  // st = PR.ReadReals(PR.CurrentList(4), "TerminatePoint Z-Values", temp); //szv#4:S4163:12Mar99
-  // moved in if
   if (PR.ReadReals(PR.CurrentList(4), "TerminatePoint Z-Values", temp))
   {
     int J;
@@ -156,8 +128,6 @@ void IGESGeom_ToolSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_SplineCu
       allZvalues->SetValue(J, temp->Value(J));
   }
 
-  // sln 28.09.2001, BUC61004, If the condition is true function ent->Init is not called in order to
-  // avoid exception
   if (allBreakPoints.IsNull() || allXPolynomials.IsNull() || allYPolynomials.IsNull()
       || allZPolynomials.IsNull())
     return;
@@ -192,8 +162,7 @@ void IGESGeom_ToolSplineCurve::WriteOwnParams(const occ::handle<IGESGeom_SplineC
   double AX, BX, CX, DX, AY, BY, CY, DY, AZ, BZ, CZ, DZ;
   for (I = 1; I <= nbSegments; I++)
   {
-    // no need to declare (hides the same name in an outer scope)
-    //      double AX,BX,CX,DX, AY,BY,CY,DY, AZ,BZ,CZ,DZ;
+
     ent->XCoordPolynomial(I, AX, BX, CX, DX);
     ent->YCoordPolynomial(I, AY, BY, CY, DY);
     ent->ZCoordPolynomial(I, AZ, BZ, CZ, DZ);
@@ -227,14 +196,14 @@ void IGESGeom_ToolSplineCurve::WriteOwnParams(const occ::handle<IGESGeom_SplineC
   IW.Send(DZ);
 }
 
-void IGESGeom_ToolSplineCurve::OwnShared(const occ::handle<IGESGeom_SplineCurve>& /* ent */,
-                                         Interface_EntityIterator& /* iter */) const
+void IGESGeom_ToolSplineCurve::OwnShared(const occ::handle<IGESGeom_SplineCurve>&,
+                                         Interface_EntityIterator&) const
 {
 }
 
 void IGESGeom_ToolSplineCurve::OwnCopy(const occ::handle<IGESGeom_SplineCurve>& another,
                                        const occ::handle<IGESGeom_SplineCurve>& ent,
-                                       Interface_CopyTool& /* TC */) const
+                                       Interface_CopyTool&) const
 {
   int    I;
   double A, B, C, D;
@@ -311,12 +280,12 @@ void IGESGeom_ToolSplineCurve::OwnCopy(const occ::handle<IGESGeom_SplineCurve>& 
 }
 
 IGESData_DirChecker IGESGeom_ToolSplineCurve::DirChecker(
-  const occ::handle<IGESGeom_SplineCurve>& /* ent */) const
+  const occ::handle<IGESGeom_SplineCurve>&) const
 {
   IGESData_DirChecker DC(112, 0);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
   DC.HierarchyStatusIgnored();
 
@@ -327,8 +296,6 @@ void IGESGeom_ToolSplineCurve::OwnCheck(const occ::handle<IGESGeom_SplineCurve>&
                                         const Interface_ShareTool&,
                                         occ::handle<Interface_Check>& ach) const
 {
-  // MGE 29/07/98
-  // Building of messages
 
   if (ent->SplineType() < 1 || ent->SplineType() > 6)
   {
@@ -357,7 +324,7 @@ void IGESGeom_ToolSplineCurve::OwnCheck(const occ::handle<IGESGeom_SplineCurve>&
 }
 
 void IGESGeom_ToolSplineCurve::OwnDump(const occ::handle<IGESGeom_SplineCurve>& ent,
-                                       const IGESData_IGESDumper& /* dumper */,
+                                       const IGESData_IGESDumper&,
                                        Standard_OStream& S,
                                        const int         level) const
 {
@@ -404,8 +371,7 @@ void IGESGeom_ToolSplineCurve::OwnDump(const occ::handle<IGESGeom_SplineCurve>& 
   double AX, BX, CX, DX, AY, BY, CY, DY, AZ, BZ, CZ, DZ;
   for (int I = 1; I <= nbSegments; I++)
   {
-    // no need to declare (hides the same name in an outer scope)
-    //   double AX,BX,CX,DX, AY,BY,CY,DY, AZ,BZ,CZ,DZ;
+
     ent->XCoordPolynomial(I, AX, BX, CX, DX);
     ent->YCoordPolynomial(I, AY, BY, CY, DY);
     ent->ZCoordPolynomial(I, AZ, BZ, CZ, DZ);

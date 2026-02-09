@@ -11,7 +11,6 @@ class StepVisual_SurfaceStyleBoundary;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SurfaceStyleBoundary
 class RWStepVisual_RWSurfaceStyleBoundary
 {
 public:

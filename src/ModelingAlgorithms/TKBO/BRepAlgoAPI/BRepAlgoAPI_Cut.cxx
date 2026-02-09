@@ -2,15 +2,11 @@
 #include <BRepAlgoAPI_Cut.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 BRepAlgoAPI_Cut::BRepAlgoAPI_Cut()
 
 {
   myOperation = BOPAlgo_CUT;
 }
-
-//=================================================================================================
 
 BRepAlgoAPI_Cut::BRepAlgoAPI_Cut(const BOPAlgo_PaveFiller& aPF)
     : BRepAlgoAPI_BooleanOperation(aPF)
@@ -18,11 +14,7 @@ BRepAlgoAPI_Cut::BRepAlgoAPI_Cut(const BOPAlgo_PaveFiller& aPF)
   myOperation = BOPAlgo_CUT;
 }
 
-//=================================================================================================
-
 BRepAlgoAPI_Cut::~BRepAlgoAPI_Cut() = default;
-
-//=================================================================================================
 
 BRepAlgoAPI_Cut::BRepAlgoAPI_Cut(const TopoDS_Shape&          S1,
                                  const TopoDS_Shape&          S2,
@@ -31,8 +23,6 @@ BRepAlgoAPI_Cut::BRepAlgoAPI_Cut(const TopoDS_Shape&          S1,
 {
   Build(theRange);
 }
-
-//=================================================================================================
 
 BRepAlgoAPI_Cut::BRepAlgoAPI_Cut(const TopoDS_Shape&          S1,
                                  const TopoDS_Shape&          S2,

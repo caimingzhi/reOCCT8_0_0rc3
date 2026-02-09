@@ -14,16 +14,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_SplitSurfaceContinuity, ShapeUpgrade_SplitSurface)
 
-//=================================================================================================
-
 ShapeUpgrade_SplitSurfaceContinuity::ShapeUpgrade_SplitSurfaceContinuity()
     : myCont(0)
 {
   myCriterion = GeomAbs_C1;
   myTolerance = Precision::Confusion();
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_SplitSurfaceContinuity::SetCriterion(const GeomAbs_Shape Criterion)
 {
@@ -46,14 +42,10 @@ void ShapeUpgrade_SplitSurfaceContinuity::SetCriterion(const GeomAbs_Shape Crite
   }
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_SplitSurfaceContinuity::SetTolerance(const double Tol)
 {
   myTolerance = Tol;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_SplitSurfaceContinuity::Compute(const bool Segment)
 {
@@ -76,7 +68,7 @@ void ShapeUpgrade_SplitSurfaceContinuity::Compute(const bool Segment)
   double           VFirst    = myVSplitValues->Value(1);
   double           VLast     = myVSplitValues->Value(myVSplitValues->Length());
   constexpr double precision = Precision::Confusion();
-  //  if (ShapeUpgrade::Debug()) std::cout << "SplitSurfaceContinuity::Build" << std::endl;
+
   if (mySurface->Continuity() < myCriterion)
     myStatus = ShapeExtend::EncodeStatus(ShapeExtend_DONE2);
   if (myUSplitValues->Length() > 2 || myVSplitValues->Length() > 2)
@@ -181,8 +173,8 @@ void ShapeUpgrade_SplitSurfaceContinuity::Compute(const bool Segment)
       case GeomAbs_C2:
         BasCriterion = GeomAbs_C3;
         break;
-      case GeomAbs_C3: // if (ShapeUpgrade::Debug()) std::cout<<". this criterion is not suitable
-                       // for a Offset Surface"<<std::endl;
+      case GeomAbs_C3:
+
 #ifdef OCCT_DEBUG
         std::cout << "Warning: ShapeUpgrade_SplitSurfaceContinuity: criterion C3 for Offset surface"
                   << std::endl;
@@ -218,7 +210,7 @@ void ShapeUpgrade_SplitSurfaceContinuity::Compute(const bool Segment)
     MyBSpline = occ::down_cast<Geom_BSplineSurface>(mySurface->Copy());
   if (MyBSpline.IsNull())
   {
-    //    if (ShapeUpgrade::Debug()) std::cout<<".  Surface is not a Bspline"<<std::endl;
+
     return;
   }
   if (mySurface->Continuity() >= myCriterion)
@@ -226,7 +218,6 @@ void ShapeUpgrade_SplitSurfaceContinuity::Compute(const bool Segment)
     return;
   }
 
-  // it is a BSplineSurface
   int UDeg      = MyBSpline->UDegree();
   int VDeg      = MyBSpline->VDegree();
   int NbUKnots  = MyBSpline->NbUKnots();
@@ -234,10 +225,9 @@ void ShapeUpgrade_SplitSurfaceContinuity::Compute(const bool Segment)
       VFirstInd = MyBSpline->FirstVKnotIndex() + 1, VLastInd = MyBSpline->LastVKnotIndex() - 1;
   int NbVKnots = MyBSpline->NbVKnots();
 
-  //  if (ShapeUpgrade::Debug()) std::cout<<". NbUKnots="<<NbUKnots<<std::endl;
   if (NbUKnots > 2)
   {
-    // Only the internal knots are checked.
+
     int iknot = UFirstInd;
     for (int j = 2; j <= myUSplitValues->Length(); j++)
     {
@@ -253,7 +243,7 @@ void ShapeUpgrade_SplitSurfaceContinuity::Compute(const bool Segment)
         int Continuity = UDeg - MyBSpline->UMultiplicity(iknot);
         if (Continuity < myCont)
         {
-          // At this knot, the Surface is C0; try to remove Knot.
+
           int  newMultiplicity = UDeg - myCont;
           bool corrected       = false;
           if (newMultiplicity >= 0)
@@ -265,10 +255,7 @@ void ShapeUpgrade_SplitSurfaceContinuity::Compute(const bool Segment)
           }
           if (corrected)
           {
-            // at this knot, the continuity is now C1. Nothing else to do.
-            //	    if (ShapeUpgrade::Debug()) std::cout<<". Correction at UKnot
-            //"<<iknot<<std::endl;
-            // PTV 15.05.2002 decrease iknot and ULastIndex values if knot removed
+
             if (newMultiplicity == 0)
             {
               iknot--;
@@ -278,22 +265,20 @@ void ShapeUpgrade_SplitSurfaceContinuity::Compute(const bool Segment)
           }
           else
           {
-            // impossible to force C1 within the tolerance:
-            // this knot will be a splitting value.
+
             double u = MyBSpline->UKnot(iknot);
             myUSplitValues->InsertBefore(j++, u);
             myNbResultingRow++;
-            //	    if (ShapeUpgrade::Debug()) std::cout<<". Splitting at Knot "<<iknot<<std::endl;
           }
         }
       }
       UFirst = ULast;
     }
   }
-  //  if (ShapeUpgrade::Debug()) std::cout<<". NbVKnots="<<NbVKnots<<std::endl;
+
   if (NbVKnots > 2)
   {
-    // Only the internal knots are checked.
+
     int iknot = VFirstInd;
     for (int j1 = 2; j1 <= myVSplitValues->Length(); j1++)
     {
@@ -308,7 +293,7 @@ void ShapeUpgrade_SplitSurfaceContinuity::Compute(const bool Segment)
         int Continuity = VDeg - MyBSpline->VMultiplicity(iknot);
         if (Continuity < myCont)
         {
-          // At this knot, the Surface is C0; try to remove Knot.
+
           int  newMultiplicity = VDeg - myCont;
           bool corrected       = false;
           if (newMultiplicity >= 0)
@@ -320,10 +305,7 @@ void ShapeUpgrade_SplitSurfaceContinuity::Compute(const bool Segment)
           }
           if (corrected)
           {
-            // at this knot, the continuity is now Criterion. Nothing else to do.
-            //	    if (ShapeUpgrade::Debug()) std::cout<<". Correction at VKnot
-            //"<<iknot<<std::endl;
-            // PTV 15.05.2002 decrease iknot and ULastIndex values if knot removed
+
             if (newMultiplicity == 0)
             {
               iknot--;
@@ -333,11 +315,10 @@ void ShapeUpgrade_SplitSurfaceContinuity::Compute(const bool Segment)
           }
           else
           {
-            // this knot will be a splitting value.
+
             double v = MyBSpline->VKnot(iknot);
             myVSplitValues->InsertBefore(j1++, v);
             myNbResultingCol++;
-            //	    if (ShapeUpgrade::Debug()) std::cout<<". Splitting at Knot "<<iknot<<std::endl;
           }
         }
       }

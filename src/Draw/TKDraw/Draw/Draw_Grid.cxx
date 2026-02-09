@@ -14,8 +14,6 @@ static double Ratio       = 200.0;
 
 extern Draw_Viewer dout;
 
-//=================================================================================================
-
 Draw_Grid::Draw_Grid()
     : myStepX(0.0),
       myStepY(0.0),
@@ -24,11 +22,6 @@ Draw_Grid::Draw_Grid()
 {
 }
 
-//=======================================================================
-// Function : Steps
-// Purpose  : Sets the steps along the X, Y & Z axis.
-//=======================================================================
-
 void Draw_Grid::Steps(const double StepX, const double StepY, const double StepZ)
 {
   myStepX    = std::abs(StepX);
@@ -36,8 +29,6 @@ void Draw_Grid::Steps(const double StepX, const double StepY, const double StepZ
   myStepZ    = std::abs(StepZ);
   myIsActive = myStepX > MinimumStep && myStepY > MinimumStep && myStepZ > MinimumStep;
 }
-
-//=================================================================================================
 
 void Draw_Grid::DrawOn(Draw_Display& Out) const
 {

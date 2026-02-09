@@ -52,8 +52,6 @@ static void MakeEdge(
 
 static bool SameSupport(const TopoDS_Edge&, const TopoDS_Edge&);
 
-//=================================================================================================
-
 void TopOpeBRepBuild_FuseFace::Init(const NCollection_List<TopoDS_Shape>& LIF,
                                     const NCollection_List<TopoDS_Shape>& LRF,
                                     const int                             CXM)
@@ -72,7 +70,7 @@ void TopOpeBRepBuild_FuseFace::Init(const NCollection_List<TopoDS_Shape>& LIF,
   else if (CXM == 2)
   {
     myInternal = true;
-  } // CXM
+  }
 #ifdef OCCT_DEBUG
   if (trc)
   {
@@ -100,12 +98,6 @@ void TopOpeBRepBuild_FuseFace::Init(const NCollection_List<TopoDS_Shape>& LIF,
   myModified = false;
   myDone     = false;
 }
-
-//=======================================================================
-// function : PerformFace
-// purpose  : fusion des faces cosurfaciques, connexes par une ou
-// plusieurs aretes
-//=======================================================================
 
 void TopOpeBRepBuild_FuseFace::PerformFace()
 {
@@ -168,7 +160,7 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
     BRepCheck_Analyzer ana(fac);
     if (!ana.IsValid(fac))
     {
-//    if (!BRepCheck_Analyzer::IsValid(fac)) {
+
 #ifdef OCCT_DEBUG
       if (trc)
         std::cout << " TopOpeBRepBuild_FuseFace::PerformFace : Invalid reconstructed face"
@@ -183,7 +175,6 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
     mylist.Append(fac);
   }
 
-  // Orientation 3d de l'espace limite par la face
   if (Ori3dForward && Ori3dReversed)
   {
 #ifdef OCCT_DEBUG
@@ -196,7 +187,6 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
     return;
   }
 
-  // listes de faces avec edges communes.
   bool Keep_Edge;
   Keep_Edge = false;
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
@@ -227,8 +217,6 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
     return;
   }
 
-  // loop over the face lists for each face in LRF
-
   for (itt1.Initialize(mapFacLFac); itt1.More(); itt1.Next())
   {
     const TopoDS_Shape&                   fac    = itt1.Key();
@@ -249,8 +237,8 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
           const TopoDS_Shape& wir = exp.Current();
           LWir.Append(wir);
         }
-      } // LFac
-      //  listes des wires avec edges communes.
+      }
+
       Keep_Edge = false;
       NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
         mapWirLWir;
@@ -267,7 +255,6 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
         return;
       }
 
-      //  boucle sur les listes des wires de 1 face de LRF
       NCollection_List<TopoDS_Shape> myFaceLIE, myFaceLEE, myFaceLME, myFaceLW;
       for (itt2.Initialize(mapWirLWir); itt2.More(); itt2.Next())
       {
@@ -277,7 +264,7 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
         int n22 = LWir1.Extent();
         if (n22 != 1)
         {
-          //    boucle sur 1 liste des wires avec edges communes.
+
           NCollection_List<TopoDS_Shape> LEdg;
           for (it3.Initialize(LWir1); it3.More(); it3.Next())
           {
@@ -289,8 +276,8 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
               const TopoDS_Shape& edg = exp.Current();
               LEdg.Append(edg);
             }
-          } // LWir1
-          //    listes des edges avec edges communes.
+          }
+
           Keep_Edge = true;
           NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
             mapEdgLEdg;
@@ -308,8 +295,6 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
             return;
           }
 
-          //    Elimination selon logique pure
-          //    boucle sur les listes des egdes de 1 wire de 1 face de LRF
           NCollection_List<TopoDS_Shape> myWireLE;
           for (itt3.Initialize(mapEdgLEdg); itt3.More(); itt3.Next())
           {
@@ -363,55 +348,46 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
               {
                 OriExternal = true;
               }
-            } // LEdg1
-
-            //      - Traitement edge selon orientation
-            //      On privilegie orientation selon 1) reversed ou forward
-            //                                      2) internal
-            //                                      3) external
-            //      pour traiter cas ou l'on a au moins 2 orientations differentes parmi
-            //           forward et reversed - interne - externe
+            }
 
             if (OriReversed || OriForward)
             {
               if (OriReversed && OriForward)
               {
-                //		TopoDS_Shape& edg1 = edg.Oriented(TopAbs_INTERNAL);
+
                 const TopoDS_Shape& edg1 = edg.Oriented(TopAbs_INTERNAL);
                 myLME.Append(edg1);
                 myFaceLME.Append(edg1);
               }
               else if (OriReversed)
               {
-                //		TopoDS_Shape& edg1 = edg.Oriented(TopAbs_REVERSED);
+
                 const TopoDS_Shape& edg1 = edg.Oriented(TopAbs_REVERSED);
                 myWireLE.Append(edg1);
               }
               else
               {
-                //		TopoDS_Shape& edg1 = edg.Oriented(TopAbs_FORWARD);
+
                 const TopoDS_Shape& edg1 = edg.Oriented(TopAbs_FORWARD);
                 myWireLE.Append(edg1);
               }
             }
             else if (OriInternal)
             {
-              //	      TopoDS_Shape& edg1 = edg.Oriented(TopAbs_INTERNAL);
+
               const TopoDS_Shape& edg1 = edg.Oriented(TopAbs_INTERNAL);
               myLIE.Append(edg1);
               myFaceLIE.Append(edg1);
             }
             else if (OriExternal)
             {
-              //	      TopoDS_Shape& edg1 = edg.Oriented(TopAbs_EXTERNAL);
+
               const TopoDS_Shape& edg1 = edg.Oriented(TopAbs_EXTERNAL);
               myLEE.Append(edg1);
               myFaceLEE.Append(edg1);
-            } // Ori
-          } // mapEdgLEdg
+            }
+          }
 
-          //    Reconstrution de 1 wire de 1 face de LRF
-          //    Attention cas ou une liste de wire connectes conduit a plusieurs Wires
           int number1 = myWireLE.Extent();
           while (number1 > 0)
           {
@@ -430,7 +406,6 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
               return;
             }
 
-            //    Astuce pour contourner Wire Not Closed
             TopoDS_Wire      W = MW.Wire();
             BRepLib_MakeWire MW1(W);
             W = MW1.Wire();
@@ -464,16 +439,15 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
               }
               myWireLE.Assign(ListEdge);
               number1 = myWireLE.Extent();
-            } // nb
-          } // number
+            }
+          }
         }
         else
         {
           myFaceLW.Append(wir);
-        } // n2 =1
-      } // mapWirLWir
+        }
+      }
 
-      //  Reconstrution de 1 face de LRF
       occ::handle<Geom_Surface> S = BRep_Tool::Surface(facref);
       if (S->DynamicType() == STANDARD_TYPE(Geom_RectangularTrimmedSurface))
       {
@@ -487,14 +461,11 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
         MF.Add(wir1);
       }
 
-      // Ajout des Edges Internes
-      //                 Externes
-      //                 Modifiees
       for (it2.Initialize(myFaceLIE); it2.More(); it2.Next())
       {
         const TopoDS_Edge& edg1 = TopoDS::Edge(it2.Value());
         BRepLib_MakeWire   MW(edg1);
-        //      MW.Add(edg1);
+
         const TopoDS_Wire& W = MW.Wire();
         MF.Add(W);
       }
@@ -502,7 +473,7 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
       {
         const TopoDS_Edge& edg1 = TopoDS::Edge(it2.Value());
         BRepLib_MakeWire   MW(edg1);
-        //      MW.Add(edg1);
+
         const TopoDS_Wire& W = MW.Wire();
         MF.Add(W);
       }
@@ -512,7 +483,7 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
         {
           const TopoDS_Edge& edg1 = TopoDS::Edge(it2.Value());
           BRepLib_MakeWire   MW(edg1);
-          //	  MW.Add(edg1);
+
           const TopoDS_Wire& W = MW.Wire();
           MF.Add(W);
         }
@@ -540,8 +511,8 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
     else
     {
       myLFF.Append(facref);
-    } // n1 = 1
-  } // mapFacLFac
+    }
+  }
 
   if (myLFF.IsEmpty())
   {
@@ -565,12 +536,6 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
 #endif
 }
 
-//=======================================================================
-// function : PerformEdge
-// purpose  : fusion des edges cosurfaciques, connexes par une ou
-// plusieurs aretes
-//=======================================================================
-
 void TopOpeBRepBuild_FuseFace::PerformEdge()
 {
 #ifdef OCCT_DEBUG
@@ -584,10 +549,6 @@ void TopOpeBRepBuild_FuseFace::PerformEdge()
   NCollection_List<TopoDS_Shape>::Iterator it1;
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>::
     Iterator itt1;
-  //  TopAbs_Orientation ori,ori1;
-
-  // Niveau 1
-  // loop over the face lists for each face in LRF
 
   for (it1.Initialize(myLFF); it1.More(); it1.Next())
   {
@@ -623,9 +584,6 @@ void TopOpeBRepBuild_FuseFace::PerformEdge()
     }
   }
 
-  // nettoyage du tableau mapVerLSh : shap1 : shap1 shap2 shap3
-  // On ne garde que les vertex qui appartiennent a - exactement 2 edges
-  //                                                - de meme support geometrique
   mapTampon = mapVerLEdg;
   mapVerLEdg.Clear();
 
@@ -647,12 +605,10 @@ void TopOpeBRepBuild_FuseFace::PerformEdge()
     }
   }
 
-  // On regroupe ensemble tous les edges consecutifs et SameSupport
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     mapEdgLEdg;
   GroupEdge(mapVerLEdg, mapEdgLEdg);
 
-  // On construit les edges somme des edges consecutifs et SameSupport
   MakeEdge(mapEdgLEdg);
 
   myModified = true;
@@ -663,11 +619,6 @@ void TopOpeBRepBuild_FuseFace::PerformEdge()
     std::cout << " TopOpeBRepBuild_FuseFace::PerformEdge() : Done" << std::endl;
 #endif
 }
-
-//=======================================================================
-// function : ClearEdge
-// purpose  : Nettoyage des Faces : Suppression des edges internes et externes
-//=======================================================================
 
 void TopOpeBRepBuild_FuseFace::ClearEdge()
 {
@@ -680,9 +631,6 @@ void TopOpeBRepBuild_FuseFace::ClearEdge()
   NCollection_List<TopoDS_Shape>::Iterator it1, it2;
   TopAbs_Orientation                       ori;
   NCollection_List<TopoDS_Shape>           myLFFnew;
-
-  // Niveau 1
-  // loop over the face lists for each face in LRF
 
   for (it1.Initialize(myLFF); it1.More(); it1.Next())
   {
@@ -700,8 +648,6 @@ void TopOpeBRepBuild_FuseFace::ClearEdge()
       {
         const TopoDS_Shape& edg = expe.Current();
 
-        //    Elimination selon des edges interne et externe
-
         ori = edg.Orientation();
         if (ori == TopAbs_INTERNAL)
         {
@@ -716,8 +662,7 @@ void TopOpeBRepBuild_FuseFace::ClearEdge()
           myWireLE.Append(edg);
         }
       }
-      //    Fin Niveau 3
-      //    Reconstrution de 1 wire de 1 face de LRF
+
       if (!myWireLE.IsEmpty())
       {
         BRepLib_MakeWire MW;
@@ -735,7 +680,6 @@ void TopOpeBRepBuild_FuseFace::ClearEdge()
           return;
         }
 
-        //    Astuce pour contourner Wire Not Closed
         TopoDS_Wire      W = MW.Wire();
         BRepLib_MakeWire MW1(W);
         W = MW1.Wire();
@@ -743,8 +687,7 @@ void TopOpeBRepBuild_FuseFace::ClearEdge()
         myFaceLW.Append(W);
       }
     }
-    //  Fin Niveau 2
-    //  Reconstrution de 1 face de LRF
+
     if (myFaceLW.IsEmpty())
     {
 #ifdef OCCT_DEBUG
@@ -781,7 +724,7 @@ void TopOpeBRepBuild_FuseFace::ClearEdge()
     const TopoDS_Face& F = MF.Face();
     myLFFnew.Append(F);
   }
-  // Fin Niveau 1
+
   if (myLFFnew.IsEmpty())
   {
 #ifdef OCCT_DEBUG
@@ -805,11 +748,6 @@ void TopOpeBRepBuild_FuseFace::ClearEdge()
 #endif
 }
 
-//=======================================================================
-// function : ClearVertex
-// purpose  : Nettoyage des Faces : Suppression des vertex internes et externes
-//=======================================================================
-
 void TopOpeBRepBuild_FuseFace::ClearVertex()
 {
 #ifdef OCCT_DEBUG
@@ -824,8 +762,6 @@ void TopOpeBRepBuild_FuseFace::ClearVertex()
 #endif
 }
 
-//=================================================================================================
-
 static void GroupShape(
   NCollection_List<TopoDS_Shape>& mylist,
   bool                            Keep_Edge,
@@ -838,8 +774,6 @@ static void GroupShape(
   NCollection_List<TopoDS_Shape> LmapSh4;
   TopAbs_Orientation             ori;
 
-  // construction du tableau C=locmapEdgLSh : egde1 - shap1 shap2 shap3
-  // construction du tableau   locmapShLSh  : shap1 - shap1 shap2 shap3
   LmapSh4.Clear();
   for (it.Initialize(mylist); it.More(); it.Next())
   {
@@ -853,7 +787,7 @@ static void GroupShape(
     for (expe.Init(shap1, TopAbs_EDGE); expe.More(); expe.Next())
     {
       const TopoDS_Shape& edg1 = expe.Current();
-      //    verification si Edge a prendre en compte
+
       ori          = edg1.Orientation();
       bool Edge_OK = true;
       if (ori == TopAbs_INTERNAL || ori == TopAbs_EXTERNAL)
@@ -876,11 +810,9 @@ static void GroupShape(
           if (!Keep_Edge)
           {
 
-            //          Recuperation premier shape de liste liee a edg1
             it1.Initialize(LmapEdg);
             const TopoDS_Shape& shap2 = it1.Value();
 
-            //          Controle si premier shape et shape courant sont deja lies
             NCollection_List<TopoDS_Shape> LmapSh1;
             LmapSh1 = mapShLSh.Find(shap2);
             for (it1.Initialize(LmapSh1); it1.More(); it1.Next())
@@ -891,7 +823,7 @@ static void GroupShape(
                 break;
               }
             }
-            //          Premier shape et Shape courant ne sont pas deja lies
+
             if (!it1.More())
             {
               const NCollection_List<TopoDS_Shape>& LmapSh11 = mapShLSh.Find(shap1);
@@ -924,7 +856,6 @@ static void GroupShape(
     }
   }
 
-  // nettoyage du tableau mapShLSh : shap1 : shap1 shap2 shap3
   mymapShLSh.Clear();
 
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>::
@@ -954,8 +885,6 @@ static void GroupShape(
   }
 }
 
-//=================================================================================================
-
 static void GroupEdge(
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
     mymapVerLEdg,
@@ -968,8 +897,6 @@ static void GroupEdge(
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     mapEdgLEdg;
 
-  // construction du tableau C=locmapEdgLSh : egde1 - shap1 shap2 shap3
-  // construction du tableau   locmapShLSh  : shap1 - shap1 shap2 shap3
   for (itt.Initialize(mymapVerLEdg); itt.More(); itt.Next())
   {
     const TopoDS_Shape&            ver1 = itt.Key();
@@ -1016,8 +943,6 @@ static void GroupEdge(
     else
     {
 
-      //    Recuperation premier shape de liste liee a edg1 et mise a jour
-
       NCollection_List<TopoDS_Shape> LmapEdg11;
       LmapEdg11.Append(edgnew);
       mapEdgLEdg.Bind(edgnew, LmapEdg11);
@@ -1035,8 +960,6 @@ static void GroupEdge(
       }
     }
   }
-
-  // nettoyage du tableau mapEdgLedg : edg1 : edg1 edg2 edg3
 
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> M;
 
@@ -1057,8 +980,6 @@ static void GroupEdge(
   }
 }
 
-//=================================================================================================
-
 static void MakeEdge(
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
     mymapEdgLEdg)
@@ -1074,8 +995,6 @@ static void MakeEdge(
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     mapEdgLEdg;
 
-  // construction du tableau C=locmapEdgLSh : egde1 - shap1 shap2 shap3
-  // construction du tableau   locmapShLSh  : shap1 - shap1 shap2 shap3
   for (itt1.Initialize(mymapEdgLEdg); itt1.More(); itt1.Next())
   {
     const TopoDS_Shape&            edg1 = itt1.Key();
@@ -1114,7 +1033,7 @@ static void MakeEdge(
       }
       else
       {
-        //	TopoDS_Shape& ver1 = ver.Oriented(TopAbs_INTERNAL);
+
         const TopoDS_Shape& ver1 = ver.Oriented(TopAbs_INTERNAL);
         myEdgeLMV.Append(ver1);
       }
@@ -1131,11 +1050,11 @@ static void MakeEdge(
     }
     it.Initialize(myEdgeLV);
     const TopoDS_Vertex& ver1 = TopoDS::Vertex(it.Value());
-    //    TopoDS_Shape& verf = ver1.Oriented(TopAbs_FORWARD);
+
     const TopoDS_Shape& verf = ver1.Oriented(TopAbs_FORWARD);
     it.Next();
     const TopoDS_Vertex& ver2 = TopoDS::Vertex(it.Value());
-    //    TopoDS_Shape& verl = ver2.Oriented(TopAbs_FORWARD);
+
     const TopoDS_Shape& verl = ver2.Oriented(TopAbs_FORWARD);
 
     occ::handle<Geom_Curve> curv;
@@ -1147,23 +1066,10 @@ static void MakeEdge(
     BRepLib_MakeEdge   ME(curv, TopoDS::Vertex(verf), TopoDS::Vertex(verl));
     const TopoDS_Edge& edgnew = ME.Edge();
 
-    //    if (myInternal) {
-    //      for (it.Initialize(myEdgeLMV); it.More(); it.Next()) {
-    //	const TopoDS_Vertex& ver1 = TopoDS::Vertex(it.Value());
-    //	BRep_Builder B;
-    //	B.MakeEdge(edgnew);
-    //	B.Add(edgnew,ver1);
-    //      }
-    //    }
     mapEdgLEdg.Bind(edgnew, LmapEdg);
   }
   mymapEdgLEdg = mapEdgLEdg;
 }
-
-//=======================================================================
-// function : SameSupport
-// purpose  : Edges SameSupport ou pas
-//=======================================================================
 
 bool SameSupport(const TopoDS_Edge& E1, const TopoDS_Edge& E2)
 {
@@ -1225,7 +1131,6 @@ bool SameSupport(const TopoDS_Edge& E1, const TopoDS_Edge& E2)
     return false;
   }
 
-  // On a presomption de confusion
   const double tollin = Precision::Confusion();
   const double tolang = Precision::Angular();
   if (typC1 == STANDARD_TYPE(Geom_Line))

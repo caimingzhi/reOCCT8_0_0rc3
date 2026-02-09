@@ -13,8 +13,6 @@
 #include <BSplCLib.hpp>
 #include <PLib.hpp>
 
-// #define AppParCurves_Gradient_BFGS BFGS_/**/AppParCurves_Gradient
-
 AppParCurves_Gradient::AppParCurves_Gradient(
   const MultiLine&                                                       SSP,
   const int                                                              FirstPoint,
@@ -31,20 +29,19 @@ AppParCurves_Gradient::AppParCurves_Gradient(
       MError2d(0.0)
 {
 
-  //  bool grad = true;
   int    j, k, i2, l;
   double UF, DU, Fval = 0.0, FU, DFU;
   int    nbP3d   = ToolLine::NbP3d(SSP);
   int    nbP2d   = ToolLine::NbP2d(SSP);
   int    mynbP3d = nbP3d, mynbP2d = nbP2d;
   int    nbP = nbP3d + nbP2d;
-  //  gp_Pnt Pt, P1, P2;
+
   gp_Pnt Pt;
-  //  gp_Pnt2d Pt2d, P12d, P22d;
+
   gp_Pnt2d Pt2d;
-  //  gp_Vec V1, V2, MyV;
+
   gp_Vec V1, MyV;
-  //  gp_Vec2d V12d, V22d, MyV2d;
+
   gp_Vec2d V12d, MyV2d;
   Done = false;
 
@@ -56,11 +53,6 @@ AppParCurves_Gradient::AppParCurves_Gradient(
   NCollection_Array1<gp_Pnt2d> TabP2d(1, mynbP2d);
   NCollection_Array1<gp_Vec>   TabV(1, mynbP3d);
   NCollection_Array1<gp_Vec2d> TabV2d(1, mynbP2d);
-
-  // Calcul de la fonction F= somme(||C(ui)-Ptli||2):
-  // Appel a une fonction heritant de MultipleVarFunctionWithGradient
-  // pour calculer F et grad_F.
-  // ================================================================
 
   AppParCurves_ParFunction MyF(SSP, FirstPoint, LastPoint, TheConstraints, Parameters, Deg);
 
@@ -77,8 +69,6 @@ AppParCurves_Gradient::AppParCurves_Gradient(
   NCollection_Array1<gp_Pnt>   TheCoef(1, (deg + 1) * mynbP3d);
   NCollection_Array1<gp_Pnt2d> TheCoef2d(1, (deg + 1) * mynbP2d);
 
-  // Stockage des Poles des courbes pour projeter:
-  // ============================================
   i2 = 0;
   for (k = 1; k <= nbP3d; k++)
   {
@@ -98,12 +88,6 @@ AppParCurves_Gradient::AppParCurves_Gradient(
     i2 += deg + 1;
   }
 
-  //  Une iteration rapide de projection est faite par la methode de
-  //  Rogers & Fog 89, methode equivalente a Hoschek 88 qui ne necessite pas
-  //  le calcul de D2.
-
-  // Iteration de Projection:
-  // =======================
   for (j = FirstPoint + 1; j <= LastPoint - 1; j++)
   {
     UF = Parameters(j);
@@ -164,8 +148,7 @@ AppParCurves_Gradient::AppParCurves_Gradient(
   }
   else if (NbIterations != 0)
   {
-    // NbIterations de gradient conjugue:
-    // =================================
+
     double                     Eps = 1.e-07;
     AppParCurves_Gradient_BFGS FResol(MyF, Parameters, Tol3d, Tol2d, Eps, NbIterations);
     Parameters = MyF.NewParameters();
@@ -175,7 +158,7 @@ AppParCurves_Gradient::AppParCurves_Gradient(
   AvError = 0.;
   for (j = FirstPoint; j <= LastPoint; j++)
   {
-    // Recherche des erreurs maxi et moyenne a un index donne:
+
     for (k = 1; k <= nbP; k++)
     {
       ParError(j) = std::max(ParError(j), MyF.Error(j, k));

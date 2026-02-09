@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_SiUnitAndThermodynamicTemperatureUnit;
 class StepData_StepWriter;
 
-//! Read & Write Module for SiUnitAndThermodynamicTemperatureUnit
 class RWStepBasic_RWSiUnitAndThermodynamicTemperatureUnit
 {
 public:

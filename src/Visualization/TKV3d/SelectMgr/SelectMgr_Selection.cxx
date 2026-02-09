@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_Selection, Standard_Transient)
 
-//=================================================================================================
-
 SelectMgr_Selection::SelectMgr_Selection(const int theModeIdx)
     : myMode(theModeIdx),
       mySelectionState(SelectMgr_SOS_Unknown),
@@ -21,8 +19,6 @@ SelectMgr_Selection::~SelectMgr_Selection()
   Destroy();
 }
 
-//=================================================================================================
-
 void SelectMgr_Selection::Destroy()
 {
   for (NCollection_Vector<occ::handle<SelectMgr_SensitiveEntity>>::Iterator anEntityIter(
@@ -36,16 +32,14 @@ void SelectMgr_Selection::Destroy()
   mySensFactor = 2;
 }
 
-//=================================================================================================
-
 void SelectMgr_Selection::Add(const occ::handle<Select3D_SensitiveEntity>& theSensitive)
 {
-  // if input is null: in debug mode raise exception
+
   Standard_NullObject_Raise_if(theSensitive.IsNull(),
                                "Null sensitive entity is added to the selection");
   if (theSensitive.IsNull())
   {
-    // in release mode do not add
+
     return;
   }
 
@@ -66,8 +60,6 @@ void SelectMgr_Selection::Add(const occ::handle<Select3D_SensitiveEntity>& theSe
   }
 }
 
-//=================================================================================================
-
 void SelectMgr_Selection::Clear()
 {
   for (NCollection_Vector<occ::handle<SelectMgr_SensitiveEntity>>::Iterator anEntityIter(
@@ -82,12 +74,6 @@ void SelectMgr_Selection::Clear()
   myEntities.Clear();
 }
 
-//==================================================
-// function: SetSensitivity
-// purpose : Changes sensitivity of the selection and all its entities to the given value.
-//           IMPORTANT: This method does not update any outer selection structures, so for
-//           proper updates use SelectMgr_SelectionManager::SetSelectionSensitivity method.
-//==================================================
 void SelectMgr_Selection::SetSensitivity(const int theNewSens)
 {
   mySensFactor   = theNewSens;
@@ -101,8 +87,6 @@ void SelectMgr_Selection::SetSensitivity(const int theNewSens)
     anEntity->BaseSensitive()->SetSensitivityFactor(theNewSens);
   }
 }
-
-//=================================================================================================
 
 void SelectMgr_Selection::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

@@ -25,12 +25,6 @@ IntPatch_PointLine::IntPatch_PointLine(const bool Tang)
 {
 }
 
-//=======================================================================
-// function : CurvatureRadiusOfIntersLine
-// purpose  :
-//        ATTENTION!!!
-//            Returns negative value if computation is not possible
-//=======================================================================
 double IntPatch_PointLine::CurvatureRadiusOfIntersLine(const occ::handle<Adaptor3d_Surface>& theS1,
                                                        const occ::handle<Adaptor3d_Surface>& theS2,
                                                        const IntSurf_PntOn2S& theUVPoint)
@@ -48,23 +42,20 @@ double IntPatch_PointLine::CurvatureRadiusOfIntersLine(const occ::handle<Adaptor
   theS2->D2(aU2, aV2, aPt, aDU2, aDV2, aDUU2, aDVV2, aDUV2);
 
   const gp_Vec aN1(aDU1.Crossed(aDV1)), aN2(aDU2.Crossed(aDV2));
-  // Tangent vector to the intersection curve
+
   const gp_Vec aCTan(aN1.Crossed(aN2));
   const double aSqMagnFDer = aCTan.SquareMagnitude();
 
   if (aSqMagnFDer < 1.0e-8)
   {
-    // Use 1.0e-4 (instead of aSmallValue) to provide
-    // stable computation between different platforms.
-    // See test bugs modalg_7 bug29807_sc01
+
     return -1.0;
   }
 
   double aDuS1 = 0.0, aDvS1 = 0.0, aDuS2 = 0.0, aDvS2 = 1.0;
 
   {
-    // This algorithm is described in NonSingularProcessing() function
-    // in ApproxInt_ImpPrmSvSurfaces.hpp file
+
     double aSqNMagn = aN1.SquareMagnitude();
     gp_Vec aTgU(aCTan.Crossed(aDU1)), aTgV(aCTan.Crossed(aDV1));
     double aDeltaU = aTgV.SquareMagnitude() / aSqNMagn;
@@ -83,23 +74,12 @@ double IntPatch_PointLine::CurvatureRadiusOfIntersLine(const occ::handle<Adaptor
     aDvS2 = -std::copysign(sqrt(aDeltaV), aTgU.Dot(aN2));
   }
 
-  // According to "Marching along surface/surface intersection curves
-  // with an adaptive step length"
-  // by Tz.E.Stoyagov
-  //(http://www.sciencedirect.com/science/article/pii/016783969290046R)
-  // we obtain the system:
-  //             {A*a+B*b=F1
-  //             {B*a+C*b=F2
-  // where a and b should be found.
-  // After that, 2nd derivative of the intersection curve can be computed as
-  //             r''(t)=a*aN1+b*aN2.
-
   const double aA = aN1.Dot(aN1), aB = aN1.Dot(aN2), aC = aN2.Dot(aN2);
   const double aDetSyst = aB * aB - aA * aC;
 
   if (std::abs(aDetSyst) < aSmallValue)
   {
-    // Undetermined system solution
+
     return -1.0;
   }
 
@@ -108,17 +88,15 @@ double IntPatch_PointLine::CurvatureRadiusOfIntersLine(const occ::handle<Adaptor
   const double aF2 = aDuS2 * aDuS2 * aDUU2.Dot(aN2) + 2.0 * aDuS2 * aDvS2 * aDUV2.Dot(aN2)
                      + aDvS2 * aDvS2 * aDVV2.Dot(aN2);
 
-  // Principal normal to the intersection curve
   const gp_Vec aCNorm((aF1 * aC - aF2 * aB) / aDetSyst * aN1
                       + (aA * aF2 - aF1 * aB) / aDetSyst * aN2);
   const double aSqMagnSDer = aCNorm.CrossSquareMagnitude(aCTan);
 
   if (aSqMagnSDer < aSqSmallValue)
-  { // Intersection curve has null curvature in observed point
+  {
     return Precision::Infinite();
   }
 
-  // square of curvature radius
   const double aFactSqRad = aSqMagnFDer * aSqMagnFDer * aSqMagnFDer / aSqMagnSDer;
 
   return sqrt(aFactSqRad);

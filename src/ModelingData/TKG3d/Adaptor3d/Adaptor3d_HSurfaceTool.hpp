@@ -69,7 +69,6 @@ public:
     theSurf->VIntervals(theTab, theSh);
   }
 
-  //! If <First> >= <Last>
   static occ::handle<Adaptor3d_Surface> UTrim(const occ::handle<Adaptor3d_Surface>& theSurf,
                                               const double                          theFirst,
                                               const double                          theLast,
@@ -78,7 +77,6 @@ public:
     return theSurf->UTrim(theFirst, theLast, theTol);
   }
 
-  //! If <First> >= <Last>
   static occ::handle<Adaptor3d_Surface> VTrim(const occ::handle<Adaptor3d_Surface>& theSurf,
                                               const double                          theFirst,
                                               const double                          theLast,

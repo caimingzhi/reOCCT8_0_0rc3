@@ -1,20 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// pdn 11.01.99 including <stdio.h> for compilation on NT
-// #70 rln 03.03.99 syntax correction
-//  sln 11.06.2002 OCC448 : Initialize "read.onlyvisiable" parameter  to control transferring
-//  invisible sub entities which logically depend on the grouping entities
 
 #include <BRep_Builder.hpp>
 #include <BRepLib.hpp>
@@ -50,22 +34,18 @@
 #include <XSAlgo_ShapeProcessor.hpp>
 
 #include <cstdio>
-// #include <ShapeCustom.hpp>
+
 #ifdef _MSC_VER
   #include <stdlib.h>
 #else
   #include <cerrno>
 #endif
-// extern int errno;
 
 static occ::handle<IGESData_FileProtocol> protocol;
 
 namespace
 {
-  //=======================================================================
-  // function : EncodeRegul
-  // purpose  : INTERNAL to encode regularity on edges
-  //=======================================================================
+
   static bool EncodeRegul(const TopoDS_Shape& theShape)
   {
     const double aToleranceAngle = Interface_Static::RVal("read.encoderegularity.angle");
@@ -90,10 +70,6 @@ namespace
     return true;
   }
 
-  //=======================================================================
-  // function : TrimTolerances
-  // purpose  : Trims tolerances of the shape according to static parameters
-  //=======================================================================
   static void TrimTolerances(const TopoDS_Shape& theShape, const double theTolerance)
   {
     if (Interface_Static::IVal("read.maxprecision.mode") == 1)
@@ -105,8 +81,6 @@ namespace
     }
   }
 } // namespace
-
-//=============================================================================
 
 IGESToBRep_Reader::IGESToBRep_Reader()
     : theDone(false)
@@ -123,23 +97,20 @@ IGESToBRep_Reader::IGESToBRep_Reader()
   theProc  = new Transfer_TransientProcess;
 }
 
-//=============================================================================
-
 int IGESToBRep_Reader::LoadFile(const char* filename)
 {
   if (theProc.IsNull())
     theProc = new Transfer_TransientProcess;
   occ::handle<Message_Messenger> TF = theProc->Messenger();
 
-  // Message for Diagnostic file.
   Message_Msg msg2000("IGES_2000");
   msg2000.Arg(filename);
   TF->Send(msg2000, Message_Info);
-  // Message_Msg msg2001("IGES_2001");   // Date
+
   Message_Msg msg2005("IGES_2005");
   msg2005.Arg(theProc->TraceLevel());
   TF->Send(msg2005, Message_Info);
-  /////////////////////////////////////////////////////////
+
   occ::handle<IGESData_IGESModel> model = new IGESData_IGESModel;
 
   OSD_Timer c;
@@ -149,42 +120,37 @@ int IGESToBRep_Reader::LoadFile(const char* filename)
   int   StatusFile = IGESFile_Read(pfilename, model, protocol);
   if (StatusFile != 0)
   {
-    // Sending of message : IGES file opening error
+
     Message_Msg Msg2("XSTEP_2");
     TF->Send(Msg2, Message_Info);
-    // Message_Msg Msg3("XSTEP_3");
-    // Message_Msg Msg4("XSTEP_4");
-    // Message_Msg Msg5("XSTEP_5");
-    // Message_Msg Msg6("XSTEP_6");
-    // Message_Msg Msg7("XSTEP_7");
-    //  Reasons of the file opening error
+
     switch (errno)
     {
-      case 2: // Sending of message : No such file or directory
+      case 2:
       {
         Message_Msg Msg3("XSTEP_3");
         TF->Send(Msg3, Message_Info);
       }
       break;
-      case 12: // Sending of message : Not enough space
+      case 12:
       {
         Message_Msg Msg4("XSTEP_4");
         TF->Send(Msg4, Message_Info);
       }
       break;
-      case 13: // Sending of message : Permission Denied
+      case 13:
       {
         Message_Msg Msg5("XSTEP_5");
         TF->Send(Msg5, Message_Info);
       }
       break;
-      case 24: // Sending of message : Too many open files
+      case 24:
       {
         Message_Msg Msg6("XSTEP_6");
         TF->Send(Msg6, Message_Info);
       }
       break;
-      default: // Sending of message : No determined
+      default:
       {
         Message_Msg Msg7("XSTEP_7");
         TF->Send(Msg7, Message_Info);
@@ -196,10 +162,9 @@ int IGESToBRep_Reader::LoadFile(const char* filename)
   Message_Msg Msg8("XSTEP_8");
   Message_Msg Msg25("XSTEP_25");
   Message_Msg Msg26("XSTEP_26");
-  // Nb warning in global section.
 
   int nbWarn = 0, nbFail = 0;
-  // Add the number of warning on entities :
+
   Interface_CheckTool     cht(model, protocol);
   Interface_CheckIterator anIter = cht.CompleteCheckList();
   for (anIter.Start(); anIter.More(); anIter.Next())
@@ -208,13 +173,12 @@ int IGESToBRep_Reader::LoadFile(const char* filename)
     nbWarn += ach->NbWarnings();
     nbFail += ach->NbFails();
   }
-  // Messages nbWarn and nbFail;
+
   Msg25.Arg(nbFail);
   Msg26.Arg(nbWarn);
   TF->Send(Msg25, Message_Info);
   TF->Send(Msg26, Message_Info);
 
-  // Message fin de loading iGES file (elapsed time %s)
   char t[20];
   t[0] = '\0';
   double second, cpu;
@@ -226,15 +190,13 @@ int IGESToBRep_Reader::LoadFile(const char* filename)
     Sprintf(t, "%dm:%.2fs", minute, second);
   else
     Sprintf(t, "%.2fs", second);
-  // Sending of message : End of Loading
+
   Msg8.Arg(t);
   TF->Send(Msg8, Message_Info);
 
   SetModel(model);
   return StatusFile;
 }
-
-//=============================================================================
 
 void IGESToBRep_Reader::SetModel(const occ::handle<IGESData_IGESModel>& model)
 {
@@ -247,43 +209,31 @@ void IGESToBRep_Reader::SetModel(const occ::handle<IGESData_IGESModel>& model)
     theProc->Clear();
 }
 
-//=============================================================================
-
 occ::handle<IGESData_IGESModel> IGESToBRep_Reader::Model() const
 {
   return theModel;
 }
-
-//=============================================================================
 
 void IGESToBRep_Reader::SetTransientProcess(const occ::handle<Transfer_TransientProcess>& TP)
 {
   theProc = TP;
 }
 
-//=============================================================================
-
 occ::handle<Transfer_TransientProcess> IGESToBRep_Reader::TransientProcess() const
 {
   return theProc;
 }
-
-//=============================================================================
 
 occ::handle<IGESToBRep_Actor> IGESToBRep_Reader::Actor() const
 {
   return theActor;
 }
 
-//=============================================================================
-
 void IGESToBRep_Reader::Clear()
 {
   theDone = false;
   theShapes.Clear();
 }
-
-//=============================================================================
 
 bool IGESToBRep_Reader::Check(const bool withprint) const
 {
@@ -297,14 +247,10 @@ bool IGESToBRep_Reader::Check(const bool withprint) const
   return chl.IsEmpty(true);
 }
 
-//=============================================================================
-
 bool IGESToBRep_Reader::IsDone() const
 {
   return theDone;
 }
-
-//=============================================================================
 
 void IGESToBRep_Reader::TransferRoots(const bool                   onlyvisible,
                                       const Message_ProgressRange& theProgress)
@@ -313,20 +259,20 @@ void IGESToBRep_Reader::TransferRoots(const bool                   onlyvisible,
     return;
 
   occ::handle<Message_Messenger> TF = theProc->Messenger();
-  // Declaration of messages.
+
   Message_Msg msg2030("IGES_2030");
   TF->Send(msg2030, Message_Info);
   Message_Msg msg2065("IGES_2065");
   OSD_Timer   c;
   c.Reset();
-  c.Start(); // Initialisation du CHRONO
+  c.Start();
   theDone = false;
   theShapes.Clear();
 
   int level = theProc->TraceLevel();
   theProc->SetErrorHandle(true);
   theProc->SetRootManagement(true);
-  //  PrepareTransfer();  -> protocol, actor
+
   theActor->SetModel(theModel);
   int continuity = Interface_Static::IVal("read.iges.bspline.continuity");
   theActor->SetContinuity(continuity);
@@ -334,7 +280,7 @@ void IGESToBRep_Reader::TransferRoots(const bool                   onlyvisible,
   theProc->SetActor(theActor);
   Transfer_TransferOutput TP(theProc, theModel);
 
-  const occ::handle<Interface_Protocol> aProtocol = protocol; // to avoid ambiguity
+  const occ::handle<Interface_Protocol> aProtocol = protocol;
   Interface_ShareFlags                  SH(theModel, aProtocol);
   int                                   nb = theModel->NbEntities();
   ShapeExtend_Explorer                  SBE;
@@ -346,7 +292,7 @@ void IGESToBRep_Reader::TransferRoots(const bool                   onlyvisible,
   if (precisionMode == 1)
   {
     Message_Msg msg2040("IGES_2040");
-    msg2040.Arg(Interface_Static::RVal("read.precision.val")); // #70 rln 03.03.99
+    msg2040.Arg(Interface_Static::RVal("read.precision.val"));
     TF->Send(msg2040, Message_Info);
   }
   Message_Msg msg2045("IGES_2045");
@@ -356,7 +302,6 @@ void IGESToBRep_Reader::TransferRoots(const bool                   onlyvisible,
   msg2050.Arg(Interface_Static::IVal("read.surfacecurve.mode"));
   TF->Send(msg2050, Message_Info);
 
-  // sln 11.06.2002 OCC448
   Interface_Static::SetIVal("read.iges.onlyvisible", onlyvisible);
 
   Message_ProgressScope PS(theProgress, "Root", nb);
@@ -373,7 +318,7 @@ void IGESToBRep_Reader::TransferRoots(const bool                   onlyvisible,
       msg2070.Arg(ent->TypeNumber());
       TF->Send(msg2070, Message_Info);
     }
-    // on ajoute un traitement pour ne prendre que les entites visibles
+
     if (!onlyvisible || ent->BlankStatus() == 0)
     {
       TopoDS_Shape shape;
@@ -402,7 +347,7 @@ void IGESToBRep_Reader::TransferRoots(const bool                   onlyvisible,
           if (!shape.IsNull())
           {
             EncodeRegul(shape);
-            // #74 rln 03.03.99 S4135
+
             TrimTolerances(shape, theActor->UsedTolerance());
             theShapes.Append(shape);
           }
@@ -421,12 +366,10 @@ void IGESToBRep_Reader::TransferRoots(const bool                   onlyvisible,
     Sprintf(t, "%dm:%.2fs", minute, second);
   else
     Sprintf(t, "%.2fs", second);
-  // Sending of message : End of Loading
+
   msg2065.Arg(t);
   TF->Send(msg2065, Message_Info);
 }
-
-//=============================================================================
 
 bool IGESToBRep_Reader::Transfer(const int num, const Message_ProgressRange& theProgress)
 {
@@ -445,13 +388,13 @@ bool IGESToBRep_Reader::Transfer(const int num, const Message_ProgressRange& the
     TF->Send(msg2032, Message_Info);
     return false;
   }
-  // declaration of messages
+
   Message_Msg msg2030("IGES_2030");
   TF->Send(msg2030, Message_Info);
   Message_Msg msg2065("IGES_2065");
   OSD_Timer   c;
   c.Reset();
-  c.Start(); // Initialisation du CHRONO
+  c.Start();
 
   occ::handle<IGESData_IGESEntity> ent = theModel->Entity(num);
 
@@ -469,10 +412,10 @@ bool IGESToBRep_Reader::Transfer(const int num, const Message_ProgressRange& the
     eps = theModel->GlobalSection().Resolution();
   else
   {
-    // mjm : modif du 19/12/97 pour prise en compte effective du parametre
+
     eps = Interface_Static::RVal("read.precision.val");
     Message_Msg msg2040("IGES_2040");
-    msg2040.Arg(eps); // #70 rln 03.03.99
+    msg2040.Arg(eps);
     TF->Send(msg2040, Message_Info);
   }
   Ival = Interface_Static::IVal("read.iges.bspline.approxd1.mode");
@@ -514,9 +457,6 @@ bool IGESToBRep_Reader::Transfer(const int num, const Message_ProgressRange& the
   {
     InitializeMissingParameters();
 
-    // Set tolerances for shape processing.
-    // These parameters are calculated inside IGESToBRep_Reader::Transfer() and cannot be set from
-    // outside.
     XSAlgo_ShapeProcessor::SetParameter("FixShape.Tolerance3d",
                                         eps * CAS.GetUnitFactor(),
                                         true,
@@ -545,7 +485,7 @@ bool IGESToBRep_Reader::Transfer(const int num, const Message_ProgressRange& the
       {
         theDone = true;
         EncodeRegul(shape);
-        // #74 rln 03.03.99 S4135
+
         TrimTolerances(shape, CAS.GetMaxTol());
         theShapes.Append(shape);
       }
@@ -563,27 +503,21 @@ bool IGESToBRep_Reader::Transfer(const int num, const Message_ProgressRange& the
     Sprintf(t, "%dm:%.2fs", minute, second);
   else
     Sprintf(t, "%.2fs", second);
-  // Sending of message : End of Loading
+
   msg2065.Arg(t);
   TF->Send(msg2065, Message_Info);
   return true;
 }
-
-//=============================================================================
 
 double IGESToBRep_Reader::UsedTolerance() const
 {
   return theActor->UsedTolerance();
 }
 
-//=============================================================================
-
 int IGESToBRep_Reader::NbShapes() const
 {
   return theShapes.Length();
 }
-
-//=============================================================================
 
 TopoDS_Shape IGESToBRep_Reader::Shape(const int num) const
 {
@@ -592,8 +526,6 @@ TopoDS_Shape IGESToBRep_Reader::Shape(const int num) const
     res = theShapes.Value(num);
   return res;
 }
-
-//=============================================================================
 
 TopoDS_Shape IGESToBRep_Reader::OneShape() const
 {
@@ -614,22 +546,16 @@ TopoDS_Shape IGESToBRep_Reader::OneShape() const
   }
 }
 
-//=============================================================================
-
 void IGESToBRep_Reader::SetShapeFixParameters(
   const XSAlgo_ShapeProcessor::ParameterMap& theParameters)
 {
   myShapeProcParams = theParameters;
 }
 
-//=============================================================================
-
 void IGESToBRep_Reader::SetShapeFixParameters(XSAlgo_ShapeProcessor::ParameterMap&& theParameters)
 {
   myShapeProcParams = std::move(theParameters);
 }
-
-//=============================================================================
 
 void IGESToBRep_Reader::SetShapeFixParameters(
   const DE_ShapeFixParameters&               theParameters,
@@ -640,15 +566,11 @@ void IGESToBRep_Reader::SetShapeFixParameters(
                                                myShapeProcParams);
 }
 
-//=============================================================================
-
 void IGESToBRep_Reader::SetShapeProcessFlags(const ShapeProcess::OperationsFlags& theFlags)
 {
   myShapeProcFlags.first  = theFlags;
   myShapeProcFlags.second = true;
 }
-
-//=============================================================================
 
 void IGESToBRep_Reader::InitializeMissingParameters()
 {

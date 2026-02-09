@@ -21,33 +21,31 @@
 IGESDimen_ToolWitnessLine::IGESDimen_ToolWitnessLine() = default;
 
 void IGESDimen_ToolWitnessLine::ReadOwnParams(const occ::handle<IGESDimen_WitnessLine>& ent,
-                                              const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                              const occ::handle<IGESData_IGESReaderData>&,
                                               IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
 
   int                                     datatype;
   double                                  zDisplacement;
   int                                     nbval;
   occ::handle<NCollection_HArray1<gp_XY>> dataPoints;
 
-  // clang-format off
-  PR.ReadInteger(PR.Current(), "Interpretation Flag", datatype); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "Interpretation Flag", datatype);
 
   bool st = PR.ReadInteger(PR.Current(), "Number of data points", nbval);
   if (st && nbval > 0)
     dataPoints = new NCollection_HArray1<gp_XY>(1, nbval);
-  else  PR.AddFail("Number of data points: Not Positive");
+  else
+    PR.AddFail("Number of data points: Not Positive");
 
-  PR.ReadReal(PR.Current(), "Common Z Displacement", zDisplacement); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadReal(PR.Current(), "Common Z Displacement", zDisplacement);
 
   if (!dataPoints.IsNull())
     for (int i = 1; i <= nbval; i++)
     {
       gp_XY tempXY;
-      PR.ReadXY(PR.CurrentList(1, 2), "Data Points", tempXY); // szv#4:S4163:12Mar99 `st=` not
-                                                              // needed
+      PR.ReadXY(PR.CurrentList(1, 2), "Data Points", tempXY);
+
       dataPoints->SetValue(i, tempXY);
     }
 
@@ -69,14 +67,14 @@ void IGESDimen_ToolWitnessLine::WriteOwnParams(const occ::handle<IGESDimen_Witne
   }
 }
 
-void IGESDimen_ToolWitnessLine::OwnShared(const occ::handle<IGESDimen_WitnessLine>& /* ent */,
-                                          Interface_EntityIterator& /* iter */) const
+void IGESDimen_ToolWitnessLine::OwnShared(const occ::handle<IGESDimen_WitnessLine>&,
+                                          Interface_EntityIterator&) const
 {
 }
 
 void IGESDimen_ToolWitnessLine::OwnCopy(const occ::handle<IGESDimen_WitnessLine>& another,
                                         const occ::handle<IGESDimen_WitnessLine>& ent,
-                                        Interface_CopyTool& /* TC */) const
+                                        Interface_CopyTool&) const
 {
   int    datatype      = another->Datatype();
   int    nbval         = another->NbPoints();
@@ -103,10 +101,10 @@ bool IGESDimen_ToolWitnessLine::OwnCorrect(const occ::handle<IGESDimen_WitnessLi
   }
   if (ent->Datatype() == 1)
     return res;
-  //  Force DataType = 1 -> reconstruct
+
   int nb = ent->NbPoints();
   if (nb == 0)
-    return false; // nothing could be done (is this possible?)
+    return false;
   occ::handle<NCollection_HArray1<gp_XY>> pts = new NCollection_HArray1<gp_XY>(1, nb);
   for (int i = 1; i <= nb; i++)
     pts->SetValue(i, gp_XY(ent->Point(i).X(), ent->Point(i).Y()));
@@ -115,7 +113,7 @@ bool IGESDimen_ToolWitnessLine::OwnCorrect(const occ::handle<IGESDimen_WitnessLi
 }
 
 IGESData_DirChecker IGESDimen_ToolWitnessLine::DirChecker(
-  const occ::handle<IGESDimen_WitnessLine>& /* ent */) const
+  const occ::handle<IGESDimen_WitnessLine>&) const
 {
   IGESData_DirChecker DC(106, 40);
   DC.Structure(IGESData_DefVoid);
@@ -142,7 +140,7 @@ void IGESDimen_ToolWitnessLine::OwnCheck(const occ::handle<IGESDimen_WitnessLine
 }
 
 void IGESDimen_ToolWitnessLine::OwnDump(const occ::handle<IGESDimen_WitnessLine>& ent,
-                                        const IGESData_IGESDumper& /* dumper */,
+                                        const IGESData_IGESDumper&,
                                         Standard_OStream& S,
                                         const int         level) const
 {

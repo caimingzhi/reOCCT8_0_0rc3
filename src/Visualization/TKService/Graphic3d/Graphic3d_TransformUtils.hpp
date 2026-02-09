@@ -7,7 +7,6 @@
 #include <NCollection_Vec4.hpp>
 #include <NCollection_Mat4.hpp>
 
-//! Helper class that implements transformation matrix functionality.
 namespace Graphic3d_TransformUtils
 {
   template <class T>
@@ -48,11 +47,9 @@ namespace Graphic3d_TransformUtils
     typedef NCollection_Vec4<float> Vec4;
   };
 
-  //! Converts gp_Trsf to NCollection_Mat4<float>.
   template <class T>
   static void Convert(const gp_Trsf& theTransformation, typename MatrixType<T>::Mat4& theOut);
 
-  //! Constructs a 3D orthographic projection matrix.
   template <class T>
   static void Ortho(typename MatrixType<T>::Mat4& theOut,
                     const T                       theLeft,
@@ -62,7 +59,6 @@ namespace Graphic3d_TransformUtils
                     const T                       theZNear,
                     const T                       theZFar);
 
-  //! Constructs a 2D orthographic projection matrix.
   template <class T>
   static void Ortho2D(typename MatrixType<T>::Mat4& theOut,
                       const T                       theLeft,
@@ -70,7 +66,6 @@ namespace Graphic3d_TransformUtils
                       const T                       theBottom,
                       const T                       theTop);
 
-  //! Maps object coordinates to window coordinates.
   template <class T>
   static bool Project(const T                             theObjX,
                       const T                             theObjY,
@@ -82,7 +77,6 @@ namespace Graphic3d_TransformUtils
                       T&                                  theWinY,
                       T&                                  theWinZ);
 
-  //! Maps window coordinates to object coordinates.
   template <class T>
   static bool UnProject(const T                             theWinX,
                         const T                             theWinY,
@@ -94,33 +88,26 @@ namespace Graphic3d_TransformUtils
                         T&                                  theObjY,
                         T&                                  theObjZ);
 
-  //! Constructs a 4x4 rotation matrix.
   template <class T>
   static void ConstructRotate(typename MatrixType<T>::Mat4& theOut, T theA, T theX, T theY, T theZ);
 
-  //! Constructs a 4x4 rotation matrix.
   template <class T>
   static void Rotate(typename MatrixType<T>::Mat4& theOut, T theA, T theX, T theY, T theZ);
 
-  //! Constructs a 4x4 scaling matrix.
   template <class T>
   static void Scale(typename MatrixType<T>::Mat4& theOut, T theX, T theY, T theZ);
 
-  //! Constructs a 4x4 translation matrix.
   template <class T>
   static void Translate(typename MatrixType<T>::Mat4& theOut, T theX, T theY, T theZ);
 
-  //! Returns scaling factor from 3x3 affine matrix.
   template <class T>
   static double ScaleFactor(const NCollection_Mat4<T>& theMatrix)
   {
-    // The determinant of the matrix should give the scale factor (cubed).
+
     const T aDeterminant = theMatrix.DeterminantMat3();
     return std::pow(static_cast<double>(aDeterminant), 1.0 / 3.0);
   }
 } // namespace Graphic3d_TransformUtils
-
-//=================================================================================================
 
 template <class T>
 void Graphic3d_TransformUtils::Convert(const gp_Trsf&                theTransformation,
@@ -128,7 +115,6 @@ void Graphic3d_TransformUtils::Convert(const gp_Trsf&                theTransfor
 {
   theOut.InitIdentity();
 
-  // Copy a 3x3 submatrix.
   theOut.ChangeValue(0, 0) = theTransformation.Value(1, 1);
   theOut.ChangeValue(0, 1) = theTransformation.Value(1, 2);
   theOut.ChangeValue(0, 2) = theTransformation.Value(1, 3);
@@ -139,16 +125,11 @@ void Graphic3d_TransformUtils::Convert(const gp_Trsf&                theTransfor
   theOut.ChangeValue(2, 1) = theTransformation.Value(3, 2);
   theOut.ChangeValue(2, 2) = theTransformation.Value(3, 3);
 
-  // Add a translate component.
   theOut.ChangeValue(0, 3) = theTransformation.TranslationPart().X();
   theOut.ChangeValue(1, 3) = theTransformation.TranslationPart().Y();
   theOut.ChangeValue(2, 3) = theTransformation.TranslationPart().Z();
 }
 
-// =======================================================================
-// function : Rotate
-// purpose  : Constructs a 4x4 rotation matrix
-// =======================================================================
 template <class T>
 void Graphic3d_TransformUtils::Rotate(typename MatrixType<T>::Mat4& theOut,
                                       T                             theA,
@@ -161,10 +142,6 @@ void Graphic3d_TransformUtils::Rotate(typename MatrixType<T>::Mat4& theOut,
   theOut = theOut * aMat;
 }
 
-// =======================================================================
-// function : Translate
-// purpose  : Constructs a 4x4 translation matrix
-// =======================================================================
 template <class T>
 void Graphic3d_TransformUtils::Translate(typename MatrixType<T>::Mat4& theOut,
                                          T                             theX,
@@ -184,10 +161,6 @@ void Graphic3d_TransformUtils::Translate(typename MatrixType<T>::Mat4& theOut,
                              + theOut.GetValue(3, 2) * theZ + theOut.GetValue(3, 3);
 }
 
-// =======================================================================
-// function : Scale
-// purpose  : Constructs a 4x4 scaling matrix
-// =======================================================================
 template <class T>
 void Graphic3d_TransformUtils::Scale(typename MatrixType<T>::Mat4& theOut, T theX, T theY, T theZ)
 {
@@ -207,10 +180,6 @@ void Graphic3d_TransformUtils::Scale(typename MatrixType<T>::Mat4& theOut, T the
   theOut.ChangeValue(3, 2) *= theZ;
 }
 
-// =======================================================================
-// function : ConstructRotate
-// purpose  : Constructs a 4x4 rotation matrix
-// =======================================================================
 template <class T>
 void Graphic3d_TransformUtils::ConstructRotate(typename MatrixType<T>::Mat4& theOut,
                                                T                             theA,
@@ -230,7 +199,7 @@ void Graphic3d_TransformUtils::ConstructRotate(typename MatrixType<T>::Mat4& the
   const bool isOnlyZ =
     (theX == static_cast<T>(0.0)) && (theY == static_cast<T>(0.0)) && (theZ != static_cast<T>(0.0));
 
-  if (isOnlyX) // Rotation only around X.
+  if (isOnlyX)
   {
     theOut.SetValue(1, 1, aCos);
     theOut.SetValue(2, 2, aCos);
@@ -248,7 +217,7 @@ void Graphic3d_TransformUtils::ConstructRotate(typename MatrixType<T>::Mat4& the
 
     return;
   }
-  else if (isOnlyY) // Rotation only around Y.
+  else if (isOnlyY)
   {
     theOut.SetValue(0, 0, aCos);
     theOut.SetValue(2, 2, aCos);
@@ -266,7 +235,7 @@ void Graphic3d_TransformUtils::ConstructRotate(typename MatrixType<T>::Mat4& the
 
     return;
   }
-  else if (isOnlyZ) // Rotation only around Z.
+  else if (isOnlyZ)
   {
     theOut.SetValue(0, 0, aCos);
     theOut.SetValue(1, 1, aCos);
@@ -289,7 +258,7 @@ void Graphic3d_TransformUtils::ConstructRotate(typename MatrixType<T>::Mat4& the
 
   if (aNorm <= static_cast<T>(1.0e-4))
   {
-    return; // Negligible rotation.
+    return;
   }
 
   aNorm = static_cast<T>(1.0) / aNorm;
@@ -323,10 +292,6 @@ void Graphic3d_TransformUtils::ConstructRotate(typename MatrixType<T>::Mat4& the
   theOut.SetValue(2, 2, aOneMinusCos * aZZ + aCos);
 }
 
-// =======================================================================
-// function : Ortho
-// purpose  : Constructs a 3D orthographic projection matrix
-// =======================================================================
 template <class T>
 void Graphic3d_TransformUtils::Ortho(typename MatrixType<T>::Mat4& theOut,
                                      const T                       theLeft,
@@ -353,10 +318,6 @@ void Graphic3d_TransformUtils::Ortho(typename MatrixType<T>::Mat4& theOut,
   aData[14] = -(theZFar + theZNear) * anInvDz;
 }
 
-// =======================================================================
-// function : Ortho2D
-// purpose  : Constructs a 2D orthographic projection matrix
-// =======================================================================
 template <class T>
 void Graphic3d_TransformUtils::Ortho2D(typename MatrixType<T>::Mat4& theOut,
                                        const T                       theLeft,
@@ -367,10 +328,6 @@ void Graphic3d_TransformUtils::Ortho2D(typename MatrixType<T>::Mat4& theOut,
   Ortho(theOut, theLeft, theRight, theBottom, theTop, static_cast<T>(-1.0), static_cast<T>(1.0));
 }
 
-// =======================================================================
-// function : Project
-// purpose  : Maps object coordinates to window coordinates
-// =======================================================================
 template <class T>
 static bool Graphic3d_TransformUtils::Project(const T                             theObjX,
                                               const T                             theObjY,
@@ -397,12 +354,10 @@ static bool Graphic3d_TransformUtils::Project(const T                           
   anOut.y() *= anOut.w();
   anOut.z() *= anOut.w();
 
-  // Map x, y and z to range 0-1.
   anOut.x() = anOut.x() * static_cast<T>(0.5) + static_cast<T>(0.5);
   anOut.y() = anOut.y() * static_cast<T>(0.5) + static_cast<T>(0.5);
   anOut.z() = anOut.z() * static_cast<T>(0.5) + static_cast<T>(0.5);
 
-  // Map x,y to viewport.
   anOut.x() = anOut.x() * theViewport[2] + theViewport[0];
   anOut.y() = anOut.y() * theViewport[3] + theViewport[1];
 
@@ -413,10 +368,6 @@ static bool Graphic3d_TransformUtils::Project(const T                           
   return true;
 }
 
-// =======================================================================
-// function : UnProject
-// purpose  : Maps window coordinates to object coordinates
-// =======================================================================
 template <class T>
 static bool Graphic3d_TransformUtils::UnProject(const T                             theWinX,
                                                 const T                             theWinY,
@@ -437,11 +388,9 @@ static bool Graphic3d_TransformUtils::UnProject(const T                         
 
   typename VectorType<T>::Vec4 anIn(theWinX, theWinY, theWinZ, static_cast<T>(1.0));
 
-  // Map x and y from window coordinates.
   anIn.x() = (anIn.x() - theViewport[0]) / theViewport[2];
   anIn.y() = (anIn.y() - theViewport[1]) / theViewport[3];
 
-  // Map to range -1 to 1.
   anIn.x() = anIn.x() * static_cast<T>(2.0) - static_cast<T>(1.0);
   anIn.y() = anIn.y() * static_cast<T>(2.0) - static_cast<T>(1.0);
   anIn.z() = anIn.z() * static_cast<T>(2.0) - static_cast<T>(1.0);

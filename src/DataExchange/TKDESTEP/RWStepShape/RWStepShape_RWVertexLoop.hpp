@@ -11,7 +11,6 @@ class StepShape_VertexLoop;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for VertexLoop
 class RWStepShape_RWVertexLoop
 {
 public:

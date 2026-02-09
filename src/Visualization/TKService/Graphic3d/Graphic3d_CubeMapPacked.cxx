@@ -1,16 +1,4 @@
-// Author: Ilya Khramov
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Graphic3d_CubeMapPacked.hpp>
 
@@ -19,8 +7,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_CubeMapPacked, Graphic3d_CubeMap)
 
-//=================================================================================================
-
 Graphic3d_CubeMapPacked::Graphic3d_CubeMapPacked(const TCollection_AsciiString&         theFilePath,
                                                  const Graphic3d_ValidatedCubeMapOrder& theOrder)
     : Graphic3d_CubeMap(theFilePath),
@@ -28,8 +14,6 @@ Graphic3d_CubeMapPacked::Graphic3d_CubeMapPacked(const TCollection_AsciiString& 
       myTileNumberX(1)
 {
 }
-
-//=================================================================================================
 
 Graphic3d_CubeMapPacked::Graphic3d_CubeMapPacked(const occ::handle<Image_PixMap>&       theImage,
                                                  const Graphic3d_ValidatedCubeMapOrder& theOrder)
@@ -42,8 +26,6 @@ Graphic3d_CubeMapPacked::Graphic3d_CubeMapPacked(const occ::handle<Image_PixMap>
     myPixMap = theImage;
   }
 }
-
-//=================================================================================================
 
 occ::handle<Image_CompressedPixMap> Graphic3d_CubeMapPacked::CompressedValue(
   const occ::handle<Image_SupportedFormats>& theSupported)
@@ -68,8 +50,6 @@ occ::handle<Image_CompressedPixMap> Graphic3d_CubeMapPacked::CompressedValue(
   }
   return occ::handle<Image_CompressedPixMap>();
 }
-
-//=================================================================================================
 
 occ::handle<Image_PixMap> Graphic3d_CubeMapPacked::Value(
   const occ::handle<Image_SupportedFormats>& theSupported)
@@ -127,8 +107,6 @@ occ::handle<Image_PixMap> Graphic3d_CubeMapPacked::Value(
   return occ::handle<Image_PixMap>();
 }
 
-//=================================================================================================
-
 bool Graphic3d_CubeMapPacked::checkOrder(const NCollection_Array1<unsigned int>& theOrder)
 {
   bool anOrderIsValid = true;
@@ -166,8 +144,6 @@ bool Graphic3d_CubeMapPacked::checkOrder(const NCollection_Array1<unsigned int>&
   return anOrderIsValid;
 }
 
-//=================================================================================================
-
 bool Graphic3d_CubeMapPacked::checkImage(const occ::handle<Image_PixMap>& theImage,
                                          unsigned int&                    theTileNumberX)
 {
@@ -197,8 +173,6 @@ bool Graphic3d_CubeMapPacked::checkImage(const occ::handle<Image_PixMap>& theIma
 
   return true;
 }
-
-//=================================================================================================
 
 void Graphic3d_CubeMapPacked::tryLoadImage(const occ::handle<Image_SupportedFormats>& theSupported,
                                            const TCollection_AsciiString&             theFilePath)

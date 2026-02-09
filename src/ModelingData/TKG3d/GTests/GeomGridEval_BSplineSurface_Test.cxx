@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -44,7 +33,7 @@ namespace
     aPoles.SetValue(1, 1, gp_Pnt(0, 0, 0));
     aPoles.SetValue(2, 1, gp_Pnt(1, 0, 0));
     aPoles.SetValue(1, 2, gp_Pnt(0, 1, 0));
-    aPoles.SetValue(2, 2, gp_Pnt(1, 1, 1)); // Non-planar corner
+    aPoles.SetValue(2, 2, gp_Pnt(1, 1, 1));
 
     NCollection_Array1<double> aUKnots(1, 2);
     NCollection_Array1<double> aVKnots(1, 2);
@@ -133,10 +122,6 @@ namespace
     return new Geom_BSplineSurface(aPoles, aUKnots, aVKnots, aUMults, aVMults, 2, 2);
   }
 } // namespace
-
-//==================================================================================================
-// Basic Evaluation Tests
-//==================================================================================================
 
 TEST(GeomGridEval_BSplineSurfaceTest, BasicEvaluation)
 {
@@ -272,24 +257,17 @@ TEST(GeomGridEval_BSplineSurfaceTest, HigherDegree)
   }
 }
 
-//==================================================================================================
-// Isoline Evaluation Tests
-//==================================================================================================
-
 TEST(GeomGridEval_BSplineSurfaceTest, IsolineU_CompareToGeomD0)
 {
   occ::handle<Geom_BSplineSurface> aBSpline = CreateMultiSpanBSplineSurface();
   GeomGridEval_BSplineSurface      anEval(aBSpline);
 
-  // U-isoline: 1 U param, multiple V params (triggers isoline path)
   NCollection_Array1<double> aUParams(1, 1);
   aUParams.SetValue(1, 0.5);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 1.0, 15);
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Compare against Geom_BSplineSurface::D0
-  // Note: ColLength() = number of U params (rows), RowLength() = number of V params (columns)
   const int aNbU = aGrid.ColLength();
   const int aNbV = aGrid.RowLength();
   for (int iU = 1; iU <= aNbU; ++iU)
@@ -308,14 +286,12 @@ TEST(GeomGridEval_BSplineSurfaceTest, IsolineV_CompareToGeomD0)
   occ::handle<Geom_BSplineSurface> aBSpline = CreateMultiSpanBSplineSurface();
   GeomGridEval_BSplineSurface      anEval(aBSpline);
 
-  // V-isoline: multiple U params, 1 V param (triggers isoline path)
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 1.0, 15);
   NCollection_Array1<double> aVParams(1, 1);
   aVParams.SetValue(1, 0.7);
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Compare against Geom_BSplineSurface::D0
   const int aNbU = aGrid.ColLength();
   const int aNbV = aGrid.RowLength();
   for (int iU = 1; iU <= aNbU; ++iU)
@@ -334,14 +310,12 @@ TEST(GeomGridEval_BSplineSurfaceTest, IsolineMultiSpan_CompareToGeomD0)
   occ::handle<Geom_BSplineSurface> aBSpline = CreateMultiSpanBSplineSurface();
   GeomGridEval_BSplineSurface      anEval(aBSpline);
 
-  // U-isoline on multi-span surface
   NCollection_Array1<double> aUParams(1, 1);
   aUParams.SetValue(1, 0.35);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 1.0, 20);
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Compare against Geom_BSplineSurface::D0
   const int aNbU = aGrid.ColLength();
   const int aNbV = aGrid.RowLength();
   for (int iU = 1; iU <= aNbU; ++iU)
@@ -360,14 +334,12 @@ TEST(GeomGridEval_BSplineSurfaceTest, IsolineRational_CompareToGeomD0)
   occ::handle<Geom_BSplineSurface> aBSpline = CreateRationalBSplineSurface();
   GeomGridEval_BSplineSurface      anEval(aBSpline);
 
-  // V-isoline on rational surface
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 1.0, 15);
   NCollection_Array1<double> aVParams(1, 1);
   aVParams.SetValue(1, 0.3);
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Compare against Geom_BSplineSurface::D0
   const int aNbU = aGrid.ColLength();
   const int aNbV = aGrid.RowLength();
   for (int iU = 1; iU <= aNbU; ++iU)
@@ -380,10 +352,6 @@ TEST(GeomGridEval_BSplineSurfaceTest, IsolineRational_CompareToGeomD0)
     }
   }
 }
-
-//==================================================================================================
-// Derivative Tests
-//==================================================================================================
 
 TEST(GeomGridEval_BSplineSurfaceTest, DerivativeD1)
 {
@@ -478,10 +446,6 @@ TEST(GeomGridEval_BSplineSurfaceTest, DerivativeD3)
     }
   }
 }
-
-//==================================================================================================
-// DN (Arbitrary Order Derivative) Tests
-//==================================================================================================
 
 TEST(GeomGridEval_BSplineSurfaceTest, DerivativeDN_U1V0)
 {
@@ -621,16 +585,11 @@ TEST(GeomGridEval_BSplineSurfaceTest, DerivativeDN_RationalSurface)
   }
 }
 
-//==================================================================================================
-// UV Pairs Evaluation Tests
-//==================================================================================================
-
 TEST(GeomGridEval_BSplineSurfaceTest, UVPairs_BasicEvaluation)
 {
   occ::handle<Geom_BSplineSurface> aSurf = CreateSimpleBSplineSurface();
   GeomGridEval_BSplineSurface      anEval(aSurf);
 
-  // Create arbitrary UV pairs
   NCollection_Array1<gp_Pnt2d> aUVPairs(1, 5);
   aUVPairs.SetValue(1, gp_Pnt2d(0.0, 0.0));
   aUVPairs.SetValue(2, gp_Pnt2d(0.5, 0.25));
@@ -641,7 +600,6 @@ TEST(GeomGridEval_BSplineSurfaceTest, UVPairs_BasicEvaluation)
   NCollection_Array1<gp_Pnt> aPoints = anEval.EvaluatePoints(aUVPairs);
   EXPECT_EQ(aPoints.Size(), 5);
 
-  // Verify results against Geom_BSplineSurface::D0
   for (int i = 1; i <= 5; ++i)
   {
     gp_Pnt aExpected;
@@ -655,12 +613,11 @@ TEST(GeomGridEval_BSplineSurfaceTest, UVPairs_MultiSpan)
   occ::handle<Geom_BSplineSurface> aSurf = CreateMultiSpanBSplineSurface();
   GeomGridEval_BSplineSurface      anEval(aSurf);
 
-  // Create UV pairs that span multiple knot spans
   NCollection_Array1<gp_Pnt2d> aUVPairs(1, 10);
   aUVPairs.SetValue(1, gp_Pnt2d(0.1, 0.1));
-  aUVPairs.SetValue(2, gp_Pnt2d(0.6, 0.3)); // Different U span
-  aUVPairs.SetValue(3, gp_Pnt2d(0.2, 0.7)); // Different V span
-  aUVPairs.SetValue(4, gp_Pnt2d(0.8, 0.9)); // Both different
+  aUVPairs.SetValue(2, gp_Pnt2d(0.6, 0.3));
+  aUVPairs.SetValue(3, gp_Pnt2d(0.2, 0.7));
+  aUVPairs.SetValue(4, gp_Pnt2d(0.8, 0.9));
   aUVPairs.SetValue(5, gp_Pnt2d(0.45, 0.45));
   aUVPairs.SetValue(6, gp_Pnt2d(0.55, 0.55));
   aUVPairs.SetValue(7, gp_Pnt2d(0.3, 0.4));
@@ -824,22 +781,20 @@ TEST(GeomGridEval_BSplineSurfaceTest, UVPairs_DerivativeDN)
 
 TEST(GeomGridEval_BSplineSurfaceTest, UVPairs_OrderPreservation)
 {
-  // Verify that results are returned in original input order regardless of sorting
+
   occ::handle<Geom_BSplineSurface> aSurf = CreateMultiSpanBSplineSurface();
   GeomGridEval_BSplineSurface      anEval(aSurf);
 
-  // Create UV pairs in a specific order that will be reordered during sorting
   NCollection_Array1<gp_Pnt2d> aUVPairs(1, 6);
-  aUVPairs.SetValue(1, gp_Pnt2d(0.9, 0.1)); // High U span
-  aUVPairs.SetValue(2, gp_Pnt2d(0.1, 0.9)); // Low U span
-  aUVPairs.SetValue(3, gp_Pnt2d(0.5, 0.5)); // Middle
-  aUVPairs.SetValue(4, gp_Pnt2d(0.2, 0.2)); // Low spans
-  aUVPairs.SetValue(5, gp_Pnt2d(0.8, 0.8)); // High spans
-  aUVPairs.SetValue(6, gp_Pnt2d(0.4, 0.6)); // Mixed
+  aUVPairs.SetValue(1, gp_Pnt2d(0.9, 0.1));
+  aUVPairs.SetValue(2, gp_Pnt2d(0.1, 0.9));
+  aUVPairs.SetValue(3, gp_Pnt2d(0.5, 0.5));
+  aUVPairs.SetValue(4, gp_Pnt2d(0.2, 0.2));
+  aUVPairs.SetValue(5, gp_Pnt2d(0.8, 0.8));
+  aUVPairs.SetValue(6, gp_Pnt2d(0.4, 0.6));
 
   NCollection_Array1<gp_Pnt> aPoints = anEval.EvaluatePoints(aUVPairs);
 
-  // Verify each result corresponds to its original input index
   for (int i = 1; i <= 6; ++i)
   {
     gp_Pnt aExpected;

@@ -15,35 +15,25 @@ class StepShape_BooleanOperand
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Returns a BooleanOperand SelectType
   Standard_EXPORT StepShape_BooleanOperand();
 
   Standard_EXPORT void SetTypeOfContent(const int aTypeOfContent);
 
   Standard_EXPORT int TypeOfContent() const;
 
-  //! returns Value as a SolidModel (Null if another
-  //! type)
   Standard_EXPORT occ::handle<StepShape_SolidModel> SolidModel() const;
 
   Standard_EXPORT void SetSolidModel(const occ::handle<StepShape_SolidModel>& aSolidModel);
 
-  //! returns Value as a HalfSpaceSolid (Null if
-  //! another type)
   Standard_EXPORT occ::handle<StepShape_HalfSpaceSolid> HalfSpaceSolid() const;
 
   Standard_EXPORT void SetHalfSpaceSolid(
     const occ::handle<StepShape_HalfSpaceSolid>& aHalfSpaceSolid);
 
-  //! returns Value as a CsgPrimitive (Null if another
-  //! type)
-  //! CsgPrimitive is another Select Type
   Standard_EXPORT StepShape_CsgPrimitive CsgPrimitive() const;
 
   Standard_EXPORT void SetCsgPrimitive(const StepShape_CsgPrimitive& aCsgPrimitive);
 
-  //! returns Value as a BooleanResult (Null if another
-  //! type)
   Standard_EXPORT occ::handle<StepShape_BooleanResult> BooleanResult() const;
 
   Standard_EXPORT void SetBooleanResult(const occ::handle<StepShape_BooleanResult>& aBooleanResult);

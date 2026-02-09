@@ -6,12 +6,8 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepAP214_RWExternallyDefinedGeneralProperty::RWStepAP214_RWExternallyDefinedGeneralProperty() =
   default;
-
-//=================================================================================================
 
 void RWStepAP214_RWExternallyDefinedGeneralProperty::ReadStep(
   const occ::handle<StepData_StepReaderData>&                    data,
@@ -19,11 +15,9 @@ void RWStepAP214_RWExternallyDefinedGeneralProperty::ReadStep(
   occ::handle<Interface_Check>&                                  ach,
   const occ::handle<StepAP214_ExternallyDefinedGeneralProperty>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 5, ach, "externally_defined_general_property"))
     return;
-
-  // Inherited fields of GeneralProperty
 
   occ::handle<TCollection_HAsciiString> aGeneralProperty_Id;
   data->ReadString(num, 1, "general_property.id", ach, aGeneralProperty_Id);
@@ -42,8 +36,6 @@ void RWStepAP214_RWExternallyDefinedGeneralProperty::ReadStep(
     hasGeneralProperty_Description = false;
   }
 
-  // Inherited fields of ExternallyDefinedItem
-
   StepBasic_SourceItem aExternallyDefinedItem_ItemId;
   data->ReadEntity(num, 4, "externally_defined_item.item_id", ach, aExternallyDefinedItem_ItemId);
 
@@ -55,7 +47,6 @@ void RWStepAP214_RWExternallyDefinedGeneralProperty::ReadStep(
                    STANDARD_TYPE(StepBasic_ExternalSource),
                    aExternallyDefinedItem_Source);
 
-  // Initialize entity
   ent->Init(aGeneralProperty_Id,
             aGeneralProperty_Name,
             hasGeneralProperty_Description,
@@ -64,14 +55,10 @@ void RWStepAP214_RWExternallyDefinedGeneralProperty::ReadStep(
             aExternallyDefinedItem_Source);
 }
 
-//=================================================================================================
-
 void RWStepAP214_RWExternallyDefinedGeneralProperty::WriteStep(
   StepData_StepWriter&                                           SW,
   const occ::handle<StepAP214_ExternallyDefinedGeneralProperty>& ent) const
 {
-
-  // Inherited fields of GeneralProperty
 
   SW.Send(ent->StepBasic_GeneralProperty::Id());
 
@@ -84,23 +71,15 @@ void RWStepAP214_RWExternallyDefinedGeneralProperty::WriteStep(
   else
     SW.SendUndef();
 
-  // Inherited fields of ExternallyDefinedItem
-
   SW.Send(ent->ExternallyDefinedItem()->ItemId().Value());
 
   SW.Send(ent->ExternallyDefinedItem()->Source());
 }
 
-//=================================================================================================
-
 void RWStepAP214_RWExternallyDefinedGeneralProperty::Share(
   const occ::handle<StepAP214_ExternallyDefinedGeneralProperty>& ent,
   Interface_EntityIterator&                                      iter) const
 {
-
-  // Inherited fields of GeneralProperty
-
-  // Inherited fields of ExternallyDefinedItem
 
   iter.AddItem(ent->ExternallyDefinedItem()->ItemId().Value());
 

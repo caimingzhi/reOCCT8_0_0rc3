@@ -20,10 +20,6 @@
 
 #include <Standard_Macro.hpp>
 
-//=======================================================================
-// function : DDataStd_SetConstraint
-// purpose  : SetConstraint (DF,entry,keyword,geometrie/value[,geometrie])",
-//=======================================================================
 static int DDataStd_SetConstraint(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb < 5)
@@ -79,7 +75,6 @@ static int DDataStd_SetConstraint(Draw_Interpretor& di, int nb, const char** arg
   {
     occ::handle<TDataXtd_Constraint> C = TDataXtd_Constraint::Set(L);
 
-    // planar constraints
     if (strcmp(aT, "rad") == 0)
       aCT = TDataXtd_RADIUS;
     else if (strcmp(aT, "dia") == 0)
@@ -114,7 +109,7 @@ static int DDataStd_SetConstraint(Draw_Interpretor& di, int nb, const char** arg
       aCT = TDataXtd_FIX;
     else if (strcmp(aT, "rigid") == 0)
       aCT = TDataXtd_RIGID;
-    // placement constraints
+
     else if (strcmp(aT, "from") == 0)
       aCT = TDataXtd_FROM;
     else if (strcmp(aT, "axis") == 0)
@@ -142,10 +137,8 @@ static int DDataStd_SetConstraint(Draw_Interpretor& di, int nb, const char** arg
       return 1;
     }
 
-    // set type
     C->SetType(aCT);
 
-    // retrieve and set geometries
     int                             i = 1, nbSh = nb - 4;
     occ::handle<TNaming_NamedShape> aSh;
     TDF_Label                       aLab;
@@ -163,10 +156,6 @@ static int DDataStd_SetConstraint(Draw_Interpretor& di, int nb, const char** arg
   return 0;
 }
 
-//=======================================================================
-// function : DDataStd_GetConstraint
-// purpose  : GetConstraints (document, label)
-//=======================================================================
 static int DDataStd_GetConstraint(Draw_Interpretor& di, int nb, const char** arg)
 {
   occ::handle<TDataXtd_Constraint> CTR;
@@ -204,11 +193,6 @@ static int DDataStd_GetConstraint(Draw_Interpretor& di, int nb, const char** arg
   return 1;
 }
 
-//=======================================================================
-// function : DDataStd_SetPattern
-// purpose  : SetPattern
-// (DF,entry,signature,NSentry[realEntry,intEntry[,NSentry,realEntry,intEntry]])
-//=======================================================================
 static int DDataStd_SetPattern(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb < 5)
@@ -228,7 +212,6 @@ static int DDataStd_SetPattern(Draw_Interpretor& di, int nb, const char** arg)
 
   occ::handle<TDataXtd_PatternStd> aP = TDataXtd_PatternStd::Set(L);
 
-  // set signature
   int signature = Draw::Atoi(arg[3]);
   aP->Signature(signature);
 
@@ -237,7 +220,6 @@ static int DDataStd_SetPattern(Draw_Interpretor& di, int nb, const char** arg)
   occ::handle<TDataStd_Real>      TReal;
   occ::handle<TDataStd_Integer>   TInt;
 
-  // set other parameters
   if (signature < 5)
   {
     if (nb < 7)
@@ -249,7 +231,6 @@ static int DDataStd_SetPattern(Draw_Interpretor& di, int nb, const char** arg)
       return 1;
     }
 
-    // NSentry
     if (!DDF::FindLabel(DF, arg[4], aLab))
       return 1;
     if (aLab.FindAttribute(TNaming_NamedShape::GetID(), TNS))
@@ -257,7 +238,6 @@ static int DDataStd_SetPattern(Draw_Interpretor& di, int nb, const char** arg)
       aP->Axis1(TNS);
     }
 
-    // realEntry
     if (!DDF::FindLabel(DF, arg[5], aLab))
       return 1;
     if (aLab.FindAttribute(TDataStd_Real::GetID(), TReal))
@@ -265,7 +245,6 @@ static int DDataStd_SetPattern(Draw_Interpretor& di, int nb, const char** arg)
       aP->Value1(TReal);
     }
 
-    // intEntry
     if (!DDF::FindLabel(DF, arg[6], aLab))
       return 1;
     if (aLab.FindAttribute(TDataStd_Integer::GetID(), TInt))
@@ -283,7 +262,6 @@ static int DDataStd_SetPattern(Draw_Interpretor& di, int nb, const char** arg)
         return 1;
       }
 
-      // NSentry
       if (!DDF::FindLabel(DF, arg[7], aLab))
         return 1;
       if (aLab.FindAttribute(TNaming_NamedShape::GetID(), TNS))
@@ -291,7 +269,6 @@ static int DDataStd_SetPattern(Draw_Interpretor& di, int nb, const char** arg)
         aP->Axis2(TNS);
       }
 
-      // realEntry
       if (!DDF::FindLabel(DF, arg[8], aLab))
         return 1;
       if (aLab.FindAttribute(TDataStd_Real::GetID(), TReal))
@@ -299,7 +276,6 @@ static int DDataStd_SetPattern(Draw_Interpretor& di, int nb, const char** arg)
         aP->Value2(TReal);
       }
 
-      // intEntry
       if (!DDF::FindLabel(DF, arg[9], aLab))
         return 1;
       if (aLab.FindAttribute(TDataStd_Integer::GetID(), TInt))
@@ -327,10 +303,6 @@ static int DDataStd_SetPattern(Draw_Interpretor& di, int nb, const char** arg)
   return 0;
 }
 
-//=======================================================================
-// function : DDataStd_DumpPattern
-// purpose  : DumpPattern (DF, entry)
-//=======================================================================
 static int DDataStd_DumpPattern(Draw_Interpretor& di, int nb, const char** arg)
 {
   occ::handle<TDataXtd_PatternStd> CTR;
@@ -344,10 +316,6 @@ static int DDataStd_DumpPattern(Draw_Interpretor& di, int nb, const char** arg)
       return 1;
     if (L.FindAttribute(TDataXtd_PatternStd::GetID(), CTR))
     {
-      //      Standard_SStream aStream;
-      //      CTR->Dump(aStream);
-      //      aStream << std::ends;
-      //      di << aStream.rdbuf()->str();
 
       TCollection_AsciiString S;
       TDF_Tool::Entry(CTR->Label(), S);
@@ -404,7 +372,7 @@ static int DDataStd_DumpPattern(Draw_Interpretor& di, int nb, const char** arg)
         if (current.FindAttribute(TDataXtd_PatternStd::GetID(), CTR))
         {
           Standard_SStream aStream;
-          //          DDataStd::DumpPattern (CTR,aStream);
+
           CTR->Dump(aStream);
           di << aStream;
         }
@@ -416,10 +384,6 @@ static int DDataStd_DumpPattern(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=======================================================================
-// function : DDataStd_SetPosition
-// purpose  : SetPosition (DF, entry, X, Y, Z)
-//=======================================================================
 static int DDataStd_SetPosition(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 6)
@@ -440,10 +404,6 @@ static int DDataStd_SetPosition(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=======================================================================
-// function : DDataStd_GetPosition
-// purpose  : GetPosition (DF, entry, X(out), Y(out), Z(out))
-//=======================================================================
 static int DDataStd_GetPosition(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 6)
@@ -469,8 +429,6 @@ static int DDataStd_GetPosition(Draw_Interpretor& di, int nb, const char** arg)
   di << "Usage: GetPosition (DF, entry, X(out), Y(out), Z(out))\n";
   return 1;
 }
-
-//=================================================================================================
 
 void DDataStd::ConstraintCommands(Draw_Interpretor& theCommands)
 

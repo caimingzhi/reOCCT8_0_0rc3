@@ -13,7 +13,6 @@
 class FEmTool_Curve;
 class math_Matrix;
 
-//! defined criterion to smooth points in curve
 class AppDef_SmoothCriterion : public Standard_Transient
 {
 
@@ -54,7 +53,6 @@ public:
 
   Standard_EXPORT virtual void Gradient(const int Element, const int Dimension, math_Vector& G) = 0;
 
-  //! Convert the assembly Vector in an Curve;
   Standard_EXPORT virtual void InputVector(
     const math_Vector&                                                             X,
     const occ::handle<NCollection_HArray2<occ::handle<NCollection_HArray1<int>>>>& AssTable) = 0;

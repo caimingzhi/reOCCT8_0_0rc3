@@ -11,7 +11,6 @@ class StepShape_ClosedShell;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ClosedShell
 class RWStepShape_RWClosedShell
 {
 public:

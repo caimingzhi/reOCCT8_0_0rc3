@@ -7,7 +7,6 @@
 #include <gp_Pln.hpp>
 class Geom_Surface;
 
-//! Find if a surface is a planar surface.
 class GeomLib_IsPlanarSurface
 {
 public:
@@ -16,10 +15,8 @@ public:
   Standard_EXPORT GeomLib_IsPlanarSurface(const occ::handle<Geom_Surface>& S,
                                           const double                     Tol = 1.0e-7);
 
-  //! Return if the Surface is a plan
   Standard_EXPORT bool IsPlanar() const;
 
-  //! Return the plan definition
   Standard_EXPORT const gp_Pln& Plan() const;
 
 private:

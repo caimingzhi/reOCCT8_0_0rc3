@@ -11,7 +11,6 @@ class StepRepr_GlobalUnitAssignedContext;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for GlobalUnitAssignedContext
 class RWStepRepr_RWGlobalUnitAssignedContext
 {
 public:

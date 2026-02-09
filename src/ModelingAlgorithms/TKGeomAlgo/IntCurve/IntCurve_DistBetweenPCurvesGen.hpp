@@ -12,8 +12,6 @@
 #define THECURVE1 (*((TheCurve*)thecurve1))
 #define THECURVE2 (*((TheCurve*)thecurve2))
 
-//=================================================================================================
-
 IntCurve_DistBetweenPCurvesGen::IntCurve_DistBetweenPCurvesGen(const TheCurve& C1,
                                                                const TheCurve& C2)
 {
@@ -21,21 +19,15 @@ IntCurve_DistBetweenPCurvesGen::IntCurve_DistBetweenPCurvesGen(const TheCurve& C
   thecurve2 = (void*)(&C2);
 }
 
-//=================================================================================================
-
 int IntCurve_DistBetweenPCurvesGen::NbVariables(void) const
 {
   return (2);
 }
 
-//=================================================================================================
-
 int IntCurve_DistBetweenPCurvesGen::NbEquations(void) const
 {
   return (2);
 }
-
-//=================================================================================================
 
 bool IntCurve_DistBetweenPCurvesGen::Value(const math_Vector& X, math_Vector& F)
 {
@@ -46,8 +38,6 @@ bool IntCurve_DistBetweenPCurvesGen::Value(const math_Vector& X, math_Vector& F)
   F(2) = P1.Y() - P2.Y();
   return (true);
 }
-
-//=================================================================================================
 
 bool IntCurve_DistBetweenPCurvesGen::Derivatives(const math_Vector& X, math_Matrix& D)
 {
@@ -63,8 +53,6 @@ bool IntCurve_DistBetweenPCurvesGen::Derivatives(const math_Vector& X, math_Matr
 
   return (true);
 }
-
-//=================================================================================================
 
 bool IntCurve_DistBetweenPCurvesGen::Values(const math_Vector& X, math_Vector& F, math_Matrix& D)
 {
@@ -85,5 +73,3 @@ bool IntCurve_DistBetweenPCurvesGen::Values(const math_Vector& X, math_Vector& F
 
   return (true);
 }
-
-//======================================================================

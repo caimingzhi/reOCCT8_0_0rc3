@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include <Interface_GeneralModule.hpp>
@@ -27,8 +16,6 @@
 
 #include <cstdio>
 
-// Constructor: Initialize STEP dumper with model, protocol, and output mode
-// mode > 0 sets label mode to 2 for enhanced entity labeling
 StepData_StepDumper::StepData_StepDumper(const occ::handle<StepData_StepModel>& amodel,
                                          const occ::handle<StepData_Protocol>&  protocol,
                                          const int                              mode)
@@ -46,30 +33,26 @@ StepData_StepWriter& StepData_StepDumper::StepWriter()
   return thewriter;
 }
 
-// Main dump method: outputs entity information to stream with different levels of detail
-// level <= 0: basic entity type and identifier information only
-// level == 1: entity identifiers and basic structure
-// level > 1:  complete entity data with all referenced entities
 bool StepData_StepDumper::Dump(Standard_OStream&                      S,
                                const occ::handle<Standard_Transient>& ent,
                                const int                              level)
 {
   int                     i, nb = themodel->NbEntities();
-  NCollection_Array1<int> ids(0, nb); // Array to store entity identifiers
+  NCollection_Array1<int> ids(0, nb);
   ids.Init(0);
-  int num  = themodel->Number(ent);     // Entity number in model
-  int nlab = themodel->IdentLabel(ent); // Entity identifier label
+  int num  = themodel->Number(ent);
+  int nlab = themodel->IdentLabel(ent);
   ids.SetValue(num, (nlab > 0 ? nlab : -1));
 
   if (level <= 0)
   {
-    // Basic output: show entity number and type information only
+
     occ::handle<StepData_ReadWriteModule> module;
     int                                   CN;
     if (num > 0)
       S << "#" << num << " = ";
     else
-      S << "#??? = "; // Unknown entity number
+      S << "#??? = ";
     if (thewlib.Select(ent, module, CN))
     {
       if (module->IsComplex(CN))
@@ -98,7 +81,7 @@ bool StepData_StepDumper::Dump(Standard_OStream&                      S,
 
   else if (level == 1)
   {
-    // Collect entity identifiers
+
     occ::handle<Standard_Transient>      anent;
     occ::handle<Interface_GeneralModule> module;
     int                                  CN;
@@ -106,7 +89,7 @@ bool StepData_StepDumper::Dump(Standard_OStream&                      S,
     {
       Interface_EntityIterator iter;
       module->FillSharedCase(CN, ent, iter);
-      module->ListImpliedCase(CN, ent, iter); // accumulate entities
+      module->ListImpliedCase(CN, ent, iter);
       for (; iter.More(); iter.Next())
       {
         anent = iter.Value();
@@ -114,15 +97,13 @@ bool StepData_StepDumper::Dump(Standard_OStream&                      S,
         ids.SetValue(themodel->Number(anent), (nlab > 0 ? nlab : -1));
       }
     }
-    // Send entity to writer
+
     thewriter.SendEntity(num, thewlib);
-    ////    thewriter.Print(S);
   }
   else
   {
     occ::handle<Standard_Transient> anent;
-    // Debug output: dumping entity number
-    // Send entities to writer
+
     NCollection_Array1<int> tab(0, nb);
     tab.Init(0);
     tab.SetValue(num, 1);
@@ -132,7 +113,7 @@ bool StepData_StepDumper::Dump(Standard_OStream&                      S,
     {
       Interface_EntityIterator iter;
       module->FillSharedCase(CN, ent, iter);
-      module->ListImpliedCase(CN, ent, iter); // accumulate entities
+      module->ListImpliedCase(CN, ent, iter);
       for (; iter.More(); iter.Next())
       {
         tab.SetValue(themodel->Number(iter.Value()), 1);
@@ -140,7 +121,7 @@ bool StepData_StepDumper::Dump(Standard_OStream&                      S,
     }
     for (i = 1; i <= nb; i++)
     {
-      // Process entity identifiers list
+
       if (tab.Value(i) == 0)
         continue;
       anent = themodel->Value(i);
@@ -149,7 +130,7 @@ bool StepData_StepDumper::Dump(Standard_OStream&                      S,
       {
         Interface_EntityIterator iter;
         module->FillSharedCase(CN, anent, iter);
-        module->ListImpliedCase(CN, anent, iter); // accumulate entities
+        module->ListImpliedCase(CN, anent, iter);
         for (; iter.More(); iter.Next())
         {
           anent = iter.Value();
@@ -158,29 +139,25 @@ bool StepData_StepDumper::Dump(Standard_OStream&                      S,
         }
       }
     }
-    ////    thewriter.Print(S);
   }
 
-  // Display entity identifiers if present
-  // Count different types of identifiers: distinct (nbi), matching entity number (nbq),
-  // without identifier (nbu), total entities with identifiers (nbe)
   int nbi = 0, nbe = 0, nbq = 0, nbu = 0;
   for (i = 1; i <= nb; i++)
   {
     nlab = ids.Value(i);
     if (nlab == 0)
-      continue; // Skip entities without identifiers
-    nbe++;      // Count entities with identifiers
+      continue;
+    nbe++;
     if (nlab < 0)
-      nbu = 0; // Entities without proper identifier
+      nbu = 0;
     else if (nlab == i)
-      nbq = 0; // Entities where identifier matches entity number
+      nbq = 0;
     else if (nlab > 0)
-      nbi++; // Entities with distinct proper identifiers
+      nbi++;
   }
   if (nbe > 0)
   {
-    // Debug statistics: displayed entities, matching identifiers, distinct identifiers
+
     if (nbu > 0)
     {
       S << " (no ident): ";
@@ -203,10 +180,10 @@ bool StepData_StepDumper::Dump(Standard_OStream&                      S,
       S << std::endl;
     }
     if (nbi < 0)
-    { // Display help format instead of individual num:#id entries
+    {
       int  nbl = 0, nbr = 0, nbr0 = 0, nbc = 0;
       char unid[30];
-      // Alternative format: "#num	     #ident"
+
       S << " (proper ident):  num:#ident  num:#ident  ..." << std::endl;
       for (i = 1; i <= nb; i++)
       {
@@ -229,18 +206,12 @@ bool StepData_StepDumper::Dump(Standard_OStream&                      S,
         }
         S << unid;
         nbr0 = nbr;
-
-        // Alternative formatting approaches for entity identifiers:
-        // - Line wrapping at 79 characters
-        // - Grouped output with spacing
-        // - Tabular format with entity ranks and STEP identifiers
       }
       if (nbl > 0)
         S << std::endl;
     }
     if (nbi > 0)
       S << "In dump, iii:#jjj means : entity rank iii has step ident #jjj" << std::endl;
-    // Debug output: entity dumping information with level details
   }
   if (level > 0)
   {

@@ -23,7 +23,6 @@ void IGESDefs_AssociativityDef::Init(const occ::handle<NCollection_HArray1<int>>
   theNbItemsPerClass = numItems;
   theItems           = items;
   InitTypeAndForm(302, FormNumber());
-  //  FormNumber is free over 5000
 }
 
 void IGESDefs_AssociativityDef::SetFormNumber(const int form)
@@ -39,7 +38,6 @@ int IGESDefs_AssociativityDef::NbClassDefs() const
 bool IGESDefs_AssociativityDef::IsBackPointerReq(const int ClassNum) const
 {
   return (theBackPointerReqs->Value(ClassNum) == 1);
-  //  1 True  2 False
 }
 
 int IGESDefs_AssociativityDef::BackPointerReq(const int ClassNum) const
@@ -50,7 +48,6 @@ int IGESDefs_AssociativityDef::BackPointerReq(const int ClassNum) const
 bool IGESDefs_AssociativityDef::IsOrdered(const int ClassNum) const
 {
   return (theClassOrders->Value(ClassNum) == 1);
-  //  1 True  2 False
 }
 
 int IGESDefs_AssociativityDef::ClassOrder(const int ClassNum) const

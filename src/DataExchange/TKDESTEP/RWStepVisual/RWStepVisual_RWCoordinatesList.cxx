@@ -8,11 +8,7 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWCoordinatesList::RWStepVisual_RWCoordinatesList() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWCoordinatesList::ReadStep(
   const occ::handle<StepData_StepReaderData>&    data,
@@ -20,17 +16,16 @@ void RWStepVisual_RWCoordinatesList::ReadStep(
   occ::handle<Interface_Check>&                  ach,
   const occ::handle<StepVisual_CoordinatesList>& ent) const
 {
-  // Number of Parameter Control
+
   if (!data->CheckNbParams(num, 3, ach, "coordinate list"))
     return;
 
-  // Inherited field : name
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
   int nbP = 0;
   data->ReadInteger(num, 2, "number_points", ach, nbP);
 
-  occ::handle<NCollection_HArray1<gp_XYZ>> aPoints; // = new NCollection_HArray1<gp_XYZ>(1, nbP);
+  occ::handle<NCollection_HArray1<gp_XYZ>> aPoints;
   int                                      nsub2;
   if (data->ReadSubList(num, 3, "items", ach, nsub2))
   {
@@ -63,24 +58,18 @@ void RWStepVisual_RWCoordinatesList::ReadStep(
     }
   }
 
-  //--- Initialisation of the read entity ---
-
   ent->Init(aName, aPoints);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWCoordinatesList::WriteStep(
   StepData_StepWriter&                           SW,
   const occ::handle<StepVisual_CoordinatesList>& ent) const
 {
-  // Inherited field : name
+
   SW.Send(ent->Name());
 
-  // Own field : npoints
   SW.Send(ent->Points()->Length());
 
-  // Own field : position_coords
   SW.OpenSub();
   for (int i = 1; i <= ent->Points()->Length(); i++)
   {

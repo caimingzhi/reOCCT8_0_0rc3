@@ -16,7 +16,7 @@
 IGESGraph_ToolColor::IGESGraph_ToolColor() = default;
 
 void IGESGraph_ToolColor::ReadOwnParams(const occ::handle<IGESGraph_Color>& ent,
-                                        const occ::handle<IGESData_IGESReaderData>& /*IR*/,
+                                        const occ::handle<IGESData_IGESReaderData>&,
                                         IGESData_ParamReader& PR) const
 {
   double                                tempRed, tempGreen, tempBlue;
@@ -44,21 +44,21 @@ void IGESGraph_ToolColor::WriteOwnParams(const occ::handle<IGESGraph_Color>& ent
   IW.Send(Red);
   IW.Send(Green);
   IW.Send(Blue);
-  //  WARNING  place to reserve (Null) if there are additional pointers
+
   if (ent->HasColorName())
     IW.Send(ent->ColorName());
   else
-    IW.SendVoid(); // placekeeper to be reserved for additional pointers
+    IW.SendVoid();
 }
 
-void IGESGraph_ToolColor::OwnShared(const occ::handle<IGESGraph_Color>& /*ent*/,
-                                    Interface_EntityIterator& /*iter*/) const
+void IGESGraph_ToolColor::OwnShared(const occ::handle<IGESGraph_Color>&,
+                                    Interface_EntityIterator&) const
 {
 }
 
 void IGESGraph_ToolColor::OwnCopy(const occ::handle<IGESGraph_Color>& another,
                                   const occ::handle<IGESGraph_Color>& ent,
-                                  Interface_CopyTool& /*TC*/) const
+                                  Interface_CopyTool&) const
 {
   double                                tempRed, tempGreen, tempBlue;
   occ::handle<TCollection_HAsciiString> tempColorName;
@@ -69,8 +69,7 @@ void IGESGraph_ToolColor::OwnCopy(const occ::handle<IGESGraph_Color>& another,
   ent->Init(tempRed, tempGreen, tempBlue, tempColorName);
 }
 
-IGESData_DirChecker IGESGraph_ToolColor::DirChecker(
-  const occ::handle<IGESGraph_Color>& /*ent*/) const
+IGESData_DirChecker IGESGraph_ToolColor::DirChecker(const occ::handle<IGESGraph_Color>&) const
 {
   IGESData_DirChecker DC(314, 0);
   DC.Structure(IGESData_DefVoid);
@@ -85,20 +84,16 @@ IGESData_DirChecker IGESGraph_ToolColor::DirChecker(
   return DC;
 }
 
-void IGESGraph_ToolColor::OwnCheck(const occ::handle<IGESGraph_Color>& /*ent*/,
+void IGESGraph_ToolColor::OwnCheck(const occ::handle<IGESGraph_Color>&,
                                    const Interface_ShareTool&,
-                                   occ::handle<Interface_Check>& /*ach*/) const
+                                   occ::handle<Interface_Check>&) const
 {
-  //  if (ent->RankColor() == 0)
-  //    ach.AddFail("Color Rank is zero");
-  //  else if (ent->RankColor() < 1 || ent->RankColor() > 8)
-  //    ach.AddFail("Color Rank not between 1 to 8");
 }
 
 void IGESGraph_ToolColor::OwnDump(const occ::handle<IGESGraph_Color>& ent,
-                                  const IGESData_IGESDumper& /*dumper*/,
+                                  const IGESData_IGESDumper&,
                                   Standard_OStream& S,
-                                  const int /*level*/) const
+                                  const int) const
 {
   S << "IGESGraph_Color\n";
 

@@ -4,11 +4,7 @@
 #include <StepBasic_ProductDefinitionReference.hpp>
 #include <StepBasic_ProductDefinitionReferenceWithLocalRepresentation.hpp>
 
-//=================================================================================================
-
 StepBasic_ProductDefinitionOrReference::StepBasic_ProductDefinitionOrReference() = default;
-
-//=================================================================================================
 
 int StepBasic_ProductDefinitionOrReference::CaseNum(
   const occ::handle<Standard_Transient>& ent) const
@@ -24,23 +20,17 @@ int StepBasic_ProductDefinitionOrReference::CaseNum(
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ProductDefinition> StepBasic_ProductDefinitionOrReference::ProductDefinition()
   const
 {
   return GetCasted(StepBasic_ProductDefinition, Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ProductDefinitionReference> StepBasic_ProductDefinitionOrReference::
   ProductDefinitionReference() const
 {
   return GetCasted(StepBasic_ProductDefinitionReference, Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_ProductDefinitionReferenceWithLocalRepresentation>
   StepBasic_ProductDefinitionOrReference::ProductDefinitionReferenceWithLocalRepresentation() const

@@ -64,20 +64,16 @@ occ::handle<Expr_GeneralExpression> Expr_Division::Derivative(
   occ::handle<Expr_GeneralExpression> myfder   = myfirst->Derivative(X);
   occ::handle<Expr_GeneralExpression> mysder   = mysecond->Derivative(X);
 
-  // "u'v"
   occ::handle<Expr_Product> firstprod = myfder * Expr::CopyShare(mysecond);
 
   occ::handle<Expr_GeneralExpression> firstsimp = firstprod->ShallowSimplified();
-  // "uv'"
+
   occ::handle<Expr_Product>           secondprod = Expr::CopyShare(myfirst) * mysder;
   occ::handle<Expr_GeneralExpression> secondsimp = secondprod->ShallowSimplified();
-  // "u'v - uv'"
+
   occ::handle<Expr_Difference> mynumer = firstsimp - secondsimp;
 
-  // " v2"
   occ::handle<Expr_Square> mydenom = new Expr_Square(Expr::CopyShare(mysecond));
-
-  // result = "u'v-uv' / v2"
 
   occ::handle<Expr_GeneralExpression> snumer = mynumer->ShallowSimplified();
   occ::handle<Expr_GeneralExpression> sdenom = mydenom->ShallowSimplified();
@@ -96,12 +92,12 @@ occ::handle<Expr_GeneralExpression> Expr_Division::ShallowSimplified() const
     occ::handle<Expr_NumericValue> myNVfirst = occ::down_cast<Expr_NumericValue>(myfirst);
     if (myNVfirst->GetValue() == 0.0)
     {
-      // case 0/X2
+
       return new Expr_NumericValue(0.0);
     }
     if (mysecond->IsKind(STANDARD_TYPE(Expr_NumericValue)))
     {
-      // case num1/num2
+
       occ::handle<Expr_NumericValue> myNVsecond = occ::down_cast<Expr_NumericValue>(mysecond);
       return new Expr_NumericValue(myNVfirst->GetValue() / myNVsecond->GetValue());
     }
@@ -110,11 +106,11 @@ occ::handle<Expr_GeneralExpression> Expr_Division::ShallowSimplified() const
   {
     if (mysecond->IsKind(STANDARD_TYPE(Expr_NumericValue)))
     {
-      // case X1/num2
+
       occ::handle<Expr_NumericValue> myNVsecond = occ::down_cast<Expr_NumericValue>(mysecond);
       if (myNVsecond->GetValue() == 1.0)
       {
-        // case X1/1
+
         return myfirst;
       }
     }

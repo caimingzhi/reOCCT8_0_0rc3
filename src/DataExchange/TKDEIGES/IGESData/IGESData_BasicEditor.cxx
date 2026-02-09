@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// #73 rln 10.03.99 S4135: "read.scale.unit" does not affect GlobalSection
 
 #include <IGESData_BasicEditor.hpp>
 #include <IGESData_ColorEntity.hpp>
@@ -70,8 +57,6 @@ occ::handle<IGESData_IGESModel> IGESData_BasicEditor::Model() const
   return themodel;
 }
 
-// ####   Work on the Header (GlobalSection)    ####
-
 bool IGESData_BasicEditor::SetUnitFlag(const int flag)
 {
   if (themodel.IsNull())
@@ -95,14 +80,10 @@ bool IGESData_BasicEditor::SetUnitValue(const double val)
   if (val <= 0.)
     return false;
   double vmm = val * themodel->GlobalSection().CascadeUnit();
-  // #73 rln 10.03.99 S4135: "read.scale.unit" does not affect GlobalSection
-  // if (Interface_Static::IVal("read.scale.unit") == 1) vmm = vmm * 1000.;
-  // vmm is expressed in MILLIMETERS
+
   int aFlag = GetFlagByValue(vmm);
   return (aFlag > 0) ? SetUnitFlag(aFlag) : false;
 }
-
-//=================================================================================================
 
 int IGESData_BasicEditor::GetFlagByValue(const double theValue)
 {
@@ -128,8 +109,6 @@ int IGESData_BasicEditor::GetFlagByValue(const double theValue)
     return 11;
   return 0;
 }
-
-//=================================================================================================
 
 bool IGESData_BasicEditor::SetUnitName(const char* name)
 {
@@ -171,8 +150,6 @@ void IGESData_BasicEditor::ApplyUnit(const bool enforce)
   theunit = false;
 }
 
-// ####   Global work on entities    ####
-
 void IGESData_BasicEditor::ComputeStatus()
 {
   if (themodel.IsNull())
@@ -181,38 +158,15 @@ void IGESData_BasicEditor::ComputeStatus()
   if (nb == 0)
     return;
   NCollection_Array1<int> subs(0, nb);
-  subs.Init(0);                         // gere Subordinate Status
-  Interface_Graph G(themodel, theglib); // gere & memorise UseFlag
+  subs.Init(0);
+  Interface_Graph G(themodel, theglib);
   G.ResetStatus();
 
-  //  2 phases : first we do an overall calculation. Then we apply
-  //             The whole model is processed, no favorites
-
-  //  Each entity will give a contribution on its own descendants :
-  //  for Subordinate (1 or 2 cumulative), for UseFlag (1 to 6 exclusive)
-  //    (6 since IGES-5.2)
-
-  //  For Subordinate : Drawing and 402 (except maybe dimensioned geometry ?) give
-  //   Logical, the rest implies Physical (on direct descendants)
-
-  //  For UseFlag, a bit more complicated :
-  //  On one hand, UseFlags propagate to direct descendants or not
-  //  On the other hand cases are more complicated (and not as clear)
-
-  //  WARNING, we can only process what can be deduced from the graph by relying
-  //  on "IGES Type Number", we don't have the right here to access the
-  //  specific description of different types : handled by AutoCorrect.
-  //  Example : a curve is 3D or parametric 2D(UV), not only according to its
-  //  ancestor, but according to the role it plays there (ex. for CurveOnSurface :
-  //  CurveUV/Curve3D)
-  //  Currently handled (necessary) :
-  //  1(Annotation), also 4(for meshing). 5(ParamUV) handled by AutoCorrect
-
   int CN;
-  int i; // svv Jan11 2000 : porting on DEC
+  int i;
   for (i = 1; i <= nb; i++)
   {
-    //  Subordinate (on direct descendants only)
+
     occ::handle<IGESData_IGESEntity>     ent = themodel->Entity(i);
     int                                  igt = ent->TypeNumber();
     occ::handle<Interface_GeneralModule> gmodule;
@@ -228,39 +182,21 @@ void IGESData_BasicEditor::ComputeStatus()
           subs.SetValue(nums, subs.Value(nums) | 2);
         else
           subs.SetValue(nums, subs.Value(nums) | 1);
-        ////	std::cout<<"ComputeStatus : nums = "<<nums<<" ->"<<subs.Value(nums)<<std::endl;
       }
     }
-    //  UseFlag (a propager)
+
     if (igt / 100 == 2)
     {
-      G.GetFromEntity(ent, true, 1); // Annotation
+      G.GetFromEntity(ent, true, 1);
       G.GetFromEntity(ent, false, ent->UseFlag());
     }
     else if (igt == 134 || igt == 116 || igt == 132)
     {
-      Interface_EntityIterator sh = G.Sharings(ent); // Maillage ...
+      Interface_EntityIterator sh = G.Sharings(ent);
       if (sh.NbEntities() > 0)
         G.GetFromEntity(ent, true, 4);
-      //  UV : see AutoCorrect of concerned classes (Boundary and CurveOnSurface)
-      /*
-          } else if (ent->IsKind(STANDARD_TYPE(IGESGeom_CurveOnSurface))) {
-            DeclareAndCast(IGESGeom_CurveOnSurface,cos,ent);    // Curve UV
-            G.GetFromEntity (cos->CurveUV(),true,5);
-          } else if (ent->IsKind(STANDARD_TYPE(IGESGeom_Boundary))) {
-            DeclareAndCast(IGESGeom_Boundary,bnd,ent);          // Curve UV
-            int nc = bnd->NbModelSpaceCurves();
-            for (int ic = 1; ic <= nc; ic ++) {
-          int nuv = bnd->NbParameterCurves(ic);
-          for (int juv = 1; juv <= nuv; juv ++)
-            G.GetFromEntity(bnd->ParameterCurve(ic,juv),true,5);
-            }
-      */
     }
   }
-
-  //  Now, we will apply all this "by force"
-  //  Only exception: non-zero UseFlags already in place are left
 
   for (i = 1; i <= nb; i++)
   {
@@ -270,7 +206,7 @@ void IGESData_BasicEditor::ComputeStatus()
     if (uf == 0)
       uf = G.Status(i);
     int hy = ent->HierarchyStatus();
-    ////    std::cout<<" Ent.n0."<<i<<" Subord="<<subs.Value(i)<<" Use="<<uf<<std::endl;
+
     ent->InitStatus(bl, subs.Value(i), uf, hy);
   }
 }
@@ -290,49 +226,7 @@ bool IGESData_BasicEditor::AutoCorrect(const occ::handle<IGESData_IGESEntity>& e
   bool done = false;
   if (ent.IsNull())
     return done;
-  //    Corrections in the header (present entities)
-  //    We don't check "Shared" items, present anyway
-  //    Header : handled by DirChecker for standard cases
-  /*
-    linefont = ent->LineFont();
-    if (!linefont.IsNull() && themodel->Number(linefont) == 0) {
-      linefont.Nullify();
-      ent->InitLineFont(linefont,0);
-      done = true;
-    }
-    levelist = ent->LevelList();
-    if (!levelist.IsNull() && themodel->Number(levelist) == 0) {
-      levelist.Nullify();
-      ent->InitLevel(levelist,0);
-      done = true;
-    }
-    view = ent->View();
-    if (!view.IsNull() && themodel->Number(view) == 0) {
-      view.Nullify();
-      ent->InitView(view);
-      done = true;
-    }
-    transf = ent->Transf();
-    if (!transf.IsNull() && themodel->Number(transf) == 0) {
-      transf.Nullify();
-      ent->InitTransf(transf);
-      done = true;
-    }
-    labdisp = ent->LabelDisplay();
-    if (!labdisp.IsNull() && themodel->Number(labdisp) == 0) {
-      labdisp.Nullify();
-      ent->InitMisc (ent->Structure(),labdisp,ent->LineWeightNumber());
-      done = true;
-    }
-    color = ent->Color();
-    if (!color.IsNull() && themodel->Number(color) == 0) {
-      color.Nullify();
-      ent->InitColor(color,0);
-      done = true;
-    }
-  */
 
-  //    Corrections in Assocs (Props remain attached to the Entity)
   Interface_EntityIterator iter = ent->Associativities();
   for (iter.Start(); iter.More(); iter.Next())
   {
@@ -344,7 +238,6 @@ bool IGESData_BasicEditor::AutoCorrect(const occ::handle<IGESData_IGESEntity>& e
     }
   }
 
-  //    Corrections specifiques
   int                                  CN;
   occ::handle<Interface_GeneralModule> gmodule;
   if (theglib.Select(ent, gmodule, CN))
@@ -372,8 +265,6 @@ int IGESData_BasicEditor::AutoCorrectModel()
   }
   return res;
 }
-
-//=================================================================================================
 
 int IGESData_BasicEditor::UnitNameFlag(const char* name)
 {
@@ -412,27 +303,27 @@ double IGESData_BasicEditor::UnitFlagValue(const int flag)
   switch (flag)
   {
     case 1:
-      return 25.4; // inch
+      return 25.4;
     case 2:
-      return 1.; // millimeter
+      return 1.;
     case 3:
       return 1.;
     case 4:
-      return 304.8; // foot
+      return 304.8;
     case 5:
-      return 1609344.; // mile
+      return 1609344.;
     case 6:
-      return 1000.; // meter
+      return 1000.;
     case 7:
-      return 1000000.; // kilometer
+      return 1000000.;
     case 8:
-      return 0.0254; // mil (0.001 inch)
+      return 0.0254;
     case 9:
-      return 0.001; // micron
+      return 0.001;
     case 10:
-      return 10.; // centimeter
+      return 10.;
     case 11:
-      return 0.0000254; // microinch
+      return 0.0000254;
     default:
       return 0.;
   }

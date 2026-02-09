@@ -11,7 +11,6 @@ class StepRepr_CharacterizedRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for CharacterizedRepresentation
 class RWStepRepr_RWCharacterizedRepresentation
 {
 public:

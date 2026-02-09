@@ -8,11 +8,6 @@
 class StepGeom_BSplineSurfaceWithKnots;
 class Geom_BSplineSurface;
 
-//! This class implements the mapping between class
-//! BSplineSurface from Geom and the class
-//! BSplineSurfaceWithKnots from
-//! StepGeom which describes a
-//! bspline_Surface_with_knots from Prostep
 class GeomToStep_MakeBSplineSurfaceWithKnots : public GeomToStep_Root
 {
 public:

@@ -18,8 +18,6 @@ class gp_Pnt2d;
 class gp_Vec2d;
 class math_Matrix;
 
-//! This abstract class describes a Function of 1 Variable
-//! used to find a line tangent to two curves.
 class Geom2dGcc_FunctionTanCuCu : public math_FunctionSetWithDerivatives
 {
 public:
@@ -39,26 +37,14 @@ public:
                                       gp_Vec2d&          D21,
                                       gp_Vec2d&          D22);
 
-  //! returns the number of variables of the function.
   Standard_EXPORT int NbVariables() const override;
 
-  //! returns the number of equations of the function.
   Standard_EXPORT int NbEquations() const override;
 
-  //! Computes the value of the function F for the variable X.
-  //! It returns True if the computation is successfully done,
-  //! False otherwise.
   Standard_EXPORT bool Value(const math_Vector& X, math_Vector& F) override;
 
-  //! Computes the derivative of the function F for the variable X.
-  //! It returns True if the computation is successfully done,
-  //! False otherwise.
   Standard_EXPORT bool Derivatives(const math_Vector& X, math_Matrix& Deriv) override;
 
-  //! Computes the value and the derivative of the function F
-  //! for the variable X.
-  //! It returns True if the computation is successfully done,
-  //! False otherwise.
   Standard_EXPORT bool Values(const math_Vector& X, math_Vector& F, math_Matrix& Deriv) override;
 
 private:

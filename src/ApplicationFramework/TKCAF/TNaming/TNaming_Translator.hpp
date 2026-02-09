@@ -10,7 +10,6 @@
 #include <NCollection_DataMap.hpp>
 class TopoDS_Shape;
 
-//! only for Shape Copy test - to move in DNaming
 class TNaming_Translator
 {
 public:
@@ -24,10 +23,8 @@ public:
 
   Standard_EXPORT bool IsDone() const;
 
-  //! returns copied shape
   Standard_EXPORT const TopoDS_Shape Copied(const TopoDS_Shape& aShape) const;
 
-  //! returns DataMap of results; (shape <-> copied shape)
   Standard_EXPORT const NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&
                         Copied() const;
 

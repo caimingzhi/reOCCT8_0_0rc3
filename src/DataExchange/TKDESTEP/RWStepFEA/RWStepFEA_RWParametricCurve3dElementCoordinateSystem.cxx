@@ -5,12 +5,8 @@
 #include <StepFEA_ParametricCurve3dElementCoordinateDirection.hpp>
 #include <StepFEA_ParametricCurve3dElementCoordinateSystem.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWParametricCurve3dElementCoordinateSystem::
   RWStepFEA_RWParametricCurve3dElementCoordinateSystem() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWParametricCurve3dElementCoordinateSystem::ReadStep(
   const occ::handle<StepData_StepReaderData>&                          data,
@@ -18,16 +14,12 @@ void RWStepFEA_RWParametricCurve3dElementCoordinateSystem::ReadStep(
   occ::handle<Interface_Check>&                                        ach,
   const occ::handle<StepFEA_ParametricCurve3dElementCoordinateSystem>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "parametric_curve3d_element_coordinate_system"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   data->ReadString(num, 1, "representation_item.name", ach, aRepresentationItem_Name);
-
-  // Own fields of ParametricCurve3dElementCoordinateSystem
 
   occ::handle<StepFEA_ParametricCurve3dElementCoordinateDirection> aDirection;
   data->ReadEntity(num,
@@ -37,36 +29,23 @@ void RWStepFEA_RWParametricCurve3dElementCoordinateSystem::ReadStep(
                    STANDARD_TYPE(StepFEA_ParametricCurve3dElementCoordinateDirection),
                    aDirection);
 
-  // Initialize entity
   ent->Init(aRepresentationItem_Name, aDirection);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWParametricCurve3dElementCoordinateSystem::WriteStep(
   StepData_StepWriter&                                                 SW,
   const occ::handle<StepFEA_ParametricCurve3dElementCoordinateSystem>& ent) const
 {
 
-  // Inherited fields of RepresentationItem
-
   SW.Send(ent->StepRepr_RepresentationItem::Name());
-
-  // Own fields of ParametricCurve3dElementCoordinateSystem
 
   SW.Send(ent->Direction());
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWParametricCurve3dElementCoordinateSystem::Share(
   const occ::handle<StepFEA_ParametricCurve3dElementCoordinateSystem>& ent,
   Interface_EntityIterator&                                            iter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Own fields of ParametricCurve3dElementCoordinateSystem
 
   iter.AddItem(ent->Direction());
 }

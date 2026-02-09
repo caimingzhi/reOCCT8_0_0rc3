@@ -21,9 +21,6 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_Map.hpp>
 
-//=======================================================================
-// forward declarations of aux functions
-//=======================================================================
 static bool SelectDouble(NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& Doubles,
                          NCollection_List<TopoDS_Shape>&                         L,
                          TopoDS_Edge&                                            E);
@@ -38,8 +35,6 @@ static double GetNextParamOnPC(const occ::handle<Geom2d_Curve>& aPC,
                                const double&                    tolV,
                                const bool&                      reverse);
 
-//=================================================================================================
-
 BRepTools_WireExplorer::BRepTools_WireExplorer()
     : myReverse(false),
       myTolU(0.0),
@@ -47,30 +42,22 @@ BRepTools_WireExplorer::BRepTools_WireExplorer()
 {
 }
 
-//=================================================================================================
-
 BRepTools_WireExplorer::BRepTools_WireExplorer(const TopoDS_Wire& W)
 {
   TopoDS_Face F = TopoDS_Face();
   Init(W, F);
 }
 
-//=================================================================================================
-
 BRepTools_WireExplorer::BRepTools_WireExplorer(const TopoDS_Wire& W, const TopoDS_Face& F)
 {
   Init(W, F);
 }
-
-//=================================================================================================
 
 void BRepTools_WireExplorer::Init(const TopoDS_Wire& W)
 {
   TopoDS_Face F = TopoDS_Face();
   Init(W, F);
 }
-
-//=================================================================================================
 
 void BRepTools_WireExplorer::Init(const TopoDS_Wire& W, const TopoDS_Face& F)
 {
@@ -85,8 +72,7 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W, const TopoDS_Face& F)
   double UMin(0.0), UMax(0.0), VMin(0.0), VMax(0.0);
   if (!F.IsNull())
   {
-    // For the faces based on Cone, BSpline and Bezier compute the
-    // UV bounds to precise the UV tolerance values
+
     const GeomAbs_SurfaceType aSurfType = BRepAdaptor_Surface(F, false).GetType();
     if (aSurfType == GeomAbs_Cone || aSurfType == GeomAbs_BSplineSurface
         || aSurfType == GeomAbs_BezierSurface)
@@ -97,8 +83,6 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W, const TopoDS_Face& F)
 
   Init(W, F, UMin, UMax, VMin, VMax);
 }
-
-//=================================================================================================
 
 void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
                                   const TopoDS_Face& F,
@@ -132,18 +116,17 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
     }
     if (dfVertToler < Precision::Confusion())
     {
-      // Use tolerance of edges
+
       for (TopoDS_Iterator it(W); it.More(); it.Next())
         dfVertToler = std::max(BRep_Tool::Tolerance(TopoDS::Edge(it.Value())), dfVertToler);
 
       if (dfVertToler < Precision::Confusion())
-        // empty wire
+
         return;
     }
     myTolU = 2. * aGAS.UResolution(dfVertToler);
     myTolV = 2. * aGAS.VResolution(dfVertToler);
 
-    // uresolution for cone with infinite vmin vmax is too small.
     if (aGAS.GetType() == GeomAbs_Cone)
     {
       gp_Pnt aP;
@@ -188,12 +171,10 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
     myReverse = (myFace.Orientation() == TopAbs_REVERSED);
   }
 
-  // map of vertices to know if the wire is open
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> vmap;
-  //  map of infinite edges
+
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> anInfEmap;
 
-  // list the vertices
   TopoDS_Vertex                  V1, V2;
   NCollection_List<TopoDS_Shape> empty;
 
@@ -215,7 +196,6 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
         myMap.Bind(V1, empty);
       myMap(V1).Append(E);
 
-      // add or remove in the vertex map
       V1.Orientation(TopAbs_FORWARD);
       int currsize = vmap.Extent(), ind = vmap.Add(V1);
       if (currsize >= ind)
@@ -245,7 +225,7 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
           anInfEmap.Add(E);
       }
       else
-      { // Eori == TopAbs_REVERSED
+      {
         if (aL == Precision::Infinite())
           anInfEmap.Add(E);
       }
@@ -253,7 +233,6 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
     it.Next();
   }
 
-  // Construction of the set of double edges.
   TopoDS_Iterator                                        it2(W);
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> emap;
   while (it2.More())
@@ -263,15 +242,9 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
     it2.Next();
   }
 
-  // if vmap is not empty the wire is open, let us find the first vertex
   if (!vmap.IsEmpty())
   {
-    // NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator itt(vmap);
-    // while (itt.Key().Orientation() != TopAbs_FORWARD) {
-    //   itt.Next();
-    //   if (!itt.More()) break;
-    // }
-    // if (itt.More()) V1 = TopoDS::Vertex(itt.Key());
+
     int ind = 0;
     for (ind = 1; ind <= vmap.Extent(); ++ind)
     {
@@ -284,7 +257,7 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
   }
   else
   {
-    //   The wire is infinite Try to find the first vertex. It may be NULL.
+
     if (!anInfEmap.IsEmpty())
     {
       NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator itt(anInfEmap);
@@ -308,7 +281,6 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
       }
     }
 
-    // use the first vertex in iterator
     it.Initialize(W);
     while (it.More())
     {
@@ -316,8 +288,7 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
       TopAbs_Orientation Eori = E.Orientation();
       if (Eori == TopAbs_INTERNAL || Eori == TopAbs_EXTERNAL)
       {
-        // JYL 10-03-97 : waiting for correct processing
-        // of INTERNAL/EXTERNAL edges
+
         it.Next();
         continue;
       }
@@ -337,14 +308,10 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
   myVertex = TopExp::FirstVertex(myEdge, true);
 }
 
-//=================================================================================================
-
 bool BRepTools_WireExplorer::More() const
 {
   return !myEdge.IsNull();
 }
-
-//=================================================================================================
 
 void BRepTools_WireExplorer::Next()
 {
@@ -369,7 +336,7 @@ void BRepTools_WireExplorer::Next()
   }
   else if (l.Extent() == 1)
   {
-    //  Modified by Sergey KHROMOV - Fri Jun 21 10:28:01 2002 OCC325 Begin
+
     TopoDS_Vertex aV1;
     TopoDS_Vertex aV2;
     TopoDS_Edge   aNextEdge = TopoDS::Edge(l.First());
@@ -426,7 +393,7 @@ void BRepTools_WireExplorer::Next()
         return;
       }
     }
-    //  Modified by Sergey KHROMOV - Fri Jun 21 11:08:16 2002 End
+
     myEdge = TopoDS::Edge(l.First());
     l.Clear();
   }
@@ -434,16 +401,14 @@ void BRepTools_WireExplorer::Next()
   {
     if (myFace.IsNull())
     {
-      // Without Face - try to return edges
-      // as logically as possible
-      // At first degenerated edges.
+
       TopoDS_Edge E = myEdge;
       if (SelectDegenerated(l, E))
       {
         myEdge = E;
         return;
       }
-      // At second double edges.
+
       E = myEdge;
       if (SelectDouble(myDoubles, l, E))
       {
@@ -473,8 +438,7 @@ void BRepTools_WireExplorer::Next()
     }
     else
     {
-      // If we have more than one edge attached to the list
-      // probably wire that we explore contains a loop or loops.
+
       double                    dfFPar = 0., dfLPar = 0.;
       occ::handle<Geom2d_Curve> aPCurve = BRep_Tool::CurveOnSurface(myEdge, myFace, dfFPar, dfLPar);
       if (aPCurve.IsNull())
@@ -482,36 +446,25 @@ void BRepTools_WireExplorer::Next()
         myEdge = TopoDS_Edge();
         return;
       }
-      // Note: current < myVertex > which is last on < myEdge >
-      //       equals in 2D to following 2D points:
-      //       edge is FORWARD  - point with MAX parameter on PCurve;
-      //       edge is REVERSED - point with MIN parameter on PCurve.
 
-      // Get 2D point equals to < myVertex > in 2D for current edge.
       gp_Pnt2d PRef;
       if (myEdge.Orientation() == TopAbs_REVERSED)
         aPCurve->D0(dfFPar, PRef);
       else
         aPCurve->D0(dfLPar, PRef);
 
-      // Get next 2D point from current edge's PCurve with parameter
-      // F + dP (REV) or L - dP (FOR)
       bool   isrevese = (myEdge.Orientation() == TopAbs_REVERSED);
       double dfMPar   = GetNextParamOnPC(aPCurve, PRef, dfFPar, dfLPar, myTolU, myTolV, isrevese);
 
       gp_Pnt2d PRefm;
       aPCurve->D0(dfMPar, PRefm);
-      // Get vector from PRef to PRefm
+
       gp_Vec2d anERefDir(PRef, PRefm);
       if (anERefDir.SquareMagnitude() < gp::Resolution())
       {
         myEdge = TopoDS_Edge();
         return;
       }
-
-      // Search the list of edges looking for the edge having hearest
-      // 2D point of connected vertex to current one and smallest angle.
-      // First process all degenerated edges, then - all others.
 
       NCollection_List<TopoDS_Shape>::Iterator it;
       int                                      k = 1, kMin = 0, iDone = 0;
@@ -567,7 +520,7 @@ void BRepTools_WireExplorer::Next()
               aPCurve->D0(aEPm, aPEe);
               if (aPEb.SquareDistance(aPEe) <= gp::Resolution())
               {
-                // seems to be very short curve
+
                 gp_Vec2d aD;
                 aPCurve->D1(aEPm, aPEe, aD);
                 if (E.Orientation() == TopAbs_REVERSED)
@@ -604,7 +557,7 @@ void BRepTools_WireExplorer::Next()
           }
           it.Next();
           k++;
-        } // while it
+        }
 
         if (kMin == 0)
         {
@@ -614,16 +567,15 @@ void BRepTools_WireExplorer::Next()
         }
         else
           break;
-      } // for iDone
+      }
 
       if (kMin == 0)
       {
-        // probably unclosed in 2d space wire
+
         myEdge = TopoDS_Edge();
         return;
       }
 
-      // Selection the edge.
       it.Initialize(l);
       k = 1;
       while (it.More())
@@ -637,24 +589,20 @@ void BRepTools_WireExplorer::Next()
         it.Next();
         k++;
       }
-    } // else face != NULL && l > 1
-  } // else l > 1
+    }
+  }
 }
-
-//=================================================================================================
 
 const TopoDS_Edge& BRepTools_WireExplorer::Current() const
 {
   return myEdge;
 }
 
-//=================================================================================================
-
 TopAbs_Orientation BRepTools_WireExplorer::Orientation() const
 {
   if (myVertex.IsNull() && !myEdge.IsNull())
   {
-    // infinite edge
+
     return TopAbs_FORWARD;
   }
 
@@ -668,14 +616,10 @@ TopAbs_Orientation BRepTools_WireExplorer::Orientation() const
   throw Standard_NoSuchObject("BRepTools_WireExplorer::Orientation");
 }
 
-//=================================================================================================
-
 const TopoDS_Vertex& BRepTools_WireExplorer::CurrentVertex() const
 {
   return myVertex;
 }
-
-//=================================================================================================
 
 void BRepTools_WireExplorer::Clear()
 {
@@ -685,8 +629,6 @@ void BRepTools_WireExplorer::Clear()
   myFace   = TopoDS_Face();
   myVertex = TopoDS_Vertex();
 }
-
-//=================================================================================================
 
 bool SelectDouble(NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& Doubles,
                   NCollection_List<TopoDS_Shape>&                         L,
@@ -707,8 +649,6 @@ bool SelectDouble(NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& Double
   return false;
 }
 
-//=================================================================================================
-
 bool SelectDegenerated(NCollection_List<TopoDS_Shape>& L, TopoDS_Edge& E)
 {
   NCollection_List<TopoDS_Shape>::Iterator it(L);
@@ -728,8 +668,6 @@ bool SelectDegenerated(NCollection_List<TopoDS_Shape>& L, TopoDS_Edge& E)
   return false;
 }
 
-//=================================================================================================
-
 double GetNextParamOnPC(const occ::handle<Geom2d_Curve>& aPC,
                         const gp_Pnt2d&                  aPRef,
                         const double&                    fP,
@@ -739,7 +677,7 @@ double GetNextParamOnPC(const occ::handle<Geom2d_Curve>& aPC,
                         const bool&                      reverse)
 {
   double result = (reverse) ? fP : lP;
-  double dP     = std::abs(lP - fP) / 1000.; // was / 16.;
+  double dP     = std::abs(lP - fP) / 1000.;
   if (reverse)
   {
     double startPar      = fP;

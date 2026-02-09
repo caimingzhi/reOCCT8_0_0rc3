@@ -7,60 +7,16 @@
 #include <GeomAbs_Shape.hpp>
 #include <PLib_JacobiPolynomial.hpp>
 
-//! This class provides method to work with Jacobi Polynomials
-//! relatively to an order of constraint
-//! q = myWorkDegree-2*(myNivConstr+1)
-//! Jk(t) for k=0,q compose the Jacobi Polynomial base relatively to the weight W(t)
-//! iorder is the integer value for the constraints:
-//! iorder = 0 <=> ConstraintOrder = GeomAbs_C0
-//! iorder = 1 <=> ConstraintOrder = GeomAbs_C1
-//! iorder = 2 <=> ConstraintOrder = GeomAbs_C2
-//! P(t) = H(t) + W(t) * Q(t) Where W(t) = (1-t**2)**(2*iordre+2)
-//! the coefficients JacCoeff represents P(t) JacCoeff are stored as follow:
-//! @code
-//! c0(1)      c0(2) ....       c0(Dimension)
-//! c1(1)      c1(2) ....       c1(Dimension)
-//!
-//! cDegree(1) cDegree(2) ....  cDegree(Dimension)
-//! @endcode
-//! The coefficients
-//! @code
-//! c0(1)                  c0(2) ....            c0(Dimension)
-//! c2*ordre+1(1)                ...          c2*ordre+1(dimension)
-//! @endcode
-//! represents the part of the polynomial in the
-//! Hermit's base: H(t)
-//! @code
-//! H(t) = c0H00(t) + c1H01(t) + ...c(iordre)H(0 ;iorder)+ c(iordre+1)H10(t)+...
-//! @endcode
-//! The following coefficients represents the part of the
-//! polynomial in the Jacobi base ie Q(t)
-//! @code
-//! Q(t) = c2*iordre+2  J0(t) + ...+ cDegree JDegree-2*iordre-2
-//! @endcode
 class PLib_HermitJacobi
 {
 
 public:
-  //! Initialize the polynomial class
-  //! Degree has to be <= 30
-  //! ConstraintOrder has to be GeomAbs_C0
-  //! GeomAbs_C1
-  //! GeomAbs_C2
   Standard_EXPORT PLib_HermitJacobi(const int WorkDegree, const GeomAbs_Shape ConstraintOrder);
 
-  //! This method computes the maximum error on the polynomial
-  //! W(t) Q(t) obtained by missing the coefficients of JacCoeff from
-  //! NewDegree +1 to Degree
   Standard_EXPORT double MaxError(const int Dimension,
                                   double&   HermJacCoeff,
                                   const int NewDegree) const;
 
-  //! Compute NewDegree <= MaxDegree so that MaxError is lower
-  //! than Tol.
-  //! MaxError can be greater than Tol if it is not possible
-  //! to find a NewDegree <= MaxDegree.
-  //! In this case NewDegree = MaxDegree
   Standard_EXPORT void ReduceDegree(const int    Dimension,
                                     const int    MaxDegree,
                                     const double Tol,
@@ -72,45 +28,33 @@ public:
                                       double&   HermJacCoeff,
                                       const int NewDegree) const;
 
-  //! Convert the polynomial P(t) = H(t) + W(t) Q(t) in the canonical base.
   Standard_EXPORT void ToCoefficients(const int                         Dimension,
                                       const int                         Degree,
                                       const NCollection_Array1<double>& HermJacCoeff,
                                       NCollection_Array1<double>&       Coefficients) const;
 
-  //! Compute the values of the basis functions in u
   Standard_EXPORT void D0(const double U, NCollection_Array1<double>& BasisValue) const;
 
-  //! Compute the values and the derivatives values of
-  //! the basis functions in u
   Standard_EXPORT void D1(const double                U,
                           NCollection_Array1<double>& BasisValue,
                           NCollection_Array1<double>& BasisD1) const;
 
-  //! Compute the values and the derivatives values of
-  //! the basis functions in u
   Standard_EXPORT void D2(const double                U,
                           NCollection_Array1<double>& BasisValue,
                           NCollection_Array1<double>& BasisD1,
                           NCollection_Array1<double>& BasisD2) const;
 
-  //! Compute the values and the derivatives values of
-  //! the basis functions in u
   Standard_EXPORT void D3(const double                U,
                           NCollection_Array1<double>& BasisValue,
                           NCollection_Array1<double>& BasisD1,
                           NCollection_Array1<double>& BasisD2,
                           NCollection_Array1<double>& BasisD3) const;
 
-  //! returns WorkDegree
   int WorkDegree() const noexcept { return myJacobi.WorkDegree(); }
 
-  //! returns NivConstr
   int NivConstr() const noexcept { return myJacobi.NivConstr(); }
 
 protected:
-  //! Compute the values and the derivatives values of
-  //! the basis functions in u
   Standard_EXPORT void D0123(const int                   NDerive,
                              const double                U,
                              NCollection_Array1<double>& BasisValue,

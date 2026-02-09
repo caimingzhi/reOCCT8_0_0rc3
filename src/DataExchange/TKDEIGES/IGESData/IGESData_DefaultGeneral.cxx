@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IGESData.hpp>
 #include <IGESData_DefaultGeneral.hpp>
@@ -59,14 +48,14 @@ IGESData_DirChecker IGESData_DefaultGeneral::DirChecker(
 {
   IGESData_DirChecker dc;
   return dc;
-} // no specific criteria
+}
 
 void IGESData_DefaultGeneral::OwnCheckCase(const int,
                                            const occ::handle<IGESData_IGESEntity>&,
                                            const Interface_ShareTool&,
                                            occ::handle<Interface_Check>&) const
 {
-} // no specific criteria
+}
 
 bool IGESData_DefaultGeneral::NewVoid(const int CN, occ::handle<Standard_Transient>& entto) const
 {
@@ -89,12 +78,11 @@ void IGESData_DefaultGeneral::OwnCopyCase(const int                             
     return;
   DeclareAndCast(IGESData_UndefinedEntity, enfr, entfrom);
   DeclareAndCast(IGESData_UndefinedEntity, ento, entto);
-  //  ShallowCopy will have passed DirStatus
-  //  transmit the contents of UndefinedContents
+
   occ::handle<Interface_UndefinedContent> cont = new Interface_UndefinedContent;
   cont->GetFromAnother(enfr->UndefinedContent(), TC);
   ento->SetNewContent(cont);
-  //  FreeFormat, more things
+
   if (enfr->IsKind(STANDARD_TYPE(IGESData_FreeFormatEntity)))
   {
     DeclareAndCast(IGESData_FreeFormatEntity, enf, entfrom);

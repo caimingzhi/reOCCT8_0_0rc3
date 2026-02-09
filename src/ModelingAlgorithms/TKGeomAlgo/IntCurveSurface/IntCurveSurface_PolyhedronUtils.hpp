@@ -11,27 +11,11 @@
 #include <NCollection_Array2.hpp>
 #include <Standard_Real.hpp>
 
-//! Utility functions for polyhedron discretization of surfaces.
-//! These template functions implement the core logic previously in IntCurveSurface_Polyhedron.gxx.
 namespace IntCurveSurface_PolyhedronUtils
 {
 
-  //! Minimum edge length for valid triangles.
   constexpr double THE_MIN_EDGE_LENGTH_SQUARED = 1e-15;
 
-  //! Initialize polyhedron with uniform UV sampling using grid evaluator.
-  //! @param[in,out] theEval          Grid evaluator (must be initialized with surface)
-  //! @param[in]     theU0            First U parameter
-  //! @param[in]     theV0            First V parameter
-  //! @param[in]     theU1            Last U parameter
-  //! @param[in]     theV1            Last V parameter
-  //! @param[in]     theNbDeltaU      Number of U subdivisions
-  //! @param[in]     theNbDeltaV      Number of V subdivisions
-  //! @param[out]    thePnts          Array of sampled points (1-based indexing)
-  //! @param[out]    theU             Array of U parameters (1-based indexing)
-  //! @param[out]    theV             Array of V parameters (1-based indexing)
-  //! @param[out]    theIsOnBounds    Array of boundary flags (1-based indexing)
-  //! @param[in,out] theBnd           Bounding box to update
   inline void InitUniform(GeomGridEval_Surface& theEval,
                           const double          theU0,
                           const double          theV0,
@@ -48,7 +32,6 @@ namespace IntCurveSurface_PolyhedronUtils
     const double dU = (theU1 - theU0) / static_cast<double>(theNbDeltaU);
     const double dV = (theV1 - theV0) / static_cast<double>(theNbDeltaV);
 
-    // Build parameter arrays
     const int aNbU = theNbDeltaU + 1;
     const int aNbV = theNbDeltaV + 1;
 
@@ -64,10 +47,8 @@ namespace IntCurveSurface_PolyhedronUtils
       aVParams(j + 1) = theV0 + j * dV;
     }
 
-    // Evaluate grid
     const NCollection_Array2<gp_Pnt> aGrid = theEval.EvaluateGrid(aUParams, aVParams);
 
-    // Copy results to output arrays (convert from 2D grid to 1D linear indexing)
     int Index = 1;
     for (int i1 = 0; i1 < aNbU; ++i1)
     {
@@ -84,17 +65,6 @@ namespace IntCurveSurface_PolyhedronUtils
     }
   }
 
-  //! Initialize polyhedron with explicit UV parameter arrays using grid evaluator.
-  //! @param[in,out] theEval          Grid evaluator (must be initialized with surface)
-  //! @param[in]     theUpars         Array of U parameters
-  //! @param[in]     theVpars         Array of V parameters
-  //! @param[in]     theNbDeltaU      Number of U subdivisions
-  //! @param[in]     theNbDeltaV      Number of V subdivisions
-  //! @param[out]    thePnts          Array of sampled points (1-based indexing)
-  //! @param[out]    theU             Array of U parameters (1-based indexing)
-  //! @param[out]    theV             Array of V parameters (1-based indexing)
-  //! @param[out]    theIsOnBounds    Array of boundary flags (1-based indexing)
-  //! @param[in,out] theBnd           Bounding box to update
   inline void InitWithParams(GeomGridEval_Surface&             theEval,
                              const NCollection_Array1<double>& theUpars,
                              const NCollection_Array1<double>& theVpars,
@@ -106,7 +76,7 @@ namespace IntCurveSurface_PolyhedronUtils
                              bool*                             theIsOnBounds,
                              Bnd_Box&                          theBnd)
   {
-    // Evaluate grid using provided parameters
+
     const NCollection_Array2<gp_Pnt> aGrid = theEval.EvaluateGrid(theUpars, theVpars);
 
     const int i0    = theUpars.Lower();
@@ -128,15 +98,6 @@ namespace IntCurveSurface_PolyhedronUtils
     }
   }
 
-  //! Compute border deflection for a boundary isoline using grid evaluation.
-  //! Uses batch evaluation for better performance on complex surfaces.
-  //! @param[in,out] theEval      Grid evaluator (will be reused for isoline evaluation)
-  //! @param[in]     theParameter Fixed parameter value (U or V depending on isUIso)
-  //! @param[in]     thePMin      Start of varying parameter range
-  //! @param[in]     thePMax      End of varying parameter range
-  //! @param[in]     theIsUIso    True if this is a U-isoline, false for V-isoline
-  //! @param[in]     theNbSamples Number of samples along the boundary
-  //! @return Maximum deflection along the border
   inline double ComputeBorderDeflection(GeomGridEval_Surface& theEval,
                                         const double          theParameter,
                                         const double          thePMin,
@@ -144,9 +105,7 @@ namespace IntCurveSurface_PolyhedronUtils
                                         const bool            theIsUIso,
                                         const int             theNbSamples)
   {
-    // Build parameter array with both boundary points and midpoints
-    // For N segments: boundary points at i*delta, midpoints at (i+0.5)*delta
-    // Total: 2*N + 1 points (N+1 boundaries + N midpoints, interleaved)
+
     const double aDelta  = (thePMax - thePMin) / theNbSamples;
     const int    aNbPnts = 2 * theNbSamples + 1;
 
@@ -154,9 +113,6 @@ namespace IntCurveSurface_PolyhedronUtils
     NCollection_Array1<double> aFixedParams(1, 1);
     aFixedParams(1) = theParameter;
 
-    // Fill varying parameters: alternating boundary and midpoint values
-    // Index 1, 3, 5, ... (odd) = boundary points (0, delta, 2*delta, ...)
-    // Index 2, 4, 6, ... (even) = midpoints (delta/2, 3*delta/2, ...)
     for (int i = 0; i <= theNbSamples; ++i)
     {
       aVaryingParams(2 * i + 1) = thePMin + i * aDelta;
@@ -166,18 +122,15 @@ namespace IntCurveSurface_PolyhedronUtils
       }
     }
 
-    // Evaluate grid: 1xN or Nx1 depending on isoline direction
     const NCollection_Array2<gp_Pnt> aGrid = theIsUIso
                                                ? theEval.EvaluateGrid(aFixedParams, aVaryingParams)
                                                : theEval.EvaluateGrid(aVaryingParams, aFixedParams);
 
-    // Compute max deflection from pre-evaluated points
     double aDeflection = RealFirst();
 
     for (int i = 0; i < theNbSamples; ++i)
     {
-      // Boundary points at indices 2*i+1 and 2*i+3 (1-based)
-      // Midpoint at index 2*i+2 (1-based)
+
       gp_XYZ aP1, aP2, aPParMid;
 
       if (theIsUIso)
@@ -203,30 +156,16 @@ namespace IntCurveSurface_PolyhedronUtils
     return aDeflection;
   }
 
-  //! Compute the number of triangles in the polyhedron.
-  //! @param[in] theNbDeltaU Number of U subdivisions
-  //! @param[in] theNbDeltaV Number of V subdivisions
-  //! @return Number of triangles (2 * nbdeltaU * nbdeltaV)
   inline int NbTriangles(const int theNbDeltaU, const int theNbDeltaV)
   {
     return theNbDeltaU * theNbDeltaV * 2;
   }
 
-  //! Compute the number of points in the polyhedron.
-  //! @param[in] theNbDeltaU Number of U subdivisions
-  //! @param[in] theNbDeltaV Number of V subdivisions
-  //! @return Number of points ((nbdeltaU + 1) * (nbdeltaV + 1))
   inline int NbPoints(const int theNbDeltaU, const int theNbDeltaV)
   {
     return (theNbDeltaU + 1) * (theNbDeltaV + 1);
   }
 
-  //! Get the three vertex indices of a triangle.
-  //! @param[in]  theIndex    Triangle index (1-based)
-  //! @param[out] theP1       First vertex index
-  //! @param[out] theP2       Second vertex index
-  //! @param[out] theP3       Third vertex index
-  //! @param[in]  theNbDeltaV Number of V subdivisions
   inline void Triangle(const int theIndex,
                        int&      theP1,
                        int&      theP2,
@@ -242,16 +181,6 @@ namespace IntCurveSurface_PolyhedronUtils
     theP3 = (line - 1 + (colon % 2)) * (theNbDeltaV + 1) + colpnt + 1;
   }
 
-  //! Navigate to a connected triangle given a pivot point and edge point.
-  //! This function computes triangle connectivity for mesh traversal.
-  //! @param[in]  theTriang   Current triangle index (0 if unknown)
-  //! @param[in]  thePivot    Pivot point index
-  //! @param[in]  thePedge    Edge point index (0 if unknown)
-  //! @param[out] theTriCon   Connected triangle index (0 if on boundary)
-  //! @param[out] theOtherP   The other point of the connected triangle
-  //! @param[in]  theNbDeltaU Number of U subdivisions
-  //! @param[in]  theNbDeltaV Number of V subdivisions
-  //! @return Connected triangle index
   inline int TriConnex(const int theTriang,
                        const int thePivot,
                        const int thePedge,
@@ -472,12 +401,6 @@ namespace IntCurveSurface_PolyhedronUtils
     return theTriCon;
   }
 
-  //! Compute the plane equation of a triangle.
-  //! @param[in]  theP1            First vertex point
-  //! @param[in]  theP2            Second vertex point
-  //! @param[in]  theP3            Third vertex point
-  //! @param[out] theNormalVector  Normal vector of the plane
-  //! @param[out] thePolarDistance Distance from origin to plane along normal
   inline void PlaneEquation(const gp_Pnt& theP1,
                             const gp_Pnt& theP2,
                             const gp_Pnt& theP3,
@@ -517,12 +440,6 @@ namespace IntCurveSurface_PolyhedronUtils
     }
   }
 
-  //! Check if a point is contained within a triangle.
-  //! @param[in] theP1     First vertex point
-  //! @param[in] theP2     Second vertex point
-  //! @param[in] theP3     Third vertex point
-  //! @param[in] theTestPnt Point to test
-  //! @return True if point is inside triangle
   inline bool Contain(const gp_Pnt& theP1,
                       const gp_Pnt& theP2,
                       const gp_Pnt& theP3,
@@ -535,12 +452,6 @@ namespace IntCurveSurface_PolyhedronUtils
     return (v1 * v2 >= 0.0 && v2 * v3 >= 0.0 && v3 * v1 >= 0.0);
   }
 
-  //! Fill bounding boxes for all triangles in the polyhedron.
-  //! @param[in]     thePnts              Array of points
-  //! @param[in]     theNbDeltaU          Number of U subdivisions
-  //! @param[in]     theNbDeltaV          Number of V subdivisions
-  //! @param[in]     theDeflection        Deflection value for enlarging boxes
-  //! @param[in,out] theComponentsBnd     Array of bounding boxes to fill
   inline void FillBounding(const gp_Pnt*                                    thePnts,
                            const int                                        theNbDeltaU,
                            const int                                        theNbDeltaV,
@@ -576,18 +487,12 @@ namespace IntCurveSurface_PolyhedronUtils
     }
   }
 
-  //! Compute deflection for a single triangle given a pre-evaluated center point.
-  //! @param[in] theP1       First vertex
-  //! @param[in] theP2       Second vertex
-  //! @param[in] theP3       Third vertex
-  //! @param[in] theCenter   Pre-evaluated center point on surface
-  //! @return Deflection value (distance from triangle center to surface)
   inline double ComputeDeflectionWithCenter(const gp_Pnt& theP1,
                                             const gp_Pnt& theP2,
                                             const gp_Pnt& theP3,
                                             const gp_Pnt& theCenter)
   {
-    // Check for degenerate triangles
+
     if (theP1.SquareDistance(theP2) <= THE_MIN_EDGE_LENGTH_SQUARED)
       return 0.0;
     if (theP1.SquareDistance(theP3) <= THE_MIN_EDGE_LENGTH_SQUARED)
@@ -595,7 +500,6 @@ namespace IntCurveSurface_PolyhedronUtils
     if (theP2.SquareDistance(theP3) <= THE_MIN_EDGE_LENGTH_SQUARED)
       return 0.0;
 
-    // Compute normal vector
     const gp_XYZ XYZ1 = theP2.XYZ() - theP1.XYZ();
     const gp_XYZ XYZ2 = theP3.XYZ() - theP2.XYZ();
     const gp_XYZ XYZ3 = theP1.XYZ() - theP3.XYZ();
@@ -607,18 +511,10 @@ namespace IntCurveSurface_PolyhedronUtils
 
     NormalVector.Divide(aNormLen);
 
-    // Compute distance from center to triangle plane
     const gp_Vec P1P(theP1, theCenter);
     return std::abs(P1P.Dot(NormalVector));
   }
 
-  //! Compute the maximum deflection over all triangles using batch evaluation.
-  //! Uses GeomGridEval_Surface::EvaluatePoints() to batch-evaluate all triangle centroids.
-  //! @tparam PolyhedronType Type of polyhedron class
-  //! @param[in] theEval        Pre-initialized grid evaluator
-  //! @param[in] thePolyhedron  The polyhedron object (provides Triangle/Point access)
-  //! @param[in] theNbTriangles Number of triangles
-  //! @return Maximum deflection value
   template <typename PolyhedronType>
   double ComputeMaxDeflection(GeomGridEval_Surface& theEval,
                               const PolyhedronType& thePolyhedron,
@@ -627,7 +523,6 @@ namespace IntCurveSurface_PolyhedronUtils
     if (theNbTriangles <= 0)
       return 0.0;
 
-    // Collect all triangle centroid UV pairs
     NCollection_Array1<gp_Pnt2d> aCentroidUVs(1, theNbTriangles);
 
     for (int i = 1; i <= theNbTriangles; ++i)
@@ -645,12 +540,10 @@ namespace IntCurveSurface_PolyhedronUtils
       aCentroidUVs.SetValue(i, gp_Pnt2d(uCenter, vCenter));
     }
 
-    // Batch evaluate all centroids
     NCollection_Array1<gp_Pnt> aCenterPoints = theEval.EvaluatePoints(aCentroidUVs);
     if (aCenterPoints.IsEmpty())
       return 0.0;
 
-    // Compute max deflection using pre-evaluated center points
     double tol = 0.0;
     for (int i = 1; i <= theNbTriangles; ++i)
     {
@@ -669,15 +562,6 @@ namespace IntCurveSurface_PolyhedronUtils
     return tol;
   }
 
-  //! Compute the maximum border deflection over all four boundaries using grid evaluation.
-  //! @param[in,out] theEval     Grid evaluator (will be reused for each boundary)
-  //! @param[in]     theU0       First U parameter
-  //! @param[in]     theV0       First V parameter
-  //! @param[in]     theU1       Last U parameter
-  //! @param[in]     theV1       Last V parameter
-  //! @param[in]     theNbDeltaU Number of U subdivisions
-  //! @param[in]     theNbDeltaV Number of V subdivisions
-  //! @return Maximum border deflection
   inline double ComputeMaxBorderDeflection(GeomGridEval_Surface& theEval,
                                            const double          theU0,
                                            const double          theV0,
@@ -688,22 +572,18 @@ namespace IntCurveSurface_PolyhedronUtils
   {
     double maxDeflection = RealFirst();
 
-    // Lower bound (U-isoline at U=U0, V varies from V0 to V1)
     double aDeflection = ComputeBorderDeflection(theEval, theU0, theV0, theV1, true, theNbDeltaV);
     if (aDeflection > maxDeflection)
       maxDeflection = aDeflection;
 
-    // Upper bound (U-isoline at U=U1, V varies from V0 to V1)
     aDeflection = ComputeBorderDeflection(theEval, theU1, theV0, theV1, true, theNbDeltaV);
     if (aDeflection > maxDeflection)
       maxDeflection = aDeflection;
 
-    // Lower bound (V-isoline at V=V0, U varies from U0 to U1)
     aDeflection = ComputeBorderDeflection(theEval, theV0, theU0, theU1, false, theNbDeltaU);
     if (aDeflection > maxDeflection)
       maxDeflection = aDeflection;
 
-    // Upper bound (V-isoline at V=V1, U varies from U0 to U1)
     aDeflection = ComputeBorderDeflection(theEval, theV1, theU0, theU1, false, theNbDeltaU);
     if (aDeflection > maxDeflection)
       maxDeflection = aDeflection;
@@ -711,13 +591,6 @@ namespace IntCurveSurface_PolyhedronUtils
     return maxDeflection;
   }
 
-  //! Check if an edge between two points lies on the boundary.
-  //! @param[in] theIndex1      First point index
-  //! @param[in] theIndex2      Second point index
-  //! @param[in] theIsOnBounds  Array of boundary flags
-  //! @param[in] theNbDeltaU    Number of U subdivisions
-  //! @param[in] theNbDeltaV    Number of V subdivisions
-  //! @return True if edge is on boundary
   inline bool IsOnBound(const int   theIndex1,
                         const int   theIndex2,
                         const bool* theIsOnBounds,
@@ -741,11 +614,6 @@ namespace IntCurveSurface_PolyhedronUtils
     return (theIsOnBounds[theIndex1] && theIsOnBounds[theIndex2]);
   }
 
-  //! Deallocate polyhedron arrays.
-  //! @param[in,out] thePnts        Points array to delete and nullify
-  //! @param[in,out] theU           U parameters array to delete and nullify
-  //! @param[in,out] theV           V parameters array to delete and nullify
-  //! @param[in,out] theIsOnBounds  Boundary flags array to delete and nullify
   inline void Destroy(void*& thePnts, void*& theU, void*& theV, void*& theIsOnBounds)
   {
     if (thePnts)
@@ -759,13 +627,6 @@ namespace IntCurveSurface_PolyhedronUtils
     thePnts = theU = theV = theIsOnBounds = NULL;
   }
 
-  //! Allocate polyhedron arrays.
-  //! @param[in]  theNbDeltaU    Number of U subdivisions
-  //! @param[in]  theNbDeltaV    Number of V subdivisions
-  //! @param[out] thePnts        Points array
-  //! @param[out] theU           U parameters array
-  //! @param[out] theV           V parameters array
-  //! @param[out] theIsOnBounds  Boundary flags array
   inline void AllocateArrays(const int theNbDeltaU,
                              const int theNbDeltaV,
                              void*&    thePnts,
@@ -780,10 +641,6 @@ namespace IntCurveSurface_PolyhedronUtils
     theIsOnBounds = new bool[t];
   }
 
-  //! Set deflection over-estimation with minimum threshold.
-  //! @param[in]     theFlec       Deflection value
-  //! @param[out]    theDeflection Stored deflection value
-  //! @param[in,out] theBnd        Bounding box to enlarge
   inline void SetDeflectionOverEstimation(const double theFlec,
                                           double&      theDeflection,
                                           Bnd_Box&     theBnd)
@@ -801,12 +658,6 @@ namespace IntCurveSurface_PolyhedronUtils
     }
   }
 
-  //! Get UV parameters at point index.
-  //! @param[in]  theIndex Index of the point
-  //! @param[in]  theU     U parameters array
-  //! @param[in]  theV     V parameters array
-  //! @param[out] theOutU  Output U parameter
-  //! @param[out] theOutV  Output V parameter
   inline void Parameters(const int   theIndex,
                          void* const theU,
                          void* const theV,
@@ -819,14 +670,6 @@ namespace IntCurveSurface_PolyhedronUtils
     theOutV          = aV[theIndex];
   }
 
-  //! Get point with UV parameters.
-  //! @param[in]  theIndex Index of the point
-  //! @param[in]  thePnts  Points array
-  //! @param[in]  theU     U parameters array
-  //! @param[in]  theV     V parameters array
-  //! @param[out] theOutU  Output U parameter
-  //! @param[out] theOutV  Output V parameter
-  //! @return Reference to the point
   inline const gp_Pnt& Point(const int   theIndex,
                              void* const thePnts,
                              void* const theU,
@@ -842,20 +685,12 @@ namespace IntCurveSurface_PolyhedronUtils
     return aPnts[theIndex];
   }
 
-  //! Get point by index.
-  //! @param[in] theIndex Index of the point
-  //! @param[in] thePnts  Points array
-  //! @return Reference to the point
   inline const gp_Pnt& Point(const int theIndex, void* const thePnts)
   {
     const gp_Pnt* aPnts = static_cast<const gp_Pnt*>(thePnts);
     return aPnts[theIndex];
   }
 
-  //! Get point by index (output parameter version).
-  //! @param[in]  theIndex Index of the point
-  //! @param[in]  thePnts  Points array
-  //! @param[out] thePoint Output point
   inline void Point(const int theIndex, void* const thePnts, gp_Pnt& thePoint)
   {
     const gp_Pnt* aPnts = static_cast<const gp_Pnt*>(thePnts);

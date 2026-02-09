@@ -21,17 +21,15 @@ IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_ModelHealer, IMeshTools_ModelAlgo)
 
 namespace
 {
-  //! Decreases deflection of the given edge and tries to update discretization.
+
   class EdgeAmplifier
   {
   public:
-    //! Constructor.
     EdgeAmplifier(const IMeshTools_Parameters& theParameters)
         : myParameters(theParameters)
     {
     }
 
-    //! Main operator.
     void operator()(const IMeshData::IEdgePtr& theDEdge) const
     {
       const IMeshData::IEdgeHandle aDEdge = theDEdge;
@@ -46,7 +44,6 @@ namespace
         const IMeshData::IPCurveHandle& aPCurve = aDEdge->GetPCurve(aPCurveIt);
         const IMeshData::IFaceHandle    aDFace  = aPCurve->GetFace();
 
-        // Check that outer wire contains 2 edges or less and add an additional point.
         const IMeshData::IWireHandle& aDWire = aDFace->GetWire(0);
         if (aDWire->EdgesNb() <= 2)
         {
@@ -77,7 +74,6 @@ namespace
     const IMeshTools_Parameters& myParameters;
   };
 
-  //! Returns True if some of two vertcies is same with reference one.
   bool isSameWithSomeOf(const TopoDS_Vertex& theRefVertex,
                         const TopoDS_Vertex& theVertex1,
                         const TopoDS_Vertex& theVertex2)
@@ -85,7 +81,6 @@ namespace
     return (theRefVertex.IsSame(theVertex1) || theRefVertex.IsSame(theVertex2));
   }
 
-  //! Returns True if some of two vertcies is within tolerance of reference one.
   bool isInToleranceWithSomeOf(const gp_Pnt& theRefPoint,
                                const gp_Pnt& thePoint1,
                                const gp_Pnt& thePoint2,
@@ -97,15 +92,9 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 BRepMesh_ModelHealer::BRepMesh_ModelHealer() = default;
 
-//=================================================================================================
-
 BRepMesh_ModelHealer::~BRepMesh_ModelHealer() = default;
-
-//=================================================================================================
 
 bool BRepMesh_ModelHealer::performInternal(const occ::handle<IMeshData_Model>& theModel,
                                            const IMeshTools_Parameters&        theParameters,
@@ -119,11 +108,6 @@ bool BRepMesh_ModelHealer::performInternal(const occ::handle<IMeshData_Model>& t
     return false;
   }
 
-  // MinSize is made as a constant. It is connected with
-  // the fact that too rude discretisation can lead to
-  // self-intersecting polygon, which cannot be fixed.
-  // As result the face will not be triangulated at all.
-  // E.g. see "Test mesh standard_mesh C7", the face #17.
   myParameters.MinSize = Precision::Confusion();
 
   myFaceIntersectingEdges = new IMeshData::DMapOfIFacePtrsMapOfIEdgePtrs;
@@ -133,7 +117,6 @@ bool BRepMesh_ModelHealer::performInternal(const occ::handle<IMeshData_Model>& t
                                   Handle(IMeshData::MapOfIEdgePtr)());
   }
 
-  // TODO: Here we can process edges in order to remove close discrete points.
   OSD_Parallel::For(0, myModel->FacesNb(), *this, !isParallel());
   amplifyEdges();
 
@@ -149,11 +132,9 @@ bool BRepMesh_ModelHealer::performInternal(const occ::handle<IMeshData_Model>& t
   }
 
   myFaceIntersectingEdges.Nullify();
-  myModel.Nullify(); // Do not hold link to model.
+  myModel.Nullify();
   return true;
 }
-
-//=================================================================================================
 
 void BRepMesh_ModelHealer::amplifyEdges()
 {
@@ -167,7 +148,7 @@ void BRepMesh_ModelHealer::amplifyEdges()
 
   while (aAmpIt++ < aIterNb && popEdgesToUpdate(aEdgesToUpdate))
   {
-    // Try to update discretization by decreasing deflection of problematic edges.
+
     OSD_Parallel::ForEach(aEdgesToUpdate.cbegin(),
                           aEdgesToUpdate.cend(),
                           anEdgeAmplifier,
@@ -196,8 +177,6 @@ void BRepMesh_ModelHealer::amplifyEdges()
   }
 }
 
-//=================================================================================================
-
 bool BRepMesh_ModelHealer::popEdgesToUpdate(IMeshData::MapOfIEdgePtr& theEdgesToUpdate)
 {
   IMeshData::DMapOfIFacePtrsMapOfIEdgePtrs::Iterator aFaceIt(*myFaceIntersectingEdges);
@@ -213,8 +192,6 @@ bool BRepMesh_ModelHealer::popEdgesToUpdate(IMeshData::MapOfIEdgePtr& theEdgesTo
 
   return !theEdgesToUpdate.IsEmpty();
 }
-
-//=================================================================================================
 
 void BRepMesh_ModelHealer::process(const IMeshData::IFaceHandle& theDFace) const
 {
@@ -257,7 +234,7 @@ void BRepMesh_ModelHealer::process(const IMeshData::IFaceHandle& theDFace) const
             if (aPCurve0->ParametersNb() == 2 && aPCurve1->ParametersNb() == 2)
             {
               aIntersections = new IMeshData::MapOfIEdgePtr;
-              // a kind of degenerated face - 1 wire, 2 edges and both edges are very small
+
               aIntersections->Add(aDEdge0);
               aIntersections->Add(aDEdge1);
             }
@@ -271,8 +248,6 @@ void BRepMesh_ModelHealer::process(const IMeshData::IFaceHandle& theDFace) const
     theDFace->SetStatus(IMeshData_Failure);
   }
 }
-
-//=================================================================================================
 
 void BRepMesh_ModelHealer::fixFaceBoundaries(const IMeshData::IFaceHandle& theDFace) const
 {
@@ -330,13 +305,12 @@ void BRepMesh_ModelHealer::fixFaceBoundaries(const IMeshData::IFaceHandle& theDF
 
       if (!isConnected || aCurrEdge->IsSet(IMeshData_Outdated))
       {
-        // We have to clean face from triangulation.
+
         theDFace->SetStatus(IMeshData_Outdated);
 
         if (!isConnected)
         {
-          // Just mark wire as open, but continue fixing other inconsistencies
-          // in hope that this data could be suitable to build mesh somehow.
+
           aDWire->SetStatus(IMeshData_OpenWire);
         }
       }
@@ -353,23 +327,11 @@ void BRepMesh_ModelHealer::fixFaceBoundaries(const IMeshData::IFaceHandle& theDF
   BRepMesh_Deflection::ComputeDeflection(theDFace, myParameters);
 }
 
-//=================================================================================================
-
 TopoDS_Vertex BRepMesh_ModelHealer::getCommonVertex(const IMeshData::IEdgeHandle& theEdge1,
                                                     const IMeshData::IEdgeHandle& theEdge2) const
 {
   TopoDS_Vertex aVertex1_1, aVertex1_2;
   TopExp::Vertices(theEdge1->GetEdge(), aVertex1_1, aVertex1_2);
-
-  // Test bugs moddata_2 bug428.
-  //   restore [locate_data_file OCC428.brep] rr
-  //   explode rr f
-  //   explode rr_91 w
-  //   explode rr_91_2 e
-  //   nbshapes rr_91_2_2
-  //   # 0 vertices; 1 edge
-
-  // This shape is invalid and can lead to exception in this code.
 
   if (aVertex1_1.IsNull() || aVertex1_2.IsNull())
     return TopoDS_Vertex();
@@ -416,8 +378,6 @@ TopoDS_Vertex BRepMesh_ModelHealer::getCommonVertex(const IMeshData::IEdgeHandle
   return TopoDS_Vertex();
 }
 
-//=================================================================================================
-
 bool BRepMesh_ModelHealer::connectClosestPoints(const IMeshData::IPCurveHandle& thePrevDEdge,
                                                 const IMeshData::IPCurveHandle& theCurrDEdge,
                                                 const IMeshData::IPCurveHandle& theNextDEdge) const
@@ -432,7 +392,7 @@ bool BRepMesh_ModelHealer::connectClosestPoints(const IMeshData::IPCurveHandle& 
 
   if (thePrevDEdge == theCurrDEdge)
   {
-    // Wire consists of a single edge.
+
     aPrevFirstUV = aPrevLastUV;
     return true;
   }
@@ -447,7 +407,7 @@ bool BRepMesh_ModelHealer::connectClosestPoints(const IMeshData::IPCurveHandle& 
   gp_Pnt2d *aNextUV = nullptr, *aCurrNextUV = nullptr;
   if (thePrevDEdge == theNextDEdge)
   {
-    // Wire consists of two edges. Connect both ends.
+
     aNextUV     = (aPrevUV == &aPrevFirstUV) ? &aPrevLastUV : &aPrevFirstUV;
     aCurrNextUV = (aCurrPrevUV == &aCurrFirstUV) ? &aCurrLastUV : &aCurrFirstUV;
 
@@ -467,8 +427,6 @@ bool BRepMesh_ModelHealer::connectClosestPoints(const IMeshData::IPCurveHandle& 
   std::cout << "NextSqDist = " << aNextSqDist << std::endl;
 #endif
 
-  // Connect closest points first. This can help to identify
-  // which ends should be connected in case of gap.
   if (aPrevSqDist - aNextSqDist > gp::Resolution())
   {
     adjustSamePoints(aCurrNextUV,

@@ -1,16 +1,4 @@
-// Author: Ilya Khramov
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Graphic3d_CubeMapSeparate.hpp>
 
@@ -21,8 +9,6 @@
 #include <OSD_File.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_CubeMapSeparate, Graphic3d_CubeMap)
-
-//=================================================================================================
 
 Graphic3d_CubeMapSeparate::Graphic3d_CubeMapSeparate(
   const NCollection_Array1<TCollection_AsciiString>& thePaths)
@@ -39,8 +25,6 @@ Graphic3d_CubeMapSeparate::Graphic3d_CubeMapSeparate(
     throw Standard_Failure("Invalid number of paths to load Graphic3d_CubeMapSeparate");
   }
 }
-
-//=================================================================================================
 
 Graphic3d_CubeMapSeparate::Graphic3d_CubeMapSeparate(
   const NCollection_Array1<occ::handle<Image_PixMap>>& theImages)
@@ -83,8 +67,6 @@ Graphic3d_CubeMapSeparate::Graphic3d_CubeMapSeparate(
   }
 }
 
-//=================================================================================================
-
 occ::handle<Image_CompressedPixMap> Graphic3d_CubeMapSeparate::CompressedValue(
   const occ::handle<Image_SupportedFormats>& theSupported)
 {
@@ -124,8 +106,6 @@ occ::handle<Image_CompressedPixMap> Graphic3d_CubeMapSeparate::CompressedValue(
                        + "' inconsistent image format or dimension in Graphic3d_CubeMapSeparate");
   return occ::handle<Image_CompressedPixMap>();
 }
-
-//=================================================================================================
 
 occ::handle<Image_PixMap> Graphic3d_CubeMapSeparate::Value(
   const occ::handle<Image_SupportedFormats>& theSupported)
@@ -191,8 +171,6 @@ occ::handle<Image_PixMap> Graphic3d_CubeMapSeparate::Value(
   return occ::handle<Image_PixMap>();
 }
 
-//=================================================================================================
-
 bool Graphic3d_CubeMapSeparate::IsDone() const
 {
   if (!myImages[0].IsNull())
@@ -211,8 +189,6 @@ bool Graphic3d_CubeMapSeparate::IsDone() const
 
   return true;
 }
-
-//=================================================================================================
 
 void Graphic3d_CubeMapSeparate::resetImages()
 {

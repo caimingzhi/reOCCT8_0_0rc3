@@ -27,13 +27,9 @@
 #include <Bnd_Box2d.hpp>
 #include <Precision.hpp>
 
-//======================================================================
-
 #define NBITER_MAX_POLYGON 10
 #define TOL_CONF_MINI 0.0000000001
 #define TOL_MINI 0.0000000001
-
-//=================================================================================================
 
 void GetIntersection(const TheCurve&             theC1,
                      const double                theT1f,
@@ -61,16 +57,12 @@ bool HeadOrEndPoint(const IntRes2d_Domain&      D1,
                     bool&                       EndOn2,
                     int                         PosSegment);
 
-//=================================================================================================
-
 IntCurve_IntPolyPolyGen::IntCurve_IntPolyPolyGen()
 {
-  const int aMinPntNb = 20; // Minimum number of samples.
+  const int aMinPntNb = 20;
   myMinPntNb          = aMinPntNb;
   done                = false;
 }
-
-//=================================================================================================
 
 void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
                                       const IntRes2d_Domain& D1,
@@ -87,9 +79,7 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
   double Tl      = (TheTol < TOL_MINI) ? TOL_MINI : TheTol;
   double TlConf  = (TheTolConf < TOL_CONF_MINI) ? TOL_CONF_MINI : TheTolConf;
   Perform(C1, D1, C2, D2, TlConf, Tl, 0, DU, DV);
-  //----------------------------------------------------------------------
-  //-- Processing of end points
-  //----------------------------------------------------------------------
+
   bool HeadOn1 = false;
   bool HeadOn2 = false;
   bool EndOn1  = false;
@@ -97,16 +87,6 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
   int  i;
   int  n = this->NbPoints();
 
-  //--------------------------------------------------------------------
-  //-- The points Head Head ... End End are not rejected if
-  //-- they are already present at the end of segment
-  //-- ( It is not possible to test the equities on the parameters)
-  //-- ( these points are not found at EpsX precision    )
-  //-- PosSegment =            1    if Head Head
-  //--                       2      if Head End
-  //--                     4        if End  Head
-  //--                   8          if End  End
-  //--------------------------------------------------------------------
   int PosSegment = 0;
 
   for (i = 1; i <= n; i++)
@@ -273,9 +253,6 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
   }
 }
 
-//======================================================================
-//==      A u t o   I n t e r s e c t i o  n
-//======================================================================
 void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
                                       const IntRes2d_Domain& D1,
                                       const double           TheTolConf,
@@ -292,16 +269,6 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
   int i;
   int n = this->NbPoints();
 
-  //--------------------------------------------------------------------
-  //-- The points Head Head ... End End are not rejected if
-  //-- they are already present at the end of segment
-  //-- ( It is not possible to test the equities on the parameters)
-  //-- ( these points are not found at EpsX precision    )
-  //-- PosSegment =            1    if Head Head
-  //--                       2      if Head End
-  //--                     4        if End  Head
-  //--                   8          if End  End
-  //--------------------------------------------------------------------
   int PosSegment = 0;
 
   for (i = 1; i <= n; i++)
@@ -367,15 +334,12 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
   (void)PosSegment;
 }
 
-//======================================================================
-
 void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
                                       const IntRes2d_Domain& D1,
                                       const double           TolConf,
                                       const double           Tol,
                                       const int              NbIter,
-                                      const double /*DeltaU*/
-                                      ,
+                                      const double,
                                       const double)
 {
 
@@ -389,10 +353,7 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
   if (NbIter > 3 || (NbIter > 2 && nbsamples > 100))
     return;
 
-  nbsamples *= 2; //---  We take systematically two times more points
-                  //--   than on a normal curve.
-                  //--   Auto-intersecting curves often produce
-                  //--   polygons rather far from the curve with parameter ct.
+  nbsamples *= 2;
 
   if (NbIter > 0)
   {
@@ -404,12 +365,7 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
     done = true;
     return;
   }
-  //-- Poly1.Dump();
-  //----------------------------------------------------------------------
-  //-- If the deflection is less than the Tolerance of Confusion
-  //-- then the deflection of the polygon is set in TolConf
-  //-- (Detection of Tangency Zones)
-  //----------------------------------------------------------------------
+
   if (Poly1.DeflectionOverEstimation() < TolConf)
   {
     Poly1.SetDeflectionOverEstimation(TolConf);
@@ -419,22 +375,16 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
   IntCurve_ExactIntersectionPoint EIP(C1, C1, TolConf);
   double                          U, V;
 
-  //----------------------------------------------------------------------
-  //-- Processing of SectionPoint
-  //----------------------------------------------------------------------
   int Nbsp = InterPP.NbSectionPoints();
   if (Nbsp >= 1)
   {
 
-    //-- ---------------------------------------------------------------------
-    //-- filtering, filtering, filtering ...
-    //--
     int* TriIndex     = new int[Nbsp + 1];
     int* PtrSegIndex1 = new int[Nbsp + 1];
     int* PtrSegIndex2 = new int[Nbsp + 1];
     bool Triok;
     int  SegIndex1, SegIndex2, SegIndex_1, SegIndex_2;
-    //    double    ParamOn1,ParamOn2,ParamOn_1,ParamOn_2;
+
     double      ParamOn1, ParamOn2;
     Intf_PIType Type;
     int         i;
@@ -478,7 +428,6 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
       }
     } while (Triok == false);
 
-    //-- supression des doublons Si Si !
     for (i = 1; i < Nbsp; i++)
     {
       if ((PtrSegIndex1[TriIndex[i]] == PtrSegIndex1[TriIndex[i + 1]])
@@ -503,9 +452,7 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
           EIP.Perform(Poly1, Poly1, SegIndex1, SegIndex2, ParamOn1, ParamOn2);
           if (EIP.NbRoots() >= 1)
           {
-            //--------------------------------------------------------------------
-            //-- It is checked if the found point is a root
-            //--------------------------------------------------------------------
+
             EIP.Roots(U, V);
 
             TheCurveTool::D1(C1, U, P1, Tan1);
@@ -515,17 +462,10 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
 
             if (std::abs(U - V) <= EpsX1)
             {
-              //-----------------------------------------
-              //-- Solution not valid
-              //-- The maths should have converged in a
-              //-- trivial solution  ( point U = V )
-              //-----------------------------------------
+
               Dist = TolConf + 1.0;
             }
 
-            //-----------------------------------------------------------------
-            //-- It is checked if the point (u,v) already exists
-            //--
             done    = true;
             int nbp = NbPoints();
 
@@ -543,13 +483,11 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
             }
 
             if (Dist <= TolConf)
-            { //-- Or the point is already present
+            {
               IntRes2d_Position   Pos1 = IntRes2d_Middle;
               IntRes2d_Position   Pos2 = IntRes2d_Middle;
               IntRes2d_Transition Trans1, Trans2;
-              //-----------------------------------------------------------------
-              //-- Calculate Positions of Points on the curve
-              //--
+
               if (P1.Distance(DomainOnCurve1.FirstPoint()) <= DomainOnCurve1.FirstTolerance())
                 Pos1 = IntRes2d_Head;
               else if (P1.Distance(DomainOnCurve1.LastPoint()) <= DomainOnCurve1.LastTolerance())
@@ -559,7 +497,7 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
                 Pos2 = IntRes2d_Head;
               else if (P2.Distance(DomainOnCurve2.LastPoint()) <= DomainOnCurve2.LastTolerance())
                 Pos2 = IntRes2d_End;
-              //-----------------------------------------------------------------
+
               if (IntImpParGen::DetermineTransition(Pos1, Tan1, Trans1, Pos2, Tan2, Trans2, TolConf)
                   == false)
               {
@@ -587,19 +525,14 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
     delete[] PtrSegIndex2;
   }
 
-  //----------------------------------------------------------------------
-  //-- Processing of TangentZone
-  //----------------------------------------------------------------------
   int Nbtz = InterPP.NbTangentZones();
   for (int tz = 1; tz <= Nbtz; tz++)
   {
     int NbPnts = InterPP.ZoneValue(tz).NumberOfPoints();
-    //====================================================================
-    //== Find the first and the last point in the tangency zone.
-    //====================================================================
+
     double ParamSupOnCurve2, ParamInfOnCurve2;
     double ParamSupOnCurve1, ParamInfOnCurve1;
-    //    int SegIndex,SegIndex1onP1,SegIndex1onP2,SegIndex2onP1,SegIndex2onP2;
+
     int         SegIndex1onP1, SegIndex1onP2;
     Intf_PIType Type;
     double      ParamOnLine;
@@ -609,14 +542,7 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
     for (int qq = 1; qq <= NbPnts; qq++)
     {
       const Intf_SectionPoint& SPnt1 = InterPP.ZoneValue(tz).GetPoint(qq);
-      //====================================================================
-      //== The zones of tangency are discretized
-      //== Test of stop : Check if
-      //==     (Deflection  < Tolerance)
-      //==  Or (Sample < EpsX)   (normally the first condition is
-      //==                           more strict)
-      //====================================================================
-      //      double _PolyUInf,_PolyUSup,_PolyVInf,_PolyVSup;
+
       double _PolyUInf, _PolyVInf;
 
       SPnt1.InfoFirst(Type, SegIndex1onP1, ParamOnLine);
@@ -645,8 +571,6 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
       }
       _PolyVInf = Poly1.ApproxParamOnCurve(SegIndex1onP2, ParamOnLine);
 
-      //----------------------------------------------------------------------
-
       if (ParamInfOnCurve1 > _PolyUInf)
         ParamInfOnCurve1 = _PolyUInf;
       if (ParamInfOnCurve2 > _PolyVInf)
@@ -674,10 +598,6 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
       PolyVInf      = PolyVSup;
       PolyVSup      = qwerty;
     }
-
-    //-----------------------------------------------------------------
-    //-- Calculate Positions of Points on the curve and
-    //-- Transitions on each limit of the segment
 
     IntRes2d_Position   Pos1 = IntRes2d_Middle;
     IntRes2d_Position   Pos2 = IntRes2d_Middle;
@@ -752,12 +672,10 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
                                         TolConf);
     }
     IntRes2d_IntersectionPoint PtSeg1(P1, PolyUInf, PolyVInf, Trans1, Trans2, false);
-    //----------------------------------------------------------------------
 
     if ((std::abs(PolyUInf - PolyUSup) <= TheCurveTool::EpsX(C1))
         || (std::abs(PolyVInf - PolyVSup) <= TheCurveTool::EpsX(C1)))
     {
-      // bad segment
     }
     else
     {
@@ -846,7 +764,7 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
         Append(Seg);
       }
     }
-  } // end of processing of TangentZone
+  }
 
   done = true;
 }
@@ -880,8 +798,6 @@ bool HeadOrEndPoint(const IntRes2d_Domain&      D1,
   IntRes2d_Position   Pos2 = IntRes2d_Middle;
   IntRes2d_Transition Trans1, Trans2;
 
-  //----------------------------------------------------------------------
-  //-- Head On 1   :        Head1 <-> P2
   if (P2.Distance(D1.FirstPoint()) <= D1.FirstTolerance())
   {
     Pos1    = IntRes2d_Head;
@@ -889,8 +805,7 @@ bool HeadOrEndPoint(const IntRes2d_Domain&      D1,
     SP1     = D1.FirstPoint();
     u       = D1.FirstParameter();
   }
-  //----------------------------------------------------------------------
-  //-- End On 1   :         End1 <-> P2
+
   else if (P2.Distance(D1.LastPoint()) <= D1.LastTolerance())
   {
     Pos1   = IntRes2d_End;
@@ -899,8 +814,6 @@ bool HeadOrEndPoint(const IntRes2d_Domain&      D1,
     u      = D1.LastParameter();
   }
 
-  //----------------------------------------------------------------------
-  //-- Head On 2   :        Head2 <-> P1
   else if (P1.Distance(D2.FirstPoint()) <= D2.FirstTolerance())
   {
     Pos2    = IntRes2d_Head;
@@ -908,8 +821,7 @@ bool HeadOrEndPoint(const IntRes2d_Domain&      D1,
     SP2     = D2.FirstPoint();
     v       = D2.FirstParameter();
   }
-  //----------------------------------------------------------------------
-  //-- End On 2   :        End2 <-> P1
+
   else if (P1.Distance(D2.LastPoint()) <= D2.LastTolerance())
   {
     Pos2   = IntRes2d_End;
@@ -975,15 +887,6 @@ bool HeadOrEndPoint(const IntRes2d_Domain&      D1,
       }
     }
 
-    //--------------------------------------------------------------------
-    //-- It is tested if a point at the end of segment already has its transitions
-    //-- If Yes, the new point is not created
-    //--
-    //-- PosSegment =            1    if Head Head
-    //--                       2      if Head End
-    //--                     4        if End  Head
-    //--                   8          if End  End
-    //--------------------------------------------------------------------
     if (Pos1 == IntRes2d_Head)
     {
       if ((Pos2 == IntRes2d_Head) && (PosSegment & 1))
@@ -1012,11 +915,6 @@ bool HeadOrEndPoint(const IntRes2d_Domain&      D1,
     return (false);
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Base method to perform polyline / polyline intersection for
-//           pair of curves.
-//=======================================================================
 void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
                                       const IntRes2d_Domain& D1,
                                       const TheCurve&        C2,
@@ -1033,19 +931,18 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
   if (NbIter > NBITER_MAX_POLYGON)
     return;
 
-  // Number of samples running.
   nbsamplesOnC1 = TheCurveTool::NbSamples(C1, D1.FirstParameter(), D1.LastParameter());
   nbsamplesOnC2 = TheCurveTool::NbSamples(C2, D2.FirstParameter(), D2.LastParameter());
 
   if (NbIter == 0)
   {
-    // Minimal number of points.
+
     nbsamplesOnC1 = std::max(nbsamplesOnC1, myMinPntNb);
     nbsamplesOnC2 = std::max(nbsamplesOnC2, myMinPntNb);
   }
   else
   {
-    // Increase number of samples in second and next iterations.
+
     nbsamplesOnC1 = (5 * (nbsamplesOnC1 * NbIter)) / 4;
     nbsamplesOnC2 = (5 * (nbsamplesOnC2 * NbIter)) / 4;
   }
@@ -1075,12 +972,6 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
     }
   }
 
-  //----------------------------------------------------------------------
-  //-- if the deflection less then the Tolerance of Confusion
-  //-- Then the deflection of the polygon is set in TolConf
-  //-- (Detection of Tangency Zones)
-  //----------------------------------------------------------------------
-
   if (aPoly1->DeflectionOverEstimation() < TolConf)
   {
     aPoly1->SetDeflectionOverEstimation(TolConf);
@@ -1089,12 +980,7 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
   {
     aPoly2->SetDeflectionOverEstimation(TolConf);
   }
-  // for case when a few polygon points were replaced by line
-  // if exact solution was not found
-  // then search of precise solution will be repeated
-  // for polygon contains all initial points
-  // secondary search will be performed only for case when initial points
-  // were dropped
+
   bool isFullRepresentation =
     (aPoly1->NbSegments() == nbsamplesOnC1 && aPoly2->NbSegments() == nbsamplesOnC2);
 
@@ -1127,10 +1013,6 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
   done = true;
 }
 
-//======================================================================
-// Purpose : findIntersect
-//======================================================================
-
 bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
                                             const IntRes2d_Domain&       D1,
                                             const TheCurve&              C2,
@@ -1151,10 +1033,8 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
   IntCurve_ExactIntersectionPoint EIP(C1, C2, TolConf);
   double                          U = 0., V = 0.;
   bool                            AnErrorOccurred = false;
-  done                                            = true; // To prevent exception in nbp=NbPoints();
-  //----------------------------------------------------------------------
-  //-- Processing of SectionPoint
-  //----------------------------------------------------------------------
+  done                                            = true;
+
   int Nbsp = InterPP.NbSectionPoints();
   for (int sp = 1; sp <= Nbsp; sp++)
   {
@@ -1176,10 +1056,6 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
       continue;
     }
 
-    //--------------------------------------------------------------------
-    //-- It is checked if the found point is really a root
-    //--------------------------------------------------------------------
-
     EIP.Roots(U, V);
     TheCurveTool::D1(C1, U, P1, Tan1);
     TheCurveTool::D1(C2, V, P2, Tan2);
@@ -1193,7 +1069,7 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
       aT1l = thePoly1.ApproxParamOnCurve(SegIndex1, 1.0);
       aT2f = thePoly2.ApproxParamOnCurve(SegIndex2, 0.0);
       aT2l = thePoly2.ApproxParamOnCurve(SegIndex2, 1.0);
-      //
+
       int aMaxCount = 16, aCount = 0;
       GetIntersection(C1, aT1f, aT1l, C2, aT2f, aT2l, TolConf, aMaxCount, aPInt, Dist, aCount);
       U = aPInt.ParamOnFirst();
@@ -1202,9 +1078,7 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
       TheCurveTool::D1(C2, V, P2, Tan2);
       Dist = P1.Distance(P2);
     }
-    //-----------------------------------------------------------------
-    //-- It is checked if the point (u,v) does not exist already
-    //--
+
     int    nbp   = NbPoints();
     double EpsX1 = 10.0 * TheCurveTool::EpsX(C1);
     double EpsX2 = 10.0 * TheCurveTool::EpsX(C2);
@@ -1222,13 +1096,11 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
     }
 
     if (Dist <= TolConf)
-    { //-- Or the point is already present
+    {
       IntRes2d_Position   Pos1 = IntRes2d_Middle;
       IntRes2d_Position   Pos2 = IntRes2d_Middle;
       IntRes2d_Transition Trans1, Trans2;
-      //-----------------------------------------------------------------
-      //-- Calculate the Positions of Points on the curve
-      //--
+
       if (P1.Distance(DomainOnCurve1.FirstPoint()) <= DomainOnCurve1.FirstTolerance())
         Pos1 = IntRes2d_Head;
       else if (P1.Distance(DomainOnCurve1.LastPoint()) <= DomainOnCurve1.LastTolerance())
@@ -1238,9 +1110,7 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
         Pos2 = IntRes2d_Head;
       else if (P2.Distance(DomainOnCurve2.LastPoint()) <= DomainOnCurve2.LastTolerance())
         Pos2 = IntRes2d_End;
-      //-----------------------------------------------------------------
-      //-- Calculate the Transitions (see IntImpParGen.cxx)
-      //--
+
       if (IntImpParGen::DetermineTransition(Pos1, Tan1, Trans1, Pos2, Tan2, Trans2, TolConf)
           == false)
       {
@@ -1261,19 +1131,14 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
     }
   }
 
-  //----------------------------------------------------------------------
-  //-- Processing of TangentZone
-  //----------------------------------------------------------------------
   int Nbtz = InterPP.NbTangentZones();
   for (int tz = 1; tz <= Nbtz; tz++)
   {
     int NbPnts = InterPP.ZoneValue(tz).NumberOfPoints();
-    //====================================================================
-    //== Find the first and the last point in the tangency zone.
-    //====================================================================
+
     double ParamSupOnCurve2, ParamInfOnCurve2;
     double ParamSupOnCurve1, ParamInfOnCurve1;
-    //    int SegIndex,SegIndex1onP1,SegIndex1onP2,SegIndex2onP1,SegIndex2onP2;
+
     int         SegIndex1onP1, SegIndex1onP2;
     Intf_PIType Type;
     double      ParamOnLine;
@@ -1283,14 +1148,7 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
     for (int qq = 1; qq <= NbPnts; qq++)
     {
       const Intf_SectionPoint& SPnt1 = InterPP.ZoneValue(tz).GetPoint(qq);
-      //====================================================================
-      //== The zones of tangency are discretized
-      //== Test of stop : Check if
-      //==     (Deflection  < Tolerance)
-      //==  Or (Sample < EpsX)   (normally the first condition is
-      //==                           more strict)
-      //====================================================================
-      //      double _PolyUInf,_PolyUSup,_PolyVInf,_PolyVSup;
+
       double _PolyUInf, _PolyVInf;
 
       SPnt1.InfoFirst(Type, SegIndex1onP1, ParamOnLine);
@@ -1318,8 +1176,6 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
         ParamOnLine   = 0.0;
       }
       _PolyVInf = thePoly2.ApproxParamOnCurve(SegIndex1onP2, ParamOnLine);
-
-      //----------------------------------------------------------------------
 
       if (ParamInfOnCurve1 > _PolyUInf)
         ParamInfOnCurve1 = _PolyUInf;
@@ -1366,16 +1222,11 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
                                TheCurveTool::Value(C2, ParamSupOnCurve2),
                                ParamSupOnCurve2,
                                TolConf);
-      //-- thePoly1(2) are not deleted,
-      //-- finally they are destroyed.
-      //-- !! No untimely return !!
+
       Perform(C1, RecursD1, C2, RecursD2, Tol, TolConf, NbIter + 1, DeltaU, DeltaV);
     }
     else
     {
-      //-----------------------------------------------------------------
-      //-- Calculate Positions of Points on the curve and
-      //-- Transitions on each limit of the segment
 
       IntRes2d_Position   Pos1 = IntRes2d_Middle;
       IntRes2d_Position   Pos2 = IntRes2d_Middle;
@@ -1451,7 +1302,6 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
                                           TolConf);
       }
       IntRes2d_IntersectionPoint PtSeg1(P1, PolyUInf, PolyVInf, Trans1, Trans2, false);
-      //----------------------------------------------------------------------
 
       if ((std::abs(PolyUInf - PolyUSup) <= TheCurveTool::EpsX(C1))
           || (std::abs(PolyVInf - PolyVSup) <= TheCurveTool::EpsX(C2)))
@@ -1550,10 +1400,6 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
   return true;
 }
 
-//======================================================================
-//  GetIntersection
-//======================================================================
-
 void GetIntersection(const TheCurve&             theC1,
                      const double                theT1f,
                      const double                theT1l,
@@ -1567,7 +1413,7 @@ void GetIntersection(const TheCurve&             theC1,
                      int&                        theCount)
 {
   theCount++;
-  //
+
   double aTol2 = theTolConf * theTolConf;
   double aPTol1 =
     std::max(100. * Epsilon(std::max(std::abs(theT1f), std::abs(theT1l))), Precision::PConfusion());
@@ -1575,32 +1421,31 @@ void GetIntersection(const TheCurve&             theC1,
     std::max(100. * Epsilon(std::max(std::abs(theT2f), std::abs(theT2l))), Precision::PConfusion());
   gp_Pnt2d  aP1f, aP1l, aP2f, aP2l;
   Bnd_Box2d aB1, aB2;
-  //
+
   TheCurveTool::D0(theC1, theT1f, aP1f);
   TheCurveTool::D0(theC1, theT1l, aP1l);
   aB1.Add(aP1f);
   aB1.Add(aP1l);
   aB1.Enlarge(theTolConf);
-  //
+
   TheCurveTool::D0(theC2, theT2f, aP2f);
   TheCurveTool::D0(theC2, theT2l, aP2l);
   aB2.Add(aP2f);
   aB2.Add(aP2l);
   aB2.Enlarge(theTolConf);
-  //
+
   if (aB1.IsOut(aB2))
   {
     theCount--;
     return;
   }
-  //
+
   bool isSmall1 = (theT1l - theT1f) <= aPTol1 || aP1f.SquareDistance(aP1l) / 4. <= aTol2;
   bool isSmall2 = (theT2l - theT2f) <= aPTol2 || aP2f.SquareDistance(aP2l) / 4. <= aTol2;
 
   if ((isSmall1 && isSmall2) || (theCount > theMaxCount))
   {
-    // Seems to be intersection
-    // Simple treatment of segment intersection
+
     gp_XY  aPnts1[3] = {aP1f.XY(), (aP1f.XY() + aP1l.XY()) / 2., aP1l.XY()};
     gp_XY  aPnts2[3] = {aP2f.XY(), (aP2f.XY() + aP2l.XY()) / 2., aP2l.XY()};
     int    i, j, imin = -1, jmin = -1;
@@ -1618,12 +1463,12 @@ void GetIntersection(const TheCurve&             theC1,
         }
       }
     }
-    //
+
     dmin = std::sqrt(dmin);
     if (theDist > dmin)
     {
       theDist = dmin;
-      //
+
       double t1;
       if (imin == 0)
       {
@@ -1637,7 +1482,7 @@ void GetIntersection(const TheCurve&             theC1,
       {
         t1 = theT1l;
       }
-      //
+
       double t2;
       if (jmin == 0)
       {
@@ -1651,9 +1496,9 @@ void GetIntersection(const TheCurve&             theC1,
       {
         t2 = theT2l;
       }
-      //
+
       gp_Pnt2d aPint((aPnts1[imin] + aPnts2[jmin]) / 2.);
-      //
+
       IntRes2d_Transition aTrans1, aTrans2;
       thePInt.SetValues(aPint, t1, t2, aTrans1, aTrans2, false);
     }
@@ -1764,14 +1609,10 @@ void GetIntersection(const TheCurve&             theC1,
   }
 }
 
-//=================================================================================================
-
 int IntCurve_IntPolyPolyGen::GetMinNbSamples() const
 {
   return myMinPntNb;
 }
-
-//=================================================================================================
 
 void IntCurve_IntPolyPolyGen::SetMinNbSamples(const int theMinNbSamples)
 {

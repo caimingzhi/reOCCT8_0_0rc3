@@ -14,10 +14,6 @@
 #include <StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface.hpp>
 #include <StepGeom_RectangularTrimmedSurface.hpp>
 
-//=============================================================================
-// Creation d' une BoundedSurface de prostep a partir d' une BoundedSurface
-// de Geom
-//=============================================================================
 GeomToStep_MakeBoundedSurface::GeomToStep_MakeBoundedSurface(
   const occ::handle<Geom_BoundedSurface>& S,
   const StepData_Factors&                 theLocalFactors)
@@ -26,7 +22,7 @@ GeomToStep_MakeBoundedSurface::GeomToStep_MakeBoundedSurface(
   if (S->IsKind(STANDARD_TYPE(Geom_BSplineSurface)))
   {
     occ::handle<Geom_BSplineSurface> BS = occ::down_cast<Geom_BSplineSurface>(S);
-    // UPDATE FMA 1-04-96
+
     if (S->IsUPeriodic() || S->IsVPeriodic())
     {
       occ::handle<Geom_BSplineSurface> newBS = occ::down_cast<Geom_BSplineSurface>(BS->Copy());
@@ -74,10 +70,6 @@ GeomToStep_MakeBoundedSurface::GeomToStep_MakeBoundedSurface(
   else
     done = false;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_BoundedSurface>& GeomToStep_MakeBoundedSurface::Value() const
 {

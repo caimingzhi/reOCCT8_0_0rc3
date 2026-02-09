@@ -32,15 +32,11 @@
 #include <TopOpeBRepTool_ShapeClassifier.hpp>
 #include <TopOpeBRepTool_SolidClassifier.hpp>
 
-//=================================================================================================
-
 TopOpeBRepTool_ShapeClassifier::TopOpeBRepTool_ShapeClassifier()
     : myP3Ddef(false),
       myP2Ddef(false)
 {
 }
-
-//=================================================================================================
 
 TopOpeBRepTool_ShapeClassifier::TopOpeBRepTool_ShapeClassifier(const TopoDS_Shape& SRef)
     : myP3Ddef(false),
@@ -49,15 +45,11 @@ TopOpeBRepTool_ShapeClassifier::TopOpeBRepTool_ShapeClassifier(const TopoDS_Shap
   myRef = SRef;
 }
 
-//=================================================================================================
-
 void TopOpeBRepTool_ShapeClassifier::ClearAll()
 {
   ClearCurrent();
   mySolidClassifier.Clear();
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_ShapeClassifier::ClearCurrent()
 {
@@ -75,29 +67,21 @@ void TopOpeBRepTool_ShapeClassifier::ClearCurrent()
   myP3Ddef = myP2Ddef = false;
 }
 
-//=================================================================================================
-
 int TopOpeBRepTool_ShapeClassifier::SameDomain() const
 {
   return mySameDomain;
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_ShapeClassifier::SameDomain(const int sam)
 {
   mySameDomain = sam;
 }
 
-//=================================================================================================
-
 void TopOpeBRepTool_ShapeClassifier::SetReference(const TopoDS_Shape& SRef)
 {
   myRef = SRef;
   MapRef();
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_ShapeClassifier::MapRef()
 {
@@ -120,8 +104,6 @@ void TopOpeBRepTool_ShapeClassifier::MapRef()
   mymredone = true;
 }
 
-//=================================================================================================
-
 TopAbs_State TopOpeBRepTool_ShapeClassifier::StateShapeShape(const TopoDS_Shape& S,
                                                              const TopoDS_Shape& SRef,
                                                              const int           samedomain)
@@ -136,8 +118,6 @@ TopAbs_State TopOpeBRepTool_ShapeClassifier::StateShapeShape(const TopoDS_Shape&
   return myState;
 }
 
-//=================================================================================================
-
 TopAbs_State TopOpeBRepTool_ShapeClassifier::StateShapeShape(const TopoDS_Shape& S,
                                                              const TopoDS_Shape& AvS,
                                                              const TopoDS_Shape& SRef)
@@ -150,8 +130,6 @@ TopAbs_State TopOpeBRepTool_ShapeClassifier::StateShapeShape(const TopoDS_Shape&
   Perform();
   return myState;
 }
-
-//=================================================================================================
 
 TopAbs_State TopOpeBRepTool_ShapeClassifier::StateShapeShape(
   const TopoDS_Shape&                   S,
@@ -167,8 +145,6 @@ TopAbs_State TopOpeBRepTool_ShapeClassifier::StateShapeShape(
   return myState;
 }
 
-//=================================================================================================
-
 TopAbs_State TopOpeBRepTool_ShapeClassifier::StateShapeReference(const TopoDS_Shape& S,
                                                                  const TopoDS_Shape& AvS)
 {
@@ -178,8 +154,6 @@ TopAbs_State TopOpeBRepTool_ShapeClassifier::StateShapeReference(const TopoDS_Sh
   Perform();
   return myState;
 }
-
-//=================================================================================================
 
 TopAbs_State TopOpeBRepTool_ShapeClassifier::StateShapeReference(
   const TopoDS_Shape&                   S,
@@ -192,14 +166,10 @@ TopAbs_State TopOpeBRepTool_ShapeClassifier::StateShapeReference(
   return myState;
 }
 
-//=================================================================================================
-
 TopOpeBRepTool_SolidClassifier& TopOpeBRepTool_ShapeClassifier::ChangeSolidClassifier()
 {
   return mySolidClassifier;
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_ShapeClassifier::FindEdge()
 {
@@ -208,7 +178,7 @@ void TopOpeBRepTool_ShapeClassifier::FindEdge()
 
   TopAbs_ShapeEnum t = myS.ShapeType();
   if (t < TopAbs_FACE)
-  { // compsolid .. shell
+  {
     FindFace(myS);
     FindEdge(myFace);
   }
@@ -217,8 +187,6 @@ void TopOpeBRepTool_ShapeClassifier::FindEdge()
     FindEdge(myS);
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_ShapeClassifier::FindEdge(const TopoDS_Shape& S)
 {
@@ -254,8 +222,6 @@ void TopOpeBRepTool_ShapeClassifier::FindEdge(const TopoDS_Shape& S)
   }
 }
 
-//=================================================================================================
-
 void TopOpeBRepTool_ShapeClassifier::FindFace(const TopoDS_Shape& S)
 {
   myFace.Nullify();
@@ -279,8 +245,6 @@ void TopOpeBRepTool_ShapeClassifier::FindFace(const TopoDS_Shape& S)
   }
 }
 
-//=================================================================================================
-
 void TopOpeBRepTool_ShapeClassifier::Perform()
 {
   myState = TopAbs_UNKNOWN;
@@ -296,9 +260,7 @@ void TopOpeBRepTool_ShapeClassifier::Perform()
 
   if (!myAvS.IsNull())
   {
-    // tAvS = FACE,EDGE --> map(AvS,EDGE)
-    // rejet des aretes de myAvS comme arete de classification
-    // (le rejet simple de myAvS est insuffisant (connexite))
+
     myMapAvS.Clear();
     TopAbs_ShapeEnum tAvS = myAvS.ShapeType();
     if (tAvS == TopAbs_FACE)
@@ -313,9 +275,7 @@ void TopOpeBRepTool_ShapeClassifier::Perform()
   }
   else if (HasAvLS())
   {
-    // tAvS = FACE,EDGE --> map(AvS,EDGE)
-    // rejet des aretes de myPAvLS comme arete de classification
-    // (le rejet simple de myPAvLS est insuffisant (connexite))
+
     myMapAvS.Clear();
     TopAbs_ShapeEnum tAvS = myPAvLS->First().ShapeType();
     if (tAvS == TopAbs_FACE)
@@ -433,7 +393,6 @@ void TopOpeBRepTool_ShapeClassifier::Perform()
     throw Standard_ProgramError("StateShapeShape : bad operands");
   }
 
-  // take orientation of reference shape in account
   TopAbs_Orientation oriRef = myRef.Orientation();
   if (oriRef == TopAbs_EXTERNAL || oriRef == TopAbs_INTERNAL)
   {
@@ -441,8 +400,6 @@ void TopOpeBRepTool_ShapeClassifier::Perform()
       myState = TopAbs_OUT;
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_ShapeClassifier::StateEdgeReference()
 {
@@ -462,7 +419,7 @@ void TopOpeBRepTool_ShapeClassifier::StateEdgeReference()
   double                    f2d, l2d, tol2d;
 
   TopAbs_ShapeEnum tR = myRef.ShapeType();
-  // myEdge est une arete de myS, pas de myRef
+
   if (tR == TopAbs_FACE)
   {
     const TopoDS_Face& F = TopoDS::Face(myRef);
@@ -487,7 +444,7 @@ void TopOpeBRepTool_ShapeClassifier::StateEdgeReference()
       return;
     }
     else
-    { // myEdge/myRef=face en 3d
+    {
       C3D = BRep_Tool::Curve(myEdge, f3d, l3d);
 
       if (C3D.IsNull())
@@ -528,8 +485,6 @@ void TopOpeBRepTool_ShapeClassifier::StateEdgeReference()
     throw Standard_ProgramError("StateShapeShape : bad operands");
 }
 
-//=================================================================================================
-
 void TopOpeBRepTool_ShapeClassifier::StateP2DReference(const gp_Pnt2d& P2D)
 {
   myState = TopAbs_UNKNOWN;
@@ -544,12 +499,12 @@ void TopOpeBRepTool_ShapeClassifier::StateP2DReference(const gp_Pnt2d& P2D)
       TopExp_Explorer x;
       for (x.Init(myRef, TopAbs_EDGE); x.More(); x.Next())
       {
-        //      for(TopExp_Explorer x(myRef,TopAbs_EDGE);x.More();x.Next()) {
+
         TopAbs_Orientation o = x.Current().Orientation();
-        //	if      (o == TopAbs_EXTERNAL) myState == TopAbs_OUT;
+
         if (o == TopAbs_EXTERNAL)
           myState = TopAbs_OUT;
-        //	else if (o == TopAbs_INTERNAL) myState == TopAbs_IN;
+
         else if (o == TopAbs_INTERNAL)
           myState = TopAbs_IN;
         else
@@ -578,8 +533,6 @@ void TopOpeBRepTool_ShapeClassifier::StateP2DReference(const gp_Pnt2d& P2D)
   }
 }
 
-//=================================================================================================
-
 void TopOpeBRepTool_ShapeClassifier::StateP3DReference(const gp_Pnt& P3D)
 {
   myState = TopAbs_UNKNOWN;
@@ -603,7 +556,7 @@ void TopOpeBRepTool_ShapeClassifier::StateP3DReference(const gp_Pnt& P3D)
     TopExp_Explorer ex;
     for (ex.Init(myRef, TopAbs_SOLID); ex.More(); ex.Next())
     {
-      //    for (TopExp_Explorer ex(myRef,TopAbs_SOLID);ex.More();ex.Next()) {
+
       const TopoDS_Solid& SO    = TopoDS::Solid(ex.Current());
       double              tol3d = Precision::Confusion();
       mySolidClassifier.Classify(SO, P3D, tol3d);
@@ -620,14 +573,10 @@ void TopOpeBRepTool_ShapeClassifier::StateP3DReference(const gp_Pnt& P3D)
   }
 }
 
-//=================================================================================================
-
 TopAbs_State TopOpeBRepTool_ShapeClassifier::State() const
 {
   return myState;
 }
-
-//=================================================================================================
 
 const gp_Pnt& TopOpeBRepTool_ShapeClassifier::P3D() const
 {
@@ -638,8 +587,6 @@ const gp_Pnt& TopOpeBRepTool_ShapeClassifier::P3D() const
   throw Standard_ProgramError("ShapeClassifier::P3D undefined");
 }
 
-//=================================================================================================
-
 const gp_Pnt2d& TopOpeBRepTool_ShapeClassifier::P2D() const
 {
   if (myP2Ddef)
@@ -648,8 +595,6 @@ const gp_Pnt2d& TopOpeBRepTool_ShapeClassifier::P2D() const
   }
   throw Standard_ProgramError("ShapeClassifier::P2D undefined");
 }
-
-//=================================================================================================
 
 bool TopOpeBRepTool_ShapeClassifier::HasAvLS() const
 {

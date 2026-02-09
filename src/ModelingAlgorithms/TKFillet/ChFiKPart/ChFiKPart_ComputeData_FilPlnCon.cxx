@@ -25,10 +25,6 @@
 #include <Precision.hpp>
 #include <TopOpeBRepDS_DataStructure.hpp>
 
-//=======================================================================
-// function : MakeFillet
-// purpose  : case cone/plane or plane/cone.
-//=======================================================================
 bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
                           const occ::handle<ChFiDS_SurfData>& Data,
                           const gp_Pln&                       Pln,
@@ -43,7 +39,7 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
                           const TopAbs_Orientation            Ofpl,
                           const bool                          plandab)
 {
-  // calculate the fillet (torus or sphere).
+
   bool   c1sphere = false;
   gp_Ax3 PosPl    = Pln.Position();
   gp_Dir Dpnat    = PosPl.XDirection().Crossed(PosPl.YDirection());
@@ -73,8 +69,7 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
   gp_Pnt             Pv;
   if (CInt.IsDone())
   {
-    // The origin of the fillet is set at the start point on the
-    // guideline.
+
     Pv = ElCLib::Value(ElCLib::Parameter(CInt.Circle(1), PtSp), CInt.Circle(1));
   }
   else
@@ -153,8 +148,6 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
     Data->ChangeSurf(ChFiKPart_IndexSurfaceInDS(gtor, DStr));
   }
 
-  // It is checked if the orientation of the fillet is the same
-  // as of the faces.
   gp_Pnt P, PP;
   gp_Vec deru, derv;
   P.SetCoord(cPln.X() + Rad * Dx.X(), cPln.Y() + Rad * Dx.Y(), cPln.Z() + Rad * Dx.Z());
@@ -181,12 +174,6 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
   {
     Data->ChangeOrientation() = TopAbs_FORWARD;
   }
-
-  // FaceInterferences are loaded with pcurves and curves 3d.
-  // ---------------------------------------------------------------
-
-  // The plane face.
-  // --------------
 
   occ::handle<Geom2d_Circle> GCirc2dPln;
   occ::handle<Geom_Circle>   GCircPln;
@@ -229,9 +216,6 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
                                                    GCirc2dPln,
                                                    GLin2dFil1);
   }
-
-  // The conic face.
-  // ----------------
 
   P.SetCoord(Pv.X() + Rabio * ddc.X(), Pv.Y() + Rabio * ddc.Y(), Pv.Z() + Rabio * ddc.Z());
   if (c1sphere)

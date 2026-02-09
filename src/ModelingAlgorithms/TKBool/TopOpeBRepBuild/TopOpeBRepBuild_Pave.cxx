@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepBuild_Pave, TopOpeBRepBuild_Loop)
 
-//=================================================================================================
-
 TopOpeBRepBuild_Pave::TopOpeBRepBuild_Pave(const TopoDS_Shape& V, const double P, const bool B)
     : TopOpeBRepBuild_Loop(V),
       myVertex(V),
@@ -14,78 +12,55 @@ TopOpeBRepBuild_Pave::TopOpeBRepBuild_Pave(const TopoDS_Shape& V, const double P
 {
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Pave::HasSameDomain(const bool B)
 {
   myHasSameDomain = B;
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Pave::SameDomain(const TopoDS_Shape& VSD)
 {
   mySameDomain = VSD;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepBuild_Pave::HasSameDomain() const
 {
   return myHasSameDomain;
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& TopOpeBRepBuild_Pave::SameDomain() const
 {
   return mySameDomain;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRepBuild_Pave::Vertex() const
 {
   return myVertex;
 }
-
-//=================================================================================================
 
 TopoDS_Shape& TopOpeBRepBuild_Pave::ChangeVertex()
 {
   return myVertex;
 }
 
-//=================================================================================================
-
 double TopOpeBRepBuild_Pave::Parameter() const
 {
   return myParam;
 }
-
-// modified by NIZHNY-MZV  Mon Feb 21 14:11:40 2000
-//=================================================================================================
 
 void TopOpeBRepBuild_Pave::Parameter(const double Par)
 {
   myParam = Par;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepBuild_Pave::IsShape() const
 {
   return myIsShape;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRepBuild_Pave::Shape() const
 {
   return myVertex;
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Pave::Dump() const
 {
@@ -94,9 +69,6 @@ void TopOpeBRepBuild_Pave::Dump() const
   TopAbs::Print(Vertex().Orientation(), std::cout);
 #endif
 }
-
-// modified by NIZHNY-MZV  Mon Feb 21 14:27:48 2000
-//=================================================================================================
 
 TopOpeBRepDS_Kind& TopOpeBRepBuild_Pave::InterferenceType()
 {

@@ -7,8 +7,6 @@
 
 class TDF_RelocationTable;
 
-//! An ancestor attribute for all attributes which have no fields.
-//! If an attribute inherits this one it should not have drivers for persistence.
 class TDataStd_GenericEmpty : public TDF_Attribute
 {
 
@@ -20,7 +18,6 @@ public:
   {
   }
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(TDataStd_GenericEmpty, TDF_Attribute)

@@ -11,26 +11,21 @@ class StepDimTol_PlacedDatumTargetFeature;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write tool for PlacedDatumTargetFeature
 class RWStepDimTol_RWPlacedDatumTargetFeature
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepDimTol_RWPlacedDatumTargetFeature();
 
-  //! Reads PlacedDatumTargetFeature
   Standard_HIDDEN void ReadStep(const occ::handle<StepData_StepReaderData>&             data,
                                 const int                                               num,
                                 occ::handle<Interface_Check>&                           ach,
                                 const occ::handle<StepDimTol_PlacedDatumTargetFeature>& ent) const;
 
-  //! Writes PlacedDatumTargetFeature
   Standard_HIDDEN void WriteStep(StepData_StepWriter&                                    SW,
                                  const occ::handle<StepDimTol_PlacedDatumTargetFeature>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(const occ::handle<StepDimTol_PlacedDatumTargetFeature>& ent,
                              Interface_EntityIterator&                               iter) const;
 };

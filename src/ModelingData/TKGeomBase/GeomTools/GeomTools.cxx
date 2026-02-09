@@ -55,22 +55,16 @@ void GeomTools::Read(occ::handle<Geom2d_Curve>& C, Standard_IStream& IS)
   C = GeomTools_Curve2dSet::ReadCurve2d(IS);
 }
 
-//=================================================================================================
-
 void GeomTools::SetUndefinedTypeHandler(const occ::handle<GeomTools_UndefinedTypeHandler>& aHandler)
 {
   if (!aHandler.IsNull())
     theActiveHandler = aHandler;
 }
 
-//=================================================================================================
-
 occ::handle<GeomTools_UndefinedTypeHandler> GeomTools::GetUndefinedTypeHandler()
 {
   return theActiveHandler;
 }
-
-//=================================================================================================
 
 void GeomTools::GetReal(Standard_IStream& IS, double& theValue)
 {
@@ -79,8 +73,7 @@ void GeomTools::GetReal(Standard_IStream& IS, double& theValue)
   {
     return;
   }
-  // According IEEE-754 Specification and standard stream parameters
-  // the most optimal buffer length not less then 25
+
   constexpr size_t THE_BUFFER_SIZE = 32;
   char             aBuffer[THE_BUFFER_SIZE];
 

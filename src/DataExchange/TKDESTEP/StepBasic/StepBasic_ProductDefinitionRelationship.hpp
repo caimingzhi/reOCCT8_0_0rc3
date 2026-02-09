@@ -8,15 +8,12 @@
 class TCollection_HAsciiString;
 class StepBasic_ProductDefinition;
 
-//! Representation of STEP entity ProductDefinitionRelationship
 class StepBasic_ProductDefinitionRelationship : public Standard_Transient
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT StepBasic_ProductDefinitionRelationship();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>&    aId,
     const occ::handle<TCollection_HAsciiString>&    aName,
@@ -25,7 +22,6 @@ public:
     const occ::handle<StepBasic_ProductDefinition>& aRelatingProductDefinition,
     const occ::handle<StepBasic_ProductDefinition>& aRelatedProductDefinition);
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>&  aId,
     const occ::handle<TCollection_HAsciiString>&  aName,
@@ -34,52 +30,37 @@ public:
     const StepBasic_ProductDefinitionOrReference& aRelatingProductDefinition,
     const StepBasic_ProductDefinitionOrReference& aRelatedProductDefinition);
 
-  //! Returns field Id
   Standard_EXPORT occ::handle<TCollection_HAsciiString> Id() const;
 
-  //! Set field Id
   Standard_EXPORT void SetId(const occ::handle<TCollection_HAsciiString>& Id);
 
-  //! Returns field Name
   Standard_EXPORT occ::handle<TCollection_HAsciiString> Name() const;
 
-  //! Set field Name
   Standard_EXPORT void SetName(const occ::handle<TCollection_HAsciiString>& Name);
 
-  //! Returns field Description
   Standard_EXPORT occ::handle<TCollection_HAsciiString> Description() const;
 
-  //! Set field Description
   Standard_EXPORT void SetDescription(const occ::handle<TCollection_HAsciiString>& Description);
 
-  //! Returns True if optional field Description is defined
   Standard_EXPORT bool HasDescription() const;
 
-  //! Returns field RelatingProductDefinition
   Standard_EXPORT occ::handle<StepBasic_ProductDefinition> RelatingProductDefinition() const;
 
-  //! Returns field RelatingProductDefinition in AP242
   Standard_EXPORT StepBasic_ProductDefinitionOrReference RelatingProductDefinitionAP242() const;
 
-  //! Set field RelatingProductDefinition
   Standard_EXPORT void SetRelatingProductDefinition(
     const occ::handle<StepBasic_ProductDefinition>& RelatingProductDefinition);
 
-  //! Set field RelatingProductDefinition in AP242
   Standard_EXPORT void SetRelatingProductDefinition(
     const StepBasic_ProductDefinitionOrReference& RelatingProductDefinition);
 
-  //! Returns field RelatedProductDefinition
   Standard_EXPORT occ::handle<StepBasic_ProductDefinition> RelatedProductDefinition() const;
 
-  //! Returns field RelatedProductDefinition in AP242
   Standard_EXPORT StepBasic_ProductDefinitionOrReference RelatedProductDefinitionAP242() const;
 
-  //! Set field RelatedProductDefinition
   Standard_EXPORT void SetRelatedProductDefinition(
     const occ::handle<StepBasic_ProductDefinition>& RelatedProductDefinition);
 
-  //! Set field RelatedProductDefinition in AP242
   Standard_EXPORT void SetRelatedProductDefinition(
     const StepBasic_ProductDefinitionOrReference& RelatedProductDefinition);
 

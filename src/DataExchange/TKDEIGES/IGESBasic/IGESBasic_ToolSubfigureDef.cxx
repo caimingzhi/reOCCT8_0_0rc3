@@ -18,39 +18,31 @@
 #include <Standard_DomainError.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-// MGE 03/08/98
 IGESBasic_ToolSubfigureDef::IGESBasic_ToolSubfigureDef() = default;
 
 void IGESBasic_ToolSubfigureDef::ReadOwnParams(const occ::handle<IGESBasic_SubfigureDef>&  ent,
                                                const occ::handle<IGESData_IGESReaderData>& IR,
                                                IGESData_ParamReader&                       PR) const
 {
-  // MGE 03/08/98
-  // Building of messages
-  //========================================
-  //  Message_Msg Msg208("XSTEP_208");
+
   Message_Msg Msg209("XSTEP_209");
-  //  Message_Msg Msg210("XSTEP_210");
-  //  Message_Msg Msg211("XSTEP_211");
-  //========================================
 
   int                                   tempDepth;
   occ::handle<TCollection_HAsciiString> tempName;
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   int                                                                nbval = 0;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> EntArray;
 
   if (!PR.ReadInteger(PR.Current(), tempDepth))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg208("XSTEP_208");
     PR.SendFail(Msg208);
   }
-  PR.ReadText(PR.Current(), Msg209, tempName); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadText(PR.Current(), Msg209, tempName);
   if (PR.ReadInteger(PR.Current(), nbval))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg211("XSTEP_211");
-    PR.ReadEnts(IR, PR.CurrentList(nbval), Msg211, EntArray); // szv#4:S4163:12Mar99 `st=` not
-                                                              // needed
+    PR.ReadEnts(IR, PR.CurrentList(nbval), Msg211, EntArray);
   }
   else
   {
@@ -104,11 +96,11 @@ void IGESBasic_ToolSubfigureDef::OwnCopy(const occ::handle<IGESBasic_SubfigureDe
 IGESData_DirChecker IGESBasic_ToolSubfigureDef::DirChecker(
   const occ::handle<IGESBasic_SubfigureDef>& ent) const
 {
-  IGESData_DirChecker DC(308, 0); // TypeNo. 308, Form no. 0
+  IGESData_DirChecker DC(308, 0);
   DC.Structure(IGESData_DefVoid);
   if (ent->HierarchyStatus() == 1)
     DC.GraphicsIgnored(01);
-  // GraphicsIgnored if hierarchy status = 01
+
   else
   {
     DC.BlankStatusIgnored();
@@ -117,9 +109,9 @@ IGESData_DirChecker IGESBasic_ToolSubfigureDef::DirChecker(
   return DC;
 }
 
-void IGESBasic_ToolSubfigureDef::OwnCheck(const occ::handle<IGESBasic_SubfigureDef>& /* ent */,
+void IGESBasic_ToolSubfigureDef::OwnCheck(const occ::handle<IGESBasic_SubfigureDef>&,
                                           const Interface_ShareTool&,
-                                          occ::handle<Interface_Check>& /* ach */) const
+                                          occ::handle<Interface_Check>&) const
 {
 }
 

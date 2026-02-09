@@ -2,8 +2,6 @@
 #include <HLRBRep_EdgeData.hpp>
 #include <TopoDS_Edge.hpp>
 
-//=================================================================================================
-
 void HLRBRep_EdgeData::Set(const bool         Rg1L,
                            const bool         RgNL,
                            const TopoDS_Edge& EG,

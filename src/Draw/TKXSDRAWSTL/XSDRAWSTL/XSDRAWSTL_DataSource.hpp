@@ -10,48 +10,32 @@
 #include <MeshVS_EntityType.hpp>
 #include <Poly_Triangulation.hpp>
 
-//! The sample DataSource for working with STLMesh_Mesh
 class XSDRAWSTL_DataSource : public MeshVS_DataSource
 {
 
 public:
-  //! Constructor
   Standard_EXPORT XSDRAWSTL_DataSource(const occ::handle<Poly_Triangulation>& aMesh);
 
-  //! Returns geometry information about node (if IsElement is False) or element (IsElement is True)
-  //! by coordinates. For element this method must return all its nodes coordinates in the strict
-  //! order: X, Y, Z and with nodes order is the same as in wire bounding the face or link. NbNodes
-  //! is number of nodes of element. It is recommended to return 1 for node. Type is an element
-  //! type.
   Standard_EXPORT bool GetGeom(const int                   ID,
                                const bool                  IsElement,
                                NCollection_Array1<double>& Coords,
                                int&                        NbNodes,
                                MeshVS_EntityType&          Type) const override;
 
-  //! This method is similar to GetGeom, but returns only element or node type. This method is
-  //! provided for a fine performance.
   Standard_EXPORT bool GetGeomType(const int          ID,
                                    const bool         IsElement,
                                    MeshVS_EntityType& Type) const override;
 
-  //! This method returns by number an address of any entity which represents element or node data
-  //! structure.
   Standard_EXPORT void* GetAddr(const int ID, const bool IsElement) const override;
 
-  //! This method returns information about what node this element consist of.
   Standard_EXPORT bool GetNodesByElement(const int                ID,
                                          NCollection_Array1<int>& NodeIDs,
                                          int&                     NbNodes) const override;
 
-  //! This method returns map of all nodes the object consist of.
   Standard_EXPORT const TColStd_PackedMapOfInteger& GetAllNodes() const override;
 
-  //! This method returns map of all elements the object consist of.
   Standard_EXPORT const TColStd_PackedMapOfInteger& GetAllElements() const override;
 
-  //! This method calculates normal of face, which is using for correct reflection presentation.
-  //! There is default method, for advance reflection this method can be redefined.
   Standard_EXPORT bool GetNormal(const int Id,
                                  const int Max,
                                  double&   nx,

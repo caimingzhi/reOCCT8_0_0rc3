@@ -18,16 +18,6 @@
 #include <NCollection_Sequence.hpp>
 #include <NCollection_DataMap.hpp>
 
-/**
- * The algorithm of unbalanced binary  tree of overlapped bounding boxes with
- * the possibility of deleting objects from the tree.
- *
- * In addition to  the requirements to the object type  defined in the parent
- * class this  class requires that the  object can be hashed  and compared to
- * another object (functions HashCode and  IsEqual are defined for it), since
- * the class NCollection_DataMap  is used where the object  plays the role of
- * the key.
- */
 template <class TheObjType, class TheBndType>
 class NCollection_EBTree : public NCollection_UBTree<TheObjType, TheBndType>
 {
@@ -35,35 +25,22 @@ public:
   typedef NCollection_UBTree<TheObjType, TheBndType> UBTree;
   typedef typename UBTree::TreeNode                  TreeNode;
 
-  // ---------- PUBLIC METHODS ----------
-
-  /**
-   * Constructor.
-   */
   NCollection_EBTree(const occ::handle<NCollection_BaseAllocator>& theAllocator = nullptr)
       : UBTree(theAllocator)
   {
   }
 
-  /**
-   * Updates the tree with a new object and its bounding box.
-   * Extends the functionality of the parent method by maintaining
-   * the map myObjNodeMap. Redefined virtual method.
-   * @return
-   *   False if the tree already contains theObj.
-   */
   bool Add(const TheObjType& theObj, const TheBndType& theBnd) override
   {
     bool result = false;
     if (!Contains(theObj))
     {
-      // Add object in the tree using parent method
+
       UBTree::Add(theObj, theBnd);
 
-      // Update the map
       TreeNode& aNewNode = this->ChangeLastNode();
       myObjNodeMap.Bind(theObj, &aNewNode);
-      // If the new node is not the root (has a parent) check the neighbour node
+
       if (!aNewNode.IsRoot())
       {
         TreeNode& aNeiNode = aNewNode.ChangeParent().ChangeChild(0);
@@ -78,28 +55,12 @@ public:
     return result;
   }
 
-  /**
-   * Removes the given object and updates the tree.
-   * @return
-   *   False if the tree does not contain theObj
-   */
   bool Remove(const TheObjType& theObj);
 
-  /**
-   * @return
-   *   True if the tree contains the object.
-   */
   bool Contains(const TheObjType& theObj) const { return myObjNodeMap.IsBound(theObj); }
 
-  /**
-   * @return
-   *   The leaf node containing the object.
-   */
   const TreeNode& FindNode(const TheObjType& theObj) const { return *myObjNodeMap.Find(theObj); }
 
-  /**
-   * Clears the contents of the tree. Redefined virtual method
-   */
   void Clear(const occ::handle<NCollection_BaseAllocator>& aNewAlloc = nullptr) override
   {
     myObjNodeMap.Clear();
@@ -107,26 +68,12 @@ public:
   }
 
 private:
-  // ---------- PRIVATE METHODS ----------
-
-  /// Copy constructor (prohibited).
   NCollection_EBTree(const NCollection_EBTree&) = delete;
 
-  /// Assignment operator (prohibited).
   NCollection_EBTree& operator=(const NCollection_EBTree&) = delete;
 
-  // ---------- PRIVATE FIELDS ----------
-
-  NCollection_DataMap<TheObjType, TreeNode*> myObjNodeMap; ///< map of object to node pointer
+  NCollection_DataMap<TheObjType, TreeNode*> myObjNodeMap;
 };
-
-// ================== METHODS TEMPLATES =====================
-
-//=======================================================================
-// function : Remove
-// purpose  : Removes the given object and updates the tree.
-//           Returns false if the tree does not contain theObj.
-//=======================================================================
 
 template <class TheObjType, class TheBndType>
 bool NCollection_EBTree<TheObjType, TheBndType>::Remove(const TheObjType& theObj)
@@ -137,20 +84,18 @@ bool NCollection_EBTree<TheObjType, TheBndType>::Remove(const TheObjType& theObj
     TreeNode* pNode = myObjNodeMap(theObj);
     if (pNode->IsRoot())
     {
-      // it is the root, so clear all the tree
+
       Clear();
     }
     else
     {
-      // it is a child of some parent,
-      // so kill the child that contains theObj
-      // and update bounding boxes of all ancestors
+
       myObjNodeMap.UnBind(theObj);
       TreeNode* pParent = &pNode->ChangeParent();
       pParent->Kill((pNode == &pParent->Child(0) ? 0 : 1), this->Allocator());
       if (pParent->IsLeaf())
       {
-        // the parent node became a leaf, so update the map
+
         myObjNodeMap.UnBind(pParent->Object());
         myObjNodeMap.Bind(pParent->Object(), pParent);
       }
@@ -166,15 +111,6 @@ bool NCollection_EBTree<TheObjType, TheBndType>::Remove(const TheObjType& theObj
   return result;
 }
 
-// ======================================================================
-// Declaration of handled version of NCollection_EBTree.
-// In the macros below the arguments are:
-// _HEBTREE      - the desired name of handled class
-// _OBJTYPE      - the name of the object type
-// _BNDTYPE      - the name of the bounding box type
-// _HUBTREE      - the name of parent class
-//                 (defined using macro DEFINE_HUBTREE)
-
 #define DEFINE_HEBTREE(_HEBTREE, _OBJTYPE, _BNDTYPE, _HUBTREE)                                     \
   class _HEBTREE : public _HUBTREE                                                                 \
   {                                                                                                \
@@ -186,9 +122,6 @@ bool NCollection_EBTree<TheObjType, TheBndType>::Remove(const TheObjType& theObj
         : _HUBTREE(new EBTree)                                                                     \
     {                                                                                              \
     }                                                                                              \
-    /* Empty constructor */                                                                        \
-                                                                                                   \
-    /* Access to the methods of EBTree */                                                          \
                                                                                                    \
     bool Remove(const _OBJTYPE& theObj)                                                            \
     {                                                                                              \
@@ -205,8 +138,6 @@ bool NCollection_EBTree<TheObjType, TheBndType>::Remove(const TheObjType& theObj
       return ETree().FindNode(theObj);                                                             \
     }                                                                                              \
                                                                                                    \
-    /* Access to the extended tree algorithm */                                                    \
-                                                                                                   \
     const EBTree& ETree() const noexcept                                                           \
     {                                                                                              \
       return (const EBTree&)Tree();                                                                \
@@ -217,7 +148,6 @@ bool NCollection_EBTree<TheObjType, TheBndType>::Remove(const TheObjType& theObj
     }                                                                                              \
                                                                                                    \
     DEFINE_STANDARD_RTTI_INLINE(_HEBTREE, _HUBTREE)                                                \
-    /* Type management */                                                                          \
   };                                                                                               \
   DEFINE_STANDARD_HANDLE(_HEBTREE, _HUBTREE)
 
@@ -250,18 +180,11 @@ class BRepMesh_CircleInspector;
 
 #define DEFINE_INC_ALLOC                                                                           \
   DEFINE_NCOLLECTION_ALLOC                                                                         \
-  void operator delete(void* /*theAddress*/)                                                       \
-  {                                                                                                \
-    /*it's inc allocator, nothing to do*/                                                          \
-  }
+  void operator delete(void*) {}
 
 namespace IMeshData
 {
-//! Default size for memory block allocated by IncAllocator.
-/**
- * The idea here is that blocks of the given size are returned to the system
- * rather than retained in the malloc heap, at least on WIN32 and WIN64 platforms.
- */
+
 #ifdef _WIN64
   const size_t MEMORY_BLOCK_SIZE_HUGE = 1024 * 1024;
 #else
@@ -283,7 +206,6 @@ namespace IMeshData
   typedef NCollection_Shared<NCollection_EBTree<int, Bnd_Box2d>> BndBox2dTree;
   typedef NCollection_UBTreeFiller<int, Bnd_Box2d>               BndBox2dTreeFiller;
 
-  // Vectors
   typedef NCollection_Shared<NCollection_Vector<IFaceHandle>>        VectorOfIFaceHandles;
   typedef NCollection_Shared<NCollection_Vector<IWireHandle>>        VectorOfIWireHandles;
   typedef NCollection_Shared<NCollection_Vector<IEdgeHandle>>        VectorOfIEdgeHandles;
@@ -298,7 +220,6 @@ namespace IMeshData
   typedef NCollection_Shared<NCollection_Array1<BRepMesh_Vertex>> Array1OfVertexOfDelaun;
   typedef NCollection_Shared<NCollection_Vector<BRepMesh_Vertex>> VectorOfVertex;
 
-  // Sequences
   typedef NCollection_Shared<NCollection_Sequence<Bnd_B2d>> SequenceOfBndB2d;
   typedef NCollection_Shared<NCollection_Sequence<int>>     SequenceOfInteger;
   typedef NCollection_Shared<NCollection_Sequence<double>>  SequenceOfReal;
@@ -311,7 +232,6 @@ namespace IMeshData
     typedef std::deque<int, NCollection_OccAllocator<int>>           SequenceOfInteger;
   } // namespace Model
 
-  // Lists
   typedef NCollection_Shared<NCollection_List<int>>           ListOfInteger;
   typedef NCollection_Shared<NCollection_List<gp_Pnt2d>>      ListOfPnt2d;
   typedef NCollection_Shared<NCollection_List<IPCurveHandle>> ListOfIPCurves;

@@ -49,8 +49,6 @@
 
 static occ::handle<IGESToBRep_AlgoContainer> theContainer;
 
-//=================================================================================================
-
 void IGESToBRep::Init()
 {
   static bool init = false;
@@ -61,28 +59,19 @@ void IGESToBRep::Init()
   theContainer = new IGESToBRep_AlgoContainer;
 }
 
-//=================================================================================================
-
 void IGESToBRep::SetAlgoContainer(const occ::handle<IGESToBRep_AlgoContainer>& aContainer)
 {
   theContainer = aContainer;
 }
-
-//=================================================================================================
 
 occ::handle<IGESToBRep_AlgoContainer> IGESToBRep::AlgoContainer()
 {
   return theContainer;
 }
 
-//=======================================================================
-// function : IsCurveAndSurface
-// purpose  : Return True if the IgesEntity can be transferred
-//           by TransferCurveAndSurface
-//=======================================================================
 bool IGESToBRep::IsCurveAndSurface(const occ::handle<IGESData_IGESEntity>& start)
 {
-  // S4054
+
   if (start.IsNull())
     return false;
   if (IsTopoCurve(start))
@@ -94,14 +83,9 @@ bool IGESToBRep::IsCurveAndSurface(const occ::handle<IGESData_IGESEntity>& start
   return false;
 }
 
-//=======================================================================
-// function : IsBasicCurve
-// purpose  : Return True if the IgesEntity can be transferred
-//           by TransferBasicCurve
-//=======================================================================
 bool IGESToBRep::IsBasicCurve(const occ::handle<IGESData_IGESEntity>& start)
 {
-  // S4054
+
   if (start.IsNull())
     return false;
   if (start->IsKind(STANDARD_TYPE(IGESGeom_BSplineCurve)))
@@ -119,21 +103,16 @@ bool IGESToBRep::IsBasicCurve(const occ::handle<IGESData_IGESEntity>& start)
   return false;
 }
 
-//=======================================================================
-// function : IsBasicSurface
-// purpose  : Return True if the IgesEntity can be transferred
-//           by TransferBasicSurface
-//=======================================================================
 bool IGESToBRep::IsBasicSurface(const occ::handle<IGESData_IGESEntity>& start)
 {
-  // S4054
+
   if (start.IsNull())
     return false;
   if (start->IsKind(STANDARD_TYPE(IGESGeom_BSplineSurface)))
     return true;
   if (start->IsKind(STANDARD_TYPE(IGESGeom_SplineSurface)))
     return true;
-  // S4181 pdn 15.04.99 added to basic surfaces
+
   if (start->IsKind(STANDARD_TYPE(IGESSolid_PlaneSurface)))
     return true;
   if (start->IsKind(STANDARD_TYPE(IGESSolid_CylindricalSurface)))
@@ -148,14 +127,9 @@ bool IGESToBRep::IsBasicSurface(const occ::handle<IGESData_IGESEntity>& start)
   return false;
 }
 
-//=======================================================================
-// function : IsTopoCurve
-// purpose  : Return True if the IgesEntity can be transferred
-//           by TransferTopoCurve
-//=======================================================================
 bool IGESToBRep::IsTopoCurve(const occ::handle<IGESData_IGESEntity>& start)
 {
-  // S4054
+
   if (start.IsNull())
     return false;
   if (IsBasicCurve(start))
@@ -173,14 +147,9 @@ bool IGESToBRep::IsTopoCurve(const occ::handle<IGESData_IGESEntity>& start)
   return false;
 }
 
-//=======================================================================
-// function : IsTopoSurface
-// purpose  : Return True if the IgesEntity can be transferred
-//           by TransferTopoSurface
-//=======================================================================
 bool IGESToBRep::IsTopoSurface(const occ::handle<IGESData_IGESEntity>& start)
 {
-  // S4054
+
   if (start.IsNull())
     return false;
   if (IsBasicSurface(start))
@@ -199,9 +168,7 @@ bool IGESToBRep::IsTopoSurface(const occ::handle<IGESData_IGESEntity>& start)
     return true;
   if (start->IsKind(STANDARD_TYPE(IGESGeom_OffsetSurface)))
     return true;
-  // S4181 pdn 15.04.99 removing to basic surface
-  // if (start->IsKind(STANDARD_TYPE(IGESSolid_PlaneSurface)))       return true;
-  //  SingleParent, special case (Perforated Face: contains only PLANEs)
+
   if (start->IsKind(STANDARD_TYPE(IGESBasic_SingleParent)))
   {
     DeclareAndCast(IGESBasic_SingleParent, sp, start);
@@ -218,14 +185,9 @@ bool IGESToBRep::IsTopoSurface(const occ::handle<IGESData_IGESEntity>& start)
   return false;
 }
 
-//=======================================================================
-// function : IsBRepEntity
-// purpose  : Return True if the IgesEntity can be transferred
-//           by TransferBRepEntity
-//=======================================================================
 bool IGESToBRep::IsBRepEntity(const occ::handle<IGESData_IGESEntity>& start)
 {
-  // S4054
+
   if (start.IsNull())
     return false;
   if (start->IsKind(STANDARD_TYPE(IGESSolid_Face)))
@@ -242,17 +204,6 @@ bool IGESToBRep::IsBRepEntity(const occ::handle<IGESData_IGESEntity>& start)
     return true;
   return false;
 }
-
-//=======================================================================
-// function : IGESCurveToSequenceOfIGESCurve
-// purpose  : Creates a sequence of IGES curves from IGES curve:
-//           - if curve is CompositeCurve its components are recursively added,
-//           - if curve is ordinary IGES curve it is simply added
-//           - otherwise (Null or not curve) it is ignored
-// remark   : if sequence is Null it is created, otherwise it is appended
-// returns  : number of curves in sequence
-// example  : (A B (C (D ( E F) G) H)) -> (A B C D E F G H)
-//=======================================================================
 
 int IGESToBRep::IGESCurveToSequenceOfIGESCurve(
   const occ::handle<IGESData_IGESEntity>&                              curve,
@@ -277,15 +228,6 @@ int IGESToBRep::IGESCurveToSequenceOfIGESCurve(
   }
   return sequence->Length();
 }
-
-//=======================================================================
-// function : TransferPCurve
-// purpose  : Copies pcurve on face <face> from <fromedge> to <toedge>
-//           If <toedge> already has pcurve on that <face>, <toedge> becomes
-//           a seam-edge; if both pcurves are not SameRange, the SameRange is
-//           called. Returns False if pcurves are not made SameRange
-//           Making <toedge> SameParameter should be done outside the method (???)
-//=======================================================================
 
 bool IGESToBRep::TransferPCurve(const TopoDS_Edge& fromedge,
                                 const TopoDS_Edge& toedge,

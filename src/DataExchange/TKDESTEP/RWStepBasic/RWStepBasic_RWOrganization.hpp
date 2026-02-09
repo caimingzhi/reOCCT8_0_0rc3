@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_Organization;
 class StepData_StepWriter;
 
-//! Read & Write Module for Organization
 class RWStepBasic_RWOrganization
 {
 public:

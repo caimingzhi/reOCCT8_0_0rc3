@@ -25,23 +25,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_ClosedFaceDivide, ShapeUpgrade_FaceDivide)
 
-//=================================================================================================
-
 ShapeUpgrade_ClosedFaceDivide::ShapeUpgrade_ClosedFaceDivide()
 
 {
   myNbSplit = 1;
 }
 
-//=================================================================================================
-
 ShapeUpgrade_ClosedFaceDivide::ShapeUpgrade_ClosedFaceDivide(const TopoDS_Face& F)
     : ShapeUpgrade_FaceDivide(F)
 {
   myNbSplit = 1;
 }
-
-//=================================================================================================
 
 bool ShapeUpgrade_ClosedFaceDivide::SplitSurface(const double)
 {
@@ -58,7 +52,7 @@ bool ShapeUpgrade_ClosedFaceDivide::SplitSurface(const double)
 
   double Uf, Ul, Vf, Vl;
   ShapeAnalysis::GetFaceUVBounds(myFace, Uf, Ul, Vf, Vl);
-  // 01.10.99 pdn Porting on DEC
+
   if (::Precision::IsInfinite(Uf) || ::Precision::IsInfinite(Ul) || ::Precision::IsInfinite(Vf)
       || ::Precision::IsInfinite(Vl))
     return false;
@@ -87,13 +81,13 @@ bool ShapeUpgrade_ClosedFaceDivide::SplitSurface(const double)
         double                    f1, f2, l1, l2;
         if (!sae.PCurve(edge, face, c1, f1, l1, false))
           continue;
-        // smh#8
+
         TopoDS_Shape tmpE = edge.Reversed();
         if (!sae.PCurve(TopoDS::Edge(tmpE), face, c2, f2, l2, false))
           continue;
         if (c2 == c1)
           continue;
-        // splitting
+
         ShapeAnalysis_Curve sac;
         Bnd_Box2d           B1, B2;
         sac.FillBndBox(c1, f1, l1, 20, true, B1);
@@ -147,7 +141,7 @@ bool ShapeUpgrade_ClosedFaceDivide::SplitSurface(const double)
 
   if (!doSplit)
   {
-    // pdn try to define geometric closure.
+
     occ::handle<ShapeAnalysis_Surface> sas     = new ShapeAnalysis_Surface(surf);
     bool                               uclosed = sas->IsUClosed(Precision());
     bool                               vclosed = sas->IsVClosed(Precision());
@@ -230,7 +224,7 @@ bool ShapeUpgrade_ClosedFaceDivide::SplitSurface(const double)
   myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_DONE2);
   for (TopExp_Explorer exp(res, TopAbs_FACE); exp.More(); exp.Next())
   {
-    // smh#8
+
     TopoDS_Shape tempf = Context()->Apply(exp.Current());
     TopoDS_Face  f     = TopoDS::Face(tempf);
     myResult           = f;
@@ -241,15 +235,11 @@ bool ShapeUpgrade_ClosedFaceDivide::SplitSurface(const double)
   return true;
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_ClosedFaceDivide::SetNbSplitPoints(const int num)
 {
   if (num > 0)
     myNbSplit = num;
 }
-
-//=================================================================================================
 
 int ShapeUpgrade_ClosedFaceDivide::GetNbSplitPoints() const
 {

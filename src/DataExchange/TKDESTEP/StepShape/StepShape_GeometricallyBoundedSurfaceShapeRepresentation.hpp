@@ -10,7 +10,6 @@ class StepShape_GeometricallyBoundedSurfaceShapeRepresentation
 {
 
 public:
-  //! Returns a GeometricallyBoundedSurfaceShapeRepresentation
   Standard_EXPORT StepShape_GeometricallyBoundedSurfaceShapeRepresentation();
 
   DEFINE_STANDARD_RTTIEXT(StepShape_GeometricallyBoundedSurfaceShapeRepresentation,

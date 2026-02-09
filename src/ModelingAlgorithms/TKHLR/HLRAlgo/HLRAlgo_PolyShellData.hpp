@@ -7,7 +7,6 @@
 #include <Standard_Transient.hpp>
 #include <Standard_Type.hpp>
 
-//! All the PolyData of a Shell
 class HLRAlgo_PolyShellData : public Standard_Transient
 {
 

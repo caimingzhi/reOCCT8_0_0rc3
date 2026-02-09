@@ -13,16 +13,15 @@
 IGESAppli_ToolPWBDrilledHole::IGESAppli_ToolPWBDrilledHole() = default;
 
 void IGESAppli_ToolPWBDrilledHole::ReadOwnParams(const occ::handle<IGESAppli_PWBDrilledHole>& ent,
-                                                 const occ::handle<IGESData_IGESReaderData>& /*IR*/,
+                                                 const occ::handle<IGESData_IGESReaderData>&,
                                                  IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   int    tempNbPropertyValues;
   double tempDrillDiameter;
   double tempFinishDiameter;
   int    tempFunctionCode;
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   if (PR.DefinedElseSkip())
     PR.ReadInteger(PR.Current(), "Number of property values", tempNbPropertyValues);
   else
@@ -44,14 +43,14 @@ void IGESAppli_ToolPWBDrilledHole::WriteOwnParams(const occ::handle<IGESAppli_PW
   IW.Send(ent->FunctionCode());
 }
 
-void IGESAppli_ToolPWBDrilledHole::OwnShared(const occ::handle<IGESAppli_PWBDrilledHole>& /*ent*/,
-                                             Interface_EntityIterator& /*iter*/) const
+void IGESAppli_ToolPWBDrilledHole::OwnShared(const occ::handle<IGESAppli_PWBDrilledHole>&,
+                                             Interface_EntityIterator&) const
 {
 }
 
 void IGESAppli_ToolPWBDrilledHole::OwnCopy(const occ::handle<IGESAppli_PWBDrilledHole>& another,
                                            const occ::handle<IGESAppli_PWBDrilledHole>& ent,
-                                           Interface_CopyTool& /*TC*/) const
+                                           Interface_CopyTool&) const
 {
   ent->Init(3,
             another->DrillDiameterSize(),
@@ -65,12 +64,12 @@ bool IGESAppli_ToolPWBDrilledHole::OwnCorrect(
   bool res = (ent->NbPropertyValues() != 3);
   if (res)
     ent->Init(3, ent->DrillDiameterSize(), ent->FinishDiameterSize(), ent->FunctionCode());
-  //     nbpropertyvalues=3
+
   return res;
 }
 
 IGESData_DirChecker IGESAppli_ToolPWBDrilledHole::DirChecker(
-  const occ::handle<IGESAppli_PWBDrilledHole>& /*ent*/) const
+  const occ::handle<IGESAppli_PWBDrilledHole>&) const
 {
   IGESData_DirChecker DC(406, 26);
   DC.Structure(IGESData_DefVoid);
@@ -96,9 +95,9 @@ void IGESAppli_ToolPWBDrilledHole::OwnCheck(const occ::handle<IGESAppli_PWBDrill
 }
 
 void IGESAppli_ToolPWBDrilledHole::OwnDump(const occ::handle<IGESAppli_PWBDrilledHole>& ent,
-                                           const IGESData_IGESDumper& /*dumper*/,
+                                           const IGESData_IGESDumper&,
                                            Standard_OStream& S,
-                                           const int /*level*/) const
+                                           const int) const
 {
   S << "IGESAppli_PWBDrilledHole\n"
     << "Number of property values : " << ent->NbPropertyValues() << "\n"

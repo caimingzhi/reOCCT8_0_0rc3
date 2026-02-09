@@ -10,7 +10,6 @@ class StepRepr_IntegerRepresentationItem : public StepRepr_RepresentationItem
 {
 
 public:
-  //! Returns a IntegerRepresentationItem
   Standard_EXPORT StepRepr_IntegerRepresentationItem();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& theName,

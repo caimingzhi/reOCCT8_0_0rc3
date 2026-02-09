@@ -1,9 +1,5 @@
 #include <Standard_Boolean.hpp>
 
-//****************************************************
-// Functions to change the type of approx.
-//****************************************************
-
 static bool AppBlend_ContextSplineApprox = false;
 
 Standard_EXPORT void AppBlend_SetContextSplineApprox(const bool b)

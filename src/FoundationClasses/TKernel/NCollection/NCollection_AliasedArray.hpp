@@ -8,19 +8,12 @@
 
 #include <cstring>
 
-//! Defines an array of values of configurable size.
-//! For instance, this class allows defining an array of 32-bit or 64-bit integer values with
-//! bitness determined in runtime. The element size in bytes (stride) should be specified at
-//! construction time. Indexation starts from 0 index. As actual type of element varies at runtime,
-//! element accessors are defined as templates. Memory for array is allocated with the given
-//! alignment (template parameter).
 template <int MyAlignSize = 16>
 class NCollection_AliasedArray
 {
 public:
   DEFINE_STANDARD_ALLOC
 public:
-  //! Empty constructor.
   NCollection_AliasedArray(int theStride)
       : myData(nullptr),
         myStride(theStride),
@@ -33,7 +26,6 @@ public:
     }
   }
 
-  //! Constructor
   NCollection_AliasedArray(int theStride, int theLength)
       : myData(nullptr),
         myStride(theStride),
@@ -51,7 +43,6 @@ public:
     }
   }
 
-  //! Copy constructor
   NCollection_AliasedArray(const NCollection_AliasedArray& theOther)
       : myData(nullptr),
         myStride(theOther.myStride),
@@ -70,7 +61,6 @@ public:
     }
   }
 
-  //! Move constructor
   NCollection_AliasedArray(NCollection_AliasedArray&& theOther) noexcept
       : myData(theOther.myData),
         myStride(theOther.myStride),
@@ -80,7 +70,6 @@ public:
     theOther.myDeletable = false;
   }
 
-  //! Constructor wrapping pre-allocated C-array of values without copying them.
   template <typename Type_t>
   NCollection_AliasedArray(const Type_t& theBegin, int theLength)
       : myData((uint8_t*)&theBegin),
@@ -94,36 +83,24 @@ public:
     }
   }
 
-  //! Returns an element size in bytes.
   int Stride() const { return myStride; }
 
-  //! Size query
   int Size() const { return mySize; }
 
-  //! Length query (the same as Size())
   int Length() const { return mySize; }
 
-  //! Return TRUE if array has zero length.
   bool IsEmpty() const { return mySize == 0; }
 
-  //! Lower bound
   int Lower() const { return 0; }
 
-  //! Upper bound
   int Upper() const { return mySize - 1; }
 
-  //! myDeletable flag
   bool IsDeletable() const { return myDeletable; }
 
-  //! IsAllocated flag - for naming compatibility
   bool IsAllocated() const { return myDeletable; }
 
-  //! Return buffer size in bytes.
   size_t SizeBytes() const { return size_t(myStride) * size_t(mySize); }
 
-  //! Copies data of theOther array to this.
-  //! This array should be pre-allocated and have the same length as theOther;
-  //! otherwise exception Standard_DimensionMismatch is thrown.
   NCollection_AliasedArray& Assign(const NCollection_AliasedArray& theOther)
   {
     if (&theOther != this)
@@ -141,10 +118,6 @@ public:
     return *this;
   }
 
-  //! Move assignment.
-  //! This array will borrow all the data from theOther.
-  //! The moved object will keep pointer to the memory buffer and
-  //! range, but it will not free the buffer on destruction.
   NCollection_AliasedArray& Move(NCollection_AliasedArray& theOther)
   {
     if (&theOther != this)
@@ -162,23 +135,16 @@ public:
     return *this;
   }
 
-  //! Assignment operator; @sa Assign()
   NCollection_AliasedArray& operator=(const NCollection_AliasedArray& theOther)
   {
     return Assign(theOther);
   }
 
-  //! Move assignment operator; @sa Move()
   NCollection_AliasedArray& operator=(NCollection_AliasedArray&& theOther)
   {
     return Move(theOther);
   }
 
-  //! Resizes the array to specified bounds.
-  //! No re-allocation will be done if length of array does not change,
-  //! but existing values will not be discarded if theToCopyData set to FALSE.
-  //! @param theLength new length of array
-  //! @param theToCopyData flag to copy existing data into new array
   void Resize(int theLength, bool theToCopyData)
   {
     if (theLength <= 0)
@@ -217,7 +183,6 @@ public:
     myDeletable = true;
   }
 
-  //! Destructor - releases the memory
   ~NCollection_AliasedArray()
   {
     if (myDeletable)
@@ -227,7 +192,6 @@ public:
   }
 
 public:
-  //! Access raw bytes of specified element.
   const uint8_t* value(int theIndex) const
   {
     Standard_OutOfRange_Raise_if(theIndex < 0 || theIndex >= mySize,
@@ -235,7 +199,6 @@ public:
     return myData + size_t(myStride) * size_t(theIndex);
   }
 
-  //! Access raw bytes of specified element.
   uint8_t* changeValue(int theIndex)
   {
     Standard_OutOfRange_Raise_if(theIndex < 0 || theIndex >= mySize,
@@ -243,7 +206,6 @@ public:
     return myData + size_t(myStride) * size_t(theIndex);
   }
 
-  //! Initialize the items with theValue
   template <typename Type_t>
   void Init(const Type_t& theValue)
   {
@@ -253,8 +215,6 @@ public:
     }
   }
 
-  //! Access element with specified position and type.
-  //! This method requires size of a type matching stride value.
   template <typename Type_t>
   const Type_t& Value(int theIndex) const
   {
@@ -263,8 +223,6 @@ public:
     return *reinterpret_cast<const Type_t*>(value(theIndex));
   }
 
-  //! Access element with specified position and type.
-  //! This method requires size of a type matching stride value.
   template <typename Type_t>
   void Value(int theIndex, Type_t& theValue) const
   {
@@ -273,8 +231,6 @@ public:
     theValue = *reinterpret_cast<const Type_t*>(value(theIndex));
   }
 
-  //! Access element with specified position and type.
-  //! This method requires size of a type matching stride value.
   template <typename Type_t>
   Type_t& ChangeValue(int theIndex)
   {
@@ -283,9 +239,6 @@ public:
     return *reinterpret_cast<Type_t*>(changeValue(theIndex));
   }
 
-  //! Access element with specified position and type.
-  //! This method allows wrapping element into smaller type (e.g. to alias 2-components within
-  //! 3-component vector).
   template <typename Type_t>
   const Type_t& Value2(int theIndex) const
   {
@@ -294,9 +247,6 @@ public:
     return *reinterpret_cast<const Type_t*>(value(theIndex));
   }
 
-  //! Access element with specified position and type.
-  //! This method allows wrapping element into smaller type (e.g. to alias 2-components within
-  //! 3-component vector).
   template <typename Type_t>
   void Value2(int theIndex, Type_t& theValue) const
   {
@@ -305,9 +255,6 @@ public:
     theValue = *reinterpret_cast<const Type_t*>(value(theIndex));
   }
 
-  //! Access element with specified position and type.
-  //! This method allows wrapping element into smaller type (e.g. to alias 2-components within
-  //! 3-component vector).
   template <typename Type_t>
   Type_t& ChangeValue2(int theIndex)
   {
@@ -316,28 +263,24 @@ public:
     return *reinterpret_cast<Type_t*>(changeValue(theIndex));
   }
 
-  //! Return first element
   template <typename Type_t>
   const Type_t& First() const
   {
     return Value<Type_t>(0);
   }
 
-  //! Return first element
   template <typename Type_t>
   Type_t& ChangeFirst()
   {
     return ChangeValue<Type_t>(0);
   }
 
-  //! Return last element
   template <typename Type_t>
   const Type_t& Last() const
   {
     return Value<Type_t>(mySize - 1);
   }
 
-  //! Return last element
   template <typename Type_t>
   Type_t& ChangeLast()
   {
@@ -345,8 +288,8 @@ public:
   }
 
 protected:
-  uint8_t* myData;      //!< data pointer
-  int      myStride;    //!< element size
-  int      mySize;      //!< number of elements
-  bool     myDeletable; //!< flag showing who allocated the array
+  uint8_t* myData;
+  int      myStride;
+  int      mySize;
+  bool     myDeletable;
 };

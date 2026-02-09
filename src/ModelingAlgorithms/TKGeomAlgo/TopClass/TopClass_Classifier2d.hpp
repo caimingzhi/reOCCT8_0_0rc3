@@ -2,8 +2,6 @@
 #include <IntRes2d_IntersectionPoint.hpp>
 #include <gp_Vec2d.hpp>
 
-//=================================================================================================
-
 TopClass_Classifier2d::TopClass_Classifier2d()
     : myIsSet(false),
       myFirstCompare(true),
@@ -11,12 +9,10 @@ TopClass_Classifier2d::TopClass_Classifier2d()
       myParam(0.0),
       myTolerance(0.0),
       myClosest(0),
-      myState(TopAbs_UNKNOWN), // skv OCC12627
-      myIsHeadOrEnd(false)     // skv OCC12627
+      myState(TopAbs_UNKNOWN),
+      myIsHeadOrEnd(false)
 {
 }
-
-//=================================================================================================
 
 void TopClass_Classifier2d::Reset(const gp_Lin2d& L, const double P, const double Tol)
 {
@@ -28,16 +24,13 @@ void TopClass_Classifier2d::Reset(const gp_Lin2d& L, const double P, const doubl
   myFirstTrans   = true;
   myClosest      = 0;
   myIsSet        = true;
-  //  Modified by skv - Wed Jul 12 15:20:58 2006 OCC12627 Begin
-  myIsHeadOrEnd = false;
-  //  Modified by skv - Wed Jul 12 15:20:58 2006 OCC12627 End
-}
 
-//=================================================================================================
+  myIsHeadOrEnd = false;
+}
 
 void TopClass_Classifier2d::Compare(const TheEdge& E, const TopAbs_Orientation Or)
 {
-  // intersect the edge and the segment
+
   myClosest = 0;
   myIntersector.Perform(myLin, myParam, myTolerance, E);
   if (!myIntersector.IsDone())
@@ -45,7 +38,6 @@ void TopClass_Classifier2d::Compare(const TheEdge& E, const TopAbs_Orientation O
   if ((myIntersector.NbPoints() == 0) && (myIntersector.NbSegments() == 0))
     return;
 
-  // find the closest point
   int iPoint, iSegment, nbPoints, nbSegments;
 
   const IntRes2d_IntersectionPoint* PClosest = NULL;
@@ -55,7 +47,7 @@ void TopClass_Classifier2d::Compare(const TheEdge& E, const TopAbs_Orientation O
   for (iPoint = 1; iPoint <= nbPoints; iPoint++)
   {
     const IntRes2d_IntersectionPoint& PInter = myIntersector.Point(iPoint);
-    // test for ON
+
     if (PInter.TransitionOfFirst().PositionOnCurve() == IntRes2d_Head)
     {
       myClosest = iPoint;
@@ -71,7 +63,6 @@ void TopClass_Classifier2d::Compare(const TheEdge& E, const TopAbs_Orientation O
     }
   }
 
-  // for the segments we only test the first point
   nbSegments = myIntersector.NbSegments();
   for (iSegment = 1; iSegment <= nbSegments; iSegment++)
   {
@@ -92,11 +83,9 @@ void TopClass_Classifier2d::Compare(const TheEdge& E, const TopAbs_Orientation O
     }
   }
 
-  // if no point was found return
   if (myClosest == 0)
     return;
 
-  // if the Edge is INTERNAL or EXTERNAL, no problem
   if (Or == TopAbs_INTERNAL)
   {
     myState = TopAbs_IN;
@@ -113,30 +102,22 @@ void TopClass_Classifier2d::Compare(const TheEdge& E, const TopAbs_Orientation O
     bool b = (dMin > myParam);
     if (b)
     {
-      // dMin > myParam : le point le plus proche (dMin) trouve dans CETTE
-      // intersection ligne,arete n'est pas le plus proche
-      // de TOUS les points d'intersection avec les autres aretes (myParam).
+
       return;
     }
   }
 
-  // process the closest point PClosest, found at dMin on line.
   myFirstCompare = false;
 
   if (myParam > dMin)
-  { //-- lbr le 13 mai 96
+  {
     myFirstTrans = true;
   }
 
   myParam                       = dMin;
   const IntRes2d_Transition& T2 = PClosest->TransitionOfSecond();
-  //  Modified by skv - Wed Jul 12 15:20:58 2006 OCC12627 Begin
-  //   bool isHeadorEnd = (T2.PositionOnCurve() == IntRes2d_Head) ||
-  //                                  (T2.PositionOnCurve() == IntRes2d_End);
-  myIsHeadOrEnd = (T2.PositionOnCurve() == IntRes2d_Head) || (T2.PositionOnCurve() == IntRes2d_End);
-  //  Modified by skv - Wed Jul 12 15:20:58 2006 OCC12627 End
 
-  // transition on the segment
+  myIsHeadOrEnd = (T2.PositionOnCurve() == IntRes2d_Head) || (T2.PositionOnCurve() == IntRes2d_End);
 
   TopAbs_Orientation SegTrans = TopAbs_FORWARD;
 
@@ -178,11 +159,9 @@ void TopClass_Classifier2d::Compare(const TheEdge& E, const TopAbs_Orientation O
       return;
   }
 
-  // are we inside the Edge ?
-  //  const IntRes2d_Transition& T2 = PClosest->TransitionOfSecond();
   if (!myIsHeadOrEnd)
   {
-    // PClosest is inside the edge
+
     switch (SegTrans)
     {
 
@@ -199,7 +178,7 @@ void TopClass_Classifier2d::Compare(const TheEdge& E, const TopAbs_Orientation O
   }
   else
   {
-    // PClosest is Head or End of the edge : update the complex transition
+
     gp_Dir2d Tang2d, Norm2d;
     double   Curv;
     myIntersector.LocalGeometry(E, PClosest->ParamOnSecond(), Tang2d, Norm2d, Curv);

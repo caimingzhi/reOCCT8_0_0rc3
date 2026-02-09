@@ -1,15 +1,4 @@
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OpenGl_FrameStatsPrs.hpp>
 
@@ -23,14 +12,13 @@
 
 namespace
 {
-  //! Auxiliary structure defining vertex with two attributes.
+
   struct OpenGl_Vec3Vec4ub
   {
     NCollection_Vec3<float>   Pos;
     NCollection_Vec4<uint8_t> Color;
   };
 
-  //! Auxiliary function formatting rendering time in " 10 ms (100 FPS)" format.
   static TCollection_AsciiString formatTimeMs(double theSeconds)
   {
     const double aFpsVal = theSeconds != 0.0 ? 1.0 / theSeconds : 0.0;
@@ -39,8 +27,6 @@ namespace
     return TCollection_AsciiString() + int(theSeconds * 1000.0) + " ms (" + aFps + " FPS)";
   }
 } // namespace
-
-//=================================================================================================
 
 OpenGl_FrameStatsPrs::OpenGl_FrameStatsPrs()
     : myStatsPrev(new OpenGl_FrameStats()),
@@ -56,11 +42,7 @@ OpenGl_FrameStatsPrs::OpenGl_FrameStatsPrs()
 {
 }
 
-//=================================================================================================
-
 OpenGl_FrameStatsPrs::~OpenGl_FrameStatsPrs() = default;
-
-//=================================================================================================
 
 void OpenGl_FrameStatsPrs::Release(OpenGl_Context* theCtx)
 {
@@ -73,8 +55,6 @@ void OpenGl_FrameStatsPrs::Release(OpenGl_Context* theCtx)
   myChartLines->Release(theCtx);
 }
 
-//=================================================================================================
-
 void OpenGl_FrameStatsPrs::Update(const occ::handle<OpenGl_Workspace>& theWorkspace)
 {
   const occ::handle<OpenGl_Context>&    aCtx        = theWorkspace->GetGlContext();
@@ -84,7 +64,6 @@ void OpenGl_FrameStatsPrs::Update(const occ::handle<OpenGl_Workspace>& theWorksp
   myChartTrsfPers    = theWorkspace->View()->RenderingParams().ChartPosition;
   myTextAspect.SetAspect(aRendParams.StatsTextAspect);
 
-  // adjust text alignment depending on corner
   Graphic3d_Text aParams((float)aRendParams.StatsTextHeight);
   aParams.SetHorizontalAlignment(Graphic3d_HTA_CENTER);
   aParams.SetVerticalAlignment(Graphic3d_VTA_CENTER);
@@ -129,8 +108,6 @@ void OpenGl_FrameStatsPrs::Update(const occ::handle<OpenGl_Workspace>& theWorksp
   updateChart(theWorkspace);
 }
 
-//=================================================================================================
-
 void OpenGl_FrameStatsPrs::updateChart(const occ::handle<OpenGl_Workspace>& theWorkspace)
 {
   const occ::handle<OpenGl_Context>&    aCtx        = theWorkspace->GetGlContext();
@@ -156,10 +133,9 @@ void OpenGl_FrameStatsPrs::updateChart(const occ::handle<OpenGl_Workspace>& theW
       aMaxDuration =
         std::max(aMaxDuration, aFrame.TimerValue(Graphic3d_FrameStatsTimer_ElapsedFrame));
     }
-    aMaxDuration = std::ceil(aMaxDuration * 1000.0 * 0.1) * 0.001 * 10.0; // round number
-                                                                          // clang-format off
-    aMaxDuration = std::max (std::min (aMaxDuration, 0.1), 0.005); // limit by 100 ms (10 FPS) and 5 ms (200 FPS)
-                                                                          // clang-format on
+    aMaxDuration = std::ceil(aMaxDuration * 1000.0 * 0.1) * 0.001 * 10.0;
+
+    aMaxDuration = std::max(std::min(aMaxDuration, 0.1), 0.005);
   }
 
   const int                       aNbTimers  = 4;
@@ -367,8 +343,6 @@ void OpenGl_FrameStatsPrs::updateChart(const occ::handle<OpenGl_Workspace>& theW
   }
 }
 
-//=================================================================================================
-
 void OpenGl_FrameStatsPrs::Render(const occ::handle<OpenGl_Workspace>& theWorkspace) const
 {
   const occ::handle<OpenGl_Context>& aCtx            = theWorkspace->GetGlContext();
@@ -389,7 +363,6 @@ void OpenGl_FrameStatsPrs::Render(const occ::handle<OpenGl_Workspace>& theWorksp
   aCtx->ModelWorldState.Push();
   aCtx->ModelWorldState.ChangeCurrent().InitIdentity();
 
-  // draw counters
   {
     aCtx->WorldViewState.Push();
     if (!myCountersTrsfPers.IsNull())
@@ -405,7 +378,6 @@ void OpenGl_FrameStatsPrs::Render(const occ::handle<OpenGl_Workspace>& theWorksp
     aCtx->WorldViewState.Pop();
   }
 
-  // draw chart
   if (myChartIndices->IsValid() && myChartIndices->GetElemsNb() > 0)
   {
     aCtx->WorldViewState.Push();
@@ -492,8 +464,6 @@ void OpenGl_FrameStatsPrs::Render(const occ::handle<OpenGl_Workspace>& theWorksp
     aCtx->core11fwd->glDisable(GL_DEPTH_CLAMP);
   }
 }
-
-//=================================================================================================
 
 void OpenGl_FrameStatsPrs::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

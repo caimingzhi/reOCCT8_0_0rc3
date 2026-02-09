@@ -15,19 +15,13 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_ShapeVisitor, IMeshTools_ShapeVisitor)
 
-//=================================================================================================
-
 BRepMesh_ShapeVisitor::BRepMesh_ShapeVisitor(const occ::handle<IMeshData_Model>& theModel)
     : myModel(theModel),
       myDEdgeMap(1, new NCollection_IncAllocator(IMeshData::MEMORY_BLOCK_SIZE_HUGE))
 {
 }
 
-//=================================================================================================
-
 BRepMesh_ShapeVisitor::~BRepMesh_ShapeVisitor() = default;
-
-//=================================================================================================
 
 void BRepMesh_ShapeVisitor::Visit(const TopoDS_Edge& theEdge)
 {
@@ -38,14 +32,11 @@ void BRepMesh_ShapeVisitor::Visit(const TopoDS_Edge& theEdge)
   }
 }
 
-//=================================================================================================
-
 void BRepMesh_ShapeVisitor::Visit(const TopoDS_Face& theFace)
 {
   BRepTools::Update(theFace);
   const IMeshData::IFaceHandle& aDFace = myModel->AddFace(theFace);
 
-  // Outer wire should always be the first in the model.
   TopoDS_Wire aOuterWire = ShapeAnalysis::OuterWire(theFace);
   if (!addWire(aOuterWire, aDFace))
   {
@@ -64,14 +55,11 @@ void BRepMesh_ShapeVisitor::Visit(const TopoDS_Face& theFace)
 
     if (!addWire(aWire, aDFace))
     {
-      // If there is a failure on internal wire, just skip it.
-      // The most significant is an outer wire.
+
       aDFace->SetStatus(IMeshData_UnorientedWire);
     }
   }
 }
-
-//=================================================================================================
 
 bool BRepMesh_ShapeVisitor::addWire(const TopoDS_Wire&            theWire,
                                     const IMeshData::IFaceHandle& theDFace)

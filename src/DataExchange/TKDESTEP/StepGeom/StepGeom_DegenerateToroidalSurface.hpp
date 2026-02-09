@@ -11,7 +11,6 @@ class StepGeom_DegenerateToroidalSurface : public StepGeom_ToroidalSurface
 {
 
 public:
-  //! Returns a DegenerateToroidalSurface
   Standard_EXPORT StepGeom_DegenerateToroidalSurface();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&  aName,

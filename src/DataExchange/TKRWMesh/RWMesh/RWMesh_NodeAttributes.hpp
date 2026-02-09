@@ -7,11 +7,10 @@
 
 class TDataStd_NamedData;
 
-//! Attributes of the node.
 struct RWMesh_NodeAttributes
 {
-  TCollection_AsciiString         Name;      //!< name for the user
-  TCollection_AsciiString         RawName;   //!< name within low-level format structure
-  occ::handle<TDataStd_NamedData> NamedData; //!< optional metadata
-  XCAFPrs_Style                   Style;     //!< presentation style
+  TCollection_AsciiString         Name;
+  TCollection_AsciiString         RawName;
+  occ::handle<TDataStd_NamedData> NamedData;
+  XCAFPrs_Style                   Style;
 };

@@ -7,24 +7,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDF_TagSourceDriver, XmlMDF_ADriver)
 
-//=================================================================================================
-
 XmlMDF_TagSourceDriver::XmlMDF_TagSourceDriver(const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
-
-//=================================================================================================
 
 occ::handle<TDF_Attribute> XmlMDF_TagSourceDriver::NewEmpty() const
 {
   return (new TDF_TagSource());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDF_TagSourceDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                    const occ::handle<TDF_Attribute>& theTarget,
                                    XmlObjMgt_RRelocationTable&) const
@@ -54,15 +46,11 @@ bool XmlMDF_TagSourceDriver::Paste(const XmlObjMgt_Persistent&       theSource,
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMDF_TagSourceDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                    XmlObjMgt_Persistent&             theTarget,
                                    XmlObjMgt_SRelocationTable&) const
 {
   occ::handle<TDF_TagSource> aTag = occ::down_cast<TDF_TagSource>(theSource);
-  // No occurrence of '&', '<' and other irregular XML characters
+
   XmlObjMgt::SetStringValue(theTarget.Element(), aTag->Get(), true);
 }

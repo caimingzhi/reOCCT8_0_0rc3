@@ -13,7 +13,6 @@ class StepBasic_ConversionBasedUnitAndPlaneAngleUnit : public StepBasic_Conversi
 {
 
 public:
-  //! Returns a ConversionBasedUnitAndPlaneAngleUnit
   Standard_EXPORT StepBasic_ConversionBasedUnitAndPlaneAngleUnit();
 
   Standard_EXPORT void Init(const occ::handle<StepBasic_DimensionalExponents>& aDimensions,

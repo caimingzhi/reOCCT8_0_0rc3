@@ -23,7 +23,6 @@
 
 #include "IntCurveSurface_Inter.hpp"
 
-// Type aliases for readability
 using TheCurve              = occ::handle<Adaptor3d_Curve>;
 using TheCurveTool          = IntCurveSurface_TheHCurveTool;
 using TheSurface            = occ::handle<Adaptor3d_Surface>;
@@ -35,11 +34,7 @@ using TheCSFunction         = IntCurveSurface_TheCSFunctionOfHInter;
 using TheExactInter         = IntCurveSurface_TheExactHInter;
 using TheQuadCurvExactInter = IntCurveSurface_TheQuadCurvExactHInter;
 
-//==================================================================================================
-
 IntCurveSurface_HInter::IntCurveSurface_HInter() = default;
-
-//==================================================================================================
 
 void IntCurveSurface_HInter::DoSurface(const TheSurface&           surface,
                                        const double                u0,
@@ -59,8 +54,6 @@ void IntCurveSurface_HInter::DoSurface(const TheSurface&           surface,
                                                                     boxSurface,
                                                                     gap);
 }
-
-//==================================================================================================
 
 void IntCurveSurface_HInter::DoNewBounds(const TheSurface&                 surface,
                                          const double                      u0,
@@ -85,8 +78,6 @@ void IntCurveSurface_HInter::DoNewBounds(const TheSurface&                 surfa
                                                                       Bounds);
 }
 
-//==================================================================================================
-
 void IntCurveSurface_HInter::Perform(const TheCurve& curve, const TheSurface& surface)
 {
   IntCurveSurface_InterImpl::Perform<TheCurve, TheCurveTool, TheSurface, TheSurfaceTool>(
@@ -97,8 +88,6 @@ void IntCurveSurface_HInter::Perform(const TheCurve& curve, const TheSurface& su
     [this](const TheCurve& c, const TheSurface& s, double u0, double v0, double u1, double v1)
     { this->Perform(c, s, u0, v0, u1, v1); });
 }
-
-//==================================================================================================
 
 void IntCurveSurface_HInter::Perform(const TheCurve&   curve,
                                      const TheSurface& surface,
@@ -132,8 +121,6 @@ void IntCurveSurface_HInter::Perform(const TheCurve&   curve,
       [this](const TheCurve& c, const TheSurface& s) { this->InternalPerformCurveQuadric(c, s); });
 }
 
-//==================================================================================================
-
 void IntCurveSurface_HInter::Perform(const TheCurve&   curve,
                                      const ThePolygon& polygon,
                                      const TheSurface& surface)
@@ -148,8 +135,6 @@ void IntCurveSurface_HInter::Perform(const TheCurve&   curve,
       [this](const TheCurve& c, const ThePolygon& p, const TheSurface& s, const ThePolyhedron& ph)
       { this->Perform(c, p, s, ph); });
 }
-
-//==================================================================================================
 
 void IntCurveSurface_HInter::Perform(const TheCurve&      curve,
                                      const TheSurface&    surface,
@@ -169,8 +154,6 @@ void IntCurveSurface_HInter::Perform(const TheCurve&      curve,
     [this](const TheCurve& c, const ThePolygon& p, const TheSurface& s, const ThePolyhedron& ph)
     { this->Perform(c, p, s, ph); });
 }
-
-//==================================================================================================
 
 void IntCurveSurface_HInter::Perform(const TheCurve&      curve,
                                      const ThePolygon&    polygon,
@@ -198,8 +181,6 @@ void IntCurveSurface_HInter::Perform(const TheCurve&      curve,
            double               u2,
            double               v2) { this->InternalPerform(c, p, s, ph, u1, v1, u2, v2); });
 }
-
-//==================================================================================================
 
 void IntCurveSurface_HInter::Perform(const TheCurve&      curve,
                                      const ThePolygon&    polygon,
@@ -230,8 +211,6 @@ void IntCurveSurface_HInter::Perform(const TheCurve&      curve,
            double               v2,
            Bnd_BoundSortBox&    bsb) { this->InternalPerform(c, p, s, ph, u1, v1, u2, v2, bsb); });
 }
-
-//==================================================================================================
 
 void IntCurveSurface_HInter::InternalPerform(const TheCurve&      curve,
                                              const ThePolygon&    polygon,
@@ -264,8 +243,6 @@ void IntCurveSurface_HInter::InternalPerform(const TheCurve&      curve,
     [this](const IntCurveSurface_IntersectionPoint& pt) { this->Append(pt); });
 }
 
-//==================================================================================================
-
 void IntCurveSurface_HInter::InternalPerform(const TheCurve&      curve,
                                              const ThePolygon&    polygon,
                                              const TheSurface&    surface,
@@ -295,8 +272,6 @@ void IntCurveSurface_HInter::InternalPerform(const TheCurve&      curve,
     [this](const IntCurveSurface_IntersectionPoint& pt) { this->Append(pt); });
 }
 
-//==================================================================================================
-
 void IntCurveSurface_HInter::InternalPerformCurveQuadric(const TheCurve&   curve,
                                                          const TheSurface& surface)
 {
@@ -309,8 +284,6 @@ void IntCurveSurface_HInter::InternalPerformCurveQuadric(const TheCurve&   curve
     surface,
     [this](const IntCurveSurface_IntersectionPoint& pt) { this->Append(pt); });
 }
-
-//==================================================================================================
 
 void IntCurveSurface_HInter::InternalPerform(const TheCurve&   curve,
                                              const ThePolygon& polygon,
@@ -344,8 +317,6 @@ void IntCurveSurface_HInter::InternalPerform(const TheCurve&   curve,
            double               v2) { this->InternalPerform(c, p, s, ph, u1, v1, u2, v2); },
     [this](const IntCurveSurface_IntersectionPoint& pt) { this->Append(pt); });
 }
-
-//==================================================================================================
 
 void IntCurveSurface_HInter::PerformConicSurf(const gp_Lin&     Line,
                                               const TheCurve&   curve,
@@ -381,8 +352,6 @@ void IntCurveSurface_HInter::PerformConicSurf(const gp_Lin&     Line,
     [this](const IntCurveSurface_IntersectionPoint& pt) { this->Append(pt); });
 }
 
-//==================================================================================================
-
 void IntCurveSurface_HInter::PerformConicSurf(const gp_Circ&    Circle,
                                               const TheCurve&   curve,
                                               const TheSurface& surface,
@@ -411,8 +380,6 @@ void IntCurveSurface_HInter::PerformConicSurf(const gp_Circ&    Circle,
              double            v2) { this->InternalPerform(c, p, s, u1, v1, u2, v2); });
 }
 
-//==================================================================================================
-
 void IntCurveSurface_HInter::PerformConicSurf(const gp_Elips&   Ellipse,
                                               const TheCurve&   curve,
                                               const TheSurface& surface,
@@ -440,8 +407,6 @@ void IntCurveSurface_HInter::PerformConicSurf(const gp_Elips&   Ellipse,
              double            u2,
              double            v2) { this->InternalPerform(c, p, s, u1, v1, u2, v2); });
 }
-
-//==================================================================================================
 
 void IntCurveSurface_HInter::PerformConicSurf(const gp_Parab&   Parab,
                                               const TheCurve&   curve,
@@ -476,8 +441,6 @@ void IntCurveSurface_HInter::PerformConicSurf(const gp_Parab&   Parab,
            double               v2) { this->InternalPerform(c, p, s, ph, u1, v1, u2, v2); });
 }
 
-//==================================================================================================
-
 void IntCurveSurface_HInter::PerformConicSurf(const gp_Hypr&    Hypr,
                                               const TheCurve&   curve,
                                               const TheSurface& surface,
@@ -511,8 +474,6 @@ void IntCurveSurface_HInter::PerformConicSurf(const gp_Hypr&    Hypr,
            double               v2) { this->InternalPerform(c, p, s, ph, u1, v1, u2, v2); });
 }
 
-//==================================================================================================
-
 void IntCurveSurface_HInter::AppendIntAna(const TheCurve&            curve,
                                           const TheSurface&          surface,
                                           const IntAna_IntConicQuad& intana_ConicQuad)
@@ -524,8 +485,6 @@ void IntCurveSurface_HInter::AppendIntAna(const TheCurve&            curve,
     myIsParallel,
     [this](const IntCurveSurface_IntersectionPoint& pt) { this->Append(pt); });
 }
-
-//==================================================================================================
 
 void IntCurveSurface_HInter::AppendPoint(const TheCurve&   curve,
                                          const double      lw,
@@ -546,12 +505,9 @@ void IntCurveSurface_HInter::AppendPoint(const TheCurve&   curve,
   }
 }
 
-//==================================================================================================
-
 void IntCurveSurface_HInter::AppendSegment(const TheCurve&,
                                            const double,
                                            const double,
                                            const TheSurface&)
 {
-  // Not implemented
 }

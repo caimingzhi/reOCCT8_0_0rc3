@@ -6,8 +6,6 @@
 #include <gp_Pnt.hpp>
 #include <NCollection_Array2.hpp>
 
-//=================================================================================================
-
 GeomConvert_BSplineSurfaceToBezierSurface::GeomConvert_BSplineSurfaceToBezierSurface(
   const occ::handle<Geom_BSplineSurface>& BasisSurface)
 {
@@ -22,8 +20,6 @@ GeomConvert_BSplineSurfaceToBezierSurface::GeomConvert_BSplineSurfaceToBezierSur
                                    mySurface->LastVKnotIndex(),
                                    mySurface->VDegree());
 }
-
-//=================================================================================================
 
 GeomConvert_BSplineSurfaceToBezierSurface::GeomConvert_BSplineSurfaceToBezierSurface(
   const occ::handle<Geom_BSplineSurface>& BasisSurface,
@@ -43,28 +39,28 @@ GeomConvert_BSplineSurfaceToBezierSurface::GeomConvert_BSplineSurfaceToBezierSur
 
   mySurface->LocateU(U1, PTol, I1, I2);
   if (I1 == I2)
-  { // On est sur le noeud
+  {
     if (mySurface->UKnot(I1) > U1)
       Uf = mySurface->UKnot(I1);
   }
 
   mySurface->LocateU(U2, PTol, I1, I2);
   if (I1 == I2)
-  { // On est sur le noeud
+  {
     if (mySurface->UKnot(I1) < U2)
       Ul = mySurface->UKnot(I1);
   }
 
   mySurface->LocateV(V1, PTol, I1, I2);
   if (I1 == I2)
-  { // On est sur le noeud
+  {
     if (mySurface->VKnot(I1) > V1)
       Vf = mySurface->VKnot(I1);
   }
 
   mySurface->LocateV(V2, PTol, I1, I2);
   if (I1 == I2)
-  { // On est sur le noeud
+  {
     if (mySurface->VKnot(I1) < V2)
       Vl = mySurface->VKnot(I1);
   }
@@ -77,8 +73,6 @@ GeomConvert_BSplineSurfaceToBezierSurface::GeomConvert_BSplineSurfaceToBezierSur
                                    mySurface->LastVKnotIndex(),
                                    mySurface->VDegree());
 }
-
-//=================================================================================================
 
 occ::handle<Geom_BezierSurface> GeomConvert_BSplineSurfaceToBezierSurface::Patch(const int UIndex,
                                                                                  const int VIndex)
@@ -123,8 +117,6 @@ occ::handle<Geom_BezierSurface> GeomConvert_BSplineSurfaceToBezierSurface::Patch
   return S;
 }
 
-//=================================================================================================
-
 void GeomConvert_BSplineSurfaceToBezierSurface::Patches(
   NCollection_Array2<occ::handle<Geom_BezierSurface>>& Surfaces)
 {
@@ -139,16 +131,12 @@ void GeomConvert_BSplineSurfaceToBezierSurface::Patches(
   }
 }
 
-//=================================================================================================
-
 void GeomConvert_BSplineSurfaceToBezierSurface::UKnots(NCollection_Array1<double>& TKnots) const
 {
   int ii, kk;
   for (ii = 1, kk = TKnots.Lower(); ii <= mySurface->NbUKnots(); ii++, kk++)
     TKnots(kk) = mySurface->UKnot(ii);
 }
-
-//=================================================================================================
 
 void GeomConvert_BSplineSurfaceToBezierSurface::VKnots(NCollection_Array1<double>& TKnots) const
 {
@@ -157,14 +145,10 @@ void GeomConvert_BSplineSurfaceToBezierSurface::VKnots(NCollection_Array1<double
     TKnots(kk) = mySurface->VKnot(ii);
 }
 
-//=================================================================================================
-
 int GeomConvert_BSplineSurfaceToBezierSurface::NbUPatches() const
 {
   return (mySurface->NbUKnots() - 1);
 }
-
-//=================================================================================================
 
 int GeomConvert_BSplineSurfaceToBezierSurface::NbVPatches() const
 {

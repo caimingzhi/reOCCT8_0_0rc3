@@ -28,17 +28,13 @@
 #include <NCollection_Map.hpp>
 
 #include <cstdio>
-// memory management
+
 #ifdef _WIN32
 extern Draw_Viewer dout;
 #endif
 
 #define Characters(IArg) (strspn(Arg[IArg], "0123456789.+-eE") != strlen(Arg[IArg]))
 #define Float(IArg) (strspn(Arg[IArg], "0123456789+-") != strlen(Arg[IArg]))
-
-//==========================================
-// useful methods
-//==========================================
 
 Standard_EXPORT void DBRep_WriteColorOrientation()
 {
@@ -73,17 +69,11 @@ Standard_EXPORT Draw_Color DBRep_ColorOrientation(const TopAbs_Orientation Or)
   return col;
 }
 
-//=================================================================================================
-
 DBRep_Params& DBRep::Parameters()
 {
   static DBRep_Params aParams;
   return aParams;
 }
-
-//=======================================================================
-// isos
-//=======================================================================
 
 static int isos(Draw_Interpretor& di, int NbArg, const char** Arg)
 {
@@ -138,10 +128,6 @@ static int isos(Draw_Interpretor& di, int NbArg, const char** Arg)
 
   return 0;
 }
-
-//=======================================================================
-// hlr
-//=======================================================================
 
 static int hlr(Draw_Interpretor& di, int n, const char** a)
 {
@@ -304,10 +290,6 @@ static int hlr(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// dispor, dispcon
-//=======================================================================
-
 static int dispor(Draw_Interpretor&, int n, const char** a)
 {
   bool d = !strcasecmp(a[0], "vori");
@@ -328,10 +310,6 @@ static int dispor(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// discretisation
-//=======================================================================
-
 static int discretisation(Draw_Interpretor& di, int n, const char** a)
 {
   DBRep_Params& aParams = DBRep::Parameters();
@@ -345,10 +323,6 @@ static int discretisation(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=======================================================================
-// triangles
-//=======================================================================
 
 static int triangles(Draw_Interpretor&, int n, const char** a)
 {
@@ -376,10 +350,6 @@ static int triangles(Draw_Interpretor&, int n, const char** a)
   Draw::Repaint();
   return 0;
 }
-
-//=======================================================================
-// tclean
-//=======================================================================
 
 static int tclean(Draw_Interpretor& di, int n, const char** a)
 {
@@ -433,10 +403,6 @@ static int tclean(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// polygons
-//=======================================================================
-
 static int polygons(Draw_Interpretor&, int n, const char** a)
 {
   DBRep_Params& aParams = DBRep::Parameters();
@@ -463,10 +429,6 @@ static int polygons(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// compound
-//=======================================================================
-
 static int compound(Draw_Interpretor&, int n, const char** a)
 {
   if (n <= 1)
@@ -484,10 +446,6 @@ static int compound(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// emptycopy
-//=======================================================================
-
 static int emptycopy(Draw_Interpretor&, int n, const char** a)
 {
   if (n <= 1)
@@ -499,10 +457,6 @@ static int emptycopy(Draw_Interpretor&, int n, const char** a)
   DBRep::Set(a[1], S);
   return 0;
 }
-
-//=======================================================================
-// add
-//=======================================================================
 
 static int add(Draw_Interpretor&, int n, const char** a)
 {
@@ -519,10 +473,6 @@ static int add(Draw_Interpretor&, int n, const char** a)
   DBRep::Set(a[2], S2);
   return 0;
 }
-
-//=======================================================================
-// explode
-//=======================================================================
 
 static int explode(Draw_Interpretor& di, int n, const char** a)
 {
@@ -553,7 +503,7 @@ static int explode(Draw_Interpretor& di, int n, const char** a)
   }
   else
   {
-    // explode a type
+
     TopAbs_ShapeEnum typ;
     switch (a[2][0])
     {
@@ -619,10 +569,6 @@ static int explode(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// nexplode : stable numbered explode (from Serguey Nizhny)
-//=======================================================================
-
 static int nexplode(Draw_Interpretor& di, int n, const char** a)
 {
   if (n <= 2)
@@ -638,7 +584,7 @@ static int nexplode(Draw_Interpretor& di, int n, const char** a)
   *p = '_';
   p++;
   TopAbs_ShapeEnum typ;
-  // explode a type
+
   switch (a[2][0])
   {
     case 'F':
@@ -668,7 +614,6 @@ static int nexplode(Draw_Interpretor& di, int n, const char** a)
   MaxShapes = IMOStmp.Extent() - 1;
   NCollection_Array1<TopoDS_Shape> aShapes(1, MaxShapes);
 
-  // explode
   while (Exp.More())
   {
     if (MShape.Add(Exp.Current()))
@@ -678,16 +623,14 @@ static int nexplode(Draw_Interpretor& di, int n, const char** a)
     }
     Exp.Next();
   }
-  //
+
   NCollection_Array1<int>    OrderInd(1, MaxShapes);
   gp_Pnt                     GPoint;
   GProp_GProps               GPr;
   int                        aTemp;
-  NCollection_Array1<double> MidXYZ(1, MaxShapes); // X,Y,Z;
+  NCollection_Array1<double> MidXYZ(1, MaxShapes);
   bool                       NoSort = true;
-  //
-  // Computing of CentreOfMass for edge and face
-  // and for vertex use its point
+
   for (Index = 1; Index <= MaxShapes; Index++)
   {
     OrderInd.SetValue(Index, Index);
@@ -703,7 +646,7 @@ static int nexplode(Draw_Interpretor& di, int n, const char** a)
     }
     MidXYZ.SetValue(Index, GPoint.X() * 999 + GPoint.Y() * 99 + GPoint.Z() * 0.9);
   }
-  // Sorting
+
   while (NoSort)
   {
     NoSort = false;
@@ -718,7 +661,7 @@ static int nexplode(Draw_Interpretor& di, int n, const char** a)
       }
     }
   }
-  // Check equality of MidXYZ
+
   for (Index = 1; Index < MaxShapes; Index++)
   {
     if (MidXYZ(OrderInd(Index + 1)) == MidXYZ(OrderInd(Index)))
@@ -734,10 +677,6 @@ static int nexplode(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=======================================================================
-// exwire
-//=======================================================================
 
 static int exwire(Draw_Interpretor&, int n, const char** a)
 {
@@ -767,10 +706,6 @@ static int exwire(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// invert
-//=======================================================================
-
 static int invert(Draw_Interpretor&, int n, const char** a)
 {
   if (n <= 1)
@@ -793,10 +728,6 @@ static int invert(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=======================================================================
-// orientation, reverse, complement
-//=======================================================================
 
 static int orientation(Draw_Interpretor&, int n, const char** a)
 {
@@ -860,10 +791,6 @@ static int orientation(Draw_Interpretor&, int n, const char** a)
 
 #include <TCollection_AsciiString.hpp>
 
-//=======================================================================
-// numshapes same as nbshapes but the output is cout
-//=======================================================================
-
 static int numshapes(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
@@ -889,10 +816,6 @@ static int numshapes(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : DumpExtent
-// purpose  : Dumps the number of sub-shapes in <aStr>.
-//=======================================================================
 static void DumpExtent(const TopoDS_Shape& aS, TCollection_AsciiString& aStr)
 {
   const int        aNbTypes             = 8;
@@ -908,9 +831,9 @@ static void DumpExtent(const TopoDS_Shape& aS, TCollection_AsciiString& aStr)
   int              i, aNb, aNbSh;
   TopAbs_ShapeEnum aType;
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aM;
-  //
+
   aNbSh = 0;
-  //
+
   for (i = aNbTypes - 1; i >= 0; --i)
   {
     aM.Clear();
@@ -923,10 +846,6 @@ static void DumpExtent(const TopoDS_Shape& aS, TCollection_AsciiString& aStr)
   aStr = aStr + pNames[0] + TCollection_AsciiString(aNbSh) + "\n";
 }
 
-//=======================================================================
-// nbshapes
-//=======================================================================
-
 static int nbshapes(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
@@ -935,9 +854,9 @@ static int nbshapes(Draw_Interpretor& di, int n, const char** a)
   int             i;
   bool            aTotal;
   TopExp_Explorer ex;
-  //
+
   aTotal = strcmp(a[n - 1], "-t") == 0;
-  //
+
   for (i = 1; i < n; i++)
   {
     TopoDS_Shape S = DBRep::Get(a[i]);
@@ -961,10 +880,6 @@ static int nbshapes(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=======================================================================
-//
-//=======================================================================
 
 static int countshapes(Draw_Interpretor& di, int n, const char** a)
 {
@@ -1086,9 +1001,6 @@ static int countshapes(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-//
-//=======================================================================
 void setProp(TopoDS_Shape Sh, const char** a, int n)
 {
   int i;
@@ -1185,9 +1097,6 @@ void setProp(TopoDS_Shape Sh, const char** a, int n)
   }
 }
 
-//=======================================================================
-//
-//=======================================================================
 static int setFlags(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 3)
@@ -1221,20 +1130,11 @@ static int setFlags(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// memory management
-//=======================================================================
 static int purgemmgt(Draw_Interpretor&, int, const char**)
 {
   Standard::Purge();
   return 0;
 }
-
-//=======================================================================
-
-//=======================================================================
-// check
-//=======================================================================
 
 static int check(Draw_Interpretor&, int n, const char** a)
 {
@@ -1260,9 +1160,6 @@ static int check(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// normals
-//=======================================================================
 static int normals(Draw_Interpretor& theDI, int theArgNum, const char** theArgs)
 {
   if (theArgNum < 2)
@@ -1384,12 +1281,11 @@ static int normals(Draw_Interpretor& theDI, int theArgNum, const char** theArgs)
       dout << aSeg;
       if (bPrint)
       {
-        // Make the normal vector from the points
+
         gp_Vec aV(aVec.first, aVec.second);
         if (bReverse)
           aV.Reverse();
 
-        // Print values of the vector avoiding printing "-0" values
         theDI << "(" << (aV.X() == 0 ? 0 : aV.X()) << ", " << (aV.Y() == 0 ? 0 : aV.Y()) << ", "
               << (aV.Z() == 0 ? 0 : aV.Z()) << ")\n";
       }
@@ -1398,8 +1294,6 @@ static int normals(Draw_Interpretor& theDI, int theArgNum, const char** theArgs)
 
   return 0;
 }
-
-//=================================================================================================
 
 void DBRep::Set(const char* theName, const TopoDS_Shape& theShape)
 {
@@ -1422,8 +1316,6 @@ void DBRep::Set(const char* theName, const TopoDS_Shape& theShape)
   Draw::Set(theName, aDrawShape);
 }
 
-//=================================================================================================
-
 TopoDS_Shape DBRep::getShape(const char*& theName, TopAbs_ShapeEnum theType, bool theToComplain)
 {
   const bool                       toPick = theName[0] == '.';
@@ -1437,7 +1329,7 @@ TopoDS_Shape DBRep::getShape(const char*& theName, TopAbs_ShapeEnum theType, boo
   TopoDS_Shape aShape = aDrawable->Shape();
   if (theType != TopAbs_SHAPE && theType != aShape.ShapeType() && toPick)
   {
-    // try to find prom pick
+
     double u, v;
     DBRep_DrawableShape::LastPick(aShape, u, v);
   }
@@ -1513,9 +1405,6 @@ static int XProgress(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
-// writebrep
-//=======================================================================
 static int writebrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   int                     aVersion = -1;
@@ -1641,9 +1530,6 @@ static int writebrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
   return 0;
 }
 
-//=======================================================================
-// readbrep
-//=======================================================================
 static int readbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs != 3)
@@ -1656,7 +1542,7 @@ static int readbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   const char* aShapeName     = theArgVec[2];
   bool        isBinaryFormat = true;
   {
-    // probe file header to recognize format
+
     const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
     std::shared_ptr<std::istream>      aFile =
       aFileSystem->OpenIStream(aFileName, std::ios::in | std::ios::binary);
@@ -1700,9 +1586,6 @@ static int readbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   return 0;
 }
 
-//=======================================================================
-// removeinternals
-//=======================================================================
 static int removeInternals(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
@@ -1731,8 +1614,6 @@ static int removeInternals(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static bool done = false;
 
 void DBRep::BasicCommands(Draw_Interpretor& theCommands)
@@ -1742,7 +1623,6 @@ void DBRep::BasicCommands(Draw_Interpretor& theCommands)
   done = true;
   Draw::Commands(theCommands);
 
-  // Register save/restore tools
   DBRep_DrawableShape::RegisterFactory();
 
   const char* g = "Basic shape commands";
@@ -1830,7 +1710,6 @@ void DBRep::BasicCommands(Draw_Interpretor& theCommands)
                   purgemmgt,
                   g);
 
-  // Add command for DRAW-specific ProgressIndicator
   theCommands.Add("XProgress",
                   "XProgress [+|-t] [+|-c] [+|-g]"
                   "\n\t\t The options are:"

@@ -9,8 +9,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Law_Composite, Law_Function)
 
-//=================================================================================================
-
 Law_Composite::Law_Composite()
     : first(-1.e100),
       last(1.e100),
@@ -21,8 +19,6 @@ Law_Composite::Law_Composite()
 
 {
 }
-
-//=================================================================================================
 
 Law_Composite::Law_Composite(const double First, const double Last, const double Tol)
     : first(-1.e100),
@@ -35,17 +31,11 @@ Law_Composite::Law_Composite(const double First, const double Last, const double
 {
 }
 
-//=================================================================================================
-
 GeomAbs_Shape Law_Composite::Continuity() const
 {
   throw Standard_NotImplemented("Law_Composite::Continuity()");
 }
 
-//=======================================================================
-// function : NbIntervals
-// purpose  : On ne se casse pas la tete, on decoupe pour chaque composant
-//=======================================================================
 int Law_Composite::NbIntervals(const GeomAbs_Shape S) const
 {
   NCollection_List<occ::handle<Law_Function>>::Iterator It(funclist);
@@ -60,10 +50,6 @@ int Law_Composite::NbIntervals(const GeomAbs_Shape S) const
   return nbr_interval;
 }
 
-//=======================================================================
-// function : Intervals
-// purpose  : Meme simplifications....
-//=======================================================================
 void Law_Composite::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const
 {
   NCollection_List<occ::handle<Law_Function>>::Iterator It(funclist);
@@ -87,16 +73,12 @@ void Law_Composite::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape
   }
 }
 
-//=================================================================================================
-
 double Law_Composite::Value(const double X)
 {
   double W = X;
   Prepare(W);
   return curfunc->Value(W);
 }
-
-//=================================================================================================
 
 void Law_Composite::D1(const double X, double& F, double& D)
 {
@@ -105,19 +87,12 @@ void Law_Composite::D1(const double X, double& F, double& D)
   curfunc->D1(W, F, D);
 }
 
-//=================================================================================================
-
 void Law_Composite::D2(const double X, double& F, double& D, double& D2)
 {
   double W = X;
   Prepare(W);
   curfunc->D2(W, F, D, D2);
 }
-
-//=======================================================================
-// function : Trim
-// purpose  : ne garde que la partie utile dans le champs.
-//=======================================================================
 
 occ::handle<Law_Function> Law_Composite::Trim(const double PFirst,
                                               const double PLast,
@@ -128,22 +103,11 @@ occ::handle<Law_Function> Law_Composite::Trim(const double PFirst,
   return l;
 }
 
-//=================================================================================================
-
 void Law_Composite::Bounds(double& PFirst, double& PLast)
 {
   PFirst = first;
   PLast  = last;
 }
-
-//=======================================================================
-// function : Prepare
-// purpose  :
-// Lorsque le parametre est pres d'un "noeud" on determine la loi en
-// fonction du signe de tol:
-//   - negatif -> Loi precedente au noeud.
-//   - positif -> Loi consecutive au noeud.
-//=======================================================================
 
 void Law_Composite::Prepare(double& W)
 {
@@ -165,7 +129,7 @@ void Law_Composite::Prepare(double& W)
     curfunc->Bounds(first, l);
   }
 
-  Wtest = W + Eps; // Decalage pour discriminer les noeuds
+  Wtest = W + Eps;
   if (periodic)
   {
     Wtest = ElCLib::InPeriod(Wtest, first, last);
@@ -196,8 +160,6 @@ void Law_Composite::Prepare(double& W)
   }
 }
 
-//=================================================================================================
-
 occ::handle<Law_Function>& Law_Composite::ChangeElementaryLaw(const double W)
 {
   double WW = W;
@@ -205,21 +167,15 @@ occ::handle<Law_Function>& Law_Composite::ChangeElementaryLaw(const double W)
   return curfunc;
 }
 
-//=================================================================================================
-
 NCollection_List<occ::handle<Law_Function>>& Law_Composite::ChangeLaws()
 {
   return funclist;
 }
 
-//=================================================================================================
-
 bool Law_Composite::IsPeriodic() const
 {
   return periodic;
 }
-
-//=================================================================================================
 
 void Law_Composite::SetPeriodic()
 {

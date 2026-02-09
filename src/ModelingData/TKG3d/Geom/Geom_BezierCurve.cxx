@@ -20,10 +20,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_BezierCurve, Geom_BoundedCurve)
 
-//=======================================================================
-// function : Rational
-// purpose  : check rationality of an array of weights
-//=======================================================================
 static bool Rational(const NCollection_Array1<double>& W)
 {
   int  i, n = W.Length();
@@ -37,15 +33,13 @@ static bool Rational(const NCollection_Array1<double>& W)
   return rat;
 }
 
-//=================================================================================================
-
 Geom_BezierCurve::Geom_BezierCurve(const Geom_BezierCurve& theOther)
     : rational(theOther.rational),
       closed(theOther.closed),
       maxderivinv(theOther.maxderivinv),
       maxderivinvok(false)
 {
-  // Deep copy all data arrays without validation
+
   poles = new NCollection_HArray1<gp_Pnt>(theOther.poles->Lower(), theOther.poles->Upper());
   poles->ChangeArray1() = theOther.poles->Array1();
 
@@ -56,28 +50,23 @@ Geom_BezierCurve::Geom_BezierCurve(const Geom_BezierCurve& theOther)
   }
 }
 
-//=================================================================================================
-
 Geom_BezierCurve::Geom_BezierCurve(const NCollection_Array1<gp_Pnt>& Poles)
 {
   int nbpoles = Poles.Length();
   if (nbpoles < 2 || nbpoles > (Geom_BezierCurve::MaxDegree() + 1))
     throw Standard_ConstructionError();
-  //  copy the poles
+
   occ::handle<NCollection_HArray1<gp_Pnt>> npoles = new NCollection_HArray1<gp_Pnt>(1, nbpoles);
 
   npoles->ChangeArray1() = Poles;
 
-  // Init non rational
   Init(npoles, occ::handle<NCollection_HArray1<double>>());
 }
-
-//=================================================================================================
 
 Geom_BezierCurve::Geom_BezierCurve(const NCollection_Array1<gp_Pnt>& Poles,
                                    const NCollection_Array1<double>& Weights)
 {
-  // copy the poles
+
   int nbpoles = Poles.Length();
   if (nbpoles < 2 || nbpoles > (Geom_BezierCurve::MaxDegree() + 1))
     throw Standard_ConstructionError();
@@ -85,8 +74,6 @@ Geom_BezierCurve::Geom_BezierCurve(const NCollection_Array1<gp_Pnt>& Poles,
   occ::handle<NCollection_HArray1<gp_Pnt>> npoles = new NCollection_HArray1<gp_Pnt>(1, nbpoles);
 
   npoles->ChangeArray1() = Poles;
-
-  // check the weights
 
   if (Weights.Length() != nbpoles)
     throw Standard_ConstructionError();
@@ -100,10 +87,8 @@ Geom_BezierCurve::Geom_BezierCurve(const NCollection_Array1<gp_Pnt>& Poles,
     }
   }
 
-  // check really rational
   bool rat = Rational(Weights);
 
-  // copy the weights
   occ::handle<NCollection_HArray1<double>> nweights;
   if (rat)
   {
@@ -111,11 +96,8 @@ Geom_BezierCurve::Geom_BezierCurve(const NCollection_Array1<gp_Pnt>& Poles,
     nweights->ChangeArray1() = Weights;
   }
 
-  // Init
   Init(npoles, nweights);
 }
-
-//=================================================================================================
 
 void Geom_BezierCurve::Increase(const int Deg)
 {
@@ -168,21 +150,15 @@ void Geom_BezierCurve::Increase(const int Deg)
   Init(npoles, nweights);
 }
 
-//=================================================================================================
-
 int Geom_BezierCurve::MaxDegree()
 {
   return BSplCLib::MaxDegree();
 }
 
-//=================================================================================================
-
 void Geom_BezierCurve::InsertPoleAfter(const int Index, const gp_Pnt& P)
 {
   InsertPoleAfter(Index, P, 1.);
 }
-
-//=================================================================================================
 
 void Geom_BezierCurve::InsertPoleAfter(const int Index, const gp_Pnt& P, const double Weight)
 {
@@ -196,7 +172,6 @@ void Geom_BezierCurve::InsertPoleAfter(const int Index, const gp_Pnt& P, const d
 
   int i;
 
-  // Insert the pole
   occ::handle<NCollection_HArray1<gp_Pnt>> npoles = new NCollection_HArray1<gp_Pnt>(1, nbpoles + 1);
 
   NCollection_Array1<gp_Pnt>&       newpoles = npoles->ChangeArray1();
@@ -210,7 +185,6 @@ void Geom_BezierCurve::InsertPoleAfter(const int Index, const gp_Pnt& P, const d
   for (i = Index + 1; i <= nbpoles; i++)
     newpoles(i + 1) = oldpoles(i);
 
-  // Insert the weight
   occ::handle<NCollection_HArray1<double>> nweights;
   bool rat = IsRational() || std::abs(Weight - 1.) > gp::Resolution();
 
@@ -237,21 +211,15 @@ void Geom_BezierCurve::InsertPoleAfter(const int Index, const gp_Pnt& P, const d
   Init(npoles, nweights);
 }
 
-//=================================================================================================
-
 void Geom_BezierCurve::InsertPoleBefore(const int Index, const gp_Pnt& P)
 {
   InsertPoleAfter(Index - 1, P);
 }
 
-//=================================================================================================
-
 void Geom_BezierCurve::InsertPoleBefore(const int Index, const gp_Pnt& P, const double Weight)
 {
   InsertPoleAfter(Index - 1, P, Weight);
 }
-
-//=================================================================================================
 
 void Geom_BezierCurve::RemovePole(const int Index)
 {
@@ -265,7 +233,6 @@ void Geom_BezierCurve::RemovePole(const int Index)
 
   int i;
 
-  // Remove the pole
   occ::handle<NCollection_HArray1<gp_Pnt>> npoles = new NCollection_HArray1<gp_Pnt>(1, nbpoles - 1);
 
   NCollection_Array1<gp_Pnt>&       newpoles = npoles->ChangeArray1();
@@ -277,7 +244,6 @@ void Geom_BezierCurve::RemovePole(const int Index)
   for (i = Index + 1; i <= nbpoles; i++)
     newpoles(i - 1) = oldpoles(i);
 
-  // Remove the weight
   occ::handle<NCollection_HArray1<double>> nweights;
 
   if (IsRational())
@@ -296,15 +262,12 @@ void Geom_BezierCurve::RemovePole(const int Index)
   Init(npoles, nweights);
 }
 
-//=================================================================================================
-
 void Geom_BezierCurve::Reverse()
 {
   gp_Pnt                      P;
   int                         i, nbpoles = NbPoles();
   NCollection_Array1<gp_Pnt>& cpoles = poles->ChangeArray1();
 
-  // reverse poles
   for (i = 1; i <= nbpoles / 2; i++)
   {
     P                       = cpoles(i);
@@ -312,7 +275,6 @@ void Geom_BezierCurve::Reverse()
     cpoles(nbpoles - i + 1) = P;
   }
 
-  // reverse weights
   if (IsRational())
   {
     NCollection_Array1<double>& cweights = weights->ChangeArray1();
@@ -326,14 +288,10 @@ void Geom_BezierCurve::Reverse()
   }
 }
 
-//=================================================================================================
-
 double Geom_BezierCurve::ReversedParameter(const double U) const
 {
   return (1. - U);
 }
-
-//=================================================================================================
 
 void Geom_BezierCurve::Segment(const double U1, const double U2)
 {
@@ -374,8 +332,6 @@ void Geom_BezierCurve::Segment(const double U1, const double U2)
   }
 }
 
-//=================================================================================================
-
 void Geom_BezierCurve::SetPole(const int Index, const gp_Pnt& P)
 {
   if (Index < 1 || Index > NbPoles())
@@ -390,15 +346,11 @@ void Geom_BezierCurve::SetPole(const int Index, const gp_Pnt& P)
   }
 }
 
-//=================================================================================================
-
 void Geom_BezierCurve::SetPole(const int Index, const gp_Pnt& P, const double Weight)
 {
   SetPole(Index, P);
   SetWeight(Index, Weight);
 }
-
-//=================================================================================================
 
 void Geom_BezierCurve::SetWeight(const int Index, const double Weight)
 {
@@ -409,15 +361,13 @@ void Geom_BezierCurve::SetWeight(const int Index, const double Weight)
   if (Weight <= gp::Resolution())
     throw Standard_ConstructionError("Geom_BezierCurve::SetWeight");
 
-  // compute new rationality
   bool wasrat = IsRational();
   if (!wasrat)
   {
-    // a weight of 1. does not turn to rational
+
     if (std::abs(Weight - 1.) <= gp::Resolution())
       return;
 
-    // set weights of 1.
     weights = new NCollection_HArray1<double>(1, nbpoles);
     weights->Init(1.);
   }
@@ -425,82 +375,59 @@ void Geom_BezierCurve::SetWeight(const int Index, const double Weight)
   NCollection_Array1<double>& cweights = weights->ChangeArray1();
   cweights(Index)                      = Weight;
 
-  // is it turning into non rational
   if (wasrat && !Rational(cweights))
     weights.Nullify();
 }
-
-//=================================================================================================
 
 bool Geom_BezierCurve::IsClosed() const
 {
   return closed;
 }
 
-//=================================================================================================
-
 bool Geom_BezierCurve::IsCN(const int) const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool Geom_BezierCurve::IsPeriodic() const
 {
   return false;
 }
 
-//=================================================================================================
-
 bool Geom_BezierCurve::IsRational() const
 {
   return !weights.IsNull();
 }
-
-//=================================================================================================
 
 GeomAbs_Shape Geom_BezierCurve::Continuity() const
 {
   return GeomAbs_CN;
 }
 
-//=================================================================================================
-
 int Geom_BezierCurve::Degree() const
 {
   return poles->Length() - 1;
 }
-
-//=================================================================================================
 
 void Geom_BezierCurve::D0(const double U, gp_Pnt& P) const
 {
   BSplCLib::D0(U, Poles(), Weights(), P);
 }
 
-//=================================================================================================
-
 void Geom_BezierCurve::D1(const double U, gp_Pnt& P, gp_Vec& V1) const
 {
   BSplCLib::D1(U, Poles(), Weights(), P, V1);
 }
-
-//=================================================================================================
 
 void Geom_BezierCurve::D2(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2) const
 {
   BSplCLib::D2(U, Poles(), Weights(), P, V1, V2);
 }
 
-//=================================================================================================
-
 void Geom_BezierCurve::D3(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2, gp_Vec& V3) const
 {
   BSplCLib::D3(U, Poles(), Weights(), P, V1, V2, V3);
 }
-
-//=================================================================================================
 
 gp_Vec Geom_BezierCurve::DN(const double U, const int N) const
 {
@@ -515,7 +442,7 @@ gp_Vec Geom_BezierCurve::DN(const double U, const int N) const
   bidmults.Init(Degree() + 1);
 
   if (IsRational())
-    //    BSplCLib::DN(U,N,0,Degree(),0.,
+
     BSplCLib::DN(U,
                  N,
                  0,
@@ -527,7 +454,7 @@ gp_Vec Geom_BezierCurve::DN(const double U, const int N) const
                  &bidmults,
                  V);
   else
-    //    BSplCLib::DN(U,N,0,Degree(),0.,
+
     BSplCLib::DN(U,
                  N,
                  0,
@@ -541,42 +468,30 @@ gp_Vec Geom_BezierCurve::DN(const double U, const int N) const
   return V;
 }
 
-//=================================================================================================
-
 gp_Pnt Geom_BezierCurve::StartPoint() const
 {
   return poles->Value(1);
 }
-
-//=================================================================================================
 
 gp_Pnt Geom_BezierCurve::EndPoint() const
 {
   return poles->Value(poles->Upper());
 }
 
-//=================================================================================================
-
 double Geom_BezierCurve::FirstParameter() const
 {
   return 0.0;
 }
-
-//=================================================================================================
 
 double Geom_BezierCurve::LastParameter() const
 {
   return 1.0;
 }
 
-//=================================================================================================
-
 int Geom_BezierCurve::NbPoles() const
 {
   return poles->Length();
 }
-
-//=================================================================================================
 
 const gp_Pnt& Geom_BezierCurve::Pole(const int Index) const
 {
@@ -585,8 +500,6 @@ const gp_Pnt& Geom_BezierCurve::Pole(const int Index) const
   return poles->Value(Index);
 }
 
-//=================================================================================================
-
 void Geom_BezierCurve::Poles(NCollection_Array1<gp_Pnt>& P) const
 {
   if (P.Length() != poles->Length())
@@ -594,14 +507,10 @@ void Geom_BezierCurve::Poles(NCollection_Array1<gp_Pnt>& P) const
   P = poles->Array1();
 }
 
-//=================================================================================================
-
 const NCollection_Array1<gp_Pnt>& Geom_BezierCurve::Poles() const
 {
   return poles->Array1();
 }
-
-//=================================================================================================
 
 double Geom_BezierCurve::Weight(const int Index) const
 {
@@ -612,8 +521,6 @@ double Geom_BezierCurve::Weight(const int Index) const
   else
     return 1.;
 }
-
-//=================================================================================================
 
 void Geom_BezierCurve::Weights(NCollection_Array1<double>& W) const
 {
@@ -631,8 +538,6 @@ void Geom_BezierCurve::Weights(NCollection_Array1<double>& W) const
   }
 }
 
-//=================================================================================================
-
 void Geom_BezierCurve::Transform(const gp_Trsf& T)
 {
   int                         nbpoles = NbPoles();
@@ -641,8 +546,6 @@ void Geom_BezierCurve::Transform(const gp_Trsf& T)
   for (int i = 1; i <= nbpoles; i++)
     cpoles(i).Transform(T);
 }
-
-//=================================================================================================
 
 void Geom_BezierCurve::Resolution(const double Tolerance3D, double& UTolerance)
 {
@@ -677,27 +580,21 @@ void Geom_BezierCurve::Resolution(const double Tolerance3D, double& UTolerance)
   UTolerance = Tolerance3D * maxderivinv;
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Geometry> Geom_BezierCurve::Copy() const
 {
   return new Geom_BezierCurve(*this);
 }
 
-//=================================================================================================
-
 void Geom_BezierCurve::Init(const occ::handle<NCollection_HArray1<gp_Pnt>>& Poles,
                             const occ::handle<NCollection_HArray1<double>>& Weights)
 {
   int nbpoles = Poles->Length();
-  // closed ?
+
   const NCollection_Array1<gp_Pnt>& cpoles = Poles->Array1();
   closed = cpoles(1).Distance(cpoles(nbpoles)) <= Precision::Confusion();
 
-  // rational
   rational = !Weights.IsNull();
 
-  // set fields
   poles = Poles;
 
   if (rational)
@@ -705,8 +602,6 @@ void Geom_BezierCurve::Init(const occ::handle<NCollection_HArray1<gp_Pnt>>& Pole
   else
     weights.Nullify();
 }
-
-//=================================================================================================
 
 void Geom_BezierCurve::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

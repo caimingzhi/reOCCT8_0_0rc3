@@ -4,8 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveSegment, Select3D_SensitiveEntity)
 
-//=================================================================================================
-
 Select3D_SensitiveSegment::Select3D_SensitiveSegment(
   const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
   const gp_Pnt&                             theFirstPnt,
@@ -17,14 +15,10 @@ Select3D_SensitiveSegment::Select3D_SensitiveSegment(
   myEnd     = theLastPnt;
 }
 
-// =======================================================================
-// function : Matches
-// purpose  : Checks whether the segment overlaps current selecting volume
-// =======================================================================
 bool Select3D_SensitiveSegment::Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                         SelectBasics_PickResult&             thePickResult)
 {
-  if (!theMgr.IsOverlapAllowed()) // check for inclusion
+  if (!theMgr.IsOverlapAllowed())
   {
     if (theMgr.GetActiveSelectionType() == SelectMgr_SelectionType_Polyline)
     {
@@ -34,7 +28,7 @@ bool Select3D_SensitiveSegment::Matches(SelectBasics_SelectingVolumeManager& the
            && theMgr.OverlapsPoint(myEnd, thePickResult);
   }
 
-  if (!theMgr.OverlapsSegment(myStart, myEnd, thePickResult)) // check for overlap
+  if (!theMgr.OverlapsSegment(myStart, myEnd, thePickResult))
   {
     return false;
   }
@@ -42,8 +36,6 @@ bool Select3D_SensitiveSegment::Matches(SelectBasics_SelectingVolumeManager& the
   thePickResult.SetDistToGeomCenter(theMgr.DistToGeometryCenter(CenterOfGeometry()));
   return true;
 }
-
-//=================================================================================================
 
 occ::handle<Select3D_SensitiveEntity> Select3D_SensitiveSegment::GetConnected()
 {
@@ -53,21 +45,11 @@ occ::handle<Select3D_SensitiveEntity> Select3D_SensitiveSegment::GetConnected()
   return aNewEntity;
 }
 
-//=======================================================================
-// function : CenterOfGeometry
-// purpose  : Returns center of the segment. If location transformation
-//            is set, it will be applied
-//=======================================================================
 gp_Pnt Select3D_SensitiveSegment::CenterOfGeometry() const
 {
   return (myStart.XYZ() + myEnd.XYZ()) * 0.5;
 }
 
-//=======================================================================
-// function : BoundingBox
-// purpose  : Returns bounding box of the segment. If location
-//            transformation is set, it will be applied
-//=======================================================================
 Select3D_BndBox3d Select3D_SensitiveSegment::BoundingBox()
 {
   const NCollection_Vec3<double> aMinPnt(std::min(myStart.X(), myEnd.X()),
@@ -79,16 +61,10 @@ Select3D_BndBox3d Select3D_SensitiveSegment::BoundingBox()
   return Select3D_BndBox3d(aMinPnt, aMaxPnt);
 }
 
-//=======================================================================
-// function : NbSubElements
-// purpose  : Returns the amount of points
-//=======================================================================
 int Select3D_SensitiveSegment::NbSubElements() const
 {
   return 2;
 }
-
-//=================================================================================================
 
 void Select3D_SensitiveSegment::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

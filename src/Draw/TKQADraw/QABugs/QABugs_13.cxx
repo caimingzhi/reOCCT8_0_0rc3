@@ -33,22 +33,18 @@
   #define M_SQRT2 1.41421356237309504880168872420969808
 #endif
 
-//=================================================================================================
-
 static int OCC332bug(Draw_Interpretor& di, int argc, const char** argv)
 {
-  // Used to Display Geometry or Topolgy
+
   char name[255];
   bool check = true;
 
-  // Set default arguments
   double wall_thickness = 10.0;
   double dia1           = 80.0;
   double dia2           = 100.0;
   double length         = 400.0;
   double major_radius   = 280.0;
 
-  // Convert arguments
   if (argc > 1)
     wall_thickness = Draw::Atof(argv[1]);
   if (argc > 2)
@@ -61,7 +57,6 @@ static int OCC332bug(Draw_Interpretor& di, int argc, const char** argv)
     length = Draw::Atof(argv[5]);
   double bend_angle = length / major_radius;
 
-  // if ((bend_angle >= M_PI)) {
   if ((bend_angle >= M_PI))
   {
     di << "The arguments are invalid.\n";
@@ -72,102 +67,35 @@ static int OCC332bug(Draw_Interpretor& di, int argc, const char** argv)
   double radius_l = dia1 / 2.0;
   double radius_r = dia2 / 2.0;
 
-  // SUPPORT:
-  // 1. There is no need to normalize the direction - it's done automatically
-  // gp_Ax2 origin(gp_Pnt(5000.0,-300.0, 1000.0),
-  // gp_Dir(0.0, -1.0/M_SQRT2, -1.0/M_SQRT2));
   gp_Ax2 origin(gp_Pnt(5000.0, -300.0, 1000.0), gp_Dir(0.0, -1.0, -1.0));
 
   TopoDS_Face  myFace;
   TopoDS_Shape myShape, gasSolid;
   TopoDS_Solid wallSolid;
 
-  // Construct a circle for the first face, on the xy-plane at the origin
   gp_Pln  circ1Plane(origin.Location(), origin.Direction());
   gp_Circ faceCircle(origin, radius_l);
   gp_Circ outFaceCircle(origin, radius_l + wall_thickness);
 
-  // Construct center for a circle to be the spine of
-  // revolution, on the xz-plane at x=major_radius
   gp_Pnt circ_center = origin.Location().Translated(major_radius * origin.XDirection());
 
-  // This point will be the center of the second face.
-  // SUPPORT:
-  // - There is no need in this point - we'll use angle instead.
-  // gp_Pnt endPoint = origin.Location();
-  // endPoint.Translate(major_radius*(1.0-cos(bend_angle))*origin.XDirection()) ;
-  // endPoint.Translate((-major_radius*sin(bend_angle))*origin.Direction());
-
-  // Construct the plane for the second face to sit on.
-  // SUPPORT:
-  // - It is better to use rotation instead of explicit calculations
-  // gp_Pln circ2Plane = gce_MakePln(circ_center, endPoint,
-  //				  endPoint.Translated(major_radius*origin.YDirection())
-  //				  ).Value();
   gp_Ax1 circ_axis(circ_center, origin.YDirection());
   gp_Pln circ2Plane = circ1Plane.Rotated(circ_axis, bend_angle);
 
-  // The circle used for the spine.
-  // SUPPORT:
-  // - Use direction (-X) instead of (X) to obtain correct right-handed system.
-  //   It is very important to maintain correct orientation between spine
-  //   and circles axes.
-  // gp_Ax2 spineAxis(circ_center, origin.YDirection(), origin.XDirection());
   gp_Ax2  spineAxis(circ_center, origin.YDirection(), -origin.XDirection());
   gp_Circ circle(spineAxis, major_radius);
-
-  // SUPPORT:
-  // - There is no need to create 2nd circles - they will be created by MakePipeShell.
-  // gp_Ax2 circ2axis(endPoint, circ2Plane.Axis().Direction(), origin.YDirection());
-  // gp_Circ faceCircle2(circ2axis,radius_r);
-  // gp_Circ outFaceCircle2(circ2axis,radius_r+wall_thickness);
 
   TopoDS_Edge E1     = BRepBuilderAPI_MakeEdge(faceCircle);
   TopoDS_Wire Wire1_ = BRepBuilderAPI_MakeWire(E1).Wire();
 
-  // Create the face at the near end for the wall solid, an annular ring.
   TopoDS_Edge Eout1       = BRepBuilderAPI_MakeEdge(outFaceCircle);
   TopoDS_Wire outerWire1_ = BRepBuilderAPI_MakeWire(Eout1).Wire();
 
-  // SUPPORT:
-  // - There is no need to create 2nd circles -
-  //   they will be created by MakePipeShell
-  // TopoDS_Edge E2 = BRepBuilderAPI_MakeEdge(faceCircle2);
-  // TopoDS_Wire Wire2_ = BRepBuilderAPI_MakeWire(E2).Wire();
-
-  // Create the face at the far end for the wall solid, an annular ring.
-  // SUPPORT:
-  // - There is no need to create 2nd circles -
-  //   they will be created by MakePipeShell
-  // TopoDS_Edge Eout2 = BRepBuilderAPI_MakeEdge(outFaceCircle2);
-  // TopoDS_Wire outerWire2_ = BRepBuilderAPI_MakeWire(Eout2).Wire();
-
-  // SUPPORT:
-  // - It is better to use bend angle calculated above
-  // occ::handle<Geom_Curve> SpineCurve = GC_MakeArcOfCircle(circle,
-  //						     endPoint,
-  //						     origin.Location(),
-  //						     true).Value();
   occ::handle<Geom_Curve> SpineCurve(GC_MakeArcOfCircle(circle, 0.0, bend_angle, true).Value());
 
-  // SUPPORT:
-  // - Use correct formula for scaling laws
   occ::handle<Law_Linear> myLaw1 = new Law_Linear();
   occ::handle<Law_Linear> myLaw2 = new Law_Linear();
-  // if ((radius_r - radius_l) < Precision::Confusion())
-  //{
-  // myLaw1->Set(SpineCurve->FirstParameter(), 1.0,
-  // SpineCurve->LastParameter(), 1.0);
-  // myLaw2->Set(SpineCurve->FirstParameter(), 1.0,
-  // SpineCurve->LastParameter(), 1.0);
-  //}
-  // else
-  //{
-  // myLaw1->Set(SpineCurve->FirstParameter(), radius_r/(radius_r-radius_l),
-  // SpineCurve->LastParameter(), 1.0);
-  // myLaw2->Set(SpineCurve->FirstParameter(), (radius_r+wall_thickness)/(radius_r-radius_l),
-  // SpineCurve->LastParameter(), 1.0);
-  //}
+
   myLaw1->Set(SpineCurve->FirstParameter(), 1.0, SpineCurve->LastParameter(), radius_r / radius_l);
   myLaw2->Set(SpineCurve->FirstParameter(),
               1.0,
@@ -192,102 +120,60 @@ static int OCC332bug(Draw_Interpretor& di, int argc, const char** argv)
   Sprintf(name, "outerWire1_");
   DBRep::Set(name, outerWire1_);
 
-  // SUPPORT:
-  // - There is no need to create 2nd circles
-  // Sprintf (name,"Wire2_");
-  // DBRep::Set(name,Wire2_);
-  // Sprintf (name,"outerWire2_");
-  // DBRep::Set(name,outerWire2_);
-
   di.Eval("fit");
 
-  // SUPPORT:
-  // - There is no need in these vertices
-  // TopoDS_Vertex Location1, Location2;
-  // TopExp::Vertices(SpineWire, Location1, Location2);
-
-  // Make inner pipe shell
   BRepOffsetAPI_MakePipeShell mkPipe1(SpineWire);
   mkPipe1.SetTolerance(1.0e-8, 1.0e-8, 1.0e-6);
-  // mkPipe1.SetTransitionMode(BRepBuilderAPI_Transformed); // Default mode !!
-  mkPipe1.SetLaw(Wire1_, myLaw1 /*, Location2*/, false, false);
+
+  mkPipe1.SetLaw(Wire1_, myLaw1, false, false);
   mkPipe1.Build();
   if (!mkPipe1.IsDone())
     return 0;
 
-  // Make outer pipe shell
   BRepOffsetAPI_MakePipeShell mkPipe2(SpineWire);
   mkPipe2.SetTolerance(1.0e-8, 1.0e-8, 1.0e-6);
-  // mkPipe2.SetTransitionMode(BRepBuilderAPI_Transformed); // Default mode !!
-  mkPipe2.SetLaw(outerWire1_, myLaw2 /*, Location2*/, false, false);
+
+  mkPipe2.SetLaw(outerWire1_, myLaw2, false, false);
   mkPipe2.Build();
   if (!mkPipe2.IsDone())
     return 0;
 
-  // Make face for first opening
   occ::handle<Geom_Plane> Plane1 = new Geom_Plane(circ1Plane);
   mkFace.Init(Plane1, false, Precision::Confusion());
-  // SUPPORT:
-  // - Use wires created by MakePipeShell
-  // mkFace.Add(TopoDS::Wire(outerWire1_));
-  // mkFace.Add(TopoDS::Wire(Wire1_.Reversed()));
+
   mkFace.Add(TopoDS::Wire(mkPipe2.FirstShape()));
   mkFace.Add(TopoDS::Wire(mkPipe1.FirstShape().Reversed()));
   if (!mkFace.IsDone())
     return 0;
   TopoDS_Face Face1 = mkFace.Face();
 
-  // Make face for second opening
   occ::handle<Geom_Plane> Plane2 = new Geom_Plane(circ2Plane);
   mkFace.Init(Plane2, false, Precision::Confusion());
-  // SUPPORT:
-  // - Use wires created by MakePipeShell
-  // mkFace.Add(TopoDS::Wire(outerWire2_));
-  // mkFace.Add(TopoDS::Wire(Wire2_.Reversed()));
+
   mkFace.Add(TopoDS::Wire(mkPipe2.LastShape()));
   mkFace.Add(TopoDS::Wire(mkPipe1.LastShape().Reversed()));
   if (!mkFace.IsDone())
     return 0;
   TopoDS_Face Face2 = mkFace.Face();
 
-  // Make tube
   TopoDS_Shell TubeShell;
   BRep_Builder B;
   B.MakeShell(TubeShell);
   TopExp_Explorer getFaces;
   TopoDS_Face     test_face;
   getFaces.Init(mkPipe1.Shape(), TopAbs_FACE);
-  // SUPPORT:
-  // - In our case there should be only 1 pipe face
-  // while (getFaces.More())
-  //  {
-  //    test_face = TopoDS::Face(getFaces.Current());
-  //    occ::handle<Geom_Surface> S = BRep_Tool::Surface(test_face);
-  //    GeomLib_IsPlanarSurface IsPl(S);
-  //    if (!IsPl.IsPlanar()) {
-  //	B.Add(TubeShell,getFaces.Current().Reversed());
-  //    }
-  //    getFaces.Next();
-  //  }
+
   if (getFaces.More())
     B.Add(TubeShell, getFaces.Current().Reversed());
 
-  // Grab the gas solid now that we've extracted the faces.
   mkPipe1.MakeSolid();
   gasSolid = mkPipe1.Shape();
 
   Sprintf(name, "gasSolid_");
   DBRep::Set(name, gasSolid);
 
-  // getFaces.Clear();
   getFaces.Init(mkPipe2.Shape(), TopAbs_FACE);
-  // SUPPORT:
-  // - In our case there should be only 1 pipe face
-  // while (getFaces.More())
-  //  {
-  //    B.Add(TubeShell,getFaces.Current());
-  //    getFaces.Next();
-  //  }
+
   if (getFaces.More())
     B.Add(TubeShell, getFaces.Current());
 
@@ -301,7 +187,6 @@ static int OCC332bug(Draw_Interpretor& di, int argc, const char** argv)
   Sprintf(name, "wallSolid_");
   DBRep::Set(name, wallSolid);
 
-  // Now calculated the volume of the outside tube.
   GProp_GProps gprops;
   BRepGProp::VolumeProperties(wallSolid, gprops);
   di << "The wallSolid's volume is: " << gprops.Mass() << "\n";
@@ -327,7 +212,7 @@ static int OCC332bug(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   di << "The result is a ";
-  // Check to see if we have a solid
+
   switch (wallSolid.ShapeType())
   {
     case (TopAbs_COMPOUND):
@@ -387,8 +272,6 @@ static int OCC332bug(Draw_Interpretor& di, int argc, const char** argv)
 #include <BRepOffsetAPI_Sewing.hpp>
 #include <BRepAlgoAPI_Fuse.hpp>
 
-//=================================================================================================
-
 static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc > 6)
@@ -397,20 +280,17 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  // Used to Display Geometry or Topolgy
   char name[255];
   bool check = true;
 
-  // Set default arguments
   double radius_l = 20.0;
   double radius_r = 80.0;
-  // mkv 15.07.03 double bend_angle = M_PI/2.0;
+
   double bend_angle = M_PI / 2.0;
 
   double major_rad      = 280.0;
   double wall_thickness = 10.0;
 
-  // Convert arguments
   if (argc > 1)
     radius_l = Draw::Atof(argv[1]);
   if (argc > 2)
@@ -422,7 +302,6 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
   if (argc > 5)
     wall_thickness = Draw::Atof(argv[5]);
 
-  // mkv 15.07.03 if ((bend_angle >= 2.0*M_PI)) {
   if ((bend_angle >= 2.0 * M_PI))
   {
     di << "The arguments are invalid.\n";
@@ -434,26 +313,21 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
 
   TopoDS_Face  firstFace, lastFace;
   TopoDS_Solid wallSolid, myShape;
-  // Construct a circle for the first face, on the xy-plane at the origin
+
   gp_Pln  circ1Plane(origin.Location(), origin.Direction());
   gp_Circ faceCircle(origin, radius_l);
   gp_Circ outFaceCircle(origin, radius_l + wall_thickness);
 
-  // Construct center for a circle to be the spine of
-  // revolution, on the xz-plane at x=major_rad
   gp_Pnt circ_center = origin.Location().Translated(major_rad * origin.XDirection());
 
-  // This point will be the center of the second face.
   gp_Pnt endPoint = origin.Location();
   endPoint.Translate(major_rad * (1.0 - cos(bend_angle)) * origin.XDirection());
   endPoint.Translate((-major_rad * sin(bend_angle)) * origin.Direction());
 
-  // Construct the plane for the second face to sit on.
   gp_Pln circ2Plane =
     gce_MakePln(circ_center, endPoint, endPoint.Translated(major_rad * origin.YDirection()))
       .Value();
 
-  // The circle used for the spine.
   gp_Ax2  spineAxis(circ_center, origin.YDirection(), origin.XDirection());
   gp_Circ circle(spineAxis, major_rad);
 
@@ -465,7 +339,6 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
   TopoDS_Edge E1_2   = BRepBuilderAPI_MakeEdge(faceCircle, M_PI, 2. * M_PI);
   TopoDS_Wire Wire1_ = BRepBuilderAPI_MakeWire(E1_1, E1_2);
 
-  // Create the face at the near end for the wall solid, an annular ring.
   TopoDS_Edge Eout1_1     = BRepBuilderAPI_MakeEdge(outFaceCircle, 0, M_PI);
   TopoDS_Edge Eout1_2     = BRepBuilderAPI_MakeEdge(outFaceCircle, M_PI, 2. * M_PI);
   TopoDS_Wire outerWire1_ = BRepBuilderAPI_MakeWire(Eout1_1, Eout1_2);
@@ -474,7 +347,6 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
   TopoDS_Edge E2_2   = BRepBuilderAPI_MakeEdge(faceCircle2, M_PI, 2. * M_PI);
   TopoDS_Wire Wire2_ = BRepBuilderAPI_MakeWire(E2_1, E2_2);
 
-  // Create the face at the far end for the wall solid, an annular ring.
   TopoDS_Edge Eout2_1     = BRepBuilderAPI_MakeEdge(outFaceCircle2, 0, M_PI);
   TopoDS_Edge Eout2_2     = BRepBuilderAPI_MakeEdge(outFaceCircle2, M_PI, 2. * M_PI);
   TopoDS_Wire outerWire2_ = BRepBuilderAPI_MakeWire(Eout2_1, Eout2_2);
@@ -533,7 +405,6 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
   Sprintf(name, "Location2");
   DBRep::Set(name, Location2);
 
-  // Make inner pipe shell
   BRepOffsetAPI_MakePipeShell mkPipe1(SpineWire);
   mkPipe1.SetTolerance(1.0e-8, 1.0e-8, 1.0e-6);
   mkPipe1.SetTransitionMode(BRepBuilderAPI_Transformed);
@@ -543,7 +414,6 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
   if (!mkPipe1.IsDone())
     return 1;
 
-  // Make outer pipe shell
   BRepOffsetAPI_MakePipeShell mkPipe2(SpineWire);
   mkPipe2.SetTolerance(1.0e-8, 1.0e-8, 1.0e-6);
   mkPipe2.SetTransitionMode(BRepBuilderAPI_Transformed);
@@ -553,21 +423,8 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
   if (!mkPipe2.IsDone())
     return 1;
 
-  //    Sprintf(name,"w1-first");
-  //    DBRep::Set(name,mkPipe1.FirstShape());
-
-  //    Sprintf(name,"w1-last");
-  //    DBRep::Set(name,mkPipe1.LastShape());
-
-  //    Sprintf(name,"w2-first");
-  //    DBRep::Set(name,mkPipe2.FirstShape());
-
-  //    Sprintf(name,"w2-last");
-  //    DBRep::Set(name,mkPipe2.LastShape());
-
   BRepOffsetAPI_Sewing SewIt(1.0e-4);
 
-  // Make tube
   TopExp_Explorer getFaces;
   TopoDS_Face     test_face;
   getFaces.Init(mkPipe1.Shape(), TopAbs_FACE);
@@ -577,7 +434,6 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
     getFaces.Next();
   }
 
-  // Make face for first opening
   occ::handle<Geom_Plane> Plane1 = new Geom_Plane(circ1Plane);
   mkFace.Init(Plane1, false, Precision::Confusion());
   mkFace.Add(TopoDS::Wire(outerWire1_));
@@ -586,7 +442,6 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   TopoDS_Face Face1 = mkFace.Face();
 
-  // Make face for second opening
   occ::handle<Geom_Plane> Plane2 = new Geom_Plane(circ2Plane);
   mkFace.Init(Plane2, false, Precision::Confusion());
   mkFace.Add(TopoDS::Wire(outerWire2_));
@@ -595,7 +450,6 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   TopoDS_Face Face2 = mkFace.Face();
 
-  // Grab the gas solid now that we've extracted the faces.
   mkPipe1.MakeSolid();
   myShape = TopoDS::Solid(mkPipe1.Shape());
 
@@ -613,7 +467,7 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
   SewIt.Perform();
 
   di << "The result of the Sewing operation is a ";
-  // Check to see if we have a solid
+
   switch (SewIt.SewedShape().ShapeType())
   {
     case (TopAbs_COMPOUND):
@@ -683,7 +537,7 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
     }
     else
     {
-      // Let's see if we can extract shells instead of solids.
+
       TopExp_Explorer getShel;
       getShel.Init(SewIt.SewedShape(), TopAbs_SHELL);
       if (getShel.More())
@@ -708,7 +562,6 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
   Sprintf(name, "result");
   DBRep::Set(name, wallSolid);
 
-  // Now calculated the volume of the outside tube.
   GProp_GProps gprops;
   BRepGProp::VolumeProperties(wallSolid, gprops);
   di << "The wallSolid's volume is: " << gprops.Mass() << "\n";
@@ -734,7 +587,7 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   di << "The result is a ";
-  // Check to see if we have a solid
+
   switch (wallSolid.ShapeType())
   {
     case (TopAbs_COMPOUND):
@@ -792,17 +645,14 @@ static int OCC817(Draw_Interpretor& di, int argc, const char** argv)
     return -1;
   }
 
-  // Create outer box solid
   gp_Pnt       P(0, 0, 0);
   TopoDS_Solid fullSolid = BRepPrimAPI_MakeBox(P, 30.0, 30.0, 30.0).Solid();
 
-  // Create inner box solid
   P.SetX(10);
   P.SetY(10);
   P.SetZ(10);
   TopoDS_Solid internalSolid = BRepPrimAPI_MakeBox(P, 10.0, 10.0, 10.0).Solid();
 
-  // Cut inner from outer
   di << "BRepAlgoAPI_Cut cut( fullSolid, internalSolid )\n";
   BRepAlgoAPI_Cut cut(fullSolid, internalSolid);
   if (!cut.IsDone())
@@ -812,7 +662,6 @@ static int OCC817(Draw_Interpretor& di, int argc, const char** argv)
   }
   const TopoDS_Shape& cut_shape = cut.Shape();
 
-  // see if we have a solid
   int             found_solid = 0;
   TopoDS_Solid    cutSolid;
   TopExp_Explorer Ex;
@@ -832,14 +681,10 @@ static int OCC817(Draw_Interpretor& di, int argc, const char** argv)
   }
   DBRep::Set(argv[1], cutSolid);
 
-  // Calculate initial volume
   GProp_GProps volumeVProps;
   BRepGProp::VolumeProperties(cutSolid, volumeVProps);
   di << "Info: Original volume  = " << volumeVProps.Mass() << "\n";
 
-  //
-  // build bounding box and calculate bounds for initial mesh
-  //
   Bnd_Box bndBox;
   BRepBndLib::Add(cutSolid, bndBox);
   double Xmin, Ymin, Zmin, Xmax, Ymax, Zmax;
@@ -853,7 +698,6 @@ static int OCC817(Draw_Interpretor& di, int argc, const char** argv)
   di << "Info: Bounds\n  (" << Xmin << "," << Ymin << "," << Zmin << ")\n  (" << Xmax << "," << Ymax
      << "," << Zmax << ")\n";
 
-  // grid the bounding box
   int NumXsubvolumes = (int)((Xmax - Xmin) / mesh_delt);
   if (NumXsubvolumes <= 0)
     NumXsubvolumes = 1;
@@ -872,9 +716,6 @@ static int OCC817(Draw_Interpretor& di, int argc, const char** argv)
   di << "Info: NumSubvolumesZ = " << NumZsubvolumes << "\n";
   di << "Info: NumSubvolumes = " << NumSubvolumes << "\n";
 
-  //
-  // construct initial mesh of cutSolid
-  //
   NCollection_Array1<TopoDS_Shape> SubvolumeSolid(0, NumSubvolumes - 1);
   NCollection_Array1<double>       SubvolumeVol(0, NumSubvolumes - 1);
   double                           accumulatedVolume = 0.0;
@@ -915,17 +756,13 @@ static int OCC817(Draw_Interpretor& di, int argc, const char** argv)
   }
   di << "Info: Accumulated mesh volume = " << accumulatedVolume << "\n";
 
-  //
-  // trim mesh to cutSolid
-  //
   accumulatedVolume = 0.0;
   for (l = 0; l < NumSubvolumes; l++)
   {
     TopoDS_Shape copySolid = BRepBuilderAPI_Copy(cutSolid).Shape();
 
-    // perform common
     di << "BRepAlgoAPI_Common common(copySolid/*cutSolid*/, SubvolumeSolid(l))\n";
-    BRepAlgoAPI_Common common(copySolid /*cutSolid*/, SubvolumeSolid(l));
+    BRepAlgoAPI_Common common(copySolid, SubvolumeSolid(l));
     if (!common.IsDone())
     {
       di << "Error: could not construct a common solid " << l << "\n";
@@ -933,10 +770,9 @@ static int OCC817(Draw_Interpretor& di, int argc, const char** argv)
     }
     const TopoDS_Shape& aCommonShape = common.Shape();
 
-    // see if we have a solid
     found_solid = 0;
     TopoDS_Shape commonShape;
-    //////////for (Ex.Init(common.Shape(), TopAbs_SOLID); Ex.More(); Ex.Next())
+
     for (Ex.Init(aCommonShape, TopAbs_SOLID); Ex.More(); Ex.Next())
     {
       TopoDS_Solid sol = TopoDS::Solid(Ex.Current());
@@ -957,8 +793,7 @@ static int OCC817(Draw_Interpretor& di, int argc, const char** argv)
       BRepGProp::VolumeProperties(SubvolumeSolid(l), subvolumeVProps);
       const double vol = subvolumeVProps.Mass();
       const bool   err = (vol > SubvolumeVol(l)) || (vol <= 0.0);
-      // std::cout << (err? "ERROR" : "Info") << ": final subvolume " << l << " volume = " << vol <<
-      // std::endl;
+
       if (err)
         di << "ERROR: final subvolume " << l << " volume = " << vol << "\n";
       else
@@ -986,14 +821,13 @@ void QABugs::Commands_13(Draw_Interpretor& theCommands)
                   __FILE__,
                   OCC332bug,
                   group);
-  //////theCommands.Add("OCC544", "OCC544 [[[[[wT [[[[d1 [[[d2 [[R [length]]]]]", __FILE__, OCC544,
-  /// group);
+
   theCommands.Add("OCC544",
                   "OCC544 [[[[[wT [[[[d1 [[[d2 [[R [length ]]]]]",
                   __FILE__,
                   OCC544,
                   group);
-  //////theCommands.Add("OCC817", "OCC817 result mesh_delta", __FILE__, OCC817, group);
+
   theCommands.Add("OCC817", "OCC817 result mesh_delta ", __FILE__, OCC817, group);
 
   return;

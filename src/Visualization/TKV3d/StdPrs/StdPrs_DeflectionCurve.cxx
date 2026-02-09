@@ -1,19 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// Great zoom leads to non-coincidence of
-// a point and non-infinite lines passing through this point:
 
 #include <BndLib_Add3dCurve.hpp>
 #include <GCPnts_TangentialDeflection.hpp>
@@ -33,8 +18,6 @@
 #include <NCollection_Sequence.hpp>
 #include <NCollection_Array1.hpp>
 
-//=================================================================================================
-
 static double GetDeflection(const Adaptor3d_Curve&           aCurve,
                             const double                     U1,
                             const double                     U2,
@@ -44,7 +27,7 @@ static double GetDeflection(const Adaptor3d_Curve&           aCurve,
 
   if (aDrawer->TypeOfDeflection() == Aspect_TOD_RELATIVE)
   {
-    // On calcule la fleche en fonction des min max globaux de la piece:
+
     Bnd_Box Total;
     BndLib_Add3dCurve::Add(aCurve, U1, U2, 0., Total);
     double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
@@ -67,8 +50,6 @@ static double GetDeflection(const Adaptor3d_Curve&           aCurve,
 
   return TheDeflection;
 }
-
-//=================================================================================================
 
 static bool FindLimits(const Adaptor3d_Curve& aCurve,
                        const double           aLimit,
@@ -125,8 +106,6 @@ static bool FindLimits(const Adaptor3d_Curve& aCurve,
   }
   return true;
 }
-
-//=================================================================================================
 
 static void drawCurve(Adaptor3d_Curve&                    aCurve,
                       const occ::handle<Graphic3d_Group>& aGroup,
@@ -204,8 +183,6 @@ static void drawCurve(Adaptor3d_Curve&                    aCurve,
   }
 }
 
-//=================================================================================================
-
 static bool MatchCurve(const double           X,
                        const double           Y,
                        const double           Z,
@@ -282,8 +259,6 @@ static bool MatchCurve(const double           X,
   return false;
 }
 
-//=================================================================================================
-
 void StdPrs_DeflectionCurve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                  Adaptor3d_Curve&                       aCurve,
                                  const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -321,8 +296,6 @@ void StdPrs_DeflectionCurve::Add(const occ::handle<Prs3d_Presentation>& aPresent
     }
   }
 }
-
-//=================================================================================================
 
 void StdPrs_DeflectionCurve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                  Adaptor3d_Curve&                       aCurve,
@@ -368,8 +341,6 @@ void StdPrs_DeflectionCurve::Add(const occ::handle<Prs3d_Presentation>& aPresent
   }
 }
 
-//=================================================================================================
-
 void StdPrs_DeflectionCurve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                  Adaptor3d_Curve&                       aCurve,
                                  const double                           U1,
@@ -387,8 +358,6 @@ void StdPrs_DeflectionCurve::Add(const occ::handle<Prs3d_Presentation>& aPresent
 
   drawCurve(aCurve, aGroup, aDeflection, anAngle, U1, U2, Points);
 }
-
-//=================================================================================================
 
 void StdPrs_DeflectionCurve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                  Adaptor3d_Curve&                       aCurve,
@@ -413,8 +382,6 @@ void StdPrs_DeflectionCurve::Add(const occ::handle<Prs3d_Presentation>& aPresent
   drawCurve(aCurve, aGroup, aDeflection, anAngle, V1, V2, Points);
 }
 
-//=================================================================================================
-
 void StdPrs_DeflectionCurve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                  Adaptor3d_Curve&                       aCurve,
                                  const double                           aDeflection,
@@ -435,8 +402,6 @@ void StdPrs_DeflectionCurve::Add(const occ::handle<Prs3d_Presentation>& aPresent
   }
   drawCurve(aCurve, aGroup, aDeflection, aDrawer->DeviationAngle(), V1, V2, Points);
 }
-
-//=================================================================================================
 
 bool StdPrs_DeflectionCurve::Match(const double                     X,
                                    const double                     Y,
@@ -460,8 +425,6 @@ bool StdPrs_DeflectionCurve::Match(const double                     X,
   }
   return false;
 }
-
-//=================================================================================================
 
 bool StdPrs_DeflectionCurve::Match(const double                     X,
                                    const double                     Y,
@@ -491,8 +454,6 @@ bool StdPrs_DeflectionCurve::Match(const double                     X,
                     V2);
 }
 
-//=================================================================================================
-
 bool StdPrs_DeflectionCurve::Match(const double           X,
                                    const double           Y,
                                    const double           Z,
@@ -505,8 +466,6 @@ bool StdPrs_DeflectionCurve::Match(const double           X,
 {
   return MatchCurve(X, Y, Z, aDistance, aCurve, aDeflection, anAngle, U1, U2);
 }
-
-//=================================================================================================
 
 bool StdPrs_DeflectionCurve::Match(const double           X,
                                    const double           Y,

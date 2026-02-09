@@ -21,25 +21,18 @@
 #include <TopoDS.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 BRepBuilderAPI_FindPlane::BRepBuilderAPI_FindPlane() = default;
-
-//=================================================================================================
 
 BRepBuilderAPI_FindPlane::BRepBuilderAPI_FindPlane(const TopoDS_Shape& S, const double Tol)
 {
   Init(S, Tol);
 }
 
-//=================================================================================================
-
 void BRepBuilderAPI_FindPlane::Init(const TopoDS_Shape& S, const double Tol)
 {
   double tolerance = Tol;
   myPlane.Nullify();
 
-  // compute the tolerance
   TopExp_Explorer ex;
   for (ex.Init(S, TopAbs_EDGE); ex.More(); ex.Next())
   {
@@ -49,7 +42,7 @@ void BRepBuilderAPI_FindPlane::Init(const TopoDS_Shape& S, const double Tol)
   }
 
   double tol2 = tolerance * tolerance;
-  // try to find an analytical curve and calculate points
+
   TopLoc_Location              loc;
   double                       first, last;
   bool                         found = false;
@@ -121,7 +114,7 @@ void BRepBuilderAPI_FindPlane::Init(const TopoDS_Shape& S, const double Tol)
 
   if (!found)
   {
-    // try to find a plane with the points
+
     if (points.Length() > 2)
     {
 
@@ -134,9 +127,8 @@ void BRepBuilderAPI_FindPlane::Init(const TopoDS_Shape& S, const double Tol)
         if (dist > disMax)
         {
           disMax = dist;
-          // clang-format off
-	  p1 = points(i); // it will be faster to store the point, otherwise it is necessary to find a value in a sequence
-                        // clang-format on
+
+          p1 = points(i);
         }
       }
 
@@ -171,7 +163,7 @@ void BRepBuilderAPI_FindPlane::Init(const TopoDS_Shape& S, const double Tol)
 
   if (found)
   {
-    // test if all points are on the plane
+
     const gp_Pln& pln = P->Pln();
     for (int i = 1; i <= points.Length(); i++)
     {
@@ -189,14 +181,10 @@ void BRepBuilderAPI_FindPlane::Init(const TopoDS_Shape& S, const double Tol)
   }
 }
 
-//=================================================================================================
-
 bool BRepBuilderAPI_FindPlane::Found() const
 {
   return !myPlane.IsNull();
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Plane> BRepBuilderAPI_FindPlane::Plane() const
 {

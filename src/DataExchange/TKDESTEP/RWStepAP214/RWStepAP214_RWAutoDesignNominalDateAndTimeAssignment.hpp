@@ -11,7 +11,6 @@ class StepAP214_AutoDesignNominalDateAndTimeAssignment;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AutoDesignNominalDateAndTimeAssignment
 class RWStepAP214_RWAutoDesignNominalDateAndTimeAssignment
 {
 public:

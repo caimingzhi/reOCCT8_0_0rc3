@@ -1,15 +1,4 @@
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XmlMXCAFDoc_VisMaterialDriver.hpp>
 
@@ -25,7 +14,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_VisMaterialDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(IsDoubleSided, "isdoublesided")
 IMPLEMENT_DOMSTRING(AlphaMode, "alpha_mode")
 IMPLEMENT_DOMSTRING(AlphaCutOff, "alpha_cutoff")
-//
+
 IMPLEMENT_DOMSTRING(BaseColor, "base_color")
 IMPLEMENT_DOMSTRING(RefractionIndex, "ior")
 IMPLEMENT_DOMSTRING(EmissiveFactor, "emissive_factor")
@@ -36,7 +25,7 @@ IMPLEMENT_DOMSTRING(MetallicRoughnessTexture, "metallic_roughness_texture")
 IMPLEMENT_DOMSTRING(EmissiveTexture, "emissive_texture")
 IMPLEMENT_DOMSTRING(OcclusionTexture, "occlusion_texture")
 IMPLEMENT_DOMSTRING(NormalTexture, "normal_texture")
-//
+
 IMPLEMENT_DOMSTRING(AmbientColor, "ambient_color")
 IMPLEMENT_DOMSTRING(DiffuseColor, "diffuse_color")
 IMPLEMENT_DOMSTRING(SpecularColor, "specular_color")
@@ -49,7 +38,6 @@ IMPLEMENT_DOMSTRING(TextureId, "texture_id")
 IMPLEMENT_DOMSTRING(Offset, "offset")
 IMPLEMENT_DOMSTRING(Length, "length")
 
-//! Encode alpha mode into character.
 static const char* alphaModeToString(Graphic3d_AlphaMode theMode)
 {
   switch (theMode)
@@ -68,7 +56,6 @@ static const char* alphaModeToString(Graphic3d_AlphaMode theMode)
   return "Auto";
 }
 
-//! Decode alpha mode from string.
 static Graphic3d_AlphaMode alphaModeFromString(const char* theMode)
 {
   if (strcasecmp(theMode, "Opaque") == 0)
@@ -94,7 +81,6 @@ static Graphic3d_AlphaMode alphaModeFromString(const char* theMode)
   return Graphic3d_AlphaMode_BlendAuto;
 }
 
-//! Encode short real value.
 static void writeReal(XmlObjMgt_Persistent&      theTarget,
                       const XmlObjMgt_DOMString& theName,
                       const float                theValue)
@@ -102,7 +88,6 @@ static void writeReal(XmlObjMgt_Persistent&      theTarget,
   theTarget.Element().setAttribute(theName, TCollection_AsciiString(theValue).ToCString());
 }
 
-//! Encode short real value.
 static bool readReal(const XmlObjMgt_Element&   theElement,
                      const XmlObjMgt_DOMString& theName,
                      float&                     theValue)
@@ -116,7 +101,6 @@ static bool readReal(const XmlObjMgt_Element&   theElement,
   return false;
 }
 
-//! Encode vec3.
 static void writeVec3(XmlObjMgt_Persistent&          theTarget,
                       const XmlObjMgt_DOMString&     theName,
                       const NCollection_Vec3<float>& theVec3)
@@ -126,7 +110,6 @@ static void writeVec3(XmlObjMgt_Persistent&          theTarget,
   theTarget.Element().setAttribute(theName, aString.ToCString());
 }
 
-//! Decode vec3.
 static bool readVec3(const XmlObjMgt_Element&   theElement,
                      const XmlObjMgt_DOMString& theName,
                      NCollection_Vec3<float>&   theVec3)
@@ -148,7 +131,6 @@ static bool readVec3(const XmlObjMgt_Element&   theElement,
   return false;
 }
 
-//! Decode vec3.
 static bool readColor(const XmlObjMgt_Element&   theElement,
                       const XmlObjMgt_DOMString& theName,
                       Quantity_Color&            theColor)
@@ -162,7 +144,6 @@ static bool readColor(const XmlObjMgt_Element&   theElement,
   return false;
 }
 
-//! Encode vec4.
 static void writeVec4(XmlObjMgt_Persistent&          theTarget,
                       const XmlObjMgt_DOMString&     theName,
                       const NCollection_Vec4<float>& theVec4)
@@ -172,7 +153,6 @@ static void writeVec4(XmlObjMgt_Persistent&          theTarget,
   theTarget.Element().setAttribute(theName, aString.ToCString());
 }
 
-//! Decode vec34
 static bool readVec4(const XmlObjMgt_Element&   theElement,
                      const XmlObjMgt_DOMString& theName,
                      NCollection_Vec4<float>&   theVec4)
@@ -196,7 +176,6 @@ static bool readVec4(const XmlObjMgt_Element&   theElement,
   return false;
 }
 
-//! Decode vec4.
 static bool readColor(const XmlObjMgt_Element&   theElement,
                       const XmlObjMgt_DOMString& theName,
                       Quantity_ColorRGBA&        theColor)
@@ -210,7 +189,6 @@ static bool readColor(const XmlObjMgt_Element&   theElement,
   return false;
 }
 
-//! Encode texture path.
 static void writeTexture(XmlObjMgt_Persistent&             theTarget,
                          const XmlObjMgt_DOMString&        theName,
                          const occ::handle<Image_Texture>& theImage)
@@ -239,7 +217,6 @@ static void writeTexture(XmlObjMgt_Persistent&             theTarget,
   }
 }
 
-//! Decode texture path.
 static void readTexture(const XmlObjMgt_Element&    theElement,
                         const XmlObjMgt_DOMString&  theName,
                         occ::handle<Image_Texture>& theImage)
@@ -276,25 +253,17 @@ static void readTexture(const XmlObjMgt_Element&    theElement,
   }
 }
 
-//=================================================================================================
-
 XmlMXCAFDoc_VisMaterialDriver::XmlMXCAFDoc_VisMaterialDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "VisMaterial")
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMXCAFDoc_VisMaterialDriver::NewEmpty() const
 {
   return new XCAFDoc_VisMaterial();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMXCAFDoc_VisMaterialDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                           const occ::handle<TDF_Attribute>& theTarget,
                                           XmlObjMgt_RRelocationTable&) const
@@ -361,10 +330,6 @@ bool XmlMXCAFDoc_VisMaterialDriver::Paste(const XmlObjMgt_Persistent&       theS
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMXCAFDoc_VisMaterialDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                           XmlObjMgt_Persistent&             theTarget,
                                           XmlObjMgt_SRelocationTable&) const

@@ -5,8 +5,6 @@
 #include <Precision.hpp>
 #include <GCPnts_TangentialDeflection.hpp>
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<double>> Extrema_Curve2dTool::DeflCurvIntervals(
   const Adaptor2d_Curve2d& C)
 {
@@ -24,7 +22,7 @@ occ::handle<NCollection_HArray1<double>> Extrema_Curve2dTool::DeflCurvIntervals(
     gp_Pnt2d aP1 = C.Value(t);
     L += aP.Distance(aP1);
   }
-  //
+
   double dLdt = L / (tl - tf);
   if (L <= Precision::Confusion() || dLdt < epsd || (tl - tf) > 10000.)
   {
@@ -34,7 +32,7 @@ occ::handle<NCollection_HArray1<double>> Extrema_Curve2dTool::DeflCurvIntervals(
     Intervals->SetValue(nbpnts, tl);
     return Intervals;
   }
-  //
+
   double aDefl = std::max(0.01 * L / (2. * M_PI), mindefl);
   if (aDefl > maxdefl)
   {

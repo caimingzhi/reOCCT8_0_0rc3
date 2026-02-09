@@ -5,11 +5,9 @@
 #include <GeomHash_AxisPlacement.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom_Ellipse (3D ellipse).
-//! Used for geometry deduplication.
 struct GeomHash_EllipseHasher
 {
-  // Hashes the ellipse by its position, major radius, and minor radius.
+
   std::size_t operator()(const occ::handle<Geom_Ellipse>& theEllipse) const noexcept
   {
     constexpr double aTolerance = 1e-12;
@@ -23,7 +21,6 @@ struct GeomHash_EllipseHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two ellipses by their positions and radii.
   bool operator()(const occ::handle<Geom_Ellipse>& theEllipse1,
                   const occ::handle<Geom_Ellipse>& theEllipse2) const noexcept
   {

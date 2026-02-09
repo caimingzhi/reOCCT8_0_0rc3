@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRepGProp.hpp>
 #include <BRepGProp_Cinert.hpp>
@@ -47,7 +35,7 @@ static gp_Pnt roughBaryCenter(const TopoDS_Shape& S)
   }
   else
   {
-    // Try using triangulation
+
     ex.Init(S, TopAbs_FACE);
     for (; ex.More(); ex.Next())
     {
@@ -74,7 +62,7 @@ void BRepGProp::LinearProperties(const TopoDS_Shape& S,
                                  const bool          SkipShared,
                                  const bool          UseTriangulation)
 {
-  // find the origin
+
   gp_Pnt P(0, 0, 0);
   P.Transform(S.Location());
   SProps = GProp_GProps(P);
@@ -215,7 +203,7 @@ void BRepGProp::SurfaceProperties(const TopoDS_Shape& S,
                                   const bool          SkipShared,
                                   const bool          UseTriangulation)
 {
-  // find the origin
+
   gp_Pnt P(0, 0, 0);
   P.Transform(S.Location());
   Props = GProp_GProps(P);
@@ -227,15 +215,13 @@ double BRepGProp::SurfaceProperties(const TopoDS_Shape& S,
                                     const double        Eps,
                                     const bool          SkipShared)
 {
-  // find the origin
+
   gp_Pnt P(0, 0, 0);
   P.Transform(S.Location());
   Props           = GProp_GProps(P);
   double ErrorMax = surfaceProperties(S, Props, Eps, SkipShared, false);
   return ErrorMax;
 }
-
-//=================================================================================================
 
 static double volumeProperties(const TopoDS_Shape& S,
                                GProp_GProps&       Props,
@@ -350,7 +336,7 @@ void BRepGProp::VolumeProperties(const TopoDS_Shape& S,
                                  const bool          SkipShared,
                                  const bool          UseTriangulation)
 {
-  // find the origin
+
   gp_Pnt P(0, 0, 0);
   P.Transform(S.Location());
   Props = GProp_GProps(P);
@@ -373,15 +359,13 @@ void BRepGProp::VolumeProperties(const TopoDS_Shape& S,
     volumeProperties(S, Props, 1.0, SkipShared, UseTriangulation);
 }
 
-//=================================================================================================
-
 double BRepGProp::VolumeProperties(const TopoDS_Shape& S,
                                    GProp_GProps&       Props,
                                    const double        Eps,
                                    const bool          OnlyClosed,
                                    const bool          SkipShared)
 {
-  // find the origin
+
   gp_Pnt P(0, 0, 0);
   P.Transform(S.Location());
   Props = GProp_GProps(P);
@@ -423,11 +407,6 @@ double BRepGProp::VolumeProperties(const TopoDS_Shape& S,
   return ErrorMax;
 }
 
-//===========================================================================================//
-// Volume properties by Gauss-Kronrod integration
-//===========================================================================================//
-//=================================================================================================
-
 static double volumePropertiesGK(const TopoDS_Shape& theShape,
                                  GProp_GProps&       theProps,
                                  const double        theTol,
@@ -441,7 +420,6 @@ static double volumePropertiesGK(const TopoDS_Shape& theShape,
 
   double aTol = theTol;
 
-  // Compute properties.
   gp_Pnt                                                 aLoc(roughBaryCenter(theShape));
   BRepGProp_VinertGK                                     aVProps;
   BRepGProp_Face                                         aPropFace(IsUseSpan);
@@ -475,7 +453,7 @@ static double volumePropertiesGK(const TopoDS_Shape& theShape,
       const occ::handle<Geom_Surface>& aSurf = BRep_Tool::Surface(aFace, aLocDummy);
       if (aSurf.IsNull())
       {
-        // skip faces without geometry
+
         continue;
       }
     }
@@ -504,8 +482,6 @@ static double volumePropertiesGK(const TopoDS_Shape& theShape,
   return anError;
 }
 
-//=================================================================================================
-
 double BRepGProp::VolumePropertiesGK(const TopoDS_Shape& S,
                                      GProp_GProps&       Props,
                                      const double        Eps,
@@ -523,7 +499,7 @@ double BRepGProp::VolumePropertiesGK(const TopoDS_Shape& S,
 
   if (OnlyClosed)
   {
-    // To select closed shells.
+
     TopExp_Explorer                                        anExp;
     NCollection_List<TopoDS_Shape>                         aClosedShells;
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aShMap;
@@ -548,7 +524,6 @@ double BRepGProp::VolumePropertiesGK(const TopoDS_Shape& S,
     if (aClosedShells.IsEmpty())
       return -1.;
 
-    // Compute the properties for each closed shell.
     double                                   aTol = Eps;
     double                                   aLocalError;
     NCollection_List<TopoDS_Shape>::Iterator anIter(aClosedShells);
@@ -574,8 +549,6 @@ double BRepGProp::VolumePropertiesGK(const TopoDS_Shape& S,
   return anError;
 }
 
-//=================================================================================================
-
 static double volumePropertiesGK(const TopoDS_Shape& theShape,
                                  GProp_GProps&       theProps,
                                  const gp_Pln&       thePln,
@@ -590,7 +563,6 @@ static double volumePropertiesGK(const TopoDS_Shape& theShape,
 
   double aTol = theTol;
 
-  // Compute properties.
   gp_Pnt                                                 aLoc(roughBaryCenter(theShape));
   BRepGProp_VinertGK                                     aVProps;
   BRepGProp_Face                                         aPropFace(IsUseSpan);
@@ -624,7 +596,7 @@ static double volumePropertiesGK(const TopoDS_Shape& theShape,
       const occ::handle<Geom_Surface>& aSurf = BRep_Tool::Surface(aFace, aLocDummy);
       if (aSurf.IsNull())
       {
-        // skip faces without geometry
+
         continue;
       }
     }
@@ -653,8 +625,6 @@ static double volumePropertiesGK(const TopoDS_Shape& theShape,
   return anError;
 }
 
-//=================================================================================================
-
 double BRepGProp::VolumePropertiesGK(const TopoDS_Shape& S,
                                      GProp_GProps&       Props,
                                      const gp_Pln&       thePln,
@@ -673,7 +643,7 @@ double BRepGProp::VolumePropertiesGK(const TopoDS_Shape& S,
 
   if (OnlyClosed)
   {
-    // To select closed shells.
+
     TopExp_Explorer                                        anExp;
     NCollection_List<TopoDS_Shape>                         aClosedShells;
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aShMap;
@@ -698,7 +668,6 @@ double BRepGProp::VolumePropertiesGK(const TopoDS_Shape& S,
     if (aClosedShells.IsEmpty())
       return -1.;
 
-    // Compute the properties for each closed shell.
     double                                   aTol = Eps;
     double                                   aLocalError;
     NCollection_List<TopoDS_Shape>::Iterator anIter(aClosedShells);

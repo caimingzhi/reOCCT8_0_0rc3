@@ -30,7 +30,6 @@ IMPLEMENT_DOMSTRING(Value, "value")
 #else
   #define EXCEPTION Standard_Failure const&
 #endif
-//=================================================================================================
 
 XmlMDataStd_NamedDataDriver::XmlMDataStd_NamedDataDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
@@ -38,14 +37,11 @@ XmlMDataStd_NamedDataDriver::XmlMDataStd_NamedDataDriver(
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataStd_NamedDataDriver::NewEmpty() const
 {
   return new TDataStd_NamedData();
 }
 
-//=======================================================================
 static TCollection_ExtendedString SplitItemFromEnd(TCollection_ExtendedString& Key)
 {
   TCollection_ExtendedString aValue;
@@ -57,7 +53,6 @@ static TCollection_ExtendedString SplitItemFromEnd(TCollection_ExtendedString& K
   return aValue;
 }
 
-//=======================================================================
 static TCollection_ExtendedString SplitItemFromStart(TCollection_ExtendedString& Key)
 {
   TCollection_ExtendedString aValue;
@@ -69,7 +64,6 @@ static TCollection_ExtendedString SplitItemFromStart(TCollection_ExtendedString&
   return aValue;
 }
 
-//=======================================================================
 occ::handle<NCollection_HArray1<int>> BuildIntArray(const TCollection_AsciiString& ValString,
                                                     const int                      theLen)
 {
@@ -86,7 +80,6 @@ occ::handle<NCollection_HArray1<int>> BuildIntArray(const TCollection_AsciiStrin
   return anArr;
 }
 
-//=======================================================================
 occ::handle<NCollection_HArray1<double>> BuildRealArray(const TCollection_AsciiString& ValString,
                                                         const int                      theLen)
 {
@@ -103,10 +96,6 @@ occ::handle<NCollection_HArray1<double>> BuildRealArray(const TCollection_AsciiS
   return anArr;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                         const occ::handle<TDF_Attribute>& theTarget,
                                         XmlObjMgt_RRelocationTable&) const
@@ -114,7 +103,6 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
   int                      aFirstInd, aLastInd, ind;
   const XmlObjMgt_Element& anElement = theSource;
 
-  // DataMapOfStringInteger: Read the FirstIndex; if the attribute is absent initialize to 1
   XmlObjMgt_DOMString aFirstIndex = anElement.getAttribute(::FirstIntegerIndex());
   if (aFirstIndex == nullptr)
     aFirstInd = 1;
@@ -128,7 +116,6 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
     return false;
   }
 
-  // Read the LastIndex;
   XmlObjMgt_DOMString aLastIndex = anElement.getAttribute(::LastIntegerIndex());
   if (aLastIndex == nullptr)
   {
@@ -194,7 +181,6 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
       T->ChangeIntegers(aMap);
     }
 
-    // DataMapOfStringReal
     aFirstIndex = anElement.getAttribute(::FirstRealIndex());
     if (aFirstIndex == nullptr)
       aFirstInd = 1;
@@ -208,7 +194,6 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
       return false;
     }
 
-    // Read the LastIndex;
     aLastIndex = anElement.getAttribute(::LastRealIndex());
     if (aLastIndex == nullptr)
     {
@@ -276,7 +261,6 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
       T->ChangeReals(aMap);
     }
 
-    // DataMapOfStringString
     aFirstIndex = anElement.getAttribute(::FirstStringIndex());
     if (aFirstIndex == nullptr)
       aFirstInd = 1;
@@ -326,7 +310,7 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
       for (ind = aFirstInd; ind < aLastInd; ind++)
       {
         XmlObjMgt::GetExtendedString(*aCurElement, aKey);
-        aValue = SplitItemFromStart(aKey); // ==>from start
+        aValue = SplitItemFromStart(aKey);
         if (aValue.Length() == 0)
         {
           TCollection_ExtendedString aMessageString =
@@ -352,7 +336,6 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
       T->ChangeStrings(aMap);
     }
 
-    // DataMapOfStringByte
     aFirstIndex = anElement.getAttribute(::FirstByteIndex());
     if (aFirstIndex == nullptr)
       aFirstInd = 1;
@@ -366,7 +349,6 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
       return false;
     }
 
-    // Read the LastIndex;
     aLastIndex = anElement.getAttribute(::LastByteIndex());
     if (aLastIndex == nullptr)
     {
@@ -437,7 +419,6 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
       T->ChangeBytes(aMap);
     }
 
-    // DataMapOfStringHArray1OfInteger
     aFirstIndex = anElement.getAttribute(::FirstIntArrIndex());
     if (aFirstIndex == nullptr)
       aFirstInd = 1;
@@ -451,7 +432,6 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
       return false;
     }
 
-    // Read the LastIndex;
     aLastIndex = anElement.getAttribute(::LastIntArrIndex());
     if (aLastIndex == nullptr)
     {
@@ -489,7 +469,7 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
 
       for (ind = aFirstInd; ind < aLastInd; ind++)
       {
-        XmlObjMgt::GetExtendedString(*aCurElement, aKey); // Len - at the end
+        XmlObjMgt::GetExtendedString(*aCurElement, aKey);
         aValueStr = SplitItemFromEnd(aKey);
         if (aValueStr.Length() == 0)
         {
@@ -540,7 +520,6 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
       T->ChangeArraysOfIntegers(aMap);
     }
 
-    // DataMapOfStringHArray1OfReal
     aFirstIndex = anElement.getAttribute(::FirstRealArrIndex());
     if (aFirstIndex == nullptr)
       aFirstInd = 1;
@@ -554,7 +533,6 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
       return false;
     }
 
-    // Read the LastIndex;
     aLastIndex = anElement.getAttribute(::LastRealArrIndex());
     if (aLastIndex == nullptr)
     {
@@ -594,7 +572,7 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
 
       for (ind = aFirstInd; ind < aLastInd; ind++)
       {
-        XmlObjMgt::GetExtendedString(*aCurElement, aKey); // Len - at the end
+        XmlObjMgt::GetExtendedString(*aCurElement, aKey);
         aValueStr = SplitItemFromEnd(aKey);
         if (aValueStr.Length() == 0)
         {
@@ -658,10 +636,6 @@ bool XmlMDataStd_NamedDataDriver::Paste(const XmlObjMgt_Persistent&       theSou
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMDataStd_NamedDataDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                         XmlObjMgt_Persistent&             theTarget,
                                         XmlObjMgt_SRelocationTable&) const
@@ -679,7 +653,7 @@ void XmlMDataStd_NamedDataDriver::Paste(const occ::handle<TDF_Attribute>& theSou
   S->LoadDeferredData();
   if (S->HasIntegers() && !S->GetIntegersContainer().IsEmpty())
   {
-    // store a set of elements with string in each of them
+
     up = S->GetIntegersContainer().Extent();
     theTarget.Element().setAttribute(::LastIntegerIndex(), up);
 
@@ -687,7 +661,7 @@ void XmlMDataStd_NamedDataDriver::Paste(const occ::handle<TDF_Attribute>& theSou
     for (i = 1; itr.More(); itr.Next(), i++)
     {
       const TCollection_ExtendedString aValueStr =
-        itr.Key() + ' ' + TCollection_ExtendedString(itr.Value()); // key - value;
+        itr.Key() + ' ' + TCollection_ExtendedString(itr.Value());
       XmlObjMgt_Element aCurTarget = aDoc.createElement(::ExtString());
       XmlObjMgt::SetExtendedString(aCurTarget, aValueStr);
       anElement.appendChild(aCurTarget);
@@ -702,7 +676,7 @@ void XmlMDataStd_NamedDataDriver::Paste(const occ::handle<TDF_Attribute>& theSou
     for (i = 1; itr.More(); itr.Next(), i++)
     {
       const TCollection_ExtendedString aValueStr =
-        itr.Key() + ' ' + TCollection_ExtendedString(itr.Value()); // key - value;
+        itr.Key() + ' ' + TCollection_ExtendedString(itr.Value());
       XmlObjMgt_Element aCurTarget = aDoc.createElement(::ExtString());
       XmlObjMgt::SetExtendedString(aCurTarget, aValueStr);
       anElement.appendChild(aCurTarget);
@@ -718,7 +692,7 @@ void XmlMDataStd_NamedDataDriver::Paste(const occ::handle<TDF_Attribute>& theSou
     for (i = 1; itr.More(); itr.Next(), i++)
     {
       const TCollection_ExtendedString aValueStr =
-        itr.Key() + ' ' + TCollection_ExtendedString(itr.Value()); // key(without blanks) - value;
+        itr.Key() + ' ' + TCollection_ExtendedString(itr.Value());
       XmlObjMgt_Element aCurTarget = aDoc.createElement(::ExtString());
       XmlObjMgt::SetExtendedString(aCurTarget, aValueStr);
       anElement.appendChild(aCurTarget);
@@ -733,7 +707,7 @@ void XmlMDataStd_NamedDataDriver::Paste(const occ::handle<TDF_Attribute>& theSou
     for (i = 1; itr.More(); itr.Next(), i++)
     {
       const TCollection_ExtendedString aValueStr =
-        itr.Key() + ' ' + TCollection_ExtendedString(itr.Value()); // key - value;
+        itr.Key() + ' ' + TCollection_ExtendedString(itr.Value());
       XmlObjMgt_Element aCurTarget = aDoc.createElement(::ExtString());
       XmlObjMgt::SetExtendedString(aCurTarget, aValueStr);
       anElement.appendChild(aCurTarget);
@@ -752,12 +726,11 @@ void XmlMDataStd_NamedDataDriver::Paste(const occ::handle<TDF_Attribute>& theSou
       const int                      aLen   = anArr1.Upper() - anArr1.Lower() + 1;
 
       const TCollection_ExtendedString aValueStr =
-        itr.Key() + ' ' + TCollection_ExtendedString(aLen); // key - Num_of_Arr_elements;
+        itr.Key() + ' ' + TCollection_ExtendedString(aLen);
       XmlObjMgt_Element aCurTarget = aDoc.createElement(::ExtString());
-      XmlObjMgt::SetExtendedString(aCurTarget, aValueStr); // key
+      XmlObjMgt::SetExtendedString(aCurTarget, aValueStr);
       anElement.appendChild(aCurTarget);
 
-      // Value = Array
       TCollection_AsciiString aValueStr2;
       int                     j = anArr1.Lower();
       for (;;)
@@ -785,14 +758,12 @@ void XmlMDataStd_NamedDataDriver::Paste(const occ::handle<TDF_Attribute>& theSou
       const NCollection_Array1<double>& anArr1 = itr.Value()->Array1();
       const int                         aLen   = anArr1.Upper() - anArr1.Lower() + 1;
 
-      // key
       const TCollection_ExtendedString aValueStr =
-        itr.Key() + ' ' + TCollection_ExtendedString(aLen); // key - Num_of_Arr_elements;
+        itr.Key() + ' ' + TCollection_ExtendedString(aLen);
       XmlObjMgt_Element aCurTarget = aDoc.createElement(::ExtString());
-      XmlObjMgt::SetExtendedString(aCurTarget, aValueStr); // key
+      XmlObjMgt::SetExtendedString(aCurTarget, aValueStr);
       anElement.appendChild(aCurTarget);
 
-      // Value = Array
       TCollection_AsciiString aValueStr2;
       int                     j = anArr1.Lower();
       for (;;)

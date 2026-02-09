@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_Address;
 class StepData_StepWriter;
 
-//! Read & Write Module for Address
 class RWStepBasic_RWAddress
 {
 public:

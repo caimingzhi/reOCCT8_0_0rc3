@@ -3,11 +3,7 @@
 #include <StepShape_DimensionalLocation.hpp>
 #include <StepShape_DimensionalSize.hpp>
 
-//=================================================================================================
-
 StepShape_DimensionalCharacteristic::StepShape_DimensionalCharacteristic() = default;
-
-//=================================================================================================
 
 int StepShape_DimensionalCharacteristic::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -20,15 +16,11 @@ int StepShape_DimensionalCharacteristic::CaseNum(const occ::handle<Standard_Tran
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepShape_DimensionalLocation> StepShape_DimensionalCharacteristic::
   DimensionalLocation() const
 {
   return occ::down_cast<StepShape_DimensionalLocation>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepShape_DimensionalSize> StepShape_DimensionalCharacteristic::DimensionalSize() const
 {

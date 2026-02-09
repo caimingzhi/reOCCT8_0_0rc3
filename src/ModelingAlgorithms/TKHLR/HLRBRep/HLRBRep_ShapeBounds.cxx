@@ -2,8 +2,6 @@
 #include <HLRTopoBRep_OutLiner.hpp>
 #include <Standard_Transient.hpp>
 
-//=================================================================================================
-
 HLRBRep_ShapeBounds::HLRBRep_ShapeBounds(const occ::handle<HLRTopoBRep_OutLiner>& S,
                                          const occ::handle<Standard_Transient>&   SData,
                                          const int                                nbIso,
@@ -25,8 +23,6 @@ HLRBRep_ShapeBounds::HLRBRep_ShapeBounds(const occ::handle<HLRTopoBRep_OutLiner>
 {
 }
 
-//=================================================================================================
-
 HLRBRep_ShapeBounds::HLRBRep_ShapeBounds(const occ::handle<HLRTopoBRep_OutLiner>& S,
                                          const int                                nbIso,
                                          const int                                V1,
@@ -46,8 +42,6 @@ HLRBRep_ShapeBounds::HLRBRep_ShapeBounds(const occ::handle<HLRTopoBRep_OutLiner>
 {
 }
 
-//=================================================================================================
-
 void HLRBRep_ShapeBounds::Translate(const int NV, const int NE, const int NF)
 {
   myVertStart += NV;
@@ -58,16 +52,12 @@ void HLRBRep_ShapeBounds::Translate(const int NV, const int NE, const int NF)
   myFaceEnd += NF;
 }
 
-//=================================================================================================
-
 void HLRBRep_ShapeBounds::Sizes(int& NV, int& NE, int& NF) const
 {
   NV = myVertEnd + 1 - myVertStart;
   NE = myEdgeEnd + 1 - myEdgeStart;
   NF = myFaceEnd + 1 - myFaceStart;
 }
-
-//=================================================================================================
 
 void HLRBRep_ShapeBounds::Bounds(int& V1, int& V2, int& E1, int& E2, int& F1, int& F2) const
 {

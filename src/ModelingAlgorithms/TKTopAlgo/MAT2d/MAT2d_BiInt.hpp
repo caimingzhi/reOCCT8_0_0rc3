@@ -7,7 +7,6 @@
 #include <Standard_Boolean.hpp>
 #include <Standard_HashUtils.hpp>
 
-//! BiInt is a set of two integers.
 class MAT2d_BiInt
 {
 public:
@@ -39,7 +38,7 @@ namespace std
   {
     size_t operator()(const MAT2d_BiInt& theBiInt) const noexcept
     {
-      // Combine two int values into a single hash value.
+
       int aCombination[2]{theBiInt.FirstIndex(), theBiInt.SecondIndex()};
       return opencascade::hashBytes(aCombination, sizeof(aCombination));
     }

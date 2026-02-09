@@ -6,11 +6,7 @@
 #include <NCollection_HArray1.hpp>
 #include <gp_XY.hpp>
 
-//=================================================================================================
-
 AdvApp2Var_Framework::AdvApp2Var_Framework() = default;
-
-//=================================================================================================
 
 AdvApp2Var_Framework::AdvApp2Var_Framework(
   const NCollection_Sequence<occ::handle<AdvApp2Var_Node>>&                      Frame,
@@ -21,11 +17,6 @@ AdvApp2Var_Framework::AdvApp2Var_Framework(
   myUConstraints    = UFrontier;
   myVConstraints    = VFrontier;
 }
-
-//==========================================================================================
-// function : FirstNotApprox
-// purpose  : return the first Iso not approximated
-//==========================================================================================
 
 occ::handle<AdvApp2Var_Iso> AdvApp2Var_Framework::FirstNotApprox(int& IndexIso,
                                                                  int& IndexStrip) const
@@ -59,11 +50,6 @@ occ::handle<AdvApp2Var_Iso> AdvApp2Var_Framework::FirstNotApprox(int& IndexIso,
   return occ::handle<AdvApp2Var_Iso>();
 }
 
-//==========================================================================================
-// function : FirstNode
-// purpose  : return the first node of an iso
-//==========================================================================================
-
 int AdvApp2Var_Framework::FirstNode(const GeomAbs_IsoType Type,
                                     const int             IndexIso,
                                     const int             IndexStrip) const
@@ -81,11 +67,6 @@ int AdvApp2Var_Framework::FirstNode(const GeomAbs_IsoType Type,
     return Index;
   }
 }
-
-//==========================================================================================
-// function : LastNode
-// purpose  : return the last node of an iso
-//==========================================================================================
 
 int AdvApp2Var_Framework::LastNode(const GeomAbs_IsoType Type,
                                    const int             IndexIso,
@@ -105,11 +86,6 @@ int AdvApp2Var_Framework::LastNode(const GeomAbs_IsoType Type,
   }
 }
 
-//==========================================================================================
-// function : ChangeIso
-// purpose  : replace the iso IndexIso of the strip IndexStrip by anIso
-//==========================================================================================
-
 void AdvApp2Var_Framework::ChangeIso(const int                          IndexIso,
                                      const int                          IndexStrip,
                                      const occ::handle<AdvApp2Var_Iso>& theIso)
@@ -119,11 +95,6 @@ void AdvApp2Var_Framework::ChangeIso(const int                          IndexIso
                                    : myVConstraints.ChangeValue(IndexStrip);
   S0.SetValue(IndexIso, theIso);
 }
-
-//==========================================================================================
-// function : Node
-// purpose  : return the node of coordinates (U,V)
-//==========================================================================================
 
 const occ::handle<AdvApp2Var_Node>& AdvApp2Var_Framework::Node(const double U, const double V) const
 {
@@ -139,11 +110,6 @@ const occ::handle<AdvApp2Var_Node>& AdvApp2Var_Framework::Node(const double U, c
   }
   return myNodeConstraints.Last();
 }
-
-//==========================================================================================
-// function : IsoU
-// purpose  : return the Iso U=U with V0<=V<=V1
-//==========================================================================================
 
 const AdvApp2Var_Iso& AdvApp2Var_Framework::IsoU(const double U,
                                                  const double V0,
@@ -165,11 +131,6 @@ const AdvApp2Var_Iso& AdvApp2Var_Framework::IsoU(const double U,
   return *(myVConstraints.Value(IndexStrip).Value(IndexIso));
 }
 
-//==========================================================================================
-// function : IsoV
-// purpose  : return the Iso V=V with U0<=U<=U1
-//==========================================================================================
-
 const AdvApp2Var_Iso& AdvApp2Var_Framework::IsoV(const double U0,
                                                  const double U1,
                                                  const double V) const
@@ -190,11 +151,6 @@ const AdvApp2Var_Iso& AdvApp2Var_Framework::IsoV(const double U0,
   return *(myUConstraints.Value(IndexStrip).Value(IndexIso));
 }
 
-//==========================================================================================
-// function : UpdateInU
-// purpose  : modification and insertion of nodes and isos
-//==========================================================================================
-
 void AdvApp2Var_Framework::UpdateInU(const double CuttingValue)
 {
   int i = 1;
@@ -214,7 +170,6 @@ void AdvApp2Var_Framework::UpdateInU(const double CuttingValue)
     const NCollection_Sequence<occ::handle<AdvApp2Var_Iso>>& S0 = myUConstraints.Value(i);
     const double Udeb = S0.First()->U0(), Ufin = S0.First()->U1();
 
-    // modification des Isos V de la bande en U d'indice i
     for (NCollection_Sequence<occ::handle<AdvApp2Var_Iso>>::Iterator aStripIter(S0);
          aStripIter.More();
          aStripIter.Next())
@@ -224,7 +179,6 @@ void AdvApp2Var_Framework::UpdateInU(const double CuttingValue)
       anIso->ResetApprox();
     }
 
-    // insertion d'une nouvelle bande en U apres l'indice i
     NCollection_Sequence<occ::handle<AdvApp2Var_Iso>> aNewStrip;
     for (NCollection_Sequence<occ::handle<AdvApp2Var_Iso>>::Iterator aStripIter(S0);
          aStripIter.More();
@@ -246,8 +200,6 @@ void AdvApp2Var_Framework::UpdateInU(const double CuttingValue)
     myUConstraints.InsertAfter(i, aNewStrip);
   }
 
-  //  insertion d'une nouvelle Iso U=U* dans chaque bande en V apres l'indice i
-  //  et restriction des paves des Isos adjacentes
   for (int j = 1; j <= myVConstraints.Length(); j++)
   {
     NCollection_Sequence<occ::handle<AdvApp2Var_Iso>>& S0    = myVConstraints.ChangeValue(j);
@@ -270,7 +222,6 @@ void AdvApp2Var_Framework::UpdateInU(const double CuttingValue)
     anIso->ChangeDomain(CuttingValue, anIso->U1(), anIso->V0(), anIso->V1());
   }
 
-  //  insertion des nouveaux noeuds (U*,Vj)
   occ::handle<AdvApp2Var_Node> aNext;
   occ::handle<AdvApp2Var_Node> aPrev = myNodeConstraints.First();
   for (int j = 1; j < myNodeConstraints.Length(); j++)
@@ -288,11 +239,6 @@ void AdvApp2Var_Framework::UpdateInU(const double CuttingValue)
   }
 }
 
-//==========================================================================================
-// function : UpdateInV
-// purpose  : modification and insertion of nodes and isos
-//==========================================================================================
-
 void AdvApp2Var_Framework::UpdateInV(const double CuttingValue)
 {
   int j = 1;
@@ -306,7 +252,6 @@ void AdvApp2Var_Framework::UpdateInV(const double CuttingValue)
     NCollection_Sequence<occ::handle<AdvApp2Var_Iso>>& S0 = myVConstraints.ChangeValue(j);
     const double Vdeb = S0.First()->V0(), Vfin = S0.First()->V1();
 
-    // modification des Isos U de la bande en V d'indice j
     for (NCollection_Sequence<occ::handle<AdvApp2Var_Iso>>::Iterator anIsoIter(S0);
          anIsoIter.More();
          anIsoIter.Next())
@@ -316,7 +261,6 @@ void AdvApp2Var_Framework::UpdateInV(const double CuttingValue)
       anIso->ResetApprox();
     }
 
-    // insertion d'une nouvelle bande en V apres l'indice j
     NCollection_Sequence<occ::handle<AdvApp2Var_Iso>> aNewStrip;
     for (NCollection_Sequence<occ::handle<AdvApp2Var_Iso>>::Iterator anIsoIter(S0);
          anIsoIter.More();
@@ -338,8 +282,6 @@ void AdvApp2Var_Framework::UpdateInV(const double CuttingValue)
     myVConstraints.InsertAfter(j, aNewStrip);
   }
 
-  // insertion d'une nouvelle Iso V=V* dans chaque bande en U apres l'indice j
-  // et restriction des paves des Isos adjacentes
   for (NCollection_Sequence<NCollection_Sequence<occ::handle<AdvApp2Var_Iso>>>::Iterator
          anUConstIter(myUConstraints);
        anUConstIter.More();
@@ -365,7 +307,6 @@ void AdvApp2Var_Framework::UpdateInV(const double CuttingValue)
     anIso->ChangeDomain(anIso->U0(), anIso->U1(), CuttingValue, anIso->V1());
   }
 
-  //  insertion des nouveaux noeuds (Ui,V*)
   int i = 1;
   while (i <= myNodeConstraints.Length() && myNodeConstraints.Value(i)->Coord().Y() < CuttingValue)
   {
@@ -381,22 +322,12 @@ void AdvApp2Var_Framework::UpdateInV(const double CuttingValue)
   }
 }
 
-//==========================================================================================
-// function : UEquation
-// purpose  : return the coefficients of the polynomial equation which approximates an iso U
-//==========================================================================================
-
 const occ::handle<NCollection_HArray1<double>>& AdvApp2Var_Framework::UEquation(
   const int IndexIso,
   const int IndexStrip) const
 {
   return myVConstraints.Value(IndexStrip).Value(IndexIso)->Polynom();
 }
-
-//==========================================================================================
-// function : VEquation
-// purpose  : return the coefficients of the polynomial equation which approximates an iso V
-//==========================================================================================
 
 const occ::handle<NCollection_HArray1<double>>& AdvApp2Var_Framework::VEquation(
   const int IndexIso,

@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DESTL_ConfigurationNode.hpp>
 
@@ -29,13 +18,9 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 DESTL_ConfigurationNode::DESTL_ConfigurationNode()
 
   = default;
-
-//=================================================================================================
 
 DESTL_ConfigurationNode::DESTL_ConfigurationNode(
   const occ::handle<DESTL_ConfigurationNode>& theNode)
@@ -43,8 +28,6 @@ DESTL_ConfigurationNode::DESTL_ConfigurationNode(
 {
   InternalParameters = theNode->InternalParameters;
 }
-
-//=================================================================================================
 
 bool DESTL_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& theResource)
 {
@@ -59,8 +42,6 @@ bool DESTL_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& t
     theResource->BooleanVal("write.ascii", InternalParameters.WriteAscii, aScope);
   return true;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString DESTL_ConfigurationNode::Save() const
 {
@@ -101,56 +82,40 @@ TCollection_AsciiString DESTL_ConfigurationNode::Save() const
   return aResult;
 }
 
-//=================================================================================================
-
 occ::handle<DE_ConfigurationNode> DESTL_ConfigurationNode::Copy() const
 {
   return new DESTL_ConfigurationNode(*this);
 }
-
-//=================================================================================================
 
 occ::handle<DE_Provider> DESTL_ConfigurationNode::BuildProvider()
 {
   return new DESTL_Provider(this);
 }
 
-//=================================================================================================
-
 bool DESTL_ConfigurationNode::IsImportSupported() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool DESTL_ConfigurationNode::IsExportSupported() const
 {
   return true;
 }
 
-//=================================================================================================
-
 bool DESTL_ConfigurationNode::IsStreamSupported() const
 {
   return true;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString DESTL_ConfigurationNode::GetFormat() const
 {
   return TCollection_AsciiString("STL");
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DESTL_ConfigurationNode::GetVendor() const
 {
   return TCollection_AsciiString("OCC");
 }
-
-//=================================================================================================
 
 NCollection_List<TCollection_AsciiString> DESTL_ConfigurationNode::GetExtensions() const
 {
@@ -159,8 +124,6 @@ NCollection_List<TCollection_AsciiString> DESTL_ConfigurationNode::GetExtensions
   return anExt;
 }
 
-//=================================================================================================
-
 bool DESTL_ConfigurationNode::CheckContent(const occ::handle<NCollection_Buffer>& theBuffer) const
 {
   if (theBuffer.IsNull() || theBuffer->Size() < 7)
@@ -168,6 +131,6 @@ bool DESTL_ConfigurationNode::CheckContent(const occ::handle<NCollection_Buffer>
     return false;
   }
   const char* aBytes = (const char*)theBuffer->Data();
-  // binary STL has no header for identification - format can be detected only by file extension
+
   return !(::strncmp(aBytes, "solid", 5) || ::strncmp(aBytes, "SOLID", 5)) && isspace(aBytes[5]);
 }

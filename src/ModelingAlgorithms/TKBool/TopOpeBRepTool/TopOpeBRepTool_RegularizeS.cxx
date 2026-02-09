@@ -18,8 +18,6 @@
 #include <TopoDS_Vertex.hpp>
 #include <TCollection_AsciiString.hpp>
 
-//=================================================================================================
-
 bool TopOpeBRepTool::RegularizeShells(
   const TopoDS_Solid& theSolid,
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
@@ -33,7 +31,6 @@ bool TopOpeBRepTool::RegularizeShells(
   REGUS.SetOshNsh(OldSheNewShe);
   REGUS.SetFsplits(FSplits);
 
-  //  bool hastoregu = false;
   TopExp_Explorer exsh(theSolid, TopAbs_SHELL);
   for (; exsh.More(); exsh.Next())
   {
@@ -47,10 +44,9 @@ bool TopOpeBRepTool::RegularizeShells(
     if (!ok)
       return false;
     REGUS.REGU();
+  }
 
-  } // exsh(theSolid)
-
-  REGUS.GetOshNsh(OldSheNewShe); //??????????????????????????????
-  REGUS.GetFsplits(FSplits);     //??????????????????????????????
+  REGUS.GetOshNsh(OldSheNewShe);
+  REGUS.GetFsplits(FSplits);
   return true;
 }

@@ -2,11 +2,6 @@
 #include <Poly_CoherentTriangle.hpp>
 #include <Standard_ProgramError.hpp>
 
-//=======================================================================
-// function : Poly_CoherentLink()
-// purpose  : Empty Constructor
-//=======================================================================
-
 Poly_CoherentLink::Poly_CoherentLink()
     : myAttribute(nullptr)
 {
@@ -15,8 +10,6 @@ Poly_CoherentLink::Poly_CoherentLink()
   myOppositeNode[0] = -1;
   myOppositeNode[1] = -1;
 }
-
-//=================================================================================================
 
 Poly_CoherentLink::Poly_CoherentLink(const Poly_CoherentTriangle& theTri, int iSide)
     : myAttribute(nullptr)

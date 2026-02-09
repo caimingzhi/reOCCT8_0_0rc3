@@ -91,7 +91,7 @@ bool Expr_FunctionDerivative::IsIdentical(const occ::handle<Expr_GeneralFunction
 
 bool Expr_FunctionDerivative::IsLinearOnVariable(const int) const
 {
-  // should be improved
+
   return myExp->IsLinear();
 }
 

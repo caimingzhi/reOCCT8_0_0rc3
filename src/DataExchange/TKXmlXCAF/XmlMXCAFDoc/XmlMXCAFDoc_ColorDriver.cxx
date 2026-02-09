@@ -7,24 +7,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_ColorDriver, XmlMDF_ADriver)
 
-//=================================================================================================
-
 XmlMXCAFDoc_ColorDriver::XmlMXCAFDoc_ColorDriver(const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "Color")
 {
 }
-
-//=================================================================================================
 
 occ::handle<TDF_Attribute> XmlMXCAFDoc_ColorDriver::NewEmpty() const
 {
   return (new XCAFDoc_Color());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMXCAFDoc_ColorDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                     const occ::handle<TDF_Attribute>& theTarget,
                                     XmlObjMgt_RRelocationTable&) const
@@ -46,10 +38,6 @@ bool XmlMXCAFDoc_ColorDriver::Paste(const XmlObjMgt_Persistent&       theSource,
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMXCAFDoc_ColorDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                     XmlObjMgt_Persistent&             theTarget,
                                     XmlObjMgt_SRelocationTable&) const

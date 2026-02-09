@@ -8,14 +8,10 @@
 #include <math_FunctionRoots.hpp>
 #include <Precision.hpp>
 
-//=================================================================================================
-
 Geom2dLProp_NumericCurInf2d::Geom2dLProp_NumericCurInf2d()
     : isDone(false)
 {
 }
-
-//=================================================================================================
 
 void Geom2dLProp_NumericCurInf2d::PerformCurExt(const occ::handle<Geom2d_Curve>& C,
                                                 LProp_CurAndInf&                 Result)
@@ -26,8 +22,6 @@ void Geom2dLProp_NumericCurInf2d::PerformCurExt(const occ::handle<Geom2d_Curve>&
                 Result);
 }
 
-//=================================================================================================
-
 void Geom2dLProp_NumericCurInf2d::PerformCurExt(const occ::handle<Geom2d_Curve>& C,
                                                 const double                     UMin,
                                                 const double                     UMax,
@@ -37,9 +31,6 @@ void Geom2dLProp_NumericCurInf2d::PerformCurExt(const occ::handle<Geom2d_Curve>&
 
   double           EpsH = 1.e-4 * (UMax - UMin);
   constexpr double Tol  = Precision::PConfusion();
-
-  // la premiere recherce se fait avec une tolerance assez grande
-  // car la derivee de la fonction est estimee assez grossierement.
 
   Geom2dLProp_FuncCurExt F(C, EpsH);
   int                    NbSamples = 100;
@@ -52,7 +43,7 @@ void Geom2dLProp_NumericCurInf2d::PerformCurExt(const occ::handle<Geom2d_Curve>&
     for (int j = 1; j <= SolRoot.NbSolutions(); j++)
     {
       double Param = SolRoot.Value(j);
-      // la solution est affinee.
+
       math_BracketedRoot BS(F, Param - EpsH, Param + EpsH, Tol);
       if (BS.IsDone())
       {
@@ -68,8 +59,6 @@ void Geom2dLProp_NumericCurInf2d::PerformCurExt(const occ::handle<Geom2d_Curve>&
   }
 }
 
-//=================================================================================================
-
 void Geom2dLProp_NumericCurInf2d::PerformInf(const occ::handle<Geom2d_Curve>& C,
                                              LProp_CurAndInf&                 Result)
 {
@@ -78,8 +67,6 @@ void Geom2dLProp_NumericCurInf2d::PerformInf(const occ::handle<Geom2d_Curve>& C,
              Geom2dLProp_Curve2dTool::LastParameter(C),
              Result);
 }
-
-//=================================================================================================
 
 void Geom2dLProp_NumericCurInf2d::PerformInf(const occ::handle<Geom2d_Curve>& C,
                                              const double                     UMin,
@@ -106,8 +93,6 @@ void Geom2dLProp_NumericCurInf2d::PerformInf(const occ::handle<Geom2d_Curve>& C,
     isDone = false;
   }
 }
-
-//=================================================================================================
 
 bool Geom2dLProp_NumericCurInf2d::IsDone() const
 {

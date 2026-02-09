@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_UniversalPairValue;
 
-//! Read & Write tool for UniversalPairValue
 class RWStepKinematics_RWUniversalPairValue
 {
 public:

@@ -1,15 +1,4 @@
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Image_DDSParser.hpp>
 
@@ -20,7 +9,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Image_CompressedPixMap, Standard_Transient)
 
-//! DDS Pixel Format structure.
 struct Image_DDSParser::DDSPixelFormat
 {
   uint32_t Size;
@@ -33,16 +21,14 @@ struct Image_DDSParser::DDSPixelFormat
   uint32_t ABitMask;
 };
 
-//! DDS File header structure.
 struct Image_DDSParser::DDSFileHeader
 {
-  //! Caps2 flag indicating complete (6 faces) cubemap.
+
   enum
   {
     DDSCompleteCubemap = 0xFE00
   };
 
-  //! Return TRUE if cubmap flag is set.
   bool IscompleteCubemap() const
   {
     return (Caps2 & DDSFileHeader::DDSCompleteCubemap) == DDSFileHeader::DDSCompleteCubemap;
@@ -63,8 +49,6 @@ struct Image_DDSParser::DDSFileHeader
   uint32_t       Caps4;
   uint32_t       Reserved2;
 };
-
-//=================================================================================================
 
 occ::handle<Image_CompressedPixMap> Image_DDSParser::Load(
   const occ::handle<Image_SupportedFormats>& theSupported,
@@ -133,8 +117,6 @@ occ::handle<Image_CompressedPixMap> Image_DDSParser::Load(
   return aDef;
 }
 
-//=================================================================================================
-
 occ::handle<Image_CompressedPixMap> Image_DDSParser::Load(
   const occ::handle<Image_SupportedFormats>& theSupported,
   const occ::handle<NCollection_Buffer>&     theBuffer,
@@ -183,8 +165,6 @@ occ::handle<Image_CompressedPixMap> Image_DDSParser::Load(
   aDef->SetFaceData(aBuffer);
   return aDef;
 }
-
-//=================================================================================================
 
 occ::handle<Image_CompressedPixMap> Image_DDSParser::parseHeader(const DDSFileHeader& theHeader)
 {

@@ -40,12 +40,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_WireDivide, ShapeUpgrade_Tool)
 
-//=================================================================================================
-
 ShapeUpgrade_WireDivide::ShapeUpgrade_WireDivide()
     : myStatus(0)
 {
-  //  if (ShapeUpgrade::Debug()) std::cout <<"ShapeUpgrade_WireDivide"<<std::endl;
+
   mySplitCurve3dTool  = new ShapeUpgrade_SplitCurve3d;
   mySplitCurve2dTool  = new ShapeUpgrade_SplitCurve2d;
   myTransferParamTool = new ShapeAnalysis_TransferParametersProj;
@@ -54,37 +52,27 @@ ShapeUpgrade_WireDivide::ShapeUpgrade_WireDivide()
   myEdgeDivide        = new ShapeUpgrade_EdgeDivide;
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_WireDivide::Init(const TopoDS_Wire& W, const TopoDS_Face& F)
 {
-  //  if (ShapeUpgrade::Debug()) std::cout <<"ShapeUpgrade_WireDivide::Init with Wire,
-  //  Face"<<std::endl;
+
   myWire   = W;
   myFace   = F;
   myStatus = ShapeExtend::EncodeStatus(ShapeExtend_OK);
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_WireDivide::Init(const TopoDS_Wire& W, const occ::handle<Geom_Surface>& S)
 {
-  //  if (ShapeUpgrade::Debug()) std::cout <<"ShapeUpgrade_WireDivide::Init with Wire, Surface
-  //  "<<std::endl;
+
   myWire = W;
   BRepLib_MakeFace mkf(S, Precision::Confusion());
   myFace   = mkf.Face();
   myStatus = ShapeExtend::EncodeStatus(ShapeExtend_OK);
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_WireDivide::Load(const TopoDS_Wire& W)
 {
   myWire = W;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_WireDivide::Load(const TopoDS_Edge& E)
 {
@@ -93,14 +81,10 @@ void ShapeUpgrade_WireDivide::Load(const TopoDS_Edge& E)
     Load(MakeWire.Wire());
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_WireDivide::SetFace(const TopoDS_Face& F)
 {
   myFace = F;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_WireDivide::SetSurface(const occ::handle<Geom_Surface>& S)
 {
@@ -108,16 +92,12 @@ void ShapeUpgrade_WireDivide::SetSurface(const occ::handle<Geom_Surface>& S)
   myFace = mkf.Face();
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_WireDivide::SetSurface(const occ::handle<Geom_Surface>& S,
                                          const TopLoc_Location&           L)
 {
   BRep_Builder B;
   B.MakeFace(myFace, S, L, Precision::Confusion());
 }
-
-//=================================================================================================
 
 static void CorrectSplitValues(const occ::handle<NCollection_HSequence<double>>& orig3d,
                                const occ::handle<NCollection_HSequence<double>>& orig2d,
@@ -134,7 +114,7 @@ static void CorrectSplitValues(const occ::handle<NCollection_HSequence<double>>&
   double Last3d = orig3d->Value(len3d);
   double Last2d = orig2d->Value(len2d);
 
-  int i; // svv #1
+  int i;
   for (i = 1; i <= len3d; i++)
   {
     double par   = new2d->Value(i);
@@ -179,7 +159,7 @@ static void CorrectSplitValues(const occ::handle<NCollection_HSequence<double>>&
     {
       if (fixNew2d(i + 1))
       {
-        // changing
+
         double tmp = new2d->Value(i + 1);
         new2d->SetValue(i + 1, new2d->Value(i) + dpreci);
         new2d->SetValue(i, tmp);
@@ -192,7 +172,7 @@ static void CorrectSplitValues(const occ::handle<NCollection_HSequence<double>>&
   }
   if (new2d->Value(len3d) > Last3d)
   {
-    int ind; // svv #1
+    int ind;
     for (ind = len3d; ind > 1 && !fixNew2d(ind); ind--)
       ;
     double lastFix = new2d->Value(ind);
@@ -210,7 +190,7 @@ static void CorrectSplitValues(const occ::handle<NCollection_HSequence<double>>&
     {
       if (fixNew3d(i + 1))
       {
-        // changing
+
         double tmp = new3d->Value(i + 1);
         new3d->SetValue(i + 1, new3d->Value(i) + dpreci);
         new3d->SetValue(i, tmp);
@@ -223,7 +203,7 @@ static void CorrectSplitValues(const occ::handle<NCollection_HSequence<double>>&
   }
   if (new3d->Value(len2d) > Last2d)
   {
-    int ind; // svv #1
+    int ind;
     for (ind = len2d; ind > 1 && !fixNew3d(ind); ind--)
       ;
     double lastFix = new3d->Value(ind);
@@ -239,8 +219,6 @@ void ShapeUpgrade_WireDivide::Perform()
 {
 
   myStatus = ShapeExtend::EncodeStatus(ShapeExtend_OK);
-
-  //  if (ShapeUpgrade::Debug()) std::cout << "ShapeUpgrade_WireDivide::Perform" << std::endl;
 
   BRep_Builder       B;
   ShapeAnalysis_Edge sae;
@@ -272,15 +250,12 @@ void ShapeUpgrade_WireDivide::Perform()
   myEdgeDivide->SetSplitCurve2dTool(GetSplitCurve2dTool());
   for (TopoDS_Iterator ItW(myWire, false); ItW.More(); ItW.Next())
   {
-    // for each Edge:
+
     TopoDS_Shape sh = Context()->Apply(ItW.Value(), TopAbs_SHAPE);
     for (TopExp_Explorer exp(sh, TopAbs_EDGE); exp.More(); exp.Next())
     {
       TopoDS_Edge E = TopoDS::Edge(exp.Current());
-      //      if (ShapeUpgrade::Debug()) std::cout << ".. Edge " << (void*) &(*E.TShape()) <<
-      //      std::endl;
 
-      // skip degenerated edges (and also INTERNAL/EXTERNAL, to avoid failures)
       if (E.Orientation() == TopAbs_INTERNAL || E.Orientation() == TopAbs_EXTERNAL)
       {
         B.Add(newWire, E);
@@ -292,20 +267,15 @@ void ShapeUpgrade_WireDivide::Perform()
         B.Add(newWire, E);
         continue;
       }
-      // first iteration: getting split knots
-      // on 3D curve: preliminary
 
       occ::handle<ShapeAnalysis_TransferParameters> theTransferParamTool = GetTransferParamTool();
       theTransferParamTool->SetMaxTolerance(MaxTolerance());
       theTransferParamTool->Init(E, myFace);
       bool wasSR = theTransferParamTool->IsSameRange();
 
-      // on pcurve(s): all knots
-      // assume that if seam-edge, its pcurve1 and pcurve2 has the same split knots !!!
       occ::handle<NCollection_HSequence<double>> theKnots3d = myEdgeDivide->Knots3d();
       occ::handle<NCollection_HSequence<double>> theKnots2d = myEdgeDivide->Knots2d();
 
-      // second iteration: transfer parameters and build segments
       occ::handle<NCollection_HSequence<double>> SplitValues2d;
       occ::handle<NCollection_HSequence<double>> SplitValues3d;
       if (myEdgeDivide->HasCurve2d() && myEdgeDivide->HasCurve3d())
@@ -337,7 +307,7 @@ void ShapeUpgrade_WireDivide::Perform()
         }
         theSplit3dTool->Build(true);
       }
-      // get 2d and 3d split values which should be the same
+
       if (myEdgeDivide->HasCurve2d())
         theKnots2d = theSplit2dTool->SplitValues();
       if (myEdgeDivide->HasCurve3d())
@@ -354,7 +324,7 @@ void ShapeUpgrade_WireDivide::Perform()
       {
         occ::handle<Geom2d_Curve> c2;
         double                    f2, l2;
-        // smh#8
+
         TopoDS_Shape tmpE = E.Reversed();
         TopoDS_Edge  erev = TopoDS::Edge(tmpE);
         if (sae.PCurve(erev, myFace, c2, f2, l2, false))
@@ -380,34 +350,29 @@ void ShapeUpgrade_WireDivide::Perform()
           isSeam = false;
       }
 
-      // Exploring theEdge
       TopoDS_Vertex V1o       = TopExp::FirstVertex(E, false);
       TopoDS_Vertex V2o       = TopExp::LastVertex(E, false);
       bool          isForward = (E.Orientation() == TopAbs_FORWARD);
       double        TolEdge   = BRep_Tool::Tolerance(E);
       bool          isDeg     = BRep_Tool::Degenerated(E);
 
-      // Copy vertices to protect original shape against SameParamseter
-      // smh#8
       TopoDS_Shape  emptyCopiedV1 = V1o.EmptyCopied();
       TopoDS_Vertex V1            = TopoDS::Vertex(emptyCopiedV1);
       Context()->Replace(V1o, V1);
       TopoDS_Vertex V2;
       if (V1o.IsSame(V2o))
       {
-        // smh#8
+
         TopoDS_Shape tmpV = V1.Oriented(V2o.Orientation());
         V2                = TopoDS::Vertex(tmpV);
       }
       else
       {
-        // smh#8
+
         TopoDS_Shape emptyCopied = V2o.EmptyCopied();
         V2                       = TopoDS::Vertex(emptyCopied);
         Context()->Replace(V2o, V2);
       }
-
-      // collect NM vertices
 
       double                   af = 0., al = 0.;
       occ::handle<Geom_Curve>  c3d;
@@ -445,7 +410,6 @@ void ShapeUpgrade_WireDivide::Perform()
         }
       }
 
-      // creating new edge(s)
       occ::handle<NCollection_HArray1<occ::handle<Geom_Curve>>> theSegments3d;
       if (myEdgeDivide->HasCurve3d())
         theSegments3d = theSplit3dTool->GetCurves();
@@ -467,7 +431,7 @@ void ShapeUpgrade_WireDivide::Perform()
           }
         }
       }
-      else if (!theSegments2d.IsNull()) // if theSegments have different length ???
+      else if (!theSegments2d.IsNull())
         nbc = theSegments2d->Length();
 
       if (nbc <= 1 && !theSplit3dTool->Status(ShapeExtend_DONE)
@@ -481,16 +445,12 @@ void ShapeUpgrade_WireDivide::Perform()
 
       TopoDS_Wire resWire;
       B.MakeWire(resWire);
-      //      TopoDS_Vertex firstVertex, lastVertex;
+
       int    numE  = 0;
       gp_Pnt pntV1 = BRep_Tool::Pnt(V1);
-      // gp_Pnt pntV2 = BRep_Tool::Pnt(V2); // pntV2 not used - see below (skl)
-      // double V2Tol = LimitTolerance( BRep_Tool::Tolerance(V2) ); // V2Tol not used - see
-      // below (skl)
 
-      // clang-format off
-      occ::handle<ShapeUpgrade_FixSmallCurves> FixSmallCurveTool = GetFixSmallCurveTool(); //gka Precision
-      // clang-format on
+      occ::handle<ShapeUpgrade_FixSmallCurves> FixSmallCurveTool = GetFixSmallCurveTool();
+
       FixSmallCurveTool->SetMinTolerance(MinTolerance());
       FixSmallCurveTool->Init(E, myFace);
       FixSmallCurveTool->SetSplitCurve3dTool(theSplit3dTool);
@@ -512,14 +472,14 @@ void ShapeUpgrade_WireDivide::Perform()
         occ::handle<Geom2d_Curve> revPCurve;
         if (isSeam)
           revPCurve = theSegments2dR->Value(icurv);
-        // construction of the intermediate Vertex
+
         TopoDS_Vertex V;
         if (icurv <= nbc && nbc != 1 && !isDeg)
         {
-          double par, parf /*,SavParl*/;
-          // double SaveParf; // SaveParf not used - see below (skl)
+          double par, parf;
+
           gp_Pnt P, P1, PM;
-          // if edge has 3d curve, take point from it
+
           if (!theNewCurve3d.IsNull())
           {
             if (theNewCurve3d->IsKind(STANDARD_TYPE(Geom_BoundedCurve)))
@@ -536,7 +496,7 @@ void ShapeUpgrade_WireDivide::Perform()
             P1 = theNewCurve3d->Value(parf);
             PM = theNewCurve3d->Value((parf + par) / 2);
           }
-          // else use pcurve and surface (suppose that both exist)
+
           else
           {
             if (Surf.IsNull())
@@ -569,7 +529,7 @@ void ShapeUpgrade_WireDivide::Perform()
               SavParf = parf;
               Savnum  = icurv;
             }
-            // SavParl = par;
+
             Small++;
             if (icurv == nbc)
             {
@@ -583,7 +543,7 @@ void ShapeUpgrade_WireDivide::Perform()
           {
             if (P.Distance(P1) > MinTolerance() || P.Distance(PM) > MinTolerance())
             {
-              // FixSmallCurveTool->Perform(prevEdge,theNewCurve3d,theNewPCurve1,revPCurve,SavParf,SavParl);
+
               gp_Pnt pmid = 0.5 * (pntV1.XYZ() + P1.XYZ());
               B.UpdateVertex(V1, pmid, 0);
             }
@@ -592,7 +552,7 @@ void ShapeUpgrade_WireDivide::Perform()
               occ::handle<Geom_Curve>   atmpCurve;
               occ::handle<Geom2d_Curve> atmpCurve2d1, atmprepcurve;
               if (FixSmallCurveTool->Approx(atmpCurve, atmpCurve2d1, atmprepcurve, SavParf, par))
-              { // BRepTools
+              {
                 theNewCurve3d = atmpCurve;
                 theNewPCurve1 = atmpCurve2d1;
                 revPCurve     = atmprepcurve;
@@ -605,29 +565,15 @@ void ShapeUpgrade_WireDivide::Perform()
             }
             Small = 0;
           }
-          // pdn
-          /* if(P.Distance (pntV1) < V1Tol)
-             V = V1;
-           else if (P.Distance (pntV2) < V2Tol) {
-             V = V2;
-             V1Tol = V2Tol;
-             pntV1 = pntV2;
-           }
-           else {*/
+
           if (icurv != nbc)
           {
-            B.MakeVertex(V, P, TolEdge); // tolerance of the edge
+            B.MakeVertex(V, P, TolEdge);
             pntV1 = P;
           }
           else
             V = V2;
-          // else  V2;
-          // }
-          //	  if (ShapeUpgrade::Debug()) std::cout <<"... New intermediate Vertex ("
-          //	    <<P.X()<<","<<P.Y()<<","<<P.Z()<<") :"<<(void*) &(*V.TShape())
-          //	      <<" with Tolerance "<<TolEdge <<std::endl;
         }
-        // else V = V2;
 
         TopoDS_Edge     newEdge;
         ShapeBuild_Edge sbe;
@@ -648,15 +594,6 @@ void ShapeUpgrade_WireDivide::Perform()
           B.UpdateEdge(newEdge, theNewCurve3d, 0.);
         else if (isDeg)
           B.Degenerated(newEdge, true);
-        // if(isSeam) {
-        //  occ::handle<Geom2d_Curve> revPCurve = theSegments2dR->Value(icurv);
-        // if(newEdge.Orientation()==TopAbs_FORWARD)
-        // B.UpdateEdge ( newEdge, theNewPCurve1, revPCurve, myFace, 0. );
-        // else
-        // B.UpdateEdge ( newEdge, revPCurve, theNewPCurve1, myFace, 0. );
-        //}
-        // else if ( ! myFace.IsNull() )
-        // B.UpdateEdge ( newEdge, theNewPCurve1, myFace, 0. );
 
         double f3d = 0., l3d = 0.;
         if (!Savnum)
@@ -695,7 +632,7 @@ void ShapeUpgrade_WireDivide::Perform()
             l2d = theKnots2d->Value(icurv + 1);
           }
         }
-        // if(!Savnum) Savnum = icurv;
+
         if (!theNewCurve3d.IsNull())
           theTransferParamTool->TransferRange(newEdge,
                                               theKnots3d->Value(Savnum),
@@ -706,10 +643,7 @@ void ShapeUpgrade_WireDivide::Perform()
                                               theKnots2d->Value(Savnum),
                                               theKnots2d->Value(icurv + 1),
                                               true);
-        /*
-        double alpha = (theKnots3d->Value (icurv) - f)/(l - f);
-        double beta  = (theKnots3d->Value (icurv + 1) - f)/(l - f);
-        sbe.CopyRanges(newEdge,E, alpha, beta);*/
+
         Savnum = 0;
         occ::handle<Geom2d_Curve> c2dTmp;
         double                    setF, setL;
@@ -718,7 +652,7 @@ void ShapeUpgrade_WireDivide::Perform()
 
         if (isSeam)
         {
-          // Handle(Geom2d_Curve  revPCurve = theSegments2dR->Value(icurv);
+
           if (newEdge.Orientation() == TopAbs_FORWARD)
             B.UpdateEdge(newEdge, theNewPCurve1, revPCurve, myFace, 0.);
           else
@@ -740,7 +674,6 @@ void ShapeUpgrade_WireDivide::Perform()
           B.SameRange(newEdge, false);
         }
 
-        // addition NM vertices to new edges
         double afpar = (myEdgeDivide->HasCurve3d() ? f3d : f2d);
         double alpar = (myEdgeDivide->HasCurve3d() ? l3d : l2d);
         for (int n = 1; n <= aSeqParNM.Length(); ++n)
@@ -772,10 +705,6 @@ void ShapeUpgrade_WireDivide::Perform()
           n--;
         }
 
-        //	if (ShapeUpgrade::Debug()) std::cout <<"... New Edge "
-        //	  <<(void*) &(*newEdge.TShape())<<" on vertices "
-        //	    <<(void*) &(*V1.TShape())<<", " <<(void*) &(*V.TShape())
-        //	      <<" with Tolerance "<<TolEdge <<std::endl;
         B.Add(resWire, newEdge);
         B.Add(newWire, newEdge);
         numE++;
@@ -792,28 +721,22 @@ void ShapeUpgrade_WireDivide::Perform()
   }
   if (Status(ShapeExtend_DONE))
   {
-    // smh#8
+
     newWire.Closed(BRep_Tool::IsClosed(newWire));
     TopoDS_Shape tmpW = Context()->Apply(newWire).Oriented(myWire.Orientation());
     myWire            = TopoDS::Wire(tmpW);
   }
 }
 
-//=================================================================================================
-
 const TopoDS_Wire& ShapeUpgrade_WireDivide::Wire() const
 {
   return myWire;
 }
 
-//=================================================================================================
-
 bool ShapeUpgrade_WireDivide::Status(const ShapeExtend_Status status) const
 {
   return ShapeExtend::DecodeStatus(myStatus, status);
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_WireDivide::SetSplitCurve3dTool(
   const occ::handle<ShapeUpgrade_SplitCurve3d>& splitCurve3dTool)
@@ -821,29 +744,21 @@ void ShapeUpgrade_WireDivide::SetSplitCurve3dTool(
   mySplitCurve3dTool = splitCurve3dTool;
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_WireDivide::SetSplitCurve2dTool(
   const occ::handle<ShapeUpgrade_SplitCurve2d>& splitCurve2dTool)
 {
   mySplitCurve2dTool = splitCurve2dTool;
 }
 
-//=================================================================================================
-
 occ::handle<ShapeUpgrade_SplitCurve3d> ShapeUpgrade_WireDivide::GetSplitCurve3dTool() const
 {
   return mySplitCurve3dTool;
 }
 
-//=================================================================================================
-
 occ::handle<ShapeUpgrade_SplitCurve2d> ShapeUpgrade_WireDivide::GetSplitCurve2dTool() const
 {
   return mySplitCurve2dTool;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_WireDivide::SetEdgeDivideTool(
   const occ::handle<ShapeUpgrade_EdgeDivide>& edgeDivideTool)
@@ -851,14 +766,10 @@ void ShapeUpgrade_WireDivide::SetEdgeDivideTool(
   myEdgeDivide = edgeDivideTool;
 }
 
-//=================================================================================================
-
 occ::handle<ShapeUpgrade_EdgeDivide> ShapeUpgrade_WireDivide::GetEdgeDivideTool() const
 {
   return myEdgeDivide;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_WireDivide::SetTransferParamTool(
   const occ::handle<ShapeAnalysis_TransferParameters>& TransferParam)
@@ -866,29 +777,21 @@ void ShapeUpgrade_WireDivide::SetTransferParamTool(
   myTransferParamTool = TransferParam;
 }
 
-//=================================================================================================
-
 occ::handle<ShapeAnalysis_TransferParameters> ShapeUpgrade_WireDivide::GetTransferParamTool()
 {
   return myTransferParamTool;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_WireDivide::SetEdgeMode(const int EdgeMode)
 {
   myEdgeMode = EdgeMode;
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_WireDivide::SetFixSmallCurveTool(
   const occ::handle<ShapeUpgrade_FixSmallCurves>& FixSmallCurvesTool)
 {
   myFixSmallCurveTool = FixSmallCurvesTool;
 }
-
-//=================================================================================================
 
 occ::handle<ShapeUpgrade_FixSmallCurves> ShapeUpgrade_WireDivide::GetFixSmallCurveTool() const
 {

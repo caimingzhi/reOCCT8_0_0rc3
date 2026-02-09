@@ -16,9 +16,6 @@ class MAT2d_Connexion;
 class MAT2d_BiInt;
 class MAT2d_MiniPath;
 
-//! Constructs a circuit on a set of lines.
-//! EquiCircuit gives a Circuit passing by all the lines
-//! in a set and all the connexions of the minipath associated.
 class MAT2d_Circuit : public Standard_Transient
 {
 
@@ -32,26 +29,17 @@ public:
     const int                                                                 IndRefLine,
     const bool                                                                Trigo);
 
-  //! Returns the Number of Items .
   Standard_EXPORT int NumberOfItems() const;
 
-  //! Returns the item at position <Index> in <me>.
   Standard_EXPORT occ::handle<Geom2d_Geometry> Value(const int Index) const;
 
-  //! Returns the number of items on the line <IndexLine>.
   Standard_EXPORT int LineLength(const int IndexLine) const;
 
-  //! Returns the set of index of the items in <me>corresponding
-  //! to the curve <IndCurve> on the line <IndLine> from the
-  //! initial figure.
   Standard_EXPORT const NCollection_Sequence<int>& RefToEqui(const int IndLine,
                                                              const int IndCurve) const;
 
-  //! Returns the Connexion on the item <Index> in me.
   Standard_EXPORT occ::handle<MAT2d_Connexion> Connexion(const int Index) const;
 
-  //! Returns <True> is there is a connexion on the item <Index>
-  //! in <me>.
   Standard_EXPORT bool ConnexionOn(const int Index) const;
 
   DEFINE_STANDARD_RTTIEXT(MAT2d_Circuit, Standard_Transient)

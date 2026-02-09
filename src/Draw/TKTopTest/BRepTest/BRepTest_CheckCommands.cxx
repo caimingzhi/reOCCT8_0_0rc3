@@ -30,7 +30,7 @@
 #include <TopoDS_Face.hpp>
 
 #include <TopOpeBRepTool_PurgeInternalEdges.hpp>
-// #include <TopOpeBRepTool_FuseEdges.hpp>
+
 #include <BRepLib.hpp>
 #include <BRepLib_FuseEdges.hpp>
 
@@ -47,9 +47,6 @@
 
 #include <cstdio>
 
-// Number of BRepCheck_Statuses in BRepCheck_Status.hpp file
-//(BRepCheck_NoError is not considered, i.e. general status
-// is smaller by one specified in file)
 static const int NumberOfStatus = 36;
 
 static char* checkfaultyname = nullptr;
@@ -80,9 +77,6 @@ static NCollection_Sequence<occ::handle<Draw_Drawable3D>> lfaulty;
 
 Standard_IMPORT int BRepCheck_Trace(const int phase);
 
-//=======================================================================
-// function : FindNamed
-//=======================================================================
 static bool FindNamed(const TopoDS_Shape& S, char*& Name)
 {
   for (int i = 1; i <= lfaulty.Length(); i++)
@@ -97,9 +91,6 @@ static bool FindNamed(const TopoDS_Shape& S, char*& Name)
   return false;
 }
 
-//=======================================================================
-// function : Contains
-//=======================================================================
 static bool Contains(const NCollection_List<TopoDS_Shape>& L, const TopoDS_Shape& S)
 {
   NCollection_List<TopoDS_Shape>::Iterator it;
@@ -113,9 +104,6 @@ static bool Contains(const NCollection_List<TopoDS_Shape>& L, const TopoDS_Shape
   return false;
 }
 
-//=======================================================================
-// function : PrintSub
-//=======================================================================
 static void PrintSub(Standard_OStream&         OS,
                      const BRepCheck_Analyzer& Ana,
                      const TopoDS_Shape&       S,
@@ -166,9 +154,6 @@ static void PrintSub(Standard_OStream&         OS,
   }
 }
 
-//=======================================================================
-// function : Print
-//=======================================================================
 static void Print(Standard_OStream& OS, const BRepCheck_Analyzer& Ana, const TopoDS_Shape& S)
 {
   for (TopoDS_Iterator iter(S); iter.More(); iter.Next())
@@ -222,10 +207,10 @@ static void Print(Standard_OStream& OS, const BRepCheck_Analyzer& Ana, const Top
       PrintSub(OS, Ana, S, TopAbs_VERTEX);
       break;
     case TopAbs_SHELL:
-      //    PrintSub(OS,Ana,S,TopAbs_FACE);
+
       break;
     case TopAbs_SOLID:
-      //    PrintSub(OS,Ana,S,TopAbs_EDGE);
+
       PrintSub(OS, Ana, S, TopAbs_SHELL);
       break;
     default:
@@ -233,13 +218,11 @@ static void Print(Standard_OStream& OS, const BRepCheck_Analyzer& Ana, const Top
   }
 }
 
-//=================================================================================================
-
 static int computetolerance(Draw_Interpretor& di, int narg, const char** a)
 {
   if (narg < 2)
   {
-    // std::cout << "Usage: computetolerance shape" << std::endl;
+
     di << "Usage: computetolerance shape\n";
     return 1;
   }
@@ -249,7 +232,7 @@ static int computetolerance(Draw_Interpretor& di, int narg, const char** a)
   {
     BRepCheck_Edge bce(TopoDS::Edge(S));
     tol = bce.Tolerance();
-    // std::cout<< "Tolerance de " << (void*) &(*S.TShape()) << " : " << tol << std::endl;
+
     Standard_SStream aSStream1;
     aSStream1 << "Tolerance de " << (void*)&(*S.TShape()) << " : " << tol << "\n";
     di << aSStream1;
@@ -264,23 +247,18 @@ static int computetolerance(Draw_Interpretor& di, int narg, const char** a)
       {
         BRepCheck_Edge bce(TopoDS::Edge(exp.Current()));
         tol = bce.Tolerance();
-        // std::cout<< "Tolerance de " << (void*) &(*exp.Current().TShape()) << " : " << tol <<
-        // "\n";
+
         Standard_SStream aSStream2;
         aSStream2 << "Tolerance de " << (void*)&(*exp.Current().TShape()) << " : " << tol << "\n";
         di << aSStream2;
       }
     }
-    // std::cout << std::endl;
+
     di << "\n";
   }
   return 0;
 }
 
-//=======================================================================
-// function : checksection
-// purpose  : Checks the closure of a section line
-//=======================================================================
 static int checksection(Draw_Interpretor& di, int narg, const char** a)
 {
   if (narg < 2)
@@ -311,7 +289,7 @@ static int checksection(Draw_Interpretor& di, int narg, const char** a)
     if (!theVertices.Add(exp.Current()))
       theVertices.Remove(exp.Current());
   }
-  // std::cout << " nb alone Vertices : " << theVertices.Extent() << std::endl;
+
   di << " nb alone Vertices : " << theVertices.Extent() << "\n";
 
   if (aCompareValue >= 0)
@@ -335,20 +313,14 @@ static int checksection(Draw_Interpretor& di, int narg, const char** a)
     ipp++;
     Sprintf(Name, "alone_%d", ipp);
     DBRep::Set(Name, itvx.Key());
-    // std::cout << Name << " " ;
+
     di << Name << " ";
   }
-  // std::cout << std::endl;
+
   di << "\n";
   return 0;
 }
 
-//=======================================================================
-
-//=======================================================================
-// function : checkdiff
-// purpose  : Checks the differences between a result and his arguments
-//=======================================================================
 static int checkdiff(Draw_Interpretor& di, int narg, const char** a)
 {
   const char* syntaxe = "checkdiff arg1 [arg2..argn] result [closedSolid (0/1)] [geomCtrl (1/0)]";
@@ -358,13 +330,13 @@ static int checkdiff(Draw_Interpretor& di, int narg, const char** a)
     {
       int bcrtrace = Draw::Atoi(a[narg - 1]);
       bcrtrace     = BRepCheck_Trace(bcrtrace);
-      // std::cout << "BRepCheck_Trace : " << bcrtrace << std::endl;
+
       di << "BRepCheck_Trace : " << bcrtrace << "\n";
-      // std::cout << syntaxe << std::endl;
+
       di << syntaxe << "\n";
       return 0;
     }
-    // std::cout << syntaxe << std::endl;
+
     di << syntaxe << "\n";
     return 1;
   }
@@ -377,7 +349,7 @@ static int checkdiff(Draw_Interpretor& di, int narg, const char** a)
   {
     if (narg < 4)
     {
-      // std::cout << syntaxe << std::endl;
+
       di << syntaxe << "\n";
       return 1;
     }
@@ -388,7 +360,7 @@ static int checkdiff(Draw_Interpretor& di, int narg, const char** a)
     {
       if (narg < 5)
       {
-        // std::cout << syntaxe << std::endl;
+
         di << syntaxe << "\n";
         return 1;
       }
@@ -398,7 +370,7 @@ static int checkdiff(Draw_Interpretor& di, int narg, const char** a)
       lastArg     = narg - 4;
       if (resu.IsNull())
       {
-        // std::cout << syntaxe << std::endl;
+
         di << syntaxe << "\n";
         return 1;
       }
@@ -413,22 +385,18 @@ static int checkdiff(Draw_Interpretor& di, int narg, const char** a)
 
   if (BRepAlgo::IsValid(lesArgs, resu, closedSolid, geomCtrl))
   {
-    // std::cout << "Difference is Valid." << std::endl;
+
     di << "Difference is Valid.\n";
   }
   else
   {
-    // std::cout << "error : Difference is Not Valid !" << std::endl;
+
     di << "error : Difference is Not Valid !\n";
   }
 
   return 0;
 }
 
-//=======================================================================
-// function : ContextualDump
-// purpose  : Contextual (modeling) style of output.
-//=======================================================================
 void ContextualDump(Draw_Interpretor&         theCommands,
                     const BRepCheck_Analyzer& theAna,
                     const TopoDS_Shape&       theShape)
@@ -451,10 +419,6 @@ void ContextualDump(Draw_Interpretor&         theCommands,
   theCommands << "\n";
 }
 
-//=======================================================================
-// function : FillProblems
-// purpose : auxiliary for StructuralDump
-//=======================================================================
 static void FillProblems(const BRepCheck_Status                 stat,
                          occ::handle<NCollection_HArray1<int>>& NbProblems)
 {
@@ -467,10 +431,6 @@ static void FillProblems(const BRepCheck_Status                 stat,
   NbProblems->SetValue(anID, NbProblems->Value(anID) + 1);
 }
 
-//=======================================================================
-// function : GetProblemSub
-// purpose : auxiliary for StructuralDump
-//=======================================================================
 static void GetProblemSub(const BRepCheck_Analyzer&                         Ana,
                           const TopoDS_Shape&                               Shape,
                           occ::handle<NCollection_HSequence<TopoDS_Shape>>& sl,
@@ -519,10 +479,6 @@ static void GetProblemSub(const BRepCheck_Analyzer&                         Ana,
   }
 }
 
-//=======================================================================
-// function : GetProblemShapes
-// purpose : auxiliary for StructuralDump
-//=======================================================================
 static void GetProblemShapes(const BRepCheck_Analyzer&                         Ana,
                              const TopoDS_Shape&                               Shape,
                              occ::handle<NCollection_HSequence<TopoDS_Shape>>& sl,
@@ -570,10 +526,6 @@ static void GetProblemShapes(const BRepCheck_Analyzer&                         A
   }
 }
 
-//=======================================================================
-// function : StructuralDump
-// purpose  : Structural (data exchange) style of output.
-//=======================================================================
 void StructuralDump(Draw_Interpretor&         theCommands,
                     const BRepCheck_Analyzer& theAna,
                     const char*               ShName,
@@ -907,8 +859,6 @@ void StructuralDump(Draw_Interpretor&         theCommands,
   }
 }
 
-//=================================================================================================
-
 static int checkshape(Draw_Interpretor& theCommands, int narg, const char** a)
 {
   if (narg == 1)
@@ -1041,7 +991,6 @@ static int checkshape(Draw_Interpretor& theCommands, int narg, const char** a)
   return 0;
 }
 
-/***************************************************************/
 static void InitEpsSurf(double& epsnl,
                         double& epsdis,
                         double& epsangk1,
@@ -1076,7 +1025,7 @@ static int shapeG1continuity(Draw_Interpretor& di, int n, const char** a)
   TopoDS_Shape edge = DBRep::Get(a[2], TopAbs_EDGE);
   if (edge.IsNull())
     return 1;
-  // calcul des deux faces
+
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     lface;
   TopExp::MapShapesAndAncestors(shape, TopAbs_EDGE, TopAbs_FACE, lface);
@@ -1093,7 +1042,6 @@ static int shapeG1continuity(Draw_Interpretor& di, int n, const char** a)
 
   bool IsSeam = face1.IsEqual(face2);
 
-  // calcul des deux pcurves
   const occ::handle<Geom2d_Curve> c1 = BRep_Tool::CurveOnSurface(TopoDS::Edge(edge), face1, f1, l1);
   if (c1.IsNull())
     return 1;
@@ -1108,18 +1056,15 @@ static int shapeG1continuity(Draw_Interpretor& di, int n, const char** a)
 
   occ::handle<Geom2d_Curve> curv2 = new Geom2d_TrimmedCurve(c2, f2, l2);
 
-  // calcul dees deux surfaces
   TopLoc_Location                  L1, L2;
   TopoDS_Face                      aLocalFace = face1;
   const occ::handle<Geom_Surface>& s1         = BRep_Tool::Surface(aLocalFace, L1);
-  //  const occ::handle<Geom_Surface>& s1 =
-  //    BRep_Tool::Surface(TopoDS::Face(face1),L1);
+
   if (s1.IsNull())
     return 1;
   aLocalFace                          = face2;
   const occ::handle<Geom_Surface>& s2 = BRep_Tool::Surface(aLocalFace, L2);
-  //  const occ::handle<Geom_Surface>& s2 =
-  //    BRep_Tool::Surface(TopoDS::Face(face2),L2);
+
   if (s2.IsNull())
     return 1;
 
@@ -1235,12 +1180,6 @@ static int shapeG1continuity(Draw_Interpretor& di, int n, const char** a)
 
   } while ((nb < nbeval) && isdone);
 
-  // if (!isdone)  { std::cout<<" Problem in computation "<<std::endl; return 1;}
-  // if (ISG1)
-  //     {std::cout<<" the continuity is G1 "<<std::endl;}
-  // else { std::cout<<" the continuity is not G1  "<<std::endl;}
-  // std::cout<<"MaxG0Value :"<< MaxG0Value << std::endl;
-  // std::cout<<"MaxG1Angle:"<<  MaxG1Angle << std::endl;
   if (!isdone)
   {
     di << " Problem in computation \n";
@@ -1259,7 +1198,6 @@ static int shapeG1continuity(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-/*****************************************************************************/
 static int shapeG0continuity(Draw_Interpretor& di, int n, const char** a)
 
 {
@@ -1278,7 +1216,7 @@ static int shapeG0continuity(Draw_Interpretor& di, int n, const char** a)
   TopoDS_Shape edge = DBRep::Get(a[2], TopAbs_EDGE);
   if (edge.IsNull())
     return 1;
-  // calcul des deux faces
+
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     lface;
   TopExp::MapShapesAndAncestors(shape, TopAbs_EDGE, TopAbs_FACE, lface);
@@ -1295,7 +1233,6 @@ static int shapeG0continuity(Draw_Interpretor& di, int n, const char** a)
 
   bool IsSeam = face1.IsEqual(face2);
 
-  // calcul des deux pcurves
   const occ::handle<Geom2d_Curve> c1 = BRep_Tool::CurveOnSurface(TopoDS::Edge(edge), face1, f1, l1);
   if (c1.IsNull())
     return 1;
@@ -1310,18 +1247,15 @@ static int shapeG0continuity(Draw_Interpretor& di, int n, const char** a)
 
   occ::handle<Geom2d_Curve> curv2 = new Geom2d_TrimmedCurve(c2, f2, l2);
 
-  // calcul des deux surfaces
   TopLoc_Location                  L1, L2;
   TopoDS_Face                      aLocalFace = face1;
   const occ::handle<Geom_Surface>& s1         = BRep_Tool::Surface(aLocalFace, L1);
-  //  const occ::handle<Geom_Surface>& s1 =
-  //    BRep_Tool::Surface(TopoDS::Face(face1),L1);
+
   if (s1.IsNull())
     return 1;
   aLocalFace                          = face2;
   const occ::handle<Geom_Surface>& s2 = BRep_Tool::Surface(aLocalFace, L2);
-  //  const occ::handle<Geom_Surface>& s2 =
-  //    BRep_Tool::Surface(TopoDS::Face(face2),L2);
+
   if (s2.IsNull())
     return 1;
 
@@ -1427,12 +1361,6 @@ static int shapeG0continuity(Draw_Interpretor& di, int n, const char** a)
 
   } while ((nb < nbeval) && isdone);
 
-  // f (!isdone)  { std::cout<<" Problem in computation "<<std::endl; return 1;}
-  // if (ISG0)
-  //     {std::cout<<" the continuity is G0 "<<std::endl;}
-
-  // else { std::cout<<" the continuity is not G0  "<<std::endl;}
-  // std::cout<<"MaxG0Value :"<< MaxG0Value << std::endl;
   if (!isdone)
   {
     di << " Problem in computation \n";
@@ -1451,7 +1379,6 @@ static int shapeG0continuity(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-/*****************************************************************************************/
 static int shapeG2continuity(Draw_Interpretor& di, int n, const char** a)
 
 {
@@ -1471,7 +1398,7 @@ static int shapeG2continuity(Draw_Interpretor& di, int n, const char** a)
   TopoDS_Shape edge = DBRep::Get(a[2], TopAbs_EDGE);
   if (edge.IsNull())
     return 1;
-  // calcul des deux faces
+
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     lface;
   TopExp::MapShapesAndAncestors(shape, TopAbs_EDGE, TopAbs_FACE, lface);
@@ -1488,7 +1415,6 @@ static int shapeG2continuity(Draw_Interpretor& di, int n, const char** a)
 
   bool IsSeam = face1.IsEqual(face2);
 
-  // calcul des deux pcurves
   const occ::handle<Geom2d_Curve> c1 = BRep_Tool::CurveOnSurface(TopoDS::Edge(edge), face1, f1, l1);
   if (c1.IsNull())
     return 1;
@@ -1503,18 +1429,15 @@ static int shapeG2continuity(Draw_Interpretor& di, int n, const char** a)
 
   occ::handle<Geom2d_Curve> curv2 = new Geom2d_TrimmedCurve(c2, f2, l2);
 
-  // calcul des deux surfaces
   TopLoc_Location                  L1, L2;
   TopoDS_Face                      aLocalFace = face1;
   const occ::handle<Geom_Surface>& s1         = BRep_Tool::Surface(aLocalFace, L1);
-  //  const occ::handle<Geom_Surface>& s1 =
-  //    BRep_Tool::Surface(TopoDS::Face(face1),L1);
+
   if (s1.IsNull())
     return 1;
   aLocalFace                          = face2;
   const occ::handle<Geom_Surface>& s2 = BRep_Tool::Surface(aLocalFace, L2);
-  //  const occ::handle<Geom_Surface>& s2 =
-  //    BRep_Tool::Surface(TopoDS::Face(face2),L2);
+
   if (s2.IsNull())
     return 1;
 
@@ -1639,13 +1562,6 @@ static int shapeG2continuity(Draw_Interpretor& di, int n, const char** a)
 
   } while ((nb < nbeval) && isdone);
 
-  // if (!isdone)  { std::cout<<" Problem in computation "<<std::endl; return 1;}
-  // if (ISG2)
-  // std::cout<<" the continuity is G2 "<<std::endl;
-  // else std::cout<<" the continuity is not G2  "<<std::endl;
-  // std::cout<<"MaxG0Value :"<< MaxG0Value << std::endl;
-  // std::cout<<"MaxG1Angle:"<<  MaxG1Angle << std::endl;
-  // std::cout<<"MaxG2Curvature:"<<MaxG2Curvature<<std::endl;
   if (!isdone)
   {
     di << " Problem in computation \n";
@@ -1661,15 +1577,13 @@ static int shapeG2continuity(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int clintedge(Draw_Interpretor& di, int narg, const char** a)
 {
   char newname[255];
 
   if (narg < 2)
   {
-    // std::cout << "Usage: clintedge shape" << std::endl;
+
     di << "Usage: clintedge shape\n";
     return 1;
   }
@@ -1680,7 +1594,7 @@ static int clintedge(Draw_Interpretor& di, int narg, const char** a)
   int                               nbedges = mypurgealgo.NbEdges();
   if (nbedges > 0)
   {
-    // std::cout<<nbedges<<" internal (or external) edges to be removed"<<std::endl;
+
     di << nbedges << " internal (or external) edges to be removed\n";
 
     int   i    = 1;
@@ -1688,20 +1602,16 @@ static int clintedge(Draw_Interpretor& di, int narg, const char** a)
 
     Sprintf(newname, "%s_%d", a[1], i);
     DBRep::Set(temp, mypurgealgo.Shape());
-    // std::cout<<newname<<" ";
+
     di << newname << " ";
 
-    // std::cout<<std::endl;
     di << "\n";
   }
   else
     di << "no internal (or external) edges\n";
-  // std::cout << "no internal (or external) edges"<<std::endl;
 
   return 0;
 }
-
-//=================================================================================================
 
 static int facintedge(Draw_Interpretor& di, int narg, const char** a)
 {
@@ -1709,7 +1619,7 @@ static int facintedge(Draw_Interpretor& di, int narg, const char** a)
 
   if (narg < 2)
   {
-    // std::cout << "Usage: facintedge shape" << std::endl;
+
     di << "Usage: facintedge shape\n";
     return 1;
   }
@@ -1728,18 +1638,15 @@ static int facintedge(Draw_Interpretor& di, int narg, const char** a)
   {
     Sprintf(newname, "%s_%d", a[1], i);
     DBRep::Set(temp, itFacEdg.Key());
-    // std::cout<<newname<<" ";
+
     di << newname << " ";
     i++;
   }
 
-  // std::cout<<std::endl;
   di << "\n";
 
   return 0;
 }
-
-//=================================================================================================
 
 static int fuseedge(Draw_Interpretor& di, int narg, const char** a)
 {
@@ -1747,14 +1654,14 @@ static int fuseedge(Draw_Interpretor& di, int narg, const char** a)
 
   if (narg < 2)
   {
-    // std::cout << "Usage: fuseedge shape" << std::endl;
+
     di << "Usage: fuseedge shape\n";
     return 1;
   }
   TopoDS_Shape S = DBRep::Get(a[1]);
 
   NCollection_DataMap<int, NCollection_List<TopoDS_Shape>> mymap;
-  // TopOpeBRepTool_FuseEdges myfusealgo(S);
+
   BRepLib_FuseEdges myfusealgo(S);
   myfusealgo.SetConcatBSpl();
   int nbvertices;
@@ -1763,7 +1670,6 @@ static int fuseedge(Draw_Interpretor& di, int narg, const char** a)
   if (nbvertices > 0)
   {
 
-    // std::cout<<nbvertices<<" vertices to be removed"<<std::endl;
     di << nbvertices << " vertices to be removed\n";
 
     int   i    = 1;
@@ -1771,20 +1677,16 @@ static int fuseedge(Draw_Interpretor& di, int narg, const char** a)
 
     Sprintf(newname, "%s_%d", a[1], i);
     DBRep::Set(temp, myfusealgo.Shape());
-    // std::cout<<newname<<" ";
+
     di << newname << " ";
 
-    // std::cout<<std::endl;
     di << "\n";
   }
   else
     di << "no vertices to remove\n";
-  // std::cout << "no vertices to remove"<<std::endl;
 
   return 0;
 }
-
-//=================================================================================================
 
 static int listfuseedge(Draw_Interpretor& di, int narg, const char** a)
 {
@@ -1792,7 +1694,7 @@ static int listfuseedge(Draw_Interpretor& di, int narg, const char** a)
 
   if (narg < 2)
   {
-    // std::cout << "Usage: listfuseedge shape" << std::endl;
+
     di << "Usage: listfuseedge shape\n";
     return 1;
   }
@@ -1816,19 +1718,16 @@ static int listfuseedge(Draw_Interpretor& di, int narg, const char** a)
     {
       Sprintf(newname, "%s_%d_%d", a[1], iLst, i);
       DBRep::Set(temp, itEdg.Value());
-      // std::cout<<newname<<" ";
+
       di << newname << " ";
       i++;
     }
   }
 
-  // std::cout<<std::endl;
   di << "\n";
 
   return 0;
 }
-
-//=================================================================================================
 
 static int tolsphere(Draw_Interpretor& di, int n, const char** a)
 {
@@ -1861,8 +1760,6 @@ static int tolsphere(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int validrange(Draw_Interpretor& di, int narg, const char** a)
 {
   if (narg < 2)
@@ -1892,8 +1789,6 @@ static int validrange(Draw_Interpretor& di, int narg, const char** a)
     di << "edge has no valid range";
   return 0;
 }
-
-//=================================================================================================
 
 void BRepTest::CheckCommands(Draw_Interpretor& theCommands)
 {

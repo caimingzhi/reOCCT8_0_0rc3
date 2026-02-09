@@ -14,14 +14,10 @@ public:
 
   Standard_EXPORT ~LDOM_XmlWriter();
 
-  // Set indentation for output (by default 0)
   void SetIndentation(const int theIndent) { myIndent = theIndent; }
 
   Standard_EXPORT void Write(Standard_OStream& theOStream, const LDOM_Document& theDoc);
 
-  //  Stream out a DOM node, and, recursively, all of its children. This
-  //  function is the heart of writing a DOM tree out as XML source. Give it
-  //  a document node and it will do the whole thing.
   Standard_EXPORT void Write(Standard_OStream& theOStream, const LDOM_Node& theNode);
 
 private:

@@ -19,9 +19,8 @@ static OSD_Chronometer chr_uparam;
 Standard_EXPORT int    uparam_count;
 Standard_EXPORT double t_uparam;
 
-// Standard_IMPORT extern void InitChron(OSD_Chronometer& ch);
 Standard_IMPORT void InitChron(OSD_Chronometer& ch);
-// Standard_IMPORT extern void ResultChron( OSD_Chronometer & ch, double & time);
+
 Standard_IMPORT void ResultChron(OSD_Chronometer& ch, double& time);
 #endif
 
@@ -43,7 +42,6 @@ static double cubic(const double X, const double* Xi, const double* Yi)
   return Result;
 }
 
-// static void findfourpoints(const double S,
 static void findfourpoints(const double,
                            int                                             NInterval,
                            const occ::handle<NCollection_HArray1<double>>& Si,
@@ -68,7 +66,7 @@ static void findfourpoints(const double,
     Xi[i] = Si->Value(NInterval - 1 + i);
     Yi[i] = Ui->Value(NInterval - 1 + i);
   }
-  // try to insert (S, U)
+
   for (i = 0; i < 3; i++)
   {
     if (Xi[i] < prevS && prevS < Xi[i + 1])
@@ -84,23 +82,6 @@ static void findfourpoints(const double,
     }
   }
 }
-
-/*static double curvature(const double U, const Adaptor3d_Curve& C)
-{
-  double k, tau, mod1, mod2, OMEGA;
-  gp_Pnt P;
-  gp_Vec D1, D2, D3;
-  C.D3(U, P, D1, D2, D3);
-  mod1 = D1.Magnitude();
-  mod2 = D1.Crossed(D2).Magnitude();
-  k = mod2/(mod1*mod1*mod1);
-  tau = D1.Dot(D2.Crossed(D3));
-  tau /= mod2*mod2;
-  OMEGA = std::sqrt(k*k + tau*tau);
-
-  return OMEGA;
-}
-*/
 
 Approx_CurvlinFunc::Approx_CurvlinFunc(const occ::handle<Adaptor3d_Curve>& C, const double Tol)
     : myC3D(C),
@@ -184,12 +165,6 @@ void Approx_CurvlinFunc::Init()
   Length();
 }
 
-//=================================================================================================
-// function : Init
-// purpose  : Init the values
-// history  : 23/10/1998 PMN : Cut at curve's discontinuities
-//=================================================================================================
-
 void Approx_CurvlinFunc::Init(Adaptor3d_Curve&                          C,
                               occ::handle<NCollection_HArray1<double>>& Si,
                               occ::handle<NCollection_HArray1<double>>& Ui) const
@@ -233,7 +208,6 @@ void Approx_CurvlinFunc::Init(Adaptor3d_Curve&                          C,
   for (i = Si->Lower(); i <= Si->Upper(); i++)
     Si->ChangeValue(i) /= Len;
 
-  // TODO - fields should be mutable
   const_cast<Approx_CurvlinFunc*>(this)->myPrevS = myFirstS;
   const_cast<Approx_CurvlinFunc*>(this)->myPrevU = FirstU;
 }
@@ -283,7 +257,6 @@ int Approx_CurvlinFunc::NbIntervals(const GeomAbs_Shape S) const
       return Fusion.Length() - 1;
   }
 
-  // POP pour WNT
   return 1;
 }
 
@@ -510,14 +483,12 @@ double Approx_CurvlinFunc::GetUParameter(Adaptor3d_Curve& C,
   base   = InitUArray->Value(NInterval);
   deltaS = (S - InitSArray->Value(NInterval)) * Length;
 
-  // to find an initial point
   double Xi[4], Yi[4], UGuess;
   findfourpoints(S, NInterval, InitSArray, InitUArray, myPrevS, myPrevU, Xi, Yi);
   UGuess = cubic(S, Xi, Yi);
 
   U = GCPnts_AbscissaPoint(C, deltaS, base, UGuess, myTolLen).Parameter();
 
-  // TODO - fields should be mutable
   const_cast<Approx_CurvlinFunc*>(this)->myPrevS = S;
   const_cast<Approx_CurvlinFunc*>(this)->myPrevU = U;
 

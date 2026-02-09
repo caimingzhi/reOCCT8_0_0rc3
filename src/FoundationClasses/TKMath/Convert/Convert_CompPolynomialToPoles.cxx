@@ -8,8 +8,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 Convert_CompPolynomialToPoles::Convert_CompPolynomialToPoles(
   const int                                       NumCurves,
   const int                                       Continuity,
@@ -39,9 +37,7 @@ Convert_CompPolynomialToPoles::Convert_CompPolynomialToPoles(
   {
     throw Standard_ConstructionError("Convert_CompPolynomialToPoles:Continuity is too great");
   }
-  //
-  //  prepare output
-  //
+
   int Tindex, multiplicities;
 
   myKnots = new NCollection_HArray1<double>(1, NumCurves + 1);
@@ -91,9 +87,7 @@ Convert_CompPolynomialToPoles::Convert_CompPolynomialToPoles(
   {
     myDegree = std::max(NumCoeffPerCurve.Value(ii) - 1, myDegree);
   }
-  //
-  //  prepare output
-  //
+
   int Tindex;
 
   myKnots = new NCollection_HArray1<double>(1, NumCurves + 1);
@@ -115,7 +109,6 @@ Convert_CompPolynomialToPoles::Convert_CompPolynomialToPoles(
   myMults->SetValue(1, myDegree + 1);
   myMults->SetValue(NumCurves + 1, myDegree + 1);
 
-  // Calculs
   Perform(NumCurves,
           MaxDegree,
           Dimension,
@@ -155,7 +148,6 @@ Convert_CompPolynomialToPoles::Convert_CompPolynomialToPoles(
   myMults = new NCollection_HArray1<int>(1, 2);
   myMults->Init(myDegree + 1);
 
-  // Calculs
   Perform(1,
           MaxDegree,
           Dimension,
@@ -211,10 +203,7 @@ void Convert_CompPolynomialToPoles::Perform(const int                         Nu
       Tindex++;
       Pindex++;
     }
-    //
-    // normalized value so that it fits the original intervals for
-    // the polynomial definition of the curves
-    //
+
     normalized_value = parameters.Value(ii) - TrueIntervals(Tindex - 1);
     normalized_value /= TrueIntervals(Tindex) - TrueIntervals(Tindex - 1);
     normalized_value =
@@ -233,10 +222,7 @@ void Convert_CompPolynomialToPoles::Perform(const int                         Nu
                                      coefficient_array[0],
                                      poles_array[poles_index]);
   }
-  //
-  // interpolation at schoenberg points should yield the desired
-  // result
-  //
+
   BSplCLib::Interpolate(myDegree,
                         myFlatKnots->Array1(),
                         parameters,
@@ -251,8 +237,6 @@ void Convert_CompPolynomialToPoles::Perform(const int                         Nu
   myDone = true;
 }
 
-//=================================================================================================
-
 int Convert_CompPolynomialToPoles::NbPoles() const
 {
   if (myDone)
@@ -263,8 +247,6 @@ int Convert_CompPolynomialToPoles::NbPoles() const
     return 0;
 }
 
-//=================================================================================================
-
 void Convert_CompPolynomialToPoles::Poles(occ::handle<NCollection_HArray2<double>>& P) const
 {
   if (myDone)
@@ -272,8 +254,6 @@ void Convert_CompPolynomialToPoles::Poles(occ::handle<NCollection_HArray2<double
     P = myPoles;
   }
 }
-
-//=================================================================================================
 
 int Convert_CompPolynomialToPoles::NbKnots() const
 {
@@ -285,8 +265,6 @@ int Convert_CompPolynomialToPoles::NbKnots() const
     return 0;
 }
 
-//=================================================================================================
-
 void Convert_CompPolynomialToPoles::Knots(occ::handle<NCollection_HArray1<double>>& K) const
 {
   if (myDone)
@@ -294,8 +272,6 @@ void Convert_CompPolynomialToPoles::Knots(occ::handle<NCollection_HArray1<double
     K = myKnots;
   }
 }
-
-//=================================================================================================
 
 void Convert_CompPolynomialToPoles::Multiplicities(occ::handle<NCollection_HArray1<int>>& M) const
 {
@@ -305,14 +281,10 @@ void Convert_CompPolynomialToPoles::Multiplicities(occ::handle<NCollection_HArra
   }
 }
 
-//=================================================================================================
-
 bool Convert_CompPolynomialToPoles::IsDone() const
 {
   return myDone;
 }
-
-//=================================================================================================
 
 int Convert_CompPolynomialToPoles::Degree() const
 {

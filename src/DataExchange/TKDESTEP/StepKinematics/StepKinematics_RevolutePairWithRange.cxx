@@ -1,18 +1,14 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_RevolutePairWithRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_RevolutePairWithRange, StepKinematics_RevolutePair)
-
-//=================================================================================================
 
 StepKinematics_RevolutePairWithRange::StepKinematics_RevolutePairWithRange()
 {
   defLowerLimitActualRotation = false;
   defUpperLimitActualRotation = false;
 }
-
-//=================================================================================================
 
 void StepKinematics_RevolutePairWithRange::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -64,14 +60,10 @@ void StepKinematics_RevolutePairWithRange::Init(
     myUpperLimitActualRotation = 0;
 }
 
-//=================================================================================================
-
 double StepKinematics_RevolutePairWithRange::LowerLimitActualRotation() const
 {
   return myLowerLimitActualRotation;
 }
-
-//=================================================================================================
 
 void StepKinematics_RevolutePairWithRange::SetLowerLimitActualRotation(
   const double theLowerLimitActualRotation)
@@ -79,29 +71,21 @@ void StepKinematics_RevolutePairWithRange::SetLowerLimitActualRotation(
   myLowerLimitActualRotation = theLowerLimitActualRotation;
 }
 
-//=================================================================================================
-
 bool StepKinematics_RevolutePairWithRange::HasLowerLimitActualRotation() const
 {
   return defLowerLimitActualRotation;
 }
-
-//=================================================================================================
 
 double StepKinematics_RevolutePairWithRange::UpperLimitActualRotation() const
 {
   return myUpperLimitActualRotation;
 }
 
-//=================================================================================================
-
 void StepKinematics_RevolutePairWithRange::SetUpperLimitActualRotation(
   const double theUpperLimitActualRotation)
 {
   myUpperLimitActualRotation = theUpperLimitActualRotation;
 }
-
-//=================================================================================================
 
 bool StepKinematics_RevolutePairWithRange::HasUpperLimitActualRotation() const
 {

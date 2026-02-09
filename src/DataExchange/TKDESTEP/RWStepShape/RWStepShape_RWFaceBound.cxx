@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include <Interface_ShareTool.hpp>
@@ -29,30 +18,20 @@ void RWStepShape_RWFaceBound::ReadStep(const occ::handle<StepData_StepReaderData
                                        const occ::handle<StepShape_FaceBound>&     ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 3, ach, "face_bound"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- own field : bound ---
-
   occ::handle<StepShape_Loop> aBound;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
   data->ReadEntity(num, 2, "bound", ach, STANDARD_TYPE(StepShape_Loop), aBound);
 
-  // --- own field : orientation ---
-
   bool aOrientation;
-  // szv#4:S4163:12Mar99 `bool stat3 =` not needed
-  data->ReadBoolean(num, 3, "orientation", ach, aOrientation);
 
-  //--- Initialisation of the read entity ---
+  data->ReadBoolean(num, 3, "orientation", ach, aOrientation);
 
   ent->Init(aName, aBound, aOrientation);
 }
@@ -61,15 +40,9 @@ void RWStepShape_RWFaceBound::WriteStep(StepData_StepWriter&                    
                                         const occ::handle<StepShape_FaceBound>& ent) const
 {
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
 
-  // --- own field : bound ---
-
   SW.Send(ent->Bound());
-
-  // --- own field : orientation ---
 
   SW.SendBoolean(ent->Orientation());
 }
@@ -100,7 +73,6 @@ void RWStepShape_RWFaceBound::Check(const occ::handle<StepShape_FaceBound>& ent,
       int nbRef = myShRef.NbEntities();
       if (nbRef == 1)
       {
-        //      ach.AddWarning("EdgeCurve only once referenced");
       }
       else if (nbRef == 2)
       {
@@ -114,8 +86,6 @@ void RWStepShape_RWFaceBound::Check(const occ::handle<StepShape_FaceBound>& ent,
           theOE2 = refOE2;
         else if (theOE1 == refOE2)
           theOE2 = refOE1;
-
-        // get the FaceBound orientation for theOE2
 
         bool sharOE2 = aShto.IsShared(theOE2);
         if (!sharOE2)
@@ -158,20 +128,16 @@ void RWStepShape_RWFaceBound::Check(const occ::handle<StepShape_FaceBound>& ent,
           }
         }
 
-        // "cumulate" the FaceBound orientation with the OrientedEdge orientation
-
         bool theOEOri1 = theFBOri1 ? theOE1->Orientation() : !(theOE1->Orientation());
         bool theOEOri2 = theFBOri2 ? theOE2->Orientation() : !(theOE2->Orientation());
-
-        // the orientation of the OrientedEdges must be opposite
 
         if (theOEOri1 == theOEOri2)
         {
           ach->AddFail("ERROR: non 2-manifold topology");
         }
-      } // end if(nbRef == 2)
-    } // end for(i=1; i<=nbEdg; ...)
-  } // end if(!theEL1.IsNull)
+      }
+    }
+  }
   else
   {
 #ifdef OCCT_DEBUG

@@ -12,16 +12,12 @@ IMPLEMENT_STANDARD_RTTIEXT(Geom_Surface, Geom_Geometry)
 
 typedef Geom_Surface Surface;
 
-//=================================================================================================
-
 occ::handle<Geom_Surface> Geom_Surface::UReversed() const
 {
   occ::handle<Geom_Surface> S = occ::down_cast<Geom_Surface>(Copy());
   S->UReverse();
   return S;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Surface> Geom_Surface::VReversed() const
 {
@@ -30,19 +26,13 @@ occ::handle<Geom_Surface> Geom_Surface::VReversed() const
   return S;
 }
 
-//=================================================================================================
-
 void Geom_Surface::TransformParameters(double&, double&, const gp_Trsf&) const {}
-
-//=================================================================================================
 
 gp_GTrsf2d Geom_Surface::ParametricTransformation(const gp_Trsf&) const
 {
   gp_GTrsf2d dummy;
   return dummy;
 }
-
-//=================================================================================================
 
 double Geom_Surface::UPeriod() const
 {
@@ -53,8 +43,6 @@ double Geom_Surface::UPeriod() const
   return (U2 - U1);
 }
 
-//=================================================================================================
-
 double Geom_Surface::VPeriod() const
 {
   Standard_NoSuchObject_Raise_if(!IsVPeriodic(), "Geom_Surface::VPeriod");
@@ -64,16 +52,12 @@ double Geom_Surface::VPeriod() const
   return (V2 - V1);
 }
 
-//=================================================================================================
-
 gp_Pnt Geom_Surface::Value(const double U, const double V) const
 {
   gp_Pnt P;
   D0(U, V, P);
   return P;
 }
-
-//=================================================================================================
 
 void Geom_Surface::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

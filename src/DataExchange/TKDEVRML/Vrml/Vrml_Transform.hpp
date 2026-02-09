@@ -8,17 +8,6 @@
 #include <Vrml_SFRotation.hpp>
 #include <Standard_OStream.hpp>
 
-//! defines a Transform of VRML specifying transform
-//! properties.
-//! This node defines a geometric 3D transformation consisting of (in order)
-//! a (possibly) non-uniform scale about an arbitrary point, a rotation about
-//! an arbitrary point and axis and translation.
-//! By default:
-//! myTranslation (0,0,0)
-//! myRotation  (0,0,1,0)
-//! myScaleFactor (1,1,1)
-//! myScaleOrientation (0,0,1,0)
-//! myCenter (0,0,0)
 class Vrml_Transform
 {
 public:

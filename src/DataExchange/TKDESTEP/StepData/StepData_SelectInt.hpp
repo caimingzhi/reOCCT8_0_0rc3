@@ -6,10 +6,6 @@
 #include <Standard_Integer.hpp>
 #include <StepData_SelectMember.hpp>
 
-//! A SelectInt is a SelectMember specialised for a basic integer
-//! type in a select which also accepts entities : this one has
-//! NO NAME.
-//! For a named select, see SelectNamed
 class StepData_SelectInt : public StepData_SelectMember
 {
 

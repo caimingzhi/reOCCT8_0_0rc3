@@ -15,8 +15,6 @@
 #include <TopoDS_Solid.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//=================================================================================================
-
 static gp_Dir getNormalOnFace(const TopoDS_Face& theFace, const double theU, const double theV)
 {
   double            aPrec = gp::Resolution();
@@ -26,11 +24,6 @@ static gp_Dir getNormalOnFace(const TopoDS_Face& theFace, const double theU, con
     aNormal.Reverse();
   return aNormal;
 }
-
-//=======================================================================
-// function : getNormalFromEdge
-// purpose  : Get average normal at the point with the given parameter on the edge
-//=======================================================================
 
 static bool getNormalFromEdge(const TopoDS_Shape& theShape,
                               const TopoDS_Edge&  theEdge,
@@ -63,11 +56,6 @@ static bool getNormalFromEdge(const TopoDS_Shape& theShape,
   return false;
 }
 
-//=======================================================================
-// function : getNormalFromVertex
-// purpose  : Get average normal at the point of the vertex
-//=======================================================================
-
 static bool getNormalFromVertex(const TopoDS_Shape&  theShape,
                                 const TopoDS_Vertex& theVer,
                                 gp_Dir&              theNormal)
@@ -96,15 +84,6 @@ static bool getNormalFromVertex(const TopoDS_Shape&  theShape,
   return false;
 }
 
-//=======================================================================
-// function : FindExtrema
-// purpose  : This function is called to find the nearest normal projection
-//           of a point <aPnt> on a shape <aShape>.
-//           1) return true if extrema is found.
-//           2) Set in:
-//             - theMinPnt : The solution point
-//             - theNormal : The normal direction to the shape at projection point
-//=======================================================================
 static bool FindExtrema(const gp_Pnt&       thePnt,
                         const TopoDS_Shape& theShape,
                         gp_Pnt&             theMinPnt,
@@ -117,9 +96,8 @@ static bool FindExtrema(const gp_Pnt&       thePnt,
   if (!ext.IsDone() || ext.NbSolution() == 0)
     return false;
 
-  // the point projection exist
   int nbext = ext.NbSolution();
-  // try to find a projection on face
+
   for (int iext = 1; iext <= nbext; iext++)
   {
     if (ext.SupportTypeShape2(iext) == BRepExtrema_IsInFace)
@@ -133,7 +111,6 @@ static bool FindExtrema(const gp_Pnt&       thePnt,
     }
   }
 
-  // if not found then take any edge or vertex solution
   for (int iext = 1; iext <= nbext; iext++)
   {
     if (ext.SupportTypeShape2(iext) == BRepExtrema_IsOnEdge)
@@ -156,22 +133,18 @@ static bool FindExtrema(const gp_Pnt&       thePnt,
   return false;
 }
 
-//=================================================================================================
-
 static bool isOutside(const gp_Pnt& thePnt, const gp_Pnt& thePonF, const gp_Dir& theNormal)
 {
   gp_Dir anOppRef(thePnt.XYZ() - thePonF.XYZ());
   double aSca = theNormal * anOppRef;
-  // outside if same directions
+
   return aSca > 0.;
 }
-
-//=================================================================================================
 
 BRepPrimAPI_MakeHalfSpace::BRepPrimAPI_MakeHalfSpace(const TopoDS_Face& theFace,
                                                      const gp_Pnt&      theRefPnt)
 {
-  // Set the flag is <IsDone> to False.
+
   NotDone();
 
   TopoDS_Shell aShell;
@@ -182,7 +155,6 @@ BRepPrimAPI_MakeHalfSpace::BRepPrimAPI_MakeHalfSpace(const TopoDS_Face& theFace,
   {
     bool toReverse = isOutside(theRefPnt, aMinPnt, aNormal);
 
-    // Construction of the open solid.
     BRep_Builder().MakeShell(aShell);
     BRep_Builder().Add(aShell, theFace);
     BRep_Builder().MakeSolid(mySolid);
@@ -196,22 +168,18 @@ BRepPrimAPI_MakeHalfSpace::BRepPrimAPI_MakeHalfSpace(const TopoDS_Face& theFace,
   }
 }
 
-//=================================================================================================
-
 BRepPrimAPI_MakeHalfSpace::BRepPrimAPI_MakeHalfSpace(const TopoDS_Shell& theShell,
                                                      const gp_Pnt&       theRefPnt)
 {
-  // Set the flag is <IsDone> to False.
+
   NotDone();
 
-  // Find the point of the skin closest to the reference point.
   gp_Pnt aMinPnt;
   gp_Dir aNormal;
   if (FindExtrema(theRefPnt, theShell, aMinPnt, aNormal))
   {
     bool toReverse = isOutside(theRefPnt, aMinPnt, aNormal);
 
-    // Construction of the open solid.
     TopoDS_Shell aShell = theShell;
     BRep_Builder().MakeSolid(mySolid);
     if (toReverse)
@@ -224,15 +192,11 @@ BRepPrimAPI_MakeHalfSpace::BRepPrimAPI_MakeHalfSpace(const TopoDS_Shell& theShel
   }
 }
 
-//=================================================================================================
-
 const TopoDS_Solid& BRepPrimAPI_MakeHalfSpace::Solid() const
 {
   StdFail_NotDone_Raise_if(!IsDone(), "BRepPrimAPI_MakeHalfSpace::Solid");
   return mySolid;
 }
-
-//=================================================================================================
 
 BRepPrimAPI_MakeHalfSpace::operator TopoDS_Solid() const
 {

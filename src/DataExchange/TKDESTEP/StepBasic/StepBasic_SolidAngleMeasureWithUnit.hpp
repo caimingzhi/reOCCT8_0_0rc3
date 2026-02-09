@@ -8,7 +8,6 @@ class StepBasic_SolidAngleMeasureWithUnit : public StepBasic_MeasureWithUnit
 {
 
 public:
-  //! Returns a SolidAngleMeasureWithUnit
   Standard_EXPORT StepBasic_SolidAngleMeasureWithUnit();
 
   DEFINE_STANDARD_RTTIEXT(StepBasic_SolidAngleMeasureWithUnit, StepBasic_MeasureWithUnit)

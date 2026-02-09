@@ -48,18 +48,10 @@ IMPLEMENT_STANDARD_RTTIEXT(Geom_OffsetSurface, Geom_Surface)
 
 static const double MyAngularToleranceForG1 = Precision::Angular();
 
-//=================================================================================================
-
 occ::handle<Geom_Geometry> Geom_OffsetSurface::Copy() const
 {
   return new Geom_OffsetSurface(*this);
 }
-
-//=======================================================================
-// function : Geom_OffsetSurface
-// purpose  : Basis surface cannot be an Offset surface or trimmed from
-//            offset surface.
-//=======================================================================
 
 Geom_OffsetSurface::Geom_OffsetSurface(const Geom_OffsetSurface& theOther)
     : basisSurf(occ::down_cast<Geom_Surface>(theOther.basisSurf->Copy())),
@@ -71,14 +63,9 @@ Geom_OffsetSurface::Geom_OffsetSurface(const Geom_OffsetSurface& theOther)
                                    : nullptr),
       myBasisSurfContinuity(theOther.myBasisSurfContinuity)
 {
-  // Deep copy without validation - source surface is already validated
 }
 
-//=================================================================================================
-
 Geom_OffsetSurface::~Geom_OffsetSurface() = default;
-
-//=================================================================================================
 
 Geom_OffsetSurface::Geom_OffsetSurface(const occ::handle<Geom_Surface>& theSurf,
                                        const double                     theOffset,
@@ -87,8 +74,6 @@ Geom_OffsetSurface::Geom_OffsetSurface(const occ::handle<Geom_Surface>& theSurf,
 {
   SetBasisSurface(theSurf, isNotCheckC0);
 }
-
-//=================================================================================================
 
 void Geom_OffsetSurface::SetBasisSurface(const occ::handle<Geom_Surface>& S,
                                          const bool                       isNotCheckC0)
@@ -122,7 +107,6 @@ void Geom_OffsetSurface::SetBasisSurface(const occ::handle<Geom_Surface>& S,
 
   bool isC0 = !isNotCheckC0 && (myBasisSurfContinuity == GeomAbs_C0);
 
-  // Basis surface must be at least C1
   if (isC0)
   {
     occ::handle<Geom_Curve> aCurve;
@@ -172,20 +156,19 @@ void Geom_OffsetSurface::SetBasisSurface(const occ::handle<Geom_Surface>& S,
       occ::handle<Geom_BSplineCurve> aBC = occ::down_cast<Geom_BSplineCurve>(aCurv1);
       isUG1                              = aBC->IsG1(aVf, aVl, MyAngularToleranceForG1);
     }
-    //
+
     if (!isVG1)
     {
       occ::handle<Geom_BSplineCurve> aBC = occ::down_cast<Geom_BSplineCurve>(aCurv2);
       isVG1                              = aBC->IsG1(aUf, aUl, MyAngularToleranceForG1);
     }
-    //
+
     if (isUG1 && isVG1)
     {
       myBasisSurfContinuity = GeomAbs_G1;
       isC0                  = false;
     }
 
-    // Raise exception if still C0
     if (isC0)
       throw Standard_ConstructionError("Offset with no C1 Surface");
   }
@@ -204,24 +187,17 @@ void Geom_OffsetSurface::SetBasisSurface(const occ::handle<Geom_Surface>& S,
   if (aCheckingSurf->IsKind(STANDARD_TYPE(Geom_BSplineSurface))
       || aCheckingSurf->IsKind(STANDARD_TYPE(Geom_BezierSurface)))
   {
-    // Tolerance en dur pour l'instant ,mais on devrait la proposer dans le constructeur
-    // et la mettre en champ, on pourrait utiliser par exemple pour l'extraction d'iso
-    // et aussi pour les singularite. Pour les surfaces osculatrices, on l'utilise pour
-    // detecter si une iso est degeneree.
-    constexpr double Tol = Precision::Confusion(); // 0.0001;
+
+    constexpr double Tol = Precision::Confusion();
     myOscSurf            = std::make_unique<Geom_OsculatingSurface>(aCheckingSurf, Tol);
   }
 }
-
-//=================================================================================================
 
 void Geom_OffsetSurface::SetOffsetValue(const double D)
 {
   offsetValue = D;
   equivSurf   = Surface();
 }
-
-//=================================================================================================
 
 void Geom_OffsetSurface::UReverse()
 {
@@ -231,14 +207,10 @@ void Geom_OffsetSurface::UReverse()
     equivSurf->UReverse();
 }
 
-//=================================================================================================
-
 double Geom_OffsetSurface::UReversedParameter(const double U) const
 {
   return basisSurf->UReversedParameter(U);
 }
-
-//=================================================================================================
 
 void Geom_OffsetSurface::VReverse()
 {
@@ -248,21 +220,15 @@ void Geom_OffsetSurface::VReverse()
     equivSurf->VReverse();
 }
 
-//=================================================================================================
-
 double Geom_OffsetSurface::VReversedParameter(const double V) const
 {
   return basisSurf->VReversedParameter(V);
 }
 
-//=================================================================================================
-
 void Geom_OffsetSurface::Bounds(double& U1, double& U2, double& V1, double& V2) const
 {
   basisSurf->Bounds(U1, U2, V1, V2);
 }
-
-//=================================================================================================
 
 GeomAbs_Shape Geom_OffsetSurface::Continuity() const
 {
@@ -279,8 +245,6 @@ GeomAbs_Shape Geom_OffsetSurface::Continuity() const
   }
   return GeomAbs_C0;
 }
-
-//=================================================================================================
 
 void Geom_OffsetSurface::D0(const double U, const double V, gp_Pnt& P) const
 {
@@ -300,8 +264,6 @@ void Geom_OffsetSurface::D0(const double U, const double V, gp_Pnt& P) const
       "Geom_OffsetSurface::D0(): Unable to calculate value at singular point");
   }
 }
-
-//=================================================================================================
 
 void Geom_OffsetSurface::D1(const double U,
                             const double V,
@@ -332,8 +294,6 @@ void Geom_OffsetSurface::D1(const double U,
       "Geom_OffsetSurface::D1(): Unable to calculate derivative at singular point");
   }
 }
-
-//=================================================================================================
 
 void Geom_OffsetSurface::D2(const double U,
                             const double V,
@@ -371,8 +331,6 @@ void Geom_OffsetSurface::D2(const double U,
       "Geom_OffsetSurface::D2(): Unable to calculate derivative at singular point");
   }
 }
-
-//=================================================================================================
 
 void Geom_OffsetSurface::D3(const double U,
                             const double V,
@@ -420,8 +378,6 @@ void Geom_OffsetSurface::D3(const double U,
   }
 }
 
-//=================================================================================================
-
 gp_Vec Geom_OffsetSurface::DN(const double U, const double V, const int Nu, const int Nv) const
 {
   Standard_RangeError_Raise_if(Nu < 0 || Nv < 0 || Nu + Nv < 1, " ");
@@ -452,12 +408,6 @@ gp_Vec Geom_OffsetSurface::DN(const double U, const double V, const int Nu, cons
   return aResult;
 }
 
-////*************************************************
-////
-////   EVALUATOR FOR THE ISO-CURVE APPROXIMATION
-////
-////*************************************************
-
 class Geom_OffsetSurface_UIsoEvaluator : public AdvApprox_EvaluatorFunction
 {
 public:
@@ -471,7 +421,7 @@ public:
                 double  StartEnd[2],
                 double* Parameter,
                 int*    DerivativeRequest,
-                double* Result, // [Dimension]
+                double* Result,
                 int*    ErrorCode) override;
 
 private:
@@ -479,8 +429,8 @@ private:
   double              IsoPar;
 };
 
-void Geom_OffsetSurface_UIsoEvaluator::Evaluate(int*, /*Dimension*/
-                                                double /*StartEnd*/[2],
+void Geom_OffsetSurface_UIsoEvaluator::Evaluate(int*,
+                                                double[2],
                                                 double* Parameter,
                                                 int*    DerivativeRequest,
                                                 double* Result,
@@ -518,7 +468,7 @@ public:
                 double  StartEnd[2],
                 double* Parameter,
                 int*    DerivativeRequest,
-                double* Result, // [Dimension]
+                double* Result,
                 int*    ErrorCode) override;
 
 private:
@@ -526,8 +476,8 @@ private:
   double                    IsoPar;
 };
 
-void Geom_OffsetSurface_VIsoEvaluator::Evaluate(int*, /*Dimension*/
-                                                double /*StartEnd*/[2],
+void Geom_OffsetSurface_VIsoEvaluator::Evaluate(int*,
+                                                double[2],
                                                 double* Parameter,
                                                 int*    DerivativeRequest,
                                                 double* Result,
@@ -551,14 +501,6 @@ void Geom_OffsetSurface_VIsoEvaluator::Evaluate(int*, /*Dimension*/
   }
   *ReturnCode = 0;
 }
-
-//=======================================================================
-// function : UIso
-// purpose  : The Uiso or the VIso of an OffsetSurface can't be clearly
-//           exprimed as a curve from Geom (except some particular cases).
-//           So, to extract the U or VIso an Approximation is needed.
-//           This approx always will return a BSplineCurve from Geom.
-//=======================================================================
 
 occ::handle<Geom_Curve> Geom_OffsetSurface::UIso(const double UU) const
 {
@@ -609,8 +551,6 @@ occ::handle<Geom_Curve> Geom_OffsetSurface::UIso(const double UU) const
     return equivSurf->UIso(UU);
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> Geom_OffsetSurface::VIso(const double VV) const
 {
   if (equivSurf.IsNull())
@@ -645,15 +585,11 @@ occ::handle<Geom_Curve> Geom_OffsetSurface::VIso(const double VV) const
     return equivSurf->VIso(VV);
 }
 
-//=================================================================================================
-
 bool Geom_OffsetSurface::IsCNu(const int N) const
 {
   Standard_RangeError_Raise_if(N < 0, " ");
   return basisSurf->IsCNu(N + 1);
 }
-
-//=================================================================================================
 
 bool Geom_OffsetSurface::IsCNv(const int N) const
 {
@@ -661,35 +597,25 @@ bool Geom_OffsetSurface::IsCNv(const int N) const
   return basisSurf->IsCNv(N + 1);
 }
 
-//=================================================================================================
-
 bool Geom_OffsetSurface::IsUPeriodic() const
 {
   return basisSurf->IsUPeriodic();
 }
-
-//=================================================================================================
 
 double Geom_OffsetSurface::UPeriod() const
 {
   return basisSurf->UPeriod();
 }
 
-//=================================================================================================
-
 bool Geom_OffsetSurface::IsVPeriodic() const
 {
   return basisSurf->IsVPeriodic();
 }
 
-//=================================================================================================
-
 double Geom_OffsetSurface::VPeriod() const
 {
   return basisSurf->VPeriod();
 }
-
-//=================================================================================================
 
 bool Geom_OffsetSurface::IsUClosed() const
 {
@@ -756,8 +682,6 @@ bool Geom_OffsetSurface::IsUClosed() const
   return UClosed;
 }
 
-//=================================================================================================
-
 bool Geom_OffsetSurface::IsVClosed() const
 {
   bool                      VClosed;
@@ -792,16 +716,12 @@ bool Geom_OffsetSurface::IsVClosed() const
   return VClosed;
 }
 
-//=================================================================================================
-
 void Geom_OffsetSurface::Transform(const gp_Trsf& T)
 {
   basisSurf->Transform(T);
   offsetValue *= T.ScaleFactor();
   equivSurf.Nullify();
 }
-
-//=================================================================================================
 
 void Geom_OffsetSurface::TransformParameters(double& U, double& V, const gp_Trsf& T) const
 {
@@ -810,20 +730,16 @@ void Geom_OffsetSurface::TransformParameters(double& U, double& V, const gp_Trsf
     equivSurf->TransformParameters(U, V, T);
 }
 
-//=================================================================================================
-
 gp_GTrsf2d Geom_OffsetSurface::ParametricTransformation(const gp_Trsf& T) const
 {
   return basisSurf->ParametricTransformation(T);
 }
 
-//==================================================================================================
-
 occ::handle<Geom_Surface> Geom_OffsetSurface::Surface() const
 {
-  // Returns an equivalent non-offset surface if it exists for this offset surface.
+
   if (offsetValue == 0.0)
-    return basisSurf; // Direct case - no offset
+    return basisSurf;
 
   constexpr double          Tol = Precision::Confusion();
   occ::handle<Geom_Surface> Result, Base;
@@ -832,7 +748,6 @@ occ::handle<Geom_Surface> Geom_OffsetSurface::Surface() const
   bool                       IsTrimmed;
   double                     U1 = 0., V1 = 0., U2 = 0., V2 = 0.;
 
-  // Handle trimmed surfaces - extract the basis surface and bounds.
   if (TheType == STANDARD_TYPE(Geom_RectangularTrimmedSurface))
   {
     occ::handle<Geom_RectangularTrimmedSurface> S =
@@ -848,12 +763,10 @@ occ::handle<Geom_Surface> Geom_OffsetSurface::Surface() const
     Base      = basisSurf;
   }
 
-  // Handle canonical surfaces - compute equivalent offset surface.
-  // For direct orientation, offset is along outward normal; for indirect, it's reversed.
   if (TheType == STANDARD_TYPE(Geom_Plane))
   {
     occ::handle<Geom_Plane> P = occ::down_cast<Geom_Plane>(Base);
-    // Plane normal is already available as Position().Direction().
+
     gp_Vec T(P->Position().Direction());
     T *= offsetValue;
     Result = occ::down_cast<Geom_Plane>(P->Translated(T));
@@ -870,11 +783,10 @@ occ::handle<Geom_Surface> Geom_OffsetSurface::Surface() const
     }
     else if (Radius <= -Tol)
     {
-      // Negative radius: flip X-axis to reverse normal orientation.
+
       Axis.XReverse();
       Result = new Geom_CylindricalSurface(Axis, -Radius);
     }
-    // else: degenerate surface - radius is too small.
   }
   else if (TheType == STANDARD_TYPE(Geom_ConicalSurface))
   {
@@ -887,13 +799,12 @@ occ::handle<Geom_Surface> Geom_OffsetSurface::Surface() const
     const double                     aRadius = C->RefRadius() + aSign * offsetValue * aCos;
     if (aRadius >= 0.)
     {
-      // Translate apex along axis by offset component.
+
       gp_Vec aZ(anAxis.Direction());
       aZ *= -aSign * offsetValue * aSin;
       anAxis.Translate(aZ);
       Result = new Geom_ConicalSurface(anAxis, anAlpha, aRadius);
     }
-    // else: degenerate surface - radius is negative.
   }
   else if (TheType == STANDARD_TYPE(Geom_SphericalSurface))
   {
@@ -907,12 +818,11 @@ occ::handle<Geom_Surface> Geom_OffsetSurface::Surface() const
     }
     else if (Radius <= -Tol)
     {
-      // Negative radius: flip both X and Z axes to reverse normal orientation.
+
       Axis.XReverse();
       Axis.ZReverse();
       Result = new Geom_SphericalSurface(Axis, -Radius);
     }
-    // else: degenerate surface - radius is too small.
   }
   else if (TheType == STANDARD_TYPE(Geom_ToroidalSurface))
   {
@@ -921,21 +831,19 @@ occ::handle<Geom_Surface> Geom_OffsetSurface::Surface() const
     gp_Ax3                            Axis        = S->Position();
     const double                      aSign       = Axis.Direct() ? 1.0 : -1.0;
     const double                      MinorRadius = S->MinorRadius() + aSign * offsetValue;
-    // Only handle non-self-intersecting torus (MinorRadius <= MajorRadius).
+
     if (MinorRadius >= Tol && MinorRadius <= MajorRadius)
     {
       Result = new Geom_ToroidalSurface(Axis, MajorRadius, MinorRadius);
     }
     else if (MinorRadius <= -Tol && -MinorRadius <= MajorRadius)
     {
-      // Negative minor radius: flip X-axis to reverse normal orientation.
+
       Axis.XReverse();
       Result = new Geom_ToroidalSurface(Axis, MajorRadius, -MinorRadius);
     }
-    // else: degenerate or self-intersecting torus - no equivalent surface.
   }
 
-  // Trim the result if the basis surface was trimmed.
   if (IsTrimmed && !Result.IsNull())
   {
     Base   = Result;
@@ -945,8 +853,6 @@ occ::handle<Geom_Surface> Geom_OffsetSurface::Surface() const
   return Result;
 }
 
-//=================================================================================================
-
 bool Geom_OffsetSurface::UOsculatingSurface(const double                      U,
                                             const double                      V,
                                             bool&                             t,
@@ -955,8 +861,6 @@ bool Geom_OffsetSurface::UOsculatingSurface(const double                      U,
   return myOscSurf && myOscSurf->UOsculatingSurface(U, V, t, L);
 }
 
-//=================================================================================================
-
 bool Geom_OffsetSurface::VOsculatingSurface(const double                      U,
                                             const double                      V,
                                             bool&                             t,
@@ -964,8 +868,6 @@ bool Geom_OffsetSurface::VOsculatingSurface(const double                      U,
 {
   return myOscSurf && myOscSurf->VOsculatingSurface(U, V, t, L);
 }
-
-//=================================================================================================
 
 void Geom_OffsetSurface::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

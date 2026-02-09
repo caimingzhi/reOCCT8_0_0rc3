@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ElCLib.hpp>
 #include <GccAna_Circ2dTanOnRad.hpp>
@@ -22,24 +10,7 @@
 #include <math_DirectPolynomialRoots.hpp>
 #include <Standard_NegativeValue.hpp>
 
-//=========================================================================
-//    typedef of handled objects :                                      +
-//=========================================================================
 typedef math_DirectPolynomialRoots Roots;
-
-//=========================================================================
-//   Circle tangent to a point      Point1.                               +
-//          center on straight line OnLine.                               +
-//          radius                  Radius.                               +
-//                                                                        +
-//  Initialize the table of solutions cirsol and all fields.              +
-//  Eliminate cases not being the solution.                     +
-//  Solve the equation of second degree showing that the found center point +
-//  (xc,yc) is at distance Radius from point Point1 and on the straight line OnLine. +
-//  The solutions are represented by circles :                     +
-//                   - of center Pntcen(xc,yc)                            +
-//                   - of radius Radius.                                   +
-//=========================================================================
 
 GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const gp_Pnt2d& Point1,
                                              const gp_Lin2d& OnLine,
@@ -88,14 +59,14 @@ GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const gp_Pnt2d& Point1,
       {
         gp_Ax2d axe(gp_Pnt2d(x1 - ydir * dp1lin, y1 + xdir * dp1lin), dirx);
         cirsol(NbrSol) = gp_Circ2d(axe, Radius);
-        //       ======================================
+
         qualifier1(NbrSol) = GccEnt_noqualifier;
       }
       else
       {
         gp_Ax2d axe(gp_Pnt2d(x1 + ydir * dp1lin, y1 - xdir * dp1lin), dirx);
         cirsol(NbrSol) = gp_Circ2d(axe, Radius);
-        //       ======================================
+
         qualifier1(NbrSol) = GccEnt_noqualifier;
       }
       TheSame1(NbrSol)  = 0;
@@ -162,7 +133,7 @@ GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const gp_Pnt2d& Point1,
             NbrSol++;
             gp_Pnt2d Center(xc, yc);
             cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-            //           =======================================================
+
             qualifier1(NbrSol) = GccEnt_noqualifier;
             TheSame1(NbrSol)   = 0;
             pnttg1sol(NbrSol)  = Point1;

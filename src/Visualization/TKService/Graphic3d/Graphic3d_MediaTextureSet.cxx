@@ -20,8 +20,6 @@ extern "C"
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_MediaTextureSet, Graphic3d_TextureSet)
 
-//=================================================================================================
-
 Graphic3d_MediaTextureSet::Graphic3d_MediaTextureSet()
     : Graphic3d_TextureSet(4),
 
@@ -94,16 +92,12 @@ Graphic3d_MediaTextureSet::Graphic3d_MediaTextureSet()
                                              aSrcFrag + F_SHADER_YUV2RGB_FULL));
 }
 
-//=================================================================================================
-
 void Graphic3d_MediaTextureSet::SetCallback(CallbackOnUpdate_t theCallbackFunction,
                                             void*              theCallbackUserPtr)
 {
   myCallbackFunction = theCallbackFunction;
   myCallbackUserPtr  = theCallbackUserPtr;
 }
-
-//=================================================================================================
 
 void Graphic3d_MediaTextureSet::Notify()
 {
@@ -112,8 +106,6 @@ void Graphic3d_MediaTextureSet::Notify()
     myCallbackFunction(myCallbackUserPtr);
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_MediaTextureSet::OpenInput(const TCollection_AsciiString& thePath, bool theToWait)
 {
@@ -134,8 +126,6 @@ void Graphic3d_MediaTextureSet::OpenInput(const TCollection_AsciiString& thePath
   myPlayerCtx->SetInput(thePath, theToWait);
   myInput = thePath;
 }
-
-//=================================================================================================
 
 occ::handle<Media_Frame> Graphic3d_MediaTextureSet::LockFrame()
 {
@@ -158,8 +148,6 @@ occ::handle<Media_Frame> Graphic3d_MediaTextureSet::LockFrame()
   return occ::handle<Media_Frame>();
 }
 
-//=================================================================================================
-
 void Graphic3d_MediaTextureSet::ReleaseFrame(const occ::handle<Media_Frame>& theFrame)
 {
   {
@@ -174,8 +162,6 @@ void Graphic3d_MediaTextureSet::ReleaseFrame(const occ::handle<Media_Frame>& the
     myCallbackFunction(myCallbackUserPtr);
   }
 }
-
-//=================================================================================================
 
 bool Graphic3d_MediaTextureSet::SwapFrames()
 {

@@ -9,7 +9,6 @@ class StepGeom_BezierSurface : public StepGeom_BSplineSurface
 {
 
 public:
-  //! Returns a BezierSurface
   Standard_EXPORT StepGeom_BezierSurface();
 
   DEFINE_STANDARD_RTTIEXT(StepGeom_BezierSurface, StepGeom_BSplineSurface)

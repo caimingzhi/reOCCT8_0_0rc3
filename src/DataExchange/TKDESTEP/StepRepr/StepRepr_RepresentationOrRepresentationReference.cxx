@@ -1,15 +1,11 @@
-// Created on : Sat May 02 12:41:14 2020
+
 
 #include <StepRepr_RepresentationOrRepresentationReference.hpp>
 #include <StepRepr_Representation.hpp>
 #include <StepRepr_RepresentationReference.hpp>
 
-//=================================================================================================
-
 StepRepr_RepresentationOrRepresentationReference::
   StepRepr_RepresentationOrRepresentationReference() = default;
-
-//=================================================================================================
 
 int StepRepr_RepresentationOrRepresentationReference::CaseNum(
   const occ::handle<Standard_Transient>& ent) const
@@ -23,15 +19,11 @@ int StepRepr_RepresentationOrRepresentationReference::CaseNum(
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepRepr_Representation> StepRepr_RepresentationOrRepresentationReference::
   Representation() const
 {
   return occ::down_cast<StepRepr_Representation>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepRepr_RepresentationReference> StepRepr_RepresentationOrRepresentationReference::
   RepresentationReference() const

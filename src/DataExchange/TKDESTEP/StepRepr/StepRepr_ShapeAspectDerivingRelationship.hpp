@@ -5,7 +5,6 @@
 
 #include <StepRepr_ShapeAspectRelationship.hpp>
 
-//! Added for Dimensional Tolerances
 class StepRepr_ShapeAspectDerivingRelationship : public StepRepr_ShapeAspectRelationship
 {
 

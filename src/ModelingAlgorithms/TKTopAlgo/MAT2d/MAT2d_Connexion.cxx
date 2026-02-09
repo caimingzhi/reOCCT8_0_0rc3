@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MAT2d_Connexion, Standard_Transient)
 
-//=================================================================================================
-
 MAT2d_Connexion::MAT2d_Connexion()
     : lineA(0),
       lineB(0),
@@ -17,8 +15,6 @@ MAT2d_Connexion::MAT2d_Connexion()
       parameterOnB(0.0)
 {
 }
-
-//=================================================================================================
 
 MAT2d_Connexion::MAT2d_Connexion(const int       LineA,
                                  const int       LineB,
@@ -41,133 +37,95 @@ MAT2d_Connexion::MAT2d_Connexion(const int       LineA,
 {
 }
 
-//=================================================================================================
-
 int MAT2d_Connexion::IndexFirstLine() const
 {
   return lineA;
 }
-
-//=================================================================================================
 
 int MAT2d_Connexion::IndexSecondLine() const
 {
   return lineB;
 }
 
-//=================================================================================================
-
 int MAT2d_Connexion::IndexItemOnFirst() const
 {
   return itemA;
 }
-
-//=================================================================================================
 
 int MAT2d_Connexion::IndexItemOnSecond() const
 {
   return itemB;
 }
 
-//=================================================================================================
-
 double MAT2d_Connexion::ParameterOnFirst() const
 {
   return parameterOnA;
 }
-
-//=================================================================================================
 
 double MAT2d_Connexion::ParameterOnSecond() const
 {
   return parameterOnB;
 }
 
-//=================================================================================================
-
 gp_Pnt2d MAT2d_Connexion::PointOnFirst() const
 {
   return pointA;
 }
-
-//=================================================================================================
 
 gp_Pnt2d MAT2d_Connexion::PointOnSecond() const
 {
   return pointB;
 }
 
-//=================================================================================================
-
 double MAT2d_Connexion::Distance() const
 {
   return distance;
 }
-
-//=================================================================================================
 
 void MAT2d_Connexion::IndexFirstLine(const int anIndex)
 {
   lineA = anIndex;
 }
 
-//=================================================================================================
-
 void MAT2d_Connexion::IndexSecondLine(const int anIndex)
 {
   lineB = anIndex;
 }
-
-//=================================================================================================
 
 void MAT2d_Connexion::IndexItemOnFirst(const int anIndex)
 {
   itemA = anIndex;
 }
 
-//=================================================================================================
-
 void MAT2d_Connexion::IndexItemOnSecond(const int anIndex)
 {
   itemB = anIndex;
 }
-
-//=================================================================================================
 
 void MAT2d_Connexion::ParameterOnFirst(const double aParameter)
 {
   parameterOnA = aParameter;
 }
 
-//=================================================================================================
-
 void MAT2d_Connexion::ParameterOnSecond(const double aParameter)
 {
   parameterOnB = aParameter;
 }
-
-//=================================================================================================
 
 void MAT2d_Connexion::PointOnFirst(const gp_Pnt2d& aPoint)
 {
   pointA = aPoint;
 }
 
-//=================================================================================================
-
 void MAT2d_Connexion::PointOnSecond(const gp_Pnt2d& aPoint)
 {
   pointB = aPoint;
 }
 
-//=================================================================================================
-
 void MAT2d_Connexion::Distance(const double d)
 {
   distance = d;
 }
-
-//=================================================================================================
 
 occ::handle<MAT2d_Connexion> MAT2d_Connexion::Reverse() const
 {
@@ -181,8 +139,6 @@ occ::handle<MAT2d_Connexion> MAT2d_Connexion::Reverse() const
                              pointB,
                              pointA);
 }
-
-//=================================================================================================
 
 bool MAT2d_Connexion::IsAfter(const occ::handle<MAT2d_Connexion>& C2, const double Sense) const
 {
@@ -224,8 +180,6 @@ static void Indent(const int Offset)
     }
   }
 }
-
-//=================================================================================================
 
 void MAT2d_Connexion::Dump(const int, const int Offset) const
 {

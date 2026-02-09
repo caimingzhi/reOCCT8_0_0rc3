@@ -17,7 +17,6 @@ class StepGeom_Direction : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a Direction
   Standard_EXPORT StepGeom_Direction();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&    theName,

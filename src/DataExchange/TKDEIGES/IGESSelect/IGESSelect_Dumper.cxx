@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_IntParam.hpp>
 #include <IFSelect_SessionFile.hpp>
@@ -45,7 +34,6 @@
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_Dumper, IFSelect_SessionDumper)
 
-// #include <IGESSelect_SelectIGESTypeForm.hxx>
 IGESSelect_Dumper::IGESSelect_Dumper() = default;
 
 bool IGESSelect_Dumper::WriteOwn(IFSelect_SessionFile&                  file,
@@ -58,15 +46,7 @@ bool IGESSelect_Dumper::WriteOwn(IFSelect_SessionFile&                  file,
     return true;
   if (type == STANDARD_TYPE(IGESSelect_DispPerDrawing))
     return true;
-  /*  if (type == STANDARD_TYPE(IGESSelect_SelectIGESTypeForm)) {
-      DeclareAndCast(IGESSelect_SelectIGESTypeForm,sf,item);
-      bool exact = sf->IsExact();
-      TCollection_AsciiString text = sf->SignatureText();  // attention, 1-2 term
-      if (exact) file.SendText("exact");
-      else       file.SendText("contains");
-      file.SendText(text.ToCString());
-      return true;
-    } */
+
   if (type == STANDARD_TYPE(IGESSelect_SelectVisibleStatus))
     return true;
   if (type == STANDARD_TYPE(IGESSelect_SelectLevelNumber))
@@ -183,26 +163,24 @@ bool IGESSelect_Dumper::ReadOwn(IFSelect_SessionFile&            file,
   {
     if (file.NbParams() < 2)
       return false;
-    // bool exact; //szv#4:S4163:12Mar99 not needed
+
     const TCollection_AsciiString& exname = file.ParamValue(1);
     if (exname.Length() < 1)
       return false;
     if (exname.Value(1) == 'e')
     {
-    } // szv#4:S4163:12Mar99 `exact = true` not needed
+    }
     else if (exname.Value(1) == 'c')
     {
-    } // szv#4:S4163:12Mar99 `exact = false` not needed
+    }
     else
       return false;
-    // Attention, 2 termes possibles pour la signature
+
     char sig[40];
     if (file.NbParams() == 2)
       Sprintf(sig, "%s", file.ParamValue(2).ToCString());
     else
       Sprintf(sig, "%s %s", file.ParamValue(2).ToCString(), file.ParamValue(3).ToCString());
-    //    item = new IGESSelect_SelectIGESTypeForm(sig,exact);
-    //    return true;
   }
   if (type.IsEqual("IGESSelect_SelectVisibleStatus"))
   {
@@ -274,7 +252,7 @@ bool IGESSelect_Dumper::ReadOwn(IFSelect_SessionFile&            file,
     ff->SetZeroSuppress(zerosup);
     if (file.NbParams() >= 5)
     {
-      // char flotrange[20]; //szv#4:S4163:12Mar99 unused
+
       double rangemin, rangemax;
       rangemin = Atof(file.ParamValue(4).ToCString());
       rangemax = Atof(file.ParamValue(5).ToCString());

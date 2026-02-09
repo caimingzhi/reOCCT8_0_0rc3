@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GCPnts_QuasiUniformDeflection.hpp>
 
@@ -22,7 +10,6 @@
 
 static const int MyMaxQuasiFleshe = 2000;
 
-// mask the return of a Adaptor2d_Curve2d as a gp_Pnt
 static gp_Pnt Value(const Adaptor3d_Curve& theC, const double theParameter)
 {
   return theC.Value(theParameter);
@@ -49,8 +36,6 @@ static void D1(const Adaptor2d_Curve2d& theC, const double theParameter, gp_Pnt&
   theP.SetCoord(a2dPoint.X(), a2dPoint.Y(), 0.0);
   theV.SetCoord(a2dVec.X(), a2dVec.Y(), 0.0);
 }
-
-//=================================================================================================
 
 template <class TheCurve>
 static void QuasiFleche(const TheCurve&               theC,
@@ -93,26 +78,22 @@ static void QuasiFleche(const TheCurve&               theC,
     aVdelta = theVfin;
   }
 
-  // square length of chord
   const double aNorme     = gp_Vec(thePdeb, aPdelta).SquareMagnitude();
   double       aFleche    = 0.0;
   bool         isFlecheOk = false;
   if (aNorme > theEps && aNorme > 16. * theDeflection2)
   {
-    // Evaluation de la fleche par interpolation. Voir IntWalk_IWalking::TestDeflection
+
     double N1 = theVdeb.SquareMagnitude();
     double N2 = aVdelta.SquareMagnitude();
     if (N1 > theEps && N2 > theEps)
     {
-      // square distance between ends of two normalized vectors [0; 4]
+
       double aNormediff = (theVdeb.Normalized().XYZ() - aVdelta.Normalized().XYZ()).SquareModulus();
       if (aNormediff > theEps)
       {
         aFleche = aNormediff * aNorme / 64.0;
-        // So, fleche <= (aNorme / 16), independently of Vdeb and Vdelta.
-        // And if (aNorme / 16) < theDeflection2, this approach gives
-        // fleche < theDeflection2 independently of real curve.
-        // That is why we exclude case aNorme < (16. * theDeflection2)
+
         isFlecheOk = true;
       }
     }
@@ -124,17 +105,9 @@ static void QuasiFleche(const TheCurve&               theC,
 
   if (isFlecheOk)
   {
-    // Algorithm, evaluating "fleche" by interpolation,
-    // can give false-positive result.
-    // So we check also distance between Pmid and Pverif (aFlecheMidMid).
-    // But aFlecheMidMid gives worse result in case of non-uniform parameterisation.
-    // Maximum aFlecheMidMid, that seems reasonable, is (chord/2)^2 + theDeflection2
-    //   .---------------.Pverif  .
-    //   |               |        | Deflection
-    //   ._______. ______.        .
-    // Pdeb    Pmid    Pdelta
+
     if (aFlecheMidMid > aNorme / 4. + theDeflection2)
-    // if (aFlecheMidMid > aNorme/4.)
+
     {
       aFleche = aFlecheMidMid;
     }
@@ -184,8 +157,6 @@ static void QuasiFleche(const TheCurve&               theC,
   }
   --theNbCalls;
 }
-
-//=================================================================================================
 
 template <class TheCurve>
 static void QuasiFleche(const TheCurve&               theC,
@@ -271,8 +242,6 @@ static void QuasiFleche(const TheCurve&               theC,
   --theNbCalls;
 }
 
-//=================================================================================================
-
 template <class TheCurve>
 static bool PerformLinear(const TheCurve&               theC,
                           NCollection_Sequence<double>& theParameters,
@@ -289,8 +258,6 @@ static bool PerformLinear(const TheCurve&               theC,
   thePoints.Append(aPoint);
   return true;
 }
-
-//=================================================================================================
 
 template <class TheCurve>
 static bool PerformCircular(const TheCurve&               theC,
@@ -316,8 +283,6 @@ static bool PerformCircular(const TheCurve&               theC,
   return true;
 }
 
-//=================================================================================================
-
 template <class TheCurve>
 static GCPnts_DeflectionType GetDefType(const TheCurve& theC)
 {
@@ -326,8 +291,6 @@ static GCPnts_DeflectionType GetDefType(const TheCurve& theC)
     return GCPnts_DefComposite;
   }
 
-  // to force subdivisions at discontinuities.
-  // G1 should work, but gives exceptions...
   switch (theC.GetType())
   {
     case GeomAbs_Line:
@@ -348,8 +311,6 @@ static GCPnts_DeflectionType GetDefType(const TheCurve& theC)
       return GCPnts_Curved;
   }
 }
-
-//=================================================================================================
 
 template <class TheCurve>
 static bool PerformCurve(NCollection_Sequence<double>& theParameters,
@@ -407,11 +368,9 @@ static bool PerformCurve(NCollection_Sequence<double>& theParameters,
                 thePoints,
                 aNbCallQF);
   }
-  //  cout << "Nb de pts: " << Points.Length()<< endl;
+
   return true;
 }
-
-//=================================================================================================
 
 template <class TheCurve>
 static bool PerformComposite(NCollection_Sequence<double>& theParameters,
@@ -423,16 +382,13 @@ static bool PerformComposite(NCollection_Sequence<double>& theParameters,
                              const double                  theEPSILON,
                              const GeomAbs_Shape           theContinuity)
 {
-  //
-  //  coherence avec Intervals
-  //
+
   const int                  aNbIntervals = theC.NbIntervals(GeomAbs_C2);
   int                        aPIndex      = 0;
   NCollection_Array1<double> aTI(1, aNbIntervals + 1);
   theC.Intervals(aTI, GeomAbs_C2);
   BSplCLib::Hunt(aTI, theU1, aPIndex);
 
-  // iterate by continuous segments
   double aUa = theU1;
   for (int anIndex = aPIndex;;)
   {
@@ -455,7 +411,6 @@ static bool PerformComposite(NCollection_Sequence<double>& theParameters,
       return true;
     }
 
-    // remove last point to avoid duplication
     theParameters.Remove(theParameters.Length());
     thePoints.Remove(thePoints.Length());
 
@@ -463,15 +418,11 @@ static bool PerformComposite(NCollection_Sequence<double>& theParameters,
   }
 }
 
-//=================================================================================================
-
 gp_Pnt GCPnts_QuasiUniformDeflection::Value(const int theIndex) const
 {
   StdFail_NotDone_Raise_if(!myDone, "GCPnts_QuasiUniformAbscissa::Parameter()");
   return myPoints.Value(theIndex);
 }
-
-//=================================================================================================
 
 GCPnts_QuasiUniformDeflection::GCPnts_QuasiUniformDeflection()
     : myDone(false),
@@ -479,8 +430,6 @@ GCPnts_QuasiUniformDeflection::GCPnts_QuasiUniformDeflection()
       myCont(GeomAbs_C1)
 {
 }
-
-//=================================================================================================
 
 GCPnts_QuasiUniformDeflection::GCPnts_QuasiUniformDeflection(const Adaptor3d_Curve& theC,
                                                              const double           theDeflection,
@@ -494,8 +443,6 @@ GCPnts_QuasiUniformDeflection::GCPnts_QuasiUniformDeflection(const Adaptor3d_Cur
   Initialize(theC, theDeflection, theU1, theU2, theContinuity);
 }
 
-//=================================================================================================
-
 GCPnts_QuasiUniformDeflection::GCPnts_QuasiUniformDeflection(const Adaptor2d_Curve2d& theC,
                                                              const double             theDeflection,
                                                              const double             theU1,
@@ -508,8 +455,6 @@ GCPnts_QuasiUniformDeflection::GCPnts_QuasiUniformDeflection(const Adaptor2d_Cur
   Initialize(theC, theDeflection, theU1, theU2, theContinuity);
 }
 
-//=================================================================================================
-
 GCPnts_QuasiUniformDeflection::GCPnts_QuasiUniformDeflection(const Adaptor3d_Curve& theC,
                                                              const double           theDeflection,
                                                              const GeomAbs_Shape    theContinuity)
@@ -519,8 +464,6 @@ GCPnts_QuasiUniformDeflection::GCPnts_QuasiUniformDeflection(const Adaptor3d_Cur
 {
   Initialize(theC, theDeflection, theContinuity);
 }
-
-//=================================================================================================
 
 GCPnts_QuasiUniformDeflection::GCPnts_QuasiUniformDeflection(const Adaptor2d_Curve2d& theC,
                                                              const double             theDeflection,
@@ -532,8 +475,6 @@ GCPnts_QuasiUniformDeflection::GCPnts_QuasiUniformDeflection(const Adaptor2d_Cur
   Initialize(theC, theDeflection, theContinuity);
 }
 
-//=================================================================================================
-
 void GCPnts_QuasiUniformDeflection::Initialize(const Adaptor3d_Curve& theC,
                                                const double           theDeflection,
                                                const GeomAbs_Shape    theContinuity)
@@ -541,16 +482,12 @@ void GCPnts_QuasiUniformDeflection::Initialize(const Adaptor3d_Curve& theC,
   Initialize(theC, theDeflection, theC.FirstParameter(), theC.LastParameter(), theContinuity);
 }
 
-//=================================================================================================
-
 void GCPnts_QuasiUniformDeflection::Initialize(const Adaptor2d_Curve2d& theC,
                                                const double             theDeflection,
                                                const GeomAbs_Shape      theContinuity)
 {
   Initialize(theC, theDeflection, theC.FirstParameter(), theC.LastParameter(), theContinuity);
 }
-
-//=================================================================================================
 
 void GCPnts_QuasiUniformDeflection::Initialize(const Adaptor3d_Curve& theC,
                                                const double           theDeflection,
@@ -561,8 +498,6 @@ void GCPnts_QuasiUniformDeflection::Initialize(const Adaptor3d_Curve& theC,
   initialize(theC, theDeflection, theU1, theU2, theContinuity);
 }
 
-//=================================================================================================
-
 void GCPnts_QuasiUniformDeflection::Initialize(const Adaptor2d_Curve2d& theC,
                                                const double             theDeflection,
                                                const double             theU1,
@@ -571,8 +506,6 @@ void GCPnts_QuasiUniformDeflection::Initialize(const Adaptor2d_Curve2d& theC,
 {
   initialize(theC, theDeflection, theU1, theU2, theContinuity);
 }
-
-//=================================================================================================
 
 template <class TheCurve>
 void GCPnts_QuasiUniformDeflection::initialize(const TheCurve&     theC,

@@ -1,18 +1,14 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_GearPairWithRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_GearPairWithRange, StepKinematics_GearPair)
-
-//=================================================================================================
 
 StepKinematics_GearPairWithRange::StepKinematics_GearPairWithRange()
 {
   defLowerLimitActualRotation1 = false;
   defUpperLimitActualRotation1 = false;
 }
-
-//=================================================================================================
 
 void StepKinematics_GearPairWithRange::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -62,14 +58,10 @@ void StepKinematics_GearPairWithRange::Init(
     myUpperLimitActualRotation1 = 0;
 }
 
-//=================================================================================================
-
 double StepKinematics_GearPairWithRange::LowerLimitActualRotation1() const
 {
   return myLowerLimitActualRotation1;
 }
-
-//=================================================================================================
 
 void StepKinematics_GearPairWithRange::SetLowerLimitActualRotation1(
   const double theLowerLimitActualRotation1)
@@ -77,29 +69,21 @@ void StepKinematics_GearPairWithRange::SetLowerLimitActualRotation1(
   myLowerLimitActualRotation1 = theLowerLimitActualRotation1;
 }
 
-//=================================================================================================
-
 bool StepKinematics_GearPairWithRange::HasLowerLimitActualRotation1() const
 {
   return defLowerLimitActualRotation1;
 }
-
-//=================================================================================================
 
 double StepKinematics_GearPairWithRange::UpperLimitActualRotation1() const
 {
   return myUpperLimitActualRotation1;
 }
 
-//=================================================================================================
-
 void StepKinematics_GearPairWithRange::SetUpperLimitActualRotation1(
   const double theUpperLimitActualRotation1)
 {
   myUpperLimitActualRotation1 = theUpperLimitActualRotation1;
 }
-
-//=================================================================================================
 
 bool StepKinematics_GearPairWithRange::HasUpperLimitActualRotation1() const
 {

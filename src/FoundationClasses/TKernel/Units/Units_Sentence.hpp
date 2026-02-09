@@ -11,36 +11,24 @@
 class Units_Lexicon;
 class Units_Token;
 
-//! This class describes all the methods to create and
-//! compute an expression contained in a string.
 class Units_Sentence
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Createsand returns a Sentence, by analyzing the
-  //! string <astring> with the lexicon <alexicon>.
   Standard_EXPORT Units_Sentence(const occ::handle<Units_Lexicon>& alexicon, const char* astring);
 
-  //! For each constant encountered, sets the value.
   Standard_EXPORT void SetConstants();
 
-  //! Returns <thesequenceoftokens>.
   occ::handle<NCollection_HSequence<occ::handle<Units_Token>>> Sequence() const;
 
-  //! Sets the field <thesequenceoftokens> to <asequenceoftokens>.
   void Sequence(
     const occ::handle<NCollection_HSequence<occ::handle<Units_Token>>>& asequenceoftokens);
 
-  //! Computes and returns in a token the result of the
-  //! expression.
   Standard_EXPORT occ::handle<Units_Token> Evaluate();
 
-  //! Return True if number of created tokens > 0
-  //! (i.e creation of sentence is successful)
   bool IsDone() const;
 
-  //! Useful for debugging.
   void Dump() const;
 
 private:
@@ -51,14 +39,10 @@ private:
 #include <NCollection_Sequence.hpp>
 #include <NCollection_HSequence.hpp>
 
-//=================================================================================================
-
 inline occ::handle<NCollection_HSequence<occ::handle<Units_Token>>> Units_Sentence::Sequence() const
 {
   return thesequenceoftokens;
 }
-
-//=================================================================================================
 
 inline void Units_Sentence::Sequence(
   const occ::handle<NCollection_HSequence<occ::handle<Units_Token>>>& asequenceoftokens)
@@ -66,14 +50,10 @@ inline void Units_Sentence::Sequence(
   thesequenceoftokens = asequenceoftokens;
 }
 
-//=================================================================================================
-
 inline bool Units_Sentence::IsDone() const
 {
   return thesequenceoftokens->Length() > 0;
 }
-
-//=================================================================================================
 
 inline void Units_Sentence::Dump() const
 {

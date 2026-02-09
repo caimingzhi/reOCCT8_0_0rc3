@@ -4,12 +4,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_ParametricSurface3dElementCoordinateSystem,
                            StepFEA_FeaRepresentationItem)
 
-//=================================================================================================
-
 StepFEA_ParametricSurface3dElementCoordinateSystem::
   StepFEA_ParametricSurface3dElementCoordinateSystem() = default;
-
-//=================================================================================================
 
 void StepFEA_ParametricSurface3dElementCoordinateSystem::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentationItem_Name,
@@ -23,28 +19,20 @@ void StepFEA_ParametricSurface3dElementCoordinateSystem::Init(
   theAngle = aAngle;
 }
 
-//=================================================================================================
-
 int StepFEA_ParametricSurface3dElementCoordinateSystem::Axis() const
 {
   return theAxis;
 }
-
-//=================================================================================================
 
 void StepFEA_ParametricSurface3dElementCoordinateSystem::SetAxis(const int aAxis)
 {
   theAxis = aAxis;
 }
 
-//=================================================================================================
-
 double StepFEA_ParametricSurface3dElementCoordinateSystem::Angle() const
 {
   return theAngle;
 }
-
-//=================================================================================================
 
 void StepFEA_ParametricSurface3dElementCoordinateSystem::SetAngle(const double aAngle)
 {

@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -24,11 +13,6 @@ namespace
 {
   constexpr double THE_TOLERANCE = 1.0e-2;
 
-  // ============================================================================
-  // Test function classes
-  // ============================================================================
-
-  //! Sphere function: f(x) = sum(x_i^2)
   struct SphereFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -42,7 +26,6 @@ namespace
     }
   };
 
-  //! Rastrigin function - highly multimodal
   struct RastriginFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -58,7 +41,6 @@ namespace
     }
   };
 
-  //! Rosenbrock function
   struct RosenbrockFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -72,7 +54,6 @@ namespace
     }
   };
 
-  //! Booth function
   struct BoothFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -86,8 +67,6 @@ namespace
     }
   };
 
-  //! Himmelblau function - has 4 identical local minima
-  //! f(x,y) = (x^2 + y - 11)^2 + (x + y^2 - 7)^2
   struct HimmelblauFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -101,7 +80,6 @@ namespace
     }
   };
 
-  //! Goldstein-Price function - complex multimodal
   struct GoldsteinPriceFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -124,7 +102,6 @@ namespace
     }
   };
 
-  // Old API adapter
   class SphereFuncOld : public math_MultipleVarFunction
   {
   private:
@@ -150,10 +127,6 @@ namespace
   };
 
 } // namespace
-
-// ============================================================================
-// GlobalMinimum unified interface tests
-// ============================================================================
 
 TEST(MathOpt_GlobOptTest, GlobalMinimum_PSO_Sphere)
 {
@@ -233,10 +206,6 @@ TEST(MathOpt_GlobOptTest, GlobalMinimum_DE_Sphere)
   EXPECT_NEAR(*aResult.Value, 0.0, THE_TOLERANCE);
 }
 
-// ============================================================================
-// Differential Evolution tests
-// ============================================================================
-
 TEST(MathOpt_GlobOptTest, DifferentialEvolution_Sphere)
 {
   SphereFunc aFunc;
@@ -298,15 +267,11 @@ TEST(MathOpt_GlobOptTest, DifferentialEvolution_Rastrigin)
   auto aResult = MathOpt::DifferentialEvolution(aFunc, aLower, aUpper, aConfig);
 
   ASSERT_TRUE(aResult.IsDone());
-  // Should find global minimum at origin
+
   EXPECT_NEAR((*aResult.Solution)(1), 0.0, 0.5);
   EXPECT_NEAR((*aResult.Solution)(2), 0.0, 0.5);
   EXPECT_LT(*aResult.Value, 1.0);
 }
-
-// ============================================================================
-// MultiStart tests
-// ============================================================================
 
 TEST(MathOpt_GlobOptTest, MultiStart_Sphere)
 {
@@ -346,10 +311,6 @@ TEST(MathOpt_GlobOptTest, MultiStart_Booth)
   EXPECT_LT(*aResult.Value, 1.0);
 }
 
-// ============================================================================
-// Himmelblau function (multiple global minima)
-// ============================================================================
-
 TEST(MathOpt_GlobOptTest, Himmelblau_FindsOneMinimum)
 {
   HimmelblauFunc aFunc;
@@ -365,14 +326,8 @@ TEST(MathOpt_GlobOptTest, Himmelblau_FindsOneMinimum)
 
   ASSERT_TRUE(aResult.IsDone());
 
-  // Himmelblau has 4 global minima, all with f = 0
-  // The algorithm should find one of them
   EXPECT_NEAR(*aResult.Value, 0.0, THE_TOLERANCE);
 }
-
-// ============================================================================
-// Goldstein-Price function
-// ============================================================================
 
 TEST(MathOpt_GlobOptTest, GoldsteinPrice)
 {
@@ -389,15 +344,10 @@ TEST(MathOpt_GlobOptTest, GoldsteinPrice)
 
   ASSERT_TRUE(aResult.IsDone());
 
-  // Global minimum at (0, -1) with f = 3
   EXPECT_NEAR((*aResult.Solution)(1), 0.0, 0.1);
   EXPECT_NEAR((*aResult.Solution)(2), -1.0, 0.1);
   EXPECT_NEAR(*aResult.Value, 3.0, 0.5);
 }
-
-// ============================================================================
-// Higher dimensional tests
-// ============================================================================
 
 TEST(MathOpt_GlobOptTest, DifferentialEvolution_Sphere5D)
 {
@@ -423,10 +373,6 @@ TEST(MathOpt_GlobOptTest, DifferentialEvolution_Sphere5D)
   EXPECT_LT(*aResult.Value, 0.1);
 }
 
-// ============================================================================
-// Strategy comparison tests
-// ============================================================================
-
 TEST(MathOpt_GlobOptTest, StrategyComparison_Rosenbrock)
 {
   RosenbrockFunc aFunc;
@@ -434,13 +380,11 @@ TEST(MathOpt_GlobOptTest, StrategyComparison_Rosenbrock)
   math_Vector aLower(1, 2, -5.0);
   math_Vector aUpper(1, 2, 5.0);
 
-  // Test PSO
   MathOpt::GlobalConfig aConfigPSO(MathOpt::GlobalStrategy::PSO, 200);
   aConfigPSO.NbPopulation = 50;
   aConfigPSO.Seed         = 42;
   auto aResultPSO         = MathOpt::GlobalMinimum(aFunc, aLower, aUpper, aConfigPSO);
 
-  // Test DE
   MathOpt::GlobalConfig aConfigDE(MathOpt::GlobalStrategy::DifferentialEvolution, 200);
   aConfigDE.NbPopulation = 50;
   aConfigDE.Seed         = 42;
@@ -449,14 +393,9 @@ TEST(MathOpt_GlobOptTest, StrategyComparison_Rosenbrock)
   ASSERT_TRUE(aResultPSO.IsDone());
   ASSERT_TRUE(aResultDE.IsDone());
 
-  // Both should find reasonable solutions
   EXPECT_LT(*aResultPSO.Value, 1.0);
   EXPECT_LT(*aResultDE.Value, 1.0);
 }
-
-// ============================================================================
-// Reproducibility test
-// ============================================================================
 
 TEST(MathOpt_GlobOptTest, Reproducibility_DE)
 {
@@ -476,13 +415,8 @@ TEST(MathOpt_GlobOptTest, Reproducibility_DE)
   ASSERT_TRUE(aResult1.IsDone());
   ASSERT_TRUE(aResult2.IsDone());
 
-  // With same seed, results should be identical
   EXPECT_DOUBLE_EQ(*aResult1.Value, *aResult2.Value);
 }
-
-// ============================================================================
-// Comparison with old API
-// ============================================================================
 
 TEST(MathOpt_GlobOptTest, CompareWithOldAPI_Sphere)
 {
@@ -492,13 +426,11 @@ TEST(MathOpt_GlobOptTest, CompareWithOldAPI_Sphere)
   math_Vector aLower(1, 2, -5.0);
   math_Vector aUpper(1, 2, 5.0);
 
-  // Old API
   math_GlobOptMin anOldSolver(&anOldFunc, aLower, aUpper, 0.01);
   anOldSolver.Perform();
   math_Vector anOldSol(1, 2);
   anOldSolver.Points(1, anOldSol);
 
-  // New API
   MathOpt::GlobalConfig aConfig(MathOpt::GlobalStrategy::PSOHybrid, 100);
   aConfig.NbPopulation = 40;
   aConfig.Seed         = 42;
@@ -506,6 +438,5 @@ TEST(MathOpt_GlobOptTest, CompareWithOldAPI_Sphere)
 
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find a good solution
   EXPECT_LT(*aNewResult.Value, 0.1);
 }

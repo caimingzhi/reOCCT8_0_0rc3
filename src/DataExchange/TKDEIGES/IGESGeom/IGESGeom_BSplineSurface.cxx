@@ -55,7 +55,6 @@ void IGESGeom_BSplineSurface::Init(const int                                    
   theVmin      = aVmin;
   theVmax      = aVmax;
   InitTypeAndForm(128, FormNumber());
-  // FormNumber  precises the shape  0-9
 }
 
 void IGESGeom_BSplineSurface::SetFormNumber(const int form)
@@ -101,11 +100,7 @@ bool IGESGeom_BSplineSurface::IsPolynomial(const bool flag) const
     return isPolynomial;
   int    i, j;
   double w0 = theWeights->Value(0, 0);
-  /*CR23377
-   * Following fix is needed to address Rational surface with non-unitary weights at last index
-   * Limit for indices are changed from theIndexV-->theIndexV+1 (=NbPolesV())
-   *                                    theIndexU--> theIndexU+1 (=NbPolesU())
-   */
+
   for (j = 0; j < (theIndexV + 1); j++)
     for (i = 0; i < (theIndexU + 1); i++)
       if (std::abs(theWeights->Value(i, j) - w0) > 1.e-10)
@@ -161,8 +156,7 @@ double IGESGeom_BSplineSurface::Weight(const int anIndex1, const int anIndex2) c
 gp_Pnt IGESGeom_BSplineSurface::Pole(const int anIndex1, const int anIndex2) const
 {
   gp_XYZ tempXYZ = thePoles->Value(anIndex1, anIndex2);
-  // Reversal of the order of indices since the poles are
-  // stored in the array like that. See ReadOwnParams()
+
   gp_Pnt Pole(tempXYZ);
   return Pole;
 }
@@ -170,8 +164,7 @@ gp_Pnt IGESGeom_BSplineSurface::Pole(const int anIndex1, const int anIndex2) con
 gp_Pnt IGESGeom_BSplineSurface::TransformedPole(const int anIndex1, const int anIndex2) const
 {
   gp_XYZ tempXYZ = thePoles->Value(anIndex1, anIndex2);
-  // Reversal of the order of indices since the poles are
-  // stored in the array like that. See ReadOwnParams()
+
   if (HasTransf())
     Location().Transforms(tempXYZ);
   gp_Pnt Pole(tempXYZ);

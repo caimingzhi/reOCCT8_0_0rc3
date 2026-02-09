@@ -17,18 +17,11 @@
 #include <Transfer_TransientProcess.hpp>
 #include <TransferBRep_ShapeBinder.hpp>
 
-//=================================================================================================
-
 StepToTopoDS_TranslateShell::StepToTopoDS_TranslateShell()
     : myError(StepToTopoDS_TranslateShellOther)
 {
   done = false;
 }
-
-// ============================================================================
-// Method  : Init
-// Purpose : Init with a ConnectedFaceSet and a Tool
-// ============================================================================
 
 void StepToTopoDS_TranslateShell::Init(const occ::handle<StepShape_ConnectedFaceSet>& CFS,
                                        StepToTopoDS_Tool&                             aTool,
@@ -36,7 +29,7 @@ void StepToTopoDS_TranslateShell::Init(const occ::handle<StepShape_ConnectedFace
                                        const StepData_Factors&      theLocalFactors,
                                        const Message_ProgressRange& theProgress)
 {
-  // bug15697
+
   if (CFS.IsNull())
     return;
 
@@ -54,7 +47,7 @@ void StepToTopoDS_TranslateShell::Init(const occ::handle<StepShape_ConnectedFace
     occ::handle<StepShape_Face> StepFace;
 
     StepToTopoDS_TranslateFace myTranFace;
-    myTranFace.SetPrecision(Precision()); // gka
+    myTranFace.SetPrecision(Precision());
     myTranFace.SetMaxTol(MaxTol());
 
     Message_ProgressScope PS(theProgress, "Face", NbFc);
@@ -75,12 +68,12 @@ void StepToTopoDS_TranslateShell::Init(const occ::handle<StepShape_ConnectedFace
           B.Add(Sh, F);
         }
         else
-        { // Warning only + add FaceSurface file Identifier
+        {
           TP->AddWarning(theFS, " a Face from Shell not mapped to TopoDS");
         }
       }
       else
-      { // Warning : add identifier
+      {
         TP->AddWarning(StepFace, " Face is not of FaceSurface Type; not mapped to TopoDS");
       }
     }
@@ -97,11 +90,6 @@ void StepToTopoDS_TranslateShell::Init(const occ::handle<StepShape_ConnectedFace
     done     = true;
   }
 }
-
-// ============================================================================
-// Method  : Init
-// Purpose : Init with a ConnectedFaceSet and a Tool
-// ============================================================================
 
 void StepToTopoDS_TranslateShell::Init(const occ::handle<StepVisual_TessellatedShell>& theTSh,
                                        StepToTopoDS_Tool&                              theTool,
@@ -187,21 +175,11 @@ void StepToTopoDS_TranslateShell::Init(const occ::handle<StepVisual_TessellatedS
   done     = true;
 }
 
-// ============================================================================
-// Method  : Value
-// Purpose : Return the mapped Shape
-// ============================================================================
-
 const TopoDS_Shape& StepToTopoDS_TranslateShell::Value() const
 {
   StdFail_NotDone_Raise_if(!done, "StepToTopoDS_TranslateShell::Value() - no result");
   return myResult;
 }
-
-// ============================================================================
-// Method  : Error
-// Purpose : Return the TranslateShell Error code
-// ============================================================================
 
 StepToTopoDS_TranslateShellError StepToTopoDS_TranslateShell::Error() const
 {

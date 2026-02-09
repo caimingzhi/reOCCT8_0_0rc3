@@ -26,7 +26,7 @@ typedef NCollection_IndexedDataMap<int, NCollection_List<int>>
 static double MyTolerance                = 10.0e-7;
 static double MyConfusionPrecision       = 10.0e-12;
 static double SquareMyConfusionPrecision = 10.0e-24;
-//
+
 static inline double maxSR(const double a, const double b, const double c);
 
 static inline double minSR(const double a, const double b, const double c);
@@ -87,22 +87,13 @@ static void DegeneratedIndex(const NCollection_Array1<double>&     Xpars,
                              int&                                  aI1,
                              int&                                  aI2);
 
-//=======================================================================
-// class : IntPolyh_BoxBndTree
-// purpose  : BVH structure to contain the boxes of triangles
-//=======================================================================
 typedef BVH_BoxSet<double, 3, int> IntPolyh_BoxBndTree;
 
-//=======================================================================
-// class : IntPolyh_BoxBndTreeSelector
-// purpose  : Selector of interfering boxes
-//=======================================================================
 class IntPolyh_BoxBndTreeSelector : public BVH_PairTraverse<double, 3, IntPolyh_BoxBndTree>
 {
 public:
   typedef BVH_Box<double, 3>::BVH_VecNt BVH_Vec3d;
 
-  //! Auxiliary structure to keep the pair of indices
   struct PairIDs
   {
     PairIDs(const int theId1 = -1, const int theId2 = -1)
@@ -121,10 +112,8 @@ public:
   };
 
 public:
-  //! Constructor
   IntPolyh_BoxBndTreeSelector() = default;
 
-  //! Rejects the node
   bool RejectNode(const BVH_Vec3d& theCMin1,
                   const BVH_Vec3d& theCMax1,
                   const BVH_Vec3d& theCMin2,
@@ -134,7 +123,6 @@ public:
     return BVH_Box<double, 3>(theCMin1, theCMax1).IsOut(theCMin2, theCMax2);
   }
 
-  //! Accepts the element
   bool Accept(const int theID1, const int theID2) override
   {
     if (!myBVHSet1->Box(theID1).IsOut(myBVHSet2->Box(theID2)))
@@ -145,35 +133,26 @@ public:
     return false;
   }
 
-  //! Returns indices
   const std::vector<PairIDs>& Pairs() const { return myPairs; }
 
-  //! Sorts the resulting indices
   void Sort() { std::sort(myPairs.begin(), myPairs.end()); }
 
 private:
   std::vector<PairIDs> myPairs;
 };
 
-//=======================================================================
-// function : GetInterferingTriangles
-// purpose  : Returns indices of the triangles with interfering bounding boxes
-//=======================================================================
 static void GetInterferingTriangles(IntPolyh_ArrayOfTriangles&                     theTriangles1,
                                     const IntPolyh_ArrayOfPoints&                  thePoints1,
                                     IntPolyh_ArrayOfTriangles&                     theTriangles2,
                                     const IntPolyh_ArrayOfPoints&                  thePoints2,
                                     IntPolyh_IndexedDataMapOfIntegerListOfInteger& theCouples)
 {
-  // Use linear builder for BVH construction
+
   opencascade::handle<BVH_LinearBuilder<double, 3>> aLBuilder =
     new BVH_LinearBuilder<double, 3>(10);
 
-  // To find the triangles with interfering bounding boxes
-  // use the BVH structure
   IntPolyh_BoxBndTree aBBTree1(aLBuilder), aBBTree2(aLBuilder);
 
-  // 1. Fill the trees with the boxes of the surfaces triangles
   for (int i = 0; i < 2; ++i)
   {
     IntPolyh_BoxBndTree&          aBBTree    = !i ? aBBTree1 : aBBTree2;
@@ -194,11 +173,10 @@ static void GetInterferingTriangles(IntPolyh_ArrayOfTriangles&                  
     if (!aBBTree.Size())
       return;
   }
-  // 2. Construct BVH trees
+
   aBBTree1.Build();
   aBBTree2.Build();
 
-  // 3. Perform selection of the interfering triangles
   IntPolyh_BoxBndTreeSelector aSelector;
   aSelector.SetBVHSets(&aBBTree1, &aBBTree2);
   aSelector.Select();
@@ -217,8 +195,6 @@ static void GetInterferingTriangles(IntPolyh_ArrayOfTriangles&                  
   }
 }
 
-//=================================================================================================
-
 IntPolyh_MaillageAffinage::IntPolyh_MaillageAffinage(const occ::handle<Adaptor3d_Surface>& Surface1,
                                                      const occ::handle<Adaptor3d_Surface>& Surface2,
                                                      const int)
@@ -235,8 +211,6 @@ IntPolyh_MaillageAffinage::IntPolyh_MaillageAffinage(const occ::handle<Adaptor3d
       myEnlargeZone(false)
 {
 }
-
-//=================================================================================================
 
 IntPolyh_MaillageAffinage::IntPolyh_MaillageAffinage(const occ::handle<Adaptor3d_Surface>& Surface1,
                                                      const int                             NbSU1,
@@ -259,8 +233,6 @@ IntPolyh_MaillageAffinage::IntPolyh_MaillageAffinage(const occ::handle<Adaptor3d
 {
 }
 
-//=================================================================================================
-
 void IntPolyh_MaillageAffinage::MakeSampling(const int                   SurfID,
                                              NCollection_Array1<double>& theUPars,
                                              NCollection_Array1<double>& theVPars)
@@ -281,37 +253,24 @@ void IntPolyh_MaillageAffinage::MakeSampling(const int                   SurfID,
                                  theVPars);
 }
 
-//=======================================================================
-// function : FillArrayOfPnt
-// purpose  : Compute points on one surface and fill an array of points
-//=======================================================================
 void IntPolyh_MaillageAffinage::FillArrayOfPnt(const int SurfID)
 {
-  // Make sampling
+
   NCollection_Array1<double> aUpars, aVpars;
   MakeSampling(SurfID, aUpars, aVpars);
-  // Fill array of points
+
   FillArrayOfPnt(SurfID, aUpars, aVpars);
 }
 
-//=======================================================================
-// function : FillArrayOfPnt
-// purpose  : Compute points on one surface and fill an array of points
-//           FILL AN ARRAY OF POINTS
-//=======================================================================
 void IntPolyh_MaillageAffinage::FillArrayOfPnt(const int SurfID, const bool isShiftFwd)
 {
-  // Make sampling
+
   NCollection_Array1<double> aUpars, aVpars;
   MakeSampling(SurfID, aUpars, aVpars);
-  // Fill array of points
+
   FillArrayOfPnt(SurfID, isShiftFwd, aUpars, aVpars);
 }
 
-//=======================================================================
-// function : FillArrayOfPnt
-// purpose  : Compute points on one surface and fill an array of points
-//=======================================================================
 void IntPolyh_MaillageAffinage::FillArrayOfPnt(const int                         SurfID,
                                                const NCollection_Array1<double>& Upars,
                                                const NCollection_Array1<double>& Vpars,
@@ -322,13 +281,13 @@ void IntPolyh_MaillageAffinage::FillArrayOfPnt(const int                        
   int    aID1, aID2, aJD1, aJD2;
   double aTol, aU, aV, aX, aY, aZ;
   gp_Pnt aP;
-  //
+
   aNbU                                    = (SurfID == 1) ? NbSamplesU1 : NbSamplesU2;
   aNbV                                    = (SurfID == 1) ? NbSamplesV1 : NbSamplesV2;
   Bnd_Box&                        aBox    = (SurfID == 1) ? MyBox1 : MyBox2;
   occ::handle<Adaptor3d_Surface>& aS      = (SurfID == 1) ? MaSurface1 : MaSurface2;
   IntPolyh_ArrayOfPoints&         TPoints = (SurfID == 1) ? TPoints1 : TPoints2;
-  //
+
   aJD1 = 0;
   aJD2 = 0;
   aID1 = 0;
@@ -338,7 +297,7 @@ void IntPolyh_MaillageAffinage::FillArrayOfPnt(const int                        
   {
     DegeneratedIndex(Upars, aNbU, aS, 2, aID1, aID2);
   }
-  //
+
   TPoints.Init(aNbU * aNbV);
   iCnt = 0;
   for (i = 1; i <= aNbU; ++i)
@@ -352,7 +311,7 @@ void IntPolyh_MaillageAffinage::FillArrayOfPnt(const int                        
       aP.Coord(aX, aY, aZ);
       IntPolyh_Point& aIP = TPoints[iCnt];
       aIP.Set(aX, aY, aZ, aU, aV);
-      //
+
       bDeg = bDegI || (aJD1 == j || aJD2 == j);
       if (bDeg)
       {
@@ -362,20 +321,18 @@ void IntPolyh_MaillageAffinage::FillArrayOfPnt(const int                        
       aBox.Add(aP);
     }
   }
-  //
+
   TPoints.SetNbItems(iCnt);
-  //
+
   aTol = !theDeflTol ? IntPolyh_Tools::ComputeDeflection(aS, Upars, Vpars) : *theDeflTol;
   aTol *= 1.2;
 
   double a1, a2, a3, b1, b2, b3;
-  //
+
   aBox.Get(a1, a2, a3, b1, b2, b3);
   aBox.Update(a1 - aTol, a2 - aTol, a3 - aTol, b1 + aTol, b2 + aTol, b3 + aTol);
   aBox.Enlarge(MyTolerance);
 }
-
-//=================================================================================================
 
 void IntPolyh_MaillageAffinage::FillArrayOfPnt(const int                          SurfID,
                                                const bool                         isShiftFwd,
@@ -429,7 +386,6 @@ void IntPolyh_MaillageAffinage::FillArrayOfPnt(const int                        
 
   TPoints.SetNbItems(iCnt);
 
-  // Update box
   double Tol = theDeflTol * 1.2;
   double a1, a2, a3, b1, b2, b3;
   aBox.Get(a1, a2, a3, b1, b2, b3);
@@ -437,10 +393,6 @@ void IntPolyh_MaillageAffinage::FillArrayOfPnt(const int                        
   aBox.Enlarge(MyTolerance);
 }
 
-//=======================================================================
-// function : FillArrayOfPnt
-// purpose  : Compute points on one surface and fill an array of points
-//=======================================================================
 void IntPolyh_MaillageAffinage::FillArrayOfPnt(const int                         SurfID,
                                                const bool                        isShiftFwd,
                                                const NCollection_Array1<double>& Upars,
@@ -448,18 +400,15 @@ void IntPolyh_MaillageAffinage::FillArrayOfPnt(const int                        
                                                const double*                     theDeflTol)
 {
   occ::handle<Adaptor3d_Surface> aS = (SurfID == 1) ? MaSurface1 : MaSurface2;
-  // Compute the tolerance
+
   double aTol =
     theDeflTol != nullptr ? *theDeflTol : IntPolyh_Tools::ComputeDeflection(aS, Upars, Vpars);
-  // Fill array of point normal
+
   IntPolyh_ArrayOfPointNormal aPoints;
   IntPolyh_Tools::FillArrayOfPointNormal(aS, Upars, Vpars, aPoints);
 
-  // Fill array of points
   FillArrayOfPnt(1, isShiftFwd, aPoints, Upars, Vpars, aTol);
 }
-
-//=================================================================================================
 
 void IntPolyh_MaillageAffinage::CommonBox()
 {
@@ -467,14 +416,6 @@ void IntPolyh_MaillageAffinage::CommonBox()
   CommonBox(GetBox(1), GetBox(2), XMin, YMin, ZMin, XMax, YMax, ZMax);
 }
 
-//=======================================================================
-// function : CommonBox
-// purpose  : Compute the common box  which is the intersection
-//           of the two bounding boxes,  and mark the points of
-//           the two surfaces that are inside.
-//           REJECTION BOUNDING BOXES
-//           DETERMINATION OF THE COMMON BOX
-//=======================================================================
 void IntPolyh_MaillageAffinage::CommonBox(const Bnd_Box&,
                                           const Bnd_Box&,
                                           double& XMin,
@@ -545,17 +486,17 @@ void IntPolyh_MaillageAffinage::CommonBox(const Bnd_Box&,
     }
 
     if (((XMin == XMax) && (!(YMin == YMax) && !(ZMin == ZMax)))
-        || ((YMin == YMax) && (!(XMin == XMax) && !(ZMin == ZMax))) // ou exclusif ??
+        || ((YMin == YMax) && (!(XMin == XMax) && !(ZMin == ZMax)))
         || ((ZMin == ZMax) && (!(XMin == XMax) && !(YMin == YMax))))
     {
     }
   }
-  //
+
   double X, Y, Z;
   X = XMax - XMin;
   Y = YMax - YMin;
   Z = ZMax - ZMin;
-  // extension of the box
+
   if ((X == 0) && (Y != 0))
     X = Y * 0.1;
   else if ((X == 0) && (Z != 0))
@@ -587,9 +528,8 @@ void IntPolyh_MaillageAffinage::CommonBox(const Bnd_Box&,
   ZMin -= Z;
   ZMax += Z;
 
-  // Marking of points included in the common
   const int FinTP1 = TPoints1.NbItems();
-  //  for(int i=0; i<FinTP1; i++) {
+
   int i;
   for (i = 0; i < FinTP1; i++)
   {
@@ -681,11 +621,6 @@ void IntPolyh_MaillageAffinage::CommonBox(const Bnd_Box&,
   }
 }
 
-//=======================================================================
-// function : FillArrayOfEdges
-// purpose  : Compute edges from the array of points
-//           FILL THE ARRAY OF EDGES
-//=======================================================================
 void IntPolyh_MaillageAffinage::FillArrayOfEdges(const int SurfID)
 {
 
@@ -694,57 +629,52 @@ void IntPolyh_MaillageAffinage::FillArrayOfEdges(const int SurfID)
   int                        NbSamplesU = (SurfID == 1) ? NbSamplesU1 : NbSamplesU2;
   int                        NbSamplesV = (SurfID == 1) ? NbSamplesV1 : NbSamplesV2;
 
-  // NbEdges = 3 + 3*(NbSamplesV-2) + 3*(NbSamplesU-2) +
-  //         + 3*(NbSamplesU-2)*(NbSamplesV-2) + (NbSamplesV-1) + (NbSamplesU-1);
-  // NbSamplesU and NbSamples cannot be less than 2, so
   int NbEdges = 3 * NbSamplesU * NbSamplesV - 2 * (NbSamplesU + NbSamplesV) + 1;
   TEdges.Init(NbEdges);
 
   int CpteurTabEdges = 0;
 
-  // maillage u0 v0
-  TEdges[CpteurTabEdges].SetFirstPoint(0);  // U V
-  TEdges[CpteurTabEdges].SetSecondPoint(1); // U V+1
+  TEdges[CpteurTabEdges].SetFirstPoint(0);
+  TEdges[CpteurTabEdges].SetSecondPoint(1);
   TEdges[CpteurTabEdges].SetSecondTriangle(0);
   TTriangles[0].SetEdgeAndOrientation(TEdges[CpteurTabEdges], CpteurTabEdges);
   CpteurTabEdges++;
 
-  TEdges[CpteurTabEdges].SetFirstPoint(0);           // U V
-  TEdges[CpteurTabEdges].SetSecondPoint(NbSamplesV); // U+1 V
+  TEdges[CpteurTabEdges].SetFirstPoint(0);
+  TEdges[CpteurTabEdges].SetSecondPoint(NbSamplesV);
   TEdges[CpteurTabEdges].SetFirstTriangle(1);
   TTriangles[1].SetEdgeAndOrientation(TEdges[CpteurTabEdges], CpteurTabEdges);
   CpteurTabEdges++;
 
-  TEdges[CpteurTabEdges].SetFirstPoint(0);               // U V
-  TEdges[CpteurTabEdges].SetSecondPoint(NbSamplesV + 1); // U+1 V+1
+  TEdges[CpteurTabEdges].SetFirstPoint(0);
+  TEdges[CpteurTabEdges].SetSecondPoint(NbSamplesV + 1);
   TEdges[CpteurTabEdges].SetFirstTriangle(0);
   TTriangles[0].SetEdgeAndOrientation(TEdges[CpteurTabEdges], CpteurTabEdges);
   TEdges[CpteurTabEdges].SetSecondTriangle(1);
   TTriangles[1].SetEdgeAndOrientation(TEdges[CpteurTabEdges], CpteurTabEdges);
   CpteurTabEdges++;
 
-  // maillage surU=u0
   int PntInit = 1;
   int BoucleMeshV;
   for (BoucleMeshV = 1; BoucleMeshV < NbSamplesV - 1; BoucleMeshV++)
   {
-    TEdges[CpteurTabEdges].SetFirstPoint(PntInit);      // U V
-    TEdges[CpteurTabEdges].SetSecondPoint(PntInit + 1); // U V+1
-    //    TEdges[CpteurTabEdges].SetFirstTriangle(-1);
+    TEdges[CpteurTabEdges].SetFirstPoint(PntInit);
+    TEdges[CpteurTabEdges].SetSecondPoint(PntInit + 1);
+
     TEdges[CpteurTabEdges].SetSecondTriangle(BoucleMeshV * 2);
     TTriangles[BoucleMeshV * 2].SetEdgeAndOrientation(TEdges[CpteurTabEdges], CpteurTabEdges);
     CpteurTabEdges++;
 
-    TEdges[CpteurTabEdges].SetFirstPoint(PntInit);                   // U V
-    TEdges[CpteurTabEdges].SetSecondPoint(PntInit + NbSamplesV + 1); // U+1 V+1
+    TEdges[CpteurTabEdges].SetFirstPoint(PntInit);
+    TEdges[CpteurTabEdges].SetSecondPoint(PntInit + NbSamplesV + 1);
     TEdges[CpteurTabEdges].SetFirstTriangle(BoucleMeshV * 2);
     TTriangles[BoucleMeshV * 2].SetEdgeAndOrientation(TEdges[CpteurTabEdges], CpteurTabEdges);
     TEdges[CpteurTabEdges].SetSecondTriangle(BoucleMeshV * 2 + 1);
     TTriangles[BoucleMeshV * 2 + 1].SetEdgeAndOrientation(TEdges[CpteurTabEdges], CpteurTabEdges);
     CpteurTabEdges++;
 
-    TEdges[CpteurTabEdges].SetFirstPoint(PntInit);               // U V
-    TEdges[CpteurTabEdges].SetSecondPoint(PntInit + NbSamplesV); // U+1 V
+    TEdges[CpteurTabEdges].SetFirstPoint(PntInit);
+    TEdges[CpteurTabEdges].SetSecondPoint(PntInit + NbSamplesV);
     TEdges[CpteurTabEdges].SetFirstTriangle(BoucleMeshV * 2 + 1);
     TTriangles[BoucleMeshV * 2 + 1].SetEdgeAndOrientation(TEdges[CpteurTabEdges], CpteurTabEdges);
     TEdges[CpteurTabEdges].SetSecondTriangle(BoucleMeshV * 2 - 2);
@@ -753,12 +683,11 @@ void IntPolyh_MaillageAffinage::FillArrayOfEdges(const int SurfID)
     PntInit++;
   }
 
-  // maillage sur V=v0
   PntInit = NbSamplesV;
   for (BoucleMeshV = 1; BoucleMeshV < NbSamplesU - 1; BoucleMeshV++)
   {
-    TEdges[CpteurTabEdges].SetFirstPoint(PntInit);      // U V
-    TEdges[CpteurTabEdges].SetSecondPoint(PntInit + 1); // U V+1
+    TEdges[CpteurTabEdges].SetFirstPoint(PntInit);
+    TEdges[CpteurTabEdges].SetSecondPoint(PntInit + 1);
     TEdges[CpteurTabEdges].SetFirstTriangle((BoucleMeshV - 1) * (NbSamplesV - 1) * 2 + 1);
     TTriangles[(BoucleMeshV - 1) * (NbSamplesV - 1) * 2 + 1].SetEdgeAndOrientation(
       TEdges[CpteurTabEdges],
@@ -768,8 +697,8 @@ void IntPolyh_MaillageAffinage::FillArrayOfEdges(const int SurfID)
                                                                          CpteurTabEdges);
     CpteurTabEdges++;
 
-    TEdges[CpteurTabEdges].SetFirstPoint(PntInit);                   // U V
-    TEdges[CpteurTabEdges].SetSecondPoint(PntInit + NbSamplesV + 1); // U+1 V+1
+    TEdges[CpteurTabEdges].SetFirstPoint(PntInit);
+    TEdges[CpteurTabEdges].SetSecondPoint(PntInit + NbSamplesV + 1);
     TEdges[CpteurTabEdges].SetFirstTriangle(BoucleMeshV * (NbSamplesV - 1) * 2);
     TTriangles[BoucleMeshV * (NbSamplesV - 1) * 2].SetEdgeAndOrientation(TEdges[CpteurTabEdges],
                                                                          CpteurTabEdges);
@@ -778,8 +707,8 @@ void IntPolyh_MaillageAffinage::FillArrayOfEdges(const int SurfID)
                                                                              CpteurTabEdges);
     CpteurTabEdges++;
 
-    TEdges[CpteurTabEdges].SetFirstPoint(PntInit);               // U V
-    TEdges[CpteurTabEdges].SetSecondPoint(PntInit + NbSamplesV); // U+1 V
+    TEdges[CpteurTabEdges].SetFirstPoint(PntInit);
+    TEdges[CpteurTabEdges].SetSecondPoint(PntInit + NbSamplesV);
     TEdges[CpteurTabEdges].SetFirstTriangle(BoucleMeshV * (NbSamplesV - 1) * 2 + 1);
     TTriangles[BoucleMeshV * (NbSamplesV - 1) * 2 + 1].SetEdgeAndOrientation(TEdges[CpteurTabEdges],
                                                                              CpteurTabEdges);
@@ -788,13 +717,13 @@ void IntPolyh_MaillageAffinage::FillArrayOfEdges(const int SurfID)
   }
 
   PntInit = NbSamplesV + 1;
-  // To provide recursion I associate a point with three edges
+
   for (int BoucleMeshU = 1; BoucleMeshU < NbSamplesU - 1; BoucleMeshU++)
   {
     for (BoucleMeshV = 1; BoucleMeshV < NbSamplesV - 1; BoucleMeshV++)
     {
-      TEdges[CpteurTabEdges].SetFirstPoint(PntInit);      // U V
-      TEdges[CpteurTabEdges].SetSecondPoint(PntInit + 1); // U V+1
+      TEdges[CpteurTabEdges].SetFirstPoint(PntInit);
+      TEdges[CpteurTabEdges].SetSecondPoint(PntInit + 1);
       TEdges[CpteurTabEdges].SetFirstTriangle((NbSamplesV - 1) * 2 * (BoucleMeshU - 1)
                                               + BoucleMeshV * 2 + 1);
       TTriangles[(NbSamplesV - 1) * 2 * (BoucleMeshU - 1) + BoucleMeshV * 2 + 1]
@@ -806,8 +735,8 @@ void IntPolyh_MaillageAffinage::FillArrayOfEdges(const int SurfID)
         CpteurTabEdges);
       CpteurTabEdges++;
 
-      TEdges[CpteurTabEdges].SetFirstPoint(PntInit);                   // U V
-      TEdges[CpteurTabEdges].SetSecondPoint(PntInit + NbSamplesV + 1); // U+1 V+1
+      TEdges[CpteurTabEdges].SetFirstPoint(PntInit);
+      TEdges[CpteurTabEdges].SetSecondPoint(PntInit + NbSamplesV + 1);
       TEdges[CpteurTabEdges].SetFirstTriangle((NbSamplesV - 1) * 2 * BoucleMeshU + BoucleMeshV * 2);
       TTriangles[(NbSamplesV - 1) * 2 * BoucleMeshU + BoucleMeshV * 2].SetEdgeAndOrientation(
         TEdges[CpteurTabEdges],
@@ -819,8 +748,8 @@ void IntPolyh_MaillageAffinage::FillArrayOfEdges(const int SurfID)
         CpteurTabEdges);
       CpteurTabEdges++;
 
-      TEdges[CpteurTabEdges].SetFirstPoint(PntInit);               // U V
-      TEdges[CpteurTabEdges].SetSecondPoint(PntInit + NbSamplesV); // U+1 V
+      TEdges[CpteurTabEdges].SetFirstPoint(PntInit);
+      TEdges[CpteurTabEdges].SetSecondPoint(PntInit + NbSamplesV);
       TEdges[CpteurTabEdges].SetFirstTriangle((NbSamplesV - 1) * 2 * BoucleMeshU + BoucleMeshV * 2
                                               + 1);
       TTriangles[(NbSamplesV - 1) * 2 * BoucleMeshU + BoucleMeshV * 2 + 1].SetEdgeAndOrientation(
@@ -832,18 +761,17 @@ void IntPolyh_MaillageAffinage::FillArrayOfEdges(const int SurfID)
         TEdges[CpteurTabEdges],
         CpteurTabEdges);
       CpteurTabEdges++;
-      PntInit++; // Pass to the next point
+      PntInit++;
     }
-    PntInit++; // Pass the last point of the column
-    PntInit++; // Pass the first point of the next column
+    PntInit++;
+    PntInit++;
   }
 
-  // close mesh on U=u1
-  PntInit = (NbSamplesU - 1) * NbSamplesV; // point U=u1 V=0
+  PntInit = (NbSamplesU - 1) * NbSamplesV;
   for (BoucleMeshV = 0; BoucleMeshV < NbSamplesV - 1; BoucleMeshV++)
   {
-    TEdges[CpteurTabEdges].SetFirstPoint(PntInit);      // U=u1 V
-    TEdges[CpteurTabEdges].SetSecondPoint(PntInit + 1); // U=u1 V+1
+    TEdges[CpteurTabEdges].SetFirstPoint(PntInit);
+    TEdges[CpteurTabEdges].SetSecondPoint(PntInit + 1);
     TEdges[CpteurTabEdges].SetFirstTriangle((NbSamplesU - 2) * (NbSamplesV - 1) * 2
                                             + BoucleMeshV * 2 + 1);
     TTriangles[(NbSamplesU - 2) * (NbSamplesV - 1) * 2 + BoucleMeshV * 2 + 1].SetEdgeAndOrientation(
@@ -853,12 +781,10 @@ void IntPolyh_MaillageAffinage::FillArrayOfEdges(const int SurfID)
     PntInit++;
   }
 
-  // close mesh on V=v1
   for (BoucleMeshV = 0; BoucleMeshV < NbSamplesU - 1; BoucleMeshV++)
   {
-    TEdges[CpteurTabEdges].SetFirstPoint(NbSamplesV - 1 + BoucleMeshV * NbSamplesV); // U V=v1
-    TEdges[CpteurTabEdges].SetSecondPoint(NbSamplesV - 1
-                                          + (BoucleMeshV + 1) * NbSamplesV); // U+1 V=v1
+    TEdges[CpteurTabEdges].SetFirstPoint(NbSamplesV - 1 + BoucleMeshV * NbSamplesV);
+    TEdges[CpteurTabEdges].SetSecondPoint(NbSamplesV - 1 + (BoucleMeshV + 1) * NbSamplesV);
     TEdges[CpteurTabEdges].SetSecondTriangle(BoucleMeshV * 2 * (NbSamplesV - 1)
                                              + (NbSamplesV - 2) * 2);
     TTriangles[BoucleMeshV * 2 * (NbSamplesV - 1) + (NbSamplesV - 2) * 2].SetEdgeAndOrientation(
@@ -869,13 +795,6 @@ void IntPolyh_MaillageAffinage::FillArrayOfEdges(const int SurfID)
   TEdges.SetNbItems(CpteurTabEdges);
 }
 
-//=======================================================================
-// function : FillArrayOfTriangles
-// purpose  : Compute triangles from the array of points, and --
-//           mark the triangles  that use marked points by the
-//           CommonBox function.
-//           FILL THE ARRAY OF TRIANGLES
-//=======================================================================
 void IntPolyh_MaillageAffinage::FillArrayOfTriangles(const int SurfID)
 {
   int CpteurTabTriangles = 0;
@@ -887,32 +806,29 @@ void IntPolyh_MaillageAffinage::FillArrayOfTriangles(const int SurfID)
   int                        NbSamplesV = (SurfID == 1) ? NbSamplesV1 : NbSamplesV2;
 
   TTriangles.Init(2 * (NbSamplesU - 1) * (NbSamplesV - 1));
-  // To provide recursion, I associate a point with two triangles
+
   for (int BoucleMeshU = 0; BoucleMeshU < NbSamplesU - 1; BoucleMeshU++)
   {
     for (int BoucleMeshV = 0; BoucleMeshV < NbSamplesV - 1; BoucleMeshV++)
     {
 
-      // FIRST TRIANGLE
-      TTriangles[CpteurTabTriangles].SetFirstPoint(PntInit);                  // U V
-      TTriangles[CpteurTabTriangles].SetSecondPoint(PntInit + 1);             // U V+1
-      TTriangles[CpteurTabTriangles].SetThirdPoint(PntInit + NbSamplesV + 1); // U+1 V+1
+      TTriangles[CpteurTabTriangles].SetFirstPoint(PntInit);
+      TTriangles[CpteurTabTriangles].SetSecondPoint(PntInit + 1);
+      TTriangles[CpteurTabTriangles].SetThirdPoint(PntInit + NbSamplesV + 1);
 
-      // IF ITS EDGE CONTACTS WITH THE COMMON BOX IP REMAINS = A 1
       if (((TPoints[PntInit].PartOfCommon()) & (TPoints[PntInit + 1].PartOfCommon()))
           && ((TPoints[PntInit + 1].PartOfCommon())
               & (TPoints[PntInit + NbSamplesV + 1].PartOfCommon()))
           && ((TPoints[PntInit + NbSamplesV + 1].PartOfCommon())
               & (TPoints[PntInit].PartOfCommon())))
-        // IF NOT IP=0
+
         TTriangles[CpteurTabTriangles].SetIntersectionPossible(false);
 
       CpteurTabTriangles++;
 
-      // SECOND TRIANGLE
-      TTriangles[CpteurTabTriangles].SetFirstPoint(PntInit);                   // U V
-      TTriangles[CpteurTabTriangles].SetSecondPoint(PntInit + NbSamplesV + 1); // U+1 V+1
-      TTriangles[CpteurTabTriangles].SetThirdPoint(PntInit + NbSamplesV);      // U+1 V
+      TTriangles[CpteurTabTriangles].SetFirstPoint(PntInit);
+      TTriangles[CpteurTabTriangles].SetSecondPoint(PntInit + NbSamplesV + 1);
+      TTriangles[CpteurTabTriangles].SetThirdPoint(PntInit + NbSamplesV);
 
       if (((TPoints[PntInit].PartOfCommon()) & (TPoints[PntInit + NbSamplesV + 1].PartOfCommon()))
           && ((TPoints[PntInit + NbSamplesV + 1].PartOfCommon())
@@ -922,9 +838,9 @@ void IntPolyh_MaillageAffinage::FillArrayOfTriangles(const int SurfID)
 
       CpteurTabTriangles++;
 
-      PntInit++; // Pass to the next point
+      PntInit++;
     }
-    PntInit++; // Pass the last point of the column
+    PntInit++;
   }
   TTriangles.SetNbItems(CpteurTabTriangles);
   const int FinTT = TTriangles.NbItems();
@@ -933,11 +849,6 @@ void IntPolyh_MaillageAffinage::FillArrayOfTriangles(const int SurfID)
   }
 }
 
-//=======================================================================
-// function : CommonPartRefinement
-// purpose  : Refine systematicaly all marked triangles of both surfaces
-//           REFINING OF THE COMMON
-//=======================================================================
 void IntPolyh_MaillageAffinage::CommonPartRefinement()
 {
   int FinInit1 = TTriangles1.NbItems();
@@ -955,13 +866,9 @@ void IntPolyh_MaillageAffinage::CommonPartRefinement()
   }
 }
 
-//=======================================================================
-// function : LocalSurfaceRefinement
-// purpose  : Refine systematicaly all marked triangles of ONE surface
-//=======================================================================
 void IntPolyh_MaillageAffinage::LocalSurfaceRefinement(const int SurfID)
 {
-  // refine locally, but systematically the chosen surface
+
   if (SurfID == 1)
   {
     const int FinInit1 = TTriangles1.NbItems();
@@ -971,7 +878,7 @@ void IntPolyh_MaillageAffinage::LocalSurfaceRefinement(const int SurfID)
         TTriangles1[i].MiddleRefinement(i, MaSurface1, TPoints1, TTriangles1, TEdges1);
     }
   }
-  //
+
   if (SurfID == 2)
   {
     const int FinInit2 = TTriangles2.NbItems();
@@ -983,15 +890,6 @@ void IntPolyh_MaillageAffinage::LocalSurfaceRefinement(const int SurfID)
   }
 }
 
-//=======================================================================
-// function : ComputeDeflections
-// purpose  : Compute deflection  for   all  triangles  of  one
-//           surface,and sort min and max of deflections
-//           REFINING PART
-//           Calculation of the deflection of all triangles
-//           --> deflection max
-//           --> deflection min
-//=======================================================================
 void IntPolyh_MaillageAffinage::ComputeDeflections(const int SurfID)
 {
   occ::handle<Adaptor3d_Surface> aSurface   = (SurfID == 1) ? MaSurface1 : MaSurface2;
@@ -1015,10 +913,6 @@ void IntPolyh_MaillageAffinage::ComputeDeflections(const int SurfID)
   }
 }
 
-//=======================================================================
-// function : TrianglesDeflectionsRefinement
-// purpose  : Refinement of the triangles depending on the deflection
-//=======================================================================
 static void TrianglesDeflectionsRefinement(const occ::handle<Adaptor3d_Surface>& theS1,
                                            IntPolyh_ArrayOfTriangles&            theTriangles1,
                                            IntPolyh_ArrayOfEdges&                theEdges1,
@@ -1030,18 +924,15 @@ static void TrianglesDeflectionsRefinement(const occ::handle<Adaptor3d_Surface>&
                                            IntPolyh_ArrayOfPoints&               thePoints2,
                                            const double                          theFlecheCritique2)
 {
-  // Find the intersecting triangles
+
   IntPolyh_IndexedDataMapOfIntegerListOfInteger aDMILI;
   GetInterferingTriangles(theTriangles1, thePoints1, theTriangles2, thePoints2, aDMILI);
-  //
-  // Interfering triangles of second surface
+
   NCollection_Map<int> aMIntS2;
-  // Since the number of the triangles may change during refinement,
-  // save the number of triangles before refinement
+
   int FinTT1 = theTriangles1.NbItems();
   int FinTT2 = theTriangles2.NbItems();
-  //
-  // Analyze interfering triangles
+
   for (int i_S1 = 0; i_S1 < FinTT1; i_S1++)
   {
     IntPolyh_Triangle& aTriangle1 = theTriangles1[i_S1];
@@ -1049,20 +940,20 @@ static void TrianglesDeflectionsRefinement(const occ::handle<Adaptor3d_Surface>&
     {
       continue;
     }
-    //
+
     const NCollection_List<int>* pLI = aDMILI.Seek(i_S1);
     if (!pLI || pLI->IsEmpty())
     {
-      // Mark non-interfering triangles of S1 to avoid their repeated usage
+
       aTriangle1.SetIntersectionPossible(false);
       continue;
     }
-    //
+
     if (aTriangle1.Deflection() > theFlecheCritique1)
     {
       aTriangle1.MiddleRefinement(i_S1, theS1, thePoints1, theTriangles1, theEdges1);
     }
-    //
+
     NCollection_List<int>::Iterator Iter(*pLI);
     for (; Iter.More(); Iter.Next())
     {
@@ -1072,14 +963,13 @@ static void TrianglesDeflectionsRefinement(const occ::handle<Adaptor3d_Surface>&
         IntPolyh_Triangle& aTriangle2 = theTriangles2[i_S2];
         if (aTriangle2.Deflection() > theFlecheCritique2)
         {
-          // Refinement of the larger triangles
+
           aTriangle2.MiddleRefinement(i_S2, theS2, thePoints2, theTriangles2, theEdges2);
         }
       }
     }
   }
-  //
-  // Mark non-interfering triangles of S2 to avoid their repeated usage
+
   if (aMIntS2.Extent() < FinTT2)
   {
     for (int i_S2 = 0; i_S2 < FinTT2; i_S2++)
@@ -1092,19 +982,13 @@ static void TrianglesDeflectionsRefinement(const occ::handle<Adaptor3d_Surface>&
   }
 }
 
-//=======================================================================
-// function : LargeTrianglesDeflectionsRefinement
-// purpose  : Refinement of the large triangles in case one surface is
-//           much smaller then the other.
-//=======================================================================
 static void LargeTrianglesDeflectionsRefinement(const occ::handle<Adaptor3d_Surface>& theS,
                                                 IntPolyh_ArrayOfTriangles&            theTriangles,
                                                 IntPolyh_ArrayOfEdges&                theEdges,
                                                 IntPolyh_ArrayOfPoints&               thePoints,
                                                 const Bnd_Box& theOppositeBox)
 {
-  // Find all triangles of the bigger surface with bounding boxes
-  // overlapping the bounding box the other surface
+
   NCollection_List<int> aLIT;
   int                   i, aNbT = theTriangles.NbItems();
   for (i = 0; i < aNbT; ++i)
@@ -1114,31 +998,27 @@ static void LargeTrianglesDeflectionsRefinement(const occ::handle<Adaptor3d_Surf
     {
       continue;
     }
-    //
+
     const Bnd_Box& aBox = aTriangle.BoundingBox(thePoints);
     if (aBox.IsVoid())
     {
       continue;
     }
-    //
+
     if (aBox.IsOut(theOppositeBox))
     {
       aTriangle.SetIntersectionPossible(false);
       continue;
     }
-    //
+
     aLIT.Append(i);
   }
-  //
+
   if (aLIT.IsEmpty())
   {
     return;
   }
-  //
-  // One surface is very small relatively to the other.
-  // The criterion of refining for large surface depends on the size of
-  // the bounding box of the other - since the criterion should be minimized,
-  // the smallest side of the bounding box is taken
+
   double x0, y0, z0, x1, y1, z1;
   theOppositeBox.Get(x0, y0, z0, x1, y1, z1);
   double dx   = std::abs(x1 - x0);
@@ -1148,12 +1028,10 @@ static void LargeTrianglesDeflectionsRefinement(const occ::handle<Adaptor3d_Surf
   if (diag > dd)
     diag = dd;
 
-  // calculation of the criterion of refining
   double CritereAffinage = 0.0;
   double DiagPonderation = 0.5;
   CritereAffinage        = diag * DiagPonderation;
-  //
-  // The deflection of the greater is compared to the size of the smaller
+
   NCollection_List<int>::Iterator Iter(aLIT);
   for (; Iter.More(); Iter.Next())
   {
@@ -1176,20 +1054,11 @@ static void LargeTrianglesDeflectionsRefinement(const occ::handle<Adaptor3d_Surf
   }
 }
 
-//=======================================================================
-// function : TrianglesDeflectionsRefinementBSB
-// purpose  : Refine both surfaces using UBTree as rejection.
-//           The criterion used to refine a triangle are:
-//           - The deflection;
-//           - The  size of the - bounding boxes (one surface may be
-//           very small compared to the other).
-//=======================================================================
 void IntPolyh_MaillageAffinage::TrianglesDeflectionsRefinementBSB()
 {
-  // To estimate a surface in general it can be interesting
-  // to calculate all deflections
+
   ComputeDeflections(1);
-  // Check deflection at output
+
   double FlecheCritique1;
   if (FlecheMin1 > FlecheMax1)
   {
@@ -1197,14 +1066,12 @@ void IntPolyh_MaillageAffinage::TrianglesDeflectionsRefinementBSB()
   }
   else
   {
-    // fleche min + (flechemax-flechemin) * 80/100
+
     FlecheCritique1 = FlecheMin1 * 0.2 + FlecheMax1 * 0.8;
   }
 
-  // Compute deflections for the second surface
   ComputeDeflections(2);
 
-  //-- Check arrows at output
   double FlecheCritique2;
   if (FlecheMin2 > FlecheMax2)
   {
@@ -1212,13 +1079,10 @@ void IntPolyh_MaillageAffinage::TrianglesDeflectionsRefinementBSB()
   }
   else
   {
-    // fleche min + (flechemax-flechemin) * 80/100
+
     FlecheCritique2 = FlecheMin2 * 0.2 + FlecheMax2 * 0.8;
   }
 
-  // The greatest of two bounding boxes created in FillArrayOfPoints is found.
-  // Then this value is weighted depending on the discretization
-  // (NbSamplesU and NbSamplesV)
   double diag1, diag2;
   double x0, y0, z0, x1, y1, z1;
 
@@ -1238,13 +1102,12 @@ void IntPolyh_MaillageAffinage::TrianglesDeflectionsRefinementBSB()
   const double NbSamplesUV2 = double(NbSamplesU2) * double(NbSamplesV2);
   diag2 /= NbSamplesUV2;
 
-  // The surface with the greatest bounding box is "discretized"
   if (diag1 < diag2)
   {
-    // second is discretized
+
     if (FlecheCritique2 < diag1)
     {
-      // The corresponding sizes are not too disproportional
+
       TrianglesDeflectionsRefinement(MaSurface1,
                                      TTriangles1,
                                      TEdges1,
@@ -1258,16 +1121,16 @@ void IntPolyh_MaillageAffinage::TrianglesDeflectionsRefinementBSB()
     }
     else
     {
-      // second surface is much larger then the first
+
       LargeTrianglesDeflectionsRefinement(MaSurface2, TTriangles2, TEdges2, TPoints2, MyBox1);
     }
   }
   else
   {
-    // first is discretized
+
     if (FlecheCritique1 < diag2)
     {
-      // The corresponding sizes are not too disproportional
+
       TrianglesDeflectionsRefinement(MaSurface2,
                                      TTriangles2,
                                      TEdges2,
@@ -1281,16 +1144,12 @@ void IntPolyh_MaillageAffinage::TrianglesDeflectionsRefinementBSB()
     }
     else
     {
-      // first surface is much larger then the second
+
       LargeTrianglesDeflectionsRefinement(MaSurface1, TTriangles1, TEdges1, TPoints1, MyBox2);
     }
   }
 }
 
-//=======================================================================
-// function : maxSR
-// purpose  : This function is used for the function project6
-//=======================================================================
 inline double maxSR(const double a, const double b, const double c)
 {
   double t = a;
@@ -1301,10 +1160,6 @@ inline double maxSR(const double a, const double b, const double c)
   return t;
 }
 
-//=======================================================================
-// function : minSR
-// purpose  : This function is used for the function project6
-//=======================================================================
 inline double minSR(const double a, const double b, const double c)
 {
   double t = a;
@@ -1315,10 +1170,6 @@ inline double minSR(const double a, const double b, const double c)
   return t;
 }
 
-//=======================================================================
-// function : project6
-// purpose  : This function is used for the function TriContact
-//=======================================================================
 int project6(const IntPolyh_Point& ax,
              const IntPolyh_Point& p1,
              const IntPolyh_Point& p2,
@@ -1346,12 +1197,6 @@ int project6(const IntPolyh_Point& ax,
   return 1;
 }
 
-//=======================================================================
-// function : TriContact
-// purpose  : This function checks if two triangles are in
-//           contact or not, return 1 if yes, return 0
-//           if no.
-//=======================================================================
 int IntPolyh_MaillageAffinage::TriContact(const IntPolyh_Point& P1,
                                           const IntPolyh_Point& P2,
                                           const IntPolyh_Point& P3,
@@ -1360,11 +1205,6 @@ int IntPolyh_MaillageAffinage::TriContact(const IntPolyh_Point& P1,
                                           const IntPolyh_Point& Q3,
                                           double&               Angle) const
 {
-  /**
-     The first triangle is (p1,p2,p3).  The other is (q1,q2,q3).
-     The edges are (e1,e2,e3) and (f1,f2,f3).
-     The normals are n1 and m1
-     Outwards are (g1,g2,g3) and (h1,h2,h3).*/
 
   if (maxSR(P1.X(), P2.X(), P3.X()) < minSR(Q1.X(), Q2.X(), Q3.X()))
     return (0);
@@ -1437,8 +1277,8 @@ int IntPolyh_MaillageAffinage::TriContact(const IntPolyh_Point& P1,
   f3.SetY(q1.Y() - q3.Y());
   f3.SetZ(q1.Z() - q3.Z());
 
-  n1.Cross(e1, e2); // normal to the first triangle
-  m1.Cross(f1, f2); // normal to the second triangle
+  n1.Cross(e1, e2);
+  m1.Cross(f1, f2);
 
   g1.Cross(e1, n1);
   g2.Cross(e2, n1);
@@ -1457,12 +1297,10 @@ int IntPolyh_MaillageAffinage::TriContact(const IntPolyh_Point& P1,
   ef32.Cross(e3, f2);
   ef33.Cross(e3, f3);
 
-  // Now the testing is done
-
   if (!project6(n1, p1, p2, p3, q1, q2, q3))
-    return 0; // T2 is not higher or lower than T1
+    return 0;
   if (!project6(m1, p1, p2, p3, q1, q2, q3))
-    return 0; // T1 is not higher of lower than T2
+    return 0;
 
   if (!project6(ef11, p1, p2, p3, q1, q2, q3))
     return 0;
@@ -1484,19 +1322,18 @@ int IntPolyh_MaillageAffinage::TriContact(const IntPolyh_Point& P1,
     return 0;
 
   if (!project6(g1, p1, p2, p3, q1, q2, q3))
-    return 0; // T2 is outside of T1 in the plane of T1
+    return 0;
   if (!project6(g2, p1, p2, p3, q1, q2, q3))
-    return 0; // T2 is outside of T1 in the plane of T1
+    return 0;
   if (!project6(g3, p1, p2, p3, q1, q2, q3))
-    return 0; // T2 is outside of T1 in the plane of T1
+    return 0;
   if (!project6(h1, p1, p2, p3, q1, q2, q3))
-    return 0; // T1 is outside of T2 in the plane of T2
+    return 0;
   if (!project6(h2, p1, p2, p3, q1, q2, q3))
-    return 0; // T1 is outside of T2 in the plane of T2
+    return 0;
   if (!project6(h3, p1, p2, p3, q1, q2, q3))
-    return 0; // T1 is outside of T2 in the plane of T2
+    return 0;
 
-  // Calculation of cosinus angle between two normals
   double SqModn1 = -1.0;
   double SqModm1 = -1.0;
   SqModn1        = n1.SquareModulus();
@@ -1511,12 +1348,6 @@ int IntPolyh_MaillageAffinage::TriContact(const IntPolyh_Point& P1,
   return 1;
 }
 
-//=======================================================================
-// function : TestNbPoints
-// purpose  : This function is used by StartingPointsResearch() to control
-//           the  number of points found keep the result in conformity (1 or 2 points)
-//           void TestNbPoints(const int TriSurfID,
-//=======================================================================
 void TestNbPoints(const int,
                   int&                       NbPoints,
                   int&                       NbPointsTotal,
@@ -1525,8 +1356,6 @@ void TestNbPoints(const int,
                   IntPolyh_StartPoint&       SP1,
                   IntPolyh_StartPoint&       SP2)
 {
-  // already checked in TriangleEdgeContact
-  //  if( (NbPoints==2)&&(Pt1.CheckSameSP(Pt2)) ) NbPoints=1;
 
   if (NbPoints > 2)
   {
@@ -1560,7 +1389,7 @@ void TestNbPoints(const int,
       NbPointsTotal = 2;
     }
     else if ((NbPoints == 2) && (NbPointsTotal == 1))
-    { // there is also Pt1 != Pt2
+    {
       if (SP1.CheckSameSP(Pt1))
       {
         SP2           = Pt2;
@@ -1572,10 +1401,10 @@ void TestNbPoints(const int,
         NbPointsTotal = 2;
       }
       else
-        NbPointsTotal = 3; /// case SP1!=Pt1 && SP1!=Pt2!
+        NbPointsTotal = 3;
     }
     else if ((NbPoints == 2) && (NbPointsTotal == 2))
-    { // there is also SP1!=SP2
+    {
       if ((SP1.CheckSameSP(Pt1)) || (SP1.CheckSameSP(Pt2)))
       {
         if ((SP2.CheckSameSP(Pt1)) || (SP2.CheckSameSP(Pt2)))
@@ -1589,12 +1418,6 @@ void TestNbPoints(const int,
   }
 }
 
-//=======================================================================
-// function : StartingPointsResearch
-// purpose  : From  two  triangles compute intersection  points.
-//           If I found   more  than two intersection  points
-//           it  means that those triangle are coplanar
-//=======================================================================
 int IntPolyh_MaillageAffinage::StartingPointsResearch(const int            T1,
                                                       const int            T2,
                                                       IntPolyh_StartPoint& SP1,
@@ -1610,10 +1433,6 @@ int IntPolyh_MaillageAffinage::StartingPointsResearch(const int            T1,
   const IntPolyh_Point& Q2 = TPoints2[Tri2.SecondPoint()];
   const IntPolyh_Point& Q3 = TPoints2[Tri2.ThirdPoint()];
 
-  /* The first triangle is (p1,p2,p3).  The other is (q1,q2,q3).
-     The sides are (e1,e2,e3) and (f1,f2,f3).
-     The normals are n1 and m1*/
-
   const IntPolyh_Point e1 = P2 - P1;
   const IntPolyh_Point e2 = P3 - P2;
   const IntPolyh_Point e3 = P1 - P3;
@@ -1623,27 +1442,23 @@ int IntPolyh_MaillageAffinage::StartingPointsResearch(const int            T1,
   const IntPolyh_Point f3 = Q1 - Q3;
 
   IntPolyh_Point nn1, mm1;
-  nn1.Cross(e1, e2); // normal to the first triangle
-  mm1.Cross(f1, f2); // normal to the second triangle
+  nn1.Cross(e1, e2);
+  mm1.Cross(f1, f2);
 
   double nn1modulus, mm1modulus;
   nn1modulus = sqrt(nn1.SquareModulus());
   mm1modulus = sqrt(mm1.SquareModulus());
 
-  //-------------------------------------------------
-  /// calculation of intersections points between triangles
-  //-------------------------------------------------
   int NbPoints      = 0;
   int NbPointsTotal = 0;
 
-  /// check T1 normal
   if (std::abs(nn1modulus) < MyConfusionPrecision)
-  { // 10.0e-20){
+  {
   }
   else
   {
     const IntPolyh_Point n1 = nn1.Divide(nn1modulus);
-    /// T2 edges with T1
+
     if (NbPointsTotal < 3)
     {
       IntPolyh_StartPoint Pt1, Pt2;
@@ -1669,14 +1484,13 @@ int IntPolyh_MaillageAffinage::StartingPointsResearch(const int            T1,
     }
   }
 
-  /// check T2 normal
   if (std::abs(mm1modulus) < MyConfusionPrecision)
-  { // 10.0e-20){
+  {
   }
   else
   {
     const IntPolyh_Point m1 = mm1.Divide(mm1modulus);
-    /// T1 edges with T2
+
     if (NbPointsTotal < 3)
     {
       IntPolyh_StartPoint Pt1, Pt2;
@@ -1701,12 +1515,7 @@ int IntPolyh_MaillageAffinage::StartingPointsResearch(const int            T1,
       TestNbPoints(2, NbPoints, NbPointsTotal, Pt1, Pt2, SP1, SP2);
     }
   }
-  //  no need already checked in  TestNbPoints
-  //  if( (NbPointsTotal==2)&&(SP1.CheckSameSP(SP2)) ) {
-  //  NbPointsTotal=1;
-  // SP1.SetCoupleValue(T1,T2);
-  // }
-  //  else
+
   if (NbPointsTotal == 2)
   {
     SP1.SetCoupleValue(T1, T2);
@@ -1720,12 +1529,6 @@ int IntPolyh_MaillageAffinage::StartingPointsResearch(const int            T1,
   return (NbPointsTotal);
 }
 
-//=======================================================================
-// function : NextStartingPointsResearch
-// purpose  : from  two triangles  and an intersection   point I
-//           search the other point (if it exist).
-//           This function is used by StartPointChain
-//=======================================================================
 int IntPolyh_MaillageAffinage::NextStartingPointsResearch(const int                  T1,
                                                           const int                  T2,
                                                           const IntPolyh_StartPoint& SPInit,
@@ -1749,10 +1552,6 @@ int IntPolyh_MaillageAffinage::NextStartingPointsResearch(const int             
     const IntPolyh_Point& Q2 = TPoints2[Tri2.SecondPoint()];
     const IntPolyh_Point& Q3 = TPoints2[Tri2.ThirdPoint()];
 
-    /* The first triangle is (p1,p2,p3).  The other is (q1,q2,q3).
-       The edges are (e1,e2,e3) and (f1,f2,f3).
-       The normals are n1 and m1*/
-
     const IntPolyh_Point e1 = P2 - P1;
     const IntPolyh_Point e2 = P3 - P2;
     const IntPolyh_Point e3 = P1 - P3;
@@ -1762,28 +1561,23 @@ int IntPolyh_MaillageAffinage::NextStartingPointsResearch(const int             
     const IntPolyh_Point f3 = Q1 - Q3;
 
     IntPolyh_Point nn1, mm1;
-    nn1.Cross(e1, e2); // normal to the first triangle
-    mm1.Cross(f1, f2); // normal to the second triangle
+    nn1.Cross(e1, e2);
+    mm1.Cross(f1, f2);
 
     double nn1modulus, mm1modulus;
     nn1modulus = sqrt(nn1.SquareModulus());
     mm1modulus = sqrt(mm1.SquareModulus());
 
-    //-------------------------------------------------
-    /// calculation of intersections points between triangles
-    //-------------------------------------------------
-
     int                 NbPoints = 0;
     IntPolyh_StartPoint SP1, SP2;
 
-    /// check T1 normal
     if (std::abs(nn1modulus) < MyConfusionPrecision)
-    { // 10.0e-20){
+    {
     }
     else
     {
       const IntPolyh_Point n1 = nn1.Divide(nn1modulus);
-      /// T2 edges with T1
+
       if ((NbPointsTotal < 3) && (EdgeInit2 != Tri2.FirstEdge()))
       {
         IntPolyh_StartPoint Pt1, Pt2;
@@ -1808,14 +1602,14 @@ int IntPolyh_MaillageAffinage::NextStartingPointsResearch(const int             
         TestNbPoints(1, NbPoints, NbPointsTotal, Pt1, Pt2, SP1, SP2);
       }
     }
-    /// check T2 normal
+
     if (std::abs(mm1modulus) < MyConfusionPrecision)
-    { // 10.0e-20){
+    {
     }
     else
     {
       const IntPolyh_Point m1 = mm1.Divide(mm1modulus);
-      /// T1 edges with T2
+
       if ((NbPointsTotal < 3) && (EdgeInit1 != Tri1.FirstEdge()))
       {
         IntPolyh_StartPoint Pt1, Pt2;
@@ -1852,12 +1646,12 @@ int IntPolyh_MaillageAffinage::NextStartingPointsResearch(const int             
     }
     else if ((NbPointsTotal == 2) && (SP1.CheckSameSP(SPInit)))
     {
-      NbPointsTotal = 1; // SP1 et SPInit sont identiques
+      NbPointsTotal = 1;
       SPNext        = SP2;
     }
     else if ((NbPointsTotal == 2) && (SP2.CheckSameSP(SPInit)))
     {
-      NbPointsTotal = 1; // SP2 et SPInit sont identiques
+      NbPointsTotal = 1;
       SPNext        = SP1;
     }
 
@@ -1868,8 +1662,6 @@ int IntPolyh_MaillageAffinage::NextStartingPointsResearch(const int             
   SPNext.SetCoupleValue(T1, T2);
   return (NbPointsTotal);
 }
-
-//=================================================================================================
 
 void CalculPtsInterTriEdgeCoplanaires(const int                TriSurfID,
                                       const IntPolyh_Point&    NormaleTri,
@@ -1888,32 +1680,32 @@ void CalculPtsInterTriEdgeCoplanaires(const int                TriSurfID,
                                       int&                     NbPoints)
 {
   double aDE, aDC;
-  //
+
   gp_Vec aVE(Edge.X(), Edge.Y(), Edge.Z());
   gp_Vec aVC(Cote.X(), Cote.Y(), Cote.Z());
-  //
+
   aDE = aVE.SquareMagnitude();
   aDC = aVC.SquareMagnitude();
-  //
+
   if (aDE > SquareMyConfusionPrecision)
   {
     aVE.Divide(aDE);
   }
-  //
+
   if (aDC > SquareMyConfusionPrecision)
   {
     aVC.Divide(aDC);
   }
-  //
+
   if (!aVE.IsParallel(aVC, MyConfusionPrecision))
   {
-    /// Edge and side are not parallel
+
     IntPolyh_Point Per;
     Per.Cross(NormaleTri, Cote);
     double p1p = Per.Dot(PE1);
     double p2p = Per.Dot(PE2);
     double p0p = Per.Dot(PT1);
-    /// The edge are PT1 are projected on the perpendicular of the side in the plane of the triangle
+
     if ((((p1p >= p0p) && (p0p >= p2p)) || ((p1p <= p0p) && (p0p <= p2p)))
         && (std::abs(p1p - p2p) > MyConfusionPrecision))
     {
@@ -1922,9 +1714,9 @@ void CalculPtsInterTriEdgeCoplanaires(const int                TriSurfID,
       {
       }
       IntPolyh_Point PIE;
-      if (std::abs(lambda) < MyConfusionPrecision) // lambda=0
+      if (std::abs(lambda) < MyConfusionPrecision)
         PIE = PE1;
-      else if (std::abs(lambda) > 1.0 - MyConfusionPrecision) // lambda=1
+      else if (std::abs(lambda) > 1.0 - MyConfusionPrecision)
         PIE = PE2;
       else
         PIE = PE1 + Edge * lambda;
@@ -1951,13 +1743,13 @@ void CalculPtsInterTriEdgeCoplanaires(const int                TriSurfID,
           if (TriSurfID == 1)
           {
             if (std::abs(alpha) < MyConfusionPrecision)
-            { // alpha=0
+            {
               SP1.SetUV1(PT1.U(), PT1.V());
               SP1.SetUV1(PIE.U(), PIE.V());
               SP1.SetEdge1(-1);
             }
             if (std::abs(alpha) > 1.0 - MyConfusionPrecision)
-            { // alpha=1
+            {
               SP1.SetUV1(PT2.U(), PT2.V());
               SP1.SetUV1(PIE.U(), PIE.V());
               SP1.SetEdge1(-1);
@@ -1977,13 +1769,13 @@ void CalculPtsInterTriEdgeCoplanaires(const int                TriSurfID,
           else if (TriSurfID == 2)
           {
             if (std::abs(alpha) < MyConfusionPrecision)
-            { // alpha=0
+            {
               SP1.SetUV1(PT1.U(), PT1.V());
               SP1.SetUV1(PIE.U(), PIE.V());
               SP1.SetEdge2(-1);
             }
             if (std::abs(alpha) > 1.0 - MyConfusionPrecision)
-            { // alpha=1
+            {
               SP1.SetUV1(PT2.U(), PT2.V());
               SP1.SetUV1(PIE.U(), PIE.V());
               SP1.SetEdge2(-1);
@@ -2011,13 +1803,13 @@ void CalculPtsInterTriEdgeCoplanaires(const int                TriSurfID,
           if (TriSurfID == 1)
           {
             if (std::abs(alpha) < MyConfusionPrecision)
-            { // alpha=0
+            {
               SP2.SetUV1(PT1.U(), PT1.V());
               SP2.SetUV1(PIE.U(), PIE.V());
               SP2.SetEdge1(-1);
             }
             if (std::abs(alpha) > 1.0 - MyConfusionPrecision)
-            { // alpha=1
+            {
               SP2.SetUV1(PT2.U(), PT2.V());
               SP2.SetUV1(PIE.U(), PIE.V());
               SP2.SetEdge1(-1);
@@ -2037,13 +1829,13 @@ void CalculPtsInterTriEdgeCoplanaires(const int                TriSurfID,
           else if (TriSurfID == 2)
           {
             if (std::abs(alpha) < MyConfusionPrecision)
-            { // alpha=0
+            {
               SP2.SetUV1(PT1.U(), PT1.V());
               SP2.SetUV1(PIE.U(), PIE.V());
               SP2.SetEdge2(-1);
             }
             if (std::abs(alpha) > 1.0 - MyConfusionPrecision)
-            { // alpha=1
+            {
               SP2.SetUV1(PT2.U(), PT2.V());
               SP2.SetUV1(PIE.U(), PIE.V());
               SP2.SetEdge2(-1);
@@ -2073,9 +1865,7 @@ void CalculPtsInterTriEdgeCoplanaires(const int                TriSurfID,
   }
   else
   {
-    // Side and Edge are parallel, with previous
-    // rejections they are at the same side
-    // The points are projected on that side
+
     double         pe1p    = Cote.Dot(PE1);
     double         pe2p    = Cote.Dot(PE2);
     double         pt1p    = Cote.Dot(PT1);
@@ -2191,7 +1981,7 @@ void CalculPtsInterTriEdgeCoplanaires(const int                TriSurfID,
     {
       SP1.SetXYZ(PEP1.X(), PEP1.Y(), PEP1.Z());
       if (TriSurfID == 1)
-      { /// cote appartient a Tri1
+      {
         SP1.SetUV1(PTP1.U(), PTP1.V());
         SP1.SetUV2(PEP1.U(), PEP1.V());
         SP1.SetEdge1(Tri1.GetEdgeNumber(CoteIndex));
@@ -2207,7 +1997,7 @@ void CalculPtsInterTriEdgeCoplanaires(const int                TriSurfID,
           SP1.SetLambda2(1.0 - lambda1);
       }
       if (TriSurfID == 2)
-      { /// cote appartient a Tri2
+      {
         SP1.SetUV1(PEP1.U(), PTP1.V());
         SP1.SetUV2(PTP1.U(), PEP1.V());
         SP1.SetEdge2(Tri2.GetEdgeNumber(CoteIndex));
@@ -2223,7 +2013,6 @@ void CalculPtsInterTriEdgeCoplanaires(const int                TriSurfID,
           SP1.SetLambda2(1.0 - lambda1);
       }
 
-      // It is checked if PEP1!=PEP2
       if ((NbPoints == 2) && (std::abs(PEP1.U() - PEP2.U()) < MyConfusionPrecision)
           && (std::abs(PEP1.V() - PEP2.V()) < MyConfusionPrecision))
         NbPoints = 1;
@@ -2265,7 +2054,7 @@ void CalculPtsInterTriEdgeCoplanaires(const int                TriSurfID,
       }
     }
   }
-  // Filter if the point is placed on top, the edge is set  to -1
+
   if (NbPoints > 0)
   {
     if (std::abs(SP1.Lambda1()) < MyConfusionPrecision)
@@ -2290,8 +2079,6 @@ void CalculPtsInterTriEdgeCoplanaires(const int                TriSurfID,
   }
 }
 
-//=================================================================================================
-
 int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriSurfID,
                                                    const int                EdgeIndex,
                                                    const IntPolyh_Triangle& Tri1,
@@ -2312,7 +2099,6 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
 
   double lambda = 0., alpha = 0., beta = 0.;
 
-  // One of edges on which the point is located is known
   if (TriSurfID == 1)
   {
     SP1.SetEdge2(Tri2.GetEdgeNumber(EdgeIndex));
@@ -2327,8 +2113,6 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
   {
   }
 
-  /**The edge is projected on the normal in the triangle if yes
-  --> a free intersection (point I)--> Start point is found */
   int NbPoints = 0;
   if (NormaleT.SquareModulus() == 0)
   {
@@ -2346,14 +2130,10 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
     double pe2 = NormaleT.Dot(PE2);
     double pt1 = NormaleT.Dot(PT1);
 
-    // PE1I = lambda.Edge
-
     if ((std::abs(pe1 - pt1) < MyConfusionPrecision)
         && (std::abs(pe2 - pt1) < MyConfusionPrecision))
     {
-      // edge and triangle are coplanar (two contact points at maximum)
 
-      // the tops of the triangle are projected on the perpendicular to the edge
       IntPolyh_Point PerpEdge;
       PerpEdge.Cross(NormaleT, Edge);
       double pp1  = PerpEdge.Dot(PT1);
@@ -2370,9 +2150,7 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
         if (((pp1 >= ppe1) && (pp2 <= ppe1) && (pp3 <= ppe1))
             || ((pp1 <= ppe1) && (pp2 >= ppe1) && (pp3 >= ppe1)))
         {
-          // there are two sides (common top PT1) that can cut the edge
 
-          // first side
           CalculPtsInterTriEdgeCoplanaires(TriSurfID,
                                            NormaleT,
                                            Tri1,
@@ -2393,7 +2171,6 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
               && (std::abs(SP1.V1() - SP2.V1()) < MyConfusionPrecision))
             NbPoints = 1;
 
-          // second side
           if (NbPoints < 2)
             CalculPtsInterTriEdgeCoplanaires(TriSurfID,
                                              NormaleT,
@@ -2422,9 +2199,7 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
                   || ((pp2 <= ppe1) && (pp1 >= ppe1) && (pp3 >= ppe1)))
                  && (NbPoints < 2))
         {
-          // there are two sides (common top PT2) that can cut the edge
 
-          // first side
           CalculPtsInterTriEdgeCoplanaires(TriSurfID,
                                            NormaleT,
                                            Tri1,
@@ -2445,7 +2220,6 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
               && (std::abs(SP1.V1() - SP2.V1()) < MyConfusionPrecision))
             NbPoints = 1;
 
-          // second side
           if (NbPoints < 2)
             CalculPtsInterTriEdgeCoplanaires(TriSurfID,
                                              NormaleT,
@@ -2473,9 +2247,7 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
                   || ((pp3 <= ppe1) && (pp1 >= ppe1) && (pp2 >= ppe1)))
                  && (NbPoints < 2))
         {
-          // there are two sides (common top PT3) that can cut the edge
 
-          // first side
           CalculPtsInterTriEdgeCoplanaires(TriSurfID,
                                            NormaleT,
                                            Tri1,
@@ -2496,7 +2268,6 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
               && (std::abs(SP1.V1() - SP2.V1()) < MyConfusionPrecision))
             NbPoints = 1;
 
-          // second side
           if (NbPoints < 2)
             CalculPtsInterTriEdgeCoplanaires(TriSurfID,
                                              NormaleT,
@@ -2522,18 +2293,15 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
       }
     }
 
-    //------------------------------------------------------
-    // NON COPLANAR edge and triangle (a contact point)
-    //------------------------------------------------------
     else if (((pe1 >= pt1) && (pt1 >= pe2)) || ((pe1 <= pt1) && (pt1 <= pe2)))
-    { //
+    {
       lambda = (pe1 - pt1) / (pe1 - pe2);
       IntPolyh_Point PI;
       if (lambda < -MyConfusionPrecision)
       {
       }
       else if (std::abs(lambda) < MyConfusionPrecision)
-      { // lambda==0
+      {
         PI = PE1;
         if (TriSurfID == 1)
           SP1.SetEdge2(-1);
@@ -2541,7 +2309,7 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
           SP1.SetEdge1(-1);
       }
       else if (std::abs(lambda - 1.0) < MyConfusionPrecision)
-      { // lambda==1
+      {
         PI = PE2;
         if (TriSurfID == 1)
           SP1.SetEdge2(-1);
@@ -2571,7 +2339,6 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
       double D1      = 0.0;
       double D3, D4;
 
-      // Combination Eq1 Eq2
       if (std::abs(Cote23X) > MyConfusionPrecision)
       {
         D1 = Cote12.Y() - Cote12.X() * Cote23.Y() / Cote23X;
@@ -2580,16 +2347,15 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
       {
         alpha = (PI.Y() - PT1.Y() - (PI.X() - PT1.X()) * Cote23.Y() / Cote23X) / D1;
 
-        /// It is checked if 1.0>=alpha>=0.0
         if ((alpha < -MyConfusionPrecision) || (alpha > (1.0 + MyConfusionPrecision)))
           return (0);
         else
           beta = (PI.X() - PT1.X() - alpha * Cote12.X()) / Cote23X;
       }
-      // Combination Eq1 and Eq2 with Cote23.X()==0
+
       else if ((std::abs(Cote12.X()) > MyConfusionPrecision)
                && (std::abs(Cote23X) < MyConfusionPrecision))
-      { // There is Cote23.X()==0
+      {
         alpha = (PI.X() - PT1.X()) / Cote12.X();
 
         if ((alpha < -MyConfusionPrecision) || (alpha > (1.0 + MyConfusionPrecision)))
@@ -2603,7 +2369,7 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
         {
         }
       }
-      // Combination Eq1 and Eq3
+
       else if ((std::abs(Cote23.X()) > MyConfusionPrecision)
                && (std::abs(D3 = (Cote12.Z() - Cote12.X() * Cote23.Z() / Cote23.X()))
                    > MyConfusionPrecision))
@@ -2616,7 +2382,7 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
         else
           beta = (PI.X() - PT1.X() - alpha * Cote12.X()) / Cote23.X();
       }
-      // Combination Eq2 and Eq3
+
       else if ((std::abs(Cote23.Y()) > MyConfusionPrecision)
                && (std::abs(D4 = (Cote12.Z() - Cote12.Y() * Cote23.Z() / Cote23.Y()))
                    > MyConfusionPrecision))
@@ -2629,7 +2395,7 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
         else
           beta = (PI.Y() - PT1.Y() - alpha * Cote12.Y()) / Cote23.Y();
       }
-      // Combination Eq2 and Eq3 with Cote23.Y()==0
+
       else if ((std::abs(Cote12.Y()) > MyConfusionPrecision)
                && (std::abs(Cote23.Y()) < MyConfusionPrecision))
       {
@@ -2648,7 +2414,7 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
           PT3.Dump(3004);
         }
       }
-      // Combination Eq1 and Eq3 with Cote23.Z()==0
+
       else if ((std::abs(Cote12.Z()) > MyConfusionPrecision)
                && (std::abs(Cote23.Z()) < MyConfusionPrecision))
       {
@@ -2666,7 +2432,7 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
       }
 
       else
-      { // Particular case not processed ?
+      {
 
         alpha = RealLast();
         beta  = RealLast();
@@ -2685,26 +2451,26 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
                      PT1.V() + Cote12.V() * alpha + Cote23.V() * beta);
           NbPoints++;
           if (alpha < MyConfusionPrecision)
-          { // alpha=0 --> beta==0
+          {
             SP1.SetXYZ(PT1.X(), PT1.Y(), PT1.Z());
             SP1.SetUV1(PT1.U(), PT1.V());
             SP1.SetEdge1(-1);
           }
           else if ((beta < MyConfusionPrecision) && (std::abs(1 - alpha) < MyConfusionPrecision))
-          { // beta==0 alpha==1
+          {
             SP1.SetXYZ(PT2.X(), PT2.Y(), PT2.Z());
             SP1.SetUV1(PT2.U(), PT2.V());
             SP1.SetEdge1(-1);
           }
           else if ((std::abs(beta - 1) < MyConfusionPrecision)
                    && (std::abs(1 - alpha) < MyConfusionPrecision))
-          { // beta==1 alpha==1
+          {
             SP1.SetXYZ(PT3.X(), PT3.Y(), PT3.Z());
             SP1.SetUV1(PT3.U(), PT3.V());
             SP1.SetEdge1(-1);
           }
           else if (beta < MyConfusionPrecision)
-          { // beta==0
+          {
             SP1.SetEdge1(Tri1.GetEdgeNumber(1));
             if (Tri1.GetEdgeOrientation(1) > 0)
               SP1.SetLambda1(alpha);
@@ -2712,7 +2478,7 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
               SP1.SetLambda1(1.0 - alpha);
           }
           else if (std::abs(beta - alpha) < MyConfusionPrecision)
-          { // beta==alpha
+          {
             SP1.SetEdge1(Tri1.GetEdgeNumber(3));
             if (Tri1.GetEdgeOrientation(3) > 0)
               SP1.SetLambda1(1.0 - alpha);
@@ -2720,7 +2486,7 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
               SP1.SetLambda1(alpha);
           }
           else if (std::abs(alpha - 1) < MyConfusionPrecision)
-          { // alpha==1
+          {
             SP1.SetEdge1(Tri1.GetEdgeNumber(2));
             if (Tri1.GetEdgeOrientation(2) > 0)
               SP1.SetLambda1(beta);
@@ -2735,26 +2501,26 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
                      PT1.V() + Cote12.V() * alpha + Cote23.V() * beta);
           NbPoints++;
           if (alpha < MyConfusionPrecision)
-          { // alpha=0 --> beta==0
+          {
             SP1.SetXYZ(PT1.X(), PT1.Y(), PT1.Z());
             SP1.SetUV2(PT1.U(), PT1.V());
             SP1.SetEdge2(-1);
           }
           else if ((beta < MyConfusionPrecision) && (std::abs(1 - alpha) < MyConfusionPrecision))
-          { // beta==0 alpha==1
+          {
             SP1.SetXYZ(PT2.X(), PT2.Y(), PT2.Z());
             SP1.SetUV2(PT2.U(), PT2.V());
             SP1.SetEdge2(-1);
           }
           else if ((std::abs(beta - 1) < MyConfusionPrecision)
                    && (std::abs(1 - alpha) < MyConfusionPrecision))
-          { // beta==1 alpha==1
+          {
             SP1.SetXYZ(PT3.X(), PT3.Y(), PT3.Z());
             SP1.SetUV2(PT3.U(), PT3.V());
             SP1.SetEdge2(-1);
           }
           else if (beta < MyConfusionPrecision)
-          { // beta==0
+          {
             SP1.SetEdge2(Tri2.GetEdgeNumber(1));
             if (Tri2.GetEdgeOrientation(1) > 0)
               SP1.SetLambda2(alpha);
@@ -2762,7 +2528,7 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
               SP1.SetLambda2(1.0 - alpha);
           }
           else if (std::abs(beta - alpha) < MyConfusionPrecision)
-          { // beta==alpha
+          {
             SP1.SetEdge2(Tri2.GetEdgeNumber(3));
             if (Tri2.GetEdgeOrientation(3) > 0)
               SP1.SetLambda2(1.0 - alpha);
@@ -2770,7 +2536,7 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
               SP1.SetLambda2(alpha);
           }
           else if (std::abs(alpha - 1) < MyConfusionPrecision)
-          { // alpha==1
+          {
             SP1.SetEdge2(Tri2.GetEdgeNumber(2));
             if (Tri2.GetEdgeOrientation(2) > 0)
               SP1.SetLambda2(alpha);
@@ -2789,26 +2555,18 @@ int IntPolyh_MaillageAffinage::TriangleEdgeContact(const int                TriS
   return (NbPoints);
 }
 
-//=======================================================================
-// function : TriangleCompare
-// purpose  : Analyze  each couple of  triangles from the two --
-//           array  of triangles,  to   see  if they are  in
-//           contact,  and  compute the  incidence.  Then  put
-//           couples  in contact  in  the  array  of  couples
-//=======================================================================
 int IntPolyh_MaillageAffinage::TriangleCompare()
 {
-  // Find couples with interfering bounding boxes
+
   IntPolyh_IndexedDataMapOfIntegerListOfInteger aDMILI;
   GetInterferingTriangles(TTriangles1, TPoints1, TTriangles2, TPoints2, aDMILI);
   if (aDMILI.IsEmpty())
   {
     return 0;
   }
-  //
+
   double CoupleAngle = -2.0;
-  //
-  // Intersection of the triangles
+
   int i, aNb = aDMILI.Extent();
   for (i = 1; i <= aNb; ++i)
   {
@@ -2817,7 +2575,7 @@ int IntPolyh_MaillageAffinage::TriangleCompare()
     const IntPolyh_Point& P1        = TPoints1[Triangle1.FirstPoint()];
     const IntPolyh_Point& P2        = TPoints1[Triangle1.SecondPoint()];
     const IntPolyh_Point& P3        = TPoints1[Triangle1.ThirdPoint()];
-    //
+
     const NCollection_List<int>&    aLI2 = aDMILI(i);
     NCollection_List<int>::Iterator aItLI(aLI2);
     for (; aItLI.More(); aItLI.Next())
@@ -2827,12 +2585,12 @@ int IntPolyh_MaillageAffinage::TriangleCompare()
       const IntPolyh_Point& Q1        = TPoints2[Triangle2.FirstPoint()];
       const IntPolyh_Point& Q2        = TPoints2[Triangle2.SecondPoint()];
       const IntPolyh_Point& Q3        = TPoints2[Triangle2.ThirdPoint()];
-      //
+
       if (TriContact(P1, P2, P3, Q1, Q2, Q3, CoupleAngle))
       {
         IntPolyh_Couple aCouple(i_S1, i_S2, CoupleAngle);
         TTrianglesContacts.Append(aCouple);
-        //
+
         Triangle1.SetIntersection(true);
         Triangle2.SetIntersection(true);
       }
@@ -2840,8 +2598,6 @@ int IntPolyh_MaillageAffinage::TriangleCompare()
   }
   return TTrianglesContacts.Extent();
 }
-
-//=================================================================================================
 
 bool CheckCoupleAndGetAngle(const int                          T1,
                             const int                          T2,
@@ -2865,8 +2621,6 @@ bool CheckCoupleAndGetAngle(const int                          T1,
   return false;
 }
 
-//=================================================================================================
-
 bool CheckCoupleAndGetAngle2(const int                                    T1,
                              const int                                    T2,
                              const int                                    T11,
@@ -2876,13 +2630,10 @@ bool CheckCoupleAndGetAngle2(const int                                    T1,
                              double&                                      Angle,
                              NCollection_List<IntPolyh_Couple>&           TTrianglesContacts)
 {
-  /// couple T1 T2 is found in the list
-  /// T11 and T22 are two other triangles implied  in the contact edge edge
-  ///  CT11 couple( T1,T22) and CT22 couple (T2,T11)
-  ///  these couples will be marked if there is a start point
+
   bool Test1, Test2, Test3;
   Test1 = Test2 = Test3 = false;
-  //
+
   NCollection_List<IntPolyh_Couple>::Iterator aIt(TTrianglesContacts);
   for (; aIt.More(); aIt.Next())
   {
@@ -2891,7 +2642,7 @@ bool CheckCoupleAndGetAngle2(const int                                    T1,
     {
       continue;
     }
-    //
+
     if (TestCouple.FirstValue() == T1)
     {
       if (TestCouple.SecondValue() == T2)
@@ -2916,7 +2667,7 @@ bool CheckCoupleAndGetAngle2(const int                                    T1,
         Angle     = TestCouple.Angle();
       }
     }
-    //
+
     if (Test1 && Test2 && Test3)
     {
       break;
@@ -2925,22 +2676,15 @@ bool CheckCoupleAndGetAngle2(const int                                    T1,
   return Test1;
 }
 
-//=======================================================================
-// function : CheckNextStartPoint
-// purpose  : it is checked if the point is not a top
-//           then it is stored in one or several valid arrays with
-// the proper list number
-//=======================================================================
 int CheckNextStartPoint(IntPolyh_SectionLine&         SectionLine,
                         IntPolyh_ArrayOfTangentZones& TTangentZones,
                         IntPolyh_StartPoint&          SP,
-                        const bool                    Prepend) //=false)
+                        const bool                    Prepend)
 {
   int Test = 1;
   if ((SP.E1() == -1) || (SP.E2() == -1))
   {
-    // The tops of triangle are analyzed
-    // It is checked if they are not in the array TTangentZones
+
     int FinTTZ = TTangentZones.NbItems();
     for (int uiui = 0; uiui < FinTTZ; uiui++)
     {
@@ -2951,17 +2695,17 @@ int CheckNextStartPoint(IntPolyh_SectionLine&         SectionLine,
         if ((std::abs(SP.U2() - TestSP.U2()) < MyConfusionPrecision)
             && (std::abs(SP.V2() - TestSP.V2()) < MyConfusionPrecision))
         {
-          Test = 0; // SP is already in the list of  tops
+          Test = 0;
           uiui = FinTTZ;
         }
       }
     }
     if (Test)
-    { // the top does not belong to the list of TangentZones
+    {
       SP.SetChainList(-1);
       TTangentZones[FinTTZ] = SP;
       TTangentZones.IncrementNbItems();
-      Test = 0; // the examined point is a top
+      Test = 0;
     }
   }
   else if (Test)
@@ -2974,66 +2718,56 @@ int CheckNextStartPoint(IntPolyh_SectionLine&         SectionLine,
       SectionLine.IncrementNbStartPoints();
     }
   }
-  // if the point is not a top Test=1
-  // The chain is continued
+
   return (Test);
 }
 
-//=======================================================================
-// function : StartPointsChain
-// purpose  : Loop on the array of couples. Compute StartPoints.
-//           Try to chain  the StartPoints into SectionLines or
-//           put  the  point  in  the    ArrayOfTangentZones if
-//           chaining it, is not possible.
-//=======================================================================
 int IntPolyh_MaillageAffinage::StartPointsChain(IntPolyh_ArrayOfSectionLines& TSectionLines,
                                                 IntPolyh_ArrayOfTangentZones& TTangentZones)
 {
-  // Loop on the array of couples filled in the function COMPARE()
+
   NCollection_List<IntPolyh_Couple>::Iterator aIt(TTrianglesContacts);
   for (; aIt.More(); aIt.Next())
   {
     IntPolyh_Couple& aCouple = aIt.ChangeValue();
-    // Check if the couple of triangles has not been already examined.
+
     if (!aCouple.IsAnalyzed())
     {
 
       int SectionLineIndex = TSectionLines.NbItems();
-      // fill last section line if still empty (eap)
+
       if (SectionLineIndex > 0 && TSectionLines[SectionLineIndex - 1].NbStartPoints() == 0)
         SectionLineIndex -= 1;
       else
         TSectionLines.IncrementNbItems();
 
       IntPolyh_SectionLine& MySectionLine = TSectionLines[SectionLineIndex];
-      if (MySectionLine.GetN() == 0) // eap
-        MySectionLine.Init(10000);   // Initialisation of array of StartPoint
+      if (MySectionLine.GetN() == 0)
+        MySectionLine.Init(10000);
 
       int NbPoints = -1;
       int T1I, T2I;
       T1I = aCouple.FirstValue();
       T2I = aCouple.SecondValue();
 
-      // Start points for the current couple are found
       IntPolyh_StartPoint SP1, SP2;
-      NbPoints = StartingPointsResearch(T1I, T2I, SP1, SP2); // first calculation
-      aCouple.SetAnalyzed(true);                             // the couple is marked
+      NbPoints = StartingPointsResearch(T1I, T2I, SP1, SP2);
+      aCouple.SetAnalyzed(true);
 
       if (NbPoints == 1)
-      { // particular case top/triangle or edge/edge
-        // the start point is input in the array
+      {
+
         SP1.SetChainList(SectionLineIndex);
         SP1.SetAngle(aCouple.Angle());
-        // it is checked if the point is not atop of the triangle
+
         if (CheckNextStartPoint(MySectionLine, TTangentZones, SP1))
         {
           IntPolyh_StartPoint SPNext1;
           int                 TestSP1 = 0;
 
-          // chain of a side
-          IntPolyh_StartPoint SP11; //=SP1;
+          IntPolyh_StartPoint SP11;
           if (SP1.E1() >= 0)
-          { //&&(SP1.E2()!=-1) already tested if the point is not a top
+          {
             int NextTriangle1 = 0;
             if (TEdges1[SP1.E1()].FirstTriangle() != T1I)
               NextTriangle1 = TEdges1[SP1.E1()].FirstTriangle();
@@ -3043,7 +2777,7 @@ int IntPolyh_MaillageAffinage::StartPointsChain(IntPolyh_ArrayOfSectionLines& TS
             double Angle = -2.0;
             if (CheckCoupleAndGetAngle(NextTriangle1, T2I, Angle, TTrianglesContacts))
             {
-              // it is checked if the couple exists and is marked
+
               int NbPoints11 = 0;
               NbPoints11     = NextStartingPointsResearch(NextTriangle1, T2I, SP1, SP11);
               if (NbPoints11 == 1)
@@ -3066,15 +2800,15 @@ int IntPolyh_MaillageAffinage::StartPointsChain(IntPolyh_ArrayOfSectionLines& TS
                         EndChainList = 0;
                     }
                     else
-                      EndChainList = 0; // There is no next point
+                      EndChainList = 0;
                   }
                 }
               }
               else
               {
                 if (NbPoints11 > 1)
-                { // The point is input in the array TTangentZones
-                  TTangentZones[TTangentZones.NbItems()] = SP11; // default list number = -1
+                {
+                  TTangentZones[TTangentZones.NbItems()] = SP11;
                   TTangentZones.IncrementNbItems();
                 }
                 else
@@ -3086,10 +2820,10 @@ int IntPolyh_MaillageAffinage::StartPointsChain(IntPolyh_ArrayOfSectionLines& TS
           else if (SP1.E2() < 0)
           {
           }
-          // chain of the other side
-          IntPolyh_StartPoint SP12; //=SP1;
+
+          IntPolyh_StartPoint SP12;
           if (SP1.E2() >= 0)
-          { //&&(SP1.E1()!=-1) already tested
+          {
             int NextTriangle2;
             if (TEdges2[SP1.E2()].FirstTriangle() != T2I)
               NextTriangle2 = TEdges2[SP1.E2()].FirstTriangle();
@@ -3106,18 +2840,15 @@ int IntPolyh_MaillageAffinage::StartPointsChain(IntPolyh_ArrayOfSectionLines& TS
 
                 SP12.SetChainList(SectionLineIndex);
                 SP12.SetAngle(Angle);
-                bool Prepend = true; // eap
+                bool Prepend = true;
 
                 if (CheckNextStartPoint(MySectionLine, TTangentZones, SP12, Prepend))
                 {
                   int EndChainList = 1;
                   while (EndChainList != 0)
                   {
-                    TestSP1 = GetNextChainStartPoint(SP12,
-                                                     SPNext1,
-                                                     MySectionLine,
-                                                     TTangentZones,
-                                                     Prepend); // eap
+                    TestSP1 =
+                      GetNextChainStartPoint(SP12, SPNext1, MySectionLine, TTangentZones, Prepend);
                     if (TestSP1 == 1)
                     {
                       SPNext1.SetChainList(SectionLineIndex);
@@ -3127,15 +2858,15 @@ int IntPolyh_MaillageAffinage::StartPointsChain(IntPolyh_ArrayOfSectionLines& TS
                         EndChainList = 0;
                     }
                     else
-                      EndChainList = 0; // there is no next point
+                      EndChainList = 0;
                   }
                 }
 
                 else
                 {
                   if (NbPoints12 > 1)
-                  { // The points are input in the array TTangentZones
-                    TTangentZones[TTangentZones.NbItems()] = SP12; // default list number = -1
+                  {
+                    TTangentZones[TTangentZones.NbItems()] = SP12;
                     TTangentZones.IncrementNbItems();
                   }
                   else
@@ -3152,7 +2883,7 @@ int IntPolyh_MaillageAffinage::StartPointsChain(IntPolyh_ArrayOfSectionLines& TS
       }
       else if (NbPoints == 2)
       {
-        // the start points are input in the array
+
         IntPolyh_StartPoint SPNext2;
         int                 TestSP2      = 0;
         int                 EndChainList = 1;
@@ -3162,7 +2893,6 @@ int IntPolyh_MaillageAffinage::StartPointsChain(IntPolyh_ArrayOfSectionLines& TS
         if (CheckNextStartPoint(MySectionLine, TTangentZones, SP1))
         {
 
-          // chain of a side
           while (EndChainList != 0)
           {
             TestSP2 = GetNextChainStartPoint(SP1, SPNext2, MySectionLine, TTangentZones);
@@ -3175,26 +2905,21 @@ int IntPolyh_MaillageAffinage::StartPointsChain(IntPolyh_ArrayOfSectionLines& TS
                 EndChainList = 0;
             }
             else
-              EndChainList = 0; // there is no next point
+              EndChainList = 0;
           }
         }
 
         SP2.SetChainList(SectionLineIndex);
         SP2.SetAngle(aCouple.Angle());
-        bool Prepend = true; // eap
+        bool Prepend = true;
 
         if (CheckNextStartPoint(MySectionLine, TTangentZones, SP2, Prepend))
         {
 
-          // chain of the other side
           EndChainList = 1;
           while (EndChainList != 0)
           {
-            TestSP2 = GetNextChainStartPoint(SP2,
-                                             SPNext2,
-                                             MySectionLine,
-                                             TTangentZones,
-                                             Prepend); // eap
+            TestSP2 = GetNextChainStartPoint(SP2, SPNext2, MySectionLine, TTangentZones, Prepend);
             if (TestSP2 == 1)
             {
               SPNext2.SetChainList(SectionLineIndex);
@@ -3204,15 +2929,14 @@ int IntPolyh_MaillageAffinage::StartPointsChain(IntPolyh_ArrayOfSectionLines& TS
                 EndChainList = 0;
             }
             else
-              EndChainList = 0; // there is no next point
+              EndChainList = 0;
           }
         }
       }
 
       else if ((NbPoints > 2) && (NbPoints < 7))
       {
-        // More than two start points
-        // the start point is input in the table
+
         SP1.SetChainList(SectionLineIndex);
         CheckNextStartPoint(MySectionLine, TTangentZones, SP1);
       }
@@ -3226,12 +2950,6 @@ int IntPolyh_MaillageAffinage::StartPointsChain(IntPolyh_ArrayOfSectionLines& TS
   return (1);
 }
 
-//=======================================================================
-// function : GetNextChainStartPoint
-// purpose  : Mainly  used  by StartPointsChain(), this function
-//           try to compute the next StartPoint.
-//           GetNextChainStartPoint is used only if it is known that there are 2 contact points
-//=======================================================================
 int IntPolyh_MaillageAffinage::GetNextChainStartPoint(const IntPolyh_StartPoint&    SP,
                                                       IntPolyh_StartPoint&          SPNext,
                                                       IntPolyh_SectionLine&         MySectionLine,
@@ -3241,13 +2959,13 @@ int IntPolyh_MaillageAffinage::GetNextChainStartPoint(const IntPolyh_StartPoint&
   int NbPoints = 0;
   if ((SP.E1() >= 0) && (SP.E2() == -2))
   {
-    // case if the point is on edge of T1
+
     int NextTriangle1;
     if (TEdges1[SP.E1()].FirstTriangle() != SP.T1())
       NextTriangle1 = TEdges1[SP.E1()].FirstTriangle();
     else
       NextTriangle1 = TEdges1[SP.E1()].SecondTriangle();
-    // If is checked if two triangles intersect
+
     double Angle = -2.0;
     if (CheckCoupleAndGetAngle(NextTriangle1, SP.T2(), Angle, TTrianglesContacts))
     {
@@ -3266,11 +2984,11 @@ int IntPolyh_MaillageAffinage::GetNextChainStartPoint(const IntPolyh_StartPoint&
         SPNext.SetAngle(Angle);
     }
     else
-      NbPoints = 0; // this couple does not intersect
+      NbPoints = 0;
   }
   else if ((SP.E1() == -2) && (SP.E2() >= 0))
   {
-    // case if the point is on edge of T2
+
     int NextTriangle2;
     if (TEdges2[SP.E2()].FirstTriangle() != SP.T2())
       NextTriangle2 = TEdges2[SP.E2()].FirstTriangle();
@@ -3298,13 +3016,12 @@ int IntPolyh_MaillageAffinage::GetNextChainStartPoint(const IntPolyh_StartPoint&
   }
   else if ((SP.E1() == -2) && (SP.E2() == -2))
   {
-    /// no edge is touched or cut
 
     NbPoints = 0;
   }
   else if ((SP.E1() >= 0) && (SP.E2() >= 0))
   {
-    /// the point is located on two edges
+
     int NextTriangle1;
     if (TEdges1[SP.E1()].FirstTriangle() != SP.T1())
       NextTriangle1 = TEdges1[SP.E1()].FirstTriangle();
@@ -3332,7 +3049,7 @@ int IntPolyh_MaillageAffinage::GetNextChainStartPoint(const IntPolyh_StartPoint&
       {
         if (NbPoints > 1)
         {
-          /// The new point is checked
+
           if (CheckNextStartPoint(MySectionLine, TTangentZones, SPNext, Prepend) > 0)
           {
           }
@@ -3343,7 +3060,7 @@ int IntPolyh_MaillageAffinage::GetNextChainStartPoint(const IntPolyh_StartPoint&
         NbPoints = 0;
       }
       else
-      { // NbPoints==1
+      {
         SPNext.SetAngle(Angle);
         if (aItCT11.More())
           aItCT11.ChangeValue().SetAnalyzed(true);
@@ -3356,13 +3073,9 @@ int IntPolyh_MaillageAffinage::GetNextChainStartPoint(const IntPolyh_StartPoint&
   }
   else if ((SP.E1() == -1) || (SP.E2() == -1))
   {
-    /// the points are tops of triangle
-    /// the point is atored in an intermediary array
   }
   return (NbPoints);
 }
-
-//=================================================================================================
 
 const IntPolyh_ArrayOfPoints& IntPolyh_MaillageAffinage::GetArrayOfPoints(const int SurfID) const
 {
@@ -3371,16 +3084,12 @@ const IntPolyh_ArrayOfPoints& IntPolyh_MaillageAffinage::GetArrayOfPoints(const 
   return (TPoints2);
 }
 
-//=================================================================================================
-
 const IntPolyh_ArrayOfEdges& IntPolyh_MaillageAffinage::GetArrayOfEdges(const int SurfID) const
 {
   if (SurfID == 1)
     return (TEdges1);
   return (TEdges2);
 }
-
-//=================================================================================================
 
 const IntPolyh_ArrayOfTriangles& IntPolyh_MaillageAffinage::GetArrayOfTriangles(
   const int SurfID) const
@@ -3390,8 +3099,6 @@ const IntPolyh_ArrayOfTriangles& IntPolyh_MaillageAffinage::GetArrayOfTriangles(
   return (TTriangles2);
 }
 
-//=================================================================================================
-
 Bnd_Box IntPolyh_MaillageAffinage::GetBox(const int SurfID) const
 {
   if (SurfID == 1)
@@ -3399,42 +3106,30 @@ Bnd_Box IntPolyh_MaillageAffinage::GetBox(const int SurfID) const
   return (MyBox2);
 }
 
-//=================================================================================================
-
 NCollection_List<IntPolyh_Couple>& IntPolyh_MaillageAffinage::GetCouples()
 {
   return TTrianglesContacts;
 }
-
-//=================================================================================================
 
 void IntPolyh_MaillageAffinage::SetEnlargeZone(const bool EnlargeZone)
 {
   myEnlargeZone = EnlargeZone;
 }
 
-//=================================================================================================
-
 bool IntPolyh_MaillageAffinage::GetEnlargeZone() const
 {
   return myEnlargeZone;
 }
-
-//=================================================================================================
 
 double IntPolyh_MaillageAffinage::GetMinDeflection(const int SurfID) const
 {
   return (SurfID == 1) ? FlecheMin1 : FlecheMin2;
 }
 
-//=================================================================================================
-
 double IntPolyh_MaillageAffinage::GetMaxDeflection(const int SurfID) const
 {
   return (SurfID == 1) ? FlecheMax1 : FlecheMax2;
 }
-
-//=================================================================================================
 
 void DegeneratedIndex(const NCollection_Array1<double>&     aXpars,
                       const int                             aNbX,
@@ -3446,18 +3141,18 @@ void DegeneratedIndex(const NCollection_Array1<double>&     aXpars,
   int    i;
   bool   bDegX1, bDegX2;
   double aDegX1, aDegX2, aTol2, aX;
-  //
+
   aI1   = 0;
   aI2   = 0;
   aTol2 = MyTolerance * MyTolerance;
-  //
+
   if (aIsoDirection == 1)
-  { // V=const
+  {
     bDegX1 = IsDegenerated(aS, 1, aTol2, aDegX1);
     bDegX2 = IsDegenerated(aS, 2, aTol2, aDegX2);
   }
   else if (aIsoDirection == 2)
-  { // U=const
+  {
     bDegX1 = IsDegenerated(aS, 3, aTol2, aDegX1);
     bDegX2 = IsDegenerated(aS, 4, aTol2, aDegX2);
   }
@@ -3465,12 +3160,12 @@ void DegeneratedIndex(const NCollection_Array1<double>&     aXpars,
   {
     return;
   }
-  //
+
   if (!(bDegX1 || bDegX2))
   {
     return;
   }
-  //
+
   for (i = 1; i <= aNbX; ++i)
   {
     aX = aXpars(i);
@@ -3491,8 +3186,6 @@ void DegeneratedIndex(const NCollection_Array1<double>&     aXpars,
   }
 }
 
-//=================================================================================================
-
 bool IsDegenerated(const occ::handle<Adaptor3d_Surface>& aS,
                    const int                             aIndex,
                    const double                          aTol2,
@@ -3502,18 +3195,18 @@ bool IsDegenerated(const occ::handle<Adaptor3d_Surface>& aS,
   int    i, aNbP;
   double aU, dU, aU1, aU2, aV, dV, aV1, aV2, aD2;
   gp_Pnt aP1, aP2;
-  //
+
   bRet  = false;
   aNbP  = 3;
   aDegX = 99;
-  //
+
   aU1 = aS->FirstUParameter();
   aU2 = aS->LastUParameter();
   aV1 = aS->FirstVParameter();
   aV2 = aS->LastVParameter();
-  //
+
   if (aIndex < 3)
-  { // V=const
+  {
     aV = aV1;
     if (aIndex == 2)
     {
@@ -3541,7 +3234,7 @@ bool IsDegenerated(const occ::handle<Adaptor3d_Surface>& aS,
     bRet  = !bRet;
   }
   else
-  { // U=const
+  {
     aU = aU1;
     if (aIndex == 4)
     {
@@ -3568,6 +3261,6 @@ bool IsDegenerated(const occ::handle<Adaptor3d_Surface>& aS,
     bRet  = !bRet;
     aDegX = aU;
   }
-  //
+
   return bRet;
 }

@@ -3,11 +3,7 @@
 #include <StepData_SelectNamed.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=================================================================================================
-
 StepBasic_SourceItem::StepBasic_SourceItem() = default;
-
-//=================================================================================================
 
 int StepBasic_SourceItem::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -18,15 +14,11 @@ int StepBasic_SourceItem::CaseNum(const occ::handle<Standard_Transient>& ent) co
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepData_SelectMember> StepBasic_SourceItem::NewMember() const
 {
   occ::handle<StepData_SelectNamed> member = new StepData_SelectNamed;
   return member;
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> StepBasic_SourceItem::Identifier() const
 {

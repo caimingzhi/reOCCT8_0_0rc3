@@ -11,7 +11,6 @@ class StepShape_GeometricSet;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for GeometricSet
 class RWStepShape_RWGeometricSet
 {
 public:

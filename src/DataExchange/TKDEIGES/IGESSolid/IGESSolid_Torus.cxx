@@ -15,8 +15,8 @@ void IGESSolid_Torus::Init(const double  R1,
 {
   theR1    = R1;
   theR2    = R2;
-  thePoint = Point;   // default (0,0,0)
-  theAxis  = Axisdir; // default (0,0,1)
+  thePoint = Point;
+  theAxis  = Axisdir;
   InitTypeAndForm(160, 0);
 }
 

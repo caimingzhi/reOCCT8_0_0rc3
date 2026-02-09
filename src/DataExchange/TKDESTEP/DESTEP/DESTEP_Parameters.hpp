@@ -110,10 +110,8 @@ public:
 public:
   Standard_EXPORT DESTEP_Parameters();
 
-  //! Initialize parameters
   Standard_EXPORT void InitFromStatic();
 
-  //! Reset used parameters
   Standard_EXPORT void Reset();
 
   Standard_EXPORT TCollection_AsciiString GetString(const ReadMode_ProductContext theMode)
@@ -131,65 +129,59 @@ public:
     }
   }
 
-  //! Returns default shape fix parameters for transferring STEP files.
   Standard_EXPORT static DE_ShapeFixParameters GetDefaultShapeFixParameters();
 
 public:
-  // Common
-  // clang-format off
-  ReadMode_BSplineContinuity ReadBSplineContinuity = ReadMode_BSplineContinuity_C1; //<! Manages the continuity of BSpline curves
-  ReadMode_Precision ReadPrecisionMode = ReadMode_Precision_File; //<! Reads the precision mode value
-  double ReadPrecisionVal = 0.0001; //<! ReadMode_Precision for shape construction (if enabled user mode)
-  ReadMode_MaxPrecision ReadMaxPrecisionMode = ReadMode_MaxPrecision_Preferred; //<! Defines the mode of applying the maximum allowed tolerance
-  double ReadMaxPrecisionVal = 1; //<! Defines the maximum allowable tolerance
-  bool ReadSameParamMode = false; //<! Defines the using of BRepLib::SameParameter
-  ReadMode_SurfaceCurve ReadSurfaceCurveMode = ReadMode_SurfaceCurve_Default; //<! Reference for the computation of curves in case of 2D/3D
-  double EncodeRegAngle = 0.57295779513; //<! Continuity which these two faces are connected with at that edge
-  AngleUnitMode AngleUnit = AngleUnitMode_File; //<! Indicates what angle units should be used when a STEP file is read
+  ReadMode_BSplineContinuity ReadBSplineContinuity = ReadMode_BSplineContinuity_C1;
+  ReadMode_Precision         ReadPrecisionMode     = ReadMode_Precision_File;
+  double                     ReadPrecisionVal      = 0.0001;
+  ReadMode_MaxPrecision      ReadMaxPrecisionMode  = ReadMode_MaxPrecision_Preferred;
+  double                     ReadMaxPrecisionVal   = 1;
+  bool                       ReadSameParamMode     = false;
+  ReadMode_SurfaceCurve      ReadSurfaceCurveMode  = ReadMode_SurfaceCurve_Default;
+  double                     EncodeRegAngle        = 0.57295779513;
+  AngleUnitMode              AngleUnit             = AngleUnitMode_File;
 
-  // Read
-  bool ReadProductMode = true; //<! Defines the approach used for selection of top-level STEP entities for translation, and for recognition of assembly structures
-  ReadMode_ProductContext ReadProductContext = ReadMode_ProductContext_All; //<! When reading AP 209 STEP files, allows selecting either only 'design' or 'analysis', or both types of products for translation
-  ReadMode_ShapeRepr ReadShapeRepr = ReadMode_ShapeRepr_All; //<! Specifies preferred type of representation of the shape of the product
-  RWMode_Tessellated ReadTessellated = RWMode_Tessellated_On; //!< Defines whether tessellated shapes should be translated
-  ReadMode_AssemblyLevel ReadAssemblyLevel = ReadMode_AssemblyLevel_All; //<! Specifies which data should be read for the products found in the STEP file
-  bool ReadRelationship = true; //<! Defines whether shapes associated with the main SHAPE_DEFINITION_REPRESENTATION entity of the product via SHAPE_REPRESENTATIONSHIP_RELATION should be translated
-  bool ReadShapeAspect = true; //<! Defines whether shapes associated with the PRODUCT_DEFINITION_SHAPE entity of the product via SHAPE_ASPECT should be translated
-  bool ReadConstrRelation = false; //<! Flag regulating translation of "CONSTRUCTIVE_GEOMETRY_REPRESENTATION_RELATIONSHIP" entities
-  bool ReadSubshapeNames = false; //<! Indicates whether to read sub-shape names from 'Name' attributes of STEP Representation Items
-  Resource_FormatType ReadCodePage = Resource_FormatType_UTF8; //<! STEP file encoding for names translation
-  bool ReadNonmanifold = false; //<! Defines non-manifold topology reading
-  bool ReadIdeas = false; //<! Defines !I-Deas-like STEP processing
-  bool ReadAllShapes = false; //<! Parameter to read all top level solids and shells
-  bool ReadRootTransformation = true; ///<!/ Mode to variate apply or not transformation placed in the root shape representation
-  bool ReadColor = true; //<! ColorMode is used to indicate read Colors or not
-  bool ReadName = true; //<! NameMode is used to indicate read Name or not
-  bool ReadLayer = true; //<! LayerMode is used to indicate read Layers or not
-  bool ReadProps = true; //<! PropsMode is used to indicate read Validation properties or not
-  bool ReadMetadata = true; //! Parameter for metadata reading
-  bool ReadProductMetadata = false; //! Parameter for product metadata reading
-  
-  // Write
-  WriteMode_PrecisionMode WritePrecisionMode = WriteMode_PrecisionMode_Average; //<! Specifies the mode of writing the resolution value into the STEP file
-  double WritePrecisionVal = 0.0001; //<! Resolution value for an STEP file when WriteMode_PrecisionMode is Greatest
-  WriteMode_Assembly WriteAssembly = WriteMode_Assembly_Auto; //<! Writing assembly mode
-  WriteMode_StepSchema WriteSchema = WriteMode_StepSchema_AP214IS; //<! Defines the version of schema used for the output STEP file
-  RWMode_Tessellated WriteTessellated = RWMode_Tessellated_OnNoBRep; //!< Defines whether tessellated shapes should be translated
-  TCollection_AsciiString WriteProductName; //<! Defines the text string that will be used for field 'name' of PRODUCT entities written to the STEP file
-  bool WriteSurfaceCurMode = true; //<! Indicates whether parametric curves (curves in parametric space of surface) should be written into the STEP file
-  UnitsMethods_LengthUnit WriteUnit = UnitsMethods_LengthUnit_Millimeter; //<! Defines a unit in which the STEP file should be written
-  WriteMode_VertexMode WriteVertexMode = WriteMode_VertexMode_OneCompound; //<! Indicates which of free vertices writing mode is switch on
-  bool WriteSubshapeNames = false; //<! Indicates whether to write sub-shape names to 'Name' attributes of STEP Representation Items
-  bool WriteColor = true; //<! ColorMode is used to indicate write Colors or not
-  bool WriteNonmanifold = false; //<! Defines non-manifold topology writing
-  bool WriteName = true; //<! NameMode is used to indicate write Name or not
-  bool WriteLayer = true; //<! LayerMode is used to indicate write Layers or not
-  bool WriteProps = true; //<! PropsMode is used to indicate write Validation properties or not
-  bool WriteMetadata = true; //<! MetadataMode is used to indicate write metadata properties or not.
-  bool WriteMaterial = true;  //<! MaterialMode is used to indicate write Material or not
-  bool WriteVisMaterial = false;  //<! VisMaterialMode is used to indicate write Visual Material or not
-  STEPControl_StepModelType WriteModelType = STEPControl_AsIs; //<! Gives you the choice of translation mode for an Open CASCADE shape that is being translated to STEP
-  bool CleanDuplicates = false; //<! Indicates whether to remove duplicate entities from the STEP file
-  bool WriteScalingTrsf = true; //<! Indicates if scaling should be written as Cartesian Operator or skipped
-  // clang-format on
+  bool                    ReadProductMode        = true;
+  ReadMode_ProductContext ReadProductContext     = ReadMode_ProductContext_All;
+  ReadMode_ShapeRepr      ReadShapeRepr          = ReadMode_ShapeRepr_All;
+  RWMode_Tessellated      ReadTessellated        = RWMode_Tessellated_On;
+  ReadMode_AssemblyLevel  ReadAssemblyLevel      = ReadMode_AssemblyLevel_All;
+  bool                    ReadRelationship       = true;
+  bool                    ReadShapeAspect        = true;
+  bool                    ReadConstrRelation     = false;
+  bool                    ReadSubshapeNames      = false;
+  Resource_FormatType     ReadCodePage           = Resource_FormatType_UTF8;
+  bool                    ReadNonmanifold        = false;
+  bool                    ReadIdeas              = false;
+  bool                    ReadAllShapes          = false;
+  bool                    ReadRootTransformation = true;
+  bool                    ReadColor              = true;
+  bool                    ReadName               = true;
+  bool                    ReadLayer              = true;
+  bool                    ReadProps              = true;
+  bool                    ReadMetadata           = true;
+  bool                    ReadProductMetadata    = false;
+
+  WriteMode_PrecisionMode   WritePrecisionMode = WriteMode_PrecisionMode_Average;
+  double                    WritePrecisionVal  = 0.0001;
+  WriteMode_Assembly        WriteAssembly      = WriteMode_Assembly_Auto;
+  WriteMode_StepSchema      WriteSchema        = WriteMode_StepSchema_AP214IS;
+  RWMode_Tessellated        WriteTessellated   = RWMode_Tessellated_OnNoBRep;
+  TCollection_AsciiString   WriteProductName;
+  bool                      WriteSurfaceCurMode = true;
+  UnitsMethods_LengthUnit   WriteUnit           = UnitsMethods_LengthUnit_Millimeter;
+  WriteMode_VertexMode      WriteVertexMode     = WriteMode_VertexMode_OneCompound;
+  bool                      WriteSubshapeNames  = false;
+  bool                      WriteColor          = true;
+  bool                      WriteNonmanifold    = false;
+  bool                      WriteName           = true;
+  bool                      WriteLayer          = true;
+  bool                      WriteProps          = true;
+  bool                      WriteMetadata       = true;
+  bool                      WriteMaterial       = true;
+  bool                      WriteVisMaterial    = false;
+  STEPControl_StepModelType WriteModelType      = STEPControl_AsIs;
+  bool                      CleanDuplicates     = false;
+  bool                      WriteScalingTrsf    = true;
 };

@@ -29,17 +29,14 @@
 #include <NCollection_Sequence.hpp>
 
 #ifdef _WIN32
-  #include <malloc.h> // for alloca()
+  #include <malloc.h>
 #endif
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_MeshPrsBuilder, MeshVS_PrsBuilder)
 
 namespace
 {
-  //================================================================
-  // Function : ProcessFace
-  // Purpose  : Fill array with triangles for the face
-  //================================================================
+
   static void ProcessFace(const NCollection_Sequence<int>&                theFaceNodes,
                           const NCollection_Array1<double>&               theNodes,
                           const double*                                   theCenter,
@@ -85,11 +82,10 @@ namespace
       }
     }
 
-    // clang-format off
-    for (int aNodeIdx = 0; aNodeIdx < aNbPolyNodes - 2; ++aNodeIdx) // triangulate polygon
-    // clang-format on
+    for (int aNodeIdx = 0; aNodeIdx < aNbPolyNodes - 2; ++aNodeIdx)
+
     {
-      for (int aSubIdx = 0; aSubIdx < 3; ++aSubIdx) // generate sub-triangle
+      for (int aSubIdx = 0; aSubIdx < 3; ++aSubIdx)
       {
         if (theIsShaded)
         {
@@ -111,8 +107,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 MeshVS_MeshPrsBuilder::MeshVS_MeshPrsBuilder(const occ::handle<MeshVS_Mesh>&       Parent,
                                              const int&                            DisplayModeMask,
                                              const occ::handle<MeshVS_DataSource>& DS,
@@ -121,8 +115,6 @@ MeshVS_MeshPrsBuilder::MeshVS_MeshPrsBuilder(const occ::handle<MeshVS_Mesh>&    
     : MeshVS_PrsBuilder(Parent, DisplayModeMask, DS, Id, Priority)
 {
 }
-
-//=================================================================================================
 
 void MeshVS_MeshPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
                                   const TColStd_PackedMapOfInteger&      IDs,
@@ -143,8 +135,6 @@ void MeshVS_MeshPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
   else
     BuildNodes(Prs, IDs, IDsToExclude, DisplayMode);
 }
-
-//=================================================================================================
 
 void MeshVS_MeshPrsBuilder::BuildNodes(const occ::handle<Prs3d_Presentation>& Prs,
                                        const TColStd_PackedMapOfInteger&      IDs,
@@ -174,7 +164,7 @@ void MeshVS_MeshPrsBuilder::BuildNodes(const occ::handle<Prs3d_Presentation>& Pr
   anIDs.Assign(IDs);
   if (!HasSelectFlag && !HasHilightFlag)
   {
-    // subtract the hidden nodes and ids to exclude (to minimize allocated memory)
+
     occ::handle<TColStd_HPackedMapOfInteger> aHiddenNodes = myParentMesh->GetHiddenNodes();
     if (!aHiddenNodes.IsNull())
       anIDs.Subtract(aHiddenNodes->Map());
@@ -208,8 +198,6 @@ void MeshVS_MeshPrsBuilder::BuildNodes(const occ::handle<Prs3d_Presentation>& Pr
   }
 }
 
-//=================================================================================================
-
 void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>& Prs,
                                           const TColStd_PackedMapOfInteger&      IDs,
                                           TColStd_PackedMapOfInteger&            IDsToExclude,
@@ -225,15 +213,12 @@ void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>&
   if (aDrawer.IsNull() || !aDrawer->GetInteger(MeshVS_DA_MaxFaceNodes, maxnodes) || maxnodes <= 0)
     return;
 
-  //----------- extract useful display mode flags ----------
   int aDispMode = (DisplayMode & GetFlags());
   if ((aDispMode & MeshVS_DMF_DeformedMask) != 0)
   {
     aDispMode /= MeshVS_DMF_DeformedPrsWireFrame;
-    // This transformation turns deformed mesh flags to real display modes
   }
   aDispMode &= MeshVS_DMF_OCCMask;
-  //--------------------------------------------------------
 
   double aShrinkCoef = 0.0;
   aDrawer->GetDouble(MeshVS_DA_ShrinkCoeff, aShrinkCoef);
@@ -249,11 +234,9 @@ void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>&
   const bool IsReflect = (IsMeshReflect && !HasHilightFlag);
   aDrawer->GetBoolean(MeshVS_DA_SmoothShading, IsMeshSmoothShading);
 
-  // display mode for highlighted prs of groups
   IsShrink  = (IsShrink && !HasHilightFlag);
   IsShading = (IsShading || HasHilightFlag);
 
-  //---------- Creating AspectFillArea3d and AspectLine3d -------------
   Graphic3d_MaterialAspect AMat;
   aDrawer->GetMaterial(MeshVS_DA_FrontMaterial, AMat);
   if (!IsReflect)
@@ -266,11 +249,9 @@ void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>&
   occ::handle<Graphic3d_AspectFillArea3d> aFill =
     MeshVS_Tool::CreateAspectFillArea3d(GetDrawer(), AMat);
   occ::handle<Graphic3d_AspectLine3d> aBeam = MeshVS_Tool::CreateAspectLine3d(GetDrawer());
-  //-------------------------------------------------------------------
 
   bool IsOverlapControl = !IsMeshAllowOverlap && (IsWireFrame || IsShading) && !HasSelectFlag;
 
-  // subtract the hidden elements and ids to exclude (to minimize allocated memory)
   TColStd_PackedMapOfInteger anIDs;
   anIDs.Assign(IDs);
   occ::handle<TColStd_HPackedMapOfInteger> aHiddenElems = myParentMesh->GetHiddenElems();
@@ -314,12 +295,12 @@ void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>&
         {
           const NCollection_Sequence<int>& aFaceNodes = aTopo->Value(aFaceIdx);
 
-          if (showEdges) // add edge segments
+          if (showEdges)
           {
             aNbEdgePrimitives += aFaceNodes.Length();
           }
 
-          if (IsShading || IsShrink) // add volumetric cell triangles
+          if (IsShading || IsShrink)
           {
             if (!HasSelectFlag)
               aNbVolmPrimitives += aFaceNodes.Length() - 2;
@@ -331,30 +312,26 @@ void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>&
     {
       if (showEdges)
       {
-        aNbLinkPrimitives += 1; // add link segment
+        aNbLinkPrimitives += 1;
       }
     }
     else if (aType == MeshVS_ET_Face)
     {
       if (showEdges)
       {
-        aNbEdgePrimitives += aNbNodes; // add edge segments
+        aNbEdgePrimitives += aNbNodes;
       }
 
       if (!IsOverlapControl || IsShading)
       {
         if ((IsShading || IsShrink) && !HasSelectFlag)
         {
-          aNbFacePrimitives += aNbNodes - 2; // add face triangles
+          aNbFacePrimitives += aNbNodes - 2;
         }
       }
     }
   }
 
-  // Here we do not use indices arrays because they are not effective for some mesh
-  // drawing modes: shrinking mode (displaces the vertices inside the polygon), 3D
-  // cell rendering (normal interpolation is not always applicable - flat shading),
-  // elemental coloring (color interpolation is impossible)
   occ::handle<Graphic3d_ArrayOfTriangles> aVolmTriangles =
     new Graphic3d_ArrayOfTriangles(aNbVolmPrimitives * 3, 0, IsReflect);
   occ::handle<Graphic3d_ArrayOfTriangles> aFaceTriangles =
@@ -375,7 +352,6 @@ void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>&
   Quantity_Color                   anEdgeColor = aFill->EdgeColor();
   NCollection_Map<MeshVS_TwoNodes> aLinkNodes;
 
-  // Forbid drawings of edges which overlap with some links
   if (showEdges && IsOverlapControl)
   {
     for (it.Reset(); it.More(); it.Next())
@@ -414,7 +390,7 @@ void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>&
 
         if (aSource->Get3DGeom(aKey, NbNodes, aTopo))
         {
-          // Add wire-frame presentation (draw edges for shading mode as well)
+
           if (showEdges)
           {
             AddVolumePrs(aTopo,
@@ -427,7 +403,6 @@ void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>&
                          aShrinkCoef);
           }
 
-          // Add shading presentation
           if ((IsShading || IsShrink) && !HasSelectFlag)
           {
             AddVolumePrs(aTopo,
@@ -551,16 +526,6 @@ void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>&
     aFill->SetEdgeColor(Quantity_NOC_BLACK);
   }
 
-  // std::cout << "Actual extents: " << std::endl
-  //   << "Face tris: " << aFaceTriangles->ItemNumber() << " from " << aNbFacePrimitives <<
-  //   std::endl
-  //   << "Volm tris: " << aVolmTriangles->ItemNumber()  << " from " << aNbVolmPrimitives <<
-  //   std::endl
-  //   << "Face segs: " << aEdgeSegments->ItemNumber()  << " from " << aNbEdgePrimitives <<
-  //   std::endl
-  //   << "Link segs: " << aLinkSegments->ItemNumber()  << " from " << aNbLinkPrimitives <<
-  //   std::endl;
-
   DrawArrays(Prs,
              aFaceTriangles,
              aEdgeSegments,
@@ -577,8 +542,6 @@ void MeshVS_MeshPrsBuilder::BuildElements(const occ::handle<Prs3d_Presentation>&
   if (IsShrink)
     aFill->SetEdgeColor(anOldEdgeColor);
 }
-
-//=================================================================================================
 
 void MeshVS_MeshPrsBuilder::BuildHilightPrs(const occ::handle<Prs3d_Presentation>& Prs,
                                             const TColStd_PackedMapOfInteger&      IDs,
@@ -609,7 +572,6 @@ void MeshVS_MeshPrsBuilder::BuildHilightPrs(const occ::handle<Prs3d_Presentation
   occ::handle<Graphic3d_AspectLine3d>   aBeam     = MeshVS_Tool::CreateAspectLine3d(GetDrawer());
   occ::handle<Graphic3d_AspectMarker3d> aNodeMark = MeshVS_Tool::CreateAspectMarker3d(GetDrawer());
 
-  // Hilight one element or node
   TColStd_MapIteratorOfPackedMapOfInteger it(IDs);
   int                                     ID = it.Key(), NbNodes;
   MeshVS_EntityType                       aType;
@@ -693,8 +655,6 @@ void MeshVS_MeshPrsBuilder::BuildHilightPrs(const occ::handle<Prs3d_Presentation
   }
 }
 
-//=================================================================================================
-
 void MeshVS_MeshPrsBuilder::AddLinkPrs(const NCollection_Array1<double>&             theCoords,
                                        const occ::handle<Graphic3d_ArrayOfSegments>& theSegments,
                                        const bool                                    theIsShrinked,
@@ -725,8 +685,6 @@ void MeshVS_MeshPrsBuilder::AddLinkPrs(const NCollection_Array1<double>&        
   theSegments->AddVertex(aX1, aY1, aZ1);
   theSegments->AddVertex(aX2, aY2, aZ2);
 }
-
-//=================================================================================================
 
 void MeshVS_MeshPrsBuilder::AddFaceWirePrs(
   const NCollection_Array1<double>&             theCoords,
@@ -775,8 +733,6 @@ void MeshVS_MeshPrsBuilder::AddFaceWirePrs(
                            aNodes.Value(aNextIdx).Z());
   }
 }
-
-//=================================================================================================
 
 void MeshVS_MeshPrsBuilder::AddFaceSolidPrs(
   const int                                      theID,
@@ -845,7 +801,6 @@ void MeshVS_MeshPrsBuilder::AddFaceSolidPrs(
     aNodes.Append(aPnt);
   }
 
-  // Triangulate polygon
   for (int aNodeIdx = 0; aNodeIdx < theNbNodes - 2; ++aNodeIdx)
   {
     for (int aSubIdx = 0; aSubIdx < 3; ++aSubIdx)
@@ -875,8 +830,6 @@ void MeshVS_MeshPrsBuilder::AddFaceSolidPrs(
     }
   }
 }
-
-//=================================================================================================
 
 void MeshVS_MeshPrsBuilder::AddVolumePrs(
   const occ::handle<NCollection_HArray1<NCollection_Sequence<int>>>& theTopo,
@@ -944,7 +897,7 @@ void MeshVS_MeshPrsBuilder::AddVolumePrs(
 
       for (int aNodeIdx = 0, aNbNodes = aFaceNodes.Length(); aNodeIdx < aNbNodes; ++aNodeIdx)
       {
-        for (int aSubIdx = 0; aSubIdx < 2; ++aSubIdx) // add segment
+        for (int aSubIdx = 0; aSubIdx < 2; ++aSubIdx)
         {
           int anIdx = aFaceNodes.Value((aNodeIdx + aSubIdx) % aNbNodes + 1);
 
@@ -961,7 +914,7 @@ void MeshVS_MeshPrsBuilder::AddVolumePrs(
   }
   else
   {
-    // Find all pairs of nodes (edges) to draw (will be drawn only once)
+
     NCollection_Map<MeshVS_NodePair, MeshVS_SymmetricPairHasher> aEdgeMap;
 
     for (int aFaceIdx = theTopo->Lower(), topoup = theTopo->Upper(); aFaceIdx <= topoup; ++aFaceIdx)
@@ -977,7 +930,6 @@ void MeshVS_MeshPrsBuilder::AddVolumePrs(
       }
     }
 
-    // Draw edges
     for (NCollection_Map<MeshVS_NodePair, MeshVS_SymmetricPairHasher>::Iterator anIt(aEdgeMap);
          anIt.More();
          anIt.Next())
@@ -1005,8 +957,6 @@ void MeshVS_MeshPrsBuilder::AddVolumePrs(
   }
 }
 
-//=================================================================================================
-
 void MeshVS_MeshPrsBuilder::HowManyPrimitives(
   const occ::handle<NCollection_HArray1<NCollection_Sequence<int>>>& Topo,
   const bool                                                         AsPolygons,
@@ -1030,15 +980,12 @@ void MeshVS_MeshPrsBuilder::HowManyPrimitives(
     else
     {
       int F = Topo->Upper() - Topo->Lower() + 1, E = NbNodes + F - 2;
-      // number of edges is obtained by Euler's expression for polyhedrons
 
       Bounds += E;
       Vertices += 2 * E;
     }
   }
 }
-
-//=================================================================================================
 
 void MeshVS_MeshPrsBuilder::DrawArrays(
   const occ::handle<Prs3d_Presentation>&          Prs,
@@ -1077,10 +1024,8 @@ void MeshVS_MeshPrsBuilder::DrawArrays(
     occ::handle<Graphic3d_Group> aGroup = Prs->NewGroup();
     aGroup->SetClosed(isSupressBackFaces);
     occ::handle<Graphic3d_AspectFillArea3d> aFillAsp = new Graphic3d_AspectFillArea3d(*theFillAsp);
-    // if ( IsPolygonsEdgesOff )
+
     aFillAsp->SetEdgeOff();
-    // else
-    //   aFillAsp->SetEdgeOn ();
 
     if (anIntColor != aBackColor)
       aFillAsp->SetDistinguishOn();
@@ -1129,10 +1074,8 @@ void MeshVS_MeshPrsBuilder::DrawArrays(
     occ::handle<Graphic3d_Group> aGroup = Prs->NewGroup();
     aGroup->SetClosed(isSupressBackFaces);
     occ::handle<Graphic3d_AspectFillArea3d> aFillAsp = new Graphic3d_AspectFillArea3d(*theFillAsp);
-    // if ( IsPolygonsEdgesOff )
+
     aFillAsp->SetEdgeOff();
-    // else
-    //   aFillAsp->SetEdgeOn ();
 
     if (anIntColor != aBackColor)
       aFillAsp->SetDistinguishOn();
@@ -1152,8 +1095,6 @@ void MeshVS_MeshPrsBuilder::DrawArrays(
     }
   }
 }
-
-//=================================================================================================
 
 void MeshVS_MeshPrsBuilder::CalculateCenter(const NCollection_Array1<double>& theCoords,
                                             const int                         NbNodes,

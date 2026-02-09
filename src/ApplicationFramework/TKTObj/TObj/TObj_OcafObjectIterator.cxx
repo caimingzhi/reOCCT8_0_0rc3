@@ -3,8 +3,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_OcafObjectIterator, TObj_LabelIterator)
 
-//=================================================================================================
-
 TObj_OcafObjectIterator::TObj_OcafObjectIterator(const TDF_Label&                  theLabel,
                                                  const occ::handle<Standard_Type>& theType,
                                                  const bool                        theRecursive,
@@ -15,8 +13,6 @@ TObj_OcafObjectIterator::TObj_OcafObjectIterator(const TDF_Label&               
 {
   MakeStep();
 }
-
-//=================================================================================================
 
 void TObj_OcafObjectIterator::MakeStep()
 {

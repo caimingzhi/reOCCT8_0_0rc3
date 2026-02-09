@@ -18,31 +18,11 @@
 #include <Standard_OStream.hpp>
 class AdvApprox_Cutting;
 
-//! this approximate a given function
 class AdvApprox_ApproxAFunction
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Constructs approximator tool.
-  //!
-  //! Warning:
-  //! the Func should be valid reference to object of type
-  //! inherited from class EvaluatorFunction from Approx
-  //! with life time longer than that of the approximator tool;
-  //!
-  //! the result should be formatted in the following way :
-  //! <--Num1DSS--> <--2 * Num2DSS--> <--3 * Num3DSS-->
-  //! R[0] ....     R[Num1DSS].....                   R[Dimension-1]
-  //!
-  //! the order in which each Subspace appears should be consistent
-  //! with the tolerances given in the create function and the
-  //! results will be given in that order as well that is :
-  //! Curve2d(n) will correspond to the nth entry
-  //! described by Num2DSS, Curve(n) will correspond to
-  //! the nth entry described by Num3DSS
-  //! The same type of schema applies to the Poles1d, Poles2d and
-  //! Poles.
   Standard_EXPORT AdvApprox_ApproxAFunction(
     const int                                       Num1DSS,
     const int                                       Num2DSS,
@@ -57,7 +37,6 @@ public:
     const int                                       MaxSeg,
     const AdvApprox_EvaluatorFunction&              Func);
 
-  //! Approximation with user methode of cutting
   Standard_EXPORT AdvApprox_ApproxAFunction(
     const int                                       Num1DSS,
     const int                                       Num2DSS,
@@ -97,25 +76,18 @@ public:
 
   bool HasResult() const;
 
-  //! returns the poles from the algorithms as is
   occ::handle<NCollection_HArray2<double>> Poles1d() const;
 
-  //! returns the poles from the algorithms as is
   occ::handle<NCollection_HArray2<gp_Pnt2d>> Poles2d() const;
 
-  //! -- returns the poles from the algorithms as is
   occ::handle<NCollection_HArray2<gp_Pnt>> Poles() const;
 
-  //! as the name says
   Standard_EXPORT int NbPoles() const;
 
-  //! returns the poles at Index from the 1d subspace
   Standard_EXPORT void Poles1d(const int Index, NCollection_Array1<double>& P) const;
 
-  //! returns the poles at Index from the 2d subspace
   Standard_EXPORT void Poles2d(const int Index, NCollection_Array1<gp_Pnt2d>& P) const;
 
-  //! returns the poles at Index from the 3d subspace
   Standard_EXPORT void Poles(const int Index, NCollection_Array1<gp_Pnt>& P) const;
 
   int Degree() const;
@@ -128,17 +100,14 @@ public:
 
   occ::handle<NCollection_HArray1<int>> Multiplicities() const;
 
-  //! returns the error as is in the algorithms
   Standard_EXPORT occ::handle<NCollection_HArray1<double>> MaxError(const int Dimension) const;
 
-  //! returns the error as is in the algorithms
   Standard_EXPORT occ::handle<NCollection_HArray1<double>> AverageError(const int Dimension) const;
 
   Standard_EXPORT double MaxError(const int Dimension, const int Index) const;
 
   Standard_EXPORT double AverageError(const int Dimension, const int Index) const;
 
-  //! display information on approximation.
   Standard_EXPORT void Dump(Standard_OStream& o) const;
 
 private:
@@ -178,56 +147,40 @@ private:
 #include <NCollection_HArray1.hpp>
 #include <Standard_Integer.hpp>
 
-//=================================================================================================
-
 inline bool AdvApprox_ApproxAFunction::HasResult() const
 {
   return myHasResult;
 }
-
-//=================================================================================================
 
 inline bool AdvApprox_ApproxAFunction::IsDone() const
 {
   return myDone;
 }
 
-//=================================================================================================
-
 inline occ::handle<NCollection_HArray2<double>> AdvApprox_ApproxAFunction::Poles1d() const
 {
   return my1DPoles;
 }
-
-//=================================================================================================
 
 inline occ::handle<NCollection_HArray2<gp_Pnt2d>> AdvApprox_ApproxAFunction::Poles2d() const
 {
   return my2DPoles;
 }
 
-//=================================================================================================
-
 inline occ::handle<NCollection_HArray2<gp_Pnt>> AdvApprox_ApproxAFunction::Poles() const
 {
   return my3DPoles;
 }
-
-//=================================================================================================
 
 inline int AdvApprox_ApproxAFunction::Degree() const
 {
   return myDegree;
 }
 
-//=================================================================================================
-
 inline int AdvApprox_ApproxAFunction::NbKnots() const
 {
   return myKnots->Length();
 }
-
-//=================================================================================================
 
 inline occ::handle<NCollection_HArray1<double>> AdvApprox_ApproxAFunction::Knots() const
 
@@ -235,15 +188,11 @@ inline occ::handle<NCollection_HArray1<double>> AdvApprox_ApproxAFunction::Knots
   return myKnots;
 }
 
-//=================================================================================================
-
 inline occ::handle<NCollection_HArray1<int>> AdvApprox_ApproxAFunction::Multiplicities() const
 
 {
   return myMults;
 }
-
-//=================================================================================================
 
 inline int AdvApprox_ApproxAFunction::NumSubSpaces(const int Dimension) const
 {

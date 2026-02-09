@@ -1,10 +1,8 @@
-// Created on : Sat May 02 12:41:16 2020
+
 
 #include <StepKinematics_SphericalPairWithRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_SphericalPairWithRange, StepKinematics_SphericalPair)
-
-//=================================================================================================
 
 StepKinematics_SphericalPairWithRange::StepKinematics_SphericalPairWithRange()
 {
@@ -15,8 +13,6 @@ StepKinematics_SphericalPairWithRange::StepKinematics_SphericalPairWithRange()
   defLowerLimitRoll  = false;
   defUpperLimitRoll  = false;
 }
-
-//=================================================================================================
 
 void StepKinematics_SphericalPairWithRange::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -108,126 +104,90 @@ void StepKinematics_SphericalPairWithRange::Init(
     myUpperLimitRoll = 0;
 }
 
-//=================================================================================================
-
 double StepKinematics_SphericalPairWithRange::LowerLimitYaw() const
 {
   return myLowerLimitYaw;
 }
-
-//=================================================================================================
 
 void StepKinematics_SphericalPairWithRange::SetLowerLimitYaw(const double theLowerLimitYaw)
 {
   myLowerLimitYaw = theLowerLimitYaw;
 }
 
-//=================================================================================================
-
 bool StepKinematics_SphericalPairWithRange::HasLowerLimitYaw() const
 {
   return defLowerLimitYaw;
 }
-
-//=================================================================================================
 
 double StepKinematics_SphericalPairWithRange::UpperLimitYaw() const
 {
   return myUpperLimitYaw;
 }
 
-//=================================================================================================
-
 void StepKinematics_SphericalPairWithRange::SetUpperLimitYaw(const double theUpperLimitYaw)
 {
   myUpperLimitYaw = theUpperLimitYaw;
 }
-
-//=================================================================================================
 
 bool StepKinematics_SphericalPairWithRange::HasUpperLimitYaw() const
 {
   return defUpperLimitYaw;
 }
 
-//=================================================================================================
-
 double StepKinematics_SphericalPairWithRange::LowerLimitPitch() const
 {
   return myLowerLimitPitch;
 }
-
-//=================================================================================================
 
 void StepKinematics_SphericalPairWithRange::SetLowerLimitPitch(const double theLowerLimitPitch)
 {
   myLowerLimitPitch = theLowerLimitPitch;
 }
 
-//=================================================================================================
-
 bool StepKinematics_SphericalPairWithRange::HasLowerLimitPitch() const
 {
   return defLowerLimitPitch;
 }
-
-//=================================================================================================
 
 double StepKinematics_SphericalPairWithRange::UpperLimitPitch() const
 {
   return myUpperLimitPitch;
 }
 
-//=================================================================================================
-
 void StepKinematics_SphericalPairWithRange::SetUpperLimitPitch(const double theUpperLimitPitch)
 {
   myUpperLimitPitch = theUpperLimitPitch;
 }
-
-//=================================================================================================
 
 bool StepKinematics_SphericalPairWithRange::HasUpperLimitPitch() const
 {
   return defUpperLimitPitch;
 }
 
-//=================================================================================================
-
 double StepKinematics_SphericalPairWithRange::LowerLimitRoll() const
 {
   return myLowerLimitRoll;
 }
-
-//=================================================================================================
 
 void StepKinematics_SphericalPairWithRange::SetLowerLimitRoll(const double theLowerLimitRoll)
 {
   myLowerLimitRoll = theLowerLimitRoll;
 }
 
-//=================================================================================================
-
 bool StepKinematics_SphericalPairWithRange::HasLowerLimitRoll() const
 {
   return defLowerLimitRoll;
 }
-
-//=================================================================================================
 
 double StepKinematics_SphericalPairWithRange::UpperLimitRoll() const
 {
   return myUpperLimitRoll;
 }
 
-//=================================================================================================
-
 void StepKinematics_SphericalPairWithRange::SetUpperLimitRoll(const double theUpperLimitRoll)
 {
   myUpperLimitRoll = theUpperLimitRoll;
 }
-
-//=================================================================================================
 
 bool StepKinematics_SphericalPairWithRange::HasUpperLimitRoll() const
 {

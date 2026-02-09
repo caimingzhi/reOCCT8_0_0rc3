@@ -10,8 +10,6 @@ IMPLEMENT_STANDARD_RTTIEXT(TFunction_DriverTable, Standard_Transient)
 
 static occ::handle<TFunction_DriverTable> DT;
 
-//=================================================================================================
-
 occ::handle<TFunction_DriverTable> TFunction_DriverTable::Get()
 {
   if (DT.IsNull())
@@ -19,14 +17,7 @@ occ::handle<TFunction_DriverTable> TFunction_DriverTable::Get()
   return DT;
 }
 
-//=================================================================================================
-
 TFunction_DriverTable::TFunction_DriverTable() = default;
-
-//=======================================================================
-// function : AddDriver
-// purpose  : Adds a driver to the DriverTable
-//=======================================================================
 
 bool TFunction_DriverTable::AddDriver(const Standard_GUID&                 guid,
                                       const occ::handle<TFunction_Driver>& driver,
@@ -38,7 +29,7 @@ bool TFunction_DriverTable::AddDriver(const Standard_GUID&                 guid,
   {
     if (myThreadDrivers.IsNull())
     {
-      // Create a new table for thread-drivers.
+
       myThreadDrivers =
         new NCollection_HArray1<NCollection_DataMap<Standard_GUID, occ::handle<TFunction_Driver>>>(
           1,
@@ -46,12 +37,12 @@ bool TFunction_DriverTable::AddDriver(const Standard_GUID&                 guid,
     }
     else if (myThreadDrivers->Upper() < thread)
     {
-      // Create a bigger table for thread-drivers.
+
       occ::handle<
         NCollection_HArray1<NCollection_DataMap<Standard_GUID, occ::handle<TFunction_Driver>>>>
         new_dt = new NCollection_HArray1<
           NCollection_DataMap<Standard_GUID, occ::handle<TFunction_Driver>>>(1, thread);
-      // Copy old table to the expanded (new) one.
+
       int i = 1, old_upper = myThreadDrivers->Upper();
       for (; i <= old_upper; i++)
       {
@@ -62,15 +53,13 @@ bool TFunction_DriverTable::AddDriver(const Standard_GUID&                 guid,
         {
           new_dt->ChangeValue(i).Bind(itrt.Key(), itrt.Value());
         }
-      } // for...
+      }
       myThreadDrivers = new_dt;
-    } // else...
+    }
     return myThreadDrivers->ChangeValue(thread).Bind(guid, driver);
   }
   return false;
 }
-
-//=================================================================================================
 
 bool TFunction_DriverTable::HasDriver(const Standard_GUID& guid, const int thread) const
 {
@@ -80,11 +69,6 @@ bool TFunction_DriverTable::HasDriver(const Standard_GUID& guid, const int threa
     return myThreadDrivers->Value(thread).IsBound(guid);
   return false;
 }
-
-//=======================================================================
-// function : FindDriver
-// purpose  : Returns the driver if find
-//=======================================================================
 
 bool TFunction_DriverTable::FindDriver(const Standard_GUID&           guid,
                                        occ::handle<TFunction_Driver>& driver,
@@ -109,8 +93,6 @@ bool TFunction_DriverTable::FindDriver(const Standard_GUID&           guid,
   return false;
 }
 
-//=================================================================================================
-
 Standard_OStream& TFunction_DriverTable::Dump(Standard_OStream& anOS) const
 {
   NCollection_DataMap<Standard_GUID, occ::handle<TFunction_Driver>>::Iterator itr(myDrivers);
@@ -125,11 +107,6 @@ Standard_OStream& TFunction_DriverTable::Dump(Standard_OStream& anOS) const
   return anOS;
 }
 
-//=======================================================================
-// function : RemoveDriver
-// purpose  : Removes a driver from the DriverTable
-//=======================================================================
-
 bool TFunction_DriverTable::RemoveDriver(const Standard_GUID& guid, const int thread)
 {
   if (thread == 0)
@@ -138,8 +115,6 @@ bool TFunction_DriverTable::RemoveDriver(const Standard_GUID& guid, const int th
     myThreadDrivers->ChangeValue(thread).UnBind(guid);
   return false;
 }
-
-//=================================================================================================
 
 void TFunction_DriverTable::Clear()
 {

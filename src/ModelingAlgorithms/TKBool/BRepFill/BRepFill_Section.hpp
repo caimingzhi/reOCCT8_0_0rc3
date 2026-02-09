@@ -6,7 +6,6 @@
 #include <TopoDS_Wire.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//! To store section definition
 class BRepFill_Section
 {
 public:

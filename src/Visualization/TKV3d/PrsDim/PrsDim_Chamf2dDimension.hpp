@@ -6,27 +6,15 @@
 
 class Geom_Plane;
 
-//! A framework to define display of 2D chamfers.
-//! A chamfer is displayed with arrows and text. The text
-//! gives the length of the chamfer if it is a symmetrical
-//! chamfer, or the angle if it is not.
 class PrsDim_Chamf2dDimension : public PrsDim_Relation
 {
   DEFINE_STANDARD_RTTIEXT(PrsDim_Chamf2dDimension, PrsDim_Relation)
 public:
-  //! Constructs the display object for 2D chamfers.
-  //! This object is defined by the face aFShape, the
-  //! dimension aVal, the plane aPlane and the text aText.
   Standard_EXPORT PrsDim_Chamf2dDimension(const TopoDS_Shape&               aFShape,
                                           const occ::handle<Geom_Plane>&    aPlane,
                                           const double                      aVal,
                                           const TCollection_ExtendedString& aText);
 
-  //! Constructs the display object for 2D chamfers.
-  //! This object is defined by the face aFShape, the plane
-  //! aPlane, the dimension aVal, the position aPosition,
-  //! the type of arrow aSymbolPrs with the size
-  //! anArrowSize, and the text aText.
   Standard_EXPORT PrsDim_Chamf2dDimension(const TopoDS_Shape&               aFShape,
                                           const occ::handle<Geom_Plane>&    aPlane,
                                           const double                      aVal,
@@ -35,10 +23,8 @@ public:
                                           const DsgPrs_ArrowSide            aSymbolPrs,
                                           const double                      anArrowSize = 0.0);
 
-  //! Indicates that we are concerned with a 2d length.
   PrsDim_KindOfDimension KindOfDimension() const override { return PrsDim_KOD_LENGTH; }
 
-  //! Returns true if the 2d chamfer dimension is movable.
   bool IsMovable() const override { return true; }
 
 private:

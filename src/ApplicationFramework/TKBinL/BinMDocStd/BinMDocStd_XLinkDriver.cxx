@@ -11,24 +11,15 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDocStd_XLinkDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDocStd_XLinkDriver::BinMDocStd_XLinkDriver(const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDocStd_XLink)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDocStd_XLinkDriver::NewEmpty() const
 {
   return new TDocStd_XLink();
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 
 bool BinMDocStd_XLinkDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                    const occ::handle<TDF_Attribute>& theTarget,
@@ -47,11 +38,6 @@ bool BinMDocStd_XLinkDriver::Paste(const BinObjMgt_Persistent&       theSource,
   }
   return ok;
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 
 void BinMDocStd_XLinkDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                    BinObjMgt_Persistent&             theTarget,

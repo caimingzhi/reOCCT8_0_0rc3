@@ -6,8 +6,6 @@
 
 #include <gp_XYZ.hpp>
 
-//! define an order 2 derivatives of a 3d valued
-//! function of a 2d variable
 class Plate_D2
 {
 public:

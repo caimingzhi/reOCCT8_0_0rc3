@@ -11,7 +11,6 @@ class StepGeom_ConicalSurface;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ConicalSurface
 class RWStepGeom_RWConicalSurface
 {
 public:

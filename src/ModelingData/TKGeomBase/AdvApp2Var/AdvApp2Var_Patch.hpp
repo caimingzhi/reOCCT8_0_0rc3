@@ -16,7 +16,6 @@ class AdvApp2Var_Context;
 class AdvApp2Var_Framework;
 class AdvApp2Var_Criterion;
 
-//! used to store results on a domain [Ui,Ui+1]x[Vj,Vj+1]
 class AdvApp2Var_Patch : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(AdvApp2Var_Patch, Standard_Transient)

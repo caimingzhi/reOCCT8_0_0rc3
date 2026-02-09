@@ -18,7 +18,6 @@ class StepGeom_BezierCurveAndRationalBSplineCurve : public StepGeom_BSplineCurve
 {
 
 public:
-  //! Returns a BezierCurveAndRationalBSplineCurve
   Standard_EXPORT StepGeom_BezierCurveAndRationalBSplineCurve();
 
   Standard_EXPORT void Init(

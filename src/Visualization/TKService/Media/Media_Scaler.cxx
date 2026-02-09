@@ -17,8 +17,6 @@ extern "C"
 
 IMPLEMENT_STANDARD_RTTIEXT(Media_Scaler, Standard_Transient)
 
-//=================================================================================================
-
 Media_Scaler::Media_Scaler()
     : mySwsContext(nullptr),
       mySrcFormat(0),
@@ -30,14 +28,10 @@ Media_Scaler::Media_Scaler()
 #endif
 }
 
-//=================================================================================================
-
 Media_Scaler::~Media_Scaler()
 {
   Release();
 }
-
-//=================================================================================================
 
 void Media_Scaler::Release()
 {
@@ -49,8 +43,6 @@ void Media_Scaler::Release()
     mySwsContext = nullptr;
   }
 }
-
-//=================================================================================================
 
 bool Media_Scaler::Init(const NCollection_Vec2<int>& theSrcDims,
                         int                          theSrcFormat,
@@ -94,8 +86,6 @@ bool Media_Scaler::Init(const NCollection_Vec2<int>& theSrcDims,
   return false;
 #endif
 }
-
-//=================================================================================================
 
 bool Media_Scaler::Convert(const occ::handle<Media_Frame>& theSrc,
                            const occ::handle<Media_Frame>& theRes)

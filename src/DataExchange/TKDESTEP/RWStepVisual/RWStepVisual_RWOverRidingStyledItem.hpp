@@ -11,7 +11,6 @@ class StepVisual_OverRidingStyledItem;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for OverRidingStyledItem
 class RWStepVisual_RWOverRidingStyledItem
 {
 public:

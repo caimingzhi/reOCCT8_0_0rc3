@@ -6,8 +6,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Circle3D, Draw_Drawable3D)
 
-//=================================================================================================
-
 Draw_Circle3D::Draw_Circle3D(const gp_Circ&    C,
                              const double      A1,
                              const double      A2,
@@ -18,8 +16,6 @@ Draw_Circle3D::Draw_Circle3D(const gp_Circ&    C,
       myColor(col)
 {
 }
-
-//=================================================================================================
 
 void Draw_Circle3D::DrawOn(Draw_Display& d) const
 {

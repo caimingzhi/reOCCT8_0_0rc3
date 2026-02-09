@@ -16,15 +16,11 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_DataMap.hpp>
 
-//=================================================================================================
-
 TNaming_Translator::TNaming_Translator()
     : myIsDone(false)
 {
   myDataMapOfResults.Clear();
 }
-
-//=================================================================================================
 
 void TNaming_Translator::Add(const TopoDS_Shape& aShape)
 {
@@ -32,25 +28,16 @@ void TNaming_Translator::Add(const TopoDS_Shape& aShape)
   myDataMapOfResults.Bind(aShape, aResult);
 }
 
-//=================================================================================================
-
 bool TNaming_Translator::IsDone() const
 {
   return myIsDone;
 }
-
-//=================================================================================================
 
 const NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& TNaming_Translator::
   Copied() const
 {
   return myDataMapOfResults;
 }
-
-//=======================================================================
-// function : Copied
-// purpose  : find bind shape if it is in the Map
-//=======================================================================
 
 const TopoDS_Shape TNaming_Translator::Copied(const TopoDS_Shape& aShape) const
 {
@@ -59,8 +46,6 @@ const TopoDS_Shape TNaming_Translator::Copied(const TopoDS_Shape& aShape) const
     aResult = myDataMapOfResults.Find(aShape);
   return aResult;
 }
-
-//=================================================================================================
 
 void TNaming_Translator::Perform()
 {
@@ -77,8 +62,6 @@ void TNaming_Translator::Perform()
   if (myDataMapOfResults.Extent())
     myIsDone = true;
 }
-
-//=================================================================================================
 
 void TNaming_Translator::DumpMap(const bool isWrite) const
 {

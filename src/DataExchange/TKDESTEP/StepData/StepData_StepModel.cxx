@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_CopyTool.hpp>
@@ -29,17 +18,13 @@
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(StepData_StepModel, Interface_InterfaceModel)
 
-// File header: list of entities
-// Default constructor for STEP data model
 StepData_StepModel::StepData_StepModel() = default;
 
 occ::handle<Standard_Transient> StepData_StepModel::Entity(const int num) const
 {
   return Value(num);
-} // More user-friendly name for accessing entities
+}
 
-// Copy header entities from another STEP model
-// This method transfers only the header section, not the data entities
 void StepData_StepModel::GetFromAnother(const occ::handle<Interface_InterfaceModel>& other)
 {
   theheader.Clear();
@@ -47,7 +32,7 @@ void StepData_StepModel::GetFromAnother(const occ::handle<Interface_InterfaceMod
   if (another.IsNull())
     return;
   Interface_EntityIterator iter = another->Header();
-  // Copy the header. Important: header is distinct from content...
+
   Interface_CopyTool TC(this, StepData::HeaderProtocol());
   for (; iter.More(); iter.Next())
   {
@@ -71,8 +56,6 @@ Interface_EntityIterator StepData_StepModel::Header() const
   return iter;
 }
 
-// Check if exactly one header entity of specified type exists
-// Returns true only if there is exactly one entity of the given type
 bool StepData_StepModel::HasHeaderEntity(const occ::handle<Standard_Type>& atype) const
 {
   return (theheader.NbTypedEntities(atype) == 1);
@@ -83,8 +66,6 @@ occ::handle<Standard_Transient> StepData_StepModel::HeaderEntity(
 {
   return theheader.TypedEntity(atype);
 }
-
-// Header population methods
 
 void StepData_StepModel::ClearHeader()
 {
@@ -113,9 +94,8 @@ void StepData_StepModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
   }
 }
 
-void StepData_StepModel::DumpHeader(Standard_OStream& S, const int /*level*/) const
+void StepData_StepModel::DumpHeader(Standard_OStream& S, const int) const
 {
-  // Note: level parameter is not used in this implementation
 
   occ::handle<StepData_Protocol> stepro = StepData::HeaderProtocol();
   bool                           iapro  = !stepro.IsNull();
@@ -136,7 +116,7 @@ void StepData_StepModel::DumpHeader(Standard_OStream& S, const int /*level*/) co
 
   occ::handle<StepData_StepModel> me(this);
   StepData_StepWriter             SW(me);
-  SW.SendModel(stepro, true); // Send HEADER only
+  SW.SendModel(stepro, true);
   SW.Print(S);
 }
 
@@ -145,28 +125,25 @@ void StepData_StepModel::ClearLabels()
   theidnums.Nullify();
 }
 
-// Set identifier label for an entity (used in STEP file format)
-// The identifier is typically a number like #123 that appears in STEP files
 void StepData_StepModel::SetIdentLabel(const occ::handle<Standard_Transient>& ent, const int ident)
 {
   int num = Number(ent);
   if (!num)
-    return; // Entity not found in model
+    return;
   int nbEnt = NbEntities();
 
-  // Initialize identifier array if not yet created
   if (theidnums.IsNull())
   {
     theidnums = new NCollection_HArray1<int>(1, nbEnt);
-    theidnums->Init(0); // Initialize all values to 0
+    theidnums->Init(0);
   }
-  // Resize array if model has grown since last allocation
+
   else if (nbEnt > theidnums->Length())
   {
     int                                   prevLength = theidnums->Length();
     occ::handle<NCollection_HArray1<int>> idnums1    = new NCollection_HArray1<int>(1, nbEnt);
     idnums1->Init(0);
-    // Copy existing identifier mappings
+
     int k = 1;
     for (; k <= prevLength; k++)
       idnums1->SetValue(k, theidnums->Value(k));
@@ -215,22 +192,16 @@ occ::handle<TCollection_HAsciiString> StepData_StepModel::StringLabel(
   return label;
 }
 
-//=================================================================================================
-
 void StepData_StepModel::SetLocalLengthUnit(const double theUnit)
 {
   myLocalLengthUnit       = theUnit;
   myReadUnitIsInitialized = true;
 }
 
-//=================================================================================================
-
 double StepData_StepModel::LocalLengthUnit() const
 {
   return myLocalLengthUnit;
 }
-
-//=================================================================================================
 
 void StepData_StepModel::SetWriteLengthUnit(const double theUnit)
 {
@@ -238,13 +209,9 @@ void StepData_StepModel::SetWriteLengthUnit(const double theUnit)
   myWriteUnitIsInitialized = true;
 }
 
-//=================================================================================================
-
-// Get the length unit for writing STEP files
-// Returns the conversion factor from millimeters to the target unit
 double StepData_StepModel::WriteLengthUnit() const
 {
-  // Lazy initialization of write unit from global parameters
+
   if (!myWriteUnitIsInitialized)
   {
     myWriteUnitIsInitialized = true;

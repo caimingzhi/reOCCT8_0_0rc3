@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -26,13 +15,6 @@ namespace
   constexpr double THE_TOLERANCE = 1.0e-6;
   constexpr double THE_LOOSE_TOL = 1.0e-3;
 
-  // ============================================================================
-  // Test function classes for new API
-  // ============================================================================
-
-  //! Simple linear system: F(x) = A*x - b
-  //! System: x1 + x2 = 3, x1 - x2 = 1
-  //! Solution: x1 = 2, x2 = 1
   struct LinearSystem2D
   {
     int NbVariables() const { return 2; }
@@ -46,7 +28,7 @@ namespace
       return true;
     }
 
-    bool Derivatives(const math_Vector& /*theX*/, math_Matrix& theD)
+    bool Derivatives(const math_Vector&, math_Matrix& theD)
     {
       theD(1, 1) = 1.0;
       theD(1, 2) = 1.0;
@@ -61,10 +43,6 @@ namespace
     }
   };
 
-  //! Nonlinear system:
-  //! F1(x,y) = x^2 + y^2 - 4
-  //! F2(x,y) = x*y - 1
-  //! Solution near (1.93, 0.52) for starting point (1,1)
   struct CircleHyperbola
   {
     int NbVariables() const { return 2; }
@@ -93,10 +71,6 @@ namespace
     }
   };
 
-  //! Rosenbrock function in residual form for least squares
-  //! F1(x,y) = 10*(y - x^2)
-  //! F2(x,y) = 1 - x
-  //! Minimum at (1,1) with F = (0,0)
   struct RosenbrockResidual
   {
     int NbVariables() const { return 2; }
@@ -125,12 +99,6 @@ namespace
     }
   };
 
-  //! Powell singular function (4D)
-  //! F1 = x1 + 10*x2
-  //! F2 = sqrt(5)*(x3 - x4)
-  //! F3 = (x2 - 2*x3)^2
-  //! F4 = sqrt(10)*(x1 - x4)^2
-  //! Minimum at origin with F = 0
   struct PowellSingular
   {
     int NbVariables() const { return 4; }
@@ -149,17 +117,17 @@ namespace
     bool Derivatives(const math_Vector& theX, math_Matrix& theD)
     {
       theD.Init(0.0);
-      // F1 = x1 + 10*x2
+
       theD(1, 1) = 1.0;
       theD(1, 2) = 10.0;
-      // F2 = sqrt(5)*(x3 - x4)
+
       theD(2, 3) = std::sqrt(5.0);
       theD(2, 4) = -std::sqrt(5.0);
-      // F3 = (x2 - 2*x3)^2
+
       const double aT1 = theX(2) - 2.0 * theX(3);
       theD(3, 2)       = 2.0 * aT1;
       theD(3, 3)       = -4.0 * aT1;
-      // F4 = sqrt(10)*(x1 - x4)^2
+
       const double aT2 = theX(1) - theX(4);
       theD(4, 1)       = 2.0 * std::sqrt(10.0) * aT2;
       theD(4, 4)       = -2.0 * std::sqrt(10.0) * aT2;
@@ -172,13 +140,10 @@ namespace
     }
   };
 
-  //! Exponential fitting problem
-  //! Data: (t_i, y_i), Model: f(t) = x1 * exp(x2 * t)
-  //! Residuals: F_i = y_i - x1 * exp(x2 * t_i)
   struct ExponentialFit
   {
     double myT[5] = {0.0, 1.0, 2.0, 3.0, 4.0};
-    double myY[5] = {1.0, 2.7, 7.4, 20.1, 54.6}; // Approx e^t
+    double myY[5] = {1.0, 2.7, 7.4, 20.1, 54.6};
 
     int NbVariables() const { return 2; }
 
@@ -210,11 +175,6 @@ namespace
     }
   };
 
-  //! Overdetermined system (more equations than variables)
-  //! F1 = x1 + x2 - 2
-  //! F2 = x1 - x2 - 0
-  //! F3 = 2*x1 + x2 - 3
-  //! Least squares solution: x1 = 1, x2 = 1
   struct OverdeterminedSystem
   {
     int NbVariables() const { return 2; }
@@ -229,7 +189,7 @@ namespace
       return true;
     }
 
-    bool Derivatives(const math_Vector& /*theX*/, math_Matrix& theD)
+    bool Derivatives(const math_Vector&, math_Matrix& theD)
     {
       theD(1, 1) = 1.0;
       theD(1, 2) = 1.0;
@@ -245,10 +205,6 @@ namespace
       return Value(theX, theF) && Derivatives(theX, theD);
     }
   };
-
-  // ============================================================================
-  // Old API adapters for comparison
-  // ============================================================================
 
   class CircleHyperbolaOld : public math_FunctionSetWithDerivatives
   {
@@ -310,10 +266,6 @@ namespace
 
 } // namespace
 
-// ============================================================================
-// Basic Levenberg-Marquardt tests
-// ============================================================================
-
 TEST(MathSys_LM_Test, LinearSystem2D)
 {
   LinearSystem2D aFunc;
@@ -352,7 +304,6 @@ TEST(MathSys_LM_Test, CircleHyperbola)
 
   ASSERT_TRUE(aResult.IsDone());
 
-  // Verify solution satisfies both equations
   const double aX = (*aResult.Solution)(1);
   const double aY = (*aResult.Solution)(2);
 
@@ -400,17 +351,12 @@ TEST(MathSys_LM_Test, PowellSingular)
 
   ASSERT_TRUE(aResult.IsDone());
 
-  // Powell singular function converges to origin
   for (int i = 1; i <= 4; ++i)
   {
     EXPECT_NEAR((*aResult.Solution)(i), 0.0, 0.1);
   }
   EXPECT_LT(*aResult.Value, 0.01);
 }
-
-// ============================================================================
-// Overdetermined system (nonlinear least squares)
-// ============================================================================
 
 TEST(MathSys_LM_Test, OverdeterminedSystem)
 {
@@ -436,8 +382,8 @@ TEST(MathSys_LM_Test, ExponentialFit)
   ExponentialFit aFunc;
 
   math_Vector aStart(1, 2);
-  aStart(1) = 0.5; // Initial guess for amplitude
-  aStart(2) = 0.5; // Initial guess for rate
+  aStart(1) = 0.5;
+  aStart(2) = 0.5;
 
   MathSys::LMConfig aConfig;
   aConfig.Tolerance     = 1.0e-8;
@@ -447,14 +393,9 @@ TEST(MathSys_LM_Test, ExponentialFit)
 
   ASSERT_TRUE(aResult.IsDone());
 
-  // The fit should be approximately f(t) = 1 * exp(1 * t)
   EXPECT_NEAR((*aResult.Solution)(1), 1.0, 0.1);
   EXPECT_NEAR((*aResult.Solution)(2), 1.0, 0.1);
 }
-
-// ============================================================================
-// Bounded Levenberg-Marquardt tests
-// ============================================================================
 
 TEST(MathSys_LM_Test, BoundedCircleHyperbola)
 {
@@ -481,7 +422,6 @@ TEST(MathSys_LM_Test, BoundedCircleHyperbola)
 
   ASSERT_TRUE(aResult.IsDone());
 
-  // Verify solution is within bounds
   const double aX = (*aResult.Solution)(1);
   const double aY = (*aResult.Solution)(2);
 
@@ -490,7 +430,6 @@ TEST(MathSys_LM_Test, BoundedCircleHyperbola)
   EXPECT_GE(aY, 0.0);
   EXPECT_LE(aY, 5.0);
 
-  // Verify solution satisfies both equations
   EXPECT_NEAR(aX * aX + aY * aY, 4.0, THE_TOLERANCE);
   EXPECT_NEAR(aX * aY, 1.0, THE_TOLERANCE);
 }
@@ -525,14 +464,13 @@ TEST(MathSys_LM_Test, BoundedRosenbrock)
 
 TEST(MathSys_LM_Test, BoundedActiveConstraint)
 {
-  // System where optimal solution would be outside bounds
+
   LinearSystem2D aFunc;
 
   math_Vector aStart(1, 2);
   aStart(1) = 1.0;
   aStart(2) = 1.0;
 
-  // Constrain x1 <= 1.5, so solution (2, 1) can't be reached exactly
   math_Vector aLower(1, 2);
   aLower(1) = -10.0;
   aLower(2) = -10.0;
@@ -547,13 +485,8 @@ TEST(MathSys_LM_Test, BoundedActiveConstraint)
 
   auto aResult = MathSys::LevenbergMarquardtBounded(aFunc, aStart, aLower, aUpper, aConfig);
 
-  // Solution should be at or near the bound
   EXPECT_LE((*aResult.Solution)(1), 1.5 + THE_TOLERANCE);
 }
-
-// ============================================================================
-// Damping parameter tests
-// ============================================================================
 
 TEST(MathSys_LM_Test, DampingParameters)
 {
@@ -563,7 +496,6 @@ TEST(MathSys_LM_Test, DampingParameters)
   aStart(1) = 1.5;
   aStart(2) = 0.5;
 
-  // Test with different initial lambda values
   double aLambdas[] = {1.0e-6, 1.0e-3, 1.0, 100.0};
 
   for (double aLambda : aLambdas)
@@ -595,7 +527,6 @@ TEST(MathSys_LM_Test, LambdaUpdateFactors)
   aStart(1) = -1.0;
   aStart(2) = 1.0;
 
-  // Test with different lambda update factors
   struct
   {
     double myIncrease;
@@ -619,10 +550,6 @@ TEST(MathSys_LM_Test, LambdaUpdateFactors)
   }
 }
 
-// ============================================================================
-// Comparison with old API
-// ============================================================================
-
 TEST(MathSys_LM_Test, CompareWithOldAPI_CircleHyperbola)
 {
   CircleHyperbolaOld anOldFunc;
@@ -634,11 +561,9 @@ TEST(MathSys_LM_Test, CompareWithOldAPI_CircleHyperbola)
 
   math_Vector aTol(1, 2, 1.0e-10);
 
-  // Old API
   math_FunctionSetRoot anOldSolver(anOldFunc, aTol, 100);
   anOldSolver.Perform(anOldFunc, aStart);
 
-  // New API
   MathSys::LMConfig aConfig;
   aConfig.Tolerance     = 1.0e-10;
   aConfig.FTolerance    = 1.0e-10;
@@ -648,7 +573,6 @@ TEST(MathSys_LM_Test, CompareWithOldAPI_CircleHyperbola)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find a valid solution
   const math_Vector& anOldSol = anOldSolver.Root();
   EXPECT_NEAR(anOldSol(1) * anOldSol(1) + anOldSol(2) * anOldSol(2), 4.0, THE_LOOSE_TOL);
   EXPECT_NEAR(anOldSol(1) * anOldSol(2), 1.0, THE_LOOSE_TOL);
@@ -670,11 +594,9 @@ TEST(MathSys_LM_Test, CompareWithOldAPI_Rosenbrock)
 
   math_Vector aTol(1, 2, 1.0e-10);
 
-  // Old API
   math_FunctionSetRoot anOldSolver(anOldFunc, aTol, 200);
   anOldSolver.Perform(anOldFunc, aStart);
 
-  // New API
   MathSys::LMConfig aConfig;
   aConfig.Tolerance     = 1.0e-10;
   aConfig.FTolerance    = 1.0e-10;
@@ -683,7 +605,6 @@ TEST(MathSys_LM_Test, CompareWithOldAPI_Rosenbrock)
 
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // New API should find the optimal solution
   EXPECT_NEAR((*aNewResult.Solution)(1), 1.0, THE_LOOSE_TOL);
   EXPECT_NEAR((*aNewResult.Solution)(2), 1.0, THE_LOOSE_TOL);
 }
@@ -707,11 +628,9 @@ TEST(MathSys_LM_Test, CompareWithOldAPI_Bounded)
 
   math_Vector aTol(1, 2, 1.0e-10);
 
-  // Old API with bounds
   math_FunctionSetRoot anOldSolver(anOldFunc, aTol, 100);
   anOldSolver.Perform(anOldFunc, aStart, aLower, aUpper);
 
-  // New API with bounds
   MathSys::LMConfig aConfig;
   aConfig.Tolerance     = 1.0e-10;
   aConfig.FTolerance    = 1.0e-10;
@@ -721,7 +640,6 @@ TEST(MathSys_LM_Test, CompareWithOldAPI_Bounded)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find solutions within bounds
   const math_Vector& anOldSol = anOldSolver.Root();
   EXPECT_GE(anOldSol(1), 0.0);
   EXPECT_LE(anOldSol(1), 5.0);
@@ -736,15 +654,10 @@ TEST(MathSys_LM_Test, CompareWithOldAPI_Bounded)
   EXPECT_LE(aNewY, 5.0);
 }
 
-// ============================================================================
-// Convergence and robustness tests
-// ============================================================================
-
 TEST(MathSys_LM_Test, DifferentStartingPoints)
 {
   CircleHyperbola aFunc;
 
-  // Test different starting points
   double aStarts[][2] = {{1.5, 0.5}, {2.0, 0.5}, {1.0, 1.0}, {2.5, 0.5}, {0.5, 2.0}};
 
   for (const auto& aStartPt : aStarts)
@@ -790,16 +703,11 @@ TEST(MathSys_LM_Test, ConvergenceIterations)
 
   ASSERT_TRUE(aResult.IsDone());
 
-  // Linear system should converge quickly
   EXPECT_LT(aResult.NbIterations, 20);
 
   EXPECT_NEAR((*aResult.Solution)(1), 2.0, THE_TOLERANCE);
   EXPECT_NEAR((*aResult.Solution)(2), 1.0, THE_TOLERANCE);
 }
-
-// ============================================================================
-// Error handling tests
-// ============================================================================
 
 TEST(MathSys_LM_Test, MaxIterationsReached)
 {
@@ -810,12 +718,11 @@ TEST(MathSys_LM_Test, MaxIterationsReached)
   aStart(2) = 1.0;
 
   MathSys::LMConfig aConfig;
-  aConfig.Tolerance     = 1.0e-15; // Very tight tolerance
-  aConfig.MaxIterations = 5;       // Very few iterations
+  aConfig.Tolerance     = 1.0e-15;
+  aConfig.MaxIterations = 5;
 
   auto aResult = MathSys::LevenbergMarquardt(aFunc, aStart, aConfig);
 
-  // Should either succeed or reach max iterations (not crash)
   EXPECT_TRUE(aResult.Solution.has_value());
 }
 
@@ -823,8 +730,7 @@ TEST(MathSys_LM_Test, InvalidInputDimensions)
 {
   LinearSystem2D aFunc;
 
-  // Wrong dimension for start vector
-  math_Vector aStart(1, 3); // 3 elements but function expects 2
+  math_Vector aStart(1, 3);
   aStart(1) = 0.0;
   aStart(2) = 0.0;
   aStart(3) = 0.0;
@@ -845,7 +751,7 @@ TEST(MathSys_LM_Test, BoundedInvalidDimensions)
   aStart(1) = 0.0;
   aStart(2) = 0.0;
 
-  math_Vector aLower(1, 3); // Wrong size
+  math_Vector aLower(1, 3);
   aLower(1) = -10.0;
   aLower(2) = -10.0;
   aLower(3) = -10.0;

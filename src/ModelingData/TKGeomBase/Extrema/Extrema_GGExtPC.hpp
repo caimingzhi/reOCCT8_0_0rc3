@@ -13,20 +13,6 @@
 #include <NCollection_HArray1.hpp>
 #include <NCollection_Sequence.hpp>
 
-//! Generic class for computing extremal distances between a point and a curve.
-//!
-//! This template class provides comprehensive extremum search functionality,
-//! handling different curve types (lines, circles, ellipses, parabolas,
-//! hyperbolas, Bezier, BSpline, and general curves) with optimized algorithms.
-//!
-//! @tparam TheCurve       The curve type (e.g., Adaptor3d_Curve, Adaptor2d_Curve2d)
-//! @tparam TheCurveTool   The curve tool providing static methods
-//! @tparam TheExtPElC     The elementary curve extremum class
-//! @tparam ThePoint       The point type (e.g., gp_Pnt, gp_Pnt2d)
-//! @tparam TheVector      The vector type (e.g., gp_Vec, gp_Vec2d)
-//! @tparam ThePOnC        The point-on-curve type
-//! @tparam TheSequenceOfPOnC The sequence of points on curve
-//! @tparam TheEPC         The general extremum point-curve class
 template <typename TheCurve,
           typename TheCurveTool,
           typename TheExtPElC,
@@ -40,7 +26,6 @@ class Extrema_GGExtPC
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Default constructor.
   Extrema_GGExtPC()
       : myC(nullptr),
         mydone(false),
@@ -57,13 +42,6 @@ public:
   {
   }
 
-  //! Calculates all extremum distances between point P and curve C
-  //! within the specified parameter range.
-  //! @param theP    The point
-  //! @param theC    The curve
-  //! @param theUinf Lower bound of parameter range
-  //! @param theUsup Upper bound of parameter range
-  //! @param theTolF Tolerance on function value (default 1.0e-10)
   Extrema_GGExtPC(const ThePoint& theP,
                   const TheCurve& theC,
                   const double    theUinf,
@@ -74,11 +52,6 @@ public:
     Perform(theP);
   }
 
-  //! Calculates all extremum distances between point P and curve C
-  //! using the full curve parameter range.
-  //! @param theP    The point
-  //! @param theC    The curve
-  //! @param theTolF Tolerance on function value (default 1.0e-10)
   Extrema_GGExtPC(const ThePoint& theP, const TheCurve& theC, const double theTolF = 1.0e-10)
   {
     Initialize(theC,
@@ -88,11 +61,6 @@ public:
     Perform(theP);
   }
 
-  //! Initializes the algorithm with curve and parameter range.
-  //! @param theC    The curve
-  //! @param theUinf Lower bound of parameter range
-  //! @param theUsup Upper bound of parameter range
-  //! @param theTolF Tolerance on function value (default 1.0e-10)
   void Initialize(const TheCurve& theC,
                   const double    theUinf,
                   const double    theUsup,
@@ -110,8 +78,6 @@ public:
     mysample           = 17;
   }
 
-  //! Performs the extremum computation for the given point.
-  //! @param theP The point to find extrema from
   void Perform(const ThePoint& theP)
   {
     mySqDist.Clear();
@@ -461,7 +427,6 @@ public:
       }
     }
 
-    // Postprocessing
     if (type == GeomAbs_BSplineCurve || type == GeomAbs_OffsetCurve || type == GeomAbs_OtherCurve)
     {
       if (mydist1 < Precision::SquareConfusion() || mydist2 < Precision::SquareConfusion())
@@ -518,12 +483,8 @@ public:
     }
   }
 
-  //! Returns true if the distances are found.
   bool IsDone() const { return mydone; }
 
-  //! Returns the Nth extremum square distance.
-  //! @param theN Index of the extremum (1-based)
-  //! @return Square distance value
   double SquareDistance(const int theN) const
   {
     if ((theN < 1) || (theN > NbExt()))
@@ -531,8 +492,6 @@ public:
     return mySqDist.Value(theN);
   }
 
-  //! Returns the number of extremum distances.
-  //! @return Number of extrema found
   int NbExt() const
   {
     if (!IsDone())
@@ -540,9 +499,6 @@ public:
     return mySqDist.Length();
   }
 
-  //! Returns true if the Nth extremum distance is a minimum.
-  //! @param theN Index of the extremum (1-based)
-  //! @return true if minimum, false if maximum
   bool IsMin(const int theN) const
   {
     if ((theN < 1) || (theN > NbExt()))
@@ -550,9 +506,6 @@ public:
     return myismin.Value(theN);
   }
 
-  //! Returns the point of the Nth extremum distance.
-  //! @param theN Index of the extremum (1-based)
-  //! @return The point on curve
   const ThePOnC& Point(const int theN) const
   {
     if ((theN < 1) || (theN > NbExt()))
@@ -560,11 +513,6 @@ public:
     return mypoint.Value(theN);
   }
 
-  //! Returns the distances at curve endpoints.
-  //! @param[out] theDist1 Square distance to first point
-  //! @param[out] theDist2 Square distance to last point
-  //! @param[out] theP1 First point on curve
-  //! @param[out] theP2 Last point on curve
   void TrimmedSquareDistances(double&   theDist1,
                               double&   theDist2,
                               ThePoint& theP1,
@@ -577,7 +525,6 @@ public:
   }
 
 protected:
-  //! Performs extremum search on the current interval.
   void IntervalPerform(const ThePoint& theP)
   {
     int    i;
@@ -604,7 +551,6 @@ protected:
     }
   }
 
-  //! Adds a solution if not already present.
   void AddSol(const double theU, const ThePoint& theP, const double theSqDist, const bool isMin)
   {
     int i, NbExt = mypoint.Length();

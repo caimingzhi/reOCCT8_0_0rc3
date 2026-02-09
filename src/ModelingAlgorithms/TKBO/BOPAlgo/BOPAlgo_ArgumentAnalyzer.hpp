@@ -10,82 +10,52 @@
 #include <BOPAlgo_CheckResult.hpp>
 #include <TopAbs_ShapeEnum.hpp>
 
-//! check the validity of argument(s) for Boolean Operations
 class BOPAlgo_ArgumentAnalyzer : public BOPAlgo_Algo
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! empty constructor
   Standard_EXPORT BOPAlgo_ArgumentAnalyzer();
   Standard_EXPORT ~BOPAlgo_ArgumentAnalyzer() override;
 
-  //! sets object shape
   Standard_EXPORT void SetShape1(const TopoDS_Shape& TheShape);
 
-  //! sets tool shape
   Standard_EXPORT void SetShape2(const TopoDS_Shape& TheShape);
 
-  //! returns object shape;
   Standard_EXPORT const TopoDS_Shape& GetShape1() const;
 
-  //! returns tool shape
   Standard_EXPORT const TopoDS_Shape& GetShape2() const;
 
-  //! returns ref
   Standard_EXPORT BOPAlgo_Operation& OperationType();
 
-  //! returns ref
   Standard_EXPORT bool& StopOnFirstFaulty();
 
-  //! Returns (modifiable) mode
-  //! that means checking types of shapes.
   bool& ArgumentTypeMode();
 
-  //! Returns (modifiable) mode that means
-  //! checking of self-intersection of shapes.
   bool& SelfInterMode();
 
-  //! Returns (modifiable) mode that means
-  //! checking of small edges.
   bool& SmallEdgeMode();
 
-  //! Returns (modifiable) mode that means
-  //! checking of possibility to split or rebuild faces.
   bool& RebuildFaceMode();
 
-  //! Returns (modifiable) mode that means
-  //! checking of tangency between subshapes.
   bool& TangentMode();
 
-  //! Returns (modifiable) mode that means
-  //! checking of problem of merging vertices.
   bool& MergeVertexMode();
 
-  //! Returns (modifiable) mode that means
-  //! checking of problem of merging edges.
   bool& MergeEdgeMode();
 
-  //! Returns (modifiable) mode that means
-  //! checking of problem of continuity of the shape.
   bool& ContinuityMode();
 
-  //! Returns (modifiable) mode that means
-  //! checking of problem of invalid curve on surface.
   bool& CurveOnSurfaceMode();
 
-  //! performs analysis
   Standard_EXPORT void Perform(
     const Message_ProgressRange& theRange = Message_ProgressRange()) override;
 
-  //! result of test
   Standard_EXPORT bool HasFaulty() const;
 
-  //! returns a result of test
   Standard_EXPORT const NCollection_List<BOPAlgo_CheckResult>& GetCheckResult() const;
 
 protected:
-  //! Prepares data;
   Standard_EXPORT void Prepare();
 
   Standard_EXPORT void TestTypes();
@@ -126,19 +96,6 @@ private:
   bool                                  myEmpty2;
   NCollection_List<BOPAlgo_CheckResult> myResult;
 };
-
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
 inline bool& BOPAlgo_ArgumentAnalyzer::ArgumentTypeMode()
 {
@@ -184,8 +141,3 @@ inline bool& BOPAlgo_ArgumentAnalyzer::CurveOnSurfaceMode()
 {
   return myCurveOnSurfaceMode;
 }
-
-// inline bool& BOPAlgo_ArgumentAnalyzer::MergeFaceMode()
-// {
-//   return myMergeFaceMode;
-// }

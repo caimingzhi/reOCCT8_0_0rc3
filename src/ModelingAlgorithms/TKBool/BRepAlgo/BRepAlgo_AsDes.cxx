@@ -6,11 +6,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepAlgo_AsDes, Standard_Transient)
 
-//=================================================================================================
-
 BRepAlgo_AsDes::BRepAlgo_AsDes() = default;
-
-//=================================================================================================
 
 void BRepAlgo_AsDes::Add(const TopoDS_Shape& S, const TopoDS_Shape& SS)
 {
@@ -29,8 +25,6 @@ void BRepAlgo_AsDes::Add(const TopoDS_Shape& S, const TopoDS_Shape& SS)
   up(SS).Append(S);
 }
 
-//=================================================================================================
-
 void BRepAlgo_AsDes::Add(const TopoDS_Shape& S, const NCollection_List<TopoDS_Shape>& SS)
 {
   NCollection_List<TopoDS_Shape>::Iterator it(SS);
@@ -40,29 +34,21 @@ void BRepAlgo_AsDes::Add(const TopoDS_Shape& S, const NCollection_List<TopoDS_Sh
   }
 }
 
-//=================================================================================================
-
 void BRepAlgo_AsDes::Clear()
 {
   up.Clear();
   down.Clear();
 }
 
-//=================================================================================================
-
 bool BRepAlgo_AsDes::HasAscendant(const TopoDS_Shape& S) const
 {
   return up.IsBound(S);
 }
 
-//=================================================================================================
-
 bool BRepAlgo_AsDes::HasDescendant(const TopoDS_Shape& S) const
 {
   return down.IsBound(S);
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepAlgo_AsDes::Ascendant(const TopoDS_Shape& S) const
 {
@@ -72,8 +58,6 @@ const NCollection_List<TopoDS_Shape>& BRepAlgo_AsDes::Ascendant(const TopoDS_Sha
   return empty;
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& BRepAlgo_AsDes::Descendant(const TopoDS_Shape& S) const
 {
   if (down.IsBound(S))
@@ -82,8 +66,6 @@ const NCollection_List<TopoDS_Shape>& BRepAlgo_AsDes::Descendant(const TopoDS_Sh
   return empty;
 }
 
-//=================================================================================================
-
 NCollection_List<TopoDS_Shape>& BRepAlgo_AsDes::ChangeDescendant(const TopoDS_Shape& S)
 {
   if (down.IsBound(S))
@@ -91,8 +73,6 @@ NCollection_List<TopoDS_Shape>& BRepAlgo_AsDes::ChangeDescendant(const TopoDS_Sh
   static NCollection_List<TopoDS_Shape> empty;
   return empty;
 }
-
-//=================================================================================================
 
 static void ReplaceInList(const TopoDS_Shape&             OldS,
                           const TopoDS_Shape&             NewS,
@@ -121,8 +101,6 @@ static void ReplaceInList(const TopoDS_Shape&             OldS,
   }
 }
 
-//=================================================================================================
-
 static void RemoveInList(const TopoDS_Shape& S, NCollection_List<TopoDS_Shape>& L)
 {
   NCollection_List<TopoDS_Shape>::Iterator it(L);
@@ -136,8 +114,6 @@ static void RemoveInList(const TopoDS_Shape& S, NCollection_List<TopoDS_Shape>& 
     it.Next();
   }
 }
-
-//=================================================================================================
 
 bool BRepAlgo_AsDes::HasCommonDescendant(const TopoDS_Shape&             S1,
                                          const TopoDS_Shape&             S2,
@@ -163,8 +139,6 @@ bool BRepAlgo_AsDes::HasCommonDescendant(const TopoDS_Shape&             S1,
   }
   return (!LC.IsEmpty());
 }
-
-//=================================================================================================
 
 void BRepAlgo_AsDes::BackReplace(const TopoDS_Shape&                   OldS,
                                  const TopoDS_Shape&                   NewS,
@@ -192,8 +166,6 @@ void BRepAlgo_AsDes::BackReplace(const TopoDS_Shape&                   OldS,
   }
 }
 
-//=================================================================================================
-
 void BRepAlgo_AsDes::Replace(const TopoDS_Shape& OldS, const TopoDS_Shape& NewS)
 {
   for (int i = 0; i < 2; ++i)
@@ -205,14 +177,14 @@ void BRepAlgo_AsDes::Replace(const TopoDS_Shape& OldS, const TopoDS_Shape& NewS)
     {
       continue;
     }
-    //
+
     bool InUp = i != 0;
     BackReplace(OldS, NewS, *pLSOld, InUp);
-    //
+
     NCollection_List<TopoDS_Shape>* pLSNew = aMap.ChangeSeek(NewS);
     if (!pLSNew)
     {
-      // filter the list
+
       NCollection_Map<TopoDS_Shape>            aMS;
       NCollection_List<TopoDS_Shape>::Iterator aIt(*pLSOld);
       for (; aIt.More();)
@@ -230,14 +202,14 @@ void BRepAlgo_AsDes::Replace(const TopoDS_Shape& OldS, const TopoDS_Shape& NewS)
     }
     else
     {
-      // avoid duplicates
+
       NCollection_Map<TopoDS_Shape>            aMS;
       NCollection_List<TopoDS_Shape>::Iterator aIt(*pLSNew);
       for (; aIt.More(); aIt.Next())
       {
         aMS.Add(aIt.Value());
       }
-      //
+
       aIt.Initialize(*pLSOld);
       for (; aIt.More(); aIt.Next())
       {
@@ -248,12 +220,10 @@ void BRepAlgo_AsDes::Replace(const TopoDS_Shape& OldS, const TopoDS_Shape& NewS)
         }
       }
     }
-    //
+
     aMap.UnBind(OldS);
   }
 }
-
-//=================================================================================================
 
 void BRepAlgo_AsDes::Remove(const TopoDS_Shape& SS)
 {

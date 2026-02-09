@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_Handle.hpp>
 #include <Standard_Transient.hpp>
@@ -19,7 +8,6 @@
 
 #include <gtest/gtest.h>
 
-// Test classes for Handle operations
 class TestBase : public Standard_Transient
 {
 public:
@@ -47,7 +35,6 @@ public:
   DEFINE_STANDARD_RTTI_INLINE(TestOther, Standard_Transient)
 };
 
-// Test fixture for Handle operations tests
 class HandleOperationsTest : public testing::Test
 {
 protected:
@@ -58,14 +45,13 @@ protected:
 
 TEST_F(HandleOperationsTest, BasicHandleOperations)
 {
-  // Test basic handle creation and null checking
+
   occ::handle<TestDerived> aDerived = new TestDerived();
   EXPECT_FALSE(aDerived.IsNull());
 
-  // Test various casting operations
   const occ::handle<TestDerived>& aConstDerived = aDerived;
   const occ::handle<TestBase>&    aConstBase    = aDerived;
-  (void)aConstBase; // Avoid unused variable warning
+  (void)aConstBase;
 
   TestDerived*       aDerivedPtr      = aDerived.get();
   const TestDerived* aConstDerivedPtr = aDerived.get();
@@ -73,13 +59,11 @@ TEST_F(HandleOperationsTest, BasicHandleOperations)
   EXPECT_NE(nullptr, aConstDerivedPtr);
   EXPECT_EQ(aDerivedPtr, aConstDerivedPtr);
 
-  // Test reference access
   TestDerived&       aDerivedRef      = *aDerived;
   const TestDerived& aConstDerivedRef = *aConstDerived;
   EXPECT_EQ(&aDerivedRef, aDerivedPtr);
   EXPECT_EQ(&aConstDerivedRef, aConstDerivedPtr);
 
-  // Test handle assignment to base type
   occ::handle<TestBase> aBase = aDerived;
   EXPECT_FALSE(aBase.IsNull());
   EXPECT_EQ(aBase.get(), aDerived.get());
@@ -87,7 +71,7 @@ TEST_F(HandleOperationsTest, BasicHandleOperations)
 
 TEST_F(HandleOperationsTest, HandleDownCast)
 {
-  // Test DownCast functionality
+
   occ::handle<TestDerived> aDerived = new TestDerived();
   occ::handle<TestBase>    aBase    = aDerived;
 
@@ -95,7 +79,6 @@ TEST_F(HandleOperationsTest, HandleDownCast)
   EXPECT_FALSE(aDownCastDerived.IsNull());
   EXPECT_EQ(aDownCastDerived.get(), aDerived.get());
 
-  // Test failed downcast (different type)
   occ::handle<TestOther>          anOther         = new TestOther();
   occ::handle<Standard_Transient> aTransient      = anOther;
   occ::handle<TestDerived>        aFailedDownCast = occ::down_cast<TestDerived>(aTransient);
@@ -105,17 +88,15 @@ TEST_F(HandleOperationsTest, HandleDownCast)
 TEST_F(HandleOperationsTest, HandleComparisons)
 {
   occ::handle<TestDerived> aDerived  = new TestDerived();
-  occ::handle<TestDerived> aDerived2 = aDerived;          // Same object
-  occ::handle<TestDerived> aDerived3 = new TestDerived(); // Different object
+  occ::handle<TestDerived> aDerived2 = aDerived;
+  occ::handle<TestDerived> aDerived3 = new TestDerived();
   occ::handle<TestBase>    aBase     = aDerived;
 
-  // Test equality operators
-  EXPECT_TRUE(aDerived == aDerived);   // Self equality
-  EXPECT_TRUE(aDerived == aDerived2);  // Same object through different handles
-  EXPECT_TRUE(aDerived == aBase);      // Handle to base type
-  EXPECT_FALSE(aDerived == aDerived3); // Different objects
+  EXPECT_TRUE(aDerived == aDerived);
+  EXPECT_TRUE(aDerived == aDerived2);
+  EXPECT_TRUE(aDerived == aBase);
+  EXPECT_FALSE(aDerived == aDerived3);
 
-  // Test with pointers
   TestDerived*       aDerivedPtr      = aDerived.get();
   const TestDerived* aConstDerivedPtr = aDerived.get();
   EXPECT_TRUE(aDerived == aDerivedPtr);
@@ -123,11 +104,9 @@ TEST_F(HandleOperationsTest, HandleComparisons)
   EXPECT_TRUE(aDerived == aConstDerivedPtr);
   EXPECT_TRUE(aConstDerivedPtr == aDerived);
 
-  // Test inequality
-  EXPECT_FALSE(aDerived != aDerived2); // Should be equal
-  EXPECT_TRUE(aDerived != aDerived3);  // Should be different
+  EXPECT_FALSE(aDerived != aDerived2);
+  EXPECT_TRUE(aDerived != aDerived3);
 
-  // Test boolean conversion
   EXPECT_TRUE(static_cast<bool>(aDerived));
   occ::handle<TestDerived> aNullDerived;
   EXPECT_FALSE(static_cast<bool>(aNullDerived));
@@ -135,21 +114,18 @@ TEST_F(HandleOperationsTest, HandleComparisons)
 
 TEST_F(HandleOperationsTest, AllocatorHandleCasting)
 {
-  // Test Handle casting with allocator hierarchy
+
   occ::handle<NCollection_BaseAllocator> aBasePtr = new NCollection_IncAllocator();
   EXPECT_FALSE(aBasePtr.IsNull());
 
-  // Test successful downcast to IncAllocator
   occ::handle<NCollection_IncAllocator> anIncAlloc =
     occ::down_cast<NCollection_IncAllocator>(aBasePtr);
   EXPECT_FALSE(anIncAlloc.IsNull());
 
-  // Test upcast back to BaseAllocator
   occ::handle<NCollection_BaseAllocator> aBaseAlloc = anIncAlloc;
   EXPECT_FALSE(aBaseAlloc.IsNull());
   EXPECT_EQ(aBaseAlloc.get(), aBasePtr.get());
 
-  // Test failed downcast to HeapAllocator
   occ::handle<NCollection_HeapAllocator> aHeapAlloc =
     occ::down_cast<NCollection_HeapAllocator>(aBasePtr);
   EXPECT_TRUE(aHeapAlloc.IsNull());
@@ -159,12 +135,10 @@ TEST_F(HandleOperationsTest, HandleCopyAndAssignment)
 {
   occ::handle<TestDerived> aDerived1 = new TestDerived();
 
-  // Test copy constructor
   occ::handle<TestDerived> aDerived2(aDerived1);
   EXPECT_FALSE(aDerived2.IsNull());
   EXPECT_EQ(aDerived1.get(), aDerived2.get());
 
-  // Test assignment operator
   occ::handle<TestDerived> aDerived3;
   EXPECT_TRUE(aDerived3.IsNull());
 
@@ -172,13 +146,11 @@ TEST_F(HandleOperationsTest, HandleCopyAndAssignment)
   EXPECT_FALSE(aDerived3.IsNull());
   EXPECT_EQ(aDerived1.get(), aDerived3.get());
 
-  // Test self-assignment (suppress warning)
 #include <Standard_WarningsDisable.hpp>
   aDerived1 = aDerived1;
 #include <Standard_WarningsRestore.hpp>
   EXPECT_FALSE(aDerived1.IsNull());
 
-  // Test assignment to null
   aDerived3 = occ::handle<TestDerived>();
   EXPECT_TRUE(aDerived3.IsNull());
 }
@@ -188,22 +160,15 @@ TEST_F(HandleOperationsTest, HandleWithDifferentTypes)
   occ::handle<TestDerived> aDerived = new TestDerived();
   occ::handle<TestOther>   anOther  = new TestOther();
 
-  // Note: Direct comparison between handles of different types is not allowed by the type system
-  // This is actually a good thing as it prevents type errors at compile time
-
-  // Test casting both to common base type
   occ::handle<Standard_Transient> aDerivedTransient = aDerived;
   occ::handle<Standard_Transient> anOtherTransient  = anOther;
 
-  // These should be different objects even when cast to base type
   EXPECT_FALSE(aDerivedTransient == anOtherTransient);
   EXPECT_TRUE(aDerivedTransient != anOtherTransient);
 
-  // But each should equal itself when cast
   EXPECT_TRUE(aDerivedTransient == aDerived);
   EXPECT_TRUE(anOtherTransient == anOther);
 
-  // Test that each maintains its identity through base type casting
   EXPECT_EQ(aDerivedTransient.get(), aDerived.get());
   EXPECT_EQ(anOtherTransient.get(), anOther.get());
 }
@@ -214,20 +179,17 @@ TEST_F(HandleOperationsTest, HandleNullOperations)
   occ::handle<TestDerived> anotherNullHandle;
   occ::handle<TestDerived> aValidHandle = new TestDerived();
 
-  // Test null handle properties
   EXPECT_TRUE(aNullHandle.IsNull());
   EXPECT_EQ(nullptr, aNullHandle.get());
 
-  // Test null handle comparisons
-  EXPECT_TRUE(aNullHandle == anotherNullHandle); // Both null
-  EXPECT_FALSE(aNullHandle == aValidHandle);     // Null vs valid
-  EXPECT_FALSE(aValidHandle == aNullHandle);     // Valid vs null
+  EXPECT_TRUE(aNullHandle == anotherNullHandle);
+  EXPECT_FALSE(aNullHandle == aValidHandle);
+  EXPECT_FALSE(aValidHandle == aNullHandle);
 
-  EXPECT_FALSE(aNullHandle != anotherNullHandle); // Both null
-  EXPECT_TRUE(aNullHandle != aValidHandle);       // Null vs valid
-  EXPECT_TRUE(aValidHandle != aNullHandle);       // Valid vs null
+  EXPECT_FALSE(aNullHandle != anotherNullHandle);
+  EXPECT_TRUE(aNullHandle != aValidHandle);
+  EXPECT_TRUE(aValidHandle != aNullHandle);
 
-  // Test boolean conversion
   EXPECT_FALSE(static_cast<bool>(aNullHandle));
   EXPECT_TRUE(static_cast<bool>(aValidHandle));
 }

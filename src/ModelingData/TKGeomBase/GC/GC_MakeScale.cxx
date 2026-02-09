@@ -3,9 +3,6 @@
 #include <gp_Pnt.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   Creation d un homothetie de gp de centre Point et de rapport Scale.  +
-//=========================================================================
 GC_MakeScale::GC_MakeScale(const gp_Pnt& Point, const double Scale)
 {
   TheScale = new Geom_Transformation();

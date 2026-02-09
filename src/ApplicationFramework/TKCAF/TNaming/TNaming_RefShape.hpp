@@ -31,7 +31,6 @@ public:
 
   Standard_EXPORT occ::handle<TNaming_NamedShape> NamedShape() const;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
 private:
@@ -44,36 +43,26 @@ inline TNaming_RefShape::TNaming_RefShape()
 {
 }
 
-//=================================================================================================
-
 inline TNaming_RefShape::TNaming_RefShape(const TopoDS_Shape& S)
     : myShape(S),
       myFirstUse(nullptr)
 {
 }
 
-//=================================================================================================
-
 inline void TNaming_RefShape::FirstUse(const TNaming_PtrNode& pdn)
 {
   myFirstUse = pdn;
 }
-
-//=================================================================================================
 
 inline void TNaming_RefShape::Shape(const TopoDS_Shape& S)
 {
   myShape = S;
 }
 
-//=================================================================================================
-
 inline TNaming_PtrNode TNaming_RefShape::FirstUse() const
 {
   return myFirstUse;
 }
-
-//=================================================================================================
 
 inline const TopoDS_Shape& TNaming_RefShape::Shape() const
 {

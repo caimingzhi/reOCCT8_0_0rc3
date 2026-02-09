@@ -11,7 +11,6 @@ class StepShape_HalfSpaceSolid : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a HalfSpaceSolid
   Standard_EXPORT StepShape_HalfSpaceSolid();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

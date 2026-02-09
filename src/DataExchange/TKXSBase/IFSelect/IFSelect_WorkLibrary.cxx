@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_ContextWrite.hpp>
 #include <IFSelect_WorkLibrary.hpp>
@@ -23,13 +12,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_WorkLibrary, Standard_Transient)
 
-//  all deferred but Copy (virtual default)
 IFSelect_WorkLibrary::IFSelect_WorkLibrary()
 {
   thelevdef = 0;
 }
 
-bool IFSelect_WorkLibrary::CopyModel(const occ::handle<Interface_InterfaceModel>& /*original*/,
+bool IFSelect_WorkLibrary::CopyModel(const occ::handle<Interface_InterfaceModel>&,
                                      const occ::handle<Interface_InterfaceModel>& newmodel,
                                      const Interface_EntityIterator&              list,
                                      Interface_CopyTool&                          TC) const
@@ -95,10 +83,10 @@ const char* IFSelect_WorkLibrary::DumpHelp(const int level) const
   return str->ToCString();
 }
 
-int IFSelect_WorkLibrary::ReadStream(const char* /*name*/,
-                                     std::istream& /*istream*/,
-                                     occ::handle<Interface_InterfaceModel>& /*model*/,
-                                     const occ::handle<Interface_Protocol>& /*protocol*/) const
+int IFSelect_WorkLibrary::ReadStream(const char*,
+                                     std::istream&,
+                                     occ::handle<Interface_InterfaceModel>&,
+                                     const occ::handle<Interface_Protocol>&) const
 {
   return 1;
 }

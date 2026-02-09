@@ -21,30 +21,20 @@ void IGESSolid_ToolToroidalSurface::ReadOwnParams(const occ::handle<IGESSolid_To
 {
   occ::handle<IGESGeom_Point>      tempCenter;
   double                           majRad, minRad;
-  occ::handle<IGESGeom_Direction>  tempAxis;   // default Unparametrised
-  occ::handle<IGESData_IGESEntity> tempRefdir; // default Unparametrised
-  // bool st; //szv#4:S4163:12Mar99 not needed
+  occ::handle<IGESGeom_Direction>  tempAxis;
+  occ::handle<IGESData_IGESEntity> tempRefdir;
 
-  PR.ReadEntity(IR,
-                PR.Current(),
-                "Center point",
-                STANDARD_TYPE(IGESGeom_Point),
-                tempCenter); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR, PR.Current(), "Center point", STANDARD_TYPE(IGESGeom_Point), tempCenter);
 
-  PR.ReadEntity(IR,
-                PR.Current(),
-                "Axis direction",
-                STANDARD_TYPE(IGESGeom_Direction),
-                tempAxis); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR, PR.Current(), "Axis direction", STANDARD_TYPE(IGESGeom_Direction), tempAxis);
 
-  PR.ReadReal(PR.Current(), "Major Radius", majRad); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Major Radius", majRad);
 
-  PR.ReadReal(PR.Current(), "Minor Radius", minRad); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Minor Radius", minRad);
 
-  if (ent->FormNumber() == 1)  // Parametrised surface
-                               // clang-format off
-    PR.ReadEntity(IR, PR.Current(), "Reference direction", tempRefdir); //szv#4:S4163:12Mar99 `st=` not needed
-                               // clang-format on
+  if (ent->FormNumber() == 1)
+
+    PR.ReadEntity(IR, PR.Current(), "Reference direction", tempRefdir);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempCenter, tempAxis, majRad, minRad, occ::down_cast<IGESGeom_Direction>(tempRefdir));
@@ -91,7 +81,7 @@ void IGESSolid_ToolToroidalSurface::OwnCopy(const occ::handle<IGESSolid_Toroidal
 }
 
 IGESData_DirChecker IGESSolid_ToolToroidalSurface::DirChecker(
-  const occ::handle<IGESSolid_ToroidalSurface>& /*ent*/) const
+  const occ::handle<IGESSolid_ToroidalSurface>&) const
 {
   IGESData_DirChecker DC(198, 0, 1);
 

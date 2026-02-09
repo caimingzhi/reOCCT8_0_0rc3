@@ -9,9 +9,6 @@ class StepGeom_Hyperbola;
 class Geom2d_Hyperbola;
 class Geom_Hyperbola;
 
-//! This class implements the mapping between the class
-//! Hyperbola from Geom and the class Hyperbola from
-//! StepGeom which describes a Hyperbola from ProSTEP
 class GeomToStep_MakeHyperbola : public GeomToStep_Root
 {
 public:

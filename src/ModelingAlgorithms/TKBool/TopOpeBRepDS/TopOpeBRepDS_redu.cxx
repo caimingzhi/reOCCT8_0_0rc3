@@ -43,11 +43,7 @@ Standard_EXPORT bool FUN_ds_redu2d1d(
   const occ::handle<TopOpeBRepDS_Interference>&                   I2d,
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& l1d,
   TopOpeBRepDS_Transition&                                        newT2d)
-// attached to edge(ISE) : l1d = {I1d=(Tr1d(Esd),vG,Esd)}, I2d=(Tr2d(F),vG,E)
-//                         - vG is not vertex of SE -
-// purpose : I2d -> (newT2d(F),vG,E), with Esd is edge of F
-//           returns true if set newT2d, false elsewhere.
-// NYIxpu251198 treating interferences IB1 !=IA1, IB2 != IA2
+
 {
   TopAbs_ShapeEnum  SB2, SA2;
   int               IB2, IA2;
@@ -63,16 +59,18 @@ Standard_EXPORT bool FUN_ds_redu2d1d(
     return false;
 
   const TopoDS_Edge& SE = TopoDS::Edge(BDS.Shape(ISE));
-  // clang-format off
-  const TopoDS_Face& F  = TopoDS::Face(BDS.Shape(IB2)); double tolF = BRep_Tool::Tolerance(F)*1.e2;//nyitol
-  const TopoDS_Edge& E  = TopoDS::Edge(BDS.Shape(S2)); double tolE = BRep_Tool::Tolerance(E)*1.e2;//nyitol
-  // clang-format on
+
+  const TopoDS_Face& F    = TopoDS::Face(BDS.Shape(IB2));
+  double             tolF = BRep_Tool::Tolerance(F) * 1.e2;
+  const TopoDS_Edge& E    = TopoDS::Edge(BDS.Shape(S2));
+  double             tolE = BRep_Tool::Tolerance(E) * 1.e2;
+
   bool EclosingF = FUN_tool_IsClosingE(E, F, F);
   if (EclosingF)
   {
     TopAbs_State stb = T2d.Before(), sta = T2d.After();
     if (stb != sta)
-    { // costs 1 projPonE
+    {
       double pbef = 0, paft = 0, factor = 1.e-4;
       double parSE = FDS_Parameter(I2d);
       double parE;
@@ -103,7 +101,7 @@ Standard_EXPORT bool FUN_ds_redu2d1d(
 
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it1(l1d);
   bool beforeIN1d = false, afterIN1d = false;
-  // ------------------------------
+
   for (; it1.More(); it1.Next())
   {
     const occ::handle<TopOpeBRepDS_Interference>& I1d = it1.Value();
@@ -124,25 +122,25 @@ Standard_EXPORT bool FUN_ds_redu2d1d(
     bool bIN = M_INTERNAL(O1) || M_REVERSED(O1);
     bool aIN = M_INTERNAL(O1) || M_FORWARD(O1);
     if (bIN && aIN)
-      return false; // NYIRAISE I1d INTERNAL -> NO I2d!!
+      return false;
     if (bIN)
       beforeIN1d = true;
     if (aIN)
       afterIN1d = true;
-  } // it1
+  }
 
   if (beforeIN1d)
     newT2d.Before(TopAbs_IN);
   if (afterIN1d)
     newT2d.After(TopAbs_IN);
   return true;
-} // redu2d1d
+}
 
 Standard_EXPORT bool FUN_ds_GetTr(
-  //                                 const TopOpeBRepDS_DataStructure& BDS,
+
   const TopOpeBRepDS_DataStructure&,
   const int ISE,
-  //				 const int G,
+
   const int,
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LIG,
   TopAbs_State&                                                   stb,
@@ -151,10 +149,7 @@ Standard_EXPORT bool FUN_ds_GetTr(
   TopAbs_State&                                                   sta,
   int&                                                            isa,
   int&                                                            adim)
-// LIG = {I=(Tr,G,S)} attached to edge<ISE>
-// purpose : returns newT(stb(isb,seb),sta(isa,sea)),
-// we assume IN1d > I2d > I3d
-//           OUT3d > OUT2d > OUT1d
+
 {
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>> LIGcopy;
   FDS_copy(LIG, LIGcopy);
@@ -192,7 +187,6 @@ Standard_EXPORT bool FUN_ds_GetTr(
   bool afterIN3d  = (FOR3d + INT3d > 0);
   bool afterOU3d  = (REV3d + EXT3d) != 0;
 
-  // state before
   stb  = TopAbs_UNKNOWN;
   isb  = 0;
   bdim = 0;
@@ -251,7 +245,6 @@ Standard_EXPORT bool FUN_ds_GetTr(
     isb = l1OUb.First()->Transition().IndexBefore();
   }
 
-  // state after
   sta  = TopAbs_UNKNOWN;
   isa  = 0;
   adim = 0;

@@ -21,32 +21,23 @@ void IGESSolid_ToolConicalSurface::ReadOwnParams(const occ::handle<IGESSolid_Con
 {
   occ::handle<IGESGeom_Point>     tempLocation;
   occ::handle<IGESGeom_Direction> tempAxis;
-  occ::handle<IGESGeom_Direction> tempRefdir; // default Unparametrised
+  occ::handle<IGESGeom_Direction> tempRefdir;
   double                          tempRadius, tempAngle;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  PR.ReadEntity(IR,
-                PR.Current(),
-                "Point on axis",
-                STANDARD_TYPE(IGESGeom_Point),
-                tempLocation); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR, PR.Current(), "Point on axis", STANDARD_TYPE(IGESGeom_Point), tempLocation);
 
-  PR.ReadEntity(IR,
-                PR.Current(),
-                "Axis direction",
-                STANDARD_TYPE(IGESGeom_Direction),
-                tempAxis); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR, PR.Current(), "Axis direction", STANDARD_TYPE(IGESGeom_Direction), tempAxis);
 
-  PR.ReadReal(PR.Current(), "Radius", tempRadius); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Radius", tempRadius);
 
-  PR.ReadReal(PR.Current(), "Semi-angle", tempAngle); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Semi-angle", tempAngle);
 
-  if (ent->FormNumber() == 1) // Parametrised surface
+  if (ent->FormNumber() == 1)
     PR.ReadEntity(IR,
                   PR.Current(),
                   "Reference direction",
                   STANDARD_TYPE(IGESGeom_Direction),
-                  tempRefdir); // szv#4:S4163:12Mar99 `st=` not needed
+                  tempRefdir);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempLocation, tempAxis, tempRadius, tempAngle, tempRefdir);
@@ -60,7 +51,7 @@ void IGESSolid_ToolConicalSurface::WriteOwnParams(const occ::handle<IGESSolid_Co
   IW.Send(ent->Radius());
   IW.Send(ent->SemiAngle());
   if (ent->IsParametrised())
-    IW.Send(ent->ReferenceDir()); // see FormNumber
+    IW.Send(ent->ReferenceDir());
 }
 
 void IGESSolid_ToolConicalSurface::OwnShared(const occ::handle<IGESSolid_ConicalSurface>& ent,
@@ -76,7 +67,6 @@ void IGESSolid_ToolConicalSurface::OwnCopy(const occ::handle<IGESSolid_ConicalSu
                                            Interface_CopyTool&                          TC) const
 {
   double tempRadius, tempAngle;
-  // bool IsItParametrised = false; //szv#4:S4163:12Mar99 unused
 
   DeclareAndCast(IGESGeom_Point, tempLocation, TC.Transferred(another->LocationPoint()));
   DeclareAndCast(IGESGeom_Direction, tempAxis, TC.Transferred(another->Axis()));
@@ -95,7 +85,7 @@ void IGESSolid_ToolConicalSurface::OwnCopy(const occ::handle<IGESSolid_ConicalSu
 }
 
 IGESData_DirChecker IGESSolid_ToolConicalSurface::DirChecker(
-  const occ::handle<IGESSolid_ConicalSurface>& /*ent*/) const
+  const occ::handle<IGESSolid_ConicalSurface>&) const
 {
   IGESData_DirChecker DC(194, 0, 1);
 

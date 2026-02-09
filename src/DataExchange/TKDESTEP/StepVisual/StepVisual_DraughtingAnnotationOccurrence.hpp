@@ -8,7 +8,6 @@ class StepVisual_DraughtingAnnotationOccurrence : public StepVisual_AnnotationOc
 {
 
 public:
-  //! Returns a DraughtingAnnotationOccurrence
   Standard_EXPORT StepVisual_DraughtingAnnotationOccurrence();
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_DraughtingAnnotationOccurrence,

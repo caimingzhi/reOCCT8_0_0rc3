@@ -11,7 +11,6 @@ class StepGeom_SurfaceReplica;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SurfaceReplica
 class RWStepGeom_RWSurfaceReplica
 {
 public:

@@ -29,19 +29,13 @@ enum ChildLab
   ChildLab_GDTPoints
 };
 
-//=================================================================================================
-
 XCAFDoc_View::XCAFDoc_View() = default;
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc_View::GetID()
 {
   static Standard_GUID ViewID("efd213e8-6dfd-11d4-b9c8-0060b0ee281b");
   return ViewID;
 }
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_View> XCAFDoc_View::Set(const TDF_Label& theLabel)
 {
@@ -54,8 +48,6 @@ occ::handle<XCAFDoc_View> XCAFDoc_View::Set(const TDF_Label& theLabel)
   return A;
 }
 
-//=================================================================================================
-
 void XCAFDoc_View::SetObject(const occ::handle<XCAFView_Object>& theObject)
 {
   Backup();
@@ -66,58 +58,45 @@ void XCAFDoc_View::SetObject(const occ::handle<XCAFView_Object>& theObject)
     anIter.Value().ForgetAllAttributes();
   }
 
-  // Name
   TDataStd_AsciiString::Set(Label().FindChild(ChildLab_Name), theObject->Name()->String());
 
-  // Type
   TDataStd_Integer::Set(Label().FindChild(ChildLab_Type), theObject->Type());
 
-  // Projection point
   TDataXtd_Point::Set(Label().FindChild(ChildLab_ProjectionPoint), theObject->ProjectionPoint());
 
-  // View direction
   gp_Ax1 aViewDir(gp_Pnt(), theObject->ViewDirection());
   TDataXtd_Axis::Set(Label().FindChild(ChildLab_ViewDirection), aViewDir);
 
-  // Up direction
   gp_Ax1 anUpDir(gp_Pnt(), theObject->UpDirection());
   TDataXtd_Axis::Set(Label().FindChild(ChildLab_UpDirection), anUpDir);
 
-  // Zoom factor
   TDataStd_Real::Set(Label().FindChild(ChildLab_ZoomFactor), theObject->ZoomFactor());
 
-  // Window horizontal size
   TDataStd_Real::Set(Label().FindChild(ChildLab_WindowHorizontalSize),
                      theObject->WindowHorizontalSize());
 
-  // Window vertical size
   TDataStd_Real::Set(Label().FindChild(ChildLab_WindowVerticalSize),
                      theObject->WindowVerticalSize());
 
-  // Front plane clipping
   if (theObject->HasFrontPlaneClipping())
   {
     TDataStd_Real::Set(Label().FindChild(ChildLab_FrontPlaneDistance),
                        theObject->FrontPlaneDistance());
   }
 
-  // Back plane clipping
   if (theObject->HasBackPlaneClipping())
   {
     TDataStd_Real::Set(Label().FindChild(ChildLab_BackPlaneDistance),
                        theObject->BackPlaneDistance());
   }
 
-  // View volume sides clipping
   int aValue = theObject->HasViewVolumeSidesClipping() ? 1 : 0;
   TDataStd_Integer::Set(Label().FindChild(ChildLab_ViewVolumeSidesClipping), aValue);
 
-  // Clipping Expression
   if (!theObject->ClippingExpression().IsNull())
     TDataStd_AsciiString::Set(Label().FindChild(ChildLab_ClippingExpression),
                               theObject->ClippingExpression()->String());
 
-  // GDT points
   if (theObject->HasGDTPoints())
   {
     TDF_Label aPointsLabel = Label().FindChild(ChildLab_GDTPoints);
@@ -128,27 +107,22 @@ void XCAFDoc_View::SetObject(const occ::handle<XCAFView_Object>& theObject)
   }
 }
 
-//=================================================================================================
-
 occ::handle<XCAFView_Object> XCAFDoc_View::GetObject() const
 {
   occ::handle<XCAFView_Object> anObj = new XCAFView_Object();
 
-  // Name
   occ::handle<TDataStd_AsciiString> aName;
   if (Label().FindChild(ChildLab_Name).FindAttribute(TDataStd_AsciiString::GetID(), aName))
   {
     anObj->SetName(new TCollection_HAsciiString(aName->Get()));
   }
 
-  // Type
   occ::handle<TDataStd_Integer> aType;
   if (Label().FindChild(ChildLab_Type).FindAttribute(TDataStd_Integer::GetID(), aType))
   {
     anObj->SetType((XCAFView_ProjectionType)aType->Get());
   }
 
-  // Projection point
   occ::handle<TDataXtd_Point> aPointAttr;
   if (Label()
         .FindChild(ChildLab_ProjectionPoint)
@@ -159,7 +133,6 @@ occ::handle<XCAFView_Object> XCAFDoc_View::GetObject() const
     anObj->SetProjectionPoint(aPoint);
   }
 
-  // View direction
   occ::handle<TDataXtd_Axis> aViewDirAttr;
   if (Label().FindChild(ChildLab_ViewDirection).FindAttribute(TDataXtd_Axis::GetID(), aViewDirAttr))
   {
@@ -168,7 +141,6 @@ occ::handle<XCAFView_Object> XCAFDoc_View::GetObject() const
     anObj->SetViewDirection(aDir.Direction());
   }
 
-  // Up direction
   occ::handle<TDataXtd_Axis> anUpDirAttr;
   if (Label().FindChild(ChildLab_UpDirection).FindAttribute(TDataXtd_Axis::GetID(), anUpDirAttr))
   {
@@ -177,14 +149,12 @@ occ::handle<XCAFView_Object> XCAFDoc_View::GetObject() const
     anObj->SetUpDirection(aDir.Direction());
   }
 
-  // Zoom factor
   occ::handle<TDataStd_Real> aZoomFactor;
   if (Label().FindChild(ChildLab_ZoomFactor).FindAttribute(TDataStd_Real::GetID(), aZoomFactor))
   {
     anObj->SetZoomFactor(aZoomFactor->Get());
   }
 
-  // Window horizontal size
   occ::handle<TDataStd_Real> aWindowHorizontalSize;
   if (Label()
         .FindChild(ChildLab_WindowHorizontalSize)
@@ -193,7 +163,6 @@ occ::handle<XCAFView_Object> XCAFDoc_View::GetObject() const
     anObj->SetWindowHorizontalSize(aWindowHorizontalSize->Get());
   }
 
-  // Window vertical size
   occ::handle<TDataStd_Real> aWindowVerticalSize;
   if (Label()
         .FindChild(ChildLab_WindowVerticalSize)
@@ -202,7 +171,6 @@ occ::handle<XCAFView_Object> XCAFDoc_View::GetObject() const
     anObj->SetWindowVerticalSize(aWindowVerticalSize->Get());
   }
 
-  // Front plane clipping
   occ::handle<TDataStd_Real> aFrontPlaneDistance;
   if (Label()
         .FindChild(ChildLab_FrontPlaneDistance)
@@ -211,7 +179,6 @@ occ::handle<XCAFView_Object> XCAFDoc_View::GetObject() const
     anObj->SetFrontPlaneDistance(aFrontPlaneDistance->Get());
   }
 
-  // Back plane clipping
   occ::handle<TDataStd_Real> aBackPlaneDistance;
   if (Label()
         .FindChild(ChildLab_BackPlaneDistance)
@@ -220,7 +187,6 @@ occ::handle<XCAFView_Object> XCAFDoc_View::GetObject() const
     anObj->SetBackPlaneDistance(aBackPlaneDistance->Get());
   }
 
-  // View volume sides clipping
   occ::handle<TDataStd_Integer> aViewVolumeSidesClipping;
   if (Label()
         .FindChild(ChildLab_ViewVolumeSidesClipping)
@@ -230,7 +196,6 @@ occ::handle<XCAFView_Object> XCAFDoc_View::GetObject() const
     anObj->SetViewVolumeSidesClipping(aValue);
   }
 
-  // Name
   occ::handle<TDataStd_AsciiString> aClippingExpression;
   if (Label()
         .FindChild(ChildLab_ClippingExpression)
@@ -239,12 +204,10 @@ occ::handle<XCAFView_Object> XCAFDoc_View::GetObject() const
     anObj->SetClippingExpression(new TCollection_HAsciiString(aClippingExpression->Get()));
   }
 
-  // GDT Points
   if (!Label().FindChild(ChildLab_GDTPoints, false).IsNull())
   {
     TDF_Label aPointsLabel = Label().FindChild(ChildLab_GDTPoints);
 
-    // Find out the number of stored GDT-points in Ocaf tree.
     int                         aNbGDTPoints = 0;
     occ::handle<TDataXtd_Point> aGDTPointAttr;
     TDF_ChildIterator           anItrPnts(aPointsLabel, false);
@@ -254,7 +217,6 @@ occ::handle<XCAFView_Object> XCAFDoc_View::GetObject() const
         aNbGDTPoints++;
     }
 
-    // Allocate the GDT-points and fill them in from Ocaf tree.
     if (aNbGDTPoints)
     {
       anObj->CreateGDTPoints(aNbGDTPoints);
@@ -274,8 +236,6 @@ occ::handle<XCAFView_Object> XCAFDoc_View::GetObject() const
 
   return anObj;
 }
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc_View::ID() const
 {

@@ -15,22 +15,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_PlanarRadius, DrawDim_PlanarDimension)
 
-//=================================================================================================
-
 DrawDim_PlanarRadius::DrawDim_PlanarRadius(const TopoDS_Face& face, const TopoDS_Shape& c)
 {
   myPlane  = face;
   myCircle = c;
 }
 
-//=================================================================================================
-
 DrawDim_PlanarRadius::DrawDim_PlanarRadius(const TopoDS_Shape& c)
 {
   myCircle = c;
 }
-
-//=================================================================================================
 
 void DrawDim_PlanarRadius::DrawOn(Draw_Display& dis) const
 {
@@ -45,7 +39,7 @@ void DrawDim_PlanarRadius::DrawOn(Draw_Display& dis) const
       TopoDS_Vertex vf, vl;
       TopExp::Vertices(TopoDS::Edge(myCircle), vf, vl);
       const gp_Pnt last = BRep_Tool::Pnt(vf);
-      //
+
       dis.Draw(first, last);
       gp_Pnt p((first.X() + last.X()) / 2, (first.Y() + last.Y()) / 2, (first.Z() + last.Z()) / 2);
       DrawText(p, dis);

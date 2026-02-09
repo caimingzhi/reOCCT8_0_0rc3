@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IGESData_IGESEntity.hpp>
 #include <IGESGraph_DefinitionLevel.hpp>
@@ -36,9 +25,8 @@ void IGESSelect_CounterOfLevelNumber::Clear()
   thehigh = thenblists = 0;
 }
 
-void IGESSelect_CounterOfLevelNumber::AddSign(
-  const occ::handle<Standard_Transient>& ent,
-  const occ::handle<Interface_InterfaceModel>& /*model*/)
+void IGESSelect_CounterOfLevelNumber::AddSign(const occ::handle<Standard_Transient>& ent,
+                                              const occ::handle<Interface_InterfaceModel>&)
 {
   DeclareAndCast(IGESData_IGESEntity, igesent, ent);
   if (igesent.IsNull())
@@ -48,7 +36,6 @@ void IGESSelect_CounterOfLevelNumber::AddSign(
   if (levelist.IsNull() && level < 0)
     return;
 
-  //  Enregistrer ce/ces niveau(x)
   if (levelist.IsNull())
     AddLevel(ent, level);
   else
@@ -90,12 +77,9 @@ void IGESSelect_CounterOfLevelNumber::AddLevel(const occ::handle<Standard_Transi
   if (level > thehigh)
     thehigh = level;
 
-  //  if (level == 0) Add(ent," NO LEVEL");
-  //  else {
   char signature[30];
   Sprintf(signature, "%7d", level);
   Add(ent, signature);
-  //  }
 }
 
 int IGESSelect_CounterOfLevelNumber::HighestLevel() const
@@ -125,10 +109,10 @@ occ::handle<NCollection_HSequence<int>> IGESSelect_CounterOfLevelNumber::Levels(
 
 occ::handle<TCollection_HAsciiString> IGESSelect_CounterOfLevelNumber::Sign(
   const occ::handle<Standard_Transient>& ent,
-  const occ::handle<Interface_InterfaceModel>& /*model*/) const
+  const occ::handle<Interface_InterfaceModel>&) const
 {
   occ::handle<TCollection_HAsciiString> res;
-  //  reprend les termes de AddSign pour la preparation (lecture du level) ...
+
   DeclareAndCast(IGESData_IGESEntity, igesent, ent);
   if (igesent.IsNull())
     return res;
@@ -137,7 +121,6 @@ occ::handle<TCollection_HAsciiString> IGESSelect_CounterOfLevelNumber::Sign(
   if (levelist.IsNull() && level < 0)
     return res;
 
-  //  puis ceux de AddLevel pour calculer la signature
   if (level < 0)
     return new TCollection_HAsciiString("LEVEL LIST");
   char signature[30];

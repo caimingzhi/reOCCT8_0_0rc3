@@ -1,21 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// 25.12.98 pdn renaming
-// 02.02.99 cky/rln PRO17746: transmitting 'sketch' command to XSDRAWEUC
-// 23.02.99 abv: method ShapeFix::FillFace() removed
-// 02.03.99 cky/rln: command edgeregul only accepts tolerance
-// 15.06.99 abv/pdn: command comptol added (from S4030)
 
 #include <BRep_Builder.hpp>
 #include <BRep_Tool.hpp>
@@ -47,22 +30,19 @@
 
 #include <cstdio>
 
-// + edge, face
-// + edgeregul/updtol
-// + fillface
 static int XSHAPE_edge(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 2)
   {
     di << "donner un nom de shape\n";
-    return 1 /* Error */;
+    return 1;
   }
   const char*  arg1  = argv[1];
   TopoDS_Shape Shape = DBRep::Get(arg1);
   if (Shape.IsNull())
   {
     di << arg1 << " inconnu\n";
-    return 1 /* Error */;
+    return 1;
   }
   int    nbe = 0, nbf = 0;
   double f3d, l3d;
@@ -92,19 +72,19 @@ static int XSHAPE_explorewire(Draw_Interpretor& di, int argc, const char** argv)
   if (argc < 2)
   {
     di << "donner un nom de wire\n";
-    return 1 /* Error */;
+    return 1;
   }
   const char*  arg1  = argv[1];
   TopoDS_Shape Shape = DBRep::Get(arg1);
   if (Shape.IsNull())
   {
     di << arg1 << " inconnu\n";
-    return 1 /* Error */;
+    return 1;
   }
   if (Shape.ShapeType() != TopAbs_WIRE)
   {
     di << "Pas un WIRE\n";
-    return 1 /* Error */;
+    return 1;
   }
   TopoDS_Wire W = TopoDS::Wire(Shape);
   TopoDS_Face F;
@@ -176,14 +156,14 @@ static int XSHAPE_ssolid(Draw_Interpretor& di, int argc, const char** argv)
   if (argc < 3)
   {
     di << "Give new solid name + shell name\n";
-    return 1 /* Error */;
+    return 1;
   }
   const char*  arg1  = argv[1];
   TopoDS_Shape Shape = DBRep::Get(arg1);
   if (Shape.IsNull())
   {
     di << "Shape unknown : " << arg1 << "\n";
-    return 1 /* Error */;
+    return 1;
   }
   TopAbs_ShapeEnum shen = Shape.ShapeType();
   if (shen == TopAbs_SOLID)
@@ -194,7 +174,7 @@ static int XSHAPE_ssolid(Draw_Interpretor& di, int argc, const char** argv)
   if (shen != TopAbs_SHELL)
   {
     di << " Not a Shell\n";
-    return 1 /* Error */;
+    return 1;
   }
   if (!Shape.Free())
   {
@@ -206,22 +186,21 @@ static int XSHAPE_ssolid(Draw_Interpretor& di, int argc, const char** argv)
   BRep_Builder B;
   B.MakeSolid(solid);
   B.Add(solid, sh);
-  //   Pas encore fini : il faut une bonne orientation
+
   BRepClass3d_SolidClassifier bsc3d(solid);
   bsc3d.PerformInfinitePoint(BRepBuilderAPI::Precision());
   if (bsc3d.State() == TopAbs_IN)
   {
-    //         Ensuite, inverser C-A-D REPRENDRE LES SHELLS
-    //         (l inversion du solide n est pas bien prise en compte)
+
     di << "NB : Shell to be reversed\n";
     TopoDS_Solid soli2;
-    B.MakeSolid(soli2); // on recommence
+    B.MakeSolid(soli2);
     sh.Reverse();
     B.Add(soli2, sh);
     solid = soli2;
   }
   DBRep::Set(argv[2], solid);
-  return 0; // Done
+  return 0;
 }
 
 static int samerange(Draw_Interpretor& di, int argc, const char** argv)
@@ -269,10 +248,6 @@ static int samerange(Draw_Interpretor& di, int argc, const char** argv)
 
   return 0;
 }
-
-//  ########################################
-//  ##            DECLARATIONS            ##
-//  ########################################
 
 void SWDRAW_ShapeTool::InitCommands(Draw_Interpretor& theCommands)
 {

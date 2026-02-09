@@ -15,22 +15,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_PlanarDiameter, DrawDim_PlanarDimension)
 
-//=================================================================================================
-
 DrawDim_PlanarDiameter::DrawDim_PlanarDiameter(const TopoDS_Face& face, const TopoDS_Shape& c)
 {
   myPlane  = face;
   myCircle = c;
 }
 
-//=================================================================================================
-
 DrawDim_PlanarDiameter::DrawDim_PlanarDiameter(const TopoDS_Shape& c)
 {
   myCircle = c;
 }
-
-//=================================================================================================
 
 void DrawDim_PlanarDiameter::DrawOn(Draw_Display& dis) const
 {
@@ -47,7 +41,7 @@ void DrawDim_PlanarDiameter::DrawOn(Draw_Display& dis) const
       double       parfirst = ElCLib::Parameter(circle, first);
       double       parlast  = (parfirst + M_PI);
       gp_Pnt       last     = ElCLib::Value(parlast, circle);
-      //
+
       dis.Draw(first, last);
       gp_Pnt p((first.X() + last.X()) / 2, (first.Y() + last.Y()) / 2, (first.Z() + last.Z()) / 2);
       DrawText(p, dis);

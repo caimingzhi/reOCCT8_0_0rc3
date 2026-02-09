@@ -6,11 +6,7 @@
 #include <StepElement_Volume3dElementDescriptor.hpp>
 #include <StepElement_VolumeElementPurposeMember.hpp>
 
-//=================================================================================================
-
 RWStepElement_RWVolume3dElementDescriptor::RWStepElement_RWVolume3dElementDescriptor() = default;
-
-//=================================================================================================
 
 void RWStepElement_RWVolume3dElementDescriptor::ReadStep(
   const occ::handle<StepData_StepReaderData>&               data,
@@ -18,11 +14,9 @@ void RWStepElement_RWVolume3dElementDescriptor::ReadStep(
   occ::handle<Interface_Check>&                             ach,
   const occ::handle<StepElement_Volume3dElementDescriptor>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "volume3d_element_descriptor"))
     return;
-
-  // Inherited fields of ElementDescriptor
 
   StepElement_ElementOrder aElementDescriptor_TopologyOrder = StepElement_Linear;
   if (data->ParamType(num, 1) == Interface_ParamEnum)
@@ -43,8 +37,6 @@ void RWStepElement_RWVolume3dElementDescriptor::ReadStep(
   occ::handle<TCollection_HAsciiString> aElementDescriptor_Description;
   data->ReadString(num, 2, "element_descriptor.description", ach, aElementDescriptor_Description);
 
-  // Own fields of Volume3dElementDescriptor
-
   occ::handle<NCollection_HArray1<occ::handle<StepElement_VolumeElementPurposeMember>>> aPurpose;
   int                                                                                   sub3 = 0;
   if (data->ReadSubList(num, 3, "purpose", ach, sub3))
@@ -54,10 +46,10 @@ void RWStepElement_RWVolume3dElementDescriptor::ReadStep(
     int num2 = sub3;
     for (int i0 = 1; i0 <= nb0; i0++)
     {
-      // StepElement_VolumeElementPurpose anIt0;
+
       occ::handle<StepElement_VolumeElementPurposeMember> aMember =
         new StepElement_VolumeElementPurposeMember;
-      // data->ReadEntity (num2, i0, "volume_element_purpose", ach, anIt0);
+
       data->ReadMember(num2, i0, "volume_element_purpose", ach, aMember);
       aPurpose->SetValue(i0, aMember);
     }
@@ -81,18 +73,13 @@ void RWStepElement_RWVolume3dElementDescriptor::ReadStep(
   else
     ach->AddFail("Parameter #4 (shape) is not enumeration");
 
-  // Initialize entity
   ent->Init(aElementDescriptor_TopologyOrder, aElementDescriptor_Description, aPurpose, aShape);
 }
-
-//=================================================================================================
 
 void RWStepElement_RWVolume3dElementDescriptor::WriteStep(
   StepData_StepWriter&                                      SW,
   const occ::handle<StepElement_Volume3dElementDescriptor>& ent) const
 {
-
-  // Inherited fields of ElementDescriptor
 
   switch (ent->StepElement_ElementDescriptor::TopologyOrder())
   {
@@ -108,8 +95,6 @@ void RWStepElement_RWVolume3dElementDescriptor::WriteStep(
   }
 
   SW.Send(ent->StepElement_ElementDescriptor::Description());
-
-  // Own fields of Volume3dElementDescriptor
 
   SW.OpenSub();
   for (int i2 = 1; i2 <= ent->Purpose()->Length(); i2++)
@@ -136,20 +121,8 @@ void RWStepElement_RWVolume3dElementDescriptor::WriteStep(
   }
 }
 
-//=================================================================================================
-
 void RWStepElement_RWVolume3dElementDescriptor::Share(
   const occ::handle<StepElement_Volume3dElementDescriptor>&,
   Interface_EntityIterator&) const
 {
-
-  // Inherited fields of ElementDescriptor
-
-  // Own fields of Volume3dElementDescriptor
-  /*  CKY 17JUN04 : content is made of STRINGS and ENUMS. No entity !
-    for (int i1=1; i1 <= ent->Purpose()->Length(); i1++ ) {
-      occ::handle<StepElement_VolumeElementPurposeMember> Var0 = ent->Purpose()->Value(i1);
-      iter.AddItem (Var0);
-    }
-  */
 }

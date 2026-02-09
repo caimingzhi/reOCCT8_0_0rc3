@@ -10,19 +10,6 @@
 #include <IntAna2d_IntPoint.hpp>
 #include <Standard_NegativeValue.hpp>
 
-// circulare tangent to a circle a point and a given radius
-//=============================================================
-//========================================================================
-// Initialize WellDone to false.                                       +
-// Return circle C1.                                             +
-// Leave with error if the construction is impossible.     +
-// Create parallel to C1 in the proper direction.                           +
-// Create circle with center in Point1 of radius Radius.                   +
-// Intersect the parallel and the circle.                              +
-//                              ==> The center point of the solution.   +
-// Create the solution that will be added to already found solutions.         +
-// Fill the fields.                                                +
-//========================================================================
 GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified1,
                                            const gp_Pnt2d&             Point2,
                                            const double                Radius,
@@ -78,7 +65,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if (Qualified1.IsEnclosed())
     {
-      //  =================================
+
       if ((distance - R1 > Tol) || (Radius - R1 > Tol))
       {
         WellDone = true;
@@ -101,7 +88,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if (Qualified1.IsEnclosing())
     {
-      //  ==================================
+
       if ((Tol < R1 - distance) || (Tol < R1 - Radius))
       {
         WellDone = true;
@@ -124,7 +111,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if (Qualified1.IsOutside())
     {
-      //  ================================
+
       if (Tol < R1 - distance)
       {
         WellDone = true;
@@ -144,13 +131,13 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if (Qualified1.IsUnqualified())
     {
-      //  ====================================
+
       if (std::abs(dispc1 - Radius * 2.0) < Tol)
       {
         WellDone = true;
         gp_Pnt2d Center(center1.XY() + (distance - Radius) * dir1.XY());
         cirsol(1) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-        //      ==================================================
+
         if (std::abs(Center.Distance(center1) - R1) < Tol)
         {
           qualifier1(1) = GccEnt_enclosed;
@@ -168,7 +155,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       else if ((std::abs(R1 - Radius) < Tol) && (std::abs(distance - R1) < Tol))
       {
         cirsol(1) = gp_Circ2d(C1);
-        //      =========================
+
         qualifier1(1) = GccEnt_unqualified;
         qualifier2(1) = GccEnt_noqualifier;
         TheSame1(1)   = 1;
@@ -202,7 +189,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
               NbrSol++;
               gp_Pnt2d Center(Intp.Point(i).Value());
               cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-              //            =======================================================
+
               double distcc1 = center1.Distance(Center);
               if (!Qualified1.IsUnqualified())
               {
@@ -249,7 +236,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     {
       gp_Pnt2d Center(center1.XY() + deport * dir1.XY());
       cirsol(1) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-      //    ==================================================
+
       qualifier1(1) = Qualified1.Qualifier();
       qualifier2(1) = GccEnt_noqualifier;
       if (std::abs(deport) <= Tol && std::abs(Radius - R1) <= Tol)

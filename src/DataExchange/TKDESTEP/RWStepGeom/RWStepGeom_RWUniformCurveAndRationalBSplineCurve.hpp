@@ -11,7 +11,6 @@ class StepGeom_UniformCurveAndRationalBSplineCurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for UniformCurveAndRationalBSplineCurve
 class RWStepGeom_RWUniformCurveAndRationalBSplineCurve
 {
 public:

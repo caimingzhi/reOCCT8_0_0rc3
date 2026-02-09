@@ -5,8 +5,6 @@
 #include <BRepMesh_Circle.hpp>
 #include <BRepMesh_CircleInspector.hpp>
 
-//=================================================================================================
-
 BRepMesh_CircleTool::BRepMesh_CircleTool(const occ::handle<NCollection_IncAllocator>& theAllocator)
     : myTolerance(Precision::PConfusion()),
       myAllocator(theAllocator),
@@ -14,8 +12,6 @@ BRepMesh_CircleTool::BRepMesh_CircleTool(const occ::handle<NCollection_IncAlloca
       mySelector(myTolerance, 64, theAllocator)
 {
 }
-
-//=================================================================================================
 
 BRepMesh_CircleTool::BRepMesh_CircleTool(const int theReservedSize,
                                          const occ::handle<NCollection_IncAllocator>& theAllocator)
@@ -26,13 +22,10 @@ BRepMesh_CircleTool::BRepMesh_CircleTool(const int theReservedSize,
 {
 }
 
-//=================================================================================================
-
 void BRepMesh_CircleTool::bind(const int theIndex, const gp_XY& theLocation, const double theRadius)
 {
   BRepMesh_Circle aCirle(theLocation, theRadius);
 
-  // compute coords
   double aMaxX = std::min(theLocation.X() + theRadius, myFaceMax.X());
   double aMinX = std::max(theLocation.X() - theRadius, myFaceMin.X());
   double aMaxY = std::min(theLocation.Y() + theRadius, myFaceMax.Y());
@@ -45,16 +38,12 @@ void BRepMesh_CircleTool::bind(const int theIndex, const gp_XY& theLocation, con
   mySelector.Bind(theIndex, aCirle);
 }
 
-//=================================================================================================
-
 void BRepMesh_CircleTool::Bind(const int theIndex, const gp_Circ2d& theCircle)
 {
   gp_XY  aCoord  = theCircle.Location().Coord();
   double aRadius = theCircle.Radius();
   bind(theIndex, aCoord, aRadius);
 }
-
-//=================================================================================================
 
 bool BRepMesh_CircleTool::MakeCircle(const gp_XY& thePoint1,
                                      const gp_XY& thePoint2,
@@ -109,8 +98,6 @@ bool BRepMesh_CircleTool::MakeCircle(const gp_XY& thePoint1,
   return true;
 }
 
-//=================================================================================================
-
 bool BRepMesh_CircleTool::Bind(const int    theIndex,
                                const gp_XY& thePoint1,
                                const gp_XY& thePoint2,
@@ -125,8 +112,6 @@ bool BRepMesh_CircleTool::Bind(const int    theIndex,
   return true;
 }
 
-//=================================================================================================
-
 void BRepMesh_CircleTool::Delete(const int theIndex)
 {
   BRepMesh_Circle& aCircle = mySelector.Circle(theIndex);
@@ -134,16 +119,12 @@ void BRepMesh_CircleTool::Delete(const int theIndex)
     aCircle.SetRadius(-1);
 }
 
-//=================================================================================================
-
 IMeshData::ListOfInteger& BRepMesh_CircleTool::Select(const gp_XY& thePoint)
 {
   mySelector.SetPoint(thePoint);
   myCellFilter.Inspect(thePoint, mySelector);
   return mySelector.GetShotCircles();
 }
-
-//=================================================================================================
 
 void BRepMesh_CircleTool::MocBind(const int theIndex)
 {

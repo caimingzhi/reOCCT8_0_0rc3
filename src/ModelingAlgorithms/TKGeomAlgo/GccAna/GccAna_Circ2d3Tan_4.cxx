@@ -1,18 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// cas de 2 cercles concentriques JCT 28/11/97
 
 #include <ElCLib.hpp>
 #include <GccAna_Circ2d3Tan.hpp>
@@ -33,19 +19,11 @@
 
 static int MaxSol = 20;
 
-//=========================================================================
-//   Creation of a circle tangent to two circles and a point.           +
-//=========================================================================
-
 GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                                      const GccEnt_QualifiedCirc& Qualified2,
                                      const gp_Pnt2d&             Point3,
                                      const double                Tolerance)
     :
-
-      //=========================================================================
-      //   Initialization of fields.                                           +
-      //=========================================================================
 
       cirsol(1, MaxSol),
       qualifier1(1, MaxSol),
@@ -77,10 +55,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
     throw GccEnt_BadQualifier();
     return;
   }
-
-  //=========================================================================
-  //   Processing.                                                          +
-  //=========================================================================
 
   gp_Circ2d C1(Qualified1.Qualified());
   gp_Circ2d C2(Qualified2.Qualified());
@@ -310,7 +284,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                 {
                   NbrSol++;
                   cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius(k1));
-                  //                 ==========================================================
+
                   double distcc1 = Center.Distance(center1);
                   if (!Qualified1.IsUnqualified())
                   {
@@ -329,7 +303,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                     qualifier1(NbrSol) = GccEnt_enclosing;
                   }
 
-                  //		   double distcc2 = Center.Distance(center1);
                   double distcc2 = Center.Distance(center2);
                   if (!Qualified2.IsUnqualified())
                   {
@@ -358,9 +331,9 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                     TheSame1(NbrSol) = 0;
                     gp_Dir2d dc(center1.XY() - Center.XY());
                     if (qualifier1(NbrSol) == GccEnt_enclosed)
-                      // clang-format off
-		       dc.Reverse(); // if tangent circle is inside the source circle, moving to edge of source circle
-                    // clang-format on
+
+                      dc.Reverse();
+
                     pnttg1sol(NbrSol) = gp_Pnt2d(Center.XY() + Radius(k1) * dc.XY());
                     par1sol(NbrSol)   = ElCLib::Parameter(cirsol(NbrSol), pnttg1sol(NbrSol));
                     pararg1(NbrSol)   = ElCLib::Parameter(C1, pnttg1sol(NbrSol));
@@ -374,8 +347,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                   {
                     TheSame2(NbrSol) = 0;
                     gp_Dir2d dc(center2.XY() - Center.XY());
-                    // case of concentric circles :
-                    // 2nd tangency point is at the other side of the circle solution
+
                     double alpha = 1.;
                     if (center1.Distance(center2) <= Tolerance)
                       alpha = -1;
@@ -406,8 +378,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
     }
   }
 
-  // Debug to create the point on the solution circles.
-
   int kk;
   for (kk = 1; kk <= NbrSol; kk++)
   {
@@ -419,8 +389,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
     }
   }
 
-  // Debug to eliminate multiple solution.
-  // this happens in case of intersection line hyperbola.
   double Tol2 = Tol * Tol;
   for (kk = 1; kk < NbrSol; kk++)
   {

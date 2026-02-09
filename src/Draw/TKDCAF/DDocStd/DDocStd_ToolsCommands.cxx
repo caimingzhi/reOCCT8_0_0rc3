@@ -15,11 +15,7 @@
 #include <NCollection_List.hpp>
 #include <Standard_DomainError.hpp>
 
-//=======================================================================
-// function : UpdateXLinks
-//=======================================================================
-
-static int DDocStd_UpdateXLinks(Draw_Interpretor& /*di*/, int n, const char** a)
+static int DDocStd_UpdateXLinks(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 3)
     return 1;
@@ -28,14 +24,9 @@ static int DDocStd_UpdateXLinks(Draw_Interpretor& /*di*/, int n, const char** a)
     return 1;
   TCollection_AsciiString Entry(a[2]);
   D->UpdateReferences(Entry);
-  // DDocStd::DisplayModified(a[1]);
+
   return 0;
 }
-
-//=======================================================================
-// function : DDocStd_DumpCommand
-// purpose  : DumpDocument (DOC)
-//=======================================================================
 
 static int DDocStd_DumpCommand(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -44,7 +35,7 @@ static int DDocStd_DumpCommand(Draw_Interpretor& di, int nb, const char** arg)
     occ::handle<TDocStd_Document> D;
     if (!DDocStd::GetDocument(arg[1], D))
       return 1;
-    //
+
     NCollection_List<occ::handle<TDF_AttributeDelta>> added, forgoten, resumed, removed, modified;
     occ::handle<TDF_AttributeDelta>                   AD;
     if (D->GetUndos().IsEmpty())
@@ -82,10 +73,10 @@ static int DDocStd_DumpCommand(Draw_Interpretor& di, int nb, const char** arg)
         throw Standard_DomainError("DDocStd_DumpCommand : unknown delta");
       }
     }
-    //
+
     TCollection_AsciiString string;
-    //
-    TCollection_AsciiString name; // (D->Name());
+
+    TCollection_AsciiString name;
     di << "ADDED    :";
     it.Initialize(added);
     if (it.More())
@@ -99,8 +90,7 @@ static int DDocStd_DumpCommand(Draw_Interpretor& di, int nb, const char** arg)
       di << it.Value()->Attribute()->DynamicType()->Name();
       di << "\n";
     }
-    //
-    // forgoten
+
     di << "FORGOTEN :";
     it.Initialize(forgoten);
     if (it.More())
@@ -114,8 +104,7 @@ static int DDocStd_DumpCommand(Draw_Interpretor& di, int nb, const char** arg)
       di << it.Value()->Attribute()->DynamicType()->Name();
       di << "\n";
     }
-    //
-    // resumed
+
     di << "RESUMED  :";
     it.Initialize(resumed);
     if (it.More())
@@ -129,8 +118,7 @@ static int DDocStd_DumpCommand(Draw_Interpretor& di, int nb, const char** arg)
       di << it.Value()->Attribute()->DynamicType()->Name();
       di << "\n";
     }
-    //
-    // removed
+
     di << "REMOVED  :";
     it.Initialize(removed);
     if (it.More())
@@ -144,8 +132,7 @@ static int DDocStd_DumpCommand(Draw_Interpretor& di, int nb, const char** arg)
       di << it.Value()->Attribute()->DynamicType()->Name();
       di << "\n";
     }
-    //
-    // modified
+
     di << "MODIFIED :";
     it.Initialize(modified);
     if (it.More())
@@ -164,8 +151,6 @@ static int DDocStd_DumpCommand(Draw_Interpretor& di, int nb, const char** arg)
   di << "TDocStd_DumpCommand : Error\n";
   return 1;
 }
-
-//=================================================================================================
 
 void DDocStd::ToolsCommands(Draw_Interpretor& theCommands)
 {

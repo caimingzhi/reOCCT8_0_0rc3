@@ -5,11 +5,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaLinearElasticity,
                            StepFEA_FeaMaterialPropertyRepresentationItem)
 
-//=================================================================================================
-
 StepFEA_FeaLinearElasticity::StepFEA_FeaLinearElasticity() = default;
-
-//=================================================================================================
 
 void StepFEA_FeaLinearElasticity::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentationItem_Name,
@@ -20,14 +16,10 @@ void StepFEA_FeaLinearElasticity::Init(
   theFeaConstants = aFeaConstants;
 }
 
-//=================================================================================================
-
 StepFEA_SymmetricTensor43d StepFEA_FeaLinearElasticity::FeaConstants() const
 {
   return theFeaConstants;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaLinearElasticity::SetFeaConstants(const StepFEA_SymmetricTensor43d& aFeaConstants)
 {

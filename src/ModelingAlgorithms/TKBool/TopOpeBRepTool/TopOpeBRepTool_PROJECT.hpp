@@ -38,9 +38,6 @@
 #include <Extrema_ExtFlag.hpp>
 #include <Extrema_ExtAlgo.hpp>
 
-// ----------------------------------------------------------------------
-//  project point <P> on geometries (curve <C>,surface <S>)
-// ----------------------------------------------------------------------
 Standard_EXPORT void FUN_tool_bounds(const TopoDS_Edge& E, double& f, double& l);
 Standard_EXPORT int  FUN_tool_getindex(const Extrema_ExtPC& ponc);
 Standard_EXPORT int  FUN_tool_getindex(const Extrema_ExtPC2d& ponc);
@@ -85,9 +82,6 @@ Standard_EXPORT bool FUN_tool_projPonS(const gp_Pnt&                    P,
                                        const Extrema_ExtFlag anExtFlag = Extrema_ExtFlag_MINMAX,
                                        const Extrema_ExtAlgo anExtAlgo = Extrema_ExtAlgo_Grad);
 
-// ----------------------------------------------------------------------
-//  project point <P> on topologies (edge <E>,face <F>)
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_projPonE(const gp_Pnt&      P,
                                        const double       tole,
                                        const TopoDS_Edge& E,

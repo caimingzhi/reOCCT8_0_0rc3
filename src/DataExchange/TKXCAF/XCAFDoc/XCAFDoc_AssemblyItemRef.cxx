@@ -242,7 +242,7 @@ void XCAFDoc_AssemblyItemRef::Restore(const occ::handle<TDF_Attribute>& theAttrF
 }
 
 void XCAFDoc_AssemblyItemRef::Paste(const occ::handle<TDF_Attribute>& theAttrInto,
-                                    const occ::handle<TDF_RelocationTable>& /*theRT*/) const
+                                    const occ::handle<TDF_RelocationTable>&) const
 {
   occ::handle<XCAFDoc_AssemblyItemRef> anOther =
     occ::down_cast<XCAFDoc_AssemblyItemRef>(theAttrInto);
@@ -263,8 +263,6 @@ Standard_OStream& XCAFDoc_AssemblyItemRef::Dump(Standard_OStream& theOS) const
     theOS << "/Subshape: " << myExtraId;
   return theOS;
 }
-
-//=================================================================================================
 
 void XCAFDoc_AssemblyItemRef::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

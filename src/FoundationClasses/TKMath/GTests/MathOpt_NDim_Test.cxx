@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -18,12 +7,6 @@
 
 #include <cmath>
 
-//=============================================================================
-// Test functions for N-dimensional optimization
-//=============================================================================
-
-// Rosenbrock function: f(x,y) = (1-x)^2 + 100(y-x^2)^2
-// Minimum at (1, 1) with f = 0
 class RosenbrockFunction
 {
 public:
@@ -45,8 +28,6 @@ public:
   }
 };
 
-// Simple quadratic: f(x,y) = x^2 + y^2
-// Minimum at (0, 0) with f = 0
 class SimpleQuadratic
 {
 public:
@@ -70,8 +51,6 @@ public:
   }
 };
 
-// Sphere function in N dimensions: f(x) = sum(x_i^2)
-// Minimum at origin with f = 0
 class SphereFunction
 {
 public:
@@ -95,8 +74,6 @@ public:
   }
 };
 
-// Booth function: f(x,y) = (x + 2y - 7)^2 + (2x + y - 5)^2
-// Minimum at (1, 3) with f = 0
 class BoothFunction
 {
 public:
@@ -122,8 +99,6 @@ public:
   }
 };
 
-// Beale's function: f(x,y) = (1.5 - x + xy)^2 + (2.25 - x + xy^2)^2 + (2.625 - x + xy^3)^2
-// Minimum at (3, 0.5) with f = 0
 class BealeFunction
 {
 public:
@@ -152,10 +127,6 @@ public:
     return true;
   }
 };
-
-//=============================================================================
-// Powell's Method Tests
-//=============================================================================
 
 TEST(MathOpt_PowellTest, SimpleQuadratic)
 {
@@ -223,10 +194,6 @@ TEST(MathOpt_PowellTest, SphereFunction3D)
   }
 }
 
-//=============================================================================
-// BFGS Tests
-//=============================================================================
-
 TEST(MathOpt_BFGSTest, SimpleQuadratic)
 {
   SimpleQuadratic aFunc;
@@ -246,7 +213,7 @@ TEST(MathOpt_BFGSTest, SimpleQuadratic)
   EXPECT_NEAR(*aResult.Value, 0.0, 1.0e-8);
   EXPECT_NEAR((*aResult.Solution)(1), 0.0, 1.0e-6);
   EXPECT_NEAR((*aResult.Solution)(2), 0.0, 1.0e-6);
-  EXPECT_LT(aResult.NbIterations, 20); // BFGS should converge quickly on quadratics
+  EXPECT_LT(aResult.NbIterations, 20);
 }
 
 TEST(MathOpt_BFGSTest, BoothFunction)
@@ -335,16 +302,12 @@ TEST(MathOpt_BFGSTest, SphereFunction5D)
   {
     EXPECT_NEAR((*aResult.Solution)(i), 0.0, 1.0e-6);
   }
-  EXPECT_LT(aResult.NbIterations, 20); // Should converge quickly on quadratics
+  EXPECT_LT(aResult.NbIterations, 20);
 }
-
-//=============================================================================
-// BFGS Numerical Gradient Tests
-//=============================================================================
 
 TEST(MathOpt_BFGSNumericalTest, SimpleQuadratic)
 {
-  // Same test but using numerical gradient
+
   class QuadraticNoGrad
   {
   public:
@@ -377,10 +340,6 @@ TEST(MathOpt_BFGSNumericalTest, SimpleQuadratic)
   EXPECT_NEAR((*aResult.Solution)(1), 0.0, 1.0e-4);
   EXPECT_NEAR((*aResult.Solution)(2), 0.0, 1.0e-4);
 }
-
-//=============================================================================
-// L-BFGS Tests
-//=============================================================================
 
 TEST(MathOpt_LBFGSTest, SimpleQuadratic)
 {
@@ -438,7 +397,6 @@ TEST(MathOpt_LBFGSTest, SphereFunction10D)
   aConfig.XTolerance    = 1.0e-10;
   aConfig.FTolerance    = 1.0e-12;
 
-  // Use small memory size for L-BFGS
   auto aResult = MathOpt::LBFGS(aFunc, aStart, 5, aConfig);
 
   EXPECT_TRUE(aResult.IsDone());
@@ -449,10 +407,6 @@ TEST(MathOpt_LBFGSTest, SphereFunction10D)
     EXPECT_NEAR((*aResult.Solution)(i), 0.0, 1.0e-6);
   }
 }
-
-//=============================================================================
-// Comparison Tests: Powell vs BFGS
-//=============================================================================
 
 TEST(MathOpt_ComparisonTest, BFGSFasterThanPowellOnQuadratic)
 {
@@ -472,9 +426,7 @@ TEST(MathOpt_ComparisonTest, BFGSFasterThanPowellOnQuadratic)
   EXPECT_TRUE(aPowellResult.IsDone());
   EXPECT_TRUE(aBFGSResult.IsDone());
 
-  // Both should find the same minimum
   EXPECT_NEAR(*aPowellResult.Value, *aBFGSResult.Value, 1.0e-4);
 
-  // BFGS should use fewer iterations on quadratic functions
   EXPECT_LT(aBFGSResult.NbIterations, aPowellResult.NbIterations);
 }

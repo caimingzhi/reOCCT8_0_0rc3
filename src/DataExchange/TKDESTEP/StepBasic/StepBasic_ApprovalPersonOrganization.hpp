@@ -12,7 +12,6 @@ class StepBasic_ApprovalPersonOrganization : public Standard_Transient
 {
 
 public:
-  //! Returns a ApprovalPersonOrganization
   Standard_EXPORT StepBasic_ApprovalPersonOrganization();
 
   Standard_EXPORT void Init(const StepBasic_PersonOrganizationSelect&  aPersonOrganization,

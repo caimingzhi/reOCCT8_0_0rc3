@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_PersonAndOrganizationRole;
 class StepData_StepWriter;
 
-//! Read & Write Module for PersonAndOrganizationRole
 class RWStepBasic_RWPersonAndOrganizationRole
 {
 public:

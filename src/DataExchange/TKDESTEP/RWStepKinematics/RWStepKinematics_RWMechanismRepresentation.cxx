@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include "RWStepKinematics_RWMechanismRepresentation.hpp"
 
@@ -13,11 +13,7 @@
 #include <StepRepr_RepresentationContext.hpp>
 #include <StepKinematics_KinematicTopologyRepresentationSelect.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWMechanismRepresentation::RWStepKinematics_RWMechanismRepresentation() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWMechanismRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&                theData,
@@ -25,11 +21,9 @@ void RWStepKinematics_RWMechanismRepresentation::ReadStep(
   occ::handle<Interface_Check>&                              theArch,
   const occ::handle<StepKinematics_MechanismRepresentation>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 4, theArch, "mechanism_representation"))
     return;
-
-  // Inherited fields of Representation
 
   occ::handle<TCollection_HAsciiString> aRepresentation_Name;
   theData->ReadString(theNum, 1, "representation.name", theArch, aRepresentation_Name);
@@ -63,26 +57,19 @@ void RWStepKinematics_RWMechanismRepresentation::ReadStep(
                       STANDARD_TYPE(StepRepr_RepresentationContext),
                       aRepresentation_ContextOfItems);
 
-  // Own fields of MechanismRepresentation
-
   StepKinematics_KinematicTopologyRepresentationSelect aRepresentedTopology;
   theData->ReadEntity(theNum, 4, "represented_topology", theArch, aRepresentedTopology);
 
-  // Initialize entity
   theEnt->Init(aRepresentation_Name,
                aRepresentation_Items,
                aRepresentation_ContextOfItems,
                aRepresentedTopology);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWMechanismRepresentation::WriteStep(
   StepData_StepWriter&                                       theSW,
   const occ::handle<StepKinematics_MechanismRepresentation>& theEnt) const
 {
-
-  // Own fields of Representation
 
   theSW.Send(theEnt->Name());
 
@@ -96,19 +83,13 @@ void RWStepKinematics_RWMechanismRepresentation::WriteStep(
 
   theSW.Send(theEnt->ContextOfItems());
 
-  // Own fields of MechanismRepresentation
-
   theSW.Send(theEnt->RepresentedTopology().Value());
 }
-
-//=================================================================================================
 
 void RWStepKinematics_RWMechanismRepresentation::Share(
   const occ::handle<StepKinematics_MechanismRepresentation>& theEnt,
   Interface_EntityIterator&                                  iter) const
 {
-
-  // Inherited fields of Representation
 
   for (int i1 = 1; i1 <= theEnt->StepRepr_Representation::Items()->Length(); i1++)
   {
@@ -118,8 +99,6 @@ void RWStepKinematics_RWMechanismRepresentation::Share(
   }
 
   iter.AddItem(theEnt->StepRepr_Representation::ContextOfItems());
-
-  // Own fields of MechanismRepresentation
 
   iter.AddItem(theEnt->RepresentedTopology().Value());
 }

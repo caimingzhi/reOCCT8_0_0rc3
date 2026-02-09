@@ -23,28 +23,22 @@
 #include <TopoDS_Vertex.hpp>
 #include <TopoDS_Shape.hpp>
 
-// #include <BRepAdaptor_Curve2d.hpp>
 const double IntersectorConfusion = 1.e-10;
 const double IntersectorTangency  = 1.e-10;
 const double HatcherConfusion2d   = 1.e-8;
 const double HatcherConfusion3d   = 1.e-8;
 const double Infinite             = 100.;
 
-//=======================================================================
-// Function : Perform
-// Purpose  : Builds isoparametric curves with a hatcher.
-//=======================================================================
-
 void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
                                        const TopoDS_Face& F,
                                        HLRTopoBRep_Data&  DS,
                                        const int          nbIsos)
 {
-  (void)FI; // avoid compiler warning
+  (void)FI;
 
   double UMin, UMax, VMin, VMax, U1, U2;
   int    ne = 0;
-  // BRep_Builder Builder;
+
   TopoDS_Edge     Edge;
   TopExp_Explorer ExpEdges;
   TopoDS_Face     TF = F;
@@ -82,13 +76,11 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
   else if (InfiniteVMax)
     VMax = VMin + Infinite;
 
-  for (ExpEdges.Init(TF, TopAbs_EDGE); // Edges of the face TF
-       ExpEdges.More();
-       ExpEdges.Next())
+  for (ExpEdges.Init(TF, TopAbs_EDGE); ExpEdges.More(); ExpEdges.Next())
     ne++;
 
   if (DS.FaceHasIntL(TF))
-  { // OutLines built on face TF.
+  {
 
     NCollection_List<TopoDS_Shape>::Iterator itE;
     for (itE.Initialize(DS.FaceIntL(TF)); itE.More(); itE.Next())
@@ -96,7 +88,7 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
   }
 
   NCollection_Array1<TopoDS_Shape> SH(1, ne);
-  NCollection_Array1<bool>         IL(1, ne); // internal OutLine
+  NCollection_Array1<bool>         IL(1, ne);
 
   for (ExpEdges.Init(TF, TopAbs_EDGE); ExpEdges.More(); ExpEdges.Next())
   {
@@ -122,7 +114,7 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
   }
 
   if (DS.FaceHasIntL(TF))
-  { // get the internal OutLines built on face F.
+  {
     NCollection_List<TopoDS_Shape>::Iterator itE;
     for (itE.Initialize(DS.FaceIntL(TF)); itE.More(); itE.Next())
     {
@@ -145,10 +137,6 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
     }
   }
 
-  //-----------------------------------------------------------------------
-  // Creation des hachures.
-  //-----------------------------------------------------------------------
-
   BRepAdaptor_Surface Surface(TF);
   double              Tolerance = BRep_Tool::Tolerance(TF);
 
@@ -157,10 +145,6 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
   double DeltaV    = std::abs(VMax - VMin);
   double Confusion = std::min(DeltaU, DeltaV) * HatcherConfusion3d;
   Hatcher.Confusion3d(Confusion);
-
-  //-----------------------------------------------------------------------
-  // Courbes Iso U.
-  //-----------------------------------------------------------------------
 
   double StepU = DeltaU / (double)nbIsos;
   if (StepU > Confusion)
@@ -220,7 +204,7 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
           IsoLine->D0(U21, P);
           Surface.D0(P.X(), P.Y(), P2);
           if (Dom.HasFirstPoint())
-          { // Iso U - Premier point
+          {
             const HatchGen_PointOnHatching& PntH = Dom.FirstPoint();
 
             for (int IPntE = 1; IPntE <= PntH.NbPoints(); IPntE++)
@@ -236,7 +220,7 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
             }
           }
           if (Dom.HasSecondPoint())
-          { // Iso U - Deuxieme point
+          {
             const HatchGen_PointOnHatching& PntH = Dom.SecondPoint();
 
             for (int IPntE = 1; IPntE <= PntH.NbPoints(); IPntE++)
@@ -260,10 +244,6 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
       UPrm += StepU;
     }
   }
-
-  //-----------------------------------------------------------------------
-  // Courbes Iso V.
-  //-----------------------------------------------------------------------
 
   double StepV = DeltaV / (double)nbIsos;
   if (StepV > Confusion)
@@ -323,7 +303,7 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
           IsoLine->D0(U22, P);
           Surface.D0(P.X(), P.Y(), P2);
           if (Dom.HasFirstPoint())
-          { // Iso V - Premier point
+          {
             const HatchGen_PointOnHatching& PntH = Dom.FirstPoint();
 
             for (int IPntE = 1; IPntE <= PntH.NbPoints(); IPntE++)
@@ -340,7 +320,7 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
             }
           }
           if (Dom.HasSecondPoint())
-          { // Iso V - Deuxieme point
+          {
             const HatchGen_PointOnHatching& PntH = Dom.SecondPoint();
 
             for (int IPntE = 1; IPntE <= PntH.NbPoints(); IPntE++)
@@ -365,8 +345,6 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
     }
   }
 }
-
-//=================================================================================================
 
 TopoDS_Vertex HLRTopoBRep_FaceIsoLiner::MakeVertex(const TopoDS_Edge& E,
                                                    const gp_Pnt&      P,
@@ -409,8 +387,6 @@ TopoDS_Vertex HLRTopoBRep_FaceIsoLiner::MakeVertex(const TopoDS_Edge& E,
 
   return V;
 }
-
-//=================================================================================================
 
 void HLRTopoBRep_FaceIsoLiner::MakeIsoLine(const TopoDS_Face&              F,
                                            const occ::handle<Geom2d_Line>& Iso,

@@ -18,41 +18,35 @@ IGESGraph_ToolLineFontDefPattern::IGESGraph_ToolLineFontDefPattern() = default;
 
 void IGESGraph_ToolLineFontDefPattern::ReadOwnParams(
   const occ::handle<IGESGraph_LineFontDefPattern>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /*IR*/,
+  const occ::handle<IGESData_IGESReaderData>&,
   IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   int                                      tempNbSeg;
   occ::handle<TCollection_HAsciiString>    tempDisplayPattern;
   occ::handle<NCollection_HArray1<double>> tempSegmentLengths;
 
   if (PR.ReadInteger(PR.Current(), "Number of Visible-Blank Segments", tempNbSeg))
-  { // szv#4:S4163:12Mar99 `st=` not needed
-    // Initialise HArray1 only if there is no error reading its Length
+  {
+
     if (tempNbSeg <= 0)
       PR.AddFail("Number of Visible-Blank Segments : Not Positive");
     else
       tempSegmentLengths = new NCollection_HArray1<double>(1, tempNbSeg);
   }
 
-  // Read the HArray1 only if its Length was read without any Error
   if (!tempSegmentLengths.IsNull())
   {
     int I;
     for (I = 1; I <= tempNbSeg; I++)
     {
       double tempReal;
-      if (PR.ReadReal(PR.Current(),
-                      "Length of Segment",
-                      tempReal)) // szv#4:S4163:12Mar99 `st=` not needed
+      if (PR.ReadReal(PR.Current(), "Length of Segment", tempReal))
         tempSegmentLengths->SetValue(I, tempReal);
     }
   }
 
-  // clang-format off
-  PR.ReadText(PR.Current(), "Visible-Blank Display Pattern", tempDisplayPattern); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadText(PR.Current(), "Visible-Blank Display Pattern", tempDisplayPattern);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempSegmentLengths, tempDisplayPattern);
@@ -70,16 +64,15 @@ void IGESGraph_ToolLineFontDefPattern::WriteOwnParams(
   IW.Send(ent->DisplayPattern());
 }
 
-void IGESGraph_ToolLineFontDefPattern::OwnShared(
-  const occ::handle<IGESGraph_LineFontDefPattern>& /*ent*/,
-  Interface_EntityIterator& /*iter*/) const
+void IGESGraph_ToolLineFontDefPattern::OwnShared(const occ::handle<IGESGraph_LineFontDefPattern>&,
+                                                 Interface_EntityIterator&) const
 {
 }
 
 void IGESGraph_ToolLineFontDefPattern::OwnCopy(
   const occ::handle<IGESGraph_LineFontDefPattern>& another,
   const occ::handle<IGESGraph_LineFontDefPattern>& ent,
-  Interface_CopyTool& /*TC*/) const
+  Interface_CopyTool&) const
 {
   occ::handle<NCollection_HArray1<double>> tempSegmentLengths =
     new NCollection_HArray1<double>(1, another->NbSegments());
@@ -94,7 +87,7 @@ void IGESGraph_ToolLineFontDefPattern::OwnCopy(
 }
 
 IGESData_DirChecker IGESGraph_ToolLineFontDefPattern::DirChecker(
-  const occ::handle<IGESGraph_LineFontDefPattern>& /*ent*/) const
+  const occ::handle<IGESGraph_LineFontDefPattern>&) const
 {
   IGESData_DirChecker DC(304, 2);
   DC.Structure(IGESData_DefVoid);
@@ -121,7 +114,7 @@ void IGESGraph_ToolLineFontDefPattern::OwnCheck(
 }
 
 void IGESGraph_ToolLineFontDefPattern::OwnDump(const occ::handle<IGESGraph_LineFontDefPattern>& ent,
-                                               const IGESData_IGESDumper& /*dumper*/,
+                                               const IGESData_IGESDumper&,
                                                Standard_OStream& S,
                                                const int         level) const
 {

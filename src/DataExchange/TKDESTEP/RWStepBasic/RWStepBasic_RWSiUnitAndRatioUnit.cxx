@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include "RWStepBasic_RWSiUnitAndRatioUnit.hpp"
 #include <StepBasic_DimensionalExponents.hpp>
@@ -33,26 +22,19 @@ void RWStepBasic_RWSiUnitAndRatioUnit::ReadStep(
 
   int num = num0;
 
-  // --- Instance of common supertype NamedUnit ---
   if (!data->CheckNbParams(num, 1, ach, "named_unit"))
     return;
 
-  // --- field : dimensions ---
-  // --- this field is redefined ---
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
   data->CheckDerived(num, 1, "dimensions", ach, false);
 
-  // --- Instance of plex component RatioUnit ---
   num = data->NextForComplex(num);
   if (!data->CheckNbParams(num, 0, ach, "ratio_unit"))
     return;
 
-  // --- Instance of plex component SiUnit ---
   num = data->NextForComplex(num);
   if (!data->CheckNbParams(num, 2, ach, "si_unit"))
     return;
 
-  // --- field : prefix ---
   StepBasic_SiPrefix aPrefix    = StepBasic_spExa;
   bool               hasAprefix = false;
   if (data->IsParamDefined(num, 1))
@@ -74,7 +56,6 @@ void RWStepBasic_RWSiUnitAndRatioUnit::ReadStep(
     }
   }
 
-  // --- field : name ---
   StepBasic_SiUnitName aName;
   if (data->ParamType(num, 2) == Interface_ParamEnum)
   {
@@ -91,7 +72,6 @@ void RWStepBasic_RWSiUnitAndRatioUnit::ReadStep(
     return;
   }
 
-  //--- Initialisation of the red entity ---
   ent->Init(hasAprefix, aPrefix, aName);
 }
 
@@ -100,25 +80,19 @@ void RWStepBasic_RWSiUnitAndRatioUnit::WriteStep(
   const occ::handle<StepBasic_SiUnitAndRatioUnit>& ent) const
 {
 
-  // --- Instance of plex component RatioUnit ---
   SW.StartEntity("RATIO_UNIT");
 
-  // --- Instance of common supertype NamedUnit ---
   SW.StartEntity("NAMED_UNIT");
-  // --- field : dimensions ---
-  // --- redefined field ---
+
   SW.SendDerived();
 
-  // --- Instance of plex component SiUnit ---
   SW.StartEntity("SI_UNIT");
 
-  // --- field : prefix ---
   bool hasAprefix = ent->HasPrefix();
   if (hasAprefix)
     SW.SendEnum(RWStepBasic_RWSiPrefix::ConvertToString(ent->Prefix()));
   else
     SW.SendUndef();
 
-  // --- field : name ---
   SW.SendEnum(RWStepBasic_RWSiUnitName::ConvertToString(ent->Name()));
 }

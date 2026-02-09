@@ -31,11 +31,6 @@ enum VrmlConverter_TypeOfLight
 #include <NCollection_Array1.hpp>
 #include <Standard_OStream.hpp>
 
-//! defines projector and calculates properties of cameras and lights from Vrml
-//! (OrthograpicCamera, PerspectiveCamera, DirectionalLight, PointLight, SpotLight
-//! and MatrixTransform) to display all scene shapes with arbitrary locations
-//! for requested the Projection Vector, High Point Direction and the Focus
-//! and adds them (method Add) to anOSream.
 class VrmlConverter_Projector : public Standard_Transient
 {
 
@@ -60,13 +55,6 @@ public:
 
   Standard_EXPORT VrmlConverter_TypeOfLight Light() const;
 
-  //! Adds into anOStream if they are defined in Create.
-  //! PerspectiveCamera,
-  //! OrthographicCamera,
-  //! DirectionLight,
-  //! PointLight,
-  //! SpotLight
-  //! with MatrixTransform from VrmlConverter;
   Standard_EXPORT void Add(Standard_OStream& anOStream) const;
 
   Standard_EXPORT HLRAlgo_Projector Projector() const;

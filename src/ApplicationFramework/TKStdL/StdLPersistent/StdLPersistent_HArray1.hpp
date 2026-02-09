@@ -16,9 +16,8 @@ class StdLPersistent_HArray1
   class base : public StdObjMgt_Persistent
   {
   public:
-    //! Read persistent data from a file.
     Standard_EXPORT void Read(StdObjMgt_ReadData& theReadData) override;
-    //! Write persistent data to a file.
+
     Standard_EXPORT void Write(StdObjMgt_WriteData& theWriteData) const override;
 
   protected:
@@ -42,7 +41,6 @@ protected:
     typedef typename ArrayClass::Iterator   Iterator;
 
   public:
-    //! Get the array.
     const occ::handle<ArrayClass>& Array() const { return myArray; }
 
   protected:

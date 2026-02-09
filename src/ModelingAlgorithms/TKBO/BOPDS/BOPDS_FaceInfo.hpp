@@ -10,102 +10,45 @@
 #include <Standard_Integer.hpp>
 #include <NCollection_Map.hpp>
 
-//! The class BOPDS_FaceInfo is to store
-//! handy information about state of face
 class BOPDS_FaceInfo
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   BOPDS_FaceInfo();
 
   virtual ~BOPDS_FaceInfo();
 
-  //! Constructor
-  //! @param theAllocator the allocator to manage the memory
   BOPDS_FaceInfo(const occ::handle<NCollection_BaseAllocator>& theAllocator);
 
-  //! Clears the contents
   void Clear();
 
-  //! Modifier
-  //! Sets the index of the face <theI>
   void SetIndex(const int theI);
 
-  //! Selector
-  //! Returns the index of the face
-  //!
-  //! In
   int Index() const;
 
-  //! Selector
-  //! Returns the pave blocks of the face
-  //! that have state In
   const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& PaveBlocksIn() const;
 
-  //! Selector/Modifier
-  //! Returns the pave blocks
-  //! of the face
-  //! that have state In
   NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& ChangePaveBlocksIn();
 
-  //! Selector
-  //! Returns the list of indices for vertices
-  //! of the face
-  //! that have state In
   const NCollection_Map<int>& VerticesIn() const;
 
-  //! Selector/Modifier
-  //! Returns the list of indices for vertices
-  //! of the face
-  //! that have state In
-  //!
-  //! On
   NCollection_Map<int>& ChangeVerticesIn();
 
-  //! Selector
-  //! Returns the pave blocks of the face
-  //! that have state On
   const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& PaveBlocksOn() const;
 
-  //! Selector/Modifier
-  //! Returns the pave blocks
-  //! of the face
-  //! that have state On
   NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& ChangePaveBlocksOn();
 
-  //! Selector
-  //! Returns the list of indices for vertices
-  //! of the face
-  //! that have state On
   const NCollection_Map<int>& VerticesOn() const;
 
-  //! Selector/Modifier
-  //! Returns the list of indices for vertices
-  //! of the face
-  //! that have state On
-  //!
-  //! Sections
   NCollection_Map<int>& ChangeVerticesOn();
 
-  //! Selector
-  //! Returns the pave blocks of the face
-  //! that are pave blocks of section edges
   const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& PaveBlocksSc() const;
 
   NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& ChangePaveBlocksSc();
 
-  //! Selector
-  //! Returns the list of indices for section vertices
-  //! of the face
   const NCollection_Map<int>& VerticesSc() const;
 
-  //! Selector/Modifier
-  //! Returns the list of indices for section vertices
-  //! of the face
-  //!
-  //! Others
   NCollection_Map<int>& ChangeVerticesSc();
 
 protected:
@@ -131,8 +74,6 @@ inline BOPDS_FaceInfo::BOPDS_FaceInfo()
 {
 }
 
-//=================================================================================================
-
 inline BOPDS_FaceInfo::BOPDS_FaceInfo(const occ::handle<NCollection_BaseAllocator>& theAllocator)
     : myAllocator(theAllocator),
       myIndex(-1),
@@ -145,16 +86,10 @@ inline BOPDS_FaceInfo::BOPDS_FaceInfo(const occ::handle<NCollection_BaseAllocato
 {
 }
 
-//=======================================================================
-// function : ~
-// purpose  :
-//=======================================================================
 inline BOPDS_FaceInfo::~BOPDS_FaceInfo()
 {
   Clear();
 }
-
-//=================================================================================================
 
 inline void BOPDS_FaceInfo::Clear()
 {
@@ -164,21 +99,15 @@ inline void BOPDS_FaceInfo::Clear()
   myVerticesOn.Clear();
 }
 
-//=================================================================================================
-
 inline void BOPDS_FaceInfo::SetIndex(const int theI)
 {
   myIndex = theI;
 }
 
-//=================================================================================================
-
 inline int BOPDS_FaceInfo::Index() const
 {
   return myIndex;
 }
-
-//=================================================================================================
 
 inline const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& BOPDS_FaceInfo::PaveBlocksIn()
   const
@@ -186,29 +115,20 @@ inline const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& BOPDS_FaceInf
   return myPaveBlocksIn;
 }
 
-//=================================================================================================
-
 inline NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& BOPDS_FaceInfo::ChangePaveBlocksIn()
 {
   return myPaveBlocksIn;
 }
-
-//=================================================================================================
 
 inline const NCollection_Map<int>& BOPDS_FaceInfo::VerticesIn() const
 {
   return myVerticesIn;
 }
 
-//=================================================================================================
-
 inline NCollection_Map<int>& BOPDS_FaceInfo::ChangeVerticesIn()
 {
   return myVerticesIn;
 }
-
-// On
-//=================================================================================================
 
 inline const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& BOPDS_FaceInfo::PaveBlocksOn()
   const
@@ -216,29 +136,20 @@ inline const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& BOPDS_FaceInf
   return myPaveBlocksOn;
 }
 
-//=================================================================================================
-
 inline NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& BOPDS_FaceInfo::ChangePaveBlocksOn()
 {
   return myPaveBlocksOn;
 }
-
-//=================================================================================================
 
 inline const NCollection_Map<int>& BOPDS_FaceInfo::VerticesOn() const
 {
   return myVerticesOn;
 }
 
-//=================================================================================================
-
 inline NCollection_Map<int>& BOPDS_FaceInfo::ChangeVerticesOn()
 {
   return myVerticesOn;
 }
-
-// Sc
-//=================================================================================================
 
 inline const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& BOPDS_FaceInfo::PaveBlocksSc()
   const
@@ -246,21 +157,15 @@ inline const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& BOPDS_FaceInf
   return myPaveBlocksSc;
 }
 
-//=================================================================================================
-
 inline NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& BOPDS_FaceInfo::ChangePaveBlocksSc()
 {
   return myPaveBlocksSc;
 }
 
-//=================================================================================================
-
 inline const NCollection_Map<int>& BOPDS_FaceInfo::VerticesSc() const
 {
   return myVerticesSc;
 }
-
-//=================================================================================================
 
 inline NCollection_Map<int>& BOPDS_FaceInfo::ChangeVerticesSc()
 {

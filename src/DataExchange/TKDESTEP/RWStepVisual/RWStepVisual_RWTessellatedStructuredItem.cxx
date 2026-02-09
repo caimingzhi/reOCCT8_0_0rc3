@@ -1,4 +1,4 @@
-// Created on : Thu Mar 24 18:30:12 2022
+
 
 #include "RWStepVisual_RWTessellatedStructuredItem.hpp"
 #include <StepVisual_TessellatedStructuredItem.hpp>
@@ -7,11 +7,7 @@
 #include <StepData_StepWriter.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWTessellatedStructuredItem::RWStepVisual_RWTessellatedStructuredItem() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWTessellatedStructuredItem::ReadStep(
   const occ::handle<StepData_StepReaderData>&              theData,
@@ -19,34 +15,25 @@ void RWStepVisual_RWTessellatedStructuredItem::ReadStep(
   occ::handle<Interface_Check>&                            theCheck,
   const occ::handle<StepVisual_TessellatedStructuredItem>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 1, theCheck, "tessellated_structured_item"))
   {
     return;
   }
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theCheck, aRepresentationItem_Name);
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWTessellatedStructuredItem::WriteStep(
   StepData_StepWriter&                                     theSW,
   const occ::handle<StepVisual_TessellatedStructuredItem>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWTessellatedStructuredItem::Share(
   const occ::handle<StepVisual_TessellatedStructuredItem>&,

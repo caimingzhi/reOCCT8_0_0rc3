@@ -57,8 +57,6 @@ extern void   ChFi3d_InitChron(OSD_Chronometer& ch);
 extern void   ChFi3d_ResultChron(OSD_Chronometer& ch, double& time);
 #endif
 
-//=================================================================================================
-
 static int SearchPivot(int* s, double u[3][3], const double t)
 {
   bool bondeb, bonfin;
@@ -87,8 +85,6 @@ static int SearchPivot(int* s, double u[3][3], const double t)
   }
   return -1;
 }
-
-//=================================================================================================
 
 static bool SearchFD(TopOpeBRepDS_DataStructure&       DStr,
                      const occ::handle<ChFiDS_Stripe>& cd1,
@@ -192,12 +188,6 @@ static bool SearchFD(TopOpeBRepDS_DataStructure&       DStr,
   return found;
 }
 
-//=======================================================================
-// function : ToricCorner
-// purpose  : Test if this is a particular case of a torus corner
-//           (or spherical limited by isos).
-//=======================================================================
-
 static bool ToricCorner(const TopoDS_Face& F, const double rd, const double rf, const gp_Vec& v)
 {
   if (std::abs(rd - rf) > Precision::Confusion())
@@ -214,25 +204,19 @@ static bool ToricCorner(const TopoDS_Face& F, const double rd, const double rf, 
   return (scal1 <= Precision::Confusion() && scal2 <= Precision::Confusion());
 }
 
-//=======================================================================
-// function : PerformThreeCorner
-// purpose  : Calculate fillet on a top with three edges
-//           incident carrying each edge.
-//=======================================================================
-
 void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
 {
 
 #ifdef OCCT_DEBUG
   OSD_Chronometer ch;
-  ChFi3d_InitChron(ch); // init perf initialisation
+  ChFi3d_InitChron(ch);
 #endif
 
   TopOpeBRepDS_DataStructure&                            DStr = myDS->ChangeDS();
   const TopoDS_Vertex&                                   Vtx  = myVDataMap.FindKey(Jndex);
   NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator It;
   int                                                    Index[3], pivot, deb, fin, ii, jj, kk;
-  // double R = 0.;
+
   bool                       pivdif    = true;
   bool                       c1pointu  = false;
   bool                       c1toric   = false;
@@ -256,9 +240,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
     Index[ii] = ChFi3d_IndexOfSurfData(Vtx, It.Value(), sens[ii]);
     CD[ii]    = It.Value();
   }
-  // It is checked if one of CD is not present twice in which
-  // case it is necessary to modify the return of IndexOfSurfData
-  // that takes the first solution.
+
   if (CD[0] == CD[1])
   {
     Index[1] = CD[1]->SetOfSurfData()->Length();
@@ -319,11 +301,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
                       sameside[0],
                       jf[1][2],
                       jf[2][1]);
-  //
-  // Analyze concavities of 3 fillets :
-  //        - 2 concavities identic and 1 inverted.
-  //        - 3 concavities identic
-  //
+
   if (oksea[2] && oksea[1] && !sameside[2] && !sameside[1])
   {
     pivot = 0;
@@ -344,7 +322,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
   }
   else if (oksea[0] && oksea[1] && oksea[2])
   {
-    // 3 concavities identic.
+
     pivot = SearchPivot(sens, p, tol2d);
     if (pivot < 0)
     {
@@ -421,11 +399,6 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
       c1spheric = (std::abs(qr[0] - qr[1]) < tolapp3d && std::abs(qr[0] - qr[2]) < tolapp3d);
   }
 
-  //  Previously to avoid loops the points were always located
-  //  inside, which could impede the construction of the
-  //  guideline of the corner which now is a circle.
-  //  int jjjd = jf[deb][fin], jjjf = jf[fin][deb];
-  //  if (pivdif) jjjd = jf[deb][pivot], jjjf = jf[fin][pivot];
   int jjjd = jf[deb][pivot], jjjf = jf[fin][pivot];
   ChFi3d_ExtrSpineCarac(DStr,
                         CD[deb],
@@ -463,8 +436,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
                         Pfp,
                         Vfp,
                         Rfp);
-  // in cas of allsame it is checked that points on the face are not
-  // too close, which can stop the work.
+
   if (!pivdif)
   {
     gp_Pnt ptestdeb, ptestfin;
@@ -503,22 +475,11 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
     if (std::abs(p[pivot][deb] - p[pivot][fin]) <= tol2d)
       c1toric = ToricCorner(face[pivot], Rdeb, Rfin, Vdp);
   }
-  // there is a pivot, the start and the end CD (finally !?!) :
-  // -------------------------------------------------------------
-  // the criterions determining if the corner is a torus or a sphere
-  // are based only on the configuration of sections at end and the
-  // nature of faces, it is necessary to make tests to
-  // determine if a more detailed analysis of incident fillets
-  // is necessare to provide tangency between them and
-  // the corner (in particular in the case with variable radius).
 
   occ::handle<ChFiDS_SurfData>& fddeb = CD[deb]->ChangeSetOfSurfData()->ChangeValue(i[deb][pivot]);
   occ::handle<ChFiDS_SurfData>& fdfin = CD[fin]->ChangeSetOfSurfData()->ChangeValue(i[fin][pivot]);
   occ::handle<ChFiDS_SurfData>& fdpiv =
     CD[pivot]->ChangeSetOfSurfData()->ChangeValue(i[pivot][deb]);
-
-  // HSurfaces and other suitable tools are constructed.
-  // ----------------------------------------------------------
 
   TopAbs_Orientation               OFac = face[pivot].Orientation();
   occ::handle<BRepAdaptor_Surface> Fac  = new BRepAdaptor_Surface(face[pivot]);
@@ -565,13 +526,11 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
   }
 
   occ::handle<GeomAdaptor_Surface> Surf = new GeomAdaptor_Surface(gasurf);
-  //  occ::handle<BRepTopAdaptor_TopolTool> IFac = new BRepTopAdaptor_TopolTool(Fac);
-  // Try to not classify on the face for cases of reentering fillets which naturally depass
-  // the border.
+
   occ::handle<GeomAdaptor_Surface> bidsurf =
     new GeomAdaptor_Surface(Fac->ChangeSurface().Surface());
   occ::handle<Adaptor3d_TopolTool> IFac = new Adaptor3d_TopolTool(bidsurf);
-  // end of the attempt.
+
   occ::handle<Adaptor3d_TopolTool> ISurf  = new Adaptor3d_TopolTool(Surf);
   occ::handle<ChFiDS_Stripe>       corner = new ChFiDS_Stripe();
   occ::handle<NCollection_HSequence<occ::handle<ChFiDS_SurfData>>>& cornerset =
@@ -644,18 +603,16 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
 #endif
 
 #ifdef OCCT_DEBUG
-  ChFi3d_ResultChron(ch, t_t3cornerinit); // result perf initialisations
+  ChFi3d_ResultChron(ch, t_t3cornerinit);
 #endif
 
   if (c1toric)
   {
 
 #ifdef OCCT_DEBUG
-    ChFi3d_InitChron(ch); // init perf case torus
+    ChFi3d_InitChron(ch);
 #endif
 
-    // Direct Construction.
-    // ---------------------
     done = ChFiKPart_ComputeData::ComputeCorner(DStr,
                                                 coin,
                                                 Fac,
@@ -672,14 +629,14 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
                                                 psurf2);
 
 #ifdef OCCT_DEBUG
-    ChFi3d_ResultChron(ch, t_torique); // result perf case torus
+    ChFi3d_ResultChron(ch, t_torique);
 #endif
   }
   else if (c1spheric)
   {
 
 #ifdef OCCT_DEBUG
-    ChFi3d_InitChron(ch); // init perf case sphere
+    ChFi3d_InitChron(ch);
 #endif
 
     done = ChFiKPart_ComputeData::ComputeCorner(DStr,
@@ -696,7 +653,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
                                                 psurf2);
 
 #ifdef OCCT_DEBUG
-    ChFi3d_ResultChron(ch, t_spherique); // result perf cas sphere
+    ChFi3d_ResultChron(ch, t_spherique);
 #endif
   }
   else if (c1pointu)
@@ -709,17 +666,8 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
     {
 
 #ifdef OCCT_DEBUG
-      ChFi3d_InitChron(ch); // init perf not filling
+      ChFi3d_InitChron(ch);
 #endif
-
-      // Calculate a guideline,
-      //------------------------------
-      // Numerous problems with loops and half-turns connected to
-      // the curvature of the guideline !!!!!!
-      // FOR CIRCLE.
-      // If the nature of guideline is changed it is necessary to
-      // reset points Pdeb and Pfin at the inside (see the
-      // comments about it in the calculation of Pdeb and Pfin).
 
       double radpondere = (Rdp + Rfp) / 2.;
       double locfleche  = fleche;
@@ -729,8 +677,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
         ChFi3d_CircularSpine(WFirst, WLast, Pdeb, Vdeb, Pfin, Vfin, radpondere);
       if (spinecoin.IsNull())
       {
-        // This is a bad case when the intersection of
-        // section planes is done out of the sector.
+
         spinecoin = ChFi3d_Spine(Pdeb, Vdeb, Pfin, Vfin, radpondere);
         WFirst    = 0.;
         WLast     = 1.;
@@ -742,12 +689,9 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
       cornerspine->SetCurve(spinecoin);
       cornerspine->FirstParameter(WFirst - pasmax);
       cornerspine->LastParameter(WLast + pasmax);
-      // Just to confuse Compute that should not require this
-      // in this exact case ...
+
       occ::handle<ChFiDS_Spine> NullSpine;
-      // The fillet is calculated - from beginning to end
-      //                       - from the face to the surface
-      //
+
       math_Vector Soldep(1, 4);
       Soldep(1) = pfac1.X();
       Soldep(2) = pfac1.Y();
@@ -862,7 +806,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
       }
 
 #ifdef OCCT_DEBUG
-      ChFi3d_ResultChron(ch, t_notfilling); // result perf not filling
+      ChFi3d_ResultChron(ch, t_notfilling);
 #endif
     }
 
@@ -870,12 +814,9 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
     {
 
 #ifdef OCCT_DEBUG
-      ChFi3d_InitChron(ch); // init perf filling
+      ChFi3d_InitChron(ch);
 #endif
 
-      // the contour to be fillet consists of straight lines uv in beginning and end
-      // of two pcurves (only one if c1pointu) calculated as possible
-      // on piv and the opposite face.
       occ::handle<GeomFill_Boundary> Bdeb, Bfin, Bpiv, Bfac;
       occ::handle<Geom2d_Curve>      PCurveOnFace;
       if (!c1pointu)
@@ -899,8 +840,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
         CD[fin]->SetOfSurfData()->Value(i[fin][pivot])->Interference(jf[fin][pivot]).LineIndex();
       DStr.Curve(kkk).Curve()->D1(p[fin][pivot], ppbid, vp2);
       occ::handle<Geom2d_Curve> PCurveOnPiv;
-      //      Bpiv = ChFi3d_mkbound(Surf,PCurveOnPiv,sens[deb],psurf1,vp1,
-      //			    sens[fin],psurf2,vp2,tolesp,2.e-4);
+
       Bpiv           = ChFi3d_mkbound(Surf, PCurveOnPiv, psurf1, psurf2, tolapp3d, 2.e-4, false);
       double pardeb2 = p[deb][pivot];
       double parfin2 = p[fin][pivot];
@@ -948,7 +888,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
         fil.Init(Bpiv, Bfin, Bfac, Bdeb, true);
 
       occ::handle<Geom_Surface> Surfcoin = fil.Surface();
-      Surfcoin->VReverse(); // revert to direction face surface;
+      Surfcoin->VReverse();
       done = CompleteData(coin,
                           Surfcoin,
                           Fac,
@@ -963,7 +903,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
                           false);
 
 #ifdef OCCT_DEBUG
-      ChFi3d_ResultChron(ch, t_filling); // result perf filling
+      ChFi3d_ResultChron(ch, t_filling);
 #endif
     }
   }
@@ -976,11 +916,9 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
 
   if (done)
   {
-    // Update of 4 Stripes and the DS
-    // -------------------------------------
 
 #ifdef OCCT_DEBUG
-    ChFi3d_InitChron(ch); // init perf update DS
+    ChFi3d_InitChron(ch);
 #endif
 
     gp_Pnt2d                  pp1, pp2;
@@ -1002,8 +940,6 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
     pbl1->Add(Pl1.Point());
     pbl2->Add(Pl2.Point());
 
-    // the start corner,
-    // -----------------------
     ChFiDS_Regul regdeb, regfin;
     If1 = ChFi3d_IndexPointInDS(Pf1, DStr);
     If2 = ChFi3d_IndexPointInDS(Pf2, DStr);
@@ -1074,8 +1010,6 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
     corner->ChangeIndexLastPointOnS2(Il2);
     ChFi3d_EnlargeBox(DStr, corner, coin, *pbl1, *pbl2, false);
 
-    // then CornerData of the beginning,
-    // --------------------------------
     bool isfirst = (sens[deb] == 1), rev = (jf[deb][fin] == 2);
     int  isurf1 = 1, isurf2 = 2;
     parpp1 = p[deb][fin];
@@ -1117,8 +1051,6 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
     else
       ChFi3d_EnlargeBox(DStr, CD[deb], fddeb, *pbf1, *pbf2, isfirst);
 
-    // then the end CornerData,
-    // ------------------------
     isfirst = (sens[fin] == 1);
     rev     = (jf[fin][deb] == 2);
     isurf1  = 1;
@@ -1162,8 +1094,6 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
     else
       ChFi3d_EnlargeBox(DStr, CD[fin], fdfin, *pbl1, *pbl2, isfirst);
 
-    // anf finally the pivot.
-    // ------------------
     ChFiDS_FaceInterference& fi = coin->ChangeInterferenceOnS2();
     isfirst                     = (sens[pivot] == 1);
     rev                         = (jf[pivot][deb] == 2);
@@ -1198,21 +1128,17 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
     fdpiv->ChangeVertex(isfirst, isurf2) = Pl2;
     fdpiv->ChangeInterference(isurf1).SetParameter(p[pivot][deb], isfirst);
     fdpiv->ChangeInterference(isurf2).SetParameter(p[pivot][fin], isfirst);
-    CD[pivot]->InDS(isfirst); // filDS already does it from the corner.
+    CD[pivot]->InDS(isfirst);
     if (rev)
       ChFi3d_EnlargeBox(DStr, CD[pivot], fdpiv, *pbl2, *pbf2, isfirst);
     else
       ChFi3d_EnlargeBox(DStr, CD[pivot], fdpiv, *pbf2, *pbl2, isfirst);
 
-    // To end the tolerances of points are rescaled.
     ChFi3d_SetPointTolerance(DStr, *pbf1, If1);
     ChFi3d_SetPointTolerance(DStr, *pbf2, If2);
     ChFi3d_SetPointTolerance(DStr, *pbl1, Il1);
     ChFi3d_SetPointTolerance(DStr, *pbl2, Il2);
   }
-
-  // The data corners are truncated and index is updated.
-  //----------------------------------------------------
 
   if (i[deb][pivot] < Index[deb])
   {
@@ -1234,7 +1160,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
     CD[fin]->ChangeSetOfSurfData()->Remove(Index[fin], i[fin][pivot] - 1);
     i[fin][pivot] = Index[fin];
   }
-  // it is necessary to take into account mutant corners.
+
   if (i[pivot][deb] < Index[pivot])
   {
     CD[pivot]->ChangeSetOfSurfData()->Remove(i[pivot][deb] + 1, Index[pivot]);
@@ -1255,6 +1181,6 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
   myListStripe.Append(corner);
 
 #ifdef OCCT_DEBUG
-  ChFi3d_ResultChron(ch, t_t3cornerDS); // result perf update DS
+  ChFi3d_ResultChron(ch, t_t3cornerDS);
 #endif
 }

@@ -9,9 +9,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomPlate_PointConstraint, Standard_Transient)
 
-//---------------------------------------------------------
-//         Constructeurs avec un point
-//---------------------------------------------------------
 GeomPlate_PointConstraint::GeomPlate_PointConstraint(const gp_Pnt& Pt,
                                                      const int     Order,
                                                      const double  TolDist)
@@ -29,9 +26,6 @@ GeomPlate_PointConstraint::GeomPlate_PointConstraint(const gp_Pnt& Pt,
     throw Standard_Failure("GeomPlate_PointConstraint : the constraint must 0 or -1 with a point");
 }
 
-//---------------------------------------------------------
-//         Constructeurs avec un point sur surface
-//---------------------------------------------------------
 GeomPlate_PointConstraint::GeomPlate_PointConstraint(const double                     U,
                                                      const double                     V,
                                                      const occ::handle<Geom_Surface>& Surf,
@@ -54,17 +48,11 @@ GeomPlate_PointConstraint::GeomPlate_PointConstraint(const double               
   myLProp.SetSurface(Surf);
 }
 
-//---------------------------------------------------------
-// Fonction : D0
-//---------------------------------------------------------
 void GeomPlate_PointConstraint::D0(gp_Pnt& P) const
 {
   P = myPoint;
 }
 
-//---------------------------------------------------------
-// Fonction : D1
-//---------------------------------------------------------
 void GeomPlate_PointConstraint::D1(gp_Pnt& P, gp_Vec& V1, gp_Vec& V2) const
 {
   P  = myPoint;
@@ -72,9 +60,6 @@ void GeomPlate_PointConstraint::D1(gp_Pnt& P, gp_Vec& V1, gp_Vec& V2) const
   V2 = myD12;
 }
 
-//---------------------------------------------------------
-// Fonction : D2
-//---------------------------------------------------------
 void GeomPlate_PointConstraint::D2(gp_Pnt& P,
                                    gp_Vec& V1,
                                    gp_Vec& V2,
@@ -90,107 +75,64 @@ void GeomPlate_PointConstraint::D2(gp_Pnt& P,
   V5 = myD23;
 }
 
-//---------------------------------------------------------
-// Fonction : SetG0Criterion
-//---------------------------------------------------------
 void GeomPlate_PointConstraint ::SetG0Criterion(const double TolDist)
 {
   myTolDist = TolDist;
 }
 
-//---------------------------------------------------------
-// Fonction : SetG1Criterion
-//---------------------------------------------------------
 void GeomPlate_PointConstraint ::SetG1Criterion(const double TolAng)
 {
   myTolAng = TolAng;
 }
 
-//---------------------------------------------------------
-// Fonction : SetG2Criterion
-//---------------------------------------------------------
 void GeomPlate_PointConstraint ::SetG2Criterion(const double TolCurv)
 {
   myTolCurv = TolCurv;
 }
 
-//---------------------------------------------------------
-// Fonction : G0Criterion
-//---------------------------------------------------------
 double GeomPlate_PointConstraint::G0Criterion() const
 {
   return myTolDist;
 }
 
-//---------------------------------------------------------
-// Fonction : G1Criterion
-//---------------------------------------------------------
 double GeomPlate_PointConstraint::G1Criterion() const
 {
   return myTolAng;
 }
 
-//---------------------------------------------------------
-// Fonction : G2Criterion
-//---------------------------------------------------------
 double GeomPlate_PointConstraint::G2Criterion() const
 {
   return myTolCurv;
 }
 
-//---------------------------------------------------------
-// Fonction : Surface
-//---------------------------------------------------------
-// occ::handle<Geom_Surface> GeomPlate_PointConstraint::Surface() const
-//{  throw Standard_Failure("GeomPlate_PointConstraint.cxx : The surface does not exist");
-//}
-//------------------------------------------------------------
-// Fonction : LPropSurf
-//------------------------------------------------------------
 GeomLProp_SLProps& GeomPlate_PointConstraint::LPropSurf()
-{ // if (myFrontiere.IsNull())
-  //  throw Standard_Failure("GeomPlate_CurveConstraint.cxx : Curve must be on a Surface");
-  // gp_Pnt2d P2d= myFrontiere->ChangeCurve().GetCurve()->Value(U);
+{
+
   myLProp.SetParameters(myU, myV);
   return myLProp;
 }
 
-//------------------------------------------------------------
-// Fonction : Order
-//------------------------------------------------------------
 int GeomPlate_PointConstraint::Order() const
 {
   return myOrder;
 }
 
-//------------------------------------------------------------
-// Fonction : SetOrder
-//------------------------------------------------------------
 void GeomPlate_PointConstraint::SetOrder(const int Order)
 {
   myOrder = Order;
 }
 
-//------------------------------------------------------------
-// Fonction : HasPnt2dOnSurf
-//------------------------------------------------------------
 bool GeomPlate_PointConstraint::HasPnt2dOnSurf() const
 {
   return hasPnt2dOnSurf;
 }
 
-//------------------------------------------------------------
-// Fonction : SetPnt2dOnSurf
-//------------------------------------------------------------
 void GeomPlate_PointConstraint::SetPnt2dOnSurf(const gp_Pnt2d& Pnt2d)
 {
   myPt2d         = Pnt2d;
   hasPnt2dOnSurf = true;
 }
 
-//------------------------------------------------------------
-// Fonction : Pnt2dOnSurf
-//------------------------------------------------------------
 gp_Pnt2d GeomPlate_PointConstraint::Pnt2dOnSurf() const
 {
   return myPt2d;

@@ -7,20 +7,6 @@
 #include <NCollection_Array1.hpp>
 #include <Standard_Integer.hpp>
 
-/*
-// Debug state= True / False.
-static bool Dbg=false;
-void ShapeUpgrade::SetDebug(const bool State)
-{
-  Dbg=State;
-}
-bool ShapeUpgrade::Debug()
-{
-  return Dbg;
-}
-*/
-//=================================================================================================
-
 bool ShapeUpgrade::C0BSplineToSequenceOfC1BSplineCurve(
   const occ::handle<Geom_BSplineCurve>&                               BS,
   occ::handle<NCollection_HSequence<occ::handle<Geom_BoundedCurve>>>& seqBS)
@@ -29,7 +15,7 @@ bool ShapeUpgrade::C0BSplineToSequenceOfC1BSplineCurve(
     return false;
 
   seqBS = new NCollection_HSequence<occ::handle<Geom_BoundedCurve>>;
-  BS->SetNotPeriodic(); // to have equation NbPoles = NbKnots with Multiplicities - degree - 1
+  BS->SetNotPeriodic();
 
   int                        deg     = BS->Degree();
   int                        NbKnots = BS->NbKnots();
@@ -58,7 +44,7 @@ bool ShapeUpgrade::C0BSplineToSequenceOfC1BSplineCurve(
       continue;
 
     int StartFlatIndex = BSplCLib::FlatIndex(deg, StartKnotIndex, Mults, false);
-    //    StartFlatIndex += Mults (StartKnotIndex) - 1;
+
     int EndFlatIndex = BSplCLib::FlatIndex(deg, EndKnotIndex, Mults, false);
     EndFlatIndex -= Mults(EndKnotIndex) - 1;
 
@@ -92,9 +78,9 @@ bool ShapeUpgrade::C0BSplineToSequenceOfC1BSplineCurve(
     int                        NewNbPoles = BSplCLib::NbPoles(deg, false, newMults);
     NCollection_Array1<gp_Pnt> newPoles(1, NewNbPoles);
     NCollection_Array1<double> newWeights(1, NewNbPoles);
-    // clang-format off
-    int PoleIndex = StartFlatIndex - deg;//Index of starting pole when splitting B-Spline is an index of starting knot
-    // clang-format on
+
+    int PoleIndex = StartFlatIndex - deg;
+
     for (j = 1; j <= NewNbPoles; j++)
     {
       newWeights(j) = Weights(j + PoleIndex - 1);
@@ -109,8 +95,6 @@ bool ShapeUpgrade::C0BSplineToSequenceOfC1BSplineCurve(
   }
   return true;
 }
-
-//=================================================================================================
 
 static occ::handle<Geom_BSplineCurve> BSplineCurve2dTo3d(const occ::handle<Geom2d_BSplineCurve>& BS)
 {

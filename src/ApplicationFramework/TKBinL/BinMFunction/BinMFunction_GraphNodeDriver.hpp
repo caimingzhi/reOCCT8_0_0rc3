@@ -11,7 +11,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! GraphNode attribute Driver.
 class BinMFunction_GraphNodeDriver : public BinMDF_ADriver
 {
 

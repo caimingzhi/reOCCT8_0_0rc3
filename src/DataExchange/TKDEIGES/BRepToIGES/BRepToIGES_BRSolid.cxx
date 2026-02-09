@@ -26,24 +26,12 @@
 #include <TopoDS_Vertex.hpp>
 #include <TopoDS_Wire.hpp>
 
-// At first only the geometry is translated (point, curve...)
-//=============================================================================
-// BRepToIGES_BRSolid
-//=============================================================================
 BRepToIGES_BRSolid::BRepToIGES_BRSolid() = default;
-
-//=============================================================================
-// BRepToIGES_BRSolid
-//=============================================================================
 
 BRepToIGES_BRSolid::BRepToIGES_BRSolid(const BRepToIGES_BREntity& BR)
     : BRepToIGES_BREntity(BR)
 {
 }
-
-//=============================================================================
-// TransferSolid
-//=============================================================================
 
 occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferSolid(
   const TopoDS_Shape&          start,
@@ -71,15 +59,9 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferSolid(
   }
   else
   {
-    // error message
   }
   return res;
 }
-
-//=============================================================================
-// TransferSolid
-//
-//=============================================================================
 
 occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferSolid(
   const TopoDS_Solid&          start,
@@ -143,10 +125,6 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferSolid(
   return res;
 }
 
-//=============================================================================
-// TransferCompSolid
-//=============================================================================
-
 occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferCompSolid(
   const TopoDS_CompSolid&      start,
   const Message_ProgressRange& theProgress)
@@ -208,10 +186,6 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferCompSolid(
   return res;
 }
 
-//=============================================================================
-// TransferCompound
-//=============================================================================
-
 occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferCompound(
   const TopoDS_Compound&       start,
   const Message_ProgressRange& theProgress)
@@ -227,7 +201,6 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferCompound(
   occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> Seq =
     new NCollection_HSequence<occ::handle<Standard_Transient>>();
 
-  // count numbers of subshapes
   int nbshapes = 0;
   for (Ex.Init(start, TopAbs_SOLID); Ex.More(); Ex.Next())
     nbshapes++;
@@ -243,7 +216,6 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferCompound(
     nbshapes++;
   Message_ProgressScope aPS(theProgress, nullptr, nbshapes);
 
-  // take all Solids
   for (Ex.Init(start, TopAbs_SOLID); Ex.More() && aPS.More(); Ex.Next())
   {
     Message_ProgressRange aRange = aPS.Next();
@@ -260,7 +232,6 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferCompound(
     }
   }
 
-  // take all isolated Shells
   for (Ex.Init(start, TopAbs_SHELL, TopAbs_SOLID); Ex.More() && aPS.More(); Ex.Next())
   {
     Message_ProgressRange aRange = aPS.Next();
@@ -277,7 +248,6 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferCompound(
     }
   }
 
-  // take all isolated Faces
   for (Ex.Init(start, TopAbs_FACE, TopAbs_SHELL); Ex.More() && aPS.More(); Ex.Next())
   {
     Message_ProgressRange aRange = aPS.Next();
@@ -294,7 +264,6 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferCompound(
     }
   }
 
-  // take all isolated Wires
   for (Ex.Init(start, TopAbs_WIRE, TopAbs_FACE); Ex.More() && aPS.More(); Ex.Next(), aPS.Next())
   {
     TopoDS_Wire S = TopoDS::Wire(Ex.Current());
@@ -310,7 +279,6 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferCompound(
     }
   }
 
-  // take all isolated Edges
   for (Ex.Init(start, TopAbs_EDGE, TopAbs_WIRE); Ex.More() && aPS.More(); Ex.Next(), aPS.Next())
   {
     TopoDS_Edge S = TopoDS::Edge(Ex.Current());
@@ -327,7 +295,6 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferCompound(
     }
   }
 
-  // take all isolated Vertices
   for (Ex.Init(start, TopAbs_VERTEX, TopAbs_EDGE); Ex.More() && aPS.More(); Ex.Next(), aPS.Next())
   {
     TopoDS_Vertex S = TopoDS::Vertex(Ex.Current());
@@ -343,7 +310,6 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRSolid ::TransferCompound(
     }
   }
 
-  // construct the group
   nbshapes = Seq->Length();
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> Tab;
   if (nbshapes >= 1)

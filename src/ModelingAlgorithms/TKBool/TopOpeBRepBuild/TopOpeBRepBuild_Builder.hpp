@@ -41,18 +41,10 @@ class TopOpeBRepDS_CurveIterator;
 class TopoDS_Vertex;
 class gp_Pnt;
 
-// resolve name collisions with X11 headers
 #ifdef FillSolid
   #undef FillSolid
 #endif
 
-//! The Builder algorithm constructs topological
-//! objects from an existing topology and new
-//! geometries attached to the topology. It is used to
-//! construct the result of a topological operation;
-//! the existing topologies are the parts involved in
-//! the topological operation and the new geometries
-//! are the intersection lines and points.
 class TopOpeBRepBuild_Builder
 {
 public:
@@ -66,30 +58,16 @@ public:
 
   Standard_EXPORT const TopOpeBRepDS_BuildTool& BuildTool() const;
 
-  //! Stores the data structure <HDS>,
-  //! Create shapes from the new geometries.
   Standard_EXPORT virtual void Perform(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
 
-  //! Stores the data structure <HDS>,
-  //! Create shapes from the new geometries,
-  //! Evaluates if an operation performed on shapes S1,S2
-  //! is a particular case.
   Standard_EXPORT virtual void Perform(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
                                        const TopoDS_Shape&                             S1,
                                        const TopoDS_Shape&                             S2);
 
-  //! returns the DS handled by this builder
   Standard_EXPORT occ::handle<TopOpeBRepDS_HDataStructure> DataStructure() const;
 
-  //! Removes all splits and merges already performed.
-  //! Does NOT clear the handled DS.
   Standard_EXPORT virtual void Clear();
 
-  //! Merges the two edges <S1> and <S2> keeping the
-  //! parts in each edge of states <TB1> and <TB2>.
-  //! Booleans onA, onB, onAB indicate whether parts of edges
-  //! found as state ON respectively on first, second, and both
-  //! shapes must be (or not) built.
   Standard_EXPORT void MergeEdges(const NCollection_List<TopoDS_Shape>& L1,
                                   const TopAbs_State                    TB1,
                                   const NCollection_List<TopoDS_Shape>& L2,
@@ -98,8 +76,6 @@ public:
                                   const bool                            onB  = false,
                                   const bool                            onAB = false);
 
-  //! Merges the two faces <S1> and <S2> keeping the
-  //! parts in each face of states <TB1> and <TB2>.
   Standard_EXPORT void MergeFaces(const NCollection_List<TopoDS_Shape>& S1,
                                   const TopAbs_State                    TB1,
                                   const NCollection_List<TopoDS_Shape>& S2,
@@ -108,15 +84,11 @@ public:
                                   const bool                            onB  = false,
                                   const bool                            onAB = false);
 
-  //! Merges the two solids <S1> and <S2> keeping the
-  //! parts in each solid of states <TB1> and <TB2>.
   Standard_EXPORT void MergeSolids(const TopoDS_Shape& S1,
                                    const TopAbs_State  TB1,
                                    const TopoDS_Shape& S2,
                                    const TopAbs_State  TB2);
 
-  //! Merges the two shapes <S1> and <S2> keeping the
-  //! parts of states <TB1>,<TB2> in <S1>,<S2>.
   Standard_EXPORT void MergeShapes(const TopoDS_Shape& S1,
                                    const TopAbs_State  TB1,
                                    const TopoDS_Shape& S2,
@@ -128,67 +100,45 @@ public:
 
   Standard_EXPORT void ChangeClassify(const bool B);
 
-  //! Merges the solid <S> keeping the
-  //! parts of state <TB>.
   Standard_EXPORT void MergeSolid(const TopoDS_Shape& S, const TopAbs_State TB);
 
-  //! Returns the vertex created on point <I>.
   Standard_EXPORT const TopoDS_Shape& NewVertex(const int I) const;
 
-  //! Returns the edges created on curve <I>.
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& NewEdges(const int I) const;
 
-  //! Returns the faces created on surface <I>.
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& NewFaces(const int I) const;
 
-  //! Returns True if the shape <S> has been split.
   Standard_EXPORT bool IsSplit(const TopoDS_Shape& S, const TopAbs_State TB) const;
 
-  //! Returns the split parts <TB> of shape <S>.
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& Splits(const TopoDS_Shape& S,
                                                                const TopAbs_State  TB) const;
 
-  //! Returns True if the shape <S> has been merged.
   Standard_EXPORT bool IsMerged(const TopoDS_Shape& S, const TopAbs_State TB) const;
 
-  //! Returns the merged parts <TB> of shape <S>.
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& Merged(const TopoDS_Shape& S,
                                                                const TopAbs_State  TB) const;
 
   Standard_EXPORT void InitSection();
 
-  //! create parts ON solid of section edges
   Standard_EXPORT void SplitSectionEdges();
 
-  //! create parts ON solid of section edges
   Standard_EXPORT virtual void SplitSectionEdge(const TopoDS_Shape& E);
 
-  //! return the section edges built on new curves.
   Standard_EXPORT void SectionCurves(NCollection_List<TopoDS_Shape>& L);
 
-  //! return the parts of edges found ON the boundary
-  //! of the two arguments S1,S2 of Perform()
   Standard_EXPORT void SectionEdges(NCollection_List<TopoDS_Shape>& L);
 
-  //! Fills anAncMap with pairs (edge,ancestor edge) for each
-  //! split from the map aMapON for the shape object identified
-  //! by ShapeRank
   Standard_EXPORT void FillSecEdgeAncestorMap(
     const int                                                                 aShapeRank,
     const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>&             aMapON,
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& anAncMap) const;
 
-  //! return all section edges.
   Standard_EXPORT void Section(NCollection_List<TopoDS_Shape>& L);
 
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& Section();
 
-  //! update the DS by creating new geometries.
-  //! create vertices on DS points.
   Standard_EXPORT void BuildVertices(const occ::handle<TopOpeBRepDS_HDataStructure>& DS);
 
-  //! update the DS by creating new geometries.
-  //! create shapes from the new geometries.
   Standard_EXPORT void BuildEdges(const occ::handle<TopOpeBRepDS_HDataStructure>& DS);
 
   Standard_EXPORT const NCollection_DataMap<TopoDS_Shape,
@@ -215,9 +165,6 @@ public:
   Standard_EXPORT void MakeShells(TopOpeBRepBuild_SolidBuilder&   B,
                                   NCollection_List<TopoDS_Shape>& L);
 
-  //! Returns a ref.on the list of shapes connected to <S> as
-  //! <TB> split parts of <S>.
-  //! Mark <S> as split in <TB> parts.
   Standard_EXPORT NCollection_List<TopoDS_Shape>& ChangeSplit(const TopoDS_Shape& S,
                                                               const TopAbs_State  TB);
 
@@ -532,14 +479,11 @@ public:
                                   const NCollection_List<TopoDS_Shape>& Lref,
                                   const TopAbs_State                    T);
 
-  //! return True if S is classified <T> / Lref shapes
   Standard_EXPORT bool GKeepShape1(const TopoDS_Shape&                   S,
                                    const NCollection_List<TopoDS_Shape>& Lref,
                                    const TopAbs_State                    T,
                                    TopAbs_State&                         pos);
 
-  //! add to Lou the shapes of Lin classified <T> / Lref shapes.
-  //! Lou is not cleared. (S is a dummy trace argument)
   Standard_EXPORT void GKeepShapes(const TopoDS_Shape&                   S,
                                    const NCollection_List<TopoDS_Shape>& Lref,
                                    const TopAbs_State                    T,
@@ -710,36 +654,24 @@ public:
   friend class TopOpeBRepBuild_HBuilder;
 
 protected:
-  //! update the DS by creating new geometries.
-  //! create edges on the new curve <Icurv>.
   Standard_EXPORT void BuildEdges(const int iC, const occ::handle<TopOpeBRepDS_HDataStructure>& DS);
 
-  //! update the DS by creating new geometries.
-  //! create faces on the new surface <ISurf>.
   Standard_EXPORT void BuildFaces(const int iS, const occ::handle<TopOpeBRepDS_HDataStructure>& DS);
 
-  //! update the DS by creating new geometries.
-  //! create shapes from the new geometries.
   Standard_EXPORT void BuildFaces(const occ::handle<TopOpeBRepDS_HDataStructure>& DS);
 
-  //! Split <E1> keeping the parts of state <TB1>.
   Standard_EXPORT void SplitEdge(const TopoDS_Shape& E1,
                                  const TopAbs_State  TB1,
                                  const TopAbs_State  TB2);
 
-  //! Split <E1> keeping the parts of state <TB1>.
   Standard_EXPORT void SplitEdge1(const TopoDS_Shape& E1,
                                   const TopAbs_State  TB1,
                                   const TopAbs_State  TB2);
 
-  //! Split <E1> keeping the parts of state <TB1>.
   Standard_EXPORT void SplitEdge2(const TopoDS_Shape& E1,
                                   const TopAbs_State  TB1,
                                   const TopAbs_State  TB2);
 
-  //! Split <F1> keeping the parts of state <TB1>.
-  //! Merge faces with same domain, keeping parts of
-  //! state <TB2>.
   Standard_EXPORT void SplitFace(const TopoDS_Shape& F1,
                                  const TopAbs_State  TB1,
                                  const TopAbs_State  TB2);
@@ -752,22 +684,16 @@ protected:
                                   const TopAbs_State  TB1,
                                   const TopAbs_State  TB2);
 
-  //! Split <S1> keeping the parts of state <TB1>.
   Standard_EXPORT void SplitSolid(const TopoDS_Shape& S1,
                                   const TopAbs_State  TB1,
                                   const TopAbs_State  TB2);
 
-  //! Explore shapes of given by explorer <Ex> to split them.
-  //! Store new shapes in the set <SS>.
-  //! According to RevOri, reverse or not their orientation.
   Standard_EXPORT void SplitShapes(TopOpeBRepTool_ShapeExplorer& Ex,
                                    const TopAbs_State            TB1,
                                    const TopAbs_State            TB2,
                                    TopOpeBRepBuild_ShapeSet&     SS,
                                    const bool                    RevOri);
 
-  //! Split edges of <F1> and store wires and edges in
-  //! the set <WES>. According to RevOri, reverse (or not) orientation.
   Standard_EXPORT void FillFace(const TopoDS_Shape&                   F1,
                                 const TopAbs_State                    TB1,
                                 const NCollection_List<TopoDS_Shape>& LF2,
@@ -775,8 +701,6 @@ protected:
                                 TopOpeBRepBuild_WireEdgeSet&          WES,
                                 const bool                            RevOri);
 
-  //! Split faces of <S1> and store shells and faces in
-  //! the set <SS>. According to RevOri, reverse (or not) orientation.
   Standard_EXPORT void FillSolid(const TopoDS_Shape&                   S1,
                                  const TopAbs_State                    TB1,
                                  const NCollection_List<TopoDS_Shape>& LS2,
@@ -784,8 +708,6 @@ protected:
                                  TopOpeBRepBuild_ShapeSet&             SS,
                                  const bool                            RevOri);
 
-  //! Split subshapes of <S1> and store subshapes in
-  //! the set <SS>. According to RevOri, reverse (or not) orientation.
   Standard_EXPORT void FillShape(const TopoDS_Shape&                   S1,
                                  const TopAbs_State                    TB1,
                                  const NCollection_List<TopoDS_Shape>& LS2,
@@ -793,40 +715,25 @@ protected:
                                  TopOpeBRepBuild_ShapeSet&             SS,
                                  const bool                            RevOri);
 
-  //! fills the vertex set PVS with the point iterator IT.
-  //! IT accesses a list of interferences which geometry is a point or a vertex.
-  //! TB indicates the orientation to give to the geometries
-  //! found in interference list accessed by IT.
   Standard_EXPORT void FillVertexSet(TopOpeBRepDS_PointIterator& IT,
                                      const TopAbs_State          TB,
                                      TopOpeBRepBuild_PaveSet&    PVS) const;
 
-  //! fills vertex set PVS with the current value of IT.
-  //! I geometry is a point or a vertex.
-  //! TB indicates the orientation to give to geometries found I
   Standard_EXPORT void FillVertexSetOnValue(const TopOpeBRepDS_PointIterator& IT,
                                             const TopAbs_State                TB,
                                             TopOpeBRepBuild_PaveSet&          PVS) const;
 
-  //! Returns True if the shape <S> has not already been split
   Standard_EXPORT bool ToSplit(const TopoDS_Shape& S, const TopAbs_State TB) const;
 
-  //! add the shape <S> to the map of split shapes.
-  //! mark <S> as split/not split on <state>, according to B value.
   Standard_EXPORT void MarkSplit(const TopoDS_Shape& S, const TopAbs_State TB, const bool B = true);
 
-  //! Returns a ref. on the list of shapes connected to <S> as
-  //! <TB> merged parts of <S>.
   Standard_EXPORT NCollection_List<TopoDS_Shape>& ChangeMerged(const TopoDS_Shape& S,
                                                                const TopAbs_State  TB);
 
-  //! Returns a ref. on the vertex created on point <I>.
   Standard_EXPORT TopoDS_Shape& ChangeNewVertex(const int I);
 
-  //! Returns a ref. on the list of edges created on curve <I>.
   Standard_EXPORT NCollection_List<TopoDS_Shape>& ChangeNewEdges(const int I);
 
-  //! Returns a ref. on the list of faces created on surface <I>.
   Standard_EXPORT NCollection_List<TopoDS_Shape>& ChangeNewFaces(const int I);
 
   Standard_EXPORT void AddIntersectionEdges(TopoDS_Shape&             F,

@@ -8,11 +8,7 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepShape_RWEdgeBasedWireframeModel::RWStepShape_RWEdgeBasedWireframeModel() = default;
-
-//=================================================================================================
 
 void RWStepShape_RWEdgeBasedWireframeModel::ReadStep(
   const occ::handle<StepData_StepReaderData>&           data,
@@ -20,16 +16,12 @@ void RWStepShape_RWEdgeBasedWireframeModel::ReadStep(
   occ::handle<Interface_Check>&                         ach,
   const occ::handle<StepShape_EdgeBasedWireframeModel>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "edge_based_wireframe_model"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   data->ReadString(num, 1, "representation_item.name", ach, aRepresentationItem_Name);
-
-  // Own fields of EdgeBasedWireframeModel
 
   occ::handle<NCollection_HArray1<occ::handle<StepShape_ConnectedEdgeSet>>> aEbwmBoundary;
   int                                                                       sub2 = 0;
@@ -51,22 +43,15 @@ void RWStepShape_RWEdgeBasedWireframeModel::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aRepresentationItem_Name, aEbwmBoundary);
 }
-
-//=================================================================================================
 
 void RWStepShape_RWEdgeBasedWireframeModel::WriteStep(
   StepData_StepWriter&                                  SW,
   const occ::handle<StepShape_EdgeBasedWireframeModel>& ent) const
 {
 
-  // Inherited fields of RepresentationItem
-
   SW.Send(ent->StepRepr_RepresentationItem::Name());
-
-  // Own fields of EdgeBasedWireframeModel
 
   SW.OpenSub();
   for (int i1 = 1; i1 <= ent->EbwmBoundary()->Length(); i1++)
@@ -77,16 +62,10 @@ void RWStepShape_RWEdgeBasedWireframeModel::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepShape_RWEdgeBasedWireframeModel::Share(
   const occ::handle<StepShape_EdgeBasedWireframeModel>& ent,
   Interface_EntityIterator&                             iter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Own fields of EdgeBasedWireframeModel
 
   for (int i1 = 1; i1 <= ent->EbwmBoundary()->Length(); i1++)
   {

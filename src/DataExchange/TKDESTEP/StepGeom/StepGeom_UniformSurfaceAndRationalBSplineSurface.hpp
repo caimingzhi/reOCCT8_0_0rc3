@@ -18,7 +18,6 @@ class StepGeom_UniformSurfaceAndRationalBSplineSurface : public StepGeom_BSpline
 {
 
 public:
-  //! Returns a UniformSurfaceAndRationalBSplineSurface
   Standard_EXPORT StepGeom_UniformSurfaceAndRationalBSplineSurface();
 
   Standard_EXPORT void Init(

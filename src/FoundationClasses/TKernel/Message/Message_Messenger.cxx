@@ -6,25 +6,19 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Message_Messenger, Standard_Transient)
 
-//=================================================================================================
-
 Message_Messenger::Message_Messenger()
 {
   AddPrinter(new Message_PrinterOStream);
 }
-
-//=================================================================================================
 
 Message_Messenger::Message_Messenger(const occ::handle<Message_Printer>& thePrinter)
 {
   AddPrinter(thePrinter);
 }
 
-//=================================================================================================
-
 bool Message_Messenger::AddPrinter(const occ::handle<Message_Printer>& thePrinter)
 {
-  // check whether printer is already in the list
+
   for (NCollection_Sequence<occ::handle<Message_Printer>>::Iterator aPrinterIter(myPrinters);
        aPrinterIter.More();
        aPrinterIter.Next())
@@ -40,11 +34,9 @@ bool Message_Messenger::AddPrinter(const occ::handle<Message_Printer>& thePrinte
   return true;
 }
 
-//=================================================================================================
-
 bool Message_Messenger::RemovePrinter(const occ::handle<Message_Printer>& thePrinter)
 {
-  // find printer in the list
+
   for (NCollection_Sequence<occ::handle<Message_Printer>>::Iterator aPrinterIter(myPrinters);
        aPrinterIter.More();
        aPrinterIter.Next())
@@ -59,11 +51,9 @@ bool Message_Messenger::RemovePrinter(const occ::handle<Message_Printer>& thePri
   return false;
 }
 
-//=================================================================================================
-
 int Message_Messenger::RemovePrinters(const occ::handle<Standard_Type>& theType)
 {
-  // remove printers from the list
+
   int nb = 0;
   for (NCollection_Sequence<occ::handle<Message_Printer>>::Iterator aPrinterIter(myPrinters);
        aPrinterIter.More();)
@@ -82,8 +72,6 @@ int Message_Messenger::RemovePrinters(const occ::handle<Standard_Type>& theType)
   return nb;
 }
 
-//=================================================================================================
-
 void Message_Messenger::Send(const char* theString, const Message_Gravity theGravity) const
 {
   for (NCollection_Sequence<occ::handle<Message_Printer>>::Iterator aPrinterIter(myPrinters);
@@ -97,8 +85,6 @@ void Message_Messenger::Send(const char* theString, const Message_Gravity theGra
     }
   }
 }
-
-//=================================================================================================
 
 void Message_Messenger::Send(const Standard_SStream& theStream,
                              const Message_Gravity   theGravity) const
@@ -115,8 +101,6 @@ void Message_Messenger::Send(const Standard_SStream& theStream,
   }
 }
 
-//=================================================================================================
-
 void Message_Messenger::Send(const TCollection_AsciiString& theString,
                              const Message_Gravity          theGravity) const
 {
@@ -131,8 +115,6 @@ void Message_Messenger::Send(const TCollection_AsciiString& theString,
     }
   }
 }
-
-//=================================================================================================
 
 void Message_Messenger::Send(const TCollection_ExtendedString& theString,
                              const Message_Gravity             theGravity) const
@@ -149,8 +131,6 @@ void Message_Messenger::Send(const TCollection_ExtendedString& theString,
   }
 }
 
-//=================================================================================================
-
 void Message_Messenger::Send(const occ::handle<Standard_Transient>& theObject,
                              const Message_Gravity                  theGravity) const
 {
@@ -165,8 +145,6 @@ void Message_Messenger::Send(const occ::handle<Standard_Transient>& theObject,
     }
   }
 }
-
-//=================================================================================================
 
 void Message_Messenger::DumpJson(Standard_OStream& theOStream, int) const
 {

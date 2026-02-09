@@ -2,9 +2,6 @@
 #include <Geom2d_Transformation.hpp>
 #include <gp_Pnt2d.hpp>
 
-//=========================================================================
-//   Creation d un homothetie de gp de centre Point et de rapport Scale.  +
-//=========================================================================
 GCE2d_MakeScale::GCE2d_MakeScale(const gp_Pnt2d& Point, const double Scale)
 {
   TheScale = new Geom2d_Transformation();

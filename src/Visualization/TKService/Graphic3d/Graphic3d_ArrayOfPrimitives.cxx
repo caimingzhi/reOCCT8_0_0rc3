@@ -29,8 +29,6 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_ArrayOfQuadrangles, Graphic3d_ArrayOfPrimit
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_ArrayOfQuadrangleStrips, Graphic3d_ArrayOfPrimitives)
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_ArrayOfPolygons, Graphic3d_ArrayOfPrimitives)
 
-//=================================================================================================
-
 occ::handle<Graphic3d_ArrayOfPrimitives> Graphic3d_ArrayOfPrimitives::CreateArray(
   Graphic3d_TypeOfPrimitiveArray theType,
   int                            theMaxVertexs,
@@ -75,8 +73,6 @@ occ::handle<Graphic3d_ArrayOfPrimitives> Graphic3d_ArrayOfPrimitives::CreateArra
   }
   return occ::handle<Graphic3d_ArrayOfPrimitives>();
 }
-
-//=================================================================================================
 
 void Graphic3d_ArrayOfPrimitives::init(Graphic3d_TypeOfPrimitiveArray theType,
                                        int                            theMaxVertexs,
@@ -199,16 +195,12 @@ void Graphic3d_ArrayOfPrimitives::init(Graphic3d_TypeOfPrimitiveArray theType,
   }
 }
 
-//=================================================================================================
-
 Graphic3d_ArrayOfPrimitives::~Graphic3d_ArrayOfPrimitives()
 {
   myIndices.Nullify();
   myAttribs.Nullify();
   myBounds.Nullify();
 }
-
-//=================================================================================================
 
 int Graphic3d_ArrayOfPrimitives::AddBound(const int theEdgeNumber)
 {
@@ -217,8 +209,6 @@ int Graphic3d_ArrayOfPrimitives::AddBound(const int theEdgeNumber)
   myBounds->Bounds[myBounds->NbBounds] = theEdgeNumber;
   return ++myBounds->NbBounds;
 }
-
-//=================================================================================================
 
 int Graphic3d_ArrayOfPrimitives::AddBound(const int    theEdgeNumber,
                                           const double theR,
@@ -233,8 +223,6 @@ int Graphic3d_ArrayOfPrimitives::AddBound(const int    theEdgeNumber,
   return myBounds->NbBounds;
 }
 
-//=================================================================================================
-
 int Graphic3d_ArrayOfPrimitives::AddEdge(const int theVertexIndex)
 {
   Standard_OutOfRange_Raise_if(myIndices.IsNull()
@@ -246,8 +234,6 @@ int Graphic3d_ArrayOfPrimitives::AddEdge(const int theVertexIndex)
   myIndices->SetIndex(myIndices->NbElements, aVertIndex);
   return ++myIndices->NbElements;
 }
-
-//=================================================================================================
 
 void Graphic3d_ArrayOfPrimitives::AddTriangleStripEdges(int theVertexLower, int theVertexUpper)
 {
@@ -271,8 +257,6 @@ void Graphic3d_ArrayOfPrimitives::AddTriangleStripEdges(int theVertexLower, int 
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_ArrayOfPrimitives::AddTriangleFanEdges(int  theVertexLower,
                                                       int  theVertexUpper,
                                                       bool theToClose)
@@ -292,8 +276,6 @@ void Graphic3d_ArrayOfPrimitives::AddTriangleFanEdges(int  theVertexLower,
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_ArrayOfPrimitives::AddPolylineEdges(int  theVertexLower,
                                                    int  theVertexUpper,
                                                    bool theToClose)
@@ -312,8 +294,6 @@ void Graphic3d_ArrayOfPrimitives::AddPolylineEdges(int  theVertexLower,
     AddSegmentEdges(theVertexUpper, theVertexLower);
   }
 }
-
-//=================================================================================================
 
 const char* Graphic3d_ArrayOfPrimitives::StringType() const
 {
@@ -350,8 +330,6 @@ const char* Graphic3d_ArrayOfPrimitives::StringType() const
   }
   return "UndefinedArray";
 }
-
-//=================================================================================================
 
 int Graphic3d_ArrayOfPrimitives::ItemNumber() const
 {
@@ -402,8 +380,6 @@ int Graphic3d_ArrayOfPrimitives::ItemNumber() const
   }
   return -1;
 }
-
-//=================================================================================================
 
 bool Graphic3d_ArrayOfPrimitives::IsValid()
 {
@@ -523,9 +499,6 @@ bool Graphic3d_ArrayOfPrimitives::IsValid()
       return false;
   }
 
-  // total number of edges(vertices) in bounds should be the same as variable
-  // of total number of defined edges(vertices); if no edges - only vertices
-  // could be in bounds.
   if (nbounds > 0)
   {
     int n = 0;
@@ -551,7 +524,6 @@ bool Graphic3d_ArrayOfPrimitives::IsValid()
     }
   }
 
-  // check that edges (indexes to an array of vertices) are in range.
   if (nedges > 0)
   {
     for (int anEdgeIter = 0; anEdgeIter < nedges; ++anEdgeIter)

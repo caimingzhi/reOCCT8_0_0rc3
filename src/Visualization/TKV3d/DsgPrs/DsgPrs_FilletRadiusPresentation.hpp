@@ -12,16 +12,11 @@ class gp_Pnt;
 class gp_Dir;
 class Geom_TrimmedCurve;
 
-//! A framework for displaying radii of fillets.
 class DsgPrs_FilletRadiusPresentation
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Adds a display of the radius of a fillet to the
-  //! presentation aPresentation. The display ttributes
-  //! defined by the attribute manager aDrawer. the value
-  //! specifies the length of the radius.
   Standard_EXPORT static void Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                   const occ::handle<Prs3d_Drawer>&       aDrawer,
                                   const double                           thevalue,

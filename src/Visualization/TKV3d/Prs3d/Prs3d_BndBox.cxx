@@ -2,8 +2,6 @@
 
 #include <Prs3d_LineAspect.hpp>
 
-//=================================================================================================
-
 void Prs3d_BndBox::Add(const occ::handle<Prs3d_Presentation>& thePresentation,
                        const Bnd_Box&                         theBndBox,
                        const occ::handle<Prs3d_Drawer>&       theDrawer)
@@ -18,8 +16,6 @@ void Prs3d_BndBox::Add(const occ::handle<Prs3d_Presentation>& thePresentation,
     aGroup->AddPrimitiveArray(FillSegments(theBndBox));
   }
 }
-
-//=================================================================================================
 
 void Prs3d_BndBox::Add(const occ::handle<Prs3d_Presentation>& thePresentation,
                        const Bnd_OBB&                         theBndBox,

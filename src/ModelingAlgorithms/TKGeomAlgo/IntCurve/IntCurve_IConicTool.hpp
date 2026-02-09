@@ -14,8 +14,6 @@ class gp_Hypr2d;
 class gp_Pnt2d;
 class gp_Vec2d;
 
-//! Implementation of the ImpTool from IntImpParGen
-//! for conics of gp.
 class IntCurve_IConicTool
 {
 public:
@@ -41,18 +39,10 @@ public:
 
   Standard_EXPORT void D2(const double U, gp_Pnt2d& P, gp_Vec2d& T, gp_Vec2d& N) const;
 
-  //! Computes the value of the signed distance between
-  //! the point P and the implicit curve.
   Standard_EXPORT double Distance(const gp_Pnt2d& P) const;
 
-  //! Computes the Gradient of the Signed Distance
-  //! between a point and the implicit curve, at the
-  //! point P.
   Standard_EXPORT gp_Vec2d GradDistance(const gp_Pnt2d& P) const;
 
-  //! Returns the parameter U of the point on the implicit curve corresponding to the point P.
-  //! The correspondence between P and the point P(U) on the
-  //! implicit curve must be coherent with the way of determination of the signed distance.
   Standard_EXPORT double FindParameter(const gp_Pnt2d& P) const;
 
 private:

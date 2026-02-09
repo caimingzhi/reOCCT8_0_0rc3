@@ -26,48 +26,36 @@ typedef IVtk_IdType IVtk_PointId;
 typedef IVtk_IdType IVtk_FaceId;
 typedef IVtk_IdType IVtk_EdgeId;
 
-//! @enum IVtk_SelectionMode Selection modes for 3D shapes
-//!
-//! Enumeration that describes all supported selection modes for 3D shapes.
-//! SM_None means that the shape should become non-selectable.
-//! SM_Shape makes the shape selectable as a whole.
-//! Other modes activate selection of sub-shapes of corresponding types.
 typedef enum
 {
-  SM_None      = -1, //!< No selection
-  SM_Shape     = 0,  //!< Shape selection
-  SM_Vertex    = 1,  //!< Vertex selection
-  SM_Edge      = 2,  //!< Edge selection
-  SM_Wire      = 3,  //!< Wire selection
-  SM_Face      = 4,  //!< Face selection
-  SM_Shell     = 5,  //!< Shell selection
-  SM_Solid     = 6,  //!< Solid selection
-  SM_CompSolid = 7,  //!< CompSolid selection
-  SM_Compound  = 8,  //!< Compound selection
+  SM_None      = -1,
+  SM_Shape     = 0,
+  SM_Vertex    = 1,
+  SM_Edge      = 2,
+  SM_Wire      = 3,
+  SM_Face      = 4,
+  SM_Shell     = 5,
+  SM_Solid     = 6,
+  SM_CompSolid = 7,
+  SM_Compound  = 8,
 } IVtk_SelectionMode;
 
-//! @enum IVtk_MeshType Types of mesh parts for 3D shapes
-//!
-//! Enumeration that describes all supported types of mesh parts for 3D shapes.
 typedef enum
 {
-  MT_Undefined     = -1, //!< Undefined
-  MT_IsoLine       = 0,  //!< Isoline
-  MT_FreeVertex    = 1,  //!< Free vertex
-  MT_SharedVertex  = 2,  //!< Shared vertex
-  MT_FreeEdge      = 3,  //!< Free edge
-  MT_BoundaryEdge  = 4,  //!< Boundary edge (related to a single face)
-  MT_SharedEdge    = 5,  //!< Shared edge (related to several faces)
-  MT_WireFrameFace = 6,  //!< Wireframe face
-  MT_ShadedFace    = 7,  //!< Shaded face
-  MT_SeamEdge      = 8   //!< Seam edge between faces
+  MT_Undefined     = -1,
+  MT_IsoLine       = 0,
+  MT_FreeVertex    = 1,
+  MT_SharedVertex  = 2,
+  MT_FreeEdge      = 3,
+  MT_BoundaryEdge  = 4,
+  MT_SharedEdge    = 5,
+  MT_WireFrameFace = 6,
+  MT_ShadedFace    = 7,
+  MT_SeamEdge      = 8
 } IVtk_MeshType;
 
-//! @enum IVtk_DisplayMode Display modes for 3D shapes
-//!
-//! Enumeration that describes all supported display modes for 3D shapes.
 typedef enum
 {
-  DM_Wireframe = 0, //!< Wireframe display mode
-  DM_Shading   = 1  //!< Shaded display mode
+  DM_Wireframe = 0,
+  DM_Shading   = 1
 } IVtk_DisplayMode;

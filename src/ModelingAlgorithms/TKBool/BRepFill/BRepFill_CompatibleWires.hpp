@@ -11,9 +11,6 @@
 #include <NCollection_DataMap.hpp>
 class TopoDS_Edge;
 
-//! Constructs a sequence of Wires (with good orientation
-//! and origin) agreed each other so that the surface passing
-//! through these sections is not twisted
 class BRepFill_CompatibleWires
 {
 public:
@@ -27,19 +24,14 @@ public:
 
   Standard_EXPORT void SetPercent(const double percent = 0.01);
 
-  //! Performs CompatibleWires According to the orientation
-  //! and the origin of each other
   Standard_EXPORT void Perform(const bool WithRotation = true);
 
   Standard_EXPORT bool IsDone() const;
 
   BRepFill_ThruSectionErrorStatus GetStatus() const { return myStatus; }
 
-  //! returns the generated sequence.
   Standard_EXPORT const NCollection_Sequence<TopoDS_Shape>& Shape() const;
 
-  //! Returns the shapes created from a subshape
-  //! <SubSection> of a section.
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& GeneratedShapes(
     const TopoDS_Edge& SubSection) const;
 
@@ -53,25 +45,12 @@ public:
   Standard_EXPORT bool IsDegeneratedLastSection() const;
 
 private:
-  //! Insert cutting points on closed wires to have same
-  //! number of edges. The sequence of shapes must
-  //! be a sequence of wires.
   Standard_EXPORT void SameNumberByPolarMethod(const bool WithRotation = true);
 
-  //! Insert cutting points on open wires to have same
-  //! number of edges. The sequence of shapes must
-  //! be a sequence of wires.
   Standard_EXPORT void SameNumberByACR(const bool report);
 
-  //! Computes origins and orientation on closed wires to
-  //! avoid twisted results. The sequence of shapes must
-  //! be a sequence of wires. <polar> must be true
-  //! if SameNumberByPolarMethod was used before.
   Standard_EXPORT void ComputeOrigin(const bool polar);
 
-  //! Computes origins and orientation on open wires to
-  //! avoid twisted results. The sequence of shapes must
-  //! be a sequence of wires.
   Standard_EXPORT void SearchOrigin();
 
   NCollection_Sequence<TopoDS_Shape> myInit;

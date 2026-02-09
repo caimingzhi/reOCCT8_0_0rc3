@@ -22,16 +22,11 @@
 #include <TopoDS_Wire.hpp>
 #include <Transfer_TransientProcess.hpp>
 
-// #include <BRepAPI.hxx>
-//=================================================================================================
-
 StepToTopoDS_TranslatePolyLoop::StepToTopoDS_TranslatePolyLoop()
     : myError(StepToTopoDS_TranslatePolyLoopOther)
 {
   done = false;
 }
-
-//=================================================================================================
 
 StepToTopoDS_TranslatePolyLoop::StepToTopoDS_TranslatePolyLoop(
   const occ::handle<StepShape_PolyLoop>& PL,
@@ -42,8 +37,6 @@ StepToTopoDS_TranslatePolyLoop::StepToTopoDS_TranslatePolyLoop(
 {
   Init(PL, T, S, F, theLocalFactors);
 }
-
-//=================================================================================================
 
 void StepToTopoDS_TranslatePolyLoop::Init(const occ::handle<StepShape_PolyLoop>& PL,
                                           StepToTopoDS_Tool&                     aTool,
@@ -56,7 +49,6 @@ void StepToTopoDS_TranslatePolyLoop::Init(const occ::handle<StepShape_PolyLoop>&
     BRep_Builder                           B;
     occ::handle<Transfer_TransientProcess> TP = aTool.TransientProcess();
 
-    //: S4136    double preci = BRepAPI::Precision();
     int                                  i;
     occ::handle<StepGeom_CartesianPoint> P1, P2;
     occ::handle<Geom_CartesianPoint>     GP1, GP2;
@@ -89,7 +81,7 @@ void StepToTopoDS_TranslatePolyLoop::Init(const occ::handle<StepShape_PolyLoop>&
     }
     else
     {
-      B.MakeVertex(V1, GP1->Pnt(), Precision::Confusion()); //: S4136: preci
+      B.MakeVertex(V1, GP1->Pnt(), Precision::Confusion());
       aTool.BindVertex(P1, V1);
     }
     B.MakeWire(W);
@@ -97,7 +89,7 @@ void StepToTopoDS_TranslatePolyLoop::Init(const occ::handle<StepShape_PolyLoop>&
     {
       P2 = Poly->Value(i);
       if (P1 == P2)
-        continue; // peut arriver (KK)  CKY 9-DEC-1997
+        continue;
       StepToTopoDS_PointPair PP(P1, P2);
       GP2 = StepToGeom::MakeCartesianPoint(P2, theLocalFactors);
       TopoDS_Shape aBoundEdge;
@@ -110,27 +102,25 @@ void StepToTopoDS_TranslatePolyLoop::Init(const occ::handle<StepShape_PolyLoop>&
         }
         else
         {
-          B.MakeVertex(V2, GP2->Pnt(), Precision::Confusion()); //: S4136: preci
+          B.MakeVertex(V2, GP2->Pnt(), Precision::Confusion());
           aTool.BindVertex(P2, V2);
         }
         V = gp_Vec(GP1->Pnt(), GP2->Pnt());
         L = new Geom_Line(GP1->Pnt(), gp_Dir(V));
-        B.MakeEdge(E, L, Precision::Confusion()); //: S4136: preci
+        B.MakeEdge(E, L, Precision::Confusion());
         V1.Orientation(TopAbs_FORWARD);
         V2.Orientation(TopAbs_REVERSED);
         B.Add(E, V1);
         B.Add(E, V2);
         Magn = V.Magnitude();
-        B.UpdateVertex(V1, 0., E, 0.);   //: S4136: preci
-        B.UpdateVertex(V2, Magn, E, 0.); //: S4136: preci
+        B.UpdateVertex(V1, 0., E, 0.);
+        B.UpdateVertex(V2, Magn, E, 0.);
       }
       else
       {
         aBoundEdge = aTool.FindEdge(PP);
         E          = TopoDS::Edge(aBoundEdge);
-        //  Il faut qu en finale l edge soit vue
-        //  - via sa premiere face, orientation combinee = celle de cette premiere face
-        //  - via sa deuxieme face, orientation combinee INVERSE de la precedente
+
         if (TopoFace.Orientation() == TopAbs_FORWARD)
           E.Reverse();
         V2 = aTool.FindVertex(P2);
@@ -148,7 +138,7 @@ void StepToTopoDS_TranslatePolyLoop::Init(const occ::handle<StepShape_PolyLoop>&
         L2d = new Geom2d_Line(V2p2, gp_Dir2d(V2d));
       }
       B.UpdateEdge(E, L2d, TopoFace, 0.);
-      TopoDS_Edge EB = E; // pour le binding : cumul des orientations !
+      TopoDS_Edge EB = E;
       EB.Orientation(TopoFace.Orientation());
       if (!isbound)
         aTool.BindEdge(PP, EB);
@@ -174,15 +164,11 @@ void StepToTopoDS_TranslatePolyLoop::Init(const occ::handle<StepShape_PolyLoop>&
   }
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& StepToTopoDS_TranslatePolyLoop::Value() const
 {
   StdFail_NotDone_Raise_if(!done, "StepToTopoDS_TranslatePolyLoop::Value() - no result");
   return myResult;
 }
-
-//=================================================================================================
 
 StepToTopoDS_TranslatePolyLoopError StepToTopoDS_TranslatePolyLoop::Error() const
 {

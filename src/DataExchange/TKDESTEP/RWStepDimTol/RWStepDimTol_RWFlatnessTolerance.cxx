@@ -6,11 +6,7 @@
 #include <StepDimTol_FlatnessTolerance.hpp>
 #include <StepDimTol_GeometricToleranceTarget.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWFlatnessTolerance::RWStepDimTol_RWFlatnessTolerance() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWFlatnessTolerance::ReadStep(
   const occ::handle<StepData_StepReaderData>&      data,
@@ -18,11 +14,9 @@ void RWStepDimTol_RWFlatnessTolerance::ReadStep(
   occ::handle<Interface_Check>&                    ach,
   const occ::handle<StepDimTol_FlatnessTolerance>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "flatness_tolerance"))
     return;
-
-  // Inherited fields of GeometricTolerance
 
   occ::handle<TCollection_HAsciiString> aGeometricTolerance_Name;
   data->ReadString(num, 1, "geometric_tolerance.name", ach, aGeometricTolerance_Name);
@@ -45,21 +39,16 @@ void RWStepDimTol_RWFlatnessTolerance::ReadStep(
                    ach,
                    aGeometricTolerance_TolerancedShapeAspect);
 
-  // Initialize entity
   ent->Init(aGeometricTolerance_Name,
             aGeometricTolerance_Description,
             aGeometricTolerance_Magnitude,
             aGeometricTolerance_TolerancedShapeAspect);
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWFlatnessTolerance::WriteStep(
   StepData_StepWriter&                             SW,
   const occ::handle<StepDimTol_FlatnessTolerance>& ent) const
 {
-
-  // Inherited fields of GeometricTolerance
 
   SW.Send(ent->StepDimTol_GeometricTolerance::Name());
 
@@ -70,13 +59,9 @@ void RWStepDimTol_RWFlatnessTolerance::WriteStep(
   SW.Send(ent->StepDimTol_GeometricTolerance::TolerancedShapeAspect().Value());
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWFlatnessTolerance::Share(const occ::handle<StepDimTol_FlatnessTolerance>& ent,
                                              Interface_EntityIterator& iter) const
 {
-
-  // Inherited fields of GeometricTolerance
 
   iter.AddItem(ent->StepDimTol_GeometricTolerance::Magnitude());
 

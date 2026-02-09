@@ -9,8 +9,6 @@
 extern bool TopOpeBRepBuild_GetcontextSPEON();
 #endif
 
-//=================================================================================================
-
 bool TopOpeBRepBuild_Builder::GToSplit(const TopoDS_Shape& S, const TopAbs_State TB) const
 {
   bool issplit = IsSplit(S, TB);
@@ -37,44 +35,42 @@ bool TopOpeBRepBuild_Builder::GToSplit(const TopoDS_Shape& S, const TopAbs_State
 
 #ifdef OCCT_DEBUG
   if (TopOpeBRepBuild_GetcontextSPEON())
-  {                                              // CONTEXT
-    tSPS       = true;                           // CONTEXT
-    bool hasON = false;                          // CONTEXT
-    bool isE   = (S.ShapeType() == TopAbs_EDGE); // CONTEXT
+  {
+    tSPS       = true;
+    bool hasON = false;
+    bool isE   = (S.ShapeType() == TopAbs_EDGE);
     if (isE)
-    {                                                                   // CONTEXT
-      const TopoDS_Edge& E    = TopoDS::Edge(S);                        // CONTEXT
-      bool               issE = myDataStructure->DS().IsSectionEdge(E); // CONTEXT
+    {
+      const TopoDS_Edge& E    = TopoDS::Edge(S);
+      bool               issE = myDataStructure->DS().IsSectionEdge(E);
       if (issE)
-      {                                         // CONTEXT
-        bool issplitON = IsSplit(E, TopAbs_ON); // CONTEXT
+      {
+        bool issplitON = IsSplit(E, TopAbs_ON);
         if (issplitON)
-        {                                        // CONTEXT
-          int n = Splits(E, TopAbs_ON).Extent(); // CONTEXT
-          hasON = (n > 0);                       // CONTEXT
-        } // CONTEXT
-      } // CONTEXT
-    } // CONTEXT
-    bool tosplitH = tosplit || hasON; // CONTEXT
+        {
+          int n = Splits(E, TopAbs_ON).Extent();
+          hasON = (n > 0);
+        }
+      }
+    }
+    bool tosplitH = tosplit || hasON;
     if (tSPS)
     {
       std::cout << "GToSplit context SPEON";
-    } // CONTEXT
+    }
     if (tSPS)
     {
       std::cout << " " << tosplitH << " : tosplit " << tosplit;
-    } // CONTEXT
+    }
     if (tSPS)
     {
       std::cout << " || hasON " << hasON << std::endl;
-    } // CONTEXT
-  } // CONTEXT
+    }
+  }
 #endif
 
   return tosplit;
-} // GToSplit
-
-//=================================================================================================
+}
 
 bool TopOpeBRepBuild_Builder::GToMerge(const TopoDS_Shape& S) const
 {
@@ -102,9 +98,7 @@ bool TopOpeBRepBuild_Builder::GToMerge(const TopoDS_Shape& S) const
 #endif
 
   return tomerge;
-} // GToMerge
-
-//=================================================================================================
+}
 
 bool TopOpeBRepBuild_Builder::GTakeCommonOfSame(const TopOpeBRepBuild_GTopo& G)
 {
@@ -123,8 +117,6 @@ bool TopOpeBRepBuild_Builder::GTakeCommonOfSame(const TopOpeBRepBuild_GTopo& G)
   return sam;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepBuild_Builder::GTakeCommonOfDiff(const TopOpeBRepBuild_GTopo& G)
 {
   TopAbs_State t1, t2;
@@ -142,11 +134,6 @@ bool TopOpeBRepBuild_Builder::GTakeCommonOfDiff(const TopOpeBRepBuild_GTopo& G)
   return dif;
 }
 
-//=======================================================================
-// function : GFindSamDom
-// purpose  : complete the lists L1,L2 with the shapes of the DS
-//           having same domain
-//=======================================================================
 void TopOpeBRepBuild_Builder::GFindSamDom(const TopoDS_Shape&             S,
                                           NCollection_List<TopoDS_Shape>& L1,
                                           NCollection_List<TopoDS_Shape>& L2) const
@@ -157,11 +144,6 @@ void TopOpeBRepBuild_Builder::GFindSamDom(const TopoDS_Shape&             S,
   GFindSamDom(L1, L2);
 }
 
-//=======================================================================
-// function : GFindSamDom
-// purpose  : complete the lists L1,L2 with the shapes of the DS
-//           having same domain
-//=======================================================================
 void TopOpeBRepBuild_Builder::GFindSamDom(NCollection_List<TopoDS_Shape>& L1,
                                           NCollection_List<TopoDS_Shape>& L2) const
 {
@@ -176,14 +158,14 @@ void TopOpeBRepBuild_Builder::GFindSamDom(NCollection_List<TopoDS_Shape>& L1,
     {
       const TopoDS_Shape& S1 = it1.Value();
 #ifdef OCCT_DEBUG
-//      int iS1 = myDataStructure->Shape(S1);
+
 #endif
       NCollection_List<TopoDS_Shape>::Iterator itsd(myDataStructure->SameDomain(S1));
       for (; itsd.More(); itsd.Next())
       {
         const TopoDS_Shape& S2 = itsd.Value();
 #ifdef OCCT_DEBUG
-//	int iS2 = myDataStructure->Shape(S2);
+
 #endif
         bool found = GContains(S2, L2);
         if (!found)
@@ -201,14 +183,14 @@ void TopOpeBRepBuild_Builder::GFindSamDom(NCollection_List<TopoDS_Shape>& L1,
     {
       const TopoDS_Shape& S2 = it2.Value();
 #ifdef OCCT_DEBUG
-//      int iS2 = myDataStructure->Shape(S2);
+
 #endif
       NCollection_List<TopoDS_Shape>::Iterator itsd(myDataStructure->SameDomain(S2));
       for (; itsd.More(); itsd.Next())
       {
         const TopoDS_Shape& S1 = itsd.Value();
 #ifdef OCCT_DEBUG
-//	int iS1 = myDataStructure->Shape(S1);
+
 #endif
         bool found = GContains(S1, L1);
         if (!found)
@@ -223,8 +205,6 @@ void TopOpeBRepBuild_Builder::GFindSamDom(NCollection_List<TopoDS_Shape>& L1,
   }
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::GFindSamDomSODO(const TopoDS_Shape&             S,
                                               NCollection_List<TopoDS_Shape>& LSO,
                                               NCollection_List<TopoDS_Shape>& LDO) const
@@ -235,8 +215,6 @@ void TopOpeBRepBuild_Builder::GFindSamDomSODO(const TopoDS_Shape&             S,
   GFindSamDomSODO(LSO, LDO);
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::GFindSamDomSODO(NCollection_List<TopoDS_Shape>& LSO,
                                               NCollection_List<TopoDS_Shape>& LDO) const
 {
@@ -246,7 +224,7 @@ void TopOpeBRepBuild_Builder::GFindSamDomSODO(NCollection_List<TopoDS_Shape>& LS
     return;
   const TopoDS_Shape& sref = it.Value();
 #ifdef OCCT_DEBUG
-//  int  iref = myDataStructure->SameDomainReference(sref);
+
 #endif
   TopOpeBRepDS_Config oref = myDataStructure->SameDomainOrientation(sref);
 
@@ -272,7 +250,7 @@ void TopOpeBRepBuild_Builder::GFindSamDomSODO(NCollection_List<TopoDS_Shape>& LS
     const TopoDS_Shape& s = it.Value();
     TopOpeBRepDS_Config o = myDataStructure->SameDomainOrientation(s);
 #ifdef OCCT_DEBUG
-//    int iS = myDataStructure->Shape(s);
+
 #endif
     if (o == oref && !GContains(s, LLSO))
       LLSO.Append(s);
@@ -285,7 +263,7 @@ void TopOpeBRepBuild_Builder::GFindSamDomSODO(NCollection_List<TopoDS_Shape>& LS
     const TopoDS_Shape& s = it.Value();
     TopOpeBRepDS_Config o = myDataStructure->SameDomainOrientation(s);
 #ifdef OCCT_DEBUG
-//    int iS = myDataStructure->Shape(s);
+
 #endif
     if (o == oref && !GContains(s, LLSO))
       LLSO.Append(s);
@@ -296,8 +274,6 @@ void TopOpeBRepBuild_Builder::GFindSamDomSODO(NCollection_List<TopoDS_Shape>& LS
   LSO = LLSO;
   LDO = LLDO;
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder::GMapShapes(const TopoDS_Shape& S1, const TopoDS_Shape& S2)
 {
@@ -310,15 +286,11 @@ void TopOpeBRepBuild_Builder::GMapShapes(const TopoDS_Shape& S1, const TopoDS_Sh
     TopExp::MapShapes(S2, myMAP2);
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::GClearMaps()
 {
   myMAP1.Clear();
   myMAP2.Clear();
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder::GFindSameRank(const NCollection_List<TopoDS_Shape>& L1,
                                             const int                             Rank,
@@ -328,7 +300,7 @@ void TopOpeBRepBuild_Builder::GFindSameRank(const NCollection_List<TopoDS_Shape>
   {
     const TopoDS_Shape& s = it1.Value();
 #ifdef OCCT_DEBUG
-//    int iS = myDataStructure->Shape(s);
+
 #endif
     int r = GShapeRank(s);
     if (r == Rank && !GContains(s, L2))
@@ -338,8 +310,6 @@ void TopOpeBRepBuild_Builder::GFindSameRank(const NCollection_List<TopoDS_Shape>
   }
 }
 
-//=================================================================================================
-
 int TopOpeBRepBuild_Builder::GShapeRank(const TopoDS_Shape& S) const
 {
   bool isof1   = GIsShapeOf(S, 1);
@@ -347,8 +317,6 @@ int TopOpeBRepBuild_Builder::GShapeRank(const TopoDS_Shape& S) const
   int  ancetre = (isof1 || isof2) ? ((isof1) ? 1 : 2) : 0;
   return ancetre;
 }
-
-//=================================================================================================
 
 bool TopOpeBRepBuild_Builder::GIsShapeOf(const TopoDS_Shape& S, const int I) const
 {
@@ -362,10 +330,6 @@ bool TopOpeBRepBuild_Builder::GIsShapeOf(const TopoDS_Shape& S, const int I) con
   return b;
 }
 
-//=======================================================================
-// function : GContains
-// purpose  : returns True if S is in the list L.
-//=======================================================================
 bool TopOpeBRepBuild_Builder::GContains(const TopoDS_Shape&                   S,
                                         const NCollection_List<TopoDS_Shape>& L)
 {
@@ -379,11 +343,6 @@ bool TopOpeBRepBuild_Builder::GContains(const TopoDS_Shape&                   S,
   return false;
 }
 
-//=======================================================================
-// function : GCopyList
-// purpose  :
-// copy des elements [i1..i2] de Lin dans Lou. 1er element de Lin = index 1
-//=======================================================================
 void TopOpeBRepBuild_Builder::GCopyList(const NCollection_List<TopoDS_Shape>& Lin,
                                         const int                             I1,
                                         const int                             I2,
@@ -400,11 +359,6 @@ void TopOpeBRepBuild_Builder::GCopyList(const NCollection_List<TopoDS_Shape>& Li
   }
 }
 
-//=======================================================================
-// function : GCopyList
-// purpose  :
-// copy de Lin dans Lou
-//=======================================================================
 void TopOpeBRepBuild_Builder::GCopyList(const NCollection_List<TopoDS_Shape>& Lin,
                                         NCollection_List<TopoDS_Shape>&       Lou)
 {

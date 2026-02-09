@@ -13,20 +13,11 @@
 #include <TopoDS_Shape.hpp>
 #include <TopoDS_Vertex.hpp>
 
-// #include <BRepAPI.hxx>
-//  For I-DEAS-like processing (ssv; 15.11.2010)
-//=================================================================================================
-
 StepToTopoDS_TranslateVertex::StepToTopoDS_TranslateVertex()
     : myError(StepToTopoDS_TranslateVertexOther)
 {
   done = false;
 }
-
-// ============================================================================
-// Method  : StepToTopoDS_TranslateVertex::StepToTopoDS_TranslateVertex
-// Purpose : Constructor with a Vertex and a Tool
-// ============================================================================
 
 StepToTopoDS_TranslateVertex::StepToTopoDS_TranslateVertex(const occ::handle<StepShape_Vertex>& V,
                                                            StepToTopoDS_Tool&                   T,
@@ -35,11 +26,6 @@ StepToTopoDS_TranslateVertex::StepToTopoDS_TranslateVertex(const occ::handle<Ste
 {
   Init(V, T, NMTool, theLocalFactors);
 }
-
-// ============================================================================
-// Method  : Init
-// Purpose : Init with a Vertex and a Tool
-// ============================================================================
 
 void StepToTopoDS_TranslateVertex::Init(const occ::handle<StepShape_Vertex>& aVertex,
                                         StepToTopoDS_Tool&                   aTool,
@@ -55,7 +41,6 @@ void StepToTopoDS_TranslateVertex::Init(const occ::handle<StepShape_Vertex>& aVe
   if (!aTool.IsBound(aVertex))
   {
 
-    // [BEGIN] Proceed with non-manifold topology (ssv; 14.11.2010)
     if (NMTool.IsActive() && NMTool.IsBound(aVertex))
     {
       myResult = NMTool.Find(aVertex);
@@ -63,9 +48,7 @@ void StepToTopoDS_TranslateVertex::Init(const occ::handle<StepShape_Vertex>& aVe
       done     = true;
       return;
     }
-    // [END] Proceed with non-manifold topology (ssv; 14.11.2010)
 
-    // [BEGIN] Proceed with I-DEAS-like STP (ssv; 15.11.2010)
     const occ::handle<TCollection_HAsciiString> aVName = aVertex->Name();
     if (NMTool.IsActive() && NMTool.IsIDEASCase() && !aVName.IsNull() && !aVName->IsEmpty()
         && NMTool.IsBound(aVName->String()))
@@ -75,9 +58,7 @@ void StepToTopoDS_TranslateVertex::Init(const occ::handle<StepShape_Vertex>& aVe
       done     = true;
       return;
     }
-    // [END] Proceed with I-DEAS-like STP (ssv; 15.11.2010)
 
-    //: S4136    double preci = BRepAPI::Precision();
     const occ::handle<StepShape_VertexPoint> VP = occ::down_cast<StepShape_VertexPoint>(aVertex);
     const occ::handle<StepGeom_Point>        P  = VP->VertexGeometry();
     if (P.IsNull())
@@ -90,10 +71,9 @@ void StepToTopoDS_TranslateVertex::Init(const occ::handle<StepShape_Vertex>& aVe
     occ::handle<Geom_CartesianPoint> P2 = StepToGeom::MakeCartesianPoint(P1, theLocalFactors);
     BRep_Builder                     B;
     TopoDS_Vertex                    V;
-    B.MakeVertex(V, P2->Pnt(), Precision::Confusion()); //: S4136: preci
+    B.MakeVertex(V, P2->Pnt(), Precision::Confusion());
     aTool.Bind(aVertex, V);
 
-    // Register Vertex in NM tool (ssv; 14.11.2010)
     if (NMTool.IsActive())
     {
       NMTool.Bind(aVertex, V);
@@ -111,21 +91,11 @@ void StepToTopoDS_TranslateVertex::Init(const occ::handle<StepShape_Vertex>& aVe
   done    = true;
 }
 
-// ============================================================================
-// Method  : Value
-// Purpose : Return the mapped Shape
-// ============================================================================
-
 const TopoDS_Shape& StepToTopoDS_TranslateVertex::Value() const
 {
   StdFail_NotDone_Raise_if(!done, "StepToTopoDS_TranslateVertex::Value() - no result");
   return myResult;
 }
-
-// ============================================================================
-// Method  : Error
-// Purpose : Return the TranslateVertex Error Code
-// ============================================================================
 
 StepToTopoDS_TranslateVertexError StepToTopoDS_TranslateVertex::Error() const
 {

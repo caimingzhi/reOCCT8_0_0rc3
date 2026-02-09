@@ -17,7 +17,6 @@ class StepShape_LoopAndPath : public StepShape_TopologicalRepresentationItem
 {
 
 public:
-  //! Returns a LoopAndPath
   Standard_EXPORT StepShape_LoopAndPath();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

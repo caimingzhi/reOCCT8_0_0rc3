@@ -1,40 +1,14 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// #ifndef OCCT_DEBUG
+
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
-
-// #endif
 
 #include <math_Householder.hpp>
 #include <math_Matrix.hpp>
 #include <Standard_DimensionError.hpp>
 #include <StdFail_NotDone.hpp>
 
-// Cette classe decrit la methode de Householder qui transforme A en un
-// produit de matrice orthogonale par une triangulaire superieure. Les seconds
-// membres sont modifies dans le meme temps.
-// Les references sur le cote sont celles de l'algorithme explique en page
-// 90 du livre "Introduction a l'analyse numerique matricielle et a
-// l'optimisation." par P.G. CIARLET, edition MASSON. Les secondes
-// references sont celles du sous-programme HOUSEO d'Euclid.
-// A la difference du sous-programme Houseo, la premiere colonne n'est pas
-// traitee separement. Les tests effectues ont montre que le code effectue
-// specialement pour celle-ci etait plus long qu'une simple recopie. C'est
-// donc cette solution de recopie initiale qui a ete retenue.
 math_Householder::math_Householder(const math_Matrix& A, const math_Vector& B, const double EPS)
     : Sol(1, A.ColNumber(), 1, 1),
       Q(1, A.RowNumber(), 1, A.ColNumber()),
@@ -109,30 +83,29 @@ void math_Householder::Perform(const math_Matrix& A, const math_Matrix& B, const
 
   Standard_DimensionError_Raise_if(l != B.RowNumber() || n > l, " ");
 
-  // Traitement de chaque colonne de A:
   for (i = 1; i <= n; i++)
   {
     h = 0.0;
     for (k = i; k <= l; k++)
     {
       qki = Q(k, i);
-      h += qki * qki; // = ||a||*||a||     = EUAI
+      h += qki * qki;
     }
-    f = Q(i, i); // = a1              = AII
+    f = Q(i, i);
     g = f < 1.e-15 ? std::sqrt(h) : -std::sqrt(h);
     if (fabs(g) <= EPS)
     {
       Done = false;
       return;
     }
-    h -= f * g;     // = (v*v)/2         = C1
-    alfaii = g - f; // = v               = ALFAII
+    h -= f * g;
+    alfaii = g - f;
     for (j = i + 1; j <= n; j++)
     {
       double scale = 0.0;
       for (k = i; k <= l; k++)
       {
-        scale += Q(k, i) * Q(k, j); //                   = SCAL
+        scale += Q(k, i) * Q(k, j);
       }
       cj      = (g * Q(i, j) - scale) / h;
       Q(i, j) = Q(i, j) - alfaii * cj;
@@ -141,8 +114,6 @@ void math_Householder::Perform(const math_Matrix& A, const math_Matrix& B, const
         Q(k, j) = Q(k, j) + cj * Q(k, i);
       }
     }
-
-    // Modification de B:
 
     for (j = 1; j <= m; j++)
     {
@@ -161,7 +132,6 @@ void math_Householder::Perform(const math_Matrix& A, const math_Matrix& B, const
     Q(i, i) = g;
   }
 
-  // Remontee:
   for (j = 1; j <= m; j++)
   {
     Sol(n, j) = B2(n, j) / Q(n, n);

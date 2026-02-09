@@ -7,8 +7,6 @@
 #include <TopoDS_Shape.hpp>
 #include <NCollection_List.hpp>
 
-//! Contains the 3 ListOfShape of a Face
-//! (Internal OutLines, OutLines on restriction and IsoLines).
 class HLRTopoBRep_FaceData
 {
 public:
@@ -39,35 +37,25 @@ inline const NCollection_List<TopoDS_Shape>& HLRTopoBRep_FaceData::FaceIntL() co
   return myIntL;
 }
 
-//=================================================================================================
-
 inline const NCollection_List<TopoDS_Shape>& HLRTopoBRep_FaceData::FaceOutL() const
 {
   return myOutL;
 }
-
-//=================================================================================================
 
 inline const NCollection_List<TopoDS_Shape>& HLRTopoBRep_FaceData::FaceIsoL() const
 {
   return myIsoL;
 }
 
-//=================================================================================================
-
 inline NCollection_List<TopoDS_Shape>& HLRTopoBRep_FaceData::AddIntL()
 {
   return myIntL;
 }
 
-//=================================================================================================
-
 inline NCollection_List<TopoDS_Shape>& HLRTopoBRep_FaceData::AddOutL()
 {
   return myOutL;
 }
-
-//=================================================================================================
 
 inline NCollection_List<TopoDS_Shape>& HLRTopoBRep_FaceData::AddIsoL()
 {

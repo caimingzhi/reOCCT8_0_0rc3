@@ -18,13 +18,10 @@ public:
 
   Standard_EXPORT virtual gp_Pnt2d Point(const int Index) const = 0;
 
-  //! Returns the tolerance of the polygon.
   double DeflectionOverEstimation() const override;
 
-  //! Returns the number of Segments in the polyline.
   int NbSegments() const override;
 
-  //! Returns the points of the segment <Index> in the Polygon.
   void Segment(const int theIndex, gp_Pnt2d& theBegin, gp_Pnt2d& theEnd) const override;
 
   Standard_EXPORT void Dump() const;
@@ -40,21 +37,15 @@ inline double IntPatch_Polygo::Error() const
   return myError;
 }
 
-//=================================================================================================
-
 inline double IntPatch_Polygo::DeflectionOverEstimation() const
 {
   return myError;
 }
 
-//=================================================================================================
-
 inline int IntPatch_Polygo::NbSegments() const
 {
   return NbPoints() - 1;
 }
-
-//=================================================================================================
 
 inline void IntPatch_Polygo::Segment(const int theIndex, gp_Pnt2d& theBegin, gp_Pnt2d& theEnd) const
 {

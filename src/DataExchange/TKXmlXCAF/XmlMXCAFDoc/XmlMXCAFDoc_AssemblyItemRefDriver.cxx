@@ -9,26 +9,20 @@ IMPLEMENT_DOMSTRING(Path, "path")
 IMPLEMENT_DOMSTRING(AttrGUID, "guid")
 IMPLEMENT_DOMSTRING(SubshapeIndex, "subshape_index")
 
-//=================================================================================================
-
 XmlMXCAFDoc_AssemblyItemRefDriver::XmlMXCAFDoc_AssemblyItemRefDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_AssemblyItemRef)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMXCAFDoc_AssemblyItemRefDriver::NewEmpty() const
 {
   return new XCAFDoc_AssemblyItemRef();
 }
 
-//=================================================================================================
-
 bool XmlMXCAFDoc_AssemblyItemRefDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                               const occ::handle<TDF_Attribute>& theTarget,
-                                              XmlObjMgt_RRelocationTable& /*theRelocTable*/) const
+                                              XmlObjMgt_RRelocationTable&) const
 {
   const XmlObjMgt_Element& anElement = theSource;
 
@@ -64,11 +58,9 @@ bool XmlMXCAFDoc_AssemblyItemRefDriver::Paste(const XmlObjMgt_Persistent&       
   return true;
 }
 
-//=================================================================================================
-
 void XmlMXCAFDoc_AssemblyItemRefDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                               XmlObjMgt_Persistent&             theTarget,
-                                              XmlObjMgt_SRelocationTable& /*theRelocTable*/) const
+                                              XmlObjMgt_SRelocationTable&) const
 {
   occ::handle<XCAFDoc_AssemblyItemRef> aThis = occ::down_cast<XCAFDoc_AssemblyItemRef>(theSource);
 

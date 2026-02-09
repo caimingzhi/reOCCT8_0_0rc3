@@ -11,7 +11,6 @@ class StepGeom_Plane;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for Plane
 class RWStepGeom_RWPlane
 {
 public:

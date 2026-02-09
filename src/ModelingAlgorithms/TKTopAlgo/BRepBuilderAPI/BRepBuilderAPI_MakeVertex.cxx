@@ -2,8 +2,6 @@
 #include <gp_Pnt.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeVertex::BRepBuilderAPI_MakeVertex(const gp_Pnt& P)
     : myMakeVertex(P)
 {
@@ -14,14 +12,10 @@ BRepBuilderAPI_MakeVertex::BRepBuilderAPI_MakeVertex(const gp_Pnt& P)
   }
 }
 
-//=================================================================================================
-
 const TopoDS_Vertex& BRepBuilderAPI_MakeVertex::Vertex()
 {
   return myMakeVertex.Vertex();
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeVertex::operator TopoDS_Vertex()
 {

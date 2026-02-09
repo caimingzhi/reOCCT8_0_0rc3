@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRep_Tool.hpp>
 #include <Geom2d_Curve.hpp>
@@ -24,23 +13,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeAnalysis_TransferParameters, Standard_Transient)
 
-//=================================================================================================
-
 ShapeAnalysis_TransferParameters::ShapeAnalysis_TransferParameters()
 {
   myScale = 1.;
   myShift = 0.;
 }
 
-//=================================================================================================
-
 ShapeAnalysis_TransferParameters::ShapeAnalysis_TransferParameters(const TopoDS_Edge& E,
                                                                    const TopoDS_Face& F)
 {
   Init(E, F);
 }
-
-//=================================================================================================
 
 void ShapeAnalysis_TransferParameters::Init(const TopoDS_Edge& E, const TopoDS_Face& F)
 {
@@ -50,14 +33,14 @@ void ShapeAnalysis_TransferParameters::Init(const TopoDS_Edge& E, const TopoDS_F
   TopLoc_Location L;
   myEdge = E;
   ShapeAnalysis_Edge      sae;
-  occ::handle<Geom_Curve> curve3d; // = BRep_Tool::Curve (E,f,l);
+  occ::handle<Geom_Curve> curve3d;
   sae.Curve3d(E, curve3d, f, l, false);
   myFirst = f;
   myLast  = l;
-  occ::handle<Geom2d_Curve> curve2d; // = BRep_Tool::CurveOnSurface (E, F, f2d,l2d);
-  // ShapeAnalysis_Edge sae;
+  occ::handle<Geom2d_Curve> curve2d;
+
   if (!F.IsNull())
-  { // process free edges
+  {
     sae.PCurve(E, F, curve2d, f2d, l2d, false);
   }
   myFirst2d = f2d;
@@ -72,14 +55,10 @@ void ShapeAnalysis_TransferParameters::Init(const TopoDS_Edge& E, const TopoDS_F
   myShift     = f2d - f * myScale;
 }
 
-//=================================================================================================
-
 void ShapeAnalysis_TransferParameters::SetMaxTolerance(const double maxtol)
 {
   myMaxTolerance = maxtol;
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HSequence<double>> ShapeAnalysis_TransferParameters::Perform(
   const occ::handle<NCollection_HSequence<double>>& Params,
@@ -91,8 +70,6 @@ occ::handle<NCollection_HSequence<double>> ShapeAnalysis_TransferParameters::Per
   return res;
 }
 
-//=================================================================================================
-
 double ShapeAnalysis_TransferParameters::Perform(const double Param, const bool To2d)
 {
   double NewParam;
@@ -102,8 +79,6 @@ double ShapeAnalysis_TransferParameters::Perform(const double Param, const bool 
     NewParam = -myShift / myScale + Param * 1. / myScale;
   return NewParam;
 }
-
-//=================================================================================================
 
 void ShapeAnalysis_TransferParameters::TransferRange(TopoDS_Edge& newEdge,
                                                      const double prevPar,
@@ -136,8 +111,6 @@ void ShapeAnalysis_TransferParameters::TransferRange(TopoDS_Edge& newEdge,
     sbe.CopyRanges(newEdge, myEdge, alpha, beta);
   }
 }
-
-//=================================================================================================
 
 bool ShapeAnalysis_TransferParameters::IsSameRange() const
 {

@@ -10,21 +10,11 @@
 
 #define MAJORATION_DEFLECTION 1.5
 
-//======================================================================
-//== We take samples on the Domain of the Curve  NbPts Points
-//== with constant parameters.
-//==
-//== We estimate the maximum deflection taking the max distance between the
-//== right Curve.Value(X(i))-->Curve.Value(X(i+1))
-//== and the point Curve.Value(X(i+1/2))
-//======================================================================
-//  Modified by Sergey KHROMOV - Mon Mar 24 12:02:43 2003 Begin
 IntCurve_Polygon2dGen::IntCurve_Polygon2dGen(const TheCurve&        C,
                                              const int              tNbPts,
                                              const IntRes2d_Domain& D,
                                              const double           Tol)
-    : //  Modified by Sergey KHROMOV - Mon Mar 24 12:02:45 2003 End
-      ThePnts(1, (tNbPts < 3) ? 6 : (tNbPts + tNbPts)),
+    : ThePnts(1, (tNbPts < 3) ? 6 : (tNbPts + tNbPts)),
       TheParams(1, (tNbPts < 3) ? 6 : (tNbPts + tNbPts)),
       TheIndex(1, (tNbPts < 3) ? 6 : (tNbPts + tNbPts))
 {
@@ -32,19 +22,14 @@ IntCurve_Polygon2dGen::IntCurve_Polygon2dGen(const TheCurve&        C,
   int NbPts      = (tNbPts < 3) ? 3 : tNbPts;
   TheMaxNbPoints = NbPts + NbPts;
   NbPntIn        = NbPts;
-  //-----------------------------------------------------
-  //--- Initialization of the breaking with d_Parametre constant
-  //---
+
   Binf = D.FirstParameter();
   Bsup = D.LastParameter();
-  //-----------------------------------------------------
-  //-- IntRes2d Raise if HasFirst returns False
-  //-- and accesses First Parameter
-  //--
+
   double u  = Binf;
   double u1 = Bsup;
   double du = (u1 - u) / (double)(NbPts - 1);
-  //  int ip1,i=1;
+
   int i = 1;
 
   do
@@ -58,13 +43,8 @@ IntCurve_Polygon2dGen::IntCurve_Polygon2dGen(const TheCurve&        C,
     i++;
   } while (i <= NbPts);
 
-  //-----------------------------------------------------
-  //--- Calculate a maximal deflection
-  //---
-  //  Modified by Sergey KHROMOV - Mon Mar 24 12:03:05 2003 Begin
-  //   TheDeflection = 0.000000001;
   TheDeflection = std::min(0.000000001, Tol / 100.);
-  //  Modified by Sergey KHROMOV - Mon Mar 24 12:03:05 2003 End
+
   i = 1;
   u = D.FirstParameter();
   u += du * 0.5;
@@ -99,8 +79,6 @@ IntCurve_Polygon2dGen::IntCurve_Polygon2dGen(const TheCurve&        C,
   myBox.Enlarge(TheDeflection * MAJORATION_DEFLECTION);
   ClosedPolygon = false;
 }
-
-//=================================================================================================
 
 void IntCurve_Polygon2dGen::ComputeWithBox(const TheCurve& C, const Bnd_Box2d& BoxOtherPolygon)
 {
@@ -153,7 +131,7 @@ void IntCurve_Polygon2dGen::ComputeWithBox(const TheCurve& C, const Bnd_Box2d& B
           MaxIndexUsed = TheIndex.Value(i);
 
         Rprec = Ri;
-      } // if((Ri & Rprec)==0) condition
+      }
 
       Rprec = Ri;
     }
@@ -171,14 +149,13 @@ void IntCurve_Polygon2dGen::ComputeWithBox(const TheCurve& C, const Bnd_Box2d& B
       }
       double RatioDeflection;
       int    nbpassagedeflection = 0;
-      //      int PointHasBeenAdded = 0;
+
       do
       {
         nbpassagedeflection++;
-        //  Modified by Sergey KHROMOV - Mon Mar 24 12:05:28 2003 Begin
-        // 	double NewDeflection = 0.0000001;
+
         double NewDeflection = TheDeflection;
-        //  Modified by Sergey KHROMOV - Mon Mar 24 12:05:29 2003 End
+
         for (i = 2; i <= nbp; i++)
         {
           int             Ii   = TheIndex.Value(i);
@@ -264,8 +241,6 @@ bool IntCurve_Polygon2dGen::AutoIntersectionIsPossible() const
   return (false);
 }
 
-//=================================================================================================
-
 double IntCurve_Polygon2dGen::ApproxParamOnCurve(const int    Aindex,
                                                  const double TheParamOnLine) const
 {
@@ -293,7 +268,6 @@ double IntCurve_Polygon2dGen::ApproxParamOnCurve(const int    Aindex,
   return (u);
 }
 
-//======================================================================
 #if TEST
 
 extern bool DebugPolygon2d;
@@ -350,7 +324,7 @@ void IntCurve_Polygon2dGen::Dump(void) const
   }
 }
 #endif
-//======================================================================
+
 void IntCurve_Polygon2dGen::Segment(const int theIndex, gp_Pnt2d& theBegin, gp_Pnt2d& theEnd) const
 {
   int ind  = theIndex;
@@ -363,5 +337,3 @@ void IntCurve_Polygon2dGen::Segment(const int theIndex, gp_Pnt2d& theBegin, gp_P
   }
   theEnd = ThePnts(TheIndex(ind + 1));
 }
-
-//======================================================================

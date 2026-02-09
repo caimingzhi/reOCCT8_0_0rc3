@@ -10,11 +10,7 @@ typedef enum
   Msg_IndefiniteType
 } FormatType;
 
-//=================================================================================================
-
 Message_Msg::Message_Msg() = default;
-
-//=================================================================================================
 
 Message_Msg::Message_Msg(const Message_Msg& theMsg)
 {
@@ -24,30 +20,22 @@ Message_Msg::Message_Msg(const Message_Msg& theMsg)
     mySeqOfFormats.Append(theMsg.mySeqOfFormats.Value(i));
 }
 
-//=================================================================================================
-
 Message_Msg::Message_Msg(const char* theMsgCode)
 {
   TCollection_AsciiString aKey((char*)theMsgCode);
   Set(Message_MsgFile::Msg(aKey));
 }
 
-//=================================================================================================
-
 Message_Msg::Message_Msg(const TCollection_ExtendedString& theMsgCode)
 {
   Set(Message_MsgFile::Msg(theMsgCode));
 }
-
-//=================================================================================================
 
 void Message_Msg::Set(const char* theMsg)
 {
   TCollection_AsciiString aMsg((char*)theMsg);
   Set(aMsg);
 }
-
-//=================================================================================================
 
 void Message_Msg::Set(const TCollection_ExtendedString& theMsg)
 {
@@ -57,12 +45,12 @@ void Message_Msg::Set(const TCollection_ExtendedString& theMsg)
   int             anMsgLength = myMessageBody.Length();
   for (int i = 0; i < anMsgLength; i++)
   {
-    //  Search for '%' character starting a format specification
+
     if (ToCharacter(anExtString[i]) == '%')
     {
       int  aStart = i++;
       char aChar  = ToCharacter(anExtString[i]);
-      //        Check for format '%%'
+
       if (aChar == '%')
       {
         myMessageBody.Remove(i + 1);
@@ -70,7 +58,7 @@ void Message_Msg::Set(const TCollection_ExtendedString& theMsg)
           break;
         aChar = ToCharacter(anExtString[i]);
       }
-      //        Skip flags, field width and precision
+
       while (i < anMsgLength)
       {
         if (aChar == '-' || aChar == '+' || aChar == ' ' || aChar == '#'
@@ -86,7 +74,7 @@ void Message_Msg::Set(const TCollection_ExtendedString& theMsg)
       FormatType aFormatType;
       if (aChar == 'h' || aChar == 'l')
         aChar = ToCharacter(anExtString[++i]);
-      switch (aChar) // detect the type of format spec
+      switch (aChar)
       {
         case 'd':
         case 'i':
@@ -109,107 +97,83 @@ void Message_Msg::Set(const TCollection_ExtendedString& theMsg)
         default:
           continue;
       }
-      mySeqOfFormats.Append(int(aFormatType)); // type
-      mySeqOfFormats.Append(aStart);           // beginning pos
-      mySeqOfFormats.Append(i + 1 - aStart);   // length
+      mySeqOfFormats.Append(int(aFormatType));
+      mySeqOfFormats.Append(aStart);
+      mySeqOfFormats.Append(i + 1 - aStart);
     }
   }
   myOriginal = myMessageBody;
 }
 
-//=================================================================================================
-
 Message_Msg& Message_Msg::Arg(const char* theString)
 {
-  // get location and format
+
   TCollection_AsciiString aFormat;
   int                     aFirst = getFormat(Msg_StringType, aFormat);
   if (!aFirst)
     return *this;
 
-  // print string according to format
   char* sStringBuffer = new char[std::max(static_cast<int>(strlen(theString) + 1), 1024)];
   Sprintf(sStringBuffer, aFormat.ToCString(), theString);
   TCollection_ExtendedString aStr(sStringBuffer, true);
   delete[] sStringBuffer;
   sStringBuffer = nullptr;
 
-  // replace the format placeholder by the actual string
   replaceText(aFirst, aFormat.Length(), aStr);
 
   return *this;
 }
 
-//=======================================================================
-// function : Arg (TCollection_ExtendedString)
-// purpose  :
-// remark   : This type of string is inserted without conversion (i.e. like %s)
-//=======================================================================
-
 Message_Msg& Message_Msg::Arg(const TCollection_ExtendedString& theString)
 {
-  // get location and format
+
   TCollection_AsciiString aFormat;
   int                     aFirst = getFormat(Msg_StringType, aFormat);
   if (!aFirst)
     return *this;
 
-  // replace the format placeholder by the actual string
   replaceText(aFirst, aFormat.Length(), theString);
 
   return *this;
 }
 
-//=================================================================================================
-
 Message_Msg& Message_Msg::Arg(const int theValue)
 {
-  // get location and format
+
   TCollection_AsciiString aFormat;
   int                     aFirst = getFormat(Msg_IntegerType, aFormat);
   if (!aFirst)
     return *this;
 
-  // print string according to format
   char sStringBuffer[64];
   Sprintf(sStringBuffer, aFormat.ToCString(), theValue);
   TCollection_ExtendedString aStr(sStringBuffer);
 
-  // replace the format placeholder by the actual string
   replaceText(aFirst, aFormat.Length(), aStr);
 
   return *this;
 }
 
-//=================================================================================================
-
 Message_Msg& Message_Msg::Arg(const double theValue)
 {
-  // get location and format
+
   TCollection_AsciiString aFormat;
   int                     aFirst = getFormat(Msg_RealType, aFormat);
   if (!aFirst)
     return *this;
 
-  // print string according to format
   char sStringBuffer[64];
   Sprintf(sStringBuffer, aFormat.ToCString(), theValue);
   TCollection_ExtendedString aStr(sStringBuffer);
 
-  // replace the format placeholder by the actual string
   replaceText(aFirst, aFormat.Length(), aStr);
 
   return *this;
 }
 
-//=======================================================================
-// function : Get
-// purpose  : used when the message is dispatched in Message_Messenger
-//=======================================================================
-
 const TCollection_ExtendedString& Message_Msg::Get()
 {
-  // remove all non-initialised format specifications
+
   int                                     i, anIncrement = 0;
   static const TCollection_ExtendedString anUnknown("UNKNOWN");
   for (i = 1; i < mySeqOfFormats.Length(); i += 3)
@@ -224,41 +188,25 @@ const TCollection_ExtendedString& Message_Msg::Get()
   return myMessageBody;
 }
 
-//=======================================================================
-// function : getFormat
-// purpose  : Find placeholder in the string where to put next value of
-//           specified type, return its starting position in the string
-//           and relevant format string (located at that position).
-//           The information on returned placeholder is deleted immediately,
-//           so it will not be found further
-//           If failed (no placeholder with relevant type found), returns 0
-//=======================================================================
-
 int Message_Msg::getFormat(const int theType, TCollection_AsciiString& theFormat)
 {
   for (int i = 1; i <= mySeqOfFormats.Length(); i += 3)
     if (mySeqOfFormats(i) == theType)
     {
-      // Extract format
+
       int aFirst = mySeqOfFormats(i + 1);
       int aLen   = mySeqOfFormats(i + 2);
       theFormat  = TCollection_AsciiString(aLen, ' ');
       for (int j = 1; j <= aLen; j++)
         if (IsAnAscii(myMessageBody.Value(aFirst + j)))
           theFormat.SetValue(j, (char)myMessageBody.Value(aFirst + j));
-      // delete information on this placeholder
+
       mySeqOfFormats.Remove(i, i + 2);
-      // return start position
+
       return aFirst + 1;
     }
   return 0;
 }
-
-//=======================================================================
-// function : replaceText
-// purpose  : Replace format text in myMessageBody (theNb chars from theFirst)
-//           by string theStr
-//=======================================================================
 
 void Message_Msg::replaceText(const int                         theFirst,
                               const int                         theNb,
@@ -267,7 +215,6 @@ void Message_Msg::replaceText(const int                         theFirst,
   myMessageBody.Remove(theFirst, theNb);
   myMessageBody.Insert(theFirst, theStr);
 
-  // update information on remaining format placeholders
   int anIncrement = theStr.Length() - theNb;
   if (!anIncrement)
     return;

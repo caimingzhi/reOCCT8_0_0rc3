@@ -19,7 +19,6 @@ class TopoDS_Shape;
 class TopoDS_Wire;
 class TopoDS_Edge;
 
-//! Build Section Law, with an Vertex, or an Wire
 class BRepFill_SectionLaw : public Standard_Transient
 {
 
@@ -38,7 +37,6 @@ public:
 
   Standard_EXPORT bool IsDone() const;
 
-  //! Say if the input shape is a vertex.
   Standard_EXPORT virtual bool IsVertex() const = 0;
 
   Standard_EXPORT virtual occ::handle<GeomFill_SectionLaw> ConcatenedLaw() const = 0;

@@ -4,9 +4,6 @@
 #include <Standard_Macro.hpp>
 #include <Standard_HashUtils.hpp>
 
-//! Structure containing two IDs (of nodes) for using as a key in a map
-//! (as representation of a mesh link)
-//!
 struct MeshVS_TwoNodes
 {
   int First, Second;
@@ -31,7 +28,7 @@ namespace std
   {
     size_t operator()(const MeshVS_TwoNodes& theTwoNodes) const noexcept
     {
-      // Combine two int values into a single hash value.
+
       int aCombination[2]{theTwoNodes.First, theTwoNodes.Second};
       if (aCombination[0] > aCombination[1])
       {

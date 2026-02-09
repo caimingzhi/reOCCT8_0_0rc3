@@ -9,8 +9,6 @@
 
 class math_Matrix;
 
-//! Class for a function used to compute a symmetric chamfer
-//! with constant throat that is the height of isosceles triangle in section
 class BlendFunc_ConstThroat : public BlendFunc_GenChamfer
 {
 public:
@@ -20,16 +18,8 @@ public:
                                         const occ::handle<Adaptor3d_Surface>& S2,
                                         const occ::handle<Adaptor3d_Curve>&   C);
 
-  //! computes the values <F> of the Functions for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Value(const math_Vector& X, math_Vector& F) override;
 
-  //! returns the values <D> of the derivatives for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Derivatives(const math_Vector& X, math_Matrix& D) override;
 
   Standard_EXPORT void Set(const double Param) override;
@@ -50,10 +40,6 @@ public:
 
   Standard_EXPORT const gp_Vec2d& Tangent2dOnS2() const override;
 
-  //! Returns the tangent vector at the section,
-  //! at the beginning and the end of the section, and
-  //! returns the normal (of the surfaces) at
-  //! these points.
   Standard_EXPORT void Tangent(const double U1,
                                const double V1,
                                const double U2,
@@ -63,10 +49,8 @@ public:
                                gp_Vec&      NormFirst,
                                gp_Vec&      NormLast) const override;
 
-  //! Sets the throat and the "quadrant".
   Standard_EXPORT void Set(const double aThroat, const double, const int Choix) override;
 
-  //! Returns the length of the maximum section
   Standard_EXPORT double GetSectionSize() const override;
 
 protected:

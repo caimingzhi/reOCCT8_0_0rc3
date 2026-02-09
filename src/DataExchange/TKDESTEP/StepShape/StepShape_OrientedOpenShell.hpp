@@ -16,7 +16,6 @@ class StepShape_OrientedOpenShell : public StepShape_OpenShell
 {
 
 public:
-  //! Returns a OrientedOpenShell
   Standard_EXPORT StepShape_OrientedOpenShell();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

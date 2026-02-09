@@ -5,11 +5,7 @@
 #include <StepRepr_ShapeAspect.hpp>
 #include <StepShape_DimensionalLocation.hpp>
 
-//=================================================================================================
-
 RWStepShape_RWDimensionalLocation::RWStepShape_RWDimensionalLocation() = default;
-
-//=================================================================================================
 
 void RWStepShape_RWDimensionalLocation::ReadStep(
   const occ::handle<StepData_StepReaderData>&       data,
@@ -17,11 +13,9 @@ void RWStepShape_RWDimensionalLocation::ReadStep(
   occ::handle<Interface_Check>&                     ach,
   const occ::handle<StepShape_DimensionalLocation>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "dimensional_location"))
     return;
-
-  // Inherited fields of ShapeAspectRelationship
 
   occ::handle<TCollection_HAsciiString> aShapeAspectRelationship_Name;
   data->ReadString(num, 1, "shape_aspect_relationship.name", ach, aShapeAspectRelationship_Name);
@@ -57,7 +51,6 @@ void RWStepShape_RWDimensionalLocation::ReadStep(
                    STANDARD_TYPE(StepRepr_ShapeAspect),
                    aShapeAspectRelationship_RelatedShapeAspect);
 
-  // Initialize entity
   ent->Init(aShapeAspectRelationship_Name,
             hasShapeAspectRelationship_Description,
             aShapeAspectRelationship_Description,
@@ -65,14 +58,10 @@ void RWStepShape_RWDimensionalLocation::ReadStep(
             aShapeAspectRelationship_RelatedShapeAspect);
 }
 
-//=================================================================================================
-
 void RWStepShape_RWDimensionalLocation::WriteStep(
   StepData_StepWriter&                              SW,
   const occ::handle<StepShape_DimensionalLocation>& ent) const
 {
-
-  // Inherited fields of ShapeAspectRelationship
 
   SW.Send(ent->StepRepr_ShapeAspectRelationship::Name());
 
@@ -88,13 +77,9 @@ void RWStepShape_RWDimensionalLocation::WriteStep(
   SW.Send(ent->StepRepr_ShapeAspectRelationship::RelatedShapeAspect());
 }
 
-//=================================================================================================
-
 void RWStepShape_RWDimensionalLocation::Share(const occ::handle<StepShape_DimensionalLocation>& ent,
                                               Interface_EntityIterator& iter) const
 {
-
-  // Inherited fields of ShapeAspectRelationship
 
   iter.AddItem(ent->StepRepr_ShapeAspectRelationship::RelatingShapeAspect());
 

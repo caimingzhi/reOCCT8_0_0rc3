@@ -12,24 +12,16 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_DatumDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(DescrIndexString, "descr")
 IMPLEMENT_DOMSTRING(IdIndexString, "ident")
 
-//=================================================================================================
-
 XmlMXCAFDoc_DatumDriver::XmlMXCAFDoc_DatumDriver(const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "Datum")
 {
 }
-
-//=================================================================================================
 
 occ::handle<TDF_Attribute> XmlMXCAFDoc_DatumDriver::NewEmpty() const
 {
   return (new XCAFDoc_Datum());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMXCAFDoc_DatumDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                     const occ::handle<TDF_Attribute>& theTarget,
                                     XmlObjMgt_RRelocationTable&) const
@@ -67,10 +59,6 @@ bool XmlMXCAFDoc_DatumDriver::Paste(const XmlObjMgt_Persistent&       theSource,
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMXCAFDoc_DatumDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                     XmlObjMgt_Persistent&             theTarget,
                                     XmlObjMgt_SRelocationTable&) const

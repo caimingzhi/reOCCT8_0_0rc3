@@ -17,15 +17,10 @@ public:
 
   Standard_EXPORT GeomFill_LocFunction(const occ::handle<GeomFill_LocationLaw>& Law);
 
-  //! compute the section for v = param
   Standard_EXPORT bool D0(const double Param, const double First, const double Last);
 
-  //! compute the first derivative in v direction of the
-  //! section for v = param
   Standard_EXPORT bool D1(const double Param, const double First, const double Last);
 
-  //! compute the second derivative in v direction of the
-  //! section for v = param
   Standard_EXPORT bool D2(const double Param, const double First, const double Last);
 
   Standard_EXPORT void DN(const double Param,

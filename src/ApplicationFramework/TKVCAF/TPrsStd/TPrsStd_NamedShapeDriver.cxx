@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// last modified by SRN 01/08/2000
 
 #include <AIS_InteractiveContext.hpp>
 #include <AIS_InteractiveObject.hpp>
@@ -27,24 +14,9 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_NamedShapeDriver, TPrsStd_Driver)
 
-#undef OPTIM_UPDATE // If this variable is defined there will be done
-
-//                      more optimized update of AIS_Shape. If an object was
-//                      erased in the viewer and its location was changed
-//                      but topological data wasn't then when displayed only
-//                      the object's presentation will be moved to new location
-//                      without recompute. The shape in AIS_Shape will
-//                      be the previous one with the old location.
-//                      NOTE! After selection of sub shapes of the object
-//                      they will have THE OLD LOCATION and it has to be
-//                      compared with location of AIS_Shape that will contain
-//                      the right location of shape.
-
-//=================================================================================================
+#undef OPTIM_UPDATE
 
 TPrsStd_NamedShapeDriver::TPrsStd_NamedShapeDriver() = default;
-
-//=================================================================================================
 
 bool TPrsStd_NamedShapeDriver::Update(const TDF_Label&                    aLabel,
                                       occ::handle<AIS_InteractiveObject>& AIS)
@@ -56,7 +28,6 @@ bool TPrsStd_NamedShapeDriver::Update(const TDF_Label&                    aLabel
     return false;
   }
 
-  // TopoDS_Shape S = TNaming_Tool::CurrentShape (NS);
   TopoDS_Shape S = TNaming_Tool::GetShape(NS);
   if (S.IsNull())
   {

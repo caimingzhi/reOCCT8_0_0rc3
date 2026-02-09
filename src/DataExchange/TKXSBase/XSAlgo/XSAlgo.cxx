@@ -7,8 +7,6 @@
 
 static occ::handle<XSAlgo_AlgoContainer> theContainer;
 
-//=================================================================================================
-
 void XSAlgo::Init()
 {
   static bool init = false;
@@ -18,44 +16,36 @@ void XSAlgo::Init()
   ShapeAlgo::Init();
   theContainer = new XSAlgo_AlgoContainer;
 
-  // init parameters
   Interface_Static::Standards();
 
-  // #74 rln 10.03.99 S4135: adding new parameter for handling use of BRepLib::SameParameter
   Interface_Static::Init("XSTEP", "read.stdsameparameter.mode", 'e', "");
   Interface_Static::Init("XSTEP", "read.stdsameparameter.mode", '&', "ematch 0");
   Interface_Static::Init("XSTEP", "read.stdsameparameter.mode", '&', "eval Off");
   Interface_Static::Init("XSTEP", "read.stdsameparameter.mode", '&', "eval On");
   Interface_Static::SetIVal("read.stdsameparameter.mode", 0);
 
-  // unit: supposed to be cascade unit (target unit for reading)
   Interface_Static::Init("XSTEP", "xstep.cascade.unit", 'e', "");
   Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "enum 1");
-  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval INCH"); // 1
-  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval MM");   // 2
-  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval ??");   // 3
-  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval FT");   // 4
-  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval MI");   // 5
-  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval M");    // 6
-  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval KM");   // 7
-  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval MIL");  // 8
-  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval UM");   // 9
-  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval CM");   // 10
-  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval UIN");  // 11
+  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval INCH");
+  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval MM");
+  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval ??");
+  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval FT");
+  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval MI");
+  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval M");
+  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval KM");
+  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval MIL");
+  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval UM");
+  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval CM");
+  Interface_Static::Init("XSTEP", "xstep.cascade.unit", '&', "eval UIN");
   Interface_Static::SetCVal("xstep.cascade.unit", "MM");
 
-  // init Standard Shape Processing operators
   ShapeProcess_OperLibrary::Init();
 }
-
-//=================================================================================================
 
 void XSAlgo::SetAlgoContainer(const occ::handle<XSAlgo_AlgoContainer>& aContainer)
 {
   theContainer = aContainer;
 }
-
-//=================================================================================================
 
 occ::handle<XSAlgo_AlgoContainer> XSAlgo::AlgoContainer()
 {

@@ -9,7 +9,6 @@ class StepGeom_Curve : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a Curve
   Standard_EXPORT StepGeom_Curve();
 
   DEFINE_STANDARD_RTTIEXT(StepGeom_Curve, StepGeom_GeometricRepresentationItem)

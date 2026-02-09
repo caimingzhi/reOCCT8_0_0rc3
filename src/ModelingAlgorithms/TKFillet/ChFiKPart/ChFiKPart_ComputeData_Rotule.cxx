@@ -22,8 +22,6 @@
 #include <Precision.hpp>
 #include <TopOpeBRepDS_DataStructure.hpp>
 
-//=================================================================================================
-
 bool ChFiKPart_MakeRotule(TopOpeBRepDS_DataStructure&         DStr,
                           const occ::handle<ChFiDS_SurfData>& Data,
                           const gp_Pln&                       pl,
@@ -36,8 +34,6 @@ bool ChFiKPart_MakeRotule(TopOpeBRepDS_DataStructure&         DStr,
                           const TopAbs_Orientation            ofpl)
 {
 
-  // calcul du tore.
-  //---------------
   gp_Ax3 pos    = pl.Position();
   gp_Dir dpl    = pos.XDirection().Crossed(pos.YDirection());
   gp_Dir dfpl   = dpl;
@@ -84,8 +80,6 @@ bool ChFiKPart_MakeRotule(TopOpeBRepDS_DataStructure&         DStr,
   occ::handle<Geom_ToroidalSurface> gtor = new Geom_ToroidalSurface(ppos, r, r);
   Data->ChangeSurf(ChFiKPart_IndexSurfaceInDS(gtor, DStr));
 
-  // on compare l orientation du tore a celle de la face en bout.
-  //------------------------------------------------------------
   gp_Pnt pp;
   gp_Vec du, dv;
   ElSLib::TorusD1(0., M_PI / 2, ppos, r, r, pp, du, dv);
@@ -101,11 +95,6 @@ bool ChFiKPart_MakeRotule(TopOpeBRepDS_DataStructure&         DStr,
     Data->ChangeOrientation() = TopAbs_FORWARD;
   }
 
-  // on charge les FaceInterferences avec les pcurves et courbes 3d.
-  //-----------------------------------------------------------------
-
-  // du cote du plan
-  //---------------
   gp_Ax2 circAx2 = ppos.Ax2();
   circAx2.SetLocation(pcirc);
   occ::handle<Geom_Circle> GC = new Geom_Circle(circAx2, r);
@@ -127,8 +116,6 @@ bool ChFiKPart_MakeRotule(TopOpeBRepDS_DataStructure&         DStr,
                                                  GC2d,
                                                  GL2d);
 
-  // du cote pointu
-  //--------------
   occ::handle<Geom_Curve>   bid;
   occ::handle<Geom2d_Curve> bid2d;
   p2dlin.SetCoord(0., M_PI);
@@ -138,8 +125,6 @@ bool ChFiKPart_MakeRotule(TopOpeBRepDS_DataStructure&         DStr,
                                                  bid2d,
                                                  GL2dcoin);
 
-  // et les points
-  //-------------
   Data->ChangeVertexFirstOnS1().SetPoint(pp);
   ElSLib::TorusD0(alpha, M_PI / 2, ppos, r, r, pp);
   Data->ChangeVertexLastOnS1().SetPoint(pp);

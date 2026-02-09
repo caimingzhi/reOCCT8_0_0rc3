@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_KinematicLinkRepresentationAssociation;
 
-//! Read & Write tool for KinematicLinkRepresentationAssociation
 class RWStepKinematics_RWKinematicLinkRepresentationAssociation
 {
 public:

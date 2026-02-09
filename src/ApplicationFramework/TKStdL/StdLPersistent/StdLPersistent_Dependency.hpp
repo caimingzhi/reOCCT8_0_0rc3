@@ -12,26 +12,21 @@ class StdLPersistent_Dependency
   class instance : public StdObjMgt_Attribute<AttribClass>
   {
   public:
-    //! Read persistent data from a file.
     inline void Read(StdObjMgt_ReadData& theReadData) { theReadData >> myName >> myVariables; }
 
-    //! Write persistent data to a file.
     inline void Write(StdObjMgt_WriteData& theWriteData) const
     {
       theWriteData << myName << myVariables;
     }
 
-    //! Gets persistent child objects
     inline void PChildren(StdObjMgt_Persistent::SequenceOfPersistent& theChildren) const
     {
       theChildren.Append(myName);
       theChildren.Append(myVariables);
     }
 
-    //! Returns persistent type name
     const char* PName() const;
 
-    //! Import transient attribute from the persistent data.
     void Import(const occ::handle<AttribClass>& theAttribute) const;
 
   private:

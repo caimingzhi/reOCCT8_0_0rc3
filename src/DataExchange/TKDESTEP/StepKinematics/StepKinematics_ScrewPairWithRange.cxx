@@ -1,18 +1,14 @@
-// Created on : Sat May 02 12:41:16 2020
+
 
 #include <StepKinematics_ScrewPairWithRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_ScrewPairWithRange, StepKinematics_ScrewPair)
-
-//=================================================================================================
 
 StepKinematics_ScrewPairWithRange::StepKinematics_ScrewPairWithRange()
 {
   defLowerLimitActualRotation = false;
   defUpperLimitActualRotation = false;
 }
-
-//=================================================================================================
 
 void StepKinematics_ScrewPairWithRange::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -54,14 +50,10 @@ void StepKinematics_ScrewPairWithRange::Init(
     myUpperLimitActualRotation = 0;
 }
 
-//=================================================================================================
-
 double StepKinematics_ScrewPairWithRange::LowerLimitActualRotation() const
 {
   return myLowerLimitActualRotation;
 }
-
-//=================================================================================================
 
 void StepKinematics_ScrewPairWithRange::SetLowerLimitActualRotation(
   const double theLowerLimitActualRotation)
@@ -69,29 +61,21 @@ void StepKinematics_ScrewPairWithRange::SetLowerLimitActualRotation(
   myLowerLimitActualRotation = theLowerLimitActualRotation;
 }
 
-//=================================================================================================
-
 bool StepKinematics_ScrewPairWithRange::HasLowerLimitActualRotation() const
 {
   return defLowerLimitActualRotation;
 }
-
-//=================================================================================================
 
 double StepKinematics_ScrewPairWithRange::UpperLimitActualRotation() const
 {
   return myUpperLimitActualRotation;
 }
 
-//=================================================================================================
-
 void StepKinematics_ScrewPairWithRange::SetUpperLimitActualRotation(
   const double theUpperLimitActualRotation)
 {
   myUpperLimitActualRotation = theUpperLimitActualRotation;
 }
-
-//=================================================================================================
 
 bool StepKinematics_ScrewPairWithRange::HasUpperLimitActualRotation() const
 {

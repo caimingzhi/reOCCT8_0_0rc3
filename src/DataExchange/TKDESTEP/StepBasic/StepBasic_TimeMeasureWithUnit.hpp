@@ -8,7 +8,6 @@ class StepBasic_TimeMeasureWithUnit : public StepBasic_MeasureWithUnit
 {
 
 public:
-  //! Returns a TimeMeasureWithUnit
   Standard_EXPORT StepBasic_TimeMeasureWithUnit();
 
   DEFINE_STANDARD_RTTIEXT(StepBasic_TimeMeasureWithUnit, StepBasic_MeasureWithUnit)

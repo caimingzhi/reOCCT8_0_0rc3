@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Font_SystemFont, Standard_Transient)
 
-//=================================================================================================
-
 Font_SystemFont::Font_SystemFont(const TCollection_AsciiString& theFontName)
     : myFontKey(theFontName),
       myFontName(theFontName),
@@ -20,8 +18,6 @@ Font_SystemFont::Font_SystemFont(const TCollection_AsciiString& theFontName)
   myFontKey.LowerCase();
 }
 
-//=================================================================================================
-
 void Font_SystemFont::SetFontPath(Font_FontAspect                theAspect,
                                   const TCollection_AsciiString& thePath,
                                   const int                      theFaceId)
@@ -34,14 +30,10 @@ void Font_SystemFont::SetFontPath(Font_FontAspect                theAspect,
   myFaceIds[theAspect]   = theFaceId;
 }
 
-//=================================================================================================
-
 bool Font_SystemFont::IsEqual(const occ::handle<Font_SystemFont>& theOtherFont) const
 {
   return theOtherFont.get() == this || myFontKey.IsEqual(theOtherFont->myFontKey);
 }
-
-//=================================================================================================
 
 TCollection_AsciiString Font_SystemFont::ToString() const
 {

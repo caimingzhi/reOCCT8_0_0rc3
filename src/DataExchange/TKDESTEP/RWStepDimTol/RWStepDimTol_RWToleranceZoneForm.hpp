@@ -11,22 +11,18 @@ class Interface_Check;
 class StepDimTol_ToleranceZoneForm;
 class StepData_StepWriter;
 
-//! Read & Write tool for ToleranceZoneForm
 class RWStepDimTol_RWToleranceZoneForm
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepDimTol_RWToleranceZoneForm();
 
-  //! Reads ToleranceZoneForm
   Standard_HIDDEN void ReadStep(const occ::handle<StepData_StepReaderData>&      data,
                                 const int                                        num,
                                 occ::handle<Interface_Check>&                    ach,
                                 const occ::handle<StepDimTol_ToleranceZoneForm>& ent) const;
 
-  //! Writes ToleranceZoneForm
   Standard_HIDDEN void WriteStep(StepData_StepWriter&                             SW,
                                  const occ::handle<StepDimTol_ToleranceZoneForm>& ent) const;
 };

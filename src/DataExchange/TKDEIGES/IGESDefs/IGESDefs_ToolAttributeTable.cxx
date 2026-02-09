@@ -31,7 +31,7 @@ void IGESDefs_ToolAttributeTable::ReadOwnParams(const occ::handle<IGESDefs_Attri
   int  j;
   bool st = true;
 
-  occ::handle<IGESDefs_AttributeDef> ab = ent->Definition(); // formerly loaded
+  occ::handle<IGESDefs_AttributeDef>                                ab = ent->Definition();
   occ::handle<NCollection_HArray2<occ::handle<Standard_Transient>>> list2;
   if (ab.IsNull())
   {
@@ -45,7 +45,6 @@ void IGESDefs_ToolAttributeTable::ReadOwnParams(const occ::handle<IGESDefs_Attri
   if (st)
     list2 = new NCollection_HArray2<occ::handle<Standard_Transient>>(1, na, 1, nr);
 
-  //  AttributeDef repeated once (Form 0) or <nr> times (Form 1)
   for (int k = 1; k <= nr; k++)
   {
     for (int i = 1; i <= na; i++)
@@ -56,7 +55,7 @@ void IGESDefs_ToolAttributeTable::ReadOwnParams(const occ::handle<IGESDefs_Attri
       {
         case 0:
           for (j = 1; j <= avc; j++)
-            PR.SetCurrentNumber(PR.CurrentNumber() + 1); // skip
+            PR.SetCurrentNumber(PR.CurrentNumber() + 1);
           break;
         case 1:
         {
@@ -65,7 +64,7 @@ void IGESDefs_ToolAttributeTable::ReadOwnParams(const occ::handle<IGESDefs_Attri
           int item;
           for (j = 1; j <= avc; j++)
           {
-            // st = PR.ReadInteger(PR.Current(),"Value",item); //szv#4:S4163:12Mar99 moved in if
+
             if (PR.ReadInteger(PR.Current(), "Value", item))
               attrInt->SetValue(j, item);
           }
@@ -79,7 +78,7 @@ void IGESDefs_ToolAttributeTable::ReadOwnParams(const occ::handle<IGESDefs_Attri
           double item;
           for (j = 1; j <= avc; j++)
           {
-            // st = PR.ReadReal(PR.Current(),"Value",item); //szv#4:S4163:12Mar99 moved in if
+
             if (PR.ReadReal(PR.Current(), "Value", item))
               attrReal->SetValue(j, item);
           }
@@ -93,7 +92,7 @@ void IGESDefs_ToolAttributeTable::ReadOwnParams(const occ::handle<IGESDefs_Attri
           occ::handle<TCollection_HAsciiString> item;
           for (j = 1; j <= avc; j++)
           {
-            // st = PR.ReadText(PR.Current(),"Value",item); //szv#4:S4163:12Mar99 moved in if
+
             if (PR.ReadText(PR.Current(), "Value", item))
               attrStr->SetValue(j, item);
           }
@@ -107,7 +106,7 @@ void IGESDefs_ToolAttributeTable::ReadOwnParams(const occ::handle<IGESDefs_Attri
           occ::handle<IGESData_IGESEntity> item;
           for (j = 1; j <= avc; j++)
           {
-            // st = PR.ReadEntity(IR,PR.Current(),"Value",item); //szv#4:S4163:12Mar99 moved in if
+
             if (PR.ReadEntity(IR, PR.Current(), "Value", item))
               attrEnt->SetValue(j, item);
           }
@@ -115,16 +114,16 @@ void IGESDefs_ToolAttributeTable::ReadOwnParams(const occ::handle<IGESDefs_Attri
         break;
         case 5:
           for (j = 1; j <= avc; j++)
-            PR.SetCurrentNumber(PR.CurrentNumber() + 1); // skip
+            PR.SetCurrentNumber(PR.CurrentNumber() + 1);
           break;
         case 6:
-        { // Here item takes value 0 or 1
+        {
           occ::handle<NCollection_HArray1<int>> attrInt = new NCollection_HArray1<int>(1, avc);
           list2->SetValue(i, k, attrInt);
           int item;
           for (j = 1; j <= avc; j++)
           {
-            // st = PR.ReadInteger(PR.Current(),"Value",item); //szv#4:S4163:12Mar99 moved in if
+
             if (PR.ReadInteger(PR.Current(), "Value", item))
               attrInt->SetValue(j, item);
           }
@@ -223,7 +222,7 @@ void IGESDefs_ToolAttributeTable::OwnCopy(const occ::handle<IGESDefs_AttributeTa
       int atype = ab->AttributeValueDataType(i);
       switch (atype)
       {
-        case 0: ////    list2->SetValue(i,k,NULL);    by default
+        case 0:
           break;
         case 1:
         {
@@ -269,10 +268,10 @@ void IGESDefs_ToolAttributeTable::OwnCopy(const occ::handle<IGESDefs_AttributeTa
                               GetCasted(IGESData_IGESEntity, TC.Transferred(otherEnt->Value(j))));
         }
         break;
-        case 5: /////	      list2->SetValue(i,k,NULL);    by default
+        case 5:
           break;
         case 6:
-        { // Here item takes value 0 or 1
+        {
           DeclareAndCast(NCollection_HArray1<int>, otherInt, another->AttributeList(i, k));
           occ::handle<NCollection_HArray1<int>> attrInt = new NCollection_HArray1<int>(1, avc);
           list2->SetValue(i, k, attrInt);
@@ -289,7 +288,7 @@ void IGESDefs_ToolAttributeTable::OwnCopy(const occ::handle<IGESDefs_AttributeTa
 }
 
 IGESData_DirChecker IGESDefs_ToolAttributeTable::DirChecker(
-  const occ::handle<IGESDefs_AttributeTable>& /* ent */) const
+  const occ::handle<IGESDefs_AttributeTable>&) const
 {
   IGESData_DirChecker DC(422, 0, 1);
   DC.Structure(IGESData_DefReference);

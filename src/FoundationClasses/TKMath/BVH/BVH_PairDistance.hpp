@@ -3,22 +3,13 @@
 #include <BVH_Traverse.hpp>
 #include <BVH_Tools.hpp>
 
-//! Abstract class for computation of the min distance between
-//! elements of two BVH trees.
-//! To use this class it is required to define only the method
-//! *Accept* to compute the distance between elements of the trees.
-//!
-//! \tparam NumType Numeric data type
-//! \tparam Dimension Vector dimension
-//! \tparam BVHSetType Type of the set on which BVH is built
 template <class NumType, int Dimension, class BVHSetType>
 class BVH_PairDistance : public BVH_PairTraverse<NumType, Dimension, BVHSetType, NumType>
 {
 public:
   typedef typename BVH_Tools<NumType, Dimension>::BVH_VecNt BVH_VecNt;
 
-public: //! @name Constructor
-  //! Constructor
+public:
   BVH_PairDistance()
       : BVH_PairTraverse<NumType, Dimension, BVHSetType, NumType>(),
         myDistance(std::numeric_limits<NumType>::max()),
@@ -26,29 +17,24 @@ public: //! @name Constructor
   {
   }
 
-public: //! @name Compute the distance
-  //! Computes the distance between two BVH trees
+public:
   NumType ComputeDistance()
   {
     myIsDone = this->Select() > 0;
     return myDistance;
   }
 
-public: //! @name Accessing the results
-  //! Returns IsDone flag
+public:
   bool IsDone() const { return myIsDone; }
 
-  //! Returns the computed distance
   NumType Distance() const { return myDistance; }
 
-public: //! @name Definition of the rules for tree descend
-  //! Compares the two metrics and chooses the best one
+public:
   bool IsMetricBetter(const NumType& theLeft, const NumType& theRight) const override
   {
     return theLeft < theRight;
   }
 
-  //! Computes the distance between boxes of the nodes
   bool RejectNode(const BVH_VecNt& theCornerMin1,
                   const BVH_VecNt& theCornerMax1,
                   const BVH_VecNt& theCornerMin2,
@@ -62,13 +48,11 @@ public: //! @name Definition of the rules for tree descend
     return theMetric > myDistance;
   }
 
-  //! Rejects the branch by the metric
   bool RejectMetric(const NumType& theMetric) const override { return theMetric > myDistance; }
 
-  //! Returns the flag controlling the tree descend
   bool Stop() const override { return myDistance == static_cast<NumType>(0); }
 
-protected:            //! @name Fields
-  NumType myDistance; //!< Square distance
-  bool    myIsDone;   //!< State of the algorithm
+protected:
+  NumType myDistance;
+  bool    myIsDone;
 };

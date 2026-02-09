@@ -10,7 +10,6 @@ class StepShape_BoxDomain : public Standard_Transient
 {
 
 public:
-  //! Returns a BoxDomain
   Standard_EXPORT StepShape_BoxDomain();
 
   Standard_EXPORT void Init(const occ::handle<StepGeom_CartesianPoint>& aCorner,

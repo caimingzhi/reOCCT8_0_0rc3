@@ -1,16 +1,4 @@
-// Author: Kirill Gavrilov
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <RWObj_TriangulationReader.hpp>
 
@@ -19,8 +7,6 @@
 #include <TopoDS_Iterator.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(RWObj_TriangulationReader, RWObj_Reader)
-
-//=================================================================================================
 
 bool RWObj_TriangulationReader::addMesh(const RWObj_SubMesh&      theMesh,
                                         const RWObj_SubMeshReason theReason)
@@ -38,7 +24,7 @@ bool RWObj_TriangulationReader::addMesh(const RWObj_SubMesh&      theMesh,
     myTriangles.Clear();
     if (theMesh.Group != myLastGroupName)
     {
-      // flush previous group and start a new one
+
       if (addSubShape(myLastObjectShape, myLastGroupShape, false))
       {
         if (myShapeReceiver != nullptr)
@@ -68,7 +54,7 @@ bool RWObj_TriangulationReader::addMesh(const RWObj_SubMesh&      theMesh,
 
   if (theReason == RWObj_SubMeshReason_NewObject)
   {
-    // forced flush at the end of the object
+
     if (addSubShape(myLastObjectShape, myLastGroupShape, false))
     {
       if (myShapeReceiver != nullptr)
@@ -94,8 +80,6 @@ bool RWObj_TriangulationReader::addMesh(const RWObj_SubMesh&      theMesh,
   }
   return true;
 }
-
-//=================================================================================================
 
 bool RWObj_TriangulationReader::addSubShape(TopoDS_Shape&       theParent,
                                             const TopoDS_Shape& theSubShape,
@@ -130,8 +114,6 @@ bool RWObj_TriangulationReader::addSubShape(TopoDS_Shape&       theParent,
   theParent = aComp;
   return true;
 }
-
-//=================================================================================================
 
 occ::handle<Poly_Triangulation> RWObj_TriangulationReader::GetTriangulation()
 {
@@ -189,8 +171,6 @@ occ::handle<Poly_Triangulation> RWObj_TriangulationReader::GetTriangulation()
 
   return aPoly;
 }
-
-//=================================================================================================
 
 TopoDS_Shape RWObj_TriangulationReader::ResultShape()
 {

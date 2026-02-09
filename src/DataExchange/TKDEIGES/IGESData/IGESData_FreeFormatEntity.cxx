@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IGESData_FreeFormatEntity.hpp>
 #include <IGESData_IGESEntity.hpp>
@@ -21,8 +10,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_FreeFormatEntity, IGESData_UndefinedEntity)
 
-//  Provides simple access to the constitution of an UndefinedEntity :
-//  Methods of UndefinedContent, + Type & Form, + AddEntities (little gadget)
 IGESData_FreeFormatEntity::IGESData_FreeFormatEntity() = default;
 
 void IGESData_FreeFormatEntity::SetTypeNumber(const int typenum)
@@ -140,7 +127,7 @@ void IGESData_FreeFormatEntity::ClearNegativePointers()
 
 void IGESData_FreeFormatEntity::WriteOwnParams(IGESData_IGESWriter& IW) const
 {
-  //  Redefined from UndefinedEntity for : NegativePointers
+
   int neg  = 0;
   int fneg = 0;
   if (!thenegptrs.IsNull())
@@ -159,7 +146,7 @@ void IGESData_FreeFormatEntity::WriteOwnParams(IGESData_IGESWriter& IW) const
     else if (UndefinedContent()->IsParamEntity(i))
     {
       DeclareAndCast(IGESData_IGESEntity, anent, UndefinedContent()->ParamEntity(i));
-      //  Send Entity : Redefini
+
       if (i == neg)
       {
         IW.Send(anent, true);

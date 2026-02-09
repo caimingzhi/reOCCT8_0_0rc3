@@ -11,7 +11,6 @@ class StepGeom_BezierSurface;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for BezierSurface
 class RWStepGeom_RWBezierSurface
 {
 public:

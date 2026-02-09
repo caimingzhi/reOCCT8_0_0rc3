@@ -12,7 +12,6 @@ class StepBasic_ProductDefinition : public Standard_Transient
 {
 
 public:
-  //! Returns a ProductDefinition
   Standard_EXPORT StepBasic_ProductDefinition();
 
   Standard_EXPORT void Init(

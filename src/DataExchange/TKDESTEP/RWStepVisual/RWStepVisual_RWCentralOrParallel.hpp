@@ -8,9 +8,6 @@ namespace RWStepVisual_RWCentralOrParallel
   static constexpr char copCentral[]  = ".CENTRAL.";
   static constexpr char copParallel[] = ".PARALLEL.";
 
-  //! Convert StepVisual_CentralOrParallel to string
-  //! @param theSourceEnum The StepVisual_CentralOrParallel value to convert
-  //! @return The corresponding string representation or nullptr if not found
   inline const char* ConvertToString(const StepVisual_CentralOrParallel theSourceEnum)
   {
     switch (theSourceEnum)
@@ -23,10 +20,6 @@ namespace RWStepVisual_RWCentralOrParallel
     return nullptr;
   }
 
-  //! Convert string to StepVisual_CentralOrParallel
-  //! @param theCentralOrParallelStr The string to convert
-  //! @param theResultEnum The corresponding StepVisual_CentralOrParallel value
-  //! @return true if the conversion was successful, false otherwise
   inline bool ConvertToEnum(const char*                   theCentralOrParallelStr,
                             StepVisual_CentralOrParallel& theResultEnum)
   {

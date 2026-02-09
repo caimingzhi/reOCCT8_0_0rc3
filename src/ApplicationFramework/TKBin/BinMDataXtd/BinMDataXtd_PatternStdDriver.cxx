@@ -10,22 +10,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataXtd_PatternStdDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataXtd_PatternStdDriver::BinMDataXtd_PatternStdDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataXtd_PatternStdDriver::NewEmpty() const
 {
   return (new TDataXtd_PatternStd());
 }
-
-//=================================================================================================
 
 bool BinMDataXtd_PatternStdDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                          const occ::handle<TDF_Attribute>& theTarget,
@@ -33,7 +27,6 @@ bool BinMDataXtd_PatternStdDriver::Paste(const BinObjMgt_Persistent&       theSo
 {
   occ::handle<TDataXtd_PatternStd> aP = occ::down_cast<TDataXtd_PatternStd>(theTarget);
 
-  // signature
   int signature;
   if (!(theSource >> signature))
     return false;
@@ -41,7 +34,6 @@ bool BinMDataXtd_PatternStdDriver::Paste(const BinObjMgt_Persistent&       theSo
     return true;
   aP->Signature(signature);
 
-  // reversed flags
   int revFlags;
   if (!(theSource >> revFlags))
     return false;
@@ -51,7 +43,7 @@ bool BinMDataXtd_PatternStdDriver::Paste(const BinObjMgt_Persistent&       theSo
   occ::handle<TNaming_NamedShape> TNS;
   int                             aNb;
 
-  if (signature == 5) // mirror
+  if (signature == 5)
   {
     if (!(theSource >> aNb))
       return false;
@@ -69,7 +61,6 @@ bool BinMDataXtd_PatternStdDriver::Paste(const BinObjMgt_Persistent&       theSo
     occ::handle<TDataStd_Real>    TReal;
     occ::handle<TDataStd_Integer> TInt;
 
-    // axis 1
     if (!(theSource >> aNb))
       return false;
     if (theRelocTable.IsBound(aNb))
@@ -81,7 +72,6 @@ bool BinMDataXtd_PatternStdDriver::Paste(const BinObjMgt_Persistent&       theSo
     }
     aP->Axis1(TNS);
 
-    // value 1
     if (!(theSource >> aNb))
       return false;
     if (theRelocTable.IsBound(aNb))
@@ -93,7 +83,6 @@ bool BinMDataXtd_PatternStdDriver::Paste(const BinObjMgt_Persistent&       theSo
     }
     aP->Value1(TReal);
 
-    // number of instances 1
     if (!(theSource >> aNb))
       return false;
     if (theRelocTable.IsBound(aNb))
@@ -107,7 +96,7 @@ bool BinMDataXtd_PatternStdDriver::Paste(const BinObjMgt_Persistent&       theSo
 
     if (signature > 2)
     {
-      // axis 2
+
       if (!(theSource >> aNb))
         return false;
       if (theRelocTable.IsBound(aNb))
@@ -119,7 +108,6 @@ bool BinMDataXtd_PatternStdDriver::Paste(const BinObjMgt_Persistent&       theSo
       }
       aP->Axis2(TNS);
 
-      // real value 2
       if (!(theSource >> aNb))
         return false;
       if (theRelocTable.IsBound(aNb))
@@ -131,7 +119,6 @@ bool BinMDataXtd_PatternStdDriver::Paste(const BinObjMgt_Persistent&       theSo
       }
       aP->Value2(TReal);
 
-      // number of instances 2
       if (!(theSource >> aNb))
         return false;
       if (theRelocTable.IsBound(aNb))
@@ -148,8 +135,6 @@ bool BinMDataXtd_PatternStdDriver::Paste(const BinObjMgt_Persistent&       theSo
   return true;
 }
 
-//=================================================================================================
-
 void BinMDataXtd_PatternStdDriver::Paste(
   const occ::handle<TDF_Attribute>&                        theSource,
   BinObjMgt_Persistent&                                    theTarget,
@@ -157,7 +142,6 @@ void BinMDataXtd_PatternStdDriver::Paste(
 {
   occ::handle<TDataXtd_PatternStd> aP = occ::down_cast<TDataXtd_PatternStd>(theSource);
 
-  // signature
   int signature = aP->Signature();
   if (signature < 1 || signature > 5)
     signature = 0;
@@ -165,7 +149,6 @@ void BinMDataXtd_PatternStdDriver::Paste(
   if (signature == 0)
     return;
 
-  // reversed flags
   int revFlags = 0;
   if (aP->Axis1Reversed())
     revFlags |= 1;
@@ -174,7 +157,7 @@ void BinMDataXtd_PatternStdDriver::Paste(
   theTarget << revFlags;
 
   int aNb;
-  if (signature == 5) // mirror
+  if (signature == 5)
   {
     occ::handle<TNaming_NamedShape> Plane = aP->Mirror();
     aNb                                   = theRelocTable.Add(Plane);
@@ -182,34 +165,30 @@ void BinMDataXtd_PatternStdDriver::Paste(
   }
   else
   {
-    // axis 1
+
     occ::handle<TNaming_NamedShape> Axis = aP->Axis1();
     aNb                                  = theRelocTable.Add(Axis);
     theTarget << aNb;
 
-    // real value 1
     occ::handle<TDataStd_Real> Value = aP->Value1();
     aNb                              = theRelocTable.Add(Value);
     theTarget << aNb;
 
-    // number of instances 1
     occ::handle<TDataStd_Integer> NbInstances = aP->NbInstances1();
     aNb                                       = theRelocTable.Add(NbInstances);
     theTarget << aNb;
 
     if (signature > 2)
     {
-      // axis 2
+
       Axis = aP->Axis2();
       aNb  = theRelocTable.Add(Axis);
       theTarget << aNb;
 
-      // real value 2
       Value = aP->Value2();
       aNb   = theRelocTable.Add(Value);
       theTarget << aNb;
 
-      // number of instances 2
       NbInstances = aP->NbInstances2();
       aNb         = theRelocTable.Add(NbInstances);
       theTarget << aNb;

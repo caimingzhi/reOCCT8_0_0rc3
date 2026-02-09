@@ -7,7 +7,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=====================================================================================
 FairCurve_EnergyOfMVC::FairCurve_EnergyOfMVC(
   const int                                         BSplOrder,
   const occ::handle<NCollection_HArray1<double>>&   FlatKnots,
@@ -22,7 +21,7 @@ FairCurve_EnergyOfMVC::FairCurve_EnergyOfMVC(
   const double                                      Angle2,
   const double                                      Curvature1,
   const double                                      Curvature2)
-    //=====================================================================================
+
     : FairCurve_Energy(Poles,
                        ContrOrder1,
                        ContrOrder2,
@@ -45,9 +44,8 @@ FairCurve_EnergyOfMVC::FairCurve_EnergyOfMVC(
                                 "FairCurve_EnergyOfMVC: PhysicalRatio error");
 }
 
-//=====================================================================================
 void FairCurve_EnergyOfMVC::ComputePoles(const math_Vector& X)
-//=====================================================================================
+
 {
   FairCurve_Energy::ComputePoles(X);
   if (MyWithAuxValue)
@@ -56,9 +54,8 @@ void FairCurve_EnergyOfMVC::ComputePoles(const math_Vector& X)
   }
 }
 
-//=====================================================================================
 bool FairCurve_EnergyOfMVC::Variable(math_Vector& X) const
-//=====================================================================================
+
 {
   bool Ok;
   Ok = FairCurve_Energy::Variable(X);
@@ -69,15 +66,13 @@ bool FairCurve_EnergyOfMVC::Variable(math_Vector& X) const
   return Ok;
 }
 
-//=====================================================================================
 bool FairCurve_EnergyOfMVC::Compute(const int DerivativeOrder, math_Vector& Result)
-//=====================================================================================
+
 {
   math_Vector        Debut(1, 1, 0.), Fin(1, 1, 1.);
   math_IntegerVector MyOrder(1, 1, 24);
   bool               Ok = false;
 
-  // Blindage contre les longueur de glissement trop exotique
   MyStatus = FairCurve_OK;
   if (MyLengthSliding > 10 * OriginalSliding)
   {
@@ -89,17 +84,11 @@ bool FairCurve_EnergyOfMVC::Compute(const int DerivativeOrder, math_Vector& Resu
     MyLengthSliding = OriginalSliding / 100;
   }
 
-  // Mise a jour des objets sous-fonction
   MyTension.SetDerivativeOrder(DerivativeOrder);
   MyTension.SetLengthSliding(MyLengthSliding);
   MySagging.SetDerivativeOrder(DerivativeOrder);
   MyJerk.SetDerivativeOrder(DerivativeOrder);
   MyBattenLaw.SetSliding(MyLengthSliding);
-
-  //  Integrations
-
-  // on decoupe afin d'avoir au moins 2 points d'integration par poles
-  // 24 points de Gauss => 12 poles maximum.
 
   int    NbInterv = (MyPoles->Length() - 1) / 12 + 1, ii;
   double Delta    = 1. / NbInterv;
@@ -107,8 +96,6 @@ bool FairCurve_EnergyOfMVC::Compute(const int DerivativeOrder, math_Vector& Resu
 
   if (MyPhysicalRatio <= 1.e-12)
   {
-
-    // Cas purement non physique --------------------------
 
     for (ii = 1; ii <= NbInterv; ii++)
     {
@@ -125,12 +112,12 @@ bool FairCurve_EnergyOfMVC::Compute(const int DerivativeOrder, math_Vector& Resu
       if (!Ok)
         return Ok;
 
-      Result += SumJerk.Value() + SumTension.Value(); // Cas purement non physique
+      Result += SumJerk.Value() + SumTension.Value();
     }
   }
   else
   {
-    // Cas mixte  --------------------------
+
     for (ii = 1; ii <= NbInterv; ii++)
     {
       Debut(1) = (ii - 1) * Delta;

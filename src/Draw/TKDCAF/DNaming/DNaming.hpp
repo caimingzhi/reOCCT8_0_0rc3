@@ -110,31 +110,23 @@ public:
                                        const occ::handle<TDF_Data>&    Data,
                                        NCollection_List<TopoDS_Shape>& Shapes);
 
-  //! theStatus = 0  Not  found,
-  //! theStatus = 1  One  shape,
-  //! theStatus = 2  More than one shape.
   Standard_EXPORT static TCollection_AsciiString GetEntry(const TopoDS_Shape&          Shape,
                                                           const occ::handle<TDF_Data>& Data,
                                                           int&                         theStatus);
 
-  //! Loads the Shape to DF
   Standard_EXPORT static void LoadImportedShape(const TDF_Label&    theResultLabel,
                                                 const TopoDS_Shape& theShape);
 
-  //! Reloads sub-shapes of the Shape to DF
   Standard_EXPORT static void LoadPrime(const TDF_Label&    theResultLabel,
                                         const TopoDS_Shape& theShape);
 
   Standard_EXPORT static void AllCommands(Draw_Interpretor& DI);
 
-  //! commands relatives to NamedShape
   Standard_EXPORT static void BasicCommands(Draw_Interpretor& DI);
 
   Standard_EXPORT static void ToolsCommands(Draw_Interpretor& DI);
 
-  //! commands relatives to Naming
   Standard_EXPORT static void SelectionCommands(Draw_Interpretor& DI);
 
-  //! commands for testing Naming
   Standard_EXPORT static void ModelingCommands(Draw_Interpretor& DI);
 };

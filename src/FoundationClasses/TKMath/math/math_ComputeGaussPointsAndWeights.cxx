@@ -20,9 +20,6 @@ math_ComputeGaussPointsAndWeights::math_ComputeGaussPointsAndWeights(const int N
     NCollection_Array1<double> aDiag(1, Number);
     NCollection_Array1<double> aSubDiag(1, Number);
 
-    // Initialization of a real symmetric tridiagonal matrix for
-    // computation of Gauss quadrature.
-
     for (i = 1; i <= Number; i++)
     {
       aDiag(i) = 0.;
@@ -37,7 +34,6 @@ math_ComputeGaussPointsAndWeights::math_ComputeGaussPointsAndWeights(const int N
       }
     }
 
-    // Compute eigen values.
     math_EigenValuesSearcher EVsearch(aDiag, aSubDiag);
 
     if (EVsearch.IsDone())

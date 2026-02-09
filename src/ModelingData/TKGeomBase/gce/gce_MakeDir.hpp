@@ -10,48 +10,19 @@ class gp_Vec;
 class gp_XYZ;
 class gp_Pnt;
 
-//! This class implements the following algorithms used
-//! to create a Dir from gp.
-//! * Create a Dir parallel to another and passing
-//! through a point.
-//! * Create a Dir passing through 2 points.
-//! * Create a Dir from its axis (Ax1 from gp).
-//! * Create a Dir from a point and a direction.
 class gce_MakeDir : public gce_Root
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Normalizes the vector V and creates a direction.
-  //! Status is "NullVector" if V.Magnitude() <= Resolution.
   Standard_EXPORT gce_MakeDir(const gp_Vec& V);
 
-  //! Creates a direction from a triplet of coordinates.
-  //! Status is "NullVector" if Coord.Modulus() <=
-  //! Resolution from gp.
   Standard_EXPORT gce_MakeDir(const gp_XYZ& Coord);
 
-  //! Creates a direction with its 3 cartesian coordinates.
-  //! Status is "NullVector" if std::sqrt(Xv*Xv + Yv*Yv + Zv*Zv)
-  //! <= Resolution
   Standard_EXPORT gce_MakeDir(const double Xv, const double Yv, const double Zv);
 
-  //! Make a Dir from gp <TheDir> passing through 2
-  //! Pnt <P1>,<P2>.
-  //! Status is "ConfusedPoints" if <p1> and <P2> are confused.
-  //! Warning
-  //! If an error occurs (that is, when IsDone returns
-  //! false), the Status function returns:
-  //! -   gce_ConfusedPoints if points P1 and P2 are coincident, or
-  //! -   gce_NullVector if one of the following is less
-  //! than or equal to gp::Resolution():
-  //! -   the magnitude of vector V,
-  //! -   the modulus of Coord,
-  //! -   std::sqrt(Xv*Xv + Yv*Yv + Zv*Zv).
   Standard_EXPORT gce_MakeDir(const gp_Pnt& P1, const gp_Pnt& P2);
 
-  //! Returns the constructed unit vector.
-  //! Exceptions StdFail_NotDone if no unit vector is constructed.
   Standard_EXPORT const gp_Dir& Value() const;
 
   Standard_EXPORT const gp_Dir& Operator() const;

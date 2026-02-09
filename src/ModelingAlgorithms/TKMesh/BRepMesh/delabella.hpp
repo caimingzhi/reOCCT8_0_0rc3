@@ -1,26 +1,19 @@
 #pragma once
 
-// returns: positive value: number of triangle indices, negative: number of line segment indices
-// (degenerated input)
-//          triangle indices in abc array are always returned in clockwise order
-// DEPRECIATED. move to new API either extern "C" or IDelaBella (C++)
-int DelaBella(int           points,
-              const double* xy /*[points][2]*/,
-              int*          abc /*[2*points-5][3]*/,
-              int (*errlog)(const char* fmt, ...) = printf);
+int DelaBella(int points, const double* xy, int* abc, int (*errlog)(const char* fmt, ...) = printf);
 
 struct DelaBella_Vertex
 {
-  int               i;    // index of original point
-  double            x, y; // coordinates (input copy)
-  DelaBella_Vertex* next; // next silhouette vertex
+  int               i;
+  double            x, y;
+  DelaBella_Vertex* next;
 };
 
 struct DelaBella_Triangle
 {
-  DelaBella_Vertex*   v[3]; // 3 vertices spanning this triangle
-  DelaBella_Triangle* f[3]; // 3 adjacent faces, f[i] is at the edge opposite to vertex v[i]
-  DelaBella_Triangle* next; // next triangle (of delaunay set or hull set)
+  DelaBella_Vertex*   v[3];
+  DelaBella_Triangle* f[3];
+  DelaBella_Triangle* next;
 };
 
 #ifdef __cplusplus
@@ -32,12 +25,6 @@ struct IDelaBella
 
   virtual void SetErrLog(int (*proc)(void* stream, const char* fmt, ...), void* stream) = 0;
 
-  // return 0: no output
-  // negative: all points are colinear, output hull vertices form colinear segment list, no
-  // triangles on output positive: output hull vertices form counter-clockwise ordered segment
-  // contour, delaunay and hull triangles are available if 'y' pointer is null, y coords are treated
-  // to be located immediately after every x if advance_bytes is less than 2*sizeof coordinate type,
-  // it is treated as 2*sizeof coordinate type
   virtual int Triangulate(int          points,
                           const float* x,
                           const float* y             = 0,
@@ -47,17 +34,13 @@ struct IDelaBella
                           const double* y             = 0,
                           int           advance_bytes = 0) = 0;
 
-  // num of points passed to last call to Triangulate()
   virtual int GetNumInputPoints() const = 0;
 
-  // num of verts returned from last call to Triangulate()
   virtual int GetNumOutputVerts() const = 0;
 
-  // clang-format off
-	virtual const DelaBella_Triangle* GetFirstDelaunayTriangle() const = 0; // valid only if Triangulate() > 0
-	virtual const DelaBella_Triangle* GetFirstHullTriangle() const = 0; // valid only if Triangulate() > 0
-	virtual const DelaBella_Vertex*   GetFirstHullVertex() const = 0; // if Triangulate() < 0 it is list, otherwise closed contour!
-  // clang-format on
+  virtual const DelaBella_Triangle* GetFirstDelaunayTriangle() const = 0;
+  virtual const DelaBella_Triangle* GetFirstHullTriangle() const     = 0;
+  virtual const DelaBella_Vertex*   GetFirstHullVertex() const       = 0;
 };
 #else
 void* DelaBella_Create();

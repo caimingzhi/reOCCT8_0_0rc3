@@ -5,11 +5,7 @@
 #include <StepRepr_MeasureRepresentationItem.hpp>
 #include <StepGeom_Placement.hpp>
 
-//=================================================================================================
-
 StepShape_ShapeDimensionRepresentationItem::StepShape_ShapeDimensionRepresentationItem() = default;
-
-//=================================================================================================
 
 int StepShape_ShapeDimensionRepresentationItem::CaseNum(
   const occ::handle<Standard_Transient>& ent) const

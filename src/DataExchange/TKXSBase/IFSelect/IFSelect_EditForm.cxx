@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_EditForm.hpp>
 #include <IFSelect_Editor.hpp>
@@ -156,7 +145,7 @@ int IFSelect_EditForm::NameNumber(const char* name) const
   int res = theeditor->NameNumber(name);
   if (thecomplete || res == 0)
     return res;
-  //   Otherwise, search res in thenums
+
   int i, nb = thenums.Length();
   for (i = 1; i <= nb; i++)
   {
@@ -171,7 +160,7 @@ int IFSelect_EditForm::NameRank(const char* name) const
   int res = theeditor->NameNumber(name);
   if (thecomplete || res == 0)
     return res;
-  //   Otherwise, search res in thenums
+
   int i, nb = thenums.Length();
   for (i = 1; i <= nb; i++)
   {
@@ -241,8 +230,6 @@ bool IFSelect_EditForm::LoadData()
   theloaded = true;
   return true;
 }
-
-//  ########    VALUES    ########
 
 occ::handle<IFSelect_ListEditor> IFSelect_EditForm::ListEditor(const int num) const
 {
@@ -342,7 +329,7 @@ bool IFSelect_EditForm::Modify(const int                                    num,
                                const occ::handle<TCollection_HAsciiString>& newval,
                                const bool                                   enforce)
 {
-  //  Peut-on editer
+
   thetouched = 0;
   if (themodifs.Upper() == 0)
     return false;
@@ -355,7 +342,6 @@ bool IFSelect_EditForm::Modify(const int                                    num,
   if (!enforce && (acc == IFSelect_EditProtected || acc == IFSelect_EditComputed))
     return false;
 
-  //  Satisfies ?
   occ::handle<Interface_TypedValue> typval = theeditor->TypedValue(num);
   if (!typval->Satisfies(newval))
     return false;
@@ -368,7 +354,6 @@ bool IFSelect_EditForm::Modify(const int                                    num,
       return false;
   }
 
-  //  Update ?
   if (!theeditor->Update(this, num, newval, enforce))
     return false;
 
@@ -381,7 +366,7 @@ bool IFSelect_EditForm::ModifyList(const int                               num,
                                    const occ::handle<IFSelect_ListEditor>& edited,
                                    const bool                              enforce)
 {
-  //  Faut-il prendre
+
   if (edited.IsNull())
     return false;
   if (!edited->IsTouched())
@@ -389,7 +374,6 @@ bool IFSelect_EditForm::ModifyList(const int                               num,
   occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> newlist =
     edited->EditedValues();
 
-  //  Peut-on editer
   thetouched = 0;
   if (themodifs.Upper() == 0)
     return false;
@@ -404,7 +388,6 @@ bool IFSelect_EditForm::ModifyList(const int                               num,
   if (!enforce && (acc == IFSelect_EditProtected || acc == IFSelect_EditComputed))
     return false;
 
-  //  Update ?
   if (!theeditor->UpdateList(this, num, newlist, enforce))
     return false;
 
@@ -525,7 +508,7 @@ void IFSelect_EditForm::PrintValues(Standard_OStream& S,
 
   else
   {
-    //  Data on which we worked
+
     if (themodel.IsNull())
     {
       if (theent.IsNull())
@@ -548,7 +531,6 @@ void IFSelect_EditForm::PrintValues(Standard_OStream& S,
     << "****************************************************" << std::endl
     << std::endl;
 
-  //  Display of values
   bool nams   = names;
   int  maxnam = theeditor->MaxNameLength(names ? 0 : -1);
   if (maxnam == 0)
@@ -567,7 +549,6 @@ void IFSelect_EditForm::PrintValues(Standard_OStream& S,
     int         jv   = NumberFromRank(iv);
     const char* name = theeditor->Name(jv, !nams);
 
-    //     Original or Final
     if (what != 0)
     {
       occ::handle<TCollection_HAsciiString> str;
@@ -595,8 +576,6 @@ void IFSelect_EditForm::PrintValues(Standard_OStream& S,
         str = EditedValue(jv);
 
       S << (str.IsNull() ? "(NULL)" : str->ToCString()) << std::endl;
-
-      //    Modified only
     }
     else
     {

@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_CertificationAssignment, Standard_Transient)
 
-//=================================================================================================
-
 StepBasic_CertificationAssignment::StepBasic_CertificationAssignment() = default;
-
-//=================================================================================================
 
 void StepBasic_CertificationAssignment::Init(
   const occ::handle<StepBasic_Certification>& aAssignedCertification)
@@ -17,15 +13,11 @@ void StepBasic_CertificationAssignment::Init(
   theAssignedCertification = aAssignedCertification;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_Certification> StepBasic_CertificationAssignment::AssignedCertification()
   const
 {
   return theAssignedCertification;
 }
-
-//=================================================================================================
 
 void StepBasic_CertificationAssignment::SetAssignedCertification(
   const occ::handle<StepBasic_Certification>& aAssignedCertification)

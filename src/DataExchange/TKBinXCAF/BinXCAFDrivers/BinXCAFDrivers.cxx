@@ -12,8 +12,6 @@
 static Standard_GUID BinXCAFStorageDriver("a78ff496-a779-11d5-aab4-0050044b1af1");
 static Standard_GUID BinXCAFRetrievalDriver("a78ff497-a779-11d5-aab4-0050044b1af1");
 
-//=================================================================================================
-
 const occ::handle<Standard_Transient>& BinXCAFDrivers::Factory(const Standard_GUID& theGUID)
 {
 
@@ -38,8 +36,6 @@ const occ::handle<Standard_Transient>& BinXCAFDrivers::Factory(const Standard_GU
   throw Standard_Failure("XCAFBinDrivers : unknown GUID");
 }
 
-//=================================================================================================
-
 void BinXCAFDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
 {
   theApp->DefineFormat("BinXCAF",
@@ -49,15 +45,12 @@ void BinXCAFDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp
                        new BinXCAFDrivers_DocumentStorageDriver);
 }
 
-//=================================================================================================
-
 occ::handle<BinMDF_ADriverTable> BinXCAFDrivers::AttributeDrivers(
   const occ::handle<Message_Messenger>& aMsgDrv)
 {
-  // Standard Drivers
+
   occ::handle<BinMDF_ADriverTable> aTable = BinDrivers::AttributeDrivers(aMsgDrv);
 
-  // XCAF Drivers
   BinMXCAFDoc::AddDrivers(aTable, aMsgDrv);
 
   return aTable;

@@ -5,8 +5,6 @@
 #include <Prs3d_PlaneAspect.hpp>
 #include <Prs3d_Presentation.hpp>
 
-//=================================================================================================
-
 void DsgPrs_XYZPlanePresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                       const occ::handle<Prs3d_Drawer>&       aDrawer,
                                       const gp_Pnt&                          aPt1,

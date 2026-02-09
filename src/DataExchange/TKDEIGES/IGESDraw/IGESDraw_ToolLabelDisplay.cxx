@@ -25,7 +25,7 @@ void IGESDraw_ToolLabelDisplay::ReadOwnParams(const occ::handle<IGESDraw_LabelDi
                                               const occ::handle<IGESData_IGESReaderData>& IR,
                                               IGESData_ParamReader&                       PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   int nbval;
 
   occ::handle<NCollection_HArray1<occ::handle<IGESData_ViewKindEntity>>> views;
@@ -34,7 +34,6 @@ void IGESDraw_ToolLabelDisplay::ReadOwnParams(const occ::handle<IGESDraw_LabelDi
   occ::handle<NCollection_HArray1<int>>                                  labelLevels;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>     displayedEntities;
 
-  // Reading nbval(No. of Label placements)
   bool st = PR.ReadInteger(PR.Current(), "No. of Label placements", nbval);
   if (st && nbval > 0)
   {
@@ -52,9 +51,7 @@ void IGESDraw_ToolLabelDisplay::ReadOwnParams(const occ::handle<IGESDraw_LabelDi
 
     for (int i = 1; i <= nbval; i++)
     {
-      // Reading views(HArray1OfView)
-      // st = PR.ReadEntity (IR, PR.Current(), "Instance of views",
-      // STANDARD_TYPE(IGESData_ViewKindEntity), tempView); //szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "Instance of views",
@@ -62,15 +59,9 @@ void IGESDraw_ToolLabelDisplay::ReadOwnParams(const occ::handle<IGESDraw_LabelDi
                         tempView))
         views->SetValue(i, tempView);
 
-      // Reading textLocations(HArray1OfXYZ)
-      // st = PR.ReadXYZ(PR.CurrentList(1, 3), "array textLocations", tempXYZ);
-      // //szv#4:S4163:12Mar99 moved in if
       if (PR.ReadXYZ(PR.CurrentList(1, 3), "array textLocations", tempXYZ))
         textLocations->SetValue(i, tempXYZ);
 
-      // Reading leaderEntities(HArray1OfLeaderArrow)
-      // st = PR.ReadEntity (IR, PR.Current(), "Instance of LeaderArrow",
-      // STANDARD_TYPE(IGESDimen_LeaderArrow), tempLeaderArrow); //szv#4:S4163:12Mar99 moved in if
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "Instance of LeaderArrow",
@@ -78,15 +69,9 @@ void IGESDraw_ToolLabelDisplay::ReadOwnParams(const occ::handle<IGESDraw_LabelDi
                         tempLeaderArrow))
         leaderEntities->SetValue(i, tempLeaderArrow);
 
-      // Reading labelLevels(HArray1OfInteger)
-      // st = PR.ReadInteger(PR.Current(), "array labelLevels", tempLabel); //szv#4:S4163:12Mar99
-      // moved in if
       if (PR.ReadInteger(PR.Current(), "array labelLevels", tempLabel))
         labelLevels->SetValue(i, tempLabel);
 
-      // Reading displayedEntities(HArray1OfIGESEntity)
-      // st = PR.ReadEntity (IR, PR.Current(), "displayedEntities entity",
-      // tempDisplayedEntity); //szv#4:S4163:12Mar99 moved in if
       if (PR.ReadEntity(IR, PR.Current(), "displayedEntities entity", tempDisplayedEntity))
         displayedEntities->SetValue(i, tempDisplayedEntity);
     }
@@ -165,7 +150,7 @@ void IGESDraw_ToolLabelDisplay::OwnCopy(const occ::handle<IGESDraw_LabelDisplay>
 }
 
 IGESData_DirChecker IGESDraw_ToolLabelDisplay::DirChecker(
-  const occ::handle<IGESDraw_LabelDisplay>& /*ent*/) const
+  const occ::handle<IGESDraw_LabelDisplay>&) const
 {
   IGESData_DirChecker DC(402, 5);
   DC.Structure(IGESData_DefVoid);
@@ -174,9 +159,9 @@ IGESData_DirChecker IGESDraw_ToolLabelDisplay::DirChecker(
   return DC;
 }
 
-void IGESDraw_ToolLabelDisplay::OwnCheck(const occ::handle<IGESDraw_LabelDisplay>& /*ent*/,
+void IGESDraw_ToolLabelDisplay::OwnCheck(const occ::handle<IGESDraw_LabelDisplay>&,
                                          const Interface_ShareTool&,
-                                         occ::handle<Interface_Check>& /*ach*/) const
+                                         occ::handle<Interface_Check>&) const
 {
 }
 
@@ -194,7 +179,7 @@ void IGESDraw_ToolLabelDisplay::OwnDump(const occ::handle<IGESDraw_LabelDisplay>
     << "Label Level Numbers :\n"
     << "Displayed Entities  : "
     << "Count = " << ent->NbLabels() << "\n";
-  if (level > 4) // Level = 4 : no Dump. Level = 5 & 6 : same Dump
+  if (level > 4)
   {
     int I;
     int up = ent->NbLabels();

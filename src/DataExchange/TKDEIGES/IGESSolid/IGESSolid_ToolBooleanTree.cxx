@@ -24,7 +24,7 @@ void IGESSolid_ToolBooleanTree::ReadOwnParams(const occ::handle<IGESSolid_Boolea
                                               const occ::handle<IGESData_IGESReaderData>& IR,
                                               IGESData_ParamReader&                       PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   int                                                                length, intvalue;
   occ::handle<IGESData_IGESEntity>                                   entvalue;
   occ::handle<NCollection_HArray1<int>>                              tempOperations;
@@ -37,24 +37,18 @@ void IGESSolid_ToolBooleanTree::ReadOwnParams(const occ::handle<IGESSolid_Boolea
     tempOperations->Init(0);
     tempOperands = new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, length);
 
-    // Op. 1-2 : Operands
-    // st = PR.ReadEntity(IR, PR.Current(), "Operand 1", entvalue); //szv#4:S4163:12Mar99 moved in
-    // if
     if (PR.ReadEntity(IR, PR.Current(), "Operand 1", entvalue))
       tempOperands->SetValue(1, entvalue);
 
-    // st = PR.ReadEntity(IR, PR.Current(), "Operand 2", entvalue); //szv#4:S4163:12Mar99 moved in
-    // if
     if (PR.ReadEntity(IR, PR.Current(), "Operand 2", entvalue))
       tempOperands->SetValue(2, entvalue);
 
-    // Op. 3 -> length-1 : Operand or Operation
     for (int i = 3; i < length; i++)
     {
       int curnum = PR.CurrentNumber();
-      // clang-format off
-	  PR.ReadInteger(PR.Current(), "Operation code", intvalue); //szv#4:S4163:12Mar99 `st=` not needed
-      // clang-format on
+
+      PR.ReadInteger(PR.Current(), "Operation code", intvalue);
+
       if (intvalue < 0)
       {
         entvalue = PR.ParamEntity(IR, curnum);
@@ -66,9 +60,7 @@ void IGESSolid_ToolBooleanTree::ReadOwnParams(const occ::handle<IGESSolid_Boolea
       else
         tempOperations->SetValue(i, intvalue);
     }
-    // Last Op. : Operation
-    // st = PR.ReadInteger(PR.Current(), "Operation code", intvalue); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadInteger(PR.Current(), "Operation code", intvalue))
       tempOperations->SetValue(length, intvalue);
   }
@@ -118,19 +110,19 @@ void IGESSolid_ToolBooleanTree::OwnCopy(const occ::handle<IGESSolid_BooleanTree>
 
   for (i = 1; i <= length; i++)
   {
-    if (another->IsOperand(i)) // Operand
+    if (another->IsOperand(i))
     {
       DeclareAndCast(IGESData_IGESEntity, new_ent, TC.Transferred(another->Operand(i)));
       tempOperands->SetValue(i, new_ent);
     }
-    else // Operation
+    else
       tempOperations->SetValue(i, another->Operation(i));
   }
   ent->Init(tempOperands, tempOperations);
 }
 
 IGESData_DirChecker IGESSolid_ToolBooleanTree::DirChecker(
-  const occ::handle<IGESSolid_BooleanTree>& /*ent*/) const
+  const occ::handle<IGESSolid_BooleanTree>&) const
 {
   IGESData_DirChecker DC(180, 0);
   DC.Structure(IGESData_DefVoid);
@@ -206,5 +198,4 @@ void IGESSolid_ToolBooleanTree::OwnDump(const occ::handle<IGESSolid_BooleanTree>
       }
     }
   }
-  //  aSender << std::endl;
 }

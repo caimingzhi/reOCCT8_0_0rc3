@@ -29,8 +29,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_PlanarAngle, DrawDim_PlanarDimension)
 
-//=================================================================================================
-
 DrawDim_PlanarAngle::DrawDim_PlanarAngle(const TopoDS_Face&  face,
                                          const TopoDS_Shape& line1,
                                          const TopoDS_Shape& line2)
@@ -41,8 +39,6 @@ DrawDim_PlanarAngle::DrawDim_PlanarAngle(const TopoDS_Face&  face,
   myPosition = 100;
 }
 
-//=================================================================================================
-
 DrawDim_PlanarAngle::DrawDim_PlanarAngle(const TopoDS_Shape& line1, const TopoDS_Shape& line2)
 {
   myLine1    = line1;
@@ -50,33 +46,24 @@ DrawDim_PlanarAngle::DrawDim_PlanarAngle(const TopoDS_Shape& line1, const TopoDS
   myPosition = 100;
 }
 
-//=================================================================================================
-
 void DrawDim_PlanarAngle::Sector(const bool reversed, const bool inverted)
 {
   myIsReversed = reversed;
   myIsInverted = inverted;
 }
 
-//=================================================================================================
-
 void DrawDim_PlanarAngle::Position(const double value)
 {
   myPosition = value;
 }
 
-//=======================================================================
-// function : DrawOn
-// purpose  : line1^line2 suppose positifs
-//=======================================================================
-
 void DrawDim_PlanarAngle::DrawOn(Draw_Display& dis) const
 {
   bool clockwise = myIsReversed;
   bool parallel  = !myIsInverted;
-  // geometrie
+
   gp_Pln plane = occ::down_cast<Geom_Plane>(BRep_Tool::Surface(myPlane))->Pln();
-  // if (plane.IsNull()) return;
+
   if (!(myLine1.ShapeType() == TopAbs_EDGE))
     return;
   if (!(myLine2.ShapeType() == TopAbs_EDGE))
@@ -98,21 +85,20 @@ void DrawDim_PlanarAngle::DrawOn(Draw_Display& dis) const
     L2 = occ::down_cast<Geom2d_TrimmedCurve>(L2)->BasisCurve();
   }
   gp_Lin2d l2 = occ::down_cast<Geom2d_Line>(L2)->Lin2d();
-  //
+
   IntAna2d_AnaIntersection inter;
   inter.Perform(l1, l2);
   if (!inter.IsDone() || !inter.NbPoints())
     return;
   gp_Pnt2d pinter = inter.Point(1).Value();
-  //
+
   double angle;
   angle = std::abs(l1.Direction().Angle(l2.Direction()));
   gp_Circ2d c(gp_Ax2d(pinter, l1.Direction()), myPosition);
 
-  // retour au plan
   occ::handle<Geom_Curve> C      = GeomAPI::To3d(new Geom2d_Circle(c), plane);
   gp_Circ                 circle = occ::down_cast<Geom_Circle>(C)->Circ();
-  //
+
   double p1 = 0., p2 = 0.;
   angle = std::abs(angle);
   if (parallel && !clockwise)
@@ -136,10 +122,10 @@ void DrawDim_PlanarAngle::DrawOn(Draw_Display& dis) const
     p1 = M_PI + angle;
     p2 = 2 * M_PI;
   }
-  // affichage
+
   dis.Draw(circle, p1, p2);
   double ptext   = (p1 + p2) / 2;
   gp_Pnt pnttext = ElCLib::Value(ptext, circle);
-  //
+
   DrawText(pnttext, dis);
 }

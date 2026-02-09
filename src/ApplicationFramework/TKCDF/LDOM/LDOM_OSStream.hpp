@@ -4,22 +4,16 @@
 #include <NCollection_BaseAllocator.hpp>
 #include <Standard_OStream.hpp>
 
-#include <stdio.h> /* EOF */
+#include <stdio.h>
 
-//! Class LDOM_SBuffer inherits std::streambuf and
-//! redefines some virtual methods of it (overflow() and xsputn()).
-//! This class contains pointers on first and current element
-//! of sequence, also it has methods for the sequence management.
 class LDOM_SBuffer : public std::streambuf
 {
-  //! One element of sequence.
-  //! Can only be allocated by the allocator and assumes
-  //! it is IncAllocator, so destructor isn't required.
+
   struct LDOM_StringElem
   {
-    char*            buf;  //!< pointer on data string
-    int              len;  //!< quantity of really written data
-    LDOM_StringElem* next; //!< pointer on the next element of a sequence
+    char*            buf;
+    int              len;
+    LDOM_StringElem* next;
 
     DEFINE_NCOLLECTION_ALLOC
 
@@ -32,55 +26,32 @@ class LDOM_SBuffer : public std::streambuf
   };
 
 public:
-  //! Constructor. Sets a default value for the
-  //!              length of each sequence element.
   Standard_EXPORT LDOM_SBuffer(const int theMaxBuf);
 
-  //! Concatenates strings of all sequence elements
-  //! into one string. Space for output string is allocated
-  //! with operator new.
-  //! Caller of this function is responsible
-  //! for memory release after the string usage.
   Standard_EXPORT const char* str() const;
 
-  //! Returns full length of data contained
   int Length() const { return myLength; }
 
-  //! Clears first element of sequence and removes all others
   Standard_EXPORT void Clear();
-
-  // Methods of std::streambuf
 
   Standard_EXPORT int overflow(int c = EOF) override;
   Standard_EXPORT int underflow() override;
-  // virtual int uflow();
 
   Standard_EXPORT std::streamsize xsputn(const char* s, std::streamsize n) override;
-  // virtual int xsgetn(char* s, int n);
-  // virtual int sync();
 
   Standard_EXPORT ~LDOM_SBuffer() override;
-  // Destructor
 
 private:
-  int                                    myMaxBuf;      // default length of one element
-  int                                    myLength;      // full length of contained data
-  LDOM_StringElem*                       myFirstString; // the head of the sequence
-  LDOM_StringElem*                       myCurString;   // current element of the sequence
-  occ::handle<NCollection_BaseAllocator> myAlloc;       // allocator for chunks
+  int                                    myMaxBuf;
+  int                                    myLength;
+  LDOM_StringElem*                       myFirstString;
+  LDOM_StringElem*                       myCurString;
+  occ::handle<NCollection_BaseAllocator> myAlloc;
 };
 
-//! Subclass if std::ostream allowing to increase performance
-//! of outputting data into a string avoiding reallocation of buffer.
-//! Class LDOM_OSStream implements output into a sequence of
-//! strings and getting the result as a string.
-//! It inherits Standard_OStream (std::ostream).
-//! Beside methods of std::ostream, it also has additional
-//! useful methods: str(), Length() and Clear().
 class LDOM_OSStream : public Standard_OStream
 {
 public:
-  //! Constructor
   Standard_EXPORT LDOM_OSStream(const int theMaxBuf);
 
   Standard_EXPORT ~LDOM_OSStream() override;
@@ -95,7 +66,6 @@ private:
   LDOM_SBuffer myBuffer;
 
 public:
-  // byte order mark defined at the start of a stream
   enum BOMType
   {
     BOM_UNDEFINED,

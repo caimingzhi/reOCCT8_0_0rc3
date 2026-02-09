@@ -4,8 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_EdgeVertexInterference, TopOpeBRepDS_ShapeShapeInterference)
 
-//=================================================================================================
-
 TopOpeBRepDS_EdgeVertexInterference::TopOpeBRepDS_EdgeVertexInterference(
   const TopOpeBRepDS_Transition& T,
   const TopOpeBRepDS_Kind        ST,
@@ -18,8 +16,6 @@ TopOpeBRepDS_EdgeVertexInterference::TopOpeBRepDS_EdgeVertexInterference(
       myParam(P)
 {
 }
-
-//=================================================================================================
 
 TopOpeBRepDS_EdgeVertexInterference::TopOpeBRepDS_EdgeVertexInterference(
   const TopOpeBRepDS_Transition& T,
@@ -39,14 +35,10 @@ TopOpeBRepDS_EdgeVertexInterference::TopOpeBRepDS_EdgeVertexInterference(
 {
 }
 
-//=================================================================================================
-
 double TopOpeBRepDS_EdgeVertexInterference::Parameter() const
 {
   return myParam;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_EdgeVertexInterference::Parameter(const double P)
 {

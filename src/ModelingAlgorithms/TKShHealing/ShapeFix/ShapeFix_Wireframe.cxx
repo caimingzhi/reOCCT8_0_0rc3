@@ -33,17 +33,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeFix_Wireframe, ShapeFix_Root)
 
-// #include <Geom2dConvert_CompCurveToBSplineCurve.hpp>
-//=================================================================================================
-
 ShapeFix_Wireframe::ShapeFix_Wireframe()
 {
   ClearStatuses();
   myModeDrop   = false;
   myLimitAngle = -1;
 }
-
-//=================================================================================================
 
 ShapeFix_Wireframe::ShapeFix_Wireframe(const TopoDS_Shape& shape)
 {
@@ -53,8 +48,6 @@ ShapeFix_Wireframe::ShapeFix_Wireframe(const TopoDS_Shape& shape)
   myLimitAngle = -1;
 }
 
-//=================================================================================================
-
 void ShapeFix_Wireframe::ClearStatuses()
 {
   int emptyStatus = ShapeExtend::EncodeStatus(ShapeExtend_OK);
@@ -63,15 +56,11 @@ void ShapeFix_Wireframe::ClearStatuses()
   myStatusSmallEdges = emptyStatus;
 }
 
-//=================================================================================================
-
 void ShapeFix_Wireframe::Load(const TopoDS_Shape& shape)
 {
   ClearStatuses();
   myShape = shape;
 }
-
-//=================================================================================================
 
 bool ShapeFix_Wireframe::FixWireGaps()
 {
@@ -134,7 +123,7 @@ bool ShapeFix_Wireframe::FixWireGaps()
   TopoDS_Face face;
   for (TopExp_Explorer anExpf1(myShape, TopAbs_FACE); anExpf1.More(); anExpf1.Next())
   {
-    // smh#8
+
     TopoDS_Shape tmpF = Context()->Apply(anExpf1.Current());
     face              = TopoDS::Face(tmpF);
     if (face.Orientation() == TopAbs_REVERSED)
@@ -143,7 +132,7 @@ bool ShapeFix_Wireframe::FixWireGaps()
     {
       if (itw.Value().ShapeType() != TopAbs_WIRE)
         continue;
-      // smh#8
+
       TopoDS_Shape tmpW = Context()->Apply(itw.Value());
       sfw->Init(TopoDS::Wire(tmpW), face, prec);
       sfw->FixReorder();
@@ -162,11 +151,6 @@ bool ShapeFix_Wireframe::FixWireGaps()
     }
   }
 
-  //============================================================
-  // Author :  enk
-  // Purpose:  This block fixing a 3d wire which not lie on plane
-  // Part 1
-  //============================================================
   for (TopExp_Explorer expw(myShape, TopAbs_WIRE, TopAbs_FACE); expw.More(); expw.Next())
   {
     TopoDS_Shape tmpW = Context()->Apply(expw.Current());
@@ -181,7 +165,6 @@ bool ShapeFix_Wireframe::FixWireGaps()
     if (sfw->StatusGaps3d(ShapeExtend_DONE))
       SendWarning(expw.Current(), Message_Msg("FixWireframe.FixFixWireGaps.MSG0"));
   }
-  // End Part1========================================================
 
   if (StatusWireGaps(ShapeExtend_DONE))
   {
@@ -210,7 +193,6 @@ bool ShapeFix_Wireframe::FixWireGaps()
       }
     }
 
-    // enk Part 2
     for (TopExp_Explorer expw2(myShape, TopAbs_WIRE, TopAbs_FACE); expw2.More(); expw2.Next())
     {
       wire = TopoDS::Wire(expw2.Current());
@@ -221,18 +203,12 @@ bool ShapeFix_Wireframe::FixWireGaps()
       for (TopoDS_Iterator ite(wire); ite.More(); ite.Next())
         sfe->FixVertexTolerance(TopoDS::Edge(ite.Value()));
     }
-    // End Part 2
 
     return true;
   }
 
   return false;
 }
-
-//=======================================================================
-// function : JoinEdges (static)
-// purpose  : used in FixSmallEdges
-//=======================================================================
 
 static bool JoinEdges(const TopoDS_Edge&                    E1,
                       const TopoDS_Edge&                    E2,
@@ -242,7 +218,7 @@ static bool JoinEdges(const TopoDS_Edge&                    E1,
   bool                      ReplaceFirst = true;
   ShapeAnalysis_Edge        sae;
   occ::handle<Geom_Curve>   c3d1, c3d2;
-  occ::handle<Geom2d_Curve> c2d1, c2d2; // TopTools
+  occ::handle<Geom2d_Curve> c2d1, c2d2;
   TopoDS_Edge               newedge, newedge1;
   E3                = newedge1;
   TopoDS_Vertex V11 = sae.FirstVertex(E1);
@@ -268,7 +244,7 @@ static bool JoinEdges(const TopoDS_Edge&                    E1,
 
     occ::handle<Geom_Curve> CRes;
     bool                    isRev1, isRev2;
-    //     double newf,newl;
+
     if (!ShapeConstruct::JoinCurves(c3d1,
                                     c3d2,
                                     E1.Orientation(),
@@ -281,7 +257,7 @@ static bool JoinEdges(const TopoDS_Edge&                    E1,
                                     isRev1,
                                     isRev2))
       return ReplaceFirst;
-    //    if(isRev1 || isRev2)
+
     if (!isSame && (isRev1 || isRev2))
       return ReplaceFirst;
     ReplaceFirst = (!isRev1);
@@ -316,7 +292,6 @@ static bool JoinEdges(const TopoDS_Edge&                    E1,
       newl = lp;
     B.Range(newedge, newf, newl);
 
-    // merging pcurves
     for (NCollection_List<TopoDS_Shape>::Iterator iter(faces); iter.More(); iter.Next())
     {
       TopoDS_Face face = TopoDS::Face(iter.Value());
@@ -348,7 +323,7 @@ static bool JoinEdges(const TopoDS_Edge&                    E1,
         ReplaceFirst = false;
       double fp2d = C2dRes->FirstParameter();
       double lp2d = C2dRes->LastParameter();
-      // B.UpdateEdge(newedge,C2dRes,face,0);
+
       double newf1 = first1;
       double newl1 = last1 + (last2 - first2);
       if (fp2d > newf1)
@@ -356,11 +331,10 @@ static bool JoinEdges(const TopoDS_Edge&                    E1,
       if (lp2d < newl1)
         newl1 = lp2d;
 
-      // dealing with seams: the same again
       if (sae.IsSeam(E1, face) && sae.IsSeam(E2, face))
       {
         occ::handle<Geom2d_Curve> c2d12, c2d22;
-        // smh#8
+
         TopoDS_Shape tmpE1 = E1.Reversed(), tmpE2 = E2.Reversed();
         TopoDS_Edge  E1t = TopoDS::Edge(tmpE1);
         TopoDS_Edge  E2t = TopoDS::Edge(tmpE2);
@@ -411,8 +385,6 @@ static bool JoinEdges(const TopoDS_Edge&                    E1,
   }
 }
 
-//=================================================================================================
-
 bool ShapeFix_Wireframe::FixSmallEdges()
 {
   myStatusSmallEdges = ShapeExtend::EncodeStatus(ShapeExtend_OK);
@@ -455,7 +427,6 @@ bool ShapeFix_Wireframe::FixSmallEdges()
       if (!res.IsSame(shape1))
         locModified = true;
 
-      // check if resulting shape if not empty
       if (res.IsNull())
         continue;
 
@@ -477,8 +448,6 @@ bool ShapeFix_Wireframe::FixSmallEdges()
   MergeSmallEdges(theSmallEdges, theEdgeToFaces, theFaceWithSmall, theMultyEdges);
   return StatusSmallEdges(ShapeExtend_DONE);
 }
-
-//=================================================================================================
 
 #include <BRepBuilderAPI_MakeFace.hpp>
 
@@ -508,7 +477,7 @@ bool ShapeFix_Wireframe::CheckSmallEdges(
       TopoDS_Wire                       aW   = TopoDS::Wire(itw.Value());
       occ::handle<ShapeExtend_WireData> aswd = new ShapeExtend_WireData(aW, true, false);
       SAW.Init(aswd, face, Precision());
-      // pnd protection on seam edges
+
       NCollection_DataMap<TopoDS_Shape, int, TopTools_ShapeMapHasher> EdgeMap;
       int                                                             i;
       for (i = 1; i <= SAW.NbEdges(); i++)
@@ -529,7 +498,7 @@ bool ShapeFix_Wireframe::CheckSmallEdges(
             theMultyEdges.Add(edge);
           continue;
         }
-        // Append current face to the list
+
         if (theEdgeToFaces.IsBound(edge))
         {
           theEdgeToFaces(edge).Append(facet);
@@ -540,7 +509,7 @@ bool ShapeFix_Wireframe::CheckSmallEdges(
           theFaceList.Append(facet);
           theEdgeToFaces.Bind(edge, theFaceList);
         }
-        // Check if current edge is small
+
         if (theSmallEdges.Contains(edge))
           theEdgeList.Append(edge);
         else if (SAW.CheckSmall(i, Precision()))
@@ -550,15 +519,11 @@ bool ShapeFix_Wireframe::CheckSmallEdges(
         }
       }
     }
-    // Add current face to the map if has small edges
+
     if (theEdgeList.Extent())
       theFaceWithSmall.Bind(facet, theEdgeList);
   }
 
-  //=========================================================================
-  // Author : enk
-  // Purpose: Analyzing of shape for small edges, if edge doesn't lie on face
-  //=========================================================================
   for (TopExp_Explorer expw1(myShape, TopAbs_WIRE, TopAbs_FACE); expw1.More(); expw1.Next())
   {
     SAW.SetPrecision(Precision());
@@ -590,7 +555,6 @@ bool ShapeFix_Wireframe::CheckSmallEdges(
         continue;
       }
 
-      // Check if current edge is small
       if (theSmallEdges.Contains(edge))
         theEdgeList.Append(edge);
       else if (SAW.CheckSmall(i, Precision()))
@@ -602,8 +566,6 @@ bool ShapeFix_Wireframe::CheckSmallEdges(
   }
   return (!theSmallEdges.IsEmpty());
 }
-
-//=================================================================================================
 
 bool ShapeFix_Wireframe::MergeSmallEdges(
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theSmallEdges,
@@ -627,7 +589,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
     SFW->SetContext(Context());
     ShapeAnalysis_Edge SAE;
     TopoDS_Edge        edge1, edge2, edge3;
-    // Iterate on map of faces with small edges
+
     TopExp_Explorer anExpf2(myShape, TopAbs_FACE);
     for (; anExpf2.More(); anExpf2.Next())
     {
@@ -635,11 +597,11 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
       {
         if (theFaceWithSmall(anExpf2.Current()).Extent())
         {
-          // smh#8
+
           TopoDS_Shape tmpShape = Context()->Apply(anExpf2.Current());
           TopoDS_Face  facet    = TopoDS::Face(tmpShape);
           if (!facet.IsSame(anExpf2.Current()))
-          { // gka
+          {
             TopExp_Explorer aExpEdge(anExpf2.Current(), TopAbs_EDGE);
             for (; aExpEdge.More(); aExpEdge.Next())
             {
@@ -663,8 +625,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
             }
           }
           TopoDS_Face face = facet;
-          // if (face.Orientation()==TopAbs_REVERSED)
-          //   face = TopoDS::Face(facet.Oriented(TopAbs_FORWARD));
+
           for (TopoDS_Iterator itw(face); itw.More(); itw.Next())
           {
             if (itw.Value().ShapeType() != TopAbs_WIRE)
@@ -673,7 +634,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
             if (face.Orientation() == TopAbs_REVERSED)
               face = TopoDS::Face(facet.Oriented(TopAbs_FORWARD));
             occ::handle<ShapeExtend_WireData> aswd = new ShapeExtend_WireData(aWire, true, false);
-            // SFW->Load(aWire);
+
             SFW->Load(aswd);
             SFW->FixReorder();
             int prev, next, index = 1;
@@ -686,10 +647,9 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
               edge2 = SFW->WireData()->Edge(index);
               edge3 = SFW->WireData()->Edge(next);
 
-              // gka protection against joining seem edge
               if (edge2.IsSame(edge1) || edge2.IsSame(edge3))
               {
-                // if(BRep_Tool::IsClosed(edge2,face)) {
+
                 index++;
                 continue;
               }
@@ -699,9 +659,9 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
               bool isSeam2 = SFW->WireData()->IsSeam(next);
               if (theSmallEdges.Contains(edge2))
               {
-                // Middle edge is small - choose a pair of edges to join
+
                 bool                    IsAnyJoin  = (edge1.IsSame(edge3));
-                bool                    take_next  = IsAnyJoin; // false;
+                bool                    take_next  = IsAnyJoin;
                 bool                    isLimAngle = false;
                 occ::handle<Geom_Curve> C1, C2, C3;
                 double                  aux, last1, first2, last2, first3;
@@ -709,8 +669,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                 if (SAE.Curve3d(edge1, C1, aux, last1) && SAE.Curve3d(edge2, C2, first2, last2)
                     && SAE.Curve3d(edge3, C3, first3, aux))
                 {
-                  // Compare angles between edges
-                  // double Ang1, Ang2;
+
                   gp_Vec Vec1, Vec2;
                   gp_Pnt P;
                   C1->D1(last1, P, Vec1);
@@ -734,17 +693,10 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                     Ang2 = M_PI / 2.;
                   else
                     Ang2 = std::abs(Vec1.Angle(Vec2));
-                  // isLimAngle = (theLimitAngle != -1 && std::min(Ang1,Ang2) > theLimitAngle);
-                  // take_next = (Ang2<Ang1);
-                  // if (take_next) { edge1 = edge2; edge2 = edge3; }
                 }
-                // if(theLimitAngle != -1 && Ang1 > theLimitAngle && Ang2 >theLimitAngle) {
-                //   index++; continue;
-                // }
 
-                // Check if edges lay on the same faces
                 if (theMultyEdges.Contains(edge1) || theMultyEdges.Contains(edge2))
-                { //??????
+                {
                   index++;
                   continue;
                 }
@@ -757,11 +709,10 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                   theList3 = theEdgeToFaces(edge3);
                 bool same_set = false;
 
-                // gka protection against joining seem edges with other edges
                 bool same_set1 = (theList1.Extent() == theList2.Extent() &&
-                                  // clang-format off
-                                              ((!isSeam && !isSeam1)|| (isSeam && isSeam1))); //gka
-                // clang-format on
+
+                                  ((!isSeam && !isSeam1) || (isSeam && isSeam1)));
+
                 bool same_set2 = (theList3.Extent() == theList2.Extent()
                                   && ((!isSeam && !isSeam2) || (isSeam && isSeam2)));
                 NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> theSetOfFaces;
@@ -770,7 +721,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                   theSetOfFaces.Add(itf1.Value());
                 if (same_set1)
                 {
-                  // Add all faces of the first edge to the current set
+
                   for (NCollection_List<TopoDS_Shape>::Iterator itf2(theList1);
                        (itf2.More() && same_set1);
                        itf2.Next())
@@ -778,7 +729,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                 }
                 if (same_set2)
                 {
-                  // Add all faces of the first edge to the current set
+
                   for (NCollection_List<TopoDS_Shape>::Iterator itf2(theList3);
                        (itf2.More() && same_set2);
                        itf2.Next())
@@ -811,9 +762,8 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                 }
                 if (same_set && !isLimAngle)
                 {
-                  // Merge current pair of edges
-                  // gka protection against crossing seem on second face
-                  bool isNeedJoin = true; // false;
+
+                  bool isNeedJoin = true;
                   for (NCollection_List<TopoDS_Shape>::Iterator aItF(theList2);
                        aItF.More() && isNeedJoin;
                        aItF.Next())
@@ -821,7 +771,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                     if (aItF.Value().IsSame(anExpf2.Current()))
                       continue;
                     TopoDS_Shape aF = Context()->Apply(aItF.Value());
-                    // aF = aF.Oriented(TopAbs_FORWARD);
+
                     for (TopoDS_Iterator aIw(aF); aIw.More(); aIw.Next())
                     {
                       if (aIw.Value().ShapeType() != TopAbs_WIRE)
@@ -863,23 +813,22 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                   }
                   else
                   {
-                    // Record vertex replacements in the map
+
                     TopoDS_Vertex oldV1 = SAE.FirstVertex(edge3), oldV2 = SAE.LastVertex(edge3);
                     if (!theNewVertices.IsBound(oldV1))
-                    // smh#8
+
                     {
                       TopoDS_Shape emptyCopiedV1 = oldV1.EmptyCopied();
                       theNewVertices.Bind(oldV1, TopoDS::Vertex(emptyCopiedV1));
                     }
                     if (!oldV1.IsSame(oldV2))
                       if (!theNewVertices.IsBound(oldV2))
-                      // smh#8
+
                       {
                         TopoDS_Shape emptyCopiedV2 = oldV2.EmptyCopied();
                         theNewVertices.Bind(oldV2, TopoDS::Vertex(emptyCopiedV2));
                       }
 
-                    // To keep NM vertices belonging initial edges
                     TopoDS_Iterator aItv(edge1, false);
                     for (; aItv.More(); aItv.Next())
                     {
@@ -909,11 +858,10 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                       }
                     }
 
-                    // Check for small resulting edge
                     bool               newsmall = false;
                     ShapeAnalysis_Wire SAW;
                     SAW.Init(SFW->WireData(), face, Precision());
-                    // Make changes in WireData and Context
+
                     if (ReplaceFirst)
                     {
                       Context()->Replace(edge1, edge3);
@@ -937,7 +885,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                       newsmall = SAW.CheckSmall(prev, Precision());
                     }
                     SFW->WireData()->Remove(index);
-                    // Process changes in maps
+
                     NCollection_List<TopoDS_Shape> theList;
                     theList.Append(theList2);
                     theEdgeToFaces.UnBind(edge1);
@@ -967,7 +915,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                           else
                             ite.Next();
                         }
-                        // Remove face without small edges from the map
+
                         if (!theEdges.Extent())
                           theFaceWithSmall.UnBind(curface);
                       }
@@ -976,7 +924,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                   }
                 }
                 else if (aModeDrop)
-                { // gka
+                {
                   occ::handle<ShapeExtend_WireData> tempWire = new ShapeExtend_WireData();
                   ShapeAnalysis_Wire                tempSaw;
                   tempWire->Add(SFW->Wire());
@@ -1003,7 +951,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                       aL2 = theEdgeToFaces.Find(tmpedge2);
                     SFW->FixConnected(newindex <= SFW->NbEdges() ? newindex : 1, Precision());
                     SFW->FixDegenerated(newindex <= SFW->NbEdges() ? newindex : 1);
-                    TopoDS_Shape aTmpShape = Context()->Apply(tmpedge1); // for porting
+                    TopoDS_Shape aTmpShape = Context()->Apply(tmpedge1);
                     TopoDS_Edge  anewedge1 = TopoDS::Edge(aTmpShape);
                     aTmpShape              = Context()->Apply(tmpedge2);
                     TopoDS_Edge anewedge2  = TopoDS::Edge(aTmpShape);
@@ -1069,7 +1017,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                 }
                 else
                 {
-                  // gka protection against removing circles
+
                   TopoDS_Edge             ed = (take_next ? edge1 : edge2);
                   ShapeAnalysis_Edge      sae;
                   occ::handle<Geom_Curve> c3d;
@@ -1088,7 +1036,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                     }
                   }
                   if (take_next && theList2.Extent() == 1)
-                  { // gka
+                  {
                     TopoDS_Vertex V1 = SAE.FirstVertex(edge1), V2 = SAE.LastVertex(edge1);
                     if (V1.IsSame(V2))
                     {
@@ -1159,8 +1107,6 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
       }
     }
 
-    // enk block
-    // Iterate on map of wires which not lie on faces
     for (TopExp_Explorer expw1(myShape, TopAbs_WIRE, TopAbs_FACE); expw1.More(); expw1.Next())
     {
       TopoDS_Wire aWire = TopoDS::Wire(expw1.Current());
@@ -1175,10 +1121,9 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
         edge2 = SFW->WireData()->Edge(index);
         edge3 = SFW->WireData()->Edge(next);
 
-        // gka protection against joining seem edge
         if (edge2.IsSame(edge1) || edge2.IsSame(edge3))
         {
-          // if(BRep_Tool::IsClosed(edge2,face)) {
+
           index++;
           continue;
         }
@@ -1188,9 +1133,9 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
         bool isSeam2 = SFW->WireData()->IsSeam(next);
         if (theSmallEdges.Contains(edge2))
         {
-          // Middle edge is small - choose a pair of edges to join
+
           bool                    IsAnyJoin  = (edge1.IsSame(edge3));
-          bool                    take_next  = IsAnyJoin; // false;
+          bool                    take_next  = IsAnyJoin;
           bool                    isLimAngle = false;
           occ::handle<Geom_Curve> C1, C2, C3;
           double                  aux, last1, first2, last2, first3;
@@ -1198,8 +1143,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
           if (SAE.Curve3d(edge1, C1, aux, last1) && SAE.Curve3d(edge2, C2, first2, last2)
               && SAE.Curve3d(edge3, C3, first3, aux))
           {
-            // Compare angles between edges
-            // double Ang1, Ang2;
+
             gp_Vec Vec1, Vec2;
             gp_Pnt P;
             C1->D1(last1, P, Vec1);
@@ -1223,17 +1167,10 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
               Ang2 = M_PI / 2.;
             else
               Ang2 = std::abs(Vec1.Angle(Vec2));
-            // isLimAngle = (theLimitAngle != -1 && std::min(Ang1,Ang2) > theLimitAngle);
-            // take_next = (Ang2<Ang1);
-            // if (take_next) { edge1 = edge2; edge2 = edge3; }
           }
-          // if(theLimitAngle != -1 && Ang1 > theLimitAngle && Ang2 >theLimitAngle) {
-          //   index++; continue;
-          // }
 
-          // Check if edges lay on the same faces
           if (theMultyEdges.Contains(edge1) || theMultyEdges.Contains(edge2))
-          { //??????
+          {
             index++;
             continue;
           }
@@ -1246,11 +1183,10 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
             theList3 = theEdgeToFaces(edge3);
           bool same_set = false;
 
-          // gka protection against joining seem edges with other edges
           bool same_set1 = (theList1.Extent() == theList2.Extent() &&
-                            // clang-format off
-                                              ((!isSeam && !isSeam1)|| (isSeam && isSeam1))); //gka
-          // clang-format on
+
+                            ((!isSeam && !isSeam1) || (isSeam && isSeam1)));
+
           bool same_set2 = (theList3.Extent() == theList2.Extent()
                             && ((!isSeam && !isSeam2) || (isSeam && isSeam2)));
           NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> theSetOfFaces;
@@ -1258,7 +1194,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
             theSetOfFaces.Add(itf1.Value());
           if (same_set1)
           {
-            // Add all faces of the first edge to the current set
+
             for (NCollection_List<TopoDS_Shape>::Iterator itf2(theList1);
                  (itf2.More() && same_set1);
                  itf2.Next())
@@ -1266,7 +1202,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
           }
           if (same_set2)
           {
-            // Add all faces of the first edge to the current set
+
             for (NCollection_List<TopoDS_Shape>::Iterator itf2(theList3);
                  (itf2.More() && same_set2);
                  itf2.Next())
@@ -1299,16 +1235,15 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
           }
           if (same_set && !isLimAngle)
           {
-            // Merge current pair of edges
-            // gka protection against crossing seem on second face
-            bool isNeedJoin = true; // false;
+
+            bool isNeedJoin = true;
             for (NCollection_List<TopoDS_Shape>::Iterator aItF(theList2); aItF.More() && isNeedJoin;
                  aItF.Next())
             {
               if (aItF.Value().IsSame(anExpf2.Current()))
                 continue;
               TopoDS_Shape aF = Context()->Apply(aItF.Value());
-              // aF = aF.Oriented(TopAbs_FORWARD);
+
               for (TopoDS_Iterator aIw(aF); aIw.More(); aIw.Next())
               {
                 if (aIw.Value().ShapeType() != TopAbs_WIRE)
@@ -1349,22 +1284,22 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
             }
             else
             {
-              // Record vertex replacements in the map
+
               TopoDS_Vertex oldV1 = SAE.FirstVertex(edge3), oldV2 = SAE.LastVertex(edge3);
               if (!theNewVertices.IsBound(oldV1))
-              // smh#8
+
               {
                 TopoDS_Shape emptyCopiedV1 = oldV1.EmptyCopied();
                 theNewVertices.Bind(oldV1, TopoDS::Vertex(emptyCopiedV1));
               }
               if (!oldV1.IsSame(oldV2))
                 if (!theNewVertices.IsBound(oldV2))
-                // smh#8
+
                 {
                   TopoDS_Shape emptyCopiedV2 = oldV2.EmptyCopied();
                   theNewVertices.Bind(oldV2, TopoDS::Vertex(emptyCopiedV2));
                 }
-              // To keep NM vertices belonging initial edges
+
               TopoDS_Iterator aItv(edge1, false);
               for (; aItv.More(); aItv.Next())
               {
@@ -1393,12 +1328,12 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                   Context()->Replace(aOldV, anewV);
                 }
               }
-              // Check for small resulting edge
+
               bool               newsmall = false;
               ShapeAnalysis_Wire SAW;
               SAW.Load(SFW->WireData());
               SAW.SetPrecision(Precision());
-              // Make changes in WireData and Context
+
               if (ReplaceFirst)
               {
                 Context()->Replace(edge1, edge3);
@@ -1422,7 +1357,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                 newsmall = SAW.CheckSmall(prev, Precision());
               }
               SFW->WireData()->Remove(index);
-              // Process changes in maps
+
               NCollection_List<TopoDS_Shape> theList;
               theList.Append(theList2);
               theEdgeToFaces.UnBind(edge1);
@@ -1451,7 +1386,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                     else
                       ite.Next();
                   }
-                  // Remove face without small edges from the map
+
                   if (!theEdges.Extent())
                     theFaceWithSmall.UnBind(curface);
                 }
@@ -1460,7 +1395,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
             }
           }
           else if (aModeDrop)
-          { // gka
+          {
             occ::handle<ShapeExtend_WireData> tempWire = new ShapeExtend_WireData();
             ShapeAnalysis_Wire                tempSaw;
             tempWire->Add(SFW->Wire());
@@ -1487,7 +1422,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                 aL2 = theEdgeToFaces.Find(tmpedge2);
               SFW->FixConnected(newindex <= SFW->NbEdges() ? newindex : 1, Precision());
               SFW->FixDegenerated(newindex <= SFW->NbEdges() ? newindex : 1);
-              TopoDS_Shape aTmpShape = Context()->Apply(tmpedge1); // for porting
+              TopoDS_Shape aTmpShape = Context()->Apply(tmpedge1);
               TopoDS_Edge  anewedge1 = TopoDS::Edge(aTmpShape);
               aTmpShape              = Context()->Apply(tmpedge2);
               TopoDS_Edge anewedge2  = TopoDS::Edge(aTmpShape);
@@ -1551,7 +1486,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
           }
           else
           {
-            // gka protection against removing circles
+
             TopoDS_Edge             ed = (take_next ? edge1 : edge2);
             ShapeAnalysis_Edge      sae;
             occ::handle<Geom_Curve> c3d;
@@ -1570,7 +1505,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
               }
             }
             if (take_next && theList2.Extent() == 1)
-            { // gka
+            {
               TopoDS_Vertex V1 = SAE.FirstVertex(edge1), V2 = SAE.LastVertex(edge1);
               if (V1.IsSame(V2))
               {
@@ -1629,8 +1564,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
         Context()->Replace(aWire, SFW->Wire());
       }
     }
-    // end enk block
-    // Record vertex replacements in context
+
     for (NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator itv(
            theNewVertices);
          itv.More();

@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include "RWStepKinematics_RWPointOnSurfacePairValue.hpp"
 
@@ -11,11 +11,7 @@
 #include <StepGeom_PointOnSurface.hpp>
 #include <StepKinematics_SpatialRotation.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWPointOnSurfacePairValue::RWStepKinematics_RWPointOnSurfacePairValue() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWPointOnSurfacePairValue::ReadStep(
   const occ::handle<StepData_StepReaderData>&                theData,
@@ -23,16 +19,12 @@ void RWStepKinematics_RWPointOnSurfacePairValue::ReadStep(
   occ::handle<Interface_Check>&                              theArch,
   const occ::handle<StepKinematics_PointOnSurfacePairValue>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 4, theArch, "point_on_surface_pair_value"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
-
-  // Inherited fields of PairValue
 
   occ::handle<StepKinematics_KinematicPair> aPairValue_AppliesToPair;
   theData->ReadEntity(theNum,
@@ -41,8 +33,6 @@ void RWStepKinematics_RWPointOnSurfacePairValue::ReadStep(
                       theArch,
                       STANDARD_TYPE(StepKinematics_KinematicPair),
                       aPairValue_AppliesToPair);
-
-  // Own fields of PointOnSurfacePairValue
 
   occ::handle<StepGeom_PointOnSurface> aActualPointOnSurface;
   theData->ReadEntity(theNum,
@@ -74,35 +64,26 @@ void RWStepKinematics_RWPointOnSurfacePairValue::ReadStep(
   else
     theData->ReadEntity(theNum, 4, "input_orientation", theArch, aInputOrientation);
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aPairValue_AppliesToPair,
                aActualPointOnSurface,
                aInputOrientation);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWPointOnSurfacePairValue::WriteStep(
   StepData_StepWriter&                                       theSW,
   const occ::handle<StepKinematics_PointOnSurfacePairValue>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
 
-  // Own fields of PairValue
-
   theSW.Send(theEnt->AppliesToPair());
-
-  // Own fields of PointOnSurfacePairValue
 
   theSW.Send(theEnt->ActualPointOnSurface());
 
   if (!theEnt->InputOrientation().YprRotation().IsNull())
   {
-    // Inherited field : YPR
+
     theSW.OpenSub();
     for (int i = 1; i <= theEnt->InputOrientation().YprRotation()->Length(); i++)
     {
@@ -114,20 +95,12 @@ void RWStepKinematics_RWPointOnSurfacePairValue::WriteStep(
     theSW.Send(theEnt->InputOrientation().Value());
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWPointOnSurfacePairValue::Share(
   const occ::handle<StepKinematics_PointOnSurfacePairValue>& theEnt,
   Interface_EntityIterator&                                  iter) const
 {
 
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of PairValue
-
   iter.AddItem(theEnt->StepKinematics_PairValue::AppliesToPair());
-
-  // Own fields of PointOnSurfacePairValue
 
   iter.AddItem(theEnt->ActualPointOnSurface());
 

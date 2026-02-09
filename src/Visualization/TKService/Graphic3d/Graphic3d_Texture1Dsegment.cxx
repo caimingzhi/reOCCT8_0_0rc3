@@ -6,8 +6,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Texture1Dsegment, Graphic3d_Texture1D)
 
-//=================================================================================================
-
 Graphic3d_Texture1Dsegment::Graphic3d_Texture1Dsegment(const TCollection_AsciiString& theFileName)
     : Graphic3d_Texture1D(theFileName, Graphic3d_TypeOfTexture_1D),
       myX1(0.0f),
@@ -22,8 +20,6 @@ Graphic3d_Texture1Dsegment::Graphic3d_Texture1Dsegment(const TCollection_AsciiSt
                        NCollection_Vec4<float>(0.0f, 0.0f, 1.0f, 0.0f),
                        NCollection_Vec4<float>(0.0f, 0.0f, 0.0f, 0.0f));
 }
-
-//=================================================================================================
 
 Graphic3d_Texture1Dsegment::Graphic3d_Texture1Dsegment(const Graphic3d_NameOfTexture1D theNOT)
     : Graphic3d_Texture1D(theNOT, Graphic3d_TypeOfTexture_1D),
@@ -40,8 +36,6 @@ Graphic3d_Texture1Dsegment::Graphic3d_Texture1Dsegment(const Graphic3d_NameOfTex
                        NCollection_Vec4<float>(0.0f, 0.0f, 0.0f, 0.0f));
 }
 
-//=================================================================================================
-
 Graphic3d_Texture1Dsegment::Graphic3d_Texture1Dsegment(const occ::handle<Image_PixMap>& thePixMap)
     : Graphic3d_Texture1D(thePixMap, Graphic3d_TypeOfTexture_1D),
       myX1(0.0f),
@@ -56,8 +50,6 @@ Graphic3d_Texture1Dsegment::Graphic3d_Texture1Dsegment(const occ::handle<Image_P
                        NCollection_Vec4<float>(0.0f, 0.0f, 1.0f, 0.0f),
                        NCollection_Vec4<float>(0.0f, 0.0f, 0.0f, 0.0f));
 }
-
-//=================================================================================================
 
 void Graphic3d_Texture1Dsegment::SetSegment(const float X1,
                                             const float Y1,
@@ -84,8 +76,6 @@ void Graphic3d_Texture1Dsegment::SetSegment(const float X1,
                        aPlaneX,
                        NCollection_Vec4<float>(0.0f, 0.0f, 0.0f, 0.0f));
 }
-
-//=================================================================================================
 
 void Graphic3d_Texture1Dsegment::Segment(float& X1,
                                          float& Y1,

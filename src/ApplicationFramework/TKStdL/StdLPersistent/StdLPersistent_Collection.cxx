@@ -1,15 +1,4 @@
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <StdLPersistent_Collection.hpp>
 
@@ -125,10 +114,6 @@ void StdLPersistent_Collection::mapBase<Base>::import(const ArrayHandle& theArra
   this->myTransient->ChangeMap(anHMap);
 }
 
-//=======================================================================
-// function : ImportAttribute
-// purpose  : Import transient attribute from the persistent data
-//=======================================================================
 template <template <class> class BaseT, class HArrayClass, class AttribClass, class Converter>
 void StdLPersistent_Collection::instance<BaseT, HArrayClass, AttribClass, Converter>::
   ImportAttribute()
@@ -143,10 +128,6 @@ void StdLPersistent_Collection::instance<BaseT, HArrayClass, AttribClass, Conver
   }
 }
 
-//=======================================================================
-// function : Read
-// purpose  : Read persistent data from a file
-//=======================================================================
 template <class Instance>
 void StdLPersistent_Collection::instance_1<Instance>::Read(StdObjMgt_ReadData& theReadData)
 {
@@ -154,10 +135,6 @@ void StdLPersistent_Collection::instance_1<Instance>::Read(StdObjMgt_ReadData& t
   theReadData >> myDelta;
 }
 
-//=======================================================================
-// function : ImportAttribute
-// purpose  : Import transient attribute from the persistent data
-//=======================================================================
 template <class Instance>
 void StdLPersistent_Collection::instance_1<Instance>::ImportAttribute()
 {

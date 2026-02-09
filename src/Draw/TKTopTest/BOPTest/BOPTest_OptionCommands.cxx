@@ -15,17 +15,15 @@ static int bcheckinverted(Draw_Interpretor&, int, const char**);
 static int buseobb(Draw_Interpretor&, int, const char**);
 static int bsimplify(Draw_Interpretor&, int, const char**);
 
-//=================================================================================================
-
 void BOPTest::OptionCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
   if (done)
     return;
   done = true;
-  // Chapter's name
+
   const char* g = "BOPTest commands";
-  // Commands
+
   theCommands.Add("boptions",
                   "Usage: boptions [-default]\n"
                   "\t\tw/o arguments shows current value of BOP options\n"
@@ -96,8 +94,6 @@ void BOPTest::OptionCommands(Draw_Interpretor& theCommands)
                   g);
 }
 
-//=================================================================================================
-
 int boptions(Draw_Interpretor& di, int n, const char** a)
 {
   if (n > 2)
@@ -114,14 +110,13 @@ int boptions(Draw_Interpretor& di, int n, const char** a)
       return 1;
     }
 
-    // Set all options to default values
     BOPTest_Objects::SetDefaultOptions();
     return 0;
   }
-  //
+
   char             buf[128];
   BOPAlgo_GlueEnum aGlue = BOPTest_Objects::Glue();
-  //
+
   Sprintf(buf,
           " RunParallel: %s \t\t(%s)\n",
           BOPTest_Objects::RunParallel() ? "Yes" : "No",
@@ -172,11 +167,9 @@ int boptions(Draw_Interpretor& di, int n, const char** a)
           BOPTest_Objects::Angular(),
           "use \"bsimplify -a\" command to change");
   di << buf;
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 int bfuzzyvalue(Draw_Interpretor& di, int n, const char** a)
 {
@@ -191,8 +184,6 @@ int bfuzzyvalue(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int brunparallel(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 2)
@@ -206,8 +197,6 @@ int brunparallel(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int bnondestructive(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 2)
@@ -220,8 +209,6 @@ int bnondestructive(Draw_Interpretor& di, int n, const char** a)
   BOPTest_Objects::SetNonDestructive(iNonDestructive != 0);
   return 0;
 }
-
-//=================================================================================================
 
 int bGlue(Draw_Interpretor& di, int n, const char** a)
 {
@@ -244,8 +231,6 @@ int bGlue(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int bdrawwarnshapes(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 2)
@@ -258,8 +243,6 @@ int bdrawwarnshapes(Draw_Interpretor& di, int n, const char** a)
   BOPTest_Objects::SetDrawWarnShapes(iDraw != 0);
   return 0;
 }
-
-//=================================================================================================
 
 int bcheckinverted(Draw_Interpretor& di, int n, const char** a)
 {
@@ -274,8 +257,6 @@ int bcheckinverted(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int buseobb(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 2)
@@ -288,8 +269,6 @@ int buseobb(Draw_Interpretor& di, int n, const char** a)
   BOPTest_Objects::SetUseOBB(iUse != 0);
   return 0;
 }
-
-//=================================================================================================
 
 int bsimplify(Draw_Interpretor& di, int n, const char** a)
 {

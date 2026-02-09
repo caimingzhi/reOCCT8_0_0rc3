@@ -10,7 +10,6 @@
 class StepVisual_AnnotationPlane : public StepVisual_AnnotationOccurrence
 {
 public:
-  //! Returns a AnnotationPlane
   Standard_EXPORT StepVisual_AnnotationPlane();
 
   Standard_EXPORT void Init(
@@ -20,29 +19,24 @@ public:
     const occ::handle<Standard_Transient>&                                     theItem,
     const occ::handle<NCollection_HArray1<StepVisual_AnnotationPlaneElement>>& theElements);
 
-  //! Returns field Elements
   inline occ::handle<NCollection_HArray1<StepVisual_AnnotationPlaneElement>> Elements() const
   {
     return myElements;
   }
 
-  //! Set field Elements
   inline void SetElements(
     const occ::handle<NCollection_HArray1<StepVisual_AnnotationPlaneElement>>& theElements)
   {
     myElements = theElements;
   }
 
-  //! Returns number of Elements
   inline int NbElements() const { return (myElements.IsNull() ? 0 : myElements->Length()); }
 
-  //! Returns Elements with the given number
   inline StepVisual_AnnotationPlaneElement ElementsValue(const int theNum) const
   {
     return myElements->Value(theNum);
   }
 
-  //! Sets Elements with given number
   inline void SetElementsValue(const int theNum, const StepVisual_AnnotationPlaneElement& theItem)
   {
     myElements->SetValue(theNum, theItem);

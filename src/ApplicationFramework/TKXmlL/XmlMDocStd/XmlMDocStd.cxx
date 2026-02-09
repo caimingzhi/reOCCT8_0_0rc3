@@ -4,8 +4,6 @@
 #include <XmlMDF_ADriverTable.hpp>
 #include <XmlMDocStd_XLinkDriver.hpp>
 
-//=================================================================================================
-
 void XmlMDocStd::AddDrivers(const occ::handle<XmlMDF_ADriverTable>& aDriverTable,
                             const occ::handle<Message_Messenger>&   aMessageDriver)
 {

@@ -18,7 +18,6 @@ class PCDM_Reader : public Standard_Transient
 {
 
 public:
-  //! retrieves the content of the file into a new Document.
   Standard_EXPORT virtual void Read(
     const TCollection_ExtendedString&     aFileName,
     const occ::handle<CDM_Document>&      aNewDocument,

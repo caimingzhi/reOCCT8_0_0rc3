@@ -13,7 +13,6 @@
 class TopoDS_Vertex;
 class ChFiDS_Stripe;
 
-//! encapsulation of IndexedDataMapOfVertexListOfStripe
 class ChFiDS_StripeMap
 {
 public:
@@ -56,8 +55,6 @@ inline int ChFiDS_StripeMap::Extent() const
 {
   return mymap.Extent();
 }
-
-//=================================================================================================
 
 inline const TopoDS_Vertex& ChFiDS_StripeMap::FindKey(const int I) const
 {

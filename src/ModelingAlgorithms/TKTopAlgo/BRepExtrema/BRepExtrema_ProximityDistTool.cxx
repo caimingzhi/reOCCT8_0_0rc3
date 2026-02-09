@@ -8,10 +8,6 @@
 #include <Standard_NullValue.hpp>
 #include <TopoDS.hpp>
 
-//=======================================================================
-// function : BRepExtrema_ProximityDistTool
-// purpose  : Creates new uninitialized tool
-//=======================================================================
 BRepExtrema_ProximityDistTool::BRepExtrema_ProximityDistTool()
     : myMinDistance(std::numeric_limits<double>::max()),
       myProxDist(-1.),
@@ -22,10 +18,6 @@ BRepExtrema_ProximityDistTool::BRepExtrema_ProximityDistTool()
 {
 }
 
-//=======================================================================
-// function : BRepExtrema_ProximityDistTool
-// purpose  : Creates new tool for the given element sets
-//=======================================================================
 BRepExtrema_ProximityDistTool::BRepExtrema_ProximityDistTool(
   const occ::handle<BRepExtrema_TriangleSet>& theSet1,
   const int                                   theNbSamples1,
@@ -46,10 +38,6 @@ BRepExtrema_ProximityDistTool::BRepExtrema_ProximityDistTool(
   LoadAdditionalPointsFirstSet(theAddVertices1, theAddStatus1);
 }
 
-//=======================================================================
-// function : LoadTriangleSets
-// purpose  : Loads the given element sets into the tool
-//=======================================================================
 void BRepExtrema_ProximityDistTool::LoadTriangleSets(
   const occ::handle<BRepExtrema_TriangleSet>& theSet1,
   const occ::handle<BRepExtrema_TriangleSet>& theSet2)
@@ -58,10 +46,6 @@ void BRepExtrema_ProximityDistTool::LoadTriangleSets(
   mySet2 = theSet2;
 }
 
-//=======================================================================
-// function : LoadShapeLists
-// purpose  : Loads the given list of subshapes into the proximity tool
-//=======================================================================
 void BRepExtrema_ProximityDistTool::LoadShapeLists(
   const NCollection_Vector<TopoDS_Shape>& theShapeList1,
   const NCollection_Vector<TopoDS_Shape>& theShapeList2)
@@ -70,10 +54,6 @@ void BRepExtrema_ProximityDistTool::LoadShapeLists(
   myShapeList2 = theShapeList2;
 }
 
-//=======================================================================
-// function : LoadAdditionalPointsFirstSet
-// purpose  : Loads given additional vertices and their statuses
-//=======================================================================
 void BRepExtrema_ProximityDistTool::LoadAdditionalPointsFirstSet(
   const BVH_Array3d&                        theAddVertices1,
   const NCollection_Vector<ProxPnt_Status>& theAddStatus1)
@@ -82,10 +62,6 @@ void BRepExtrema_ProximityDistTool::LoadAdditionalPointsFirstSet(
   myAddStatus1   = theAddStatus1;
 }
 
-//=======================================================================
-// function : goThroughtSet1
-// purpose  : Goes through vertices from the 1st set
-//=======================================================================
 void BRepExtrema_ProximityDistTool::goThroughtSet1(const BVH_Array3d& theVertices1,
                                                    const bool         theIsAdditionalSet)
 {
@@ -115,10 +91,6 @@ void BRepExtrema_ProximityDistTool::goThroughtSet1(const BVH_Array3d& theVertice
   }
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Performs searching of the proximity distance
-//=======================================================================
 void BRepExtrema_ProximityDistTool::Perform()
 {
   SetBVHSet(mySet2.get());
@@ -155,10 +127,6 @@ static double pointBoxSquareMaxDistance(const BVH_Vec3d& thePoint,
   return aDist;
 }
 
-//=======================================================================
-// function : Branch rejection
-// purpose  : Defines the rules for node rejection by bounding box
-//=======================================================================
 bool BRepExtrema_ProximityDistTool::RejectNode(const BVH_Vec3d& theCornerMin,
                                                const BVH_Vec3d& theCornerMax,
                                                double&          theMetric) const
@@ -171,10 +139,6 @@ bool BRepExtrema_ProximityDistTool::RejectNode(const BVH_Vec3d& theCornerMin,
   return theMetric > myDistance || aMaxMetric < myProxDist;
 }
 
-//=======================================================================
-// function : Leaf acceptance
-// purpose  : Defines the rules for leaf acceptance
-//=======================================================================
 bool BRepExtrema_ProximityDistTool::Accept(const int theTrgIdx, const double&)
 {
   BVH_Vec3d aTrgVert1;
@@ -199,12 +163,12 @@ bool BRepExtrema_ProximityDistTool::Accept(const int theTrgIdx, const double&)
   BVH_Vec3d aDirect     = myObject - aNearestPnt;
   double    aSqDistance = aDirect.Dot(aDirect);
 
-  if (aSqDistance > Precision::SquareConfusion()) // point belongs to triangle
+  if (aSqDistance > Precision::SquareConfusion())
   {
     const BVH_Vec3d aAB = aTrgVert2 - aTrgVert1;
 
     BVH_Vec3d aNorm;
-    if (aTrgVert2.IsEqual(aTrgVert3)) // is this degenerate triangle (= segment)
+    if (aTrgVert2.IsEqual(aTrgVert3))
     {
       const BVH_Vec3d aAP = myObject - aTrgVert1;
       aNorm               = BVH_Vec3d::Cross(BVH_Vec3d::Cross(aAP, aAB), aAB);
@@ -217,12 +181,11 @@ bool BRepExtrema_ProximityDistTool::Accept(const int theTrgIdx, const double&)
 
     double aNormSqLen = aNorm.Dot(aNorm);
 
-    // check if the distance is under perpendicular
     const BVH_Vec3d aCrossCross      = BVH_Vec3d::Cross(aDirect, aNorm);
     double          aCrossCrossSqLen = aCrossCross.Dot(aCrossCross);
     if (aCrossCrossSqLen > Precision::SquareConfusion() * aSqDistance * aNormSqLen)
     {
-      // the distance is not under perpendicular
+
       if (myMinDistance - sqrt(aSqDistance) > Precision::Confusion())
       {
         myMinDistance  = sqrt(aSqDistance);
@@ -234,7 +197,6 @@ bool BRepExtrema_ProximityDistTool::Accept(const int theTrgIdx, const double&)
     }
   }
 
-  // the distance is under perpendicular
   if (myDistance - sqrt(aSqDistance) > Precision::Confusion())
   {
     myDistance     = sqrt(aSqDistance);
@@ -247,10 +209,6 @@ bool BRepExtrema_ProximityDistTool::Accept(const int theTrgIdx, const double&)
   return false;
 }
 
-//=======================================================================
-// function : ComputeDistance
-// purpose  : Computes the distance between object and BVH tree
-//=======================================================================
 double BRepExtrema_ProximityDistTool::ComputeDistance()
 {
   myIsDone = this->Select() > 0;
@@ -270,34 +228,29 @@ double BRepExtrema_ProximityDistTool::ComputeDistance()
   return myDistance;
 }
 
-//=======================================================================
-// function : IsNodeOnBorder
-// purpose  : Returns true if the node is on the boarder
-//=======================================================================
 bool BRepExtrema_ProximityDistTool::IsNodeOnBorder(const int theNodeIdx,
                                                    const occ::handle<Poly_Triangulation>& theTr)
 {
   Poly_Connect aPolyConnect(theTr);
 
-  int aContTrg; // index of triangle containing exploring node
+  int aContTrg;
   for (aPolyConnect.Initialize(theNodeIdx); aPolyConnect.More(); aPolyConnect.Next())
   {
     aContTrg = aPolyConnect.Value();
 
     int aContTrgNodes[3];
-    // clang-format off
-    theTr->Triangle (aContTrg).Get (aContTrgNodes[0], aContTrgNodes[1], aContTrgNodes[2]); //indices of nodes of the triangle
+
+    theTr->Triangle(aContTrg).Get(aContTrgNodes[0], aContTrgNodes[1], aContTrgNodes[2]);
 
     int aAdjTrg[3];
-    aPolyConnect.Triangles (aContTrg, aAdjTrg[0], aAdjTrg[1], aAdjTrg[2]); //indices of adjacent triangles
-    // clang-format on
+    aPolyConnect.Triangles(aContTrg, aAdjTrg[0], aAdjTrg[1], aAdjTrg[2]);
 
     for (int j = 0; j < 3; j++)
     {
       int k = (j + 1) % 3;
-      if (aAdjTrg[j] == 0) // free segment of triangle
+      if (aAdjTrg[j] == 0)
       {
-        // aContTrgNodes[j], aContTrgNodes[k] are ends of free segment and it is a part of border
+
         if (aContTrgNodes[j] == theNodeIdx || aContTrgNodes[k] == theNodeIdx)
         {
           return true;
@@ -309,10 +262,6 @@ bool BRepExtrema_ProximityDistTool::IsNodeOnBorder(const int theNodeIdx,
   return false;
 }
 
-//=======================================================================
-// function : IsEdgeOnBorder
-// purpose  : Returns true if the edge is on the boarder
-//=======================================================================
 bool BRepExtrema_ProximityDistTool::IsEdgeOnBorder(const int theTrgIdx,
                                                    const int theFirstEdgeNodeIdx,
                                                    const int theSecondEdgeNodeIdx,
@@ -321,16 +270,15 @@ bool BRepExtrema_ProximityDistTool::IsEdgeOnBorder(const int theTrgIdx,
   Poly_Connect aPolyConnect(theTr);
 
   int aAdjTrg[3];
-  // clang-format off
-  aPolyConnect.Triangles (theTrgIdx, aAdjTrg[0], aAdjTrg[1], aAdjTrg[2]); //indices of adjacent triangles
-  // clang-format on
+
+  aPolyConnect.Triangles(theTrgIdx, aAdjTrg[0], aAdjTrg[1], aAdjTrg[2]);
 
   for (int j = 0; j < 3; j++)
   {
     int k = (j + 1) % 3;
-    if (aAdjTrg[j] == 0) // free segment of triangle
+    if (aAdjTrg[j] == 0)
     {
-      // are ends of free segment and it is a part of border
+
       if (j == theFirstEdgeNodeIdx && k == theSecondEdgeNodeIdx)
       {
         return true;
@@ -341,10 +289,6 @@ bool BRepExtrema_ProximityDistTool::IsEdgeOnBorder(const int theTrgIdx,
   return false;
 }
 
-//=======================================================================
-// function : defineStatusProxPnt1
-// purpose  : Defines the status of proximity point from 1st BVH
-//=======================================================================
 void BRepExtrema_ProximityDistTool::defineStatusProxPnt1()
 {
   if (myIsProxVtx1FromAddSet)
@@ -361,7 +305,7 @@ void BRepExtrema_ProximityDistTool::defineStatusProxPnt1()
     int                aVtxSize   = (int)aVertices1.size();
     int                aLastIdx   = aVtxSize - 1;
 
-    if ((aVertices1[0] - aVertices1[aLastIdx]).Modulus() < Precision::Confusion()) // if closed
+    if ((aVertices1[0] - aVertices1[aLastIdx]).Modulus() < Precision::Confusion())
     {
       myPntStatus1 = ProxPnt_Status_MIDDLE;
       return;
@@ -395,10 +339,6 @@ void BRepExtrema_ProximityDistTool::defineStatusProxPnt1()
   }
 }
 
-//=======================================================================
-// function : defineStatusProxPnt2
-// purpose  : Defines the status of proximity point from 2nd BVH
-//=======================================================================
 void BRepExtrema_ProximityDistTool::defineStatusProxPnt2()
 {
   int aTrgIdx  = myProxPrjState.GetTrgIdx();
@@ -416,7 +356,7 @@ void BRepExtrema_ProximityDistTool::defineStatusProxPnt2()
       int                aVtxSize   = (int)aVertices2.size();
       int                aLastIdx   = aVtxSize - 1;
 
-      if ((aVertices2[0] - aVertices2[aLastIdx]).Modulus() < Precision::Confusion()) // if closed
+      if ((aVertices2[0] - aVertices2[aLastIdx]).Modulus() < Precision::Confusion())
       {
         myPntStatus2 = ProxPnt_Status_MIDDLE;
         return;
@@ -444,7 +384,6 @@ void BRepExtrema_ProximityDistTool::defineStatusProxPnt2()
         int aLastNodeNum = myProxPrjState.GetNumberOfLastNode();
         int aLastVtxIdx  = aVtxIndicesOfTrg[aLastNodeNum];
 
-        // it could be border only in case projection is on a degenerated edge
         if (aFirstVtxIdx == aLastVtxIdx && (aFirstVtxIdx == 0 || aFirstVtxIdx == aLastIdx))
         {
           myPntStatus2 = ProxPnt_Status_BORDER;
@@ -500,20 +439,15 @@ void BRepExtrema_ProximityDistTool::defineStatusProxPnt2()
         {
           myPntStatus2 = ProxPnt_Status_MIDDLE;
         }
-      } // else if (myProxPrjState.GetPrjState() == BVH_PrjState::BVH_PrjStateInTriangle_EDGE)
+      }
     }
-  } // else if (myShapeList1 (aFaceID1).ShapeType() == TopAbs_FACE)
+  }
 }
 
-//=======================================================================
-// function : DefineStatusProxPnt
-// purpose  : Defines the status of proximity points
-//=======================================================================
 void BRepExtrema_ProximityDistTool::DefineStatusProxPnt()
 {
-  // define the status of proximity point from 1st BVH
+
   defineStatusProxPnt1();
 
-  // define the status of proximity point from 2nd BVH
   defineStatusProxPnt2();
 }

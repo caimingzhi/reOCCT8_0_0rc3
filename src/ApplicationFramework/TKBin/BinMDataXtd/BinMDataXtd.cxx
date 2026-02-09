@@ -10,8 +10,6 @@
 
 static int myDocumentVersion = -1;
 
-//=================================================================================================
-
 void BinMDataXtd::AddDrivers(const occ::handle<BinMDF_ADriverTable>& theDriverTable,
                              const occ::handle<Message_Messenger>&   theMsgDriver)
 {
@@ -24,19 +22,11 @@ void BinMDataXtd::AddDrivers(const occ::handle<BinMDF_ADriverTable>& theDriverTa
   theDriverTable->AddDriver(new BinMDataXtd_PositionDriver(theMsgDriver));
 }
 
-//=======================================================================
-// function : SetDocumentVersion
-// purpose  : Sets current document version
-//=======================================================================
 void BinMDataXtd::SetDocumentVersion(const int theVersion)
 {
   myDocumentVersion = theVersion;
 }
 
-//=======================================================================
-// function : DocumentVersion
-// purpose  : Retrieved document version
-//=======================================================================
 int BinMDataXtd::DocumentVersion()
 {
   return myDocumentVersion;

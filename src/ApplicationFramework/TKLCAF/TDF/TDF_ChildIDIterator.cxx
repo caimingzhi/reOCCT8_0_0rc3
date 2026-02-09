@@ -9,11 +9,7 @@
       myItr.Next();                                                                                \
   }
 
-//=================================================================================================
-
 TDF_ChildIDIterator::TDF_ChildIDIterator() = default;
-
-//=================================================================================================
 
 TDF_ChildIDIterator::TDF_ChildIDIterator(const TDF_Label&     aLabel,
                                          const Standard_GUID& anID,
@@ -23,8 +19,6 @@ TDF_ChildIDIterator::TDF_ChildIDIterator(const TDF_Label&     aLabel,
 {
   ChildIDIterator_FindNext;
 }
-
-//=================================================================================================
 
 void TDF_ChildIDIterator::Initialize(const TDF_Label&     aLabel,
                                      const Standard_GUID& anID,
@@ -36,8 +30,6 @@ void TDF_ChildIDIterator::Initialize(const TDF_Label&     aLabel,
   ChildIDIterator_FindNext;
 }
 
-//=================================================================================================
-
 void TDF_ChildIDIterator::Next()
 {
   myAtt.Nullify();
@@ -47,8 +39,6 @@ void TDF_ChildIDIterator::Next()
     ChildIDIterator_FindNext;
   }
 }
-
-//=================================================================================================
 
 void TDF_ChildIDIterator::NextBrother()
 {

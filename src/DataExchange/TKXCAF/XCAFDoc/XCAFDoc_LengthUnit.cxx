@@ -1,15 +1,4 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDoc_LengthUnit.hpp>
 
@@ -23,14 +12,10 @@
 
 IMPLEMENT_DERIVED_ATTRIBUTE_WITH_TYPE(XCAFDoc_LengthUnit, TDF_Attribute, "xcaf", "LengthUnit")
 
-//=================================================================================================
-
 XCAFDoc_LengthUnit::XCAFDoc_LengthUnit()
     : myUnitScaleValue(1.)
 {
 }
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_LengthUnit> XCAFDoc_LengthUnit::Set(const TDF_Label&               theLabel,
                                                         const TCollection_AsciiString& theUnitName,
@@ -39,8 +24,6 @@ occ::handle<XCAFDoc_LengthUnit> XCAFDoc_LengthUnit::Set(const TDF_Label&        
   return Set(theLabel, GetID(), theUnitName, theUnitValue);
 }
 
-//=================================================================================================
-
 occ::handle<XCAFDoc_LengthUnit> XCAFDoc_LengthUnit::Set(const TDF_Label& theLabel,
                                                         const double     theUnitValue)
 {
@@ -48,8 +31,6 @@ occ::handle<XCAFDoc_LengthUnit> XCAFDoc_LengthUnit::Set(const TDF_Label& theLabe
     UnitsMethods::DumpLengthUnit(theUnitValue, UnitsMethods_LengthUnit_Meter);
   return Set(theLabel, GetID(), aUnitName, theUnitValue);
 }
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_LengthUnit> XCAFDoc_LengthUnit::Set(const TDF_Label&               theLabel,
                                                         const Standard_GUID&           theGUID,
@@ -67,8 +48,6 @@ occ::handle<XCAFDoc_LengthUnit> XCAFDoc_LengthUnit::Set(const TDF_Label&        
   return A;
 }
 
-//=================================================================================================
-
 void XCAFDoc_LengthUnit::Set(const TCollection_AsciiString& theUnitName, const double theUnitValue)
 {
   Backup();
@@ -76,22 +55,16 @@ void XCAFDoc_LengthUnit::Set(const TCollection_AsciiString& theUnitName, const d
   myUnitScaleValue = theUnitValue;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_LengthUnit::GetID()
 {
   static const Standard_GUID theGUID("efd212f8-6dfd-11d4-b9c8-0060b0ee281b");
   return theGUID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_LengthUnit::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 void XCAFDoc_LengthUnit::Restore(const occ::handle<TDF_Attribute>& theWith)
 {
@@ -100,8 +73,6 @@ void XCAFDoc_LengthUnit::Restore(const occ::handle<TDF_Attribute>& theWith)
   myUnitScaleValue                       = anAttr->GetUnitValue();
 }
 
-//=================================================================================================
-
 void XCAFDoc_LengthUnit::Paste(const occ::handle<TDF_Attribute>&       theInto,
                                const occ::handle<TDF_RelocationTable>& theRT) const
 {
@@ -109,8 +80,6 @@ void XCAFDoc_LengthUnit::Paste(const occ::handle<TDF_Attribute>&       theInto,
   occ::handle<XCAFDoc_LengthUnit> anAttr = occ::down_cast<XCAFDoc_LengthUnit>(theInto);
   anAttr->Set(myUnitName, myUnitScaleValue);
 }
-
-//=================================================================================================
 
 Standard_OStream& XCAFDoc_LengthUnit::Dump(Standard_OStream& theOS) const
 {
@@ -122,8 +91,6 @@ Standard_OStream& XCAFDoc_LengthUnit::Dump(Standard_OStream& theOS) const
   anOS << aSGUID << "|" << std::endl;
   return anOS;
 }
-
-//=================================================================================================
 
 void XCAFDoc_LengthUnit::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

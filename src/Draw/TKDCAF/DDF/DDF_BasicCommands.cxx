@@ -18,11 +18,6 @@
 #include <TDF_Tool.hpp>
 #include <TDF_DerivedAttribute.hpp>
 
-//=======================================================================
-// function : Children
-// purpose  : Returns a list of sub-label entries.
-//=======================================================================
-
 static int DDF_Children(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
@@ -47,17 +42,12 @@ static int DDF_Children(Draw_Interpretor& di, int n, const char** a)
     for (TDF_ChildIterator itr(lab); itr.More(); itr.Next())
     {
       TDF_Tool::Entry(itr.Value(), entry);
-      // TCollection_AsciiString entry(itr.Value().Tag());
+
       di << entry.ToCString() << " ";
     }
   }
   return 0;
 }
-
-//=======================================================================
-// function : Attributes
-// purpose  : Returns a list of label attributes.
-//=======================================================================
 
 static int DDF_Attributes(Draw_Interpretor& di, int n, const char** a)
 {
@@ -81,11 +71,6 @@ static int DDF_Attributes(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=======================================================================
-// function : SetEmptyAttribute
-// purpose  : Adds an empty attribute to the label by its dynamic type.
-//=======================================================================
 
 static int DDF_SetEmptyAttribute(Draw_Interpretor& di, int n, const char** a)
 {
@@ -115,12 +100,7 @@ static int DDF_SetEmptyAttribute(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : ForgetAll
-// purpose  : "ForgetAll dfname Label"
-//=======================================================================
-
-static int DDF_ForgetAll(Draw_Interpretor& /*di*/, int n, const char** a)
+static int DDF_ForgetAll(Draw_Interpretor&, int n, const char** a)
 {
   if (n != 3)
     return 1;
@@ -135,14 +115,9 @@ static int DDF_ForgetAll(Draw_Interpretor& /*di*/, int n, const char** a)
   if (label.IsNull())
     return 1;
   label.ForgetAllAttributes();
-  // POP pour NT
+
   return 0;
 }
-
-//=======================================================================
-// function : ForgetAttribute
-// purpose  : "ForgetAtt dfname Label guid_or_type"
-//=======================================================================
 
 static int DDF_ForgetAttribute(Draw_Interpretor& di, int n, const char** a)
 {
@@ -158,7 +133,7 @@ static int DDF_ForgetAttribute(Draw_Interpretor& di, int n, const char** a)
     return 1;
   if (!Standard_GUID::CheckGUIDFormat(a[3]))
   {
-    // check this may be derived attribute by its type
+
     occ::handle<TDF_Attribute> anAttrByType = TDF_DerivedAttribute::Attribute(a[3]);
     if (!anAttrByType.IsNull())
     {
@@ -172,11 +147,6 @@ static int DDF_ForgetAttribute(Draw_Interpretor& di, int n, const char** a)
   aLabel.ForgetAttribute(guid);
   return 0;
 }
-
-//=======================================================================
-// function : DDF_SetTagger
-// purpose  : SetTagger (DF, entry)
-//=======================================================================
 
 static int DDF_SetTagger(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -194,11 +164,6 @@ static int DDF_SetTagger(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=======================================================================
-// function : DDF_NewTag
-// purpose  : NewTag (DF,[father]
-//=======================================================================
-
 static int DDF_NewTag(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 3)
@@ -215,11 +180,6 @@ static int DDF_NewTag(Draw_Interpretor& di, int nb, const char** arg)
   di << "DDF_NewTag : Error\n";
   return 1;
 }
-
-//=======================================================================
-// function : DDF_NewChild
-// purpose  : NewChild(DF,[father])
-//=======================================================================
 
 static int DDF_NewChild(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -248,10 +208,6 @@ static int DDF_NewChild(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=======================================================================
-// function : Label (DF,freeentry)
-//=======================================================================
-
 static int DDF_Label(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 3)
@@ -263,17 +219,14 @@ static int DDF_Label(Draw_Interpretor& di, int n, const char** a)
     if (!DDF::FindLabel(DF, a[2], L, false))
     {
       DDF::AddLabel(DF, a[2], L);
-      // di << "Label : " << a[2] << " created\n";
     }
-    // else di << "Label : " << a[2] << " retrieved\n";
+
     DDF::ReturnLabel(di, L);
     return 0;
   }
   di << "DDF_Label : Error\n";
   return 1;
 }
-
-//=================================================================================================
 
 void DDF::BasicCommands(Draw_Interpretor& theCommands)
 {
@@ -283,8 +236,6 @@ void DDF::BasicCommands(Draw_Interpretor& theCommands)
   done = true;
 
   const char* g = "DF basic commands";
-
-  // Label :
 
   theCommands.Add("SetTagger", "SetTagger (DF, entry)", __FILE__, DDF_SetTagger, g);
 

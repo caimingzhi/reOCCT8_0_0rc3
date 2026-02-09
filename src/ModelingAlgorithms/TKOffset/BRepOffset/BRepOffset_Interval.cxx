@@ -1,10 +1,6 @@
 #include <BRepOffset_Interval.hpp>
 
-//=================================================================================================
-
 BRepOffset_Interval::BRepOffset_Interval() = default;
-
-//=================================================================================================
 
 BRepOffset_Interval::BRepOffset_Interval(const double                 U1,
                                          const double                 U2,

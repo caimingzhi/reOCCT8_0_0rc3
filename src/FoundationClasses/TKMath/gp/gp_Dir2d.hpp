@@ -9,35 +9,24 @@ class gp_Vec2d;
 class gp_Ax2d;
 class gp_Trsf2d;
 
-//! Describes a unit vector in the plane (2D space). This unit
-//! vector is also called "Direction".
-//! See Also
-//! gce_MakeDir2d which provides functions for more
-//! complex unit vector constructions
-//! Geom2d_Direction which provides additional functions
-//! for constructing unit vectors and works, in particular, with
-//! the parametric equations of unit vectors
 class gp_Dir2d
 {
 public:
-  //! Standard directions in 2D space for optimized constexpr construction
   enum class D
   {
-    X,  //!< Direction along positive X axis (1, 0)
-    Y,  //!< Direction along positive Y axis (0, 1)
-    NX, //!< Direction along negative X axis (-1, 0)
-    NY  //!< Direction along negative Y axis (0, -1)
+    X,
+    Y,
+    NX,
+    NY
   };
 
   DEFINE_STANDARD_ALLOC
 
-  //! Creates a direction corresponding to X axis.
   constexpr gp_Dir2d() noexcept
       : coord(1., 0.)
   {
   }
 
-  //! Creates a direction from a standard direction enumeration.
   constexpr explicit gp_Dir2d(const D theDir) noexcept
       : coord(theDir == D::X    ? 1.0
               : theDir == D::NX ? -1.0
@@ -48,150 +37,42 @@ public:
   {
   }
 
-  //! Normalizes the vector theV and creates a Direction. Raises ConstructionError if
-  //! theV.Magnitude() <= Resolution from gp.
-  //! @note Constexpr-compatible when input is already normalized.
   constexpr gp_Dir2d(const gp_Vec2d& theV);
 
-  //! Creates a Direction from a doublet of coordinates. Raises ConstructionError if
-  //! theCoord.Modulus() <= Resolution from gp.
-  //! @note Constexpr-compatible when input is already normalized.
   constexpr gp_Dir2d(const gp_XY& theCoord);
 
-  //! Creates a Direction with its 2 cartesian coordinates. Raises ConstructionError if
-  //! std::sqrt(theXv*theXv + theYv*theYv) <= Resolution from gp.
-  //! @note Constexpr-compatible when input is already normalized.
   constexpr gp_Dir2d(const double theXv, const double theYv);
 
-  //! For this unit vector, assigns:
-  //! the value theXi to:
-  //! -   the X coordinate if theIndex is 1, or
-  //! -   the Y coordinate if theIndex is 2, and then normalizes it.
-  //! Warning
-  //! Remember that all the coordinates of a unit vector are
-  //! implicitly modified when any single one is changed directly.
-  //! Exceptions
-  //! Standard_OutOfRange if theIndex is not 1 or 2.
-  //! Standard_ConstructionError if either of the following
-  //! is less than or equal to gp::Resolution():
-  //! -   std::sqrt(theXv*theXv + theYv*theYv), or
-  //! -   the modulus of the number pair formed by the new
-  //! value theXi and the other coordinate of this vector that
-  //! was not directly modified.
-  //! Raises OutOfRange if theIndex != {1, 2}.
-  //! @note Constexpr-compatible when result is already normalized.
   constexpr void SetCoord(const int theIndex, const double theXi);
 
-  //! For this unit vector, assigns:
-  //! -   the values theXv and theYv to its two coordinates,
-  //! Warning
-  //! Remember that all the coordinates of a unit vector are
-  //! implicitly modified when any single one is changed directly.
-  //! Exceptions
-  //! Standard_OutOfRange if theIndex is not 1 or 2.
-  //! Standard_ConstructionError if either of the following
-  //! is less than or equal to gp::Resolution():
-  //! -   std::sqrt(theXv*theXv + theYv*theYv), or
-  //! -   the modulus of the number pair formed by the new
-  //! value Xi and the other coordinate of this vector that
-  //! was not directly modified.
-  //! Raises OutOfRange if theIndex != {1, 2}.
-  //! @note Constexpr-compatible when input is already normalized.
   constexpr void SetCoord(const double theXv, const double theYv);
 
-  //! Assigns the given value to the X coordinate of this unit vector,
-  //! and then normalizes it.
-  //! Warning
-  //! Remember that all the coordinates of a unit vector are
-  //! implicitly modified when any single one is changed directly.
-  //! Exceptions
-  //! Standard_ConstructionError if either of the following
-  //! is less than or equal to gp::Resolution():
-  //! -   the modulus of Coord, or
-  //! -   the modulus of the number pair formed from the new
-  //! X or Y coordinate and the other coordinate of this
-  //! vector that was not directly modified.
-  //! @note Constexpr-compatible when result is already normalized.
   constexpr void SetX(const double theX);
 
-  //! Assigns the given value to the Y coordinate of this unit vector,
-  //! and then normalizes it.
-  //! Warning
-  //! Remember that all the coordinates of a unit vector are
-  //! implicitly modified when any single one is changed directly.
-  //! Exceptions
-  //! Standard_ConstructionError if either of the following
-  //! is less than or equal to gp::Resolution():
-  //! -   the modulus of Coord, or
-  //! -   the modulus of the number pair formed from the new
-  //! X or Y coordinate and the other coordinate of this
-  //! vector that was not directly modified.
-  //! @note Constexpr-compatible when result is already normalized.
   constexpr void SetY(const double theY);
 
-  //! Assigns:
-  //! -   the two coordinates of theCoord to this unit vector,
-  //! and then normalizes it.
-  //! Warning
-  //! Remember that all the coordinates of a unit vector are
-  //! implicitly modified when any single one is changed directly.
-  //! Exceptions
-  //! Standard_ConstructionError if either of the following
-  //! is less than or equal to gp::Resolution():
-  //! -   the modulus of theCoord, or
-  //! -   the modulus of the number pair formed from the new
-  //! X or Y coordinate and the other coordinate of this
-  //! vector that was not directly modified.
-  //! @note Constexpr-compatible when input is already normalized.
   constexpr void SetXY(const gp_XY& theCoord);
 
-  //! For this unit vector returns the coordinate of range theIndex :
-  //! theIndex = 1 => X is returned
-  //! theIndex = 2 => Y is returned
-  //! Raises OutOfRange if theIndex != {1, 2}.
   constexpr double Coord(const int theIndex) const { return coord.Coord(theIndex); }
 
-  //! For this unit vector returns its two coordinates theXv and theYv.
-  //! Raises OutOfRange if theIndex != {1, 2}.
   constexpr void Coord(double& theXv, double& theYv) const noexcept { coord.Coord(theXv, theYv); }
 
-  //! For this unit vector, returns its X coordinate.
   constexpr double X() const noexcept { return coord.X(); }
 
-  //! For this unit vector, returns its Y coordinate.
   constexpr double Y() const noexcept { return coord.Y(); }
 
-  //! For this unit vector, returns its two coordinates as a number pair.
-  //! Comparison between Directions
-  //! The precision value is an input data.
   constexpr const gp_XY& XY() const noexcept { return coord; }
 
-  //! Returns True if the two vectors have the same direction
-  //! i.e. the angle between this unit vector and the
-  //! unit vector theOther is less than or equal to theAngularTolerance.
   bool IsEqual(const gp_Dir2d& theOther, const double theAngularTolerance) const;
 
-  //! Returns True if the angle between this unit vector and the
-  //! unit vector theOther is equal to Pi/2 or -Pi/2 (normal)
-  //! i.e. std::abs(std::abs(<me>.Angle(theOther)) - PI/2.) <= theAngularTolerance
   bool IsNormal(const gp_Dir2d& theOther, const double theAngularTolerance) const;
 
-  //! Returns True if the angle between this unit vector and the
-  //! unit vector theOther is equal to Pi or -Pi (opposite).
-  //! i.e.  PI - std::abs(<me>.Angle(theOther)) <= theAngularTolerance
   bool IsOpposite(const gp_Dir2d& theOther, const double theAngularTolerance) const;
 
-  //! Returns True if the angle between this unit vector and unit
-  //! vector theOther is equal to 0, Pi or -Pi.
-  //! i.e.  std::abs(Angle(<me>, theOther)) <= theAngularTolerance or
-  //! PI - std::abs(Angle(<me>, theOther)) <= theAngularTolerance
   bool IsParallel(const gp_Dir2d& theOther, const double theAngularTolerance) const;
 
-  //! Computes the angular value in radians between <me> and
-  //! <theOther>. Returns the angle in the range [-PI, PI].
   Standard_EXPORT double Angle(const gp_Dir2d& theOther) const;
 
-  //! Computes the cross product between two directions.
   [[nodiscard]] constexpr double Crossed(const gp_Dir2d& theRight) const noexcept
   {
     return coord.Crossed(theRight.coord);
@@ -202,7 +83,6 @@ public:
     return Crossed(theRight);
   }
 
-  //! Computes the scalar product
   constexpr double Dot(const gp_Dir2d& theOther) const noexcept
   {
     return coord.Dot(theOther.coord);
@@ -212,7 +92,6 @@ public:
 
   constexpr void Reverse() noexcept { coord.Reverse(); }
 
-  //! Reverses the orientation of a direction
   [[nodiscard]] constexpr gp_Dir2d Reversed() const noexcept
   {
     gp_Dir2d aV = *this;
@@ -224,22 +103,14 @@ public:
 
   Standard_EXPORT void Mirror(const gp_Dir2d& theV) noexcept;
 
-  //! Performs the symmetrical transformation of a direction
-  //! with respect to the direction theV which is the center of
-  //! the symmetry.
   [[nodiscard]] Standard_EXPORT gp_Dir2d Mirrored(const gp_Dir2d& theV) const noexcept;
 
   Standard_EXPORT void Mirror(const gp_Ax2d& theA) noexcept;
 
-  //! Performs the symmetrical transformation of a direction
-  //! with respect to an axis placement which is the axis
-  //! of the symmetry.
   [[nodiscard]] Standard_EXPORT gp_Dir2d Mirrored(const gp_Ax2d& theA) const noexcept;
 
   void Rotate(const double Ang);
 
-  //! Rotates a direction. theAng is the angular value of
-  //! the rotation in radians.
   [[nodiscard]] gp_Dir2d Rotated(const double theAng) const
   {
     gp_Dir2d aV = *this;
@@ -249,10 +120,6 @@ public:
 
   Standard_EXPORT void Transform(const gp_Trsf2d& theT) noexcept;
 
-  //! Transforms a direction with the "Trsf" theT.
-  //! Warnings :
-  //! If the scale factor of the "Trsf" theT is negative then the
-  //! direction <me> is reversed.
   [[nodiscard]] gp_Dir2d Transformed(const gp_Trsf2d& theT) const
   {
     gp_Dir2d aV = *this;
@@ -260,7 +127,6 @@ public:
     return aV;
   }
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
 private:
@@ -270,41 +136,31 @@ private:
 #include <gp_Ax2d.hpp>
 #include <gp_Trsf2d.hpp>
 
-//=================================================================================================
-
 inline constexpr gp_Dir2d::gp_Dir2d(const gp_Vec2d& theV)
     : gp_Dir2d(theV.XY())
 {
 }
-
-//=================================================================================================
 
 inline constexpr gp_Dir2d::gp_Dir2d(const gp_XY& theXY)
     : gp_Dir2d(theXY.X(), theXY.Y())
 {
 }
 
-//=================================================================================================
-
 inline constexpr gp_Dir2d::gp_Dir2d(const double theXv, const double theYv)
 {
   const double aSqMod = theXv * theXv + theYv * theYv;
 
-  // Fast path: already normalized - fully constexpr
   if (aSqMod >= (1.0 - gp::Resolution()) && aSqMod <= (1.0 + gp::Resolution()))
   {
     coord.SetCoord(theXv, theYv);
     return;
   }
 
-  // Slow path: runtime only (sqrt not constexpr - compile error if reached in constexpr context)
   Standard_ConstructionError_Raise_if(aSqMod <= gp::Resolution() * gp::Resolution(),
                                       "gp_Dir2d() - input vector has zero norm");
   const double aD = sqrt(aSqMod);
   coord.SetCoord(theXv / aD, theYv / aD);
 }
-
-//=================================================================================================
 
 inline constexpr void gp_Dir2d::SetCoord(const int theIndex, const double theXi)
 {
@@ -320,48 +176,36 @@ inline constexpr void gp_Dir2d::SetCoord(const int theIndex, const double theXi)
   }
 }
 
-//=================================================================================================
-
 inline constexpr void gp_Dir2d::SetCoord(const double theXv, const double theYv)
 {
   const double aSqMod = theXv * theXv + theYv * theYv;
 
-  // Fast path: already normalized - fully constexpr
   if (aSqMod >= (1.0 - gp::Resolution()) && aSqMod <= (1.0 + gp::Resolution()))
   {
     coord.SetCoord(theXv, theYv);
     return;
   }
 
-  // Slow path: runtime only (sqrt not constexpr - compile error if reached in constexpr context)
   Standard_ConstructionError_Raise_if(aSqMod <= gp::Resolution() * gp::Resolution(),
                                       "gp_Dir2d::SetCoord() - result vector has zero norm");
   const double aD = sqrt(aSqMod);
   coord.SetCoord(theXv / aD, theYv / aD);
 }
 
-//=================================================================================================
-
 inline constexpr void gp_Dir2d::SetX(const double theX)
 {
   SetCoord(theX, coord.Y());
 }
-
-//=================================================================================================
 
 inline constexpr void gp_Dir2d::SetY(const double theY)
 {
   SetCoord(coord.X(), theY);
 }
 
-//=================================================================================================
-
 inline constexpr void gp_Dir2d::SetXY(const gp_XY& theXY)
 {
   SetCoord(theXY.X(), theXY.Y());
 }
-
-//=================================================================================================
 
 inline bool gp_Dir2d::IsEqual(const gp_Dir2d& theOther, const double theAngularTolerance) const
 {
@@ -372,8 +216,6 @@ inline bool gp_Dir2d::IsEqual(const gp_Dir2d& theOther, const double theAngularT
   }
   return anAng <= theAngularTolerance;
 }
-
-//=================================================================================================
 
 inline bool gp_Dir2d::IsNormal(const gp_Dir2d& theOther, const double theAngularTolerance) const
 {
@@ -390,8 +232,6 @@ inline bool gp_Dir2d::IsNormal(const gp_Dir2d& theOther, const double theAngular
   return anAng <= theAngularTolerance;
 }
 
-//=================================================================================================
-
 inline bool gp_Dir2d::IsOpposite(const gp_Dir2d& theOther, const double theAngularTolerance) const
 {
   double anAng = Angle(theOther);
@@ -402,8 +242,6 @@ inline bool gp_Dir2d::IsOpposite(const gp_Dir2d& theOther, const double theAngul
   return M_PI - anAng <= theAngularTolerance;
 }
 
-//=================================================================================================
-
 inline bool gp_Dir2d::IsParallel(const gp_Dir2d& theOther, const double theAngularTolerance) const
 {
   double anAng = Angle(theOther);
@@ -413,8 +251,6 @@ inline bool gp_Dir2d::IsParallel(const gp_Dir2d& theOther, const double theAngul
   }
   return anAng <= theAngularTolerance || M_PI - anAng <= theAngularTolerance;
 }
-
-//=================================================================================================
 
 inline void gp_Dir2d::Rotate(const double theAng)
 {

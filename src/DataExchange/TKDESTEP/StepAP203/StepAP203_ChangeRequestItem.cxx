@@ -2,11 +2,7 @@
 #include <StepAP203_ChangeRequestItem.hpp>
 #include <StepBasic_ProductDefinitionFormation.hpp>
 
-//=================================================================================================
-
 StepAP203_ChangeRequestItem::StepAP203_ChangeRequestItem() = default;
-
-//=================================================================================================
 
 int StepAP203_ChangeRequestItem::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -16,8 +12,6 @@ int StepAP203_ChangeRequestItem::CaseNum(const occ::handle<Standard_Transient>& 
     return 1;
   return 0;
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_ProductDefinitionFormation> StepAP203_ChangeRequestItem::
   ProductDefinitionFormation() const

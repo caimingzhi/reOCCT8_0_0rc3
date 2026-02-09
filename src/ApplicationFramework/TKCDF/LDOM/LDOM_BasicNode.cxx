@@ -4,22 +4,12 @@
 #include <LDOM_BasicElement.hpp>
 #include <LDOM_BasicText.hpp>
 
-//=======================================================================
-// function : operator =
-// purpose  : Assignment
-//=======================================================================
-
 LDOM_BasicNode& LDOM_BasicNode::operator=(const LDOM_BasicNode& anOther)
 {
   myNodeType = anOther.getNodeType();
   mySibling  = anOther.GetSibling();
   return *this;
 }
-
-//=======================================================================
-// function : GetSibling
-// purpose  : also detaches NULL siblings
-//=======================================================================
 
 const LDOM_BasicNode* LDOM_BasicNode::GetSibling() const
 {
@@ -33,9 +23,7 @@ const LDOM_BasicNode* LDOM_BasicNode::GetSibling() const
 
 #ifdef OCCT_DEBUG
   #ifndef _MSC_VER
-    //=======================================================================
-    // Debug Function for DBX: use "print -p <Variable> or pp <Variable>"
-    //=======================================================================
+
     #include <LDOM_OSStream.hpp>
     #define FLITERAL 0x10
     #define MAX_SIBLINGS 8

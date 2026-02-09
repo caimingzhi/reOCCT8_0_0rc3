@@ -8,7 +8,6 @@
 #include <Standard_Boolean.hpp>
 class Geom_Surface;
 
-//! A Geom surface and a tolerance.
 class TopOpeBRepDS_Surface
 {
 public:
@@ -28,7 +27,6 @@ public:
 
   double Tolerance() const { return myTolerance; }
 
-  //! Update the tolerance
   void Tolerance(double theTol) { myTolerance = theTol; }
 
   bool Keep() const { return myKeep; }

@@ -11,7 +11,6 @@ class StepRepr_Representation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for Representation
 class RWStepRepr_RWRepresentation
 {
 public:

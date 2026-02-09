@@ -5,15 +5,11 @@
 #include <TopoDS_Shell.hpp>
 #include <TopoDS_Solid.hpp>
 
-//=================================================================================================
-
 const TopoDS_Face& BRepPrimAPI_MakeOneAxis::Face()
 {
   Build();
   return ((BRepPrim_OneAxis*)OneAxis())->LateralFace();
 }
-
-//=================================================================================================
 
 const TopoDS_Shell& BRepPrimAPI_MakeOneAxis::Shell()
 {
@@ -21,9 +17,7 @@ const TopoDS_Shell& BRepPrimAPI_MakeOneAxis::Shell()
   return ((BRepPrim_OneAxis*)OneAxis())->Shell();
 }
 
-//=================================================================================================
-
-void BRepPrimAPI_MakeOneAxis::Build(const Message_ProgressRange& /*theRange*/)
+void BRepPrimAPI_MakeOneAxis::Build(const Message_ProgressRange&)
 {
   BRep_Builder B;
   B.MakeSolid(TopoDS::Solid(myShape));
@@ -31,29 +25,21 @@ void BRepPrimAPI_MakeOneAxis::Build(const Message_ProgressRange& /*theRange*/)
   Done();
 }
 
-//=================================================================================================
-
 const TopoDS_Solid& BRepPrimAPI_MakeOneAxis::Solid()
 {
   Build();
   return TopoDS::Solid(myShape);
 }
 
-//=================================================================================================
-
 BRepPrimAPI_MakeOneAxis::operator TopoDS_Face()
 {
   return Face();
 }
 
-//=================================================================================================
-
 BRepPrimAPI_MakeOneAxis::operator TopoDS_Shell()
 {
   return Shell();
 }
-
-//=================================================================================================
 
 BRepPrimAPI_MakeOneAxis::operator TopoDS_Solid()
 {

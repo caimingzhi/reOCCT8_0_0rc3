@@ -8,8 +8,6 @@
 #define MySurf1 MyIntersectionOn2S.Function().AuxillarSurface1()
 #define MySurf2 MyIntersectionOn2S.Function().AuxillarSurface2()
 
-//=================================================================================================
-
 ApproxInt_PrmPrmSvSurfaces::ApproxInt_PrmPrmSvSurfaces(const ThePSurface& Surf1,
                                                        const ThePSurface& Surf2)
     : MyIsTangent(false),
@@ -20,11 +18,6 @@ ApproxInt_PrmPrmSvSurfaces::ApproxInt_PrmPrmSvSurfaces(const ThePSurface& Surf1,
 {
 }
 
-//=======================================================================
-// function : Compute
-// purpose  :    Computes point on curve, 3D and 2D-tangents of a curve and
-//            parameters on the surfaces.
-//=======================================================================
 bool ApproxInt_PrmPrmSvSurfaces::Compute(double&   u1,
                                          double&   v1,
                                          double&   u2,
@@ -95,7 +88,7 @@ bool ApproxInt_PrmPrmSvSurfaces::Compute(double&   u1,
 
   MyIsTangent = true;
 
-  double                     aParam[4]; // stack vs heap allocation
+  double                     aParam[4];
   NCollection_Array1<double> Param(aParam[0], 1, 4);
   Param(1) = u1;
   Param(2) = v1;
@@ -111,8 +104,7 @@ bool ApproxInt_PrmPrmSvSurfaces::Compute(double&   u1,
   if (MyIntersectionOn2S.IsEmpty())
   {
     MyIsTangent = false;
-    // cout<<"\n----- Parametree Parametree : IsEmpty ds Compute "<<endl;
-    // Debug(u1); Debug(u2); Debug(v1); Debug(v2);   cout<<endl;
+
     MyHasBeenComputed = MyHasBeenComputedbis = false;
     return (false);
   }
@@ -133,26 +125,6 @@ bool ApproxInt_PrmPrmSvSurfaces::Compute(double&   u1,
   MyTguv1 = Tguv1 = MyIntersectionOn2S.DirectionOnS1();
   MyTguv2 = Tguv2 = MyIntersectionOn2S.DirectionOnS2();
 
-  //----------------------------------------------------------------------
-  //-- Si ( Tg )    TU et TV sont normes
-  //--
-  //-- On a    Tg   =  DeltaU  *  TU    +   DeltaV  *  TV
-  //--
-  //-- soit :  Tg.TU  =  DeltaU  TU.TU  +   DeltaV  TU.TV
-  //--         Tg.TV  =  DeltaU  TV.TU  +   DeltaV  TV.TV
-  //--
-  //-- Donc :
-  //--
-  //--               Tg.TU TV.TV  - Tg.TV * TU.TV
-  //--   DeltaU = -------------------------------
-  //--               TU.TU TV.TV  - (TU.TV)**2
-  //--
-  //--               Tg.TV TU.TU  - Tg.TU * TU.TV
-  //--   DeltaV = -------------------------------
-  //--               TU.TU TV.TV  - (TU.TV)**2
-  //--
-  //--
-
   Tg.Normalize();
   MyTg = Tg;
 
@@ -160,9 +132,7 @@ bool ApproxInt_PrmPrmSvSurfaces::Compute(double&   u1,
   gp_Vec TU, TV;
   gp_Pnt Pbid;
   double TUTV, TgTU, TgTV, TUTU, TVTV, DIS;
-  //------------------------------------------------------------
-  //-- Calcul de Tguv1
-  //--
+
   ThePSurfaceTool::D1(MySurf1, u1, v1, Pbid, TU, TV);
 
   TUTU = TU.Dot(TU);
@@ -184,9 +154,6 @@ bool ApproxInt_PrmPrmSvSurfaces::Compute(double&   u1,
   Tguv1.SetCoord(DeltaU, DeltaV);
   MyTguv1 = Tguv1;
 
-  //------------------------------------------------------------
-  //-- Calcul de Tguv2
-  //--
   ThePSurfaceTool::D1(MySurf2, u2, v2, Pbid, TU, TV);
 
   TUTU = TU.Dot(TU);
@@ -211,8 +178,6 @@ bool ApproxInt_PrmPrmSvSurfaces::Compute(double&   u1,
   return (true);
 }
 
-//=================================================================================================
-
 void ApproxInt_PrmPrmSvSurfaces::Pnt(const double u1,
                                      const double v1,
                                      const double u2,
@@ -230,11 +195,6 @@ void ApproxInt_PrmPrmSvSurfaces::Pnt(const double u1,
   P = MyPnt;
 }
 
-//=======================================================================
-// function : SeekPoint
-// purpose  :    Computes point on curve and
-//            parameters on the surfaces.
-//=======================================================================
 bool ApproxInt_PrmPrmSvSurfaces::SeekPoint(const double     u1,
                                            const double     v1,
                                            const double     u2,
@@ -255,8 +215,6 @@ bool ApproxInt_PrmPrmSvSurfaces::SeekPoint(const double     u1,
   return true;
 }
 
-//=================================================================================================
-
 bool ApproxInt_PrmPrmSvSurfaces::Tangency(const double u1,
                                           const double v1,
                                           const double u2,
@@ -274,8 +232,6 @@ bool ApproxInt_PrmPrmSvSurfaces::Tangency(const double u1,
   T            = MyTg;
   return (t);
 }
-
-//=================================================================================================
 
 bool ApproxInt_PrmPrmSvSurfaces::TangencyOnSurf1(const double u1,
                                                  const double v1,
@@ -295,8 +251,6 @@ bool ApproxInt_PrmPrmSvSurfaces::TangencyOnSurf1(const double u1,
   return (t);
 }
 
-//=================================================================================================
-
 bool ApproxInt_PrmPrmSvSurfaces::TangencyOnSurf2(const double u1,
                                                  const double v1,
                                                  const double u2,
@@ -315,12 +269,10 @@ bool ApproxInt_PrmPrmSvSurfaces::TangencyOnSurf2(const double u1,
   return (t);
 }
 
-//--------------------------------------------------------------------------------
-
 #if 0 
-  //------------------------------------------------------------
-  //-- Calcul de Tguv1
-  //--
+  
+  
+  
   ThePSurfaceTool::D1(MySurf1,u1,v1,P,TU,TV);
   
   TUTV = TU.Dot(TV);
@@ -335,9 +287,9 @@ bool ApproxInt_PrmPrmSvSurfaces::TangencyOnSurf2(const double u1,
   
   Tguv1.Multiplied(Delta);  MyTguv1 = Tguv1;
 
-  //------------------------------------------------------------
-  //-- Calcul de Tguv2
-  //--  
+  
+  
+  
   ThePSurfaceTool::D1(MySurf2,u2,v2,P,TU,TV);
 
   TUTV = TU.Dot(TV);

@@ -13,8 +13,6 @@
 
 static int ComputeIntersection(IntPolyh_PMaillageAffinage& theMaillage);
 
-//=================================================================================================
-
 IntPolyh_Intersection::IntPolyh_Intersection(const occ::handle<Adaptor3d_Surface>& theS1,
                                              const occ::handle<Adaptor3d_Surface>& theS2)
 {
@@ -30,8 +28,6 @@ IntPolyh_Intersection::IntPolyh_Intersection(const occ::handle<Adaptor3d_Surface
   myTangentZones.Init(10000);
   Perform();
 }
-
-//=================================================================================================
 
 IntPolyh_Intersection::IntPolyh_Intersection(const occ::handle<Adaptor3d_Surface>& theS1,
                                              const int                             theNbSU1,
@@ -53,8 +49,6 @@ IntPolyh_Intersection::IntPolyh_Intersection(const occ::handle<Adaptor3d_Surface
   Perform();
 }
 
-//=================================================================================================
-
 IntPolyh_Intersection::IntPolyh_Intersection(const occ::handle<Adaptor3d_Surface>& theS1,
                                              const NCollection_Array1<double>&     theUPars1,
                                              const NCollection_Array1<double>&     theVPars1,
@@ -74,8 +68,6 @@ IntPolyh_Intersection::IntPolyh_Intersection(const occ::handle<Adaptor3d_Surface
   myTangentZones.Init(10000);
   Perform(theUPars1, theVPars1, theUPars2, theVPars2);
 }
-
-//=================================================================================================
 
 void IntPolyh_Intersection::GetLinePoint(const int Indexl,
                                          const int Indexp,
@@ -100,10 +92,8 @@ void IntPolyh_Intersection::GetLinePoint(const int Indexl,
   incidence                       = sp.GetAngle();
 }
 
-//=================================================================================================
-
 void IntPolyh_Intersection::GetTangentZonePoint(const int Indexz,
-                                                const int /*Indexp*/,
+                                                const int,
                                                 double& x,
                                                 double& y,
                                                 double& z,
@@ -122,20 +112,15 @@ void IntPolyh_Intersection::GetTangentZonePoint(const int Indexz,
   v2                            = sp.V2();
 }
 
-//=================================================================================================
-
 void IntPolyh_Intersection::Perform()
 {
-  // Prepare the sampling of the surfaces - UV parameters of the triangulation nodes
+
   NCollection_Array1<double> UPars1, VPars1, UPars2, VPars2;
   IntPolyh_Tools::MakeSampling(mySurf1, myNbSU1, myNbSV1, false, UPars1, VPars1);
   IntPolyh_Tools::MakeSampling(mySurf2, myNbSU2, myNbSV2, false, UPars2, VPars2);
 
-  // Perform intersection
   Perform(UPars1, VPars1, UPars2, VPars2);
 }
-
-//=================================================================================================
 
 void IntPolyh_Intersection::Perform(const NCollection_Array1<double>& theUPars1,
                                     const NCollection_Array1<double>& theVPars1,
@@ -144,11 +129,9 @@ void IntPolyh_Intersection::Perform(const NCollection_Array1<double>& theUPars1,
 {
   myIsDone = true;
 
-  // Compute the deflection of the given sampling if it is not set
   double aDeflTol1 = IntPolyh_Tools::ComputeDeflection(mySurf1, theUPars1, theVPars1);
   double aDeflTol2 = IntPolyh_Tools::ComputeDeflection(mySurf2, theUPars2, theVPars2);
 
-  // Perform standard intersection
   IntPolyh_PMaillageAffinage pMaillageStd = nullptr;
   int                        nbCouplesStd = 0;
   bool                       isStdDone    = PerformStd(theUPars1,
@@ -162,7 +145,7 @@ void IntPolyh_Intersection::Perform(const NCollection_Array1<double>& theUPars1,
 
   if (!isStdDone)
   {
-    // Intersection not done
+
     myIsDone = false;
     if (pMaillageStd)
       delete pMaillageStd;
@@ -171,13 +154,12 @@ void IntPolyh_Intersection::Perform(const NCollection_Array1<double>& theUPars1,
 
   if (!IsAdvRequired(pMaillageStd))
   {
-    // Default interference done well, use it
+
     pMaillageStd->StartPointsChain(mySectionLines, myTangentZones);
   }
   else
   {
-    // Default intersection is done, but too few interferences found.
-    // Perform advanced intersection - perform intersection four times with different shifts.
+
     IntPolyh_PMaillageAffinage pMaillageFF  = nullptr;
     IntPolyh_PMaillageAffinage pMaillageFR  = nullptr;
     IntPolyh_PMaillageAffinage pMaillageRF  = nullptr;
@@ -198,7 +180,7 @@ void IntPolyh_Intersection::Perform(const NCollection_Array1<double>& theUPars1,
 
     if (isAdvDone && nbCouplesAdv > 0)
     {
-      // Advanced interference found
+
       pMaillageFF->StartPointsChain(mySectionLines, myTangentZones);
       pMaillageFR->StartPointsChain(mySectionLines, myTangentZones);
       pMaillageRF->StartPointsChain(mySectionLines, myTangentZones);
@@ -206,12 +188,11 @@ void IntPolyh_Intersection::Perform(const NCollection_Array1<double>& theUPars1,
     }
     else
     {
-      // Advanced intersection not done or no intersection is found -> use standard intersection
+
       if (nbCouplesStd > 0)
         pMaillageStd->StartPointsChain(mySectionLines, myTangentZones);
     }
 
-    // Clean up
     if (pMaillageFF)
       delete pMaillageFF;
     if (pMaillageFR)
@@ -222,12 +203,9 @@ void IntPolyh_Intersection::Perform(const NCollection_Array1<double>& theUPars1,
       delete pMaillageRR;
   }
 
-  // clean up
   if (pMaillageStd)
     delete pMaillageStd;
 }
-
-//=================================================================================================
 
 bool IntPolyh_Intersection::PerformStd(const NCollection_Array1<double>& theUPars1,
                                        const NCollection_Array1<double>& theVPars1,
@@ -249,8 +227,6 @@ bool IntPolyh_Intersection::PerformStd(const NCollection_Array1<double>& theUPar
   return isDone;
 }
 
-//=================================================================================================
-
 bool IntPolyh_Intersection::PerformAdv(const NCollection_Array1<double>& theUPars1,
                                        const NCollection_Array1<double>& theVPars1,
                                        const NCollection_Array1<double>& theUPars2,
@@ -263,55 +239,54 @@ bool IntPolyh_Intersection::PerformAdv(const NCollection_Array1<double>& theUPar
                                        IntPolyh_PMaillageAffinage&       theMaillageRR,
                                        int&                              theNbCouples)
 {
-  // Compute the points on the surface and normal directions in these points
+
   IntPolyh_ArrayOfPointNormal aPoints1, aPoints2;
   IntPolyh_Tools::FillArrayOfPointNormal(mySurf1, theUPars1, theVPars1, aPoints1);
   IntPolyh_Tools::FillArrayOfPointNormal(mySurf2, theUPars2, theVPars2, aPoints2);
 
-  // Perform intersection with the different shifts of the triangles
   bool isDone = PerformMaillage(theUPars1,
                                 theVPars1,
                                 theUPars2,
-                                theVPars2, // sampling
+                                theVPars2,
                                 theDeflTol1,
-                                theDeflTol2, // deflection tolerance
+                                theDeflTol2,
                                 aPoints1,
-                                aPoints2, // points and normals
+                                aPoints2,
                                 true,
-                                false, // shift
+                                false,
                                 theMaillageFR)
                 && PerformMaillage(theUPars1,
                                    theVPars1,
                                    theUPars2,
-                                   theVPars2, // sampling
+                                   theVPars2,
                                    theDeflTol1,
-                                   theDeflTol2, // deflection tolerance
+                                   theDeflTol2,
                                    aPoints1,
-                                   aPoints2, // points and normals
+                                   aPoints2,
                                    false,
-                                   true, // shift
+                                   true,
                                    theMaillageRF)
                 && PerformMaillage(theUPars1,
                                    theVPars1,
                                    theUPars2,
-                                   theVPars2, // sampling
+                                   theVPars2,
                                    theDeflTol1,
-                                   theDeflTol2, // deflection tolerance
+                                   theDeflTol2,
                                    aPoints1,
-                                   aPoints2, // points and normals
+                                   aPoints2,
                                    true,
-                                   true, // shift
+                                   true,
                                    theMaillageFF)
                 && PerformMaillage(theUPars1,
                                    theVPars1,
                                    theUPars2,
-                                   theVPars2, // sampling
+                                   theVPars2,
                                    theDeflTol1,
-                                   theDeflTol2, // deflection tolerance
+                                   theDeflTol2,
                                    aPoints1,
-                                   aPoints2, // points and normals
+                                   aPoints2,
                                    false,
-                                   false, // shift
+                                   false,
                                    theMaillageRR);
 
   if (isDone)
@@ -319,7 +294,6 @@ bool IntPolyh_Intersection::PerformAdv(const NCollection_Array1<double>& theUPar
     theNbCouples = theMaillageFF->GetCouples().Extent() + theMaillageFR->GetCouples().Extent()
                    + theMaillageRF->GetCouples().Extent() + theMaillageRR->GetCouples().Extent();
 
-    // Merge couples
     if (theNbCouples > 0)
       MergeCouples(theMaillageFF->GetCouples(),
                    theMaillageFR->GetCouples(),
@@ -330,10 +304,6 @@ bool IntPolyh_Intersection::PerformAdv(const NCollection_Array1<double>& theUPar
   return isDone;
 }
 
-//=======================================================================
-// function : PerformMaillage
-// purpose  : Computes standard MaillageAffinage (without shift)
-//=======================================================================
 bool IntPolyh_Intersection::PerformMaillage(const NCollection_Array1<double>& theUPars1,
                                             const NCollection_Array1<double>& theVPars1,
                                             const NCollection_Array1<double>& theUPars2,
@@ -355,10 +325,9 @@ bool IntPolyh_Intersection::PerformMaillage(const NCollection_Array1<double>& th
 
   int FinTTC = ComputeIntersection(theMaillage);
 
-  // If no intersecting triangles are found, try enlarged surfaces
   if (FinTTC == 0)
   {
-    // Check if enlarge for the surfaces is possible
+
     bool isEnlargeU1, isEnlargeV1, isEnlargeU2, isEnlargeV2;
     IntPolyh_Tools::IsEnlargePossible(mySurf1, isEnlargeU1, isEnlargeV1);
     IntPolyh_Tools::IsEnlargePossible(mySurf2, isEnlargeU2, isEnlargeV2);
@@ -366,23 +335,18 @@ bool IntPolyh_Intersection::PerformMaillage(const NCollection_Array1<double>& th
     if (isEnlargeU1 || isEnlargeV1 || isEnlargeU2 || isEnlargeV2)
     {
       theMaillage->SetEnlargeZone(true);
-      // Make new points on the enlarged surface
+
       theMaillage->FillArrayOfPnt(1);
       theMaillage->FillArrayOfPnt(2);
-      // Compute intersection
+
       ComputeIntersection(theMaillage);
       theMaillage->SetEnlargeZone(false);
     }
   }
 
-  // if too many intersections, consider surfaces parallel
   return AnalyzeIntersection(theMaillage);
 }
 
-//=======================================================================
-// function : PerformMaillage
-// purpose  : Computes MaillageAffinage
-//=======================================================================
 bool IntPolyh_Intersection::PerformMaillage(const NCollection_Array1<double>&  theUPars1,
                                             const NCollection_Array1<double>&  theVPars1,
                                             const NCollection_Array1<double>&  theUPars2,
@@ -411,20 +375,14 @@ bool IntPolyh_Intersection::PerformMaillage(const NCollection_Array1<double>&  t
   return AnalyzeIntersection(theMaillage);
 }
 
-//=======================================================================
-// function : MergeCouples
-// purpose  : This method analyzes the lists to find same couples.
-//           If some are detected it leaves the couple in only one list
-//           deleting from others.
-//=======================================================================
 void IntPolyh_Intersection::MergeCouples(NCollection_List<IntPolyh_Couple>& anArrayFF,
                                          NCollection_List<IntPolyh_Couple>& anArrayFR,
                                          NCollection_List<IntPolyh_Couple>& anArrayRF,
                                          NCollection_List<IntPolyh_Couple>& anArrayRR) const
 {
-  // Fence map to remove from the lists the duplicating elements.
+
   NCollection_Map<IntPolyh_Couple> aFenceMap;
-  //
+
   NCollection_List<IntPolyh_Couple>* pLists[4] = {&anArrayFF, &anArrayFR, &anArrayRF, &anArrayRR};
   for (int i = 0; i < 4; ++i)
   {
@@ -441,40 +399,31 @@ void IntPolyh_Intersection::MergeCouples(NCollection_List<IntPolyh_Couple>& anAr
   }
 }
 
-//=======================================================================
-// function : IsAdvRequired
-// purpose  : Analyzes the standard intersection on the angles between triangles.
-//           If the angle between some of the interfering triangles is
-//           too small (less than 5 deg), the advanced intersection is required.
-//           Otherwise, the standard intersection is considered satisfactory.
-//=======================================================================
 bool IntPolyh_Intersection::IsAdvRequired(IntPolyh_PMaillageAffinage& theMaillage)
 {
   if (!theMaillage)
     return true;
 
-  // Interfering triangles
   NCollection_List<IntPolyh_Couple>& Couples = theMaillage->GetCouples();
-  // Number of interfering pairs
+
   int aNbCouples = Couples.Extent();
-  // Flag to define whether advanced intersection is required or not
+
   bool isAdvReq = (aNbCouples == 0) && !IsParallel();
   if (isAdvReq)
-    // No interfering triangles are found -> perform advanced intersection
+
     return isAdvReq;
 
   if (aNbCouples > 10)
-    // Enough interfering triangles are found -> no need to perform advanced intersection
+
     return isAdvReq;
 
-  const double                                anEps = .996; //~ cos of 5 deg
+  const double                                anEps = .996;
   NCollection_List<IntPolyh_Couple>::Iterator aIt(Couples);
   for (; aIt.More(); aIt.Next())
   {
     if (std::abs(aIt.Value().Angle()) > anEps)
     {
-      // The angle between interfering triangles is small -> perform advanced
-      // intersection to make intersection more precise
+
       isAdvReq = true;
       break;
     }
@@ -483,36 +432,24 @@ bool IntPolyh_Intersection::IsAdvRequired(IntPolyh_PMaillageAffinage& theMaillag
   return isAdvReq;
 }
 
-//=======================================================================
-// function : ComputeIntersection
-// purpose  : Computes the intersection of the triangles
-//=======================================================================
 int ComputeIntersection(IntPolyh_PMaillageAffinage& theMaillage)
 {
   if (!theMaillage)
     return 0;
 
-  // Compute common box and mark the points inside that box
   theMaillage->CommonBox();
 
-  // Make triangles
   theMaillage->FillArrayOfTriangles(1);
   theMaillage->FillArrayOfTriangles(2);
 
-  // Make edges
   theMaillage->FillArrayOfEdges(1);
   theMaillage->FillArrayOfEdges(2);
 
-  // Deflection refinement
   theMaillage->TrianglesDeflectionsRefinementBSB();
 
   return theMaillage->TriangleCompare();
 }
 
-//=======================================================================
-// function : AnalyzeIntersection
-// purpose  : Analyzes the intersection on the number of interfering triangles
-//=======================================================================
 bool IntPolyh_Intersection::AnalyzeIntersection(IntPolyh_PMaillageAffinage& theMaillage)
 {
   if (!theMaillage)
@@ -522,7 +459,7 @@ bool IntPolyh_Intersection::AnalyzeIntersection(IntPolyh_PMaillageAffinage& theM
   int                                FinTTC  = Couples.Extent();
   if (FinTTC > 200)
   {
-    const double                                eps   = .996; //~ cos of 5deg.
+    const double                                eps   = .996;
     int                                         npara = 0;
     NCollection_List<IntPolyh_Couple>::Iterator aIt(Couples);
     for (; aIt.More(); aIt.Next())

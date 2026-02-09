@@ -6,11 +6,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_MaterialPropertyRepresentation,
                            StepRepr_PropertyDefinitionRepresentation)
 
-//=================================================================================================
-
 StepRepr_MaterialPropertyRepresentation::StepRepr_MaterialPropertyRepresentation() = default;
-
-//=================================================================================================
 
 void StepRepr_MaterialPropertyRepresentation::Init(
   const StepRepr_RepresentedDefinition&        aPropertyDefinitionRepresentation_Definition,
@@ -24,15 +20,11 @@ void StepRepr_MaterialPropertyRepresentation::Init(
   theDependentEnvironment = aDependentEnvironment;
 }
 
-//=================================================================================================
-
 occ::handle<StepRepr_DataEnvironment> StepRepr_MaterialPropertyRepresentation::
   DependentEnvironment() const
 {
   return theDependentEnvironment;
 }
-
-//=================================================================================================
 
 void StepRepr_MaterialPropertyRepresentation::SetDependentEnvironment(
   const occ::handle<StepRepr_DataEnvironment>& aDependentEnvironment)

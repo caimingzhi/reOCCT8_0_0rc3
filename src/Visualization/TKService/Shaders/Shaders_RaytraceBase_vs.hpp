@@ -10,5 +10,3 @@ static const char Shaders_RaytraceBase_vs[] = "in vec4 occVertex;\n"
                                               "\n"
                                               "  gl_Position = occVertex;\n"
                                               "}\n";
-
-// clang-format on

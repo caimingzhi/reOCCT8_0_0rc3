@@ -10,17 +10,13 @@ IMPLEMENT_STANDARD_RTTIEXT(PCDM_ReferenceIterator, Standard_Transient)
 
 #ifdef _MSC_VER
   #include <tchar.h>
-#endif // _MSC_VER
-
-//=================================================================================================
+#endif
 
 PCDM_ReferenceIterator::PCDM_ReferenceIterator(const occ::handle<Message_Messenger>& theMsgDriver)
     : myIterator(0)
 {
   myMessageDriver = theMsgDriver;
 }
-
-//=================================================================================================
 
 void PCDM_ReferenceIterator::LoadReferences(const occ::handle<CDM_Document>&    aDocument,
                                             const occ::handle<CDM_MetaData>&    aMetaData,
@@ -38,32 +34,24 @@ void PCDM_ReferenceIterator::LoadReferences(const occ::handle<CDM_Document>&    
   }
 }
 
-//=================================================================================================
-
 void PCDM_ReferenceIterator::Init(const occ::handle<CDM_MetaData>& theMetaData)
 {
 
   myReferences.Clear();
-  // mod. by szy
+
   PCDM_RetrievalDriver::References(theMetaData->FileName(), myReferences, myMessageDriver);
   myIterator = 1;
 }
-
-//=================================================================================================
 
 bool PCDM_ReferenceIterator::More() const
 {
   return myIterator <= myReferences.Length();
 }
 
-//=================================================================================================
-
 void PCDM_ReferenceIterator::Next()
 {
   myIterator++;
 }
-
-//=================================================================================================
 
 occ::handle<CDM_MetaData> PCDM_ReferenceIterator::MetaData(
   NCollection_DataMap<TCollection_ExtendedString, occ::handle<CDM_MetaData>>& theLookUpTable,
@@ -112,7 +100,7 @@ occ::handle<CDM_MetaData> PCDM_ReferenceIterator::MetaData(
   theFolder = dirRet;
   theName   = UTL::Name(p);
   theName += UTL::Extension(p);
-#endif // _WIN32
+#endif
 
   return CDM_MetaData::LookUp(theLookUpTable,
                               theFolder,
@@ -122,14 +110,10 @@ occ::handle<CDM_MetaData> PCDM_ReferenceIterator::MetaData(
                               UTL::IsReadOnly(theFile));
 }
 
-//=================================================================================================
-
 int PCDM_ReferenceIterator::ReferenceIdentifier() const
 {
   return myReferences(myIterator).ReferenceIdentifier();
 }
-
-//=================================================================================================
 
 int PCDM_ReferenceIterator::DocumentVersion() const
 {

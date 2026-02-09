@@ -4,22 +4,14 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_VertexBuffer, OpenGl_Buffer)
 
-//=================================================================================================
-
 OpenGl_VertexBuffer::OpenGl_VertexBuffer() = default;
 
-//=================================================================================================
-
 OpenGl_VertexBuffer::~OpenGl_VertexBuffer() = default;
-
-//=================================================================================================
 
 unsigned int OpenGl_VertexBuffer::GetTarget() const
 {
   return GL_ARRAY_BUFFER;
 }
-
-//=================================================================================================
 
 void OpenGl_VertexBuffer::BindVertexAttrib(const occ::handle<OpenGl_Context>& theGlCtx,
                                            const unsigned int                 theAttribLoc) const
@@ -34,8 +26,6 @@ void OpenGl_VertexBuffer::BindVertexAttrib(const occ::handle<OpenGl_Context>& th
     ->glVertexAttribPointer(theAttribLoc, GLint(myComponentsNb), myDataType, GL_FALSE, 0, myOffset);
 }
 
-//=================================================================================================
-
 void OpenGl_VertexBuffer::UnbindVertexAttrib(const occ::handle<OpenGl_Context>& theGlCtx,
                                              const unsigned int                 theAttribLoc) const
 {
@@ -47,33 +37,21 @@ void OpenGl_VertexBuffer::UnbindVertexAttrib(const occ::handle<OpenGl_Context>& 
   Unbind(theGlCtx);
 }
 
-//=================================================================================================
-
 void OpenGl_VertexBuffer::BindAllAttributes(const occ::handle<OpenGl_Context>&) const {}
-
-//=================================================================================================
 
 void OpenGl_VertexBuffer::BindPositionAttribute(const occ::handle<OpenGl_Context>&) const {}
 
-//=================================================================================================
-
 void OpenGl_VertexBuffer::UnbindAllAttributes(const occ::handle<OpenGl_Context>&) const {}
-
-//=================================================================================================
 
 bool OpenGl_VertexBuffer::HasColorAttribute() const
 {
   return false;
 }
 
-//=================================================================================================
-
 bool OpenGl_VertexBuffer::HasNormalAttribute() const
 {
   return false;
 }
-
-//=================================================================================================
 
 void OpenGl_VertexBuffer::bindAttribute(const occ::handle<OpenGl_Context>& theCtx,
                                         const Graphic3d_TypeOfAttribute    theAttribute,
@@ -90,9 +68,7 @@ void OpenGl_VertexBuffer::bindAttribute(const occ::handle<OpenGl_Context>& theCt
     }
     else
     {
-      // OpenGL handles vertex attribute setup independently from active GLSL program,
-      // but OCCT historically requires program to be bound beforehand (this check could be removed
-      // in future).
+
       Message::SendFail(
         "Error: OpenGl_VertexBuffer::bindAttribute() does nothing without active GLSL program");
     }
@@ -108,8 +84,6 @@ void OpenGl_VertexBuffer::bindAttribute(const occ::handle<OpenGl_Context>& theCt
                                            theOffset);
 }
 
-//=================================================================================================
-
 void OpenGl_VertexBuffer::unbindAttribute(const occ::handle<OpenGl_Context>& theCtx,
                                           const Graphic3d_TypeOfAttribute    theAttribute)
 {
@@ -124,8 +98,6 @@ void OpenGl_VertexBuffer::unbindAttribute(const occ::handle<OpenGl_Context>& the
 
   theCtx->core20fwd->glDisableVertexAttribArray(theAttribute);
 }
-
-//=================================================================================================
 
 void OpenGl_VertexBuffer::bindFixed(const occ::handle<OpenGl_Context>& theCtx,
                                     const Graphic3d_TypeOfAttribute    theMode,
@@ -169,8 +141,6 @@ void OpenGl_VertexBuffer::bindFixed(const occ::handle<OpenGl_Context>& theCtx,
   }
 }
 
-//=================================================================================================
-
 void OpenGl_VertexBuffer::unbindFixed(const occ::handle<OpenGl_Context>& theCtx,
                                       const Graphic3d_TypeOfAttribute    theMode)
 {
@@ -195,14 +165,10 @@ void OpenGl_VertexBuffer::unbindFixed(const occ::handle<OpenGl_Context>& theCtx,
   }
 }
 
-//=================================================================================================
-
 void OpenGl_VertexBuffer::unbindFixedColor(const occ::handle<OpenGl_Context>& theCtx)
 {
   theCtx->core11ffp->glDisableClientState(GL_COLOR_ARRAY);
   theCtx->core11fwd->glDisable(GL_COLOR_MATERIAL);
 
-  // invalidate FFP material state after GL_COLOR_MATERIAL has modified it (took values from the
-  // vertex color)
   theCtx->ShaderManager()->UpdateMaterialState();
 }

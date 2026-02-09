@@ -11,7 +11,6 @@ class StepGeom_Pcurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for Pcurve
 class RWStepGeom_RWPcurve
 {
 public:

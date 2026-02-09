@@ -4,16 +4,6 @@
 #include <NCollection_Vector.hpp>
 #include <Standard_Assert.hpp>
 
-//! Performs fast BVH construction using LBVH building approach.
-//! Algorithm uses spatial Morton codes to reduce the BVH construction
-//! problem to a sorting problem (radix sort -- O(N) complexity). This
-//! Linear Bounding Volume Hierarchy (LBVH) builder produces BVH trees
-//! of lower quality compared to SAH-based BVH builders but it is over
-//! an order of magnitude faster (up to 3M triangles per second).
-//!
-//! For more details see:
-//! C. Lauterbach, M. Garland, S. Sengupta, D. Luebke, and D. Manocha.
-//! Fast BVH construction on GPUs. Eurographics, 2009.
 template <class T, int N>
 class BVH_LinearBuilder : public BVH_Builder<T, N>
 {
@@ -21,14 +11,11 @@ public:
   typedef typename BVH::VectorType<T, N>::Type BVH_VecNt;
 
 public:
-  //! Creates binned LBVH builder.
   BVH_LinearBuilder(const int theLeafNodeSize = BVH_Constants_LeafNodeSizeDefault,
                     const int theMaxTreeDepth = BVH_Constants_MaxTreeDepth);
 
-  //! Releases resources of LBVH builder.
   ~BVH_LinearBuilder() override;
 
-  //! Builds BVH.
   void Build(BVH_Set<T, N>*       theSet,
              BVH_Tree<T, N>*      theBVH,
              const BVH_Box<T, N>& theBox) const override;
@@ -37,7 +24,6 @@ protected:
   typedef NCollection_Array1<BVH_EncodedLink>::iterator LinkIterator;
 
 protected:
-  //! Emits hierarchy from sorted Morton codes.
   int emitHierachy(BVH_Tree<T, N>*                            theBVH,
                    const NCollection_Array1<BVH_EncodedLink>& theEncodedLinks,
                    const int                                  theBit,
@@ -45,14 +31,11 @@ protected:
                    const int                                  theStart,
                    const int                                  theFinal) const;
 
-  //! Returns index of the first element which does not compare less than the given one.
   int lowerBound(const NCollection_Array1<BVH_EncodedLink>& theEncodedLinks,
                  int                                        theStart,
                  int                                        theFinal,
                  int                                        theDigit) const;
 };
-
-//=================================================================================================
 
 template <class T, int N>
 BVH_LinearBuilder<T, N>::BVH_LinearBuilder(const int theLeafNodeSize, const int theMaxTreeDepth)
@@ -60,17 +43,9 @@ BVH_LinearBuilder<T, N>::BVH_LinearBuilder(const int theLeafNodeSize, const int 
 {
 }
 
-// =======================================================================
-// function : ~BVH_LinearBuilder
-// purpose  :
-// =======================================================================
 template <class T, int N>
 BVH_LinearBuilder<T, N>::~BVH_LinearBuilder() = default;
 
-// =======================================================================
-// function : lowerBound
-// purpose  : Returns index of first element greater than the given one
-// =======================================================================
 template <class T, int N>
 int BVH_LinearBuilder<T, N>::lowerBound(const NCollection_Array1<BVH_EncodedLink>& theEncodedLinks,
                                         int                                        theStart,
@@ -96,10 +71,6 @@ int BVH_LinearBuilder<T, N>::lowerBound(const NCollection_Array1<BVH_EncodedLink
   return theStart;
 }
 
-// =======================================================================
-// function : emitHierachy
-// purpose  : Emits hierarchy from sorted Morton codes
-// =======================================================================
 template <class T, int N>
 int BVH_LinearBuilder<T, N>::emitHierachy(
   BVH_Tree<T, N>*                            theBVH,
@@ -118,7 +89,6 @@ int BVH_LinearBuilder<T, N>::emitHierachy(
       return emitHierachy(theBVH, theEncodedLinks, theDigit - 1, theShift, theStart, theFinal);
     }
 
-    // Build inner node
     const int aNode    = theBVH->AddInnerNode(0, 0);
     const int aRghNode = theShift + aPosition - theStart;
 
@@ -133,14 +103,14 @@ int BVH_LinearBuilder<T, N>::emitHierachy(
   }
   else
   {
-    // Build leaf node
+
     return theBVH->AddLeafNode(theShift, theShift + theFinal - theStart - 1);
   }
 }
 
 namespace BVH
 {
-  //! Calculates bounding boxes (AABBs) for the given BVH tree.
+
   template <class T, int N>
   int UpdateBounds(BVH_Set<T, N>* theSet, BVH_Tree<T, N>* theTree, const int theNode = 0)
   {
@@ -190,14 +160,13 @@ namespace BVH
   template <class T, int N>
   struct BoundData
   {
-    BVH_Set<T, N>*  mySet;    //!< Set of geometric objects
-    BVH_Tree<T, N>* myBVH;    //!< BVH tree built over the set
-    int             myNode;   //!< BVH node to update bounding box
-    int             myLevel;  //!< Level of the processed BVH node
-    int*            myHeight; //!< Height of the processed BVH node
+    BVH_Set<T, N>*  mySet;
+    BVH_Tree<T, N>* myBVH;
+    int             myNode;
+    int             myLevel;
+    int*            myHeight;
   };
 
-  //! Task for parallel bounds updating.
   template <class T, int N>
   class UpdateBoundTask
   {
@@ -207,7 +176,6 @@ namespace BVH
     {
     }
 
-    //! Executes the task.
     void operator()(const BoundData<T, N>& theData) const
     {
       if (theData.myBVH->IsOuter(theData.myNode) || theData.myLevel > 2)
@@ -279,8 +247,6 @@ namespace BVH
   };
 } // namespace BVH
 
-//=================================================================================================
-
 template <class T, int N>
 void BVH_LinearBuilder<T, N>::Build(BVH_Set<T, N>*       theSet,
                                     BVH_Tree<T, N>*      theBVH,
@@ -295,17 +261,13 @@ void BVH_LinearBuilder<T, N>::Build(BVH_Set<T, N>*       theSet,
 
   theBVH->Clear();
 
-  // Step 0 -- Initialize parameter of virtual grid
   BVH_RadixSorter<T, N> aRadixSorter(theBox);
   aRadixSorter.SetParallel(this->IsParallel());
 
-  // Step 1 - Perform radix sorting of primitive set
   aRadixSorter.Perform(theSet);
 
-  // Step 2 -- Emitting BVH hierarchy from sorted Morton codes
   emitHierachy(theBVH, aRadixSorter.EncodedLinks(), 29, 0, 0, theSet->Size());
 
-  // Step 3 -- Compute bounding boxes of BVH nodes
   theBVH->MinPointBuffer().resize(theBVH->NodeInfoBuffer().size());
   theBVH->MaxPointBuffer().resize(theBVH->NodeInfoBuffer().size());
 

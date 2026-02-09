@@ -16,7 +16,6 @@ class StepBasic_ProductRelatedProductCategory : public StepBasic_ProductCategory
 {
 
 public:
-  //! Returns a ProductRelatedProductCategory
   Standard_EXPORT StepBasic_ProductRelatedProductCategory();
 
   Standard_EXPORT void Init(

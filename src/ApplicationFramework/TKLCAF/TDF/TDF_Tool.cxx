@@ -37,11 +37,6 @@ static void TDF_Tool_OutReferences(const TDF_Label&                             
                                    const TDF_IDFilter&             aFilterForReferences,
                                    const occ::handle<TDF_DataSet>& ds);
 
-//=======================================================================
-// function : NbLabels
-// purpose  : Returns the numbers of labels of the tree.
-//=======================================================================
-
 int TDF_Tool::NbLabels(const TDF_Label& aLabel)
 {
   int n = 1;
@@ -50,11 +45,6 @@ int TDF_Tool::NbLabels(const TDF_Label& aLabel)
   return n;
 }
 
-//=======================================================================
-// function : NbAttributes
-// purpose  : Returns the number of attributes of the tree.
-//=======================================================================
-
 int TDF_Tool::NbAttributes(const TDF_Label& aLabel)
 {
   int n = aLabel.NbAttributes();
@@ -62,12 +52,6 @@ int TDF_Tool::NbAttributes(const TDF_Label& aLabel)
     n += itr.Value().NbAttributes();
   return n;
 }
-
-//=======================================================================
-// function : NbAttributes
-// purpose  : Returns the number of attributes of the tree,
-//           selected by an IDFilter.
-//=======================================================================
 
 int TDF_Tool::NbAttributes(const TDF_Label& aLabel, const TDF_IDFilter& aFilter)
 {
@@ -83,15 +67,11 @@ int TDF_Tool::NbAttributes(const TDF_Label& aLabel, const TDF_IDFilter& aFilter)
   return n;
 }
 
-//=================================================================================================
-
 bool TDF_Tool::IsSelfContained(const TDF_Label& aLabel)
 {
-  TDF_IDFilter filter(false); // Keep all.
+  TDF_IDFilter filter(false);
   return IsSelfContained(aLabel, filter);
 }
-
-//=================================================================================================
 
 bool TDF_Tool::IsSelfContained(const TDF_Label& aLabel, const TDF_IDFilter& aFilter)
 {
@@ -108,8 +88,6 @@ bool TDF_Tool::IsSelfContained(const TDF_Label& aLabel, const TDF_IDFilter& aFil
   return true;
 }
 
-//=================================================================================================
-
 static bool TDF_Tool_DescendantRef(const TDF_Label&                aRefLabel,
                                    const TDF_Label&                aLabel,
                                    const TDF_IDFilter&             aFilter,
@@ -117,14 +95,13 @@ static bool TDF_Tool_DescendantRef(const TDF_Label&                aRefLabel,
 {
   for (TDF_AttributeIterator itr(aLabel); itr.More(); itr.Next())
   {
-    // CLE
-    // const occ::handle<TDF_Attribute>& labAtt = itr.Value();
+
     occ::handle<TDF_Attribute> labAtt = itr.Value();
-    // ENDCLE
+
     if (aFilter.IsKept(labAtt))
     {
       labAtt->References(ds);
-      // First of all, the referenced labels.
+
       const NCollection_Map<TDF_Label>& labMap = ds->Labels();
 
       for (NCollection_Map<TDF_Label>::Iterator labMItr(labMap); labMItr.More(); labMItr.Next())
@@ -132,17 +109,16 @@ static bool TDF_Tool_DescendantRef(const TDF_Label&                aRefLabel,
         if (!labMItr.Key().IsDescendant(aRefLabel))
           return false;
       }
-      // Then the referenced attributes.
+
       const NCollection_Map<occ::handle<TDF_Attribute>>& attMap = ds->Attributes();
       for (NCollection_Map<occ::handle<TDF_Attribute>>::Iterator attMItr(attMap); attMItr.More();
            attMItr.Next())
       {
-        // CLE
-        // const occ::handle<TDF_Attribute>& att = attMItr.Key();
+
         const occ::handle<TDF_Attribute>& att = attMItr.Key();
         if (!att.IsNull() && !att->Label().IsNull())
         {
-          // ENDCLE
+
           if (aFilter.IsKept(att) && !att->Label().IsDescendant(aRefLabel))
             return false;
         }
@@ -153,16 +129,12 @@ static bool TDF_Tool_DescendantRef(const TDF_Label&                aRefLabel,
   return true;
 }
 
-//=================================================================================================
-
 void TDF_Tool::OutReferers(const TDF_Label&                             aLabel,
                            NCollection_Map<occ::handle<TDF_Attribute>>& atts)
 {
-  TDF_IDFilter filter(false); // Keep all.
+  TDF_IDFilter filter(false);
   OutReferers(aLabel, filter, filter, atts);
 }
-
-//=================================================================================================
 
 void TDF_Tool::OutReferers(const TDF_Label&                             aLabel,
                            const TDF_IDFilter&                          aFilterForReferers,
@@ -176,8 +148,6 @@ void TDF_Tool::OutReferers(const TDF_Label&                             aLabel,
     TDF_Tool_OutReferers(aLabel, itr.Value(), atts, aFilterForReferers, aFilterForReferences, ds);
   }
 }
-
-//=================================================================================================
 
 static void TDF_Tool_OutReferers(const TDF_Label&                             aRefLabel,
                                  const TDF_Label&                             aLabel,
@@ -199,10 +169,9 @@ static void TDF_Tool_OutReferers(const TDF_Label&                             aR
     for (NCollection_Map<occ::handle<TDF_Attribute>>::Iterator attMItr(attMap); attMItr.More();
          attMItr.Next())
     {
-      // CLE
-      // const occ::handle<TDF_Attribute>& att = attMItr.Key();
+
       const occ::handle<TDF_Attribute>& att = attMItr.Key();
-      // ENDCLE
+
       if (aFilterForReferences.IsKept(att) && !att->Label().IsNull()
           && !att->Label().IsDescendant(aRefLabel))
       {
@@ -230,16 +199,12 @@ static void TDF_Tool_OutReferers(const TDF_Label&                             aR
   }
 }
 
-//=================================================================================================
-
 void TDF_Tool::OutReferences(const TDF_Label&                             aLabel,
                              NCollection_Map<occ::handle<TDF_Attribute>>& atts)
 {
-  TDF_IDFilter filter(false); // Keep all.
+  TDF_IDFilter filter(false);
   OutReferences(aLabel, filter, filter, atts);
 }
-
-//=================================================================================================
 
 void TDF_Tool::OutReferences(const TDF_Label&                             aLabel,
                              const TDF_IDFilter&                          aFilterForReferers,
@@ -253,8 +218,6 @@ void TDF_Tool::OutReferences(const TDF_Label&                             aLabel
     TDF_Tool_OutReferences(aLabel, itr.Value(), atts, aFilterForReferers, aFilterForReferences, ds);
   }
 }
-
-//=================================================================================================
 
 static void TDF_Tool_OutReferences(const TDF_Label&                             aRefLabel,
                                    const TDF_Label&                             aLabel,
@@ -298,8 +261,6 @@ static void TDF_Tool_OutReferences(const TDF_Label&                             
   ds->Clear();
 }
 
-//=================================================================================================
-
 void TDF_Tool::RelocateLabel(const TDF_Label& aSourceLabel,
                              const TDF_Label& fromRoot,
                              const TDF_Label& toRoot,
@@ -319,27 +280,22 @@ void TDF_Tool::RelocateLabel(const TDF_Label& aSourceLabel,
   TDF_Tool::Label(toRoot.Data(), labelTags, aTargetLabel, create);
 }
 
-//=======================================================================
-// function : Entry
-// purpose  : Returns the entry as an ascii string.
-//=======================================================================
-
 void TDF_Tool::Entry(const TDF_Label& aLabel, TCollection_AsciiString& anEntry)
 {
   if (!aLabel.IsNull())
   {
-    int       aStrLen = 1; // initial "0" of a root label
+    int       aStrLen = 1;
     TDF_Label aLab    = aLabel;
     for (; !aLab.IsRoot(); aLab = aLab.Father())
     {
       for (int aTag = aLab.Tag(); aTag > 9; aTag /= 10)
         ++aStrLen;
-      aStrLen += 2; // one digit and separator
+      aStrLen += 2;
     }
 
     if (aStrLen == 1)
     {
-      // an exceptional case for the root label, it ends with separator
+
       static const TCollection_AsciiString THE_ROOT_ENTRY =
         TCollection_AsciiString('0') + TDF_TagSeparator;
       anEntry = THE_ROOT_ENTRY;
@@ -363,11 +319,6 @@ void TDF_Tool::Entry(const TDF_Label& aLabel, TCollection_AsciiString& anEntry)
     anEntry.Clear();
 }
 
-//=======================================================================
-// function : TagList
-// purpose  : Returns the entry of a label as a list of integers.
-//=======================================================================
-
 void TDF_Tool::TagList(const TDF_Label& aLabel, NCollection_List<int>& aTagList)
 {
   aTagList.Clear();
@@ -383,11 +334,6 @@ void TDF_Tool::TagList(const TDF_Label& aLabel, NCollection_List<int>& aTagList)
     }
   }
 }
-
-//=======================================================================
-// function : TagList
-// purpose  : Returns the entry expressed as a string as a list of integers.
-//=======================================================================
 
 void TDF_Tool::TagList(const TCollection_AsciiString& anEntry, NCollection_List<int>& aTagList)
 {
@@ -409,17 +355,12 @@ void TDF_Tool::TagList(const TCollection_AsciiString& anEntry, NCollection_List<
         ++cc;
     }
     else
-    { // Not an entry!
+    {
       aTagList.Clear();
       break;
     }
   }
 }
-
-//=======================================================================
-// function : Label
-// purpose  : Returns the label expressed by <anEntry>.
-//=======================================================================
 
 void TDF_Tool::Label(const occ::handle<TDF_Data>&   aDF,
                      const TCollection_AsciiString& anEntry,
@@ -433,12 +374,6 @@ void TDF_Tool::Label(const occ::handle<TDF_Data>&   aDF,
   if (!isFound)
     TDF_Tool::Label(aDF, anEntry.ToCString(), aLabel, create);
 }
-
-//=======================================================================
-// function : Label
-// purpose  : Returns the label expressed by <anEntry>,
-//           and creates it if <create> is true.
-//=======================================================================
 
 void TDF_Tool::Label(const occ::handle<TDF_Data>& aDF,
                      const char*                  anEntry,
@@ -457,12 +392,6 @@ void TDF_Tool::Label(const occ::handle<TDF_Data>& aDF,
   }
 }
 
-//=======================================================================
-// function : Label
-// purpose  : Returns the label expressed by <anEntry>,
-//           and creates it if <create> is true.
-//=======================================================================
-
 void TDF_Tool::Label(const occ::handle<TDF_Data>& aDF,
                      const NCollection_List<int>& aTagList,
                      TDF_Label&                   aLabel,
@@ -480,7 +409,7 @@ void TDF_Tool::Label(const occ::handle<TDF_Data>& aDF,
     else
     {
       NCollection_List<int>::Iterator tagItr(aTagList);
-      tagItr.Next(); // Suppresses root tag.
+      tagItr.Next();
       for (; !aLabel.IsNull() && tagItr.More(); tagItr.Next())
       {
         aLabel = aLabel.FindChild(tagItr.Value(), create);
@@ -488,8 +417,6 @@ void TDF_Tool::Label(const occ::handle<TDF_Data>& aDF,
     }
   }
 }
-
-//=================================================================================================
 
 void TDF_Tool::CountLabels(NCollection_List<TDF_Label>&         aLabelList,
                            NCollection_DataMap<TDF_Label, int>& aLabelMap)
@@ -516,8 +443,6 @@ void TDF_Tool::CountLabels(NCollection_List<TDF_Label>&         aLabelList,
       itr.Next();
   }
 }
-
-//=================================================================================================
 
 void TDF_Tool::DeductLabels(NCollection_List<TDF_Label>&         aLabelList,
                             NCollection_DataMap<TDF_Label, int>& aLabelMap)
@@ -546,18 +471,11 @@ void TDF_Tool::DeductLabels(NCollection_List<TDF_Label>&         aLabelList,
   }
 }
 
-//=================================================================================================
-
 void TDF_Tool::DeepDump(Standard_OStream& anOS, const occ::handle<TDF_Data>& aDF)
 {
   anOS << aDF;
   TDF_Tool::DeepDump(anOS, aDF->Root());
 }
-
-//=======================================================================
-// function : ExtendedDeepDump
-// purpose  : Extended deep dump of a DF.
-//=======================================================================
 
 void TDF_Tool::ExtendedDeepDump(Standard_OStream&            anOS,
                                 const occ::handle<TDF_Data>& aDF,
@@ -567,23 +485,16 @@ void TDF_Tool::ExtendedDeepDump(Standard_OStream&            anOS,
   TDF_Tool::ExtendedDeepDump(anOS, aDF->Root(), aFilter);
 }
 
-//=================================================================================================
-
 void TDF_Tool::DeepDump(Standard_OStream& anOS, const TDF_Label& aLabel)
 {
-  // Dumps the label.
+
   anOS << aLabel;
-  // Its children
+
   for (TDF_ChildIterator ChildIt(aLabel); ChildIt.More(); ChildIt.Next())
   {
     TDF_Tool::DeepDump(anOS, ChildIt.Value());
   }
 }
-
-//=======================================================================
-// function : ExtendedDeepDump
-// purpose  : Extended deep dump of a label.
-//=======================================================================
 
 void TDF_Tool::ExtendedDeepDump(Standard_OStream&   anOS,
                                 const TDF_Label&    aLabel,
@@ -627,16 +538,14 @@ void TDF_Tool::ExtendedDeepDump(Standard_OStream&   anOS,
   anOS << " dumped between " << --i << std::endl;
 }
 
-//=================================================================================================
-
 static void TDF_Tool_ExtendedDeepDump(Standard_OStream&                                   anOS,
                                       const TDF_Label&                                    aLabel,
                                       const TDF_IDFilter&                                 aFilter,
                                       NCollection_IndexedMap<occ::handle<TDF_Attribute>>& aMap)
 {
-  // Dumps the label.
+
   aLabel.ExtendedDump(anOS, aFilter, aMap);
-  // Its children
+
   for (TDF_ChildIterator ChildIt(aLabel); ChildIt.More(); ChildIt.Next())
   {
     TDF_Tool_ExtendedDeepDump(anOS, ChildIt.Value(), aFilter, aMap);

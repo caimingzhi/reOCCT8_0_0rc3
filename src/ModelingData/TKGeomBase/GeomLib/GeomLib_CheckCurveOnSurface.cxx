@@ -21,7 +21,7 @@ typedef NCollection_Array1<occ::handle<Adaptor3d_Curve>> Array1OfHCurve;
 class GeomLib_CheckCurveOnSurface_TargetFunc;
 
 static bool MinComputing(GeomLib_CheckCurveOnSurface_TargetFunc& theFunction,
-                         const double                            theEpsilon, // 1.0e-3
+                         const double                            theEpsilon,
                          const int                               theNbParticles,
                          double&                                 theBestValue,
                          double&                                 theBestParameter);
@@ -33,10 +33,6 @@ static int FillSubIntervals(const occ::handle<Adaptor3d_Curve>&   theCurve3d,
                             int&                                  theNbParticles,
                             NCollection_Array1<double>* const     theSubIntervals = nullptr);
 
-//=======================================================================
-// class   : GeomLib_CheckCurveOnSurface_TargetFunc
-// purpose : Target function (to be minimized)
-//=======================================================================
 class GeomLib_CheckCurveOnSurface_TargetFunc : public math_MultipleVarFunctionWithHessian
 {
 public:
@@ -51,15 +47,10 @@ public:
   {
   }
 
-  // returns the number of parameters of the function
-  // (the function is one-dimension).
   int NbVariables() const override { return 1; }
 
-  // returns value of the function when parameters are equal to theX
   bool Value(const math_Vector& theX, double& theFVal) override { return Value(theX(1), theFVal); }
 
-  // returns value of the one-dimension-function when parameter
-  // is equal to theX
   bool Value(const double theX, double& theFVal) const
   {
     try
@@ -79,18 +70,13 @@ public:
     return true;
   }
 
-  // see analogical method for abstract owner class math_MultipleVarFunction
   int GetStateNumber() override { return 0; }
 
-  // returns the gradient of the function when parameters are
-  // equal to theX
   bool Gradient(const math_Vector& theX, math_Vector& theGrad) override
   {
     return Derive(theX(1), theGrad(1));
   }
 
-  // returns 1st derivative of the one-dimension-function when
-  // parameter is equal to theX
   bool Derive(const double theX, double& theDeriv1, double* const theDeriv2 = nullptr) const
   {
     try
@@ -100,10 +86,10 @@ public:
       {
         return false;
       }
-      //
+
       gp_Pnt aP1, aP2;
       gp_Vec aDC1, aDC2, aDCC1, aDCC2;
-      //
+
       if (!theDeriv2)
       {
         myCurve1.D1(theX, aP1, aDC1);
@@ -116,7 +102,7 @@ public:
       }
 
       const gp_Vec aVec1(aP1, aP2), aVec2(aDC2 - aDC1);
-      //
+
       theDeriv1 = -2.0 * aVec1.Dot(aVec2);
 
       if (theDeriv2)
@@ -133,23 +119,21 @@ public:
     return true;
   }
 
-  // returns value and gradient
   bool Values(const math_Vector& theX, double& theVal, math_Vector& theGrad) override
   {
     if (!Value(theX, theVal))
     {
       return false;
     }
-    //
+
     if (!Gradient(theX, theGrad))
     {
       return false;
     }
-    //
+
     return true;
   }
 
-  // returns value, gradient and hessian
   bool Values(const math_Vector& theX,
               double&            theVal,
               math_Vector&       theGrad,
@@ -159,27 +143,23 @@ public:
     {
       return false;
     }
-    //
+
     if (!Derive(theX(1), theGrad(1), &theHessian(1, 1)))
     {
       return false;
     }
-    //
+
     return true;
   }
 
-  //
   double FirstParameter() const { return myFirst; }
 
-  //
   double LastParameter() const { return myLast; }
 
 private:
   GeomLib_CheckCurveOnSurface_TargetFunc operator=(GeomLib_CheckCurveOnSurface_TargetFunc&) =
     delete;
 
-  // checks if the function can be computed when its parameter is
-  // equal to theParam
   bool CheckParameter(const double theParam) const
   {
     return ((myFirst <= theParam) && (theParam <= myLast));
@@ -191,10 +171,6 @@ private:
   const double           myLast;
 };
 
-//=======================================================================
-// class   : GeomLib_CheckCurveOnSurface_Local
-// purpose : Created for parallelization possibility only
-//=======================================================================
 class GeomLib_CheckCurveOnSurface_Local
 {
 public:
@@ -215,11 +191,7 @@ public:
 
   void operator()(int theThreadIndex, int theElemIndex) const
   {
-    // For every sub-interval (which is set by mySubIntervals array) this method
-    // computes optimal value of GeomLib_CheckCurveOnSurface_TargetFunc function.
-    // This optimal value will be put in corresponding (depending on theIndex - the
-    // identificator of the current interval in mySubIntervals array) cell of
-    // myArrOfDist and myArrOfParam arrays.
+
     GeomLib_CheckCurveOnSurface_TargetFunc aFunc(
       *(myCurveArray.Value(theThreadIndex).get()),
       *(myCurveOnSurfaceArray.Value(theThreadIndex).get()),
@@ -238,10 +210,8 @@ public:
     myArrOfParam(theElemIndex) = aPar;
   }
 
-  // Returns optimal value (inverse of square of maximal distance)
   void OptimalValues(double& theMinimalValue, double& theParameter) const
   {
-    // This method looks for the minimal value of myArrOfDist.
 
     const int aStartInd = myArrOfDist.Lower();
     theMinimalValue     = myArrOfDist(aStartInd);
@@ -270,8 +240,6 @@ private:
   mutable NCollection_Array1<double> myArrOfParam;
 };
 
-//=================================================================================================
-
 GeomLib_CheckCurveOnSurface::GeomLib_CheckCurveOnSurface()
     : myErrorStatus(0),
       myMaxDistance(RealLast()),
@@ -280,8 +248,6 @@ GeomLib_CheckCurveOnSurface::GeomLib_CheckCurveOnSurface()
       myIsParallel(false)
 {
 }
-
-//=================================================================================================
 
 GeomLib_CheckCurveOnSurface::GeomLib_CheckCurveOnSurface(
   const occ::handle<Adaptor3d_Curve>& theCurve,
@@ -295,8 +261,6 @@ GeomLib_CheckCurveOnSurface::GeomLib_CheckCurveOnSurface(
 {
 }
 
-//=================================================================================================
-
 void GeomLib_CheckCurveOnSurface::Init()
 {
   myCurve.Nullify();
@@ -305,8 +269,6 @@ void GeomLib_CheckCurveOnSurface::Init()
   myMaxParameter = 0.0;
   myTolRange     = Precision::PConfusion();
 }
-
-//=================================================================================================
 
 void GeomLib_CheckCurveOnSurface::Init(const occ::handle<Adaptor3d_Curve>& theCurve,
                                        const double                        theTolRange)
@@ -317,8 +279,6 @@ void GeomLib_CheckCurveOnSurface::Init(const occ::handle<Adaptor3d_Curve>& theCu
   myMaxParameter = 0.0;
   myTolRange     = theTolRange;
 }
-
-//=================================================================================================
 
 void GeomLib_CheckCurveOnSurface::Perform(
   const occ::handle<Adaptor3d_CurveOnSurface>& theCurveOnSurface)
@@ -339,13 +299,6 @@ void GeomLib_CheckCurveOnSurface::Perform(
   const double anEpsilonRange = 1.e-3;
 
   int aNbParticles = 3;
-
-  // Polynomial function with degree n has not more than n-1 maxima and
-  // minima (degree of 1st derivative is equal to n-1 => 1st derivative has
-  // no greater than n-1 roots). Consequently, this function has
-  // maximum n monotonicity intervals. That is a good idea to try to put
-  // at least one particle in every monotonicity interval. Therefore,
-  // number of particles should be equal to n.
 
   const int aNbSubIntervals = FillSubIntervals(myCurve,
                                                theCurveOnSurface->GetCurve(),
@@ -413,13 +366,6 @@ void GeomLib_CheckCurveOnSurface::Perform(
   }
 }
 
-//=======================================================================
-// Function : FillSubIntervals
-// purpose : Divides [theFirst, theLast] interval on parts
-//            in order to make searching-algorithm more precisely
-//            (fills theSubIntervals array).
-//            Returns number of subintervals.
-//=======================================================================
 int FillSubIntervals(const occ::handle<Adaptor3d_Curve>&   theCurve3d,
                      const occ::handle<Adaptor2d_Curve2d>& theCurve2d,
                      const double                          theFirst,
@@ -436,7 +382,6 @@ int FillSubIntervals(const occ::handle<Adaptor3d_Curve>&   theCurve3d,
   occ::handle<Geom_BSplineCurve>   aBS3DCurv;
   bool                             isTrimmed3D = false, isTrimmed2D = false;
 
-  //
   if (theCurve3d->GetType() == GeomAbs_BSplineCurve)
   {
     aBS3DCurv = theCurve3d->BSpline();
@@ -567,7 +512,7 @@ int FillSubIntervals(const occ::handle<Adaptor3d_Curve>&   theCurve3d,
       const double aDelta = aVal3D - aVal2D;
 
       if (aDelta < Precision::PConfusion())
-      { // aVal3D <= aVal2D
+      {
         if ((aVal3D > theFirst) && (aVal3D < theLast))
         {
           aNbSubIntervals++;
@@ -579,12 +524,12 @@ int FillSubIntervals(const occ::handle<Adaptor3d_Curve>&   theCurve3d,
         anIndex3D++;
 
         if (-aDelta < Precision::PConfusion())
-        { // aVal3D == aVal2D
+        {
           anIndex2D++;
         }
       }
       else
-      { // aVal2D < aVal3D
+      {
         if ((aVal2D > theFirst) && (aVal2D < theLast))
         {
           aNbSubIntervals++;
@@ -624,10 +569,6 @@ int FillSubIntervals(const occ::handle<Adaptor3d_Curve>&   theCurve3d,
   return aNbSubIntervals;
 }
 
-//=======================================================================
-// class   : PSO_Perform
-// purpose : Searches minimal distance with math_PSO class
-//=======================================================================
 bool PSO_Perform(GeomLib_CheckCurveOnSurface_TargetFunc& theFunction,
                  const math_Vector&                      theParInf,
                  const math_Vector&                      theParSup,
@@ -645,7 +586,6 @@ bool PSO_Perform(GeomLib_CheckCurveOnSurface_TargetFunc& theFunction,
 
   math_PSOParticlesPool aParticles(theNbParticles, 1);
 
-  // They are used for finding a position of theNbParticles worst places
   const int aNbControlPoints = 3 * theNbParticles;
 
   const double aStep  = aDeltaParam / (aNbControlPoints - 1);
@@ -674,12 +614,8 @@ bool PSO_Perform(GeomLib_CheckCurveOnSurface_TargetFunc& theFunction,
   return true;
 }
 
-//=======================================================================
-// class   : MinComputing
-// purpose : Performs computing minimal value
-//=======================================================================
 bool MinComputing(GeomLib_CheckCurveOnSurface_TargetFunc& theFunction,
-                  const double                            theEpsilon, // 1.0e-3
+                  const double                            theEpsilon,
                   const int                               theNbParticles,
                   double&                                 theBestValue,
                   double&                                 theBestParameter)
@@ -688,7 +624,6 @@ bool MinComputing(GeomLib_CheckCurveOnSurface_TargetFunc& theFunction,
   {
     OCC_CATCH_SIGNALS
 
-    //
     math_Vector aParInf(1, 1), aParSup(1, 1), anOutputParam(1, 1);
     aParInf(1)       = theFunction.FirstParameter();
     aParSup(1)       = theFunction.LastParameter();
@@ -711,19 +646,17 @@ bool MinComputing(GeomLib_CheckCurveOnSurface_TargetFunc& theFunction,
 
     theBestParameter = anOutputParam(1);
 
-    // Here, anOutputParam contains parameter, which is near to optimal.
-    // It needs to be more precise. Precision is made by math_NewtonMinimum.
     math_NewtonMinimum aMinSol(theFunction);
     aMinSol.Perform(theFunction, anOutputParam);
 
     if (aMinSol.IsDone() && (aMinSol.GetStatus() == math_OK))
-    { // math_NewtonMinimum has precised the value. We take it.
+    {
       aMinSol.Location(anOutputParam);
       theBestParameter = anOutputParam(1);
       theBestValue     = aMinSol.Minimum();
     }
     else
-    { // Use math_PSO again but on smaller range.
+    {
       const double aStep = theEpsilon * (aParSup(1) - aParInf(1));
       aParInf(1)         = theBestParameter - 0.5 * aStep;
       aParSup(1)         = theBestParameter + 0.5 * aStep;

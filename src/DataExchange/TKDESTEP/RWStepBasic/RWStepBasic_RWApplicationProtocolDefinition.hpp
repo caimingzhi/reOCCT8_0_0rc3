@@ -11,7 +11,6 @@ class StepBasic_ApplicationProtocolDefinition;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ApplicationProtocolDefinition
 class RWStepBasic_RWApplicationProtocolDefinition
 {
 public:

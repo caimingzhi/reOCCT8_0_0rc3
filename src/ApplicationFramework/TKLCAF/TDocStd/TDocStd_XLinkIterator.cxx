@@ -5,14 +5,10 @@
 #include <TDocStd_XLink.hpp>
 #include <TDocStd_XLinkRoot.hpp>
 
-//=================================================================================================
-
 TDocStd_XLinkIterator::TDocStd_XLinkIterator()
     : myValue(nullptr)
 {
 }
-
-//=================================================================================================
 
 TDocStd_XLinkIterator::TDocStd_XLinkIterator(const occ::handle<TDocStd_Document>& DOC)
     : myValue(nullptr)
@@ -20,15 +16,11 @@ TDocStd_XLinkIterator::TDocStd_XLinkIterator(const occ::handle<TDocStd_Document>
   Init(DOC);
 }
 
-//=================================================================================================
-
 void TDocStd_XLinkIterator::Initialize(const occ::handle<TDocStd_Document>& DOC)
 {
   myValue = nullptr;
   Init(DOC);
 }
-
-//=================================================================================================
 
 void TDocStd_XLinkIterator::Next()
 {
@@ -37,8 +29,6 @@ void TDocStd_XLinkIterator::Next()
   else
     myValue = myValue->Next();
 }
-
-//=================================================================================================
 
 void TDocStd_XLinkIterator::Init(const occ::handle<TDocStd_Document>& DOC)
 {

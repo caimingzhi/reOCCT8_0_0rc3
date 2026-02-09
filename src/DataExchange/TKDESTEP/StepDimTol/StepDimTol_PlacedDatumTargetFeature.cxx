@@ -3,6 +3,4 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_PlacedDatumTargetFeature, StepDimTol_DatumTarget)
 
-//=================================================================================================
-
 StepDimTol_PlacedDatumTargetFeature::StepDimTol_PlacedDatumTargetFeature() = default;

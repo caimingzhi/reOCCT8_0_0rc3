@@ -3,11 +3,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP203_CcDesignApproval, StepBasic_ApprovalAssignment)
 
-//=================================================================================================
-
 StepAP203_CcDesignApproval::StepAP203_CcDesignApproval() = default;
-
-//=================================================================================================
 
 void StepAP203_CcDesignApproval::Init(
   const occ::handle<StepBasic_Approval>& aApprovalAssignment_AssignedApproval,
@@ -18,14 +14,10 @@ void StepAP203_CcDesignApproval::Init(
   theItems = aItems;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<StepAP203_ApprovedItem>> StepAP203_CcDesignApproval::Items() const
 {
   return theItems;
 }
-
-//=================================================================================================
 
 void StepAP203_CcDesignApproval::SetItems(
   const occ::handle<NCollection_HArray1<StepAP203_ApprovedItem>>& aItems)

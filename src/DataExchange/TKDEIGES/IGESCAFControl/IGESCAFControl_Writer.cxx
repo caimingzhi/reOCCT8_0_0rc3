@@ -93,8 +93,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 IGESCAFControl_Writer::IGESCAFControl_Writer()
     : myColorMode(true),
       myNameMode(true),
@@ -102,22 +100,16 @@ IGESCAFControl_Writer::IGESCAFControl_Writer()
 {
 }
 
-//=================================================================================================
-
 IGESCAFControl_Writer::IGESCAFControl_Writer(const occ::handle<XSControl_WorkSession>& WS,
-                                             const bool /*scratch*/)
+                                             const bool)
 {
-  // this code does things in a wrong way, it should be vice-versa
+
   WS->SetModel(Model());
   WS->SetMapWriter(TransferProcess());
   myColorMode = true;
   myNameMode  = true;
   myLayerMode = true;
-
-  //  SetWS (WS,scratch); // this should be the only required command here
 }
-
-//=================================================================================================
 
 IGESCAFControl_Writer::IGESCAFControl_Writer(const occ::handle<XSControl_WorkSession>& WS,
                                              const char*                               theUnit)
@@ -131,12 +123,10 @@ IGESCAFControl_Writer::IGESCAFControl_Writer(const occ::handle<XSControl_WorkSes
   myLayerMode = true;
 }
 
-//=================================================================================================
-
 bool IGESCAFControl_Writer::Transfer(const occ::handle<TDocStd_Document>& doc,
                                      const Message_ProgressRange&         theProgress)
 {
-  // translate free top-level shapes of the DECAF document
+
   occ::handle<XCAFDoc_ShapeTool> STool = XCAFDoc_DocumentTool::ShapeTool(doc->Main());
   if (STool.IsNull())
     return false;
@@ -146,8 +136,6 @@ bool IGESCAFControl_Writer::Transfer(const occ::handle<TDocStd_Document>& doc,
   return Transfer(labels, theProgress);
 }
 
-//=================================================================================================
-
 bool IGESCAFControl_Writer::Transfer(const TDF_Label&             label,
                                      const Message_ProgressRange& theProgress)
 {
@@ -156,43 +144,33 @@ bool IGESCAFControl_Writer::Transfer(const TDF_Label&             label,
   return Transfer(labels, theProgress);
 }
 
-//=================================================================================================
-
 bool IGESCAFControl_Writer::Transfer(const NCollection_Sequence<TDF_Label>& labels,
                                      const Message_ProgressRange&           theProgress)
 {
   if (labels.Length() <= 0)
     return false;
-  prepareUnit(labels.First()); // set local length unit to the model
+  prepareUnit(labels.First());
   Message_ProgressScope aPS(theProgress, "Labels", labels.Length());
   for (int i = 1; i <= labels.Length() && aPS.More(); i++)
   {
     TopoDS_Shape shape = XCAFDoc_ShapeTool::GetShape(labels.Value(i));
     if (!shape.IsNull())
       AddShape(shape, aPS.Next());
-    //      IGESControl_Writer::Transfer ( shape );
   }
 
-  // write colors
   if (GetColorMode())
     WriteAttributes(labels);
 
-  // write layers
   if (GetLayerMode())
     WriteLayers(labels);
 
-  // write names
   if (GetNameMode())
     WriteNames(labels);
 
-  // refresh graph
-  //  WS()->ComputeGraph ( true );
   ComputeModel();
 
   return true;
 }
-
-//=================================================================================================
 
 bool IGESCAFControl_Writer::Perform(const occ::handle<TDocStd_Document>& doc,
                                     const char*                          filename,
@@ -203,8 +181,6 @@ bool IGESCAFControl_Writer::Perform(const occ::handle<TDocStd_Document>& doc,
   return Write(filename) == IFSelect_RetDone;
 }
 
-//=================================================================================================
-
 bool IGESCAFControl_Writer::Perform(const occ::handle<TDocStd_Document>& doc,
                                     const TCollection_AsciiString&       filename,
                                     const Message_ProgressRange&         theProgress)
@@ -214,31 +190,25 @@ bool IGESCAFControl_Writer::Perform(const occ::handle<TDocStd_Document>& doc,
   return Write(filename.ToCString()) == IFSelect_RetDone;
 }
 
-//=================================================================================================
-
 bool IGESCAFControl_Writer::WriteAttributes(const NCollection_Sequence<TDF_Label>& labels)
 {
-  // Iterate on labels
+
   if (labels.Length() <= 0)
     return false;
   for (int i = 1; i <= labels.Length(); i++)
   {
     TDF_Label L = labels.Value(i);
 
-    // collect color settings
     NCollection_IndexedDataMap<TopoDS_Shape, XCAFPrs_Style, TopTools_ShapeMapHasher> settings;
     TopLoc_Location                                                                  loc;
     XCAFPrs::CollectStyleSettings(L, loc, settings);
     if (settings.Extent() <= 0)
       continue;
 
-    // get a target shape and try to find corresponding context
-    // (all the colors set under that label will be put into that context)
     TopoDS_Shape S;
     if (!XCAFDoc_ShapeTool::GetShape(L, S))
       continue;
 
-    // iterate on subshapes and create IGES styles
     NCollection_DataMap<XCAFPrs_Style, occ::handle<Standard_Transient>> colors;
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>              Map;
     const XCAFPrs_Style                                                 inherit;
@@ -248,8 +218,6 @@ bool IGESCAFControl_Writer::WriteAttributes(const NCollection_Sequence<TDF_Label
   return true;
 }
 
-//=================================================================================================
-
 void IGESCAFControl_Writer::MakeColors(
   const TopoDS_Shape&                                                                     S,
   const NCollection_IndexedDataMap<TopoDS_Shape, XCAFPrs_Style, TopTools_ShapeMapHasher>& settings,
@@ -257,11 +225,10 @@ void IGESCAFControl_Writer::MakeColors(
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>&                                 Map,
   const XCAFPrs_Style&                                                                    inherit)
 {
-  // skip already processed shapes
+
   if (!Map.Add(S))
     return;
 
-  // check if shape has its own style (or inherits from ancestor)
   XCAFPrs_Style style = inherit;
   if (settings.Contains(S))
   {
@@ -273,7 +240,6 @@ void IGESCAFControl_Writer::MakeColors(
     style.SetMaterial(own.Material());
   }
 
-  // analyze whether current entity should get a color
   bool           hasColor = false;
   Quantity_Color col;
   if (S.ShapeType() == TopAbs_FACE || S.ShapeType() == TopAbs_SOLID)
@@ -298,14 +264,13 @@ void IGESCAFControl_Writer::MakeColors(
     }
   }
 
-  // if color has to be assigned, try to do this
   if (hasColor)
   {
     occ::handle<IGESGraph_Color> colent;
     int                          rank = IGESCAFControl::EncodeColor(col);
     if (!rank)
     {
-      XCAFPrs_Style c; // style used as key in the map
+      XCAFPrs_Style c;
       c.SetColorSurf(col);
       if (colors.IsBound(c))
       {
@@ -341,12 +306,12 @@ void IGESCAFControl_Writer::MakeColors(
     }
     else
     {
-      // may be S was split during shape process
+
       occ::handle<Transfer_Binder> bnd = FP->Find(mapper);
       if (!bnd.IsNull())
       {
         occ::handle<Transfer_TransientListBinder> TransientListBinder =
-          // occ::down_cast<Transfer_TransientListBinder>( bnd->Next(true) );
+
           occ::down_cast<Transfer_TransientListBinder>(bnd);
         int i = 0, nb = 0;
         if (!TransientListBinder.IsNull())
@@ -368,20 +333,10 @@ void IGESCAFControl_Writer::MakeColors(
             }
           }
         }
-        /* // alternative: consider recursive mapping S -> compound -> entities
-        else {
-          TopoDS_Shape comp = TransferBRep::ShapeResult(bnd);
-          if ( ! comp.IsNull() && comp.ShapeType() < S.ShapeType() )
-            for ( TopoDS_Iterator it(comp); it.More(); it.Next() ) {
-              MakeColors ( it.Value(), settings, colors, Map, style );
-            }
-        }
-        */
       }
     }
   }
 
-  // iterate on subshapes (except vertices :)
   if (S.ShapeType() == TopAbs_EDGE)
     return;
   for (TopoDS_Iterator it(S); it.More(); it.Next())
@@ -455,8 +410,6 @@ static void MakeLayers(const occ::handle<Transfer_FinderProcess>& FP,
   }
 }
 
-//=================================================================================================
-
 bool IGESCAFControl_Writer::WriteLayers(const NCollection_Sequence<TDF_Label>& labels)
 {
   if (labels.Length() <= 0)
@@ -518,8 +471,6 @@ bool IGESCAFControl_Writer::WriteLayers(const NCollection_Sequence<TDF_Label>& l
   return true;
 }
 
-//=================================================================================================
-
 bool IGESCAFControl_Writer::WriteNames(const NCollection_Sequence<TDF_Label>& theLabels)
 {
   if (theLabels.Length() <= 0)
@@ -540,7 +491,6 @@ bool IGESCAFControl_Writer::WriteNames(const NCollection_Sequence<TDF_Label>& th
 
     aMapOfShapeNames.Bind(aShape, aName->Get());
 
-    // Collect names for subshapes
     TopLoc_Location aLocation;
     CollectShapeNames(aLabel, aLocation, aName, aMapOfShapeNames);
   }
@@ -570,7 +520,6 @@ bool IGESCAFControl_Writer::WriteNames(const NCollection_Sequence<TDF_Label>& th
       }
       anIGESEntity->SetLabel(anAsciiName);
 
-      // Set long IGES name using 406 form 15 entity
       occ::handle<IGESBasic_Name>              aLongNameEntity = new IGESBasic_Name;
       occ::handle<TCollection_HExtendedString> aTmpStr = new TCollection_HExtendedString(aName);
       aLongNameEntity->Init(1, new TCollection_HAsciiString(aTmpStr, '_'));
@@ -583,8 +532,6 @@ bool IGESCAFControl_Writer::WriteNames(const NCollection_Sequence<TDF_Label>& th
   return true;
 }
 
-//=================================================================================================
-
 void IGESCAFControl_Writer::prepareUnit(const TDF_Label& theLabel)
 {
   occ::handle<XCAFDoc_LengthUnit> aLengthAttr;
@@ -594,47 +541,35 @@ void IGESCAFControl_Writer::prepareUnit(const TDF_Label& theLabel)
   }
   else
   {
-    XSAlgo_ShapeProcessor::PrepareForTransfer(); // update unit info
+    XSAlgo_ShapeProcessor::PrepareForTransfer();
     Model()->ChangeGlobalSection().SetCascadeUnit(UnitsMethods::GetCasCadeLengthUnit());
   }
 }
-
-//=================================================================================================
 
 void IGESCAFControl_Writer::SetColorMode(const bool colormode)
 {
   myColorMode = colormode;
 }
 
-//=================================================================================================
-
 bool IGESCAFControl_Writer::GetColorMode() const
 {
   return myColorMode;
 }
-
-//=================================================================================================
 
 void IGESCAFControl_Writer::SetNameMode(const bool namemode)
 {
   myNameMode = namemode;
 }
 
-//=================================================================================================
-
 bool IGESCAFControl_Writer::GetNameMode() const
 {
   return myNameMode;
 }
 
-//=================================================================================================
-
 void IGESCAFControl_Writer::SetLayerMode(const bool layermode)
 {
   myLayerMode = layermode;
 }
-
-//=================================================================================================
 
 bool IGESCAFControl_Writer::GetLayerMode() const
 {

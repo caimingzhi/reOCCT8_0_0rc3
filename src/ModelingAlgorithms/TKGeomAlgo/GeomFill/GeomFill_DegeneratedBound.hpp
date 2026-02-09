@@ -7,11 +7,6 @@
 #include <GeomFill_Boundary.hpp>
 class gp_Vec;
 
-//! Description of a degenerated boundary (a point).
-//! Class defining a degenerated boundary for a
-//! constrained filling with a point and no other
-//! constraint. Only used to simulate an ordinary bound,
-//! may not be useful and desapear soon.
 class GeomFill_DegeneratedBound : public GeomFill_Boundary
 {
 

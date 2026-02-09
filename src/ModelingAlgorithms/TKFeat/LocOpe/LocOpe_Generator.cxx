@@ -51,8 +51,6 @@ static double NewParameter(const TopoDS_Edge&,
                            const TopoDS_Edge&,
                            const TopoDS_Vertex&);
 
-//=================================================================================================
-
 void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
 {
   if (myShape.IsNull())
@@ -61,20 +59,15 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
   }
   myDone = false;
   myRes.Nullify();
-  //  myDescFaces.Clear();
+
   myModShapes.Clear();
-  //  myFFromE.Clear();
 
   const NCollection_List<TopoDS_Shape>& ledges = G->GeneratingEdges();
 
-  // On genere une liste des faces a gauche du wire. Equivalent du LeftOf.
-  // Attention : il faudra bien propager pour ne pas oublier des faces
-  // a l`interieur
-
   TopExp_Explorer                                        exp, exp2, exp3;
-  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> theLeft; // Faces a gauche
+  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> theLeft;
 
-  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> GEdg, GVtx; // Edges et vertex generateurs
+  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> GEdg, GVtx;
 
   NCollection_List<TopoDS_Shape>::Iterator itl, itl2;
 
@@ -125,7 +118,6 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>           toRemove;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator itm;
 
-  // search for face fusions
   for (itm.Initialize(GEdg); itm.More(); itm.Next())
   {
     const TopoDS_Edge& edg = TopoDS::Edge(itm.Key());
@@ -141,7 +133,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
       }
     }
     if (!itl2.More())
-    { // edge "interne" au shell, ou bord libre
+    {
     }
     else
     {
@@ -149,7 +141,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
       TopoDS_Face        facbis = G->Generated(edg);
       if (ToFuse(fac, facbis))
       {
-        // On recherche si une face a deja fusionne avec facbis
+
         bool facbisfound = false;
         for (NCollection_DataMap<TopoDS_Shape,
                                  NCollection_List<TopoDS_Shape>,
@@ -201,17 +193,11 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
         }
       }
       else
-      { // face generee par edg : on la marque.
-        //	myFFromE.Bind(edg,facbis);
+      {
       }
     }
   }
 
-  // Il faut ici ajouter dans toRemove les edges de connexites entre faces
-  // a fusionner avec une meme face de base
-
-  //  NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>,
-  //  TopTools_ShapeMapHasher>::Iterator itf(theFFMap);
   for (NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>::
          Iterator itf(theFFMap);
        itf.More();
@@ -264,7 +250,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
       const TopoDS_Edge& edg = TopoDS::Edge(exp.Current());
       if (mapTreated.Contains(edg))
       {
-        continue; // on saute l`edge
+        continue;
       }
 
       mapTreated.Add(edg);
@@ -276,12 +262,12 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
           TopoDS_Edge edgbis = G->Generated(vtx);
 
           if ((edgbis.IsNull() || BRep_Tool::Degenerated(edgbis)) ||
-              //	      toRemove.Contains(edgbis) ||
+
               !ToFuse(edg, edgbis))
           {
             continue;
           }
-          // a voir
+
           if (BRepTools::IsReallyClosed(edg, fac))
           {
             if (!theEEMap.IsBound(edg))
@@ -289,7 +275,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
               NCollection_List<TopoDS_Shape> thelist1;
               theEEMap.Bind(edg, thelist1);
               theEEMap(edg).Append(edgbis);
-              toRemove.Add(edgbis); // toujours vrai pour edge double
+              toRemove.Add(edgbis);
               bool          FuseEdge = true;
               TopoDS_Vertex Vf, Vl;
               TopExp::Vertices(edg, Vf, Vl);
@@ -304,7 +290,6 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
                   if ((Vf.IsSame(vtx) || Vl.IsSame(vtx)) && !toRemove.Contains(eee))
                   {
                     FuseEdge = false;
-                    // On recherche celui qu`il ne faut pas fusionner
 
                     if ((Vf.IsSame(vtx) && orient == TopAbs_FORWARD)
                         || (Vl.IsSame(vtx) && orient == TopAbs_REVERSED))
@@ -342,9 +327,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
 
           else
           {
-            /*  A VOIR
-                  if (!BRep_Tool::IsClosed(edg,fac)) {
-            */
+
             if (!theEEMap.IsBound(edg))
             {
               NCollection_List<TopoDS_Shape> thelist2;
@@ -380,7 +363,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
                   if (theFFMap.IsBound(itl.Value()))
                   {
                     FuseEdge = ToFuse(edg, TopoDS::Face(itl.Value()), vtx, toRemove);
-                    // edge a fusionner
+
                     if (FuseEdge)
                     {
                       toRemove.Add(vtx);
@@ -395,7 +378,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
                     }
                   }
                   else
-                  { // on marque comme face a reconstruire
+                  {
                     RebuildFace.Append(itl.Value());
                     if (toRemove.Contains(vtx))
                     {
@@ -433,7 +416,6 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
   occ::handle<Geom_Plane>   P;
   occ::handle<Geom_Curve>   C;
 
-  // Fusion des edges
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>::
     Iterator ite(theEEMap);
   for (; ite.More(); ite.Next())
@@ -443,7 +425,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
     BRep_Tool::Range(edg, f, l);
     TopoDS_Shape aLocalEdge = edg.EmptyCopied();
     newedg                  = TopoDS::Edge(aLocalEdge);
-    //    newedg = TopoDS::Edge(edg.EmptyCopied());
+
     newedg.Orientation(TopAbs_FORWARD);
     for (exp.Init(edg.Oriented(TopAbs_FORWARD), TopAbs_VERTEX); exp.More(); exp.Next())
     {
@@ -481,7 +463,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
         B.Add(newedg, newvtx.Oriented(vtx.Orientation()));
         tol = BRep_Tool::Tolerance(newvtx);
         B.UpdateVertex(newvtx, prm, newedg, tol);
-        toRemove.Add(itl.Value()); // i-e edgbis
+        toRemove.Add(itl.Value());
         KeepNewEdge = true;
       }
       else
@@ -505,7 +487,6 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
 
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> EdgAdded;
 
-  // Fusion des faces, ou reconstruction
   for (NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>::
          Iterator itf(theFFMap);
        itf.More();
@@ -527,7 +508,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
     orface                             = exp.Current().Orientation();
     TopoDS_Shape aLocalFaceEmptyCopied = fac.EmptyCopied();
     newface                            = TopoDS::Face(aLocalFaceEmptyCopied);
-    //    newface = TopoDS::Face(fac.EmptyCopied());
+
     newface.Orientation(TopAbs_FORWARD);
     S = BRep_Tool::Surface(fac);
     if (S->DynamicType() == STANDARD_TYPE(Geom_RectangularTrimmedSurface))
@@ -548,8 +529,8 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
         }
       }
       if (!exp2.More())
-      { // wire non modifie
-        //	B.Add(newface,wir.Oriented(wir.Orientation()));
+      {
+
         for (exp2.Init(wir, TopAbs_EDGE); exp2.More(); exp2.Next())
         {
           listofedg.Append(exp2.Current());
@@ -560,15 +541,11 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
         if (!ModFace)
         {
 
-          // Petit truc crad pour les p-curves sur les cylindres...
           if (P.IsNull())
           {
             double Vminc, Vmaxc;
             BRepTools::UVBounds(fac, Uminc, Umaxc, Vminc, Vmaxc);
           }
-
-          // premier passage : on met les wires non touches des faces
-          // en vis a vis
 
           for (itl.Initialize(itf.Value()); itl.More(); itl.Next())
           {
@@ -586,7 +563,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
               facbis.Orientation(orient);
             }
             else
-            { // on fusionne avec une autre face du shape...
+            {
               for (exp2.Init(myShape, TopAbs_FACE); exp2.More(); exp2.Next())
               {
                 if (exp2.Current().IsSame(facbis))
@@ -609,19 +586,18 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
               if (!exp2.More())
               {
                 TopoDS_Wire theNew;
-                B.MakeWire(theNew); // FORWARD
+                B.MakeWire(theNew);
                 for (exp2.ReInit(); exp2.More(); exp2.Next())
                 {
                   const TopoDS_Edge& edg = TopoDS::Edge(exp2.Current());
 
                   orient = TopAbs::Compose(orface, edg.Orientation());
-                  //		  B.Add(theNew,edg.Oriented(or));
+
                   listofedg.Append(edg.Oriented(orient));
                   EdgAdded.Add(edg);
                   if (P.IsNull())
                   {
-                    // on met les courbes 2d si on n`est pas sur un plan
-                    // on ne devrait pas avoir de pb d`edge de couture.
+
                     tol = BRep_Tool::Tolerance(edg);
                     C   = BRep_Tool::Curve(edg, loc, f, l);
                     if (!loc.IsIdentity())
@@ -636,7 +612,6 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
 
                     occ::handle<Geom2d_Curve> C2d = GeomProjLib::Curve2d(C, f, l, S, tol);
 
-                    // Tentative de recalage dans la facette
                     pf                     = C2d->Value(f);
                     pl                     = C2d->Value(l);
                     constexpr double tttol = Precision::Angular();
@@ -658,32 +633,23 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
                     {
                       B.UpdateEdge(edg, C2d, newface, tol);
                     }
-                    //		else {
-                    //		  std::cout << "Edge double bizarre... " << std::endl;
-                    //		}
                   }
                 }
-                //		B.Add(newface,theNew);
               }
             }
           }
           ModFace = true;
         }
 
-        // reconstruction du wire
-        // B.MakeWire(newwire);
-
         occ::handle<Geom2d_Curve> C2d, C2d1;
 
-        //	for (exp2.Init(wir.Oriented(TopAbs_FORWARD),TopAbs_EDGE);
         for (exp2.Init(wir, TopAbs_EDGE); exp2.More(); exp2.Next())
         {
           const TopoDS_Edge& edg = TopoDS::Edge(exp2.Current());
           orient                 = edg.Orientation();
           if (!toRemove.Contains(edg) && !theEEMap.IsBound(edg))
           {
-            //	    B.Add(newwire,edg.Oriented(or));
-            //            listofedg.Append(edg.Oriented(or));
+
             listofedg.Append(edg);
           }
           else if (myModShapes.IsBound(edg) || theEEMap.IsBound(edg))
@@ -696,7 +662,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
             {
               newedg = edg;
             }
-            //	    B.Add(newwire,newedg.Oriented(or));
+
             listofedg.Append(newedg.Oriented(orient));
             C = BRep_Tool::Curve(newedg, loc, f, l);
             if (!loc.IsIdentity())
@@ -709,19 +675,14 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
               C = occ::down_cast<Geom_TrimmedCurve>(C)->BasisCurve();
             }
             if (P.IsNull())
-            { // on met les courbes 2d si on n`est pas
-              // sur un plan
-              //	      TopAbs_Orientation oredonfafw = TopAbs::Compose(or,orsav);
+            {
+
               TopAbs_Orientation oredonfafw = orient;
               tol                           = BRep_Tool::Tolerance(newedg);
               TopoDS_Shape aLocalEdge       = edg.Oriented(oredonfafw);
               TopoDS_Shape aLocalFace       = fac.Oriented(TopAbs_FORWARD);
               C2d =
                 BRep_Tool::CurveOnSurface(TopoDS::Edge(aLocalEdge), TopoDS::Face(aLocalFace), f, l);
-              //	      C2d = BRep_Tool::CurveOnSurface
-              //		(TopoDS::Edge(edg.Oriented(oredonfafw)),
-              //		 TopoDS::Face(fac.Oriented(TopAbs_FORWARD)),
-              //		 f,l);
 
               if (!BRepTools::IsReallyClosed(edg, fac))
               {
@@ -733,7 +694,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
               }
               else
               {
-                //		if (TopAbs::Compose(orsav,or) == TopAbs_FORWARD) {
+
                 if (orient == TopAbs_FORWARD)
                 {
                   B.UpdateEdge(newedg, C2d, C2d1, newface, tol);
@@ -764,8 +725,8 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
               else
               {
                 if (myModShapes.IsBound(edg))
-                { // edg raccourci
-                  //		  if (TopAbs::Compose(orsav,or)==DontFuse(edg).Orientation()){
+                {
+
                   if (orient == DontFuse(edg).Orientation())
                   {
                     AddPart = true;
@@ -773,7 +734,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
                 }
                 else
                 {
-                  //		  if (TopAbs::Compose(orsav,or) ==
+
                   if (orient == TopAbs::Reverse(DontFuse(edg).Orientation()))
                   {
                     AddPart = true;
@@ -834,19 +795,18 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
                 EdgAdded.Add(edgbis);
                 if (dir1.Dot(dir2) < 0.)
                 {
-                  //		  B.Add(newwire,edgbis.Oriented(TopAbs::Reverse(or)));
+
                   listofedg.Append(edgbis.Oriented(TopAbs::Reverse(orient)));
                 }
                 else
                 {
-                  //		  B.Add(newwire,edgbis.Oriented(or));
+
                   listofedg.Append(edgbis.Oriented(orient));
                 }
 
                 if (P.IsNull())
                 {
-                  // on met les courbes 2d si on n`est pas sur un plan
-                  // C est la courbe de edgbis, f et l s`y rapportent
+
                   occ::handle<Geom2d_Curve> PTC = GeomProjLib::Curve2d(C, f, l, S, tol);
                   if (S->IsUPeriodic())
                   {
@@ -855,17 +815,13 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
                     {
                       TopAbs_Orientation oredge = DontFuse(edg).Orientation();
                       if (myModShapes.IsBound(edg))
-                      { // edge raccourci...
+                      {
                         TopoDS_Shape aLocalShape = edg.Oriented(oredge);
                         TopoDS_Shape aLocalFace  = fac.Oriented(TopAbs_FORWARD);
                         BRep_Tool::UVPoints(TopoDS::Edge(aLocalShape),
                                             TopoDS::Face(aLocalFace),
                                             pf,
                                             pl);
-                        //			BRep_Tool::
-                        //			UVPoints(TopoDS::Edge(edg.Oriented(oredge)),
-                        //				 TopoDS::Face(fac.Oriented(TopAbs_FORWARD)),
-                        //				 pf,pl);
                       }
                       else
                       {
@@ -875,10 +831,6 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
                                             TopoDS::Face(aLocalFace),
                                             pf,
                                             pl);
-                        //			BRep_Tool::
-                        //			UVPoints(TopoDS::Edge(edg.Oriented(TopAbs::Reverse(oredge))),
-                        //				 TopoDS::Face(fac.Oriented(TopAbs_FORWARD)),
-                        //				 pf,pl);
                       }
                       Uref = pf.X();
                     }
@@ -890,7 +842,6 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
 
                     double NewU = (PTC->Value(f)).X();
 
-                    //		    if(abs(NewU - Uref) > Epsilon(S->UPeriod()))   {
                     if (fabs(NewU - Uref) > Epsilon(S->UPeriod()))
                     {
                       PTC->Translate(gp_Vec2d((Uref - NewU), 0.));
@@ -903,12 +854,6 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
             }
           }
         }
-
-        // Recuperation des edges sur les faces a fusionner.
-
-        // ICICICICI
-
-        //	orface = TopAbs::Compose(orsav,orface);
 
         bool includeinw = false;
         for (itl.Initialize(itf.Value()); itl.More(); itl.Next())
@@ -928,7 +873,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
             facbis.Orientation(orient);
           }
           else
-          { // on fusionne avec une autre face du shape...
+          {
             genface = false;
             for (exp2.Init(myShape, TopAbs_FACE); exp2.More(); exp2.Next())
             {
@@ -968,7 +913,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
                   TopExp::Vertices(TopoDS::Edge(exp2.Current()), VF, VL);
                   TopExp_Explorer exp4;
                   for (exp4.Init(wir, TopAbs_VERTEX);
-                       //		  for (TopExp_Explorer exp4(wir,TopAbs_VERTEX);
+
                        exp4.More();
                        exp4.Next())
                   {
@@ -998,13 +943,12 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
               {
 
                 orient = TopAbs::Compose(orface, edg.Orientation());
-                //		B.Add(newwire,edg.Oriented(or));
+
                 listofedg.Append(edg.Oriented(orient));
                 EdgAdded.Add(edg);
                 if (P.IsNull())
                 {
-                  // on met les courbes 2d si on n`est pas sur un plan
-                  // on ne devrait pas avoir de pb d`edge de couture.
+
                   tol = BRep_Tool::Tolerance(edg);
                   C   = BRep_Tool::Curve(edg, loc, f, l);
                   if (!loc.IsIdentity())
@@ -1019,7 +963,6 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
 
                   C2d = GeomProjLib::Curve2d(C, f, l, S, tol);
 
-                  // Tentative de recalage dans la facette
                   pf                     = C2d->Value(f);
                   pl                     = C2d->Value(l);
                   constexpr double tttol = Precision::Angular();
@@ -1041,9 +984,6 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
                   {
                     B.UpdateEdge(edg, C2d, newface, tol);
                   }
-                  //		else {
-                  //		  std::cout << "Edge double bizarre... " << std::endl;
-                  //		}
                 }
               }
             }
@@ -1060,9 +1000,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
       L.WiresToFaces();
       const NCollection_List<TopoDS_Shape>& listoffaces = L.NewFaces();
       toRemove.Add(fac);
-      //      if (!HasWire) {
-      //	newface.Nullify();
-      //      }
+
       myModShapes.Bind(fac, listoffaces);
       for (itl.Initialize(itf.Value()); itl.More(); itl.Next())
       {
@@ -1070,49 +1008,6 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
       }
     }
   }
-
-  /* JAG 16.09.96 : on utilise LocOpe_BuildShape
-    TopoDS_Shell theShell;
-    B.MakeShell(theShell);
-    for (exp.Init(myShape,TopAbs_FACE); exp.More(); exp.Next()) {
-      const TopoDS_Face& fac = TopoDS::Face(exp.Current());
-      if (!theLeft.Contains(fac)) {
-        if (!toRemove.Contains(exp.Current())) {
-      B.Add(theShell,fac);
-      myModShapes.Bind(fac,fac);
-        }
-        else if (!myModShapes(fac).IsNull())  {
-      B.Add(theShell, myModShapes(fac).Oriented(fac.Orientation()));
-        }
-      }
-    }
-
-    TopAbs_Orientation orsolid = myShape.Orientation();
-    for (itl.Initialize(G->OrientedFaces()); itl.More(); itl.Next()) {
-      const TopoDS_Face& fac = TopoDS::Face(itl.Value());
-      if (toRemove.Contains(fac)) {
-        continue;
-      }
-
-      if (orsolid == TopAbs_FORWARD) {
-        B.Add(theShell,fac);
-      }
-      else {
-        B.Add(theShell,fac.Reversed());
-      }
-      myModShapes.Bind(fac,fac);
-
-    }
-
-    B.MakeSolid(TopoDS::Solid(myRes));
-    B.Add(myRes,theShell);
-    myRes.Orientation(orsolid);
-
-  */
-
-  // 06.11.96
-  // Debug temporaire. Il faudra prevoir un syntaxe de BuildShape
-  // qui impose une ori de certaines faces.
 
   TopoDS_Face FaceRefOri;
 
@@ -1170,7 +1065,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
 
   LocOpe_BuildShape BS(lfres);
   myRes = BS.Shape();
-  // Suite debug du 06.11.96
+
   if (myRes.ShapeType() == TopAbs_SOLID)
   {
     for (exp.Init(myRes, TopAbs_FACE); exp.More(); exp.Next())
@@ -1182,8 +1077,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
     }
     if (exp.More() && exp.Current().Orientation() != FaceRefOri.Orientation())
     {
-      // 	---C++: return const&	---C++: return const&	---C++: return const&Si un seul Shell ,
-      // on change son orientation
+
       TopoDS_Solid NewSol;
       B.MakeSolid(NewSol);
       exp.Init(myRes, TopAbs_SHELL);
@@ -1193,16 +1087,11 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
     }
   }
 
-  // recodage des regularites qui existaient sur le shape colle
-
   myDone = true;
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& LocOpe_Generator::DescendantFace(const TopoDS_Face& F)
 {
-  // NCollection_List<TopoDS_Shape> list;
 
   if (!myDone)
   {
@@ -1210,8 +1099,6 @@ const NCollection_List<TopoDS_Shape>& LocOpe_Generator::DescendantFace(const Top
   }
   return myModShapes(F);
 }
-
-//=================================================================================================
 
 bool ToFuse(const TopoDS_Face& F1, const TopoDS_Face& F2)
 {
@@ -1267,8 +1154,6 @@ bool ToFuse(const TopoDS_Face& F1, const TopoDS_Face& F2)
 
   return ValRet;
 }
-
-//=================================================================================================
 
 bool ToFuse(const TopoDS_Edge& E1, const TopoDS_Edge& E2)
 {
@@ -1333,8 +1218,6 @@ bool ToFuse(const TopoDS_Edge& E1, const TopoDS_Edge& E2)
   return ValRet;
 }
 
-//=================================================================================================
-
 bool ToFuse(const TopoDS_Edge&                                            E,
             const TopoDS_Face&                                            F,
             const TopoDS_Vertex&                                          V,
@@ -1344,7 +1227,7 @@ bool ToFuse(const TopoDS_Edge&                                            E,
   TopExp_Explorer exp;
   for (exp.Init(F, TopAbs_EDGE); exp.More(); exp.Next())
   {
-    //  for (TopExp_Explorer exp(F,TopAbs_EDGE); exp.More(); exp.Next()) {
+
     const TopoDS_Edge& eee = TopoDS::Edge(exp.Current());
     if (!eee.IsSame(E))
     {
@@ -1357,8 +1240,6 @@ bool ToFuse(const TopoDS_Edge&                                            E,
   }
   return true;
 }
-
-//=================================================================================================
 
 double NewParameter(const TopoDS_Edge&   Edg,
                     const TopoDS_Vertex& Vtx,
@@ -1393,12 +1274,11 @@ double NewParameter(const TopoDS_Edge&   Edg,
   else if (typC == STANDARD_TYPE(Geom_Circle))
   {
     double prm = ElCLib::Parameter(occ::down_cast<Geom_Circle>(C)->Circ(), P);
-    // Vtx vient d`une exploration de Edg orientee FORWARD
 
     TopAbs_Orientation orient = TopAbs::Reverse(Vtx.Orientation());
     if (orient == TopAbs_FORWARD || orient == TopAbs_REVERSED)
     {
-      //      for (TopExp_Explorer exp(NewEdg.Oriented(TopAbs_FORWARD),TopAbs_VERTEX);
+
       TopExp_Explorer exp(NewEdg.Oriented(TopAbs_FORWARD), TopAbs_VERTEX);
       for (; exp.More(); exp.Next())
       {

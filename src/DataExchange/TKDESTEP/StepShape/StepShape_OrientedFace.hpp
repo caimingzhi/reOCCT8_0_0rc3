@@ -16,7 +16,6 @@ class StepShape_OrientedFace : public StepShape_Face
 {
 
 public:
-  //! Returns a OrientedFace
   Standard_EXPORT StepShape_OrientedFace();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

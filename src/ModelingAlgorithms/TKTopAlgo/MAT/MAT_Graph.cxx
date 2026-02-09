@@ -13,18 +13,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MAT_Graph, Standard_Transient)
 
-//------------------
-// functions static.
-//-------------------
 static occ::handle<MAT_Arc> MakeArc(
   const occ::handle<MAT_Bisector>&                     aBisector,
   NCollection_DataMap<int, occ::handle<MAT_BasicElt>>& TheBasicElts,
   NCollection_DataMap<int, occ::handle<MAT_Arc>>&      TheArcs,
   int&                                                 IndTabArcs);
 
-// =====================================================================
-// Constructeur vide.
-// =====================================================================
 MAT_Graph::MAT_Graph()
     : numberOfArcs(0),
       numberOfNodes(0),
@@ -33,10 +27,6 @@ MAT_Graph::MAT_Graph()
 {
 }
 
-// =====================================================================
-// function : Perform
-// purpose  : Creation du graphe contenant le resultat.
-// =====================================================================
 void MAT_Graph::Perform(const bool                             SemiInfinite,
                         const occ::handle<MAT_ListOfBisector>& TheRoots,
                         const int                              NbBasicElts,
@@ -52,10 +42,6 @@ void MAT_Graph::Perform(const bool                             SemiInfinite,
   double                DistExt;
   int                   IndExt;
   occ::handle<MAT_Arc>  PreviousArc = CurrentArc;
-
-  //------------------------
-  // Construction du graphe.
-  //------------------------
 
   if (SemiInfinite)
   {
@@ -73,25 +59,15 @@ void MAT_Graph::Perform(const bool                             SemiInfinite,
   numberOfNodes     = NbRoots + NbArcs;
   IndTabNodes       = numberOfNodes;
 
-  //---------------------------
-  //... Creation des BasicElts.
-  //---------------------------
   for (i = 1; i <= NbBasicElts; i++)
   {
     theBasicElts.Bind(i, new MAT_BasicElt(i));
     theBasicElts(i)->SetGeomIndex(i);
   }
 
-  //--------------------------------------------------------------------
-  // ... Creation des ARCS et des NODES.
-  //     Construction des arbres d arcs a partir des <Bisector> racines.
-  //--------------------------------------------------------------------
-
   if (SemiInfinite)
   {
 
-    // Plusieurs points d entree a l infini.
-    //--------------------------------------
     TheRoots->First();
 
     while (TheRoots->More())
@@ -107,10 +83,7 @@ void MAT_Graph::Perform(const bool                             SemiInfinite,
   }
   else
   {
-    // -----------------------------------------------
-    // Un seul point d entree .
-    // Creation d un premier ARC et du NODE racine.
-    // -----------------------------------------------
+
     NbRoots = 1;
     TheRoots->First();
     CurrentArc = MakeArc(TheRoots->Current(), theBasicElts, theArcs, IndTabArcs);
@@ -123,11 +96,6 @@ void MAT_Graph::Perform(const bool                             SemiInfinite,
     theNodes.Bind(IndTabNodes, Extremite);
     IndTabNodes--;
 
-    // -----------------------------------------------------------
-    // ...Creation des ARCs issues de la racine.
-    //    Codage des voisinages sur ces arcs et mise a jour de la
-    //    sequence des arcs issue du Node racine.
-    // -----------------------------------------------------------
     FirstArc    = CurrentArc;
     PreviousArc = FirstArc;
     TheRoots->Next();
@@ -146,63 +114,43 @@ void MAT_Graph::Perform(const bool                             SemiInfinite,
     CurrentArc->SetNeighbour(MAT_Right, Extremite, FirstArc);
   }
 
-  // ----------------------------------------------------
-  // Les sequence des Arcs des Nodes racines sont a jour.
-  // Mise a jour des sequences des autres Nodes.
-  // ----------------------------------------------------
   UpDateNodes(IndTabNodes);
 }
-
-//=================================================================================================
 
 occ::handle<MAT_Arc> MAT_Graph::Arc(const int Index) const
 {
   return theArcs(Index);
 }
 
-//=================================================================================================
-
 occ::handle<MAT_BasicElt> MAT_Graph::BasicElt(const int Index) const
 {
   return theBasicElts(Index);
 }
-
-//=================================================================================================
 
 occ::handle<MAT_Node> MAT_Graph::Node(const int Index) const
 {
   return theNodes(Index);
 }
 
-//=================================================================================================
-
 int MAT_Graph::NumberOfArcs() const
 {
   return numberOfArcs;
 }
-
-//=================================================================================================
 
 int MAT_Graph::NumberOfNodes() const
 {
   return numberOfNodes;
 }
 
-//=================================================================================================
-
 int MAT_Graph::NumberOfInfiniteNodes() const
 {
   return numberOfInfiniteNodes;
 }
 
-//=================================================================================================
-
 int MAT_Graph::NumberOfBasicElts() const
 {
   return numberOfBasicElts;
 }
-
-//=================================================================================================
 
 void MAT_Graph::FusionOfBasicElts(const int IndexElt1,
                                   const int IndexElt2,
@@ -222,10 +170,6 @@ void MAT_Graph::FusionOfBasicElts(const int IndexElt1,
   int                   i;
   occ::handle<MAT_Zone> Zone2 = new MAT_Zone(Elt2);
 
-  //--------------------------------------------------------------------
-  // Les arcs de la zone de Elt2 ne separent plus Elt2 et qq chose mais
-  // Elt1 et qq chose.
-  //--------------------------------------------------------------------
   for (i = 1; i <= Zone2->NumberOfArcs(); i++)
   {
     if (Zone2->ArcOnFrontier(i)->FirstElement() == Elt2)
@@ -238,10 +182,6 @@ void MAT_Graph::FusionOfBasicElts(const int IndexElt1,
     }
   }
 
-  //-------------------------------------------------------------------
-  // le EndArc de Elt1 et le StartArc de Elt2 peuvent separes les memes
-  // elements de base => Fusion des deux arcs et mise a jour des noeuds.
-  //-------------------------------------------------------------------
   occ::handle<MAT_Arc> EA1 = Elt1->EndArc();
   occ::handle<MAT_Arc> SA2 = Elt2->StartArc();
 
@@ -259,18 +199,8 @@ void MAT_Graph::FusionOfBasicElts(const int IndexElt1,
     IGeomArc2 = SA2->GeomIndex();
   }
 
-  //-------------------------------------------------
-  // La fin de Elt1 devient la fin de Elt2.
-  //-------------------------------------------------
   Elt1->SetEndArc(Elt2->EndArc());
 
-  //-------------------------------------------------------------------
-  // le EndArc de Elt1 et le StartArc de Elt1 peuvent separer les memes
-  // elements de base.
-  // si les noeuds des arcs ne sont pas sur le contour
-  //    => fusion des arcs.(contour ferme compose d un seul BasicElt)
-  // sinon rien            (contour ferme compose de deux BasicElts)
-  //-------------------------------------------------------------------
   occ::handle<MAT_Arc> SA1 = Elt1->StartArc();
   EA1                      = Elt1->EndArc();
 
@@ -295,18 +225,10 @@ void MAT_Graph::FusionOfBasicElts(const int IndexElt1,
     }
   }
 
-  //----------------------------------------------------
-  // un element de base a ete elimine.
-  //----------------------------------------------------
   theBasicElts.UnBind(Elt2->Index());
   numberOfBasicElts--;
 }
 
-//=============================================================================
-// function : FusionOfArcs
-// purpose  : Fusion de deux arcs separant les memes elements.
-//            l <Arc1> ira du Second noeud de <Arc2> au second Noeud de <Arc1>.
-//=============================================================================
 void MAT_Graph::FusionOfArcs(const occ::handle<MAT_Arc>& Arc1, const occ::handle<MAT_Arc>& Arc2)
 {
 
@@ -315,9 +237,6 @@ void MAT_Graph::FusionOfArcs(const occ::handle<MAT_Arc>& Arc1, const occ::handle
 
   Arc1->SetFirstNode(Arc2->SecondNode());
 
-  //--------------------------------------------------------------------
-  // Mise a jour des voisinages autour du nouveau premier noeud de Arc1.
-  //--------------------------------------------------------------------
   if (!Arc2->SecondNode()->Infinite())
   {
     occ::handle<MAT_Arc> LNeighbour = Arc2->Neighbour(Arc2->SecondNode(), MAT_Left);
@@ -335,14 +254,8 @@ void MAT_Graph::FusionOfArcs(const occ::handle<MAT_Arc>& Arc1, const occ::handle
     Arc1->SetFirstArc(MAT_Right, EmptyArc);
   }
 
-  //-------------------------------------------------------------------
-  // Mise a jour du premier noeud Arc1.
-  //-----------------------------------------------------------------
   Arc1->FirstNode()->SetLinkedArc(Arc1);
 
-  //------------------------------------
-  // Elimination de Arc2 et des OldNode
-  //------------------------------------
   if (theNodes.IsBound(OldNode1->Index()))
   {
     theNodes.UnBind(OldNode1->Index());
@@ -354,9 +267,6 @@ void MAT_Graph::FusionOfArcs(const occ::handle<MAT_Arc>& Arc1, const occ::handle
     numberOfNodes--;
   }
 
-  // Note: the Arc2 is actually a reference to a handle contained in theArcs map;
-  // it is necessary to create copy of that handle and use only it to access
-  // that object, since the handle contained in the map is destroyed by UnBind()
   occ::handle<MAT_Arc> anArc2 = Arc2;
   theArcs.UnBind(Arc2->Index());
   numberOfArcs--;
@@ -380,10 +290,6 @@ void MAT_Graph::FusionOfArcs(const occ::handle<MAT_Arc>& Arc1, const occ::handle
   }
 }
 
-//=============================================================================
-// function : CompactArcs
-// purpose  : Decalage des Arcs pour boucher les trous.
-//=============================================================================
 void MAT_Graph::CompactArcs()
 {
   int  IFind      = 0;
@@ -410,10 +316,6 @@ void MAT_Graph::CompactArcs()
   }
 }
 
-//=============================================================================
-// function : CompactNodes
-// purpose  : Decalage des Nodes pour boucher les trous.
-//=============================================================================
 void MAT_Graph::CompactNodes()
 {
   int  IFind      = 0;
@@ -440,8 +342,6 @@ void MAT_Graph::CompactNodes()
   }
 }
 
-//=================================================================================================
-
 void MAT_Graph::ChangeBasicElts(const NCollection_DataMap<int, occ::handle<MAT_BasicElt>>& NewMap)
 {
   theBasicElts = NewMap;
@@ -452,19 +352,11 @@ void MAT_Graph::ChangeBasicElts(const NCollection_DataMap<int, occ::handle<MAT_B
   }
 }
 
-//=================================================================================================
-
 occ::handle<MAT_BasicElt> MAT_Graph::ChangeBasicElt(const int Index)
 {
   return theBasicElts(Index);
 }
 
-//=============================================================================
-// function : UpDateNodes
-// purpose  : Mise a jour des sequence d'ARC de chaque FirstNode de chaque arc.
-//            et stockage de chaque noeud dans la table des noeuds.
-//            Les noeuds racines sont traites dans PERFORM.
-//=============================================================================
 void MAT_Graph::UpDateNodes(int& IndTabNodes)
 {
   int                   i;
@@ -481,10 +373,6 @@ void MAT_Graph::UpDateNodes(int& IndTabNodes)
   }
 }
 
-//=============================================================================
-// function : MakeArc
-// purpose  : Creation des <ARCS> en parcourant l'arbre issue de <aBisector>.
-//=============================================================================
 static occ::handle<MAT_Arc> MakeArc(
   const occ::handle<MAT_Bisector>&                     aBisector,
   NCollection_DataMap<int, occ::handle<MAT_BasicElt>>& TheBasicElts,
@@ -524,9 +412,7 @@ static occ::handle<MAT_Arc> MakeArc(
 
   if (!BisectorList->More())
   {
-    // -------------------
-    // Arc sur le contour.
-    // -------------------
+
     TheBasicElts(aBisector->SecondEdge()->EdgeNumber())->SetStartArc(CurrentArc);
     TheBasicElts(aBisector->FirstEdge()->EdgeNumber())->SetEndArc(CurrentArc);
   }

@@ -86,7 +86,7 @@ bool ShapeUpgrade_FixSmallBezierCurves::Approx(occ::handle<Geom_Curve>&   Curve3
   occ::handle<Geom2d_Curve> c2d;
   TopLoc_Location           L;
   occ::handle<Geom_Surface> aSurf = BRep_Tool::Surface(myFace, L);
-  GeomAdaptor_Surface       ads(aSurf); // = new GeomAdaptor_Surface(aSurf);
+  GeomAdaptor_Surface       ads(aSurf);
   double prec = std::max(ads.UResolution(Precision()), ads.VResolution(Precision()));
   if (sae.PCurve(myEdge, myFace, c2d, f, l, false))
   {
@@ -110,7 +110,7 @@ bool ShapeUpgrade_FixSmallBezierCurves::Approx(occ::handle<Geom_Curve>&   Curve3
         occ::handle<NCollection_HArray1<occ::handle<Geom2d_Curve>>> theSegments2d;
         theSegments2d = mySplitCurve2dTool->GetCurves();
         if (theSegments2d->Length() > 1)
-          return false; // ShapeAnalysis_Surface
+          return false;
         Curve2d = theSegments2d->Value(1);
       }
     }
@@ -131,7 +131,7 @@ bool ShapeUpgrade_FixSmallBezierCurves::Approx(occ::handle<Geom_Curve>&   Curve3
   {
     occ::handle<Geom2d_Curve> c2;
     double                    f2, l2;
-    // smh#8
+
     TopoDS_Shape tmpE = myEdge.Reversed();
     TopoDS_Edge  erev = TopoDS::Edge(tmpE);
     if (sae.PCurve(erev, myFace, c2, f2, l2, false))
@@ -156,7 +156,7 @@ bool ShapeUpgrade_FixSmallBezierCurves::Approx(occ::handle<Geom_Curve>&   Curve3
           occ::handle<NCollection_HArray1<occ::handle<Geom2d_Curve>>> theSegments2d;
           theSegments2d = mySplitCurve2dTool->GetCurves();
           if (theSegments2d->Length() > 1)
-            return false; // ShapeAnalysis_Surface
+            return false;
           Curve2dR = theSegments2d->Value(1);
         }
       }

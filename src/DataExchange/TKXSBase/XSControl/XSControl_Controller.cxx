@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_DispPerCount.hpp>
 #include <IFSelect_DispPerFiles.hpp>
@@ -53,26 +42,19 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XSControl_Controller, Standard_Transient)
 
-//  ParamEditor
-//  Transferts
-
 static NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transient>> listad;
-
-//=================================================================================================
 
 XSControl_Controller::XSControl_Controller(const char* theLongName, const char* theShortName)
     : myShortName(theShortName),
       myLongName(theLongName)
 {
-  // Standard parameters
+
   Interface_Static::Standards();
   TraceStatic("read.precision.mode", 5);
   TraceStatic("read.precision.val", 5);
   TraceStatic("write.precision.mode", 6);
   TraceStatic("write.precision.val", 6);
 }
-
-//=================================================================================================
 
 void XSControl_Controller::TraceStatic(const char* theName, const int theUse)
 {
@@ -82,8 +64,6 @@ void XSControl_Controller::TraceStatic(const char* theName, const int theUse)
   myParams.Append(val);
   myParamUses.Append(theUse);
 }
-
-//=================================================================================================
 
 void XSControl_Controller::SetNames(const char* theLongName, const char* theShortName)
 {
@@ -99,8 +79,6 @@ void XSControl_Controller::SetNames(const char* theLongName, const char* theShor
   }
 }
 
-//=================================================================================================
-
 void XSControl_Controller::Record(const char* theName) const
 {
   if (listad.IsBound(theName))
@@ -115,8 +93,6 @@ void XSControl_Controller::Record(const char* theName) const
   listad.Bind(theName, this);
 }
 
-//=================================================================================================
-
 occ::handle<XSControl_Controller> XSControl_Controller::Recorded(const char* theName)
 {
   occ::handle<Standard_Transient> recorded;
@@ -124,27 +100,16 @@ occ::handle<XSControl_Controller> XSControl_Controller::Recorded(const char* the
                                          : occ::handle<XSControl_Controller>());
 }
 
-//    ####    DEFINITION    ####
-
-//=================================================================================================
-
 occ::handle<Transfer_ActorOfTransientProcess> XSControl_Controller::ActorRead(
   const occ::handle<Interface_InterfaceModel>&) const
 {
   return myAdaptorRead;
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_ActorOfFinderProcess> XSControl_Controller::ActorWrite() const
 {
   return myAdaptorWrite;
 }
-
-// ###########################
-//  Transfer Help : value control + help
-
-//=================================================================================================
 
 void XSControl_Controller::SetModeWrite(const int modemin, const int modemax, const bool)
 {
@@ -157,8 +122,6 @@ void XSControl_Controller::SetModeWrite(const int modemin, const int modemax, co
     new NCollection_HArray1<occ::handle<TCollection_HAsciiString>>(modemin, modemax);
 }
 
-//=================================================================================================
-
 void XSControl_Controller::SetModeWriteHelp(const int modetrans, const char* help, const bool)
 {
   if (myModeWriteShapeN.IsNull())
@@ -168,8 +131,6 @@ void XSControl_Controller::SetModeWriteHelp(const int modetrans, const char* hel
   occ::handle<TCollection_HAsciiString> hl = new TCollection_HAsciiString(help);
   myModeWriteShapeN->SetValue(modetrans, hl);
 }
-
-//=================================================================================================
 
 bool XSControl_Controller::ModeWriteBounds(int& modemin, int& modemax, const bool) const
 {
@@ -181,8 +142,6 @@ bool XSControl_Controller::ModeWriteBounds(int& modemin, int& modemax, const boo
   return true;
 }
 
-//=================================================================================================
-
 bool XSControl_Controller::IsModeWrite(const int modetrans, const bool) const
 {
   if (myModeWriteShapeN.IsNull())
@@ -193,8 +152,6 @@ bool XSControl_Controller::IsModeWrite(const int modetrans, const bool) const
     return false;
   return true;
 }
-
-//=================================================================================================
 
 const char* XSControl_Controller::ModeWriteHelp(const int modetrans, const bool) const
 {
@@ -210,12 +167,6 @@ const char* XSControl_Controller::ModeWriteHelp(const int modetrans, const bool)
   return str->ToCString();
 }
 
-// ###########################
-//  Transfer : we do what is needed by default (with ActorWrite)
-//    can be redefined ...
-
-//=================================================================================================
-
 bool XSControl_Controller::RecognizeWriteTransient(const occ::handle<Standard_Transient>& obj,
                                                    const int modetrans) const
 {
@@ -224,8 +175,6 @@ bool XSControl_Controller::RecognizeWriteTransient(const occ::handle<Standard_Tr
   myAdaptorWrite->ModeTrans() = modetrans;
   return myAdaptorWrite->Recognize(new Transfer_TransientMapper(obj));
 }
-
-//=================================================================================================
 
 static IFSelect_ReturnStatus TransferFinder(
   const occ::handle<Transfer_ActorOfFinderProcess>& theActor,
@@ -264,8 +213,6 @@ static IFSelect_ReturnStatus TransferFinder(
   return stat;
 }
 
-//=================================================================================================
-
 IFSelect_ReturnStatus XSControl_Controller::TransferWriteTransient(
   const occ::handle<Standard_Transient>&       theObj,
   const occ::handle<Transfer_FinderProcess>&   theFP,
@@ -283,8 +230,6 @@ IFSelect_ReturnStatus XSControl_Controller::TransferWriteTransient(
                         theProgress);
 }
 
-//=================================================================================================
-
 bool XSControl_Controller::RecognizeWriteShape(const TopoDS_Shape& shape, const int modetrans) const
 {
   if (myAdaptorWrite.IsNull())
@@ -292,8 +237,6 @@ bool XSControl_Controller::RecognizeWriteShape(const TopoDS_Shape& shape, const 
   myAdaptorWrite->ModeTrans() = modetrans;
   return myAdaptorWrite->Recognize(new TransferBRep_ShapeMapper(shape));
 }
-
-//=================================================================================================
 
 IFSelect_ReturnStatus XSControl_Controller::TransferWriteShape(
   const TopoDS_Shape&                          shape,
@@ -314,13 +257,6 @@ IFSelect_ReturnStatus XSControl_Controller::TransferWriteShape(
   return theReturnStat;
 }
 
-// ###########################
-//  Customization ! We register Items for a WorkSession
-//     (cancels and replaces)
-//     Then, we put them back in place on demand
-
-//=================================================================================================
-
 void XSControl_Controller::AddSessionItem(const occ::handle<Standard_Transient>& theItem,
                                           const char*                            theName,
                                           const bool                             toApply)
@@ -332,8 +268,6 @@ void XSControl_Controller::AddSessionItem(const occ::handle<Standard_Transient>&
     myAdaptorApplied.Append(theItem);
 }
 
-//=================================================================================================
-
 occ::handle<Standard_Transient> XSControl_Controller::SessionItem(const char* theName) const
 {
   occ::handle<Standard_Transient> item;
@@ -342,13 +276,10 @@ occ::handle<Standard_Transient> XSControl_Controller::SessionItem(const char* th
   return item;
 }
 
-//=================================================================================================
-
 void XSControl_Controller::Customise(occ::handle<XSControl_WorkSession>& WS)
 {
   WS->SetParams(myParams, myParamUses);
 
-  // General
   if (!myAdaptorSession.IsEmpty())
   {
     NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transient>>::Iterator iter(
@@ -421,17 +352,14 @@ void XSControl_Controller::Customise(occ::handle<XSControl_WorkSession>& WS)
     dispsign->SetFinalSelection(slr);
     WS->AddNamedItem("xst-disp-sign", dispsign);
 
-    // Not used directly but useful anyway
     WS->AddNamedItem("xst-pointed", new IFSelect_SelectPointed);
     WS->AddNamedItem("xst-sharing", new IFSelect_SelectSharing);
     WS->AddNamedItem("xst-shared", new IFSelect_SelectShared);
     WS->AddNamedItem("xst-nb-selected", new IFSelect_GraphCounter);
 
-    // szv:mySignType = stp;
     WS->SetSignType(stp);
   }
 
-  // Applied Modifiers
   int i, nb = myAdaptorApplied.Length();
   for (i = 1; i <= nb; i++)
   {
@@ -439,10 +367,6 @@ void XSControl_Controller::Customise(occ::handle<XSControl_WorkSession>& WS)
     occ::handle<TCollection_HAsciiString>  name   = WS->Name(anitem);
     WS->SetAppliedModifier(GetCasted(IFSelect_GeneralModifier, anitem), WS->ShareOut());
   }
-
-  // Editors of Parameters
-  // Here for the specific manufacturers of controllers could create the
-  // Parameters: So wait here
 
   occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> listat =
     Interface_Static::Items();

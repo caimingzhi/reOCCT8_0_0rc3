@@ -22,8 +22,6 @@
 
 #define NECHANT 10
 
-//=================================================================================================
-
 bool LocOpe::Closed(const TopoDS_Wire& W, const TopoDS_Face& F)
 {
   TopoDS_Vertex Vf, Vl;
@@ -32,8 +30,6 @@ bool LocOpe::Closed(const TopoDS_Wire& W, const TopoDS_Face& F)
   {
     return false;
   }
-
-  // On recherche l`edge contenant Vf FORWARD
 
   TopExp_Explorer exp, exp2;
   for (exp.Init(W.Oriented(TopAbs_FORWARD), TopAbs_EDGE); exp.More(); exp.Next())
@@ -51,8 +47,6 @@ bool LocOpe::Closed(const TopoDS_Wire& W, const TopoDS_Face& F)
     }
   }
   TopoDS_Edge Ef = TopoDS::Edge(exp.Current());
-
-  // On recherche l`edge contenant Vl REVERSED
 
   for (exp.Init(W.Oriented(TopAbs_FORWARD), TopAbs_EDGE); exp.More(); exp.Next())
   {
@@ -98,8 +92,6 @@ bool LocOpe::Closed(const TopoDS_Wire& W, const TopoDS_Face& F)
   return false;
 }
 
-//=================================================================================================
-
 bool LocOpe::Closed(const TopoDS_Edge& E, const TopoDS_Face& F)
 {
   BRep_Builder B;
@@ -108,8 +100,6 @@ bool LocOpe::Closed(const TopoDS_Edge& E, const TopoDS_Face& F)
   B.Add(W, E.Oriented(TopAbs_FORWARD));
   return LocOpe::Closed(W, F);
 }
-
-//=================================================================================================
 
 bool LocOpe::TgtFaces(const TopoDS_Edge& E, const TopoDS_Face& F1, const TopoDS_Face& F2)
 {
@@ -127,16 +117,14 @@ bool LocOpe::TgtFaces(const TopoDS_Edge& E, const TopoDS_Face& F1, const TopoDS_
   HC2d->Initialize(e, F1);
   HC2d2->Initialize(e, F2);
 
-  //  Adaptor3d_CurveOnSurface C1(HC2d,HS1);
-
   bool   rev1 = (F1.Orientation() == TopAbs_REVERSED);
   bool   rev2 = (F2.Orientation() == TopAbs_REVERSED);
   double f, l, eps, angmin = M_PI, angmax = -M_PI, ang;
   BRep_Tool::Range(e, f, l);
 
   eps = (l - f) / 100.;
-  f += eps; // pour eviter de faire des calculs sur les
-  l -= eps; // pointes des carreaux pointus.
+  f += eps;
+  l -= eps;
   gp_Pnt2d p;
   gp_Pnt   pp1;
   gp_Vec   du, dv;
@@ -168,8 +156,6 @@ bool LocOpe::TgtFaces(const TopoDS_Edge& E, const TopoDS_Face& F1, const TopoDS_
   return (angmax <= ta);
 }
 
-//=================================================================================================
-
 void LocOpe::SampleEdges(const TopoDS_Shape& theShape, NCollection_Sequence<gp_Pnt>& theSeq)
 {
   theSeq.Clear();
@@ -181,7 +167,6 @@ void LocOpe::SampleEdges(const TopoDS_Shape& theShape, NCollection_Sequence<gp_P
   double                  f, l, prm;
   int                     i;
 
-  // Computes points on edge, but does not take the extremities into account
   for (; exp.More(); exp.Next())
   {
     const TopoDS_Edge& edg = TopoDS::Edge(exp.Current());
@@ -202,7 +187,6 @@ void LocOpe::SampleEdges(const TopoDS_Shape& theShape, NCollection_Sequence<gp_P
     }
   }
 
-  // Adds every vertex
   for (exp.Init(theShape, TopAbs_VERTEX); exp.More(); exp.Next())
   {
     if (theMap.Add(exp.Current()))
@@ -211,33 +195,3 @@ void LocOpe::SampleEdges(const TopoDS_Shape& theShape, NCollection_Sequence<gp_P
     }
   }
 }
-
-/*
-bool LocOpe::IsInside(const TopoDS_Face& F1,
-                  const TopoDS_Face& F2)
-{
-  bool Result = true;
-
-  TopExp_Explorer exp1, exp2;
-
-  for(exp1.Init(F1, TopAbs_EDGE); exp1.More(); exp1.Next())  {
-    TopoDS_Edge e1 = TopoDS::Edge(exp1.Current());
-    BRepAdaptor_Curve2d C1(e1, F1);
-    for(exp2.Init(F2, TopAbs_EDGE); exp2.More(); exp2.Next())  {
-      TopoDS_Edge e2 = TopoDS::Edge(exp2.Current());
-      BRepAdaptor_Curve2d C2(e2, F2);
-      Geom2dInt_GInter C;
-      C.Perform(C1, C2, Precision::Confusion(), Precision::Confusion());
-      if(!C.IsEmpty()) Result = false;
-      if(Result == false) {
-    for(exp3.Init(e2, TopAbs_VERTEX); exp3.More(); exp3.Next())  {
-
-        }
-      }
-    }
-    if(Result == false) break;
-  }
-  return Result;
-}
-
-*/

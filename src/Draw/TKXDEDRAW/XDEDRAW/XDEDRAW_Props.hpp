@@ -5,8 +5,6 @@
 
 #include <Draw_Interpretor.hpp>
 
-//! Contains commands to work with geometric validation
-//! properties of shapes
 class XDEDRAW_Props
 {
 public:

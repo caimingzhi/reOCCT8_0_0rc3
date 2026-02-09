@@ -11,19 +11,13 @@
 #include <TopoDS_Vertex.hpp>
 #include <TopoDS_Wire.hpp>
 
-//=================================================================================================
-
 BRepPrim_FaceBuilder::BRepPrim_FaceBuilder() = default;
-
-//=================================================================================================
 
 BRepPrim_FaceBuilder::BRepPrim_FaceBuilder(const BRep_Builder&              B,
                                            const occ::handle<Geom_Surface>& S)
 {
   Init(B, S);
 }
-
-//=================================================================================================
 
 BRepPrim_FaceBuilder::BRepPrim_FaceBuilder(const BRep_Builder&              B,
                                            const occ::handle<Geom_Surface>& S,
@@ -35,16 +29,12 @@ BRepPrim_FaceBuilder::BRepPrim_FaceBuilder(const BRep_Builder&              B,
   Init(B, S, UMin, UMax, VMin, VMax);
 }
 
-//=================================================================================================
-
 void BRepPrim_FaceBuilder::Init(const BRep_Builder& B, const occ::handle<Geom_Surface>& S)
 {
   double UMin, UMax, VMin, VMax;
   S->Bounds(UMin, UMax, VMin, VMax);
   Init(B, S, UMin, UMax, VMin, VMax);
 }
-
-//=================================================================================================
 
 void BRepPrim_FaceBuilder::Init(const BRep_Builder&              B,
                                 const occ::handle<Geom_Surface>& S,
@@ -53,7 +43,7 @@ void BRepPrim_FaceBuilder::Init(const BRep_Builder&              B,
                                 const double                     VMin,
                                 const double                     VMax)
 {
-  // Check the values
+
   double USMin, USMax, VSMin, VSMax;
   S->Bounds(USMin, USMax, VSMin, VSMax);
 
@@ -70,22 +60,18 @@ void BRepPrim_FaceBuilder::Init(const BRep_Builder&              B,
   if (VMax > VSMax)
     throw Standard_ConstructionError("BRepPrim_FaceBuilder");
 
-  // Make the vertices
   B.MakeVertex(myVertex[0], S->Value(UMin, VMin), Precision::Confusion());
   B.MakeVertex(myVertex[1], S->Value(UMax, VMin), Precision::Confusion());
   B.MakeVertex(myVertex[2], S->Value(UMax, VMax), Precision::Confusion());
   B.MakeVertex(myVertex[3], S->Value(UMin, VMax), Precision::Confusion());
 
-  // Make the edges
   B.MakeEdge(myEdges[0]);
   B.MakeEdge(myEdges[1]);
   B.MakeEdge(myEdges[2]);
   B.MakeEdge(myEdges[3]);
 
-  // Make the face
   B.MakeFace(myFace, S, Precision::Confusion());
 
-  // set the pcurves
   occ::handle<Geom2d_Line> L;
   L = new Geom2d_Line(gp_Pnt2d(UMin, VMin), gp_Dir2d(gp_Dir2d::D::X));
   B.UpdateEdge(myEdges[0], L, myFace, Precision::Confusion());
@@ -96,7 +82,6 @@ void BRepPrim_FaceBuilder::Init(const BRep_Builder&              B,
   L = new Geom2d_Line(gp_Pnt2d(UMin, VMax), gp_Dir2d(gp_Dir2d::D::NY));
   B.UpdateEdge(myEdges[3], L, myFace, Precision::Confusion());
 
-  // set the parameters
   B.UpdateVertex(myVertex[0], 0, myEdges[0], 0);
   B.UpdateVertex(myVertex[1], UMax - UMin, myEdges[0], 0);
   B.UpdateVertex(myVertex[1], 0, myEdges[1], 0);
@@ -106,7 +91,6 @@ void BRepPrim_FaceBuilder::Init(const BRep_Builder&              B,
   B.UpdateVertex(myVertex[3], 0, myEdges[3], 0);
   B.UpdateVertex(myVertex[0], VMax - VMin, myEdges[3], 0);
 
-  // insert vertices in edges
   myVertex[0].Orientation(TopAbs_REVERSED);
   B.Add(myEdges[3], myVertex[0]);
   myVertex[0].Orientation(TopAbs_FORWARD);
@@ -124,7 +108,6 @@ void BRepPrim_FaceBuilder::Init(const BRep_Builder&              B,
   myVertex[3].Orientation(TopAbs_FORWARD);
   B.Add(myEdges[3], myVertex[3]);
 
-  // insert edges in a wire and in the face
   TopoDS_Wire W;
   B.MakeWire(W);
   B.Add(W, myEdges[0]);
@@ -134,19 +117,14 @@ void BRepPrim_FaceBuilder::Init(const BRep_Builder&              B,
 
   B.Add(myFace, W);
 
-  // set the natural restriction flag
   if (UMin == USMin && UMax == USMax && VMin == VSMin && VMax == VSMax)
     B.NaturalRestriction(myFace, true);
 }
-
-//=================================================================================================
 
 const TopoDS_Face& BRepPrim_FaceBuilder::Face() const
 {
   return myFace;
 }
-
-//=================================================================================================
 
 const TopoDS_Edge& BRepPrim_FaceBuilder::Edge(const int I) const
 {
@@ -154,15 +132,11 @@ const TopoDS_Edge& BRepPrim_FaceBuilder::Edge(const int I) const
   return myEdges[I - 1];
 }
 
-//=================================================================================================
-
 const TopoDS_Vertex& BRepPrim_FaceBuilder::Vertex(const int I) const
 {
   Standard_OutOfRange_Raise_if(I < 1 || I > 4, "BRepPrim_FaceBuilder::Vertex");
   return myVertex[I - 1];
 }
-
-//=================================================================================================
 
 BRepPrim_FaceBuilder::operator TopoDS_Face()
 {

@@ -14,30 +14,22 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_SplitSurfaceAngle, ShapeUpgrade_SplitSurface)
 
-//=================================================================================================
-
 ShapeUpgrade_SplitSurfaceAngle::ShapeUpgrade_SplitSurfaceAngle(const double MaxAngle)
 {
   myMaxAngle = MaxAngle;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_SplitSurfaceAngle::SetMaxAngle(const double MaxAngle)
 {
   myMaxAngle = MaxAngle;
 }
 
-//=================================================================================================
-
 double ShapeUpgrade_SplitSurfaceAngle::MaxAngle() const
 {
   return myMaxAngle;
 }
 
-//=================================================================================================
-
-void ShapeUpgrade_SplitSurfaceAngle::Compute(const bool /*Segment*/)
+void ShapeUpgrade_SplitSurfaceAngle::Compute(const bool)
 {
   occ::handle<Geom_Surface> S;
   double                    U1 = 0., U2 = 0.;
@@ -68,7 +60,7 @@ void ShapeUpgrade_SplitSurfaceAngle::Compute(const bool /*Segment*/)
 
     double UFirst     = myUSplitValues->Sequence().First();
     double ULast      = myUSplitValues->Sequence().Last();
-    double maxAngle   = myMaxAngle; // maximal u length of segment
+    double maxAngle   = myMaxAngle;
     double uLength    = ULast - UFirst;
     int    nbSegments = int((uLength - Precision::Angular()) / maxAngle) + 1;
     if (nbSegments == 1)

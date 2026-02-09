@@ -5,10 +5,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=======================================================================
-// function : Constructor.
-// purpose  :
-//=======================================================================
 BRepGProp_TFunction::BRepGProp_TFunction(const BRepGProp_Face& theSurface,
                                          const gp_Pnt&         theVertex,
                                          const bool            IsByPoint,
@@ -28,16 +24,12 @@ BRepGProp_TFunction::BRepGProp_TFunction(const BRepGProp_Face& theSurface,
 {
 }
 
-//=================================================================================================
-
 void BRepGProp_TFunction::Init()
 {
   myTolReached = 0.;
   myErrReached = 0.;
   myAbsError   = 0.;
 }
-
-//=================================================================================================
 
 bool BRepGProp_TFunction::Value(const double X, double& F)
 {
@@ -60,14 +52,10 @@ bool BRepGProp_TFunction::Value(const double X, double& F)
   mySurface.GetUKnots(myUMin, aUMax, anUKnots);
   myUFunction.SetVParam(aP2d.Y());
 
-  // Compute the integral from myUMin to aUMax of myUFunction.
   int    i;
   double aCoeff = aV2d.Y();
-  // int aNbUIntervals = anUKnots->Length() - 1;
-  // double    aTol          = myTolerance/aNbUIntervals;
-  double aTol = myTolerance;
 
-  // aTol /= myNbPntOuter;
+  double aTol = myTolerance;
 
   if (myValueType == GProp_Mass)
   {
@@ -94,14 +82,10 @@ bool BRepGProp_TFunction::Value(const double X, double& F)
 
   if (aAbsCoeff <= Precision::Angular())
   {
-    // No need to compute the integral. The value will be equal to 0.
+
     F = 0.;
     return true;
   }
-  // else if (aAbsCoeff > 10.*aTol)
-  //   aTol /= aAbsCoeff;
-  // else
-  //   aTol = 0.1;
 
   int                           iU = anUKnots->Upper();
   int                           aNbPntsStart;
@@ -112,7 +96,6 @@ bool BRepGProp_TFunction::Value(const double X, double& F)
   i = anUKnots->Lower();
   F = 0.;
 
-  // Epmirical criterion
   aNbPntsStart = std::min(15, mySurface.UIntegrationOrder() / (anUKnots->Length() - 1) + 1);
   aNbPntsStart = std::max(5, aNbPntsStart);
 
@@ -131,8 +114,6 @@ bool BRepGProp_TFunction::Value(const double X, double& F)
 
     F += anIntegral.Value();
     aLocalErr += anIntegral.AbsolutError();
-    // std::cout << " TFunction : " << anIntegral.NbIterReached() << " " <<
-    // anIntegral.AbsolutError() << std::endl;
   }
 
   F *= aCoeff;
@@ -149,16 +130,8 @@ bool BRepGProp_TFunction::Value(const double X, double& F)
   return true;
 }
 
-//=================================================================================================
-
 int BRepGProp_TFunction::GetStateNumber()
 {
-  // myErrReached  = myTolReached;
-  // myTolReached  = 0.;
-  // myNbPntOuter += RealToInt(0.5*myNbPntOuter);
-
-  // if (myNbPntOuter%2 == 0)
-  // myNbPntOuter++;
 
   return 0;
 }

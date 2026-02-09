@@ -13,7 +13,6 @@ class StepBasic_ConversionBasedUnitAndTimeUnit : public StepBasic_ConversionBase
 {
 
 public:
-  //! Returns a ConversionBasedUnitAndTimeUnit
   Standard_EXPORT StepBasic_ConversionBasedUnitAndTimeUnit();
 
   Standard_EXPORT void Init(const occ::handle<StepBasic_DimensionalExponents>& aDimensions,

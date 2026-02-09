@@ -10,7 +10,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! Reference attribute Driver.
 class BinMDF_ReferenceDriver : public BinMDF_ADriver
 {
 

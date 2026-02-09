@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #ifndef _WIN32
 
@@ -21,7 +9,6 @@
 
   #include <cstdio>
 
-/* Created by Stephan GARNAUD (ARM) 1992 for Matra Datavision */
 OSD_Error::OSD_Error()
 {
   myErrno = 0;
@@ -413,10 +400,6 @@ void OSD_Error::Perror()
       break;
     }
 
-  //
-  // AIX maps ENOTEMPTY to EEXIST.  Move this case block to
-  // the EEXIST case block.
-  //
   #if (!defined(_AIX)) && (!defined(AIX))
     case ENOTEMPTY:
       switch (myCode)
@@ -456,7 +439,7 @@ void OSD_Error::Perror()
     default:
     {
       char buf[255];
-      //
+
       Sprintf(buf, "%sUnknowm error #%d", buffer.ToCString(), myErrno);
       TCollection_AsciiString interm(buf);
       buffer  = interm;
@@ -468,10 +451,6 @@ void OSD_Error::Perror()
 }
 
 #else
-
-//------------------------------------------------------------------------
-//-------------------  Windows NT sources for OSD_Error ------------------
-//------------------------------------------------------------------------
 
   #include <OSD_Error.hpp>
   #include <OSD_ErrorList.hpp>
@@ -597,7 +576,7 @@ OSD_Error ::OSD_Error()
       extCode(0)
 {
   Reset();
-} // end constructor ( 1 )
+}
 
 void OSD_Error ::Perror()
 {
@@ -651,16 +630,14 @@ void OSD_Error ::Perror()
 
     default:
       StringCchCatW(buff, _countof(buff), L"Unknown");
-
-  } // end switch
+  }
 
   StringCchCatW(buff, _countof(buff), L" )");
 
   std::wcerr << buff;
 
   std::cerr << myMessage.ToCString() << std::endl << std::flush;
-
-} // end OSD_Error :: Perror
+}
 
 void OSD_Error ::SetValue(const int Errcode, const int From, const TCollection_AsciiString& Message)
 {
@@ -683,8 +660,7 @@ void OSD_Error ::SetValue(const int Errcode, const int From, const TCollection_A
 
           extCode = dirErrorTable[i].csf_error;
           break;
-
-        } // end if
+        }
 
       if (i == DIR_ERR_TABLE_SIZE)
         extCode = _get_comm_error(Errcode);
@@ -700,8 +676,7 @@ void OSD_Error ::SetValue(const int Errcode, const int From, const TCollection_A
 
           extCode = fileErrorTable[i].csf_error;
           break;
-
-        } // end if
+        }
 
       if (i == FILE_ERR_TABLE_SIZE)
         extCode = _get_comm_error(Errcode);
@@ -717,8 +692,7 @@ void OSD_Error ::SetValue(const int Errcode, const int From, const TCollection_A
 
           extCode = fileNodeErrorTable[i].csf_error;
           break;
-
-        } // end if
+        }
 
       if (i == FILE_NODE_ERR_TABLE_SIZE)
         extCode = _get_comm_error(Errcode);
@@ -728,29 +702,25 @@ void OSD_Error ::SetValue(const int Errcode, const int From, const TCollection_A
     default:
 
       extCode = _get_comm_error(Errcode);
-
-  } // end switch
-
-} // end OSD_Error :: SetValue
+  }
+}
 
 int OSD_Error ::Error() const
 {
 
   return extCode;
-
-} // end OSD_Error :: Error
+}
 
 bool OSD_Error ::Failed() const
 {
 
   return myErrno == ERROR_SUCCESS ? false : true;
-
-} // end OSD_Error :: Failed
+}
 
 void OSD_Error ::Reset()
 {
   myErrno = ERROR_SUCCESS;
-} // end OSD_Error :: Reset
+}
 
 static int _get_comm_error(DWORD dwCode)
 {
@@ -765,11 +735,9 @@ static int _get_comm_error(DWORD dwCode)
 
       retVal = commErrorTable[i].csf_error;
       break;
-
-    } // end if
+    }
 
   return retVal;
-
-} // end _get_comm_error
+}
 
 #endif

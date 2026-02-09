@@ -51,7 +51,7 @@ static int DEP(Draw_Interpretor& theCommands, int narg, const char** a)
   {
     TopoDS_Shape aLocalShape(DBRep::Get(a[8 * ii + 6], TopAbs_FACE));
     F = TopoDS::Face(aLocalShape);
-    //    F = TopoDS::Face(DBRep::Get(a[8*ii+6],TopAbs_FACE));
+
     Angle = Draw::Atof(a[8 * ii + 7]) * M_PI / 180.;
     Pax.SetCoord(Draw::Atof(a[8 * ii + 8]), Draw::Atof(a[8 * ii + 9]), Draw::Atof(a[8 * ii + 10]));
     Dax.SetCoord(Draw::Atof(a[8 * ii + 11]),
@@ -91,7 +91,7 @@ static int NDEP(Draw_Interpretor& theCommands, int narg, const char** a)
   TopoDS_Shape V = DBRep::Get(a[2]);
   if (V.IsNull())
   {
-    // std::cout << a[2] << " is not a Shape" << std::endl;
+
     theCommands << a[2] << " is not a Shape\n";
     return 1;
   }
@@ -109,11 +109,10 @@ static int NDEP(Draw_Interpretor& theCommands, int narg, const char** a)
   {
     TopoDS_Shape aLocalFace(DBRep::Get(a[9 * ii + 6], TopAbs_FACE));
     F = TopoDS::Face(aLocalFace);
-    //    F = TopoDS::Face(DBRep::Get(a[9*ii+6],TopAbs_FACE));
 
     if (F.IsNull())
     {
-      // std::cout << a[9*ii+6] << " is not a face" << std::endl;
+
       theCommands << a[9 * ii + 6] << " is not a face\n";
       return 1;
     }
@@ -159,12 +158,12 @@ static int draft(Draw_Interpretor& di, int n, const char** a)
     return 1;
 
   double       x, y, z, teta;
-  TopoDS_Shape SInit = DBRep::Get(a[2]); // shape d'arret
+  TopoDS_Shape SInit = DBRep::Get(a[2]);
 
   x    = Draw::Atof(a[3]);
-  y    = Draw::Atof(a[4]); // direction de depouille
+  y    = Draw::Atof(a[4]);
   z    = Draw::Atof(a[5]);
-  teta = Draw::Atof(a[6]); // angle de depouille (teta)
+  teta = Draw::Atof(a[6]);
 
   gp_Dir D(x, y, z);
 
@@ -211,13 +210,11 @@ static int draft(Draw_Interpretor& di, int n, const char** a)
   {
     MkDraft.SetDraft(Internal);
     di << "Internal Draft : \n";
-    // std::cout << "Internal Draft : " << std::endl;
   }
   else
     di << "External Draft : \n";
-  // std::cout << "External Draft : " << std::endl;
 
-  TopoDS_Shape Stop = DBRep::Get(a[7]); // shape d'arret
+  TopoDS_Shape Stop = DBRep::Get(a[7]);
   if (!Stop.IsNull())
   {
     bool KeepOutside = true;
@@ -229,14 +226,14 @@ static int draft(Draw_Interpretor& di, int n, const char** a)
   {
     occ::handle<Geom_Surface> Surf = DrawTrSurf::GetSurface(a[7]);
     if (!Surf.IsNull())
-    { // surface d'arret
+    {
       bool KeepInside = true;
       if (Inside == 1)
         KeepInside = false;
       MkDraft.Perform(Surf, KeepInside);
     }
     else
-    { // by Length
+    {
       double L = Draw::Atof(a[7]);
       if (L > 1.e-7)
       {
@@ -252,8 +249,6 @@ static int draft(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 void BRepTest::DraftAngleCommands(Draw_Interpretor& theCommands)
 {

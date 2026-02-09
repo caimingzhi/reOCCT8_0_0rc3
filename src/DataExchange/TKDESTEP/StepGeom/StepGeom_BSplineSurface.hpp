@@ -17,7 +17,6 @@ class StepGeom_BSplineSurface : public StepGeom_BoundedSurface
 {
 
 public:
-  //! Returns a BSplineSurface
   Standard_EXPORT StepGeom_BSplineSurface();
 
   Standard_EXPORT void Init(

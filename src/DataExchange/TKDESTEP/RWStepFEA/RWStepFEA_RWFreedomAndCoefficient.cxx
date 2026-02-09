@@ -4,11 +4,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepFEA_FreedomAndCoefficient.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWFreedomAndCoefficient::RWStepFEA_RWFreedomAndCoefficient() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWFreedomAndCoefficient::ReadStep(
   const occ::handle<StepData_StepReaderData>&       data,
@@ -16,11 +12,9 @@ void RWStepFEA_RWFreedomAndCoefficient::ReadStep(
   occ::handle<Interface_Check>&                     ach,
   const occ::handle<StepFEA_FreedomAndCoefficient>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "freedom_and_coefficient"))
     return;
-
-  // Own fields of FreedomAndCoefficient
 
   StepFEA_DegreeOfFreedom aFreedom;
   data->ReadEntity(num, 1, "freedom", ach, aFreedom);
@@ -28,31 +22,22 @@ void RWStepFEA_RWFreedomAndCoefficient::ReadStep(
   StepElement_MeasureOrUnspecifiedValue aA;
   data->ReadEntity(num, 2, "a", ach, aA);
 
-  // Initialize entity
   ent->Init(aFreedom, aA);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWFreedomAndCoefficient::WriteStep(
   StepData_StepWriter&                              SW,
   const occ::handle<StepFEA_FreedomAndCoefficient>& ent) const
 {
 
-  // Own fields of FreedomAndCoefficient
-
   SW.Send(ent->Freedom().Value());
 
   SW.Send(ent->A().Value());
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWFreedomAndCoefficient::Share(const occ::handle<StepFEA_FreedomAndCoefficient>& ent,
                                               Interface_EntityIterator& iter) const
 {
-
-  // Own fields of FreedomAndCoefficient
 
   iter.AddItem(ent->Freedom().Value());
 

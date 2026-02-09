@@ -5,12 +5,8 @@
 #include <StepData_StepWriter.hpp>
 #include <StepRepr_QuantifiedAssemblyComponentUsage.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWQuantifiedAssemblyComponentUsage::RWStepRepr_RWQuantifiedAssemblyComponentUsage() =
   default;
-
-//=================================================================================================
 
 void RWStepRepr_RWQuantifiedAssemblyComponentUsage::ReadStep(
   const occ::handle<StepData_StepReaderData>&                   data,
@@ -18,11 +14,9 @@ void RWStepRepr_RWQuantifiedAssemblyComponentUsage::ReadStep(
   occ::handle<Interface_Check>&                                 ach,
   const occ::handle<StepRepr_QuantifiedAssemblyComponentUsage>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 7, ach, "quantified_assembly_component_usage"))
     return;
-
-  // Inherited fields of ProductDefinitionRelationship
 
   occ::handle<TCollection_HAsciiString> aProductDefinitionRelationship_Id;
   data->ReadString(num,
@@ -67,8 +61,6 @@ void RWStepRepr_RWQuantifiedAssemblyComponentUsage::ReadStep(
                    ach,
                    aProductDefinitionRelationship_RelatedProductDefinition);
 
-  // Inherited fields of AssemblyComponentUsage
-
   occ::handle<TCollection_HAsciiString> aAssemblyComponentUsage_ReferenceDesignator;
   bool                                  hasAssemblyComponentUsage_ReferenceDesignator = true;
   if (data->IsParamDefined(num, 6))
@@ -84,12 +76,9 @@ void RWStepRepr_RWQuantifiedAssemblyComponentUsage::ReadStep(
     hasAssemblyComponentUsage_ReferenceDesignator = false;
   }
 
-  // Own fields of QuantifiedAssemblyComponentUsage
-
   occ::handle<Standard_Transient> aQuantity;
   data->ReadEntity(num, 7, "quantity", ach, STANDARD_TYPE(Standard_Transient), aQuantity);
 
-  // Initialize entity
   ent->Init(aProductDefinitionRelationship_Id,
             aProductDefinitionRelationship_Name,
             hasProductDefinitionRelationship_Description,
@@ -101,14 +90,10 @@ void RWStepRepr_RWQuantifiedAssemblyComponentUsage::ReadStep(
             aQuantity);
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWQuantifiedAssemblyComponentUsage::WriteStep(
   StepData_StepWriter&                                          SW,
   const occ::handle<StepRepr_QuantifiedAssemblyComponentUsage>& ent) const
 {
-
-  // Inherited fields of ProductDefinitionRelationship
 
   SW.Send(ent->StepBasic_ProductDefinitionRelationship::Id());
 
@@ -125,8 +110,6 @@ void RWStepRepr_RWQuantifiedAssemblyComponentUsage::WriteStep(
 
   SW.Send(ent->StepBasic_ProductDefinitionRelationship::RelatedProductDefinitionAP242().Value());
 
-  // Inherited fields of AssemblyComponentUsage
-
   if (ent->StepRepr_AssemblyComponentUsage::HasReferenceDesignator())
   {
     SW.Send(ent->StepRepr_AssemblyComponentUsage::ReferenceDesignator());
@@ -134,29 +117,19 @@ void RWStepRepr_RWQuantifiedAssemblyComponentUsage::WriteStep(
   else
     SW.SendUndef();
 
-  // Own fields of QuantifiedAssemblyComponentUsage
-
   SW.Send(ent->Quantity());
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWQuantifiedAssemblyComponentUsage::Share(
   const occ::handle<StepRepr_QuantifiedAssemblyComponentUsage>& ent,
   Interface_EntityIterator&                                     iter) const
 {
 
-  // Inherited fields of ProductDefinitionRelationship
-
   iter.AddItem(
     ent->StepBasic_ProductDefinitionRelationship::RelatingProductDefinitionAP242().Value());
 
   iter.AddItem(
     ent->StepBasic_ProductDefinitionRelationship::RelatedProductDefinitionAP242().Value());
-
-  // Inherited fields of AssemblyComponentUsage
-
-  // Own fields of QuantifiedAssemblyComponentUsage
 
   iter.AddItem(ent->Quantity());
 }

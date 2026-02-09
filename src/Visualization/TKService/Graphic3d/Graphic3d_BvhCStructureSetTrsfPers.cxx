@@ -2,8 +2,6 @@
 
 #include <Graphic3d_CStructure.hpp>
 
-//=================================================================================================
-
 Graphic3d_BvhCStructureSetTrsfPers::Graphic3d_BvhCStructureSetTrsfPers(
   const occ::handle<BVH_Builder3d>& theBuilder)
     : myIsDirty(false),
@@ -12,29 +10,21 @@ Graphic3d_BvhCStructureSetTrsfPers::Graphic3d_BvhCStructureSetTrsfPers(
 {
 }
 
-//=================================================================================================
-
 int Graphic3d_BvhCStructureSetTrsfPers::Size() const
 {
   return myStructs.Size();
 }
-
-//=================================================================================================
 
 Graphic3d_BndBox3d Graphic3d_BvhCStructureSetTrsfPers::Box(const int theIdx) const
 {
   return *myStructBoxes(theIdx + 1);
 }
 
-//=================================================================================================
-
 double Graphic3d_BvhCStructureSetTrsfPers::Center(const int theIdx, const int theAxis) const
 {
   const Graphic3d_BndBox3d& aBndBox = *myStructBoxes(theIdx + 1);
   return (aBndBox.CornerMin()[theAxis] + aBndBox.CornerMax()[theAxis]) * 0.5;
 }
-
-//=================================================================================================
 
 void Graphic3d_BvhCStructureSetTrsfPers::Swap(const int theIdx1, const int theIdx2)
 {
@@ -45,13 +35,11 @@ void Graphic3d_BvhCStructureSetTrsfPers::Swap(const int theIdx1, const int theId
   myStructBoxes.Swap(aStructIdx1, aStructIdx2);
 }
 
-//=================================================================================================
-
 bool Graphic3d_BvhCStructureSetTrsfPers::Add(const Graphic3d_CStructure* theStruct)
 {
   const int aSize = myStructs.Size();
 
-  if (myStructs.Add(theStruct) > aSize) // new structure?
+  if (myStructs.Add(theStruct) > aSize)
   {
     MarkDirty();
 
@@ -60,8 +48,6 @@ bool Graphic3d_BvhCStructureSetTrsfPers::Add(const Graphic3d_CStructure* theStru
 
   return false;
 }
-
-//=================================================================================================
 
 bool Graphic3d_BvhCStructureSetTrsfPers::Remove(const Graphic3d_CStructure* theStruct)
 {
@@ -79,22 +65,16 @@ bool Graphic3d_BvhCStructureSetTrsfPers::Remove(const Graphic3d_CStructure* theS
   return false;
 }
 
-//=================================================================================================
-
 void Graphic3d_BvhCStructureSetTrsfPers::Clear()
 {
   myStructs.Clear();
   MarkDirty();
 }
 
-//=================================================================================================
-
 const Graphic3d_CStructure* Graphic3d_BvhCStructureSetTrsfPers::GetStructureById(int theId)
 {
   return myStructs.FindKey(theId + 1);
 }
-
-//=================================================================================================
 
 const opencascade::handle<BVH_Tree<double, 3>>& Graphic3d_BvhCStructureSetTrsfPers::BVH(
   const occ::handle<Graphic3d_Camera>& theCamera,

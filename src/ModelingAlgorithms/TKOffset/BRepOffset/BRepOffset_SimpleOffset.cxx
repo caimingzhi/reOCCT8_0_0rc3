@@ -18,8 +18,6 @@
 #include <TopoDS_Edge.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//=================================================================================================
-
 BRepOffset_SimpleOffset::BRepOffset_SimpleOffset(const TopoDS_Shape& theInputShape,
                                                  const double        theOffsetValue,
                                                  const double        theTolerance)
@@ -28,8 +26,6 @@ BRepOffset_SimpleOffset::BRepOffset_SimpleOffset(const TopoDS_Shape& theInputSha
 {
   FillOffsetData(theInputShape);
 }
-
-//=================================================================================================
 
 bool BRepOffset_SimpleOffset::NewSurface(const TopoDS_Face&         F,
                                          occ::handle<Geom_Surface>& S,
@@ -52,8 +48,6 @@ bool BRepOffset_SimpleOffset::NewSurface(const TopoDS_Face&         F,
   return true;
 }
 
-//=================================================================================================
-
 bool BRepOffset_SimpleOffset::NewCurve(const TopoDS_Edge&       E,
                                        occ::handle<Geom_Curve>& C,
                                        TopLoc_Location&         L,
@@ -71,8 +65,6 @@ bool BRepOffset_SimpleOffset::NewCurve(const TopoDS_Edge&       E,
   return true;
 }
 
-//=================================================================================================
-
 bool BRepOffset_SimpleOffset::NewPoint(const TopoDS_Vertex& V, gp_Pnt& P, double& Tol)
 {
   if (!myVertexInfo.IsBound(V))
@@ -86,16 +78,14 @@ bool BRepOffset_SimpleOffset::NewPoint(const TopoDS_Vertex& V, gp_Pnt& P, double
   return true;
 }
 
-//=================================================================================================
-
 bool BRepOffset_SimpleOffset::NewCurve2d(const TopoDS_Edge& E,
                                          const TopoDS_Face& F,
-                                         const TopoDS_Edge& /*NewE*/,
-                                         const TopoDS_Face& /*NewF*/,
+                                         const TopoDS_Edge&,
+                                         const TopoDS_Face&,
                                          occ::handle<Geom2d_Curve>& C,
                                          double&                    Tol)
 {
-  // Use original pcurve.
+
   double aF, aL;
   C   = BRep_Tool::CurveOnSurface(E, F, aF, aL);
   Tol = BRep_Tool::Tolerance(E);
@@ -106,14 +96,12 @@ bool BRepOffset_SimpleOffset::NewCurve2d(const TopoDS_Edge& E,
   return true;
 }
 
-//=================================================================================================
-
 bool BRepOffset_SimpleOffset::NewParameter(const TopoDS_Vertex& V,
                                            const TopoDS_Edge&   E,
                                            double&              P,
                                            double&              Tol)
 {
-  // Use original parameter.
+
   P   = BRep_Tool::Parameter(V, E);
   Tol = BRep_Tool::Tolerance(V);
 
@@ -123,29 +111,24 @@ bool BRepOffset_SimpleOffset::NewParameter(const TopoDS_Vertex& V,
   return true;
 }
 
-//=================================================================================================
-
 GeomAbs_Shape BRepOffset_SimpleOffset::Continuity(const TopoDS_Edge& E,
                                                   const TopoDS_Face& F1,
                                                   const TopoDS_Face& F2,
-                                                  const TopoDS_Edge& /*NewE*/,
-                                                  const TopoDS_Face& /*NewF1*/,
-                                                  const TopoDS_Face& /*NewF2*/)
+                                                  const TopoDS_Edge&,
+                                                  const TopoDS_Face&,
+                                                  const TopoDS_Face&)
 {
-  // Compute result using original continuity.
+
   return BRep_Tool::Continuity(E, F1, F2);
 }
 
-//=================================================================================================
-
 void BRepOffset_SimpleOffset::FillOffsetData(const TopoDS_Shape& theShape)
 {
-  // Clears old data.
+
   myFaceInfo.Clear();
   myEdgeInfo.Clear();
   myVertexInfo.Clear();
 
-  // Faces loop. Compute offset surface for each face.
   TopExp_Explorer anExpSF(theShape, TopAbs_FACE);
   for (; anExpSF.More(); anExpSF.Next())
   {
@@ -153,7 +136,6 @@ void BRepOffset_SimpleOffset::FillOffsetData(const TopoDS_Shape& theShape)
     FillFaceData(aCurrFace);
   }
 
-  // Iterate over edges to compute 3d curve.
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     aEdgeFaceMap;
   TopExp::MapShapesAndAncestors(theShape, TopAbs_EDGE, TopAbs_FACE, aEdgeFaceMap);
@@ -163,7 +145,6 @@ void BRepOffset_SimpleOffset::FillOffsetData(const TopoDS_Shape& theShape)
     FillEdgeData(aCurrEdge, aEdgeFaceMap, anIdx);
   }
 
-  // Iterate over vertices to compute new vertex.
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     aVertexEdgeMap;
   TopExp::MapShapesAndAncestors(theShape, TopAbs_VERTEX, TopAbs_EDGE, aVertexEdgeMap);
@@ -174,8 +155,6 @@ void BRepOffset_SimpleOffset::FillOffsetData(const TopoDS_Shape& theShape)
   }
 }
 
-//=================================================================================================
-
 void BRepOffset_SimpleOffset::FillFaceData(const TopoDS_Face& theFace)
 {
   NewFaceData aNFD;
@@ -183,27 +162,19 @@ void BRepOffset_SimpleOffset::FillFaceData(const TopoDS_Face& theFace)
   aNFD.myRevFace  = false;
   aNFD.myTol      = BRep_Tool::Tolerance(theFace);
 
-  // Create offset surface.
-
-  // Any existing transformation is applied to the surface.
-  // New face will have null transformation.
   occ::handle<Geom_Surface> aS = BRep_Tool::Surface(theFace);
   aS                           = BRepOffset::CollapseSingularities(aS, theFace, myTolerance);
 
-  // Take into account face orientation.
   double aMult = 1.0;
   if (theFace.Orientation() == TopAbs_REVERSED)
     aMult = -1.0;
 
-  BRepOffset_Status aStatus; // set by BRepOffset::Surface(), could be used to check result...
+  BRepOffset_Status aStatus;
   aNFD.myOffsetS = BRepOffset::Surface(aS, aMult * myOffsetValue, aStatus, true);
-  aNFD.myL       = TopLoc_Location(); // Null transformation.
+  aNFD.myL       = TopLoc_Location();
 
-  // Save offset surface in map.
   myFaceInfo.Bind(theFace, aNFD);
 }
-
-//=================================================================================================
 
 void BRepOffset_SimpleOffset::FillEdgeData(
   const TopoDS_Edge&                                         theEdge,
@@ -215,34 +186,28 @@ void BRepOffset_SimpleOffset::FillEdgeData(
   const NCollection_List<TopoDS_Shape>& aFacesList = theEdgeFaceMap(theIdx);
 
   if (aFacesList.Size() == 0)
-    return; // Free edges are skipped.
+    return;
 
-  // Get offset surface.
   const TopoDS_Face& aCurrFace = TopoDS::Face(aFacesList.First());
 
   if (!myFaceInfo.IsBound(aCurrFace))
     return;
 
-  // No need to deal with transformation - it is applied in fill faces data method.
   const NewFaceData&        aNFD         = myFaceInfo.Find(aCurrFace);
   occ::handle<Geom_Surface> anOffsetSurf = aNFD.myOffsetS;
 
-  // Compute offset 3d curve.
   double                    aF, aL;
   occ::handle<Geom2d_Curve> aC2d = BRep_Tool::CurveOnSurface(theEdge, aCurrFace, aF, aL);
 
   BRepBuilderAPI_MakeEdge anEdgeMaker(aC2d, anOffsetSurf, aF, aL);
   TopoDS_Edge             aNewEdge = anEdgeMaker.Edge();
 
-  // Compute max tolerance. Vertex tolerance usage is taken from existing offset computation
-  // algorithm. This piece of code significantly influences resulting performance.
   double aTol = BRep_Tool::MaxTolerance(theEdge, TopAbs_VERTEX);
   BRepLib::BuildCurves3d(aNewEdge, aTol);
 
   NewEdgeData aNED;
   aNED.myOffsetC = BRep_Tool::Curve(aNewEdge, aNED.myL, aF, aL);
 
-  // Iterate over adjacent faces for the current edge and compute max deviation.
   double                                   anEdgeTol = 0.0;
   NCollection_List<TopoDS_Shape>::Iterator anIter(aFacesList);
   for (; !aNED.myOffsetC.IsNull() && anIter.More(); anIter.Next())
@@ -252,7 +217,6 @@ void BRepOffset_SimpleOffset::FillEdgeData(
     if (!myFaceInfo.IsBound(aCurFace))
       continue;
 
-    // Create offset curve on surface.
     const occ::handle<Geom2d_Curve> aC2dNew = BRep_Tool::CurveOnSurface(theEdge, aCurFace, aF, aL);
     const occ::handle<Adaptor2d_Curve2d> aHCurve2d = new Geom2dAdaptor_Curve(aC2dNew, aF, aL);
     const occ::handle<Adaptor3d_Surface> aHSurface =
@@ -260,10 +224,8 @@ void BRepOffset_SimpleOffset::FillEdgeData(
     const occ::handle<Adaptor3d_CurveOnSurface> aCurveOnSurf =
       new Adaptor3d_CurveOnSurface(aHCurve2d, aHSurface);
 
-    // Extract 3d-curve (it is not null).
     const occ::handle<Adaptor3d_Curve> aCurve3d = new GeomAdaptor_Curve(aNED.myOffsetC, aF, aL);
 
-    // It is necessary to compute maximal deviation (tolerance).
     BRepLib_ValidateEdge aValidateEdge(aCurve3d, aCurveOnSurf, true);
     aValidateEdge.Process();
     if (aValidateEdge.IsDone())
@@ -274,11 +236,8 @@ void BRepOffset_SimpleOffset::FillEdgeData(
   }
   aNED.myTol = std::max(BRep_Tool::Tolerance(aNewEdge), anEdgeTol);
 
-  // Save computed 3d curve in map.
   myEdgeInfo.Bind(theEdge, aNED);
 }
-
-//=================================================================================================
 
 void BRepOffset_SimpleOffset::FillVertexData(
   const TopoDS_Vertex&                                       theVertex,
@@ -287,38 +246,29 @@ void BRepOffset_SimpleOffset::FillVertexData(
                                    TopTools_ShapeMapHasher>& theVertexEdgeMap,
   const int                                                  theIdx)
 {
-  // Algorithm:
-  // Find adjacent edges for the given vertex.
-  // Find corresponding end on the each adjacent edge.
-  // Get offset points for founded end.
-  // Set result vertex position as barycenter of founded points.
 
   gp_Pnt aCurrPnt = BRep_Tool::Pnt(theVertex);
 
   const NCollection_List<TopoDS_Shape>& aEdgesList = theVertexEdgeMap(theIdx);
 
   if (aEdgesList.Size() == 0)
-    return; // Free verices are skipped.
+    return;
 
-  // Array to store offset points.
   NCollection_Vector<gp_Pnt> anOffsetPointVec;
 
   double aMaxEdgeTol = 0.0;
 
-  // Iterate over adjacent edges.
   NCollection_List<TopoDS_Shape>::Iterator anIterEdges(aEdgesList);
   for (; anIterEdges.More(); anIterEdges.Next())
   {
     const TopoDS_Edge& aCurrEdge = TopoDS::Edge(anIterEdges.Value());
 
     if (!myEdgeInfo.IsBound(aCurrEdge))
-      continue; // Skip shared edges with wrong orientation.
+      continue;
 
-    // Find the closest bound.
     double                  aF, aL;
     occ::handle<Geom_Curve> aC3d = BRep_Tool::Curve(aCurrEdge, aF, aL);
 
-    // Protection from degenerated edges.
     if (aC3d.IsNull())
       continue;
 
@@ -331,18 +281,16 @@ void BRepOffset_SimpleOffset::FillVertexData(
     double aMinParam = aF, aMaxParam = aL;
     if (aSqDistL < aSqDistF)
     {
-      // Square distance to last point is closer.
+
       aMinParam = aL;
       aMaxParam = aF;
     }
 
-    // Compute point on offset edge.
     const NewEdgeData&             aNED          = myEdgeInfo.Find(aCurrEdge);
     const occ::handle<Geom_Curve>& anOffsetCurve = aNED.myOffsetC;
     const gp_Pnt                   anOffsetPoint = anOffsetCurve->Value(aMinParam);
     anOffsetPointVec.Append(anOffsetPoint);
 
-    // Handle situation when edge is closed.
     TopoDS_Vertex aV1, aV2;
     TopExp::Vertices(aCurrEdge, aV1, aV2);
     if (aV1.IsSame(aV2))
@@ -354,8 +302,6 @@ void BRepOffset_SimpleOffset::FillVertexData(
     aMaxEdgeTol = std::max(aMaxEdgeTol, aNED.myTol);
   }
 
-  // NCollection_Vector starts from 0 by default.
-  // It's better to use lower() and upper() in this case instead of direct indexes range.
   gp_Pnt aCenter(0.0, 0.0, 0.0);
   for (int i = anOffsetPointVec.Lower(); i <= anOffsetPointVec.Upper(); ++i)
   {
@@ -363,7 +309,6 @@ void BRepOffset_SimpleOffset::FillVertexData(
   }
   aCenter.SetXYZ(aCenter.XYZ() / anOffsetPointVec.Size());
 
-  // Compute max distance.
   double aSqMaxDist = 0.0;
   for (int i = anOffsetPointVec.Lower(); i <= anOffsetPointVec.Upper(); ++i)
   {
@@ -374,11 +319,10 @@ void BRepOffset_SimpleOffset::FillVertexData(
 
   const double aResTol = std::max(aMaxEdgeTol, std::sqrt(aSqMaxDist));
 
-  const double  aMultCoeff = 1.001; // Avoid tolernace problems.
+  const double  aMultCoeff = 1.001;
   NewVertexData aNVD;
   aNVD.myP   = aCenter;
   aNVD.myTol = aResTol * aMultCoeff;
 
-  // Save computed vertex info.
   myVertexInfo.Bind(theVertex, aNVD);
 }

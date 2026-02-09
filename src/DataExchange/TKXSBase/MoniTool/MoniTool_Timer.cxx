@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_CString.hpp>
 #include <Standard_CStringHasher.hpp>
@@ -23,8 +12,6 @@
 
 class MoniTool_Timer;
 IMPLEMENT_STANDARD_RTTIEXT(MoniTool_Timer, Standard_Transient)
-
-//=================================================================================================
 
 void MoniTool_Timer::Dump(Standard_OStream& ostr)
 {
@@ -47,8 +34,6 @@ void MoniTool_Timer::Dump(Standard_OStream& ostr)
   ostr << buff << std::endl;
 }
 
-//=================================================================================================
-
 NCollection_DataMap<const char*, occ::handle<MoniTool_Timer>, Standard_CStringHasher>&
   MoniTool_Timer::Dictionary()
 {
@@ -56,14 +41,9 @@ NCollection_DataMap<const char*, occ::handle<MoniTool_Timer>, Standard_CStringHa
   return dic;
 }
 
-//=======================================================================
-// function : Timer
-// purpose  : Return handle for timer from map
-//=======================================================================
-
 occ::handle<MoniTool_Timer> MoniTool_Timer::Timer(const char* name)
 {
-  //  AmendAccess();
+
   NCollection_DataMap<const char*, occ::handle<MoniTool_Timer>, Standard_CStringHasher>& dic =
     Dictionary();
   if (dic.IsBound(name))
@@ -74,20 +54,10 @@ occ::handle<MoniTool_Timer> MoniTool_Timer::Timer(const char* name)
   return MT;
 }
 
-//=======================================================================
-// function : ClearTimers
-// purpose  : Clears all the map of timers
-//=======================================================================
-
 void MoniTool_Timer::ClearTimers()
 {
   Dictionary().Clear();
 }
-
-//=======================================================================
-// function : DumpTimers
-// purpose  : Shows all timer from Dictionary
-//=======================================================================
 
 void MoniTool_Timer::DumpTimers(Standard_OStream& ostr)
 {
@@ -117,11 +87,11 @@ void MoniTool_Timer::DumpTimers(Standard_OStream& ostr)
         stmp = keys[j];
       }
     }
-    // occ::handle<MoniTool_Timer> MT = iter.Value();
+
     char buff[1024];
     Sprintf(buff, "%-20s\t", stmp);
     ostr << "TIMER: " << buff;
-    // iter.Value()->Dump ( ostr );
+
     Timer(stmp)->Dump(ostr);
     keys[ntmp] = nullptr;
     if (Timer(stmp)->IsRunning())
@@ -129,8 +99,6 @@ void MoniTool_Timer::DumpTimers(Standard_OStream& ostr)
   }
   delete[] keys;
 }
-
-//=================================================================================================
 
 static double amAccess = 0., amInternal = 0., amExternal = 0., amError = 0.;
 
@@ -152,7 +120,6 @@ void MoniTool_Timer::ComputeAmendments()
   MoniTool_Timer::Timer("_mt_amend_t2_")->Reset();
   MoniTool_Timer::Timer("_mt_amend_t3_")->Reset();
 
-  // reference test
   MT0->Start();
   for (i = 1; i <= NBTESTS; i++)
   {
@@ -161,7 +128,6 @@ void MoniTool_Timer::ComputeAmendments()
   }
   MT0->Stop();
 
-  // test for direct access
   occ::handle<MoniTool_Timer> MT = MoniTool_Timer::Timer("_mt_amend_t1_");
   MT1->Start();
   for (i = 1; i <= NBTESTS; i++)
@@ -173,7 +139,6 @@ void MoniTool_Timer::ComputeAmendments()
   }
   MT1->Stop();
 
-  // test for using Sentry
   MT2->Start();
   for (i = 1; i <= NBTESTS; i++)
   {
@@ -185,7 +150,6 @@ void MoniTool_Timer::ComputeAmendments()
   }
   MT2->Stop();
 
-  // test for access by name
   MT3->Start();
   for (i = 1; i <= NBTESTS; i++)
   {
@@ -198,7 +162,6 @@ void MoniTool_Timer::ComputeAmendments()
   }
   MT3->Stop();
 
-  // analyze results
   double cpu0, cpu1, cpu2, cpu3, cput1, cput2, cput3;
   cpu0  = MoniTool_Timer::Timer("_mt_amend_0_")->CPU();
   cpu1  = MoniTool_Timer::Timer("_mt_amend_1_")->CPU();
@@ -221,8 +184,6 @@ void MoniTool_Timer::ComputeAmendments()
             << ", Internal: " << amInternal << ", Error: " << amError << std::endl;
 }
 
-//=================================================================================================
-
 void MoniTool_Timer::GetAmendments(double& access,
                                    double& internal,
                                    double& external,
@@ -233,8 +194,6 @@ void MoniTool_Timer::GetAmendments(double& access,
   external = amExternal;
   error10  = amError;
 }
-
-//=================================================================================================
 
 static occ::handle<MoniTool_Timer> myActive;
 
@@ -252,7 +211,6 @@ void MoniTool_Timer::AmendStart()
     act->myAmend += amend;
   myAmend += amInternal;
 
-  // add to list
   if (!myActive.IsNull())
   {
     myActive->myPrev = this;
@@ -266,7 +224,6 @@ void MoniTool_Timer::AmendStop()
   occ::handle<MoniTool_Timer> thisActive(this);
   if (myActive == thisActive)
     myActive = myNext;
-  //    if ( myActive == this )  myActive = myNext;
 
   if (!myPrev.IsNull())
     myPrev->myNext = myNext;

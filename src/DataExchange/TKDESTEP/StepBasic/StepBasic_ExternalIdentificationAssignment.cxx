@@ -6,11 +6,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ExternalIdentificationAssignment,
                            StepBasic_IdentificationAssignment)
 
-//=================================================================================================
-
 StepBasic_ExternalIdentificationAssignment::StepBasic_ExternalIdentificationAssignment() = default;
-
-//=================================================================================================
 
 void StepBasic_ExternalIdentificationAssignment::Init(
   const occ::handle<TCollection_HAsciiString>&     aIdentificationAssignment_AssignedId,
@@ -23,14 +19,10 @@ void StepBasic_ExternalIdentificationAssignment::Init(
   theSource = aSource;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ExternalSource> StepBasic_ExternalIdentificationAssignment::Source() const
 {
   return theSource;
 }
-
-//=================================================================================================
 
 void StepBasic_ExternalIdentificationAssignment::SetSource(
   const occ::handle<StepBasic_ExternalSource>& aSource)

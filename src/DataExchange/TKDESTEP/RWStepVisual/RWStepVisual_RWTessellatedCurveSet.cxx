@@ -7,11 +7,7 @@
 #include <StepVisual_CoordinatesList.hpp>
 #include <StepVisual_TessellatedCurveSet.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWTessellatedCurveSet::RWStepVisual_RWTessellatedCurveSet() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWTessellatedCurveSet::ReadStep(
   const occ::handle<StepData_StepReaderData>&        data,
@@ -19,18 +15,17 @@ void RWStepVisual_RWTessellatedCurveSet::ReadStep(
   occ::handle<Interface_Check>&                      ach,
   const occ::handle<StepVisual_TessellatedCurveSet>& ent) const
 {
-  // Number of Parameter Control
+
   if (!data->CheckNbParams(num, 3, ach, "tessellated_curve_set"))
     return;
 
-  // Inherited field : name
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
   occ::handle<StepVisual_CoordinatesList> aCoordList;
   data
     ->ReadEntity(num, 2, "coord_list", ach, STANDARD_TYPE(StepVisual_CoordinatesList), aCoordList);
-  //--- Initialisation of the read entity ---
+
   int                                                                             nsub2;
   NCollection_Handle<NCollection_Vector<occ::handle<NCollection_HSequence<int>>>> aCurves =
     new NCollection_Vector<occ::handle<NCollection_HSequence<int>>>;
@@ -60,19 +55,15 @@ void RWStepVisual_RWTessellatedCurveSet::ReadStep(
   ent->Init(aName, aCoordList, aCurves);
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWTessellatedCurveSet::WriteStep(
   StepData_StepWriter&                               SW,
   const occ::handle<StepVisual_TessellatedCurveSet>& ent) const
 {
-  // Inherited field : name
+
   SW.Send(ent->Name());
 
-  // Own filed : coordinates
   SW.Send(ent->CoordList());
 
-  // Own field : line_strips
   SW.OpenSub();
   for (int curveIt = 0; curveIt < ent->Curves()->Length(); curveIt++)
   {
@@ -85,12 +76,10 @@ void RWStepVisual_RWTessellatedCurveSet::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWTessellatedCurveSet::Share(
   const occ::handle<StepVisual_TessellatedCurveSet>& ent,
   Interface_EntityIterator&                          iter) const
 {
-  // Own filed : coordinates
+
   iter.AddItem(ent->CoordList());
 }

@@ -17,14 +17,11 @@
 #include <Geom_Line.hpp>
 #include <Adaptor3d_Curve.hpp>
 
-// perform checks on the argument
 static const TopoDS_Shape& check(const TopoDS_Shape& S)
 {
   BRepLib::BuildCurves3d(S);
   return S;
 }
-
-//=================================================================================================
 
 BRepPrimAPI_MakeRevol::BRepPrimAPI_MakeRevol(const TopoDS_Shape& S,
                                              const gp_Ax1&       A,
@@ -44,8 +41,6 @@ BRepPrimAPI_MakeRevol::BRepPrimAPI_MakeRevol(const TopoDS_Shape& S,
     Build();
   }
 }
-
-//=================================================================================================
 
 BRepPrimAPI_MakeRevol::BRepPrimAPI_MakeRevol(const TopoDS_Shape& S,
                                              const gp_Ax1&       A,
@@ -67,16 +62,12 @@ BRepPrimAPI_MakeRevol::BRepPrimAPI_MakeRevol(const TopoDS_Shape& S,
   }
 }
 
-//=================================================================================================
-
 const BRepSweep_Revol& BRepPrimAPI_MakeRevol::Revol() const
 {
   return myRevol;
 }
 
-//=================================================================================================
-
-void BRepPrimAPI_MakeRevol::Build(const Message_ProgressRange& /*theRange*/)
+void BRepPrimAPI_MakeRevol::Build(const Message_ProgressRange&)
 {
   if (myIsBuild)
   {
@@ -94,10 +85,7 @@ void BRepPrimAPI_MakeRevol::Build(const Message_ProgressRange& /*theRange*/)
   BRep_Builder                                                                               aBB;
 
   TopExp_Explorer anExp(myShape, TopAbs_EDGE);
-  // Problem is that some degenerated edges can be shared by different faces.
-  // It is not valid for correct shape.
-  // To solve problem it is possible to copy shared degenerated edge for each face, which has it,
-  // and replace shared edge by its copy
+
   for (; anExp.More(); anExp.Next())
   {
     const TopoDS_Shape&     anEdge = anExp.Current();
@@ -108,7 +96,7 @@ void BRepPrimAPI_MakeRevol::Build(const Message_ProgressRange& /*theRange*/)
       NCollection_List<TopoDS_Shape>* anL = aDegE.ChangeSeek(anEdge);
       if (anL)
       {
-        // Make the copy if degenerated edge occurs more then once
+
         TopoDS_Shape aCopyE = anEdge.EmptyCopied();
         aCopyE.Orientation(TopAbs_FORWARD);
         TopoDS_Iterator aVIter(anEdge.Oriented(TopAbs_FORWARD), false);
@@ -135,8 +123,7 @@ void BRepPrimAPI_MakeRevol::Build(const Message_ProgressRange& /*theRange*/)
          aDegF;
     bool isReplaced = false;
     anExp.Init(myShape, TopAbs_FACE);
-    // Replace degenerated edge by its copies for different faces
-    // First, for each face list of d.e. is created
+
     for (; anExp.More(); anExp.Next())
     {
       const TopoDS_Shape& aF = anExp.Current();
@@ -155,8 +142,7 @@ void BRepPrimAPI_MakeRevol::Build(const Message_ProgressRange& /*theRange*/)
         }
       }
     }
-    //
-    // Second, replace edges by copies using ReShape
+
     BRepTools_ReShape aSubsF;
     NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>::
       Iterator aFIter(aDegF);
@@ -178,14 +164,13 @@ void BRepPrimAPI_MakeRevol::Build(const Message_ProgressRange& /*theRange*/)
           {
             if (anIt.Value().IsEqual(anE))
             {
-              // First occurrence of initial deg. edge is not replaced
+
               aCEL.Remove(anIt);
               break;
             }
             if (anIt.Value().Orientation() == anE.Orientation())
             {
-              // All other occurrences of anE are replaced by any copy
-              // with suitable orientation
+
               isReplaced = true;
               aSubs.Replace(anE, anIt.Value());
               aCEL.Remove(anIt);
@@ -208,10 +193,7 @@ void BRepPrimAPI_MakeRevol::Build(const Message_ProgressRange& /*theRange*/)
         }
         myShape = aSubsF.Apply(myShape);
         myHist->Merge(aSubsF.History());
-        // Pair aF->aNF is in history after first replacing of edge by aNF = aSubs.Apply(aF)
-        // After merging history for replacing faces, modified list for aF contains two exemplar of
-        // aNF So, using ReplaceModified clears modified list for aF and leaves only one exemplar of
-        // aNF
+
         myHist->ReplaceModified(aF, aNF);
         aSubsF.Clear();
       }
@@ -219,15 +201,10 @@ void BRepPrimAPI_MakeRevol::Build(const Message_ProgressRange& /*theRange*/)
   }
 }
 
-//=======================================================================
-// function : IsIntersect
-// purpose  : used in CheckValidity to find out is there
-//           intersection between curve and axe of revolution
-//=======================================================================
 static bool IsIntersect(const occ::handle<Adaptor3d_Curve>& theC, const gp_Ax1& theAxe)
 {
   const gp_Lin anAxis(theAxe);
-  // Quick test for circle
+
   if (theC->GetType() == GeomAbs_Circle)
   {
     gp_Circ       aCirc  = theC->Circle();
@@ -266,8 +243,6 @@ static bool IsIntersect(const occ::handle<Adaptor3d_Curve>& theC, const gp_Ax1& 
   return false;
 }
 
-//=================================================================================================
-
 bool BRepPrimAPI_MakeRevol::CheckValidity(const TopoDS_Shape& theShape, const gp_Ax1& theA)
 {
   TopExp_Explorer anExp(theShape, TopAbs_EDGE);
@@ -291,8 +266,7 @@ bool BRepPrimAPI_MakeRevol::CheckValidity(const TopoDS_Shape& theShape, const gp
 
     occ::handle<GeomAdaptor_Curve> HC = new GeomAdaptor_Curve();
     HC->Load(C, First, Last);
-    // Checking coincidence axe of revolution and basis curve
-    // This code is taken directly from GeomAdaptor_SurfaceOfRevolution
+
     int    Ratio = 1;
     double Dist;
     gp_Pnt PP;
@@ -302,11 +276,10 @@ bool BRepPrimAPI_MakeRevol::CheckValidity(const TopoDS_Shape& theShape, const gp
       Dist = gp_Lin(theA).Distance(PP);
       Ratio++;
     } while (Dist < Precision::Confusion() && Ratio < 100);
-    //
-    if (Ratio >= 100) // edge coincides with axes
+
+    if (Ratio >= 100)
     {
-      IsValid = true; // Such edges are allowed by revol algo and treated
-                      // by special way, so they must be considered as valid
+      IsValid = true;
     }
     else
     {
@@ -317,25 +290,19 @@ bool BRepPrimAPI_MakeRevol::CheckValidity(const TopoDS_Shape& theShape, const gp
       break;
     }
   }
-  //
+
   return IsValid;
 }
-
-//=================================================================================================
 
 TopoDS_Shape BRepPrimAPI_MakeRevol::FirstShape()
 {
   return myRevol.FirstShape();
 }
 
-//=================================================================================================
-
 TopoDS_Shape BRepPrimAPI_MakeRevol::LastShape()
 {
   return myRevol.LastShape();
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepPrimAPI_MakeRevol::Generated(const TopoDS_Shape& S)
 {
@@ -376,19 +343,19 @@ const NCollection_List<TopoDS_Shape>& BRepPrimAPI_MakeRevol::Generated(const Top
           return myGenerated;
         }
       }
-      //
+
       if (myHist.IsNull())
       {
         myGenerated.Append(aGS);
         return myGenerated;
       }
-      //
+
       if (myHist->Modified(aGS).IsEmpty())
       {
         myGenerated.Append(aGS);
         return myGenerated;
       }
-      //
+
       NCollection_List<TopoDS_Shape>::Iterator anIt(myHist->Modified(aGS));
       for (; anIt.More(); anIt.Next())
       {
@@ -399,43 +366,25 @@ const NCollection_List<TopoDS_Shape>& BRepPrimAPI_MakeRevol::Generated(const Top
   return myGenerated;
 }
 
-//=================================================================================================
-
 bool BRepPrimAPI_MakeRevol::IsDeleted(const TopoDS_Shape& S)
 {
   return !myRevol.IsUsed(S);
 }
-
-//=======================================================================
-// function : FirstShape
-// purpose  : This method returns the shape of the beginning of the revolution,
-//           generated with theShape (subShape of the generating shape).
-//=======================================================================
 
 TopoDS_Shape BRepPrimAPI_MakeRevol::FirstShape(const TopoDS_Shape& theShape)
 {
   return myRevol.FirstShape(theShape);
 }
 
-//=======================================================================
-// function : LastShape
-// purpose  : This method returns the shape of the end of the revolution,
-//           generated with theShape (subShape of the generating shape).
-//=======================================================================
-
 TopoDS_Shape BRepPrimAPI_MakeRevol::LastShape(const TopoDS_Shape& theShape)
 {
   return myRevol.LastShape(theShape);
 }
 
-//=================================================================================================
-
 bool BRepPrimAPI_MakeRevol::HasDegenerated() const
 {
   return (!myDegenerated.IsEmpty());
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepPrimAPI_MakeRevol::Degenerated() const
 {

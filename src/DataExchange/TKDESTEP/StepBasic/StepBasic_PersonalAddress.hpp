@@ -15,7 +15,6 @@ class StepBasic_PersonalAddress : public StepBasic_Address
 {
 
 public:
-  //! Returns a PersonalAddress
   Standard_EXPORT StepBasic_PersonalAddress();
 
   Standard_EXPORT void Init(

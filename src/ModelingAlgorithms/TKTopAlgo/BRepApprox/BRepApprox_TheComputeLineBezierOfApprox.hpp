@@ -29,12 +29,6 @@ class BRepApprox_TheComputeLineBezierOfApprox
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! The MultiLine <Line> will be approximated until tolerances
-  //! will be reached.
-  //! The approximation will be done from degreemin to degreemax
-  //! with a cutting if the corresponding boolean is True.
-  //! If <Squares> is True, the computation will be done with
-  //! no iteration at all.
   Standard_EXPORT BRepApprox_TheComputeLineBezierOfApprox(
     const BRepApprox_TheMultiLineOfApprox& Line,
     const int                              degreemin       = 4,
@@ -46,12 +40,6 @@ public:
     const Approx_ParametrizationType       parametrization = Approx_ChordLength,
     const bool                             Squares         = false);
 
-  //! The MultiLine <Line> will be approximated until tolerances
-  //! will be reached.
-  //! The approximation will be done from degreemin to degreemax
-  //! with a cutting if the corresponding boolean is True.
-  //! If <Squares> is True, the computation will be done with
-  //! no iteration at all.
   Standard_EXPORT BRepApprox_TheComputeLineBezierOfApprox(
     const BRepApprox_TheMultiLineOfApprox& Line,
     const math_Vector&                     Parameters,
@@ -63,7 +51,6 @@ public:
     const bool                             cutting      = true,
     const bool                             Squares      = false);
 
-  //! Initializes the fields of the algorithm.
   Standard_EXPORT BRepApprox_TheComputeLineBezierOfApprox(const math_Vector& Parameters,
                                                           const int          degreemin    = 4,
                                                           const int          degreemax    = 8,
@@ -73,7 +60,6 @@ public:
                                                           const bool         cutting      = true,
                                                           const bool         Squares      = false);
 
-  //! Initializes the fields of the algorithm.
   Standard_EXPORT BRepApprox_TheComputeLineBezierOfApprox(
     const int                        degreemin       = 4,
     const int                        degreemax       = 8,
@@ -84,7 +70,6 @@ public:
     const Approx_ParametrizationType parametrization = Approx_ChordLength,
     const bool                       Squares         = false);
 
-  //! Initializes the fields of the algorithm.
   Standard_EXPORT void Init(const int                        degreemin       = 4,
                             const int                        degreemax       = 8,
                             const double                     Tolerance3d     = 1.0e-03,
@@ -94,52 +79,34 @@ public:
                             const Approx_ParametrizationType parametrization = Approx_ChordLength,
                             const bool                       Squares         = false);
 
-  //! runs the algorithm after having initialized the fields.
   Standard_EXPORT void Perform(const BRepApprox_TheMultiLineOfApprox& Line);
 
-  //! changes the degrees of the approximation.
   Standard_EXPORT void SetDegrees(const int degreemin, const int degreemax);
 
-  //! Changes the tolerances of the approximation.
   Standard_EXPORT void SetTolerances(const double Tolerance3d, const double Tolerance2d);
 
-  //! changes the first and the last constraint points.
   Standard_EXPORT void SetConstraints(const AppParCurves_Constraint firstC,
                                       const AppParCurves_Constraint lastC);
 
-  //! returns False if at a moment of the approximation,
-  //! the status NoApproximation has been sent by the user
-  //! when more points were needed.
   Standard_EXPORT bool IsAllApproximated() const;
 
-  //! returns False if the status NoPointsAdded has been sent.
   Standard_EXPORT bool IsToleranceReached() const;
 
-  //! returns the tolerances 2d and 3d of the <Index> MultiCurve.
   Standard_EXPORT void Error(const int Index, double& tol3d, double& tol2d) const;
 
-  //! Returns the number of MultiCurve doing the approximation
-  //! of the MultiLine.
   Standard_EXPORT int NbMultiCurves() const;
 
-  //! returns the result of the approximation.
   Standard_EXPORT const AppParCurves_MultiCurve& Value(const int Index = 1) const;
 
-  //! returns the result of the approximation.
   Standard_EXPORT AppParCurves_MultiCurve& ChangeValue(const int Index = 1);
 
-  //! returns the result of the approximation.
   Standard_EXPORT const AppParCurves_MultiBSpCurve& SplineValue();
 
-  //! returns the type of parametrization
   Standard_EXPORT Approx_ParametrizationType Parametrization() const;
 
-  //! returns the new parameters of the approximation
-  //! corresponding to the points of the multicurve <Index>.
   Standard_EXPORT const NCollection_Array1<double>& Parameters(const int Index = 1) const;
 
 private:
-  //! is internally used in the algorithm.
   Standard_EXPORT bool Compute(const BRepApprox_TheMultiLineOfApprox& Line,
                                const int                              fpt,
                                const int                              lpt,
@@ -148,12 +115,10 @@ private:
                                double&                                TheTol2d,
                                int&                                   indbad);
 
-  //! is internally used in the algorithm.
   Standard_EXPORT bool ComputeCurve(const BRepApprox_TheMultiLineOfApprox& Line,
                                     const int                              firspt,
                                     const int                              lastpt);
 
-  //! computes new parameters between firstP and lastP.
   Standard_EXPORT void Parameters(const BRepApprox_TheMultiLineOfApprox& Line,
                                   const int                              firstP,
                                   const int                              LastP,

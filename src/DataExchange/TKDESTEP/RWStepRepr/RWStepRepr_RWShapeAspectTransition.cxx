@@ -5,11 +5,7 @@
 #include <StepRepr_ShapeAspect.hpp>
 #include <StepRepr_ShapeAspectTransition.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWShapeAspectTransition::RWStepRepr_RWShapeAspectTransition() = default;
-
-//=================================================================================================
 
 void RWStepRepr_RWShapeAspectTransition::ReadStep(
   const occ::handle<StepData_StepReaderData>&        data,
@@ -17,11 +13,9 @@ void RWStepRepr_RWShapeAspectTransition::ReadStep(
   occ::handle<Interface_Check>&                      ach,
   const occ::handle<StepRepr_ShapeAspectTransition>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "shape_aspect_transition"))
     return;
-
-  // Inherited fields of ShapeAspectRelationship
 
   occ::handle<TCollection_HAsciiString> aShapeAspectRelationship_Name;
   data->ReadString(num, 1, "shape_aspect_relationship.name", ach, aShapeAspectRelationship_Name);
@@ -57,7 +51,6 @@ void RWStepRepr_RWShapeAspectTransition::ReadStep(
                    STANDARD_TYPE(StepRepr_ShapeAspect),
                    aShapeAspectRelationship_RelatedShapeAspect);
 
-  // Initialize entity
   ent->Init(aShapeAspectRelationship_Name,
             hasShapeAspectRelationship_Description,
             aShapeAspectRelationship_Description,
@@ -65,14 +58,10 @@ void RWStepRepr_RWShapeAspectTransition::ReadStep(
             aShapeAspectRelationship_RelatedShapeAspect);
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWShapeAspectTransition::WriteStep(
   StepData_StepWriter&                               SW,
   const occ::handle<StepRepr_ShapeAspectTransition>& ent) const
 {
-
-  // Inherited fields of ShapeAspectRelationship
 
   SW.Send(ent->StepRepr_ShapeAspectRelationship::Name());
 
@@ -88,14 +77,10 @@ void RWStepRepr_RWShapeAspectTransition::WriteStep(
   SW.Send(ent->StepRepr_ShapeAspectRelationship::RelatedShapeAspect());
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWShapeAspectTransition::Share(
   const occ::handle<StepRepr_ShapeAspectTransition>& ent,
   Interface_EntityIterator&                          iter) const
 {
-
-  // Inherited fields of ShapeAspectRelationship
 
   iter.AddItem(ent->StepRepr_ShapeAspectRelationship::RelatingShapeAspect());
 

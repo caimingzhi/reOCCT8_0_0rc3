@@ -10,7 +10,6 @@ class StepVisual_ColourSpecification : public StepVisual_Colour
 {
 
 public:
-  //! Returns a ColourSpecification
   Standard_EXPORT StepVisual_ColourSpecification();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName);

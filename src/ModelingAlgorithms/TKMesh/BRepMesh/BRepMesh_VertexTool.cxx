@@ -3,8 +3,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_VertexTool, Standard_Transient)
 
-//=================================================================================================
-
 NCollection_CellFilter_Action BRepMesh_VertexInspector::Inspect(const int theTarget)
 {
   const BRepMesh_Vertex& aVertex = myVertices->Value(theTarget - 1);
@@ -38,8 +36,6 @@ NCollection_CellFilter_Action BRepMesh_VertexInspector::Inspect(const int theTar
   return CellFilter_Keep;
 }
 
-//=================================================================================================
-
 BRepMesh_VertexTool::BRepMesh_VertexTool(const occ::handle<NCollection_IncAllocator>& theAllocator)
     : myAllocator(theAllocator),
       myCellFilter(0., myAllocator),
@@ -49,8 +45,6 @@ BRepMesh_VertexTool::BRepMesh_VertexTool(const occ::handle<NCollection_IncAlloca
   SetCellSize(aTol + 0.05 * aTol);
   SetTolerance(aTol, aTol);
 }
-
-//=================================================================================================
 
 int BRepMesh_VertexTool::Add(const BRepMesh_Vertex& theVertex, const bool isForceAdd)
 {
@@ -66,8 +60,6 @@ int BRepMesh_VertexTool::Add(const BRepMesh_Vertex& theVertex, const bool isForc
   return aIndex;
 }
 
-//=================================================================================================
-
 void BRepMesh_VertexTool::DeleteVertex(const int theIndex)
 {
   BRepMesh_Vertex& aV = mySelector.GetVertex(theIndex);
@@ -78,8 +70,6 @@ void BRepMesh_VertexTool::DeleteVertex(const int theIndex)
   myCellFilter.Remove(theIndex, aMinPnt, aMaxPnt);
   mySelector.Delete(theIndex);
 }
-
-//=================================================================================================
 
 void BRepMesh_VertexTool::Substitute(const int theIndex, const BRepMesh_Vertex& theVertex)
 {
@@ -94,8 +84,6 @@ void BRepMesh_VertexTool::Substitute(const int theIndex, const BRepMesh_Vertex& 
   expandPoint(aV.Coord(), aMinPnt, aMaxPnt);
   myCellFilter.Add(theIndex, aMinPnt, aMaxPnt);
 }
-
-//=================================================================================================
 
 void BRepMesh_VertexTool::Statistics(Standard_OStream& theStream) const
 {

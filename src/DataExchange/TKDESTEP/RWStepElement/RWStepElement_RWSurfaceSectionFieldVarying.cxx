@@ -6,11 +6,7 @@
 #include <StepElement_SurfaceSection.hpp>
 #include <StepElement_SurfaceSectionFieldVarying.hpp>
 
-//=================================================================================================
-
 RWStepElement_RWSurfaceSectionFieldVarying::RWStepElement_RWSurfaceSectionFieldVarying() = default;
-
-//=================================================================================================
 
 void RWStepElement_RWSurfaceSectionFieldVarying::ReadStep(
   const occ::handle<StepData_StepReaderData>&                data,
@@ -18,11 +14,9 @@ void RWStepElement_RWSurfaceSectionFieldVarying::ReadStep(
   occ::handle<Interface_Check>&                              ach,
   const occ::handle<StepElement_SurfaceSectionFieldVarying>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "surface_section_field_varying"))
     return;
-
-  // Own fields of SurfaceSectionFieldVarying
 
   occ::handle<NCollection_HArray1<occ::handle<StepElement_SurfaceSection>>> aDefinitions;
   int                                                                       sub1 = 0;
@@ -47,18 +41,13 @@ void RWStepElement_RWSurfaceSectionFieldVarying::ReadStep(
   bool aAdditionalNodeValues;
   data->ReadBoolean(num, 2, "additional_node_values", ach, aAdditionalNodeValues);
 
-  // Initialize entity
   ent->Init(aDefinitions, aAdditionalNodeValues);
 }
-
-//=================================================================================================
 
 void RWStepElement_RWSurfaceSectionFieldVarying::WriteStep(
   StepData_StepWriter&                                       SW,
   const occ::handle<StepElement_SurfaceSectionFieldVarying>& ent) const
 {
-
-  // Own fields of SurfaceSectionFieldVarying
 
   SW.OpenSub();
   for (int i0 = 1; i0 <= ent->Definitions()->Length(); i0++)
@@ -71,14 +60,10 @@ void RWStepElement_RWSurfaceSectionFieldVarying::WriteStep(
   SW.SendBoolean(ent->AdditionalNodeValues());
 }
 
-//=================================================================================================
-
 void RWStepElement_RWSurfaceSectionFieldVarying::Share(
   const occ::handle<StepElement_SurfaceSectionFieldVarying>& ent,
   Interface_EntityIterator&                                  iter) const
 {
-
-  // Own fields of SurfaceSectionFieldVarying
 
   for (int i1 = 1; i1 <= ent->Definitions()->Length(); i1++)
   {

@@ -11,7 +11,6 @@ class StepGeom_SurfaceOfLinearExtrusion;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SurfaceOfLinearExtrusion
 class RWStepGeom_RWSurfaceOfLinearExtrusion
 {
 public:

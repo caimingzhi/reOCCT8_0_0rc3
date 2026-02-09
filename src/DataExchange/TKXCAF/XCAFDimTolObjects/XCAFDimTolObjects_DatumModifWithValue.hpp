@@ -1,6 +1,5 @@
 #pragma once
 
-//! Defines modifirs
 enum XCAFDimTolObjects_DatumModifWithValue
 {
   XCAFDimTolObjects_DatumModifWithValue_None,

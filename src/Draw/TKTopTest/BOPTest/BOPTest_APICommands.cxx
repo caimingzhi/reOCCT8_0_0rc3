@@ -19,17 +19,15 @@ static int bapibuild(Draw_Interpretor&, int, const char**);
 static int bapibop(Draw_Interpretor&, int, const char**);
 static int bapisplit(Draw_Interpretor&, int, const char**);
 
-//=================================================================================================
-
 void BOPTest::APICommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
   if (done)
     return;
   done = true;
-  // Chapter's name
+
   const char* g = "BOPTest commands";
-  // Commands
+
   theCommands.Add(
     "bapibuild",
     "Builds the result of General Fuse operation using top level API.\n"
@@ -66,8 +64,6 @@ void BOPTest::APICommands(Draw_Interpretor& theCommands)
     g);
 }
 
-//=================================================================================================
-
 int bapibop(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 3)
@@ -82,7 +78,7 @@ int bapibop(Draw_Interpretor& di, int n, const char** a)
     di << "Invalid operation type\n";
     return 0;
   }
-  //
+
   bool                          bRunParallel, bNonDestructive;
   double                        aFuzzyValue;
   BRepAlgoAPI_Common            aCommon;
@@ -90,40 +86,40 @@ int bapibop(Draw_Interpretor& di, int n, const char** a)
   BRepAlgoAPI_Cut               aCut;
   BRepAlgoAPI_Section           aSection;
   BRepAlgoAPI_BooleanOperation* pBuilder;
-  //
+
   pBuilder = nullptr;
-  //
+
   switch (anOp)
   {
     case BOPAlgo_COMMON:
       pBuilder = &aCommon;
       break;
-      //
+
     case BOPAlgo_FUSE:
       pBuilder = &aFuse;
       break;
-      //
+
     case BOPAlgo_CUT:
     case BOPAlgo_CUT21:
       pBuilder = &aCut;
       break;
-      //
+
     case BOPAlgo_SECTION:
       pBuilder = &aSection;
       break;
-      //
+
     default:
       break;
   }
-  //
+
   NCollection_List<TopoDS_Shape>& aLS = BOPTest_Objects::Shapes();
   NCollection_List<TopoDS_Shape>& aLT = BOPTest_Objects::Tools();
-  //
+
   bRunParallel           = BOPTest_Objects::RunParallel();
   aFuzzyValue            = BOPTest_Objects::FuzzyValue();
   bNonDestructive        = BOPTest_Objects::NonDestructive();
   BOPAlgo_GlueEnum aGlue = BOPTest_Objects::Glue();
-  //
+
   if (anOp != BOPAlgo_CUT21)
   {
     pBuilder->SetArguments(aLS);
@@ -134,7 +130,7 @@ int bapibop(Draw_Interpretor& di, int n, const char** a)
     pBuilder->SetArguments(aLT);
     pBuilder->SetTools(aLS);
   }
-  //
+
   pBuilder->SetRunParallel(bRunParallel);
   pBuilder->SetFuzzyValue(aFuzzyValue);
   pBuilder->SetNonDestructive(bNonDestructive);
@@ -142,14 +138,13 @@ int bapibop(Draw_Interpretor& di, int n, const char** a)
   pBuilder->SetCheckInverted(BOPTest_Objects::CheckInverted());
   pBuilder->SetUseOBB(BOPTest_Objects::UseOBB());
   pBuilder->SetToFillHistory(BRepTest_Objects::IsHistoryNeeded());
-  //
+
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
   pBuilder->Build(aProgress->Start());
   pBuilder->SimplifyResult(BOPTest_Objects::UnifyEdges(),
                            BOPTest_Objects::UnifyFaces(),
                            BOPTest_Objects::Angular());
 
-  // Store the history of operation into the session
   if (BRepTest_Objects::IsHistoryNeeded())
     BRepTest_Objects::SetHistory(pBuilder->History());
 
@@ -159,7 +154,7 @@ int bapibop(Draw_Interpretor& di, int n, const char** a)
     pBuilder->DumpWarnings(aSStream);
     di << aSStream;
   }
-  //
+
   if (pBuilder->HasErrors())
   {
     Standard_SStream aSStream;
@@ -167,19 +162,17 @@ int bapibop(Draw_Interpretor& di, int n, const char** a)
     di << aSStream;
     return 0;
   }
-  //
+
   const TopoDS_Shape& aR = pBuilder->Shape();
   if (aR.IsNull())
   {
     di << "Result is a null shape\n";
     return 0;
   }
-  //
+
   DBRep::Set(a[1], aR);
   return 0;
 }
-
-//=================================================================================================
 
 int bapibuild(Draw_Interpretor& di, int n, const char** a)
 {
@@ -188,21 +181,21 @@ int bapibuild(Draw_Interpretor& di, int n, const char** a)
     di.PrintHelp(a[0]);
     return 1;
   }
-  //
+
   bool                    bRunParallel, bNonDestructive;
   int                     iErr;
   double                  aFuzzyValue;
   BRepAlgoAPI_BuilderAlgo aBuilder;
-  //
+
   NCollection_List<TopoDS_Shape> aLS = BOPTest_Objects::Shapes();
   NCollection_List<TopoDS_Shape> aLT = BOPTest_Objects::Tools();
-  //
+
   aLS.Append(aLT);
   bRunParallel           = BOPTest_Objects::RunParallel();
   aFuzzyValue            = BOPTest_Objects::FuzzyValue();
   bNonDestructive        = BOPTest_Objects::NonDestructive();
   BOPAlgo_GlueEnum aGlue = BOPTest_Objects::Glue();
-  //
+
   aBuilder.SetArguments(aLS);
   aBuilder.SetRunParallel(bRunParallel);
   aBuilder.SetFuzzyValue(aFuzzyValue);
@@ -211,14 +204,13 @@ int bapibuild(Draw_Interpretor& di, int n, const char** a)
   aBuilder.SetCheckInverted(BOPTest_Objects::CheckInverted());
   aBuilder.SetUseOBB(BOPTest_Objects::UseOBB());
   aBuilder.SetToFillHistory(BRepTest_Objects::IsHistoryNeeded());
-  //
+
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
   aBuilder.Build(aProgress->Start());
   aBuilder.SimplifyResult(BOPTest_Objects::UnifyEdges(),
                           BOPTest_Objects::UnifyFaces(),
                           BOPTest_Objects::Angular());
 
-  // Store the history of operation into the session
   if (BRepTest_Objects::IsHistoryNeeded())
     BRepTest_Objects::SetHistory(aBuilder.History());
 
@@ -228,7 +220,7 @@ int bapibuild(Draw_Interpretor& di, int n, const char** a)
     aBuilder.DumpWarnings(aSStream);
     di << aSStream;
   }
-  //
+
   iErr = aBuilder.HasErrors();
   if (iErr)
   {
@@ -237,19 +229,17 @@ int bapibuild(Draw_Interpretor& di, int n, const char** a)
     di << aSStream;
     return 0;
   }
-  //
+
   const TopoDS_Shape& aR = aBuilder.Shape();
   if (aR.IsNull())
   {
     di << "Result is a null shape\n";
     return 0;
   }
-  //
+
   DBRep::Set(a[1], aR);
   return 0;
 }
-
-//=================================================================================================
 
 int bapisplit(Draw_Interpretor& di, int n, const char** a)
 {
@@ -258,12 +248,12 @@ int bapisplit(Draw_Interpretor& di, int n, const char** a)
     di.PrintHelp(a[0]);
     return 1;
   }
-  //
+
   BRepAlgoAPI_Splitter aSplitter;
-  // setting arguments
+
   aSplitter.SetArguments(BOPTest_Objects::Shapes());
   aSplitter.SetTools(BOPTest_Objects::Tools());
-  // setting options
+
   aSplitter.SetRunParallel(BOPTest_Objects::RunParallel());
   aSplitter.SetFuzzyValue(BOPTest_Objects::FuzzyValue());
   aSplitter.SetNonDestructive(BOPTest_Objects::NonDestructive());
@@ -271,26 +261,23 @@ int bapisplit(Draw_Interpretor& di, int n, const char** a)
   aSplitter.SetCheckInverted(BOPTest_Objects::CheckInverted());
   aSplitter.SetUseOBB(BOPTest_Objects::UseOBB());
   aSplitter.SetToFillHistory(BRepTest_Objects::IsHistoryNeeded());
-  //
-  // performing operation
+
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
   aSplitter.Build(aProgress->Start());
   aSplitter.SimplifyResult(BOPTest_Objects::UnifyEdges(),
                            BOPTest_Objects::UnifyFaces(),
                            BOPTest_Objects::Angular());
 
-  // Store the history of operation into the session
   if (BRepTest_Objects::IsHistoryNeeded())
     BRepTest_Objects::SetHistory(aSplitter.History());
 
-  // check warning status
   if (aSplitter.HasWarnings())
   {
     Standard_SStream aSStream;
     aSplitter.DumpWarnings(aSStream);
     di << aSStream;
   }
-  // checking error status
+
   int iErr = aSplitter.HasErrors();
   if (iErr)
   {
@@ -299,15 +286,14 @@ int bapisplit(Draw_Interpretor& di, int n, const char** a)
     di << aSStream;
     return 0;
   }
-  //
-  // getting the result of the operation
+
   const TopoDS_Shape& aR = aSplitter.Shape();
   if (aR.IsNull())
   {
     di << "Result is a null shape\n";
     return 0;
   }
-  //
+
   DBRep::Set(a[1], aR);
   return 0;
 }

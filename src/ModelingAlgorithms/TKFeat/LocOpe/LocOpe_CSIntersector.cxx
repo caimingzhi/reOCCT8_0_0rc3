@@ -37,8 +37,6 @@ static void AddPoints(IntCurvesFace_Intersector&,
                       NCollection_Sequence<LocOpe_PntFace>&,
                       const TopoDS_Face&);
 
-//=================================================================================================
-
 void LocOpe_CSIntersector::Init(const TopoDS_Shape& S)
 {
   myDone  = false;
@@ -50,8 +48,6 @@ void LocOpe_CSIntersector::Init(const TopoDS_Shape& S)
   }
   myNbelem = 0;
 }
-
-//=================================================================================================
 
 void LocOpe_CSIntersector::Perform(const NCollection_Sequence<gp_Lin>& Slin)
 {
@@ -87,8 +83,6 @@ void LocOpe_CSIntersector::Perform(const NCollection_Sequence<gp_Lin>& Slin)
   }
   myDone = true;
 }
-
-//=================================================================================================
 
 void LocOpe_CSIntersector::Perform(const NCollection_Sequence<gp_Circ>& Scir)
 {
@@ -128,8 +122,6 @@ void LocOpe_CSIntersector::Perform(const NCollection_Sequence<gp_Circ>& Scir)
   }
   myDone = true;
 }
-
-//=================================================================================================
 
 void LocOpe_CSIntersector::Perform(const NCollection_Sequence<occ::handle<Geom_Curve>>& Scur)
 {
@@ -172,8 +164,6 @@ void LocOpe_CSIntersector::Perform(const NCollection_Sequence<occ::handle<Geom_C
   myDone = true;
 }
 
-//=================================================================================================
-
 int LocOpe_CSIntersector::NbPoints(const int I) const
 {
   if (!myDone)
@@ -186,8 +176,6 @@ int LocOpe_CSIntersector::NbPoints(const int I) const
   }
   return ((NCollection_Sequence<LocOpe_PntFace>*)myPoints)[I - 1].Length();
 }
-
-//=================================================================================================
 
 const LocOpe_PntFace& LocOpe_CSIntersector::Point(const int I, const int Index) const
 {
@@ -202,8 +190,6 @@ const LocOpe_PntFace& LocOpe_CSIntersector::Point(const int I, const int Index) 
   return ((NCollection_Sequence<LocOpe_PntFace>*)myPoints)[I - 1](Index);
 }
 
-//=================================================================================================
-
 void LocOpe_CSIntersector::Destroy()
 {
   if (myPoints != nullptr)
@@ -212,8 +198,6 @@ void LocOpe_CSIntersector::Destroy()
     myPoints = nullptr;
   }
 }
-
-//=================================================================================================
 
 bool LocOpe_CSIntersector::LocalizeAfter(const int           I,
                                          const double        From,
@@ -238,8 +222,6 @@ bool LocOpe_CSIntersector::LocalizeAfter(const int           I,
                   IndTo);
 }
 
-//=================================================================================================
-
 bool LocOpe_CSIntersector::LocalizeBefore(const int           I,
                                           const double        From,
                                           const double        Tol,
@@ -262,8 +244,6 @@ bool LocOpe_CSIntersector::LocalizeBefore(const int           I,
                    IndFrom,
                    IndTo);
 }
-
-//=================================================================================================
 
 bool LocOpe_CSIntersector::LocalizeAfter(const int           I,
                                          const int           FromInd,
@@ -288,8 +268,6 @@ bool LocOpe_CSIntersector::LocalizeAfter(const int           I,
                   IndTo);
 }
 
-//=================================================================================================
-
 bool LocOpe_CSIntersector::LocalizeBefore(const int           I,
                                           const int           FromInd,
                                           const double        Tol,
@@ -312,8 +290,6 @@ bool LocOpe_CSIntersector::LocalizeBefore(const int           I,
                    IndFrom,
                    IndTo);
 }
-
-//=================================================================================================
 
 static bool LocAfter(const NCollection_Sequence<LocOpe_PntFace>& Spt,
                      const double                                From,
@@ -364,7 +340,7 @@ static bool LocAfter(const NCollection_Sequence<LocOpe_PntFace>& Spt,
         IndFrom = i;
       }
       else
-      { // on a une intersection franche
+      {
         IndTo  = i - 1;
         found  = true;
         RetVal = true;
@@ -374,8 +350,6 @@ static bool LocAfter(const NCollection_Sequence<LocOpe_PntFace>& Spt,
 
   return RetVal;
 }
-
-//=================================================================================================
 
 static bool LocBefore(const NCollection_Sequence<LocOpe_PntFace>& Spt,
                       const double                                From,
@@ -425,7 +399,7 @@ static bool LocBefore(const NCollection_Sequence<LocOpe_PntFace>& Spt,
         IndTo = i;
       }
       else
-      { // on a une intersection franche
+      {
         IndFrom = i + 1;
         found   = true;
         RetVal  = true;
@@ -435,8 +409,6 @@ static bool LocBefore(const NCollection_Sequence<LocOpe_PntFace>& Spt,
 
   return RetVal;
 }
-
-//=================================================================================================
 
 static bool LocAfter(const NCollection_Sequence<LocOpe_PntFace>& Spt,
                      const int                                   FromInd,
@@ -501,7 +473,7 @@ static bool LocAfter(const NCollection_Sequence<LocOpe_PntFace>& Spt,
         IndFrom = i;
       }
       else
-      { // on a une intersection franche
+      {
         IndTo  = i - 1;
         found  = true;
         RetVal = true;
@@ -510,8 +482,6 @@ static bool LocAfter(const NCollection_Sequence<LocOpe_PntFace>& Spt,
   }
   return RetVal;
 }
-
-//=================================================================================================
 
 static void AddPoints(IntCurvesFace_Intersector&            theInt,
                       NCollection_Sequence<LocOpe_PntFace>& theSeq,
@@ -532,32 +502,12 @@ static void AddPoints(IntCurvesFace_Intersector&            theInt,
     switch (theInt.Transition(j))
     {
       case IntCurveSurface_In:
-        /* JAG 13.09.96
-              if ( orface == TopAbs_FORWARD) {
-            theor = TopAbs_FORWARD;
-              }
-              else if (orface == TopAbs_REVERSED) {
-            theor = TopAbs_REVERSED;
-              }
-              else {
-            theor = TopAbs_EXTERNAL;
-              }
-        */
+
         theor = TopAbs_FORWARD;
 
         break;
       case IntCurveSurface_Out:
-        /* JAG 13.09.96
-              if ( orface == TopAbs_FORWARD) {
-            theor = TopAbs_REVERSED;
-              }
-              else if (orface == TopAbs_REVERSED) {
-            theor = TopAbs_FORWARD;
-              }
-              else {
-            theor = TopAbs_EXTERNAL;
-              }
-        */
+
         theor = TopAbs_REVERSED;
         break;
       case IntCurveSurface_Tangent:
@@ -565,7 +515,7 @@ static void AddPoints(IntCurvesFace_Intersector&            theInt,
         break;
     }
     LocOpe_PntFace newpt(thept, theface, theor, param, paramu, paramv);
-    //    for (int k=1; k <= nbpoints; k++) {
+
     int k;
     for (k = 1; k <= nbpoints; k++)
     {

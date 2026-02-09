@@ -1,27 +1,8 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// lpa, le 03/09/91
 
-// Implementation de la classe resolvant les equations en cosinus-sinus.
-// Equation de la forme a*cos(x)*cos(x)+2*b*cos(x)*sin(x)+c*cos(x)+d*sin(x)+e
-
-// #ifndef OCCT_DEBUG
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
-// #endif
 
 #include <math_TrigonometricFunctionRoots.hpp>
 #include <math_TrigonometricEquationFunction.hpp>
@@ -130,7 +111,7 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
       {
         if (std::abs(E) <= Eps)
         {
-          InfiniteStatus = true; // infinite de solutions.
+          InfiniteStatus = true;
           return;
         }
         else
@@ -141,8 +122,7 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
       }
       else
       {
-        // Equation du type d*sin(x) + e = 0
-        // =================================
+
         NbSol = 0;
         AA    = -E / D;
         if (std::abs(AA) > 1.)
@@ -159,8 +139,7 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
           {
             Zer(i) = Depi - std::abs(Zer(i));
           }
-          // On rend les solutions entre InfBound et SupBound:
-          // =================================================
+
           Zer(i) += std::trunc(Mod) * Depi;
           X = Zer(i) - MyBorneInf;
           if ((X > (-Epsilon(Delta))) && (X < Delta + Epsilon(Delta)))
@@ -175,8 +154,6 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
     else if (std::abs(D) <= Eps)
     {
 
-      // Equation du premier degre de la forme c*cos(x) + e = 0
-      // ======================================================
       NbSol = 0;
       AA    = -E / C;
       if (std::abs(AA) > 1.)
@@ -193,8 +170,7 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
         {
           Zer(i) = Depi - std::abs(Zer(i));
         }
-        // On rend les solutions entre InfBound et SupBound:
-        // =================================================
+
         Zer(i) += std::trunc(Mod) * 2. * M_PI;
         X = Zer(i) - MyBorneInf;
         if ((X >= (-Epsilon(Delta))) && (X <= Delta + Epsilon(Delta)))
@@ -208,8 +184,6 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
     else
     {
 
-      // Equation du second degre:
-      // =========================
       AA = E - C;
       BB = 2.0 * D;
       CC = E + C;
@@ -237,12 +211,12 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
   }
   else
   {
-    // Two additional analytical cases.
+
     if ((std::abs(A) <= Eps) && (std::abs(E) <= Eps))
     {
       if (std::abs(C) <= Eps)
       {
-        // 2 * B * sin * cos + D * sin = 0
+
         NZer   = 2;
         Zer(1) = 0.0;
         Zer(2) = M_PI;
@@ -275,8 +249,7 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
           {
             Zer(i) += Depi;
           }
-          // On rend les solutions entre InfBound et SupBound:
-          // =================================================
+
           Zer(i) += std::trunc(Mod) * 2. * M_PI;
           X = Zer(i) - MyBorneInf;
           if ((X >= (-Precision::PConfusion())) && (X <= Delta + Precision::PConfusion()))
@@ -293,7 +266,7 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
       }
       if (std::abs(D) <= Eps)
       {
-        // 2 * B * sin * cos + C * cos = 0
+
         NZer   = 2;
         Zer(1) = M_PI / 2.0;
         Zer(2) = M_PI * 3.0 / 2.0;
@@ -327,8 +300,7 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
           {
             Zer(i) += Depi;
           }
-          // On rend les solutions entre InfBound et SupBound:
-          // =================================================
+
           Zer(i) += std::trunc(Mod) * 2. * M_PI;
           X = Zer(i) - MyBorneInf;
           if ((X >= (-Precision::PConfusion())) && (X <= Delta + Precision::PConfusion()))
@@ -345,8 +317,6 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
       }
     }
 
-    // Equation du 4 ieme degre
-    // ========================
     ko(1) = A - C + E;
     ko(2) = 2.0 * D - 4.0 * B;
     ko(3) = 2.0 * E - 2.0 * A;
@@ -395,18 +365,15 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
       {
         if (std::abs(Zer(i + 1) - Zer(i)) < Eps)
         {
-          //-- est ce une racine double ou une erreur numerique ?
+
           double qw = Zer(i + 1);
           double va = ko(4) + qw * (2.0 * ko(3) + qw * (3.0 * ko(2) + qw * (4.0 * ko(1))));
-          //-- std::cout<<"   Val Double ("<<qw<<")=("<<va<<")"<<std::endl;
+
           if (std::abs(va) > Eps)
           {
             bko = true;
 #ifdef OCCT_DEBUG
-            // if(nbko==1) {
-            //   std::cout<<"Pb ds math_TrigonometricFunctionRoots CC="
-            //	<<A<<" CS="<<B<<" C="<<C<<" S="<<D<<" Cte="<<E<<std::endl;
-            // }
+
 #endif
             break;
           }
@@ -414,8 +381,6 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
       }
       if (bko)
       {
-        //-- Si il y a un coeff petit, on divise
-        //--
 
         ko(1) *= 0.0001;
         ko(2) *= 0.0001;
@@ -426,8 +391,6 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
     } while (bko);
   }
 
-  // Verification des solutions par rapport aux bornes:
-  // ==================================================
   double SupmInfs100 = (SupBound - InfBound) * 0.01;
   NbSol              = 0;
   for (i = 1; i <= NZer; i++)
@@ -447,8 +410,6 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
     {
       X = Teta;
 
-      // Appel de Newton:
-      // OCC541(apo):  double TetaNewton=0;
       double                             TetaNewton = Teta;
       math_TrigonometricEquationFunction MyF(A, B, C, D, E);
       math_NewtonFunctionRoot            Resol(MyF, X, Tol1, Eps, Nit);
@@ -456,11 +417,10 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
       {
         TetaNewton = Resol.Root();
       }
-      //-- lbr le 7 mars 97 (newton converge tres tres loin de la solution initilale)
+
       double DeltaNewton = TetaNewton - Teta;
       if ((DeltaNewton > SupmInfs100) || (DeltaNewton < -SupmInfs100))
       {
-        //-- std::cout<<"\n Newton X0="<<Teta<<" -> "<<TetaNewton<<std::endl;
       }
       else
       {
@@ -471,7 +431,7 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
 
       for (k = 1; k <= NbSol; k++)
       {
-        // On met les valeurs par ordre croissant:
+
         if (Teta < Sol(k))
         {
           for (l = k; l <= NbSol; l++)
@@ -492,7 +452,7 @@ void math_TrigonometricFunctionRoots::Perform(const double A,
       }
     }
   }
-  // Cas particulier de  PI:
+
   if (NbSol < 4)
   {
     int startIndex = NbSol + 1;

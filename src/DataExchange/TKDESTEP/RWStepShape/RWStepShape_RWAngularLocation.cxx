@@ -5,11 +5,7 @@
 #include <StepRepr_ShapeAspect.hpp>
 #include <StepShape_AngularLocation.hpp>
 
-//=================================================================================================
-
 RWStepShape_RWAngularLocation::RWStepShape_RWAngularLocation() = default;
-
-//=================================================================================================
 
 void RWStepShape_RWAngularLocation::ReadStep(
   const occ::handle<StepData_StepReaderData>&   data,
@@ -17,11 +13,9 @@ void RWStepShape_RWAngularLocation::ReadStep(
   occ::handle<Interface_Check>&                 ach,
   const occ::handle<StepShape_AngularLocation>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 5, ach, "angular_location"))
     return;
-
-  // Inherited fields of ShapeAspectRelationship
 
   occ::handle<TCollection_HAsciiString> aShapeAspectRelationship_Name;
   data->ReadString(num, 1, "shape_aspect_relationship.name", ach, aShapeAspectRelationship_Name);
@@ -57,11 +51,6 @@ void RWStepShape_RWAngularLocation::ReadStep(
                    STANDARD_TYPE(StepRepr_ShapeAspect),
                    aShapeAspectRelationship_RelatedShapeAspect);
 
-  // Own fields of AngularLocation
-
-  // PTV 16.09.2000
-  // default value set as StepShape_Small, cause there wasn't default value, but may be situation
-  // when value will not be initialized and returned in ent->Init.
   StepShape_AngleRelator aAngleSelection = StepShape_Small;
   if (data->ParamType(num, 5) == Interface_ParamEnum)
   {
@@ -78,7 +67,6 @@ void RWStepShape_RWAngularLocation::ReadStep(
   else
     ach->AddFail("Parameter #5 (angle_selection) is not enumeration");
 
-  // Initialize entity
   ent->Init(aShapeAspectRelationship_Name,
             hasShapeAspectRelationship_Description,
             aShapeAspectRelationship_Description,
@@ -87,14 +75,10 @@ void RWStepShape_RWAngularLocation::ReadStep(
             aAngleSelection);
 }
 
-//=================================================================================================
-
 void RWStepShape_RWAngularLocation::WriteStep(
   StepData_StepWriter&                          SW,
   const occ::handle<StepShape_AngularLocation>& ent) const
 {
-
-  // Inherited fields of ShapeAspectRelationship
 
   SW.Send(ent->StepRepr_ShapeAspectRelationship::Name());
 
@@ -108,8 +92,6 @@ void RWStepShape_RWAngularLocation::WriteStep(
   SW.Send(ent->StepRepr_ShapeAspectRelationship::RelatingShapeAspect());
 
   SW.Send(ent->StepRepr_ShapeAspectRelationship::RelatedShapeAspect());
-
-  // Own fields of AngularLocation
 
   switch (ent->AngleSelection())
   {
@@ -125,17 +107,11 @@ void RWStepShape_RWAngularLocation::WriteStep(
   }
 }
 
-//=================================================================================================
-
 void RWStepShape_RWAngularLocation::Share(const occ::handle<StepShape_AngularLocation>& ent,
                                           Interface_EntityIterator&                     iter) const
 {
 
-  // Inherited fields of ShapeAspectRelationship
-
   iter.AddItem(ent->StepRepr_ShapeAspectRelationship::RelatingShapeAspect());
 
   iter.AddItem(ent->StepRepr_ShapeAspectRelationship::RelatedShapeAspect());
-
-  // Own fields of AngularLocation
 }

@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DESTL_Provider.hpp>
 #include <DESTL_ConfigurationNode.hpp>
@@ -44,15 +33,12 @@ class DESTL_ProviderTest : public ::testing::Test
 protected:
   void SetUp() override
   {
-    // Initialize provider with default configuration
+
     occ::handle<DESTL_ConfigurationNode> aNode = new DESTL_ConfigurationNode();
     myProvider                                 = new DESTL_Provider(aNode);
 
-    // Create triangulated shape for testing (STL format requires triangulated data)
-
     myTriangularFace = CreateTriangulatedFace();
 
-    // Create test document
     occ::handle<TDocStd_Application> anApp = new TDocStd_Application();
     anApp->NewDocument("BinXCAF", myDocument);
   }
@@ -63,7 +49,6 @@ protected:
     myDocument.Nullify();
   }
 
-  // Helper method to count shape elements
   int CountShapeElements(const TopoDS_Shape& theShape, TopAbs_ShapeEnum theType)
   {
     int aCount = 0;
@@ -74,25 +59,21 @@ protected:
     return aCount;
   }
 
-  // Helper method to create a triangulated face with mesh data (suitable for STL)
   TopoDS_Shape CreateTriangulatedFace()
   {
-    // Create vertices for triangulation
+
     NCollection_Array1<gp_Pnt> aNodes(1, 4);
-    aNodes.SetValue(1, gp_Pnt(0.0, 0.0, 0.0));   // Bottom-left
-    aNodes.SetValue(2, gp_Pnt(10.0, 0.0, 0.0));  // Bottom-right
-    aNodes.SetValue(3, gp_Pnt(10.0, 10.0, 0.0)); // Top-right
-    aNodes.SetValue(4, gp_Pnt(0.0, 10.0, 0.0));  // Top-left
+    aNodes.SetValue(1, gp_Pnt(0.0, 0.0, 0.0));
+    aNodes.SetValue(2, gp_Pnt(10.0, 0.0, 0.0));
+    aNodes.SetValue(3, gp_Pnt(10.0, 10.0, 0.0));
+    aNodes.SetValue(4, gp_Pnt(0.0, 10.0, 0.0));
 
-    // Create triangles (two triangles forming a quad)
     NCollection_Array1<Poly_Triangle> aTriangles(1, 2);
-    aTriangles.SetValue(1, Poly_Triangle(1, 2, 3)); // First triangle
-    aTriangles.SetValue(2, Poly_Triangle(1, 3, 4)); // Second triangle
+    aTriangles.SetValue(1, Poly_Triangle(1, 2, 3));
+    aTriangles.SetValue(2, Poly_Triangle(1, 3, 4));
 
-    // Create triangulation
     occ::handle<Poly_Triangulation> aTriangulation = new Poly_Triangulation(aNodes, aTriangles);
 
-    // Create a simple planar face
     gp_Pln                  aPlane(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(gp_Dir::D::Z));
     BRepBuilderAPI_MakeFace aFaceBuilder(aPlane, 0.0, 10.0, 0.0, 10.0);
 
@@ -103,7 +84,6 @@ protected:
 
     TopoDS_Face aFace = aFaceBuilder.Face();
 
-    // Attach triangulation to the face
     BRep_Builder aBuilder;
     aBuilder.UpdateFace(aFace, aTriangulation);
 
@@ -116,7 +96,6 @@ protected:
   occ::handle<TDocStd_Document> myDocument;
 };
 
-// Test basic provider creation and format/vendor information
 TEST_F(DESTL_ProviderTest, BasicProperties)
 {
   EXPECT_STREQ("STL", myProvider->GetFormat().ToCString());
@@ -124,14 +103,12 @@ TEST_F(DESTL_ProviderTest, BasicProperties)
   EXPECT_FALSE(myProvider->GetNode().IsNull());
 }
 
-// Test stream-based shape write and read operations
 TEST_F(DESTL_ProviderTest, StreamShapeWriteRead)
 {
   std::ostringstream           anOStream;
   DE_Provider::WriteStreamList aWriteStreams;
   aWriteStreams.Append(DE_Provider::WriteStreamNode("test.stl", anOStream));
 
-  // Write triangulated face to stream (STL works with mesh data)
   EXPECT_TRUE(myProvider->Write(aWriteStreams, myTriangularFace));
 
   std::string aStlContent = anOStream.str();
@@ -141,7 +118,7 @@ TEST_F(DESTL_ProviderTest, StreamShapeWriteRead)
 
   if (!aStlContent.empty())
   {
-    // Read back from stream
+
     std::istringstream          anIStream(aStlContent);
     DE_Provider::ReadStreamList aReadStreams;
     aReadStreams.Append(DE_Provider::ReadStreamNode("test.stl", anIStream));
@@ -152,17 +129,16 @@ TEST_F(DESTL_ProviderTest, StreamShapeWriteRead)
 
     if (!aReadShape.IsNull())
     {
-      // STL should produce faces with triangulation
+
       int aReadFaces = CountShapeElements(aReadShape, TopAbs_FACE);
-      EXPECT_GT(aReadFaces, 0); // Should have faces
+      EXPECT_GT(aReadFaces, 0);
     }
   }
 }
 
-// Test stream-based document write and read operations
 TEST_F(DESTL_ProviderTest, StreamDocumentWriteRead)
 {
-  // Add triangulated shape to document
+
   occ::handle<XCAFDoc_ShapeTool> aShapeTool  = XCAFDoc_DocumentTool::ShapeTool(myDocument->Main());
   TDF_Label                      aShapeLabel = aShapeTool->AddShape(myTriangularFace);
   EXPECT_FALSE(aShapeLabel.IsNull());
@@ -171,7 +147,6 @@ TEST_F(DESTL_ProviderTest, StreamDocumentWriteRead)
   DE_Provider::WriteStreamList aWriteStreams;
   aWriteStreams.Append(DE_Provider::WriteStreamNode("document.stl", anOStream));
 
-  // Write document to stream
   EXPECT_TRUE(myProvider->Write(aWriteStreams, myDocument));
 
   std::string aStlContent = anOStream.str();
@@ -179,38 +154,33 @@ TEST_F(DESTL_ProviderTest, StreamDocumentWriteRead)
 
   if (!aStlContent.empty())
   {
-    // Create new document for reading
+
     occ::handle<TDocStd_Application> anApp = new TDocStd_Application();
     occ::handle<TDocStd_Document>    aNewDocument;
     anApp->NewDocument("BinXCAF", aNewDocument);
 
-    // Read back from stream
     std::istringstream          anIStream(aStlContent);
     DE_Provider::ReadStreamList aReadStreams;
     aReadStreams.Append(DE_Provider::ReadStreamNode("document.stl", anIStream));
 
     EXPECT_TRUE(myProvider->Read(aReadStreams, aNewDocument));
 
-    // Validate document content
     occ::handle<XCAFDoc_ShapeTool> aNewShapeTool =
       XCAFDoc_DocumentTool::ShapeTool(aNewDocument->Main());
     NCollection_Sequence<TDF_Label> aLabels;
     aNewShapeTool->GetShapes(aLabels);
-    EXPECT_GT(aLabels.Length(), 0); // Should have at least one shape in document
+    EXPECT_GT(aLabels.Length(), 0);
   }
 }
 
-// Test DE_Wrapper integration for STL operations
 TEST_F(DESTL_ProviderTest, DE_WrapperIntegration)
 {
-  // Initialize DE_Wrapper and bind STL provider
+
   DE_Wrapper                           aWrapper;
   occ::handle<DESTL_ConfigurationNode> aNode = new DESTL_ConfigurationNode();
 
-  // Bind the configured node to wrapper
   EXPECT_TRUE(aWrapper.Bind(aNode));
 
-  // Test write with DE_Wrapper using triangular face
   std::ostringstream           anOStream;
   DE_Provider::WriteStreamList aWriteStreams;
   aWriteStreams.Append(DE_Provider::WriteStreamNode("test.stl", anOStream));
@@ -222,7 +192,7 @@ TEST_F(DESTL_ProviderTest, DE_WrapperIntegration)
 
   if (!aStlContent.empty())
   {
-    // Test DE_Wrapper stream operations
+
     std::istringstream          anIStream(aStlContent);
     DE_Provider::ReadStreamList aReadStreams;
     aReadStreams.Append(DE_Provider::ReadStreamNode("test.stl", anIStream));
@@ -230,7 +200,6 @@ TEST_F(DESTL_ProviderTest, DE_WrapperIntegration)
     TopoDS_Shape aReadShape;
     bool         aWrapperResult = aWrapper.Read(aReadStreams, aReadShape);
 
-    // Test direct provider with same content for comparison
     std::istringstream          anIStream2(aStlContent);
     DE_Provider::ReadStreamList aReadStreams2;
     aReadStreams2.Append(DE_Provider::ReadStreamNode("test.stl", anIStream2));
@@ -239,7 +208,6 @@ TEST_F(DESTL_ProviderTest, DE_WrapperIntegration)
     TopoDS_Shape                aDirectShape;
     bool                        aDirectResult = aDirectProvider->Read(aReadStreams2, aDirectShape);
 
-    // REQUIREMENT: DE_Wrapper must work exactly the same as direct provider
     EXPECT_EQ(aWrapperResult, aDirectResult);
     EXPECT_EQ(aReadShape.IsNull(), aDirectShape.IsNull());
 
@@ -251,10 +219,9 @@ TEST_F(DESTL_ProviderTest, DE_WrapperIntegration)
   }
 }
 
-// Test error conditions and edge cases with null document validation
 TEST_F(DESTL_ProviderTest, ErrorHandling)
 {
-  // Test with empty streams
+
   DE_Provider::WriteStreamList anEmptyWriteStreams;
   EXPECT_FALSE(myProvider->Write(anEmptyWriteStreams, myTriangularFace));
 
@@ -262,18 +229,14 @@ TEST_F(DESTL_ProviderTest, ErrorHandling)
   TopoDS_Shape                aShape;
   EXPECT_FALSE(myProvider->Read(anEmptyReadStreams, aShape));
 
-  // Test with null shape
   std::ostringstream           anOStream;
   DE_Provider::WriteStreamList aWriteStreams;
   aWriteStreams.Append(DE_Provider::WriteStreamNode("null_test.stl", anOStream));
   TopoDS_Shape aNullShape;
 
-  // Writing null shape should succeed but produce minimal content
   myProvider->Write(aWriteStreams, aNullShape);
   std::string aContent = anOStream.str();
-  // STL may produce empty content for null shape
 
-  // Test reading invalid STL content
   std::string                 anInvalidContent = "This is not valid STL content";
   std::istringstream          anInvalidStream(anInvalidContent);
   DE_Provider::ReadStreamList anInvalidReadStreams;
@@ -282,42 +245,34 @@ TEST_F(DESTL_ProviderTest, ErrorHandling)
   TopoDS_Shape anInvalidShape;
   EXPECT_FALSE(myProvider->Read(anInvalidReadStreams, anInvalidShape));
 
-  // Test with null document
   occ::handle<TDocStd_Document> aNullDoc;
   EXPECT_FALSE(myProvider->Write(aWriteStreams, aNullDoc));
   EXPECT_FALSE(myProvider->Read(anEmptyReadStreams, aNullDoc));
 }
 
-// Test DESTL configuration modes
 TEST_F(DESTL_ProviderTest, ConfigurationModes)
 {
   occ::handle<DESTL_ConfigurationNode> aNode =
     occ::down_cast<DESTL_ConfigurationNode>(myProvider->GetNode());
 
-  // Test ASCII mode configuration
   aNode->InternalParameters.WriteAscii = true;
   EXPECT_TRUE(aNode->InternalParameters.WriteAscii);
 
-  // Test Binary mode configuration
   aNode->InternalParameters.WriteAscii = false;
   EXPECT_FALSE(aNode->InternalParameters.WriteAscii);
 
-  // Test merge angle configuration
   aNode->InternalParameters.ReadMergeAngle = 45.0;
   EXPECT_DOUBLE_EQ(45.0, aNode->InternalParameters.ReadMergeAngle);
 
-  // Test that provider format and vendor are correct
   EXPECT_STREQ("STL", myProvider->GetFormat().ToCString());
   EXPECT_STREQ("OCC", myProvider->GetVendor().ToCString());
 }
 
-// Test ASCII vs Binary mode configurations
 TEST_F(DESTL_ProviderTest, AsciiVsBinaryModes)
 {
   occ::handle<DESTL_ConfigurationNode> aNode =
     occ::down_cast<DESTL_ConfigurationNode>(myProvider->GetNode());
 
-  // Test ASCII mode
   aNode->InternalParameters.WriteAscii = true;
 
   std::ostringstream           anAsciiStream;
@@ -329,7 +284,6 @@ TEST_F(DESTL_ProviderTest, AsciiVsBinaryModes)
   EXPECT_FALSE(anAsciiContent.empty());
   EXPECT_TRUE(anAsciiContent.find("solid") != std::string::npos);
 
-  // Test Binary mode
   aNode->InternalParameters.WriteAscii = false;
 
   std::ostringstream           aBinaryStream;
@@ -340,17 +294,15 @@ TEST_F(DESTL_ProviderTest, AsciiVsBinaryModes)
   std::string aBinaryContent = aBinaryStream.str();
   EXPECT_FALSE(aBinaryContent.empty());
 
-  // Binary and ASCII content should be different
   EXPECT_NE(anAsciiContent, aBinaryContent);
 }
 
-// Test multiple shapes in single document
 TEST_F(DESTL_ProviderTest, MultipleShapesInDocument)
 {
-  // Add triangulated face to document multiple times (to create multiple shapes)
+
   occ::handle<XCAFDoc_ShapeTool> aShapeTool  = XCAFDoc_DocumentTool::ShapeTool(myDocument->Main());
   TDF_Label                      aFaceLabel1 = aShapeTool->AddShape(myTriangularFace);
-  TDF_Label aFaceLabel2 = aShapeTool->AddShape(myTriangularFace); // Add same face again
+  TDF_Label                      aFaceLabel2 = aShapeTool->AddShape(myTriangularFace);
 
   EXPECT_FALSE(aFaceLabel1.IsNull());
   EXPECT_FALSE(aFaceLabel2.IsNull());
@@ -359,13 +311,11 @@ TEST_F(DESTL_ProviderTest, MultipleShapesInDocument)
   DE_Provider::WriteStreamList aWriteStreams;
   aWriteStreams.Append(DE_Provider::WriteStreamNode("multi_shapes.stl", anOStream));
 
-  // Write document with multiple shapes
   EXPECT_TRUE(myProvider->Write(aWriteStreams, myDocument));
 
   std::string aStlContent = anOStream.str();
   EXPECT_FALSE(aStlContent.empty());
 
-  // Read back into new document
   occ::handle<TDocStd_Application> anApp = new TDocStd_Application();
   occ::handle<TDocStd_Document>    aNewDocument;
   anApp->NewDocument("BinXCAF", aNewDocument);
@@ -376,7 +326,6 @@ TEST_F(DESTL_ProviderTest, MultipleShapesInDocument)
 
   EXPECT_TRUE(myProvider->Read(aReadStreams, aNewDocument));
 
-  // Validate document content
   occ::handle<XCAFDoc_ShapeTool> aNewShapeTool =
     XCAFDoc_DocumentTool::ShapeTool(aNewDocument->Main());
   NCollection_Sequence<TDF_Label> aLabels;
@@ -384,10 +333,9 @@ TEST_F(DESTL_ProviderTest, MultipleShapesInDocument)
   EXPECT_GT(aLabels.Length(), 0);
 }
 
-// Test triangulated face handling (suitable for STL)
 TEST_F(DESTL_ProviderTest, TriangulatedFaceHandling)
 {
-  // Use our triangulated face which already has mesh data
+
   std::ostringstream           anOStream;
   DE_Provider::WriteStreamList aWriteStreams;
   aWriteStreams.Append(DE_Provider::WriteStreamNode("triangulated_face.stl", anOStream));
@@ -396,9 +344,8 @@ TEST_F(DESTL_ProviderTest, TriangulatedFaceHandling)
 
   std::string aStlContent = anOStream.str();
   EXPECT_FALSE(aStlContent.empty());
-  EXPECT_GT(aStlContent.size(), 100); // Should have meaningful content
+  EXPECT_GT(aStlContent.size(), 100);
 
-  // Read back
   std::istringstream          anIStream(aStlContent);
   DE_Provider::ReadStreamList aReadStreams;
   aReadStreams.Append(DE_Provider::ReadStreamNode("triangulated_face.stl", anIStream));
@@ -408,14 +355,12 @@ TEST_F(DESTL_ProviderTest, TriangulatedFaceHandling)
   EXPECT_FALSE(aReadShape.IsNull());
 }
 
-// Test DE_Wrapper with different file extensions
 TEST_F(DESTL_ProviderTest, DE_WrapperFileExtensions)
 {
   DE_Wrapper                           aWrapper;
   occ::handle<DESTL_ConfigurationNode> aNode = new DESTL_ConfigurationNode();
   EXPECT_TRUE(aWrapper.Bind(aNode));
 
-  // Test different STL extensions
   std::vector<std::string> aExtensions = {"test.stl", "test.STL", "mesh.stl"};
 
   for (const auto& anExt : aExtensions)
@@ -430,7 +375,6 @@ TEST_F(DESTL_ProviderTest, DE_WrapperFileExtensions)
     std::string aContent = anOStream.str();
     EXPECT_FALSE(aContent.empty()) << "Empty content for extension: " << anExt;
 
-    // Test read back
     std::istringstream          anIStream(aContent);
     DE_Provider::ReadStreamList aReadStreams;
     aReadStreams.Append(DE_Provider::ReadStreamNode(anExt.c_str(), anIStream));
@@ -442,10 +386,9 @@ TEST_F(DESTL_ProviderTest, DE_WrapperFileExtensions)
   }
 }
 
-// Test stream operations with empty and invalid data
 TEST_F(DESTL_ProviderTest, StreamErrorConditions)
 {
-  // Test empty stream list
+
   DE_Provider::WriteStreamList anEmptyWriteStreams;
   EXPECT_FALSE(myProvider->Write(anEmptyWriteStreams, myTriangularFace));
 
@@ -453,7 +396,6 @@ TEST_F(DESTL_ProviderTest, StreamErrorConditions)
   TopoDS_Shape                aShape;
   EXPECT_FALSE(myProvider->Read(anEmptyReadStreams, aShape));
 
-  // Test corrupted STL data
   std::string                 aCorruptedData = "This is not STL data at all";
   std::istringstream          aCorruptedStream(aCorruptedData);
   DE_Provider::ReadStreamList aCorruptedReadStreams;
@@ -462,8 +404,7 @@ TEST_F(DESTL_ProviderTest, StreamErrorConditions)
   TopoDS_Shape aCorruptedShape;
   EXPECT_FALSE(myProvider->Read(aCorruptedReadStreams, aCorruptedShape));
 
-  // Test partial STL data
-  std::string                 aPartialData = "solid test\n  facet normal 0 0 1\n"; // Incomplete
+  std::string                 aPartialData = "solid test\n  facet normal 0 0 1\n";
   std::istringstream          aPartialStream(aPartialData);
   DE_Provider::ReadStreamList aPartialReadStreams;
   aPartialReadStreams.Append(DE_Provider::ReadStreamNode("partial.stl", aPartialStream));
@@ -472,24 +413,20 @@ TEST_F(DESTL_ProviderTest, StreamErrorConditions)
   EXPECT_FALSE(myProvider->Read(aPartialReadStreams, aPartialShape));
 }
 
-// Test configuration parameter validation
 TEST_F(DESTL_ProviderTest, ConfigurationParameterValidation)
 {
   occ::handle<DESTL_ConfigurationNode> aNode =
     occ::down_cast<DESTL_ConfigurationNode>(myProvider->GetNode());
 
-  // Test valid merge angle
   aNode->InternalParameters.ReadMergeAngle = 30.0;
   EXPECT_DOUBLE_EQ(30.0, aNode->InternalParameters.ReadMergeAngle);
 
-  // Test edge case merge angles
-  aNode->InternalParameters.ReadMergeAngle = 0.0; // Minimum
+  aNode->InternalParameters.ReadMergeAngle = 0.0;
   EXPECT_DOUBLE_EQ(0.0, aNode->InternalParameters.ReadMergeAngle);
 
-  aNode->InternalParameters.ReadMergeAngle = 90.0; // Maximum
+  aNode->InternalParameters.ReadMergeAngle = 90.0;
   EXPECT_DOUBLE_EQ(90.0, aNode->InternalParameters.ReadMergeAngle);
 
-  // Test BRep vs triangulation modes
   aNode->InternalParameters.ReadBRep = true;
   EXPECT_TRUE(aNode->InternalParameters.ReadBRep);
 
@@ -497,10 +434,9 @@ TEST_F(DESTL_ProviderTest, ConfigurationParameterValidation)
   EXPECT_FALSE(aNode->InternalParameters.ReadBRep);
 }
 
-// Test multiple triangulated faces
 TEST_F(DESTL_ProviderTest, MultipleTriangulatedFaces)
 {
-  // Create another triangulated face with different geometry
+
   NCollection_Array1<gp_Pnt> aNodes(1, 3);
   aNodes.SetValue(1, gp_Pnt(0.0, 0.0, 0.0));
   aNodes.SetValue(2, gp_Pnt(5.0, 0.0, 0.0));
@@ -518,7 +454,6 @@ TEST_F(DESTL_ProviderTest, MultipleTriangulatedFaces)
   BRep_Builder aBuilder;
   aBuilder.UpdateFace(aTriangleFace, aTriangulation);
 
-  // Test first triangulated face
   std::ostringstream           aStream1;
   DE_Provider::WriteStreamList aWriteStreams1;
   aWriteStreams1.Append(DE_Provider::WriteStreamNode("face1.stl", aStream1));
@@ -526,7 +461,6 @@ TEST_F(DESTL_ProviderTest, MultipleTriangulatedFaces)
   EXPECT_TRUE(myProvider->Write(aWriteStreams1, myTriangularFace));
   std::string aContent1 = aStream1.str();
 
-  // Test second triangulated face
   std::ostringstream           aStream2;
   DE_Provider::WriteStreamList aWriteStreams2;
   aWriteStreams2.Append(DE_Provider::WriteStreamNode("face2.stl", aStream2));
@@ -534,14 +468,11 @@ TEST_F(DESTL_ProviderTest, MultipleTriangulatedFaces)
   EXPECT_TRUE(myProvider->Write(aWriteStreams2, aTriangleFace));
   std::string aContent2 = aStream2.str();
 
-  // Both content should be non-empty
   EXPECT_FALSE(aContent1.empty());
   EXPECT_FALSE(aContent2.empty());
 
-  // Different triangulated faces should produce different STL content
   EXPECT_NE(aContent1, aContent2);
 
-  // Both should read back successfully
   std::istringstream          aIStream1(aContent1);
   DE_Provider::ReadStreamList aReadStreams1;
   aReadStreams1.Append(DE_Provider::ReadStreamNode("face1.stl", aIStream1));

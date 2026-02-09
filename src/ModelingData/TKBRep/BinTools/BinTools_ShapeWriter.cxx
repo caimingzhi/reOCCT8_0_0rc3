@@ -1,15 +1,4 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BinTools_ShapeWriter.hpp>
 #include <BinTools_LocationSet.hpp>
@@ -31,17 +20,11 @@
 #include <BinTools_OStream.hpp>
 #include <Standard_ErrorHandler.hpp>
 
-//=================================================================================================
-
 BinTools_ShapeWriter::BinTools_ShapeWriter()
 
   = default;
 
-//=================================================================================================
-
 BinTools_ShapeWriter::~BinTools_ShapeWriter() = default;
-
-//=================================================================================================
 
 void BinTools_ShapeWriter::Clear()
 {
@@ -56,15 +39,11 @@ void BinTools_ShapeWriter::Clear()
   myTriangulationPos.Clear();
 }
 
-//=================================================================================================
-
 void BinTools_ShapeWriter::Write(const TopoDS_Shape& theShape, Standard_OStream& theStream)
 {
   BinTools_OStream anOStream(theStream);
   WriteShape(anOStream, theShape);
 }
-
-//=================================================================================================
 
 void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_Shape& theShape)
 {
@@ -75,7 +54,7 @@ void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_
   }
   TopoDS_Shape    aShape     = theShape.Located(TopLoc_Location());
   const uint64_t* anExisting = myShapePos.Seek(aShape);
-  if (anExisting) // shape is already there, so, write reference to it
+  if (anExisting)
   {
     theStream.WriteReference(*anExisting);
     WriteLocation(theStream, theShape.Location());
@@ -107,20 +86,20 @@ void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_
           const occ::handle<BRep_PointRepresentation>& aPR = anIter.Value();
           if (aPR->IsPointOnCurve())
           {
-            theStream << (uint8_t)1; // 1
+            theStream << (uint8_t)1;
             theStream << aPR->Parameter();
             WriteCurve(theStream, aPR->Curve());
           }
           else if (aPR->IsPointOnCurveOnSurface())
           {
-            theStream << (uint8_t)2; // 2
+            theStream << (uint8_t)2;
             theStream << aPR->Parameter();
             WriteCurve(theStream, aPR->PCurve());
             WriteSurface(theStream, aPR->Surface());
           }
           else if (aPR->IsPointOnSurface())
           {
-            theStream << (uint8_t)3; // 3
+            theStream << (uint8_t)3;
             theStream << aPR->Parameter2() << aPR->Parameter();
             WriteSurface(theStream, aPR->Surface());
           }
@@ -147,7 +126,7 @@ void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_
             {
               occ::handle<BRep_GCurve> aGC = occ::down_cast<BRep_GCurve>(aCR);
               aGC->Range(aFirst, aLast);
-              theStream << (uint8_t)1; // -1- CURVE_3D;
+              theStream << (uint8_t)1;
               WriteCurve(theStream, aCR->Curve3D());
               WriteLocation(theStream, aCR->Location());
               theStream << aFirst << aLast;
@@ -158,13 +137,13 @@ void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_
             occ::handle<BRep_GCurve> GC = occ::down_cast<BRep_GCurve>(aCR);
             GC->Range(aFirst, aLast);
             if (!aCR->IsCurveOnClosedSurface())
-              theStream << (uint8_t)2; // -2- Curve on surf
+              theStream << (uint8_t)2;
             else
-              theStream << (uint8_t)3; // -3- Curve on closed surf
+              theStream << (uint8_t)3;
             WriteCurve(theStream, aCR->PCurve());
 
             if (aCR->IsCurveOnClosedSurface())
-            { //+ int|char
+            {
               WriteCurve(theStream, aCR->PCurve2());
               theStream << (uint8_t)aCR->Continuity();
             }
@@ -174,7 +153,7 @@ void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_
           }
           else if (aCR->IsRegularity())
           {
-            theStream << (uint8_t)4; // -4- Regularity
+            theStream << (uint8_t)4;
             theStream << (uint8_t)aCR->Continuity();
             WriteSurface(theStream, aCR->Surface());
             WriteLocation(theStream, aCR->Location());
@@ -188,7 +167,7 @@ void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_
               occ::handle<BRep_Polygon3D> aGC = occ::down_cast<BRep_Polygon3D>(aCR);
               if (!aGC->Polygon3D().IsNull())
               {
-                theStream << (uint8_t)5; // -5- Polygon3D
+                theStream << (uint8_t)5;
                 WritePolygon(theStream, aCR->Polygon3D());
                 WriteLocation(theStream, aCR->Location());
               }
@@ -198,14 +177,14 @@ void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_
               occ::handle<BRep_PolygonOnTriangulation> aPT =
                 occ::down_cast<BRep_PolygonOnTriangulation>(aCR);
               if (!aCR->IsPolygonOnClosedTriangulation())
-                theStream << (uint8_t)6; // -6- Polygon on triangulation
+                theStream << (uint8_t)6;
               else
-                theStream << (uint8_t)7; // -7- Polygon on closed triangulation
+                theStream << (uint8_t)7;
               WritePolygon(theStream, aPT->PolygonOnTriangulation());
 
               if (aCR->IsPolygonOnClosedTriangulation())
                 WritePolygon(theStream, aPT->PolygonOnTriangulation2());
-              // edge triangulation does not need normals
+
               WriteTriangulation(theStream, aPT->Triangulation(), false);
               WriteLocation(theStream, aCR->Location());
             }
@@ -220,7 +199,6 @@ void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_
         occ::handle<BRep_TFace> aTF = occ::down_cast<BRep_TFace>(aShape.TShape());
         const TopoDS_Face&      aF  = TopoDS::Face(aShape);
 
-        // Write the surface geometry
         theStream << BRep_Tool::NaturalRestriction(aF) << aTF->Tolerance();
         WriteSurface(theStream, aTF->Surface());
         WriteLocation(theStream, aTF->Location());
@@ -239,7 +217,7 @@ void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_
             theStream << (uint8_t)1;
         }
         else
-          theStream << (uint8_t)0; // without triangulation
+          theStream << (uint8_t)0;
       }
       break;
       default:
@@ -261,14 +239,12 @@ void BinTools_ShapeWriter::WriteShape(BinTools_OStream& theStream, const TopoDS_
                      aShape.Closed(),
                      aShape.Infinite(),
                      aShape.Convex());
-  // process sub-shapes
+
   for (TopoDS_Iterator aSub(aShape, false, false); aSub.More(); aSub.Next())
     WriteShape(theStream, aSub.Value());
 
   theStream << BinTools_ObjectType_EndShape;
 }
-
-//=================================================================================================
 
 void BinTools_ShapeWriter::WriteLocation(BinTools_OStream&      theStream,
                                          const TopLoc_Location& theLocation)
@@ -323,8 +299,6 @@ void BinTools_ShapeWriter::WriteLocation(BinTools_OStream&      theStream,
   }
 }
 
-//=================================================================================================
-
 void BinTools_ShapeWriter::WriteCurve(BinTools_OStream&              theStream,
                                       const occ::handle<Geom_Curve>& theCurve)
 {
@@ -343,8 +317,6 @@ void BinTools_ShapeWriter::WriteCurve(BinTools_OStream&              theStream,
   theStream << BinTools_ObjectType_Curve;
   BinTools_CurveSet::WriteCurve(theCurve, theStream);
 }
-
-//=================================================================================================
 
 void BinTools_ShapeWriter::WriteCurve(BinTools_OStream&                theStream,
                                       const occ::handle<Geom2d_Curve>& theCurve)
@@ -365,8 +337,6 @@ void BinTools_ShapeWriter::WriteCurve(BinTools_OStream&                theStream
   BinTools_Curve2dSet::WriteCurve2d(theCurve, theStream);
 }
 
-//=================================================================================================
-
 void BinTools_ShapeWriter::WriteSurface(BinTools_OStream&                theStream,
                                         const occ::handle<Geom_Surface>& theSurface)
 {
@@ -385,8 +355,6 @@ void BinTools_ShapeWriter::WriteSurface(BinTools_OStream&                theStre
   theStream << BinTools_ObjectType_Surface;
   BinTools_SurfaceSet::WriteSurface(theSurface, theStream);
 }
-
-//=================================================================================================
 
 void BinTools_ShapeWriter::WritePolygon(BinTools_OStream&                  theStream,
                                         const occ::handle<Poly_Polygon3D>& thePolygon)
@@ -417,8 +385,6 @@ void BinTools_ShapeWriter::WritePolygon(BinTools_OStream&                  theSt
       theStream << aParam.Value(aNodeIter);
   }
 }
-
-//=================================================================================================
 
 void BinTools_ShapeWriter::WritePolygon(BinTools_OStream&                               theStream,
                                         const occ::handle<Poly_PolygonOnTriangulation>& thePolygon)
@@ -475,11 +441,9 @@ void BinTools_ShapeWriter::WriteTriangulation(
   const int aNbTriangles = theTriangulation->NbTriangles();
   theStream << aNbNodes << aNbTriangles << theTriangulation->HasUVNodes();
   theStream << theNeedToWriteNormals << theTriangulation->Deflection();
-  // write the 3d nodes
+
   for (int aNodeIter = 1; aNodeIter <= aNbNodes; ++aNodeIter)
     theStream << theTriangulation->Node(aNodeIter);
-  // theStream.write ((char*)(theTriangulation->InternalNodes().value(0)) , sizeof (gp_Pnt) *
-  // aNbNodes);
 
   if (theTriangulation->HasUVNodes())
   {

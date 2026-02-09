@@ -9,10 +9,6 @@
 #include <NCollection_Array1.hpp>
 class Law_BSpline;
 
-//! Law Function based on a BSpline curve 1d. Package
-//! methods and classes are implemented in package Law
-//! to construct the basis curve with several
-//! constraints.
 class Law_BSpFunc : public Law_Function
 {
 
@@ -25,13 +21,8 @@ public:
 
   Standard_EXPORT GeomAbs_Shape Continuity() const override;
 
-  //! Returns the number of intervals for continuity
-  //! <S>. May be one if Continuity(me) >= <S>
   Standard_EXPORT int NbIntervals(const GeomAbs_Shape S) const override;
 
-  //! Stores in <T> the parameters bounding the intervals of continuity <S>.
-  //! The array must provide enough room to accommodate for the parameters, i.e. T.Length() >
-  //! NbIntervals()
   Standard_EXPORT void Intervals(NCollection_Array1<double>& T,
                                  const GeomAbs_Shape         S) const override;
 
@@ -41,12 +32,6 @@ public:
 
   Standard_EXPORT void D2(const double X, double& F, double& D, double& D2) override;
 
-  //! Returns a law equivalent of <me> between
-  //! parameters <First> and <Last>. <Tol> is used to
-  //! test for 3d points confusion.
-  //! It is usfule to determines the derivatives
-  //! in these values <First> and <Last> if
-  //! the Law is not Cn.
   Standard_EXPORT occ::handle<Law_Function> Trim(const double PFirst,
                                                  const double PLast,
                                                  const double Tol) const override;

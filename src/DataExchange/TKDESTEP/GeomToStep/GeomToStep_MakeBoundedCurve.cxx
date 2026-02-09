@@ -15,9 +15,6 @@
 #include <StepGeom_BSplineCurveWithKnots.hpp>
 #include <StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve.hpp>
 
-//=============================================================================
-// Creation d' une BoundedCurve de prostep a partir d' une BoundedCurve de Geom
-//=============================================================================
 GeomToStep_MakeBoundedCurve::GeomToStep_MakeBoundedCurve(const occ::handle<Geom_BoundedCurve>& C,
                                                          const StepData_Factors& theLocalFactors)
 {
@@ -26,7 +23,7 @@ GeomToStep_MakeBoundedCurve::GeomToStep_MakeBoundedCurve(const occ::handle<Geom_
   if (C->IsKind(STANDARD_TYPE(Geom_BSplineCurve)))
   {
     occ::handle<Geom_BSplineCurve> Bspli = occ::down_cast<Geom_BSplineCurve>(C);
-    // UPDATE FMA 1-04-96
+
     if (C->IsPeriodic())
     {
       occ::handle<Geom_BSplineCurve> newBspli = occ::down_cast<Geom_BSplineCurve>(Bspli->Copy());
@@ -71,11 +68,6 @@ GeomToStep_MakeBoundedCurve::GeomToStep_MakeBoundedCurve(const occ::handle<Geom_
   }
 }
 
-//=============================================================================
-// Creation d' une BoundedCurve de prostep a partir d' une BoundedCurve de
-// Geom2d
-//=============================================================================
-
 GeomToStep_MakeBoundedCurve::GeomToStep_MakeBoundedCurve(const occ::handle<Geom2d_BoundedCurve>& C,
                                                          const StepData_Factors& theLocalFactors)
 {
@@ -83,7 +75,7 @@ GeomToStep_MakeBoundedCurve::GeomToStep_MakeBoundedCurve(const occ::handle<Geom2
   if (C->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)))
   {
     occ::handle<Geom2d_BSplineCurve> Bspli = occ::down_cast<Geom2d_BSplineCurve>(C);
-    // UPDATE FMA 1-04-96
+
     if (C->IsPeriodic())
     {
       occ::handle<Geom2d_BSplineCurve> newBspli =
@@ -113,10 +105,6 @@ GeomToStep_MakeBoundedCurve::GeomToStep_MakeBoundedCurve(const occ::handle<Geom2
   else
     done = false;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_BoundedCurve>& GeomToStep_MakeBoundedCurve::Value() const
 {

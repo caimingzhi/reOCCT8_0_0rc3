@@ -8,8 +8,6 @@
 #include <TDF_Tool.hpp>
 #include <TNaming_NamedShape.hpp>
 
-//=================================================================================================
-
 void DDataStd::AllCommands(Draw_Interpretor& theCommands)
 {
   NamedShapeCommands(theCommands);
@@ -21,8 +19,6 @@ void DDataStd::AllCommands(Draw_Interpretor& theCommands)
   NameCommands(theCommands);
   TreeCommands(theCommands);
 }
-
-//=================================================================================================
 
 void DDataStd::DumpConstraint(const occ::handle<TDataXtd_Constraint>& CTR, Standard_OStream& anOS)
 {

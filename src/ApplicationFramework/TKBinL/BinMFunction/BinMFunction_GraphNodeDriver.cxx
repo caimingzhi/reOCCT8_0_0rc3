@@ -13,25 +13,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMFunction_GraphNodeDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMFunction_GraphNodeDriver::BinMFunction_GraphNodeDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TFunction_GraphNode)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMFunction_GraphNodeDriver::NewEmpty() const
 {
   return new TFunction_GraphNode();
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 
 bool BinMFunction_GraphNodeDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                          const occ::handle<TDF_Attribute>& theTarget,
@@ -43,10 +34,8 @@ bool BinMFunction_GraphNodeDriver::Paste(const BinObjMgt_Persistent&       theSo
   if (!(theSource >> intStatus >> nb_previous >> nb_next))
     return false;
 
-  // Execution status
   GN->SetStatus((TFunction_ExecutionStatus)intStatus);
 
-  // Previous functions
   if (nb_previous)
   {
     NCollection_Array1<int> aTargetArray(1, nb_previous);
@@ -58,7 +47,6 @@ bool BinMFunction_GraphNodeDriver::Paste(const BinObjMgt_Persistent&       theSo
     }
   }
 
-  // Next functions
   if (nb_next)
   {
     NCollection_Array1<int> aTargetArray(1, nb_next);
@@ -73,11 +61,6 @@ bool BinMFunction_GraphNodeDriver::Paste(const BinObjMgt_Persistent&       theSo
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
-
 void BinMFunction_GraphNodeDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
   BinObjMgt_Persistent&             theTarget,
@@ -85,14 +68,12 @@ void BinMFunction_GraphNodeDriver::Paste(
 {
   occ::handle<TFunction_GraphNode> GN = occ::down_cast<TFunction_GraphNode>(theSource);
 
-  // Execution status
   theTarget << (int)GN->GetStatus();
-  // Number of previous functions
+
   theTarget << GN->GetPrevious().Extent();
-  // Number of next functions
+
   theTarget << GN->GetNext().Extent();
 
-  // Previous functions
   int nb = GN->GetPrevious().Extent();
   if (nb)
   {
@@ -106,7 +87,6 @@ void BinMFunction_GraphNodeDriver::Paste(
     theTarget.PutIntArray(aPtr, nb);
   }
 
-  // Next functions
   nb = GN->GetNext().Extent();
   if (nb)
   {

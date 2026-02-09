@@ -11,8 +11,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Wasm_Window, Aspect_Window)
 
-//=================================================================================================
-
 Wasm_Window::Wasm_Window(const TCollection_AsciiString& theCanvasId, const bool theToScaleBacking)
     : myCanvasId(theCanvasId),
       mySize(0),
@@ -39,11 +37,7 @@ Wasm_Window::Wasm_Window(const TCollection_AsciiString& theCanvasId, const bool 
 #endif
 }
 
-//=================================================================================================
-
 Wasm_Window::~Wasm_Window() = default;
-
-//=================================================================================================
 
 Aspect_TypeOfResize Wasm_Window::DoResize()
 {
@@ -71,8 +65,6 @@ Aspect_TypeOfResize Wasm_Window::DoResize()
   return Aspect_TOR_UNKNOWN;
 }
 
-//=================================================================================================
-
 double Wasm_Window::Ratio() const
 {
   NCollection_Vec2<int> aCanvasSize = mySize;
@@ -87,8 +79,6 @@ double Wasm_Window::Ratio() const
            ? double(aCanvasSize.x()) / double(aCanvasSize.y())
            : 1.0;
 }
-
-//=================================================================================================
 
 void Wasm_Window::Position(int& theX1, int& theY1, int& theX2, int& theY2) const
 {
@@ -106,8 +96,6 @@ void Wasm_Window::Position(int& theX1, int& theY1, int& theX2, int& theY2) const
 #endif
 }
 
-//=================================================================================================
-
 void Wasm_Window::Size(int& theWidth, int& theHeight) const
 {
   if (IsVirtual())
@@ -122,8 +110,6 @@ void Wasm_Window::Size(int& theWidth, int& theHeight) const
 #endif
 }
 
-//=================================================================================================
-
 void Wasm_Window::SetSizeLogical(const NCollection_Vec2<double>& theSize)
 {
   mySize = NCollection_Vec2<int>(theSize * myDevicePixelRatio);
@@ -137,8 +123,6 @@ void Wasm_Window::SetSizeLogical(const NCollection_Vec2<double>& theSize)
   emscripten_set_element_css_size(myCanvasId.ToCString(), theSize.x(), theSize.y());
 #endif
 }
-
-//=================================================================================================
 
 void Wasm_Window::SetSizeBacking(const NCollection_Vec2<int>& theSize)
 {
@@ -156,11 +140,7 @@ void Wasm_Window::SetSizeBacking(const NCollection_Vec2<int>& theSize)
 #endif
 }
 
-//=================================================================================================
-
 void Wasm_Window::InvalidateContent(const occ::handle<Aspect_DisplayConnection>&) {}
-
-//=================================================================================================
 
 bool Wasm_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
                                  int                         theEventType,
@@ -217,8 +197,6 @@ bool Wasm_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
 #endif
 }
 
-//=================================================================================================
-
 bool Wasm_Window::ProcessMouseEvent(Aspect_WindowInputListener& theListener,
                                     int                         theEventType,
                                     const EmscriptenMouseEvent* theEvent)
@@ -251,7 +229,7 @@ bool Wasm_Window::ProcessMouseEvent(Aspect_WindowInputListener& theListener,
   Aspect_VKeyMouse       aButtons    = Wasm_Window::MouseButtonsFromNative(theEvent->buttons);
   if (theEventType != EMSCRIPTEN_EVENT_MOUSEDOWN)
   {
-    aButtons &= aButtonsOld; // filter out unexpected buttons
+    aButtons &= aButtonsOld;
   }
   switch (theEventType)
   {
@@ -302,8 +280,7 @@ bool Wasm_Window::ProcessMouseEvent(Aspect_WindowInputListener& theListener,
     }
     case EMSCRIPTEN_EVENT_MOUSELEAVE:
     {
-      // there is no SetCapture() support, so that mouse unclick events outside canvas will not
-      // arrive, so we have to forget current state...
+
       if (theListener.UpdateMouseButtons(aNewPos2i, Aspect_VKeyMouse_NONE, aFlags, isEmulated))
       {
         theListener.ProcessInput();
@@ -319,8 +296,6 @@ bool Wasm_Window::ProcessMouseEvent(Aspect_WindowInputListener& theListener,
   return false;
 #endif
 }
-
-//=================================================================================================
 
 bool Wasm_Window::ProcessWheelEvent(Aspect_WindowInputListener& theListener,
                                     int                         theEventType,
@@ -375,8 +350,6 @@ bool Wasm_Window::ProcessWheelEvent(Aspect_WindowInputListener& theListener,
   return false;
 #endif
 }
-
-//=================================================================================================
 
 bool Wasm_Window::ProcessTouchEvent(Aspect_WindowInputListener& theListener,
                                     int                         theEventType,
@@ -448,8 +421,6 @@ bool Wasm_Window::ProcessTouchEvent(Aspect_WindowInputListener& theListener,
   return hasUpdates || theListener.HasTouchPoints();
 }
 
-//=================================================================================================
-
 bool Wasm_Window::ProcessKeyEvent(Aspect_WindowInputListener&    theListener,
                                   int                            theEventType,
                                   const EmscriptenKeyboardEvent* theEvent)
@@ -496,8 +467,6 @@ bool Wasm_Window::ProcessKeyEvent(Aspect_WindowInputListener&    theListener,
   return false;
 }
 
-//=================================================================================================
-
 bool Wasm_Window::ProcessUiEvent(Aspect_WindowInputListener& theListener,
                                  int                         theEventType,
                                  const EmscriptenUiEvent*)
@@ -514,16 +483,13 @@ bool Wasm_Window::ProcessUiEvent(Aspect_WindowInputListener& theListener,
   return true;
 }
 
-//=================================================================================================
-
 bool Wasm_Window::ProcessFocusEvent(Aspect_WindowInputListener& theListener,
                                     int                         theEventType,
                                     const EmscriptenFocusEvent*)
 {
   bool isActivated = false;
 #if defined(__EMSCRIPTEN__)
-  if (theEventType != EMSCRIPTEN_EVENT_FOCUS
-      && theEventType != EMSCRIPTEN_EVENT_FOCUSIN // about to receive focus
+  if (theEventType != EMSCRIPTEN_EVENT_FOCUS && theEventType != EMSCRIPTEN_EVENT_FOCUSIN
       && theEventType != EMSCRIPTEN_EVENT_FOCUSOUT)
   {
     return false;
@@ -535,8 +501,6 @@ bool Wasm_Window::ProcessFocusEvent(Aspect_WindowInputListener& theListener,
   theListener.ProcessFocus(isActivated);
   return true;
 }
-
-//=================================================================================================
 
 Aspect_VKeyMouse Wasm_Window::MouseButtonsFromNative(unsigned short theButtons)
 {
@@ -556,24 +520,22 @@ Aspect_VKeyMouse Wasm_Window::MouseButtonsFromNative(unsigned short theButtons)
   return aButtons;
 }
 
-//=================================================================================================
-
 Aspect_VKey Wasm_Window::VirtualKeyFromNative(int theKey)
 {
 #if defined(__EMSCRIPTEN__)
   if (theKey >= DOM_VK_0 && theKey <= DOM_VK_9)
   {
-    // numpad keys
+
     return Aspect_VKey((theKey - DOM_VK_0) + Aspect_VKey_0);
   }
   if (theKey >= DOM_VK_A && theKey <= DOM_VK_Z)
   {
-    // main latin alphabet keys
+
     return Aspect_VKey((theKey - DOM_VK_A) + Aspect_VKey_A);
   }
   if (theKey >= DOM_VK_F1 && theKey <= DOM_VK_F24)
   {
-    // special keys
+
     if (theKey <= DOM_VK_F12)
     {
       return Aspect_VKey((theKey - DOM_VK_F1) + Aspect_VKey_F1);
@@ -582,7 +544,7 @@ Aspect_VKey Wasm_Window::VirtualKeyFromNative(int theKey)
   }
   if (theKey >= DOM_VK_NUMPAD0 && theKey <= DOM_VK_NUMPAD9)
   {
-    // numpad keys
+
     return Aspect_VKey((theKey - DOM_VK_NUMPAD0) + Aspect_VKey_Numpad0);
   }
 
@@ -609,12 +571,12 @@ Aspect_VKey Wasm_Window::VirtualKeyFromNative(int theKey)
     case DOM_VK_PAUSE:
     case DOM_VK_CAPS_LOCK:
     case DOM_VK_KANA:
-    // case DOM_VK_HANGUL:
+
     case DOM_VK_EISU:
     case DOM_VK_JUNJA:
     case DOM_VK_FINAL:
     case DOM_VK_HANJA:
-      // case DOM_VK_KANJI:
+
       return Aspect_VKey_UNKNOWN;
     case DOM_VK_ESCAPE:
       return Aspect_VKey_Escape;
@@ -661,7 +623,7 @@ Aspect_VKey Wasm_Window::VirtualKeyFromNative(int theKey)
       return Aspect_VKey_UNKNOWN;
     case DOM_VK_QUESTION_MARK:
       return Aspect_VKey_Slash;
-    case DOM_VK_AT: // @ key
+    case DOM_VK_AT:
       return Aspect_VKey_UNKNOWN;
     case DOM_VK_WIN:
       return Aspect_VKey_Meta;
@@ -693,7 +655,7 @@ Aspect_VKey Wasm_Window::VirtualKeyFromNative(int theKey)
       return Aspect_VKey_UNKNOWN;
     case DOM_VK_EXCLAMATION:
     case DOM_VK_DOUBLE_QUOTE:
-    // case DOM_VK_HASH:
+
     case DOM_VK_DOLLAR:
     case DOM_VK_PERCENT:
     case DOM_VK_AMPERSAND:

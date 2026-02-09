@@ -4,17 +4,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StdSelect_ShapeTypeFilter, SelectMgr_Filter)
 
-//=================================================================================================
-
 StdSelect_ShapeTypeFilter::StdSelect_ShapeTypeFilter(const TopAbs_ShapeEnum aType)
     : myType(aType)
 {
 }
-
-//==================================================
-// Function: IsOk
-// Purpose : Renvoie True si la shape est du type defini a la construction
-//==================================================
 
 bool StdSelect_ShapeTypeFilter::IsOk(const occ::handle<SelectMgr_EntityOwner>& EO) const
 {

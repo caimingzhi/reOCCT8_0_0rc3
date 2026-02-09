@@ -16,7 +16,6 @@ Extrema_FuncPSNorm::Extrema_FuncPSNorm()
   mySinit = false;
 }
 
-//=============================================================================
 Extrema_FuncPSNorm::Extrema_FuncPSNorm(const gp_Pnt& P, const Adaptor3d_Surface& S)
     : myU(0.0),
       myV(0.0)
@@ -27,7 +26,6 @@ Extrema_FuncPSNorm::Extrema_FuncPSNorm(const gp_Pnt& P, const Adaptor3d_Surface&
   mySinit = true;
 }
 
-//=============================================================================
 void Extrema_FuncPSNorm::Initialize(const Adaptor3d_Surface& S)
 {
   myS     = &S;
@@ -35,8 +33,6 @@ void Extrema_FuncPSNorm::Initialize(const Adaptor3d_Surface& S)
   myPoint.Clear();
   mySqDist.Clear();
 }
-
-//=============================================================================
 
 void Extrema_FuncPSNorm::SetPoint(const gp_Pnt& P)
 {
@@ -46,23 +42,15 @@ void Extrema_FuncPSNorm::SetPoint(const gp_Pnt& P)
   mySqDist.Clear();
 }
 
-//=============================================================================
-
-//=============================================================================
-
 int Extrema_FuncPSNorm::NbVariables() const
 {
   return 2;
 }
 
-//=============================================================================
-
 int Extrema_FuncPSNorm::NbEquations() const
 {
   return 2;
 }
-
-//=============================================================================
 
 bool Extrema_FuncPSNorm::Value(const math_Vector& UV, math_Vector& F)
 {
@@ -81,15 +69,11 @@ bool Extrema_FuncPSNorm::Value(const math_Vector& UV, math_Vector& F)
   return true;
 }
 
-//=============================================================================
-
 bool Extrema_FuncPSNorm::Derivatives(const math_Vector& UV, math_Matrix& Df)
 {
   math_Vector F(1, 2);
   return Values(UV, F, Df);
 }
-
-//=============================================================================
 
 bool Extrema_FuncPSNorm::Values(const math_Vector& UV, math_Vector& F, math_Matrix& Df)
 {
@@ -107,20 +91,17 @@ bool Extrema_FuncPSNorm::Values(const math_Vector& UV, math_Vector& F, math_Matr
   Df(2, 1) = Df(1, 2);
   Df(2, 2) = Dvs.SquareMagnitude() + PPs.Dot(Dvvs);
 
-  // 3. Value
   F(1) = PPs.Dot(Dus);
   F(2) = PPs.Dot(Dvs);
 
   return true;
 }
 
-//=============================================================================
-
 int Extrema_FuncPSNorm::GetStateNumber()
 {
   if (!myPinit || !mySinit)
     throw Standard_TypeMismatch();
-  // comparison of solution with previous solutions
+
   int              i = 1, nbSol = mySqDist.Length();
   constexpr double tol2d = Precision::PConfusion() * Precision::PConfusion();
 
@@ -138,14 +119,10 @@ int Extrema_FuncPSNorm::GetStateNumber()
   return 0;
 }
 
-//=============================================================================
-
 int Extrema_FuncPSNorm::NbExt() const
 {
   return mySqDist.Length();
 }
-
-//=============================================================================
 
 double Extrema_FuncPSNorm::SquareDistance(const int N) const
 {
@@ -153,8 +130,6 @@ double Extrema_FuncPSNorm::SquareDistance(const int N) const
     throw Standard_TypeMismatch();
   return mySqDist.Value(N);
 }
-
-//=============================================================================
 
 const Extrema_POnSurf& Extrema_FuncPSNorm::Point(const int N) const
 {

@@ -16,7 +16,6 @@
 #include <Interface_ShareTool.hpp>
 #include <Message_Msg.hpp>
 
-// MGE 03/08/98
 IGESBasic_ToolSingularSubfigure::IGESBasic_ToolSingularSubfigure() = default;
 
 void IGESBasic_ToolSingularSubfigure::ReadOwnParams(
@@ -24,13 +23,9 @@ void IGESBasic_ToolSingularSubfigure::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&     IR,
   IGESData_ParamReader&                           PR) const
 {
-  // MGE 03/08/98
-  // Building of messages
-  //========================================
-  Message_Msg Msg213("XSTEP_213");
-  //========================================
 
-  // bool st; //szv#4:S4163:12Mar99 not needed
+  Message_Msg Msg213("XSTEP_213");
+
   bool                                temphasscale;
   double                              tempScaleFactor;
   occ::handle<IGESBasic_SubfigureDef> tempSubfigureDef;
@@ -42,7 +37,7 @@ void IGESBasic_ToolSingularSubfigure::ReadOwnParams(
                      aStatus,
                      STANDARD_TYPE(IGESBasic_SubfigureDef),
                      tempSubfigureDef))
-  { // szv#4:S4163:12Mar99 `st=` not needed;
+  {
     Message_Msg Msg212("XSTEP_212");
     switch (aStatus)
     {
@@ -72,15 +67,11 @@ void IGESBasic_ToolSingularSubfigure::ReadOwnParams(
       }
     }
   }
-  PR.ReadXYZ(PR.CurrentList(1, 3), Msg213, tempTranslation); // szv#4:S4163:12Mar99 `st=` not needed
-  // st = PR.ReadEntity(IR,PR.Current(),"Subfigure definition entity",
-  //                    STANDARD_TYPE(IGESBasic_SubfigureDef), tempSubfigureDef);
-  // st = PR.ReadXYZ
-  //   (PR.CurrentList(1, 3),"Translation data",tempTranslation);
+  PR.ReadXYZ(PR.CurrentList(1, 3), Msg213, tempTranslation);
+
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(),Msg214,tempScaleFactor); //szv#4:S4163:12Mar99 moved down
-    // st = PR.ReadReal(PR.Current(),"Scale Factor",tempScaleFactor);
+
     temphasscale = PR.ReadReal(PR.Current(), tempScaleFactor);
     if (!temphasscale)
     {
@@ -138,17 +129,16 @@ void IGESBasic_ToolSingularSubfigure::OwnCopy(
 IGESData_DirChecker IGESBasic_ToolSingularSubfigure::DirChecker(
   const occ::handle<IGESBasic_SingularSubfigure>& ent) const
 {
-  IGESData_DirChecker DC(408, 0); // TypeNo. 408, Form no. 0
+  IGESData_DirChecker DC(408, 0);
   DC.Structure(IGESData_DefVoid);
   if (ent->HierarchyStatus() == 1)
-    DC.GraphicsIgnored(01); // GraphicsIgnored if Hierarchy = 01
+    DC.GraphicsIgnored(01);
   return DC;
 }
 
-void IGESBasic_ToolSingularSubfigure::OwnCheck(
-  const occ::handle<IGESBasic_SingularSubfigure>& /* ent */,
-  const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /* ach */) const
+void IGESBasic_ToolSingularSubfigure::OwnCheck(const occ::handle<IGESBasic_SingularSubfigure>&,
+                                               const Interface_ShareTool&,
+                                               occ::handle<Interface_Check>&) const
 {
 }
 

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <UnitsMethods.hpp>
 
@@ -17,15 +6,11 @@
 
 static double UnitsMethods_CascadeLengthUnit = 1.;
 
-//=================================================================================================
-
 double UnitsMethods::GetCasCadeLengthUnit(const UnitsMethods_LengthUnit theBaseUnit)
 {
   return UnitsMethods_CascadeLengthUnit
          * GetLengthUnitScale(UnitsMethods_LengthUnit_Millimeter, theBaseUnit);
 }
-
-//=================================================================================================
 
 void UnitsMethods::SetCasCadeLengthUnit(const double                  theUnitValue,
                                         const UnitsMethods_LengthUnit theBaseUnit)
@@ -34,45 +19,39 @@ void UnitsMethods::SetCasCadeLengthUnit(const double                  theUnitVal
     theUnitValue * GetLengthUnitScale(theBaseUnit, UnitsMethods_LengthUnit_Millimeter);
 }
 
-//=================================================================================================
-
 void UnitsMethods::SetCasCadeLengthUnit(const int theUnit)
 {
   UnitsMethods_CascadeLengthUnit = GetLengthFactorValue(theUnit);
 }
-
-//=================================================================================================
 
 double UnitsMethods::GetLengthFactorValue(const int theUnit)
 {
   switch (theUnit)
   {
     case 1:
-      return 25.4; // inch
+      return 25.4;
     case 2:
-      return 1.; // millimeter
+      return 1.;
     case 4:
-      return 304.8; // foot
+      return 304.8;
     case 5:
-      return 1609344.; // mile
+      return 1609344.;
     case 6:
-      return 1000.; // meter
+      return 1000.;
     case 7:
-      return 1000000.; // kilometer
+      return 1000000.;
     case 8:
-      return 0.0254; // mil (0.001 inch)
+      return 0.0254;
     case 9:
-      return 0.001; // micron
+      return 0.001;
     case 10:
-      return 10.; // centimeter
+      return 10.;
     case 11:
-      return 0.0000254; // microinch
+      return 0.0000254;
     default:
       return 1.;
   }
 }
-
-//=================================================================================================
 
 double UnitsMethods::GetLengthUnitScale(const UnitsMethods_LengthUnit theFromUnit,
                                         const UnitsMethods_LengthUnit theToUnit)
@@ -81,8 +60,6 @@ double UnitsMethods::GetLengthUnitScale(const UnitsMethods_LengthUnit theFromUni
   double aVal2 = GetLengthFactorValue(theToUnit);
   return aVal1 / aVal2;
 }
-
-//=================================================================================================
 
 UnitsMethods_LengthUnit UnitsMethods::GetLengthUnitByFactorValue(
   const double                  theFactorValue,
@@ -134,8 +111,6 @@ UnitsMethods_LengthUnit UnitsMethods::GetLengthUnitByFactorValue(
   return UnitsMethods_LengthUnit_Undefined;
 }
 
-//=================================================================================================
-
 const char* UnitsMethods::DumpLengthUnit(const UnitsMethods_LengthUnit theUnit)
 {
   switch (theUnit)
@@ -165,16 +140,12 @@ const char* UnitsMethods::DumpLengthUnit(const UnitsMethods_LengthUnit theUnit)
   }
 }
 
-//=================================================================================================
-
 const char* UnitsMethods::DumpLengthUnit(const double                  theScaleFactor,
                                          const UnitsMethods_LengthUnit theBaseUnit)
 {
   const UnitsMethods_LengthUnit aUnit = GetLengthUnitByFactorValue(theScaleFactor, theBaseUnit);
   return DumpLengthUnit(aUnit);
 }
-
-//=================================================================================================
 
 UnitsMethods_LengthUnit UnitsMethods::LengthUnitFromString(const char* theStr,
                                                            const bool  theCaseSensitive)

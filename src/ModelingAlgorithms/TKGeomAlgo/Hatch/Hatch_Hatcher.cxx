@@ -8,23 +8,17 @@
 #include <IntAna2d_IntPoint.hpp>
 #include <Standard_OutOfRange.hpp>
 
-//=================================================================================================
-
 Hatch_Hatcher::Hatch_Hatcher(const double Tol, const bool Oriented)
     : myToler(Tol),
       myOrient(Oriented)
 {
 }
 
-//=================================================================================================
-
 void Hatch_Hatcher::AddLine(const gp_Lin2d& L, const Hatch_LineForm T)
 {
   Hatch_Line HL(L, T);
   myLines.Append(HL);
 }
-
-//=================================================================================================
 
 void Hatch_Hatcher::AddLine(const gp_Dir2d& D, const double Dist)
 {
@@ -35,8 +29,6 @@ void Hatch_Hatcher::AddLine(const gp_Dir2d& D, const double Dist)
   AddLine(L, Hatch_ANYLINE);
 }
 
-//=================================================================================================
-
 void Hatch_Hatcher::AddXLine(const double X)
 {
   gp_Pnt2d O(X, 0);
@@ -44,8 +36,6 @@ void Hatch_Hatcher::AddXLine(const double X)
   gp_Lin2d L(O, D);
   AddLine(L, Hatch_XLINE);
 }
-
-//=================================================================================================
 
 void Hatch_Hatcher::AddYLine(const double Y)
 {
@@ -55,14 +45,10 @@ void Hatch_Hatcher::AddYLine(const double Y)
   AddLine(L, Hatch_YLINE);
 }
 
-//=================================================================================================
-
 void Hatch_Hatcher::Trim(const gp_Lin2d& L, const int Index)
 {
   Trim(L, RealFirst(), RealLast(), Index);
 }
-
-//=================================================================================================
 
 void Hatch_Hatcher::Trim(const gp_Lin2d& L, const double Start, const double End, const int Index)
 {
@@ -76,7 +62,7 @@ void Hatch_Hatcher::Trim(const gp_Lin2d& L, const double Start, const double End
     {
       if (!Inters.IdenticalElements() && !Inters.ParallelElements())
       {
-        // we have got something
+
         Pinter         = Inters.Point(1);
         double linePar = Pinter.ParamOnSecond();
         if (linePar - Start < -myToler)
@@ -86,19 +72,17 @@ void Hatch_Hatcher::Trim(const gp_Lin2d& L, const double Start, const double End
         double norm = L.Direction() ^ myLines(iLine).myLin.Direction();
         if (linePar - Start < myToler)
         {
-          // on the limit of the trimming segment
-          // accept if the other extremity is on the left
+
           if (norm < 0)
             continue;
         }
         if (linePar - End > -myToler)
         {
-          // on the limit of the trimming segment
-          // accept if the other extremity is on the left
+
           if (norm > 0)
             continue;
         }
-        // insert the parameter
+
         myLines(iLine).AddIntersection(Pinter.ParamOnFirst(),
                                        norm > 0,
                                        Index,
@@ -108,8 +92,6 @@ void Hatch_Hatcher::Trim(const gp_Lin2d& L, const double Start, const double End
     }
   }
 }
-
-//=================================================================================================
 
 void Hatch_Hatcher::Trim(const gp_Pnt2d& P1, const gp_Pnt2d& P2, const int Index)
 {
@@ -126,8 +108,6 @@ void Hatch_Hatcher::Trim(const gp_Pnt2d& P1, const gp_Pnt2d& P2, const int Index
   }
 }
 
-//=================================================================================================
-
 int Hatch_Hatcher::NbIntervals() const
 {
   int i, nb = 0;
@@ -136,28 +116,20 @@ int Hatch_Hatcher::NbIntervals() const
   return nb;
 }
 
-//=================================================================================================
-
 int Hatch_Hatcher::NbLines() const
 {
   return myLines.Length();
 }
-
-//=================================================================================================
 
 const gp_Lin2d& Hatch_Hatcher::Line(const int I) const
 {
   return myLines(I).myLin;
 }
 
-//=================================================================================================
-
 Hatch_LineForm Hatch_Hatcher::LineForm(const int I) const
 {
   return myLines(I).myForm;
 }
-
-//=================================================================================================
 
 double Hatch_Hatcher::Coordinate(const int I) const
 {
@@ -177,8 +149,6 @@ double Hatch_Hatcher::Coordinate(const int I) const
   return 0.;
 }
 
-//=================================================================================================
-
 int Hatch_Hatcher::NbIntervals(const int I) const
 {
   int l = myLines(I).myInters.Length();
@@ -193,8 +163,6 @@ int Hatch_Hatcher::NbIntervals(const int I) const
   }
   return l;
 }
-
-//=================================================================================================
 
 double Hatch_Hatcher::Start(const int I, const int J) const
 {
@@ -214,8 +182,6 @@ double Hatch_Hatcher::Start(const int I, const int J) const
     return myLines(I).myInters(jj).myPar1;
   }
 }
-
-//=================================================================================================
 
 void Hatch_Hatcher::StartIndex(const int I, const int J, int& Index, double& Par2) const
 {
@@ -244,8 +210,6 @@ void Hatch_Hatcher::StartIndex(const int I, const int J, int& Index, double& Par
   }
 }
 
-//=================================================================================================
-
 double Hatch_Hatcher::End(const int I, const int J) const
 {
   if (myLines(I).myInters.IsEmpty())
@@ -264,8 +228,6 @@ double Hatch_Hatcher::End(const int I, const int J) const
     return myLines(I).myInters(jj).myPar1;
   }
 }
-
-//=================================================================================================
 
 void Hatch_Hatcher::EndIndex(const int I, const int J, int& Index, double& Par2) const
 {

@@ -11,13 +11,6 @@ class BRepBlend_BlendTool
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Projects the point P on the arc C.
-  //! If the methods returns true, the projection is
-  //! successful, and Paramproj is the parameter on the arc
-  //! of the projected point, Dist is the distance between
-  //! P and the curve..
-  //! If the method returns false, Param proj and Dist
-  //! are not significant.
   Standard_EXPORT static bool Project(const gp_Pnt2d&                       P,
                                       const occ::handle<Adaptor3d_Surface>& S,
                                       const occ::handle<Adaptor2d_Curve2d>& C,
@@ -31,14 +24,9 @@ public:
                                      double&                               Param,
                                      double&                               Dist);
 
-  //! Returns the parameter of the vertex V on the edge A.
   static double Parameter(const occ::handle<Adaptor3d_HVertex>& V,
                           const occ::handle<Adaptor2d_Curve2d>& A);
 
-  //! Returns the parametric tolerance on the arc A
-  //! used to consider that the vertex and another point meet,
-  //! i-e if std::abs(Parameter(Vertex)-Parameter(OtherPnt))<=
-  //! Tolerance, the points are "merged".
   static double Tolerance(const occ::handle<Adaptor3d_HVertex>& V,
                           const occ::handle<Adaptor2d_Curve2d>& A);
 
@@ -58,10 +46,6 @@ public:
                                         const double                          v1,
                                         const double                          v2);
 
-  //! Returns the parametric limits on the arc C.
-  //! These limits must be finite : they are either
-  //! the real limits of the arc, for a finite arc,
-  //! or a bounding box for an infinite arc.
   Standard_EXPORT static void Bounds(const occ::handle<Adaptor2d_Curve2d>& C,
                                      double&                               Ufirst,
                                      double&                               Ulast);
@@ -95,14 +79,14 @@ inline bool BRepBlend_BlendTool::SingularOnVMax(const occ::handle<Adaptor3d_Surf
 inline double BRepBlend_BlendTool::Tolerance(const occ::handle<Adaptor3d_HVertex>& V,
                                              const occ::handle<Adaptor2d_Curve2d>& A)
 {
-  //  return Adaptor2d_HCurve2dTool::Resolution(A,1.e-6); // a voir
-  return V->Resolution(A); // a voir
+
+  return V->Resolution(A);
 }
 
 inline double BRepBlend_BlendTool::Parameter(const occ::handle<Adaptor3d_HVertex>& V,
                                              const occ::handle<Adaptor2d_Curve2d>& C)
 {
-  //  return BRep_Tool::Parameter(V,A->Curve().Edge());
+
   return V->Parameter(C);
 }
 

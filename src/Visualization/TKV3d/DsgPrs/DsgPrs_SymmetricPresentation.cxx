@@ -19,10 +19,6 @@
 #include <Prs3d_LineAspect.hpp>
 #include <Prs3d_Presentation.hpp>
 
-//===================================================================
-// Function:Add
-// Purpose: draws the representation of an axial symmetry between two segments.
-//===================================================================
 void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                        const occ::handle<Prs3d_Drawer>&       aDrawer,
                                        const gp_Pnt&                          AttachmentPoint1,
@@ -48,14 +44,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   VL1.Multiply(h);
 
   gp_Pnt P1, P2;
-
-  //======================================
-  // SYMMETRY OF EDGE PERPEND. TO THE AXIS
-  //   ____        :        ____
-  // edge2 |       : -=-   | edge 1
-  //       |<------:------>|
-  //               :
-  //======================================
 
   if (VLa.Dot(VL1) == 0)
   {
@@ -102,18 +90,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   double D1(aAxis.Distance(AttachmentPoint1)), coeff(.5);
   gp_Pnt pint, Pj_P1, P1Previous = P1;
 
-  /*=======================================================
-   TO AVOID CROSSING
-          P1  -=- P2                P2  -=- P1
-            \<-->/                    |<-->|
-             \  /                     |    |
-              \/                      |    |
-              /\                      |    |
-             /  \                     |    |
-   Pattach2 /____\ Pattach1 Pattach2 /______\ Pattach1
-           /  NO \                  /   YES  \
-  =======================================================*/
-
   bool   Cross = false;
   gp_Vec Attch1_PjAttch1(AttachmentPoint1, PjAttachPnt1);
   gp_Vec v(P1, ProjOffsetPoint);
@@ -125,13 +101,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     P1       = P2;
     P2       = PntTempo;
   }
-  /*===================================
-   FRACTURES OF TRAITS OF CALL
-          /             \
-         /               \
-         |      -=-      |
-         |<------------->|
-  ===================================*/
 
   gp_Vec Vfix;
   double alpha, b;
@@ -139,7 +108,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   if (aAxis.Distance(P1) > D1 * (1 + coeff) && !Cross)
   {
 
-    //==== PROCESSING OF FACE ===========
     aPresentation->NewGroup();
     aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
@@ -148,13 +116,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     Vfix = Vp.Divided(Vp.Magnitude()).Multiplied(D1 * (1 + coeff));
     P1   = Pj_P1.Translated(Vfix);
     P2   = Pj_P1.Translated(Vfix.Reversed());
-
-    //=================================
-    // LISTING AT THE EXTERIOR
-    //                        -=-
-    //      ->|----------|<------
-    //        |          |
-    //=================================
 
     L3     = gce_MakeLin(P1, P2);
     parmin = ElCLib::Parameter(L3, P1);
@@ -187,7 +148,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     aPrims->AddVertex(PointMin);
     aPrims->AddVertex(PointMax);
 
-    //==== PROCESSING OF CALL 1 =====
     alpha = aDirectionAxis.Angle(aDirection1);
     b     = (coeff * D1) / sin(alpha);
     gp_Vec Vpint(AttachmentPoint1, P1Previous);
@@ -198,7 +158,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     aPrims->AddVertex(pint);
     aPrims->AddVertex(P1);
 
-    //==== PROCESSING OF CALL 2 =====
     gp_Pnt Pj_pint = ElCLib::Value(ElCLib::Parameter(aAxis, pint), aAxis);
     gp_Vec V_int(pint, Pj_pint);
     gp_Pnt Sym_pint = Pj_pint.Translated(V_int);
@@ -211,18 +170,9 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
   }
 
-  /*===================================
-   FRACTURES OF PROCESSING OF CALL
-                -=-
-           |<--------->|
-           |           |
-          /             \
-         /               \
-  ===================================*/
   else if (aAxis.Distance(P1) < D1 * (1 - coeff) || Cross)
   {
 
-    //------ PROCESSING OF FACE ------------
     aPresentation->NewGroup();
     aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
@@ -234,12 +184,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     Pj_P1.Translated(Vfix.Reversed()).Coord(X, Y, Z);
     P2.SetCoord(X, Y, Z);
 
-    //=================================
-    // LISTING AT THE EXTERIOR
-    //                        -=-
-    //      ->|----------|<------
-    //        |          |
-    //=================================
     L3     = gce_MakeLin(P1, P2);
     parmin = ElCLib::Parameter(L3, P1);
     parmax = parmin;
@@ -271,7 +215,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     aPrims->AddVertex(PointMin);
     aPrims->AddVertex(PointMax);
 
-    //==== PROCESSING OF CALL 1 =====
     alpha = aDirectionAxis.Angle(aDirection1);
     b     = (coeff * D1) / sin(alpha);
     gp_Vec Vpint(AttachmentPoint1, P1Previous);
@@ -282,7 +225,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     aPrims->AddVertex(pint);
     aPrims->AddVertex(P1);
 
-    //==== PROCESSING OF CALL 2 =====
     gp_Pnt Pj_pint = ElCLib::Value(ElCLib::Parameter(aAxis, pint), aAxis);
     gp_Vec V_int(pint, Pj_pint);
     gp_Pnt Sym_pint = Pj_pint.Translated(V_int);
@@ -297,7 +239,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   else
   {
 
-    //==== PROCESSING OF FACE ===========
     aPresentation->NewGroup();
     aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
@@ -306,18 +247,15 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     aPrims->AddVertex(PointMin);
     aPrims->AddVertex(PointMax);
 
-    //==== PROCESSING OF CALL 1 =====
     aPrims->AddVertex(AttachmentPoint1);
     aPrims->AddVertex(P1);
 
-    //==== PROCESSING OF CALL 2 =====
     aPrims->AddVertex(AttachmentPoint2);
     aPrims->AddVertex(P2);
 
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
   }
 
-  //==== ARROWS ================
   aPresentation->NewGroup();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
@@ -326,27 +264,18 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   gp_Dir arrdir = L3.Direction().Reversed();
   if (outside)
     arrdir.Reverse();
-  // arrow 1 ----
+
   Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                     P1,
                     arrdir,
                     LA->ArrowAspect()->Angle(),
                     LA->ArrowAspect()->Length());
 
-  // arrow 2 ----
   Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                     P2,
                     arrdir.Reversed(),
                     LA->ArrowAspect()->Angle(),
                     LA->ArrowAspect()->Length());
-
-  //-------------------------------------------------------------------------------------
-  //|                                SYMBOL OF SYMMETRY                                 |
-  //-------------------------------------------------------------------------------------
-
-  //           -------    : Superior Segment
-  //         -----------  : Axis
-  //           -------    : Inferior Segment
 
   gp_Vec Vvar(P1, P2);
   gp_Vec vec;
@@ -373,7 +302,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   }
   pOff = OffsetPoint.Translated(vecB);
 
-  // Calculate the extremities of the symbol axis
   gp_Vec vecAxe = vecA.Multiplied(.7);
 
   aPresentation->NewGroup();
@@ -385,7 +313,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   aPrims->AddVertex(pOff.Translated(vecAxe));
   aPrims->AddVertex(pOff.Translated(vecAxe.Reversed()));
 
-  // Calculate the extremities of the superior segment of the symbol
   gp_Vec vec1 = vecAxe.Multiplied(.6);
   vecAxe      = Vaxe.Multiplied(vecAxe.Magnitude());
   gp_Vec vec2 = vecAxe.Multiplied(.4);
@@ -394,20 +321,10 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   aPrims->AddVertex(pOff.Translated(vec1.Added(vec2)));
   aPrims->AddVertex(pOff.Translated(vec1.Reversed().Added(vec2)));
 
-  // Calculate the extremities of the inferior segment of the symbol
   aPrims->AddBound(2);
   aPrims->AddVertex(pOff.Translated(vec1.Added(vec2.Reversed())));
   aPrims->AddVertex(pOff.Translated(vec1.Reversed().Added(vec2.Reversed())));
 
-  /*--------------------------------------------------------------------------------------
-  |                          MARKING OF THE SYMMETRY AXIS                                |
-  ----------------------------------------------------------------------------------------
-          ____
-          \  / :Cursor
-           \/
-           /\
-          /__\
-*/
   double Dist = (aAxis.Distance(AttachmentPoint1) + aAxis.Distance(AttachmentPoint2)) / 75;
   gp_Vec vs(aDirectionAxis);
   gp_Vec vsym(vs.Divided(vs.Magnitude()).Multiplied(Dist).XYZ());
@@ -434,10 +351,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 }
 
-//===================================================================
-// Function:Add
-// Purpose: draws the representation of an axial symmetry between two arcs.
-//===================================================================
 void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                        const occ::handle<Prs3d_Drawer>&       aDrawer,
                                        const gp_Pnt&                          AttachmentPoint1,
@@ -498,13 +411,11 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   gp_Pnt PointMin = ElCLib::Value(parmin, L3);
   gp_Pnt PointMax = ElCLib::Value(parmax, L3);
 
-  //==== PROCESSING OF FACE ===========
   occ::handle<Graphic3d_ArrayOfPrimitives> aPrims = new Graphic3d_ArrayOfSegments(2);
   aPrims->AddVertex(PointMin);
   aPrims->AddVertex(PointMax);
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  //==== PROCESSING OF CALL 1 =====
   int    nbp           = 10;
   double ParamP1       = ElCLib::Parameter(aCircle1, P1);
   double ParamPAttach1 = ElCLib::Parameter(aCircle1, AttachmentPoint1);
@@ -548,7 +459,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     aPrims->AddVertex(ElCLib::Value(ParamPAttach1 + alphaIter, aCircle1));
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  //==== PROCESSING OF CALL 2 =====
   gp_Pnt  Center2 = ProjCenter1.Translated(Vp.Reversed());
   gp_Dir  DirC2   = aCircle1.Axis().Direction();
   gp_Ax2  AxeC2(Center2, DirC2);
@@ -595,7 +505,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     aPrims->AddVertex(ElCLib::Value(ParamPAttach2 + alphaIter, aCircle2));
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  //==== ARROWS ================
   aPresentation->NewGroup();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
@@ -604,27 +513,18 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   gp_Dir arrdir = L3.Direction().Reversed();
   if (outside)
     arrdir.Reverse();
-  // arrow 1 ----
+
   Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                     P1,
                     arrdir,
                     LA->ArrowAspect()->Angle(),
                     LA->ArrowAspect()->Length());
 
-  // arrow 2 ----
   Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                     P2,
                     arrdir.Reversed(),
                     LA->ArrowAspect()->Angle(),
                     LA->ArrowAspect()->Length());
-
-  //-------------------------------------------------------------------------------------
-  //|                                SYMBOL OF SYMMETRY                                 |
-  //-------------------------------------------------------------------------------------
-
-  //           -------    : Superior Segment
-  //         -----------  : Axis
-  //           -------    : Inferior Segment
 
   gp_Vec Vvar(P1, P2);
   gp_Vec Vtmp = Vvar.Divided(Vvar.Magnitude()).Multiplied(2 * (aAxis.Distance(Center1)));
@@ -639,7 +539,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   gp_Pnt pm   = P1.Translated(Vvar.Multiplied(.5));
   gp_Pnt pOff = OffsetPnt.Translated(vecB);
 
-  // Calculation of extremas of the axis of the symbol
   gp_Vec vecAxe = vecA.Multiplied(.7);
 
   aPresentation->NewGroup();
@@ -651,7 +550,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   aPrims->AddVertex(pOff.Translated(vecAxe));
   aPrims->AddVertex(pOff.Translated(vecAxe.Reversed()));
 
-  // Calculation of extremas of the superior segment of the symbol
   gp_Vec vec1 = vecAxe.Multiplied(.6);
   vecAxe      = Vaxe.Multiplied(vecAxe.Magnitude());
   gp_Vec vec2 = vecAxe.Multiplied(.4);
@@ -660,20 +558,10 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   aPrims->AddVertex(pOff.Translated(vec1.Added(vec2)));
   aPrims->AddVertex(pOff.Translated(vec1.Reversed().Added(vec2)));
 
-  // Calculation of extremas of the inferior segment of the symbol
   aPrims->AddBound(2);
   aPrims->AddVertex(pOff.Translated(vec1.Added(vec2.Reversed())));
   aPrims->AddVertex(pOff.Translated(vec1.Reversed().Added(vec2.Reversed())));
 
-  /*--------------------------------------------------------------------------------------
-    |                          MARKING OF THE AXIS OF SYMMETRY                           |
-    --------------------------------------------------------------------------------------
-            ____
-            \  / :Cursor
-             \/
-             /\
-            /__\
-  */
   double Dist           = aAxis.Distance(Center1) / 37;
   gp_Dir aDirectionAxis = aAxis.Direction();
   gp_Vec vs(aDirectionAxis);
@@ -701,10 +589,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 }
 
-//===================================================================
-// Function:Add
-// Purpose: draws the representation of an axial symmetry between two vertex.
-//===================================================================
 void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                        const occ::handle<Prs3d_Drawer>&       aDrawer,
                                        const gp_Pnt&                          AttachmentPoint1,
@@ -717,10 +601,7 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
 
   if (AttachmentPoint1.IsEqual(AttachmentPoint2, Precision::Confusion()))
   {
-    //==============================================================
-    //  SYMMETRY WHEN THE REFERENCE POINT IS ON THE AXIS OF SYM.:
-    //==============================================================
-    // Marker of localisation of the face
+
     Quantity_Color                        aColor = LA->LineAspect()->Aspect()->Color();
     occ::handle<Graphic3d_AspectMarker3d> aMarkerAsp =
       new Graphic3d_AspectMarker3d(Aspect_TOM_O, aColor, 1.0);
@@ -729,7 +610,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     anArrayOfPoints->AddVertex(AttachmentPoint1.X(), AttachmentPoint1.Y(), AttachmentPoint1.Z());
     aPresentation->CurrentGroup()->AddPrimitiveArray(anArrayOfPoints);
 
-    // Trace of the linking segment
     aPresentation->NewGroup();
     aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
@@ -738,14 +618,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     aPrims->AddVertex(AttachmentPoint1);
     aPrims->AddVertex(OffsetPoint);
 
-    //--------------------------------------------------------------------------------------
-    //|                                SYMBOL OF SYMMETRY                                  |
-    //--------------------------------------------------------------------------------------
-    //           -------    : Superior Segment
-    //         -----------  : Axis
-    //           -------    : Inferior Segment
-
-    // Calculate extremas of the axis of the symbol
     gp_Vec VAO(AttachmentPoint1, OffsetPoint);
     gp_Vec uVAO  = VAO.Divided(VAO.Magnitude());
     gp_Pnt pDaxe = OffsetPoint.Translated(uVAO.Multiplied(3.));
@@ -754,7 +626,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     aPrims->AddVertex(pDaxe);
     aPrims->AddVertex(pFaxe);
 
-    // Calculate extremas of the superior segment of the symbol
     gp_Vec nVAO(-uVAO.Y(), uVAO.X(), uVAO.Z());
     gp_Pnt sgP11 = pDaxe.Translated(uVAO.Multiplied(2.).Added(nVAO.Multiplied(2.)));
     gp_Pnt sgP12 = sgP11.Translated(uVAO.Multiplied(8.));
@@ -762,7 +633,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     aPrims->AddVertex(sgP11);
     aPrims->AddVertex(sgP12);
 
-    // Calculate extremas of the inferior segment of the symbol
     gp_Vec nVAOr = nVAO.Reversed();
     gp_Pnt sgP21 = pDaxe.Translated(uVAO.Multiplied(2.).Added(nVAOr.Multiplied(2.)));
     gp_Pnt sgP22 = sgP21.Translated(uVAO.Multiplied(8.));
@@ -772,9 +642,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
 
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
   }
-  //==============================================================
-  //  OTHER CASES                                                 :
-  //==============================================================
 
   else
   {
@@ -810,7 +677,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     gp_Pnt PointMin = ElCLib::Value(parmin, L3);
     gp_Pnt PointMax = ElCLib::Value(parmax, L3);
 
-    //==== PROCESSING OF FACE ===========
     aPresentation->NewGroup();
     aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
@@ -819,38 +685,32 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     aPrims->AddVertex(PointMin);
     aPrims->AddVertex(PointMax);
 
-    //==== PROCESSING OF CALL 1 =====
     aPrims->AddVertex(AttachmentPoint1);
     aPrims->AddVertex(P1);
 
-    //==== PROCESSING OF CALL 2 =====
     aPrims->AddVertex(AttachmentPoint2);
     aPrims->AddVertex(P2);
 
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-    //==== ARROWS ================
     if (dist < (LA->ArrowAspect()->Length() + LA->ArrowAspect()->Length()))
       outside = true;
     gp_Dir arrdir = L3.Direction().Reversed();
     if (outside)
       arrdir.Reverse();
-    // arrow 1 ----
+
     Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                       P1,
                       arrdir,
                       LA->ArrowAspect()->Angle(),
                       LA->ArrowAspect()->Length());
 
-    // arrow 2 ----
     Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                       P2,
                       arrdir.Reversed(),
                       LA->ArrowAspect()->Angle(),
                       LA->ArrowAspect()->Length());
 
-    //==== POINTS ================
-    // Marker of localization of attachment points:
     aPresentation->NewGroup();
     aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
@@ -869,14 +729,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     anArrayOfPoints2->AddVertex(AttachmentPoint2.X(), AttachmentPoint2.Y(), AttachmentPoint2.Z());
     aPresentation->CurrentGroup()->AddPrimitiveArray(anArrayOfPoints2);
 
-    //-------------------------------------------------------------------------------------
-    //|                                SYMBOL OF SYMMETRY                                 |
-    //-------------------------------------------------------------------------------------
-
-    //           -------    : Superior Segment
-    //         -----------  : Axis
-    //           -------    : Inferior Segment
-
     gp_Vec vec(P1, P2);
     gp_Vec vecA = vec.Multiplied(.1);
 
@@ -888,7 +740,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     gp_Pnt pm   = P1.Translated(vec.Multiplied(.5));
     gp_Pnt pOff = OffsetPoint.Translated(vecB);
 
-    // Calculate the extremas of the axis of the symbol
     gp_Vec vecAxe = vecA.Multiplied(.7);
 
     aPresentation->NewGroup();
@@ -900,7 +751,6 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     aPrims->AddVertex(pOff.Translated(vecAxe));
     aPrims->AddVertex(pOff.Translated(vecAxe.Reversed()));
 
-    // Calculate the extremas of the superior segment of the symbol
     gp_Vec vec1 = vecAxe.Multiplied(.6);
     vecAxe      = Vaxe.Multiplied(vecAxe.Magnitude());
     gp_Vec vec2 = vecAxe.Multiplied(.4);
@@ -909,20 +759,10 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     aPrims->AddVertex(pOff.Translated(vec1.Added(vec2)));
     aPrims->AddVertex(pOff.Translated(vec1.Reversed().Added(vec2)));
 
-    // Calculate the extremas of the inferior segment of the symbol
     aPrims->AddBound(2);
     aPrims->AddVertex(pOff.Translated(vec1.Added(vec2.Reversed())));
     aPrims->AddVertex(pOff.Translated(vec1.Reversed().Added(vec2.Reversed())));
 
-    /*--------------------------------------------------------------------------------------
-    |                          MARKING OF THE AXIS OF SYMMETRY                             |
-    ----------------------------------------------------------------------------------------
-            ____
-            \  / :Cursor
-             \/
-             /\
-            /__\
-    */
     double Dist           = P1.Distance(P2) / 75;
     gp_Dir aDirectionAxis = aAxis.Direction();
     gp_Vec vs(aDirectionAxis);

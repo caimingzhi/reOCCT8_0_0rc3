@@ -11,7 +11,6 @@ class StepRepr_CompGroupShAspAndCompShAspAndDatumFeatAndShAsp;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for CompGroupShAspAndCompShAspAndDatumFeatAndShAsp
 class RWStepRepr_RWCompGroupShAspAndCompShAspAndDatumFeatAndShAsp
 {
 public:

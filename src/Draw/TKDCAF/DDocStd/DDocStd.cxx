@@ -17,8 +17,6 @@
 #include <BinDrivers.hpp>
 #include <XmlDrivers.hpp>
 
-//=================================================================================================
-
 const occ::handle<TDocStd_Application>& DDocStd::GetApplication()
 {
   static occ::handle<TDocStd_Application> anApp;
@@ -26,8 +24,6 @@ const occ::handle<TDocStd_Application>& DDocStd::GetApplication()
   {
     anApp = new TDocStd_Application;
 
-    // Initialize standard document formats at creation - they should
-    // be available even if this DRAW plugin is not loaded by pload command
     StdLDrivers::DefineFormat(anApp);
     BinLDrivers::DefineFormat(anApp);
     XmlLDrivers::DefineFormat(anApp);
@@ -37,8 +33,6 @@ const occ::handle<TDocStd_Application>& DDocStd::GetApplication()
   }
   return anApp;
 }
-
-//=================================================================================================
 
 bool DDocStd::GetDocument(const char*&                   Name,
                           occ::handle<TDocStd_Document>& DOC,
@@ -63,11 +57,6 @@ bool DDocStd::GetDocument(const char*&                   Name,
   return false;
 }
 
-//=======================================================================
-// function : Label
-// purpose  : try to retrieve a label
-//=======================================================================
-
 bool DDocStd::Find(const occ::handle<TDocStd_Document>& D,
                    const char*                          Entry,
                    TDF_Label&                           Label,
@@ -79,11 +68,6 @@ bool DDocStd::Find(const occ::handle<TDocStd_Document>& D,
     std::cout << "No label for entry " << Entry << std::endl;
   return !Label.IsNull();
 }
-
-//=======================================================================
-// function : Find
-// purpose  : Try to retrieve an attribute.
-//=======================================================================
 
 bool DDocStd::Find(const occ::handle<TDocStd_Document>& D,
                    const char*                          Entry,
@@ -102,8 +86,6 @@ bool DDocStd::Find(const occ::handle<TDocStd_Document>& D,
   return false;
 }
 
-//=================================================================================================
-
 Draw_Interpretor& DDocStd::ReturnLabel(Draw_Interpretor& di, const TDF_Label& L)
 {
   TCollection_AsciiString S;
@@ -112,8 +94,6 @@ Draw_Interpretor& DDocStd::ReturnLabel(Draw_Interpretor& di, const TDF_Label& L)
   return di;
 }
 
-//=================================================================================================
-
 void DDocStd::AllCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
@@ -121,7 +101,6 @@ void DDocStd::AllCommands(Draw_Interpretor& theCommands)
     return;
   done = true;
 
-  // define commands
   DDocStd::ApplicationCommands(theCommands);
   DDocStd::DocumentCommands(theCommands);
   DDocStd::ToolsCommands(theCommands);

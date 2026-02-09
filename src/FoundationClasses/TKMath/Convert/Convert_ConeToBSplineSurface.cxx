@@ -1,18 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// JCV 16/10/91
 
 #include <Convert_ConeToBSplineSurface.hpp>
 #include <gp.hpp>
@@ -42,7 +28,6 @@ static void ComputePoles(const double                R,
 
   int i;
 
-  // Number of spans : maximum opening = 150 degrees ( = PI / 1.2 rds)
   int    nbUSpans = (int)std::trunc(1.2 * deltaU / M_PI) + 1;
   double AlfaU    = deltaU / (nbUSpans * 2);
 
@@ -74,8 +59,6 @@ static void ComputePoles(const double                R,
   }
 }
 
-//=================================================================================================
-
 Convert_ConeToBSplineSurface::Convert_ConeToBSplineSurface(const gp_Cone& C,
                                                            const double   U1,
                                                            const double   U2,
@@ -97,9 +80,7 @@ Convert_ConeToBSplineSurface::Convert_ConeToBSplineSurface(const gp_Cone& C,
   isvperiodic = false;
 
   int i, j;
-  // construction of cone in the reference mark xOy.
 
-  // Number of spans : maximum opening = 150 degrees ( = PI / 1.2 rds)
   int    nbUSpans = (int)std::trunc(1.2 * deltaU / M_PI) + 1;
   double AlfaU    = deltaU / (nbUSpans * 2);
 
@@ -126,8 +107,6 @@ Convert_ConeToBSplineSurface::Convert_ConeToBSplineSurface(const gp_Cone& C,
   vknots(2) = V2;
   vmults(2) = 2;
 
-  // Replace the bspline in the mark of the sphere.
-  // and calculate the weight of the bspline.
   double  W1;
   gp_Trsf Trsf;
   Trsf.SetTransformation(C.Position(), gp::XOY());
@@ -147,8 +126,6 @@ Convert_ConeToBSplineSurface::Convert_ConeToBSplineSurface(const gp_Cone& C,
   }
 }
 
-//=================================================================================================
-
 Convert_ConeToBSplineSurface::Convert_ConeToBSplineSurface(const gp_Cone& C,
                                                            const double   V1,
                                                            const double   V2)
@@ -166,8 +143,6 @@ Convert_ConeToBSplineSurface::Convert_ConeToBSplineSurface(const gp_Cone& C,
 
   isuperiodic = true;
   isvperiodic = false;
-
-  // construction of the cone in the reference mark xOy.
 
   double R = C.RefRadius();
   double A = C.SemiAngle();
@@ -189,8 +164,6 @@ Convert_ConeToBSplineSurface::Convert_ConeToBSplineSurface(const gp_Cone& C,
   vknots(2) = V2;
   vmults(2) = 2;
 
-  // replace bspline in the mark of the cone.
-  // and calculate the weight of bspline.
   double  W;
   gp_Trsf Trsf;
   Trsf.SetTransformation(C.Position(), gp::XOY());
@@ -198,7 +171,7 @@ Convert_ConeToBSplineSurface::Convert_ConeToBSplineSurface(const gp_Cone& C,
   for (i = 1; i <= nbUPoles; i++)
   {
     if (i % 2 == 0)
-      W = 0.5; // = std::cos(pi /3)
+      W = 0.5;
     else
       W = 1.;
 

@@ -23,7 +23,6 @@
 #include <TopOpeBRepTool_TOPOLOGY.hpp>
 #include <TopOpeBRepTool_SC.hpp>
 
-// #include <BRepAdaptor_Curve2d.hpp>
 Standard_EXPORT bool FUN_projPonL(const gp_Pnt&                 P,
                                   const TopOpeBRep_LineInter&   L,
                                   const TopOpeBRep_FacesFiller& FF,
@@ -66,8 +65,6 @@ static void FUN_MakeERL(TopOpeBRep_FacesIntersector& FI, NCollection_List<TopoDS
   }
 }
 
-//=================================================================================================
-
 TopOpeBRep_FacesFiller::TopOpeBRep_FacesFiller()
     : myPShapeClassifier(nullptr)
 {
@@ -77,21 +74,15 @@ TopOpeBRep_FacesFiller::TopOpeBRep_FacesFiller()
 #endif
 }
 
-//=================================================================================================
-
 TopOpeBRepTool_PShapeClassifier TopOpeBRep_FacesFiller::PShapeClassifier() const
 {
   return myPShapeClassifier;
 }
 
-//=================================================================================================
-
 void TopOpeBRep_FacesFiller::SetPShapeClassifier(const TopOpeBRepTool_PShapeClassifier& PSC)
 {
   myPShapeClassifier = PSC;
 }
-
-//=================================================================================================
 
 void TopOpeBRep_FacesFiller::Insert(const TopoDS_Shape&                             S1,
                                     const TopoDS_Shape&                             S2,
@@ -145,7 +136,7 @@ void TopOpeBRep_FacesFiller::Insert(const TopoDS_Shape&                         
   ProcessSectionEdges();
   myFFfirstDSP = myDS->NbPoints() + 1;
 
-  FUN_MakeERL((*myFacesIntersector), myERL); // BUG
+  FUN_MakeERL((*myFacesIntersector), myERL);
 
   myFacesIntersector->InitLine();
   for (; myFacesIntersector->MoreLine(); myFacesIntersector->NextLine())
@@ -156,14 +147,10 @@ void TopOpeBRep_FacesFiller::Insert(const TopoDS_Shape&                         
   }
 }
 
-//=================================================================================================
-
 TopOpeBRep_PointClassifier& TopOpeBRep_FacesFiller::ChangePointClassifier()
 {
   return myPointClassifier;
 }
-
-//=================================================================================================
 
 void TopOpeBRep_FacesFiller::LoadLine(TopOpeBRep_LineInter& L)
 {
@@ -184,14 +171,8 @@ void TopOpeBRep_FacesFiller::LoadLine(TopOpeBRep_LineInter& L)
     return;
 
   L.ComputeFaceFaceTransition();
-} // LoadLine
+}
 
-//=======================================================================
-// function : CheckLine
-// purpose  : private
-//           returns False if L is WALKING line with a number of VPoints < 2
-//           else returns True
-//=======================================================================
 bool TopOpeBRep_FacesFiller::CheckLine(TopOpeBRep_LineInter& L) const
 {
   double tol1, tol2;
@@ -260,7 +241,7 @@ bool TopOpeBRep_FacesFiller::CheckLine(TopOpeBRep_LineInter& L) const
     {
       return false;
     }
-  } // LINE
+  }
   else
   {
     bool notrnotw = (t != TopOpeBRep_RESTRICTION && t != TopOpeBRep_WALKING);
@@ -268,7 +249,6 @@ bool TopOpeBRep_FacesFiller::CheckLine(TopOpeBRep_LineInter& L) const
     {
       if (t == TopOpeBRep_CIRCLE)
       {
-        // cto 012 D2, faces 6 et 1, line 3 incorrecte.
 
         int iINON1, iINONn, nINON;
         myLine->VPBounds(iINON1, iINONn, nINON);
@@ -285,7 +265,7 @@ bool TopOpeBRep_FacesFiller::CheckLine(TopOpeBRep_LineInter& L) const
             check = false;
           }
         }
-      } // CIRCLE
+      }
       else if (t == TopOpeBRep_HYPERBOLA)
       {
         int iINON1, iINONn, nINON;
@@ -331,9 +311,6 @@ bool TopOpeBRep_FacesFiller::CheckLine(TopOpeBRep_LineInter& L) const
   return check;
 }
 
-//=================================================================================================
-
-// void TopOpeBRep_FacesFiller::VP_Position(TopOpeBRep_FacesIntersector& FACINT)
 void TopOpeBRep_FacesFiller::VP_Position(TopOpeBRep_FacesIntersector&)
 {
   for (myFacesIntersector->InitLine(); myFacesIntersector->MoreLine();
@@ -357,8 +334,6 @@ void TopOpeBRep_FacesFiller::VP_Position(TopOpeBRep_FacesIntersector&)
   }
 }
 
-//=================================================================================================
-
 void TopOpeBRep_FacesFiller::VP_Position(TopOpeBRep_LineInter& L)
 {
   myLine      = &L;
@@ -371,8 +346,6 @@ void TopOpeBRep_FacesFiller::VP_Position(TopOpeBRep_LineInter& L)
 
   L.SetVPBounds();
 }
-
-//=================================================================================================
 
 void TopOpeBRep_FacesFiller::VP_PositionOnL(TopOpeBRep_LineInter& L)
 {
@@ -405,8 +378,6 @@ void TopOpeBRep_FacesFiller::VP_PositionOnL(TopOpeBRep_LineInter& L)
     }
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRep_FacesFiller::VP_PositionOnR(TopOpeBRep_LineInter& L)
 {
@@ -467,8 +438,8 @@ void TopOpeBRep_FacesFiller::VP_PositionOnR(TopOpeBRep_LineInter& L)
       }
       else
       {
-        //	throw Standard_ProgramError("VP_Position projection failed on E");
-        VP.ChangeKeep(false); // xpu051198
+
+        VP.ChangeKeep(false);
       }
     }
 
@@ -484,14 +455,12 @@ void TopOpeBRep_FacesFiller::VP_PositionOnR(TopOpeBRep_LineInter& L)
       }
       else
       {
-        //	throw Standard_ProgramError("VP_Position projection failed on OOE");
-        VP.ChangeKeep(false); // xpu051198
+
+        VP.ChangeKeep(false);
       }
     }
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRep_FacesFiller::VP_Position(TopOpeBRep_VPointInter&           VP,
                                          TopOpeBRep_VPointInterClassifier& VPC)
@@ -524,21 +493,16 @@ void TopOpeBRep_FacesFiller::VP_Position(TopOpeBRep_VPointInter&           VP,
   if (myLine)
     AssumeINON = (myLine->TypeLineCurve() != TopOpeBRep_RESTRICTION);
 
-  // modified by NIZHNY-MKK  Fri Oct 27 14:50:28 2000.BEGIN
-  //   double tol = Precision::Confusion();
   double tol1, tol2;
   tol1 = tol2 = Precision::Confusion();
   myFacesIntersector->GetTolerances(tol1, tol2);
   double tol = (tol1 > tol2) ? tol1 : tol2;
-  // modified by NIZHNY-MKK  Fri Oct 27 14:50:36 2000.END
 
   if (c1)
     VPC.VPointPosition(myF1, VP, 1, myPointClassifier, AssumeINON, tol);
   if (c2)
     VPC.VPointPosition(myF2, VP, 2, myPointClassifier, AssumeINON, tol);
 }
-
-//=================================================================================================
 
 bool TopOpeBRep_FacesFiller::PequalVPonR(const gp_Pnt&           P3D,
                                          const int               VPsi,
@@ -588,28 +552,20 @@ bool TopOpeBRep_FacesFiller::PequalVPonR(const gp_Pnt&           P3D,
   return VPequalVPONRESTRICTION;
 }
 
-//=================================================================================================
-
 TopOpeBRep_FacesIntersector& TopOpeBRep_FacesFiller::ChangeFacesIntersector()
 {
   return (*myFacesIntersector);
 }
-
-//=================================================================================================
 
 occ::handle<TopOpeBRepDS_HDataStructure> TopOpeBRep_FacesFiller::HDataStructure()
 {
   return myHDS;
 }
 
-//=================================================================================================
-
 TopOpeBRepDS_DataStructure& TopOpeBRep_FacesFiller::ChangeDataStructure()
 {
   return (*myDS);
 }
-
-//=================================================================================================
 
 const TopoDS_Face& TopOpeBRep_FacesFiller::Face(const int I) const
 {
@@ -620,8 +576,6 @@ const TopoDS_Face& TopOpeBRep_FacesFiller::Face(const int I) const
   throw Standard_ProgramError("FacesFiller::Face");
 }
 
-//=================================================================================================
-
 const TopOpeBRepDS_Transition& TopOpeBRep_FacesFiller::FaceFaceTransition(
   const TopOpeBRep_LineInter& L,
   const int                   I) const
@@ -629,8 +583,6 @@ const TopOpeBRepDS_Transition& TopOpeBRep_FacesFiller::FaceFaceTransition(
   const TopOpeBRepDS_Transition& T = L.FaceFaceTransition(I);
   return T;
 }
-
-//=================================================================================================
 
 const TopOpeBRepDS_Transition& TopOpeBRep_FacesFiller::FaceFaceTransition(const int I) const
 {
@@ -653,15 +605,11 @@ TopOpeBRep_PLineInter TopOpeBRep_FacesFiller::PLineInterDummy() const
   return myLine;
 }
 
-//=================================================================================================
-
 void TopOpeBRep_FacesFiller::SetTraceIndex(const int exF1, const int exF2)
 {
   myexF1 = exF1;
   myexF2 = exF2;
 }
-
-//=================================================================================================
 
 void TopOpeBRep_FacesFiller::GetTraceIndex(int& exF1, int& exF2) const
 {

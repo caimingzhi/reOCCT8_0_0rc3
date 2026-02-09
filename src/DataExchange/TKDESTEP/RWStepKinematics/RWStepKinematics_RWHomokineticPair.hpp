@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_HomokineticPair;
 
-//! Read & Write tool for HomokineticPair
 class RWStepKinematics_RWHomokineticPair
 {
 public:

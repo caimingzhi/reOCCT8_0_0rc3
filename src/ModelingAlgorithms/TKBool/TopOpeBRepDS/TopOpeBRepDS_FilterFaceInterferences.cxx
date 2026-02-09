@@ -16,8 +16,6 @@ Standard_EXPORT void FUN_resolveFUNKNOWN(
                             TopTools_ShapeMapHasher>&       MEsp,
   TopOpeBRepTool_PShapeClassifier                           pClassif);
 
-//=================================================================================================
-
 void TopOpeBRepDS_Filter::ProcessFaceInterferences(
   const int                                           SIX,
   const NCollection_DataMap<TopoDS_Shape,
@@ -26,7 +24,6 @@ void TopOpeBRepDS_Filter::ProcessFaceInterferences(
 {
   TopOpeBRepDS_DataStructure& BDS = myHDS->ChangeDS();
 
-  //                 BDS.Shape(SIX);
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI = BDS.ChangeShapeInterferences(SIX);
   ::FUN_reducedoublons(LI, BDS, SIX);
 
@@ -48,5 +45,4 @@ void TopOpeBRepDS_Filter::ProcessFaceInterferences(
   LI.Append(lFE);
   LI.Append(lFEF);
   LI.Append(lE);
-
-} // ProcessFaceInterferences
+}

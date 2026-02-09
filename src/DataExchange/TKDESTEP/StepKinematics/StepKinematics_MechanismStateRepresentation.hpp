@@ -10,7 +10,6 @@ class StepKinematics_MechanismRepresentation;
 class StepKinematics_MechanismStateRepresentation : public StepRepr_Representation
 {
 public:
-  //! Returns a MechanismStateRepresentation
   Standard_EXPORT StepKinematics_MechanismStateRepresentation();
 
   Standard_EXPORT void Init(

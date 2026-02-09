@@ -30,18 +30,12 @@ IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepTool_HBoxTool, Standard_Transient)
   #define TBOX TopOpeBRepTool_GettraceBOX()
 #endif
 
-//=================================================================================================
-
 TopOpeBRepTool_HBoxTool::TopOpeBRepTool_HBoxTool() = default;
-
-//=================================================================================================
 
 void TopOpeBRepTool_HBoxTool::Clear()
 {
   myIMS.Clear();
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_HBoxTool::AddBoxes(const TopoDS_Shape&    S,
                                        const TopAbs_ShapeEnum TS,
@@ -50,13 +44,11 @@ void TopOpeBRepTool_HBoxTool::AddBoxes(const TopoDS_Shape&    S,
   TopExp_Explorer ex;
   for (ex.Init(S, TS, TA); ex.More(); ex.Next())
   {
-    //  for (TopExp_Explorer ex(S,TS,TA);ex.More();ex.Next()) {
+
     const TopoDS_Shape& ss = ex.Current();
     AddBox(ss);
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_HBoxTool::AddBox(const TopoDS_Shape& S)
 {
@@ -83,8 +75,6 @@ void TopOpeBRepTool_HBoxTool::AddBox(const TopoDS_Shape& S)
 #endif
 }
 
-//=================================================================================================
-
 void TopOpeBRepTool_HBoxTool::ComputeBox(const TopoDS_Shape& S, Bnd_Box& B)
 {
   TopAbs_ShapeEnum t = S.ShapeType();
@@ -92,12 +82,12 @@ void TopOpeBRepTool_HBoxTool::ComputeBox(const TopoDS_Shape& S, Bnd_Box& B)
     BRepBndLib::Add(S, B);
   else if (t == TopAbs_EDGE)
     BRepBndLib::Add(S, B);
-  // modified by NIZHNY-MZV  Tue Sep 21 14:04:33 1999
+
   else if (t == TopAbs_SOLID)
     BRepBndLib::Add(S, B);
   else if (t == TopAbs_COMPOUND)
     BRepBndLib::Add(S, B);
-  // modified by NIZHNY-MZV  Wed Apr  5 10:05:53 2000
+
   else if (t == TopAbs_VERTEX)
     BRepBndLib::Add(S, B);
   else
@@ -105,8 +95,6 @@ void TopOpeBRepTool_HBoxTool::ComputeBox(const TopoDS_Shape& S, Bnd_Box& B)
     throw Standard_ProgramError("HBT::ComputeBox : invalid type");
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_HBoxTool::ComputeBoxOnVertices(const TopoDS_Shape& S, Bnd_Box& B)
 {
@@ -127,8 +115,6 @@ void TopOpeBRepTool_HBoxTool::ComputeBoxOnVertices(const TopoDS_Shape& S, Bnd_Bo
   B.Enlarge(tol);
 }
 
-//=================================================================================================
-
 const Bnd_Box& TopOpeBRepTool_HBoxTool::Box(const TopoDS_Shape& S)
 {
   bool hb = HasBox(S);
@@ -140,8 +126,6 @@ const Bnd_Box& TopOpeBRepTool_HBoxTool::Box(const TopoDS_Shape& S)
   const Bnd_Box& B = myIMS.FindFromKey(S);
   return B;
 }
-
-//=================================================================================================
 
 const Bnd_Box& TopOpeBRepTool_HBoxTool::Box(const int I) const
 {
@@ -155,15 +139,11 @@ const Bnd_Box& TopOpeBRepTool_HBoxTool::Box(const int I) const
   return B;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepTool_HBoxTool::HasBox(const TopoDS_Shape& S) const
 {
   bool hb = myIMS.Contains(S);
   return hb;
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& TopOpeBRepTool_HBoxTool::Shape(const int I) const
 {
@@ -177,15 +157,11 @@ const TopoDS_Shape& TopOpeBRepTool_HBoxTool::Shape(const int I) const
   return S;
 }
 
-//=================================================================================================
-
 int TopOpeBRepTool_HBoxTool::Index(const TopoDS_Shape& S) const
 {
   int i = myIMS.FindIndex(S);
   return i;
 }
-
-//=================================================================================================
 
 int TopOpeBRepTool_HBoxTool::Extent() const
 {
@@ -193,21 +169,15 @@ int TopOpeBRepTool_HBoxTool::Extent() const
   return n;
 }
 
-//=================================================================================================
-
 NCollection_IndexedDataMap<TopoDS_Shape, Bnd_Box>& TopOpeBRepTool_HBoxTool::ChangeIMS()
 {
   return myIMS;
 }
 
-//=================================================================================================
-
 const NCollection_IndexedDataMap<TopoDS_Shape, Bnd_Box>& TopOpeBRepTool_HBoxTool::IMS() const
 {
   return myIMS;
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_HBoxTool::DumpB
 #ifdef OCCT_DEBUG

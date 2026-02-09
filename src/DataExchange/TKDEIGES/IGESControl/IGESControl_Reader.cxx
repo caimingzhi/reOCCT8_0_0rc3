@@ -1,18 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// gka 06.01.99 S3767
-// abv 10.04.99 S4136: eliminate using BRepAPI::Precision()
 
 #include <BRepLib.hpp>
 #include <DEIGES_Parameters.hpp>
@@ -44,11 +30,6 @@
 
 #include <cstdio>
 
-// S3767 dce 18/01/1999
-// Transfer_Iterator.hxx>
-// add of stdio.h for NT compilation
-//=================================================================================================
-
 IGESControl_Reader::IGESControl_Reader()
 {
   IGESControl_Controller::Init();
@@ -57,8 +38,6 @@ IGESControl_Reader::IGESControl_Reader()
   int onlyvisible    = Interface_Static::IVal("read.iges.onlyvisible");
   theReadOnlyVisible = (onlyvisible == 1);
 }
-
-//=================================================================================================
 
 IGESControl_Reader::IGESControl_Reader(const occ::handle<XSControl_WorkSession>& WS,
                                        const bool                                scratch)
@@ -70,14 +49,10 @@ IGESControl_Reader::IGESControl_Reader(const occ::handle<XSControl_WorkSession>&
   theReadOnlyVisible = (onlyvisible == 1);
 }
 
-//=================================================================================================
-
 occ::handle<IGESData_IGESModel> IGESControl_Reader::IGESModel() const
 {
   return occ::down_cast<IGESData_IGESModel>(Model());
 }
-
-//=================================================================================================
 
 int IGESControl_Reader::NbRootsForTransfer()
 {
@@ -96,7 +71,6 @@ int IGESControl_Reader::NbRootsForTransfer()
 
   Interface_ShareFlags SH(model, protocol);
 
-  // sln 11.06.2002 OCC448
   Interface_Static::SetIVal("read.iges.onlyvisible", theReadOnlyVisible);
 
   int nb = model->NbEntities();
@@ -105,7 +79,7 @@ int IGESControl_Reader::NbRootsForTransfer()
     occ::handle<IGESData_IGESEntity> ent = model->Entity(i);
     if (SH.IsShared(ent) || !actor->Recognize(ent))
       continue;
-    // add processing to take only visible entities
+
     if (!theReadOnlyVisible || ent->BlankStatus() == 0)
     {
       theroots.Append(ent);
@@ -114,15 +88,6 @@ int IGESControl_Reader::NbRootsForTransfer()
 
   return theroots.Length();
 }
-
-//  ####    Remainder of methods to be reworked    ####
-
-//=======================================================================
-// Function : PrintTransferInfo
-// Purpose  : Print statistics information on transfer using MoniTool message management
-// Created  : 18/01/98 DCE for S3767
-// Modified :
-//=======================================================================
 
 void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
                                            const IFSelect_PrintCount mode) const
@@ -135,14 +100,14 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
   {
     nbEntities = model->NbEntities();
     nbRoots    = TP->NbRoots();
-    // nbResults = TP->NbMapped();
+
     Transfer_IteratorOfProcessForTransient            iterTrans = TP->RootResult(true);
     NCollection_DataMap<TCollection_AsciiString, int> aMapCountResult;
     NCollection_DataMap<TCollection_AsciiString, int> aMapCountMapping;
     for (iterTrans.Start(); iterTrans.More(); iterTrans.Next())
     {
       nbResults++;
-      // Init for dicoCountResult for IFSelect_ResultCount
+
       if (mode == IFSelect_ResultCount)
       {
         char                                mess[300];
@@ -153,7 +118,7 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
         else
           aMapCountResult.Bind(mess, 1);
       }
-      // Init for dicoCountMapping for IFSelect_Mapping
+
       else if (mode == IFSelect_Mapping)
       {
         char                                mess[300];
@@ -166,7 +131,7 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
                 igesEnt->FormNumber(),
                 "%d",
                 aBinder->ResultTypeName());
-        // std::cout << mess << std::endl;
+
         if (aMapCountMapping.IsBound(mess))
           aMapCountMapping.ChangeFind(mess)++;
         else
@@ -177,7 +142,7 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
     Interface_CheckIterator                           checkIterator = TP->CheckList(false);
     NCollection_DataMap<TCollection_AsciiString, int> aMapCount;
     NCollection_DataMap<TCollection_AsciiString, occ::handle<NCollection_HSequence<int>>> aMapList;
-    // Init the dicoCount dicoList and nbWarn ,nb Fail.
+
     for (checkIterator.Start(); checkIterator.More(); checkIterator.Next())
     {
       char                                mess[300];
@@ -207,7 +172,7 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
       for (i = 1; i <= nf; i++)
       {
         Sprintf(mess, "\t F\t%d\t%d\t%s", type, form, aCheck->CFail(i));
-        // TF << mess << std::endl;
+
         if (aMapCount.IsBound(mess))
           aMapCount.ChangeFind(mess)++;
         else
@@ -225,8 +190,8 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
       nbWarn += nw;
       nbFail += nf;
     }
-    Message_Msg msg3000("IGES_3000"); // *************************
-    TF->Send(msg3000, Message_Info);  // smh#14
+    Message_Msg msg3000("IGES_3000");
+    TF->Send(msg3000, Message_Info);
 
     switch (mode)
     {
@@ -277,7 +242,7 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
             int nbInLine = 0;
             for (int i = 1; i <= length; i++)
             {
-              // IDT_Out << (entityList->Value(i)) << " ";
+
               Sprintf(line, "\t %d", entityList->Value(i));
               aSender << line;
               if (++nbInLine == 6)
@@ -324,7 +289,7 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
         TF->Send(msg3015, Message_Info);
         Message_Msg msg3045("IGES_3055");
         TF->Send(msg3045, Message_Info);
-        // Add failed entities in dicoCountMapping
+
         if (nbRoots != nbResults)
         {
           for (int i = 1; i <= nbRoots; i++)
@@ -340,7 +305,7 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
                       root->FormNumber(),
                       "%d",
                       "Failed");
-              // std::cout << mess << std::endl;
+
               if (aMapCountMapping.IsBound(mess))
                 aMapCountMapping.ChangeFind(mess)++;
               else
@@ -353,9 +318,8 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
         {
           char mess[80];
           Sprintf(mess, aMapCountIter.Key().ToCString(), aMapCountIter.Value());
-          // clang-format off
-        TF->SendInfo() << mess << std::endl; //dicoCountIter.Value() << dicoCountIter.Name() << std::endl;
-                                     // clang-format on
+
+          TF->SendInfo() << mess << std::endl;
         }
         break;
       }
@@ -365,14 +329,10 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
   }
 }
 
-//=================================================================================================
-
 DE_ShapeFixParameters IGESControl_Reader::GetDefaultShapeFixParameters() const
 {
   return DEIGES_Parameters::GetDefaultShapeFixParameters();
 }
-
-//=================================================================================================
 
 ShapeProcess::OperationsFlags IGESControl_Reader::GetDefaultShapeProcessFlags() const
 {

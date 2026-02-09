@@ -22,7 +22,6 @@ public:
     const occ::handle<Adaptor3d_Surface>& Surf1,
     const occ::handle<Adaptor3d_Surface>& Surf2);
 
-  //! returns True if Tg,Tguv1 Tguv2 can be computed.
   Standard_EXPORT bool Compute(double&   u1,
                                double&   v1,
                                double&   u2,

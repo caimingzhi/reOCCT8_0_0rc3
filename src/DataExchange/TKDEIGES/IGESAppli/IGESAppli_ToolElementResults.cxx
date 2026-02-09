@@ -27,7 +27,7 @@ void IGESAppli_ToolElementResults::ReadOwnParams(const occ::handle<IGESAppli_Ele
                                                  const occ::handle<IGESData_IGESReaderData>&  IR,
                                                  IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   int                                                                    num = 0;
   occ::handle<IGESDimen_GeneralNote>                                     aNote;
   int                                                                    aSubcaseNumber    = 0;
@@ -43,7 +43,6 @@ void IGESAppli_ToolElementResults::ReadOwnParams(const occ::handle<IGESAppli_Ele
   occ::handle<IGESBasic_HArray1OfHArray1OfInteger>                       allResultDataLoc;
   occ::handle<IGESBasic_HArray1OfHArray1OfReal>                          allResultData;
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadEntity(IR, PR.Current(), "General Note", STANDARD_TYPE(IGESDimen_GeneralNote), aNote);
   PR.ReadInteger(PR.Current(), "Subcase Number", aSubcaseNumber);
   PR.ReadReal(PR.Current(), "Time", aTime);
@@ -61,7 +60,6 @@ void IGESAppli_ToolElementResults::ReadOwnParams(const occ::handle<IGESAppli_Ele
     allNbResultDataLocs    = new NCollection_HArray1<int>(1, num);
     allResultDataLoc       = new IGESBasic_HArray1OfHArray1OfInteger(1, num);
     allResultData          = new IGESBasic_HArray1OfHArray1OfReal(1, num);
-    // ??  WHAT ABOUT FILLING  ?
   }
   else
     PR.AddFail("Number of Finite Elements: Not Positive");
@@ -73,7 +71,7 @@ void IGESAppli_ToolElementResults::ReadOwnParams(const occ::handle<IGESAppli_Ele
     occ::handle<IGESAppli_FiniteElement>     aFEM;
     occ::handle<NCollection_HArray1<int>>    rdrl;
     occ::handle<NCollection_HArray1<double>> vres;
-    // szv#4:S4163:12Mar99 moved in if
+
     if (PR.ReadInteger(PR.Current(), "FEM Element Identifier", ival))
       allElementIdentifiers->SetValue(nume, ival);
     if (PR.ReadEntity(IR,
@@ -92,9 +90,9 @@ void IGESAppli_ToolElementResults::ReadOwnParams(const occ::handle<IGESAppli_Ele
       allNbResultDataLocs->SetValue(nume, nrl);
     if (PR.ReadInts(PR.CurrentList(nrl), "Result data locations", rdrl))
       allResultDataLoc->SetValue(nume, rdrl);
-    // clang-format off
-    PR.ReadInteger (PR.Current(), "Nb. of result data locations", numv); //szv#4:S4163:12Mar99 `st=` not needed
-    // clang-format on
+
+    PR.ReadInteger(PR.Current(), "Nb. of result data locations", numv);
+
     if (PR.ReadReals(PR.CurrentList(numv), "Result Data", vres))
       allResultData->SetValue(nume, vres);
   }
@@ -225,7 +223,7 @@ void IGESAppli_ToolElementResults::OwnCopy(const occ::handle<IGESAppli_ElementRe
 }
 
 IGESData_DirChecker IGESAppli_ToolElementResults::DirChecker(
-  const occ::handle<IGESAppli_ElementResults>& /* ent  */) const
+  const occ::handle<IGESAppli_ElementResults>&) const
 {
   IGESData_DirChecker DC(148, 0, 34);
   DC.Structure(IGESData_DefVoid);
@@ -242,7 +240,7 @@ IGESData_DirChecker IGESAppli_ToolElementResults::DirChecker(
 void IGESAppli_ToolElementResults::OwnCheck(const occ::handle<IGESAppli_ElementResults>& ent,
                                             const Interface_ShareTool&,
                                             occ::handle<Interface_Check>& ach) const
-// UNFINISHED
+
 {
   int rrf = ent->ResultReportFlag();
   if (rrf < 0 || rrf > 3)
@@ -428,7 +426,7 @@ void IGESAppli_ToolElementResults::OwnCheck(const occ::handle<IGESAppli_ElementR
 void IGESAppli_ToolElementResults::OwnDump(const occ::handle<IGESAppli_ElementResults>& ent,
                                            const IGESData_IGESDumper&                   dumper,
                                            Standard_OStream&                            S,
-                                           const int level) const // UNFINISHED
+                                           const int                                    level) const
 {
   int sublevel = (level > 4) ? 1 : 0;
   S << "IGESAppli_ElementResults\n";
@@ -454,13 +452,11 @@ void IGESAppli_ToolElementResults::OwnDump(const occ::handle<IGESAppli_ElementRe
   S << "\nResult Data Locations : ";
   S << " TO BE DONE  ";
 
-  //  ??  TO VERIFY CLOSELY, not at all sure this is correct
-  //      see also Write and Copy
   if (level <= 4)
     S << " [ ask level > 4 for more, > 5 for complete ]\n";
   else
   {
-    int i; // svv Jan 10 2000 : porting on DEC
+    int i;
     for (i = 1; i <= ent->NbElements(); i++)
     {
       int nloc = ent->NbResultDataLocs(i);
@@ -480,7 +476,7 @@ void IGESAppli_ToolElementResults::OwnDump(const occ::handle<IGESAppli_ElementRe
       else
       {
         for (int j = 1; j <= nres; j++)
-          S << " " << ent->ResultData(i, j); // ?? is it all ?? UNFINISHED
+          S << " " << ent->ResultData(i, j);
       }
     }
   }

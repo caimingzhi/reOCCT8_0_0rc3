@@ -14,24 +14,9 @@ namespace
 {
   static std::atomic<int> THE_MARKER_IMAGE_COUNTER(0);
 
-  //! Names of built-in markers
-  static const char* THE_MARKER_NAMES[Aspect_TOM_USERDEFINED] = {
-    ".",     // Aspect_TOM_POINT
-    "+",     // Aspect_TOM_PLUS
-    "*",     // Aspect_TOM_STAR
-    "x",     // Aspect_TOM_X
-    "o",     // Aspect_TOM_O
-    "o.",    // Aspect_TOM_O_POINT
-    "o+",    // Aspect_TOM_O_PLUS
-    "o*",    // Aspect_TOM_O_STAR
-    "ox",    // Aspect_TOM_O_X
-    "ring1", // Aspect_TOM_RING1
-    "ring2", // Aspect_TOM_RING2
-    "ring3", // Aspect_TOM_RING3
-    "ball"   // Aspect_TOM_BALL
-  };
+  static const char* THE_MARKER_NAMES[Aspect_TOM_USERDEFINED] =
+    {".", "+", "*", "x", "o", "o.", "o+", "o*", "ox", "ring1", "ring2", "ring3", "ball"};
 
-  //! Returns a parameters for the marker of the specified type and scale.
   static void getMarkerBitMapParam(const Aspect_TypeOfMarker theMarkerType,
                                    const float               theScale,
                                    int&                      theWidth,
@@ -59,9 +44,6 @@ namespace
     theNumOfBytes              = theHeight * aNumOfBytesInRow;
   }
 
-  //! Merge two image pixmap into one. Used for creating image for following markers:
-  //! Aspect_TOM_O_POINT, Aspect_TOM_O_PLUS, Aspect_TOM_O_STAR, Aspect_TOM_O_X, Aspect_TOM_RING1,
-  //! Aspect_TOM_RING2, Aspect_TOM_RING3
   static occ::handle<Image_PixMap> mergeImages(const occ::handle<Image_PixMap>& theImage1,
                                                const occ::handle<Image_PixMap>& theImage2)
   {
@@ -124,7 +106,6 @@ namespace
     return aResultImage;
   }
 
-  //! Draw inner point as filled rectangle
   static occ::handle<NCollection_HArray1<uint8_t>> fillPointBitmap(const int theSize)
   {
     const int aNbBytes = (theSize / 8 + (theSize % 8 ? 1 : 0)) * theSize;
@@ -137,7 +118,6 @@ namespace
     return aBitMap;
   }
 
-  //! Returns a marker image for the marker of the specified type and scale.
   static occ::handle<Graphic3d_MarkerImage> getTextureImage(const Aspect_TypeOfMarker theMarkerType,
                                                             const float               theScale)
   {
@@ -156,8 +136,6 @@ namespace
     return aTexture;
   }
 } // namespace
-
-//=================================================================================================
 
 Graphic3d_MarkerImage::Graphic3d_MarkerImage(const occ::handle<Image_PixMap>& theImage,
                                              const occ::handle<Image_PixMap>& theImageAlpha)
@@ -187,8 +165,6 @@ Graphic3d_MarkerImage::Graphic3d_MarkerImage(const occ::handle<Image_PixMap>& th
   }
 }
 
-//=================================================================================================
-
 Graphic3d_MarkerImage::Graphic3d_MarkerImage(const TCollection_AsciiString&   theId,
                                              const TCollection_AsciiString&   theAlphaId,
                                              const occ::handle<Image_PixMap>& theImage,
@@ -215,8 +191,6 @@ Graphic3d_MarkerImage::Graphic3d_MarkerImage(const TCollection_AsciiString&   th
   }
 }
 
-//=================================================================================================
-
 Graphic3d_MarkerImage::Graphic3d_MarkerImage(
   const occ::handle<NCollection_HArray1<uint8_t>>& theBitMap,
   const int                                        theWidth,
@@ -233,15 +207,11 @@ Graphic3d_MarkerImage::Graphic3d_MarkerImage(
                    + TCollection_AsciiString(THE_MARKER_IMAGE_COUNTER);
 }
 
-//=================================================================================================
-
 bool Graphic3d_MarkerImage::IsColoredImage() const
 {
   return !myImage.IsNull() && myImage->Format() != Image_Format_Alpha
          && myImage->Format() != Image_Format_Gray;
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<uint8_t>> Graphic3d_MarkerImage::GetBitMapArray(
   const double theAlphaValue,
@@ -270,7 +240,7 @@ occ::handle<NCollection_HArray1<uint8_t>> Graphic3d_MarkerImage::GetBitMapArray(
       {
         aBitOn = aColor.GetRGB().Red() > theAlphaValue;
       }
-      else // if (myImage->Format() == Image_Format_Alpha)
+      else
       {
         aBitOn = aColor.Alpha() > theAlphaValue;
       }
@@ -285,8 +255,6 @@ occ::handle<NCollection_HArray1<uint8_t>> Graphic3d_MarkerImage::GetBitMapArray(
   return aBitMap;
 }
 
-//=================================================================================================
-
 const occ::handle<Image_PixMap>& Graphic3d_MarkerImage::GetImage()
 {
   if (!myImage.IsNull() || myBitMap.IsNull())
@@ -294,9 +262,6 @@ const occ::handle<Image_PixMap>& Graphic3d_MarkerImage::GetImage()
     return myImage;
   }
 
-  // Converting a byte array to bitmap image. Row and column offsets are used
-  // to store bitmap in a square image, so the image will not be stretched
-  // when rendering with point sprites.
   const int aNumOfBytesInRow = myWidth / 8 + (myWidth % 8 ? 1 : 0);
   const int aSize            = std::max(myWidth, myHeight);
   const int aRowOffset       = (aSize - myHeight) / 2 + myMargin;
@@ -319,8 +284,6 @@ const occ::handle<Image_PixMap>& Graphic3d_MarkerImage::GetImage()
 
   return myImage;
 }
-
-//=================================================================================================
 
 const occ::handle<Image_PixMap>& Graphic3d_MarkerImage::GetImageAlpha()
 {
@@ -355,29 +318,21 @@ const occ::handle<Image_PixMap>& Graphic3d_MarkerImage::GetImageAlpha()
   return myImageAlpha;
 }
 
-//=================================================================================================
-
 const TCollection_AsciiString& Graphic3d_MarkerImage::GetImageId() const
 {
   return myImageId;
 }
-
-//=================================================================================================
 
 const TCollection_AsciiString& Graphic3d_MarkerImage::GetImageAlphaId() const
 {
   return myImageAlphaId;
 }
 
-//=================================================================================================
-
 void Graphic3d_MarkerImage::GetTextureSize(int& theWidth, int& theHeight) const
 {
   theWidth  = myWidth;
   theHeight = myHeight;
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
   const Aspect_TypeOfMarker      theMarkerType,
@@ -389,7 +344,6 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
     return occ::handle<Graphic3d_MarkerImage>();
   }
 
-  // predefined markers are defined with 0.5 step
   const int               aScaleInt = int(theScale * 10.0f + 0.5f);
   TCollection_AsciiString aKey      = TCollection_AsciiString("Graphic3d_MarkerImage_")
                                  + THE_MARKER_NAMES[theMarkerType] + "_" + aScaleInt;
@@ -412,13 +366,12 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
     case Aspect_TOM_O_STAR:
     case Aspect_TOM_O_X:
     {
-      // For this type of markers we merge two base bitmaps into one
-      // For example Aspect_TOM_O_PLUS = Aspect_TOM_O + Aspect_TOM_PLUS
+
       occ::handle<Graphic3d_MarkerImage> aMarkerImage1 = getTextureImage(Aspect_TOM_O, theScale);
       occ::handle<Graphic3d_MarkerImage> aMarkerImage2;
       if (theMarkerType == Aspect_TOM_O_POINT)
       {
-        // draw inner point as filled rectangle
+
         const int                                 aSize = theScale > 7 ? 7 : (int)(theScale + 0.5F);
         occ::handle<NCollection_HArray1<uint8_t>> aBitMap = fillPointBitmap(aSize);
         aMarkerImage2 = new Graphic3d_MarkerImage(aBitMap, aSize, aSize);
@@ -471,13 +424,12 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
 
       NCollection_Vec4<double> aColor(theColor);
 
-      const int                 aSize = std::max(aWidth + 2, aHeight + 2); // includes extra margin
+      const int                 aSize    = std::max(aWidth + 2, aHeight + 2);
       occ::handle<Image_PixMap> anImage  = new Image_PixMap();
       occ::handle<Image_PixMap> anImageA = new Image_PixMap();
       anImage->InitZero(Image_Format_RGBA, aSize, aSize);
       anImageA->InitZero(Image_Format_Alpha, aSize, aSize);
 
-      // we draw a set of circles
       Image_ColorRGBA aColor32;
       aColor32.a() = 255;
       double      aHLS[3];
@@ -485,7 +437,7 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
       while (aScale >= 1.0f)
       {
         Quantity_Color::RgbHls(aColor.r(), aColor.g(), aColor.b(), aHLS[0], aHLS[1], aHLS[2]);
-        aHLS[2] *= 0.95; // 5% saturation change
+        aHLS[2] *= 0.95;
         Quantity_Color::HlsRgb(aHLS[0], aHLS[1], aHLS[2], aColor.r(), aColor.g(), aColor.b());
         aColor32.r() = static_cast<uint8_t>(255.0 * aColor.r());
         aColor32.g() = static_cast<uint8_t>(255.0 * aColor.g());

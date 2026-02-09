@@ -1,5 +1,4 @@
 #define Debug(expr) std::cout << " MAT2d_Tool2d.cxx  :  expr :" << expr << std::endl;
-// #define OCCT_DEBUG
 
 #include <Bisector_Bisec.hpp>
 #include <Bisector_BisecAna.hpp>
@@ -44,9 +43,6 @@ static bool Store      = false;
 static bool AffichDist = false;
 #endif
 
-//=====================================================================
-//  static functions
-//=====================================================================
 static IntRes2d_Domain Domain(const occ::handle<Geom2d_TrimmedCurve>& Bisector1,
                               const double                            Tolerance);
 
@@ -62,18 +58,14 @@ static bool CheckEnds(const occ::handle<Geom2d_Geometry>& Elt,
 
 static double MAT2d_TOLCONF = 1.e-7;
 
-//=================================================================================================
-
 MAT2d_Tool2d::MAT2d_Tool2d()
 {
   theDirection         = 1.;
-  theJoinType          = GeomAbs_Arc; // default
+  theJoinType          = GeomAbs_Arc;
   theNumberOfBisectors = 0;
   theNumberOfVecs      = 0;
   theNumberOfPnts      = 0;
 }
-
-//=================================================================================================
 
 void MAT2d_Tool2d::InitItems(const occ::handle<MAT2d_Circuit>& EquiCircuit)
 {
@@ -88,8 +80,6 @@ void MAT2d_Tool2d::InitItems(const occ::handle<MAT2d_Circuit>& EquiCircuit)
   theCircuit = EquiCircuit;
 }
 
-//=================================================================================================
-
 void MAT2d_Tool2d::Sense(const MAT_Side aside)
 {
   if (aside == MAT_Left)
@@ -98,28 +88,20 @@ void MAT2d_Tool2d::Sense(const MAT_Side aside)
     theDirection = -1.;
 }
 
-//=================================================================================================
-
 void MAT2d_Tool2d::SetJoinType(const GeomAbs_JoinType aJoinType)
 {
   theJoinType = aJoinType;
 }
-
-//=================================================================================================
 
 int MAT2d_Tool2d::NumberOfItems() const
 {
   return theCircuit->NumberOfItems();
 }
 
-//=================================================================================================
-
 double MAT2d_Tool2d::ToleranceOfConfusion() const
 {
   return 2 * MAT2d_TOLCONF;
 }
-
-//=================================================================================================
 
 int MAT2d_Tool2d::FirstPoint(const int anitem, double& dist)
 {
@@ -152,8 +134,6 @@ int MAT2d_Tool2d::FirstPoint(const int anitem, double& dist)
   }
   return theNumberOfPnts;
 }
-
-//=================================================================================================
 
 int MAT2d_Tool2d::TangentBefore(const int anitem, const bool IsOpenResult)
 {
@@ -193,8 +173,6 @@ int MAT2d_Tool2d::TangentBefore(const int anitem, const bool IsOpenResult)
   return theNumberOfVecs;
 }
 
-//=================================================================================================
-
 int MAT2d_Tool2d::TangentAfter(const int anitem, const bool IsOpenResult)
 {
   int                       item;
@@ -233,8 +211,6 @@ int MAT2d_Tool2d::TangentAfter(const int anitem, const bool IsOpenResult)
   return theNumberOfVecs;
 }
 
-//=================================================================================================
-
 int MAT2d_Tool2d::Tangent(const int bisector)
 {
   theNumberOfVecs++;
@@ -242,8 +218,6 @@ int MAT2d_Tool2d::Tangent(const int bisector)
                    GeomBis(bisector).Value()->DN(GeomBis(bisector).Value()->LastParameter(), 1));
   return theNumberOfVecs;
 }
-
-//=================================================================================================
 
 void MAT2d_Tool2d::CreateBisector(const occ::handle<MAT_Bisector>& abisector)
 {
@@ -289,12 +263,12 @@ void MAT2d_Tool2d::CreateBisector(const occ::handle<MAT_Bisector>& abisector)
     std::cout << "  Item 1 : " << std::endl;
     std::cout << edge1number << std::endl;
     std::cout << std::endl;
-    //    elt1->Dump(1,1);
+
     std::cout << std::endl;
     std::cout << "  Item 2 : " << std::endl;
     std::cout << edge2number << std::endl;
     std::cout << std::endl;
-    //  elt2->Dump(1,1);
+
     std::cout << std::endl;
   }
 #endif
@@ -351,9 +325,6 @@ void MAT2d_Tool2d::CreateBisector(const occ::handle<MAT_Bisector>& abisector)
                      ontheline);
   }
 
-  //------------------------------
-  // Restriction de la bisectrice.
-  //-----------------------------
   TrimBisec(bisector, edge1number, InitialNeighbour, 1);
   TrimBisec(bisector, edge2number, InitialNeighbour, 2);
 
@@ -379,13 +350,6 @@ void MAT2d_Tool2d::CreateBisector(const occ::handle<MAT_Bisector>& abisector)
 #endif
 }
 
-//=============================================================================
-// function : TrimBisec
-// purpose  : Restriction de la bisectrice.
-//           Restriction des bissectrice separant deux elements lies par une
-//           connexion ou l un au moins des elements est un cercle.
-//           Cette restriction est necessaire a la logique de l algorithme.
-//=============================================================================
 void MAT2d_Tool2d::TrimBisec(Bisector_Bisec& B1,
                              const int       IndexEdge,
                              const bool      InitialNeighbour,
@@ -395,8 +359,7 @@ void MAT2d_Tool2d::TrimBisec(Bisector_Bisec& B1,
   occ::handle<Geom2d_TrimmedCurve> LineSupportDomain, Line;
   occ::handle<Geom2d_Line>         Line1, Line2;
 
-  // gp_Vec2d             Tan1,Tan2;
-  gp_Pnt2d Ori; // PEdge;
+  gp_Pnt2d Ori;
   int      INext;
   INext = (IndexEdge == theCircuit->NumberOfItems()) ? 1 : (IndexEdge + 1);
 
@@ -408,9 +371,7 @@ void MAT2d_Tool2d::TrimBisec(Bisector_Bisec& B1,
     {
       Curve    = occ::down_cast<Geom2d_TrimmedCurve>(theCircuit->Value(IndexEdge))->BasisCurve();
       EdgeType = Curve->DynamicType();
-      //-------------------------------------------------------------------
-      // si l edge est liee a sa voisine  precedente par une connexion.
-      //-------------------------------------------------------------------
+
       if (theCircuit->ConnexionOn(IndexEdge) && StartOrEnd == 1)
       {
         if (EdgeType == STANDARD_TYPE(Geom2d_Circle))
@@ -420,9 +381,7 @@ void MAT2d_Tool2d::TrimBisec(Bisector_Bisec& B1,
           Line1       = new Geom2d_Line(Ori, gp_Dir2d(P2.X() - Ori.X(), P2.Y() - Ori.Y()));
         }
       }
-      //-----------------------------------------------------------------------
-      // Si l edge est liee a sa voisine suivante par une connexion.
-      //-----------------------------------------------------------------------
+
       if (theCircuit->ConnexionOn(INext) && StartOrEnd == 2)
       {
         if (EdgeType == STANDARD_TYPE(Geom2d_Circle))
@@ -435,10 +394,6 @@ void MAT2d_Tool2d::TrimBisec(Bisector_Bisec& B1,
       if (Line1.IsNull() && Line2.IsNull())
         return;
 
-      //-----------------------------------------------------------------------
-      // Restriction de la bisectrice par les demi-droites liees aux connexions
-      // si elles existent.
-      //-----------------------------------------------------------------------
       if (!Line1.IsNull())
       {
         Line = new Geom2d_TrimmedCurve(Line1, 0., Precision::Infinite());
@@ -452,8 +407,6 @@ void MAT2d_Tool2d::TrimBisec(Bisector_Bisec& B1,
     }
   }
 }
-
-//=================================================================================================
 
 bool MAT2d_Tool2d::TrimBisector(const occ::handle<MAT_Bisector>& abisector)
 {
@@ -483,8 +436,6 @@ bool MAT2d_Tool2d::TrimBisector(const occ::handle<MAT_Bisector>& abisector)
   return true;
 }
 
-//=================================================================================================
-
 bool MAT2d_Tool2d::TrimBisector(const occ::handle<MAT_Bisector>& abisector, const int apoint)
 {
   double                           Param;
@@ -493,7 +444,6 @@ bool MAT2d_Tool2d::TrimBisector(const occ::handle<MAT_Bisector>& abisector, cons
 
   occ::handle<Bisector_Curve> Bis = occ::down_cast<Bisector_Curve>(Bisector->BasisCurve());
 
-  //  Param = ParameterOnCurve(Bisector,theGeomPnts.Value(apoint));
   Param = Bis->Parameter(GeomPnt(apoint));
 
   if (Bisector->BasisCurve()->IsPeriodic())
@@ -516,8 +466,6 @@ bool MAT2d_Tool2d::TrimBisector(const occ::handle<MAT_Bisector>& abisector, cons
   return true;
 }
 
-//=================================================================================================
-
 bool MAT2d_Tool2d::Projection(const int IEdge, const gp_Pnt2d& PCom, double& Distance) const
 {
   gp_Pnt2d                         PEdge;
@@ -525,7 +473,7 @@ bool MAT2d_Tool2d::Projection(const int IEdge, const gp_Pnt2d& PCom, double& Dis
   occ::handle<Standard_Type>       Type = Elt->DynamicType();
   occ::handle<Geom2d_TrimmedCurve> Curve;
   int                              INext;
-  double                           Eps = MAT2d_TOLCONF; //*10.;
+  double                           Eps = MAT2d_TOLCONF;
 
   if (Type == STANDARD_TYPE(Geom2d_CartesianPoint))
   {
@@ -536,11 +484,7 @@ bool MAT2d_Tool2d::Projection(const int IEdge, const gp_Pnt2d& PCom, double& Dis
   {
     Distance = Precision::Infinite();
     Curve    = occ::down_cast<Geom2d_TrimmedCurve>(Elt);
-    //-----------------------------------------------------------------------
-    // Calcul des parametres MinMax sur l edge si celui ci est lies a ses
-    // voisins par des connexions la courbe de calcul est limitee par
-    // celles_ci.
-    //-----------------------------------------------------------------------
+
     double ParamMin = Curve->FirstParameter();
     double ParamMax = Curve->LastParameter();
     if (theCircuit->ConnexionOn(IEdge))
@@ -556,9 +500,7 @@ bool MAT2d_Tool2d::Projection(const int IEdge, const gp_Pnt2d& PCom, double& Dis
         ElCLib::AdjustPeriodic(0., 2 * M_PI, Eps, ParamMin, ParamMax);
       }
     }
-    //---------------------------------------------------------------------
-    // Constuction de la courbe pour les extremas et ajustement des bornes.
-    //---------------------------------------------------------------------
+
     Geom2dAdaptor_Curve C1(Curve);
     GeomAbs_CurveType   TypeC1 = C1.GetType();
     if (TypeC1 == GeomAbs_Circle)
@@ -578,9 +520,7 @@ bool MAT2d_Tool2d::Projection(const int IEdge, const gp_Pnt2d& PCom, double& Dis
       ParamMax = ParamMax + Eps;
       ParamMin = ParamMin - Eps;
     }
-    //-----------------------------------------------------
-    // Calcul des extremas et stockage minimum de distance.
-    //-----------------------------------------------------
+
     Extrema_ExtPC2d Extremas(PCom, C1, ParamMin, ParamMax);
     if (Extremas.IsDone())
     {
@@ -608,8 +548,6 @@ bool MAT2d_Tool2d::Projection(const int IEdge, const gp_Pnt2d& PCom, double& Dis
   }
   return true;
 }
-
-//=================================================================================================
 
 bool MAT2d_Tool2d::IsSameDistance(const occ::handle<MAT_Bisector>& BisectorOne,
                                   const occ::handle<MAT_Bisector>& BisectorTwo,
@@ -667,7 +605,7 @@ bool MAT2d_Tool2d::IsSameDistance(const occ::handle<MAT_Bisector>& BisectorOne,
     Dist(4) = Dist(2);
   else
     isDone4 = Projection(IEdge4, PCom, Dist(4));
-  //
+
   if (isDone3)
   {
     if (!isDone4)
@@ -725,8 +663,6 @@ bool MAT2d_Tool2d::IsSameDistance(const occ::handle<MAT_Bisector>& BisectorOne,
   return true;
 }
 
-//=================================================================================================
-
 double MAT2d_Tool2d::IntersectBisector(const occ::handle<MAT_Bisector>& BisectorOne,
                                        const occ::handle<MAT_Bisector>& BisectorTwo,
                                        int&                             IntPnt)
@@ -747,12 +683,6 @@ double MAT2d_Tool2d::IntersectBisector(const occ::handle<MAT_Bisector>& Bisector
   if (Bisector1.IsNull() || Bisector2.IsNull())
     return Precision::Infinite();
 
-  //-------------------------------------------------------------------------
-  // Si les deux bissectrices separent des elements consecutifs et qu elles
-  // sont issues des connexions C1 et C2.
-  // Si C1 est la reverse de C2 ,alors les deux bissectrices sont issues
-  // du meme point. Dans ce cas l intersection n est pas validee.
-  //-------------------------------------------------------------------------
   int IS1 = BisectorOne->SecondEdge()->EdgeNumber();
   int IS2 = BisectorTwo->SecondEdge()->EdgeNumber();
   int IF1 = BisectorOne->FirstEdge()->EdgeNumber();
@@ -769,9 +699,6 @@ double MAT2d_Tool2d::IntersectBisector(const occ::handle<MAT_Bisector>& Bisector
       return Precision::Infinite();
   }
 
-  // -----------------------------------------
-  // Construction des domaines d intersection.
-  // -----------------------------------------
   IntRes2d_Domain Domain1 = Domain(Bisector1, Tolerance);
   IntRes2d_Domain Domain2 = Domain(Bisector2, Tolerance);
 
@@ -788,23 +715,19 @@ double MAT2d_Tool2d::IntersectBisector(const occ::handle<MAT_Bisector>& Bisector
     std::cout << "INTERSECTION de " << BisectorOne->BisectorNumber() << " et de "
               << BisectorTwo->BisectorNumber() << std::endl;
     std::cout << "  Bisector 1 : " << std::endl;
-    //    (Bisector1->BasisCurve())->Dump(-1,1);
+
     std::cout << std::endl;
     Debug(Domain1.FirstParameter());
     Debug(Domain1.LastParameter());
     std::cout << "-----------------" << std::endl;
     std::cout << "  Bisector 2 : " << std::endl;
-    //    (Bisector2->BasisCurve())->Dump(-1,1);
+
     std::cout << std::endl;
     Debug(Domain2.FirstParameter());
     Debug(Domain2.LastParameter());
     std::cout << "-----------------" << std::endl;
   }
 #endif
-
-  // -------------------------
-  // Calcul de l intersection.
-  // -------------------------
 
   Bisector_Inter Intersect;
   Intersect.Perform(GeomBis(BisectorOne->BisectorNumber()),
@@ -814,15 +737,6 @@ double MAT2d_Tool2d::IntersectBisector(const occ::handle<MAT_Bisector>& Bisector
                     Tolerance,
                     Tolerance,
                     true);
-
-  //  Geom2dInt_GInter Intersect;
-  //  Intersect.Perform(Bisector1,Domain1,Bisector2,Domain2,Tolerance,Tolerance);
-
-  // -------------------------------------------------------------------------
-  // Exploitation du resultat de l intersection et selection du point solution
-  // equidistant des deux edges et le plus proche en parametre de l origine
-  // des bissectrices.
-  // -------------------------------------------------------------------------
 
   if (!Intersect.IsDone())
     return Precision::Infinite();
@@ -843,10 +757,7 @@ double MAT2d_Tool2d::IntersectBisector(const occ::handle<MAT_Bisector>& Bisector
       IntRes2d_IntersectionSegment Segment     = Intersect.Segment(i);
       bool                         PointRetenu = false;
       gp_Pnt2d                     PointOnSegment;
-      // ----------------------------------------------------------------
-      // Si les segments sont petits, recherche des points sur le segment
-      // equidistants des edges.
-      // ----------------------------------------------------------------
+
       if ((Segment.HasFirstPoint() && Segment.HasLastPoint()))
       {
         gp_Pnt2d P1, P2;
@@ -877,10 +788,6 @@ double MAT2d_Tool2d::IntersectBisector(const occ::handle<MAT_Bisector>& Bisector
         }
       }
 
-      // ----------------------------------------------------------------
-      // Sauvegarde du point equidistant des edges de plus petit
-      // parametre sur les bissectrices.
-      // ----------------------------------------------------------------
       if (PointRetenu)
       {
         Parama = occ::down_cast<Bisector_Curve>(Bisector1->BasisCurve())->Parameter(PointOnSegment);
@@ -931,21 +838,6 @@ double MAT2d_Tool2d::IntersectBisector(const occ::handle<MAT_Bisector>& Bisector
   theGeomPnts.Bind(theNumberOfPnts, PointSolution);
   IntPnt = theNumberOfPnts;
 
-  //-----------------------------------------------------------------------
-  // Si le point d intersection est quasi confondue avec une des extremites
-  // de l une ou l autre des bisectrices, l intersection n est pas validee.
-  //
-  // SAUF si une des bisectrices est issue d une connexion et que les
-  // edges separes par les bissectrices sont des voisines sur le contour
-  // initiales.
-  // en effet le milieu de la connexion P qui est l origine d une des
-  // bissectrices peut etre sur l autre bissectrice.
-  // P est donc point d intersection
-  // et la bissectrice issue de la connexion est de longueur nulle.
-  // (ex : un rectangle dans un rectangle ou la connexion est entre un coin
-  // et un cote).
-  //-----------------------------------------------------------------------
-
   int  IndexEdge1, IndexEdge2, IndexEdge3, IndexEdge4;
   bool ExtremiteControle = true;
 
@@ -956,9 +848,7 @@ double MAT2d_Tool2d::IntersectBisector(const occ::handle<MAT_Bisector>& Bisector
 
   if (theCircuit->ConnexionOn(IndexEdge2))
   {
-    // --------------------------------------
-    // BisectorOne est issue d une connexion.
-    // --------------------------------------
+
     if (AreNeighbours(IndexEdge1, IndexEdge2, NumberOfItems())
         && AreNeighbours(IndexEdge3, IndexEdge4, NumberOfItems()) && IndexEdge2 == IndexEdge3)
     {
@@ -969,9 +859,7 @@ double MAT2d_Tool2d::IntersectBisector(const occ::handle<MAT_Bisector>& Bisector
 
   if (theCircuit->ConnexionOn(IndexEdge4))
   {
-    //--------------------------------------
-    // BisectorTwo est issue d une connexion.
-    //--------------------------------------
+
     if (AreNeighbours(IndexEdge1, IndexEdge2, NumberOfItems())
         && AreNeighbours(IndexEdge3, IndexEdge4, NumberOfItems()) && IndexEdge2 == IndexEdge3)
     {
@@ -979,12 +867,6 @@ double MAT2d_Tool2d::IntersectBisector(const occ::handle<MAT_Bisector>& Bisector
       Param2            = Param2 + Tolerance;
     }
   }
-
-  // if (ExtremiteControle) {
-  //   if(Bisector1->StartPoint().Distance(PointSolution) < Tolerance ||
-  //     Bisector2->StartPoint().Distance(PointSolution) < Tolerance  )
-  //     return Precision::Infinite();
-  // }
 
   if (ExtremiteControle)
   {
@@ -1023,8 +905,6 @@ double MAT2d_Tool2d::IntersectBisector(const occ::handle<MAT_Bisector>& Bisector
   return DistanceMini;
 }
 
-//=================================================================================================
-
 double MAT2d_Tool2d::Distance(const occ::handle<MAT_Bisector>& Bis,
                               const double                     Param1,
                               const double                     Param2) const
@@ -1039,8 +919,6 @@ double MAT2d_Tool2d::Distance(const occ::handle<MAT_Bisector>& Bis,
   }
   return Dist;
 }
-
-//=================================================================================================
 
 #ifndef OCCT_DEBUG
 void MAT2d_Tool2d::Dump(const int, const int) const
@@ -1061,49 +939,35 @@ void MAT2d_Tool2d::Dump(const int bisector, const int) const
 #endif
 }
 
-//=================================================================================================
-
 const Bisector_Bisec& MAT2d_Tool2d::GeomBis(const int Index) const
 {
   return theGeomBisectors.Find(Index);
 }
-
-//=================================================================================================
 
 Bisector_Bisec& MAT2d_Tool2d::ChangeGeomBis(const int Index)
 {
   return theGeomBisectors.ChangeFind(Index);
 }
 
-//=================================================================================================
-
 occ::handle<Geom2d_Geometry> MAT2d_Tool2d::GeomElt(const int Index) const
 {
   return theCircuit->Value(Index);
 }
-
-//=================================================================================================
 
 const gp_Pnt2d& MAT2d_Tool2d::GeomPnt(const int Index) const
 {
   return theGeomPnts.Find(Index);
 }
 
-//=================================================================================================
-
 const gp_Vec2d& MAT2d_Tool2d::GeomVec(const int Index) const
 {
   return theGeomVecs.Find(Index);
 }
 
-//=================================================================================================
-
 occ::handle<MAT2d_Circuit> MAT2d_Tool2d::Circuit() const
 {
   return theCircuit;
 }
-
-//=================================================================================================
 
 void MAT2d_Tool2d::BisecFusion(const int I1, const int I2)
 {
@@ -1119,14 +983,7 @@ void MAT2d_Tool2d::BisecFusion(const int I1, const int I2)
   occ::handle<Standard_Type> Type1 = Bisector1->BasisCurve()->DynamicType();
   if (Type1 == STANDARD_TYPE(Bisector_BisecCC))
   {
-    //------------------------------------------------------------------------------------
-    // les bissectrice courbe/courbe sont  construites avec un point de depart
-    // elles ne peuvent pas etre trimes par un point se trouvant de l autre cote du
-    // point de depart.
-    // pour faire la fusion des deux bissectrices on reconstruit la bissectrice entre les
-    // deux courbes avec comme point de depart le dernier point de la Bisector2.
-    // on trime ensuite la courbe par le dernier point de Bisector1.
-    //------------------------------------------------------------------------------------
+
     double                        Tolerance = MAT2d_TOLCONF;
     Bisector_Bisec                Bis;
     gp_Vec2d                      VBid(1, 0);
@@ -1158,19 +1015,12 @@ void MAT2d_Tool2d::BisecFusion(const int I1, const int I2)
 
     occ::handle<Bisector_BisecAna> BAna =
       occ::down_cast<Bisector_BisecAna>(Bisector1->BasisCurve());
-    //---------------------------- uncomment if new method Bisector_BisecAna::SetTrim(f,l) is not
-    // used
-    //    occ::handle<Geom2d_Curve> C2d = BAna->Geom2dCurve();
-    //    occ::handle<Geom2d_TrimmedCurve> trimC2d = new Geom2d_TrimmedCurve(C2d, UF1, UL1);
-    //    BAna->Init(trimC2d);
-    //--------------------------- end
-    BAna->SetTrim(UF1, UL1); // put comment if SetTrim(f,l) is not used
+
+    BAna->SetTrim(UF1, UL1);
 
     Bisector1->SetTrim(UF1, UL1);
   }
 }
-
-//=================================================================================================
 
 static occ::handle<Standard_Type> Type(const occ::handle<Geom2d_Geometry>& aGeom)
 {
@@ -1185,11 +1035,6 @@ static occ::handle<Standard_Type> Type(const occ::handle<Geom2d_Geometry>& aGeom
   return type;
 }
 
-//==========================================================================
-// function : AreNeighbours
-// purpose  : Return TRUE si IEdge1 et IEdge2 correspondent a des elements
-//           consecutifs sur un contour ferme de NbEdge elements.
-//==========================================================================
 bool AreNeighbours(const int IEdge1, const int IEdge2, const int NbEdge)
 {
   if (std::abs(IEdge1 - IEdge2) == 1)
@@ -1199,8 +1044,6 @@ bool AreNeighbours(const int IEdge1, const int IEdge2, const int NbEdge)
   else
     return false;
 }
-
-//=================================================================================================
 
 static void SetTrim(Bisector_Bisec& Bis, const occ::handle<Geom2d_Curve>& Line1)
 {
@@ -1232,15 +1075,10 @@ static void SetTrim(Bisector_Bisec& Bis, const occ::handle<Geom2d_Curve>& Line1)
       }
     }
   }
-  // ------------------------------------------------------------------------
-  // Restriction de la Bissectrice par le point d intersection de plus petit
-  // parametre.
-  // ------------------------------------------------------------------------
+
   if (UTrim < UB2 && UTrim > UB1)
     Bisector->SetTrim(UB1, UTrim);
 }
-
-//=================================================================================================
 
 IntRes2d_Domain Domain(const occ::handle<Geom2d_TrimmedCurve>& Bisector1, const double Tolerance)
 {
@@ -1294,8 +1132,6 @@ IntRes2d_Domain Domain(const occ::handle<Geom2d_TrimmedCurve>& Bisector1, const 
   return Domain1;
 }
 
-//=================================================================================================
-
 bool CheckEnds(const occ::handle<Geom2d_Geometry>& Elt,
                const gp_Pnt2d&                     PCom,
                const double                        Distance,
@@ -1325,16 +1161,8 @@ bool CheckEnds(const occ::handle<Geom2d_Geometry>& Elt,
 }
 
 #ifdef OCCT_DEBUG
-//==========================================================================
-// function : MAT2d_DrawCurve
-// purpose  : Affichage d une courbe <aCurve> de Geom2d. dans une couleur
-//           definie par <Indice>.
-//            Indice = 1 jaune,
-//            Indice = 2 bleu,
-//            Indice = 3 rouge,
-//            Indice = 4 vert.
-//==========================================================================
-void MAT2d_DrawCurve(const occ::handle<Geom2d_Curve>& aCurve, const int /*Indice*/)
+
+void MAT2d_DrawCurve(const occ::handle<Geom2d_Curve>& aCurve, const int)
 {
   occ::handle<Standard_Type> type = aCurve->DynamicType();
   occ::handle<Geom2d_Curve>  curve, CurveDraw;
@@ -1343,14 +1171,13 @@ void MAT2d_DrawCurve(const occ::handle<Geom2d_Curve>& aCurve, const int /*Indice
   {
     curve = occ::down_cast<Geom2d_TrimmedCurve>(aCurve)->BasisCurve();
     type  = curve->DynamicType();
-    // PB de representation des courbes semi_infinies.
+
     gp_Parab2d gpParabola;
     gp_Hypr2d  gpHyperbola;
     double     Focus;
     double     Limit = 50000.;
     double     delta = 400;
 
-    // PB de representation des courbes semi_infinies.
     if (aCurve->LastParameter() == Precision::Infinite())
     {
 
@@ -1380,7 +1207,6 @@ void MAT2d_DrawCurve(const occ::handle<Geom2d_Curve>& aCurve, const int /*Indice
     {
       CurveDraw = aCurve;
     }
-    // fin PB.
   }
   else
   {

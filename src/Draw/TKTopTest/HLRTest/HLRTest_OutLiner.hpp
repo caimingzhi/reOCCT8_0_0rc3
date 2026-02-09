@@ -18,17 +18,12 @@ public:
 
   occ::handle<HLRTopoBRep_OutLiner> OutLiner() const;
 
-  //! Does nothhing,
   Standard_EXPORT void DrawOn(Draw_Display& dis) const override;
 
-  //! For variable copy.
   Standard_EXPORT occ::handle<Draw_Drawable3D> Copy() const override;
 
-  //! For variable dump.
   Standard_EXPORT void Dump(Standard_OStream& S) const override;
 
-  //! For variable whatis command. Set as a result the
-  //! type of the variable.
   Standard_EXPORT void Whatis(Draw_Interpretor& I) const override;
 
   DEFINE_STANDARD_RTTIEXT(HLRTest_OutLiner, Draw_Drawable3D)

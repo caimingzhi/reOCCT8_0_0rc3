@@ -17,34 +17,6 @@
 #include <Precision.hpp>
 class ShapeBuild_ReShape;
 
-//! This tool tries to unify faces and edges of the shape which lie on the same geometry.
-//! Faces/edges are considering as 'same-domain' if a group of neighbouring faces/edges
-//! are lying on coincident surfaces/curves.
-//! In this case these faces/edges can be unified into one face/edge.
-//! ShapeUpgrade_UnifySameDomain is initialized by a shape and the next optional parameters:
-//! UnifyFaces - tries to unify all possible faces
-//! UnifyEdges - tries to unify all possible edges
-//! ConcatBSplines - if this flag is set to true then all neighbouring edges, which lay
-//! on BSpline or Bezier curves with C1 continuity on their common vertices,
-//! will be merged into one common edge.
-//!
-//! The input shape can be of any type containing faces or edges - compsolid, solid, shell,
-//! wire, compound of any kind of shapes. The algorithm preserves the structure of compsolids,
-//! solids, shells and wires. E.g., if two shells have a common edge and the faces sharing
-//! this edge lie on the same surface the algorithm will not unify these faces, otherwise
-//! the structure of shells would be broken. However, if such faces belong to different
-//! compounds of faces they will be unified.
-//!
-//! The output result of the tool is the unified shape.
-//!
-//! All the modifications of initial shape are recorded during unifying.
-//! Methods History are intended to:
-//! - set a place holder for the history of modifications of sub-shapes of
-//!   the initial shape;
-//! - get the collected history.
-//! The algorithm provides a place holder for the history and collects the
-//! history by default.
-//! To avoid collecting of the history the place holder should be set to null handle.
 class ShapeUpgrade_UnifySameDomain : public Standard_Transient
 {
 
@@ -56,71 +28,40 @@ public:
                               TopTools_ShapeMapHasher>
     DataMapOfShapeMapOfShape;
 
-  //! Empty constructor
   Standard_EXPORT ShapeUpgrade_UnifySameDomain();
 
-  //! Constructor defining input shape and necessary flags.
-  //! It does not perform unification.
   Standard_EXPORT ShapeUpgrade_UnifySameDomain(const TopoDS_Shape& aShape,
                                                const bool          UnifyEdges     = true,
                                                const bool          UnifyFaces     = true,
                                                const bool          ConcatBSplines = false);
 
-  //! Initializes with a shape and necessary flags.
-  //! It does not perform unification.
-  //! If you intend to nullify the History place holder do it after
-  //! initialization.
   Standard_EXPORT void Initialize(const TopoDS_Shape& aShape,
                                   const bool          UnifyEdges     = true,
                                   const bool          UnifyFaces     = true,
                                   const bool          ConcatBSplines = false);
 
-  //! Sets the flag defining whether it is allowed to create
-  //! internal edges inside merged faces in the case of non-manifold
-  //! topology. Without this flag merging through multi connected edge
-  //! is forbidden. Default value is false.
   Standard_EXPORT void AllowInternalEdges(const bool theValue);
 
-  //! Sets the shape for avoid merging of the faces/edges.
-  //! This shape can be vertex or edge.
-  //! If the shape is a vertex it forbids merging of connected edges.
-  //! If the shape is a edge it forbids merging of connected faces.
-  //! This method can be called several times to keep several shapes.
   Standard_EXPORT void KeepShape(const TopoDS_Shape& theShape);
 
-  //! Sets the map of shapes for avoid merging of the faces/edges.
-  //! It allows passing a ready to use map instead of calling many times
-  //! the method KeepShape.
   Standard_EXPORT void KeepShapes(
     const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theShapes);
 
-  //! Sets the flag defining the behavior of the algorithm regarding
-  //! modification of input shape.
-  //! If this flag is equal to True then the input (original) shape can't be
-  //! modified during modification process. Default value is true.
   Standard_EXPORT void SetSafeInputMode(bool theValue);
 
-  //! Sets the linear tolerance. It plays the role of chord error when
-  //! taking decision about merging of shapes. Default value is Precision::Confusion().
   void SetLinearTolerance(const double theValue) { myLinTol = theValue; }
 
-  //! Sets the angular tolerance. If two shapes form a connection angle greater than
-  //! this value they will not be merged. Default value is Precision::Angular().
   void SetAngularTolerance(const double theValue)
   {
     myAngTol = (theValue < Precision::Angular() ? Precision::Angular() : theValue);
   }
 
-  //! Performs unification and builds the resulting shape.
   Standard_EXPORT void Build();
 
-  //! Gives the resulting shape
   const TopoDS_Shape& Shape() const { return myShape; }
 
-  //! Returns the history of the processed shapes.
   const occ::handle<BRepTools_History>& History() const { return myHistory; }
 
-  //! Returns the history of the processed shapes.
   occ::handle<BRepTools_History>& History() { return myHistory; }
 
   DEFINE_STANDARD_RTTIEXT(ShapeUpgrade_UnifySameDomain, Standard_Transient)
@@ -129,12 +70,8 @@ protected:
   struct SubSequenceOfEdges;
 
 protected:
-  //! This method makes if possible a common face from each
-  //! group of faces lying on coincident surfaces
   Standard_EXPORT void UnifyFaces();
 
-  //! This method makes if possible a common edge from each
-  //! group of smothly connected edges, which are common for the same couple of faces
   Standard_EXPORT void UnifyEdges();
 
   void IntUnifyFaces(const TopoDS_Shape&                                        theInpShape,
@@ -144,7 +81,6 @@ protected:
                      const DataMapOfShapeMapOfShape&                            theGMapFaceShells,
                      const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theFreeBoundMap);
 
-  //! Splits the sequence of edges into the sequence of chains
   bool MergeEdges(NCollection_Sequence<TopoDS_Shape>&                           SeqEdges,
                   const NCollection_IndexedDataMap<TopoDS_Shape,
                                                    NCollection_List<TopoDS_Shape>,
@@ -152,30 +88,23 @@ protected:
                   NCollection_Sequence<SubSequenceOfEdges>&                     SeqOfSubSeqOfEdges,
                   const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& NonMergVrt);
 
-  //! Tries to unify the sequence of edges with the set of
-  //! another edges which lies on the same geometry
   bool MergeSeq(NCollection_Sequence<TopoDS_Shape>&                           SeqEdges,
                 const NCollection_IndexedDataMap<TopoDS_Shape,
                                                  NCollection_List<TopoDS_Shape>,
                                                  TopTools_ShapeMapHasher>&    theVFmap,
                 const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& nonMergVert);
 
-  //! Merges a sequence of edges into one edge if possible
   bool MergeSubSeq(const NCollection_Sequence<TopoDS_Shape>&                  theChain,
                    const NCollection_IndexedDataMap<TopoDS_Shape,
                                                     NCollection_List<TopoDS_Shape>,
                                                     TopTools_ShapeMapHasher>& theVFmap,
                    TopoDS_Edge&                                               OutEdge);
 
-  //! Unifies the pcurve of the chain into one pcurve of the edge
   void UnionPCurves(const NCollection_Sequence<TopoDS_Shape>& theChain, TopoDS_Edge& theEdge);
 
-  //! Fills the history of the modifications during the operation.
   Standard_EXPORT void FillHistory();
 
 private:
-  //! Generates sub-sequences of edges from sequence of edges.
-  //! Edges from each subsequences can be merged into the one edge.
   static void generateSubSeq(
     const NCollection_Sequence<TopoDS_Shape>&                     anInpEdgeSeq,
     NCollection_Sequence<SubSequenceOfEdges>&                     SeqOfSubSeqOfEdges,
@@ -204,5 +133,5 @@ private:
                                                                            myEFmap;
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> myFaceNewFace;
 
-  occ::handle<BRepTools_History> myHistory; //!< The history.
+  occ::handle<BRepTools_History> myHistory;
 };

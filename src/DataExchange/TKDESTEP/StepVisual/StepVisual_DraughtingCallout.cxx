@@ -2,11 +2,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_DraughtingCallout, StepGeom_GeometricRepresentationItem)
 
-//=================================================================================================
-
 StepVisual_DraughtingCallout::StepVisual_DraughtingCallout() = default;
-
-//=================================================================================================
 
 void StepVisual_DraughtingCallout::Init(
   const occ::handle<TCollection_HAsciiString>&                                 theName,

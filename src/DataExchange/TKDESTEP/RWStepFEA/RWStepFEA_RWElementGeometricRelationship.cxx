@@ -5,11 +5,7 @@
 #include <StepElement_AnalysisItemWithinRepresentation.hpp>
 #include <StepFEA_ElementGeometricRelationship.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWElementGeometricRelationship::RWStepFEA_RWElementGeometricRelationship() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWElementGeometricRelationship::ReadStep(
   const occ::handle<StepData_StepReaderData>&              data,
@@ -17,11 +13,9 @@ void RWStepFEA_RWElementGeometricRelationship::ReadStep(
   occ::handle<Interface_Check>&                            ach,
   const occ::handle<StepFEA_ElementGeometricRelationship>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "element_geometric_relationship"))
     return;
-
-  // Own fields of ElementGeometricRelationship
 
   StepFEA_ElementOrElementGroup aElementRef;
   data->ReadEntity(num, 1, "element_ref", ach, aElementRef);
@@ -37,18 +31,13 @@ void RWStepFEA_RWElementGeometricRelationship::ReadStep(
   StepElement_ElementAspect aAspect;
   data->ReadEntity(num, 3, "aspect", ach, aAspect);
 
-  // Initialize entity
   ent->Init(aElementRef, aItem, aAspect);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWElementGeometricRelationship::WriteStep(
   StepData_StepWriter&                                     SW,
   const occ::handle<StepFEA_ElementGeometricRelationship>& ent) const
 {
-
-  // Own fields of ElementGeometricRelationship
 
   SW.Send(ent->ElementRef().Value());
 
@@ -57,14 +46,10 @@ void RWStepFEA_RWElementGeometricRelationship::WriteStep(
   SW.Send(ent->Aspect().Value());
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWElementGeometricRelationship::Share(
   const occ::handle<StepFEA_ElementGeometricRelationship>& ent,
   Interface_EntityIterator&                                iter) const
 {
-
-  // Own fields of ElementGeometricRelationship
 
   iter.AddItem(ent->ElementRef().Value());
 

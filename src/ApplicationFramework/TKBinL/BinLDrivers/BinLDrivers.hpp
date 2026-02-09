@@ -14,11 +14,8 @@ public:
   Standard_EXPORT static const occ::handle<Standard_Transient>& Factory(
     const Standard_GUID& theGUID);
 
-  //! Defines format "BinLOcaf" and registers its read and write drivers
-  //! in the specified application
   Standard_EXPORT static void DefineFormat(const occ::handle<TDocStd_Application>& theApp);
 
-  //! Creates a table of the supported drivers' types
   Standard_EXPORT static occ::handle<BinMDF_ADriverTable> AttributeDrivers(
     const occ::handle<Message_Messenger>& MsgDrv);
 };

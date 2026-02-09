@@ -1,25 +1,10 @@
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <StdPersistent_TopLoc.hpp>
 #include <StdObjMgt_ReadData.hpp>
 #include <StdObjMgt_WriteData.hpp>
 #include <StdObject_gp_Trsfs.hpp>
 
-//=======================================================================
-// function : Read
-// purpose  : Read persistent data from a file
-//=======================================================================
 void StdPersistent_TopLoc::Datum3D::Read(StdObjMgt_ReadData& theReadData)
 {
   gp_Trsf aTrsf;
@@ -32,28 +17,16 @@ void StdPersistent_TopLoc::Datum3D::Write(StdObjMgt_WriteData& theWriteData) con
   theWriteData << myTransient->Transformation();
 }
 
-//=======================================================================
-// function : Read
-// purpose  : Read persistent data from a file
-//=======================================================================
 void StdPersistent_TopLoc::ItemLocation::Read(StdObjMgt_ReadData& theReadData)
 {
   theReadData >> myDatum >> myPower >> myNext;
 }
 
-//=======================================================================
-// function : Write
-// purpose  : Write persistent data to a file
-//=======================================================================
 void StdPersistent_TopLoc::ItemLocation::Write(StdObjMgt_WriteData& theWriteData) const
 {
   theWriteData << myDatum << myPower << myNext;
 }
 
-//=======================================================================
-// function : PChildren
-// purpose  : Gets persistent child objects
-//=======================================================================
 void StdPersistent_TopLoc::ItemLocation::PChildren(
   StdObjMgt_Persistent::SequenceOfPersistent& theChildren) const
 {
@@ -61,10 +34,6 @@ void StdPersistent_TopLoc::ItemLocation::PChildren(
   myNext.PChildren(theChildren);
 }
 
-//=======================================================================
-// function : Import
-// purpose  : Import transient object from the persistent data
-//=======================================================================
 TopLoc_Location StdPersistent_TopLoc::ItemLocation::Import() const
 {
   TopLoc_Location aNext = myNext.Import();
@@ -74,10 +43,6 @@ TopLoc_Location StdPersistent_TopLoc::ItemLocation::Import() const
     return aNext;
 }
 
-//=======================================================================
-// function : Translate
-// purpose  : Create a persistent object from a location
-//=======================================================================
 Handle(StdPersistent_TopLoc::ItemLocation) StdPersistent_TopLoc::Translate(
   const TopLoc_Location&                                                                   theLoc,
   NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>& theMap)
@@ -89,10 +54,6 @@ Handle(StdPersistent_TopLoc::ItemLocation) StdPersistent_TopLoc::Translate(
   return aPLoc;
 }
 
-//=======================================================================
-// function : Translate
-// purpose  : Create a persistent object from a location datum
-//=======================================================================
 Handle(StdPersistent_TopLoc::Datum3D) StdPersistent_TopLoc::Translate(
   const occ::handle<TopLoc_Datum3D>&                                                       theDatum,
   NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>& theMap)

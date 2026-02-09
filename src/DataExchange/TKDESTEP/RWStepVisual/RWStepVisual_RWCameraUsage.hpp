@@ -11,7 +11,6 @@ class StepVisual_CameraUsage;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for CameraUsage
 class RWStepVisual_RWCameraUsage
 {
 public:

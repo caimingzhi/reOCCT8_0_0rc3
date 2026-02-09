@@ -14,7 +14,6 @@
 #include <Interface_ShareTool.hpp>
 #include <Message_Msg.hpp>
 
-// MGE 31/07/98
 IGESGeom_ToolSurfaceOfRevolution::IGESGeom_ToolSurfaceOfRevolution() = default;
 
 void IGESGeom_ToolSurfaceOfRevolution::ReadOwnParams(
@@ -22,16 +21,14 @@ void IGESGeom_ToolSurfaceOfRevolution::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&      IR,
   IGESData_ParamReader&                            PR) const
 {
-  // MGE 31/07/98
 
   occ::handle<IGESGeom_Line>       anAxis;
   occ::handle<IGESData_IGESEntity> aGeneratrix;
   double                           aStartAngle, anEndAngle;
   IGESData_Status                  aStatus;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, STANDARD_TYPE(IGESGeom_Line), anAxis))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg152("XSTEP_152");
     switch (aStatus)
     {
@@ -62,7 +59,7 @@ void IGESGeom_ToolSurfaceOfRevolution::ReadOwnParams(
     }
   }
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, aGeneratrix))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg153("XSTEP_153");
     switch (aStatus)
     {
@@ -86,21 +83,16 @@ void IGESGeom_ToolSurfaceOfRevolution::ReadOwnParams(
     }
   }
   if (!PR.ReadReal(PR.Current(), aStartAngle))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg154("XSTEP_154");
     PR.SendFail(Msg154);
   }
   if (!PR.ReadReal(PR.Current(), anEndAngle))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg155("XSTEP_155");
     PR.SendFail(Msg155);
   }
-  /*
-    st = PR.ReadEntity(IR, PR.Current(), "Axis", STANDARD_TYPE(IGESGeom_Line), anAxis);
-    st = PR.ReadEntity(IR, PR.Current(), "Generatrix", aGeneratrix);
-    st = PR.ReadReal(PR.Current(), "StartAngle", aStartAngle);
-    st = PR.ReadReal(PR.Current(), "EndAngle", anEndAngle);
-  */
+
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(anAxis, aGeneratrix, aStartAngle, anEndAngle);
 }
@@ -137,26 +129,22 @@ void IGESGeom_ToolSurfaceOfRevolution::OwnCopy(
 }
 
 IGESData_DirChecker IGESGeom_ToolSurfaceOfRevolution::DirChecker(
-  const occ::handle<IGESGeom_SurfaceOfRevolution>& /*ent*/) const
+  const occ::handle<IGESGeom_SurfaceOfRevolution>&) const
 {
   IGESData_DirChecker DC(120, 0);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
 
   DC.HierarchyStatusIgnored();
   return DC;
 }
 
-void IGESGeom_ToolSurfaceOfRevolution::OwnCheck(
-  const occ::handle<IGESGeom_SurfaceOfRevolution>& /*ent*/,
-  const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /*ach*/) const
+void IGESGeom_ToolSurfaceOfRevolution::OwnCheck(const occ::handle<IGESGeom_SurfaceOfRevolution>&,
+                                                const Interface_ShareTool&,
+                                                occ::handle<Interface_Check>&) const
 {
-  //  double diffang = ent->EndAngle() - ent->StartAngle();
-  //  if (diffang <= 0.0 || diffang > 2.0 * M_PI)
-  //    ach.AddFail("0 < TA - SA <=  2Pi is not satisfied");
 }
 
 void IGESGeom_ToolSurfaceOfRevolution::OwnDump(const occ::handle<IGESGeom_SurfaceOfRevolution>& ent,

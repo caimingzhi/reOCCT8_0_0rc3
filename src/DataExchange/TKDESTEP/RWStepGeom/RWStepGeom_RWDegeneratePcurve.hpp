@@ -11,7 +11,6 @@ class StepGeom_DegeneratePcurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for DegeneratePcurve
 class RWStepGeom_RWDegeneratePcurve
 {
 public:

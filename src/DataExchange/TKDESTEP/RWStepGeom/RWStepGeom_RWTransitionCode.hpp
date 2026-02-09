@@ -10,9 +10,6 @@ namespace RWStepGeom_RWTransitionCode
   static constexpr char tcContSameGradient[]              = ".CONT_SAME_GRADIENT.";
   static constexpr char tcContinuous[]                    = ".CONTINUOUS.";
 
-  //! Convert StepGeom_TransitionCode to string
-  //! @param theTransitionCodeEnum The StepGeom_TransitionCode value to convert
-  //! @return The corresponding string representation
   inline const char* ConvertToString(const StepGeom_TransitionCode theTransitionCodeEnum)
   {
     switch (theTransitionCodeEnum)
@@ -29,10 +26,6 @@ namespace RWStepGeom_RWTransitionCode
     return nullptr;
   }
 
-  //! Convert string to StepGeom_TransitionCode
-  //! @param theTransitionCodeStr The string to convert
-  //! @param theResultEnum The corresponding StepGeom_TransitionCode value
-  //! @return true if the conversion was successful, false otherwise
   inline bool ConvertToEnum(const char*              theTransitionCodeStr,
                             StepGeom_TransitionCode& theResultEnum)
   {

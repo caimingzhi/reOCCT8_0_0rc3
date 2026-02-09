@@ -3,11 +3,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_TNameContainer, TDF_Attribute)
 
-//=================================================================================================
-
 TObj_TNameContainer::TObj_TNameContainer() = default;
-
-//=================================================================================================
 
 const Standard_GUID& TObj_TNameContainer::GetID()
 {
@@ -15,14 +11,10 @@ const Standard_GUID& TObj_TNameContainer::GetID()
   return theID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TObj_TNameContainer::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 occ::handle<TObj_TNameContainer> TObj_TNameContainer::Set(const TDF_Label& theLabel)
 {
@@ -35,8 +27,6 @@ occ::handle<TObj_TNameContainer> TObj_TNameContainer::Set(const TDF_Label& theLa
   return A;
 }
 
-//=================================================================================================
-
 void TObj_TNameContainer::RecordName(const occ::handle<TCollection_HExtendedString>& theName,
                                      const TDF_Label&                                theLabel)
 {
@@ -46,8 +36,6 @@ void TObj_TNameContainer::RecordName(const occ::handle<TCollection_HExtendedStri
     myMap.Bind(new TCollection_HExtendedString(theName->String()), theLabel);
   }
 }
-
-//=================================================================================================
 
 void TObj_TNameContainer::RemoveName(const occ::handle<TCollection_HExtendedString>& theName)
 {
@@ -64,22 +52,16 @@ void TObj_TNameContainer::Clear()
   myMap.Clear();
 }
 
-//=================================================================================================
-
 bool TObj_TNameContainer::IsRegistered(
   const occ::handle<TCollection_HExtendedString>& theName) const
 {
   return myMap.IsBound(theName);
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TObj_TNameContainer::NewEmpty() const
 {
   return new TObj_TNameContainer();
 }
-
-//=================================================================================================
 
 void TObj_TNameContainer::Restore(const occ::handle<TDF_Attribute>& theWith)
 {
@@ -88,24 +70,18 @@ void TObj_TNameContainer::Restore(const occ::handle<TDF_Attribute>& theWith)
   myMap = R->Get();
 }
 
-//=================================================================================================
-
 void TObj_TNameContainer::Paste(const occ::handle<TDF_Attribute>& theInto,
-                                const occ::handle<TDF_RelocationTable>& /* RT */) const
+                                const occ::handle<TDF_RelocationTable>&) const
 {
   occ::handle<TObj_TNameContainer> R = occ::down_cast<TObj_TNameContainer>(theInto);
   R->Set(myMap);
 }
-
-//=================================================================================================
 
 const NCollection_DataMap<occ::handle<TCollection_HExtendedString>, TDF_Label>&
   TObj_TNameContainer::Get() const
 {
   return myMap;
 }
-
-//=================================================================================================
 
 void TObj_TNameContainer::Set(
   const NCollection_DataMap<occ::handle<TCollection_HExtendedString>, TDF_Label>& theMap)

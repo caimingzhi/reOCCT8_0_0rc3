@@ -2,7 +2,6 @@
 #include <IVtkOCC_ShapeMesher.hpp>
 #include <IVtkTools_ShapeObject.hpp>
 
-// prevent disabling some MSVC warning messages by VTK headers
 #ifdef _MSC_VER
   #pragma warning(push)
 #endif
@@ -20,8 +19,6 @@
 
 vtkStandardNewMacro(IVtkTools_ShapeDataSource)
 
-  //=================================================================================================
-
   IVtkTools_ShapeDataSource::IVtkTools_ShapeDataSource()
     : myPolyData(new IVtkVTK_ShapeData()),
       myIsFastTransformMode(false),
@@ -31,11 +28,7 @@ vtkStandardNewMacro(IVtkTools_ShapeDataSource)
   this->SetNumberOfOutputPorts(1);
 }
 
-//=================================================================================================
-
 IVtkTools_ShapeDataSource::~IVtkTools_ShapeDataSource() = default;
-
-//=================================================================================================
 
 void IVtkTools_ShapeDataSource::SetShape(const IVtkOCC_Shape::Handle& theOccShape)
 {
@@ -44,8 +37,6 @@ void IVtkTools_ShapeDataSource::SetShape(const IVtkOCC_Shape::Handle& theOccShap
   myOccShape = theOccShape;
   this->Modified();
 }
-
-//=================================================================================================
 
 int IVtkTools_ShapeDataSource::RequestData(vtkInformation*        vtkNotUsed(theRequest),
                                            vtkInformationVector** vtkNotUsed(theInputVector),
@@ -81,7 +72,7 @@ int IVtkTools_ShapeDataSource::RequestData(vtkInformation*        vtkNotUsed(the
     IVtkOCC_Shape::Handle aShapeWrapperCopy = myOccShape;
     if (myIsFastTransformMode && !aShapeLoc.IsIdentity())
     {
-      // Reset location before meshing
+
       aShape.Location(TopLoc_Location());
       aShapeWrapperCopy = new IVtkOCC_Shape(aShape);
       aShapeWrapperCopy->SetAttributes(myOccShape->Attributes());
@@ -102,19 +93,13 @@ int IVtkTools_ShapeDataSource::RequestData(vtkInformation*        vtkNotUsed(the
     }
   }
 
-  aPolyData->CopyStructure(aTransformedData);  // Copy points and cells
-  aPolyData->CopyAttributes(aTransformedData); // Copy data arrays (sub-shapes IDs)
+  aPolyData->CopyStructure(aTransformedData);
+  aPolyData->CopyAttributes(aTransformedData);
 
-  // We store the OccShape instance in a IVtkTools_ShapeObject
-  // wrapper in vtkInformation object of vtkDataObject, then pass it
-  // to the actors through pipelines, so selection logic can access
-  // OccShape easily given the actor instance.
   IVtkTools_ShapeObject::SetShapeSource(this, aPolyData);
   aPolyData->GetAttributes(vtkDataObject::CELL)->SetPedigreeIds(SubShapeIDs());
   return 1;
 }
-
-//=================================================================================================
 
 vtkSmartPointer<vtkIdTypeArray> IVtkTools_ShapeDataSource::SubShapeIDs()
 {
@@ -123,21 +108,15 @@ vtkSmartPointer<vtkIdTypeArray> IVtkTools_ShapeDataSource::SubShapeIDs()
   return vtkSmartPointer<vtkIdTypeArray>(vtkIdTypeArray::SafeDownCast(anArr.GetPointer()));
 }
 
-//=================================================================================================
-
 IVtk_IdType IVtkTools_ShapeDataSource::GetId() const
 {
   return myOccShape.IsNull() ? -1 : myOccShape->GetId();
 }
 
-//=================================================================================================
-
 bool IVtkTools_ShapeDataSource::Contains(const IVtkOCC_Shape::Handle& theShape) const
 {
   return myOccShape == theShape;
 }
-
-//=================================================================================================
 
 vtkSmartPointer<vtkPolyData> IVtkTools_ShapeDataSource::transform(vtkPolyData*   theSource,
                                                                   const gp_Trsf& theTrsf) const
@@ -166,8 +145,8 @@ vtkSmartPointer<vtkPolyData> IVtkTools_ShapeDataSource::transform(vtkPolyData*  
   aTrsfFilter->Update();
 
   vtkSmartPointer<vtkPolyData> aTransformed = aTrsfFilter->GetOutput();
-  aResult->CopyStructure(aTransformed);  // Copy points and cells
-  aResult->CopyAttributes(aTransformed); // Copy data arrays (sub-shapes ids)
+  aResult->CopyStructure(aTransformed);
+  aResult->CopyAttributes(aTransformed);
 
   return aResult;
 }

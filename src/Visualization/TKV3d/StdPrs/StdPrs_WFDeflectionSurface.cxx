@@ -113,8 +113,6 @@ static void FindLimits(const occ::handle<Adaptor3d_Surface>& surf,
   }
 }
 
-//=================================================================================================
-
 void StdPrs_WFDeflectionSurface::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                      const occ::handle<Adaptor3d_Surface>&  aSurface,
                                      const occ::handle<Prs3d_Drawer>&       aDrawer)
@@ -130,7 +128,7 @@ void StdPrs_WFDeflectionSurface::Add(const occ::handle<Prs3d_Presentation>& aPre
   Aspect_TypeOfDeflection TOD = aDrawer->TypeOfDeflection();
   if (TOD == Aspect_TOD_RELATIVE)
   {
-    // On calcule la fleche en fonction des min max globaux de la piece:
+
     Bnd_Box Total;
     BndLib_AddSurface::Add(*aSurface, U1, U2, V1, V2, 0., Total);
     double m = aDrawer->MaximalChordialDeviation() / aDrawer->DeviationCoefficient();
@@ -151,9 +149,6 @@ void StdPrs_WFDeflectionSurface::Add(const occ::handle<Prs3d_Presentation>& aPre
   Adaptor3d_IsoCurve anIso;
   anIso.Load(aSurface);
 
-  // Trace des frontieres.
-  // *********************
-  //
   if (!(UClosed && VClosed))
   {
     aPresentation->CurrentGroup()->SetPrimitivesAspect(aDrawer->FreeBoundaryAspect()->Aspect());
@@ -172,10 +167,7 @@ void StdPrs_WFDeflectionSurface::Add(const occ::handle<Prs3d_Presentation>& aPre
       StdPrs_DeflectionCurve::Add(aPresentation, anIso, TheDeflection, MaxP);
     }
   }
-  //
-  // Trace des isoparametriques.
-  // ***************************
-  //
+
   int fin = aDrawer->UIsoAspect()->Number();
   if (fin != 0)
   {

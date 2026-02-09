@@ -15,11 +15,10 @@ IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_ModelPreProcessor, IMeshTools_ModelAlgo)
 
 namespace
 {
-  //! Checks consistency of triangulation stored in topological face.
+
   class TriangulationConsistency
   {
   public:
-    //! Constructor
     TriangulationConsistency(const occ::handle<IMeshData_Model>& theModel,
                              const bool                          theAllowQualityDecrease)
         : myModel(theModel),
@@ -27,7 +26,6 @@ namespace
     {
     }
 
-    //! Main functor.
     void operator()(const int theFaceIndex) const
     {
       const IMeshData::IFaceHandle& aDFace = myModel->GetFace(theFaceIndex);
@@ -42,9 +40,7 @@ namespace
 
       if (!aTriangulation.IsNull())
       {
-        // If there is an info about initial parameters, use it due to deflection kept
-        // by Poly_Triangulation is generally an estimation upon generated mesh and can
-        // be either less or even greater than specified value.
+
         const occ::handle<Poly_TriangulationParameters>& aSourceParams =
           aTriangulation->Parameters();
         const double aDeflection = (!aSourceParams.IsNull() && aSourceParams->HasDeflection())
@@ -57,7 +53,7 @@ namespace
 
         if (isTriangulationConsistent)
         {
-          // #25080: check that indices of links forming triangles are in range.
+
           for (int i = 1; i <= aTriangulation->NbTriangles() && isTriangulationConsistent; ++i)
           {
             const Poly_Triangle aTriangle = aTriangulation->Triangle(i);
@@ -85,14 +81,12 @@ namespace
 
   private:
     occ::handle<IMeshData_Model> myModel;
-    bool                         myAllowQualityDecrease; //!< Flag used for consistency check
+    bool                         myAllowQualityDecrease;
   };
 
-  //! Adds additional points to seam edges on specific surfaces.
   class SeamEdgeAmplifier
   {
   public:
-    //! Constructor
     SeamEdgeAmplifier(const occ::handle<IMeshData_Model>& theModel,
                       const IMeshTools_Parameters&        theParameters)
         : myModel(theModel),
@@ -100,7 +94,6 @@ namespace
     {
     }
 
-    //! Main functor.
     void operator()(const int theFaceIndex) const
     {
       const IMeshData::IFaceHandle& aDFace = myModel->GetFace(theFaceIndex);
@@ -137,7 +130,6 @@ namespace
     }
 
   private:
-    //! Returns step for splitting seam edge of a cone.
     double getConeStep(const IMeshData::IFaceHandle& theDFace) const
     {
       BRepMesh_ConeRangeSplitter aSplitter;
@@ -162,7 +154,6 @@ namespace
       return aSteps.second;
     }
 
-    //! Splits 3D and all pcurves accordingly using the specified step.
     bool splitEdge(const IMeshData::IEdgePtr&    theDEdge,
                    const IMeshData::IFaceHandle& theDFace,
                    const double                  theDU) const
@@ -177,7 +168,6 @@ namespace
       const IMeshData::IPCurveHandle& aIPC1 = theDEdge->GetPCurve(0);
       const IMeshData::IPCurveHandle& aIPC2 = theDEdge->GetPCurve(1);
 
-      // Calculate the step by parameter of the curve.
       const gp_Pnt2d& aFPntOfIPC1 = aIPC1->GetPoint(0);
       const gp_Pnt2d& aLPntOfIPC1 = aIPC1->GetPoint(aIPC1->ParametersNb() - 1);
       const double    aMod        = std::abs(aFPntOfIPC1.Y() - aLPntOfIPC1.Y());
@@ -194,7 +184,6 @@ namespace
         return false;
       }
 
-      // Define two pcurves of the seam-edge.
       occ::handle<Geom2d_Curve> aPC1, aPC2;
       double                    af, al;
 
@@ -209,7 +198,6 @@ namespace
         return false;
       }
 
-      // Select the correct pcurve of the seam-edge.
       const gp_Pnt2d& aFPntOfPC1 = aPC1->Value(aPC1->FirstParameter());
 
       if (std::abs(aLPntOfIPC1.X() - aFPntOfPC1.X()) > Precision::Confusion())
@@ -223,7 +211,6 @@ namespace
       return true;
     }
 
-    //! Splits the given curve using the specified step.
     template <class PointType, class GeomCurve, class Curve>
     bool splitCurve(GeomCurve& theGeomCurve, Curve& theCurve, const double theDT) const
     {
@@ -258,15 +245,9 @@ namespace
   };
 } // namespace
 
-//=================================================================================================
-
 BRepMesh_ModelPreProcessor::BRepMesh_ModelPreProcessor() = default;
 
-//=================================================================================================
-
 BRepMesh_ModelPreProcessor::~BRepMesh_ModelPreProcessor() = default;
-
-//=================================================================================================
 
 bool BRepMesh_ModelPreProcessor::performInternal(const occ::handle<IMeshData_Model>& theModel,
                                                  const IMeshTools_Parameters&        theParameters,
@@ -286,7 +267,6 @@ bool BRepMesh_ModelPreProcessor::performInternal(const occ::handle<IMeshData_Mod
                     TriangulationConsistency(theModel, theParameters.AllowQualityDecrease),
                     isOneThread);
 
-  // Clean edges and faces from outdated polygons.
   occ::handle<NCollection_IncAllocator> aTmpAlloc(
     new NCollection_IncAllocator(IMeshData::MEMORY_BLOCK_SIZE_HUGE));
   NCollection_Map<IMeshData_Face*> aUsedFaces(1, aTmpAlloc);
@@ -307,7 +287,7 @@ bool BRepMesh_ModelPreProcessor::performInternal(const occ::handle<IMeshData_Mod
 
     for (int aPCurveIt = 0; aPCurveIt < aDEdge->PCurvesNb(); ++aPCurveIt)
     {
-      // Find adjacent outdated face.
+
       const IMeshData::IFaceHandle aDFace = aDEdge->GetPCurve(aPCurveIt)->GetFace();
       if (!aUsedFaces.Contains(aDFace.get()))
       {
@@ -318,7 +298,6 @@ bool BRepMesh_ModelPreProcessor::performInternal(const occ::handle<IMeshData_Mod
           const occ::handle<Poly_Triangulation>& aTriangulation =
             BRep_Tool::Triangulation(aDFace->GetFace(), aLoc);
 
-          // Clean all edges of oudated face.
           for (int aWireIt = 0; aWireIt < aDFace->WiresNb(); ++aWireIt)
           {
             const IMeshData::IWireHandle& aDWire = aDFace->GetWire(aWireIt);

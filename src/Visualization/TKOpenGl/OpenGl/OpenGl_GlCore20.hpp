@@ -2,13 +2,12 @@
 
 #include <OpenGl_GlCore15.hpp>
 
-//! OpenGL 2.0 core based on 1.5 version.
 struct OpenGl_GlCore20 : public OpenGl_GlCore15
 {
 private:
   typedef OpenGl_GlCore15 theBaseClass_t;
 
-public: //! @name OpenGL 2.0 additives to 1.5
+public:
   using theBaseClass_t::glAttachShader;
   using theBaseClass_t::glBindAttribLocation;
   using theBaseClass_t::glBlendEquationSeparate;

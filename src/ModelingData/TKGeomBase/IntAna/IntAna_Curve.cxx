@@ -3,24 +3,6 @@
   #define No_Standard_OutOfRange
 #endif
 
-//----------------------------------------------------------------------
-//-- Differents constructeurs sont proposes qui correspondent aux
-//-- polynomes en Z :
-//--    A(std::sin(Theta),std::cos(Theta)) Z**2
-//--  + B(std::sin(Theta),std::cos(Theta)) Z
-//--  + C(std::sin(Theta),std::cos(Theta))
-//--
-//-- Une Courbe est definie sur un domaine
-//--
-//-- Value retourne le point de parametre U(Theta),V(Theta)
-//--       ou V est la solution du polynome A V**2 + B V + C
-//--       (Selon les cas, on prend V+ ou V-)
-//--
-//-- D1u   calcule le vecteur tangent a la courbe
-//--       et retourne le booleen false si ce calcul ne peut
-//--       pas etre mene a bien.
-//----------------------------------------------------------------------
-
 #include <algorithm>
 
 #include <ElSLib.hpp>
@@ -33,8 +15,6 @@
 #include <math_DirectPolynomialRoots.hpp>
 #include <Precision.hpp>
 #include <Standard_DomainError.hpp>
-
-//=================================================================================================
 
 IntAna_Curve::IntAna_Curve()
     : Z0Cte(0.0),
@@ -72,10 +52,6 @@ IntAna_Curve::IntAna_Curve()
 {
 }
 
-//=======================================================================
-// function : SetConeQuadValues
-// purpose  : Description de l intersection Cone Quadrique
-//=======================================================================
 void IntAna_Curve::SetConeQuadValues(const gp_Cone& Cone,
                                      const double   Qxx,
                                      const double   Qyy,
@@ -102,15 +78,14 @@ void IntAna_Curve::SetConeQuadValues(const gp_Cone& Cone,
 
   typequadric = GeomAbs_Cone;
 
-  TwoCurves     = twocurves;     //-- deux  Z pour un meme parametre
-  TakeZPositive = takezpositive; //-- Prendre sur la courbe le Z Positif
-                                 //--   ( -B + std::sqrt()) et non (-B - std::sqrt())
+  TwoCurves     = twocurves;
+  TakeZPositive = takezpositive;
 
-  Z0Cte    = Q1;  //-- Attention On a    Z?Cos std::cos(t)
-  Z0Sin    = 0.0; //-- et Non          2 Z?Cos std::cos(t) !!!
-  Z0Cos    = 0.0; //-- Ce pour tous les Parametres
-  Z0CosCos = 0.0; //--  ie pas de Coefficient 2
-  Z0SinSin = 0.0; //--     devant les termes CS C S
+  Z0Cte    = Q1;
+  Z0Sin    = 0.0;
+  Z0Cos    = 0.0;
+  Z0CosCos = 0.0;
+  Z0SinSin = 0.0;
   Z0CosSin = 0.0;
 
   Z1Cte    = 2.0 * (UnSurTgAngle)*Qz;
@@ -131,17 +106,13 @@ void IntAna_Curve::SetConeQuadValues(const gp_Cone& Cone,
   DomainInf = DomInf;
   DomainSup = DomSup;
 
-  RestrictedInf = RestrictedSup = true; //-- Le Domaine est Borne
+  RestrictedInf = RestrictedSup = true;
   firstbounded = lastbounded = false;
 
   myFirstParameter = DomainInf;
   myLastParameter  = (TwoCurves) ? DomainSup + DomainSup - DomainInf : DomainSup;
 }
 
-//=======================================================================
-// function : SetCylinderQuadValues
-// purpose  : Description de l intersection Cylindre Quadrique
-//=======================================================================
 void IntAna_Curve::SetCylinderQuadValues(const gp_Cylinder& Cyl,
                                          const double       Qxx,
                                          const double       Qyy,
@@ -164,9 +135,9 @@ void IntAna_Curve::SetCylinderQuadValues(const gp_Cylinder& Cyl,
   RCyl        = Cyl.Radius();
   typequadric = GeomAbs_Cylinder;
 
-  TwoCurves       = twocurves;     //-- deux  Z pour un meme parametre
-  TakeZPositive   = takezpositive; //-- Prendre sur la courbe le Z Positif
-  double RCylmul2 = RCyl + RCyl;   //--   ( -B + std::sqrt())
+  TwoCurves       = twocurves;
+  TakeZPositive   = takezpositive;
+  double RCylmul2 = RCyl + RCyl;
 
   Z0Cte    = Q1;
   Z0Sin    = RCylmul2 * Qy;
@@ -200,14 +171,10 @@ void IntAna_Curve::SetCylinderQuadValues(const gp_Cylinder& Cyl,
   myLastParameter  = (TwoCurves) ? DomainSup + DomainSup - DomainInf : DomainSup;
 }
 
-//=================================================================================================
-
 bool IntAna_Curve::IsOpen() const
 {
   return (RestrictedInf && RestrictedSup);
 }
-
-//=================================================================================================
 
 void IntAna_Curve::Domain(double& theFirst, double& theLast) const
 {
@@ -222,43 +189,31 @@ void IntAna_Curve::Domain(double& theFirst, double& theLast) const
   }
 }
 
-//=================================================================================================
-
 bool IntAna_Curve::IsConstant() const
 {
-  //-- ???  Pas facile de decider a la seule vue des Param.
+
   return (false);
 }
-
-//=================================================================================================
 
 bool IntAna_Curve::IsFirstOpen() const
 {
   return (firstbounded);
 }
 
-//=================================================================================================
-
 bool IntAna_Curve::IsLastOpen() const
 {
   return (lastbounded);
 }
-
-//=================================================================================================
 
 void IntAna_Curve::SetIsFirstOpen(const bool Flag)
 {
   firstbounded = Flag;
 }
 
-//=================================================================================================
-
 void IntAna_Curve::SetIsLastOpen(const bool Flag)
 {
   lastbounded = Flag;
 }
-
-//=================================================================================================
 
 void IntAna_Curve::InternalUVValue(const double theta,
                                    double&      Param1,
@@ -272,7 +227,6 @@ void IntAna_Curve::InternalUVValue(const double theta,
 {
   const double aRelTolp = 1.0 + Epsilon(1.0), aRelTolm = 1.0 - Epsilon(1.0);
 
-  // Infinitesimal step of increasing curve parameter. See comment below.
   const double aDT = 100.0 * Epsilon(DomainSup + DomainSup - DomainInf);
 
   double Theta          = theta;
@@ -287,7 +241,7 @@ void IntAna_Curve::InternalUVValue(const double theta,
 
   if (std::abs(Theta - DomainSup) < aDT)
   {
-    // Point of Null-discriminant.
+
     Theta = DomainSup;
   }
   else if (Theta > DomainSup)
@@ -302,7 +256,7 @@ void IntAna_Curve::InternalUVValue(const double theta,
   {
     SecondSolution = TakeZPositive;
   }
-  //
+
   cost                = std::cos(Theta);
   sint                = std::sin(Theta);
   const double aSin2t = std::sin(Theta + Theta);
@@ -328,10 +282,6 @@ void IntAna_Curve::InternalUVValue(const double theta,
 
   double aDiscriminant = B * B - 4.0 * A * C;
 
-  // We consider that infinitesimal dt = aDT.
-  // Error of discriminant computation is equal to
-  // (d(Disc)/dt)*dt, where 1st derivative d(Disc)/dt = 2*B*aDB - 4*(A*aDC + C*aDA).
-
   const double aTolD = 2.0 * aDT * std::abs(B * aDB - 2.0 * (A * aDC + C * aDA));
 
   if (aDiscriminant < aTolD)
@@ -355,12 +305,10 @@ void IntAna_Curve::InternalUVValue(const double theta,
   }
 }
 
-//=================================================================================================
-
 gp_Pnt IntAna_Curve::Value(const double theta)
 {
   double A, B, C, U, V, sint, cost, SigneSqrtDis;
-  //
+
   A            = 0.0;
   B            = 0.0;
   C            = 0.0;
@@ -370,15 +318,13 @@ gp_Pnt IntAna_Curve::Value(const double theta)
   cost         = 0.0;
   SigneSqrtDis = 0.0;
   InternalUVValue(theta, U, V, A, B, C, cost, sint, SigneSqrtDis);
-  //-- checked the parameter U and Raises Domain Error if Error
+
   return (InternalValue(U, V));
 }
 
-//=================================================================================================
-
 bool IntAna_Curve::D1u(const double theta, gp_Pnt& Pt, gp_Vec& Vec)
 {
-  //-- Pour detecter le cas ou le calcul est impossible
+
   double A, B, C, U, V, sint, cost, SigneSqrtDis;
   A    = 0.0;
   B    = 0.0;
@@ -387,14 +333,13 @@ bool IntAna_Curve::D1u(const double theta, gp_Pnt& Pt, gp_Vec& Vec)
   V    = 0.0;
   sint = 0.0;
   cost = 0.0;
-  //
+
   InternalUVValue(theta, U, V, A, B, C, cost, sint, SigneSqrtDis);
-  //
+
   Pt = Value(theta);
   if (std::abs(A) < 1.0e-7 || std::abs(SigneSqrtDis) < 1.0e-10)
     return (false);
 
-  //-- Approximation de la derivee (mieux que le calcul mathematique!)
   double dtheta = (DomainSup - DomainInf) * 1.0e-6;
   double theta2 = theta + dtheta;
   if ((theta2 < DomainInf) || ((theta2 > DomainSup) && (!TwoCurves))
@@ -410,23 +355,14 @@ bool IntAna_Curve::D1u(const double theta, gp_Pnt& Pt, gp_Vec& Vec)
   return (true);
 }
 
-//=======================================================================
-// function : FindParameter
-// purpose  : Projects P to the ALine. Returns the list of parameters as a results
-//            of projection.
-//           Sometimes aline can be self-intersected line (see bug #29807 where
-//            ALine goes through the cone apex).
-//=======================================================================
 void IntAna_Curve::FindParameter(const gp_Pnt& theP, NCollection_List<double>& theParams) const
 {
-  const double aPIpPI = M_PI + M_PI, anEpsAng = 1.e-8,
-               InternalPrecision = 1.e-8; // precision of internal algorithm of values computation
-  // clang-format off
-  constexpr double aSqTolPrecision = Precision::SquareConfusion(); //for boundary points to check their coincidence with others
-  // clang-format on
+  const double aPIpPI = M_PI + M_PI, anEpsAng = 1.e-8, InternalPrecision = 1.e-8;
+
+  constexpr double aSqTolPrecision = Precision::SquareConfusion();
 
   double aTheta = 0.0;
-  //
+
   switch (typequadric)
   {
     case GeomAbs_Cylinder:
@@ -446,7 +382,7 @@ void IntAna_Curve::FindParameter(const gp_Pnt& theP, NCollection_List<double>& t
     default:
       return;
   }
-  //
+
   if (!firstbounded && (DomainInf > aTheta) && ((DomainInf - aTheta) <= anEpsAng))
   {
     aTheta = DomainInf;
@@ -455,7 +391,7 @@ void IntAna_Curve::FindParameter(const gp_Pnt& theP, NCollection_List<double>& t
   {
     aTheta = DomainSup;
   }
-  //
+
   if (aTheta < DomainInf)
   {
     aTheta = aTheta + aPIpPI;
@@ -502,11 +438,9 @@ void IntAna_Curve::FindParameter(const gp_Pnt& theP, NCollection_List<double>& t
   }
 }
 
-//=================================================================================================
-
 gp_Pnt IntAna_Curve::InternalValue(const double U, const double _V) const
 {
-  //-- std::cout<<" ["<<U<<","<<V<<"]";
+
   double V = _V;
   if (V > 100000.0)
   {
@@ -521,12 +455,7 @@ gp_Pnt IntAna_Curve::InternalValue(const double U, const double _V) const
   {
     case GeomAbs_Cone:
     {
-      //------------------------------------------------
-      //-- Parametrage : X = V * std::cos(U)              ---
-      //--               Y = V * std::sin(U)              ---
-      //--               Z = (V-RCyl) / std::tan(SemiAngle)--
-      //------------------------------------------------
-      //-- Angle Vaut Cone.SemiAngle()
+
       return (ElSLib::ConeValue(U, (V - RCyl) / std::sin(Angle), Ax3, RCyl, Angle));
     }
     break;
@@ -540,16 +469,13 @@ gp_Pnt IntAna_Curve::InternalValue(const double U, const double _V) const
   }
 }
 
-//
-//=================================================================================================
-
 void IntAna_Curve::SetDomain(const double theFirst, const double theLast)
 {
   if (theLast <= theFirst)
   {
     throw Standard_DomainError("IntAna_Curve::Domain");
   }
-  //
+
   myFirstParameter = theFirst;
   myLastParameter  = theLast;
 }

@@ -14,7 +14,6 @@ class StepGeom_GeometricRepresentationContextAndParametricRepresentationContext
 {
 
 public:
-  //! empty constructor
   Standard_EXPORT StepGeom_GeometricRepresentationContextAndParametricRepresentationContext();
 
   Standard_EXPORT void Init(

@@ -29,16 +29,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Units_UnitsDictionary, Standard_Transient)
 
-//=================================================================================================
-
 Units_UnitsDictionary::Units_UnitsDictionary() = default;
-
-//=================================================================================================
 
 namespace
 {
 
-  //! Auxiliary method removing trailing spaces.
   static bool strrightadjust(char* str)
   {
     for (size_t len = strlen(str); len > 0 && IsSpace(str[len - 1]); len--)
@@ -48,7 +43,6 @@ namespace
     return str[0] != '\0';
   }
 
-  //! Auxiliary method for iterating string line-by-line.
   static const char* readLine(TCollection_AsciiString& theLine, const char* theString)
   {
     theLine.Clear();
@@ -92,23 +86,21 @@ void Units_UnitsDictionary::Creates()
 
   thequantitiessequence = new NCollection_HSequence<occ::handle<Units_Quantity>>();
 
-  // read file line by line
   int                     numberofunits = 0;
   TCollection_AsciiString aLine;
   for (const char* aLineIter = readLine(aLine, UnitsAPI_Units_dat); aLineIter != nullptr;
        aLineIter             = readLine(aLine, aLineIter))
   {
-    // trim trailing spaces
+
     aLine.RightAdjust();
     if (aLine.IsEmpty())
     {
       continue;
     }
 
-    // lines starting with dot separate sections of the file
     if (aLine.Value(1) == '.')
     {
-      // if some units are collected in previous section, store them
+
       if (numberofunits)
       {
         unitscomputed = 0;
@@ -157,12 +149,9 @@ void Units_UnitsDictionary::Creates()
         }
       }
 
-      // skip help string and read header
       aLineIter = readLine(aLine, aLineIter);
       aLineIter = readLine(aLine, aLineIter);
 
-      // header consists of dimension name (40 symbols) and factors
-      // for basic SI dimensions (mass, length, time, ...)
       char name[41];
       char MM[11], LL[11], TT[11], II[11], tt[11], NN[11], JJ[11], PP[11], SS[11];
       memset(name, 0x00, sizeof(name));
@@ -208,23 +197,17 @@ void Units_UnitsDictionary::Creates()
       quantity         = new Units_Quantity(name, dimensions, theunitssequence);
       thequantitiessequence->Append(quantity);
 
-      // clean matrix of units
       for (i = 0; i < 50; i++)
       {
         for (j = 0; j < 50; j++)
           matrix(i, j) = 0.;
       }
 
-      // skip next line (dotted)
       aLineIter = readLine(aLine, aLineIter);
     }
     else
     {
-      // normal line defining a unit should contain:
-      // - unit name (51 symbol)
-      // - unit notation (27 symbols)
-      // - factor (27 symbols)
-      // - base unit (27 symbols)
+
       char unite[52], symbol[28], convert[28], unit2[28];
       memset(unite, 0x00, sizeof(unite));
       memset(symbol, 0x00, sizeof(symbol));
@@ -238,7 +221,7 @@ void Units_UnitsDictionary::Creates()
       strrightadjust(convert);
       strrightadjust(unit2);
       if (!unite[0] && !symbol[0] && !convert[0] && !unit2[0])
-        continue; // empty line
+        continue;
 
       if (convert[0] == '[')
       {
@@ -338,8 +321,6 @@ void Units_UnitsDictionary::Creates()
     }
   }
 }
-
-//=================================================================================================
 
 TCollection_AsciiString Units_UnitsDictionary::ActiveUnit(const char* aquantity) const
 {

@@ -10,7 +10,6 @@ class Interface_Check;
 class StepGeom_Surface;
 class StepData_StepWriter;
 
-//! Read & Write Module for Surface
 class RWStepGeom_RWSurface
 {
 public:

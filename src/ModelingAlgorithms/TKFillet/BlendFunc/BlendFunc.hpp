@@ -10,9 +10,6 @@
 class gp_Pnt2d;
 class gp_Vec;
 
-//! This package provides a set of generic functions, that can
-//! instantiated to compute blendings between two surfaces
-//! (Constant radius, Evolutive radius, Ruled surface).
 class BlendFunc
 {
 public:
@@ -37,7 +34,6 @@ public:
                                                 const double                       AngleMax,
                                                 NCollection_Array1<double>&        Weigths);
 
-  //! Used to obtain the next level of continuity.
   Standard_EXPORT static GeomAbs_Shape NextShape(const GeomAbs_Shape S);
 
   Standard_EXPORT static bool ComputeNormal(const occ::handle<Adaptor3d_Surface>& Surf,

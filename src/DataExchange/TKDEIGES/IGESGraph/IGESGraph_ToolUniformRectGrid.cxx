@@ -17,10 +17,9 @@
 
 IGESGraph_ToolUniformRectGrid::IGESGraph_ToolUniformRectGrid() = default;
 
-void IGESGraph_ToolUniformRectGrid::ReadOwnParams(
-  const occ::handle<IGESGraph_UniformRectGrid>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /*IR*/,
-  IGESData_ParamReader& PR) const
+void IGESGraph_ToolUniformRectGrid::ReadOwnParams(const occ::handle<IGESGraph_UniformRectGrid>& ent,
+                                                  const occ::handle<IGESData_IGESReaderData>&,
+                                                  IGESData_ParamReader& PR) const
 {
   int   nbPropertyValues;
   int   finite;
@@ -31,31 +30,23 @@ void IGESGraph_ToolUniformRectGrid::ReadOwnParams(
   int   nbPointsX = 0;
   int   nbPointsY = 0;
 
-  // Reading nbPropertyValues(Integer)
   PR.ReadInteger(PR.Current(), "No. of property values", nbPropertyValues);
   if (nbPropertyValues != 9)
     PR.AddFail("No. of Property values : Value is not 9");
 
-  // Reading finite(Integer)
   PR.ReadInteger(PR.Current(), "Finite/infinite grid flag", finite);
 
-  // Reading line(Integer)
   PR.ReadInteger(PR.Current(), "Line/point grid flag", line);
 
-  // Reading weighted(Integer)
   PR.ReadInteger(PR.Current(), "Weighted/unweighted grid flag", weighted);
 
-  // Reading gridPoint(XY)
   PR.ReadXY(PR.CurrentList(1, 2), "Grid point coordinates", gridPoint);
 
-  // Reading gridSpacing(XY)
   PR.ReadXY(PR.CurrentList(1, 2), "Grid Spacing coordinates", gridSpacing);
 
-  // Reading nbPointsX(Integer)  ?? even if not IsFinite ?
   if (finite != 0 || PR.DefinedElseSkip())
     PR.ReadInteger(PR.Current(), "No. of points/lines in X direction", nbPointsX);
 
-  // Reading nbPointsY(Integer)
   if (finite != 0 || PR.DefinedElseSkip())
     PR.ReadInteger(PR.Current(), "No. of points/lines in Y direction", nbPointsY);
 
@@ -75,18 +66,18 @@ void IGESGraph_ToolUniformRectGrid::WriteOwnParams(
   IW.Send(ent->GridPoint().Y());
   IW.Send(ent->GridSpacing().X());
   IW.Send(ent->GridSpacing().Y());
-  IW.Send(ent->NbPointsX()); // ?? even if not IsFinite ??
+  IW.Send(ent->NbPointsX());
   IW.Send(ent->NbPointsY());
 }
 
-void IGESGraph_ToolUniformRectGrid::OwnShared(const occ::handle<IGESGraph_UniformRectGrid>& /*ent*/,
-                                              Interface_EntityIterator& /*iter*/) const
+void IGESGraph_ToolUniformRectGrid::OwnShared(const occ::handle<IGESGraph_UniformRectGrid>&,
+                                              Interface_EntityIterator&) const
 {
 }
 
 void IGESGraph_ToolUniformRectGrid::OwnCopy(const occ::handle<IGESGraph_UniformRectGrid>& another,
                                             const occ::handle<IGESGraph_UniformRectGrid>& ent,
-                                            Interface_CopyTool& /*TC*/) const
+                                            Interface_CopyTool&) const
 {
   ent->Init(9,
             (another->IsFinite() ? 1 : 0),
@@ -110,12 +101,12 @@ bool IGESGraph_ToolUniformRectGrid::OwnCorrect(
               ent->GridPoint().XY(),
               ent->GridSpacing().XY(),
               ent->NbPointsX(),
-              ent->NbPointsY()); // nbpropertyvalues=9
+              ent->NbPointsY());
   return res;
 }
 
 IGESData_DirChecker IGESGraph_ToolUniformRectGrid::DirChecker(
-  const occ::handle<IGESGraph_UniformRectGrid>& /*ent*/) const
+  const occ::handle<IGESGraph_UniformRectGrid>&) const
 {
   IGESData_DirChecker DC(406, 22);
   DC.Structure(IGESData_DefVoid);
@@ -143,9 +134,9 @@ void IGESGraph_ToolUniformRectGrid::OwnCheck(const occ::handle<IGESGraph_Uniform
 }
 
 void IGESGraph_ToolUniformRectGrid::OwnDump(const occ::handle<IGESGraph_UniformRectGrid>& ent,
-                                            const IGESData_IGESDumper& /*dumper*/,
+                                            const IGESData_IGESDumper&,
                                             Standard_OStream& S,
-                                            const int /*level*/) const
+                                            const int) const
 {
   S << "IGESGraph_UniformRectGrid\n"
     << "No. of property values : " << ent->NbPropertyValues() << "\n"

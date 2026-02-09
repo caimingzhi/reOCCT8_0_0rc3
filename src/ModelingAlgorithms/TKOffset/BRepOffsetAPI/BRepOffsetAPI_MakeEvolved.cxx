@@ -8,11 +8,7 @@
 
 static const NCollection_List<TopoDS_Shape> anEmptyList;
 
-//=================================================================================================
-
 BRepOffsetAPI_MakeEvolved::BRepOffsetAPI_MakeEvolved() = default;
-
-//=================================================================================================
 
 BRepOffsetAPI_MakeEvolved::BRepOffsetAPI_MakeEvolved(const TopoDS_Shape&    Spine,
                                                      const TopoDS_Wire&     Profil,
@@ -71,11 +67,6 @@ BRepOffsetAPI_MakeEvolved::BRepOffsetAPI_MakeEvolved(const TopoDS_Shape&    Spin
   Build();
 }
 
-//=======================================================================
-// function : BRepFill_Evolved&
-// purpose  :
-//=======================================================================
-
 const BRepFill_Evolved& BRepOffsetAPI_MakeEvolved::Evolved() const
 {
   if (myIsVolume)
@@ -86,9 +77,7 @@ const BRepFill_Evolved& BRepOffsetAPI_MakeEvolved::Evolved() const
   return myEvolved;
 }
 
-//=================================================================================================
-
-void BRepOffsetAPI_MakeEvolved::Build(const Message_ProgressRange& /*theRange*/)
+void BRepOffsetAPI_MakeEvolved::Build(const Message_ProgressRange&)
 {
   if (myEvolved.IsDone())
   {
@@ -102,21 +91,15 @@ void BRepOffsetAPI_MakeEvolved::Build(const Message_ProgressRange& /*theRange*/)
   Done();
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& BRepOffsetAPI_MakeEvolved::Top() const
 {
   return myEvolved.Top();
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& BRepOffsetAPI_MakeEvolved::Bottom() const
 {
   return myEvolved.Bottom();
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_MakeEvolved::GeneratedShapes(
   const TopoDS_Shape& SpineShape,

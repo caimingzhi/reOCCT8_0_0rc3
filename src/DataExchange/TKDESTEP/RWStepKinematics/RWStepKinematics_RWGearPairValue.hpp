@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_GearPairValue;
 
-//! Read & Write tool for GearPairValue
 class RWStepKinematics_RWGearPairValue
 {
 public:

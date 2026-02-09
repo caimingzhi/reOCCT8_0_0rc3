@@ -1,21 +1,7 @@
-// Copyright (c) 2016-2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <FSD_Base64.hpp>
 
-// =======================================================================
-// function : Encode
-// =======================================================================
 size_t FSD_Base64::Encode(char*          theEncodedStr,
                           const size_t   theStrLen,
                           const uint8_t* theData,
@@ -73,9 +59,6 @@ size_t FSD_Base64::Encode(char*          theEncodedStr,
   return aSize64;
 }
 
-// =======================================================================
-// function : Encode
-// =======================================================================
 TCollection_AsciiString FSD_Base64::Encode(const uint8_t* theData, const size_t theDataLen)
 {
   size_t                  aStrLen = Encode(nullptr, 0, theData, theDataLen);
@@ -84,9 +67,6 @@ TCollection_AsciiString FSD_Base64::Encode(const uint8_t* theData, const size_t 
   return aStr;
 }
 
-// =======================================================================
-// function : Decode
-// =======================================================================
 size_t FSD_Base64::Decode(uint8_t*     theDecodedData,
                           const size_t theDataLen,
                           const char*  theEncodedStr,
@@ -104,7 +84,6 @@ size_t FSD_Base64::Decode(uint8_t*     theDecodedData,
     return 0;
   }
 
-  // Calculate pad bytes and number of bytes without pad
   uint32_t     aPad(theStrLen % 4 || theEncodedStr[theStrLen - 1] == '=');
   const size_t aNbIter = ((theStrLen + 3) / 4 - aPad) * 4;
   if (theStrLen > aNbIter + 2 && theEncodedStr[aNbIter + 2] != '=')
@@ -112,7 +91,6 @@ size_t FSD_Base64::Decode(uint8_t*     theDecodedData,
     ++aPad;
   }
 
-  // Calculate new size
   const size_t aDecodedSize = aNbIter / 4 * 3 + aPad;
   if (theDecodedData == nullptr)
   {
@@ -123,7 +101,6 @@ size_t FSD_Base64::Decode(uint8_t*     theDecodedData,
     return 0;
   }
 
-  // Decoding loop
   for (size_t i = 0; i < aNbIter; i += 4)
   {
     unsigned aWord = (aBase64Codes[unsigned(theEncodedStr[i])] << 18)
@@ -135,7 +112,6 @@ size_t FSD_Base64::Decode(uint8_t*     theDecodedData,
     *theDecodedData++ = static_cast<uint8_t>(aWord & 0xFF);
   }
 
-  // Decoding pad bytes
   if (aPad > 0)
   {
     unsigned aWord = (aBase64Codes[unsigned(theEncodedStr[aNbIter])] << 18)
@@ -151,9 +127,6 @@ size_t FSD_Base64::Decode(uint8_t*     theDecodedData,
   return aDecodedSize;
 }
 
-// =======================================================================
-// function : Decode
-// =======================================================================
 occ::handle<NCollection_Buffer> FSD_Base64::Decode(const char*  theEncodedStr,
                                                    const size_t theStrLen)
 {

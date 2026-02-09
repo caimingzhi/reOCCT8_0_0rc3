@@ -16,29 +16,21 @@ void RWStepAP242_RWItemIdentifiedRepresentationUsage::ReadStep(
   occ::handle<Interface_Check>&                                   ach,
   const occ::handle<StepAP242_ItemIdentifiedRepresentationUsage>& ent) const
 {
-  // --- Number of Parameter Control ---
 
   if (!data->CheckNbParams(num, 5, ach, "item_identified_representation_usage"))
     return;
 
-  // --- own field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
-
-  // --- own field : description ---
 
   occ::handle<TCollection_HAsciiString> aDescription;
   if (data->IsParamDefined(num, 2))
   {
     data->ReadString(num, 2, "description", ach, aDescription);
   }
-  // --- own field : definition ---
 
   StepAP242_ItemIdentifiedRepresentationUsageDefinition aDefinition;
   data->ReadEntity(num, 3, "definition", ach, aDefinition);
-
-  // --- own field : used_representation ---
 
   occ::handle<StepRepr_Representation> aRepresentation;
   data->ReadEntity(num,
@@ -47,8 +39,6 @@ void RWStepAP242_RWItemIdentifiedRepresentationUsage::ReadStep(
                    ach,
                    STANDARD_TYPE(StepRepr_Representation),
                    aRepresentation);
-
-  // --- own field : identified_item
 
   occ::handle<NCollection_HArray1<occ::handle<StepRepr_RepresentationItem>>> anItems;
   occ::handle<StepRepr_RepresentationItem>                                   anEnt;
@@ -85,8 +75,6 @@ void RWStepAP242_RWItemIdentifiedRepresentationUsage::ReadStep(
     }
   }
 
-  //--- Initialisation of the read entity ---
-
   ent->Init(aName, aDescription, aDefinition, aRepresentation, anItems);
 }
 
@@ -95,23 +83,13 @@ void RWStepAP242_RWItemIdentifiedRepresentationUsage::WriteStep(
   const occ::handle<StepAP242_ItemIdentifiedRepresentationUsage>& ent) const
 {
 
-  // --- own field : name ---
-
   SW.Send(ent->Name());
-
-  // --- own field : description ---
 
   SW.Send(ent->Description());
 
-  // --- own field : definition ---
-
   SW.Send(ent->Definition().Value());
 
-  // --- own field : used_representation ---
-
   SW.Send(ent->UsedRepresentation());
-
-  // --- own field : identified_item ---
 
   if (ent->NbIdentifiedItem() == 1)
     SW.Send(ent->IdentifiedItemValue(1));

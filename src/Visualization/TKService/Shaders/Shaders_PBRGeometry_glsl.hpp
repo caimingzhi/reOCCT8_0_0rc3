@@ -12,5 +12,3 @@ static const char Shaders_PBRGeometry_glsl[] =
   "  g2 /= theCosL * (1.0 - k) + k;\n"
   "  return g1 * g2;\n"
   "}\n";
-
-// clang-format on

@@ -11,7 +11,6 @@ class StepBasic_DateAndTime;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for DateAndTime
 class RWStepBasic_RWDateAndTime
 {
 public:

@@ -14,31 +14,26 @@
 #include <Message_Messenger.hpp>
 #include <Message_Msg.hpp>
 
-// MGE 28/07/98
 IGESGeom_ToolCompositeCurve::IGESGeom_ToolCompositeCurve() = default;
 
 void IGESGeom_ToolCompositeCurve::ReadOwnParams(const occ::handle<IGESGeom_CompositeCurve>& ent,
                                                 const occ::handle<IGESData_IGESReaderData>& IR,
                                                 IGESData_ParamReader& PR) const
 {
-  // MGE 28/07/98
-  // Building of messages
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> tempEntities;
 
-  int num; // szv#4:S4163:12Mar99 i not needed
+  int num;
 
   bool st = PR.ReadInteger(PR.Current(), num);
-  // st = PR.ReadInteger(PR.Current(), "Number of Components", num);
+
   if (st && (num > 0))
   {
     Message_Msg Msg80("XSTEP_80");
-    // clang-format off
-    PR.ReadEnts (IR,PR.CurrentList(num),Msg80,tempEntities); //szv#4:S4163:12Mar99 `st=` not needed
-  //else st = PR.ReadEnts (IR,PR.CurrentList(num),"List of Components",tempEntities);
-    // clang-format on
+
+    PR.ReadEnts(IR, PR.CurrentList(num), Msg80, tempEntities);
   }
-  // if (st && num <= 0) PR.SendFail(Msg79);
+
   else
   {
     Message_Msg Msg79("XSTEP_79");
@@ -83,20 +78,20 @@ void IGESGeom_ToolCompositeCurve::OwnCopy(const occ::handle<IGESGeom_CompositeCu
 }
 
 IGESData_DirChecker IGESGeom_ToolCompositeCurve::DirChecker(
-  const occ::handle<IGESGeom_CompositeCurve>& /* ent */) const
+  const occ::handle<IGESGeom_CompositeCurve>&) const
 {
   IGESData_DirChecker DC(102, 0);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
   return DC;
 }
 
-void IGESGeom_ToolCompositeCurve::OwnCheck(const occ::handle<IGESGeom_CompositeCurve>& /* ent */,
+void IGESGeom_ToolCompositeCurve::OwnCheck(const occ::handle<IGESGeom_CompositeCurve>&,
                                            const Interface_ShareTool&,
-                                           occ::handle<Interface_Check>& /* ach */) const
+                                           occ::handle<Interface_Check>&) const
 {
 }
 

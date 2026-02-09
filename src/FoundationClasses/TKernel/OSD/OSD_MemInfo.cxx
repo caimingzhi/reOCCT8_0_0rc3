@@ -21,11 +21,8 @@
 #if defined(__EMSCRIPTEN__)
   #include <emscripten.h>
 
-//! Return WebAssembly heap size in bytes.
 EM_JS(double, OSD_MemInfo_getModuleHeapLength, (), { return Module.HEAP8.length; });
 #endif
-
-//=================================================================================================
 
 OSD_MemInfo::OSD_MemInfo(const bool theImmediateUpdate)
 {
@@ -40,8 +37,6 @@ OSD_MemInfo::OSD_MemInfo(const bool theImmediateUpdate)
   }
 }
 
-//=================================================================================================
-
 void OSD_MemInfo::SetActive(const bool theActive)
 {
   for (int anIter = 0; anIter < MemCounter_NB; ++anIter)
@@ -50,8 +45,6 @@ void OSD_MemInfo::SetActive(const bool theActive)
   }
 }
 
-//=================================================================================================
-
 void OSD_MemInfo::Clear()
 {
   for (int anIter = 0; anIter < MemCounter_NB; ++anIter)
@@ -59,8 +52,6 @@ void OSD_MemInfo::Clear()
     myCounters[anIter] = size_t(-1);
   }
 }
-
-//=================================================================================================
 
 void OSD_MemInfo::Update()
 {
@@ -88,7 +79,7 @@ void OSD_MemInfo::Update()
   if (IsActive(MemPrivate) || IsActive(MemWorkingSet) || IsActive(MemWorkingSetPeak)
       || IsActive(MemSwapUsage) || IsActive(MemSwapUsagePeak))
   {
-    // use Psapi library
+
     HANDLE aProcess = GetCurrentProcess();
     #if (_WIN32_WINNT >= 0x0501)
     PROCESS_MEMORY_COUNTERS_EX aProcMemCnts;
@@ -128,7 +119,7 @@ void OSD_MemInfo::Update()
   #elif defined(__EMSCRIPTEN__)
   if (IsActive(MemHeapUsage) || IsActive(MemWorkingSet) || IsActive(MemWorkingSetPeak))
   {
-    // /proc/%d/status is not emulated - get more info from mallinfo()
+
     const struct mallinfo aMI = mallinfo();
     if (IsActive(MemHeapUsage))
     {
@@ -175,7 +166,6 @@ void OSD_MemInfo::Update()
     return;
   }
 
-  // use procfs on Linux
   char aBuff[4096];
   snprintf(aBuff, sizeof(aBuff), "/proc/%d/status", getpid());
   std::ifstream aFile;
@@ -198,18 +188,15 @@ void OSD_MemInfo::Update()
     {
       myCounters[MemVirtual] = atol(aBuff + strlen("VmSize:")) * 1024;
     }
-    // else if (strncmp (aBuff, "VmPeak:", strlen ("VmPeak:")) == 0)
-    //   myVirtualPeak = atol (aBuff + strlen ("VmPeak:")) * 1024;
+
     else if (IsActive(MemWorkingSet) && strncmp(aBuff, "VmRSS:", strlen("VmRSS:")) == 0)
     {
-      // clang-format off
-      myCounters[MemWorkingSet] = atol (aBuff + strlen ("VmRSS:")) * 1024; // RSS - resident set size
+
+      myCounters[MemWorkingSet] = atol(aBuff + strlen("VmRSS:")) * 1024;
     }
-    else if (IsActive (MemWorkingSetPeak)
-          && strncmp (aBuff, "VmHWM:", strlen ("VmHWM:")) == 0)
+    else if (IsActive(MemWorkingSetPeak) && strncmp(aBuff, "VmHWM:", strlen("VmHWM:")) == 0)
     {
-      myCounters[MemWorkingSetPeak] = atol (aBuff + strlen ("VmHWM:")) * 1024; // HWM - high water mark
-      // clang-format on
+      myCounters[MemWorkingSetPeak] = atol(aBuff + strlen("VmHWM:")) * 1024;
     }
     else if (IsActive(MemPrivate) && strncmp(aBuff, "VmData:", strlen("VmData:")) == 0)
     {
@@ -233,11 +220,10 @@ void OSD_MemInfo::Update()
     if (task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&aTaskInfo, &aTaskInfoCount)
         == KERN_SUCCESS)
     {
-      // On Mac OS X, these values in bytes, not pages!
+
       myCounters[MemVirtual]    = aTaskInfo.virtual_size;
       myCounters[MemWorkingSet] = aTaskInfo.resident_size;
 
-      // Getting malloc statistics
       malloc_statistics_t aStats;
       malloc_zone_statistics(nullptr, &aStats);
 
@@ -247,8 +233,6 @@ void OSD_MemInfo::Update()
   #endif
 #endif
 }
-
-//=================================================================================================
 
 TCollection_AsciiString OSD_MemInfo::ToString() const
 {
@@ -291,8 +275,6 @@ TCollection_AsciiString OSD_MemInfo::ToString() const
   return anInfo;
 }
 
-//=================================================================================================
-
 size_t OSD_MemInfo::Value(const OSD_MemInfo::Counter theCounter) const
 {
   if (theCounter < 0 || theCounter >= MemCounter_NB || !IsActive(theCounter))
@@ -301,8 +283,6 @@ size_t OSD_MemInfo::Value(const OSD_MemInfo::Counter theCounter) const
   }
   return myCounters[theCounter];
 }
-
-//=================================================================================================
 
 size_t OSD_MemInfo::ValueMiB(const OSD_MemInfo::Counter theCounter) const
 {
@@ -314,8 +294,6 @@ size_t OSD_MemInfo::ValueMiB(const OSD_MemInfo::Counter theCounter) const
                                                 : (myCounters[theCounter] / (1024 * 1024));
 }
 
-//=================================================================================================
-
 double OSD_MemInfo::ValuePreciseMiB(const OSD_MemInfo::Counter theCounter) const
 {
   if (theCounter < 0 || theCounter >= MemCounter_NB || !IsActive(theCounter))
@@ -326,8 +304,6 @@ double OSD_MemInfo::ValuePreciseMiB(const OSD_MemInfo::Counter theCounter) const
            ? -1.0
            : ((double)myCounters[theCounter] / (1024.0 * 1024.0));
 }
-
-//=================================================================================================
 
 TCollection_AsciiString OSD_MemInfo::PrintInfo()
 {

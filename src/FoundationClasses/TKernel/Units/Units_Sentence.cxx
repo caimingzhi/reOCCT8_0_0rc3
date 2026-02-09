@@ -30,8 +30,6 @@ static occ::handle<Units_Token> CreateTokenForNumber(const char* str)
   return new Units_Token(tstr.ToCString(), "0");
 }
 
-//=================================================================================================
-
 Units_Sentence::Units_Sentence(const occ::handle<Units_Lexicon>& alexicon, const char* astring)
 {
   int                      index;
@@ -47,7 +45,7 @@ Units_Sentence::Units_Sentence(const occ::handle<Units_Lexicon>& alexicon, const
   i        = 0;
 
   TCollection_AsciiString tmpstr = astring;
-  // occ::handle<Units_Token> tmptoken;
+
   TCollection_AsciiString PrevMean;
   TCollection_AsciiString PrevWord;
   while (i < limchain)
@@ -68,11 +66,11 @@ Units_Sentence::Units_Sentence(const occ::handle<Units_Lexicon>& alexicon, const
     }
     if (!IsFound)
     {
-      // may be it is a number(degree)?
+
       LastWord = tmpstr.SubString(1, 1);
       if (!LastWord.IsIntegerValue())
       {
-        // unknown expression - not create sentene
+
         thesequenceoftokens->Clear();
 #ifdef OCCT_DEBUG
         std::cout << "Warning: can not create correct sentence from string: " << astring
@@ -82,14 +80,14 @@ Units_Sentence::Units_Sentence(const occ::handle<Units_Lexicon>& alexicon, const
       }
       else
       {
-        // create token for number
+
         token    = CreateTokenForNumber(tmpstr.ToCString());
         LastWord = token->Word();
       }
     }
     if (i > 0)
     {
-      // make additional checking
+
       if ((token->Mean() == "M" && (PrevMean == "M" || PrevMean == "MU" || PrevMean == "0"))
           || (token->Mean() == "U" && (PrevMean == "U" || PrevMean == "0"))
           || (token->Mean() == "O" && (PrevMean == "M" || PrevMean == "O"))
@@ -97,7 +95,7 @@ Units_Sentence::Units_Sentence(const occ::handle<Units_Lexicon>& alexicon, const
           || (token->Mean() == "S" && (PrevMean == "M"))
           || (token->Mean() == "0" && (PrevMean == "M" || PrevMean == "U" || PrevMean == "MU")))
       {
-        // incorrect situation
+
         thesequenceoftokens->Clear();
 #ifdef OCCT_DEBUG
         std::cout << "Warning: can not create correct sentence from string: " << astring
@@ -113,8 +111,6 @@ Units_Sentence::Units_Sentence(const occ::handle<Units_Lexicon>& alexicon, const
     tmpstr.Remove(1, LastWord.Length());
   }
 }
-
-//=================================================================================================
 
 void Units_Sentence::SetConstants()
 {
@@ -139,17 +135,10 @@ void Units_Sentence::SetConstants()
   }
 }
 
-//=================================================================================================
-
 static occ::handle<Units_Token> CalculateLocal(
   const occ::handle<NCollection_HSequence<occ::handle<Units_Token>>>& aSeq)
 {
-  // std::cout<<std::endl;
-  // for(int index=1; index<=aSeq->Length(); index++) {
-  //   occ::handle<Units_Token> tok = aSeq->Value(index);
-  //   std::cout<<tok->Word()<<" ";
-  // }
-  // std::cout<<std::endl;
+
   occ::handle<Units_Token> tok1, tok2;
   int                      i, j;
 
@@ -158,7 +147,6 @@ static occ::handle<Units_Token> CalculateLocal(
     return aSeq->Value(1);
   }
 
-  // case of unar sign
   if (aSeq->Length() == 2)
   {
     if (aSeq->Value(1)->Word() == "+")
@@ -208,8 +196,7 @@ static occ::handle<Units_Token> CalculateLocal(
     if (i > aSeq->Length())
     {
       IsBracket = false;
-      // there are not brackets => make calculations
-      // step 1: operation '**'
+
       for (i = 1; i <= aSeq->Length(); i++)
       {
         if (aSeq->Value(i)->Word() == "**")
@@ -223,7 +210,7 @@ static occ::handle<Units_Token> CalculateLocal(
           i--;
         }
       }
-      // step 2: operation '*', '.' and '/'
+
       for (i = 1; i <= aSeq->Length(); i++)
       {
         if (aSeq->Value(i)->Mean() == "O")
@@ -240,13 +227,10 @@ static occ::handle<Units_Token> CalculateLocal(
           i--;
         }
       }
-      // now aSeq have to include only one result token
     }
   }
   return tok1;
 }
-
-//=================================================================================================
 
 occ::handle<Units_Token> Units_Sentence::Evaluate()
 {
@@ -254,123 +238,7 @@ occ::handle<Units_Token> Units_Sentence::Evaluate()
   if (thesequenceoftokens->Length() == 0)
     return rtoken;
 
-  /* old variant
-    int index;
-    static char *ooper[6] = { "+", "-", "*", ".", "/", "**" };
-    int numterm,i,j,k,maxlevel,curlevel,level[255];
-    occ::handle<Units_Token> currenttoken;
-    TCollection_AsciiString string;
-    TCollection_AsciiString mean;
-    TCollection_AsciiString oper;
-
-    numterm=curlevel=i=0;
-    for(index=1;index<=thesequenceoftokens->Length();index++) {
-      string = thesequenceoftokens->Value(index)->Word();
-
-      if( string=="(" ) {
-        level[numterm]=curlevel;
-        curlevel++;
-      }
-      else if( string==")" ) {
-        curlevel--;
-        level[numterm]=curlevel;
-      }
-      else {
-        level[numterm]=curlevel;
-      }
-      numterm++;
-    }
-
-    //if(IPrint==1) {
-    //  std::cout<<std::endl;
-    //  for(index=1; index<=thesequenceoftokens->Length(); index++) {
-    //    occ::handle<Units_Token> tok = thesequenceoftokens->Value(index);
-    //    std::cout<<tok->Word()<<" ";
-    //  }
-    //  std::cout<<std::endl;
-    //  for(index=1; index<=thesequenceoftokens->Length(); index++) {
-    //    std::cout<<level[index-1]<<" ";
-    //  }
-    //  std::cout<<std::endl;
-    //}
-
-    if(curlevel) {
-      std::cout<<" Incorrect number of brackets"<<std::endl;
-      return new Units_Token();
-    }
-
-    for(k=0; k<6; k++) {
-      for(index=1,i=0; index<=thesequenceoftokens->Length(); index++,i++)	{
-        if( thesequenceoftokens->Value(index)->Word() == ooper[k] ) {
-          j=i+1;
-          curlevel=level[j];
-          while(j < numterm && level[j] >= curlevel)
-            level[j++]++;
-          j=i-1;
-          curlevel=level[j];
-          while(j >= 0 && level[j] >= curlevel)
-            level[j--]++;
-        }
-      }
-    }
-
-    occ::handle<Units_Dimensions> aDim;
-
-    numterm--;
-    while(numterm>0) {
-
-      maxlevel=0;
-      for(i=0; i<=numterm; i++)if(level[i] > maxlevel)
-        maxlevel=level[i];
-
-      i=0;
-      while(level[i] != maxlevel)
-        i++;
-
-      oper.Clear();
-
-      k=i;
-      while( k<=numterm && level[k]==maxlevel ) {
-        ktoken=thesequenceoftokens->Value(k+1);
-        mean=ktoken->Mean();
-        if(mean=="O") {
-          oper = ktoken->Word();
-        }
-        else if(mean!="S") {
-          if     (oper == "/")  rtoken = rtoken / ktoken;
-          else if(oper == "+")  rtoken = rtoken + ktoken;
-          else if(oper == "-")  rtoken = rtoken - ktoken;
-          else if(oper == "*")  rtoken = rtoken * ktoken;
-          else if(oper == "**") rtoken = pow(rtoken,ktoken);
-          else if(oper == ".")  rtoken = rtoken * ktoken;
-          else                  rtoken = ktoken->Creates();
-        }
-        k++;
-      }
-      thesequenceoftokens->SetValue(i+1,rtoken);
-      level[i]=maxlevel-1;
-
-      if( (i+1) != k ) {
-        thesequenceoftokens->Remove(i+2,k);
-        j=i;
-        while(k <= numterm)
-          level[++j]=level[k++];
-        numterm=j;
-      }
-    }
-
-    rtoken = thesequenceoftokens->Value(1)->Creates();
-
-    if( rtoken->Value()==0. ) {
-      std::cout << "*BAD token value from unit '" << rtoken->Word() << "'" << std::endl;
-      rtoken->Value(1.);
-    }
-  */ // end old variant
-
-  // variant skl 15.09.2005
   rtoken = CalculateLocal(thesequenceoftokens);
-
-  // rtoken->Dump(0,1);
 
   return rtoken;
 }

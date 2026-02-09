@@ -57,8 +57,6 @@
 Standard_IMPORT Draw_Viewer dout;
 #endif
 
-//=================================================================================================
-
 static int surface_radius(Draw_Interpretor& di, int n, const char** a)
 {
   int    report_curvature = 0;
@@ -114,8 +112,6 @@ static int surface_radius(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int anasurface(Draw_Interpretor&, int n, const char** a)
 {
@@ -202,8 +198,6 @@ static int anasurface(Draw_Interpretor&, int n, const char** a)
   DrawTrSurf::Set(a[1], result);
   return 0;
 }
-
-//=================================================================================================
 
 static int polesurface(Draw_Interpretor&, int n, const char** a)
 {
@@ -322,8 +316,6 @@ static int polesurface(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int algosurface(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 5)
@@ -357,8 +349,6 @@ static int algosurface(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int trimming(Draw_Interpretor&, int n, const char** a)
 {
@@ -460,8 +450,6 @@ static int trimming(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int converting(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 3)
@@ -528,8 +516,6 @@ static int converting(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int tocanon(Draw_Interpretor& di, int n, const char** a)
 {
@@ -645,8 +631,6 @@ static int tocanon(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int tobezier(Draw_Interpretor& di, int n, const char** a)
 {
@@ -767,8 +751,6 @@ static int tobezier(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int convbz(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 4)
@@ -781,7 +763,7 @@ static int convbz(Draw_Interpretor& di, int n, const char** a)
   occ::handle<Geom_Curve> aCurve(occ::down_cast<Geom_Curve>(DrawTrSurf::Get(a[3])));
   if (aCurve.IsNull())
   {
-    // Cas Surfacique
+
     NbV = Draw::Atoi(a[3]);
     if (n < 4 + NbU * NbV)
     {
@@ -824,7 +806,7 @@ static int convbz(Draw_Interpretor& di, int n, const char** a)
     DrawTrSurf::Set(a[1], BSurf);
   }
   else
-  { // cas de courbes
+  {
     Convert_CompBezierCurvesToBSplineCurve Conv;
     occ::handle<Geom_BezierCurve>          BZ;
     for (ii = 1, kk = 3; ii <= NbU; ii++, kk++)
@@ -854,22 +836,17 @@ static int convbz(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : approxsurf
-// purpose  : Approximation d'une Surface par une BSpline non rationnelle
-//=======================================================================
-
 static int approxsurf(Draw_Interpretor& di, int n, const char** a)
 {
-  // " Tolerance (par defaut 0.1mm) "
+
   double Tol = 1.e-4;
-  // " Ordres de continuites : 0, 1 ou 2 (par defaut 1)"
+
   GeomAbs_Shape myUCont = GeomAbs_C1, myVCont = GeomAbs_C1;
-  // " Degre maximum des carreaux de Bezier 14 par defaut "
+
   int degU = 14, degV = 14;
-  // " Nombre max de carreaux (par defaut 10)"
+
   int nmax = 16;
-  // "Code de precision par defaults"
+
   int myPrec = 1;
 
   if (n > 10 || n < 3)
@@ -921,14 +898,11 @@ static int approxsurf(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int offseting(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4)
     return 1;
 
-  // test the Geom2d curve
   occ::handle<Geom2d_Curve> C2d = DrawTrSurf::GetCurve2d(a[2]);
   if (!C2d.IsNull())
   {
@@ -971,8 +945,6 @@ static int offseting(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int sreverse(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 2)
@@ -996,8 +968,6 @@ static int sreverse(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int iso(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4)
@@ -1017,8 +987,6 @@ static int iso(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int value(Draw_Interpretor&, int n, const char** a)
 {
@@ -1081,8 +1049,6 @@ static int value(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int derivative(Draw_Interpretor&, int theArgc, const char** theArgv)
 {
   if (theArgc != 9)
@@ -1105,8 +1071,6 @@ static int derivative(Draw_Interpretor&, int theArgc, const char** theArgv)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int movepole(Draw_Interpretor&, int n, const char** a)
 {
@@ -1143,8 +1107,6 @@ static int movepole(Draw_Interpretor&, int n, const char** a)
   }
 
   int FirstRow = 0, LastRow = 0, FirstCol = 0, LastCol = 0;
-  // Rem : Row = indice ligne.  -> variation en U.
-  //       Col = indice colonne.-> variation en V.
 
   if (!strcasecmp(a[0], "movep"))
   {
@@ -1202,8 +1164,6 @@ static int movepole(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int movepoint(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 7)
@@ -1250,8 +1210,6 @@ static int movepoint(Draw_Interpretor&, int n, const char** a)
   Draw::Repaint();
   return 0;
 }
-
-//=================================================================================================
 
 static int insertknot(Draw_Interpretor&, int n, const char** a)
 {
@@ -1308,8 +1266,6 @@ static int insertknot(Draw_Interpretor&, int n, const char** a)
   Draw::Repaint();
   return 0;
 }
-
-//=================================================================================================
 
 static int incdegree(Draw_Interpretor& di, int n, const char** a)
 {
@@ -1381,8 +1337,6 @@ static int incdegree(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int rempole(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
@@ -1429,8 +1383,6 @@ static int rempole(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int sfindp(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 7)
@@ -1473,8 +1425,6 @@ static int sfindp(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int ssetperiodic(Draw_Interpretor&, int n, const char** a)
 {
@@ -1534,8 +1484,6 @@ static int ssetperiodic(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int exchuv(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 2)
@@ -1564,8 +1512,6 @@ static int exchuv(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int segsur(Draw_Interpretor&, int n, const char** a)
 {
@@ -1657,8 +1603,6 @@ static int compBsplSur(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int setuvorigin(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 3)
@@ -1682,13 +1626,11 @@ static int setuvorigin(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int parameters(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 8)
   {
-    // try to find parameters on a Surface
+
     occ::handle<Geom_Surface> S = DrawTrSurf::GetSurface(a[1]);
     if (S.IsNull())
     {
@@ -1710,7 +1652,7 @@ static int parameters(Draw_Interpretor& di, int n, const char** a)
   }
   else if (n == 7)
   {
-    // try to find parameters on a 3d Curve
+
     occ::handle<Geom_Curve> C = DrawTrSurf::GetCurve(a[1]);
     if (C.IsNull())
     {
@@ -1731,7 +1673,7 @@ static int parameters(Draw_Interpretor& di, int n, const char** a)
   }
   else if (n == 6)
   {
-    // try to find parameters on a 2d Curve
+
     occ::handle<Geom2d_Curve> C = DrawTrSurf::GetCurve2d(a[1]);
     if (C.IsNull())
     {
@@ -1763,16 +1705,14 @@ static int parameters(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int bounds(Draw_Interpretor&, int n, const char** a)
 {
   double U1, U2, V1, V2;
   if (n == 4)
-  { // compute on a curve or a 2d curve
+  {
     occ::handle<Geom_Curve> C3d = DrawTrSurf::GetCurve(a[1]);
     if (C3d.IsNull())
-    { // 2dcurve
+    {
       occ::handle<Geom2d_Curve> C2d = DrawTrSurf::GetCurve2d(a[1]);
       if (C2d.IsNull())
         return 1;
@@ -1780,7 +1720,7 @@ int bounds(Draw_Interpretor&, int n, const char** a)
       U2 = C2d->LastParameter();
     }
     else
-    { // 3dcurve
+    {
       U1 = C3d->FirstParameter();
       U2 = C3d->LastParameter();
     }
@@ -1788,7 +1728,7 @@ int bounds(Draw_Interpretor&, int n, const char** a)
     Draw::Set(a[3], U2);
   }
   else if (n == 6)
-  { // compute on a Surface
+  {
     occ::handle<Geom_Surface> S = DrawTrSurf::GetSurface(a[1]);
     if (S.IsNull())
       return 1;
@@ -1803,8 +1743,6 @@ int bounds(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 void GeomliteTest::SurfaceCommands(Draw_Interpretor& theCommands)
 {
   static bool loaded = false;
@@ -1815,7 +1753,7 @@ void GeomliteTest::SurfaceCommands(Draw_Interpretor& theCommands)
   DrawTrSurf::BasicCommands(theCommands);
 
   const char* g;
-  // analytic surfaces
+
   g = "GEOMETRY surfaces creation";
 
   theCommands.Add("plane", "plane name [x y z [dx dy dz [ux uy uz]]]", __FILE__, anasurface, g);

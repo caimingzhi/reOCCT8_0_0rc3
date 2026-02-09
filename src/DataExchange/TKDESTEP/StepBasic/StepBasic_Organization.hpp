@@ -11,7 +11,6 @@ class StepBasic_Organization : public Standard_Transient
 {
 
 public:
-  //! Returns a Organization
   Standard_EXPORT StepBasic_Organization();
 
   Standard_EXPORT void Init(const bool                                   hasAid,

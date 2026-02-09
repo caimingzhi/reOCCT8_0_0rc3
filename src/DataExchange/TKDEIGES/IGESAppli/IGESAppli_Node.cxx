@@ -24,15 +24,15 @@ gp_Pnt IGESAppli_Node::Coord() const
 
 occ::handle<IGESData_TransfEntity> IGESAppli_Node::System() const
 {
-  // if Null, Global Cartesian Coordinate System
+
   return occ::handle<IGESData_TransfEntity>(theSystem);
 }
 
 int IGESAppli_Node::SystemType() const
 {
   if (theSystem.IsNull())
-    return 0;                           // 0 Global Cartesien
-  return (theSystem->FormNumber() - 9); // 1 Cartesien, 2 Cylind. 3 Spher.
+    return 0;
+  return (theSystem->FormNumber() - 9);
 }
 
 gp_Pnt IGESAppli_Node::TransformedNodalCoord() const

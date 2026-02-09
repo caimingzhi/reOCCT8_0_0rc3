@@ -7,23 +7,13 @@
 #include <gp_Trsf.hpp>
 class gp_Pnt;
 
-//! Implements an elementary construction algorithm for
-//! a scaling transformation in 3D space. The result is a gp_Trsf transformation.
-//! A MakeScale object provides a framework for:
-//! -   defining the construction of the transformation,
-//! -   implementing the construction algorithm, and
-//! -   consulting the result.
 class gce_MakeScale
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Constructs a scaling transformation with
-  //! -   Point as the center of the transformation, and
-  //! -   Scale as the scale factor.
   Standard_EXPORT gce_MakeScale(const gp_Pnt& Point, const double Scale);
 
-  //! Returns the constructed transformation.
   Standard_EXPORT const gp_Trsf& Value() const;
 
   Standard_EXPORT const gp_Trsf& Operator() const;

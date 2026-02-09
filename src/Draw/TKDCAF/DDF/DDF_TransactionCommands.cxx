@@ -12,12 +12,6 @@
 static NCollection_List<occ::handle<DDF_Transaction>> DDF_TStack;
 static occ::handle<TDF_Delta>                         DDF_LastDelta;
 
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Transaction commands
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-//=================================================================================================
-
 static int OpenTran(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
@@ -32,8 +26,6 @@ static int OpenTran(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int AbortTran(Draw_Interpretor& di, int n, const char** a)
 {
@@ -57,8 +49,6 @@ static int AbortTran(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int CommitTran(Draw_Interpretor& di, int n, const char** a)
 {
@@ -86,11 +76,6 @@ static int CommitTran(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : CurrentTran
-// purpose  : Current transaction number.
-//=======================================================================
-
 static int CurrentTran(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
@@ -106,12 +91,6 @@ static int CurrentTran(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Delta commands
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-//=================================================================================================
 
 static int Undo(Draw_Interpretor& di, int n, const char** a)
 {
@@ -151,10 +130,6 @@ static int Undo(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-//=================================================================================================
-
 void DDF::TransactionCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
@@ -164,8 +139,6 @@ void DDF::TransactionCommands(Draw_Interpretor& theCommands)
 
   const char* g = "DF transaction and undo commands";
 
-  // Transaction :
-  // +++++++++++++
   theCommands.Add("OpenTran",
                   "Opens a transaction on a DF: OpenTran dfname",
                   __FILE__,
@@ -191,8 +164,6 @@ void DDF::TransactionCommands(Draw_Interpretor& theCommands)
                   CurrentTran,
                   g);
 
-  // Undo :
-  // ++++++
   theCommands.Add("DFUndo",
                   " Undos last DF commit modifications: Undo dfname [withDelta]",
                   __FILE__,

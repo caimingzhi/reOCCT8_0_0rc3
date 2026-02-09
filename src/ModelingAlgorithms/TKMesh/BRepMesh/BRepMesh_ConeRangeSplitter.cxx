@@ -3,8 +3,6 @@
 #include <GCPnts_TangentialDeflection.hpp>
 #include <IMeshTools_Parameters.hpp>
 
-//=================================================================================================
-
 std::pair<double, double> BRepMesh_ConeRangeSplitter::GetSplitSteps(
   const IMeshTools_Parameters& theParameters,
   std::pair<int, int>&         theStepsNb) const
@@ -37,8 +35,6 @@ std::pair<double, double> BRepMesh_ConeRangeSplitter::GetSplitSteps(
   theStepsNb.second = nbV;
   return std::make_pair(Du, Dv);
 }
-
-//=================================================================================================
 
 Handle(IMeshData::ListOfPnt2d) BRepMesh_ConeRangeSplitter::GenerateSurfaceNodes(
   const IMeshTools_Parameters& theParameters) const

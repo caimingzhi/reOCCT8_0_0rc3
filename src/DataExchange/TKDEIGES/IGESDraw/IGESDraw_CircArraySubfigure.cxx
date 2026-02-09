@@ -76,14 +76,11 @@ double IGESDraw_CircArraySubfigure::DeltaAngle() const
 bool IGESDraw_CircArraySubfigure::DisplayFlag() const
 {
   return (thePositions.IsNull());
-  // if LC == 0 then there is no allocation made for thePositions array
-  // i.e., thePositions == Null Handle
 }
 
 int IGESDraw_CircArraySubfigure::ListCount() const
 {
   return (thePositions.IsNull() ? 0 : thePositions->Length());
-  // Return 0 if HArray1 thePositions is NULL Handle
 }
 
 bool IGESDraw_CircArraySubfigure::DoDontFlag() const
@@ -93,9 +90,6 @@ bool IGESDraw_CircArraySubfigure::DoDontFlag() const
 
 bool IGESDraw_CircArraySubfigure::PositionNum(const int Index) const
 {
-  // Method : If thePositions array length is Zero return theDoDontFlag;
-  //          else Search Index in to the Array. If 'Index' found in the
-  //          array return theDoDontFlag else return !theDoDontFlag.
 
   if (thePositions.IsNull())
     return theDoDontFlag;
@@ -116,6 +110,4 @@ bool IGESDraw_CircArraySubfigure::PositionNum(const int Index) const
 int IGESDraw_CircArraySubfigure::ListPosition(const int Index) const
 {
   return thePositions->Value(Index);
-  // raise OutOfRange from Standard if Index is out-of-bound
-  // Exception NoSuchObject will be raised if thePositions == Null Handle
 }

@@ -36,7 +36,6 @@ Standard_IMPORT bool Draw_Interprete(const char* theCommand);
   #include <emscripten/emscripten.h>
   #include <emscripten/threading.h>
 
-//! Signal async command completion to Module.evalAsyncCompleted callback.
 EM_JS(void, occJSEvalAsyncCompleted, (int theResult), {
   if (Module.evalAsyncCompleted != undefined)
   {
@@ -48,18 +47,16 @@ EM_JS(void, occJSEvalAsyncCompleted, (int theResult), {
   }
 });
 
-//! Draw Harness interface for JavaScript.
 class DRAWEXE
 {
 public:
-  //! Evaluate Tcl command.
   static int eval(const std::string& theCommand)
   {
     int aRes = 0;
     try
     {
       OCC_CATCH_SIGNALS
-      // aRes = Draw::GetInterpretor().Eval (theCommand.c_str());
+
       aRes = Draw_Interprete(theCommand.c_str()) ? 1 : 0;
     }
     catch (Standard_Failure& anExcept)
@@ -69,13 +66,11 @@ public:
     return aRes;
   }
 
-  //! Check if Tcl command is complete.
   static bool isComplete(const std::string& theCommand)
   {
     return Draw::GetInterpretor().Complete(theCommand.c_str());
   }
 
-  //! Evaluate Tcl command asynchronously.
   static void evalAsync(const std::string& theCommand)
   {
   #if defined(__EMSCRIPTEN_PTHREADS__)
@@ -83,7 +78,7 @@ public:
     OSD_Thread   aThread(&evalAsyncEntry);
     aThread.Run(aCmdPtr);
   #else
-    // fallback synchronous implementation
+
     int aRes = eval(theCommand);
     occJSEvalAsyncCompleted(aRes);
   #endif
@@ -91,7 +86,6 @@ public:
 
   #if defined(__EMSCRIPTEN_PTHREADS__)
 private:
-  //! Thread entry for async command execution.
   static void* evalAsyncEntry(void* theData)
   {
     OSD::SetSignal(false);
@@ -103,14 +97,12 @@ private:
     return 0;
   }
 
-  //! Notify Module.evalAsyncCompleted about async cmd completion.
   static void evalAsyncCompletedEntry(int theResult) { occJSEvalAsyncCompleted(theResult); }
   #endif
 };
 
-//! Print message to Module.printMessage callback.
 EM_JS(void, occJSPrintMessage, (const char* theStr, int theGravity), {
-  const aStr = Number(theStr); // bigintToI53Checked(theStr);
+  const aStr = Number(theStr);
   if (Module.printMessage != undefined && Module.printMessage != null)
   {
     Module.printMessage(UTF8ToString(aStr), theGravity);
@@ -121,26 +113,21 @@ EM_JS(void, occJSPrintMessage, (const char* theStr, int theGravity), {
   }
   else
   {
-    // console.info (UTF8ToString(aStr));
   }
 });
 
-//! Auxiliary printer to a Module.printMessage callback accepting text and gravity.
 class DRAWEXE_WasmModulePrinter : public Message_Printer
 {
   DEFINE_STANDARD_RTTI_INLINE(DRAWEXE_WasmModulePrinter, Message_Printer)
 public:
-  //! Main constructor.
   DRAWEXE_WasmModulePrinter(const Message_Gravity theTraceLevel = Message_Info)
   {
     SetTraceLevel(theTraceLevel);
   }
 
-  //! Destructor.
   virtual ~DRAWEXE_WasmModulePrinter() {}
 
 protected:
-  //! Puts a message.
   virtual void send(const TCollection_AsciiString& theString,
                     const Message_Gravity          theGravity) const override
   {
@@ -164,10 +151,9 @@ EMSCRIPTEN_BINDINGS(DRAWEXE)
   #include <string>
   #include <unordered_map>
 
-//! Mimic pload command by loading pre-defined set of statically linked plugins.
 static int Pload(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
-  // Define a map of aPlugin keys to their corresponding factory methods
+
   std::unordered_map<std::string, std::function<void(Draw_Interpretor&)>> aPluginMap = {
     {"TOPTEST", BOPTest::Factory},
     {"DCAF", DPrsStd::Factory},
@@ -191,7 +177,6 @@ static int Pload(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
     {"OBJ", XSDRAWOBJ::Factory},
     {"DE", XSDRAWDE::Factory}};
 
-  // Define a map of aliases to their corresponding aPlugin keys
   std::unordered_map<std::string, std::vector<std::string>> anAliasMap = {
     {"DEFAULT", {"MODELING"}},
     {"MODELING", {"TOPTEST"}},
@@ -250,18 +235,15 @@ static int Pload(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 }
 #endif
 
-//=================================================================================================
-
 void Draw_InitAppli(Draw_Interpretor& theDI)
 {
 #if defined(__EMSCRIPTEN__)
-  // open JavaScript console within the Browser to see this output
+
   Message_Gravity                       aGravity = Message_Info;
   occ::handle<Message_PrinterSystemLog> aJSConsolePrinter =
     new Message_PrinterSystemLog("DRAWEXE", aGravity);
   Message::DefaultMessenger()->AddPrinter(aJSConsolePrinter);
-  // replace printer into std::cout by a printer into a custom callback Module.printMessage
-  // accepting message gravity
+
   Message::DefaultMessenger()->RemovePrinters(STANDARD_TYPE(Message_PrinterOStream));
   occ::handle<DRAWEXE_WasmModulePrinter> aJSModulePrinter = new DRAWEXE_WasmModulePrinter(aGravity);
   Message::DefaultMessenger()->AddPrinter(aJSModulePrinter);

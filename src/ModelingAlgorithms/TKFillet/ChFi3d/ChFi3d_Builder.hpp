@@ -43,9 +43,6 @@ class TopoDS_Face;
 class AppBlend_Approx;
 class Geom2d_Curve;
 
-//! Root class for calculation of surfaces (fillets,
-//! chamfers) destined to smooth edges of
-//! a gap on a Shape and the reconstruction of the Shape.
 class ChFi3d_Builder
 {
 public:
@@ -63,108 +60,60 @@ public:
   Standard_EXPORT void SetContinuity(const GeomAbs_Shape InternalContinuity,
                                      const double        AngularTolerance);
 
-  //! extracts from the list the contour containing edge E.
   Standard_EXPORT void Remove(const TopoDS_Edge& E);
 
-  //! gives the number of the contour containing E or 0
-  //! if E does not belong to any contour.
   Standard_EXPORT int Contains(const TopoDS_Edge& E) const;
 
-  //! gives the number of the contour containing E or 0
-  //! if E does not belong to any contour.
-  //! Sets in IndexInSpine the index of E in the contour if it's found
   Standard_EXPORT int Contains(const TopoDS_Edge& E, int& IndexInSpine) const;
 
-  //! gives the number of disjoint contours on which
-  //! the fillets are calculated
   Standard_EXPORT int NbElements() const;
 
-  //! gives the n'th set of edges (contour)
-  //! if I >NbElements()
   Standard_EXPORT occ::handle<ChFiDS_Spine> Value(const int I) const;
 
-  //! returns the length of the contour of index IC.
   Standard_EXPORT double Length(const int IC) const;
 
-  //! returns the First vertex V of
-  //! the contour of index IC.
   Standard_EXPORT TopoDS_Vertex FirstVertex(const int IC) const;
 
-  //! returns the Last vertex V of
-  //! the contour of index IC.
   Standard_EXPORT TopoDS_Vertex LastVertex(const int IC) const;
 
-  //! returns the abscissa of the vertex V on
-  //! the contour of index IC.
   Standard_EXPORT double Abscissa(const int IC, const TopoDS_Vertex& V) const;
 
-  //! returns the relative abscissa([0.,1.]) of the
-  //! vertex V on the contour of index IC.
   Standard_EXPORT double RelativeAbscissa(const int IC, const TopoDS_Vertex& V) const;
 
-  //! returns true if the contour of index IC is closed
-  //! an tangent.
   Standard_EXPORT bool ClosedAndTangent(const int IC) const;
 
-  //! returns true if the contour of index IC is closed
   Standard_EXPORT bool Closed(const int IC) const;
 
-  //! general calculation of geometry on all edges,
-  //! topologic reconstruction.
   Standard_EXPORT void Compute();
 
-  //! returns True if the computation is success
   Standard_EXPORT bool IsDone() const;
 
-  //! if (Isdone()) makes the result.
-  //! if (!Isdone())
   Standard_EXPORT TopoDS_Shape Shape() const;
 
-  //! Advanced function for the history
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& Generated(const TopoDS_Shape& EouV);
 
-  //! Returns the number of contours on which the calculation
-  //! has failed.
   Standard_EXPORT int NbFaultyContours() const;
 
-  //! Returns the number of I'th contour on which the calculation
-  //! has failed.
   Standard_EXPORT int FaultyContour(const int I) const;
 
-  //! Returns the number of surfaces calculated on the contour IC.
   Standard_EXPORT int NbComputedSurfaces(const int IC) const;
 
-  //! Returns the IS'th surface calculated on the contour IC.
   Standard_EXPORT occ::handle<Geom_Surface> ComputedSurface(const int IC, const int IS) const;
 
-  //! Returns the number of vertices on which the calculation
-  //! has failed.
   Standard_EXPORT int NbFaultyVertices() const;
 
-  //! Returns the IV'th vertex on which the calculation has failed.
   Standard_EXPORT TopoDS_Vertex FaultyVertex(const int IV) const;
 
-  //! returns True if a partial result has been calculated
   Standard_EXPORT bool HasResult() const;
 
-  //! if (HasResult()) returns partial result
-  //! if (!HasResult())
   Standard_EXPORT TopoDS_Shape BadShape() const;
 
-  //! for the stripe IC ,indication on the cause
-  //! of failure WalkingFailure,TwistedSurface,Error, Ok
   Standard_EXPORT ChFiDS_ErrorStatus StripeStatus(const int IC) const;
 
-  //! Reset all results of compute and returns the algorithm
-  //! in the state of the last acquisition to enable modification of contours or areas.
   Standard_EXPORT void Reset();
 
-  //! Returns the Builder of topologic operations.
   Standard_EXPORT occ::handle<TopOpeBRepBuild_HBuilder> Builder() const;
 
-  //! Method, implemented in the inheritants, calculates
-  //! the elements of construction of the surface (fillet or
-  //! chamfer).
   Standard_EXPORT bool SplitKPart(const occ::handle<ChFiDS_SurfData>&                 Data,
                                   NCollection_Sequence<occ::handle<ChFiDS_SurfData>>& SetData,
                                   const occ::handle<ChFiDS_Spine>&                    Spine,
@@ -422,9 +371,6 @@ protected:
                                        occ::handle<BRepAdaptor_Surface>&                   Surf1,
                                        occ::handle<BRepAdaptor_Surface>&                   Surf2);
 
-  //! Method, implemented in the inheritants, calculating
-  //! elements of construction of the surface (fillet or
-  //! chamfer).
   Standard_EXPORT virtual bool PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfData>>& Data,
                                            const occ::handle<ChFiDS_ElSpine>&      Guide,
                                            const occ::handle<ChFiDS_Spine>&        Spine,
@@ -447,9 +393,6 @@ protected:
                                            int&                                    Intf,
                                            int&                                    Intl) = 0;
 
-  //! Method, implemented in inheritants, calculates
-  //! the elements of construction of the surface (fillet
-  //! or chamfer) contact edge/face.
   Standard_EXPORT virtual void PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfData>>& Data,
                                            const occ::handle<ChFiDS_ElSpine>&      Guide,
                                            const occ::handle<ChFiDS_Spine>&        Spine,
@@ -476,9 +419,6 @@ protected:
                                            const bool                              RecRst,
                                            const math_Vector&                      Soldep);
 
-  //! Method, implemented in inheritants, calculates
-  //! the elements of construction of the surface (fillet
-  //! or chamfer) contact edge/face.
   Standard_EXPORT virtual void PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfData>>& Data,
                                            const occ::handle<ChFiDS_ElSpine>&      Guide,
                                            const occ::handle<ChFiDS_Spine>&        Spine,
@@ -505,9 +445,6 @@ protected:
                                            const bool                              RecRst,
                                            const math_Vector&                      Soldep);
 
-  //! Method, implemented in inheritants, calculates
-  //! the elements of construction of the surface (fillet
-  //! or chamfer) contact edge/edge.
   Standard_EXPORT virtual void PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfData>>& Data,
                                            const occ::handle<ChFiDS_ElSpine>&      Guide,
                                            const occ::handle<ChFiDS_Spine>&        Spine,
@@ -579,7 +516,6 @@ protected:
                                           TopAbs_Orientation&              Or2,
                                           int&                             ChoixConge) const;
 
-  //! Calculates a Line of contact face/face.
   Standard_EXPORT bool ComputeData(occ::handle<ChFiDS_SurfData>&           Data,
                                    const occ::handle<ChFiDS_ElSpine>&      Guide,
                                    const occ::handle<ChFiDS_Spine>&        Spine,
@@ -609,7 +545,6 @@ protected:
                                    const bool                              RecOnS1 = false,
                                    const bool                              RecOnS2 = false);
 
-  //! Calculates a Line of contact edge/face.
   Standard_EXPORT bool ComputeData(occ::handle<ChFiDS_SurfData>&           Data,
                                    const occ::handle<ChFiDS_ElSpine>&      HGuide,
                                    occ::handle<BRepBlend_Line>&            Lin,
@@ -637,7 +572,6 @@ protected:
                                    const bool                              RecS,
                                    const bool                              RecRst);
 
-  //! Calculates a Line of contact edge/edge.
   Standard_EXPORT bool ComputeData(occ::handle<ChFiDS_SurfData>&           Data,
                                    const occ::handle<ChFiDS_ElSpine>&      HGuide,
                                    occ::handle<BRepBlend_Line>&            Lin,
@@ -817,8 +751,6 @@ private:
                                   occ::handle<BRepAdaptor_Surface>& HS1,
                                   occ::handle<BRepAdaptor_Surface>& HS2) const;
 
-  //! Assign to tolesp parameter minimal value of spine's tolesp if it is less
-  //! than default initial value.
   Standard_EXPORT void UpdateTolesp();
 
   TopoDS_Shape                   myShape;

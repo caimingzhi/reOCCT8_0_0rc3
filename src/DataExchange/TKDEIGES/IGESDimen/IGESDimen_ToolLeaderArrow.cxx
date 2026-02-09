@@ -19,10 +19,9 @@
 IGESDimen_ToolLeaderArrow::IGESDimen_ToolLeaderArrow() = default;
 
 void IGESDimen_ToolLeaderArrow::ReadOwnParams(const occ::handle<IGESDimen_LeaderArrow>& ent,
-                                              const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                              const occ::handle<IGESData_IGESReaderData>&,
                                               IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
 
   double                                  arrowHeadHeight;
   double                                  arrowHeadWidth;
@@ -37,7 +36,6 @@ void IGESDimen_ToolLeaderArrow::ReadOwnParams(const occ::handle<IGESDimen_Leader
   else
     PR.AddFail("Count of Segments: Not Positive");
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadReal(PR.Current(), "Arrow Head Height", arrowHeadHeight);
   PR.ReadReal(PR.Current(), "Arrow Head Width", arrowHeadWidth);
   PR.ReadReal(PR.Current(), "Z Depth", zDepth);
@@ -48,14 +46,13 @@ void IGESDimen_ToolLeaderArrow::ReadOwnParams(const occ::handle<IGESDimen_Leader
     for (int i = 1; i <= nbval; i++)
     {
       gp_XY tempXY;
-      // st = PR.ReadXY(PR.CurrentList(1, 2), "Segment Co-ords.", tempXY); //szv#4:S4163:12Mar99
-      // moved in if
+
       if (PR.ReadXY(PR.CurrentList(1, 2), "Segment Co-ords.", tempXY))
         segmentTails->SetValue(i, tempXY);
     }
     DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
     ent->Init(arrowHeadHeight, arrowHeadWidth, zDepth, arrowHead, segmentTails);
-  } // segmentTails.IsNull() crash in ent->Init( ...
+  }
 }
 
 void IGESDimen_ToolLeaderArrow::WriteOwnParams(const occ::handle<IGESDimen_LeaderArrow>& ent,
@@ -75,14 +72,14 @@ void IGESDimen_ToolLeaderArrow::WriteOwnParams(const occ::handle<IGESDimen_Leade
   }
 }
 
-void IGESDimen_ToolLeaderArrow::OwnShared(const occ::handle<IGESDimen_LeaderArrow>& /* ent */,
-                                          Interface_EntityIterator& /* iter */) const
+void IGESDimen_ToolLeaderArrow::OwnShared(const occ::handle<IGESDimen_LeaderArrow>&,
+                                          Interface_EntityIterator&) const
 {
 }
 
 void IGESDimen_ToolLeaderArrow::OwnCopy(const occ::handle<IGESDimen_LeaderArrow>& another,
                                         const occ::handle<IGESDimen_LeaderArrow>& ent,
-                                        Interface_CopyTool& /* TC */) const
+                                        Interface_CopyTool&) const
 {
   int    nbval           = another->NbSegments();
   double arrowHeadHeight = another->ArrowHeadHeight();
@@ -102,7 +99,7 @@ void IGESDimen_ToolLeaderArrow::OwnCopy(const occ::handle<IGESDimen_LeaderArrow>
 }
 
 IGESData_DirChecker IGESDimen_ToolLeaderArrow::DirChecker(
-  const occ::handle<IGESDimen_LeaderArrow>& /* ent */) const
+  const occ::handle<IGESDimen_LeaderArrow>&) const
 {
   IGESData_DirChecker DC(214, 1, 12);
   DC.Structure(IGESData_DefVoid);
@@ -114,14 +111,14 @@ IGESData_DirChecker IGESDimen_ToolLeaderArrow::DirChecker(
   return DC;
 }
 
-void IGESDimen_ToolLeaderArrow::OwnCheck(const occ::handle<IGESDimen_LeaderArrow>& /* ent */,
+void IGESDimen_ToolLeaderArrow::OwnCheck(const occ::handle<IGESDimen_LeaderArrow>&,
                                          const Interface_ShareTool&,
-                                         occ::handle<Interface_Check>& /* ach */) const
+                                         occ::handle<Interface_Check>&) const
 {
 }
 
 void IGESDimen_ToolLeaderArrow::OwnDump(const occ::handle<IGESDimen_LeaderArrow>& ent,
-                                        const IGESData_IGESDumper& /* dumper */,
+                                        const IGESData_IGESDumper&,
                                         Standard_OStream& S,
                                         const int         level) const
 {

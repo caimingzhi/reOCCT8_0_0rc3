@@ -1,7 +1,5 @@
 #include <Prs3d_ToolTorus.hpp>
 
-//=================================================================================================
-
 void Prs3d_ToolTorus::init(const double theMajorRad,
                            const double theMinorRad,
                            const double theAngle1,
@@ -19,8 +17,6 @@ void Prs3d_ToolTorus::init(const double theMajorRad,
   myStacksNb    = theNbStacks;
 }
 
-//=================================================================================================
-
 gp_Pnt Prs3d_ToolTorus::Vertex(const double theU, const double theV) const
 {
   const double aU = theU * myAngle;
@@ -30,16 +26,12 @@ gp_Pnt Prs3d_ToolTorus::Vertex(const double theU, const double theV) const
                 myMinorRadius * std::sin(aV));
 }
 
-//=================================================================================================
-
 gp_Dir Prs3d_ToolTorus::Normal(const double theU, const double theV) const
 {
   const double aU = theU * myAngle;
   const double aV = myVMin + theV * (myVMax - myVMin);
   return gp_Dir(std::cos(aU) * std::cos(aV), std::sin(aU) * std::cos(aV), std::sin(aV));
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_ArrayOfTriangles> Prs3d_ToolTorus::Create(const double   theMajorRad,
                                                                 const double   theMinorRad,

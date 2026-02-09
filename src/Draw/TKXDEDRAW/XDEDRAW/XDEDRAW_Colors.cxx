@@ -20,7 +20,6 @@
 #include <XCAFDoc_VisMaterialTool.hpp>
 #include <XDEDRAW_Colors.hpp>
 
-//! Parse XCAFDoc_ColorType enumeration argument.
 static bool parseXDocColorType(const TCollection_AsciiString& theArg, XCAFDoc_ColorType& theType)
 {
   TCollection_AsciiString anArgCase(theArg);
@@ -43,7 +42,6 @@ static bool parseXDocColorType(const TCollection_AsciiString& theArg, XCAFDoc_Co
   return false;
 }
 
-//! Print triplet of values.
 template <class S, class T>
 static S& operator<<(S& theStream, const NCollection_Vec3<T>& theVec)
 {
@@ -51,7 +49,6 @@ static S& operator<<(S& theStream, const NCollection_Vec3<T>& theVec)
   return theStream;
 }
 
-//! Print 4 values.
 template <class S, class T>
 static S& operator<<(S& theStream, const NCollection_Vec4<T>& theVec)
 {
@@ -59,7 +56,6 @@ static S& operator<<(S& theStream, const NCollection_Vec4<T>& theVec)
   return theStream;
 }
 
-//! Convert alpha mode into string.
 static const char* alphaModeToString(Graphic3d_AlphaMode theMode)
 {
   switch (theMode)
@@ -78,7 +74,6 @@ static const char* alphaModeToString(Graphic3d_AlphaMode theMode)
   return "";
 }
 
-//! Convert back face culling mode into string.
 static const char* faceCullToString(Graphic3d_TypeOfBackfacingModel theMode)
 {
   switch (theMode)
@@ -95,7 +90,6 @@ static const char* faceCullToString(Graphic3d_TypeOfBackfacingModel theMode)
   return "";
 }
 
-//! Find existing visualization material in the document.
 static TDF_Label findVisMaterial(const occ::handle<TDocStd_Document>& theDoc,
                                  const TCollection_AsciiString&       theKey)
 {
@@ -123,7 +117,6 @@ static TDF_Label findVisMaterial(const occ::handle<TDocStd_Document>& theDoc,
   return TDF_Label();
 }
 
-//! Check if image file exists.
 static bool isImageFileExist(const TCollection_AsciiString& thePath)
 {
   const OSD_Path aPath(thePath);
@@ -135,7 +128,6 @@ static bool isImageFileExist(const TCollection_AsciiString& thePath)
   return true;
 }
 
-//! Parse RGB values coming after specified argument.
 static bool parseRgbColor(int&            theArgIter,
                           Quantity_Color& theColor,
                           int             theNbArgs,
@@ -152,7 +144,6 @@ static bool parseRgbColor(int&            theArgIter,
   return true;
 }
 
-//! Parse normalized real value within 0..1 range.
 static bool parseNormalizedReal(const char* theString, float& theValue)
 {
   theValue = (float)Draw::Atof(theString);
@@ -164,9 +155,6 @@ static bool parseNormalizedReal(const char* theString, float& theValue)
   return true;
 }
 
-//=======================================================================
-// Section: Work with colors
-//=======================================================================
 static int setColor(Draw_Interpretor&, int argc, const char** argv)
 {
   if (argc < 4)
@@ -203,7 +191,6 @@ static int setColor(Draw_Interpretor&, int argc, const char** argv)
   {
     if (parseXDocColorType(argv[anArgIter], aColType))
     {
-      //
     }
     else if (!isColorDefined)
     {
@@ -524,7 +511,7 @@ static int setVisibility(Draw_Interpretor&, int argc, const char** argv)
   occ::handle<XCAFDoc_ColorTool> aColorTool = XCAFDoc_DocumentTool::ColorTool(aDoc->Main());
   if (aLabel.IsNull())
   {
-    // get label by shape
+
     TopoDS_Shape aShape = DBRep::Get(argv[2]);
     if (!aShape.IsNull())
     {
@@ -580,7 +567,7 @@ static int getVisibility(Draw_Interpretor& di, int argc, const char** argv)
   TDF_Tool::Label(aDoc->GetData(), argv[2], aLabel);
   if (aLabel.IsNull())
   {
-    // get label by shape
+
     TopoDS_Shape aShape = DBRep::Get(argv[2]);
     if (!aShape.IsNull())
     {
@@ -697,7 +684,6 @@ static int setStyledcolor(Draw_Interpretor&, int argc, const char** argv)
   {
     if (parseXDocColorType(argv[anArgIter], aColorType))
     {
-      //
     }
     else
     {
@@ -719,8 +705,6 @@ static int setStyledcolor(Draw_Interpretor&, int argc, const char** argv)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int XGetAllVisMaterials(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -783,8 +767,6 @@ static int XGetAllVisMaterials(Draw_Interpretor& theDI, int theNbArgs, const cha
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int XGetVisMaterial(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -906,8 +888,6 @@ static int XGetVisMaterial(Draw_Interpretor& theDI, int theNbArgs, const char** 
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int XAddVisMaterial(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
@@ -1164,8 +1144,6 @@ static int XAddVisMaterial(Draw_Interpretor&, int theNbArgs, const char** theArg
   return 0;
 }
 
-//=================================================================================================
-
 static int XRemoveVisMaterial(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs != 3)
@@ -1195,8 +1173,6 @@ static int XRemoveVisMaterial(Draw_Interpretor&, int theNbArgs, const char** the
   return 0;
 }
 
-//=================================================================================================
-
 static int XSetVisMaterial(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs != 3 && theNbArgs != 4)
@@ -1218,7 +1194,7 @@ static int XSetVisMaterial(Draw_Interpretor&, int theNbArgs, const char** theArg
   occ::handle<XCAFDoc_ColorTool> aColorTool = XCAFDoc_DocumentTool::ColorTool(aDoc->Main());
   if (aShapeLab.IsNull())
   {
-    // get label by shape
+
     TopoDS_Shape aShape = DBRep::Get(theArgVec[2]);
     if (!aShape.IsNull())
     {
@@ -1248,8 +1224,6 @@ static int XSetVisMaterial(Draw_Interpretor&, int theNbArgs, const char** theArg
   return 0;
 }
 
-//=================================================================================================
-
 void XDEDRAW_Colors::InitCommands(Draw_Interpretor& di)
 {
   static bool initactor = false;
@@ -1258,10 +1232,6 @@ void XDEDRAW_Colors::InitCommands(Draw_Interpretor& di)
     return;
   }
   initactor = true;
-
-  //=====================================
-  // Work with colors
-  //=====================================
 
   const char* g = "XDE color's commands";
 

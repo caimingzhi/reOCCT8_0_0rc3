@@ -16,17 +16,11 @@ enum BRepLib_ShellError
 class Geom_Surface;
 class TopoDS_Shell;
 
-//! Provides methods to build shells.
-//!
-//! Build a shell from a set of faces.
-//! Build untied shell from a non C2 surface
-//! splitting it into C2-continuous parts.
 class BRepLib_MakeShell : public BRepLib_MakeShape
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Not done.
   Standard_EXPORT BRepLib_MakeShell();
 
   Standard_EXPORT BRepLib_MakeShell(const occ::handle<Geom_Surface>& S, const bool Segment = false);
@@ -38,8 +32,6 @@ public:
                                     const double                     VMax,
                                     const bool                       Segment = false);
 
-  //! Creates the shell from the surface and the min-max
-  //! values.
   Standard_EXPORT void Init(const occ::handle<Geom_Surface>& S,
                             const double                     UMin,
                             const double                     UMax,
@@ -49,7 +41,6 @@ public:
 
   Standard_EXPORT BRepLib_ShellError Error() const;
 
-  //! Returns the new Shell.
   Standard_EXPORT const TopoDS_Shell& Shell() const;
   Standard_EXPORT                     operator TopoDS_Shell() const;
 

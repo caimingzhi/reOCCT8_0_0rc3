@@ -1,20 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//================================================================================
-//    Creation of a circle tangent to an element and having center in a point    +
-//================================================================================
 
 #include <ElCLib.hpp>
 #include <GccAna_Circ2dTanCen.hpp>
@@ -28,25 +12,10 @@
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
 
-//========================================================================
-//     Creation of a circle tangent to a circle with center in a point.      +
-//   - Calculate the distance between the center of the circle and the point of  +
-//     center : dist                                                     +
-//   - Check that this distance is compatible with the qualifier of the circle. +
-//       Si yes, the radius of the solution will be :                           +
-//          C1.Radius()-dist if the qualifier is Enclosed.              +
-//          C1.Radius()+dist if the qualifier is Enclosing.             +
-//          dist-C1.Radius() if the qualifier is Outside.               +
-//          a mix of these values if the qualifier is Unqualified.  +
-//========================================================================
 GccAna_Circ2dTanCen::GccAna_Circ2dTanCen(const GccEnt_QualifiedCirc& Qualified1,
                                          const gp_Pnt2d&             Pcenter,
                                          const double                Tolerance)
     :
-
-      //========================================================================
-      //   Initialization of fields.                                          +
-      //========================================================================
 
       cirsol(1, 2),
       qualifier1(1, 2),
@@ -79,7 +48,7 @@ GccAna_Circ2dTanCen::GccAna_Circ2dTanCen(const GccEnt_QualifiedCirc& Qualified1,
     dist = Pcenter.Distance(center1);
     if (Qualified1.IsEnclosed())
     {
-      //   ============================
+
       if (dist - R1 <= Tol)
       {
         Radius = std::abs(R1 - dist);
@@ -92,13 +61,13 @@ GccAna_Circ2dTanCen::GccAna_Circ2dTanCen(const GccEnt_QualifiedCirc& Qualified1,
     }
     else if (Qualified1.IsEnclosing())
     {
-      //   =================================
+
       Radius = R1 + dist;
       signe  = -1;
     }
     else if (Qualified1.IsOutside())
     {
-      //   ===============================
+
       if (dist < R1 - Tol)
       {
         WellDone = true;
@@ -113,7 +82,7 @@ GccAna_Circ2dTanCen::GccAna_Circ2dTanCen(const GccEnt_QualifiedCirc& Qualified1,
     {
       NbrSol++;
       cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Pcenter, dirx), Radius);
-      //     ========================================================
+
       qualifier1(NbrSol) = Qualified1.Qualifier();
       if (dist <= gp::Resolution())
       {
@@ -132,7 +101,7 @@ GccAna_Circ2dTanCen::GccAna_Circ2dTanCen(const GccEnt_QualifiedCirc& Qualified1,
   }
   else
   {
-    // ====
+
     dist = Pcenter.Distance(center1);
     if (dist >= gp::Resolution())
     {
@@ -151,7 +120,7 @@ GccAna_Circ2dTanCen::GccAna_Circ2dTanCen(const GccEnt_QualifiedCirc& Qualified1,
         Radius = std::abs(R1 + signe * dist);
         NbrSol++;
         cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Pcenter, dirx), Radius);
-        //       ========================================================
+
         double distcc1 = Pcenter.Distance(center1);
         if (!Qualified1.IsUnqualified())
         {
@@ -181,7 +150,7 @@ GccAna_Circ2dTanCen::GccAna_Circ2dTanCen(const GccEnt_QualifiedCirc& Qualified1,
     {
       NbrSol++;
       cirsol(NbrSol) = gp_Circ2d(C1);
-      //     ==============================
+
       qualifier1(1)    = Qualified1.Qualifier();
       TheSame1(NbrSol) = 1;
       WellDone         = true;
@@ -189,18 +158,8 @@ GccAna_Circ2dTanCen::GccAna_Circ2dTanCen(const GccEnt_QualifiedCirc& Qualified1,
   }
 }
 
-//=========================================================================
-//   Circle tangent to line Linetan and center in a point Pcenter.    +
-//   Calculate the distance from the point to the line ==> Radius.                +
-//   Create the circle with center Pcenter of radius Radius.                  +
-//=========================================================================
-
 GccAna_Circ2dTanCen::GccAna_Circ2dTanCen(const gp_Lin2d& Linetan, const gp_Pnt2d& Pcenter)
     :
-
-      //=========================================================================
-      //   Initialisation of fields.                                           +
-      //=========================================================================
 
       cirsol(1, 1),
       qualifier1(1, 1),
@@ -213,7 +172,7 @@ GccAna_Circ2dTanCen::GccAna_Circ2dTanCen(const gp_Lin2d& Linetan, const gp_Pnt2d
   gp_Dir2d dirx(gp_Dir2d::D::X);
   double   rayon = Linetan.Distance(Pcenter);
   cirsol(1)      = gp_Circ2d(gp_Ax2d(Pcenter, dirx), rayon);
-  // ==================================================
+
   qualifier1(1) = GccEnt_noqualifier;
   TheSame1(1)   = 0;
   double xloc   = Linetan.Location().X();
@@ -237,18 +196,8 @@ GccAna_Circ2dTanCen::GccAna_Circ2dTanCen(const gp_Lin2d& Linetan, const gp_Pnt2d
   WellDone = true;
 }
 
-//=========================================================================
-//   Circle tangent to point Point1 and centered in a point Pcenter.      +
-//   Calculate the distance from Pcenter to Point1 ==> Radius.                +
-//   Create the circle with center Pcenter of radius Radius.                  +
-//=========================================================================
-
 GccAna_Circ2dTanCen::GccAna_Circ2dTanCen(const gp_Pnt2d& Point1, const gp_Pnt2d& Pcenter)
     :
-
-      //=========================================================================
-      //   Initialisation of fields.                                           +
-      //=========================================================================
 
       cirsol(1, 1),
       qualifier1(1, 1),
@@ -261,7 +210,7 @@ GccAna_Circ2dTanCen::GccAna_Circ2dTanCen(const gp_Pnt2d& Point1, const gp_Pnt2d&
   gp_Dir2d dirx(gp_Dir2d::D::X);
   double   rayon = Point1.Distance(Pcenter);
   cirsol(1)      = gp_Circ2d(gp_Ax2d(Pcenter, dirx), rayon);
-  // =================================================
+
   qualifier1(1) = GccEnt_noqualifier;
   TheSame1(1)   = 0;
   pnttg1sol(1)  = Point1;
@@ -270,8 +219,6 @@ GccAna_Circ2dTanCen::GccAna_Circ2dTanCen(const gp_Pnt2d& Point1, const gp_Pnt2d&
   NbrSol        = 1;
   WellDone      = true;
 }
-
-//=========================================================================
 
 bool GccAna_Circ2dTanCen::IsDone() const
 {

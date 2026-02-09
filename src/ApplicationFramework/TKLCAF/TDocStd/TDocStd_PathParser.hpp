@@ -6,7 +6,6 @@
 
 #include <TCollection_ExtendedString.hpp>
 
-//! parse an OS path
 class TDocStd_PathParser
 {
 public:

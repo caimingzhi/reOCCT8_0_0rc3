@@ -1,8 +1,6 @@
 #include <TopOpeBRepDS_define.hpp>
 #include <TopOpeBRepDS_Transition.hpp>
 
-//=================================================================================================
-
 TopOpeBRepDS_Transition::TopOpeBRepDS_Transition()
     : myStateBefore(TopAbs_UNKNOWN),
       myStateAfter(TopAbs_UNKNOWN),
@@ -12,8 +10,6 @@ TopOpeBRepDS_Transition::TopOpeBRepDS_Transition()
       myIndexAfter(0)
 {
 }
-
-//=================================================================================================
 
 TopOpeBRepDS_Transition::TopOpeBRepDS_Transition(const TopAbs_State     SB,
                                                  const TopAbs_State     SA,
@@ -28,8 +24,6 @@ TopOpeBRepDS_Transition::TopOpeBRepDS_Transition(const TopAbs_State     SB,
 {
 }
 
-//=================================================================================================
-
 TopOpeBRepDS_Transition::TopOpeBRepDS_Transition(const TopAbs_Orientation O)
     : myShapeBefore(TopAbs_FACE),
       myShapeAfter(TopAbs_FACE),
@@ -38,8 +32,6 @@ TopOpeBRepDS_Transition::TopOpeBRepDS_Transition(const TopAbs_Orientation O)
 {
   Set(O);
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_Transition::Set(const TopAbs_State     SB,
                                   const TopAbs_State     SA,
@@ -52,35 +44,25 @@ void TopOpeBRepDS_Transition::Set(const TopAbs_State     SB,
   myShapeAfter  = ONA;
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_Transition::StateBefore(const TopAbs_State S)
 {
   myStateBefore = S;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_Transition::StateAfter(const TopAbs_State S)
 {
   myStateAfter = S;
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_Transition::ShapeBefore(const TopAbs_ShapeEnum SE)
 {
   myShapeBefore = SE;
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_Transition::ShapeAfter(const TopAbs_ShapeEnum SE)
 {
   myShapeAfter = SE;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_Transition::Before(const TopAbs_State S, const TopAbs_ShapeEnum ONB)
 {
@@ -88,78 +70,56 @@ void TopOpeBRepDS_Transition::Before(const TopAbs_State S, const TopAbs_ShapeEnu
   myShapeBefore = ONB;
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_Transition::After(const TopAbs_State S, const TopAbs_ShapeEnum ONA)
 {
   myStateAfter = S;
   myShapeAfter = ONA;
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_Transition::Index(const int I)
 {
   myIndexBefore = myIndexAfter = I;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_Transition::IndexBefore(const int I)
 {
   myIndexBefore = I;
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_Transition::IndexAfter(const int I)
 {
   myIndexAfter = I;
 }
-
-//=================================================================================================
 
 TopAbs_State TopOpeBRepDS_Transition::Before() const
 {
   return myStateBefore;
 }
 
-//=================================================================================================
-
 TopAbs_ShapeEnum TopOpeBRepDS_Transition::ONBefore() const
 {
   return myShapeBefore;
 }
-
-//=================================================================================================
 
 TopAbs_State TopOpeBRepDS_Transition::After() const
 {
   return myStateAfter;
 }
 
-//=================================================================================================
-
 TopAbs_ShapeEnum TopOpeBRepDS_Transition::ONAfter() const
 {
   return myShapeAfter;
 }
-
-//=================================================================================================
 
 TopAbs_ShapeEnum TopOpeBRepDS_Transition::ShapeBefore() const
 {
   return myShapeBefore;
 }
 
-//=================================================================================================
-
 TopAbs_ShapeEnum TopOpeBRepDS_Transition::ShapeAfter() const
 {
   return myShapeAfter;
 }
-
-//=================================================================================================
 
 int TopOpeBRepDS_Transition::Index() const
 {
@@ -168,21 +128,15 @@ int TopOpeBRepDS_Transition::Index() const
   return myIndexBefore;
 }
 
-//=================================================================================================
-
 int TopOpeBRepDS_Transition::IndexBefore() const
 {
   return myIndexBefore;
 }
 
-//=================================================================================================
-
 int TopOpeBRepDS_Transition::IndexAfter() const
 {
   return myIndexAfter;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_Transition::Set(const TopAbs_Orientation O)
 {
@@ -210,8 +164,6 @@ void TopOpeBRepDS_Transition::Set(const TopAbs_Orientation O)
   }
 }
 
-//=================================================================================================
-
 TopAbs_Orientation TopOpeBRepDS_Transition::Orientation(const TopAbs_State     S,
                                                         const TopAbs_ShapeEnum T) const
 {
@@ -238,10 +190,8 @@ TopAbs_Orientation TopOpeBRepDS_Transition::Orientation(const TopAbs_State     S
   }
 }
 
-//=================================================================================================
-
 TopAbs_Orientation TopOpeBRepDS_Transition::OrientationON(const TopAbs_State S,
-                                                          const TopAbs_ShapeEnum) const // T) const
+                                                          const TopAbs_ShapeEnum) const
 {
   TopAbs_Orientation result = TopAbs_FORWARD;
 
@@ -272,21 +222,17 @@ TopAbs_Orientation TopOpeBRepDS_Transition::OrientationON(const TopAbs_State S,
   return result;
 }
 
-//=================================================================================================
-
 TopOpeBRepDS_Transition TopOpeBRepDS_Transition::Complement() const
 {
   TopOpeBRepDS_Transition T;
   T.myIndexBefore = myIndexBefore;
   T.myIndexAfter  = myIndexAfter;
 
-  // xpu : 14-01-98
   if (myStateBefore == TopAbs_UNKNOWN && myStateAfter == TopAbs_UNKNOWN)
   {
     T.Set(myStateAfter, myStateBefore, myShapeAfter, myShapeBefore);
     return T;
   }
-  // xpu : 14-01-98
 
   if (myStateBefore == TopAbs_ON || myStateAfter == TopAbs_ON)
   {
@@ -295,20 +241,18 @@ TopOpeBRepDS_Transition TopOpeBRepDS_Transition::Complement() const
   else
   {
     TopAbs_Orientation o = Orientation(TopAbs_IN);
-    if (o == TopAbs_FORWARD) // (OUT,IN) --> (IN,OUT)
+    if (o == TopAbs_FORWARD)
       T.Set(TopAbs_IN, TopAbs_OUT, myShapeBefore, myShapeAfter);
-    else if (o == TopAbs_REVERSED) // (IN,OUT) --> (OUT,IN)
+    else if (o == TopAbs_REVERSED)
       T.Set(TopAbs_OUT, TopAbs_IN, myShapeBefore, myShapeAfter);
-    else if (o == TopAbs_EXTERNAL) // (OUT,OUT) --> (IN,IN)
+    else if (o == TopAbs_EXTERNAL)
       T.Set(TopAbs_IN, TopAbs_IN, myShapeBefore, myShapeAfter);
-    else if (o == TopAbs_INTERNAL) // (IN,IN) --> (OUT,OUT)
+    else if (o == TopAbs_INTERNAL)
       T.Set(TopAbs_OUT, TopAbs_OUT, myShapeBefore, myShapeAfter);
   }
 
   return T;
 }
-
-//=================================================================================================
 
 bool TopOpeBRepDS_Transition::IsUnknown() const
 {

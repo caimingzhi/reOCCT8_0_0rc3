@@ -22,11 +22,9 @@ class BOPDS_CommonBlock;
 class IntTools_Context;
 class TopoDS_Shape;
 
-//! Provides tools used in the intersection part of Boolean operations
 class BOPAlgo_Tools
 {
 public:
-  //! Makes the chains of the connected elements from the given convexity map
   template <class TheMap, class TheList>
   static void MakeBlocks(const TheMap&                                 theMILI,
                          TheList&                                      theMBlocks,
@@ -39,18 +37,17 @@ public:
       const typename TheMap::key_type& n = theMILI.FindKey(i);
       if (!aMFence.Add(n))
         continue;
-      //
-      // Start the chain
+
       typename TheList::value_type& aChain =
         theMBlocks.Append(typename TheList::value_type(theAllocator));
       aChain.Append(n);
-      // Look for connected elements
+
       typename TheList::value_type::Iterator aItLChain(aChain);
       for (; aItLChain.More(); aItLChain.Next())
       {
         const typename TheMap::key_type&    n1  = aItLChain.Value();
         const typename TheList::value_type& aLI = theMILI.FindFromKey(n1);
-        // Add connected elements into the chain
+
         typename TheList::value_type::Iterator aItLI(aLI);
         for (; aItLI.More(); aItLI.Next())
         {
@@ -64,7 +61,6 @@ public:
     }
   }
 
-  //! Fills the map with the connected entities
   template <class TheType, class TheMap>
   static void FillMap(const TheType&                                n1,
                       const TheType&                                n2,
@@ -77,7 +73,7 @@ public:
       pList1 = &theMILI(theMILI.Add(n1, NCollection_List<TheType>(theAllocator)));
     }
     pList1->Append(n2);
-    //
+
     typename TheMap::value_type* pList2 = theMILI.ChangeSeek(n2);
     if (!pList2)
     {
@@ -92,8 +88,6 @@ public:
     NCollection_IndexedDataMap<occ::handle<BOPDS_PaveBlock>, NCollection_List<int>>& theMILI,
     const occ::handle<NCollection_BaseAllocator>&                                    theAllocator);
 
-  //! Create Common Blocks from the groups of pave blocks of <theMBlocks>
-  //! connection map.
   Standard_EXPORT static void PerformCommonBlocks(
     NCollection_IndexedDataMap<occ::handle<BOPDS_PaveBlock>,
                                NCollection_List<occ::handle<BOPDS_PaveBlock>>>& theMBlocks,
@@ -101,7 +95,6 @@ public:
     BOPDS_PDS&                                                                  theDS,
     const occ::handle<IntTools_Context>& theContext = occ::handle<IntTools_Context>());
 
-  //! Create Common Blocks on faces using the PB->Faces connection map <theMBlocks>.
   Standard_EXPORT static void PerformCommonBlocks(
     const NCollection_IndexedDataMap<occ::handle<BOPDS_PaveBlock>, NCollection_List<int>>&
                                                   theMBlocks,
@@ -114,67 +107,20 @@ public:
     const BOPDS_PDS                       theDS,
     const occ::handle<IntTools_Context>&  theContext);
 
-  //! Creates planar wires from the given edges.
-  //! The input edges are expected to be planar. And for the performance
-  //! sake the method does not check if the edges are really planar.
-  //! Thus, the result wires will also be not planar if the input edges are not planar.
-  //! The edges may be not shared, but the resulting wires will be sharing the
-  //! coinciding parts and intersecting parts.
-  //! The output wires may be non-manifold and contain free and multi-connected vertices.
-  //! Parameters:
-  //! <theEdges> - input edges;
-  //! <theWires> - output wires;
-  //! <theShared> - boolean flag which defines whether the input edges are already
-  //!               shared or have to be intersected;
-  //! <theAngTol> - the angular tolerance which will be used for distinguishing
-  //!               the planes in which the edges are located. Default value is
-  //!               1.e-8 which is used for intersection of planes in IntTools_FaceFace.
-  //! Method returns the following error statuses:
-  //! 0 - in case of success (at least one wire has been built);
-  //! 1 - in case there are no edges in the given shape;
-  //! 2 - sharing of the edges has failed.
   Standard_EXPORT static int EdgesToWires(const TopoDS_Shape& theEdges,
                                           TopoDS_Shape&       theWires,
                                           const bool          theShared = false,
                                           const double        theAngTol = 1.e-8);
 
-  //! Creates planar faces from given planar wires.
-  //! The method does not check if the wires are really planar.
-  //! The input wires may be non-manifold but should be shared.
-  //! The wires located in the same planes and included into other wires will create
-  //! holes in the faces built from outer wires.
-  //! The tolerance values of the input shapes may be modified during the operation
-  //! due to projection of the edges on the planes for creation of 2D curves.
-  //! Parameters:
-  //! <theWires> - the given wires;
-  //! <theFaces> - the output faces;
-  //! <theAngTol> - the angular tolerance for distinguishing the planes in which
-  //!               the wires are located. Default value is 1.e-8 which is used
-  //!               for intersection of planes in IntTools_FaceFace.
-  //! Method returns TRUE in case of success, i.e. at least one face has been built.
   Standard_EXPORT static bool WiresToFaces(const TopoDS_Shape& theWires,
                                            TopoDS_Shape&       theFaces,
                                            const double        theAngTol = 1.e-8);
 
-  //! Finds chains of intersecting vertices
   Standard_EXPORT static void IntersectVertices(
     const NCollection_IndexedDataMap<TopoDS_Shape, double, TopTools_ShapeMapHasher>& theVertices,
     const double                                                                     theFuzzyValue,
     NCollection_List<NCollection_List<TopoDS_Shape>>&                                theChains);
 
-  //! Classifies the faces <theFaces> relatively solids <theSolids>.
-  //! The IN faces for solids are stored into output data map <theInParts>.
-  //!
-  //! The map <theSolidsIF> contains INTERNAL faces of the solids, to avoid
-  //! their additional classification.
-  //!
-  //! Firstly, it checks the intersection of bounding boxes of the shapes.
-  //! If the Box is not stored in the <theShapeBoxMap> map, it builds the box.
-  //! If the bounding boxes of solid and face are interfering the classification is performed.
-  //!
-  //! It is assumed that all faces and solids are already intersected and
-  //! do not have any geometrically coinciding parts without topological
-  //! sharing of these parts
   Standard_EXPORT static void ClassifyFaces(
     const NCollection_List<TopoDS_Shape>&                                      theFaces,
     const NCollection_List<TopoDS_Shape>&                                      theSolids,
@@ -191,13 +137,6 @@ public:
       NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>(),
     const Message_ProgressRange& theRange = Message_ProgressRange());
 
-  //! Classifies the given parts relatively the given solids and
-  //! fills the solids with the parts classified as INTERNAL.
-  //!
-  //! @param theSolids  - The solids to put internals to
-  //! @param theParts   - The parts to classify relatively solids
-  //! @param theImages  - Possible images of the parts that has to be classified
-  //! @param theContext - cached geometrical tools to speed-up classifications
   Standard_EXPORT static void FillInternals(
     const NCollection_List<TopoDS_Shape>&               theSolids,
     const NCollection_List<TopoDS_Shape>&               theParts,
@@ -206,15 +145,6 @@ public:
                               TopTools_ShapeMapHasher>& theImages,
     const occ::handle<IntTools_Context>&                theContext);
 
-  //! Computes the transformation needed to move the objects
-  //! to the given point to increase the quality of computations.
-  //! Returns true if the objects are located far from the given point
-  //! (relatively given criteria), false otherwise.
-  //! @param theBox1 the AABB of the first object
-  //! @param theBox2 the AABB of the second object
-  //! @param theTrsf the computed transformation
-  //! @param thePoint the Point to compute transformation to
-  //! @param theCriteria the Criteria to check whether thranformation is required
   Standard_EXPORT static bool TrsfToPoint(const Bnd_Box& theBox1,
                                           const Bnd_Box& theBox2,
                                           gp_Trsf&       theTrsf,

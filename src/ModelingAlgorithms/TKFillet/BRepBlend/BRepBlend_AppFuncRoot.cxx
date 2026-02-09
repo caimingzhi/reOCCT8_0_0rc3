@@ -22,7 +22,6 @@ BRepBlend_AppFuncRoot::BRepBlend_AppFuncRoot(occ::handle<BRepBlend_Line>& Line,
   int NbPoles, NbKnots, Degree, NbPoles2d;
   int ii;
 
-  //  Tolerances
   Func.GetTolerance(myTolerance, Tol3d);
   int dim = Func.NbVariables();
   for (ii = 1; ii <= dim; ii++)
@@ -33,10 +32,8 @@ BRepBlend_AppFuncRoot::BRepBlend_AppFuncRoot(occ::handle<BRepBlend_Line>& Line,
     }
   }
 
-  //  Tables
   Func.GetShape(NbPoles, NbKnots, Degree, NbPoles2d);
 
-  // Calculation of BaryCentre (rational case).
   if (Func.IsRational())
   {
     double Xmax = -1.e100, Xmin = 1.e100, Ymax = -1.e100, Ymin = 1.e100, Zmax = -1.e100,
@@ -61,14 +58,9 @@ BRepBlend_AppFuncRoot::BRepBlend_AppFuncRoot(occ::handle<BRepBlend_Line>& Line,
   }
 }
 
-//================================================================================
-// Function: D0
-// Purpose : Calculation of section for v = Param, if calculation fails
-//           false is raised.
-//================================================================================
 bool BRepBlend_AppFuncRoot::D0(const double Param,
-                               const double /*First*/,
-                               const double /*Last*/,
+                               const double,
+                               const double,
                                NCollection_Array1<gp_Pnt>&   Poles,
                                NCollection_Array1<gp_Pnt2d>& Poles2d,
                                NCollection_Array1<double>&   Weigths)
@@ -82,14 +74,9 @@ bool BRepBlend_AppFuncRoot::D0(const double Param,
   return Ok;
 }
 
-//================================================================================
-// Function: D1
-// Purpose : Calculation of the partial derivative of the section corresponding to v
-//           for v = Param, if the calculation fails false is raised.
-//================================================================================
 bool BRepBlend_AppFuncRoot::D1(const double Param,
-                               const double /*First*/,
-                               const double /*Last*/,
+                               const double,
+                               const double,
                                NCollection_Array1<gp_Pnt>&   Poles,
                                NCollection_Array1<gp_Vec>&   DPoles,
                                NCollection_Array1<gp_Pnt2d>& Poles2d,
@@ -110,15 +97,9 @@ bool BRepBlend_AppFuncRoot::D1(const double Param,
   return Ok;
 }
 
-//===========================================================================
-// Function: D2
-// Purpose : Calculation of the derivative and second partial of the
-//           section corresponding to v.
-//           For v = Param, if the calculation fails false is raised.
-//===========================================================================
 bool BRepBlend_AppFuncRoot::D2(const double Param,
-                               const double /*First*/,
-                               const double /*Last*/,
+                               const double,
+                               const double,
                                NCollection_Array1<gp_Pnt>&   Poles,
                                NCollection_Array1<gp_Vec>&   DPoles,
                                NCollection_Array1<gp_Vec>&   D2Poles,
@@ -254,33 +235,16 @@ void BRepBlend_AppFuncRoot::GetMinimalWeight(NCollection_Array1<double>& Weigths
   Func->GetMinimalWeight(Weigths);
 }
 
-//================================================================================
-//
-// Function : SearchPoint
-//
-// Purpose : Find point solution with parameter Param (on 2 Surfaces)
-//
-// Algorithm :
-//     1) Approximative solution is found from already calculated Points
-//     2) Convergence is done by a method of type Newton
-//
-// Possible causes of fails :
-//        - Singularity on surfaces.
-//        - no information oin the "line" resulting from processing.
-//
-//================================================================================
-
 bool BRepBlend_AppFuncRoot::SearchPoint(Blend_AppFunction& Func,
                                         const double       Param,
                                         Blend_Point&       Pnt)
 {
   bool Trouve;
   int  dim = Func.NbVariables();
-  // (1) Find a point of init
+
   int    I1 = 1, I2 = myLine->NbPoints(), Index;
   double t1, t2;
 
-  //  (1.a) It is checked if it is inside
   if (Param < myLine->Point(I1).Parameter())
   {
     return false;
@@ -290,10 +254,8 @@ bool BRepBlend_AppFuncRoot::SearchPoint(Blend_AppFunction& Func,
     return false;
   }
 
-  //  (1.b) Find the interval
   Trouve = SearchLocation(Param, I1, I2, Index);
 
-  //  (1.c) If the point is already calculated it is returned
   if (Trouve)
   {
     Pnt = myLine->Point(Index);
@@ -301,7 +263,7 @@ bool BRepBlend_AppFuncRoot::SearchPoint(Blend_AppFunction& Func,
   }
   else
   {
-    //  (1.d) Initialisation by linear interpolation
+
     Pnt = myLine->Point(Index);
     Vec(X1, Pnt);
     t1 = Pnt.Parameter();
@@ -318,7 +280,6 @@ bool BRepBlend_AppFuncRoot::SearchPoint(Blend_AppFunction& Func,
     }
   }
 
-  // (2) Calculation of the solution ------------------------
   Func.Set(Param);
   Func.GetBounds(X1, X2);
   math_FunctionSetRoot rsnld(Func, myTolerance, 30);
@@ -334,10 +295,8 @@ bool BRepBlend_AppFuncRoot::SearchPoint(Blend_AppFunction& Func,
   }
   rsnld.Root(Sol);
 
-  // (3) Storage of the point
   Point(Func, Param, Sol, Pnt);
 
-  // (4) Insertion of the point if the calculation seems long.
   if ((!Trouve) && (rsnld.NbIterations() > 3))
   {
 #ifdef OCCT_DEBUG
@@ -349,16 +308,6 @@ bool BRepBlend_AppFuncRoot::SearchPoint(Blend_AppFunction& Func,
   return true;
 }
 
-//=============================================================================
-//
-// Function : SearchLocation
-//
-// Purpose : Binary search of the line of the parametric interval containing
-//           Param in the list of calculated points (myline)
-//           if the point of parameter Param is already stored in the list
-//           True is raised and ParamIndex corresponds to line of Point.
-//           Complexity of this algorithm is log(n)/log(2)
-//================================================================================
 bool BRepBlend_AppFuncRoot::SearchLocation(const double Param,
                                            const int    FirstIndex,
                                            const int    LastIndex,

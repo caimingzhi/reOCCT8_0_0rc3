@@ -4,15 +4,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_AssemblyComponentUsage, StepRepr_ProductDefinitionUsage)
 
-//=================================================================================================
-
 StepRepr_AssemblyComponentUsage::StepRepr_AssemblyComponentUsage()
 {
   defReferenceDesignator = false;
 }
 
-//=================================================================================================
-
 void StepRepr_AssemblyComponentUsage::Init(
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Id,
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Name,
@@ -41,8 +37,6 @@ void StepRepr_AssemblyComponentUsage::Init(
     theReferenceDesignator.Nullify();
 }
 
-//=================================================================================================
-
 void StepRepr_AssemblyComponentUsage::Init(
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Id,
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Name,
@@ -70,23 +64,17 @@ void StepRepr_AssemblyComponentUsage::Init(
   else
     theReferenceDesignator.Nullify();
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> StepRepr_AssemblyComponentUsage::ReferenceDesignator() const
 {
   return theReferenceDesignator;
 }
 
-//=================================================================================================
-
 void StepRepr_AssemblyComponentUsage::SetReferenceDesignator(
   const occ::handle<TCollection_HAsciiString>& aReferenceDesignator)
 {
   theReferenceDesignator = aReferenceDesignator;
 }
-
-//=================================================================================================
 
 bool StepRepr_AssemblyComponentUsage::HasReferenceDesignator() const
 {

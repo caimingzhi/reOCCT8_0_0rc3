@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include "RWStepBasic_RWApprovalPersonOrganization.hpp"
@@ -29,21 +18,15 @@ void RWStepBasic_RWApprovalPersonOrganization::ReadStep(
   const occ::handle<StepBasic_ApprovalPersonOrganization>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 3, ach, "approval_person_organization"))
     return;
 
-  // --- own field : personOrganization ---
-
   StepBasic_PersonOrganizationSelect aPersonOrganization;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadEntity(num, 1, "person_organization", ach, aPersonOrganization);
 
-  // --- own field : authorizedApproval ---
-
   occ::handle<StepBasic_Approval> aAuthorizedApproval;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
   data->ReadEntity(num,
                    2,
                    "authorized_approval",
@@ -51,13 +34,9 @@ void RWStepBasic_RWApprovalPersonOrganization::ReadStep(
                    STANDARD_TYPE(StepBasic_Approval),
                    aAuthorizedApproval);
 
-  // --- own field : role ---
-
   occ::handle<StepBasic_ApprovalRole> aRole;
-  // szv#4:S4163:12Mar99 `bool stat3 =` not needed
-  data->ReadEntity(num, 3, "role", ach, STANDARD_TYPE(StepBasic_ApprovalRole), aRole);
 
-  //--- Initialisation of the read entity ---
+  data->ReadEntity(num, 3, "role", ach, STANDARD_TYPE(StepBasic_ApprovalRole), aRole);
 
   ent->Init(aPersonOrganization, aAuthorizedApproval, aRole);
 }
@@ -67,15 +46,9 @@ void RWStepBasic_RWApprovalPersonOrganization::WriteStep(
   const occ::handle<StepBasic_ApprovalPersonOrganization>& ent) const
 {
 
-  // --- own field : personOrganization ---
-
   SW.Send(ent->PersonOrganization().Value());
 
-  // --- own field : authorizedApproval ---
-
   SW.Send(ent->AuthorizedApproval());
-
-  // --- own field : role ---
 
   SW.Send(ent->Role());
 }

@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #ifndef _WIN32
 
@@ -25,15 +13,15 @@ const OSD_WhoAmI Iam = OSD_WHost;
 
   #include <cerrno>
 
-  #include <sys/utsname.h> // For 'uname'
-  #include <netdb.h>       // This is for 'gethostbyname'
+  #include <sys/utsname.h>
+  #include <netdb.h>
   #include <unistd.h>
   #include <cstdio>
 
   #if defined(__osf__) || defined(DECOSF1)
     #include <sys/types.h>
-    #include <sys/sysinfo.h> // For 'getsysinfo'
-    #include <sys/socket.h>  // To get ethernet address
+    #include <sys/sysinfo.h>
+    #include <sys/socket.h>
     #include <sys/ioctl.h>
     #include <net/if.h>
 extern "C"
@@ -47,11 +35,7 @@ extern "C"
   int sysinfo(int, char*, long);
 }
 
-// =========================================================================
-
 OSD_Host::OSD_Host() = default;
-
-// =========================================================================
 
 TCollection_AsciiString OSD_Host::SystemVersion()
 {
@@ -64,8 +48,6 @@ TCollection_AsciiString OSD_Host::SystemVersion()
   result += info.release;
   return (result);
 }
-
-// =========================================================================
 
 OSD_SysType OSD_Host::SystemId() const
 {
@@ -96,8 +78,6 @@ OSD_SysType OSD_Host::SystemId() const
   return (OSD_Unknown);
 }
 
-// =========================================================================
-
 TCollection_AsciiString OSD_Host::HostName()
 {
   TCollection_AsciiString result;
@@ -112,25 +92,21 @@ TCollection_AsciiString OSD_Host::HostName()
   return (result);
 }
 
-// =========================================================================
-
 int OSD_Host::AvailableMemory()
 {
   int result;
 
   #if defined(__osf__) || defined(DECOSF1)
   char buffer[16];
-  ////     result = getsysinfo(GSI_PHYSMEM,buffer, 16,0,NULL);
+
   if (result != -1)
     result *= 1024;
   #else
   result = 0;
-    //@@ A faire
+
   #endif
   return (result);
 }
-
-// =========================================================================
 
 TCollection_AsciiString OSD_Host::InternetAddress()
 {
@@ -147,7 +123,6 @@ TCollection_AsciiString OSD_Host::InternetAddress()
   }
   memcpy(&internet_address, aHostByName, sizeof(struct hostent));
 
-  // Gets each bytes into integers
   a = (unsigned char)internet_address.h_addr_list[0][0];
   b = (unsigned char)internet_address.h_addr_list[0][1];
   c = (unsigned char)internet_address.h_addr_list[0][2];
@@ -157,7 +132,6 @@ TCollection_AsciiString OSD_Host::InternetAddress()
   return (result);
 }
 
-// =========================================================================
 OSD_OEMType OSD_Host::MachineType()
 {
   struct utsname info;
@@ -211,10 +185,6 @@ int OSD_Host::Error() const
 
 #else
 
-//------------------------------------------------------------------------
-//-------------------  WNT Sources of OSD_Host ---------------------------
-//------------------------------------------------------------------------
-
   #include <windows.h>
 
   #include <OSD_Host.hpp>
@@ -249,7 +219,6 @@ OSD_Host ::OSD_Host()
     ZeroMemory(&ms, sizeof(ms));
     ZeroMemory(szHostName, sizeof(char) * (MAX_COMPUTERNAME_LENGTH + 1));
 
-    // suppress GetVersionEx() deprecation warning
     Standard_DISABLE_DEPRECATION_WARNINGS if (!GetVersionExW(&osVerInfo))
     {
       _osd_wnt_set_error(myError, OSD_WHost);
@@ -262,7 +231,7 @@ OSD_Host ::OSD_Host()
     {
       ms.dwLength = sizeof(MEMORYSTATUS);
       GlobalMemoryStatus(&ms);
-    } // end else
+    }
     Standard_ENABLE_DEPRECATION_WARNINGS
 
       if (!Failed())
@@ -285,10 +254,8 @@ OSD_Host ::OSD_Host()
 
         CopyMemory(&inAddr, *phe->h_addr_list, sizeof(IN_ADDR));
         hostAddr = inet_ntoa(inAddr);
-
-      } // end else
-
-    } // end if
+      }
+    }
 
     if (!Failed())
     {
@@ -305,85 +272,73 @@ OSD_Host ::OSD_Host()
       version = aVersion;
 
       fInit = TRUE;
-
-    } // end if
-
-  } // end if
+    }
+  }
 
   if (fInit)
 
     myName = hostName;
   #endif
-} // end constructor
+}
 
 TCollection_AsciiString OSD_Host ::SystemVersion()
 {
 
   return version;
-
-} // end OSD_Host :: SystemVersion
+}
 
 OSD_SysType OSD_Host ::SystemId() const
 {
 
   return OSD_WindowsNT;
-
-} // end OSD_Host :: SystemId
+}
 
 TCollection_AsciiString OSD_Host ::HostName()
 {
 
   return hostName;
-
-} // end OSD_Host :: HostName
+}
 
 int OSD_Host ::AvailableMemory()
 {
 
   return memSize;
-
-} // end OSD_Host :: AvailableMemory
+}
 
 TCollection_AsciiString OSD_Host ::InternetAddress()
 {
 
   return interAddr;
-
-} // end OSD_Host :: InternetAddress
+}
 
 OSD_OEMType OSD_Host ::MachineType()
 {
 
   return OSD_PC;
-
-} // end OSD_Host :: MachineTYpe
+}
 
 bool OSD_Host ::Failed() const
 {
 
   return myError.Failed();
-
-} // end OSD_Host :: Failed
+}
 
 void OSD_Host ::Reset()
 {
 
   myError.Reset();
-
-} // end OSD_Host :: Reset
+}
 
 void OSD_Host ::Perror()
 {
 
   myError.Perror();
-
-} // end OSD_Host :: Perror
+}
 
 int OSD_Host ::Error() const
 {
 
   return myError.Error();
-
-} // end OSD_Host :: Error
+}
 
 #endif

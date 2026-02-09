@@ -12,8 +12,6 @@
 
 IMPLEMENT_DERIVED_ATTRIBUTE(TDataXtd_Shape, TDataStd_GenericEmpty)
 
-//=================================================================================================
-
 bool TDataXtd_Shape::Find(const TDF_Label& current, occ::handle<TDataXtd_Shape>& S)
 {
   TDF_Label                   L = current;
@@ -37,8 +35,6 @@ bool TDataXtd_Shape::Find(const TDF_Label& current, occ::handle<TDataXtd_Shape>&
   return false;
 }
 
-//=================================================================================================
-
 occ::handle<TDataXtd_Shape> TDataXtd_Shape::New(const TDF_Label& label)
 {
   if (label.HasAttribute())
@@ -49,8 +45,6 @@ occ::handle<TDataXtd_Shape> TDataXtd_Shape::New(const TDF_Label& label)
   label.AddAttribute(A);
   return A;
 }
-
-//=================================================================================================
 
 occ::handle<TDataXtd_Shape> TDataXtd_Shape::Set(const TDF_Label& label, const TopoDS_Shape& shape)
 {
@@ -73,8 +67,6 @@ occ::handle<TDataXtd_Shape> TDataXtd_Shape::Set(const TDF_Label& label, const To
   return A;
 }
 
-//=================================================================================================
-
 TopoDS_Shape TDataXtd_Shape::Get(const TDF_Label& label)
 {
   TopoDS_Shape shape;
@@ -90,30 +82,20 @@ TopoDS_Shape TDataXtd_Shape::Get(const TDF_Label& label)
   return shape;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataXtd_Shape::GetID()
 {
   static Standard_GUID TDataXtd_ShapeID("2a96b620-ec8b-11d0-bee7-080009dc3333");
   return TDataXtd_ShapeID;
 }
 
-//=================================================================================================
-
 TDataXtd_Shape::TDataXtd_Shape() = default;
-
-//=================================================================================================
 
 const Standard_GUID& TDataXtd_Shape::ID() const
 {
   return GetID();
 }
 
-//=================================================================================================
-
 void TDataXtd_Shape::References(const occ::handle<TDF_DataSet>&) const {}
-
-//=================================================================================================
 
 Standard_OStream& TDataXtd_Shape::Dump(Standard_OStream& anOS) const
 {

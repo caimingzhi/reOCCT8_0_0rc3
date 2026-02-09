@@ -11,7 +11,6 @@ class StepVisual_FillAreaStyleColour;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for FillAreaStyleColour
 class RWStepVisual_RWFillAreaStyleColour
 {
 public:

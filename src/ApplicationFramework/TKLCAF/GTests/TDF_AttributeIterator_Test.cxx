@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <TDF_AttributeIterator.hpp>
 #include <TDataStd_Integer.hpp>
@@ -27,15 +16,12 @@ TEST(TDF_AttributeIterator_Test, OCC24755_AttributeInsertionOrder)
   anApp->NewDocument("BinOcaf", aDoc);
   TDF_Label aLab = aDoc->Main();
 
-  // Prepend an int value.
   TDataStd_Integer::Set(aLab, 0);
-  // Prepend a name.
-  TDataStd_Name::Set(aLab, "test");
-  // Append a double value.
-  aLab.AddAttribute(new TDataStd_Real(), true /*append*/);
 
-  // Verify that attributes are iterated in the expected order:
-  // Integer (prepended second, so it's first), Name (prepended first), Real (appended)
+  TDataStd_Name::Set(aLab, "test");
+
+  aLab.AddAttribute(new TDataStd_Real(), true);
+
   TDF_AttributeIterator anIter(aLab);
 
   ASSERT_TRUE(anIter.More()) << "Iterator should have first attribute";

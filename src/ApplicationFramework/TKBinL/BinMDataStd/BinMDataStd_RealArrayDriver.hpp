@@ -11,7 +11,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! Array of Real attribute Driver.
 class BinMDataStd_RealArrayDriver : public BinMDF_ADriver
 {
 

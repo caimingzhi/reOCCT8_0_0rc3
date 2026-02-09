@@ -25,14 +25,10 @@
 Standard_IMPORT Draw_Viewer dout;
 #endif
 
-//=================================================================================================
-
 void DrawDim::AllCommands(Draw_Interpretor& theCommands)
 {
   PlanarDimensionCommands(theCommands);
 }
-
-//=================================================================================================
 
 void DrawDim::DrawShapeName(const TopoDS_Shape& ashape, const char* aname)
 {
@@ -66,12 +62,10 @@ void DrawDim::DrawShapeName(const TopoDS_Shape& ashape, const char* aname)
     default:
       break;
   }
-  t += aname; // Name();
+  t += aname;
   occ::handle<Draw_Text3D> text = new Draw_Text3D(position, t.ToCString(), Draw_blanc);
   dout << text;
 }
-
-//=================================================================================================
 
 bool DrawDim::Pln(const TopoDS_Face& f, gp_Pln& p)
 {
@@ -83,8 +77,6 @@ bool DrawDim::Pln(const TopoDS_Face& f, gp_Pln& p)
   }
   return false;
 }
-
-//=================================================================================================
 
 bool DrawDim::Lin(const TopoDS_Edge& e, gp_Lin& l, bool& infinite, double& first, double& last)
 {
@@ -116,8 +108,6 @@ bool DrawDim::Lin(const TopoDS_Edge& e, gp_Lin& l, bool& infinite, double& first
   return false;
 }
 
-//=================================================================================================
-
 bool DrawDim::Circ(const TopoDS_Edge& e, gp_Circ& c, double& first, double& last)
 {
   double                   f1, l1;
@@ -131,8 +121,6 @@ bool DrawDim::Circ(const TopoDS_Edge& e, gp_Circ& c, double& first, double& last
   }
   return false;
 }
-
-//=================================================================================================
 
 gp_Pnt DrawDim::Nearest(const TopoDS_Shape& ashape, const gp_Pnt& apoint)
 {

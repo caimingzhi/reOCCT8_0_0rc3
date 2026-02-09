@@ -17,8 +17,6 @@
 #include <Prs3d_Text.hpp>
 #include <TCollection_ExtendedString.hpp>
 
-//=================================================================================================
-
 void DsgPrs_EllipseRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                            const occ::handle<Prs3d_Drawer>&       aDrawer,
                                            const double                           theval,
@@ -41,20 +39,16 @@ void DsgPrs_EllipseRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>
   aPrims->AddVertex(EndPoint);
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // value
   TCollection_ExtendedString Text(IsMaxRadius ? "a = " : "b = ");
   Text += aText;
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), Text, aPosition);
 
-  // arrows
   gp_Dir arrdir(gp_Vec(aCenter, anEndOfArrow));
   if (!inside)
     arrdir.Reverse();
 
   DsgPrs::ComputeSymbol(aPresentation, LA, anEndOfArrow, anEndOfArrow, arrdir, arrdir, ArrowPrs);
 }
-
-//=================================================================================================
 
 void DsgPrs_EllipseRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                            const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -75,9 +69,9 @@ void DsgPrs_EllipseRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>
   if (!IsInDomain)
   {
     const double uLast = ElCLib::Parameter(anEllipse, anEndOfArrow);
-    // clang-format off
-    const double Alpha = DsgPrs::DistanceFromApex(anEllipse, anEndOfArrow, uFirst);//length of ellipse arc
-    // clang-format on
+
+    const double Alpha = DsgPrs::DistanceFromApex(anEllipse, anEndOfArrow, uFirst);
+
     gp_Vec Vapex(aCenter, ElCLib::Value(uLast, anEllipse));
     gp_Vec Vpnt(aCenter, ElCLib::Value(uFirst, anEllipse));
     gp_Dir dir(Vpnt ^ Vapex);
@@ -101,8 +95,6 @@ void DsgPrs_EllipseRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>
                                         IsMaxRadius,
                                         ArrowPrs);
 }
-
-//=================================================================================================
 
 void DsgPrs_EllipseRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                            const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -129,9 +121,9 @@ void DsgPrs_EllipseRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>
     aBEllipse.SetMajorRadius(aBEllipse.MajorRadius() + Offset);
     aBEllipse.SetMinorRadius(aBEllipse.MinorRadius() + Offset);
     const double uLast = ElCLib::Parameter(aBEllipse, anEndOfArrow);
-    // clang-format off
-    const double Alpha = DsgPrs::DistanceFromApex(aBEllipse, anEndOfArrow, uFirst);//length of ellipse arc
-    // clang-format on
+
+    const double Alpha = DsgPrs::DistanceFromApex(aBEllipse, anEndOfArrow, uFirst);
+
     gp_Pnt p1;
     aCurve->D0(uFirst, p1);
     gp_Vec    Vapex(aCenter, anEndOfArrow);

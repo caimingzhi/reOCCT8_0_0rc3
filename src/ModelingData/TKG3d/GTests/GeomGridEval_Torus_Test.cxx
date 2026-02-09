@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -38,27 +27,22 @@ namespace
   }
 } // namespace
 
-//==================================================================================================
-// Grid evaluation tests
-//==================================================================================================
-
 TEST(GeomGridEval_TorusTest, GridBasicEvaluation)
 {
-  // Torus: Major=10, Minor=2, Center(0,0,0), Z-axis
+
   occ::handle<Geom_ToroidalSurface> aTorus =
     new Geom_ToroidalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 10.0, 2.0);
 
   GeomGridEval_Torus anEval(aTorus);
   EXPECT_FALSE(anEval.Geometry().IsNull());
 
-  NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 9); // Major
-  NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 2 * M_PI, 9); // Minor
+  NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 9);
+  NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 2 * M_PI, 9);
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
   EXPECT_EQ(aGrid.RowLength(), 9);
   EXPECT_EQ(aGrid.ColLength(), 9);
 
-  // Verify points
   for (int iU = 1; iU <= 9; ++iU)
   {
     for (int iV = 1; iV <= 9; ++iV)
@@ -174,7 +158,6 @@ TEST(GeomGridEval_TorusTest, GridDerivativeDN)
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 5);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 2 * M_PI, 4);
 
-  // Test D4U (4th derivative in U)
   NCollection_Array2<gp_Vec> aD4U = anEval.EvaluateGridDN(aUParams, aVParams, 4, 0);
   for (int iU = 1; iU <= 5; ++iU)
   {
@@ -186,17 +169,12 @@ TEST(GeomGridEval_TorusTest, GridDerivativeDN)
   }
 }
 
-//==================================================================================================
-// Points evaluation tests
-//==================================================================================================
-
 TEST(GeomGridEval_TorusTest, PointsBasicEvaluation)
 {
   occ::handle<Geom_ToroidalSurface> aTorus =
     new Geom_ToroidalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 10.0, 2.0);
   GeomGridEval_Torus anEval(aTorus);
 
-  // Create arbitrary UV pairs
   NCollection_Array1<gp_Pnt2d> aUVPairs(1, 10);
   aUVPairs.SetValue(1, gp_Pnt2d(0.0, 0.0));
   aUVPairs.SetValue(2, gp_Pnt2d(M_PI / 4, M_PI / 4));
@@ -324,7 +302,6 @@ TEST(GeomGridEval_TorusTest, PointsDerivativeDN)
   aUVPairs.SetValue(4, gp_Pnt2d(M_PI, M_PI));
   aUVPairs.SetValue(5, gp_Pnt2d(3 * M_PI / 2, 5 * M_PI / 4));
 
-  // Test D4U
   NCollection_Array1<gp_Vec> aD4U = anEval.EvaluatePointsDN(aUVPairs, 4, 0);
   for (int i = 1; i <= 5; ++i)
   {
@@ -333,7 +310,6 @@ TEST(GeomGridEval_TorusTest, PointsDerivativeDN)
     EXPECT_NEAR((aD4U.Value(i) - aExpected).Magnitude(), 0.0, THE_TOLERANCE);
   }
 
-  // Test mixed D2UV
   NCollection_Array1<gp_Vec> aD2UV = anEval.EvaluatePointsDN(aUVPairs, 2, 2);
   for (int i = 1; i <= 5; ++i)
   {
@@ -345,7 +321,7 @@ TEST(GeomGridEval_TorusTest, PointsDerivativeDN)
 
 TEST(GeomGridEval_TorusTest, PointsTransformedTorus)
 {
-  // Torus with offset center and tilted axis
+
   gp_Ax3                            anAxis(gp_Pnt(5, 3, 2), gp_Dir(1, 1, 1));
   occ::handle<Geom_ToroidalSurface> aTorus = new Geom_ToroidalSurface(anAxis, 8.0, 1.5);
   GeomGridEval_Torus                anEval(aTorus);
@@ -368,7 +344,7 @@ TEST(GeomGridEval_TorusTest, PointsTransformedTorus)
 
 TEST(GeomGridEval_TorusTest, PointsOnMajorCircle)
 {
-  // Test points on major circle (V=0)
+
   occ::handle<Geom_ToroidalSurface> aTorus =
     new Geom_ToroidalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 10.0, 2.0);
   GeomGridEval_Torus anEval(aTorus);
@@ -381,8 +357,7 @@ TEST(GeomGridEval_TorusTest, PointsOnMajorCircle)
 
   NCollection_Array1<gp_Pnt> aPoints = anEval.EvaluatePoints(aUVPairs);
 
-  // Points on major circle at V=0 should be at distance (Major+Minor) from Z axis
-  const double aExpectedRadius = 10.0 + 2.0; // Major + Minor
+  const double aExpectedRadius = 10.0 + 2.0;
   for (int i = 1; i <= 4; ++i)
   {
     const gp_Pnt& aPnt        = aPoints.Value(i);

@@ -5,18 +5,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_LineAttributes, OpenGl_Resource)
 
-//=================================================================================================
-
 OpenGl_LineAttributes::OpenGl_LineAttributes() = default;
-
-//=================================================================================================
 
 OpenGl_LineAttributes::~OpenGl_LineAttributes()
 {
   Release(nullptr);
 }
-
-//=================================================================================================
 
 void OpenGl_LineAttributes::Release(OpenGl_Context* theGlCtx)
 {
@@ -33,8 +27,6 @@ void OpenGl_LineAttributes::Release(OpenGl_Context* theGlCtx)
   myStyles.Clear();
 }
 
-//=================================================================================================
-
 unsigned int OpenGl_LineAttributes::init(const OpenGl_Context*                    theGlCtx,
                                          const occ::handle<Graphic3d_HatchStyle>& theStyle)
 {
@@ -44,8 +36,6 @@ unsigned int OpenGl_LineAttributes::init(const OpenGl_Context*                  
   theGlCtx->core11ffp->glEndList();
   return aListId;
 }
-
-//=================================================================================================
 
 bool OpenGl_LineAttributes::SetTypeOfHatch(const OpenGl_Context*                    theGlCtx,
                                            const occ::handle<Graphic3d_HatchStyle>& theStyle)

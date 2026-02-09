@@ -1,15 +1,4 @@
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BinMXCAFDoc_VisMaterialDriver.hpp>
 
@@ -19,7 +8,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_VisMaterialDriver, BinMDF_ADriver)
 
-//! Encode alpha mode into character.
 static uint8_t alphaModeToChar(Graphic3d_AlphaMode theMode)
 {
   switch (theMode)
@@ -38,7 +26,6 @@ static uint8_t alphaModeToChar(Graphic3d_AlphaMode theMode)
   return 'A';
 }
 
-//! Decode alpha mode from character.
 static Graphic3d_AlphaMode alphaModeFromChar(uint8_t theMode)
 {
   switch (theMode)
@@ -57,7 +44,6 @@ static Graphic3d_AlphaMode alphaModeFromChar(uint8_t theMode)
   return Graphic3d_AlphaMode_BlendAuto;
 }
 
-//! Encode face culling mode into character.
 static uint8_t faceCullToChar(Graphic3d_TypeOfBackfacingModel theMode)
 {
   switch (theMode)
@@ -74,7 +60,6 @@ static uint8_t faceCullToChar(Graphic3d_TypeOfBackfacingModel theMode)
   return '0';
 }
 
-//! Decode face culling mode from character.
 static Graphic3d_TypeOfBackfacingModel faceCullFromChar(uint8_t theMode)
 {
   switch (theMode)
@@ -91,7 +76,6 @@ static Graphic3d_TypeOfBackfacingModel faceCullFromChar(uint8_t theMode)
   return Graphic3d_TypeOfBackfacingModel_Auto;
 }
 
-//! Encode vec3.
 static void writeVec3(BinObjMgt_Persistent& theTarget, const NCollection_Vec3<float>& theVec3)
 {
   theTarget.PutShortReal(theVec3[0]);
@@ -99,7 +83,6 @@ static void writeVec3(BinObjMgt_Persistent& theTarget, const NCollection_Vec3<fl
   theTarget.PutShortReal(theVec3[2]);
 }
 
-//! Encode vec4.
 static void writeVec4(BinObjMgt_Persistent& theTarget, const NCollection_Vec4<float>& theVec4)
 {
   theTarget.PutShortReal(theVec4[0]);
@@ -108,7 +91,6 @@ static void writeVec4(BinObjMgt_Persistent& theTarget, const NCollection_Vec4<fl
   theTarget.PutShortReal(theVec4[3]);
 }
 
-//! Decode vec3.
 static void readVec3(const BinObjMgt_Persistent& theSource, NCollection_Vec3<float>& theVec3)
 {
   theSource.GetShortReal(theVec3[0]);
@@ -116,7 +98,6 @@ static void readVec3(const BinObjMgt_Persistent& theSource, NCollection_Vec3<flo
   theSource.GetShortReal(theVec3[2]);
 }
 
-//! Decode vec3.
 static void readColor(const BinObjMgt_Persistent& theSource, Quantity_Color& theColor)
 {
   NCollection_Vec3<float> aVec3;
@@ -124,7 +105,6 @@ static void readColor(const BinObjMgt_Persistent& theSource, Quantity_Color& the
   theColor = Quantity_Color(aVec3);
 }
 
-//! Decode vec4.
 static void readColor(const BinObjMgt_Persistent& theSource, Quantity_ColorRGBA& theColor)
 {
   NCollection_Vec4<float> aVec4;
@@ -135,7 +115,6 @@ static void readColor(const BinObjMgt_Persistent& theSource, Quantity_ColorRGBA&
   theColor = Quantity_ColorRGBA(aVec4);
 }
 
-//! Encode texture path.
 static void writeTexture(BinObjMgt_Persistent&             theTarget,
                          const occ::handle<Image_Texture>& theImage)
 {
@@ -165,7 +144,6 @@ static void writeTexture(BinObjMgt_Persistent&             theTarget,
                          static_cast<int>(theImage->DataBuffer()->Size()));
 }
 
-//! Decode texture path.
 static void readTexture(const BinObjMgt_Persistent& theSource,
                         occ::handle<Image_Texture>& theTexture)
 {
@@ -203,26 +181,20 @@ static void readTexture(const BinObjMgt_Persistent& theSource,
   theTexture = new Image_Texture(aBuff, aStr);
 }
 
-//=================================================================================================
-
 BinMXCAFDoc_VisMaterialDriver::BinMXCAFDoc_VisMaterialDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_VisMaterial)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMXCAFDoc_VisMaterialDriver::NewEmpty() const
 {
   return new XCAFDoc_VisMaterial();
 }
 
-//=================================================================================================
-
 bool BinMXCAFDoc_VisMaterialDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                           const occ::handle<TDF_Attribute>& theTarget,
-                                          BinObjMgt_RRelocationTable& /*theRelocTable*/) const
+                                          BinObjMgt_RRelocationTable&) const
 {
   occ::handle<XCAFDoc_VisMaterial> aMat    = occ::down_cast<XCAFDoc_VisMaterial>(theTarget);
   uint8_t                          aVerMaj = 0, aVerMin = 0;
@@ -293,8 +265,6 @@ bool BinMXCAFDoc_VisMaterialDriver::Paste(const BinObjMgt_Persistent&       theS
 
   return true;
 }
-
-//=================================================================================================
 
 void BinMXCAFDoc_VisMaterialDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,

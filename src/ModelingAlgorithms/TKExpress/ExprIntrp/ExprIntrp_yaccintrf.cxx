@@ -1,16 +1,4 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ExprIntrp_yaccintrf.hpp>
 #include <ExprIntrp_yaccanal.hpp>
@@ -226,9 +214,6 @@ static occ::handle<Expr_GeneralExpression> ExprIntrp_StandardFunction(
   const TCollection_AsciiString&             name,
   const occ::handle<Expr_GeneralExpression>& op)
 {
-  // return standard functions equivalent corresponding to <name>
-  // with given operand <op> if exists. Returns null value if not.
-  // <name> is not case sensitive
 
   occ::handle<Expr_GeneralExpression> res;
   if ((name == "abs") || (name == "Abs"))
@@ -585,7 +570,7 @@ extern "C" void ExprIntrp_EndOfAssign()
   if (namexp.IsNull())
   {
     namu                                                = new Expr_NamedUnknown(ExprIntrp_assname);
-    const occ::handle<Expr_NamedExpression>& aNamedExpr = namu; // to resolve ambiguity
+    const occ::handle<Expr_NamedExpression>& aNamedExpr = namu;
     ExprIntrp_Recept.Use(aNamedExpr);
   }
   else
@@ -611,7 +596,7 @@ extern "C" void ExprIntrp_EndOfFuncDef()
     vars(i)       = occ::down_cast<Expr_NamedUnknown>(ExprIntrp_Recept.Pop());
     internvars(i) = occ::down_cast<Expr_NamedUnknown>(vars(i)->Copy());
   }
-  theexp = Expr::CopyShare(theexp); // ATTENTION, PROTECTION BUG STACK
+  theexp = Expr::CopyShare(theexp);
   for (i = 1; i <= nbargs; i++)
   {
     if (theexp->Contains(vars(i)))
@@ -643,7 +628,7 @@ extern "C" void ExprIntrp_ConstantDefinition()
   const TCollection_AsciiString&          aStr     = ExprIntrp_GetResult();
   double                                  val      = aStr.RealValue();
   occ::handle<Expr_NamedConstant>         theconst = new Expr_NamedConstant(name, val);
-  const occ::handle<Expr_NamedExpression> theexpr  = theconst; // to resolve ambiguity
+  const occ::handle<Expr_NamedExpression> theexpr  = theconst;
   ExprIntrp_Recept.Use(theexpr);
   ExprIntrp_Recept.Push(theconst);
 }

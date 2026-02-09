@@ -11,27 +11,22 @@ class StepDimTol_PerpendicularityTolerance;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write tool for PerpendicularityTolerance
 class RWStepDimTol_RWPerpendicularityTolerance
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepDimTol_RWPerpendicularityTolerance();
 
-  //! Reads PerpendicularityTolerance
   Standard_HIDDEN void ReadStep(const occ::handle<StepData_StepReaderData>&              data,
                                 const int                                                num,
                                 occ::handle<Interface_Check>&                            ach,
                                 const occ::handle<StepDimTol_PerpendicularityTolerance>& ent) const;
 
-  //! Writes PerpendicularityTolerance
   Standard_HIDDEN void WriteStep(
     StepData_StepWriter&                                     SW,
     const occ::handle<StepDimTol_PerpendicularityTolerance>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(const occ::handle<StepDimTol_PerpendicularityTolerance>& ent,
                              Interface_EntityIterator&                                iter) const;
 };

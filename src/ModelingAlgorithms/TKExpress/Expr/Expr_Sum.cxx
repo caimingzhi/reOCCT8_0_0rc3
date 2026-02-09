@@ -201,7 +201,7 @@ occ::handle<Expr_GeneralExpression> Expr_Sum::ShallowSimplified() const
   if (!noone)
   {
     if (newops.IsEmpty())
-    { // result is only numericvalue (even zero)
+    {
       return new Expr_NumericValue(vals);
     }
     if (vals != 0.0)
@@ -212,12 +212,12 @@ occ::handle<Expr_GeneralExpression> Expr_Sum::ShallowSimplified() const
         return me;
       }
       occ::handle<Expr_NumericValue> thevals = new Expr_NumericValue(vals);
-      newops.Append(thevals); // non-zero value added
+      newops.Append(thevals);
       return new Expr_Sum(newops);
     }
     if (newops.Length() == 1)
     {
-      // case X + 0
+
       return newops(1);
     }
     return new Expr_Sum(newops);

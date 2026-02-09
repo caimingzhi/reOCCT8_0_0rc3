@@ -1,14 +1,10 @@
-// Created on : Thu Mar 24 18:30:12 2022
+
 
 #include <StepVisual_TessellatedSurfaceSet.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_TessellatedSurfaceSet, StepVisual_TessellatedItem)
 
-//=================================================================================================
-
 StepVisual_TessellatedSurfaceSet::StepVisual_TessellatedSurfaceSet() = default;
-
-//=================================================================================================
 
 void StepVisual_TessellatedSurfaceSet::Init(
   const occ::handle<TCollection_HAsciiString>&    theRepresentationItem_Name,
@@ -25,14 +21,10 @@ void StepVisual_TessellatedSurfaceSet::Init(
   myNormals = theNormals;
 }
 
-//=================================================================================================
-
 occ::handle<StepVisual_CoordinatesList> StepVisual_TessellatedSurfaceSet::Coordinates() const
 {
   return myCoordinates;
 }
-
-//=================================================================================================
 
 void StepVisual_TessellatedSurfaceSet::SetCoordinates(
   const occ::handle<StepVisual_CoordinatesList>& theCoordinates)
@@ -40,36 +32,26 @@ void StepVisual_TessellatedSurfaceSet::SetCoordinates(
   myCoordinates = theCoordinates;
 }
 
-//=================================================================================================
-
 int StepVisual_TessellatedSurfaceSet::Pnmax() const
 {
   return myPnmax;
 }
-
-//=================================================================================================
 
 void StepVisual_TessellatedSurfaceSet::SetPnmax(const int thePnmax)
 {
   myPnmax = thePnmax;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray2<double>> StepVisual_TessellatedSurfaceSet::Normals() const
 {
   return myNormals;
 }
-
-//=================================================================================================
 
 void StepVisual_TessellatedSurfaceSet::SetNormals(
   const occ::handle<NCollection_HArray2<double>>& theNormals)
 {
   myNormals = theNormals;
 }
-
-//=================================================================================================
 
 int StepVisual_TessellatedSurfaceSet::NbNormals() const
 {

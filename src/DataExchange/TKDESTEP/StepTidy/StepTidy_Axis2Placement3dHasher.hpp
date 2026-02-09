@@ -6,14 +6,12 @@
 #include <Standard_HashUtils.hpp>
 #include <StepGeom_Axis2Placement3d.hpp>
 
-//! OCCT-style hasher for StepGeom_Axis2Placement3d entities.
 struct StepTidy_Axis2Placement3dHasher
 {
-  // Hashes the axis placements.
+
   std::size_t operator()(const occ::handle<StepGeom_Axis2Placement3d>& thePlacement) const noexcept
   {
-    // Prepare an array of hashes for the location, axis, and ref direction.
-    // Optimal seed is used for the axis and ref direction if they are not present.
+
     const size_t aHashes[3]{
       StepTidy_CartesianPointHasher{}(thePlacement->Location()),
       thePlacement->HasAxis() ? StepTidy_DirectionHasher{}(thePlacement->Axis())
@@ -23,21 +21,20 @@ struct StepTidy_Axis2Placement3dHasher
     const size_t aHash = opencascade::hashBytes(aHashes, sizeof(aHashes));
     if (thePlacement->Name().IsNull())
     {
-      // If the name is not present, return the hash.
+
       return aHash;
     }
-    // Add the name to the hash if it is present.
+
     const size_t aHashWithName[2]{
       aHash,
       std::hash<TCollection_AsciiString>{}(thePlacement->Name()->String())};
     return opencascade::hashBytes(aHashWithName, sizeof(aHashWithName));
   }
 
-  // Compares two axis placements.
   bool operator()(const occ::handle<StepGeom_Axis2Placement3d>& thePlacement1,
                   const occ::handle<StepGeom_Axis2Placement3d>& thePlacement2) const noexcept
   {
-    // Compare names.
+
     if (thePlacement1->Name().IsNull() != thePlacement2->Name().IsNull())
     {
       return false;
@@ -47,16 +44,15 @@ struct StepTidy_Axis2Placement3dHasher
       return false;
     }
 
-    // Compare location, axis, and ref direction.
     const bool isSameLocation =
       StepTidy_CartesianPointHasher{}(thePlacement1->Location(), thePlacement2->Location());
-    // Have to check if the axis is present and compare it.
+
     const bool isSameAxisFlag = thePlacement1->HasAxis() == thePlacement2->HasAxis();
     const bool isSameAxis =
       isSameAxisFlag
       && (!thePlacement1->HasAxis()
           || StepTidy_DirectionHasher{}(thePlacement1->Axis(), thePlacement2->Axis()));
-    // Have to check if the ref direction is present and compare it.
+
     const bool isSameRefDirectionFlag =
       thePlacement1->HasRefDirection() == thePlacement2->HasRefDirection();
     const bool isSameRefDirection =

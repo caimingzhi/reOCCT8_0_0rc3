@@ -28,10 +28,6 @@ GC_MakeCylindricalSurface::GC_MakeCylindricalSurface(const gp_Ax2& A2, const dou
   }
 }
 
-//=========================================================================
-//   Construction of a cylinder by axis <A1> et radius <Radius>.          +
-//=========================================================================
-
 GC_MakeCylindricalSurface::GC_MakeCylindricalSurface(const gp_Ax1& A1, const double Radius)
 {
   gce_MakeCylinder Cyl = gce_MakeCylinder(A1, Radius);
@@ -42,22 +38,12 @@ GC_MakeCylindricalSurface::GC_MakeCylindricalSurface(const gp_Ax1& A1, const dou
   }
 }
 
-//=========================================================================
-//   Construction of a cylinder by a circle <Cir>.                        +
-//=========================================================================
-
 GC_MakeCylindricalSurface::GC_MakeCylindricalSurface(const gp_Circ& Circ)
 {
   gp_Cylinder Cyl = gce_MakeCylinder(Circ);
   TheCylinder     = new Geom_CylindricalSurface(Cyl);
   TheError        = gce_Done;
 }
-
-//=========================================================================
-//   Construction of a cylinder by tree points <P1>, <P2>, <P3>.          +
-//   Two first points define the axis.                                    +
-//   The third gives the radius.                                          +
-//=========================================================================
 
 GC_MakeCylindricalSurface::GC_MakeCylindricalSurface(const gp_Pnt& P1,
                                                      const gp_Pnt& P2,

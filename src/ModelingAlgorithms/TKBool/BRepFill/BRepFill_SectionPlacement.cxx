@@ -75,7 +75,6 @@ void BRepFill_SectionPlacement::Perform(const bool          WithContact,
   double                  anEdgeEndParam   = 0.;
   occ::handle<Geom_Curve> aCurve;
 
-  // Here we are simply looking for the first valid curve in the section.
   TopExp_Explorer anEdgeExplorer(mySection, TopAbs_EDGE);
   for (; anEdgeExplorer.More(); anEdgeExplorer.Next())
   {
@@ -93,7 +92,7 @@ void BRepFill_SectionPlacement::Perform(const bool          WithContact,
   occ::handle<Geom_Geometry> aSection;
   if (aCurve.IsNull())
   {
-    // No edge found : the section is a vertex
+
     TopExp_Explorer     aVertexExplorer(mySection, TopAbs_VERTEX);
     const TopoDS_Vertex aFirstVertex = TopoDS::Vertex(aVertexExplorer.Current());
     const gp_Pnt        aPoint       = BRep_Tool::Pnt(aFirstVertex);
@@ -112,7 +111,7 @@ void BRepFill_SectionPlacement::Perform(const bool          WithContact,
       for (; anEdgeExplorer.More(); anEdgeExplorer.Next())
       {
         TopoDS_Edge anEdge = TopoDS::Edge(anEdgeExplorer.Current());
-        // avoid null, degenerated edges
+
         if (anEdge.IsNull() || BRep_Tool::Degenerated(anEdge))
           continue;
 
@@ -151,14 +150,13 @@ void BRepFill_SectionPlacement::Perform(const bool          WithContact,
 
   int aLawIndex1 = 0;
   int aLawIndex2 = 0;
-  // In the general case : Localisation via concatenation of the spine
+
   bool anIsIntervalFound = false;
   for (int aLawIndex = 1; aLawIndex <= myLaw->NbLaw() && !anIsIntervalFound; ++aLawIndex)
   {
     const double aCurrKnotParam = aLawIndex - 1;
     const double aNextKnotParam = aLawIndex;
 
-    // Check if the section parameter is in the interval [aCurrKnotParam, aNextKnotParam]
     anIsIntervalFound = (aCurrKnotParam - aParamConfusion <= aSectionParam)
                         && (aNextKnotParam + aParamConfusion >= aSectionParam);
     if (!anIsIntervalFound)
@@ -183,7 +181,6 @@ void BRepFill_SectionPlacement::Perform(const bool          WithContact,
     throw Standard_ConstructionError("Interval is not found");
   }
 
-  // Search of the <Ind1> by vertex <TheV>
   bool          anIsVertexOnLaw = false;
   TopoDS_Vertex aVertex         = TopoDS::Vertex(Vertex);
   if (!aVertex.IsNull())
@@ -202,9 +199,6 @@ void BRepFill_SectionPlacement::Perform(const bool          WithContact,
       }
     }
   }
-  ////////////////////
-
-  // Positioning on the localized edge (or 2 Edges)
 
   aSectionPlacement.SetLocation(myLaw->Law(aLawIndex1));
   if (!anIsVertexOnLaw)

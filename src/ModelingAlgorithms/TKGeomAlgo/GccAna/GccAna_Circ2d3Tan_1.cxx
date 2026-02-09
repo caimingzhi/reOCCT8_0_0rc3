@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ElCLib.hpp>
 #include <GccAna_Circ2d3Tan.hpp>
@@ -30,18 +18,11 @@
 #include <Precision.hpp>
 #include <NCollection_Array1.hpp>
 
-//=========================================================================
-//   Creation of a circle tangent to two circles and a straight line.     +
-//=========================================================================
 GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                                      const GccEnt_QualifiedCirc& Qualified2,
                                      const GccEnt_QualifiedLin&  Qualified3,
                                      const double                Tolerance)
     :
-
-      //=========================================================================
-      //   Initialization of fields.                                           +
-      //=========================================================================
 
       cirsol(1, 16),
       qualifier1(1, 16),
@@ -74,10 +55,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
     throw GccEnt_BadQualifier();
     return;
   }
-
-  //=========================================================================
-  //   Processing.                                                          +
-  //=========================================================================
 
   gp_Circ2d C1 = Qualified1.Qualified();
   gp_Circ2d C2 = Qualified2.Qualified();
@@ -139,7 +116,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
               double   Rradius = 0;
               gp_Pnt2d Center(Intp.Point(j).Value());
 
-              // pop : if the coordinates are too great, no creation
               if (Center.X() > 1e10 || Center.Y() > 1e10)
                 break;
 
@@ -147,7 +123,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
               double dist2 = Center.Distance(C2.Location());
               double dist3 = L3.Distance(Center);
 
-              // pop : if the coordinates are too great, no creation
               if (dist3 > 1e10)
                 break;
 
@@ -286,7 +261,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                 {
                   NbrSol++;
                   cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius(ind3));
-                  //                ==========================================================
+
                   double distcc1 = Center.Distance(center1);
                   if (!Qualified1.IsUnqualified())
                   {
@@ -344,13 +319,13 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                     TheSame1(NbrSol) = 0;
                     gp_Dir2d dc(C1.Location().XY() - Center.XY());
                     pnttg1sol(NbrSol) = gp_Pnt2d(Center.XY() + Radius(ind3) * dc.XY());
-                    // POP for protection if cirsol(NbrSol).Location == pnttg1sol(NbrSol)
+
                     if (cirsol(NbrSol).Location().IsEqual(pnttg1sol(NbrSol),
                                                           Precision::Confusion()))
                       par1sol(NbrSol) = 1;
                     else
                       par1sol(NbrSol) = ElCLib::Parameter(cirsol(NbrSol), pnttg1sol(NbrSol));
-                    // POP for protection if C1.Location == pnttg1sol(NbrSol)
+
                     if (C1.Location().IsEqual(pnttg1sol(NbrSol), Precision::Confusion()))
                       pararg1(NbrSol) = 1;
                     else
@@ -366,13 +341,13 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                     TheSame2(NbrSol) = 0;
                     gp_Dir2d dc(C2.Location().XY() - Center.XY());
                     pnttg2sol(NbrSol) = gp_Pnt2d(Center.XY() + Radius(ind3) * dc.XY());
-                    // POP for protection if cirsol(NbrSol).Location == pnttg1sol(NbrSol)
+
                     if (cirsol(NbrSol).Location().IsEqual(pnttg1sol(NbrSol),
                                                           Precision::Confusion()))
                       par1sol(NbrSol) = 1;
                     else
                       par2sol(NbrSol) = ElCLib::Parameter(cirsol(NbrSol), pnttg2sol(NbrSol));
-                    // POP for protection if C2.Location == pnttg2sol(NbrSol)
+
                     if (C2.Location().IsEqual(pnttg2sol(NbrSol), Precision::Confusion()))
                       pararg2(NbrSol) = 1;
                     else

@@ -9,11 +9,6 @@
 class Expr_GeneralExpression;
 class Expr_GeneralRelation;
 
-//! This package describes the data structure of any
-//! expression, relation or function used in mathematics.
-//! It also describes the assignment of variables. Standard
-//! mathematical functions are implemented such as
-//! trigonometrics, hyperbolics, and log functions.
 class Expr
 {
 public:

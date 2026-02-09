@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRepAdaptor_Curve.hpp>
 #include <BRepGProp_Cinert.hpp>
@@ -36,9 +24,9 @@ void BRepGProp_Cinert::Perform(const BRepAdaptor_Curve& C)
   double Upper = BRepGProp_EdgeTool::LastParameter(C);
   int    Order = std::min(BRepGProp_EdgeTool::IntegrationOrder(C), math::GaussPointsMax());
 
-  gp_Pnt P;  // value on the curve
-  gp_Vec V1; // first derivative on the curve
-  double ds; // curvilign abscissae
+  gp_Pnt P;
+  gp_Vec V1;
+  double ds;
   double ur, um, u;
   double x, y, z;
   double xloc, yloc, zloc;
@@ -46,11 +34,9 @@ void BRepGProp_Cinert::Perform(const BRepAdaptor_Curve& C)
   math_Vector GaussP(1, Order);
   math_Vector GaussW(1, Order);
 
-  // Recuperation des points de Gauss dans le fichier GaussPoints.
   math::GaussPoints(Order, GaussP);
   math::GaussWeights(Order, GaussW);
 
-  // modified by NIZHNY-MKK  Thu Jun  9 12:13:21 2005.BEGIN
   int                        nbIntervals   = BRepGProp_EdgeTool::NbIntervals(C, GeomAbs_CN);
   bool                       bHasIntervals = (nbIntervals > 1);
   NCollection_Array1<double> TI(1, nbIntervals + 1);
@@ -84,13 +70,11 @@ void BRepGProp_Cinert::Perform(const BRepAdaptor_Curve& C)
       IyzLocal;
     dimLocal = IxLocal = IyLocal = IzLocal = IxxLocal = IyyLocal = IzzLocal = IxyLocal = IxzLocal =
       IyzLocal                                                                         = 0.0;
-    // modified by NIZHNY-MKK  Thu Jun  9 12:13:32 2005.END
 
     loc.Coord(xloc, yloc, zloc);
 
     int i;
 
-    // Calcul des integrales aux points de gauss :
     um = 0.5 * (Upper + Lower);
     ur = 0.5 * (Upper - Lower);
 
@@ -118,7 +102,7 @@ void BRepGProp_Cinert::Perform(const BRepAdaptor_Curve& C)
       IyyLocal += (x + z) * ds;
       IzzLocal += (x + y) * ds;
     }
-    // modified by NIZHNY-MKK  Thu Jun  9 12:13:47 2005.BEGIN
+
     dimLocal *= ur;
     IxLocal *= ur;
     IyLocal *= ur;
@@ -141,7 +125,6 @@ void BRepGProp_Cinert::Perform(const BRepAdaptor_Curve& C)
     Ixz += IxzLocal;
     Iyz += IyzLocal;
   }
-  // modified by NIZHNY-MKK  Thu Jun  9 12:13:55 2005.END
 
   inertia = gp_Mat(gp_XYZ(Ixx, -Ixy, -Ixz), gp_XYZ(-Ixy, Iyy, -Iyz), gp_XYZ(-Ixz, -Iyz, Izz));
 

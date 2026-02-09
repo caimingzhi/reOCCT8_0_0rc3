@@ -58,21 +58,15 @@ Geom2dHatch_Element& Geom2dHatch_Elements::ChangeFind(const int K)
   return (myMap.ChangeFind(K));
 }
 
-//=================================================================================================
-
 bool Geom2dHatch_Elements::CheckPoint(gp_Pnt2d&)
 {
   return true;
 }
 
-//=================================================================================================
-
 bool Geom2dHatch_Elements::Reject(const gp_Pnt2d&) const
 {
   return false;
 }
-
-//=================================================================================================
 
 bool Geom2dHatch_Elements::Segment(const gp_Pnt2d& P, gp_Lin2d& L, double& Par)
 {
@@ -80,8 +74,6 @@ bool Geom2dHatch_Elements::Segment(const gp_Pnt2d& P, gp_Lin2d& L, double& Par)
   myCurEdgePar = Probing_Start;
   return OtherSegment(P, L, Par);
 }
-
-//=================================================================================================
 
 bool Geom2dHatch_Elements::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double& Par)
 {
@@ -133,8 +125,7 @@ bool Geom2dHatch_Elements::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double& 
           double aSinA = aTanVec.Crossed(aLinDir);
           if (std::abs(aSinA) < 0.001)
           {
-            // too small angle - line and edge may be considered
-            // as tangent which is bad for classifier
+
             if (myCurEdgePar + Probing_Step < Probing_End)
               continue;
           }
@@ -170,21 +161,15 @@ bool Geom2dHatch_Elements::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double& 
   return false;
 }
 
-//=================================================================================================
-
 void Geom2dHatch_Elements::InitWires()
 {
   NumWire = 0;
 }
 
-//=================================================================================================
-
 bool Geom2dHatch_Elements::RejectWire(const gp_Lin2d&, const double) const
 {
   return false;
 }
-
-//=================================================================================================
 
 void Geom2dHatch_Elements::InitEdges()
 {
@@ -192,14 +177,10 @@ void Geom2dHatch_Elements::InitEdges()
   Iter.Initialize(myMap);
 }
 
-//=================================================================================================
-
 bool Geom2dHatch_Elements::RejectEdge(const gp_Lin2d&, const double) const
 {
   return false;
 }
-
-//=================================================================================================
 
 void Geom2dHatch_Elements::CurrentEdge(Geom2dAdaptor_Curve& E, TopAbs_Orientation& Or) const
 {
@@ -211,28 +192,20 @@ void Geom2dHatch_Elements::CurrentEdge(Geom2dAdaptor_Curve& E, TopAbs_Orientatio
   Or = Item.Orientation();
 }
 
-//=================================================================================================
-
 bool Geom2dHatch_Elements::MoreWires() const
 {
   return (NumWire == 0);
 }
-
-//=================================================================================================
 
 void Geom2dHatch_Elements::NextWire()
 {
   NumWire++;
 }
 
-//=================================================================================================
-
 bool Geom2dHatch_Elements::MoreEdges() const
 {
   return (Iter.More());
 }
-
-//=================================================================================================
 
 void Geom2dHatch_Elements::NextEdge()
 {

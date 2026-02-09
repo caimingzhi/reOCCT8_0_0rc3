@@ -10,10 +10,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_DraftTrihedron, GeomFill_TrihedronLaw)
 
-//=======================================================================
-// function : DDeriv
-// purpose  : computes (F/|F|)''
-//=======================================================================
 static gp_Vec DDeriv(const gp_Vec& F, const gp_Vec& DF, const gp_Vec& D2F)
 {
   double Norma = F.Magnitude();
@@ -26,8 +22,6 @@ static gp_Vec DDeriv(const gp_Vec& F, const gp_Vec& DF, const gp_Vec& D2F)
   return Result;
 }
 
-//=================================================================================================
-
 GeomFill_DraftTrihedron::GeomFill_DraftTrihedron(const gp_Vec& BiNormal, const double Angle)
 {
   B = BiNormal;
@@ -35,18 +29,12 @@ GeomFill_DraftTrihedron::GeomFill_DraftTrihedron(const gp_Vec& BiNormal, const d
   SetAngle(Angle);
 }
 
-//=================================================================================================
-
 void GeomFill_DraftTrihedron::SetAngle(const double Angle)
 {
   myAngle = M_PI / 2 + Angle;
   myCos   = std::cos(myAngle);
 }
 
-//=======================================================================
-// function : D0
-// purpose  : calculation of trihedron
-//=======================================================================
 bool GeomFill_DraftTrihedron::D0(const double Param,
                                  gp_Vec&      Tangent,
                                  gp_Vec&      Normal,
@@ -69,11 +57,8 @@ bool GeomFill_DraftTrihedron::D0(const double Param,
   double mu = myCos;
   mu        = myCos;
 
-  // La Normal est portee par la regle
   Normal.SetLinearForm(std::sqrt(1 - mu * mu), b, mu, v);
 
-  // Le reste suit....
-  // La tangente est perpendiculaire a la normale et a la direction de depouille
   Tangent = Normal.Crossed(B);
   Tangent.Normalize();
 
@@ -83,10 +68,6 @@ bool GeomFill_DraftTrihedron::D0(const double Param,
   return true;
 }
 
-//=======================================================================
-// function : D1
-// purpose  :  calculation of trihedron and first derivative
-//=======================================================================
 bool GeomFill_DraftTrihedron::D1(const double Param,
                                  gp_Vec&      Tangent,
                                  gp_Vec&      DTangent,
@@ -137,10 +118,6 @@ bool GeomFill_DraftTrihedron::D1(const double Param,
   return true;
 }
 
-//=======================================================================
-// function : D2
-// purpose  : calculation of trihedron and derivatives 1 et 2
-//=======================================================================
 bool GeomFill_DraftTrihedron::D2(const double Param,
                                  gp_Vec&      Tangent,
                                  gp_Vec&      DTangent,
@@ -214,16 +191,12 @@ bool GeomFill_DraftTrihedron::D2(const double Param,
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<GeomFill_TrihedronLaw> GeomFill_DraftTrihedron::Copy() const
 {
   occ::handle<GeomFill_DraftTrihedron> copy = new (GeomFill_DraftTrihedron)(B, myAngle - M_PI / 2);
   copy->SetCurve(myCurve);
   return copy;
 }
-
-//=================================================================================================
 
 int GeomFill_DraftTrihedron::NbIntervals(const GeomAbs_Shape S) const
 {
@@ -248,8 +221,6 @@ int GeomFill_DraftTrihedron::NbIntervals(const GeomAbs_Shape S) const
   return myCurve->NbIntervals(tmpS);
 }
 
-//=================================================================================================
-
 void GeomFill_DraftTrihedron::Intervals(NCollection_Array1<double>& TT, const GeomAbs_Shape S) const
 {
   GeomAbs_Shape tmpS = GeomAbs_C0;
@@ -273,11 +244,9 @@ void GeomFill_DraftTrihedron::Intervals(NCollection_Array1<double>& TT, const Ge
   myCurve->Intervals(TT, tmpS);
 }
 
-//=================================================================================================
-
 void GeomFill_DraftTrihedron::GetAverageLaw(gp_Vec& ATangent, gp_Vec& ANormal, gp_Vec& ABiNormal)
 {
-  int    Num = 20; // order of digitalization
+  int    Num = 20;
   gp_Vec T, N, BN;
   ATangent  = gp_Vec(0, 0, 0);
   ANormal   = gp_Vec(0, 0, 0);
@@ -301,14 +270,10 @@ void GeomFill_DraftTrihedron::GetAverageLaw(gp_Vec& ATangent, gp_Vec& ANormal, g
   ATangent /= Num + 1;
 }
 
-//=================================================================================================
-
 bool GeomFill_DraftTrihedron::IsConstant() const
 {
   return (myCurve->GetType() == GeomAbs_Line);
 }
-
-//=================================================================================================
 
 bool GeomFill_DraftTrihedron::IsOnlyBy3dCurve() const
 {
@@ -338,16 +303,15 @@ bool GeomFill_DraftTrihedron::IsOnlyBy3dCurve() const
       break;
     }
     case GeomAbs_Line:
-    { // La normale du plan de la courbe est il perpendiculaire a la BiNormale ?
+    {
       gp_Vec V;
       V.SetXYZ(myCurve->Line().Direction().XYZ());
       return V.IsParallel(B, Precision::Angular());
     }
     default:
-      return false; // pas de risques
+      return false;
   }
 
-  // La normale du plan de la courbe est il // a la BiNormale ?
   gp_Vec V;
   V.SetXYZ(TheAxe.Direction().XYZ());
   return V.IsParallel(B, Precision::Angular());

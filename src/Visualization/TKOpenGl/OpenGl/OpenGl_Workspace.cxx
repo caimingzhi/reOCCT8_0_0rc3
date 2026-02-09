@@ -10,8 +10,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_Workspace, Standard_Transient)
 
-//=================================================================================================
-
 void OpenGl_Material::Init(const OpenGl_Context&           theCtx,
                            const Graphic3d_MaterialAspect& theFront,
                            const Quantity_Color&           theFrontColor,
@@ -30,8 +28,6 @@ void OpenGl_Material::Init(const OpenGl_Context&           theCtx,
   }
 }
 
-//=================================================================================================
-
 void OpenGl_Material::init(const OpenGl_Context&           theCtx,
                            const Graphic3d_MaterialAspect& theMat,
                            const Quantity_Color&           theInteriorColor,
@@ -48,9 +44,9 @@ void OpenGl_Material::init(const OpenGl_Context&           theCtx,
   const NCollection_Vec3<float>& aSrcDif = theMat.DiffuseColor();
   const NCollection_Vec3<float>& aSrcSpe = theMat.SpecularColor();
   const NCollection_Vec3<float>& aSrcEms = theMat.EmissiveColor();
-  // clang-format off
-  aCommon.SpecularShininess.SetValues (aSrcSpe,128.0f * theMat.Shininess()); // interior color is ignored for Specular
-  // clang-format on
+
+  aCommon.SpecularShininess.SetValues(aSrcSpe, 128.0f * theMat.Shininess());
+
   switch (theMat.MaterialType())
   {
     case Graphic3d_MATERIAL_ASPECT:
@@ -77,8 +73,6 @@ void OpenGl_Material::init(const OpenGl_Context&           theCtx,
   aCommon.Emission          = theCtx.Vec4FromQuantityColor(aCommon.Emission);
 }
 
-//=================================================================================================
-
 OpenGl_Workspace::OpenGl_Workspace(OpenGl_View*                      theView,
                                    const occ::handle<OpenGl_Window>& theWindow)
     : myView(theView),
@@ -86,22 +80,21 @@ OpenGl_Workspace::OpenGl_Workspace(OpenGl_View*                      theView,
       myGlContext(!theWindow.IsNull() ? theWindow->GetGlContext() : nullptr),
       myUseZBuffer(true),
       myUseDepthWrite(true),
-      //
+
       myNbSkippedTranspElems(0),
       myRenderFilter(OpenGl_RenderFilter_Empty),
-      //
+
       myAspectsSet(&myDefaultAspects),
-      //
+
       myToAllowFaceCulling(false)
 {
   if (!myGlContext.IsNull() && myGlContext->MakeCurrent())
   {
     myGlContext->core11fwd->glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-    // General initialization of the context
     if (myGlContext->core11ffp != nullptr)
     {
-      // enable two-side lighting by default
+
       myGlContext->core11ffp->glLightModeli((GLenum)GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
       myGlContext->core11fwd->glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);
       if (myGlContext->caps->ffpEnable)
@@ -117,7 +110,7 @@ OpenGl_Workspace::OpenGl_Workspace(OpenGl_View*                      theView,
     }
     if (myGlContext->Vendor() == "microsoft corporation" && !myGlContext->IsGlGreaterEqual(1, 2))
     {
-      // this software implementation causes too slow rendering into GL_FRONT on modern Windows
+
       theView->SetImmediateModeDrawToFront(false);
     }
   }
@@ -130,8 +123,6 @@ OpenGl_Workspace::OpenGl_Workspace(OpenGl_View*                      theView,
   myFrontCulling.Aspect()->SetDrawEdges(false);
   myFrontCulling.Aspect()->SetAlphaMode(Graphic3d_AlphaMode_Opaque);
 }
-
-//=================================================================================================
 
 bool OpenGl_Workspace::Activate()
 {
@@ -167,7 +158,6 @@ bool OpenGl_Workspace::Activate()
 
   ResetAppliedAspect();
 
-  // reset state for safety
   myGlContext->BindProgram(occ::handle<OpenGl_ShaderProgram>());
   if (myGlContext->core20fwd != nullptr)
   {
@@ -180,10 +170,6 @@ bool OpenGl_Workspace::Activate()
   return true;
 }
 
-//=======================================================================
-// function : ResetAppliedAspect
-// purpose  : Sets default values of GL parameters in accordance with default aspects
-//=======================================================================
 void OpenGl_Workspace::ResetAppliedAspect()
 {
   myGlContext->BindDefaultVao();
@@ -203,8 +189,6 @@ void OpenGl_Workspace::ResetAppliedAspect()
   }
 }
 
-//=================================================================================================
-
 Graphic3d_PolygonOffset OpenGl_Workspace::SetDefaultPolygonOffset(
   const Graphic3d_PolygonOffset& theOffset)
 {
@@ -218,8 +202,6 @@ Graphic3d_PolygonOffset OpenGl_Workspace::SetDefaultPolygonOffset(
   return aPrev;
 }
 
-//=================================================================================================
-
 const OpenGl_Aspects* OpenGl_Workspace::SetAspects(const OpenGl_Aspects* theAspect)
 {
   const OpenGl_Aspects* aPrevAspects = myAspectsSet;
@@ -227,12 +209,9 @@ const OpenGl_Aspects* OpenGl_Workspace::SetAspects(const OpenGl_Aspects* theAspe
   return aPrevAspects;
 }
 
-//=================================================================================================
-
 const OpenGl_Aspects* OpenGl_Workspace::ApplyAspects(bool theToBindTextures)
 {
-  // bool toSuppressBackFaces = myView->BackfacingModel() ==
-  // Graphic3d_TypeOfBackfacingModel_BackCulled;
+
   Graphic3d_TypeOfBackfacingModel aCullFacesMode = myView->BackfacingModel();
   if (aCullFacesMode == Graphic3d_TypeOfBackfacingModel_Auto)
   {
@@ -249,7 +228,7 @@ const OpenGl_Aspects* OpenGl_Workspace::ApplyAspects(bool theToBindTextures)
             || (myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode_BlendAuto
                 && myAspectsSet->Aspect()->FrontMaterial().Transparency() != 0.0f))
         {
-          // disable culling in case of translucent shading aspect
+
           aCullFacesMode = Graphic3d_TypeOfBackfacingModel_DoubleSided;
         }
         else
@@ -267,7 +246,6 @@ const OpenGl_Aspects* OpenGl_Workspace::ApplyAspects(bool theToBindTextures)
   }
   myAspectFaceAppliedWithHL = myHighlightStyle;
 
-  // Aspect_POM_None means: do not change current settings
   if ((myAspectsSet->Aspect()->PolygonOffset().Mode & Aspect_POM_None) != Aspect_POM_None)
   {
     myGlContext->SetPolygonOffset(myAspectsSet->Aspect()->PolygonOffset());
@@ -285,10 +263,9 @@ const OpenGl_Aspects* OpenGl_Workspace::ApplyAspects(bool theToBindTextures)
     myGlContext->SetPolygonHatchStyle(myAspectsSet->Aspect()->HatchStyle());
   }
 
-  // Case of hidden line
   if (anIntstyle == Aspect_IS_HIDDENLINE)
   {
-    // copy all values including line edge aspect
+
     *myAspectFaceHl.Aspect() = *myAspectsSet->Aspect();
     myAspectFaceHl.Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
     myAspectFaceHl.Aspect()->SetInteriorColor(myView->BackgroundColor().GetRGB());
@@ -318,29 +295,22 @@ const OpenGl_Aspects* OpenGl_Workspace::ApplyAspects(bool theToBindTextures)
   return myAspectsSet;
 }
 
-//=================================================================================================
-
 int OpenGl_Workspace::Width() const
 {
   return !myView->GlWindow().IsNull() ? myView->GlWindow()->Width() : 0;
 }
-
-//=================================================================================================
 
 int OpenGl_Workspace::Height() const
 {
   return !myView->GlWindow().IsNull() ? myView->GlWindow()->Height() : 0;
 }
 
-//=================================================================================================
-
 occ::handle<OpenGl_FrameBuffer> OpenGl_Workspace::FBOCreate(const int theWidth, const int theHeight)
 {
-  // activate OpenGL context
+
   if (!Activate())
     return occ::handle<OpenGl_FrameBuffer>();
 
-  // create the FBO
   const occ::handle<OpenGl_Context>& aCtx = GetGlContext();
   aCtx->BindTextures(occ::handle<OpenGl_TextureSet>(), occ::handle<OpenGl_ShaderProgram>());
   occ::handle<OpenGl_FrameBuffer> aFrameBuffer = new OpenGl_FrameBuffer();
@@ -356,11 +326,9 @@ occ::handle<OpenGl_FrameBuffer> OpenGl_Workspace::FBOCreate(const int theWidth, 
   return aFrameBuffer;
 }
 
-//=================================================================================================
-
 void OpenGl_Workspace::FBORelease(occ::handle<OpenGl_FrameBuffer>& theFbo)
 {
-  // activate OpenGL context
+
   if (!Activate() || theFbo.IsNull())
   {
     return;
@@ -370,8 +338,6 @@ void OpenGl_Workspace::FBORelease(occ::handle<OpenGl_FrameBuffer>& theFbo)
   theFbo.Nullify();
 }
 
-//=================================================================================================
-
 bool OpenGl_Workspace::BufferDump(const occ::handle<OpenGl_FrameBuffer>& theFbo,
                                   Image_PixMap&                          theImage,
                                   const Graphic3d_BufferType&            theBufferType)
@@ -379,8 +345,6 @@ bool OpenGl_Workspace::BufferDump(const occ::handle<OpenGl_FrameBuffer>& theFbo,
   return !theImage.IsEmpty() && Activate()
          && OpenGl_FrameBuffer::BufferDump(GetGlContext(), theFbo, theImage, theBufferType);
 }
-
-//=================================================================================================
 
 bool OpenGl_Workspace::ShouldRender(const OpenGl_Element* theElement, const OpenGl_Group* theGroup)
 {
@@ -392,7 +356,6 @@ bool OpenGl_Workspace::ShouldRender(const OpenGl_Element* theElement, const Open
     }
   }
 
-  // render only non-raytracable elements when RayTracing is enabled
   if ((myRenderFilter & OpenGl_RenderFilter_NonRaytraceableOnly) != 0)
   {
     if (!theGroup->HasPersistence() && OpenGl_Raytrace::IsRaytracedElement(theElement))
@@ -408,7 +371,6 @@ bool OpenGl_Workspace::ShouldRender(const OpenGl_Element* theElement, const Open
     }
   }
 
-  // handle opaque/transparency render passes
   if ((myRenderFilter & OpenGl_RenderFilter_OpaqueOnly) != 0)
   {
     if (!theElement->IsFillDrawMode())
@@ -438,8 +400,6 @@ bool OpenGl_Workspace::ShouldRender(const OpenGl_Element* theElement, const Open
   }
   return true;
 }
-
-//=================================================================================================
 
 void OpenGl_Workspace::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

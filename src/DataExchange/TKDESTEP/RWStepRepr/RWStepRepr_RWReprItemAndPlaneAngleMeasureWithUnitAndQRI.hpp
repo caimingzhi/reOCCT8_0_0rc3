@@ -10,7 +10,6 @@ class Interface_Check;
 class StepRepr_ReprItemAndPlaneAngleMeasureWithUnitAndQRI;
 class StepData_StepWriter;
 
-//! Read & Write Module for ReprItemAndPlaneAngleMeasureWithUnitAndQRI
 class RWStepRepr_RWReprItemAndPlaneAngleMeasureWithUnitAndQRI
 {
 public:

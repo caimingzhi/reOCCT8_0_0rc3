@@ -10,41 +10,19 @@
 #include <Standard_OutOfRange.hpp>
 #include <utility>
 
-/**
- * Purpose:     An indexed map is used  to store keys and to  bind
- *              an index to them.  Each  new key stored in the map
- *              gets an index.  Index are  incremented as keys are
- *              stored in the map. A key can be found by the index
- *              and an index by the key.  No  key but the last can
- *              be  removed so the  indices   are in the range 1..
- *              Extent.  An Item is stored with each key.
- *
- *              This   class is   similar  to  IndexedMap     from
- *              NCollection  with the Item as  a new feature. Note
- *              the important difference on  the operator  ().  In
- *              the IndexedMap this operator returns  the Key.  In
- *              the IndexedDataMap this operator returns the Item.
- *
- *              See  the  class   Map   from NCollection   for   a
- *              discussion about the number of buckets.
- */
-
 template <class TheKeyType, class TheItemType, class Hasher = NCollection_DefaultHasher<TheKeyType>>
 class NCollection_IndexedDataMap : public NCollection_BaseMap
 {
 public:
-  //! STL-compliant typedef for key type
   typedef TheKeyType key_type;
-  //! STL-compliant typedef for value type
+
   typedef TheItemType value_type;
   typedef Hasher      hasher;
 
 private:
-  //!    Adaptation of the TListNode to the INDEXEDDatamap
   class IndexedDataMapNode : public NCollection_TListNode<TheItemType>
   {
   public:
-    //! Constructor with 'Next'
     IndexedDataMapNode(const TheKeyType&     theKey1,
                        const int             theIndex,
                        const TheItemType&    theItem,
@@ -55,7 +33,6 @@ private:
     {
     }
 
-    //! Constructor with 'Next'
     IndexedDataMapNode(TheKeyType&&          theKey1,
                        const int             theIndex,
                        const TheItemType&    theItem,
@@ -66,7 +43,6 @@ private:
     {
     }
 
-    //! Constructor with 'Next'
     IndexedDataMapNode(const TheKeyType&     theKey1,
                        const int             theIndex,
                        TheItemType&&         theItem,
@@ -77,7 +53,6 @@ private:
     {
     }
 
-    //! Constructor with 'Next'
     IndexedDataMapNode(TheKeyType&&          theKey1,
                        const int             theIndex,
                        TheItemType&&         theItem,
@@ -88,13 +63,10 @@ private:
     {
     }
 
-    //! Key1
     TheKeyType& Key1() noexcept { return myKey1; }
 
-    //! Index
     int& Index() noexcept { return myIndex; }
 
-    //! Static deleter to be passed to BaseList
     static void delNode(NCollection_ListNode*                   theNode,
                         occ::handle<NCollection_BaseAllocator>& theAl) noexcept
     {
@@ -108,91 +80,72 @@ private:
   };
 
 public:
-  //!   Implementation of the Iterator interface.
   class Iterator
   {
   public:
-    //! Empty constructor
     Iterator()
         : myMap(nullptr),
           myIndex(0)
     {
     }
 
-    //! Constructor
     Iterator(const NCollection_IndexedDataMap& theMap)
         : myMap((NCollection_IndexedDataMap*)&theMap),
           myIndex(1)
     {
     }
 
-    //! Query if the end of collection is reached by iterator
     bool More() const noexcept { return (myMap != nullptr) && (myIndex <= myMap->Extent()); }
 
-    //! Make a step along the collection
     void Next() noexcept { ++myIndex; }
 
-    //! Value access
     const TheItemType& Value() const
     {
       Standard_NoSuchObject_Raise_if(!More(), "NCollection_IndexedDataMap::Iterator::Value");
       return myMap->FindFromIndex(myIndex);
     }
 
-    //! ChangeValue access
     TheItemType& ChangeValue() const
     {
       Standard_NoSuchObject_Raise_if(!More(), "NCollection_IndexedDataMap::Iterator::ChangeValue");
       return myMap->ChangeFromIndex(myIndex);
     }
 
-    //! Key
     const TheKeyType& Key() const
     {
       Standard_NoSuchObject_Raise_if(!More(), "NCollection_IndexedDataMap::Iterator::Key");
       return myMap->FindKey(myIndex);
     }
 
-    //! Performs comparison of two iterators.
     bool IsEqual(const Iterator& theOther) const noexcept
     {
       return myMap == theOther.myMap && myIndex == theOther.myIndex;
     }
 
   private:
-    NCollection_IndexedDataMap* myMap;   //!< Pointer to current node
-    int                         myIndex; //!< Current index
+    NCollection_IndexedDataMap* myMap;
+    int                         myIndex;
   };
 
-  //! Shorthand for a regular iterator type.
   typedef NCollection_StlIterator<std::forward_iterator_tag, Iterator, TheItemType, false> iterator;
 
-  //! Shorthand for a constant iterator type.
   typedef NCollection_StlIterator<std::forward_iterator_tag, Iterator, TheItemType, true>
     const_iterator;
 
-  //! Returns an iterator pointing to the first element in the map.
   iterator begin() const noexcept { return Iterator(*this); }
 
-  //! Returns an iterator referring to the past-the-end element in the map.
   iterator end() const noexcept { return Iterator(); }
 
-  //! Returns a const iterator pointing to the first element in the map.
   const_iterator cbegin() const noexcept { return Iterator(*this); }
 
-  //! Returns a const iterator referring to the past-the-end element in the map.
   const_iterator cend() const noexcept { return Iterator(); }
 
 public:
-  // ---------- PUBLIC METHODS ------------
-
-  //! Empty constructor.
   NCollection_IndexedDataMap()
       : NCollection_BaseMap(1, true, occ::handle<NCollection_BaseAllocator>())
   {
   }
 
-  //! Constructor
   explicit NCollection_IndexedDataMap(
     const int                                     theNbBuckets,
     const occ::handle<NCollection_BaseAllocator>& theAllocator = nullptr)
@@ -200,25 +153,19 @@ public:
   {
   }
 
-  //! Copy constructor
   NCollection_IndexedDataMap(const NCollection_IndexedDataMap& theOther)
       : NCollection_BaseMap(theOther.NbBuckets(), true, theOther.myAllocator)
   {
     *this = theOther;
   }
 
-  //! Move constructor
   NCollection_IndexedDataMap(NCollection_IndexedDataMap&& theOther) noexcept
       : NCollection_BaseMap(std::forward<NCollection_BaseMap>(theOther))
   {
   }
 
-  //! Exchange the content of two maps without re-allocations.
-  //! Notice that allocators will be swapped as well!
   void Exchange(NCollection_IndexedDataMap& theOther) noexcept { this->exchangeMapsData(theOther); }
 
-  //! Assignment.
-  //! This method does not change the internal allocator.
   NCollection_IndexedDataMap& Assign(const NCollection_IndexedDataMap& theOther)
   {
     if (this == &theOther)
@@ -228,7 +175,7 @@ public:
     int anExt = theOther.Extent();
     if (anExt)
     {
-      ReSize(anExt - 1); // mySize is same after resize
+      ReSize(anExt - 1);
       for (int anIndexIter = 1; anIndexIter <= anExt; ++anIndexIter)
       {
         const TheKeyType&   aKey1  = theOther.FindKey(anIndexIter);
@@ -244,13 +191,11 @@ public:
     return *this;
   }
 
-  //! Assignment operator
   NCollection_IndexedDataMap& operator=(const NCollection_IndexedDataMap& theOther)
   {
     return Assign(theOther);
   }
 
-  //! Move operator
   NCollection_IndexedDataMap& operator=(NCollection_IndexedDataMap&& theOther) noexcept
   {
     if (this == &theOther)
@@ -259,7 +204,6 @@ public:
     return *this;
   }
 
-  //! ReSize
   void ReSize(const int N)
   {
     NCollection_ListNode** ppNewData1 = nullptr;
@@ -293,10 +237,6 @@ public:
     }
   }
 
-  //! Returns the Index of already bound Key or appends new Key with specified Item value.
-  //! @param theKey1 Key to search (and to bind, if it was not bound already)
-  //! @param theItem Item value to set for newly bound Key; ignored if Key was already bound
-  //! @return index of Key
   int Add(const TheKeyType& theKey1, const TheItemType& theItem)
   {
     if (Resizable())
@@ -316,10 +256,6 @@ public:
     return aNewIndex;
   }
 
-  //! Returns the Index of already bound Key or appends new Key with specified Item value.
-  //! @param theKey1 Key to search (and to bind, if it was not bound already)
-  //! @param theItem Item value to set for newly bound Key; ignored if Key was already bound
-  //! @return index of Key
   int Add(TheKeyType&& theKey1, const TheItemType& theItem)
   {
     if (Resizable())
@@ -340,10 +276,6 @@ public:
     return aNewIndex;
   }
 
-  //! Returns the Index of already bound Key or appends new Key with specified Item value.
-  //! @param theKey1 Key to search (and to bind, if it was not bound already)
-  //! @param theItem Item value to set for newly bound Key; ignored if Key was already bound
-  //! @return index of Key
   int Add(const TheKeyType& theKey1, TheItemType&& theItem)
   {
     if (Resizable())
@@ -364,10 +296,6 @@ public:
     return aNewIndex;
   }
 
-  //! Returns the Index of already bound Key or appends new Key with specified Item value.
-  //! @param theKey1 Key to search (and to bind, if it was not bound already)
-  //! @param theItem Item value to set for newly bound Key; ignored if Key was already bound
-  //! @return index of Key
   int Add(TheKeyType&& theKey1, TheItemType&& theItem)
   {
     if (Resizable())
@@ -390,21 +318,18 @@ public:
     return aNewIndex;
   }
 
-  //! Contains
   bool Contains(const TheKeyType& theKey1) const
   {
     IndexedDataMapNode* aNode;
     return static_cast<bool>(lookup(theKey1, aNode));
   }
 
-  //! Substitute
   void Substitute(const int theIndex, const TheKeyType& theKey1, const TheItemType& theItem)
   {
     Standard_OutOfRange_Raise_if(theIndex < 1 || theIndex > Extent(),
                                  "NCollection_IndexedDataMap::Substitute : "
                                  "Index is out of range");
 
-    // check if theKey1 is not already in the map
     size_t              aHash;
     IndexedDataMapNode* aNode;
     if (lookup(theKey1, aNode, aHash))
@@ -419,10 +344,8 @@ public:
       return;
     }
 
-    // Find the node for the index I
     aNode = (IndexedDataMapNode*)myData2[theIndex - 1];
 
-    // remove the old key
     const size_t        iK = HashCode(aNode->Key1(), NbBuckets());
     IndexedDataMapNode* q  = (IndexedDataMapNode*)myData1[iK];
     if (q == aNode)
@@ -434,14 +357,12 @@ public:
       q->Next() = aNode->Next();
     }
 
-    // update the node
     aNode->Key1()        = theKey1;
     aNode->ChangeValue() = theItem;
     aNode->Next()        = myData1[aHash];
     myData1[aHash]       = aNode;
   }
 
-  //! Swaps two elements with the given indices.
   void Swap(const int theIndex1, const int theIndex2)
   {
     Standard_OutOfRange_Raise_if(theIndex1 < 1 || theIndex1 > Extent() || theIndex2 < 1
@@ -460,17 +381,14 @@ public:
     myData2[theIndex1 - 1] = aP2;
   }
 
-  //! RemoveLast
   void RemoveLast()
   {
     const int aLastIndex = Extent();
     Standard_OutOfRange_Raise_if(aLastIndex == 0, "NCollection_IndexedDataMap::RemoveLast");
 
-    // Find the node for the last index and remove it
     IndexedDataMapNode* p   = (IndexedDataMapNode*)myData2[aLastIndex - 1];
     myData2[aLastIndex - 1] = nullptr;
 
-    // remove the key
     const size_t        iK1 = HashCode(p->Key1(), NbBuckets());
     IndexedDataMapNode* q   = (IndexedDataMapNode*)myData1[iK1];
     if (q == p)
@@ -486,8 +404,6 @@ public:
     Decrement();
   }
 
-  //! Remove the key of the given index.
-  //! Caution! The index of the last key can be changed.
   void RemoveFromIndex(const int theIndex)
   {
     const int aLastInd = Extent();
@@ -500,8 +416,6 @@ public:
     RemoveLast();
   }
 
-  //! Remove the given key.
-  //! Caution! The index of the last key can be changed.
   void RemoveKey(const TheKeyType& theKey1)
   {
     int anIndToRemove = FindIndex(theKey1);
@@ -511,7 +425,6 @@ public:
     }
   }
 
-  //! FindKey
   const TheKeyType& FindKey(const int theIndex) const
   {
     Standard_OutOfRange_Raise_if(theIndex < 1 || theIndex > Extent(),
@@ -520,7 +433,6 @@ public:
     return aNode->Key1();
   }
 
-  //! FindFromIndex
   const TheItemType& FindFromIndex(const int theIndex) const
   {
     Standard_OutOfRange_Raise_if(theIndex < 1 || theIndex > Extent(),
@@ -529,10 +441,8 @@ public:
     return aNode->Value();
   }
 
-  //! operator ()
   const TheItemType& operator()(const int theIndex) const { return FindFromIndex(theIndex); }
 
-  //! ChangeFromIndex
   TheItemType& ChangeFromIndex(const int theIndex)
   {
     Standard_OutOfRange_Raise_if(theIndex < 1 || theIndex > Extent(),
@@ -541,10 +451,8 @@ public:
     return aNode->ChangeValue();
   }
 
-  //! operator ()
   TheItemType& operator()(const int theIndex) { return ChangeFromIndex(theIndex); }
 
-  //! FindIndex
   int FindIndex(const TheKeyType& theKey1) const
   {
     IndexedDataMapNode* aNode;
@@ -555,7 +463,6 @@ public:
     return 0;
   }
 
-  //! FindFromKey
   const TheItemType& FindFromKey(const TheKeyType& theKey1) const
   {
     Standard_NoSuchObject_Raise_if(IsEmpty(), "NCollection_IndexedDataMap::FindFromKey");
@@ -567,7 +474,6 @@ public:
     throw Standard_NoSuchObject("NCollection_IndexedDataMap::FindFromKey");
   }
 
-  //! ChangeFromKey
   TheItemType& ChangeFromKey(const TheKeyType& theKey1)
   {
     Standard_NoSuchObject_Raise_if(IsEmpty(), "NCollection_IndexedDataMap::ChangeFromKey");
@@ -579,15 +485,11 @@ public:
     throw Standard_NoSuchObject("NCollection_IndexedDataMap::ChangeFromKey");
   }
 
-  //! Seek returns pointer to Item by Key. Returns
-  //! NULL if Key was not found.
   const TheItemType* Seek(const TheKeyType& theKey1) const
   {
     return const_cast<NCollection_IndexedDataMap*>(this)->ChangeSeek(theKey1);
   }
 
-  //! ChangeSeek returns modifiable pointer to Item by Key. Returns
-  //! NULL if Key was not found.
   TheItemType* ChangeSeek(const TheKeyType& theKey1)
   {
     IndexedDataMapNode* aNode;
@@ -598,8 +500,6 @@ public:
     return nullptr;
   }
 
-  //! Find value for key with copying.
-  //! @return true if key was found
   bool FindFromKey(const TheKeyType& theKey1, TheItemType& theValue) const
   {
     IndexedDataMapNode* aNode;
@@ -611,14 +511,11 @@ public:
     return false;
   }
 
-  //! Clear data. If doReleaseMemory is false then the table of
-  //! buckets is not released and will be reused.
   void Clear(const bool doReleaseMemory = false)
   {
     Destroy(IndexedDataMapNode::delNode, doReleaseMemory);
   }
 
-  //! Clear data and reset allocator
   void Clear(const occ::handle<NCollection_BaseAllocator>& theAllocator)
   {
     Clear(theAllocator != this->myAllocator);
@@ -626,40 +523,29 @@ public:
       (!theAllocator.IsNull() ? theAllocator : NCollection_BaseAllocator::CommonBaseAllocator());
   }
 
-  //! Destructor
   ~NCollection_IndexedDataMap() override { Clear(true); }
 
-  //! Size
   int Size() const noexcept { return Extent(); }
 
 protected:
-  //! Lookup for particular key in map.
-  //! @param[in] theKey key to compute hash
-  //! @param[out] theNode the detected node with equal key. Can be null.
-  //! @param[out] theHash computed bounded hash code for current key.
-  //! @return true if key is found
   bool lookup(const TheKeyType& theKey, IndexedDataMapNode*& theNode, size_t& theHash) const
   {
     theHash = HashCode(theKey, NbBuckets());
     if (IsEmpty())
-      return false; // Not found
+      return false;
     for (theNode = (IndexedDataMapNode*)myData1[theHash]; theNode;
          theNode = (IndexedDataMapNode*)theNode->Next())
     {
       if (IsEqual(theNode->Key1(), theKey))
         return true;
     }
-    return false; // Not found
+    return false;
   }
 
-  //! Lookup for particular key in map.
-  //! @param[in] theKey key to compute hash
-  //! @param[out] theNode the detected node with equal key. Can be null.
-  //! @return true if key is found
   bool lookup(const TheKeyType& theKey, IndexedDataMapNode*& theNode) const
   {
     if (IsEmpty())
-      return false; // Not found
+      return false;
     for (theNode = (IndexedDataMapNode*)myData1[HashCode(theKey, NbBuckets())]; theNode;
          theNode = (IndexedDataMapNode*)theNode->Next())
     {
@@ -668,7 +554,7 @@ protected:
         return true;
       }
     }
-    return false; // Not found
+    return false;
   }
 
   bool IsEqual(const TheKeyType& theKey1, const TheKeyType& theKey2) const

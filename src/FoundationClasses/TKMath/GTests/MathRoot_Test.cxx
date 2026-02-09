@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -25,8 +14,6 @@ namespace
   constexpr double THE_TOLERANCE = 1.0e-10;
   constexpr double THE_PI        = 3.14159265358979323846;
 
-  //! Function with derivative: f(x) = x^2 - 2, f'(x) = 2x
-  //! Root at x = sqrt(2) ~= 1.41421356...
   class SqrtTwoFunc
   {
   public:
@@ -44,8 +31,6 @@ namespace
     }
   };
 
-  //! Function: f(x) = cos(x) - x
-  //! Root at x ~= 0.739085...
   class CosMinusXFunc
   {
   public:
@@ -63,8 +48,6 @@ namespace
     }
   };
 
-  //! Function: f(x) = x^3 - x - 2
-  //! Root at x ~= 1.5214...
   class CubicFunc
   {
   public:
@@ -82,8 +65,6 @@ namespace
     }
   };
 
-  //! Function: f(x) = sin(x)
-  //! Roots at x = n*PI for integer n
   class SinFunc
   {
   public:
@@ -101,8 +82,6 @@ namespace
     }
   };
 
-  //! Function: f(x) = e^x - 3
-  //! Root at x = ln(3) ~= 1.0986...
   class ExpMinusThreeFunc
   {
   public:
@@ -120,8 +99,6 @@ namespace
     }
   };
 
-  //! Linear function: f(x) = 2x - 4
-  //! Root at x = 2
   class LinearFunc
   {
   public:
@@ -140,10 +117,6 @@ namespace
   };
 } // namespace
 
-// ============================================================================
-// Newton method tests
-// ============================================================================
-
 TEST(MathRoot_NewtonTest, SqrtTwo)
 {
   SqrtTwoFunc            aFunc;
@@ -158,7 +131,7 @@ TEST(MathRoot_NewtonTest, CosMinusX)
   CosMinusXFunc          aFunc;
   MathRoot::ScalarResult aResult = MathRoot::Newton(aFunc, 0.5);
   ASSERT_TRUE(aResult.IsDone());
-  // Verify root satisfies equation
+
   double aFx = std::cos(*aResult.Root) - *aResult.Root;
   EXPECT_NEAR(aFx, 0.0, THE_TOLERANCE);
 }
@@ -168,7 +141,7 @@ TEST(MathRoot_NewtonTest, CubicEquation)
   CubicFunc              aFunc;
   MathRoot::ScalarResult aResult = MathRoot::Newton(aFunc, 1.5);
   ASSERT_TRUE(aResult.IsDone());
-  // Verify root
+
   double aFx = *aResult.Root * *aResult.Root * *aResult.Root - *aResult.Root - 2.0;
   EXPECT_NEAR(aFx, 0.0, THE_TOLERANCE);
 }
@@ -202,10 +175,6 @@ TEST(MathRoot_NewtonTest, CustomTolerance)
   EXPECT_NEAR(*aResult.Root, std::sqrt(2.0), 1.0e-14);
 }
 
-// ============================================================================
-// Newton bounded tests
-// ============================================================================
-
 TEST(MathRoot_NewtonBoundedTest, SqrtTwoWithBounds)
 {
   SqrtTwoFunc            aFunc;
@@ -221,10 +190,6 @@ TEST(MathRoot_NewtonBoundedTest, SinWithBounds)
   ASSERT_TRUE(aResult.IsDone());
   EXPECT_NEAR(*aResult.Root, THE_PI, THE_TOLERANCE);
 }
-
-// ============================================================================
-// Secant method tests
-// ============================================================================
 
 TEST(MathRoot_SecantTest, SqrtTwo)
 {
@@ -250,10 +215,6 @@ TEST(MathRoot_SecantTest, ExpFunction)
   ASSERT_TRUE(aResult.IsDone());
   EXPECT_NEAR(*aResult.Root, std::log(3.0), THE_TOLERANCE);
 }
-
-// ============================================================================
-// Brent method tests
-// ============================================================================
 
 TEST(MathRoot_BrentTest, SqrtTwo)
 {
@@ -300,7 +261,7 @@ TEST(MathRoot_BrentTest, ExpFunction)
 TEST(MathRoot_BrentTest, InvalidBracket)
 {
   SqrtTwoFunc aFunc;
-  // Both endpoints positive - no sign change
+
   MathRoot::ScalarResult aResult = MathRoot::Brent(aFunc, 2.0, 3.0);
   EXPECT_EQ(aResult.Status, MathRoot::Status::InvalidInput);
 }
@@ -308,15 +269,11 @@ TEST(MathRoot_BrentTest, InvalidBracket)
 TEST(MathRoot_BrentTest, ReversedBracket)
 {
   SqrtTwoFunc aFunc;
-  // Reversed bracket (upper < lower)
+
   MathRoot::ScalarResult aResult = MathRoot::Brent(aFunc, 2.0, 1.0);
   ASSERT_TRUE(aResult.IsDone());
   EXPECT_NEAR(*aResult.Root, std::sqrt(2.0), THE_TOLERANCE);
 }
-
-// ============================================================================
-// Bisection method tests
-// ============================================================================
 
 TEST(MathRoot_BisectionTest, SqrtTwo)
 {
@@ -346,14 +303,10 @@ TEST(MathRoot_BisectionTest, SinPi)
 TEST(MathRoot_BisectionTest, InvalidBracket)
 {
   SqrtTwoFunc aFunc;
-  // No sign change
+
   MathRoot::ScalarResult aResult = MathRoot::Bisection(aFunc, 2.0, 3.0);
   EXPECT_EQ(aResult.Status, MathRoot::Status::InvalidInput);
 }
-
-// ============================================================================
-// Bisection-Newton hybrid tests
-// ============================================================================
 
 TEST(MathRoot_BisectionNewtonTest, SqrtTwo)
 {
@@ -384,20 +337,15 @@ TEST(MathRoot_BisectionNewtonTest, FasterThanPureBisection)
   ASSERT_TRUE(aBisec.IsDone());
   ASSERT_TRUE(aHybrid.IsDone());
 
-  // Hybrid should converge in fewer iterations
   EXPECT_LE(aHybrid.NbIterations, aBisec.NbIterations);
 }
-
-// ============================================================================
-// Convergence and iteration tests
-// ============================================================================
 
 TEST(MathRoot_ConvergenceTest, NewtonIterationCount)
 {
   SqrtTwoFunc            aFunc;
   MathRoot::ScalarResult aResult = MathRoot::Newton(aFunc, 1.0);
   ASSERT_TRUE(aResult.IsDone());
-  // Newton should converge quickly (typically < 10 iterations)
+
   EXPECT_LT(aResult.NbIterations, 15);
 }
 
@@ -406,13 +354,9 @@ TEST(MathRoot_ConvergenceTest, BrentIterationCount)
   SqrtTwoFunc            aFunc;
   MathRoot::ScalarResult aResult = MathRoot::Brent(aFunc, 1.0, 2.0);
   ASSERT_TRUE(aResult.IsDone());
-  // Brent should converge reasonably fast
+
   EXPECT_LT(aResult.NbIterations, 50);
 }
-
-// ============================================================================
-// Boolean conversion tests
-// ============================================================================
 
 TEST(MathRoot_BoolConversionTest, SuccessfulResultIsTrue)
 {

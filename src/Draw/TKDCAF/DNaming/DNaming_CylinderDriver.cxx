@@ -23,29 +23,15 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DNaming_CylinderDriver, TFunction_Driver)
 
-//=================================================================================================
-
 DNaming_CylinderDriver::DNaming_CylinderDriver() = default;
 
-//=======================================================================
-// function : Validate
-// purpose  : Validates labels of a function in <log>.
-//=======================================================================
 void DNaming_CylinderDriver::Validate(occ::handle<TFunction_Logbook>&) const {}
 
-//=======================================================================
-// function : MustExecute
-// purpose  : Analyse in <log> if the loaded function must be executed
-//=======================================================================
 bool DNaming_CylinderDriver::MustExecute(const occ::handle<TFunction_Logbook>&) const
 {
   return true;
 }
 
-//=======================================================================
-// function : Execute
-// purpose  : Execute the function and push in <log> the impacted labels
-//=======================================================================
 int DNaming_CylinderDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
 {
   occ::handle<TFunction_Function> aFunction;
@@ -74,7 +60,7 @@ int DNaming_CylinderDriver::Execute(occ::handle<TFunction_Logbook>& theLog) cons
     aFunction->SetFailure(WRONG_AXIS);
     return -1;
   }
-  // Creation of gp axis (gp_Ax2):
+
   if (aTopoDSAxis.ShapeType() != TopAbs_EDGE && aTopoDSAxis.ShapeType() != TopAbs_WIRE)
   {
 #ifdef OCCT_DEBUG
@@ -115,7 +101,7 @@ int DNaming_CylinderDriver::Execute(occ::handle<TFunction_Logbook>& theLog) cons
   }
 
   occ::handle<TNaming_NamedShape> aPrevCyl = DNaming::GetFunctionResult(aFunction);
-  // Save location
+
   TopLoc_Location aLocation;
   if (!aPrevCyl.IsNull() && !aPrevCyl->IsEmpty())
   {
@@ -138,10 +124,8 @@ int DNaming_CylinderDriver::Execute(occ::handle<TFunction_Logbook>& theLog) cons
     return -1;
   }
 
-  // Naming
   LoadNamingDS(RESPOSITION(aFunction), aMakeCylinder);
 
-  // restore location
   if (!aLocation.IsIdentity())
     TNaming::Displace(RESPOSITION(aFunction), aLocation, true);
 
@@ -149,8 +133,6 @@ int DNaming_CylinderDriver::Execute(occ::handle<TFunction_Logbook>& theLog) cons
   aFunction->SetFailure(DONE);
   return 0;
 }
-
-//=================================================================================================
 
 void DNaming_CylinderDriver::LoadNamingDS(const TDF_Label&          theResultLabel,
                                           BRepPrimAPI_MakeCylinder& MS) const
@@ -160,7 +142,6 @@ void DNaming_CylinderDriver::LoadNamingDS(const TDF_Label&          theResultLab
 
   BRepPrim_Cylinder& S = MS.Cylinder();
 
-  // Load faces of the Cyl :
   if (S.HasBottom())
   {
     TopoDS_Face     BottomFace = S.BottomFace();

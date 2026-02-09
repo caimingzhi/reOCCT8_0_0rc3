@@ -11,7 +11,6 @@ class StepVisual_AreaInSet;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AreaInSet
 class RWStepVisual_RWAreaInSet
 {
 public:

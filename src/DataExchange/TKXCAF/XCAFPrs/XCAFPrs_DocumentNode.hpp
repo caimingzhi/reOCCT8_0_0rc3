@@ -6,24 +6,23 @@
 #include <TDF_Label.hpp>
 #include <TopLoc_Location.hpp>
 
-//! Structure defining document node.
 struct XCAFPrs_DocumentNode
 {
-  TCollection_AsciiString Id;         //!< string identifier
-  TDF_Label               Label;      //!< label in the document
-  TDF_Label               RefLabel;   //!< reference label in the document
-  XCAFPrs_Style           Style;      //!< node style
-  TopLoc_Location         Location;   //!< node global transformation
-  TopLoc_Location         LocalTrsf;  //!< node transformation relative to parent
-  TDF_ChildIterator       ChildIter;  //!< child iterator
-  bool                    IsAssembly; //!< flag indicating that this label is assembly
+  TCollection_AsciiString Id;
+  TDF_Label               Label;
+  TDF_Label               RefLabel;
+  XCAFPrs_Style           Style;
+  TopLoc_Location         Location;
+  TopLoc_Location         LocalTrsf;
+  TDF_ChildIterator       ChildIter;
+  bool                    IsAssembly;
 
   XCAFPrs_DocumentNode()
       : IsAssembly(false)
   {
   }
 
-public: // Methods for hash map
+public:
   bool operator==(const XCAFPrs_DocumentNode& theOther) const { return Id == theOther.Id; }
 };
 

@@ -15,8 +15,6 @@ class FEmTool_ElementaryCriterion;
 class FEmTool_Curve;
 class math_Matrix;
 
-//! defined an Linear Criteria to used in variational
-//! Smoothing of points.
 class AppDef_LinearCriteria : public AppDef_SmoothCriterion
 {
 
@@ -61,7 +59,6 @@ public:
 
   Standard_EXPORT void Gradient(const int Element, const int Dimension, math_Vector& G) override;
 
-  //! Convert the assembly Vector in an Curve;
   Standard_EXPORT void InputVector(
     const math_Vector&                                                             X,
     const occ::handle<NCollection_HArray2<occ::handle<NCollection_HArray1<int>>>>& AssTable)

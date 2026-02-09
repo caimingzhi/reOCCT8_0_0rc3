@@ -11,7 +11,6 @@ class StepBasic_LocalTime : public Standard_Transient
 {
 
 public:
-  //! Returns a LocalTime
   Standard_EXPORT StepBasic_LocalTime();
 
   Standard_EXPORT void Init(const int    aHourComponent,

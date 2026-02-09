@@ -1,15 +1,11 @@
-// Created on : Fri May 08 19:02:07 2020
+
 
 #include <StepKinematics_LinearFlexibleAndPinionPair.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_LinearFlexibleAndPinionPair,
                            StepKinematics_LowOrderKinematicPairWithMotionCoupling)
 
-//=================================================================================================
-
 StepKinematics_LinearFlexibleAndPinionPair::StepKinematics_LinearFlexibleAndPinionPair() = default;
-
-//=================================================================================================
 
 void StepKinematics_LinearFlexibleAndPinionPair::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -33,14 +29,10 @@ void StepKinematics_LinearFlexibleAndPinionPair::Init(
   myPinionRadius = thePinionRadius;
 }
 
-//=================================================================================================
-
 double StepKinematics_LinearFlexibleAndPinionPair::PinionRadius() const
 {
   return myPinionRadius;
 }
-
-//=================================================================================================
 
 void StepKinematics_LinearFlexibleAndPinionPair::SetPinionRadius(const double thePinionRadius)
 {

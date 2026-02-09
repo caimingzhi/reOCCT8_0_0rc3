@@ -14,7 +14,6 @@ class StepVisual_SurfaceSideStyle : public Standard_Transient
 {
 
 public:
-  //! Returns a SurfaceSideStyle
   Standard_EXPORT StepVisual_SurfaceSideStyle();
 
   Standard_EXPORT void Init(

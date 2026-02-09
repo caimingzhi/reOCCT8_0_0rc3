@@ -16,22 +16,16 @@ class GeomFill_Frenet;
 class GeomFill_TrihedronLaw;
 class gp_Vec;
 
-//! Trihedron in the case of sweeping along a guide curve defined
-//! by the orthogonal plan on the trajectory
 class GeomFill_GuideTrihedronPlan : public GeomFill_TrihedronWithGuide
 {
 
 public:
   Standard_EXPORT GeomFill_GuideTrihedronPlan(const occ::handle<Adaptor3d_Curve>& theGuide);
 
-  //! initialize curve of trihedron law
-  //! @return true in case if execution end correctly
   Standard_EXPORT bool SetCurve(const occ::handle<Adaptor3d_Curve>& thePath) override;
 
   Standard_EXPORT occ::handle<GeomFill_TrihedronLaw> Copy() const override;
 
-  //! Give a status to the Law
-  //! Returns PipeOk (default implementation)
   Standard_EXPORT GeomFill_PipeError ErrorStatus() const override;
 
   Standard_EXPORT occ::handle<Adaptor3d_Curve> Guide() const override;
@@ -60,35 +54,17 @@ public:
                           gp_Vec&      DBiNormal,
                           gp_Vec&      D2BiNormal) override;
 
-  //! Sets the bounds of the parametric interval on
-  //! the function
-  //! This determines the derivatives in these values if the
-  //! function is not Cn.
   Standard_EXPORT void SetInterval(const double First, const double Last) override;
 
-  //! Returns the number of intervals for continuity
-  //! <S>.
-  //! May be one if Continuity(me) >= <S>
   Standard_EXPORT int NbIntervals(const GeomAbs_Shape S) const override;
 
-  //! Stores in <T> the parameters bounding the intervals
-  //! of continuity <S>.
-  //!
-  //! The array must provide enough room to accommodate
-  //! for the parameters. i.e. T.Length() > NbIntervals()
   Standard_EXPORT void Intervals(NCollection_Array1<double>& T,
                                  const GeomAbs_Shape         S) const override;
 
-  //! Get average value of M(t) and V(t) it is useful to
-  //! make fast approximation of rational surfaces.
   Standard_EXPORT void GetAverageLaw(gp_Vec& ATangent, gp_Vec& ANormal, gp_Vec& ABiNormal) override;
 
-  //! Say if the law is Constant
   Standard_EXPORT bool IsConstant() const override;
 
-  //! Say if the law is defined, only by the 3d Geometry of
-  //! the set Curve
-  //! Return False by Default.
   Standard_EXPORT bool IsOnlyBy3dCurve() const override;
 
   Standard_EXPORT void Origine(const double OrACR1, const double OrACR2) override;

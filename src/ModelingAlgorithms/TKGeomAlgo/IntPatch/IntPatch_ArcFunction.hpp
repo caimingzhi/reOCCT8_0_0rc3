@@ -38,8 +38,6 @@ public:
 
   const occ::handle<Adaptor3d_Surface>& Surface() const;
 
-  //! Returns the point, which has been computed
-  //! while the last calling Value() method
   const gp_Pnt& LastComputedPoint() const;
 
 private:

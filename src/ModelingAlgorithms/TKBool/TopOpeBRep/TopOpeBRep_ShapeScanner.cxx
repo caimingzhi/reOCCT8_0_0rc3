@@ -17,18 +17,12 @@
 #include <TCollection_AsciiString.hpp>
 #include <TopOpeBRepTool_ShapeExplorer.hpp>
 
-//=================================================================================================
-
 TopOpeBRep_ShapeScanner::TopOpeBRep_ShapeScanner() = default;
-
-//=================================================================================================
 
 void TopOpeBRep_ShapeScanner::Clear()
 {
   myBoxSort.Clear();
 }
-
-//=================================================================================================
 
 void TopOpeBRep_ShapeScanner::AddBoxesMakeCOB(const TopoDS_Shape&    S,
                                               const TopAbs_ShapeEnum TS,
@@ -36,8 +30,6 @@ void TopOpeBRep_ShapeScanner::AddBoxesMakeCOB(const TopoDS_Shape&    S,
 {
   myBoxSort.AddBoxesMakeCOB(S, TS, TA);
 }
-
-//=================================================================================================
 
 void TopOpeBRep_ShapeScanner::Init(TopOpeBRepTool_ShapeExplorer& E)
 {
@@ -48,7 +40,7 @@ void TopOpeBRep_ShapeScanner::Init(TopOpeBRepTool_ShapeExplorer& E)
   for (; E.More(); E.Next())
   {
     const TopoDS_Shape& cur = E.Current();
-    //    TopAbs_ShapeEnum t = cur.ShapeType();
+
     Init(cur);
     bool b = More();
     if (b)
@@ -56,14 +48,10 @@ void TopOpeBRep_ShapeScanner::Init(TopOpeBRepTool_ShapeExplorer& E)
   }
 }
 
-//=================================================================================================
-
 void TopOpeBRep_ShapeScanner::Init(const TopoDS_Shape& E)
 {
   myListIterator = myBoxSort.Compare(E);
 }
-
-//=================================================================================================
 
 bool TopOpeBRep_ShapeScanner::More() const
 {
@@ -71,14 +59,10 @@ bool TopOpeBRep_ShapeScanner::More() const
   return b;
 }
 
-//=================================================================================================
-
 void TopOpeBRep_ShapeScanner::Next()
 {
   myListIterator.Next();
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& TopOpeBRep_ShapeScanner::Current() const
 {
@@ -86,21 +70,15 @@ const TopoDS_Shape& TopOpeBRep_ShapeScanner::Current() const
   return E;
 }
 
-//=================================================================================================
-
 const TopOpeBRepTool_BoxSort& TopOpeBRep_ShapeScanner::BoxSort() const
 {
   return myBoxSort;
 }
 
-//=================================================================================================
-
 TopOpeBRepTool_BoxSort& TopOpeBRep_ShapeScanner::ChangeBoxSort()
 {
   return myBoxSort;
 }
-
-//=================================================================================================
 
 int TopOpeBRep_ShapeScanner::Index() const
 {
@@ -109,8 +87,6 @@ int TopOpeBRep_ShapeScanner::Index() const
     n = myListIterator.Value();
   return n;
 }
-
-//=================================================================================================
 
 Standard_OStream& TopOpeBRep_ShapeScanner::DumpCurrent(Standard_OStream& OS) const
 {

@@ -223,7 +223,7 @@ Geom2dGcc_Circ2d3TanIter::Geom2dGcc_Circ2d3TanIter(const GccEnt_QualifiedCirc& Q
     gp_Pnt2d point1(centre1.XY() + R1 * gp_XY(std::cos(Ufirst(1)), std::sin(Ufirst(1))));
     gp_Vec2d Tan1(gp_XY(-std::sin(Ufirst(1)), std::cos(Ufirst(1))));
     gp_Pnt2d point2, point3;
-    //     gp_Vec2d Tan2,Tan3,Nor2,Nor3;
+
     gp_Vec2d Tan2, Tan3;
     Geom2dGcc_CurveTool::D1(Cu2, Ufirst(2), point2, Tan2);
     Geom2dGcc_CurveTool::D1(Cu3, Ufirst(3), point3, Tan3);
@@ -528,7 +528,6 @@ Geom2dGcc_Circ2d3TanIter::Geom2dGcc_Circ2d3TanIter(const GccEnt_QualifiedLin& Qu
       cirsol = circ.ThisSolution(1);
       gp_Pnt2d centre(cirsol.Location());
 
-      // creation vaariables intermediaires pour WNT
       gp_XY  dummy1 = centre.XY() - L1.Location().XY();
       gp_XY  dummy2(-L1.Direction().Y(), L1.Direction().X());
       double pscal = dummy1.Dot(dummy2);
@@ -807,7 +806,7 @@ Geom2dGcc_Circ2d3TanIter::Geom2dGcc_Circ2d3TanIter(const Geom2dGcc_QCurve& Quali
     Root.Root(Ufirst);
     Func.Value(Ufirst, Umin);
     gp_Pnt2d point1, point2;
-    //     gp_Vec2d Tan1,Tan2,Nor1,Nor2;
+
     gp_Vec2d Tan1, Tan2;
     Geom2dGcc_CurveTool::D1(Cu1, Ufirst(2), point1, Tan1);
     Geom2dGcc_CurveTool::D1(Cu2, Ufirst(3), point2, Tan2);
@@ -938,7 +937,7 @@ Geom2dGcc_Circ2d3TanIter::Geom2dGcc_Circ2d3TanIter(const Geom2dGcc_QCurve& Quali
     Root.Root(Ufirst);
     Func.Value(Ufirst, Umin);
     gp_Pnt2d point3;
-    //     gp_Vec2d Tan3,Nor3;
+
     gp_Vec2d Tan3;
     Geom2dGcc_CurveTool::D1(Cu1, Ufirst(3), point3, Tan3);
     GccAna_Circ2d3Tan circ(Point2, Point3, point3, Tol);
@@ -1350,7 +1349,7 @@ Geom2dGcc_Circ2d3TanIter::Geom2dGcc_Circ2d3TanIter(const GccEnt_QualifiedCirc& Q
     double   R1 = C1.Radius();
     gp_Pnt2d point1(centre1.XY() + R1 * gp_XY(std::cos(Ufirst(1)), std::sin(Ufirst(1))));
     gp_Pnt2d point2;
-    //     gp_Vec2d Tan2,Nor2;
+
     gp_Vec2d Tan2;
     Geom2dGcc_CurveTool::D1(Cu2, Ufirst(2), point2, Tan2);
     GccAna_Circ2d3Tan circ(point1, point2, Point3, Tol);

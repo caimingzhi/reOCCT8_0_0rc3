@@ -2,8 +2,6 @@
 #include <gp_Vec.hpp>
 #include <LProp3d_SurfaceTool.hpp>
 
-//=================================================================================================
-
 void LProp3d_SurfaceTool::Value(const occ::handle<Adaptor3d_Surface>& S,
                                 const double                          U,
                                 const double                          V,
@@ -11,8 +9,6 @@ void LProp3d_SurfaceTool::Value(const occ::handle<Adaptor3d_Surface>& S,
 {
   P = S->Value(U, V);
 }
-
-//=================================================================================================
 
 void LProp3d_SurfaceTool::D1(const occ::handle<Adaptor3d_Surface>& S,
                              const double                          U,
@@ -23,8 +19,6 @@ void LProp3d_SurfaceTool::D1(const occ::handle<Adaptor3d_Surface>& S,
 {
   S->D1(U, V, P, D1U, D1V);
 }
-
-//=================================================================================================
 
 void LProp3d_SurfaceTool::D2(const occ::handle<Adaptor3d_Surface>& S,
                              const double                          U,
@@ -39,8 +33,6 @@ void LProp3d_SurfaceTool::D2(const occ::handle<Adaptor3d_Surface>& S,
   S->D2(U, V, P, D1U, D1V, D2U, D2V, DUV);
 }
 
-//=================================================================================================
-
 gp_Vec LProp3d_SurfaceTool::DN(const occ::handle<Adaptor3d_Surface>& S,
                                const double                          U,
                                const double                          V,
@@ -49,8 +41,6 @@ gp_Vec LProp3d_SurfaceTool::DN(const occ::handle<Adaptor3d_Surface>& S,
 {
   return S->DN(U, V, IU, IV);
 }
-
-//=================================================================================================
 
 int LProp3d_SurfaceTool::Continuity(const occ::handle<Adaptor3d_Surface>& S)
 {
@@ -74,8 +64,6 @@ int LProp3d_SurfaceTool::Continuity(const occ::handle<Adaptor3d_Surface>& S)
   };
   return 0;
 }
-
-//=================================================================================================
 
 void LProp3d_SurfaceTool::Bounds(const occ::handle<Adaptor3d_Surface>& S,
                                  double&                               U1,

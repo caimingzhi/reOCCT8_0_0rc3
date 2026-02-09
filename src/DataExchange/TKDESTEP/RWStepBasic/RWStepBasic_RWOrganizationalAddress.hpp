@@ -11,7 +11,6 @@ class StepBasic_OrganizationalAddress;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for OrganizationalAddress
 class RWStepBasic_RWOrganizationalAddress
 {
 public:

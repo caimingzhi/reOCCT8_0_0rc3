@@ -1,15 +1,4 @@
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ShapePersistent_Poly.hpp>
 #include <ShapePersistent_HArray1.hpp>
@@ -90,7 +79,6 @@ occ::handle<Poly_Triangulation> ShapePersistent_Poly::pTriangulation::Import() c
 {
   occ::handle<Poly_Triangulation> aTriangulation;
 
-  // Triangulation is not used
   if (myNodes && myTriangles)
   {
     if (myUVNodes)
@@ -198,14 +186,12 @@ Handle(ShapePersistent_Poly::Triangulation) ShapePersistent_Poly::Translate(
       aPT               = new Triangulation;
       aPT->myPersistent = new pTriangulation;
 
-      // Create an array of nodes
       NCollection_Array1<gp_Pnt> pArrayOfNodes(1, thePolyTriang->NbNodes());
       for (int i = 1; i <= thePolyTriang->NbNodes(); i++)
       {
         pArrayOfNodes.SetValue(i, thePolyTriang->Node(i));
       }
 
-      // Create an array of triangles
       NCollection_Array1<Poly_Triangle> pArrayOfTriangles(1, thePolyTriang->NbTriangles());
       for (int i = 1; i <= thePolyTriang->NbTriangles(); i++)
       {
@@ -222,7 +208,6 @@ Handle(ShapePersistent_Poly::Triangulation) ShapePersistent_Poly::Translate(
       if (thePolyTriang->HasUVNodes())
       {
 
-        // Create an array of UV-nodes
         NCollection_Array1<gp_Pnt2d> pArrayOfUVNodes(1, thePolyTriang->NbNodes());
         for (int i = 1; i <= thePolyTriang->NbNodes(); i++)
         {

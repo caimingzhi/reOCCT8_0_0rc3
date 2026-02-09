@@ -9,11 +9,7 @@
 #include <NCollection_HArray1.hpp>
 #include <StepGeom_Surface.hpp>
 
-//=================================================================================================
-
 RWStepGeom_RWCurveBoundedSurface::RWStepGeom_RWCurveBoundedSurface() = default;
-
-//=================================================================================================
 
 void RWStepGeom_RWCurveBoundedSurface::ReadStep(
   const occ::handle<StepData_StepReaderData>&      data,
@@ -21,16 +17,12 @@ void RWStepGeom_RWCurveBoundedSurface::ReadStep(
   occ::handle<Interface_Check>&                    ach,
   const occ::handle<StepGeom_CurveBoundedSurface>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "curve_bounded_surface"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   data->ReadString(num, 1, "representation_item.name", ach, aRepresentationItem_Name);
-
-  // Own fields of CurveBoundedSurface
 
   occ::handle<StepGeom_Surface> aBasisSurface;
   data->ReadEntity(num, 2, "basis_surface", ach, STANDARD_TYPE(StepGeom_Surface), aBasisSurface);
@@ -53,22 +45,15 @@ void RWStepGeom_RWCurveBoundedSurface::ReadStep(
   bool aImplicitOuter;
   data->ReadBoolean(num, 4, "implicit_outer", ach, aImplicitOuter);
 
-  // Initialize entity
   ent->Init(aRepresentationItem_Name, aBasisSurface, aBoundaries, aImplicitOuter);
 }
-
-//=================================================================================================
 
 void RWStepGeom_RWCurveBoundedSurface::WriteStep(
   StepData_StepWriter&                             SW,
   const occ::handle<StepGeom_CurveBoundedSurface>& ent) const
 {
 
-  // Inherited fields of RepresentationItem
-
   SW.Send(ent->StepRepr_RepresentationItem::Name());
-
-  // Own fields of CurveBoundedSurface
 
   SW.Send(ent->BasisSurface());
 
@@ -83,15 +68,9 @@ void RWStepGeom_RWCurveBoundedSurface::WriteStep(
   SW.SendBoolean(ent->ImplicitOuter());
 }
 
-//=================================================================================================
-
 void RWStepGeom_RWCurveBoundedSurface::Share(const occ::handle<StepGeom_CurveBoundedSurface>& ent,
                                              Interface_EntityIterator& iter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Own fields of CurveBoundedSurface
 
   iter.AddItem(ent->BasisSurface());
 

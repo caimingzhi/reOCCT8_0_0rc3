@@ -4,10 +4,7 @@
 #include <TopOpeBRepBuild_WireEdgeSet.hpp>
 #include <TopOpeBRepDS_CurveIterator.hpp>
 
-// Standard_IMPORT extern bool GLOBAL_faces2d;
 extern bool GLOBAL_faces2d;
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder::GFillONPartsWES(const TopoDS_Shape&                   FOR,
                                               const TopOpeBRepBuild_GTopo&          G,

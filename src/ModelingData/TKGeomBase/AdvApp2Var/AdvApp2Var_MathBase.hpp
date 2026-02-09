@@ -6,7 +6,6 @@
 class AdvApp2Var_MathBase
 {
 public:
-  ///
   Standard_EXPORT static int mmapcmp_(integer*, integer*, integer*, double*, double*);
 
   Standard_EXPORT static int mmdrc11_(integer*,
@@ -41,7 +40,7 @@ public:
                                        doublereal*,
                                        integer*,
                                        integer*);
-  ///
+
   Standard_EXPORT static int mmcglc1_(integer*    ndimax,
                                       integer*    ndimen,
                                       integer*    ncoeff,
@@ -131,10 +130,7 @@ public:
 
   Standard_EXPORT static int mmgaus1_(
     integer* ndimf,
-    int (*bfunx)(integer*    ninteg,
-                 doublereal* parame,
-                 doublereal* vfunj1,
-                 integer*    iercod), // mmfunj1_() from Smoothing.cxx
+    int (*bfunx)(integer* ninteg, doublereal* parame, doublereal* vfunj1, integer* iercod),
     integer*    k,
     doublereal* xd,
     doublereal* xf,

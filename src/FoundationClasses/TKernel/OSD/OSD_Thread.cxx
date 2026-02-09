@@ -1,8 +1,5 @@
 #include <OSD_Thread.hpp>
 
-//=============================================
-// OSD_Thread::OSD_Thread
-//=============================================
 OSD_Thread::OSD_Thread()
     : myFunc(nullptr),
       myThread(OSD_PTHREAD_NULL),
@@ -10,10 +7,6 @@ OSD_Thread::OSD_Thread()
       myPriority(0)
 {
 }
-
-//=============================================
-// OSD_Thread::OSD_Thread
-//=============================================
 
 OSD_Thread::OSD_Thread(const OSD_ThreadFunction& func)
     : myFunc(func),
@@ -23,10 +16,6 @@ OSD_Thread::OSD_Thread(const OSD_ThreadFunction& func)
 {
 }
 
-//=============================================
-// OSD_Thread::OSD_Thread
-//=============================================
-
 OSD_Thread::OSD_Thread(const OSD_Thread& other)
     : myFunc(other.myFunc),
       myThread(OSD_PTHREAD_NULL),
@@ -35,47 +24,33 @@ OSD_Thread::OSD_Thread(const OSD_Thread& other)
   Assign(other);
 }
 
-//=============================================
-// OSD_Thread::Assign
-//=============================================
-
 void OSD_Thread::Assign(const OSD_Thread& other)
 {
-  // copy function pointer
+
   myFunc     = other.myFunc;
   myPriority = other.myPriority;
 
-  // detach current thread
   Detach();
 
 #ifdef _WIN32
-  // duplicate the source handle
+
   if (other.myThread)
   {
-    HANDLE hProc = GetCurrentProcess(); // we are always within the same process
+    HANDLE hProc = GetCurrentProcess();
     DuplicateHandle(hProc, other.myThread, hProc, &myThread, 0, TRUE, DUPLICATE_SAME_ACCESS);
   }
 #else
-  // On Unix/Linux, just copy the thread id
+
   myThread = other.myThread;
 #endif
 
   myThreadId = other.myThreadId;
 }
 
-//=============================================
-// OSD_Thread::~OSD_Thread
-//=============================================
-
 OSD_Thread::~OSD_Thread()
 {
   Detach();
 }
-
-//=============================================
-// function : SetPriority
-// purpose  : Set the thread priority relative to the caller's priority
-//=============================================
 
 void OSD_Thread::SetPriority(const int thePriority)
 {
@@ -86,27 +61,16 @@ void OSD_Thread::SetPriority(const int thePriority)
 #endif
 }
 
-//=============================================
-// OSD_Thread::SetFunction
-//=============================================
-
 void OSD_Thread::SetFunction(const OSD_ThreadFunction& func)
 {
-  // close current handle if any
+
   Detach();
   myFunc = func;
 }
 
-//=============================================
-// OSD_Thread::Run
-//=============================================
-
 #ifdef _WIN32
   #include <malloc.h>
 
-// On Windows the signature of the thread function differs from that on UNIX/Linux.
-// As we use the same definition of the thread function on all platforms (POSIX-like),
-// we need to introduce appropriate wrapper function on Windows.
 struct WNTthread_data
 {
   void*              data;
@@ -133,20 +97,16 @@ bool OSD_Thread::Run(void* const data,
   if (!myFunc)
     return false;
 
-  // detach current thread, if open
   Detach();
 
 #ifdef _WIN32
 
-  // allocate intermediate data structure to pass both data parameter and address
-  // of the real thread function to Windows thread wrapper function
   WNTthread_data* adata = (WNTthread_data*)malloc(sizeof(WNTthread_data));
   if (!adata)
     return false;
   adata->data = data;
   adata->func = myFunc;
 
-  // then try to create a new thread
   DWORD aThreadId = DWORD();
   myThread        = CreateThread(NULL, WNTStackSize, WNTthread_func, adata, 0, &aThreadId);
   myThreadId      = aThreadId;
@@ -172,21 +132,15 @@ bool OSD_Thread::Run(void* const data,
   return myThread != OSD_PTHREAD_NULL;
 }
 
-//=============================================
-// OSD_Thread::Detach
-//=============================================
-
 void OSD_Thread::Detach()
 {
 #ifdef _WIN32
 
-  // On Windows, close current handle
   if (myThread)
     CloseHandle(myThread);
 
 #else
 
-  // On Unix/Linux, detach a thread
   if (myThread)
     pthread_detach(myThread);
 
@@ -196,13 +150,9 @@ void OSD_Thread::Detach()
   myThreadId = 0;
 }
 
-//=============================================
-// OSD_Thread::Wait
-//=============================================
-
 bool OSD_Thread::Wait(void*& theResult)
 {
-  // check that thread handle is not null
+
   theResult = nullptr;
   if (!myThread)
   {
@@ -210,13 +160,12 @@ bool OSD_Thread::Wait(void*& theResult)
   }
 
 #ifdef _WIN32
-  // On Windows, wait for the thread handle to be signaled
+
   if (WaitForSingleObject(myThread, INFINITE) != WAIT_OBJECT_0)
   {
     return false;
   }
 
-  // and convert result of the thread execution to void*
   DWORD anExitCode;
   if (GetExitCodeThread(myThread, &anExitCode))
   {
@@ -228,7 +177,7 @@ bool OSD_Thread::Wait(void*& theResult)
   myThreadId = 0;
   return true;
 #else
-  // On Unix/Linux, join the thread
+
   if (pthread_join(myThread, &theResult) != 0)
   {
     return false;
@@ -240,13 +189,9 @@ bool OSD_Thread::Wait(void*& theResult)
 #endif
 }
 
-//=============================================
-// OSD_Thread::Wait
-//=============================================
-
 bool OSD_Thread::Wait(const int theTimeMs, void*& theResult)
 {
-  // check that thread handle is not null
+
   theResult = nullptr;
   if (!myThread)
   {
@@ -254,7 +199,7 @@ bool OSD_Thread::Wait(const int theTimeMs, void*& theResult)
   }
 
 #ifdef _WIN32
-  // On Windows, wait for the thread handle to be signaled
+
   DWORD ret = WaitForSingleObject(myThread, theTimeMs);
   if (ret == WAIT_OBJECT_0)
   {
@@ -300,7 +245,7 @@ bool OSD_Thread::Wait(const int theTimeMs, void*& theResult)
   }
 
   #else
-  // join the thread without timeout
+
   (void)theTimeMs;
   if (pthread_join(myThread, &theResult) != 0)
   {
@@ -313,18 +258,10 @@ bool OSD_Thread::Wait(const int theTimeMs, void*& theResult)
 #endif
 }
 
-//=============================================
-// OSD_Thread::GetId
-//=============================================
-
 Standard_ThreadId OSD_Thread::GetId() const
 {
   return myThreadId;
 }
-
-//=============================================
-// OSD_Thread::Current
-//=============================================
 
 Standard_ThreadId OSD_Thread::Current()
 {

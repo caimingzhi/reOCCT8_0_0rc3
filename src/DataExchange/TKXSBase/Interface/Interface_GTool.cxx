@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_GeneralLib.hpp>
 #include <Interface_GeneralModule.hpp>
@@ -96,15 +85,13 @@ void Interface_GTool::ClearEntities()
   thentmod.Clear();
 }
 
-//=================================================================================================
-
 bool Interface_GTool::Select(const occ::handle<Standard_Transient>& ent,
                              occ::handle<Interface_GeneralModule>&  gmod,
                              int&                                   CN,
                              const bool                             enforce)
 {
   const occ::handle<Standard_Type>& aType = ent->DynamicType();
-  int                               num   = thentmod.FindIndex(aType); // (ent);
+  int                               num   = thentmod.FindIndex(aType);
   if (num == 0 || enforce)
   {
     if (thelib.Select(ent, gmod, CN))

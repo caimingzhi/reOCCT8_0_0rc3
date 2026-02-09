@@ -8,9 +8,6 @@
 #include <Vrml_SFRotation.hpp>
 #include <Standard_OStream.hpp>
 
-//! specifies a PerspectiveCamera node of VRML specifying properties of cameras.
-//! A perspective camera defines a perspective projection from a viewpoint. The viewing
-//! volume for a perspective camera is a truncated right pyramid.
 class Vrml_PerspectiveCamera
 {
 public:

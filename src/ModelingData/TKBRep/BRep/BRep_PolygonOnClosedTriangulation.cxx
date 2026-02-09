@@ -7,8 +7,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_PolygonOnClosedTriangulation, BRep_PolygonOnTriangulation)
 
-//=================================================================================================
-
 BRep_PolygonOnClosedTriangulation::BRep_PolygonOnClosedTriangulation(
   const occ::handle<Poly_PolygonOnTriangulation>& P1,
   const occ::handle<Poly_PolygonOnTriangulation>& P2,
@@ -19,14 +17,10 @@ BRep_PolygonOnClosedTriangulation::BRep_PolygonOnClosedTriangulation(
 {
 }
 
-//=================================================================================================
-
 bool BRep_PolygonOnClosedTriangulation::IsPolygonOnClosedTriangulation() const
 {
   return true;
 }
-
-//=================================================================================================
 
 void BRep_PolygonOnClosedTriangulation::PolygonOnTriangulation2(
   const occ::handle<Poly_PolygonOnTriangulation>& P2)
@@ -34,15 +28,11 @@ void BRep_PolygonOnClosedTriangulation::PolygonOnTriangulation2(
   myPolygon2 = P2;
 }
 
-//=================================================================================================
-
 const occ::handle<Poly_PolygonOnTriangulation>& BRep_PolygonOnClosedTriangulation::
   PolygonOnTriangulation2() const
 {
   return myPolygon2;
 }
-
-//=================================================================================================
 
 occ::handle<BRep_CurveRepresentation> BRep_PolygonOnClosedTriangulation::Copy() const
 {
@@ -54,8 +44,6 @@ occ::handle<BRep_CurveRepresentation> BRep_PolygonOnClosedTriangulation::Copy() 
 
   return P;
 }
-
-//=================================================================================================
 
 void BRep_PolygonOnClosedTriangulation::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

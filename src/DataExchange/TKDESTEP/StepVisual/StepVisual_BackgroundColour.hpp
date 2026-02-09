@@ -9,7 +9,6 @@ class StepVisual_BackgroundColour : public StepVisual_Colour
 {
 
 public:
-  //! Returns a BackgroundColour
   Standard_EXPORT StepVisual_BackgroundColour();
 
   Standard_EXPORT void Init(const StepVisual_AreaOrView& aPresentation);

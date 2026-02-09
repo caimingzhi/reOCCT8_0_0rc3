@@ -56,7 +56,7 @@ static int StepFile_Read(const char*                                 theName,
                          const occ::handle<StepData_FileRecognizer>& theRecogHeader,
                          const occ::handle<StepData_FileRecognizer>& theRecogData)
 {
-  // if stream is not provided, open file stream here
+
   std::istream*                 aStreamPtr = theIStream;
   std::shared_ptr<std::istream> aFileStream;
   if (aStreamPtr == nullptr)
@@ -110,11 +110,11 @@ static int StepFile_Read(const char*                                 theName,
   std::lock_guard<std::mutex> aLock(GetGlobalReadMutex());
 
   int nbhead, nbrec, nbpar;
-  aFileDataModel.GetFileNbR(&nbhead, &nbrec, &nbpar); // renvoi par lex/yacc
+  aFileDataModel.GetFileNbR(&nbhead, &nbrec, &nbpar);
   occ::handle<StepData_StepReaderData> undirec =
-    // clang-format off
-    new StepData_StepReaderData(nbhead,nbrec,nbpar, theStepModel->SourceCodePage());  // creation tableau de records
-  // clang-format on
+
+    new StepData_StepReaderData(nbhead, nbrec, nbpar, theStepModel->SourceCodePage());
+
   for (int nr = 1; nr <= nbrec; nr++)
   {
     int   nbarg;
@@ -154,13 +154,11 @@ static int StepFile_Read(const char*                                 theName,
   c.Show(sout);
 #endif
 
-  //   Analyse : par StepReaderTool
-
   StepData_StepReaderTool readtool(undirec, theProtocol);
   readtool.SetErrorHandle(true);
 
-  readtool.PrepareHeader(theRecogHeader); // Header. reco nul -> pour Protocol
-  readtool.Prepare(theRecogData);         // Data.   reco nul -> pour Protocol
+  readtool.PrepareHeader(theRecogHeader);
+  readtool.Prepare(theRecogData);
 
   sout << "      ... Parameters prepared ...\n";
 

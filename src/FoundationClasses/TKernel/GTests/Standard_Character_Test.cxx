@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_Character.hpp>
 
@@ -17,13 +6,11 @@
 
 TEST(Standard_Character_Test, OCC29925_CharacterClassificationFunctions)
 {
-  // Test that all character classification functions work without crashes
-  // for all valid ASCII chars (including extended)
+
   for (int i = 0; i < 256; i++)
   {
     char c = (char)(unsigned char)i;
 
-    // These functions should not throw exceptions for any valid ASCII character
     EXPECT_NO_THROW(IsAlphabetic(c));
     EXPECT_NO_THROW(IsDigit(c));
     EXPECT_NO_THROW(IsXDigit(c));
@@ -39,7 +26,6 @@ TEST(Standard_Character_Test, OCC29925_CharacterClassificationFunctions)
     EXPECT_NO_THROW(UpperCase(c));
   }
 
-  // Verify some specific character classifications
   EXPECT_TRUE(IsAlphabetic('A'));
   EXPECT_TRUE(IsAlphabetic('z'));
   EXPECT_FALSE(IsAlphabetic('5'));

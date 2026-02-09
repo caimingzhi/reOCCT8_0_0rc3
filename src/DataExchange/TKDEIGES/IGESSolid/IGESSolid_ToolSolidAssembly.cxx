@@ -19,10 +19,9 @@ void IGESSolid_ToolSolidAssembly::ReadOwnParams(const occ::handle<IGESSolid_Soli
                                                 const occ::handle<IGESData_IGESReaderData>& IR,
                                                 IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
-  int nbitems; // szv#4:S4163:12Mar99 `i` moved in for
-  // occ::handle<IGESData_IGESEntity> anent; //szv#4:S4163:12Mar99 moved down
-  // occ::handle<IGESGeom_TransformationMatrix> amatr; //szv#4:S4163:12Mar99 moved down
+
+  int nbitems;
+
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>           tempItems;
   occ::handle<NCollection_HArray1<occ::handle<IGESGeom_TransformationMatrix>>> tempMatrices;
 
@@ -33,11 +32,10 @@ void IGESSolid_ToolSolidAssembly::ReadOwnParams(const occ::handle<IGESSolid_Soli
     tempMatrices = new NCollection_HArray1<occ::handle<IGESGeom_TransformationMatrix>>(1, nbitems);
 
     occ::handle<IGESData_IGESEntity> anent;
-    int                              i; // svv Jan 10 2000 : porting on DEC
+    int                              i;
     for (i = 1; i <= nbitems; i++)
     {
-      // st = PR.ReadEntity(IR,PR.Current(), "Solid assembly items", anent); //szv#4:S4163:12Mar99
-      // moved in if
+
       if (PR.ReadEntity(IR, PR.Current(), "Solid assembly items", anent))
         tempItems->SetValue(i, anent);
     }
@@ -45,9 +43,7 @@ void IGESSolid_ToolSolidAssembly::ReadOwnParams(const occ::handle<IGESSolid_Soli
     occ::handle<IGESGeom_TransformationMatrix> amatr;
     for (i = 1; i <= nbitems; i++)
     {
-      // st = PR.ReadEntity(IR,PR.Current(), "Matrices",
-      // STANDARD_TYPE(IGESGeom_TransformationMatrix),
-      // amatr, true); //szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "Matrices",
@@ -118,7 +114,7 @@ void IGESSolid_ToolSolidAssembly::OwnCopy(const occ::handle<IGESSolid_SolidAssem
 }
 
 IGESData_DirChecker IGESSolid_ToolSolidAssembly::DirChecker(
-  const occ::handle<IGESSolid_SolidAssembly>& /* ent */) const
+  const occ::handle<IGESSolid_SolidAssembly>&) const
 {
   IGESData_DirChecker DC(184, 0, 1);
 
@@ -131,9 +127,9 @@ IGESData_DirChecker IGESSolid_ToolSolidAssembly::DirChecker(
   return DC;
 }
 
-void IGESSolid_ToolSolidAssembly::OwnCheck(const occ::handle<IGESSolid_SolidAssembly>& /* ent */,
+void IGESSolid_ToolSolidAssembly::OwnCheck(const occ::handle<IGESSolid_SolidAssembly>&,
                                            const Interface_ShareTool&,
-                                           occ::handle<Interface_Check>& /* ach */) const
+                                           occ::handle<Interface_Check>&) const
 {
 }
 
@@ -142,7 +138,7 @@ void IGESSolid_ToolSolidAssembly::OwnDump(const occ::handle<IGESSolid_SolidAssem
                                           Standard_OStream&                           S,
                                           const int                                   level) const
 {
-  //  int upper = ent->NbItems();
+
   S << "IGESSolid_SolidAssembly\n"
     << "Items : ";
   IGESData_DumpEntities(S, dumper, level, 1, ent->NbItems(), ent->Item);

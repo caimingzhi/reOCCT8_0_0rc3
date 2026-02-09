@@ -28,9 +28,6 @@
 
 static double PIpPI = M_PI + M_PI;
 
-//=============================================================================
-//==                                          E m p t y   C o n s t r u c t o r
-//==
 CREATE(void)
 {
   done      = false;
@@ -40,9 +37,6 @@ CREATE(void)
   memset(paramonc, 0, sizeof(paramonc));
 }
 
-//=============================================================================
-//==                                                 L i n e  -   Q u a d r i c
-//==
 CREATE(const gp_Lin& L, const IntAna_Quadric& Quad)
 {
   Perform(L, Quad);
@@ -53,19 +47,6 @@ PERFORM(const gp_Lin& L, const IntAna_Quadric& Quad)
 
   double Qxx, Qyy, Qzz, Qxy, Qxz, Qyz, Qx, Qy, Qz, QCte;
   done = inquadric = parallel = false;
-
-  //----------------------------------------------------------------------
-  //-- Substitution de x=t Lx + Lx0       ( exprime dans                 )
-  //--                 y=t Ly + Ly0       (  le systeme de coordonnees   )
-  //--                 z=t Lz + Lz0       (  canonique                   )
-  //--
-  //-- Dans     Qxx x**2 + Qyy y**2 + Qzz z**2
-  //--          + 2 ( Qxy x y  + Qxz x z  + Qyz y z  )
-  //--          + 2 ( Qx x + Qy y + Qz z )
-  //--          + QCte
-  //--
-  //-- Done un polynome en t : A2 t**2 + A1 t + A0 avec :
-  //----------------------------------------------------------------------
 
   double Lx0, Ly0, Lz0, Lx, Ly, Lz;
 
@@ -110,9 +91,6 @@ PERFORM(const gp_Lin& L, const IntAna_Quadric& Quad)
   }
 }
 
-//=============================================================================
-//==                                            C i r c l e   -   Q u a d r i c
-//==
 CREATE(const gp_Circ& C, const IntAna_Quadric& Quad)
 {
   Perform(C, Quad);
@@ -123,17 +101,6 @@ PERFORM(const gp_Circ& C, const IntAna_Quadric& Quad)
 
   double Qxx, Qyy, Qzz, Qxy, Qxz, Qyz, Qx, Qy, Qz, QCte;
 
-  //----------------------------------------------------------------------
-  //-- Dans le repere liee a C.Position() :
-  //-- xC = R * Cos[t]
-  //-- yC = R * Sin[t]
-  //-- zC = 0
-  //--
-  //-- On exprime la quadrique dans ce repere et on substitue
-  //-- xC,yC et zC    a    x,y et z
-  //--
-  //-- On Obtient un polynome en Cos[t] et Sin[t] de degre 2
-  //----------------------------------------------------------------------
   done = inquadric = parallel = false;
 
   Quad.Coefficients(Qxx, Qyy, Qzz, Qxy, Qxz, Qyz, Qx, Qy, Qz, QCte);
@@ -142,12 +109,12 @@ PERFORM(const gp_Circ& C, const IntAna_Quadric& Quad)
   double R  = C.Radius();
   double RR = R * R;
 
-  double P_CosCos = RR * Qxx; //-- Cos Cos
-  double P_SinSin = RR * Qyy; //-- Sin Sin
-  double P_Sin    = R * Qy;   //-- 2 Sin
-  double P_Cos    = R * Qx;   //-- 2 Cos
-  double P_CosSin = RR * Qxy; //-- 2 Cos Sin
-  double P_Cte    = QCte;     //-- 1
+  double P_CosCos = RR * Qxx;
+  double P_SinSin = RR * Qyy;
+  double P_Sin    = R * Qy;
+  double P_Cos    = R * Qx;
+  double P_CosSin = RR * Qxy;
+  double P_Cte    = QCte;
 
   math_TrigonometricFunctionRoots CircQuadPol(P_CosCos - P_SinSin,
                                               P_CosSin,
@@ -178,9 +145,6 @@ PERFORM(const gp_Circ& C, const IntAna_Quadric& Quad)
   }
 }
 
-//=============================================================================
-//==                                                  E l i p s - Q u a d r i c
-//==
 CREATE(const gp_Elips& E, const IntAna_Quadric& Quad)
 {
   Perform(E, Quad);
@@ -193,30 +157,18 @@ PERFORM(const gp_Elips& E, const IntAna_Quadric& Quad)
 
   done = inquadric = parallel = false;
 
-  //----------------------------------------------------------------------
-  //-- Dans le repere liee a E.Position() :
-  //-- xE = R * Cos[t]
-  //-- yE = r * Sin[t]
-  //-- zE = 0
-  //--
-  //-- On exprime la quadrique dans ce repere et on substitue
-  //-- xE,yE et zE    a    x,y et z
-  //--
-  //-- On Obtient un polynome en Cos[t] et Sin[t] de degre 2
-  //----------------------------------------------------------------------
-
   Quad.Coefficients(Qxx, Qyy, Qzz, Qxy, Qxz, Qyz, Qx, Qy, Qz, QCte);
   Quad.NewCoefficients(Qxx, Qyy, Qzz, Qxy, Qxz, Qyz, Qx, Qy, Qz, QCte, E.Position());
 
   double R = E.MajorRadius();
   double r = E.MinorRadius();
 
-  double P_CosCos = R * R * Qxx; //-- Cos Cos
-  double P_SinSin = r * r * Qyy; //-- Sin Sin
-  double P_Sin    = r * Qy;      //-- 2 Sin
-  double P_Cos    = R * Qx;      //-- 2 Cos
-  double P_CosSin = R * r * Qxy; //-- 2 Cos Sin
-  double P_Cte    = QCte;        //-- 1
+  double P_CosCos = R * R * Qxx;
+  double P_SinSin = r * r * Qyy;
+  double P_Sin    = r * Qy;
+  double P_Cos    = R * Qx;
+  double P_CosSin = R * r * Qxy;
+  double P_Cte    = QCte;
 
   math_TrigonometricFunctionRoots ElipsQuadPol(P_CosCos - P_SinSin,
                                                P_CosSin,
@@ -246,9 +198,6 @@ PERFORM(const gp_Elips& E, const IntAna_Quadric& Quad)
   }
 }
 
-//=============================================================================
-//==                                                  P a r a b - Q u a d r i c
-//==
 CREATE(const gp_Parab& P, const IntAna_Quadric& Quad)
 {
   Perform(P, Quad);
@@ -260,18 +209,6 @@ PERFORM(const gp_Parab& P, const IntAna_Quadric& Quad)
   double Qxx, Qyy, Qzz, Qxy, Qxz, Qyz, Qx, Qy, Qz, QCte;
 
   done = inquadric = parallel = false;
-
-  //----------------------------------------------------------------------
-  //-- Dans le repere liee a P.Position() :
-  //-- xP = y*y / (2 p)
-  //-- yP = y
-  //-- zP = 0
-  //--
-  //-- On exprime la quadrique dans ce repere et on substitue
-  //-- xP,yP et zP    a    x,y et z
-  //--
-  //-- On Obtient un polynome en y de degre 4
-  //----------------------------------------------------------------------
 
   Quad.Coefficients(Qxx, Qyy, Qzz, Qxy, Qxz, Qyz, Qx, Qy, Qz, QCte);
   Quad.NewCoefficients(Qxx, Qyy, Qzz, Qxy, Qxz, Qyz, Qx, Qy, Qz, QCte, P.Position());
@@ -308,9 +245,6 @@ PERFORM(const gp_Parab& P, const IntAna_Quadric& Quad)
   }
 }
 
-//=============================================================================
-//==                                                    H y p r - Q u a d r i c
-//==
 CREATE(const gp_Hypr& H, const IntAna_Quadric& Quad)
 {
   Perform(H, Quad);
@@ -322,18 +256,6 @@ PERFORM(const gp_Hypr& H, const IntAna_Quadric& Quad)
   double Qxx, Qyy, Qzz, Qxy, Qxz, Qyz, Qx, Qy, Qz, QCte;
 
   done = inquadric = parallel = false;
-
-  //----------------------------------------------------------------------
-  //-- Dans le repere liee a P.Position() :
-  //-- xH = R Ch[t]
-  //-- yH = r Sh[t]
-  //-- zH = 0
-  //--
-  //-- On exprime la quadrique dans ce repere et on substitue
-  //-- xP,yP et zP    a    x,y et z
-  //--
-  //-- On Obtient un polynome en Exp[t] de degre 4
-  //----------------------------------------------------------------------
 
   Quad.Coefficients(Qxx, Qyy, Qzz, Qxy, Qxz, Qyz, Qx, Qy, Qz, QCte);
   Quad.NewCoefficients(Qxx, Qyy, Qzz, Qxy, Qxz, Qyz, Qx, Qy, Qz, QCte, H.Position());
@@ -380,8 +302,6 @@ PERFORM(const gp_Hypr& H, const IntAna_Quadric& Quad)
   }
 }
 
-//=============================================================================
-
 IntAna_IntConicQuad::IntAna_IntConicQuad(const gp_Lin& L,
                                          const gp_Pln& P,
                                          const double  Tolang,
@@ -424,10 +344,6 @@ void IntAna_IntConicQuad::Perform(const gp_Lin& L,
                                   const double  Len)
 {
 
-  // Tolang represents the angular tolerance from which we consider
-  // that the angle between 2 vectors is zero. We will reason about the cosine of this
-  // angle, (we have std::cos(t) equivalent to t near Pi/2).
-
   done = false;
 
   double A, B, C, D;
@@ -440,16 +356,16 @@ void IntAna_IntConicQuad::Perform(const gp_Lin& L,
 
   Direc = A * Al + B * Bl + C * Cl;
   Dis   = A * Orig.X() + B * Orig.Y() + C * Orig.Z() + D;
-  //
+
   parallel = false;
   if (std::abs(Direc) < Tolang)
   {
     parallel = true;
     if (Len != 0 && Direc != 0)
     {
-      // check the distance from bounding point of the line to the plane
+
       gp_Pnt aP1, aP2;
-      //
+
       aP1.SetCoord(Orig.X() - Dis * A, Orig.Y() - Dis * B, Orig.Z() - Dis * C);
       aP2.SetCoord(aP1.X() + Len * Al, aP1.Y() + Len * Bl, aP1.Z() + Len * Cl);
       if (P.Distance(aP2) > Tol)

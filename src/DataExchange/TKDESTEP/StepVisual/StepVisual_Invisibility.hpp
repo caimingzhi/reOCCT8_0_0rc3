@@ -13,7 +13,6 @@ class StepVisual_Invisibility : public Standard_Transient
 {
 
 public:
-  //! Returns a Invisibility
   Standard_EXPORT StepVisual_Invisibility();
 
   Standard_EXPORT void Init(

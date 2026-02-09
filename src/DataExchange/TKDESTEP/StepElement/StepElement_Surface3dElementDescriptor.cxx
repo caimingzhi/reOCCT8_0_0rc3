@@ -3,11 +3,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepElement_Surface3dElementDescriptor, StepElement_ElementDescriptor)
 
-//=================================================================================================
-
 StepElement_Surface3dElementDescriptor::StepElement_Surface3dElementDescriptor() = default;
-
-//=================================================================================================
 
 void StepElement_Surface3dElementDescriptor::Init(
   const StepElement_ElementOrder               aElementDescriptor_TopologyOrder,
@@ -25,16 +21,12 @@ void StepElement_Surface3dElementDescriptor::Init(
   theShape = aShape;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<
   occ::handle<NCollection_HSequence<occ::handle<StepElement_SurfaceElementPurposeMember>>>>>
   StepElement_Surface3dElementDescriptor::Purpose() const
 {
   return thePurpose;
 }
-
-//=================================================================================================
 
 void StepElement_Surface3dElementDescriptor::SetPurpose(
   const occ::handle<NCollection_HArray1<
@@ -44,14 +36,10 @@ void StepElement_Surface3dElementDescriptor::SetPurpose(
   thePurpose = aPurpose;
 }
 
-//=================================================================================================
-
 StepElement_Element2dShape StepElement_Surface3dElementDescriptor::Shape() const
 {
   return theShape;
 }
-
-//=================================================================================================
 
 void StepElement_Surface3dElementDescriptor::SetShape(const StepElement_Element2dShape aShape)
 {

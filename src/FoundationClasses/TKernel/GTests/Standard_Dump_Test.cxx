@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -19,13 +8,9 @@
 #include <Bnd_Box.hpp>
 #include <TCollection_AsciiString.hpp>
 
-//==================================================================================================
-// AddValuesSeparator Direct Tests
-//==================================================================================================
-
 TEST(Standard_DumpTest, AddValuesSeparator_EmptyStream)
 {
-  // Test that AddValuesSeparator doesn't add separator to an empty stream
+
   std::ostringstream anOStream;
 
   Standard_Dump::AddValuesSeparator(anOStream);
@@ -37,7 +22,7 @@ TEST(Standard_DumpTest, AddValuesSeparator_EmptyStream)
 
 TEST(Standard_DumpTest, AddValuesSeparator_AfterContent)
 {
-  // Test that AddValuesSeparator adds separator after content
+
   std::ostringstream anOStream;
   anOStream << "\"Field1\": 42";
 
@@ -50,7 +35,7 @@ TEST(Standard_DumpTest, AddValuesSeparator_AfterContent)
 
 TEST(Standard_DumpTest, AddValuesSeparator_AfterOpeningBrace)
 {
-  // Test that AddValuesSeparator doesn't add separator after opening brace
+
   std::ostringstream anOStream;
   anOStream << "{";
 
@@ -63,7 +48,7 @@ TEST(Standard_DumpTest, AddValuesSeparator_AfterOpeningBrace)
 
 TEST(Standard_DumpTest, AddValuesSeparator_AfterExistingSeparator)
 {
-  // Test that AddValuesSeparator doesn't duplicate separator
+
   std::ostringstream anOStream;
   anOStream << "\"Field1\": 42, ";
 
@@ -76,7 +61,7 @@ TEST(Standard_DumpTest, AddValuesSeparator_AfterExistingSeparator)
 
 TEST(Standard_DumpTest, AddValuesSeparator_MultipleFields)
 {
-  // Test adding separators between multiple fields
+
   std::ostringstream anOStream;
 
   anOStream << "\"Field1\": 42";
@@ -92,27 +77,20 @@ TEST(Standard_DumpTest, AddValuesSeparator_MultipleFields)
     << "Separators should be added between fields. Got: '" << aResult << "'";
 }
 
-//==================================================================================================
-// Test with Real OCCT Classes
-//==================================================================================================
-
 TEST(Standard_DumpTest, gp_Pnt_DumpAndInit)
 {
-  // Test gp_Pnt serialization/deserialization
+
   gp_Pnt aPoint(1.5, 2.5, 3.5);
 
-  // Serialize
   std::ostringstream anOStream;
   aPoint.DumpJson(anOStream);
   std::string aJsonStr = anOStream.str();
 
-  // Verify JSON structure
   EXPECT_NE(aJsonStr.find("\"gp_Pnt\""), std::string::npos)
     << "JSON should contain class name. Got: " << aJsonStr;
   EXPECT_NE(aJsonStr.find("[1.5, 2.5, 3.5]"), std::string::npos)
     << "JSON should contain coordinates. Got: " << aJsonStr;
 
-  // Deserialize
   std::stringstream anIStream(aJsonStr);
   gp_Pnt            aDeserializedPnt;
   int               aStreamPos = 1;
@@ -120,7 +98,6 @@ TEST(Standard_DumpTest, gp_Pnt_DumpAndInit)
   EXPECT_TRUE(aDeserializedPnt.InitFromJson(anIStream, aStreamPos))
     << "Deserialization should succeed. JSON: " << aJsonStr;
 
-  // Verify values
   EXPECT_DOUBLE_EQ(aPoint.X(), aDeserializedPnt.X());
   EXPECT_DOUBLE_EQ(aPoint.Y(), aDeserializedPnt.Y());
   EXPECT_DOUBLE_EQ(aPoint.Z(), aDeserializedPnt.Z());
@@ -128,15 +105,13 @@ TEST(Standard_DumpTest, gp_Pnt_DumpAndInit)
 
 TEST(Standard_DumpTest, gp_Ax3_DumpAndInit_MultipleSeparators)
 {
-  // Test gp_Ax3 which has multiple fields requiring separators
+
   gp_Ax3 anAxis(gp_Pnt(1, 2, 3), gp_Dir(gp_Dir::D::Z), gp_Dir(gp_Dir::D::X));
 
-  // Serialize
   std::ostringstream anOStream;
   anAxis.DumpJson(anOStream);
   std::string aJsonStr = anOStream.str();
 
-  // Verify separators are present between fields
   EXPECT_NE(aJsonStr.find(", \"Direction\""), std::string::npos)
     << "Separator should be before Direction. Got: " << aJsonStr;
   EXPECT_NE(aJsonStr.find(", \"XDirection\""), std::string::npos)
@@ -144,7 +119,6 @@ TEST(Standard_DumpTest, gp_Ax3_DumpAndInit_MultipleSeparators)
   EXPECT_NE(aJsonStr.find(", \"YDirection\""), std::string::npos)
     << "Separator should be before YDirection. Got: " << aJsonStr;
 
-  // Verify no missing separators (the bug symptom)
   EXPECT_EQ(aJsonStr.find("]\"Direction\""), std::string::npos)
     << "Should not have missing separator. Got: " << aJsonStr;
   EXPECT_EQ(aJsonStr.find("]\"XDirection\""), std::string::npos)
@@ -152,7 +126,6 @@ TEST(Standard_DumpTest, gp_Ax3_DumpAndInit_MultipleSeparators)
   EXPECT_EQ(aJsonStr.find("]\"YDirection\""), std::string::npos)
     << "Should not have missing separator. Got: " << aJsonStr;
 
-  // Deserialize
   std::stringstream anIStream(aJsonStr);
   gp_Ax3            aDeserializedAxis;
   int               aStreamPos = 1;
@@ -160,7 +133,6 @@ TEST(Standard_DumpTest, gp_Ax3_DumpAndInit_MultipleSeparators)
   EXPECT_TRUE(aDeserializedAxis.InitFromJson(anIStream, aStreamPos))
     << "Deserialization should succeed. JSON: " << aJsonStr;
 
-  // Verify values
   EXPECT_TRUE(anAxis.Location().IsEqual(aDeserializedAxis.Location(), 1e-10))
     << "Locations should match";
   EXPECT_TRUE(anAxis.Direction().IsEqual(aDeserializedAxis.Direction(), 1e-10))
@@ -169,16 +141,14 @@ TEST(Standard_DumpTest, gp_Ax3_DumpAndInit_MultipleSeparators)
 
 TEST(Standard_DumpTest, Bnd_Box_ComplexDump)
 {
-  // Test Bnd_Box with gap and multiple fields
+
   Bnd_Box aBox(gp_Pnt(-5, -10, -15), gp_Pnt(20, 30, 40));
   aBox.SetGap(1.5);
 
-  // Serialize
   std::ostringstream anOStream;
   aBox.DumpJson(anOStream);
   std::string aJsonStr = anOStream.str();
 
-  // Verify all separators
   EXPECT_NE(aJsonStr.find(", \"CornerMax\""), std::string::npos)
     << "Separator before CornerMax. Got: " << aJsonStr;
   EXPECT_NE(aJsonStr.find(", \"Gap\""), std::string::npos)
@@ -186,7 +156,6 @@ TEST(Standard_DumpTest, Bnd_Box_ComplexDump)
   EXPECT_NE(aJsonStr.find(", \"Flags\""), std::string::npos)
     << "Separator before Flags. Got: " << aJsonStr;
 
-  // Deserialize
   std::stringstream anIStream(aJsonStr);
   Bnd_Box           aDeserializedBox;
   int               aStreamPos = 1;
@@ -194,7 +163,6 @@ TEST(Standard_DumpTest, Bnd_Box_ComplexDump)
   EXPECT_TRUE(aDeserializedBox.InitFromJson(anIStream, aStreamPos))
     << "Deserialization should succeed. JSON: " << aJsonStr;
 
-  // Verify values
   double aXmin1, aYmin1, aZmin1, aXmax1, aYmax1, aZmax1;
   double aXmin2, aYmin2, aZmin2, aXmax2, aYmax2, aZmax2;
 
@@ -210,27 +178,20 @@ TEST(Standard_DumpTest, Bnd_Box_ComplexDump)
   EXPECT_DOUBLE_EQ(aBox.GetGap(), aDeserializedBox.GetGap());
 }
 
-//==================================================================================================
-// Edge Cases and Stream Position Tests
-//==================================================================================================
-
 TEST(Standard_DumpTest, TellP_BehaviorValidation)
 {
-  // Test that tellp() correctly reports stream position
+
   std::ostringstream anOStream;
 
-  // Empty stream should have position 0 or -1
   std::streampos aPos1 = anOStream.tellp();
   EXPECT_TRUE(aPos1 == std::streampos(0) || aPos1 == std::streampos(-1))
     << "Empty stream position should be 0 or -1, got: " << aPos1;
 
-  // After writing, position should be positive
   anOStream << "test";
   std::streampos aPos2 = anOStream.tellp();
   EXPECT_GT(aPos2, std::streampos(0))
     << "Stream with content should have positive position, got: " << aPos2;
 
-  // Verify the fix relies on tellp()
   std::ostringstream anEmptyStream;
   Standard_Dump::AddValuesSeparator(anEmptyStream);
   EXPECT_TRUE(anEmptyStream.str().empty())
@@ -246,7 +207,7 @@ TEST(Standard_DumpTest, TellP_BehaviorValidation)
 
 TEST(Standard_DumpTest, ConsecutiveDumps)
 {
-  // Test multiple consecutive dumps to the same stream
+
   std::ostringstream anOStream;
 
   gp_Pnt aPoint1(1, 2, 3);
@@ -259,14 +220,13 @@ TEST(Standard_DumpTest, ConsecutiveDumps)
 
   std::string aResult = anOStream.str();
 
-  // Should have separator between the two dumps
   EXPECT_NE(aResult.find(", \"gp_Pnt\""), std::string::npos)
     << "Should have separator between dumps. Got: " << aResult;
 }
 
 TEST(Standard_DumpTest, StreamWithOnlyOpenBrace)
 {
-  // Test behavior when stream contains only opening brace
+
   std::ostringstream anOStream;
   anOStream << "{";
 
@@ -280,17 +240,15 @@ TEST(Standard_DumpTest, StreamWithOnlyOpenBrace)
 
 TEST(Standard_DumpTest, VoidBoxSerialization)
 {
-  // Test serialization of a void box (edge case)
+
   Bnd_Box aVoidBox;
 
   std::ostringstream anOStream;
   aVoidBox.DumpJson(anOStream);
   std::string aJsonStr = anOStream.str();
 
-  // Should still have proper JSON structure even for void box
   EXPECT_FALSE(aJsonStr.empty()) << "Void box should still produce JSON output";
 
-  // Try to deserialize
   std::stringstream anIStream(aJsonStr);
   Bnd_Box           aDeserializedBox;
   int               aStreamPos = 1;

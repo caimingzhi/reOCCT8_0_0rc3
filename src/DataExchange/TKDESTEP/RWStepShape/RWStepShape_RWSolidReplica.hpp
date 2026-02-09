@@ -11,7 +11,6 @@ class StepShape_SolidReplica;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SolidReplica
 class RWStepShape_RWSolidReplica
 {
 public:

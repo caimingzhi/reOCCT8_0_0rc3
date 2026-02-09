@@ -5,7 +5,7 @@
 #include <TopOpeBRepDS_ListOfShapeOn1State.hpp>
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_DataMap.hpp>
-// TopOpeBRepDS_redu.cxx
+
 Standard_EXPORT void FUN_scanloi(
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& lII,
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>&       lFOR,
@@ -31,7 +31,7 @@ Standard_EXPORT bool FUN_ds_GetTr(
   TopAbs_State&                                                   sta,
   int&                                                            isa,
   int&                                                            adim);
-// TopOpeBRepDS_EXPORT.cxx
+
 Standard_EXPORT void FDS_SetT(TopOpeBRepDS_Transition& T, const TopOpeBRepDS_Transition& T0);
 Standard_EXPORT bool FDS_hasUNK(const TopOpeBRepDS_Transition& T);
 Standard_EXPORT void FDS_copy(const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI,
@@ -87,9 +87,11 @@ Standard_EXPORT bool FDS_aresamdom(const TopOpeBRepDS_DataStructure& BDS,
                                    const int                         SI,
                                    const int                         isb1,
                                    const int                         isb2);
-// clang-format off
-Standard_EXPORT bool FDS_EdgeIsConnexToSameDomainFaces(const TopoDS_Shape& E,const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);  // not used
-// clang-format on
+
+Standard_EXPORT bool FDS_EdgeIsConnexToSameDomainFaces(
+  const TopoDS_Shape&                             E,
+  const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
+
 Standard_EXPORT bool   FDS_SIisGIofIofSBAofTofI(const TopOpeBRepDS_DataStructure&             BDS,
                                                 const int                                     SI,
                                                 const occ::handle<TopOpeBRepDS_Interference>& I);
@@ -124,10 +126,10 @@ Standard_EXPORT void FUN_ds_completeforSE3(const occ::handle<TopOpeBRepDS_HDataS
 Standard_EXPORT void FUN_ds_completeforSE4(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
 Standard_EXPORT void FUN_ds_completeforSE5(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
 Standard_EXPORT void FUN_ds_completeforSE6(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
-// Standard_EXPORT void FUN_ds_completeforSE7(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
+
 Standard_EXPORT void FUN_ds_completeforE7(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
 Standard_EXPORT void FUN_ds_completeforSE8(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
-// Standard_EXPORT void FUN_ds_completeFEIGb1(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
+
 Standard_EXPORT void FUN_ds_PURGEforE9(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
 Standard_EXPORT void FUN_ds_completeforSE9(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
 Standard_EXPORT void FUN_ds_complete1dForSESDM(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);

@@ -55,7 +55,6 @@ void DsgPrs_ParalPresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   gp_Pnt PointMin = ElCLib::Value(parmin, L3);
   gp_Pnt PointMax = ElCLib::Value(parmax, L3);
 
-  // processing of side : 1st group
   occ::handle<Graphic3d_ArrayOfSegments> aPrims = new Graphic3d_ArrayOfSegments(6);
   aPrims->AddVertex(PointMin);
   aPrims->AddVertex(PointMax);
@@ -69,7 +68,6 @@ void DsgPrs_ParalPresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   if (outside)
     arrdir.Reverse();
 
-  // arrow 1 : 2nd group
   Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                     Proj1,
                     arrdir,
@@ -79,7 +77,6 @@ void DsgPrs_ParalPresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   aPresentation->NewGroup();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
-  // arrow 2 : 3rd group
   Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                     Proj2,
                     arrdir.Reversed(),
@@ -88,26 +85,19 @@ void DsgPrs_ParalPresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
 
   aPresentation->NewGroup();
 
-  // text : 4th group
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, offp);
 
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
-  // processing of call 1 : 5th group
   aPrims->AddVertex(AttachmentPoint1);
   aPrims->AddVertex(Proj1);
 
-  // processing of call 2 : 6th group
   aPrims->AddVertex(AttachmentPoint2);
   aPrims->AddVertex(Proj2);
 
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 }
 
-//==========================================================================
-// function : DsgPrs_ParalPresentation::Add
-// purpose  : it is possible to choose the symbol of extremities of the face (arrow, point...)
-//==========================================================================
 void DsgPrs_ParalPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                    const occ::handle<Prs3d_Drawer>&       aDrawer,
                                    const TCollection_ExtendedString&      aText,
@@ -152,7 +142,6 @@ void DsgPrs_ParalPresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   gp_Pnt PointMin = ElCLib::Value(parmin, L3);
   gp_Pnt PointMax = ElCLib::Value(parmax, L3);
 
-  // processing of face
   occ::handle<Graphic3d_ArrayOfSegments> aPrims = new Graphic3d_ArrayOfSegments(6);
   aPrims->AddVertex(PointMin);
   aPrims->AddVertex(PointMax);
@@ -163,19 +152,15 @@ void DsgPrs_ParalPresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   if (outside)
     arrdir.Reverse();
 
-  // processing of call 1
   aPrims->AddVertex(AttachmentPoint1);
   aPrims->AddVertex(Proj1);
 
-  // processing of call 2
   aPrims->AddVertex(AttachmentPoint2);
   aPrims->AddVertex(Proj2);
 
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // text
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, offp);
 
-  // arrows
   DsgPrs::ComputeSymbol(aPresentation, LA, Proj1, Proj2, arrdir, arrdir.Reversed(), ArrowPrs);
 }

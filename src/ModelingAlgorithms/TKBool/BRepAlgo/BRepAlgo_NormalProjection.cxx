@@ -53,7 +53,6 @@ void ResultChron(OSD_Chronometer& ch, double& time)
 }
 
 #endif
-//=================================================================================================
 
 BRepAlgo_NormalProjection::BRepAlgo_NormalProjection()
     : myIsDone(false),
@@ -65,8 +64,6 @@ BRepAlgo_NormalProjection::BRepAlgo_NormalProjection()
   BB.MakeCompound(TopoDS::Compound(myToProj));
   SetDefaultParams();
 }
-
-//=================================================================================================
 
 BRepAlgo_NormalProjection::BRepAlgo_NormalProjection(const TopoDS_Shape& S)
     : myIsDone(false),
@@ -80,22 +77,16 @@ BRepAlgo_NormalProjection::BRepAlgo_NormalProjection(const TopoDS_Shape& S)
   Init(S);
 }
 
-//=================================================================================================
-
 void BRepAlgo_NormalProjection::Init(const TopoDS_Shape& S)
 {
   myShape = S;
 }
-
-//=================================================================================================
 
 void BRepAlgo_NormalProjection::Add(const TopoDS_Shape& ToProj)
 {
   BRep_Builder BB;
   BB.Add(myToProj, ToProj);
 }
-
-//=================================================================================================
 
 void BRepAlgo_NormalProjection::SetParams(const double        Tol3D,
                                           const double        Tol2D,
@@ -110,8 +101,6 @@ void BRepAlgo_NormalProjection::SetParams(const double        Tol3D,
   myMaxSeg     = MaxSeg;
 }
 
-//=================================================================================================
-
 void BRepAlgo_NormalProjection::SetDefaultParams()
 {
   myTol3d      = 1.e-4;
@@ -121,28 +110,20 @@ void BRepAlgo_NormalProjection::SetDefaultParams()
   myMaxSeg     = 16;
 }
 
-//=================================================================================================
-
 void BRepAlgo_NormalProjection::SetLimit(const bool FaceBounds)
 {
   myFaceBounds = FaceBounds;
 }
-
-//=================================================================================================
 
 void BRepAlgo_NormalProjection::SetMaxDistance(const double MaxDist)
 {
   myMaxDist = MaxDist;
 }
 
-//=================================================================================================
-
 void BRepAlgo_NormalProjection::Compute3d(const bool With3d)
 {
   myWith3d = With3d;
 }
-
-//=================================================================================================
 
 void BRepAlgo_NormalProjection::Build()
 {
@@ -174,7 +155,6 @@ void BRepAlgo_NormalProjection::Build()
   TopoDS_Shape                   VertexRes;
   bool                           Only3d, Only2d, Elementary;
 
-  // for isoparametric cases
   NCollection_Array1<gp_Pnt2d> Poles(1, 2);
   NCollection_Array1<double>   Knots(1, 2);
   NCollection_Array1<int>      Mults(1, 2);
@@ -182,7 +162,6 @@ void BRepAlgo_NormalProjection::Build()
   Deg      = 1;
   Mults(1) = Deg + 1;
   Mults(2) = Deg + 1;
-  //
 
   for (ExpOfWire.Init(myToProj, TopAbs_EDGE); ExpOfWire.More(); ExpOfWire.Next(), NbEdges++)
   {
@@ -209,13 +188,11 @@ void BRepAlgo_NormalProjection::Build()
       occ::handle<BRepAdaptor_Surface> hsur =
         new BRepAdaptor_Surface(TopoDS::Face(Faces->Value(j)));
 
-      // computation of  TolU and TolV
-
       double TolU, TolV;
 
       TolU = hsur->UResolution(myTol3d) / 20;
       TolV = hsur->VResolution(myTol3d) / 20;
-      // Projection
+
 #ifdef OCCT_DEBUG_CHRONO
       InitChron(chr_init);
 #endif
@@ -225,7 +202,7 @@ void BRepAlgo_NormalProjection::Build()
       ResultChron(chr_init, t_init);
       init_count++;
 #endif
-      //
+
       TopoDS_Shape prj;
       bool         Degenerated = false;
       gp_Pnt2d     P2d, Pdeb, Pfin;
@@ -233,7 +210,7 @@ void BRepAlgo_NormalProjection::Build()
       double       UIso, VIso;
 
       occ::handle<Adaptor2d_Curve2d> HPCur;
-      occ::handle<Geom2d_Curve>      PCur2d; // Only for isoparametric projection
+      occ::handle<Geom2d_Curve>      PCur2d;
 
       for (k = 1; k <= HProjector->NbCurves(); k++)
       {
@@ -256,7 +233,6 @@ void BRepAlgo_NormalProjection::Build()
           Only2d = Only3d = false;
           HProjector->Bounds(k, Udeb, Ufin);
 
-          /**************************************************************/
           if (HProjector->IsUIso(k, UIso))
           {
 #ifdef OCCT_DEBUG
@@ -341,17 +317,14 @@ void BRepAlgo_NormalProjection::Build()
             }
             else
             {
-              // It is tested if the solution is not degenerated to set the
-              // flag on edge, one takes several points, checks if the cloud of
-              // points has less diameter than the tolerance 3D
+
               Degenerated = true;
               double                         Dist;
               occ::handle<Geom_BSplineCurve> BS3d = appr.Curve3d();
-              gp_Pnt                         P1(0., 0., 0.), PP; // skl : I change "P" to "PP"
-              int                            NbPoint, ii;        // skl : I change "i" to "ii"
+              gp_Pnt                         P1(0., 0., 0.), PP;
+              int                            NbPoint, ii;
               double                         Par, DPar;
-              // start from 3 points to reject non degenerated edges
-              // very fast
+
               NbPoint = 3;
               DPar    = (BS3d->LastParameter() - BS3d->FirstParameter()) / (NbPoint - 1);
               for (ii = 0; ii < NbPoint; ii++)
@@ -371,7 +344,7 @@ void BRepAlgo_NormalProjection::Build()
                   break;
                 }
               }
-              // if the test passes a more exact test with 10 points
+
               if (Degenerated)
               {
                 P1.SetCoord(0., 0., 0.);
@@ -429,20 +402,18 @@ void BRepAlgo_NormalProjection::Build()
 
           if (myFaceBounds)
           {
-            // Trimming edges by face bounds
-            // if the solution is degenerated, use of BoolTool is avoided
+
 #ifdef OCCT_DEBUG_CHRONO
             InitChron(chr_booltool);
 #endif
             if (!Degenerated)
             {
-              // Perform Boolean COMMON operation to get parts of projected edge
-              // inside the face
+
               BRepAlgoAPI_Section aSection(Faces->Value(j), prj);
               if (aSection.IsDone())
               {
                 const TopoDS_Shape& aRC = aSection.Shape();
-                //
+
                 TopExp_Explorer aExpE(aRC, TopAbs_EDGE);
                 for (; aExpE.More(); aExpE.Next())
                 {
@@ -454,7 +425,7 @@ void BRepAlgo_NormalProjection::Build()
               }
               else
               {
-                // if the common operation has failed, try to classify the part
+
                 BRepTopAdaptor_FClass2d classifier(TopoDS::Face(Faces->Value(j)),
                                                    Precision::Confusion());
                 gp_Pnt2d                Puv;
@@ -513,9 +484,6 @@ void BRepAlgo_NormalProjection::Build()
     }
     myDescendants.Bind(Edges->Value(i), DescenList);
   }
-  // JPI : eventual wire creation is reported in a specific method
-  //       BuilWire that can be called by the user. Otherwise, the
-  //       relations of map myAncestorMap, myCorresp will be lost.
 
   if (YaVertexRes)
     BB.Add(myRes, VertexRes);
@@ -557,42 +525,30 @@ void BRepAlgo_NormalProjection::Build()
 #endif
 }
 
-//=================================================================================================
-
 bool BRepAlgo_NormalProjection::IsDone() const
 {
   return myIsDone;
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& BRepAlgo_NormalProjection::Projection() const
 {
   return myRes;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& BRepAlgo_NormalProjection::Ancestor(const TopoDS_Edge& E) const
 {
   return myAncestorMap.Find(E);
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& BRepAlgo_NormalProjection::Couple(const TopoDS_Edge& E) const
 {
   return myCorresp.Find(E);
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& BRepAlgo_NormalProjection::Generated(const TopoDS_Shape& S)
 {
   return myDescendants.Find(S);
 }
-
-//=================================================================================================
 
 bool BRepAlgo_NormalProjection::IsElementary(const Adaptor3d_Curve& C) const
 {
@@ -610,8 +566,6 @@ bool BRepAlgo_NormalProjection::IsElementary(const Adaptor3d_Curve& C) const
       return false;
   }
 }
-
-//=================================================================================================
 
 bool BRepAlgo_NormalProjection::BuildWire(NCollection_List<TopoDS_Shape>& ListOfWire) const
 {
@@ -632,8 +586,7 @@ bool BRepAlgo_NormalProjection::BuildWire(NCollection_List<TopoDS_Shape>& ListOf
     if (MW.IsDone())
     {
       const TopoDS_Shape& Wire = MW.Shape();
-      // If the resulting wire contains the same edge as at the beginning OK
-      // otherwise the result really consists of several wires.
+
       TopExp_Explorer exp2(Wire, TopAbs_EDGE);
       int             NbEdges = 0;
       for (; exp2.More(); exp2.Next())

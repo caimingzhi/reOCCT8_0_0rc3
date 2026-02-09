@@ -4,18 +4,10 @@
 #include <gp_Vec.hpp>
 #include <math_Vector.hpp>
 
-//! F(cu, su, sv)=(C^{(x)}(cu)-S^{(x)}(su,sv))^{2}+
-//               (C^{(y)}(cu)-S^{(y)}(su,sv))^{2}+
-//               (C^{(z)}(cu)-S^{(z)}(su,sv))^{2}
-
-//=================================================================================================
-
 void Extrema_GlobOptFuncCS::value(double cu, double su, double sv, double& F)
 {
   F = myC->Value(cu).SquareDistance(myS->Value(su, sv));
 }
-
-//=================================================================================================
 
 void Extrema_GlobOptFuncCS::gradient(double cu, double su, double sv, math_Vector& G)
 {
@@ -32,8 +24,6 @@ void Extrema_GlobOptFuncCS::gradient(double cu, double su, double sv, math_Vecto
   G(3) = -(CD0.X() - SD0.X()) * SD1V.X() - (CD0.Y() - SD0.Y()) * SD1V.Y()
          - (CD0.Z() - SD0.Z()) * SD1V.Z();
 }
-
-//=================================================================================================
 
 void Extrema_GlobOptFuncCS::hessian(double cu, double su, double sv, math_Matrix& H)
 {
@@ -70,8 +60,6 @@ void Extrema_GlobOptFuncCS::hessian(double cu, double su, double sv, math_Matrix
             - (CD0.Z() - SD0.Z()) * SD2VV.Z();
 }
 
-//=================================================================================================
-
 bool Extrema_GlobOptFuncCS::checkInputData(const math_Vector& X, double& cu, double& su, double& sv)
 {
   int aStartIndex = X.Lower();
@@ -84,22 +72,16 @@ bool Extrema_GlobOptFuncCS::checkInputData(const math_Vector& X, double& cu, dou
          && sv <= myS->LastVParameter();
 }
 
-//=================================================================================================
-
 Extrema_GlobOptFuncCS::Extrema_GlobOptFuncCS(const Adaptor3d_Curve* C, const Adaptor3d_Surface* S)
     : myC(C),
       myS(S)
 {
 }
 
-//=================================================================================================
-
 int Extrema_GlobOptFuncCS::NbVariables() const
 {
   return 3;
 }
-
-//=================================================================================================
 
 bool Extrema_GlobOptFuncCS::Value(const math_Vector& X, double& F)
 {
@@ -111,8 +93,6 @@ bool Extrema_GlobOptFuncCS::Value(const math_Vector& X, double& F)
   return true;
 }
 
-//=================================================================================================
-
 bool Extrema_GlobOptFuncCS::Gradient(const math_Vector& X, math_Vector& G)
 {
   double cu, su, sv;
@@ -122,8 +102,6 @@ bool Extrema_GlobOptFuncCS::Gradient(const math_Vector& X, math_Vector& G)
   gradient(cu, su, sv, G);
   return true;
 }
-
-//=================================================================================================
 
 bool Extrema_GlobOptFuncCS::Values(const math_Vector& X, double& F, math_Vector& G)
 {
@@ -135,8 +113,6 @@ bool Extrema_GlobOptFuncCS::Values(const math_Vector& X, double& F, math_Vector&
   gradient(cu, su, sv, G);
   return true;
 }
-
-//=================================================================================================
 
 bool Extrema_GlobOptFuncCS::Values(const math_Vector& X, double& F, math_Vector& G, math_Matrix& H)
 {

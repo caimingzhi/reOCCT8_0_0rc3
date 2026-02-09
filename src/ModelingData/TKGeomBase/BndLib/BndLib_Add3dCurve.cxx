@@ -1,16 +1,4 @@
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Bnd_Box.hpp>
 #include <BndLib.hpp>
@@ -25,7 +13,7 @@
 #include <math_Function.hpp>
 #include <math_PSO.hpp>
 #include <math_BrentMinimum.hpp>
-//
+
 static int NbSamples(const Adaptor3d_Curve& C, const double Umin, const double Umax);
 
 static double AdjustExtr(const Adaptor3d_Curve& C,
@@ -36,16 +24,11 @@ static double AdjustExtr(const Adaptor3d_Curve& C,
                          const double           Tol,
                          const bool             IsMin);
 
-//=======================================================================
-// function : reduceSplineBox
-// purpose  : This method intended to reduce box in case of
-//           bezier and bspline curve.
-//=======================================================================
 static void reduceSplineBox(const Adaptor3d_Curve& theCurve,
                             const Bnd_Box&         theOrigBox,
                             Bnd_Box&               theReducedBox)
 {
-  // Guaranteed bounding box based on poles of bspline/bezier.
+
   Bnd_Box aPolesBox;
 
   if (theCurve.GetType() == GeomAbs_BSplineCurve)
@@ -67,10 +50,8 @@ static void reduceSplineBox(const Adaptor3d_Curve& theCurve,
     }
   }
 
-  // Get original box limits using C++17 structured bindings.
   const auto [aXMin, aXMax, aYMin, aYMax, aZMin, aZMax] = theOrigBox.Get();
 
-  // If poles box is valid, intersect with original box.
   if (!aPolesBox.IsVoid())
   {
     const auto [aPXMin, aPXMax, aPYMin, aPYMax, aPZMin, aPZMax] = aPolesBox.Get();
@@ -87,14 +68,11 @@ static void reduceSplineBox(const Adaptor3d_Curve& theCurve,
   }
 }
 
-//=================================================================================================
-
 void BndLib_Add3dCurve::Add(const Adaptor3d_Curve& C, const double Tol, Bnd_Box& B)
 {
   BndLib_Add3dCurve::Add(C, C.FirstParameter(), C.LastParameter(), Tol, B);
 }
 
-// OCC566(apo)->
 static double FillBox(Bnd_Box&               B,
                       const Adaptor3d_Curve& C,
                       const double           first,
@@ -133,16 +111,13 @@ static double FillBox(Bnd_Box&               B,
   return tol;
 }
 
-//<-OCC566(apo)
-//=================================================================================================
-
 void BndLib_Add3dCurve::Add(const Adaptor3d_Curve& C,
                             const double           U1,
                             const double           U2,
                             const double           Tol,
                             Bnd_Box&               B)
 {
-  constexpr double weakness = 1.5; // OCC566(apo)
+  constexpr double weakness = 1.5;
   double           tol      = 0.0;
   switch (C.GetType())
   {
@@ -194,7 +169,7 @@ void BndLib_Add3dCurve::Add(const Adaptor3d_Curve& C,
         occ::handle<Geom_Geometry>     G = Bs->Copy();
         occ::handle<Geom_BSplineCurve> Bsaux(occ::down_cast<Geom_BSplineCurve>(G));
         double                         u1 = U1, u2 = U2;
-        //// modified by jgv, 24.10.01 for BUC61031 ////
+
         if (Bsaux->IsPeriodic())
           ElCLib::AdjustPeriodic(Bsaux->FirstParameter(),
                                  Bsaux->LastParameter(),
@@ -203,30 +178,23 @@ void BndLib_Add3dCurve::Add(const Adaptor3d_Curve& C,
                                  u2);
         else
         {
-          ////////////////////////////////////////////////
-          //  modified by NIZHNY-EAP Fri Dec  3 14:29:14 1999 ___BEGIN___
-          // To avoid exception in Segment
+
           if (Bsaux->FirstParameter() > U1)
             u1 = Bsaux->FirstParameter();
           if (Bsaux->LastParameter() < U2)
             u2 = Bsaux->LastParameter();
-          //  modified by NIZHNY-EAP Fri Dec  3 14:29:18 1999 ___END___
         }
         double aSegmentTol = 2. * Precision::PConfusion();
 
-        // For periodic curves, check if parameters are close in either direction
         if (Bsaux->IsPeriodic())
         {
           const double aPeriod = Bsaux->LastParameter() - Bsaux->FirstParameter();
 
-          // Check direct distance between parameters
           const double aDirectDiff = std::abs(u2 - u1);
 
-          // Check distances across period boundary (in both directions)
           const double aCrossPeriodDiff1 = std::abs(u2 - aPeriod - u1);
           const double aCrossPeriodDiff2 = std::abs(u1 - aPeriod - u2);
 
-          // Find the minimum difference (closest approach)
           const double aMinDiff =
             std::min(aDirectDiff, std::min(aCrossPeriodDiff1, aCrossPeriodDiff2));
 
@@ -235,7 +203,7 @@ void BndLib_Add3dCurve::Add(const Adaptor3d_Curve& C,
             aSegmentTol = aMinDiff * 0.01;
           }
         }
-        // For non-periodic curves, just check direct parameter difference
+
         else if (std::abs(u2 - u1) < aSegmentTol)
         {
           aSegmentTol = std::abs(u2 - u1) * 0.01;
@@ -243,7 +211,7 @@ void BndLib_Add3dCurve::Add(const Adaptor3d_Curve& C,
         Bsaux->Segment(u1, u2, aSegmentTol);
         Bs = Bsaux;
       }
-      // OCC566(apo)->
+
       Bnd_Box B1;
       int     k, k1 = Bs->FirstUKnotIndex(), k2 = Bs->LastUKnotIndex(), N = Bs->Degree(),
              NbKnots = Bs->NbKnots();
@@ -263,7 +231,7 @@ void BndLib_Add3dCurve::Add(const Adaptor3d_Curve& C,
         reduceSplineBox(C, B1, B);
         B.Enlarge(Tol);
       }
-      //<-OCC566(apo)
+
       break;
     }
     default:
@@ -280,14 +248,10 @@ void BndLib_Add3dCurve::Add(const Adaptor3d_Curve& C,
   }
 }
 
-//=================================================================================================
-
 void BndLib_Add3dCurve::AddOptimal(const Adaptor3d_Curve& C, const double Tol, Bnd_Box& B)
 {
   BndLib_Add3dCurve::AddOptimal(C, C.FirstParameter(), C.LastParameter(), Tol, B);
 }
-
-//=================================================================================================
 
 void BndLib_Add3dCurve::AddOptimal(const Adaptor3d_Curve& C,
                                    const double           U1,
@@ -330,8 +294,6 @@ void BndLib_Add3dCurve::AddOptimal(const Adaptor3d_Curve& C,
   }
 }
 
-//=================================================================================================
-
 void BndLib_Add3dCurve::AddGenCurv(const Adaptor3d_Curve& C,
                                    const double           UMin,
                                    const double           UMax,
@@ -339,11 +301,11 @@ void BndLib_Add3dCurve::AddGenCurv(const Adaptor3d_Curve& C,
                                    Bnd_Box&               B)
 {
   int Nu = NbSamples(C, UMin, UMax);
-  //
+
   double CoordMin[3] = {RealLast(), RealLast(), RealLast()};
   double CoordMax[3] = {-RealLast(), -RealLast(), -RealLast()};
   double DeflMax[3]  = {-RealLast(), -RealLast(), -RealLast()};
-  //
+
   gp_Pnt                     P;
   int                        i, k;
   double                     du = (UMax - UMin) / (Nu - 1), du2 = du / 2.;
@@ -353,7 +315,7 @@ void BndLib_Add3dCurve::AddGenCurv(const Adaptor3d_Curve& C,
   {
     C.D0(u, P);
     aPnts(i) = P.XYZ();
-    //
+
     for (k = 0; k < 3; ++k)
     {
       if (CoordMin[k] > P.Coord(k + 1))
@@ -365,7 +327,7 @@ void BndLib_Add3dCurve::AddGenCurv(const Adaptor3d_Curve& C,
         CoordMax[k] = P.Coord(k + 1);
       }
     }
-    //
+
     if (i > 1)
     {
       gp_XYZ aPm = 0.5 * (aPnts(i - 1) + aPnts(i));
@@ -389,8 +351,7 @@ void BndLib_Add3dCurve::AddGenCurv(const Adaptor3d_Curve& C,
       }
     }
   }
-  //
-  // Adjusting minmax
+
   double eps = std::max(Tol, Precision::Confusion());
   for (k = 0; k < 3; ++k)
   {
@@ -435,7 +396,6 @@ void BndLib_Add3dCurve::AddGenCurv(const Adaptor3d_Curve& C,
   B.Enlarge(eps);
 }
 
-//
 class CurvMaxMinCoordMVar : public math_MultipleVarFunction
 {
 public:
@@ -479,7 +439,6 @@ private:
   double                 mySign;
 };
 
-//
 class CurvMaxMinCoord : public math_Function
 {
 public:
@@ -521,8 +480,6 @@ private:
   double                 mySign;
 };
 
-//=================================================================================================
-
 double AdjustExtr(const Adaptor3d_Curve& C,
                   const double           UMin,
                   const double           UMax,
@@ -533,10 +490,10 @@ double AdjustExtr(const Adaptor3d_Curve& C,
 {
   double aSign = IsMin ? 1. : -1.;
   double extr  = aSign * Extr0;
-  //
+
   double uTol = std::max(C.Resolution(Tol), Precision::PConfusion());
   double Du   = (C.LastParameter() - C.FirstParameter());
-  //
+
   double reltol = uTol / std::max(std::abs(UMin), std::abs(UMax));
   if (UMax - UMin < 0.01 * Du)
   {
@@ -550,7 +507,7 @@ double AdjustExtr(const Adaptor3d_Curve& C,
       return aSign * extr;
     }
   }
-  //
+
   int         aNbParticles = std::max(8, RealToInt(32 * (UMax - UMin) / Du));
   double      maxstep      = (UMax - UMin) / (aNbParticles + 1);
   math_Vector aT(1, 1);
@@ -564,7 +521,7 @@ double AdjustExtr(const Adaptor3d_Curve& C,
   CurvMaxMinCoordMVar aFunc(C, UMin, UMax, CoordIndx, aSign);
   math_PSO            aFinder(&aFunc, aLowBorder, aUppBorder, aSteps, aNbParticles);
   aFinder.Perform(aSteps, extr, aT);
-  //
+
   math_BrentMinimum anOptLoc(reltol, 100, uTol);
   CurvMaxMinCoord   aFunc1(C, UMin, UMax, CoordIndx, aSign);
   anOptLoc.Perform(aFunc1,
@@ -581,8 +538,6 @@ double AdjustExtr(const Adaptor3d_Curve& C,
   return aSign * extr;
 }
 
-//=================================================================================================
-
 int NbSamples(const Adaptor3d_Curve& C, const double Umin, const double Umax)
 {
   int               N;
@@ -592,7 +547,7 @@ int NbSamples(const Adaptor3d_Curve& C, const double Umin, const double Umax)
     case GeomAbs_BezierCurve:
     {
       N = 2 * C.NbPoles();
-      // By default parametric range of Bezier curv is [0, 1]
+
       double du = Umax - Umin;
       if (du < .9)
       {

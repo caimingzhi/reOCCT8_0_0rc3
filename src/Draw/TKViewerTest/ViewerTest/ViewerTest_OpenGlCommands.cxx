@@ -18,11 +18,9 @@ class AIS_InteractiveObject;
 extern NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>, TCollection_AsciiString>&
   GetMapOfAIS();
 
-//=================================================================================================
-
 static int VImmediateFront(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
-  // get the context
+
   occ::handle<AIS_InteractiveContext> aContextAIS = ViewerTest::GetAISContext();
   if (aContextAIS.IsNull())
   {
@@ -48,7 +46,6 @@ static int VImmediateFront(Draw_Interpretor&, int theArgNb, const char** theArgV
   return 0;
 }
 
-//! Search the info from the key.
 inline TCollection_AsciiString searchInfo(
   const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
   const TCollection_AsciiString&                                                      theKey)
@@ -66,11 +63,9 @@ inline TCollection_AsciiString searchInfo(
   return TCollection_AsciiString();
 }
 
-//=================================================================================================
-
 static int VGlInfo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
-  // get the active view
+
   occ::handle<V3d_View> aView = ViewerTest::CurrentView();
   if (aView.IsNull())
   {
@@ -158,7 +153,6 @@ static int VGlInfo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec
         continue;
       }
 
-      // split into lines
       aText += TCollection_AsciiString("  ") + aValueIter.Key() + ":";
       TCollection_AsciiString aSubList;
       for (int aTokenIter = 1;; ++aTokenIter)
@@ -211,7 +205,6 @@ static int VGlInfo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec
   return 0;
 }
 
-//! Parse shader type argument.
 static bool parseShaderTypeArg(Graphic3d_TypeOfShaderObject&  theType,
                                const TCollection_AsciiString& theArg)
 {
@@ -248,10 +241,6 @@ static bool parseShaderTypeArg(Graphic3d_TypeOfShaderObject&  theType,
   return true;
 }
 
-//==============================================================================
-// function : VShaderProg
-// purpose  : Sets the pair of vertex and fragment shaders for the object
-//==============================================================================
 static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
   occ::handle<AIS_InteractiveContext> aCtx = ViewerTest::GetAISContext();
@@ -318,7 +307,6 @@ static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
     }
     else if (aPrsList.IsEmpty() && anArg == "*")
     {
-      //
     }
     else if (!isSetGroupAspect && anArgIter + 1 < theArgNb
              && (anArg == "-primtype" || anArg == "-primitivetype" || anArg == "-groupaspect"
@@ -478,7 +466,6 @@ static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   return 0;
 }
 
-//! Print triplet of values.
 template <class S, class T>
 static S& operator<<(S& theStream, const NCollection_Vec3<T>& theVec)
 {
@@ -486,7 +473,6 @@ static S& operator<<(S& theStream, const NCollection_Vec3<T>& theVec)
   return theStream;
 }
 
-//! Print 4 values.
 template <class S, class T>
 static S& operator<<(S& theStream, const NCollection_Vec4<T>& theVec)
 {
@@ -494,7 +480,6 @@ static S& operator<<(S& theStream, const NCollection_Vec4<T>& theVec)
   return theStream;
 }
 
-//! Print fresnel model.
 static const char* fresnelModelString(const Graphic3d_FresnelModel theModel)
 {
   switch (theModel)
@@ -511,15 +496,12 @@ static const char* fresnelModelString(const Graphic3d_FresnelModel theModel)
   return "N/A";
 }
 
-//! Create a colored rectangle SVG element.
 static TCollection_AsciiString formatSvgColoredRect(const Quantity_Color& theColor)
 {
   return TCollection_AsciiString()
          + "<svg width='20px' height='20px'><rect width='20px' height='20px' fill='"
          + Quantity_Color::ColorToHex(theColor) + "' /></svg>";
 }
-
-//=================================================================================================
 
 static int VListMaterials(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -571,7 +553,6 @@ static int VListMaterials(Draw_Interpretor& theDI, int theArgNb, const char** th
     }
   }
 
-  // geometry for dumping
   const NCollection_Vec3<float> aBoxVerts[8] = {NCollection_Vec3<float>(1, -1, -1),
                                                 NCollection_Vec3<float>(1, -1, 1),
                                                 NCollection_Vec3<float>(-1, -1, 1),
@@ -808,8 +789,6 @@ static int VListMaterials(Draw_Interpretor& theDI, int theArgNb, const char** th
   return 0;
 }
 
-//=================================================================================================
-
 static int VListColors(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
   TCollection_AsciiString                    aDumpFile;
@@ -976,8 +955,6 @@ static int VListColors(Draw_Interpretor& theDI, int theArgNb, const char** theAr
   return 0;
 }
 
-//=================================================================================================
-
 static std::string envLutWriteToFile(float theValue)
 {
   std::stringstream aStream;
@@ -989,8 +966,6 @@ static std::string envLutWriteToFile(float theValue)
   aStream << 'f';
   return aStream.str();
 }
-
-//=================================================================================================
 
 static int VGenEnvLUT(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
@@ -1130,8 +1105,6 @@ static int VGenEnvLUT(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   return 0;
 }
 
-//=================================================================================================
-
 void ViewerTest::OpenGlCommands(Draw_Interpretor& theCommands)
 {
   const char* aGroup    = "AIS Viewer";
@@ -1140,20 +1113,20 @@ void ViewerTest::OpenGlCommands(Draw_Interpretor& theCommands)
     [&](const char* theName, Draw_Interpretor::CommandFunction theFunc, const char* theHelp)
   { theCommands.Add(theName, theHelp, aFileName, theFunc, aGroup); };
 
-  addCmd("vimmediatefront", VImmediateFront, /* [vimmediatefront] */ R"(
+  addCmd("vimmediatefront", VImmediateFront, R"(
 vimmediatefront : render immediate mode to front buffer or to back buffer
-)" /* [vimmediatefront] */);
+)");
 
-  addCmd("vglinfo", VGlInfo, /* [vglinfo] */ R"(
+  addCmd("vglinfo", VGlInfo, R"(
 vglinfo [-short|-basic|-complete] [-lineWidth Value=80]
         [GL_VENDOR] [GL_RENDERER] [GL_VERSION]
         [GL_SHADING_LANGUAGE_VERSION] [GL_EXTENSIONS]
 Print OpenGL info.
  -lineWidth split values longer than specified value into multiple lines;
             -1 disables splitting.
-)" /* [vglinfo] */);
+)");
 
-  addCmd("vshader", VShaderProg, /* [vshader] */ R"(
+  addCmd("vshader", VShaderProg, R"(
 vshader name -vert VertexShader -frag FragmentShader [-geom GeometryShader]
         [-off] [-phong] [-aspect {shading|line|point|text}=shading]
         [-header VersionHeader]
@@ -1161,34 +1134,34 @@ vshader name -vert VertexShader -frag FragmentShader [-geom GeometryShader]
         [-uniform Name FloatValue]
         [-defaultSampler {0|1}]=1
 Assign custom GLSL program to presentation aspects.
-)" /* [vshader] */);
+)");
 
-  addCmd("vshaderprog", VShaderProg, /* [vshaderprog] */ R"(
+  addCmd("vshaderprog", VShaderProg, R"(
 Alias for vshader
-)" /* [vshaderprog] */);
+)");
 
-  addCmd("vlistmaterials", VListMaterials, /* [vlistmaterials] */ R"(
+  addCmd("vlistmaterials", VListMaterials, R"(
 vlistmaterials [*] [MaterialName1 [MaterialName2 [...]]] [dump.obj|dump.html]
 Without arguments, command prints the list of standard materials.
 Otherwise, properties of specified materials will be printed
 or dumped into specified file.
 * can be used to refer to complete list of standard materials.
-)" /* [vlistmaterials] */);
+)");
 
-  addCmd("vlistcolors", VListColors, /* [vlistcolors] */ R"(
+  addCmd("vlistcolors", VListColors, R"(
 vlistcolors [*] [ColorName1 [ColorName2 [...]]] [dump.html]
 Without arguments, command prints the list of standard colors.
 Otherwise, properties of specified colors will be printed
 or dumped into specified file.
 * can be used to refer to complete list of standard colors.
-)" /* [vlistcolors] */);
+)");
 
-  addCmd("vgenenvlut", VGenEnvLUT, /* [vgenenvlut] */ R"(
+  addCmd("vgenenvlut", VGenEnvLUT, R"(
 vgenenvlut [-size size = 128] [-nbsamples nbsamples = 1024]
 Generates PBR environment look up table.
 Saves it as C++ source file which is expected to be included in code.
 The path where result will be located is 'Graphic3d_TextureRoot::TexturesFolder()'.
  -size size of one side of resulted square table
  -nbsamples number of samples used in Monte-Carlo integration
-)" /* [vgenenvlut] */);
+)");
 }

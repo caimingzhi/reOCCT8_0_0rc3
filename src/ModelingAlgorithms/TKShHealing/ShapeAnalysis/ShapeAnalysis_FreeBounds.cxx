@@ -30,12 +30,7 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_Map.hpp>
 
-// ied_modif_for_compil_Nov-19-1998
-//=================================================================================================
-
 ShapeAnalysis_FreeBounds::ShapeAnalysis_FreeBounds() = default;
-
-//=================================================================================================
 
 ShapeAnalysis_FreeBounds::ShapeAnalysis_FreeBounds(const TopoDS_Shape& shape,
                                                    const double        toler,
@@ -50,9 +45,7 @@ ShapeAnalysis_FreeBounds::ShapeAnalysis_FreeBounds(const TopoDS_Shape& shape,
   for (TopoDS_Iterator S(shape); S.More(); S.Next())
     Sew.Add(S.Value());
   Sew.Perform();
-  //
-  // Extract free edges.
-  //
+
   int                                              nbedge = Sew.NbFreeEdges();
   occ::handle<NCollection_HSequence<TopoDS_Shape>> edges  = new NCollection_HSequence<TopoDS_Shape>;
   occ::handle<NCollection_HSequence<TopoDS_Shape>> wires;
@@ -63,17 +56,13 @@ ShapeAnalysis_FreeBounds::ShapeAnalysis_FreeBounds(const TopoDS_Shape& shape,
     if (!BRep_Tool::Degenerated(anEdge))
       edges->Append(anEdge);
   }
-  //
-  // Chainage.
-  //
+
   ConnectEdgesToWires(edges, toler, false, wires);
   DispatchWires(wires, myWires, myEdges);
   SplitWires();
 
   return;
 }
-
-//=================================================================================================
 
 ShapeAnalysis_FreeBounds::ShapeAnalysis_FreeBounds(const TopoDS_Shape& shape,
                                                    const bool          splitclosed,
@@ -106,8 +95,6 @@ ShapeAnalysis_FreeBounds::ShapeAnalysis_FreeBounds(const TopoDS_Shape& shape,
   }
 }
 
-//=================================================================================================
-
 void ShapeAnalysis_FreeBounds::ConnectEdgesToWires(
   occ::handle<NCollection_HSequence<TopoDS_Shape>>& edges,
   const double                                      toler,
@@ -117,7 +104,7 @@ void ShapeAnalysis_FreeBounds::ConnectEdgesToWires(
   occ::handle<NCollection_HSequence<TopoDS_Shape>> iwires = new NCollection_HSequence<TopoDS_Shape>;
   BRep_Builder                                     B;
 
-  int i; // svv #1
+  int i;
   for (i = 1; i <= edges->Length(); i++)
   {
     TopoDS_Wire wire;
@@ -133,8 +120,6 @@ void ShapeAnalysis_FreeBounds::ConnectEdgesToWires(
       edges->ChangeValue(i).Reverse();
 }
 
-//=================================================================================================
-
 void ShapeAnalysis_FreeBounds::ConnectWiresToWires(
   occ::handle<NCollection_HSequence<TopoDS_Shape>>& iwires,
   const double                                      toler,
@@ -144,8 +129,6 @@ void ShapeAnalysis_FreeBounds::ConnectWiresToWires(
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> map;
   ConnectWiresToWires(iwires, toler, shared, owires, map);
 }
-
-//=================================================================================================
 
 void ShapeAnalysis_FreeBounds::ConnectWiresToWires(
   occ::handle<NCollection_HSequence<TopoDS_Shape>>&                         iwires,
@@ -158,7 +141,7 @@ void ShapeAnalysis_FreeBounds::ConnectWiresToWires(
     return;
   occ::handle<NCollection_HArray1<TopoDS_Shape>> arrwires =
     new NCollection_HArray1<TopoDS_Shape>(1, iwires->Length());
-  // amv
+
   int i;
   for (i = 1; i <= arrwires->Length(); i++)
     arrwires->SetValue(i, iwires->Value(i));
@@ -202,7 +185,7 @@ void ShapeAnalysis_FreeBounds::ConnectWiresToWires(
   aTreeFiller.Fill();
   int nsel;
 
-  ShapeAnalysis_Edge sae; // szv#4:S4163:12Mar99 moved
+  ShapeAnalysis_Edge sae;
   bool               done = false;
 
   while (!done)
@@ -258,10 +241,8 @@ void ShapeAnalysis_FreeBounds::ConnectWiresToWires(
     }
     else
     {
-      // making wire
-      // 1.providing connection (see ShapeFix_Wire::FixConnected())
-      // int i; // svv #1
-      for (/*int*/ i = 1; i <= saw->NbEdges(); i++)
+
+      for (i = 1; i <= saw->NbEdges(); i++)
       {
         if (saw->CheckConnected(i))
         {
@@ -270,11 +251,11 @@ void ShapeAnalysis_FreeBounds::ConnectWiresToWires(
           TopoDS_Edge E1 = sewd->Edge(n1);
           TopoDS_Edge E2 = sewd->Edge(n2);
 
-          TopoDS_Vertex Vprev, Vfol, V; // connection vertex
+          TopoDS_Vertex Vprev, Vfol, V;
           Vprev = sae.LastVertex(E1);
           Vfol  = sae.FirstVertex(E2);
 
-          if (saw->LastCheckStatus(ShapeExtend_DONE1)) // absolutely confused
+          if (saw->LastCheckStatus(ShapeExtend_DONE1))
             V = Vprev;
           else
           {
@@ -284,7 +265,6 @@ void ShapeAnalysis_FreeBounds::ConnectWiresToWires(
           vertices.Bind(Vprev, V);
           vertices.Bind(Vfol, V);
 
-          // replace vertices to a new one
           ShapeBuild_Edge sbe;
           if (saw->NbEdges() < 2)
             sewd->Set(sbe.CopyReplaceVertices(E2, V, V), n2);
@@ -297,7 +277,6 @@ void ShapeAnalysis_FreeBounds::ConnectWiresToWires(
         }
       }
 
-      // 2.making wire
       TopoDS_Wire wire = sewd->Wire();
       if (isUsedManifoldMode)
       {
@@ -306,7 +285,7 @@ void ShapeAnalysis_FreeBounds::ConnectWiresToWires(
       }
       else
       {
-        // Try to check connection by number of free vertices
+
         NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> vmap;
         TopoDS_Iterator                                        it(wire);
 
@@ -319,7 +298,7 @@ void ShapeAnalysis_FreeBounds::ConnectWiresToWires(
             const TopoDS_Shape& V = ite.Value();
             if (V.Orientation() == TopAbs_FORWARD || V.Orientation() == TopAbs_REVERSED)
             {
-              // add or remove in the vertex map
+
               if (!vmap.Add(V))
                 vmap.Remove(V);
             }
@@ -335,14 +314,12 @@ void ShapeAnalysis_FreeBounds::ConnectWiresToWires(
       sewd->Clear();
       sewd->ManifoldMode() = isUsedManifoldMode;
 
-      // Recherche de la premier edge non traitee pour un autre wire.
-      // Searching for first edge for next wire
       lwire = -1;
-      for (/*int*/ i = 1; i <= arrwires->Length(); i++)
+      for (i = 1; i <= arrwires->Length(); i++)
       {
         if (!aSel.ContWire(i))
         {
-          lwire = i; // szv#4:S4163:12Mar99 optimized
+          lwire = i;
           sewd->Add(TopoDS::Wire(arrwires->Value(lwire)));
           aSel.LoadList(lwire);
 
@@ -357,7 +334,7 @@ void ShapeAnalysis_FreeBounds::ConnectWiresToWires(
     }
   }
 
-  for (/*int*/ i = 1; i <= iwires->Length(); i++)
+  for (i = 1; i <= iwires->Length(); i++)
   {
     iwires->SetValue(i, arrwires->Value(i));
   }
@@ -379,21 +356,17 @@ static void SplitWire(const TopoDS_Wire&                                wire,
   occ::handle<ShapeExtend_WireData> sewd    = new ShapeExtend_WireData(wire);
   int                               nbedges = sewd->NbEdges();
 
-  // ConnectedEdgeSequence - list of indices of connected edges to build a wire
   NCollection_Sequence<int> ces;
-  // statuses - array of flags describing the edge:
-  // 0-free, 1-in CES, 2-already in wire,
-  // 3-no closed wire can be produced starting at this edge
+
   NCollection_Array1<int> statuses(1, nbedges);
   statuses.Init(0);
 
-  // building closed wires
-  int i; // svv #1
+  int i;
   for (i = 1; i <= nbedges; i++)
     if (statuses.Value(i) == 0)
     {
       ces.Append(i);
-      statuses.SetValue(i, 1); // putting into CES
+      statuses.SetValue(i, 1);
       bool SearchBackward = true;
 
       for (;;)
@@ -403,7 +376,6 @@ static void SplitWire(const TopoDS_Wire&                                wire,
         TopoDS_Vertex lvertex;
         gp_Pnt        lpoint;
 
-        // searching for connection in ces
         if (SearchBackward)
         {
           SearchBackward = false;
@@ -411,7 +383,7 @@ static void SplitWire(const TopoDS_Wire&                                wire,
           edge           = sewd->Edge(ces.Last());
           lvertex        = sae.LastVertex(edge);
           lpoint         = BRep_Tool::Pnt(lvertex);
-          int j; // svv #1
+          int j;
           for (j = ces.Length(); (j >= 1) && !found; j--)
           {
             TopoDS_Vertex fv = sae.FirstVertex(sewd->Edge(ces.Value(j)));
@@ -422,8 +394,8 @@ static void SplitWire(const TopoDS_Wire&                                wire,
 
           if (found)
           {
-            j++; // because of decreasing last iteration
-            // making closed wire
+            j++;
+
             TopoDS_Wire wire1;
             B.MakeWire(wire1);
             for (int cesindex = j; cesindex <= ces.Length(); cesindex++)
@@ -439,12 +411,11 @@ static void SplitWire(const TopoDS_Wire&                                wire,
           }
         }
 
-        // searching for connection among free edges
         found   = false;
         edge    = sewd->Edge(ces.Last());
         lvertex = sae.LastVertex(edge);
         lpoint  = BRep_Tool::Pnt(lvertex);
-        int j; // svv #1
+        int j;
         for (j = 1; (j <= nbedges) && !found; j++)
           if (statuses.Value(j) == 0)
           {
@@ -456,14 +427,13 @@ static void SplitWire(const TopoDS_Wire&                                wire,
 
         if (found)
         {
-          j--; // because of last iteration
+          j--;
           ces.Append(j);
-          statuses.SetValue(j, 1); // putting into CES
+          statuses.SetValue(j, 1);
           SearchBackward = true;
           continue;
         }
 
-        // no edges found - mark the branch as open (use status 3)
         statuses.SetValue(ces.Last(), 3);
         ces.Remove(ces.Length());
         if (ces.IsEmpty())
@@ -471,7 +441,6 @@ static void SplitWire(const TopoDS_Wire&                                wire,
       }
     }
 
-  // building open wires
   occ::handle<NCollection_HSequence<TopoDS_Shape>> edges = new NCollection_HSequence<TopoDS_Shape>;
   for (i = 1; i <= nbedges; i++)
     if (statuses.Value(i) != 2)
@@ -499,8 +468,6 @@ void ShapeAnalysis_FreeBounds::SplitWires(
   }
 }
 
-//=================================================================================================
-
 void ShapeAnalysis_FreeBounds::DispatchWires(
   const occ::handle<NCollection_HSequence<TopoDS_Shape>>& wires,
   TopoDS_Compound&                                        closed,
@@ -521,17 +488,10 @@ void ShapeAnalysis_FreeBounds::DispatchWires(
       B.Add(open, wires->Value(iw));
 }
 
-//=======================================================================
-// function : SplitWires
-// purpose  : Splits compounds of closed (myWires) and open (myEdges) wires
-//           into small closed wires according to fields mySplitClosed and
-//           mySplitOpen and rebuilds compounds
-//=======================================================================
-
 void ShapeAnalysis_FreeBounds::SplitWires()
 {
   if (!mySplitClosed && !mySplitOpen)
-    return; // nothing to do
+    return;
 
   ShapeExtend_Explorer                             see;
   occ::handle<NCollection_HSequence<TopoDS_Shape>> closedwires, cw1, cw2, openwires, ow1, ow2;
@@ -559,7 +519,6 @@ void ShapeAnalysis_FreeBounds::SplitWires()
   openwires = ow1;
   openwires->Append(ow2);
 
-  // szv#4:S4163:12Mar99 SGI warns
   TopoDS_Shape compWires = see.CompoundFromSeq(closedwires);
   TopoDS_Shape compEdges = see.CompoundFromSeq(openwires);
   myWires                = TopoDS::Compound(compWires);

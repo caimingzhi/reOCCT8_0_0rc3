@@ -20,5 +20,3 @@ static const char Shaders_TangentSpaceNormal_glsl[] =
   "  return mat3 (aDirection * theDeltaVectorMatrix[0], aDirection * theDeltaVectorMatrix[1], "
   "theNormal) * theNormalMapValue;\n"
   "}\n";
-
-// clang-format on

@@ -11,8 +11,6 @@
 
 class StepGeom_Polyline;
 
-//! This class implements the mapping between an Array1 of points
-//! from gp and a Polyline from StepGeom.
 class GeomToStep_MakePolyline : public GeomToStep_Root
 {
 public:

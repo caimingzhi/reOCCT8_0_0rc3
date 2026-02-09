@@ -40,25 +40,14 @@ extern void debeeff();
 Standard_EXPORT TOPKRO KRO_DSFILLER_INTEE("intersection edge/edge");
 #endif
 
-// la surface de reference peut etre celle de la 1ere ou la 2eme face
-// de l'appel de SetFaces. Ces deux faces sont "SameDomain".
-// Leurs normales geometriques sont SurfacesSameOriented()
-// Leurs normales topologiques sont FacesSameOriented()
-// cas type 1 :
-//    face1 FORWARD, normale geometrique Ng1 en +Z
-//    face2 REVERSED, normale geometrique Ng2 en -Z
-// ==> SurfaceSameOriented = 0, FacesSameOriented = 1
-
-//=================================================================================================
-
 TopOpeBRep_EdgesIntersector::TopOpeBRep_EdgesIntersector()
 {
   mySurface1              = new BRepAdaptor_Surface();
   mySurface2              = new BRepAdaptor_Surface();
   mySurfacesSameOriented  = false;
   myFacesSameOriented     = false;
-  myTol1                  = 0.; // Precision::PConfusion();
-  myTol2                  = 0.; // Precision::PIntersection();
+  myTol1                  = 0.;
+  myTol2                  = 0.;
   myDimension             = 2;
   myTolForced             = false;
   myf1surf1F_sameoriented = true;
@@ -77,15 +66,11 @@ TopOpeBRep_EdgesIntersector::TopOpeBRep_EdgesIntersector()
 
 TopOpeBRep_EdgesIntersector::~TopOpeBRep_EdgesIntersector() = default;
 
-//=================================================================================================
-
 void TopOpeBRep_EdgesIntersector::SetFaces(const TopoDS_Shape& F1, const TopoDS_Shape& F2)
 {
   Bnd_Box B1, B2;
   SetFaces(F1, F2, B1, B2);
 }
-
-//=================================================================================================
 
 void TopOpeBRep_EdgesIntersector::SetFaces(const TopoDS_Shape& F1,
                                            const TopoDS_Shape& F2,
@@ -156,8 +141,6 @@ void TopOpeBRep_EdgesIntersector::SetFaces(const TopoDS_Shape& F1,
 #endif
 }
 
-//=================================================================================================
-
 void TopOpeBRep_EdgesIntersector::ForceTolerances(const double Tol1, const double Tol2)
 {
   myTol1      = Tol1;
@@ -199,7 +182,6 @@ static bool TransitionEqualAndExtremity(const IntRes2d_Transition& T1,
   return (false);
 }
 
-//  Modified by Sergey KHROMOV - Fri Jan 11 14:49:48 2002 Begin
 static bool IsTangentSegment(const IntRes2d_IntersectionPoint& P1,
                              const IntRes2d_IntersectionPoint& P2,
                              const Geom2dAdaptor_Curve&        aC1,
@@ -229,17 +211,12 @@ static bool IsTangentSegment(const IntRes2d_IntersectionPoint& P1,
 
   return false;
 }
-//  Modified by Sergey KHROMOV - Fri Jan 11 14:49:49 2002 End
 
-//------------------------------------------------------------------------
 bool EdgesIntersector_checkT1D(const TopoDS_Edge&       E1,
                                const TopoDS_Edge&       E2,
                                const TopoDS_Vertex&     vG,
                                TopOpeBRepDS_Transition& newT)
-//------------------------------------------------------------------------
-// E1 sdm E2, interferes with E2 at vertex vG
-// vG is vertex of E2, but not vertex of E1
-// purpose : get newT / attached to E1, I1d=(newT(E2),G,E2)
+
 {
 #define FIRST (1)
 #define LAST (2)
@@ -272,7 +249,7 @@ bool EdgesIntersector_checkT1D(const TopoDS_Edge&       E1,
   {
     SO = !SO;
     DO = !DO;
-  } // relative to E1 FORWARD
+  }
 
   bool reversed = (SO && first) || (DO && last);
   bool forward  = (SO && last) || (DO && first);
@@ -281,13 +258,9 @@ bool EdgesIntersector_checkT1D(const TopoDS_Edge&       E1,
   if (forward)
     newT.Set(TopAbs_FORWARD);
   return (reversed || forward);
-} // EdgesIntersector_checkT1D
+}
 
-// modified by NIZNHY-PKV Fri Nov  5 12:27:07 1999 from
 #include <BRepAdaptor_Surface.hpp>
-
-// modified by NIZNHY-PKV Fri Nov  5 12:27:10 1999 to
-//=================================================================================================
 
 void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
                                           const TopoDS_Shape& E2,
@@ -303,7 +276,6 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
   double                    first, last, tole, tolpc;
   gp_Pnt2d                  pfirst, plast;
   occ::handle<Geom2d_Curve> PC1;
-  // modified by NIZNHY-PKV Thu Nov  4 16:08:05 1999 f
 
   BRepAdaptor_Surface aSurface1(myFace1), aSurface2(myFace2);
   GeomAbs_SurfaceType aSurfaceType1 = aSurface1.GetType(), aSurfaceType2 = aSurface2.GetType();
@@ -316,7 +288,6 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
   {
     PC1 = FC2D_CurveOnSurface(myEdge1, myFace1, first, last, tolpc);
   }
-  // modified by NIZNHY-PKV Thu Nov  4 15:44:13 1999 to
 
   if (PC1.IsNull())
     throw Standard_Failure("EdgesIntersector::Perform : no 2d curve");
@@ -371,7 +342,7 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
     occ::handle<Geom_Curve>   NC;
     bool                      dgE2 = BRep_Tool::Degenerated(myEdge2);
     if (dgE2)
-    { // xpu210998 : cto900Q3
+    {
       TopExp_Explorer      exv(myEdge2, TopAbs_VERTEX);
       const TopoDS_Vertex& v2  = TopoDS::Vertex(exv.Current());
       gp_Pnt               pt2 = BRep_Tool::Pnt(v2);
@@ -379,7 +350,7 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
       double               d;
       bool                 ok = FUN_tool_projPonF(pt2, myFace1, uv2, d);
       if (!ok)
-        return; // nyiRaise
+        return;
 
       occ::handle<Geom_Surface> aSurf1 = BRep_Tool::Surface(myFace1);
       bool                      apex   = FUN_tool_onapex(uv2, aSurf1);
@@ -407,23 +378,22 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
           bool               dgee = BRep_Tool::Degenerated(ee);
           if (!dgee)
             continue;
-          //	  double f,l;
+
           PC2on1 = BRep_Tool::CurveOnSurface(ee, myFace1, first, last);
         }
       }
       else
       {
-      } // NYIxpu210998
-    } // dgE2
+      }
+    }
     else
     {
-      // project curve of edge 2 on surface of face 1
+
       TopLoc_Location         loc;
       occ::handle<Geom_Curve> C = BRep_Tool::Curve(myEdge2, loc, first, last);
       NC                        = occ::down_cast<Geom_Curve>(C->Transformed(loc.Transformation()));
       double tolreached2d;
 
-      // modified by NIZNHY-PKV Fri Nov  5 12:29:13 1999 from
       if (aSurfaceType1 == GeomAbs_Sphere && aSurfaceType2 == GeomAbs_Sphere)
       {
         PC2on1 = FC2D_MakeCurveOnSurface(myEdge2, myFace1, first, last, tolpc, true);
@@ -432,7 +402,6 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
       {
         PC2on1 = TopOpeBRepTool_CurveTool::MakePCurveOnFace(myFace1, NC, tolreached2d);
       }
-      // modified by NIZNHY-PKV Thu Nov  4 14:52:25 1999 t
     }
 
     if (!PC2on1.IsNull())
@@ -461,25 +430,12 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
       return;
   }
 
-  // compute the intersection
 #ifdef OCCT_DEBUG
   if (TopOpeBRepTool_GettraceKRO())
     KRO_DSFILLER_INTEE.Start();
 #endif
 
   double tol1 = myTol1, tol2 = myTol2;
-  // Wrong !!!
-  /*  if ( !myTolForced ) {
-      if ( t1 != t2 ) {
-        //#ifdef OCCT_DEBUG // JYL 28/09/98 : temporaire
-        //if ( TopOpeBRep_GetcontextTOL0() ) { // JYL 28/09/98 : temporaire
-        tol1 = 0.; // JYL 28/09/98 : temporaire
-        tol2 = 0.; // JYL 28/09/98 : temporaire
-        //} // JYL 28/09/98 : temporaire
-        //#endif // JYL 28/09/98 : temporaire
-      }
-    }
-  */
 
 #ifdef OCCT_DEBUG
   if (TopOpeBRep_GettraceFITOL())
@@ -498,7 +454,7 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
 
   mylpnt.Clear();
   mylseg.Clear();
-  //  for (int p=1; p<=nbp; p++) mylpnt.Append(myIntersector.Point(p));
+
   int p;
   for (p = 1; p <= nbp; p++)
     mylpnt.Append(myIntersector.Point(p));
@@ -512,7 +468,6 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
     filter = false;
 #endif
 
-  //-- Filter :
   if (filter)
   {
     bool fin;
@@ -535,7 +490,7 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
           mylpnt.Remove(p);
           nbp--;
         }
-        //  Modified by Sergey KHROMOV - Fri Jan 11 10:31:38 2002 Begin
+
         else if (IsTangentSegment(P1, P2, myCurve1, myCurve2, std::max(tol1, tol2)))
         {
           const IntRes2d_Transition& aTrans = P2.TransitionOfFirst();
@@ -547,11 +502,9 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
             mylpnt.Remove(p + 1);
           nbp--;
         }
-        //  Modified by Sergey KHROMOV - Fri Jan 11 10:31:39 2002 End
       }
     } while (!fin);
   }
-  //-- End filter
 
   myNbSegments = mylseg.Length();
   myHasSegment = (myNbSegments != 0);
@@ -570,9 +523,6 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
   if (ReduceSegment)
     ReduceSegments();
 
-  // xpu010998 : cto900J1, e5 sdm e13, IntPatch (Touch,Inside) ->
-  //             faulty INTERNAL transition at G=v9 :
-  // xpu281098 : cto019D2, e3 sdm e9, faulty EXTERNAL transition
   bool esd = SameDomain();
   for (InitPoint(); MorePoint(); NextPoint())
   {
@@ -613,7 +563,6 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
           T2.Set(newT.Orientation(TopAbs_IN));
       }
 
-      // xpu121098 : cto900I7 (e12on,vG14)
       TopoDS_Vertex vcl2;
       bool          clE2 = TopOpeBRepTool_TOOL::ClosedE(myEdge2, vcl2);
       bool          nT1  = (!T1INT && clE2 && isvertex22 && vcl2.IsSame(P2D.Vertex(2)));
@@ -624,17 +573,14 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
       bool          nT2  = (!T2INT && clE1 && isvertex11 && vcl1.IsSame(P2D.Vertex(1)));
       if (nT2)
         T2.Set(TopAbs_INTERNAL);
-
-    } // (isvertex && esd)
-  } // MorePoint
+    }
+  }
 
 #ifdef OCCT_DEBUG
   if (TopOpeBRepTool_GettraceKRO())
     KRO_DSFILLER_INTEE.Stop();
 #endif
-} // Perform
-
-//=================================================================================================
+}
 
 void TopOpeBRep_EdgesIntersector::Dimension(const int Dim)
 {
@@ -644,14 +590,10 @@ void TopOpeBRep_EdgesIntersector::Dimension(const int Dim)
   }
 }
 
-//=================================================================================================
-
 int TopOpeBRep_EdgesIntersector::Dimension() const
 {
   return myDimension;
 }
-
-//=================================================================================================
 
 bool TopOpeBRep_EdgesIntersector::ComputeSameDomain()
 {
@@ -683,18 +625,22 @@ bool TopOpeBRep_EdgesIntersector::ComputeSameDomain()
   gp_Circ2d c2 = C2.Circle();
   double    r1 = c1.Radius();
   double    r2 = c2.Radius();
-  //  bool rr = (r1 == r2);
-  // clang-format off
-  bool rr = (std::abs(r1-r2) < Precision::Confusion()); //xpu281098 (cto019D2) tolerance a revoir
-  if (!rr) return SetSameDomain(false);
+
+  bool rr = (std::abs(r1 - r2) < Precision::Confusion());
+  if (!rr)
+    return SetSameDomain(false);
 
   const gp_Pnt2d& p1 = c1.Location();
   const gp_Pnt2d& p2 = c2.Location();
 
   const BRepAdaptor_Surface& BAS1 = Surface(1);
-  double u1,v1; p1.Coord(u1,v1); gp_Pnt P1 = BAS1.Value(u1,v1);
-  double u2,v2; p2.Coord(u2,v2); gp_Pnt P2 = BAS1.Value(u2,v2);// recall myCurve2=C2d(myEdge2,myFace1);
-  // clang-format on
+  double                     u1, v1;
+  p1.Coord(u1, v1);
+  gp_Pnt P1 = BAS1.Value(u1, v1);
+  double u2, v2;
+  p2.Coord(u2, v2);
+  gp_Pnt P2 = BAS1.Value(u2, v2);
+
   double dpp  = P1.Distance(P2);
   double tol1 = BRep_Tool::Tolerance(TopoDS::Edge(Edge(1)));
   double tol2 = BRep_Tool::Tolerance(TopoDS::Edge(Edge(2)));
@@ -704,17 +650,13 @@ bool TopOpeBRep_EdgesIntersector::ComputeSameDomain()
     return SetSameDomain(true);
 
   return SetSameDomain(false);
-} // ComputeSameDomain
-
-//=================================================================================================
+}
 
 bool TopOpeBRep_EdgesIntersector::SetSameDomain(const bool B)
 {
   mySameDomain = B;
   return B;
 }
-
-//=================================================================================================
 
 void TopOpeBRep_EdgesIntersector::MakePoints2d()
 {
@@ -751,8 +693,6 @@ void TopOpeBRep_EdgesIntersector::MakePoints2d()
   myip2d = 1;
   mynp2d = mysp2d.Length();
 }
-
-//=================================================================================================
 
 bool TopOpeBRep_EdgesIntersector::ReduceSegment(TopOpeBRep_Point2d& psa,
                                                 TopOpeBRep_Point2d& psb,
@@ -838,9 +778,7 @@ bool TopOpeBRep_EdgesIntersector::ReduceSegment(TopOpeBRep_Point2d& psa,
   }
 
   return reduced;
-} // ReduceSegment
-
-//=================================================================================================
+}
 
 void TopOpeBRep_EdgesIntersector::ReduceSegments()
 {
@@ -868,31 +806,22 @@ void TopOpeBRep_EdgesIntersector::ReduceSegments()
   myNbSegments   = mylseg.Length();
   myHasSegment   = (myNbSegments != 0);
   myTrueNbPoints = myNbPoints + 2 * myNbSegments;
-
-} // ReduceSegments
-
-//=================================================================================================
+}
 
 bool TopOpeBRep_EdgesIntersector::IsEmpty()
 {
   return (mynp2d == 0);
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_EdgesIntersector::HasSegment() const
 {
   return myHasSegment;
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_EdgesIntersector::SameDomain() const
 {
   return mySameDomain;
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& TopOpeBRep_EdgesIntersector::Edge(const int Index) const
 {
@@ -904,8 +833,6 @@ const TopoDS_Shape& TopOpeBRep_EdgesIntersector::Edge(const int Index) const
     throw Standard_Failure("TopOpeBRep_EdgesIntersector::Edge");
 }
 
-//=================================================================================================
-
 const Geom2dAdaptor_Curve& TopOpeBRep_EdgesIntersector::Curve(const int Index) const
 {
   if (Index == 1)
@@ -915,8 +842,6 @@ const Geom2dAdaptor_Curve& TopOpeBRep_EdgesIntersector::Curve(const int Index) c
   else
     throw Standard_Failure("TopOpeBRep_EdgesIntersector::Curve");
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& TopOpeBRep_EdgesIntersector::Face(const int Index) const
 {
@@ -928,8 +853,6 @@ const TopoDS_Shape& TopOpeBRep_EdgesIntersector::Face(const int Index) const
     throw Standard_Failure("TopOpeBRep_EdgesIntersector::Face");
 }
 
-//=================================================================================================
-
 const BRepAdaptor_Surface& TopOpeBRep_EdgesIntersector::Surface(const int Index) const
 {
   if (Index == 1)
@@ -940,21 +863,15 @@ const BRepAdaptor_Surface& TopOpeBRep_EdgesIntersector::Surface(const int Index)
     throw Standard_Failure("TopOpeBRep_EdgesIntersector::Surface");
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_EdgesIntersector::SurfacesSameOriented() const
 {
   return mySurfacesSameOriented;
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_EdgesIntersector::FacesSameOriented() const
 {
   return myFacesSameOriented;
 }
-
-//=================================================================================================
 
 void TopOpeBRep_EdgesIntersector::InitPoint(const bool selectkeep)
 {
@@ -964,23 +881,17 @@ void TopOpeBRep_EdgesIntersector::InitPoint(const bool selectkeep)
   Find();
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_EdgesIntersector::MorePoint() const
 {
   bool b = (myip2d <= mynp2d);
   return b;
 }
 
-//=================================================================================================
-
 void TopOpeBRep_EdgesIntersector::NextPoint()
 {
   myip2d++;
   Find();
 }
-
-//=================================================================================================
 
 void TopOpeBRep_EdgesIntersector::Find()
 {
@@ -1001,21 +912,15 @@ void TopOpeBRep_EdgesIntersector::Find()
   }
 }
 
-//=================================================================================================
-
 const NCollection_Sequence<TopOpeBRep_Point2d>& TopOpeBRep_EdgesIntersector::Points() const
 {
   return mysp2d;
 }
 
-//=================================================================================================
-
 const TopOpeBRep_Point2d& TopOpeBRep_EdgesIntersector::Point() const
 {
   return mysp2d(myip2d);
 }
-
-//=================================================================================================
 
 const TopOpeBRep_Point2d& TopOpeBRep_EdgesIntersector::Point(const int I) const
 {
@@ -1024,15 +929,11 @@ const TopOpeBRep_Point2d& TopOpeBRep_EdgesIntersector::Point(const int I) const
   return mysp2d(I);
 }
 
-//=================================================================================================
-
 double TopOpeBRep_EdgesIntersector::ToleranceMax() const
 {
   double tol = std::max(myTol1, myTol2);
   return tol;
 }
-
-//=================================================================================================
 
 void TopOpeBRep_EdgesIntersector::Tolerances(double& tol1, double& tol2) const
 {
@@ -1040,21 +941,15 @@ void TopOpeBRep_EdgesIntersector::Tolerances(double& tol1, double& tol2) const
   tol2 = myTol2;
 }
 
-//=================================================================================================
-
 int TopOpeBRep_EdgesIntersector::NbPoints() const
 {
   return myNbPoints;
 }
 
-//=================================================================================================
-
 int TopOpeBRep_EdgesIntersector::NbSegments() const
 {
   return myNbSegments;
 }
-
-//=================================================================================================
 
 #ifndef OCCT_DEBUG
 void TopOpeBRep_EdgesIntersector::Dump(const TCollection_AsciiString&, const int, const int)

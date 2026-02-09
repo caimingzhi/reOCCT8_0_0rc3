@@ -11,7 +11,6 @@ class StepGeom_Axis1Placement;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for Axis1Placement
 class RWStepGeom_RWAxis1Placement
 {
 public:

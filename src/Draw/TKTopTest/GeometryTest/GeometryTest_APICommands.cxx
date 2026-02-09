@@ -27,8 +27,6 @@
 Standard_IMPORT Draw_Viewer dout;
 #endif
 
-//=================================================================================================
-
 static void showProjSolution(Draw_Interpretor& di,
                              const int         i,
                              const gp_Pnt&     P,
@@ -40,7 +38,7 @@ static void showProjSolution(Draw_Interpretor& di,
   char name[100];
   Sprintf(name, "%s%d", "ext_", i);
   di << name << " ";
-  char* temp = name; // portage WNT
+  char* temp = name;
   if (P.Distance(P1) > Precision::Confusion())
   {
     occ::handle<Geom_Line>         L  = new Geom_Line(P, gp_Vec(P, P1));
@@ -60,8 +58,6 @@ static void showProjSolution(Draw_Interpretor& di,
   else
     di << " parameter " << i << " = " << U << "\n";
 }
-
-//=================================================================================================
 
 static int proj(Draw_Interpretor& di, int n, const char** a)
 {
@@ -146,8 +142,6 @@ static int proj(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int appro(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
@@ -213,8 +207,6 @@ static int appro(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int grilapp(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 12)
@@ -249,8 +241,6 @@ static int grilapp(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int surfapp(Draw_Interpretor& di, int n, const char** a)
 {
@@ -322,7 +312,7 @@ static int surfapp(Draw_Interpretor& di, int n, const char** a)
     for (i = 1; i <= Nu; i++)
     {
       Sprintf(name, "point_%d", Count++);
-      char* temp = name; // portage WNT
+      char* temp = name;
       DrawTrSurf::Set(temp, Points(i, j));
     }
   }
@@ -354,8 +344,6 @@ static int surfapp(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int surfint(Draw_Interpretor& di, int n, const char** a)
 {
@@ -389,7 +377,7 @@ static int surfint(Draw_Interpretor& di, int n, const char** a)
     for (i = 1; i <= Nu; i++)
     {
       Sprintf(name, "point_%d", Count++);
-      char* temp = name; // portage WNT
+      char* temp = name;
       DrawTrSurf::Set(temp, Points(i, j));
     }
   }
@@ -446,8 +434,6 @@ static int surfint(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int extrema(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
@@ -498,7 +484,6 @@ static int extrema(Draw_Interpretor& di, int n, const char** a)
   {
     GeomAPI_ExtremaCurveCurve Ex(GC1, GC2, U1f, U1l, U2f, U2l);
 
-    // Since GeomAPI cannot provide access to flag directly.
     isInfinitySolutions = Ex.Extrema().IsParallel();
     if (isInfinitySolutions)
     {
@@ -575,7 +560,7 @@ static int extrema(Draw_Interpretor& di, int n, const char** a)
   else if (!GS1.IsNull() && !GS2.IsNull())
   {
     GeomAPI_ExtremaSurfaceSurface Ex(GS1, GS2, U1f, U1l, V1f, V1l, U2f, U2l, V2f, V2l);
-    // Since GeomAPI cannot provide access to flag directly.
+
     isInfinitySolutions = Ex.Extrema().IsParallel();
     if (isInfinitySolutions)
     {
@@ -601,14 +586,12 @@ static int extrema(Draw_Interpretor& di, int n, const char** a)
   }
 
   char  aName[100];
-  char* aName2 = aName; // portage WNT
+  char* aName2 = aName;
 
-  // Output points.
   const int aPntCount = aPnts1.Size();
   if (aPntCount == 0 || isInfinitySolutions)
   {
-    // Infinity solutions flag may be set with 0 number of
-    // solutions in analytic extrema Curve/Curve.
+
     if (isInfinitySolutions)
       di << "Infinite number of extremas, distance = " << aMinDist << "\n";
     else
@@ -634,7 +617,7 @@ static int extrema(Draw_Interpretor& di, int n, const char** a)
 
   if (n >= 4)
   {
-    // Output points.
+
     for (int aJ = 1; aJ <= aPntCount; aJ++)
     {
       gp_Pnt aP1 = aPnts1(aJ - 1), aP2 = aPnts2(aJ - 1);
@@ -646,7 +629,6 @@ static int extrema(Draw_Interpretor& di, int n, const char** a)
       di << aName << " ";
     }
 
-    // Output parameters.
     for (int aJ = 0; aJ < 4; ++aJ)
     {
       for (int aPrmCount = aPrms[aJ].Size(), aK = 0; aK < aPrmCount; ++aK)
@@ -661,8 +643,6 @@ static int extrema(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int totalextcc(Draw_Interpretor& di, int n, const char** a)
 {
@@ -710,7 +690,7 @@ static int totalextcc(Draw_Interpretor& di, int n, const char** a)
       occ::handle<Geom_Line>         L  = new Geom_Line(P1, gp_Vec(P1, P2));
       occ::handle<Geom_TrimmedCurve> CT = new Geom_TrimmedCurve(L, 0., P1.Distance(P2));
       Sprintf(name, "%s%d", "ext_", 1);
-      char* temp = name; // portage WNT
+      char* temp = name;
       DrawTrSurf::Set(temp, CT);
       di << name << " ";
     }

@@ -38,23 +38,12 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <Transfer_FinderProcess.hpp>
 
-//=============================================================================
-// BRepToIGES_BRShell
-//=============================================================================
 BRepToIGES_BRShell::BRepToIGES_BRShell() = default;
-
-//=============================================================================
-// BRepToIGES_BRShell
-//=============================================================================
 
 BRepToIGES_BRShell::BRepToIGES_BRShell(const BRepToIGES_BREntity& BR)
     : BRepToIGES_BREntity(BR)
 {
 }
-
-//=============================================================================
-// TransferShell
-//=============================================================================
 
 occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferShell(
   const TopoDS_Shape&          start,
@@ -77,15 +66,9 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferShell(
   }
   else
   {
-    // error message
   }
   return res;
 }
-
-//=============================================================================
-// TransferFace
-//
-//=============================================================================
 
 occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferFace(const TopoDS_Face& start,
                                                                    const Message_ProgressRange&)
@@ -97,24 +80,20 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferFace(const TopoDS_
     return res;
   }
 
-  // to explore the face, it must be set to FORWARD.
   TopoDS_Face aFace = start;
-  // Associates the input face (start) and its sub-shapes with the reversed variant,
-  // if the input face has a Reversed orientation
+
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> aShapeShapeMap;
   if (start.Orientation() == TopAbs_REVERSED)
   {
     BRepBuilderAPI_Copy aCopy;
     aCopy.Perform(aFace);
 
-    // create face with redirected surface
     BRep_Builder              B;
     TopLoc_Location           aLoc;
     occ::handle<Geom_Surface> aSurf = BRep_Tool::Surface(start, aLoc);
     while (aSurf->IsKind(STANDARD_TYPE(Geom_RectangularTrimmedSurface)))
     {
-      // take basis surface, because pcurves will be transformed, so trim will be shifted,
-      // accorded to new face bounds
+
       occ::handle<Geom_RectangularTrimmedSurface> aTrimmedSurf =
         occ::down_cast<Geom_RectangularTrimmedSurface>(aSurf);
       aSurf = aTrimmedSurf->BasisSurface();
@@ -122,9 +101,9 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferFace(const TopoDS_
     aSurf       = aSurf->UReversed();
     double aTol = BRep_Tool::Tolerance(start);
     B.MakeFace(aFace, aSurf, aLoc, aTol);
-    // set specifics flags of a Face
+
     B.NaturalRestriction(aFace, BRep_Tool::NaturalRestriction(start));
-    // add wires
+
     TopoDS_Wire     anOuter = TopoDS::Wire(ShapeAlgo::AlgoContainer()->OuterWire(start));
     TopExp_Explorer ex;
     for (ex.Init(start, TopAbs_WIRE); ex.More(); ex.Next())
@@ -135,7 +114,7 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferFace(const TopoDS_
       if (!W.IsNull() && W.IsSame(anOuter))
       {
         B.Add(aFace, aCopyWire);
-        aShapeShapeMap.Bind(aCopyWire, W); // Bind the reversed copy of Wire to the original
+        aShapeShapeMap.Bind(aCopyWire, W);
         break;
       }
     }
@@ -147,11 +126,10 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferFace(const TopoDS_
       if (!W.IsNull() && !W.IsSame(anOuter))
       {
         B.Add(aFace, aCopyWire);
-        aShapeShapeMap.Bind(aCopyWire, W); // Bind the reversed copy of Wire to the original
+        aShapeShapeMap.Bind(aCopyWire, W);
       }
     }
 
-    // mirror pcurves
     double U1, U2, V1, V2;
     aSurf->Bounds(U1, U2, V1, V2);
     double    aCenter = 0.5 * (U1 + U2);
@@ -165,7 +143,7 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferFace(const TopoDS_
       TopoDS_Edge aCopyEdge  = TopoDS::Edge(aCopy.ModifiedShape(anOrigEdge));
       aCopyEdge              = TopoDS::Edge(aCopyEdge.Oriented(anOrigEdge.Orientation()));
       if (!aMap.Add(aCopyEdge))
-        // seam edge has been already updated
+
         continue;
       double                    f, l;
       occ::handle<Geom2d_Curve> aCurve1, aCurve2;
@@ -201,32 +179,27 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferFace(const TopoDS_
         {
           B.UpdateEdge(aCopyEdge, aCurve1, aFace, aTol);
         }
-        // set range for degenerated edges
+
         if (BRep_Tool::Degenerated(aCopyEdge))
         {
           B.Range(aCopyEdge, aFace, f, l);
         }
       }
-      // clang-format off
-      aShapeShapeMap.Bind(aCopyEdge, anOrigEdge); // Bind the reversed copy of Edge to the original
-      // clang-format on
+
+      aShapeShapeMap.Bind(aCopyEdge, anOrigEdge);
     }
-    aShapeShapeMap.Bind(start, aFace); // Bind the original face to the reversed copy
+    aShapeShapeMap.Bind(start, aFace);
   }
 
-  // int Nb = 0; //szv#4:S4163:12Mar99 unused
   double                           Length = 1.;
   occ::handle<IGESData_IGESEntity> ISurf;
-
-  // returns the face surface
-  // ------------------------
 
   occ::handle<Geom_Surface> Surf = BRep_Tool::Surface(aFace);
 
   if (!Surf.IsNull())
   {
     double U1, U2, V1, V2;
-    // to limit the base surfaces
+
     BRepTools::UVBounds(aFace, U1, U2, V1, V2);
     GeomToIGES_GeomSurface GS;
     GS.SetModel(GetModel());
@@ -239,17 +212,12 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferFace(const TopoDS_
     Length = GS.Length();
   }
 
-  // returns the wires of the face
-  // -----------------------------
-
   BRepToIGES_BRWire                BW(*this);
   int                              Imode   = 0;
   int                              Iprefer = 0;
   occ::handle<IGESData_IGESEntity> ICurve2d;
 
-  // outer wire
-  //: n3  TopoDS_Wire Outer = BRepTools::OuterWire(myface);
-  TopoDS_Wire                          Outer  = ShapeAlgo::AlgoContainer()->OuterWire(aFace); //: n3
+  TopoDS_Wire                          Outer  = ShapeAlgo::AlgoContainer()->OuterWire(aFace);
   occ::handle<IGESGeom_CurveOnSurface> IOuter = new IGESGeom_CurveOnSurface;
   if (!Outer.IsNull())
   {
@@ -264,7 +232,6 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferFace(const TopoDS_
     IOuter->Init(Imode, ISurf, ICurve2d, ICurve3d, Iprefer);
   }
 
-  // inners wires
   TopExp_Explorer                                                     Ex;
   occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> Seq =
     new NCollection_HSequence<occ::handle<Standard_Transient>>();
@@ -293,7 +260,6 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferFace(const TopoDS_
     }
   }
 
-  // all inners edges not in a wire
   for (Ex.Init(aFace, TopAbs_EDGE, TopAbs_WIRE); Ex.More(); Ex.Next())
   {
     TopoDS_Edge                          E     = TopoDS::Edge(Ex.Current());
@@ -332,19 +298,17 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferFace(const TopoDS_
     }
   }
 
-  // protection against faces on infinite surfaces with mistaken natural restriction flag
   bool isWholeSurface = BRep_Tool::NaturalRestriction(start);
   if ((Surf->IsKind(STANDARD_TYPE(Geom_Plane))
        || Surf->IsKind(STANDARD_TYPE(Geom_CylindricalSurface))
        || Surf->IsKind(STANDARD_TYPE(Geom_ConicalSurface)))
       && !IOuter.IsNull())
     isWholeSurface = false;
-  // returns the TrimmedSurface
-  // --------------------------
+
   occ::handle<IGESGeom_TrimmedSurface> TrimmedSurf = new IGESGeom_TrimmedSurface;
   if (isWholeSurface)
   {
-    // if face bounds and surface bounds are same, outer wire is unnecessary
+
     TrimmedSurf->Init(ISurf, false, nullptr, Tab);
   }
   else
@@ -354,10 +318,6 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferFace(const TopoDS_
   SetShapeResult(start, res);
   return res;
 }
-
-//=============================================================================
-// TransferShell
-//=============================================================================
 
 occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell::TransferShell(
   const TopoDS_Shell&          start,

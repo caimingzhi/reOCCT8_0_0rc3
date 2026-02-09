@@ -38,13 +38,12 @@
 extern bool BRepFeat_GettraceFEAT();
 #endif
 
-static void MajMap(const TopoDS_Shape&,
-                   const LocOpe_DPrism&,
-                   NCollection_DataMap<TopoDS_Shape,
-                                       NCollection_List<TopoDS_Shape>,
-                                       TopTools_ShapeMapHasher>&, // myMap
-                   TopoDS_Shape&,                                 // myFShape
-                   TopoDS_Shape&);                                // myLShape
+static void MajMap(
+  const TopoDS_Shape&,
+  const LocOpe_DPrism&,
+  NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&,
+  TopoDS_Shape&,
+  TopoDS_Shape&);
 
 static double HeightMax(const TopoDS_Shape& theSbase,
                         const TopoDS_Face&  theSkface,
@@ -54,8 +53,6 @@ static double HeightMax(const TopoDS_Shape& theSbase,
 static int SensOfPrism(const occ::handle<Geom_Curve>& C, const TopoDS_Shape& Until);
 
 static occ::handle<Geom_Curve> TestCurve(const TopoDS_Face&);
-
-//=================================================================================================
 
 void BRepFeat_MakeDPrism::Init(const TopoDS_Shape& Sbase,
                                const TopoDS_Face&  Pbase,
@@ -97,10 +94,6 @@ void BRepFeat_MakeDPrism::Init(const TopoDS_Shape& Sbase,
   myModify    = Modify;
   myJustGluer = false;
 
-  //-------------- ifv
-  // mySkface.Nullify();
-  //-------------- ifv
-
   myShape.Nullify();
   myMap.Clear();
   myFShape.Nullify();
@@ -126,15 +119,9 @@ void BRepFeat_MakeDPrism::Init(const TopoDS_Shape& Sbase,
       std::cout << " Cut" << std::endl;
     if (!myModify)
       std::cout << " Modify = 0" << std::endl;
-    //    std::cout <<" Angle = " << myAngle << std::endl;
   }
 #endif
 }
-
-//=======================================================================
-// function : Add
-// purpose  : add sliding faces and edges
-//=======================================================================
 
 void BRepFeat_MakeDPrism::Add(const TopoDS_Edge& E, const TopoDS_Face& F)
 {
@@ -187,8 +174,6 @@ void BRepFeat_MakeDPrism::Add(const TopoDS_Edge& E, const TopoDS_Face& F)
   }
 }
 
-//=================================================================================================
-
 void BRepFeat_MakeDPrism::Perform(const double Height)
 {
 #ifdef OCCT_DEBUG
@@ -205,7 +190,6 @@ void BRepFeat_MakeDPrism::Perform(const double Height)
   PerfSelectionValid();
 
   double theheight = Height / cos(myAngle);
-  //  myPbase.Orientation(TopAbs_FORWARD);
 
   LocOpe_DPrism       theDPrism(myPbase, theheight, myAngle);
   const TopoDS_Shape& VraiDPrism = theDPrism.Shape();
@@ -225,19 +209,16 @@ void BRepFeat_MakeDPrism::Perform(const double Height)
     return;
   }
 
-  // management of gluing faces
-
   GluedFacesValid();
 
   if (!myGluedF.IsEmpty())
-  { // case gluing
+  {
     myJustGluer = true;
     theDPrism.Curves(myCurves);
     myBCurve = theDPrism.BarycCurve();
     GlobalPerform();
   }
 
-  // if there is no gluing -> call topological operations
   if (!myJustGluer)
   {
     if (myFuse == 1)
@@ -262,11 +243,6 @@ void BRepFeat_MakeDPrism::Perform(const double Height)
   }
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : feature limited by the shape Until
-//=======================================================================
-
 void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& Until)
 {
 #ifdef OCCT_DEBUG
@@ -283,7 +259,6 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& Until)
   {
     throw Standard_ConstructionError();
   }
-  //  myPbase.Orientation(TopAbs_FORWARD);
 
   myGluedF.Clear();
   myPerfSelection = BRepFeat_SelectionU;
@@ -350,8 +325,7 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& Until)
       {
         Or = ASI.Point(1, ASI.NbPoints(1)).Orientation();
       }
-      //      double prm = ASI.Point(1,1).Parameter();
-      //      if(prm < 0) Or = TopAbs::Reverse(Or);
+
       TopoDS_Face  FUntil = ASI.Point(1, 1).Face();
       TopoDS_Shape Comp;
       bB.MakeCompound(TopoDS::Compound(Comp));
@@ -398,11 +372,6 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& Until)
   }
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : feature limited by two shapes
-//=======================================================================
-
 void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& Until)
 {
 #ifdef OCCT_DEBUG
@@ -432,7 +401,6 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& 
         return;
     }
   }
-  //  myPbase.Orientation(TopAbs_FORWARD);
 
   myGluedF.Clear();
   myPerfSelection = BRepFeat_SelectionFU;
@@ -479,22 +447,18 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& 
   {
     MajMap(myPbase, theDPrism, myMap, myFShape, myLShape);
 
-    // Make systematically dprism
     myGShape = VraiDPrism;
     GeneratedShapeValid();
 
-    // management of gluing faces
-    //	  mySbase, myPbase, mySlface, theDPrism, myGluedF);
     GluedFacesValid();
     theDPrism.Curves(myCurves);
     myBCurve = theDPrism.BarycCurve();
 
-    // topologic reconstruction
     GlobalPerform();
   }
   else
   {
-    // management of descendants
+
     MajMap(myPbase, theDPrism, myMap, myFShape, myLShape);
     occ::handle<Geom_Curve> C1;
     if (sens == -1)
@@ -514,7 +478,7 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& 
     ASI2.Perform(scur);
     TopAbs_Orientation OrU, OrF;
     TopoDS_Face        FFrom, FUntil;
-    // direction of dprism
+
     if (ASI1.IsDone() && ASI1.NbPoints(1) >= 1)
     {
       if (myFuse == 1)
@@ -525,8 +489,7 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& 
       {
         OrU = ASI1.Point(1, ASI1.NbPoints(1)).Orientation();
       }
-      //      double prm = ASI1.Point(1,1).Parameter();
-      //      if(prm < 0) OrU = TopAbs::Reverse(OrU);
+
       FUntil = ASI1.Point(1, 1).Face();
     }
     else
@@ -538,7 +501,7 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& 
     if (ASI2.IsDone() && ASI2.NbPoints(1) >= 1)
     {
       OrF = ASI2.Point(1, 1).Orientation();
-      //      double prm = ASI2.Point(1,1).Parameter();
+
       OrF   = TopAbs::Reverse(OrF);
       FFrom = ASI2.Point(1, 1).Face();
     }
@@ -579,7 +542,7 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& 
       UpdateDescendants(f, myShape, false);
       Done();
     }
-    //
+
     else if (myFuse == 0)
     {
       BRepAlgoAPI_Cut c(mySbase, trP.Shape());
@@ -594,11 +557,6 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& 
     }
   }
 }
-
-//=======================================================================
-// function : Perform
-// purpose  : feature semi-infinie
-//=======================================================================
 
 void BRepFeat_MakeDPrism::PerformUntilEnd()
 {
@@ -615,7 +573,6 @@ void BRepFeat_MakeDPrism::PerformUntilEnd()
   mySFrom.Nullify();
   ShapeFromValid();
   double Height = HeightMax(mySbase, mySkface, mySFrom, mySUntil);
-  //  myPbase.Orientation(TopAbs_FORWARD);
 
   LocOpe_DPrism       theDPrism(myPbase, Height, myAngle);
   const TopoDS_Shape& VraiDPrism = theDPrism.Shape();
@@ -629,11 +586,6 @@ void BRepFeat_MakeDPrism::PerformUntilEnd()
   myBCurve = theDPrism.BarycCurve();
   GlobalPerform();
 }
-
-//=======================================================================
-// function : PerformFromEnd
-// purpose  : feature semiinfinite limited by the shape Until from the other side
-//=======================================================================
 
 void BRepFeat_MakeDPrism::PerformFromEnd(const TopoDS_Shape& Until)
 {
@@ -657,7 +609,7 @@ void BRepFeat_MakeDPrism::PerformFromEnd(const TopoDS_Shape& Until)
   {
     throw Standard_ConstructionError();
   }
-  //  myPbase.Orientation(TopAbs_FORWARD);
+
   myPerfSelection = BRepFeat_SelectionShU;
   PerfSelectionValid();
   mySFrom.Nullify();
@@ -679,7 +631,7 @@ void BRepFeat_MakeDPrism::PerformFromEnd(const TopoDS_Shape& Until)
   }
 
   if (!Trf)
-  { // case finite face
+  {
     MajMap(myPbase, theDPrism, myMap, myFShape, myLShape);
     myGShape = VraiDPrism;
     GeneratedShapeValid();
@@ -690,7 +642,7 @@ void BRepFeat_MakeDPrism::PerformFromEnd(const TopoDS_Shape& Until)
     GlobalPerform();
   }
   else
-  { // case support
+  {
     MajMap(myPbase, theDPrism, myMap, myFShape, myLShape);
     occ::handle<Geom_Curve> C2;
     if (sens == -1)
@@ -744,7 +696,6 @@ void BRepFeat_MakeDPrism::PerformFromEnd(const TopoDS_Shape& Until)
       BRepLib_MakeFace fac(S, Precision::Confusion());
       mySFrom = fac.Face();
       Trf     = TransformShapeFU(0);
-      //      FFrom = TopoDS::Face(mySFrom);
     }
 
     TopoDS_Shape Comp;
@@ -793,11 +744,6 @@ void BRepFeat_MakeDPrism::PerformFromEnd(const TopoDS_Shape& Until)
   }
 }
 
-//=======================================================================
-// function : PerformThruAll
-// purpose  : feature throughout the entire initial shape
-//=======================================================================
-
 void BRepFeat_MakeDPrism::PerformThruAll()
 {
 #ifdef OCCT_DEBUG
@@ -819,7 +765,7 @@ void BRepFeat_MakeDPrism::PerformThruAll()
   }
 
   PerfSelectionValid();
-  //  myPbase.Orientation(TopAbs_FORWARD);
+
   myGluedF.Clear();
   GluedFacesValid();
 
@@ -849,11 +795,6 @@ void BRepFeat_MakeDPrism::PerformThruAll()
   }
 }
 
-//=======================================================================
-// function : PerformUntilHeight
-// purpose  : feature until the shape is of the given height
-//=======================================================================
-
 void BRepFeat_MakeDPrism::PerformUntilHeight(const TopoDS_Shape& Until, const double Height)
 {
 #ifdef OCCT_DEBUG
@@ -874,7 +815,7 @@ void BRepFeat_MakeDPrism::PerformUntilHeight(const TopoDS_Shape& Until, const do
   {
     throw Standard_ConstructionError();
   }
-  //  myPbase.Orientation(TopAbs_FORWARD);
+
   myGluedF.Clear();
   myPerfSelection = BRepFeat_NoSelection;
   PerfSelectionValid();
@@ -890,7 +831,7 @@ void BRepFeat_MakeDPrism::PerformUntilHeight(const TopoDS_Shape& Until, const do
   const TopoDS_Shape& VraiDPrism = theDPrism.Shape();
 
   if (!Trf)
-  { // case face finished
+  {
     MajMap(myPbase, theDPrism, myMap, myFShape, myLShape);
     myGShape = VraiDPrism;
     GeneratedShapeValid();
@@ -911,7 +852,7 @@ void BRepFeat_MakeDPrism::PerformUntilHeight(const TopoDS_Shape& Until, const do
     GlobalPerform();
   }
   else
-  { // case support
+  {
     MajMap(myPbase, theDPrism, myMap, myFShape, myLShape);
     occ::handle<Geom_Curve> C1;
     if (sens == -1)
@@ -938,8 +879,7 @@ void BRepFeat_MakeDPrism::PerformUntilHeight(const TopoDS_Shape& Until, const do
       {
         Or = ASI.Point(1, ASI.NbPoints(1)).Orientation();
       }
-      //      double prm = ASI.Point(1,1).Parameter();
-      //      if(prm < 0) Or = TopAbs::Reverse(Or);
+
       TopoDS_Face  FUntil = ASI.Point(1, 1).Face();
       TopoDS_Shape Comp;
       BRep_Builder B;
@@ -971,22 +911,11 @@ void BRepFeat_MakeDPrism::PerformUntilHeight(const TopoDS_Shape& Until, const do
   }
 }
 
-//=======================================================================
-// function : Curves
-// purpose  : curves parallel to the axis of the prism
-//=======================================================================
-
 void BRepFeat_MakeDPrism::Curves(NCollection_Sequence<occ::handle<Geom_Curve>>& scur)
 {
   scur = myCurves;
 }
 
-//============================================================================
-// function : BRepFeat_BossEgdes
-// purpose: Determination of TopEdges and LatEdges.
-//          sig = 1 -> TopEdges = FirstShape of the DPrism
-//          sig = 2 -> TOpEdges = LastShape of the DPrism
-//============================================================================
 void BRepFeat_MakeDPrism::BossEdges(const int signature)
 {
 #ifdef OCCT_DEBUG
@@ -1009,7 +938,6 @@ void BRepFeat_MakeDPrism::BossEdges(const int signature)
     return;
   }
 
-  // Edges Top
   NCollection_List<TopoDS_Shape>::Iterator itLS;
   TopExp_Explorer                          ExpE;
   for (itLS.Initialize(theLastShape); itLS.More(); itLS.Next())
@@ -1022,10 +950,9 @@ void BRepFeat_MakeDPrism::BossEdges(const int signature)
     }
   }
 
-  // Edges Bottom
   if (signature < 0)
   {
-    // Attention check if TgtEdges is important
+
     myLatEdges = NewEdges();
   }
   else if (signature > 0)
@@ -1099,43 +1026,25 @@ void BRepFeat_MakeDPrism::BossEdges(const int signature)
   }
 }
 
-//============================================================================
-// function : BRepFeat_TopEgdes
-// Purpose: Returns the list of TopoDS Edges of the top of the boss
-//============================================================================
 const NCollection_List<TopoDS_Shape>& BRepFeat_MakeDPrism::TopEdges()
 {
   return myTopEdges;
 }
 
-//============================================================================
-// function : BRepFeat_LatEgdes
-// Purpose: Returns the list of TopoDS Edges of the top of the boss
-//============================================================================
 const NCollection_List<TopoDS_Shape>& BRepFeat_MakeDPrism::LatEdges()
 {
   return myLatEdges;
 }
-
-//=======================================================================
-// function : BarycCurve
-// purpose  : passe par le centre de masses de la primitive
-//=======================================================================
 
 occ::handle<Geom_Curve> BRepFeat_MakeDPrism::BarycCurve()
 {
   return myBCurve;
 }
 
-//=======================================================================
-// function : HeightMax
-// purpose  : Calculate the height of the prism following the parameters of the bounding box
-//=======================================================================
-
-static double HeightMax(const TopoDS_Shape& theSbase,  // shape initial
-                        const TopoDS_Face&  theSkface, // face de sketch
-                        const TopoDS_Shape& theSFrom,  // shape from
-                        const TopoDS_Shape& theSUntil) // shape until
+static double HeightMax(const TopoDS_Shape& theSbase,
+                        const TopoDS_Face&  theSkface,
+                        const TopoDS_Shape& theSFrom,
+                        const TopoDS_Shape& theSUntil)
 {
   Bnd_Box Box;
   BRepBndLib::Add(theSbase, Box);
@@ -1151,29 +1060,15 @@ static double HeightMax(const TopoDS_Shape& theSbase,  // shape initial
   double c[6];
 
   Box.Get(c[0], c[2], c[4], c[1], c[3], c[5]);
-  //  double parmin=c[0], parmax = c[0];
-  //  for(int i = 0 ; i < 6; i++) {
-  //    if(c[i] > parmax) parmax = c[i];
-  //    if(c[i] < parmin ) parmin = c[i];
-  //  }
-  //  double Height = abs(2.*(parmax - parmin));
-  //  return(2.*Height);
-  // #ifndef OCCT_DEBUG
+
   double par = std::max(std::max(fabs(c[1] - c[0]), fabs(c[3] - c[2])), fabs(c[5] - c[4]));
-  // #else
-  //   double par = std::max(  std::max( abs(c[1] - c[0]), abs(c[3] - c[2]) ), abs(c[5] -
-  //   c[4]) );
-  // #endif
+
 #ifdef OCCT_DEBUG
   std::cout << "Height = > " << par << std::endl;
 #endif
   return par;
 }
 
-//=======================================================================
-// function : SensOfPrism
-// purpose  : determine the direction of prism generation
-//=======================================================================
 int SensOfPrism(const occ::handle<Geom_Curve>& C, const TopoDS_Shape& Until)
 {
   LocOpe_CSIntersector                          ASI1(Until);
@@ -1201,15 +1096,13 @@ int SensOfPrism(const occ::handle<Geom_Curve>& C, const TopoDS_Shape& Until)
   return sens;
 }
 
-//=================================================================================================
-
 static void MajMap(
   const TopoDS_Shape&  theB,
   const LocOpe_DPrism& theP,
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
-                theMap,    // myMap
-  TopoDS_Shape& theFShape, // myFShape
-  TopoDS_Shape& theLShape) // myLShape
+                theMap,
+  TopoDS_Shape& theFShape,
+  TopoDS_Shape& theLShape)
 {
   TopExp_Explorer exp;
   if (!theP.FirstShape().IsNull())
@@ -1253,8 +1146,6 @@ static void MajMap(
     }
   }
 }
-
-//=================================================================================================
 
 static occ::handle<Geom_Curve> TestCurve(const TopoDS_Face& Base)
 {

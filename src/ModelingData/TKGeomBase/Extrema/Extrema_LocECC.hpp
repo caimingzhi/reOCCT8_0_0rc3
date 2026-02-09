@@ -10,7 +10,6 @@
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 
-//! Type alias for 3D curve-curve extremum function.
 using Extrema_CCLocFOfLocECC = Extrema_GFuncExtCC<Adaptor3d_Curve,
                                                   Extrema_CurveTool,
                                                   Adaptor3d_Curve,
@@ -24,7 +23,6 @@ using Extrema_CCLocFOfLocECC = Extrema_GFuncExtCC<Adaptor3d_Curve,
 #include <Extrema_GenLocateExtCC.hpp>
 #include <Extrema_POnCurv.hpp>
 
-//! Type alias for 3D curve-curve local extremum locator.
 using Extrema_LocECC = Extrema_GenLocateExtCC<Adaptor3d_Curve,
                                               Extrema_CurveTool,
                                               Extrema_POnCurv,

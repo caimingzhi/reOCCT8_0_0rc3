@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DEOBJ_ConfigurationNode.hpp>
 
@@ -28,13 +17,9 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 DEOBJ_ConfigurationNode::DEOBJ_ConfigurationNode()
 
   = default;
-
-//=================================================================================================
 
 DEOBJ_ConfigurationNode::DEOBJ_ConfigurationNode(
   const occ::handle<DEOBJ_ConfigurationNode>& theNode)
@@ -42,8 +27,6 @@ DEOBJ_ConfigurationNode::DEOBJ_ConfigurationNode(
 {
   InternalParameters = theNode->InternalParameters;
 }
-
-//=================================================================================================
 
 bool DEOBJ_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& theResource)
 {
@@ -83,8 +66,6 @@ bool DEOBJ_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& t
     theResource->StringVal("write.author", InternalParameters.WriteAuthor, aScope);
   return true;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString DEOBJ_ConfigurationNode::Save() const
 {
@@ -182,49 +163,35 @@ TCollection_AsciiString DEOBJ_ConfigurationNode::Save() const
   return aResult;
 }
 
-//=================================================================================================
-
 occ::handle<DE_ConfigurationNode> DEOBJ_ConfigurationNode::Copy() const
 {
   return new DEOBJ_ConfigurationNode(*this);
 }
-
-//=================================================================================================
 
 occ::handle<DE_Provider> DEOBJ_ConfigurationNode::BuildProvider()
 {
   return new DEOBJ_Provider(this);
 }
 
-//=================================================================================================
-
 bool DEOBJ_ConfigurationNode::IsImportSupported() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool DEOBJ_ConfigurationNode::IsExportSupported() const
 {
   return true;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DEOBJ_ConfigurationNode::GetFormat() const
 {
   return TCollection_AsciiString("OBJ");
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DEOBJ_ConfigurationNode::GetVendor() const
 {
   return TCollection_AsciiString("OCC");
 }
-
-//=================================================================================================
 
 NCollection_List<TCollection_AsciiString> DEOBJ_ConfigurationNode::GetExtensions() const
 {

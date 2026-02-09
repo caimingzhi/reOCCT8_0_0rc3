@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <SWDRAW.hpp>
 
@@ -27,13 +16,7 @@
 #include <SWDRAW_ShapeTool.hpp>
 #include <SWDRAW_ShapeUpgrade.hpp>
 
-// #72 rln 09.03.99 Packaging of SWDRAW
-//   for NSPApply -- CKY 12 JUL 2001
 static int dejadraw = 0;
-
-// #72 rln 09.03.99 Packaging of SWDRAW
-
-//=================================================================================================
 
 static int LocSet(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -80,8 +63,6 @@ static int LocSet(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int LocDump(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 2)
@@ -109,8 +90,6 @@ static int LocDump(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 void SWDRAW::Init(Draw_Interpretor& theCommands)
 {
   if (!dejadraw)
@@ -127,7 +106,6 @@ void SWDRAW::Init(Draw_Interpretor& theCommands)
   SWDRAW_ShapeProcess::InitCommands(theCommands);
   SWDRAW_ShapeProcessAPI::InitCommands(theCommands);
 
-  // locations
   theCommands.Add("LocSet",
                   "a [b [c]]: set loc b->a; use no args to get help",
                   __FILE__,
@@ -135,11 +113,8 @@ void SWDRAW::Init(Draw_Interpretor& theCommands)
                   "essai");
   theCommands.Add("LocDump", "a: dump location of a", __FILE__, LocDump, "essai");
 
-  // register operators for ShapeProcessing
   ShapeProcess_OperLibrary::Init();
 }
-
-//=================================================================================================
 
 const char* SWDRAW::GroupName()
 {

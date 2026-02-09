@@ -4,8 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRTest_ShapeData, Standard_Transient)
 
-//=================================================================================================
-
 HLRTest_ShapeData::HLRTest_ShapeData(const Draw_Color& CVis,
                                      const Draw_Color& COVis,
                                      const Draw_Color& CIVis,

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -30,27 +19,19 @@ void RWStepBasic_RWProductDefinitionWithAssociatedDocuments::ReadStep(
   const occ::handle<StepBasic_ProductDefinitionWithAssociatedDocuments>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 5, ach, "product_definition"))
     return;
 
-  // --- inherited field : id ---
-
   occ::handle<TCollection_HAsciiString> aId;
-  // szv#4:S4163:12Mar `99Standard_Boolean stat1 =` not needed
+
   data->ReadString(num, 1, "id", ach, aId);
 
-  // --- inherited field : description ---
-
   occ::handle<TCollection_HAsciiString> aDescription;
-  // szv#4:S4163:12Mar `99Standard_Boolean stat2 =` not needed
+
   data->ReadString(num, 2, "description", ach, aDescription);
 
-  // --- inherited field : formation ---
-
   occ::handle<StepBasic_ProductDefinitionFormation> aFormation;
-  // szv#4:S4163:12Mar `99Standard_Boolean stat3 =` not needed
+
   data->ReadEntity(num,
                    3,
                    "formation",
@@ -58,18 +39,14 @@ void RWStepBasic_RWProductDefinitionWithAssociatedDocuments::ReadStep(
                    STANDARD_TYPE(StepBasic_ProductDefinitionFormation),
                    aFormation);
 
-  // --- inherited field : frameOfReference ---
-
   occ::handle<StepBasic_ProductDefinitionContext> aFrameOfReference;
-  // szv#4:S4163:12Mar `99Standard_Boolean stat4 =` not needed
+
   data->ReadEntity(num,
                    4,
                    "frame_of_reference",
                    ach,
                    STANDARD_TYPE(StepBasic_ProductDefinitionContext),
                    aFrameOfReference);
-
-  // --- own field : doc_ids ---
 
   occ::handle<NCollection_HArray1<occ::handle<StepBasic_Document>>> aDocIds;
   occ::handle<StepBasic_Document>                                   anent5;
@@ -81,7 +58,7 @@ void RWStepBasic_RWProductDefinitionWithAssociatedDocuments::ReadStep(
       aDocIds = new NCollection_HArray1<occ::handle<StepBasic_Document>>(1, nb5);
     for (int i5 = 1; i5 <= nb5; i5++)
     {
-      // szv#4:S4163:12Mar `99Standard_Boolean stat5 =` not needed
+
       if (data->ReadEntity(nsub5,
                            i5,
                            "product_context",
@@ -92,8 +69,6 @@ void RWStepBasic_RWProductDefinitionWithAssociatedDocuments::ReadStep(
     }
   }
 
-  //--- Initialisation of the read entity ---
-
   ent->Init(aId, aDescription, aFormation, aFrameOfReference, aDocIds);
 }
 
@@ -102,23 +77,13 @@ void RWStepBasic_RWProductDefinitionWithAssociatedDocuments::WriteStep(
   const occ::handle<StepBasic_ProductDefinitionWithAssociatedDocuments>& ent) const
 {
 
-  // --- inherited field : id ---
-
   SW.Send(ent->Id());
-
-  // --- inherited field : description ---
 
   SW.Send(ent->Description());
 
-  // --- inherited field : formation ---
-
   SW.Send(ent->Formation());
 
-  // --- inherited field : DocIds ---
-
   SW.Send(ent->FrameOfReference());
-
-  // -- own : list
 
   SW.OpenSub();
   int i, nb = ent->NbDocIds();

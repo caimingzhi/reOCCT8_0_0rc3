@@ -28,5 +28,3 @@ static const char Shaders_PBRIllumination_glsl[] =
   "  return (aDiffuse + aSpecular) * theLightColor * theLightIntensity * max(0.0, dot(theLight, "
   "theNormal));\n"
   "}\n";
-
-// clang-format on

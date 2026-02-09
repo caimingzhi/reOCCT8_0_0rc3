@@ -36,10 +36,6 @@
 #include <BRepTools.hpp>
 #include <ShapeAnalysis_Curve.hpp>
 
-// Processing of non-manifold topology (ssv; 11.11.2010)
-
-//=================================================================================================
-
 TopoDSToStep_MakeStepEdge::TopoDSToStep_MakeStepEdge()
     : myError(TopoDSToStep_EdgeOther)
 {
@@ -55,20 +51,14 @@ TopoDSToStep_MakeStepEdge::TopoDSToStep_MakeStepEdge(const TopoDS_Edge&         
   Init(E, T, FP, theLocalFactors);
 }
 
-//=================================================================================================
-
 void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         aEdge,
                                      TopoDSToStep_Tool&                         aTool,
                                      const occ::handle<Transfer_FinderProcess>& FP,
                                      const StepData_Factors&                    theLocalFactors)
 {
-  // ------------------------------------------------------------------
-  // The edge is given with its relative orientation (i.e. in the wire)
-  // ------------------------------------------------------------------
 
   aTool.SetCurrentEdge(aEdge);
 
-  // [BEGIN] Processing non-manifold topology (ssv; 11.11.2010)
   bool isNMMode =
     occ::down_cast<StepData_StepModel>(FP->Model())->InternalParameters.WriteNonmanifold != 0;
   if (isNMMode)
@@ -77,14 +67,13 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
     occ::handle<TransferBRep_ShapeMapper> aSTEPMapper = TransferBRep::ShapeMapper(FP, aEdge);
     if (FP->FindTypedTransient(aSTEPMapper, STANDARD_TYPE(StepShape_EdgeCurve), anEC))
     {
-      // Non-manifold topology detected
+
       myError  = TopoDSToStep_EdgeDone;
       myResult = anEC;
       done     = true;
       return;
     }
   }
-  // [END] Processing non-manifold topology (ssv; 11.11.2010)
 
   if (aTool.IsBound(aEdge))
   {
@@ -101,12 +90,6 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
 
   bool isSeam = BRep_Tool::IsClosed(aEdge, aTool.CurrentFace());
 
-  //: i4 abv 02 Sep 98: ProSTEP TR8 Motor.rle f3 & f62: check that edge
-  // participates twice in the wires of the face before making it seam
-  // (else it can have two pcurves on the same surface being shared by
-  // two faces on that surface)
-  // This fix is necessary because sharing of surfaces is not preserved when
-  // writing faces to STEP (see TopoDSToSTEP_MakeStepFace)
   if (isSeam)
   {
     int             count = 0;
@@ -126,8 +109,6 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
     done    = false;
     return;
   }
-
-  // Vertices
 
   occ::handle<StepShape_Vertex>                        V1, V2;
   occ::handle<StepShape_TopologicalRepresentationItem> Gpms2;
@@ -161,9 +142,6 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
     return;
   }
 
-  // ---------------------------------------
-  // Translate 3D representation of the Edge
-  // ---------------------------------------
   BRepAdaptor_Curve           CA = BRepAdaptor_Curve(aEdge);
   occ::handle<StepGeom_Curve> Gpms;
   occ::handle<Geom_Curve>     C = CA.Curve().Curve();
@@ -173,11 +151,7 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
     C           = occ::down_cast<Geom_Curve>(C->Copy());
     gp_Trsf Tr1 = CA.Trsf();
     C->Transform(Tr1);
-    // Special treatment is needed for very short edges based on periodic curves.
-    // Since edge in STEP does not store its parametric range, parameters are computed
-    // on import by projecting vertices on a curve, and for periodic curve this may
-    // lead to use of wrong part of the curve if end vertices are too close to each other
-    // (often whole curve is taken instead of its very small fragment).
+
     if (C->IsPeriodic())
     {
       double dpar = CA.LastParameter() - CA.FirstParameter();
@@ -186,9 +160,6 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
         dpar += (ceil(fabs(dpar) / C->Period()) * C->Period());
       }
 
-      // if range obtained from projection of vertices contradicts with range
-      // of the edge tnen vertices are swapped to keep results correct after import
-      // (see test de step_5 A1)
       gp_Pnt              aP1 = BRep_Tool::Pnt(Vfirst);
       gp_Pnt              aP2 = BRep_Tool::Pnt(Vlast);
       gp_Pnt              pproj;
@@ -207,9 +178,6 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
         std::swap(V1, V2);
       }
 
-      // If vertices overlap, we cut only needed part of the BSpline curve.
-      // Note that this method cannot be used for canonic curves
-      // (STEP does not support trimmed curves in AIC 514).
       if (C->IsKind(STANDARD_TYPE(Geom_BSplineCurve)))
       {
         double aTolV1       = BRep_Tool::Tolerance(Vfirst);
@@ -238,10 +206,6 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
   else
   {
 
-    // -------------------------
-    // a 3D Curve is constructed
-    // -------------------------
-
 #ifdef OCCT_DEBUG
     std::cout << "Warning: TopoDSToStep_MakeStepEdge: edge without 3d curve; creating..."
               << std::endl;
@@ -259,8 +223,7 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
     }
     else
     {
-      // To Be Optimized : create an approximated BSpline
-      //                   using GeomAPI_PointsToBSpline
+
       NCollection_Array1<gp_Pnt> Points(1, Nbpt);
       NCollection_Array1<double> Knots(1, Nbpt);
       NCollection_Array1<int>    Mult(1, Nbpt);
@@ -274,8 +237,7 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
         Knots.SetValue(i, U);
         Mult.SetValue(i, 1);
       }
-      // Points.SetValue(1, BRep_Tool::Pnt(Vfirst));
-      // Points.SetValue(Nbpt, BRep_Tool::Pnt(Vlast));
+
       Mult.SetValue(1, 2);
       Mult.SetValue(Nbpt, 2);
       occ::handle<Geom_Curve> Bs = new Geom_BSplineCurve(Points, Knots, Mult, 1);
@@ -284,15 +246,6 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
     }
   }
 
-  // ---------------------------------------------------------
-  // Warning : if the edge is connected aGeom->Length = 2
-  //           otherwise = 1 ;
-  //           and enumeration is pscrPcurveS2 or pscrPcurveS1
-  // This is corrected in the Write File phases !
-  // ---------------------------------------------------------
-
-  //: abv 25.01.00 CAX-IF TRJ3
-  // if PcurveMode is 1 (default), make surface_curve instead of simple 3d curve
   if (aTool.PCurveMode() != 0)
   {
 
@@ -314,7 +267,6 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
     }
   }
 
-  // Edge curve
   occ::handle<StepShape_EdgeCurve>      Epms  = new StepShape_EdgeCurve;
   occ::handle<TCollection_HAsciiString> aName = new TCollection_HAsciiString("");
   Epms->Init(aName, V1, V2, Gpms, true);
@@ -326,15 +278,11 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
   return;
 }
 
-//=================================================================================================
-
 const occ::handle<StepShape_TopologicalRepresentationItem>& TopoDSToStep_MakeStepEdge::Value() const
 {
   StdFail_NotDone_Raise_if(!done, "TopoDSToStep_MakeStepEdge::Value() - no result");
   return myResult;
 }
-
-//=================================================================================================
 
 TopoDSToStep_MakeEdgeError TopoDSToStep_MakeStepEdge::Error() const
 {

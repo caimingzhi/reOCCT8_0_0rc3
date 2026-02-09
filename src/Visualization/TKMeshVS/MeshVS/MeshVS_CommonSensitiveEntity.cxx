@@ -8,8 +8,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_CommonSensitiveEntity, Select3D_SensitiveSet)
 
-//=================================================================================================
-
 MeshVS_CommonSensitiveEntity::MeshVS_CommonSensitiveEntity(
   const occ::handle<SelectMgr_EntityOwner>& theOwner,
   const occ::handle<MeshVS_Mesh>&           theParentMesh,
@@ -43,7 +41,6 @@ MeshVS_CommonSensitiveEntity::MeshVS_CommonSensitiveEntity(
       }
     }
 
-    // increase sensitivity for vertices detection
     SetSensitivityFactor(8);
     myCOG = aCenter / aNbSelectableNodes;
   }
@@ -75,8 +72,6 @@ MeshVS_CommonSensitiveEntity::MeshVS_CommonSensitiveEntity(
   }
 }
 
-//=================================================================================================
-
 MeshVS_CommonSensitiveEntity::MeshVS_CommonSensitiveEntity(
   const MeshVS_CommonSensitiveEntity& theOther)
     : Select3D_SensitiveSet(theOther.myOwnerId),
@@ -89,29 +84,21 @@ MeshVS_CommonSensitiveEntity::MeshVS_CommonSensitiveEntity(
 {
 }
 
-//=================================================================================================
-
 MeshVS_CommonSensitiveEntity::~MeshVS_CommonSensitiveEntity()
 {
   myDataSource.Nullify();
   myItemIndexes.Clear();
 }
 
-//=================================================================================================
-
 int MeshVS_CommonSensitiveEntity::NbSubElements() const
 {
   return myItemIndexes.Size();
 }
 
-//=================================================================================================
-
 int MeshVS_CommonSensitiveEntity::Size() const
 {
   return myItemIndexes.Size();
 }
-
-//=================================================================================================
 
 gp_Pnt MeshVS_CommonSensitiveEntity::getVertexByIndex(const int theNodeIdx) const
 {
@@ -125,8 +112,6 @@ gp_Pnt MeshVS_CommonSensitiveEntity::getVertexByIndex(const int theNodeIdx) cons
   }
   return gp_Pnt(aCoords.Value(1), aCoords.Value(2), aCoords.Value(3));
 }
-
-//=================================================================================================
 
 Select3D_BndBox3d MeshVS_CommonSensitiveEntity::Box(const int theIdx) const
 {
@@ -167,8 +152,6 @@ Select3D_BndBox3d MeshVS_CommonSensitiveEntity::Box(const int theIdx) const
   return aBox;
 }
 
-//=================================================================================================
-
 double MeshVS_CommonSensitiveEntity::Center(const int theIdx, const int theAxis) const
 {
   const Select3D_BndBox3d& aBox    = Box(theIdx);
@@ -177,8 +160,6 @@ double MeshVS_CommonSensitiveEntity::Center(const int theIdx, const int theAxis)
   return theAxis == 0 ? aCenter.x() : (theAxis == 1 ? aCenter.y() : aCenter.z());
 }
 
-//=================================================================================================
-
 void MeshVS_CommonSensitiveEntity::Swap(const int theIdx1, const int theIdx2)
 {
   const int anItem1                  = myItemIndexes.Value(theIdx1);
@@ -186,8 +167,6 @@ void MeshVS_CommonSensitiveEntity::Swap(const int theIdx1, const int theIdx2)
   myItemIndexes.ChangeValue(theIdx1) = anItem2;
   myItemIndexes.ChangeValue(theIdx2) = anItem1;
 }
-
-//=================================================================================================
 
 bool MeshVS_CommonSensitiveEntity::overlapsElement(SelectBasics_PickResult& thePickResult,
                                                    SelectBasics_SelectingVolumeManager& theMgr,
@@ -244,8 +223,6 @@ bool MeshVS_CommonSensitiveEntity::overlapsElement(SelectBasics_PickResult& theP
   return false;
 }
 
-//=================================================================================================
-
 bool MeshVS_CommonSensitiveEntity::elementIsInside(SelectBasics_SelectingVolumeManager& theMgr,
                                                    int                                  theElemIdx,
                                                    bool theIsFullInside)
@@ -296,21 +273,15 @@ bool MeshVS_CommonSensitiveEntity::elementIsInside(SelectBasics_SelectingVolumeM
   return false;
 }
 
-//=================================================================================================
-
 double MeshVS_CommonSensitiveEntity::distanceToCOG(SelectBasics_SelectingVolumeManager& theMgr)
 {
   return theMgr.DistToGeometryCenter(myCOG);
 }
 
-//=================================================================================================
-
 Select3D_BndBox3d MeshVS_CommonSensitiveEntity::BoundingBox()
 {
   return myBndBox;
 }
-
-//=================================================================================================
 
 gp_Pnt MeshVS_CommonSensitiveEntity::CenterOfGeometry() const
 {

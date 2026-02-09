@@ -10,9 +10,6 @@
 #include <StepGeom_Direction.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d' un axis2_placement_2d de prostep a partir d' un Ax2 de gp
-//=============================================================================
 GeomToStep_MakeAxis2Placement2d::GeomToStep_MakeAxis2Placement2d(
   const gp_Ax2&           A,
   const StepData_Factors& theLocalFactors)
@@ -36,10 +33,6 @@ GeomToStep_MakeAxis2Placement2d::GeomToStep_MakeAxis2Placement2d(
   done                = true;
 }
 
-//=============================================================================
-// Creation d' un axis2_placement_2d de prostep a partir d' un Ax22d de gp
-//=============================================================================
-
 GeomToStep_MakeAxis2Placement2d::GeomToStep_MakeAxis2Placement2d(
   const gp_Ax22d&         A,
   const StepData_Factors& theLocalFactors)
@@ -62,35 +55,6 @@ GeomToStep_MakeAxis2Placement2d::GeomToStep_MakeAxis2Placement2d(
   theAxis2Placement2d = Axe;
   done                = true;
 }
-
-//=============================================================================
-// Creation d' un axis2_placement_2d de prostep a partir d' un Axis2Placement
-// de Geom
-//=============================================================================
-
-// GeomToStep_MakeAxis2Placement2d::GeomToStep_MakeAxis2Placement2d
-//   ( const occ::handle<Geom_Axis2Placement>& Axis2)
-//{
-//   occ::handle<StepGeom_Axis2Placement2d> Axe;
-//   occ::handle<StepGeom_CartesianPoint> P;
-//   occ::handle<StepGeom_Direction> D1, D2;
-//   gp_Ax2 A;
-
-//  A = Axis2->Ax2();
-//  P = GeomToStep_MakeCartesianPoint(A.Location());
-//  D1 = GeomToStep_MakeDirection(A.Direction());
-//  D2 = GeomToStep_MakeDirection(A.XDirection());
-//  Axe = new StepGeom_Axis2Placement2d;
-//  Axe->SetLocation(P);
-//  Axe->SetAxis(D1);
-//  Axe->SetRefDirection(D2);
-//  theAxis2Placement2d = Axe;
-//  done = true;
-//}
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_Axis2Placement2d>& GeomToStep_MakeAxis2Placement2d::Value() const
 {

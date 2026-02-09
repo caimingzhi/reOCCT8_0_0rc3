@@ -31,8 +31,6 @@
 
 #include <cstdio>
 
-//=================================================================================================
-
 occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   C,
                                                const double                     First,
                                                const double                     Last,
@@ -114,8 +112,6 @@ occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   
   return G2dC;
 }
 
-//=================================================================================================
-
 occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   C,
                                                const double                     First,
                                                const double                     Last,
@@ -127,10 +123,6 @@ occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   
   S->Bounds(UFirst, ULast, VFirst, VLast);
   return Curve2d(C, First, Last, S, UFirst, ULast, VFirst, VLast, Tolerance);
 }
-
-//  Modified by skv - Wed Aug 11 17:26:03 2004 OCC6272 Begin
-//  Add not implemented method.
-//=================================================================================================
 
 occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   C,
                                                const occ::handle<Geom_Surface>& S,
@@ -145,10 +137,6 @@ occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   
   return GeomProjLib::Curve2d(C, First, Last, S, UDeb, UFin, VDeb, VFin, Tol);
 }
 
-//  Modified by skv - Wed Aug 11 17:26:03 2004 OCC6272 End
-
-//=================================================================================================
-
 occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   C,
                                                const occ::handle<Geom_Surface>& S,
                                                const double                     UDeb,
@@ -162,8 +150,6 @@ occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   
   return GeomProjLib::Curve2d(C, First, Last, S, UDeb, UFin, VDeb, VFin, Tolerance);
 }
 
-//=================================================================================================
-
 occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   C,
                                                const occ::handle<Geom_Surface>& S)
 {
@@ -173,8 +159,6 @@ occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   
   return GeomProjLib::Curve2d(C, First, Last, S, Tol);
 }
 
-//=================================================================================================
-
 occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   C,
                                                const double                     First,
                                                const double                     Last,
@@ -183,8 +167,6 @@ occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   
   double Tol = Precision::PConfusion();
   return GeomProjLib::Curve2d(C, First, Last, S, Tol);
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> GeomProjLib::Project(const occ::handle<Geom_Curve>&   C,
                                              const occ::handle<Geom_Surface>& S)
@@ -246,9 +228,7 @@ occ::handle<Geom_Curve> GeomProjLib::Project(const occ::handle<Geom_Curve>&   C,
   {
     occ::handle<GeomAdaptor_Surface> HS = new GeomAdaptor_Surface(AS);
     occ::handle<GeomAdaptor_Curve>   HC = new GeomAdaptor_Curve(AC);
-    //    double Tol  = Precision::Approximation();
-    //    double TolU = Precision::PApproximation();
-    //    double TolV = Precision::PApproximation();
+
     double                     Tol  = 0.0001;
     double                     TolU = std::pow(Tol, 2. / 3);
     double                     TolV = std::pow(Tol, 2. / 3);
@@ -260,15 +240,12 @@ occ::handle<Geom_Curve> GeomProjLib::Project(const occ::handle<Geom_Curve>&   C,
     Approx_CurveOnSurface          Approx(HC2d, HS, f, l, Tol);
     Approx.Perform(16, 14, GeomAbs_C2, true);
 
-    // ici, on a toujours un type BSpline.
     if (Approx.IsDone() && Approx.HasResult())
       GC = Approx.Curve3d();
   }
 
   return GC;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> GeomProjLib::ProjectOnPlane(const occ::handle<Geom_Curve>& Curve,
                                                     const occ::handle<Geom_Plane>& Plane,

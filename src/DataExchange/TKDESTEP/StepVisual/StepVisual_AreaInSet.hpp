@@ -11,7 +11,6 @@ class StepVisual_AreaInSet : public Standard_Transient
 {
 
 public:
-  //! Returns a AreaInSet
   Standard_EXPORT StepVisual_AreaInSet();
 
   Standard_EXPORT void Init(const occ::handle<StepVisual_PresentationArea>& aArea,

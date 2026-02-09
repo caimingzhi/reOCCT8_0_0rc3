@@ -2,7 +2,7 @@
 
   #include <Standard_Type.hpp>
 
-static bool TopOpeBRepBuild_traceCU = false; // dump curves
+static bool TopOpeBRepBuild_traceCU = false;
 
 Standard_EXPORT void TopOpeBRepBuild_SettraceCU(const bool b)
 {
@@ -14,7 +14,7 @@ Standard_EXPORT bool TopOpeBRepBuild_GettraceCU()
   return TopOpeBRepBuild_traceCU;
 }
 
-static bool TopOpeBRepBuild_traceCUV = false; // dump curves verbose or not
+static bool TopOpeBRepBuild_traceCUV = false;
 
 Standard_EXPORT void TopOpeBRepBuild_SettraceCUV(const bool b)
 {
@@ -26,7 +26,7 @@ Standard_EXPORT bool TopOpeBRepBuild_GettraceCUV()
   return TopOpeBRepBuild_traceCUV;
 }
 
-static bool TopOpeBRepBuild_traceSPF = false; // SplitFace
+static bool TopOpeBRepBuild_traceSPF = false;
 
 Standard_EXPORT void TopOpeBRepBuild_SettraceSPF(const bool b)
 {
@@ -38,7 +38,7 @@ Standard_EXPORT bool TopOpeBRepBuild_GettraceSPF()
   return TopOpeBRepBuild_traceSPF;
 }
 
-static bool TopOpeBRepBuild_traceSPS = false; // SplitSolid
+static bool TopOpeBRepBuild_traceSPS = false;
 
 Standard_EXPORT void TopOpeBRepBuild_SettraceSPS(const bool b)
 {
@@ -50,7 +50,7 @@ Standard_EXPORT bool TopOpeBRepBuild_GettraceSPS()
   return TopOpeBRepBuild_traceSPS;
 }
 
-static bool TopOpeBRepBuild_traceSHEX = false; // Check edge
+static bool TopOpeBRepBuild_traceSHEX = false;
 
 Standard_EXPORT void TopOpeBRepBuild_SettraceSHEX(const bool b)
 {
@@ -362,7 +362,7 @@ Standard_EXPORT bool TopOpeBRepBuild_GetcontextNOFE()
   return b;
 }
 
-static bool TopOpeBRepBuild_traceFE = false; // trace FuseEdges
+static bool TopOpeBRepBuild_traceFE = false;
 
 Standard_EXPORT void TopOpeBRepBuild_SettraceFE(const bool b)
 {
@@ -374,5 +374,4 @@ Standard_EXPORT bool TopOpeBRepBuild_GettraceFE()
   return TopOpeBRepBuild_traceFE;
 }
 
-// #ifdef OCCT_DEBUG
 #endif

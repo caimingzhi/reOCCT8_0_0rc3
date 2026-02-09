@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_NodeGroup, StepFEA_FeaGroup)
 
-//=================================================================================================
-
 StepFEA_NodeGroup::StepFEA_NodeGroup() = default;
-
-//=================================================================================================
 
 void StepFEA_NodeGroup::Init(
   const occ::handle<TCollection_HAsciiString>& aGroup_Name,
@@ -21,15 +17,11 @@ void StepFEA_NodeGroup::Init(
   theNodes = aNodes;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<occ::handle<StepFEA_NodeRepresentation>>> StepFEA_NodeGroup::Nodes()
   const
 {
   return theNodes;
 }
-
-//=================================================================================================
 
 void StepFEA_NodeGroup::SetNodes(
   const occ::handle<NCollection_HArray1<occ::handle<StepFEA_NodeRepresentation>>>& aNodes)

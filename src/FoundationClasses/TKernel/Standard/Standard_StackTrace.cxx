@@ -13,9 +13,9 @@
 #if defined(__EMSCRIPTEN__)
   #include <emscripten/emscripten.h>
 #elif defined(__ANDROID__)
-// #include <unwind.h>
+
 #elif defined(__QNX__)
-// #include <backtrace.h> // requires linking to libbacktrace
+
 #elif !defined(_WIN32) && !(defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE)
   #include <execinfo.h>
 #elif defined(_WIN32) && !defined(OCCT_UWP)
@@ -25,18 +25,9 @@
   #include <dbghelp.h>
   #include <Standard_WarningsRestore.hpp>
 
-//! This is a wrapper of DbgHelp library loaded dynamically.
-//! DbgHelp is coming with Windows SDK, so that technically it is always available.
-//! However, it's usage requires extra steps:
-//! - .pdb files are necessary to resolve function names;
-//!   Normal release DLLs without PDBs will show no much useful info.
-//! - DbgHelp.dll and friends (SymSrv.dll, SrcSrv.dll) should be packaged with application;
-//!   DbgHelp.dll coming with system might be of other incompatible version
-//!   (some applications load it dynamically to avoid packaging extra DLL,
-//!    with a extra hacks determining library version)
 class Standard_DbgHelper
 {
-public: // dbgHelp.dll function types
+public:
   typedef BOOL(WINAPI* SYMINITIALIZEPROC)(HANDLE, PCSTR, BOOL);
   typedef BOOL(WINAPI* STACKWALK64PROC)(DWORD,
                                         HANDLE,
@@ -51,14 +42,12 @@ public: // dbgHelp.dll function types
   typedef BOOL(WINAPI* SYMFROMADDRPROC)(HANDLE, DWORD64, PDWORD64, PSYMBOL_INFO);
 
 public:
-  //! Return global instance.
   static Standard_DbgHelper& GetDbgHelper()
   {
     static Standard_DbgHelper aDbgHelper;
     return aDbgHelper;
   }
 
-  //! Return global mutex.
   static std::mutex& Mutex()
   {
     static std::mutex THE_MUTEX_LOCK;
@@ -73,14 +62,11 @@ public:
   PGET_MODULE_BASE_ROUTINE64       SymGetModuleBase64;
   SYMFROMADDRPROC                  SymFromAddr;
 
-  //! Return TRUE if library has been loaded.
   bool IsLoaded() const { return myDbgHelpLib != NULL; }
 
-  //! Return loading error message.
   const char* ErrorMessage() const { return myError; }
 
 private:
-  //! Main constructor.
   Standard_DbgHelper()
       : SymInitialize(NULL),
         SymCleanup(NULL),
@@ -140,14 +126,8 @@ private:
     }
   }
 
-  //! Destructor.
-  ~Standard_DbgHelper()
-  {
-    // we could unload library here, but don't do it as it is kept loaded
-    // unload();
-  }
+  ~Standard_DbgHelper() {}
 
-  //! Unload library.
   void unload()
   {
     if (myDbgHelpLib != NULL)
@@ -162,13 +142,11 @@ private:
   Standard_DbgHelper& operator=(const Standard_DbgHelper&);
 
 private:
-  HMODULE     myDbgHelpLib; //!< handle to DbgHelp
-  const char* myError;      //!< loading error message
+  HMODULE     myDbgHelpLib;
+  const char* myError;
 };
 
 #endif
-
-//=================================================================================================
 
 bool Standard::StackTrace(char*     theBuffer,
                           const int theBufferSize,
@@ -183,8 +161,7 @@ bool Standard::StackTrace(char*     theBuffer,
   }
 
 #if defined(__EMSCRIPTEN__)
-  // theNbTraces is ignored
-  // EM_LOG_JS_STACK?
+
   return emscripten_get_callstack(EM_LOG_C_STACK | EM_LOG_DEMANGLE | EM_LOG_NO_PATHS
                                     | EM_LOG_FUNC_PARAMS,
                                   theBuffer,
@@ -194,16 +171,14 @@ bool Standard::StackTrace(char*     theBuffer,
   Message::SendTrace("Standard::StackTrace() is not implemented for this platform");
   return false;
 #elif defined(__QNX__)
-  // bt_get_backtrace()
+
   Message::SendTrace("Standard::StackTrace() is not implemented for this platform");
   return false;
 #elif defined(OCCT_UWP) || (defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE)
   Message::SendTrace("Standard::StackTrace() is not implemented for this platform");
   return false;
 #elif defined(_WIN32)
-  // Each CPU architecture requires manual stack frame setup,
-  // and 32-bit version requires also additional hacks to retrieve current context;
-  // this implementation currently covers only x86_64 architecture.
+
   #if defined(_M_X64)
   int          aNbTraces  = theNbTraces;
   const HANDLE anHProcess = GetCurrentProcess();
@@ -221,7 +196,6 @@ bool Standard::StackTrace(char*     theBuffer,
     RtlCaptureContext(&aCtx);
   }
 
-  // DbgHelp is not thread-safe library, hence global lock is used for serial access
   std::lock_guard<std::mutex> aLock(Standard_DbgHelper::Mutex());
   Standard_DbgHelper&         aDbgHelp = Standard_DbgHelper::GetDbgHelper();
   if (!aDbgHelp.IsLoaded())
@@ -252,7 +226,7 @@ bool Standard::StackTrace(char*     theBuffer,
   aSymbol->SizeOfStruct = sizeof(SYMBOL_INFO);
   aSymbol->MaxNameLen   = MAX_SYM_NAME;
 
-  int aTopSkip = theNbTopSkip + 1; // skip this function call and specified extra number
+  int aTopSkip = theNbTopSkip + 1;
   strcat_s(theBuffer, theBufferSize, "\n==Backtrace==");
   for (int aLineIter = 0; aLineIter < aNbTraces; ++aLineIter)
   {
@@ -309,7 +283,7 @@ bool Standard::StackTrace(char*     theBuffer,
   return false;
   #endif
 #else
-  const int aTopSkip  = theNbTopSkip + 1; // skip this function call and specified extra number
+  const int aTopSkip  = theNbTopSkip + 1;
   int       aNbTraces = theNbTraces + aTopSkip;
   void**    aStackArr = (void**)alloca(sizeof(void*) * aNbTraces);
   if (aStackArr == nullptr)

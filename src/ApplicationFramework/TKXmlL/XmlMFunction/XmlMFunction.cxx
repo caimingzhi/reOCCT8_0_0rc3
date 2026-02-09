@@ -6,8 +6,6 @@
 #include <XmlMFunction_GraphNodeDriver.hpp>
 #include <XmlMFunction_ScopeDriver.hpp>
 
-//=================================================================================================
-
 void XmlMFunction::AddDrivers(const occ::handle<XmlMDF_ADriverTable>& aDriverTable,
                               const occ::handle<Message_Messenger>&   aMessageDriver)
 {

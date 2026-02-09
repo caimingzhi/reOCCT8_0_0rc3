@@ -8,23 +8,9 @@
 
 #include <cmath>
 
-//! Internal helper namespace for 2D offset curve calculations.
-//! Provides static inline functions to compute offset curve point and derivatives
-//! from basis curve derivatives.
-//!
-//! These functions are used by Geom2d_OffsetCurve and Geom2dAdaptor_Curve.
-//!
-//! Mathematical basis:
-//! P(u) = p(u) + Offset * N / ||N||
-//! where N = (p'(u).Y, -p'(u).X) is the normal direction (rotated tangent by 90 degrees)
 namespace Geom2d_OffsetCurveUtils
 {
 
-  //! Calculates D0 (point) for 2D offset curve.
-  //! @param[in,out] theValue on input: basis curve point; on output: offset point
-  //! @param[in] theD1 first derivative of basis curve at the point
-  //! @param[in] theOffset offset distance value
-  //! @return true if successful, false if tangent vector has zero magnitude
   inline bool CalculateD0(gp_Pnt2d& theValue, const gp_Vec2d& theD1, double theOffset)
   {
     if (theD1.SquareMagnitude() <= gp::Resolution())
@@ -37,21 +23,11 @@ namespace Geom2d_OffsetCurveUtils
     return true;
   }
 
-  //! Calculates D0 and D1 for 2D offset curve.
-  //! @param[in,out] theValue on input: basis curve point; on output: offset point
-  //! @param[in,out] theD1 on input: first derivative of basis; on output: offset curve D1
-  //! @param[in] theD2 second derivative of basis curve
-  //! @param[in] theOffset offset distance value
-  //! @return true if successful, false if computation failed
   inline bool CalculateD1(gp_Pnt2d&       theValue,
                           gp_Vec2d&       theD1,
                           const gp_Vec2d& theD2,
                           double          theOffset)
   {
-    // P(u) = p(u) + Offset * Ndir / R
-    // with R = || p' ^ Z|| and Ndir = P' ^ Z
-
-    // P'(u) = p'(u) + (Offset / R**2) * (DNdir/DU * R -  Ndir * (DR/R))
 
     gp_XY  Ndir(theD1.Y(), -theD1.X());
     gp_XY  DNdir(theD2.Y(), -theD2.X());
@@ -65,34 +41,26 @@ namespace Geom2d_OffsetCurveUtils
       {
         return false;
       }
-      // We try another computation but the stability is not very good.
+
       DNdir.Multiply(R);
       DNdir.Subtract(Ndir.Multiplied(Dr / R));
       DNdir.Multiply(theOffset / R2);
     }
     else
     {
-      // Same computation as IICURV in EUCLID-IS because the stability is better
+
       DNdir.Multiply(theOffset / R);
       DNdir.Subtract(Ndir.Multiplied(theOffset * Dr / R3));
     }
 
     Ndir.Multiply(theOffset / R);
-    // P(u)
+
     theValue.ChangeCoord().Add(Ndir);
-    // P'(u)
+
     theD1.Add(gp_Vec2d(DNdir));
     return true;
   }
 
-  //! Calculates D0, D1, D2 for 2D offset curve.
-  //! @param[in,out] theValue on input: basis curve point; on output: offset point
-  //! @param[in,out] theD1 on input: first derivative of basis; on output: offset curve D1
-  //! @param[in,out] theD2 on input: second derivative of basis; on output: offset curve D2
-  //! @param[in] theD3 third derivative of basis curve
-  //! @param[in] theIsDirChange flag indicating direction change at singular point
-  //! @param[in] theOffset offset distance value
-  //! @return true if successful, false if computation failed
   inline bool CalculateD2(gp_Pnt2d&       theValue,
                           gp_Vec2d&       theD1,
                           gp_Vec2d&       theD2,
@@ -100,13 +68,6 @@ namespace Geom2d_OffsetCurveUtils
                           bool            theIsDirChange,
                           double          theOffset)
   {
-    // P(u) = p(u) + Offset * Ndir / R
-    // with R = || p' ^ Z|| and Ndir = P' ^ Z
-
-    // P'(u) = p'(u) + (Offset / R**2) * (DNdir/DU * R -  Ndir * (DR/R))
-
-    // P"(u) = p"(u) + (Offset / R) * (D2Ndir/DU - DNdir * (2.0 * Dr/ R**2) +
-    //         Ndir * ( (3.0 * Dr**2 / R**4) - (D2r / R**2)))
 
     gp_XY  Ndir(theD1.Y(), -theD1.X());
     gp_XY  DNdir(theD2.Y(), -theD2.X());
@@ -124,36 +85,32 @@ namespace Geom2d_OffsetCurveUtils
       {
         return false;
       }
-      // We try another computation but the stability is not very good dixit ISG.
-      //  V2 = P" (U) :
+
       D2Ndir.Subtract(DNdir.Multiplied(2.0 * Dr / R2));
       D2Ndir.Add(Ndir.Multiplied(((3.0 * Dr * Dr) / R4) - (D2r / R2)));
       D2Ndir.Multiply(theOffset / R);
 
-      // V1 = P' (U) :
       DNdir.Multiply(R);
       DNdir.Subtract(Ndir.Multiplied(Dr / R));
       DNdir.Multiply(theOffset / R2);
     }
     else
     {
-      // Same computation as IICURV in EUCLID-IS because the stability is better.
-      // V2 = P" (U) :
+
       D2Ndir.Multiply(theOffset / R);
       D2Ndir.Subtract(DNdir.Multiplied(2.0 * theOffset * Dr / R3));
       D2Ndir.Add(Ndir.Multiplied(theOffset * (((3.0 * Dr * Dr) / R5) - (D2r / R3))));
 
-      // V1 = P' (U)
       DNdir.Multiply(theOffset / R);
       DNdir.Subtract(Ndir.Multiplied(theOffset * Dr / R3));
     }
 
     Ndir.Multiply(theOffset / R);
-    // P(u)
+
     theValue.ChangeCoord().Add(Ndir);
-    // P'(u) :
+
     theD1.Add(gp_Vec2d(DNdir));
-    // P"(u) :
+
     if (theIsDirChange)
     {
       theD2.Reverse();
@@ -162,15 +119,6 @@ namespace Geom2d_OffsetCurveUtils
     return true;
   }
 
-  //! Calculates D0, D1, D2, D3 for 2D offset curve.
-  //! @param[in,out] theValue on input: basis curve point; on output: offset point
-  //! @param[in,out] theD1 on input: first derivative of basis; on output: offset curve D1
-  //! @param[in,out] theD2 on input: second derivative of basis; on output: offset curve D2
-  //! @param[in,out] theD3 on input: third derivative of basis; on output: offset curve D3
-  //! @param[in] theD4 fourth derivative of basis curve
-  //! @param[in] theIsDirChange flag indicating direction change at singular point
-  //! @param[in] theOffset offset distance value
-  //! @return true if successful, false if computation failed
   inline bool CalculateD3(gp_Pnt2d&       theValue,
                           gp_Vec2d&       theD1,
                           gp_Vec2d&       theD2,
@@ -179,18 +127,6 @@ namespace Geom2d_OffsetCurveUtils
                           bool            theIsDirChange,
                           double          theOffset)
   {
-    // P(u) = p(u) + Offset * Ndir / R
-    // with R = || p' ^ Z|| and Ndir = P' ^ Z
-
-    // P'(u)  = p'(u) + (Offset / R**2) * (DNdir/DU * R -  Ndir * (DR/R))
-
-    // P"(u)  = p"(u) + (Offset / R) * (D2Ndir/DU - DNdir * (2.0 * Dr/ R**2) +
-    //          Ndir * ( (3.0 * Dr**2 / R**4) - (D2r / R**2)))
-
-    // P"'(u) = p"'(u) + (Offset / R) * (D3Ndir - (3.0 * Dr/R**2 ) * D2Ndir -
-    //          (3.0 * D2r / R2) * DNdir) + (3.0 * Dr * Dr / R4) * DNdir -
-    //          (D3r/R2) * Ndir + (6.0 * Dr * Dr / R4) * Ndir +
-    //          (6.0 * Dr * D2r / R4) * Ndir - (15.0 * Dr* Dr* Dr /R6) * Ndir
 
     gp_XY  Ndir(theD1.Y(), -theD1.X());
     gp_XY  DNdir(theD2.Y(), -theD2.X());
@@ -213,49 +149,47 @@ namespace Geom2d_OffsetCurveUtils
       {
         return false;
       }
-      // We try another computation but the stability is not very good dixit ISG.
-      // V3 = P"' (U) :
+
       D3Ndir.Subtract(D2Ndir.Multiplied(3.0 * Dr / R2));
       D3Ndir.Subtract(DNdir.Multiplied(3.0 * ((D2r / R2) + (Dr * Dr / R4))));
       D3Ndir.Add(
         Ndir.Multiplied(6.0 * Dr * Dr / R4 + 6.0 * Dr * D2r / R4 - 15.0 * Dr * Dr * Dr / R6 - D3r));
       D3Ndir.Multiply(theOffset / R);
-      // V2 = P" (U) :
+
       R4 = R2 * R2;
       D2Ndir.Subtract(DNdir.Multiplied(2.0 * Dr / R2));
       D2Ndir.Subtract(Ndir.Multiplied((3.0 * Dr * Dr / R4) - (D2r / R2)));
       D2Ndir.Multiply(theOffset / R);
-      // V1 = P' (U) :
+
       DNdir.Multiply(R);
       DNdir.Subtract(Ndir.Multiplied(Dr / R));
       DNdir.Multiply(theOffset / R2);
     }
     else
     {
-      // Same computation as IICURV in EUCLID-IS because the stability is better.
-      // V3 = P"' (U) :
+
       D3Ndir.Multiply(theOffset / R);
       D3Ndir.Subtract(D2Ndir.Multiplied(3.0 * theOffset * Dr / R3));
       D3Ndir.Subtract(DNdir.Multiplied(((3.0 * theOffset) * ((D2r / R3) + (Dr * Dr) / R5))));
       D3Ndir.Add(Ndir.Multiplied(
         (theOffset * (6.0 * Dr * Dr / R5 + 6.0 * Dr * D2r / R5 - 15.0 * Dr * Dr * Dr / R7 - D3r))));
-      // V2 = P" (U) :
+
       D2Ndir.Multiply(theOffset / R);
       D2Ndir.Subtract(DNdir.Multiplied(2.0 * theOffset * Dr / R3));
       D2Ndir.Subtract(Ndir.Multiplied(theOffset * (((3.0 * Dr * Dr) / R5) - (D2r / R3))));
-      // V1 = P' (U) :
+
       DNdir.Multiply(theOffset / R);
       DNdir.Subtract(Ndir.Multiplied(theOffset * Dr / R3));
     }
 
     Ndir.Multiply(theOffset / R);
-    // P(u)
+
     theValue.ChangeCoord().Add(Ndir);
-    // P'(u) :
+
     theD1.Add(gp_Vec2d(DNdir));
-    // P"(u)
+
     theD2.Add(gp_Vec2d(D2Ndir));
-    // P"'(u)
+
     if (theIsDirChange)
     {
       theD3.Reverse();
@@ -264,17 +198,6 @@ namespace Geom2d_OffsetCurveUtils
     return true;
   }
 
-  //! Adjusts derivatives at singular points where the first derivative is nearly zero.
-  //! Uses Taylor series approximation to find a valid tangent direction.
-  //! @tparam CurveType type supporting D0, DN methods (Geom2d_Curve or adaptor)
-  //! @param[in] theCurve basis curve for derivative evaluation
-  //! @param[in] theMaxDerivative maximum derivative order to compute (3 or 4)
-  //! @param[in] theU parameter value
-  //! @param[in,out] theD1 first derivative (will be adjusted)
-  //! @param[in,out] theD2 second derivative (will be adjusted)
-  //! @param[in,out] theD3 third derivative (will be adjusted)
-  //! @param[in,out] theD4 fourth derivative (will be adjusted if theMaxDerivative >= 4)
-  //! @return true if direction change detected
   template <typename CurveType>
   bool AdjustDerivative(const CurveType& theCurve,
                         int              theMaxDerivative,
@@ -305,8 +228,7 @@ namespace Geom2d_OffsetCurveUtils
 
     const double aDelta = std::max(du * DivisionFactor, aMinStep);
 
-    // Derivative is approximated by Taylor-series
-    int      anIndex = 1; // Derivative order
+    int      anIndex = 1;
     gp_Vec2d V;
 
     do
@@ -343,15 +265,6 @@ namespace Geom2d_OffsetCurveUtils
     return isDirectionChange;
   }
 
-  //! Template function for D0 evaluation of 2D offset curve.
-  //! Gets D1 from basis curve and computes offset point.
-  //!
-  //! @tparam BasisCurveType type of basis curve (must have D1 method)
-  //! @param[in] theU parameter value
-  //! @param[in] theBasisCurve basis curve
-  //! @param[in] theOffset offset distance
-  //! @param[out] theValue computed offset point
-  //! @return true if evaluation succeeded, false if normal is undefined
   template <typename BasisCurveType>
   bool EvaluateD0(double                theU,
                   const BasisCurveType& theBasisCurve,
@@ -363,16 +276,6 @@ namespace Geom2d_OffsetCurveUtils
     return CalculateD0(theValue, aD1, theOffset);
   }
 
-  //! Template function for D1 evaluation of 2D offset curve.
-  //! Gets D2 from basis curve and computes offset point and first derivative.
-  //!
-  //! @tparam BasisCurveType type of basis curve (must have D2 method)
-  //! @param[in] theU parameter value
-  //! @param[in] theBasisCurve basis curve
-  //! @param[in] theOffset offset distance
-  //! @param[out] theValue computed offset point
-  //! @param[out] theD1 computed first derivative
-  //! @return true if evaluation succeeded, false if computation failed
   template <typename BasisCurveType>
   bool EvaluateD1(double                theU,
                   const BasisCurveType& theBasisCurve,
@@ -385,18 +288,6 @@ namespace Geom2d_OffsetCurveUtils
     return CalculateD1(theValue, theD1, aD2, theOffset);
   }
 
-  //! Template function for D2 evaluation of 2D offset curve.
-  //! Gets D3 from basis curve and computes offset point and derivatives.
-  //! Handles singular points where first derivative is nearly zero.
-  //!
-  //! @tparam BasisCurveType type of basis curve (must have D3 and DN methods)
-  //! @param[in] theU parameter value
-  //! @param[in] theBasisCurve basis curve
-  //! @param[in] theOffset offset distance
-  //! @param[out] theValue computed offset point
-  //! @param[out] theD1 computed first derivative
-  //! @param[out] theD2 computed second derivative
-  //! @return true if evaluation succeeded, false if computation failed
   template <typename BasisCurveType>
   bool EvaluateD2(double                theU,
                   const BasisCurveType& theBasisCurve,
@@ -418,19 +309,6 @@ namespace Geom2d_OffsetCurveUtils
     return CalculateD2(theValue, theD1, theD2, aD3, isDirectionChange, theOffset);
   }
 
-  //! Template function for D3 evaluation of 2D offset curve.
-  //! Gets D3 and D4 from basis curve and computes offset point and derivatives.
-  //! Handles singular points where first derivative is nearly zero.
-  //!
-  //! @tparam BasisCurveType type of basis curve (must have D3 and DN methods)
-  //! @param[in] theU parameter value
-  //! @param[in] theBasisCurve basis curve
-  //! @param[in] theOffset offset distance
-  //! @param[out] theValue computed offset point
-  //! @param[out] theD1 computed first derivative
-  //! @param[out] theD2 computed second derivative
-  //! @param[out] theD3 computed third derivative
-  //! @return true if evaluation succeeded, false if computation failed
   template <typename BasisCurveType>
   bool EvaluateD3(double                theU,
                   const BasisCurveType& theBasisCurve,
@@ -452,18 +330,6 @@ namespace Geom2d_OffsetCurveUtils
     return CalculateD3(theValue, theD1, theD2, theD3, aD4, isDirectionChange, theOffset);
   }
 
-  //! Template function for DN evaluation of 2D offset curve.
-  //! Handles derivatives up to order 3 using D1/D2/D3 methods.
-  //! For derivatives > 3, returns the basis curve derivative directly
-  //! (offset contribution is negligible for high-order derivatives).
-  //!
-  //! @tparam BasisCurveType type of basis curve (must have D1, D2, D3, DN methods)
-  //! @param[in] theU parameter value
-  //! @param[in] theBasisCurve basis curve
-  //! @param[in] theOffset offset distance
-  //! @param[in] theN derivative order (must be >= 1)
-  //! @param[out] theDN computed N-th derivative
-  //! @return true if evaluation succeeded, false if computation failed
   template <typename BasisCurveType>
   bool EvaluateDN(double                theU,
                   const BasisCurveType& theBasisCurve,
@@ -482,7 +348,7 @@ namespace Geom2d_OffsetCurveUtils
       case 3:
         return EvaluateD3(theU, theBasisCurve, theOffset, aPnt, aDummy, aDummy, theDN);
       default:
-        // For derivatives > 3, return basis curve derivative (no offset contribution)
+
         theDN = theBasisCurve->DN(theU, theN);
         return true;
     }

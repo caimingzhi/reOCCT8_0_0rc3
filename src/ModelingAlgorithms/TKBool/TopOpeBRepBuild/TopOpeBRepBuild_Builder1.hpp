@@ -23,9 +23,6 @@ class TopOpeBRepBuild_PaveSet;
 class TopoDS_Edge;
 class TopoDS_Face;
 
-//! extension of the class TopOpeBRepBuild_Builder dedicated
-//! to avoid bugs in "Rebuilding Result" algorithm for the
-//! case of SOLID/SOLID Boolean Operations
 class TopOpeBRepBuild_Builder1 : public TopOpeBRepBuild_Builder
 {
 public:
@@ -35,8 +32,6 @@ public:
 
   Standard_EXPORT ~TopOpeBRepBuild_Builder1() override;
 
-  //! Removes all splits and merges already performed.
-  //! Does NOT clear the handled DS (except ShapeWithStatesMaps).
   Standard_EXPORT void Clear() override;
 
   Standard_EXPORT void Perform(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS) override;

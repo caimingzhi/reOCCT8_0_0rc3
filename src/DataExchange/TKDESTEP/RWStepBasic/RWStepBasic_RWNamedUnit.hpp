@@ -11,7 +11,6 @@ class StepBasic_NamedUnit;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for NamedUnit
 class RWStepBasic_RWNamedUnit
 {
 public:

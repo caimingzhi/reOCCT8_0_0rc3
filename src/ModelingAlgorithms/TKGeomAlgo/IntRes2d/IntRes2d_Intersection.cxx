@@ -16,7 +16,6 @@ static void InternalVerifyPosition(IntRes2d_Transition& T1,
                                    const double         FirstParam2,
                                    const double         LastParam2);
 
-//----------------------------------------------------------------------
 static bool TransitionEqual(const IntRes2d_Transition& T1, const IntRes2d_Transition& T2);
 
 bool TransitionEqual(const IntRes2d_Transition& T1, const IntRes2d_Transition& T2)
@@ -81,7 +80,6 @@ void IntRes2d_Intersection::Insert(const IntRes2d_IntersectionPoint& Pnt)
           }
         }
       }
-      //----------------------------------------------------------------
 
       i++;
     }
@@ -113,10 +111,7 @@ void IntRes2d_Intersection::SetValues(const IntRes2d_Intersection& Other)
     {
       lseg.Append(Other.lseg(i));
     }
-    //-----------------------
-    // lpnt=Other.lpnt;  Pose des problemes
-    // lseg=Other.lseg;  pour des objets composites
-    //-----------------------
+
     done = true;
   }
   else
@@ -125,44 +120,6 @@ void IntRes2d_Intersection::SetValues(const IntRes2d_Intersection& Other)
   }
 }
 
-//----------------------------------------------------------------------
-//-- Function used to Merge the results of two Intersections .
-//-- for Composite Curves only. FirstParam and LastParam are the
-//--  parameter of the bounds of the composite Curve
-//-- Merge of two Intersection Segments S1 and S2 when :
-//--
-//--     S1 : U1First,PosU1First   -->  U1Last,PosU1Last
-//--          V1First,PosV1First   -->  V1Last,PosV1Last
-//--     S2 : U2First,PosU2First   -->  U2Last,PosU2Last
-//--          V2First,PosV2First   -->  V2Last,PosV2Last
-//--
-//--   1       U :      X------1-------E H-----2-------X   U -->
-//--           V :      X------1-------X X-----2-------X  <- V -> ?
-//--
-//--      PosU1Last == End    &&  PosU2First == Head
-//--      && U1Last == U2First
-//--      && V1Last == V2First
-//--
-//--   OR
-//--
-//--   2       U :      X------1-------H E-----2-------X   U <--
-//--           V :      X------1-------X X-----2-------X  <- V -> ?
-//--
-//--      PosU1Last == Head   &&  PosU2First == End
-//--      && U1Last == U2First
-//--      && V1Last == V2First
-//--
-//--  merge the two Segment in :
-//--
-//--           U :      X------1----------2-------X     U
-//--           V :      X------1----------2-------X  <- V -> ?
-//--
-//--
-//--
-//--  The Position of Intersection Point is set to Middle
-//--  when the Parameters U et V are between FirstParam1, EndParam1
-//--  and FirstParam2, EndParam2
-//--
 void IntRes2d_Intersection::Append(const IntRes2d_Intersection& Other,
                                    const double                 FirstParam1,
                                    const double                 LastParam1,
@@ -172,7 +129,7 @@ void IntRes2d_Intersection::Append(const IntRes2d_Intersection& Other,
 
   if (Other.done)
   {
-    //-- Verification of the Position of the IntersectionPoints
+
     int n = Other.lpnt.Length();
     int i;
     for (i = 1; i <= n; i++)
@@ -197,11 +154,6 @@ void IntRes2d_Intersection::Append(const IntRes2d_Intersection& Other,
       this->Insert(IntRes2d_IntersectionPoint(Pt, PParamOnFirst, PParamOnSecond, T1, T2, false));
     }
 
-    //--------------------------------------------------
-    //-- IntersectionSegment
-    //-- (we assume that a composite curve is always bounded)
-    //-- (a segment has always a FirstPoint and a LastPoint)
-    //--------------------------------------------------
     n                       = Other.lseg.Length();
     double SegModif_P1First = 0, SegModif_P1Second = 0;
     double SegModif_P2First = 0, SegModif_P2Second = 0;
@@ -245,8 +197,6 @@ void IntRes2d_Intersection::Append(const IntRes2d_Intersection& Other,
                              FirstParam2,
                              LastParam2);
 
-      //-- Loop on the previous segments
-      //--
       int  an             = lseg.Length();
       bool NotYetModified = true;
 
@@ -263,10 +213,7 @@ void IntRes2d_Intersection::Append(const IntRes2d_Intersection& Other,
 
         if (Opposite == lseg(j).IsOpposite())
         {
-          //---------------------------------------------------------------
-          //--    AnP1---------AnP2
-          //--                  P1-------------P2
-          //--
+
           if (PARAMEQUAL(P1PParamOnFirst, AnP2PParamOnFirst)
               && PARAMEQUAL(P1PParamOnSecond, AnP2PParamOnSecond))
           {
@@ -277,10 +224,7 @@ void IntRes2d_Intersection::Append(const IntRes2d_Intersection& Other,
             SegModif_P2First  = P2PParamOnFirst;
             SegModif_P2Second = P2PParamOnSecond;
           }
-          //---------------------------------------------------------------
-          //--                                AnP1---------AnP2
-          //--                  P1-------------P2
-          //--
+
           else if (PARAMEQUAL(P2PParamOnFirst, AnP1PParamOnFirst)
                    && PARAMEQUAL(P2PParamOnSecond, AnP1PParamOnSecond))
           {
@@ -291,10 +235,7 @@ void IntRes2d_Intersection::Append(const IntRes2d_Intersection& Other,
             SegModif_P2First  = AnP2PParamOnFirst;
             SegModif_P2Second = AnP2PParamOnSecond;
           }
-          //---------------------------------------------------------------
-          //--    AnP2---------AnP1
-          //--                  P1-------------P2
-          //--
+
           if (PARAMEQUAL(P1PParamOnFirst, AnP1PParamOnFirst)
               && PARAMEQUAL(P1PParamOnSecond, AnP1PParamOnSecond))
           {
@@ -305,10 +246,7 @@ void IntRes2d_Intersection::Append(const IntRes2d_Intersection& Other,
             SegModif_P2First  = AnP2PParamOnFirst;
             SegModif_P2Second = AnP2PParamOnSecond;
           }
-          //---------------------------------------------------------------
-          //--                                AnP2---------AnP1
-          //--                  P1-------------P2
-          //--
+
           else if (PARAMEQUAL(P2PParamOnFirst, AnP2PParamOnFirst)
                    && PARAMEQUAL(P2PParamOnSecond, AnP2PParamOnSecond))
           {
@@ -328,13 +266,10 @@ void IntRes2d_Intersection::Append(const IntRes2d_Intersection& Other,
           IntRes2d_IntersectionPoint(P2Pt, P2PParamOnFirst, P2PParamOnSecond, P2T1, P2T2, false),
           Opposite,
           false));
-
-      } //-- if(NotYetModified)
+      }
       else
       {
-        //--------------------------------------------------------------
-        //-- Are some Existing Points in this segment ?
-        //--------------------------------------------------------------
+
         int rnbpts = lpnt.Length();
         for (int rp = 1; (rp <= rnbpts) && (rp >= 1); rp++)
         {
@@ -350,13 +285,9 @@ void IntRes2d_Intersection::Append(const IntRes2d_Intersection& Other,
             rp--;
             rnbpts--;
           }
-        } //-- for(int rp=1; (rp<=rnbpts)&&(rp>=1); rp++)
+        }
       }
     }
-    //--------------------------------------------------
-    //-- Remove some Points ?
-    //-- Example : Points which lie in a segment.
-    //--------------------------------------------------
 
     done = true;
   }
@@ -366,8 +297,6 @@ void IntRes2d_Intersection::Append(const IntRes2d_Intersection& Other,
   }
 }
 
-//----------------------------------------------------------------------
-//--
 #define DEBUGPOSITION 0
 
 #if DEBUGPOSITION
@@ -420,5 +349,3 @@ void InternalVerifyPosition(IntRes2d_Transition& T1,
     }
   }
 }
-
-//----------------------------------------------------------------------

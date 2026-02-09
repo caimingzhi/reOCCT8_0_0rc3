@@ -5,12 +5,8 @@
 #include <StepData_StepWriter.hpp>
 #include <StepDimTol_DatumReferenceModifierWithValue.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWDatumReferenceModifierWithValue::RWStepDimTol_RWDatumReferenceModifierWithValue() =
   default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWDatumReferenceModifierWithValue::ReadStep(
   const occ::handle<StepData_StepReaderData>&                    data,
@@ -18,11 +14,9 @@ void RWStepDimTol_RWDatumReferenceModifierWithValue::ReadStep(
   occ::handle<Interface_Check>&                                  ach,
   const occ::handle<StepDimTol_DatumReferenceModifierWithValue>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "datum_reference_modifier_with_value"))
     return;
-
-  // own fields of DatumReferenceModifierWithValue
 
   StepDimTol_DatumReferenceModifierType aModifierType = StepDimTol_CircularOrCylindrical;
   if (data->ParamType(num, 1) == Interface_ParamEnum)
@@ -50,17 +44,13 @@ void RWStepDimTol_RWDatumReferenceModifierWithValue::ReadStep(
                    STANDARD_TYPE(StepBasic_LengthMeasureWithUnit),
                    aModifierValue);
 
-  // Initialize entity
   ent->Init(aModifierType, aModifierValue);
 }
-
-//=================================================================================================
 
 void RWStepDimTol_RWDatumReferenceModifierWithValue::WriteStep(
   StepData_StepWriter&                                           SW,
   const occ::handle<StepDimTol_DatumReferenceModifierWithValue>& ent) const
 {
-  // own fields of DatumReferenceModifierWithValue
 
   switch (ent->ModifierType())
   {

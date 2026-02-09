@@ -13,8 +13,6 @@
 #include <Standard_DomainError.hpp>
 #include <TopoDS_Face.hpp>
 
-//=================================================================================================
-
 double Draft::Angle(const TopoDS_Face& F, const gp_Dir& D)
 {
 
@@ -60,7 +58,7 @@ double Draft::Angle(const TopoDS_Face& F, const gp_Dir& D)
     Angle = 0.;
   }
   else
-  { // STANDARD_TYPE(Geom_ConicalSurface)
+  {
     gp_Cone Co(occ::down_cast<Geom_ConicalSurface>(S)->Cone());
     double  testdir = D.Dot(Co.Axis().Direction());
     if (std::abs(testdir) <= 1. - Precision::Angular())

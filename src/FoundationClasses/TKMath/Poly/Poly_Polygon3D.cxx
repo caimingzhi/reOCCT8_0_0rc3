@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Poly_Polygon3D, Standard_Transient)
 
-//=================================================================================================
-
 Poly_Polygon3D::Poly_Polygon3D(const int theNbNodes, const bool theHasParams)
     : myDeflection(0.0),
       myNodes(1, theNbNodes)
@@ -14,8 +12,6 @@ Poly_Polygon3D::Poly_Polygon3D(const int theNbNodes, const bool theHasParams)
   }
 }
 
-//=================================================================================================
-
 Poly_Polygon3D::Poly_Polygon3D(const NCollection_Array1<gp_Pnt>& Nodes)
     : myDeflection(0.),
       myNodes(1, Nodes.Length())
@@ -24,8 +20,6 @@ Poly_Polygon3D::Poly_Polygon3D(const NCollection_Array1<gp_Pnt>& Nodes)
   for (i = Nodes.Lower(); i <= Nodes.Upper(); i++)
     myNodes(j++) = Nodes(i);
 }
-
-//=================================================================================================
 
 Poly_Polygon3D::Poly_Polygon3D(const NCollection_Array1<gp_Pnt>& Nodes,
                                const NCollection_Array1<double>& P)
@@ -43,8 +37,6 @@ Poly_Polygon3D::Poly_Polygon3D(const NCollection_Array1<gp_Pnt>& Nodes,
   }
 }
 
-//=================================================================================================
-
 occ::handle<Poly_Polygon3D> Poly_Polygon3D::Copy() const
 {
   occ::handle<Poly_Polygon3D> aCopy;
@@ -55,8 +47,6 @@ occ::handle<Poly_Polygon3D> Poly_Polygon3D::Copy() const
   aCopy->Deflection(myDeflection);
   return aCopy;
 }
-
-//=================================================================================================
 
 void Poly_Polygon3D::DumpJson(Standard_OStream& theOStream, int) const
 {

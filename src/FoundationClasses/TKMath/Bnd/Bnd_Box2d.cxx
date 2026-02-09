@@ -10,17 +10,14 @@
 
 namespace
 {
-  // Precision constant for infinite bounds
+
   constexpr double THE_BND_PRECISION_INFINITE = 1e+100;
 
-  // Precomputed unit direction vectors for bounding box transformations
   constexpr gp_Dir2d THE_DIR_XMIN{gp_Dir2d::D::NX};
   constexpr gp_Dir2d THE_DIR_XMAX{gp_Dir2d::D::X};
   constexpr gp_Dir2d THE_DIR_YMIN{gp_Dir2d::D::NY};
   constexpr gp_Dir2d THE_DIR_YMAX{gp_Dir2d::D::Y};
-} // anonymous namespace
-
-//=================================================================================================
+} // namespace
 
 void Bnd_Box2d::Update(const double x, const double y, const double X, const double Y)
 {
@@ -45,8 +42,6 @@ void Bnd_Box2d::Update(const double x, const double y, const double X, const dou
   }
 }
 
-//=================================================================================================
-
 void Bnd_Box2d::Update(const double X, const double Y)
 {
   if (Flags & VoidMask)
@@ -70,8 +65,6 @@ void Bnd_Box2d::Update(const double X, const double Y)
   }
 }
 
-//=================================================================================================
-
 void Bnd_Box2d::Get(double& x, double& y, double& Xm, double& Ym) const
 {
   if (Flags & VoidMask)
@@ -83,42 +76,30 @@ void Bnd_Box2d::Get(double& x, double& y, double& Xm, double& Ym) const
   Ym = GetYMax();
 }
 
-//=================================================================================================
-
 Bnd_Box2d::Limits Bnd_Box2d::Get() const
 {
   return {GetXMin(), GetXMax(), GetYMin(), GetYMax()};
 }
-
-//=================================================================================================
 
 double Bnd_Box2d::GetXMin() const
 {
   return (Flags & XminMask) ? -THE_BND_PRECISION_INFINITE : Xmin - Gap;
 }
 
-//=================================================================================================
-
 double Bnd_Box2d::GetXMax() const
 {
   return (Flags & XmaxMask) ? THE_BND_PRECISION_INFINITE : Xmax + Gap;
 }
-
-//=================================================================================================
 
 double Bnd_Box2d::GetYMin() const
 {
   return (Flags & YminMask) ? -THE_BND_PRECISION_INFINITE : Ymin - Gap;
 }
 
-//=================================================================================================
-
 double Bnd_Box2d::GetYMax() const
 {
   return (Flags & YmaxMask) ? THE_BND_PRECISION_INFINITE : Ymax + Gap;
 }
-
-//=================================================================================================
 
 Bnd_Box2d Bnd_Box2d::Transformed(const gp_Trsf2d& T) const
 {
@@ -211,8 +192,6 @@ Bnd_Box2d Bnd_Box2d::Transformed(const gp_Trsf2d& T) const
   return aNewBox;
 }
 
-//=================================================================================================
-
 void Bnd_Box2d::Add(const Bnd_Box2d& Other)
 {
   if (IsWhole())
@@ -257,8 +236,6 @@ void Bnd_Box2d::Add(const Bnd_Box2d& Other)
   }
 }
 
-//=================================================================================================
-
 void Bnd_Box2d::Add(const gp_Dir2d& D)
 {
   double DX = D.X();
@@ -274,8 +251,6 @@ void Bnd_Box2d::Add(const gp_Dir2d& D)
   else if (DY > RealEpsilon())
     OpenYmax();
 }
-
-//=================================================================================================
 
 bool Bnd_Box2d::IsOut(const gp_Pnt2d& P) const
 {
@@ -300,8 +275,6 @@ bool Bnd_Box2d::IsOut(const gp_Pnt2d& P) const
   }
 }
 
-//=================================================================================================
-
 bool Bnd_Box2d::IsOut(const gp_Lin2d& theL) const
 {
   if (IsWhole())
@@ -325,8 +298,6 @@ bool Bnd_Box2d::IsOut(const gp_Lin2d& theL) const
   return aStatus;
 }
 
-//=================================================================================================
-
 bool Bnd_Box2d::IsOut(const gp_Pnt2d& theP0, const gp_Pnt2d& theP1) const
 {
   if (IsWhole())
@@ -342,7 +313,6 @@ bool Bnd_Box2d::IsOut(const gp_Pnt2d& theP0, const gp_Pnt2d& theP1) const
   double aLocXMin, aLocXMax, aLocYMin, aLocYMax;
   Get(aLocXMin, aLocYMin, aLocXMax, aLocYMax);
 
-  //// Intersect the line containing the segment.
   const gp_XY aSegDelta(theP1.XY() - theP0.XY());
 
   gp_XY aCenter((aLocXMin + aLocXMax) / 2, (aLocYMin + aLocYMax) / 2);
@@ -354,7 +324,7 @@ bool Bnd_Box2d::IsOut(const gp_Pnt2d& theP0, const gp_Pnt2d& theP1) const
 
   if ((std::abs(aProd[0]) <= (std::abs(aProd[1]) + std::abs(aProd[2]))))
   {
-    // Intersection with line detected; check the segment as bounding box
+
     const gp_XY aHSeg(0.5 * aSegDelta.X(), 0.5 * aSegDelta.Y());
     const gp_XY aHSegAbs(std::abs(aHSeg.X()), std::abs(aHSeg.Y()));
     aStatus = ((std::abs((theP0.XY() + aHSeg - aCenter).X()) > (aHeigh + aHSegAbs).X())
@@ -362,8 +332,6 @@ bool Bnd_Box2d::IsOut(const gp_Pnt2d& theP0, const gp_Pnt2d& theP1) const
   }
   return aStatus;
 }
-
-//=================================================================================================
 
 bool Bnd_Box2d::IsOut(const Bnd_Box2d& Other) const
 {
@@ -390,8 +358,6 @@ bool Bnd_Box2d::IsOut(const Bnd_Box2d& Other) const
   }
   return false;
 }
-
-//=================================================================================================
 
 void Bnd_Box2d::Dump() const
 {

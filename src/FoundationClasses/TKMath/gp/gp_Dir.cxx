@@ -1,18 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// JCV 07/12/90 Modifs suite a l'introduction des classes XYZ et Mat dans gp
 
 #include <gp_Dir.hpp>
 
@@ -26,13 +12,7 @@
 
 double gp_Dir::Angle(const gp_Dir& Other) const
 {
-  //    Commentaires :
-  //    Au dessus de 45 degres l'arccos donne la meilleur precision pour le
-  //    calcul de l'angle. Sinon il vaut mieux utiliser l'arcsin.
-  //    Les erreurs commises sont loin d'etre negligeables lorsque l'on est
-  //    proche de zero ou de 90 degres.
-  //    En 3d les valeurs angulaires sont toujours positives et comprises entre
-  //    0 et PI
+
   double Cosinus = coord.Dot(Other.coord);
   if (Cosinus > -0.70710678118655 && Cosinus < 0.70710678118655)
     return acos(Cosinus);

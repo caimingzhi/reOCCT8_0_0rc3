@@ -16,11 +16,6 @@ typedef BOPAlgo_WireEdgeSet* BOPAlgo_PWireEdgeSet;
 class TopoDS_Wire;
 class TopoDS_Face;
 
-//! The class is to build loops from the given set of edges.
-//!
-//! It returns the following Error statuses
-//! - *BOPAlgo_AlertNullInputShapes* - in case there no input edges to build the loops.
-//!
 class BOPAlgo_WireSplitter : public BOPAlgo_Algo
 {
 public:
@@ -35,10 +30,8 @@ public:
 
   Standard_EXPORT BOPAlgo_WireEdgeSet& WES();
 
-  //! Sets the context for the algorithm
   Standard_EXPORT void SetContext(const occ::handle<IntTools_Context>& theContext);
 
-  //! Returns the context
   Standard_EXPORT const occ::handle<IntTools_Context>& Context();
 
   Standard_EXPORT void Perform(
@@ -65,49 +58,35 @@ protected:
 
 #include <TopoDS_Edge.hpp>
 
-//=================================================================================================
-
 class BOPAlgo_EdgeInfo
 {
 public:
-  //
   BOPAlgo_EdgeInfo()
       : myPassed(false),
         myInFlag(false),
         myIsInside(false),
         myAngle(-1.) {};
 
-  //
   void SetEdge(const TopoDS_Edge& theE) { myEdge = theE; };
 
-  //
   const TopoDS_Edge& Edge() const { return myEdge; };
 
-  //
   void SetPassed(const bool theFlag) { myPassed = theFlag; };
 
-  //
   bool Passed() const { return myPassed; };
 
-  //
   void SetInFlag(const bool theFlag) { myInFlag = theFlag; };
 
-  //
   bool IsIn() const { return myInFlag; };
 
-  //
   void SetAngle(const double theAngle) { myAngle = theAngle; };
 
-  //
   double Angle() const { return myAngle; };
 
-  //
   bool IsInside() const { return myIsInside; };
 
-  //
   void SetIsInside(const bool theIsInside) { myIsInside = theIsInside; };
 
-  //
 protected:
   TopoDS_Edge myEdge;
   bool        myPassed;
@@ -121,13 +100,11 @@ protected:
 #include <NCollection_IndexedDataMap.hpp>
 #include <TopTools_ShapeMapHasher.hpp>
 
-//=================================================================================================
-
 inline void BOPAlgo_WireSplitter::MakeWire(NCollection_List<TopoDS_Shape>& aLE, TopoDS_Wire& aWire)
 {
   BRep_Builder aBB;
   aBB.MakeWire(aWire);
-  //
+
   NCollection_List<TopoDS_Shape>::Iterator aIt(aLE);
   for (; aIt.More(); aIt.Next())
   {

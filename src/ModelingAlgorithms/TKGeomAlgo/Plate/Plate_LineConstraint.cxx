@@ -12,7 +12,7 @@ Plate_LineConstraint::Plate_LineConstraint(const gp_XY&  point2d,
   myLSC.SetPPC(1, Plate_PinpointConstraint(point2d, point, iu, iv));
 
   gp_XYZ dir = lin.Direction().XYZ();
-  // one builds two directions orthogonal to dir
+
   gp_XYZ dX(1, 0, 0);
   gp_XYZ dY(0, 1, 0);
 

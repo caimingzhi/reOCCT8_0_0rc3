@@ -16,7 +16,6 @@ class StepShape_OrientedPath : public StepShape_Path
 {
 
 public:
-  //! Returns a OrientedPath
   Standard_EXPORT StepShape_OrientedPath();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

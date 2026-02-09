@@ -9,12 +9,9 @@
 #include <gp_Hypr.hpp>
 #include <gp_Parab.hpp>
 
-//! This class implements function which calculate square Eucluidean distance
-//! between point on surface and nearest point on Conic.
 class Extrema_GlobOptFuncConicS : public math_MultipleVarFunction
 {
 public:
-  //! Curve and surface should exist during all the lifetime of Extrema_GlobOptFuncConicS.
   Standard_EXPORT Extrema_GlobOptFuncConicS(const Adaptor3d_Curve* C, const Adaptor3d_Surface* S);
 
   Standard_EXPORT Extrema_GlobOptFuncConicS(const Adaptor3d_Surface* S);
@@ -31,7 +28,6 @@ public:
 
   Standard_EXPORT bool Value(const math_Vector& theX, double& theF) override;
 
-  //! Parameter of conic for point on surface defined by theUV
   Standard_EXPORT double ConicParameter(const math_Vector& theUV) const;
 
 private:
@@ -49,7 +45,7 @@ private:
   gp_Parab                 myParab;
   gp_Pnt                   myCPf;
   gp_Pnt                   myCPl;
-  // Boundaries
+
   double myTf;
   double myTl;
   double myUf;

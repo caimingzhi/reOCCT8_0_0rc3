@@ -8,9 +8,6 @@
 #include <Standard_ShortReal.hpp>
 #include <TopAbs_State.hpp>
 
-//! Describes an intersection on an edge to hide.
-//! Contains a parameter and a state (ON = on the
-//! face, OUT = above the face, IN = under the Face)
 class HLRAlgo_Intersection
 {
 public:
@@ -69,91 +66,65 @@ inline void HLRAlgo_Intersection::Orientation(const TopAbs_Orientation Ori)
   myOrien = Ori;
 }
 
-//=================================================================================================
-
 inline TopAbs_Orientation HLRAlgo_Intersection::Orientation() const
 {
   return myOrien;
 }
-
-//=================================================================================================
 
 inline void HLRAlgo_Intersection::Level(const int Lev)
 {
   myLevel = Lev;
 }
 
-//=================================================================================================
-
 inline int HLRAlgo_Intersection::Level() const
 {
   return myLevel;
 }
-
-//=================================================================================================
 
 inline void HLRAlgo_Intersection::SegIndex(const int SegInd)
 {
   mySegIndex = SegInd;
 }
 
-//=================================================================================================
-
 inline int HLRAlgo_Intersection::SegIndex() const
 {
   return mySegIndex;
 }
-
-//=================================================================================================
 
 inline void HLRAlgo_Intersection::Index(const int Ind)
 {
   myIndex = Ind;
 }
 
-//=================================================================================================
-
 inline int HLRAlgo_Intersection::Index() const
 {
   return myIndex;
 }
-
-//=================================================================================================
 
 inline void HLRAlgo_Intersection::Parameter(const double P)
 {
   myParam = P;
 }
 
-//=================================================================================================
-
 inline double HLRAlgo_Intersection::Parameter() const
 {
   return myParam;
 }
-
-//=================================================================================================
 
 inline void HLRAlgo_Intersection::Tolerance(const float T)
 {
   myToler = T;
 }
 
-//=================================================================================================
-
 inline float HLRAlgo_Intersection::Tolerance() const
 {
   return myToler;
 }
 
-//=================================================================================================
-
 inline void HLRAlgo_Intersection::State(const TopAbs_State St)
 {
   myState = St;
 }
-
-//=================================================================================================
 
 inline TopAbs_State HLRAlgo_Intersection::State() const
 {

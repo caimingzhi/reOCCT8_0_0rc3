@@ -10,7 +10,6 @@
 #include <Standard_Boolean.hpp>
 class Geom2d_Curve;
 
-//! interference face/fillet
 class ChFiDS_FaceInterference
 {
 public:
@@ -71,77 +70,55 @@ inline void ChFiDS_FaceInterference::SetInterference(const int                  
   pCurveOnSurf   = PCurv2;
 }
 
-//=================================================================================================
-
 inline void ChFiDS_FaceInterference::SetLineIndex(const int I)
 {
   lineindex = I;
 }
-
-//=================================================================================================
 
 inline void ChFiDS_FaceInterference::SetFirstParameter(const double U1)
 {
   firstParam = U1;
 }
 
-//=================================================================================================
-
 inline void ChFiDS_FaceInterference::SetLastParameter(const double U1)
 {
   lastParam = U1;
 }
-
-//=================================================================================================
 
 inline int ChFiDS_FaceInterference::LineIndex() const
 {
   return lineindex;
 }
 
-//=================================================================================================
-
 inline TopAbs_Orientation ChFiDS_FaceInterference::Transition() const
 {
   return LineTransition;
 }
-
-//=================================================================================================
 
 inline const occ::handle<Geom2d_Curve>& ChFiDS_FaceInterference::PCurveOnFace() const
 {
   return pCurveOnFace;
 }
 
-//=================================================================================================
-
 inline const occ::handle<Geom2d_Curve>& ChFiDS_FaceInterference::PCurveOnSurf() const
 {
   return pCurveOnSurf;
 }
-
-//=================================================================================================
 
 inline occ::handle<Geom2d_Curve>& ChFiDS_FaceInterference::ChangePCurveOnFace()
 {
   return pCurveOnFace;
 }
 
-//=================================================================================================
-
 inline occ::handle<Geom2d_Curve>& ChFiDS_FaceInterference::ChangePCurveOnSurf()
 {
   return pCurveOnSurf;
 }
 
-//=================================================================================================
-
 inline double ChFiDS_FaceInterference::FirstParameter() const
 {
   return firstParam;
 }
-
-//=================================================================================================
 
 inline double ChFiDS_FaceInterference::LastParameter() const
 {

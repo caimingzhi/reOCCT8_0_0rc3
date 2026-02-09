@@ -5,7 +5,6 @@
 
 #include <Draw_Interpretor.hpp>
 
-//! Contains commands to work with colors
 class XDEDRAW_Colors
 {
 public:

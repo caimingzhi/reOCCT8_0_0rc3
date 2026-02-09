@@ -96,23 +96,19 @@ int IGESGeom_ConicArc::ComputedFormNumber() const
   double eps, eps2, eps4;
   eps       = 1.E-08;
   eps2      = eps * eps;
-  eps4      = eps2 * eps2; // #59 rln
+  eps4      = eps2 * eps2;
   double Q1 = theA * (theC * theF - theE * theE / 4.)
               + theB / 2. * (theE * theD / 4. - theB * theF / 2.)
               + theD / 2. * (theB * theE / 4. - theC * theD / 2.);
   double Q2 = theA * theC - theB * theB / 4;
   double Q3 = theA + theC;
 
-  //  Resultats
-  // #59 rln 29.12.98 PRO17015 face#67, ellipse
-  // each Qi has its own dimension:
-  //[Q1] = L^-4, [Q2]=L^-4, [Q3]=L^-2
   if (Q2 > eps4 && Q1 * Q3 < 0)
-    return 1; // Ellipse
+    return 1;
   if (Q2 < -eps4 && std::abs(Q1) > eps4)
-    return 2; // Hyperbola
+    return 2;
   if (std::abs(Q2) <= eps4 && std::abs(Q1) > eps4)
-    return 3; // Parabola
+    return 3;
   return 0;
 }
 
@@ -150,8 +146,6 @@ gp_Dir IGESGeom_ConicArc::Axis() const
   gp_Dir axis(gp_Dir::D::Z);
   return axis;
 }
-
-//    Valeurs calculees
 
 gp_Dir IGESGeom_ConicArc::TransformedAxis() const
 {
@@ -205,17 +199,17 @@ void IGESGeom_ConicArc::ComputedDefinition(double& Xcen,
                                            double& Rmax) const
 {
   double a, b, c, d, e, f;
-  //  conic : a*x2 + 2*b*x*y + c*y2 + 2*d*x + 2*e*y + f = 0.
+
   Equation(a, b, c, d, e, f);
   b = b / 2.;
   d = d / 2.;
-  e = e / 2.; // chgt de variable
+  e = e / 2.;
 
-  double eps = 1.E-08; // ?? comme ComputedForm
+  double eps = 1.E-08;
 
   if (IsFromParabola())
   {
-    Rmin = Rmax = -1.; // radii : there are none
+    Rmin = Rmax = -1.;
     if ((std::abs(a) <= eps) && (std::abs(b) <= eps))
     {
       Xcen         = (f * c - e * e) / c / d / 2.;
@@ -251,11 +245,6 @@ void IGESGeom_ConicArc::ComputedDefinition(double& Xcen,
 
   else
   {
-    //   -> Centered conic, general case
-    //  We use the matrix Determinants :
-    //               | a b d |
-    //  gdet (3x3) = | b c e |  and pdet (2X2) = | a b |
-    //               | d e f |                   | b c |
 
     double gdet = a * c * f + 2 * b * d * e - c * d * d - a * e * e - b * b * f;
     double pdet = a * c - b * b;
@@ -275,7 +264,7 @@ void IGESGeom_ConicArc::ComputedDefinition(double& Xcen,
     }
     else
     {
-      double t2d = term2 / term1; // skl 28.12.2001
+      double t2d = term2 / term1;
       cos2t      = 1. / sqrt(1 + t2d * t2d);
       auxil      = sqrt(term1 * term1 + term2 * term2);
     }
@@ -296,7 +285,7 @@ void IGESGeom_ConicArc::ComputedDefinition(double& Xcen,
       Rmin = sqrt(term1);
       Rmax = sqrt(term2);
       if (Rmax < Rmin)
-      { // skl 28.12.2001
+      {
         Rmax = sqrt(term1);
         Rmin = sqrt(term2);
       }

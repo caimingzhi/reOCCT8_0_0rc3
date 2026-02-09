@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Prs3d_PresentationShadow, Graphic3d_Structure)
 
-//=================================================================================================
-
 Prs3d_PresentationShadow::Prs3d_PresentationShadow(
   const occ::handle<Graphic3d_StructureManager>& theViewer,
   const occ::handle<Graphic3d_Structure>&        thePrs)
@@ -13,11 +11,7 @@ Prs3d_PresentationShadow::Prs3d_PresentationShadow(
 {
 }
 
-//=================================================================================================
-
 void Prs3d_PresentationShadow::CalculateBoundBox() {}
-
-//=================================================================================================
 
 void Prs3d_PresentationShadow::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

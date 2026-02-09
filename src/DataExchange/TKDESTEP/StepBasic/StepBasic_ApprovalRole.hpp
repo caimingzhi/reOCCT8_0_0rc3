@@ -10,7 +10,6 @@ class StepBasic_ApprovalRole : public Standard_Transient
 {
 
 public:
-  //! Returns a ApprovalRole
   Standard_EXPORT StepBasic_ApprovalRole();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aRole);

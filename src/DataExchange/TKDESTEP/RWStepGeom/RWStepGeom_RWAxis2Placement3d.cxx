@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include "RWStepGeom_RWAxis2Placement3d.hpp"
@@ -28,30 +17,22 @@ void RWStepGeom_RWAxis2Placement3d::ReadStep(
   const occ::handle<StepGeom_Axis2Placement3d>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 4, ach, "axis2_placement_3d"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- inherited field : location ---
-
   occ::handle<StepGeom_CartesianPoint> aLocation;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
-  data->ReadEntity(num, 2, "location", ach, STANDARD_TYPE(StepGeom_CartesianPoint), aLocation);
 
-  // --- own field : axis ---
+  data->ReadEntity(num, 2, "location", ach, STANDARD_TYPE(StepGeom_CartesianPoint), aLocation);
 
   occ::handle<StepGeom_Direction> aAxis;
   bool                            hasAaxis = false;
   if (data->IsParamDefined(num, 3))
   {
-    // szv#4:S4163:12Mar99 `bool stat3 =` not needed
+
     hasAaxis = data->ReadEntity(num, 3, "axis", ach, STANDARD_TYPE(StepGeom_Direction), aAxis);
   }
   else
@@ -59,13 +40,11 @@ void RWStepGeom_RWAxis2Placement3d::ReadStep(
     aAxis.Nullify();
   }
 
-  // --- own field : refDirection ---
-
   occ::handle<StepGeom_Direction> aRefDirection;
   bool                            hasArefDirection = false;
   if (data->IsParamDefined(num, 4))
   {
-    // szv#4:S4163:12Mar99 `bool stat4 =` not needed
+
     hasArefDirection = data->ReadEntity(num,
                                         4,
                                         "ref_direction",
@@ -78,8 +57,6 @@ void RWStepGeom_RWAxis2Placement3d::ReadStep(
     aRefDirection.Nullify();
   }
 
-  //--- Initialisation of the read entity ---
-
   ent->Init(aName, aLocation, hasAaxis, aAxis, hasArefDirection, aRefDirection);
 }
 
@@ -88,15 +65,9 @@ void RWStepGeom_RWAxis2Placement3d::WriteStep(
   const occ::handle<StepGeom_Axis2Placement3d>& ent) const
 {
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
 
-  // --- inherited field location ---
-
   SW.Send(ent->Location());
-
-  // --- own field : axis ---
 
   bool hasAaxis = ent->HasAxis();
   if (hasAaxis)
@@ -107,8 +78,6 @@ void RWStepGeom_RWAxis2Placement3d::WriteStep(
   {
     SW.SendUndef();
   }
-
-  // --- own field : refDirection ---
 
   bool hasArefDirection = ent->HasRefDirection();
   if (hasArefDirection)

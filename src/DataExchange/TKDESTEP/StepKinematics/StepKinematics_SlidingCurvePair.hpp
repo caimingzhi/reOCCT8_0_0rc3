@@ -6,11 +6,9 @@
 #include <TCollection_HAsciiString.hpp>
 #include <StepGeom_Curve.hpp>
 
-//! Representation of STEP entity SlidingCurvePair
 class StepKinematics_SlidingCurvePair : public StepKinematics_PlanarCurvePair
 {
 public:
-  //! default constructor
   Standard_EXPORT StepKinematics_SlidingCurvePair();
 
   DEFINE_STANDARD_RTTIEXT(StepKinematics_SlidingCurvePair, StepKinematics_PlanarCurvePair)

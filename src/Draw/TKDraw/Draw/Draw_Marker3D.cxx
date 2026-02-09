@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Marker3D, Draw_Drawable3D)
 
-//=================================================================================================
-
 Draw_Marker3D::Draw_Marker3D(const gp_Pnt&          P,
                              const Draw_MarkerShape T,
                              const Draw_Color&      C,
@@ -19,8 +17,6 @@ Draw_Marker3D::Draw_Marker3D(const gp_Pnt&          P,
       myIsRSiz(false)
 {
 }
-
-//=================================================================================================
 
 Draw_Marker3D::Draw_Marker3D(const gp_Pnt&          P,
                              const Draw_MarkerShape T,
@@ -35,8 +31,6 @@ Draw_Marker3D::Draw_Marker3D(const gp_Pnt&          P,
 {
 }
 
-//=================================================================================================
-
 void Draw_Marker3D::DrawOn(Draw_Display& D) const
 {
   D.SetColor(myCol);
@@ -46,14 +40,10 @@ void Draw_Marker3D::DrawOn(Draw_Display& D) const
     D.DrawMarker(myPos, myTyp, mySiz);
 }
 
-//=================================================================================================
-
 gp_Pnt& Draw_Marker3D::ChangePos()
 {
   return myPos;
 }
-
-//=================================================================================================
 
 bool Draw_Marker3D::PickReject(const double, const double, const double) const
 {

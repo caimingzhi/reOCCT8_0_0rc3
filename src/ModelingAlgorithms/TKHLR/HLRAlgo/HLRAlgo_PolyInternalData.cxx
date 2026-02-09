@@ -12,7 +12,6 @@ IMPLEMENT_STANDARD_RTTIEXT(HLRAlgo_PolyInternalData, Standard_Transient)
 static int HLRAlgo_PolyInternalData_TRACE = false;
 static int HLRAlgo_PolyInternalData_ERROR = false;
 #endif
-//=================================================================================================
 
 HLRAlgo_PolyInternalData::HLRAlgo_PolyInternalData(const int nbNod, const int nbTri)
     : myNbTData(nbTri),
@@ -38,8 +37,6 @@ HLRAlgo_PolyInternalData::HLRAlgo_PolyInternalData(const int nbNod, const int nb
     NN++;
   }
 }
-
-//=================================================================================================
 
 void HLRAlgo_PolyInternalData::UpdateLinks(
   NCollection_Array1<HLRAlgo_TriangleData>&                  theTData,
@@ -352,8 +349,6 @@ void HLRAlgo_PolyInternalData::UpdateLinks(
   }
 }
 
-//=================================================================================================
-
 int HLRAlgo_PolyInternalData::AddNode(
   HLRAlgo_PolyInternalNode::NodeData&                         theNod1RValues,
   HLRAlgo_PolyInternalNode::NodeData&                         theNod2RValues,
@@ -393,8 +388,6 @@ int HLRAlgo_PolyInternalData::AddNode(
   }
   return ip3;
 }
-
-//=================================================================================================
 
 void HLRAlgo_PolyInternalData::UpdateLinks(
   const int                                                   ip1,
@@ -744,11 +737,9 @@ void HLRAlgo_PolyInternalData::UpdateLinks(
   }
 }
 
-//=================================================================================================
-
 void HLRAlgo_PolyInternalData::Dump() const
 {
-  int                                                        i; //,i1,i2,i3;
+  int                                                        i;
   NCollection_Array1<HLRAlgo_TriangleData>*                  TData = &myTData->ChangeArray1();
   NCollection_Array1<HLRAlgo_PolyInternalSegment>*           PISeg = &myPISeg->ChangeArray1();
   NCollection_Array1<occ::handle<HLRAlgo_PolyInternalNode>>* PINod = &myPINod->ChangeArray1();
@@ -790,8 +781,6 @@ void HLRAlgo_PolyInternalData::Dump() const
   }
 }
 
-//=================================================================================================
-
 void HLRAlgo_PolyInternalData::IncTData(NCollection_Array1<HLRAlgo_TriangleData>*& TData1,
                                         NCollection_Array1<HLRAlgo_TriangleData>*& TData2)
 {
@@ -829,8 +818,6 @@ void HLRAlgo_PolyInternalData::IncTData(NCollection_Array1<HLRAlgo_TriangleData>
   myNbTData++;
 }
 
-//=================================================================================================
-
 void HLRAlgo_PolyInternalData::IncPISeg(NCollection_Array1<HLRAlgo_PolyInternalSegment>*& PISeg1,
                                         NCollection_Array1<HLRAlgo_PolyInternalSegment>*& PISeg2)
 {
@@ -866,8 +853,6 @@ void HLRAlgo_PolyInternalData::IncPISeg(NCollection_Array1<HLRAlgo_PolyInternalS
   }
   myNbPISeg++;
 }
-
-//=================================================================================================
 
 void HLRAlgo_PolyInternalData::IncPINod(
   NCollection_Array1<occ::handle<HLRAlgo_PolyInternalNode>>*& PINod1,

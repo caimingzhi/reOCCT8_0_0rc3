@@ -27,8 +27,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DDataStd_DrawDriver, Standard_Transient)
 
-// attribut affichable
-// drawable object
 static int    DISCRET = 100;
 static int    NBISOS  = 10;
 static double THESIZE = 1000.;
@@ -45,11 +43,7 @@ void DDataStd_DrawDriver::Set(const occ::handle<DDataStd_DrawDriver>& DD)
   DrawDriver = DD;
 }
 
-//=================================================================================================
-
 DDataStd_DrawDriver::DDataStd_DrawDriver() = default;
-
-//=================================================================================================
 
 static TopoDS_Shape Geometry(const occ::handle<TDataXtd_Constraint>& A,
                              const int                               i,
@@ -64,11 +58,8 @@ static TopoDS_Shape Geometry(const occ::handle<TDataXtd_Constraint>& A,
   return S;
 }
 
-//=================================================================================================
-
 occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::Drawable(const TDF_Label& L) const
 {
-  // CONSTRAINT
 
   occ::handle<TDataXtd_Constraint> CTR;
   if (L.FindAttribute(TDataXtd_Constraint::GetID(), CTR))
@@ -76,16 +67,7 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::Drawable(const TDF_Label& L) c
     return DrawableConstraint(CTR);
   }
 
-  // OBJECT
-
   TopoDS_Shape s;
-
-  // occ::handle<TDataStd_Object> OBJ;
-  // if (L.FindAttribute(TDataStd_Object::GetID(),OBJ)) {
-  //   return DrawableShape (L,Draw_vert);
-  // }
-
-  // DATUM
 
   occ::handle<TDataXtd_Point> POINT;
   if (L.FindAttribute(TDataXtd_Point::GetID(), POINT))
@@ -104,8 +86,6 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::Drawable(const TDF_Label& L) c
   {
     return DrawableShape(L, Draw_magenta, false);
   }
-
-  // Standard GEOMETRY
 
   occ::handle<TDataXtd_Geometry> STD_GEOM;
   if (L.FindAttribute(TDataXtd_Geometry::GetID(), STD_GEOM))
@@ -134,8 +114,6 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::Drawable(const TDF_Label& L) c
     }
   }
 
-  // PURE SHAPE
-
   occ::handle<TNaming_NamedShape> NS;
   if (L.FindAttribute(TNaming_NamedShape::GetID(), NS))
   {
@@ -145,8 +123,6 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::Drawable(const TDF_Label& L) c
   occ::handle<Draw_Drawable3D> D3D;
   return D3D;
 }
-
-//=================================================================================================
 
 occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
   const occ::handle<TDataXtd_Constraint>& A) const
@@ -166,7 +142,7 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
       {
         TopoDS_Shape aLocalShape = Geometry(A, 1, TopAbs_FACE);
         TopoDS_Face  F1          = TopoDS::Face(aLocalShape);
-        // TopoDS_Face F1 = TopoDS::Face(Geometry(A,1,TopAbs_FACE));
+
         if (!F1.IsNull())
           D = new DrawDim_Radius(F1);
       }
@@ -220,7 +196,7 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
         DAng->Sector(A->Reversed(), A->Inverted());
         TopoDS_Shape aLocalShape = TNaming_Tool::GetShape(A->GetPlane());
         DAng->SetPlane(TopoDS::Face(aLocalShape));
-        //	DAng->SetPlane(TopoDS::Face(TNaming_Tool::GetShape(A->GetPlane())));
+
         D = DAng;
       }
       else
@@ -229,8 +205,7 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
         TopoDS_Face  F1          = TopoDS::Face(aLocalShape);
         aLocalShape              = Geometry(A, 2, TopAbs_FACE);
         TopoDS_Face F2           = TopoDS::Face(aLocalShape);
-        //	TopoDS_Face F1 = TopoDS::Face(Geometry(A,1,TopAbs_FACE));
-        //	TopoDS_Face F2 = TopoDS::Face(Geometry(A,2,TopAbs_FACE));
+
         if (!F1.IsNull() && !F2.IsNull())
           D = new DrawDim_Angle(F1, F2);
       }
@@ -270,8 +245,7 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
       TopoDS_Face  F1          = TopoDS::Face(aLocalShape);
       aLocalShape              = Geometry(A, 2, TopAbs_FACE);
       TopoDS_Face F2           = TopoDS::Face(aLocalShape);
-      //      TopoDS_Face F1 = TopoDS::Face(Geometry(A,1,TopAbs_FACE));
-      //      TopoDS_Face F2 = TopoDS::Face(Geometry(A,2,TopAbs_FACE));
+
       if (!F1.IsNull() && !F2.IsNull())
         D = new DrawDim_Distance(F1, F2);
     }
@@ -283,8 +257,7 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
       TopoDS_Face  F1          = TopoDS::Face(aLocalShape);
       aLocalShape              = Geometry(A, 2, TopAbs_FACE);
       TopoDS_Face F2           = TopoDS::Face(aLocalShape);
-      //      TopoDS_Face F1 = TopoDS::Face(Geometry(A,1,TopAbs_FACE));
-      //      TopoDS_Face F2 = TopoDS::Face(Geometry(A,2,TopAbs_FACE));
+
       if (!F1.IsNull() && !F2.IsNull())
         D = new DrawDim_Distance(F1, F2);
     }
@@ -315,14 +288,12 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
         val = (180. * val) / M_PI;
       Standard_ENABLE_DEPRECATION_WARNINGS D->SetValue(val);
     }
-    // unverified constraints are red (default is white)
+
     if (!A->Verified())
       D->TextColor(Draw_rouge);
   }
   return D;
 }
-
-//=================================================================================================
 
 occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableShape(const TDF_Label&     L,
                                                                 const Draw_ColorKind color,
@@ -341,8 +312,6 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableShape(const TDF_Label&
   }
   return DS;
 }
-
-//=================================================================================================
 
 occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableShape(const TopoDS_Shape&  s,
                                                                 const Draw_ColorKind color)

@@ -10,7 +10,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! TDataXtd_Triangulation attribute bin Driver.
 class BinMDataXtd_TriangulationDriver : public BinMDF_ADriver
 {
 

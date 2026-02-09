@@ -1,18 +1,14 @@
-// Created on : Sat May 02 12:41:16 2020
+
 
 #include <StepKinematics_SurfacePairWithRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_SurfacePairWithRange, StepKinematics_SurfacePair)
-
-//=================================================================================================
 
 StepKinematics_SurfacePairWithRange::StepKinematics_SurfacePairWithRange()
 {
   defLowerLimitActualRotation = false;
   defUpperLimitActualRotation = false;
 }
-
-//=================================================================================================
 
 void StepKinematics_SurfacePairWithRange::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -64,15 +60,11 @@ void StepKinematics_SurfacePairWithRange::Init(
     myUpperLimitActualRotation = 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_RectangularTrimmedSurface> StepKinematics_SurfacePairWithRange::
   RangeOnSurface1() const
 {
   return myRangeOnSurface1;
 }
-
-//=================================================================================================
 
 void StepKinematics_SurfacePairWithRange::SetRangeOnSurface1(
   const occ::handle<StepGeom_RectangularTrimmedSurface>& theRangeOnSurface1)
@@ -80,15 +72,11 @@ void StepKinematics_SurfacePairWithRange::SetRangeOnSurface1(
   myRangeOnSurface1 = theRangeOnSurface1;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_RectangularTrimmedSurface> StepKinematics_SurfacePairWithRange::
   RangeOnSurface2() const
 {
   return myRangeOnSurface2;
 }
-
-//=================================================================================================
 
 void StepKinematics_SurfacePairWithRange::SetRangeOnSurface2(
   const occ::handle<StepGeom_RectangularTrimmedSurface>& theRangeOnSurface2)
@@ -96,14 +84,10 @@ void StepKinematics_SurfacePairWithRange::SetRangeOnSurface2(
   myRangeOnSurface2 = theRangeOnSurface2;
 }
 
-//=================================================================================================
-
 double StepKinematics_SurfacePairWithRange::LowerLimitActualRotation() const
 {
   return myLowerLimitActualRotation;
 }
-
-//=================================================================================================
 
 void StepKinematics_SurfacePairWithRange::SetLowerLimitActualRotation(
   const double theLowerLimitActualRotation)
@@ -111,29 +95,21 @@ void StepKinematics_SurfacePairWithRange::SetLowerLimitActualRotation(
   myLowerLimitActualRotation = theLowerLimitActualRotation;
 }
 
-//=================================================================================================
-
 bool StepKinematics_SurfacePairWithRange::HasLowerLimitActualRotation() const
 {
   return defLowerLimitActualRotation;
 }
-
-//=================================================================================================
 
 double StepKinematics_SurfacePairWithRange::UpperLimitActualRotation() const
 {
   return myUpperLimitActualRotation;
 }
 
-//=================================================================================================
-
 void StepKinematics_SurfacePairWithRange::SetUpperLimitActualRotation(
   const double theUpperLimitActualRotation)
 {
   myUpperLimitActualRotation = theUpperLimitActualRotation;
 }
-
-//=================================================================================================
 
 bool StepKinematics_SurfacePairWithRange::HasUpperLimitActualRotation() const
 {

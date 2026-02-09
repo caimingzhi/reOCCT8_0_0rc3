@@ -1,7 +1,5 @@
 #include <ViewerTest_AutoUpdater.hpp>
 
-//=================================================================================================
-
 ViewerTest_AutoUpdater::ViewerTest_AutoUpdater(
   const occ::handle<AIS_InteractiveContext>& theContext,
   const occ::handle<V3d_View>&               theView)
@@ -16,14 +14,10 @@ ViewerTest_AutoUpdater::ViewerTest_AutoUpdater(
   }
 }
 
-//=================================================================================================
-
 ViewerTest_AutoUpdater::~ViewerTest_AutoUpdater()
 {
   Update();
 }
-
-//=================================================================================================
 
 bool ViewerTest_AutoUpdater::parseRedrawMode(const TCollection_AsciiString& theArg)
 {
@@ -42,8 +36,6 @@ bool ViewerTest_AutoUpdater::parseRedrawMode(const TCollection_AsciiString& theA
   return false;
 }
 
-//=================================================================================================
-
 void ViewerTest_AutoUpdater::Invalidate()
 {
   myToUpdate = ViewerTest_AutoUpdater::RedrawMode_Suppressed;
@@ -52,8 +44,6 @@ void ViewerTest_AutoUpdater::Invalidate()
     myView->SetImmediateUpdate(myWasAutoUpdate);
   }
 }
-
-//=================================================================================================
 
 void ViewerTest_AutoUpdater::Update()
 {

@@ -35,7 +35,6 @@
 namespace
 {
 
-  //! Computes wireframe presentation for free wires and vertices
   void wireframeFromShape(const occ::handle<Prs3d_Presentation>& thePrs,
                           const TopoDS_Shape&                    theShape,
                           const occ::handle<Prs3d_Drawer>&       theDrawer)
@@ -53,23 +52,17 @@ namespace
       return;
     }
 
-    // We have to create a compound and collect all subshapes not drawn by the shading algo.
-    // This includes:
-    // - isolated edges
-    // - isolated vertices, if aDrawAllVerticesFlag == false
-    // - all shape's vertices, if aDrawAllVerticesFlag == true
     TopoDS_Compound aCompoundWF;
     BRep_Builder    aBuilder;
     aBuilder.MakeCompound(aCompoundWF);
     bool hasElement = false;
 
-    // isolated edges
     for (aShapeIter.Init(theShape, TopAbs_EDGE, TopAbs_FACE); aShapeIter.More(); aShapeIter.Next())
     {
       hasElement = true;
       aBuilder.Add(aCompoundWF, aShapeIter.Current());
     }
-    // isolated or all vertices
+
     aShapeIter.Init(theShape, TopAbs_VERTEX, aDrawAllVerticesFlag ? TopAbs_SHAPE : TopAbs_EDGE);
     for (; aShapeIter.More(); aShapeIter.Next())
     {
@@ -82,7 +75,6 @@ namespace
     }
   }
 
-  //! Computes special wireframe presentation for faces without triangulation.
   void wireframeNoTriangFacesFromShape(const occ::handle<Prs3d_Presentation>& thePrs,
                                        const TopoDS_Shape&                    theShape,
                                        const occ::handle<Prs3d_Drawer>&       theDrawer)
@@ -118,7 +110,6 @@ namespace
     }
   }
 
-  //! Gets triangulation of every face of shape and fills output array of triangles
   static occ::handle<Graphic3d_ArrayOfTriangles> fillTriangles(const TopoDS_Shape& theShape,
                                                                const bool          theHasTexels,
                                                                const gp_Pnt2d&     theUVOrigin,
@@ -131,7 +122,6 @@ namespace
     int                             aNbTriangles = 0;
     int                             aNbVertices  = 0;
 
-    // Precision for compare square distances
     constexpr double aPreci = Precision::SquareConfusion();
 
     TopExp_Explorer aFaceIt(theShape, TopAbs_FACE);
@@ -163,10 +153,8 @@ namespace
       }
       const gp_Trsf& aTrsf = aLoc.Transformation();
 
-      // Determinant of transform matrix less then 0 means that mirror transform applied.
       bool isMirrored = aTrsf.VectorialPart().Determinant() < 0;
 
-      // Extracts vertices & normals from nodes
       StdPrs_ToolTriangulatedShape::ComputeNormals(aFace, aT);
 
       if (theHasTexels)
@@ -209,7 +197,6 @@ namespace
         }
       }
 
-      // Fill array with vertex and edge visibility info
       int anIndex[3];
       for (int aTriIter = 1; aTriIter <= aT->NbTriangles(); ++aTriIter)
       {
@@ -253,7 +240,6 @@ namespace
     return anArray;
   }
 
-  //! Prepare shaded presentation for specified shape
   static bool shadeFromShape(const TopoDS_Shape&                    theShape,
                              const occ::handle<Prs3d_Presentation>& thePrs,
                              const occ::handle<Prs3d_Drawer>&       theDrawer,
@@ -278,12 +264,10 @@ namespace
     return true;
   }
 
-  //! Compute boundary presentation for faces of the shape.
   static occ::handle<Graphic3d_ArrayOfSegments> fillFaceBoundaries(const TopoDS_Shape& theShape,
                                                                    GeomAbs_Shape theUpperContinuity)
   {
-    // collection of all triangulation nodes on edges
-    // for computing boundaries presentation
+
     int aNodeNumber  = 0;
     int aNbPolylines = 0;
 
@@ -295,7 +279,7 @@ namespace
       const TopoDS_Face& aFace = TopoDS::Face(aFaceIter.Current());
       if (aFace.NbChildren() == 0)
       {
-        // handle specifically faces without boundary definition (triangulation-only)
+
         if (aSeqPntsExtra.IsNull())
         {
           occ::handle<NCollection_IncAllocator> anIncAlloc = new NCollection_IncAllocator();
@@ -305,7 +289,6 @@ namespace
       }
     }
 
-    // explore all boundary edges
     NCollection_IndexedDataMap<TopoDS_Shape,
                                NCollection_List<TopoDS_Shape>,
                                TopTools_ShapeMapHasher>
@@ -317,13 +300,12 @@ namespace
          anEdgeIter.More();
          anEdgeIter.Next())
     {
-      // reject free edges
+
       if (anEdgeIter.Value().Extent() == 0)
       {
         continue;
       }
 
-      // take one of the shared edges and get edge triangulation
       const TopoDS_Face&              aFace          = TopoDS::Face(anEdgeIter.Value().First());
       occ::handle<Poly_Triangulation> aTriangulation = BRep_Tool::Triangulation(aFace, aTrsf);
       if (aTriangulation.IsNull())
@@ -363,7 +345,6 @@ namespace
       return aSegments;
     }
 
-    // create indexed segments array to pack polylines from different edges into single array
     const int                              aSegmentEdgeNb = (aNodeNumber - aNbPolylines) * 2;
     occ::handle<Graphic3d_ArrayOfSegments> aSegments =
       new Graphic3d_ArrayOfSegments(aNodeNumber + aNbExtra, aSegmentEdgeNb + aNbExtra);
@@ -399,15 +380,12 @@ namespace
         continue;
       }
 
-      // get edge nodes indexes from face triangulation
       const NCollection_Array1<int>& anEdgeNodes = anEdgePoly->Nodes();
 
-      // collect the edge nodes
       int aSegmentEdge = aSegments->VertexNumber() + 1;
       for (int aNodeIdx = anEdgeNodes.Lower(); aNodeIdx <= anEdgeNodes.Upper(); ++aNodeIdx)
       {
-        // node index in face triangulation
-        // get node and apply location transformation to the node
+
         const int aTriIndex = anEdgeNodes.Value(aNodeIdx);
         gp_Pnt    aTriNode  = aTriangulation->Node(aTriIndex);
         if (!aTrsf.IsIdentity())
@@ -438,9 +416,7 @@ namespace
     return aSegments;
   }
 
-} // anonymous namespace
-
-//=================================================================================================
+} // namespace
 
 void StdPrs_ShadedShape::ExploreSolids(const TopoDS_Shape& theShape,
                                        const BRep_Builder& theBuilder,
@@ -498,8 +474,6 @@ void StdPrs_ShadedShape::ExploreSolids(const TopoDS_Shape& theShape,
   }
 }
 
-//=================================================================================================
-
 void StdPrs_ShadedShape::Add(const occ::handle<Prs3d_Presentation>& thePrs,
                              const TopoDS_Shape&                    theShape,
                              const occ::handle<Prs3d_Drawer>&       theDrawer,
@@ -518,8 +492,6 @@ void StdPrs_ShadedShape::Add(const occ::handle<Prs3d_Presentation>& thePrs,
                           theGroup);
 }
 
-//=================================================================================================
-
 void StdPrs_ShadedShape::Add(const occ::handle<Prs3d_Presentation>& thePrs,
                              const TopoDS_Shape&                    theShape,
                              const occ::handle<Prs3d_Drawer>&       theDrawer,
@@ -535,28 +507,21 @@ void StdPrs_ShadedShape::Add(const occ::handle<Prs3d_Presentation>& thePrs,
     return;
   }
 
-  // Use automatic re-triangulation with deflection-check logic only if this feature is enable
   if (theDrawer->IsAutoTriangulation())
   {
-    // Triangulation completeness is important for "open-closed" analysis - perform tessellation
-    // beforehand
+
     StdPrs_ToolTriangulatedShape::Tessellate(theShape, theDrawer);
   }
 
-  // add wireframe presentation for isolated edges and vertices
   wireframeFromShape(thePrs, theShape, theDrawer);
 
-  // add special wireframe presentation for faces without triangulation
   wireframeNoTriangFacesFromShape(thePrs, theShape, theDrawer);
 
-  // The shape types listed below need advanced analysis as potentially containing
-  // both closed and open parts. Solids are also included, because they might
-  // contain non-manifold parts inside (internal open shells)
   if ((theShape.ShapeType() == TopAbs_COMPOUND || theShape.ShapeType() == TopAbs_COMPSOLID
        || theShape.ShapeType() == TopAbs_SOLID)
       && theVolume == StdPrs_Volume_Autodetection)
   {
-    // collect two compounds: for opened and closed (solid) sub-shapes
+
     TopoDS_Compound anOpened, aClosed;
     BRep_Builder    aBuilder;
     aBuilder.MakeCompound(aClosed);
@@ -591,7 +556,7 @@ void StdPrs_ShadedShape::Add(const occ::handle<Prs3d_Presentation>& thePrs,
   }
   else
   {
-    // if the shape type is not compound, composolid or solid, use autodetection back-facing filled
+
     shadeFromShape(theShape,
                    thePrs,
                    theDrawer,
@@ -615,8 +580,6 @@ void StdPrs_ShadedShape::Add(const occ::handle<Prs3d_Presentation>& thePrs,
   }
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_ArrayOfTriangles> StdPrs_ShadedShape::FillTriangles(
   const TopoDS_Shape& theShape,
   const bool          theHasTexels,
@@ -627,8 +590,6 @@ occ::handle<Graphic3d_ArrayOfTriangles> StdPrs_ShadedShape::FillTriangles(
   return fillTriangles(theShape, theHasTexels, theUVOrigin, theUVRepeat, theUVScale);
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_ArrayOfSegments> StdPrs_ShadedShape::FillFaceBoundaries(
   const TopoDS_Shape& theShape,
   GeomAbs_Shape       theUpperContinuity)
@@ -636,16 +597,12 @@ occ::handle<Graphic3d_ArrayOfSegments> StdPrs_ShadedShape::FillFaceBoundaries(
   return fillFaceBoundaries(theShape, theUpperContinuity);
 }
 
-//=================================================================================================
-
 void StdPrs_ShadedShape::AddWireframeForFreeElements(const occ::handle<Prs3d_Presentation>& thePrs,
                                                      const TopoDS_Shape&              theShape,
                                                      const occ::handle<Prs3d_Drawer>& theDrawer)
 {
   wireframeFromShape(thePrs, theShape, theDrawer);
 }
-
-//=================================================================================================
 
 void StdPrs_ShadedShape::AddWireframeForFacesWithoutTriangles(
   const occ::handle<Prs3d_Presentation>& thePrs,

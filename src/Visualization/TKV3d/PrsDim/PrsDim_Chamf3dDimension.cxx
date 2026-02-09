@@ -22,8 +22,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_Chamf3dDimension, PrsDim_Relation)
 
-//=================================================================================================
-
 PrsDim_Chamf3dDimension::PrsDim_Chamf3dDimension(const TopoDS_Shape&               aFShape,
                                                  const double                      aVal,
                                                  const TCollection_ExtendedString& aText)
@@ -37,8 +35,6 @@ PrsDim_Chamf3dDimension::PrsDim_Chamf3dDimension(const TopoDS_Shape&            
 
   myArrowSize = myVal / 100.;
 }
-
-//=================================================================================================
 
 PrsDim_Chamf3dDimension::PrsDim_Chamf3dDimension(const TopoDS_Shape&               aFShape,
                                                  const double                      aVal,
@@ -57,15 +53,11 @@ PrsDim_Chamf3dDimension::PrsDim_Chamf3dDimension(const TopoDS_Shape&            
   myAutomaticPosition = false;
 }
 
-//=================================================================================================
-
 void PrsDim_Chamf3dDimension::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                       const occ::handle<Prs3d_Presentation>& aPresentation,
                                       const int)
 {
-  //----------------------------
-  // Calcul du centre de la face
-  //----------------------------
+
   BRepAdaptor_Surface surfAlgo(TopoDS::Face(myFShape));
   double              uFirst, uLast, vFirst, vLast;
   uFirst      = surfAlgo.FirstUParameter();
@@ -80,11 +72,7 @@ void PrsDim_Chamf3dDimension::Compute(const occ::handle<PrsMgr_PresentationManag
   myPntAttach = apos;
 
   myDir = d1u ^ d1v;
-  //  myDir = surfAlgo.Plane().Axis().Direction();
 
-  //--------------------------------------------
-  // Calcul du point de positionnement du texte
-  //--------------------------------------------
   gp_Pnt curpos;
   if (myAutomaticPosition)
   {
@@ -116,10 +104,6 @@ void PrsDim_Chamf3dDimension::Compute(const occ::handle<PrsMgr_PresentationManag
   occ::handle<Prs3d_DimensionAspect> la  = myDrawer->DimensionAspect();
   occ::handle<Prs3d_ArrowAspect>     arr = la->ArrowAspect();
 
-  //-------------------------------------------------
-  // Calcul de la boite englobante du component pour
-  // determiner la taille de la fleche
-  //-------------------------------------------------
   if (!myArrowSizeIsDefined)
   {
     double arrsize = myArrowSize;
@@ -133,7 +117,6 @@ void PrsDim_Chamf3dDimension::Compute(const occ::handle<PrsMgr_PresentationManag
   }
   arr->SetLength(myArrowSize);
 
-  // Calcul de la presentation
   DsgPrs_Chamf2dPresentation::Add(aPresentation,
                                   myDrawer,
                                   myPntAttach,
@@ -141,8 +124,6 @@ void PrsDim_Chamf3dDimension::Compute(const occ::handle<PrsMgr_PresentationManag
                                   myText,
                                   mySymbolPrs);
 }
-
-//=================================================================================================
 
 void PrsDim_Chamf3dDimension::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSelection,
                                                const int)
@@ -152,7 +133,6 @@ void PrsDim_Chamf3dDimension::ComputeSelection(const occ::handle<SelectMgr_Selec
     new Select3D_SensitiveSegment(own, myPntAttach, myPosition);
   aSelection->Add(seg);
 
-  // Text
   double                             size(std::min(myVal / 100. + 1.e-6, myArrowSize + 1.e-6));
   occ::handle<Select3D_SensitiveBox> box = new Select3D_SensitiveBox(own,
                                                                      myPosition.X(),

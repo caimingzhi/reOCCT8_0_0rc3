@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GCPnts_UniformAbscissa.hpp>
 
@@ -18,8 +6,6 @@
 #include <GCPnts_AbscissaType.hpp>
 #include <GCPnts_TCurveTypes.hpp>
 #include <Standard_ConstructionError.hpp>
-
-//=================================================================================================
 
 template <class TheCurve>
 static double GetParameterLengthRatio(const TheCurve& theC)
@@ -49,8 +35,6 @@ static double GetParameterLengthRatio(const TheCurve& theC)
     }
   }
 }
-
-//=================================================================================================
 
 template <class TheCurve>
 static GCPnts_AbscissaType GetAbsType(const TheCurve& theC)
@@ -92,8 +76,6 @@ static GCPnts_AbscissaType GetAbsType(const TheCurve& theC)
   }
 }
 
-//=================================================================================================
-
 template <class TheCurve>
 static bool Perform(NCollection_Array1<double>& theParameters,
                     const TheCurve&             theC,
@@ -108,7 +90,6 @@ static bool Perform(NCollection_Array1<double>& theParameters,
   double aUU1 = std::min(theU1, theU2), aUU2 = std::max(theU1, theU2);
   theNbPoints = 0;
 
-  // this initialization avoids the computation of the Length of the curve
   double aDelta  = (theAbscissa / theTotalLength) * (aUU2 - aUU1);
   int    anIndex = 1;
   theParameters.SetValue(anIndex, aUU1);
@@ -117,11 +98,7 @@ static bool Perform(NCollection_Array1<double>& theParameters,
     double aUi = theParameters.Value(anIndex) + aDelta;
     if (aUi > aUU2)
     {
-      // MSV 21.04.2004: OCC5739 (GCPnts_UniformAbscissa gives incorrect distribution of points)
-      // if (aUU2 - theParameters.Value (anIndex) > 0.01 * aDelta) { Index += 1; }
-      // theParameters.SetValue (anIndex, aUU2);
-      // isNotDone = false;
-      // break;
+
       aUi = aUU2;
     }
     GCPnts_AbscissaPoint anAbscissaFinder(theC,
@@ -164,8 +141,6 @@ static bool Perform(NCollection_Array1<double>& theParameters,
   return isLocalDone;
 }
 
-//=================================================================================================
-
 template <class TheCurve>
 static bool PerformLengthParametrized(NCollection_Array1<double>& theParameters,
                                       const TheCurve&             theC,
@@ -179,9 +154,6 @@ static bool PerformLengthParametrized(NCollection_Array1<double>& theParameters,
   double aUU1 = std::min(theU1, theU2);
   double aUU2 = std::max(theU1, theU2);
 
-  // Ratio is defined as dl = Ratio * du
-  // for a circle of gp Ratio is equal to the radius of the circle.
-  // for a line of gp ratio is equal to 1.0
   const double aRatio = GetParameterLengthRatio(theC);
   if (theAbscissa < 0.0e0)
   {
@@ -226,8 +198,6 @@ static bool PerformLengthParametrized(NCollection_Array1<double>& theParameters,
   return true;
 }
 
-//=================================================================================================
-
 GCPnts_UniformAbscissa::GCPnts_UniformAbscissa()
     : myDone(false),
       myNbPoints(0),
@@ -235,8 +205,6 @@ GCPnts_UniformAbscissa::GCPnts_UniformAbscissa()
 {
 }
 
-//=================================================================================================
-
 GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor3d_Curve& theC,
                                                const double           theAbscissa,
                                                const double           theTol)
@@ -247,8 +215,6 @@ GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor3d_Curve& theC,
   Initialize(theC, theAbscissa, theTol);
 }
 
-//=================================================================================================
-
 GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor2d_Curve2d& theC,
                                                const double             theAbscissa,
                                                const double             theTol)
@@ -258,8 +224,6 @@ GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor2d_Curve2d& theC,
 {
   Initialize(theC, theAbscissa, theTol);
 }
-
-//=================================================================================================
 
 GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor3d_Curve& theC,
                                                const double           theAbscissa,
@@ -273,8 +237,6 @@ GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor3d_Curve& theC,
   Initialize(theC, theAbscissa, theU1, theU2, theTol);
 }
 
-//=================================================================================================
-
 GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor2d_Curve2d& theC,
                                                const double             theAbscissa,
                                                const double             theU1,
@@ -287,8 +249,6 @@ GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor2d_Curve2d& theC,
   Initialize(theC, theAbscissa, theU1, theU2, theTol);
 }
 
-//=================================================================================================
-
 GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor3d_Curve& theC,
                                                const int              theNbPoints,
                                                const double           theTol)
@@ -299,8 +259,6 @@ GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor3d_Curve& theC,
   Initialize(theC, theNbPoints, theTol);
 }
 
-//=================================================================================================
-
 GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor2d_Curve2d& theC,
                                                const int                theNbPoints,
                                                const double             theTol)
@@ -310,8 +268,6 @@ GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor2d_Curve2d& theC,
 {
   Initialize(theC, theNbPoints, theTol);
 }
-
-//=================================================================================================
 
 GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor3d_Curve& theC,
                                                const int              theNbPoints,
@@ -325,8 +281,6 @@ GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor3d_Curve& theC,
   Initialize(theC, theNbPoints, theU1, theU2, theTol);
 }
 
-//=================================================================================================
-
 GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor2d_Curve2d& theC,
                                                const int                theNbPoints,
                                                const double             theU1,
@@ -338,8 +292,6 @@ GCPnts_UniformAbscissa::GCPnts_UniformAbscissa(const Adaptor2d_Curve2d& theC,
 {
   Initialize(theC, theNbPoints, theU1, theU2, theTol);
 }
-
-//=================================================================================================
 
 void GCPnts_UniformAbscissa::Initialize(const Adaptor3d_Curve& theC,
                                         const double           theAbscissa,
@@ -348,16 +300,12 @@ void GCPnts_UniformAbscissa::Initialize(const Adaptor3d_Curve& theC,
   Initialize(theC, theAbscissa, theC.FirstParameter(), theC.LastParameter(), theTol);
 }
 
-//=================================================================================================
-
 void GCPnts_UniformAbscissa::Initialize(const Adaptor2d_Curve2d& theC,
                                         const double             theAbscissa,
                                         const double             theTol)
 {
   Initialize(theC, theAbscissa, theC.FirstParameter(), theC.LastParameter(), theTol);
 }
-
-//=================================================================================================
 
 void GCPnts_UniformAbscissa::Initialize(const Adaptor3d_Curve& theC,
                                         const double           theAbscissa,
@@ -368,8 +316,6 @@ void GCPnts_UniformAbscissa::Initialize(const Adaptor3d_Curve& theC,
   initialize(theC, theAbscissa, theU1, theU2, theTol);
 }
 
-//=================================================================================================
-
 void GCPnts_UniformAbscissa::Initialize(const Adaptor2d_Curve2d& theC,
                                         const double             theAbscissa,
                                         const double             theU1,
@@ -378,8 +324,6 @@ void GCPnts_UniformAbscissa::Initialize(const Adaptor2d_Curve2d& theC,
 {
   initialize(theC, theAbscissa, theU1, theU2, theTol);
 }
-
-//=================================================================================================
 
 template <class TheCurve>
 void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
@@ -399,11 +343,8 @@ void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
     return;
   }
 
-  // compute the total Length here so that we can guess
-  // the number of points instead of letting the constructor
-  // of CPnts_AbscissaPoint do that and lose the information
   const double aSizeR = aL / std::abs(theAbscissa) + 5;
-  if (aSizeR >= IntegerLast()) // modified by Igor Motchalov 23/04/2001
+  if (aSizeR >= IntegerLast())
   {
     return;
   }
@@ -453,8 +394,6 @@ void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
   }
 }
 
-//=================================================================================================
-
 void GCPnts_UniformAbscissa::Initialize(const Adaptor3d_Curve& theC,
                                         const int              theNbPoints,
                                         const double           theTol)
@@ -462,16 +401,12 @@ void GCPnts_UniformAbscissa::Initialize(const Adaptor3d_Curve& theC,
   Initialize(theC, theNbPoints, theC.FirstParameter(), theC.LastParameter(), theTol);
 }
 
-//=================================================================================================
-
 void GCPnts_UniformAbscissa::Initialize(const Adaptor2d_Curve2d& theC,
                                         const int                theNbPoints,
                                         const double             theTol)
 {
   Initialize(theC, theNbPoints, theC.FirstParameter(), theC.LastParameter(), theTol);
 }
-
-//=================================================================================================
 
 void GCPnts_UniformAbscissa::Initialize(const Adaptor3d_Curve& theC,
                                         const int              theNbPoints,
@@ -482,8 +417,6 @@ void GCPnts_UniformAbscissa::Initialize(const Adaptor3d_Curve& theC,
   initialize(theC, theNbPoints, theU1, theU2, theTol);
 }
 
-//=================================================================================================
-
 void GCPnts_UniformAbscissa::Initialize(const Adaptor2d_Curve2d& theC,
                                         const int                theNbPoints,
                                         const double             theU1,
@@ -492,8 +425,6 @@ void GCPnts_UniformAbscissa::Initialize(const Adaptor2d_Curve2d& theC,
 {
   initialize(theC, theNbPoints, theU1, theU2, theTol);
 }
-
-//=================================================================================================
 
 template <class TheCurve>
 void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
@@ -509,8 +440,7 @@ void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
   myDone     = false;
 
   const double anEPSILON = theC.Resolution(std::max(theTol, Precision::Confusion()));
-  // although very similar to Initialize with Abscissa this avoid
-  // the computation of the total length of the curve twice
+
   const double aL = GCPnts_AbscissaPoint::Length(theC, theU1, theU2, anEPSILON);
   if (aL <= Precision::Confusion())
   {
@@ -519,9 +449,6 @@ void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
 
   const double anAbscissa = myAbscissa = aL / (theNbPoints - 1);
 
-  // compute the total Length here so that we can guess
-  // the number of points instead of letting the constructor
-  // of CPnts_AbscissaPoint do that and lose the information
   const int aSize = theNbPoints + 5;
   if (!myParams.IsNull())
   {

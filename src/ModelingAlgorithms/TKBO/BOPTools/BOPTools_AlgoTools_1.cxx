@@ -74,8 +74,6 @@ static void UpdateShape(
   const double                                                         aTol,
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapToAvoid);
 
-//=================================================================================================
-
 class BOPTools_CPC
 {
 public:
@@ -85,29 +83,22 @@ public:
   {
   }
 
-  //
   ~BOPTools_CPC() = default;
 
-  //
   void SetEdge(const TopoDS_Edge& aE) { myEdge = aE; }
 
-  //
   const TopoDS_Edge& Edge() const { return myEdge; }
 
-  //
   void SetMaxTol(const double aMaxTol) { myMaxTol = aMaxTol; }
 
-  //
   double MaxTol() const { return myMaxTol; }
 
-  //
   void SetMapToAvoid(
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapToAvoid)
   {
     mypMapToAvoid = &aMapToAvoid;
   }
 
-  //
   void Perform()
   {
     Standard_ProgramError_Raise_if(!mypMapToAvoid, "mypMapToAvoid is null");
@@ -120,11 +111,7 @@ protected:
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>* mypMapToAvoid;
 };
 
-//
-//=======================================================================
 typedef NCollection_Vector<BOPTools_CPC> BOPTools_VectorOfCPC;
-
-//=================================================================================================
 
 class BOPTools_CWT
 {
@@ -134,36 +121,28 @@ public:
   {
   }
 
-  //
   ~BOPTools_CWT() = default;
 
-  //
   void SetFace(const TopoDS_Face& aF) { myFace = aF; }
 
-  //
   void SetMapToAvoid(
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapToAvoid)
   {
     mypMapToAvoid = &aMapToAvoid;
   }
 
-  //
   void Perform()
   {
     Standard_ProgramError_Raise_if(!mypMapToAvoid, "mypMapToAvoid is null");
     CorrectWires(myFace, *mypMapToAvoid);
   }
 
-  //
 protected:
   TopoDS_Face                                                          myFace;
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>* mypMapToAvoid;
 };
 
-//=======================================================================
 typedef NCollection_Vector<BOPTools_CWT> BOPTools_VectorOfCWT;
-
-//=================================================================================================
 
 class BOPTools_CDT
 {
@@ -174,33 +153,26 @@ public:
   {
   }
 
-  //
   ~BOPTools_CDT() = default;
 
-  //
   void SetEdge(const TopoDS_Edge& aE) { myEdge = aE; }
 
-  //
   void SetFace(const TopoDS_Face& aF) { myFace = aF; }
 
-  //
   void SetMaxTol(const double aMaxTol) { myMaxTol = aMaxTol; }
 
-  //
   void SetMapToAvoid(
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapToAvoid)
   {
     mypMapToAvoid = &aMapToAvoid;
   }
 
-  //
   void Perform()
   {
     Standard_ProgramError_Raise_if(!mypMapToAvoid, "mypMapToAvoid is null");
     CorrectEdgeTolerance(myEdge, myFace, myMaxTol, *mypMapToAvoid);
   }
 
-  //
 protected:
   double                                                               myMaxTol;
   TopoDS_Edge                                                          myEdge;
@@ -208,10 +180,7 @@ protected:
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>* mypMapToAvoid;
 };
 
-//=======================================================================
 typedef NCollection_Vector<BOPTools_CDT> BOPTools_VectorOfCDT;
-
-//=================================================================================================
 
 class BOPTools_CVT
 {
@@ -221,37 +190,28 @@ public:
   {
   }
 
-  //
   ~BOPTools_CVT() = default;
 
-  //
   void SetEdge(const TopoDS_Edge& aE) { myEdge = aE; }
 
-  //
   void SetMapToAvoid(
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapToAvoid)
   {
     mypMapToAvoid = &aMapToAvoid;
   }
 
-  //
   void Perform()
   {
     Standard_ProgramError_Raise_if(!mypMapToAvoid, "mypMapToAvoid is null");
     CorrectVertexTolerance(myEdge, *mypMapToAvoid);
   }
 
-  //
 protected:
   TopoDS_Edge                                                          myEdge;
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>* mypMapToAvoid;
 };
 
-//
-//=======================================================================
 typedef NCollection_Vector<BOPTools_CVT> BOPTools_VectorOfCVT;
-
-//=================================================================================================
 
 class BOPTools_CET
 {
@@ -261,36 +221,28 @@ public:
   {
   }
 
-  //
   ~BOPTools_CET() = default;
 
-  //
   void SetFace(const TopoDS_Face& aF) { myFace = aF; }
 
-  //
   void SetMapToAvoid(
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapToAvoid)
   {
     mypMapToAvoid = &aMapToAvoid;
   }
 
-  //
   void Perform()
   {
     Standard_ProgramError_Raise_if(!mypMapToAvoid, "mypMapToAvoid is null");
     UpdateEdges(myFace, *mypMapToAvoid);
   }
 
-  //
 protected:
   TopoDS_Face                                                          myFace;
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>* mypMapToAvoid;
 };
 
-//=======================================================================
 typedef NCollection_Vector<BOPTools_CET> BOPTools_VectorOfCET;
-
-//=================================================================================================
 
 void BOPTools_AlgoTools::CorrectTolerances(
   const TopoDS_Shape&                                                  aShape,
@@ -302,9 +254,6 @@ void BOPTools_AlgoTools::CorrectTolerances(
   BOPTools_AlgoTools::CorrectCurveOnSurface(aShape, aMapToAvoid, aMaxTol, bRunParallel);
 }
 
-//
-//=================================================================================================
-
 void BOPTools_AlgoTools::CorrectPointOnCurve(
   const TopoDS_Shape&                                                  aS,
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapToAvoid,
@@ -313,7 +262,7 @@ void BOPTools_AlgoTools::CorrectPointOnCurve(
 {
   TopExp_Explorer      aExp;
   BOPTools_VectorOfCPC aVCPC;
-  //
+
   aExp.Init(aS, TopAbs_EDGE);
   for (; aExp.More(); aExp.Next())
   {
@@ -323,13 +272,9 @@ void BOPTools_AlgoTools::CorrectPointOnCurve(
     aCPC.SetMaxTol(aMaxTol);
     aCPC.SetMapToAvoid(aMapToAvoid);
   }
-  //
-  //======================================================
-  BOPTools_Parallel::Perform(bRunParallel, aVCPC);
-  //======================================================
-}
 
-//=================================================================================================
+  BOPTools_Parallel::Perform(bRunParallel, aVCPC);
+}
 
 void BOPTools_AlgoTools::CorrectCurveOnSurface(
   const TopoDS_Shape&                                                  aS,
@@ -340,21 +285,21 @@ void BOPTools_AlgoTools::CorrectCurveOnSurface(
   TopExp_Explorer      aExpF, aExpE;
   BOPTools_VectorOfCWT aVCWT;
   BOPTools_VectorOfCDT aVCDT;
-  //
+
   aExpF.Init(aS, TopAbs_FACE);
   for (; aExpF.More(); aExpF.Next())
   {
     const TopoDS_Face& aF = *((TopoDS_Face*)&aExpF.Current());
-    //
+
     BOPTools_CWT& aCWT = aVCWT.Appended();
     aCWT.SetFace(aF);
     aCWT.SetMapToAvoid(aMapToAvoid);
-    //
+
     aExpE.Init(aF, TopAbs_EDGE);
     for (; aExpE.More(); aExpE.Next())
     {
       const TopoDS_Edge& aE = *((TopoDS_Edge*)&aExpE.Current());
-      //
+
       BOPTools_CDT& aCDT = aVCDT.Appended();
       aCDT.SetEdge(aE);
       aCDT.SetFace(aF);
@@ -362,15 +307,11 @@ void BOPTools_AlgoTools::CorrectCurveOnSurface(
       aCDT.SetMapToAvoid(aMapToAvoid);
     }
   }
-  //
-  //======================================================
-  BOPTools_Parallel::Perform(bRunParallel, aVCWT);
-  //======================================================
-  BOPTools_Parallel::Perform(bRunParallel, aVCDT);
-  //======================================================
-}
 
-//=================================================================================================
+  BOPTools_Parallel::Perform(bRunParallel, aVCWT);
+
+  BOPTools_Parallel::Perform(bRunParallel, aVCDT);
+}
 
 void BOPTools_AlgoTools::CorrectShapeTolerances(
   const TopoDS_Shape&                                                  aShape,
@@ -380,7 +321,7 @@ void BOPTools_AlgoTools::CorrectShapeTolerances(
   TopExp_Explorer      aExp;
   BOPTools_VectorOfCVT aVCVT;
   BOPTools_VectorOfCET aVCET;
-  //
+
   aExp.Init(aShape, TopAbs_EDGE);
   for (; aExp.More(); aExp.Next())
   {
@@ -389,11 +330,9 @@ void BOPTools_AlgoTools::CorrectShapeTolerances(
     aCVT.SetEdge(aE);
     aCVT.SetMapToAvoid(aMapToAvoid);
   }
-  //
-  //======================================================
+
   BOPTools_Parallel::Perform(bRunParallel, aVCVT);
-  //======================================================
-  //
+
   aExp.Init(aShape, TopAbs_FACE);
   for (; aExp.More(); aExp.Next())
   {
@@ -402,17 +341,10 @@ void BOPTools_AlgoTools::CorrectShapeTolerances(
     aCET.SetFace(aF);
     aCET.SetMapToAvoid(aMapToAvoid);
   }
-  //
-  //======================================================
+
   BOPTools_Parallel::Perform(bRunParallel, aVCET);
-  //======================================================
 }
 
-//
-//=======================================================================
-// Function : CheckEdge
-// purpose :  Correct tolerances for Vertices on Edge
-//=======================================================================
 void CheckEdge(const TopoDS_Edge&                                                   Ed,
                const double                                                         aMaxTol,
                const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapToAvoid)
@@ -420,29 +352,29 @@ void CheckEdge(const TopoDS_Edge&                                               
   TopoDS_Edge aE = Ed;
   aE.Orientation(TopAbs_FORWARD);
   double aTolE = BRep_Tool::Tolerance(aE);
-  //
+
   occ::handle<BRep_TEdge>& TE = *((occ::handle<BRep_TEdge>*)&aE.TShape());
-  //
+
   const TopLoc_Location& Eloc = aE.Location();
 
   TopoDS_Iterator aItS(aE);
   for (; aItS.More(); aItS.Next())
   {
     const TopoDS_Vertex& aV = TopoDS::Vertex(aItS.Value());
-    //
+
     occ::handle<BRep_TVertex>& TV  = *((occ::handle<BRep_TVertex>*)&aV.TShape());
     const gp_Pnt&              aPV = TV->Pnt();
-    //
+
     double aTol = BRep_Tool::Tolerance(aV);
     aTol        = std::max(aTol, aTolE);
     double dd   = 0.1 * aTol;
     aTol *= aTol;
-    //
+
     NCollection_List<occ::handle<BRep_CurveRepresentation>>::Iterator aItCR(TE->Curves());
     while (aItCR.More())
     {
       const occ::handle<BRep_CurveRepresentation>& aCR = aItCR.Value();
-      //
+
       if (aCR->IsCurve3D())
       {
         const occ::handle<Geom_Curve>& aC = aCR->Curve3D();
@@ -467,7 +399,7 @@ void CheckEdge(const TopoDS_Edge&                                               
             }
             aItPR.Next();
           }
-          //
+
           TopAbs_Orientation aOrV = aV.Orientation();
           if (aOrV == TopAbs_FORWARD || aOrV == TopAbs_REVERSED)
           {
@@ -482,7 +414,7 @@ void CheckEdge(const TopoDS_Edge&                                               
               aPC = aC->Value(aGC->Last());
             }
             aPC.Transform(L.Transformation());
-            //
+
             double aD2 = aPV.SquareDistance(aPC);
             if (aD2 > aTol)
             {
@@ -494,14 +426,10 @@ void CheckEdge(const TopoDS_Edge&                                               
         }
       }
       aItCR.Next();
-    } //  while (itcr.More()) {
-  } // for (; aVExp.More(); aVExp.Next()) {
+    }
+  }
 }
 
-//=======================================================================
-// Function : MapEdgeLength
-// purpose  : Compute edge length and cache it in the map
-//=======================================================================
 static double MapEdgeLength(const TopoDS_Edge&                         theEdge,
                             NCollection_DataMap<TopoDS_Shape, double>& theMapEdgeLen)
 {
@@ -519,27 +447,19 @@ static double MapEdgeLength(const TopoDS_Edge&                         theEdge,
   return *pLen;
 }
 
-//=======================================================================
-// Function : EdgeData
-// purpose : Structure to store edge data
-//=======================================================================
 namespace
 {
   struct EdgeData
   {
-    const TopoDS_Edge*  Edge;       // Edge
-    double              VParameter; // Parameter of the vertex on the edge
-    bool                IsClosed;   // Closed flag of the edge
-    Geom2dAdaptor_Curve GAdaptor;   // 2D adaptor for PCurve of the edge on the face
-    double              First;      // First parameter in the range
-    double              Last;       // Last parameter in the rage
+    const TopoDS_Edge*  Edge;
+    double              VParameter;
+    bool                IsClosed;
+    Geom2dAdaptor_Curve GAdaptor;
+    double              First;
+    double              Last;
   };
 } // namespace
 
-//=======================================================================
-// Function : IntersectCurves2d
-// purpose  : Intersect 2d curves of edges
-//=======================================================================
 static double IntersectCurves2d(const TopoDS_Vertex&                       theV,
                                 const occ::handle<Geom_Surface>&           theS,
                                 const EdgeData&                            theEData1,
@@ -547,16 +467,16 @@ static double IntersectCurves2d(const TopoDS_Vertex&                       theV,
                                 NCollection_DataMap<TopoDS_Shape, double>& theMapEdgeLen)
 {
   Geom2dInt_GInter anInter;
-  // Range of the first edge
+
   double aT11 = theEData1.First;
   double aT12 = theEData1.Last;
-  // Range of the second edge
+
   double aT21 = theEData2.First;
   double aT22 = theEData2.Last;
 
   double aMaxDist = 0.;
   double aTol2d   = 1.e-10;
-  //
+
   IntRes2d_Domain aDom1(theEData1.GAdaptor.Value(aT11),
                         aT11,
                         aTol2d,
@@ -569,29 +489,29 @@ static double IntersectCurves2d(const TopoDS_Vertex&                       theV,
                         theEData2.GAdaptor.Value(aT22),
                         aT22,
                         aTol2d);
-  //
+
   anInter.Perform(theEData1.GAdaptor, aDom1, theEData2.GAdaptor, aDom2, aTol2d, aTol2d);
   if (!anInter.IsDone() || (!anInter.NbSegments() && !anInter.NbPoints()))
   {
     return aMaxDist;
   }
-  //
+
   double                                       aT1, aT2, aTint1, aTint2, aHalfR1, aHalfR2, aDist;
   int                                          i, aNb;
   gp_Pnt                                       aP, aPV;
   gp_Pnt2d                                     aP2d;
   NCollection_List<IntRes2d_IntersectionPoint> aLP;
   NCollection_List<IntRes2d_IntersectionPoint>::Iterator aItLP;
-  //
+
   aPV = BRep_Tool::Pnt(theV);
   aT1 = theEData1.VParameter;
   aT2 = theEData2.VParameter;
-  //
+
   aHalfR1 = (aT12 - aT11) / 2.;
   aHalfR2 = (aT22 - aT21) / 2.;
-  //
+
   aDist = 0.;
-  //
+
   aNb = anInter.NbSegments();
   for (i = 1; i <= aNb; ++i)
   {
@@ -599,15 +519,14 @@ static double IntersectCurves2d(const TopoDS_Vertex&                       theV,
     aLP.Append(aSeg.FirstPoint());
     aLP.Append(aSeg.LastPoint());
   }
-  //
+
   aNb = anInter.NbPoints();
   for (i = 1; i <= aNb; ++i)
   {
     const IntRes2d_IntersectionPoint& aPnt = anInter.Point(i);
     aLP.Append(aPnt);
   }
-  //
-  // evaluate the length of the smallest edge, so that not to return too large distance
+
   double       aLen1                      = MapEdgeLength(*theEData1.Edge, theMapEdgeLen);
   double       aLen2                      = MapEdgeLength(*theEData1.Edge, theMapEdgeLen);
   const double MaxEdgePartCoveredByVertex = 0.3;
@@ -617,23 +536,23 @@ static double IntersectCurves2d(const TopoDS_Vertex&                       theV,
   for (; aItLP.More(); aItLP.Next())
   {
     const IntRes2d_IntersectionPoint& aPnt = aItLP.Value();
-    //
+
     aTint1 = aPnt.ParamOnFirst();
     aTint2 = aPnt.ParamOnSecond();
-    //
+
     if ((aTint1 < aT11 || aTint1 > aT12) || (aTint2 < aT21 || aTint2 > aT22))
     {
-      // out of range;
+
       continue;
     }
-    //
+
     if ((!theEData1.IsClosed && std::abs(aTint1 - aT1) > aHalfR1)
         || (!theEData2.IsClosed && std::abs(aTint2 - aT2) > aHalfR2))
     {
-      // intersection is on the other end of the edge
+
       continue;
     }
-    //
+
     aP2d = aPnt.Value();
     theS->D0(aP2d.X(), aP2d.Y(), aP);
     aDist = aPV.SquareDistance(aP);
@@ -642,11 +561,9 @@ static double IntersectCurves2d(const TopoDS_Vertex&                       theV,
       aMaxDist = aDist;
     }
   }
-  //
+
   return aMaxDist;
 }
-
-//=================================================================================================
 
 void CorrectWires(const TopoDS_Face&                                                   aFx,
                   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapToAvoid)
@@ -659,7 +576,7 @@ void CorrectWires(const TopoDS_Face&                                            
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
                                            aMVE;
   NCollection_List<TopoDS_Shape>::Iterator aIt;
-  //
+
   aF = aFx;
   aF.Orientation(TopAbs_FORWARD);
   const occ::handle<Geom_Surface>& aS = BRep_Tool::Surface(aFx);
@@ -674,9 +591,9 @@ void CorrectWires(const TopoDS_Face&                                            
     aPV                     = BRep_Tool::Pnt(aV);
     aTol                    = BRep_Tool::Tolerance(aV);
     aTol2                   = aTol * aTol;
-    //
+
     aD2max = -1.;
-    // Save edge's data to avoid its recalculation during intersection of 2d curves
+
     NCollection_List<EdgeData>            aLEPars;
     const NCollection_List<TopoDS_Shape>& aLE = aMVE.FindFromIndex(i);
     aIt.Initialize(aLE);
@@ -696,7 +613,7 @@ void CorrectWires(const TopoDS_Face&                                            
         TopExp::Vertices(aE, aV1, aV2);
         isClosed = aV1.IsSame(aV2);
       }
-      //
+
       aC2D->D0(aT, aP2D);
       aS->D0(aP2D.X(), aP2D.Y(), aP);
       aD2 = aPV.SquareDistance(aP);
@@ -707,8 +624,7 @@ void CorrectWires(const TopoDS_Face&                                            
       EdgeData anEData = {&aE, aT, isClosed, Geom2dAdaptor_Curve(aC2D), aT1, aT2};
       aLEPars.Append(anEData);
     }
-    //
-    // check wires on self interference by intersecting 2d curves of the edges
+
     NCollection_List<EdgeData>::Iterator aItE1(aLEPars);
     for (; aItE1.More(); aItE1.Next())
     {
@@ -731,27 +647,22 @@ void CorrectWires(const TopoDS_Face&                                            
         }
       }
     }
-    //
+
     if (aD2max > aTol2)
     {
       aTol = 1.01 * sqrt(aD2max);
       UpdateShape(aV, aTol, aMapToAvoid);
     }
-  } // for (i=1; i<=aNbV; ++i) {
+  }
 }
 
-//=======================================================================
-// Function : CorrectEdgeTolerance
-// purpose :  Correct tolerances for Edge
-//=======================================================================
 void CorrectEdgeTolerance(
   const TopoDS_Edge&                                                   myShape,
   const TopoDS_Face&                                                   S,
   const double                                                         aMaxTol,
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapToAvoid)
 {
-  //
-  // 1. Minimum of conditions to Perform
+
   occ::handle<BRep_CurveRepresentation> myCref;
   occ::handle<Adaptor3d_Curve>          myHCurve;
 
@@ -789,11 +700,11 @@ void CorrectEdgeTolerance(
 
   if (unique == 0)
   {
-    return; //...No3DCurve
+    return;
   }
   if (unique > 1)
   {
-    return; //...Multiple3DCurve;
+    return;
   }
 
   if (myCref.IsNull() && !Degenerated)
@@ -813,7 +724,7 @@ void CorrectEdgeTolerance(
 
   else if (!myCref.IsNull() && Degenerated)
   {
-    return; //...InvalidDegeneratedFlag;
+    return;
   }
 
   if (!myCref.IsNull())
@@ -824,7 +735,7 @@ void CorrectEdgeTolerance(
     if (Last <= First)
     {
       myCref.Nullify();
-      return; // InvalidRange;
+      return;
     }
 
     else
@@ -837,7 +748,7 @@ void CorrectEdgeTolerance(
         myHCurve = new GeomAdaptor_Curve(GAC3d);
       }
       else
-      { // curve on surface
+      {
         occ::handle<Geom_Surface> Sref = myCref->Surface();
         Sref = occ::down_cast<Geom_Surface>(Sref->Transformed(myCref->Location().Transformation()));
         const occ::handle<Geom2d_Curve>& PCref   = myCref->PCurve();
@@ -849,8 +760,6 @@ void CorrectEdgeTolerance(
     }
   }
 
-  //===============================================
-  // 2. Tolerances in InContext
   {
     if (myCref.IsNull())
       return;
@@ -883,7 +792,7 @@ void CorrectEdgeTolerance(
         GC->Range(f, l);
         if (SameRange && (f != First || l != Last))
         {
-          return; // BRepCheck_InvalidSameRangeFlag;
+          return;
         }
 
         occ::handle<Geom_Surface> Sb = cr->Surface();
@@ -907,8 +816,8 @@ void CorrectEdgeTolerance(
 
         if (cr->IsCurveOnClosedSurface())
         {
-          GHPC->Load(cr->PCurve2(), f, l); // same bounds
-          ACS->Load(GHPC, GAHS);           // sans doute inutile
+          GHPC->Load(cr->PCurve2(), f, l);
+          ACS->Load(GHPC, GAHS);
 
           BRepLib_ValidateEdge aValidateEdgeOnClosedSurf(myHCurve, ACS, SameParameter);
           aValidateEdgeOnClosedSurf.Process();
@@ -940,17 +849,16 @@ void CorrectEdgeTolerance(
         P = occ::down_cast<Geom_Plane>(Su);
       }
       if (P.IsNull())
-      { // not a plane
+      {
         return;
       }
 
       else
-      { // on fait la projection a la volee, comme BRep_Tool
+      {
         P = occ::down_cast<Geom_Plane>(P->Transformed(L.Transformation()));
-        // on projette Cref sur ce plan
+
         occ::handle<GeomAdaptor_Surface> GAHS = new GeomAdaptor_Surface(P);
 
-        // Dub - Normalement myHCurve est une GeomAdaptor_Curve
         occ::handle<GeomAdaptor_Curve> Gac  = occ::down_cast<GeomAdaptor_Curve>(myHCurve);
         occ::handle<Geom_Curve>        C3dx = Gac->Curve();
         occ::handle<Geom_Curve>        ProjOnPlane =
@@ -980,11 +888,9 @@ void CorrectEdgeTolerance(
           }
         }
       }
-    } // end of if (!pcurvefound) {
-  } // end of  2. Tolerances in InContext
+    }
+  }
 }
-
-//=================================================================================================
 
 void CorrectVertexTolerance(
   const TopoDS_Edge&                                                   aE,
@@ -992,7 +898,7 @@ void CorrectVertexTolerance(
 {
   double          aTolE, aTolV;
   TopoDS_Iterator aIt;
-  //
+
   aTolE = BRep_Tool::Tolerance(aE);
   aIt.Initialize(aE);
   for (; aIt.More(); aIt.Next())
@@ -1006,14 +912,12 @@ void CorrectVertexTolerance(
   }
 }
 
-//=================================================================================================
-
 void UpdateEdges(const TopoDS_Face&                                                   aF,
                  const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapToAvoid)
 {
   double          aTolF, aTolE, aTolV;
   TopoDS_Iterator aItF, aItW, aItE;
-  //
+
   aTolE = aTolF = BRep_Tool::Tolerance(aF);
   aItF.Initialize(aF);
   for (; aItF.More(); aItF.Next())
@@ -1045,8 +949,6 @@ void UpdateEdges(const TopoDS_Face&                                             
   }
 }
 
-//=================================================================================================
-
 void UpdateShape(const TopoDS_Shape&                                                  aS,
                  const double                                                         aTol,
                  const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapToAvoid)
@@ -1055,10 +957,10 @@ void UpdateShape(const TopoDS_Shape&                                            
   {
     return;
   }
-  //
+
   TopAbs_ShapeEnum aType;
   BRep_Builder     aBB;
-  //
+
   aType = aS.ShapeType();
   if (aType == TopAbs_EDGE)
   {
@@ -1072,24 +974,22 @@ void UpdateShape(const TopoDS_Shape&                                            
   }
 }
 
-//=================================================================================================
-
 bool BOPTools_AlgoTools::ComputeTolerance(const TopoDS_Face& theFace,
                                           const TopoDS_Edge& theEdge,
                                           double&            theMaxDist,
                                           double&            theMaxPar)
 {
   BRepLib_CheckCurveOnSurface aCS;
-  //
+
   aCS.Init(theEdge, theFace);
   aCS.Perform();
   if (!aCS.IsDone())
   {
     return false;
   }
-  //
+
   theMaxDist = aCS.MaxDistance();
   theMaxPar  = aCS.MaxParameter();
-  //
+
   return true;
 }

@@ -20,16 +20,12 @@ NLPlate_NLPlate::NLPlate_NLPlate(const occ::handle<Geom_Surface>& InitialSurface
 {
 }
 
-//=======================================================================
-
 void NLPlate_NLPlate::Load(const occ::handle<NLPlate_HGPPConstraint>& GConst)
 {
   if (!GConst.IsNull())
     myHGPPConstraints.Append(GConst);
   OK = false;
 }
-
-//=================================================================================================
 
 void NLPlate_NLPlate::Solve(const int ord, const int InitialConsraintOrder)
 {
@@ -48,8 +44,6 @@ void NLPlate_NLPlate::Solve(const int ord, const int InitialConsraintOrder)
   }
   OK = true;
 }
-
-//=================================================================================================
 
 void NLPlate_NLPlate::Solve2(const int ord, const int InitialConsraintOrder)
 {
@@ -74,10 +68,8 @@ void NLPlate_NLPlate::Solve2(const int ord, const int InitialConsraintOrder)
   OK = true;
 }
 
-//=================================================================================================
-
 void NLPlate_NLPlate::IncrementalSolve(const int ord,
-                                       const int /*InitialConsraintOrder*/,
+                                       const int,
                                        const int  NbIncrements,
                                        const bool UVSliding)
 {
@@ -90,7 +82,7 @@ void NLPlate_NLPlate::IncrementalSolve(const int ord,
   for (int increment = 0; increment < NbIncrements; increment++)
   {
     IncrementalLoad = 1. / double(NbIncrements - increment);
-    //      for(int iterOrder=InitialConsraintOrder;iterOrder<=maxOrder;iterOrder++)
+
     int iterOrder = maxOrder;
     {
       if (!Iterate(iterOrder, ordre + iterOrder - maxOrder, IncrementalLoad))
@@ -105,20 +97,15 @@ void NLPlate_NLPlate::IncrementalSolve(const int ord,
   OK = true;
 }
 
-//=======================================================================
 bool NLPlate_NLPlate::IsDone() const
 {
   return OK;
 }
 
-//=======================================================================
-
 void NLPlate_NLPlate::destroy()
 {
   Init();
 }
-
-//=======================================================================
 
 void NLPlate_NLPlate::Init()
 {
@@ -126,14 +113,10 @@ void NLPlate_NLPlate::Init()
   myHGPPConstraints.Clear();
 }
 
-//=======================================================================
-
 gp_XYZ NLPlate_NLPlate::Evaluate(const gp_XY& point2d) const
 {
   return EvaluateDerivative(point2d, 0, 0);
 }
-
-//=======================================================================
 
 gp_XYZ NLPlate_NLPlate::EvaluateDerivative(const gp_XY& point2d, const int iu, const int iv) const
 {
@@ -151,8 +134,6 @@ gp_XYZ NLPlate_NLPlate::EvaluateDerivative(const gp_XY& point2d, const int iu, c
   return Value;
 }
 
-//=======================================================================
-
 int NLPlate_NLPlate::Continuity() const
 {
   int cont;
@@ -168,8 +149,6 @@ int NLPlate_NLPlate::Continuity() const
   }
   return cont;
 }
-
-//=======================================================================
 
 bool NLPlate_NLPlate::Iterate(const int    ConstraintOrder,
                               const int    ResolutionOrder,
@@ -303,8 +282,6 @@ bool NLPlate_NLPlate::Iterate(const int    ConstraintOrder,
     return true;
 }
 
-//=======================================================================
-
 void NLPlate_NLPlate::ConstraintsSliding(const int NbIterations)
 {
   for (int index = 1; index <= myHGPPConstraints.Length(); index++)
@@ -317,7 +294,7 @@ void NLPlate_NLPlate::ConstraintsSliding(const int NbIterations)
       const gp_XYZ P1 = HGPP->G0Target();
       for (int iter = 1; iter <= NbIterations; iter++)
       {
-        // on itere au premier ordre, ce qui suffit si on est assez pres de la surface ??
+
         gp_XYZ      DP = P1 - P0;
         gp_XYZ      Du = EvaluateDerivative(UV, 1, 0);
         gp_XYZ      Dv = EvaluateDerivative(UV, 0, 1);
@@ -343,8 +320,6 @@ void NLPlate_NLPlate::ConstraintsSliding(const int NbIterations)
     }
   }
 }
-
-//=======================================================================
 
 int NLPlate_NLPlate::MaxActiveConstraintOrder() const
 {

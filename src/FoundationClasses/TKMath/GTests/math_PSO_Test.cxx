@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <math_PSO.hpp>
 #include <math_PSOParticlesPool.hpp>
@@ -26,7 +15,6 @@
 namespace
 {
 
-  // Simple quadratic function: f(x,y) = (x-1)^2 + (y-2)^2, minimum at (1, 2)
   class QuadraticFunction : public math_MultipleVarFunction
   {
   public:
@@ -41,7 +29,6 @@ namespace
     }
   };
 
-  // 1D quadratic function: f(x) = (x-3)^2, minimum at x = 3
   class Quadratic1DFunction : public math_MultipleVarFunction
   {
   public:
@@ -55,7 +42,6 @@ namespace
     }
   };
 
-  // Rosenbrock function: f(x,y) = (1-x)^2 + 100*(y-x^2)^2
   class RosenbrockFunction : public math_MultipleVarFunction
   {
   public:
@@ -72,7 +58,6 @@ namespace
     }
   };
 
-  // Multi-modal function: f(x,y) = -cos(x)*cos(y)*exp(-((x-PI)^2+(y-PI)^2))
   class MultiModalFunction : public math_MultipleVarFunction
   {
   public:
@@ -89,7 +74,6 @@ namespace
     }
   };
 
-  // 3D function: f(x,y,z) = x^2 + 2*y^2 + 3*z^2, minimum at (0,0,0)
   class Quadratic3DFunction : public math_MultipleVarFunction
   {
   public:
@@ -105,11 +89,11 @@ namespace
     }
   };
 
-} // anonymous namespace
+} // namespace
 
 TEST(MathPSOTest, QuadraticFunctionOptimization)
 {
-  // Test PSO on simple quadratic function
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -138,7 +122,7 @@ TEST(MathPSOTest, QuadraticFunctionOptimization)
 
 TEST(MathPSOTest, OneDimensionalOptimization)
 {
-  // Test PSO on 1D function
+
   Quadratic1DFunction aFunc;
 
   math_Vector aLowerBorder(1, 1);
@@ -163,7 +147,7 @@ TEST(MathPSOTest, OneDimensionalOptimization)
 
 TEST(MathPSOTest, ThreeDimensionalOptimization)
 {
-  // Test PSO on 3D function
+
   Quadratic3DFunction aFunc;
 
   math_Vector aLowerBorder(1, 3);
@@ -196,7 +180,7 @@ TEST(MathPSOTest, ThreeDimensionalOptimization)
 
 TEST(MathPSOTest, CustomParticleCount)
 {
-  // Test PSO with different particle counts
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -211,7 +195,6 @@ TEST(MathPSOTest, CustomParticleCount)
   aSteps(1) = 0.2;
   aSteps(2) = 0.2;
 
-  // Few particles
   math_PSO aSolver1(&aFunc, aLowerBorder, aUpperBorder, aSteps, 5, 20);
 
   double      aValue1;
@@ -222,7 +205,6 @@ TEST(MathPSOTest, CustomParticleCount)
   EXPECT_TRUE(aSolution1(1) >= -2.0 && aSolution1(1) <= 4.0) << "Solution should be within bounds";
   EXPECT_TRUE(aSolution1(2) >= -1.0 && aSolution1(2) <= 5.0) << "Solution should be within bounds";
 
-  // Many particles
   math_PSO aSolver2(&aFunc, aLowerBorder, aUpperBorder, aSteps, 50, 30);
 
   double      aValue2;
@@ -236,7 +218,7 @@ TEST(MathPSOTest, CustomParticleCount)
 
 TEST(MathPSOTest, CustomIterationCount)
 {
-  // Test PSO with different iteration counts
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -256,13 +238,11 @@ TEST(MathPSOTest, CustomIterationCount)
   double      aValue;
   math_Vector aSolution(1, 2);
 
-  // Test with fewer iterations
   aSolver.Perform(aSteps, aValue, aSolution, 5);
 
   EXPECT_TRUE(aSolution(1) >= -2.0 && aSolution(1) <= 4.0) << "Solution should be within bounds";
   EXPECT_TRUE(aSolution(2) >= -1.0 && aSolution(2) <= 5.0) << "Solution should be within bounds";
 
-  // Test with more iterations
   aSolver.Perform(aSteps, aValue, aSolution, 100);
 
   EXPECT_TRUE(aSolution(1) >= -2.0 && aSolution(1) <= 4.0) << "Solution should be within bounds";
@@ -271,7 +251,7 @@ TEST(MathPSOTest, CustomIterationCount)
 
 TEST(MathPSOTest, RosenbrockOptimization)
 {
-  // Test PSO on challenging Rosenbrock function
+
   RosenbrockFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -293,7 +273,6 @@ TEST(MathPSOTest, RosenbrockOptimization)
 
   aSolver.Perform(aSteps, aValue, aSolution);
 
-  // PSO may not find exact minimum due to stochastic nature, but should be reasonably close
   EXPECT_TRUE(aSolution(1) >= -2.0 && aSolution(1) <= 2.0) << "Solution should be within bounds";
   EXPECT_TRUE(aSolution(2) >= -1.0 && aSolution(2) <= 3.0) << "Solution should be within bounds";
   EXPECT_LT(aValue, 100.0) << "Function value should improve from random start";
@@ -301,7 +280,7 @@ TEST(MathPSOTest, RosenbrockOptimization)
 
 TEST(MathPSOTest, MultiModalOptimization)
 {
-  // Test PSO on multi-modal function
+
   MultiModalFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -332,7 +311,7 @@ TEST(MathPSOTest, MultiModalOptimization)
 
 TEST(MathPSOTest, DifferentStepSizes)
 {
-  // Test PSO with different step sizes
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -343,7 +322,6 @@ TEST(MathPSOTest, DifferentStepSizes)
   aUpperBorder(1) = 4.0;
   aUpperBorder(2) = 5.0;
 
-  // Large steps
   math_Vector aLargeSteps(1, 2);
   aLargeSteps(1) = 0.5;
   aLargeSteps(2) = 0.5;
@@ -358,7 +336,6 @@ TEST(MathPSOTest, DifferentStepSizes)
   EXPECT_TRUE(aSolution1(1) >= -2.0 && aSolution1(1) <= 4.0) << "Solution should be within bounds";
   EXPECT_TRUE(aSolution1(2) >= -1.0 && aSolution1(2) <= 5.0) << "Solution should be within bounds";
 
-  // Small steps
   math_Vector aSmallSteps(1, 2);
   aSmallSteps(1) = 0.05;
   aSmallSteps(2) = 0.05;
@@ -376,7 +353,7 @@ TEST(MathPSOTest, DifferentStepSizes)
 
 TEST(MathPSOTest, PSOParticlesPoolIntegration)
 {
-  // Test PSO with explicit particles pool
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -393,7 +370,6 @@ TEST(MathPSOTest, PSOParticlesPoolIntegration)
 
   math_PSO aSolver(&aFunc, aLowerBorder, aUpperBorder, aSteps, 20, 30);
 
-  // Create particles pool
   int                   aNbParticles = 20;
   math_PSOParticlesPool aParticlesPool(aNbParticles, 2);
 
@@ -408,7 +384,7 @@ TEST(MathPSOTest, PSOParticlesPoolIntegration)
 
 TEST(MathPSOTest, SmallSearchSpace)
 {
-  // Test PSO with very small search space
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -437,16 +413,16 @@ TEST(MathPSOTest, SmallSearchSpace)
 
 TEST(MathPSOTest, AsymmetricBounds)
 {
-  // Test PSO with asymmetric bounds
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
-  aLowerBorder(1) = -5.0; // Far from minimum
-  aLowerBorder(2) = 1.5;  // Close to minimum
+  aLowerBorder(1) = -5.0;
+  aLowerBorder(2) = 1.5;
 
   math_Vector aUpperBorder(1, 2);
-  aUpperBorder(1) = 2.0;  // Includes minimum
-  aUpperBorder(2) = 10.0; // Far from minimum
+  aUpperBorder(1) = 2.0;
+  aUpperBorder(2) = 10.0;
 
   math_Vector aSteps(1, 2);
   aSteps(1) = 0.2;
@@ -467,7 +443,7 @@ TEST(MathPSOTest, AsymmetricBounds)
 
 TEST(MathPSOTest, MinimalConfiguration)
 {
-  // Test PSO with minimal configuration (few particles, few iterations)
+
   Quadratic1DFunction aFunc;
 
   math_Vector aLowerBorder(1, 1);
@@ -479,7 +455,7 @@ TEST(MathPSOTest, MinimalConfiguration)
   math_Vector aSteps(1, 1);
   aSteps(1) = 0.5;
 
-  math_PSO aSolver(&aFunc, aLowerBorder, aUpperBorder, aSteps, 3, 5); // Minimal config
+  math_PSO aSolver(&aFunc, aLowerBorder, aUpperBorder, aSteps, 3, 5);
 
   double      aValue;
   math_Vector aSolution(1, 1);
@@ -487,12 +463,11 @@ TEST(MathPSOTest, MinimalConfiguration)
   aSolver.Perform(aSteps, aValue, aSolution, 3);
 
   EXPECT_TRUE(aSolution(1) >= 0.0 && aSolution(1) <= 6.0) << "Solution should be within bounds";
-  // With minimal configuration, we just check it doesn't crash and produces valid output
 }
 
 TEST(MathPSOTest, RepeatedPerformCalls)
 {
-  // Test multiple calls to Perform method
+
   QuadraticFunction aFunc;
 
   math_Vector aLowerBorder(1, 2);
@@ -512,7 +487,6 @@ TEST(MathPSOTest, RepeatedPerformCalls)
   double      aValue1, aValue2;
   math_Vector aSolution1(1, 2), aSolution2(1, 2);
 
-  // First call
   aSolver.Perform(aSteps, aValue1, aSolution1);
 
   EXPECT_TRUE(aSolution1(1) >= -2.0 && aSolution1(1) <= 4.0)
@@ -520,13 +494,10 @@ TEST(MathPSOTest, RepeatedPerformCalls)
   EXPECT_TRUE(aSolution1(2) >= -1.0 && aSolution1(2) <= 5.0)
     << "First solution should be within bounds";
 
-  // Second call
   aSolver.Perform(aSteps, aValue2, aSolution2);
 
   EXPECT_TRUE(aSolution2(1) >= -2.0 && aSolution2(1) <= 4.0)
     << "Second solution should be within bounds";
   EXPECT_TRUE(aSolution2(2) >= -1.0 && aSolution2(2) <= 5.0)
     << "Second solution should be within bounds";
-
-  // Results may vary due to stochastic nature, but both should be valid
 }

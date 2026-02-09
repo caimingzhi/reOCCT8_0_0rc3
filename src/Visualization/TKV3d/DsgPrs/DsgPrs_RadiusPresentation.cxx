@@ -26,8 +26,6 @@ static bool DsgPrs_InDomain(const double fpar, const double lpar, const double p
   return false;
 }
 
-//=================================================================================================
-
 void DsgPrs_RadiusPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                     const occ::handle<Prs3d_Drawer>&       aDrawer,
                                     const TCollection_ExtendedString&      aText,
@@ -103,22 +101,14 @@ void DsgPrs_RadiusPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   if (reverseArrow)
     arrdir.Reverse();
 
-  // fleche
   Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                     ptoncirc,
                     arrdir,
                     LA->ArrowAspect()->Angle(),
                     LA->ArrowAspect()->Length());
 
-  // texte
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, attpoint);
 }
-
-//=======================================================================
-// function : DsgPrs_RadiusPresentation::Add
-// purpose  : SZY 20-february-98
-//         : adds radius representation according drawFromCenter value
-//=======================================================================
 
 void DsgPrs_RadiusPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                     const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -146,7 +136,6 @@ void DsgPrs_RadiusPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   aPrims->AddVertex(LineEnd);
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // text
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, AttachmentPoint);
 
   gp_Dir ArrowDir = gce_MakeDir(LineOrigin, LineEnd);

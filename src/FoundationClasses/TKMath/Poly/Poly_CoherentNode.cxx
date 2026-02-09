@@ -1,8 +1,6 @@
 #include <Poly_CoherentNode.hpp>
 #include <Poly_CoherentTriangle.hpp>
 
-//=================================================================================================
-
 void Poly_CoherentNode::Clear(const occ::handle<NCollection_BaseAllocator>& theAlloc)
 {
   Poly_CoherentTriPtr::RemoveList(myTriangles, theAlloc);
@@ -14,19 +12,12 @@ void Poly_CoherentNode::Clear(const occ::handle<NCollection_BaseAllocator>& theA
   SetCoord(0., 0., 0.);
 }
 
-//=======================================================================
-// function : SetNormal
-// purpose  : Define the normal vector in the Node.
-//=======================================================================
-
 void Poly_CoherentNode::SetNormal(const gp_XYZ& theVector)
 {
   myNormal[0] = static_cast<float>(theVector.X());
   myNormal[1] = static_cast<float>(theVector.Y());
   myNormal[2] = static_cast<float>(theVector.Z());
 }
-
-//=================================================================================================
 
 void Poly_CoherentNode::AddTriangle(const Poly_CoherentTriangle&                  theTri,
                                     const occ::handle<NCollection_BaseAllocator>& theAlloc)
@@ -36,8 +27,6 @@ void Poly_CoherentNode::AddTriangle(const Poly_CoherentTriangle&                
   else
     myTriangles->Prepend(&theTri, theAlloc);
 }
-
-//=================================================================================================
 
 bool Poly_CoherentNode::RemoveTriangle(const Poly_CoherentTriangle&                  theTri,
                                        const occ::handle<NCollection_BaseAllocator>& theAlloc)
@@ -66,8 +55,6 @@ bool Poly_CoherentNode::RemoveTriangle(const Poly_CoherentTriangle&             
   }
   return aResult;
 }
-
-//=================================================================================================
 
 void Poly_CoherentNode::Dump(Standard_OStream& theStream) const
 {

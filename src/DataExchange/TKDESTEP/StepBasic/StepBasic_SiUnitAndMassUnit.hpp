@@ -12,7 +12,6 @@ class StepBasic_SiUnitAndMassUnit : public StepBasic_SiUnit
 {
 
 public:
-  //! Returns a SiUnitAndMassUnit
   Standard_EXPORT StepBasic_SiUnitAndMassUnit();
 
   Standard_EXPORT void Init(const bool                 hasAprefix,

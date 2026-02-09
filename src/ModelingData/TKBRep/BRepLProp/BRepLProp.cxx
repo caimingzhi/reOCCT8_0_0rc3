@@ -7,8 +7,6 @@
 #include <TopAbs_Orientation.hpp>
 #include <TopoDS_Edge.hpp>
 
-//=================================================================================================
-
 GeomAbs_Shape BRepLProp::Continuity(const BRepAdaptor_Curve& C1,
                                     const BRepAdaptor_Curve& C2,
                                     const double             u1,
@@ -87,8 +85,6 @@ GeomAbs_Shape BRepLProp::Continuity(const BRepAdaptor_Curve& C1,
     cont = GeomAbs_CN;
   return cont;
 }
-
-//=================================================================================================
 
 GeomAbs_Shape BRepLProp::Continuity(const BRepAdaptor_Curve& C1,
                                     const BRepAdaptor_Curve& C2,

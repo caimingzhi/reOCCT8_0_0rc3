@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ChFiDS_ChamfSpine, ChFiDS_Spine)
 
-//=================================================================================================
-
 ChFiDS_ChamfSpine::ChFiDS_ChamfSpine()
     : d1(0.0),
       d2(0.0),
@@ -26,8 +24,6 @@ ChFiDS_ChamfSpine::ChFiDS_ChamfSpine(const double Tol)
   myMode = ChFiDS_ClassicChamfer;
 }
 
-//=================================================================================================
-
 void ChFiDS_ChamfSpine::GetDist(double& Dis) const
 {
   if (mChamf != ChFiDS_Sym)
@@ -37,16 +33,12 @@ void ChFiDS_ChamfSpine::GetDist(double& Dis) const
   Dis = d1;
 }
 
-//=================================================================================================
-
 void ChFiDS_ChamfSpine::SetDist(const double Dis)
 {
-  // isconstant->Init(true);
+
   mChamf = ChFiDS_Sym;
   d1     = Dis;
 }
-
-//=================================================================================================
 
 void ChFiDS_ChamfSpine::Dists(double& Dis1, double& Dis2) const
 {
@@ -56,48 +48,36 @@ void ChFiDS_ChamfSpine::Dists(double& Dis1, double& Dis2) const
   Dis2 = d2;
 }
 
-//=================================================================================================
-
 void ChFiDS_ChamfSpine::SetDists(const double Dis1, const double Dis2)
 {
-  // isconstant->Init(true);
+
   mChamf = ChFiDS_TwoDist;
   d1     = Dis1;
   d2     = Dis2;
 }
 
-//=================================================================================================
-
 void ChFiDS_ChamfSpine::GetDistAngle(double& Dis, double& Angle) const
-// bool& DisOnF1)const
+
 {
   if (mChamf != ChFiDS_DistAngle)
     throw Standard_Failure("Chamfer is not a Two Dists Chamfer");
   Dis   = d1;
   Angle = angle;
-  // DisOnF1 = dison1;
 }
 
-//=================================================================================================
-
 void ChFiDS_ChamfSpine::SetDistAngle(const double Dis, const double Angle)
-// const bool DisOnF1)
+
 {
-  // isconstant->Init(true);
+
   mChamf = ChFiDS_DistAngle;
   d1     = Dis;
   angle  = Angle;
-  // dison1 = DisOnF1;
 }
-
-//=================================================================================================
 
 void ChFiDS_ChamfSpine::SetMode(const ChFiDS_ChamfMode theMode)
 {
   myMode = theMode;
 }
-
-//=================================================================================================
 
 ChFiDS_ChamfMethod ChFiDS_ChamfSpine::IsChamfer() const
 {

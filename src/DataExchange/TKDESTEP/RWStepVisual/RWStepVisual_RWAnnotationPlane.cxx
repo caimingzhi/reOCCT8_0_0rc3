@@ -5,11 +5,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepVisual_AnnotationPlane.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWAnnotationPlane::RWStepVisual_RWAnnotationPlane() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWAnnotationPlane::ReadStep(
   const occ::handle<StepData_StepReaderData>&    data,
@@ -17,15 +13,13 @@ void RWStepVisual_RWAnnotationPlane::ReadStep(
   occ::handle<Interface_Check>&                  ach,
   const occ::handle<StepVisual_AnnotationPlane>& ent) const
 {
-  // Number of Parameter Control
+
   if (!data->CheckNbParams(num, 4, ach, "annotation_plane"))
     return;
 
-  // Inherited field : name
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // Inherited field : styles
   occ::handle<NCollection_HArray1<occ::handle<StepVisual_PresentationStyleAssignment>>> aStyles;
   occ::handle<StepVisual_PresentationStyleAssignment>                                   anent2;
   int                                                                                   nsub2;
@@ -45,11 +39,9 @@ void RWStepVisual_RWAnnotationPlane::ReadStep(
     }
   }
 
-  // Inherited field : item
   occ::handle<Standard_Transient> aItem;
   data->ReadEntity(num, 3, "item", ach, STANDARD_TYPE(Standard_Transient), aItem);
 
-  // Own field: elements
   occ::handle<NCollection_HArray1<StepVisual_AnnotationPlaneElement>> anElements;
   StepVisual_AnnotationPlaneElement                                   anEnt;
   int                                                                 nbSub;
@@ -64,21 +56,15 @@ void RWStepVisual_RWAnnotationPlane::ReadStep(
     }
   }
 
-  // Initialisation of the read entity
   ent->Init(aName, aStyles, aItem, anElements);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWAnnotationPlane::WriteStep(
   StepData_StepWriter&                           SW,
   const occ::handle<StepVisual_AnnotationPlane>& ent) const
 {
-  // Inherited field : name
 
   SW.Send(ent->Name());
-
-  // Inherited field : styles
 
   SW.OpenSub();
   for (int i2 = 1; i2 <= ent->NbStyles(); i2++)
@@ -87,10 +73,8 @@ void RWStepVisual_RWAnnotationPlane::WriteStep(
   }
   SW.CloseSub();
 
-  // Inherited field : item
   SW.Send(ent->Item());
 
-  // Own field: elements
   SW.OpenSub();
   for (int i = 1; i <= ent->NbElements(); i++)
   {
@@ -98,8 +82,6 @@ void RWStepVisual_RWAnnotationPlane::WriteStep(
   }
   SW.CloseSub();
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWAnnotationPlane::Share(const occ::handle<StepVisual_AnnotationPlane>& ent,
                                            Interface_EntityIterator& iter) const
@@ -111,7 +93,6 @@ void RWStepVisual_RWAnnotationPlane::Share(const occ::handle<StepVisual_Annotati
   }
   iter.GetOneItem(ent->Item());
 
-  // Own field: contents
   int i, nb = ent->NbElements();
   for (i = 1; i <= nb; i++)
     iter.AddItem(ent->ElementsValue(i).Value());

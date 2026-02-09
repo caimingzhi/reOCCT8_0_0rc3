@@ -30,9 +30,8 @@ Standard_EXPORT void debON2d(const int iF)
 }
 #endif
 
-// clang-format off
-Standard_EXPORT TopAbs_State FUN_build_TB(const TopOpeBRepBuild_PBuilder& PB,const int rank); // xpu290698
-// clang-format on
+Standard_EXPORT TopAbs_State FUN_build_TB(const TopOpeBRepBuild_PBuilder& PB, const int rank);
+
 Standard_EXPORT bool FUN_keepEON(const TopOpeBRepBuild_Builder& B,
                                  const TopoDS_Shape&            sEG,
                                  const TopoDS_Shape&            sFOR,
@@ -44,8 +43,6 @@ Standard_EXPORT bool FUN_keepEON(const TopOpeBRepBuild_Builder& B,
 Standard_EXPORT void FUN_coutmess(const TCollection_AsciiString& m);
 
 Standard_EXPORTEXTERN TopOpeBRepDS_PDataStructure GLOBAL_DS2d;
-
-//=================================================================================================
 
 void TopOpeBRepBuild_BuilderON::Perform2d(const TopOpeBRepBuild_PBuilder&     PB,
                                           const TopoDS_Shape&                 FOR,
@@ -84,11 +81,11 @@ void TopOpeBRepBuild_BuilderON::Perform2d(const TopOpeBRepBuild_PBuilder&     PB
 
     const TopoDS_Edge& EG = TopoDS::Edge(BDS.Shape(GI));
 #ifdef OCCT_DEBUG
-//    int iEG=BDS.Shape(EG);
+
 #endif
     const NCollection_List<TopoDS_Shape>& lEspON = myPB->Splits(EG, TopAbs_ON);
 #ifdef OCCT_DEBUG
-//    int nEspON=lEspON.Extent();
+
 #endif
     for (NCollection_List<TopoDS_Shape>::Iterator it(lEspON); it.More(); it.Next())
     {
@@ -97,8 +94,6 @@ void TopOpeBRepBuild_BuilderON::Perform2d(const TopOpeBRepBuild_PBuilder&     PB
     }
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_BuilderON::GFillONParts2dWES2(const occ::handle<TopOpeBRepDS_Interference>& I,
                                                    const TopoDS_Shape& EspON)
@@ -112,43 +107,32 @@ void TopOpeBRepBuild_BuilderON::GFillONParts2dWES2(const occ::handle<TopOpeBRepD
   TopOpeBRepDS_Kind GT, ST;
   int               GI, SI;
   FDS_data(SSI, GT, GI, ST, SI);
-  //  const TopOpeBRepDS_Transition& TFE=SSI->Transition();
+
   bool               EGBoundFOR = SSI->GBound();
   const TopoDS_Face& FOR        = TopoDS::Face(myFace);
   int                iFOR       = BDS.Shape(FOR);
   const TopoDS_Edge& EG         = TopoDS::Edge(BDS.Shape(GI));
 #ifdef OCCT_DEBUG
-//  int iEG=BDS.Shape(EG);
+
 #endif
   const TopoDS_Face& FS = TopoDS::Face(BDS.Shape(SI));
 #ifdef OCCT_DEBUG
-//  int iFS=BDS.Shape(FS);
-//  bool isclosedFF=BRep_Tool::IsClosed(EG,FOR);
-//  bool isclosedFS=BRep_Tool::IsClosed(EG,FS);
-//  bool isclosed=(isclosedFF || isclosedFS);
-//  bool isrest=BDS.IsSectionEdge(EG);
-//  bool issplit=myPB->IsSplit(EG,TopAbs_ON);
-//  int rankFS=myPB->GShapeRank(FS);
+
 #endif
   int rankEG = myPB->GShapeRank(EG);
 #ifdef OCCT_DEBUG
-//  int rankFOR=myPB->GShapeRank(FOR);
+
 #endif
 
-  //  TopAbs_State TBEG = (rankEG == 1) ? TB1 : TB2;
   TopAbs_State TBEG = FUN_build_TB(myPB, rankEG);
 #ifdef OCCT_DEBUG
-//  TopAbs_State TFEbef = TFE.Before();
-//  TopAbs_State TFEaft = TFE.After();
-//  bool EGboundFOR =
-//                   occ::down_cast<TopOpeBRepDS_ShapeShapeInterference>(I)->GBound();
+
 #endif
   bool eghassd = HDS->HasSameDomain(EG);
 
 #ifdef OCCT_DEBUG
   bool tFOR = myPB->GtraceSPS(iFOR);
-  //  bool tE=myPB->GtraceSPS(GI);
-  //  bool tEFOR = (tE && tFOR);
+
   if (tFOR)
   {
     debON2d(iFOR);
@@ -158,26 +142,20 @@ void TopOpeBRepBuild_BuilderON::GFillONParts2dWES2(const occ::handle<TopOpeBRepD
   int  iFCX     = SI;
   bool FFinSDSO = true;
 #ifdef OCCT_DEBUG
-//  bool FFinSDDO = false;
+
 #endif
   bool        FFinSD = true;
   TopoDS_Face FCX    = FS;
 
 #ifdef OCCT_DEBUG
-//  TopAbs_Orientation oFOR = BDS.Shape(iFOR).Orientation();
-//  TopAbs_Orientation oFS  = BDS.Shape(iFS).Orientation();
-//  TopAbs_Orientation oFCX = BDS.Shape(iFCX).Orientation();
-//  int irefFOR = BDS.SameDomainRef(FOR);
-//  int irefFCX = BDS.SameDomainRef(FCX);
-//  bool FORisref = (irefFOR == iFOR);
-//  bool FCXisref = (irefFCX == iFCX);
+
 #endif
 
   TopAbs_Orientation oegFCXF;
   bool               EGBoundFCX = FUN_tool_orientEinFFORWARD(EG, FCX, oegFCXF);
   TopAbs_Orientation oegFCX;
 #ifdef OCCT_DEBUG
-//  bool ok2 =
+
 #endif
   FUN_tool_orientEinF(EG, FCX, oegFCX);
 
@@ -187,12 +165,10 @@ void TopOpeBRepBuild_BuilderON::GFillONParts2dWES2(const occ::handle<TopOpeBRepD
 
   bool yap6 = true;
   yap6      = yap6 && FFinSD;
-  //  yap6 = yap6 && (!EGBoundFOR);
-  //  yap6 = yap6 && EGBoundFCX;
+
   yap6 = yap6 && (EGBoundFOR || EGBoundFCX);
   yap6 = yap6 && eghassd;
 
-  //=========================================
   if (yap6)
   {
 #ifdef OCCT_DEBUG
@@ -200,16 +176,12 @@ void TopOpeBRepBuild_BuilderON::GFillONParts2dWES2(const occ::handle<TopOpeBRepD
       std::cout << "* yap6 = 1" << std::endl;
 #endif
     TopAbs_Orientation neworiE = TopAbs_FORWARD;
-    // FF est samedomain avec FCX
-    // on evalue la transition de FOR par rapport a la matiere 2d de la face FCX
-    // au lieu de la transition par rapport a la matiere 3d de la face FS
-    // EG est une arete de FCX, oegFCXF=O.T. de EG dans FCX orientee FORWARD
 
     bool b = false;
 
-    bool SO = FFinSDSO; //(FFinSDSO && (oFOR == oFCX)) || (FFinSDDO && (oFOR != oFCX));
+    bool SO = FFinSDSO;
 #ifdef OCCT_DEBUG
-//    int rkToFill = BDS.AncestorRank(myFace); //DEB
+
 #endif
     bool rk1 = (rankEG == 1);
     if (!rk1)
@@ -223,7 +195,7 @@ void TopOpeBRepBuild_BuilderON::GFillONParts2dWES2(const occ::handle<TopOpeBRepD
     else if (EGBoundFOR)
       ok = FUN_ds_shareG(myPB->DataStructure(), iFCX, iFOR, GI, TopoDS::Edge(EspON), shareG);
     if (!ok)
-      return; // nyiFUNRAISE
+      return;
 #ifdef OCCT_DEBUG
     if (tFOR)
       std::cout << " shareG=" << shareG << std::endl;
@@ -231,7 +203,7 @@ void TopOpeBRepBuild_BuilderON::GFillONParts2dWES2(const occ::handle<TopOpeBRepD
 
     if (SO)
     {
-      // FOR and FCX share geometric domain.
+
       if (opeFus)
         b = shareG;
       else if (opeCut)
@@ -254,14 +226,14 @@ void TopOpeBRepBuild_BuilderON::GFillONParts2dWES2(const occ::handle<TopOpeBRepD
       neworiE = oegFOR;
     }
 
-    //    double f,l; FUN_tool_bounds(EG,f,l); double parON = (f+l)*.4352;
-    // clang-format off
-    double f,l; FUN_tool_bounds(TopoDS::Edge(EspON),f,l); double parON = (f+l)*.4352; // xpu120698
-    // clang-format on
+    double f, l;
+    FUN_tool_bounds(TopoDS::Edge(EspON), f, l);
+    double parON = (f + l) * .4352;
+
     bool ESO;
     ok = FUN_tool_curvesSO(TopoDS::Edge(EspON), parON, EG, ESO);
     if (!ok)
-      return; // xpu120698
+      return;
     if (!ESO)
       neworiE = TopAbs::Complement(neworiE);
 
@@ -278,6 +250,5 @@ void TopOpeBRepBuild_BuilderON::GFillONParts2dWES2(const occ::handle<TopOpeBRepD
       std::cout << "  add spON e" << GI << std::endl;
 #endif
     return;
-  } // yap6
-
-} // GFillONPartsWES2
+  }
+}

@@ -1,15 +1,11 @@
-// Created on : Sat May 02 12:41:16 2020
+
 
 #include <StepKinematics_ScrewPair.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_ScrewPair,
                            StepKinematics_LowOrderKinematicPairWithMotionCoupling)
 
-//=================================================================================================
-
 StepKinematics_ScrewPair::StepKinematics_ScrewPair() = default;
-
-//=================================================================================================
 
 void StepKinematics_ScrewPair::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -33,14 +29,10 @@ void StepKinematics_ScrewPair::Init(
   myPitch = thePitch;
 }
 
-//=================================================================================================
-
 double StepKinematics_ScrewPair::Pitch() const
 {
   return myPitch;
 }
-
-//=================================================================================================
 
 void StepKinematics_ScrewPair::SetPitch(const double thePitch)
 {

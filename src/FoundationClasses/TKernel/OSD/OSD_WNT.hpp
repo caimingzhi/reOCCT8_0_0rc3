@@ -2,16 +2,16 @@
 
 #ifndef STRICT
   #define STRICT
-#endif /* STRICT */
+#endif
 
 #ifndef _INC_WINDOWS
   #include <windows.h>
-#endif /* _INC_WINDOWS */
+#endif
 
 #ifdef __cplusplus
 extern "C"
 {
-#endif /* __cplusplus */
+#endif
 
   enum DIR_RESPONSE
   {
@@ -29,10 +29,6 @@ extern "C"
 #define FLAG_NAMED_PIPE 0x00000040
 #define FLAG_DEVICE 0x00000080
 #define FLAG_TYPE 0x0000007C
-
-  // 2 macros modified for VisualAge
-  // #define LODWORD( a ) ( DWORD )(   ( ( DWORDLONG )( a ) ) & 0x00000000FFFFFFFF   )
-  // #define HIDWORD( a ) ( DWORD )(   ( ( DWORDLONG )( a ) ) >> 32                  )
 
 #define LODWORD(a) (DWORD)(((_int64)(a)) & 0x00000000FFFFFFFF)
 #define HIDWORD(a) (DWORD)(((_int64)(a)) >> 32)
@@ -93,4 +89,4 @@ extern "C"
 
 #ifdef __cplusplus
 }
-#endif /* __cplusplus */
+#endif

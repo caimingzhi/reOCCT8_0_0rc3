@@ -1,6 +1,5 @@
 #pragma once
 
-//! Algorithms:
 enum GProp_ValueType
 {
   GProp_Mass,

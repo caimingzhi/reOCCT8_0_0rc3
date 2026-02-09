@@ -4,22 +4,16 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWGroup::RWStepBasic_RWGroup() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWGroup::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                    const int                                   num,
                                    occ::handle<Interface_Check>&               ach,
                                    const occ::handle<StepBasic_Group>&         ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "group"))
     return;
-
-  // Own fields of Group
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -35,17 +29,12 @@ void RWStepBasic_RWGroup::ReadStep(const occ::handle<StepData_StepReaderData>& d
     hasDescription = false;
   }
 
-  // Initialize entity
   ent->Init(aName, hasDescription, aDescription);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWGroup::WriteStep(StepData_StepWriter&                SW,
                                     const occ::handle<StepBasic_Group>& ent) const
 {
-
-  // Own fields of Group
 
   SW.Send(ent->Name());
 
@@ -57,10 +46,7 @@ void RWStepBasic_RWGroup::WriteStep(StepData_StepWriter&                SW,
     SW.SendUndef();
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWGroup::Share(const occ::handle<StepBasic_Group>&,
                                 Interface_EntityIterator&) const
 {
-  // Own fields of Group
 }

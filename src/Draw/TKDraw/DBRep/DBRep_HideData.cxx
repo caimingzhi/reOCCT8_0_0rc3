@@ -15,16 +15,12 @@
 #define PntY2 ((double*)Coordinates)[4]
 #define PntZ2 ((double*)Coordinates)[5]
 
-//=================================================================================================
-
 DBRep_HideData::DBRep_HideData()
     : myView(-1),
       myFocal(0.0),
       myAngle(0.0)
 {
 }
-
-//=================================================================================================
 
 void DBRep_HideData::Set(const int           viewID,
                          const gp_Trsf&      TProj,
@@ -92,8 +88,6 @@ void DBRep_HideData::Set(const int           viewID,
   }
 }
 
-//=================================================================================================
-
 bool DBRep_HideData::IsSame(const gp_Trsf& TProj, const double focal) const
 {
   if (focal > 0)
@@ -126,8 +120,6 @@ bool DBRep_HideData::IsSame(const gp_Trsf& TProj, const double focal) const
   return true;
 }
 
-//=================================================================================================
-
 void DBRep_HideData::DrawOn(Draw_Display&     D,
                             const bool        withRg1,
                             const bool        withRgN,
@@ -137,7 +129,6 @@ void DBRep_HideData::DrawOn(Draw_Display&     D,
 {
   bool                                        firstPick = true;
   NCollection_List<HLRBRep_BiPoint>::Iterator It;
-  //  bool reg1,regn,outl;
 
   if (withHid)
   {
@@ -182,8 +173,6 @@ void DBRep_HideData::DrawOn(Draw_Display&     D,
     }
   }
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& DBRep_HideData::LastPick() const
 {

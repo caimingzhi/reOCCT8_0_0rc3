@@ -27,25 +27,8 @@ class StepAP214_AutoDesignReferencingItem : public StepData_SelectType
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Returns a AutoDesignReferencingItem SelectType
   Standard_EXPORT StepAP214_AutoDesignReferencingItem();
 
-  //! Recognizes a AutoDesignReferencingItem Kind Entity that is :
-  //! 1     Approval from StepBasic,
-  //! 2     DocumentRelationship from StepBasic,
-  //! 3     ExternallyDefinedRepresentation from StepRepr,
-  //! 4     MappedItem from StepRepr,
-  //! 5     MaterialDesignation from StepRepr,
-  //! 6     PresentationArea from StepVisual,
-  //! 7     PresentationView from StepVisual,
-  //! 8     ProductCategory from StepBasic,
-  //! 9     ProductDefinition from StepBasic,
-  //! 10     ProductDefinitionRelationship from StepBasic,
-  //! 11     PropertyDefinition from StepBasic,
-  //! 12     Representation from StepRepr,
-  //! 13     RepresentationRelationship from StepRepr,
-  //! 14     ShapeAspect from StepRepr
-  //! 0 else
   Standard_EXPORT int CaseNum(const occ::handle<Standard_Transient>& ent) const override;
 
   Standard_EXPORT occ::handle<StepBasic_Approval> Approval() const;

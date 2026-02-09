@@ -10,7 +10,6 @@ class Interface_Check;
 class StepRepr_FunctionallyDefinedTransformation;
 class StepData_StepWriter;
 
-//! Read & Write Module for FunctionallyDefinedTransformation
 class RWStepRepr_RWFunctionallyDefinedTransformation
 {
 public:

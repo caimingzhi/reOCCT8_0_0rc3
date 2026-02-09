@@ -14,25 +14,17 @@ IMPLEMENT_DOMSTRING(LastLabelIndex, "lastlabel")
 
 IMPLEMENT_DOMSTRING(ExtString, "string")
 
-//=================================================================================================
-
 XmlMFunction_ScopeDriver::XmlMFunction_ScopeDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMFunction_ScopeDriver::NewEmpty() const
 {
   return (new TFunction_Scope());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMFunction_ScopeDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                      const occ::handle<TDF_Attribute>& theTarget,
                                      XmlObjMgt_RRelocationTable&) const
@@ -44,13 +36,8 @@ bool XmlMFunction_ScopeDriver::Paste(const XmlObjMgt_Persistent&       theSource
   int                      aFirstInd, aLastInd, aValue, ind, nbIDs = 0, nbLabels = 0;
   const XmlObjMgt_Element& anElement = theSource;
 
-  // IDs
-  // ===
-
-  // Read the FirstIndex; if the attribute is absent initialize to 1
   aFirstInd = 1;
 
-  // Read the LastIndex; the attribute should present
   if (!anElement.getAttribute(::LastIDIndex()).GetInteger(aLastInd))
   {
     TCollection_ExtendedString aMessageString =
@@ -94,12 +81,8 @@ bool XmlMFunction_ScopeDriver::Paste(const XmlObjMgt_Persistent&       theSource
     }
   }
 
-  // Labels
-  // ======
-
   aFirstInd = 1;
 
-  // Read the LastIndex; the attribute should present
   if (!anElement.getAttribute(::LastLabelIndex()).GetInteger(aLastInd))
   {
     TCollection_ExtendedString aMessageString =
@@ -118,7 +101,7 @@ bool XmlMFunction_ScopeDriver::Paste(const XmlObjMgt_Persistent&       theSource
     return false;
   }
 
-  LDOM_Node           aCurNode = anElement.getFirstChild() /*.getNextSibling().getNextSibling()*/;
+  LDOM_Node           aCurNode    = anElement.getFirstChild();
   LDOM_Element*       aCurElement = (LDOM_Element*)&aCurNode;
   XmlObjMgt_DOMString aValueStr;
   while (*aCurElement != anElement.getLastChild())
@@ -138,8 +121,8 @@ bool XmlMFunction_ScopeDriver::Paste(const XmlObjMgt_Persistent&       theSource
       myMessageDriver->Send(aMessage, Message_Fail);
       return false;
     }
-    // Find label by entry
-    TDF_Label tLab; // Null label.
+
+    TDF_Label tLab;
     if (anEntry.Length() > 0)
     {
       TDF_Tool::Label(S->Label().Data(), anEntry, tLab, true);
@@ -149,7 +132,6 @@ bool XmlMFunction_ScopeDriver::Paste(const XmlObjMgt_Persistent&       theSource
     aCurElement = (LDOM_Element*)&aCurNode;
   }
 
-  // Last reference
   aValueStr = XmlObjMgt::GetStringValue(*aCurElement);
   if (aValueStr == nullptr)
   {
@@ -164,15 +146,14 @@ bool XmlMFunction_ScopeDriver::Paste(const XmlObjMgt_Persistent&       theSource
     myMessageDriver->Send(aMessage, Message_Fail);
     return false;
   }
-  // Find label by entry
-  TDF_Label tLab; // Null label.
+
+  TDF_Label tLab;
   if (anEntry.Length() > 0)
   {
     TDF_Tool::Label(S->Label().Data(), anEntry, tLab, true);
   }
   Labels.Append(tLab);
 
-  // Check equality of lengths of the list of IDs & Labels.
   if (nbIDs != nbLabels)
   {
     TCollection_ExtendedString aMessage =
@@ -181,7 +162,6 @@ bool XmlMFunction_ScopeDriver::Paste(const XmlObjMgt_Persistent&       theSource
     return false;
   }
 
-  // Set IDs & Labels into the Scope attribute
   int                                   freeID = 0;
   NCollection_List<int>::Iterator       itri(IDs);
   NCollection_List<TDF_Label>::Iterator itrl(Labels);
@@ -198,18 +178,11 @@ bool XmlMFunction_ScopeDriver::Paste(const XmlObjMgt_Persistent&       theSource
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMFunction_ScopeDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                      XmlObjMgt_Persistent&             theTarget,
                                      XmlObjMgt_SRelocationTable&) const
 {
   occ::handle<TFunction_Scope> S = occ::down_cast<TFunction_Scope>(theSource);
-
-  // IDs
-  // ===
 
   theTarget.Element().setAttribute(::LastIDIndex(), S->GetFunctions().Extent());
 
@@ -224,9 +197,6 @@ void XmlMFunction_ScopeDriver::Paste(const occ::handle<TDF_Attribute>& theSource
   aValueStr += "\n";
 
   XmlObjMgt::SetStringValue(theTarget, aValueStr.ToCString(), true);
-
-  // Labels
-  // ======
 
   XmlObjMgt_Element& anElement = theTarget;
   anElement.setAttribute(::LastLabelIndex(), S->GetFunctions().Extent());

@@ -12,10 +12,6 @@ class gp_Ax3;
 class gp_Trsf;
 class Geom_Axis2Placement;
 
-//! This class implements the mapping between classes
-//! Axis2Placement from Geom and Ax2, Ax3 from gp, and the class
-//! Axis2Placement3d from StepGeom which describes an
-//! axis2_placement_3d from Prostep.
 class GeomToStep_MakeAxis2Placement3d : public GeomToStep_Root
 {
 public:

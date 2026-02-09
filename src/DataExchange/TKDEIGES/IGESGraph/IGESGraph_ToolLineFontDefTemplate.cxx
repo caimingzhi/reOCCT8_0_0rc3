@@ -20,24 +20,22 @@ void IGESGraph_ToolLineFontDefTemplate::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&       IR,
   IGESData_ParamReader&                             PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   int                                 tempOrientation;
   double                              tempDistance, tempScale;
   occ::handle<IGESBasic_SubfigureDef> tempTemplateEntity;
 
-  // clang-format off
-  PR.ReadInteger(PR.Current(), "Template Orientation", tempOrientation); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "Template Orientation", tempOrientation);
 
-  PR.ReadEntity(IR, PR.Current(),
-		"Subfigure Definition Entity for Template Display",
-		STANDARD_TYPE(IGESBasic_SubfigureDef), tempTemplateEntity); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR,
+                PR.Current(),
+                "Subfigure Definition Entity for Template Display",
+                STANDARD_TYPE(IGESBasic_SubfigureDef),
+                tempTemplateEntity);
 
-  PR.ReadReal(PR.Current(), "Distance between successive Template",
-	      tempDistance); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Distance between successive Template", tempDistance);
 
-  PR.ReadReal(PR.Current(), "Scale Factor For Subfigure", tempScale); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadReal(PR.Current(), "Scale Factor For Subfigure", tempScale);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempOrientation, tempTemplateEntity, tempDistance, tempScale);
@@ -76,7 +74,7 @@ void IGESGraph_ToolLineFontDefTemplate::OwnCopy(
 }
 
 IGESData_DirChecker IGESGraph_ToolLineFontDefTemplate::DirChecker(
-  const occ::handle<IGESGraph_LineFontDefTemplate>& /*ent*/) const
+  const occ::handle<IGESGraph_LineFontDefTemplate>&) const
 {
   IGESData_DirChecker DC(304, 1);
   DC.Structure(IGESData_DefVoid);

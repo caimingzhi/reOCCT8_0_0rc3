@@ -14,17 +14,6 @@ class TopoDS_Shape;
 class TopOpeBRepDS_HDataStructure;
 class TopoDS_Face;
 
-//! Provides class methods to fill a datastructure
-//! with results of intersections.
-//!
-//! 1. Use an Intersector to find pairs of
-//! intersecting GeomShapes
-//!
-//! 2. For each pair fill the DataStructure using the
-//! appropriate Filler.
-//!
-//! 3. Complete the DataStructure to record shapes to
-//! rebuild (shells, wires)
 class TopOpeBRep_DSFiller
 {
 public:
@@ -34,23 +23,13 @@ public:
 
   Standard_EXPORT ~TopOpeBRep_DSFiller();
 
-  //! return field myPShapeClassifier.
-  //! set field myPShapeClassifier.
   Standard_EXPORT TopOpeBRepTool_PShapeClassifier PShapeClassifier() const;
 
-  //! Stores in <DS> the intersections of <S1> and <S2>.
-  //! if orientFORWARD = True
-  //! S FORWARD,REVERSED  --> FORWARD
-  //! S EXTERNAL,INTERNAL --> EXTERNAL,INTERNAL
   Standard_EXPORT void Insert(const TopoDS_Shape&                             S1,
                               const TopoDS_Shape&                             S2,
                               const occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
                               const bool                                      orientFORWARD = true);
 
-  //! Stores in <DS> the intersections of <S1> and <S2>.
-  //! if orientFORWARD = True
-  //! S FORWAR,REVERSED   --> FORWARD
-  //! S EXTERNAL,INTERNAL --> EXTERNAL,INTERNAL
   Standard_EXPORT void InsertIntersection(const TopoDS_Shape&                             S1,
                                           const TopoDS_Shape&                             S2,
                                           const occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
@@ -58,15 +37,10 @@ public:
 
   Standard_EXPORT void Complete(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
 
-  //! Stores in <DS> the intersections of <S1> and <S2>.
-  //! S1 and S2 contain only SameDomain Face
   Standard_EXPORT void Insert2d(const TopoDS_Shape&                             S1,
                                 const TopoDS_Shape&                             S2,
                                 const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
 
-  //! S1, S2 set of tangent face
-  //! Launches 2D intersection calculations to correctly
-  //! code the SameDomain faces.
   Standard_EXPORT void InsertIntersection2d(const TopoDS_Shape&                             S1,
                                             const TopoDS_Shape&                             S2,
                                             const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
@@ -75,15 +49,6 @@ public:
 
   Standard_EXPORT bool IsContext1d(const TopoDS_Shape& S) const;
 
-  //! Stores in <DS> the intersections of <S1> and <S2>.
-  //! S1 and S2 are edges or wires.
-  //! S1 edges have a 2d representation in face F1
-  //! S2 edges have a 2d representation in face F2
-  //! F1 is the face which surface is taken as reference
-  //! for 2d description of S1 and S2 edges.
-  //! if orientFORWARD = True
-  //! S FORWARD,REVERSED  --> FORWARD
-  //! S EXTERNAL,INTERNAL --> EXTERNAL,INTERNAL
   Standard_EXPORT void Insert1d(const TopoDS_Shape&                             S1,
                                 const TopoDS_Shape&                             S2,
                                 const TopoDS_Face&                              F1,
@@ -103,11 +68,6 @@ public:
 
   Standard_EXPORT void GapFiller(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS) const;
 
-  //! Update the data structure with relevant
-  //! information deduced from the intersections.
-  //!
-  //! Shells containing an intersected face.
-  //! Wires  containing an intersected edge.
   Standard_EXPORT void CompleteDS(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS) const;
 
   Standard_EXPORT void Filter(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS) const;
@@ -118,13 +78,6 @@ public:
 
   Standard_EXPORT void Checker(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS) const;
 
-  //! Update the data structure with relevant
-  //! information deduced from the intersections 2d.
-  //!
-  //! Shells containing an intersected face.
-  //! Wires  containing an intersected edge.
-  //!
-  //! search for interference identity using edge connexity //NYI
   Standard_EXPORT void CompleteDS2d(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS) const;
 
 private:

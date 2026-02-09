@@ -8,8 +8,6 @@
 
 static size_t NormalizedIds(const size_t aId, const int aDiv);
 
-//=================================================================================================
-
 BOPTools_Set::BOPTools_Set()
     : myAllocator(NCollection_BaseAllocator::CommonBaseAllocator()),
       myShapes(myAllocator)
@@ -19,8 +17,6 @@ BOPTools_Set::BOPTools_Set()
   myUpper    = 432123;
 }
 
-//=================================================================================================
-
 BOPTools_Set::BOPTools_Set(const occ::handle<NCollection_BaseAllocator>& theAllocator)
     : myAllocator(theAllocator),
       myShapes(myAllocator)
@@ -29,8 +25,6 @@ BOPTools_Set::BOPTools_Set(const occ::handle<NCollection_BaseAllocator>& theAllo
   mySum      = 0;
   myUpper    = 432123;
 }
-
-//=================================================================================================
 
 BOPTools_Set::BOPTools_Set(const BOPTools_Set& theOther)
     : myAllocator(theOther.myAllocator),
@@ -46,14 +40,10 @@ BOPTools_Set::BOPTools_Set(const BOPTools_Set& theOther)
   }
 }
 
-//=================================================================================================
-
 BOPTools_Set::~BOPTools_Set()
 {
   Clear();
 }
-
-//=================================================================================================
 
 void BOPTools_Set::Clear()
 {
@@ -62,25 +52,21 @@ void BOPTools_Set::Clear()
   myShapes.Clear();
 }
 
-//=================================================================================================
-
 int BOPTools_Set::NbShapes() const
 {
   return myNbShapes;
 }
 
-//=================================================================================================
-
 BOPTools_Set& BOPTools_Set::Assign(const BOPTools_Set& theOther)
 {
   NCollection_List<TopoDS_Shape>::Iterator aIt;
-  //
+
   myShape     = theOther.myShape;
   myNbShapes  = theOther.myNbShapes;
   mySum       = theOther.mySum;
   myUpper     = theOther.myUpper;
   myAllocator = theOther.myAllocator;
-  //
+
   myShapes.Clear();
   aIt.Initialize(theOther.myShapes);
   for (; aIt.More(); aIt.Next())
@@ -91,36 +77,32 @@ BOPTools_Set& BOPTools_Set::Assign(const BOPTools_Set& theOther)
   return *this;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& BOPTools_Set::Shape() const
 {
   return myShape;
 }
 
-//=================================================================================================
-
 bool BOPTools_Set::IsEqual(const BOPTools_Set& theOther) const
 {
   bool bRet;
-  //
+
   bRet = false;
-  //
+
   if (theOther.myNbShapes != myNbShapes)
   {
     return bRet;
   }
-  //
+
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aM1;
   NCollection_List<TopoDS_Shape>::Iterator               aIt;
-  //
+
   aIt.Initialize(myShapes);
   for (; aIt.More(); aIt.Next())
   {
     const TopoDS_Shape& aSx1 = aIt.Value();
     aM1.Add(aSx1);
   }
-  //
+
   aIt.Initialize(theOther.myShapes);
   for (; aIt.More(); aIt.Next())
   {
@@ -130,23 +112,21 @@ bool BOPTools_Set::IsEqual(const BOPTools_Set& theOther) const
       return bRet;
     }
   }
-  //
+
   return !bRet;
 }
-
-//=================================================================================================
 
 void BOPTools_Set::Add(const TopoDS_Shape& theS, const TopAbs_ShapeEnum theType)
 {
   size_t             aId, aIdN;
   TopAbs_Orientation aOr;
   TopExp_Explorer    aExp;
-  //
+
   myShape = theS;
   myShapes.Clear();
   myNbShapes = 0;
   mySum      = 0;
-  //
+
   aExp.Init(theS, theType);
   for (; aExp.More(); aExp.Next())
   {
@@ -159,17 +139,17 @@ void BOPTools_Set::Add(const TopoDS_Shape& theS, const TopAbs_ShapeEnum theType)
         continue;
       }
     }
-    //
+
     aOr = aSx.Orientation();
     if (aOr == TopAbs_INTERNAL)
     {
       TopoDS_Shape aSy;
-      //
+
       aSy = aSx;
-      //
+
       aSy.Orientation(TopAbs_FORWARD);
       myShapes.Append(aSy);
-      //
+
       aSy.Orientation(TopAbs_REVERSED);
       myShapes.Append(aSy);
     }
@@ -178,15 +158,15 @@ void BOPTools_Set::Add(const TopoDS_Shape& theS, const TopAbs_ShapeEnum theType)
       myShapes.Append(aSx);
     }
   }
-  //
+
   myNbShapes = myShapes.Extent();
   if (!myNbShapes)
   {
     return;
   }
-  //
+
   NCollection_List<TopoDS_Shape>::Iterator aIt;
-  //
+
   aIt.Initialize(myShapes);
   for (; aIt.More(); aIt.Next())
   {
@@ -197,12 +177,10 @@ void BOPTools_Set::Add(const TopoDS_Shape& theS, const TopAbs_ShapeEnum theType)
   }
 }
 
-//=================================================================================================
-
 size_t NormalizedIds(const size_t aId, const int aDiv)
 {
   size_t aMax, aTresh, aIdRet;
-  //
+
   aIdRet = aId;
   aMax   = SIZE_MAX;
   aTresh = aMax / aDiv;

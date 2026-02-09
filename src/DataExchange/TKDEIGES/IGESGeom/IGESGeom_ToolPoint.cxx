@@ -18,26 +18,20 @@
 #include <Message_Msg.hpp>
 #include <Standard_DomainError.hpp>
 
-// MGE 28/07/98
 IGESGeom_ToolPoint::IGESGeom_ToolPoint() = default;
 
 void IGESGeom_ToolPoint::ReadOwnParams(const occ::handle<IGESGeom_Point>&          ent,
                                        const occ::handle<IGESData_IGESReaderData>& IR,
                                        IGESData_ParamReader&                       PR) const
 {
-  // MGE 28/07/98
-  // Building of messages
-  //==================================
+
   Message_Msg Msg73("XSTEP_73");
-  //==================================
 
   gp_XYZ                              aPoint;
   occ::handle<IGESBasic_SubfigureDef> aSymbol;
   IGESData_Status                     aStatus;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  PR.ReadXYZ(PR.CurrentList(1, 3), Msg73, aPoint); // szv#4:S4163:12Mar99 `st=` not needed
-  // st = PR.ReadXYZ(PR.CurrentList(1, 3), "Point", aPoint);
+  PR.ReadXYZ(PR.CurrentList(1, 3), Msg73, aPoint);
 
   if (PR.DefinedElseSkip())
   {
@@ -77,10 +71,7 @@ void IGESGeom_ToolPoint::ReadOwnParams(const occ::handle<IGESGeom_Point>&       
         }
       }
     }
-    // szv#4:S4163:12Mar99 `st=` not needed
   }
-  // st = PR.ReadEntity(IR, PR.Current(), "Display Symbol",
-  //		       STANDARD_TYPE(IGESBasic_SubfigureDef), aSymbol, true);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(aPoint, aSymbol);
@@ -124,9 +115,9 @@ IGESData_DirChecker IGESGeom_ToolPoint::DirChecker(const occ::handle<IGESGeom_Po
   return DC;
 }
 
-void IGESGeom_ToolPoint::OwnCheck(const occ::handle<IGESGeom_Point>& /* ent */,
+void IGESGeom_ToolPoint::OwnCheck(const occ::handle<IGESGeom_Point>&,
                                   const Interface_ShareTool&,
-                                  occ::handle<Interface_Check>& /* ach */) const
+                                  occ::handle<Interface_Check>&) const
 {
 }
 

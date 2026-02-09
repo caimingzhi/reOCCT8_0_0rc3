@@ -4,14 +4,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BOPDS_CommonBlock, Standard_Transient)
 
-//=================================================================================================
-
 BOPDS_CommonBlock::BOPDS_CommonBlock()
     : myTolerance(0.0)
 {
 }
-
-//=================================================================================================
 
 BOPDS_CommonBlock::BOPDS_CommonBlock(const occ::handle<NCollection_BaseAllocator>& theAllocator)
     : myPaveBlocks(theAllocator),
@@ -20,8 +16,6 @@ BOPDS_CommonBlock::BOPDS_CommonBlock(const occ::handle<NCollection_BaseAllocator
 {
 }
 
-//=================================================================================================
-
 void BOPDS_CommonBlock::AddPaveBlock(const occ::handle<BOPDS_PaveBlock>& aPB)
 {
   if (myPaveBlocks.IsEmpty())
@@ -29,8 +23,7 @@ void BOPDS_CommonBlock::AddPaveBlock(const occ::handle<BOPDS_PaveBlock>& aPB)
     myPaveBlocks.Append(aPB);
     return;
   }
-  //
-  // Put the pave block with the minimal index of the original edge in the first place
+
   if (aPB->OriginalEdge() < myPaveBlocks.First()->OriginalEdge())
   {
     myPaveBlocks.Prepend(aPB);
@@ -40,8 +33,6 @@ void BOPDS_CommonBlock::AddPaveBlock(const occ::handle<BOPDS_PaveBlock>& aPB)
     myPaveBlocks.Append(aPB);
   }
 }
-
-//=================================================================================================
 
 void BOPDS_CommonBlock::SetPaveBlocks(const NCollection_List<occ::handle<BOPDS_PaveBlock>>& aLPB)
 {
@@ -53,49 +44,35 @@ void BOPDS_CommonBlock::SetPaveBlocks(const NCollection_List<occ::handle<BOPDS_P
   }
 }
 
-//=================================================================================================
-
 const NCollection_List<occ::handle<BOPDS_PaveBlock>>& BOPDS_CommonBlock::PaveBlocks() const
 {
   return myPaveBlocks;
 }
-
-//=================================================================================================
 
 void BOPDS_CommonBlock::AddFace(const int aF)
 {
   myFaces.Append(aF);
 }
 
-//=================================================================================================
-
 void BOPDS_CommonBlock::SetFaces(const NCollection_List<int>& aLF)
 {
   myFaces = aLF;
 }
-
-//=================================================================================================
 
 void BOPDS_CommonBlock::AppendFaces(NCollection_List<int>& aLF)
 {
   myFaces.Append(aLF);
 }
 
-//=================================================================================================
-
 const NCollection_List<int>& BOPDS_CommonBlock::Faces() const
 {
   return myFaces;
 }
 
-//=================================================================================================
-
 const occ::handle<BOPDS_PaveBlock>& BOPDS_CommonBlock::PaveBlock1() const
 {
   return myPaveBlocks.First();
 }
-
-//=================================================================================================
 
 void BOPDS_CommonBlock::SetRealPaveBlock(const occ::handle<BOPDS_PaveBlock>& thePB)
 {
@@ -111,15 +88,13 @@ void BOPDS_CommonBlock::SetRealPaveBlock(const occ::handle<BOPDS_PaveBlock>& the
   }
 }
 
-//=================================================================================================
-
 occ::handle<BOPDS_PaveBlock>& BOPDS_CommonBlock::PaveBlockOnEdge(const int aIx)
 {
   static occ::handle<BOPDS_PaveBlock> aPBs;
-  //
+
   int                                                      aIOr;
   NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator anIt;
-  //
+
   anIt.Initialize(myPaveBlocks);
   for (; anIt.More(); anIt.Next())
   {
@@ -133,14 +108,12 @@ occ::handle<BOPDS_PaveBlock>& BOPDS_CommonBlock::PaveBlockOnEdge(const int aIx)
   return aPBs;
 }
 
-//=================================================================================================
-
 bool BOPDS_CommonBlock::IsPaveBlockOnFace(const int aIx) const
 {
   bool                            bFound;
   int                             nF;
   NCollection_List<int>::Iterator anIt;
-  //
+
   bFound = false;
   anIt.Initialize(myFaces);
   for (; anIt.More(); anIt.Next())
@@ -154,14 +127,12 @@ bool BOPDS_CommonBlock::IsPaveBlockOnFace(const int aIx) const
   return bFound;
 }
 
-//=================================================================================================
-
 bool BOPDS_CommonBlock::IsPaveBlockOnEdge(const int aIx) const
 {
   bool                                                     bFound;
   int                                                      aIOr;
   NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator anIt;
-  //
+
   bFound = false;
   anIt.Initialize(myPaveBlocks);
   for (; anIt.More(); anIt.Next())
@@ -176,12 +147,10 @@ bool BOPDS_CommonBlock::IsPaveBlockOnEdge(const int aIx) const
   return bFound;
 }
 
-//=================================================================================================
-
 void BOPDS_CommonBlock::SetEdge(const int theEdge)
 {
   NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator anIt;
-  //
+
   anIt.Initialize(myPaveBlocks);
   for (; anIt.More(); anIt.Next())
   {
@@ -189,8 +158,6 @@ void BOPDS_CommonBlock::SetEdge(const int theEdge)
     aPB->SetEdge(theEdge);
   }
 }
-
-//=================================================================================================
 
 int BOPDS_CommonBlock::Edge() const
 {
@@ -202,22 +169,20 @@ int BOPDS_CommonBlock::Edge() const
   return -1;
 }
 
-//=================================================================================================
-
 bool BOPDS_CommonBlock::Contains(const occ::handle<BOPDS_PaveBlock>& aPBx) const
 {
   bool                                                     bFound;
   int                                                      aNb1;
   NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator anIt;
-  //
+
   bFound = false;
   aNb1   = myPaveBlocks.Extent();
-  //
+
   if (!aNb1)
   {
     return bFound;
   }
-  //
+
   anIt.Initialize(myPaveBlocks);
   for (; anIt.More(); anIt.Next())
   {
@@ -230,13 +195,11 @@ bool BOPDS_CommonBlock::Contains(const occ::handle<BOPDS_PaveBlock>& aPBx) const
   return bFound;
 }
 
-//=================================================================================================
-
 bool BOPDS_CommonBlock::Contains(const int theF) const
 {
   bool                            bFound;
   NCollection_List<int>::Iterator aIt;
-  //
+
   bFound = false;
   aIt.Initialize(myFaces);
   for (; aIt.More(); aIt.Next())
@@ -249,14 +212,12 @@ bool BOPDS_CommonBlock::Contains(const int theF) const
   return bFound;
 }
 
-//=================================================================================================
-
 void BOPDS_CommonBlock::Dump() const
 {
   int                                                      nF;
   NCollection_List<int>::Iterator                          aIt;
   NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator aItPB;
-  //
+
   printf(" -- CB:\n");
   aItPB.Initialize(myPaveBlocks);
   for (; aItPB.More(); aItPB.Next())
@@ -265,7 +226,7 @@ void BOPDS_CommonBlock::Dump() const
     aPB->Dump();
     printf("\n");
   }
-  //
+
   if (myFaces.Extent())
   {
     printf(" Faces:");

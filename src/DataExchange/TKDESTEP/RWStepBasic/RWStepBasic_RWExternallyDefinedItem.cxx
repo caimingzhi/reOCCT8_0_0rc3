@@ -5,11 +5,7 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWExternallyDefinedItem::RWStepBasic_RWExternallyDefinedItem() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWExternallyDefinedItem::ReadStep(
   const occ::handle<StepData_StepReaderData>&         data,
@@ -17,11 +13,9 @@ void RWStepBasic_RWExternallyDefinedItem::ReadStep(
   occ::handle<Interface_Check>&                       ach,
   const occ::handle<StepBasic_ExternallyDefinedItem>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "externally_defined_item"))
     return;
-
-  // Own fields of ExternallyDefinedItem
 
   StepBasic_SourceItem aItemId;
   data->ReadEntity(num, 1, "item_id", ach, aItemId);
@@ -29,32 +23,23 @@ void RWStepBasic_RWExternallyDefinedItem::ReadStep(
   occ::handle<StepBasic_ExternalSource> aSource;
   data->ReadEntity(num, 2, "source", ach, STANDARD_TYPE(StepBasic_ExternalSource), aSource);
 
-  // Initialize entity
   ent->Init(aItemId, aSource);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWExternallyDefinedItem::WriteStep(
   StepData_StepWriter&                                SW,
   const occ::handle<StepBasic_ExternallyDefinedItem>& ent) const
 {
 
-  // Own fields of ExternallyDefinedItem
-
   SW.Send(ent->ItemId().Value());
 
   SW.Send(ent->Source());
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWExternallyDefinedItem::Share(
   const occ::handle<StepBasic_ExternallyDefinedItem>& ent,
   Interface_EntityIterator&                           iter) const
 {
-
-  // Own fields of ExternallyDefinedItem
 
   iter.AddItem(ent->ItemId().Value());
 

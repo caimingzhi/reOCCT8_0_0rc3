@@ -1,53 +1,33 @@
 #pragma once
 
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #ifndef _BVH_Constants_Header
   #define _BVH_Constants_Header
 
 enum
 {
-  //! The optimal tree depth.
-  //! Should be in sync with maximum stack size while traversing the tree - don't pass the trees of
-  //! greater depth to OCCT algorithms!
+
   BVH_Constants_MaxTreeDepth = 32,
 
-  //! Leaf node size optimal for complex nodes,
-  //! e.g. for upper-level BVH trees within multi-level structure (nodes point to another BVH
-  //! trees).
   BVH_Constants_LeafNodeSizeSingle = 1,
-  //! Average leaf node size (4 primitive per leaf), optimal for average tree nodes.
+
   BVH_Constants_LeafNodeSizeAverage = 4,
-  //! Default leaf node size (5 primitives per leaf).
+
   BVH_Constants_LeafNodeSizeDefault = 5,
-  //! Leaf node size (8 primitives per leaf), optimal for small tree nodes (e.g. triangles).
+
   BVH_Constants_LeafNodeSizeSmall = 8,
 
-  //! The optimal number of bins for binned builder.
   BVH_Constants_NbBinsOptimal = 32,
-  //! The maximum number of bins for binned builder (giving the best traversal time at cost of
-  //! longer tree construction time).
+
   BVH_Constants_NbBinsBest = 48,
 };
 
 namespace BVH
 {
-  //! Minimum node size to split.
-  constexpr double THE_NODE_MIN_SIZE = 1e-5;
-} // namespace BVH
 
-#endif // _BVH_Constants_Header
+  constexpr double THE_NODE_MIN_SIZE = 1e-5;
+}
+
+#endif
 
 #include <BVH_Types.hpp>
 #include <Standard_Macro.hpp>
@@ -56,25 +36,18 @@ namespace BVH
 
 #include <limits>
 
-//! Base class for BVH_Box (CRTP idiom is used).
-//! @tparam T             Numeric data type
-//! @tparam N             Vector dimension
-//! @tparam TheDerivedBox Template of derived class that defined axis aligned bounding box.
-template <class T, int N, template <class /*T*/, int /*N*/> class TheDerivedBox>
+template <class T, int N, template <class, int> class TheDerivedBox>
 class BVH_BaseBox
 {
 };
 
-// forward declaration
 template <class T, int N>
 class BVH_Box;
 
-//! Partial template specialization for BVH_Box when N = 3.
 template <class T>
 class BVH_BaseBox<T, 3, BVH_Box>
 {
 public:
-  //! Transforms this box with given transformation.
   void Transform(const NCollection_Mat4<T>& theTransform)
   {
     if (theTransform.IsIdentity())
@@ -94,8 +67,6 @@ public:
     aThis->CornerMax() = aBox.CornerMax();
   }
 
-  //! Returns a box which is the result of applying the
-  //! given transformation to this box.
   BVH_Box<T, 3> Transformed(const NCollection_Mat4<T>& theTransform) const
   {
     using BVH_VecNt = typename BVH_Box<T, 3>::BVH_VecNt;
@@ -111,21 +82,13 @@ public:
       return *aThis;
     }
 
-    // Untransformed AABB min and max points
     const BVH_VecNt& anOldMinPnt = aThis->CornerMin();
     const BVH_VecNt& anOldMaxPnt = aThis->CornerMax();
 
-    // Define an empty AABB located in the transformation translation point
     const typename BVH::VectorType<T, 4>::Type aTranslation = theTransform.GetColumn(3);
     BVH_VecNt aNewMinPnt = BVH_VecNt(aTranslation.x(), aTranslation.y(), aTranslation.z());
     BVH_VecNt aNewMaxPnt = BVH_VecNt(aTranslation.x(), aTranslation.y(), aTranslation.z());
 
-    // This implements James Arvo's algorithm for transforming an axis-aligned bounding box (AABB)
-    // under an affine transformation. For each row of the transformation matrix, we compute
-    // the products of the min and max coordinates with the matrix elements, and select the
-    // minimum and maximum values to form the new bounding box. This ensures that the transformed
-    // box tightly encloses the original box after transformation, accounting for rotation and
-    // scaling.
     for (int aCol = 0; aCol < 3; ++aCol)
     {
       for (int aRow = 0; aRow < 3; ++aRow)
@@ -143,9 +106,6 @@ public:
   }
 };
 
-//! Defines axis aligned bounding box (AABB) based on BVH vectors.
-//! \tparam T Numeric data type
-//! \tparam N Vector dimension
 template <class T, int N>
 class BVH_Box : public BVH_BaseBox<T, N, BVH_Box>
 {
@@ -153,28 +113,23 @@ public:
   typedef typename BVH::VectorType<T, N>::Type BVH_VecNt;
 
 private:
-  //! Returns the minimum point sentinel value for invalid box.
   static constexpr T minSentinel() noexcept { return (std::numeric_limits<T>::max)(); }
 
-  //! Returns the maximum point sentinel value for invalid box.
   static constexpr T maxSentinel() noexcept { return (std::numeric_limits<T>::lowest)(); }
 
 public:
-  //! Creates uninitialized bounding box.
   constexpr BVH_Box() noexcept
       : myMinPoint(BVH_VecNt(minSentinel())),
         myMaxPoint(BVH_VecNt(maxSentinel()))
   {
   }
 
-  //! Creates bounding box of given point.
   constexpr BVH_Box(const BVH_VecNt& thePoint) noexcept
       : myMinPoint(thePoint),
         myMaxPoint(thePoint)
   {
   }
 
-  //! Creates bounding box from corner points.
   constexpr BVH_Box(const BVH_VecNt& theMinPoint, const BVH_VecNt& theMaxPoint) noexcept
       : myMinPoint(theMinPoint),
         myMaxPoint(theMaxPoint)
@@ -182,48 +137,34 @@ public:
   }
 
 public:
-  //! Clears bounding box.
   constexpr void Clear() noexcept
   {
     myMinPoint = BVH_VecNt(minSentinel());
     myMaxPoint = BVH_VecNt(maxSentinel());
   }
 
-  //! Is bounding box valid?
   constexpr bool IsValid() const noexcept { return myMinPoint[0] <= myMaxPoint[0]; }
 
-  //! Appends new point to the bounding box.
   void Add(const BVH_VecNt& thePoint);
 
-  //! Combines bounding box with another one.
   void Combine(const BVH_Box& theBox);
 
-  //! Returns minimum point of bounding box.
   constexpr const BVH_VecNt& CornerMin() const noexcept { return myMinPoint; }
 
-  //! Returns maximum point of bounding box.
   constexpr const BVH_VecNt& CornerMax() const noexcept { return myMaxPoint; }
 
-  //! Returns minimum point of bounding box.
   constexpr BVH_VecNt& CornerMin() noexcept { return myMinPoint; }
 
-  //! Returns maximum point of bounding box.
   constexpr BVH_VecNt& CornerMax() noexcept { return myMaxPoint; }
 
-  //! Returns surface area of bounding box.
-  //! If the box is degenerated into line, returns the perimeter instead.
   T Area() const;
 
-  //! Returns diagonal of bounding box.
   constexpr BVH_VecNt Size() const { return myMaxPoint - myMinPoint; }
 
-  //! Returns center of bounding box.
   constexpr BVH_VecNt Center() const { return (myMinPoint + myMaxPoint) * static_cast<T>(0.5); }
 
-  //! Returns center of bounding box along the given axis.
   inline T Center(const int theAxis) const;
 
-  //! Dumps the content of me into the stream
   void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const
   {
     (void)theDepth;
@@ -258,7 +199,6 @@ public:
     }
   }
 
-  //! Inits the content of me from the stream
   bool InitFromJson(const Standard_SStream& theSStream, int& theStreamPos)
   {
     int aPos = theStreamPos;
@@ -270,7 +210,7 @@ public:
 
     if (anIsValid == 0)
     {
-      Clear(); // Set to invalid state using sentinel values
+      Clear();
       theStreamPos = aPos;
       return true;
     }
@@ -309,8 +249,6 @@ public:
       myMaxPoint[2] = (T)aValue3;
     }
 
-    // For N > 3, initialize remaining dimensions to unbounded range
-    // so they don't affect intersection checks
     for (int i = n; i < N; ++i)
     {
       myMinPoint[i] = (std::numeric_limits<T>::lowest)();
@@ -322,7 +260,6 @@ public:
   }
 
 public:
-  //! Checks if the Box is out of the other box.
   constexpr bool IsOut(const BVH_Box<T, N>& theOther) const
   {
     if (!theOther.IsValid())
@@ -331,7 +268,6 @@ public:
     return IsOut(theOther.myMinPoint, theOther.myMaxPoint);
   }
 
-  //! Checks if the Box is out of the other box defined by two points.
   constexpr bool IsOut(const BVH_VecNt& theMinPoint, const BVH_VecNt& theMaxPoint) const
   {
     if (!IsValid())
@@ -345,7 +281,6 @@ public:
     return false;
   }
 
-  //! Checks if the Box fully contains the other box.
   constexpr bool Contains(const BVH_Box<T, N>& theOther, bool& hasOverlap) const
   {
     hasOverlap = false;
@@ -355,7 +290,6 @@ public:
     return Contains(theOther.myMinPoint, theOther.myMaxPoint, hasOverlap);
   }
 
-  //! Checks if the Box is fully contains the other box.
   constexpr bool Contains(const BVH_VecNt& theMinPoint,
                           const BVH_VecNt& theMaxPoint,
                           bool&            hasOverlap) const
@@ -375,7 +309,6 @@ public:
     return isInside;
   }
 
-  //! Checks if the Point is out of the box.
   constexpr bool IsOut(const BVH_VecNt& thePoint) const
   {
     if (!IsValid())
@@ -390,33 +323,23 @@ public:
   }
 
 protected:
-  BVH_VecNt myMinPoint; //!< Minimum point of bounding box (max<T> when invalid)
-  BVH_VecNt myMaxPoint; //!< Maximum point of bounding box (lowest<T> when invalid)
+  BVH_VecNt myMinPoint;
+  BVH_VecNt myMaxPoint;
 };
 
 namespace BVH
 {
-  //! Tool class for calculating box center along the given axis.
-  //! \tparam T Numeric data type
-  //! \tparam N Vector dimension
+
   template <class T, int N>
   struct CenterAxis
   {
-    //! Returns the center of the box along the specified axis using array access.
+
     static inline T Center(const BVH_Box<T, N>& theBox, const int theAxis)
     {
       return (theBox.CornerMin()[theAxis] + theBox.CornerMax()[theAxis]) * static_cast<T>(0.5);
     }
   };
 
-  //! Tool class for calculating surface area of the box.
-  //! For N=1, computes length (degenerate case).
-  //! For N=2, computes area (or perimeter for degenerate boxes).
-  //! For N>=3, computes 3D surface area using X, Y, Z components only.
-  //! The W component (4th dimension) is intentionally ignored as BVH surface area
-  //! heuristic (SAH) operates in 3D geometric space regardless of additional dimensions.
-  //! \tparam T Numeric data type
-  //! \tparam N Vector dimension
   template <class T, int N>
   struct SurfaceCalculator
   {
@@ -424,7 +347,7 @@ namespace BVH
     {
       if constexpr (N == 1)
       {
-        // For 1D, return the length
+
         return std::abs(theSize[0]);
       }
       else if constexpr (N == 2)
@@ -438,7 +361,7 @@ namespace BVH
       }
       else
       {
-        // For N >= 3, compute standard 3D surface area.
+
         const T anArea = (std::abs(theSize.x() * theSize.y()) + std::abs(theSize.x() * theSize.z())
                           + std::abs(theSize.z() * theSize.y()))
                          * static_cast<T>(2.0);
@@ -451,15 +374,11 @@ namespace BVH
     }
   };
 
-  //! Tool class for computing component-wise vector minimum and maximum.
-  //! \tparam T Numeric data type
-  //! \tparam N Vector dimension
   template <class T, int N>
   struct BoxMinMax
   {
     typedef typename BVH::VectorType<T, N>::Type BVH_VecNt;
 
-    //! Computes component-wise minimum in-place.
     static inline void CwiseMin(BVH_VecNt& theVec1, const BVH_VecNt& theVec2)
     {
       for (int i = 0; i < N; ++i)
@@ -468,7 +387,6 @@ namespace BVH
       }
     }
 
-    //! Computes component-wise maximum in-place.
     static inline void CwiseMax(BVH_VecNt& theVec1, const BVH_VecNt& theVec2)
     {
       for (int i = 0; i < N; ++i)
@@ -479,16 +397,12 @@ namespace BVH
   };
 } // namespace BVH
 
-//=================================================================================================
-
 template <class T, int N>
 void BVH_Box<T, N>::Add(const BVH_VecNt& thePoint)
 {
   BVH::BoxMinMax<T, N>::CwiseMin(myMinPoint, thePoint);
   BVH::BoxMinMax<T, N>::CwiseMax(myMaxPoint, thePoint);
 }
-
-//=================================================================================================
 
 template <class T, int N>
 void BVH_Box<T, N>::Combine(const BVH_Box& theBox)
@@ -500,16 +414,12 @@ void BVH_Box<T, N>::Combine(const BVH_Box& theBox)
   }
 }
 
-//=================================================================================================
-
 template <class T, int N>
 T BVH_Box<T, N>::Area() const
 {
   return !IsValid() ? static_cast<T>(0.0)
                     : BVH::SurfaceCalculator<T, N>::Area(myMaxPoint - myMinPoint);
 }
-
-//=================================================================================================
 
 template <class T, int N>
 T BVH_Box<T, N>::Center(const int theAxis) const

@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -38,27 +27,22 @@ namespace
   }
 } // namespace
 
-//==================================================================================================
-// Grid evaluation tests
-//==================================================================================================
-
 TEST(GeomGridEval_CylinderTest, GridBasicEvaluation)
 {
-  // Cylinder radius 2 along Z axis
+
   occ::handle<Geom_CylindricalSurface> aCyl =
     new Geom_CylindricalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 2.0);
 
   GeomGridEval_Cylinder anEval(aCyl);
   EXPECT_FALSE(anEval.Geometry().IsNull());
 
-  NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 9); // Angle
-  NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 5.0, 6);      // Height
+  NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 9);
+  NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 5.0, 6);
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
   EXPECT_EQ(aGrid.RowLength(), 6);
   EXPECT_EQ(aGrid.ColLength(), 9);
 
-  // Verify points
   for (int iU = 1; iU <= 9; ++iU)
   {
     for (int iV = 1; iV <= 6; ++iV)
@@ -174,7 +158,6 @@ TEST(GeomGridEval_CylinderTest, GridDerivativeDN)
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 5);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 5.0, 4);
 
-  // Test D4U (4th derivative in U)
   NCollection_Array2<gp_Vec> aD4U = anEval.EvaluateGridDN(aUParams, aVParams, 4, 0);
   for (int iU = 1; iU <= 5; ++iU)
   {
@@ -186,17 +169,12 @@ TEST(GeomGridEval_CylinderTest, GridDerivativeDN)
   }
 }
 
-//==================================================================================================
-// Points evaluation tests
-//==================================================================================================
-
 TEST(GeomGridEval_CylinderTest, PointsBasicEvaluation)
 {
   occ::handle<Geom_CylindricalSurface> aCyl =
     new Geom_CylindricalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 2.0);
   GeomGridEval_Cylinder anEval(aCyl);
 
-  // Create arbitrary UV pairs
   NCollection_Array1<gp_Pnt2d> aUVPairs(1, 10);
   aUVPairs.SetValue(1, gp_Pnt2d(0.0, 0.0));
   aUVPairs.SetValue(2, gp_Pnt2d(M_PI / 4, 1.0));
@@ -324,7 +302,6 @@ TEST(GeomGridEval_CylinderTest, PointsDerivativeDN)
   aUVPairs.SetValue(4, gp_Pnt2d(M_PI, 3.0));
   aUVPairs.SetValue(5, gp_Pnt2d(3 * M_PI / 2, 4.0));
 
-  // Test D4U
   NCollection_Array1<gp_Vec> aD4U = anEval.EvaluatePointsDN(aUVPairs, 4, 0);
   for (int i = 1; i <= 5; ++i)
   {
@@ -336,7 +313,7 @@ TEST(GeomGridEval_CylinderTest, PointsDerivativeDN)
 
 TEST(GeomGridEval_CylinderTest, PointsTransformedCylinder)
 {
-  // Cylinder with offset center and tilted axis
+
   gp_Ax3                               anAxis(gp_Pnt(5, 3, 2), gp_Dir(1, 1, 1));
   occ::handle<Geom_CylindricalSurface> aCyl = new Geom_CylindricalSurface(anAxis, 3.0);
   GeomGridEval_Cylinder                anEval(aCyl);

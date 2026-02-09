@@ -17,8 +17,6 @@ namespace
   static std::atomic<int> THE_PROGRAM_OBJECT_COUNTER(0);
 }
 
-//=================================================================================================
-
 const TCollection_AsciiString& Graphic3d_ShaderProgram::ShadersFolder()
 {
   static bool                    THE_IS_DEFINED = false;
@@ -57,10 +55,6 @@ const TCollection_AsciiString& Graphic3d_ShaderProgram::ShadersFolder()
   return THE_SHADERS_FOLDER;
 }
 
-// =======================================================================
-// function : Graphic3d_ShaderProgram
-// purpose  : Creates new empty program object
-// =======================================================================
 Graphic3d_ShaderProgram::Graphic3d_ShaderProgram()
     : myNbLightsMax(THE_MAX_LIGHTS_DEFAULT),
       myNbShadowMaps(0),
@@ -76,16 +70,8 @@ Graphic3d_ShaderProgram::Graphic3d_ShaderProgram()
          + TCollection_AsciiString(++THE_PROGRAM_OBJECT_COUNTER);
 }
 
-// =======================================================================
-// function : ~Graphic3d_ShaderProgram
-// purpose  : Releases resources of program object
-// =======================================================================
 Graphic3d_ShaderProgram::~Graphic3d_ShaderProgram() = default;
 
-// =======================================================================
-// function : IsDone
-// purpose  : Checks if the program object is valid or not
-// =======================================================================
 bool Graphic3d_ShaderProgram::IsDone() const
 {
   if (myShaderObjects.IsEmpty())
@@ -104,10 +90,6 @@ bool Graphic3d_ShaderProgram::IsDone() const
   return true;
 }
 
-// =======================================================================
-// function : AttachShader
-// purpose  : Attaches shader object to the program object
-// =======================================================================
 bool Graphic3d_ShaderProgram::AttachShader(const occ::handle<Graphic3d_ShaderObject>& theShader)
 {
   if (theShader.IsNull())
@@ -127,10 +109,6 @@ bool Graphic3d_ShaderProgram::AttachShader(const occ::handle<Graphic3d_ShaderObj
   return true;
 }
 
-// =======================================================================
-// function : DetachShader
-// purpose  : Detaches shader object from the program object
-// =======================================================================
 bool Graphic3d_ShaderProgram::DetachShader(const occ::handle<Graphic3d_ShaderObject>& theShader)
 {
   if (theShader.IsNull())
@@ -152,16 +130,10 @@ bool Graphic3d_ShaderProgram::DetachShader(const occ::handle<Graphic3d_ShaderObj
   return false;
 }
 
-// =======================================================================
-// function : ClearVariables
-// purpose  : Removes all custom uniform variables from the program
-// =======================================================================
 void Graphic3d_ShaderProgram::ClearVariables()
 {
   myVariables.Clear();
 }
-
-//=================================================================================================
 
 void Graphic3d_ShaderProgram::SetVertexAttributes(
   const NCollection_Sequence<occ::handle<Graphic3d_ShaderAttribute>>& theAttributes)

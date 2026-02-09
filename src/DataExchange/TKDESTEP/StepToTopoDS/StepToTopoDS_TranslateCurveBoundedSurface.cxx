@@ -18,11 +18,7 @@
 #include <TopoDS_Face.hpp>
 #include <Transfer_TransientProcess.hpp>
 
-//=================================================================================================
-
 StepToTopoDS_TranslateCurveBoundedSurface::StepToTopoDS_TranslateCurveBoundedSurface() = default;
-
-//=================================================================================================
 
 StepToTopoDS_TranslateCurveBoundedSurface::StepToTopoDS_TranslateCurveBoundedSurface(
   const occ::handle<StepGeom_CurveBoundedSurface>& CBS,
@@ -31,8 +27,6 @@ StepToTopoDS_TranslateCurveBoundedSurface::StepToTopoDS_TranslateCurveBoundedSur
 {
   Init(CBS, TP, theLocalFactors);
 }
-
-//=================================================================================================
 
 bool StepToTopoDS_TranslateCurveBoundedSurface::Init(
   const occ::handle<StepGeom_CurveBoundedSurface>& CBS,
@@ -43,7 +37,6 @@ bool StepToTopoDS_TranslateCurveBoundedSurface::Init(
   if (CBS.IsNull())
     return false;
 
-  // translate basis surface
   occ::handle<StepGeom_Surface> S    = CBS->BasisSurface();
   occ::handle<Geom_Surface>     Surf = StepToGeom::MakeSurface(S, theLocalFactors);
   if (Surf.IsNull())
@@ -52,8 +45,6 @@ bool StepToTopoDS_TranslateCurveBoundedSurface::Init(
     return false;
   }
 
-  // abv 30.06.00: trj4_k1_geo-tu.stp #108: do as in TranslateFace
-  // pdn to force bsplsurf to be periodic
   occ::handle<StepGeom_BSplineSurface> sgbss = occ::down_cast<StepGeom_BSplineSurface>(S);
   if (!sgbss.IsNull())
   {
@@ -65,11 +56,9 @@ bool StepToTopoDS_TranslateCurveBoundedSurface::Init(
     }
   }
 
-  // create face
   BRep_Builder B;
   B.MakeFace(myFace, Surf, Precision::Confusion());
 
-  // add natural bound if implicit
   if (CBS->ImplicitOuter())
   {
     if (Surf->IsKind(STANDARD_TYPE(Geom_BoundedSurface)))
@@ -81,7 +70,6 @@ bool StepToTopoDS_TranslateCurveBoundedSurface::Init(
       TP->AddWarning(CBS, "Cannot make natural bounds on infinite surface");
   }
 
-  // translate boundaries
   occ::handle<NCollection_HArray1<StepGeom_SurfaceBoundary>> bnd = CBS->Boundaries();
   int                                                        nb  = bnd->Length();
   for (int i = 1; i <= nb; i++)
@@ -101,8 +89,6 @@ bool StepToTopoDS_TranslateCurveBoundedSurface::Init(
   done = !myFace.IsNull();
   return done;
 }
-
-//=================================================================================================
 
 const TopoDS_Face& StepToTopoDS_TranslateCurveBoundedSurface::Value() const
 {

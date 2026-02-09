@@ -14,18 +14,6 @@
 #include <IntAna2d_IntPoint.hpp>
 #include <NCollection_Array1.hpp>
 
-//=========================================================================
-//   Creation of a circle tangent to two circles C1 and C2.               +
-//                        centered on a circle.                           +
-//  We start with distinguishing various boundary cases that will be      +
-//  processed separately.                                            +
-//  In the general case:                                                  +
-//  ====================                                                  +
-//  We calculate bissectrices to C1 and C2 that give us all           +
-//  possible locations of centers of all circles tangent to C1 and C2. + We intersect these
-//  bissectrices with circle OnCirc which gives us   + points among which we choose the solutions. +
-//  The choice is made basing in Qualifiers of C1 and C2.  +
-//=========================================================================
 GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
                                          const GccEnt_QualifiedCirc& Qualified2,
                                          const gp_Circ2d&            OnCirc,
@@ -67,10 +55,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
 
   double R1 = C1.Radius();
   double R2 = C2.Radius();
-
-  //=========================================================================
-  //   Processing of boundary cases.                                          +
-  //=========================================================================
 
   int      nbsol1  = 1;
   int      nbsol2  = 0;
@@ -141,7 +125,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
           WellDone = true;
           NbrSol++;
           cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(pinterm, dirx), Radius(i));
-          //        ===========================================================
+
           gp_Dir2d dc1(center1.XY() - pinterm.XY());
           gp_Dir2d dc2(center2.XY() - pinterm.XY());
           distcc1 = pinterm.Distance(center1);
@@ -194,10 +178,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
       return;
     }
   }
-
-  //=========================================================================
-  //   General case.                                                         +
-  //=========================================================================
 
   GccAna_Circ2dBisec Bis(C1, C2);
   if (Bis.IsDone())
@@ -311,7 +291,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
               {
                 NbrSol++;
                 cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius(k));
-                //              ==========================================================
+
                 distcc1 = Center.Distance(center1);
                 distcc2 = Center.Distance(center2);
                 if (!Qualified1.IsUnqualified())

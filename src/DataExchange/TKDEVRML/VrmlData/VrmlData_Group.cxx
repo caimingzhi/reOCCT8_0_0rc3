@@ -20,8 +20,6 @@ IMPLEMENT_STANDARD_RTTIEXT(VrmlData_Group, VrmlData_Node)
   #pragma warning(disable : 4996)
 #endif
 
-//=================================================================================================
-
 VrmlData_Group::VrmlData_Group(const VrmlData_Scene& theScene,
                                const char*           theName,
                                const bool            isTransform)
@@ -30,8 +28,6 @@ VrmlData_Group::VrmlData_Group(const VrmlData_Scene& theScene,
       myNodes(theScene.Allocator())
 {
 }
-
-//=================================================================================================
 
 bool VrmlData_Group::RemoveNode(const occ::handle<VrmlData_Node>& theNode)
 {
@@ -46,8 +42,6 @@ bool VrmlData_Group::RemoveNode(const occ::handle<VrmlData_Node>& theNode)
   return aResult;
 }
 
-//=================================================================================================
-
 bool VrmlData_Group::SetTransform(const gp_Trsf& theTrsf)
 {
   bool aResult(false);
@@ -58,8 +52,6 @@ bool VrmlData_Group::SetTransform(const gp_Trsf& theTrsf)
   }
   return aResult;
 }
-
-//=================================================================================================
 
 occ::handle<VrmlData_Node> VrmlData_Group::Clone(const occ::handle<VrmlData_Node>& theOther) const
 {
@@ -74,7 +66,7 @@ occ::handle<VrmlData_Node> VrmlData_Group::Clone(const occ::handle<VrmlData_Node
     aResult->myNodes = myNodes;
   else
   {
-    // Create a dummy node to pass the different Scene instance to methods Clone
+
     const occ::handle<VrmlData_UnknownNode> aDummyNode = new VrmlData_UnknownNode(aResult->Scene());
     Iterator                                anIter(myNodes);
     for (; anIter.More(); anIter.Next())
@@ -91,8 +83,6 @@ occ::handle<VrmlData_Node> VrmlData_Group::Clone(const occ::handle<VrmlData_Node
   return aResult;
 }
 
-//=================================================================================================
-
 occ::handle<VrmlData_Node> VrmlData_Group::FindNode(const char* theName, gp_Trsf& theLocation) const
 {
   occ::handle<VrmlData_Node> aResult;
@@ -108,7 +98,7 @@ occ::handle<VrmlData_Node> VrmlData_Group::FindNode(const char* theName, gp_Trsf
         theLocation = myTrsf;
         break;
       }
-      // Try a Group type of node
+
       if (aNode->IsKind(STANDARD_TYPE(VrmlData_Group)))
       {
         const occ::handle<VrmlData_Group> aGroup = occ::down_cast<VrmlData_Group>(aNode);
@@ -117,7 +107,7 @@ occ::handle<VrmlData_Node> VrmlData_Group::FindNode(const char* theName, gp_Trsf
           aResult = aGroup->FindNode(theName, theLocation);
           if (!aResult.IsNull())
           {
-            // theLocation *= myTrsf;
+
             theLocation.PreMultiply(myTrsf);
             break;
           }
@@ -127,8 +117,6 @@ occ::handle<VrmlData_Node> VrmlData_Group::FindNode(const char* theName, gp_Trsf
   }
   return aResult;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
 {
@@ -149,7 +137,7 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "children"))
     {
       bool isBracketed(false);
-      // Read the opening bracket for the list of children
+
       if (!OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
         break;
       if (theBuffer.LinePtr[0] == '[')
@@ -160,17 +148,16 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
         isBracketed = true;
       }
 
-      // Read the child nodes
       occ::handle<VrmlData_Node> aChildNode;
       while (OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
       {
-        // read the end-of-list bracket
+
         if (isBracketed && theBuffer.LinePtr[0] == ']')
         {
           theBuffer.LinePtr++;
           break;
         }
-        // otherwise read a node
+
         if (!OK(aStatus, ReadNode(theBuffer, aChildNode)))
           break;
         AddNode(aChildNode);
@@ -186,7 +173,7 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "Switch"))
     {
       bool isBracketed(false);
-      // Read the opening bracket for the list of children
+
       if (!OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
         break;
 
@@ -198,18 +185,16 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
         isBracketed = true;
       }
 
-      // Read the child nodes
       occ::handle<VrmlData_Node> aChildNode;
       while (OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
       {
-        // read the end-of-list bracket
+
         if (isBracketed && theBuffer.LinePtr[0] == '}')
         {
           theBuffer.LinePtr++;
           break;
         }
 
-        // otherwise read a node
         if (!OK(aStatus, ReadNode(theBuffer, aChildNode)))
           break;
 
@@ -223,7 +208,7 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
     {
       occ::handle<VrmlData_Group> aGroupNode = new VrmlData_Group(Scene(), "");
       bool                        isBracketed(false);
-      // Read the opening bracket for the list of children
+
       if (!OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
         break;
 
@@ -235,17 +220,16 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
         isBracketed = true;
       }
 
-      // Read the child nodes
       occ::handle<VrmlData_Node> aChildNode;
       while (OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
       {
-        // read the end-of-list bracket
+
         if (isBracketed && theBuffer.LinePtr[0] == '}')
         {
           theBuffer.LinePtr++;
           break;
         }
-        // otherwise read a node
+
         if (!OK(aStatus, ReadNode(theBuffer, aChildNode)))
           break;
 
@@ -318,7 +302,7 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "ShapeHints")
              || VRMLDATA_LCOMPARE(theBuffer.LinePtr, "DirectionalLight"))
     {
-      // Skip this tag
+
       if (!OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
         break;
 
@@ -330,7 +314,7 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
 
         while (OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
         {
-          // read the end-of-list bracket
+
           if (theBuffer.LinePtr[0] == '}')
           {
             theBuffer.LinePtr++;
@@ -428,8 +412,7 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
               continue;
             const_cast<VrmlData_Scene&>(Scene()).myAllNodes.Append(aNode);
             aNode->myScene = &Scene();
-            // The name of the imported node should be prefixed by the URL
-            // because each name must remain unique in the global scene.
+
             if (aNode->Name())
               if (*aNode->Name() != '\0')
               {
@@ -461,12 +444,11 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
       break;
   }
 
-  // Read the terminating (closing) brace
   if (OK(aStatus))
     aStatus = readBrace(theBuffer);
   if (OK(aStatus))
   {
-    // Check if the Bounding Box has been imported
+
     if (aBoxSize.X() > -Precision::Confusion() && aBoxSize.Y() > -Precision::Confusion()
         && aBoxSize.Z() > -Precision::Confusion())
     {
@@ -475,14 +457,13 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
     }
     if (myIsTransform)
     {
-      // Create the corresponding transformation.
+
       gp_Trsf tRot, tCentInv;
       myTrsf.SetTranslation(aTrans + aCenter);
       gp_Ax1 aRotation(gp::Origin(), aRotAxis);
       tRot.SetRotation(gp_Ax1(gp::Origin(), aRotAxis), aRotAngle);
       myTrsf.Multiply(tRot);
-      // Check that the scale is uniform (the same value in all 3 directions.
-      // Only in this case the scaling is applied.
+
       const double aScaleDiff[2] = {aScale.X() - aScale.Y(), aScale.X() - aScale.Z()};
       if (aScaleDiff[0] * aScaleDiff[0] + aScaleDiff[1] * aScaleDiff[1] < Precision::Confusion())
       {
@@ -497,8 +478,6 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
   return aStatus;
 }
 
-//=================================================================================================
-
 void VrmlData_Group::Shape(
   TopoDS_Shape&                                                                      theShape,
   NCollection_DataMap<occ::handle<TopoDS_TShape>, occ::handle<VrmlData_Appearance>>* pMapApp)
@@ -506,8 +485,6 @@ void VrmlData_Group::Shape(
   VrmlData_Scene::createShape(theShape, myNodes, pMapApp);
   theShape.Location(myTrsf, false);
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Group::openFile(Standard_IStream&              theStream,
                                               const TCollection_AsciiString& theFilename)
@@ -541,8 +518,6 @@ VrmlData_ErrorStatus VrmlData_Group::openFile(Standard_IStream&              the
   return aStatus;
 }
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_Group::Write(const char* thePrefix) const
 {
   VrmlData_ErrorStatus aStatus(VrmlData_StatusOK);
@@ -559,7 +534,7 @@ VrmlData_ErrorStatus VrmlData_Group::Write(const char* thePrefix) const
       if (OK(aStatus) && !aScene.IsDummyWrite())
       {
         const gp_XYZ aBoxCorner[2] = {myBox.CornerMin(), myBox.CornerMax()};
-        // Check that the box is not void
+
         if (aBoxCorner[0].X() < aBoxCorner[1].X() + Precision::Confusion())
         {
           Sprintf(buf,
@@ -581,7 +556,7 @@ VrmlData_ErrorStatus VrmlData_Group::Write(const char* thePrefix) const
       }
       if (OK(aStatus) && isTransform && !aScene.IsDummyWrite())
       {
-        // Output the Scale
+
         const double aScaleFactor = myTrsf.ScaleFactor();
         if ((aScaleFactor - 1.) * (aScaleFactor - 1.) > 0.0001 * Precision::Confusion())
         {
@@ -589,7 +564,6 @@ VrmlData_ErrorStatus VrmlData_Group::Write(const char* thePrefix) const
           aStatus = aScene.WriteLine(buf);
         }
 
-        // Output the Translation
         const gp_XYZ& aTrans = myTrsf.TranslationPart();
         if (aTrans.SquareModulus() > 0.0001 * Precision::Confusion())
         {
@@ -597,12 +571,11 @@ VrmlData_ErrorStatus VrmlData_Group::Write(const char* thePrefix) const
           aStatus = aScene.WriteLine(buf);
         }
 
-        // Output the Rotation
         gp_XYZ anAxis;
         double anAngle;
         if (myTrsf.GetRotation(anAxis, anAngle))
         {
-          // output the Rotation
+
           Sprintf(buf,
                   "rotation    %.12g %.12g %.12g %.9g",
                   anAxis.X(),

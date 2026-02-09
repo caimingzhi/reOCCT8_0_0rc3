@@ -11,7 +11,6 @@ class StepGeom_BoundaryCurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for BoundaryCurve
 class RWStepGeom_RWBoundaryCurve
 {
 public:

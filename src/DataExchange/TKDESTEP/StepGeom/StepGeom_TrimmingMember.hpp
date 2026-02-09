@@ -5,8 +5,6 @@
 
 #include <StepData_SelectReal.hpp>
 
-//! For immediate members of TrimmingSelect, i.e. :
-//! ParameterValue (a Real)
 class StepGeom_TrimmingMember : public StepData_SelectReal
 {
 

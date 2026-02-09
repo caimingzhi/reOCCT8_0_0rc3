@@ -15,7 +15,6 @@ class StepVisual_PresentationLayerAssignment : public Standard_Transient
 {
 
 public:
-  //! Returns a PresentationLayerAssignment
   Standard_EXPORT StepVisual_PresentationLayerAssignment();
 
   Standard_EXPORT void Init(

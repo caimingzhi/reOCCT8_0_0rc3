@@ -9,7 +9,6 @@
 #include <Geom_Plane.hpp>
 #include <Geom_CylindricalSurface.hpp>
 
-// #include <BRepFeat_LocalOperation.hxx>
 #include <BRepFeat_MakeCylindricalHole.hpp>
 #include <BRepFeat_SplitShape.hpp>
 #include <BRepFeat_Gluer.hpp>
@@ -90,7 +89,6 @@ static BRepFeat_MakeRevolutionForm& getRevolutionForm()
   return theRF;
 }
 
-// Input shapes for Prism, DPrism, Revol, Pipe
 static TopoDS_Shape theSbase, thePbase;
 static TopoDS_Face  theSkface;
 
@@ -155,18 +153,13 @@ static int Loc(Draw_Interpretor& theCommands, int narg, const char** a)
   {
     TopoDS_Shape aLocalShape(DBRep::Get(a[i + 5], TopAbs_FACE));
     LF.Append(aLocalShape);
-    //    LF.Append(TopoDS::Face(DBRep::Get(a[i+5],TopAbs_FACE)));
   }
 
-  // BRepFeat_LocalOperation BLoc(S);
-  // BLoc.Perform(T,LF,Fuse);
-  // BLoc.BuildPartsOfTool();
   NCollection_List<TopoDS_Shape> parts;
   BRepFeat_Builder               BLoc;
   BLoc.Init(S, T);
   BLoc.SetOperation(Fuse);
-  // BRepFeat_LocalOperation BLoc;
-  // BLoc.Init(S,T,Fuse);
+
   BLoc.Perform();
   BLoc.PartsOfTool(parts);
 
@@ -192,13 +185,13 @@ static int Loc(Draw_Interpretor& theCommands, int narg, const char** a)
     do {
       TopoDS_Shape aLocalShape(DBRep::Get(".", TopAbs_SHELL));
       S = TopoDS::Shell(aLocalShape);
-      //      S = TopoDS::Shell(DBRep::Get(".",TopAbs_SHELL));
+      
       Draw::LastPick(qq, ww, ee, button);
       if (!S.IsNull()) {
 
         switch (button) {
         case 1:
-          //BLoc.RemovePart(S);
+          
           break;
         case 2:
           BLoc.KeepPart(S);
@@ -217,7 +210,7 @@ static int Loc(Draw_Interpretor& theCommands, int narg, const char** a)
   BLoc.PerformResult();
   if (!BLoc.HasErrors())
   {
-    //    dout.Clear();
+
     DBRep::Set(a[1], BLoc.Shape());
     dout.Flush();
     return 0;
@@ -253,7 +246,7 @@ static int HOLE1(Draw_Interpretor& theCommands, int narg, const char** a)
   getHole().Build();
   if (!getHole().HasErrors())
   {
-    //    dout.Clear();
+
     DBRep::Set(a[1], getHole().Shape());
     dout.Flush();
     return 0;
@@ -280,7 +273,7 @@ static int HOLE2(Draw_Interpretor& theCommands, int narg, const char** a)
   getHole().Build();
   if (!getHole().HasErrors())
   {
-    //    dout.Clear();
+
     DBRep::Set(a[1], getHole().Shape());
     dout.Flush();
     return 0;
@@ -306,7 +299,7 @@ static int HOLE3(Draw_Interpretor& theCommands, int narg, const char** a)
   getHole().Build();
   if (!getHole().HasErrors())
   {
-    //    dout.Clear();
+
     DBRep::Set(a[1], getHole().Shape());
     dout.Flush();
     return 0;
@@ -333,7 +326,7 @@ static int HOLE4(Draw_Interpretor& theCommands, int narg, const char** a)
   getHole().Build();
   if (!getHole().HasErrors())
   {
-    //    dout.Clear();
+
     DBRep::Set(a[1], getHole().Shape());
     dout.Flush();
     return 0;
@@ -360,10 +353,6 @@ static int CONTROL(Draw_Interpretor& theCommands, int narg, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : reportOffsetState
-// purpose  : Print state of offset operation by error code.
-//=======================================================================
 static void reportOffsetState(Draw_Interpretor& theCommands, const BRepOffset_Error theErrorCode)
 {
   switch (theErrorCode)
@@ -421,8 +410,6 @@ static void reportOffsetState(Draw_Interpretor& theCommands, const BRepOffset_Er
     }
   }
 }
-
-//=================================================================================================
 
 static int PRW(Draw_Interpretor& theCommands, int narg, const char** a)
 {
@@ -484,7 +471,7 @@ static int PRW(Draw_Interpretor& theCommands, int narg, const char** a)
 
   TopoDS_Shape aLocalShape(DBRep::Get(a[borne], TopAbs_FACE));
   TopoDS_Face  F = TopoDS::Face(aLocalShape);
-  //  TopoDS_Face F  = TopoDS::Face(DBRep::Get(a[borne],TopAbs_FACE));
+
   BRepFeat_SplitShape Spls(F);
   for (int i = borne + 1; i < narg; i++)
   {
@@ -493,7 +480,6 @@ static int PRW(Draw_Interpretor& theCommands, int narg, const char** a)
     {
       aLocalShape = DBRep::Get(a[i], TopAbs_WIRE);
       wir         = TopoDS::Wire(aLocalShape);
-      //      wir = TopoDS::Wire(DBRep::Get(a[i],TopAbs_WIRE));
     }
     else
     {
@@ -502,7 +488,7 @@ static int PRW(Draw_Interpretor& theCommands, int narg, const char** a)
       const char* Temp = a[i] + 1;
       aLocalShape      = DBRep::Get(Temp, TopAbs_WIRE);
       wir              = TopoDS::Wire(aLocalShape);
-      //      wir = TopoDS::Wire(DBRep::Get(Temp,TopAbs_WIRE));
+
       wir.Reverse();
     }
     Spls.Add(wir, F);
@@ -531,10 +517,6 @@ static int PRW(Draw_Interpretor& theCommands, int narg, const char** a)
     ToPrism = Sh;
   }
 
-  // Recherche des faces de glissement, si on n`a pas sketche sur une face
-  // du shape de depart
-
-  //  for (TopExp_Explorer exp(S,TopAbs_FACE);exp.More();exp.Next()) {
   TopExp_Explorer exp(S, TopAbs_FACE);
   for (; exp.More(); exp.Next())
   {
@@ -609,8 +591,7 @@ static int PRW(Draw_Interpretor& theCommands, int narg, const char** a)
     }
     else
     {
-      // il faudrait inverser V et appeler PerfomFromEnd...
-      // std::cout << "Not Implemented" << std::endl;
+
       theCommands << "Not Implemented\n";
     }
   }
@@ -624,8 +605,6 @@ static int PRW(Draw_Interpretor& theCommands, int narg, const char** a)
   dout.Flush();
   return 0;
 }
-
-//=================================================================================================
 
 static int PRF(Draw_Interpretor& theCommands, int narg, const char** a)
 {
@@ -690,7 +669,7 @@ static int PRF(Draw_Interpretor& theCommands, int narg, const char** a)
   {
     TopoDS_Shape aLocalShape(DBRep::Get(a[borne], TopAbs_FACE));
     TopoDS_Face  F = TopoDS::Face(aLocalShape);
-    //    TopoDS_Face F  = TopoDS::Face(DBRep::Get(a[borne],TopAbs_FACE));
+
     thePFace.Init(S, F, F, V, fuse, true);
     ToPrism = F;
   }
@@ -703,7 +682,7 @@ static int PRF(Draw_Interpretor& theCommands, int narg, const char** a)
     {
       TopoDS_Shape aLocalShape(DBRep::Get(a[i], TopAbs_FACE));
       TopoDS_Face  F = TopoDS::Face(aLocalShape);
-      //      TopoDS_Face F  = TopoDS::Face(DBRep::Get(a[i],TopAbs_FACE));
+
       if (!F.IsNull())
       {
         B.Add(She, F);
@@ -714,14 +693,10 @@ static int PRF(Draw_Interpretor& theCommands, int narg, const char** a)
     ToPrism = She;
   }
 
-  // Recherche des faces de glissement, on ne prisme pas une face
-  // du shape de depart
-
-  //  for (TopExp_Explorer exp(ToPrism,TopAbs_FACE);exp.More();exp.Next()) {
   TopExp_Explorer exp(ToPrism, TopAbs_FACE);
   for (; exp.More(); exp.Next())
   {
-    //    for (TopExp_Explorer exp2(S,TopAbs_FACE);exp2.More();exp2.Next()) {
+
     TopExp_Explorer exp2(S, TopAbs_FACE);
     for (; exp2.More(); exp2.Next())
     {
@@ -800,9 +775,8 @@ static int PRF(Draw_Interpretor& theCommands, int narg, const char** a)
       }
     }
     else
-    { // FUntil.IsNull()
-      // il faudrait inverser V et appeler PerfomFromEnd...
-      // std::cout << "Not Implemented" << std::endl;
+    {
+
       theCommands << "Not Implemented\n";
     }
   }
@@ -816,8 +790,6 @@ static int PRF(Draw_Interpretor& theCommands, int narg, const char** a)
   dout.Flush();
   return 0;
 }
-
-//=================================================================================================
 
 static int SPLS(Draw_Interpretor&, int narg, const char** a)
 {
@@ -893,7 +865,6 @@ static int SPLS(Draw_Interpretor&, int narg, const char** a)
     }
     if (!isSplittingEdges && !EF.IsNull() && EF.ShapeType() == TopAbs_FACE)
     {
-      // face wire/edge ...
 
       while (i < newnarg)
       {
@@ -915,7 +886,7 @@ static int SPLS(Draw_Interpretor&, int narg, const char** a)
         }
         if (W.IsNull())
         {
-          return 1; // on n`a rien recupere
+          return 1;
         }
         TopAbs_ShapeEnum wtyp = W.ShapeType();
         if (wtyp != TopAbs_WIRE && wtyp != TopAbs_EDGE && wtyp != TopAbs_COMPOUND && pick)
@@ -980,20 +951,19 @@ static int SPLS(Draw_Interpretor&, int narg, const char** a)
   if (isSplittingEdges)
     Spls.Add(aSplitEdges);
 
-  // ici, i vaut newnarg
   for (; i < narg; i += 2)
   {
     TopoDS_Shape Ew, Es;
     TopoDS_Shape aLocalShape(DBRep::Get(a[i], TopAbs_EDGE));
     Es = TopoDS::Edge(aLocalShape);
-    //    Es = TopoDS::Edge(DBRep::Get(a[i],TopAbs_EDGE));
+
     if (Es.IsNull())
     {
       return 1;
     }
     aLocalShape = DBRep::Get(a[i + 1], TopAbs_EDGE);
     Ew          = TopoDS::Edge(aLocalShape);
-    //    Ew = TopoDS::Edge(DBRep::Get(a[i+1],TopAbs_EDGE));
+
     if (Ew.IsNull())
     {
       Message::SendFail() << "Invalid input shape " << a[i + 1];
@@ -1005,8 +975,6 @@ static int SPLS(Draw_Interpretor&, int narg, const char** a)
   DBRep::Set(a[1], Spls);
   return 0;
 }
-
-//=================================================================================================
 
 int thickshell(Draw_Interpretor& theCommands, int n, const char** a)
 {
@@ -1027,7 +995,7 @@ int thickshell(Draw_Interpretor& theCommands, int n, const char** a)
       JT = GeomAbs_Tangent;
   }
 
-  bool   Inter = false; // true;
+  bool   Inter = false;
   double Tol   = Precision::Confusion();
   if (n > 5)
     Tol = Draw::Atof(a[5]);
@@ -1048,8 +1016,6 @@ int thickshell(Draw_Interpretor& theCommands, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int mkoffsetshape(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -1121,8 +1087,6 @@ static int mkoffsetshape(Draw_Interpretor& theDI, int theArgNb, const char** the
   return 0;
 }
 
-//=================================================================================================
-
 int offsetshape(Draw_Interpretor& theCommands, int n, const char** a)
 {
   if (n < 4)
@@ -1153,9 +1117,7 @@ int offsetshape(Draw_Interpretor& theCommands, int n, const char** a)
     }
   }
   B.Initialize(S, Of, Tol, BRepOffset_Skin, Inter, false, JT);
-  //------------------------------------------
-  // recuperation et chargement des bouchons.
-  //----------------------------------------
+
   bool YaBouchon = false;
 
   for (int i = IB; i < n; i++)
@@ -1222,7 +1184,7 @@ int offsetparameter(Draw_Interpretor& di, int n, const char** a)
       default:
         break;
     }
-    //
+
     di << "\n   --> Internal Edges : ";
     if (RemoveIntEdges)
     {
@@ -1233,29 +1195,27 @@ int offsetparameter(Draw_Interpretor& di, int n, const char** a)
       di << "Keep";
     }
     di << "\n";
-    //
+
     return 0;
   }
 
   if (n < 4)
     return 1;
-  //
+
   TheTolerance = Draw::Atof(a[1]);
   TheInter     = strcmp(a[2], "p") != 0;
-  //
+
   if (!strcmp(a[3], "a"))
     TheJoin = GeomAbs_Arc;
   else if (!strcmp(a[3], "i"))
     TheJoin = GeomAbs_Intersection;
   else if (!strcmp(a[3], "t"))
     TheJoin = GeomAbs_Tangent;
-  //
+
   RemoveIntEdges = (n >= 5) ? !strcmp(a[4], "r") : false;
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 int offsetload(Draw_Interpretor&, int n, const char** a)
 {
@@ -1267,7 +1227,6 @@ int offsetload(Draw_Interpretor&, int n, const char** a)
 
   double Of = Draw::Atof(a[2]);
   TheRadius = Of;
-  //  bool Inter = true;
 
   TheOffset.Initialize(S,
                        Of,
@@ -1278,9 +1237,7 @@ int offsetload(Draw_Interpretor&, int n, const char** a)
                        TheJoin,
                        false,
                        RemoveIntEdges);
-  //------------------------------------------
-  // recuperation et chargement des bouchons.
-  //----------------------------------------
+
   for (int i = 3; i < n; i++)
   {
     TopoDS_Shape SF = DBRep::Get(a[i], TopAbs_FACE);
@@ -1293,8 +1250,6 @@ int offsetload(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 int offsetonface(Draw_Interpretor&, int n, const char** a)
 {
@@ -1313,8 +1268,6 @@ int offsetonface(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 int offsetperform(Draw_Interpretor& theCommands, int theNArg, const char** a)
 {
@@ -1337,7 +1290,6 @@ int offsetperform(Draw_Interpretor& theCommands, int theNArg, const char** a)
     reportOffsetState(theCommands, aRetCode);
   }
 
-  // Store the history of Boolean operation into the session
   if (BRepTest_Objects::IsHistoryNeeded())
   {
     NCollection_List<TopoDS_Shape> aLA;
@@ -1347,8 +1299,6 @@ int offsetperform(Draw_Interpretor& theCommands, int theNArg, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int ROW(Draw_Interpretor& theCommands, int narg, const char** a)
 {
@@ -1409,7 +1359,7 @@ static int ROW(Draw_Interpretor& theCommands, int narg, const char** a)
 
   TopoDS_Shape aLocalShape(DBRep::Get(a[borne], TopAbs_FACE));
   TopoDS_Face  F = TopoDS::Face(aLocalShape);
-  //  TopoDS_Face F  = TopoDS::Face(DBRep::Get(a[borne],TopAbs_FACE));
+
   BRepFeat_SplitShape Spls(F);
   for (i = borne + 1; i < narg; i++)
   {
@@ -1418,7 +1368,6 @@ static int ROW(Draw_Interpretor& theCommands, int narg, const char** a)
     {
       aLocalShape = DBRep::Get(a[i], TopAbs_WIRE);
       wir         = TopoDS::Wire(aLocalShape);
-      //      wir = TopoDS::Wire(DBRep::Get(a[i],TopAbs_WIRE));
     }
     else
     {
@@ -1427,7 +1376,7 @@ static int ROW(Draw_Interpretor& theCommands, int narg, const char** a)
       const char* Temp = a[i] + 1;
       aLocalShape      = DBRep::Get(Temp, TopAbs_WIRE);
       wir              = TopoDS::Wire(aLocalShape);
-      //      wir = TopoDS::Wire(DBRep::Get(Temp,TopAbs_WIRE));
+
       wir.Reverse();
     }
     Spls.Add(wir, F);
@@ -1456,8 +1405,6 @@ static int ROW(Draw_Interpretor& theCommands, int narg, const char** a)
     ToRotate = Sh;
   }
 
-  // Recherche des faces de glissement
-  //  for (TopExp_Explorer exp(S,TopAbs_FACE);exp.More();exp.Next()) {
   TopExp_Explorer exp(S, TopAbs_FACE);
   for (; exp.More(); exp.Next())
   {
@@ -1517,7 +1464,7 @@ static int ROW(Draw_Interpretor& theCommands, int narg, const char** a)
     }
   }
   else
-  { // borne == 12
+  {
     theRFace.Perform(FFrom, FUntil);
   }
 
@@ -1531,8 +1478,6 @@ static int ROW(Draw_Interpretor& theCommands, int narg, const char** a)
   dout.Flush();
   return 0;
 }
-
-//=================================================================================================
 
 static int ROF(Draw_Interpretor& theCommands, int narg, const char** a)
 {
@@ -1596,7 +1541,7 @@ static int ROF(Draw_Interpretor& theCommands, int narg, const char** a)
   {
     TopoDS_Shape aLocalShape(DBRep::Get(a[borne], TopAbs_FACE));
     TopoDS_Face  F = TopoDS::Face(aLocalShape);
-    //    TopoDS_Face F  = TopoDS::Face(DBRep::Get(a[borne],TopAbs_FACE));
+
     theRFace.Init(S, F, F, theAxis, fuse, true);
     ToRotate = F;
   }
@@ -1610,7 +1555,7 @@ static int ROF(Draw_Interpretor& theCommands, int narg, const char** a)
     {
       TopoDS_Shape aLocalShape(DBRep::Get(a[i], TopAbs_FACE));
       TopoDS_Face  F = TopoDS::Face(aLocalShape);
-      //      TopoDS_Face F  = TopoDS::Face(DBRep::Get(a[i],TopAbs_FACE));
+
       if (!F.IsNull())
       {
         B.Add(She, F);
@@ -1621,11 +1566,10 @@ static int ROF(Draw_Interpretor& theCommands, int narg, const char** a)
     ToRotate = She;
   }
 
-  //  for (TopExp_Explorer exp(ToRotate,TopAbs_FACE);exp.More();exp.Next()) {
   TopExp_Explorer exp(ToRotate, TopAbs_FACE);
   for (; exp.More(); exp.Next())
   {
-    //    for (TopExp_Explorer exp2(S,TopAbs_FACE);exp2.More();exp2.Next()) {
+
     TopExp_Explorer exp2(S, TopAbs_FACE);
     for (; exp2.More(); exp2.Next())
     {
@@ -1690,7 +1634,7 @@ static int ROF(Draw_Interpretor& theCommands, int narg, const char** a)
     }
   }
   else
-  { // borne == 12
+  {
     theRFace.Perform(FFrom, FUntil);
   }
 
@@ -1704,8 +1648,6 @@ static int ROF(Draw_Interpretor& theCommands, int narg, const char** a)
   dout.Flush();
   return 0;
 }
-
-//=================================================================================================
 
 static int GLU(Draw_Interpretor&, int narg, const char** a)
 {
@@ -1831,7 +1773,7 @@ static int DEFIN(Draw_Interpretor& theCommands, int narg, const char** a)
     }
     TopoDS_Shape aLocalShape(DBRep::Get(a[3], TopAbs_FACE));
     Skface = TopoDS::Face(aLocalShape);
-    //    Skface = TopoDS::Face(DBRep::Get(a[3],TopAbs_FACE));
+
     if (Skface.IsNull())
     {
       theCommands << "null face of Sketch";
@@ -1842,7 +1784,7 @@ static int DEFIN(Draw_Interpretor& theCommands, int narg, const char** a)
   {
     TopoDS_Shape aLocalShape(DBRep::Get(a[2], TopAbs_WIRE));
     W = TopoDS::Wire(aLocalShape);
-    //    W = TopoDS::Wire(DBRep::Get(a[2], TopAbs_WIRE));
+
     if (W.IsNull())
     {
       theCommands << "null profile for rib or slot";
@@ -1858,14 +1800,14 @@ static int DEFIN(Draw_Interpretor& theCommands, int narg, const char** a)
   }
   if (narg == 9 || narg == 12 || narg == 14)
   {
-    //    double X,Y,Z,X1,Y1,Z1;
+
     double X, Y, Z;
     X = Draw::Atof(a[4]);
     Y = Draw::Atof(a[5]);
     Z = Draw::Atof(a[6]);
 
     if (narg == 9)
-    { // prism
+    {
       prdef     = true;
       theSbase  = Sbase;
       thePbase  = Pbase;
@@ -1886,7 +1828,7 @@ static int DEFIN(Draw_Interpretor& theCommands, int narg, const char** a)
       if (!getRevolutionForm().IsDone())
       {
         se = getRevolutionForm().CurrentStatusError();
-        // BRepFeat::Print(se,std::cout) << std::endl;
+
         Standard_SStream aSStream;
         BRepFeat::Print(se, aSStream);
         theCommands << aSStream << "\n";
@@ -1916,7 +1858,7 @@ static int DEFIN(Draw_Interpretor& theCommands, int narg, const char** a)
       if (!getLienarForm().IsDone())
       {
         se = getLienarForm().CurrentStatusError();
-        // BRepFeat::Print(se,std::cout) << std::endl;
+
         Standard_SStream aSStream;
         BRepFeat::Print(se, aSStream);
         theCommands << aSStream << "\n";
@@ -1941,10 +1883,10 @@ static int DEFIN(Draw_Interpretor& theCommands, int narg, const char** a)
       getDPrism().Init(Sbase, TopoDS::Face(Pbase), Skface, Angle, Fuse, Modify);
     }
     else
-    { // FEATPIPE
+    {
       TopoDS_Shape aLocalShape(DBRep::Get(a[4], TopAbs_WIRE));
       TopoDS_Wire  Spine = TopoDS::Wire(aLocalShape);
-      //      TopoDS_Wire Spine = TopoDS::Wire(DBRep::Get(a[4],TopAbs_WIRE));
+
       if (Spine.IsNull())
       {
         TopoDS_Shape Edspine = DBRep::Get(a[4], TopAbs_EDGE);
@@ -1984,14 +1926,14 @@ static int ADD(Draw_Interpretor&, int narg, const char** a)
     {
       TopoDS_Shape aLocalShape(DBRep::Get(a[i], TopAbs_EDGE));
       TopoDS_Edge  edg = TopoDS::Edge(aLocalShape);
-      //      TopoDS_Edge edg = TopoDS::Edge(DBRep::Get(a[i],TopAbs_EDGE));
+
       if (edg.IsNull())
       {
         return 1;
       }
       aLocalShape     = DBRep::Get(a[i + 1], TopAbs_FACE);
       TopoDS_Face fac = TopoDS::Face(aLocalShape);
-      //      TopoDS_Face fac = TopoDS::Face(DBRep::Get(a[i+1],TopAbs_FACE));
+
       if (fac.IsNull())
       {
         return 1;
@@ -2009,14 +1951,14 @@ static int ADD(Draw_Interpretor&, int narg, const char** a)
     {
       TopoDS_Shape aLocalShape(DBRep::Get(a[i], TopAbs_EDGE));
       TopoDS_Edge  edg = TopoDS::Edge(aLocalShape);
-      //      TopoDS_Edge edg = TopoDS::Edge(DBRep::Get(a[i],TopAbs_EDGE));
+
       if (edg.IsNull())
       {
         return 1;
       }
       aLocalShape     = DBRep::Get(a[i + 1], TopAbs_FACE);
       TopoDS_Face fac = TopoDS::Face(aLocalShape);
-      //      TopoDS_Face fac = TopoDS::Face(DBRep::Get(a[i+1],TopAbs_FACE));
+
       if (fac.IsNull())
       {
         return 1;
@@ -2034,14 +1976,14 @@ static int ADD(Draw_Interpretor&, int narg, const char** a)
     {
       TopoDS_Shape aLocalShape(DBRep::Get(a[i], TopAbs_EDGE));
       TopoDS_Edge  edg = TopoDS::Edge(aLocalShape);
-      //      TopoDS_Edge edg = TopoDS::Edge(DBRep::Get(a[i],TopAbs_EDGE));
+
       if (edg.IsNull())
       {
         return 1;
       }
       aLocalShape     = DBRep::Get(a[i + 1], TopAbs_FACE);
       TopoDS_Face fac = TopoDS::Face(aLocalShape);
-      //      TopoDS_Face fac = TopoDS::Face(DBRep::Get(a[i+1],TopAbs_FACE));
+
       if (fac.IsNull())
       {
         return 1;
@@ -2205,7 +2147,7 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
   else if (!strcasecmp(a[0], "FEATPERFORM"))
   {
     if (narg == 3)
-    { // Thru all
+    {
       switch (Kas)
       {
         case 1:
@@ -2232,7 +2174,7 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
       }
     }
     else if (narg == 4)
-    { // Until
+    {
       TopoDS_Shape Funtil = DBRep::Get(a[3], TopAbs_SHAPE);
       switch (Kas)
       {
@@ -2367,7 +2309,7 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
       if (!getPrism().IsDone())
       {
         se = getPrism().CurrentStatusError();
-        // BRepFeat::Print(se,std::cout) << std::endl;
+
         Standard_SStream aSStream;
         BRepFeat::Print(se, aSStream);
         theCommands << aSStream << "\n";
@@ -2375,7 +2317,7 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
       }
       DBRep::Set(a[2], getPrism());
       dout.Flush();
-      // History
+
       if (BRepTest_Objects::IsHistoryNeeded())
       {
         anArgs.Clear();
@@ -2389,13 +2331,13 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
       if (!getRevol().IsDone())
       {
         se = getRevol().CurrentStatusError();
-        // BRepFeat::Print(se,std::cout) << std::endl;
+
         Standard_SStream aSStream;
         BRepFeat::Print(se, aSStream);
         theCommands << aSStream << "\n";
         return 1;
       }
-      // History
+
       if (BRepTest_Objects::IsHistoryNeeded())
       {
         anArgs.Clear();
@@ -2411,13 +2353,13 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
       if (!getPipe().IsDone())
       {
         se = getPipe().CurrentStatusError();
-        // BRepFeat::Print(se,std::cout) << std::endl;
+
         Standard_SStream aSStream;
         BRepFeat::Print(se, aSStream);
         theCommands << aSStream << "\n";
         return 1;
       }
-      // History
+
       if (BRepTest_Objects::IsHistoryNeeded())
       {
         anArgs.Clear();
@@ -2433,13 +2375,13 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
       if (!getDPrism().IsDone())
       {
         se = getDPrism().CurrentStatusError();
-        // BRepFeat::Print(se,std::cout) << std::endl;
+
         Standard_SStream aSStream;
         BRepFeat::Print(se, aSStream);
         theCommands << aSStream << "\n";
         return 1;
       }
-      // History
+
       if (BRepTest_Objects::IsHistoryNeeded())
       {
         anArgs.Clear();
@@ -2455,7 +2397,7 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
       if (!getLienarForm().IsDone())
       {
         se = getLienarForm().CurrentStatusError();
-        // BRepFeat::Print(se,std::cout) << std::endl;
+
         Standard_SStream aSStream;
         BRepFeat::Print(se, aSStream);
         theCommands << aSStream << "\n";
@@ -2468,7 +2410,7 @@ static int PERF(Draw_Interpretor& theCommands, int narg, const char** a)
       if (!getRevolutionForm().IsDone())
       {
         se = getRevolutionForm().CurrentStatusError();
-        // BRepFeat::Print(se,std::cout) << std::endl;
+
         Standard_SStream aSStream;
         BRepFeat::Print(se, aSStream);
         theCommands << aSStream << "\n";
@@ -2570,7 +2512,6 @@ static int BOSS(Draw_Interpretor& theCommands, int narg, const char** a)
   if (Kas == 2 || Kas == 3)
   {
 
-    //    int nrad;
     TopoDS_Shape V;
     if (Kas == 2)
     {
@@ -2665,7 +2606,6 @@ static int BOSS(Draw_Interpretor& theCommands, int narg, const char** a)
     }
     dout.Flush();
 
-    // Save history for fillet
     if (BRepTest_Objects::IsHistoryNeeded())
     {
       NCollection_List<TopoDS_Shape> anArg;
@@ -2679,10 +2619,6 @@ static int BOSS(Draw_Interpretor& theCommands, int narg, const char** a)
   return 1;
 }
 
-//=============================================================================
-// function : ComputeSimpleOffset
-// purpose  : Computes simple offset.
-//=============================================================================
 static int ComputeSimpleOffset(Draw_Interpretor& theCommands, int narg, const char** a)
 {
   if (narg < 4)
@@ -2691,7 +2627,6 @@ static int ComputeSimpleOffset(Draw_Interpretor& theCommands, int narg, const ch
     return 1;
   }
 
-  // Input data.
   TopoDS_Shape aShape = DBRep::Get(a[2]);
   if (aShape.IsNull())
   {
@@ -2724,8 +2659,6 @@ static int ComputeSimpleOffset(Draw_Interpretor& theCommands, int narg, const ch
 
   return 0;
 }
-
-//=================================================================================================
 
 void BRepTest::FeatureCommands(Draw_Interpretor& theCommands)
 {

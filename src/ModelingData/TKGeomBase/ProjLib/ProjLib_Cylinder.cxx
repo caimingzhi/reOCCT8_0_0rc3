@@ -8,18 +8,12 @@
 #include <ProjLib_Cylinder.hpp>
 #include <Standard_NotImplemented.hpp>
 
-//=================================================================================================
-
 ProjLib_Cylinder::ProjLib_Cylinder() = default;
-
-//=================================================================================================
 
 ProjLib_Cylinder::ProjLib_Cylinder(const gp_Cylinder& Cyl)
 {
   Init(Cyl);
 }
-
-//=================================================================================================
 
 ProjLib_Cylinder::ProjLib_Cylinder(const gp_Cylinder& Cyl, const gp_Lin& L)
 {
@@ -27,23 +21,17 @@ ProjLib_Cylinder::ProjLib_Cylinder(const gp_Cylinder& Cyl, const gp_Lin& L)
   Project(L);
 }
 
-//=================================================================================================
-
 ProjLib_Cylinder::ProjLib_Cylinder(const gp_Cylinder& Cyl, const gp_Circ& C)
 {
   Init(Cyl);
   Project(C);
 }
 
-//=================================================================================================
-
 ProjLib_Cylinder::ProjLib_Cylinder(const gp_Cylinder& Cyl, const gp_Elips& E)
 {
   Init(Cyl);
   Project(E);
 }
-
-//=================================================================================================
 
 void ProjLib_Cylinder::Init(const gp_Cylinder& Cyl)
 {
@@ -52,12 +40,6 @@ void ProjLib_Cylinder::Init(const gp_Cylinder& Cyl)
   myIsPeriodic = false;
   isDone       = false;
 }
-
-//=======================================================================
-// function : EvalPnt2d / EvalDir2d
-// purpose  : returns the Projected Pnt / Dir in the parametrization range
-//           of myPlane.
-//=======================================================================
 
 static gp_Pnt2d EvalPnt2d(const gp_Pnt& P, const gp_Cylinder& Cy)
 {
@@ -78,12 +60,9 @@ static gp_Pnt2d EvalPnt2d(const gp_Pnt& P, const gp_Cylinder& Cy)
   return gp_Pnt2d(U, Z);
 }
 
-//=================================================================================================
-
 void ProjLib_Cylinder::Project(const gp_Lin& L)
 {
-  // Check the line is parallel to the axis of cylinder.
-  // In other cases, the projection is wrong.
+
   if (L.Direction().XYZ().CrossSquareMagnitude(myCylinder.Position().Direction().XYZ())
       > Precision::Angular() * Precision::Angular())
     return;
@@ -103,12 +82,9 @@ void ProjLib_Cylinder::Project(const gp_Lin& L)
   isDone = true;
 }
 
-//=================================================================================================
-
 void ProjLib_Cylinder::Project(const gp_Circ& C)
 {
-  // Check the circle's normal is parallel to the axis of cylinder.
-  // In other cases, the projection is wrong.
+
   const gp_Ax3& aCylPos  = myCylinder.Position();
   const gp_Ax2& aCircPos = C.Position();
   if (aCylPos.Direction().XYZ().CrossSquareMagnitude(aCircPos.Direction().XYZ())
@@ -135,14 +111,7 @@ void ProjLib_Cylinder::Project(const gp_Circ& C)
   isDone = true;
 }
 
-//=================================================================================================
-
-// void  ProjLib_Cylinder::Project(const gp_Elips& E)
-void ProjLib_Cylinder::Project(const gp_Elips&)
-{
-  // Pour de vastes raisons de periodicite mal gerees,
-  // la projection d`une ellipse sur un cylindre sera passee aux approx.
-}
+void ProjLib_Cylinder::Project(const gp_Elips&) {}
 
 void ProjLib_Cylinder::Project(const gp_Parab& P)
 {

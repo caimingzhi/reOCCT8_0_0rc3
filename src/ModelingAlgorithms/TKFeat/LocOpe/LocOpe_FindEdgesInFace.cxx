@@ -21,8 +21,6 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_Map.hpp>
 
-//=================================================================================================
-
 void LocOpe_FindEdgesInFace::Set(const TopoDS_Shape& Sh, const TopoDS_Face& F)
 {
   myShape = Sh;
@@ -53,7 +51,7 @@ void LocOpe_FindEdgesInFace::Set(const TopoDS_Shape& Sh, const TopoDS_Face& F)
 
   if (Ts != STANDARD_TYPE(Geom_Plane) && Ts != STANDARD_TYPE(Geom_CylindricalSurface))
   {
-    return; // pour le moment
+    return;
   }
 
   occ::handle<BRepAdaptor_Surface> HS = new BRepAdaptor_Surface(myFace);
@@ -76,7 +74,7 @@ void LocOpe_FindEdgesInFace::Set(const TopoDS_Shape& Sh, const TopoDS_Face& F)
       }
     }
     if (expf.More())
-    { // partage d`edge
+    {
       M.Add(edg);
       myList.Append(edg);
       continue;
@@ -92,7 +90,7 @@ void LocOpe_FindEdgesInFace::Set(const TopoDS_Shape& Sh, const TopoDS_Face& F)
     }
     if (Tc != STANDARD_TYPE(Geom_Line) && Tc != STANDARD_TYPE(Geom_Circle))
     {
-      continue; // pour le moment
+      continue;
     }
     if (Ts == STANDARD_TYPE(Geom_Plane))
     {
@@ -114,7 +112,7 @@ void LocOpe_FindEdgesInFace::Set(const TopoDS_Shape& Sh, const TopoDS_Face& F)
         }
       }
       else
-      { // Ts == STANDARD_TYPE(Geom_CylindricalSurface)
+      {
         if (cy.Axis().IsParallel(li.Position(), TolAng)
             && std::abs(li.Distance(cy.Location()) - cy.Radius()) < Tol)
         {
@@ -123,7 +121,7 @@ void LocOpe_FindEdgesInFace::Set(const TopoDS_Shape& Sh, const TopoDS_Face& F)
       }
     }
     else
-    { // Tt == STANDARD_TYPE(Geom_Circle)
+    {
       gp_Circ ci = occ::down_cast<Geom_Circle>(C)->Circ();
       if (Ts == STANDARD_TYPE(Geom_Plane))
       {
@@ -144,13 +142,13 @@ void LocOpe_FindEdgesInFace::Set(const TopoDS_Shape& Sh, const TopoDS_Face& F)
 
     if (ToAdd)
     {
-      // On classifie 3 points.
+
       gp_Pnt p[3];
       double U, V;
       p[0] = C->Value(f);
       p[1] = C->Value(l);
       p[2] = C->Value((f + l) / 2.);
-      //      for (int i=0; i<3; i++) {
+
       int i;
       for (i = 0; i < 3; i++)
       {

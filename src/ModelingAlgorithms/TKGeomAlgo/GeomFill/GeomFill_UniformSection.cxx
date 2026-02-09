@@ -35,9 +35,6 @@ GeomFill_UniformSection::GeomFill_UniformSection(const occ::handle<Geom_Curve>& 
   }
 }
 
-//=======================================================
-// Purpose :D0
-//=======================================================
 bool GeomFill_UniformSection::D0(const double,
                                  NCollection_Array1<gp_Pnt>& Poles,
                                  NCollection_Array1<double>& Weights)
@@ -48,9 +45,6 @@ bool GeomFill_UniformSection::D0(const double,
   return true;
 }
 
-//=======================================================
-// Purpose :D1
-//=======================================================
 bool GeomFill_UniformSection::D1(const double,
                                  NCollection_Array1<gp_Pnt>& Poles,
                                  NCollection_Array1<gp_Vec>& DPoles,
@@ -66,9 +60,6 @@ bool GeomFill_UniformSection::D1(const double,
   return true;
 }
 
-//=======================================================
-// Purpose :D2
-//=======================================================
 bool GeomFill_UniformSection::D2(const double,
                                  NCollection_Array1<gp_Pnt>& Poles,
                                  NCollection_Array1<gp_Vec>& DPoles,
@@ -88,9 +79,6 @@ bool GeomFill_UniformSection::D2(const double,
   return true;
 }
 
-//=======================================================
-// Purpose :BSplineSurface()
-//=======================================================
 occ::handle<Geom_BSplineSurface> GeomFill_UniformSection::BSplineSurface() const
 {
   int                        ii, NbPoles = myCurve->NbPoles();
@@ -122,9 +110,6 @@ occ::handle<Geom_BSplineSurface> GeomFill_UniformSection::BSplineSurface() const
   return BS;
 }
 
-//=======================================================
-// Purpose :SectionShape
-//=======================================================
 void GeomFill_UniformSection::SectionShape(int& NbPoles, int& NbKnots, int& Degree) const
 {
   NbPoles = myCurve->NbPoles();
@@ -137,90 +122,56 @@ void GeomFill_UniformSection::Knots(NCollection_Array1<double>& TKnots) const
   myCurve->Knots(TKnots);
 }
 
-//=======================================================
-// Purpose :Mults
-//=======================================================
 void GeomFill_UniformSection::Mults(NCollection_Array1<int>& TMults) const
 {
   myCurve->Multiplicities(TMults);
 }
 
-//=======================================================
-// Purpose :IsRational
-//=======================================================
 bool GeomFill_UniformSection::IsRational() const
 {
   return myCurve->IsRational();
 }
 
-//=======================================================
-// Purpose :IsUPeriodic
-//=======================================================
 bool GeomFill_UniformSection::IsUPeriodic() const
 {
   return myCurve->IsPeriodic();
 }
 
-//=======================================================
-// Purpose :IsVPeriodic
-//=======================================================
 bool GeomFill_UniformSection::IsVPeriodic() const
 {
   return true;
 }
 
-//=======================================================
-// Purpose :NbIntervals
-//=======================================================
-// int GeomFill_UniformSection::NbIntervals(const GeomAbs_Shape S) const
 int GeomFill_UniformSection::NbIntervals(const GeomAbs_Shape) const
 {
   return 1;
 }
 
-//=======================================================
-// Purpose :Intervals
-//=======================================================
 void GeomFill_UniformSection::Intervals(NCollection_Array1<double>& T,
-                                        //					 const GeomAbs_Shape S) const
+
                                         const GeomAbs_Shape) const
 {
   T(T.Lower()) = First;
   T(T.Upper()) = Last;
 }
 
-//=======================================================
-// Purpose : SetInterval
-//=======================================================
-void GeomFill_UniformSection::SetInterval(const double, const double)
-{
-  // Ne fait Rien
-}
+void GeomFill_UniformSection::SetInterval(const double, const double) {}
 
-//=======================================================
-// Purpose : GetInterval
-//=======================================================
 void GeomFill_UniformSection::GetInterval(double& F, double& L) const
 {
   F = First;
   L = Last;
 }
 
-//=======================================================
-// Purpose : GetDomain
-//=======================================================
 void GeomFill_UniformSection::GetDomain(double& F, double& L) const
 {
   F = First;
   L = Last;
 }
 
-//=======================================================
-// Purpose : GetTolerance
-//=======================================================
 void GeomFill_UniformSection::GetTolerance(const double BoundTol,
                                            const double SurfTol,
-                                           //					    const double AngleTol,
+
                                            const double,
                                            NCollection_Array1<double>& Tol3d) const
 {
@@ -232,9 +183,6 @@ void GeomFill_UniformSection::GetTolerance(const double BoundTol,
   }
 }
 
-//=======================================================
-// Purpose :
-//=======================================================
 gp_Pnt GeomFill_UniformSection::BarycentreOfSurf() const
 {
   double U = mySection->FirstParameter(), Delta;

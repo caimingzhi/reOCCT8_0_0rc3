@@ -44,14 +44,10 @@ inline occ::handle<StepRepr_NextAssemblyUsageOccurrence> STEPSelections_Assembly
   return myNAUO;
 }
 
-//=================================================================================================
-
 inline occ::handle<Standard_Transient> STEPSelections_AssemblyLink::GetItem() const
 {
   return myItem;
 }
-
-//=================================================================================================
 
 inline occ::handle<STEPSelections_AssemblyComponent> STEPSelections_AssemblyLink::GetComponent()
   const
@@ -59,22 +55,16 @@ inline occ::handle<STEPSelections_AssemblyComponent> STEPSelections_AssemblyLink
   return myComponent;
 }
 
-//=================================================================================================
-
 inline void STEPSelections_AssemblyLink::SetNAUO(
   const occ::handle<StepRepr_NextAssemblyUsageOccurrence>& nauo)
 {
   myNAUO = nauo;
 }
 
-//=================================================================================================
-
 inline void STEPSelections_AssemblyLink::SetItem(const occ::handle<Standard_Transient>& item)
 {
   myItem = item;
 }
-
-//=================================================================================================
 
 inline void STEPSelections_AssemblyLink::SetComponent(
   const occ::handle<STEPSelections_AssemblyComponent>& part)

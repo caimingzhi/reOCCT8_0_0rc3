@@ -6,8 +6,6 @@
 
 OpenGl_StencilTest::OpenGl_StencilTest() = default;
 
-//=================================================================================================
-
 void OpenGl_StencilTest::Render(const occ::handle<OpenGl_Workspace>& theWorkspace) const
 {
   const occ::handle<OpenGl_Context>& aCtx = theWorkspace->GetGlContext();
@@ -22,22 +20,14 @@ void OpenGl_StencilTest::Render(const occ::handle<OpenGl_Workspace>& theWorkspac
   }
 }
 
-//=================================================================================================
-
 void OpenGl_StencilTest::Release(OpenGl_Context*) {}
-
-//=================================================================================================
 
 void OpenGl_StencilTest::SetOptions(const bool theIsEnabled)
 {
   myIsEnabled = theIsEnabled;
 }
 
-//=================================================================================================
-
 OpenGl_StencilTest::~OpenGl_StencilTest() = default;
-
-//=================================================================================================
 
 void OpenGl_StencilTest::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

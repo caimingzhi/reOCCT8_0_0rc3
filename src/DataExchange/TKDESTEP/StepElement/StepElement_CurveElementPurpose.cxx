@@ -4,18 +4,12 @@
 #include <StepElement_CurveElementPurposeMember.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=================================================================================================
-
 StepElement_CurveElementPurpose::StepElement_CurveElementPurpose() = default;
 
-//=================================================================================================
-
-int StepElement_CurveElementPurpose::CaseNum(const occ::handle<Standard_Transient>& /*ent*/) const
+int StepElement_CurveElementPurpose::CaseNum(const occ::handle<Standard_Transient>&) const
 {
   return 0;
 }
-
-//=================================================================================================
 
 int StepElement_CurveElementPurpose::CaseMem(const occ::handle<StepData_SelectMember>& ent) const
 {
@@ -29,14 +23,10 @@ int StepElement_CurveElementPurpose::CaseMem(const occ::handle<StepData_SelectMe
     return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepData_SelectMember> StepElement_CurveElementPurpose::NewMember() const
 {
   return new StepElement_CurveElementPurposeMember;
 }
-
-//=================================================================================================
 
 void StepElement_CurveElementPurpose::SetEnumeratedCurveElementPurpose(
   const StepElement_EnumeratedCurveElementPurpose val)
@@ -50,8 +40,6 @@ void StepElement_CurveElementPurpose::SetEnumeratedCurveElementPurpose(
   SelMem->SetName(name->ToCString());
   SelMem->SetEnum((int)val);
 }
-
-//=================================================================================================
 
 StepElement_EnumeratedCurveElementPurpose StepElement_CurveElementPurpose::
   EnumeratedCurveElementPurpose() const
@@ -98,8 +86,6 @@ StepElement_EnumeratedCurveElementPurpose StepElement_CurveElementPurpose::
   return val;
 }
 
-//=================================================================================================
-
 void StepElement_CurveElementPurpose::SetApplicationDefinedElementPurpose(
   const occ::handle<TCollection_HAsciiString>& val)
 {
@@ -112,8 +98,6 @@ void StepElement_CurveElementPurpose::SetApplicationDefinedElementPurpose(
   SelMem->SetName(name->ToCString());
   SelMem->SetString(val->ToCString());
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> StepElement_CurveElementPurpose::
   ApplicationDefinedElementPurpose() const

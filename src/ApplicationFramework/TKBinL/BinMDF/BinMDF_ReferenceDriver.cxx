@@ -7,24 +7,15 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDF_ReferenceDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDF_ReferenceDriver::BinMDF_ReferenceDriver(const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDF_Reference)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDF_ReferenceDriver::NewEmpty() const
 {
   return new TDF_Reference();
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 
 bool BinMDF_ReferenceDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                    const occ::handle<TDF_Attribute>& theTarget,
@@ -32,19 +23,13 @@ bool BinMDF_ReferenceDriver::Paste(const BinObjMgt_Persistent&       theSource,
 {
   occ::handle<TDF_Reference> aRef = occ::down_cast<TDF_Reference>(theTarget);
 
-  TDF_Label tLab; // Null label.
+  TDF_Label tLab;
   if (!theSource.GetLabel(aRef->Label().Data(), tLab))
     return false;
 
-  // set referenced label
   aRef->Set(tLab);
   return true;
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 
 void BinMDF_ReferenceDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                    BinObjMgt_Persistent&             theTarget,
@@ -58,7 +43,7 @@ void BinMDF_ReferenceDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
     if (!lab.IsNull() && !refLab.IsNull())
     {
       if (lab.IsDescendant(refLab.Root()))
-      { // Internal reference
+      {
         theTarget << refLab;
       }
     }

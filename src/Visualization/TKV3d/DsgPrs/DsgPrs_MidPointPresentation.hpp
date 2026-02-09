@@ -16,8 +16,6 @@ class DsgPrs_MidPointPresentation
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! draws the representation of a MidPoint between
-  //! two vertices.
   Standard_EXPORT static void Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                   const occ::handle<Prs3d_Drawer>&       aDrawer,
                                   const gp_Ax2&                          theAxe,
@@ -26,8 +24,6 @@ public:
                                   const gp_Pnt&                          AttachPoint,
                                   const bool                             first);
 
-  //! draws the representation of a MidPoint between
-  //! two lines or linear segments.
   Standard_EXPORT static void Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                   const occ::handle<Prs3d_Drawer>&       aDrawer,
                                   const gp_Ax2&                          theAxe,
@@ -38,8 +34,6 @@ public:
                                   const gp_Pnt&                          Point2,
                                   const bool                             first);
 
-  //! draws the representation of a MidPoint between
-  //! two entire circles or two circular arcs.
   Standard_EXPORT static void Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                   const occ::handle<Prs3d_Drawer>&       aDrawer,
                                   const gp_Circ&                         aCircle,
@@ -50,8 +44,6 @@ public:
                                   const gp_Pnt&                          Point2,
                                   const bool                             first);
 
-  //! draws the representation of a MidPoint between
-  //! two entire ellipses or two elliptic arcs.
   Standard_EXPORT static void Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                   const occ::handle<Prs3d_Drawer>&       aDrawer,
                                   const gp_Elips&                        anElips,

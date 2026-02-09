@@ -6,7 +6,6 @@
 
 #include <Standard_OStream.hpp>
 
-//! defines a PointSet node of VRML specifying geometry shapes.
 class Vrml_PointSet
 {
 public:

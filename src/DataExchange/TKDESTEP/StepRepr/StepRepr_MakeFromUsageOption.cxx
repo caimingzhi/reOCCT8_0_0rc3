@@ -5,12 +5,8 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_MakeFromUsageOption, StepRepr_ProductDefinitionUsage)
 
-//=================================================================================================
-
 StepRepr_MakeFromUsageOption::StepRepr_MakeFromUsageOption() = default;
 
-//=================================================================================================
-
 void StepRepr_MakeFromUsageOption::Init(
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Id,
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Name,
@@ -38,8 +34,6 @@ void StepRepr_MakeFromUsageOption::Init(
   theQuantity = aQuantity;
 }
 
-//=================================================================================================
-
 void StepRepr_MakeFromUsageOption::Init(
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Id,
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Name,
@@ -66,29 +60,21 @@ void StepRepr_MakeFromUsageOption::Init(
 
   theQuantity = aQuantity;
 }
-
-//=================================================================================================
 
 int StepRepr_MakeFromUsageOption::Ranking() const
 {
   return theRanking;
 }
 
-//=================================================================================================
-
 void StepRepr_MakeFromUsageOption::SetRanking(const int aRanking)
 {
   theRanking = aRanking;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepRepr_MakeFromUsageOption::RankingRationale() const
 {
   return theRankingRationale;
 }
-
-//=================================================================================================
 
 void StepRepr_MakeFromUsageOption::SetRankingRationale(
   const occ::handle<TCollection_HAsciiString>& aRankingRationale)
@@ -96,14 +82,10 @@ void StepRepr_MakeFromUsageOption::SetRankingRationale(
   theRankingRationale = aRankingRationale;
 }
 
-//=================================================================================================
-
 occ::handle<Standard_Transient> StepRepr_MakeFromUsageOption::Quantity() const
 {
   return theQuantity;
 }
-
-//=================================================================================================
 
 void StepRepr_MakeFromUsageOption::SetQuantity(const occ::handle<Standard_Transient>& aQuantity)
 {

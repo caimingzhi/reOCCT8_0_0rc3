@@ -16,8 +16,6 @@
 static Standard_GUID XmlLStorageDriver("13a56820-8269-11d5-aab2-0050044b1af1");
 static Standard_GUID XmlLRetrievalDriver("13a56822-8269-11d5-aab2-0050044b1af1");
 
-//=================================================================================================
-
 const occ::handle<Standard_Transient>& XmlLDrivers::Factory(const Standard_GUID& theGUID)
 {
   if (theGUID == XmlLStorageDriver)
@@ -25,8 +23,8 @@ const occ::handle<Standard_Transient>& XmlLDrivers::Factory(const Standard_GUID&
 #ifdef OCCT_DEBUG
     std::cout << "XmlLDrivers : Storage Plugin" << std::endl;
 #endif
-    static occ::handle<Standard_Transient> model_sd = new XmlLDrivers_DocumentStorageDriver(
-      "Copyright: Open Cascade, 2001-2002"); // default copyright
+    static occ::handle<Standard_Transient> model_sd =
+      new XmlLDrivers_DocumentStorageDriver("Copyright: Open Cascade, 2001-2002");
     return model_sd;
   }
 
@@ -43,8 +41,6 @@ const occ::handle<Standard_Transient>& XmlLDrivers::Factory(const Standard_GUID&
 }
 
 #define SLENGTH 80
-
-//=================================================================================================
 
 TCollection_AsciiString XmlLDrivers::CreationDate()
 {
@@ -71,8 +67,6 @@ TCollection_AsciiString XmlLDrivers::CreationDate()
   return nowstr;
 }
 
-//=================================================================================================
-
 void XmlLDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
 {
   theApp->DefineFormat("XmlLOcaf",
@@ -82,20 +76,17 @@ void XmlLDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
                        new XmlLDrivers_DocumentStorageDriver("Copyright: Open Cascade, 2001-2002"));
 }
 
-//=================================================================================================
-
 occ::handle<XmlMDF_ADriverTable> XmlLDrivers::AttributeDrivers(
   const occ::handle<Message_Messenger>& theMessageDriver)
 {
   occ::handle<XmlMDF_ADriverTable> aTable = new XmlMDF_ADriverTable();
-  //
+
   XmlMDF ::AddDrivers(aTable, theMessageDriver);
   XmlMDataStd ::AddDrivers(aTable, theMessageDriver);
   XmlMFunction ::AddDrivers(aTable, theMessageDriver);
   XmlMDocStd ::AddDrivers(aTable, theMessageDriver);
-  //
+
   return aTable;
 }
 
-// Declare entry point PLUGINFACTORY
 PLUGIN(XmlLDrivers)

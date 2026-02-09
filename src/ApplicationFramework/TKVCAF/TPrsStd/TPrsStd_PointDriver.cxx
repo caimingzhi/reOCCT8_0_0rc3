@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <AIS_InteractiveContext.hpp>
 #include <AIS_InteractiveObject.hpp>
@@ -24,12 +13,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_PointDriver, TPrsStd_Driver)
 
-// #include <TDataStd_Datum.hxx>
-//=================================================================================================
-
 TPrsStd_PointDriver::TPrsStd_PointDriver() = default;
-
-//=================================================================================================
 
 bool TPrsStd_PointDriver::Update(const TDF_Label&                    aLabel,
                                  occ::handle<AIS_InteractiveObject>& anAISObject)
@@ -48,7 +32,6 @@ bool TPrsStd_PointDriver::Update(const TDF_Label&                    aLabel,
   }
   occ::handle<Geom_CartesianPoint> apt = new Geom_CartesianPoint(pnt);
 
-  //  Update de l'AIS
   occ::handle<AIS_Point> aistrihed;
   if (anAISObject.IsNull())
     aistrihed = new AIS_Point(apt);

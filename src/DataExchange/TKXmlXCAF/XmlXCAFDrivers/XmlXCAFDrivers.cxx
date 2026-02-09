@@ -17,8 +17,8 @@ const occ::handle<Standard_Transient>& XmlXCAFDrivers::Factory(const Standard_GU
 #ifdef OCCT_DEBUG
     std::cout << "XmlXCAFDrivers : Storage Plugin" << std::endl;
 #endif
-    static occ::handle<Standard_Transient> model_sd = new XmlXCAFDrivers_DocumentStorageDriver(
-      "Copyright: Open Cascade, 2001-2002"); // default copyright
+    static occ::handle<Standard_Transient> model_sd =
+      new XmlXCAFDrivers_DocumentStorageDriver("Copyright: Open Cascade, 2001-2002");
     return model_sd;
   }
   if (aGUID == XSRetrievalDriver)
@@ -32,8 +32,6 @@ const occ::handle<Standard_Transient>& XmlXCAFDrivers::Factory(const Standard_GU
 
   return XmlDrivers::Factory(aGUID);
 }
-
-//=================================================================================================
 
 void XmlXCAFDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
 {

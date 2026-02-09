@@ -188,8 +188,6 @@ void CDM_MetaData::UnsetIsReadOnly()
   myIsReadOnly = false;
 }
 
-//=================================================================================================
-
 void CDM_MetaData::DumpJson(Standard_OStream& theOStream, int) const
 {
   OCCT_DUMP_TRANSIENT_CLASS_BEGIN(theOStream)

@@ -18,7 +18,6 @@
 
 namespace PolyUtils = IntCurveSurface_PolyhedronUtils;
 
-//================================================================================
 static int NbPOnU(const occ::handle<Adaptor3d_Surface>& S)
 {
   const double u0   = S->FirstUParameter();
@@ -27,7 +26,6 @@ static int NbPOnU(const occ::handle<Adaptor3d_Surface>& S)
   return (nbpu > NBMAXUV ? NBMAXUV : nbpu);
 }
 
-//================================================================================
 static int NbPOnV(const occ::handle<Adaptor3d_Surface>& S)
 {
   const double v0   = S->FirstVParameter();
@@ -35,8 +33,6 @@ static int NbPOnV(const occ::handle<Adaptor3d_Surface>& S)
   const int    nbpv = IntPatch_HInterTool::NbSamplesV(S, v0, v1);
   return (nbpv > NBMAXUV ? NBMAXUV : nbpv);
 }
-
-//=================================================================================================
 
 void IntPatch_Polyhedron::Destroy()
 {
@@ -51,8 +47,6 @@ void IntPatch_Polyhedron::Destroy()
     delete[] CMyV;
   C_MyPnts = C_MyU = C_MyV = nullptr;
 }
-
-//=================================================================================================
 
 IntPatch_Polyhedron::IntPatch_Polyhedron(const occ::handle<Adaptor3d_Surface>& Surface)
     : TheDeflection(Epsilon(100.)),
@@ -79,7 +73,6 @@ IntPatch_Polyhedron::IntPatch_Polyhedron(const occ::handle<Adaptor3d_Surface>& S
   const double v0 = Surface->FirstVParameter();
   const double v1 = Surface->LastVParameter();
 
-  // Build UV parameter arrays
   NCollection_Array1<double> aUParams(0, nbdeltaU);
   NCollection_Array1<double> aVParams(0, nbdeltaV);
   const double               U1mU0sNbdeltaU = (u1 - u0) / (double)nbdeltaU;
@@ -94,12 +87,10 @@ IntPatch_Polyhedron::IntPatch_Polyhedron(const occ::handle<Adaptor3d_Surface>& S
     aVParams.SetValue(j, v0 + j * V1mV0sNbdeltaV);
   }
 
-  // Use grid evaluator for batch point evaluation
   GeomGridEval_Surface anEval;
   anEval.Initialize(*Surface);
   NCollection_Array2<gp_Pnt> aGridPnts = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Copy to internal arrays and build bounding box
   int Index = 1;
   for (int i1 = 0; i1 <= nbdeltaU; ++i1)
   {
@@ -113,15 +104,12 @@ IntPatch_Polyhedron::IntPatch_Polyhedron(const occ::handle<Adaptor3d_Surface>& S
     }
   }
 
-  // Compute max deflection using batch evaluation
   double tol = PolyUtils::ComputeMaxDeflection(anEval, *this, NbTriangles());
   tol *= DEFLECTION_COEFF;
 
   DeflectionOverEstimation(tol);
   FillBounding();
 }
-
-//=================================================================================================
 
 IntPatch_Polyhedron::IntPatch_Polyhedron(const occ::handle<Adaptor3d_Surface>& Surface,
                                          const int                             nbu,
@@ -150,7 +138,6 @@ IntPatch_Polyhedron::IntPatch_Polyhedron(const occ::handle<Adaptor3d_Surface>& S
   const double v0 = Surface->FirstVParameter();
   const double v1 = Surface->LastVParameter();
 
-  // Build UV parameter arrays
   NCollection_Array1<double> aUParams(0, nbdeltaU);
   NCollection_Array1<double> aVParams(0, nbdeltaV);
   const double               U1mU0sNbdeltaU = (u1 - u0) / (double)nbdeltaU;
@@ -165,12 +152,10 @@ IntPatch_Polyhedron::IntPatch_Polyhedron(const occ::handle<Adaptor3d_Surface>& S
     aVParams.SetValue(j, v0 + j * V1mV0sNbdeltaV);
   }
 
-  // Use grid evaluator for batch point evaluation
   GeomGridEval_Surface anEval;
   anEval.Initialize(*Surface);
   NCollection_Array2<gp_Pnt> aGridPnts = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Copy to internal arrays and build bounding box
   int Index = 1;
   for (int i1 = 0; i1 <= nbdeltaU; ++i1)
   {
@@ -184,7 +169,6 @@ IntPatch_Polyhedron::IntPatch_Polyhedron(const occ::handle<Adaptor3d_Surface>& S
     }
   }
 
-  // Compute max deflection using batch evaluation
   double tol = PolyUtils::ComputeMaxDeflection(anEval, *this, NbTriangles());
   tol *= DEFLECTION_COEFF;
 
@@ -192,15 +176,11 @@ IntPatch_Polyhedron::IntPatch_Polyhedron(const occ::handle<Adaptor3d_Surface>& S
   FillBounding();
 }
 
-//=================================================================================================
-
 void IntPatch_Polyhedron::Parameters(const int Index, double& U, double& V) const
 {
   U = ((double*)C_MyU)[Index];
   V = ((double*)C_MyV)[Index];
 }
-
-//=================================================================================================
 
 void IntPatch_Polyhedron::DeflectionOverEstimation(const double flec)
 {
@@ -216,21 +196,15 @@ void IntPatch_Polyhedron::DeflectionOverEstimation(const double flec)
   }
 }
 
-//=================================================================================================
-
 double IntPatch_Polyhedron::DeflectionOverEstimation() const
 {
   return TheDeflection;
 }
 
-//=================================================================================================
-
 const Bnd_Box& IntPatch_Polyhedron::Bounding() const
 {
   return TheBnd;
 }
-
-//=================================================================================================
 
 void IntPatch_Polyhedron::FillBounding()
 {
@@ -262,28 +236,20 @@ void IntPatch_Polyhedron::FillBounding()
   }
 }
 
-//=================================================================================================
-
 const occ::handle<NCollection_HArray1<Bnd_Box>>& IntPatch_Polyhedron::ComponentsBounding() const
 {
   return TheComponentsBnd;
 }
-
-//=================================================================================================
 
 int IntPatch_Polyhedron::NbTriangles() const
 {
   return nbdeltaU * nbdeltaV * 2;
 }
 
-//=================================================================================================
-
 int IntPatch_Polyhedron::NbPoints() const
 {
   return (nbdeltaU + 1) * (nbdeltaV + 1);
 }
-
-//=================================================================================================
 
 int IntPatch_Polyhedron::TriConnex(const int Triang,
                                    const int Pivot,
@@ -296,23 +262,21 @@ int IntPatch_Polyhedron::TriConnex(const int Triang,
   int nbdeltaVp1 = nbdeltaV + 1;
   int nbdeltaVm2 = nbdeltaV + nbdeltaV;
 
-  // Pivot position in the MaTriangle :
   int ligP = Pivotm1 / nbdeltaVp1;
   int colP = Pivotm1 - ligP * nbdeltaVp1;
 
-  // Point sur Edge position in the MaTriangle and edge typ :
   int ligE = 0, colE = 0, typE = 0;
   if (Pedge != 0)
   {
     ligE = (Pedge - 1) / nbdeltaVp1;
     colE = (Pedge - 1) - (ligE * nbdeltaVp1);
-    // Horizontal
+
     if (ligP == ligE)
       typE = 1;
-    // Vertical
+
     else if (colP == colE)
       typE = 2;
-    // Oblique
+
     else
       typE = 3;
   }
@@ -321,7 +285,6 @@ int IntPatch_Polyhedron::TriConnex(const int Triang,
     typE = 0;
   }
 
-  // Triangle position General case :
   int linT = 0, colT = 0;
   int linO = 0, colO = 0;
   int t, tt;
@@ -357,58 +320,58 @@ int IntPatch_Polyhedron::TriConnex(const int Triang,
     }
     switch (typE)
     {
-      case 1: // Horizontal
+      case 1:
         if (linT == ligP)
         {
           linT++;
           linO = ligP + 1;
-          colO = (colP > colE) ? colP : colE; //--colO=Max(colP, colE);
+          colO = (colP > colE) ? colP : colE;
         }
         else
         {
           linT--;
           linO = ligP - 1;
-          colO = (colP < colE) ? colP : colE; //--colO=Min(colP, colE);
+          colO = (colP < colE) ? colP : colE;
         }
         break;
-      case 2: // Vertical
+      case 2:
         if (colT == (colP + colP))
         {
           colT++;
-          linO = (ligP > ligE) ? ligP : ligE; //--linO=Max(ligP, ligE);
+          linO = (ligP > ligE) ? ligP : ligE;
           colO = colP + 1;
         }
         else
         {
           colT--;
-          linO = (ligP < ligE) ? ligP : ligE; //--linO=Min(ligP, ligE);
+          linO = (ligP < ligE) ? ligP : ligE;
           colO = colP - 1;
         }
         break;
-      case 3: // Oblique
+      case 3:
         if ((colT & 1) == 0)
         {
           colT--;
-          linO = (ligP > ligE) ? ligP : ligE; //--linO=Max(ligP, ligE);
-          colO = (colP < colE) ? colP : colE; //--colO=Min(colP, colE);
+          linO = (ligP > ligE) ? ligP : ligE;
+          colO = (colP < colE) ? colP : colE;
         }
         else
         {
           colT++;
-          linO = (ligP < ligE) ? ligP : ligE; //--linO=Min(ligP, ligE);
-          colO = (colP > colE) ? colP : colE; //--colO=Max(colP, colE);
+          linO = (ligP < ligE) ? ligP : ligE;
+          colO = (colP > colE) ? colP : colE;
         }
         break;
     }
   }
   else
   {
-    // Unknown Triangle position :
+
     if (Pedge == 0)
     {
-      // Unknown edge :
-      linT = (1 > ligP) ? 1 : ligP;                   //--linT=Max(1, ligP);
-      colT = (1 > (colP + colP)) ? 1 : (colP + colP); //--colT=Max(1, colP+colP);
+
+      linT = (1 > ligP) ? 1 : ligP;
+      colT = (1 > (colP + colP)) ? 1 : (colP + colP);
       if (ligP == 0)
         linO = ligP + 1;
       else
@@ -417,27 +380,27 @@ int IntPatch_Polyhedron::TriConnex(const int Triang,
     }
     else
     {
-      // Known edge We take the left or down connectivity :
+
       switch (typE)
       {
-        case 1: // Horizontal
+        case 1:
           linT = ligP + 1;
-          colT = (colP > colE) ? colP : colE; //--colT=Max(colP,colE);
+          colT = (colP > colE) ? colP : colE;
           colT += colT;
           linO = ligP + 1;
-          colO = (colP > colE) ? colP : colE; //--colO=Max(colP,colE);
+          colO = (colP > colE) ? colP : colE;
           break;
-        case 2:                               // Vertical
-          linT = (ligP > ligE) ? ligP : ligE; //--linT=Max(ligP, ligE);
+        case 2:
+          linT = (ligP > ligE) ? ligP : ligE;
           colT = colP + colP;
-          linO = (ligP < ligE) ? ligP : ligE; //--linO=Min(ligP, ligE);
+          linO = (ligP < ligE) ? ligP : ligE;
           colO = colP - 1;
           break;
-        case 3:                               // Oblique
-          linT = (ligP > ligE) ? ligP : ligE; //--linT=Max(ligP, ligE);
+        case 3:
+          linT = (ligP > ligE) ? ligP : ligE;
           colT = colP + colE;
-          linO = (ligP > ligE) ? ligP : ligE; //--linO=Max(ligP, ligE);
-          colO = (colP < colE) ? colP : colE; //--colO=Min(colP, colE);
+          linO = (ligP > ligE) ? ligP : ligE;
+          colO = (colP < colE) ? colP : colE;
           break;
       }
     }
@@ -513,15 +476,6 @@ int IntPatch_Polyhedron::TriConnex(const int Triang,
 
   OtherP = linO * nbdeltaVp1 + colO + 1;
 
-  //----------------------------------------------------
-  //-- Detection des cas ou le triangle retourne est
-  //-- invalide. Dans ce cas, on retourne le triangle
-  //-- suivant par un nouvel appel a TriConnex.
-  //--
-  //-- Si En entree : Point(Pivot)==Point(Pedge)
-  //-- Alors on retourne OtherP a 0
-  //-- et Tricon = Triangle
-  //--
   if (Point(Pivot).SquareDistance(Point(Pedge)) <= LONGUEUR_MINI_EDGE_TRIANGLE)
   {
     OtherP = 0;
@@ -537,16 +491,10 @@ int IntPatch_Polyhedron::TriConnex(const int Triang,
     std::cout << " Probleme ds IntCurveSurface_Polyhedron : OtherP et PEdge Confondus "
               << std::endl;
 #endif
-    return (0); //-- BUG NON CORRIGE ( a revoir le role de nbdeltaU et nbdeltaV)
-                //    int TempTri,TempOtherP;
-                //    TempTri = TriCon;
-                //    TempOtherP = OtherP;
-                //    return(TriConnex(TempTri,Pivot,TempOtherP,TriCon,OtherP));
+    return (0);
   }
   return TriCon;
 }
-
-//=================================================================================================
 
 void IntPatch_Polyhedron::PlaneEquation(const int Triang,
                                         gp_XYZ&   NormalVector,
@@ -592,8 +540,6 @@ void IntPatch_Polyhedron::PlaneEquation(const int Triang,
   }
 }
 
-//=================================================================================================
-
 bool IntPatch_Polyhedron::Contain(const int Triang, const gp_Pnt& ThePnt) const
 {
   int i1, i2, i3;
@@ -608,11 +554,7 @@ bool IntPatch_Polyhedron::Contain(const int Triang, const gp_Pnt& ThePnt) const
   return v1 * v2 >= 0. && v2 * v3 >= 0. && v3 * v1 >= 0.;
 }
 
-//=================================================================================================
-
 void IntPatch_Polyhedron::Dump() const {}
-
-//=================================================================================================
 
 void IntPatch_Polyhedron::Size(int& nbdu, int& nbdv) const
 {
@@ -620,30 +562,19 @@ void IntPatch_Polyhedron::Size(int& nbdu, int& nbdv) const
   nbdv = nbdeltaV;
 }
 
-//=================================================================================================
-
 void IntPatch_Polyhedron::Triangle(const int Index, int& P1, int& P2, int& P3) const
 {
   int line   = 1 + ((Index - 1) / (nbdeltaV * 2));
   int colon  = 1 + ((Index - 1) % (nbdeltaV * 2));
   int colpnt = (colon + 1) / 2;
 
-  // General formula = (line-1)*(nbdeltaV+1)+colpnt
-
-  //  Position of P1 = MesXYZ(line,colpnt);
   P1 = (line - 1) * (nbdeltaV + 1) + colpnt;
 
-  //  Position of P2= MesXYZ(line+1,colpnt+((colon-1)%2));
   P2 = line * (nbdeltaV + 1) + colpnt + ((colon - 1) % 2);
 
-  //  Position of P3= MesXYZ(line+(colon%2),colpnt+1);
   P3 = (line - 1 + (colon % 2)) * (nbdeltaV + 1) + colpnt + 1;
-  //-- printf("\nTriangle %4d    P1:%4d   P2:%4d   P3:%4d",Index,P1,P2,P3);
 }
 
-//=======================================================================
-// function : Point
-//=======================================================================
 const gp_Pnt& IntPatch_Polyhedron::Point(const int Index, double& U, double& V) const
 {
   gp_Pnt* CMyPnts = (gp_Pnt*)C_MyPnts;
@@ -654,34 +585,16 @@ const gp_Pnt& IntPatch_Polyhedron::Point(const int Index, double& U, double& V) 
   return CMyPnts[Index];
 }
 
-//=======================================================================
-// function : Point
-//=======================================================================
 const gp_Pnt& IntPatch_Polyhedron::Point(const int Index) const
 {
   gp_Pnt* CMyPnts = (gp_Pnt*)C_MyPnts;
   return CMyPnts[Index];
 }
 
-//=======================================================================
-// function : Point
-//=======================================================================
-void IntPatch_Polyhedron::Point(const gp_Pnt& /*p*/,
-                                const int /*lig*/,
-                                const int /*col*/,
-                                const double /*u*/,
-                                const double /*v*/)
-{
-  // printf("\n IntPatch_Polyhedron::Point : Ne dois pas etre appelle\n");
-}
+void IntPatch_Polyhedron::Point(const gp_Pnt&, const int, const int, const double, const double) {}
 
-//=======================================================================
-// function : Point
-//=======================================================================
 void IntPatch_Polyhedron::Point(const int Index, gp_Pnt& P) const
 {
   gp_Pnt* CMyPnts = (gp_Pnt*)C_MyPnts;
   P               = CMyPnts[Index];
 }
-
-//=======================================================================

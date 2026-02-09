@@ -3,8 +3,6 @@
 #include <vector>
 #include <NCollection_OccAllocator.hpp>
 
-// Defines a dynamic vector of work data.
-
 struct IntWalk_WalkingData
 {
   double ustart;

@@ -27,9 +27,7 @@ extern Draw_Viewer dout;
 Standard_IMPORT Draw_Viewer dout;
 #endif
 
-//=================================================================================================
-
-static int DDocStd_ListDocuments(Draw_Interpretor& di, int nb, const char** /*a*/)
+static int DDocStd_ListDocuments(Draw_Interpretor& di, int nb, const char**)
 {
   if (nb == 1)
   {
@@ -54,8 +52,6 @@ static int DDocStd_ListDocuments(Draw_Interpretor& di, int nb, const char** /*a*
   di << "DDocStd_ListDocuments : Error\n";
   return 1;
 }
-
-//=================================================================================================
 
 static int DDocStd_NewDocument(Draw_Interpretor& di, int nb, const char** a)
 {
@@ -95,8 +91,6 @@ static int DDocStd_NewDocument(Draw_Interpretor& di, int nb, const char** a)
   return 1;
 }
 
-//=================================================================================================
-
 static int DDocStd_Open(Draw_Interpretor& di, int nb, const char** a)
 {
   if (nb >= 3)
@@ -133,11 +127,11 @@ static int DDocStd_Open(Draw_Interpretor& di, int nb, const char** a)
       else if (anArg.StartsWith("-read"))
       {
         TCollection_AsciiString aValue = anArg.SubString(6, anArg.Length());
-        if (aValue.Value(1) == '0') // path
+        if (aValue.Value(1) == '0')
         {
           aFilter->AddPath(aValue);
         }
-        else // attribute to read
+        else
         {
           aFilter->AddRead(aValue);
         }
@@ -219,8 +213,6 @@ static int DDocStd_Open(Draw_Interpretor& di, int nb, const char** a)
   return 1;
 }
 
-//=================================================================================================
-
 static int DDocStd_Save(Draw_Interpretor& di, int nb, const char** a)
 {
   if (nb == 2)
@@ -242,8 +234,6 @@ static int DDocStd_Save(Draw_Interpretor& di, int nb, const char** a)
   di << "DDocStd_Save : Error\n";
   return 1;
 }
-
-//=================================================================================================
 
 static int DDocStd_SaveAs(Draw_Interpretor& di, int nb, const char** a)
 {
@@ -338,8 +328,6 @@ static int DDocStd_SaveAs(Draw_Interpretor& di, int nb, const char** a)
   return 1;
 }
 
-//=================================================================================================
-
 static int DDocStd_Close(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
   bool                                      toComplain = true;
@@ -428,8 +416,6 @@ static int DDocStd_Close(Draw_Interpretor& theDI, int theArgNb, const char** the
   return 0;
 }
 
-//=================================================================================================
-
 static int DDocStd_IsInSession(Draw_Interpretor& di, int nb, const char** a)
 {
   if (nb == 2)
@@ -441,8 +427,6 @@ static int DDocStd_IsInSession(Draw_Interpretor& di, int nb, const char** a)
   di << "DDocStd_IsInSession : Error\n";
   return 1;
 }
-
-//=================================================================================================
 
 static int DDocStd_OSDPath(Draw_Interpretor& di, int nb, const char** a)
 {
@@ -462,8 +446,6 @@ static int DDocStd_OSDPath(Draw_Interpretor& di, int nb, const char** a)
   return 1;
 }
 
-//=================================================================================================
-
 static int DDocStd_Path(Draw_Interpretor& di, int nb, const char** a)
 {
   if (nb == 2)
@@ -479,8 +461,6 @@ static int DDocStd_Path(Draw_Interpretor& di, int nb, const char** a)
   return 1;
 }
 
-//=================================================================================================
-
 static int DDocStd_AddComment(Draw_Interpretor& di, int nb, const char** a)
 {
   if (nb == 3)
@@ -489,16 +469,13 @@ static int DDocStd_AddComment(Draw_Interpretor& di, int nb, const char** a)
     if (!DDocStd::GetDocument(a[1], D))
       return 1;
     TCollection_ExtendedString comment(a[2], true);
-    //    occ::handle<TDocStd_Application> A = DDocStd::GetApplication();
-    //    A->AddComment(D,comment);
+
     D->AddComment(comment);
     return 0;
   }
   di << "DDocStd_AddComment : Wrong arguments number\n";
   return 1;
 }
-
-//=================================================================================================
 
 static int DDocStd_PrintComments(Draw_Interpretor& di, int nb, const char** a)
 {
@@ -521,8 +498,6 @@ static int DDocStd_PrintComments(Draw_Interpretor& di, int nb, const char** a)
   di << "DDocStd_PrintComments : Wrong arguments number\n";
   return 1;
 }
-
-//=================================================================================================
 
 static int DDocStd_StorageFormatVersion(Draw_Interpretor& theDI,
                                         int               theNbArgs,
@@ -560,8 +535,6 @@ static int DDocStd_StorageFormatVersion(Draw_Interpretor& theDI,
   return 0;
 }
 
-//=================================================================================================
-
 void DDocStd::ApplicationCommands(Draw_Interpretor& theCommands)
 {
 
@@ -572,7 +545,6 @@ void DDocStd::ApplicationCommands(Draw_Interpretor& theCommands)
 
   const char* g = "DDocStd application commands";
 
-  // user application commands
   theCommands.Add("ListDocuments", "ListDocuments", __FILE__, DDocStd_ListDocuments, g);
 
   theCommands.Add("NewDocument", "NewDocument docname format", __FILE__, DDocStd_NewDocument, g);

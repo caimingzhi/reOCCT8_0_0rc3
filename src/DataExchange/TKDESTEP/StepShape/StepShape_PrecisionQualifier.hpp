@@ -6,7 +6,6 @@
 #include <Standard_Integer.hpp>
 #include <Standard_Transient.hpp>
 
-//! Added for Dimensional Tolerances
 class StepShape_PrecisionQualifier : public Standard_Transient
 {
 

@@ -13,22 +13,14 @@ void RWStepAP242_RWIdAttribute::ReadStep(const occ::handle<StepData_StepReaderDa
                                          const occ::handle<StepAP242_IdAttribute>&   ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 2, ach, "id_attribute"))
     return;
-
-  // --- own field : attribute_value ---
 
   occ::handle<TCollection_HAsciiString> anAttributeValue;
   data->ReadString(num, 1, "attribute_value", ach, anAttributeValue);
 
-  // --- own field : identified_item ---
-
   StepAP242_IdAttributeSelect anIdentifiedItem;
   data->ReadEntity(num, 2, "identified_item", ach, anIdentifiedItem);
-
-  //--- Initialisation of the read entity ---
 
   ent->Init(anAttributeValue, anIdentifiedItem);
 }
@@ -37,11 +29,7 @@ void RWStepAP242_RWIdAttribute::WriteStep(StepData_StepWriter&                  
                                           const occ::handle<StepAP242_IdAttribute>& ent) const
 {
 
-  // --- own field : attribute_value ---
-
   SW.Send(ent->AttributeValue());
-
-  // --- own field : identified_item ---
 
   SW.Send(ent->IdentifiedItem().Value());
 }

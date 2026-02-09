@@ -12,25 +12,17 @@ IMPLEMENT_DOMSTRING(TriangString, "triangulation")
 IMPLEMENT_DOMSTRING(NullString, "null")
 IMPLEMENT_DOMSTRING(ExistString, "exists")
 
-//=================================================================================================
-
 XmlMDataXtd_TriangulationDriver::XmlMDataXtd_TriangulationDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataXtd_TriangulationDriver::NewEmpty() const
 {
   return new TDataXtd_Triangulation();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDataXtd_TriangulationDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                             const occ::handle<TDF_Attribute>& theTarget,
                                             XmlObjMgt_RRelocationTable&) const
@@ -38,16 +30,14 @@ bool XmlMDataXtd_TriangulationDriver::Paste(const XmlObjMgt_Persistent&       th
   const XmlObjMgt_Element&            element   = theSource;
   occ::handle<TDataXtd_Triangulation> attribute = occ::down_cast<TDataXtd_Triangulation>(theTarget);
 
-  // Read the FirstIndex; if the attribute is absent initialize to 1
   XmlObjMgt_DOMString triangStatus = element.getAttribute(::TriangString());
   if (triangStatus == nullptr || triangStatus.Type() != LDOMBasicString::LDOM_AsciiDoc
       || strcmp(triangStatus.GetString(), ::ExistString().GetString()))
   {
-    // No triangulation.
+
     return true;
   }
 
-  // Get mesh as a string.
   const XmlObjMgt_DOMString& data = XmlObjMgt::GetStringValue(element);
   std::stringstream          stream(std::string(data.GetString()));
 
@@ -79,7 +69,6 @@ bool XmlMDataXtd_TriangulationDriver::Paste(const XmlObjMgt_Persistent&       th
     }
   }
 
-  // read the triangles
   NCollection_Array1<Poly_Triangle> Triangles(1, nbTriangles);
   for (i = 1; i <= nbTriangles; i++)
   {
@@ -99,10 +88,6 @@ bool XmlMDataXtd_TriangulationDriver::Paste(const XmlObjMgt_Persistent&       th
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMDataXtd_TriangulationDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                             XmlObjMgt_Persistent&             theTarget,
                                             XmlObjMgt_SRelocationTable&) const
@@ -117,23 +102,20 @@ void XmlMDataXtd_TriangulationDriver::Paste(const occ::handle<TDF_Attribute>& th
 
     int i, n1, n2, n3;
 
-    // Analyse the size of the triangulation
-    // (to allocate properly the string array).
     const occ::handle<Poly_Triangulation>& PT          = attribute->Get();
     int                                    nbNodes     = PT->NbNodes();
     int                                    nbTriangles = PT->NbTriangles();
     int                                    size        = PT->NbNodes();
-    // clang-format off
-    size *= 3 * 25; // 3 coordinates for a node * 25 characters are used to represent a coordinate (double) in XML
-    if (PT->HasUVNodes()) 
-      size += 2 * 25 * nbNodes; // 2 coordinates for a 2D node * 25 characters are used to represent a coordinate (double) in XML
-    // clang-format on
-    size += 3 * 10 * nbTriangles; // space for triangles
-    size *= 2;                    // just in case :-)
+
+    size *= 3 * 25;
+    if (PT->HasUVNodes())
+      size += 2 * 25 * nbNodes;
+
+    size += 3 * 10 * nbTriangles;
+    size *= 2;
     if (!size)
       size = 1;
 
-    // Allocate a string stream.
     LDOM_OSStream stream(size);
     stream.precision(17);
 
@@ -142,7 +124,6 @@ void XmlMDataXtd_TriangulationDriver::Paste(const occ::handle<TDF_Attribute>& th
 
     stream << PT->Deflection() << "\n";
 
-    // write the 3d nodes
     for (i = 1; i <= nbNodes; i++)
     {
       const gp_Pnt aNode = PT->Node(i);
@@ -166,15 +147,12 @@ void XmlMDataXtd_TriangulationDriver::Paste(const occ::handle<TDF_Attribute>& th
 
     stream << std::ends;
 
-    // clang-format off
-    char* dump = (char*)stream.str(); // copying! Don't forget to delete it.
-    // clang-format on
+    char* dump = (char*)stream.str();
+
     XmlObjMgt::SetStringValue(theTarget, dump, true);
     delete[] dump;
   }
 }
-
-//=================================================================================================
 
 void XmlMDataXtd_TriangulationDriver::GetReal(Standard_IStream& IS, double& theValue) const
 {

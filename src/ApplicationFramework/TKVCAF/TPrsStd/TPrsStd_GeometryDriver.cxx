@@ -21,11 +21,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_GeometryDriver, TPrsStd_Driver)
 
-//=================================================================================================
-
 TPrsStd_GeometryDriver::TPrsStd_GeometryDriver() = default;
-
-//=================================================================================================
 
 bool TPrsStd_GeometryDriver::Update(const TDF_Label&                    aLabel,
                                     occ::handle<AIS_InteractiveObject>& anAISObject)

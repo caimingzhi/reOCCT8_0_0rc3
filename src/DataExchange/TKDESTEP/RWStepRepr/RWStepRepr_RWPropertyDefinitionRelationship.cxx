@@ -5,12 +5,8 @@
 #include <StepRepr_PropertyDefinition.hpp>
 #include <StepRepr_PropertyDefinitionRelationship.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWPropertyDefinitionRelationship::RWStepRepr_RWPropertyDefinitionRelationship() =
   default;
-
-//=================================================================================================
 
 void RWStepRepr_RWPropertyDefinitionRelationship::ReadStep(
   const occ::handle<StepData_StepReaderData>&                 data,
@@ -18,11 +14,9 @@ void RWStepRepr_RWPropertyDefinitionRelationship::ReadStep(
   occ::handle<Interface_Check>&                               ach,
   const occ::handle<StepRepr_PropertyDefinitionRelationship>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "property_definition_relationship"))
     return;
-
-  // Own fields of PropertyDefinitionRelationship
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -46,18 +40,13 @@ void RWStepRepr_RWPropertyDefinitionRelationship::ReadStep(
                    STANDARD_TYPE(StepRepr_PropertyDefinition),
                    aRelatedPropertyDefinition);
 
-  // Initialize entity
   ent->Init(aName, aDescription, aRelatingPropertyDefinition, aRelatedPropertyDefinition);
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWPropertyDefinitionRelationship::WriteStep(
   StepData_StepWriter&                                        SW,
   const occ::handle<StepRepr_PropertyDefinitionRelationship>& ent) const
 {
-
-  // Own fields of PropertyDefinitionRelationship
 
   SW.Send(ent->Name());
 
@@ -68,14 +57,10 @@ void RWStepRepr_RWPropertyDefinitionRelationship::WriteStep(
   SW.Send(ent->RelatedPropertyDefinition());
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWPropertyDefinitionRelationship::Share(
   const occ::handle<StepRepr_PropertyDefinitionRelationship>& ent,
   Interface_EntityIterator&                                   iter) const
 {
-
-  // Own fields of PropertyDefinitionRelationship
 
   iter.AddItem(ent->RelatingPropertyDefinition());
 

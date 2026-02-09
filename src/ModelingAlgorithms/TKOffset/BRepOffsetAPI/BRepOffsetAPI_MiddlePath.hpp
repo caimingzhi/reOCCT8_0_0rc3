@@ -10,16 +10,11 @@
 #include <NCollection_Sequence.hpp>
 #include <BRepBuilderAPI_MakeShape.hpp>
 
-//! Describes functions to build a middle path of a
-//! pipe-like shape
 class BRepOffsetAPI_MiddlePath : public BRepBuilderAPI_MakeShape
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! General constructor.
-  //! StartShape and EndShape may be
-  //! a wire or a face
   Standard_EXPORT BRepOffsetAPI_MiddlePath(const TopoDS_Shape& aShape,
                                            const TopoDS_Shape& StartShape,
                                            const TopoDS_Shape& EndShape);

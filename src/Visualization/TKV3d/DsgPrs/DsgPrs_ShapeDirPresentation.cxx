@@ -26,11 +26,8 @@
 #include <TopoDS_Shape.hpp>
 #include <NCollection_List.hpp>
 
-//=================================================================================================
-
 static bool FindPointOnFace(const TopoDS_Face& face, gp_Pnt2d& pt2d)
 {
-  // discredisation of the external contour and computing the center of gravity
 
   TopExp_Explorer wireExp;
   wireExp.Init(face, TopAbs_WIRE);
@@ -46,7 +43,7 @@ static bool FindPointOnFace(const TopoDS_Face& face, gp_Pnt2d& pt2d)
 
   for (edgeExp.Init(wireExp.Current(), TopAbs_EDGE); edgeExp.More(); edgeExp.Next())
   {
-    // discretize the 2d curve
+
     double                    first, last;
     occ::handle<Geom2d_Curve> c2d =
       BRep_Tool::CurveOnSurface(TopoDS::Edge(edgeExp.Current()), face, first, last);
@@ -85,8 +82,6 @@ static bool FindPointOnFace(const TopoDS_Face& face, gp_Pnt2d& pt2d)
       }
     }
 
-    // compute the contribution to the center of gravity
-
     double h, c, d;
     for (int i = 1; i <= npoints - 1; i++)
     {
@@ -108,19 +103,15 @@ static bool FindPointOnFace(const TopoDS_Face& face, gp_Pnt2d& pt2d)
 
   pt2d.SetCoord(xcent / area, ycent / area);
 
-  // verify that (upar vpar) is a point on the face
-
   BRepClass_FaceClassifier fClass(face, pt2d, gp::Resolution());
 
   if ((fClass.State() == TopAbs_OUT) || (fClass.State() == TopAbs_UNKNOWN))
   {
-    // try to find a point on face
+
     pt2d = points(1);
   }
   return true;
 }
-
-//=================================================================================================
 
 static bool ComputeDir(const TopoDS_Shape& shape, gp_Pnt& pt, gp_Dir& dir, const int mode)
 {
@@ -168,8 +159,6 @@ static bool ComputeDir(const TopoDS_Shape& shape, gp_Pnt& pt, gp_Dir& dir, const
   }
   return true;
 }
-
-//=================================================================================================
 
 void DsgPrs_ShapeDirPresentation::Add(const occ::handle<Prs3d_Presentation>& prs,
                                       const occ::handle<Prs3d_Drawer>&       drawer,
@@ -243,7 +232,7 @@ void DsgPrs_ShapeDirPresentation::Add(const occ::handle<Prs3d_Presentation>& prs
 
   gp_Pnt ptmin(c[0], c[1], c[2]), ptmax(c[3], c[4], c[5]);
   double leng = ptmin.Distance(ptmax) / 3.;
-  // mei 19/09/96 extrusion infinie -> taille fixe
+
   if (leng >= 20000.)
     leng = 50;
 

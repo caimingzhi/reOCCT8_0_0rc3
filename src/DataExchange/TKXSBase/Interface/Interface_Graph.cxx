@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_BitMap.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -29,18 +18,11 @@
 #include <Standard_Integer.hpp>
 #include <NCollection_List.hpp>
 
-// Flags : 0 = Presence, 1 = Sharing Error
 #define Graph_Present 0
 #define Graph_ShareError 1
 
-//  ###########################################################################
-
-//  ....                           CONSTRUCTEURS                           ....
-
-//  ....       Construction from Entity knowledge        ....
-
 Interface_Graph::Interface_Graph(const occ::handle<Interface_InterfaceModel>& amodel,
-                                 const Interface_GeneralLib& /*lib*/,
+                                 const Interface_GeneralLib&,
                                  bool theModeStat)
     : themodel(amodel),
       thepresents("")
@@ -51,7 +33,7 @@ Interface_Graph::Interface_Graph(const occ::handle<Interface_InterfaceModel>& am
 }
 
 Interface_Graph::Interface_Graph(const occ::handle<Interface_InterfaceModel>& amodel,
-                                 const occ::handle<Interface_Protocol>& /*protocol*/,
+                                 const occ::handle<Interface_Protocol>&,
                                  bool theModeStat)
     : themodel(amodel),
       thepresents("")
@@ -63,7 +45,7 @@ Interface_Graph::Interface_Graph(const occ::handle<Interface_InterfaceModel>& am
 }
 
 Interface_Graph::Interface_Graph(const occ::handle<Interface_InterfaceModel>& amodel,
-                                 const occ::handle<Interface_GTool>& /*gtool*/,
+                                 const occ::handle<Interface_GTool>&,
                                  bool theModeStat)
     : themodel(amodel),
       thepresents("")
@@ -83,9 +65,7 @@ Interface_Graph::Interface_Graph(const occ::handle<Interface_InterfaceModel>& am
   Evaluate();
 }
 
-//  ....                Construction from another Graph                ....
-
-Interface_Graph::Interface_Graph(const Interface_Graph& agraph, const bool /*copied*/)
+Interface_Graph::Interface_Graph(const Interface_Graph& agraph, const bool)
     : themodel(agraph.Model()),
       thepresents("")
 {
@@ -139,11 +119,9 @@ const occ::handle<NCollection_HArray1<NCollection_List<int>>>& Interface_Graph::
 
 void Interface_Graph::Evaluate()
 {
-  // Evaluation is performed on all entities of the model
+
   const int anEntityNumber = Size();
 
-  // Global allocator stored as a field of the single container of the sharings
-  // and will be destructed with the container.
   occ::handle<NCollection_IncAllocator> anAlloc =
     new NCollection_IncAllocator(NCollection_IncAllocator::THE_DEFAULT_BLOCK_SIZE);
   thesharings = new NCollection_HArray1<NCollection_List<int>>(1, anEntityNumber);
@@ -158,12 +136,6 @@ void Interface_Graph::Evaluate()
     return;
   }
 
-  // Fill the sharing table with the entities shared by each entity
-  // and the entities which share each entity.
-  // The entities are iterated in the order of their numbers in the model.
-  // The entities which are not present in the model are ignored.
-  // The entities which are not shared by any other entity are ignored.
-  // Allocator is used to reuse memory for the lists of shared entities.
   occ::handle<NCollection_IncAllocator> anAlloc2 =
     new NCollection_IncAllocator(NCollection_IncAllocator::THE_MINIMUM_BLOCK_SIZE);
   occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> aListOfEntities =
@@ -214,12 +186,6 @@ void Interface_Graph::Evaluate()
   }
 }
 
-//  ....                Construction from another Graph                ....
-
-//  ###########################################################################
-
-//  ....                UNITARY ACCESS TO BASE DATA                ....
-
 void Interface_Graph::Reset()
 {
   if (!thestats.IsNull())
@@ -241,7 +207,7 @@ void Interface_Graph::ResetStatus()
 int Interface_Graph::Size() const
 {
   return themodel->NbEntities();
-} // thestats.Upper();  }
+}
 
 int Interface_Graph::EntityNumber(const occ::handle<Standard_Transient>& ent) const
 {
@@ -319,10 +285,6 @@ Interface_BitMap& Interface_Graph::CBitMap()
   return theflags;
 }
 
-//  ###########################################################################
-
-//  ....      Elementary Loadings with "Share" Propagation      .... //
-
 const occ::handle<Interface_InterfaceModel>& Interface_Graph::Model() const
 {
   return themodel;
@@ -331,7 +293,7 @@ const occ::handle<Interface_InterfaceModel>& Interface_Graph::Model() const
 void Interface_Graph::GetFromModel()
 {
   if (themodel.IsNull() || thestats.IsNull())
-    return; // no model ... (-> we won't go far)
+    return;
   theflags.Init(true, Graph_Present);
   thestats->Init(0);
 }
@@ -346,11 +308,11 @@ void Interface_Graph::GetFromEntity(const occ::handle<Standard_Transient>& ent,
   if (!num)
     return;
   if (theflags.CTrue(num, Graph_Present))
-    return; // already taken : we skip
+    return;
   thestats->SetValue(num, newstat);
   if (!shared)
     return;
-  //  Watch out for redefinition !
+
   Interface_EntityIterator aIter = GetShareds(ent);
 
   for (; aIter.More(); aIter.Next())
@@ -373,25 +335,25 @@ void Interface_Graph::GetFromEntity(const occ::handle<Standard_Transient>& ent,
 
   if (pasla)
   {
-    ///    theflags.SetTrue (num, Graph_Present);   // new : note with newstat
+
     thestats->SetValue(num, newstat);
   }
   else
   {
     int overstat = stat;
     if (stat != newstat)
-    { // already taken, same status : skip
+    {
       if (cumul)
-        overstat += overlapstat; // new status : with cumulation ...
+        overstat += overlapstat;
       else
-        overstat = overlapstat; // ... or without (forced status)
-      if (stat != overstat)     // if repass already done, skip
+        overstat = overlapstat;
+      if (stat != overstat)
         thestats->SetValue(num, overstat);
     }
   }
   if (!shared)
     return;
-  //  Watch out for redefinition !
+
   Interface_EntityIterator aIter = GetShareds(ent);
 
   for (; aIter.More(); aIter.Next())
@@ -427,8 +389,8 @@ void Interface_Graph::GetFromIter(const Interface_EntityIterator& iter,
     int                                    num = EntityNumber(ent);
     if (!num)
       continue;
-    /*bool pasla = !*/ theflags.Value(num, Graph_Present);
-    /*int stat  = */ thestats->Value(num);
+    theflags.Value(num, Graph_Present);
+    thestats->Value(num);
     GetFromEntity(ent, false, newstat, overlapstat, cumul);
   }
 }
@@ -457,10 +419,6 @@ void Interface_Graph::GetFromGraph(const Interface_Graph& agraph, const int stat
   }
 }
 
-//  #####################################################################
-
-//  ....                Listing of Shared Entities                ....
-
 bool Interface_Graph::HasShareErrors(const occ::handle<Standard_Transient>& ent) const
 {
   if (thestats.IsNull())
@@ -482,7 +440,6 @@ Interface_EntityIterator Interface_Graph::Shareds(const occ::handle<Standard_Tra
   if (themodel->IsRedefinedContent(num))
     aCurEnt = themodel->ReportEntity(num)->Content();
 
-  // if (num == 0)  throw Standard_DomainError("Interface : Shareds");
   occ::handle<Interface_GeneralModule> module;
   int                                  CN;
   if (themodel->GTool()->Select(aCurEnt, module, CN))
@@ -502,8 +459,7 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> Interface_Gr
   int num = EntityNumber(ent);
   if (!num)
     return nullptr;
-  // return
-  // occ::down_cast<NCollection_HSequence<occ::handle<Standard_Transient>>>(thesharings->Value(num));
+
   const NCollection_List<int>& alist = thesharings->Value(num);
   occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> aSharings =
     new NCollection_HSequence<occ::handle<Standard_Transient>>;

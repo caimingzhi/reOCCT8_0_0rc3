@@ -7,18 +7,11 @@
 #include <Standard_OStream.hpp>
 #include <Standard_SStream.hpp>
 
-//! This class describes a cartesian coordinate entity in
-//! 3D space {X,Y,Z}. This entity is used for algebraic
-//! calculation. This entity can be transformed
-//! with a "Trsf" or a "GTrsf" from package "gp".
-//! It is used in vectorial computations or for holding this type
-//! of information in data structures.
 class gp_XYZ
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates an XYZ object with zero coordinates (0,0,0)
   constexpr gp_XYZ() noexcept
       : x(0.),
         y(0.),
@@ -26,7 +19,6 @@ public:
   {
   }
 
-  //! creates an XYZ with given coordinates
   constexpr gp_XYZ(const double theX, const double theY, const double theZ) noexcept
       : x(theX),
         y(theY),
@@ -34,8 +26,6 @@ public:
   {
   }
 
-  //! For this XYZ object, assigns
-  //! the values theX, theY and theZ to its three coordinates
   constexpr void SetCoord(const double theX, const double theY, const double theZ) noexcept
   {
     x = theX;
@@ -43,11 +33,6 @@ public:
     z = theZ;
   }
 
-  //! modifies the coordinate of range theIndex
-  //! theIndex = 1 => X is modified
-  //! theIndex = 2 => Y is modified
-  //! theIndex = 3 => Z is modified
-  //! Raises OutOfRange if theIndex != {1, 2, 3}.
   constexpr void SetCoord(const int theIndex, const double theXi)
   {
     Standard_OutOfRange_Raise_if(theIndex < 1 || theIndex > 3, nullptr);
@@ -65,21 +50,12 @@ public:
     }
   }
 
-  //! Assigns the given value to the X coordinate
   constexpr void SetX(const double theX) noexcept { x = theX; }
 
-  //! Assigns the given value to the Y coordinate
   constexpr void SetY(const double theY) noexcept { y = theY; }
 
-  //! Assigns the given value to the Z coordinate
   constexpr void SetZ(const double theZ) noexcept { z = theZ; }
 
-  //! returns the coordinate of range theIndex :
-  //! theIndex = 1 => X is returned
-  //! theIndex = 2 => Y is returned
-  //! theIndex = 3 => Z is returned
-  //!
-  //! Raises OutOfRange if theIndex != {1, 2, 3}.
   constexpr double Coord(const int theIndex) const
   {
     Standard_OutOfRange_Raise_if(theIndex < 1 || theIndex > 3, nullptr);
@@ -115,35 +91,20 @@ public:
     theZ = z;
   }
 
-  //! Returns a const ptr to coordinates location.
-  //! Is useful for algorithms, but DOES NOT PERFORM
-  //! ANY CHECKS!
   constexpr const double* GetData() const noexcept { return (&x); }
 
-  //! Returns a ptr to coordinates location.
-  //! Is useful for algorithms, but DOES NOT PERFORM
-  //! ANY CHECKS!
   double* ChangeData() noexcept { return (&x); }
 
-  //! Returns the X coordinate
   constexpr double X() const noexcept { return x; }
 
-  //! Returns the Y coordinate
   constexpr double Y() const noexcept { return y; }
 
-  //! Returns the Z coordinate
   constexpr double Z() const noexcept { return z; }
 
-  //! computes std::sqrt(X*X + Y*Y + Z*Z) where X, Y and Z are the three coordinates of this XYZ
-  //! object.
   double Modulus() const { return sqrt(x * x + y * y + z * z); }
 
-  //! Computes X*X + Y*Y + Z*Z where X, Y and Z are the three coordinates of this XYZ object.
   constexpr double SquareModulus() const noexcept { return (x * x + y * y + z * z); }
 
-  //! Returns True if he coordinates of this XYZ object are
-  //! equal to the respective coordinates Other,
-  //! within the specified tolerance theTolerance.
   bool IsEqual(const gp_XYZ& theOther, const double theTolerance) const
 
   {
@@ -151,11 +112,6 @@ public:
            && (std::abs(z - theOther.z) < theTolerance);
   }
 
-  //! @code
-  //! <me>.X() = <me>.X() + theOther.X()
-  //! <me>.Y() = <me>.Y() + theOther.Y()
-  //! <me>.Z() = <me>.Z() + theOther.Z()
-  //! @endcode
   constexpr void Add(const gp_XYZ& theOther) noexcept
   {
     x += theOther.x;
@@ -165,11 +121,6 @@ public:
 
   constexpr void operator+=(const gp_XYZ& theOther) noexcept { Add(theOther); }
 
-  //! @code
-  //! new.X() = <me>.X() + theOther.X()
-  //! new.Y() = <me>.Y() + theOther.Y()
-  //! new.Z() = <me>.Z() + theOther.Z()
-  //! @endcode
   [[nodiscard]] constexpr gp_XYZ Added(const gp_XYZ& theOther) const noexcept
   {
     return gp_XYZ(x + theOther.x, y + theOther.y, z + theOther.z);
@@ -180,20 +131,10 @@ public:
     return Added(theOther);
   }
 
-  //! @code
-  //! <me>.X() = <me>.Y() * theOther.Z() - <me>.Z() * theOther.Y()
-  //! <me>.Y() = <me>.Z() * theOther.X() - <me>.X() * theOther.Z()
-  //! <me>.Z() = <me>.X() * theOther.Y() - <me>.Y() * theOther.X()
-  //! @endcode
   constexpr void Cross(const gp_XYZ& theOther) noexcept;
 
   constexpr void operator^=(const gp_XYZ& theOther) noexcept { Cross(theOther); }
 
-  //! @code
-  //! new.X() = <me>.Y() * theOther.Z() - <me>.Z() * theOther.Y()
-  //! new.Y() = <me>.Z() * theOther.X() - <me>.X() * theOther.Z()
-  //! new.Z() = <me>.X() * theOther.Y() - <me>.Y() * theOther.X()
-  //! @endcode
   [[nodiscard]] constexpr gp_XYZ Crossed(const gp_XYZ& theOther) const noexcept
   {
     return gp_XYZ(y * theOther.z - z * theOther.y,
@@ -206,20 +147,12 @@ public:
     return Crossed(theOther);
   }
 
-  //! Computes the magnitude of the cross product between <me> and
-  //! theRight. Returns || <me> ^ theRight ||
   double CrossMagnitude(const gp_XYZ& theRight) const;
 
-  //! Computes the square magnitude of the cross product between <me> and
-  //! theRight. Returns || <me> ^ theRight ||**2
   constexpr double CrossSquareMagnitude(const gp_XYZ& theRight) const noexcept;
 
-  //! Triple vector product
-  //! Computes <me> = <me>.Cross(theCoord1.Cross(theCoord2))
   constexpr void CrossCross(const gp_XYZ& theCoord1, const gp_XYZ& theCoord2) noexcept;
 
-  //! Triple vector product
-  //! computes New = <me>.Cross(theCoord1.Cross(theCoord2))
   [[nodiscard]] constexpr gp_XYZ CrossCrossed(const gp_XYZ& theCoord1,
                                               const gp_XYZ& theCoord2) const noexcept
   {
@@ -228,7 +161,6 @@ public:
     return aCoord0;
   }
 
-  //! divides <me> by a real.
   constexpr void Divide(const double theScalar)
   {
     x /= theScalar;
@@ -238,7 +170,6 @@ public:
 
   constexpr void operator/=(const double theScalar) { Divide(theScalar); }
 
-  //! divides <me> by a real.
   [[nodiscard]] constexpr gp_XYZ Divided(const double theScalar) const
   {
     return gp_XYZ(x / theScalar, y / theScalar, z / theScalar);
@@ -249,7 +180,6 @@ public:
     return Divided(theScalar);
   }
 
-  //! computes the scalar product between <me> and theOther
   constexpr double Dot(const gp_XYZ& theOther) const noexcept
   {
     return (x * theOther.x + y * theOther.y + z * theOther.z);
@@ -257,14 +187,8 @@ public:
 
   constexpr double operator*(const gp_XYZ& theOther) const noexcept { return Dot(theOther); }
 
-  //! computes the triple scalar product
   constexpr double DotCross(const gp_XYZ& theCoord1, const gp_XYZ& theCoord2) const noexcept;
 
-  //! @code
-  //! <me>.X() = <me>.X() * theScalar;
-  //! <me>.Y() = <me>.Y() * theScalar;
-  //! <me>.Z() = <me>.Z() * theScalar;
-  //! @endcode
   constexpr void Multiply(const double theScalar) noexcept
   {
     x *= theScalar;
@@ -274,11 +198,6 @@ public:
 
   constexpr void operator*=(const double theScalar) noexcept { Multiply(theScalar); }
 
-  //! @code
-  //! <me>.X() = <me>.X() * theOther.X();
-  //! <me>.Y() = <me>.Y() * theOther.Y();
-  //! <me>.Z() = <me>.Z() * theOther.Z();
-  //! @endcode
   constexpr void Multiply(const gp_XYZ& theOther) noexcept
   {
     x *= theOther.x;
@@ -288,16 +207,10 @@ public:
 
   constexpr void operator*=(const gp_XYZ& theOther) noexcept { Multiply(theOther); }
 
-  //! <me> = theMatrix * <me>
   constexpr void Multiply(const gp_Mat& theMatrix) noexcept;
 
   constexpr void operator*=(const gp_Mat& theMatrix) noexcept { Multiply(theMatrix); }
 
-  //! @code
-  //! New.X() = <me>.X() * theScalar;
-  //! New.Y() = <me>.Y() * theScalar;
-  //! New.Z() = <me>.Z() * theScalar;
-  //! @endcode
   [[nodiscard]] constexpr gp_XYZ Multiplied(const double theScalar) const noexcept
   {
     return gp_XYZ(x * theScalar, y * theScalar, z * theScalar);
@@ -308,20 +221,14 @@ public:
     return Multiplied(theScalar);
   }
 
-  //! @code
-  //! new.X() = <me>.X() * theOther.X();
-  //! new.Y() = <me>.Y() * theOther.Y();
-  //! new.Z() = <me>.Z() * theOther.Z();
-  //! @endcode
   [[nodiscard]] constexpr gp_XYZ Multiplied(const gp_XYZ& theOther) const noexcept
   {
     return gp_XYZ(x * theOther.x, y * theOther.y, z * theOther.z);
   }
 
-  //! New = theMatrix * <me>
   [[nodiscard]] constexpr gp_XYZ Multiplied(const gp_Mat& theMatrix) const noexcept
   {
-    // Direct access to matrix data for optimal performance (gp_XYZ is friend of gp_Mat)
+
     return gp_XYZ(theMatrix.myMat[0][0] * x + theMatrix.myMat[0][1] * y + theMatrix.myMat[0][2] * z,
                   theMatrix.myMat[1][0] * x + theMatrix.myMat[1][1] * y + theMatrix.myMat[1][2] * z,
                   theMatrix.myMat[2][0] * x + theMatrix.myMat[2][1] * y
@@ -333,20 +240,8 @@ public:
     return Multiplied(theMatrix);
   }
 
-  //! @code
-  //! <me>.X() = <me>.X()/ <me>.Modulus()
-  //! <me>.Y() = <me>.Y()/ <me>.Modulus()
-  //! <me>.Z() = <me>.Z()/ <me>.Modulus()
-  //! @endcode
-  //! Raised if <me>.Modulus() <= Resolution from gp
   void Normalize();
 
-  //! @code
-  //! New.X() = <me>.X()/ <me>.Modulus()
-  //! New.Y() = <me>.Y()/ <me>.Modulus()
-  //! New.Z() = <me>.Z()/ <me>.Modulus()
-  //! @endcode
-  //! Raised if <me>.Modulus() <= Resolution from gp
   [[nodiscard]] gp_XYZ Normalized() const
   {
     const double aD = Modulus();
@@ -355,11 +250,6 @@ public:
     return gp_XYZ(x / aD, y / aD, z / aD);
   }
 
-  //! @code
-  //! <me>.X() = -<me>.X()
-  //! <me>.Y() = -<me>.Y()
-  //! <me>.Z() = -<me>.Z()
-  //! @endcode
   constexpr void Reverse() noexcept
   {
     x = -x;
@@ -367,18 +257,8 @@ public:
     z = -z;
   }
 
-  //! @code
-  //! New.X() = -<me>.X()
-  //! New.Y() = -<me>.Y()
-  //! New.Z() = -<me>.Z()
-  //! @endcode
   [[nodiscard]] constexpr gp_XYZ Reversed() const noexcept { return gp_XYZ(-x, -y, -z); }
 
-  //! @code
-  //! <me>.X() = <me>.X() - theOther.X()
-  //! <me>.Y() = <me>.Y() - theOther.Y()
-  //! <me>.Z() = <me>.Z() - theOther.Z()
-  //! @endcode
   constexpr void Subtract(const gp_XYZ& theOther) noexcept
   {
     x -= theOther.x;
@@ -388,11 +268,6 @@ public:
 
   constexpr void operator-=(const gp_XYZ& theOther) noexcept { Subtract(theOther); }
 
-  //! @code
-  //! new.X() = <me>.X() - theOther.X()
-  //! new.Y() = <me>.Y() - theOther.Y()
-  //! new.Z() = <me>.Z() - theOther.Z()
-  //! @endcode
   [[nodiscard]] constexpr gp_XYZ Subtracted(const gp_XYZ& theOther) const noexcept
   {
     return gp_XYZ(x - theOther.x, y - theOther.y, z - theOther.z);
@@ -403,10 +278,6 @@ public:
     return Subtracted(theOther);
   }
 
-  //! <me> is set to the following linear form :
-  //! @code
-  //! theA1 * theXYZ1 + theA2 * theXYZ2 + theA3 * theXYZ3 + theXYZ4
-  //! @endcode
   constexpr void SetLinearForm(const double  theA1,
                                const gp_XYZ& theXYZ1,
                                const double  theA2,
@@ -420,10 +291,6 @@ public:
     z = theA1 * theXYZ1.z + theA2 * theXYZ2.z + theA3 * theXYZ3.z + theXYZ4.z;
   }
 
-  //! <me> is set to the following linear form :
-  //! @code
-  //! theA1 * theXYZ1 + theA2 * theXYZ2 + theA3 * theXYZ3
-  //! @endcode
   constexpr void SetLinearForm(const double  theA1,
                                const gp_XYZ& theXYZ1,
                                const double  theA2,
@@ -436,10 +303,6 @@ public:
     z = theA1 * theXYZ1.z + theA2 * theXYZ2.z + theA3 * theXYZ3.z;
   }
 
-  //! <me> is set to the following linear form :
-  //! @code
-  //! theA1 * theXYZ1 + theA2 * theXYZ2 + theXYZ3
-  //! @endcode
   constexpr void SetLinearForm(const double  theA1,
                                const gp_XYZ& theXYZ1,
                                const double  theA2,
@@ -451,10 +314,6 @@ public:
     z = theA1 * theXYZ1.z + theA2 * theXYZ2.z + theXYZ3.z;
   }
 
-  //! <me> is set to the following linear form :
-  //! @code
-  //! theA1 * theXYZ1 + theA2 * theXYZ2
-  //! @endcode
   constexpr void SetLinearForm(const double  theA1,
                                const gp_XYZ& theXYZ1,
                                const double  theA2,
@@ -465,10 +324,6 @@ public:
     z = theA1 * theXYZ1.z + theA2 * theXYZ2.z;
   }
 
-  //! <me> is set to the following linear form :
-  //! @code
-  //! theA1 * theXYZ1 + theXYZ2
-  //! @endcode
   constexpr void SetLinearForm(const double  theA1,
                                const gp_XYZ& theXYZ1,
                                const gp_XYZ& theXYZ2) noexcept
@@ -478,10 +333,6 @@ public:
     z = theA1 * theXYZ1.z + theXYZ2.z;
   }
 
-  //! <me> is set to the following linear form :
-  //! @code
-  //! theXYZ1 + theXYZ2
-  //! @endcode
   constexpr void SetLinearForm(const gp_XYZ& theXYZ1, const gp_XYZ& theXYZ2) noexcept
   {
     x = theXYZ1.x + theXYZ2.x;
@@ -489,10 +340,8 @@ public:
     z = theXYZ1.z + theXYZ2.z;
   }
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
-  //! Inits the content of me from the stream
   Standard_EXPORT bool InitFromJson(const Standard_SStream& theSStream, int& theStreamPos);
 
 private:
@@ -500,8 +349,6 @@ private:
   double y;
   double z;
 };
-
-//=================================================================================================
 
 inline constexpr void gp_XYZ::Cross(const gp_XYZ& theRight) noexcept
 {
@@ -512,14 +359,10 @@ inline constexpr void gp_XYZ::Cross(const gp_XYZ& theRight) noexcept
   y                     = aYresult;
 }
 
-//=================================================================================================
-
 inline double gp_XYZ::CrossMagnitude(const gp_XYZ& theRight) const
 {
   return sqrt(CrossSquareMagnitude(theRight));
 }
-
-//=================================================================================================
 
 inline constexpr double gp_XYZ::CrossSquareMagnitude(const gp_XYZ& theRight) const noexcept
 {
@@ -529,16 +372,13 @@ inline constexpr double gp_XYZ::CrossSquareMagnitude(const gp_XYZ& theRight) con
   return aXresult * aXresult + aYresult * aYresult + aZresult * aZresult;
 }
 
-//=================================================================================================
-
 inline constexpr void gp_XYZ::CrossCross(const gp_XYZ& theCoord1, const gp_XYZ& theCoord2) noexcept
 {
-  // First compute theCoord1 * theCoord2
+
   const double aCrossX = theCoord1.y * theCoord2.z - theCoord1.z * theCoord2.y;
   const double aCrossY = theCoord1.z * theCoord2.x - theCoord1.x * theCoord2.z;
   const double aCrossZ = theCoord1.x * theCoord2.y - theCoord1.y * theCoord2.x;
 
-  // Then compute this * (theCoord1 * theCoord2)
   const double aXresult = y * aCrossZ - z * aCrossY;
   const double aYresult = z * aCrossX - x * aCrossZ;
 
@@ -546,8 +386,6 @@ inline constexpr void gp_XYZ::CrossCross(const gp_XYZ& theCoord1, const gp_XYZ& 
   x = aXresult;
   y = aYresult;
 }
-
-//=================================================================================================
 
 inline constexpr double gp_XYZ::DotCross(const gp_XYZ& theCoord1,
                                          const gp_XYZ& theCoord2) const noexcept
@@ -558,16 +396,13 @@ inline constexpr double gp_XYZ::DotCross(const gp_XYZ& theCoord1,
   return (x * aXresult + y * anYresult + z * aZresult);
 }
 
-//=================================================================================================
-
 inline constexpr void gp_XYZ::Multiply(const gp_Mat& theMatrix) noexcept
 {
-  // Cache original coordinates to avoid aliasing issues
+
   const double aOrigX = x;
   const double aOrigY = y;
   const double aOrigZ = z;
 
-  // Matrix-vector multiplication: this = theMatrix * this
   x = theMatrix.myMat[0][0] * aOrigX + theMatrix.myMat[0][1] * aOrigY
       + theMatrix.myMat[0][2] * aOrigZ;
   y = theMatrix.myMat[1][0] * aOrigX + theMatrix.myMat[1][1] * aOrigY
@@ -575,8 +410,6 @@ inline constexpr void gp_XYZ::Multiply(const gp_Mat& theMatrix) noexcept
   z = theMatrix.myMat[2][0] * aOrigX + theMatrix.myMat[2][1] * aOrigY
       + theMatrix.myMat[2][2] * aOrigZ;
 }
-
-//=================================================================================================
 
 inline void gp_XYZ::Normalize()
 {
@@ -588,19 +421,11 @@ inline void gp_XYZ::Normalize()
   z = z / aD;
 }
 
-//=======================================================================
-// function : operator*
-// purpose :
-//=======================================================================
 inline constexpr gp_XYZ operator*(const gp_Mat& theMatrix, const gp_XYZ& theCoord1) noexcept
 {
   return theCoord1.Multiplied(theMatrix);
 }
 
-//=======================================================================
-// function : operator*
-// purpose :
-//=======================================================================
 inline constexpr gp_XYZ operator*(const double theScalar, const gp_XYZ& theCoord1) noexcept
 {
   return theCoord1.Multiplied(theScalar);

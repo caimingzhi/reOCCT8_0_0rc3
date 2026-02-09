@@ -69,20 +69,7 @@ void IntPatch_ALine::ComputeVertexParameters(const double Tol)
   ParamMinOnLine = FirstParameter(OpenFirst);
   ParamMaxOnLine = LastParameter(OpenLast);
 
-  //----------------------------------------------------------
-  //--     F i l t r e   s u r   r e s t r i c t i o n s   --
-  //----------------------------------------------------------
-  //-- deux vertex sur la meme restriction et seulement
-  //-- sur celle ci ne doivent pas avoir le meme parametre
-  //--
-  //--
-
-  //-- Le tri est necessaire si suppression du first ou du last point
   nbvtx = NbVertex();
-
-  //-- On verifie qu un vertex a bien toute ses representations :
-  //-- Cas tres rare : point de tangence sur un debut de ligne
-  //-- et la ligne fait 2 * 2 PI de parametrage.
 
   for (i = 1; i <= nbvtx; i++)
   {
@@ -233,9 +220,6 @@ void IntPatch_ALine::ComputeVertexParameters(const double Tol)
     }
   } while (APointDeleted);
 
-  //----------------------------------------------------------
-  //-- Tri des vertex et suppression des Vtx superflus
-  //--
   do
   {
     nbvtx = NbVertex();
@@ -281,34 +265,34 @@ void IntPatch_ALine::ComputeVertexParameters(const double Tol)
         if (std::abs(VTXM1.ParameterOnLine() - VTX.ParameterOnLine()) < PCONFUSION)
         {
           if (VTXM1.IsOnDomS1() && VTX.IsOnDomS1())
-          { //-- OnS1    OnS1
+          {
             if (VTXM1.ArcOnS1() == VTX.ArcOnS1())
-            { //-- OnS1 == OnS1
+            {
               if (VTXM1.IsOnDomS2())
-              { //-- OnS1 == OnS1  OnS2
+              {
                 if (!VTX.IsOnDomS2())
-                { //-- OnS1 == OnS1  OnS2 PasOnS2
+                {
                   kill = true;
                 }
                 else
                 {
                   if (VTXM1.ArcOnS2() == VTX.ArcOnS2())
-                  { //-- OnS1 == OnS1  OnS2 == OnS2
+                  {
                     kill = true;
                   }
                 }
               }
               else
-              { //-- OnS1 == OnS1  PasOnS2
+              {
                 if (VTX.IsOnDomS2())
-                { //-- OnS1 == OnS1  PasOnS2  OnS2
+                {
                   killm1 = true;
                 }
               }
             }
           }
           else
-          { //-- Pas OnS1  et  OnS1
+          {
             if (!VTXM1.IsOnDomS2() && !VTX.IsOnDomS2())
             {
               if (VTXM1.IsOnDomS1() && !VTX.IsOnDomS1())
@@ -325,34 +309,34 @@ void IntPatch_ALine::ComputeVertexParameters(const double Tol)
           if (!(kill || killm1))
           {
             if (VTXM1.IsOnDomS2() && VTX.IsOnDomS2())
-            { //-- OnS2    OnS2
+            {
               if (VTXM1.ArcOnS2() == VTX.ArcOnS2())
-              { //-- OnS2 == OnS2
+              {
                 if (VTXM1.IsOnDomS1())
-                { //-- OnS2 == OnS2  OnS1
+                {
                   if (!VTX.IsOnDomS1())
-                  { //-- OnS2 == OnS2  OnS1 PasOnS1
+                  {
                     kill = true;
                   }
                   else
                   {
                     if (VTXM1.ArcOnS1() == VTX.ArcOnS1())
-                    { //-- OnS2 == OnS2  OnS1 == OnS1
+                    {
                       kill = true;
                     }
                   }
                 }
                 else
-                { //-- OnS2 == OnS2  PasOnS1
+                {
                   if (VTX.IsOnDomS1())
-                  { //-- OnS2 == OnS2  PasOnS1  OnS1
+                  {
                     killm1 = true;
                   }
                 }
               }
             }
             else
-            { //-- Pas OnS2  et  OnS2
+            {
               if (!VTXM1.IsOnDomS1() && !VTX.IsOnDomS1())
               {
                 if (VTXM1.IsOnDomS2() && !VTX.IsOnDomS2())
@@ -366,7 +350,7 @@ void IntPatch_ALine::ComputeVertexParameters(const double Tol)
               }
             }
           }
-          //-- On a j < i
+
           if (kill)
           {
             SortIsOK = false;
@@ -412,9 +396,6 @@ void IntPatch_ALine::ComputeVertexParameters(const double Tol)
     }
   } while (!SortIsOK);
 
-  //----------------------------------------------------------
-  //--   Traitement des lignes periodiques                  --
-  //----------------------------------------------------------
   if (!OpenFirst && !OpenLast)
   {
     nbvtx = NbVertex();
@@ -453,9 +434,7 @@ void IntPatch_ALine::ComputeVertexParameters(const double Tol)
       }
     }
   }
-  //---------------------------------------------------------
-  //-- Faut il supprimer le premier et le dernier point
-  //--
+
   nbvtx = NbVertex();
   if (nbvtx > 1)
   {
@@ -483,7 +462,6 @@ void IntPatch_ALine::ComputeVertexParameters(const double Tol)
     }
   }
 
-  //-- Si 2 vertex ont le meme parametre   on identifie le p3d
   nbvtx = NbVertex();
   do
   {
@@ -608,14 +586,8 @@ void IntPatch_ALine::ComputeVertexParameters(const double Tol)
           }
 
           SortIsOK = false;
-          //-- std::cout<<" IntPatch_ALine : ComputeVertexParameters : Ajust "<<std::endl;
         }
       }
     }
   } while (!SortIsOK);
-
-  /*nbvtx     = NbVertex();
-  for(int opopo = 1; opopo<=nbvtx; opopo++) {
-    svtx.Value(opopo).Dump();
-  }*/
 }

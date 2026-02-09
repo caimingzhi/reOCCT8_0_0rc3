@@ -27,69 +27,37 @@ class gp_Elips;
 class Geom_Curve;
 class Geom_Surface;
 
-//! This class provides operators for analysis surfaces and curves of shapes
-//! in order to find out more simple geometry entities, which could replace
-//! existing complex (for example, BSpline) geometry objects with given tolerance.
 class ShapeAnalysis_CanonicalRecognition
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_EXPORT ShapeAnalysis_CanonicalRecognition();
 
-  //! constructor with shape initialisation
   Standard_EXPORT ShapeAnalysis_CanonicalRecognition(const TopoDS_Shape& theShape);
 
-  //! Sets shape
   Standard_EXPORT void SetShape(const TopoDS_Shape& theShape);
 
-  //! Returns input shape
   const TopoDS_Shape& GetShape() const { return myShape; }
 
-  //! Returns deviation between input geometry entity and analytical entity
   double GetGap() const { return myGap; }
 
-  //! Returns status of operation.
-  //! Current meaning of possible values of status:
-  //! -1 - algorithm is not initalazed by shape
-  //!  0 - no errors
-  //!  1 - error during any operation (usually - because of wrong input data)
-  //! Any operation (calling any methods like IsPlane(...), ...) can be performed
-  //! when current staue is equal 0.
-  //! If after any operation status != 0, it is necessary to set it 0 by method ClearStatus()
-  //! before calling other operation.
   int GetStatus() const { return myStatus; }
 
-  //! Returns status to be equal 0.
   void ClearStatus() { myStatus = 0; }
 
-  //! Returns true if the underlined surface can be represent by plane with tolerance theTol
-  //! and sets in thePln the result plane.
   Standard_EXPORT bool IsPlane(const double theTol, gp_Pln& thePln);
 
-  //! Returns true if the underlined surface can be represent by cylindrical one with tolerance
-  //! theTol and sets in theCyl the result cylinrical surface.
   Standard_EXPORT bool IsCylinder(const double theTol, gp_Cylinder& theCyl);
 
-  //! Returns true if the underlined surface can be represent by conical one with tolerance theTol
-  //! and sets in theCone the result conical surface.
   Standard_EXPORT bool IsCone(const double theTol, gp_Cone& theCone);
 
-  //! Returns true if the underlined surface can be represent by spherical one with tolerance theTol
-  //! and sets in theSphere the result spherical surface.
   Standard_EXPORT bool IsSphere(const double theTol, gp_Sphere& theSphere);
 
-  //! Returns true if the underlined curve can be represent by line with tolerance theTol
-  //! and sets in theLin the result line.
   Standard_EXPORT bool IsLine(const double theTol, gp_Lin& theLin);
 
-  //! Returns true if the underlined curve can be represent by circle with tolerance theTol
-  //! and sets in theCirc the result circle.
   Standard_EXPORT bool IsCircle(const double theTol, gp_Circ& theCirc);
 
-  //! Returns true if the underlined curve can be represent by ellipse with tolerance theTol
-  //! and sets in theCirc the result ellipse.
   Standard_EXPORT bool IsEllipse(const double theTol, gp_Elips& theElips);
 
 private:

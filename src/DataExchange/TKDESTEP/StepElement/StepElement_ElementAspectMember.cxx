@@ -14,21 +14,15 @@ static const char* aSurface3dEdge = "SURFACE_3D_EDGE";
 static const char* aSurface2dEdge = "SURFACE_2D_EDGE";
 static const char* aCurveEdge     = "CURVE_EDGE";
 
-//=================================================================================================
-
 StepElement_ElementAspectMember::StepElement_ElementAspectMember()
     : mycase(0)
 {
 }
 
-//=================================================================================================
-
 bool StepElement_ElementAspectMember::HasName() const
 {
   return mycase > 0;
 }
-
-//=================================================================================================
 
 const char* StepElement_ElementAspectMember::Name() const
 {
@@ -59,8 +53,6 @@ const char* StepElement_ElementAspectMember::Name() const
   }
   return "";
 }
-
-//=================================================================================================
 
 static int CompareNames(const char* name, int& numen)
 {
@@ -96,8 +88,6 @@ static int CompareNames(const char* name, int& numen)
   return thecase;
 }
 
-//=================================================================================================
-
 bool StepElement_ElementAspectMember::SetName(const char* name)
 {
   int numit = 0;
@@ -106,8 +96,6 @@ bool StepElement_ElementAspectMember::SetName(const char* name)
     SetInteger(numit);
   return (mycase > 0);
 }
-
-//=================================================================================================
 
 bool StepElement_ElementAspectMember::Matches(const char* name) const
 {

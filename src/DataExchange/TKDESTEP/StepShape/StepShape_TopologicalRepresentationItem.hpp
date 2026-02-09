@@ -9,7 +9,6 @@ class StepShape_TopologicalRepresentationItem : public StepRepr_RepresentationIt
 {
 
 public:
-  //! Returns a TopologicalRepresentationItem
   Standard_EXPORT StepShape_TopologicalRepresentationItem();
 
   DEFINE_STANDARD_RTTIEXT(StepShape_TopologicalRepresentationItem, StepRepr_RepresentationItem)

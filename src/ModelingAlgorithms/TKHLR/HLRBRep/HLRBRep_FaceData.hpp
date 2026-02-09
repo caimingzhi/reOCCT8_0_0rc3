@@ -17,20 +17,13 @@ public:
 
   Standard_EXPORT HLRBRep_FaceData();
 
-  //! <Or> is the orientation of the face. <Cl> is true
-  //! if the face belongs to a closed volume. <NW> is
-  //! the number of wires (or block of edges) of the
-  //! face.
   Standard_EXPORT void Set(const TopoDS_Face&       FG,
                            const TopAbs_Orientation Or,
                            const bool               Cl,
                            const int                NW);
 
-  //! Set <NE> the number of edges of the wire number
-  //! <WI>.
   Standard_EXPORT void SetWire(const int WI, const int NE);
 
-  //! Set the edge number <EWI> of the wire <WI>.
   Standard_EXPORT void SetWEdge(const int                WI,
                                 const int                EWI,
                                 const int                EI,
@@ -138,8 +131,6 @@ inline bool HLRBRep_FaceData::Selected() const
   return (myFlags & (int)FMaskSelected) != 0;
 }
 
-//=================================================================================================
-
 inline void HLRBRep_FaceData::Selected(const bool B)
 {
   if (B)
@@ -148,14 +139,10 @@ inline void HLRBRep_FaceData::Selected(const bool B)
     myFlags &= ~((int)FMaskSelected);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceData::Back() const
 {
   return (myFlags & (int)FMaskBack) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceData::Back(const bool B)
 {
@@ -165,14 +152,10 @@ inline void HLRBRep_FaceData::Back(const bool B)
     myFlags &= ~((int)FMaskBack);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceData::Side() const
 {
   return (myFlags & (int)FMaskSide) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceData::Side(const bool B)
 {
@@ -182,14 +165,10 @@ inline void HLRBRep_FaceData::Side(const bool B)
     myFlags &= ~((int)FMaskSide);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceData::Closed() const
 {
   return (myFlags & (int)FMaskClosed) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceData::Closed(const bool B)
 {
@@ -199,14 +178,10 @@ inline void HLRBRep_FaceData::Closed(const bool B)
     myFlags &= ~((int)FMaskClosed);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceData::Hiding() const
 {
   return (myFlags & (int)FMaskHiding) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceData::Hiding(const bool B)
 {
@@ -216,14 +191,10 @@ inline void HLRBRep_FaceData::Hiding(const bool B)
     myFlags &= ~((int)FMaskHiding);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceData::Simple() const
 {
   return (myFlags & (int)FMaskSimple) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceData::Simple(const bool B)
 {
@@ -233,14 +204,10 @@ inline void HLRBRep_FaceData::Simple(const bool B)
     myFlags &= ~((int)FMaskSimple);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceData::Cut() const
 {
   return (myFlags & (int)FMaskCut) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceData::Cut(const bool B)
 {
@@ -250,14 +217,10 @@ inline void HLRBRep_FaceData::Cut(const bool B)
     myFlags &= ~((int)FMaskCut);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceData::WithOutL() const
 {
   return (myFlags & (int)FMaskWithOutL) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceData::WithOutL(const bool B)
 {
@@ -267,14 +230,10 @@ inline void HLRBRep_FaceData::WithOutL(const bool B)
     myFlags &= ~((int)FMaskWithOutL);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceData::Plane() const
 {
   return (myFlags & (int)FMaskPlane) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceData::Plane(const bool B)
 {
@@ -284,14 +243,10 @@ inline void HLRBRep_FaceData::Plane(const bool B)
     myFlags &= ~((int)FMaskPlane);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceData::Cylinder() const
 {
   return (myFlags & (int)FMaskCylinder) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceData::Cylinder(const bool B)
 {
@@ -301,14 +256,10 @@ inline void HLRBRep_FaceData::Cylinder(const bool B)
     myFlags &= ~((int)FMaskCylinder);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceData::Cone() const
 {
   return (myFlags & (int)FMaskCone) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceData::Cone(const bool B)
 {
@@ -318,14 +269,10 @@ inline void HLRBRep_FaceData::Cone(const bool B)
     myFlags &= ~((int)FMaskCone);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceData::Sphere() const
 {
   return (myFlags & (int)FMaskSphere) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceData::Sphere(const bool B)
 {
@@ -335,14 +282,10 @@ inline void HLRBRep_FaceData::Sphere(const bool B)
     myFlags &= ~((int)FMaskSphere);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceData::Torus() const
 {
   return (myFlags & (int)FMaskTorus) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceData::Torus(const bool B)
 {
@@ -352,28 +295,20 @@ inline void HLRBRep_FaceData::Torus(const bool B)
     myFlags &= ~((int)FMaskTorus);
 }
 
-//=================================================================================================
-
 inline double HLRBRep_FaceData::Size() const
 {
   return mySize;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceData::Size(const double S)
 {
   mySize = S;
 }
 
-//=================================================================================================
-
 inline TopAbs_Orientation HLRBRep_FaceData::Orientation() const
 {
   return ((TopAbs_Orientation)(myFlags & (int)EMaskOrient));
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceData::Orientation(const TopAbs_Orientation O)
 {
@@ -381,21 +316,15 @@ inline void HLRBRep_FaceData::Orientation(const TopAbs_Orientation O)
   myFlags |= ((int)O & (int)EMaskOrient);
 }
 
-//=================================================================================================
-
 inline occ::handle<HLRAlgo_WiresBlock>& HLRBRep_FaceData::Wires()
 {
   return myWires;
 }
 
-//=================================================================================================
-
 inline HLRBRep_Surface& HLRBRep_FaceData::Geometry()
 {
   return myGeometry;
 }
-
-//=================================================================================================
 
 inline float HLRBRep_FaceData::Tolerance() const
 {

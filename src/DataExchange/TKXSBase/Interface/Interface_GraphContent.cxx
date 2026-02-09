@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Graph.hpp>
 #include <Interface_GraphContent.hpp>
@@ -34,7 +23,7 @@ Interface_GraphContent::Interface_GraphContent(const Interface_Graph&           
   Interface_EntityIterator list = agraph.Shareds(ent);
   int                      nb   = list.NbEntities();
   if (nb == 0)
-    return; // Liste redefinie a VIDE
+    return;
   for (; list.More(); list.Next())
   {
     const occ::handle<Standard_Transient>& curent = list.Value();
@@ -65,7 +54,7 @@ void Interface_GraphContent::GetFromGraph(const Interface_Graph& agraph, const i
 
 Interface_EntityIterator Interface_GraphContent::Result()
 {
-  Interface_EntityIterator iter; // On transvase ...
+  Interface_EntityIterator iter;
   for (Begin(); More(); Next())
     iter.GetOneItem(Value());
   return iter;
@@ -77,4 +66,4 @@ void Interface_GraphContent::Begin()
   Interface_EntityIterator::Start();
 }
 
-void Interface_GraphContent::Evaluate() {} // by default, Evaluate does nothing
+void Interface_GraphContent::Evaluate() {}

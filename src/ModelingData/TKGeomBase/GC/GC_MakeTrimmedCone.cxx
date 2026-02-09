@@ -8,12 +8,6 @@
 #include <gp_Pnt.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   Creation of a cone by four points.                                   +
-//   First two give the axis.                                             +
-//   The third gives the base radius.                                     +
-//   the third and the fourth demi-angle.                                 +
-//=========================================================================
 GC_MakeTrimmedCone::GC_MakeTrimmedCone(const gp_Pnt& P1,
                                        const gp_Pnt& P2,
                                        const gp_Pnt& P3,
@@ -34,9 +28,6 @@ GC_MakeTrimmedCone::GC_MakeTrimmedCone(const gp_Pnt& P1,
   }
 }
 
-//=========================================================================
-//=========================================================================
-
 GC_MakeTrimmedCone::GC_MakeTrimmedCone(const gp_Pnt& P1,
                                        const gp_Pnt& P2,
                                        const double  R1,
@@ -50,8 +41,6 @@ GC_MakeTrimmedCone::GC_MakeTrimmedCone(const gp_Pnt& P1,
     TheCone  = new Geom_RectangularTrimmedSurface(Cone.Value(), 0., 2. * M_PI, 0., D, true, true);
   }
 }
-
-//=================================================================================================
 
 const occ::handle<Geom_RectangularTrimmedSurface>& GC_MakeTrimmedCone::Value() const
 {

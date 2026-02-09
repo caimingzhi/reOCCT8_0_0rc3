@@ -7,11 +7,6 @@
 #include <gp_Vec.hpp>
 #include <Standard_OStream.hpp>
 
-//! defines a Scale node of VRML specifying transform
-//! properties.
-//! This node defines a 3D scaling about the origin.
-//! By default:
-//! myRotation = (1 1 1)
 class Vrml_Scale
 {
 public:

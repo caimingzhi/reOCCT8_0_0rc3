@@ -13,7 +13,6 @@ namespace
   class AnalyticalFilter
   {
   public:
-    //! Constructor.
     AnalyticalFilter(const IMeshData::IFaceHandle&            theDFace,
                      const GeomAbs_IsoType                    theIsoType,
                      const Handle(IMeshData::SequenceOfReal)& theParams,
@@ -35,7 +34,6 @@ namespace
     {
     }
 
-    //! Returns map of parameters supposed to be removed.
     const Handle(IMeshData::MapOfReal)& GetControlParametersToRemove(
       const IMeshTools_Parameters& theParameters)
     {
@@ -71,8 +69,6 @@ namespace
     }
 
   private:
-    //! Checks the given control point for deviation.
-    //! Returns number of steps to be used to move point iterator.
     int checkControlPointAndMoveOn(const int theIndex)
     {
       int aMoveSteps     = 0;
@@ -98,20 +94,16 @@ namespace
       if (((aSqDist > aSqMaxDeflection) || (anAngle > myParameters.AngleInterior))
           && aSqDist > myParameters.MinSize * myParameters.MinSize)
       {
-        // insertion
+
         myControlParams->InsertBefore(theIndex, aMidParam);
       }
       else
       {
-        // Here we should leave at least 3 parameters as far as
-        // we must have at least one parameter related to surface
-        // internals in order to prevent movement of triangle body
-        // outside the surface in case of highly curved ones, e.g.
-        // BSpline springs.
+
         if (((aSqDist < aSqMaxDeflection) || (anAngle < myParameters.AngleInterior))
             && myControlParams->Length() > 3 && theIndex < myControlParams->Length())
         {
-          // Remove too dense points
+
           const double aTmpParam = myControlParams->Value(theIndex + 1);
           if (checkParameterForDeflectionAndUpdateCache(aTmpParam))
           {
@@ -129,7 +121,6 @@ namespace
       return aMoveSteps;
     }
 
-    //! Checks whether the given param suits specified deflection. Updates cache.
     bool checkParameterForDeflectionAndUpdateCache(const double theParam)
     {
       gp_Pnt aTmpPnt;
@@ -139,19 +130,17 @@ namespace
       const double aTmpMidParam = 0.5 * (myPrevControlParam + theParam);
       const gp_Pnt aTmpMidPnt   = myIso->Value(aTmpMidParam);
 
-      // Lets check next parameter.
-      // If it also fits deflection, we can remove previous parameter.
       const double aSqDist =
         BRepMesh_GeomTool::SquareDeflectionOfSegment(myPrevControlPnt, aTmpPnt, aTmpMidPnt);
 
       if (aSqDist < myDFace->GetDeflection() * myDFace->GetDeflection())
       {
-        // Lets check parameters for angular deflection.
+
         if (myPrevControlVec.SquareMagnitude() < gp::Resolution()
             || aTmpVec.SquareMagnitude() < gp::Resolution()
             || myPrevControlVec.Angle(aTmpVec) < myParameters.AngleInterior)
         {
-          // For current Iso line we can remove this parameter.
+
           myControlParamsToRemove->Add(myCurrControlParam);
           myCurrControlParam = theParam;
           myCurrControlPnt   = aTmpPnt;
@@ -160,8 +149,7 @@ namespace
         }
         else
         {
-          // We have found a place on the surface refusing
-          // removement of this parameter.
+
           myParamsForbiddenToRemove->Add(myCurrParam);
           myControlParamsForbiddenToRemove->Add(myCurrControlParam);
         }
@@ -197,7 +185,6 @@ namespace
     gp_Vec myPrevControlVec;
   };
 
-  //! Adds param to map if it fits specified range.
   bool addParam(const double&                    theParam,
                 const std::pair<double, double>& theRange,
                 IMeshData::IMapOfReal&           theParams)
@@ -211,7 +198,6 @@ namespace
     return true;
   }
 
-  //! Initializes parameters map using CN intervals.
   bool initParamsFromIntervals(const NCollection_Array1<double>& theIntervals,
                                const std::pair<double, double>&  theRange,
                                const bool                        isSplitIntervals,
@@ -240,9 +226,6 @@ namespace
     return isAdded;
   }
 
-  //! Checks whether intervals should be split.
-  //! Returns true in case if it is impossible to compute normal
-  //! directly on intervals, false is returned elsewhere.
   bool toSplitIntervals(const occ::handle<Geom_Surface>& theSurf,
                         const NCollection_Array1<double> (&theIntervals)[2])
   {
@@ -266,15 +249,12 @@ namespace
         {
           return true;
         }
-        // TODO: do not split intervals if there is no normal in the middle of interval.
       }
     }
 
     return false;
   }
 } // namespace
-
-//=================================================================================================
 
 void BRepMesh_NURBSRangeSplitter::AdjustRange()
 {
@@ -290,8 +270,6 @@ void BRepMesh_NURBSRangeSplitter::AdjustRange()
                 && aRangeV.second <= 1.5;
   }
 }
-
-//=================================================================================================
 
 Handle(IMeshData::ListOfPnt2d) BRepMesh_NURBSRangeSplitter::GenerateSurfaceNodes(
   const IMeshTools_Parameters& theParameters) const
@@ -327,7 +305,6 @@ Handle(IMeshData::ListOfPnt2d) BRepMesh_NURBSRangeSplitter::GenerateSurfaceNodes
                                     theParameters,
                                     aTmpAlloc)};
 
-  // check intermediate isolines
   Handle(IMeshData::MapOfReal) aFixedParams[2] = {new IMeshData::MapOfReal(1, aTmpAlloc),
                                                   new IMeshData::MapOfReal(1, aTmpAlloc)};
 
@@ -352,11 +329,9 @@ Handle(IMeshData::ListOfPnt2d) BRepMesh_NURBSRangeSplitter::GenerateSurfaceNodes
   NCollection_MapAlgo::Subtract(*aParamsToRemove[0], *aFixedParams[0]);
   NCollection_MapAlgo::Subtract(*aParamsToRemove[1], *aFixedParams[1]);
 
-  // insert nodes of the regular grid
   Handle(IMeshData::ListOfPnt2d) aNodes =
     new IMeshData::ListOfPnt2d(new NCollection_IncAllocator(IMeshData::MEMORY_BLOCK_SIZE_HUGE));
 
-  // insert nodes of the regular grid
   for (int i = 1; i <= aParams[0]->Length(); ++i)
   {
     const double aParam1 = aParams[0]->Value(i);
@@ -380,17 +355,13 @@ Handle(IMeshData::ListOfPnt2d) BRepMesh_NURBSRangeSplitter::GenerateSurfaceNodes
   return aNodes;
 }
 
-//=================================================================================================
-
 int BRepMesh_NURBSRangeSplitter::getUndefinedIntervalNb(
   const occ::handle<Adaptor3d_Surface>& theSurface,
   const bool                            isU,
-  const GeomAbs_Shape /*theContinuity*/) const
+  const GeomAbs_Shape) const
 {
   return (isU ? theSurface->NbUPoles() : theSurface->NbVPoles()) - 1;
 }
-
-//=================================================================================================
 
 void BRepMesh_NURBSRangeSplitter::getUndefinedInterval(
   const occ::handle<Adaptor3d_Surface>& theSurface,
@@ -430,8 +401,6 @@ void BRepMesh_NURBSRangeSplitter::getUndefinedInterval(
   }
 }
 
-//=================================================================================================
-
 bool BRepMesh_NURBSRangeSplitter::initParameters() const
 {
   const GeomAbs_Shape                     aContinuity = GeomAbs_CN;
@@ -448,7 +417,7 @@ bool BRepMesh_NURBSRangeSplitter::initParameters() const
                                isSplitIntervals,
                                const_cast<IMeshData::IMapOfReal&>(GetParametersU())))
   {
-    // if (!grabParamsOfEdges (Edge_Frontier, Param_U))
+
     {
       return false;
     }
@@ -459,7 +428,7 @@ bool BRepMesh_NURBSRangeSplitter::initParameters() const
                                isSplitIntervals,
                                const_cast<IMeshData::IMapOfReal&>(GetParametersV())))
   {
-    // if (!grabParamsOfEdges (Edge_Frontier, Param_V))
+
     {
       return false;
     }
@@ -467,8 +436,6 @@ bool BRepMesh_NURBSRangeSplitter::initParameters() const
 
   return grabParamsOfEdges(Edge_Internal, Param_U | Param_V);
 }
-
-//=================================================================================================
 
 bool BRepMesh_NURBSRangeSplitter::grabParamsOfEdges(const EdgeType theEdgeType,
                                                     const int      theParamDimensionFlag) const
@@ -516,8 +483,6 @@ bool BRepMesh_NURBSRangeSplitter::grabParamsOfEdges(const EdgeType theEdgeType,
   return true;
 }
 
-//=================================================================================================
-
 Handle(IMeshData::SequenceOfReal) BRepMesh_NURBSRangeSplitter::computeGrainAndFilterParameters(
   const IMeshData::IMapOfReal&                 theSourceParams,
   const double                                 theTol2d,
@@ -526,7 +491,7 @@ Handle(IMeshData::SequenceOfReal) BRepMesh_NURBSRangeSplitter::computeGrainAndFi
   const IMeshTools_Parameters&                 theParameters,
   const occ::handle<NCollection_IncAllocator>& theAllocator) const
 {
-  // Sort and filter sequence of parameters
+
   double aMinDiff = Precision::PConfusion();
   if (theDelta < 1.)
   {
@@ -545,8 +510,6 @@ Handle(IMeshData::SequenceOfReal) BRepMesh_NURBSRangeSplitter::computeGrainAndFi
   return filterParameters(theSourceParams, aMinDiff, aDiff, theAllocator);
 }
 
-//=================================================================================================
-
 Handle(IMeshData::SequenceOfReal) BRepMesh_NURBSRangeSplitter::filterParameters(
   const IMeshData::IMapOfReal&                 theParams,
   const double                                 theMinDist,
@@ -555,7 +518,6 @@ Handle(IMeshData::SequenceOfReal) BRepMesh_NURBSRangeSplitter::filterParameters(
 {
   Handle(IMeshData::SequenceOfReal) aResult = new IMeshData::SequenceOfReal(theAllocator);
 
-  // Sort sequence of parameters
   const int anInitLen = theParams.Extent();
 
   if (anInitLen < 1)
@@ -570,7 +532,6 @@ Handle(IMeshData::SequenceOfReal) BRepMesh_NURBSRangeSplitter::filterParameters(
 
   std::sort(aParamArray.begin(), aParamArray.end());
 
-  // mandatory pre-filtering using the first (minimal) filter value
   int aParamLength = 1;
   for (j = 2; j <= anInitLen; j++)
   {
@@ -581,7 +542,6 @@ Handle(IMeshData::SequenceOfReal) BRepMesh_NURBSRangeSplitter::filterParameters(
     }
   }
 
-  // perform filtering on series
   double aLastAdded, aLastCandidate;
   bool   isCandidateDefined = false;
   aLastAdded                = aParamArray(1);
@@ -593,7 +553,7 @@ Handle(IMeshData::SequenceOfReal) BRepMesh_NURBSRangeSplitter::filterParameters(
     double aVal = aParamArray(j);
     if (aVal - aLastAdded > theFilterDist)
     {
-      // adds the parameter
+
       if (isCandidateDefined)
       {
         aLastAdded         = aLastCandidate;

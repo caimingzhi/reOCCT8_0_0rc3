@@ -47,24 +47,8 @@
 
 #include <cstdio>
 
-// #include <SWDRAW_ShapeUpgrade.hpp>
-// #include <ShapeUpgrade_SupportModification.hxx>
-// #include <ShapeExtend_WireData.hpp>
-// #include <ShapeAnalysis_Shell.hpp>
-// #include <ShapeAnalysis_WireOrder.hpp>
-// #include <ShapeAnalysis_Wire.hpp>
-// #include <ShapeUpgrade_ShellSewing.hpp>
-//  the plane (equation z=0) shared by PlaneDividedFaceContinuity and PlaneGridShell
-// static occ::handle<Geom_Plane> ThePlane= new Geom_Plane(0,0,1,0);
-//=================================================================================================
-
 static int DT_ShapeDivide(Draw_Interpretor& di, int n, const char** a)
 {
-  // DT_ShapeDivide result Shape Tol
-  // a[1]= result
-  // a[2]= input Face/Surface
-  // a[3] si n>3= Wire/Face
-  // a[n-1]= Tolerance
 
   if (n < 3)
   {
@@ -72,28 +56,21 @@ static int DT_ShapeDivide(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  // try to read a shape:
   TopoDS_Shape inputShape = DBRep::Get(a[2]);
   if (inputShape.IsNull())
   {
     di << "Unknown shape\n";
     return 1;
   }
-  // a[2] is a shape. managing:
-  // DT_ShapeDivide result Face Tol
 
-  // giving a face is available only in the constructor:
-  // we make the whole and quit.
   ShapeUpgrade_ShapeDivideContinuity tool(inputShape);
 
-  // tolerance is optional
   if (n == 4)
   {
     double Tol = Draw::Atof(a[3]);
     tool.SetTolerance(Tol);
   }
 
-  //  theTool.SetGlobalCriterion(GeomAbs_C1);
   tool.Perform();
   TopoDS_Shape res = tool.Result();
 
@@ -132,8 +109,6 @@ static int DT_ShapeDivide(Draw_Interpretor& di, int n, const char** a)
   if (tool.Status(ShapeExtend_FAIL8))
     di << "Status: FAIL8\n";
 
-  // fixes
-
   ShapeFix::SameParameter(res, false);
 
   DBRep::Set(a[1], res);
@@ -148,7 +123,6 @@ static int DT_ShapeConvertRev(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  // try to read a shape:
   TopoDS_Shape inputShape = DBRep::Get(a[2]);
   if (inputShape.IsNull())
   {
@@ -223,187 +197,12 @@ static int DT_ShapeConvertRev(Draw_Interpretor& di, int n, const char** a)
   if (tool.Status(ShapeExtend_FAIL8))
     di << "Status: FAIL8\n";
 
-  // fixes
-
   ShapeFix::SameParameter(res, false);
 
   DBRep::Set(a[1], res);
   return 0;
 }
 
-/*
-  if (!inputShape.IsNull()) {
-    // a[2] is a shape. managing:
-    // DT_ShapeDivide result Face Tol
-
-    TopoDS_Face  inputFace = TopoDS::Face(inputShape);
-    if (inputFace.IsNull()) {
-      di << a[2] << " is not a face\n";
-      return 1;
-    }
-
-    // giving a face is available only in the constructor:
-    // we make the whole and quit.
-    ShapeUpgrade_ShapeDivideContinuity theTool(inputFace);
-
-    // tolerance is optional
-    if (n==4) {
-      double Tol=Draw::Atof(a[n-1]);
-      theTool.SetTolerance(Tol);
-    }
-
-    theTool.SetGlobalCriterion(GeomAbs_C1);
-    theTool.Build();
-    if (!theTool.IsDone()) {
-      ShapeUpgrade_Error theError=theTool.Error();
-      di << "Not done: error=";
-      if (theError==ShapeUpgrade_Done)
-    di << "Done\n";
-      else if (theError==ShapeUpgrade_NotDone)
-    di << "NotDone\n";
-      else if (theError==ShapeUpgrade_EmptyShell)
-    di << "EmptyShell\n";
-      else if (theError==ShapeUpgrade_InvalidCriterion)
-    di << "InvalidCriterion\n";
-      else if (theError==ShapeUpgrade_InvalidGridSurface)
-    di << "InvalidGridSurface\n";
-      else if (theError==ShapeUpgrade_DegeneratedEdge)
-    di << "DegeneratedEdge\n";
-      else if (theError==ShapeUpgrade_NoSurface)
-    di << "NoSurface\n";
-      else if (theError==ShapeUpgrade_NoTolerance)
-    di << "NoTolerance\n";
-      return 1;
-    }
-    TopoDS_Shell res = theTool.Shell();
-    DBRep::Set(a[1],res);
-
-    return 0;
-  }
-  else {
-    // not a face: we can use the empty constructor.
-    ShapeUpgrade_ShapeDivideContinuity theTool;
-    double Tol=Draw::Atof(a[n-1]);
-    theTool.SetTolerance(Tol);
-    theTool.SetGlobalCriterion(GeomAbs_C1);
-
-    // try to read a surface:
-    occ::handle<Geom_Surface> GS = DrawTrSurf::GetSurface(a[2]);
-    if (! GS.IsNull()) {
-      // a[2] is a surface. managing the configurations:
-      // DT_ShapeDivide result Surface Tol
-      // DT_ShapeDivide result Surface Face Tol
-      // DT_ShapeDivide result Surface Wire Surf Tol
-
-      theTool.SetSupport(GS);
-
-      // try to read a Wire or a Face:
-      if (n>=5) {
-    TopoDS_Shape inputBoundary=DBRep::Get(a[3]);
-    if (inputBoundary.IsNull()) {
-      di << "Invalid Boundary\n";
-      return 1;
-    }
-    TopoDS_Wire WireBoundary = TopoDS::Wire(inputBoundary);
-    if (!WireBoundary.IsNull()) {
-      // DT_ShapeDivide result Surface Wire Surf Tol
-      occ::handle<Geom_Surface> WireSupport = DrawTrSurf::GetSurface(a[4]);
-      if (WireSupport.IsNull()) {
-        di << "Invalid Surface supporting the Wire\n";
-        return 1;
-      }
-      theTool.SetBoundary(WireBoundary, WireSupport);
-    }
-    else {
-      TopoDS_Face  FaceBoundary = TopoDS::Face(inputBoundary);
-      // DT_ShapeDivide result Surface Face Tol
-      theTool.SetBoundary(FaceBoundary);
-    }
-      }
-    }
-    else {
-      // it must be a grid: managing the configurations:
-      // DT_ShapeDivide result NbU NbV {Surf_u_v...} Tol
-      // DT_ShapeDivide result NbU NbV {Surf_u_v...} Face Tol
-      // DT_ShapeDivide result NbU NbV {Surf_u_v...} Wire Surf Tol
-      if (n<6) {
-    di << "bad number of arguments for grid input\n";
-    return 1;
-      }
-      // number of surf:
-      int NbU=Draw::Atoi(a[2]);
-      int NbV=Draw::Atoi(a[3]);
-      if (n < 4+NbU*NbV+1) {
-    di << "bad number of arguments\n";
-    return 1;
-      }
-
-      occ::handle<NCollection_HArray2<occ::handle<Geom_Surface>>>
-    TheGridSurf= new NCollection_HArray2<occ::handle<Geom_Surface>>(1,NbU,1,NbV);
-
-      for (int iu=1; iu<=NbU; iu++) {
-    for (int jv=1; jv<=NbV; jv++) {
-      occ::handle<Geom_Surface> GS = DrawTrSurf::GetSurface(a[4+(iu-1)*NbV+jv-1]);
-      TheGridSurf->SetValue(iu,jv,GS);
-    }
-      }
-      theTool.SetSupport(TheGridSurf,Tol);
-
-      // try to read a Wire or a Face:
-      if (n>=6+NbU*NbV) {
-    TopoDS_Shape inputBoundary=DBRep::Get(a[4+NbU*NbV]);
-    if (inputBoundary.IsNull()) {
-      di << "Invalid Boundary\n";
-      return 1;
-    }
-    TopoDS_Wire  WireBoundary = TopoDS::Wire(inputBoundary);
-    if (!WireBoundary.IsNull()) {
-      // DT_ShapeDivide result Surface Wire Surf Tol
-      occ::handle<Geom_Surface> WireSupport = DrawTrSurf::GetSurface(a[4+NbU*NbV+1]);
-      if (WireSupport.IsNull()) {
-        di << "Invalid Surface supporting the Wire\n";
-        return 1;
-      }
-      theTool.SetBoundary(WireBoundary, WireSupport);
-    }
-    else {
-      TopoDS_Face  FaceBoundary = TopoDS::Face(inputBoundary);
-      // DT_ShapeDivide result Surface Face Tol
-      theTool.SetBoundary(FaceBoundary);
-    }
-      }
-    }
-
-    theTool.Build();
-    if (!theTool.IsDone()) {
-      ShapeUpgrade_Error theError=theTool.Error();
-      di << "Not done: error=";
-      if (theError==ShapeUpgrade_Done)
-    di << "Done\n";
-      else if (theError==ShapeUpgrade_NotDone)
-    di << "NotDone\n";
-      else if (theError==ShapeUpgrade_EmptyShell)
-    di << "EmptyShell\n";
-      else if (theError==ShapeUpgrade_InvalidCriterion)
-    di << "InvalidCriterion\n";
-      else if (theError==ShapeUpgrade_InvalidGridSurface)
-    di << "InvalidGridSurface\n";
-      else if (theError==ShapeUpgrade_DegeneratedEdge)
-    di << "DegeneratedEdge\n";
-      else if (theError==ShapeUpgrade_NoSurface)
-    di << "NoSurface\n";
-      else if (theError==ShapeUpgrade_NoTolerance)
-    di << "NoTolerance\n";
-      return 1;
-    }
-
-    TopoDS_Shell res = theTool.Shell();
-    DBRep::Set(a[1],res);
-
-    return 0;
-  }
-}
-*/
 static int DT_ShapeConvert(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 5)
@@ -412,7 +211,6 @@ static int DT_ShapeConvert(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  // try to read a shape:
   TopoDS_Shape inputShape = DBRep::Get(a[2]);
   if (inputShape.IsNull())
   {
@@ -466,8 +264,6 @@ static int DT_ShapeConvert(Draw_Interpretor& di, int n, const char** a)
     di << "Status: FAIL7\n";
   if (tool.Status(ShapeExtend_FAIL8))
     di << "Status: FAIL8\n";
-
-  // fixes
 
   ShapeFix::SameParameter(res, false);
 
@@ -537,161 +333,15 @@ static int DT_SplitAngle(Draw_Interpretor& di, int n, const char** a)
   if (tool.Status(ShapeExtend_FAIL8))
     di << "Status: FAIL8\n";
 
-  // fixes
-
   ShapeFix::SameParameter(res, false);
 
   DBRep::Set(a[1], res);
   return 0;
 }
 
-/*
-//=======================================================================
-//function : DT_PlaneDividedFace
-//purpose  : Transfer into a plane with boundary divided
-//
-//
-//=======================================================================
-static int DT_PlaneDividedFace (Draw_Interpretor& di,
-                   int n, const char** a)
-
-{
-  // a[1]= result
-  // a[2]= input Face
-  // a[3]= Tolerance
-
-  if (n !=4) {
-    di << "bad number of arguments\n";
-    return 1;
-  }
-
-  double      Tol=Draw::Atof(a[3]);
-  TopoDS_Shape inputShape=DBRep::Get(a[2]);
-  TopoDS_Face  inputFace = TopoDS::Face(inputShape);
-  if (inputFace.IsNull()) {
-    di << a[2] << " is not a face\n";
-    return 1;
-  }
-
-  ShapeUpgrade_PlaneDividedFace theTool(ThePlane);
-  theTool.Init(inputFace);
-  //theTool.SetBoundaryCriterion(GeomAbs_C1);
-  //theTool.SetTolerance(Tol);
-  theTool.Build();
-  if (!theTool.IsDone()) {
-    di << "Not done\n";
-    return 1;
-  }
-
-  TopoDS_Face res = theTool.Face();
-  DBRep::Set(a[1],res);
-
-  double the2d3dFactor=theTool.Get2d3dFactor();
-  di << "2d3dFactor="<<the2d3dFactor<< "\n";
-  return 0;
-}
-
-//=======================================================================
-//function : DT_PlaneGridShell
-//purpose  : Create a Plane Grid Shell from U and V knots
-//
-//
-//=======================================================================
-static int DT_PlaneGridShell (Draw_Interpretor& di,
-                   int n, const char** a)
-
-{
-
-  if (n < 4) return 1;
-  // a[1]= result
-  // a[2]= NbU >=2
-  // a[3]= NbV >=2
-  // a[4..]= {UKnots}
-  // a[4+NbU...] = {VKnots}
-  // a[4+NbU+NbV+1] = Tol
-
-  // number of knots:
-  int NbU=Draw::Atoi(a[2]);
-  int NbV=Draw::Atoi(a[3]);
-  if (n != 4+NbU+NbV+1) {
-    di << "bad number of arguments\n";
-    return 1;
-  }
-
-  NCollection_Array1<double> TheUKnots(1,NbU);
-  NCollection_Array1<double> TheVKnots(1,NbV);
-
-  for (int ii=1; ii<=NbU; ii++) {
-    TheUKnots(ii)=Draw::Atof(a[4+ii-1]);
-  }
-  for (ii=1; ii<=NbV; ii++) {
-    TheVKnots(ii)=Draw::Atof(a[4+NbU+ii-1]);
-  }
-
-  double Tol=Draw::Atof(a[4+NbU+NbV]);
-
-  ShapeUpgrade_PlaneGridShell TheGrid(ThePlane,TheUKnots,TheVKnots,Tol);
-
-  TopoDS_Shell res = TheGrid.Shell();
-  DBRep::Set(a[1],res);
-
-  return 0;
-}
-
-//=======================================================================
-//function : DT_PlaneFaceCommon
-//purpose  : Common between a plane Face and a Shell whose all Faces are
-//           laying in the same plane
-//
-//
-//=======================================================================
-static int DT_PlaneFaceCommon (Draw_Interpretor& di,
-                   int n, const char** a)
-
-{
-  // a[1]= result
-  // a[2]= input Face
-  // a[3]= input Shell
-
-  if (n !=4) {
-    di << "bad number of arguments\n";
-    return 1;
-  }
-
-  TopoDS_Shape inputShape= DBRep::Get(a[2]);
-  TopoDS_Face  inputFace = TopoDS::Face(inputShape);
-  if (inputFace.IsNull()) {
-    di << a[2] << " is not a face\n";
-    return 1;
-  }
-
-  inputShape = DBRep::Get(a[3]);
-  TopoDS_Shell inputShell = TopoDS::Shell(inputShape);
-  if (inputShell.IsNull()) {
-    di << a[3] << " is not a shell\n";
-    return 1;
-  }
-
-  ShapeUpgrade_PlaneFaceCommon theTool;
-  theTool.Init(inputFace,inputShell);
-
-  TopoDS_Shell res = theTool.Shell();
-  DBRep::Set(a[1],res);
-
-  return 0;
-}*/
-
-//=======================================================================
-// function : DT_SplitCurve
-// purpose  :  Splits the curve with C1 criterion
-//
-//
-//=======================================================================
 static int DT_SplitCurve(Draw_Interpretor& di, int n, const char** a)
 
 {
-  // a[1]= input curve. This name is used with a suffix to name the output curves
-  // a[2]= Tolerance
 
   if (n < 3)
   {
@@ -730,17 +380,9 @@ static int DT_SplitCurve(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : DT_SplitCurve2d
-// purpose  :  Splits the curve with C1 criterion
-//
-//
-//=======================================================================
 static int DT_SplitCurve2d(Draw_Interpretor& di, int n, const char** a)
 
 {
-  // a[1]= input 2d curve. This name is used with a suffix to name the output curves
-  // a[2]= Tolerance
 
   if (n < 3)
   {
@@ -779,111 +421,9 @@ static int DT_SplitCurve2d(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : DT_SplitSurface
-// purpose  :  Splits the surface with C1 criterion
-//
-//
-//=======================================================================
-/*
-static int DT_SplitWire (Draw_Interpretor& di,
-                      int n, const char** a)
-{
-
-  if (n <3) {
-    di << "bad number of arguments\n";
-    return 1;
-  }
-
-  TopoDS_Face source = TopoDS::Face(DBRep::Get(a[2]));
-  if(source.IsNull()) {
-    di <<"Shape is not face\n";
-    return 1;
-  }
-  TopoDS_Iterator wi(source);
-  if(!wi.More()) {
-    di <<"Shape is face without wire\n";
-    return 1;
-  }
-
-  TopoDS_Wire wire = TopoDS::Wire(wi.Value());
-  occ::handle<ShapeUpgrade_WireDivideContinuity> tool = new ShapeUpgrade_WireDivideContinuity;
-  tool->Init(wire,source);
-  if(n >=4 ) {
-    double      Tol=Draw::Atof(a[3]);
-  }
-  occ::handle<ShapeBuild_ReShape> context = new ShapeBuild_ReShape;
-  tool->Perform(context);
-  TopoDS_Wire result = tool->Wire();
-  DBRep::Set(a[1],result);
-  return 0;
-}
-*/
-/*
-static int DT_SplitFace (Draw_Interpretor& di,
-                      int n, const char** a)
-{
-
-  if (n <3) {
-    di << "bad number of arguments\n";
-    return 1;
-  }
-
-  TopoDS_Face source = TopoDS::Face(DBRep::Get(a[2]));
-  if(source.IsNull()) {
-    di <<"Shape is not face\n";
-    return 1;
-  }
-  occ::handle<ShapeUpgrade_ShapeDivideContinuity> tool = new ShapeUpgrade_FaceDivideContinuity;
-  tool->Init(source);
-  if(n >=4 ) {
-    double      Tol=Draw::Atof(a[3]);
-    tool->SetPrecision(Tol);
-  }
-
-  occ::handle<ShapeBuild_ReShape> context = new ShapeBuild_ReShape;
-  tool->Perform(context);
-  TopoDS_Shape result = tool->Result();
-
-  if ( tool->Status ( ShapeExtend_OK ) ) di << "Status: OK\n";
-  if ( tool->Status ( ShapeExtend_DONE1 ) ) di << "Status: DONE1\n";
-  if ( tool->Status ( ShapeExtend_DONE2 ) ) di << "Status: DONE2\n";
-  if ( tool->Status ( ShapeExtend_DONE3 ) ) di << "Status: DONE3\n";
-  if ( tool->Status ( ShapeExtend_DONE4 ) ) di << "Status: DONE4\n";
-  if ( tool->Status ( ShapeExtend_DONE5 ) ) di << "Status: DONE5\n";
-  if ( tool->Status ( ShapeExtend_DONE6 ) ) di << "Status: DONE6\n";
-  if ( tool->Status ( ShapeExtend_DONE7 ) ) di << "Status: DONE7\n";
-  if ( tool->Status ( ShapeExtend_DONE8 ) ) di << "Status: DONE8\n";
-  if ( tool->Status ( ShapeExtend_FAIL1 ) ) di << "Status: FAIL1\n";
-  if ( tool->Status ( ShapeExtend_FAIL2 ) ) di << "Status: FAIL2\n";
-  if ( tool->Status ( ShapeExtend_FAIL3 ) ) di << "Status: FAIL3\n";
-  if ( tool->Status ( ShapeExtend_FAIL4 ) ) di << "Status: FAIL4\n";
-  if ( tool->Status ( ShapeExtend_FAIL5 ) ) di << "Status: FAIL5\n";
-  if ( tool->Status ( ShapeExtend_FAIL6 ) ) di << "Status: FAIL6\n";
-  if ( tool->Status ( ShapeExtend_FAIL7 ) ) di << "Status: FAIL7\n";
-  if ( tool->Status ( ShapeExtend_FAIL8 ) ) di << "Status: FAIL8\n";
-
-  // fixes
-
-  ShapeFix::SameParameter ( result, false );
-
-  DBRep::Set(a[1],result);
-  return 0;
-}
-*/
-
 static int DT_SplitSurface(Draw_Interpretor& di, int n, const char** a)
 
 {
-  // a[1]= result (used with a suffix to name the output surfaces)
-  // a[2]= input surface.
-  // a[3]= Tolerance
-
-  // a[1]= result
-  // a[2]= nbU
-  // a[3]= nbV
-  // a[3+1]..a[3+nbU*nbV] = Input Surfaces
-  // a[4+nbU*nbV]= Tolerance
 
   if (n < 4)
   {
@@ -891,35 +431,15 @@ static int DT_SplitSurface(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  // clang-format off
-  occ::handle<ShapeUpgrade_SplitSurfaceContinuity> theTool = new ShapeUpgrade_SplitSurfaceContinuity;//S4137
-  // clang-format on
+  occ::handle<ShapeUpgrade_SplitSurfaceContinuity> theTool =
+    new ShapeUpgrade_SplitSurfaceContinuity;
 
   double Tol   = Draw::Atof(a[3]);
   int    Split = Draw::Atoi(a[4]);
   theTool->SetTolerance(Tol);
   theTool->SetCriterion(GeomAbs_C1);
   occ::handle<Geom_Surface> GS = DrawTrSurf::GetSurface(a[2]);
-  /*
-    if ( GS.IsNull()) {
-      // Case of composite grid surface
-      di << "composite surf\n";
-      int      nbU=Draw::Atoi(a[2]);
-      int      nbV=Draw::Atoi(a[3]);
-      if (nbU==0 || nbV==0) return 1;
-      occ::handle<NCollection_HArray2<occ::handle<Geom_Surface>>>
-        theGrid= new NCollection_HArray2<occ::handle<Geom_Surface>>(1,nbU,1,nbV);
-      for (int iu=1; iu<=nbU; iu++) {
-        for (int iv=1; iv<=nbV; iv++) {
-      occ::handle<Geom_Surface> GS = DrawTrSurf::GetSurface(a[3+(iu-1)*nbV+iv]);
-      theGrid->SetValue(iu,iv,GS);
-        }
-      }
-      di << "appel a SplitSurface::Init\n";
-      theTool->Init(theGrid);
-    }
-    else {*/
-  // Case of single surface
+
   di << "single surf\n";
 
   di << "appel a SplitSurface::Init\n";
@@ -945,8 +465,7 @@ static int DT_SplitSurface(Draw_Interpretor& di, int n, const char** a)
   di << "nb GlobalU ; nb GlobalV=" << nbGlU << " " << nbGlV;
   for (int iu = 1; iu <= nbGlU; iu++)
     di << " " << GlobalU->Value(iu);
-  //  di <<"\n";
-  //  di << "nb GlobalV="<<nbGlV;
+
   for (int iv = 1; iv <= nbGlV; iv++)
     di << " " << GlobalV->Value(iv);
   di << "\n";
@@ -971,19 +490,15 @@ static int DT_SplitSurface(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//---------------gka
-//=================================================================================================
-
 static int offset2dcurve(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 4)
   {
     di << "result + curve + offset\n";
 
-    return 1 /* Error */;
+    return 1;
   }
-  //  const char* arg1 = argv[1];
-  //  const char* arg2 = argv[2];
+
   double                    Offset = Draw::Atof(argv[3]);
   occ::handle<Geom2d_Curve> GC     = DrawTrSurf::GetCurve2d(argv[2]);
   if (GC.IsNull())
@@ -993,18 +508,15 @@ static int offset2dcurve(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int offsetcurve(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 5)
   {
     di << "result + curve + offset + Dir\n";
 
-    return 1 /* Error */;
+    return 1;
   }
-  //  const char* arg1 = argv[1];
-  //  const char* arg2 = argv[2];
+
   double                  Offset = Draw::Atof(argv[3]);
   occ::handle<Geom_Curve> GC     = DrawTrSurf::GetCurve(argv[2]);
   if (GC.IsNull())
@@ -1016,8 +528,6 @@ static int offsetcurve(Draw_Interpretor& di, int argc, const char** argv)
   DrawTrSurf::Set(argv[1], offcrv);
   return 0;
 }
-
-//=================================================================================================
 
 static int splitface(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1081,7 +591,7 @@ static int splitface(Draw_Interpretor& di, int argc, const char** argv)
   NCollection_Sequence<double> vval;
 
   bool byV = false;
-  int  i; // svv Jan11 2000 : porting on DEC
+  int  i;
   for (i = 3; i < argc; i++)
   {
     if (argv[i][0] == 'u')
@@ -1116,7 +626,7 @@ static int splitface(Draw_Interpretor& di, int argc, const char** argv)
     di << "Splitting by U: ";
     for (int j = 1; j <= uval.Length(); j++)
     {
-      // std::cout << ( i >j ? ", " : "" ) << uval(j);
+
       if (i > j)
       {
         di << ", ";
@@ -1134,7 +644,7 @@ static int splitface(Draw_Interpretor& di, int argc, const char** argv)
     di << "Splitting by V: ";
     for (int j = 1; j <= vval.Length(); j++)
     {
-      // std::cout << ( j >1 ? ", " : "" ) << vval(j);
+
       if (j > 1)
       {
         di << ", ";
@@ -1446,9 +956,6 @@ static ShapeUpgrade_UnifySameDomain& Unifier()
   return sUnifier;
 }
 
-//=======================================================================
-// unifysamedom
-//=======================================================================
 static int unifysamedom(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
@@ -1472,7 +979,6 @@ static int unifysamedom(Draw_Interpretor& di, int n, const char** a)
   if (aShape.IsNull())
     return 1;
 
-  // default values
   bool                                                   anUFaces        = true;
   bool                                                   anUEdges        = true;
   bool                                                   anConBS         = false;
@@ -1559,7 +1065,7 @@ static int copytranslate(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-static int reshape(Draw_Interpretor& /*theDI*/, int theArgc, const char** theArgv)
+static int reshape(Draw_Interpretor&, int theArgc, const char** theArgv)
 {
   if (theArgc < 4)
   {
@@ -1578,7 +1084,6 @@ static int reshape(Draw_Interpretor& /*theDI*/, int theArgc, const char** theArg
 
   TopAbs_ShapeEnum aShapeLevel = TopAbs_SHAPE;
 
-  // Record the requested modifications
   for (int i = 3; i < theArgc; ++i)
   {
     const char*             anArg = theArgv[i];
@@ -1668,7 +1173,6 @@ static int reshape(Draw_Interpretor& /*theDI*/, int theArgc, const char** theArg
     }
   }
 
-  // Apply all the recorded modifications
   TopoDS_Shape aResult = aReShaper->Apply(aSource, aShapeLevel);
   if (aResult.IsNull())
   {
@@ -1680,8 +1184,6 @@ static int reshape(Draw_Interpretor& /*theDI*/, int theArgc, const char** theArg
   return 0;
 }
 
-//=================================================================================================
-
 void SWDRAW_ShapeUpgrade::InitCommands(Draw_Interpretor& theCommands)
 {
   static int initactor = 0;
@@ -1691,7 +1193,7 @@ void SWDRAW_ShapeUpgrade::InitCommands(Draw_Interpretor& theCommands)
   }
   initactor = 1;
 
-  const char* g = SWDRAW::GroupName(); // "Tests of DivideTool";
+  const char* g = SWDRAW::GroupName();
 
   theCommands.Add("DT_ShapeDivide",
                   "DT_ShapeDivide Result Shape Tol: Divides shape with C1 Criterion",
@@ -1717,20 +1219,6 @@ void SWDRAW_ShapeUpgrade::InitCommands(Draw_Interpretor& theCommands)
                   __FILE__,
                   DT_ShapeConvertRev,
                   g);
-  /*  theCommands.Add("DT_PlaneDividedFace",
-            "DT_PlaneDividedFace Result Face Tol: Transfer into a plane with boundary divided",
-            __FILE__,
-            DT_PlaneDividedFace,g);
-
-    theCommands.Add("DT_PlaneGridShell",
-            "DT_PlaneGridShell Result NbU NbV {UKnots} {VKnots} Tol : Create a plane grid Shell",
-            __FILE__,
-            DT_PlaneGridShell,g);
-
-    theCommands.Add("DT_PlaneFaceCommon",
-            "DT_PlaneFaceCommon Result Face Shell: Common between a plane Face and a Shell",
-            __FILE__,
-            DT_PlaneFaceCommon,g);*/
 
   theCommands.Add("DT_SplitCurve2d",
                   "DT_SplitCurve2d Curve Tol: Splits the curve with C1 criterion",
@@ -1751,22 +1239,6 @@ void SWDRAW_ShapeUpgrade::InitCommands(Draw_Interpretor& theCommands)
     DT_SplitSurface,
     g);
 
-  /*theCommands.Add("DT_SupportModification",
-          "DT_SupportModification Result Shell Surface 2d3dFactor: Surface will support all the
-     faces",
-          __FILE__,
-          DT_SupportModification,g);*/
-
-  //  theCommands.Add("DT_SpltWire","DT_SpltWire Result Wire Tol",
-  //		  __FILE__,DT_SplitWire,g);
-
-  //  theCommands.Add("DT_SplitFace", "DT_SplitFace Result Face Tol",
-  //		  __FILE__, DT_SplitFace,g);
-
-  //  theCommands.Add("DT_Debug", "DT_Debug 0/1 : activation/deactivation of the debug messages",
-  //		  __FILE__, DT_Debug,g);
-  //  theCommands.Add ("shellsolid","option[a-b-c-f] shape result",
-  //		   __FILE__,shellsolid,g);
   theCommands.Add("offset2dcurve", "result curve offset", __FILE__, offset2dcurve, g);
 
   theCommands.Add("offsetcurve", "result curve offset dir", __FILE__, offsetcurve, g);

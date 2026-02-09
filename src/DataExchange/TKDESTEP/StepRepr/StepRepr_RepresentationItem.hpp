@@ -10,7 +10,6 @@ class StepRepr_RepresentationItem : public Standard_Transient
 {
 
 public:
-  //! Returns a RepresentationItem
   Standard_EXPORT StepRepr_RepresentationItem();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName);

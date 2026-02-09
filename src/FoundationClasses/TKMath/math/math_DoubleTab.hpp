@@ -20,7 +20,6 @@ public:
   DEFINE_NCOLLECTION_ALLOC;
 
 public:
-  //! Constructor for ranges [theLowerRow..theUpperRow, theLowerCol..theUpperCol]
   math_DoubleTab(const int theLowerRow,
                  const int theUpperRow,
                  const int theLowerCol,
@@ -37,7 +36,6 @@ public:
   }
 
 public:
-  //! Constructor from external data array
   math_DoubleTab(void* const theTab,
                  const int   theLowerRow,
                  const int   theUpperRow,
@@ -51,16 +49,13 @@ public:
   {
   }
 
-  //! Initialize all elements with theInitValue
   void Init(const double theInitValue) { myArray.Init(theInitValue); }
 
-  //! Copy constructor
   math_DoubleTab(const math_DoubleTab& theOther)
       : myArray(theOther.myArray)
   {
   }
 
-  //! Move constructor
   math_DoubleTab(math_DoubleTab&& theOther) noexcept
       : myBuffer{},
         myArray(theOther.myArray.IsDeletable()
@@ -82,61 +77,46 @@ public:
     }
   }
 
-  //! Copy data to theOther
   void Copy(math_DoubleTab& theOther) const { theOther.myArray.Assign(myArray); }
 
-  //! Returns true if the internal array is deletable (heap-allocated)
   bool IsDeletable() const { return myArray.IsDeletable(); }
 
-  //! Set lower row index
   void SetLowerRow(const int theLowerRow) { myArray.UpdateLowerRow(theLowerRow); }
 
-  //! Set lower column index
   void SetLowerCol(const int theLowerCol) { myArray.UpdateLowerCol(theLowerCol); }
 
-  //! Get lower row index
   int LowerRow() const noexcept { return myArray.LowerRow(); }
 
-  //! Get upper row index
   int UpperRow() const noexcept { return myArray.UpperRow(); }
 
-  //! Get lower column index
   int LowerCol() const noexcept { return myArray.LowerCol(); }
 
-  //! Get upper column index
   int UpperCol() const noexcept { return myArray.UpperCol(); }
 
-  //! Get number of rows
   int NbRows() const noexcept { return myArray.NbRows(); }
 
-  //! Get number of columns
   int NbColumns() const noexcept { return myArray.NbColumns(); }
 
-  //! Access element at (theRowIndex, theColIndex)
   const double& Value(const int theRowIndex, const int theColIndex) const
   {
     return myArray.Value(theRowIndex, theColIndex);
   }
 
-  //! Change element at (theRowIndex, theColIndex)
   double& Value(const int theRowIndex, const int theColIndex)
   {
     return myArray.ChangeValue(theRowIndex, theColIndex);
   }
 
-  //! Operator() - alias to Value
   const double& operator()(const int theRowIndex, const int theColIndex) const
   {
     return Value(theRowIndex, theColIndex);
   }
 
-  //! Operator() - alias to ChangeValue
   double& operator()(const int theRowIndex, const int theColIndex)
   {
     return Value(theRowIndex, theColIndex);
   }
 
-  //! Assignment operator
   math_DoubleTab& operator=(const math_DoubleTab& theOther)
   {
     if (this != &theOther)
@@ -146,7 +126,6 @@ public:
     return *this;
   }
 
-  //! Move assignment operator
   math_DoubleTab& operator=(math_DoubleTab&& theOther) noexcept
   {
     if (this == &theOther)
@@ -169,7 +148,6 @@ public:
     return *this;
   }
 
-  //! Destructor
   ~math_DoubleTab() = default;
 
 private:

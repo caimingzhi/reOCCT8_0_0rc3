@@ -20,14 +20,10 @@ Standard_IMPORT Draw_Viewer dout;
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_DataMap.hpp>
 
-//=================================================================================================
-
 void HLRTest::Set(const char* Name, const HLRAlgo_Projector& P)
 {
   Draw::Set(Name, new HLRTest_Projector(P));
 }
-
-//=================================================================================================
 
 bool HLRTest::GetProjector(const char*& Name, HLRAlgo_Projector& P)
 {
@@ -38,14 +34,10 @@ bool HLRTest::GetProjector(const char*& Name, HLRAlgo_Projector& P)
   return true;
 }
 
-//=================================================================================================
-
 void HLRTest::Set(const char* Name, const TopoDS_Shape& S)
 {
   Draw::Set(Name, new HLRTest_OutLiner(S));
 }
-
-//=================================================================================================
 
 occ::handle<HLRTopoBRep_OutLiner> HLRTest::GetOutLiner(const char*& Name)
 {
@@ -57,13 +49,11 @@ occ::handle<HLRTopoBRep_OutLiner> HLRTest::GetOutLiner(const char*& Name)
   return HO;
 }
 
-//=================================================================================================
-
 static int hprj(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 2)
     return 1;
-  //
+
   gp_Ax2 anAx2 = gp::XOY();
   if (n == 11)
   {
@@ -90,8 +80,6 @@ static int hprj(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int hout(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
@@ -106,8 +94,6 @@ static int hout(Draw_Interpretor& di, int n, const char** a)
   HLRTest::Set(a[1], S);
   return 0;
 }
-
-//=================================================================================================
 
 static int hfil(Draw_Interpretor& di, int n, const char** a)
 {
@@ -135,8 +121,6 @@ static int hfil(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int sori(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
@@ -152,8 +136,6 @@ static int sori(Draw_Interpretor& di, int n, const char** a)
   DBRep::Set(name1, HS->OriginalShape());
   return 0;
 }
-
-//=================================================================================================
 
 static int sout(Draw_Interpretor& di, int n, const char** a)
 {
@@ -176,8 +158,6 @@ static int sout(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int hloa(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
@@ -192,8 +172,6 @@ static int hloa(Draw_Interpretor& di, int n, const char** a)
   hider->Load(HS);
   return 0;
 }
-
-//=================================================================================================
 
 static int hrem(Draw_Interpretor& di, int n, const char** a)
 {
@@ -243,8 +221,6 @@ static int hrem(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int sprj(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
@@ -260,15 +236,11 @@ static int sprj(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int upda(Draw_Interpretor&, int, const char**)
 {
   hider->Update();
   return 0;
 }
-
-//=================================================================================================
 
 static int hide(Draw_Interpretor&, int, const char**)
 {
@@ -276,15 +248,11 @@ static int hide(Draw_Interpretor&, int, const char**)
   return 0;
 }
 
-//=================================================================================================
-
 static int show(Draw_Interpretor&, int, const char**)
 {
   hider->ShowAll();
   return 0;
 }
-
-//=================================================================================================
 
 static int hdbg(Draw_Interpretor& di, int, const char**)
 {
@@ -296,15 +264,11 @@ static int hdbg(Draw_Interpretor& di, int, const char**)
   return 0;
 }
 
-//=================================================================================================
-
 static int hnul(Draw_Interpretor&, int, const char**)
 {
   hider->OutLinedShapeNullify();
   return 0;
 }
-
-//=================================================================================================
 
 static int hres(Draw_Interpretor&, int n, const char** a)
 {
@@ -365,8 +329,6 @@ static int hres(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int reflectlines(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 6)
@@ -404,8 +366,6 @@ static int reflectlines(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int hlrin3d(Draw_Interpretor&, int n, const char** a)
 {
@@ -457,8 +417,6 @@ static int hlrin3d(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int hlrin2d(Draw_Interpretor&, int n, const char** a)
 {
@@ -514,11 +472,9 @@ static int hlrin2d(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 void HLRTest::Commands(Draw_Interpretor& theCommands)
 {
-  // Register save/restore tool
+
   HLRTest_Projector::RegisterFactory();
 
   const char* g = "ADVALGOS HLR Commands";

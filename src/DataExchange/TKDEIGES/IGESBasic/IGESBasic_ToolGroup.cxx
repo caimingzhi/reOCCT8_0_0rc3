@@ -17,33 +17,21 @@
 #include <Message_Msg.hpp>
 #include <Standard_DomainError.hpp>
 
-// MGE 03/08/98
 IGESBasic_ToolGroup::IGESBasic_ToolGroup() = default;
 
 void IGESBasic_ToolGroup::ReadOwnParams(const occ::handle<IGESBasic_Group>&         ent,
                                         const occ::handle<IGESData_IGESReaderData>& IR,
                                         IGESData_ParamReader&                       PR) const
 {
-  // MGE 03/08/98
-  // Building of messages
-  //========================================
-  //  Message_Msg Msg202("XSTEP_202");
-  //  Message_Msg Msg203("XSTEP_203");
-  //========================================
 
-  // bool st; //szv#4:S4163:12Mar99 not needed
   int nbval = 0;
-  //  Msg202.Arg(1);
-  // st = PR.ReadInteger( PR.Current(), Msg202, nbval); //szv#4:S4163:12Mar99 moved down
-  // st = PR.ReadInteger( PR.Current(), "Count of Entities", nbval);
 
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> EntArray;
   if (PR.ReadInteger(PR.Current(), nbval))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg203("XSTEP_203");
     Msg203.Arg(1);
-    PR.ReadEnts(IR, PR.CurrentList(nbval), Msg203, EntArray); // szv#4:S4163:12Mar99 `st=` not
-                                                              // needed
+    PR.ReadEnts(IR, PR.CurrentList(nbval), Msg203, EntArray);
   }
   else
   {
@@ -121,10 +109,9 @@ bool IGESBasic_ToolGroup::OwnCorrect(const occ::handle<IGESBasic_Group>& ent) co
   return true;
 }
 
-IGESData_DirChecker IGESBasic_ToolGroup::DirChecker(
-  const occ::handle<IGESBasic_Group>& /* ent */) const
+IGESData_DirChecker IGESBasic_ToolGroup::DirChecker(const occ::handle<IGESBasic_Group>&) const
 {
-  IGESData_DirChecker DC(402, 1); // TypeNo. 402, Form no. 1
+  IGESData_DirChecker DC(402, 1);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
@@ -134,7 +121,7 @@ IGESData_DirChecker IGESBasic_ToolGroup::DirChecker(
 
 void IGESBasic_ToolGroup::OwnCheck(const occ::handle<IGESBasic_Group>& ent,
                                    const Interface_ShareTool&,
-                                   occ::handle<Interface_Check>& /* ach */) const
+                                   occ::handle<Interface_Check>&) const
 {
   bool ianul = false;
   int  i, nb = ent->NbEntities();

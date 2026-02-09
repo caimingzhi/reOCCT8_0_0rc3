@@ -8,16 +8,11 @@
 
 class gp_Pnt;
 
-//! A framework to define display of shaded planes.
 class DsgPrs_ShadedPlanePresentation
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Adds the points aPt1, aPt2 and aPt3 to the
-  //! presentation object, aPresentation.
-  //! The display attributes of the shaded plane are
-  //! defined by the attribute manager aDrawer.
   Standard_EXPORT static void Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                   const occ::handle<Prs3d_Drawer>&       aDrawer,
                                   const gp_Pnt&                          aPt1,

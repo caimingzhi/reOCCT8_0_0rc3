@@ -6,8 +6,6 @@
 #include <DDF.hpp>
 #include <DDocStd.hpp>
 
-// for AIS
-
 #include <TPrsStd_AISPresentation.hpp>
 #include <TPrsStd_AISViewer.hpp>
 #include <AIS_InteractiveContext.hpp>
@@ -24,14 +22,6 @@
 #include <TDataXtd_Point.hpp>
 #include <Standard_PCharacter.hpp>
 
-// #include <TSketchStd_Geometry.hxx>
-// #include <TSketchStd_Edge.hxx>
-
-//=======================================================================
-// function : DPrsStd_AISDisplay
-// purpose  : DDisplay (DOC,entry, not_update)
-//=======================================================================
-
 static int DPrsStd_AISDisplay(Draw_Interpretor&, int nb, const char** arg)
 {
   occ::handle<TDocStd_Document> D;
@@ -47,11 +37,6 @@ static int DPrsStd_AISDisplay(Draw_Interpretor&, int nb, const char** arg)
   TPrsStd_AISViewer::Update(L);
   return 0;
 }
-
-//=======================================================================
-// function : DPrsStd_AISRemove
-// purpose  : AISRemove (DOC,entry)
-//=======================================================================
 
 static int DPrsStd_AISRemove(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -74,11 +59,6 @@ static int DPrsStd_AISRemove(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=======================================================================
-// function : DPrsStd_AISErase
-// purpose  : AISErase (DOC,entry)
-//=======================================================================
-
 static int DPrsStd_AISErase(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 3)
@@ -99,11 +79,6 @@ static int DPrsStd_AISErase(Draw_Interpretor& di, int nb, const char** arg)
   di << "DPrsStd_AISErase : Error\n";
   return 1;
 }
-
-//=======================================================================
-// function : DPrsStd_AISUpdate
-// purpose  : AISUpdate (DOC,entry)
-//=======================================================================
 
 static int DPrsStd_AISUpdate(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -126,11 +101,6 @@ static int DPrsStd_AISUpdate(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=======================================================================
-// function : DPrsStd_AISSet
-// purpose  : AISSet (DOC,entry, id)
-//=======================================================================
-
 static int DPrsStd_AISSet(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 4)
@@ -146,22 +116,18 @@ static int DPrsStd_AISSet(Draw_Interpretor& di, int nb, const char** arg)
 #ifdef OCCT_DEBUG
     std::cout << "Inputted parameter > " << str << std::endl;
 #endif
-    if (str == "A")                        // axis
-      guid = TDataXtd_Axis::GetID();       //"2a96b601-ec8b-11d0-bee7-080009dc3333"
-    else if (str == "C")                   // constraint
-      guid = TDataXtd_Constraint::GetID(); //"2a96b602-ec8b-11d0-bee7-080009dc3333"
-    else if (str == "NS")                  // namedshape
-      guid = TNaming_NamedShape::GetID();  //"c4ef4200-568f-11d1-8940-080009dc3333"
-    else if (str == "G")                   // geometry
-      guid = TDataXtd_Geometry::GetID();   //"2a96b604-ec8b-11d0-bee7-080009dc3333"
-    else if (str == "PL")                  // plane
-      guid = TDataXtd_Plane::GetID();      //"2a96b60c-ec8b-11d0-bee7-080009dc3333"
-    else if (str == "PT")                  // point
-      guid = TDataXtd_Point::GetID();      //"2a96b60d-ec8b-11d0-bee7-080009dc3333"
-                                           //    else if( str == "SG" )        //TSketch_Geometry
-    //      guid = TSketchStd_Geometry::GetID();    //"b3aac909-5b78-11d1-8940-080009dc3333"
-    //    else if( str == "E" )        //TSketch_Edge
-    //      guid = TSketchStd_Edge::GetID();           //"b3aac90a-5b78-11d1-8940-080009dc3333"
+    if (str == "A")
+      guid = TDataXtd_Axis::GetID();
+    else if (str == "C")
+      guid = TDataXtd_Constraint::GetID();
+    else if (str == "NS")
+      guid = TNaming_NamedShape::GetID();
+    else if (str == "G")
+      guid = TDataXtd_Geometry::GetID();
+    else if (str == "PL")
+      guid = TDataXtd_Plane::GetID();
+    else if (str == "PT")
+      guid = TDataXtd_Point::GetID();
 
     occ::handle<TPrsStd_AISPresentation> prs = TPrsStd_AISPresentation::Set(L, guid);
 #ifdef OCCT_DEBUG
@@ -179,11 +145,6 @@ static int DPrsStd_AISSet(Draw_Interpretor& di, int nb, const char** arg)
   di << "DPrsStd_AISSet : Error\n";
   return 1;
 }
-
-//=======================================================================
-// function : DPrsStd_AISDriver
-// purpose  : AISDriver (DOC,entry, [ID])
-//=======================================================================
 
 static int DPrsStd_AISDriver(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -216,29 +177,25 @@ static int DPrsStd_AISDriver(Draw_Interpretor& di, int nb, const char** arg)
 #ifdef OCCT_DEBUG
         std::cout << "Inputted parameter > " << str << std::endl;
 #endif
-        if (str == "A")                        // axis
-          guid = TDataXtd_Axis::GetID();       //"2a96b601-ec8b-11d0-bee7-080009dc3333"
-        else if (str == "C")                   // constraint
-          guid = TDataXtd_Constraint::GetID(); //"2a96b602-ec8b-11d0-bee7-080009dc3333"
-        else if (str == "NS")                  // namedshape
-          guid = TNaming_NamedShape::GetID();  //"c4ef4200-568f-11d1-8940-080009dc3333"
-        else if (str == "G")                   // geometry
-          guid = TDataXtd_Geometry::GetID();   //"2a96b604-ec8b-11d0-bee7-080009dc3333"
-        else if (str == "PL")                  // plane
-          guid = TDataXtd_Plane::GetID();      //"2a96b60c-ec8b-11d0-bee7-080009dc3333"
-        else if (str == "PT")                  // point
-          guid = TDataXtd_Point::GetID();      //"2a96b60d-ec8b-11d0-bee7-080009dc3333"
-                                               //	else if( str == "SG" )        //TSketch_Geometry
-        //	  guid = TSketchStd_Geometry::GetID();    //"b3aac909-5b78-11d1-8940-080009dc3333"
-        //	else if( str == "E" )        //TSketch_Edge
-        //	  guid = TSketchStd_Edge::GetID();           //"b3aac90a-5b78-11d1-8940-080009dc3333"
+        if (str == "A")
+          guid = TDataXtd_Axis::GetID();
+        else if (str == "C")
+          guid = TDataXtd_Constraint::GetID();
+        else if (str == "NS")
+          guid = TNaming_NamedShape::GetID();
+        else if (str == "G")
+          guid = TDataXtd_Geometry::GetID();
+        else if (str == "PL")
+          guid = TDataXtd_Plane::GetID();
+        else if (str == "PT")
+          guid = TDataXtd_Point::GetID();
 
         prs->SetDriverGUID(guid);
         char                resS[37];
         Standard_PCharacter presS;
-        // modified by NIZNHY-PKV Tue Apr 22 16:15:02 2008f
+
         presS = resS;
-        // modified by NIZNHY-PKV Tue Apr 22 16:15:05 2008t
+
         guid.ToCString(presS);
         di << resS;
         return 0;
@@ -248,11 +205,6 @@ static int DPrsStd_AISDriver(Draw_Interpretor& di, int nb, const char** arg)
   di << "DPrsStd_AISDriver : Error\n";
   return 1;
 }
-
-//=======================================================================
-// function : DPrsStd_AISUnset
-// purpose  : AISUnset (DOC,entry)
-//=======================================================================
 
 static int DPrsStd_AISUnset(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -271,11 +223,6 @@ static int DPrsStd_AISUnset(Draw_Interpretor& di, int nb, const char** arg)
   di << "DPrsStd_AISDriver : Error\n";
   return 1;
 }
-
-//=======================================================================
-// function : DPrsStd_AISTransparency
-// purpose  : AISTransparency  (DOC,entry,[real])
-//=======================================================================
 
 static int DPrsStd_AISTransparency(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -320,11 +267,6 @@ static int DPrsStd_AISTransparency(Draw_Interpretor& di, int nb, const char** ar
   return 1;
 }
 
-//=======================================================================
-// function : DPrsStd_AISDefaultTransparency
-// purpose  : AISDefaultTransparency (DOC,entry)
-//=======================================================================
-
 static int DPrsStd_AISDefaultTransparency(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 3)
@@ -347,11 +289,6 @@ static int DPrsStd_AISDefaultTransparency(Draw_Interpretor& di, int nb, const ch
   di << "DPrsStd_AISDefaultTransparency : Error" << "\n";
   return 1;
 }
-
-//=======================================================================
-// function : DPrsStd_AISColor
-// purpose  : AISColor (DOC,entry,[color])
-//=======================================================================
 
 static int DPrsStd_AISColor(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -408,11 +345,6 @@ static int DPrsStd_AISColor(Draw_Interpretor& di, int nb, const char** arg)
   return 0;
 }
 
-//=======================================================================
-// function : DPrsStd_AISDefaultColor
-// purpose  : AISDefaultColor (DOC,entry)
-//=======================================================================
-
 static int DPrsStd_AISDefaultColor(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 3)
@@ -439,11 +371,6 @@ static int DPrsStd_AISDefaultColor(Draw_Interpretor& di, int nb, const char** ar
   di << "DPrsStd_AISDefaultColor : Error" << "\n";
   return 1;
 }
-
-//=======================================================================
-// function : DPrsStd_AISMaterial
-// purpose  : AISMaterial (DOC,entry,[material])
-//=======================================================================
 
 static int DPrsStd_AISMaterial(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -488,11 +415,6 @@ static int DPrsStd_AISMaterial(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=======================================================================
-// function : DPrsStd_AISDefaultMaterial
-// purpose  : AISDefaultMaterial (DOC,entry)
-//=======================================================================
-
 static int DPrsStd_AISDefaultMaterial(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 3)
@@ -519,12 +441,6 @@ static int DPrsStd_AISDefaultMaterial(Draw_Interpretor& di, int nb, const char**
   di << "DPrsStd_AISDefaultMaterial : Error" << "\n";
   return 1;
 }
-
-//=======================================================================
-// function : DPrsStd_AISHasOwnColor
-// purpose  : AISHasOwnColor (DOC,entry)
-// return   : Boolean
-//=======================================================================
 
 static int DPrsStd_AISHasOwnColor(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -555,12 +471,6 @@ static int DPrsStd_AISHasOwnColor(Draw_Interpretor& di, int nb, const char** arg
   return 1;
 }
 
-//=======================================================================
-// function : DPrsStd_AISHasOwnMaterial
-// purpose  : AISHasOwnMaterial (DOC,entry)
-// return   : Boolean
-//=======================================================================
-
 static int DPrsStd_AISHasOwnMaterial(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb >= 3)
@@ -589,12 +499,6 @@ static int DPrsStd_AISHasOwnMaterial(Draw_Interpretor& di, int nb, const char** 
   di << "DPrsStd_AISHasOwnMaterial : Error" << "\n";
   return 1;
 }
-
-//=======================================================================
-// function : DPrsStd_AISHasOwnTransparency
-// purpose  : AISHasOwnColor (DOC,entry)
-// return   : Boolean
-//=======================================================================
 
 static int DPrsStd_AISHasOwnTransparency(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -625,10 +529,6 @@ static int DPrsStd_AISHasOwnTransparency(Draw_Interpretor& di, int nb, const cha
   return 1;
 }
 
-//=======================================================================
-// function : DPrsStd_AISMode
-// purpose  : AISMode (DOC,entry,[Mode])
-//=======================================================================
 static int DPrsStd_AISMode(Draw_Interpretor& di, int nb, const char** arg)
 {
   TDF_Label                            L;
@@ -659,10 +559,6 @@ static int DPrsStd_AISMode(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=======================================================================
-// function : DPrsStd_AISSelMode
-// purpose  : AISSelMode (DOC,entry,[SelMode1 SelMode2 ...])
-//=======================================================================
 static int DPrsStd_AISSelMode(Draw_Interpretor& di, int nb, const char** arg)
 {
   TDF_Label                            L;
@@ -678,10 +574,10 @@ static int DPrsStd_AISSelMode(Draw_Interpretor& di, int nb, const char** arg)
       return 1;
     if (nb >= 4)
     {
-      // Set selection mode.
+
       int selMode = Draw::Atoi(arg[3]);
       prs->SetSelectionMode(selMode);
-      // Add other selection modes.
+
       for (int i = 4; i < nb; i++)
       {
         selMode = Draw::Atoi(arg[i]);
@@ -691,7 +587,7 @@ static int DPrsStd_AISSelMode(Draw_Interpretor& di, int nb, const char** arg)
     }
     else if (nb == 3)
     {
-      // Print selection mode.
+
       int nbSelModes = prs->GetNbSelectionModes();
       if (nbSelModes == 1)
       {
@@ -715,8 +611,6 @@ static int DPrsStd_AISSelMode(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=================================================================================================
-
 void DPrsStd::AISPresentationCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
@@ -724,8 +618,6 @@ void DPrsStd::AISPresentationCommands(Draw_Interpretor& theCommands)
     return;
   done          = true;
   const char* g = "DPrsStd : standard presentation commands";
-
-  // standard commands working on AISPresentation
 
   theCommands.Add("AISDisplay",
                   "AISDisplay (DOC, entry, [not_update])",

@@ -17,13 +17,12 @@
 #include <NCollection_HArray1.hpp>
 #include <Standard_Integer.hpp>
 
-//======================================================================================
 FairCurve_MinimalVariation::FairCurve_MinimalVariation(const gp_Pnt2d& P1,
                                                        const gp_Pnt2d& P2,
                                                        const double    Heigth,
                                                        const double    Slope,
                                                        const double    PhysicalRatio)
-    //======================================================================================
+
     : FairCurve_Batten(P1, P2, Heigth, Slope),
       OldCurvature1(0),
       OldCurvature2(0),
@@ -34,22 +33,19 @@ FairCurve_MinimalVariation::FairCurve_MinimalVariation(const gp_Pnt2d& P1,
 {
 }
 
-//======================================================================================
 bool FairCurve_MinimalVariation::Compute(FairCurve_AnalysisCode& ACode,
                                          const int               NbIterations,
                                          const double            Tolerance)
-//======================================================================================
+
 {
   bool Ok = true, End = false;
-  // clang-format off
-  double AngleMax = 0.7;      // parameter regulating the function of increment ( 40 degrees )
-  // clang-format on
-  double AngleMin = 2 * M_PI / 100; // parameter regulating the function of increment
-                                    // full passage should not contain more than 100 steps.
+
+  double AngleMax = 0.7;
+
+  double AngleMin = 2 * M_PI / 100;
+
   double DAngle1, DAngle2, DRho1, DRho2, Ratio, Fraction, Toler;
   double OldDist, NewDist;
-
-  //  Loop of Homotopy : calculation of the step and optimisation
 
   while (Ok && !End)
   {
@@ -130,7 +126,6 @@ bool FairCurve_MinimalVariation::Compute(FairCurve_AnalysisCode& ACode,
   return Ok;
 }
 
-//======================================================================================
 bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
                                          const gp_Vec2d&         DeltaP2,
                                          const double            DeltaAngle1,
@@ -140,14 +135,13 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
                                          FairCurve_AnalysisCode& ACode,
                                          const int               NbIterations,
                                          const double            Tolerance)
-//======================================================================================
+
 {
   bool Ok, OkCompute = true;
   ACode = FairCurve_OK;
 
-  // Deformation of the curve by adding a polynom of interpolation
   int L = 2 + NewConstraintOrder1 + NewConstraintOrder2, kk, ii;
-//                    NbP1 = Poles->Length()-1, kk, ii;
+
 #ifdef OCCT_DEBUG
   int NbP1 =
 #endif
@@ -164,26 +158,23 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
   occ::handle<NCollection_HArray1<gp_Pnt2d>> NPoles =
     new NCollection_HArray1<gp_Pnt2d>(1, Poles->Length());
 
-  // Polynomes of Hermite
   math_Matrix HermiteCoef(1, L, 1, L);
   Ok = PLib::HermiteCoefficients(0, 1, NewConstraintOrder1, NewConstraintOrder2, HermiteCoef);
   if (!Ok)
     return false;
 
-  // Definition of constraints of interpolation
   NCollection_Array1<gp_XY> ADelta(1, L);
   gp_Vec2d VOld(OldP1, OldP2), VNew(-(OldP1.XY() + DeltaP1.XY()) + (OldP2.XY() + DeltaP2.XY()));
   double   DAngleRef = VNew.Angle(VOld);
   double   DAngle1   = DeltaAngle1 - DAngleRef,
-         // clang-format off
-                 DAngle2 = DAngleRef   - DeltaAngle2; // Correction of Delta by the Delta induced by the points.
-  // clang-format on
+
+         DAngle2 = DAngleRef - DeltaAngle2;
 
   ADelta(1) = DeltaP1.XY();
   kk        = 2;
   if (NewConstraintOrder1 > 0)
   {
-    // rotation of the derivative premiereDeltaAngle1
+
     gp_Vec2d OldDerive(Poles->Value(Poles->Lower()), Poles->Value(Poles->Lower() + 1));
     OldDerive *= Degree / (Knots->Value(Knots->Lower() + 1) - Knots->Value(Knots->Lower()));
     ADelta(kk) = (OldDerive.Rotated(DAngle1) - OldDerive).XY();
@@ -191,7 +182,7 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
 
     if (NewConstraintOrder1 > 1)
     {
-      // rotation of the second derivative + adding
+
       gp_Vec2d OldSeconde(Poles->Value(Poles->Lower()).XY() + Poles->Value(Poles->Lower() + 2).XY()
                           - 2 * Poles->Value(Poles->Lower() + 1).XY());
       OldSeconde *= Degree * (Degree - 1)
@@ -213,7 +204,7 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
     kk += 1;
     if (NewConstraintOrder2 > 1)
     {
-      // rotation of the second derivative + adding
+
       gp_Vec2d OldSeconde(Poles->Value(Poles->Upper()).XY() + Poles->Value(Poles->Upper() - 2).XY()
                           - 2 * Poles->Value(Poles->Upper() - 1).XY());
       OldSeconde *= Degree * (Degree - 1)
@@ -226,7 +217,6 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
     }
   }
 
-  // Interpolation
   gp_XY AuxXY(0, 0);
   for (ii = 1; ii <= L; ii++)
   {
@@ -237,7 +227,7 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
     }
     Interpolation(ii).SetXY(AuxXY);
   }
-  // Conversion into BSpline of the same structure as the current batten.
+
   PLib::CoefficientsPoles(Interpolation, PLib::NoWeights(), HermitePoles, PLib::NoWeights());
 
   mults.Init(L);
@@ -251,14 +241,11 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
     DeltaCurve->InsertKnots(Knots->Array1(), Mults->Array1(), 1.e-10);
   }
 
-  // Summing
   DeltaCurve->Poles(NPoles->ChangeArray1());
   for (kk = NPoles->Lower(); kk <= NPoles->Upper(); kk++)
   {
     NPoles->ChangeValue(kk).ChangeCoord() += Poles->Value(kk).Coord();
   }
-
-  // Intermediaires
 
   double Angle1, Angle2, SlidingLength,
     Alph1 = OldAngle1 + DeltaAngle1, Alph2 = OldAngle2 + DeltaAngle2,
@@ -268,12 +255,8 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
   gp_Vec2d Ox(1, 0),
     P1P2(NPoles->Value(NPoles->Upper()).Coord() - NPoles->Value(NPoles->Lower()).Coord());
 
-  // Angles corresponding to axis ox
-
   Angle1 = Ox.Angle(P1P2) + Alph1;
   Angle2 = -Ox.Angle(P1P2) + Alph2;
-
-  // Calculation of the length of sliding (imposed or initial);
 
   if (!NewFreeSliding)
   {
@@ -291,7 +274,6 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
     }
   }
 
-  // Energy and vectors of initialization
   FairCurve_BattenLaw   LBatten(NewHeight, NewSlope, SlidingLength);
   FairCurve_EnergyOfMVC EMVC(Degree + 1,
                              Flatknots,
@@ -308,7 +290,6 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
                              Rho2);
   math_Vector           VInit(1, EMVC.NbVariables());
 
-  // The value below gives an idea about the smallest value of the criterion of flexion.
   double VConvex = 0.01 * pow(NewHeight / SlidingLength, 3);
   if (VConvex < 1.e-12)
   {
@@ -317,7 +298,6 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
 
   Ok = EMVC.Variable(VInit);
 
-  // Minimisation
   FairCurve_Newton Newton(EMVC,
                           Tolerance * (P1P2.Magnitude() / 10),
                           Tolerance,
@@ -413,17 +393,14 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
 
   Ok = EMVC.Variable(VInit);
 
-  // Processing of non convergence
   if (!Newton.IsConverged())
   {
     ACode = FairCurve_NotConverged;
   }
 
-  // Prevention of infinite sliding
   if (NewFreeSliding && VInit(VInit.Upper()) > 2 * LReference)
     ACode = FairCurve_InfiniteSliding;
 
-  // Eventual insertion of Nodes
   bool   NewKnots = false;
   int    NbKnots  = Knots->Length();
   double ValAngles =
@@ -464,14 +441,11 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
     Flatknots = FKnots;
   }
 
-  // For eventual debug Newton.Dump(std::cout);
-
   return OkCompute;
 }
 
-//======================================================================================
 void FairCurve_MinimalVariation::Dump(Standard_OStream& o) const
-//======================================================================================
+
 {
 
   o << "  MVCurve      |";

@@ -1,15 +1,4 @@
-// Copyright (c) 2023 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XSDRAWIGES.hpp>
 
@@ -56,10 +45,6 @@
 #include <XSControl_WorkSession.hpp>
 #include <XSDRAW.hpp>
 
-//=======================================================================
-// function : WriteShape
-// purpose  : Creates a file Shape_'number'
-//=======================================================================
 void WriteShape(const TopoDS_Shape& shape, const int number)
 {
   char fname[110];
@@ -71,8 +56,6 @@ void WriteShape(const TopoDS_Shape& shape, const int number)
   BRepTools::Write(shape, f);
   f.close();
 }
-
-//=================================================================================================
 
 TCollection_AsciiString XSDRAW_CommandPart(int argc, const char** argv, const int argf)
 {
@@ -86,8 +69,6 @@ TCollection_AsciiString XSDRAW_CommandPart(int argc, const char** argv, const in
   return res;
 }
 
-//=================================================================================================
-
 static int GiveEntityNumber(const occ::handle<XSControl_WorkSession>& WS, const char* name)
 {
   int num = 0;
@@ -98,7 +79,7 @@ static int GiveEntityNumber(const occ::handle<XSControl_WorkSession>& WS, const 
     ligne[0] = '\0';
     std::cin.width(aBufferSize);
     std::cin >> ligne;
-    //    std::cin.clear();  std::cin.getline (ligne,79);
+
     if (ligne[0] == '\0')
       return 0;
     num = WS->NumberFromLabel(ligne);
@@ -107,8 +88,6 @@ static int GiveEntityNumber(const occ::handle<XSControl_WorkSession>& WS, const 
     num = WS->NumberFromLabel(name);
   return num;
 }
-
-//=================================================================================================
 
 bool FileAndVar(const occ::handle<XSControl_WorkSession>& session,
                 const char*                               file,
@@ -137,7 +116,7 @@ bool FileAndVar(const occ::handle<XSControl_WorkSession>& session,
     int nomdeb, nomfin;
     nomdeb = resfile.SearchFromEnd("/");
     if (nomdeb <= 0)
-      nomdeb = resfile.SearchFromEnd("\\"); // pour NT
+      nomdeb = resfile.SearchFromEnd("\\");
     if (nomdeb < 0)
       nomdeb = 0;
     nomfin = resfile.SearchFromEnd(".");
@@ -147,8 +126,6 @@ bool FileAndVar(const occ::handle<XSControl_WorkSession>& session,
   }
   return iafic;
 }
-
-//=================================================================================================
 
 static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -160,7 +137,6 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
     aWS->SelectNorm("IGES");
   }
 
-  // Progress indicator
   occ::handle<Draw_ProgressIndicator> progress = new Draw_ProgressIndicator(theDI, 1);
   Message_ProgressScope               aPSRoot(progress->Start(), "Reading", 100);
 
@@ -184,7 +160,6 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   IDT_SetLevel(3);
 #endif
 
-  // Reading the file
   aPSRoot.SetName("Loading");
   progress->Show(aPSRoot);
 
@@ -193,7 +168,7 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   else if (XSDRAW::Session()->NbStartingEntities() > 0)
     readstat = IFSelect_RetDone;
 
-  aPSRoot.Next(20); // On average loading takes 20%
+  aPSRoot.Next(20);
   if (aPSRoot.UserBreak())
     return 1;
 
@@ -205,7 +180,7 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
       theDI << "No model loaded\n";
     return 1;
   }
-  // Choice of treatment
+
   bool fromtcl = (theNbArgs > 3);
   int  modepri = 1, nent, nbs;
   if (fromtcl)
@@ -213,16 +188,13 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
 
   while (modepri)
   {
-    // Roots for transfer are defined before setting mode ALL or OnlyVisible - gka
-    // mode OnlyVisible does not work.
-    //  nent = Reader.NbRootsForTransfer();
+
     if (!fromtcl)
     {
       std::cout << "Mode (0 End, 1 Visible Roots, 2 All Roots, 3 Only One Entity, 4 Selection) :"
                 << std::flush;
       modepri = -1;
 
-      // amv 26.09.2003 : this is used to avoid error of enter's symbol
       constexpr size_t aBufferSize = 80;
       char             str[aBufferSize];
       std::cin.width(aBufferSize);
@@ -236,12 +208,12 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
     Reader.SetShapeProcessFlags(aProcessingData.second);
 
     if (modepri == 0)
-    { // fin
+    {
       theDI << "Bye and good luck! \n";
       break;
     }
     else if (modepri <= 2)
-    { // 1 : Visible Roots, 2 : All Roots
+    {
       theDI << "All Geometry Transfer\n";
       theDI << "spline_continuity (read) : "
             << Interface_Static::IVal("read.iges.bspline.continuity")
@@ -260,8 +232,6 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
       if (aPSRoot.UserBreak())
         return 1;
 
-      // result in only one shape for all the roots
-      //        or in one shape for one root.
       theDI << "Count of shapes produced : " << Reader.NbShapes() << "\n";
       int answer = 1;
       if (Reader.NbShapes() > 1)
@@ -270,7 +240,7 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
                      "(one for all : 3) (one per root : 4) : "
                   << std::flush;
         answer = -1;
-        // amv 26.09.2003
+
         constexpr size_t aBufferSize = 80;
         char             str_a[aBufferSize];
         std::cin.width(aBufferSize);
@@ -282,7 +252,7 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
       if (answer == 1 || answer == 3)
       {
         TopoDS_Shape shape = Reader.OneShape();
-        // save the shape
+
         if (shape.IsNull())
         {
           theDI << "No Shape produced\n";
@@ -313,7 +283,7 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
         int numshape = Reader.NbShapes();
         for (int inum = 1; inum <= numshape; inum++)
         {
-          // save all the shapes
+
           TopoDS_Shape shape = Reader.Shape(inum);
           if (shape.IsNull())
           {
@@ -343,7 +313,7 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
     }
 
     else if (modepri == 3)
-    { // One Entity
+    {
       std::cout << "Only One Entity" << std::endl;
       std::cout << "spline_continuity (read) : "
                 << Interface_Static::IVal("read.iges.bspline.continuity")
@@ -367,13 +337,9 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
     }
 
     else if (modepri == 4)
-    { // Selection
+    {
       int                                                                 answer = 1;
       occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> list;
-
-      //  Selection, nommee ou via tcl. tcl : raccourcis admis
-      //   * donne iges-visible + xst-transferrable-roots
-      //   *r donne xst-model-roots (TOUTES racines)
 
       if (fromtcl && theArgVec[3][0] == '*' && theArgVec[3][1] == '\0')
       {
@@ -394,9 +360,8 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
         if (aPSRoot.UserBreak())
           return 1;
 
-        // result in only one shape for all the roots
         TopoDS_Shape shape = Reader.OneShape();
-        // save the shape
+
         char fname[110];
         Sprintf(fname, "%s", rnom.ToCString());
         theDI << "Saving shape in variable Draw : " << fname << "\n";
@@ -418,7 +383,7 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
 
       if (fromtcl)
       {
-        modepri = 0; // d office, une seule passe
+        modepri = 0;
         if (theArgVec[3][0] == '*' && theArgVec[3][1] == 'r' && theArgVec[3][2] == '\0')
         {
           theDI << "All Roots : ";
@@ -459,7 +424,7 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
           std::cout << "Choice: 0 abandon  1 transfer all  2 with confirmation  3 list n0s ents :"
                     << std::flush;
           answer = -1;
-          // anv 26.09.2003
+
           constexpr size_t aBufferSize = 80;
           char             str_answer[aBufferSize];
           std::cin.width(aBufferSize);
@@ -473,7 +438,7 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
           for (int ill = 1; ill <= nbl; ill++)
           {
             occ::handle<Standard_Transient> ent = list->Value(ill);
-            theDI << "  "; // model->Print(ent,theDI);
+            theDI << "  ";
           }
           theDI << "\n";
         }
@@ -508,7 +473,7 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
           if (aPSRoot.UserBreak())
             return 1;
           theDI << "Nb Shapes successfully produced : " << nbt << "\n";
-          answer = 0; // on ne reboucle pas
+          answer = 0;
         }
       }
     }
@@ -517,8 +482,6 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int testread(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -572,8 +535,6 @@ static int testread(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   theDI << "Count of shapes produced : " << Reader.NbShapes() << "\n";
   return 0;
 }
-
-//=================================================================================================
 
 static int brepiges(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -629,13 +590,12 @@ static int brepiges(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   theDI << aNumShapesProcessed << " Shapes written, giving " << anIgesWriter.Model()->NbEntities()
         << " Entities\n";
 
-  if (!aFileName) // delayed write
+  if (!aFileName)
   {
     theDI << " Now, to write a file, command : writeall filename\n";
     return 0;
   }
 
-  // write file
   if (!anIgesWriter.Write(aFileName))
   {
     theDI << " Error: could not write file " << aFileName << "\n";
@@ -646,8 +606,6 @@ static int brepiges(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
 
   return 0;
 }
-
-//=================================================================================================
 
 static int testwrite(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -680,11 +638,9 @@ static int testwrite(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
   return 0;
 }
 
-//=================================================================================================
-
 static int igesparam(Draw_Interpretor& theDI, int, const char**)
 {
-  //  liste des parametres
+
   theDI << "List of parameters which control IGES :\n";
   theDI
     << "  unit : write.iges.unit\n  mode write : write.iges.brep.mode\n  spline_continuity (read) "
@@ -696,8 +652,6 @@ static int igesparam(Draw_Interpretor& theDI, int, const char**)
   theDI << "\n To modifier, param nom_param new_val\n";
   return 0;
 }
-
-//=================================================================================================
 
 static int XSDRAWIGES_tplosttrim(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -831,8 +785,6 @@ static int XSDRAWIGES_tplosttrim(Draw_Interpretor& theDI, int theNbArgs, const c
   return 0;
 }
 
-//=================================================================================================
-
 static int XSDRAWIGES_TPSTAT(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   occ::handle<XSControl_WorkSession>            aWorkSession = XSDRAW::Session();
@@ -894,8 +846,6 @@ static int XSDRAWIGES_TPSTAT(Draw_Interpretor& theDI, int theNbArgs, const char*
   return 0;
 }
 
-//=================================================================================================
-
 static int etest(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs < 3)
@@ -916,10 +866,6 @@ static int etest(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
   return 0;
 }
 
-//=======================================================================
-// function : ReadIges
-// purpose  : Read IGES to DECAF document
-//=======================================================================
 static int ReadIges(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs < 3)
@@ -1017,10 +963,6 @@ static int ReadIges(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   return 0;
 }
 
-//=======================================================================
-// function : WriteIges
-// purpose  : Write DECAF document to IGES
-//=======================================================================
 static int WriteIges(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs < 3)
@@ -1099,15 +1041,13 @@ static int WriteIges(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
 
 namespace
 {
-  // Singleton to ensure DEIGES plugin is registered only once
+
   void DEIGESSingleton()
   {
     static DE_PluginHolder<DEIGES_ConfigurationNode> aHolder;
     (void)aHolder;
   }
 } // namespace
-
-//=================================================================================================
 
 void XSDRAWIGES::Factory(Draw_Interpretor& theDI)
 {
@@ -1120,7 +1060,6 @@ void XSDRAWIGES::Factory(Draw_Interpretor& theDI)
 
   IGESControl_Controller::Init();
 
-  //! Ensure DEIGES plugin is registered
   DEIGESSingleton();
 
   const char* aGroup = "DE: IGES";
@@ -1171,9 +1110,7 @@ void XSDRAWIGES::Factory(Draw_Interpretor& theDI)
   theDI.Add("brepiges", "brepiges sh1 [+sh2 [+sh3 ..]] filename.igs", __FILE__, brepiges, aGroup);
   theDI.Add("testwriteiges", "testwriteiges filename.igs shape", __FILE__, testwrite, aGroup);
 
-  // Load XSDRAW session for pilot activation
   XSDRAW::LoadDraw(theDI);
 }
 
-// Declare entry point PLUGINFACTORY
 DPLUGIN(XSDRAWIGES)

@@ -7,9 +7,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//==========================================================================
-// function : Constructor
-//==========================================================================
 BRepGProp_VinertGK::BRepGProp_VinertGK(BRepGProp_Face& theSurface,
                                        const gp_Pnt&   theLocation,
                                        const double    theTolerance,
@@ -20,11 +17,6 @@ BRepGProp_VinertGK::BRepGProp_VinertGK(BRepGProp_Face& theSurface,
   SetLocation(theLocation);
   Perform(theSurface, theTolerance, theCGFlag, theIFlag);
 }
-
-//==========================================================================
-// function : Constructor
-//
-//==========================================================================
 
 BRepGProp_VinertGK::BRepGProp_VinertGK(BRepGProp_Face& theSurface,
                                        const gp_Pnt&   thePoint,
@@ -38,11 +30,6 @@ BRepGProp_VinertGK::BRepGProp_VinertGK(BRepGProp_Face& theSurface,
   Perform(theSurface, thePoint, theTolerance, theCGFlag, theIFlag);
 }
 
-//==========================================================================
-// function : Constructor
-//
-//==========================================================================
-
 BRepGProp_VinertGK::BRepGProp_VinertGK(BRepGProp_Face&   theSurface,
                                        BRepGProp_Domain& theDomain,
                                        const gp_Pnt&     theLocation,
@@ -54,11 +41,6 @@ BRepGProp_VinertGK::BRepGProp_VinertGK(BRepGProp_Face&   theSurface,
   SetLocation(theLocation);
   Perform(theSurface, theDomain, theTolerance, theCGFlag, theIFlag);
 }
-
-//==========================================================================
-// function : Constructor
-//
-//==========================================================================
 
 BRepGProp_VinertGK::BRepGProp_VinertGK(BRepGProp_Face&   theSurface,
                                        BRepGProp_Domain& theDomain,
@@ -73,11 +55,6 @@ BRepGProp_VinertGK::BRepGProp_VinertGK(BRepGProp_Face&   theSurface,
   Perform(theSurface, theDomain, thePoint, theTolerance, theCGFlag, theIFlag);
 }
 
-//==========================================================================
-// function : Constructor
-//
-//==========================================================================
-
 BRepGProp_VinertGK::BRepGProp_VinertGK(BRepGProp_Face& theSurface,
                                        const gp_Pln&   thePlane,
                                        const gp_Pnt&   theLocation,
@@ -89,11 +66,6 @@ BRepGProp_VinertGK::BRepGProp_VinertGK(BRepGProp_Face& theSurface,
   SetLocation(theLocation);
   Perform(theSurface, thePlane, theTolerance, theCGFlag, theIFlag);
 }
-
-//==========================================================================
-// function : Constructor
-//
-//==========================================================================
 
 BRepGProp_VinertGK::BRepGProp_VinertGK(BRepGProp_Face&   theSurface,
                                        BRepGProp_Domain& theDomain,
@@ -108,11 +80,6 @@ BRepGProp_VinertGK::BRepGProp_VinertGK(BRepGProp_Face&   theSurface,
   Perform(theSurface, theDomain, thePlane, theTolerance, theCGFlag, theIFlag);
 }
 
-//==========================================================================
-// function : Perform
-//           Compute the properties.
-//==========================================================================
-
 double BRepGProp_VinertGK::Perform(BRepGProp_Face& theSurface,
                                    const double    theTolerance,
                                    const bool      theCGFlag,
@@ -123,11 +90,6 @@ double BRepGProp_VinertGK::Perform(BRepGProp_Face& theSurface,
 
   return PrivatePerform(theSurface, nullptr, true, aShift, theTolerance, theCGFlag, theIFlag);
 }
-
-//==========================================================================
-// function : Perform
-//           Compute the properties.
-//==========================================================================
 
 double BRepGProp_VinertGK::Perform(BRepGProp_Face& theSurface,
                                    const gp_Pnt&   thePoint,
@@ -144,11 +106,6 @@ double BRepGProp_VinertGK::Perform(BRepGProp_Face& theSurface,
   return PrivatePerform(theSurface, nullptr, true, aShift, theTolerance, theCGFlag, theIFlag);
 }
 
-//==========================================================================
-// function : Perform
-//           Compute the properties.
-//==========================================================================
-
 double BRepGProp_VinertGK::Perform(BRepGProp_Face&   theSurface,
                                    BRepGProp_Domain& theDomain,
                                    const double      theTolerance,
@@ -160,11 +117,6 @@ double BRepGProp_VinertGK::Perform(BRepGProp_Face&   theSurface,
 
   return PrivatePerform(theSurface, &theDomain, true, aShift, theTolerance, theCGFlag, theIFlag);
 }
-
-//==========================================================================
-// function : Perform
-//           Compute the properties.
-//==========================================================================
 
 double BRepGProp_VinertGK::Perform(BRepGProp_Face&   theSurface,
                                    BRepGProp_Domain& theDomain,
@@ -181,11 +133,6 @@ double BRepGProp_VinertGK::Perform(BRepGProp_Face&   theSurface,
 
   return PrivatePerform(theSurface, &theDomain, true, aShift, theTolerance, theCGFlag, theIFlag);
 }
-
-//==========================================================================
-// function : Perform
-//           Compute the properties.
-//==========================================================================
 
 double BRepGProp_VinertGK::Perform(BRepGProp_Face& theSurface,
                                    const gp_Pln&   thePlane,
@@ -205,11 +152,6 @@ double BRepGProp_VinertGK::Perform(BRepGProp_Face& theSurface,
 
   return PrivatePerform(theSurface, nullptr, false, aCoeff, theTolerance, theCGFlag, theIFlag);
 }
-
-//==========================================================================
-// function : Perform
-//           Compute the properties.
-//==========================================================================
 
 double BRepGProp_VinertGK::Perform(BRepGProp_Face&   theSurface,
                                    BRepGProp_Domain& theDomain,
@@ -231,11 +173,6 @@ double BRepGProp_VinertGK::Perform(BRepGProp_Face&   theSurface,
   return PrivatePerform(theSurface, &theDomain, false, aCoeff, theTolerance, theCGFlag, theIFlag);
 }
 
-//==========================================================================
-// function : PrivatePerform
-//           Compute the properties.
-//==========================================================================
-
 double BRepGProp_VinertGK::PrivatePerform(BRepGProp_Face& theSurface,
                                           void* const     thePtrDomain,
                                           const bool      IsByPoint,
@@ -249,12 +186,9 @@ double BRepGProp_VinertGK::PrivatePerform(BRepGProp_Face& theSurface,
   const double  aTTol   = 1.e-9;
   const double* aCoeffs = theCoeffs;
 
-  // Compute the number of 2d bounding curves of the face.
   BRepGProp_Domain* aPDomain  = nullptr;
   int               aNbCurves = 0;
 
-  // If the pointer to the domain is NULL, there is only one curve to treat:
-  // U isoline with the UMax parameter.
   if (thePtrDomain == nullptr)
     aNbCurves = 1;
   else
@@ -272,7 +206,6 @@ double BRepGProp_VinertGK::PrivatePerform(BRepGProp_Face& theSurface,
     return myErrorReached;
   }
 
-  // double    aCrvTol = 0.5*theTolerance/aNbCurves;
   double                   aCrvTol = 0.1 * theTolerance;
   double                   aUMin;
   double                   aUMax;
@@ -290,7 +223,6 @@ double BRepGProp_VinertGK::PrivatePerform(BRepGProp_Face& theSurface,
   CFlags.Init(false);
   bool isMore;
 
-  // aNbVal = 1;
   aValue.Init(0.);
   aTolReached.Init(0.);
 
@@ -327,8 +259,6 @@ double BRepGProp_VinertGK::PrivatePerform(BRepGProp_Face& theSurface,
 
   while (isMore)
   {
-    // If the pointer to the domain is NULL, there is only one curve to treat:
-    // U isoline with the UMax parameter.
 
     if (thePtrDomain == nullptr)
       theSurface.Load(false, GeomAbs_IsoU);
@@ -338,7 +268,6 @@ double BRepGProp_VinertGK::PrivatePerform(BRepGProp_Face& theSurface,
     aTMin = theSurface.FirstParameter();
     aTMax = theSurface.LastParameter();
 
-    // Get the spans on the curve.
     occ::handle<NCollection_HArray1<double>> aTKnots;
     BRepGProp_TFunction aTFunc(theSurface, loc, IsByPoint, theCoeffs, aUMin, aCrvTol);
 
@@ -346,15 +275,13 @@ double BRepGProp_VinertGK::PrivatePerform(BRepGProp_Face& theSurface,
 
     int iU            = aTKnots->Upper();
     int aNbTIntervals = aTKnots->Length() - 1;
-    // double                 aTolSpan       = aCrvTol/aNbTIntervals;
-    double                        aTolSpan = 0.9 * theTolerance; // Relative error
+
+    double                        aTolSpan = 0.9 * theTolerance;
     math_KronrodSingleIntegration anIntegral;
     GProp_ValueType               aValueType;
 
-    // Empirical criterion.
     aNbPnts = std::min(15, theSurface.IntegrationOrder() / aNbTIntervals + 1);
     aNbPnts = std::max(5, aNbPnts);
-    //     aNbPnts = theSurface.IntegrationOrder();
 
     aLocalValue.Init(0.);
     aLocalTolReached.Init(0.);
@@ -410,7 +337,6 @@ double BRepGProp_VinertGK::PrivatePerform(BRepGProp_Face& theSurface,
       while (i < iU)
       {
 
-        // std::cout << "-------------- Span " << i << " nbp: " << aNbPnts << std::endl;
         double aT1 = aTKnots->Value(i++);
         double aT2 = aTKnots->Value(i);
 
@@ -431,19 +357,14 @@ double BRepGProp_VinertGK::PrivatePerform(BRepGProp_Face& theSurface,
 
         aLocalValue(k) += anIntegral.Value();
         err1 = aTFunc.AbsolutError() * (aT2 - aT1);
-        // std::cout << "Errors: " << anIntegral.NbIterReached() << " " << anIntegral.AbsolutError()
-        // << " " << err1 << std::endl;
+
         aLocalTolReached(k) += anIntegral.AbsolutError() + err1;
-        // std::cout << "--- Errors: " << anIntegral.NbIterReached() << " " <<
-        // anIntegral.AbsolutError() << " " << err1 << std::endl;
       }
 
       aValue(k) += aLocalValue(k);
       aTolReached(k) += aLocalTolReached(k);
     }
 
-    // If the pointer to the domain is NULL, there is only one curve to treat:
-    // U isoline with the UMax parameter.
     if (thePtrDomain == nullptr)
       isMore = false;
     else
@@ -453,7 +374,6 @@ double BRepGProp_VinertGK::PrivatePerform(BRepGProp_Face& theSurface,
     }
   }
 
-  // Get volume value.
   dim             = aValue(1);
   myErrorReached  = aTolReached(1);
   myAbsolutError  = myErrorReached;
@@ -464,7 +384,7 @@ double BRepGProp_VinertGK::PrivatePerform(BRepGProp_Face& theSurface,
 
   if (theCGFlag || theIFlag)
   {
-    // Compute values of center of mass.
+
     if (anAbsDim >= aVolTol)
     {
       if (IsByPoint)
@@ -492,11 +412,11 @@ double BRepGProp_VinertGK::PrivatePerform(BRepGProp_Face& theSurface,
 
   if (theIFlag)
   {
-    // Fill the matrix of inertia.
+
     inertia.SetCols(gp_XYZ(aValue(5), aValue(8), aValue(9)),
                     gp_XYZ(aValue(8), aValue(6), aValue(10)),
                     gp_XYZ(aValue(9), aValue(10), aValue(7)));
   }
-  // return myErrorReached;
+
   return myAbsolutError;
 }

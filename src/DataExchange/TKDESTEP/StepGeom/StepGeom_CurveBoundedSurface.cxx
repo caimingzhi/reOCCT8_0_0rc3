@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepGeom_CurveBoundedSurface, StepGeom_BoundedSurface)
 
-//=================================================================================================
-
 StepGeom_CurveBoundedSurface::StepGeom_CurveBoundedSurface() = default;
-
-//=================================================================================================
 
 void StepGeom_CurveBoundedSurface::Init(
   const occ::handle<TCollection_HAsciiString>&                      aRepresentationItem_Name,
@@ -25,14 +21,10 @@ void StepGeom_CurveBoundedSurface::Init(
   theImplicitOuter = aImplicitOuter;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_Surface> StepGeom_CurveBoundedSurface::BasisSurface() const
 {
   return theBasisSurface;
 }
-
-//=================================================================================================
 
 void StepGeom_CurveBoundedSurface::SetBasisSurface(
   const occ::handle<StepGeom_Surface>& aBasisSurface)
@@ -40,15 +32,11 @@ void StepGeom_CurveBoundedSurface::SetBasisSurface(
   theBasisSurface = aBasisSurface;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<StepGeom_SurfaceBoundary>> StepGeom_CurveBoundedSurface::
   Boundaries() const
 {
   return theBoundaries;
 }
-
-//=================================================================================================
 
 void StepGeom_CurveBoundedSurface::SetBoundaries(
   const occ::handle<NCollection_HArray1<StepGeom_SurfaceBoundary>>& aBoundaries)
@@ -56,14 +44,10 @@ void StepGeom_CurveBoundedSurface::SetBoundaries(
   theBoundaries = aBoundaries;
 }
 
-//=================================================================================================
-
 bool StepGeom_CurveBoundedSurface::ImplicitOuter() const
 {
   return theImplicitOuter;
 }
-
-//=================================================================================================
 
 void StepGeom_CurveBoundedSurface::SetImplicitOuter(const bool aImplicitOuter)
 {

@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DEBREP_Provider.hpp>
 
@@ -25,18 +14,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DEBREP_Provider, DE_Provider)
 
-//=================================================================================================
-
 DEBREP_Provider::DEBREP_Provider() = default;
-
-//=================================================================================================
 
 DEBREP_Provider::DEBREP_Provider(const occ::handle<DE_ConfigurationNode>& theNode)
     : DE_Provider(theNode)
 {
 }
-
-//=================================================================================================
 
 bool DEBREP_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
@@ -47,8 +30,6 @@ bool DEBREP_Provider::Read(const TCollection_AsciiString&       thePath,
   return Read(thePath, theDocument, theProgress);
 }
 
-//=================================================================================================
-
 bool DEBREP_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
                             occ::handle<XSControl_WorkSession>&  theWS,
@@ -57,8 +38,6 @@ bool DEBREP_Provider::Write(const TCollection_AsciiString&       thePath,
   (void)theWS;
   return Write(thePath, theDocument, theProgress);
 }
-
-//=================================================================================================
 
 bool DEBREP_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
@@ -79,8 +58,6 @@ bool DEBREP_Provider::Read(const TCollection_AsciiString&       thePath,
   aShTool->AddShape(aShape);
   return true;
 }
-
-//=================================================================================================
 
 bool DEBREP_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
@@ -124,8 +101,6 @@ bool DEBREP_Provider::Write(const TCollection_AsciiString&       thePath,
   return Write(thePath, aShape, theProgress);
 }
 
-//=================================================================================================
-
 bool DEBREP_Provider::Read(const TCollection_AsciiString&      thePath,
                            TopoDS_Shape&                       theShape,
                            occ::handle<XSControl_WorkSession>& theWS,
@@ -134,8 +109,6 @@ bool DEBREP_Provider::Read(const TCollection_AsciiString&      thePath,
   (void)theWS;
   return Read(thePath, theShape, theProgress);
 }
-
-//=================================================================================================
 
 bool DEBREP_Provider::Write(const TCollection_AsciiString&      thePath,
                             const TopoDS_Shape&                 theShape,
@@ -146,15 +119,13 @@ bool DEBREP_Provider::Write(const TCollection_AsciiString&      thePath,
   return Write(thePath, theShape, theProgress);
 }
 
-//=================================================================================================
-
 bool DEBREP_Provider::Read(const TCollection_AsciiString& thePath,
                            TopoDS_Shape&                  theShape,
                            const Message_ProgressRange&   theProgress)
 {
   bool isBinaryFormat = true;
   {
-    // probe file header to recognize format
+
     const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
     std::shared_ptr<std::istream>      aFile =
       aFileSystem->OpenIStream(thePath, std::ios::in | std::ios::binary);
@@ -197,8 +168,6 @@ bool DEBREP_Provider::Read(const TCollection_AsciiString& thePath,
 
   return true;
 }
-
-//=================================================================================================
 
 bool DEBREP_Provider::Write(const TCollection_AsciiString& thePath,
                             const TopoDS_Shape&            theShape,
@@ -282,14 +251,10 @@ bool DEBREP_Provider::Write(const TCollection_AsciiString& thePath,
   return true;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DEBREP_Provider::GetFormat() const
 {
   return TCollection_AsciiString("BREP");
 }
-
-//=================================================================================================
 
 TCollection_AsciiString DEBREP_Provider::GetVendor() const
 {

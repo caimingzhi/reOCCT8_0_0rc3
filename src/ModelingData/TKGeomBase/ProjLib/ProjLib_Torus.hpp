@@ -11,19 +11,15 @@ class gp_Elips;
 class gp_Parab;
 class gp_Hypr;
 
-//! Projects elementary curves on a torus.
 class ProjLib_Torus : public ProjLib_Projector
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Undefined projection.
   Standard_EXPORT ProjLib_Torus();
 
-  //! Projection on the torus <To>.
   Standard_EXPORT ProjLib_Torus(const gp_Torus& To);
 
-  //! Projection of the circle <C> on the torus <To>.
   Standard_EXPORT ProjLib_Torus(const gp_Torus& To, const gp_Circ& C);
 
   Standard_EXPORT void Init(const gp_Torus& To);

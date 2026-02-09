@@ -3,8 +3,6 @@
 
 #include <cstdio>
 
-//=================================================================================================
-
 void BOPDS_ShapeInfo::Dump() const
 {
   const TopAbs_ShapeEnum aTS = ShapeType();

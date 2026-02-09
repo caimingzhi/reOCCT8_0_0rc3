@@ -5,12 +5,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaShellMembraneBendingCouplingStiffness,
                            StepFEA_FeaMaterialPropertyRepresentationItem)
 
-//=================================================================================================
-
 StepFEA_FeaShellMembraneBendingCouplingStiffness::
   StepFEA_FeaShellMembraneBendingCouplingStiffness() = default;
-
-//=================================================================================================
 
 void StepFEA_FeaShellMembraneBendingCouplingStiffness::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentationItem_Name,
@@ -21,14 +17,10 @@ void StepFEA_FeaShellMembraneBendingCouplingStiffness::Init(
   theFeaConstants = aFeaConstants;
 }
 
-//=================================================================================================
-
 StepFEA_SymmetricTensor42d StepFEA_FeaShellMembraneBendingCouplingStiffness::FeaConstants() const
 {
   return theFeaConstants;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaShellMembraneBendingCouplingStiffness::SetFeaConstants(
   const StepFEA_SymmetricTensor42d& aFeaConstants)

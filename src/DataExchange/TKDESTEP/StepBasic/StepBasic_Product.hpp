@@ -15,7 +15,6 @@ class StepBasic_Product : public Standard_Transient
 {
 
 public:
-  //! Returns a Product
   Standard_EXPORT StepBasic_Product();
 
   Standard_EXPORT void Init(

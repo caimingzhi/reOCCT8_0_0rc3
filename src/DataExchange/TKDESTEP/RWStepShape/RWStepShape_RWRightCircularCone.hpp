@@ -11,7 +11,6 @@ class StepShape_RightCircularCone;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for RightCircularCone
 class RWStepShape_RWRightCircularCone
 {
 public:

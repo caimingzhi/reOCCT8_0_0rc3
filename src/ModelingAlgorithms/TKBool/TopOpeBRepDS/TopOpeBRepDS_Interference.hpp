@@ -9,27 +9,6 @@
 #include <Standard_Transient.hpp>
 #include <Standard_OStream.hpp>
 
-//! An interference is the description of the
-//! attachment of a new geometry on a geometry. For
-//! example an intersection point on an Edge or on a
-//! Curve.
-//!
-//! The Interference contains the following data:
-//!
-//! - Transition: How the interference separates the
-//! existing geometry in INSIDE and OUTSIDE.
-//!
-//! - SupportType: Type of the object supporting the
-//! interference. (FACE, EDGE, VERTEX, SURFACE, CURVE).
-//!
-//! - Support: Index in the data structure of the
-//! object supporting the interference.
-//!
-//! - GeometryType: Type ofthe geometry of the
-//! interference (SURFACE, CURVE, POINT).
-//!
-//! - Geometry: Index in the data structure of the
-//! geometry.
 class TopOpeBRepDS_Interference : public Standard_Transient
 {
 
@@ -50,7 +29,6 @@ public:
 
   Standard_EXPORT void Transition(const TopOpeBRepDS_Transition& T);
 
-  //! return GeometryType + Geometry + SupportType + Support
   Standard_EXPORT void GKGSKS(TopOpeBRepDS_Kind& GK, int& G, TopOpeBRepDS_Kind& SK, int& S) const;
 
   Standard_EXPORT TopOpeBRepDS_Kind SupportType() const;

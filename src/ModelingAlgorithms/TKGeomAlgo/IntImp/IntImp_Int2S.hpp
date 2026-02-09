@@ -19,15 +19,15 @@ IntImp_Int2S::IntImp_Int2S(const ThePSurface& surf1,
       myZerParFunc(surf1, surf2),
       tol(TolTangency * TolTangency)
 {
-  ua0 = ThePSurfaceTool::FirstUParameter(surf1); //-- ThePSurfaceTool::UIntervalFirst(surf1);
-  va0 = ThePSurfaceTool::FirstVParameter(surf1); //-- ThePSurfaceTool::VIntervalFirst(surf1);
-  ua1 = ThePSurfaceTool::LastUParameter(surf1);  //-- ThePSurfaceTool::UIntervalLast(surf1);
-  va1 = ThePSurfaceTool::LastVParameter(surf1);  //-- ThePSurfaceTool::VIntervalLast(surf1);
+  ua0 = ThePSurfaceTool::FirstUParameter(surf1);
+  va0 = ThePSurfaceTool::FirstVParameter(surf1);
+  ua1 = ThePSurfaceTool::LastUParameter(surf1);
+  va1 = ThePSurfaceTool::LastVParameter(surf1);
 
-  ub0 = ThePSurfaceTool::FirstUParameter(surf2); //-- ThePSurfaceTool::UIntervalFirst(surf2);
-  vb0 = ThePSurfaceTool::FirstVParameter(surf2); //-- ThePSurfaceTool::VIntervalFirst(surf2);
-  ub1 = ThePSurfaceTool::LastUParameter(surf2);  //-- ThePSurfaceTool::UIntervalLast(surf2);
-  vb1 = ThePSurfaceTool::LastVParameter(surf2);  //-- ThePSurfaceTool::VIntervalLast(surf2);
+  ub0 = ThePSurfaceTool::FirstUParameter(surf2);
+  vb0 = ThePSurfaceTool::FirstVParameter(surf2);
+  ub1 = ThePSurfaceTool::LastUParameter(surf2);
+  vb1 = ThePSurfaceTool::LastVParameter(surf2);
 
   ures1 = ThePSurfaceTool::UResolution(surf1, Precision::Confusion());
   vres1 = ThePSurfaceTool::VResolution(surf1, Precision::Confusion());
@@ -45,16 +45,16 @@ IntImp_Int2S::IntImp_Int2S(const NCollection_Array1<double>& Param,
       myZerParFunc(surf1, surf2),
       tol(TolTangency * TolTangency)
 {
-  math_FunctionSetRoot Rsnld(myZerParFunc, 15);  //-- Modif lbr 18 MAI ?????????????
-  ua0 = ThePSurfaceTool::FirstUParameter(surf1); //-- ThePSurfaceTool::UIntervalFirst(surf1);
-  va0 = ThePSurfaceTool::FirstVParameter(surf1); //-- ThePSurfaceTool::VIntervalFirst(surf1);
-  ua1 = ThePSurfaceTool::LastUParameter(surf1);  //-- ThePSurfaceTool::UIntervalLast(surf1);
-  va1 = ThePSurfaceTool::LastVParameter(surf1);  //-- ThePSurfaceTool::VIntervalLast(surf1);
+  math_FunctionSetRoot Rsnld(myZerParFunc, 15);
+  ua0 = ThePSurfaceTool::FirstUParameter(surf1);
+  va0 = ThePSurfaceTool::FirstVParameter(surf1);
+  ua1 = ThePSurfaceTool::LastUParameter(surf1);
+  va1 = ThePSurfaceTool::LastVParameter(surf1);
 
-  ub0 = ThePSurfaceTool::FirstUParameter(surf2); //-- ThePSurfaceTool::UIntervalFirst(surf2);
-  vb0 = ThePSurfaceTool::FirstVParameter(surf2); //-- ThePSurfaceTool::VIntervalFirst(surf2);
-  ub1 = ThePSurfaceTool::LastUParameter(surf2);  //-- ThePSurfaceTool::UIntervalLast(surf2);
-  vb1 = ThePSurfaceTool::LastVParameter(surf2);  //-- ThePSurfaceTool::VIntervalLast(surf2);
+  ub0 = ThePSurfaceTool::FirstUParameter(surf2);
+  vb0 = ThePSurfaceTool::FirstVParameter(surf2);
+  ub1 = ThePSurfaceTool::LastUParameter(surf2);
+  vb1 = ThePSurfaceTool::LastVParameter(surf2);
 
   ures1 = ThePSurfaceTool::UResolution(surf1, Precision::Confusion());
   vres1 = ThePSurfaceTool::VResolution(surf1, Precision::Confusion());
@@ -83,8 +83,8 @@ IntImp_ConstIsoparametric IntImp_Int2S::Perform(const NCollection_Array1<double>
   if (Rsnld.IsDone())
   {
     if (std::abs(myZerParFunc.Root()) <= tol)
-    { // distance des 2 points
-      // dans la tolerance
+    {
+
       Rsnld.Root(UVap);
       empty   = false;
       tangent = myZerParFunc.IsTangent(UVap, Uvres, BestChoix);
@@ -141,7 +141,7 @@ IntImp_ConstIsoparametric IntImp_Int2S::Perform(const NCollection_Array1<double>
     return BestChoix;
 
   int                       i            = 0;
-  IntImp_ConstIsoparametric CurrentChoix = BestChoix; //-- Modif 17 Mai 93
+  IntImp_ConstIsoparametric CurrentChoix = BestChoix;
 
   while (empty && i <= 3)
   {
@@ -153,18 +153,18 @@ IntImp_ConstIsoparametric IntImp_Int2S::Perform(const NCollection_Array1<double>
     i++;
   }
   if (!empty)
-  { // verifier que l on ne deborde pas les frontieres
+  {
     pint.Parameters(Duv(1), Duv(2), Duv(3), Duv(4));
 
-    UVd[0] = ua0; //-- ThePSurfaceTool::UIntervalFirst(Caro1);
-    UVd[1] = va0; //-- ThePSurfaceTool::VIntervalFirst(Caro1);
-    UVf[0] = ua1; //-- ThePSurfaceTool::UIntervalLast(Caro1);
-    UVf[1] = va1; //-- ThePSurfaceTool::VIntervalLast(Caro1);
+    UVd[0] = ua0;
+    UVd[1] = va0;
+    UVf[0] = ua1;
+    UVf[1] = va1;
 
-    UVd[2] = ub0; //-- ThePSurfaceTool::UIntervalFirst(Caro2);
-    UVd[3] = vb0; //-- ubThePSurfaceTool::VIntervalFirst(Caro2);
-    UVf[2] = ub1; //-- ThePSurfaceTool::UIntervalLast(Caro2);
-    UVf[3] = vb1; //-- ThePSurfaceTool::VIntervalLast(Caro2);
+    UVd[2] = ub0;
+    UVd[3] = vb0;
+    UVf[2] = ub1;
+    UVf[3] = vb1;
 
     int Nc, Iiso;
     if (Duv(1) <= UVd[0] - Epsuv[0])
@@ -216,13 +216,13 @@ IntImp_ConstIsoparametric IntImp_Int2S::Perform(const NCollection_Array1<double>
       Iiso   = 3;
     }
     else
-      return BestChoix; // on a gagne
+      return BestChoix;
     empty     = true;
-    BestChoix = ChoixRef(Iiso); // en attendant
+    BestChoix = ChoixRef(Iiso);
     BestChoix = Perform(Duv, Rsnld, BestChoix);
     if (!empty)
-    { // verification si l on ne deborde pas sur le carreau
-      // reciproque
+    {
+
       Nc = 3 - Nc;
       if (Duv(Nc) <= UVd[Nc - 1] - Epsuv[Nc - 1])
         Duv(Nc) = UVd[Nc - 1];
@@ -246,7 +246,7 @@ IntImp_ConstIsoparametric IntImp_Int2S::Perform(const NCollection_Array1<double>
       if (Nc == 4)
         Nc = 0;
 
-      BestChoix = ChoixRef(Nc); // en attendant
+      BestChoix = ChoixRef(Nc);
       BestChoix = Perform(Duv, Rsnld, BestChoix);
     }
   }

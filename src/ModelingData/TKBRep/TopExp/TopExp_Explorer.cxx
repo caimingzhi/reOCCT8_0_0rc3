@@ -1,41 +1,25 @@
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <TopExp_Explorer.hpp>
 
 namespace
 {
-  //! Returns true if the given type matches the type to find.
+
   inline bool isSameType(const TopAbs_ShapeEnum theType, const TopAbs_ShapeEnum toFind) noexcept
   {
     return toFind == theType;
   }
 
-  //! Returns true if the given type should be avoided.
   inline bool shouldAvoid(const TopAbs_ShapeEnum theType, const TopAbs_ShapeEnum toAvoid) noexcept
   {
     return toAvoid != TopAbs_SHAPE && toAvoid == theType;
   }
 
-  //! Returns true if the given type is more complex than the type to find.
   inline bool isMoreComplex(const TopAbs_ShapeEnum theType, const TopAbs_ShapeEnum toFind) noexcept
   {
     return toFind > theType;
   }
 } // namespace
-
-//=================================================================================================
 
 TopExp_Explorer::TopExp_Explorer() noexcept
     : myStack(20),
@@ -44,8 +28,6 @@ TopExp_Explorer::TopExp_Explorer() noexcept
       hasMore(false)
 {
 }
-
-//=================================================================================================
 
 TopExp_Explorer::TopExp_Explorer(const TopoDS_Shape&    S,
                                  const TopAbs_ShapeEnum ToFind,
@@ -58,14 +40,10 @@ TopExp_Explorer::TopExp_Explorer(const TopoDS_Shape&    S,
   Init(S, ToFind, ToAvoid);
 }
 
-//=================================================================================================
-
 TopExp_Explorer::~TopExp_Explorer()
 {
   Clear();
 }
-
-//=================================================================================================
 
 void TopExp_Explorer::Init(const TopoDS_Shape&    S,
                            const TopAbs_ShapeEnum ToFind,
@@ -104,8 +82,6 @@ void TopExp_Explorer::Init(const TopoDS_Shape&    S,
     }
   }
 }
-
-//=================================================================================================
 
 void TopExp_Explorer::Next()
 {
@@ -148,7 +124,6 @@ void TopExp_Explorer::Next()
       else if (isMoreComplex(ty, toFind) && !shouldAvoid(ty, toAvoid))
       {
         myStack.Append(TopoDS_Iterator(aShapTop));
-        // aTopIter reference is now invalid after Append
       }
       else
       {
@@ -166,21 +141,15 @@ void TopExp_Explorer::Next()
   hasMore = false;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopExp_Explorer::Current() const noexcept
 {
   return myStack.IsEmpty() ? myShape : myStack.Last().Value();
 }
 
-//=================================================================================================
-
 int TopExp_Explorer::Depth() const noexcept
 {
   return myStack.Length();
 }
-
-//=================================================================================================
 
 void TopExp_Explorer::Clear()
 {

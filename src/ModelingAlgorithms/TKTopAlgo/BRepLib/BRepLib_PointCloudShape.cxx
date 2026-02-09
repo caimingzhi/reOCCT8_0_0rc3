@@ -1,15 +1,4 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRepLib_PointCloudShape.hpp>
 
@@ -30,8 +19,6 @@
 
 #include <random>
 
-//=================================================================================================
-
 BRepLib_PointCloudShape::BRepLib_PointCloudShape(const TopoDS_Shape& theShape, const double theTol)
     : myShape(theShape),
       myDist(0.0),
@@ -40,11 +27,7 @@ BRepLib_PointCloudShape::BRepLib_PointCloudShape(const TopoDS_Shape& theShape, c
 {
 }
 
-//=================================================================================================
-
 BRepLib_PointCloudShape::~BRepLib_PointCloudShape() = default;
-
-//=================================================================================================
 
 int BRepLib_PointCloudShape::NbPointsByDensity(const double theDensity)
 {
@@ -67,8 +50,6 @@ int BRepLib_PointCloudShape::NbPointsByDensity(const double theDensity)
   return aNbPoints;
 }
 
-//=================================================================================================
-
 bool BRepLib_PointCloudShape::GeneratePointsByDensity(const double theDensity)
 {
   if (myFacePoints.IsEmpty())
@@ -90,8 +71,6 @@ bool BRepLib_PointCloudShape::GeneratePointsByDensity(const double theDensity)
   return (aNbAdded > 0);
 }
 
-//=================================================================================================
-
 bool BRepLib_PointCloudShape::GeneratePointsByTriangulation()
 {
   clear();
@@ -106,8 +85,6 @@ bool BRepLib_PointCloudShape::GeneratePointsByTriangulation()
   }
   return (aNbAdded > 0);
 }
-
-//=================================================================================================
 
 double BRepLib_PointCloudShape::faceArea(const TopoDS_Shape& theShape)
 {
@@ -124,11 +101,9 @@ double BRepLib_PointCloudShape::faceArea(const TopoDS_Shape& theShape)
   return anArea;
 }
 
-//=================================================================================================
-
 double BRepLib_PointCloudShape::computeDensity()
 {
-  // at first step find the face with smallest area
+
   double anAreaMin = Precision::Infinite();
   for (TopExp_Explorer aExpF(myShape, TopAbs_FACE); aExpF.More(); aExpF.Next())
   {
@@ -146,11 +121,9 @@ double BRepLib_PointCloudShape::computeDensity()
   return anAreaMin * 0.1;
 }
 
-//=================================================================================================
-
 int BRepLib_PointCloudShape::NbPointsByTriangulation() const
 {
-  // at first step find the face with smallest area
+
   int aNbPoints = 0;
   for (TopExp_Explorer aExpF(myShape, TopAbs_FACE); aExpF.More(); aExpF.Next())
   {
@@ -167,11 +140,9 @@ int BRepLib_PointCloudShape::NbPointsByTriangulation() const
   return aNbPoints;
 }
 
-//=================================================================================================
-
 bool BRepLib_PointCloudShape::addDensityPoints(const TopoDS_Shape& theFace)
 {
-  // addition of the points with specified density on the face by random way
+
   int aNbPnts = (myFacePoints.IsBound(theFace) ? myFacePoints.Find(theFace) : 0);
   if (aNbPnts == 0)
   {
@@ -238,8 +209,6 @@ bool BRepLib_PointCloudShape::addDensityPoints(const TopoDS_Shape& theFace)
   return true;
 }
 
-//=================================================================================================
-
 bool BRepLib_PointCloudShape::addTriangulationPoints(const TopoDS_Shape& theFace)
 {
   TopLoc_Location                 aLoc;
@@ -271,8 +240,6 @@ bool BRepLib_PointCloudShape::addTriangulationPoints(const TopoDS_Shape& theFace
   }
   return true;
 }
-
-//=================================================================================================
 
 void BRepLib_PointCloudShape::clear()
 {

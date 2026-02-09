@@ -11,9 +11,6 @@ class TopoDS_Face;
 class TopoDSToStep_Tool;
 class Transfer_FinderProcess;
 
-//! This class implements the mapping between classes
-//! Face from TopoDS and TopologicalRepresentationItem from
-//! StepShape.
 class TopoDSToStep_MakeStepFace : public TopoDSToStep_Root
 {
 public:

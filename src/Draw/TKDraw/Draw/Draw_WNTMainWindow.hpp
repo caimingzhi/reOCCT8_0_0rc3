@@ -2,9 +2,6 @@
 
   #define CLIENTWND 0
 
-  /*
-  ** PROCEDURES DE MAIN WINDOW
-  */
   #include <windows.h>
 
 LRESULT APIENTRY WndProc(HWND, UINT, WPARAM, LPARAM);

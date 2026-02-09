@@ -11,16 +11,12 @@ IMPLEMENT_STANDARD_RTTIEXT(Draw_Axis3D, Draw_Drawable3D)
 
 extern bool Draw_Bounds;
 
-//=================================================================================================
-
 Draw_Axis3D::Draw_Axis3D(const Draw_Color& col, const int Size)
     : myAxes(gp::XOY()),
       myColor(col),
       mySize(Size)
 {
 }
-
-//=================================================================================================
 
 Draw_Axis3D::Draw_Axis3D(const gp_Pnt& p, const Draw_Color& col, const int Size)
     : myAxes(p, gp::DZ(), gp::DX()),
@@ -29,16 +25,12 @@ Draw_Axis3D::Draw_Axis3D(const gp_Pnt& p, const Draw_Color& col, const int Size)
 {
 }
 
-//=================================================================================================
-
 Draw_Axis3D::Draw_Axis3D(const gp_Ax3& a, const Draw_Color& col, const int Size)
     : myAxes(a),
       myColor(col),
       mySize(Size)
 {
 }
-
-//=================================================================================================
 
 void Draw_Axis3D::DrawOn(Draw_Display& dis) const
 {

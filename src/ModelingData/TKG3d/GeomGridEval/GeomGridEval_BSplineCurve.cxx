@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GeomGridEval_BSplineCurve.hpp>
 
@@ -21,35 +10,30 @@
 namespace
 {
 
-  //! Threshold for using cache vs direct evaluation.
   constexpr int THE_CACHE_THRESHOLD = 4;
 
-  //! Parameter value with pre-computed span index and local parameter.
   struct ParamWithSpan
   {
-    double Param;      //!< Original parameter value
-    double LocalParam; //!< Pre-computed local parameter in [0, 1] range
-    int    SpanIndex;  //!< Flat knot index identifying the span
-    int    OrigIdx;    //!< Original index in the input array (0-based)
+    double Param;
+    double LocalParam;
+    int    SpanIndex;
+    int    OrigIdx;
   };
 
-  //! Range of parameter indices belonging to the same span.
   struct SpanRange
   {
-    int    SpanIndex; //!< Flat knot index of this span
-    int    StartIdx;  //!< First parameter index (0-based, inclusive)
-    int    EndIdx;    //!< Past-the-end parameter index (exclusive)
-    double SpanMid;   //!< Midpoint of span (for cache convention)
+    int    SpanIndex;
+    int    StartIdx;
+    int    EndIdx;
+    double SpanMid;
   };
 
-  //! Result of prepareParams containing both parameter and span data.
   struct PreparedParams
   {
     NCollection_Array1<ParamWithSpan> Params;
     NCollection_Array1<SpanRange>     Ranges;
   };
 
-  //! Find span index for a parameter value.
   int locateSpan(double                            theParam,
                  int                               theDegree,
                  bool                              theIsPeriodic,
@@ -67,7 +51,6 @@ namespace
     return aSpanIndex;
   }
 
-  //! Find span index with a hint for better performance on sorted parameters.
   int locateSpanWithHint(double                            theParam,
                          int                               theHint,
                          int                               theDegree,
@@ -77,7 +60,6 @@ namespace
     const int aLower = theFlatKnots.Lower() + theDegree;
     const int aUpper = theFlatKnots.Upper() - theDegree - 1;
 
-    // Quick check if hint is still valid
     if (theHint >= aLower && theHint <= aUpper)
     {
       const double aSpanStart = theFlatKnots.Value(theHint);
@@ -88,7 +70,6 @@ namespace
         return theHint;
       }
 
-      // Check next span (common case for sorted parameters)
       if (theHint < aUpper && theParam >= aSpanEnd)
       {
         const double aNextEnd = theFlatKnots.Value(theHint + 2);
@@ -99,16 +80,9 @@ namespace
       }
     }
 
-    // Fall back to standard locate
     return locateSpan(theParam, theDegree, theIsPeriodic, theFlatKnots);
   }
 
-  //! Prepare parameters with span data.
-  //! @param theParams array of parameter values
-  //! @param theDegree curve degree
-  //! @param theIsPeriodic true if curve is periodic
-  //! @param theFlatKnots flat knots array
-  //! @return prepared parameters with span information
   [[nodiscard]] PreparedParams prepareParams(const NCollection_Array1<double>& theParams,
                                              int                               theDegree,
                                              bool                              theIsPeriodic,
@@ -118,7 +92,6 @@ namespace
     const int      aNbParams = theParams.Size();
     aResult.Params.Resize(0, aNbParams - 1, false);
 
-    // Use hint-based span location for efficiency on sorted parameters
     int aPrevSpan = theFlatKnots.Lower() + theDegree;
 
     for (int i = theParams.Lower(); i <= theParams.Upper(); ++i)
@@ -128,7 +101,6 @@ namespace
         locateSpanWithHint(aParam, aPrevSpan, theDegree, theIsPeriodic, theFlatKnots);
       aPrevSpan = aSpanIdx;
 
-      // Pre-compute local parameter for this span
       const double aSpanStart  = theFlatKnots.Value(aSpanIdx);
       const double aSpanLength = theFlatKnots.Value(aSpanIdx + 1) - aSpanStart;
       const double aLocalParam = (aSpanLength > 0.0) ? (aParam - aSpanStart) / aSpanLength : 0.0;
@@ -137,7 +109,6 @@ namespace
       aResult.Params.SetValue(aIdx, ParamWithSpan{aParam, aLocalParam, aSpanIdx, aIdx});
     }
 
-    // Count distinct spans
     int aNbSpans     = 1;
     int aCurrentSpan = aResult.Params.Value(0).SpanIndex;
     for (int i = 1; i < aNbParams; ++i)
@@ -151,7 +122,6 @@ namespace
 
     aResult.Ranges.Resize(0, aNbSpans - 1, false);
 
-    // Fill span ranges
     aCurrentSpan    = aResult.Params.Value(0).SpanIndex;
     int aRangeStart = 0;
     int aRangeIdx   = 0;
@@ -172,7 +142,6 @@ namespace
       }
     }
 
-    // Add the last range
     const double aSpanStart  = theFlatKnots.Value(aCurrentSpan);
     const double aSpanLength = theFlatKnots.Value(aCurrentSpan + 1) - aSpanStart;
     const double aSpanMid    = aSpanStart + aSpanLength * 0.5;
@@ -182,7 +151,6 @@ namespace
     return aResult;
   }
 
-  //! Iterate over span blocks and dispatch to cache or direct evaluation functors.
   template <typename BuildCacheFunc, typename CacheEvalFunc, typename DirectEvalFunc>
   void iterateSpanBlocks(const NCollection_Array1<SpanRange>&     theSpanRanges,
                          const NCollection_Array1<ParamWithSpan>& theParams,
@@ -198,7 +166,7 @@ namespace
 
       if (aNbInSpan >= THE_CACHE_THRESHOLD)
       {
-        // Large block: reuse cache
+
         theBuildCache(theParams.Value(aRange.StartIdx).Param);
 
         for (int i = aRange.StartIdx; i < aRange.EndIdx; ++i)
@@ -209,7 +177,7 @@ namespace
       }
       else
       {
-        // Small block: cheaper to evaluate directly
+
         const int aSpanIdx = aRange.SpanIndex;
         for (int i = aRange.StartIdx; i < aRange.EndIdx; ++i)
         {
@@ -222,8 +190,6 @@ namespace
 
 } // namespace
 
-//==================================================================================================
-
 NCollection_Array1<gp_Pnt> GeomGridEval_BSplineCurve::EvaluateGrid(
   const NCollection_Array1<double>& theParams) const
 {
@@ -232,7 +198,6 @@ NCollection_Array1<gp_Pnt> GeomGridEval_BSplineCurve::EvaluateGrid(
     return NCollection_Array1<gp_Pnt>();
   }
 
-  // Get flat knots directly from geometry
   const occ::handle<NCollection_HArray1<double>>& aFlatKnotsHandle = myGeom->HArrayFlatKnots();
   if (aFlatKnotsHandle.IsNull())
   {
@@ -258,7 +223,6 @@ NCollection_Array1<gp_Pnt> GeomGridEval_BSplineCurve::EvaluateGrid(
   const int  aDegree    = myGeom->Degree();
   const bool isPeriodic = myGeom->IsPeriodic();
 
-  // Prepare parameters with span data
   PreparedParams aPrepared = prepareParams(theParams, aDegree, isPeriodic, aFlatKnots);
 
   const int                  aNbParams = theParams.Size();
@@ -271,10 +235,10 @@ NCollection_Array1<gp_Pnt> GeomGridEval_BSplineCurve::EvaluateGrid(
     aPrepared.Ranges,
     aPrepared.Params,
     [&](double theParam) { aCache->BuildCache(theParam, aFlatKnots, aPoles, aWeights); },
-    // Cache evaluation (local parameter)
+
     [&](int theIdx, double theLocalParam)
     { aCache->D0Local(theLocalParam, aPoints.ChangeValue(theIdx + 1)); },
-    // Direct evaluation (global parameter + span index)
+
     [&](int theIdx, double theParam, int theSpanIdx)
     {
       gp_Pnt aPoint;
@@ -292,8 +256,6 @@ NCollection_Array1<gp_Pnt> GeomGridEval_BSplineCurve::EvaluateGrid(
 
   return aPoints;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_BSplineCurve::EvaluateGridD1(
   const NCollection_Array1<double>& theParams) const
@@ -367,8 +329,6 @@ NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_BSplineCurve::EvaluateGri
   return aResults;
 }
 
-//==================================================================================================
-
 NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_BSplineCurve::EvaluateGridD2(
   const NCollection_Array1<double>& theParams) const
 {
@@ -441,8 +401,6 @@ NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_BSplineCurve::EvaluateGri
 
   return aResults;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_BSplineCurve::EvaluateGridD3(
   const NCollection_Array1<double>& theParams) const
@@ -518,8 +476,6 @@ NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_BSplineCurve::EvaluateGri
   return aResults;
 }
 
-//==================================================================================================
-
 NCollection_Array1<gp_Vec> GeomGridEval_BSplineCurve::EvaluateGridDN(
   const NCollection_Array1<double>& theParams,
   int                               theN) const
@@ -532,7 +488,6 @@ NCollection_Array1<gp_Vec> GeomGridEval_BSplineCurve::EvaluateGridDN(
   const int                  aNbParams = theParams.Size();
   NCollection_Array1<gp_Vec> aResult(1, aNbParams);
 
-  // For B-spline curves, derivatives become zero when order exceeds degree
   const int aDegree = myGeom->Degree();
   if (theN > aDegree)
   {
@@ -544,7 +499,6 @@ NCollection_Array1<gp_Vec> GeomGridEval_BSplineCurve::EvaluateGridDN(
     return aResult;
   }
 
-  // Get flat knots directly from geometry
   const occ::handle<NCollection_HArray1<double>>& aFlatKnotsHandle = myGeom->HArrayFlatKnots();
   if (aFlatKnotsHandle.IsNull())
   {
@@ -570,7 +524,6 @@ NCollection_Array1<gp_Vec> GeomGridEval_BSplineCurve::EvaluateGridDN(
 
   PreparedParams aPrepared = prepareParams(theParams, aDegree, isPeriodic, aFlatKnots);
 
-  // Use BSplCLib::DN directly with pre-computed span indices
   const int aNbRanges = aPrepared.Ranges.Size();
   for (int iRange = 0; iRange < aNbRanges; ++iRange)
   {

@@ -6,11 +6,10 @@
 #include <GeometryTest.hpp>
 #include <gp_Pnt2d.hpp>
 
-//=======================================================================
 bool IsGoodNumber(int argc, int waiting, Draw_Interpretor& di)
-//=======================================================================
+
 {
-  // argc vaut 1 de plus, puisque argv[0] contient le nom de la commande
+
   if (argc != (waiting + 1))
   {
     di << "Waiting " << waiting << " arguments\n";
@@ -20,9 +19,8 @@ bool IsGoodNumber(int argc, int waiting, Draw_Interpretor& di)
     return true;
 }
 
-//=======================================================================
 static int BattenCurve(Draw_Interpretor& di, int argc, const char** argv)
-//=======================================================================
+
 {
   if (!IsGoodNumber(argc, 6, di))
     return 1;
@@ -59,12 +57,10 @@ static int BattenCurve(Draw_Interpretor& di, int argc, const char** argv)
   Draw::Set(BattenName, aBatten);
 
   return 0;
-  // !!! Delete of Bat have to be make in DrawFairCurve_Batten destructor !!!!!
 }
 
-//=======================================================================
 static int MVCurve(Draw_Interpretor& di, int argc, const char** argv)
-//=======================================================================
+
 {
   if (!IsGoodNumber(argc, 6, di))
     return 1;
@@ -101,12 +97,10 @@ static int MVCurve(Draw_Interpretor& di, int argc, const char** argv)
   Draw::Set(MVCName, aMVC);
 
   return 0;
-  // !!! Delete of Bat have to be make in DrawFairCurve_MinimalVariation destructor !!!!!
 }
 
-//=======================================================================
 static int SetPoint(Draw_Interpretor& di, int argc, const char** argv)
-//=======================================================================
+
 {
   if (!IsGoodNumber(argc, 3, di))
     return 1;
@@ -131,9 +125,8 @@ static int SetPoint(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
 static int SetAngle(Draw_Interpretor& di, int argc, const char** argv)
-//=======================================================================
+
 {
   if (!IsGoodNumber(argc, 3, di))
     return 1;
@@ -155,9 +148,8 @@ static int SetAngle(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
 static int SetCurvature(Draw_Interpretor& di, int argc, const char** argv)
-//=======================================================================
+
 {
   if (!IsGoodNumber(argc, 3, di))
     return 1;
@@ -179,9 +171,8 @@ static int SetCurvature(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
 static int SetSlide(Draw_Interpretor& di, int argc, const char** argv)
-//=======================================================================
+
 {
   if (!IsGoodNumber(argc, 2, di))
     return 1;
@@ -201,9 +192,8 @@ static int SetSlide(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
 static int FreeAngle(Draw_Interpretor& di, int argc, const char** argv)
-//=======================================================================
+
 {
   if (!IsGoodNumber(argc, 2, di))
     return 1;
@@ -223,9 +213,8 @@ static int FreeAngle(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
 static int FreeCurvature(Draw_Interpretor& di, int argc, const char** argv)
-//=======================================================================
+
 {
   if (!IsGoodNumber(argc, 2, di))
     return 1;
@@ -245,9 +234,8 @@ static int FreeCurvature(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
 static int FreeSlide(Draw_Interpretor& di, int argc, const char** argv)
-//=======================================================================
+
 {
   if (!IsGoodNumber(argc, 1, di))
     return 1;
@@ -264,9 +252,8 @@ static int FreeSlide(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
 static int SetHeight(Draw_Interpretor& di, int argc, const char** argv)
-//=======================================================================
+
 {
   if (!IsGoodNumber(argc, 2, di))
     return 1;
@@ -286,9 +273,8 @@ static int SetHeight(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
 static int SetSlope(Draw_Interpretor& di, int argc, const char** argv)
-//=======================================================================
+
 {
   if (!IsGoodNumber(argc, 2, di))
     return 1;
@@ -307,9 +293,9 @@ static int SetSlope(Draw_Interpretor& di, int argc, const char** argv)
   Draw::Repaint();
   return 0;
 }
-//=======================================================================
+
 static int SetPhysicalRatio(Draw_Interpretor& di, int argc, const char** argv)
-//=======================================================================
+
 {
   if (!IsGoodNumber(argc, 2, di))
     return 1;
@@ -329,9 +315,7 @@ static int SetPhysicalRatio(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
 void GeometryTest::FairCurveCommands(Draw_Interpretor& TheCommande)
-//=======================================================================
 
 {
   const char* g;

@@ -11,7 +11,6 @@ class StepGeom_SweptSurface;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SweptSurface
 class RWStepGeom_RWSweptSurface
 {
 public:

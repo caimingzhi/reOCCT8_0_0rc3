@@ -89,10 +89,10 @@ void BREP_mergePDS(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
       if (GK != TopOpeBRepDS_POINT)
         continue;
       int GI = CPI->Geometry();
-      //**!
+
       if (GI > BDS.NbPoints())
         continue;
-      //**!
+
       const TopOpeBRepDS_Point& PDS = BDS.Point(GI);
 
       int               ivp1;
@@ -162,7 +162,6 @@ void BREP_mergePDS(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
         }
       }
 #endif
-
-    } // itI.More()
+    }
   }
-} // BREP_mergePDS
+}

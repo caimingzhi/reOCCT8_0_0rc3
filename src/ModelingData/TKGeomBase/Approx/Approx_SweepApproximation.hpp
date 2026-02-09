@@ -21,15 +21,6 @@
 class Approx_SweepFunction;
 class AdvApprox_Cutting;
 
-//! Approximation of an Surface S(u,v)
-//! (and eventually associate 2d Curves) defined
-//! by section's law.
-//!
-//! This surface is defined by a function F(u, v)
-//! where Ft(u) = F(u, t) is a bspline curve.
-//! To use this algorithm, you have to implement Ft(u)
-//! as a derivative class of Approx_SweepFunction.
-//! This algorithm can be used by blending, sweeping...
 class Approx_SweepApproximation
 {
 public:
@@ -37,21 +28,6 @@ public:
 
   Standard_EXPORT Approx_SweepApproximation(const occ::handle<Approx_SweepFunction>& Func);
 
-  //! Perform the Approximation
-  //! [First, Last] : Approx_SweepApproximation.cdl
-  //! Tol3d : Tolerance to surface approximation
-  //! Tol2d : Tolerance used to perform curve approximation
-  //! Normally the 2d curve are approximated with a
-  //! tolerance given by the resolution on support surfaces,
-  //! but if this tolerance is too large Tol2d is used.
-  //! TolAngular : Tolerance (in radian) to control the angle
-  //! between tangents on the section law and
-  //! tangent of iso-v on approximated surface
-  //! Continuity : The continuity in v waiting on the surface
-  //! Degmax     : The maximum degree in v required on the surface
-  //! Segmax     : The maximum number of span in v required on
-  //! the surface
-  //! Warning : The continuity ci can be obtained only if Ft is Ci
   Standard_EXPORT void Perform(const double        First,
                                const double        Last,
                                const double        Tol3d,
@@ -62,14 +38,12 @@ public:
                                const int           Degmax     = 11,
                                const int           Segmax     = 50);
 
-  //! The EvaluatorFunction from AdvApprox;
   Standard_EXPORT int Eval(const double Parameter,
                            const int    DerivativeRequest,
                            const double First,
                            const double Last,
                            double&      Result);
 
-  //! returns if we have an result
   bool IsDone() const;
 
   Standard_EXPORT void SurfShape(int& UDegree,
@@ -102,10 +76,8 @@ public:
 
   const NCollection_Array1<int>& SurfVMults() const;
 
-  //! returns the maximum error in the surface approximation.
   Standard_EXPORT double MaxErrorOnSurf() const;
 
-  //! returns the average error in the surface approximation.
   Standard_EXPORT double AverageErrorOnSurf() const;
 
   int NbCurves2d() const;
@@ -125,19 +97,12 @@ public:
 
   const NCollection_Array1<int>& Curves2dMults() const;
 
-  //! returns the maximum error of the <Index>
-  //! 2d curve approximation.
   Standard_EXPORT double Max2dError(const int Index) const;
 
-  //! returns the average error of the <Index>
-  //! 2d curve approximation.
   Standard_EXPORT double Average2dError(const int Index) const;
 
-  //! returns the maximum 3d error of the <Index>
-  //! 2d curve approximation on the Surface.
   Standard_EXPORT double TolCurveOnSurf(const int Index) const;
 
-  //! display information on approximation.
   Standard_EXPORT void Dump(Standard_OStream& o) const;
 
 private:
@@ -356,9 +321,3 @@ inline const NCollection_Array1<int>& Approx_SweepApproximation::Curves2dMults()
   }
   return tab2dMults->Array1();
 }
-
-/*
-inline  void Approx_SweepApproximation::TolReached(double& Tol3d,double& Tol2d) const
-{
-
-}*/

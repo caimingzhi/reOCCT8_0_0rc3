@@ -26,14 +26,10 @@ public:
 
   Standard_EXPORT void LoadSolid(const TopoDS_Solid& S);
 
-  //! compute the position of point <P> regarding with the
-  //! geometric domain of the solid <S>.
   Standard_EXPORT TopAbs_State Classify(const TopoDS_Solid& S, const gp_Pnt& P, const double Tol);
 
   Standard_EXPORT void LoadShell(const TopoDS_Shell& S);
 
-  //! compute the position of point <P> regarding with the
-  //! geometric domain of the shell <S>.
   Standard_EXPORT TopAbs_State Classify(const TopoDS_Shell& S, const gp_Pnt& P, const double Tol);
 
   Standard_EXPORT TopAbs_State State() const;

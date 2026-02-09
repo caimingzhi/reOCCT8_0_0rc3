@@ -10,25 +10,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_BooleanListDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_BooleanListDriver::BinMDataStd_BooleanListDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_BooleanList)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_BooleanListDriver::NewEmpty() const
 {
   return new TDataStd_BooleanList();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool BinMDataStd_BooleanListDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                           const occ::handle<TDF_Attribute>& theTarget,
                                           BinObjMgt_RRelocationTable&       theRelocTable) const
@@ -59,10 +51,6 @@ bool BinMDataStd_BooleanListDriver::Paste(const BinObjMgt_Persistent&       theS
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void BinMDataStd_BooleanListDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
   BinObjMgt_Persistent&             theTarget,
@@ -86,7 +74,6 @@ void BinMDataStd_BooleanListDriver::Paste(
   uint8_t* aPtr = (uint8_t*)&aSourceArray(aFirstInd);
   theTarget.PutByteArray(aPtr, aLength);
 
-  // process user defined guid
   if (anAtt->ID() != TDataStd_BooleanList::GetID())
     theTarget << anAtt->ID();
 }

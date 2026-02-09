@@ -41,15 +41,11 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_DataMap.hpp>
 
-//=================================================================================================
-
 int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
 {
-  // initializations
-  // !Note if IType set as -1 it means that occurs error with null 3d curve for the edge
+
   int IType = 0;
 
-  // characteristics of the first edge
   double                  first1 = 0., last1 = 0., first2, last2, ff, ll;
   TopLoc_Location         loc;
   TopoDS_Vertex           V1, V2;
@@ -57,7 +53,6 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
   GeomAdaptor_Curve       AdC1;
   bool                    degen1 = BRep_Tool::Degenerated(Edge1);
 
-  // find the particular case
   gp_Pnt pos1, pos;
   double dist;
   double dist1 = 0.;
@@ -88,7 +83,7 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
     AdC1.Load(curv1);
     if (AdC1.GetType() == GeomAbs_Circle)
     {
-      // first circular section
+
       IType = 1;
       pos1  = AdC1.Circle().Location();
       dist1 = AdC1.Circle().Radius();
@@ -96,7 +91,7 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
     }
     else if (AdC1.GetType() == GeomAbs_Line)
     {
-      // first straight line section
+
       IType = 4;
       pos1  = AdC1.Line().Location();
       dist1 = AdC1.Value(first1).Distance(AdC1.Value(last1));
@@ -106,7 +101,7 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
     }
     else
     {
-      // first section of any type
+
       IType = 0;
     }
   }
@@ -121,10 +116,10 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
       pos = BRep_Tool::Pnt(V1);
       if (IType == 1)
       {
-        // the only particular case with degenerated edge at end : the cone
+
         if (pos.IsEqual(pos1, Precision::Confusion()))
         {
-          // the top is mixed with the center of the circle
+
           IType = 0;
         }
         else
@@ -134,19 +129,19 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
           axe = gp_Ax1(pos1, dir);
           if (axe.IsParallel(axe1, Precision::Angular()))
           {
-            // the top is on the axis of the circle
+
             IType = 2;
           }
           else
           {
-            // incorrect top --> no particular case
+
             IType = 0;
           }
         }
       }
       else if (IType != 4)
-      { // not a plane
-        // no particular case
+      {
+
         IType = 0;
       }
     }
@@ -172,17 +167,17 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
       {
         if (AdC.GetType() != GeomAbs_Circle)
         {
-          // section not circular --> no particular case
+
           IType = 0;
         }
         else
         {
           if (AdC.Circle().Axis().IsCoaxial(axe1, Precision::Angular(), Precision::Confusion()))
           {
-            // same axis
+
             if (std::abs(AdC.Circle().Radius() - dist1) < Precision::Confusion())
             {
-              // possibility of cylinder or a piece of cylinder
+
               double h1 = std::abs(last1 - first1), h2 = std::abs(last2 - first2);
               bool   Same, SameParametricLength = (std::abs(h1 - h2) < Precision::PConfusion());
               double m1 = (first1 + last1) / 2., m2 = (first2 + last2) / 2.;
@@ -193,18 +188,18 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
               Same = SameParametricLength && (gp_Vec(P1, P2).IsNormal(DU, Precision::Angular()));
               if (Same)
               {
-                // cylinder or piece of cylinder
+
                 IType = 1;
               }
               else
               {
-                // the interval of definition is not correct
+
                 IType = 0;
               }
             }
             else
             {
-              // possibility of cone truncation
+
               double h1 = std::abs(last1 - first1), h2 = std::abs(last2 - first2);
               bool   Same, SameParametricLength = (std::abs(h1 - h2) < Precision::PConfusion());
               double m1 = (first1 + last1) / 2., m2 = (first2 + last2) / 2.;
@@ -215,32 +210,32 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
               Same = SameParametricLength && (gp_Vec(P1, P2).IsNormal(DU, Precision::Angular()));
               if (Same)
               {
-                // truncation of cone
+
                 IType = 2;
               }
               else
               {
-                // the interval of definition is not correct
+
                 IType = 0;
               }
             }
             if (AdC.Circle().Location().IsEqual(pos1, Precision::Confusion()))
             {
-              // the centers are mixed
+
               IType = 0;
             }
           }
           else
           {
-            // different axis
+
             if (AdC.Circle().Radius() == dist1)
             {
-              // torus ?
+
               IType = 3;
             }
             else
             {
-              // different radius --> no particular case
+
               IType = 0;
             }
           }
@@ -250,7 +245,7 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
       {
         if (AdC.GetType() != GeomAbs_Line)
         {
-          // not a straight line section --> no particular case
+
           IType = 0;
         }
         else
@@ -262,30 +257,30 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
           axe = gp_Ax1(AdC.Value(first2), aDir);
           if (axe.IsParallel(axe1, Precision::Angular()))
           {
-            // parallel straight line
+
             if (std::abs(dist - dist1) < Precision::Confusion())
             {
               gp_Dir dir(gp_Vec(AdC1.Value(first1), AdC.Value(first2)));
               if (dir.IsNormal(gp_Dir(vec), Precision::Angular()))
               {
-                // plane
+
                 IType = 4;
               }
               else
               {
-                // extrusion ?
+
                 IType = 5;
               }
             }
             else
             {
-              // different length --> no particular case
+
               IType = 0;
             }
           }
           else
           {
-            // not parallel straight line --> no particular case
+
             IType = 0;
           }
         }
@@ -293,15 +288,15 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
       else if (IType == -2)
       {
         if (AdC.GetType() == GeomAbs_Line)
-          IType = 4; // plane
+          IType = 4;
         else if (AdC.GetType() == GeomAbs_Circle)
         {
-          // the only particular case with degenerated edge at the beginning the cone
+
           pos = AdC.Circle().Location();
           axe = AdC.Circle().Axis();
           if (pos1.IsEqual(pos, Precision::Confusion()))
           {
-            // the top is mixed with the center of the circle
+
             IType = 0;
           }
           else
@@ -311,12 +306,12 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
             axe1 = gp_Ax1(pos1, dir);
             if (axe.IsParallel(axe1, Precision::Angular()))
             {
-              // the top is on the axis of the circle
+
               IType = -2;
             }
             else
             {
-              // incorrect top --> no particular case
+
               IType = 0;
             }
           }
@@ -326,23 +321,18 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
       }
     }
   }
-  // torus and extrusion are not particular cases.
+
   if (IType == 3 || IType == 5)
     IType = 0;
   return IType;
 }
-
-//=======================================================================
-// function : CreateKPart
-// purpose  : Returns true if there is no errors occur
-//=======================================================================
 
 bool CreateKPart(const TopoDS_Edge&         Edge1,
                  const TopoDS_Edge&         Edge2,
                  const int                  IType,
                  occ::handle<Geom_Surface>& Surf)
 {
-  // find the dimension
+
   TopoDS_Vertex V1, V2;
 
   TopLoc_Location loc;
@@ -351,12 +341,11 @@ bool CreateKPart(const TopoDS_Edge&         Edge1,
 
   bool isDone = true;
 
-  // find characteristics of the first edge
   occ::handle<Geom_Curve> C1;
   bool                    degen1 = BRep_Tool::Degenerated(Edge1);
   if (degen1)
   {
-    // cone with degenerated edge at the top
+
     TopExp::Vertices(Edge1, v1f, v1l);
   }
   else
@@ -382,12 +371,11 @@ bool CreateKPart(const TopoDS_Edge&         Edge1,
     }
   }
 
-  // find characteristics of the second edge
   occ::handle<Geom_Curve> C2;
   bool                    degen2 = BRep_Tool::Degenerated(Edge2);
   if (degen2)
   {
-    // cone with degenerated edge at the top
+
     TopExp::Vertices(Edge2, v2f, v2l);
   }
   else
@@ -412,14 +400,13 @@ bool CreateKPart(const TopoDS_Edge&         Edge1,
     {
       if (degen1)
       {
-        aa = a1; // C2->ReversedParameter(b1);
-        bb = b1; // C2->ReversedParameter(a1);
+        aa = a1;
+        bb = b1;
       }
       TopExp::Vertices(Edge2, v2f, v2l);
     }
   }
 
-  // create the new surface
   TopoDS_Face face;
   TopoDS_Wire W;
   TopoDS_Edge edge1, edge2, edge3, edge4, couture;
@@ -436,12 +423,11 @@ bool CreateKPart(const TopoDS_Edge&         Edge1,
   if (!C2.IsNull())
     aC2Adaptor.Load(C2);
 
-  // calculate the surface
   occ::handle<Geom_Surface> surface;
   double                    V, Rad;
   if (IType == 1)
   {
-    // cylindrical surface
+
     gp_Circ c1  = aC1Adaptor.Circle();
     gp_Circ c2  = aC2Adaptor.Circle();
     gp_Ax3  Ac1 = c1.Position();
@@ -456,7 +442,7 @@ bool CreateKPart(const TopoDS_Edge&         Edge1,
   }
   else if (IType == 2)
   {
-    // conical surface
+
     gp_Circ k1  = aC1Adaptor.Circle();
     gp_Ax3  Ak1 = k1.Position();
     if (degen2)
@@ -483,12 +469,12 @@ bool CreateKPart(const TopoDS_Edge&         Edge1,
   }
   else if (IType == -2)
   {
-    // conical surface with the top at the beginning (degen1 is true)
+
     gp_Circ k2  = aC2Adaptor.Circle();
     gp_Ax3  Ak2 = k2.Position();
     Ak2.SetLocation(BRep_Tool::Pnt(v1f));
     V   = gp_Vec(BRep_Tool::Pnt(v1f), k2.Location()).Dot(gp_Vec(Ak2.Direction()));
-    Rad = k2.Radius(); // - k2.Radius();
+    Rad = k2.Radius();
     if (V < 0.)
     {
       Ak2.ZReverse();
@@ -501,11 +487,10 @@ bool CreateKPart(const TopoDS_Edge&         Edge1,
   }
   else if (IType == 3)
   {
-    // torus surface ?
   }
   else if (IType == 4)
   {
-    // surface plane
+
     gp_Lin L1, L2, aLine;
     if (!degen1)
     {
@@ -527,22 +512,16 @@ bool CreateKPart(const TopoDS_Edge&         Edge1,
     occ::handle<Geom_Plane> Plan = new Geom_Plane(Ax);
     V                            = P1P2.Dot(Ax.YDirection());
     surface                      = Plan;
-    // surface = new Geom_RectangularTrimmedSurface
-    //( Plan, aa, bb, std::min(0.,V), std::max(0.,V) );
   }
   else if (IType == 5)
   {
-    // surface of extrusion ?
   }
   else
   {
-    // IType incorrect
   }
   Surf = surface;
   return isDone;
 }
-
-//=================================================================================================
 
 static TopoDS_Edge CreateNewEdge(
   const TopoDS_Edge&                                                        theEdge,
@@ -567,22 +546,16 @@ static TopoDS_Edge CreateNewEdge(
   return aNewEdge;
 }
 
-//=================================================================================================
-
 BRepFill_Generator::BRepFill_Generator()
     : myMutableInput(true),
       myStatus(BRepFill_ThruSectionErrorStatus_NotDone)
 {
 }
 
-//=================================================================================================
-
 void BRepFill_Generator::AddWire(const TopoDS_Wire& Wire)
 {
   myWires.Append(Wire);
 }
-
-//=================================================================================================
 
 void BRepFill_Generator::Perform()
 {
@@ -596,9 +569,8 @@ void BRepFill_Generator::Perform()
   BRep_Builder B;
   B.MakeShell(myShell);
 
-  int Nb = myWires.Length();
-  NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>
-    aModifWires; // indexed map for debugging
+  int                                                           Nb = myWires.Length();
+  NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aModifWires;
 
   BRepTools_WireExplorer ex1, ex2;
 
@@ -657,9 +629,7 @@ void BRepFill_Generator::Perform()
       {
         TopoDS_Shape aLocalShape = anOrEdge1.EmptyCopied();
         Edge1                    = TopoDS::Edge(aLocalShape);
-        //	Edge1 = TopoDS::Edge(ex1.Current().EmptyCopied());
-        //	aLocalShape = ex1.Current();
-        //	TopExp::Vertices(TopoDS::Edge(aLocalShape),V1f,V1l);
+
         TopExp::Vertices(anOrEdge1, V1f, V1l);
         V1f.Orientation(TopAbs_FORWARD);
         B.Add(Edge1, V1f);
@@ -677,7 +647,7 @@ void BRepFill_Generator::Perform()
       {
         TopoDS_Shape aLocalShape = anOrEdge2.EmptyCopied();
         Edge2                    = TopoDS::Edge(aLocalShape);
-        //	Edge2 = TopoDS::Edge(ex2.Current().EmptyCopied());
+
         TopExp::Vertices(anOrEdge2, V2f, V2l);
         V2f.Orientation(TopAbs_FORWARD);
         B.Add(Edge2, V2f);
@@ -693,14 +663,12 @@ void BRepFill_Generator::Perform()
 
       bool Periodic =
         (BRep_Tool::IsClosed(Edge1) || degen1) && (BRep_Tool::IsClosed(Edge2) || degen2);
-      // ATTENTION : a non-punctual wire should not
-      //             contain a punctual edge
+
       if (!wPoint1)
         ex1.Next();
       if (!wPoint2)
         ex2.Next();
 
-      // initialization of vertices
       occ::handle<Geom_Surface> Surf;
       double                    f1 = 0, l1 = 1, f2 = 0, l2 = 1;
       if (Edge1.Orientation() == TopAbs_REVERSED)
@@ -722,7 +690,6 @@ void BRepFill_Generator::Perform()
         Vl_toMap = V1l;
       }
 
-      // processing of KPart
       int IType = DetectKPart(Edge1, Edge2);
       if (IType == -1)
       {
@@ -732,7 +699,7 @@ void BRepFill_Generator::Perform()
 
       if (IType == 0)
       {
-        // no part cases
+
         TopLoc_Location L, L1, L2;
 
         occ::handle<Geom_Curve>    C1, C2;
@@ -769,10 +736,7 @@ void BRepFill_Generator::Perform()
           }
         }
 
-        // compute the location
         bool SameLoc = false;
-
-        // transform and trim the curves
 
         if (std::abs(f1 - C1->FirstParameter()) > Precision::PConfusion()
             || std::abs(l1 - C1->LastParameter()) > Precision::PConfusion())
@@ -816,7 +780,7 @@ void BRepFill_Generator::Perform()
       }
       else
       {
-        // particular case
+
         if (!CreateKPart(Edge1, Edge2, IType, Surf))
         {
           myStatus = BRepFill_ThruSectionErrorStatus_Null3DCurve;
@@ -825,7 +789,6 @@ void BRepFill_Generator::Perform()
         B.MakeFace(Face, Surf, Precision::Confusion());
       }
 
-      // make the missing edges
       double first, last;
       Surf->Bounds(f1, l1, f2, l2);
       if (IType == 0)
@@ -843,7 +806,6 @@ void BRepFill_Generator::Perform()
       {
         TopoDS_Shape aLocalShape = Map(Vf_toMap).Reversed();
         Edge3                    = TopoDS::Edge(aLocalShape);
-        //	Edge3 = TopoDS::Edge(Map(V1f).Reversed());
       }
       else
       {
@@ -858,12 +820,12 @@ void BRepFill_Generator::Perform()
           NCollection_Array1<gp_Pnt> Extremities(1, 2);
           if (IType == 0)
           {
-            // general case : Edge3 corresponds to iso U=f1
+
             CC = Surf->UIso(f1);
           }
           else
           {
-            // particular case : it is required to calculate the curve 3d
+
             Extremities(1) = BRep_Tool::Pnt(V1f);
             Extremities(2) = BRep_Tool::Pnt(V2f);
             CC             = new Geom_BezierCurve(Extremities);
@@ -884,7 +846,7 @@ void BRepFill_Generator::Perform()
       {
         TopoDS_Shape      aLocalShape = Map(Vl_toMap).Reversed();
         const TopoDS_Edge CommonE     = TopoDS::Edge(aLocalShape);
-        //	const TopoDS_Edge CommonE = TopoDS::Edge(Map(V1l).Reversed());
+
         TopoDS_Vertex V1, V2;
         TopExp::Vertices(CommonE, V1, V2);
         CommonEdge = V1.IsSame(V1l) && V2.IsSame(V2l);
@@ -893,7 +855,6 @@ void BRepFill_Generator::Perform()
       {
         TopoDS_Shape aLocalShape = Map(Vl_toMap).Reversed();
         Edge4                    = TopoDS::Edge(aLocalShape);
-        //	Edge4 = TopoDS::Edge(Map(V1l).Reversed());
       }
       else
       {
@@ -908,12 +869,12 @@ void BRepFill_Generator::Perform()
           NCollection_Array1<gp_Pnt> Extremities(1, 2);
           if (IType == 0)
           {
-            // general case : Edge4 corresponds to iso U=l1
+
             CC = Surf->UIso(l1);
           }
           else
           {
-            // particular case : it is required to calculate the curve 3d
+
             Extremities(1) = BRep_Tool::Pnt(V1l);
             Extremities(2) = BRep_Tool::Pnt(V2l);
             CC             = new Geom_BezierCurve(Extremities);
@@ -930,7 +891,7 @@ void BRepFill_Generator::Perform()
 
       if (!myMutableInput)
       {
-        if (!degen1) // if true=>already empty-copied
+        if (!degen1)
         {
           const TopoDS_Shape* aNewEd1 = myOldNewShapes.Seek(Edge1);
           if (aNewEd1)
@@ -941,8 +902,7 @@ void BRepFill_Generator::Perform()
                    && (IType != 4 || BRep_Tool::SameParameter(Edge1)
                        || BRep_Tool::SameRange(Edge1)))
           {
-            // if such expression is true and mutableInput is false => pre-copy the edge to prevent
-            // a following modifying (see code below)
+
             Edge1 = CreateNewEdge(Edge1, myOldNewShapes, Wire1, aModifWires);
           }
         }
@@ -960,10 +920,9 @@ void BRepFill_Generator::Perform()
         }
       }
 
-      // set the pcurves
       constexpr double T = Precision::Confusion();
 
-      if (IType != 4) // not plane
+      if (IType != 4)
       {
         if (Edge1.Orientation() == TopAbs_REVERSED)
         {
@@ -1006,7 +965,7 @@ void BRepFill_Generator::Perform()
       }
       else
       {
-        // KPart
+
         if (Periodic)
         {
           NCollection_Array1<gp_Pnt2d> Extrem1(1, 2);
@@ -1022,7 +981,7 @@ void BRepFill_Generator::Perform()
                        T);
         }
         else if (IType != 4)
-        { // not plane
+        {
           NCollection_Array1<gp_Pnt2d> Extrem2(1, 2);
           Extrem2(1).SetCoord(f1, f2);
           Extrem2(2).SetCoord(f1, l2);
@@ -1033,7 +992,7 @@ void BRepFill_Generator::Perform()
           B.UpdateEdge(Edge4, new Geom2d_BezierCurve(Extrem1), Face, T);
         }
       }
-      // Set the non parameter flag;
+
       B.SameParameter(Edge1, false);
       B.SameParameter(Edge2, false);
       B.SameParameter(Edge3, false);
@@ -1043,7 +1002,6 @@ void BRepFill_Generator::Perform()
       B.SameRange(Edge3, false);
       B.SameRange(Edge4, false);
 
-      // make the wire
       TopoDS_Wire aWire;
       B.MakeWire(aWire);
 
@@ -1061,7 +1019,6 @@ void BRepFill_Generator::Perform()
       B.Add(Face, aWire);
       B.Add(myShell, Face);
 
-      // complete myMap for edge1
       if (!degen1 || IType != 4)
       {
         TopoDS_Edge aREd = anOrEdge1;
@@ -1087,7 +1044,6 @@ void BRepFill_Generator::Perform()
     aFirstWire = false;
   }
 
-  // all vertices from myShell are the part of orig. section wires
   if (myMutableInput)
   {
     BRepLib::SameParameter(myShell);
@@ -1111,7 +1067,6 @@ void BRepFill_Generator::Perform()
     myShell.Closed(true);
   }
 
-  // update wire's history
   TopoDS_Iterator anItEdge;
   for (int i = 1; i <= aModifWires.Extent(); i++)
   {
@@ -1122,7 +1077,7 @@ void BRepFill_Generator::Perform()
     anItEdge.Initialize(aCurWire);
     for (; anItEdge.More(); anItEdge.Next())
     {
-      const TopoDS_Shape& aCurEdge = anItEdge.Value(); // edges only
+      const TopoDS_Shape& aCurEdge = anItEdge.Value();
       const TopoDS_Shape& aNewEdge = ResultShape(aCurEdge);
       B.Add(aNewWire, aNewEdge);
     }
@@ -1139,8 +1094,6 @@ void BRepFill_Generator::Perform()
   }
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& BRepFill_Generator::GeneratedShapes(
   const TopoDS_Shape& SSection) const
 {
@@ -1155,15 +1108,11 @@ const NCollection_List<TopoDS_Shape>& BRepFill_Generator::GeneratedShapes(
   }
 }
 
-//=================================================================================================
-
 const NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
   BRepFill_Generator::Generated() const
 {
   return myMap;
 }
-
-//=================================================================================================
 
 TopoDS_Shape BRepFill_Generator::ResultShape(const TopoDS_Shape& theShape) const
 {
@@ -1178,14 +1127,10 @@ TopoDS_Shape BRepFill_Generator::ResultShape(const TopoDS_Shape& theShape) const
   return aNewShape;
 }
 
-//=================================================================================================
-
 void BRepFill_Generator::SetMutableInput(const bool theIsMutableInput)
 {
   myMutableInput = theIsMutableInput;
 }
-
-//=================================================================================================
 
 bool BRepFill_Generator::IsMutableInput() const
 {

@@ -21,45 +21,20 @@ class TCollection_HExtendedString;
 class TCollection_ExtendedString;
 class TopoDS_Shape;
 
-//! This class provides various useful utility routines, to
-//! facilitate handling of most common data structures :
-//! transients (type, type name ...),
-//! strings (ascii or extended, pointed or handled or ...),
-//! shapes (reading, writing, testing ...),
-//! sequences & arrays (of strings, of transients, of shapes ...),
-//! ...
-//!
-//! Also it gives some helps on some data structures from XSTEP,
-//! such as printing on standard trace file, recignizing most
-//! currently used auxiliary types (Binder,Mapper ...)
 class XSControl_Utils
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! the only use of this, is to allow a frontal to get one
-  //! distinct "Utils" set per separate engine
   Standard_EXPORT XSControl_Utils();
 
-  //! Just prints a line into the current Trace File. This allows to
-  //! better characterise the various trace outputs, as desired.
   Standard_EXPORT void TraceLine(const char* line) const;
 
-  //! Just prints a line or a set of lines into the current Trace
-  //! File. <lines> can be a HAscii/ExtendedString (produces a print
-  //! without ending line) or a HSequence or HArray1 Of ..
-  //! (one new line per item)
   Standard_EXPORT void TraceLines(const occ::handle<Standard_Transient>& lines) const;
 
   Standard_EXPORT bool IsKind(const occ::handle<Standard_Transient>& item,
                               const occ::handle<Standard_Type>&      what) const;
 
-  //! Returns the name of the dynamic type of an object, i.e. :
-  //! If it is a Type, its Name
-  //! If it is a object not a type, the Name of its DynamicType
-  //! If it is Null, an empty string
-  //! If <nopk> is False (D), gives complete name
-  //! If <nopk> is True, returns class name without package
   Standard_EXPORT const char* TypeName(const occ::handle<Standard_Transient>& item,
                                        const bool                             nopk = false) const;
 
@@ -132,26 +107,11 @@ public:
     const occ::handle<NCollection_HSequence<occ::handle<TCollection_HExtendedString>>>& seqval,
     const char16_t* strval) const;
 
-  //! Converts a list of Shapes to a Compound (a kind of Shape)
   Standard_EXPORT TopoDS_Shape
     CompoundFromSeq(const occ::handle<NCollection_HSequence<TopoDS_Shape>>& seqval) const;
 
-  //! Returns the type of a Shape : true type if <compound> is False
-  //! If <compound> is True and <shape> is a Compound, iterates on
-  //! its items. If all are of the same type, returns this type.
-  //! Else, returns COMPOUND. If it is empty, returns SHAPE
-  //! For a Null Shape, returns SHAPE
   Standard_EXPORT TopAbs_ShapeEnum ShapeType(const TopoDS_Shape& shape, const bool compound) const;
 
-  //! From a Shape, builds a Compound as follows :
-  //! explores it level by level
-  //! If <explore> is False, only COMPOUND items. Else, all items
-  //! Adds to the result, shapes which comply to <type>
-  //! + if <type> is WIRE, considers free edges (and makes wires)
-  //! + if <type> is SHELL, considers free faces (and makes shells)
-  //! If <compound> is True, gathers items in compounds which
-  //! correspond to starting COMPOUND,SOLID or SHELL containers, or
-  //! items directly contained in a Compound
   Standard_EXPORT TopoDS_Shape SortedCompound(const TopoDS_Shape&    shape,
                                               const TopAbs_ShapeEnum type,
                                               const bool             explore,
@@ -165,15 +125,9 @@ public:
   Standard_EXPORT void AppendShape(const occ::handle<NCollection_HSequence<TopoDS_Shape>>& seqv,
                                    const TopoDS_Shape& shape) const;
 
-  //! Creates a Transient Object from a Shape : it is either a Binder
-  //! (used by functions which require a Transient but can process
-  //! a Shape, such as viewing functions) or a HShape (according to hs)
-  //! Default is a HShape
   Standard_EXPORT occ::handle<Standard_Transient> ShapeBinder(const TopoDS_Shape& shape,
                                                               const bool          hs = true) const;
 
-  //! From a Transient, returns a Shape.
-  //! In fact, recognizes ShapeBinder ShapeMapper and HShape
   Standard_EXPORT TopoDS_Shape BinderShape(const occ::handle<Standard_Transient>& tr) const;
 
   Standard_EXPORT int SeqLength(const occ::handle<Standard_Transient>& list) const;

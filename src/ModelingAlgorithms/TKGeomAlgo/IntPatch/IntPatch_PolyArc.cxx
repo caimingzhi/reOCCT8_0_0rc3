@@ -35,18 +35,7 @@ IntPatch_PolyArc::IntPatch_PolyArc(const occ::handle<Adaptor2d_Curve2d>& Line,
   {
     throw Standard_ConstructionError();
   }
-  //----------------------------------------------------------------------
-  //-- On veut eviter les cas ou  le present polygone est beaucoup plus
-  //-- grand que l objet en second.
-  //--
-  //-- Par exemple lorsque l objet en second est une ligne de cheminement
-  //-- qui contient de nombreux segments (>>100), une fleche nulle
-  //-- et ce polygone quelques segments et une fleche qui contient
-  //-- toute la ligne de cheminement.
-  //--
-  //-- Dans ce cas (tout un polygone compris dans la zone d influence)
-  //-- les calculs deviennent tres longs (N2)
-  //----------------------------------------------------------------------
+
   int IndexInf = NbSample + 1;
   int IndexSup = 0;
 
@@ -88,12 +77,7 @@ IntPatch_PolyArc::IntPatch_PolyArc(const occ::handle<Adaptor2d_Curve2d>& Line,
       brise(i).SetCoord(X, Y);
       XXs = 0.5 * (Xs + X);
       YYs = 0.5 * (Ys + Y);
-      //------------------------------------------------------------
-      //-- On recherche le debut et la fin de la zone significative
-      //------------------------------------------------------------
-      // MSV: (see cda 002 H2) if segment is too large (>>r) we have
-      //      a risk to jump through BoxOtherPolygon, therefore we should
-      //      check this condition if the first one is failure.
+
       bool isMidPtInBox = (std::abs(bx0 - XXs) + std::abs(by0 - YYs)) < r;
       bool isSegOut     = true;
       if (!isMidPtInBox)
@@ -109,10 +93,7 @@ IntPatch_PolyArc::IntPatch_PolyArc(const occ::handle<Adaptor2d_Curve2d>& Line,
       }
       if (isMidPtInBox || !isSegOut)
       {
-        // MSV: take the previous and the next segments too, because of
-        //      we check only the middle point (see BUC60946)
-        // if(IndexInf>i) IndexInf=i-1;
-        // if(IndexSup<i) IndexSup=i;
+
         if (IndexInf > i)
           IndexInf = std::max(i - 2, 1);
         if (IndexSup < i)
@@ -132,24 +113,18 @@ IntPatch_PolyArc::IntPatch_PolyArc(const occ::handle<Adaptor2d_Curve2d>& Line,
     {
       r += r;
       r2 = r * r * 49.;
-      //-- std::cout<<" Le rayon : "<<r<<" est insuffisant "<<std::endl;
     }
     else
     {
-      //----------------------------------------------
-      //-- Si le nombre de points significatifs est
-      //-- insuffisant, on reechantillonne une fois
-      //-- encore
-      //----------------------------------------------
+
       if ((IndexSup - IndexInf) < (NbSample / 2))
       {
-        //-- std::cout<<" --- On remet ca entre les index "<<IndexInf<<" et "<<IndexSup<<std::endl;
+
         nbloop = 10;
-        // if(IndexInf>1) IndexInf--;
-        // if(IndexSup<NbSample) IndexSup++;
+
         Pdeb = param(IndexInf);
         Pfin = param(IndexSup);
-        // IndexInf = IndexSup+1;
+
         IndexInf = NbSample + 1;
         IndexSup = 0;
       }

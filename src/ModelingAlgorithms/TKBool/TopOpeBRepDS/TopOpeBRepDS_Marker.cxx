@@ -4,8 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_Marker, Standard_Transient)
 
-// #include <TopExp.hpp>
-// #include <NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>.hxx>
 TopOpeBRepDS_Marker::TopOpeBRepDS_Marker()
 {
   Reset();
@@ -28,7 +26,7 @@ void TopOpeBRepDS_Marker::Set(const int ie, const bool b)
 void TopOpeBRepDS_Marker::Set(const bool b, const int na, void* const aa)
 {
   char** a = (char**)aa;
-  //  int ia,ie;
+
   int ia;
   if (!na)
     myhe->Init(b);

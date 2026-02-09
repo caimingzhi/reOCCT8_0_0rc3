@@ -9,8 +9,6 @@
 #include <Precision.hpp>
 #include <TopoDS_Face.hpp>
 
-//=================================================================================================
-
 BRepPrim_Cylinder::BRepPrim_Cylinder(const gp_Ax2& Position,
                                      const double  Radius,
                                      const double  Height)
@@ -20,16 +18,12 @@ BRepPrim_Cylinder::BRepPrim_Cylinder(const gp_Ax2& Position,
   SetMeridian();
 }
 
-//=================================================================================================
-
 BRepPrim_Cylinder::BRepPrim_Cylinder(const double Radius)
     : BRepPrim_Revolution(gp::XOY(), RealFirst(), RealLast()),
       myRadius(Radius)
 {
   SetMeridian();
 }
-
-//=================================================================================================
 
 BRepPrim_Cylinder::BRepPrim_Cylinder(const gp_Pnt& Center, const double Radius)
     : BRepPrim_Revolution(gp_Ax2(Center, gp_Dir(gp_Dir::D::Z), gp_Dir(gp_Dir::D::X)),
@@ -40,16 +34,12 @@ BRepPrim_Cylinder::BRepPrim_Cylinder(const gp_Pnt& Center, const double Radius)
   SetMeridian();
 }
 
-//=================================================================================================
-
 BRepPrim_Cylinder::BRepPrim_Cylinder(const gp_Ax2& Axes, const double Radius)
     : BRepPrim_Revolution(Axes, RealFirst(), RealLast()),
       myRadius(Radius)
 {
   SetMeridian();
 }
-
-//=================================================================================================
 
 BRepPrim_Cylinder::BRepPrim_Cylinder(const double R, const double H)
     : BRepPrim_Revolution(gp::XOY(), 0, H),
@@ -58,16 +48,12 @@ BRepPrim_Cylinder::BRepPrim_Cylinder(const double R, const double H)
   SetMeridian();
 }
 
-//=================================================================================================
-
 BRepPrim_Cylinder::BRepPrim_Cylinder(const gp_Pnt& Center, const double R, const double H)
     : BRepPrim_Revolution(gp_Ax2(Center, gp_Dir(gp_Dir::D::Z), gp_Dir(gp_Dir::D::X)), 0, H),
       myRadius(R)
 {
   SetMeridian();
 }
-
-//=================================================================================================
 
 TopoDS_Face BRepPrim_Cylinder::MakeEmptyLateralFace() const
 {
@@ -76,8 +62,6 @@ TopoDS_Face BRepPrim_Cylinder::MakeEmptyLateralFace() const
   myBuilder.Builder().MakeFace(F, C, Precision::Confusion());
   return F;
 }
-
-//=================================================================================================
 
 void BRepPrim_Cylinder::SetMeridian()
 {

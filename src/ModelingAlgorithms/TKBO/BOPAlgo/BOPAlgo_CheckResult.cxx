@@ -1,8 +1,6 @@
 #include <BOPAlgo_CheckResult.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 BOPAlgo_CheckResult::BOPAlgo_CheckResult()
     : myStatus(BOPAlgo_CheckUnknown),
       myMaxDist1(0.),

@@ -16,9 +16,9 @@ void IGESSolid_ConeFrustum::Init(const double  Ht,
 {
   theHeight     = Ht;
   theR1         = R1;
-  theR2         = R2;     // default 0
-  theFaceCenter = Center; // default (0,0,0)
-  theAxis       = anAxis; // default (0,0,1)
+  theR2         = R2;
+  theFaceCenter = Center;
+  theAxis       = anAxis;
   InitTypeAndForm(156, 0);
 }
 

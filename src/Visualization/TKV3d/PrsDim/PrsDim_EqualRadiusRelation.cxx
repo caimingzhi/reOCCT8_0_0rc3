@@ -22,8 +22,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_EqualRadiusRelation, PrsDim_Relation)
 
-//=================================================================================================
-
 PrsDim_EqualRadiusRelation::PrsDim_EqualRadiusRelation(const TopoDS_Edge&             aFirstEdge,
                                                        const TopoDS_Edge&             aSecondEdge,
                                                        const occ::handle<Geom_Plane>& aPlane)
@@ -33,8 +31,6 @@ PrsDim_EqualRadiusRelation::PrsDim_EqualRadiusRelation(const TopoDS_Edge&       
   mySShape = aSecondEdge;
   myPlane  = aPlane;
 }
-
-//=================================================================================================
 
 void PrsDim_EqualRadiusRelation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                          const occ::handle<Prs3d_Presentation>& aPresentation,
@@ -84,7 +80,6 @@ void PrsDim_EqualRadiusRelation::Compute(const occ::handle<PrsMgr_PresentationMa
   myFirstCenter  = FirstCirc.Location();
   mySecondCenter = SecondCirc.Location();
 
-  // ota -- begin --
   if (myAutomaticPosition)
   {
     myFirstPoint  = ElCLib::Value((FirstPar1 + LastPar1) * 0.5, FirstCirc);
@@ -101,10 +96,10 @@ void PrsDim_EqualRadiusRelation::Compute(const occ::handle<PrsMgr_PresentationMa
       myFirstPoint = ElCLib::Value(aPar, FirstCirc);
     if (FirstPoint1.Distance(LastPoint1) > Precision::Confusion())
     {
-      // check where is myFirstPoint
+
       if (aPar > LastPar1 || aPar < FirstPar1)
       {
-        // myFirstPoint is out of Arc of FirstCircle
+
         if (FirstPoint1.Distance(myFirstPoint) < LastPoint1.Distance(myFirstPoint))
           myFirstPoint = FirstPoint1;
         else
@@ -122,7 +117,7 @@ void PrsDim_EqualRadiusRelation::Compute(const occ::handle<PrsMgr_PresentationMa
     if (FirstPoint2.Distance(LastPoint2) > Precision::Confusion())
     {
       if (aPar > LastPar2 || aPar < FirstPar2)
-      { // mySecondPoint is out of Arc of mySecondCircle
+      {
         if (FirstPoint2.Distance(mySecondPoint) < LastPoint2.Distance(mySecondPoint))
           mySecondPoint = FirstPoint2;
         else
@@ -139,8 +134,6 @@ void PrsDim_EqualRadiusRelation::Compute(const occ::handle<PrsMgr_PresentationMa
   occ::handle<Prs3d_ArrowAspect>     arr = la->ArrowAspect();
   arr->SetLength(myArrowSize);
 
-  // ota -- end --
-
   DsgPrs_EqualRadiusPresentation::Add(aPresentation,
                                       myDrawer,
                                       myFirstCenter,
@@ -149,8 +142,6 @@ void PrsDim_EqualRadiusRelation::Compute(const occ::handle<PrsMgr_PresentationMa
                                       mySecondPoint,
                                       myPlane);
 }
-
-//=================================================================================================
 
 void PrsDim_EqualRadiusRelation::ComputeSelection(
   const occ::handle<SelectMgr_Selection>& aSelection,
@@ -171,11 +162,10 @@ void PrsDim_EqualRadiusRelation::ComputeSelection(
   seg = new Select3D_SensitiveSegment(own, myFirstCenter, mySecondCenter);
   aSelection->Add(seg);
 
-  // Two small lines
   gp_Pnt Middle((myFirstCenter.XYZ() + mySecondCenter.XYZ()) * 0.5);
 
   double SmallDist = .001;
-  // Should be changed as the domain of small lines could be changed.
+
   occ::handle<Select3D_SensitiveBox> box = new Select3D_SensitiveBox(own,
                                                                      Middle.X() - SmallDist,
                                                                      Middle.Y() - SmallDist,
@@ -186,8 +176,6 @@ void PrsDim_EqualRadiusRelation::ComputeSelection(
   aSelection->Add(box);
 }
 
-//=================================================================================================
-
 void PrsDim_EqualRadiusRelation::ComputeRadiusPosition()
 {
   if (myAutomaticPosition || myFirstCenter.Distance(myPosition) < Precision::Confusion()
@@ -196,7 +184,6 @@ void PrsDim_EqualRadiusRelation::ComputeRadiusPosition()
 
   gp_Pnt aPosition;
 
-  // project myPosition to the plane of constraint
   GeomAPI_ProjectPointOnSurf aProj(myPosition, myPlane);
   aPosition = aProj.NearestPoint();
 

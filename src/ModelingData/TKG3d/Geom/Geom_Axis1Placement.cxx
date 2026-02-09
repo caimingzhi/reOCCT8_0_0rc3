@@ -15,8 +15,6 @@ typedef gp_Pnt              Pnt;
 typedef gp_Trsf             Trsf;
 typedef gp_Vec              Vec;
 
-//=================================================================================================
-
 occ::handle<Geom_Geometry> Geom_Axis1Placement::Copy() const
 {
 
@@ -24,8 +22,6 @@ occ::handle<Geom_Geometry> Geom_Axis1Placement::Copy() const
   A1 = new Axis1Placement(axis);
   return A1;
 }
-
-//=================================================================================================
 
 Geom_Axis1Placement::Geom_Axis1Placement(const gp_Ax1& A1)
 {

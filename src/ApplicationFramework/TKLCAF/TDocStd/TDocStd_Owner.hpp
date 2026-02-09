@@ -10,16 +10,10 @@ class Standard_GUID;
 class TDF_Data;
 class TDF_RelocationTable;
 
-//! This attribute located at the root label of the
-//! framework contains a back reference to the owner
-//! TDocStd_Document, providing access to the document
-//! from any label. private class Owner;
 class TDocStd_Owner : public TDF_Attribute
 {
 
 public:
-  //! class methods
-  //! =============
   Standard_EXPORT static const Standard_GUID& GetID();
 
   Standard_EXPORT static void SetDocument(const occ::handle<TDF_Data>&         indata,
@@ -28,8 +22,6 @@ public:
   Standard_EXPORT static void SetDocument(const occ::handle<TDF_Data>& indata,
                                           TDocStd_Document*            doc);
 
-  //! Owner methods
-  //! ===============
   Standard_EXPORT static occ::handle<TDocStd_Document> GetDocument(
     const occ::handle<TDF_Data>& ofdata);
 
@@ -52,12 +44,10 @@ public:
 
   Standard_EXPORT Standard_OStream& Dump(Standard_OStream& anOS) const override;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(TDocStd_Owner, TDF_Attribute)
 
 private:
-  //! It keeps pointer to the document to avoid handles cyclic dependency
   TDocStd_Document* myDocument;
 };

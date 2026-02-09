@@ -5,14 +5,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_DocumentProductAssociation, Standard_Transient)
 
-//=================================================================================================
-
 StepBasic_DocumentProductAssociation::StepBasic_DocumentProductAssociation()
 {
   defDescription = false;
 }
-
-//=================================================================================================
 
 void StepBasic_DocumentProductAssociation::Init(
   const occ::handle<TCollection_HAsciiString>&    aName,
@@ -37,14 +33,10 @@ void StepBasic_DocumentProductAssociation::Init(
   theRelatedProduct = aRelatedProduct;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepBasic_DocumentProductAssociation::Name() const
 {
   return theName;
 }
-
-//=================================================================================================
 
 void StepBasic_DocumentProductAssociation::SetName(
   const occ::handle<TCollection_HAsciiString>& aName)
@@ -52,14 +44,10 @@ void StepBasic_DocumentProductAssociation::SetName(
   theName = aName;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepBasic_DocumentProductAssociation::Description() const
 {
   return theDescription;
 }
-
-//=================================================================================================
 
 void StepBasic_DocumentProductAssociation::SetDescription(
   const occ::handle<TCollection_HAsciiString>& aDescription)
@@ -67,21 +55,15 @@ void StepBasic_DocumentProductAssociation::SetDescription(
   theDescription = aDescription;
 }
 
-//=================================================================================================
-
 bool StepBasic_DocumentProductAssociation::HasDescription() const
 {
   return defDescription;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_Document> StepBasic_DocumentProductAssociation::RelatingDocument() const
 {
   return theRelatingDocument;
 }
-
-//=================================================================================================
 
 void StepBasic_DocumentProductAssociation::SetRelatingDocument(
   const occ::handle<StepBasic_Document>& aRelatingDocument)
@@ -89,15 +71,11 @@ void StepBasic_DocumentProductAssociation::SetRelatingDocument(
   theRelatingDocument = aRelatingDocument;
 }
 
-//=================================================================================================
-
 StepBasic_ProductOrFormationOrDefinition StepBasic_DocumentProductAssociation::RelatedProduct()
   const
 {
   return theRelatedProduct;
 }
-
-//=================================================================================================
 
 void StepBasic_DocumentProductAssociation::SetRelatedProduct(
   const StepBasic_ProductOrFormationOrDefinition& aRelatedProduct)

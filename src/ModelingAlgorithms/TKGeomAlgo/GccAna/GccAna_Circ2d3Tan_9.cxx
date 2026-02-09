@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ElCLib.hpp>
 #include <GccAna_Circ2d3Tan.hpp>
@@ -22,30 +10,11 @@
 #include <IntAna2d_AnaIntersection.hpp>
 #include <IntAna2d_IntPoint.hpp>
 
-//=========================================================================
-//   Creation of a circle passing by three points.                       +
-//   Three cases  :                                               +
-//      1/ Three points coincide.                               +
-//      -----------------------------------                               +
-//      The result is the circle with center in Point1 with zero radius.  +
-//      2/ Two of three points coincide.                          +
-//      ----------------------------------------                          +
-//      Create the medium line between two non-coinciding points and      +
-//      the straight line passing by these two points.                               +
-//      The center of the solution is the intersection of two straight lines and the   +
-//      radius is the distance between this center and one of three points.  +
-//      3/ The three points are distinct.                                +
-//      ----------------------------------                                +
-//=========================================================================
 GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const gp_Pnt2d& Point1,
                                      const gp_Pnt2d& Point2,
                                      const gp_Pnt2d& Point3,
                                      const double    Tolerance)
     :
-
-      //=========================================================================
-      //   Initialization of fields.                                           +
-      //=========================================================================
 
       cirsol(1, 1),
       qualifier1(1, 1),
@@ -69,10 +38,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const gp_Pnt2d& Point1,
   WellDone = false;
   NbrSol   = 0;
 
-  //=========================================================================
-  //   Processing.                                                          +
-  //=========================================================================
-
   double dist1 = Point1.Distance(Point2);
   double dist2 = Point1.Distance(Point3);
   double dist3 = Point2.Distance(Point3);
@@ -86,7 +51,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const gp_Pnt2d& Point1,
     NbrSol++;
     WellDone  = true;
     cirsol(1) = gp_Circ2d(gp_Ax2d(Point1, dirx), 0.0);
-    //   ===============================================
+
     TheSame1(1)  = 0;
     TheSame2(1)  = 0;
     TheSame3(1)  = 0;
@@ -134,11 +99,9 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const gp_Pnt2d& Point1,
         for (int i = 1; i <= Intp.NbPoints(); i++)
         {
           NbrSol++;
-          cirsol(NbrSol) =
-            gp_Circ2d(gp_Ax2d(Intp.Point(i).Value(), dirx),
-                      //         ===============================================================
-                      Point1.Distance(Intp.Point(i).Value()));
-          //                                    =======================================
+          cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Intp.Point(i).Value(), dirx),
+
+                                     Point1.Distance(Intp.Point(i).Value()));
 
           TheSame1(NbrSol)  = 0;
           TheSame2(NbrSol)  = 0;

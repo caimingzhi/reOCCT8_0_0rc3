@@ -10,7 +10,6 @@ class Interface_Check;
 class StepShape_SolidModel;
 class StepData_StepWriter;
 
-//! Read & Write Module for SolidModel
 class RWStepShape_RWSolidModel
 {
 public:

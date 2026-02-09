@@ -2,11 +2,7 @@
 #include <LProp_AnalyticCurInf.hpp>
 #include <LProp_CurAndInf.hpp>
 
-//=================================================================================================
-
 LProp_AnalyticCurInf::LProp_AnalyticCurInf() = default;
-
-//=================================================================================================
 
 void LProp_AnalyticCurInf::Perform(const GeomAbs_CurveType CType,
                                    const double            UFirst,

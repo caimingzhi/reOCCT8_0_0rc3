@@ -15,21 +15,15 @@ namespace
 {
   static const double THE_MAT_PREC = 0.001 * Precision::Confusion();
 
-  //=================================================================================================
-
   static bool isValidValue(double theVal)
   {
     return theVal >= -THE_MAT_PREC && theVal <= 1.0 + THE_MAT_PREC;
   }
 
-  //=================================================================================================
-
   static bool isValidColor(const gp_XYZ& theVec3)
   {
     return isValidValue(theVec3.X()) && isValidValue(theVec3.Y()) && isValidValue(theVec3.Z());
   }
-
-  //=================================================================================================
 
   static bool parseColor(VrmlData_ErrorStatus& theStatus,
                          VrmlData_InBuffer&    theBuffer,
@@ -66,8 +60,6 @@ namespace
     }
     return true;
   }
-
-  //=================================================================================================
 
   static bool parseScalar(VrmlData_ErrorStatus& theStatus,
                           VrmlData_InBuffer&    theBuffer,
@@ -107,11 +99,6 @@ namespace
   }
 } // namespace
 
-//=======================================================================
-// function : VrmlData_Material()
-// purpose  : Empty Constructor
-//=======================================================================
-
 VrmlData_Material::VrmlData_Material()
     : myAmbientIntensity(0.2),
       myShininess(0.2),
@@ -122,8 +109,6 @@ VrmlData_Material::VrmlData_Material()
       mySpecularColor(Quantity_NOC_BLACK)
 {
 }
-
-//=================================================================================================
 
 VrmlData_Material::VrmlData_Material(const VrmlData_Scene& theScene,
                                      const char*           theName,
@@ -140,8 +125,6 @@ VrmlData_Material::VrmlData_Material(const VrmlData_Scene& theScene,
       mySpecularColor(Quantity_NOC_BLACK)
 {
 }
-
-//=================================================================================================
 
 occ::handle<VrmlData_Node> VrmlData_Material::Clone(
   const occ::handle<VrmlData_Node>& theOther) const
@@ -160,8 +143,6 @@ occ::handle<VrmlData_Node> VrmlData_Material::Clone(
   aResult->SetSpecularColor(mySpecularColor);
   return aResult;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Material::Read(VrmlData_InBuffer& theBuffer)
 {
@@ -208,11 +189,9 @@ VrmlData_ErrorStatus VrmlData_Material::Read(VrmlData_InBuffer& theBuffer)
       break;
   }
 
-  // Read the terminating (closing) brace
   if (OK(aStatus))
     aStatus = readBrace(theBuffer);
 
-  // Store the values in the Material node instance
   if (OK(aStatus))
   {
     myAmbientIntensity = anIntensity[0];
@@ -225,8 +204,6 @@ VrmlData_ErrorStatus VrmlData_Material::Read(VrmlData_InBuffer& theBuffer)
   }
   return aStatus;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Material::Write(const char* thePrefix) const
 {
@@ -289,8 +266,6 @@ VrmlData_ErrorStatus VrmlData_Material::Write(const char* thePrefix) const
   }
   return aStatus;
 }
-
-//=================================================================================================
 
 bool VrmlData_Material::IsDefault() const
 {

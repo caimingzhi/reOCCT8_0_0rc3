@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -39,30 +28,20 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::ReadStep(
   const occ::handle<StepGeom_BSplineSurfaceWithKnots>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 13, ach, "b_spline_surface_with_knots"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- inherited field : uDegree ---
-
   int aUDegree;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
   data->ReadInteger(num, 2, "u_degree", ach, aUDegree);
 
-  // --- inherited field : vDegree ---
-
   int aVDegree;
-  // szv#4:S4163:12Mar99 `bool stat3 =` not needed
-  data->ReadInteger(num, 3, "v_degree", ach, aVDegree);
 
-  // --- inherited field : controlPointsList ---
+  data->ReadInteger(num, 3, "v_degree", ach, aVDegree);
 
   occ::handle<NCollection_HArray2<occ::handle<StepGeom_CartesianPoint>>> aControlPointsList;
   occ::handle<StepGeom_CartesianPoint>                                   anent4;
@@ -80,7 +59,7 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::ReadStep(
       {
         for (int j4 = 1; j4 <= nbj4; j4++)
         {
-          // szv#4:S4163:12Mar99 `bool stat4 =` not needed
+
           if (data->ReadEntity(nsi4,
                                j4,
                                "cartesian_point",
@@ -92,8 +71,6 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::ReadStep(
       }
     }
   }
-
-  // --- inherited field : surfaceForm ---
 
   StepGeom_BSplineSurfaceForm aSurfaceForm = StepGeom_bssfPlaneSurf;
   if (data->ParamType(num, 5) == Interface_ParamEnum)
@@ -107,25 +84,17 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::ReadStep(
   else
     ach->AddFail("Parameter #5 (surface_form) is not an enumeration");
 
-  // --- inherited field : uClosed ---
-
   StepData_Logical aUClosed;
-  // szv#4:S4163:12Mar99 `bool stat6 =` not needed
+
   data->ReadLogical(num, 6, "u_closed", ach, aUClosed);
 
-  // --- inherited field : vClosed ---
-
   StepData_Logical aVClosed;
-  // szv#4:S4163:12Mar99 `bool stat7 =` not needed
+
   data->ReadLogical(num, 7, "v_closed", ach, aVClosed);
 
-  // --- inherited field : selfIntersect ---
-
   StepData_Logical aSelfIntersect;
-  // szv#4:S4163:12Mar99 `bool stat8 =` not needed
-  data->ReadLogical(num, 8, "self_intersect", ach, aSelfIntersect);
 
-  // --- own field : uMultiplicities ---
+  data->ReadLogical(num, 8, "self_intersect", ach, aSelfIntersect);
 
   occ::handle<NCollection_HArray1<int>> aUMultiplicities;
   int                                   aUMultiplicitiesItem;
@@ -136,13 +105,11 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::ReadStep(
     aUMultiplicities = new NCollection_HArray1<int>(1, nb9);
     for (int i9 = 1; i9 <= nb9; i9++)
     {
-      // szv#4:S4163:12Mar99 `bool stat9 =` not needed
+
       if (data->ReadInteger(nsub9, i9, "u_multiplicities", ach, aUMultiplicitiesItem))
         aUMultiplicities->SetValue(i9, aUMultiplicitiesItem);
     }
   }
-
-  // --- own field : vMultiplicities ---
 
   occ::handle<NCollection_HArray1<int>> aVMultiplicities;
   int                                   aVMultiplicitiesItem;
@@ -153,13 +120,11 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::ReadStep(
     aVMultiplicities = new NCollection_HArray1<int>(1, nb10);
     for (int i10 = 1; i10 <= nb10; i10++)
     {
-      // szv#4:S4163:12Mar99 `bool stat10 =` not needed
+
       if (data->ReadInteger(nsub10, i10, "v_multiplicities", ach, aVMultiplicitiesItem))
         aVMultiplicities->SetValue(i10, aVMultiplicitiesItem);
     }
   }
-
-  // --- own field : uKnots ---
 
   occ::handle<NCollection_HArray1<double>> aUKnots;
   double                                   aUKnotsItem;
@@ -170,13 +135,11 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::ReadStep(
     aUKnots  = new NCollection_HArray1<double>(1, nb11);
     for (int i11 = 1; i11 <= nb11; i11++)
     {
-      // szv#4:S4163:12Mar99 `bool stat11 =` not needed
+
       if (data->ReadReal(nsub11, i11, "u_knots", ach, aUKnotsItem))
         aUKnots->SetValue(i11, aUKnotsItem);
     }
   }
-
-  // --- own field : vKnots ---
 
   occ::handle<NCollection_HArray1<double>> aVKnots;
   double                                   aVKnotsItem;
@@ -187,13 +150,11 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::ReadStep(
     aVKnots  = new NCollection_HArray1<double>(1, nb12);
     for (int i12 = 1; i12 <= nb12; i12++)
     {
-      // szv#4:S4163:12Mar99 `bool stat12 =` not needed
+
       if (data->ReadReal(nsub12, i12, "v_knots", ach, aVKnotsItem))
         aVKnots->SetValue(i12, aVKnotsItem);
     }
   }
-
-  // --- own field : knotSpec ---
 
   StepGeom_KnotType aKnotSpec = StepGeom_ktUniformKnots;
   if (data->ParamType(num, 13) == Interface_ParamEnum)
@@ -206,8 +167,6 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::ReadStep(
   }
   else
     ach->AddFail("Parameter #13 (knot_spec) is not an enumeration");
-
-  //--- Initialisation of the read entity ---
 
   ent->Init(aName,
             aUDegree,
@@ -229,19 +188,11 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::WriteStep(
   const occ::handle<StepGeom_BSplineSurfaceWithKnots>& ent) const
 {
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
-
-  // --- inherited field uDegree ---
 
   SW.Send(ent->UDegree());
 
-  // --- inherited field vDegree ---
-
   SW.Send(ent->VDegree());
-
-  // --- inherited field controlPointsList ---
 
   SW.OpenSub();
   for (int i4 = 1; i4 <= ent->NbControlPointsListI(); i4++)
@@ -257,23 +208,13 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::WriteStep(
   }
   SW.CloseSub();
 
-  // --- inherited field surfaceForm ---
-
   SW.SendEnum(RWStepGeom_RWBSplineSurfaceForm::ConvertToString(ent->SurfaceForm()));
-
-  // --- inherited field uClosed ---
 
   SW.SendLogical(ent->UClosed());
 
-  // --- inherited field vClosed ---
-
   SW.SendLogical(ent->VClosed());
 
-  // --- inherited field selfIntersect ---
-
   SW.SendLogical(ent->SelfIntersect());
-
-  // --- own field : uMultiplicities ---
 
   SW.OpenSub();
   for (int i9 = 1; i9 <= ent->NbUMultiplicities(); i9++)
@@ -282,16 +223,12 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::WriteStep(
   }
   SW.CloseSub();
 
-  // --- own field : vMultiplicities ---
-
   SW.OpenSub();
   for (int i10 = 1; i10 <= ent->NbVMultiplicities(); i10++)
   {
     SW.Send(ent->VMultiplicitiesValue(i10));
   }
   SW.CloseSub();
-
-  // --- own field : uKnots ---
 
   SW.OpenSub();
   for (int i11 = 1; i11 <= ent->NbUKnots(); i11++)
@@ -300,16 +237,12 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::WriteStep(
   }
   SW.CloseSub();
 
-  // --- own field : vKnots ---
-
   SW.OpenSub();
   for (int i12 = 1; i12 <= ent->NbVKnots(); i12++)
   {
     SW.Send(ent->VKnotsValue(i12));
   }
   SW.CloseSub();
-
-  // --- own field : knotSpec ---
 
   SW.SendEnum(RWStepGeom_RWKnotType::ConvertToString(ent->KnotSpec()));
 }
@@ -346,10 +279,7 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::Check(
   int sumMulU = 0;
   int sumMulV = 0;
   int i;
-  //  std::cout << "BSplineSurfaceWithKnots: nbMulU=" << nbMulU << " nbKnoU= " <<
-  //    nbKnoU << " nbCPLU= " << nbCPLU << " degreeU= " << dgBSSU << std::endl;
-  //  std::cout << "                         nbMulV=" << nbMulV << " nbKnoV= " <<
-  //    nbKnoV << " nbCPLV= " << nbCPLV << " degreeV= " << dgBSSV << std::endl;
+
   if (nbMulU != nbKnoU)
   {
     ach->AddFail("ERROR: No.of KnotMultiplicities not equal No.of Knots in U");
@@ -369,8 +299,6 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::Check(
     return;
   }
 
-  // check in U direction
-
   for (i = 1; i <= nbMulU - 1; i++)
   {
     sumMulU = sumMulU + ent->UMultiplicitiesValue(i);
@@ -378,8 +306,7 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::Check(
   int sumNonPU = nbCPLU + dgBSSU + 1;
   int mult1U   = ent->UMultiplicitiesValue(1);
   int multNU   = ent->UMultiplicitiesValue(nbMulU);
-  //  std::cout << "BSplineSurfaceWithKnots: mult1U=" << mult1U << " multNU= " <<
-  //    multNU << " sumMulU= " << sumMulU << std::endl;
+
   if ((sumMulU + multNU) == sumNonPU)
   {
   }
@@ -399,8 +326,6 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::Check(
       ach->AddFail("ERROR: Surface contains descending KnotsValues in U");
   }
 
-  // check in V direction
-
   for (i = 1; i <= nbMulV - 1; i++)
   {
     sumMulV = sumMulV + ent->VMultiplicitiesValue(i);
@@ -408,8 +333,7 @@ void RWStepGeom_RWBSplineSurfaceWithKnots::Check(
   int sumNonPV = nbCPLV + dgBSSV + 1;
   int mult1V   = ent->VMultiplicitiesValue(1);
   int multNV   = ent->VMultiplicitiesValue(nbMulV);
-  //  std::cout << "                       : mult1V=" << mult1V << " multNV= " <<
-  //    multNV << " sumMulV= " << sumMulV << std::endl;
+
   if ((sumMulV + multNV) == sumNonPV)
   {
   }

@@ -3,21 +3,16 @@
 #include <TDF_Data.hpp>
 #include <TDF_Label.hpp>
 
-//=======================================================================
-// function : TDF_LabelNode
-// purpose  : Constructor with TDF_Data*, only used for root node.
-//=======================================================================
-
 TDF_LabelNode::TDF_LabelNode(TDF_Data* aDataPtr)
-    : myFather(nullptr), // The sign it is the root.
+    : myFather(nullptr),
 #ifdef KEEP_LOCAL_ROOT
       myBrother(nullptr),
 #else
       myBrother((TDF_LabelNode*)aDataPtr),
 #endif
       myFirstChild(nullptr),
-      myLastFoundChild(nullptr), // jfa 10.01.2003
-      myTag(0),                  // Always 0 for root.
+      myLastFoundChild(nullptr),
+      myTag(0),
       myFlags(0),
 #ifdef KEEP_LOCAL_ROOT
       myData(aDataPtr)
@@ -28,13 +23,11 @@ TDF_LabelNode::TDF_LabelNode(TDF_Data* aDataPtr)
 #endif
 }
 
-//=================================================================================================
-
 TDF_LabelNode::TDF_LabelNode(const int aTag, TDF_LabelNode* aFather)
     : myFather(aFather),
       myBrother(nullptr),
       myFirstChild(nullptr),
-      myLastFoundChild(nullptr), // jfa 10.01.2003
+      myLastFoundChild(nullptr),
       myTag(aTag),
       myFlags(0),
 #ifdef KEEP_LOCAL_ROOT
@@ -55,12 +48,9 @@ TDF_LabelNode::TDF_LabelNode(const int aTag, TDF_LabelNode* aFather)
 #endif
 }
 
-//=================================================================================================
-
 void TDF_LabelNode::Destroy(const TDF_HAllocator& theAllocator)
 {
-  // MSV 21.03.2003: do not delete brother, rather delete all children in a loop
-  //                 to avoid stack overflow
+
   while (myFirstChild != nullptr)
   {
     TDF_LabelNode* aSecondChild = myFirstChild->Brother();
@@ -71,58 +61,40 @@ void TDF_LabelNode::Destroy(const TDF_HAllocator& theAllocator)
   myFather = myBrother = myFirstChild = myLastFoundChild = nullptr;
   myTag = myFlags = 0;
 
-  // deallocate memory (does nothing for IncAllocator)
   theAllocator->Free(this);
 }
-
-//=======================================================================
-// function : AddAttribute
-// purpose  : Adds an attribute at the first or the specified position.
-//=======================================================================
 
 void TDF_LabelNode::AddAttribute(const occ::handle<TDF_Attribute>& afterAtt,
                                  const occ::handle<TDF_Attribute>& newAtt)
 {
-  newAtt->myFlags     = 1; // Valid.
+  newAtt->myFlags     = 1;
   newAtt->myLabelNode = this;
   if (afterAtt.IsNull())
-  { // Inserts at beginning.
+  {
     newAtt->myNext   = myFirstAttribute;
     myFirstAttribute = newAtt;
   }
   else
-  { // Inserts at specified place.
+  {
     newAtt->myNext   = afterAtt->myNext;
     afterAtt->myNext = newAtt;
   }
 }
 
-//=======================================================================
-// function : RemoveAttribute
-// purpose  : Removes an attribute from the first or the specified position.
-//=======================================================================
-
 void TDF_LabelNode::RemoveAttribute(const occ::handle<TDF_Attribute>& afterAtt,
                                     const occ::handle<TDF_Attribute>& oldAtt)
 {
-  oldAtt->myFlags     = 0; // Invalid.
+  oldAtt->myFlags     = 0;
   oldAtt->myLabelNode = nullptr;
   if (afterAtt.IsNull())
-  { // Removes from beginning.
+  {
     myFirstAttribute = oldAtt->myNext;
   }
   else
-  { // Removes from specified place.
+  {
     afterAtt->myNext = oldAtt->myNext;
   }
-  // Nullifier le next induit l'iterateur d'attribut en erreur.
-  // oldAtt->myNext.Nullify();
 }
-
-//=======================================================================
-// function : RootNode
-// purpose  : used for non const object.
-//=======================================================================
 
 TDF_LabelNode* TDF_LabelNode::RootNode()
 {
@@ -136,11 +108,6 @@ TDF_LabelNode* TDF_LabelNode::RootNode()
 #endif
 }
 
-//=======================================================================
-// function : RootNode
-// purpose  : used for const object.
-//=======================================================================
-
 const TDF_LabelNode* TDF_LabelNode::RootNode() const
 {
 #ifdef KEEP_LOCAL_ROOT
@@ -153,8 +120,6 @@ const TDF_LabelNode* TDF_LabelNode::RootNode() const
 #endif
 }
 
-//=================================================================================================
-
 TDF_Data* TDF_LabelNode::Data() const
 {
 #ifdef KEEP_LOCAL_ROOT
@@ -164,8 +129,6 @@ TDF_Data* TDF_LabelNode::Data() const
   return ((TDF_Data*)ln);
 #endif
 }
-
-//=================================================================================================
 
 void TDF_LabelNode::AllMayBeModified()
 {

@@ -6,19 +6,6 @@
 #include <type_traits>
 #include <utility>
 
-//! Implements allocator requirements as defined in ISO C++ Standard 2003, section 20.1.5.
-/*! The allocator uses a standard OCCT mechanism for memory
-  allocation and deallocation. It can be used with standard
-  containers (std::vector, std::map, etc.) to take advantage of OCCT memory optimizations.
-
-  Example of use:
-  \code
-  NCollection_Allocator<TopoDS_Shape> anSAllocator();
-  std::list<TopoDS_Shape, NCollection_Allocator<TopoDS_Shape>> aList(anSAllocator);
-  TopoDS_Solid aSolid = BRepPrimAPI_MakeBox(10., 20., 30.);
-  aList.push_back(aSolid);
-  \endcode
-*/
 template <typename ItemType>
 class NCollection_Allocator
 {
@@ -37,63 +24,46 @@ public:
     typedef NCollection_Allocator<OtherType> other;
   };
 
-  //! Constructor.
-  //! Creates an object using the default Open CASCADE allocation mechanism, i.e., which uses
-  //! Standard::Allocate() and Standard::Free() underneath.
   NCollection_Allocator() noexcept = default;
 
-  //! Constructor.
   NCollection_Allocator(const occ::handle<NCollection_BaseAllocator>&) noexcept {}
 
-  //! Assignment operator
   template <typename OtherType>
   NCollection_Allocator& operator=(const NCollection_Allocator<OtherType>&) noexcept
   {
     return *this;
   }
 
-  //! Constructor.
-  //! Creates an object using the default Open CASCADE allocation mechanism, i.e., which uses
-  //! Standard::Allocate() and Standard::Free() underneath.
   template <typename OtherType>
   NCollection_Allocator(const NCollection_Allocator<OtherType>&) noexcept
   {
   }
 
-  //! Returns an object address.
   pointer address(reference theItem) const noexcept { return &theItem; }
 
-  //! Returns an object address.
   const_pointer address(const_reference theItem) const noexcept { return &theItem; }
 
-  //! Allocates memory for theSize objects.
-  pointer allocate(const size_type theSize, const void* /*hint*/ = nullptr) const
+  pointer allocate(const size_type theSize, const void* = nullptr) const
   {
     return static_cast<pointer>(Standard::AllocateOptimal(theSize * sizeof(ItemType)));
   }
 
-  //! Frees previously allocated memory.
   void deallocate(pointer thePnt, const size_type) const
   {
     Standard::Free(static_cast<void*>(thePnt));
   }
 
-  //! Reallocates memory for theSize objects.
   pointer reallocate(pointer thePnt, const size_type theSize) const
   {
     return static_cast<pointer>(Standard::Reallocate(thePnt, theSize * sizeof(ItemType)));
   }
 
-  //! Constructs an object.
-  //! Uses placement new operator and copy constructor to construct an object.
   template <class _Objty, class... _Types>
   void construct(_Objty* _Ptr, _Types&&... _Args)
   {
     ::new ((void*)_Ptr) _Objty(std::forward<_Types>(_Args)...);
   }
 
-  //! Destroys the object.
-  //! Uses the object destructor.
   void destroy(pointer thePnt) noexcept(std::is_nothrow_destructible<value_type>::value)
   {
     (void)thePnt;

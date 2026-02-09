@@ -6,30 +6,17 @@
 #include <gp_Pnt.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   Creation d une ligne 3d de gp a partir d un Ax1 de gp.               +
-//=========================================================================
 gce_MakeLin::gce_MakeLin(const gp_Ax1& A1)
 {
   TheLin   = gp_Lin(A1);
   TheError = gce_Done;
 }
 
-//=========================================================================
-//   Creation d une ligne 3d de gp a partir de son origine P (Pnt de gp)  +
-//   et d une direction V (Dir de gp).                                    +
-//=========================================================================
-
 gce_MakeLin::gce_MakeLin(const gp_Pnt& P, const gp_Dir& V)
 {
   TheLin   = gp_Lin(P, V);
   TheError = gce_Done;
 }
-
-//=========================================================================
-//   Creation d une ligne 3d de gp passant par les deux points <P1> et    +
-//   <P2>.                                                                +
-//=========================================================================
 
 gce_MakeLin::gce_MakeLin(const gp_Pnt& P1, const gp_Pnt& P2)
 {
@@ -43,11 +30,6 @@ gce_MakeLin::gce_MakeLin(const gp_Pnt& P1, const gp_Pnt& P2)
     TheError = gce_ConfusedPoints;
   }
 }
-
-//=========================================================================
-//   Creation d une ligne 3d de gp parallele a une autre <Lin> et passant +
-//   par le point <P>.                                                    +
-//=========================================================================
 
 gce_MakeLin::gce_MakeLin(const gp_Lin& Lin, const gp_Pnt& P)
 {

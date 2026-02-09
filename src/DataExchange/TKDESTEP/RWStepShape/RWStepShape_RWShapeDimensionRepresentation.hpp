@@ -11,28 +11,23 @@ class StepShape_ShapeDimensionRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write tool for ShapeDimensionRepresentation
 class RWStepShape_RWShapeDimensionRepresentation
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepShape_RWShapeDimensionRepresentation();
 
-  //! Reads ShapeDimensionRepresentation
   Standard_HIDDEN void ReadStep(
     const occ::handle<StepData_StepReaderData>&                data,
     const int                                                  num,
     occ::handle<Interface_Check>&                              ach,
     const occ::handle<StepShape_ShapeDimensionRepresentation>& ent) const;
 
-  //! Writes ShapeDimensionRepresentation
   Standard_HIDDEN void WriteStep(
     StepData_StepWriter&                                       SW,
     const occ::handle<StepShape_ShapeDimensionRepresentation>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(const occ::handle<StepShape_ShapeDimensionRepresentation>& ent,
                              Interface_EntityIterator&                                  iter) const;
 };

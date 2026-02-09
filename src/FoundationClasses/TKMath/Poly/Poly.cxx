@@ -15,17 +15,12 @@
 #include <iomanip>
 #include <fstream>
 
-//=======================================================================
-// function : Catenate
-// purpose  : Join several triangulations to one new triangulation object
-//=======================================================================
 occ::handle<Poly_Triangulation> Poly::Catenate(
   const NCollection_List<occ::handle<Poly_Triangulation>>& lstTri)
 {
   int nNodes(0);
   int nTrian(0);
 
-  // Sum up the total number of nodes.
   NCollection_List<occ::handle<Poly_Triangulation>>::Iterator anIter(lstTri);
   for (; anIter.More(); anIter.Next())
   {
@@ -72,8 +67,6 @@ occ::handle<Poly_Triangulation> Poly::Catenate(
   return aResult;
 }
 
-//=================================================================================================
-
 void Poly::Write(const occ::handle<Poly_Triangulation>& T, Standard_OStream& OS, const bool Compact)
 {
   OS << "Poly_Triangulation\n";
@@ -89,13 +82,9 @@ void Poly::Write(const occ::handle<Poly_Triangulation>& T, Standard_OStream& OS,
     OS << ((T->HasUVNodes()) ? "with" : "without") << " UV nodes\n";
   }
 
-  // write the deflection
-
   if (!Compact)
     OS << "Deflection : ";
   OS << T->Deflection() << "\n";
-
-  // write the 3d nodes
 
   if (!Compact)
     OS << "\n3D Nodes :\n";
@@ -156,8 +145,6 @@ void Poly::Write(const occ::handle<Poly_Triangulation>& T, Standard_OStream& OS,
   }
 }
 
-//=================================================================================================
-
 void Poly::Write(const occ::handle<Poly_Polygon3D>& P, Standard_OStream& OS, const bool Compact)
 {
   OS << "Poly_Polygon3D\n";
@@ -172,13 +159,9 @@ void Poly::Write(const occ::handle<Poly_Polygon3D>& P, Standard_OStream& OS, con
     OS << ((P->HasParameters()) ? "with" : "without") << " parameters\n";
   }
 
-  // write the deflection
-
   if (!Compact)
     OS << "Deflection : ";
   OS << P->Deflection() << "\n";
-
-  // write the nodes
 
   if (!Compact)
     OS << "\nNodes :\n";
@@ -213,8 +196,6 @@ void Poly::Write(const occ::handle<Poly_Polygon3D>& P, Standard_OStream& OS, con
   }
 }
 
-//=================================================================================================
-
 void Poly::Write(const occ::handle<Poly_Polygon2D>& P, Standard_OStream& OS, const bool Compact)
 {
   OS << "Poly_Polygon2D\n";
@@ -227,13 +208,9 @@ void Poly::Write(const occ::handle<Poly_Polygon2D>& P, Standard_OStream& OS, con
     OS << std::setw(8) << P->NbNodes() << " Nodes\n";
   }
 
-  // write the deflection
-
   if (!Compact)
     OS << "Deflection : ";
   OS << P->Deflection() << "\n";
-
-  // write the nodes
 
   if (!Compact)
     OS << "\nNodes :\n";
@@ -253,32 +230,23 @@ void Poly::Write(const occ::handle<Poly_Polygon2D>& P, Standard_OStream& OS, con
   }
 }
 
-//=================================================================================================
-
 void Poly::Dump(const occ::handle<Poly_Triangulation>& T, Standard_OStream& OS)
 {
   Poly::Write(T, OS, false);
 }
-
-//=================================================================================================
 
 void Poly::Dump(const occ::handle<Poly_Polygon3D>& P, Standard_OStream& OS)
 {
   Poly::Write(P, OS, false);
 }
 
-//=================================================================================================
-
 void Poly::Dump(const occ::handle<Poly_Polygon2D>& P, Standard_OStream& OS)
 {
   Poly::Write(P, OS, false);
 }
 
-//=================================================================================================
-
 occ::handle<Poly_Triangulation> Poly::ReadTriangulation(Standard_IStream& IS)
 {
-  // Read a triangulation
 
   char line[100];
   IS >> line;
@@ -297,7 +265,6 @@ occ::handle<Poly_Triangulation> Poly::ReadTriangulation(Standard_IStream& IS)
   double d;
   IS >> d;
 
-  // read the 3d nodes
   double                       x, y, z;
   int                          i;
   NCollection_Array1<gp_Pnt>   Nodes(1, nbNodes);
@@ -309,8 +276,6 @@ occ::handle<Poly_Triangulation> Poly::ReadTriangulation(Standard_IStream& IS)
     Nodes(i).SetCoord(x, y, z);
   }
 
-  // read the UV points if necessary
-
   if (hasUV)
   {
     for (i = 1; i <= nbNodes; i++)
@@ -320,7 +285,6 @@ occ::handle<Poly_Triangulation> Poly::ReadTriangulation(Standard_IStream& IS)
     }
   }
 
-  // read the triangles
   int                               n1, n2, n3;
   NCollection_Array1<Poly_Triangle> Triangles(1, nbTriangles);
   for (i = 1; i <= nbTriangles; i++)
@@ -341,11 +305,8 @@ occ::handle<Poly_Triangulation> Poly::ReadTriangulation(Standard_IStream& IS)
   return T;
 }
 
-//=================================================================================================
-
 occ::handle<Poly_Polygon3D> Poly::ReadPolygon3D(Standard_IStream& IS)
 {
-  // Read a 3d polygon
 
   char line[100];
   IS >> line;
@@ -366,7 +327,6 @@ occ::handle<Poly_Polygon3D> Poly::ReadPolygon3D(Standard_IStream& IS)
   double d;
   IS >> d;
 
-  // read the nodes
   double                     x, y, z;
   int                        i;
   NCollection_Array1<gp_Pnt> Nodes(1, nbNodes);
@@ -397,11 +357,8 @@ occ::handle<Poly_Polygon3D> Poly::ReadPolygon3D(Standard_IStream& IS)
   return P;
 }
 
-//=================================================================================================
-
 occ::handle<Poly_Polygon2D> Poly::ReadPolygon2D(Standard_IStream& IS)
 {
-  // Read a 2d polygon
 
   char line[100];
   IS >> line;
@@ -419,7 +376,6 @@ occ::handle<Poly_Polygon2D> Poly::ReadPolygon2D(Standard_IStream& IS)
   double d;
   IS >> d;
 
-  // read the nodes
   double                       x, y;
   int                          i;
   NCollection_Array1<gp_Pnt2d> Nodes(1, nbNodes);
@@ -437,14 +393,10 @@ occ::handle<Poly_Polygon2D> Poly::ReadPolygon2D(Standard_IStream& IS)
   return P;
 }
 
-//=================================================================================================
-
 void Poly::ComputeNormals(const occ::handle<Poly_Triangulation>& theTri)
 {
   theTri->ComputeNormals();
 }
-
-//=================================================================================================
 
 double Poly::PointOnTriangle(const gp_XY& theP1,
                              const gp_XY& theP2,
@@ -457,29 +409,21 @@ double Poly::PointOnTriangle(const gp_XY& theP1,
   gp_XY  aDV  = theP3 - theP1;
   double aDet = aDU ^ aDV;
 
-  // case of non-degenerated triangle
   if (std::abs(aDet) > gp::Resolution())
   {
     double aU = (aDP ^ aDV) / aDet;
     double aV = -(aDP ^ aDU) / aDet;
 
-    // if point is inside triangle, just return parameters
     if (aU > -gp::Resolution() && aV > -gp::Resolution() && 1. - aU - aV > -gp::Resolution())
     {
       theUV.SetCoord(aU, aV);
       return 0.;
     }
 
-    // else find closest point on triangle sides; note that in general case
-    // triangle can be very distorted and it is necessary to check
-    // projection on all sides regardless of values of computed parameters
-
-    // project on side U=0
     aU        = 0.;
     aV        = std::min(1., std::max(0., (aDP * aDV) / aDV.SquareModulus()));
     double aD = (aV * aDV - aDP).SquareModulus();
 
-    // project on side V=0
     double u = std::min(1., std::max(0., (aDP * aDU) / aDU.SquareModulus()));
     double d = (u * aDU - aDP).SquareModulus();
     if (d < aD)
@@ -489,7 +433,6 @@ double Poly::PointOnTriangle(const gp_XY& theP1,
       aD = d;
     }
 
-    // project on side U+V=1
     gp_XY  aDUV = aDV - aDU;
     double v    = std::min(1., std::max(0., ((aDP - aDU) * aDUV) / aDUV.SquareModulus()));
     d           = (theP2 + v * aDUV - theP).SquareModulus();
@@ -504,12 +447,11 @@ double Poly::PointOnTriangle(const gp_XY& theP1,
     return aD;
   }
 
-  // degenerated triangle
   double aL2U = aDU.SquareModulus();
   double aL2V = aDV.SquareModulus();
-  if (aL2U < gp::Resolution()) // side 1-2 is degenerated
+  if (aL2U < gp::Resolution())
   {
-    if (aL2V < gp::Resolution()) // whole triangle is degenerated to point
+    if (aL2V < gp::Resolution())
     {
       theUV.SetCoord(0., 0.);
       return (theP - theP1).SquareModulus();
@@ -520,14 +462,14 @@ double Poly::PointOnTriangle(const gp_XY& theP1,
       return (theP - (theP1 + theUV.Y() * aDV)).SquareModulus();
     }
   }
-  else if (aL2V < gp::Resolution()) // side 1-3 is degenerated
+  else if (aL2V < gp::Resolution())
   {
     theUV.SetCoord((aDP * aDU) / aL2U, 0.);
     return (theP - (theP1 + theUV.X() * aDU)).SquareModulus();
   }
-  else // sides 1-2 and 1-3 are collinear
+  else
   {
-    // select parameter on one of sides so as to have points closer to picked
+
     double aU  = std::min(1., std::max(0., (aDP * aDU) / aL2U));
     double aV  = std::min(1., std::max(0., (aDP * aDV) / aL2V));
     double aD1 = (aDP - aU * aDU).SquareModulus();
@@ -544,8 +486,6 @@ double Poly::PointOnTriangle(const gp_XY& theP1,
     }
   }
 }
-
-//=================================================================================================
 
 bool Poly::Intersect(const occ::handle<Poly_Triangulation>& theTri,
                      const gp_Ax1&                          theAxis,
@@ -598,7 +538,6 @@ bool Poly::Intersect(const occ::handle<Poly_Triangulation>& theTri,
   return false;
 }
 
-//! Calculate the minor of the given matrix, defined by the columns specified by values c1, c2, c3.
 static double Determinant(const double a[3][4], const int c1, const int c2, const int c3)
 {
   return a[0][c1] * a[1][c2] * a[2][c3] + a[0][c2] * a[1][c3] * a[2][c1]
@@ -606,10 +545,6 @@ static double Determinant(const double a[3][4], const int c1, const int c2, cons
          - a[0][c2] * a[1][c1] * a[2][c3] - a[0][c1] * a[1][c3] * a[2][c2];
 }
 
-//=======================================================================
-// function : IntersectTriLine
-// purpose  : Intersect a triangle with a line
-//=======================================================================
 int Poly::IntersectTriLine(const gp_XYZ& theStart,
                            const gp_Dir& theDir,
                            const gp_XYZ& theV0,

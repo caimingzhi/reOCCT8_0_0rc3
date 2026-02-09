@@ -18,7 +18,7 @@ ProjLib_PrjFunc::ProjLib_PrjFunc(const Adaptor3d_Curve*   C,
       myFix(Fix)
 {
   myNorm = std::min(1., std::min(mySurface->UResolution(1.), mySurface->VResolution(1.)));
-  // myNorm=1.;
+
   switch (myFix)
   {
     case 1:
@@ -78,9 +78,6 @@ bool ProjLib_PrjFunc::Values(const math_Vector& X, math_Vector& F, math_Matrix& 
       v = myV;
   }
 
-  /*  if(X(1) > mySup.X() || X(1) < myInf.X()) return false;
-    if(X(2) > mySup.Y() || X(2) < myInf.Y()) return false;
-  */
   gp_Pnt S, C;
   gp_Vec DS1_u, DS1_v, DS2_u, DS2_uv, DS2_v, DC1_t;
   myCurve->D1(t, C, DC1_t);
@@ -94,30 +91,23 @@ bool ProjLib_PrjFunc::Values(const math_Vector& X, math_Vector& F, math_Matrix& 
   switch (myFix)
   {
     case 1:
-      D(1, 1) = (DS1_u.SquareMagnitude() + V * DS2_u) * myNorm; // dE1/du
-      D(1, 2) = (DS1_v * DS1_u + V * DS2_uv) * myNorm;          // dE1/dv
-      D(2, 1) = D(1, 2);                                        // dE2/du
-      D(2, 2) = (DS1_v.SquareMagnitude() + V * DS2_v) * myNorm; // dE2/dv
+      D(1, 1) = (DS1_u.SquareMagnitude() + V * DS2_u) * myNorm;
+      D(1, 2) = (DS1_v * DS1_u + V * DS2_uv) * myNorm;
+      D(2, 1) = D(1, 2);
+      D(2, 2) = (DS1_v.SquareMagnitude() + V * DS2_v) * myNorm;
       break;
     case 2:
-      D(1, 1) = (-DC1_t * DS1_u) * myNorm;                      // dE1/dt
-      D(1, 2) = (DS1_v * DS1_u + V * DS2_uv) * myNorm;          // dE1/dv
-      D(2, 1) = (-DC1_t * DS1_v) * myNorm;                      // dE2/dt
-      D(2, 2) = (DS1_v.SquareMagnitude() + V * DS2_v) * myNorm; // dE2/dv
+      D(1, 1) = (-DC1_t * DS1_u) * myNorm;
+      D(1, 2) = (DS1_v * DS1_u + V * DS2_uv) * myNorm;
+      D(2, 1) = (-DC1_t * DS1_v) * myNorm;
+      D(2, 2) = (DS1_v.SquareMagnitude() + V * DS2_v) * myNorm;
       break;
     case 3:
-      D(1, 1) = -DC1_t * DS1_u * myNorm;                        // dE1/dt
-      D(1, 2) = (DS1_u.SquareMagnitude() + V * DS2_u) * myNorm; // dE1/du
-      D(2, 1) = -DC1_t * DS1_v * myNorm;                        // dE2/dt
-      D(2, 2) = (DS1_v * DS1_u + V * DS2_uv) * myNorm;          // dE2/du
+      D(1, 1) = -DC1_t * DS1_u * myNorm;
+      D(1, 2) = (DS1_u.SquareMagnitude() + V * DS2_u) * myNorm;
+      D(2, 1) = -DC1_t * DS1_v * myNorm;
+      D(2, 2) = (DS1_v * DS1_u + V * DS2_uv) * myNorm;
   }
-
-  /*  std::cout<<"F = ("<<F(1)<<", "<<F(2)<<")"<<std::endl;
-    std::cout<<"dE1/dt = "<<D(1,1)<<std::endl;
-    std::cout<<"dE1/dv = "<<D(1,2)<<std::endl;
-    std::cout<<"dE2/dt = "<<D(2,1)<<std::endl;
-    std::cout<<"dE2/dv = "<<D(2,2)<<std::endl;
-  */
 
   myU = u;
   myV = v;
@@ -137,6 +127,6 @@ gp_Pnt2d ProjLib_PrjFunc::Solution() const
     case 3:
       return gp_Pnt2d(myt, myU);
   }
-  // pout NT, meme si on n'y passe pas.
+
   return gp_Pnt2d(0., 0.);
 }

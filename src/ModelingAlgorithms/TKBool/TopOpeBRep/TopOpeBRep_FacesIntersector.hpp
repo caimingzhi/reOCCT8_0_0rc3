@@ -14,7 +14,6 @@
 class BRepTopAdaptor_TopolTool;
 class Bnd_Box;
 
-//! Describes the intersection of two faces.
 class TopOpeBRep_FacesIntersector
 {
 public:
@@ -22,10 +21,8 @@ public:
 
   Standard_EXPORT TopOpeBRep_FacesIntersector();
 
-  //! Computes the intersection of faces S1 and S2.
   Standard_EXPORT void Perform(const TopoDS_Shape& S1, const TopoDS_Shape& S2);
 
-  //! Computes the intersection of faces S1 and S2.
   Standard_EXPORT void Perform(const TopoDS_Shape& S1,
                                const TopoDS_Shape& S2,
                                const Bnd_Box&      B1,
@@ -35,23 +32,14 @@ public:
 
   Standard_EXPORT bool IsDone() const;
 
-  //! Returns True if Perform() arguments are two faces with the
-  //! same surface.
   Standard_EXPORT bool SameDomain() const;
 
-  //! returns first or second intersected face.
   Standard_EXPORT const TopoDS_Shape& Face(const int Index) const;
 
-  //! Returns True if Perform() arguments are two faces
-  //! SameDomain() and normals on both side.
-  //! Raise if SameDomain is False
   Standard_EXPORT bool SurfacesSameOriented() const;
 
-  //! returns true if edge <E> is found as same as the edge
-  //! associated with a RESTRICTION line.
   Standard_EXPORT bool IsRestriction(const TopoDS_Shape& E) const;
 
-  //! returns the map of edges found as TopeBRepBRep_RESTRICTION
   Standard_EXPORT const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>&
                         Restrictions() const;
 
@@ -73,12 +61,8 @@ public:
 
   Standard_EXPORT TopOpeBRep_LineInter& ChangeLine(const int IL);
 
-  //! Force the tolerance values used by the next Perform(S1,S2) call.
   Standard_EXPORT void ForceTolerances(const double tolarc, const double toltang);
 
-  //! Return the tolerance values used in the last Perform() call
-  //! If ForceTolerances() has been called, return the given values.
-  //! If not, return values extracted from shapes.
   Standard_EXPORT void GetTolerances(double& tolarc, double& toltang) const;
 
 private:
@@ -86,17 +70,8 @@ private:
 
   Standard_EXPORT void ResetIntersection();
 
-  //! extract tolerance values from shapes <S1>,<S2>,
-  //! in order to perform intersection between <S1> and <S2>
-  //! with tolerance values "fitting" the shape tolerances.
-  //! (called by Perform() by default, when ForceTolerances() has not
-  //! been called)
   Standard_EXPORT void ShapeTolerances(const TopoDS_Shape& S1, const TopoDS_Shape& S2);
 
-  //! returns the max tolerance of sub-shapes of type <T>
-  //! found in shape <S>. If no such sub-shape found, return
-  //! Precision::Intersection()
-  //! (called by ShapeTolerances())
   Standard_EXPORT double ToleranceMax(const TopoDS_Shape& S, const TopAbs_ShapeEnum T) const;
 
   IntPatch_Intersection                                         myIntersector;

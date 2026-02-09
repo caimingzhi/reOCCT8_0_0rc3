@@ -1,14 +1,10 @@
-// Created on : Thu Mar 24 18:30:12 2022
+
 
 #include <StepVisual_FaceOrSurface.hpp>
 #include <StepShape_Face.hpp>
 #include <StepGeom_Surface.hpp>
 
-//=================================================================================================
-
 StepVisual_FaceOrSurface::StepVisual_FaceOrSurface() = default;
-
-//=================================================================================================
 
 int StepVisual_FaceOrSurface::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -21,14 +17,10 @@ int StepVisual_FaceOrSurface::CaseNum(const occ::handle<Standard_Transient>& ent
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepShape_Face> StepVisual_FaceOrSurface::Face() const
 {
   return occ::down_cast<StepShape_Face>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepGeom_Surface> StepVisual_FaceOrSurface::Surface() const
 {

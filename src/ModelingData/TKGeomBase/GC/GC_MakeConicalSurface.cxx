@@ -34,13 +34,6 @@ GC_MakeConicalSurface::GC_MakeConicalSurface(const gp_Cone& C)
   TheCone  = new Geom_ConicalSurface(C);
 }
 
-//=========================================================================
-//   Creation of a cone by four points.                                +
-//   two first give the axis.                                     +
-//   the third gives the base radius.                              +
-//   the third and the fourth the half-angle.                          +
-//=========================================================================
-
 GC_MakeConicalSurface::GC_MakeConicalSurface(const gp_Pnt& P1,
                                              const gp_Pnt& P2,
                                              const gp_Pnt& P3,
@@ -53,9 +46,6 @@ GC_MakeConicalSurface::GC_MakeConicalSurface(const gp_Pnt& P1,
     TheCone = new Geom_ConicalSurface(C.Value());
   }
 }
-
-//=========================================================================
-//=========================================================================
 
 GC_MakeConicalSurface::GC_MakeConicalSurface(const gp_Pnt& P1,
                                              const gp_Pnt& P2,

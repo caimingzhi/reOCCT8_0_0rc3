@@ -4,15 +4,11 @@
 #include <TopoDS_Edge.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//=================================================================================================
-
 ShapeFix_WireSegment::ShapeFix_WireSegment()
 {
   Clear();
   myOrient = TopAbs_FORWARD;
 }
-
-//=================================================================================================
 
 ShapeFix_WireSegment::ShapeFix_WireSegment(const occ::handle<ShapeExtend_WireData>& wire,
                                            const TopAbs_Orientation                 ori)
@@ -20,8 +16,6 @@ ShapeFix_WireSegment::ShapeFix_WireSegment(const occ::handle<ShapeExtend_WireDat
   Load(wire);
   myOrient = ori;
 }
-
-//=================================================================================================
 
 void ShapeFix_WireSegment::Clear()
 {
@@ -34,39 +28,29 @@ void ShapeFix_WireSegment::Clear()
   myVertex               = TopoDS_Vertex();
 }
 
-//=================================================================================================
-
 void ShapeFix_WireSegment::Load(const occ::handle<ShapeExtend_WireData>& wire)
 {
-  //  myWire = wire;
+
   Clear();
   myWire->ManifoldMode() = wire->ManifoldMode();
   for (int i = 1; i <= wire->NbEdges(); i++)
     AddEdge(i, wire->Edge(i));
 }
 
-//=================================================================================================
-
 const occ::handle<ShapeExtend_WireData>& ShapeFix_WireSegment::WireData() const
 {
   return myWire;
 }
-
-//=================================================================================================
 
 void ShapeFix_WireSegment::Orientation(const TopAbs_Orientation ori)
 {
   myOrient = ori;
 }
 
-//=================================================================================================
-
 TopAbs_Orientation ShapeFix_WireSegment::Orientation() const
 {
   return myOrient;
 }
-
-//=================================================================================================
 
 TopoDS_Vertex ShapeFix_WireSegment::FirstVertex() const
 {
@@ -74,15 +58,11 @@ TopoDS_Vertex ShapeFix_WireSegment::FirstVertex() const
   return sae.FirstVertex(myWire->Edge(1));
 }
 
-//=================================================================================================
-
 TopoDS_Vertex ShapeFix_WireSegment::LastVertex() const
 {
   ShapeAnalysis_Edge sae;
   return sae.LastVertex(myWire->Edge(myWire->NbEdges()));
 }
-
-//=================================================================================================
 
 bool ShapeFix_WireSegment::IsClosed() const
 {
@@ -91,21 +71,13 @@ bool ShapeFix_WireSegment::IsClosed() const
   return v.IsSame(LastVertex());
 }
 
-//=======================================================================
-// WORK with EDGES and PATCH INDICES
-//=======================================================================
-
 #define MININD -32000
 #define MAXIND 32000
-
-//=================================================================================================
 
 int ShapeFix_WireSegment::NbEdges() const
 {
   return myWire->NbEdges();
 }
-
-//=================================================================================================
 
 TopoDS_Edge ShapeFix_WireSegment::Edge(const int i) const
 {
@@ -113,21 +85,15 @@ TopoDS_Edge ShapeFix_WireSegment::Edge(const int i) const
   return myWire->Edge(i);
 }
 
-//=================================================================================================
-
 void ShapeFix_WireSegment::SetEdge(const int i, const TopoDS_Edge& edge)
 {
   myWire->Set(edge, i);
 }
 
-//=================================================================================================
-
 void ShapeFix_WireSegment::AddEdge(const int i, const TopoDS_Edge& edge)
 {
   AddEdge(i, edge, MININD, MAXIND, MININD, MAXIND);
 }
-
-//=================================================================================================
 
 void ShapeFix_WireSegment::AddEdge(const int          i,
                                    const TopoDS_Edge& edge,
@@ -153,8 +119,6 @@ void ShapeFix_WireSegment::AddEdge(const int          i,
   }
 }
 
-//=================================================================================================
-
 void ShapeFix_WireSegment::SetPatchIndex(const int i,
                                          const int iumin,
                                          const int iumax,
@@ -167,8 +131,6 @@ void ShapeFix_WireSegment::SetPatchIndex(const int i,
   myIVMax->SetValue(i, ivmax);
 }
 
-//=================================================================================================
-
 void ShapeFix_WireSegment::DefineIUMin(const int i, const int iumin)
 {
   if (myIUMin->Value(i) < iumin)
@@ -178,8 +140,6 @@ void ShapeFix_WireSegment::DefineIUMin(const int i, const int iumin)
     std::cout << "Warning: ShapeFix_WireSegment::DefineIUMin: indexation error" << std::endl;
 #endif
 }
-
-//=================================================================================================
 
 void ShapeFix_WireSegment::DefineIUMax(const int i, const int iumax)
 {
@@ -192,8 +152,6 @@ void ShapeFix_WireSegment::DefineIUMax(const int i, const int iumax)
 #endif
 }
 
-//=================================================================================================
-
 void ShapeFix_WireSegment::DefineIVMin(const int i, const int ivmin)
 {
   if (myIVMin->Value(i) < ivmin)
@@ -204,8 +162,6 @@ void ShapeFix_WireSegment::DefineIVMin(const int i, const int ivmin)
     std::cout << "Warning: ShapeFix_WireSegment::DefineIVMin: indexation error" << std::endl;
 #endif
 }
-
-//=================================================================================================
 
 void ShapeFix_WireSegment::DefineIVMax(const int i, const int ivmax)
 {
@@ -218,8 +174,6 @@ void ShapeFix_WireSegment::DefineIVMax(const int i, const int ivmax)
 #endif
 }
 
-//=================================================================================================
-
 void ShapeFix_WireSegment::GetPatchIndex(const int i,
                                          int&      iumin,
                                          int&      iumax,
@@ -231,8 +185,6 @@ void ShapeFix_WireSegment::GetPatchIndex(const int i,
   ivmin = myIVMin->Value(i);
   ivmax = myIVMax->Value(i);
 }
-
-//=================================================================================================
 
 bool ShapeFix_WireSegment::CheckPatchIndex(const int i) const
 {
@@ -247,36 +199,15 @@ bool ShapeFix_WireSegment::CheckPatchIndex(const int i) const
   return ok;
 }
 
-//=================================================================================================
-
 void ShapeFix_WireSegment::SetVertex(const TopoDS_Vertex& theVertex)
 {
   myVertex = theVertex;
-  // SetVertex(theVertex, MININD, MAXIND, MININD, MAXIND);
 }
-
-/*//=================================================================================================
-
-void ShapeFix_WireSegment::SetVertex(const TopoDS_Vertex& theVertex,
-                     int iumin,
-                     int iumax,
-                     int ivmin,
-                     int ivmax)
-  myVertex = theVertex;
-  myIUMin->Append ( iumin );
-  myIUMax->Append ( iumax );
-  myIVMin->Append ( ivmin );
-  myIVMax->Append ( ivmax );
-}
-*/
-//=================================================================================================
 
 TopoDS_Vertex ShapeFix_WireSegment::GetVertex() const
 {
   return myVertex;
 }
-
-//=================================================================================================
 
 bool ShapeFix_WireSegment::IsVertex() const
 {

@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -21,10 +10,6 @@
 #include <Standard_TypeDef.hpp>
 #include <NCollection_Mat4.hpp>
 #include <Precision.hpp>
-
-//==================================================================================================
-// Constructor Tests
-//==================================================================================================
 
 TEST(Graphic3d_BndBox3dTest, DefaultConstructor)
 {
@@ -59,10 +44,6 @@ TEST(Graphic3d_BndBox3dTest, PointsConstructor)
   EXPECT_DOUBLE_EQ(6.0, aBox.CornerMax().z()) << "Zmax should match constructor input";
 }
 
-//==================================================================================================
-// Add and Combine Tests
-//==================================================================================================
-
 TEST(Graphic3d_BndBox3dTest, AddPoint)
 {
   Graphic3d_BndBox3d       aBox;
@@ -93,10 +74,6 @@ TEST(Graphic3d_BndBox3dTest, CombineBoxes)
   EXPECT_DOUBLE_EQ(6.0, aBox1.CornerMax().z()) << "Combined box should adopt max Z from either box";
 }
 
-//==================================================================================================
-// Size, Center and Area Tests
-//==================================================================================================
-
 TEST(Graphic3d_BndBox3dTest, BoxSize)
 {
   Graphic3d_BndBox3d       aBox(NCollection_Vec3<double>(0.5, -2.0, -3.0),
@@ -125,17 +102,13 @@ TEST(Graphic3d_BndBox3dTest, BoxArea)
   EXPECT_DOUBLE_EQ(52.0, anArea) << "Area should be 2*(XY + YZ + ZX) = 52 for box 2x3x4";
 }
 
-//==================================================================================================
-// Transformation Tests
-//==================================================================================================
-
 TEST(Graphic3d_BndBox3dTest, TransformationIdentity)
 {
   Graphic3d_BndBox3d aBox(NCollection_Vec3<double>(0.0, 0.0, 0.0),
                           NCollection_Vec3<double>(4.0, 5.0, 6.0));
 
   NCollection_Mat4<double> anIdentity;
-  aBox.Transform(anIdentity); // Identity transformation applied
+  aBox.Transform(anIdentity);
   EXPECT_TRUE(aBox.IsValid()) << "Transformed box should remain valid";
   EXPECT_DOUBLE_EQ(0.0, aBox.CornerMin().x()) << "Xmin should remain unchanged";
   EXPECT_DOUBLE_EQ(0.0, aBox.CornerMin().y()) << "Ymin should remain unchanged";
@@ -171,7 +144,7 @@ TEST(Graphic3d_BndBox3dTest, TransformationScale)
                           NCollection_Vec3<double>(2.0, 2.0, 2.0));
 
   gp_Trsf aScale;
-  aScale.SetScale(gp_Pnt(0.0, 0.0, 0.0), 2.0); // Scale by factor of 2 from origin
+  aScale.SetScale(gp_Pnt(0.0, 0.0, 0.0), 2.0);
   NCollection_Mat4<double> aMat;
   aScale.GetMat4(aMat);
 
@@ -191,7 +164,7 @@ TEST(Graphic3d_BndBox3dTest, TransformationRotation)
                           NCollection_Vec3<double>(2.0, 1.0, 1.0));
 
   gp_Trsf aRotation;
-  aRotation.SetRotation(gp_Ax1(gp::Origin(), gp::DZ()), M_PI / 2); // 90 degrees around Z
+  aRotation.SetRotation(gp_Ax1(gp::Origin(), gp::DZ()), M_PI / 2);
   NCollection_Mat4<double> aMat;
   aRotation.GetMat4(aMat);
 
@@ -236,7 +209,7 @@ TEST(Graphic3d_BndBox3dTest, TransformationComposed)
   NCollection_Vec3<double> anExpectedCornerMax =
     NCollection_Vec3<double>(-45.09248805040103, 87.9443412035472, -20.487612688573407);
 
-  double aPrecision = 0.00001; // Acceptable error for this test case
+  double aPrecision = 0.00001;
   EXPECT_TRUE(std::abs(aResultCornerMin.x() - anExpectedCornerMin.x()) < aPrecision)
     << "Xmin should match expected after composed transformation";
   EXPECT_TRUE(std::abs(aResultCornerMin.y() - anExpectedCornerMin.y()) < aPrecision)
@@ -253,7 +226,7 @@ TEST(Graphic3d_BndBox3dTest, TransformationComposed)
 
 TEST(Graphic3d_BndBox3dTest, TransformationInvalidBox)
 {
-  Graphic3d_BndBox3d aBox; // Invalid box
+  Graphic3d_BndBox3d aBox;
 
   gp_Trsf aRotation;
   aRotation.SetRotation(gp_Ax1(gp_Pnt(0, 0, 0), gp_Dir(gp_Dir::D::Z)), M_PI / 4);

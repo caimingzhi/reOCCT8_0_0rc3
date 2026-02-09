@@ -24,7 +24,6 @@ public:
 
   Standard_EXPORT bool IsReadOnly() const;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
   friend class CDM_Document;
@@ -46,8 +45,6 @@ private:
 
   Standard_EXPORT void Update(const occ::handle<CDM_MetaData>& aMetaData);
 
-  //! compares the actual document version with the
-  //! document version at the creation of the reference
   Standard_EXPORT bool IsUpToDate() const;
 
   Standard_EXPORT void SetIsUpToDate();
@@ -55,8 +52,6 @@ private:
   Standard_EXPORT void UnsetToDocument(const occ::handle<CDM_MetaData>&    aMetaData,
                                        const occ::handle<CDM_Application>& anApplication);
 
-  //! returns true if the ToDocument has been retrieved
-  //! and opened.
   Standard_EXPORT bool IsOpened() const;
 
   Standard_EXPORT occ::handle<CDM_Document> Document() const;

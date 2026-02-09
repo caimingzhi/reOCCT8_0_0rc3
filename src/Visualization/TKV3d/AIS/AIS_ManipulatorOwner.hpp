@@ -5,7 +5,6 @@
 #include <SelectMgr_EntityOwner.hpp>
 #include <SelectMgr_SelectableObject.hpp>
 
-//! Entity owner for selection management of AIS_Manipulator object.
 class AIS_ManipulatorOwner : public SelectMgr_EntityOwner
 {
 public:
@@ -28,10 +27,9 @@ public:
 
   AIS_ManipulatorMode Mode() const { return myMode; }
 
-  //! @return index of manipulator axis.
   int Index() const { return myIndex; }
 
 protected:
-  int                 myIndex; //!< index of manipulator axis.
-  AIS_ManipulatorMode myMode;  //!< manipulation (highlight) mode.
+  int                 myIndex;
+  AIS_ManipulatorMode myMode;
 };

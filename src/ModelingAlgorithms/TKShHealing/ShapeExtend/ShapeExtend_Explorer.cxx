@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// szv#4 S4163
 
 #include <BRep_Builder.hpp>
 #include <ShapeExtend_Explorer.hpp>
@@ -23,11 +10,7 @@
 #include <TopoDS_Wire.hpp>
 #include <NCollection_List.hpp>
 
-//=================================================================================================
-
 ShapeExtend_Explorer::ShapeExtend_Explorer() = default;
-
-//=================================================================================================
 
 TopoDS_Shape ShapeExtend_Explorer::CompoundFromSeq(
   const occ::handle<NCollection_HSequence<TopoDS_Shape>>& seqval) const
@@ -40,8 +23,6 @@ TopoDS_Shape ShapeExtend_Explorer::CompoundFromSeq(
     B.Add(C, seqval->Value(i));
   return C;
 }
-
-//=================================================================================================
 
 static void FillList(const occ::handle<NCollection_HSequence<TopoDS_Shape>>& list,
                      const TopoDS_Shape&                                     comp,
@@ -75,8 +56,6 @@ occ::handle<NCollection_HSequence<TopoDS_Shape>> ShapeExtend_Explorer::SeqFromCo
   return list;
 }
 
-//=================================================================================================
-
 void ShapeExtend_Explorer::ListFromSeq(
   const occ::handle<NCollection_HSequence<TopoDS_Shape>>& seqval,
   NCollection_List<TopoDS_Shape>&                         lisval,
@@ -91,8 +70,6 @@ void ShapeExtend_Explorer::ListFromSeq(
     lisval.Append(seqval->Value(i));
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<TopoDS_Shape>> ShapeExtend_Explorer::SeqFromList(
   const NCollection_List<TopoDS_Shape>& lisval) const
 {
@@ -103,8 +80,6 @@ occ::handle<NCollection_HSequence<TopoDS_Shape>> ShapeExtend_Explorer::SeqFromLi
     seqval->Append(it.Value());
   return seqval;
 }
-
-//=================================================================================================
 
 TopAbs_ShapeEnum ShapeExtend_Explorer::ShapeType(const TopoDS_Shape& shape,
                                                  const bool          compound) const
@@ -125,7 +100,7 @@ TopAbs_ShapeEnum ShapeExtend_Explorer::ShapeType(const TopoDS_Shape& shape,
       typ = ShapeType(sh, compound);
     if (res == TopAbs_SHAPE)
       res = typ;
-    //   Egalite : OK;  Pseudo-Egalite : EDGE/WIRE ou FACE/SHELL
+
     else if (res == TopAbs_EDGE && typ == TopAbs_WIRE)
       res = typ;
     else if (res == TopAbs_WIRE && typ == TopAbs_EDGE)
@@ -140,8 +115,6 @@ TopAbs_ShapeEnum ShapeExtend_Explorer::ShapeType(const TopoDS_Shape& shape,
   return res;
 }
 
-//=================================================================================================
-
 TopoDS_Shape ShapeExtend_Explorer::SortedCompound(const TopoDS_Shape&    shape,
                                                   const TopAbs_ShapeEnum type,
                                                   const bool             explore,
@@ -153,7 +126,6 @@ TopoDS_Shape ShapeExtend_Explorer::SortedCompound(const TopoDS_Shape&    shape,
   TopoDS_Shape     sh, sh0;
   int              nb = 0;
 
-  //  Compound : on le prend, soit tel quel, soit son contenu
   if (typ == TopAbs_COMPOUND || typ == TopAbs_COMPSOLID)
   {
     TopoDS_Compound C;
@@ -188,7 +160,6 @@ TopoDS_Shape ShapeExtend_Explorer::SortedCompound(const TopoDS_Shape&    shape,
     return C;
   }
 
-  //   Egalite : OK;  Pseudo-Egalite : EDGE/WIRE ou FACE/SHELL
   if (typ == type)
     return shape;
   if (typ == TopAbs_EDGE && type == TopAbs_WIRE)
@@ -208,15 +179,12 @@ TopoDS_Shape ShapeExtend_Explorer::SortedCompound(const TopoDS_Shape&    shape,
     return S;
   }
 
-  //   Le reste : selon exploration
   if (!explore)
   {
     TopoDS_Shape nulsh;
     return nulsh;
   }
 
-  //  Ici, on doit explorer
-  //  SOLID + mode COMPOUND : reconduire les SHELLs
   if (typ == TopAbs_SOLID && compound)
   {
     TopoDS_Compound C;
@@ -238,11 +206,10 @@ TopoDS_Shape ShapeExtend_Explorer::SortedCompound(const TopoDS_Shape&    shape,
     return C;
   }
 
-  //  Exploration classique
   TopoDS_Compound CC;
   BRep_Builder    BB;
   BB.MakeCompound(CC);
-  // int iena = false; //szv#4:S4163:12Mar99 unused
+
   for (TopExp_Explorer aExp(shape, type); aExp.More(); aExp.Next())
   {
     nb++;
@@ -255,8 +222,6 @@ TopoDS_Shape ShapeExtend_Explorer::SortedCompound(const TopoDS_Shape&    shape,
     return sh;
   return CC;
 }
-
-//=================================================================================================
 
 void ShapeExtend_Explorer::DispatchList(
   const occ::handle<NCollection_HSequence<TopoDS_Shape>>& list,

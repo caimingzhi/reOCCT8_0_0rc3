@@ -14,15 +14,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_Distance, DrawDim_Dimension)
 
-//=================================================================================================
-
 DrawDim_Distance::DrawDim_Distance(const TopoDS_Face& plane1, const TopoDS_Face& plane2)
 {
   myPlane1 = plane1;
   myPlane2 = plane2;
 }
-
-//=================================================================================================
 
 DrawDim_Distance::DrawDim_Distance(const TopoDS_Face& plane1)
 
@@ -30,54 +26,40 @@ DrawDim_Distance::DrawDim_Distance(const TopoDS_Face& plane1)
   myPlane1 = plane1;
 }
 
-//=================================================================================================
-
 const TopoDS_Face& DrawDim_Distance::Plane1() const
 {
   return myPlane1;
 }
-
-//=================================================================================================
 
 void DrawDim_Distance::Plane1(const TopoDS_Face& face)
 {
   myPlane1 = face;
 }
 
-//=================================================================================================
-
 const TopoDS_Face& DrawDim_Distance::Plane2() const
 {
   return myPlane2;
 }
-
-//=================================================================================================
 
 void DrawDim_Distance::Plane2(const TopoDS_Face& face)
 {
   myPlane2 = face;
 }
 
-//=================================================================================================
-
 void DrawDim_Distance::DrawOn(Draw_Display& dis) const
 {
 
-  // compute the points and the direction
   BRepAdaptor_Surface surf1(myPlane1);
 
-  // today we process only planar faces
   if (surf1.GetType() != GeomAbs_Plane)
     return;
 
   gp_Ax1 anAx1 = surf1.Plane().Axis();
   gp_Vec V     = anAx1.Direction();
 
-  // output
-  gp_Pnt FAttach; // first attach point
-  gp_Pnt SAttach; // second attach point
+  gp_Pnt FAttach;
+  gp_Pnt SAttach;
 
-  // first point, try a vertex
   TopExp_Explorer explo(myPlane1, TopAbs_VERTEX);
   if (explo.More())
   {
@@ -85,13 +67,13 @@ void DrawDim_Distance::DrawOn(Draw_Display& dis) const
   }
   else
   {
-    // no vertex, use the origin
+
     FAttach = anAx1.Location();
   }
 
   if (!myPlane2.IsNull())
   {
-    // translate the point until the second face
+
     BRepAdaptor_Surface surf2(myPlane2);
     surf2.D0(0, 0, SAttach);
     double r = V.Dot(gp_Vec(FAttach, SAttach));
@@ -101,7 +83,6 @@ void DrawDim_Distance::DrawOn(Draw_Display& dis) const
   SAttach = FAttach;
   SAttach.Translate(V);
 
-  // DISPLAY
   dis.Draw(FAttach, SAttach);
   V *= 0.5;
   FAttach.Translate(V);

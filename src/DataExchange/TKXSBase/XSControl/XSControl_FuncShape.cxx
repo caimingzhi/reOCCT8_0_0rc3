@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRep_Builder.hpp>
 #include <BRepTools.hpp>
@@ -45,14 +34,6 @@
 
 #include <cstdio>
 
-// #include <TransferBRep_Analyzer.hxx>
-//   ######################################################################
-//   ####                                                              ####
-//   ####                           COMMANDS                           ####
-//   ####                                                              ####
-//   ######################################################################
-//=================================================================================================
-
 static IFSelect_ReturnStatus XSControl_tpdraw(const occ::handle<IFSelect_SessionPilot>& pilot)
 {
   int                                           argc = pilot->NbWords();
@@ -67,7 +48,7 @@ static IFSelect_ReturnStatus XSControl_tpdraw(const occ::handle<IFSelect_Session
     sout << "No Transfer Read" << std::endl;
     return IFSelect_RetError;
   }
-  //        ****    tpdraw        ****
+
   if (argc < 2)
   {
     sout << "Donner [mode facultatif : item ou root] , NUMERO , nom DRAW facultatif" << std::endl;
@@ -107,7 +88,6 @@ static IFSelect_ReturnStatus XSControl_tpdraw(const occ::handle<IFSelect_Session
   occ::handle<Standard_Transient> ent;
   TopoDS_Shape                    sh;
   char                            nomvar[40];
-  //  bool moderoot =  (pilot->Word(0).Value(3) == 'r');
 
   int                                   n1, n2, i, max = 0, index = 0;
   occ::handle<Interface_InterfaceModel> model = TP->Model();
@@ -148,7 +128,7 @@ static IFSelect_ReturnStatus XSControl_tpdraw(const occ::handle<IFSelect_Session
   else
   {
     n1 = n2 = num;
-    nbvar   = -1; // nbvar : 1st simple shape = no n0
+    nbvar   = -1;
     sout << ", n0 " << num << std::endl;
   }
 
@@ -196,10 +176,10 @@ static IFSelect_ReturnStatus XSControl_tpdraw(const occ::handle<IFSelect_Session
       continue;
     }
     sh = TransferBRep::ShapeResult(binder);
-    // DeclareAndCast(TransferBRep_ShapeBinder,shb,binder);
+
     if (!sh.IsNull())
     {
-      // sh = shb->Result();
+
       nbvar++;
       if (sh.IsNull())
       {
@@ -322,8 +302,6 @@ static IFSelect_ReturnStatus XSControl_tpdraw(const occ::handle<IFSelect_Session
   return IFSelect_RetDone;
 }
 
-//=================================================================================================
-
 static IFSelect_ReturnStatus XSControl_tpcompound(const occ::handle<IFSelect_SessionPilot>& pilot)
 {
   int                                           argc = pilot->NbWords();
@@ -336,7 +314,7 @@ static IFSelect_ReturnStatus XSControl_tpcompound(const occ::handle<IFSelect_Ses
     sout << "No Transfer Read" << std::endl;
     return IFSelect_RetError;
   }
-  //        ****    tpcompound        ****
+
   if (argc < 2)
   {
     sout << "Give a NAME for the Compound  + optional givelist, else roots are taken" << std::endl;
@@ -373,17 +351,12 @@ static IFSelect_ReturnStatus XSControl_tpcompound(const occ::handle<IFSelect_Ses
   return IFSelect_RetDone;
 }
 
-//=================================================================================================
-
 static IFSelect_ReturnStatus XSControl_traccess(const occ::handle<IFSelect_SessionPilot>& pilot)
 {
   int         argc = pilot->NbWords();
   const char* arg1 = pilot->Arg(1);
   const char* arg2 = pilot->Arg(2);
-  //        ****    trdraw : TransferReader        **** 26
-  //        ****    trsave : TransferReader        **** 27
-  //        ****    trcomp  (comp -> DRAW)         **** 28
-  //        ****    trscomp (comp -> save)         **** 29
+
   bool                    cascomp = (pilot->Word(0).Location(1, 'o', 1, 5) > 0);
   bool                    cassave = (pilot->Word(0).Location(1, 's', 1, 5) > 0);
   TCollection_AsciiString nomsh, noms;
@@ -411,7 +384,7 @@ static IFSelect_ReturnStatus XSControl_traccess(const occ::handle<IFSelect_Sessi
 
   if (num == 0 || cascomp)
   {
-    TopoDS_Compound C; // for compound case
+    TopoDS_Compound C;
     BRep_Builder    B;
     B.MakeCompound(C);
 
@@ -470,9 +443,6 @@ static IFSelect_ReturnStatus XSControl_traccess(const occ::handle<IFSelect_Sessi
   return IFSelect_RetDone;
 }
 
-//=================================================================================================
-
-// PTV 23.08.2000 Added for checking where are an entity from.
 static bool XSControl_IsEqualSubShape(const TopoDS_Shape& Shape, TopoDS_Shape& sh, int aLevel)
 {
   if (sh.IsSame(Shape))
@@ -492,13 +462,11 @@ static bool XSControl_IsEqualSubShape(const TopoDS_Shape& Shape, TopoDS_Shape& s
   return false;
 }
 
-//=================================================================================================
-
 static IFSelect_ReturnStatus XSControl_fromshape(const occ::handle<IFSelect_SessionPilot>& pilot)
 {
   int         argc = pilot->NbWords();
   const char* arg1 = pilot->Arg(1);
-  //        ****    fromshape (tread)         ****
+
   Message_Messenger::StreamBuffer sout = Message::SendInfo();
   if (argc < 2)
   {
@@ -523,11 +491,10 @@ static IFSelect_ReturnStatus XSControl_fromshape(const occ::handle<IFSelect_Sess
     aLevel = -aLevel;
   }
 
-  //    IMPORT
   const occ::handle<XSControl_TransferReader>& TR = XSControl::Session(pilot)->TransferReader();
   if (TR.IsNull())
   {
-  } // sout<<"No read transfer (import) recorded"<<std::endl;
+  }
   else
   {
     yena = true;
@@ -584,15 +551,13 @@ static IFSelect_ReturnStatus XSControl_fromshape(const occ::handle<IFSelect_Sess
         sout << "Shape " << arg1 << ": ";
       if (modrec < 0)
         sout << "(moved from origin) ";
-      // else sout<<"(origin) ";
     }
-    //  on affiche
+
     if (ent.IsNull())
     {
       if (!silent)
         sout << " unknown as imported";
-      // skl 11.05.2004
-      // if Shape is a compound try to make "fromshape" for its subshapes
+
       if (Shape.ShapeType() == TopAbs_COMPOUND)
       {
         sout << std::endl << "Subshapes imported from entities:";
@@ -625,7 +590,6 @@ static IFSelect_ReturnStatus XSControl_fromshape(const occ::handle<IFSelect_Sess
       sout << std::endl;
   }
 
-  //   ET EN EXPORT ?
   const occ::handle<Transfer_FinderProcess>& FP =
     XSControl::Session(pilot)->TransferWriter()->FinderProcess();
   if (FP.IsNull())
@@ -646,16 +610,15 @@ static IFSelect_ReturnStatus XSControl_fromshape(const occ::handle<IFSelect_Sess
         sout << " in file " << XSControl::Session(pilot)->LoadedFile();
       sout << std::endl;
     }
-    // abv 31.08.00: treat case of split shape (several results)
-    // it is supposed that results are of the same type and lie in one-level comp
+
     else
     {
       occ::handle<Transfer_Binder> bnd = FP->Find(fnd);
       if (!bnd.IsNull())
       {
         occ::handle<Transfer_TransientListBinder> TransientListBinder =
-          // occ::down_cast<Transfer_TransientListBinder>( bnd->Next(true) ); //skl
-          occ::down_cast<Transfer_TransientListBinder>(bnd); // skl
+
+          occ::down_cast<Transfer_TransientListBinder>(bnd);
         if (!TransientListBinder.IsNull())
         {
           int i = 1, nb = TransientListBinder->NbTransients();
@@ -674,24 +637,6 @@ static IFSelect_ReturnStatus XSControl_fromshape(const occ::handle<IFSelect_Sess
             sout << std::endl;
           }
         }
-        /*	else {
-              TopoDS_Shape comp = TransferBRep::ShapeResult(bnd);
-              if ( ! comp.IsNull() && comp.ShapeType() < Shape.ShapeType() ) {
-                bool start = true;
-                for ( TopoDS_Iterator it(comp); it.More(); it.Next() ) {
-                  occ::handle<Transfer_Finder> cfnd = TransferBRep::ShapeMapper (FP,it.Value());
-                  if ( cfnd.IsNull() ) continue;
-                  occ::handle<Standard_Transient> cent = FP->FindTransient (cfnd);
-                  if ( cent.IsNull() ) continue;
-                  if ( start )
-                sout<<"Shape "<<arg1<<" : exported to entities ";
-                  else sout << ", ";
-                  start = false;
-                  XSControl::Session(pilot)->Model()->Print(cent,sout);
-                }
-                if ( ! start ) sout<<std::endl;
-              }
-            }  */
       }
     }
   }
@@ -701,14 +646,12 @@ static IFSelect_ReturnStatus XSControl_fromshape(const occ::handle<IFSelect_Sess
   return IFSelect_RetVoid;
 }
 
-//=================================================================================================
-
 static IFSelect_ReturnStatus XSControl_trconnexentities(
   const occ::handle<IFSelect_SessionPilot>& pilot)
 {
   int         argc = pilot->NbWords();
   const char* arg1 = pilot->Arg(1);
-  //        ****    connected entities (last transfer)         ****
+
   const occ::handle<XSControl_TransferReader>& TR = XSControl::Session(pilot)->TransferReader();
   occ::handle<Transfer_TransientProcess>       TP;
   if (!TR.IsNull())
@@ -749,12 +692,9 @@ static IFSelect_ReturnStatus XSControl_trconnexentities(
   return IFSelect_RetDone;
 }
 
-//=================================================================================================
-
 static IFSelect_ReturnStatus XSControl_trimport(const occ::handle<IFSelect_SessionPilot>& pilot)
 {
-  //  FileName or . (for current)  VarName  GiveList (mandatory)
-  //    GiveList : * for xst-transferrable-roots
+
   occ::handle<XSControl_WorkSession> WS = XSControl::Session(pilot);
 
   int                             argc = pilot->NbWords();
@@ -770,8 +710,6 @@ static IFSelect_ReturnStatus XSControl_trimport(const occ::handle<IFSelect_Sessi
   const char* arg2 = pilot->Arg(2);
   const char* arg3 = pilot->Arg(3);
 
-  //  File Name and Variable (root) Name
-
   TCollection_AsciiString fnom, rnom;
   bool modfic = XSControl_FuncShape::FileAndVar(WS, arg1, arg2, "IMPORT", fnom, rnom);
   if (modfic)
@@ -780,10 +718,7 @@ static IFSelect_ReturnStatus XSControl_trimport(const occ::handle<IFSelect_Sessi
     sout << " Model taken from the session : " << fnom << std::endl;
   sout << " -- Names of variables BREP-DRAW prefixed by : " << rnom << std::endl;
 
-  //  keep the current command, because sub-commands will be called
   TCollection_AsciiString compart = pilot->CommandPart(3);
-
-  //  Reading file if required
 
   if (modfic)
   {
@@ -800,8 +735,6 @@ static IFSelect_ReturnStatus XSControl_trimport(const occ::handle<IFSelect_Sessi
   {
     sout << "Currently Loaded Model" << std::endl;
   }
-
-  //  Selecting Entities
 
   occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> list;
   if (arg3[0] == '*' && arg3[1] == '\0')
@@ -822,8 +755,6 @@ static IFSelect_ReturnStatus XSControl_trimport(const occ::handle<IFSelect_Sessi
   int nbl = list->Length();
   sout << "Nb entities selected : " << nbl << std::endl;
 
-  //  Starting Transfer
-
   WS->InitTransferReader(0);
   const occ::handle<XSControl_TransferReader>& TR = WS->TransferReader();
   if (TR.IsNull())
@@ -834,11 +765,9 @@ static IFSelect_ReturnStatus XSControl_trimport(const occ::handle<IFSelect_Sessi
 
   TR->BeginTransfer();
 
-  //  Transferring
   int nbt = TR->TransferList(list);
   sout << "Nb Entities Selected : " << nbl << " have given " << nbt << " results" << std::endl;
 
-  //  Filling VARS. one compound (trimpcomp) or one shape per ent (trimport)
   bool            iscomp = (pilot->Arg(0)[5] == 'c');
   int             nbs    = 0;
   TopoDS_Shape    sh;
@@ -880,7 +809,7 @@ static IFSelect_ReturnStatus XSControl_trimport(const occ::handle<IFSelect_Sessi
     XSControl::Vars(pilot)->SetShape(rnom.ToCString(), C);
   }
   else
-  { // several individual shapes
+  {
     sout << nbs << " Shapes, named " << rnom.ToCString() << "_1 to " << rnom.ToCString() << "_"
          << nbs << std::endl;
   }
@@ -888,13 +817,11 @@ static IFSelect_ReturnStatus XSControl_trimport(const occ::handle<IFSelect_Sessi
   return IFSelect_RetDone;
 }
 
-//=================================================================================================
-
 static IFSelect_ReturnStatus XSControl_twrite(const occ::handle<IFSelect_SessionPilot>& pilot)
 {
   int         argc = pilot->NbWords();
   const char* arg1 = pilot->Arg(1);
-  //        ****    twrite         ****
+
   Message_Messenger::StreamBuffer       sout = Message::SendInfo();
   occ::handle<XSControl_TransferWriter> TW   = XSControl::Session(pilot)->TransferWriter();
   if (argc < 2)
@@ -904,7 +831,6 @@ static IFSelect_ReturnStatus XSControl_twrite(const occ::handle<IFSelect_Session
   }
   sout << "Attention, on alimente le modele courant ..." << std::endl;
 
-  // Shape
   for (int i = 1; i < argc; i++)
   {
     const char*  ai    = (const char*)pilot->Arg(i);
@@ -919,23 +845,11 @@ static IFSelect_ReturnStatus XSControl_twrite(const occ::handle<IFSelect_Session
     sout << " Transfer Write Status = " << stat << std::endl;
   }
   pilot->Session()->ComputeGraph();
-  // Transient ? (Geom) : ignore
+
   return IFSelect_RetDone;
 }
 
-//  ######################################################################
-//  ####                    TIMERS                                    ####
-//  ######################################################################
-
-//  ######################################################################
-//  ####                                                              ####
-//  ####                    Initialising Commands                     ####
-//  ####                                                              ####
-//  ######################################################################
-
 static int THE_XSControl_FuncShape_initactor = 0;
-
-//=================================================================================================
 
 void XSControl_FuncShape::Init()
 {
@@ -989,29 +903,13 @@ void XSControl_FuncShape::Init()
   IFSelect_Act::AddFunc("twrite",
                         "shape : transfer write for this shape, AFTER newmodel !",
                         XSControl_twrite);
-
-  // skl IFSelect_Act::AddFunc ("checkbrep","shapename or * [+ rootname for expurged and faulties [+
-  // mode f-s]]",XSHAPE_checkbrep); skl IFSelect_Act::AddFunc ("dblist","option : clear  nb  index
-  // set n1  data n1 n2",XSHAPE_dblist);
 }
-
-//  ######################################################################
-//  ####                                                              ####
-//  ####                      Additional Methods                      ####
-//  ####                                                              ####
-//  ######################################################################
-
-//=================================================================================================
 
 int XSControl_FuncShape::MoreShapes(const occ::handle<XSControl_WorkSession>&         session,
                                     occ::handle<NCollection_HSequence<TopoDS_Shape>>& list,
                                     const char*                                       name)
 {
-  //  name = un nom -> Draw
-  //  name = "*"    -> tous les transferts RACINES du TP
-  //  name = "**"   -> tous les transferts du TP : VRAIMENT TOUS
-  //  name = "."    -> reperage graphique (not yet impl)
-  //  name = nom(n1-n2) with n1,n2 integers :  the variables of name  nomn1 to nomn2
+
   Message_Messenger::StreamBuffer sout = Message::SendInfo();
   if (list.IsNull())
     list = new NCollection_HSequence<TopoDS_Shape>();
@@ -1046,9 +944,9 @@ int XSControl_FuncShape::MoreShapes(const occ::handle<XSControl_WorkSession>&   
     n2 = atoi(&name[moins + 1]);
     n1 = atoi(&name[paro + 1]);
     if (n1 < 0)
-      n1 += n2; // otherwise we have n1-n2
+      n1 += n2;
   }
-  //  liste
+
   if (n1 <= n2 && n1 > 0)
   {
     char nom[50], nomsh[60];
@@ -1083,8 +981,6 @@ int XSControl_FuncShape::MoreShapes(const occ::handle<XSControl_WorkSession>&   
   return 1;
 }
 
-//=================================================================================================
-
 bool XSControl_FuncShape::FileAndVar(const occ::handle<XSControl_WorkSession>& session,
                                      const char*                               file,
                                      const char*                               var,
@@ -1112,7 +1008,7 @@ bool XSControl_FuncShape::FileAndVar(const occ::handle<XSControl_WorkSession>& s
     int nomdeb, nomfin;
     nomdeb = resfile.SearchFromEnd("/");
     if (nomdeb <= 0)
-      nomdeb = resfile.SearchFromEnd("\\"); // for NT
+      nomdeb = resfile.SearchFromEnd("\\");
     if (nomdeb < 0)
       nomdeb = 0;
     nomfin = resfile.SearchFromEnd(".");

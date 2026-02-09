@@ -5,11 +5,9 @@
 #include <GeomHash_AxisPlacement.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom_SphericalSurface.
-//! Used for geometry deduplication.
 struct GeomHash_SphericalSurfaceHasher
 {
-  // Hashes the sphere by its position and radius.
+
   std::size_t operator()(const occ::handle<Geom_SphericalSurface>& theSphere) const noexcept
   {
     constexpr double aTolerance = 1e-12;
@@ -22,7 +20,6 @@ struct GeomHash_SphericalSurfaceHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two spheres by their positions and radii.
   bool operator()(const occ::handle<Geom_SphericalSurface>& theSphere1,
                   const occ::handle<Geom_SphericalSurface>& theSphere2) const noexcept
   {

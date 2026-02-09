@@ -11,7 +11,6 @@ class BinXCAFDrivers_DocumentRetrievalDriver : public BinDrivers_DocumentRetriev
 {
 
 public:
-  //! Constructor
   Standard_EXPORT BinXCAFDrivers_DocumentRetrievalDriver();
 
   Standard_EXPORT occ::handle<BinMDF_ADriverTable> AttributeDrivers(

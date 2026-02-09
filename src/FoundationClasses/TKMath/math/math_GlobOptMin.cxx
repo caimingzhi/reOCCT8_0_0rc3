@@ -12,8 +12,6 @@
   #define M_SQRT2 1.41421356237309504880168872420969808
 #endif
 
-//=================================================================================================
-
 static double DistanceToBorder(const math_Vector& theX,
                                const math_Vector& theMin,
                                const math_Vector& theMax)
@@ -30,8 +28,6 @@ static double DistanceToBorder(const math_Vector& theX,
 
   return aDist;
 }
-
-//=================================================================================================
 
 math_GlobOptMin::math_GlobOptMin(math_MultipleVarFunction* theFunc,
                                  const math_Vector&        theA,
@@ -90,10 +86,6 @@ math_GlobOptMin::math_GlobOptMin(math_MultipleVarFunction* theFunc,
   myDone = false;
 }
 
-//=======================================================================
-// function : SetGlobalParams
-// purpose  : Set parameters without memory allocation.
-//=======================================================================
 void math_GlobOptMin::SetGlobalParams(math_MultipleVarFunction* theFunc,
                                       const math_Vector&        theA,
                                       const math_Vector&        theB,
@@ -132,10 +124,6 @@ void math_GlobOptMin::SetGlobalParams(math_MultipleVarFunction* theFunc,
   myDone = false;
 }
 
-//=======================================================================
-// function : SetLocalParams
-// purpose  : Set parameters without memory allocation.
-//=======================================================================
 void math_GlobOptMin::SetLocalParams(const math_Vector& theLocalA, const math_Vector& theLocalB)
 {
   int i;
@@ -155,36 +143,22 @@ void math_GlobOptMin::SetLocalParams(const math_Vector& theLocalA, const math_Ve
   myDone = false;
 }
 
-//=======================================================================
-// function : SetTol
-// purpose  : Set algorithm tolerances.
-//=======================================================================
 void math_GlobOptMin::SetTol(const double theDiscretizationTol, const double theSameTol)
 {
   myTol     = theDiscretizationTol;
   mySameTol = theSameTol;
 }
 
-//=======================================================================
-// function : GetTol
-// purpose  : Get algorithm tolerances.
-//=======================================================================
 void math_GlobOptMin::GetTol(double& theDiscretizationTol, double& theSameTol)
 {
   theDiscretizationTol = myTol;
   theSameTol           = mySameTol;
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Compute Global extremum point
-//=======================================================================
-// In this algo indexes started from 1, not from 0.
 void math_GlobOptMin::Perform(const bool isFindSingleSolution)
 {
   myDone = false;
 
-  // Compute parameters range
   double minLength = RealLast();
   double maxLength = RealFirst();
   for (int i = 1; i <= myN; i++)
@@ -209,7 +183,7 @@ void math_GlobOptMin::Perform(const bool isFindSingleSolution)
 
   if (!myIsConstLocked)
   {
-    // Compute initial value for myC.
+
     computeInitialValues();
   }
 
@@ -219,7 +193,7 @@ void math_GlobOptMin::Perform(const bool isFindSingleSolution)
   myIsFindSingleSolution = isFindSingleSolution;
   if (isFindSingleSolution)
   {
-    // Run local optimization if current value better than optimal.
+
     myE3 = 0.0;
   }
   else
@@ -230,7 +204,6 @@ void math_GlobOptMin::Perform(const bool isFindSingleSolution)
       myE3 = -maxLength * myTol * myC / 4.0;
   }
 
-  // Search single solution and current solution in its neighborhood.
   if (CheckFunctionalStopCriteria())
   {
     myDone = true;
@@ -244,15 +217,12 @@ void math_GlobOptMin::Perform(const bool isFindSingleSolution)
   myDone = true;
 }
 
-//=================================================================================================
-
 bool math_GlobOptMin::computeLocalExtremum(const math_Vector& thePnt,
                                            double&            theVal,
                                            math_Vector&       theOutPnt)
 {
   int i;
 
-  // Newton method
   if (myCont >= 2 && dynamic_cast<math_MultipleVarFunctionWithHessian*>(myFunc))
   {
     math_MultipleVarFunctionWithHessian* aTmp =
@@ -271,7 +241,6 @@ bool math_GlobOptMin::computeLocalExtremum(const math_Vector& thePnt,
     }
   }
 
-  // BFGS method used.
   if (myCont >= 1 && dynamic_cast<math_MultipleVarFunctionWithGradient*>(myFunc))
   {
     math_MultipleVarFunctionWithGradient* aTmp =
@@ -290,7 +259,6 @@ bool math_GlobOptMin::computeLocalExtremum(const math_Vector& thePnt,
     }
   }
 
-  // Powell method used.
   if (dynamic_cast<math_MultipleVarFunction*>(myFunc))
   {
     math_Matrix m(1, myN, 1, myN, 0.0);
@@ -313,8 +281,6 @@ bool math_GlobOptMin::computeLocalExtremum(const math_Vector& thePnt,
   return false;
 }
 
-//=================================================================================================
-
 void math_GlobOptMin::computeInitialValues()
 {
   const double aMinLC  = 0.01;
@@ -327,7 +293,6 @@ void math_GlobOptMin::computeInitialValues()
   math_Vector  aParamStep(1, myN);
   double       aCurrVal = RealLast();
 
-  // Lipchitz const approximation.
   double aLipConst = 0.0, aPrevValDiag, aPrevValProj;
   int    aPntNb    = 13;
   myFunc->Value(myA, aPrevValDiag);
@@ -338,12 +303,10 @@ void math_GlobOptMin::computeInitialValues()
   {
     aCurrPnt = myA + aParamStep * i;
 
-    // Walk over diagonal.
     myFunc->Value(aCurrPnt, aCurrVal);
     aLipConst    = std::max(std::abs(aCurrVal - aPrevValDiag), aLipConst);
     aPrevValDiag = aCurrVal;
 
-    // Walk over diag in projected space aPnt(1) = myA(1) = const.
     aCurrPnt(1) = myA(1);
     myFunc->Value(aCurrPnt, aCurrVal);
     aLipConst    = std::max(std::abs(aCurrVal - aPrevValProj), aLipConst);
@@ -358,13 +321,11 @@ void math_GlobOptMin::computeInitialValues()
     myC = std::min(myC * aMaxEps, aMaxLC);
 }
 
-//=================================================================================================
-
 void math_GlobOptMin::computeGlobalExtremum(int j)
 {
   int         i;
-  double      d              = RealLast(), aPrevVal; // Functional in original and moved points.
-  double      val            = RealLast();           // Local extrema computed in moved point.
+  double      d              = RealLast(), aPrevVal;
+  double      val            = RealLast();
   double      aStepBestValue = RealLast();
   math_Vector aStepBestPoint(1, myN);
   bool        isInside = false, isReached = false;
@@ -380,35 +341,32 @@ void math_GlobOptMin::computeGlobalExtremum(int j)
     }
 
     if (CheckFunctionalStopCriteria())
-      return; // Best possible value is obtained.
+      return;
 
     if (j == 1)
     {
       isInside = false;
       aPrevVal = d;
       myFunc->Value(myX, d);
-      r1 = (d + myZ * myC * myLastStep - myF) * myZ; // Evtushenko estimation.
-                                                     // clang-format off
-      r2 = ((d + aPrevVal - myC * myLastStep) * 0.5 - myF) * myZ; // Shubert / Piyavsky estimation.
-                                                     // clang-format on
+      r1 = (d + myZ * myC * myLastStep - myF) * myZ;
+
+      r2 = ((d + aPrevVal - myC * myLastStep) * 0.5 - myF) * myZ;
+
       r = std::min(r1, r2);
       if (r > myE3)
       {
         double aSaveParam = myX(1);
 
-        // Piyavsky midpoint estimation.
         double aParam = (2 * myX(1) - myV(1)) * 0.5 + (aPrevVal - d) * 0.5 / myC;
         if (Precision::IsInfinite(aPrevVal))
-          aParam = myX(1) - myV(1) * 0.5; // Protection from upper dimension step.
+          aParam = myX(1) - myV(1) * 0.5;
 
         myX(1)      = aParam;
         double aVal = 0;
         myFunc->Value(myX, aVal);
         myX(1) = aSaveParam;
 
-        if ((aVal < d && aVal < aPrevVal)
-            || DistanceToBorder(myX, myA, myB)
-                 < myE1) // Condition optimization case near the border.
+        if ((aVal < d && aVal < aPrevVal) || DistanceToBorder(myX, myA, myB) < myE1)
         {
           isInside = computeLocalExtremum(myX, val, myTmp);
         }
@@ -416,11 +374,10 @@ void math_GlobOptMin::computeGlobalExtremum(int j)
       aStepBestValue = (isInside && (val < d)) ? val : d;
       aStepBestPoint = (isInside && (val < d)) ? myTmp : myX;
 
-      // Check point and value on the current step to be optimal.
       checkAddCandidate(aStepBestPoint, aStepBestValue);
 
       if (CheckFunctionalStopCriteria())
-        return; // Best possible value is obtained.
+        return;
 
       myV(1)     = std::min(myE2 + std::abs(myF - d) / myC, myMaxV(1));
       myLastStep = myV(1);
@@ -430,7 +387,6 @@ void math_GlobOptMin::computeGlobalExtremum(int j)
       myV(j) = RealLast() / 2.0;
       computeGlobalExtremum(j - 1);
 
-      // Nullify steps on lower dimensions.
       for (i = 1; i < j; i++)
         myV(i) = 0.0;
     }
@@ -439,7 +395,7 @@ void math_GlobOptMin::computeGlobalExtremum(int j)
       double aUpperDimStep = std::max(myV(j), myE2);
       if (myV(j + 1) > aUpperDimStep)
       {
-        if (aUpperDimStep > myMaxV(j + 1)) // Case of too big step.
+        if (aUpperDimStep > myMaxV(j + 1))
           myV(j + 1) = myMaxV(j + 1);
         else
           myV(j + 1) = aUpperDimStep;
@@ -447,8 +403,6 @@ void math_GlobOptMin::computeGlobalExtremum(int j)
     }
   }
 }
-
-//=================================================================================================
 
 bool math_GlobOptMin::isInside(const math_Vector& thePnt)
 {
@@ -463,8 +417,6 @@ bool math_GlobOptMin::isInside(const math_Vector& thePnt)
   return true;
 }
 
-//=================================================================================================
-
 bool math_GlobOptMin::isStored(const math_Vector& thePnt)
 {
   int         i, j;
@@ -472,7 +424,6 @@ bool math_GlobOptMin::isStored(const math_Vector& thePnt)
   math_Vector aTol(1, myN);
   aTol = (myB - myA) * mySameTol;
 
-  // C1 * n^2 = C2 * 3^dim * n
   if (mySolCount < myMinCellFilterSol)
   {
     for (i = 0; i < mySolCount; i++)
@@ -497,7 +448,6 @@ bool math_GlobOptMin::isStored(const math_Vector& thePnt)
     {
       myFilter.Reset(myCellSize);
 
-      // Copy initial data into cell filter.
       for (int aSolIdx = 0; aSolIdx < mySolCount; aSolIdx++)
       {
         math_Vector aVec(1, myN);
@@ -518,14 +468,12 @@ bool math_GlobOptMin::isStored(const math_Vector& thePnt)
     myFilter.Inspect(aLow, anUp, anInspector);
     if (!anInspector.isFind())
     {
-      // Point is out of close cells, add new one.
+
       myFilter.Add(thePnt, thePnt);
     }
   }
   return false;
 }
-
-//=================================================================================================
 
 void math_GlobOptMin::Points(const int theIndex, math_Vector& theSol)
 {
@@ -534,8 +482,6 @@ void math_GlobOptMin::Points(const int theIndex, math_Vector& theSol)
   for (j = 1; j <= myN; j++)
     theSol(j) = myY((theIndex - 1) * myN + j);
 }
-
-//=================================================================================================
 
 void math_GlobOptMin::initCellSize()
 {
@@ -546,29 +492,21 @@ void math_GlobOptMin::initCellSize()
   }
 }
 
-//=================================================================================================
-
 bool math_GlobOptMin::CheckFunctionalStopCriteria()
 {
-  // Search single solution and current solution in its neighborhood.
+
   return myIsFindSingleSolution && std::abs(myF - myFunctionalMinimalValue) < mySameTol * 0.01;
 }
-
-//=================================================================================================
 
 void math_GlobOptMin::ComputeInitSol()
 {
   double      aVal;
   math_Vector aPnt(1, myN);
 
-  // Check functional value in midpoint. It is necessary since local optimization
-  // algorithm may fail and return nothing. This is a protection from uninitialized
-  // variables.
   aPnt = (myGlobA + myGlobB) * 0.5;
   myFunc->Value(aPnt, aVal);
   checkAddCandidate(aPnt, aVal);
 
-  // Run local optimization from lower corner, midpoint, and upper corner.
   for (int i = 1; i <= 3; i++)
   {
     aPnt = myA + (myB - myA) * (i - 1) / 2.0;
@@ -578,12 +516,9 @@ void math_GlobOptMin::ComputeInitSol()
   }
 }
 
-//=================================================================================================
-
 void math_GlobOptMin::checkAddCandidate(const math_Vector& thePnt, const double theValue)
 {
-  if (std::abs(theValue - myF) < mySameTol * 0.01 && // Value in point is close to optimal value.
-      !myIsFindSingleSolution)                       // Several optimal solutions are allowed.
+  if (std::abs(theValue - myF) < mySameTol * 0.01 && !myIsFindSingleSolution)
   {
     if (!isStored(thePnt))
     {
@@ -595,9 +530,6 @@ void math_GlobOptMin::checkAddCandidate(const math_Vector& thePnt, const double 
     }
   }
 
-  // New best solution:
-  // new point is out of (mySameTol * 0.01) surrounding or
-  // new point is better than old and single point search.
   double aDelta = (theValue - myF) * myZ;
   if (aDelta > mySameTol * 0.01 || (aDelta > 0.0 && myIsFindSingleSolution))
   {

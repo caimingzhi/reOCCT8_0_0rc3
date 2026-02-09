@@ -5,49 +5,35 @@
 #include <NCollection_Vec2.hpp>
 #include <Standard_Macro.hpp>
 
-//! Defines an array of 2D nodes of single/double precision configurable at construction time.
 class Poly_ArrayOfUVNodes : public NCollection_AliasedArray<>
 {
 public:
-  //! Empty constructor of double-precision array.
   Poly_ArrayOfUVNodes()
       : NCollection_AliasedArray((int)sizeof(gp_Pnt2d))
   {
-    //
   }
 
-  //! Constructor of double-precision array.
   Poly_ArrayOfUVNodes(int theLength)
       : NCollection_AliasedArray((int)sizeof(gp_Pnt2d), theLength)
   {
-    //
   }
 
-  //! Copy constructor
   Standard_EXPORT Poly_ArrayOfUVNodes(const Poly_ArrayOfUVNodes& theOther);
 
-  //! Constructor wrapping pre-allocated C-array of values without copying them.
   Poly_ArrayOfUVNodes(const gp_Pnt2d& theBegin, int theLength)
       : NCollection_AliasedArray(theBegin, theLength)
   {
-    //
   }
 
-  //! Constructor wrapping pre-allocated C-array of values without copying them.
   Poly_ArrayOfUVNodes(const NCollection_Vec2<float>& theBegin, int theLength)
       : NCollection_AliasedArray(theBegin, theLength)
   {
-    //
   }
 
-  //! Destructor.
   Standard_EXPORT ~Poly_ArrayOfUVNodes();
 
-  //! Returns TRUE if array defines nodes with double precision.
   bool IsDoublePrecision() const { return myStride == (int)sizeof(gp_Pnt2d); }
 
-  //! Sets if array should define nodes with double or single precision.
-  //! Raises exception if array was already allocated.
   void SetDoublePrecision(bool theIsDouble)
   {
     if (myData != nullptr)
@@ -58,44 +44,30 @@ public:
     myStride = int(theIsDouble ? sizeof(gp_Pnt2d) : sizeof(NCollection_Vec2<float>));
   }
 
-  //! Copies data of theOther array to this.
-  //! The arrays should have the same length,
-  //! but may have different precision / number of components (data conversion will be applied in
-  //! the latter case).
   Standard_EXPORT Poly_ArrayOfUVNodes& Assign(const Poly_ArrayOfUVNodes& theOther);
 
-  //! Move assignment.
   Poly_ArrayOfUVNodes& Move(Poly_ArrayOfUVNodes& theOther)
   {
     NCollection_AliasedArray::Move(theOther);
     return *this;
   }
 
-  //! Assignment operator; @sa Assign()
   Poly_ArrayOfUVNodes& operator=(const Poly_ArrayOfUVNodes& theOther) { return Assign(theOther); }
 
-  //! Move constructor
   Poly_ArrayOfUVNodes(Poly_ArrayOfUVNodes&& theOther) noexcept
       : NCollection_AliasedArray(std::move(theOther))
   {
-    //
   }
 
-  //! Move assignment operator; @sa Move()
   Poly_ArrayOfUVNodes& operator=(Poly_ArrayOfUVNodes&& theOther) noexcept { return Move(theOther); }
 
 public:
-  //! A generalized accessor to point.
   inline gp_Pnt2d Value(int theIndex) const;
 
-  //! A generalized setter for point.
   inline void SetValue(int theIndex, const gp_Pnt2d& theValue);
 
-  //! operator[] - alias to Value
   gp_Pnt2d operator[](int theIndex) const { return Value(theIndex); }
 };
-
-//=================================================================================================
 
 inline gp_Pnt2d Poly_ArrayOfUVNodes::Value(int theIndex) const
 {
@@ -110,8 +82,6 @@ inline gp_Pnt2d Poly_ArrayOfUVNodes::Value(int theIndex) const
     return gp_Pnt2d(aVec2.x(), aVec2.y());
   }
 }
-
-//=================================================================================================
 
 inline void Poly_ArrayOfUVNodes::SetValue(int theIndex, const gp_Pnt2d& theValue)
 {

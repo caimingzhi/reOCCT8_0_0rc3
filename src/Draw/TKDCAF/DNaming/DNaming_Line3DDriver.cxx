@@ -28,26 +28,14 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DNaming_Line3DDriver, TFunction_Driver)
 
-//=================================================================================================
-
 DNaming_Line3DDriver::DNaming_Line3DDriver() = default;
 
-//=======================================================================
-// function : Validate
-// purpose  : Validates labels of a function in <theLog>.
-//=======================================================================
 void DNaming_Line3DDriver::Validate(occ::handle<TFunction_Logbook>&) const {}
 
-//=======================================================================
-// function : MustExecute
-// purpose  : Analyse in <theLog> if the loaded function must be executed
-//=======================================================================
 bool DNaming_Line3DDriver::MustExecute(const occ::handle<TFunction_Logbook>&) const
 {
   return true;
 }
-
-//=================================================================================================
 
 int DNaming_Line3DDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
 {
@@ -58,7 +46,7 @@ int DNaming_Line3DDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
 
   aFunction->SetFailure(NOTDONE);
   occ::handle<TNaming_NamedShape> aPrevILine3D = DNaming::GetFunctionResult(aFunction);
-  // Save location
+
   TopLoc_Location aLocation;
   if (!aPrevILine3D.IsNull() && !aPrevILine3D->IsEmpty())
   {
@@ -79,7 +67,7 @@ int DNaming_Line3DDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
   TopoDS_Wire                     aWire;
   TopoDS_Shape                    aShape1, aShape2;
 
-  NCollection_Array1<TopoDS_Shape> anArV(1, aLength); // aLength - number of points
+  NCollection_Array1<TopoDS_Shape> anArV(1, aLength);
   for (aCounter = 1; aCounter <= aLength - 1; aCounter++)
   {
     occ::handle<TDataStd_UAttribute> aRefP1 =
@@ -94,8 +82,6 @@ int DNaming_Line3DDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
       aShape1                = aNS1->Get();
       const gp_Pnt aDebPoint = BRep_Tool::Pnt(TopoDS::Vertex(aShape1));
       (void)aDebPoint;
-      //	std::cout << aCounter << " X = " <<  aDebPoint.X() << " Y = " <<  aDebPoint.Y() << " Z =
-      //" <<  aDebPoint.Z() << std::endl;
     }
     else
       std::cout << " Line3DDriver:: NS1 is empty" << std::endl;
@@ -104,8 +90,6 @@ int DNaming_Line3DDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
       aShape2                = aNS2->Get();
       const gp_Pnt aDebPoint = BRep_Tool::Pnt(TopoDS::Vertex(aShape2));
       (void)aDebPoint;
-      //      std::cout << aCounter+1 << " X = " <<  aDebPoint.X() << " Y = " <<  aDebPoint.Y() << "
-      //      Z = " <<  aDebPoint.Z() << std::endl;
     }
     else
       std::cout << " Line3DDriver:: NS2 is empty" << std::endl;
@@ -120,9 +104,7 @@ int DNaming_Line3DDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
 #ifdef OCCT_DEBUG
     const gp_Pnt aDebPoint1 = BRep_Tool::Pnt(TopoDS::Vertex(aShape1));
     const gp_Pnt aDebPoint2 = BRep_Tool::Pnt(TopoDS::Vertex(aShape2));
-    //      std::cout << aCounter   << " X = " <<  aDebPoint1.X() << " Y = " <<  aDebPoint1.Y() << "
-    //      Z = " <<  aDebPoint1.Z() << std::endl; std::cout << aCounter+1 << " X = " <<
-    //      aDebPoint2.X() << " Y = " <<  aDebPoint2.Y() << " Z = " <<  aDebPoint2.Z() << std::endl;
+
     (void)aDebPoint1;
     (void)aDebPoint2;
 #endif
@@ -139,7 +121,7 @@ int DNaming_Line3DDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
       aMakeWire.Add(aMakeEdge.Edge());
     }
   }
-  //  } else // closed
+
   if (isClosed)
   {
     occ::handle<TDataStd_UAttribute> aRefP1 = DNaming::GetObjectArg(aFunction, (LINE3D_TYPE + 1));
@@ -164,7 +146,7 @@ int DNaming_Line3DDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
     return -1;
   }
 
-  TDF_Label aResultLabel = RESPOSITION(aFunction); // aFunction->GetResult()->Label();
+  TDF_Label aResultLabel = RESPOSITION(aFunction);
   try
   {
     LoadNamingDS(aResultLabel, aWire, anArV, isClosed);
@@ -175,7 +157,6 @@ int DNaming_Line3DDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
     return -1;
   }
 
-  // restore location
   if (!aLocation.IsIdentity())
     TNaming::Displace(aResultLabel, aLocation, true);
 
@@ -185,10 +166,6 @@ int DNaming_Line3DDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
   return 0;
 }
 
-//=======================================================================
-// function : LoadNamingDS
-// purpose  : Loads a Line3D in a data framework
-//=======================================================================
 void DNaming_Line3DDriver::LoadNamingDS(const TDF_Label&                        theResultLabel,
                                         const TopoDS_Wire&                      theWire,
                                         const NCollection_Array1<TopoDS_Shape>& theArV,
@@ -196,7 +173,7 @@ void DNaming_Line3DDriver::LoadNamingDS(const TDF_Label&                        
 {
   if (theWire.IsNull())
     return;
-  // Wire
+
   TNaming_Builder aWBuilder(theResultLabel);
   aWBuilder.Generated(theWire);
 #ifdef OCCT_DEBUG
@@ -250,7 +227,7 @@ void DNaming_Line3DDriver::LoadNamingDS(const TDF_Label&                        
       {
         anArE.SetValue(aLength, anE);
         aFound = true;
-        // closed case
+
         aFirst = aV2;
         aLast  = aV1;
         break;
@@ -261,13 +238,11 @@ void DNaming_Line3DDriver::LoadNamingDS(const TDF_Label&                        
   }
   else
   {
-    // open
-    anArE.SetValue(aLength, aShape); // last edge
+
+    anArE.SetValue(aLength, aShape);
     TopExp::Vertices(theWire, aFirst, aLast);
   }
 
-  // put edges
-  // from 1:aLength - edges
   for (int i1 = 1; i1 <= aLength; i1++)
   {
     TDF_Label aLab = theResultLabel.FindChild(i1);
@@ -283,9 +258,7 @@ void DNaming_Line3DDriver::LoadNamingDS(const TDF_Label&                        
         TNaming_Builder aB(aLab);
     }
   }
-  // put vertexes
-  //  aLength +1 - first vertex
-  //  aLength +2 - last vertex
+
   TDF_Label aLab1 = theResultLabel.FindChild(aLength + 1);
   TDF_Label aLab2 = theResultLabel.FindChild(aLength + 2);
   if (!aFirst.IsNull())

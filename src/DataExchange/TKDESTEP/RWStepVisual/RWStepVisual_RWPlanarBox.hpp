@@ -11,7 +11,6 @@ class StepVisual_PlanarBox;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for PlanarBox
 class RWStepVisual_RWPlanarBox
 {
 public:

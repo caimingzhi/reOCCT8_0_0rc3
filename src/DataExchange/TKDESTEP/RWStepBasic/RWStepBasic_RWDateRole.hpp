@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_DateRole;
 class StepData_StepWriter;
 
-//! Read & Write Module for DateRole
 class RWStepBasic_RWDateRole
 {
 public:

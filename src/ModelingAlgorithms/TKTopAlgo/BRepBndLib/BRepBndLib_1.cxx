@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRepBndLib.hpp>
 #include <BRep_Tool.hpp>
@@ -31,10 +20,6 @@
 #include <Geom_BSplineCurve.hpp>
 #include <Geom_BezierSurface.hpp>
 
-//=======================================================================
-// Function : IsLinear
-// purpose : Returns TRUE if theC is line-like.
-//=======================================================================
 static bool IsLinear(const Adaptor3d_Curve& theC)
 {
   const GeomAbs_CurveType aCT = theC.GetType();
@@ -45,9 +30,6 @@ static bool IsLinear(const Adaptor3d_Curve& theC)
 
   if ((aCT == GeomAbs_BSplineCurve) || (aCT == GeomAbs_BezierCurve))
   {
-    // Indeed, curves with C0-continuity and degree==1, may be
-    // represented with set of points. It will be possible made
-    // in the future.
 
     return ((theC.Degree() == 1) && (theC.Continuity() != GeomAbs_C0));
   }
@@ -60,10 +42,6 @@ static bool IsLinear(const Adaptor3d_Curve& theC)
   return false;
 }
 
-//=======================================================================
-// Function : IsPlanar
-// purpose : Returns TRUE if theS is plane-like.
-//=======================================================================
 static bool IsPlanar(const Adaptor3d_Surface& theS)
 {
   const GeomAbs_SurfaceType aST = theS.GetType();
@@ -82,10 +60,6 @@ static bool IsPlanar(const Adaptor3d_Surface& theS)
     if ((theS.UDegree() != 1) || (theS.VDegree() != 1))
       return false;
 
-    // Indeed, surfaces with C0-continuity and degree==1, may be
-    // represented with set of points. It will be possible made
-    // in the future.
-
     return ((theS.UContinuity() != GeomAbs_C0) && (theS.VContinuity() != GeomAbs_C0));
   }
 
@@ -97,15 +71,6 @@ static bool IsPlanar(const Adaptor3d_Surface& theS)
   return false;
 }
 
-//=======================================================================
-// Function : PointsForOBB
-// purpose : Returns number of points for array.
-//
-// Attention!!!
-//  1. Start index for thePts must be 0 strictly.
-//  2. Currently, infinite edges/faces (e.g. half-space) are not
-//      processed correctly because computation of UV-bounds is a costly operation.
-//=======================================================================
 static int PointsForOBB(const TopoDS_Shape&         theS,
                         const bool                  theIsTriangulationUsed,
                         NCollection_Array1<gp_Pnt>* thePts        = nullptr,
@@ -114,7 +79,6 @@ static int PointsForOBB(const TopoDS_Shape&         theS,
   int             aRetVal = 0;
   TopExp_Explorer anExpF, anExpE;
 
-  // get all vertices from the shape
   for (anExpF.Init(theS, TopAbs_VERTEX); anExpF.More(); anExpF.Next())
   {
     const TopoDS_Vertex& aVert = TopoDS::Vertex(anExpF.Current());
@@ -135,7 +99,6 @@ static int PointsForOBB(const TopoDS_Shape&         theS,
   if (aRetVal == 0)
     return 0;
 
-  // analyze the faces of the shape on planarity and existence of triangulation
   TopLoc_Location aLoc;
   for (anExpF.Init(theS, TopAbs_FACE); anExpF.More(); anExpF.Next())
   {
@@ -145,12 +108,12 @@ static int PointsForOBB(const TopoDS_Shape&         theS,
     if (!IsPlanar(anAS.Surface()))
     {
       if (!theIsTriangulationUsed)
-        // not planar and triangulation usage disabled
+
         return 0;
     }
     else
     {
-      // planar face
+
       for (anExpE.Init(aF, TopAbs_EDGE); anExpE.More(); anExpE.Next())
       {
         const TopoDS_Edge& anE = TopoDS::Edge(anExpE.Current());
@@ -160,7 +123,7 @@ static int PointsForOBB(const TopoDS_Shape&         theS,
           if (!IsLinear(anAC))
           {
             if (!theIsTriangulationUsed)
-              // not linear and triangulation usage disabled
+
               return 0;
 
             break;
@@ -169,15 +132,14 @@ static int PointsForOBB(const TopoDS_Shape&         theS,
       }
 
       if (!anExpE.More())
-        // skip planar face with linear edges as its vertices have already been added
+
         continue;
     }
 
-    // Use triangulation of the face
     const occ::handle<Poly_Triangulation>& aTrng = BRep_Tool::Triangulation(aF, aLoc);
     if (aTrng.IsNull())
     {
-      // no triangulation on the face
+
       return 0;
     }
 
@@ -201,8 +163,6 @@ static int PointsForOBB(const TopoDS_Shape&         theS,
     }
   }
 
-  // Consider edges without faces
-
   for (anExpE.Init(theS, TopAbs_EDGE, TopAbs_FACE); anExpE.More(); anExpE.Next())
   {
     const TopoDS_Edge& anE = TopoDS::Edge(anExpE.Current());
@@ -211,13 +171,13 @@ static int PointsForOBB(const TopoDS_Shape&         theS,
       const BRepAdaptor_Curve anAC(anE);
       if (IsLinear(anAC))
       {
-        // skip linear edge as its vertices have already been added
+
         continue;
       }
     }
 
     if (!theIsTriangulationUsed)
-      // not linear and triangulation usage disabled
+
       return 0;
 
     const occ::handle<Poly_Polygon3D>& aPolygon = BRep_Tool::Polygon3D(anE, aLoc);
@@ -246,11 +206,6 @@ static int PointsForOBB(const TopoDS_Shape&         theS,
   return aRetVal;
 }
 
-//=======================================================================
-// Function : IsWCS
-// purpose : Returns 0 if the theDir does not match any axis of WCS.
-//            Otherwise, returns the index of correspond axis.
-//=======================================================================
 static int IsWCS(const gp_Dir& theDir)
 {
   constexpr double aToler = Precision::Angular() * Precision::Angular();
@@ -260,23 +215,17 @@ static int IsWCS(const gp_Dir& theDir)
   const double aVx = aY * aY + aZ * aZ, aVy = aX * aX + aZ * aZ, aVz = aX * aX + aY * aY;
 
   if (aVz < aToler)
-    return 3; // Z-axis
+    return 3;
 
   if (aVy < aToler)
-    return 2; // Y-axis
+    return 2;
 
   if (aVx < aToler)
-    return 1; // X-axis
+    return 1;
 
   return 0;
 }
 
-//=======================================================================
-// Function : CheckPoints
-// purpose : Collects points for DiTO algorithm for OBB construction on
-//            linear/planar shapes and shapes having triangulation
-//            (http://www.idt.mdh.se/~tla/publ/FastOBBs.pdf).
-//=======================================================================
 static bool CheckPoints(const TopoDS_Shape& theS,
                         const bool          theIsTriangulationUsed,
                         const bool          theIsOptimal,
@@ -302,7 +251,7 @@ static bool CheckPoints(const TopoDS_Shape& theS,
 
   if (!theOBB.IsVoid())
   {
-    // All points of old OBB have zero-tolerance
+
     theOBB.GetVertex(&anArrPnts(aNbPnts));
   }
 
@@ -311,10 +260,6 @@ static bool CheckPoints(const TopoDS_Shape& theS,
   return (!theOBB.IsVoid());
 }
 
-//=======================================================================
-// Function : ComputeProperties
-// purpose : Computes properties of theS.
-//=======================================================================
 static void ComputeProperties(const TopoDS_Shape& theS, GProp_GProps& theGCommon)
 {
   TopExp_Explorer anExp;
@@ -346,21 +291,16 @@ static void ComputeProperties(const TopoDS_Shape& theS, GProp_GProps& theGCommon
   }
 }
 
-//=======================================================================
-// Function : ComputePCA
-// purpose : Creates OBB with axes of inertia.
-//=======================================================================
 static void ComputePCA(const TopoDS_Shape& theS,
                        Bnd_OBB&            theOBB,
                        const bool          theIsTriangulationUsed,
                        const bool          theIsOptimal,
                        const bool          theIsShapeToleranceUsed)
 {
-  // Compute the transformation matrix to obtain more tight bounding box
+
   GProp_GProps aGCommon;
   ComputeProperties(theS, aGCommon);
 
-  // Transform the shape to the local coordinate system
   gp_Trsf aTrsf;
 
   const int anIdx1 = IsWCS(aGCommon.PrincipalProperties().FirstAxisOfInertia());
@@ -368,7 +308,7 @@ static void ComputePCA(const TopoDS_Shape& theS,
 
   if ((anIdx1 == 0) || (anIdx2 == 0))
   {
-    // Coordinate system in which the shape will have the optimal bounding box
+
     gp_Ax3 aLocCoordSys(aGCommon.CentreOfMass(),
                         aGCommon.PrincipalProperties().ThirdAxisOfInertia(),
                         aGCommon.PrincipalProperties().FirstAxisOfInertia());
@@ -378,7 +318,6 @@ static void ComputePCA(const TopoDS_Shape& theS,
   const TopoDS_Shape aST =
     (aTrsf.Form() == gp_Identity) ? theS : theS.Moved(TopLoc_Location(aTrsf));
 
-  // Initial axis-aligned BndBox
   Bnd_Box aShapeBox;
   if (theIsOptimal)
   {
@@ -400,22 +339,17 @@ static void ComputePCA(const TopoDS_Shape& theS,
   gp_XYZ aYDir(0, 1, 0);
   gp_XYZ aZDir(0, 0, 1);
 
-  // Compute the center of the box
   gp_XYZ aCenter = (aPMin.XYZ() + aPMax.XYZ()) / 2.;
 
-  // Compute the half diagonal size of the box.
-  // It takes into account the gap.
   gp_XYZ anOBBHSize = (aPMax.XYZ() - aPMin.XYZ()) / 2.;
 
-  // Apply transformation if necessary
   if (aTrsf.Form() != gp_Identity)
   {
     aTrsf.Invert();
     aTrsf.Transforms(aCenter);
 
-    // Make transformation
     const double* aMat = &aTrsf.HVectorialPart().Value(1, 1);
-    // Compute axes directions of the box
+
     aXDir = gp_XYZ(aMat[0], aMat[3], aMat[6]);
     aYDir = gp_XYZ(aMat[1], aMat[4], aMat[7]);
     aZDir = gp_XYZ(aMat[2], aMat[5], aMat[8]);
@@ -423,9 +357,7 @@ static void ComputePCA(const TopoDS_Shape& theS,
 
   if (theOBB.IsVoid())
   {
-    // Create the OBB box
 
-    // Set parameters to the OBB
     theOBB.SetCenter(aCenter);
 
     theOBB.SetXComponent(aXDir, anOBBHSize.X());
@@ -435,7 +367,6 @@ static void ComputePCA(const TopoDS_Shape& theS,
   }
   else
   {
-    // Recreate the OBB box
 
     NCollection_Array1<gp_Pnt> aListOfPnts(0, 15);
     theOBB.GetVertex(&aListOfPnts(0));
@@ -459,8 +390,6 @@ static void ComputePCA(const TopoDS_Shape& theS,
     theOBB.ReBuild(aListOfPnts);
   }
 }
-
-//=================================================================================================
 
 void BRepBndLib::AddOBB(const TopoDS_Shape& theS,
                         Bnd_OBB&            theOBB,

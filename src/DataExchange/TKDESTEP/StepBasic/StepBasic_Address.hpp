@@ -11,7 +11,6 @@ class StepBasic_Address : public Standard_Transient
 {
 
 public:
-  //! Returns a Address
   Standard_EXPORT StepBasic_Address();
 
   Standard_EXPORT void Init(const bool                                   hasAinternalLocation,

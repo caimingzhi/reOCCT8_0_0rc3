@@ -5,12 +5,8 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaCurveSectionGeometricRelationship, Standard_Transient)
 
-//=================================================================================================
-
 StepFEA_FeaCurveSectionGeometricRelationship::StepFEA_FeaCurveSectionGeometricRelationship() =
   default;
-
-//=================================================================================================
 
 void StepFEA_FeaCurveSectionGeometricRelationship::Init(
   const occ::handle<StepElement_CurveElementSectionDefinition>&    aSectionRef,
@@ -22,15 +18,11 @@ void StepFEA_FeaCurveSectionGeometricRelationship::Init(
   theItem = aItem;
 }
 
-//=================================================================================================
-
 occ::handle<StepElement_CurveElementSectionDefinition>
   StepFEA_FeaCurveSectionGeometricRelationship::SectionRef() const
 {
   return theSectionRef;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaCurveSectionGeometricRelationship::SetSectionRef(
   const occ::handle<StepElement_CurveElementSectionDefinition>& aSectionRef)
@@ -38,15 +30,11 @@ void StepFEA_FeaCurveSectionGeometricRelationship::SetSectionRef(
   theSectionRef = aSectionRef;
 }
 
-//=================================================================================================
-
 occ::handle<StepElement_AnalysisItemWithinRepresentation>
   StepFEA_FeaCurveSectionGeometricRelationship::Item() const
 {
   return theItem;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaCurveSectionGeometricRelationship::SetItem(
   const occ::handle<StepElement_AnalysisItemWithinRepresentation>& aItem)

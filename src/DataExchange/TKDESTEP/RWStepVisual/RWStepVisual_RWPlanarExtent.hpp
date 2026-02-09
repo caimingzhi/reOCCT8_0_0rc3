@@ -10,7 +10,6 @@ class Interface_Check;
 class StepVisual_PlanarExtent;
 class StepData_StepWriter;
 
-//! Read & Write Module for PlanarExtent
 class RWStepVisual_RWPlanarExtent
 {
 public:

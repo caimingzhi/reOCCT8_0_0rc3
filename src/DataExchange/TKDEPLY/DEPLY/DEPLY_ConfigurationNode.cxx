@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DEPLY_ConfigurationNode.hpp>
 
@@ -29,13 +18,9 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 DEPLY_ConfigurationNode::DEPLY_ConfigurationNode()
 
   = default;
-
-//=================================================================================================
 
 DEPLY_ConfigurationNode::DEPLY_ConfigurationNode(
   const occ::handle<DEPLY_ConfigurationNode>& theNode)
@@ -43,8 +28,6 @@ DEPLY_ConfigurationNode::DEPLY_ConfigurationNode(
 {
   InternalParameters = theNode->InternalParameters;
 }
-
-//=================================================================================================
 
 bool DEPLY_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& theResource)
 {
@@ -79,8 +62,6 @@ bool DEPLY_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& t
     theResource->StringVal("write.author", InternalParameters.WriteAuthor, aScope);
   return true;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString DEPLY_ConfigurationNode::Save() const
 {
@@ -166,49 +147,35 @@ TCollection_AsciiString DEPLY_ConfigurationNode::Save() const
   return aResult;
 }
 
-//=================================================================================================
-
 occ::handle<DE_ConfigurationNode> DEPLY_ConfigurationNode::Copy() const
 {
   return new DEPLY_ConfigurationNode(*this);
 }
-
-//=================================================================================================
 
 occ::handle<DE_Provider> DEPLY_ConfigurationNode::BuildProvider()
 {
   return new DEPLY_Provider(this);
 }
 
-//=================================================================================================
-
 bool DEPLY_ConfigurationNode::IsImportSupported() const
 {
   return false;
 }
-
-//=================================================================================================
 
 bool DEPLY_ConfigurationNode::IsExportSupported() const
 {
   return true;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DEPLY_ConfigurationNode::GetFormat() const
 {
   return TCollection_AsciiString("PLY");
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DEPLY_ConfigurationNode::GetVendor() const
 {
   return TCollection_AsciiString("OCC");
 }
-
-//=================================================================================================
 
 NCollection_List<TCollection_AsciiString> DEPLY_ConfigurationNode::GetExtensions() const
 {
@@ -216,8 +183,6 @@ NCollection_List<TCollection_AsciiString> DEPLY_ConfigurationNode::GetExtensions
   anExt.Append("ply");
   return anExt;
 }
-
-//=================================================================================================
 
 bool DEPLY_ConfigurationNode::CheckContent(const occ::handle<NCollection_Buffer>& theBuffer) const
 {

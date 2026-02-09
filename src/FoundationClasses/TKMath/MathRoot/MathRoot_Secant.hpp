@@ -11,22 +11,6 @@ namespace MathRoot
 {
   using namespace MathUtils;
 
-  //! Secant method for root finding.
-  //! Does not require derivative, uses finite difference approximation.
-  //! Converges superlinearly (order ~1.618, the golden ratio).
-  //!
-  //! Algorithm:
-  //! 1. Start with two initial points x0, x1
-  //! 2. Approximate derivative: f'(x) ~ (f(x1) - f(x0)) / (x1 - x0)
-  //! 3. Newton-like update: x2 = x1 - f(x1) * (x1 - x0) / (f(x1) - f(x0))
-  //! 4. Repeat with x0 = x1, x1 = x2
-  //!
-  //! @tparam Function type with Value(double theX, double& theF) method
-  //! @param theFunc function object providing only value
-  //! @param theX0 first initial point
-  //! @param theX1 second initial point (different from theX0)
-  //! @param theConfig solver configuration
-  //! @return result containing root location and convergence status
   template <typename Function>
   MathUtils::ScalarResult Secant(Function&                theFunc,
                                  double                   theX0,
@@ -40,7 +24,6 @@ namespace MathRoot
     double aF0 = 0.0;
     double aF1 = 0.0;
 
-    // Evaluate at initial points
     if (!theFunc.Value(aX0, aF0))
     {
       aResult.Status = MathUtils::Status::NumericalError;
@@ -56,7 +39,6 @@ namespace MathRoot
     {
       aResult.NbIterations = anIter + 1;
 
-      // Check convergence
       if (MathUtils::IsFConverged(aF1, theConfig.FTolerance))
       {
         aResult.Status = MathUtils::Status::OK;
@@ -65,7 +47,6 @@ namespace MathRoot
         return aResult;
       }
 
-      // Secant step
       const double aDenom = aF1 - aF0;
       if (MathUtils::IsZero(aDenom))
       {
@@ -77,7 +58,6 @@ namespace MathRoot
 
       const double aXNew = aX1 - aF1 * (aX1 - aX0) / aDenom;
 
-      // Check X convergence
       if (MathUtils::IsXConverged(aX1, aXNew, theConfig.XTolerance))
       {
         double aFNew = 0.0;
@@ -88,7 +68,6 @@ namespace MathRoot
         return aResult;
       }
 
-      // Update for next iteration
       aX0 = aX1;
       aF0 = aF1;
       aX1 = aXNew;
@@ -107,20 +86,12 @@ namespace MathRoot
     return aResult;
   }
 
-  //! Secant method with automatic initial points.
-  //! Creates second point by small perturbation of the initial guess.
-  //!
-  //! @tparam Function type with Value(double theX, double& theF) method
-  //! @param theFunc function object providing only value
-  //! @param theX0 initial guess
-  //! @param theConfig solver configuration
-  //! @return result containing root location and convergence status
   template <typename Function>
   MathUtils::ScalarResult SecantAuto(Function&                theFunc,
                                      double                   theX0,
                                      const MathUtils::Config& theConfig = MathUtils::Config())
   {
-    // Create second point by small perturbation
+
     const double aDelta = (std::abs(theX0) > 1.0) ? 0.01 * theX0 : 0.01;
     return Secant(theFunc, theX0, theX0 + aDelta, theConfig);
   }

@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_CubicBezierTessellatedEdge;
 
-//! Read & Write tool for CubicBezierTessellatedEdge
 class RWStepVisual_RWCubicBezierTessellatedEdge
 {
 

@@ -5,7 +5,6 @@
 
 #include <StepRepr_DerivedShapeAspect.hpp>
 
-//! Added for Dimensional Tolerances
 class StepRepr_Apex : public StepRepr_DerivedShapeAspect
 {
 

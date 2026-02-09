@@ -7,7 +7,6 @@
 #include <TopoDS_Shape.hpp>
 #include <NCollection_List.hpp>
 
-//! represent shape + a list of shape
 class TopOpeBRepBuild_ShapeListOfShape
 {
 public:

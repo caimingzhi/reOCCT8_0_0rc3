@@ -5,8 +5,6 @@
 #include <TopoDS.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//=================================================================================================
-
 BRepLib_MakeVertex::BRepLib_MakeVertex(const gp_Pnt& P)
 {
   BRep_Builder B;
@@ -14,14 +12,10 @@ BRepLib_MakeVertex::BRepLib_MakeVertex(const gp_Pnt& P)
   Done();
 }
 
-//=================================================================================================
-
 const TopoDS_Vertex& BRepLib_MakeVertex::Vertex()
 {
   return TopoDS::Vertex(Shape());
 }
-
-//=================================================================================================
 
 BRepLib_MakeVertex::operator TopoDS_Vertex()
 {

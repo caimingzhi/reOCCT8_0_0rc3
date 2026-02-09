@@ -11,7 +11,6 @@ class StepVisual_PlanarBox : public StepVisual_PlanarExtent
 {
 
 public:
-  //! Returns a PlanarBox
   Standard_EXPORT StepVisual_PlanarBox();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

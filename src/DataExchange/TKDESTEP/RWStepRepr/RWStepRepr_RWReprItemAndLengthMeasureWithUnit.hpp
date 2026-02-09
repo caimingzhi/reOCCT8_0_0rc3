@@ -10,7 +10,6 @@ class Interface_Check;
 class StepRepr_ReprItemAndLengthMeasureWithUnit;
 class StepData_StepWriter;
 
-//! Read & Write Module for ReprItemAndLengthMeasureWithUni
 class RWStepRepr_RWReprItemAndLengthMeasureWithUnit
 {
 public:

@@ -2,9 +2,6 @@
 
 #include <Standard_IStream.hpp>
 
-/**
- * Structure passed to the methods dealing with input stream.
- */
 struct VrmlData_InBuffer
 {
   Standard_IStream& Input;

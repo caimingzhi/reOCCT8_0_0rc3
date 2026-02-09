@@ -8,7 +8,6 @@
 #include <Standard_Boolean.hpp>
 #include <Standard_Real.hpp>
 
-//! if Cutting is necessary in [a,b], we cut at (a+b) / 2.
 class AdvApprox_DichoCutting : public AdvApprox_Cutting
 {
 public:

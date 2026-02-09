@@ -13,8 +13,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDefs_AttributeDef, IGESData_IGESEntity)
 
-//  For each Attribute Value, according to Attribute Type :
-// 0 -> Void, 1 -> Integer, 2 -> Real, 3 -> String, 4 -> Entity   6 -> Logical
 IGESDefs_AttributeDef::IGESDefs_AttributeDef() = default;
 
 void IGESDefs_AttributeDef::Init(
@@ -39,7 +37,6 @@ void IGESDefs_AttributeDef::Init(
   if (FormNumber() == 2)
     if (attrValuePointers->Lower() != 1 || attrValuePointers->Length() != nb)
       throw Standard_DimensionMismatch("IGESDefs_AttributeDef : Init");
-  // Form 1 : attrValues defined  Form = 2 : attrValuePointers defined
 
   theName               = aName;
   theListType           = aListType;

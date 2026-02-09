@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -31,22 +20,15 @@ void RWStepAP214_RWAppliedDocumentReference::ReadStep(
   occ::handle<Interface_Check>&                          ach,
   const occ::handle<StepAP214_AppliedDocumentReference>& ent) const
 {
-  // --- Number of Parameter Control ---
 
   if (!data->CheckNbParams(num, 3, ach, "applied_document_reference"))
     return;
 
-  // --- inherited field : assigned_document
-
   occ::handle<StepBasic_Document> adoc;
   data->ReadEntity(num, 1, "assigned_document", ach, STANDARD_TYPE(StepBasic_Document), adoc);
 
-  // --- inherited field : source ---
-
   occ::handle<TCollection_HAsciiString> asource;
   data->ReadString(num, 2, "source", ach, asource);
-
-  // --- own field : items ---
 
   occ::handle<NCollection_HArray1<StepAP214_DocumentReferenceItem>> aItems;
   StepAP214_DocumentReferenceItem                                   anItem;
@@ -63,8 +45,6 @@ void RWStepAP214_RWAppliedDocumentReference::ReadStep(
     }
   }
 
-  //--- Initialisation of the read entity ---
-
   ent->Init(adoc, asource, aItems);
 }
 
@@ -73,15 +53,9 @@ void RWStepAP214_RWAppliedDocumentReference::WriteStep(
   const occ::handle<StepAP214_AppliedDocumentReference>& ent) const
 {
 
-  // --- inherited field : assigned_document ---
-
   SW.Send(ent->AssignedDocument());
 
-  // --- inherited field : source ---
-
   SW.Send(ent->Source());
-
-  // --- own field : items ---
 
   SW.OpenSub();
   for (int i3 = 1; i3 <= ent->NbItems(); i3++)

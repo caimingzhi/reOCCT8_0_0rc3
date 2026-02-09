@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Standard_NoSuchObject.hpp>
@@ -17,7 +6,7 @@
 #include <Transfer_SimpleBinderOfTransient.hpp>
 #include <Transfer_TransferIterator.hpp>
 
-static occ::handle<Standard_Transient> nultrans; // for const&(Null) return
+static occ::handle<Standard_Transient> nultrans;
 
 Transfer_TransferIterator::Transfer_TransferIterator()
 {
@@ -65,9 +54,9 @@ void Transfer_TransferIterator::SelectResult(const occ::handle<Standard_Type>& a
     else if (atr->IsMultiple())
       matchtype = false;
     else if (casetype == 0)
-      matchtype = (atype == btype); // Type fixe
+      matchtype = (atype == btype);
     else
-      matchtype = (btype->SubType(atype)); // Dynamique
+      matchtype = (btype->SubType(atype));
     if (matchtype != keep)
     {
       theselect->SetValue(i, 0);
@@ -100,8 +89,6 @@ void Transfer_TransferIterator::SelectItem(const int num, const bool keep)
   else
     theselect->SetValue(num, 0);
 }
-
-//  ....                Iteration-Interrogations                ....
 
 int Transfer_TransferIterator::Number() const
 {
@@ -150,8 +137,6 @@ const occ::handle<Transfer_Binder>& Transfer_TransferIterator::Value() const
   return theitems->Value(thecurr);
 }
 
-//  ....                Access to Current Binder Data                ....
-
 bool Transfer_TransferIterator::HasResult() const
 {
   occ::handle<Transfer_Binder> atr = Value();
@@ -172,7 +157,7 @@ occ::handle<Standard_Type> Transfer_TransferIterator::ResultType() const
   occ::handle<Transfer_Binder> atr = Value();
   if (!atr->IsMultiple())
     btype = atr->ResultType();
-  //  Binder's ResultType takes into account the Dynamic Type for Handles
+
   return btype;
 }
 

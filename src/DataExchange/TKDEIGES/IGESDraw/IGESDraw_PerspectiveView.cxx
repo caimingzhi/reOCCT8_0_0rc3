@@ -12,8 +12,6 @@ IMPLEMENT_STANDARD_RTTIEXT(IGESDraw_PerspectiveView, IGESData_ViewKindEntity)
 
 IGESDraw_PerspectiveView::IGESDraw_PerspectiveView() = default;
 
-// This class inherits from IGESData_ViewKindEntity
-
 void IGESDraw_PerspectiveView::Init(const int     aViewNumber,
                                     const double  aScaleFactor,
                                     const gp_XYZ& aViewNormalVector,

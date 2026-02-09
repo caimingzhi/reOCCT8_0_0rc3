@@ -39,8 +39,6 @@ static void ParabolaTolerance(const occ::handle<Geom_Curve>&,
                               double&,
                               double&);
 
-//=================================================================================================
-
 bool IntTools_Tools::HasInternalEdge(const TopoDS_Wire& aW)
 {
   bool bFlag = true;
@@ -57,8 +55,6 @@ bool IntTools_Tools::HasInternalEdge(const TopoDS_Wire& aW)
   }
   return !bFlag;
 }
-
-//=================================================================================================
 
 bool IntTools_Tools::IsClosed(const occ::handle<Geom_Curve>& aC3D)
 {
@@ -78,15 +74,12 @@ bool IntTools_Tools::IsClosed(const occ::handle<Geom_Curve>& aC3D)
   aC3D->D0(aF, aP1);
   aC3D->D0(aL, aP2);
 
-  //
   aPC   = Precision::Confusion();
   aPC   = aPC * aPC;
   aDist = aP1.SquareDistance(aP2);
   bRet  = aDist < aPC;
   return bRet;
 }
-
-//=================================================================================================
 
 void IntTools_Tools::RejectLines(const NCollection_Sequence<IntTools_Curve>& aSIn,
                                  NCollection_Sequence<IntTools_Curve>&       aSOut)
@@ -104,7 +97,7 @@ void IntTools_Tools::RejectLines(const NCollection_Sequence<IntTools_Curve>& aSI
   {
     const IntTools_Curve& IC = aSIn(i);
     aC3D                     = IC.Curve();
-    //
+
     occ::handle<Geom_TrimmedCurve> aGTC = occ::down_cast<Geom_TrimmedCurve>(aC3D);
 
     if (!aGTC.IsNull())
@@ -113,7 +106,7 @@ void IntTools_Tools::RejectLines(const NCollection_Sequence<IntTools_Curve>& aSI
       IntTools_Curve* pIC = (IntTools_Curve*)&IC;
       pIC->SetCurve(aC3D);
     }
-    //
+
     occ::handle<Geom_Line> aGLine = occ::down_cast<Geom_Line>(aC3D);
 
     if (aGLine.IsNull())
@@ -125,7 +118,7 @@ void IntTools_Tools::RejectLines(const NCollection_Sequence<IntTools_Curve>& aSI
       }
       return;
     }
-    //
+
     gp_Lin aLin = aGLine->Lin();
     aD2         = aLin.Direction();
     if (i == 1)
@@ -144,8 +137,6 @@ void IntTools_Tools::RejectLines(const NCollection_Sequence<IntTools_Curve>& aSI
   }
 }
 
-//=================================================================================================
-
 bool IntTools_Tools::IsDirsCoinside(const gp_Dir& D1, const gp_Dir& D2)
 {
   bool   bFlag;
@@ -157,13 +148,11 @@ bool IntTools_Tools::IsDirsCoinside(const gp_Dir& D1, const gp_Dir& D2)
   return bFlag;
 }
 
-//=================================================================================================
-
 bool IntTools_Tools::IsDirsCoinside(const gp_Dir& D1, const gp_Dir& D2, const double dLim)
 {
   bool   bFlag;
   double d;
-  //
+
   gp_Pnt P1(D1.X(), D1.Y(), D1.Z());
   gp_Pnt P2(D2.X(), D2.Y(), D2.Z());
   d     = P1.Distance(P2);
@@ -171,14 +160,12 @@ bool IntTools_Tools::IsDirsCoinside(const gp_Dir& D1, const gp_Dir& D2, const do
   return bFlag;
 }
 
-//=================================================================================================
-
 int IntTools_Tools::SplitCurve(const IntTools_Curve& IC, NCollection_Sequence<IntTools_Curve>& aCvs)
 {
   const occ::handle<Geom_Curve>& aC3D = IC.Curve();
   if (aC3D.IsNull())
     return 0;
-  //
+
   const occ::handle<Geom2d_Curve>& aC2D1 = IC.FirstCurve2d();
   const occ::handle<Geom2d_Curve>& aC2D2 = IC.SecondCurve2d();
   bool                             bIsClosed;
@@ -191,7 +178,6 @@ int IntTools_Tools::SplitCurve(const IntTools_Curve& IC, NCollection_Sequence<In
 
   double aF, aL, aMid;
 
-  //
   aF   = aC3D->FirstParameter();
   aL   = aC3D->LastParameter();
   aMid = 0.5 * (aF + aL);
@@ -199,17 +185,16 @@ int IntTools_Tools::SplitCurve(const IntTools_Curve& IC, NCollection_Sequence<In
   GeomAbs_CurveType aCT = aGAC.GetType();
   if (aCT == GeomAbs_BSplineCurve || aCT == GeomAbs_BezierCurve)
   {
-    // aMid=0.5*aMid;
+
     aMid = IntTools_Tools::IntermediatePoint(aF, aL);
   }
-  //
+
   occ::handle<Geom_Curve> aC3DNewF, aC3DNewL;
   aC3DNewF = new Geom_TrimmedCurve(aC3D, aF, aMid);
   aC3DNewL = new Geom_TrimmedCurve(aC3D, aMid, aL);
 
-  //
   occ::handle<Geom2d_Curve> aC2D1F, aC2D1L, aC2D2F, aC2D2L;
-  //
+
   if (!aC2D1.IsNull())
   {
     aC2D1F = new Geom2d_TrimmedCurve(aC2D1, aF, aMid);
@@ -221,29 +206,25 @@ int IntTools_Tools::SplitCurve(const IntTools_Curve& IC, NCollection_Sequence<In
     aC2D2F = new Geom2d_TrimmedCurve(aC2D2, aF, aMid);
     aC2D2L = new Geom2d_TrimmedCurve(aC2D2, aMid, aL);
   }
-  //
+
   IntTools_Curve aIC1(aC3DNewF, aC2D1F, aC2D2F, IC.Tolerance(), IC.TangentialTolerance());
   IntTools_Curve aIC2(aC3DNewL, aC2D1L, aC2D2L, IC.Tolerance(), IC.TangentialTolerance());
-  //
+
   aCvs.Append(aIC1);
-  //
+
   aCvs.Append(aIC2);
-  //
+
   return 2;
 }
 
-//=================================================================================================
-
 double IntTools_Tools::IntermediatePoint(const double aFirst, const double aLast)
 {
-  // define parameter division number as 10*e^(-M_PI) = 0.43213918
+
   const double PAR_T = 0.43213918;
   double       aParm;
   aParm = (1. - PAR_T) * aFirst + PAR_T * aLast;
   return aParm;
 }
-
-//=================================================================================================
 
 bool IntTools_Tools::IsVertex(const gp_Pnt& aP, const double aTolPV, const TopoDS_Vertex& aV)
 {
@@ -252,19 +233,17 @@ bool IntTools_Tools::IsVertex(const gp_Pnt& aP, const double aTolPV, const TopoD
   gp_Pnt aPv;
 
   aTolV = BRep_Tool::Tolerance(aV);
-  //
+
   dTol  = Precision::Confusion();
   aTolV = aTolV + aTolPV + dTol;
-  //
+
   aPv = BRep_Tool::Pnt(aV);
-  //
+
   aD    = aPv.SquareDistance(aP);
   aTolV = aTolV * aTolV;
   bRet  = (aD <= aTolV);
   return bRet;
 }
-
-//=================================================================================================
 
 bool IntTools_Tools::IsVertex(const IntTools_CommonPrt& aCmnPrt)
 {
@@ -289,8 +268,6 @@ bool IntTools_Tools::IsVertex(const IntTools_CommonPrt& aCmnPrt)
   return anIsVertex;
 }
 
-//=================================================================================================
-
 bool IntTools_Tools::IsVertex(const TopoDS_Edge& aE, const TopoDS_Vertex& aV, const double t)
 {
   double aTolV, aTolV2, d2;
@@ -305,8 +282,6 @@ bool IntTools_Tools::IsVertex(const TopoDS_Edge& aE, const TopoDS_Vertex& aV, co
   d2     = aPv.SquareDistance(aPt);
   return d2 < aTolV2;
 }
-
-//=================================================================================================
 
 bool IntTools_Tools::IsVertex(const TopoDS_Edge& aE, const double t)
 {
@@ -334,8 +309,6 @@ bool IntTools_Tools::IsVertex(const TopoDS_Edge& aE, const double t)
   return false;
 }
 
-//=================================================================================================
-
 int IntTools_Tools::ComputeVV(const TopoDS_Vertex& aV1, const TopoDS_Vertex& aV2)
 {
   double aTolV1, aTolV2, aTolSum, d;
@@ -356,8 +329,6 @@ int IntTools_Tools::ComputeVV(const TopoDS_Vertex& aV1, const TopoDS_Vertex& aV2
   return -1;
 }
 
-//=================================================================================================
-
 void IntTools_Tools::MakeFaceFromWireAndFace(const TopoDS_Wire& aW,
                                              const TopoDS_Face& aF,
                                              TopoDS_Face&       aFNew)
@@ -370,8 +341,6 @@ void IntTools_Tools::MakeFaceFromWireAndFace(const TopoDS_Wire& aW,
   BB.Add(aFNew, aW);
 }
 
-//=================================================================================================
-
 TopAbs_State IntTools_Tools::ClassifyPointByFace(const TopoDS_Face& aF, const gp_Pnt2d& aP2d)
 {
   double       aFaceTolerance;
@@ -383,8 +352,6 @@ TopAbs_State IntTools_Tools::ClassifyPointByFace(const TopoDS_Face& aF, const gp
 
   return aState;
 }
-
-//=================================================================================================
 
 bool IntTools_Tools::IsMiddlePointsEqual(const TopoDS_Edge& aE1, const TopoDS_Edge& aE2)
 
@@ -410,41 +377,39 @@ bool IntTools_Tools::IsMiddlePointsEqual(const TopoDS_Edge& aE1, const TopoDS_Ed
   return bRet;
 }
 
-//=================================================================================================
-
 double IntTools_Tools::CurveTolerance(const occ::handle<Geom_Curve>& aC3D, const double aTolBase)
 {
   double aTolReached, aTf, aTl, aTolMin, aTolMax;
 
   aTolReached = aTolBase;
-  //
+
   if (aC3D.IsNull())
   {
     return aTolReached;
   }
-  //
+
   occ::handle<Geom_TrimmedCurve> aCT3D = occ::down_cast<Geom_TrimmedCurve>(aC3D);
   if (aCT3D.IsNull())
   {
     return aTolReached;
   }
-  //
+
   aTolMin = aTolBase;
   aTolMax = aTolBase;
-  //
+
   aTf = aCT3D->FirstParameter();
   aTl = aCT3D->LastParameter();
-  //
+
   GeomAdaptor_Curve aGAC(aCT3D);
   GeomAbs_CurveType aCType = aGAC.GetType();
-  //
+
   if (aCType == GeomAbs_Parabola)
   {
     occ::handle<Geom_Curve> aC3DBase = aCT3D->BasisCurve();
     ParabolaTolerance(aC3DBase, aTf, aTl, aTolBase, aTolMin, aTolMax);
     aTolReached = aTolMax;
   }
-  //
+
   return aTolReached;
 }
 
@@ -452,8 +417,6 @@ double IntTools_Tools::CurveTolerance(const occ::handle<Geom_Curve>& aC3D, const
 #include <gp_Parab.hpp>
 #include <BndLib_Add3dCurve.hpp>
 #include <BRepLib_CheckCurveOnSurface.hpp>
-
-//=================================================================================================
 
 void ParabolaTolerance(const occ::handle<Geom_Curve>& aC3D,
                        const double                   aTf,
@@ -484,8 +447,7 @@ void ParabolaTolerance(const occ::handle<Geom_Curve>& aC3D,
   {
     return;
   }
-  //
-  // aTol1
+
   aTol1 = aTol;
   aX1   = 0.;
   aGP->D0(aTf, aPf);
@@ -503,8 +465,7 @@ void ParabolaTolerance(const occ::handle<Geom_Curve>& aC3D,
   {
     aTol1 = aTol;
   }
-  //
-  // aTol2
+
   aTol2 = aTol;
   aX2   = 0.;
   aGP->D0(aTl, aPl);
@@ -523,13 +484,10 @@ void ParabolaTolerance(const occ::handle<Geom_Curve>& aC3D,
   {
     aTol2 = aTol;
   }
-  //
+
   aTolMax = (aTol1 > aTol2) ? aTol1 : aTol2;
   aTolMin = (aTol1 < aTol2) ? aTol1 : aTol2;
 }
-
-/////////////////////////////////////////////////////////////////////////
-//=================================================================================================
 
 bool IntTools_Tools::CheckCurve(const IntTools_Curve& theCurve, Bnd_Box& theBox)
 {
@@ -539,63 +497,49 @@ bool IntTools_Tools::CheckCurve(const IntTools_Curve& theCurve, Bnd_Box& theBox)
   {
     return bValid;
   }
-  //
-  // Build bounding box for the curve
+
   BndLib_Add3dCurve::Add(GeomAdaptor_Curve(aC3D),
                          std::max(theCurve.Tolerance(), theCurve.TangentialTolerance()),
                          theBox);
-  //
-  // Estimate the bounding box of the curve comparing it with the
-  // minimal length for the curve from which the valid edge can be built -
-  // 3*Precision::Confusion():
-  // - 2 vertices with the Precision::Confusion() tolerance;
-  // - plus Precision::Confusion() as the minimal distance between vertices.
+
   double aTolCmp = 3 * Precision::Confusion();
-  //
-  // Check the size of the box using the Bnd_Box::IsThin() method
-  // which does not use the gap of the box.
+
   bValid = !theBox.IsThin(aTolCmp);
-  //
+
   return bValid;
 }
-
-//=================================================================================================
 
 bool IntTools_Tools::IsOnPave(const double          aT1,
                               const IntTools_Range& aRange,
                               const double          aTolerance)
 {
   bool firstisonpave1, firstisonpave2, bIsOnPave;
-  //
+
   firstisonpave1 = (std::abs(aRange.First() - aT1) < aTolerance);
   firstisonpave2 = (std::abs(aRange.Last() - aT1) < aTolerance);
   bIsOnPave      = (firstisonpave1 || firstisonpave2);
   return bIsOnPave;
 }
 
-//=================================================================================================
-
 void IntTools_Tools::VertexParameters(const IntTools_CommonPrt& aCPart, double& aT1, double& aT2)
 {
   const IntTools_Range& aR1 = aCPart.Range1();
   aT1                       = 0.5 * (aR1.First() + aR1.Last());
-  //
+
   if ((aCPart.VertexParameter1() >= aR1.First()) && (aCPart.VertexParameter1() <= aR1.Last()))
   {
     aT1 = aCPart.VertexParameter1();
   }
-  //
+
   const NCollection_Sequence<IntTools_Range>& aRanges2 = aCPart.Ranges2();
   const IntTools_Range&                       aR2      = aRanges2(1);
   aT2                                                  = 0.5 * (aR2.First() + aR2.Last());
-  //
+
   if ((aCPart.VertexParameter2() >= aR2.First()) && (aCPart.VertexParameter2() <= aR2.Last()))
   {
     aT2 = aCPart.VertexParameter2();
   }
 }
-
-//=================================================================================================
 
 void IntTools_Tools::VertexParameter(const IntTools_CommonPrt& aCPart, double& aT)
 {
@@ -607,15 +551,13 @@ void IntTools_Tools::VertexParameter(const IntTools_CommonPrt& aCPart, double& a
   }
 }
 
-//=================================================================================================
-
 bool IntTools_Tools::IsOnPave1(const double          aTR,
                                const IntTools_Range& aCPRange,
                                const double          aTolerance)
 {
   bool   bIsOnPave;
   double aT1, aT2, dT1, dT2;
-  //
+
   aT1       = aCPRange.First();
   aT2       = aCPRange.Last();
   bIsOnPave = (aTR >= aT1 && aTR <= aT2);
@@ -623,14 +565,12 @@ bool IntTools_Tools::IsOnPave1(const double          aTR,
   {
     return bIsOnPave;
   }
-  //
+
   dT1       = std::abs(aTR - aT1);
   dT2       = std::abs(aTR - aT2);
   bIsOnPave = (dT1 <= aTolerance || dT2 <= aTolerance);
   return bIsOnPave;
 }
-
-//=================================================================================================
 
 bool IntTools_Tools::IsInRange(const IntTools_Range& aRRef,
                                const IntTools_Range& aR,
@@ -638,19 +578,17 @@ bool IntTools_Tools::IsInRange(const IntTools_Range& aRRef,
 {
   bool   bIsIn;
   double aT1, aT2, aTRef1, aTRef2;
-  //
+
   aR.Range(aT1, aT2);
   aRRef.Range(aTRef1, aTRef2);
-  //
+
   aTRef1 -= aTolerance;
   aTRef2 += aTolerance;
-  //
+
   bIsIn = (aT1 >= aTRef1 && aT1 <= aTRef2) || (aT2 >= aTRef1 && aT2 <= aTRef2);
-  //
+
   return bIsIn;
 }
-
-//=================================================================================================
 
 int IntTools_Tools::SegPln(const gp_Lin& theLin,
                            const double  theTLin1,
@@ -667,57 +605,55 @@ int IntTools_Tools::SegPln(const gp_Lin& theLin,
   int    iRet;
   double aTol, aA, aB, aC, aD, aE, aH, aTP, aDist1, aDist2;
   gp_Pnt aP1, aP2;
-  //
+
   iRet = 0;
   aTol = theTolLin + theTolPln;
-  //
+
   const gp_Ax3& aPosPln = thePln.Position();
   const gp_Dir& aDirPln = aPosPln.Direction();
   const gp_Pnt& aLocPln = aPosPln.Location();
-  //
+
   const gp_Dir& aDirLin = theLin.Direction();
   const gp_Pnt& aLocLin = theLin.Location();
-  //
+
   aP1.SetXYZ(aLocLin.XYZ() + theTLin1 * aDirLin.XYZ());
   aDist1 = aDirPln.X() * (aP1.X() - aLocPln.X()) + aDirPln.Y() * (aP1.Y() - aLocPln.Y())
            + aDirPln.Z() * (aP1.Z() - aLocPln.Z());
-  //
+
   aP2.SetXYZ(aLocLin.XYZ() + theTLin2 * aDirLin.XYZ());
   aDist2 = aDirPln.X() * (aP2.X() - aLocPln.X()) + aDirPln.Y() * (aP2.Y() - aLocPln.Y())
            + aDirPln.Z() * (aP2.Z() - aLocPln.Z());
-  //
+
   if (aDist1 < aTol && aDist2 < aTol)
   {
-    iRet = 1; // common block
+    iRet = 1;
     return iRet;
   }
-  //
+
   if (aDist1 * aDist2 > 0.)
   {
-    iRet = 2; // segment lays on one side to the Plane
+    iRet = 2;
     return iRet;
   }
-  //
+
   thePln.Coefficients(aA, aB, aC, aD);
   aE  = aA * aLocLin.X() + aB * aLocLin.Y() + aC * aLocLin.Z() + aD;
   aH  = aA * aDirLin.X() + aB * aDirLin.Y() + aC * aDirLin.Z();
   aTP = -aE / aH;
   if (aTP < theTLin1 - aTol || aTP > theTLin2 + aTol)
   {
-    iRet = 3; // no intersections due to range of the Line
+    iRet = 3;
     return iRet;
   }
-  //
+
   theTP = aTP;
   theP.SetXYZ(aLocLin.XYZ() + aTP * aDirLin.XYZ());
   theTolP  = aTol;
   theTPmin = theTP - theTolPln;
   theTPmax = theTP + theTolPln;
-  iRet     = 0; // intersection point
+  iRet     = 0;
   return iRet;
 }
-
-//=================================================================================================
 
 bool IntTools_Tools::ComputeTolerance(const occ::handle<Geom_Curve>&   theCurve3D,
                                       const occ::handle<Geom2d_Curve>& theCurve2D,
@@ -730,7 +666,7 @@ bool IntTools_Tools::ComputeTolerance(const occ::handle<Geom_Curve>&   theCurve3
                                       const bool                       theToRunParallel)
 {
   GeomLib_CheckCurveOnSurface aCS;
-  //
+
   const occ::handle<Adaptor3d_Curve> aGeomAdaptorCurve =
     new GeomAdaptor_Curve(theCurve3D, theFirst, theLast);
 
@@ -749,28 +685,19 @@ bool IntTools_Tools::ComputeTolerance(const occ::handle<Geom_Curve>&   theCurve3
     return false;
   }
 
-  // Obtaining precise result is impossible if we use
-  // numeric methods for solution. Therefore, we must provide
-  // some margin. Otherwise, in the future
-  //(when geometrical properties of the curve will be changed,
-  // e.g. after trimming) we will be able to come
-  // to the more precise minimum point. As result, this curve with the
-  // tolerance computed earlier will become invalid.
   const double anEps = (1.0 + 1.0e-5);
   theMaxDist         = anEps * aCS.MaxDistance();
   theMaxPar          = aCS.MaxParameter();
-  //
+
   return true;
 }
-
-//=================================================================================================
 
 double IntTools_Tools::ComputeIntRange(const double theTol1,
                                        const double theTol2,
                                        const double theAngle)
 {
   double aDt;
-  //
+
   if (std::abs(M_PI_2 - theAngle) < Precision::Angular())
   {
     aDt = theTol2;
@@ -778,12 +705,12 @@ double IntTools_Tools::ComputeIntRange(const double theTol1,
   else
   {
     double a1, a2, anAngle;
-    //
+
     anAngle = (theAngle > M_PI_2) ? (M_PI - theAngle) : theAngle;
     a1      = theTol1 * tan(M_PI_2 - anAngle);
     a2      = theTol2 / sin(anAngle);
     aDt     = a1 + a2;
   }
-  //
+
   return aDt;
 }

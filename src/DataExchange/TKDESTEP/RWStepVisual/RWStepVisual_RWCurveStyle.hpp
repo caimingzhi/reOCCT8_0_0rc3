@@ -11,7 +11,6 @@ class StepVisual_CurveStyle;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for CurveStyle
 class RWStepVisual_RWCurveStyle
 {
 public:

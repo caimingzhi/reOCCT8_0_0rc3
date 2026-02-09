@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDimTolObjects_DimensionObject.hpp>
 
@@ -19,8 +8,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDimTolObjects_DimensionObject, Standard_Transient)
 
-//=================================================================================================
-
 XCAFDimTolObjects_DimensionObject::XCAFDimTolObjects_DimensionObject()
 {
   myHasPlane       = false;
@@ -28,8 +15,6 @@ XCAFDimTolObjects_DimensionObject::XCAFDimTolObjects_DimensionObject()
   myHasConnection1 = false;
   myHasConnection2 = false;
 }
-
-//=================================================================================================
 
 XCAFDimTolObjects_DimensionObject::XCAFDimTolObjects_DimensionObject(
   const occ::handle<XCAFDimTolObjects_DimensionObject>& theObj)
@@ -71,14 +56,10 @@ XCAFDimTolObjects_DimensionObject::XCAFDimTolObjects_DimensionObject(
   }
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> XCAFDimTolObjects_DimensionObject::GetSemanticName() const
 {
   return mySemanticName;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DimensionObject::SetSemanticName(
   const occ::handle<TCollection_HAsciiString>& theName)
@@ -86,29 +67,21 @@ void XCAFDimTolObjects_DimensionObject::SetSemanticName(
   mySemanticName = theName;
 }
 
-//=================================================================================================
-
 void XCAFDimTolObjects_DimensionObject::SetQualifier(
   const XCAFDimTolObjects_DimensionQualifier theQualifier)
 {
   myQualifier = theQualifier;
 }
 
-//=================================================================================================
-
 XCAFDimTolObjects_DimensionQualifier XCAFDimTolObjects_DimensionObject::GetQualifier() const
 {
   return myQualifier;
 }
 
-//=================================================================================================
-
 bool XCAFDimTolObjects_DimensionObject::HasQualifier() const
 {
   return (myQualifier != XCAFDimTolObjects_DimensionQualifier_None);
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DimensionObject::SetAngularQualifier(
   const XCAFDimTolObjects_AngularQualifier theAngularQualifier)
@@ -116,47 +89,36 @@ void XCAFDimTolObjects_DimensionObject::SetAngularQualifier(
   myAngularQualifier = theAngularQualifier;
 }
 
-//=================================================================================================
-
 XCAFDimTolObjects_AngularQualifier XCAFDimTolObjects_DimensionObject::GetAngularQualifier() const
 {
   return myAngularQualifier;
 }
-
-//=================================================================================================
 
 bool XCAFDimTolObjects_DimensionObject::HasAngularQualifier() const
 {
   return (myAngularQualifier != XCAFDimTolObjects_AngularQualifier_None);
 }
 
-//=================================================================================================
-
 void XCAFDimTolObjects_DimensionObject::SetType(const XCAFDimTolObjects_DimensionType theType)
 {
   myType = theType;
 }
-
-//=================================================================================================
 
 XCAFDimTolObjects_DimensionType XCAFDimTolObjects_DimensionObject::GetType() const
 {
   return myType;
 }
 
-//=================================================================================================
-
 double XCAFDimTolObjects_DimensionObject::GetValue() const
 {
   if (myVal.IsNull())
     return 0;
 
-  // Simple value or value with Plus_Minus_Tolerance
   if (myVal->Length() == 1 || myVal->Length() == 3)
   {
     return myVal->Value(1);
   }
-  // Range
+
   if (myVal->Length() == 2)
   {
     return (myVal->Value(1) + myVal->Value(2)) / 2;
@@ -164,14 +126,10 @@ double XCAFDimTolObjects_DimensionObject::GetValue() const
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<double>> XCAFDimTolObjects_DimensionObject::GetValues() const
 {
   return myVal;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DimensionObject::SetValue(const double theValue)
 {
@@ -179,22 +137,16 @@ void XCAFDimTolObjects_DimensionObject::SetValue(const double theValue)
   myVal->SetValue(1, theValue);
 }
 
-//=================================================================================================
-
 void XCAFDimTolObjects_DimensionObject::SetValues(
   const occ::handle<NCollection_HArray1<double>>& theValue)
 {
   myVal = theValue;
 }
 
-//=================================================================================================
-
 bool XCAFDimTolObjects_DimensionObject::IsDimWithRange() const
 {
   return !myVal.IsNull() && myVal->Length() == 2;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DimensionObject::SetUpperBound(const double theUpperBound)
 {
@@ -208,8 +160,6 @@ void XCAFDimTolObjects_DimensionObject::SetUpperBound(const double theUpperBound
   }
 }
 
-//=================================================================================================
-
 void XCAFDimTolObjects_DimensionObject::SetLowerBound(const double theLowerBound)
 {
   if (!myVal.IsNull() && myVal->Length() > 1)
@@ -222,8 +172,6 @@ void XCAFDimTolObjects_DimensionObject::SetLowerBound(const double theLowerBound
   }
 }
 
-//=================================================================================================
-
 double XCAFDimTolObjects_DimensionObject::GetUpperBound() const
 {
   if (!myVal.IsNull() && myVal->Length() == 2)
@@ -232,8 +180,6 @@ double XCAFDimTolObjects_DimensionObject::GetUpperBound() const
   }
   return 0;
 }
-
-//=================================================================================================
 
 double XCAFDimTolObjects_DimensionObject::GetLowerBound() const
 {
@@ -244,14 +190,10 @@ double XCAFDimTolObjects_DimensionObject::GetLowerBound() const
   return 0;
 }
 
-//=================================================================================================
-
 bool XCAFDimTolObjects_DimensionObject::IsDimWithPlusMinusTolerance() const
 {
   return (!myVal.IsNull() && myVal->Length() == 3);
 }
-
-//=================================================================================================
 
 bool XCAFDimTolObjects_DimensionObject::SetUpperTolValue(const double theUperTolValue)
 {
@@ -272,8 +214,6 @@ bool XCAFDimTolObjects_DimensionObject::SetUpperTolValue(const double theUperTol
   return false;
 }
 
-//=================================================================================================
-
 bool XCAFDimTolObjects_DimensionObject::SetLowerTolValue(const double theLowerTolValue)
 {
   if (!myVal.IsNull() && myVal->Length() == 3)
@@ -293,8 +233,6 @@ bool XCAFDimTolObjects_DimensionObject::SetLowerTolValue(const double theLowerTo
   return false;
 }
 
-//=================================================================================================
-
 double XCAFDimTolObjects_DimensionObject::GetUpperTolValue() const
 {
   if (!myVal.IsNull() && myVal->Length() == 3)
@@ -303,8 +241,6 @@ double XCAFDimTolObjects_DimensionObject::GetUpperTolValue() const
   }
   return 0;
 }
-
-//=================================================================================================
 
 double XCAFDimTolObjects_DimensionObject::GetLowerTolValue() const
 {
@@ -315,14 +251,10 @@ double XCAFDimTolObjects_DimensionObject::GetLowerTolValue() const
   return 0;
 }
 
-//=================================================================================================
-
 bool XCAFDimTolObjects_DimensionObject::IsDimWithClassOfTolerance() const
 {
   return (myFormVariance != XCAFDimTolObjects_DimensionFormVariance_None);
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DimensionObject::SetClassOfTolerance(
   const bool                                    theHole,
@@ -333,8 +265,6 @@ void XCAFDimTolObjects_DimensionObject::SetClassOfTolerance(
   myFormVariance = theFormVariance;
   myGrade        = theGrade;
 }
-
-//=================================================================================================
 
 bool XCAFDimTolObjects_DimensionObject::GetClassOfTolerance(
   bool&                                    theHole,
@@ -351,15 +281,11 @@ bool XCAFDimTolObjects_DimensionObject::GetClassOfTolerance(
   return false;
 }
 
-//=================================================================================================
-
 void XCAFDimTolObjects_DimensionObject::SetNbOfDecimalPlaces(const int theL, const int theR)
 {
   myL = theL;
   myR = theR;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DimensionObject::GetNbOfDecimalPlaces(int& theL, int& theR) const
 {
@@ -367,15 +293,11 @@ void XCAFDimTolObjects_DimensionObject::GetNbOfDecimalPlaces(int& theL, int& the
   theR = myR;
 }
 
-//=================================================================================================
-
 NCollection_Sequence<XCAFDimTolObjects_DimensionModif> XCAFDimTolObjects_DimensionObject::
   GetModifiers() const
 {
   return myModifiers;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DimensionObject::SetModifiers(
   const NCollection_Sequence<XCAFDimTolObjects_DimensionModif>& theModifiers)
@@ -383,22 +305,16 @@ void XCAFDimTolObjects_DimensionObject::SetModifiers(
   myModifiers = theModifiers;
 }
 
-//=================================================================================================
-
 void XCAFDimTolObjects_DimensionObject::AddModifier(
   const XCAFDimTolObjects_DimensionModif theModifier)
 {
   myModifiers.Append(theModifier);
 }
 
-//=================================================================================================
-
 TopoDS_Edge XCAFDimTolObjects_DimensionObject::GetPath() const
 {
   return myPath;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DimensionObject::SetPath(const TopoDS_Edge& thePath)
 {
@@ -408,23 +324,17 @@ void XCAFDimTolObjects_DimensionObject::SetPath(const TopoDS_Edge& thePath)
   }
 }
 
-//=================================================================================================
-
 bool XCAFDimTolObjects_DimensionObject::GetDirection(gp_Dir& theDir) const
 {
   theDir = myDir;
   return true;
 }
 
-//=================================================================================================
-
 bool XCAFDimTolObjects_DimensionObject::SetDirection(const gp_Dir& theDir)
 {
   myDir = theDir;
   return true;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DimensionObject::RemoveDescription(const int theNumber)
 {
@@ -446,8 +356,6 @@ void XCAFDimTolObjects_DimensionObject::RemoveDescription(const int theNumber)
   myDescriptionNames = aDescriptionNames;
 }
 
-//=================================================================================================
-
 bool XCAFDimTolObjects_DimensionObject::IsDimensionalLocation(
   const XCAFDimTolObjects_DimensionType theType)
 {
@@ -464,8 +372,6 @@ bool XCAFDimTolObjects_DimensionObject::IsDimensionalLocation(
          || theType == XCAFDimTolObjects_DimensionType_Location_LinearDistance_FromInnerToInner
          || theType == XCAFDimTolObjects_DimensionType_Location_Oriented;
 }
-
-//=================================================================================================
 
 bool XCAFDimTolObjects_DimensionObject::IsDimensionalSize(
   const XCAFDimTolObjects_DimensionType theType)
@@ -485,8 +391,6 @@ bool XCAFDimTolObjects_DimensionObject::IsDimensionalSize(
          || theType == XCAFDimTolObjects_DimensionType_Size_ToroidalLowMajorRadius
          || theType == XCAFDimTolObjects_DimensionType_Size_Thickness;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DimensionObject::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

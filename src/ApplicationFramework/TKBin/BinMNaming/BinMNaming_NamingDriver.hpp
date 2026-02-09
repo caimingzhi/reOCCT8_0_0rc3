@@ -11,7 +11,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! Naming Attribute Driver.
 class BinMNaming_NamingDriver : public BinMDF_ADriver
 {
 

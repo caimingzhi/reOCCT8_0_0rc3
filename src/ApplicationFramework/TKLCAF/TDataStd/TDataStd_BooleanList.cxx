@@ -10,18 +10,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_BooleanList, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_BooleanList::GetID()
 {
   static Standard_GUID TDataStd_BooleanListID("23A9D60E-A033-44d8-96EE-015587A41BBC");
   return TDataStd_BooleanListID;
 }
 
-//=======================================================================
-// function : SetAttr
-// purpose  : Implements Set functionality
-//=======================================================================
 static occ::handle<TDataStd_BooleanList> SetAttr(const TDF_Label&     label,
                                                  const Standard_GUID& theGuid)
 {
@@ -35,45 +29,31 @@ static occ::handle<TDataStd_BooleanList> SetAttr(const TDF_Label&     label,
   return A;
 }
 
-//=================================================================================================
-
 TDataStd_BooleanList::TDataStd_BooleanList()
     : myID(GetID())
 {
 }
-
-//=================================================================================================
 
 occ::handle<TDataStd_BooleanList> TDataStd_BooleanList::Set(const TDF_Label& label)
 {
   return SetAttr(label, GetID());
 }
 
-//=======================================================================
-// function : Set
-// purpose  : Set user defined attribute with specific ID
-//=======================================================================
 occ::handle<TDataStd_BooleanList> TDataStd_BooleanList::Set(const TDF_Label&     label,
                                                             const Standard_GUID& theGuid)
 {
   return SetAttr(label, theGuid);
 }
 
-//=================================================================================================
-
 bool TDataStd_BooleanList::IsEmpty() const
 {
   return myList.IsEmpty();
 }
 
-//=================================================================================================
-
 int TDataStd_BooleanList::Extent() const
 {
   return myList.Extent();
 }
-
-//=================================================================================================
 
 void TDataStd_BooleanList::Prepend(const bool value)
 {
@@ -81,15 +61,11 @@ void TDataStd_BooleanList::Prepend(const bool value)
   myList.Prepend(value ? 1 : 0);
 }
 
-//=================================================================================================
-
 void TDataStd_BooleanList::Append(const bool value)
 {
   Backup();
   myList.Append(value ? 1 : 0);
 }
-
-//=================================================================================================
 
 void TDataStd_BooleanList::Clear()
 {
@@ -97,31 +73,21 @@ void TDataStd_BooleanList::Clear()
   myList.Clear();
 }
 
-//=================================================================================================
-
 bool TDataStd_BooleanList::First() const
 {
   return myList.First() == 1;
 }
-
-//=================================================================================================
 
 bool TDataStd_BooleanList::Last() const
 {
   return myList.Last() == 1;
 }
 
-//=================================================================================================
-
 const NCollection_List<uint8_t>& TDataStd_BooleanList::List() const
 {
   return myList;
 }
 
-//=======================================================================
-// function : InsertBefore
-// purpose  : Inserts the <value> before the <index> position.
-//=======================================================================
 bool TDataStd_BooleanList::InsertBefore(const int index, const bool before_value)
 {
   int                                 i(1);
@@ -140,10 +106,6 @@ bool TDataStd_BooleanList::InsertBefore(const int index, const bool before_value
   return found;
 }
 
-//=======================================================================
-// function : InsertAfter
-// purpose  : Inserts the <value> after the <index> position.
-//=======================================================================
 bool TDataStd_BooleanList::InsertAfter(const int index, const bool after_value)
 {
   int                                 i(1);
@@ -162,10 +124,6 @@ bool TDataStd_BooleanList::InsertAfter(const int index, const bool after_value)
   return found;
 }
 
-//=======================================================================
-// function : Remove
-// purpose  : Removes the <value> at the <index> position.
-//=======================================================================
 bool TDataStd_BooleanList::Remove(const int index)
 {
   int                                 i(1);
@@ -184,14 +142,10 @@ bool TDataStd_BooleanList::Remove(const int index)
   return found;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_BooleanList::ID() const
 {
   return myID;
 }
-
-//=================================================================================================
 
 void TDataStd_BooleanList::SetID(const Standard_GUID& theGuid)
 {
@@ -201,22 +155,16 @@ void TDataStd_BooleanList::SetID(const Standard_GUID& theGuid)
   myID = theGuid;
 }
 
-//=================================================================================================
-
 void TDataStd_BooleanList::SetID()
 {
   Backup();
   myID = GetID();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDataStd_BooleanList::NewEmpty() const
 {
   return new TDataStd_BooleanList();
 }
-
-//=================================================================================================
 
 void TDataStd_BooleanList::Restore(const occ::handle<TDF_Attribute>& With)
 {
@@ -229,8 +177,6 @@ void TDataStd_BooleanList::Restore(const occ::handle<TDF_Attribute>& With)
   }
   myID = aList->ID();
 }
-
-//=================================================================================================
 
 void TDataStd_BooleanList::Paste(const occ::handle<TDF_Attribute>& Into,
                                  const occ::handle<TDF_RelocationTable>&) const
@@ -245,8 +191,6 @@ void TDataStd_BooleanList::Paste(const occ::handle<TDF_Attribute>& Into,
   aList->SetID(myID);
 }
 
-//=================================================================================================
-
 Standard_OStream& TDataStd_BooleanList::Dump(Standard_OStream& anOS) const
 {
   anOS << "\nBooleanList: ";
@@ -256,8 +200,6 @@ Standard_OStream& TDataStd_BooleanList::Dump(Standard_OStream& anOS) const
   anOS << std::endl;
   return anOS;
 }
-
-//=================================================================================================
 
 void TDataStd_BooleanList::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

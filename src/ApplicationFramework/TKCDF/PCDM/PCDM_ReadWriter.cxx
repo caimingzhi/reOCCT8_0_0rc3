@@ -23,8 +23,6 @@ static TCollection_ExtendedString TryXmlDriverType(const TCollection_AsciiString
 
 static TCollection_ExtendedString TryXmlDriverType(Standard_IStream& theIStream);
 
-//=================================================================================================
-
 void PCDM_ReadWriter::Open(const occ::handle<Storage_BaseDriver>& aDriver,
                            const TCollection_ExtendedString&      aFileName,
                            const Storage_OpenMode                 aMode)
@@ -51,21 +49,15 @@ void PCDM_ReadWriter::Open(const occ::handle<Storage_BaseDriver>& aDriver,
   }
 }
 
-//=================================================================================================
-
 occ::handle<PCDM_ReadWriter> PCDM_ReadWriter::Reader(const TCollection_ExtendedString&)
 {
   return (new PCDM_ReadWriter_1);
 }
 
-//=================================================================================================
-
 occ::handle<PCDM_ReadWriter> PCDM_ReadWriter::Writer()
 {
   return (new PCDM_ReadWriter_1);
 }
-
-//=================================================================================================
 
 void PCDM_ReadWriter::WriteFileFormat(const occ::handle<Storage_Data>& aData,
                                       const occ::handle<CDM_Document>& aDocument)
@@ -76,15 +68,12 @@ void PCDM_ReadWriter::WriteFileFormat(const occ::handle<Storage_Data>& aData,
   aData->AddToUserInfo(ligne);
 }
 
-//=================================================================================================
-
 TCollection_ExtendedString PCDM_ReadWriter::FileFormat(const TCollection_ExtendedString& aFileName)
 {
   TCollection_ExtendedString theFormat;
 
   occ::handle<Storage_BaseDriver> theFileDriver;
 
-  // conversion to UTF-8 is done inside
   TCollection_AsciiString theFileName(aFileName);
   if (PCDM::FileDriverType(theFileName, theFileDriver) == PCDM_TOFD_Unknown)
     return ::TryXmlDriverType(theFileName);
@@ -127,8 +116,6 @@ TCollection_ExtendedString PCDM_ReadWriter::FileFormat(const TCollection_Extende
   return theFormat;
 }
 
-//=================================================================================================
-
 TCollection_ExtendedString PCDM_ReadWriter::FileFormat(Standard_IStream&          theIStream,
                                                        occ::handle<Storage_Data>& theData)
 {
@@ -141,7 +128,7 @@ TCollection_ExtendedString PCDM_ReadWriter::FileFormat(Standard_IStream&        
   }
   if (!aFileDriver)
   {
-    // type is not recognized, return empty string
+
     return aFormat;
   }
 
@@ -160,11 +147,6 @@ TCollection_ExtendedString PCDM_ReadWriter::FileFormat(Standard_IStream&        
   return aFormat;
 }
 
-//=======================================================================
-// function : ::TryXmlDriverType
-// purpose  : called from FileFormat()
-//=======================================================================
-
 static TCollection_ExtendedString TryXmlDriverType(const TCollection_AsciiString& theFileName)
 {
   TCollection_ExtendedString theFormat;
@@ -172,8 +154,6 @@ static TCollection_ExtendedString TryXmlDriverType(const TCollection_AsciiString
   const char*                aDocumentElementName = "document";
   aParser.SetStartElementName(static_cast<const char*>(aDocumentElementName));
 
-  // Parse the file; if there is no error or an error appears before retrieval
-  // of the DocumentElement, the XML format cannot be defined
   if (aParser.parse(theFileName.ToCString()))
   {
     const LDOM_Element& anElement = aParser.GetElement();
@@ -182,11 +162,6 @@ static TCollection_ExtendedString TryXmlDriverType(const TCollection_AsciiString
   }
   return theFormat;
 }
-
-//=======================================================================
-// function : ::TryXmlDriverType
-// purpose  : called from FileFormat()
-//=======================================================================
 
 static TCollection_ExtendedString TryXmlDriverType(Standard_IStream& theIStream)
 {
@@ -197,8 +172,7 @@ static TCollection_ExtendedString TryXmlDriverType(Standard_IStream& theIStream)
 
   if (theIStream.good())
   {
-    // Parse the file; if there is no error or an error appears before retrieval
-    // of the DocumentElement, the XML format cannot be defined
+
     if (aParser.parse(theIStream, true))
     {
       const LDOM_Element& anElement = aParser.GetElement();

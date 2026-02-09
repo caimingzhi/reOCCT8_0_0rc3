@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_AngularSize, StepShape_DimensionalSize)
 
-//=================================================================================================
-
 StepShape_AngularSize::StepShape_AngularSize() = default;
-
-//=================================================================================================
 
 void StepShape_AngularSize::Init(
   const occ::handle<StepRepr_ShapeAspect>&     aDimensionalSize_AppliesTo,
@@ -20,14 +16,10 @@ void StepShape_AngularSize::Init(
   theAngleSelection = aAngleSelection;
 }
 
-//=================================================================================================
-
 StepShape_AngleRelator StepShape_AngularSize::AngleSelection() const
 {
   return theAngleSelection;
 }
-
-//=================================================================================================
 
 void StepShape_AngularSize::SetAngleSelection(const StepShape_AngleRelator aAngleSelection)
 {

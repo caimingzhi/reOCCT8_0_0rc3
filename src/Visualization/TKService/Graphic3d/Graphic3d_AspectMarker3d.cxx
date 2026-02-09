@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_AspectMarker3d, Graphic3d_Aspects)
 
-//=================================================================================================
-
 Graphic3d_AspectMarker3d::Graphic3d_AspectMarker3d()
 {
   myShadingModel = Graphic3d_TypeOfShadingModel_Unlit;
@@ -11,8 +9,6 @@ Graphic3d_AspectMarker3d::Graphic3d_AspectMarker3d()
   myMarkerType  = Aspect_TOM_X;
   myMarkerScale = 1.0f;
 }
-
-//=================================================================================================
 
 Graphic3d_AspectMarker3d::Graphic3d_AspectMarker3d(const Aspect_TypeOfMarker theType,
                                                    const Quantity_Color&     theColor,
@@ -23,8 +19,6 @@ Graphic3d_AspectMarker3d::Graphic3d_AspectMarker3d(const Aspect_TypeOfMarker the
   myMarkerType = theType;
   SetMarkerScale((float)theScale);
 }
-
-//=================================================================================================
 
 Graphic3d_AspectMarker3d::Graphic3d_AspectMarker3d(
   const Quantity_Color&                            theColor,
@@ -38,8 +32,6 @@ Graphic3d_AspectMarker3d::Graphic3d_AspectMarker3d(
   myMarkerScale = 1.0f;
 }
 
-//=================================================================================================
-
 Graphic3d_AspectMarker3d::Graphic3d_AspectMarker3d(const occ::handle<Image_PixMap>& theTextureImage)
 {
   myShadingModel = Graphic3d_TypeOfShadingModel_Unlit;
@@ -48,8 +40,6 @@ Graphic3d_AspectMarker3d::Graphic3d_AspectMarker3d(const occ::handle<Image_PixMa
   myMarkerType  = Aspect_TOM_USERDEFINED;
   myMarkerScale = 1.0f;
 }
-
-//=================================================================================================
 
 void Graphic3d_AspectMarker3d::GetTextureSize(int& theWidth, int& theHeight) const
 {
@@ -63,8 +53,6 @@ void Graphic3d_AspectMarker3d::GetTextureSize(int& theWidth, int& theHeight) con
     theHeight = 0;
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_AspectMarker3d::SetBitMap(
   const int                                        theWidth,

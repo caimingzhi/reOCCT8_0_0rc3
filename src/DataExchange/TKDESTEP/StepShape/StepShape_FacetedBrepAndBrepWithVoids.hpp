@@ -18,7 +18,6 @@ class StepShape_FacetedBrepAndBrepWithVoids : public StepShape_ManifoldSolidBrep
 {
 
 public:
-  //! Returns a FacetedBrepAndBrepWithVoids
   Standard_EXPORT StepShape_FacetedBrepAndBrepWithVoids();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

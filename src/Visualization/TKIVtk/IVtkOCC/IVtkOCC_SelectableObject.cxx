@@ -13,8 +13,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IVtkOCC_SelectableObject, SelectMgr_SelectableObject)
 
-//=================================================================================================
-
 IVtkOCC_SelectableObject::IVtkOCC_SelectableObject(const IVtkOCC_Shape::Handle& theShape)
     : SelectMgr_SelectableObject(PrsMgr_TOP_AllView),
       myShape(theShape)
@@ -25,18 +23,12 @@ IVtkOCC_SelectableObject::IVtkOCC_SelectableObject(const IVtkOCC_Shape::Handle& 
   }
 }
 
-//=================================================================================================
-
 IVtkOCC_SelectableObject::IVtkOCC_SelectableObject()
     : SelectMgr_SelectableObject(PrsMgr_TOP_AllView)
 {
 }
 
-//=================================================================================================
-
 IVtkOCC_SelectableObject::~IVtkOCC_SelectableObject() = default;
-
-//=================================================================================================
 
 void IVtkOCC_SelectableObject::SetShape(const IVtkOCC_Shape::Handle& theShape)
 {
@@ -46,12 +38,9 @@ void IVtkOCC_SelectableObject::SetShape(const IVtkOCC_Shape::Handle& theShape)
     myShape->SetSelectableObject(this);
   }
 
-  // Shape has changed -> Clear all internal data
   myBndBox.SetVoid();
   myselections.Clear();
 }
-
-//=================================================================================================
 
 void IVtkOCC_SelectableObject::ComputeSelection(
   const occ::handle<SelectMgr_Selection>& theSelection,
@@ -65,7 +54,7 @@ void IVtkOCC_SelectableObject::ComputeSelection(
   const TopoDS_Shape& anOcctShape = myShape->GetShape();
   if (anOcctShape.ShapeType() == TopAbs_COMPOUND && anOcctShape.NbChildren() == 0)
   {
-    // Shape empty -> go away
+
     return;
   }
 
@@ -97,8 +86,6 @@ void IVtkOCC_SelectableObject::ComputeSelection(
   }
 }
 
-//=================================================================================================
-
 const Bnd_Box& IVtkOCC_SelectableObject::BoundingBox()
 {
   if (myShape.IsNull())
@@ -110,7 +97,7 @@ const Bnd_Box& IVtkOCC_SelectableObject::BoundingBox()
   const TopoDS_Shape& anOcctShape = myShape->GetShape();
   if (anOcctShape.ShapeType() == TopAbs_COMPOUND && anOcctShape.NbChildren() == 0)
   {
-    // Shape empty -> nothing to do
+
     myBndBox.SetVoid();
     return myBndBox;
   }
@@ -122,8 +109,6 @@ const Bnd_Box& IVtkOCC_SelectableObject::BoundingBox()
 
   return myBndBox;
 }
-
-//=================================================================================================
 
 void IVtkOCC_SelectableObject::BoundingBox(Bnd_Box& theBndBox)
 {

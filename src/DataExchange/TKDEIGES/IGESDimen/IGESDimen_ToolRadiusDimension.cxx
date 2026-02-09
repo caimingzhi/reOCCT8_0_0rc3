@@ -28,29 +28,21 @@ void IGESDimen_ToolRadiusDimension::ReadOwnParams(const occ::handle<IGESDimen_Ra
   occ::handle<IGESDimen_LeaderArrow> leadArr;
   gp_XY                              arcCenter;
   occ::handle<IGESDimen_LeaderArrow> leadArr2;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  PR.ReadEntity(IR,
-                PR.Current(),
-                "General Note",
-                STANDARD_TYPE(IGESDimen_GeneralNote),
-                tempNote); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR, PR.Current(), "General Note", STANDARD_TYPE(IGESDimen_GeneralNote), tempNote);
 
-  PR.ReadEntity(IR,
-                PR.Current(),
-                "Leader arrow",
-                STANDARD_TYPE(IGESDimen_LeaderArrow),
-                leadArr); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR, PR.Current(), "Leader arrow", STANDARD_TYPE(IGESDimen_LeaderArrow), leadArr);
 
-  PR.ReadXY(PR.CurrentList(1, 2), "Arc center", arcCenter); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadXY(PR.CurrentList(1, 2), "Arc center", arcCenter);
 
   if (ent->FormNumber() == 1)
     PR.ReadEntity(IR,
                   PR.Current(),
                   "Leader arrow 2",
-                  // clang-format off
-		  STANDARD_TYPE(IGESDimen_LeaderArrow), leadArr2, true); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+
+                  STANDARD_TYPE(IGESDimen_LeaderArrow),
+                  leadArr2,
+                  true);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempNote, leadArr, arcCenter, leadArr2);
@@ -91,7 +83,7 @@ void IGESDimen_ToolRadiusDimension::OwnCopy(const occ::handle<IGESDimen_RadiusDi
 }
 
 IGESData_DirChecker IGESDimen_ToolRadiusDimension::DirChecker(
-  const occ::handle<IGESDimen_RadiusDimension>& /* ent */) const
+  const occ::handle<IGESDimen_RadiusDimension>&) const
 {
   IGESData_DirChecker DC(222, 0, 1);
   DC.Structure(IGESData_DefVoid);
@@ -110,7 +102,6 @@ void IGESDimen_ToolRadiusDimension::OwnCheck(const occ::handle<IGESDimen_RadiusD
 {
   if (ent->HasLeader2() && ent->FormNumber() == 0)
     ach->AddFail("Value of Form Number not consistent with presence of Leader2");
-  // Form 1 : Leader can be defined or not. Form 0 : only cannot
 }
 
 void IGESDimen_ToolRadiusDimension::OwnDump(const occ::handle<IGESDimen_RadiusDimension>& ent,

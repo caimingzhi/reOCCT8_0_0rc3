@@ -11,7 +11,6 @@
 
 class IntTools_Range;
 
-//! class for range index management of curve
 class IntTools_CurveRangeSample : public IntTools_BaseRangeSample
 {
 public:
@@ -49,7 +48,7 @@ namespace std
   {
     size_t operator()(const IntTools_CurveRangeSample& theCurveRangeSample) const noexcept
     {
-      // Combine two int values into a single hash value.
+
       int aCombination[2]{theCurveRangeSample.GetDepth(), theCurveRangeSample.GetRangeIndex()};
       return opencascade::hashBytes(aCombination, sizeof(aCombination));
     }

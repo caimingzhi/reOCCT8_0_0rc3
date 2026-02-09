@@ -18,7 +18,6 @@ class StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface : public StepGeom_BS
 {
 
 public:
-  //! Returns a QuasiUniformSurfaceAndRationalBSplineSurface
   Standard_EXPORT StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface();
 
   Standard_EXPORT void Init(

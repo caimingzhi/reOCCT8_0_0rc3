@@ -9,12 +9,6 @@
 #include <Standard_Transient.hpp>
 #include <Standard_OStream.hpp>
 
-//! defines a Coordinate3 node of VRML specifying
-//! properties of geometry and its appearance.
-//! This node defines a set of 3D coordinates to be used by a subsequent IndexedFaceSet,
-//! IndexedLineSet, or PointSet node. This node does not produce a visible result
-//! during rendering; it simply replaces the current coordinates in the rendering
-//! state for subsequent nodes to use.
 class Vrml_Coordinate3 : public Standard_Transient
 {
 

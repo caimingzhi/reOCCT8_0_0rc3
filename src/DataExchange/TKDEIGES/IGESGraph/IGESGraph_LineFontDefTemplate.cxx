@@ -6,8 +6,6 @@ IMPLEMENT_STANDARD_RTTIEXT(IGESGraph_LineFontDefTemplate, IGESData_LineFontEntit
 
 IGESGraph_LineFontDefTemplate::IGESGraph_LineFontDefTemplate() = default;
 
-// This class inherits from IGESData_LineFontEntity
-
 void IGESGraph_LineFontDefTemplate::Init(const int                                  anOrientation,
                                          const occ::handle<IGESBasic_SubfigureDef>& aTemplate,
                                          const double                               aDistance,

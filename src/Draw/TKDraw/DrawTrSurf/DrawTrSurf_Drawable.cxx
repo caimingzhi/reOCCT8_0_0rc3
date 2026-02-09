@@ -14,10 +14,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_Drawable, Draw_Drawable3D)
 
-//=======================================================================
-// function : DrawTrSurf_Drawable
-// purpose  : initialise the discretisation
-//=======================================================================
 DrawTrSurf_Drawable::DrawTrSurf_Drawable(
 
   const int    discret,
@@ -28,8 +24,6 @@ DrawTrSurf_Drawable::DrawTrSurf_Drawable(
       myDeflection(deflection)
 {
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Drawable::DrawCurve2dOn(Adaptor2d_Curve2d& C, Draw_Display& aDisplay) const
 {
@@ -79,10 +73,6 @@ void DrawTrSurf_Drawable::DrawCurve2dOn(Adaptor2d_Curve2d& C, Draw_Display& aDis
   }
 }
 
-//=======================================================================
-// static function : PlotCurve
-// purpose  : draw a 3D curve
-//=======================================================================
 static void PlotCurve(Draw_Display&          aDisplay,
                       const Adaptor3d_Curve& C,
                       double&                theFirstParam,
@@ -108,8 +98,6 @@ static void PlotCurve(Draw_Display&          aDisplay,
     PlotCurve(aDisplay, C, aLocalF, theHalfStep / 2., Pm, theLastPnt);
   }
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Drawable::DrawCurveOn(Adaptor3d_Curve& C, Draw_Display& aDisplay) const
 {
@@ -181,8 +169,6 @@ void DrawTrSurf_Drawable::DrawCurveOn(Adaptor3d_Curve& C, Draw_Display& aDisplay
     }
   }
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Drawable::DrawIsoCurveOn(Adaptor3d_IsoCurve&   C,
                                          const GeomAbs_IsoType T,

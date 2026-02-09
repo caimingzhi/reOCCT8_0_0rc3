@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_RevolutePairValue;
 
-//! Read & Write tool for RevolutePairValue
 class RWStepKinematics_RWRevolutePairValue
 {
 public:

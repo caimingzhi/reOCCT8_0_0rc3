@@ -34,9 +34,6 @@ public:
     return Copy(Other);
   }
 
-  //! Test a point with +- an offset (Tol) and returns
-  //! On if some points are OUT an some are IN
-  //! (Caution: Internal use. see the code for more details)
   Standard_EXPORT TopAbs_State TestOnRestriction(const gp_Pnt2d& Puv,
                                                  const double    Tol,
                                                  const bool      RecadreOnPeriodic = true) const;

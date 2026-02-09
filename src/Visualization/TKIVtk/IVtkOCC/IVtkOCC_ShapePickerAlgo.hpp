@@ -3,55 +3,32 @@
 #include <IVtk_IShapePickerAlgo.hpp>
 #include <IVtkOCC_ViewerSelector.hpp>
 
-//! @class IVtkOCC_ShapePickerAlgo
-//! @brief OCC implementation of 3D shapes picking algorithm.
 class IVtkOCC_ShapePickerAlgo : public IVtk_IShapePickerAlgo
 {
 public:
   typedef occ::handle<IVtkOCC_ShapePickerAlgo> Handle;
 
-  //! Constructor
   Standard_EXPORT IVtkOCC_ShapePickerAlgo();
 
-  //! Destructor
   Standard_EXPORT ~IVtkOCC_ShapePickerAlgo() override;
 
-  //! Sets the picker's view interface.
-  //! The picker uses the view to obtain parameters of
-  //! the 3D view projection.
   Standard_EXPORT void SetView(const IVtk_IView::Handle& theView) override;
 
-  //! Get number of picked entities.
   Standard_EXPORT int NbPicked() override;
 
-  //! Get activated selection modes for a shape.
-  //! @param[in]  theShape a shape with activated selection mode(s)
-  //! @return list of active selection modes
   Standard_EXPORT NCollection_List<IVtk_SelectionMode> GetSelectionModes(
     const IVtk_IShape::Handle& theShape) const override;
 
-public: //! @name Set selectable shapes and selection modes
-  //! Activates/deactivates the given selection mode for the shape.
-  //! If mode == SM_None, the shape becomes non-selectable and
-  //! is removed from the internal selection data.
-  //! @param[in]  theShape Shape for which the selection mode should be activated
-  //! @param[in]  theMode Selection mode to be activated
-  //! @param[in]  theIsTurnOn Flag to turn on/off the selection mode
+public:
   Standard_EXPORT void SetSelectionMode(const IVtk_IShape::Handle& theShape,
                                         const IVtk_SelectionMode   theMode,
                                         const bool                 theIsTurnOn = true) override;
 
-  //! Activates/deactivates the given selection mode for the shape.
-  //! If mode == SM_None, the shape becomes non-selectable and
-  //! is removed from the internal selection data.
-  //! @param[in]  theShapes List of shapes for which the selection mode should be activated
-  //! @param[in]  theMode Selection mode to be activated
-  //! @param[in]  theIsTurnOn Flag to turn on/off the selection mode
   Standard_EXPORT void SetSelectionMode(const NCollection_List<IVtk_IShape::Handle>& theShapes,
                                         const IVtk_SelectionMode                     theMode,
                                         const bool theIsTurnOn = true) override;
 
-public: //! @name Picking methods
+public:
   Standard_EXPORT bool Pick(const double theX, const double theY) override;
 
   Standard_EXPORT bool Pick(const double theXMin,
@@ -61,40 +38,22 @@ public: //! @name Picking methods
 
   Standard_EXPORT bool Pick(double** thePolyLine, const int theNbPoints) override;
 
-public: //! @name Obtain picking results
-  //! @return the list of picked top-level shape IDs,
-  //! in the order of increasing depth (the ID of the shape closest to the eye
-  //! is the first in the list)
+public:
   Standard_EXPORT const NCollection_List<IVtk_IdType>& ShapesPicked() const override;
 
-  //! @param[in]  theId Top-level shape ID
-  //! @param[out]  theShapeList the list of picked sub-shape IDs for the given top-level shape ID,
-  //! in the order of increasing depth (the ID of the sub-shape closest to the eye
-  //! is the first in the list)
   Standard_EXPORT void SubShapesPicked(const IVtk_IdType              theId,
                                        NCollection_List<IVtk_IdType>& theShapeList) const override;
 
-  //! Remove selectable object from the picker (from internal maps).
-  //! @param[in]  theShape the selectable shape
   Standard_EXPORT virtual void RemoveSelectableObject(const IVtk_IShape::Handle& theShape);
 
-  //! Return topmost picked 3D point or (Inf, Inf, Inf) if undefined.
   const gp_Pnt& TopPickedPoint() const { return myTopPickedPoint; }
 
 public:
   DEFINE_STANDARD_RTTIEXT(IVtkOCC_ShapePickerAlgo, IVtk_IShapePickerAlgo)
 
 private:
-  //! Internal method, resets picked data
   void clearPicked();
 
-  //! Internal method, extracts picked shapes from ViewerSelector
-  //! and prepares the results in the form of IDs:
-  //! In case of top-level shape(s) selected, only myShapesPicked list is filled.
-  //! Otherwise, mySubShapesPicked map is filled in addition, to provide the information
-  //! about selected sub-shapes grouped by their top-level shapes.
-  //! @return true if some shapes has been picked, and false otherwise
-  //! @see IVtkOCC_ShapePickerAlgo::pick
   bool processPicked();
 
   IVtk_IView::Handle                                              myView;

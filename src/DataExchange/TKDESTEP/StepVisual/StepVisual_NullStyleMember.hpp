@@ -13,8 +13,6 @@ enum StepVisual_NullStyle
   StepVisual_Null
 };
 
-//! Defines NullStyle as unique member of PresentationStyleSelect
-//! Works with an EnumTool
 class StepVisual_NullStyleMember : public StepData_SelectInt
 {
 
@@ -25,7 +23,7 @@ public:
 
   const char* Name() const override { return "NULL_STYLE"; }
 
-  bool SetName(const char* /*theName*/) override { return true; }
+  bool SetName(const char*) override { return true; }
 
   int Kind() const override { return 4; }
 

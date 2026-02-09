@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -25,8 +14,6 @@ namespace
 {
   constexpr double THE_TOLERANCE = 1.0e-8;
 
-  //! Simple 2x2 nonlinear system: F1 = x^2 + y^2 - 1, F2 = x - y
-  //! Solution: x = y = sqrt(0.5) ~ 0.7071
   class SimpleCircleLineSystem : public math_FunctionSetWithDerivatives
   {
   public:
@@ -36,17 +23,17 @@ namespace
 
     bool Value(const math_Vector& X, math_Vector& F) override
     {
-      F(1) = X(1) * X(1) + X(2) * X(2) - 1.0; // x^2 + y^2 = 1
-      F(2) = X(1) - X(2);                     // x = y
+      F(1) = X(1) * X(1) + X(2) * X(2) - 1.0;
+      F(2) = X(1) - X(2);
       return true;
     }
 
     bool Derivatives(const math_Vector& X, math_Matrix& D) override
     {
-      D(1, 1) = 2.0 * X(1); // dF1/dx
-      D(1, 2) = 2.0 * X(2); // dF1/dy
-      D(2, 1) = 1.0;        // dF2/dx
-      D(2, 2) = -1.0;       // dF2/dy
+      D(1, 1) = 2.0 * X(1);
+      D(1, 2) = 2.0 * X(2);
+      D(2, 1) = 1.0;
+      D(2, 2) = -1.0;
       return true;
     }
 
@@ -56,8 +43,6 @@ namespace
     }
   };
 
-  //! Rosenbrock-like 2D system: F1 = 10*(y - x^2), F2 = 1 - x
-  //! Solution: x = 1, y = 1
   class RosenbrockSystem : public math_FunctionSetWithDerivatives
   {
   public:
@@ -87,8 +72,6 @@ namespace
     }
   };
 
-  //! 3x3 linear-like system: F1 = 2x + y - 2, F2 = x + 3y - 5, F3 = z - 1
-  //! Solution: x = 0.2, y = 1.6, z = 1
   class Linear3System : public math_FunctionSetWithDerivatives
   {
   public:
@@ -124,8 +107,6 @@ namespace
     }
   };
 
-  //! Polynomial system: x^3 - y = 0, y^3 - x = 0
-  //! Solutions: (0,0), (1,1), (-1,-1)
   class PolynomialSystem : public math_FunctionSetWithDerivatives
   {
   public:
@@ -156,10 +137,6 @@ namespace
   };
 } // namespace
 
-//==================================================================================================
-// Test: Simple circle-line system - compare new API with legacy
-//==================================================================================================
-
 TEST(MathSys_ComparisonTest, Newton_CircleLineSystem)
 {
   SimpleCircleLineSystem aFunc;
@@ -171,34 +148,25 @@ TEST(MathSys_ComparisonTest, Newton_CircleLineSystem)
   math_Vector aTolX(1, 2, 1.0e-10);
   double      aTolF = 1.0e-10;
 
-  // Solve using new API
   auto aNewResult = MathSys::Newton(aFunc, aStart, aTolX, aTolF);
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Solve using legacy API
   math_NewtonFunctionSetRoot aOldSolver(aFunc, aTolX, aTolF);
   aOldSolver.Perform(aFunc, aStart);
   ASSERT_TRUE(aOldSolver.IsDone());
 
   const math_Vector& aOldRoot = aOldSolver.Root();
 
-  // Expected solution: x = y = sqrt(0.5)
   const double aExpected = std::sqrt(0.5);
 
-  // Compare solutions
   EXPECT_NEAR((*aNewResult.Solution)(1), aExpected, THE_TOLERANCE);
   EXPECT_NEAR((*aNewResult.Solution)(2), aExpected, THE_TOLERANCE);
   EXPECT_NEAR(aOldRoot(1), aExpected, THE_TOLERANCE);
   EXPECT_NEAR(aOldRoot(2), aExpected, THE_TOLERANCE);
 
-  // Compare new and old results
   EXPECT_NEAR((*aNewResult.Solution)(1), aOldRoot(1), THE_TOLERANCE);
   EXPECT_NEAR((*aNewResult.Solution)(2), aOldRoot(2), THE_TOLERANCE);
 }
-
-//==================================================================================================
-// Test: Rosenbrock system
-//==================================================================================================
 
 TEST(MathSys_ComparisonTest, Newton_RosenbrockSystem)
 {
@@ -211,31 +179,23 @@ TEST(MathSys_ComparisonTest, Newton_RosenbrockSystem)
   math_Vector aTolX(1, 2, 1.0e-10);
   double      aTolF = 1.0e-10;
 
-  // Solve using new API
   auto aNewResult = MathSys::Newton(aFunc, aStart, aTolX, aTolF);
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Solve using legacy API
   math_NewtonFunctionSetRoot aOldSolver(aFunc, aTolX, aTolF);
   aOldSolver.Perform(aFunc, aStart);
   ASSERT_TRUE(aOldSolver.IsDone());
 
   const math_Vector& aOldRoot = aOldSolver.Root();
 
-  // Expected solution: x = 1, y = 1
   EXPECT_NEAR((*aNewResult.Solution)(1), 1.0, THE_TOLERANCE);
   EXPECT_NEAR((*aNewResult.Solution)(2), 1.0, THE_TOLERANCE);
   EXPECT_NEAR(aOldRoot(1), 1.0, THE_TOLERANCE);
   EXPECT_NEAR(aOldRoot(2), 1.0, THE_TOLERANCE);
 
-  // Compare new and old
   EXPECT_NEAR((*aNewResult.Solution)(1), aOldRoot(1), THE_TOLERANCE);
   EXPECT_NEAR((*aNewResult.Solution)(2), aOldRoot(2), THE_TOLERANCE);
 }
-
-//==================================================================================================
-// Test: 3D linear system
-//==================================================================================================
 
 TEST(MathSys_ComparisonTest, Newton_Linear3System)
 {
@@ -249,38 +209,29 @@ TEST(MathSys_ComparisonTest, Newton_Linear3System)
   math_Vector aTolX(1, 3, 1.0e-10);
   double      aTolF = 1.0e-10;
 
-  // Solve using new API
   auto aNewResult = MathSys::Newton(aFunc, aStart, aTolX, aTolF);
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Solve using legacy API
   math_NewtonFunctionSetRoot aOldSolver(aFunc, aTolX, aTolF);
   aOldSolver.Perform(aFunc, aStart);
   ASSERT_TRUE(aOldSolver.IsDone());
 
   const math_Vector& aOldRoot = aOldSolver.Root();
 
-  // Expected solution: x = 0.2, y = 1.6, z = 1.0
   EXPECT_NEAR((*aNewResult.Solution)(1), 0.2, THE_TOLERANCE);
   EXPECT_NEAR((*aNewResult.Solution)(2), 1.6, THE_TOLERANCE);
   EXPECT_NEAR((*aNewResult.Solution)(3), 1.0, THE_TOLERANCE);
 
-  // Compare new and old
   for (int i = 1; i <= 3; ++i)
   {
     EXPECT_NEAR((*aNewResult.Solution)(i), aOldRoot(i), THE_TOLERANCE);
   }
 }
 
-//==================================================================================================
-// Test: Polynomial system finding (1,1) solution
-//==================================================================================================
-
 TEST(MathSys_ComparisonTest, Newton_PolynomialSystem)
 {
   PolynomialSystem aFunc;
 
-  // Start near (1,1)
   math_Vector aStart(1, 2);
   aStart(1) = 0.9;
   aStart(2) = 0.9;
@@ -288,29 +239,21 @@ TEST(MathSys_ComparisonTest, Newton_PolynomialSystem)
   math_Vector aTolX(1, 2, 1.0e-10);
   double      aTolF = 1.0e-10;
 
-  // Solve using new API
   auto aNewResult = MathSys::Newton(aFunc, aStart, aTolX, aTolF);
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Solve using legacy API
   math_NewtonFunctionSetRoot aOldSolver(aFunc, aTolX, aTolF);
   aOldSolver.Perform(aFunc, aStart);
   ASSERT_TRUE(aOldSolver.IsDone());
 
   const math_Vector& aOldRoot = aOldSolver.Root();
 
-  // Expected solution: x = 1, y = 1
   EXPECT_NEAR((*aNewResult.Solution)(1), 1.0, THE_TOLERANCE);
   EXPECT_NEAR((*aNewResult.Solution)(2), 1.0, THE_TOLERANCE);
 
-  // Compare new and old
   EXPECT_NEAR((*aNewResult.Solution)(1), aOldRoot(1), THE_TOLERANCE);
   EXPECT_NEAR((*aNewResult.Solution)(2), aOldRoot(2), THE_TOLERANCE);
 }
-
-//==================================================================================================
-// Test: Bounded Newton with simple system
-//==================================================================================================
 
 TEST(MathSys_ComparisonTest, NewtonBounded_CircleLineSystem)
 {
@@ -331,31 +274,23 @@ TEST(MathSys_ComparisonTest, NewtonBounded_CircleLineSystem)
   math_Vector aTolX(1, 2, 1.0e-10);
   double      aTolF = 1.0e-10;
 
-  // Solve using new bounded API
   auto aNewResult = MathSys::NewtonBounded(aFunc, aStart, aInfBound, aSupBound, aTolX, aTolF);
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Solve using legacy bounded API
   math_NewtonFunctionSetRoot aOldSolver(aFunc, aTolX, aTolF);
   aOldSolver.Perform(aFunc, aStart, aInfBound, aSupBound);
   ASSERT_TRUE(aOldSolver.IsDone());
 
   const math_Vector& aOldRoot = aOldSolver.Root();
 
-  // Expected solution: x = y = sqrt(0.5)
   const double aExpected = std::sqrt(0.5);
 
   EXPECT_NEAR((*aNewResult.Solution)(1), aExpected, THE_TOLERANCE);
   EXPECT_NEAR((*aNewResult.Solution)(2), aExpected, THE_TOLERANCE);
 
-  // Compare new and old
   EXPECT_NEAR((*aNewResult.Solution)(1), aOldRoot(1), THE_TOLERANCE);
   EXPECT_NEAR((*aNewResult.Solution)(2), aOldRoot(2), THE_TOLERANCE);
 }
-
-//==================================================================================================
-// Test: Verify function values at solution are near zero
-//==================================================================================================
 
 TEST(MathSys_ComparisonTest, Newton_VerifyFunctionValues)
 {
@@ -368,18 +303,12 @@ TEST(MathSys_ComparisonTest, Newton_VerifyFunctionValues)
   auto aResult = MathSys::Newton(aFunc, aStart, 1.0e-10, 1.0e-10);
   ASSERT_TRUE(aResult.IsDone());
 
-  // Evaluate function at solution
   math_Vector aF(1, 2);
   ASSERT_TRUE(aFunc.Value(*aResult.Solution, aF));
 
-  // Function values should be near zero
   EXPECT_NEAR(aF(1), 0.0, 1.0e-8);
   EXPECT_NEAR(aF(2), 0.0, 1.0e-8);
 }
-
-//==================================================================================================
-// Test: Iteration count comparison
-//==================================================================================================
 
 TEST(MathSys_ComparisonTest, IterationCount_NewVsOld)
 {
@@ -392,28 +321,19 @@ TEST(MathSys_ComparisonTest, IterationCount_NewVsOld)
   math_Vector aTolX(1, 2, 1.0e-10);
   double      aTolF = 1.0e-10;
 
-  // Solve using new API
   auto aNewResult = MathSys::Newton(aFunc, aStart, aTolX, aTolF);
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Solve using legacy API
   math_NewtonFunctionSetRoot aOldSolver(aFunc, aTolX, aTolF);
   aOldSolver.Perform(aFunc, aStart);
   ASSERT_TRUE(aOldSolver.IsDone());
 
-  // Both should converge in similar number of iterations
-  // (exact count may differ slightly due to implementation details)
   EXPECT_GT(aNewResult.NbIterations, 0u);
-  EXPECT_LE(aNewResult.NbIterations, 20u); // Reasonable upper bound
+  EXPECT_LE(aNewResult.NbIterations, 20u);
 
-  // The iteration counts should be reasonably close
   int aOldIter = aOldSolver.NbIterations();
   EXPECT_NEAR(static_cast<int>(aNewResult.NbIterations), aOldIter, 5);
 }
-
-//==================================================================================================
-// Test: Simplified Newton interface with uniform tolerance
-//==================================================================================================
 
 TEST(MathSys_ComparisonTest, Newton_UniformTolerance)
 {
@@ -423,19 +343,13 @@ TEST(MathSys_ComparisonTest, Newton_UniformTolerance)
   aStart(1) = 0.5;
   aStart(2) = 0.5;
 
-  // Use simplified interface with uniform tolerance
   auto aResult = MathSys::Newton(aFunc, aStart, 1.0e-10, 1.0e-10);
   ASSERT_TRUE(aResult.IsDone());
 
-  // Expected solution
   const double aExpected = std::sqrt(0.5);
   EXPECT_NEAR((*aResult.Solution)(1), aExpected, THE_TOLERANCE);
   EXPECT_NEAR((*aResult.Solution)(2), aExpected, THE_TOLERANCE);
 }
-
-//==================================================================================================
-// Test: Different starting points
-//==================================================================================================
 
 TEST(MathSys_ComparisonTest, Newton_DifferentStartingPoints)
 {
@@ -444,7 +358,6 @@ TEST(MathSys_ComparisonTest, Newton_DifferentStartingPoints)
   math_Vector aTolX(1, 2, 1.0e-10);
   double      aTolF = 1.0e-10;
 
-  // Test several starting points
   double aStartPoints[][2] = {
     {0.1, 0.1},
     {0.9, 0.9},
@@ -468,7 +381,6 @@ TEST(MathSys_ComparisonTest, Newton_DifferentStartingPoints)
 
     const math_Vector& aOldRoot = aOldSolver.Root();
 
-    // Both should find the same solution
     EXPECT_NEAR((*aNewResult.Solution)(1), aOldRoot(1), THE_TOLERANCE);
     EXPECT_NEAR((*aNewResult.Solution)(2), aOldRoot(2), THE_TOLERANCE);
   }

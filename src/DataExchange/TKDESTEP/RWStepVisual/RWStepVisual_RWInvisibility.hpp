@@ -11,7 +11,6 @@ class StepVisual_Invisibility;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for Invisibility
 class RWStepVisual_RWInvisibility
 {
 public:

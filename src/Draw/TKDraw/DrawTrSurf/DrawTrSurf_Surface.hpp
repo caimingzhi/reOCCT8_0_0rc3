@@ -6,17 +6,11 @@
 
 class Geom_Surface;
 
-//! This class defines a drawable surface.
-//! With this class you can draw a general surface from package Geom.
 class DrawTrSurf_Surface : public DrawTrSurf_Drawable
 {
   DEFINE_STANDARD_RTTIEXT(DrawTrSurf_Surface, DrawTrSurf_Drawable)
   Draw_Drawable3D_FACTORY
 public:
-  //! default drawing mode
-  //! Just the middle isoparametric curves are drawn.
-  //! The boundaries are yellow, the isoparametric curves are blues.
-  //! For the discretisation 50 points are computed in each parametric direction.
   Standard_EXPORT DrawTrSurf_Surface(const occ::handle<Geom_Surface>& S);
 
   Standard_EXPORT DrawTrSurf_Surface(const occ::handle<Geom_Surface>& S,
@@ -30,13 +24,10 @@ public:
 
   Draw_Color BoundsColor() const { return boundsLook; }
 
-  //! rub out all the isoparametric curves.
   Standard_EXPORT virtual void ClearIsos();
 
   Standard_EXPORT void DrawOn(Draw_Display& dis) const override;
 
-  //! Iso = True : Draw the isos, the boundaries, the UVMarker.
-  //! Iso = False: Only Draw the boundary and the UVMarker.
   Standard_EXPORT void DrawOn(Draw_Display& dis, const bool Iso) const;
 
   occ::handle<Geom_Surface> GetSurface() const { return surf; }
@@ -53,23 +44,18 @@ public:
 
   void SetIsosColor(const Draw_Color& theColor) { isosLook = theColor; }
 
-  //! change the number of isoparametric curves to be drawn.
   virtual void ShowIsos(const int theNu, const int theNv)
   {
     nbUIsos = std::abs(theNu);
     nbVIsos = std::abs(theNv);
   }
 
-  //! For variable copy.
   Standard_EXPORT occ::handle<Draw_Drawable3D> Copy() const override;
 
-  //! For variable dump.
   Standard_EXPORT void Dump(Standard_OStream& S) const override;
 
-  //! Save drawable into stream.
   Standard_EXPORT void Save(Standard_OStream& theStream) const override;
 
-  //! For variable whatis command.
   Standard_EXPORT void Whatis(Draw_Interpretor& I) const override;
 
 protected:

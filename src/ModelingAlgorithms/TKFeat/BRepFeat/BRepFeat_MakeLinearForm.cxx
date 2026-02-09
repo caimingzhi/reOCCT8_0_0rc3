@@ -49,21 +49,18 @@ extern bool BRepFeat_GettraceFEAT();
 extern bool BRepFeat_GettraceFEATRIB();
 #endif
 
-static void MajMap(const TopoDS_Shape&, // base
-                   const LocOpe_LinearForm&,
-                   NCollection_DataMap<TopoDS_Shape,
-                                       NCollection_List<TopoDS_Shape>,
-                                       TopTools_ShapeMapHasher>&, // myMap
-                   TopoDS_Shape&,                                 // myFShape
-                   TopoDS_Shape&);                                // myLShape
+static void MajMap(
+  const TopoDS_Shape&,
+  const LocOpe_LinearForm&,
+  NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&,
+  TopoDS_Shape&,
+  TopoDS_Shape&);
 
 static void SetGluedFaces(
   const NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
     theSlmap,
   LocOpe_LinearForm&,
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&);
-
-//=================================================================================================
 
 void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
                                    const TopoDS_Wire&             W,
@@ -82,8 +79,6 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
   Done();
   myGenerated.Clear();
 
-  // modify = 0 if there is no intention to make sliding
-  //        = 1 if one tries to make sliding
   bool Sliding = Modify;
   myLFMap.Clear();
 
@@ -102,7 +97,7 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
 
   TopoDS_Shape aLocalShapeW = W.Oriented(TopAbs_FORWARD);
   myWire                    = TopoDS::Wire(aLocalShapeW);
-  //  myWire = TopoDS::Wire(W.Oriented(TopAbs_FORWARD));
+
   myDir  = Direc;
   myDir1 = Direc1;
   myPln  = Plane;
@@ -118,7 +113,6 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
   }
 #endif
 
-  // ---Determine Tolerance : max tolerance on parameters
   myTol = Precision::Confusion();
 
   TopExp_Explorer exx;
@@ -138,8 +132,6 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
       myTol = tol;
   }
 
-  // ---Control of directions
-  //    the wire should be in the rib
   gp_Vec nulldir(0, 0, 0);
   if (!myDir1.IsEqual(nulldir, myTol, myTol))
   {
@@ -158,7 +150,6 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
   else
   {
 
-// Rib is centre in the middle of translation
 #ifdef OCCT_DEBUG
     if (trc)
       std::cout << " Rib is centre" << std::endl;
@@ -174,7 +165,6 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
     myPln->Transform(T);
   }
 
-  // ---Calculate bounding box
   BRep_Builder BB;
 
   NCollection_List<TopoDS_Shape> theList;
@@ -188,7 +178,6 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
   BRepPrimAPI_MakeBox Bndbox(FirstCorner, LastCorner);
   TopoDS_Solid        BndBox = Bndbox.Solid();
 
-  // ---Construction of the face workplane (section bounding box)
   BRepLib_MakeFace PlaneF(myPln->Pln(), -6. * myBnd, 6. * myBnd, -6. * myBnd, 6. * myBnd);
   TopoDS_Face      PlaneFace = TopoDS::Face(PlaneF.Shape());
 
@@ -200,7 +189,6 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
   BRepLib_MakeFace Bndface(myPln->Pln(), www, true);
   TopoDS_Face      BndFace = TopoDS::Face(Bndface.Shape());
 
-  // ---Find support faces of the rib
   TopoDS_Edge   FirstEdge, LastEdge;
   TopoDS_Face   FirstFace, LastFace;
   TopoDS_Vertex FirstVertex, LastVertex;
@@ -240,24 +228,18 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
     return;
   }
 
-  // ---Proofing Point for the side of the wire to be filled - side material
   gp_Pnt CheckPnt = CheckPoint(FirstEdge, bnd / 10., myPln);
 
-  //  double f, l;
-
-  // ---Control sliding valuable
-  // Many cases when the sliding is abandoned
-  int Concavite = 3; // a priori the profile is not concave
+  int Concavite = 3;
 
   myFirstPnt = BRep_Tool::Pnt(FirstVertex);
   myLastPnt  = BRep_Tool::Pnt(LastVertex);
 
-  // SliList : list of faces concerned by the rib
   NCollection_List<TopoDS_Shape> SliList;
   SliList.Append(FirstFace);
 
   if (Sliding)
-  { // sliding
+  {
 #ifdef OCCT_DEBUG
     if (trc)
       std::cout << " Sliding" << std::endl;
@@ -271,15 +253,11 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
     if (s->DynamicType() == STANDARD_TYPE(Geom_Plane)
         || s->DynamicType() == STANDARD_TYPE(Geom_CylindricalSurface))
     {
-      // if plane or cylinder : sliding is possible
+
       Sliding = true;
     }
   }
 
-  // Control only start and end points
-  // -> no control at the middle - improve
-  // Controle between Surface and segment between 2 limit points
-  // is too expensive - improve
   if (Sliding)
   {
     gp_Pnt p1(myFirstPnt.X() + myDir.X(), myFirstPnt.Y() + myDir.Y(), myFirstPnt.Z() + myDir.Z());
@@ -291,7 +269,7 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
     {
       gp_Pnt p2(myLastPnt.X() + myDir.X(), myLastPnt.Y() + myDir.Y(), myLastPnt.Z() + myDir.Z());
       BRepLib_MakeEdge  ee2(myLastPnt, p2);
-      BRepExtrema_ExtCF ext2(ee2, LastFace); // ExtCF : curves and surfaces
+      BRepExtrema_ExtCF ext2(ee2, LastFace);
       Sliding = ext2.NbExt() == 1
                 && ext2.SquareDistance(1)
                      <= BRep_Tool::Tolerance(LastFace) * BRep_Tool::Tolerance(LastFace);
@@ -331,12 +309,6 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
     }
   }
 
-  // Construct a great profile that goes till the bounding box
-  // -> by tangency with the first and the last edge of the Wire
-  // -> by normals to the support faces : statistically better
-  // Intersect everything to find the final profile
-
-  // ---case of sliding : construction of the profile face
   if (Sliding)
   {
 #ifdef OCCT_DEBUG
@@ -373,11 +345,9 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
       return;
     }
 
-    // ---Propagation on faces of the initial shape
-    // to find the faces concerned by the rib
     bool falseside = true;
     Sliding        = Propagate(SliList, Prof, myFirstPnt, myLastPnt, falseside);
-    // Control if there is everything required to have the material at the proper side
+
     if (!falseside)
     {
 #ifdef OCCT_DEBUG
@@ -389,18 +359,14 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
     }
   }
 
-  // ---Generation of the base of the rib profile
-
   TopoDS_Wire w;
   BB.MakeWire(w);
   TopoDS_Edge   thePreviousEdge;
   TopoDS_Vertex theFV;
   thePreviousEdge.Nullify();
 
-  // calculate the number of edges to fill the map
   int counter = 1;
 
-  // ---case of sliding
   if (Sliding && !myListOfEdges.IsEmpty())
   {
     BRepTools_WireExplorer EX1(myWire);
@@ -450,7 +416,7 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
         }
         TopoDS_Shape aLocalShape = ee1.Oriented(E.Orientation());
         ee1                      = TopoDS::Edge(aLocalShape);
-        //	ee1 = TopoDS::Edge(ee1.Oriented(E.Orientation()));
+
         if (counter == 1)
           theFV = TopExp::FirstVertex(ee1, true);
         myLFMap(E).Append(ee1);
@@ -462,7 +428,6 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
       }
     }
 
-    // Case of several edges
     if (!FirstEdge.IsSame(LastEdge))
     {
       for (; EX1.More(); EX1.Next())
@@ -486,7 +451,7 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
           }
           else
           {
-            //	    v1 = TopExp::LastVertex(E,true);
+
             v1 = TopExp::FirstVertex(E, true);
             v2 = TopExp::LastVertex(E, true);
           }
@@ -494,7 +459,7 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
           TopoDS_Edge      E11         = TopoDS::Edge(E1.Shape());
           TopoDS_Shape     aLocalShape = E11.Oriented(E.Orientation());
           E11                          = TopoDS::Edge(aLocalShape);
-          //	  E11 = TopoDS::Edge(E11.Oriented(E.Orientation()));
+
           thePreviousEdge = E11;
           myLFMap(E).Append(E11);
           BB.Add(w, E11);
@@ -522,7 +487,7 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
           }
           TopoDS_Shape aLocalShape = ee.Oriented(E.Orientation());
           ee                       = TopoDS::Edge(aLocalShape);
-          //	  ee = TopoDS::Edge(ee.Oriented(E.Orientation()));
+
           BB.Add(w, ee);
           myLFMap(E).Append(ee);
           if (counter == 1)
@@ -690,7 +655,7 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
                 const TopoDS_Face&                       fac  = TopoDS::Face(itm.Key());
                 const NCollection_List<TopoDS_Shape>&    ledg = itm.Value();
                 NCollection_List<TopoDS_Shape>::Iterator itedg(ledg);
-                // int iiii = 0;
+
                 for (; itedg.More(); itedg.Next())
                 {
                   const TopoDS_Edge& e1 = TopoDS::Edge(itedg.Value());
@@ -715,20 +680,18 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
     mySlface = SlidMap;
   }
 
-  // ---Arguments of LocOpe_LinearForm : arguments of the prism sliding
   if (Sliding)
   {
     TopoDS_Face F;
     BB.MakeFace(F, myPln, myTol);
     w.Closed(BRep_Tool::IsClosed(w));
     BB.Add(F, w);
-    //    BRepLib_MakeFace F(myPln->Pln(),w, true);
+
     mySkface = F;
     myPbase  = mySkface;
     mySUntil.Nullify();
   }
 
-  // ---Case without sliding : construction of the profile face
   if (!Sliding)
   {
 #ifdef OCCT_DEBUG
@@ -772,11 +735,9 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
       return;
     }
 
-    // ---Propagation on faces of the initial shape
-    // to find the faces concerned by the rib
     bool falseside = true;
     Propagate(SliList, Prof, myFirstPnt, myLastPnt, falseside);
-    // Control if there is everything required to have the material at the proper side
+
     if (!falseside)
     {
 #ifdef OCCT_DEBUG
@@ -818,11 +779,6 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
     myMap(exp.Current()).Append(exp.Current());
   }
 }
-
-//=======================================================================
-// function : Add
-// purpose  : add des element de collage
-//=======================================================================
 
 void BRepFeat_MakeLinearForm::Add(const TopoDS_Edge& E, const TopoDS_Face& F)
 {
@@ -866,11 +822,6 @@ void BRepFeat_MakeLinearForm::Add(const TopoDS_Edge& E, const TopoDS_Face& F)
   }
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : construction of rib from a profile and the initial shape
-//=======================================================================
-
 void BRepFeat_MakeLinearForm::Perform()
 {
 #ifdef OCCT_DEBUG
@@ -910,11 +861,11 @@ void BRepFeat_MakeLinearForm::Perform()
   else
     theForm.Perform(myPbase, V, myDir1, myFirstPnt, myLastPnt);
 
-  TopoDS_Shape VraiForm = theForm.Shape(); // primitive of the rib
+  TopoDS_Shape VraiForm = theForm.Shape();
 
   myFacesForDraft.Append(theForm.FirstShape());
   myFacesForDraft.Append(theForm.LastShape());
-  MajMap(myPbase, theForm, myMap, myFShape, myLShape); // management of descendants
+  MajMap(myPbase, theForm, myMap, myFShape, myLShape);
 
   TopExp_Explorer exx(myPbase, TopAbs_EDGE);
   for (; exx.More(); exx.Next())
@@ -933,7 +884,7 @@ void BRepFeat_MakeLinearForm::Perform()
   }
 
   myGShape = VraiForm;
-  SetGluedFaces(mySlface, theForm, myGluedF); // management of sliding faces
+  SetGluedFaces(mySlface, theForm, myGluedF);
 
   if (!myGluedF.IsEmpty() && !mySUntil.IsNull())
   {
@@ -950,49 +901,8 @@ void BRepFeat_MakeLinearForm::Perform()
   }
 
   LFPerform();
-
-  /*
-
-    TopExp_Explorer expr(mySbase, TopAbs_FACE);
-    char nom1[20], nom2[20];
-    int ii = 0;
-    for(; expr.More(); expr.Next()) {
-      ii++;
-      Sprintf(nom1, "faceinitial_%d", ii);
-      DBRep::Set(nom1, expr.Current());
-      int jj = 0;
-      const NCollection_List<TopoDS_Shape>& list = Modified(expr.Current());
-      NCollection_List<TopoDS_Shape>::Iterator ite(list);
-      for(; ite.More(); ite.Next()) {
-        jj++;
-        Sprintf(nom2, "facemodifie_%d_%d", ii, jj);
-        DBRep::Set(nom2, ite.Value());
-      }
-    }
-
-    expr.Init(myWire, TopAbs_EDGE);
-    ii=0;
-    for(; expr.More(); expr.Next()) {
-      ii++;
-      Sprintf(nom1, "edgeinitial_%d", ii);
-      DBRep::Set(nom1, expr.Current());
-      int jj = 0;
-      const NCollection_List<TopoDS_Shape>& genf = Generated(expr.Current());
-      NCollection_List<TopoDS_Shape>::Iterator ite(genf);
-      for(; ite.More(); ite.Next()) {
-        jj++;
-        Sprintf(nom2, "egdegeneree_%d_%d", ii, jj);
-        DBRep::Set(nom2, ite.Value());
-      }
-    }
-  */
 }
 
-//=======================================================================
-// function : Propagate
-// purpose  : propagation on faces of the initial shape, find
-// faces concerned by the rib
-//=======================================================================
 bool BRepFeat_MakeLinearForm::Propagate(NCollection_List<TopoDS_Shape>& SliList,
                                         const TopoDS_Face&              fac,
                                         const gp_Pnt&                   Firstpnt,
@@ -1067,7 +977,6 @@ bool BRepFeat_MakeLinearForm::Propagate(NCollection_List<TopoDS_Shape>& SliList,
   myListOfEdges.Clear();
   myListOfEdges.Append(eb);
 
-  // two points are on the same face.
   if (LastOK && FirstOK)
   {
     return result;
@@ -1097,7 +1006,6 @@ bool BRepFeat_MakeLinearForm::Propagate(NCollection_List<TopoDS_Shape>& SliList,
       ptprev    = p1;
     }
 
-    // find edge connected to v1 or v2:
     for (ex.Init(CurrentFace, TopAbs_EDGE); ex.More(); ex.Next())
     {
       const TopoDS_Edge& rfe = TopoDS::Edge(ex.Current());
@@ -1121,8 +1029,7 @@ bool BRepFeat_MakeLinearForm::Propagate(NCollection_List<TopoDS_Shape>& SliList,
           if (dist2min <= BRep_Tool::Tolerance(rfe) * BRep_Tool::Tolerance(rfe))
           {
             FirstEdge = rfe;
-            // If the edge is not perpendicular to the plane of the rib
-            // it is required to set Sliding(result) to false.
+
             if (result)
             {
               result = false;
@@ -1224,7 +1131,7 @@ bool BRepFeat_MakeLinearForm::Propagate(NCollection_List<TopoDS_Shape>& SliList,
     }
     else
     {
-      // end by chaining the section
+
       return false;
     }
     NCollection_List<TopoDS_Shape> thelist1;
@@ -1236,18 +1143,13 @@ bool BRepFeat_MakeLinearForm::Propagate(NCollection_List<TopoDS_Shape>& SliList,
   return result;
 }
 
-//=======================================================================
-// function : MajMap
-// purpose  : management of descendants
-//=======================================================================
-
 static void MajMap(
   const TopoDS_Shape&      theB,
   const LocOpe_LinearForm& theP,
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
-                theMap,    // myMap
-  TopoDS_Shape& theFShape, // myFShape
-  TopoDS_Shape& theLShape) // myLShape
+                theMap,
+  TopoDS_Shape& theFShape,
+  TopoDS_Shape& theLShape)
 {
   TopExp_Explorer exp(theP.FirstShape(), TopAbs_WIRE);
   if (exp.More())
@@ -1284,18 +1186,13 @@ static void MajMap(
   }
 }
 
-//=======================================================================
-// function : SetGluedFaces
-// purpose  : management of faces of gluing
-//=======================================================================
-
 static void SetGluedFaces(
   const NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
                                                                             theSlmap,
   LocOpe_LinearForm&                                                        thePrism,
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& theMap)
 {
-  // Slidings
+
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>::
     Iterator itm(theSlmap);
   if (!theSlmap.IsEmpty())

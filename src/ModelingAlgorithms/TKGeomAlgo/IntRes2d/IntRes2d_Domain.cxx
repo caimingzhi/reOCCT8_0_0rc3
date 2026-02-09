@@ -3,14 +3,10 @@
 
 const double infVal = Precision::Infinite();
 
-//=================================================================================================
-
 static inline double LimitInfinite(const double Val)
 {
   return (std::abs(Val) > infVal ? (Val > 0 ? infVal : -infVal) : Val);
 }
-
-//=================================================================================================
 
 IntRes2d_Domain::IntRes2d_Domain()
     : status(0),
@@ -31,11 +27,6 @@ void IntRes2d_Domain::SetValues()
   periodfirst = periodlast = 0.0;
 }
 
-//=======================================================================
-// function : IntRes2d_Domain
-// purpose  : Creates a bounded Domain.
-//=======================================================================
-
 IntRes2d_Domain::IntRes2d_Domain(const gp_Pnt2d& Pnt1,
                                  const double    Par1,
                                  const double    Tol1,
@@ -46,11 +37,6 @@ IntRes2d_Domain::IntRes2d_Domain(const gp_Pnt2d& Pnt1,
 
   SetValues(Pnt1, Par1, Tol1, Pnt2, Par2, Tol2);
 }
-
-//=======================================================================
-// function : SetValues
-// purpose  : Sets the values for a bounded domain.
-//=======================================================================
 
 void IntRes2d_Domain::SetValues(const gp_Pnt2d& Pnt1,
                                 const double    Par1,

@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_CoordinatedUniversalTimeOffset;
 class StepData_StepWriter;
 
-//! Read & Write Module for CoordinatedUniversalTimeOffset
 class RWStepBasic_RWCoordinatedUniversalTimeOffset
 {
 public:

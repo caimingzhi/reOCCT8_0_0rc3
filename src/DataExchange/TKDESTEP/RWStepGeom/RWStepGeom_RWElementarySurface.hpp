@@ -11,7 +11,6 @@ class StepGeom_ElementarySurface;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ElementarySurface
 class RWStepGeom_RWElementarySurface
 {
 public:

@@ -11,9 +11,6 @@
 #include <XCAFDoc_LayerTool.hpp>
 #include <XDEDRAW_Layers.hpp>
 
-//=======================================================================
-// Section: Work with layers
-//=======================================================================
 static int addLayer(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 3)
@@ -135,7 +132,7 @@ static int getLayers(Draw_Interpretor& di, int argc, const char** argv)
     di << "Use: " << argv[0] << " DocName {Shape|Label} \n";
     return 1;
   }
-  //
+
   occ::handle<TDocStd_Document> Doc;
   DDocStd::GetDocument(argv[1], Doc);
   if (Doc.IsNull())
@@ -531,8 +528,6 @@ static int getLayerRefs(Draw_Interpretor& theDI, int theArgc, const char** theAr
   return 0;
 }
 
-//=================================================================================================
-
 void XDEDRAW_Layers::InitCommands(Draw_Interpretor& di)
 {
   static bool initactor = false;
@@ -541,10 +536,6 @@ void XDEDRAW_Layers::InitCommands(Draw_Interpretor& di)
     return;
   }
   initactor = true;
-
-  //=====================================
-  // Work with layers
-  //=====================================
 
   const char* g = "XDE layer's commands";
 

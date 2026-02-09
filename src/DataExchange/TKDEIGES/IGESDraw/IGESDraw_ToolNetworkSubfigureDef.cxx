@@ -22,7 +22,6 @@ void IGESDraw_ToolNetworkSubfigureDef::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&      IR,
   IGESData_ParamReader&                            PR) const
 {
-  // bool  st; //szv#4:S4163:12Mar99 not needed
 
   int                                   tempDepth, tempNbEntities1, tempTypeFlag, tempNbEntities2;
   occ::handle<TCollection_HAsciiString> tempName, tempDesignator;
@@ -30,42 +29,25 @@ void IGESDraw_ToolNetworkSubfigureDef::ReadOwnParams(
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>   tempEntities;
   occ::handle<NCollection_HArray1<occ::handle<IGESDraw_ConnectPoint>>> tempPointEntities;
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadInteger(PR.Current(), "Depth Of Subfigure", tempDepth);
   PR.ReadText(PR.Current(), "Subfigure Name", tempName);
 
-  // st = PR.ReadInteger(PR.Current(), "Number Of Child Entities", tempNbEntities1);
-  // //szv#4:S4163:12Mar99 moved in if
   if (PR.ReadInteger(PR.Current(), "Number Of Child Entities", tempNbEntities1))
   {
-    // Initialize HArray1 only if there is no error reading its Length
+
     if (tempNbEntities1 < 0)
       PR.AddFail("Number Of Child Entities : Not Positive");
     else if (tempNbEntities1 > 0)
-      // clang-format off
-      PR.ReadEnts(IR,PR.CurrentList(tempNbEntities1),"Child Entities",tempEntities); //szv#4:S4163:12Mar99 `st=` not needed
-//      tempEntities = new NCollection_HArray1<occ::handle<IGESData_IGESEntity>> (1,tempNbEntities1);
-    // clang-format on
+
+      PR.ReadEnts(IR, PR.CurrentList(tempNbEntities1), "Child Entities", tempEntities);
   }
 
-  // Read the HArray1 only if its Length was read without any Error
-  /*
-    if (! tempEntities.IsNull()) {
-      occ::handle<IGESData_IGESEntity> tempEntity1;
-      int I;
-      for (I = 1; I <= tempNbEntities1; I++) {
-        st = PR.ReadEntity(IR, PR.Current(), "Associated Entity",
-               tempEntity1);
-        if (st) tempEntities->SetValue(I, tempEntity1);
-      }
-    }
-  */
-  PR.ReadInteger(PR.Current(), "Type Flag", tempTypeFlag); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "Type Flag", tempTypeFlag);
 
   if (PR.DefinedElseSkip())
-    // clang-format off
-    PR.ReadText(PR.Current(), "Primary Reference Designator", tempDesignator); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+
+    PR.ReadText(PR.Current(), "Primary Reference Designator", tempDesignator);
+
   else
     PR.AddWarning("Primary Reference Designator : Null");
 
@@ -82,7 +64,7 @@ void IGESDraw_ToolNetworkSubfigureDef::ReadOwnParams(
     tempNbEntities2 = 0;
   if (st)
   {
-    // Initialise HArray1 only if there is no error reading its Length
+
     if (tempNbEntities2 < 0)
       PR.AddFail("Number Of Connect Points : Less Than Zero");
     else if (tempNbEntities2 > 0)
@@ -90,16 +72,13 @@ void IGESDraw_ToolNetworkSubfigureDef::ReadOwnParams(
         new NCollection_HArray1<occ::handle<IGESDraw_ConnectPoint>>(1, tempNbEntities2);
   }
 
-  // Read the HArray1 only if its Length was read without any Error
   if (!tempPointEntities.IsNull())
   {
     occ::handle<IGESDraw_ConnectPoint> tempConnectPoint;
     int                                I;
     for (I = 1; I <= tempNbEntities2; I++)
     {
-      // st = PR.ReadEntity(IR, PR.Current(),"Associated Connect Point Entity",
-      // STANDARD_TYPE(IGESDraw_ConnectPoint), tempConnectPoint,
-      // true); //szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "Associated Connect Point Entity",
@@ -217,7 +196,7 @@ void IGESDraw_ToolNetworkSubfigureDef::OwnCopy(
 }
 
 IGESData_DirChecker IGESDraw_ToolNetworkSubfigureDef::DirChecker(
-  const occ::handle<IGESDraw_NetworkSubfigureDef>& /*ent*/) const
+  const occ::handle<IGESDraw_NetworkSubfigureDef>&) const
 {
   IGESData_DirChecker DC(320, 0);
   DC.Structure(IGESData_DefVoid);

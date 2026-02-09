@@ -14,7 +14,6 @@ static int halfspace(Draw_Interpretor& di, int n, const char** a)
   if (n < 6)
     return 1;
 
-  // Le point indiquant le cote "matiere".
   gp_Pnt RefPnt = gp_Pnt(Draw::Atof(a[3]), Draw::Atof(a[4]), Draw::Atof(a[5]));
 
   TopoDS_Shape Face = DBRep::Get(a[2], TopAbs_FACE);
@@ -56,8 +55,6 @@ static int halfspace(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int buildfaces(Draw_Interpretor&, int narg, const char** a)
 {
   if (narg < 4)
@@ -90,8 +87,6 @@ static int buildfaces(Draw_Interpretor&, int narg, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 void BRepTest::TopologyCommands(Draw_Interpretor& theCommands)
 {

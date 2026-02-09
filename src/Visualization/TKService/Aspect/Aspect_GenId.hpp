@@ -8,48 +8,31 @@
 #include <NCollection_List.hpp>
 #include <Standard_Boolean.hpp>
 
-//! This class permits the creation and control of integer identifiers.
 class Aspect_GenId
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates an available set of identifiers with the lower bound 0 and the upper bound INT_MAX
-  //! / 2.
   Standard_EXPORT Aspect_GenId();
 
-  //! Creates an available set of identifiers with specified range.
-  //! Raises IdentDefinitionError if theUpper is less than theLow.
   Standard_EXPORT Aspect_GenId(const int theLow, const int theUpper);
 
-  //! Free all identifiers - make the whole range available again.
   Standard_EXPORT void Free();
 
-  //! Free specified identifier. Warning - method has no protection against double-freeing!
   Standard_EXPORT void Free(const int theId);
 
-  //! Returns true if there are available identifiers in range.
   bool HasFree() const { return myFreeCount > 0 || myFreeIds.Extent() > 0; }
 
-  //! Returns the number of available identifiers.
   int Available() const { return myFreeCount + myFreeIds.Extent(); }
 
-  //! Returns the lower identifier in range.
   int Lower() const { return myLowerBound; }
 
-  //! Returns the next available identifier.
-  //! Warning: Raises IdentDefinitionError if all identifiers are busy.
   Standard_EXPORT int Next();
 
-  //! Generates the next available identifier.
-  //! @param[out] theId  generated identifier
-  //! @return FALSE if all identifiers are busy.
   Standard_EXPORT bool Next(int& theId);
 
-  //! Returns the upper identifier in range.
   int Upper() const { return myUpperBound; }
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
 private:

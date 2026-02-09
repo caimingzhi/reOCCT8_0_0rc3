@@ -3,15 +3,14 @@
 #include <Standard_Macro.hpp>
 #include <TopAbs_ShapeEnum.hpp>
 
-//! Struct for shape healing parameters storage
 struct DE_ShapeFixParameters
 {
-  //! Enum, classifying a type of value for parameters
+
   enum class FixMode : signed char
   {
-    FixOrNot = -1, //!< Procedure will be executed or not (depending on the situation)
-    NotFix   = 0,  //!< Procedure will be executed
-    Fix      = 1   //!< Procedure will be executed anyway
+    FixOrNot = -1,
+    NotFix   = 0,
+    Fix      = 1
   };
 
   double           Tolerance3d                         = 1.e-6;

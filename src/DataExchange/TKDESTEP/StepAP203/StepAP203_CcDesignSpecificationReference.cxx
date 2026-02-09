@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP203_CcDesignSpecificationReference, StepBasic_DocumentReference)
 
-//=================================================================================================
-
 StepAP203_CcDesignSpecificationReference::StepAP203_CcDesignSpecificationReference() = default;
-
-//=================================================================================================
 
 void StepAP203_CcDesignSpecificationReference::Init(
   const occ::handle<StepBasic_Document>&       aDocumentReference_AssignedDocument,
@@ -21,15 +17,11 @@ void StepAP203_CcDesignSpecificationReference::Init(
   theItems = aItems;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<StepAP203_SpecifiedItem>> StepAP203_CcDesignSpecificationReference::
   Items() const
 {
   return theItems;
 }
-
-//=================================================================================================
 
 void StepAP203_CcDesignSpecificationReference::SetItems(
   const occ::handle<NCollection_HArray1<StepAP203_SpecifiedItem>>& aItems)

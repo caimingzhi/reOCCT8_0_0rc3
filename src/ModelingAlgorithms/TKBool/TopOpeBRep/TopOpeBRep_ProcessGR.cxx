@@ -6,7 +6,7 @@
 
 #include <Geom_Curve.hpp>
 #include <GeomAPI_ProjectPointOnSurf.hpp>
-// #include <BRepAdaptor_Curve2d.hpp>
+
 #include <TopoDS.hpp>
 #include <TopOpeBRep_FFTransitionTool.hpp>
 #include <TopOpeBRep_VPointInterIterator.hpp>
@@ -35,10 +35,7 @@ extern bool FUN_debnull(const TopoDS_Shape& s)
 }
 #endif
 
-// Standard_EXPORT extern double GLOBAL_tolFF;
 Standard_EXPORTEXTERN double GLOBAL_tolFF;
-
-//=================================================================================================
 
 TopAbs_State TopOpeBRep_FacesFiller::StBipVPonF(const TopOpeBRep_VPointInter& vpf,
                                                 const TopOpeBRep_VPointInter& vpl,
@@ -71,16 +68,10 @@ TopAbs_State TopOpeBRep_FacesFiller::StBipVPonF(const TopOpeBRep_VPointInter& vp
   TopOpeBRep_VPointInter vpff = vpf;
   TopOpeBRep_VPointInter vpll = vpl;
 
-  // xpu200798 : CTS21216, restriction edge 7, f8
-  // purpose : periodic restriction; vpf, vpl describing restriction bounds
-  //      if the Rline is describing the portion on curve (vpl,vpf),
-  //      we have to commutate these bounds.
   if (isperiodic)
   {
 #ifdef OCCT_DEBUG
-//    TopOpeBRep_FFDumper FFD(*this);
-//    std::cout <<"vpf :"; FFD.DumpVP(vpf,std::cout);
-//    std::cout <<"vpl :"; FFD.DumpVP(vpl,std::cout);
+
 #endif
 
     int IArc = 0;
@@ -113,8 +104,8 @@ TopAbs_State TopOpeBRep_FacesFiller::StBipVPonF(const TopOpeBRep_VPointInter& vp
         vpff = vpl;
         vpll = vpf;
       }
-    } // act
-  } // isperiodic
+    }
+  }
 
   TopoDS_Shape F;
   if (isonedge1)
@@ -124,9 +115,6 @@ TopAbs_State TopOpeBRep_FacesFiller::StBipVPonF(const TopOpeBRep_VPointInter& vp
   double uf = TopOpeBRep_FacesFiller::VPParamOnER(vpff, Lrest);
   double ul = TopOpeBRep_FacesFiller::VPParamOnER(vpll, Lrest);
 
-  // NYI XPU: 16-05-97: INTPATCH -> the parametrization of a point on a
-  // periodized curve is INSUFFICIENT : parVP on line can be either 0.
-  // or period.
   bool   badparametrized = (uf > ul);
   double f, l;
   f = BAC.FirstParameter();
@@ -145,7 +133,7 @@ TopAbs_State TopOpeBRep_FacesFiller::StBipVPonF(const TopOpeBRep_VPointInter& vp
   const TopoDS_Edge& arc = TopoDS::Edge(Lrest.Arc());
   BRepAdaptor_Curve  BC(arc);
   double             x      = 0.789;
-  double             parmil = (1 - x) * uf + x * ul; // xpu170898
+  double             parmil = (1 - x) * uf + x * ul;
   gp_Pnt             pmil   = BC.Value(parmil);
 
 #ifdef OCCT_DEBUG
@@ -153,8 +141,6 @@ TopAbs_State TopOpeBRep_FacesFiller::StBipVPonF(const TopOpeBRep_VPointInter& vp
   TopAbs_State st = FSC_StatePonFace(pmil, F, *myPShapeClassifier);
   return st;
 }
-
-//=================================================================================================
 
 TopAbs_State TopOpeBRep_FacesFiller::StateVPonFace(const TopOpeBRep_VPointInter& VP) const
 {
@@ -181,13 +167,6 @@ TopAbs_State TopOpeBRep_FacesFiller::StateVPonFace(const TopOpeBRep_VPointInter&
   return state;
 }
 
-//=================================================================================================
-
-//=======================================================================
-// function : Lminmax
-// purpose  : Computes <pmin> and <pmax> the upper and lower bounds of <L>
-//           enclosing all vpoints.
-//=======================================================================
 void TopOpeBRep_FacesFiller::Lminmax(const TopOpeBRep_LineInter& L, double& pmin, double& pmax)
 {
   pmin = RealLast();
@@ -212,11 +191,6 @@ void TopOpeBRep_FacesFiller::Lminmax(const TopOpeBRep_LineInter& L, double& pmin
   }
 }
 
-//=======================================================================
-// function : LSameDomainERL
-// purpose  : Returns <True> if GLine shares a same geometric domain with
-//           at least one of the restriction edges of <ERL>.
-//=======================================================================
 bool TopOpeBRep_FacesFiller::LSameDomainERL(const TopOpeBRep_LineInter&           L,
                                             const NCollection_List<TopoDS_Shape>& ERL)
 {
@@ -229,10 +203,10 @@ bool TopOpeBRep_FacesFiller::LSameDomainERL(const TopOpeBRep_LineInter&         
   double d = std::abs(f - l);
 
   {
-    bool idINL = (L.INL() && (d == 0)); // null length line, made of VPoints only
+    bool idINL = (L.INL() && (d == 0));
     if (idINL)
       return false;
-  } // INL
+  }
 
   bool id = (d <= Precision::PConfusion());
   if (id)
@@ -264,11 +238,6 @@ bool TopOpeBRep_FacesFiller::LSameDomainERL(const TopOpeBRep_LineInter&         
   return isone;
 }
 
-//=======================================================================
-// function : IsVPtransLok
-// purpose  : Computes the transition <T> of the VPoint <iVP> on the edge
-//           <SI12>. Returns <False> if the status is unknown.
-//=======================================================================
 bool TopOpeBRep_FacesFiller::IsVPtransLok(const TopOpeBRep_LineInter& L,
                                           const int                   iVP,
                                           const int                   SI12,
@@ -310,12 +279,9 @@ bool TopOpeBRep_FacesFiller::TransvpOK(const TopOpeBRep_LineInter& L,
   return ok;
 }
 
-//=================================================================================================
-
 double TopOpeBRep_FacesFiller::VPParamOnER(const TopOpeBRep_VPointInter& vp,
                                            const TopOpeBRep_LineInter&   Lrest)
 {
-  // If vp(index) is an edge boundary returns the point's parameter.
 
   const TopoDS_Edge& E       = TopoDS::Edge(Lrest.Arc());
   bool               isedge1 = Lrest.ArcIsEdge(1);
@@ -332,15 +298,14 @@ double TopOpeBRep_FacesFiller::VPParamOnER(const TopOpeBRep_VPointInter& vp,
     double               rr = BRep_Tool::Parameter(v2, E);
     return rr;
   }
-  // vp is an intersection point,and we get it's parameter.
+
   if (isedge1 && vp.IsOnDomS1())
     return vp.ParameterOnArc1();
   if (isedge2 && vp.IsOnDomS2())
     return vp.ParameterOnArc2();
 
-  // Else,we have to project the point on the edge restriction
   double tolee = BRep_Tool::Tolerance(E);
-  tolee        = tolee * 1.e2; // xpu290998 : PRO15369
+  tolee        = tolee * 1.e2;
   double param, dist;
   bool   projok = FUN_tool_projPonE(vp.Value(), tolee, E, param, dist);
   if (!projok)
@@ -350,7 +315,6 @@ double TopOpeBRep_FacesFiller::VPParamOnER(const TopOpeBRep_VPointInter& vp,
   return param;
 }
 
-// Standard_EXPORT bool FUN_EqualPonR(const TopOpeBRep_LineInter& Lrest,
 Standard_EXPORT bool FUN_EqualPonR(const TopOpeBRep_LineInter&,
                                    const TopOpeBRep_VPointInter& VP1,
                                    const TopOpeBRep_VPointInter& VP2)
@@ -372,8 +336,6 @@ Standard_EXPORT bool FUN_EqualponR(const TopOpeBRep_LineInter&   Lrest,
   bool   pequal = fabs(p1 - p2) < Precision::PConfusion();
   return pequal;
 }
-
-//=================================================================================================
 
 bool TopOpeBRep_FacesFiller::EqualpPonR(const TopOpeBRep_LineInter&   Lrest,
                                         const TopOpeBRep_VPointInter& VP1,

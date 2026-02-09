@@ -10,7 +10,6 @@
 #include <Standard_Transient.hpp>
 #include <Standard_Type.hpp>
 
-//! to Update OutLines.
 class HLRAlgo_PolyInternalData : public Standard_Transient
 {
 
@@ -106,92 +105,66 @@ private:
 #include <HLRAlgo_PolyInternalSegment.hpp>
 #include <HLRAlgo_PolyInternalNode.hpp>
 
-//=================================================================================================
-
 inline void HLRAlgo_PolyInternalData::DecTData()
 {
   myNbTData--;
 }
-
-//=================================================================================================
 
 inline void HLRAlgo_PolyInternalData::DecPISeg()
 {
   myNbPISeg--;
 }
 
-//=================================================================================================
-
 inline void HLRAlgo_PolyInternalData::DecPINod()
 {
   myNbPINod--;
 }
-
-//=================================================================================================
 
 inline int HLRAlgo_PolyInternalData::NbTData() const
 {
   return myNbTData;
 }
 
-//=================================================================================================
-
 inline int HLRAlgo_PolyInternalData::NbPISeg() const
 {
   return myNbPISeg;
 }
-
-//=================================================================================================
 
 inline int HLRAlgo_PolyInternalData::NbPINod() const
 {
   return myNbPINod;
 }
 
-//=================================================================================================
-
 inline bool HLRAlgo_PolyInternalData::Planar() const
 {
   return myPlanar;
 }
-
-//=================================================================================================
 
 inline void HLRAlgo_PolyInternalData::Planar(const bool B)
 {
   myPlanar = B;
 }
 
-//=================================================================================================
-
 inline bool HLRAlgo_PolyInternalData::IntOutL() const
 {
   return myIntOutL;
 }
-
-//=================================================================================================
 
 inline void HLRAlgo_PolyInternalData::IntOutL(const bool B)
 {
   myIntOutL = B;
 }
 
-//=================================================================================================
-
 inline NCollection_Array1<HLRAlgo_TriangleData>& HLRAlgo_PolyInternalData::TData() const
 {
   return myTData->ChangeArray1();
 }
-
-//=================================================================================================
 
 inline NCollection_Array1<occ::handle<HLRAlgo_PolyInternalNode>>& HLRAlgo_PolyInternalData::PINod()
   const
 {
   return myPINod->ChangeArray1();
 }
-
-//=================================================================================================
 
 inline NCollection_Array1<HLRAlgo_PolyInternalSegment>& HLRAlgo_PolyInternalData::PISeg() const
 {

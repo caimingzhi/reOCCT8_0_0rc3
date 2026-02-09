@@ -19,21 +19,17 @@
 IGESSolid_ToolBlock::IGESSolid_ToolBlock() = default;
 
 void IGESSolid_ToolBlock::ReadOwnParams(const occ::handle<IGESSolid_Block>& ent,
-                                        const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                        const occ::handle<IGESData_IGESReaderData>&,
                                         IGESData_ParamReader& PR) const
 {
   gp_XYZ tempSize, tempCorner, tempXAxis, tempZAxis;
   double tempreal;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  // clang-format off
-  PR.ReadXYZ(PR.CurrentList(1, 3), "Size of Block", tempSize); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadXYZ(PR.CurrentList(1, 3), "Size of Block", tempSize);
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Corner Point (X)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Corner Point (X)", tempreal))
       tempCorner.SetX(tempreal);
   }
@@ -42,8 +38,7 @@ void IGESSolid_ToolBlock::ReadOwnParams(const occ::handle<IGESSolid_Block>& ent,
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Corner Point (Y)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Corner Point (Y)", tempreal))
       tempCorner.SetY(tempreal);
   }
@@ -52,8 +47,7 @@ void IGESSolid_ToolBlock::ReadOwnParams(const occ::handle<IGESSolid_Block>& ent,
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Corner Point (Z)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Corner Point (Z)", tempreal))
       tempCorner.SetZ(tempreal);
   }
@@ -62,8 +56,7 @@ void IGESSolid_ToolBlock::ReadOwnParams(const occ::handle<IGESSolid_Block>& ent,
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local X axis (I)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local X axis (I)", tempreal))
       tempXAxis.SetX(tempreal);
   }
@@ -72,8 +65,7 @@ void IGESSolid_ToolBlock::ReadOwnParams(const occ::handle<IGESSolid_Block>& ent,
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local X axis (J)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local X axis (J)", tempreal))
       tempXAxis.SetY(tempreal);
   }
@@ -82,8 +74,7 @@ void IGESSolid_ToolBlock::ReadOwnParams(const occ::handle<IGESSolid_Block>& ent,
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local X axis (K)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local X axis (K)", tempreal))
       tempXAxis.SetZ(tempreal);
   }
@@ -92,8 +83,7 @@ void IGESSolid_ToolBlock::ReadOwnParams(const occ::handle<IGESSolid_Block>& ent,
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local Z axis (I)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local Z axis (I)", tempreal))
       tempZAxis.SetX(tempreal);
   }
@@ -102,8 +92,7 @@ void IGESSolid_ToolBlock::ReadOwnParams(const occ::handle<IGESSolid_Block>& ent,
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local Z axis (J)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local Z axis (J)", tempreal))
       tempZAxis.SetY(tempreal);
   }
@@ -112,8 +101,7 @@ void IGESSolid_ToolBlock::ReadOwnParams(const occ::handle<IGESSolid_Block>& ent,
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local Z axis (K)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local Z axis (K)", tempreal))
       tempZAxis.SetZ(tempreal);
   }
@@ -146,14 +134,14 @@ void IGESSolid_ToolBlock::WriteOwnParams(const occ::handle<IGESSolid_Block>& ent
   IW.Send(ent->ZAxis().Z());
 }
 
-void IGESSolid_ToolBlock::OwnShared(const occ::handle<IGESSolid_Block>& /* ent */,
-                                    Interface_EntityIterator& /* iter */) const
+void IGESSolid_ToolBlock::OwnShared(const occ::handle<IGESSolid_Block>&,
+                                    Interface_EntityIterator&) const
 {
 }
 
 void IGESSolid_ToolBlock::OwnCopy(const occ::handle<IGESSolid_Block>& another,
                                   const occ::handle<IGESSolid_Block>& ent,
-                                  Interface_CopyTool& /* TC */) const
+                                  Interface_CopyTool&) const
 {
   ent->Init(another->Size(),
             another->Corner().XYZ(),
@@ -161,8 +149,7 @@ void IGESSolid_ToolBlock::OwnCopy(const occ::handle<IGESSolid_Block>& another,
             another->ZAxis().XYZ());
 }
 
-IGESData_DirChecker IGESSolid_ToolBlock::DirChecker(
-  const occ::handle<IGESSolid_Block>& /* ent */) const
+IGESData_DirChecker IGESSolid_ToolBlock::DirChecker(const occ::handle<IGESSolid_Block>&) const
 {
   IGESData_DirChecker DC(150, 0);
   DC.Structure(IGESData_DefVoid);
@@ -186,7 +173,7 @@ void IGESSolid_ToolBlock::OwnCheck(const occ::handle<IGESSolid_Block>& ent,
 }
 
 void IGESSolid_ToolBlock::OwnDump(const occ::handle<IGESSolid_Block>& ent,
-                                  const IGESData_IGESDumper& /* dumper */,
+                                  const IGESData_IGESDumper&,
                                   Standard_OStream& S,
                                   const int         level) const
 {

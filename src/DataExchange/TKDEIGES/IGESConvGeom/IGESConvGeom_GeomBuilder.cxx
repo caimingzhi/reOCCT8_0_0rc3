@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gp.hpp>
 #include <gp_Ax1.hpp>
@@ -80,7 +69,7 @@ occ::handle<IGESGeom_CopiousData> IGESConvGeom_GeomBuilder::MakeCopiousData(
   if (datatype < 1 || datatype > 3 || nb == 0 || (polyline && datatype == 3))
     throw Standard_DomainError("IGESConvGeom_GeomBuilder : MakeCopiousData");
 
-  int nbd = datatype + 1; // 1->2  2->3   and   3->6
+  int nbd = datatype + 1;
   if (datatype == 3)
     nbd = 6;
   occ::handle<NCollection_HArray1<double>> data = new NCollection_HArray1<double>(1, nb * nbd);
@@ -146,7 +135,7 @@ bool IGESConvGeom_GeomBuilder::IsIdentity() const
 {
   if (thepos.Form() == gp_Identity)
     return true;
-  //   otherwise, look more closely  ...
+
   if (!IsTranslation())
     return false;
   if (!thepos.TranslationPart().IsEqual(gp_XYZ(0., 0., 0.), epsl))
@@ -158,7 +147,6 @@ bool IGESConvGeom_GeomBuilder::IsTranslation() const
 {
   if (thepos.Form() == gp_Identity || thepos.Form() == gp_Translation)
     return true;
-  //   otherwise, look more closely  ...
 
   int i, j;
   for (i = 1; i <= 3; i++)

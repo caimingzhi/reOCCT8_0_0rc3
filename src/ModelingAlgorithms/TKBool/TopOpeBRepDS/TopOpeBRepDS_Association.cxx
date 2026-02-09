@@ -3,8 +3,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_Association, Standard_Transient)
 
-//=================================================================================================
-
 static bool Contains(const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI,
                      const occ::handle<TopOpeBRepDS_Interference>&                   I)
 {
@@ -17,11 +15,7 @@ static bool Contains(const NCollection_List<occ::handle<TopOpeBRepDS_Interferenc
   return false;
 }
 
-//=================================================================================================
-
 TopOpeBRepDS_Association::TopOpeBRepDS_Association() = default;
-
-//=================================================================================================
 
 void TopOpeBRepDS_Association::Associate(const occ::handle<TopOpeBRepDS_Interference>& I,
                                          const occ::handle<TopOpeBRepDS_Interference>& K)
@@ -48,8 +42,6 @@ void TopOpeBRepDS_Association::Associate(const occ::handle<TopOpeBRepDS_Interfer
   }
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_Association::Associate(
   const occ::handle<TopOpeBRepDS_Interference>&                   I,
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI)
@@ -61,14 +53,10 @@ void TopOpeBRepDS_Association::Associate(
   }
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_Association::HasAssociation(const occ::handle<TopOpeBRepDS_Interference>& I) const
 {
   return myMap.IsBound(I);
 }
-
-//=================================================================================================
 
 NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& TopOpeBRepDS_Association::Associated(
   const occ::handle<TopOpeBRepDS_Interference>& I)
@@ -80,8 +68,6 @@ NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& TopOpeBRepDS_Associati
   static NCollection_List<occ::handle<TopOpeBRepDS_Interference>> empty;
   return empty;
 }
-
-//=================================================================================================
 
 bool TopOpeBRepDS_Association::AreAssociated(const occ::handle<TopOpeBRepDS_Interference>& I,
                                              const occ::handle<TopOpeBRepDS_Interference>& K) const

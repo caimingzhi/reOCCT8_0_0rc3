@@ -8,11 +8,9 @@
 #include <Standard_Dump.hpp>
 #include <TCollection_AsciiString.hpp>
 
-//! Structure defines list of ZLayer properties.
 struct Graphic3d_ZLayerSettings
 {
 
-  //! Default settings.
   Graphic3d_ZLayerSettings()
       : myCullingDistance(Precision::Infinite()),
         myCullingSize(Precision::Infinite()),
@@ -26,27 +24,18 @@ struct Graphic3d_ZLayerSettings
   {
   }
 
-  //! Return user-provided name.
   const TCollection_AsciiString& Name() const { return myName; }
 
-  //! Set custom name.
   void SetName(const TCollection_AsciiString& theName) { myName = theName; }
 
-  //! Return lights list to be used for rendering presentations within this Z-Layer; NULL by
-  //! default. NULL list (but not empty list!) means that default lights assigned to the View should
-  //! be used instead of per-layer lights.
   const occ::handle<Graphic3d_LightSet>& Lights() const { return myLights; }
 
-  //! Assign lights list to be used.
   void SetLights(const occ::handle<Graphic3d_LightSet>& theLights) { myLights = theLights; }
 
-  //! Return the origin of all objects within the layer.
   const gp_XYZ& Origin() const { return myOrigin; }
 
-  //! Return the transformation to the origin.
   const occ::handle<TopLoc_Datum3D>& OriginTransformation() const { return myOriginTrsf; }
 
-  //! Set the origin of all objects within the layer.
   void SetOrigin(const gp_XYZ& theOrigin)
   {
     myOrigin = theOrigin;
@@ -59,93 +48,58 @@ struct Graphic3d_ZLayerSettings
     }
   }
 
-  //! Return TRUE, if culling of distant objects (distance culling) should be performed; FALSE by
-  //! default.
-  //! @sa CullingDistance()
   bool HasCullingDistance() const
   {
     return !Precision::IsInfinite(myCullingDistance) && myCullingDistance > 0.0;
   }
 
-  //! Return the distance to discard drawing of distant objects (distance from camera Eye point); by
-  //! default it is Infinite (distance culling is disabled). Since camera eye definition has no
-  //! strong meaning within orthographic projection, option is considered only within perspective
-  //! projection. Note also that this option has effect only when frustum culling is enabled.
   double CullingDistance() const { return myCullingDistance; }
 
-  //! Set the distance to discard drawing objects.
   void SetCullingDistance(double theDistance) { myCullingDistance = theDistance; }
 
-  //! Return TRUE, if culling of small objects (size culling) should be performed; FALSE by default.
-  //! @sa CullingSize()
   bool HasCullingSize() const
   {
     return !Precision::IsInfinite(myCullingSize) && myCullingSize > 0.0;
   }
 
-  //! Return the size to discard drawing of small objects; by default it is Infinite (size culling
-  //! is disabled). Current implementation checks the length of projected diagonal of bounding box
-  //! in pixels for discarding. Note that this option has effect only when frustum culling is
-  //! enabled.
   double CullingSize() const { return myCullingSize; }
 
-  //! Set the distance to discard drawing objects.
   void SetCullingSize(double theSize) { myCullingSize = theSize; }
 
-  //! Return true if this layer should be drawn after all normal (non-immediate) layers.
   bool IsImmediate() const { return myIsImmediate; }
 
-  //! Set the flag indicating the immediate layer, which should be drawn after all normal
-  //! (non-immediate) layers.
   void SetImmediate(const bool theValue) { myIsImmediate = theValue; }
 
-  //! Returns TRUE if layer should be processed by ray-tracing renderer; TRUE by default.
-  //! Note that this flag is IGNORED for layers with IsImmediate() flag.
   bool IsRaytracable() const { return myToRaytrace; }
 
-  //! Sets if layer should be processed by ray-tracing renderer.
   void SetRaytracable(bool theToRaytrace) { myToRaytrace = theToRaytrace; }
 
-  //! Return flag to allow/prevent environment texture mapping usage for specific layer.
   bool UseEnvironmentTexture() const { return myUseEnvironmentTexture; }
 
-  //! Set the flag to allow/prevent environment texture mapping usage for specific layer.
   void SetEnvironmentTexture(const bool theValue) { myUseEnvironmentTexture = theValue; }
 
-  //! Return true if depth test should be enabled.
   bool ToEnableDepthTest() const { return myToEnableDepthTest; }
 
-  //! Set if depth test should be enabled.
   void SetEnableDepthTest(const bool theValue) { myToEnableDepthTest = theValue; }
 
-  //! Return true depth values should be written during rendering.
   bool ToEnableDepthWrite() const { return myToEnableDepthWrite; }
 
-  //! Set if depth values should be written during rendering.
   void SetEnableDepthWrite(const bool theValue) { myToEnableDepthWrite = theValue; }
 
-  //! Return true if depth values should be cleared before drawing the layer.
   bool ToClearDepth() const { return myToClearDepth; }
 
-  //! Set if depth values should be cleared before drawing the layer.
   void SetClearDepth(const bool theValue) { myToClearDepth = theValue; }
 
-  //! Return TRUE if layer should be rendered within depth pre-pass; TRUE by default.
   bool ToRenderInDepthPrepass() const { return myToRenderInDepthPrepass; }
 
-  //! Set if layer should be rendered within depth pre-pass.
   void SetRenderInDepthPrepass(bool theToRender) { myToRenderInDepthPrepass = theToRender; }
 
-  //! Return glPolygonOffset() arguments.
   const Graphic3d_PolygonOffset& PolygonOffset() const { return myPolygonOffset; }
 
-  //! Setup glPolygonOffset() arguments.
   void SetPolygonOffset(const Graphic3d_PolygonOffset& theParams) { myPolygonOffset = theParams; }
 
-  //! Modify glPolygonOffset() arguments.
   Graphic3d_PolygonOffset& ChangePolygonOffset() { return myPolygonOffset; }
 
-  //! Sets minimal possible positive depth offset.
   void SetDepthOffsetPositive()
   {
     myPolygonOffset.Mode   = Aspect_POM_Fill;
@@ -153,7 +107,6 @@ struct Graphic3d_ZLayerSettings
     myPolygonOffset.Units  = 1.0f;
   }
 
-  //! Sets minimal possible negative depth offset.
   void SetDepthOffsetNegative()
   {
     myPolygonOffset.Mode   = Aspect_POM_Fill;
@@ -161,7 +114,6 @@ struct Graphic3d_ZLayerSettings
     myPolygonOffset.Units  = -1.0f;
   }
 
-  //! Dumps the content of me into the stream
   void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const
   {
     OCCT_DUMP_CLASS_BEGIN(theOStream, Graphic3d_ZLayerSettings)
@@ -185,20 +137,19 @@ struct Graphic3d_ZLayerSettings
   }
 
 protected:
-  TCollection_AsciiString         myName;       //!< user-provided name
-  occ::handle<Graphic3d_LightSet> myLights;     //!< lights list
-  occ::handle<TopLoc_Datum3D>     myOriginTrsf; //!< transformation to the origin
-  // clang-format off
-  gp_XYZ                      myOrigin;                //!< the origin of all objects within the layer
-  double               myCullingDistance;       //!< distance to discard objects
-  double               myCullingSize;           //!< size to discard objects
-  Graphic3d_PolygonOffset     myPolygonOffset;         //!< glPolygonOffset() arguments
-  bool            myIsImmediate;           //!< immediate layer will be drawn after all normal layers
-  bool            myToRaytrace;            //!< option to render layer within ray-tracing engine
-  bool            myUseEnvironmentTexture; //!< flag to allow/prevent environment texture mapping usage for specific layer
-  bool            myToEnableDepthTest;     //!< option to enable depth test
-  bool            myToEnableDepthWrite;    //!< option to enable write depth values
-  bool            myToClearDepth;          //!< option to clear depth values before drawing the layer
-  bool            myToRenderInDepthPrepass;//!< option to render layer within depth pre-pass
-  // clang-format on
+  TCollection_AsciiString         myName;
+  occ::handle<Graphic3d_LightSet> myLights;
+  occ::handle<TopLoc_Datum3D>     myOriginTrsf;
+
+  gp_XYZ                  myOrigin;
+  double                  myCullingDistance;
+  double                  myCullingSize;
+  Graphic3d_PolygonOffset myPolygonOffset;
+  bool                    myIsImmediate;
+  bool                    myToRaytrace;
+  bool                    myUseEnvironmentTexture;
+  bool                    myToEnableDepthTest;
+  bool                    myToEnableDepthWrite;
+  bool                    myToClearDepth;
+  bool                    myToRenderInDepthPrepass;
 };

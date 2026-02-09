@@ -47,29 +47,15 @@ static bool FindOtherErrors(
   const BRepCheck_Analyzer&                                            theAnalyzer,
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMap);
 
-//=================================================================================================
-
 DNaming_BooleanOperationDriver::DNaming_BooleanOperationDriver() = default;
 
-//=======================================================================
-// function : Validate
-// purpose  : Validates labels of a function in <log>.
-//=======================================================================
 void DNaming_BooleanOperationDriver::Validate(occ::handle<TFunction_Logbook>&) const {}
 
-//=======================================================================
-// function : MustExecute
-// purpose  : Analyse in <log> if the loaded function must be executed
-//=======================================================================
 bool DNaming_BooleanOperationDriver::MustExecute(const occ::handle<TFunction_Logbook>&) const
 {
   return true;
 }
 
-//=======================================================================
-// function : Execute
-// purpose  : Execute the function and push in <log> the impacted labels
-//=======================================================================
 int DNaming_BooleanOperationDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
 {
   occ::handle<TFunction_Function> aFunction;
@@ -77,9 +63,6 @@ int DNaming_BooleanOperationDriver::Execute(occ::handle<TFunction_Logbook>& theL
   if (aFunction.IsNull())
     return -1;
 
-  //  occ::handle<TDataStd_UAttribute> anObject = DNaming::GetObjectFromFunction(aFunction);
-  //  if(anObject.IsNull()) return -1;
-  //  occ::handle<TNaming_NamedShape> anObjectNS = DNaming::GetObjectValue(anObject);
   occ::handle<TFunction_Function> aPrevFun = DNaming::GetPrevFunction(aFunction);
   if (aPrevFun.IsNull())
     return -1;
@@ -120,25 +103,24 @@ int DNaming_BooleanOperationDriver::Execute(occ::handle<TFunction_Logbook>& theL
 
   bool anIsDone = false;
 
-  // case FUSE
   if (aFunction->GetDriverGUID() == FUSE_GUID)
   {
     BRepAlgoAPI_Fuse aMkFuse(anOBJECT, aTOOL);
     anIsDone = CheckAndLoad(aMkFuse, aFunction);
   }
-  // case CUT
+
   else if (aFunction->GetDriverGUID() == CUT_GUID)
   {
     BRepAlgoAPI_Cut aMkCut(anOBJECT, aTOOL);
     anIsDone = CheckAndLoad(aMkCut, aFunction);
   }
-  // case COMMON
+
   else if (aFunction->GetDriverGUID() == COMMON_GUID)
   {
     BRepAlgoAPI_Common aMkCom(anOBJECT, aTOOL);
     anIsDone = CheckAndLoad(aMkCom, aFunction);
   }
-  // case SECTION
+
   else if (aFunction->GetDriverGUID() == SECTION_GUID)
   {
     BRepAlgoAPI_Section aMkSect(anOBJECT, aTOOL);
@@ -159,9 +141,6 @@ int DNaming_BooleanOperationDriver::Execute(occ::handle<TFunction_Logbook>& theL
   }
 }
 
-//===================================================================
-//=================================================================================================
-
 static TopAbs_ShapeEnum ShapeType(const TopoDS_Shape& theShape)
 {
   TopAbs_ShapeEnum TypeSh = theShape.ShapeType();
@@ -181,7 +160,6 @@ static TopAbs_ShapeEnum ShapeType(const TopoDS_Shape& theShape)
   return TypeSh;
 }
 
-//=====================================================================
 static bool IsValidSurfType(const TopoDS_Face& theFace)
 {
   BRepAdaptor_Surface          anAdapt(theFace);
@@ -189,8 +167,6 @@ static bool IsValidSurfType(const TopoDS_Face& theFace)
   const GeomAbs_SurfaceType&   aType = anAdapt.GetType();
   return aType == GeomAbs_Sphere;
 }
-
-//=================================================================================================
 
 static bool IsWRCase(const BRepAlgoAPI_BooleanOperation& MS)
 {
@@ -236,8 +212,6 @@ static bool IsWRCase(const BRepAlgoAPI_BooleanOperation& MS)
   return false;
 }
 
-//=================================================================================================
-
 void DNaming_BooleanOperationDriver::LoadNamingDS(const TDF_Label&              theResultLabel,
                                                   BRepAlgoAPI_BooleanOperation& MS) const
 {
@@ -253,7 +227,6 @@ void DNaming_BooleanOperationDriver::LoadNamingDS(const TDF_Label&              
     return;
   }
 
-  // LoadResult
   DNaming::LoadResult(theResultLabel, MS);
 
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> SubShapes;
@@ -263,22 +236,20 @@ void DNaming_BooleanOperationDriver::LoadNamingDS(const TDF_Label&              
     SubShapes.Bind(Exp.Current(), Exp.Current());
   }
 
-  // Naming of modified faces:
-  TNaming_Builder modFB(theResultLabel.NewChild()); // FindChild(1,true));
+  TNaming_Builder modFB(theResultLabel.NewChild());
   DNaming::LoadAndOrientModifiedShapes(MS, ObjSh, TopAbs_FACE, modFB, SubShapes);
   DNaming::LoadAndOrientModifiedShapes(MS, ToolSh, TopAbs_FACE, modFB, SubShapes);
 
-  // Naming of deleted faces:
   if (MS.HasDeleted())
   {
-    TNaming_Builder delB(theResultLabel.NewChild()); // FindChild(2,true));
+    TNaming_Builder delB(theResultLabel.NewChild());
     DNaming::LoadDeletedShapes(MS, ObjSh, TopAbs_FACE, delB);
     DNaming::LoadDeletedShapes(MS, ToolSh, TopAbs_FACE, delB);
   }
 
   if (IsWRCase(MS))
   {
-    // Edges
+
     Exp.Init(ResSh, TopAbs_EDGE);
     for (; Exp.More(); Exp.Next())
     {
@@ -318,8 +289,6 @@ void DNaming_BooleanOperationDriver::LoadNamingDS(const TDF_Label&              
   }
 }
 
-//=================================================================================================
-
 void DNaming_BooleanOperationDriver::LoadSectionNDS(const TDF_Label&              theResultLabel,
                                                     BRepAlgoAPI_BooleanOperation& MS) const
 {
@@ -335,7 +304,6 @@ void DNaming_BooleanOperationDriver::LoadSectionNDS(const TDF_Label&            
     return;
   }
 
-  // LoadResult
   DNaming::LoadResult(theResultLabel, MS);
 
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> SubShapes;
@@ -345,16 +313,11 @@ void DNaming_BooleanOperationDriver::LoadSectionNDS(const TDF_Label&            
     SubShapes.Bind(Exp.Current(), Exp.Current());
   }
 
-  // Naming of modified faces:
-  TNaming_Builder genEdB(theResultLabel.NewChild()); // FindChild(1,true));
+  TNaming_Builder genEdB(theResultLabel.NewChild());
   DNaming::LoadAndOrientGeneratedShapes(MS, ObjSh, TopAbs_FACE, genEdB, SubShapes);
   DNaming::LoadAndOrientGeneratedShapes(MS, ToolSh, TopAbs_FACE, genEdB, SubShapes);
 }
 
-//=======================================================================
-// function : CheckAndLoad
-// purpose  : checks result of operation and performs Topological Naming
-//=======================================================================
 bool DNaming_BooleanOperationDriver::CheckAndLoad(
   BRepAlgoAPI_BooleanOperation&          theMkOpe,
   const occ::handle<TFunction_Function>& theFunction) const
@@ -382,7 +345,7 @@ bool DNaming_BooleanOperationDriver::CheckAndLoad(
       }
       else if (theFunction->GetDriverGUID() == CUT_GUID)
       {
-        LoadNamingDS(RESPOSITION(theFunction), theMkOpe); // the same naming only for case of solids
+        LoadNamingDS(RESPOSITION(theFunction), theMkOpe);
       }
       else if (theFunction->GetDriverGUID() == COMMON_GUID)
       {
@@ -406,10 +369,6 @@ bool DNaming_BooleanOperationDriver::CheckAndLoad(
   return false;
 }
 
-// ------------------------------------------------------------------------
-// static function: FixSameParameter
-// purpose:
-// ------------------------------------------------------------------------
 bool FixSameParameter(const TopoDS_Shape& theShape,
                       BRepCheck_Analyzer& theAnalyzer,
                       const bool          bIgnoreNotSPErrors)
@@ -447,10 +406,6 @@ bool FixSameParameter(const TopoDS_Shape& theShape,
   return false;
 }
 
-// ------------------------------------------------------------------------
-// static function: FindSPErrorEdges
-// purpose:
-// ------------------------------------------------------------------------
 void FindSPErrorEdges(const TopoDS_Shape&                                            theShape,
                       const BRepCheck_Analyzer&                                      theAnalyzer,
                       NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMap)
@@ -512,10 +467,6 @@ void FindSPErrorEdges(const TopoDS_Shape&                                       
   }
 }
 
-// ------------------------------------------------------------------------
-// static function: FindOtherErrors
-// purpose:
-// ------------------------------------------------------------------------
 bool FindOtherErrors(const TopoDS_Shape&       theShape,
                      const BRepCheck_Analyzer& theAnalyzer,
                      const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMap)
@@ -541,7 +492,6 @@ bool FindOtherErrors(const TopoDS_Shape&       theShape,
       {
         bOtherFound = true;
 
-        //
         TopExp_Explorer anExpF(theShape, TopAbs_FACE);
 
         for (; anExpF.More(); anExpF.Next())
@@ -592,7 +542,6 @@ bool FindOtherErrors(const TopoDS_Shape&       theShape,
             }
           }
         }
-        //
 
         if (!bOtherFound)
         {

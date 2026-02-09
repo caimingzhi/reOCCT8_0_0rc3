@@ -64,37 +64,16 @@ public:
 
   Standard_EXPORT int IndexAfter() const;
 
-  //! set the transition corresponding to orientation <O>
-  //!
-  //! O       Before  After
-  //!
-  //! FORWARD       OUT    IN
-  //! REVERSED      IN     OUT
-  //! INTERNAL      IN     IN
-  //! EXTERNAL      OUT    OUT
   Standard_EXPORT void Set(const TopAbs_Orientation O);
 
-  //! returns the orientation corresponding to state <S>
-  //!
-  //! Before and After not equal TopAbs_ON :
-  //! --------------------------------------
-  //! Before  After   Computed orientation
-  //!
-  //! S      not S   REVERSED (we leave state S)
-  //! not S  S       FORWARD  (we enter state S)
-  //! S      S       INTERNAL (we stay in state S)
-  //! not S  not S   EXTERNAL (we stay outside state S)
   Standard_EXPORT TopAbs_Orientation Orientation(const TopAbs_State     S,
                                                  const TopAbs_ShapeEnum T = TopAbs_FACE) const;
 
   Standard_EXPORT TopOpeBRepDS_Transition Complement() const;
 
-  //! returns True if both states are UNKNOWN
   Standard_EXPORT bool IsUnknown() const;
 
 private:
-  //! returns the orientation corresponding to state <S>
-  //! (if one at least of the internal states is ON)
   Standard_EXPORT TopAbs_Orientation OrientationON(const TopAbs_State     S,
                                                    const TopAbs_ShapeEnum T) const;
 

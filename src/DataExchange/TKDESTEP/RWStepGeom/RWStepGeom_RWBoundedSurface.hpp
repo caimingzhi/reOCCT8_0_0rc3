@@ -10,7 +10,6 @@ class Interface_Check;
 class StepGeom_BoundedSurface;
 class StepData_StepWriter;
 
-//! Read & Write Module for BoundedSurface
 class RWStepGeom_RWBoundedSurface
 {
 public:

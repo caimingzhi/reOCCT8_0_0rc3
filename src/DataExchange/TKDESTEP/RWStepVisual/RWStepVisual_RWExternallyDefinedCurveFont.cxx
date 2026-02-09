@@ -5,11 +5,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepVisual_ExternallyDefinedCurveFont.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWExternallyDefinedCurveFont::RWStepVisual_RWExternallyDefinedCurveFont() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWExternallyDefinedCurveFont::ReadStep(
   const occ::handle<StepData_StepReaderData>&               data,
@@ -17,11 +13,9 @@ void RWStepVisual_RWExternallyDefinedCurveFont::ReadStep(
   occ::handle<Interface_Check>&                             ach,
   const occ::handle<StepVisual_ExternallyDefinedCurveFont>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "externally_defined_curve_font"))
     return;
-
-  // Inherited fields of ExternallyDefinedItem
 
   StepBasic_SourceItem aExternallyDefinedItem_ItemId;
   data->ReadEntity(num, 1, "externally_defined_item.item_id", ach, aExternallyDefinedItem_ItemId);
@@ -34,32 +28,23 @@ void RWStepVisual_RWExternallyDefinedCurveFont::ReadStep(
                    STANDARD_TYPE(StepBasic_ExternalSource),
                    aExternallyDefinedItem_Source);
 
-  // Initialize entity
   ent->Init(aExternallyDefinedItem_ItemId, aExternallyDefinedItem_Source);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWExternallyDefinedCurveFont::WriteStep(
   StepData_StepWriter&                                      SW,
   const occ::handle<StepVisual_ExternallyDefinedCurveFont>& ent) const
 {
 
-  // Inherited fields of ExternallyDefinedItem
-
   SW.Send(ent->StepBasic_ExternallyDefinedItem::ItemId().Value());
 
   SW.Send(ent->StepBasic_ExternallyDefinedItem::Source());
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWExternallyDefinedCurveFont::Share(
   const occ::handle<StepVisual_ExternallyDefinedCurveFont>& ent,
   Interface_EntityIterator&                                 iter) const
 {
-
-  // Inherited fields of ExternallyDefinedItem
 
   iter.AddItem(ent->StepBasic_ExternallyDefinedItem::ItemId().Value());
 

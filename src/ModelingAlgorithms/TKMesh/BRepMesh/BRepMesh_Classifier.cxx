@@ -7,15 +7,9 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_Classifier, Standard_Transient)
 
-//=================================================================================================
-
 BRepMesh_Classifier::BRepMesh_Classifier() = default;
 
-//=================================================================================================
-
 BRepMesh_Classifier::~BRepMesh_Classifier() = default;
-
-//=================================================================================================
 
 TopAbs_State BRepMesh_Classifier::Perform(const gp_Pnt2d& thePoint) const
 {
@@ -27,7 +21,7 @@ TopAbs_State BRepMesh_Classifier::Perform(const gp_Pnt2d& thePoint) const
     const int aCur = myTabClass(i)->SiDans(thePoint);
     if (aCur == 0)
     {
-      // Point is ON, but mark it as OUT
+
       isOut = true;
     }
     else
@@ -44,8 +38,6 @@ TopAbs_State BRepMesh_Classifier::Perform(const gp_Pnt2d& thePoint) const
   return TopAbs_IN;
 }
 
-//=================================================================================================
-
 void BRepMesh_Classifier::RegisterWire(const NCollection_Sequence<const gp_Pnt2d*>& theWire,
                                        const std::pair<double, double>&             theTolUV,
                                        const std::pair<double, double>&             theRangeU,
@@ -57,7 +49,6 @@ void BRepMesh_Classifier::RegisterWire(const NCollection_Sequence<const gp_Pnt2d
     return;
   }
 
-  // Accumulate angle
   NCollection_Array1<gp_Pnt2d> aPClass(1, aNbPnts);
   double                       anAngle = 0.0;
   const gp_Pnt2d *             p1 = theWire(1), *p2 = theWire(2), *p3;
@@ -85,7 +76,7 @@ void BRepMesh_Classifier::RegisterWire(const NCollection_Sequence<const gp_Pnt2d
     {
       const double aCurAngle    = A.Angle(B);
       const double aCurAngleAbs = std::abs(aCurAngle);
-      // Check if vectors are opposite
+
       if (aCurAngleAbs > aAngTol && (M_PI - aCurAngleAbs) > aAngTol)
       {
         anAngle += aCurAngle;
@@ -94,7 +85,7 @@ void BRepMesh_Classifier::RegisterWire(const NCollection_Sequence<const gp_Pnt2d
     }
     p2 = p3;
   }
-  // Check for zero angle - treat self intersecting wire as outer
+
   if (std::abs(anAngle) < aAngTol)
     anAngle = 0.0;
 

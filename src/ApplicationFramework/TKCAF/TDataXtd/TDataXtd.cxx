@@ -11,8 +11,6 @@
 #include <Standard_GUID.hpp>
 #include <NCollection_List.hpp>
 
-//=================================================================================================
-
 void TDataXtd::IDList(NCollection_List<Standard_GUID>& anIDList)
 {
   anIDList.Append(TDataXtd_Axis::GetID());
@@ -26,17 +24,10 @@ void TDataXtd::IDList(NCollection_List<Standard_GUID>& anIDList)
   anIDList.Append(TDataXtd_Shape::GetID());
 }
 
-//=======================================================================
-// function :
-// purpose  : print the name of the constraint
-//=======================================================================
-
 Standard_OStream& TDataXtd::Print(const TDataXtd_ConstraintEnum C, Standard_OStream& s)
 {
   switch (C)
   {
-
-      // 2d planar constraints
 
     case TDataXtd_RADIUS:
     {
@@ -124,8 +115,6 @@ Standard_OStream& TDataXtd::Print(const TDataXtd_ConstraintEnum C, Standard_OStr
       break;
     }
 
-      // placement constraint
-
     case TDataXtd_FROM:
     {
       s << "FROM";
@@ -180,11 +169,6 @@ Standard_OStream& TDataXtd::Print(const TDataXtd_ConstraintEnum C, Standard_OStr
   }
   return s;
 }
-
-//=======================================================================
-// function :
-// purpose  : print the name of the real dimension
-//=======================================================================
 
 Standard_OStream& TDataXtd::Print(const TDataXtd_GeometryEnum G, Standard_OStream& s)
 {

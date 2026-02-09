@@ -11,7 +11,6 @@ class StepBasic_PersonAndOrganization;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for PersonAndOrganization
 class RWStepBasic_RWPersonAndOrganization
 {
 public:

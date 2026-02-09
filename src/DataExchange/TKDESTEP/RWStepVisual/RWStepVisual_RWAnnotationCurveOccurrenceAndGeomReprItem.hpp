@@ -11,7 +11,6 @@ class StepVisual_AnnotationCurveOccurrenceAndGeomReprItem;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for StepVisual_AnnotationCurveOccurrenceAndGeomReprItem
 class RWStepVisual_RWAnnotationCurveOccurrenceAndGeomReprItem
 {
 public:

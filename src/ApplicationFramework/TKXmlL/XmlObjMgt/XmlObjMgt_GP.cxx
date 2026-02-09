@@ -6,10 +6,6 @@
 static const char* Translate(const char* theStr, gp_Mat& M);
 static const char* Translate(const char* theStr, gp_XYZ& P);
 
-// STORE
-
-//=================================================================================================
-
 XmlObjMgt_DOMString XmlObjMgt_GP::Translate(const gp_Trsf& aTrsf)
 {
   char                buf[256];
@@ -18,8 +14,6 @@ XmlObjMgt_DOMString XmlObjMgt_GP::Translate(const gp_Trsf& aTrsf)
 
   return XmlObjMgt_DOMString(buf);
 }
-
-//=================================================================================================
 
 XmlObjMgt_DOMString XmlObjMgt_GP::Translate(const gp_Mat& aMat)
 {
@@ -30,18 +24,12 @@ XmlObjMgt_DOMString XmlObjMgt_GP::Translate(const gp_Mat& aMat)
   return XmlObjMgt_DOMString(buf);
 }
 
-//=================================================================================================
-
 XmlObjMgt_DOMString XmlObjMgt_GP::Translate(const gp_XYZ& anXYZ)
 {
-  char buf[75]; // (24 + 1) * 3
+  char buf[75];
   Sprintf(buf, "%.17g %.17g %.17g", anXYZ.X(), anXYZ.Y(), anXYZ.Z());
   return XmlObjMgt_DOMString(buf);
 }
-
-// RETRIEVE
-
-//=================================================================================================
 
 bool XmlObjMgt_GP::Translate(const XmlObjMgt_DOMString& theStr, gp_Trsf& T)
 {
@@ -60,12 +48,10 @@ bool XmlObjMgt_GP::Translate(const XmlObjMgt_DOMString& theStr, gp_Trsf& T)
       T.SetForm((gp_TrsfForm)aForm);
       aStr = ptr;
 
-      //  gp_Mat aMatr;
       aStr = ::Translate(aStr, (gp_Mat&)T.HVectorialPart());
       if (aStr)
       {
 
-        //  gp_XYZ aTransl;
         ::Translate(aStr, (gp_XYZ&)T.TranslationPart());
         aResult = true;
       }
@@ -74,21 +60,15 @@ bool XmlObjMgt_GP::Translate(const XmlObjMgt_DOMString& theStr, gp_Trsf& T)
   return aResult;
 }
 
-//=================================================================================================
-
 bool XmlObjMgt_GP::Translate(const XmlObjMgt_DOMString& theStr, gp_Mat& M)
 {
   return (::Translate(theStr.GetString(), M) != nullptr);
 }
 
-//=================================================================================================
-
 bool XmlObjMgt_GP::Translate(const XmlObjMgt_DOMString& theStr, gp_XYZ& P)
 {
   return (::Translate(theStr.GetString(), P) != nullptr);
 }
-
-//=================================================================================================
 
 static const char* Translate(const char* theStr, gp_Mat& M)
 {
@@ -109,8 +89,6 @@ static const char* Translate(const char* theStr, gp_Mat& M)
   }
   return theStr;
 }
-
-//=================================================================================================
 
 static const char* Translate(const char* theStr, gp_XYZ& P)
 {

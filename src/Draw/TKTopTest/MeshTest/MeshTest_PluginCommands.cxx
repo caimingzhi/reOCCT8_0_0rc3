@@ -41,8 +41,6 @@ static int mpparallel(Draw_Interpretor&, int, const char**);
 static int triarea(Draw_Interpretor&, int, const char**);
 static int tricheck(Draw_Interpretor&, int, const char**);
 
-//=================================================================================================
-
 void MeshTest::PluginCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
@@ -51,9 +49,9 @@ void MeshTest::PluginCommands(Draw_Interpretor& theCommands)
     return;
   }
   done = true;
-  //
+
   const char* g = "Mesh Commands";
-  // Commands
+
   theCommands.Add("mpnames", "use mpnames", __FILE__, mpnames, g);
   theCommands.Add("mpsetdefaultname", "use mpsetdefaultname", __FILE__, mpsetdefaultname, g);
   theCommands.Add("mpgetdefaultname", "use mpgetdefaultname", __FILE__, mpgetdefaultname, g);
@@ -79,19 +77,17 @@ void MeshTest::PluginCommands(Draw_Interpretor& theCommands)
                   g);
 }
 
-//=================================================================================================
-
 static int mpnames(Draw_Interpretor&, int n, const char**)
 {
   int                                                aNb;
   NCollection_Map<TCollection_AsciiString>::Iterator aIt;
-  //
+
   if (n != 1)
   {
     printf(" use mpnames\n");
     return 0;
   }
-  //
+
   const NCollection_Map<TCollection_AsciiString>& aMN = BRepMesh_DiscretFactory::Get().Names();
   aNb                                                 = aMN.Extent();
   if (!aNb)
@@ -99,7 +95,7 @@ static int mpnames(Draw_Interpretor&, int n, const char**)
     printf(" *no names found\n");
     return 0;
   }
-  //
+
   printf(" *available names:\n");
   aIt.Initialize(aMN);
   for (; aIt.More(); aIt.Next())
@@ -107,33 +103,29 @@ static int mpnames(Draw_Interpretor&, int n, const char**)
     const TCollection_AsciiString& aName = aIt.Key();
     printf("  %s\n", aName.ToCString());
   }
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 static int mpsetdefaultname(Draw_Interpretor&, int n, const char** a)
 {
   TCollection_AsciiString aName;
-  //
+
   if (n != 2)
   {
     printf(" use mpsetdefaultname name\n");
     return 0;
   }
-  //
+
   aName = a[1];
-  //
+
   if (BRepMesh_DiscretFactory::Get().SetDefaultName(aName))
     printf(" *ready\n");
   else
     printf(" *fault\n");
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 static int mpgetdefaultname(Draw_Interpretor&, int n, const char**)
 {
@@ -142,36 +134,32 @@ static int mpgetdefaultname(Draw_Interpretor&, int n, const char**)
     printf(" use mpgetdefaultname\n");
     return 0;
   }
-  //
+
   const TCollection_AsciiString& aName = BRepMesh_DiscretFactory::Get().DefaultName();
   printf(" *default name: %s\n", aName.ToCString());
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 static int mpsetfunctionname(Draw_Interpretor&, int n, const char** a)
 {
   TCollection_AsciiString aName;
-  //
+
   if (n != 2)
   {
     printf(" use mpsetfunctionname name\n");
     return 0;
   }
-  //
+
   aName = a[1];
-  //
+
   if (BRepMesh_DiscretFactory::Get().SetFunctionName(aName))
     printf(" *ready\n");
   else
     printf(" *fault\n");
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 static int mpgetfunctionname(Draw_Interpretor&, int n, const char**)
 {
@@ -180,83 +168,78 @@ static int mpgetfunctionname(Draw_Interpretor&, int n, const char**)
     printf(" use mpgetfunctionname\n");
     return 0;
   }
-  //
+
   const TCollection_AsciiString& aName = BRepMesh_DiscretFactory::Get().FunctionName();
   printf(" *function name: %s\n", aName.ToCString());
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 static int mperror(Draw_Interpretor&, int n, const char**)
 {
   BRepMesh_FactoryError aErr;
-  //
+
   if (n != 1)
   {
     printf(" use mperror\n");
     return 0;
   }
-  //
+
   aErr = BRepMesh_DiscretFactory::Get().ErrorStatus();
   printf(" *ErrorStatus: %d\n", (int)aErr);
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 static int mpincmesh(Draw_Interpretor&, int n, const char** a)
 {
   double       aDeflection, aAngle;
   TopoDS_Shape aS;
-  //
+
   if (n < 3)
   {
     printf(" use mpincmesh s deflection [angle]\n");
     return 0;
   }
-  //
+
   aS = DBRep::Get(a[1]);
   if (aS.IsNull())
   {
     printf(" null shapes is not allowed here\n");
     return 0;
   }
-  //
+
   aDeflection = Draw::Atof(a[2]);
   aAngle      = 0.5;
   if (n > 3)
   {
     aAngle = Draw::Atof(a[3]);
   }
-  //
+
   occ::handle<BRepMesh_DiscretRoot> aMeshAlgo =
     BRepMesh_DiscretFactory::Get().Discret(aS, aDeflection, aAngle);
-  //
+
   BRepMesh_FactoryError aErr = BRepMesh_DiscretFactory::Get().ErrorStatus();
   if (aErr != BRepMesh_FE_NOERROR)
   {
     printf(" *Factory::Get().ErrorStatus()=%d\n", (int)aErr);
   }
-  //
+
   if (aMeshAlgo.IsNull())
   {
     printf(" *Can not create the algo\n");
     return 0;
   }
-  //
+
   aMeshAlgo->Perform();
   if (!aMeshAlgo->IsDone())
   {
     printf(" *Not done\n");
   }
-  //
+
   return 0;
 }
 
-// #######################################################################
 static int triarea(Draw_Interpretor& di, int n, const char** a)
 {
 
@@ -273,7 +256,6 @@ static int triarea(Draw_Interpretor& di, int n, const char** a)
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aMapF;
   TopExp::MapShapes(shape, TopAbs_FACE, aMapF);
 
-  // detect if a shape has triangulation
   bool hasPoly = false;
   int  i;
   for (i = 1; i <= aMapF.Extent(); i++)
@@ -288,7 +270,6 @@ static int triarea(Draw_Interpretor& di, int n, const char** a)
     }
   }
 
-  // compute area by triangles
   double aTriArea = 0;
   if (hasPoly)
   {
@@ -319,7 +300,6 @@ static int triarea(Draw_Interpretor& di, int n, const char** a)
     aTriArea /= 2;
   }
 
-  // compute area by geometry
   GProp_GProps props;
   if (anEps <= 0.)
     BRepGProp::SurfaceProperties(shape, props);
@@ -331,7 +311,6 @@ static int triarea(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-// #######################################################################
 bool IsEqual(const BRepMesh_Edge& theFirst, const BRepMesh_Edge& theSecond)
 {
   return theFirst.IsEqual(theSecond);
@@ -352,11 +331,9 @@ static int tricheck(Draw_Interpretor& di, int n, const char** a)
   TopExp::MapShapes(shape, TopAbs_FACE, aMapF);
   const char* name = ".";
 
-  // execute check
   MeshTest_CheckTopology aCheck(shape);
   aCheck.Perform(di);
 
-  // dump info on free links inside the triangulation
   int nbFree = 0;
   int nbFac  = aCheck.NbFacesWithFL(), i, k;
   if (nbFac > 0)
@@ -401,7 +378,6 @@ static int tricheck(Draw_Interpretor& di, int n, const char** a)
     }
   }
 
-  // dump info on cross face errors
   int nbErr = aCheck.NbCrossFaceErrors();
   if (nbErr > 0)
   {
@@ -416,7 +392,6 @@ static int tricheck(Draw_Interpretor& di, int n, const char** a)
     di << "\n";
   }
 
-  // dump info on edges
   int nbAsync = aCheck.NbAsyncEdges();
   if (nbAsync > 0)
   {
@@ -429,7 +404,6 @@ static int tricheck(Draw_Interpretor& di, int n, const char** a)
     di << "\n";
   }
 
-  // dump info on free nodes
   int nbFreeNodes = aCheck.NbFreeNodes();
   if (nbFreeNodes > 0)
   {
@@ -509,7 +483,6 @@ static int tricheck(Draw_Interpretor& di, int n, const char** a)
     di << "\n";
   }
 
-  // output errors summary to DRAW
   if (nbFree > 0 || nbErr > 0 || nbAsync > 0 || nbFreeNodes > 0 || (aNbSmallTriangles > 0))
   {
     di << "Free_links " << nbFree << " Cross_face_errors " << nbErr << " Async_edges " << nbAsync
@@ -526,7 +499,6 @@ static int tricheck(Draw_Interpretor& di, int n, const char** a)
     TopLoc_Location                 aLoc;
     occ::handle<Poly_Triangulation> aT = BRep_Tool::Triangulation(aFace, aLoc);
 
-    // Iterate boundary edges
     NCollection_Map<BRepMesh_Edge> aBoundaryEdgeMap;
     TopExp_Explorer                anExp(aShape, TopAbs_EDGE);
     for (; anExp.More(); anExp.Next())
@@ -620,9 +592,7 @@ static int tricheck(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
-static int mpparallel(Draw_Interpretor& /*di*/, int argc, const char** argv)
+static int mpparallel(Draw_Interpretor&, int argc, const char** argv)
 {
   if (argc == 2)
   {

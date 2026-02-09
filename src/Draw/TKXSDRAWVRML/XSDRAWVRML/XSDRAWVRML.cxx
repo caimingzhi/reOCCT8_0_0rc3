@@ -1,15 +1,4 @@
-// Copyright (c) 2023 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XSDRAWVRML.hpp>
 
@@ -40,10 +29,6 @@
 #include <XSControl_WorkSession.hpp>
 #include <XSDRAW.hpp>
 
-//=============================================================================
-// function : parseCoordinateSystem
-// purpose  : Parse RWMesh_CoordinateSystem enumeration
-//=============================================================================
 static bool parseCoordinateSystem(const char* theArg, RWMesh_CoordinateSystem& theSystem)
 {
   TCollection_AsciiString aCSStr(theArg);
@@ -62,8 +47,6 @@ static bool parseCoordinateSystem(const char* theArg, RWMesh_CoordinateSystem& t
   }
   return true;
 }
-
-//=================================================================================================
 
 static int ReadVrml(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
@@ -197,10 +180,6 @@ static int ReadVrml(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   return 0;
 }
 
-//=======================================================================
-// function : WriteVrml
-// purpose  : Write DECAF document to Vrml
-//=======================================================================
 static int WriteVrml(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -228,7 +207,7 @@ static int WriteVrml(Draw_Interpretor& di, int argc, const char** argv)
   double aScaleFactorM = 1.;
   if (!XCAFDoc_DocumentTool::GetLengthUnit(aDoc, aScaleFactorM))
   {
-    XSAlgo_ShapeProcessor::PrepareForTransfer(); // update unit info
+    XSAlgo_ShapeProcessor::PrepareForTransfer();
     aScaleFactorM = UnitsMethods::GetCasCadeLengthUnit(UnitsMethods_LengthUnit_Meter);
   }
   if (!writer.WriteDoc(aDoc, argv[2], aScaleFactorM))
@@ -239,8 +218,6 @@ static int WriteVrml(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int loadvrml(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -250,14 +227,12 @@ static int loadvrml(Draw_Interpretor& di, int argc, const char** argv)
     TopoDS_Shape                                                                      aShape;
     NCollection_DataMap<occ::handle<TopoDS_TShape>, occ::handle<VrmlData_Appearance>> aShapeAppMap;
 
-    //-----------------------------------------------------------
     std::filebuf aFic;
     std::istream aStream(&aFic);
 
     if (aFic.open(argv[2], std::ios::in))
     {
 
-      // Get path of the VRML file.
       OSD_Path                aPath(argv[2]);
       TCollection_AsciiString aVrmlDir(".");
       TCollection_AsciiString aDisk = aPath.Disk();
@@ -354,13 +329,9 @@ static int loadvrml(Draw_Interpretor& di, int argc, const char** argv)
     {
       di << "cannot open file\n";
     }
-
-    //-----------------------------------------------------------
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int writevrml(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -372,7 +343,6 @@ static int writevrml(Draw_Interpretor& di, int argc, const char** argv)
 
   TopoDS_Shape aShape = DBRep::Get(argv[1]);
 
-  // Get the optional parameters
   int aVersion = 2;
   int aType    = 1;
   if (argc >= 4)
@@ -382,7 +352,6 @@ static int writevrml(Draw_Interpretor& di, int argc, const char** argv)
       aType = Draw::Atoi(argv[4]);
   }
 
-  // Bound parameters
   aVersion = std::max(1, aVersion);
   aVersion = std::min(2, aVersion);
   aType    = std::max(0, aType);
@@ -413,15 +382,13 @@ static int writevrml(Draw_Interpretor& di, int argc, const char** argv)
 
 namespace
 {
-  // Singleton to ensure DEVRML plugin is registered only once
+
   void DEVRMLSingleton()
   {
     static DE_PluginHolder<DEVRML_ConfigurationNode> aHolder;
     (void)aHolder;
   }
 } // namespace
-
-//=================================================================================================
 
 void XSDRAWVRML::Factory(Draw_Interpretor& theDI)
 {
@@ -432,7 +399,6 @@ void XSDRAWVRML::Factory(Draw_Interpretor& theDI)
   }
   anInitActor = true;
 
-  //! Ensure DEVRML plugin is registered
   DEVRMLSingleton();
 
   const char* aGroup = "XDE translation commands";
@@ -466,9 +432,7 @@ void XSDRAWVRML::Factory(Draw_Interpretor& theDI)
             writevrml,
             aGroup);
 
-  // Load XSDRAW session for pilot activation
   XSDRAW::LoadDraw(theDI);
 }
 
-// Declare entry point PLUGINFACTORY
 DPLUGIN(XSDRAWVRML)

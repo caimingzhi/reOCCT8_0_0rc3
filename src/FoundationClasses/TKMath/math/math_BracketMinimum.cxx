@@ -1,22 +1,9 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <math_BracketMinimum.hpp>
 #include <math_Function.hpp>
 #include <StdFail_NotDone.hpp>
 
-// waiting for NotDone Exception
 #define GOLD 1.618034
 #define CGOLD 0.3819660
 #define GLIMIT 100.0
@@ -44,10 +31,10 @@ bool math_BracketMinimum::LimitAndMayBeSwap(math_Function& F,
   bool OK = F.Value(theC, theFC);
   if (!OK)
     return false;
-  // check that B is between A and C
+
   if ((theA - theB) * (theB - theC) < 0)
   {
-    // swap B and C
+
     double dum;
     SHFT(dum, theB, theC, dum);
     SHFT(dum, theFB, theFC, dum);
@@ -81,7 +68,6 @@ void math_BracketMinimum::Perform(math_Function& F)
     SHFT(dum, FBx, FAx, dum);
   }
 
-  // get next prob after (A, B)
   Cx = Bx + Lambda * (Bx - Ax);
   if (myIsLimited)
   {
@@ -106,13 +92,13 @@ void math_BracketMinimum::Perform(math_Function& F)
       ulim = Limited(ulim);
     if ((Bx - u) * (u - Cx) > 0.0)
     {
-      // u is between B and C
+
       OK = F.Value(u, fu);
       if (!OK)
         return;
       if (fu < FCx)
       {
-        // solution is found (B, u, c)
+
         Ax   = Bx;
         Bx   = u;
         FAx  = FBx;
@@ -122,13 +108,13 @@ void math_BracketMinimum::Perform(math_Function& F)
       }
       else if (fu > FBx)
       {
-        // solution is found (A, B, u)
+
         Cx   = u;
         FCx  = fu;
         Done = true;
         return;
       }
-      // get next prob after (B, C)
+
       u = Cx + Lambda * (Cx - Bx);
       if (myIsLimited)
       {
@@ -145,14 +131,14 @@ void math_BracketMinimum::Perform(math_Function& F)
     }
     else if ((Cx - u) * (u - ulim) > 0.0)
     {
-      // u is beyond C but between C and limit
+
       OK = F.Value(u, fu);
       if (!OK)
         return;
     }
     else if ((u - ulim) * (ulim - Cx) >= 0.0)
     {
-      // u is beyond limit
+
       u  = ulim;
       OK = F.Value(u, fu);
       if (!OK)
@@ -160,8 +146,7 @@ void math_BracketMinimum::Perform(math_Function& F)
     }
     else
     {
-      // u tends to approach to the side of A,
-      // so reset it to the next prob after (B, C)
+
       u = Cx + GOLD * (Cx - Bx);
       if (myIsLimited)
       {

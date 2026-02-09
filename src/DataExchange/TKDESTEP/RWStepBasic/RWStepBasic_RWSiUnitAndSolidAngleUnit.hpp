@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_SiUnitAndSolidAngleUnit;
 class StepData_StepWriter;
 
-//! Read & Write Module for SiUnitAndSolidAngleUnit
 class RWStepBasic_RWSiUnitAndSolidAngleUnit
 {
 public:

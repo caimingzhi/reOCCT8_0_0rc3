@@ -6,11 +6,7 @@
 #include <StepDimTol_ToleranceZoneDefinition.hpp>
 #include <StepRepr_ShapeAspect.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWToleranceZoneDefinition::RWStepDimTol_RWToleranceZoneDefinition() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWToleranceZoneDefinition::ReadStep(
   const occ::handle<StepData_StepReaderData>&            data,
@@ -18,11 +14,9 @@ void RWStepDimTol_RWToleranceZoneDefinition::ReadStep(
   occ::handle<Interface_Check>&                          ach,
   const occ::handle<StepDimTol_ToleranceZoneDefinition>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "tolerance_zone_definition"))
     return;
-
-  // Own fields of ToleranceZoneDefinition
 
   occ::handle<StepDimTol_ToleranceZone> aToleranceZone;
   data->ReadEntity(num, 1, "zone", ach, STANDARD_TYPE(StepDimTol_ToleranceZone), aToleranceZone);
@@ -42,17 +36,13 @@ void RWStepDimTol_RWToleranceZoneDefinition::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aToleranceZone, anItems);
 }
-
-//=================================================================================================
 
 void RWStepDimTol_RWToleranceZoneDefinition::WriteStep(
   StepData_StepWriter&                                   SW,
   const occ::handle<StepDimTol_ToleranceZoneDefinition>& ent) const
 {
-  // Own fields of ToleranceZoneDefinition
 
   SW.Send(ent->Zone());
 
@@ -64,14 +54,10 @@ void RWStepDimTol_RWToleranceZoneDefinition::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWToleranceZoneDefinition::Share(
   const occ::handle<StepDimTol_ToleranceZoneDefinition>& ent,
   Interface_EntityIterator&                              iter) const
 {
-
-  // Own fields of ToleranceZoneDefinition
 
   iter.AddItem(ent->Zone());
 

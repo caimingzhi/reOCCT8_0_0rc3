@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include "RWStepGeom_RWOffsetCurve3d.hpp"
@@ -26,42 +15,28 @@ void RWStepGeom_RWOffsetCurve3d::ReadStep(const occ::handle<StepData_StepReaderD
                                           const occ::handle<StepGeom_OffsetCurve3d>&  ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 5, ach, "offset_curve_3d"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- own field : basisCurve ---
-
   occ::handle<StepGeom_Curve> aBasisCurve;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
   data->ReadEntity(num, 2, "basis_curve", ach, STANDARD_TYPE(StepGeom_Curve), aBasisCurve);
 
-  // --- own field : distance ---
-
   double aDistance;
-  // szv#4:S4163:12Mar99 `bool stat3 =` not needed
+
   data->ReadReal(num, 3, "distance", ach, aDistance);
 
-  // --- own field : selfIntersect ---
-
   StepData_Logical aSelfIntersect;
-  // szv#4:S4163:12Mar99 `bool stat4 =` not needed
+
   data->ReadLogical(num, 4, "self_intersect", ach, aSelfIntersect);
 
-  // --- own field : refDirection ---
-
   occ::handle<StepGeom_Direction> aRefDirection;
-  // szv#4:S4163:12Mar99 `bool stat5 =` not needed
-  data->ReadEntity(num, 5, "ref_direction", ach, STANDARD_TYPE(StepGeom_Direction), aRefDirection);
 
-  //--- Initialisation of the read entity ---
+  data->ReadEntity(num, 5, "ref_direction", ach, STANDARD_TYPE(StepGeom_Direction), aRefDirection);
 
   ent->Init(aName, aBasisCurve, aDistance, aSelfIntersect, aRefDirection);
 }
@@ -70,23 +45,13 @@ void RWStepGeom_RWOffsetCurve3d::WriteStep(StepData_StepWriter&                 
                                            const occ::handle<StepGeom_OffsetCurve3d>& ent) const
 {
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
-
-  // --- own field : basisCurve ---
 
   SW.Send(ent->BasisCurve());
 
-  // --- own field : distance ---
-
   SW.Send(ent->Distance());
 
-  // --- own field : selfIntersect ---
-
   SW.SendLogical(ent->SelfIntersect());
-
-  // --- own field : refDirection ---
 
   SW.Send(ent->RefDirection());
 }

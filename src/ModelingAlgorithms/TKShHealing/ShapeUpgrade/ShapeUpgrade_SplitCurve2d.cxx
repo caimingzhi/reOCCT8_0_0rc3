@@ -17,24 +17,18 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_SplitCurve2d, ShapeUpgrade_SplitCurve)
 
-//=================================================================================================
-
 ShapeUpgrade_SplitCurve2d::ShapeUpgrade_SplitCurve2d() = default;
-
-//=================================================================================================
 
 void ShapeUpgrade_SplitCurve2d::Init(const occ::handle<Geom2d_Curve>& C)
 {
   Init(C, C->FirstParameter(), C->LastParameter());
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_SplitCurve2d::Init(const occ::handle<Geom2d_Curve>& C,
                                      const double                     First,
                                      const double                     Last)
 {
-  //  if (ShapeUpgrade::Debug()) std::cout << "SplitCurve2d::Init"<<std::endl;
+
   occ::handle<Geom2d_Curve> CopyOfC = occ::down_cast<Geom2d_Curve>(C->Copy());
   myCurve                           = CopyOfC;
 
@@ -44,7 +38,7 @@ void ShapeUpgrade_SplitCurve2d::Init(const occ::handle<Geom2d_Curve>& C,
   occ::handle<Geom2d_Curve> aCurve    = myCurve;
   if (aCurve->IsKind(STANDARD_TYPE(Geom2d_TrimmedCurve)))
     aCurve = occ::down_cast<Geom2d_TrimmedCurve>(aCurve)->BasisCurve();
-  // 15.11.2002 PTV OCC966
+
   if (!ShapeAnalysis_Curve::IsPeriodic(C))
   {
     double fP = aCurve->FirstParameter();
@@ -73,20 +67,15 @@ void ShapeUpgrade_SplitCurve2d::Init(const occ::handle<Geom2d_Curve>& C,
 
   ShapeUpgrade_SplitCurve::Init(firstPar, lastPar);
 
-  // first, we make a copy of C to prevent modification:
-  //  if (ShapeUpgrade::Debug()) std::cout << ". copy of the curve"<<std::endl;
-
   myNbCurves = 1;
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_SplitCurve2d::Build(const bool Segment)
 {
-  //  if (ShapeUpgrade::Debug()) std::cout<<"ShapeUpgrade_SplitCurve2d::Build"<<std::endl;
+
   double First = mySplitValues->Value(1);
   double Last  = mySplitValues->Value(mySplitValues->Length());
-  // PrepareKnots();
+
   if (mySplitValues->Length() > 2)
     myStatus = ShapeExtend::EncodeStatus(ShapeExtend_DONE1);
   if (myCurve->IsKind(STANDARD_TYPE(Geom2d_TrimmedCurve)))
@@ -206,12 +195,12 @@ void ShapeUpgrade_SplitCurve2d::Build(const bool Segment)
   }
   for (int i = 1; i <= myNbCurves; i++)
   {
-    // skl : in the next block I change "First","Last" to "Firstt","Lastt"
+
     double                    Firstt = mySplitValues->Value(i), Lastt = mySplitValues->Value(i + 1);
     occ::handle<Geom2d_Curve> theNewCurve;
     if (Segment)
     {
-      // creates a copy of myCurve before to segment:
+
       if (myCurve->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve))
           || myCurve->IsKind(STANDARD_TYPE(Geom2d_BezierCurve)))
       {
@@ -244,8 +233,6 @@ void ShapeUpgrade_SplitCurve2d::Build(const bool Segment)
     myResultingCurves->SetValue(i, theNewCurve);
   }
 }
-
-//=================================================================================================
 
 const occ::handle<NCollection_HArray1<occ::handle<Geom2d_Curve>>>& ShapeUpgrade_SplitCurve2d::
   GetCurves() const

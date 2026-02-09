@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_EntityOwner, Standard_Transient)
 
-//=================================================================================================
-
 SelectMgr_EntityOwner::SelectMgr_EntityOwner(const int thePriority)
     : mySelectable(nullptr),
       mypriority(thePriority),
@@ -11,8 +9,6 @@ SelectMgr_EntityOwner::SelectMgr_EntityOwner(const int thePriority)
       myFromDecomposition(false)
 {
 }
-
-//=================================================================================================
 
 SelectMgr_EntityOwner::SelectMgr_EntityOwner(
   const occ::handle<SelectMgr_SelectableObject>& theSelObj,
@@ -24,8 +20,6 @@ SelectMgr_EntityOwner::SelectMgr_EntityOwner(
 {
 }
 
-//=================================================================================================
-
 SelectMgr_EntityOwner::SelectMgr_EntityOwner(const occ::handle<SelectMgr_EntityOwner>& theOwner,
                                              const int                                 thePriority)
     : mySelectable(theOwner->mySelectable),
@@ -34,8 +28,6 @@ SelectMgr_EntityOwner::SelectMgr_EntityOwner(const occ::handle<SelectMgr_EntityO
       myFromDecomposition(false)
 {
 }
-
-//=================================================================================================
 
 void SelectMgr_EntityOwner::HilightWithColor(const occ::handle<PrsMgr_PresentationManager>& thePM,
                                              const occ::handle<Prs3d_Drawer>& theStyle,
@@ -58,8 +50,6 @@ void SelectMgr_EntityOwner::HilightWithColor(const occ::handle<PrsMgr_Presentati
     mySelectable->HilightOwnerWithColor(thePM, theStyle, this);
   }
 }
-
-//=================================================================================================
 
 bool SelectMgr_EntityOwner::Select(const AIS_SelectionScheme theSelScheme,
                                    const bool                theIsDetected) const
@@ -101,8 +91,6 @@ bool SelectMgr_EntityOwner::Select(const AIS_SelectionScheme theSelScheme,
   }
   return false;
 }
-
-//=================================================================================================
 
 void SelectMgr_EntityOwner::DumpJson(Standard_OStream& theOStream, int) const
 {

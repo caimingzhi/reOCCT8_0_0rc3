@@ -10,7 +10,6 @@ class StepBasic_OrdinalDate : public StepBasic_Date
 {
 
 public:
-  //! Returns a OrdinalDate
   Standard_EXPORT StepBasic_OrdinalDate();
 
   Standard_EXPORT void Init(const int aYearComponent, const int aDayComponent);

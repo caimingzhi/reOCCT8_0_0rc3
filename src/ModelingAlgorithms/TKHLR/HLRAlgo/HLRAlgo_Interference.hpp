@@ -54,86 +54,60 @@ private:
   TopAbs_Orientation   myBTransition;
 };
 
-//=================================================================================================
-// Inline implementations
-//=================================================================================================
-
 inline void HLRAlgo_Interference::Intersection(const HLRAlgo_Intersection& I)
 {
   myIntersection = I;
 }
-
-//=================================================================================================
 
 inline void HLRAlgo_Interference::Boundary(const HLRAlgo_Coincidence& B)
 {
   myBoundary = B;
 }
 
-//=================================================================================================
-
 inline void HLRAlgo_Interference::Orientation(const TopAbs_Orientation Or)
 {
   myOrientation = Or;
 }
-
-//=================================================================================================
 
 inline void HLRAlgo_Interference::Transition(const TopAbs_Orientation Or)
 {
   myTransition = Or;
 }
 
-//=================================================================================================
-
 inline void HLRAlgo_Interference::BoundaryTransition(const TopAbs_Orientation Or)
 {
   myBTransition = Or;
 }
-
-//=================================================================================================
 
 inline const HLRAlgo_Intersection& HLRAlgo_Interference::Intersection() const
 {
   return myIntersection;
 }
 
-//=================================================================================================
-
 inline HLRAlgo_Intersection& HLRAlgo_Interference::ChangeIntersection()
 {
   return myIntersection;
 }
-
-//=================================================================================================
 
 inline const HLRAlgo_Coincidence& HLRAlgo_Interference::Boundary() const
 {
   return myBoundary;
 }
 
-//=================================================================================================
-
 inline HLRAlgo_Coincidence& HLRAlgo_Interference::ChangeBoundary()
 {
   return myBoundary;
 }
-
-//=================================================================================================
 
 inline TopAbs_Orientation HLRAlgo_Interference::Orientation() const
 {
   return myOrientation;
 }
 
-//=================================================================================================
-
 inline TopAbs_Orientation HLRAlgo_Interference::Transition() const
 {
   return myTransition;
 }
-
-//=================================================================================================
 
 inline TopAbs_Orientation HLRAlgo_Interference::BoundaryTransition() const
 {

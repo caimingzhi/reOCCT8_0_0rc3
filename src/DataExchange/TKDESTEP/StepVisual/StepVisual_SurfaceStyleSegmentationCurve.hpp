@@ -10,7 +10,6 @@ class StepVisual_SurfaceStyleSegmentationCurve : public Standard_Transient
 {
 
 public:
-  //! Returns a SurfaceStyleSegmentationCurve
   Standard_EXPORT StepVisual_SurfaceStyleSegmentationCurve();
 
   Standard_EXPORT void Init(const occ::handle<StepVisual_CurveStyle>& aStyleOfSegmentationCurve);

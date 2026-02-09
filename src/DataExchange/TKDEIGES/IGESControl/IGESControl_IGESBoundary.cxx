@@ -27,20 +27,14 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESControl_IGESBoundary, IGESToBRep_IGESBoundary)
 
-//=================================================================================================
-
 IGESControl_IGESBoundary::IGESControl_IGESBoundary()
 
   = default;
-
-//=================================================================================================
 
 IGESControl_IGESBoundary::IGESControl_IGESBoundary(const IGESToBRep_CurveAndSurface& CS)
     : IGESToBRep_IGESBoundary(CS)
 {
 }
-
-//=================================================================================================
 
 void IGESControl_IGESBoundary::Check(const bool result,
                                      const bool checkclosure,
@@ -53,7 +47,7 @@ void IGESControl_IGESBoundary::Check(const bool result,
 
   if (Result && checkclosure)
   {
-    // USA60022 7277 check of closure
+
     occ::handle<ShapeAnalysis_Wire> saw = new ShapeAnalysis_Wire;
     saw->Load(mysewd);
     saw->SetPrecision(maxtol);
@@ -74,15 +68,16 @@ void IGESControl_IGESBoundary::Check(const bool result,
     mysewd->Clear();
     if (okCurve3d && mysewd3d->NbEdges() > 0)
     {
-      // clang-format off
-      Message_Msg Msg1070("IGES_1070");//"Representations in the file are inconsistent. Recomputation from 3d"
+
+      Message_Msg Msg1070("IGES_1070");
       Msg1070.Arg(3);
-      myCS.SendWarning(myentity,Msg1070);
+      myCS.SendWarning(myentity, Msg1070);
       mysewd = mysewd3d;
     }
-    else if (okCurve2d && mysewd2d->NbEdges() > 0) {
-      Message_Msg Msg1070("IGES_1070");//"Representations in the file are inconsistent. Recomputation from 2d"
-      // clang-format on
+    else if (okCurve2d && mysewd2d->NbEdges() > 0)
+    {
+      Message_Msg Msg1070("IGES_1070");
+
       Msg1070.Arg(2);
       myCS.SendWarning(myentity, Msg1070);
       mysewd = mysewd2d;
@@ -90,17 +85,6 @@ void IGESControl_IGESBoundary::Check(const bool result,
   }
 }
 
-//=======================================================================
-// function : Connect
-// purpose  : Connects theNextWD to theWD using theSAW.
-//           First, connects edges of theNextWD by calling ShapeFix_Wire::FixConnected(). This
-//           is necessary when theNextWD was built using multiple curves from the Composite
-//           Curve (as ShapeExtend_WireData::Wire() would otherwise produce a wrong
-//           disconnected TopoDS_Wire).
-//           FixConnected() will only update the edges resulting from different composite
-//           curve segments. Edges resulting from splitting C0 curve will already be
-//           connected.
-//=======================================================================
 static bool Connect(const occ::handle<ShapeAnalysis_Wire>&   theSAW,
                     const occ::handle<ShapeExtend_WireData>& theWD,
                     const occ::handle<ShapeExtend_WireData>& theNextWD,
@@ -115,14 +99,12 @@ static bool Connect(const occ::handle<ShapeAnalysis_Wire>&   theSAW,
   {
     occ::handle<ShapeFix_Wire> sfw = new ShapeFix_Wire;
     sfw->Load(theNextWD);
-    sfw->ClosedWireMode() = false; // internal connections are enough
+    sfw->ClosedWireMode() = false;
     sfw->FixConnected();
   }
   return ShapeAlgo::AlgoContainer()
     ->ConnectNextWire(theSAW, theNextWD, theMaxTol, theDistMin, theReverseWD, theReverseNextWD);
 }
-
-//=================================================================================================
 
 bool IGESControl_IGESBoundary::Transfer(
   bool&                                                                     okCurve,
@@ -137,11 +119,10 @@ bool IGESControl_IGESBoundary::Transfer(
   const int                                                                 number,
   occ::handle<ShapeExtend_WireData>&                                        Gsewd)
 {
-  Gsewd = new ShapeExtend_WireData; // local translation (for mysewd)
-  // clang-format off
-  occ::handle<ShapeExtend_WireData> Gsewd3d = new ShapeExtend_WireData;//local translation (for mysewd3d)
-  occ::handle<ShapeExtend_WireData> Gsewd2d = new ShapeExtend_WireData;//local translation (for mysewd2d)
-  // clang-format on
+  Gsewd = new ShapeExtend_WireData;
+
+  occ::handle<ShapeExtend_WireData> Gsewd3d = new ShapeExtend_WireData;
+  occ::handle<ShapeExtend_WireData> Gsewd2d = new ShapeExtend_WireData;
 
   bool   revsewd, revnextsewd;
   double distmin, precision = myCS.GetEpsGeom() * myCS.GetUnitFactor(), maxtol = myCS.GetMaxTol();
@@ -181,7 +162,7 @@ bool IGESControl_IGESBoundary::Transfer(
 
   if (GTranslate3d && GTranslate2d)
   {
-    // Setting preference in the case of inconsistency between 3D and 2D
+
     if (surfcurv == 2)
       Preferred3d = false;
     else if (surfcurv == 3)
@@ -219,8 +200,7 @@ bool IGESControl_IGESBoundary::Transfer(
           Gsewd->Add(Gsewd3d->Wire());
         }
         else
-          Gsewd->Add(
-            Sh); // Gsewd = Gsewd3d is impossible to avoid sharing of sewd (UK1.igs entity 7)
+          Gsewd->Add(Sh);
       }
     }
   }
@@ -240,14 +220,13 @@ bool IGESControl_IGESBoundary::Transfer(
   }
   else if (GTranslate3d && GTranslate2d)
   {
-    // Translate both curves 3D and 2D
-    // Suppose that i-th segment in 2D curve corresponds to i-th segment in 3D curve
+
     for (int i = 1; i <= len3d; i++)
     {
       bool LTranslate3d = true, LTranslate2d = true;
 
       occ::handle<ShapeExtend_WireData> Lsewd3d = new ShapeExtend_WireData;
-      TC.SetBadCase(false); //: 27
+      TC.SetBadCase(false);
       if (usescurve)
         Lsewd3d->Add(scurve3d->Edge(i));
       else
@@ -265,19 +244,19 @@ bool IGESControl_IGESBoundary::Transfer(
         else
           LTranslate3d = false;
       }
-      bool bad3d = TC.BadCase(); //: 27
+      bool bad3d = TC.BadCase();
       okCurve3d  = okCurve3d
                   && ShapeAlgo::AlgoContainer()
                        ->ConnectNextWire(saw3d, Lsewd3d, maxtol, distmin, revsewd, revnextsewd);
 
       occ::handle<ShapeExtend_WireData> Lsewd2d = new ShapeExtend_WireData;
-      TC.SetBadCase(false); //: 27
+      TC.SetBadCase(false);
       TopoDS_Shape shape2d =
         TC.Transfer2dTopoCurve(occ::down_cast<IGESData_IGESEntity>(seq2d->Value(i)),
                                myface,
                                mytrsf,
                                myuFact);
-      bool bad2d = TC.BadCase(); //: 27
+      bool bad2d = TC.BadCase();
       if (!shape2d.IsNull())
       {
         Lsewd2d->Add(shape2d);
@@ -292,8 +271,6 @@ bool IGESControl_IGESBoundary::Transfer(
       else
         LTranslate2d = false;
 
-      //     if (LTranslate3d && LTranslate2d && (Lsewd3d->NbEdges() != Lsewd2d->NbEdges() || bad3d
-      //     || bad2d)) {
       bool isBSpline = false;
       if (!usescurve && !seq3d->Value(i).IsNull() && !seq2d->Value(i).IsNull())
         isBSpline = seq3d->Value(i)->IsKind(STANDARD_TYPE(IGESGeom_BSplineCurve))
@@ -308,7 +285,7 @@ bool IGESControl_IGESBoundary::Transfer(
         LTranslate3d = Preferred3d;
         LTranslate2d = Preferred2d;
       }
-      occ::handle<ShapeExtend_WireData> Lsewd; // Lsewd3d or Lsewd2d or Lsewd3d+pcurve
+      occ::handle<ShapeExtend_WireData> Lsewd;
       if (LTranslate3d && !LTranslate2d)
         Lsewd = Lsewd3d;
       else if (!LTranslate3d && LTranslate2d)
@@ -316,7 +293,7 @@ bool IGESControl_IGESBoundary::Transfer(
       else
       {
         Lsewd = Lsewd3d;
-        // copying pcurve to edge with 3D curve
+
         occ::handle<ShapeFix_Edge> sfe = new ShapeFix_Edge;
         for (int iedge = 1; iedge <= Lsewd3d->NbEdges(); iedge++)
         {
@@ -330,13 +307,12 @@ bool IGESControl_IGESBoundary::Transfer(
                       << std::endl;
 #endif
           }
-          // #74 rln 10.03.99 S4135: handling use of BRepLib::SameParameter by new static parameter
+
           if (Interface_Static::IVal("read.stdsameparameter.mode"))
           {
             double first, last;
             BRep_Tool::Range(edge3d, first, last);
-            // pdn 08.04.99 S4135 optimizing in computation of SPTol
-            // choosing tolerance according to Approx_SameParameter: 50 * 22
+
             double       SPTol = std::min(precision, std::abs(last - first) / 1000);
             BRep_Builder B;
             B.SameParameter(edge3d, false);
@@ -345,9 +321,9 @@ bool IGESControl_IGESBoundary::Transfer(
           else
             sfe->FixSameParameter(edge3d);
           double maxdev = BRep_Tool::Tolerance(edge3d);
-          // pdn 08.04.99 S4135 recomputing only if deviation is greater than maxtol
+
           if (maxdev > maxtol)
-          { //: e2
+          {
 #ifdef OCCT_DEBUG
             std::cout << "Warning: IGESToBRep_IGESBoundary: Deviation = " << maxdev << std::endl;
 #endif

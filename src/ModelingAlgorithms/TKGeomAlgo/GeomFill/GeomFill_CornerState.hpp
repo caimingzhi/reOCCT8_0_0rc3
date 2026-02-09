@@ -7,10 +7,6 @@
 #include <Standard_Real.hpp>
 #include <Standard_Boolean.hpp>
 
-//! Class (should be a structure) storing the
-//! information about continuity, normals
-//! parallelism, coons conditions and bounds tangents
-//! angle on the corner of contour to be filled.
 class GeomFill_CornerState
 {
 public:

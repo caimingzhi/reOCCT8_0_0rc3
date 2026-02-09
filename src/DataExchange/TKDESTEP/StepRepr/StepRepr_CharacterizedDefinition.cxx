@@ -8,11 +8,7 @@
 #include <StepRepr_ShapeAspect.hpp>
 #include <StepRepr_ShapeAspectRelationship.hpp>
 
-//=================================================================================================
-
 StepRepr_CharacterizedDefinition::StepRepr_CharacterizedDefinition() = default;
-
-//=================================================================================================
 
 int StepRepr_CharacterizedDefinition::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -35,22 +31,16 @@ int StepRepr_CharacterizedDefinition::CaseNum(const occ::handle<Standard_Transie
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_CharacterizedObject> StepRepr_CharacterizedDefinition::CharacterizedObject()
   const
 {
   return occ::down_cast<StepBasic_CharacterizedObject>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ProductDefinition> StepRepr_CharacterizedDefinition::ProductDefinition() const
 {
   return occ::down_cast<StepBasic_ProductDefinition>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_ProductDefinitionRelationship> StepRepr_CharacterizedDefinition::
   ProductDefinitionRelationship() const
@@ -58,30 +48,22 @@ occ::handle<StepBasic_ProductDefinitionRelationship> StepRepr_CharacterizedDefin
   return occ::down_cast<StepBasic_ProductDefinitionRelationship>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepRepr_ProductDefinitionShape> StepRepr_CharacterizedDefinition::
   ProductDefinitionShape() const
 {
   return occ::down_cast<StepRepr_ProductDefinitionShape>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepRepr_ShapeAspect> StepRepr_CharacterizedDefinition::ShapeAspect() const
 {
   return occ::down_cast<StepRepr_ShapeAspect>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepRepr_ShapeAspectRelationship> StepRepr_CharacterizedDefinition::
   ShapeAspectRelationship() const
 {
   return occ::down_cast<StepRepr_ShapeAspectRelationship>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_DocumentFile> StepRepr_CharacterizedDefinition::DocumentFile() const
 {

@@ -8,16 +8,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Poly_Triangulation, Standard_Transient)
 
-//=================================================================================================
-
 Poly_Triangulation::Poly_Triangulation()
     : myCachedMinMax(nullptr),
       myDeflection(0),
       myPurpose(Poly_MeshPurpose_NONE)
 {
 }
-
-//=================================================================================================
 
 Poly_Triangulation::Poly_Triangulation(const int  theNbNodes,
                                        const int  theNbTriangles,
@@ -39,8 +35,6 @@ Poly_Triangulation::Poly_Triangulation(const int  theNbNodes,
   }
 }
 
-//=================================================================================================
-
 Poly_Triangulation::Poly_Triangulation(const NCollection_Array1<gp_Pnt>&        theNodes,
                                        const NCollection_Array1<Poly_Triangle>& theTriangles)
     : myCachedMinMax(nullptr),
@@ -53,8 +47,6 @@ Poly_Triangulation::Poly_Triangulation(const NCollection_Array1<gp_Pnt>&        
   myNodes     = aNodeWrapper;
   myTriangles = theTriangles;
 }
-
-//=================================================================================================
 
 Poly_Triangulation::Poly_Triangulation(const NCollection_Array1<gp_Pnt>&        theNodes,
                                        const NCollection_Array1<gp_Pnt2d>&      theUVNodes,
@@ -73,21 +65,15 @@ Poly_Triangulation::Poly_Triangulation(const NCollection_Array1<gp_Pnt>&        
   myUVNodes = aUVNodeWrapper;
 }
 
-//=================================================================================================
-
 Poly_Triangulation::~Poly_Triangulation()
 {
   delete myCachedMinMax;
 }
 
-//=================================================================================================
-
 occ::handle<Poly_Triangulation> Poly_Triangulation::Copy() const
 {
   return new Poly_Triangulation(this);
 }
-
-//=================================================================================================
 
 Poly_Triangulation::Poly_Triangulation(const occ::handle<Poly_Triangulation>& theTriangulation)
     : myCachedMinMax(nullptr),
@@ -100,8 +86,6 @@ Poly_Triangulation::Poly_Triangulation(const occ::handle<Poly_Triangulation>& th
 {
   SetCachedMinMax(theTriangulation->CachedMinMax());
 }
-
-//=================================================================================================
 
 void Poly_Triangulation::Clear()
 {
@@ -120,8 +104,6 @@ void Poly_Triangulation::Clear()
   RemoveNormals();
 }
 
-//=================================================================================================
-
 void Poly_Triangulation::RemoveUVNodes()
 {
   if (!myUVNodes.IsEmpty())
@@ -132,8 +114,6 @@ void Poly_Triangulation::RemoveUVNodes()
   }
 }
 
-//=================================================================================================
-
 void Poly_Triangulation::RemoveNormals()
 {
   if (!myNormals.IsEmpty())
@@ -142,8 +122,6 @@ void Poly_Triangulation::RemoveNormals()
     myNormals.Move(anEmpty);
   }
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<gp_Pnt>> Poly_Triangulation::MapNodeArray() const
 {
@@ -154,7 +132,7 @@ occ::handle<NCollection_HArray1<gp_Pnt>> Poly_Triangulation::MapNodeArray() cons
 
   if (myNodes.IsDoublePrecision())
   {
-    // wrap array
+
     const gp_Pnt*                            aPntArr  = &myNodes.First<gp_Pnt>();
     occ::handle<NCollection_HArray1<gp_Pnt>> anHArray = new NCollection_HArray1<gp_Pnt>();
     NCollection_Array1<gp_Pnt>               anArray(*aPntArr, 1, NbNodes());
@@ -162,7 +140,6 @@ occ::handle<NCollection_HArray1<gp_Pnt>> Poly_Triangulation::MapNodeArray() cons
     return anHArray;
   }
 
-  // deep copy
   occ::handle<NCollection_HArray1<gp_Pnt>> anArray = new NCollection_HArray1<gp_Pnt>(1, NbNodes());
   for (int aNodeIter = 0; aNodeIter < NbNodes(); ++aNodeIter)
   {
@@ -171,8 +148,6 @@ occ::handle<NCollection_HArray1<gp_Pnt>> Poly_Triangulation::MapNodeArray() cons
   }
   return anArray;
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<Poly_Triangle>> Poly_Triangulation::MapTriangleArray() const
 {
@@ -188,8 +163,6 @@ occ::handle<NCollection_HArray1<Poly_Triangle>> Poly_Triangulation::MapTriangleA
   return anHArray;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<gp_Pnt2d>> Poly_Triangulation::MapUVNodeArray() const
 {
   if (myUVNodes.IsEmpty())
@@ -199,7 +172,7 @@ occ::handle<NCollection_HArray1<gp_Pnt2d>> Poly_Triangulation::MapUVNodeArray() 
 
   if (myUVNodes.IsDoublePrecision())
   {
-    // wrap array
+
     const gp_Pnt2d*                            aPntArr  = &myUVNodes.First<gp_Pnt2d>();
     occ::handle<NCollection_HArray1<gp_Pnt2d>> anHArray = new NCollection_HArray1<gp_Pnt2d>();
     NCollection_Array1<gp_Pnt2d>               anArray(*aPntArr, 1, NbNodes());
@@ -207,7 +180,6 @@ occ::handle<NCollection_HArray1<gp_Pnt2d>> Poly_Triangulation::MapUVNodeArray() 
     return anHArray;
   }
 
-  // deep copy
   occ::handle<NCollection_HArray1<gp_Pnt2d>> anArray =
     new NCollection_HArray1<gp_Pnt2d>(1, NbNodes());
   for (int aNodeIter = 0; aNodeIter < NbNodes(); ++aNodeIter)
@@ -217,8 +189,6 @@ occ::handle<NCollection_HArray1<gp_Pnt2d>> Poly_Triangulation::MapUVNodeArray() 
   }
   return anArray;
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<float>> Poly_Triangulation::MapNormalArray() const
 {
@@ -232,8 +202,6 @@ occ::handle<NCollection_HArray1<float>> Poly_Triangulation::MapNormalArray() con
   anHArray->Move(anArray);
   return anHArray;
 }
-
-//=================================================================================================
 
 void Poly_Triangulation::SetNormals(const occ::handle<NCollection_HArray1<float>>& theNormals)
 {
@@ -254,15 +222,11 @@ void Poly_Triangulation::SetNormals(const occ::handle<NCollection_HArray1<float>
   }
 }
 
-//=================================================================================================
-
 void Poly_Triangulation::SetDoublePrecision(bool theIsDouble)
 {
   myNodes.SetDoublePrecision(theIsDouble);
   myUVNodes.SetDoublePrecision(theIsDouble);
 }
-
-//=================================================================================================
 
 void Poly_Triangulation::ResizeNodes(int theNbNodes, bool theToCopyOld)
 {
@@ -277,14 +241,10 @@ void Poly_Triangulation::ResizeNodes(int theNbNodes, bool theToCopyOld)
   }
 }
 
-//=================================================================================================
-
 void Poly_Triangulation::ResizeTriangles(int theNbTriangles, bool theToCopyOld)
 {
   myTriangles.Resize(1, theNbTriangles, theToCopyOld);
 }
-
-//=================================================================================================
 
 void Poly_Triangulation::AddUVNodes()
 {
@@ -294,8 +254,6 @@ void Poly_Triangulation::AddUVNodes()
   }
 }
 
-//=================================================================================================
-
 void Poly_Triangulation::AddNormals()
 {
   if (myNormals.IsEmpty() || myNormals.Size() != myNodes.Size())
@@ -303,8 +261,6 @@ void Poly_Triangulation::AddNormals()
     myNormals.Resize(0, myNodes.Size() - 1, false);
   }
 }
-
-//=================================================================================================
 
 void Poly_Triangulation::DumpJson(Standard_OStream& theOStream, int) const
 {
@@ -321,15 +277,11 @@ void Poly_Triangulation::DumpJson(Standard_OStream& theOStream, int) const
   OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, myPurpose)
 }
 
-//=================================================================================================
-
 const Bnd_Box& Poly_Triangulation::CachedMinMax() const
 {
   static const Bnd_Box anEmptyBox;
   return (myCachedMinMax == nullptr) ? anEmptyBox : *myCachedMinMax;
 }
-
-//=================================================================================================
 
 void Poly_Triangulation::SetCachedMinMax(const Bnd_Box& theBox)
 {
@@ -345,8 +297,6 @@ void Poly_Triangulation::SetCachedMinMax(const Bnd_Box& theBox)
   *myCachedMinMax = theBox;
 }
 
-//=================================================================================================
-
 void Poly_Triangulation::unsetCachedMinMax()
 {
   if (myCachedMinMax != nullptr)
@@ -355,8 +305,6 @@ void Poly_Triangulation::unsetCachedMinMax()
     myCachedMinMax = nullptr;
   }
 }
-
-//=================================================================================================
 
 bool Poly_Triangulation::MinMax(Bnd_Box&       theBox,
                                 const gp_Trsf& theTrsf,
@@ -382,8 +330,6 @@ bool Poly_Triangulation::MinMax(Bnd_Box&       theBox,
   return true;
 }
 
-//=================================================================================================
-
 Bnd_Box Poly_Triangulation::computeBoundingBox(const gp_Trsf& theTrsf) const
 {
   Bnd_Box aBox;
@@ -404,11 +350,9 @@ Bnd_Box Poly_Triangulation::computeBoundingBox(const gp_Trsf& theTrsf) const
   return aBox;
 }
 
-//=================================================================================================
-
 void Poly_Triangulation::ComputeNormals()
 {
-  // zero values
+
   AddNormals();
   myNormals.Init(NCollection_Vec3<float>(0.0f));
 
@@ -432,7 +376,6 @@ void Poly_Triangulation::ComputeNormals()
     }
   }
 
-  // Normalize all vectors
   for (NCollection_Array1<NCollection_Vec3<float>>::Iterator aNodeIter(myNormals); aNodeIter.More();
        aNodeIter.Next())
   {
@@ -441,8 +384,6 @@ void Poly_Triangulation::ComputeNormals()
     aNorm3f = aMod == 0.0f ? NCollection_Vec3<float>(0.0f, 0.0f, 1.0f) : (aNorm3f / aMod);
   }
 }
-
-//=================================================================================================
 
 bool Poly_Triangulation::LoadDeferredData(const occ::handle<OSD_FileSystem>& theFileSystem)
 {
@@ -457,8 +398,6 @@ bool Poly_Triangulation::LoadDeferredData(const occ::handle<OSD_FileSystem>& the
   SetMeshPurpose(myPurpose | Poly_MeshPurpose_Loaded);
   return true;
 }
-
-//=================================================================================================
 
 occ::handle<Poly_Triangulation> Poly_Triangulation::DetachedLoadDeferredData(
   const occ::handle<OSD_FileSystem>& theFileSystem) const
@@ -475,8 +414,6 @@ occ::handle<Poly_Triangulation> Poly_Triangulation::DetachedLoadDeferredData(
   aResult->SetMeshPurpose(aResult->MeshPurpose() | Poly_MeshPurpose_Loaded);
   return aResult;
 }
-
-//=================================================================================================
 
 bool Poly_Triangulation::UnloadDeferredData()
 {

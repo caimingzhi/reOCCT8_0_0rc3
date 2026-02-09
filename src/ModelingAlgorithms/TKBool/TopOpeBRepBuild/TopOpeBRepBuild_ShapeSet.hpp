@@ -14,54 +14,22 @@
 #include <NCollection_IndexedMap.hpp>
 #include <Standard_OStream.hpp>
 
-//! Auxiliary class providing an exploration of a set
-//! of shapes to build faces or solids.
-//! To build faces  : shapes are wires, elements are edges.
-//! To build solids : shapes are shells, elements are faces.
-//! The ShapeSet stores a list of shapes, a list of elements
-//! to start reconstructions, and a map to search neighbours.
-//! The map stores the connection between elements through
-//! subshapes of type <SubShapeType> given in constructor.
-//! <SubShapeType> is:
-//! - TopAbs_VERTEX to connect edges
-//! - TopAbs_EDGE to connect faces
-//!
-//! Signature needed by the BlockBuilder:
-//! InitStartElements(me : in out)
-//! MoreStartElements(me) returns Boolean;
-//! NextStartElement(me : in out);
-//! StartElement(me) returns Shape; ---C++: return const &
-//! InitNeighbours(me : in out; S : Shape);
-//! MoreNeighbours(me) returns Boolean;
-//! NextNeighbour(me : in out);
-//! Neighbour(me) returns Shape; ---C++: return const &
 class TopOpeBRepBuild_ShapeSet
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates a ShapeSet in order to build shapes connected
-  //! by <SubShapeType> shapes.
-  //! <checkshape>:check (or not) the shapes, startelements, elements added.
   Standard_EXPORT TopOpeBRepBuild_ShapeSet(const TopAbs_ShapeEnum SubShapeType,
                                            const bool             checkshape = true);
 
   Standard_EXPORT virtual ~TopOpeBRepBuild_ShapeSet();
 
-  //! Adds <S> to the list of shapes. (wires or shells).
   Standard_EXPORT virtual void AddShape(const TopoDS_Shape& S);
 
-  //! (S is a face or edge)
-  //! Add S to the list of starting shapes used for reconstructions.
-  //! apply AddElement(S).
   Standard_EXPORT virtual void AddStartElement(const TopoDS_Shape& S);
 
-  //! for each subshape SE of S of type mySubShapeType
-  //! - Add subshapes of S to the map of subshapes (mySubShapeMap)
-  //! - Add S to the list of shape incident to subshapes of S.
   Standard_EXPORT virtual void AddElement(const TopoDS_Shape& S);
 
-  //! return a reference on myStartShapes
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& StartElements() const;
 
   Standard_EXPORT void InitShapes();
@@ -90,9 +58,6 @@ public:
 
   Standard_EXPORT NCollection_List<TopoDS_Shape>& ChangeStartShapes();
 
-  //! Build the list of neighbour shapes of myCurrentShape
-  //! (neighbour shapes and myCurrentShapes are of type t)
-  //! Initialize myIncidentShapesIter on neighbour shapes.
   Standard_EXPORT virtual void FindNeighbours();
 
   Standard_EXPORT virtual const NCollection_List<TopoDS_Shape>& MakeNeighboursList(

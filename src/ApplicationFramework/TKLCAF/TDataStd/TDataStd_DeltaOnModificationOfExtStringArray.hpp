@@ -9,17 +9,13 @@
 #include <TDF_DeltaOnModification.hpp>
 class TDataStd_ExtStringArray;
 
-//! This class provides default services for an
-//! AttributeDelta on a MODIFICATION action.
 class TDataStd_DeltaOnModificationOfExtStringArray : public TDF_DeltaOnModification
 {
 
 public:
-  //! Initializes a TDF_DeltaOnModification.
   Standard_EXPORT TDataStd_DeltaOnModificationOfExtStringArray(
     const occ::handle<TDataStd_ExtStringArray>& Arr);
 
-  //! Applies the delta to the attribute.
   Standard_EXPORT void Apply() override;
 
   DEFINE_STANDARD_RTTIEXT(TDataStd_DeltaOnModificationOfExtStringArray, TDF_DeltaOnModification)

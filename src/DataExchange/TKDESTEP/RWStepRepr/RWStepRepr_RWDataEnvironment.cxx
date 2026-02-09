@@ -8,22 +8,16 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWDataEnvironment::RWStepRepr_RWDataEnvironment() = default;
-
-//=================================================================================================
 
 void RWStepRepr_RWDataEnvironment::ReadStep(const occ::handle<StepData_StepReaderData>&  data,
                                             const int                                    num,
                                             occ::handle<Interface_Check>&                ach,
                                             const occ::handle<StepRepr_DataEnvironment>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "data_environment"))
     return;
-
-  // Own fields of DataEnvironment
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -53,17 +47,12 @@ void RWStepRepr_RWDataEnvironment::ReadStep(const occ::handle<StepData_StepReade
     }
   }
 
-  // Initialize entity
   ent->Init(aName, aDescription, aElements);
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWDataEnvironment::WriteStep(StepData_StepWriter&                         SW,
                                              const occ::handle<StepRepr_DataEnvironment>& ent) const
 {
-
-  // Own fields of DataEnvironment
 
   SW.Send(ent->Name());
 
@@ -78,13 +67,9 @@ void RWStepRepr_RWDataEnvironment::WriteStep(StepData_StepWriter&               
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWDataEnvironment::Share(const occ::handle<StepRepr_DataEnvironment>& ent,
                                          Interface_EntityIterator&                    iter) const
 {
-
-  // Own fields of DataEnvironment
 
   for (int i1 = 1; i1 <= ent->Elements()->Length(); i1++)
   {

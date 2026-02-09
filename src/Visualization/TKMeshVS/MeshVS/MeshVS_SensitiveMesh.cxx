@@ -7,8 +7,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_SensitiveMesh, Select3D_SensitiveEntity)
 
-//=================================================================================================
-
 MeshVS_SensitiveMesh::MeshVS_SensitiveMesh(const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
                                            const int                                 theMode)
     : Select3D_SensitiveEntity(theOwnerId)
@@ -31,14 +29,10 @@ MeshVS_SensitiveMesh::MeshVS_SensitiveMesh(const occ::handle<SelectMgr_EntityOwn
   }
 }
 
-//=================================================================================================
-
 int MeshVS_SensitiveMesh::GetMode() const
 {
   return myMode;
 }
-
-//=================================================================================================
 
 occ::handle<Select3D_SensitiveEntity> MeshVS_SensitiveMesh::GetConnected()
 {
@@ -46,10 +40,6 @@ occ::handle<Select3D_SensitiveEntity> MeshVS_SensitiveMesh::GetConnected()
   return aMeshEnt;
 }
 
-//=======================================================================
-// function : NbSubElements
-// purpose  : Returns the amount of mesh nodes
-//=======================================================================
 int MeshVS_SensitiveMesh::NbSubElements() const
 {
   occ::handle<MeshVS_MeshOwner> anOwner = occ::down_cast<MeshVS_MeshOwner>(OwnerId());
@@ -61,19 +51,11 @@ int MeshVS_SensitiveMesh::NbSubElements() const
   return aDataSource->GetAllNodes().Extent();
 }
 
-//=======================================================================
-// function : BoundingBox
-// purpose  : Returns bounding box of mesh
-//=======================================================================
 Select3D_BndBox3d MeshVS_SensitiveMesh::BoundingBox()
 {
   return myBndBox;
 }
 
-//=======================================================================
-// function : CenterOfGeometry
-// purpose  : Returns center of mesh
-//=======================================================================
 gp_Pnt MeshVS_SensitiveMesh::CenterOfGeometry() const
 {
   if (!myBndBox.IsValid())

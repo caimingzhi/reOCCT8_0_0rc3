@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_PrismaticPairWithRange;
 
-//! Read & Write tool for PrismaticPairWithRange
 class RWStepKinematics_RWPrismaticPairWithRange
 {
 public:

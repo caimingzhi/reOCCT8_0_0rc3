@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ElCLib.hpp>
 #include <GccAna_Circ2d3Tan.hpp>
@@ -30,9 +18,6 @@
 #include <Precision.hpp>
 #include <NCollection_Array1.hpp>
 
-//=======================================================================
-//   Creation of a circle tangent to a circle and two points.           +
-//=======================================================================
 GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                                      const gp_Pnt2d&             Point2,
                                      const gp_Pnt2d&             Point3,
@@ -67,10 +52,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
     throw GccEnt_BadQualifier();
     return;
   }
-
-  //=========================================================================
-  //   Processing.                                                          +
-  //=========================================================================
 
   gp_Circ2d                  C1 = Qualified1.Qualified();
   double                     R1 = C1.Radius();
@@ -123,7 +104,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
             double   dist2  = Center.Distance(Point2);
             double   dist3  = Center.Distance(Point3);
             int      nbsol1 = 0;
-            //	     int nbsol2 = 0;
+
             int  nbsol3 = 0;
             bool ok     = false;
             if (Qualified1.IsEnclosed())
@@ -162,8 +143,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
               ok = false;
               for (int ii = 1; ii <= nbsol1; ii++)
               {
-                // pop		 if (std::abs(dist2-Radius(ii))<=Tol &&
-                // std::abs(dist2-Radius(ii))<=Tol){
+
                 if (std::abs(dist2 - Radius(ii)) <= Tol && std::abs(dist3 - Radius(ii)) <= Tol)
                 {
                   nbsol3 = ii;
@@ -174,13 +154,13 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
 
             if (ok)
             {
-              //	       for (int k = 1 ; k <= nbsol3 ; k++) {
+
               if (NbrSol >= 2)
                 break;
               NbrSol++;
-              //		 cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center,dirx),Radius(k));
+
               cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius(nbsol3));
-              //               ==========================================================
+
               double distcc1 = Center.Distance(center1);
               if (!Qualified1.IsUnqualified())
               {
@@ -210,9 +190,9 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                 TheSame1(NbrSol) = 0;
                 gp_Dir2d dc(center1.XY() - Center.XY());
                 if (qualifier1(NbrSol) == GccEnt_enclosed)
-                  // clang-format off
-		     dc.Reverse(); // if tangent circle is inside the source circle, moving to edge of source circle
-                // clang-format on
+
+                  dc.Reverse();
+
                 pnttg1sol(NbrSol) = gp_Pnt2d(Center.XY() + Radius(nbsol3) * dc.XY());
                 par1sol(NbrSol)   = ElCLib::Parameter(cirsol(NbrSol), pnttg1sol(NbrSol));
                 pararg1(NbrSol)   = ElCLib::Parameter(C1, pnttg1sol(NbrSol));
@@ -226,7 +206,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
               pnttg3sol(NbrSol) = Point3;
               par3sol(NbrSol)   = ElCLib::Parameter(cirsol(NbrSol), pnttg3sol(NbrSol));
               pararg3(NbrSol)   = 0.;
-              //}
             }
           }
         }

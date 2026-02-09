@@ -52,7 +52,7 @@ void IGESSolid_Loop::SetBound(const bool bound)
 
 int IGESSolid_Loop::NbEdges() const
 {
-  // pdn 20.04.99 CTS22655 to avoid exceptions on empty loops
+
   if (theEdges.IsNull())
     return 0;
   return theEdges->Length();
@@ -83,13 +83,13 @@ bool IGESSolid_Loop::IsIsoparametric(const int EdgeIndex, const int CurveIndex) 
   if (!theIsoparametricFlags->Value(EdgeIndex).IsNull())
     return (theIsoparametricFlags->Value(EdgeIndex)->Value(CurveIndex) != 0);
   else
-    return false; // must say something
+    return false;
 }
 
 occ::handle<IGESData_IGESEntity> IGESSolid_Loop::ParametricCurve(const int EdgeIndex,
                                                                  const int CurveIndex) const
 {
-  occ::handle<IGESData_IGESEntity> acurve; // by default will be null
+  occ::handle<IGESData_IGESEntity> acurve;
   if (!theCurves->Value(EdgeIndex).IsNull())
     acurve = theCurves->Value(EdgeIndex)->Value(CurveIndex);
   return acurve;

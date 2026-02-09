@@ -11,7 +11,6 @@ class StepBasic_ProductContext : public StepBasic_ApplicationContextElement
 {
 
 public:
-  //! Returns a ProductContext
   Standard_EXPORT StepBasic_ProductContext();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&     aName,

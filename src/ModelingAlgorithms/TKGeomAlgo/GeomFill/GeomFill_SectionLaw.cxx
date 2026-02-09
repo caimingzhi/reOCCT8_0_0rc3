@@ -35,10 +35,7 @@ occ::handle<Geom_BSplineSurface> GeomFill_SectionLaw::BSplineSurface() const
   return BS;
 }
 
-void GeomFill_SectionLaw::SetTolerance(const double, const double)
-{
-  // Ne fait Rien
-}
+void GeomFill_SectionLaw::SetTolerance(const double, const double) {}
 
 gp_Pnt GeomFill_SectionLaw::BarycentreOfSurf() const
 {

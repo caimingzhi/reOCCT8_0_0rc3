@@ -9,7 +9,6 @@
 #include <Standard_Integer.hpp>
 class TCollection_HAsciiString;
 
-//! Added for Dimensional Tolerances
 class StepRepr_CompoundRepresentationItem : public StepRepr_RepresentationItem
 {
 

@@ -63,13 +63,11 @@ occ::handle<Expr_GeneralExpression> Expr_ArcSine::Derivative(
   occ::handle<Expr_GeneralExpression> derop = op->Derivative(X);
 
   occ::handle<Expr_Square> sq = new Expr_Square(Expr::CopyShare(op));
-  // 1 - X2
+
   occ::handle<Expr_Difference> thedif = 1.0 - sq->ShallowSimplified();
 
-  // sqrt(1-X2)
   occ::handle<Expr_SquareRoot> theroot = new Expr_SquareRoot(thedif->ShallowSimplified());
 
-  // ArcSine'(F(X)) = F'(X)/sqrt(1-F(X)2)
   occ::handle<Expr_Division> thediv = derop / theroot->ShallowSimplified();
 
   return thediv->ShallowSimplified();

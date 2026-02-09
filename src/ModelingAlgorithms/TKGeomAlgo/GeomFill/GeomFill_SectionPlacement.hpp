@@ -15,7 +15,6 @@ class gp_Trsf;
 class gp_Mat;
 class gp_Vec;
 
-//! To place section in sweep Function
 class GeomFill_SectionPlacement
 {
 public:
@@ -24,7 +23,6 @@ public:
   Standard_EXPORT GeomFill_SectionPlacement(const occ::handle<GeomFill_LocationLaw>& L,
                                             const occ::handle<Geom_Geometry>&        Section);
 
-  //! To change the section Law
   Standard_EXPORT void SetLocation(const occ::handle<GeomFill_LocationLaw>& L);
 
   Standard_EXPORT void Perform(const double Tol);
@@ -46,17 +44,8 @@ public:
   Standard_EXPORT gp_Trsf Transformation(const bool WithTranslation,
                                          const bool WithCorrection = false) const;
 
-  //! Compute the Section, in the coordinate system given by
-  //! the Location Law.
-  //! If <WithTranslation> contact between
-  //! <Section> and <Path> is forced.
   Standard_EXPORT occ::handle<Geom_Curve> Section(const bool WithTranslation) const;
 
-  //! Compute the Section, in the coordinate system given by
-  //! the Location Law.
-  //! To have the Normal to section equal to the Location
-  //! Law Normal. If <WithTranslation> contact between
-  //! <Section> and <Path> is forced.
   Standard_EXPORT occ::handle<Geom_Curve> ModifiedSection(const bool WithTranslation) const;
 
 private:

@@ -4,18 +4,12 @@
 #include <StepFEA_SymmetricTensor23dMember.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=================================================================================================
-
 StepFEA_SymmetricTensor23d::StepFEA_SymmetricTensor23d() = default;
 
-//=================================================================================================
-
-int StepFEA_SymmetricTensor23d::CaseNum(const occ::handle<Standard_Transient>& /*ent*/) const
+int StepFEA_SymmetricTensor23d::CaseNum(const occ::handle<Standard_Transient>&) const
 {
   return 0;
 }
-
-//=================================================================================================
 
 int StepFEA_SymmetricTensor23d::CaseMem(const occ::handle<StepData_SelectMember>& ent) const
 {
@@ -31,14 +25,10 @@ int StepFEA_SymmetricTensor23d::CaseMem(const occ::handle<StepData_SelectMember>
     return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepData_SelectMember> StepFEA_SymmetricTensor23d::NewMember() const
 {
   return new StepFEA_SymmetricTensor23dMember;
 }
-
-//=================================================================================================
 
 void StepFEA_SymmetricTensor23d::SetIsotropicSymmetricTensor23d(const double val)
 {
@@ -51,8 +41,6 @@ void StepFEA_SymmetricTensor23d::SetIsotropicSymmetricTensor23d(const double val
   SelMem->SetName(name->ToCString());
   SelMem->SetReal(val);
 }
-
-//=================================================================================================
 
 double StepFEA_SymmetricTensor23d::IsotropicSymmetricTensor23d() const
 {
@@ -70,10 +58,8 @@ double StepFEA_SymmetricTensor23d::IsotropicSymmetricTensor23d() const
   return val;
 }
 
-//=================================================================================================
-
 void StepFEA_SymmetricTensor23d::SetOrthotropicSymmetricTensor23d(
-  const occ::handle<NCollection_HArray1<double>>& /*val*/)
+  const occ::handle<NCollection_HArray1<double>>&)
 {
   occ::handle<StepFEA_SymmetricTensor23dMember> SelMem =
     occ::down_cast<StepFEA_SymmetricTensor23dMember>(Value());
@@ -82,10 +68,7 @@ void StepFEA_SymmetricTensor23d::SetOrthotropicSymmetricTensor23d(
   occ::handle<TCollection_HAsciiString> name =
     new TCollection_HAsciiString("ORTHOTROPIC_SYMMETRIC_TENSOR2_3D");
   SelMem->SetName(name->ToCString());
-  // SelMem->SetHArray1OfReal(val);
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<double>> StepFEA_SymmetricTensor23d::OrthotropicSymmetricTensor23d()
   const
@@ -100,14 +83,12 @@ occ::handle<NCollection_HArray1<double>> StepFEA_SymmetricTensor23d::Orthotropic
     new TCollection_HAsciiString("ORTHOTROPIC_SYMMETRIC_TENSOR2_3D");
   if (name->IsDifferent(nameitem))
     return nullptr;
-  occ::handle<NCollection_HArray1<double>> val /* = SelMem->HArray1OfReal()*/;
+  occ::handle<NCollection_HArray1<double>> val;
   return val;
 }
 
-//=================================================================================================
-
 void StepFEA_SymmetricTensor23d::SetAnisotropicSymmetricTensor23d(
-  const occ::handle<NCollection_HArray1<double>>& /*val*/)
+  const occ::handle<NCollection_HArray1<double>>&)
 {
   occ::handle<StepFEA_SymmetricTensor23dMember> SelMem =
     occ::down_cast<StepFEA_SymmetricTensor23dMember>(Value());
@@ -116,10 +97,7 @@ void StepFEA_SymmetricTensor23d::SetAnisotropicSymmetricTensor23d(
   occ::handle<TCollection_HAsciiString> name =
     new TCollection_HAsciiString("ANISOTROPIC_SYMMETRIC_TENSOR2_3D");
   SelMem->SetName(name->ToCString());
-  // SelMem->SetHArray1OfReal(val);
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<double>> StepFEA_SymmetricTensor23d::AnisotropicSymmetricTensor23d()
   const
@@ -134,6 +112,6 @@ occ::handle<NCollection_HArray1<double>> StepFEA_SymmetricTensor23d::Anisotropic
     new TCollection_HAsciiString("ANISOTROPIC_SYMMETRIC_TENSOR2_3D");
   if (name->IsDifferent(nameitem))
     return nullptr;
-  occ::handle<NCollection_HArray1<double>> val /*= SelMem->HArray1OfReal()*/;
+  occ::handle<NCollection_HArray1<double>> val;
   return val;
 }

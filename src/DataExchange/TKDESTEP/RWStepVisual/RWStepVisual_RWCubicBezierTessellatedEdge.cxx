@@ -1,4 +1,4 @@
-// Created on : Thu Mar 24 18:30:11 2022
+
 
 #include "RWStepVisual_RWCubicBezierTessellatedEdge.hpp"
 #include <StepVisual_CubicBezierTessellatedEdge.hpp>
@@ -12,11 +12,7 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWCubicBezierTessellatedEdge::RWStepVisual_RWCubicBezierTessellatedEdge() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWCubicBezierTessellatedEdge::ReadStep(
   const occ::handle<StepData_StepReaderData>&               theData,
@@ -24,18 +20,14 @@ void RWStepVisual_RWCubicBezierTessellatedEdge::ReadStep(
   occ::handle<Interface_Check>&                             theCheck,
   const occ::handle<StepVisual_CubicBezierTessellatedEdge>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 4, theCheck, "cubic_bezier_tessellated_edge"))
   {
     return;
   }
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theCheck, aRepresentationItem_Name);
-
-  // Inherited fields of TessellatedEdge
 
   occ::handle<StepVisual_CoordinatesList> aTessellatedEdge_Coordinates;
   theData->ReadEntity(theNum,
@@ -76,7 +68,6 @@ void RWStepVisual_RWCubicBezierTessellatedEdge::ReadStep(
     }
   }
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aTessellatedEdge_Coordinates,
                hasTessellatedEdge_GeometricLink,
@@ -84,18 +75,12 @@ void RWStepVisual_RWCubicBezierTessellatedEdge::ReadStep(
                aTessellatedEdge_LineStrip);
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWCubicBezierTessellatedEdge::WriteStep(
   StepData_StepWriter&                                      theSW,
   const occ::handle<StepVisual_CubicBezierTessellatedEdge>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Own fields of TessellatedEdge
 
   theSW.Send(theEnt->Coordinates());
 
@@ -117,16 +102,10 @@ void RWStepVisual_RWCubicBezierTessellatedEdge::WriteStep(
   theSW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWCubicBezierTessellatedEdge::Share(
   const occ::handle<StepVisual_CubicBezierTessellatedEdge>& theEnt,
   Interface_EntityIterator&                                 theIter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of TessellatedEdge
 
   theIter.AddItem(theEnt->StepVisual_TessellatedEdge::Coordinates());
 

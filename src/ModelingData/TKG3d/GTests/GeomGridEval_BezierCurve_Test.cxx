@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -38,7 +27,7 @@ namespace
 
 TEST(GeomGridEval_BezierCurveTest, BasicEvaluation)
 {
-  // Create a cubic Bezier curve
+
   NCollection_Array1<gp_Pnt> aPoles(1, 4);
   aPoles.SetValue(1, gp_Pnt(0, 0, 0));
   aPoles.SetValue(2, gp_Pnt(1, 2, 0));
@@ -50,7 +39,6 @@ TEST(GeomGridEval_BezierCurveTest, BasicEvaluation)
   GeomGridEval_BezierCurve anEval(aBezier);
   EXPECT_FALSE(anEval.Geometry().IsNull());
 
-  // Test at 0, 0.5, 1
   NCollection_Array1<double> aParams(1, 3);
   aParams.SetValue(1, 0.0);
   aParams.SetValue(2, 0.5);
@@ -59,7 +47,6 @@ TEST(GeomGridEval_BezierCurveTest, BasicEvaluation)
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
   EXPECT_EQ(aGrid.Size(), 3);
 
-  // Verify points
   for (int i = 1; i <= 3; ++i)
   {
     gp_Pnt aExpected = aBezier->Value(aParams.Value(i));
@@ -147,7 +134,7 @@ TEST(GeomGridEval_BezierCurveTest, DerivativeD3)
 
 TEST(GeomGridEval_BezierCurveTest, RationalEvaluation)
 {
-  // Rational Bezier curve (quarter circle)
+
   NCollection_Array1<gp_Pnt> aPoles(1, 3);
   NCollection_Array1<double> aWeights(1, 3);
 
@@ -241,7 +228,7 @@ TEST(GeomGridEval_BezierCurveTest, DerivativeDN_Order3)
 
 TEST(GeomGridEval_BezierCurveTest, DerivativeDN_BeyondDegree)
 {
-  // Cubic Bezier (degree 3), test DN for N > 3 should return zero vectors
+
   NCollection_Array1<gp_Pnt> aPoles(1, 4);
   aPoles.SetValue(1, gp_Pnt(0, 0, 0));
   aPoles.SetValue(2, gp_Pnt(1, 2, 0));
@@ -253,7 +240,6 @@ TEST(GeomGridEval_BezierCurveTest, DerivativeDN_BeyondDegree)
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 1.0, 5);
 
-  // 4th derivative of cubic Bezier should be zero
   NCollection_Array1<gp_Vec> aGrid = anEval.EvaluateGridDN(aParams, 4);
 
   for (int i = 1; i <= 5; ++i)
@@ -264,7 +250,7 @@ TEST(GeomGridEval_BezierCurveTest, DerivativeDN_BeyondDegree)
 
 TEST(GeomGridEval_BezierCurveTest, DerivativeDN_RationalCurve)
 {
-  // Rational Bezier curve (quarter circle)
+
   NCollection_Array1<gp_Pnt> aPoles(1, 3);
   NCollection_Array1<double> aWeights(1, 3);
 
@@ -281,7 +267,6 @@ TEST(GeomGridEval_BezierCurveTest, DerivativeDN_RationalCurve)
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 1.0, 11);
 
-  // Test DN for orders 1, 2
   for (int aOrder = 1; aOrder <= 2; ++aOrder)
   {
     NCollection_Array1<gp_Vec> aGrid = anEval.EvaluateGridDN(aParams, aOrder);

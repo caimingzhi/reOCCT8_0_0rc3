@@ -7,8 +7,6 @@
 #include "../../TKGeomAlgo/IntCurveSurface/IntCurveSurface_PolygonUtils.hpp"
 #include <Standard_OutOfRange.hpp>
 
-//==================================================================================================
-
 HLRBRep_ThePolygonOfInterCSurf::HLRBRep_ThePolygonOfInterCSurf(const gp_Lin& Curve, const int NbPnt)
     : ThePnts(1, (NbPnt < 5) ? 5 : NbPnt),
       ClosedPolygon(false)
@@ -18,8 +16,6 @@ HLRBRep_ThePolygonOfInterCSurf::HLRBRep_ThePolygonOfInterCSurf(const gp_Lin& Cur
   Bsup    = HLRBRep_LineTool::LastParameter(Curve);
   Init(Curve);
 }
-
-//==================================================================================================
 
 HLRBRep_ThePolygonOfInterCSurf::HLRBRep_ThePolygonOfInterCSurf(const gp_Lin& Curve,
                                                                const double  U1,
@@ -34,8 +30,6 @@ HLRBRep_ThePolygonOfInterCSurf::HLRBRep_ThePolygonOfInterCSurf(const gp_Lin& Cur
   Init(Curve);
 }
 
-//==================================================================================================
-
 HLRBRep_ThePolygonOfInterCSurf::HLRBRep_ThePolygonOfInterCSurf(
   const gp_Lin&                     Curve,
   const NCollection_Array1<double>& Upars)
@@ -48,8 +42,6 @@ HLRBRep_ThePolygonOfInterCSurf::HLRBRep_ThePolygonOfInterCSurf(
   Init(Curve, Upars);
 }
 
-//==================================================================================================
-
 void HLRBRep_ThePolygonOfInterCSurf::Init(const gp_Lin& Curve)
 {
   IntCurveSurface_PolygonUtils::InitUniform<gp_Lin, HLRBRep_LineTool>(Curve,
@@ -61,8 +53,6 @@ void HLRBRep_ThePolygonOfInterCSurf::Init(const gp_Lin& Curve)
                                                                       TheDeflection);
   ClosedPolygon = false;
 }
-
-//==================================================================================================
 
 void HLRBRep_ThePolygonOfInterCSurf::Init(const gp_Lin&                     Curve,
                                           const NCollection_Array1<double>& Upars)
@@ -77,8 +67,6 @@ void HLRBRep_ThePolygonOfInterCSurf::Init(const gp_Lin&                     Curv
   ClosedPolygon = false;
 }
 
-//==================================================================================================
-
 double HLRBRep_ThePolygonOfInterCSurf::ApproxParamOnCurve(const int    Index,
                                                           const double ParamOnLine) const
 {
@@ -89,7 +77,5 @@ double HLRBRep_ThePolygonOfInterCSurf::ApproxParamOnCurve(const int    Index,
                                                           NbPntIn,
                                                           myParams);
 }
-
-//==================================================================================================
 
 void HLRBRep_ThePolygonOfInterCSurf::Dump() const {}

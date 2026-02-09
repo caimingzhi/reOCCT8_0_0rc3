@@ -20,10 +20,10 @@ IGESDimen_ToolDimensionDisplayData::IGESDimen_ToolDimensionDisplayData() = defau
 
 void IGESDimen_ToolDimensionDisplayData::ReadOwnParams(
   const occ::handle<IGESDimen_DimensionDisplayData>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /* IR */,
+  const occ::handle<IGESData_IGESReaderData>&,
   IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   int                                   tempDimType;
   int                                   tempLabelPos;
   int                                   tempCharSet;
@@ -40,37 +40,34 @@ void IGESDimen_ToolDimensionDisplayData::ReadOwnParams(
   occ::handle<NCollection_HArray1<int>> tempStartInd;
   occ::handle<NCollection_HArray1<int>> tempEndInd;
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadInteger(PR.Current(), "Number of Properties", tempNbProps);
   PR.ReadInteger(PR.Current(), "Dimension Type", tempDimType);
   PR.ReadInteger(PR.Current(), "Label Position", tempLabelPos);
   if (PR.DefinedElseSkip())
-    // clang-format off
-    PR.ReadInteger(PR.Current(),"Character Set", tempCharSet); //szv#4:S4163:12Mar99 `st=` not needed
+
+    PR.ReadInteger(PR.Current(), "Character Set", tempCharSet);
   else
     tempCharSet = 1;
 
-  //szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadText(PR.Current(),"L String", tempLString);
-  PR.ReadInteger(PR.Current(),"Decimal Symbol",tempDeciSymb);
+  PR.ReadText(PR.Current(), "L String", tempLString);
+  PR.ReadInteger(PR.Current(), "Decimal Symbol", tempDeciSymb);
   if (PR.DefinedElseSkip())
-    PR.ReadReal(PR.Current(),"Witness Line Angle",tempWitLineAng); //szv#4:S4163:12Mar99 `st=` not needed
+    PR.ReadReal(PR.Current(), "Witness Line Angle", tempWitLineAng);
   else
     tempWitLineAng = M_PI / 2;
 
-  PR.ReadInteger(PR.Current(),"Text Alignment",tempTextAlign); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "Text Alignment", tempTextAlign);
   if (PR.DefinedElseSkip())
-    PR.ReadInteger(PR.Current(),"Text Level",tempTextLevel); //szv#4:S4163:12Mar99 `st=` not needed
+    PR.ReadInteger(PR.Current(), "Text Level", tempTextLevel);
   else
     tempTextLevel = 0;
 
   if (PR.DefinedElseSkip())
-    PR.ReadInteger(PR.Current(),"Text Place",tempTextPlace); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+    PR.ReadInteger(PR.Current(), "Text Place", tempTextPlace);
+
   else
     tempTextPlace = 0;
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadInteger(PR.Current(), "ArrowHeadOrientation", tempArrHeadOrient);
   PR.ReadReal(PR.Current(), "Initial Value", tempInitVal);
   int  tempnbval;
@@ -83,14 +80,13 @@ void IGESDimen_ToolDimensionDisplayData::ReadOwnParams(
     for (int i = 1; i <= tempnbval; i++)
     {
       int anote, astart, anend;
-      // st = PR.ReadInteger(PR.Current(), "Supplementary Notes", anote); //szv#4:S4163:12Mar99
-      // moved in if
+
       if (PR.ReadInteger(PR.Current(), "Supplementary Notes", anote))
         tempSuppleNotes->SetValue(i, anote);
-      // st = PR.ReadInteger(PR.Current(),"Start Index", astart); //szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadInteger(PR.Current(), "Start Index", astart))
         tempStartInd->SetValue(i, astart);
-      // st = PR.ReadInteger(PR.Current(),"End Index",anend); //szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadInteger(PR.Current(), "End Index", anend))
         tempEndInd->SetValue(i, anend);
     }
@@ -142,15 +138,15 @@ void IGESDimen_ToolDimensionDisplayData::WriteOwnParams(
 }
 
 void IGESDimen_ToolDimensionDisplayData::OwnShared(
-  const occ::handle<IGESDimen_DimensionDisplayData>& /* ent */,
-  Interface_EntityIterator& /* iter */) const
+  const occ::handle<IGESDimen_DimensionDisplayData>&,
+  Interface_EntityIterator&) const
 {
 }
 
 void IGESDimen_ToolDimensionDisplayData::OwnCopy(
   const occ::handle<IGESDimen_DimensionDisplayData>& another,
   const occ::handle<IGESDimen_DimensionDisplayData>& ent,
-  Interface_CopyTool& /* TC */) const
+  Interface_CopyTool&) const
 {
   occ::handle<NCollection_HArray1<int>> EndList;
   occ::handle<NCollection_HArray1<int>> StartList;
@@ -237,13 +233,13 @@ bool IGESDimen_ToolDimensionDisplayData::OwnCorrect(
             NotesList,
             StartList,
             EndList);
-  return res; // nbpropertyvalues=14
+  return res;
 }
 
 IGESData_DirChecker IGESDimen_ToolDimensionDisplayData::DirChecker(
-  const occ::handle<IGESDimen_DimensionDisplayData>& /* ent */) const
+  const occ::handle<IGESDimen_DimensionDisplayData>&) const
 {
-  IGESData_DirChecker DC(406, 30); // type=406, Form no. = 30
+  IGESData_DirChecker DC(406, 30);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
@@ -286,7 +282,7 @@ void IGESDimen_ToolDimensionDisplayData::OwnCheck(
 
 void IGESDimen_ToolDimensionDisplayData::OwnDump(
   const occ::handle<IGESDimen_DimensionDisplayData>& ent,
-  const IGESData_IGESDumper& /* dumper */,
+  const IGESData_IGESDumper&,
   Standard_OStream& S,
   const int         level) const
 {

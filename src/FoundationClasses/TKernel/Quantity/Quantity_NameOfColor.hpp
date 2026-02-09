@@ -1,7 +1,5 @@
 #pragma once
 
-//! Definition of names of known colors.
-//! The names come (mostly) from the X11 specification.
 enum Quantity_NameOfColor
 {
   Quantity_NOC_BLACK,

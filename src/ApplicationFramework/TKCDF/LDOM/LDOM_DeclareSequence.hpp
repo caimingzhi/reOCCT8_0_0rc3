@@ -2,22 +2,6 @@
 
 #include <Standard_Macro.hpp>
 
-//      Declaration of Sequence (numbered list) class.
-//  Remarks on the current implementation:
-//
-// 1. Methods First() and Last() added
-// 2. The method InsertAt(anIndex) replaces InsertBefore and InsertAfter.
-//    This method never throws exception "OutOfRange". Its behaviour:
-//              anIndex <= 1            => equivalent to Prepend()
-//              anIndex >  Length()     => equivalent to Append()
-//              else                    => equivalent to InsertBefore.
-
-// *******************************************************************
-// use the following somewhere in a header file;
-//    ClassName - name of the list class to create
-//    Type      - type of members of the list
-// *******************************************************************
-
 #define DECLARE_SEQUENCE(ClassName, Type)                                                          \
                                                                                                    \
   class ClassName                                                                                  \
@@ -105,24 +89,24 @@
                                                                                                    \
   inline const Type& ClassName::First() const                                                      \
   {                                                                                                \
-    return myFirst->Value(); /* exception if out of range */                                       \
+    return myFirst->Value();                                                                       \
   }                                                                                                \
                                                                                                    \
   inline const Type& ClassName::Last() const                                                       \
   {                                                                                                \
-    return myLast->Value(); /* exception if out of range */                                        \
+    return myLast->Value();                                                                        \
   }                                                                                                \
                                                                                                    \
   inline const Type& ClassName::Value(const int anI) const                                         \
   {                                                                                                \
     const Node* anItem = (const Node*)FindItem(anI);                                               \
-    return anItem->Value(); /* exception if out of range */                                        \
+    return anItem->Value();                                                                        \
   }                                                                                                \
                                                                                                    \
   inline Type& ClassName::ChangeValue(const int anI)                                               \
   {                                                                                                \
     Node* anItem = (Node*)FindItem(anI);                                                           \
-    return anItem->ChangeValue(); /* exception if out of range */                                  \
+    return anItem->ChangeValue();                                                                  \
   }                                                                                                \
                                                                                                    \
   inline const Type& ClassName::operator()(const int anI) const                                    \
@@ -135,10 +119,6 @@
     return ChangeValue(anI);                                                                       \
   }
 
-// *******************************************************************
-// use the following in a translation unit (*.cxx);
-//
-// *******************************************************************
 #define IMPLEMENT_SEQUENCE(ClassName, Type)                                                        \
   const void* ClassName::FindItem(const int anI) const                                             \
   {                                                                                                \

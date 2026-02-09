@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepElement_SurfaceElementProperty, Standard_Transient)
 
-//=================================================================================================
-
 StepElement_SurfaceElementProperty::StepElement_SurfaceElementProperty() = default;
-
-//=================================================================================================
 
 void StepElement_SurfaceElementProperty::Init(
   const occ::handle<TCollection_HAsciiString>&        aPropertyId,
@@ -23,14 +19,10 @@ void StepElement_SurfaceElementProperty::Init(
   theSection = aSection;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepElement_SurfaceElementProperty::PropertyId() const
 {
   return thePropertyId;
 }
-
-//=================================================================================================
 
 void StepElement_SurfaceElementProperty::SetPropertyId(
   const occ::handle<TCollection_HAsciiString>& aPropertyId)
@@ -38,14 +30,10 @@ void StepElement_SurfaceElementProperty::SetPropertyId(
   thePropertyId = aPropertyId;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepElement_SurfaceElementProperty::Description() const
 {
   return theDescription;
 }
-
-//=================================================================================================
 
 void StepElement_SurfaceElementProperty::SetDescription(
   const occ::handle<TCollection_HAsciiString>& aDescription)
@@ -53,14 +41,10 @@ void StepElement_SurfaceElementProperty::SetDescription(
   theDescription = aDescription;
 }
 
-//=================================================================================================
-
 occ::handle<StepElement_SurfaceSectionField> StepElement_SurfaceElementProperty::Section() const
 {
   return theSection;
 }
-
-//=================================================================================================
 
 void StepElement_SurfaceElementProperty::SetSection(
   const occ::handle<StepElement_SurfaceSectionField>& aSection)

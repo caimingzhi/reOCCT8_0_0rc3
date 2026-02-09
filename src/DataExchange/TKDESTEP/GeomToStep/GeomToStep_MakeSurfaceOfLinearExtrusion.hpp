@@ -9,10 +9,6 @@
 class StepGeom_SurfaceOfLinearExtrusion;
 class Geom_SurfaceOfLinearExtrusion;
 
-//! This class implements the mapping between class
-//! SurfaceOfLinearExtrusion from Geom and the class
-//! SurfaceOfLinearExtrusion from StepGeom which describes a
-//! surface_of_linear_extrusion from Prostep
 class GeomToStep_MakeSurfaceOfLinearExtrusion : public GeomToStep_Root
 {
 public:

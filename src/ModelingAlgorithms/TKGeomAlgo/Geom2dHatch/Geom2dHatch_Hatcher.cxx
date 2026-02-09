@@ -18,14 +18,6 @@
 #define RAISE_IF_NOSUCHOBJECT 0
 #define TRACE_HATCHER 0
 
-//=======================================================================
-//=======================================================================
-//  Category : General use.
-//=======================================================================
-//=======================================================================
-
-//=================================================================================================
-
 Geom2dHatch_Hatcher::Geom2dHatch_Hatcher(const Geom2dHatch_Intersector& Intersector,
                                          const double                   Confusion2d,
                                          const double                   Confusion3d,
@@ -41,11 +33,6 @@ Geom2dHatch_Hatcher::Geom2dHatch_Hatcher(const Geom2dHatch_Intersector& Intersec
 {
 }
 
-//=======================================================================
-// Function : Intersector
-// Purpose  : Sets the associated intersector.
-//=======================================================================
-
 void Geom2dHatch_Hatcher::Intersector(const Geom2dHatch_Intersector& Intersector)
 {
   myIntersector = Intersector;
@@ -58,11 +45,6 @@ void Geom2dHatch_Hatcher::Intersector(const Geom2dHatch_Intersector& Intersector
     }
   }
 }
-
-//=======================================================================
-// Function : Confusion2d
-// Purpose  : Sets the 2dconfusion tolerance.
-//=======================================================================
 
 void Geom2dHatch_Hatcher::Confusion2d(const double Confusion)
 {
@@ -77,11 +59,6 @@ void Geom2dHatch_Hatcher::Confusion2d(const double Confusion)
   }
 }
 
-//=======================================================================
-// Function : Confusion3d
-// Purpose  : Sets the 3d confusion tolerance.
-//=======================================================================
-
 void Geom2dHatch_Hatcher::Confusion3d(const double Confusion)
 {
   myConfusion3d = Confusion;
@@ -94,8 +71,6 @@ void Geom2dHatch_Hatcher::Confusion3d(const double Confusion)
     }
   }
 }
-
-//=================================================================================================
 
 void Geom2dHatch_Hatcher::KeepPoints(const bool Keep)
 {
@@ -110,8 +85,6 @@ void Geom2dHatch_Hatcher::KeepPoints(const bool Keep)
   }
 }
 
-//=================================================================================================
-
 void Geom2dHatch_Hatcher::KeepSegments(const bool Keep)
 {
   myKeepSegments = Keep;
@@ -124,17 +97,6 @@ void Geom2dHatch_Hatcher::KeepSegments(const bool Keep)
     }
   }
 }
-
-//=======================================================================
-//=======================================================================
-//  Category : Element.
-//=======================================================================
-//=======================================================================
-
-//=======================================================================
-// Function : AddElement
-// Purpose  : Adds an element to the Hatcher and returns its index.
-//=======================================================================
 
 int Geom2dHatch_Hatcher::AddElement(const Geom2dAdaptor_Curve& Curve,
                                     const TopAbs_Orientation   Orientation)
@@ -159,11 +121,6 @@ int Geom2dHatch_Hatcher::AddElement(const Geom2dAdaptor_Curve& Curve,
   }
   return IndE;
 }
-
-//=======================================================================
-// Function : RemElement
-// Purpose  : Removes the IndE-th element from the hatcher.
-//=======================================================================
 
 void Geom2dHatch_Hatcher::RemElement(const int IndE)
 {
@@ -199,11 +156,6 @@ void Geom2dHatch_Hatcher::RemElement(const int IndE)
     myNbElements--;
 }
 
-//=======================================================================
-// Function : ClrElements
-// Purpose  : Removes all the elements from the hatcher.
-//=======================================================================
-
 void Geom2dHatch_Hatcher::ClrElements()
 {
   if (myNbElements != 0)
@@ -224,17 +176,6 @@ void Geom2dHatch_Hatcher::ClrElements()
   }
 }
 
-//=======================================================================
-//=======================================================================
-//  Category : Hatching.
-//=======================================================================
-//=======================================================================
-
-//=======================================================================
-// Function : AddHatching
-// Purpose  : Adds a hatching to the hatcher and returns its index.
-//=======================================================================
-
 int Geom2dHatch_Hatcher::AddHatching(const Geom2dAdaptor_Curve& Curve)
 {
   int IndH;
@@ -250,11 +191,6 @@ int Geom2dHatch_Hatcher::AddHatching(const Geom2dAdaptor_Curve& Curve)
   return IndH;
 }
 
-//=======================================================================
-// Function : RemHatching
-// Purpose  : Removes the IndH-th hatching from the hatcher.
-//=======================================================================
-
 void Geom2dHatch_Hatcher::RemHatching(const int IndH)
 {
 #if RAISE_IF_NOSUCHOBJECT
@@ -266,11 +202,6 @@ void Geom2dHatch_Hatcher::RemHatching(const int IndH)
   if (IndH == myNbHatchings)
     myNbHatchings--;
 }
-
-//=======================================================================
-// Function : ClrHatchings
-// Purpose  : Removes all the hatchings from the hatcher.
-//=======================================================================
 
 void Geom2dHatch_Hatcher::ClrHatchings()
 {
@@ -289,18 +220,6 @@ void Geom2dHatch_Hatcher::ClrHatchings()
   }
 }
 
-//=======================================================================
-//=======================================================================
-//  Category : Computation - Trimming
-//=======================================================================
-//=======================================================================
-
-//=======================================================================
-// Function : Trim
-// Purpose  : Trims all the hatchings of the hatcher by all the elements
-//            of the hatcher.
-//=======================================================================
-
 void Geom2dHatch_Hatcher::Trim()
 {
   for (int IndH = 1; IndH <= myNbHatchings; IndH++)
@@ -308,23 +227,12 @@ void Geom2dHatch_Hatcher::Trim()
       Trim(IndH);
 }
 
-//=======================================================================
-// Function : Trim
-// Purpose  : Adds a hatching to the hatcher and trims it by the elements
-//            already given and returns its index.
-//=======================================================================
-
 int Geom2dHatch_Hatcher::Trim(const Geom2dAdaptor_Curve& Curve)
 {
   int IndH = AddHatching(Curve);
   Trim(IndH);
   return IndH;
 }
-
-//=======================================================================
-// Function : Trim
-// Purpose  : Trims the IndH-th hatching by the elements already given.
-//=======================================================================
 
 void Geom2dHatch_Hatcher::Trim(const int IndH)
 {
@@ -363,11 +271,6 @@ void Geom2dHatch_Hatcher::Trim(const int IndH)
 }
 
 #if TRACE_HATCHER
-
-//=======================================================================
-// Function : IntersectionPointDump
-// Purpose  : Dump of the intersection point.
-//=======================================================================
 
 static void IntersectionPointDump(const IntRes2d_IntersectionPoint& Pnt, const int Index)
 {
@@ -481,12 +384,6 @@ static void IntersectionPointDump(const IntRes2d_IntersectionPoint& Pnt, const i
 
 #endif
 
-//=======================================================================
-// Function : Trim
-// Purpose  : Trims the IndH-th hatching of the hatcher by the IndE th
-//            element.
-//=======================================================================
-
 bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
 {
 #if RAISE_IF_NOSUCHOBJECT
@@ -533,10 +430,6 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
             << std::endl;
 #endif
 
-  //-----------------------------------------------------------------------
-  // Traitement des points d intersection.
-  //-----------------------------------------------------------------------
-
   for (int IPntI = 1; IPntI <= myIntersector.NbPoints(); IPntI++)
   {
     const IntRes2d_IntersectionPoint& PntI = myIntersector.Point(IPntI);
@@ -555,10 +448,6 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
     Hatching.AddPoint(PntH, myConfusion2d);
   }
 
-  //-----------------------------------------------------------------------
-  // Traitement des segments d intersection.
-  //-----------------------------------------------------------------------
-
   for (int ISeg = 1; ISeg <= myIntersector.NbSegments(); ISeg++)
   {
 
@@ -570,10 +459,6 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
 
     bool FirstPoint = Seg.HasFirstPoint();
     bool LastPoint  = Seg.HasLastPoint();
-
-    //-----------------------------------------------------------------------
-    // Les deux points peuvent etre confondus.
-    //-----------------------------------------------------------------------
 
     if (FirstPoint && LastPoint)
     {
@@ -591,16 +476,7 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
       IntRes2d_TypeTrans TypePnt2H = TrsPnt2H.TransitionType();
       IntRes2d_TypeTrans TypePnt2E = TrsPnt2E.TransitionType();
 
-      //-----------------------------------------------------------------------
-      // Les deux points peuvent etre confondus au regard de la precision du
-      // `hatcher'.
-      //-----------------------------------------------------------------------
-
       bool Conf2d = std::abs(Pnt1.ParamOnFirst() - Pnt2.ParamOnFirst()) <= myConfusion2d;
-
-      //-----------------------------------------------------------------------
-      // Les deux points peuvent etre `confondus' au regard des intersections.
-      //-----------------------------------------------------------------------
 
       bool Conf3d = false;
 
@@ -735,10 +611,6 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
         continue;
       }
 
-      //-----------------------------------------------------------------------
-      // Traitement du premier point du segment.
-      //-----------------------------------------------------------------------
-
       if (FirstPoint)
       {
 
@@ -767,10 +639,6 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
         std::cout << "---------------------------------" << std::endl;
 #endif
       }
-
-      //-----------------------------------------------------------------------
-      // Traitement du deuxieme point du segment.
-      //-----------------------------------------------------------------------
 
       if (LastPoint)
       {
@@ -808,19 +676,6 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
   }
   return true;
 }
-
-//=======================================================================
-//=======================================================================
-//  Category : Computation - Domains
-//=======================================================================
-//=======================================================================
-
-//=======================================================================
-// Function : GlobalTransition
-// Purpose  : Returns the before and after states of the complex
-//            transition of the IndP-th intersection point of the
-//            IndH-th hatching.
-//=======================================================================
 
 bool Geom2dHatch_Hatcher::GlobalTransition(HatchGen_PointOnHatching& Point)
 {
@@ -891,7 +746,6 @@ bool Geom2dHatch_Hatcher::GlobalTransition(HatchGen_PointOnHatching& Point)
         break;
     }
 
-//--
 #if TRACE_HATCHER
     printf("\n ******** ToReverse: %d Param : %g   ANParam : %g \n",
            ToReverse,
@@ -902,14 +756,6 @@ bool Geom2dHatch_Hatcher::GlobalTransition(HatchGen_PointOnHatching& Point)
 
     myIntersector.LocalGeometry(CurveE.Curve(), Param, Tangente2d, Normale2d, Courbure);
 
-    //-----------------------------------------------------------------------
-    // Calcul de la transition locale. On suppose les relations suivantes :
-    //  - Si l orientation de l element est INTERNAL ==> INTERNAL
-    //  - Si l orientation de l element est EXTERNAL ==> EXTERNAL
-    //  - Si tangence, on a IN-IN  ou OUT-OUT ==> INTERNAL/EXTERNAL
-    //  - Sinon,       on a IN-OUT ou OUT-IN  ==> REVERSED/FORWARD
-    // Les deux dernieres conditions avec l element vu en FORWARD.
-    //-----------------------------------------------------------------------
     TopAbs_Orientation LocalTransition = TopAbs_EXTERNAL;
 
     if (ElementOrientation == TopAbs_INTERNAL)
@@ -964,9 +810,6 @@ bool Geom2dHatch_Hatcher::GlobalTransition(HatchGen_PointOnHatching& Point)
       }
     }
 
-    //-----------------------------------------------------------------------
-    // Orientation de la tangente au point d interference.
-    //-----------------------------------------------------------------------
     TopAbs_Orientation TangenteOrientation = TopAbs_FORWARD;
     switch (PntE.Position())
     {
@@ -983,10 +826,6 @@ bool Geom2dHatch_Hatcher::GlobalTransition(HatchGen_PointOnHatching& Point)
       default:
         break;
     }
-
-    //-----------------------------------------------------------------------
-    // Proprietes geometriques.
-    //-----------------------------------------------------------------------
 
     if (ToReverse)
     {
@@ -1085,22 +924,12 @@ bool Geom2dHatch_Hatcher::GlobalTransition(HatchGen_PointOnHatching& Point)
   return true;
 }
 
-//=======================================================================
-// Function : ComputeDomains
-// Purpose  : Computes the domains of all the hatchings.
-//=======================================================================
-
 void Geom2dHatch_Hatcher::ComputeDomains()
 {
   for (int IndH = 1; IndH <= myNbHatchings; IndH++)
     if (myHatchings.IsBound(IndH))
       ComputeDomains(IndH);
 }
-
-//=======================================================================
-// Function : ComputeDomains
-// Purpose  : Computes the domains of the IndH-th hatching.
-//=======================================================================
 
 void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
 {
@@ -1129,8 +958,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
 
   if (NbPnt == 0)
   {
-    //-- std::cout << "The hatching # " << std::setw(3) << IndH << " has to be classified" <<
-    // std::endl ;
+
     Geom2dHatch_Classifier Classifier(myElements, Hatching.ClassificationPoint(), 0.0000001);
     if (Classifier.State() == TopAbs_IN)
     {
@@ -1142,7 +970,6 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
     return;
   }
 
-  // for (int IPnt = 1 ; IPnt <= NbPnt ; IPnt++) {
   for (IPnt = 1; IPnt <= NbPnt; IPnt++)
   {
     bool NoDomain   = Hatching.NbDomains() == 0;
@@ -1158,20 +985,12 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
     std::cout << "==========================================" << std::endl;
 #endif
 
-    //-----------------------------------------------------------------------
-    // Calcul des domaines.
-    //-----------------------------------------------------------------------
-
     TopAbs_State StateBefore  = CurPnt.StateBefore();
     TopAbs_State StateAfter   = CurPnt.StateAfter();
     bool         SegmentBegin = CurPnt.SegmentBeginning();
     bool         SegmentEnd   = CurPnt.SegmentEnd();
 
     HatchGen_Domain domain;
-
-    //-----------------------------------------------------------------------
-    // Initialisations dues au premier point.
-    //-----------------------------------------------------------------------
 
     if (FirstPoint)
     {
@@ -1222,10 +1041,6 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
       }
     }
 
-    //-----------------------------------------------------------------------
-    // Initialisations dues au dernier point.
-    //-----------------------------------------------------------------------
-
     if (LastPoint)
     {
       if (SegmentEnd && SegmentBegin)
@@ -1250,10 +1065,6 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
       {
       }
     }
-
-    //-----------------------------------------------------------------------
-    // Cas general.
-    //-----------------------------------------------------------------------
 
     bool ToAppend = false;
 
@@ -1425,13 +1236,8 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
           domain.SetSecondPoint(CurPnt);
           ToAppend = true;
 
-          // Modified by Sergey KHROMOV - Fri Jan  5 12:05:30 2001
-          // SavPnt = false ;
-          // ISav = 0 ;
-
           SavPnt = true;
           ISav   = IPnt;
-          // Modified by Sergey KHROMOV - Fri Jan  5 12:05:31 2001
         }
       }
 
@@ -1439,10 +1245,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
     }
     else
     {
-      //-- ???????????????????????????????????????????????????????????????????????????
-      //-- Solution provisoire (lbr le 11 Aout 97 )
-      //-- si On a 2 points dont des points OUT OUT ou IN IN qui delimitent une isos
-      //-- on transforme les transitions
+
       if (StateBefore == TopAbs_OUT && StateAfter == TopAbs_OUT)
       {
         if (NbPnt == 2)
@@ -1453,7 +1256,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
             StateBefore = TopAbs_IN;
         }
       }
-      //-- ???????????????????????????????????????????????????????????????????????????
+
       if (StateBefore == TopAbs_OUT && StateAfter == TopAbs_OUT)
       {
         if (SavPnt)
@@ -1524,7 +1327,6 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
                 Hatching.IsDone(true);
               }
 
-              // return;
               continue;
             }
 
@@ -1593,16 +1395,8 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
       }
     }
 
-    //-----------------------------------------------------------------------
-    // Ajout du domaine.
-    //-----------------------------------------------------------------------
-
     if (ToAppend)
       Hatching.AddDomain(domain);
-
-    //-----------------------------------------------------------------------
-    // Traitement lie au dernier point.
-    //-----------------------------------------------------------------------
 
     if (LastPoint)
     {
@@ -1714,17 +1508,6 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
   Hatching.IsDone(true);
 }
 
-//=======================================================================
-//=======================================================================
-//  Category : Results.
-//=======================================================================
-//=======================================================================
-
-//=======================================================================
-// Function : Domain
-// Purpose  : Returns the IDom-th domain of the IndH-th hatching.
-//=======================================================================
-
 const HatchGen_Domain& Geom2dHatch_Hatcher::Domain(const int IndH, const int IDom) const
 {
 #if RAISE_IF_NOSUCHOBJECT
@@ -1738,14 +1521,6 @@ const HatchGen_Domain& Geom2dHatch_Hatcher::Domain(const int IndH, const int IDo
   const HatchGen_Domain& Domain = Hatching.Domain(IDom);
   return Domain;
 }
-
-//=======================================================================
-//=======================================================================
-//  Category : Dump.
-//=======================================================================
-//=======================================================================
-
-//=================================================================================================
 
 void Geom2dHatch_Hatcher::Dump() const
 {

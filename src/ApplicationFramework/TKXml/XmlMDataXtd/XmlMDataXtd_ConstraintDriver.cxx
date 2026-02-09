@@ -18,7 +18,7 @@ IMPLEMENT_DOMSTRING(ValueString, "valueref")
 IMPLEMENT_DOMSTRING(GeometriesString, "geometries")
 IMPLEMENT_DOMSTRING(PlaneString, "plane")
 IMPLEMENT_DOMSTRING(StatusString, "flags")
-// planar constraints
+
 IMPLEMENT_DOMSTRING(ConRadiusString, "radius")
 IMPLEMENT_DOMSTRING(ConDiameterString, "diameter")
 IMPLEMENT_DOMSTRING(ConMinRadiusString, "minorradius")
@@ -36,7 +36,7 @@ IMPLEMENT_DOMSTRING(ConMidPointString, "midpoint")
 IMPLEMENT_DOMSTRING(ConEqualDistanceString, "equaldist")
 IMPLEMENT_DOMSTRING(ConFixString, "fix")
 IMPLEMENT_DOMSTRING(ConRigidString, "rigid")
-// placement constraints
+
 IMPLEMENT_DOMSTRING(ConFromString, "from")
 IMPLEMENT_DOMSTRING(ConAxisString, "axis")
 IMPLEMENT_DOMSTRING(ConMateString, "mate")
@@ -47,25 +47,17 @@ IMPLEMENT_DOMSTRING(ConFacesAngleString, "facesangle")
 IMPLEMENT_DOMSTRING(ConRoundString, "round")
 IMPLEMENT_DOMSTRING(ConOffsetString, "offset")
 
-//=================================================================================================
-
 XmlMDataXtd_ConstraintDriver::XmlMDataXtd_ConstraintDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataXtd_ConstraintDriver::NewEmpty() const
 {
   return (new TDataXtd_Constraint());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDataXtd_ConstraintDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                          const occ::handle<TDF_Attribute>& theTarget,
                                          XmlObjMgt_RRelocationTable&       theRelocTable) const
@@ -76,7 +68,6 @@ bool XmlMDataXtd_ConstraintDriver::Paste(const XmlObjMgt_Persistent&       theSo
   int                        aNb;
   TCollection_ExtendedString aMsgString;
 
-  // value
   occ::handle<TDataStd_Real> aTValue;
   XmlObjMgt_DOMString        aDOMStr = anElem.getAttribute(::ValueString());
   if (aDOMStr != nullptr)
@@ -103,13 +94,11 @@ bool XmlMDataXtd_ConstraintDriver::Paste(const XmlObjMgt_Persistent&       theSo
     }
   }
 
-  // geometries
   aDOMStr = anElem.getAttribute(::GeometriesString());
   if (aDOMStr != nullptr)
   {
     const char* aGs = static_cast<const char*>(aDOMStr.GetString());
 
-    // first geometry
     if (!XmlObjMgt::GetInteger(aGs, aNb))
     {
       aMsgString =
@@ -132,14 +121,12 @@ bool XmlMDataXtd_ConstraintDriver::Paste(const XmlObjMgt_Persistent&       theSo
       }
       aC->SetGeometry(i, aG);
 
-      // next geometry
       if (!XmlObjMgt::GetInteger(aGs, aNb))
         aNb = 0;
       i++;
     }
   }
 
-  // plane
   aDOMStr = anElem.getAttribute(::PlaneString());
   if (aDOMStr != nullptr)
   {
@@ -165,11 +152,9 @@ bool XmlMDataXtd_ConstraintDriver::Paste(const XmlObjMgt_Persistent&       theSo
     }
   }
 
-  // constraint type
   XmlObjMgt_DOMString aType = anElem.getAttribute(::TypeString());
   aC->SetType(ConstraintTypeEnum(aType));
 
-  // flags
   XmlObjMgt_DOMString aString = anElem.getAttribute(::StatusString());
   const char*         aPtr    = aString.GetString();
   aC->Verified((*aPtr) == '+');
@@ -181,10 +166,6 @@ bool XmlMDataXtd_ConstraintDriver::Paste(const XmlObjMgt_Persistent&       theSo
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMDataXtd_ConstraintDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                          XmlObjMgt_Persistent&             theTarget,
                                          XmlObjMgt_SRelocationTable&       theRelocTable) const
@@ -194,7 +175,6 @@ void XmlMDataXtd_ConstraintDriver::Paste(const occ::handle<TDF_Attribute>& theSo
 
   int aNb;
 
-  // value
   occ::handle<TDataStd_Real> aValue = aC->GetValue();
   if (!aValue.IsNull())
   {
@@ -206,7 +186,6 @@ void XmlMDataXtd_ConstraintDriver::Paste(const occ::handle<TDF_Attribute>& theSo
     anElem.setAttribute(::ValueString(), aNb);
   }
 
-  // geometries
   int NbGeom = aC->NbGeometries();
   if (NbGeom >= 1)
   {
@@ -230,7 +209,6 @@ void XmlMDataXtd_ConstraintDriver::Paste(const occ::handle<TDF_Attribute>& theSo
     anElem.setAttribute(::GeometriesString(), aGsStr.ToCString());
   }
 
-  // plane
   occ::handle<TNaming_NamedShape> aTPlane = aC->GetPlane();
   if (!aTPlane.IsNull())
   {
@@ -242,10 +220,8 @@ void XmlMDataXtd_ConstraintDriver::Paste(const occ::handle<TDF_Attribute>& theSo
     anElem.setAttribute(::PlaneString(), aNb);
   }
 
-  // constraint type
   anElem.setAttribute(::TypeString(), ConstraintTypeString(aC->GetType()));
 
-  // flags
   TCollection_AsciiString aStatusStr;
 
   if (aC->Verified())
@@ -266,12 +242,10 @@ void XmlMDataXtd_ConstraintDriver::Paste(const occ::handle<TDF_Attribute>& theSo
   anElem.setAttribute(::StatusString(), aStatusStr.ToCString());
 }
 
-//=================================================================================================
-
 static TDataXtd_ConstraintEnum ConstraintTypeEnum(const XmlObjMgt_DOMString& theString)
 {
   TDataXtd_ConstraintEnum aResult = TDataXtd_RADIUS;
-  // planar constraints
+
   if (!theString.equals(::ConRadiusString()))
   {
     if (theString.equals(::ConDiameterString()))
@@ -306,7 +280,7 @@ static TDataXtd_ConstraintEnum ConstraintTypeEnum(const XmlObjMgt_DOMString& the
       aResult = TDataXtd_FIX;
     else if (theString.equals(::ConRigidString()))
       aResult = TDataXtd_RIGID;
-    // placement constraints
+
     else if (theString.equals(::ConFromString()))
       aResult = TDataXtd_FROM;
     else if (theString.equals(::ConAxisString()))
@@ -332,13 +306,11 @@ static TDataXtd_ConstraintEnum ConstraintTypeEnum(const XmlObjMgt_DOMString& the
   return aResult;
 }
 
-//=================================================================================================
-
 static const XmlObjMgt_DOMString& ConstraintTypeString(const TDataXtd_ConstraintEnum theE)
 {
   switch (theE)
   {
-      // planar constraints
+
     case TDataXtd_RADIUS:
       return ::ConRadiusString();
     case TDataXtd_DIAMETER:
@@ -373,7 +345,7 @@ static const XmlObjMgt_DOMString& ConstraintTypeString(const TDataXtd_Constraint
       return ::ConFixString();
     case TDataXtd_RIGID:
       return ::ConRigidString();
-      // placement constraints
+
     case TDataXtd_FROM:
       return ::ConFromString();
     case TDataXtd_AXIS:

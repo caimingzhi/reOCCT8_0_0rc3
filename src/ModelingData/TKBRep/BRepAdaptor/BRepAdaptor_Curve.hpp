@@ -24,73 +24,36 @@ class Geom_BezierCurve;
 class Geom_BSplineCurve;
 class Geom_OffsetCurve;
 
-//! The Curve from BRepAdaptor allows to use an Edge
-//! of the BRep topology like a 3D curve.
-//!
-//! It has the methods the class Curve from Adaptor3d.
-//!
-//! It is created or Initialized with an Edge. It
-//! takes into account local coordinate systems. If
-//! the Edge has a 3D curve it is use with priority.
-//! If the edge has no 3D curve one of the curves on
-//! surface is used. It is possible to enforce using a
-//! curve on surface by creating or initialising with
-//! an Edge and a Face.
 class BRepAdaptor_Curve : public Adaptor3d_Curve
 {
   DEFINE_STANDARD_RTTIEXT(BRepAdaptor_Curve, Adaptor3d_Curve)
 public:
-  //! Creates an undefined Curve with no Edge loaded.
   Standard_EXPORT BRepAdaptor_Curve();
 
-  //! Creates a Curve to access the geometry of edge <E>.
   Standard_EXPORT BRepAdaptor_Curve(const TopoDS_Edge& E);
 
-  //! Creates a Curve to access the geometry of edge
-  //! <E>. The geometry will be computed using the
-  //! parametric curve of <E> on the face <F>. An Error
-  //! is raised if the edge does not have a pcurve on
-  //! the face.
   Standard_EXPORT BRepAdaptor_Curve(const TopoDS_Edge& E, const TopoDS_Face& F);
 
-  //! Shallow copy of adaptor
   Standard_EXPORT occ::handle<Adaptor3d_Curve> ShallowCopy() const override;
 
-  //! Reset currently loaded curve (undone Load()).
   Standard_EXPORT void Reset();
 
-  //! Sets the Curve <me> to access the geometry of
-  //! edge <E>.
   Standard_EXPORT void Initialize(const TopoDS_Edge& E);
 
-  //! Sets the Curve <me> to access the geometry of
-  //! edge <E>. The geometry will be computed using the
-  //! parametric curve of <E> on the face <F>. An Error
-  //! is raised if the edge does not have a pcurve on
-  //! the face.
   Standard_EXPORT void Initialize(const TopoDS_Edge& E, const TopoDS_Face& F);
 
-  //! Returns the coordinate system of the curve.
   Standard_EXPORT const gp_Trsf& Trsf() const;
 
-  //! Returns True if the edge geometry is computed from
-  //! a 3D curve.
   Standard_EXPORT bool Is3DCurve() const;
 
-  //! Returns True if the edge geometry is computed from
-  //! a pcurve on a surface.
   Standard_EXPORT bool IsCurveOnSurface() const;
 
-  //! Returns the Curve of the edge.
   Standard_EXPORT const GeomAdaptor_Curve& Curve() const;
 
-  //! Returns the CurveOnSurface of the edge.
   Standard_EXPORT const Adaptor3d_CurveOnSurface& CurveOnSurface() const;
 
-  //! Returns the edge.
   Standard_EXPORT const TopoDS_Edge& Edge() const;
 
-  //! Returns the edge tolerance.
   Standard_EXPORT double Tolerance() const;
 
   Standard_EXPORT double FirstParameter() const override;
@@ -99,22 +62,11 @@ public:
 
   Standard_EXPORT GeomAbs_Shape Continuity() const override;
 
-  //! Returns the number of intervals for continuity
-  //! <S>. May be one if Continuity(me) >= <S>
   Standard_EXPORT int NbIntervals(const GeomAbs_Shape S) const override;
 
-  //! Stores in <T> the parameters bounding the intervals
-  //! of continuity <S>.
-  //!
-  //! The array must provide enough room to accommodate
-  //! for the parameters. i.e. T.Length() > NbIntervals()
   Standard_EXPORT void Intervals(NCollection_Array1<double>& T,
                                  const GeomAbs_Shape         S) const override;
 
-  //! Returns a curve equivalent of <me> between
-  //! parameters <First> and <Last>. <Tol> is used to
-  //! test for 3d points confusion.
-  //! If <First> >= <Last>
   Standard_EXPORT occ::handle<Adaptor3d_Curve> Trim(const double First,
                                                     const double Last,
                                                     const double Tol) const override;
@@ -125,42 +77,22 @@ public:
 
   Standard_EXPORT double Period() const override;
 
-  //! Computes the point of parameter U on the curve
   Standard_EXPORT gp_Pnt Value(const double U) const override;
 
-  //! Computes the point of parameter U.
   Standard_EXPORT void D0(const double U, gp_Pnt& P) const override;
 
-  //! Computes the point of parameter U on the curve
-  //! with its first derivative.
-  //! Raised if the continuity of the current interval
-  //! is not C1.
   Standard_EXPORT void D1(const double U, gp_Pnt& P, gp_Vec& V) const override;
 
-  //! Returns the point P of parameter U, the first and second
-  //! derivatives V1 and V2.
-  //! Raised if the continuity of the current interval
-  //! is not C2.
   Standard_EXPORT void D2(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2) const override;
 
-  //! Returns the point P of parameter U, the first, the second
-  //! and the third derivative.
-  //! Raised if the continuity of the current interval
-  //! is not C3.
   Standard_EXPORT void D3(const double U,
                           gp_Pnt&      P,
                           gp_Vec&      V1,
                           gp_Vec&      V2,
                           gp_Vec&      V3) const override;
 
-  //! The returned vector gives the value of the derivative for the
-  //! order of derivation N.
-  //! Raised if the continuity of the current interval
-  //! is not CN.
-  //! Raised if N < 1.
   Standard_EXPORT gp_Vec DN(const double U, const int N) const override;
 
-  //! returns the parametric resolution
   Standard_EXPORT double Resolution(const double R3d) const override;
 
   Standard_EXPORT GeomAbs_CurveType GetType() const override;
@@ -183,14 +115,8 @@ public:
 
   Standard_EXPORT int NbKnots() const override;
 
-  //! Warning:
-  //! This will make a copy of the Bezier Curve since it applies to it myTsrf.
-  //! Be careful when using this method.
   Standard_EXPORT occ::handle<Geom_BezierCurve> Bezier() const override;
 
-  //! Warning:
-  //! This will make a copy of the BSpline Curve since it applies to it myTsrf.
-  //! Be careful when using this method.
   Standard_EXPORT occ::handle<Geom_BSplineCurve> BSpline() const override;
 
   Standard_EXPORT occ::handle<Geom_OffsetCurve> OffsetCurve() const override;

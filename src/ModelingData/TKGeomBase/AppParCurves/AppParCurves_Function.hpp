@@ -170,8 +170,6 @@ bool AppParCurves_Function::Value(const math_Vector& X, double& F)
 
   myParameters = X;
 
-  // Resolution moindres carres:
-  // ===========================
   MyLeastSquare.Perform(myParameters);
   if (!(MyLeastSquare.IsDone()))
   {
@@ -184,12 +182,10 @@ bool AppParCurves_Function::Value(const math_Vector& X, double& F)
     F = FVal;
   }
 
-  // Resolution avec contraintes:
-  // ============================
   else
   {
     int Npol = Degre + 1;
-    //    bool Ext = true;
+
     int         Ci, i, j, dimen;
     double      AA, BB, CC, AIJ, FX, FY, FZ, Fi;
     math_Vector PTCXCI(1, Npol), PTCYCI(1, Npol), PTCZCI(1, Npol);
@@ -211,8 +207,6 @@ bool AppParCurves_Function::Value(const math_Vector& X, double& F)
       return false;
     }
 
-    // Calcul de F = Sum||C(ui)-Ptli||2  sur toutes les courbes :
-    // ========================================================================
     FVal = 0.0;
 
     for (Ci = 1; Ci <= NbCu; Ci++)
@@ -230,8 +224,6 @@ bool AppParCurves_Function::Value(const math_Vector& X, double& F)
         }
       }
 
-      // Calcul de F:
-      // ============
       for (i = Adeb; i <= Afin; i++)
       {
         AA = 0.0;
@@ -277,8 +269,7 @@ void AppParCurves_Function::Perform(const math_Vector& X)
   int j;
 
   myParameters = X;
-  // Resolution moindres carres:
-  // ===========================
+
   MyLeastSquare.Perform(myParameters);
 
   if (!(MyLeastSquare.IsDone()))
@@ -306,7 +297,7 @@ void AppParCurves_Function::Perform(const math_Vector& X)
     math_Matrix             Grad_F(FirstP, LastP, 1, NbCu, 0.0);
     math_Vector             PTCXCI(1, Npol), PTCYCI(1, Npol), PTCZCI(1, Npol);
     math_Vector             PTCOXCI(1, Npol), PTCOYCI(1, Npol), PTCOZCI(1, Npol);
-    //    bool Ext = true;
+
     ERR3d = ERR2d = 0.0;
 
     math_Matrix PTCOX(1, Npol, 1, NbCu), PTCOY(1, Npol, 1, NbCu), PTCOZ(1, Npol, 1, NbCu);
@@ -335,9 +326,6 @@ void AppParCurves_Function::Perform(const math_Vector& X)
     A  = MyLeastSquare.FunctionMatrix();
     DA = MyLeastSquare.DerivativeFunctionMatrix();
 
-    // Resolution avec contraintes:
-    // ============================
-
     ResolCons Resol(MyMultiLine, MyMultiCurve, FirstP, LastP, myConstraints, A, DA);
     if (!Resol.IsDone())
     {
@@ -345,9 +333,6 @@ void AppParCurves_Function::Perform(const math_Vector& X)
       return;
     }
 
-    // Calcul de F = Sum||C(ui)-Ptli||2 et du gradient non contraint de F pour
-    // chaque point PointIndex.
-    // ========================================================================
     FVal = 0.0;
     for (j = FirstP; j <= LastP; j++)
     {
@@ -392,9 +377,6 @@ void AppParCurves_Function::Perform(const math_Vector& X)
         }
       }
     }
-
-    // Calcul du gradient sans contraintes:
-    // ====================================
 
     for (Ci = 1; Ci <= NbCu; Ci++)
     {
@@ -448,8 +430,6 @@ void AppParCurves_Function::Perform(const math_Vector& X)
       }
     }
 
-    // Calcul de DK*PTC:
-    // =================
     for (i = 1; i <= K.RowNumber(); i++)
     {
       Inc = 0;
@@ -474,10 +454,6 @@ void AppParCurves_Function::Perform(const math_Vector& X)
 
     math_Vector DERR(DTK.LowerRow(), DTK.UpperRow());
     DERR = (DTK)*Vardua - KK * ((DKPTC) + K * (DTK)*Vardua);
-
-    // rajout du gradient avec contraintes:
-    // ====================================
-    // dPTCO1/duk = [d(TA)/duk*[A*PTCO-PTL] + TA*dA/duk*PTCO]
 
     Inc = 0;
 
@@ -506,7 +482,7 @@ void AppParCurves_Function::Perform(const math_Vector& X)
       Errx    = (A * PTCOXCI - PTLX.Col(Ci));
       Erry    = (A * PTCOYCI - PTLY.Col(Ci));
       Errz    = (A * PTCOZCI - PTLZ.Col(Ci));
-      Scalx   = (DA * PTCOXCI); // Scal = DA * PTCO
+      Scalx   = (DA * PTCOXCI);
       Scaly   = (DA * PTCOYCI);
       Scalz   = (DA * PTCOZCI);
       Erruzax = (PTCXCI - PTCOXCI);
@@ -538,11 +514,6 @@ void AppParCurves_Function::Perform(const math_Vector& X)
       else
         Inc = Inc + 2 * Npol;
     }
-
-    // on calcule DPTCO = - RESTM * DPTCO1:
-
-    // Calcul de DPTCO/duk:
-    // dPTCO/duk = -Inv(T(A)*A)*[d(TA)/duk*[A*PTCO-PTL] + TA*dA/duk*PTCO]
 
     int low = myConstraints->Lower(), upp = myConstraints->Upper();
     Inc = 0;

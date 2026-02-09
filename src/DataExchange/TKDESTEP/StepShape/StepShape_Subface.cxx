@@ -3,11 +3,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_Subface, StepShape_Face)
 
-//=================================================================================================
-
 StepShape_Subface::StepShape_Subface() = default;
-
-//=================================================================================================
 
 void StepShape_Subface::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentationItem_Name,
@@ -19,14 +15,10 @@ void StepShape_Subface::Init(
   theParentFace = aParentFace;
 }
 
-//=================================================================================================
-
 occ::handle<StepShape_Face> StepShape_Subface::ParentFace() const
 {
   return theParentFace;
 }
-
-//=================================================================================================
 
 void StepShape_Subface::SetParentFace(const occ::handle<StepShape_Face>& aParentFace)
 {

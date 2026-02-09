@@ -35,5 +35,3 @@ static const char Shaders_PBRFresnel_glsl[] =
   "  theCosV *= theCosV * theCosV * theCosV * theCosV;\n"
   "  return f0 + (max(vec3(1.0 - theRoughness), f0) - f0) * theCosV;\n"
   "}\n";
-
-// clang-format on

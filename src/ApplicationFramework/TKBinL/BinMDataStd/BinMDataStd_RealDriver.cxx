@@ -7,24 +7,15 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_RealDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_RealDriver::BinMDataStd_RealDriver(const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_Real)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_RealDriver::NewEmpty() const
 {
   return new TDataStd_Real();
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 
 bool BinMDataStd_RealDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                    const occ::handle<TDF_Attribute>& theTarget,
@@ -37,7 +28,7 @@ bool BinMDataStd_RealDriver::Paste(const BinObjMgt_Persistent&       theSource,
     anAtt->Set(aValue);
   if (theRelocTable.GetHeaderData()->StorageVersion().IntegerValue()
       >= TDocStd_FormatVersion_VERSION_9)
-  { // process user defined guid
+  {
     const int&    aPos = theSource.Position();
     Standard_GUID aGuid;
     ok = theSource >> aGuid;
@@ -57,18 +48,13 @@ bool BinMDataStd_RealDriver::Paste(const BinObjMgt_Persistent&       theSource,
   return ok;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
-
 void BinMDataStd_RealDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                    BinObjMgt_Persistent&             theTarget,
                                    NCollection_IndexedMap<occ::handle<Standard_Transient>>&) const
 {
   occ::handle<TDataStd_Real> anAtt = occ::down_cast<TDataStd_Real>(theSource);
   theTarget << anAtt->Get();
-  // process user defined guid
+
   if (anAtt->ID() != TDataStd_Real::GetID())
     theTarget << anAtt->ID();
 }

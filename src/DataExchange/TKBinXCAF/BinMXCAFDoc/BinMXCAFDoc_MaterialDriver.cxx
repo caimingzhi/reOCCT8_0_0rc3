@@ -8,26 +8,20 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_MaterialDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMXCAFDoc_MaterialDriver::BinMXCAFDoc_MaterialDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_Material)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMXCAFDoc_MaterialDriver::NewEmpty() const
 {
   return new XCAFDoc_Material();
 }
 
-//=================================================================================================
-
 bool BinMXCAFDoc_MaterialDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                        const occ::handle<TDF_Attribute>& theTarget,
-                                       BinObjMgt_RRelocationTable& /*theRelocTable*/) const
+                                       BinObjMgt_RRelocationTable&) const
 {
   occ::handle<XCAFDoc_Material> anAtt = occ::down_cast<XCAFDoc_Material>(theTarget);
   double                        aDensity;
@@ -52,12 +46,10 @@ static void pasteString(BinObjMgt_Persistent&                        theTarget,
     theTarget << TCollection_AsciiString("");
 }
 
-//=================================================================================================
-
 void BinMXCAFDoc_MaterialDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
   BinObjMgt_Persistent&             theTarget,
-  NCollection_IndexedMap<occ::handle<Standard_Transient>>& /*theRelocTable*/) const
+  NCollection_IndexedMap<occ::handle<Standard_Transient>>&) const
 {
   occ::handle<XCAFDoc_Material> anAtt = occ::down_cast<XCAFDoc_Material>(theSource);
   pasteString(theTarget, anAtt->GetName());

@@ -12,7 +12,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class Interface_ShareTool;
 
-//! Read & Write Module for BrepWithVoids
 class RWStepShape_RWBrepWithVoids
 {
 public:

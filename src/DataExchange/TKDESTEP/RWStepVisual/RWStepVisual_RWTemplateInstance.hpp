@@ -11,7 +11,6 @@ class StepVisual_TemplateInstance;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for TemplateInstance
 class RWStepVisual_RWTemplateInstance
 {
 public:

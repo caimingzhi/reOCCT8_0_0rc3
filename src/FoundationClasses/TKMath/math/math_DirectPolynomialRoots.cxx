@@ -1,16 +1,4 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
@@ -23,44 +11,21 @@
 #include <array>
 #include <cmath>
 
-// @file math_DirectPolynomialRoots.cxx
-// @brief Implementation of direct polynomial root finding algorithms
-//
-// This implementation provides robust numerical methods for finding all real
-// roots of polynomials up to degree 4. The algorithms are based on classical
-// algebraic methods enhanced with modern numerical techniques for stability.
-//
-// Algorithm References:
-//   - ALGORITHMES NUMERIQUES ANALYSE ET MISE EN OEUVRE, tome 2
-//     (equations et systemes non lineaires) J. VIGNES editions TECHNIP
-//   - Ferrari's method for quartic equations
-//   - Cardano's formula for cubic equations
-//   - Numerically stable quadratic formula
-//   - Newton-Raphson refinement for improved accuracy
-
 namespace
 {
 
-  /// Threshold below which coefficients are considered effectively zero
   const double ZERO_THRESHOLD = 1.0e-30;
 
-  /// Machine epsilon for floating-point arithmetic precision
   const double MACHINE_EPSILON = RealEpsilon();
 
-  /// Floating-point radix (base) for coefficient scaling operations
   const double FLOATING_RADIX = 2.0;
 
-  /// Inverse of natural logarithm of radix for exponent calculations
   const double INV_LOG_RADIX = 1.0 / std::log(2.0);
 
-  /// Maximum number of Newton-Raphson refinement iterations
   constexpr int MAX_NEWTON_ITERATIONS = 10;
 
-  /// Upper limit to prevent numerical overflow in computations
   constexpr double OVERFLOW_LIMIT = 1.0e+80;
 
-  // Evaluates polynomial at point X using Horner's method
-  // Coefficients: Poly[0]*X^(N-1) + Poly[1]*X^(N-2) + ... + Poly[N-1]
   double EvaluatePolynomial(const int theN, const double* thePoly, const double theX)
   {
     double aResult = thePoly[0];
@@ -71,7 +36,6 @@ namespace
     return aResult;
   }
 
-  // Evaluates polynomial and its derivative simultaneously
   void EvaluatePolynomialWithDerivative(const int     theN,
                                         const double* thePoly,
                                         const double  theX,
@@ -88,7 +52,6 @@ namespace
     }
   }
 
-  // Refines root using Newton-Raphson iterations
   double RefineRoot(const int theN, const double* thePoly, const double theInitialGuess)
   {
     double       aValue        = 0.0;
@@ -115,12 +78,9 @@ namespace
       aSolution += aDelta;
     }
 
-    // Return improved solution only if it's better
     return (std::abs(aValue) <= std::abs(aInitialValue)) ? aSolution : theInitialGuess;
   }
 
-  // Single variadic template for polynomial root refinement and improvement
-  // Automatically handles any number of coefficients
   template <typename... Coeffs>
   inline double RefinePolynomialRoot(const double theInitialGuess, Coeffs... theCoeffs)
   {
@@ -129,7 +89,6 @@ namespace
     return RefineRoot(N, aCoeffs, theInitialGuess);
   }
 
-  // Helper method to scale and refine all roots of a polynomial
   template <typename... Args>
   inline void ScaleAndRefineAllRoots(double*      theRoots,
                                      const int    theNbRoots,
@@ -143,7 +102,6 @@ namespace
     }
   }
 
-  // Computes base-2 exponent for coefficient scaling
   int ComputeBaseExponent(const double theValue)
   {
     if (theValue > 1.0)
@@ -157,13 +115,11 @@ namespace
     return 0;
   }
 
-  // Scale coefficients to avoid overflow/underflow
   struct ScaledCoefficients
   {
-    /// Scaled coefficient values
+
     double A, B, C, D, E;
 
-    /// Scale factor for converting roots back to original coordinate system
     double ScaleFactor;
 
     void ScaleQuartic(double theA, double theB, double theC, double theD, double theE)
@@ -188,11 +144,10 @@ namespace
       A = theA / ScaleFactor;
       B = theB / aScaleFactor2;
       C = theC / (aScaleFactor2 * ScaleFactor);
-      D = theD; // Not used for cubic, but kept for consistency
+      D = theD;
     }
   };
 
-  // Computes special discriminant for P < 0 cases with improved numerical stability
   double ComputeSpecialDiscriminant(const double theBeta,
                                     const double theGamma,
                                     const double theDel,
@@ -222,7 +177,6 @@ namespace
     return 0.0;
   }
 
-  // Solves cubic equation with three real roots using trigonometric method
   void SolveCubicThreeRealRoots(const double theBeta,
                                 const double theGamma,
                                 const double theDel,
@@ -233,7 +187,7 @@ namespace
   {
     if (theBeta == 0.0 && theQ == 0.0)
     {
-      // Special case: x^3 + Px = 0
+
       theRoots[0] = std::sqrt(-theP);
       theRoots[1] = -theRoots[0];
       theRoots[2] = 0.0;
@@ -253,7 +207,7 @@ namespace
       }
       else
       {
-        // Alternative formula for better accuracy
+
         const double aDbg  = theDel - theBeta * theGamma;
         const double aSdbg = (aDbg >= 0.0) ? 1.0 : -1.0;
         const double aDen1 =
@@ -262,12 +216,10 @@ namespace
         theRoots[1]        = aDbg / aDen1 + aSdbg * std::sqrt(-27.0 * theDiscr) / aDen2;
       }
 
-      // Use Vieta's formula for the third root
       theRoots[2] = -theDel / (theRoots[0] * theRoots[1]);
     }
   }
 
-  // Solves cubic equation with one real root using Cardano's formula
   void SolveCubicOneRealRoot(const double theBeta,
                              const double theDel,
                              const double theP,
@@ -305,7 +257,6 @@ namespace
     }
   }
 
-  // Solves cubic equation with multiple roots (discriminant = 0)
   void SolveCubicMultipleRoots(const double theBeta,
                                const double theGamma,
                                const double theDel,
@@ -340,7 +291,6 @@ namespace
     }
   }
 
-  // Determines if quartic should be reduced to lower degree
   bool ShouldReduceDegreeQuartic(const double theA,
                                  const double theB,
                                  const double theC,
@@ -352,7 +302,6 @@ namespace
       return true;
     }
 
-    // Modified by jgv, 22.01.09 for numerical stability
     double aMaxCoeff = ZERO_THRESHOLD;
     aMaxCoeff        = std::max(aMaxCoeff, std::abs(theB));
     aMaxCoeff        = std::max(aMaxCoeff, std::abs(theC));
@@ -384,14 +333,13 @@ namespace
     return false;
   }
 
-  // Constructs and solves Ferrari's resolvent cubic equation
   double SolveFerrariResolvent(const double theA,
                                const double theB,
                                const double theC,
                                const double theD,
                                bool&        theSuccess)
   {
-    // Construct resolvent cubic: Y^3 + R3*Y^2 + S3*Y + T3 = 0
+
     const double aR3 = -theB;
     const double aS3 = theA * theC - 4.0 * theD;
     const double aT3 = theD * (4.0 * theB - theA * theA) - theC * theC;
@@ -406,7 +354,6 @@ namespace
 
     theSuccess = true;
 
-    // Choose the largest root for numerical stability
     double aY0 = aCubicSolver.Value(1);
     for (int i = 2; i <= aCubicSolver.NbSolutions(); ++i)
     {
@@ -419,21 +366,18 @@ namespace
     return aY0;
   }
 
-  // Structure for quartic factorization into two quadratic equations
   struct QuarticFactorization
   {
-    /// Linear coefficient of first quadratic factor
+
     double P1;
-    /// Constant coefficient of first quadratic factor
+
     double Q1;
 
-    /// Linear coefficient of second quadratic factor
     double P2;
-    /// Constant coefficient of second quadratic factor
+
     double Q2;
   };
 
-  // Factors quartic into two quadratics using Ferrari's method
   QuarticFactorization FactorQuarticViaFerrari(const double theA,
                                                const double theB,
                                                const double theC,
@@ -442,18 +386,14 @@ namespace
   {
     QuarticFactorization aFactors;
 
-    // Compute discriminant and parameters
     const double aDiscr  = theA * theY0 * 0.5 - theC;
     const double aSdiscr = (aDiscr >= 0.0) ? 1.0 : -1.0;
 
-    // Compute P0 and Q0 for the quadratic factors
     double aP0 = theA * theA * 0.25 - theB + theY0;
     aP0        = (aP0 < 0.0) ? 0.0 : std::sqrt(aP0);
 
     double aQ0 = theY0 * theY0 * 0.25 - theD;
 
-    // Handle the case where Q0^2 is very close to zero more robustly
-    // This fixes the numerical precision issue on Linux/Windows vs macOS
     if (std::abs(aQ0) < 10 * MACHINE_EPSILON)
     {
       aQ0 = 0.0;
@@ -463,7 +403,6 @@ namespace
       aQ0 = (aQ0 < 0.0) ? 0.0 : std::sqrt(aQ0);
     }
 
-    // Form coefficients for the two quadratic equations
     const double aAdemi    = theA * 0.5;
     const double aYdemi    = theY0 * 0.5;
     const double aSdiscrQ0 = aSdiscr * aQ0;
@@ -473,7 +412,6 @@ namespace
     aFactors.P2 = aAdemi - aP0;
     aFactors.Q2 = aYdemi - aSdiscrQ0;
 
-    // Clean up near-zero coefficients
     const double anEps = 100.0 * MACHINE_EPSILON;
 
     if (std::abs(aFactors.P1) <= anEps)
@@ -490,8 +428,6 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 math_DirectPolynomialRoots::math_DirectPolynomialRoots(const double theA,
                                                        const double theB,
                                                        const double theC,
@@ -503,8 +439,6 @@ math_DirectPolynomialRoots::math_DirectPolynomialRoots(const double theA,
   Solve(theA, theB, theC, theD, theE);
 }
 
-//=================================================================================================
-
 math_DirectPolynomialRoots::math_DirectPolynomialRoots(const double theA,
                                                        const double theB,
                                                        const double theC,
@@ -515,8 +449,6 @@ math_DirectPolynomialRoots::math_DirectPolynomialRoots(const double theA,
   Solve(theA, theB, theC, theD);
 }
 
-//=================================================================================================
-
 math_DirectPolynomialRoots::math_DirectPolynomialRoots(const double theA,
                                                        const double theB,
                                                        const double theC)
@@ -526,8 +458,6 @@ math_DirectPolynomialRoots::math_DirectPolynomialRoots(const double theA,
   Solve(theA, theB, theC);
 }
 
-//=================================================================================================
-
 math_DirectPolynomialRoots::math_DirectPolynomialRoots(const double theA, const double theB)
 {
   myDone           = true;
@@ -535,32 +465,27 @@ math_DirectPolynomialRoots::math_DirectPolynomialRoots(const double theA, const 
   Solve(theA, theB);
 }
 
-//=================================================================================================
-
 void math_DirectPolynomialRoots::Solve(const double theA,
                                        const double theB,
                                        const double theC,
                                        const double theD,
                                        const double theE)
 {
-  // Check for degree reduction
+
   if (ShouldReduceDegreeQuartic(theA, theB, theC, theD, theE))
   {
     Solve(theB, theC, theD, theE);
     return;
   }
 
-  // Normalize coefficients
   const double A = theB / theA;
   const double B = theC / theA;
   const double C = theD / theA;
   const double D = theE / theA;
 
-  // Scale coefficients to avoid overflow/underflow
   ScaledCoefficients aScaled;
   aScaled.ScaleQuartic(A, B, C, D, D);
 
-  // Solve Ferrari's resolvent cubic
   bool         aSuccess = false;
   const double aY0 = SolveFerrariResolvent(aScaled.A, aScaled.B, aScaled.C, aScaled.D, aSuccess);
 
@@ -570,11 +495,9 @@ void math_DirectPolynomialRoots::Solve(const double theA,
     return;
   }
 
-  // Factor into two quadratics
   const QuarticFactorization aFactors =
     FactorQuarticViaFerrari(aScaled.A, aScaled.B, aScaled.C, aScaled.D, aY0);
 
-  // Solve first quadratic
   math_DirectPolynomialRoots aQuadratic1(1.0, aFactors.P1, aFactors.Q1);
   if (!aQuadratic1.IsDone())
   {
@@ -582,7 +505,6 @@ void math_DirectPolynomialRoots::Solve(const double theA,
     return;
   }
 
-  // Solve second quadratic
   math_DirectPolynomialRoots aQuadratic2(1.0, aFactors.P2, aFactors.Q2);
   if (!aQuadratic2.IsDone())
   {
@@ -590,7 +512,6 @@ void math_DirectPolynomialRoots::Solve(const double theA,
     return;
   }
 
-  // Collect all roots
   myNbSol    = aQuadratic1.NbSolutions() + aQuadratic2.NbSolutions();
   int aIndex = 0;
 
@@ -604,34 +525,28 @@ void math_DirectPolynomialRoots::Solve(const double theA,
     myRoots[aIndex++] = aQuadratic2.myRoots[i];
   }
 
-  // Apply inverse scaling and Newton-Raphson refinement to all roots
   ScaleAndRefineAllRoots(myRoots, myNbSol, aScaled.ScaleFactor, theA, theB, theC, theD, theE);
 }
-
-//=================================================================================================
 
 void math_DirectPolynomialRoots::Solve(const double theA,
                                        const double theB,
                                        const double theC,
                                        const double theD)
 {
-  // Check for degree reduction
+
   if (std::abs(theA) <= ZERO_THRESHOLD)
   {
     Solve(theB, theC, theD);
     return;
   }
 
-  // Normalize coefficients
   const double aBeta  = theB / theA;
   const double aGamma = theC / theA;
   const double aDel   = theD / theA;
 
-  // Scale to avoid overflow/underflow
   ScaledCoefficients aScaled;
   aScaled.ScaleCubic(aBeta, aGamma, aDel, aDel);
 
-  // Transform to depressed cubic: t^3 + Pt + Q = 0
   const double aP1 = aScaled.B;
   const double aP2 = -(aScaled.A * aScaled.A) / 3.0;
   double       aP  = aP1 + aP2;
@@ -647,63 +562,54 @@ void math_DirectPolynomialRoots::Solve(const double theA,
   if (std::abs(aQ) <= aEq)
     aQ = 0.0;
 
-  // Check for overflow
   if (std::abs(aP) > OVERFLOW_LIMIT)
   {
     myDone = false;
     return;
   }
 
-  // Compute discriminant
   const double aA1    = (aP * aP * aP) / 27.0;
   const double aA2    = (aQ * aQ) / 4.0;
   double       aDiscr = aA1 + aA2;
 
-  // Special handling for P < 0
   if (aP < 0.0)
   {
     aDiscr = ComputeSpecialDiscriminant(aScaled.A, aScaled.B, aScaled.C, aA1);
   }
 
-  // Solve based on discriminant
   if (aDiscr < 0.0)
   {
-    // Three distinct real roots
+
     myNbSol = 3;
     SolveCubicThreeRealRoots(aScaled.A, aScaled.B, aScaled.C, aP, aQ, aDiscr, myRoots);
   }
   else if (aDiscr > 0.0)
   {
-    // One real root
+
     myNbSol = 1;
     SolveCubicOneRealRoot(aScaled.A, aScaled.C, aP, aQ, aDiscr, myRoots);
   }
   else
   {
-    // Multiple roots
+
     SolveCubicMultipleRoots(aScaled.A, aScaled.B, aScaled.C, aP, aQ, myRoots, myNbSol);
   }
 
-  // Apply inverse scaling and Newton-Raphson refinement to all roots
   ScaleAndRefineAllRoots(myRoots, myNbSol, aScaled.ScaleFactor, theA, theB, theC, theD);
 }
 
-//=================================================================================================
-
 void math_DirectPolynomialRoots::Solve(const double theA, const double theB, const double theC)
 {
-  // Check for degree reduction
+
   if (std::abs(theA) <= ZERO_THRESHOLD)
   {
     Solve(theB, theC);
     return;
   }
 
-  // Solve normalized quadratic x^2 + P*x + Q = 0
   const double P = theB / theA;
   const double Q = theC / theA;
 
-  // Compute discriminant with error bounds
   const double aEpsD    = 3.0 * MACHINE_EPSILON * (P * P + std::abs(4.0 * Q));
   double       aDiscrim = P * P - 4.0 * Q;
 
@@ -714,12 +620,12 @@ void math_DirectPolynomialRoots::Solve(const double theA, const double theB, con
 
   if (aDiscrim < 0.0)
   {
-    // No real roots
+
     myNbSol = 0;
   }
   else if (aDiscrim == 0.0)
   {
-    // Double root
+
     myNbSol    = 2;
     myRoots[0] = -0.5 * P;
     myRoots[0] = RefinePolynomialRoot(myRoots[0], 1.0, P, Q);
@@ -727,7 +633,7 @@ void math_DirectPolynomialRoots::Solve(const double theA, const double theB, con
   }
   else
   {
-    // Two distinct real roots - use numerically stable formula
+
     myNbSol = 2;
     if (P > 0.0)
     {
@@ -743,29 +649,24 @@ void math_DirectPolynomialRoots::Solve(const double theA, const double theB, con
   }
 }
 
-//=================================================================================================
-
 void math_DirectPolynomialRoots::Solve(const double theA, const double theB)
 {
   if (std::abs(theA) <= ZERO_THRESHOLD)
   {
     if (std::abs(theB) <= ZERO_THRESHOLD)
     {
-      // 0 = 0: infinite solutions
+
       myInfiniteStatus = true;
       return;
     }
-    // 0*x + B = 0: no solution
+
     myNbSol = 0;
     return;
   }
 
-  // Normal case: unique solution
   myNbSol    = 1;
   myRoots[0] = -theB / theA;
 }
-
-//=================================================================================================
 
 void math_DirectPolynomialRoots::Dump(Standard_OStream& theStream) const
 {

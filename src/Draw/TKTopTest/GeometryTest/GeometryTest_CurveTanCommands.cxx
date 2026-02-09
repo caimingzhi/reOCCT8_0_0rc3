@@ -15,11 +15,6 @@
 #include <TCollection_AsciiString.hpp>
 #include <cstdio>
 
-//=======================================================================
-// function : qcircle
-// purpose  : Parses command: "qcircle name x y radius
-// [-unqualified|-enclosing|-enclosed|-outside|-noqualifier]"
-//=======================================================================
 static int qcurve(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
 {
   if (theArgsNb < 5)
@@ -78,8 +73,6 @@ static int qcurve(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
   return 0;
 }
 
-//=================================================================================================
-
 static int solutions(Draw_Interpretor& theDI, GccAna_Circ2d3Tan& theCirTan3, const char* theName)
 {
   if (!theCirTan3.IsDone())
@@ -105,7 +98,7 @@ static int solutions(Draw_Interpretor& theDI, GccAna_Circ2d3Tan& theCirTan3, con
           << "\n";
 
     theDI << "  tangent points: point (parameter on solution, parameter on argument)\n";
-    // the first tangent point
+
     if (theCirTan3.IsTheSame1(aSolId))
       theDI << "    " << "= the solution number " << aSolId << " is equal to the first argument\n";
     else
@@ -115,7 +108,7 @@ static int solutions(Draw_Interpretor& theDI, GccAna_Circ2d3Tan& theCirTan3, con
       DrawTrSurf::Set(aTanPntIdName.ToCString(), aPntSol);
       theDI << "    " << aTanPntIdName.ToCString() << " (" << aParSol << ", " << aParArg << ")\n";
     }
-    // the second tangent point
+
     if (theCirTan3.IsTheSame2(aSolId))
       theDI << "    " << "= the solution number " << aSolId << " is equal to the second argument\n";
     else
@@ -125,7 +118,7 @@ static int solutions(Draw_Interpretor& theDI, GccAna_Circ2d3Tan& theCirTan3, con
       DrawTrSurf::Set(aTanPntIdName.ToCString(), aPntSol);
       theDI << "    " << aTanPntIdName.ToCString() << " (" << aParSol << ", " << aParArg << ")\n";
     }
-    // the third tangent point
+
     if (theCirTan3.IsTheSame3(aSolId))
       theDI << "    " << "= the solution number " << aSolId << " is equal to the third argument\n";
     else
@@ -141,12 +134,6 @@ static int solutions(Draw_Interpretor& theDI, GccAna_Circ2d3Tan& theCirTan3, con
   return 0;
 }
 
-//=======================================================================
-// function : circ2d3Tan
-// purpose  : Parses command: [circ2d3Tan cname qcicrle1/qlin1/point1 qcicrle2/qlin2/point2
-// qcicrle3/qlin3/point3
-//                            tolerance]
-//=======================================================================
 static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theArgVec)
 {
   if (theArgsNb < 5)
@@ -171,7 +158,7 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
   if (theArgsNb > 5)
     aTolerance = Draw::Atof(theArgVec[5]);
 
-  if (aQCurve1.IsNull()) // <point, point, point>
+  if (aQCurve1.IsNull())
   {
     if (!anIsPoint1 || !anIsPoint2 || !anIsPoint3)
     {
@@ -182,8 +169,7 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
     return solutions(theDI, aCircBuilder, theArgVec[1]);
   }
 
-  // the first curve is not NULL
-  if (aQCurve2.IsNull()) // <qcircle, point, point> or <qlin, point, point>
+  if (aQCurve2.IsNull())
   {
     if (!anIsPoint2 || !anIsPoint3)
     {
@@ -207,9 +193,7 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
     return 1;
   }
 
-  // the first and the second curves are not NULL
-  if (aQCurve3
-        .IsNull()) // <qcircle, qcircle, point> or <qcircle, qlin, point> or <qlin, qlin, point>
+  if (aQCurve3.IsNull())
   {
     if (!anIsPoint3)
     {
@@ -244,9 +228,6 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
     return 1;
   }
 
-  // the first, the second and the third curves are not NULL
-  // <qcircle, qcircle, qcircle> or <qcircle, qcircle, qlin>, <qcircle, qlin, qlin>, <qlin, qlin,
-  // qlin>
   Geom2dAdaptor_Curve anAdaptorCurve1(aQCurve1->GetCurve());
   Geom2dAdaptor_Curve anAdaptorCurve2(aQCurve2->GetCurve());
   Geom2dAdaptor_Curve anAdaptorCurve3(aQCurve3->GetCurve());
@@ -296,8 +277,6 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
   Message::SendFail() << "Error: wrong curve type";
   return 1;
 }
-
-//=================================================================================================
 
 void GeometryTest::CurveTanCommands(Draw_Interpretor& theCommands)
 {

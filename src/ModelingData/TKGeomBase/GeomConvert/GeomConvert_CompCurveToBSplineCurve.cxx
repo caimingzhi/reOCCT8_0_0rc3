@@ -8,16 +8,12 @@
 #include <NCollection_Array1.hpp>
 #include <Standard_Integer.hpp>
 
-//=================================================================================================
-
 GeomConvert_CompCurveToBSplineCurve::GeomConvert_CompCurveToBSplineCurve(
   const Convert_ParameterisationType theParameterisation)
     : myTol(Precision::Confusion()),
       myType(theParameterisation)
 {
 }
-
-//=================================================================================================
 
 GeomConvert_CompCurveToBSplineCurve::GeomConvert_CompCurveToBSplineCurve(
   const occ::handle<Geom_BoundedCurve>& BasisCurve,
@@ -36,15 +32,13 @@ GeomConvert_CompCurveToBSplineCurve::GeomConvert_CompCurveToBSplineCurve(
   }
 }
 
-//=================================================================================================
-
 bool GeomConvert_CompCurveToBSplineCurve::Add(const occ::handle<Geom_BoundedCurve>& NewCurve,
                                               const double                          Tolerance,
                                               const bool                            After,
                                               const bool                            WithRatio,
                                               const int                             MinM)
 {
-  // conversion
+
   occ::handle<Geom_BSplineCurve> Bs = occ::down_cast<Geom_BSplineCurve>(NewCurve);
   if (!Bs.IsNull())
   {
@@ -63,9 +57,6 @@ bool GeomConvert_CompCurveToBSplineCurve::Add(const occ::handle<Geom_BoundedCurv
   bool avant, apres;
   myTol = Tolerance;
 
-  // Use actual curve endpoints instead of poles for proper G0 continuity check.
-  // G0 continuity (positional continuity) requires curves to share endpoints.
-  // For non-clamped or periodic B-splines, first/last poles may not coincide with endpoints.
   const gp_Pnt aCurveStart = myCurve->StartPoint();
   const gp_Pnt aCurveEnd   = myCurve->EndPoint();
   const gp_Pnt aBsStart    = Bs->StartPoint();
@@ -74,16 +65,14 @@ bool GeomConvert_CompCurveToBSplineCurve::Add(const occ::handle<Geom_BoundedCurv
   avant = ((aCurveStart.Distance(aBsStart) < myTol) || (aCurveStart.Distance(aBsEnd) < myTol));
   apres = ((aCurveEnd.Distance(aBsStart) < myTol) || (aCurveEnd.Distance(aBsEnd) < myTol));
 
-  // myCurve est (sera) elle fermee ?
   if (avant && apres)
-  { // On leve l'ambiguite
+  {
     if (After)
       avant = false;
     else
       apres = false;
   }
 
-  // Ajout Apres ?
   if (apres)
   {
     if (aCurveEnd.Distance(aBsEnd) < myTol)
@@ -93,7 +82,7 @@ bool GeomConvert_CompCurveToBSplineCurve::Add(const occ::handle<Geom_BoundedCurv
     Add(myCurve, Bs, true, WithRatio, MinM);
     return true;
   }
-  // Ajout avant ?
+
   else if (avant)
   {
     if (aCurveStart.Distance(aBsStart) < myTol)
@@ -113,7 +102,7 @@ void GeomConvert_CompCurveToBSplineCurve::Add(occ::handle<Geom_BSplineCurve>& Fi
                                               const bool                      WithRatio,
                                               const int                       MinM)
 {
-  // Harmonisation des degres.
+
   int Deg = std::max(FirstCurve->Degree(), SecondCurve->Degree());
   if (FirstCurve->Degree() < Deg)
   {
@@ -124,7 +113,6 @@ void GeomConvert_CompCurveToBSplineCurve::Add(occ::handle<Geom_BSplineCurve>& Fi
     SecondCurve->IncreaseDegree(Deg);
   }
 
-  // Declarationd
   double                     L1, L2;
   int                        ii, jj;
   double                     Ratio = 1, Ratio1, Ratio2, Delta1, Delta2;
@@ -135,7 +123,6 @@ void GeomConvert_CompCurveToBSplineCurve::Add(occ::handle<Geom_BSplineCurve>& Fi
   NCollection_Array1<double> Poids(1, NbP1 + NbP2 - 1);
   NCollection_Array1<int>    Mults(1, NbK1 + NbK2 - 1);
 
-  // Ratio de reparametrisation (C1 si possible)
   if (WithRatio)
   {
     L1 = FirstCurve->DN(FirstCurve->LastParameter(), 1).Magnitude();
@@ -153,7 +140,7 @@ void GeomConvert_CompCurveToBSplineCurve::Add(occ::handle<Geom_BSplineCurve>& Fi
 
   if (After)
   {
-    // On ne bouge pas la premiere courbe
+
     Ratio1 = 1;
     Delta1 = 0;
     Ratio2 = 1 / Ratio;
@@ -161,14 +148,13 @@ void GeomConvert_CompCurveToBSplineCurve::Add(occ::handle<Geom_BSplineCurve>& Fi
   }
   else
   {
-    // On ne bouge pas la seconde courbe
+
     Ratio1 = Ratio;
     Delta1 = Ratio1 * FirstCurve->Knot(NbK1) - SecondCurve->Knot(1);
     Ratio2 = 1;
     Delta2 = 0;
   }
 
-  // Les Noeuds
   double eps;
   for (ii = 1; ii <= NbK1; ii++)
   {
@@ -201,7 +187,7 @@ void GeomConvert_CompCurveToBSplineCurve::Add(occ::handle<Geom_BSplineCurve>& Fi
 
   Ratio = FirstCurve->Weight(NbP1);
   Ratio /= SecondCurve->Weight(1);
-  // Les Poles et Poids
+
   for (ii = 1; ii < NbP1; ii++)
   {
     Poles(ii) = FirstCurve->Pole(ii);
@@ -210,17 +196,12 @@ void GeomConvert_CompCurveToBSplineCurve::Add(occ::handle<Geom_BSplineCurve>& Fi
   for (ii = 1, jj = NbP1; ii <= NbP2; ii++, jj++)
   {
     Poles(jj) = SecondCurve->Pole(ii);
-    //
-    // attentiion les poids ne se raccord pas forcement C0
-    // d'ou Ratio
-    //
+
     Poids(jj) = Ratio * SecondCurve->Weight(ii);
   }
 
-  // Creation de la BSpline
   myCurve = new (Geom_BSplineCurve)(Poles, Poids, Noeuds, Mults, Deg);
 
-  // Reduction eventuelle de la multiplicite jusqu'a MinM
   bool Ok = true;
   int  M  = Mults(NbK1);
   while ((M > MinM) && Ok)
@@ -230,14 +211,10 @@ void GeomConvert_CompCurveToBSplineCurve::Add(occ::handle<Geom_BSplineCurve>& Fi
   }
 }
 
-//=================================================================================================
-
 occ::handle<Geom_BSplineCurve> GeomConvert_CompCurveToBSplineCurve::BSplineCurve() const
 {
   return myCurve;
 }
-
-//=================================================================================================
 
 void GeomConvert_CompCurveToBSplineCurve::Clear()
 {

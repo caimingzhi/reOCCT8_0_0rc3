@@ -34,14 +34,10 @@ inline NCollection_Sequence<occ::handle<TDocStd_Document>>& TDocStd_ApplicationD
   return myDocuments;
 }
 
-//=================================================================================================
-
 inline const TCollection_ExtendedString& TDocStd_ApplicationDelta::GetName() const
 {
   return myName;
 }
-
-//=================================================================================================
 
 inline void TDocStd_ApplicationDelta::SetName(const TCollection_ExtendedString& theName)
 {

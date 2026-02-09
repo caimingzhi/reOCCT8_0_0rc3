@@ -184,5 +184,4 @@ Standard_EXPORT bool TopOpeBRepTool_GetcontextNOSEW()
   return TopOpeBRepTool_contextNOSEW;
 }
 
-// #ifdef OCCT_DEBUG
 #endif

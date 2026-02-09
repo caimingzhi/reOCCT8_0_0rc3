@@ -1,14 +1,10 @@
 #include <TDF_AttributeIterator.hpp>
 
-//=================================================================================================
-
 TDF_AttributeIterator::TDF_AttributeIterator()
     : myValue(nullptr),
       myWithoutForgotten(true)
 {
 }
-
-//=================================================================================================
 
 TDF_AttributeIterator::TDF_AttributeIterator(const TDF_Label& aLabel, const bool withoutForgotten)
     : myValue(nullptr),
@@ -18,8 +14,6 @@ TDF_AttributeIterator::TDF_AttributeIterator(const TDF_Label& aLabel, const bool
   if (!aFirstAttribute.IsNull())
     goToNext(aFirstAttribute);
 }
-
-//=================================================================================================
 
 TDF_AttributeIterator::TDF_AttributeIterator(const TDF_LabelNodePtr aLabelNode,
                                              const bool             withoutForgotten)
@@ -31,8 +25,6 @@ TDF_AttributeIterator::TDF_AttributeIterator(const TDF_LabelNodePtr aLabelNode,
     goToNext(aFirstAttribute);
 }
 
-//=================================================================================================
-
 void TDF_AttributeIterator::Initialize(const TDF_Label& aLabel, const bool withoutForgotten)
 {
   myWithoutForgotten                                = withoutForgotten;
@@ -43,12 +35,9 @@ void TDF_AttributeIterator::Initialize(const TDF_Label& aLabel, const bool witho
     goToNext(aFirstAttribute);
 }
 
-//=================================================================================================
-
 void TDF_AttributeIterator::Next()
 {
-  // A little bit complicated...
-  // but necessary if we want to find sometimes the Forgotten attributes.
+
   if (myValue)
   {
     const occ::handle<TDF_Attribute>& anAttribute = myValue->myNext;
@@ -58,11 +47,6 @@ void TDF_AttributeIterator::Next()
       goToNext(anAttribute);
   }
 }
-
-//=======================================================================
-// function : goToNext
-// purpose  : private method, used by the above
-//=======================================================================
 
 void TDF_AttributeIterator::goToNext(const occ::handle<TDF_Attribute>& anAttr)
 {

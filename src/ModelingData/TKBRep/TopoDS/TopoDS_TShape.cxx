@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TopoDS_TShape, Standard_Transient)
 
-//=================================================================================================
-
 void TopoDS_TShape::DumpJson(Standard_OStream& theOStream, int) const
 {
   OCCT_DUMP_TRANSIENT_CLASS_BEGIN(theOStream)

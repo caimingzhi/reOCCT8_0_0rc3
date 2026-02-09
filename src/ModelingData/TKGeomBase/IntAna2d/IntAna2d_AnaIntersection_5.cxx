@@ -1,19 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//============================================ IntAna2d_AnaIntersection_5.cxx
-//============================================================================
 
 #include <gp_Circ2d.hpp>
 #include <IntAna2d_AnaIntersection.hpp>
@@ -43,14 +28,12 @@ void IntAna2d_AnaIntersection::Perform(const gp_Circ2d& Circle, const IntAna2d_C
   Conic.Coefficients(A, B, C, D, E, F);
   Conic.NewCoefficients(A, B, C, D, E, F, Axe_rep);
 
-  // Parametre a avec x=Radius std::cos(a)  et y=Radius std::sin(a)
-
   pss  = B * radius_P2;
-  pcc  = A * radius_P2 - pss; // COS ^2
-  p2sc = C * radius_P2;       // 2 SIN COS
-  pc   = 2.0 * D * radius;    // COS
-  ps   = 2.0 * E * radius;    // SIN
-  pcte = F + pss;             // 1
+  pcc  = A * radius_P2 - pss;
+  p2sc = C * radius_P2;
+  pc   = 2.0 * D * radius;
+  ps   = 2.0 * E * radius;
+  pcte = F + pss;
 
   math_TrigonometricFunctionRoots Sol(pcc, p2sc, pc, ps, pcte, 0.0, 2.0 * M_PI);
 

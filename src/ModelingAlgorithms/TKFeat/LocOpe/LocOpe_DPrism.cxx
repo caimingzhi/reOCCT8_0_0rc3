@@ -39,9 +39,7 @@
 extern bool BRepFeat_GettraceFEAT();
 #endif
 
-#define NECHANT 7 // voir BRepFeat.cxx
-
-//=================================================================================================
+#define NECHANT 7
 
 LocOpe_DPrism::LocOpe_DPrism(const TopoDS_Face& Spine,
                              const double       Height1,
@@ -133,11 +131,11 @@ LocOpe_DPrism::LocOpe_DPrism(const TopoDS_Face& Spine,
         {
           TopoDS_Shape aLocalShape = fac.EmptyCopied();
           TopoDS_Face  newFace(TopoDS::Face(aLocalShape));
-          //	  TopoDS_Face newFace(TopoDS::Face(fac.EmptyCopied()));
+
           TopExp_Explorer exp;
           for (exp.Init(fac.Oriented(TopAbs_FORWARD), TopAbs_WIRE); exp.More(); exp.Next())
           {
-            //	    for (TopExp_Explorer exp2(exp.Current(),TopAbs_EDGE);
+
             TopExp_Explorer exp2(exp.Current(), TopAbs_EDGE);
             for (; exp2.More(); exp2.Next())
             {
@@ -192,11 +190,11 @@ LocOpe_DPrism::LocOpe_DPrism(const TopoDS_Face& Spine,
         {
           TopoDS_Shape aLocalShape = fac.EmptyCopied();
           TopoDS_Face  newFace(TopoDS::Face(aLocalShape));
-          //	  TopoDS_Face newFace(TopoDS::Face(fac.EmptyCopied()));
+
           TopExp_Explorer exp;
           for (exp.Init(fac.Oriented(TopAbs_FORWARD), TopAbs_WIRE); exp.More(); exp.Next())
           {
-            //	    for (TopExp_Explorer exp2(exp.Current(),TopAbs_EDGE);
+
             TopExp_Explorer exp2(exp.Current(), TopAbs_EDGE);
             for (; exp2.More(); exp2.Next())
             {
@@ -277,7 +275,7 @@ LocOpe_DPrism::LocOpe_DPrism(const TopoDS_Face& Spine,
                 if (!exp.Current().IsSame(RemovedEdge))
                 {
                   if (theWire.Orientation() != Orref)
-                  { // Les 2 faces planes ont des normales opposees
+                  {
                     B.Add(NewWire, exp.Current());
                   }
                   else
@@ -339,8 +337,6 @@ LocOpe_DPrism::LocOpe_DPrism(const TopoDS_Face& Spine,
     BRepLib::UpdateTolerances(myRes);
   }
 }
-
-//=================================================================================================
 
 LocOpe_DPrism::LocOpe_DPrism(const TopoDS_Face& Spine, const double Height, const double Angle)
     : mySpine(Spine)
@@ -408,11 +404,11 @@ LocOpe_DPrism::LocOpe_DPrism(const TopoDS_Face& Spine, const double Height, cons
         {
           TopoDS_Shape aLocalShape = fac.EmptyCopied();
           TopoDS_Face  newFace(TopoDS::Face(aLocalShape));
-          //	  TopoDS_Face newFace(TopoDS::Face(fac.EmptyCopied()));
+
           TopExp_Explorer exp;
           for (exp.Init(fac.Oriented(TopAbs_FORWARD), TopAbs_WIRE); exp.More(); exp.Next())
           {
-            //	    for (TopExp_Explorer exp2(exp.Current(),TopAbs_EDGE);
+
             TopExp_Explorer exp2(exp.Current(), TopAbs_EDGE);
             for (; exp2.More(); exp2.Next())
             {
@@ -467,11 +463,11 @@ LocOpe_DPrism::LocOpe_DPrism(const TopoDS_Face& Spine, const double Height, cons
         {
           TopoDS_Shape aLocalShape = fac.EmptyCopied();
           TopoDS_Face  newFace(TopoDS::Face(aLocalShape));
-          //	  TopoDS_Face newFace(TopoDS::Face(fac.EmptyCopied()));
+
           TopExp_Explorer exp;
           for (exp.Init(fac.Oriented(TopAbs_FORWARD), TopAbs_WIRE); exp.More(); exp.Next())
           {
-            //	    for (TopExp_Explorer exp2(exp.Current(),TopAbs_EDGE);
+
             TopExp_Explorer exp2(exp.Current(), TopAbs_EDGE);
             for (; exp2.More(); exp2.Next())
             {
@@ -527,14 +523,10 @@ LocOpe_DPrism::LocOpe_DPrism(const TopoDS_Face& Spine, const double Height, cons
   }
 }
 
-//=================================================================================================
-
 bool LocOpe_DPrism::IsDone() const
 {
   return myDPrism.IsDone();
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& LocOpe_DPrism::Shape() const
 {
@@ -545,35 +537,25 @@ const TopoDS_Shape& LocOpe_DPrism::Shape() const
   return myRes;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& LocOpe_DPrism::Spine() const
 {
   return mySpine;
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& LocOpe_DPrism::Profile() const
 {
   return myProfile;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& LocOpe_DPrism::FirstShape() const
 {
   return myFirstShape;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& LocOpe_DPrism::LastShape() const
 {
   return myLastShape;
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& LocOpe_DPrism::Shapes(const TopoDS_Shape& S) const
 {
@@ -591,11 +573,9 @@ const NCollection_List<TopoDS_Shape>& LocOpe_DPrism::Shapes(const TopoDS_Shape& 
   }
 }
 
-//=================================================================================================
-
 void LocOpe_DPrism::Curves(NCollection_Sequence<occ::handle<Geom_Curve>>& Scurves) const
 {
-  // Retrieves dy and dz with myProfile2
+
   TopoDS_Vertex V1, V2;
   TopExp::Vertices(myProfile2, V1, V2);
   gp_Pnt P1 = BRep_Tool::Pnt(V1);
@@ -665,8 +645,6 @@ void LocOpe_DPrism::Curves(NCollection_Sequence<occ::handle<Geom_Curve>>& Scurve
   }
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> LocOpe_DPrism::BarycCurve() const
 {
   TopoDS_Vertex V1, V2;
@@ -703,7 +681,6 @@ occ::handle<Geom_Curve> LocOpe_DPrism::BarycCurve() const
       std::cout << " Reversed Spine orientation" << std::endl;
     }
 #endif
-    //    Normale.Reverse();  //cts20871
   }
   gp_Vec Vec = dz * Normale.XYZ();
 

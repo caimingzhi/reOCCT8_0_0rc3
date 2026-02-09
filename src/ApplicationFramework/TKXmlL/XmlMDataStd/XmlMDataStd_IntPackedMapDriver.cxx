@@ -18,25 +18,17 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_IntPackedMapDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(IntPackedMapSize, "mapsize")
 IMPLEMENT_DOMSTRING(IsDeltaOn, "delta")
 
-//=================================================================================================
-
 XmlMDataStd_IntPackedMapDriver::XmlMDataStd_IntPackedMapDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_IntPackedMap)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataStd_IntPackedMapDriver::NewEmpty() const
 {
   return (new TDataStd_IntPackedMap());
 }
 
-//=======================================================================
-// function : Paste()
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDataStd_IntPackedMapDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                            const occ::handle<TDF_Attribute>& theTarget,
                                            XmlObjMgt_RRelocationTable&       theRelocTable) const
@@ -64,7 +56,7 @@ bool XmlMDataStd_IntPackedMapDriver::Paste(const XmlObjMgt_Persistent&       the
     {
       const char* aValueString =
         static_cast<const char*>(XmlObjMgt::GetStringValue(anElement).GetString());
-      //      occ::handle<TColStd_HPackedMapOfInteger> aHMap = new TColStd_HPackedMapOfInteger ();
+
       for (int i = 1; i <= aSize; i++)
       {
         int aValue;
@@ -119,10 +111,6 @@ bool XmlMDataStd_IntPackedMapDriver::Paste(const XmlObjMgt_Persistent&       the
   return false;
 }
 
-//=======================================================================
-// function : Paste()
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMDataStd_IntPackedMapDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                            XmlObjMgt_Persistent&             theTarget,
                                            XmlObjMgt_SRelocationTable&) const
@@ -140,8 +128,7 @@ void XmlMDataStd_IntPackedMapDriver::Paste(const occ::handle<TDF_Attribute>& the
 
   if (aSize)
   {
-    // Allocation of 12 chars for each integer including the space.
-    // An example: -2 147 483 648
+
     int                          iChar = 0;
     NCollection_LocalArray<char> str(12 * aSize + 1);
 
@@ -152,7 +139,6 @@ void XmlMDataStd_IntPackedMapDriver::Paste(const occ::handle<TDF_Attribute>& the
       iChar += Sprintf(&(str[iChar]), "%d ", intValue);
     }
 
-    // No occurrence of '&', '<' and other irregular XML characters
     XmlObjMgt::SetStringValue(theTarget, (char*)str, true);
   }
 }

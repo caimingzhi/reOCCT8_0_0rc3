@@ -9,8 +9,6 @@
 #include <Precision.hpp>
 #include <NCollection_Array1.hpp>
 
-//=================================================================================================
-
 MAT2d_Mat2d::MAT2d_Mat2d(const bool IsOpenResult)
     : semiInfinite(false),
       isDone(false)
@@ -20,88 +18,6 @@ MAT2d_Mat2d::MAT2d_Mat2d(const bool IsOpenResult)
   thenumberofedges     = 0;
 }
 
-//========================================================================
-//  function : CreateMat
-//  purpose  : Calcul des lieux Bisecteurs.
-//
-//  Structure de la carte.
-//  ======================
-//  La carte des lieux bisecteurs se presente sous la forme d un ou plusieurs
-//  arbres de bisectrices.
-//  ( un arbre, si calcul a l interieur du contour, plusieurs sinon).
-//
-//  Les branches de plus bas niveau de l arbre separent deux elements voisins
-//  du contour.
-//
-//  Principe de l algorithme.
-//  -------------------------
-//  l arbre est construit des branches les plus basses vers les plus hautes.
-//
-//  0. Calcul des bisectrices entre elements voisins du contour.
-//  1. Elimination de certains element du contour => nouveau contour
-//  2. Retour en 0.
-//
-//  Principales etapes de l algorithme.
-//  ===================================
-//
-//  etape 1: Initialisation de l algorithme .
-//  -----------------------------------------
-//   Recuperation via le tool du nombre d'elements sur le contour
-//   Initialisation de <theedgelist>, un edge correspond a chaque
-//   element du contour.
-//
-//  etape 2 : Boucle principale.
-//  ----------------------------
-//    0 - Tant que Nombre d'edge > 1
-//
-//      1. Pour chaque edge: construction de la bissectrice entre l edge
-//         et l edge suivante.
-//         La bissectrice est semi_infinie, elle est soit trimmee par le
-//         point commun des deux edges, soit par l intersection de deux
-//         bissectrices antecedentes.
-//
-//      2. Intersection des Bisectrices issue du meme edge
-//         => une bisectrice est intersectee avec sa voisine a gauche
-//            et sa voisine a droite.
-//
-//      3. Analyse des intersections.
-//         Si pas d'intersection entre deux bisectrices B1 et B2
-//         - Recherche de l intersection la plus basse de B1 avec les
-//           Bisectrices antecedentes a B2 du cote de B1. Soit Bi la
-//           bissectrice intersectee. Toutes les bissectrices constituant la
-//           branche qui relie B2 a Bi sont marquees a effacer
-//         - idem pour B2.
-//
-//      4. Suppresion des bisectrices a effacer.
-//         une bisectrise est a effacer :
-//          - Anulation de l intersection dont la bissectrice est issue
-//            => Prolongement des deux bisectrices posterieures.
-//          - Reinsertion des edge correspondant dans <theedgelist>.
-//
-//      5. Pour chaque edge, analyse des distances entre les points d inter
-//         section et l edge.
-//         B1 B2 les bisectrices liee a l edge
-//         Soit P0 le point d intersection des bissectrices .
-//         Soit P1 le point d intersection de B1 avec son autre voisine .
-//         Soit P2 le point d intersection de B2 avec son autre voisine .
-//
-//         si sur B1 le parametre de P0 < parametre de P1 et
-//         si sur B2 le parametre de P0 < parametre de P2
-//         alors suppression de l edge de la liste des edges <theedgelist>.
-//
-//         rq: le parametre sur une bissectirce est croissant par rapport
-//         a la distance du point courant aux edges.
-
-//      6. Si aucune edge est elimine alors sortie de la boucle principale.
-//
-//      7. Retour en 0.
-//
-//  etape 3 : Creation des racines des arbres de bisectrices.
-//  ---------------------------------------------------------
-//            Recuperation des bissectrices calculees lors du dernier passage
-//            dans la boucle.
-//
-//========================================================================
 void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
 {
 
@@ -148,9 +64,6 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
   int parama[2];
   int paramb[2];
 
-  // -----------------------------------------
-  // Initialisation et remise a zero des maps.
-  // -----------------------------------------
   bisectoronetoremove.Clear();
   bisectortwotoremove.Clear();
   typeofbisectortoremove.Clear();
@@ -160,10 +73,6 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
   noofbisectors = noofedges - 1;
   beginbisector = 0;
 
-  // --------------------------------------------------------------------
-  // Construction de <theedgelist> un edge correspond a un element simple
-  // du contour.
-  // --------------------------------------------------------------------
   theedgelist      = new MAT_ListOfEdge();
   RemovedEdgesList = new MAT_ListOfEdge();
 
@@ -177,9 +86,6 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
 
   theedgelist->Loop();
 
-  //---------------------------------------------------
-  // Initialisation des bissectrices issues du contour.
-  //---------------------------------------------------
   double Dist;
   theedgelist->First();
 
@@ -198,9 +104,6 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
       atool.TangentAfter(theedgelist->Current()->EdgeNumber(), myIsOpenResult));
   }
 
-  //----------------------------------------------------
-  // Affectation a chaque edge de ses deux bissectrices.
-  //----------------------------------------------------
   theedgelist->First();
   theedgelist->Current()->FirstBisector(bisectormap(0));
   theedgelist->Current()->SecondBisector(bisectormap(0));
@@ -216,17 +119,10 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
   theedgelist->Current()->FirstBisector(bisectormap(theedgelist->Number() - 2));
   theedgelist->Current()->SecondBisector(bisectormap(theedgelist->Number() - 2));
 
-  //===========================================================================
-  //                         Boucle Principale   (etape 2)
-  //===========================================================================
   int NumberOfIte = 0;
 
   while (theedgelist->Number() > 1)
   {
-
-    // ------------------------------------------------------------------
-    //  Creation des geometries des bissectrices via le tool. (etape 2.1)
-    // -------------------------------------------------------------------
 
     for (i = beginbisector; i < noofbisectors; i++)
     {
@@ -242,18 +138,9 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
 #endif
     }
 
-    // ---------------------------------------------
-    //  Condition de sortie de la boucle principale.
-    // ---------------------------------------------
-
-    //  Modified by Sergey KHROMOV - Fri Nov 17 10:28:28 2000 Begin
     if (theedgelist->Number() < 3)
       break;
-    //  Modified by Sergey KHROMOV - Fri Nov 17 10:28:37 2000 End
 
-    //---------------------------------------------------
-    // loop 2: While there are bisectors to remove.
-    //---------------------------------------------------
     for (;;)
     {
       NbIterBis++;
@@ -261,10 +148,6 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
       noofbisectorstoremove = 0;
       theedgelist->First();
       theedgelist->Next();
-
-      //--------------------------------------------------------------
-      // Calcul des intersections des bisectrices voisines.(etape 2.2)
-      //--------------------------------------------------------------
 
       if (NbIterBis <= EvenNbIterBis + 1)
         EdgeNumbers(NbIterBis) = theedgelist->Number();
@@ -308,29 +191,15 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
         theedgelist->Next();
       }
 
-      //-------------------------------
-      // Test de sortie de la boucle 2.
-      //-------------------------------
-
       if (ToNullifyNoofbisectorstoremove)
         noofbisectorstoremove = 0;
       if (noofbisectorstoremove == 0)
         break;
 
-      //---------------------------------------------------
-      // Annulation des bissectrices a effacer. (etape 2.4)
-      //---------------------------------------------------
-
       for (i = 0; i < noofbisectorstoremove; i++)
       {
 
         bisectortoremove = bisectoronetoremove(i);
-
-        //---------------------------------------------------------------
-        // Destruction des bisectrices descendantes de <bisectortoremove>
-        // On descend dans l arbre jusqu a ce qu on atteigne
-        // <bisectortwotoremove(i).
-        //---------------------------------------------------------------
 
         for (;;)
         {
@@ -338,9 +207,7 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
 #ifdef OCCT_DEBUG_Mat
           atool.Dump(bisectortoremove->BisectorNumber(), 0);
 #endif
-          // ----------------------------------
-          // Annulation de <bisectortoremove>.
-          // ----------------------------------
+
           thenumberofbisectors--;
           currentbisectorlist = bisectortoremove->List();
           currentbisectorlist->First();
@@ -351,18 +218,11 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
           previousedge->FirstBisector()->SecondParameter(Precision::Infinite());
           previousedge->SecondBisector()->FirstParameter(Precision::Infinite());
 
-          //------------------------------------------
-          // Annulation des fils de <currentbisector>.
-          //------------------------------------------
-
           while (currentbisectorlist->More())
           {
             currentbisector = currentbisectorlist->Current();
             currentedge     = currentbisector->SecondEdge();
 
-            //---------------------------------------
-            // Reinsertion de l edge dans le contour.
-            //---------------------------------------
             theedgelist->LinkAfter(currentedge);
             theedgelist->Next();
 
@@ -371,11 +231,6 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
 #ifdef OCCT_DEBUG_Mat
             atool.Dump(currentbisector->BisectorNumber(), 0);
 #endif
-
-            //------------------------------------------------------
-            // Annulation de l intersection ie les fils qui
-            // ont generes l intersection sont prolonges a l infini.
-            //------------------------------------------------------
 
             currentbisector->FirstParameter(Precision::Infinite());
             currentbisector->SecondParameter(Precision::Infinite());
@@ -396,42 +251,20 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
           RemovedEdgesList->BackAdd(theedgelist->Current());
           theedgelist->Unlink();
 
-          //-----------------------------------------------------------
-          // Test de sortie de la boucle d annulation des bissectrices.
-          //-----------------------------------------------------------
-
           if (bisectortoremove->BisectorNumber() == bisectortwotoremove(i)->BisectorNumber())
             break;
-
-          //-----------------------
-          // Descente dans l arbre.
-          //-----------------------
 
           if (typeofbisectortoremove(i) == 1)
             bisectortoremove = bisectortoremove->FirstBisector();
           else
             bisectortoremove = bisectortoremove->LastBisector();
-
-        } //----------------------------------------------------
-          // Fin boucle d annulation des bissectrices issue de
-          // <bisectoronetoremove(i)>.
-          //----------------------------------------------------
-
-      } //------------------------------------------
-        // Fin boucle d annulation des bissectrices.
-        //-------------------------------------------
+        }
+      }
 
 #ifdef ICONTINUE
       std::cin >> Icontinue;
 #endif
-    } //--------------
-      // Fin Boucle 2.
-      //--------------
-
-    // ----------------------------------------------------------------------
-    // Analyse des parametres des intersections sur les bisectrices de chaque
-    // edge et determination des portions de contour a supprimees. (etape 2.5)
-    // ----------------------------------------------------------------------
+    }
 
     theedgelist->First();
     theedgelist->Next();
@@ -522,15 +355,6 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
         paramb[1] = 1;
       }
 
-      //-----------------------------------------------------------------
-      // Test si l edge est a enlever du contour
-      // Construction des portions de contour a eliminer.
-      //
-      //  narea : nombre de portions continues du contour a eliminer.
-      //  firstarea[i] : indice premier edge de la portion i.
-      //  lastarea[i]  : indice dernier edge de la portion i.
-      //-----------------------------------------------------------------
-
 #ifdef OCCT_DEBUG_Mat
       std::cout << " Test sur les parametres pour elimination" << std::endl;
       std::cout << " Edge number :" << theedgelist->Current()->EdgeNumber() << std::endl;
@@ -582,21 +406,11 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
 
     narea++;
 
-    //------------------------------------------------------------------
-    // Sortie de la boucle principale si il n y a pas d edge a eliminer.
-    // (etape 2.6)
-    //------------------------------------------------------------------
     if (narea == 0)
     {
       interrupt = true;
       break;
     }
-
-    //----------------------------------------------------------------
-    // Elimination des edges a enlever du contour
-    // => Mise a jour du nouveau contour.
-    // => Creation des bissectrices entre les nouvelles edges voisines.
-    //----------------------------------------------------------------
 
     beginbisector = noofbisectors;
     shift         = 0;
@@ -686,31 +500,13 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
       theedgelist->Current()->SecondBisector()->FirstParameter(Precision::Infinite());
     }
 
-    //-----------------------------------------------------------------------
-    // Test sur le nombre d iterations :
-    // A chaque iteration est elimine un element du contour qui ne sera plus
-    // reinsere par la suite => le nombre d iterartions doit etre < au nombre
-    // d elements.
-    // Le nombre d iteration maximum est fixe a numberofedges*numberofedges.
-    //-----------------------------------------------------------------------
     if (NumberOfIte > NumberMaxOfIte)
     {
-      isDone = false; // Echec calcul de la carte.
+      isDone = false;
       break;
     }
     NumberOfIte++;
-
-  } //===============================================
-    //            Fin Boucle Principale.
-    //===============================================
-
-  //----------
-  // etape 3.
-  //----------
-
-  //----------------------------------------------
-  // interupt = True => bissectrices semi_infinies.
-  //----------------------------------------------
+  }
 
   if (interrupt)
     semiInfinite = true;
@@ -718,23 +514,14 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
   {
     semiInfinite = false;
 
-    //------------------------------------------------------------------
-    // Si le nombre d edge > 1 => le nombre d edge = 2
-    //              (cf test sortie boucle principale)
-    // Les deux dernieres bisectrices separent les memes edges .
-    // Soit elles sont confondues si calcul a l interieur, soit elles
-    // sont semi-Infinies (exemple : contour compose seulement de deux
-    // arcs de cercles).
-    //------------------------------------------------------------------
-
     if (theedgelist->Number() > 1)
-    { // Now this branch is never reachable
-      // because the case edgenumber = 2 is processed in the main loop
+    {
+
       theedgelist->First();
       edge = theedgelist->Current();
       if (edge->FirstBisector()->IndexNumber() == noofbisectors - 1)
       {
-        //  Modified by skv - Tue Sep 13 12:13:28 2005 IDEM Begin
+
         if (atool.TrimBisector(edge->SecondBisector(), edge->FirstBisector()->IssuePoint()))
         {
           if (edge->SecondBisector()->EndPoint() == 0)
@@ -743,11 +530,10 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
         }
         else
           semiInfinite = true;
-        //  Modified by skv - Tue Sep 13 12:13:28 2005 IDEM End
       }
       else
       {
-        //  Modified by skv - Tue Sep 13 12:13:28 2005 IDEM Begin
+
         if (atool.TrimBisector(edge->FirstBisector(), edge->SecondBisector()->IssuePoint()))
         {
           if (edge->FirstBisector()->EndPoint() == 0)
@@ -756,7 +542,6 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
         }
         else
           semiInfinite = true;
-        //  Modified by skv - Tue Sep 13 12:13:28 2005 IDEM End
       }
       if (!semiInfinite)
       {
@@ -779,10 +564,6 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
       theedgelist->Next();
     }
   }
-
-  //---------------------------
-  // Recuperations des racines.
-  //---------------------------
 
   roots = new MAT_ListOfBisector;
 
@@ -846,14 +627,11 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
 
   int parama[2];
   int paramb[2];
-  //
+
   int  aNbOfNarea1 = 0, aPrefNarea = 0, aNbMaxNarea1 = 10;
   int  aNbElts[2] = {0, 0}, aCountElts[2] = {0, 0};
   bool isBreak = false;
 
-  // -----------------------------------------
-  // Initialisation et remise a zero des maps.
-  // -----------------------------------------
   bisectoronetoremove.Clear();
   bisectortwotoremove.Clear();
   typeofbisectortoremove.Clear();
@@ -863,10 +641,6 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
   noofbisectors = noofedges;
   beginbisector = 0;
 
-  // --------------------------------------------------------------------
-  // Construction de <theedgelist> un edge correspond a un element simple
-  // du contour.
-  // --------------------------------------------------------------------
   theedgelist      = new MAT_ListOfEdge();
   RemovedEdgesList = new MAT_ListOfEdge();
 
@@ -880,9 +654,6 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
 
   theedgelist->Loop();
 
-  //---------------------------------------------------
-  // Initialisation des bissectrices issues du contour.
-  //---------------------------------------------------
   double Dist;
   theedgelist->First();
 
@@ -901,9 +672,6 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
       atool.TangentAfter(theedgelist->Current()->EdgeNumber(), myIsOpenResult));
   }
 
-  //----------------------------------------------------
-  // Affectation a chaque edge de ses deux bissectrices.
-  //----------------------------------------------------
   theedgelist->First();
 
   for (i = 0; i < theedgelist->Number(); i++)
@@ -913,17 +681,11 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
     theedgelist->Next();
   }
 
-  //===========================================================================
-  //                         Boucle Principale   (etape 2)
-  //===========================================================================
   int NumberOfIte = 0;
 
   while (theedgelist->Number() > 1)
   {
 
-    // ------------------------------------------------------------------
-    //  Creation des geometries des bissectrices via le tool. (etape 2.1)
-    // -------------------------------------------------------------------
     int aNbBis = noofbisectors - beginbisector;
     for (i = beginbisector; i < noofbisectors; i++)
     {
@@ -939,8 +701,6 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
 #endif
     }
 
-    // Patch to prevent infinit loop because of
-    // bad geometry
     if (aNbBis == 1)
     {
       if (aPrefNarea == 1)
@@ -980,28 +740,16 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
       }
     }
     aPrefNarea = aNbBis;
-    // ---------------------------------------------
-    //  Condition de sortie de la boucle principale.
-    // ---------------------------------------------
 
-    //  Modified by Sergey KHROMOV - Fri Nov 17 10:28:28 2000 Begin
     if (theedgelist->Number() < 3)
       break;
-    //  Modified by Sergey KHROMOV - Fri Nov 17 10:28:37 2000 End
 
-    //---------------------------------------------------
-    // loop 2: While there are bisectors to remove.
-    //---------------------------------------------------
     for (;;)
     {
       NbIterBis++;
 
       noofbisectorstoremove = 0;
       theedgelist->First();
-
-      //--------------------------------------------------------------
-      // Calcul des intersections des bisectrices voisines.(etape 2.2)
-      //--------------------------------------------------------------
 
       if (NbIterBis <= EvenNbIterBis + 1)
         EdgeNumbers(NbIterBis) = theedgelist->Number();
@@ -1045,29 +793,15 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
         theedgelist->Next();
       }
 
-      //-------------------------------
-      // Test de sortie de la boucle 2.
-      //-------------------------------
-
       if (ToNullifyNoofbisectorstoremove)
         noofbisectorstoremove = 0;
       if (noofbisectorstoremove == 0)
         break;
 
-      //---------------------------------------------------
-      // Annulation des bissectrices a effacer. (etape 2.4)
-      //---------------------------------------------------
-
       for (i = 0; i < noofbisectorstoremove; i++)
       {
 
         bisectortoremove = bisectoronetoremove(i);
-
-        //---------------------------------------------------------------
-        // Destruction des bisectrices descendantes de <bisectortoremove>
-        // On descend dans l arbre jusqu a ce qu on atteigne
-        // <bisectortwotoremove(i).
-        //---------------------------------------------------------------
 
         for (;;)
         {
@@ -1075,9 +809,7 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
 #ifdef OCCT_DEBUG_Mat
           atool.Dump(bisectortoremove->BisectorNumber(), 0);
 #endif
-          // ----------------------------------
-          // Annulation de <bisectortoremove>.
-          // ----------------------------------
+
           thenumberofbisectors--;
           currentbisectorlist = bisectortoremove->List();
           currentbisectorlist->First();
@@ -1088,18 +820,11 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
           previousedge->FirstBisector()->SecondParameter(Precision::Infinite());
           previousedge->SecondBisector()->FirstParameter(Precision::Infinite());
 
-          //------------------------------------------
-          // Annulation des fils de <currentbisector>.
-          //------------------------------------------
-
           while (currentbisectorlist->More())
           {
             currentbisector = currentbisectorlist->Current();
             currentedge     = currentbisector->SecondEdge();
 
-            //---------------------------------------
-            // Reinsertion de l edge dans le contour.
-            //---------------------------------------
             theedgelist->LinkAfter(currentedge);
             theedgelist->Next();
 
@@ -1108,11 +833,6 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
 #ifdef OCCT_DEBUG_Mat
             atool.Dump(currentbisector->BisectorNumber(), 0);
 #endif
-
-            //------------------------------------------------------
-            // Annulation de l intersection ie les fils qui
-            // ont generes l intersection sont prolonges a l infini.
-            //------------------------------------------------------
 
             currentbisector->FirstParameter(Precision::Infinite());
             currentbisector->SecondParameter(Precision::Infinite());
@@ -1133,42 +853,20 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
           RemovedEdgesList->BackAdd(theedgelist->Current());
           theedgelist->Unlink();
 
-          //-----------------------------------------------------------
-          // Test de sortie de la boucle d annulation des bissectrices.
-          //-----------------------------------------------------------
-
           if (bisectortoremove->BisectorNumber() == bisectortwotoremove(i)->BisectorNumber())
             break;
-
-          //-----------------------
-          // Descente dans l arbre.
-          //-----------------------
 
           if (typeofbisectortoremove(i) == 1)
             bisectortoremove = bisectortoremove->FirstBisector();
           else
             bisectortoremove = bisectortoremove->LastBisector();
-
-        } //----------------------------------------------------
-        // Fin boucle d annulation des bissectrices issue de
-        // <bisectoronetoremove(i)>.
-        //----------------------------------------------------
-
-      } //------------------------------------------
-      // Fin boucle d annulation des bissectrices.
-      //-------------------------------------------
+        }
+      }
 
 #ifdef ICONTINUE
       std::cin >> Icontinue;
 #endif
-    } //--------------
-    // Fin Boucle 2.
-    //--------------
-
-    // ----------------------------------------------------------------------
-    // Analyse des parametres des intersections sur les bisectrices de chaque
-    // edge et determination des portions de contour a supprimees. (etape 2.5)
-    // ----------------------------------------------------------------------
+    }
 
     theedgelist->First();
 
@@ -1258,15 +956,6 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
         paramb[1] = 1;
       }
 
-      //-----------------------------------------------------------------
-      // Test si l edge est a enlever du contour
-      // Construction des portions de contour a eliminer.
-      //
-      //  narea : nombre de portions continues du contour a eliminer.
-      //  firstarea[i] : indice premier edge de la portion i.
-      //  lastarea[i]  : indice dernier edge de la portion i.
-      //-----------------------------------------------------------------
-
 #ifdef OCCT_DEBUG_Mat
       std::cout << " Test sur les parametres pour elimination" << std::endl;
       std::cout << " Edge number :" << theedgelist->Current()->EdgeNumber() << std::endl;
@@ -1318,28 +1007,16 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
 
     narea++;
 
-    //------------------------------------------------------------------
-    // Sortie de la boucle principale si il n y a pas d edge a eliminer.
-    // (etape 2.6)
-    //------------------------------------------------------------------
-    //
-    // Patch to break infinite loop.
     if (narea == 1 && isBreak)
     {
       narea = 0;
     }
-    //
+
     if (narea == 0)
     {
       interrupt = true;
       break;
     }
-
-    //----------------------------------------------------------------
-    // Elimination des edges a enlever du contour
-    // => Mise a jour du nouveau contour.
-    // => Creation des bissectrices entre les nouvelles edges voisines.
-    //----------------------------------------------------------------
 
     beginbisector = noofbisectors;
     shift         = 0;
@@ -1428,31 +1105,13 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
       theedgelist->Current()->SecondBisector()->FirstParameter(Precision::Infinite());
     }
 
-    //-----------------------------------------------------------------------
-    // Test sur le nombre d iterations :
-    // A chaque iteration est elimine un element du contour qui ne sera plus
-    // reinsere par la suite => le nombre d iterartions doit etre < au nombre
-    // d elements.
-    // Le nombre d iteration maximum est fixe a numberofedges*numberofedges.
-    //-----------------------------------------------------------------------
     if (NumberOfIte > NumberMaxOfIte)
     {
-      isDone = false; // Echec calcul de la carte.
+      isDone = false;
       break;
     }
     NumberOfIte++;
-
-  } //===============================================
-  //            Fin Boucle Principale.
-  //===============================================
-
-  //----------
-  // etape 3.
-  //----------
-
-  //----------------------------------------------
-  // interupt = True => bissectrices semi_infinies.
-  //----------------------------------------------
+  }
 
   if (interrupt)
     semiInfinite = true;
@@ -1460,23 +1119,14 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
   {
     semiInfinite = false;
 
-    //------------------------------------------------------------------
-    // Si le nombre d edge > 1 => le nombre d edge = 2
-    //              (cf test sortie boucle principale)
-    // Les deux dernieres bisectrices separent les memes edges .
-    // Soit elles sont confondues si calcul a l interieur, soit elles
-    // sont semi-Infinies (exemple : contour compose seulement de deux
-    // arcs de cercles).
-    //------------------------------------------------------------------
-
     if (theedgelist->Number() > 1)
-    { // Now this branch is never reachable
-      // because the case edgenumber = 2 is processed in the main loop
+    {
+
       theedgelist->First();
       edge = theedgelist->Current();
       if (edge->FirstBisector()->IndexNumber() == noofbisectors - 1)
       {
-        //  Modified by skv - Tue Sep 13 12:13:28 2005 IDEM Begin
+
         if (atool.TrimBisector(edge->SecondBisector(), edge->FirstBisector()->IssuePoint()))
         {
           if (edge->SecondBisector()->EndPoint() == 0)
@@ -1485,11 +1135,10 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
         }
         else
           semiInfinite = true;
-        //  Modified by skv - Tue Sep 13 12:13:28 2005 IDEM End
       }
       else
       {
-        //  Modified by skv - Tue Sep 13 12:13:28 2005 IDEM Begin
+
         if (atool.TrimBisector(edge->FirstBisector(), edge->SecondBisector()->IssuePoint()))
         {
           if (edge->FirstBisector()->EndPoint() == 0)
@@ -1498,7 +1147,6 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
         }
         else
           semiInfinite = true;
-        //  Modified by skv - Tue Sep 13 12:13:28 2005 IDEM End
       }
       if (!semiInfinite)
       {
@@ -1521,10 +1169,6 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
     }
   }
 
-  //---------------------------
-  // Recuperations des racines.
-  //---------------------------
-
   roots = new MAT_ListOfBisector;
 
   if (bisectormap(noofbisectors - 1)->BisectorNumber() == -1)
@@ -1542,10 +1186,6 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
   }
 }
 
-//========================================================================
-//  function : LoadBisectorsToRemove
-//  purpose  : Chargement des bisectrices a effacer.
-//========================================================================
 void MAT2d_Mat2d::LoadBisectorsToRemove(int&                             noofbisectorstoremove,
                                         const double                     distance1,
                                         const double                     distance2,
@@ -1604,21 +1244,6 @@ void MAT2d_Mat2d::LoadBisectorsToRemove(int&                             noofbis
   }
 }
 
-//========================================================================
-//  function : Intersect
-//  purpose  : Si <aside=0> Intersection de <firstbisector> avec les
-//                 descendants de <secondbisector> les plus a gauche
-//                (ie secondbisector->FirstBisector()->FirstBisector...)
-//                          Intersection de <secondbisector> avec les
-//                 descendants de <firstbisector> les plus a droite
-//                (ie firstbisector->LastBisector()->LastBisector...)
-//
-//             Si <aside=1> Intersection de <firstbisector> avec ses
-//                descendants les plus a gauche et les plus a droite.
-//
-//             Si <aside=2> Intersection de <secondbisector> avec ses
-//                descendants les plus a gauche et les plus a droite.
-//========================================================================v
 void MAT2d_Mat2d::Intersect(MAT2d_Tool2d&                    atool,
                             const int                        aside,
                             int&                             noofbisectortoremove,
@@ -1703,10 +1328,6 @@ void MAT2d_Mat2d::Intersect(MAT2d_Tool2d&                    atool,
     }
   }
 
-  //---------------------------------------
-  // Chargement des bissectrices a effacer.
-  //---------------------------------------
-
   LoadBisectorsToRemove(noofbisectortoremove,
                         distance[0],
                         distance[1],
@@ -1716,56 +1337,40 @@ void MAT2d_Mat2d::Intersect(MAT2d_Tool2d&                    atool,
                         lastbisectortoremove[1]);
 }
 
-//=================================================================================================
-
 void MAT2d_Mat2d::Init()
 {
   roots->First();
 }
-
-//=================================================================================================
 
 bool MAT2d_Mat2d::More() const
 {
   return roots->More();
 }
 
-//=================================================================================================
-
 void MAT2d_Mat2d::Next()
 {
   roots->Next();
 }
-
-//=================================================================================================
 
 occ::handle<MAT_Bisector> MAT2d_Mat2d::Bisector() const
 {
   return roots->Current();
 }
 
-//=================================================================================================
-
 int MAT2d_Mat2d::NumberOfBisectors() const
 {
   return thenumberofbisectors;
 }
-
-//=================================================================================================
 
 bool MAT2d_Mat2d::SemiInfinite() const
 {
   return semiInfinite;
 }
 
-//=================================================================================================
-
 bool MAT2d_Mat2d::IsDone() const
 {
   return isDone;
 }
-
-//=================================================================================================
 
 MAT2d_Mat2d::~MAT2d_Mat2d()
 {

@@ -3,8 +3,6 @@
 #include <BlendFunc_ChamfInv.hpp>
 #include <math_Matrix.hpp>
 
-//=================================================================================================
-
 BlendFunc_ChamfInv::BlendFunc_ChamfInv(const occ::handle<Adaptor3d_Surface>& S1,
                                        const occ::handle<Adaptor3d_Surface>& S2,
                                        const occ::handle<Adaptor3d_Curve>&   C)
@@ -13,8 +11,6 @@ BlendFunc_ChamfInv::BlendFunc_ChamfInv(const occ::handle<Adaptor3d_Surface>& S1,
       corde2(surf2, curv)
 {
 }
-
-//=================================================================================================
 
 void BlendFunc_ChamfInv::Set(const double Dist1, const double Dist2, const int Choix)
 {
@@ -59,8 +55,6 @@ void BlendFunc_ChamfInv::Set(const double Dist1, const double Dist2, const int C
   corde2.SetDist(dis2);
 }
 
-//=================================================================================================
-
 bool BlendFunc_ChamfInv::IsSolution(const math_Vector& Sol, const double Tol)
 {
   gp_Pnt2d p2d;
@@ -89,8 +83,6 @@ bool BlendFunc_ChamfInv::IsSolution(const math_Vector& Sol, const double Tol)
 
   return issol;
 }
-
-//=================================================================================================
 
 bool BlendFunc_ChamfInv::Value(const math_Vector& X, math_Vector& F)
 {
@@ -125,8 +117,6 @@ bool BlendFunc_ChamfInv::Value(const math_Vector& X, math_Vector& F)
   return true;
 }
 
-//=================================================================================================
-
 bool BlendFunc_ChamfInv::Derivatives(const math_Vector& X, math_Matrix& D)
 {
   int         i, j;
@@ -148,7 +138,7 @@ bool BlendFunc_ChamfInv::Derivatives(const math_Vector& X, math_Matrix& D)
 
   if (first)
   {
-    // p2d = pts est sur surf1
+
     ptgui = corde1.PointOnGuide();
     nplan = corde1.NPlan();
     corde2.Derivatives(x2, d2);
@@ -158,7 +148,7 @@ bool BlendFunc_ChamfInv::Derivatives(const math_Vector& X, math_Matrix& D)
   }
   else
   {
-    //  p2d = pts est sur surf2
+
     ptgui = corde2.PointOnGuide();
     nplan = corde2.NPlan();
     corde1.Derivatives(x2, d1);
@@ -167,7 +157,6 @@ bool BlendFunc_ChamfInv::Derivatives(const math_Vector& X, math_Matrix& D)
     surf2->D1(x1(1), x1(2), pts, d1u, d1v);
   }
 
-  // derivees par rapport a T
   temp.SetLinearForm(v2d.X(), d1u, v2d.Y(), d1v);
   if (first)
   {
@@ -184,13 +173,11 @@ bool BlendFunc_ChamfInv::Derivatives(const math_Vector& X, math_Matrix& D)
     D(4, 1) = 2 * (gp_Vec(ptgui, pts).Dot(temp));
   }
 
-  // derivees par rapport a W
   D(1, 2) = df1.X();
   D(2, 2) = df1.Y();
   D(3, 2) = df2.X();
   D(4, 2) = df2.Y();
 
-  // derivees par rapport a U et V
   if (first)
   {
     for (i = 1; i < 3; i++)

@@ -13,10 +13,9 @@
 
 namespace
 {
-  // Precision constant for infinite bounds
+
   constexpr double THE_BND_PRECISION_INFINITE = 1e+100;
 
-  // Precomputed unit direction vectors for bounding box transformations
   constexpr gp_Dir THE_DIR_XMIN{gp_Dir::D::NX};
   constexpr gp_Dir THE_DIR_XMAX{gp_Dir::D::X};
   constexpr gp_Dir THE_DIR_YMIN{gp_Dir::D::NY};
@@ -24,7 +23,6 @@ namespace
   constexpr gp_Dir THE_DIR_ZMIN{gp_Dir::D::NZ};
   constexpr gp_Dir THE_DIR_ZMAX{gp_Dir::D::Z};
 
-  // Computes minimum squared distance between two 1D intervals
   inline double DistMini2Box(const double theR1Min,
                              const double theR1Max,
                              const double theR2Min,
@@ -35,19 +33,17 @@ namespace
     return std::min(aR1, aR2);
   }
 
-  // Computes squared distance in one dimension, returns 0 if intervals overlap
   inline double DistanceInDimension(const double theMin1,
                                     const double theMax1,
                                     const double theMin2,
                                     const double theMax2) noexcept
   {
-    // Check if intervals overlap
+
     if ((theMin1 <= theMin2 && theMin2 <= theMax1) || (theMin2 <= theMin1 && theMin1 <= theMax2))
       return 0.0;
     return DistMini2Box(theMin1, theMax1, theMin2, theMax2);
   }
 
-  // Tests if a 2D segment is outside a 2D box
   bool IsSegmentOut(const double theX1,
                     const double theY1,
                     const double theX2,
@@ -101,9 +97,7 @@ namespace
 
     return false;
   }
-} // anonymous namespace
-
-//=================================================================================================
+} // namespace
 
 void Bnd_Box::Set(const gp_Pnt& P)
 {
@@ -111,15 +105,11 @@ void Bnd_Box::Set(const gp_Pnt& P)
   Add(P);
 }
 
-//=================================================================================================
-
 void Bnd_Box::Set(const gp_Pnt& P, const gp_Dir& D)
 {
   SetVoid();
   Add(P, D);
 }
-
-//=================================================================================================
 
 void Bnd_Box::Update(const double x,
                      const double y,
@@ -149,8 +139,6 @@ void Bnd_Box::Update(const double x,
   }
 }
 
-//=================================================================================================
-
 void Bnd_Box::Update(const double X, const double Y, const double Z)
 {
   if (IsVoid())
@@ -174,8 +162,6 @@ void Bnd_Box::Update(const double X, const double Y, const double Z)
   }
 }
 
-//=================================================================================================
-
 void Bnd_Box::Get(double& theXmin,
                   double& theYmin,
                   double& theZmin,
@@ -196,56 +182,40 @@ void Bnd_Box::Get(double& theXmin,
   theZmax = GetZMax();
 }
 
-//=================================================================================================
-
 Bnd_Box::Limits Bnd_Box::Get() const
 {
   return {GetXMin(), GetXMax(), GetYMin(), GetYMax(), GetZMin(), GetZMax()};
 }
-
-//=================================================================================================
 
 double Bnd_Box::GetXMin() const
 {
   return IsOpenXmin() ? -THE_BND_PRECISION_INFINITE : Xmin - Gap;
 }
 
-//=================================================================================================
-
 double Bnd_Box::GetXMax() const
 {
   return IsOpenXmax() ? THE_BND_PRECISION_INFINITE : Xmax + Gap;
 }
-
-//=================================================================================================
 
 double Bnd_Box::GetYMin() const
 {
   return IsOpenYmin() ? -THE_BND_PRECISION_INFINITE : Ymin - Gap;
 }
 
-//=================================================================================================
-
 double Bnd_Box::GetYMax() const
 {
   return IsOpenYmax() ? THE_BND_PRECISION_INFINITE : Ymax + Gap;
 }
-
-//=================================================================================================
 
 double Bnd_Box::GetZMin() const
 {
   return IsOpenZmin() ? -THE_BND_PRECISION_INFINITE : Zmin - Gap;
 }
 
-//=================================================================================================
-
 double Bnd_Box::GetZMax() const
 {
   return IsOpenZmax() ? THE_BND_PRECISION_INFINITE : Zmax + Gap;
 }
-
-//=================================================================================================
 
 gp_Pnt Bnd_Box::CornerMin() const
 {
@@ -258,8 +228,6 @@ gp_Pnt Bnd_Box::CornerMin() const
                 IsOpenZmin() ? -THE_BND_PRECISION_INFINITE : Zmin - Gap);
 }
 
-//=================================================================================================
-
 gp_Pnt Bnd_Box::CornerMax() const
 {
   if (IsVoid())
@@ -270,8 +238,6 @@ gp_Pnt Bnd_Box::CornerMax() const
                 IsOpenYmax() ? THE_BND_PRECISION_INFINITE : Ymax + Gap,
                 IsOpenZmax() ? THE_BND_PRECISION_INFINITE : Zmax + Gap);
 }
-
-//=================================================================================================
 
 bool Bnd_Box::IsXThin(const double tol) const
 {
@@ -288,8 +254,6 @@ bool Bnd_Box::IsXThin(const double tol) const
   return false;
 }
 
-//=================================================================================================
-
 bool Bnd_Box::IsYThin(const double tol) const
 {
   if (IsWhole())
@@ -304,8 +268,6 @@ bool Bnd_Box::IsYThin(const double tol) const
     return true;
   return false;
 }
-
-//=================================================================================================
 
 bool Bnd_Box::IsZThin(const double tol) const
 {
@@ -322,8 +284,6 @@ bool Bnd_Box::IsZThin(const double tol) const
   return false;
 }
 
-//=================================================================================================
-
 bool Bnd_Box::IsThin(const double tol) const
 {
   if (IsWhole())
@@ -338,8 +298,6 @@ bool Bnd_Box::IsThin(const double tol) const
     return false;
   return true;
 }
-
-//=================================================================================================
 
 Bnd_Box Bnd_Box::Transformed(const gp_Trsf& T) const
 {
@@ -430,8 +388,6 @@ Bnd_Box Bnd_Box::Transformed(const gp_Trsf& T) const
   return aNewBox;
 }
 
-//=================================================================================================
-
 void Bnd_Box::Add(const Bnd_Box& Other)
 {
   if (Other.IsVoid())
@@ -482,8 +438,6 @@ void Bnd_Box::Add(const Bnd_Box& Other)
     OpenZmax();
 }
 
-//=================================================================================================
-
 void Bnd_Box::Add(const gp_Pnt& P)
 {
   double X, Y, Z;
@@ -491,15 +445,11 @@ void Bnd_Box::Add(const gp_Pnt& P)
   Update(X, Y, Z);
 }
 
-//=================================================================================================
-
 void Bnd_Box::Add(const gp_Pnt& P, const gp_Dir& D)
 {
   Add(P);
   Add(D);
 }
-
-//=================================================================================================
 
 void Bnd_Box::Add(const gp_Dir& D)
 {
@@ -521,8 +471,6 @@ void Bnd_Box::Add(const gp_Dir& D)
   else if (DZ > RealEpsilon())
     OpenZmax();
 }
-
-//=================================================================================================
 
 bool Bnd_Box::IsOut(const gp_Pnt& P) const
 {
@@ -551,8 +499,6 @@ bool Bnd_Box::IsOut(const gp_Pnt& P) const
   }
 }
 
-//=================================================================================================
-
 bool Bnd_Box::IsOut(const gp_Pln& P) const
 {
   if (IsWhole())
@@ -580,8 +526,6 @@ bool Bnd_Box::IsOut(const gp_Pln& P) const
     return plus == ((A * (Xmax + Gap) + B * (Ymax + Gap) + C * (Zmax + Gap) + D) > 0);
   }
 }
-
-//=================================================================================================
 
 bool Bnd_Box::IsOut(const gp_Lin& L) const
 {
@@ -626,10 +570,10 @@ bool Bnd_Box::IsOut(const gp_Lin& L) const
     {
       par1 = (myYmin - L.Location().XYZ().Y()) / L.Direction().XYZ().Y();
       par2 = (myYmax - L.Location().XYZ().Y()) / L.Direction().XYZ().Y();
-      //=================DET change 06/03/01====================
+
       if (parmax < std::min(par1, par2) || parmin > std::max(par1, par2))
         return true;
-      //========================================================
+
       parmin = std::max(parmin, std::min(par1, par2));
       parmax = std::min(parmax, std::max(par1, par2));
       yToSet = true;
@@ -649,10 +593,10 @@ bool Bnd_Box::IsOut(const gp_Lin& L) const
     {
       par1 = (myZmin - L.Location().XYZ().Z()) / L.Direction().XYZ().Z();
       par2 = (myZmax - L.Location().XYZ().Z()) / L.Direction().XYZ().Z();
-      //=================DET change 06/03/01====================
+
       if (parmax < std::min(par1, par2) || parmin > std::max(par1, par2))
         return true;
-      //========================================================
+
       parmin = std::max(parmin, std::min(par1, par2));
       parmax = std::min(parmax, std::max(par1, par2));
       par1   = L.Location().XYZ().Z() + parmin * L.Direction().XYZ().Z();
@@ -693,15 +637,13 @@ bool Bnd_Box::IsOut(const gp_Lin& L) const
   return false;
 }
 
-//=================================================================================================
-
 bool Bnd_Box::IsOut(const Bnd_Box& Other) const
 {
-  // Fast path for non-open boxes with early exit
+
   if (!Flags && !Other.Flags)
   {
     const double aDelta = Other.Gap + Gap;
-    // Early exit on first separating axis found
+
     if (Xmin - Other.Xmax > aDelta)
       return true;
     if (Other.Xmin - Xmax > aDelta)
@@ -717,7 +659,6 @@ bool Bnd_Box::IsOut(const Bnd_Box& Other) const
     return false;
   }
 
-  // Handle special cases
   if (IsVoid() || Other.IsVoid())
     return true;
   if (IsWhole() || Other.IsWhole())
@@ -725,7 +666,6 @@ bool Bnd_Box::IsOut(const Bnd_Box& Other) const
 
   const double aDelta = Other.Gap + Gap;
 
-  // Check each axis with early exit
   if (!IsOpenXmin() && !Other.IsOpenXmax() && Xmin - Other.Xmax > aDelta)
     return true;
   if (!IsOpenXmax() && !Other.IsOpenXmin() && Other.Xmin - Xmax > aDelta)
@@ -744,21 +684,15 @@ bool Bnd_Box::IsOut(const Bnd_Box& Other) const
   return false;
 }
 
-//=================================================================================================
-
 bool Bnd_Box::IsOut(const Bnd_Box& Other, const gp_Trsf& T) const
 {
   return IsOut(Other.Transformed(T));
 }
 
-//=================================================================================================
-
 bool Bnd_Box::IsOut(const gp_Trsf& T1, const Bnd_Box& Other, const gp_Trsf& T2) const
 {
   return Transformed(T1).IsOut(Other.Transformed(T2));
 }
-
-//=================================================================================================
 
 bool Bnd_Box::IsOut(const gp_Pnt& P1, const gp_Pnt& P2, const gp_Dir& D) const
 {
@@ -824,7 +758,7 @@ bool Bnd_Box::IsOut(const gp_Pnt& P1, const gp_Pnt& P2, const gp_Dir& D) const
       return false;
 
     return true;
-  } // if(D.X() == 0)
+  }
 
   if (std::abs(D.Y()) < eps)
   {
@@ -869,7 +803,7 @@ bool Bnd_Box::IsOut(const gp_Pnt& P1, const gp_Pnt& P2, const gp_Dir& D) const
       return false;
 
     return true;
-  } // if(D.Y() == 0)
+  }
 
   if (std::abs(D.Z()) < eps)
   {
@@ -914,7 +848,7 @@ bool Bnd_Box::IsOut(const gp_Pnt& P1, const gp_Pnt& P2, const gp_Dir& D) const
       return false;
 
     return true;
-  } // if(D.Z() == 0)
+  }
 
   if (!IsSegmentOut(myXmin,
                     myZmin,
@@ -979,11 +913,6 @@ bool Bnd_Box::IsOut(const gp_Pnt& P1, const gp_Pnt& P2, const gp_Dir& D) const
   return true;
 }
 
-//=======================================================================
-// function : Distance
-// purpose  : computes the minimum distance between two boxes
-//=======================================================================
-
 double Bnd_Box::Distance(const Bnd_Box& Other) const
 {
   double aXMinB1, aYMinB1, aZMinB1, aXMaxB1, aYMaxB1, aZMaxB1;
@@ -998,8 +927,6 @@ double Bnd_Box::Distance(const Bnd_Box& Other) const
 
   return std::sqrt(aDistX + aDistY + aDistZ);
 }
-
-//=================================================================================================
 
 void Bnd_Box::Dump() const
 {
@@ -1045,8 +972,6 @@ void Bnd_Box::Dump() const
   std::cout << "\n";
 }
 
-//=================================================================================================
-
 void Bnd_Box::DumpJson(Standard_OStream& theOStream, int) const
 {
   OCCT_DUMP_FIELD_VALUES_NUMERICAL(theOStream, "CornerMin", 3, Xmin, Ymin, Zmin);
@@ -1054,8 +979,6 @@ void Bnd_Box::DumpJson(Standard_OStream& theOStream, int) const
   OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, Gap);
   OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, Flags)
 }
-
-//=================================================================================================
 
 bool Bnd_Box::InitFromJson(const Standard_SStream& theSStream, int& theStreamPos)
 {

@@ -37,8 +37,6 @@
 #include <NCollection_IndexedMap.hpp>
 #include <NCollection_List.hpp>
 
-// mpv modifications 08.04.2002
-// end of mpv modifications 08.04.2002
 #ifdef OCCT_DEBUG_DBGTOOLS_WRITE
   #define MDTV_DEB
   #define MDTV_DEB_OR
@@ -58,7 +56,6 @@
   #include <TCollection_AsciiString.hpp>
   #include <TDF_ChildIterator.hpp>
 
-//=======================================================================
 void PrintEntry(const TDF_Label& label)
 {
   TCollection_AsciiString entry;
@@ -66,7 +63,6 @@ void PrintEntry(const TDF_Label& label)
   std::cout << "LabelEntry = " << entry << std::endl;
 }
 
-//=======================================================================
 void PrintEntries(const NCollection_Map<TDF_Label>& map)
 {
   std::cout << "=== Labels Map ===" << std::endl;
@@ -79,7 +75,7 @@ void PrintEntries(const NCollection_Map<TDF_Label>& map)
   }
 }
   #ifdef OCCT_DEBUG_DBGTOOLS_WRITE
-//=======================================================================
+
 static void DbgTools_Write(const TopoDS_Shape& shape, const char* filename)
 {
   char buf[256];
@@ -102,7 +98,6 @@ static void DbgTools_Write(const TopoDS_Shape& shape, const char* filename)
   save.close();
 }
 
-//=======================================================================
 static void DbgTools_Write(const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& MS,
                            const char* filename)
 {
@@ -117,7 +112,6 @@ static void DbgTools_Write(const NCollection_IndexedMap<TopoDS_Shape, TopTools_S
   }
 }
 
-//=======================================================================
 static void DbgTools_WriteNSOnLabel(const occ::handle<TNaming_NamedShape>& NS, const char* filename)
 {
   if (!NS.IsNull() && !NS->IsEmpty())
@@ -142,8 +136,7 @@ static void DbgTools_WriteNSOnLabel(const occ::handle<TNaming_NamedShape>& NS, c
 }
   #endif
 #endif
-//
-//====================================================================
+
 static bool ValidArgs(const NCollection_List<occ::handle<TNaming_NamedShape>>& Args)
 {
   NCollection_List<occ::handle<TNaming_NamedShape>>::Iterator it(Args);
@@ -179,78 +172,56 @@ static bool ValidArgs(const NCollection_List<occ::handle<TNaming_NamedShape>>& A
   return true;
 }
 
-//=================================================================================================
-
 TNaming_Name::TNaming_Name()
     : myType(TNaming_UNKNOWN),
       myIndex(-1)
 {
 }
 
-//=================================================================================================
-
 void TNaming_Name::Type(const TNaming_NameType aType)
 {
   myType = aType;
 }
-
-//=================================================================================================
 
 void TNaming_Name::ShapeType(const TopAbs_ShapeEnum T)
 {
   myShapeType = T;
 }
 
-//=================================================================================================
-
 void TNaming_Name::Shape(const TopoDS_Shape& theShape)
 {
   myShape = theShape;
 }
-
-//=================================================================================================
 
 TopoDS_Shape TNaming_Name::Shape() const
 {
   return myShape;
 }
 
-//=================================================================================================
-
 void TNaming_Name::Append(const occ::handle<TNaming_NamedShape>& arg)
 {
   myArgs.Append(arg);
 }
-
-//=================================================================================================
 
 void TNaming_Name::StopNamedShape(const occ::handle<TNaming_NamedShape>& arg)
 {
   myStop = arg;
 }
 
-//=================================================================================================
-
 void TNaming_Name::Index(const int I)
 {
   myIndex = I;
 }
-
-//=================================================================================================
 
 TNaming_NameType TNaming_Name::Type() const
 {
   return myType;
 }
 
-//=================================================================================================
-
 TopAbs_ShapeEnum TNaming_Name::ShapeType() const
 {
   return myShapeType;
 }
-
-//=================================================================================================
 
 void TNaming_Name::Paste(TNaming_Name& into, const occ::handle<TDF_RelocationTable>& RT) const
 {
@@ -259,7 +230,7 @@ void TNaming_Name::Paste(TNaming_Name& into, const occ::handle<TDF_RelocationTab
   into.myShape     = myShape;
   into.myIndex     = myIndex;
   into.myArgs.Clear();
-  //  into.myOrientation = myOrientation;
+
   occ::handle<TNaming_NamedShape> NS;
 
   for (NCollection_List<occ::handle<TNaming_NamedShape>>::Iterator it(myArgs); it.More(); it.Next())
@@ -278,28 +249,20 @@ void TNaming_Name::Paste(TNaming_Name& into, const occ::handle<TDF_RelocationTab
   }
 }
 
-//=================================================================================================
-
 const NCollection_List<occ::handle<TNaming_NamedShape>>& TNaming_Name::Arguments() const
 {
   return myArgs;
 }
-
-//=================================================================================================
 
 occ::handle<TNaming_NamedShape> TNaming_Name::StopNamedShape() const
 {
   return myStop;
 }
 
-//=================================================================================================
-
 int TNaming_Name::Index() const
 {
   return myIndex;
 }
-
-//=================================================================================================
 
 static TopoDS_Shape MakeShape(
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& MS)
@@ -322,11 +285,6 @@ static TopoDS_Shape MakeShape(
   }
   return TopoDS_Shape();
 }
-
-//=======================================================================
-// function : ShapeWithType
-// purpose  : Tries to make shape with given type from the given shape
-//=======================================================================
 
 static TopoDS_Shape ShapeWithType(const TopoDS_Shape& theShape, const TopAbs_ShapeEnum theType)
 {
@@ -379,14 +337,14 @@ static TopoDS_Shape ShapeWithType(const TopoDS_Shape& theShape, const TopAbs_Sha
       return aResult;
   }
   else
-  { // if the shape type more complex than shapes from aShapes list, try make it
+  {
     switch (aType)
     {
-      case TopAbs_VERTEX: // can't do something from vertex
+      case TopAbs_VERTEX:
         break;
       case TopAbs_EDGE:
       {
-        // make wire from edges
+
         if (theType <= TopAbs_SOLID)
           break;
         BRepBuilderAPI_MakeWire aMakeWire;
@@ -395,14 +353,14 @@ static TopoDS_Shape ShapeWithType(const TopoDS_Shape& theShape, const TopAbs_Sha
           return theShape;
         if (theType == TopAbs_WIRE)
           return aMakeWire.Wire();
-        aShapes.Clear(); // don't break: we can do something more of it
+        aShapes.Clear();
         aShapes.Append(aMakeWire.Wire());
         aListIter.Initialize(aShapes);
       }
         [[fallthrough]];
       case TopAbs_WIRE:
       {
-        // make faceS from wires (one per one)
+
         if (theType < TopAbs_SOLID)
           break;
         NCollection_List<TopoDS_Shape> aFaces;
@@ -418,13 +376,13 @@ static TopoDS_Shape ShapeWithType(const TopoDS_Shape& theShape, const TopAbs_Sha
             return aFaces.First();
           return theShape;
         }
-        aShapes.Assign(aFaces); // don't break: we can do something more of it
+        aShapes.Assign(aFaces);
         aListIter.Initialize(aShapes);
       }
         [[fallthrough]];
       case TopAbs_FACE:
       {
-        // make shell from faces
+
         if (theType < TopAbs_SOLID)
           break;
         BRep_Builder aShellBuilder;
@@ -435,14 +393,14 @@ static TopoDS_Shape ShapeWithType(const TopoDS_Shape& theShape, const TopAbs_Sha
         aShell.Closed(BRep_Tool::IsClosed(aShell));
         if (theType == TopAbs_SHELL)
           return aShell;
-        aShapes.Clear(); // don't break: we can do something more of it
+        aShapes.Clear();
         aShapes.Append(aShell);
         aListIter.Initialize(aShapes);
       }
         [[fallthrough]];
       case TopAbs_SHELL:
       {
-        // make solids from shells (one per one)
+
         NCollection_List<TopoDS_Shape> aSolids;
         for (; aListIter.More(); aListIter.Next())
         {
@@ -456,13 +414,13 @@ static TopoDS_Shape ShapeWithType(const TopoDS_Shape& theShape, const TopAbs_Sha
             return aSolids.First();
           return theShape;
         }
-        aShapes.Assign(aSolids); // don't break: we can do something more of it
+        aShapes.Assign(aSolids);
         aListIter.Initialize(aShapes);
       }
         [[fallthrough]];
       case TopAbs_SOLID:
       {
-        // make compsolid from solids
+
         BRep_Builder     aCompBuilder;
         TopoDS_CompSolid aCompSolid;
         aCompBuilder.MakeCompSolid(aCompSolid);
@@ -475,8 +433,6 @@ static TopoDS_Shape ShapeWithType(const TopoDS_Shape& theShape, const TopAbs_Sha
   }
   return theShape;
 }
-
-//=================================================================================================
 
 static bool FindModifUntil(TNaming_NewShapeIterator&                                      it,
                            NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& MS,
@@ -502,7 +458,7 @@ static bool FindModifUntil(TNaming_NewShapeIterator&                            
         found = true;
       }
       else
-      { // New shape != Context
+      {
         TNaming_NewShapeIterator it2(it);
         found = FindModifUntil(it2, MS, it.Shape(), Context);
       }
@@ -511,24 +467,19 @@ static bool FindModifUntil(TNaming_NewShapeIterator&                            
   return found;
 }
 
-//=======================================================================
-// function : ModifUntil
-// purpose  : returns map <theMS> of generators of Target
-//=======================================================================
-
 static void SearchModifUntil(
-  const NCollection_Map<TDF_Label>& /*Valid*/,
+  const NCollection_Map<TDF_Label>&,
   const occ::handle<TNaming_NamedShape>&                         Target,
   const NCollection_List<occ::handle<TNaming_NamedShape>>&       theListOfGenerators,
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMS)
 {
 
 #ifdef OCCT_DEBUG_MODUN
-  DbgTools_WriteNSOnLabel(Target, "SMUntil_"); // Target <== generated
+  DbgTools_WriteNSOnLabel(Target, "SMUntil_");
   int                     i = 0;
   TCollection_AsciiString aGen1("Gens_New_"), aGen2("Gented_Old_"), Und("_");
 #endif
-  // Test si S apparait comme oldshape dans Context. : Test if S appears as oldshape in Context.
+
   bool found = false;
   for (NCollection_List<occ::handle<TNaming_NamedShape>>::Iterator it(theListOfGenerators);
        it.More();
@@ -540,7 +491,7 @@ static void SearchModifUntil(
     int j = 0;
 #endif
     for (TNaming_Iterator itL(aNS); itL.More(); itL.Next())
-    { // <- generators
+    {
       const TopoDS_Shape& S = itL.NewShape();
       found                 = false;
 
@@ -549,17 +500,17 @@ static void SearchModifUntil(
       int                     k     = 0;
       TCollection_AsciiString aNam1 = aGen1 + i + Und + j + ".brep";
       DbgTools_Write(S, aNam1.ToCString());
-      PrintEntry(aNS->Label()); // NSLabel
+      PrintEntry(aNS->Label());
 #endif
       TNaming_Iterator itC(Target);
       for (; itC.More(); itC.Next())
-      { // <- generated
+      {
         const TopoDS_Shape& OS = itC.OldShape();
 #ifdef OCCT_DEBUG_MODUN
         k++;
         TCollection_AsciiString aNam2 = aGen2 + i + Und + j + Und + k + ".brep";
         DbgTools_Write(OS, aNam2.ToCString());
-        PrintEntry(Target->Label()); // Target Label
+        PrintEntry(Target->Label());
 #endif
         if (OS.IsSame(S))
         {
@@ -580,16 +531,6 @@ static void SearchModifUntil(
   }
 }
 
-//=================================================================================================
-
-// NamedShape for this type is assembled from all last modifications of the
-// last argument shapes (see method  TNaming_NamingTool::CurrentShape),
-// which are not descendants (see method TNaming_NamingTool::BuildDescendants)
-// of the stop shape. This type of naming is used for identification shapes,
-// which has only one parent with evolution PRIMITIVE (or itself), which
-// uniquely identifies it. In most cases stop shape is empty and this algorithm
-// is equal to the algorithm for IDENTITY.
-//=======================================================================
 static bool ModifUntil(const TDF_Label&                                         L,
                        const NCollection_Map<TDF_Label>&                        Valid,
                        const NCollection_List<occ::handle<TNaming_NamedShape>>& Args,
@@ -599,7 +540,7 @@ static bool ModifUntil(const TDF_Label&                                         
   NCollection_Map<TDF_Label>                                    Forbiden;
   if (!ValidArgs(Args))
     return false;
-  TNaming_NamingTool::BuildDescendants(Stop, Forbiden); // fills Forbidden from Stop
+  TNaming_NamingTool::BuildDescendants(Stop, Forbiden);
 
 #ifdef OCCT_DEBUG_GEN
   std::cout << "Regenerating ModifUntil => ";
@@ -607,7 +548,7 @@ static bool ModifUntil(const TDF_Label&                                         
   DbgTools_WriteNSOnLabel(Args.Last(), "ModifUntil-");
 
 #endif
-  // all last modifications of the last argument
+
   TNaming_NamingTool::CurrentShape(Valid, Forbiden, Args.Last(), MS);
 #ifdef OCCT_DEBUG_GEN
   int                     i(0);
@@ -628,13 +569,6 @@ static bool ModifUntil(const TDF_Label&                                         
   return true;
 }
 
-//=================================================================================================
-
-// from the NS of the first argument TNaming_Iterator is started, shape "S"
-// is the NewShape from Iterator with index "myIndex" of the Name, this
-// shape and all last modifications (except NamedShapes - descendants of
-// the stop shape) are the parts of resulting NamedShape.
-//=======================================================================
 static bool ConstShape(const TDF_Label&                                         L,
                        const NCollection_Map<TDF_Label>&                        Valid,
                        const NCollection_List<occ::handle<TNaming_NamedShape>>& Args,
@@ -671,19 +605,6 @@ static bool ConstShape(const TDF_Label&                                         
   return true;
 }
 
-//=================================================================================================
-
-// algorithm does next steps:
-// 1. Sets to the "Forbiden" map  all shapes, which are descendants of stop
-//    shape. Named shapes at these labels can't be used.
-// 2. Takes first argument (with method CurrentShape) and sets map "S" of
-//    ancestors (shapes, which belong to this one) of its shape with type
-//    "ShapeType" of Name.
-// 3. Takes next argument of Name (with method CurrentShape) and removes
-//    from the map "S" all ancestors, which not belongs to the shape of
-//    this argument. This step is repeated for all arguments of this Name.
-// 4. Adds to the result NamedShape all rest of shapes from the map "S".
-//=======================================================================
 static bool Intersection(const TDF_Label&                                         L,
                          const NCollection_Map<TDF_Label>&                        Valid,
                          const NCollection_List<occ::handle<TNaming_NamedShape>>& Args,
@@ -710,7 +631,7 @@ static bool Intersection(const TDF_Label&                                       
   PrintEntry(it.Value()->Label());
 #endif
 
-  TNaming_NamingTool::BuildDescendants(Stop, Forbiden); // <==<1>
+  TNaming_NamingTool::BuildDescendants(Stop, Forbiden);
 
 #ifdef OCCT_DEBUG_INT
   std::cout << "Intersection:: Valid Map: " << std::endl;
@@ -719,9 +640,9 @@ static bool Intersection(const TDF_Label&                                       
   PrintEntries(Forbiden);
 #endif
   NCollection_List<TopoDS_Shape> aListOfAnc;
-  TNaming_NamingTool::CurrentShape(Valid, Forbiden, it.Value(), MS); // first argument
+  TNaming_NamingTool::CurrentShape(Valid, Forbiden, it.Value(), MS);
   TopoDS_Shape      CS = MakeShape(MS);
-  TNaming_ShapesSet S(CS, ShapeType); // <==<2>
+  TNaming_ShapesSet S(CS, ShapeType);
   aListOfAnc.Append(CS);
 #ifdef OCCT_DEBUG_INT
   if (!CS.IsNull())
@@ -731,7 +652,7 @@ static bool Intersection(const TDF_Label&                                       
   TCollection_AsciiString ext(".brep");
 
 #endif
-  it.Next(); // <<===<3.1>
+  it.Next();
   for (; it.More(); it.Next())
   {
     MS.Clear();
@@ -746,7 +667,7 @@ static bool Intersection(const TDF_Label&                                       
 #endif
 
     TNaming_ShapesSet OS(CS, ShapeType);
-    S.Filter(OS); //<<===<3.2>
+    S.Filter(OS);
 #ifdef OCCT_DEBUG_INT
     int                                                              j = 1;
     TCollection_AsciiString                                          aNam2("SSMap_"), aName3;
@@ -764,7 +685,7 @@ static bool Intersection(const TDF_Label&                                       
   i    = 1;
 #endif
 
-  TNaming_Builder B(L); //<<===<4>
+  TNaming_Builder B(L);
   bool            isOK(false);
   if (S.Map().Extent() > 1 && Index > 0 && ShapeType == TopAbs_EDGE)
   {
@@ -792,9 +713,9 @@ static bool Intersection(const TDF_Label&                                       
     int aCaseW(0);
     int aNbW = aS.NbChildren();
     if (aNbW == nbW)
-      aCaseW = 1; // exact solution for wire (nb of wires is kept)
+      aCaseW = 1;
     else
-      aCaseW = 2; // indefinite description ==> compound which can include expected wire
+      aCaseW = 2;
     if (aCaseW == 1)
     {
       TopoDS_Shape aWire;
@@ -810,7 +731,7 @@ static bool Intersection(const TDF_Label&                                       
       int aCaseE(0);
       int aNbE = aWire.NbChildren();
       if (aNbE == nbE)
-        aCaseE = 1; // exact solution for edge
+        aCaseE = 1;
       else
         aCaseE = 2;
       if (aCaseE == 1)
@@ -856,7 +777,6 @@ static bool Intersection(const TDF_Label&                                       
   return isOK;
 }
 
-//=======================================================================
 static void KeepInList(const TopoDS_Shape&             CS,
                        const TopAbs_ShapeEnum          Type,
                        NCollection_List<TopoDS_Shape>& aList)
@@ -895,12 +815,6 @@ static void KeepInList(const TopoDS_Shape&             CS,
   }
 }
 
-//=================================================================================================
-
-// Resulting NamedShape contains compound of next shapes:
-// compound of last modifications of each argument (see CurrentShape method)
-// without descendants of the stop shape.
-//=======================================================================
 static bool Union(const TDF_Label&                                         L,
                   const NCollection_Map<TDF_Label>&                        Valid,
                   const NCollection_List<occ::handle<TNaming_NamedShape>>& Args,
@@ -912,48 +826,23 @@ static bool Union(const TDF_Label&                                         L,
     return false;
   if (!ValidArgs(Args))
     return false;
-  // temporary solution for Orientation name
+
   bool isOr(true);
-  /* not completed
-    const TDF_Label& aLabel = L.Father();
-    if(!aLabel.IsNull()) {
-    PrintEntry(L);
-    PrintEntry(aLabel);
-      Handle (TNaming_Naming)  Naming;
-      if(aLabel.FindAttribute(TNaming_Naming::GetID(), Naming)) {
-        const TNaming_Name& aName = Naming->GetName();
-        if(aName.Type() == TNaming_ORIENTATION) {
-      const NCollection_List<occ::handle<TNaming_NamedShape>>&   Args = aName.Arguments();
-      if(Args.Extent() > 2) {
-        const occ::handle<TNaming_NamedShape>& A = Args.First();
-        if(!A.IsNull()) {
-          PrintEntry(A->Label());
-          if (A->Label() == L)
-            isOr = true;
-        }
-      } else
-        if(!Args.Extent())
-          isOr = true;
-        }
-      }
-    }
-  */
-  // end of temp. sol.
 
   NCollection_List<occ::handle<TNaming_NamedShape>>::Iterator   it(Args);
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> MS;
   NCollection_Map<TDF_Label>                                    Forbiden;
 
-  TNaming_NamingTool::BuildDescendants(Stop, Forbiden); // fill Forbidden
-  // clang-format off
-  TNaming_NamingTool::CurrentShape  (Valid, Forbiden,it.Value(),MS); // fill MS with last modifications of the first argument
-  TopoDS_Shape  CS = MakeShape(MS);
+  TNaming_NamingTool::BuildDescendants(Stop, Forbiden);
+
+  TNaming_NamingTool::CurrentShape(Valid, Forbiden, it.Value(), MS);
+  TopoDS_Shape CS = MakeShape(MS);
 
   NCollection_List<TopoDS_Shape> aListS;
-  if(isOr)
-    KeepInList(CS,ShapeType,aListS);
-  TNaming_ShapesSet S(CS,ShapeType);//fill internal map of shapeset by shapes of the specified type
-// clang-format on
+  if (isOr)
+    KeepInList(CS, ShapeType, aListS);
+  TNaming_ShapesSet S(CS, ShapeType);
+
 #ifdef OCCT_DEBUG_UNN
   TCollection_AsciiString entry;
   TDF_Tool::Entry(it.Value()->Label(), entry);
@@ -969,14 +858,14 @@ static bool Union(const TDF_Label&                                         L,
     TDF_Tool::Entry(it.Value()->Label(), entry);
 #endif
     MS.Clear();
-    // clang-format off
-      TNaming_NamingTool::CurrentShape (Valid, Forbiden,it.Value(),MS);// fill MS with last modifications of the it.Value()
-    // clang-format on
+
+    TNaming_NamingTool::CurrentShape(Valid, Forbiden, it.Value(), MS);
+
     CS = MakeShape(MS);
     if (isOr)
       KeepInList(CS, ShapeType, aListS);
     TNaming_ShapesSet OS(CS, ShapeType);
-    S.Add(OS); // concatenate both shapesets
+    S.Add(OS);
 
 #ifdef OCCT_DEBUG_UNN
     ii++;
@@ -986,7 +875,6 @@ static bool Union(const TDF_Label&                                         L,
 #endif
   }
 
-  // start szy 27.05.08
   TopoDS_Shape aCand;
   bool         found = false;
   if (!ContextLabel.IsNull())
@@ -1057,7 +945,6 @@ static bool Union(const TDF_Label&                                         L,
         break;
       }
     }
-    // end szy 27.05.08
   }
 
   TNaming_Builder B(L);
@@ -1099,7 +986,6 @@ static bool Union(const TDF_Label&                                         L,
   return true;
 }
 
-//=======================================================================
 static TopoDS_Shape FindShape(
   const NCollection_DataMap<TopoDS_Shape, NCollection_Map<TopoDS_Shape>>& DM)
 {
@@ -1114,11 +1000,11 @@ static TopoDS_Shape FindShape(
     const TopoDS_Shape&                  aKey1 = it.Key();
     const NCollection_Map<TopoDS_Shape>& aMap  = it.Value();
 
-    NCollection_Map<TopoDS_Shape>::Iterator itm(aMap); // iterate first map
+    NCollection_Map<TopoDS_Shape>::Iterator itm(aMap);
     for (; itm.More(); itm.Next())
     {
-      const TopoDS_Shape& aS = itm.Key(); // element of the first map
-      bool                isCand(true);   // aS is a Candidate
+      const TopoDS_Shape&                                                        aS = itm.Key();
+      bool                                                                       isCand(true);
       NCollection_DataMap<TopoDS_Shape, NCollection_Map<TopoDS_Shape>>::Iterator it2(DM);
       for (; it2.More(); it2.Next())
       {
@@ -1148,15 +1034,6 @@ static TopoDS_Shape FindShape(
   return Compound;
 }
 
-//=======================================================================
-// function : Generation
-// purpose  : Resolves Name from arguments: arg1 - generated (target shape)
-//         : arg2 - the generator: the oldest ancestor (usually NS with
-//         : PRIMITIVE evolution. (See TNaming_Localizer::FindGenerator).
-//         : Resulting NamedShape contains shape, which is in the first
-//         : argument NamedShape and is modification of the last argument NS.
-//=======================================================================
-
 static bool Generated(const TDF_Label&                                         L,
                       const NCollection_Map<TDF_Label>&                        Valid,
                       const NCollection_List<occ::handle<TNaming_NamedShape>>& Args)
@@ -1165,8 +1042,6 @@ static bool Generated(const TDF_Label&                                         L
   {
     throw Standard_ConstructionError("TNaming_Name::Solve: => Generated");
   }
-  // First argument : label of generation
-  // Next arguments : generators.
 
   if (!ValidArgs(Args))
     return false;
@@ -1175,7 +1050,7 @@ static bool Generated(const TDF_Label&                                         L
 #ifdef OCCT_DEBUG_GEN
   DbgTools_Write(Args.First()->Get(), "Generated.brep");
 #endif
-  // Nouvell valeurs des generateurs dans l attribut de generation
+
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aMS;
   NCollection_List<occ::handle<TNaming_NamedShape>>             aGenerators;
   aGenerators.Assign(Args);
@@ -1195,7 +1070,7 @@ static bool Generated(const TDF_Label&                                         L
   DbgTools_Write(aMS, "SearchModifUntil_Result");
 #endif
   occ::handle<TNaming_NamedShape> anOldNS;
-  int                             aVer = -1; // Initial build of name
+  int                             aVer = -1;
   L.FindAttribute(TNaming_NamedShape::GetID(), anOldNS);
   if (!anOldNS.IsNull())
     aVer = anOldNS->Version();
@@ -1206,7 +1081,7 @@ static bool Generated(const TDF_Label&                                         L
   TCollection_AsciiString aNam1("Gen_Old_");
   TCollection_AsciiString ext(".brep");
 #endif
-  TNaming_Builder                                                  B(L); // NS
+  TNaming_Builder                                                  B(L);
   NCollection_List<TopoDS_Shape>                                   aList;
   NCollection_DataMap<TopoDS_Shape, NCollection_Map<TopoDS_Shape>> aDM;
   for (int anItMS = 1; anItMS <= aMS.Extent(); ++anItMS)
@@ -1222,7 +1097,7 @@ static bool Generated(const TDF_Label&                                         L
       if (itNew.Label() == LabelOfGeneration)
       {
         aMapDM.Add(itNew.Shape());
-        aList.Append(itNew.Shape()); // szy 21.10.03
+        aList.Append(itNew.Shape());
 #ifdef OCCT_DEBUG_GEN
         TCollection_AsciiString aName = aNam2 + i + "_" + ++j + ext;
         DbgTools_Write(itNew.Shape(), aName.ToCString());
@@ -1233,7 +1108,7 @@ static bool Generated(const TDF_Label&                                         L
   }
 
   if (aVer == -1)
-  { // initial
+  {
     int                                      i     = 1;
     TNaming_Name&                            aName = aNaming->ChangeName();
     NCollection_List<TopoDS_Shape>::Iterator it(aList);
@@ -1244,22 +1119,22 @@ static bool Generated(const TDF_Label&                                         L
         if (it.Value().IsSame(aSelection))
         {
           B.Select(it.Value(), it.Value());
-          aName.Index(i); // for debug - index of selection in the list
+          aName.Index(i);
           break;
         }
       }
     }
     else
-    { // Selection == Null
+    {
       for (; it.More(); it.Next())
         B.Select(it.Value(), it.Value());
     }
   }
   else
   {
-    // *** Regeneration *** //
+
     if (aList.Extent() == 1)
-    { // trivial case
+    {
       B.Select(aList.Last(), aList.Last());
     }
     else
@@ -1270,11 +1145,11 @@ static bool Generated(const TDF_Label&                                         L
       NCollection_List<TopoDS_Shape>::Iterator it(aList);
       for (; it.More(); it.Next())
       {
-        if (it.Value().ShapeType() == aType) // collect only the same type
+        if (it.Value().ShapeType() == aType)
           aList2.Append(it.Value());
       }
       if (!aList2.Extent())
-        return false; // Empty
+        return false;
 
       bool         found  = false;
       TopoDS_Shape aShape = FindShape(aDM);
@@ -1297,8 +1172,8 @@ static bool Generated(const TDF_Label&                                         L
         bool                           aHas = false;
         bool                           a1NB = false;
         if (aGenerators.Extent() != aMS.Extent())
-        {              // missed generators
-          aHas = true; // has lost generatos
+        {
+          aHas = true;
 #ifdef OCCT_DEBUG_GEN
           std::cout << "Generated ==> has lost generatos!" << std::endl;
 #endif
@@ -1310,9 +1185,9 @@ static bool Generated(const TDF_Label&                                         L
               aLM.Append(itg.Value()->Get());
           }
           if (aLM.Extent() == 1)
-          { // lost 1
+          {
             NCollection_List<TopoDS_Shape>::Iterator itm(aLM);
-            TopoDS_Shape                             aSM = itm.Value(); // Missed
+            TopoDS_Shape                             aSM = itm.Value();
             for (int anItMS1 = 1; anItMS1 <= aMS.Extent(); ++anItMS1)
             {
               const TopoDS_Shape& aS = aMS(anItMS1);
@@ -1325,7 +1200,7 @@ static bool Generated(const TDF_Label&                                         L
                   {
                     a1NB = true;
                     break;
-                  } // lost only 1 neighbour
+                  }
                 }
                 else if (aS.ShapeType() == TopAbs_FACE)
                 {
@@ -1339,37 +1214,23 @@ static bool Generated(const TDF_Label&                                         L
                       {
                         a1NB = true;
                         break;
-                      } // lost only 1 neighbour
+                      }
                     }
                   }
                 }
               }
             }
-            // 	    if(aShape.ShapeType() == TopAbs_VERTEX && a1NBE) {
-            // 	//if atleast 1 Gen was missed and the Gen is Edge
-            // 	      NCollection_List<TopoDS_Shape>::Iterator it(aList);
-            // 	      for(;it.More();it.Next()) {
-            // 		if(it.Value().ShapeType() == TopAbs_EDGE) {
-            // 		  const TopoDS_Shape& aV1 = TopExp::FirstVertex(TopoDS::Edge(it.Value()));
-            // 		  const TopoDS_Shape& aV2 = TopExp::LastVertex(TopoDS::Edge(it.Value()));
-            // 		  if(aShape.IsSame(aV1)) {aShape2 =  aV2; 	std::cout << "##### => V2 "
-            // <<std::endl;break;} 		  else 		    if(aShape.IsSame(aV2)) {aShape2 =  aV1;
-            // std::cout << "#####
-            // => V1 " <<std::endl;break;}
-            // 		}
-            // 	      }
-            // 	    }
           }
         }
-        if (!aHas)                  // all arguments were kept
-          B.Select(aShape, aShape); // only this case is correct on 100%
+        if (!aHas)
+          B.Select(aShape, aShape);
         else
         {
-          if (a1NB) // Has, but may be ...
+          if (a1NB)
             B.Select(aShape, aShape);
           else
           {
-            // put Compound, may be if possible processed later in Sel. Driver
+
             NCollection_List<TopoDS_Shape>::Iterator it1(aList2);
             for (; it1.More(); it1.Next())
               B.Select(it1.Value(), it1.Value());
@@ -1377,7 +1238,7 @@ static bool Generated(const TDF_Label&                                         L
         }
       }
       else
-      { // not found
+      {
 #ifdef OCCT_DEBUG_GEN
         std::cout << "Generated ==> Shape is NOT found! Probably Compound will be built"
                   << std::endl;
@@ -1392,16 +1253,6 @@ static bool Generated(const TDF_Label&                                         L
   return true;
 }
 
-//=======================================================================
-// function : Identity
-// purpose  : Regenerates Naming attribute with Name = IDENTITY
-//=======================================================================
-// Name with this type must contain only one NamedShape attribute as argument.
-// Algorithm takes all last modifications of NamedShape of this argument
-// starting with this one ( see method TNaming_NamingTool::CurrentShape ).
-// Algorithm takes only NamedShapes belonging to the labels from the Valid
-// labels map (if it's not empty) and put to the resulting NamedShape as compound.
-//=======================================================================
 static bool Identity(const TDF_Label&                                         L,
                      const NCollection_Map<TDF_Label>&                        Valid,
                      const NCollection_List<occ::handle<TNaming_NamedShape>>& Args,
@@ -1418,30 +1269,20 @@ static bool Identity(const TDF_Label&                                         L,
   NCollection_Map<TDF_Label>                                    Forbiden;
   TNaming_NamingTool::CurrentShape(Valid, Forbiden, A, MS);
 #ifdef OCCT_DEBUG_SOL2
-  // TCollection_AsciiString entry;
-  // TDF_Tool::Entry(L, entry);
-  // TDF_Tool::Entry(A->Label(), entry);
+
 #endif
   TNaming_Builder B(L);
   for (int anItMS = 1; anItMS <= MS.Extent(); ++anItMS)
   {
     const TopoDS_Shape& S = ShapeWithType(MS(anItMS), ShapeType);
 #ifdef OCCT_DEBUG_SOL2
-    // TopAbs_Orientation Or = S.Orientation();
+
 #endif
     B.Select(S, S);
   }
   return true;
 }
 
-//=======================================================================
-// function : FilterByNeighbourgs
-// purpose  : regenerated the specified shape with help of its neighbours
-//=======================================================================
-// result -  is a subshape of the first argument of the Name with type =
-// ShapeType of this Name, which has a common subshapes (boundaries) with
-// each neighbour - shapes from the other arguments of the Name.
-//=======================================================================
 static bool FilterByNeighbourgs(const TDF_Label&                                         L,
                                 const NCollection_Map<TDF_Label>&                        Valid,
                                 const NCollection_List<occ::handle<TNaming_NamedShape>>& Args,
@@ -1454,15 +1295,13 @@ static bool FilterByNeighbourgs(const TDF_Label&                                
   NCollection_Map<TDF_Label> Forbiden;
   if (!ValidArgs(Args))
     return false;
-  // clang-format off
-  TNaming_NamingTool::BuildDescendants (Stop, Forbiden); //all descendants of Stop (New shapes) are forbidden
-  // clang-format on
+
+  TNaming_NamingTool::BuildDescendants(Stop, Forbiden);
+
   if (!Stop.IsNull())
     Forbiden.Remove(Stop->Label());
-  //----------------------------------------
-  // First argument: collection has to be filtered.
-  //----------------------------------------
-  const occ::handle<TNaming_NamedShape>& Cand = Args.First(); // collection of candidates
+
+  const occ::handle<TNaming_NamedShape>& Cand = Args.First();
 
 #ifdef OCCT_DEBUG_FNB
   int                     i = 1;
@@ -1476,9 +1315,8 @@ static bool FilterByNeighbourgs(const TDF_Label&                                
 #endif
 
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> SCand;
-  // clang-format off
-  TNaming_NamingTool::CurrentShape  (Valid, Forbiden,Cand,SCand);//fills SCand with last modifications of Cand. CandNS should be at the same level (before) as NS of FilterByNBS
-  // clang-format on
+
+  TNaming_NamingTool::CurrentShape(Valid, Forbiden, Cand, SCand);
 
 #ifdef OCCT_DEBUG_FNB
   TCollection_AsciiString aNam2("SCand");
@@ -1487,16 +1325,12 @@ static bool FilterByNeighbourgs(const TDF_Label&                                
             << std::endl;
 #endif
 
-  //------------------------------------------------------------
-  // Autres arguments : contiennent les voisins du bon candidat.
-  // Other arguments  : contains the neighbors of the good candidate.
-  //------------------------------------------------------------
   TopAbs_ShapeEnum TC = TopAbs_EDGE;
   if (ShapeType == TopAbs_EDGE)
     TC = TopAbs_VERTEX;
-  // clang-format off
-  if (ShapeType == TopAbs_VERTEX) TC = TopAbs_VERTEX; // szy 31.03.10 - to process case when Candidate is of type Vertex
-  // clang-format on
+
+  if (ShapeType == TopAbs_VERTEX)
+    TC = TopAbs_VERTEX;
 
 #ifdef OCCT_DEBUG_FNB
   i    = 1;
@@ -1504,7 +1338,7 @@ static bool FilterByNeighbourgs(const TDF_Label&                                
 #endif
   bool isDone = false;
   if (SCand.Extent() == 1)
-  { // check if a collection is inside
+  {
     TopoDS_Shape aS = SCand(1);
     if (!aS.IsNull())
       if (aS.ShapeType() == TopAbs_COMPOUND && aS.ShapeType() != ShapeType)
@@ -1516,15 +1350,16 @@ static bool FilterByNeighbourgs(const TDF_Label&                                
       }
   }
   for (int anItSCand = 1; anItSCand <= SCand.Extent(); ++anItSCand)
-  { // 1
+  {
     const TopoDS_Shape&                                    S = SCand(anItSCand);
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> Boundaries;
-    if (S.ShapeType() == TopAbs_VERTEX) // # szy 31.03.10
-      Boundaries.Add(S);                // #
-    else                                // #
-                                        // clang-format off
-      for (TopExp_Explorer exp(S,TC); exp.More(); exp.Next()) { //put boundaries of each candidate (from SCand) to the Boundaries map
-        // clang-format on
+    if (S.ShapeType() == TopAbs_VERTEX)
+      Boundaries.Add(S);
+    else
+
+      for (TopExp_Explorer exp(S, TC); exp.More(); exp.Next())
+      {
+
         Boundaries.Add(exp.Current());
 #ifdef OCCT_DEBUG_FNB
         TCollection_AsciiString aName = aNam + i++ + ext;
@@ -1541,22 +1376,18 @@ static bool FilterByNeighbourgs(const TDF_Label&                                
     aNam = "Boundaries";
 #endif
     for (; it.More(); it.Next())
-    { // 2 ==> for each Arg
+    {
       bool Connected = false;
-      // Le candidat doit etre  connexe a au moins un shape de
-      // chaque NamedShape des voisins.
-      // The candidate should be connectedand and have at least one shape of NamedShape
-      // of each neighbor.
-      const occ::handle<TNaming_NamedShape>& NSVois = it.Value(); // neighbor
+
+      const occ::handle<TNaming_NamedShape>& NSVois = it.Value();
 
 #ifdef OCCT_DEBUG_FNB
       DbgTools_WriteNSOnLabel(NSVois, "Next_Neighbor_");
 #endif
 
       NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> SVois;
-      // clang-format off
-      TNaming_NamingTool::CurrentShape  (Valid, Forbiden,NSVois,SVois); // fills SVois with last modifications of NSVois
-      // clang-format on
+
+      TNaming_NamingTool::CurrentShape(Valid, Forbiden, NSVois, SVois);
 
 #ifdef OCCT_DEBUG_FNB
       TCollection_AsciiString aNam2("SVois");
@@ -1564,28 +1395,28 @@ static bool FilterByNeighbourgs(const TDF_Label&                                
 #endif
 
       for (int anItSVois = 1; anItSVois <= SVois.Extent(); ++anItSVois)
-      { // 6
+      {
         const TopoDS_Shape& Vois = SVois(anItSVois);
         for (TopExp_Explorer exp1(Vois, TC); exp1.More(); exp1.Next())
-        { // 7
+        {
           if (Boundaries.Contains(exp1.Current()))
           {
-            Connected = true; // has common boundaries with candidate shape
+            Connected = true;
 #ifdef OCCT_DEBUG_FNB
             DbgTools_Write(Vois, "Neighbor_Connected.brep");
 #endif
             break;
           }
-        } // 7
+        }
         if (Connected)
           break;
-      } // 6
+      }
       if (!Connected)
       {
         Keep = false;
         break;
       }
-    } // 2
+    }
     if (Keep)
     {
       B.Select(S, S);
@@ -1594,11 +1425,10 @@ static bool FilterByNeighbourgs(const TDF_Label&                                
       DbgTools_Write(S, "FilterByNbs_Sel.brep");
 #endif
     }
-  } // 1
+  }
   return isDone;
 }
 
-//=======================================================================
 static const TopoDS_Shape FindSubShapeInAncestor(const TopoDS_Shape& Selection,
                                                  const TopoDS_Shape& Context)
 {
@@ -1638,21 +1468,6 @@ static const TopoDS_Shape FindSubShapeInAncestor(const TopoDS_Shape& Selection,
   return TopoDS_Shape();
 }
 
-//=======================================================================
-// static int Count(const TopoDS_Shape& S)
-//{
-//  int N(0);
-//  TopoDS_Iterator it(S);
-//  for(;it.More();it.Next()) {
-//    if(it.Value().ShapeType() != TopAbs_COMPOUND && it.Value().ShapeType() != TopAbs_COMPSOLID)
-//      N++;
-//    else {
-//      N += Count(it.Value());
-//    }
-//  }
-//  return N;
-//}
-//=======================================================================
 static int Aggregation(const TopoDS_Shape& S, const TopoDS_Shape& AS, TNaming_Builder& B)
 {
   int             N(0);
@@ -1675,13 +1490,6 @@ static int Aggregation(const TopoDS_Shape& S, const TopoDS_Shape& AS, TNaming_Bu
   return N;
 }
 
-//==========================================================================
-// function : Orientation
-// purpose  : to solve  ORIENTATION name
-// this function explores the second argument | arguments (Context) and
-// keeps at the label (L) the first argument (S) with the orientation it
-// has in the context. Index is used only for Seam edge recomputing
-//==========================================================================
 static bool ORientation(const TDF_Label&                                         L,
                         const NCollection_Map<TDF_Label>&                        Valid,
                         const NCollection_List<occ::handle<TNaming_NamedShape>>& Args,
@@ -1729,13 +1537,13 @@ static bool ORientation(const TDF_Label&                                        
 #endif
 
   NCollection_List<TopoDS_Shape> aSList;
-  // tmp. solution
+
   if (aShape.ShapeType() == TopAbs_COMPOUND && !isSplit)
   {
     TopoDS_Iterator it(aShape);
     for (; it.More(); it.Next())
       aSList.Append(it.Value());
-  } //
+  }
 
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> MSC;
   if (aSList.Extent() == 0)
@@ -1752,10 +1560,10 @@ static bool ORientation(const TDF_Label&                                        
       for (int anItMSC = 1; anItMSC <= MSC.Extent(); ++anItMSC)
       {
         const TopoDS_Shape& AS = MSC(anItMSC);
-        // <=== start 21.10.2009
+
         TopoDS_Shape CS;
         if (Index > 0)
-        { // only for seam edge
+        {
           TopoDS_Iterator itw(AS);
           for (; itw.More(); itw.Next())
           {
@@ -1779,7 +1587,7 @@ static bool ORientation(const TDF_Label&                                        
         }
         else
           CS = FindSubShapeInAncestor(aShape, AS);
-// <=== end 21.10.2009
+
 #ifdef OCCT_DEBUG_OR
         std::cout << "ORIENTATION: Selection TShape = " << CS.TShape()
                   << " Orientation = " << CS.Orientation() << std::endl;
@@ -1816,11 +1624,9 @@ static bool ORientation(const TDF_Label&                                        
   else
   {
     NCollection_List<occ::handle<TNaming_NamedShape>>::Iterator it(Args);
-    it.Next(); // skip first
+    it.Next();
 
-    // temporary solution. To be optimized (+ has connection with Union name)
-    occ::handle<NCollection_HArray2<TopoDS_Shape>>
-      Arr; // Arr(1,1) - selection; Arr(1,2) - Context shape
+    occ::handle<NCollection_HArray2<TopoDS_Shape>> Arr;
     Arr = new NCollection_HArray2<TopoDS_Shape>(1, aSList.Extent(), 1, 2);
     NCollection_List<TopoDS_Shape>::Iterator it1(aSList);
     int                                      i = 1;
@@ -1865,7 +1671,7 @@ static bool ORientation(const TDF_Label&                                        
       }
     }
     else
-    { // > 1
+    {
       for (int k = Arr->LowerRow(); k <= Arr->UpperRow(); k++)
       {
         const TopoDS_Shape& S  = Arr->Value(k, 1);
@@ -1892,12 +1698,10 @@ static bool ORientation(const TDF_Label&                                        
         }
       }
     }
-  } // end of tmp. solution
+  }
 
   return true;
 }
-
-//=================================================================================================
 
 static bool WireIN(const TDF_Label&                                         L,
                    const NCollection_Map<TDF_Label>&                        Valid,
@@ -1923,7 +1727,7 @@ static bool WireIN(const TDF_Label&                                         L,
 #endif
   TNaming_Builder B(L);
   if (Index == 1)
-  { // Outer wire case
+  {
     TopoDS_Wire anOuterWire;
     TNaming::OuterWire(TopoDS::Face(aCF), anOuterWire);
     if (!anOuterWire.IsNull())
@@ -1933,22 +1737,22 @@ static bool WireIN(const TDF_Label&                                         L,
     }
   }
   else
-  { // has internal wires
+  {
     NCollection_List<occ::handle<TNaming_NamedShape>> ArgsE;
     ArgsE.Assign(Args);
     ArgsE.RemoveFirst();
-    // fill Map with edges
+
     NCollection_List<occ::handle<TNaming_NamedShape>>::Iterator   anIter(ArgsE);
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> MS;
     NCollection_Map<TDF_Label>                                    Forbiden;
 
-    TNaming_NamingTool::BuildDescendants(Stop, Forbiden); // fill Forbidden
-                                                          // clang-format off
-    TNaming_NamingTool::CurrentShape  (Valid, Forbiden, anIter.Value(),MS); // fill MS with last modifications of the first additional argument
-    TopoDS_Shape  CS = MakeShape(MS);
+    TNaming_NamingTool::BuildDescendants(Stop, Forbiden);
 
-    TNaming_ShapesSet aSet(CS,TopAbs_EDGE);//fill internal map of shapeset by shapes of the specified type
-// clang-format on
+    TNaming_NamingTool::CurrentShape(Valid, Forbiden, anIter.Value(), MS);
+    TopoDS_Shape CS = MakeShape(MS);
+
+    TNaming_ShapesSet aSet(CS, TopAbs_EDGE);
+
 #ifdef OCCT_DEBUG_WIN
     TCollection_AsciiString entry;
     TDF_Tool::Entry(it.Value()->Label(), entry);
@@ -1964,12 +1768,12 @@ static bool WireIN(const TDF_Label&                                         L,
       TDF_Tool::Entry(it.Value()->Label(), entry);
 #endif
       MS.Clear();
-      // clang-format off
-      TNaming_NamingTool::CurrentShape (Valid, Forbiden,anIter.Value(),MS);// fill MS with last modifications of the it.Value()
-      // clang-format on
+
+      TNaming_NamingTool::CurrentShape(Valid, Forbiden, anIter.Value(), MS);
+
       CS = MakeShape(MS);
       TNaming_ShapesSet OS(CS, TopAbs_EDGE);
-      aSet.Add(OS); // concatenate both shapesets
+      aSet.Add(OS);
 
 #ifdef OCCT_DEBUG_WIN
       ii++;
@@ -1996,11 +1800,10 @@ static bool WireIN(const TDF_Label&                                         L,
                 << " Orient = " << exp.Current().Orientation() << std::endl;
     }
 #endif
-    // end for edges
 
     for (TopoDS_Iterator itF(aCF); itF.More(); itF.Next())
-    {                                      // find the expected wire in the face
-      const TopoDS_Shape& S = itF.Value(); // wire
+    {
+      const TopoDS_Shape& S = itF.Value();
       if (!S.IsNull())
       {
 #ifdef OCCT_DEBUG_WIN
@@ -2013,7 +1816,7 @@ static bool WireIN(const TDF_Label&                                         L,
           NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aView;
           int                                                    aNum(0x7FFFFFFF);
           for (TopoDS_Iterator it(S); it.More(); it.Next())
-            aView.Add(it.Value()); // edges of wire of the face in map
+            aView.Add(it.Value());
 
           NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator it(aSet.Map());
           aNum = aView.Extent();
@@ -2035,7 +1838,7 @@ static bool WireIN(const TDF_Label&                                         L,
           }
         }
       }
-    } //
+    }
 
     if (!aResult)
     {
@@ -2045,7 +1848,7 @@ static bool WireIN(const TDF_Label&                                         L,
       {
         for (TopoDS_Iterator itF(aCF); itF.More(); itF.Next())
         {
-          const TopoDS_Shape& S = itF.Value(); // wire
+          const TopoDS_Shape& S = itF.Value();
           if (!S.IsNull() && S.ShapeType() == TopAbs_WIRE)
           {
             if (S.IsEqual(anOuterWire))
@@ -2059,10 +1862,6 @@ static bool WireIN(const TDF_Label&                                         L,
   return aResult;
 }
 
-//===========================================================================
-// function : ShellIN
-// purpose  : to solve  SHELLIN name
-//===========================================================================
 static bool ShellIN(const TDF_Label&                                         L,
                     const NCollection_Map<TDF_Label>&                        Valid,
                     const NCollection_List<occ::handle<TNaming_NamedShape>>& Args,
@@ -2087,7 +1886,7 @@ static bool ShellIN(const TDF_Label&                                         L,
 #endif
   TNaming_Builder B(L);
   if (Index == 1)
-  { // Outer Shell case
+  {
     TopoDS_Shell anOuterShell;
     TNaming::OuterShell(TopoDS::Solid(aCSO), anOuterShell);
     if (!anOuterShell.IsNull())
@@ -2107,22 +1906,22 @@ static bool ShellIN(const TDF_Label&                                         L,
     }
   }
   else
-  { // has internal Shells
+  {
     NCollection_List<occ::handle<TNaming_NamedShape>> ArgsF;
     ArgsF.Assign(Args);
     ArgsF.RemoveFirst();
-    // fill Map with faces
+
     NCollection_List<occ::handle<TNaming_NamedShape>>::Iterator   anIter(ArgsF);
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> MS;
     NCollection_Map<TDF_Label>                                    Forbiden;
 
-    TNaming_NamingTool::BuildDescendants(Stop, Forbiden); // fill Forbidden
-                                                          // clang-format off
-    TNaming_NamingTool::CurrentShape  (Valid, Forbiden, anIter.Value(),MS); // fill MS with last modifications of the first additional argument
-    TopoDS_Shape  CS = MakeShape(MS);
+    TNaming_NamingTool::BuildDescendants(Stop, Forbiden);
 
-    TNaming_ShapesSet aSet(CS,TopAbs_FACE);//fill internal map of shapeset by shapes of the specified type
-// clang-format on
+    TNaming_NamingTool::CurrentShape(Valid, Forbiden, anIter.Value(), MS);
+    TopoDS_Shape CS = MakeShape(MS);
+
+    TNaming_ShapesSet aSet(CS, TopAbs_FACE);
+
 #ifdef OCCT_DEBUG_SHELL
     TCollection_AsciiString entry;
     TDF_Tool::Entry(anIter.Value()->Label(), entry);
@@ -2138,12 +1937,12 @@ static bool ShellIN(const TDF_Label&                                         L,
       TDF_Tool::Entry(anIter.Value()->Label(), entry);
 #endif
       MS.Clear();
-      // clang-format off
-      TNaming_NamingTool::CurrentShape (Valid, Forbiden,anIter.Value(),MS);// fill MS with last modifications of the it.Value()
-      // clang-format on
+
+      TNaming_NamingTool::CurrentShape(Valid, Forbiden, anIter.Value(), MS);
+
       CS = MakeShape(MS);
       TNaming_ShapesSet OS(CS, TopAbs_FACE);
-      aSet.Add(OS); // concatenate both shapesets
+      aSet.Add(OS);
 
 #ifdef OCCT_DEBUG_SHELL
       ii++;
@@ -2170,11 +1969,10 @@ static bool ShellIN(const TDF_Label&                                         L,
                 << " Orient = " << exp.Current().Orientation() << std::endl;
     }
 #endif
-    // end for faces
 
     for (TopoDS_Iterator itS(aCSO); itS.More(); itS.Next())
-    {                                      // find the expected shell in the solid
-      const TopoDS_Shape& S = itS.Value(); // shell
+    {
+      const TopoDS_Shape& S = itS.Value();
       if (!S.IsNull())
       {
 #ifdef OCCT_DEBUG_SHELL
@@ -2187,7 +1985,7 @@ static bool ShellIN(const TDF_Label&                                         L,
           NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aView;
           int                                                    aNum(0x7FFFFFFF);
           for (TopoDS_Iterator it(S); it.More(); it.Next())
-            aView.Add(it.Value()); // faces of shell of the solid in map
+            aView.Add(it.Value());
 
           aNum = aView.Extent();
           if (aNum == aSet.Map().Extent())
@@ -2209,7 +2007,7 @@ static bool ShellIN(const TDF_Label&                                         L,
           }
         }
       }
-    } //
+    }
 
     if (!aResult)
     {
@@ -2219,7 +2017,7 @@ static bool ShellIN(const TDF_Label&                                         L,
       {
         for (TopoDS_Iterator itS(aCSO); itS.More(); itS.Next())
         {
-          const TopoDS_Shape& S = itS.Value(); // shell
+          const TopoDS_Shape& S = itS.Value();
           if (!S.IsNull() && S.ShapeType() == TopAbs_SHELL)
           {
             if (S.IsEqual(anOuterShell))
@@ -2233,7 +2031,7 @@ static bool ShellIN(const TDF_Label&                                         L,
   return aResult;
 }
 #ifdef OCCT_DEBUG
-//=======================================================================
+
 static const char* NameTypeToString(const TNaming_NameType Type)
 {
   switch (Type)
@@ -2265,7 +2063,6 @@ static const char* NameTypeToString(const TNaming_NameType Type)
   }
 }
 #endif
-//=================================================================================================
 
 bool TNaming_Name::Solve(const TDF_Label& aLab, const NCollection_Map<TDF_Label>& Valid) const
 {
@@ -2310,7 +2107,7 @@ bool TNaming_Name::Solve(const TDF_Label& aLab, const NCollection_Map<TDF_Label>
       case TNaming_SUBSTRACTION:
       {
         throw Standard_NotImplemented();
-        //      Done = Substraction (aLab,Valid,myArgs);
+
         break;
       }
       case TNaming_CONSTSHAPE:
@@ -2358,28 +2155,20 @@ bool TNaming_Name::Solve(const TDF_Label& aLab, const NCollection_Map<TDF_Label>
   return Done;
 }
 
-//=================================================================================================
-
 void TNaming_Name::ContextLabel(const TDF_Label& theLabel)
 {
   myContextLabel = theLabel;
 }
-
-//=================================================================================================
 
 const TDF_Label& TNaming_Name::ContextLabel() const
 {
   return myContextLabel;
 }
 
-//=================================================================================================
-
 void TNaming_Name::Orientation(const TopAbs_Orientation theOrientation)
 {
   myOrientation = theOrientation;
 }
-
-//=================================================================================================
 
 void TNaming_Name::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

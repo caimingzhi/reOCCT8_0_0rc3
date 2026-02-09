@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_LinearFlexibleLinkRepresentation;
 
-//! Read & Write tool for LinearFlexibleLinkRepresentation
 class RWStepKinematics_RWLinearFlexibleLinkRepresentation
 {
 public:

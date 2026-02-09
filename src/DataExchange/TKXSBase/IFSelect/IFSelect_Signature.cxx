@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_Signature.hpp>
 #include <Interface_InterfaceModel.hpp>
@@ -20,8 +9,6 @@
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_Signature, Interface_SignType)
 
-// unused
-// static const char* nulsign = "";
 static char intval[20];
 
 IFSelect_Signature::IFSelect_Signature(const char* name)
@@ -107,7 +94,7 @@ bool IFSelect_Signature::MatchValue(const char*                    val,
 {
   if (exact)
     return text.IsEqual(val);
-  // NB: no regexp
+
   char cardeb = text.Value(1);
   int  ln, lnt, i, j;
   ln  = text.Length();
@@ -116,7 +103,7 @@ bool IFSelect_Signature::MatchValue(const char*                    val,
   {
     if (val[i] == cardeb)
     {
-      //    a candidate
+
       bool res = true;
       for (j = 1; j < ln; j++)
       {

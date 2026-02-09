@@ -11,10 +11,6 @@
 
 class math_Matrix;
 
-//! This class describes the function on a parametric surface.
-//! the form of the function is F(u,v) = 0 where u and v are
-//! the parametric coordinates of a point on the surface,
-//! to compute the contours of the surface.
 class Contap_SurfFunction : public math_FunctionSetWithDerivatives
 {
 public:
@@ -34,29 +30,20 @@ public:
 
   void Set(const double Tolerance);
 
-  //! This method has to return 2.
   Standard_EXPORT int NbVariables() const override;
 
-  //! This method has to return 1.
   Standard_EXPORT int NbEquations() const override;
 
-  //! The dimension of F is 1.
   Standard_EXPORT bool Value(const math_Vector& X, math_Vector& F) override;
 
-  //! The dimension of D is (1,2).
   Standard_EXPORT bool Derivatives(const math_Vector& X, math_Matrix& D) override;
 
   Standard_EXPORT bool Values(const math_Vector& X, math_Vector& F, math_Matrix& D) override;
 
-  //! Root is the value of the function at the solution.
-  //! It is a vector of dimension 1, i-e a real.
   double Root() const;
 
-  //! Returns the value Tol so that if std::abs(Func.Root())<Tol
-  //! the function is considered null.
   double Tolerance() const;
 
-  //! Returns the value of the solution point on the surface.
   const gp_Pnt& Point() const;
 
   Standard_EXPORT bool IsTangent();
@@ -75,7 +62,6 @@ public:
 
   const occ::handle<Adaptor3d_Surface>& Surface() const;
 
-  //! Method is entered for compatibility with IntPatch_TheSurfFunction.
   const occ::handle<Adaptor3d_Surface>& PSurface() const { return Surface(); }
 
 private:
@@ -104,21 +90,21 @@ private:
 
 inline void Contap_SurfFunction::Set(const gp_Pnt& Eye)
 {
-  myType = Contap_ContourPrs; // pers
+  myType = Contap_ContourPrs;
   myEye  = Eye;
   myAng  = 0.;
 }
 
 inline void Contap_SurfFunction::Set(const gp_Dir& Direction)
 {
-  myType = Contap_ContourStd; // Contour app
+  myType = Contap_ContourStd;
   myDir  = Direction;
   myAng  = 0.;
 }
 
 inline void Contap_SurfFunction::Set(const gp_Dir& Direction, const double Angle)
 {
-  myType   = Contap_DraftStd; // Contour vu
+  myType   = Contap_DraftStd;
   myDir    = Direction;
   myAng    = Angle;
   myCosAng = std::cos(M_PI / 2. + Angle);
@@ -126,7 +112,7 @@ inline void Contap_SurfFunction::Set(const gp_Dir& Direction, const double Angle
 
 inline void Contap_SurfFunction::Set(const gp_Pnt& Eye, const double Angle)
 {
-  myType   = Contap_DraftPrs; // Contour vu "conique"...
+  myType   = Contap_DraftPrs;
   myEye    = Eye;
   myAng    = Angle;
   myCosAng = std::cos(M_PI / 2. + Angle);

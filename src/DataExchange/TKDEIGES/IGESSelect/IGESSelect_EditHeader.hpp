@@ -11,8 +11,6 @@ class TCollection_HAsciiString;
 class Standard_Transient;
 class Interface_InterfaceModel;
 
-//! This class is aimed to display and edit the Header of an
-//! IGES Model : Start Section and Global Section
 class IGESSelect_EditHeader : public IFSelect_Editor
 {
 

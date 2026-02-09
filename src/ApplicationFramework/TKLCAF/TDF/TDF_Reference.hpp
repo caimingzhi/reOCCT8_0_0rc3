@@ -9,8 +9,6 @@ class Standard_GUID;
 class TDF_RelocationTable;
 class TDF_DataSet;
 
-//! This attribute is used to store in the framework a
-//! reference to an other label.
 class TDF_Reference : public TDF_Attribute
 {
 
@@ -39,7 +37,6 @@ public:
 
   Standard_EXPORT TDF_Reference();
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(TDF_Reference, TDF_Attribute)

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IGESData_DirChecker.hpp>
 #include <IGESGraph_Color.hpp>
@@ -52,9 +41,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESGraph_GeneralModule, IGESData_GeneralModule)
 
-//  Each Module is attached to a Protocol : it must interpret Case Numbers
-//  (arguments <CN> of various methods) in accordance to values returned by
-//  the method TypeNumber from this Protocol
 IGESGraph_GeneralModule::IGESGraph_GeneralModule() = default;
 
 void IGESGraph_GeneralModule::OwnSharedCase(const int                               CN,
@@ -315,7 +301,7 @@ IGESData_DirChecker IGESGraph_GeneralModule::DirChecker(
     default:
       break;
   }
-  return IGESData_DirChecker(); // by default, no specific criterium
+  return IGESData_DirChecker();
 }
 
 void IGESGraph_GeneralModule::OwnCheckCase(const int                               CN,
@@ -503,7 +489,7 @@ bool IGESGraph_GeneralModule::NewVoid(const int CN, occ::handle<Standard_Transie
       ent = new IGESGraph_UniformRectGrid;
       break;
     default:
-      return false; // by default, Failure on Recognize
+      return false;
   }
   return true;
 }
@@ -632,7 +618,7 @@ void IGESGraph_GeneralModule::OwnCopyCase(const int                             
   }
 }
 
-int IGESGraph_GeneralModule::CategoryNumber(const int /*CN*/,
+int IGESGraph_GeneralModule::CategoryNumber(const int,
                                             const occ::handle<Standard_Transient>&,
                                             const Interface_ShareTool&) const
 {

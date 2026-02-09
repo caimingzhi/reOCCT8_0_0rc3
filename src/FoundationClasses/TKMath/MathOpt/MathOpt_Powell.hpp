@@ -11,29 +11,6 @@ namespace MathOpt
 {
   using namespace MathUtils;
 
-  //! Powell's conjugate direction method for N-dimensional minimization.
-  //! A gradient-free optimization algorithm that uses conjugate directions.
-  //!
-  //! Algorithm:
-  //! 1. Start with N linearly independent directions (coordinate axes)
-  //! 2. Perform line minimization along each direction
-  //! 3. Replace one direction with the overall displacement direction
-  //! 4. Repeat until convergence
-  //!
-  //! Advantages:
-  //! - No gradient required
-  //! - Generates conjugate directions for quadratic functions
-  //! - Robust for non-smooth functions
-  //!
-  //! Disadvantages:
-  //! - Slower than gradient methods for smooth functions
-  //! - May lose direction independence over iterations
-  //!
-  //! @tparam Function type with Value(const math_Vector&, double&) method
-  //! @param theFunc function to minimize
-  //! @param theStartingPoint initial guess (N-dimensional)
-  //! @param theConfig solver configuration
-  //! @return result containing minimum location and value
   template <typename Function>
   VectorResult Powell(Function&          theFunc,
                       const math_Vector& theStartingPoint,
@@ -45,11 +22,9 @@ namespace MathOpt
     const int aUpper = theStartingPoint.Upper();
     const int aN     = aUpper - aLower + 1;
 
-    // Current point
     math_Vector aX(aLower, aUpper);
     aX = theStartingPoint;
 
-    // Function value at current point
     double aFx = 0.0;
     if (!theFunc.Value(aX, aFx))
     {
@@ -57,15 +32,12 @@ namespace MathOpt
       return aResult;
     }
 
-    // Initialize direction set to coordinate axes
-    // Directions stored as rows of matrix
     math_Matrix aDirections(1, aN, 1, aN, 0.0);
     for (int i = 1; i <= aN; ++i)
     {
       aDirections(i, i) = 1.0;
     }
 
-    // Working vectors
     math_Vector aDir(aLower, aUpper);
     math_Vector aXOld(aLower, aUpper);
     math_Vector aPt(aLower, aUpper);
@@ -79,14 +51,12 @@ namespace MathOpt
       const double aFp = aFx;
       aXOld            = aX;
 
-      // Track largest decrease and its direction index
       double aDel  = 0.0;
       int    aIBig = 0;
 
-      // Minimize along each direction
       for (int i = 1; i <= aN; ++i)
       {
-        // Extract direction i
+
         for (int j = aLower; j <= aUpper; ++j)
         {
           aDir(j) = aDirections(i, j - aLower + 1);
@@ -94,20 +64,18 @@ namespace MathOpt
 
         const double aFpPrev = aFx;
 
-        // Line minimization along direction
         MathUtils::LineSearchResult aLineResult =
           MathUtils::ExactLineSearch(theFunc, aX, aDir, 10.0, theConfig.XTolerance);
 
         if (aLineResult.IsValid)
         {
-          // Update position
+
           for (int j = aLower; j <= aUpper; ++j)
           {
             aX(j) += aLineResult.Alpha * aDir(j);
           }
           aFx = aLineResult.FNew;
 
-          // Track direction with largest decrease
           const double aDecrease = aFpPrev - aFx;
           if (aDecrease > aDel)
           {
@@ -117,7 +85,6 @@ namespace MathOpt
         }
       }
 
-      // Check convergence
       if (2.0 * std::abs(aFp - aFx)
           <= theConfig.FTolerance * (std::abs(aFp) + std::abs(aFx) + MathUtils::THE_ZERO_TOL))
       {
@@ -127,22 +94,19 @@ namespace MathOpt
         return aResult;
       }
 
-      // Construct extrapolated point and new direction
       for (int j = aLower; j <= aUpper; ++j)
       {
         aPtt(j) = 2.0 * aX(j) - aXOld(j);
         aXit(j) = aX(j) - aXOld(j);
       }
 
-      // Evaluate at extrapolated point
       double aFptt = 0.0;
       if (!theFunc.Value(aPtt, aFptt))
       {
-        // If evaluation fails, continue with current directions
+
         continue;
       }
 
-      // Check if new direction should be added
       if (aFptt < aFp)
       {
         const double aT = 2.0 * (aFp - 2.0 * aFx + aFptt) * MathUtils::Sqr(aFp - aFx - aDel)
@@ -150,20 +114,19 @@ namespace MathOpt
 
         if (aT < 0.0)
         {
-          // Minimize along new direction
+
           MathUtils::LineSearchResult aLineResult =
             MathUtils::ExactLineSearch(theFunc, aX, aXit, 10.0, theConfig.XTolerance);
 
           if (aLineResult.IsValid)
           {
-            // Update position
+
             for (int j = aLower; j <= aUpper; ++j)
             {
               aX(j) += aLineResult.Alpha * aXit(j);
             }
             aFx = aLineResult.FNew;
 
-            // Replace direction with largest decrease
             if (aIBig > 0)
             {
               for (int j = 1; j <= aN; ++j)
@@ -176,7 +139,6 @@ namespace MathOpt
         }
       }
 
-      // Check X convergence
       double aMaxDiff = 0.0;
       for (int j = aLower; j <= aUpper; ++j)
       {
@@ -191,22 +153,12 @@ namespace MathOpt
       }
     }
 
-    // Maximum iterations reached
     aResult.Status   = Status::MaxIterations;
     aResult.Solution = aX;
     aResult.Value    = aFx;
     return aResult;
   }
 
-  //! Powell's method with custom initial directions.
-  //! Allows specifying the initial direction set instead of coordinate axes.
-  //!
-  //! @tparam Function type with Value(const math_Vector&, double&) method
-  //! @param theFunc function to minimize
-  //! @param theStartingPoint initial guess
-  //! @param theInitialDirections initial direction set (N x N matrix, directions as rows)
-  //! @param theConfig solver configuration
-  //! @return result containing minimum location and value
   template <typename Function>
   VectorResult PowellWithDirections(Function&          theFunc,
                                     const math_Vector& theStartingPoint,
@@ -219,7 +171,6 @@ namespace MathOpt
     const int aUpper = theStartingPoint.Upper();
     const int aN     = aUpper - aLower + 1;
 
-    // Validate dimensions
     if (theInitialDirections.RowNumber() != aN || theInitialDirections.ColNumber() != aN)
     {
       aResult.Status = Status::InvalidInput;
@@ -236,7 +187,6 @@ namespace MathOpt
       return aResult;
     }
 
-    // Copy initial directions
     math_Matrix aDirections(1, aN, 1, aN);
     aDirections = theInitialDirections;
 
@@ -284,7 +234,6 @@ namespace MathOpt
         }
       }
 
-      // Check convergence
       if (2.0 * std::abs(aFp - aFx)
           <= theConfig.FTolerance * (std::abs(aFp) + std::abs(aFx) + MathUtils::THE_ZERO_TOL))
       {
@@ -294,7 +243,6 @@ namespace MathOpt
         return aResult;
       }
 
-      // Construct extrapolated point
       for (int j = aLower; j <= aUpper; ++j)
       {
         aPtt(j) = 2.0 * aX(j) - aXOld(j);

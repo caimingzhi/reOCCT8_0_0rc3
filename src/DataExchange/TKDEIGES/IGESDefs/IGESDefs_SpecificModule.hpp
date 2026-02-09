@@ -8,15 +8,12 @@
 class IGESData_IGESEntity;
 class IGESData_IGESDumper;
 
-//! Defines Services attached to IGES Entities : Dump, for IGESDefs
 class IGESDefs_SpecificModule : public IGESData_SpecificModule
 {
 
 public:
-  //! Creates a SpecificModule from IGESDefs & puts it into SpecificLib
   Standard_EXPORT IGESDefs_SpecificModule();
 
-  //! Specific Dump (own parameters) for IGESDefs
   Standard_EXPORT void OwnDump(const int                               CN,
                                const occ::handle<IGESData_IGESEntity>& ent,
                                const IGESData_IGESDumper&              dumper,

@@ -1,15 +1,4 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OSD_LocalFileSystem.hpp>
 #include <OSD_OpenFile.hpp>
@@ -18,14 +7,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OSD_LocalFileSystem, OSD_FileSystem)
 
-//=================================================================================================
-
 bool OSD_LocalFileSystem::IsSupportedPath(const TCollection_AsciiString& theUrl) const
 {
   return !OSD_Path::IsRemoteProtocolPath(theUrl.ToCString());
 }
-
-//=================================================================================================
 
 bool OSD_LocalFileSystem::IsOpenIStream(const std::shared_ptr<std::istream>& theStream) const
 {
@@ -39,8 +24,6 @@ bool OSD_LocalFileSystem::IsOpenIStream(const std::shared_ptr<std::istream>& the
   return (aFileBuf != nullptr) ? aFileBuf->is_open() : false;
 }
 
-//=================================================================================================
-
 bool OSD_LocalFileSystem::IsOpenOStream(const std::shared_ptr<std::ostream>& theStream) const
 {
   std::shared_ptr<OSD_OStreamBuffer> aFileStream =
@@ -52,8 +35,6 @@ bool OSD_LocalFileSystem::IsOpenOStream(const std::shared_ptr<std::ostream>& the
   const std::filebuf* aFileBuf = dynamic_cast<const std::filebuf*>(aFileStream->rdbuf());
   return (aFileBuf != nullptr) ? aFileBuf->is_open() : false;
 }
-
-//=================================================================================================
 
 std::shared_ptr<std::streambuf> OSD_LocalFileSystem::OpenStreamBuffer(
   const TCollection_AsciiString& theUrl,
@@ -68,7 +49,7 @@ std::shared_ptr<std::streambuf> OSD_LocalFileSystem::OpenStreamBuffer(
   {
     return std::shared_ptr<std::streambuf>();
   }
-  // if buffer is opened for read, find the file size
+
   if (theOutBufSize && ((theMode & std::ios::in) != 0))
   {
     *theOutBufSize = (int64_t)aNewBuf->pubseekoff(0, std::ios_base::end, std::ios_base::in);

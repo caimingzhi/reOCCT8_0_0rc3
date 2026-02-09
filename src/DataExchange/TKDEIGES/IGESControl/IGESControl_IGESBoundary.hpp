@@ -12,27 +12,14 @@ class IGESToBRep_CurveAndSurface;
 class IGESData_IGESEntity;
 class ShapeExtend_WireData;
 
-//! Translates IGES boundary entity (types 141, 142 and 508)
-//! in Advanced Data Exchange.
-//! Redefines translation and treatment methods from inherited
-//! open class IGESToBRep_IGESBoundary.
 class IGESControl_IGESBoundary : public IGESToBRep_IGESBoundary
 {
 
 public:
-  //! Creates an object and calls inherited constructor.
   Standard_EXPORT IGESControl_IGESBoundary();
 
-  //! Creates an object and calls inherited constructor.
   Standard_EXPORT IGESControl_IGESBoundary(const IGESToBRep_CurveAndSurface& CS);
 
-  //! Checks result of translation of IGES boundary entities
-  //! (types 141, 142 or 508).
-  //! Checks consistency of 2D and 3D representations and keeps
-  //! only one if they are inconsistent.
-  //! Checks the closure of resulting wire and if it is not closed,
-  //! checks 2D and 3D representation and updates the resulting
-  //! wire to contain only closed representation.
   Standard_EXPORT void Check(const bool result,
                              const bool checkclosure,
                              const bool okCurve3d,

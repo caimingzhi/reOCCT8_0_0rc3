@@ -10,7 +10,6 @@ class StepBasic_SiUnitAndVolumeUnit : public StepBasic_SiUnit
 {
 
 public:
-  //! Returns a SiUnitAndVolumeUnit
   Standard_EXPORT StepBasic_SiUnitAndVolumeUnit();
 
   Standard_EXPORT void SetVolumeUnit(const occ::handle<StepBasic_VolumeUnit>& aVolumeUnit);

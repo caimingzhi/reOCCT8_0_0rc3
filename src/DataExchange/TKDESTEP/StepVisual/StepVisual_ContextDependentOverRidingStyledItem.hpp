@@ -16,7 +16,6 @@ class StepVisual_ContextDependentOverRidingStyledItem : public StepVisual_OverRi
 {
 
 public:
-  //! Returns a ContextDependentOverRidingStyledItem
   Standard_EXPORT StepVisual_ContextDependentOverRidingStyledItem();
 
   Standard_EXPORT void Init(

@@ -1,14 +1,10 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_RackAndPinionPairValue.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_RackAndPinionPairValue, StepKinematics_PairValue)
 
-//=================================================================================================
-
 StepKinematics_RackAndPinionPairValue::StepKinematics_RackAndPinionPairValue() = default;
-
-//=================================================================================================
 
 void StepKinematics_RackAndPinionPairValue::Init(
   const occ::handle<TCollection_HAsciiString>&     theRepresentationItem_Name,
@@ -20,14 +16,10 @@ void StepKinematics_RackAndPinionPairValue::Init(
   myActualDisplacement = theActualDisplacement;
 }
 
-//=================================================================================================
-
 double StepKinematics_RackAndPinionPairValue::ActualDisplacement() const
 {
   return myActualDisplacement;
 }
-
-//=================================================================================================
 
 void StepKinematics_RackAndPinionPairValue::SetActualDisplacement(
   const double theActualDisplacement)

@@ -15,19 +15,11 @@
 #include <Standard_OStream.hpp>
 class Approx_SweepFunction;
 
-//! Used to Approximate the blending surfaces.
 class BRepBlend_AppSurface : public AppBlend_Approx
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Approximation of the new Surface (and
-  //! eventually the 2d Curves on the support
-  //! surfaces).
-  //! Normally the 2d curve are
-  //! approximated with a tolerance given by the
-  //! resolution on support surfaces, but if this
-  //! tolerance is too large Tol2d is used.
   Standard_EXPORT BRepBlend_AppSurface(const occ::handle<Approx_SweepFunction>& Funct,
                                        const double                             First,
                                        const double                             Last,
@@ -70,7 +62,6 @@ public:
 
   const NCollection_Array1<int>& SurfVMults() const override;
 
-  //! returns the maximum error in the surface approximation.
   Standard_EXPORT double MaxErrorOnSurf() const;
 
   int NbCurves2d() const override;
@@ -92,12 +83,10 @@ public:
 
   Standard_EXPORT void TolReached(double& Tol3d, double& Tol2d) const override;
 
-  //! returns the maximum error in the <Index> 2d curve approximation.
   Standard_EXPORT double Max2dError(const int Index) const;
 
   Standard_EXPORT double TolCurveOnSurf(const int Index) const override;
 
-  //! display information on approximation.
   Standard_EXPORT void Dump(Standard_OStream& o) const;
 
 private:

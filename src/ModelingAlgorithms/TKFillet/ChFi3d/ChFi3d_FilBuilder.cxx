@@ -62,29 +62,10 @@ static double MaxRad(const occ::handle<ChFiDS_FilSpine>& fsp,
 {
   int IE = fsp->Index(E);
 
-  // 1: case of constant R
   if (fsp->IsConstant(IE))
     return (fsp->Radius(IE));
-  else // 2,3: case of sequence ParAndRad and(or) Laws
+  else
     return (fsp->MaxRadFromSeqAndLaws());
-
-  /*
-   occ::handle<ChFiDS_ElSpine> HGuide = fsp->ElSpine(IE);
-   double la = HGuide->LastParameter(), fi = HGuide->FirstParameter();
-   double longueur = la - fi,  temp, w;
-  //#ifndef OCCT_DEBUG
-   double radiussect = 0.;
-  //#else
-  // double radiussect;
-  //#endif
-   occ::handle<Law_Composite> lc = fsp->Law(HGuide);
-   for(int i = 0; i <= 5; i++){
-     w = fi + i*longueur*0.2;
-     temp = lc->Value(w);
-     if(temp>radiussect) radiussect = temp;
-   }
-   return  radiussect;
-  */
 }
 
 static void SimulParams(const occ::handle<ChFiDS_ElSpine>&  HGuide,
@@ -96,8 +77,7 @@ static void SimulParams(const occ::handle<ChFiDS_ElSpine>&  HGuide,
   double longueur = la - fi;
   MaxStep         = longueur * 0.05;
   double w;
-  // gp_Pnt Pbid;
-  // gp_Vec d1,d2;
+
   double radiussect;
   if (fsp->IsConstant())
     radiussect = fsp->Radius();
@@ -116,8 +96,6 @@ static void SimulParams(const occ::handle<ChFiDS_ElSpine>&  HGuide,
   Fleche = radiussect * 0.05;
 }
 
-//=================================================================================================
-
 ChFi3d_FilBuilder::ChFi3d_FilBuilder(const TopoDS_Shape&      S,
                                      const ChFi3d_FilletShape FShape,
                                      const double             Ta)
@@ -125,8 +103,6 @@ ChFi3d_FilBuilder::ChFi3d_FilBuilder(const TopoDS_Shape&      S,
 {
   SetFilletShape(FShape);
 }
-
-//=================================================================================================
 
 void ChFi3d_FilBuilder::SetFilletShape(const ChFi3d_FilletShape FShape)
 {
@@ -144,11 +120,9 @@ void ChFi3d_FilBuilder::SetFilletShape(const ChFi3d_FilletShape FShape)
   }
 }
 
-//=================================================================================================
-
 ChFi3d_FilletShape ChFi3d_FilBuilder::GetFilletShape() const
 {
-  ChFi3d_FilletShape filshape = ChFi3d_Rational; //  need to set default value
+  ChFi3d_FilletShape filshape = ChFi3d_Rational;
   switch (myShape)
   {
     case BlendFunc_Rational:
@@ -165,8 +139,6 @@ ChFi3d_FilletShape ChFi3d_FilBuilder::GetFilletShape() const
   }
   return filshape;
 }
-
-//=================================================================================================
 
 void ChFi3d_FilBuilder::Add(const TopoDS_Edge& E)
 {
@@ -191,8 +163,6 @@ void ChFi3d_FilBuilder::Add(const TopoDS_Edge& E)
   }
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::Add(const double Radius, const TopoDS_Edge& E)
 {
   Add(E);
@@ -200,8 +170,6 @@ void ChFi3d_FilBuilder::Add(const double Radius, const TopoDS_Edge& E)
   if (IC)
     SetRadius(Radius, IC, E);
 }
-
-//=================================================================================================
 
 void ChFi3d_FilBuilder::SetRadius(const occ::handle<Law_Function>& C, const int IC, const int IinC)
 {
@@ -211,8 +179,6 @@ void ChFi3d_FilBuilder::SetRadius(const occ::handle<Law_Function>& C, const int 
     fsp->SetRadius(C, IinC);
   }
 }
-
-//=================================================================================================
 
 bool ChFi3d_FilBuilder::IsConstant(const int IC)
 {
@@ -224,8 +190,6 @@ bool ChFi3d_FilBuilder::IsConstant(const int IC)
   return false;
 }
 
-//=================================================================================================
-
 double ChFi3d_FilBuilder::Radius(const int IC)
 {
   if (IC <= NbElements())
@@ -236,8 +200,6 @@ double ChFi3d_FilBuilder::Radius(const int IC)
   return -1.;
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::ResetContour(const int IC)
 {
   if (IC <= NbElements())
@@ -246,8 +208,6 @@ void ChFi3d_FilBuilder::ResetContour(const int IC)
     fsp->Reset(true);
   }
 }
-
-//=================================================================================================
 
 void ChFi3d_FilBuilder::SetRadius(const double Radius, const int IC, const TopoDS_Edge& E)
 {
@@ -258,8 +218,6 @@ void ChFi3d_FilBuilder::SetRadius(const double Radius, const int IC, const TopoD
   }
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::UnSet(const int IC, const TopoDS_Edge& E)
 {
   if (IC <= NbElements())
@@ -268,8 +226,6 @@ void ChFi3d_FilBuilder::UnSet(const int IC, const TopoDS_Edge& E)
     fsp->UnSetRadius(E);
   }
 }
-
-//=================================================================================================
 
 void ChFi3d_FilBuilder::SetRadius(const double Radius, const int IC, const TopoDS_Vertex& V)
 {
@@ -280,8 +236,6 @@ void ChFi3d_FilBuilder::SetRadius(const double Radius, const int IC, const TopoD
   }
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::UnSet(const int IC, const TopoDS_Vertex& V)
 {
   if (IC <= NbElements())
@@ -291,8 +245,6 @@ void ChFi3d_FilBuilder::UnSet(const int IC, const TopoDS_Vertex& V)
   }
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::SetRadius(const gp_XY& UandR, const int IC, const int IinC)
 {
   if (IC <= NbElements())
@@ -301,8 +253,6 @@ void ChFi3d_FilBuilder::SetRadius(const gp_XY& UandR, const int IC, const int Ii
     fsp->SetRadius(UandR, IinC);
   }
 }
-
-//=================================================================================================
 
 bool ChFi3d_FilBuilder::IsConstant(const int IC, const TopoDS_Edge& E)
 {
@@ -314,8 +264,6 @@ bool ChFi3d_FilBuilder::IsConstant(const int IC, const TopoDS_Edge& E)
   return false;
 }
 
-//=================================================================================================
-
 double ChFi3d_FilBuilder::Radius(const int IC, const TopoDS_Edge& E)
 {
   if (IC <= NbElements())
@@ -325,8 +273,6 @@ double ChFi3d_FilBuilder::Radius(const int IC, const TopoDS_Edge& E)
   }
   return -1.;
 }
-
-//=================================================================================================
 
 bool ChFi3d_FilBuilder::GetBounds(const int IC, const TopoDS_Edge& E, double& F, double& L)
 {
@@ -343,8 +289,6 @@ bool ChFi3d_FilBuilder::GetBounds(const int IC, const TopoDS_Edge& E, double& F,
   return false;
 }
 
-//=================================================================================================
-
 occ::handle<Law_Function> ChFi3d_FilBuilder::GetLaw(const int IC, const TopoDS_Edge& E)
 {
   if (IC <= NbElements())
@@ -355,21 +299,17 @@ occ::handle<Law_Function> ChFi3d_FilBuilder::GetLaw(const int IC, const TopoDS_E
   return occ::handle<Law_Function>();
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::SetLaw(const int                        IC,
                                const TopoDS_Edge&               E,
                                const occ::handle<Law_Function>& L)
 {
-  // Check if it is necessary to check borders!
+
   if (IC <= NbElements())
   {
     occ::handle<ChFiDS_FilSpine> fsp = occ::down_cast<ChFiDS_FilSpine>(Value(IC));
     fsp->ChangeLaw(E)                = L;
   }
 }
-
-//=================================================================================================
 
 void ChFi3d_FilBuilder::Simulate(const int IC)
 {
@@ -406,8 +346,6 @@ void ChFi3d_FilBuilder::Simulate(const int IC)
 #endif
 }
 
-//=================================================================================================
-
 int ChFi3d_FilBuilder::NbSurf(const int IC) const
 {
   NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator itel;
@@ -421,8 +359,6 @@ int ChFi3d_FilBuilder::NbSurf(const int IC) const
   }
   return 0;
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<ChFiDS_CircSection>> ChFi3d_FilBuilder::Sect(const int IC,
                                                                              const int IS) const
@@ -441,8 +377,6 @@ occ::handle<NCollection_HArray1<ChFiDS_CircSection>> ChFi3d_FilBuilder::Sect(con
   }
   return occ::handle<NCollection_HArray1<ChFiDS_CircSection>>();
 }
-
-//=================================================================================================
 
 void ChFi3d_FilBuilder::SimulKPart(const occ::handle<ChFiDS_SurfData>& SD) const
 {
@@ -524,8 +458,6 @@ void ChFi3d_FilBuilder::SimulKPart(const occ::handle<ChFiDS_SurfData>& SD) const
   SD->SetSimul(sec);
 }
 
-//=================================================================================================
-
 bool ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
                                   const occ::handle<ChFiDS_ElSpine>&      HGuide,
                                   const occ::handle<ChFiDS_Spine>&        Spine,
@@ -551,9 +483,9 @@ bool ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
     throw Standard_ConstructionError("SimulSurf : this is not the spine of the fillet");
   occ::handle<BRepBlend_Line> lin;
 #ifdef OCCT_DEBUG
-//  TopAbs_Orientation Or = S1->Face().Orientation();
+
 #endif
-  // Flexible parameters!!!
+
   double locfleche, MaxStep;
   SimulParams(HGuide, fsp, MaxStep, locfleche);
   occ::handle<NCollection_HArray1<ChFiDS_CircSection>> sec;
@@ -744,8 +676,6 @@ bool ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
   return true;
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
                                   const occ::handle<ChFiDS_ElSpine>&      HGuide,
                                   const occ::handle<ChFiDS_Spine>&        Spine,
@@ -759,7 +689,7 @@ void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
                                   const occ::handle<BRepAdaptor_Surface>& HS2,
                                   const occ::handle<Adaptor3d_TopolTool>& I2,
                                   const TopAbs_Orientation                Or2,
-                                  const double /*Fleche*/,
+                                  const double,
                                   const double       TolGuide,
                                   double&            First,
                                   double&            Last,
@@ -776,7 +706,6 @@ void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
     throw Standard_ConstructionError("PerformSurf : this is not the spine of the fillet");
   occ::handle<BRepBlend_Line> lin;
 
-  // Flexible parameters!
   double locfleche, MaxStep;
   SimulParams(HGuide, fsp, MaxStep, locfleche);
   occ::handle<NCollection_HArray1<ChFiDS_CircSection>> sec;
@@ -940,7 +869,7 @@ void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
     }
   }
   Data->SetSimul(sec);
-  //  gp_Pnt2d pbid;
+
   Data->Set2dPoints(ppcf, ppcl, pf, pl);
   ChFi3d_FilCommonPoint(lin->StartPointOnFirst(),
                         lin->TransitionOnS1(),
@@ -964,8 +893,6 @@ void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
                         tolapp3d);
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
                                   const occ::handle<ChFiDS_ElSpine>&      HGuide,
                                   const occ::handle<ChFiDS_Spine>&        Spine,
@@ -979,7 +906,7 @@ void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
                                   const occ::handle<BRepAdaptor_Surface>& HSref2,
                                   const occ::handle<BRepAdaptor_Curve2d>& PCref2,
                                   bool&                                   Decroch2,
-                                  const double /*Arrow*/,
+                                  const double,
                                   const double       TolGuide,
                                   double&            First,
                                   double&            Last,
@@ -996,7 +923,6 @@ void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
     throw Standard_ConstructionError("PerformSurf : it is not the spine of a fillet");
   occ::handle<BRepBlend_Line> lin;
 
-  // Flexible parameters!
   double locfleche, MaxStep;
   SimulParams(HGuide, fsp, MaxStep, locfleche);
   occ::handle<NCollection_HArray1<ChFiDS_CircSection>> sec;
@@ -1158,7 +1084,7 @@ void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
     }
   }
   Data->SetSimul(sec);
-  // gp_Pnt2d pbid;
+
   Data->Set2dPoints(pf, pl, ppcf, ppcl);
   ChFi3d_FilCommonPoint(lin->StartPointOnFirst(),
                         lin->TransitionOnS1(),
@@ -1182,8 +1108,6 @@ void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
                         tolapp3d);
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
                                   const occ::handle<ChFiDS_ElSpine>&      HGuide,
                                   const occ::handle<ChFiDS_Spine>&        Spine,
@@ -1202,7 +1126,7 @@ void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
                                   const occ::handle<BRepAdaptor_Curve2d>& PCref2,
                                   bool&                                   Decroch2,
                                   const TopAbs_Orientation                Or2,
-                                  const double /*Fleche*/,
+                                  const double,
                                   const double       TolGuide,
                                   double&            First,
                                   double&            Last,
@@ -1220,11 +1144,9 @@ void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
     throw Standard_ConstructionError("PerformSurf : it is not the spine of a fillet");
   occ::handle<BRepBlend_Line> lin;
 
-  // Flexible parameters!
   double locfleche, MaxStep;
   SimulParams(HGuide, fsp, MaxStep, locfleche);
   occ::handle<NCollection_HArray1<ChFiDS_CircSection>> sec;
-  //  gp_Pnt2d pf,pl;
 
   int    ch1 = 1, ch2 = 2;
   double PFirst = First;
@@ -1304,8 +1226,6 @@ void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
       param                 = p.Parameter();
       func.Section(param, u, v, p1, p2, ci);
       isec.Set(ci, p1, p2);
-      //      if(i == 1) {pf.SetCoord(u,v);}
-      //      if(i == nbp) {pl.SetCoord(u,v);}
     }
   }
   else
@@ -1386,13 +1306,9 @@ void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
       param                 = p.Parameter();
       func.Section(param, u, v, p1, p2, ci);
       isec.Set(ci, p1, p2);
-      //      if(i == 1) {pf.SetCoord(u,v);}
-      //      if(i == nbp) {pl.SetCoord(u,v);}
     }
   }
   Data->SetSimul(sec);
-  //  gp_Pnt2d pbid;
-  //  Data->Set2dPoints(pf,pl,pbid,pbid);
 
   ChFi3d_FilCommonPoint(lin->StartPointOnFirst(),
                         lin->TransitionOnS1(),
@@ -1415,8 +1331,6 @@ void ChFi3d_FilBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
                         Data->ChangeVertexLastOnS2(),
                         tolapp3d);
 }
-
-//=================================================================================================
 
 bool ChFi3d_FilBuilder::PerformFirstSection(const occ::handle<ChFiDS_Spine>&        Spine,
                                             const occ::handle<ChFiDS_ElSpine>&      HGuide,
@@ -1451,8 +1365,6 @@ bool ChFi3d_FilBuilder::PerformFirstSection(const occ::handle<ChFiDS_Spine>&    
     return TheWalk.PerformFirstSection(Func, Par, SolDep, tolapp3d, TolGuide, Pos1, Pos2);
   }
 }
-
-//=================================================================================================
 
 bool ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfData>>& SeqData,
                                     const occ::handle<ChFiDS_ElSpine>&                  HGuide,
@@ -1500,7 +1412,7 @@ bool ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
     Func.Set(myShape);
 
 #ifdef OCCT_DEBUG
-    ChFi3d_InitChron(ch); // init perf ComputeData
+    ChFi3d_InitChron(ch);
 #endif
 
     done = ComputeData(Data,
@@ -1533,20 +1445,20 @@ bool ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
                        RecOnS2);
 
 #ifdef OCCT_DEBUG
-    ChFi3d_ResultChron(ch, t_computedata); // result perf ComputeData
+    ChFi3d_ResultChron(ch, t_computedata);
 #endif
 
     if (!done)
-      return false; // recovery is possible PMN 14/05/1998
+      return false;
 
 #ifdef OCCT_DEBUG
-    ChFi3d_InitChron(ch); // init  perf  CompleteData
+    ChFi3d_InitChron(ch);
 #endif
 
     done = CompleteData(Data, Func, lin, S1, S2, Or, gd1, gd2, gf1, gf2);
 
 #ifdef OCCT_DEBUG
-    ChFi3d_ResultChron(ch, t_completedata); // result perf CompleteData
+    ChFi3d_ResultChron(ch, t_completedata);
 #endif
 
     if (!done)
@@ -1562,7 +1474,7 @@ bool ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
     Func.Set(myShape);
 
 #ifdef OCCT_DEBUG
-    ChFi3d_InitChron(ch); // init perf ComputeData
+    ChFi3d_InitChron(ch);
 #endif
 
     done = ComputeData(Data,
@@ -1594,20 +1506,20 @@ bool ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
                        RecOnS1,
                        RecOnS2);
 #ifdef OCCT_DEBUG
-    ChFi3d_ResultChron(ch, t_computedata); // result perf ComputeData
+    ChFi3d_ResultChron(ch, t_computedata);
 #endif
 
     if (!done)
       return false;
 
 #ifdef OCCT_DEBUG
-    ChFi3d_InitChron(ch); // init perf CompleteData
+    ChFi3d_InitChron(ch);
 #endif
 
     done = CompleteData(Data, Func, lin, S1, S2, Or, gd1, gd2, gf1, gf2);
 
 #ifdef OCCT_DEBUG
-    ChFi3d_ResultChron(ch, t_completedata); // result perf CompleteData
+    ChFi3d_ResultChron(ch, t_completedata);
 #endif
 
     if (!done)
@@ -1618,8 +1530,6 @@ bool ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
     SplitSurf(SeqData, lin);
   return true;
 }
-
-//=================================================================================================
 
 void ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfData>>& SeqData,
                                     const occ::handle<ChFiDS_ElSpine>&                  HGuide,
@@ -1776,8 +1686,6 @@ void ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
     SplitSurf(SeqData, lin);
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfData>>& SeqData,
                                     const occ::handle<ChFiDS_ElSpine>&                  HGuide,
                                     const occ::handle<ChFiDS_Spine>&                    Spine,
@@ -1933,8 +1841,6 @@ void ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
   if (maybesingular)
     SplitSurf(SeqData, lin);
 }
-
-//=================================================================================================
 
 void ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfData>>& SeqData,
                                     const occ::handle<ChFiDS_ElSpine>&                  HGuide,
@@ -2124,8 +2030,6 @@ void ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
     SplitSurf(SeqData, lin);
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::SplitSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfData>>& SeqData,
                                   const occ::handle<BRepBlend_Line>&                  Line)
 {
@@ -2149,13 +2053,11 @@ void ChFi3d_FilBuilder::SplitSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfDa
   double                       precedant, suivant, courant;
   double                       a, b, c;
 
-  // (1) Finds vi so that iso v=vi is punctual
   VFirst =
     std::min(ref->InterferenceOnS1().FirstParameter(), ref->InterferenceOnS2().FirstParameter());
   VLast =
     std::max(ref->InterferenceOnS1().LastParameter(), ref->InterferenceOnS2().LastParameter());
 
-  // (1.1) Finds the first point inside
   for (ii = 1; ii <= Nbpnt && Line->Point(ii).Parameter() < VFirst; ii++)
   {
   }
@@ -2169,7 +2071,6 @@ void ChFi3d_FilBuilder::SplitSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfDa
   precedant = P.PointOnS1().Distance(P.PointOnS2());
   ii++;
 
-  // (1.2) Find a minimum by "points"
   for (; ii <= Nbpnt && Line->Point(ii).Parameter() <= VLast; ii++)
   {
     for (; ii <= Nbpnt && Line->Point(ii).Parameter() < VLast
@@ -2183,13 +2084,8 @@ void ChFi3d_FilBuilder::SplitSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfDa
     suivant                = pnt.PointOnS1().Distance(pnt.PointOnS2());
     if ((courant < precedant) && (courant < suivant))
     {
-      // (1.3) Find the exact minimum
-      math_FunctionRoot Resol(Fonc,
-                              (a + c) / 2,
-                              tol2d, // Surf->VResolution(toleps),
-                              a,
-                              c,
-                              50);
+
+      math_FunctionRoot Resol(Fonc, (a + c) / 2, tol2d, a, c, 50);
       if (Resol.IsDone())
       {
         double Val, racine = Resol.Root();
@@ -2197,7 +2093,7 @@ void ChFi3d_FilBuilder::SplitSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfDa
         Fonc.Value(Resol.Root(), Val);
         if (Val < tolapp3d)
         {
-          // the solution (avoiding the risks of confusion)
+
           if (LesVi.Length() == 0)
           {
             if ((racine > VFirst + tol2d) && (racine < VLast - tol2d))
@@ -2221,14 +2117,13 @@ void ChFi3d_FilBuilder::SplitSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfDa
 #endif
       }
     }
-    // update if non duplication
+
     a         = b;
     precedant = courant;
     b         = c;
     courant   = suivant;
   }
 
-  // (2) Update of the sequence of SurfData
   if (LesVi.Length() > 0)
   {
     TopOpeBRepDS_DataStructure&  DStru = myDS->ChangeDS();
@@ -2242,7 +2137,7 @@ void ChFi3d_FilBuilder::SplitSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfDa
     {
 
       T = LesVi(ii);
-      // (2.0) copy and insertion
+
       SD = new (ChFiDS_SurfData);
       SD->Copy(ref);
       SeqData.InsertBefore(ii, SD);
@@ -2253,7 +2148,6 @@ void ChFi3d_FilBuilder::SplitSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfDa
       C2 = DStru.Curve(SD->InterferenceOnS2().LineIndex());
       SD->ChangeInterferenceOnS2().SetLineIndex(DStru.AddCurve(C2));
 
-      // (2.1) Modification of common Point
       SD->ChangeVertexLastOnS1().Reset();
       SD->ChangeVertexLastOnS2().Reset();
       ref->ChangeVertexFirstOnS1().Reset();
@@ -2273,36 +2167,31 @@ void ChFi3d_FilBuilder::SplitSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfDa
       ref->ChangeVertexFirstOnS1().SetTolerance(VertexTol);
       ref->ChangeVertexFirstOnS2().SetTolerance(VertexTol);
 
-      // (2.2) Modification of interferences
       SD->ChangeInterferenceOnS1().SetLastParameter(T);
       SD->ChangeInterferenceOnS2().SetLastParameter(T);
       ref->ChangeInterferenceOnS1().SetFirstParameter(T);
       ref->ChangeInterferenceOnS2().SetFirstParameter(T);
 
-      // Parameters on ElSpine
       SD->LastSpineParam(T);
       ref->FirstSpineParam(T);
     }
   }
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::ExtentOneCorner(const TopoDS_Vertex& V, const occ::handle<ChFiDS_Stripe>& S)
 {
-  // review by using the data at end of fillets (point, radius, normal
-  // to the faces and tangents of the guideline).
+
   int                       Sens  = 0;
   double                    Coeff = 0.5;
   occ::handle<ChFiDS_Spine> Spine = S->Spine();
   ChFi3d_IndexOfSurfData(V, S, Sens);
   double dU = Spine->LastParameter(Spine->NbEdges());
   if (Spine->IsTangencyExtremity((Sens == 1)))
-    return; // No extension in the queue
+    return;
 
   if (Spine->Status((Sens == 1)) == ChFiDS_FreeBoundary)
   {
-    Coeff *= 2; // It is necessary to go to the end and to evaluate the length
+    Coeff *= 2;
   }
 
   if (Sens == 1)
@@ -2317,13 +2206,10 @@ void ChFi3d_FilBuilder::ExtentOneCorner(const TopoDS_Vertex& V, const occ::handl
   }
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::ExtentTwoCorner(const TopoDS_Vertex&                                V,
                                         const NCollection_List<occ::handle<ChFiDS_Stripe>>& LS)
 {
-  // Review by using the data at end of fillets (point, radius, normal
-  // to faces and tangents to the guideline.
+
   int                                                    Sens;
   double                                                 Coeff = 0.3, Eval = 0.0, dU, rad;
   NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator itel(LS);
@@ -2331,7 +2217,6 @@ void ChFi3d_FilBuilder::ExtentTwoCorner(const TopoDS_Vertex&                    
   occ::handle<ChFiDS_Stripe>                             Stripe;
   occ::handle<ChFiDS_Spine>                              Spine;
 
-  // A value of symmetric extension is calculated
   for (; itel.More(); itel.Next())
   {
     Stripe                           = itel.Value();
@@ -2344,10 +2229,6 @@ void ChFi3d_FilBuilder::ExtentTwoCorner(const TopoDS_Vertex&                    
     {
       TopoDS_Edge E = ChFi3d_EdgeFromV1(V, itel.Value(), Sens);
       rad           = MaxRad(fsp, E);
-      /*
-      IE = ChFi3d_IndexOfSurfData(V,itel.Value(),Sens);
-      rad = MaxRad(fsp, IE);
-      */
     }
     rad *= 1.5;
     if (rad > dU)
@@ -2356,7 +2237,6 @@ void ChFi3d_FilBuilder::ExtentTwoCorner(const TopoDS_Vertex&                    
       Eval = dU;
   }
 
-  // One applies
   for (itel.Initialize(LS); itel.More(); itel.Next())
   {
     ChFi3d_IndexOfSurfData(V, itel.Value(), Sens);
@@ -2365,7 +2245,7 @@ void ChFi3d_FilBuilder::ExtentTwoCorner(const TopoDS_Vertex&                    
     Stripe = itel.Value();
     Spine  = Stripe->Spine();
     if (!Spine->IsTangencyExtremity((Sens == 1)))
-    { // No extension on queue
+    {
       if (Sens == 1)
       {
         Spine->SetFirstParameter(-Eval);
@@ -2382,17 +2262,14 @@ void ChFi3d_FilBuilder::ExtentTwoCorner(const TopoDS_Vertex&                    
   }
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::ExtentThreeCorner(const TopoDS_Vertex&                                V,
                                           const NCollection_List<occ::handle<ChFiDS_Stripe>>& LS)
 {
-  // Review by using the data at end of fillets (point, radius, normal
-  // to faces and tangents to the guideline.
+
   int                                          Sens  = 0;
   double                                       Coeff = 0.1;
   NCollection_List<occ::handle<ChFiDS_Stripe>> check;
-  //  bool FF = true;
+
   for (NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator itel(LS); itel.More(); itel.Next())
   {
     occ::handle<ChFiDS_Stripe> Stripe = itel.Value();
@@ -2407,7 +2284,7 @@ void ChFi3d_FilBuilder::ExtentThreeCorner(const TopoDS_Vertex&                  
     }
     occ::handle<ChFiDS_Spine> Spine = Stripe->Spine();
     if (Spine->IsTangencyExtremity((Sens == 1)))
-      return; // No extension on queue
+      return;
     double dU = Spine->LastParameter(Spine->NbEdges());
     if (Sens == 1)
     {
@@ -2428,8 +2305,6 @@ void ChFi3d_FilBuilder::ExtentThreeCorner(const TopoDS_Vertex&                  
     check.Append(Stripe);
   }
 }
-
-//=================================================================================================
 
 void ChFi3d_FilBuilder::SetRegul()
 

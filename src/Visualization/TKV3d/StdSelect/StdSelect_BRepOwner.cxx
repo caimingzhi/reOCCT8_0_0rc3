@@ -12,15 +12,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StdSelect_BRepOwner, SelectMgr_EntityOwner)
 
-//=================================================================================================
-
 StdSelect_BRepOwner::StdSelect_BRepOwner(const int thePriority)
     : SelectMgr_EntityOwner(thePriority),
       myCurMode(0)
 {
 }
-
-//=================================================================================================
 
 StdSelect_BRepOwner::StdSelect_BRepOwner(const TopoDS_Shape& theShape,
                                          const int           thePriority,
@@ -31,8 +27,6 @@ StdSelect_BRepOwner::StdSelect_BRepOwner(const TopoDS_Shape& theShape,
 {
   myFromDecomposition = theComesFromDecomposition;
 }
-
-//=================================================================================================
 
 StdSelect_BRepOwner::StdSelect_BRepOwner(const TopoDS_Shape&                            theShape,
                                          const occ::handle<SelectMgr_SelectableObject>& theOrigin,
@@ -45,8 +39,6 @@ StdSelect_BRepOwner::StdSelect_BRepOwner(const TopoDS_Shape&                    
   myFromDecomposition = theComesFromDecomposition;
 }
 
-//=================================================================================================
-
 bool StdSelect_BRepOwner::IsHilighted(const occ::handle<PrsMgr_PresentationManager>& PM,
                                       const int                                      aMode) const
 {
@@ -55,8 +47,6 @@ bool StdSelect_BRepOwner::IsHilighted(const occ::handle<PrsMgr_PresentationManag
     return PM->IsHighlighted(Selectable(), M);
   return PM->IsHighlighted(myPrsSh, M);
 }
-
-//=================================================================================================
 
 void StdSelect_BRepOwner::HilightWithColor(const occ::handle<PrsMgr_PresentationManager>& thePM,
                                            const occ::handle<Prs3d_Drawer>&               theStyle,
@@ -77,19 +67,16 @@ void StdSelect_BRepOwner::HilightWithColor(const occ::handle<PrsMgr_Presentation
     return;
   }
 
-  // do the update flag check
   if (!myPrsSh.IsNull() && myPrsSh->ToBeUpdated(true))
   {
     myPrsSh.Nullify();
   }
 
-  // generate new presentable shape
   if (myPrsSh.IsNull())
   {
     myPrsSh = new StdSelect_Shape(myShape, theStyle);
   }
 
-  // initialize presentation attributes of child presentation
   myPrsSh->SetZLayer(aSel->ZLayer());
   myPrsSh->SetTransformPersistence(aSel->TransformPersistence());
   myPrsSh->SetLocalTransformation(Location());
@@ -98,7 +85,6 @@ void StdSelect_BRepOwner::HilightWithColor(const occ::handle<PrsMgr_Presentation
   myPrsSh->Attributes()->SetTransparency(theStyle->Transparency());
   myPrsSh->Attributes()->SetBasicFillAreaAspect(theStyle->BasicFillAreaAspect());
 
-  // highlight with color and set layer
   thePM->Color(myPrsSh, theStyle, aDispMode, aSel, aHiLayer);
 }
 
@@ -132,8 +118,6 @@ void StdSelect_BRepOwner::SetLocation(const TopLoc_Location& aLoc)
   }
 }
 
-//=================================================================================================
-
 void StdSelect_BRepOwner::UpdateHighlightTrsf(
   const occ::handle<V3d_Viewer>&                 theViewer,
   const occ::handle<PrsMgr_PresentationManager>& theManager,
@@ -144,8 +128,6 @@ void StdSelect_BRepOwner::UpdateHighlightTrsf(
     theManager->UpdateHighlightTrsf(theViewer, Selectable(), theDispMode, myPrsSh);
   }
 }
-
-//=================================================================================================
 
 void StdSelect_BRepOwner::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

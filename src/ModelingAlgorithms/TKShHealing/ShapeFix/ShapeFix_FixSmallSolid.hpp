@@ -8,31 +8,21 @@
 class TopoDS_Shape;
 class ShapeBuild_ReShape;
 
-//! Fixing solids with small size
 class ShapeFix_FixSmallSolid : public ShapeFix_Root
 {
 
 public:
-  //! Construct
   Standard_EXPORT ShapeFix_FixSmallSolid();
 
-  //! Set working mode for operator:
-  //! - theMode = 0 use both WidthFactorThreshold and VolumeThreshold parameters
-  //! - theMode = 1 use only WidthFactorThreshold parameter
-  //! - theMode = 2 use only VolumeThreshold parameter
   Standard_EXPORT void SetFixMode(const int theMode);
 
-  //! Set or clear volume threshold for small solids
   Standard_EXPORT void SetVolumeThreshold(const double theThreshold = -1.0);
 
-  //! Set or clear width factor threshold for small solids
   Standard_EXPORT void SetWidthFactorThreshold(const double theThreshold = -1.0);
 
-  //! Remove small solids from the given shape
   Standard_EXPORT TopoDS_Shape Remove(const TopoDS_Shape&                    theShape,
                                       const occ::handle<ShapeBuild_ReShape>& theContext) const;
 
-  //! Merge small solids in the given shape to adjacent non-small ones
   Standard_EXPORT TopoDS_Shape Merge(const TopoDS_Shape&                    theShape,
                                      const occ::handle<ShapeBuild_ReShape>& theContext) const;
 

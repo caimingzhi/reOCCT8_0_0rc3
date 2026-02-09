@@ -7,11 +7,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_Volume3dElementRepresentation, StepFEA_ElementRepresentation)
 
-//=================================================================================================
-
 StepFEA_Volume3dElementRepresentation::StepFEA_Volume3dElementRepresentation() = default;
-
-//=================================================================================================
 
 void StepFEA_Volume3dElementRepresentation::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentation_Name,
@@ -36,14 +32,10 @@ void StepFEA_Volume3dElementRepresentation::Init(
   theMaterial = aMaterial;
 }
 
-//=================================================================================================
-
 occ::handle<StepFEA_FeaModel3d> StepFEA_Volume3dElementRepresentation::ModelRef() const
 {
   return theModelRef;
 }
-
-//=================================================================================================
 
 void StepFEA_Volume3dElementRepresentation::SetModelRef(
   const occ::handle<StepFEA_FeaModel3d>& aModelRef)
@@ -51,15 +43,11 @@ void StepFEA_Volume3dElementRepresentation::SetModelRef(
   theModelRef = aModelRef;
 }
 
-//=================================================================================================
-
 occ::handle<StepElement_Volume3dElementDescriptor> StepFEA_Volume3dElementRepresentation::
   ElementDescriptor() const
 {
   return theElementDescriptor;
 }
-
-//=================================================================================================
 
 void StepFEA_Volume3dElementRepresentation::SetElementDescriptor(
   const occ::handle<StepElement_Volume3dElementDescriptor>& aElementDescriptor)
@@ -67,14 +55,10 @@ void StepFEA_Volume3dElementRepresentation::SetElementDescriptor(
   theElementDescriptor = aElementDescriptor;
 }
 
-//=================================================================================================
-
 occ::handle<StepElement_ElementMaterial> StepFEA_Volume3dElementRepresentation::Material() const
 {
   return theMaterial;
 }
-
-//=================================================================================================
 
 void StepFEA_Volume3dElementRepresentation::SetMaterial(
   const occ::handle<StepElement_ElementMaterial>& aMaterial)

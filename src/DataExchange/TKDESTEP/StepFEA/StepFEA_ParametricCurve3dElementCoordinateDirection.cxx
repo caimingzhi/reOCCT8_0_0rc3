@@ -5,12 +5,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_ParametricCurve3dElementCoordinateDirection,
                            StepFEA_FeaRepresentationItem)
 
-//=================================================================================================
-
 StepFEA_ParametricCurve3dElementCoordinateDirection::
   StepFEA_ParametricCurve3dElementCoordinateDirection() = default;
-
-//=================================================================================================
 
 void StepFEA_ParametricCurve3dElementCoordinateDirection::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentationItem_Name,
@@ -21,15 +17,11 @@ void StepFEA_ParametricCurve3dElementCoordinateDirection::Init(
   theOrientation = aOrientation;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_Direction> StepFEA_ParametricCurve3dElementCoordinateDirection::Orientation()
   const
 {
   return theOrientation;
 }
-
-//=================================================================================================
 
 void StepFEA_ParametricCurve3dElementCoordinateDirection::SetOrientation(
   const occ::handle<StepGeom_Direction>& aOrientation)

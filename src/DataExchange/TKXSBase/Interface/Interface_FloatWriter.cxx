@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// #52 rln 23.12.98
 
 #include <Interface_FloatWriter.hpp>
 
@@ -20,14 +7,12 @@ Interface_FloatWriter::Interface_FloatWriter(const int chars)
   SetDefaults(chars);
 }
 
-//  ....                Control of Float Transmission                ....
-
 void Interface_FloatWriter::SetFormat(const char* form, const bool reset)
 {
   strcpy(themainform, form);
   if (!reset)
     return;
-  therange1 = therange2 = 0.; // second form : inhibee
+  therange1 = therange2 = 0.;
   thezerosup            = false;
 }
 
@@ -82,16 +67,12 @@ const char* Interface_FloatWriter::FormatForRange() const
   return rangeform;
 }
 
-//  ########################################################################
-
 int Interface_FloatWriter::Write(const double val, const char* text) const
 {
   const char* mainform  = static_cast<const char*>(themainform);
   const char* rangeform = static_cast<const char*>(therangeform);
   return Convert(val, text, thezerosup, therange1, therange2, mainform, rangeform);
 }
-
-//=================================================================================================
 
 int Interface_FloatWriter::Convert(const double val,
                                    const char*  text,
@@ -101,8 +82,8 @@ int Interface_FloatWriter::Convert(const double val,
                                    const char*  mainform,
                                    const char*  rangeform)
 {
-  //    Float value, purged of trailing "0000" and "E+00"
-  const int anMasSize = 5; // change 6 to 5: index 5 is not used below
+
+  const int anMasSize = 5;
   char      lxp[anMasSize], *pText;
   int       i0 = 0, j0 = 0;
 
@@ -110,7 +91,7 @@ int Interface_FloatWriter::Convert(const double val,
     lxp[i] = '\0';
 
   pText = (char*)text;
-  //
+
   if ((val >= R1 && val < R2) || (val <= -R1 && val > -R2))
     Sprintf(pText, rangeform, val);
   else
@@ -137,7 +118,7 @@ int Interface_FloatWriter::Convert(const double val,
       if (text[i] == '\0')
         break;
     }
-    // #52 rln 23.12.98 converting 1e-07 throws exception
+
     for (int j = i0 - 1; j >= 0; j--)
     {
       j0 = j;

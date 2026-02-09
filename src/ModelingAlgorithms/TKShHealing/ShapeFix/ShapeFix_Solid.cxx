@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Bnd_Box2d.hpp>
 #include <BRep_Builder.hpp>
@@ -47,8 +36,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeFix_Solid, ShapeFix_Root)
 
-//=================================================================================================
-
 ShapeFix_Solid::ShapeFix_Solid()
 {
   myStatus                  = ShapeExtend::EncodeStatus(ShapeExtend_OK);
@@ -57,8 +44,6 @@ ShapeFix_Solid::ShapeFix_Solid()
   myFixShell                = new ShapeFix_Shell;
   myCreateOpenSolidMode     = false;
 }
-
-//=================================================================================================
 
 ShapeFix_Solid::ShapeFix_Solid(const TopoDS_Solid& solid)
 {
@@ -70,19 +55,13 @@ ShapeFix_Solid::ShapeFix_Solid(const TopoDS_Solid& solid)
   Init(solid);
 }
 
-//=================================================================================================
-
 void ShapeFix_Solid::Init(const TopoDS_Solid& solid)
 {
   mySolid = solid;
-  // mySolid = TopoDS::Solid(shape.EmptyCopied());
-  // BRep_Builder B;
-  // for( TopoDS_Iterator iter(solid); iter.More(); iter.Next())
-  //  B.Add(mySolid,TopoDS::Shell(iter.Value()));
+
   myShape = solid;
 }
 #ifdef OCCT_DEBUG_GET_MIDDLE_POINT
-//=================================================================================================
 
 static void GetMiddlePoint(const TopoDS_Shape& aShape, gp_Pnt& pmid)
 {
@@ -110,7 +89,6 @@ static void GetMiddlePoint(const TopoDS_Shape& aShape, gp_Pnt& pmid)
   pmid.SetXYZ(center);
 }
 #endif
-//=================================================================================================
 
 static void CollectSolids(
   const NCollection_Sequence<TopoDS_Shape>& aSeqShells,
@@ -127,7 +105,7 @@ static void CollectSolids(
     NCollection_List<TopoDS_Shape> lshells;
     aMapShellHoles.Bind(aShell1, lshells);
   }
-  // Finds roots shells and hole shells.
+
   for (int i = 1; i <= aSeqShells.Length(); i++)
   {
     TopoDS_Shell    aShell1 = TopoDS::Shell(aSeqShells.Value(i));
@@ -207,7 +185,7 @@ static void CollectSolids(
           GetMiddlePoint(aShell2, pmid);
           bsc3d.Perform(pmid, Precision::Confusion());
 #endif
-          pointstatus = /*(bsc3d.State() == TopAbs_IN ? TopAbs_IN :*/ TopAbs_OUT;
+          pointstatus = TopAbs_OUT;
         }
         if (pointstatus != infinstatus)
         {
@@ -267,8 +245,6 @@ static void CollectSolids(
   }
 }
 
-//=================================================================================================
-
 static bool CreateSolids(const TopoDS_Shape&                                            theShape,
                          NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapSolids)
 {
@@ -284,7 +260,7 @@ static bool CreateSolids(const TopoDS_Shape&                                    
   NCollection_DataMap<TopoDS_Shape, int, TopTools_ShapeMapHasher> aMapStatus;
   CollectSolids(aSeqShells, aMapShellHoles, aMapStatus);
   NCollection_IndexedDataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> ShellSolid;
-  // Defines correct orientation of shells
+
   for (int i = 1; i <= aMapShellHoles.Extent(); ++i)
   {
     TopoDS_Shell    aShell = TopoDS::Shell(aMapShellHoles.FindKey(i));
@@ -366,7 +342,7 @@ static bool CreateSolids(const TopoDS_Shape&                                    
     }
     ShellSolid.Add(aShell, aSolid);
   }
-  // Creation of compsolid from shells containing shared faces.
+
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     aMapFaceShells;
   TopExp::MapShapesAndAncestors(theShape, TopAbs_FACE, TopAbs_SHELL, aMapFaceShells);
@@ -411,8 +387,6 @@ static bool CreateSolids(const TopoDS_Shape&                                    
   return isDone;
 }
 
-//=================================================================================================
-
 bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
 {
 
@@ -424,20 +398,17 @@ bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
   int          NbShells = 0;
   TopoDS_Shape S        = Context()->Apply(myShape);
 
-  // Calculate number of underlying shells
   int aNbShells = 0;
   for (TopExp_Explorer aExpSh(S, TopAbs_SHELL); aExpSh.More(); aExpSh.Next())
     aNbShells++;
 
-  // Start progress scope (no need to check if progress exists -- it is safe)
   Message_ProgressScope aPS(theProgress, "Fixing solid stage", 2);
 
   if (NeedFix(myFixShellMode))
   {
-    // Start progress scope (no need to check if progress exists -- it is safe)
+
     Message_ProgressScope aPSFixShell(aPS.Next(), "Fixing shell", aNbShells);
 
-    // Fix shell by shell using ShapeFix_Shell tool
     for (TopExp_Explorer aExpSh(S, TopAbs_SHELL); aExpSh.More() && aPSFixShell.More();
          aExpSh.Next())
     {
@@ -452,7 +423,6 @@ bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
       NbShells += myFixShell->NbShells();
     }
 
-    // Halt algorithm in case of user's abort
     if (!aPSFixShell.More())
       return false;
   }
@@ -499,9 +469,9 @@ bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
         TopoDS_Solid aSol = SolidFromShell(aShell);
         if (ShapeExtend::DecodeStatus(myStatus, ShapeExtend_DONE2))
         {
-          // clang-format off
-          SendWarning (Message_Msg ("FixAdvSolid.FixOrientation.MSG20"));// Orientation of shell was corrected.
-          // clang-format on
+
+          SendWarning(Message_Msg("FixAdvSolid.FixOrientation.MSG20"));
+
           Context()->Replace(tmpShape, aSol);
           tmpShape = aSol;
         }
@@ -514,17 +484,19 @@ bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
       myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_DONE3);
       TopoDS_Iterator aIt(tmpShape, false);
       Context()->Replace(tmpShape, aIt.Value());
-      // clang-format off
-      SendFail (Message_Msg ("FixAdvSolid.FixShell.MSG10")); // Solid can not be created from open shell. 
+
+      SendFail(Message_Msg("FixAdvSolid.FixShell.MSG10"));
     }
   }
-  else {
-    TopoDS_Shape aResShape = Context()->Apply(myShape);
+  else
+  {
+    TopoDS_Shape                       aResShape = Context()->Apply(myShape);
     NCollection_Sequence<TopoDS_Shape> aSeqShells;
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aMapSolids;
-    if(CreateSolids(aResShape,aMapSolids)) {
-      SendWarning (Message_Msg ("FixAdvSolid.FixOrientation.MSG20"));// Orientation of shell was corrected..
-      // clang-format on
+    if (CreateSolids(aResShape, aMapSolids))
+    {
+      SendWarning(Message_Msg("FixAdvSolid.FixOrientation.MSG20"));
+
       if (aMapSolids.Extent() == 1)
       {
         const TopoDS_Shape& aResSol = aMapSolids.FindKey(1);
@@ -540,14 +512,15 @@ bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
         {
           mySolid = aResSol;
           if (aResSol.ShapeType() == TopAbs_SHELL)
-            // clang-format off
-            SendFail (Message_Msg ("FixAdvSolid.FixShell.MSG10")); // Solid can not be created from open shell. 
+
+            SendFail(Message_Msg("FixAdvSolid.FixShell.MSG10"));
         }
-        Context()->Replace(aResShape,mySolid);
+        Context()->Replace(aResShape, mySolid);
       }
-      else if(aMapSolids.Extent() >1) {
-        SendWarning (Message_Msg ("FixAdvSolid.FixOrientation.MSG30"));// Bad connected solid a few solids were created.
-        // clang-format on
+      else if (aMapSolids.Extent() > 1)
+      {
+        SendWarning(Message_Msg("FixAdvSolid.FixOrientation.MSG30"));
+
         BRep_Builder    aB;
         TopoDS_Compound aComp;
         aB.MakeCompound(aComp);
@@ -566,13 +539,13 @@ bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
             aResSh = solid;
           }
           else if (aResShape.ShapeType() == TopAbs_SHELL)
-            // clang-format off
-            SendFail(Message_Msg ("FixAdvSolid.FixShell.MSG10")); // Solid can not be created from open shell.
-          // clang-format on
+
+            SendFail(Message_Msg("FixAdvSolid.FixShell.MSG10"));
+
           aB.Add(aComp, aResSh);
         }
         if (!aPSCreatingSolid.More())
-          return false; // aborted execution
+          return false;
         Context()->Replace(aResShape, aComp);
       }
     }
@@ -581,14 +554,10 @@ bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
   return status;
 }
 
-//=================================================================================================
-
 TopoDS_Shape ShapeFix_Solid::Shape()
 {
   return myShape;
 }
-
-//=================================================================================================
 
 TopoDS_Solid ShapeFix_Solid::SolidFromShell(const TopoDS_Shell& shell)
 {
@@ -600,23 +569,22 @@ TopoDS_Solid ShapeFix_Solid::SolidFromShell(const TopoDS_Shell& shell)
   BRep_Builder B;
   B.MakeSolid(solid);
   B.Add(solid, sh);
-  //   Pas encore fini : il faut une bonne orientation
+
   try
   {
     OCC_CATCH_SIGNALS
     BRepClass3d_SolidClassifier bsc3d(solid);
-    constexpr double            t = Precision::Confusion(); // tolerance moyenne
+    constexpr double            t = Precision::Confusion();
     bsc3d.PerformInfinitePoint(t);
 
     if (bsc3d.State() == TopAbs_IN)
     {
-      //         Ensuite, inverser C-A-D REPRENDRE LES SHELLS
-      //         (l inversion du solide n est pas bien prise en compte)
+
       sh = shell;
       if (!sh.Free())
         sh.Free(true);
       TopoDS_Solid soli2;
-      B.MakeSolid(soli2); // on recommence
+      B.MakeSolid(soli2);
       sh.Reverse();
       B.Add(soli2, sh);
       solid = soli2;
@@ -636,21 +604,15 @@ TopoDS_Solid ShapeFix_Solid::SolidFromShell(const TopoDS_Shell& shell)
   return solid;
 }
 
-//=================================================================================================
-
 bool ShapeFix_Solid::Status(const ShapeExtend_Status theStatus) const
 {
   return ShapeExtend::DecodeStatus(myStatus, theStatus);
 }
 
-//=================================================================================================
-
 TopoDS_Shape ShapeFix_Solid::Solid() const
 {
   return mySolid;
 }
-
-//=================================================================================================
 
 void ShapeFix_Solid::SetMsgRegistrator(const occ::handle<ShapeExtend_BasicMsgRegistrator>& msgreg)
 {
@@ -658,23 +620,17 @@ void ShapeFix_Solid::SetMsgRegistrator(const occ::handle<ShapeExtend_BasicMsgReg
   myFixShell->SetMsgRegistrator(msgreg);
 }
 
-//=================================================================================================
-
 void ShapeFix_Solid::SetPrecision(const double preci)
 {
   ShapeFix_Root::SetPrecision(preci);
   myFixShell->SetPrecision(preci);
 }
 
-//=================================================================================================
-
 void ShapeFix_Solid::SetMinTolerance(const double mintol)
 {
   ShapeFix_Root::SetMinTolerance(mintol);
   myFixShell->SetMinTolerance(mintol);
 }
-
-//=================================================================================================
 
 void ShapeFix_Solid::SetMaxTolerance(const double maxtol)
 {

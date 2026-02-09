@@ -54,9 +54,6 @@ public:
 
   Contap_Point& Vertex(const int Index) const;
 
-  //! Returns Contap_Lin for a line, Contap_Circle for
-  //! a circle, and Contap_Walking for a Walking line,
-  //! Contap_Restriction for a part of boundary.
   Contap_IType TypeContour() const;
 
   int NbPnts() const;
@@ -69,11 +66,8 @@ public:
 
   Standard_EXPORT const occ::handle<Adaptor2d_Curve2d>& Arc() const;
 
-  //! Set The Transition of the line.
   Standard_EXPORT void SetTransitionOnS(const IntSurf_TypeTrans T);
 
-  //! returns IN if at the "left" of the line, the normale of the
-  //! surface is oriented to the observator.
   Standard_EXPORT IntSurf_TypeTrans TransitionOnS() const;
 
 private:

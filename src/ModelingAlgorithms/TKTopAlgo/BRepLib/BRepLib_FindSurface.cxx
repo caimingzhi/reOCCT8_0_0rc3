@@ -30,8 +30,6 @@
 #include <TopoDS_Wire.hpp>
 #include <NCollection_Vector.hpp>
 
-//=================================================================================================
-
 static double Controle(const NCollection_Sequence<gp_Pnt>& thePoints,
                        const occ::handle<Geom_Plane>&      thePlane)
 {
@@ -50,28 +48,21 @@ static double Controle(const NCollection_Sequence<gp_Pnt>& thePoints,
   return dfMaxDist;
 }
 
-//=======================================================================
-// function : Is2DConnected
-// purpose  : Return true if the last vertex of theEdge1 coincides with
-//           the first vertex of theEdge2 in parametric space of theFace
-//=======================================================================
 inline static bool Is2DConnected(const TopoDS_Edge&               theEdge1,
                                  const TopoDS_Edge&               theEdge2,
                                  const occ::handle<Geom_Surface>& theSurface,
                                  const TopLoc_Location&           theLocation)
 {
   double f, l;
-  // TopLoc_Location aLoc;
+
   occ::handle<Geom2d_Curve> aCurve;
   gp_Pnt2d                  p1, p2;
 
-  // get 2D points
   aCurve = BRep_Tool::CurveOnSurface(theEdge1, theSurface, theLocation, f, l);
   p1     = aCurve->Value(theEdge1.Orientation() == TopAbs_FORWARD ? l : f);
   aCurve = BRep_Tool::CurveOnSurface(theEdge2, theSurface, theLocation, f, l);
   p2     = aCurve->Value(theEdge2.Orientation() == TopAbs_FORWARD ? f : l);
 
-  // compare 2D points
   GeomAdaptor_Surface aSurface(theSurface);
   TopoDS_Vertex       aV    = TopExp::FirstVertex(theEdge2, true);
   double              tol3D = BRep_Tool::Tolerance(aV);
@@ -80,12 +71,6 @@ inline static bool Is2DConnected(const TopoDS_Edge&               theEdge1,
   return dist2 < tol2D * tol2D;
 }
 
-//=======================================================================
-// function : Is2DClosed
-// purpose  : Return true if edges of theShape form a closed wire in
-//           parametric space of theSurface
-//=======================================================================
-
 static bool Is2DClosed(const TopoDS_Shape&              theShape,
                        const occ::handle<Geom_Surface>& theSurface,
                        const TopLoc_Location&           theLocation)
@@ -93,27 +78,24 @@ static bool Is2DClosed(const TopoDS_Shape&              theShape,
   try
   {
     OCC_CATCH_SIGNALS
-    // get a wire theShape
+
     TopExp_Explorer aWireExp(theShape, TopAbs_WIRE);
     if (!aWireExp.More())
     {
       return false;
     }
     TopoDS_Wire aWire = TopoDS::Wire(aWireExp.Current());
-    // a tmp face
+
     TopoDS_Face aTmpFace = BRepLib_MakeFace(theSurface, Precision::PConfusion());
 
-    // check topological closeness using wire explorer, if the wire is not closed
-    // the 1st and the last vertices of wire are different
     BRepTools_WireExplorer aWireExplorer(aWire, aTmpFace);
     if (!aWireExplorer.More())
     {
       return false;
     }
-    // remember the 1st and the last edges of aWire
+
     TopoDS_Edge aFisrtEdge = aWireExplorer.Current(), aLastEdge = aFisrtEdge;
-    // check if edges connected topologically (that is assured by BRepTools_WireExplorer)
-    // are connected in 2D
+
     TopoDS_Edge aPrevEdge = aFisrtEdge;
     for (aWireExplorer.Next(); aWireExplorer.More(); aWireExplorer.Next())
     {
@@ -124,8 +106,7 @@ static bool Is2DClosed(const TopoDS_Shape&              theShape,
       }
       aPrevEdge = aLastEdge;
     }
-    // wire is closed if ( 1st vertex of aFisrtEdge ) ==
-    // ( last vertex of aLastEdge ) in 2D
+
     TopoDS_Vertex aV1 = TopExp::FirstVertex(aFisrtEdge, true);
     TopoDS_Vertex aV2 = TopExp::LastVertex(aLastEdge, true);
     return (aV1.IsSame(aV2) && Is2DConnected(aLastEdge, aFisrtEdge, theSurface, theLocation));
@@ -136,16 +117,12 @@ static bool Is2DClosed(const TopoDS_Shape&              theShape,
   }
 }
 
-//=================================================================================================
-
 BRepLib_FindSurface::BRepLib_FindSurface()
     : myTolerance(0.0),
       myTolReached(0.0),
       isExisted(false)
 {
 }
-
-//=================================================================================================
 
 BRepLib_FindSurface::BRepLib_FindSurface(const TopoDS_Shape& S,
                                          const double        Tol,
@@ -220,8 +197,6 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
                                const double        Tol,
                                const bool          OnlyPlane,
@@ -233,7 +208,6 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
   myLocation.Identity();
   mySurface.Nullify();
 
-  // compute the tolerance
   TopExp_Explorer ex;
 
   for (ex.Init(S, TopAbs_EDGE); ex.More(); ex.Next())
@@ -243,10 +217,9 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
       myTolerance = t;
   }
 
-  // search an existing surface
   ex.Init(S, TopAbs_EDGE);
   if (!ex.More())
-    return; // no edges ....
+    return;
 
   TopoDS_Edge               E = TopoDS::Edge(ex.Current());
   double                    f, l, ff, ll;
@@ -255,7 +228,6 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
   TopLoc_Location           L;
   int                       i = 0, j;
 
-  // iterate on the surfaces of the first edge
   for (;;)
   {
     i++;
@@ -264,7 +236,7 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
     {
       break;
     }
-    // check the other edges
+
     for (ex.Init(S, TopAbs_EDGE); ex.More(); ex.Next())
     {
       if (!E.IsSame(ex.Current()))
@@ -293,7 +265,6 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
       }
     }
 
-    // if OnlyPlane, eval if mySurface is a plane.
     if (OnlyPlane && !mySurface.IsNull())
     {
       if (mySurface->IsKind(STANDARD_TYPE(Geom_RectangularTrimmedSurface)))
@@ -302,8 +273,7 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
     }
 
     if (!mySurface.IsNull())
-      // if S is e.g. the bottom face of a cylinder, mySurface can be the
-      // lateral (cylindrical) face of the cylinder; reject an improper mySurface
+
       if (!OnlyClosed || Is2DClosed(S, mySurface, myLocation))
         break;
   }
@@ -313,19 +283,10 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
     isExisted = true;
     return;
   }
-  //
-  // no existing surface, search a plane
-  // 07/02/02 akm vvv : (OCC157) changed algorithm
-  //                    1. Collect the points along all edges of the shape
-  //                       For each point calculate the WEIGHT = sum of
-  //                       distances from neighboring points (_only_ same edge)
-  //                    2. Minimizing the weighed sum of squared deviations
-  //                       compute coefficients of the sought plane.
 
   NCollection_Sequence<gp_Pnt> aPoints;
   NCollection_Sequence<double> aWeight;
 
-  // ======================= Step #1
   for (ex.Init(S, TopAbs_EDGE); ex.More(); ex.Next())
   {
     BRepAdaptor_Curve c(TopoDS::Edge(ex.Current()));
@@ -334,12 +295,11 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
     double dfUl = c.LastParameter();
     if (IsEqual(dfUf, dfUl))
     {
-      // Degenerate
+
       continue;
     }
     int iNbPoints = 0;
 
-    // Fill the parameters of the sampling points
     NCollection_Vector<double> aParams;
     switch (c.GetType())
     {
@@ -361,7 +321,7 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
       }
       case GeomAbs_Line:
       {
-        // Two points on a straight segment
+
         aParams.Append(dfUf);
         aParams.Append(dfUl);
         break;
@@ -370,12 +330,12 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
       case GeomAbs_Ellipse:
       case GeomAbs_Hyperbola:
       case GeomAbs_Parabola:
-        // Four points on other analytical curves
+
         iNbPoints = 4;
         [[fallthrough]];
       default:
       {
-        // Put some points on other curves
+
         if (iNbPoints == 0)
           iNbPoints = 15 + c.NbIntervals(GeomAbs_C3);
 
@@ -387,7 +347,6 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
       }
     }
 
-    // Add the points with weights to the sequences
     fillPoints(c, aParams, aPoints, aWeight);
   }
 
@@ -396,12 +355,11 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
     return;
   }
 
-  // ======================= Step #2
   myLocation.Identity();
   int         iPoint;
   math_Matrix aMat(1, 3, 1, 3, 0.);
   math_Vector aVec(1, 3, 0.);
-  // Find the barycenter and normalize weights
+
   double dfMaxWeight = 0.;
   gp_XYZ aBaryCenter(0., 0., 0.);
   double dfSumWeight = 0.;
@@ -417,7 +375,6 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
   }
   aBaryCenter /= dfSumWeight;
 
-  // Fill the matrix and the right vector
   for (iPoint = 1; iPoint <= aPoints.Length(); iPoint++)
   {
     gp_XYZ p = aPoints(iPoint).XYZ() - aBaryCenter;
@@ -425,16 +382,16 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
     aMat(1, 1) += w * p.X() * p.X();
     aMat(1, 2) += w * p.X() * p.Y();
     aMat(1, 3) += w * p.X() * p.Z();
-    //
+
     aMat(2, 2) += w * p.Y() * p.Y();
     aMat(2, 3) += w * p.Y() * p.Z();
-    //
+
     aMat(3, 3) += w * p.Z() * p.Z();
   }
   aMat(2, 1) = aMat(1, 2);
   aMat(3, 1) = aMat(1, 3);
   aMat(3, 2) = aMat(2, 3);
-  //
+
   math_Jacobi anEignval(aMat);
   math_Vector anEVals(1, 3);
   bool        isSolved = anEignval.IsDone();
@@ -442,7 +399,7 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
   if (isSolved)
   {
     anEVals = anEignval.Values();
-    // We need vector with eigenvalue ~ 0.
+
     double anEMin = RealLast();
     double anEMax = -anEMin;
     for (i = 1; i <= 3; ++i)
@@ -472,7 +429,7 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
       }
       else
       {
-        // try using vector product of other axes
+
         int ind[2] = {0, 0};
         for (i = 1; i <= 3; ++i)
         {
@@ -510,7 +467,7 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
 
   if (!isSolved)
     return;
-  // Removing very small values
+
   double aMaxV = std::max(std::abs(aVec(1)), std::max(std::abs(aVec(2)), std::abs(aVec(3))));
   double eps   = Epsilon(aMaxV);
   for (i = 1; i <= 3; ++i)
@@ -525,7 +482,7 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
   if (myTolReached <= myTolerance || (Tol < 0 && myTolReached < myTolerance * aWeakness))
   {
     mySurface = aPlane;
-    // If S is wire, try to orient surface according to orientation of wire.
+
     if (S.ShapeType() == TopAbs_WIRE && S.Closed())
     {
       TopoDS_Wire  aW       = TopoDS::Wire(S);
@@ -543,42 +500,30 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
   }
 }
 
-//=================================================================================================
-
 bool BRepLib_FindSurface::Found() const
 {
   return !mySurface.IsNull();
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Surface> BRepLib_FindSurface::Surface() const
 {
   return mySurface;
 }
 
-//=================================================================================================
-
 double BRepLib_FindSurface::Tolerance() const
 {
   return myTolerance;
 }
-
-//=================================================================================================
 
 double BRepLib_FindSurface::ToleranceReached() const
 {
   return myTolReached;
 }
 
-//=================================================================================================
-
 bool BRepLib_FindSurface::Existed() const
 {
   return isExisted;
 }
-
-//=================================================================================================
 
 TopLoc_Location BRepLib_FindSurface::Location() const
 {

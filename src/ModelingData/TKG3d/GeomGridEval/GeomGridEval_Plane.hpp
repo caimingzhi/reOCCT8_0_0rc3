@@ -8,42 +8,23 @@
 #include <NCollection_Array2.hpp>
 #include <Standard_DefineAlloc.hpp>
 
-//! @brief Efficient batch evaluator for plane grid points.
-//!
-//! Uses direct analytical formula: P(u,v) = Location + u * XDir + v * YDir
-//! This is a header-only implementation for maximum performance.
-//!
-//! Usage:
-//! @code
-//!   GeomGridEval_Plane anEvaluator(myGeomPlane);
-//!   NCollection_Array2<gp_Pnt> aGrid = anEvaluator.EvaluateGrid(myUParams, myVParams);
-//!   NCollection_Array1<gp_Pnt> aPoints = anEvaluator.EvaluatePoints(myUVPairs);
-//! @endcode
 class GeomGridEval_Plane
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Constructor with geometry.
-  //! @param thePlane the plane geometry to evaluate
   GeomGridEval_Plane(const occ::handle<Geom_Plane>& thePlane)
       : myGeom(thePlane)
   {
   }
 
-  //! Non-copyable and non-movable.
   GeomGridEval_Plane(const GeomGridEval_Plane&)            = delete;
   GeomGridEval_Plane& operator=(const GeomGridEval_Plane&) = delete;
   GeomGridEval_Plane(GeomGridEval_Plane&&)                 = delete;
   GeomGridEval_Plane& operator=(GeomGridEval_Plane&&)      = delete;
 
-  //! Returns the geometry handle.
   const occ::handle<Geom_Plane>& Geometry() const { return myGeom; }
 
-  //! Evaluate grid points at Cartesian product of U and V parameters.
-  //! @param theUParams array of U parameter values
-  //! @param theVParams array of V parameter values
-  //! @return 2D array of evaluated points (1-based indexing)
   NCollection_Array2<gp_Pnt> EvaluateGrid(const NCollection_Array1<double>& theUParams,
                                           const NCollection_Array1<double>& theVParams) const
   {
@@ -56,13 +37,11 @@ public:
 
     NCollection_Array2<gp_Pnt> aResult(1, aNbU, 1, aNbV);
 
-    // Extract plane data from geometry
     const gp_Pln& aPln  = myGeom->Pln();
     const gp_Pnt& aLoc  = aPln.Location();
     const gp_Dir& aXDir = aPln.Position().XDirection();
     const gp_Dir& aYDir = aPln.Position().YDirection();
 
-    // Pre-extract coordinates for performance
     const double aLocX = aLoc.X();
     const double aLocY = aLoc.Y();
     const double aLocZ = aLoc.Z();
@@ -89,10 +68,6 @@ public:
     return aResult;
   }
 
-  //! Evaluate grid points with first partial derivatives.
-  //! @param theUParams array of U parameter values
-  //! @param theVParams array of V parameter values
-  //! @return 2D array of SurfD1 (1-based indexing)
   NCollection_Array2<GeomGridEval::SurfD1> EvaluateGridD1(
     const NCollection_Array1<double>& theUParams,
     const NCollection_Array1<double>& theVParams) const
@@ -121,7 +96,6 @@ public:
     const double aYY   = aYDir.Y();
     const double aYZ   = aYDir.Z();
 
-    // D1U and D1V are constant for a plane
     const gp_Vec aD1U(aXX, aXY, aXZ);
     const gp_Vec aD1V(aYX, aYY, aYZ);
 
@@ -142,10 +116,6 @@ public:
     return aResult;
   }
 
-  //! Evaluate grid points with first and second partial derivatives.
-  //! @param theUParams array of U parameter values
-  //! @param theVParams array of V parameter values
-  //! @return 2D array of SurfD2 (1-based indexing)
   NCollection_Array2<GeomGridEval::SurfD2> EvaluateGridD2(
     const NCollection_Array1<double>& theUParams,
     const NCollection_Array1<double>& theVParams) const
@@ -176,7 +146,7 @@ public:
 
     const gp_Vec aD1U(aXX, aXY, aXZ);
     const gp_Vec aD1V(aYX, aYY, aYZ);
-    const gp_Vec aZero(0, 0, 0); // All second derivatives are zero for a plane
+    const gp_Vec aZero(0, 0, 0);
 
     for (int iU = 1; iU <= aNbU; ++iU)
     {
@@ -196,10 +166,6 @@ public:
     return aResult;
   }
 
-  //! Evaluate grid points with derivatives up to third order.
-  //! @param theUParams array of U parameter values
-  //! @param theVParams array of V parameter values
-  //! @return 2D array of SurfD3 (1-based indexing)
   NCollection_Array2<GeomGridEval::SurfD3> EvaluateGridD3(
     const NCollection_Array1<double>& theUParams,
     const NCollection_Array1<double>& theVParams) const
@@ -230,7 +196,7 @@ public:
 
     const gp_Vec aD1U(aXX, aXY, aXZ);
     const gp_Vec aD1V(aYX, aYY, aYZ);
-    const gp_Vec aZero(0, 0, 0); // All derivatives of order >= 2 are zero for a plane
+    const gp_Vec aZero(0, 0, 0);
 
     for (int iU = 1; iU <= aNbU; ++iU)
     {
@@ -257,12 +223,6 @@ public:
     return aResult;
   }
 
-  //! Evaluate partial derivative d^(NU+NV)S/(dU^NU dV^NV) at all grid points.
-  //! @param theUParams array of U parameter values
-  //! @param theVParams array of V parameter values
-  //! @param theNU derivative order in U direction
-  //! @param theNV derivative order in V direction
-  //! @return 2D array of derivative vectors (1-based indexing)
   NCollection_Array2<gp_Vec> EvaluateGridDN(const NCollection_Array1<double>& theUParams,
                                             const NCollection_Array1<double>& theVParams,
                                             int                               theNU,
@@ -277,22 +237,20 @@ public:
 
     NCollection_Array2<gp_Vec> aResult(1, aNbU, 1, aNbV);
 
-    // For a plane, only D1U (1,0) and D1V (0,1) are non-zero
     gp_Vec aDerivative(0, 0, 0);
 
     if (theNU == 1 && theNV == 0)
     {
-      // D1U = XDir
+
       const gp_Dir aXDir = myGeom->Pln().Position().XDirection();
       aDerivative        = gp_Vec(aXDir.X(), aXDir.Y(), aXDir.Z());
     }
     else if (theNU == 0 && theNV == 1)
     {
-      // D1V = YDir
+
       const gp_Dir aYDir = myGeom->Pln().Position().YDirection();
       aDerivative        = gp_Vec(aYDir.X(), aYDir.Y(), aYDir.Z());
     }
-    // All other derivatives are zero
 
     for (int iU = 1; iU <= aNbU; ++iU)
     {
@@ -304,9 +262,6 @@ public:
     return aResult;
   }
 
-  //! Evaluate points at arbitrary UV pairs.
-  //! @param theUVPairs array of UV coordinate pairs
-  //! @return 1D array of evaluated points (1-based indexing)
   NCollection_Array1<gp_Pnt> EvaluatePoints(const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
   {
     if (myGeom.IsNull() || theUVPairs.IsEmpty())
@@ -344,9 +299,6 @@ public:
     return aResult;
   }
 
-  //! Evaluate points with first partial derivatives.
-  //! @param theUVPairs array of UV coordinate pairs
-  //! @return 1D array of SurfD1 (1-based indexing)
   NCollection_Array1<GeomGridEval::SurfD1> EvaluatePointsD1(
     const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
   {
@@ -390,9 +342,6 @@ public:
     return aResult;
   }
 
-  //! Evaluate points with first and second partial derivatives.
-  //! @param theUVPairs array of UV coordinate pairs
-  //! @return 1D array of SurfD2 (1-based indexing)
   NCollection_Array1<GeomGridEval::SurfD2> EvaluatePointsD2(
     const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
   {
@@ -440,9 +389,6 @@ public:
     return aResult;
   }
 
-  //! Evaluate points with derivatives up to third order.
-  //! @param theUVPairs array of UV coordinate pairs
-  //! @return 1D array of SurfD3 (1-based indexing)
   NCollection_Array1<GeomGridEval::SurfD3> EvaluatePointsD3(
     const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
   {
@@ -494,11 +440,6 @@ public:
     return aResult;
   }
 
-  //! Evaluate partial derivative at all UV pairs.
-  //! @param theUVPairs array of UV coordinate pairs
-  //! @param theNU derivative order in U direction
-  //! @param theNV derivative order in V direction
-  //! @return 1D array of derivative vectors (1-based indexing)
   NCollection_Array1<gp_Vec> EvaluatePointsDN(const NCollection_Array1<gp_Pnt2d>& theUVPairs,
                                               int                                 theNU,
                                               int                                 theNV) const
@@ -511,7 +452,6 @@ public:
     const int                  aNbPoints = theUVPairs.Size();
     NCollection_Array1<gp_Vec> aResult(1, aNbPoints);
 
-    // For a plane, only D1U (1,0) and D1V (0,1) are non-zero
     gp_Vec aDerivative(0, 0, 0);
 
     if (theNU == 1 && theNV == 0)

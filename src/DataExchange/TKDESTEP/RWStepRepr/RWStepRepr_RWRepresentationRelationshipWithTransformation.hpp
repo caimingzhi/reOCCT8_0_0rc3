@@ -11,7 +11,6 @@ class StepRepr_RepresentationRelationshipWithTransformation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for RepresentationRelationshipWithTransformation
 class RWStepRepr_RWRepresentationRelationshipWithTransformation
 {
 public:

@@ -7,7 +7,7 @@
 #elif defined(_MSC_VER)
   #pragma warning(push, 0)
 #elif defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))
-  // -Wall does not work here for GCC, so the only way is to list all most important warnings...
+
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
   #pragma GCC diagnostic ignored "-Wunused-variable"

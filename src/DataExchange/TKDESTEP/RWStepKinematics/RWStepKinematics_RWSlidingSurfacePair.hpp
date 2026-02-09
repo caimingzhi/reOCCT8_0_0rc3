@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_SlidingSurfacePair;
 
-//! Read & Write tool for SlidingSurfacePair
 class RWStepKinematics_RWSlidingSurfacePair
 {
 public:

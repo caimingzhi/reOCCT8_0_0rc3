@@ -7,17 +7,12 @@
 #include <gp_Ax2.hpp>
 #include <gp_Vec.hpp>
 
-//! It calculates all the extremum (minimum and
-//! maximum) distances between a point and a linear
-//! extrusion surface.
 class Extrema_ExtPExtS : public Standard_Transient
 {
 
 public:
   Standard_EXPORT Extrema_ExtPExtS();
 
-  //! It calculates all the distances between a point
-  //! from gp and a Surface.
   Standard_EXPORT Extrema_ExtPExtS(const gp_Pnt&                                            P,
                                    const occ::handle<GeomAdaptor_SurfaceOfLinearExtrusion>& S,
                                    const double                                             Umin,
@@ -27,14 +22,11 @@ public:
                                    const double                                             TolU,
                                    const double                                             TolV);
 
-  //! It calculates all the distances between a point
-  //! from gp and a Surface.
   Standard_EXPORT Extrema_ExtPExtS(const gp_Pnt&                                            P,
                                    const occ::handle<GeomAdaptor_SurfaceOfLinearExtrusion>& S,
                                    const double                                             TolU,
                                    const double                                             TolV);
 
-  //! Initializes the fields of the algorithm.
   Standard_EXPORT void Initialize(const occ::handle<GeomAdaptor_SurfaceOfLinearExtrusion>& S,
                                   const double                                             Uinf,
                                   const double                                             Usup,
@@ -45,16 +37,12 @@ public:
 
   Standard_EXPORT void Perform(const gp_Pnt& P);
 
-  //! Returns True if the distances are found.
   Standard_EXPORT bool IsDone() const;
 
-  //! Returns the number of extremum distances.
   Standard_EXPORT int NbExt() const;
 
-  //! Returns the value of the Nth resulting square distance.
   Standard_EXPORT double SquareDistance(const int N) const;
 
-  //! Returns the point of the Nth resulting distance.
   Standard_EXPORT const Extrema_POnSurf& Point(const int N) const;
 
   DEFINE_STANDARD_RTTIEXT(Extrema_ExtPExtS, Standard_Transient)

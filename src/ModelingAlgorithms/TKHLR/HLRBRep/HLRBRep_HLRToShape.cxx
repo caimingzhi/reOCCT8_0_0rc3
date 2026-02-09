@@ -12,14 +12,10 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_IndexedMap.hpp>
 
-//=================================================================================================
-
 HLRBRep_HLRToShape::HLRBRep_HLRToShape(const occ::handle<HLRBRep_Algo>& A)
     : myAlgo(A)
 {
 }
-
-//=================================================================================================
 
 TopoDS_Shape HLRBRep_HLRToShape::InternalCompound(const int           typ,
                                                   const bool          visible,
@@ -38,7 +34,7 @@ TopoDS_Shape HLRBRep_HLRToShape::InternalCompound(const int           typ,
     int  f1     = 1;
     int  f2     = DS->NbFaces();
     bool explor = false;
-    //    bool todraw;
+
     if (!S.IsNull())
     {
       int v1, v2;
@@ -121,8 +117,6 @@ TopoDS_Shape HLRBRep_HLRToShape::InternalCompound(const int           typ,
   return Result;
 }
 
-//=================================================================================================
-
 void HLRBRep_HLRToShape::DrawFace(const bool                 visible,
                                   const int                  typ,
                                   const int                  iface,
@@ -142,7 +136,7 @@ void HLRBRep_HLRToShape::DrawFace(const bool                 visible,
       bool todraw;
       if (typ == 1)
         todraw = Itf.IsoLine();
-      else if (typ == 2) // outlines
+      else if (typ == 2)
       {
         if (In3d)
           todraw = Itf.Internal() || Itf.OutLine();
@@ -163,8 +157,7 @@ void HLRBRep_HLRToShape::DrawFace(const bool                 visible,
       }
       else
       {
-        if ((typ > 4 || typ == 2) && // sharp or outlines
-            (edf.Rg1Line() && !Itf.OutLine()))
+        if ((typ > 4 || typ == 2) && (edf.Rg1Line() && !Itf.OutLine()))
         {
           int hc = edf.HideCount();
           if (hc > 0)
@@ -174,7 +167,7 @@ void HLRBRep_HLRToShape::DrawFace(const bool                 visible,
           else
           {
             ++hc;
-            edf.HideCount(hc); // to try with another face
+            edf.HideCount(hc);
           }
         }
         else
@@ -185,8 +178,6 @@ void HLRBRep_HLRToShape::DrawFace(const bool                 visible,
     }
   }
 }
-
-//=================================================================================================
 
 void HLRBRep_HLRToShape::DrawEdge(const bool        visible,
                                   const bool        inFace,

@@ -8,7 +8,6 @@
 #include <math_Vector.hpp>
 class math_Matrix;
 
-//! used to store the "gradient of gradient"
 class BlendFunc_Tensor
 {
 public:
@@ -16,13 +15,8 @@ public:
 
   Standard_EXPORT BlendFunc_Tensor(const int NbRow, const int NbCol, const int NbMat);
 
-  //! Initialize all the elements of a Tensor to InitialValue.
   Standard_EXPORT void Init(const double InitialValue);
 
-  //! accesses (in read or write mode) the value of index <Row>,
-  //! <Col> and <Mat> of a Tensor.
-  //! An exception is raised if <Row>, <Col> or <Mat> are not
-  //! in the correct range.
   const double& Value(const int Row, const int Col, const int Mat) const;
 
   const double& operator()(const int Row, const int Col, const int Mat) const
@@ -30,10 +24,6 @@ public:
     return Value(Row, Col, Mat);
   }
 
-  //! accesses (in read or write mode) the value of index <Row>,
-  //! <Col> and <Mat> of a Tensor.
-  //! An exception is raised if <Row>, <Col> or <Mat> are not
-  //! in the correct range.
   double& ChangeValue(const int Row, const int Col, const int Mat);
 
   double& operator()(const int Row, const int Col, const int Mat)

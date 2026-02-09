@@ -11,11 +11,6 @@ class TCollection_HAsciiString;
 class Standard_Transient;
 class Interface_InterfaceModel;
 
-//! EditContext is an Editor fit for
-//! Product Definition Context (one per Model) , i.e. :
-//! - ProductDefinition
-//! - ApplicationProtocolDefinition
-//! - ProductRelatedProductCategory
 class STEPEdit_EditContext : public IFSelect_Editor
 {
 

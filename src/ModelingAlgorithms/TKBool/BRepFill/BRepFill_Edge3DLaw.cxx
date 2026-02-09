@@ -23,8 +23,7 @@ BRepFill_Edge3DLaw::BRepFill_Edge3DLaw(const TopoDS_Wire&                       
   int                    ipath;
   TopAbs_Orientation     Or;
   BRepTools_WireExplorer wexp;
-  // Class BRep_Tool without fields and without Constructor :
-  //  BRep_Tool B;
+
   TopoDS_Edge                    E;
   occ::handle<Geom_Curve>        C;
   occ::handle<GeomAdaptor_Curve> AC;
@@ -33,7 +32,7 @@ BRepFill_Edge3DLaw::BRepFill_Edge3DLaw(const TopoDS_Wire&                       
   for (ipath = 0, wexp.Init(myPath); wexp.More(); wexp.Next())
   {
     E = wexp.Current();
-    //    if (!B.Degenerated(E)) {
+
     if (!BRep_Tool::Degenerated(E))
     {
       ipath++;
@@ -43,7 +42,7 @@ BRepFill_Edge3DLaw::BRepFill_Edge3DLaw(const TopoDS_Wire&                       
       if (Or == TopAbs_REVERSED)
       {
         occ::handle<Geom_TrimmedCurve> CBis = new (Geom_TrimmedCurve)(C, First, Last);
-        CBis->Reverse(); // Pour eviter de deteriorer la topologie
+        CBis->Reverse();
         C     = CBis;
         First = C->FirstParameter();
         Last  = C->LastParameter();

@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Geom2dHash_CurveHasher.hpp>
 
@@ -35,8 +24,6 @@
 #include <Geom2dHash_TrimmedCurveHasher.hpp>
 #include <Geom2dHash_OffsetCurveHasher.hpp>
 
-//=================================================================================================
-
 std::size_t Geom2dHash_CurveHasher::operator()(
   const occ::handle<Geom2d_Curve>& theCurve) const noexcept
 {
@@ -45,7 +32,6 @@ std::size_t Geom2dHash_CurveHasher::operator()(
     return 0;
   }
 
-  // Dispatch based on actual curve type
   if (occ::handle<Geom2d_Line> aLine = occ::down_cast<Geom2d_Line>(theCurve))
   {
     return Geom2dHash_LineHasher{}(aLine);
@@ -83,11 +69,8 @@ std::size_t Geom2dHash_CurveHasher::operator()(
     return Geom2dHash_OffsetCurveHasher{}(anOffset);
   }
 
-  // Unknown curve type - hash the type name
   return Standard_CStringHasher{}(theCurve->DynamicType()->Name());
 }
-
-//=================================================================================================
 
 bool Geom2dHash_CurveHasher::operator()(const occ::handle<Geom2d_Curve>& theCurve1,
                                         const occ::handle<Geom2d_Curve>& theCurve2) const noexcept
@@ -102,13 +85,11 @@ bool Geom2dHash_CurveHasher::operator()(const occ::handle<Geom2d_Curve>& theCurv
     return true;
   }
 
-  // Must be same type
   if (theCurve1->DynamicType() != theCurve2->DynamicType())
   {
     return false;
   }
 
-  // Dispatch based on actual curve type
   if (occ::handle<Geom2d_Line> aLine1 = occ::down_cast<Geom2d_Line>(theCurve1))
   {
     return Geom2dHash_LineHasher{}(aLine1, occ::down_cast<Geom2d_Line>(theCurve2));
@@ -146,6 +127,5 @@ bool Geom2dHash_CurveHasher::operator()(const occ::handle<Geom2d_Curve>& theCurv
     return Geom2dHash_OffsetCurveHasher{}(aOff1, occ::down_cast<Geom2d_OffsetCurve>(theCurve2));
   }
 
-  // Unknown curve type - compare by pointer
   return theCurve1.get() == theCurve2.get();
 }

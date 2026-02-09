@@ -28,39 +28,32 @@ class Geom2dInt_GInter : public IntRes2d_Intersection
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor.
   Geom2dInt_GInter();
 
-  //! Self Intersection of a curve
   Geom2dInt_GInter(const Adaptor2d_Curve2d& C, const double TolConf, const double Tol);
 
-  //! Self Intersection of a curve with a domain.
   Geom2dInt_GInter(const Adaptor2d_Curve2d& C,
                    const IntRes2d_Domain&   D,
                    const double             TolConf,
                    const double             Tol);
 
-  //! Intersection between 2 curves.
   Geom2dInt_GInter(const Adaptor2d_Curve2d& C1,
                    const Adaptor2d_Curve2d& C2,
                    const double             TolConf,
                    const double             Tol);
 
-  //! Intersection between 2 curves.
   Geom2dInt_GInter(const Adaptor2d_Curve2d& C1,
                    const IntRes2d_Domain&   D1,
                    const Adaptor2d_Curve2d& C2,
                    const double             TolConf,
                    const double             Tol);
 
-  //! Intersection between 2 curves.
   Geom2dInt_GInter(const Adaptor2d_Curve2d& C1,
                    const Adaptor2d_Curve2d& C2,
                    const IntRes2d_Domain&   D2,
                    const double             TolConf,
                    const double             Tol);
 
-  //! Intersection between 2 curves.
   Geom2dInt_GInter(const Adaptor2d_Curve2d& C1,
                    const IntRes2d_Domain&   D1,
                    const Adaptor2d_Curve2d& C2,
@@ -68,7 +61,6 @@ public:
                    const double             TolConf,
                    const double             Tol);
 
-  //! Intersection between 2 curves.
   Standard_EXPORT void Perform(const Adaptor2d_Curve2d& C1,
                                const IntRes2d_Domain&   D1,
                                const Adaptor2d_Curve2d& C2,
@@ -76,45 +68,37 @@ public:
                                const double             TolConf,
                                const double             Tol);
 
-  //! Intersection between 2 curves.
   void Perform(const Adaptor2d_Curve2d& C1,
                const Adaptor2d_Curve2d& C2,
                const double             TolConf,
                const double             Tol);
 
-  //! Intersection between 2 curves.
   Standard_EXPORT void Perform(const Adaptor2d_Curve2d& C1,
                                const IntRes2d_Domain&   D1,
                                const double             TolConf,
                                const double             Tol);
 
-  //! Intersection between 2 curves.
   Standard_EXPORT void Perform(const Adaptor2d_Curve2d& C1, const double TolConf, const double Tol);
 
-  //! Intersection between 2 curves.
   void Perform(const Adaptor2d_Curve2d& C1,
                const IntRes2d_Domain&   D1,
                const Adaptor2d_Curve2d& C2,
                const double             TolConf,
                const double             Tol);
 
-  //! Intersection between 2 curves.
   void Perform(const Adaptor2d_Curve2d& C1,
                const Adaptor2d_Curve2d& C2,
                const IntRes2d_Domain&   D2,
                const double             TolConf,
                const double             Tol);
 
-  //! Create a domain from a curve
   Standard_EXPORT IntRes2d_Domain ComputeDomain(const Adaptor2d_Curve2d& C1,
                                                 const double             TolDomain) const;
 
-  //! Set / get minimum number of points in polygon intersection.
   Standard_EXPORT void SetMinNbSamples(const int theMinNbSamples);
   Standard_EXPORT int  GetMinNbSamples() const;
 
 private:
-  //! Intersection between 2 curves.
   Standard_EXPORT void InternalPerform(const Adaptor2d_Curve2d& C1,
                                        const IntRes2d_Domain&   D1,
                                        const Adaptor2d_Curve2d& C2,
@@ -123,7 +107,6 @@ private:
                                        const double             Tol,
                                        const bool               Composite);
 
-  //! Part of InternalCompositePerform function
   Standard_EXPORT void InternalCompositePerform_noRecurs(const int                NbInterC1,
                                                          const Adaptor2d_Curve2d& C1,
                                                          const int                NumInterC1,
@@ -137,7 +120,6 @@ private:
                                                          const double                      TolConf,
                                                          const double                      Tol);
 
-  //! Intersection between 2 curves.
   Standard_EXPORT void InternalCompositePerform(const Adaptor2d_Curve2d&          C1,
                                                 const IntRes2d_Domain&            D1,
                                                 const int                         N1,

@@ -29,8 +29,6 @@
 #include <XSControl_WorkSession.hpp>
 #include <UnitsMethods.hpp>
 
-//=================================================================================================
-
 static void checkColorRange(double& theCol)
 {
   if (theCol < 0.)
@@ -56,23 +54,6 @@ static inline bool IsComposite(const TopoDS_Shape& theShape)
   return false;
 }
 
-//=======================================================================
-// function : AddCompositeShape
-// purpose  : Recursively adds composite shapes (TopoDS_Compounds) into the XDE document.
-//           If the compound does not contain nested compounds then adds it
-//           as no-assembly (i.e. no individual labels for sub-shapes), as this
-//           combination is often encountered in IGES (e.g. Group of Trimmed Surfaces).
-//           If the compound does contain nested compounds then adds it as an
-//           assembly.
-//           The construction happens bottom-up, i.e. the most deep sub-shapes are added
-//           first.
-//           If theIsTop is False (in a recursive call) then sub-shapes are added without
-//           a location. This is to ensure that no extra label in the XDE document is
-//           created for an instance (as otherwise, XDE will consider it as a free
-//           shape). Correct location and instance will be created when adding a parent
-//           compound.
-//           theMap is used to avoid visiting the same compound.
-//=======================================================================
 static void AddCompositeShape(const occ::handle<XCAFDoc_ShapeTool>& theSTool,
                               const TopoDS_Shape&                   theShape,
                               bool                                  theConsiderLoc,
@@ -109,7 +90,7 @@ static void AddCompositeShape(const occ::handle<XCAFDoc_ShapeTool>& theSTool,
       nbSimple++;
     }
   }
-  // case of hybrid shape
+
   if (nbSimple && aHasCompositeSubShape)
   {
     theSTool->AddShape(aSimpleShape, false, false);
@@ -129,36 +110,28 @@ static void AddCompositeShape(const occ::handle<XCAFDoc_ShapeTool>& theSTool,
   return;
 }
 
-//=================================================================================================
-
 bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
                                      const Message_ProgressRange&         theProgress)
 {
-  // read all shapes
-  int num; // = NbRootsForTransfer();
-  // if ( num <=0 ) return false;
-  // for ( int i=1; i <= num; i++ ) {
-  //   TransferOneRoot ( i );
-  // }
 
-  // set units
+  int num;
+
   occ::handle<IGESData_IGESModel> aModel = occ::down_cast<IGESData_IGESModel>(WS()->Model());
 
   double aScaleFactorMM = 1.;
   if (!XCAFDoc_DocumentTool::GetLengthUnit(doc, aScaleFactorMM, UnitsMethods_LengthUnit_Millimeter))
   {
-    XSAlgo_ShapeProcessor::PrepareForTransfer(); // update unit info
+    XSAlgo_ShapeProcessor::PrepareForTransfer();
     aScaleFactorMM = UnitsMethods::GetCasCadeLengthUnit();
-    // set length unit to the document
+
     XCAFDoc_DocumentTool::SetLengthUnit(doc, aScaleFactorMM, UnitsMethods_LengthUnit_Millimeter);
   }
   aModel->ChangeGlobalSection().SetCascadeUnit(aScaleFactorMM);
-  TransferRoots(theProgress); // replaces the above
+  TransferRoots(theProgress);
   num = NbShapes();
   if (num <= 0)
     return false;
 
-  // and insert them to the document
   occ::handle<XCAFDoc_ShapeTool> STool = XCAFDoc_DocumentTool::ShapeTool(doc->Main());
   if (STool.IsNull())
     return false;
@@ -166,7 +139,7 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
   for (i = 1; i <= num; i++)
   {
     TopoDS_Shape sh = Shape(i);
-    // ---- HERE -- to add check [ assembly / hybrid model ]
+
     if (!IsComposite(sh))
       STool->AddShape(sh, false);
     else
@@ -176,7 +149,6 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
     }
   }
 
-  // added by skl 13.10.2003
   const occ::handle<XSControl_TransferReader>&  TR      = WS()->TransferReader();
   const occ::handle<Transfer_TransientProcess>& TP      = TR->TransientProcess();
   bool                                          IsCTool = true;
@@ -205,11 +177,10 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
     Quantity_Color col;
     if (GetColorMode() && IsCTool)
     {
-      // read colors
+
       if (ent->DefColor() == IGESData_DefValue || ent->DefColor() == IGESData_DefReference)
       {
-        // color is assigned
-        // decode color and set to document
+
         IsColor = true;
         if (ent->DefColor() == IGESData_DefValue)
         {
@@ -261,8 +232,7 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
             CTool->SetColor(L, col, XCAFDoc_ColorGen);
             if (GetLayerMode() && IsLTool)
             {
-              // read layers
-              // set a layers to the document
+
               IGESData_DefList aDeflist = ent->DefLevel();
               switch (aDeflist)
               {
@@ -299,7 +269,7 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
       }
       if (GetNameMode())
       {
-        // read names
+
         if (ent->HasName())
         {
           TCollection_AsciiString string = ent->NameValue()->String();
@@ -311,8 +281,7 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
       }
       if (GetLayerMode() && IsLTool)
       {
-        // read layers
-        // set a layers to the document
+
         IGESData_DefList aDeflist = ent->DefLevel();
         switch (aDeflist)
         {
@@ -339,12 +308,11 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
       }
     }
 
-    // Checks that current entity is a subfigure
     occ::handle<IGESBasic_SubfigureDef> aSubfigure = occ::down_cast<IGESBasic_SubfigureDef>(ent);
     if (GetNameMode() && !aSubfigure.IsNull() && !aSubfigure->Name().IsNull()
         && STool->Search(S, L, true, true))
     {
-      // In this case we attach subfigure name to the label, instead of default "COMPOUND"
+
       occ::handle<TCollection_HAsciiString> aName = aSubfigure->Name();
       aName->LeftAdjust();
       aName->RightAdjust();
@@ -355,13 +323,10 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
 
   CTool->ReverseChainsOfTreeNodes();
 
-  // Update assembly compounds
   STool->UpdateAssemblies();
 
   return true;
 }
-
-//=================================================================================================
 
 bool IGESCAFControl_Reader::Perform(const char*                          filename,
                                     const occ::handle<TDocStd_Document>& doc,

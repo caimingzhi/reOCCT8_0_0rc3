@@ -11,7 +11,6 @@ class StepShape_RevolvedAreaSolid;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for RevolvedAreaSolid
 class RWStepShape_RWRevolvedAreaSolid
 {
 public:

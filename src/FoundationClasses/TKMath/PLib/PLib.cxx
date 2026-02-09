@@ -10,10 +10,6 @@
 
 #include <array>
 
-// To convert points array into Real ..
-// *********************************
-//=================================================================================================
-
 void PLib::SetPoles(const NCollection_Array1<gp_Pnt2d>& Poles, NCollection_Array1<double>& FP)
 {
   int j      = FP.Lower();
@@ -29,8 +25,6 @@ void PLib::SetPoles(const NCollection_Array1<gp_Pnt2d>& Poles, NCollection_Array
     j++;
   }
 }
-
-//=================================================================================================
 
 void PLib::SetPoles(const NCollection_Array1<gp_Pnt2d>& Poles,
                     const NCollection_Array1<double>&   Weights,
@@ -53,8 +47,6 @@ void PLib::SetPoles(const NCollection_Array1<gp_Pnt2d>& Poles,
   }
 }
 
-//=================================================================================================
-
 void PLib::GetPoles(const NCollection_Array1<double>& FP, NCollection_Array1<gp_Pnt2d>& Poles)
 {
   int j      = FP.Lower();
@@ -70,8 +62,6 @@ void PLib::GetPoles(const NCollection_Array1<double>& FP, NCollection_Array1<gp_
     j++;
   }
 }
-
-//=================================================================================================
 
 void PLib::GetPoles(const NCollection_Array1<double>& FP,
                     NCollection_Array1<gp_Pnt2d>&     Poles,
@@ -94,8 +84,6 @@ void PLib::GetPoles(const NCollection_Array1<double>& FP,
   }
 }
 
-//=================================================================================================
-
 void PLib::SetPoles(const NCollection_Array1<gp_Pnt>& Poles, NCollection_Array1<double>& FP)
 {
   int j      = FP.Lower();
@@ -113,8 +101,6 @@ void PLib::SetPoles(const NCollection_Array1<gp_Pnt>& Poles, NCollection_Array1<
     j++;
   }
 }
-
-//=================================================================================================
 
 void PLib::SetPoles(const NCollection_Array1<gp_Pnt>& Poles,
                     const NCollection_Array1<double>& Weights,
@@ -139,8 +125,6 @@ void PLib::SetPoles(const NCollection_Array1<gp_Pnt>& Poles,
   }
 }
 
-//=================================================================================================
-
 void PLib::GetPoles(const NCollection_Array1<double>& FP, NCollection_Array1<gp_Pnt>& Poles)
 {
   int j      = FP.Lower();
@@ -158,8 +142,6 @@ void PLib::GetPoles(const NCollection_Array1<double>& FP, NCollection_Array1<gp_
     j++;
   }
 }
-
-//=================================================================================================
 
 void PLib::GetPoles(const NCollection_Array1<double>& FP,
                     NCollection_Array1<gp_Pnt>&       Poles,
@@ -184,32 +166,25 @@ void PLib::GetPoles(const NCollection_Array1<double>& FP,
   }
 }
 
-// specialized allocator for binomial coefficients using compile-time computation
 namespace
 {
 
-  //! Compile-time Pascal's triangle allocator for binomial coefficients
-  //! @tparam MaxDegree Maximum degree N for which C(N,P) can be computed
   template <int MaxDegree>
   class BinomAllocator
   {
   public:
-    //! Constructor - computes Pascal's triangle at compile time
-    //! Uses the recurrence relation: C(n,k) = C(n-1,k-1) + C(n-1,k)
     constexpr BinomAllocator()
         : myBinom{}
     {
-      // Initialize first row: C(0,0) = 1
+
       myBinom[0][0] = 1;
 
-      // Build Pascal's triangle row by row
       for (int i = 1; i <= MaxDegree; ++i)
       {
-        // First and last elements are always 1
+
         myBinom[i][0] = 1;
         myBinom[i][i] = 1;
 
-        // Use recurrence relation for middle elements
         for (int j = 1; j < i; ++j)
         {
           myBinom[i][j] = myBinom[i - 1][j - 1] + myBinom[i - 1][j];
@@ -217,19 +192,12 @@ namespace
       }
     }
 
-    //! Returns the binomial coefficient C(N,P)
-    //! @param N the degree (n in C(n,k))
-    //! @param P the parameter (k in C(n,k))
-    //! @return the value of C(N,P)
-    //! @note Caller must ensure N and P are within valid range
     constexpr int Value(const int N, const int P) const { return myBinom[N][P]; }
 
   private:
     int myBinom[MaxDegree + 1][MaxDegree + 1];
   };
 
-  //! Thread-safe lazy initialization of compile-time computed binomial coefficients
-  //! @tparam MaxDegree Maximum degree supported (default 25)
   template <int MaxDegree = BSplCLib::MaxDegree()>
   inline const BinomAllocator<MaxDegree>& GetBinomAllocator()
   {
@@ -238,8 +206,6 @@ namespace
   }
 
 } // namespace
-
-//=================================================================================================
 
 double PLib::Bin(const int N, const int P)
 {
@@ -253,8 +219,6 @@ double PLib::Bin(const int N, const int P)
   return double(aBinom.Value(N, P));
 }
 
-//=================================================================================================
-
 void PLib::RationalDerivative(const int  Degree,
                               const int  DerivativeRequest,
                               const int  Dimension,
@@ -262,43 +226,7 @@ void PLib::RationalDerivative(const int  Degree,
                               double&    RDers,
                               const bool All)
 {
-  //
-  // Our purpose is to compute f = (u/v) derivated N = DerivativeRequest times
-  //
-  //  We Write  u = fv
-  //  Let C(N,P) be the binomial
-  //
-  //        then we have
-  //
-  //         (q)                             (p)   (q-p)
-  //        u    =     SUM          C (q,p) f     v
-  //                p = 0 to q
-  //
-  //
-  //        Therefore
-  //
-  //
-  //         (q)         (   (q)                               (p)   (q-p)   )
-  //        f    = (1/v) (  u    -     SUM            C (q,p) f     v        )
-  //                     (          p = 0 to q-1                             )
-  //
-  //
-  // make arrays for the binomial since computing it each time could raise a performance
-  // issue
-  // As oppose to the method below the <Der> array is organized in the following
-  // fashion :
-  //
-  //  u (1)     u (2) ....   u  (Dimension)     v (1)
-  //
-  //   (1)       (1)          (1)                (1)
-  //  u (1)     u (2) ....   u  (Dimension)     v (1)
-  //
-  //   ............................................
-  //
-  //   (Degree)  (Degree)     (Degree)           (Degree)
-  //  u (1)     u (2) ....   u  (Dimension)     v (1)
-  //
-  //
+
   double                         Inverse;
   double*                        PolesArray    = &Ders;
   double*                        RationalArray = &RDers;
@@ -537,45 +465,15 @@ void PLib::RationalDerivative(const int  Degree,
   }
 }
 
-//=======================================================================
-// function : RationalDerivatives
-// purpose  : Uses Homogeneous Poles Derivatives and Derivatives of Weights
-//=======================================================================
-
 void PLib::RationalDerivatives(const int DerivativeRequest,
                                const int Dimension,
                                double&   PolesDerivates,
-                               // must be an array with
-                               // (DerivativeRequest + 1) * Dimension slots
+
                                double& WeightsDerivates,
-                               // must be an array with
-                               // (DerivativeRequest + 1) slots
+
                                double& RationalDerivates)
 {
-  //
-  // Our purpose is to compute f = (u/v) derivated N times
-  //
-  //  We Write  u = fv
-  //  Let C(N,P) be the binomial
-  //
-  //        then we have
-  //
-  //         (q)                             (p)   (q-p)
-  //        u    =     SUM          C (q,p) f     v
-  //                p = 0 to q
-  //
-  //
-  //        Therefore
-  //
-  //
-  //         (q)         (   (q)                               (p)   (q-p)   )
-  //        f    = (1/v) (  u    -     SUM            C (q,p) f     v        )
-  //                     (          p = 0 to q-1                             )
-  //
-  //
-  // make arrays for the binomial since computing it each time could
-  // raize a performance issue
-  //
+
   double  Inverse;
   double* PolesArray    = &PolesDerivates;
   double* WeightsArray  = &WeightsDerivates;
@@ -682,19 +580,11 @@ void PLib::RationalDerivatives(const int DerivativeRequest,
   }
 }
 
-//=======================================================================
-// Auxiliary template functions used for optimized evaluation of polynome
-// and its derivatives for smaller dimensions of the polynome.
-// Uses local arrays to enable register allocation and avoids memcpy/memset.
-//=======================================================================
-
 namespace
 {
-  // Maximum dimension for optimized template dispatch
+
   constexpr int THE_MAX_OPT_DIM = 15;
 
-  // Evaluation of only value using local array (register-friendly).
-  // Writes to output only at the end.
   template <int dim>
   inline void eval_poly0(double* theResult, const double* theCoeffs, int theDegree, double thePar)
   {
@@ -720,8 +610,6 @@ namespace
     }
   }
 
-  // Evaluation of value and first derivative using local arrays.
-  // Fuses derivative and value loops to read aLocal0 only once per iteration.
   template <int dim>
   inline void eval_poly1(double* theResult, const double* theCoeffs, int theDegree, double thePar)
   {
@@ -753,8 +641,6 @@ namespace
     }
   }
 
-  // Evaluation of value and first and second derivatives using local arrays.
-  // Fuses all three loops for better cache utilization.
   template <int dim>
   inline void eval_poly2(double* theResult, const double* theCoeffs, int theDegree, double thePar)
   {
@@ -791,7 +677,6 @@ namespace
     }
   }
 
-  // Runtime evaluation for dimension > THE_MAX_OPT_DIM (value only)
   inline void eval_poly0_runtime(double*       theResult,
                                  const double* theCoeffs,
                                  int           theDegree,
@@ -814,7 +699,6 @@ namespace
     }
   }
 
-  // Runtime evaluation for dimension > THE_MAX_OPT_DIM (value + 1st derivative)
   inline void eval_poly1_runtime(double*       theResult,
                                  const double* theCoeffs,
                                  int           theDegree,
@@ -843,7 +727,6 @@ namespace
     }
   }
 
-  // Runtime evaluation for dimension > THE_MAX_OPT_DIM (value + 1st + 2nd derivatives)
   inline void eval_poly2_runtime(double*       theResult,
                                  const double* theCoeffs,
                                  int           theDegree,
@@ -876,17 +759,14 @@ namespace
     }
   }
 
-  // Function pointer type for dispatch tables
   using EvalPolyFunc = void (*)(double*, const double*, int, double);
 
-  // Helper to generate dispatch tables at compile time
   template <template <int> class EvalFunc, typename FuncPtr, int... Is>
   constexpr std::array<FuncPtr, sizeof...(Is)> makeDispatchTable(std::integer_sequence<int, Is...>)
   {
     return {{&EvalFunc<Is + 1>::call...}};
   }
 
-  // Wrapper structs to allow template parameter deduction
   template <int Dim>
   struct EvalPoly0Wrapper
   {
@@ -905,7 +785,6 @@ namespace
     static void call(double* r, const double* c, int d, double p) { eval_poly2<Dim>(r, c, d, p); }
   };
 
-  // Dispatch tables for dimensions 1..15
   constexpr std::array<EvalPolyFunc, THE_MAX_OPT_DIM> THE_EVAL_POLY0_TABLE =
     makeDispatchTable<EvalPoly0Wrapper, EvalPolyFunc>(
       std::make_integer_sequence<int, THE_MAX_OPT_DIM>{});
@@ -920,34 +799,13 @@ namespace
 
 } // namespace
 
-//=======================================================================
-// function : This evaluates a polynomial and its derivatives
-// purpose  : up to the requested order
-//=======================================================================
-
 void PLib::EvalPolynomial(const double  Par,
                           const int     DerivativeRequest,
                           const int     Degree,
                           const int     Dimension,
                           const double& PolynomialCoeff,
                           double&       Results)
-//
-// the polynomial coefficients are assumed to be stored as follows :
-//                                                      0
-// [0]                  [Dimension -1]                 X     coefficient
-//                                                      1
-// [Dimension]          [Dimension + Dimension -1]     X     coefficient
-//                                                      2
-// [2 * Dimension]      [2 * Dimension + Dimension-1]  X     coefficient
-//
-//   ...................................................
-//
-//
-//                                                      d
-// [d * Dimension]      [d * Dimension + Dimension-1]  X     coefficient
-//
-//  where d is the Degree
-//
+
 {
   const double* aCoeffs = &PolynomialCoeff + Degree * Dimension;
   double*       aRes    = &Results;
@@ -980,7 +838,7 @@ void PLib::EvalPolynomial(const double  Par,
     }
     default:
     {
-      // General case for DerivativeRequest > 2
+
       const int aResSize = (1 + DerivativeRequest) * Dimension;
       for (int i = 0; i < aResSize; ++i)
       {
@@ -990,7 +848,7 @@ void PLib::EvalPolynomial(const double  Par,
       for (int aDeg = 0; aDeg <= Degree; ++aDeg)
       {
         double* aPtr = aRes + aResSize - Dimension;
-        // Calculating derivatives of the polynomial
+
         for (int aDeriv = DerivativeRequest; aDeriv > 0; --aDeriv)
         {
           double* anOriginal = aPtr - Dimension;
@@ -1000,7 +858,7 @@ void PLib::EvalPolynomial(const double  Par,
           }
           aPtr = anOriginal;
         }
-        // Calculating the value of the polynomial
+
         for (int ind = 0; ind < Dimension; ++ind)
         {
           aPtr[ind] = aPtr[ind] * Par + aCoeffs[ind];
@@ -1010,8 +868,6 @@ void PLib::EvalPolynomial(const double  Par,
     }
   }
 }
-
-//=================================================================================================
 
 void PLib::NoDerivativeEvalPolynomial(const double  Par,
                                       const int     Degree,
@@ -1033,11 +889,6 @@ void PLib::NoDerivativeEvalPolynomial(const double  Par,
   }
 }
 
-//=======================================================================
-// function : This evaluates a polynomial of 2 variables
-// purpose  : or its derivative at the requested orders
-//=======================================================================
-
 void PLib::EvalPoly2Var(const double UParameter,
                         const double VParameter,
                         const int    UDerivativeRequest,
@@ -1047,37 +898,7 @@ void PLib::EvalPoly2Var(const double UParameter,
                         const int    Dimension,
                         double&      PolynomialCoeff,
                         double&      Results)
-//
-// the polynomial coefficients are assumed to be stored as follows :
-//                                                      0 0
-// [0]                  [Dimension -1]                 U V    coefficient
-//                                                      1 0
-// [Dimension]          [Dimension + Dimension -1]     U V    coefficient
-//                                                      2 0
-// [2 * Dimension]      [2 * Dimension + Dimension-1]  U V    coefficient
-//
-//   ...................................................
-//
-//
-//                                                      m 0
-// [m * Dimension]      [m * Dimension + Dimension-1]  U V    coefficient
-//
-//  where m = UDegree
-//
-//                                                           0 1
-// [(m+1) * Dimension]  [(m+1) * Dimension + Dimension-1]   U V   coefficient
-//
-//   ...................................................
-//
-//                                                          m 1
-// [2*m * Dimension]      [2*m * Dimension + Dimension-1]  U V    coefficient
-//
-//   ...................................................
-//
-//                                                          m n
-// [m*n * Dimension]      [m*n * Dimension + Dimension-1]  U V    coefficient
-//
-//  where n = VDegree
+
 {
   int                        Udim = (VDegree + 1) * Dimension, index = Udim * UDerivativeRequest;
   NCollection_Array1<double> Curve(1, Udim * (UDerivativeRequest + 1));
@@ -1099,12 +920,6 @@ void PLib::EvalPoly2Var(const double UParameter,
   }
 }
 
-//=======================================================================
-// function : This evaluates the lagrange polynomial and its derivatives
-// purpose  : up to the requested order that interpolates a series of
-// points of dimension <Dimension> with given assigned parameters
-//=======================================================================
-
 int PLib::EvalLagrange(const double Parameter,
                        const int    DerivativeRequest,
                        const int    Degree,
@@ -1113,28 +928,7 @@ int PLib::EvalLagrange(const double Parameter,
                        double&      Parameters,
                        double&      Results)
 {
-  //
-  // the points  are assumed to be stored as follows in the Values array :
-  //
-  // [0]              [Dimension -1]                first  point   coefficients
-  //
-  // [Dimension]      [Dimension + Dimension -1]    second point   coefficients
-  //
-  // [2 * Dimension]  [2 * Dimension + Dimension-1] third  point   coefficients
-  //
-  //   ...................................................
-  //
-  //
-  //
-  // [d * Dimension]  [d * Dimension + Dimension-1] d + 1 point   coefficients
-  //
-  //  where d is the Degree
-  //
-  //  The ParameterArray stores the parameter value assign to each point in
-  //  order described above, that is
-  //  [0]   is assign to first  point
-  //  [1]   is assign to second point
-  //
+
   int     ii, jj, kk, Index, Index1, ReturnCode = 0;
   int     local_request = DerivativeRequest;
   double* ParameterArray;
@@ -1150,9 +944,6 @@ int PLib::EvalLagrange(const double Parameter,
     local_request = Degree;
   }
   NCollection_LocalArray<double> divided_differences_array((Degree + 1) * Dimension);
-  //
-  //  Build the divided differences array
-  //
 
   for (ii = 0; ii < (Degree + 1) * Dimension; ii++)
   {
@@ -1185,16 +976,7 @@ int PLib::EvalLagrange(const double Parameter,
       }
     }
   }
-  //
-  //
-  // Evaluate the divided difference array polynomial which expresses as
-  //
-  //  P(t) = [t1] P + (t - t1) [t1,t2] P + (t - t1)(t - t2)[t1,t2,t3] P + ...
-  //         + (t - t1)(t - t2)(t - t3)...(t - td) [t1,t2,...,td+1] P
-  //
-  // The ith slot in the divided_differences_array is [t1,t2,...,ti+1]
-  //
-  //
+
   Index = Degree * Dimension;
 
   for (kk = 0; kk < Dimension; kk++)
@@ -1234,12 +1016,6 @@ FINISH:
   return (ReturnCode);
 }
 
-//=======================================================================
-// function : This evaluates the hermite polynomial and its derivatives
-// purpose  : up to the requested order that interpolates a series of
-// points of dimension <Dimension> with given assigned parameters
-//=======================================================================
-
 int PLib::EvalCubicHermite(const double Parameter,
                            const int    DerivativeRequest,
                            const int    Dimension,
@@ -1248,26 +1024,7 @@ int PLib::EvalCubicHermite(const double Parameter,
                            double&      theParameters,
                            double&      Results)
 {
-  //
-  // the points  are assumed to be stored as follows in the Values array :
-  //
-  // [0]            [Dimension -1]             first  point   coefficients
-  //
-  // [Dimension]    [Dimension + Dimension -1] last point   coefficients
-  //
-  //
-  // the derivatives  are assumed to be stored as follows in
-  // the Derivatives array :
-  //
-  // [0]            [Dimension -1]             first  point   coefficients
-  //
-  // [Dimension]    [Dimension + Dimension -1] last point   coefficients
-  //
-  //  The ParameterArray stores the parameter value assign to each point in
-  //  order described above, that is
-  //  [0]   is assign to first  point
-  //  [1]   is assign to last   point
-  //
+
   int ii, jj, kk, pp, Index, Index1, Degree, ReturnCode;
   int local_request = DerivativeRequest;
 
@@ -1295,13 +1052,7 @@ int PLib::EvalCubicHermite(const double Parameter,
   {
     ParametersArray[jj] = ParametersArray[jj + 1] = FirstLast[ii];
   }
-  //
-  //  Build the divided differences array
-  //
-  //
-  // initialise it at the stage 2 of the building algorithm
-  // for divided differences
-  //
+
   inverse = FirstLast[1] - FirstLast[0];
   inverse = 1.0e0 / inverse;
 
@@ -1333,16 +1084,7 @@ int PLib::EvalCubicHermite(const double Parameter,
       }
     }
   }
-  //
-  //
-  // Evaluate the divided difference array polynomial which expresses as
-  //
-  //  P(t) = [t1] P + (t - t1) [t1,t2] P + (t - t1)(t - t2)[t1,t2,t3] P + ...
-  //         + (t - t1)(t - t2)(t - t3)...(t - td) [t1,t2,...,td+1] P
-  //
-  // The ith slot in the divided_differences_array is [t1,t2,...,ti+1]
-  //
-  //
+
   Index = Degree * Dimension;
 
   for (kk = 0; kk < Dimension; kk++)
@@ -1378,14 +1120,9 @@ int PLib::EvalCubicHermite(const double Parameter,
       ResultArray[kk] += divided_differences_array[Index + kk];
     }
   }
-  //  FINISH :
+
   return (ReturnCode);
 }
-
-//=======================================================================
-// function : HermiteCoefficients
-// purpose  : calcul des polynomes d'Hermite
-//=======================================================================
 
 bool PLib::HermiteCoefficients(const double FirstParameter,
                                const double LastParameter,
@@ -1399,8 +1136,6 @@ bool PLib::HermiteCoefficients(const double FirstParameter,
   math_Vector Coeff(1, NbCoeff), B(1, NbCoeff, 0.0);
   math_Matrix MAT(1, NbCoeff, 1, NbCoeff, 0.0);
 
-  // Test de validites
-
   if ((FirstOrder < 0) || (LastOrder < 0))
     return false;
   double D1 = fabs(FirstParameter), D2 = fabs(LastParameter);
@@ -1411,8 +1146,6 @@ bool PLib::HermiteCoefficients(const double FirstParameter,
     return false;
   if (fabs(LastParameter - FirstParameter) / D2 < 0.01)
     return false;
-
-  // Calcul de la matrice a inverser (MAT)
 
   Ordre[0] = FirstOrder + 1;
   Ordre[1] = LastOrder + 1;
@@ -1428,7 +1161,7 @@ bool PLib::HermiteCoefficients(const double FirstParameter,
 
       for (jj = pp; jj <= NbCoeff; jj++)
       {
-        //        tout se passe dans les 3 lignes suivantes
+
         MAT(ii, jj) = Coeff(jj) * Prod;
         Coeff(jj) *= jj - pp;
         Prod *= TBorne;
@@ -1438,7 +1171,6 @@ bool PLib::HermiteCoefficients(const double FirstParameter,
     iof    = Ordre[0];
   }
 
-  // resolution du systemes
   math_Gauss ResolCoeff(MAT, 1.0e-10);
   if (!ResolCoeff.IsDone())
     return false;
@@ -1453,8 +1185,6 @@ bool PLib::HermiteCoefficients(const double FirstParameter,
   return true;
 }
 
-//=================================================================================================
-
 void PLib::CoefficientsPoles(const NCollection_Array1<gp_Pnt>& Coefs,
                              const NCollection_Array1<double>* WCoefs,
                              NCollection_Array1<gp_Pnt>&       Poles,
@@ -1467,8 +1197,6 @@ void PLib::CoefficientsPoles(const NCollection_Array1<gp_Pnt>& Coefs,
   PLib::CoefficientsPoles(3, tempC, WCoefs, tempP, Weights);
   PLib::GetPoles(tempP, Poles);
 }
-
-//=================================================================================================
 
 void PLib::CoefficientsPoles(const NCollection_Array1<gp_Pnt2d>& Coefs,
                              const NCollection_Array1<double>*   WCoefs,
@@ -1483,8 +1211,6 @@ void PLib::CoefficientsPoles(const NCollection_Array1<gp_Pnt2d>& Coefs,
   PLib::GetPoles(tempP, Poles);
 }
 
-//=================================================================================================
-
 void PLib::CoefficientsPoles(const NCollection_Array1<double>& Coefs,
                              const NCollection_Array1<double>* WCoefs,
                              NCollection_Array1<double>&       Poles,
@@ -1492,8 +1218,6 @@ void PLib::CoefficientsPoles(const NCollection_Array1<double>& Coefs,
 {
   PLib::CoefficientsPoles(1, Coefs, WCoefs, Poles, Weights);
 }
-
-//=================================================================================================
 
 void PLib::CoefficientsPoles(const int                         dim,
                              const NCollection_Array1<double>& Coefs,
@@ -1512,7 +1236,7 @@ void PLib::CoefficientsPoles(const int                         dim,
   int  upwp   = 0;
   int  reflen = Coefs.Length() / dim;
   int  i, j, k;
-  // Les Extremites.
+
   if (rat)
   {
     lowc = WCoefs->Lower();
@@ -1573,8 +1297,6 @@ void PLib::CoefficientsPoles(const int                         dim,
   }
 }
 
-//=================================================================================================
-
 void PLib::Trimming(const double                U1,
                     const double                U2,
                     NCollection_Array1<gp_Pnt>& Coefs,
@@ -1585,8 +1307,6 @@ void PLib::Trimming(const double                U1,
   PLib::Trimming(U1, U2, 3, temp, WCoefs);
   PLib::GetPoles(temp, Coefs);
 }
-
-//=================================================================================================
 
 void PLib::Trimming(const double                  U1,
                     const double                  U2,
@@ -1599,8 +1319,6 @@ void PLib::Trimming(const double                  U1,
   PLib::GetPoles(temp, Coefs);
 }
 
-//=================================================================================================
-
 void PLib::Trimming(const double                U1,
                     const double                U2,
                     NCollection_Array1<double>& Coefs,
@@ -1609,19 +1327,12 @@ void PLib::Trimming(const double                U1,
   PLib::Trimming(U1, U2, 1, Coefs, WCoefs);
 }
 
-//=================================================================================================
-
 void PLib::Trimming(const double                U1,
                     const double                U2,
                     const int                   dim,
                     NCollection_Array1<double>& Coefs,
                     NCollection_Array1<double>* WCoefs)
 {
-
-  // principe :
-  // on fait le changement de variable v = (u-U1) / (U2-U1)
-  // on exprime u = f(v) que l'on remplace dans l'expression polynomiale
-  // decomposee sous la forme du schema iteratif de horner.
 
   double lsp = U2 - U1;
   int    indc, indw = 0;
@@ -1643,7 +1354,6 @@ void PLib::Trimming(const double                U1,
     indc = upc - dim * (i - 1);
     if (rat)
       indw = upw - i + 1;
-    // calcul du coefficient de degre le plus faible a l'iteration i
 
     for (j = 0; j < dim; j++)
     {
@@ -1651,8 +1361,6 @@ void PLib::Trimming(const double                U1,
     }
     if (rat)
       (*WCoefs)(indw - 1) += U1 * (*WCoefs)(indw);
-
-    // calcul des coefficients intermediaires :
 
     while (indc < upc)
     {
@@ -1669,8 +1377,6 @@ void PLib::Trimming(const double                U1,
       }
     }
 
-    // calcul du coefficient de degre le plus eleve :
-
     for (j = 0; j < dim; j++)
     {
       Coefs(upc + j) *= lsp;
@@ -1679,14 +1385,6 @@ void PLib::Trimming(const double                U1,
       (*WCoefs)(upw) *= lsp;
   }
 }
-
-//=======================================================================
-// function : CoefficientsPoles
-// purpose  :
-// Modified: 21/10/1996 by PMN :  PolesCoefficient (PRO5852).
-// on ne bidouille plus les u et v c'est a l'appelant de savoir ce qu'il
-// fait avec BuildCache ou plus simplement d'utiliser PolesCoefficients
-//=======================================================================
 
 void PLib::CoefficientsPoles(const NCollection_Array2<gp_Pnt>& Coefs,
                              const NCollection_Array2<double>* WCoefs,
@@ -1700,10 +1398,6 @@ void PLib::CoefficientsPoles(const NCollection_Array2<gp_Pnt>& Coefs,
   int  UpperCol  = Poles.UpperCol();
   int  ColLength = Poles.ColLength();
   int  RowLength = Poles.RowLength();
-
-  // Bidouille pour retablir u et v pour les coefs calcules
-  // par buildcache
-  //  bool inv = false; //ColLength != Coefs.ColLength();
 
   int    Row, Col;
   double W, Cnp;
@@ -1792,8 +1486,6 @@ void PLib::CoefficientsPoles(const NCollection_Array2<gp_Pnt>& Coefs,
   }
 }
 
-//=================================================================================================
-
 void PLib::UTrimming(const double                U1,
                      const double                U2,
                      NCollection_Array2<gp_Pnt>& Coeffs,
@@ -1829,8 +1521,6 @@ void PLib::UTrimming(const double                U1,
     }
   }
 }
-
-//=================================================================================================
 
 void PLib::VTrimming(const double                V1,
                      const double                V2,
@@ -1868,8 +1558,6 @@ void PLib::VTrimming(const double                V1,
   }
 }
 
-//=================================================================================================
-
 bool PLib::HermiteInterpolate(const int                         Dimension,
                               const double                      FirstParameter,
                               const double                      LastParameter,
@@ -1880,8 +1568,6 @@ bool PLib::HermiteInterpolate(const int                         Dimension,
                               NCollection_Array1<double>&       Coefficients)
 {
   double Pattern[3][6];
-
-  // portage HP : il faut les initialiser 1 par 1
 
   Pattern[0][0] = 1;
   Pattern[0][1] = 1;
@@ -1903,7 +1589,7 @@ bool PLib::HermiteInterpolate(const int                         Dimension,
   Pattern[2][5] = 20;
 
   math_Matrix A(0, FirstOrder + LastOrder + 1, 0, FirstOrder + LastOrder + 1);
-  //  The initialisation of the matrix A
+
   int irow;
   for (irow = 0; irow <= FirstOrder; irow++)
   {
@@ -1928,27 +1614,11 @@ bool PLib::HermiteInterpolate(const int                         Dimension,
         LastVal *= LastParameter;
     }
   }
-  //
-  //  The filled matrix A for FirstOrder=LastOrder=2 is:
-  //
-  //      1   FP  FP**2   FP**3    FP**4     FP**5
-  //      0   1   2*FP    3*FP**2  4*FP**3   5*FP**4        FP - FirstParameter
-  //      0   0   2       6*FP     12*FP**2  20*FP**3
-  //      1   LP  LP**2   LP**3    LP**4     LP**5
-  //      0   1   2*LP    3*LP**2  4*LP**3   5*LP**4        LP - LastParameter
-  //      0   0   2       6*LP     12*LP**2  20*LP**3
-  //
-  //  If FirstOrder or LastOrder <=2 then some rows and columns are missing.
-  //  For example:
-  //  If FirstOrder=1 then 3th row and 6th column are missing
-  //  If FirstOrder=LastOrder=0 then 2,3,5,6th rows and 3,4,5,6th columns are missing
 
   math_Gauss Equations(A);
-  //  std::cout << "A=" << A << std::endl;
 
   for (int idim = 1; idim <= Dimension; idim++)
   {
-    //  std::cout << "idim=" << idim << std::endl;
 
     math_Vector B(0, FirstOrder + LastOrder + 1);
     int         icol;
@@ -1957,16 +1627,11 @@ bool PLib::HermiteInterpolate(const int                         Dimension,
 
     for (icol = 0; icol <= LastOrder; icol++)
       B(FirstOrder + 1 + icol) = LastConstr(idim, icol);
-    //  std::cout << "B=" << B << std::endl;
 
-    //  The solving of equations system A * X = B. Then B = X
     Equations.Solve(B);
-    //  std::cout << "After Solving" << std::endl << "B=" << B << std::endl;
 
     if (!Equations.IsDone())
       return false;
-
-    //  the filling of the Coefficients
 
     for (icol = 0; icol <= FirstOrder + LastOrder + 1; icol++)
       Coefficients(Dimension * icol + idim - 1) = B(icol);
@@ -1974,35 +1639,12 @@ bool PLib::HermiteInterpolate(const int                         Dimension,
   return true;
 }
 
-//=================================================================================================
-
 void PLib::JacobiParameters(const GeomAbs_Shape ConstraintOrder,
                             const int           MaxDegree,
                             const int           Code,
                             int&                NbGaussPoints,
                             int&                WorkDegree)
 {
-  // ConstraintOrder: Ordre de contrainte aux extremites :
-  //            C0 = contraintes de passage aux bornes;
-  //            C1 = C0 + contraintes de derivees 1eres;
-  //            C2 = C1 + contraintes de derivees 2ndes.
-  // MaxDegree: Nombre maxi de coeff de la "courbe" polynomiale
-  //            d' approximation (doit etre superieur ou egal a
-  //            2*NivConstr+2 et inferieur ou egal a 50).
-  // Code:      Code d' init. des parametres de discretisation.
-  //            (choix de NBPNTS et de NDGJAC de MAPF1C,MAPFXC).
-  //            = -5 Calcul tres rapide mais peu precis (8pts)
-  //            = -4    '     '    '      '   '    '    (10pts)
-  //            = -3    '     '    '      '   '    '    (15pts)
-  //            = -2    '     '    '      '   '    '    (20pts)
-  //            = -1    '     '    '      '   '    '    (25pts)
-  //            = 1 calcul rapide avec precision moyenne (30pts).
-  //            = 2 calcul rapide avec meilleure precision (40pts).
-  //            = 3 calcul un peu plus lent avec bonne precision (50 pts).
-  //            = 4 calcul lent avec la meilleure precision possible
-  //             (61pts).
-
-  // The possible values of NbGaussPoints
 
   const int NDEG8 = 8, NDEG10 = 10, NDEG15 = 15, NDEG20 = 20, NDEG25 = 25, NDEG30 = 30, NDEG40 = 40,
             NDEG50 = 50, NDEG61 = 61;
@@ -2030,7 +1672,6 @@ void PLib::JacobiParameters(const GeomAbs_Shape ConstraintOrder,
   else
     WorkDegree = MaxDegree + 6;
 
-  //---> Nbre mini de points necessaires.
   int IPMIN = 0;
   if (WorkDegree < NDEG8)
     IPMIN = NDEG8;
@@ -2052,7 +1693,7 @@ void PLib::JacobiParameters(const GeomAbs_Shape ConstraintOrder,
     IPMIN = NDEG61;
   else
     throw Standard_ConstructionError("Invalid MaxDegree");
-  // ---> Nbre de points voulus.
+
   int IWANT = 0;
   switch (Code)
   {
@@ -2086,17 +1727,9 @@ void PLib::JacobiParameters(const GeomAbs_Shape ConstraintOrder,
     default:
       throw Standard_ConstructionError("Invalid Code");
   }
-  //-->  NbGaussPoints est le nombre de points de discretisation de la fonction,
-  //     il ne peut prendre que les valeurs 8,10,15,20,25,30,40,50 ou 61.
-  //     NbGaussPoints doit etre superieur strictement a WorkDegree.
-  NbGaussPoints = std::max(IPMIN, IWANT);
-  //  NbGaussPoints +=2;
-}
 
-//=======================================================================
-// function : NivConstr
-// purpose  : translates from GeomAbs_Shape to Integer
-//=======================================================================
+  NbGaussPoints = std::max(IPMIN, IWANT);
+}
 
 int PLib::NivConstr(const GeomAbs_Shape ConstraintOrder)
 {
@@ -2118,11 +1751,6 @@ int PLib::NivConstr(const GeomAbs_Shape ConstraintOrder)
   return NivConstr;
 }
 
-//=======================================================================
-// function : ConstraintOrder
-// purpose  : translates from Integer to GeomAbs_Shape
-//=======================================================================
-
 GeomAbs_Shape PLib::ConstraintOrder(const int NivConstr)
 {
   GeomAbs_Shape ConstraintOrder = GeomAbs_C0;
@@ -2142,8 +1770,6 @@ GeomAbs_Shape PLib::ConstraintOrder(const int NivConstr)
   }
   return ConstraintOrder;
 }
-
-//=================================================================================================
 
 void PLib::EvalLength(const int    Degree,
                       const int    Dimension,
@@ -2168,20 +1794,14 @@ void PLib::EvalLength(const int    Degree,
   C1 = (U2 + U1) / 2.;
   C2 = (U2 - U1) / 2.;
 
-  //-----------------------------------------------------------
-  //****** Integration - Boucle sur les intervalles de GAUSS **
-  //-----------------------------------------------------------
-
   Sum = 0;
 
   for (j = 1; j <= NbGaussPoints / 2; j++)
   {
-    // Integration en tenant compte de la symetrie
+
     Tran = C2 * GaussPoints(j);
     X1   = C1 + Tran;
     X2   = C1 - Tran;
-
-    //****** Derivation sur la dimension de l'espace **
 
     degdim = Degree * Dimension;
     Der1 = Der2 = 0.;
@@ -2198,16 +1818,10 @@ void PLib::EvalLength(const int    Degree,
       Der2 += D2 * D2;
     }
 
-    //****** Integration **
-
     Sum += GaussWeights(j) * C2 * (std::sqrt(Der1) + std::sqrt(Der2));
-
-    //****** Fin de boucle dur les intervalles de GAUSS **
   }
   Length = Sum;
 }
-
-//=================================================================================================
 
 void PLib::EvalLength(const int    Degree,
                       const int    Dimension,
@@ -2218,10 +1832,8 @@ void PLib::EvalLength(const int    Degree,
                       double&      Length,
                       double&      Error)
 {
-  int i;
-  int NbSubInt = 1,  // Current number of subintervals
-    MaxNbIter  = 13, // Max number of iterations
-    NbIter     = 1;  // Current number of iterations
+  int    i;
+  int    NbSubInt = 1, MaxNbIter = 13, NbIter = 1;
   double dU, OldLen, LenI;
 
   PLib::EvalLength(Degree, Dimension, PolynomialCoeff, U1, U2, Length);

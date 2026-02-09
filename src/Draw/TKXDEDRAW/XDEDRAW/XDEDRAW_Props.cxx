@@ -41,9 +41,6 @@
 
 #include <cstdio>
 
-// --------------------- VolumeFix Begin ---
-//=================================================================================================
-
 static double TetraVol(gp_Pnt RefPoint, gp_Pnt Som1, gp_Pnt Som2, gp_Pnt Som3)
 {
   double curVolume = 0;
@@ -81,8 +78,6 @@ static double TetraVol(gp_Pnt RefPoint, gp_Pnt Som1, gp_Pnt Som2, gp_Pnt Som3)
     return (-curVolume);
 }
 
-//=================================================================================================
-
 static gp_XYZ TetraCen(const gp_Pnt& RefPoint,
                        const gp_Pnt& Som1,
                        const gp_Pnt& Som2,
@@ -93,8 +88,6 @@ static gp_XYZ TetraCen(const gp_Pnt& RefPoint,
   curCentr = plnPnt + (RefPoint.XYZ() - plnPnt) / 4;
   return curCentr;
 }
-
-//=================================================================================================
 
 static double CalculVolume(const TopoDS_Shape& So,
                            gp_Pnt&             aRefPoint,
@@ -133,7 +126,7 @@ static double CalculVolume(const TopoDS_Shape& So,
     {
 
       Poly_Triangle trian = facing->Triangle(i);
-      int           index1, index2, index3; // M,N;
+      int           index1, index2, index3;
       if (F.Orientation() == TopAbs_REVERSED)
         trian.Get(index1, index3, index2);
       else
@@ -156,14 +149,6 @@ static double CalculVolume(const TopoDS_Shape& So,
   di << "Z=\t" << localCentroid.Z() << "\n";
   return (myVolume);
 }
-
-// --------------------- VolumeFix End   ---
-
-//=======================================================================
-// Section: Work with val props
-//=======================================================================
-
-//=================================================================================================
 
 static int SetProps(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -201,7 +186,6 @@ static int SetProps(Draw_Interpretor& di, int argc, const char** argv)
   if (!aLabel.IsNull())
   {
 
-    // retrieve epsilon
     double anEps;
     if (argc > 3)
       anEps = Draw::Atof(argv[3]);
@@ -234,8 +218,6 @@ static int SetProps(Draw_Interpretor& di, int argc, const char** argv)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int SetVolume(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -278,8 +260,6 @@ static int SetVolume(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int SetArea(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 4)
@@ -319,8 +299,6 @@ static int SetArea(Draw_Interpretor& di, int argc, const char** argv)
   di << res;
   return 0;
 }
-
-//=================================================================================================
 
 static int SetCentroid(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -364,8 +342,6 @@ static int SetCentroid(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int GetVolume(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 3)
@@ -394,17 +370,13 @@ static int GetVolume(Draw_Interpretor& di, int argc, const char** argv)
   }
   if (!aLabel.IsNull())
   {
-    //    occ::handle<XCAFDoc_Volume> aVolume = new (XCAFDoc_Volume);
-    //    if (aLabel.FindAttribute (XCAFDoc_Volume::GetID(), aVolume)) di << aVolume->Get();
-    // another case
+
     double aVol;
     if (XCAFDoc_Volume::Get(aLabel, aVol))
       di << aVol;
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int GetArea(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -434,17 +406,13 @@ static int GetArea(Draw_Interpretor& di, int argc, const char** argv)
   }
   if (!aLabel.IsNull())
   {
-    //     occ::handle<XCAFDoc_Area> aArea = new (XCAFDoc_Area);
-    //     if (aLabel.FindAttribute (XCAFDoc_Area::GetID(), aArea)) di << aArea->Get();
-    // another case
+
     double anA;
     if (XCAFDoc_Area::Get(aLabel, anA))
       di << anA;
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int GetCentroid(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -479,17 +447,13 @@ static int GetCentroid(Draw_Interpretor& di, int argc, const char** argv)
     occ::handle<XCAFDoc_Centroid> aCentroid = new (XCAFDoc_Centroid);
     if (aLabel.FindAttribute(XCAFDoc_Centroid::GetID(), aCentroid))
     {
-      //       aPoint = aCentroid->Get();
-      //       di << aPoint.X()<<" "<<aPoint.Y()<<" "<<aPoint.Z();
-      // another case
+
       if (XCAFDoc_Centroid::Get(aLabel, aPoint))
         di << aPoint.X() << " " << aPoint.Y() << " " << aPoint.Z();
     }
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -546,7 +510,6 @@ static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
   {
     TDF_Label aLabel = seq(i);
 
-    // add instance labels to sequence to process them as well
     if (XCAFDoc_ShapeTool::IsAssembly(aLabel))
     {
       NCollection_Sequence<TDF_Label> comp;
@@ -568,8 +531,7 @@ static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
 
     TCollection_AsciiString str;
     TDF_Tool::Entry(aLabel, str);
-    // printf ( "%s%-12.12s", ( wholeDoc ? "" : "Label " ), str.ToCString() );
-    // fflush ( stdout );
+
     char string1[260];
     Sprintf(string1, "%s%-12.12s", (wholeDoc ? "" : "Label "), str.ToCString());
     di << string1;
@@ -596,10 +558,7 @@ static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
       {
         OCC_CATCH_SIGNALS
         BRepGProp::SurfaceProperties(aShape, G, 0.001);
-        // printf ("%s%9.1f (%3d%%)%s", ( wholeDoc ? "" : "  Area defect:   " ),
-        //	aArea->Get() - G.Mass(),
-        //	(int)( Abs ( G.Mass() ) > 1e-10 ? 100. * ( aArea->Get() - G.Mass() ) /
-        // G.Mass() : 999. ), 	( wholeDoc ? "" : "\n" ));
+
         char string2[260];
         Sprintf(
           string2,
@@ -612,7 +571,7 @@ static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
       }
       catch (Standard_Failure const&)
       {
-        // printf ( "%-16.16s", "exception" );
+
         char string3[260];
         Sprintf(string3, "%-16.16s", "exception");
         di << string3;
@@ -620,7 +579,7 @@ static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
     }
     else if (wholeDoc)
     {
-      // printf ( "%16.16s", "" );
+
       char string4[260];
       Sprintf(string4, "%16.16s", "");
       di << string4;
@@ -631,7 +590,7 @@ static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
       try
       {
         OCC_CATCH_SIGNALS
-        // Added for check Volume. PTV 08 Nov 2000.
+
         double localVolume;
         gp_Pnt pcg(0, 0, 0);
         if (withVolFix)
@@ -654,10 +613,7 @@ static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
 
         if (!aVolume.IsNull())
         {
-          // printf ("%s%9.1f (%3d%%)%s", ( wholeDoc ? "" : "  Volume defect: " ),
-          //   aVolume->Get() - localVolume,
-          //   (int)( Abs ( localVolume ) > 1e-10 ? 100. * ( aVolume->Get() -
-          //   localVolume ) / localVolume : 999. ), ( wholeDoc ? "" : "\n" ));
+
           char string5[260];
           Sprintf(string5,
                   "%s%9.1f (%3d%%)%s",
@@ -671,7 +627,7 @@ static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
         }
         else if (wholeDoc)
         {
-          // printf ( "%16.16s", "" );
+
           char string6[260];
           Sprintf(string6, "%16.16s", "");
           di << string6;
@@ -683,8 +639,7 @@ static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
           char   string7[260];
           if (wholeDoc)
           {
-            // printf ( " %7.2f %7.2f %7.2f",
-            //     p.X() - pcg.X(), p.Y() - pcg.Y(), p.Z() - pcg.Z() );
+
             Sprintf(string7,
                     " %7.2f %7.2f %7.2f",
                     p.X() - pcg.X(),
@@ -693,8 +648,7 @@ static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
           }
           else
           {
-            // printf ( "  CG defect: dX=%.3f, dY=%.3f, dZ=%.3f\n",
-            //     p.X() - pcg.X(), p.Y() - pcg.Y(), p.Z() - pcg.Z() );
+
             Sprintf(string7,
                     "  CG defect: dX=%.3f, dY=%.3f, dZ=%.3f\n",
                     p.X() - pcg.X(),
@@ -705,7 +659,7 @@ static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
         }
         else if (wholeDoc)
         {
-          // printf ( "%24.24s", "" );
+
           char string8[260];
           Sprintf(string8, "%24.24s", "");
           di << string8;
@@ -713,12 +667,12 @@ static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
       }
       catch (Standard_Failure const& anException)
       {
-        // printf ( "%40.40s", "exception" );
+
         char string9[260];
         Sprintf(string9, "%40.40s", "exception");
         di << string9;
 #ifdef OCCT_DEBUG
-        // fflush ( stdout );
+
         di << ": ";
         di << anException.what();
         di << " ** Skip\n";
@@ -728,12 +682,11 @@ static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
     }
     else if (wholeDoc)
     {
-      // printf ( "%40.40s", "" );
+
       char string10[260];
       Sprintf(string10, "%40.40s", "");
       di << string10;
     }
-    // fflush ( stdout );
 
     if (wholeDoc)
     {
@@ -746,8 +699,6 @@ static int CheckProps(Draw_Interpretor& di, int argc, const char** argv)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int ShapeVolume(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -769,17 +720,12 @@ static int ShapeVolume(Draw_Interpretor& di, int argc, const char** argv)
     tol       = -tol;
   }
   localVolume = CalculVolume(aShape, aPoint, tol, withForce, di);
-  // std::cout << "Volume : " << std::setw(15) << localVolume << "\n" << std::endl;
+
   Standard_SStream aSStream;
   aSStream << "Volume : " << std::setw(15) << localVolume << "\n";
   di << aSStream;
   return 0;
 }
-
-//=======================================================================
-// function : GetMassProps
-// purpose  : auxiliary for ShapeMassProps
-//=======================================================================
 
 static bool GetMassProps(const TDF_Label& aLabel,
                          gp_XYZ&          theCenterGravity,
@@ -804,14 +750,11 @@ static bool GetMassProps(const TDF_Label& aLabel,
     occ::handle<TNaming_NamedShape> NS;
     if (aLabel.FindAttribute(TNaming_NamedShape::GetID(), NS))
     {
-      // S = TNaming_Tool::GetShape(NS);
+
       TopoDS_Shape aSh = NS->Get();
       if (aSh.ShapeType() == TopAbs_SOLID)
         return false;
     }
-
-    // TopoDS_Shape aSh = XCAFDoc_ShapeTool::GetShape(aLabel);
-    // if(aSh.ShapeType()==TopAbs_SOLID) return false;
 
     occ::handle<TDataStd_TreeNode> Node;
     if (aLabel.FindAttribute(XCAFDoc::ShapeRefGUID(), Node) && Node->HasFather())
@@ -832,7 +775,7 @@ static bool GetMassProps(const TDF_Label& aLabel,
     }
     else
     {
-      // calculate for components
+
       NCollection_Sequence<TDF_Label> comp;
       XCAFDoc_ShapeTool::GetComponents(aLabel, comp);
       if (!comp.Length())
@@ -872,8 +815,6 @@ static bool GetMassProps(const TDF_Label& aLabel,
   }
   return true;
 }
-
-//=================================================================================================
 
 static int ShapeMassProps(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -923,17 +864,14 @@ static int ShapeMassProps(Draw_Interpretor& di, int argc, const char** argv)
     occ::handle<XCAFDoc_ShapeTool> STool = XCAFDoc_DocumentTool::ShapeTool(Doc->Main());
     STool->GetShapes(seq);
   }
-  // if ( wholeDoc ) {
-  //   di << "Label            Area defect   Volume defect    dX      dY      dZ    Name\n";
-  // }
+
   gp_XYZ aCenterGravity(0.0, 0.0, 0.0);
   double aMassVal = 0.0;
   for (int i = 1; i <= seq.Length(); i++)
   {
     TDF_Label aLabel = seq(i);
     GetMassProps(aLabel, aCenterGravity, aMassVal, atol);
-    //    if(GetMassProps(aLabel,aCenterGravity,aMassVal,atol))
-    //    {
+
     TCollection_AsciiString str;
     TDF_Tool::Entry(aLabel, str);
     if (aMassVal > 0)
@@ -946,14 +884,12 @@ static int ShapeMassProps(Draw_Interpretor& di, int argc, const char** argv)
     }
     else
     {
-      //      di<<"For one component density is absent\n";
+
       di << "Shape from label : " << str.ToCString() << " not have a mass\n";
     }
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int SetMaterial(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1079,8 +1015,6 @@ static int GetValidationProps(Draw_Interpretor& di, int argc, const char** argv)
   di << "\n";
   return 0;
 }
-
-//=================================================================================================
 
 void XDEDRAW_Props::InitCommands(Draw_Interpretor& di)
 {

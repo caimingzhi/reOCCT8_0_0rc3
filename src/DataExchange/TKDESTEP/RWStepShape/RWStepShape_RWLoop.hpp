@@ -10,7 +10,6 @@ class Interface_Check;
 class StepShape_Loop;
 class StepData_StepWriter;
 
-//! Read & Write Module for Loop
 class RWStepShape_RWLoop
 {
 public:

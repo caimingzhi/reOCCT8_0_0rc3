@@ -10,8 +10,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_Deflection, Standard_Transient)
 
-//=================================================================================================
-
 double BRepMesh_Deflection::ComputeAbsoluteDeflection(const TopoDS_Shape& theShape,
                                                       const double        theRelativeDeflection,
                                                       const double        theMaxShapeSize)
@@ -26,8 +24,6 @@ double BRepMesh_Deflection::ComputeAbsoluteDeflection(const TopoDS_Shape& theSha
 
   double aShapeSize = theRelativeDeflection;
   BRepMesh_ShapeTool::BoxMaxDimension(aBox, aShapeSize);
-
-  // Adjust resulting value in relation to the total size
 
   double aX1, aY1, aZ1, aX2, aY2, aZ2;
   aBox.Get(aX1, aY1, aZ1, aX2, aY2, aZ2);
@@ -46,8 +42,6 @@ double BRepMesh_Deflection::ComputeAbsoluteDeflection(const TopoDS_Shape& theSha
 
   return (anAdjustmentCoefficient * aShapeSize * theRelativeDeflection);
 }
-
-//=================================================================================================
 
 void BRepMesh_Deflection::ComputeDeflection(const IMeshData::IEdgeHandle& theDEdge,
                                             const double                  theMaxShapeSize,
@@ -83,8 +77,6 @@ void BRepMesh_Deflection::ComputeDeflection(const IMeshData::IEdgeHandle& theDEd
   theDEdge->SetAngularDeflection(aAngDeflection);
 }
 
-//=================================================================================================
-
 void BRepMesh_Deflection::ComputeDeflection(const IMeshData::IWireHandle& theDWire,
                                             const IMeshTools_Parameters&  theParameters)
 {
@@ -105,8 +97,6 @@ void BRepMesh_Deflection::ComputeDeflection(const IMeshData::IWireHandle& theDWi
 
   theDWire->SetDeflection(aWireDeflection);
 }
-
-//=================================================================================================
 
 void BRepMesh_Deflection::ComputeDeflection(const IMeshData::IFaceHandle& theDFace,
                                             const IMeshTools_Parameters&  theParameters)
@@ -138,15 +128,12 @@ void BRepMesh_Deflection::ComputeDeflection(const IMeshData::IFaceHandle& theDFa
   theDFace->SetDeflection(aFaceDeflection);
 }
 
-//=================================================================================================
-
 bool BRepMesh_Deflection::IsConsistent(const double theCurrent,
                                        const double theRequired,
                                        const bool   theAllowDecrease,
                                        const double theRatio)
 {
-  // Check if the deflection of existing polygonal representation
-  // fits the required deflection.
+
   bool isConsistent = theCurrent < (1. + theRatio) * theRequired
                       && (!theAllowDecrease || theCurrent > (1. - theRatio) * theRequired);
   return isConsistent;

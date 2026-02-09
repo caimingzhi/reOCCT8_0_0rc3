@@ -3,8 +3,6 @@
 #include <TopLoc_SListNodeOfItemLocation.hpp>
 #include <TopLoc_SListOfItemLocation.hpp>
 
-//=================================================================================================
-
 TopLoc_SListOfItemLocation::TopLoc_SListOfItemLocation(const TopLoc_ItemLocation&        anItem,
                                                        const TopLoc_SListOfItemLocation& aTail)
     : myNode(new TopLoc_SListNodeOfItemLocation(anItem, aTail))
@@ -15,8 +13,6 @@ TopLoc_SListOfItemLocation::TopLoc_SListOfItemLocation(const TopLoc_ItemLocation
     myNode->Value().myTrsf.PreMultiply(aT);
   }
 }
-
-//=================================================================================================
 
 TopLoc_SListOfItemLocation& TopLoc_SListOfItemLocation::Assign(
   const TopLoc_SListOfItemLocation& Other)
@@ -29,15 +25,11 @@ TopLoc_SListOfItemLocation& TopLoc_SListOfItemLocation::Assign(
   return *this;
 }
 
-//=================================================================================================
-
 const TopLoc_ItemLocation& TopLoc_SListOfItemLocation::Value() const
 {
   Standard_NoSuchObject_Raise_if(myNode.IsNull(), "TopLoc_SListOfItemLocation::Value");
   return myNode->Value();
 }
-
-//=================================================================================================
 
 const TopLoc_SListOfItemLocation& TopLoc_SListOfItemLocation::Tail() const
 {

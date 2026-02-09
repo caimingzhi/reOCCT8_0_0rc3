@@ -7,87 +7,66 @@ class Image_CompressedPixMap;
 class Image_SupportedFormats;
 class Image_PixMap;
 
-//! Texture image definition.
-//! The image can be stored as path to image file, as file path with the given offset and as a data
-//! buffer of encoded image.
 class Image_Texture : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(Image_Texture, Standard_Transient)
 public:
-  //! Constructor pointing to file location.
   Standard_EXPORT explicit Image_Texture(const TCollection_AsciiString& theFileName);
 
-  //! Constructor pointing to file part.
   Standard_EXPORT explicit Image_Texture(const TCollection_AsciiString& theFileName,
                                          int64_t                        theOffset,
                                          int64_t                        theLength);
 
-  //! Constructor pointing to buffer.
   Standard_EXPORT explicit Image_Texture(const occ::handle<NCollection_Buffer>& theBuffer,
                                          const TCollection_AsciiString&         theId);
 
-  //! Return generated texture id.
   const TCollection_AsciiString& TextureId() const { return myTextureId; }
 
-  //! Return image file path.
   const TCollection_AsciiString& FilePath() const { return myImagePath; }
 
-  //! Return offset within file.
   int64_t FileOffset() const { return myOffset; }
 
-  //! Return length of image data within the file after offset.
   int64_t FileLength() const { return myLength; }
 
-  //! Return buffer holding encoded image content.
   const occ::handle<NCollection_Buffer>& DataBuffer() const { return myBuffer; }
 
-  //! Return mime-type of image file based on ProbeImageFileFormat().
   Standard_EXPORT TCollection_AsciiString MimeType() const;
 
-  //! Return image file format.
   Standard_EXPORT TCollection_AsciiString ProbeImageFileFormat() const;
 
-  //! Image reader without decoding data for formats supported natively by GPUs.
   Standard_EXPORT virtual occ::handle<Image_CompressedPixMap> ReadCompressedImage(
     const occ::handle<Image_SupportedFormats>& theSupported) const;
 
-  //! Image reader.
   Standard_EXPORT virtual occ::handle<Image_PixMap> ReadImage(
     const occ::handle<Image_SupportedFormats>& theSupported) const;
 
-  //! Write image to specified file without decoding data.
   Standard_EXPORT virtual bool WriteImage(const TCollection_AsciiString& theFile);
 
-  //! Write image to specified stream without decoding data.
   Standard_EXPORT virtual bool WriteImage(std::ostream&                  theStream,
                                           const TCollection_AsciiString& theFile);
 
-public: //! @name hasher interface
-  //! Dumps the content of me into the stream
+public:
   Standard_EXPORT virtual void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
 protected:
-  //! Read image from normal image file.
   Standard_EXPORT virtual occ::handle<Image_PixMap> loadImageFile(
     const TCollection_AsciiString& thePath) const;
 
-  //! Read image from file with some offset.
   Standard_EXPORT virtual occ::handle<Image_PixMap> loadImageOffset(
     const TCollection_AsciiString& thePath,
     int64_t                        theOffset,
     int64_t                        theLength) const;
 
-  //! Read image from buffer.
   Standard_EXPORT virtual occ::handle<Image_PixMap> loadImageBuffer(
     const occ::handle<NCollection_Buffer>& theBuffer,
     const TCollection_AsciiString&         theId) const;
 
 protected:
-  TCollection_AsciiString         myTextureId; //!< generated texture id
-  TCollection_AsciiString         myImagePath; //!< image file path
-  occ::handle<NCollection_Buffer> myBuffer;    //!< image buffer
-  int64_t                         myOffset;    //!< offset within file
-  int64_t                         myLength;    //!< length within file
+  TCollection_AsciiString         myTextureId;
+  TCollection_AsciiString         myImagePath;
+  occ::handle<NCollection_Buffer> myBuffer;
+  int64_t                         myOffset;
+  int64_t                         myLength;
 };
 
 namespace std

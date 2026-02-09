@@ -8,7 +8,6 @@
 #include <gp_XY.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
 GccAna_LinPnt2dBisec::GccAna_LinPnt2dBisec(const gp_Lin2d& Line1, const gp_Pnt2d& Point2)
 {
 
@@ -19,7 +18,7 @@ GccAna_LinPnt2dBisec::GccAna_LinPnt2dBisec(const gp_Lin2d& Line1, const gp_Pnt2d
   double xloc = Line1.Location().X();
   double yloc = Line1.Location().Y();
   double dist = Line1.Distance(Point2);
-  //   if ( dist > gp::Resolution()) {
+
   if (dist > 1.e-10)
   {
     double xpoint2 = Point2.X();
@@ -30,7 +29,6 @@ GccAna_LinPnt2dBisec::GccAna_LinPnt2dBisec(const gp_Lin2d& Line1, const gp_Pnt2d
                        gp_Dir2d(-ydir, xdir));
       gp_Parab2d bislinpnt(axeparab, dist / 2.0);
       bissol = new GccInt_BParab(bislinpnt);
-      //         =====================================
     }
     else
     {
@@ -38,7 +36,6 @@ GccAna_LinPnt2dBisec::GccAna_LinPnt2dBisec(const gp_Lin2d& Line1, const gp_Pnt2d
                        gp_Dir2d(ydir, -xdir));
       gp_Parab2d bislinpnt(axeparab, dist / 2.0);
       bissol = new GccInt_BParab(bislinpnt);
-      //         =====================================
     }
     WellDone = true;
   }
@@ -46,12 +43,10 @@ GccAna_LinPnt2dBisec::GccAna_LinPnt2dBisec(const gp_Lin2d& Line1, const gp_Pnt2d
   {
     gp_Lin2d bislinpnt(Point2, gp_Dir2d(-ydir, xdir));
     bissol = new GccInt_BLine(bislinpnt);
-    //     ====================================
+
     WellDone = true;
   }
 }
-
-//=========================================================================
 
 bool GccAna_LinPnt2dBisec::IsDone() const
 {

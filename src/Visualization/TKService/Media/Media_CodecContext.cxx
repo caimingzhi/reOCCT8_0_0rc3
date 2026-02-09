@@ -14,8 +14,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Media_CodecContext, Standard_Transient)
 
-//=================================================================================================
-
 Media_CodecContext::Media_CodecContext()
     : myCodecCtx(nullptr),
       myCodec(nullptr),
@@ -30,14 +28,10 @@ Media_CodecContext::Media_CodecContext()
 #endif
 }
 
-//=================================================================================================
-
 Media_CodecContext::~Media_CodecContext()
 {
   Close();
 }
-
-//=================================================================================================
 
 bool Media_CodecContext::Init(const AVStream& theStream, double thePtsStartBase, int theNbThreads)
 {
@@ -47,8 +41,6 @@ bool Media_CodecContext::Init(const AVStream& theStream, double thePtsStartBase,
   return Init(theStream, thePtsStartBase, theNbThreads, 0);
 #endif
 }
-
-//=================================================================================================
 
 bool Media_CodecContext::Init(const AVStream& theStream,
                               double          thePtsStartBase,
@@ -65,10 +57,10 @@ bool Media_CodecContext::Init(const AVStream& theStream,
     return false;
   }
   #else
-    // For older FFmpeg, copy from stream's codec context
+
     #ifdef _MSC_VER
       #pragma warning(push)
-      #pragma warning(disable : 4996) // deprecated declaration
+      #pragma warning(disable : 4996)
     #endif
   if (avcodec_copy_context(myCodecCtx, theStream.codec) < 0)
     #ifdef _MSC_VER
@@ -91,7 +83,7 @@ bool Media_CodecContext::Init(const AVStream& theStream,
   #else
     #ifdef _MSC_VER
       #pragma warning(push)
-      #pragma warning(disable : 4996) // deprecated declaration
+      #pragma warning(disable : 4996)
     #endif
   const AVCodecID aCodecId = theCodecId != 0 ? (AVCodecID)theCodecId : theStream.codec->codec_id;
     #ifdef _MSC_VER
@@ -116,7 +108,7 @@ bool Media_CodecContext::Init(const AVStream& theStream,
   #else
     #ifdef _MSC_VER
       #pragma warning(push)
-      #pragma warning(disable : 4996) // deprecated declaration
+      #pragma warning(disable : 4996)
     #endif
   if (theStream.codec->codec_type == AVMEDIA_TYPE_VIDEO)
     #ifdef _MSC_VER
@@ -161,7 +153,7 @@ bool Media_CodecContext::Init(const AVStream& theStream,
   #else
     #ifdef _MSC_VER
       #pragma warning(push)
-      #pragma warning(disable : 4996) // deprecated declaration
+      #pragma warning(disable : 4996)
     #endif
   if (theStream.codec->codec_type == AVMEDIA_TYPE_VIDEO
       && (myCodecCtx->width <= 0 || myCodecCtx->height <= 0))
@@ -185,8 +177,6 @@ bool Media_CodecContext::Init(const AVStream& theStream,
 #endif
 }
 
-//=================================================================================================
-
 void Media_CodecContext::Close()
 {
   if (myCodecCtx != nullptr)
@@ -203,8 +193,6 @@ void Media_CodecContext::Close()
   }
 }
 
-//=================================================================================================
-
 void Media_CodecContext::Flush()
 {
   if (myCodecCtx != nullptr)
@@ -215,8 +203,6 @@ void Media_CodecContext::Flush()
   }
 }
 
-//=================================================================================================
-
 int Media_CodecContext::SizeX() const
 {
 #ifdef HAVE_FFMPEG
@@ -225,8 +211,6 @@ int Media_CodecContext::SizeX() const
   return 0;
 #endif
 }
-
-//=================================================================================================
 
 int Media_CodecContext::SizeY() const
 {
@@ -237,14 +221,10 @@ int Media_CodecContext::SizeY() const
 #endif
 }
 
-//=================================================================================================
-
 bool Media_CodecContext::CanProcessPacket(const occ::handle<Media_Packet>& thePacket) const
 {
   return !thePacket.IsNull() && myStreamIndex == thePacket->StreamIndex();
 }
-
-//=================================================================================================
 
 bool Media_CodecContext::SendPacket(const occ::handle<Media_Packet>& thePacket)
 {
@@ -258,7 +238,7 @@ bool Media_CodecContext::SendPacket(const occ::handle<Media_Packet>& thePacket)
   const int aRes = avcodec_send_packet(myCodecCtx, thePacket->Packet());
   return aRes >= 0 || aRes == AVERROR_EOF;
   #else
-  // For older FFmpeg versions, fallback to older decode API if needed
+
   const int aRes = avcodec_send_packet(myCodecCtx, thePacket->Packet());
   if (aRes < 0 && aRes != AVERROR_EOF)
   {
@@ -270,8 +250,6 @@ bool Media_CodecContext::SendPacket(const occ::handle<Media_Packet>& thePacket)
   return false;
 #endif
 }
-
-//=================================================================================================
 
 bool Media_CodecContext::ReceiveFrame(const occ::handle<Media_Frame>& theFrame)
 {
@@ -294,7 +272,7 @@ bool Media_CodecContext::ReceiveFrame(const occ::handle<Media_Frame>& theFrame)
   theFrame->SetPts(aFramePts);
   return true;
   #else
-  // For older FFmpeg, use the older decoding API
+
   const int aRes2 = avcodec_receive_frame(myCodecCtx, theFrame->ChangeFrame());
   if (aRes2 < 0)
   {

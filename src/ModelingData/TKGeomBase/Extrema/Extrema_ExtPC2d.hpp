@@ -10,7 +10,6 @@
 #include <gp_Pnt2d.hpp>
 #include <gp_Vec2d.hpp>
 
-//! Type alias for 2D point-to-curve extremum computation.
 using Extrema_ExtPC2d = Extrema_GGExtPC<Adaptor2d_Curve2d,
                                         Extrema_Curve2dTool,
                                         Extrema_ExtPElC2d,

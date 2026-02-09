@@ -116,18 +116,12 @@ void IntPatch_RLine::SetPoint(const int Index, const IntPatch_Point& thepoint)
   curv->Value(Index, thepoint.PntOn2S());
 }
 
-// void IntPatch_RLine::ComputeVertexParameters(const double Tol)
 void IntPatch_RLine::ComputeVertexParameters(const double)
 {
-  int i, j, nbvtx; // k;
+  int i, j, nbvtx;
 
   bool APointDeleted = false;
-  //----------------------------------------------------------
-  //--     F i l t r e   s u r   r e s t r i c t i o n s   --
-  //----------------------------------------------------------
-  //-- deux vertex sur la meme restriction et seulement
-  //-- sur celle ci ne doivent pas avoir le meme parametre
-  //--
+
   nbvtx = NbVertex();
   do
   {
@@ -219,8 +213,6 @@ void IntPatch_RLine::ComputeVertexParameters(const double)
 
   nbvtx = NbVertex();
 
-  //----------------------------------------------------
-  //-- On trie les Vertex
   bool SortIsOK;
   do
   {
@@ -255,21 +247,21 @@ void IntPatch_RLine::ComputeVertexParameters(const double)
           {
             restrdiff = false;
             if (VTXM1.IsOnDomS1() && VTX.IsOnDomS1())
-            { //-- OnS1    OnS1
+            {
               if (VTXM1.ArcOnS1() == VTX.ArcOnS1())
-              { //-- OnS1 == OnS1
+              {
                 if (VTX.ParameterOnArc1() == VTXM1.ParameterOnArc1())
                 {
                   if (VTXM1.IsOnDomS2())
-                  { //-- OnS1 == OnS1  OnS2
+                  {
                     if (!VTX.IsOnDomS2())
-                    { //-- OnS1 == OnS1  OnS2 PasOnS2
+                    {
                       kill = true;
                     }
                     else
                     {
                       if (VTXM1.ArcOnS2() == VTX.ArcOnS2())
-                      { //-- OnS1 == OnS1  OnS2 == OnS2
+                      {
                         if (VTX.ParameterOnArc2() == VTXM1.ParameterOnArc2())
                         {
                           kill = true;
@@ -278,9 +270,9 @@ void IntPatch_RLine::ComputeVertexParameters(const double)
                     }
                   }
                   else
-                  { //-- OnS1 == OnS1  PasOnS2
+                  {
                     if (VTX.IsOnDomS2())
-                    { //-- OnS1 == OnS1  PasOnS2  OnS2
+                    {
                       killm1 = true;
                     }
                   }
@@ -295,21 +287,21 @@ void IntPatch_RLine::ComputeVertexParameters(const double)
             if ((!restrdiff) && (!(kill || killm1)))
             {
               if (VTXM1.IsOnDomS2() && VTX.IsOnDomS2())
-              { //-- OnS2    OnS2
+              {
                 if (VTXM1.ArcOnS2() == VTX.ArcOnS2())
-                { //-- OnS2 == OnS2
+                {
                   if (VTX.ParameterOnArc2() == VTXM1.ParameterOnArc2())
                   {
                     if (VTXM1.IsOnDomS1())
-                    { //-- OnS2 == OnS2  OnS1
+                    {
                       if (!VTX.IsOnDomS1())
-                      { //-- OnS2 == OnS2  OnS1 PasOnS1
+                      {
                         kill = true;
                       }
                       else
                       {
                         if (VTXM1.ArcOnS1() == VTX.ArcOnS1())
-                        { //-- OnS2 == OnS2  OnS1 == OnS1
+                        {
                           if (VTX.ParameterOnArc1() == VTXM1.ParameterOnArc1())
                           {
                             kill = true;
@@ -318,9 +310,9 @@ void IntPatch_RLine::ComputeVertexParameters(const double)
                       }
                     }
                     else
-                    { //-- OnS2 == OnS2  PasOnS1
+                    {
                       if (VTX.IsOnDomS1())
-                      { //-- OnS2 == OnS2  PasOnS1  OnS1
+                      {
                         killm1 = true;
                       }
                     }
@@ -381,8 +373,6 @@ void IntPatch_RLine::ComputeVertexParameters(const double)
     }
   } while (!SortIsOK);
 
-  //----------------------------------------------------
-  //-- On trie les Vertex ( Cas Bizarre )
   nbvtx = NbVertex();
   do
   {

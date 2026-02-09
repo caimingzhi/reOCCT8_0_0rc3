@@ -5,11 +5,7 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWDocumentRepresentationType::RWStepBasic_RWDocumentRepresentationType() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWDocumentRepresentationType::ReadStep(
   const occ::handle<StepData_StepReaderData>&              data,
@@ -17,11 +13,9 @@ void RWStepBasic_RWDocumentRepresentationType::ReadStep(
   occ::handle<Interface_Check>&                            ach,
   const occ::handle<StepBasic_DocumentRepresentationType>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "document_representation_type"))
     return;
-
-  // Own fields of DocumentRepresentationType
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -34,32 +28,23 @@ void RWStepBasic_RWDocumentRepresentationType::ReadStep(
                    STANDARD_TYPE(StepBasic_Document),
                    aRepresentedDocument);
 
-  // Initialize entity
   ent->Init(aName, aRepresentedDocument);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWDocumentRepresentationType::WriteStep(
   StepData_StepWriter&                                     SW,
   const occ::handle<StepBasic_DocumentRepresentationType>& ent) const
 {
 
-  // Own fields of DocumentRepresentationType
-
   SW.Send(ent->Name());
 
   SW.Send(ent->RepresentedDocument());
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWDocumentRepresentationType::Share(
   const occ::handle<StepBasic_DocumentRepresentationType>& ent,
   Interface_EntityIterator&                                iter) const
 {
-
-  // Own fields of DocumentRepresentationType
 
   iter.AddItem(ent->RepresentedDocument());
 }

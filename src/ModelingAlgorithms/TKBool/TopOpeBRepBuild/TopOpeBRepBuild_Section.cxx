@@ -59,15 +59,12 @@ Standard_EXPORT void debspseon(const int i)
 extern bool TopOpeBRepTool_GettraceC2D();
 #endif
 
-// Standard_IMPORT void FUN_tool_ttranslate(const gp_Vec2d& tvector, const TopoDS_Face& fF,
-// TopoDS_Edge& fyE);
-
 #include <TopOpeBRepTool_ShapeTool.hpp>
 #include <GeomAdaptor_Surface.hpp>
 #include <GeomAbs_SurfaceType.hpp>
-//---------------------------------------------
+
 static bool FUN_periodicS(const TopoDS_Shape& F)
-//---------------------------------------------
+
 {
   if (F.IsNull())
     return false;
@@ -83,7 +80,7 @@ static bool FUN_periodicS(const TopoDS_Shape& F)
     periodic = true;
   if (styp == GeomAbs_Sphere)
     periodic = true;
-  // NYI : for Torus,SurfaceOfRevolution..
+
   return periodic;
 }
 
@@ -98,7 +95,7 @@ static bool FUN_periodic(const TopoDS_Face& F, bool& uper, bool& vper)
 
 static bool FUN_onboundsper(const gp_Pnt2d& uv, const TopoDS_Face& F)
 {
-  // 2d :
+
   const occ::handle<Geom_Surface>& su   = BRep_Tool::Surface(F);
   bool                             uclo = su->IsUPeriodic();
   bool                             vclo = su->IsVPeriodic();
@@ -107,7 +104,7 @@ static bool FUN_onboundsper(const gp_Pnt2d& uv, const TopoDS_Face& F)
 
   double u1, u2, v1, v2;
   su->Bounds(u1, u2, v1, v2);
-  double toluv = 1.e-8 * 1.e-2; // nyinyitol
+  double toluv = 1.e-8 * 1.e-2;
   if (uclo)
   {
     double d1  = std::abs(u1 - uv.X());
@@ -128,14 +125,14 @@ static bool FUN_onboundsper(const gp_Pnt2d& uv, const TopoDS_Face& F)
 }
 
 static bool FUN_onboundsper(const TopoDS_Edge& E, const TopoDS_Face& F, gp_Pnt2d& uv)
-// uv is found by projection pnt(E,par)
+
 {
-  // 3d :
+
   double f, l;
   FUN_tool_bounds(E, f, l);
   double x    = 0.45678;
   double par  = f * x + (1 - x) * l;
-  double tolF = BRep_Tool::Tolerance(F) * 1.e2; // nyitol
+  double tolF = BRep_Tool::Tolerance(F) * 1.e2;
   bool   ok   = FUN_tool_parF(E, par, F, uv, tolF);
   if (!ok)
     return false;
@@ -144,13 +141,12 @@ static bool FUN_onboundsper(const TopoDS_Edge& E, const TopoDS_Face& F, gp_Pnt2d
   return onbp;
 }
 
-//-----------------------------------------------------------------------
 static bool FUN_PinC(const gp_Pnt&                  P,
                      const occ::handle<Geom_Curve>& C,
                      const double                   pmin,
                      const double                   pmax,
                      const double                   tol)
-//-----------------------------------------------------------------------
+
 {
   bool                        PinC = false;
   GeomAPI_ProjectPointOnCurve mydm(P, C, pmin, pmax);
@@ -166,9 +162,8 @@ static bool FUN_PinC(const gp_Pnt&                  P,
   return PinC;
 }
 
-//-----------------------------------------------------------------------
 static bool FUN_PinE(const gp_Pnt& P, const TopoDS_Edge& E)
-//-----------------------------------------------------------------------
+
 {
   bool                    PinE = false;
   double                  f, l;
@@ -180,22 +175,20 @@ static bool FUN_PinE(const gp_Pnt& P, const TopoDS_Edge& E)
 
 #include <BRep_Tool.hpp>
 #include <TopOpeBRepDS_ShapeShapeInterference.hpp>
-//-----------------------------------------------------------------------
+
 static bool FUN_EstaEE(const TopoDS_Edge& E, const TopAbs_State sta, const TopoDS_Edge& EE)
-//-----------------------------------------------------------------------
+
 {
   bool   EinEE = false;
   double f, l;
-  // modified by NIZNHY-PKV Wed Nov  3 11:40:14 1999 from
 
   if (BRep_Tool::Degenerated(E))
   {
     return sta != TopAbs_IN;
   }
-  // modified by NIZNHY-PKV Wed Nov  3 11:40:19 1999 to
 
   occ::handle<Geom_Curve> CE = BRep_Tool::Curve(E, f, l);
-  double                  t  = 0.417789; // Oi blya... ???
+  double                  t  = 0.417789;
   double                  p  = (1 - t) * f + t * l;
   gp_Pnt                  P  = CE->Value(p);
   EinEE                      = FUN_PinE(P, EE);
@@ -207,8 +200,6 @@ static bool FUN_EstaEE(const TopoDS_Edge& E, const TopAbs_State sta, const TopoD
     throw Standard_ProgramError("TopOpeBRepBuild FUN_EstaEE on invalid state");
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::InitSection()
 {
   mySectionDone = false;
@@ -217,9 +208,6 @@ void TopOpeBRepBuild_Builder::InitSection()
   mySplitON.Clear();
 }
 
-//-----------------------------------------------------------------------
-// LE : list of edges from where is extracted LEsta = edges located <sta> / edge E
-// N.B. : LEsta is expanded and NOT reinitialized
 static void FUN_selLEE(NCollection_List<TopoDS_Shape>& LE,
                        const TopoDS_Edge&              E,
                        const TopAbs_State              sta,
@@ -240,9 +228,6 @@ static void FUN_selLEE(NCollection_List<TopoDS_Shape>& LE,
   }
 }
 
-//-----------------------------------------------------------------------
-// search the existence of shape E in time as shape of a mesh cell
-// (shape,listofshape) of the list loslos.
 bool FUN_FindEinSLOS(const TopoDS_Shape&                                       E,
                      const NCollection_List<TopOpeBRepBuild_ShapeListOfShape>& loslos)
 {
@@ -261,8 +246,6 @@ bool FUN_FindEinSLOS(const TopoDS_Shape&                                       E
   return f;
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::SplitSectionEdges()
 {
   if (mySplitSectionEdgesDone)
@@ -272,12 +255,12 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
   int                               i, n = BDS.NbSectionEdges();
 
   for (i = 1; i <= n; i++)
-  { // 1
+  {
     const TopoDS_Edge& E = TopoDS::Edge(BDS.SectionEdge(i));
     if (E.IsNull())
       continue;
     SplitSectionEdge(E);
-  } // 1
+  }
 
   NCollection_DataMap<TopoDS_Shape,
                       NCollection_List<TopOpeBRepBuild_ShapeListOfShape>,
@@ -286,7 +269,7 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher> MEOUT;
 
   for (i = 1; i <= n; i++)
-  { // 2
+  {
     const TopoDS_Edge& E = TopoDS::Edge(BDS.SectionEdge(i));
     if (E.IsNull())
       continue;
@@ -313,12 +296,8 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
     GCopyList(LEspon, LEoutLESD);
     int iRef = BDS.SameDomainRef(E);
 
-    // LEoutLESD = list of edges Split(E,ON) OUT of all
-    // edges of the list of edges same domain of E in 3d only
-    // edges LEoutLESD are attached in Split(ON) to E only.
-
     for (NCollection_List<TopoDS_Shape>::Iterator itLESD(LESD); itLESD.More(); itLESD.Next())
-    { // 2.1
+    {
       const TopoDS_Edge&                    ESD      = TopoDS::Edge(itLESD.Value());
       int                                   iESD     = myDataStructure->Shape(ESD);
       const NCollection_List<TopoDS_Shape>& LESDspon = Splits(ESD, TopAbs_ON);
@@ -338,7 +317,6 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
       }
 #endif
 
-      // reduction of LEoutLESD = edges OUT all ESD
       NCollection_List<TopoDS_Shape> dummylos;
       FUN_selLEE(LEoutLESD, ESD, TopAbs_IN, dummylos);
 
@@ -379,16 +357,14 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
       const TopoDS_Edge&                    E2  = *pE2;
       const NCollection_List<TopoDS_Shape>& LE1 = *plos1;
 
-      // selection of edges IN E2 = LEinE2
       NCollection_List<TopoDS_Shape> LE1loc;
       GCopyList(LE1, LE1loc);
       NCollection_List<TopoDS_Shape> LE1inE2;
       FUN_selLEE(LE1loc, E2, TopAbs_IN, LE1inE2);
       int nLE1inE2 = LE1inE2.Extent();
 
-      // edges E1 and E2 share LE1inE2
       if (nLE1inE2 != 0)
-      { // 2.2
+      {
 
         bool                                               E1b = MEIN.IsBound(E1);
         NCollection_List<TopOpeBRepBuild_ShapeListOfShape> thelist;
@@ -396,7 +372,7 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
           MEIN.Bind(E1, thelist);
         NCollection_List<TopOpeBRepBuild_ShapeListOfShape>& LE1loslos = MEIN.ChangeFind(E1);
 #ifdef OCCT_DEBUG
-//	int nLE1 = LE1loslos.Extent();
+
 #endif
 
         bool                                               E2b = MEIN.IsBound(E2);
@@ -405,7 +381,7 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
           MEIN.Bind(E2, thelist2);
         NCollection_List<TopOpeBRepBuild_ShapeListOfShape>& LE2loslos = MEIN.ChangeFind(E2);
 #ifdef OCCT_DEBUG
-//	int nLE2 = LE2loslos.Extent();
+
 #endif
 
         bool E2elemofE1 = FUN_FindEinSLOS(E2, LE1loslos);
@@ -414,7 +390,7 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
         bool condadd = (!E2elemofE1 && !E1elemofE2);
         if (condadd)
         {
-          // regularization of edges of LE1inE2 -> LR
+
           NCollection_List<TopoDS_Shape> LR;
           for (NCollection_List<TopoDS_Shape>::Iterator ite(LE1inE2); ite.More(); ite.Next())
           {
@@ -441,7 +417,7 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
             GCopyList(LR, E2slos.ChangeList());
           }
         }
-      } // 2.2
+      }
     }
 
     if (!MEOUT.IsBound(E))
@@ -450,17 +426,16 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
       MEOUT.Bind(E, thelist5);
     }
     GCopyList(LEoutLESD, MEOUT.ChangeFind(E));
-
-  } // 2
+  }
 
   for (i = 1; i <= n; i++)
-  { // 3
+  {
     const TopoDS_Edge& E = TopoDS::Edge(BDS.SectionEdge(i));
     if (E.IsNull())
       continue;
 #ifdef OCCT_DEBUG
     int iE = myDataStructure->Shape(E);
-    //    int rE = GShapeRank(E);
+
     bool tSPS = GtraceSPS(E, iE);
     if (tSPS)
       debsplitsemess(iE);
@@ -486,7 +461,7 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
     {
       const NCollection_List<TopoDS_Shape>& LEOUT = MEOUT.Find(E);
 #ifdef OCCT_DEBUG
-//      int nOUT = LEOUT.Extent();
+
 #endif
       GCopyList(LEOUT, LEspon);
     }
@@ -495,23 +470,23 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
     {
       const NCollection_List<TopOpeBRepBuild_ShapeListOfShape>& loslos = MEIN.Find(E);
 #ifdef OCCT_DEBUG
-//      int nloslos = loslos.Extent();
+
 #endif
       for (NCollection_List<TopOpeBRepBuild_ShapeListOfShape>::Iterator it(loslos); it.More();
            it.Next())
       {
         const NCollection_List<TopoDS_Shape>& los = it.Value().List();
 #ifdef OCCT_DEBUG
-//	int nlos = los.Extent();
+
 #endif
         GCopyList(los, LEspon);
       }
     }
-  } // 3
+  }
 
   BRep_Builder BB;
   for (i = 1; i <= n; i++)
-  { // 4
+  {
     const TopoDS_Edge& E = TopoDS::Edge(BDS.SectionEdge(i));
     if (E.IsNull())
       continue;
@@ -527,7 +502,7 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
 
     int iE = BDS.Shape(E);
 #ifdef OCCT_DEBUG
-//    int rE = BDS.AncestorRank(E);
+
 #endif
     int RE = BDS.SameDomainRef(E);
     if (iE != RE)
@@ -539,14 +514,14 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
     {
       const TopoDS_Edge& esd = TopoDS::Edge(itlesd.Value());
 #ifdef OCCT_DEBUG
-//      int iesd = BDS.Shape(esd);
+
 #endif
       const NCollection_List<TopoDS_Shape>& lf =
         FDSCNX_EdgeConnexitySameShape(esd, myDataStructure);
       GCopyList(lf, lF);
     }
 #ifdef OCCT_DEBUG
-//    int nlF = lF.Extent();
+
 #endif
 
     NCollection_List<TopoDS_Shape>&          lon  = ChangeSplit(E, TopAbs_ON);
@@ -559,7 +534,7 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
       int                rF = BDS.AncestorRank(iF);
 
       TopoDS_Edge esdF;
-      bool        besdF = false; // NYI pointer on esdF
+      bool        besdF = false;
       for (itlesd.Initialize(lesd); itlesd.More(); itlesd.Next())
       {
         const TopoDS_Edge& esd  = TopoDS::Edge(itlesd.Value());
@@ -570,7 +545,7 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
           TopExp_Explorer ex;
           for (ex.Init(F, TopAbs_EDGE); ex.More(); ex.Next())
           {
-            //	  for (TopExp_Explorer ex(F,TopAbs_EDGE);ex.More();ex.Next()) {
+
             const TopoDS_Shape& ee = ex.Current();
             bool                eq = (ee.IsEqual(esd));
             if (eq)
@@ -601,10 +576,10 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
           std::cout << "tsee s " << iF << " " << idebE << ";" << std::endl;
         }
 #endif
-        //	double tolpc; MGhc2 PC = FC2D_CurveOnSurface(eon,F,esdF,f,l,tolpc);
-        // clang-format off
-	double tolpc; MGhc2 PC = FC2D_CurveOnSurface(eon,F,esdF,f,l,tolpc,true);//xpu051198 :PRO15049
-        // clang-format on
+
+        double tolpc;
+        MGhc2  PC = FC2D_CurveOnSurface(eon, F, esdF, f, l, tolpc, true);
+
         hasPC = (!PC.IsNull());
         if (!hasPC)
           throw Standard_ProgramError("TopOpeBRepBuild_Builder::SSE null PC on F");
@@ -612,18 +587,18 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
         BB.UpdateEdge(eon, PC, F, tol);
       }
     }
-  } // 4
+  }
 
   int nsha = BDS.NbShapes();
   for (i = 1; i <= nsha; i++)
-  { // 5
+  {
     const TopoDS_Shape& FOR    = myDataStructure->Shape(i);
     bool                isface = (FOR.ShapeType() == TopAbs_FACE);
     if (!isface)
       continue;
     const TopoDS_Face& FF = TopoDS::Face(FOR);
 #ifdef OCCT_DEBUG
-//    int iFF = BDS.Shape(FF);
+
 #endif
     const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI = BDS.ShapeInterferences(FF);
     int                                                             nLI = LI.Extent();
@@ -647,7 +622,7 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
         continue;
       const TopoDS_Face& FS = TopoDS::Face(myDataStructure->Shape(SI));
 #ifdef OCCT_DEBUG
-//      int iFS = myDataStructure->Shape(FS);
+
 #endif
       bool FSisper = FUN_periodicS(FS);
       if (!FSisper)
@@ -655,13 +630,13 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
 
       const TopoDS_Edge& EG = TopoDS::Edge(myDataStructure->Shape(GI));
 #ifdef OCCT_DEBUG
-//      int iEG = myDataStructure->Shape(EG);
+
 #endif
       bool isrest = myDataStructure->DS().IsSectionEdge(EG);
       if (!isrest)
         continue;
 #ifdef OCCT_DEBUG
-//      double tolE = BRep_Tool::Tolerance(EG);
+
 #endif
       bool haspc = FC2D_HasCurveOnSurface(EG, FS);
       if (haspc)
@@ -676,18 +651,18 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
       if (PC.IsNull())
         throw Standard_ProgramError("TopOpeBRepBuild_Builder::SSE EG without PC on FS");
     }
-  } // 5
+  }
 
   for (i = 1; i <= nsha; i++)
-  { // 6
-    // xpu201198, for all periodic surfaces
+  {
+
     const TopoDS_Shape& FOR    = myDataStructure->Shape(i);
     bool                isface = (FOR.ShapeType() == TopAbs_FACE);
     if (!isface)
       continue;
     const TopoDS_Face& FF = TopoDS::Face(FOR);
 #ifdef OCCT_DEBUG
-//    int iFF = BDS.Shape(FF);
+
 #endif
     bool FFuper, FFvper;
     bool FFisper = FUN_periodic(FF, FFuper, FFvper);
@@ -716,13 +691,12 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
 
       const TopoDS_Edge& EG = TopoDS::Edge(myDataStructure->Shape(GI));
 #ifdef OCCT_DEBUG
-//      int iEG = myDataStructure->Shape(EG);
+
 #endif
       bool isrest = myDataStructure->DS().IsSectionEdge(EG);
       if (!isrest)
         continue;
 
-      // xpu191198 : cto016*
       double                    pf, pl, tolpc;
       occ::handle<Geom2d_Curve> PC;
       bool                      trim3d = true;
@@ -759,14 +733,14 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
           }
 
           gp_Pnt2d uvok;
-          bool     isonclo = FUN_onboundsper(eon, FF, uvok); // 3d
+          bool     isonclo = FUN_onboundsper(eon, FF, uvok);
           if (isonclo)
           {
             newlON.Append(eon);
             continue;
           }
 
-          bool isonclo2 = FUN_onboundsper(o2don, FF); // 2d
+          bool isonclo2 = FUN_onboundsper(o2don, FF);
           if (isonclo2)
           {
             gp_Vec2d tr;
@@ -781,31 +755,29 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
               tr         = gp_Vec2d(0., dtr);
             }
             double mag   = tr.Magnitude();
-            double toluv = 1.e-8 * 1.e2; // NYINYI
+            double toluv = 1.e-8 * 1.e2;
             if (mag > toluv)
               TopOpeBRepTool_TOOL::TrslUVModifE(tr, FF, eon);
           }
           newlON.Append(eon);
-        } // itON
+        }
         NCollection_List<TopoDS_Shape>& nlON = ChangeSplit(EG, TopAbs_ON);
         nlON.Clear();
         nlON.Append(newlON);
-      } // ISO
-    } // ILI(LI)
-  } // 6
+      }
+    }
+  }
   mySplitSectionEdgesDone = true;
-} // SplitSectionEdges
+}
 
 #define TheIN (1)
 #define TheON (2)
 #define TheOUT (3)
-int GLOBAL_issp = 0; //++
+int GLOBAL_issp = 0;
 
 #define HASSD2d (2)
 #define HASSD3d (3)
-Standard_EXPORT int GLOBAL_hassd = 0; //++
-
-//=================================================================================================
+Standard_EXPORT int GLOBAL_hassd = 0;
 
 void TopOpeBRepBuild_Builder::SplitSectionEdge(const TopoDS_Shape& EA)
 {
@@ -820,11 +792,8 @@ void TopOpeBRepBuild_Builder::SplitSectionEdge(const TopoDS_Shape& EA)
   const TopoDS_Edge&          EOR = TopoDS::Edge(EA);
   TopoDS_Edge                 EF  = EOR;
   EF.Orientation(TopAbs_FORWARD);
-  // clang-format off
-  int rankEF = myDataStructure->DS().AncestorRank(EF); // GShapeRank <- GMapShapes, appele par Merge
-  // clang-format on
 
-  //  FUN_removeonGB(myDataStructure,EOR); //xpu041198
+  int rankEF = myDataStructure->DS().AncestorRank(EF);
 
   bool hg    = myDataStructure->HasGeometry(EOR);
   bool hsd3d = FDS_HasSameDomain3d(BDS, EOR);
@@ -833,13 +802,13 @@ void TopOpeBRepBuild_Builder::SplitSectionEdge(const TopoDS_Shape& EA)
   bool issplit = IsSplit(EOR, TopAbs_ON);
 #endif
 
-  bool cond = (hg || hsd3d); // REST2 //( hg && (!hsd) );
+  bool cond = (hg || hsd3d);
 
-  GLOBAL_hassd = 0; // initializing
+  GLOBAL_hassd = 0;
   if (hsd3d)
-    GLOBAL_hassd = 3; //++
+    GLOBAL_hassd = 3;
   if (hsd2d)
-    GLOBAL_hassd = 2; //++
+    GLOBAL_hassd = 2;
 
   if (mySplitSectionEdgesDone)
   {
@@ -863,7 +832,6 @@ void TopOpeBRepBuild_Builder::SplitSectionEdge(const TopoDS_Shape& EA)
     std::cout << " (hg=" << hg << "||hsd3d=" << hsd3d << ")=" << cond << std::endl;
 #endif
 
-  // xpu161198 BUC60382(e3on) SE EOR has all its interferences "on bounds"
   bool          allGb1 = false;
   TopoDS_Vertex vf, vl;
   TopExp::Vertices(TopoDS::Edge(EOR), vf, vl);
@@ -896,17 +864,17 @@ void TopOpeBRepBuild_Builder::SplitSectionEdge(const TopoDS_Shape& EA)
     }
     if (!allGb1)
       break;
-  } // tki
+  }
 
   bool mke = !cond;
-  mke      = mke || !hg;    // xpu271098 cto002J2(e9on)
-  mke      = mke || allGb1; // xpu161198 BUC60382(e3on)
+  mke      = mke || !hg;
+  mke      = mke || allGb1;
   if (mke)
   {
     MarkSplit(EOR, TopAbs_ON);
     NCollection_List<TopoDS_Shape>& LON = ChangeSplit(EOR, TopAbs_ON);
 #ifdef OCCT_DEBUG
-//    int non = LON.Extent(); // DEB
+
 #endif
 
     TopoDS_Edge newEOR;
@@ -943,7 +911,7 @@ void TopOpeBRepBuild_Builder::SplitSectionEdge(const TopoDS_Shape& EA)
     else
       LON.Append(EOR);
     return;
-  } // mke
+  }
 
   NCollection_List<TopoDS_Shape> LESD1, LESD2;
   GFindSamDom(EOR, LESD1, LESD2);
@@ -970,11 +938,10 @@ void TopOpeBRepBuild_Builder::SplitSectionEdge(const TopoDS_Shape& EA)
     myEdgeReference         = EF;
     TopOpeBRepBuild_PaveSet PVS(EF);
 
-    GLOBAL_issp = TheON; //++
+    GLOBAL_issp = TheON;
     GFillEdgePVS(EF, myEmptyShapeList, G, PVS);
-    GLOBAL_issp = 0; //++
+    GLOBAL_issp = 0;
 
-    // Create an edge builder EDBU
     TopOpeBRepBuild_PaveClassifier VCL(EF);
     bool                           equalpar = PVS.HasEqualParameters();
     if (equalpar)
@@ -982,12 +949,9 @@ void TopOpeBRepBuild_Builder::SplitSectionEdge(const TopoDS_Shape& EA)
     TopOpeBRepBuild_EdgeBuilder EDBU;
     EDBU.InitEdgeBuilder(PVS, VCL);
 
-    // Build the new edges LEM
     NCollection_List<TopoDS_Shape> LEM;
     GEDBUMakeEdges(EF, EDBU, LEM);
 
-    // xpu : 18-03-98 (cto 016 B2)
-    //       splits edges of LEM with internal vertices
     NCollection_List<TopoDS_Shape>           newLEM;
     NCollection_List<TopoDS_Shape>::Iterator ite(LEM);
     for (; ite.More(); ite.Next())
@@ -1004,16 +968,10 @@ void TopOpeBRepBuild_Builder::SplitSectionEdge(const TopoDS_Shape& EA)
     LEM.Clear();
     LEM.Append(newLEM);
 
-    // connect new edges LEM as split parts (ON,SOLID)
     MarkSplit(EOR, TopAbs_ON);
     NCollection_List<TopoDS_Shape>& LON = ChangeSplit(EOR, TopAbs_ON);
     GCopyList(LEM, LON);
   }
-
-  // modified by NIZHNY-MZV  Mon Apr 17 16:25:51 2000  NCollection_List<TopoDS_Shape> losOO;
-  // modified by NIZHNY-MZV  Mon Apr 17 16:25:52 2000  if      (rankEF == 1)
-  // losOO.Append(GLOBALDS_shape2); modified by NIZHNY-MZV  Mon Apr 17 16:25:53 2000  else if
-  // (rankEF == 2) losOO.Append(GLOBALDS_shape1);
 
   {
 #ifdef OCCT_DEBUG
@@ -1021,15 +979,14 @@ void TopOpeBRepBuild_Builder::SplitSectionEdge(const TopoDS_Shape& EA)
       debspsein(iE);
 #endif
     TopOpeBRepBuild_GTopo G = TopOpeBRepBuild_GTool::GCutUnsh(TopAbs_FACE, TopAbs_FACE);
-    G                       = G.CopyPermuted(); // parts (IN,OUT) 3d are constructed
+    G                       = G.CopyPermuted();
     myEdgeReference         = EF;
     TopOpeBRepBuild_PaveSet PVS(EF);
 
-    GLOBAL_issp = TheIN; //++
+    GLOBAL_issp = TheIN;
     GFillEdgePVS(EF, myEmptyShapeList, G, PVS);
-    GLOBAL_issp = 0; //++
+    GLOBAL_issp = 0;
 
-    // Create an edge builder EDBU
     TopOpeBRepBuild_PaveClassifier VCL(EF);
     bool                           equalpar = PVS.HasEqualParameters();
     if (equalpar)
@@ -1037,14 +994,9 @@ void TopOpeBRepBuild_Builder::SplitSectionEdge(const TopoDS_Shape& EA)
     TopOpeBRepBuild_EdgeBuilder EDBU;
     EDBU.InitEdgeBuilder(PVS, VCL);
 
-    // Build the new edges LEM
     NCollection_List<TopoDS_Shape> LEMNC;
     GEDBUMakeEdges(EF, EDBU, LEMNC);
 
-    // modified by NIZHNY-MZV  Mon Apr 17 15:23:28 2000    NCollection_List<TopoDS_Shape> LEM;
-    // modified by NIZHNY-MZV  Mon Apr 17 15:23:16 2000 GKeepShapes(EF,losOO,TopAbs_IN,LEMNC,LEM);
-
-    // connect new edges LEM as split parts (IN,SOLID)
     MarkSplit(EOR, TopAbs_IN);
     NCollection_List<TopoDS_Shape>& LINN = ChangeSplit(EOR, TopAbs_IN);
     GCopyList(LEMNC, LINN);
@@ -1056,15 +1008,14 @@ void TopOpeBRepBuild_Builder::SplitSectionEdge(const TopoDS_Shape& EA)
       debspseou(iE);
 #endif
     TopOpeBRepBuild_GTopo G = TopOpeBRepBuild_GTool::GCutUnsh(TopAbs_FACE, TopAbs_FACE);
-    // parts (OUT,IN) 3d are constructed
+
     myEdgeReference = EF;
     TopOpeBRepBuild_PaveSet PVS(EF);
 
-    GLOBAL_issp = TheOUT; //++
+    GLOBAL_issp = TheOUT;
     GFillEdgePVS(EF, myEmptyShapeList, G, PVS);
-    GLOBAL_issp = 0; //++
+    GLOBAL_issp = 0;
 
-    // Create an edge builder EDBU
     TopOpeBRepBuild_PaveClassifier VCL(EF);
     bool                           equalpar = PVS.HasEqualParameters();
     if (equalpar)
@@ -1072,20 +1023,16 @@ void TopOpeBRepBuild_Builder::SplitSectionEdge(const TopoDS_Shape& EA)
     TopOpeBRepBuild_EdgeBuilder EDBU;
     EDBU.InitEdgeBuilder(PVS, VCL);
 
-    // Build the new edges LEM
     NCollection_List<TopoDS_Shape> LEM;
     GEDBUMakeEdges(EF, EDBU, LEM);
 
-    // connect new edges LEM as split parts (OUT,SOLID)
     MarkSplit(EOR, TopAbs_OUT);
     NCollection_List<TopoDS_Shape>& LINN = ChangeSplit(EOR, TopAbs_OUT);
     GCopyList(LEM, LINN);
   }
 
-  GLOBAL_hassd = 0; //++
+  GLOBAL_hassd = 0;
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_Builder::Section()
 {
@@ -1097,14 +1044,10 @@ const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_Builder::Section()
   return mySection;
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::Section(NCollection_List<TopoDS_Shape>& L)
 {
   L = Section();
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder::SectionCurves(NCollection_List<TopoDS_Shape>& LSE)
 {
@@ -1120,8 +1063,6 @@ void TopOpeBRepBuild_Builder::SectionCurves(NCollection_List<TopoDS_Shape>& LSE)
   }
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::SectionEdges(NCollection_List<TopoDS_Shape>& LSE)
 {
   const TopOpeBRepDS_DataStructure& BDS = myDataStructure->DS();
@@ -1129,14 +1070,14 @@ void TopOpeBRepBuild_Builder::SectionEdges(NCollection_List<TopoDS_Shape>& LSE)
 
   int iskpart = IsKPart();
   if (iskpart == 1)
-  { // iskole
+  {
     for (i = 1; i <= nes; i++)
     {
       const TopoDS_Edge& E = TopoDS::Edge(BDS.SectionEdge(i));
-      // modif fbi 16-09-97: case possible if RemoveSectionEdge was called
+
       if (E.IsNull())
         continue;
-      // end modif fbi
+
       LSE.Append(E);
     }
     return;
@@ -1144,18 +1085,16 @@ void TopOpeBRepBuild_Builder::SectionEdges(NCollection_List<TopoDS_Shape>& LSE)
 
   SplitSectionEdges();
 
-  // common of edges of section
-
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> MOS;
 
   for (i = 1; i <= nes; i++)
   {
 
     const TopoDS_Shape& es = BDS.SectionEdge(i);
-    // modif fbi 16-09-97: case possible if RemoveSectionEdge was called
+
     if (es.IsNull())
       continue;
-    // end modif fbi
+
     bool         issplitIN = IsSplit(es, TopAbs_IN);
     bool         issplitON = IsSplit(es, TopAbs_ON);
     TopAbs_State staspl    = (issplitON) ? TopAbs_ON : (issplitIN) ? TopAbs_IN : TopAbs_UNKNOWN;
@@ -1197,10 +1136,8 @@ void TopOpeBRepBuild_Builder::SectionEdges(NCollection_List<TopoDS_Shape>& LSE)
         }
       }
     }
-  } // for i [1..nes]
-} // SectionEdges
-
-//=================================================================================================
+  }
+}
 
 void TopOpeBRepBuild_Builder::FillSecEdgeAncestorMap(
   const int                                                                 aShapeRank,
@@ -1223,7 +1160,7 @@ void TopOpeBRepBuild_Builder::FillSecEdgeAncestorMap(
     TopAbs_State states[3] = {TopAbs_IN, TopAbs_ON, TopAbs_OUT};
     for (int j = 0; j < 3; j++)
     {
-      //      bool isSplit = IsSplit(es,states[j]);
+
       if (IsSplit(es, states[j]))
       {
         NCollection_List<TopoDS_Shape>::Iterator it(Splits(es, states[j]));

@@ -3,11 +3,7 @@
 #include <HLRAlgo_Intersection.hpp>
 #include <HLRAlgo_Coincidence.hpp>
 
-//=================================================================================================
-
 HLRAlgo_Interference::HLRAlgo_Interference() = default;
-
-//=================================================================================================
 
 HLRAlgo_Interference::HLRAlgo_Interference(const HLRAlgo_Intersection& Inters,
                                            const HLRAlgo_Coincidence&  Bound,

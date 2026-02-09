@@ -66,48 +66,40 @@ public:
 public:
   DEIGES_Parameters() = default;
 
-  //! Initialize parameters
   Standard_EXPORT void InitFromStatic();
 
-  //! Reset used parameters
   Standard_EXPORT void Reset();
 
-  //! Returns default shape fix parameters for transferring IGES files.
   Standard_EXPORT static DE_ShapeFixParameters GetDefaultShapeFixParameters();
 
 public:
-  // Common
-  // clang-format off
-  ReadMode_BSplineContinuity ReadBSplineContinuity = ReadMode_BSplineContinuity_C1; //<! Manages the continuity of BSpline curves
-  ReadMode_Precision ReadPrecisionMode = ReadMode_Precision_File; //<! Reads the precision mode value
-  double ReadPrecisionVal = 0.0001; //<! ReadMode_Precision for shape construction (if enabled user mode)
-  ReadMode_MaxPrecision ReadMaxPrecisionMode = ReadMode_MaxPrecision_Preferred; //<! Defines the mode of applying the maximum allowed tolerance
-  double ReadMaxPrecisionVal = 1; //<! Defines the maximum allowable tolerance
-  bool ReadSameParamMode = false; //<! Defines the using of BRepLib::SameParameter
-  ReadMode_SurfaceCurve ReadSurfaceCurveMode = ReadMode_SurfaceCurve_Default; //<! reference for the computation of curves in case of 2D/3D
-  double EncodeRegAngle = 0.57295779513; //<! Continuity which these two faces are connected with at that edge
+  ReadMode_BSplineContinuity ReadBSplineContinuity = ReadMode_BSplineContinuity_C1;
+  ReadMode_Precision         ReadPrecisionMode     = ReadMode_Precision_File;
+  double                     ReadPrecisionVal      = 0.0001;
+  ReadMode_MaxPrecision      ReadMaxPrecisionMode  = ReadMode_MaxPrecision_Preferred;
+  double                     ReadMaxPrecisionVal   = 1;
+  bool                       ReadSameParamMode     = false;
+  ReadMode_SurfaceCurve      ReadSurfaceCurveMode  = ReadMode_SurfaceCurve_Default;
+  double                     EncodeRegAngle        = 0.57295779513;
 
-  //Read
-  bool ReadApproxd1 = false; //<! Flag to split bspline curves of degree 1
-  bool ReadFaultyEntities = false; //<! Parameter for reading failed entities
-  bool ReadOnlyVisible = false; //<! Parameter for reading invisible entities
-  bool ReadColor = true; //<! ColorMode is used to indicate read Colors or not
-  bool ReadName = true; //<! NameMode is used to indicate read Name or not
-  bool ReadLayer = true; //<! LayerMode is used to indicate read Layers or not
+  bool ReadApproxd1       = false;
+  bool ReadFaultyEntities = false;
+  bool ReadOnlyVisible    = false;
+  bool ReadColor          = true;
+  bool ReadName           = true;
+  bool ReadLayer          = true;
 
-  // Write
-  WriteMode_BRep WriteBRepMode = WriteMode_BRep_Faces; //<! Flag to define entities type to write
-  WriteMode_ConvertSurface WriteConvertSurfaceMode = WriteMode_ConvertSurface_Off; //<! Flag to convert surface to elementary
-  TCollection_AsciiString WriteHeaderAuthor; //<! Name of the author of the file
-  TCollection_AsciiString WriteHeaderCompany; //<! Name of the sending company
-  TCollection_AsciiString WriteHeaderProduct; //<! Name of the sending product
-  TCollection_AsciiString WriteHeaderReciever; //<! Name of the receiving company
-  WriteMode_PrecisionMode WritePrecisionMode = WriteMode_PrecisionMode_Average; //<! Specifies the mode of writing the resolution value into the IGES file
-  double WritePrecisionVal = 0.0001; //<! Resolution value for an IGES file when WriteMode_PrecisionMode is Greatest
-  WriteMode_PlaneMode WritePlaneMode = WriteMode_PlaneMode_Plane; //<! Flag to convert plane to the BSline
-  bool WriteOffsetMode = false; //<! Writing offset curves like BSplines
-  bool WriteColor      = true;  //<! ColorMode is used to indicate write Colors or not
-  bool WriteName       = true;  //<! NameMode is used to indicate write Name or not
-  bool WriteLayer      = true;  //<! LayerMode is used to indicate write Layers or not
-  // clang-format on
+  WriteMode_BRep           WriteBRepMode           = WriteMode_BRep_Faces;
+  WriteMode_ConvertSurface WriteConvertSurfaceMode = WriteMode_ConvertSurface_Off;
+  TCollection_AsciiString  WriteHeaderAuthor;
+  TCollection_AsciiString  WriteHeaderCompany;
+  TCollection_AsciiString  WriteHeaderProduct;
+  TCollection_AsciiString  WriteHeaderReciever;
+  WriteMode_PrecisionMode  WritePrecisionMode = WriteMode_PrecisionMode_Average;
+  double                   WritePrecisionVal  = 0.0001;
+  WriteMode_PlaneMode      WritePlaneMode     = WriteMode_PlaneMode_Plane;
+  bool                     WriteOffsetMode    = false;
+  bool                     WriteColor         = true;
+  bool                     WriteName          = true;
+  bool                     WriteLayer         = true;
 };

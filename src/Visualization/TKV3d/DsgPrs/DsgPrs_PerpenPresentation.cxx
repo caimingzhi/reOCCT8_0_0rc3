@@ -21,10 +21,9 @@ void DsgPrs_PerpenPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
                                     const bool                             intOut2)
 {
   occ::handle<Prs3d_DimensionAspect> LA = aDrawer->DimensionAspect();
-  LA->LineAspect()->SetTypeOfLine(Aspect_TOL_SOLID); // ou DOT ou DOTDASH
+  LA->LineAspect()->SetTypeOfLine(Aspect_TOL_SOLID);
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
-  // segments
   occ::handle<Graphic3d_ArrayOfPrimitives> aPrims = new Graphic3d_ArrayOfPolylines(6, 2);
 
   aPrims->AddBound(3);
@@ -32,7 +31,6 @@ void DsgPrs_PerpenPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   aPrims->AddVertex(pAx1);
   aPrims->AddVertex(pAx2);
 
-  // Symbol
   gp_Vec vec1(gce_MakeDir(OffsetPoint, pAx1));
   gp_Vec vec2(gce_MakeDir(OffsetPoint, pAx2));
   vec1 *= .2 * OffsetPoint.Distance(pAx1);
@@ -49,10 +47,9 @@ void DsgPrs_PerpenPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
 
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // points attache
   if (intOut1 || intOut2)
   {
-    LA->LineAspect()->SetTypeOfLine(Aspect_TOL_DOT); // ou DOT ou DOTDASH
+    LA->LineAspect()->SetTypeOfLine(Aspect_TOL_DOT);
     aPresentation->NewGroup();
     aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 

@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_OrientedJoint;
 
-//! Read & Write tool for OrientedJoint
 class RWStepKinematics_RWOrientedJoint
 {
 public:

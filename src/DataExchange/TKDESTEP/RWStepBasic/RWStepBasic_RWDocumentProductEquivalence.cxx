@@ -5,11 +5,7 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWDocumentProductEquivalence::RWStepBasic_RWDocumentProductEquivalence() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWDocumentProductEquivalence::ReadStep(
   const occ::handle<StepData_StepReaderData>&              data,
@@ -17,11 +13,9 @@ void RWStepBasic_RWDocumentProductEquivalence::ReadStep(
   occ::handle<Interface_Check>&                            ach,
   const occ::handle<StepBasic_DocumentProductEquivalence>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "document_product_equivalence"))
     return;
-
-  // Inherited fields of DocumentProductAssociation
 
   occ::handle<TCollection_HAsciiString> aDocumentProductAssociation_Name;
   data->ReadString(num,
@@ -60,7 +54,6 @@ void RWStepBasic_RWDocumentProductEquivalence::ReadStep(
                    ach,
                    aDocumentProductAssociation_RelatedProduct);
 
-  // Initialize entity
   ent->Init(aDocumentProductAssociation_Name,
             hasDocumentProductAssociation_Description,
             aDocumentProductAssociation_Description,
@@ -68,14 +61,10 @@ void RWStepBasic_RWDocumentProductEquivalence::ReadStep(
             aDocumentProductAssociation_RelatedProduct);
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWDocumentProductEquivalence::WriteStep(
   StepData_StepWriter&                                     SW,
   const occ::handle<StepBasic_DocumentProductEquivalence>& ent) const
 {
-
-  // Inherited fields of DocumentProductAssociation
 
   SW.Send(ent->StepBasic_DocumentProductAssociation::Name());
 
@@ -91,14 +80,10 @@ void RWStepBasic_RWDocumentProductEquivalence::WriteStep(
   SW.Send(ent->StepBasic_DocumentProductAssociation::RelatedProduct().Value());
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWDocumentProductEquivalence::Share(
   const occ::handle<StepBasic_DocumentProductEquivalence>& ent,
   Interface_EntityIterator&                                iter) const
 {
-
-  // Inherited fields of DocumentProductAssociation
 
   iter.AddItem(ent->StepBasic_DocumentProductAssociation::RelatingDocument());
 

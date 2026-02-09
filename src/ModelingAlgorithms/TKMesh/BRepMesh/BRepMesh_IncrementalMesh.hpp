@@ -4,64 +4,40 @@
 #include <IMeshTools_Context.hpp>
 #include <Standard_NumericError.hpp>
 
-//! Builds the mesh of a shape with respect of their
-//! correctly triangulated parts
 class BRepMesh_IncrementalMesh : public BRepMesh_DiscretRoot
 {
-public: //! @name mesher API
-  //! Default constructor
+public:
   Standard_EXPORT BRepMesh_IncrementalMesh();
 
-  //! Destructor
   Standard_EXPORT ~BRepMesh_IncrementalMesh() override;
 
-  //! Constructor.
-  //! Automatically calls method Perform.
-  //! @param theShape shape to be meshed.
-  //! @param theLinDeflection linear deflection.
-  //! @param isRelative if TRUE deflection used for discretization of
-  //! each edge will be <theLinDeflection> * <size of edge>. Deflection
-  //! used for the faces will be the maximum deflection of their edges.
-  //! @param theAngDeflection angular deflection.
-  //! @param isInParallel if TRUE shape will be meshed in parallel.
   Standard_EXPORT BRepMesh_IncrementalMesh(const TopoDS_Shape& theShape,
                                            const double        theLinDeflection,
                                            const bool          isRelative       = false,
                                            const double        theAngDeflection = 0.5,
                                            const bool          isInParallel     = false);
 
-  //! Constructor.
-  //! Automatically calls method Perform.
-  //! @param theShape shape to be meshed.
-  //! @param theParameters - parameters of meshing
   Standard_EXPORT BRepMesh_IncrementalMesh(
     const TopoDS_Shape&          theShape,
     const IMeshTools_Parameters& theParameters,
     const Message_ProgressRange& theRange = Message_ProgressRange());
 
-  //! Performs meshing of the shape.
   Standard_EXPORT void Perform(
     const Message_ProgressRange& theRange = Message_ProgressRange()) override;
 
-  //! Performs meshing using custom context;
   Standard_EXPORT void Perform(const occ::handle<IMeshTools_Context>& theContext,
                                const Message_ProgressRange& theRange = Message_ProgressRange());
 
-public: //! @name accessing to parameters.
-  //! Returns meshing parameters
+public:
   const IMeshTools_Parameters& Parameters() const { return myParameters; }
 
-  //! Returns modifiable meshing parameters
   IMeshTools_Parameters& ChangeParameters() { return myParameters; }
 
-  //! Returns modified flag.
   bool IsModified() const { return myModified; }
 
-  //! Returns accumulated status flags faced during meshing.
   int GetStatusFlags() const { return myStatus; }
 
 private:
-  //! Initializes specific parameters
   void initParameters()
   {
     if (myParameters.Deflection < Precision::Confusion())
@@ -93,24 +69,14 @@ private:
     }
   }
 
-public: //! @name plugin API
-  //! Plugin interface for the Mesh Factories.
-  //! Initializes meshing algorithm with the given parameters.
-  //! @param theShape shape to be meshed.
-  //! @param theLinDeflection linear deflection.
-  //! @param theAngDeflection angular deflection.
-  //! @param[out] theAlgo pointer to initialized algorithm.
+public:
   Standard_EXPORT static int Discret(const TopoDS_Shape&    theShape,
                                      const double           theLinDeflection,
                                      const double           theAngDeflection,
                                      BRepMesh_DiscretRoot*& theAlgo);
 
-  //! Returns multi-threading usage flag set by default in
-  //! Discret() static method (thus applied only to Mesh Factories).
   Standard_EXPORT static bool IsParallelDefault();
 
-  //! Setup multi-threading usage flag set by default in
-  //! Discret() static method (thus applied only to Mesh Factories).
   Standard_EXPORT static void SetParallelDefault(const bool isInParallel);
 
   DEFINE_STANDARD_RTTIEXT(BRepMesh_IncrementalMesh, BRepMesh_DiscretRoot)

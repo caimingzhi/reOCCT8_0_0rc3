@@ -37,39 +37,27 @@ private:
 
 #include <TopoDS.hpp>
 
-//=================================================================================================
-
 inline LocOpe_FindEdgesInFace::LocOpe_FindEdgesInFace() = default;
-
-//=================================================================================================
 
 inline LocOpe_FindEdgesInFace::LocOpe_FindEdgesInFace(const TopoDS_Shape& S, const TopoDS_Face& F)
 {
   Set(S, F);
 }
 
-//=================================================================================================
-
 inline void LocOpe_FindEdgesInFace::Init()
 {
   myIt.Initialize(myList);
 }
-
-//=================================================================================================
 
 inline bool LocOpe_FindEdgesInFace::More() const
 {
   return myIt.More();
 }
 
-//=================================================================================================
-
 inline const TopoDS_Edge& LocOpe_FindEdgesInFace::Edge() const
 {
   return TopoDS::Edge(myIt.Value());
 }
-
-//=================================================================================================
 
 inline void LocOpe_FindEdgesInFace::Next()
 {

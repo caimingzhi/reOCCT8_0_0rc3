@@ -10,7 +10,6 @@
 
 class TopoDS_Shape;
 
-//! Tool to keep shapes in binary format
 class BinTools
 {
 public:
@@ -38,11 +37,6 @@ public:
 
   Standard_EXPORT static Standard_IStream& GetExtChar(Standard_IStream& IS, char16_t& theValue);
 
-  //! Writes the shape to the stream in binary format BinTools_FormatVersion_CURRENT.
-  //! This alias writes shape with triangulation data.
-  //! @param[in] theShape        the shape to write
-  //! @param[in][out] theStream  the stream to output shape into
-  //! @param theRange            the range of progress indicator to fill in
   static void Write(const TopoDS_Shape&          theShape,
                     Standard_OStream&            theStream,
                     const Message_ProgressRange& theRange = Message_ProgressRange())
@@ -50,17 +44,6 @@ public:
     Write(theShape, theStream, true, false, BinTools_FormatVersion_CURRENT, theRange);
   }
 
-  //! Writes the shape to the stream in binary format of specified version.
-  //! @param[in] theShape          the shape to write
-  //! @param[in][out] theStream    the stream to output shape into
-  //! @param[in] theWithTriangles  flag which specifies whether to save shape with (TRUE) or without
-  //! (FALSE) triangles;
-  //!                              has no effect on triangulation-only geometry
-  //! @param[in] theWithNormals    flag which specifies whether to save triangulation with (TRUE) or
-  //! without (FALSE) normals;
-  //!                              has no effect on triangulation-only geometry
-  //! @param[in] theVersion        the BinTools format version
-  //! @param theRange              the range of progress indicator to fill in
   Standard_EXPORT static void Write(
     const TopoDS_Shape&          theShape,
     Standard_OStream&            theStream,
@@ -69,15 +52,10 @@ public:
     const BinTools_FormatVersion theVersion,
     const Message_ProgressRange& theRange = Message_ProgressRange());
 
-  //! Reads a shape from <theStream> and returns it in <theShape>.
   Standard_EXPORT static void Read(TopoDS_Shape&                theShape,
                                    Standard_IStream&            theStream,
                                    const Message_ProgressRange& theRange = Message_ProgressRange());
 
-  //! Writes the shape to the file in binary format BinTools_FormatVersion_CURRENT.
-  //! @param[in] theShape  the shape to write
-  //! @param[in] theFile   the path to file to output shape into
-  //! @param theRange      the range of progress indicator to fill in
   static bool Write(const TopoDS_Shape&          theShape,
                     const char*                  theFile,
                     const Message_ProgressRange& theRange = Message_ProgressRange())
@@ -85,17 +63,6 @@ public:
     return Write(theShape, theFile, true, false, BinTools_FormatVersion_CURRENT, theRange);
   }
 
-  //! Writes the shape to the file in binary format of specified version.
-  //! @param[in] theShape          the shape to write
-  //! @param[in] theFile           the path to file to output shape into
-  //! @param[in] theWithTriangles  flag which specifies whether to save shape with (TRUE) or without
-  //! (FALSE) triangles;
-  //!                              has no effect on triangulation-only geometry
-  //! @param[in] theWithNormals    flag which specifies whether to save triangulation with (TRUE) or
-  //! without (FALSE) normals;
-  //!                              has no effect on triangulation-only geometry
-  //! @param[in] theVersion        the BinTools format version
-  //! @param theRange              the range of progress indicator to fill in
   Standard_EXPORT static bool Write(
     const TopoDS_Shape&          theShape,
     const char*                  theFile,
@@ -104,7 +71,6 @@ public:
     const BinTools_FormatVersion theVersion,
     const Message_ProgressRange& theRange = Message_ProgressRange());
 
-  //! Reads a shape from <theFile> and returns it in <theShape>.
   Standard_EXPORT static bool Read(TopoDS_Shape&                theShape,
                                    const char*                  theFile,
                                    const Message_ProgressRange& theRange = Message_ProgressRange());

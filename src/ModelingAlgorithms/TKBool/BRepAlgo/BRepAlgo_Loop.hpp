@@ -12,7 +12,6 @@
 #include <BRepAlgo_Image.hpp>
 class TopoDS_Edge;
 
-//! Builds the loops from a set of edges on a face.
 class BRepAlgo_Loop
 {
 public:
@@ -20,64 +19,42 @@ public:
 
   Standard_EXPORT BRepAlgo_Loop();
 
-  //! Init with <F> the set of edges must have
-  //! pcurves on <F>.
   Standard_EXPORT void Init(const TopoDS_Face& F);
 
-  //! Add E with <LV>. <E> will be copied and trim
-  //! by vertices in <LV>.
   Standard_EXPORT void AddEdge(TopoDS_Edge& E, const NCollection_List<TopoDS_Shape>& LV);
 
-  //! Add <E> as const edge, E can be in the result.
   Standard_EXPORT void AddConstEdge(const TopoDS_Edge& E);
 
-  //! Add <LE> as a set of const edges.
   Standard_EXPORT void AddConstEdges(const NCollection_List<TopoDS_Shape>& LE);
 
-  //! Sets the Image Vertex - Vertex
   Standard_EXPORT void SetImageVV(const BRepAlgo_Image& theImageVV);
 
-  //! Make loops.
   Standard_EXPORT void Perform();
 
-  //! Update VE map according to Image Vertex - Vertex
   Standard_EXPORT void UpdateVEmap(NCollection_IndexedDataMap<TopoDS_Shape,
                                                               NCollection_List<TopoDS_Shape>,
                                                               TopTools_ShapeMapHasher>& theVEmap);
 
-  //! Cut the edge <E> in several edges <NE> on the
-  //! vertices<VonE>.
   Standard_EXPORT void CutEdge(const TopoDS_Edge&                    E,
                                const NCollection_List<TopoDS_Shape>& VonE,
                                NCollection_List<TopoDS_Shape>&       NE) const;
 
-  //! Returns the list of wires performed.
-  //! can be an empty list.
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& NewWires() const;
 
-  //! Build faces from the wires result.
   Standard_EXPORT void WiresToFaces();
 
-  //! Returns the list of faces.
-  //! Warning: The method <WiresToFaces> as to be called before.
-  //! can be an empty list.
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& NewFaces() const;
 
-  //! Returns the list of new edges built from an edge <E>
-  //! it can be an empty list.
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& NewEdges(const TopoDS_Edge& E) const;
 
-  //! Returns the datamap of vertices with their substitutes.
   Standard_EXPORT void GetVerticesForSubstitute(
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& VerVerMap) const;
 
   Standard_EXPORT void VerticesForSubstitute(
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& VerVerMap);
 
-  //! Set maximal tolerance used for comparing distances between vertices.
   void SetTolConf(const double theTolConf) { myTolConf = theTolConf; }
 
-  //! Get maximal tolerance used for comparing distances between vertices.
   double GetTolConf() const { return myTolConf; }
 
 private:

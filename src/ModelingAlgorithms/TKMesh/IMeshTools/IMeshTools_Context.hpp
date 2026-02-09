@@ -7,20 +7,13 @@
 #include <IMeshTools_ModelAlgo.hpp>
 #include <Message_ProgressRange.hpp>
 
-//! Interface class representing context of BRepMesh algorithm.
-//! Intended to cache discrete model and instances of tools for
-//! its processing.
 class IMeshTools_Context : public IMeshData_Shape
 {
 public:
-  //! Constructor.
   IMeshTools_Context() = default;
 
-  //! Destructor.
   ~IMeshTools_Context() override = default;
 
-  //! Builds model using assigned model builder.
-  //! @return True on success, False elsewhere.
   virtual bool BuildModel()
   {
     if (myModelBuilder.IsNull())
@@ -33,8 +26,6 @@ public:
     return !myModel.IsNull();
   }
 
-  //! Performs discretization of model edges using assigned edge discret algorithm.
-  //! @return True on success, False elsewhere.
   virtual bool DiscretizeEdges()
   {
     if (myModel.IsNull() || myEdgeDiscret.IsNull())
@@ -42,13 +33,9 @@ public:
       return false;
     }
 
-    // Discretize edges of a model.
     return myEdgeDiscret->Perform(myModel, myParameters, Message_ProgressRange());
   }
 
-  //! Performs healing of discrete model built by DiscretizeEdges() method
-  //! using assigned healing algorithm.
-  //! @return True on success, False elsewhere.
   virtual bool HealModel()
   {
     if (myModel.IsNull())
@@ -61,9 +48,6 @@ public:
              : myModelHealer->Perform(myModel, myParameters, Message_ProgressRange());
   }
 
-  //! Performs pre-processing of discrete model using assigned algorithm.
-  //! Performs auxiliary actions such as cleaning shape from old triangulation.
-  //! @return True on success, False elsewhere.
   virtual bool PreProcessModel()
   {
     if (myModel.IsNull())
@@ -76,8 +60,6 @@ public:
              : myPreProcessor->Perform(myModel, myParameters, Message_ProgressRange());
   }
 
-  //! Performs meshing of faces of discrete model using assigned meshing algorithm.
-  //! @return True on success, False elsewhere.
   virtual bool DiscretizeFaces(const Message_ProgressRange& theRange)
   {
     if (myModel.IsNull() || myFaceDiscret.IsNull())
@@ -85,12 +67,9 @@ public:
       return false;
     }
 
-    // Discretize faces of a model.
     return myFaceDiscret->Perform(myModel, myParameters, theRange);
   }
 
-  //! Performs post-processing of discrete model using assigned algorithm.
-  //! @return True on success, False elsewhere.
   virtual bool PostProcessModel()
   {
     if (myModel.IsNull())
@@ -103,7 +82,6 @@ public:
              : myPostProcessor->Perform(myModel, myParameters, Message_ProgressRange());
   }
 
-  //! Cleans temporary context data.
   virtual void Clean()
   {
     if (myParameters.CleanModel)
@@ -112,67 +90,52 @@ public:
     }
   }
 
-  //! Gets instance of a tool to be used to build discrete model.
   const occ::handle<IMeshTools_ModelBuilder>& GetModelBuilder() const { return myModelBuilder; }
 
-  //! Sets instance of a tool to be used to build discrete model.
   void SetModelBuilder(const occ::handle<IMeshTools_ModelBuilder>& theBuilder)
   {
     myModelBuilder = theBuilder;
   }
 
-  //! Gets instance of a tool to be used to discretize edges of a model.
   const occ::handle<IMeshTools_ModelAlgo>& GetEdgeDiscret() const { return myEdgeDiscret; }
 
-  //! Sets instance of a tool to be used to discretize edges of a model.
   void SetEdgeDiscret(const occ::handle<IMeshTools_ModelAlgo>& theEdgeDiscret)
   {
     myEdgeDiscret = theEdgeDiscret;
   }
 
-  //! Gets instance of a tool to be used to heal discrete model.
   const occ::handle<IMeshTools_ModelAlgo>& GetModelHealer() const { return myModelHealer; }
 
-  //! Sets instance of a tool to be used to heal discrete model.
   void SetModelHealer(const occ::handle<IMeshTools_ModelAlgo>& theModelHealer)
   {
     myModelHealer = theModelHealer;
   }
 
-  //! Gets instance of pre-processing algorithm.
   const occ::handle<IMeshTools_ModelAlgo>& GetPreProcessor() const { return myPreProcessor; }
 
-  //! Sets instance of pre-processing algorithm.
   void SetPreProcessor(const occ::handle<IMeshTools_ModelAlgo>& thePreProcessor)
   {
     myPreProcessor = thePreProcessor;
   }
 
-  //! Gets instance of meshing algorithm.
   const occ::handle<IMeshTools_ModelAlgo>& GetFaceDiscret() const { return myFaceDiscret; }
 
-  //! Sets instance of meshing algorithm.
   void SetFaceDiscret(const occ::handle<IMeshTools_ModelAlgo>& theFaceDiscret)
   {
     myFaceDiscret = theFaceDiscret;
   }
 
-  //! Gets instance of post-processing algorithm.
   const occ::handle<IMeshTools_ModelAlgo>& GetPostProcessor() const { return myPostProcessor; }
 
-  //! Sets instance of post-processing algorithm.
   void SetPostProcessor(const occ::handle<IMeshTools_ModelAlgo>& thePostProcessor)
   {
     myPostProcessor = thePostProcessor;
   }
 
-  //! Gets parameters to be used for meshing.
   const IMeshTools_Parameters& GetParameters() const { return myParameters; }
 
-  //! Gets reference to parameters to be used for meshing.
   IMeshTools_Parameters& ChangeParameters() { return myParameters; }
 
-  //! Returns discrete model of a shape.
   const occ::handle<IMeshData_Model>& GetModel() const { return myModel; }
 
   DEFINE_STANDARD_RTTIEXT(IMeshTools_Context, IMeshData_Shape)

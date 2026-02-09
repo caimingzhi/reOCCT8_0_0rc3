@@ -10,7 +10,6 @@ class Interface_Check;
 class StepRepr_ParametricRepresentationContext;
 class StepData_StepWriter;
 
-//! Read & Write Module for ParametricRepresentationContext
 class RWStepRepr_RWParametricRepresentationContext
 {
 public:

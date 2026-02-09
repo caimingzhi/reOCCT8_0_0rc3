@@ -12,10 +12,6 @@
 #include <TransferBRep.hpp>
 #include <TransferBRep_ShapeMapper.hpp>
 
-// Processing of non-manifold topology (ssv; 11.11.2010)
-
-//=================================================================================================
-
 TopoDSToStep_MakeStepVertex::TopoDSToStep_MakeStepVertex()
     : myError(TopoDSToStep_VertexOther)
 {
@@ -32,8 +28,6 @@ TopoDSToStep_MakeStepVertex::TopoDSToStep_MakeStepVertex(
   Init(V, T, FP, theLocalFactors);
 }
 
-//=================================================================================================
-
 void TopoDSToStep_MakeStepVertex::Init(const TopoDS_Vertex&                       aVertex,
                                        TopoDSToStep_Tool&                         aTool,
                                        const occ::handle<Transfer_FinderProcess>& FP,
@@ -42,7 +36,6 @@ void TopoDSToStep_MakeStepVertex::Init(const TopoDS_Vertex&                     
 
   aTool.SetCurrentVertex(aVertex);
 
-  // [BEGIN] Processing non-manifold topology (ssv; 11.11.2010)
   bool isNMMode =
     occ::down_cast<StepData_StepModel>(FP->Model())->InternalParameters.WriteNonmanifold != 0;
   if (isNMMode)
@@ -51,14 +44,13 @@ void TopoDSToStep_MakeStepVertex::Init(const TopoDS_Vertex&                     
     occ::handle<TransferBRep_ShapeMapper> aSTEPMapper = TransferBRep::ShapeMapper(FP, aVertex);
     if (FP->FindTypedTransient(aSTEPMapper, STANDARD_TYPE(StepShape_VertexPoint), aVP))
     {
-      // Non-manifold topology detected
+
       myError  = TopoDSToStep_VertexOther;
       myResult = aVP;
       done     = true;
       return;
     }
   }
-  // [END] Processing non-manifold topology (ssv; 11.11.2010)
 
   if (aTool.IsBound(aVertex))
   {
@@ -84,16 +76,12 @@ void TopoDSToStep_MakeStepVertex::Init(const TopoDS_Vertex&                     
   myResult = Vpms;
 }
 
-//=================================================================================================
-
 const occ::handle<StepShape_TopologicalRepresentationItem>& TopoDSToStep_MakeStepVertex::Value()
   const
 {
   StdFail_NotDone_Raise_if(!done, "TopoDSToStep_MakeStepVertex::Value() - no result");
   return myResult;
 }
-
-//=================================================================================================
 
 TopoDSToStep_MakeVertexError TopoDSToStep_MakeStepVertex::Error() const
 {

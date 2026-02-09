@@ -199,56 +199,52 @@ public:
   typedef Delayed<Curve, pOffset> Offset;
 
 public:
-  //! Create a persistent object for a line
   Standard_EXPORT static occ::handle<Curve> Translate(
     const occ::handle<Geom_Line>& theCurve,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a circle
+
   Standard_EXPORT static occ::handle<Curve> Translate(
     const occ::handle<Geom_Circle>& theCurve,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a ellipse
+
   Standard_EXPORT static occ::handle<Curve> Translate(
     const occ::handle<Geom_Ellipse>& theCurve,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a hyperbola
+
   Standard_EXPORT static occ::handle<Curve> Translate(
     const occ::handle<Geom_Hyperbola>& theCurve,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a parabola
+
   Standard_EXPORT static occ::handle<Curve> Translate(
     const occ::handle<Geom_Parabola>& theCurve,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a Bezier curve
+
   Standard_EXPORT static occ::handle<Curve> Translate(
     const occ::handle<Geom_BezierCurve>& theCurve,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a BSpline curve
+
   Standard_EXPORT static occ::handle<Curve> Translate(
     const occ::handle<Geom_BSplineCurve>& theCurve,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a trimmed curve
+
   Standard_EXPORT static occ::handle<Curve> Translate(
     const occ::handle<Geom_TrimmedCurve>& theCurve,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for an offset curve
+
   Standard_EXPORT static occ::handle<Curve> Translate(
     const occ::handle<Geom_OffsetCurve>& theCurve,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
 };
 
-//=======================================================================
-// Line
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::instance<ShapePersistent_Geom::Curve, Geom_Line, gp_Ax1>::PName()
   const;
@@ -257,15 +253,9 @@ template <>
 void ShapePersistent_Geom::instance<ShapePersistent_Geom::Curve, Geom_Line, gp_Ax1>::Write(
   StdObjMgt_WriteData& theWriteData) const;
 
-//=======================================================================
-// Conic
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::Curve, gp_Ax2>::PName() const;
 
-//=======================================================================
-// Circle
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::
   instance<ShapePersistent_Geom_Curve::Conic, Geom_Circle, gp_Circ>::PName() const;
@@ -274,9 +264,6 @@ template <>
 void ShapePersistent_Geom::instance<ShapePersistent_Geom_Curve::Conic, Geom_Circle, gp_Circ>::Write(
   StdObjMgt_WriteData& theWriteData) const;
 
-//=======================================================================
-// Ellipse
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::
   instance<ShapePersistent_Geom_Curve::Conic, Geom_Ellipse, gp_Elips>::PName() const;
@@ -285,9 +272,6 @@ template <>
 void ShapePersistent_Geom::instance<ShapePersistent_Geom_Curve::Conic, Geom_Ellipse, gp_Elips>::
   Write(StdObjMgt_WriteData& theWriteData) const;
 
-//=======================================================================
-// Hyperbola
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::
   instance<ShapePersistent_Geom_Curve::Conic, Geom_Hyperbola, gp_Hypr>::PName() const;
@@ -296,9 +280,6 @@ template <>
 void ShapePersistent_Geom::instance<ShapePersistent_Geom_Curve::Conic, Geom_Hyperbola, gp_Hypr>::
   Write(StdObjMgt_WriteData& theWriteData) const;
 
-//=======================================================================
-// Parabola
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::
   instance<ShapePersistent_Geom_Curve::Conic, Geom_Parabola, gp_Parab>::PName() const;

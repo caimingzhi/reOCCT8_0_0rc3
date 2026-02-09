@@ -29,10 +29,6 @@
 #include <Transfer_FinderProcess.hpp>
 #include <TransferBRep_ShapeMapper.hpp>
 
-//=============================================================================
-// Create a FacetedBrepAndBrepWithVoids of StepShape from a Solid of TopoDS
-// containing more than one closed shell
-//=============================================================================
 TopoDSToStep_MakeFacetedBrepAndBrepWithVoids::TopoDSToStep_MakeFacetedBrepAndBrepWithVoids(
   const TopoDS_Solid&                        aSolid,
   const occ::handle<Transfer_FinderProcess>& FP,
@@ -166,10 +162,6 @@ TopoDSToStep_MakeFacetedBrepAndBrepWithVoids::TopoDSToStep_MakeFacetedBrepAndBre
   }
 }
 
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
-
 const occ::handle<StepShape_FacetedBrepAndBrepWithVoids>&
   TopoDSToStep_MakeFacetedBrepAndBrepWithVoids::Value() const
 {
@@ -177,11 +169,6 @@ const occ::handle<StepShape_FacetedBrepAndBrepWithVoids>&
                            "TopoDSToStep_MakeFacetedBrepAndBrepWithVoids::Value() - no result");
   return theFacetedBrepAndBrepWithVoids;
 }
-
-// ============================================================================
-// Method  : TopoDSToStep_MakeFacetedBrepAndBrepWithVoids::TessellatedValue
-// Purpose : Returns TessellatedItem as the optional result
-// ============================================================================
 
 const occ::handle<StepVisual_TessellatedItem>& TopoDSToStep_MakeFacetedBrepAndBrepWithVoids::
   TessellatedValue() const

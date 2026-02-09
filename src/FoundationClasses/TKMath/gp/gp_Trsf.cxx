@@ -1,21 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// JCV 30/08/90 Modif passage version C++ 2.0 sur Sun
-// JCV 1/10/90 Changement de nom du package vgeom -> gp
-// JCV 4/10/90 codage sur la forme de la transformation shape,Scaling,negative
-// JCV 10/12/90 Modif introduction des classes Mat et XYZ dans gp
 
 #define No_Standard_OutOfRange
 
@@ -33,8 +16,6 @@
 #include <Standard_ConstructionError.hpp>
 #include <Standard_OutOfRange.hpp>
 #include <Standard_Dump.hpp>
-
-//=================================================================================================
 
 gp_Trsf::gp_Trsf(const gp_Trsf2d& T)
     : scale(T.ScaleFactor()),
@@ -54,8 +35,6 @@ gp_Trsf::gp_Trsf(const gp_Trsf2d& T)
   }
 }
 
-//=================================================================================================
-
 void gp_Trsf::SetMirror(const gp_Ax1& A1) noexcept
 {
   shape = gp_Ax1Mirror;
@@ -70,8 +49,6 @@ void gp_Trsf::SetMirror(const gp_Ax1& A1) noexcept
   matrix.Multiply(-1);
 }
 
-//=================================================================================================
-
 void gp_Trsf::SetMirror(const gp_Ax2& A2) noexcept
 {
   shape = gp_Ax2Mirror;
@@ -85,8 +62,6 @@ void gp_Trsf::SetMirror(const gp_Ax2& A2) noexcept
   loc.Add(A2.Location().XYZ());
 }
 
-//=================================================================================================
-
 void gp_Trsf::SetRotation(const gp_Ax1& A1, const double Ang)
 {
   shape = gp_Rotation;
@@ -98,8 +73,6 @@ void gp_Trsf::SetRotation(const gp_Ax1& A1, const double Ang)
   loc.Add(A1.Location().XYZ());
 }
 
-//=================================================================================================
-
 void gp_Trsf::SetRotation(const gp_Quaternion& R)
 {
   shape = gp_Rotation;
@@ -107,8 +80,6 @@ void gp_Trsf::SetRotation(const gp_Quaternion& R)
   loc.SetCoord(0., 0., 0.);
   matrix = R.GetMatrix();
 }
-
-//=================================================================================================
 
 void gp_Trsf::SetRotationPart(const gp_Quaternion& theR)
 {
@@ -157,8 +128,6 @@ void gp_Trsf::SetRotationPart(const gp_Quaternion& theR)
   }
 }
 
-//=================================================================================================
-
 void gp_Trsf::SetScale(const gp_Pnt& P, const double S)
 {
   shape = gp_Scale;
@@ -170,19 +139,16 @@ void gp_Trsf::SetScale(const gp_Pnt& P, const double S)
   loc.Multiply(1 - S);
 }
 
-//=================================================================================================
-
 void gp_Trsf::SetTransformation(const gp_Ax3& FromA1, const gp_Ax3& ToA2)
 {
   shape = gp_CompoundTrsf;
   scale = 1.0;
-  // matrix from XOY  ToA2 :
+
   matrix.SetRows(ToA2.XDirection().XYZ(), ToA2.YDirection().XYZ(), ToA2.Direction().XYZ());
   loc = ToA2.Location().XYZ();
   loc.Multiply(matrix);
   loc.Reverse();
 
-  // matrix FromA1 to XOY :
   const gp_XYZ& xDir = FromA1.XDirection().XYZ();
   const gp_XYZ& yDir = FromA1.YDirection().XYZ();
   const gp_XYZ& zDir = FromA1.Direction().XYZ();
@@ -190,7 +156,6 @@ void gp_Trsf::SetTransformation(const gp_Ax3& FromA1, const gp_Ax3& ToA2)
   gp_Mat MA1(xDir, yDir, zDir);
   gp_XYZ MA1loc = FromA1.Location().XYZ();
 
-  // matrix * MA1 => FromA1 ToA2 :
   MA1loc.Multiply(matrix);
   loc.Add(MA1loc);
   matrix.Multiply(MA1);
@@ -206,8 +171,6 @@ void gp_Trsf::SetTransformation(const gp_Ax3& A3)
   loc.Reverse();
 }
 
-//=================================================================================================
-
 void gp_Trsf::SetTransformation(const gp_Quaternion& R, const gp_Vec& T)
 {
   shape  = gp_CompoundTrsf;
@@ -216,18 +179,16 @@ void gp_Trsf::SetTransformation(const gp_Quaternion& R, const gp_Vec& T)
   matrix = R.GetMatrix();
 }
 
-//=================================================================================================
-
 void gp_Trsf::SetDisplacement(const gp_Ax3& FromA1, const gp_Ax3& ToA2)
 {
   shape = gp_CompoundTrsf;
   scale = 1.0;
-  // matrix from ToA2 to XOY :
+
   matrix.SetCol(1, ToA2.XDirection().XYZ());
   matrix.SetCol(2, ToA2.YDirection().XYZ());
   matrix.SetCol(3, ToA2.Direction().XYZ());
   loc = ToA2.Location().XYZ();
-  // matrix XOY to FromA1 :
+
   const gp_XYZ& xDir = FromA1.XDirection().XYZ();
   const gp_XYZ& yDir = FromA1.YDirection().XYZ();
   const gp_XYZ& zDir = FromA1.Direction().XYZ();
@@ -236,13 +197,11 @@ void gp_Trsf::SetDisplacement(const gp_Ax3& FromA1, const gp_Ax3& ToA2)
   gp_XYZ MA1loc = FromA1.Location().XYZ();
   MA1loc.Multiply(MA1);
   MA1loc.Reverse();
-  // matrix * MA1
+
   MA1loc.Multiply(matrix);
   loc.Add(MA1loc);
   matrix.Multiply(MA1);
 }
-
-//=================================================================================================
 
 void gp_Trsf::SetTranslationPart(const gp_Vec& V) noexcept
 {
@@ -278,14 +237,12 @@ void gp_Trsf::SetTranslationPart(const gp_Vec& V) noexcept
   }
 }
 
-//=================================================================================================
-
 void gp_Trsf::SetScaleFactor(const double S)
 {
   Standard_ConstructionError_Raise_if(std::abs(S) <= gp::Resolution(), "gp_Trsf::SetScaleFactor");
   scale            = S;
-  const bool unit  = std::abs(scale - 1.) <= gp::Resolution(); // = (scale == 1)
-  const bool munit = std::abs(scale + 1.) <= gp::Resolution(); // = (scale == -1)
+  const bool unit  = std::abs(scale - 1.) <= gp::Resolution();
+  const bool munit = std::abs(scale + 1.) <= gp::Resolution();
 
   switch (shape)
   {
@@ -321,13 +278,6 @@ void gp_Trsf::SetScaleFactor(const double S)
   }
 }
 
-//=======================================================================
-// function : SetValues
-// purpose  :
-// 06-01-1998 modified by PMN : On utilise TolDist pour evaluer si les coeffs
-//  sont nuls : c'est toujours mieux que gp::Resolution !
-//=======================================================================
-
 void gp_Trsf::SetValues(const double a11,
                         const double a12,
                         const double a13,
@@ -345,7 +295,7 @@ void gp_Trsf::SetValues(const double a11,
   gp_XYZ col2(a12, a22, a32);
   gp_XYZ col3(a13, a23, a33);
   gp_XYZ col4(a14, a24, a34);
-  // compute the determinant
+
   gp_Mat M(col1, col2, col3);
   double s = M.Determinant();
   Standard_ConstructionError_Raise_if(std::abs(s) < gp::Resolution(),
@@ -365,22 +315,14 @@ void gp_Trsf::SetValues(const double a11,
   loc = col4;
 }
 
-//=================================================================================================
-
 gp_Quaternion gp_Trsf::GetRotation() const
 {
   return gp_Quaternion(matrix);
 }
 
-//=================================================================================================
-
 void gp_Trsf::Invert()
 {
-  //                                    -1
-  //  X' = scale * R * X + T  =>  X = (R  / scale)  * ( X' - T)
-  //
-  // Pour les gp_Trsf puisque le scale est extrait de la gp_Matrice R
-  // on a toujours determinant (R) = 1 et R-1 = R transposee.
+
   if (shape == gp_Identity)
   {
   }
@@ -403,8 +345,6 @@ void gp_Trsf::Invert()
     loc.Multiply(-scale);
   }
 }
-
-//=================================================================================================
 
 void gp_Trsf::Multiply(const gp_Trsf& T)
 {
@@ -537,8 +477,6 @@ void gp_Trsf::Multiply(const gp_Trsf& T)
     matrix.Multiply(T.matrix);
   }
 }
-
-//=================================================================================================
 
 void gp_Trsf::Power(const int N)
 {
@@ -673,8 +611,6 @@ void gp_Trsf::Power(const int N)
   }
 }
 
-//=================================================================================================
-
 void gp_Trsf::PreMultiply(const gp_Trsf& T)
 {
   if (T.shape == gp_Identity)
@@ -797,12 +733,6 @@ void gp_Trsf::PreMultiply(const gp_Trsf& T)
   }
 }
 
-//=======================================================================
-// function : GetRotation
-// purpose  : algorithm from A.Korn, M.Korn, "Mathematical Handbook for
-//           scientists and Engineers" McGraw-Hill, 1961, ch.14.10-2.
-//=======================================================================
-
 bool gp_Trsf::GetRotation(gp_XYZ& theAxis, double& theAngle) const
 {
   gp_Quaternion Q = GetRotation();
@@ -812,59 +742,8 @@ bool gp_Trsf::GetRotation(gp_XYZ& theAxis, double& theAngle) const
   return true;
 }
 
-//=======================================================================
-// function : Orthogonalize
-// purpose  :
-// ATTENTION!!!
-//      Orthogonalization is not equivalent transformation. Therefore,
-//        transformation with source matrix and with orthogonalized matrix can
-//        lead to different results for one shape. Consequently, source matrix must
-//        be close to orthogonalized matrix for reducing these differences.
-//=======================================================================
 void gp_Trsf::Orthogonalize()
 {
-  // Matrix M is called orthogonal if and only if
-  //     M*Transpose(M) == E
-  // where E is identity matrix.
-
-  // Set of all rows (as of all columns) of matrix M (for gp_Trsf class) is
-  // orthonormal basis. If this condition is not satisfied then the basis can be
-  // orthonormalized in accordance with below described algorithm.
-
-  // In 3D-space, we have the linear span of three basis vectors: V1, V2 and V3.
-  // Correspond orthonormalized basis is formed by vectors Vn1, Vn2 and Vn3.
-
-  // In this case,
-  //     Vn_{i}*Vn_{j} = (i == j)? 1 : 0.
-
-  // The algorithm includes following steps:
-
-  // 1. Normalize V1 vector:
-  //     V1n=V1/|V1|;
-  //
-  // 2. Let
-  //     V2n=V2-m*V1n.
-  //
-  // After multiplication two parts of this equation by V1n,
-  // we will have following equation:
-  //     0=V2*V1n-m <==> m=V2*V1n.
-  //
-  // Consequently,
-  //     V2n=V2-(V2*V1n)*V1n.
-
-  // 3. Let
-  //     V3n=V3-m1*V1n-m2*V2n.
-  //
-  // After multiplication two parts of this equation by V1n,
-  // we will have following equation:
-  //     0=V3*V1n-m1 <==> m1=V3*V1n.
-  //
-  // After multiplication two parts of main equation by V2n,
-  // we will have following equation:
-  //     0=V3*V2n-m2 <==> m2=V3*V2n.
-  //
-  // In conclusion,
-  //     V3n=V3-(V3*V1n)*V1n-(V3*V2n)*V2n.
 
   gp_Mat aTM(matrix);
 
@@ -899,8 +778,6 @@ void gp_Trsf::Orthogonalize()
   matrix = aTM;
 }
 
-//=================================================================================================
-
 void gp_Trsf::DumpJson(Standard_OStream& theOStream, int) const
 {
   OCCT_DUMP_VECTOR_CLASS(theOStream, "Location", 3, loc.X(), loc.Y(), loc.Z())
@@ -919,8 +796,6 @@ void gp_Trsf::DumpJson(Standard_OStream& theOStream, int) const
   OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, shape)
   OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, scale)
 }
-
-//=================================================================================================
 
 bool gp_Trsf::InitFromJson(const Standard_SStream& theSStream, int& theStreamPos)
 {

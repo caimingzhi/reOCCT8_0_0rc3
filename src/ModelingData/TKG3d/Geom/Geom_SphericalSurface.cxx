@@ -28,8 +28,6 @@ typedef gp_Trsf               Trsf;
 typedef gp_XYZ                XYZ;
 typedef gp_Vec                Vec;
 
-//=================================================================================================
-
 occ::handle<Geom_Geometry> Geom_SphericalSurface::Copy() const
 {
 
@@ -37,8 +35,6 @@ occ::handle<Geom_Geometry> Geom_SphericalSurface::Copy() const
   Cs = new SphericalSurface(pos, radius);
   return Cs;
 }
-
-//=================================================================================================
 
 Geom_SphericalSurface::Geom_SphericalSurface(const Ax3& A, const double R)
     : radius(R)
@@ -49,8 +45,6 @@ Geom_SphericalSurface::Geom_SphericalSurface(const Ax3& A, const double R)
   pos = A;
 }
 
-//=================================================================================================
-
 Geom_SphericalSurface::Geom_SphericalSurface(const gp_Sphere& S)
     : radius(S.Radius())
 {
@@ -58,63 +52,45 @@ Geom_SphericalSurface::Geom_SphericalSurface(const gp_Sphere& S)
   pos = S.Position();
 }
 
-//=================================================================================================
-
 double Geom_SphericalSurface::UReversedParameter(const double U) const
 {
   return (2. * M_PI - U);
 }
-
-//=================================================================================================
 
 double Geom_SphericalSurface::VReversedParameter(const double V) const
 {
   return (-V);
 }
 
-//=================================================================================================
-
 double Geom_SphericalSurface::Area() const
 {
   return 4.0 * M_PI * radius * radius;
 }
-
-//=================================================================================================
 
 double Geom_SphericalSurface::Radius() const
 {
   return radius;
 }
 
-//=================================================================================================
-
 bool Geom_SphericalSurface::IsUClosed() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool Geom_SphericalSurface::IsVClosed() const
 {
   return false;
 }
 
-//=================================================================================================
-
 bool Geom_SphericalSurface::IsUPeriodic() const
 {
   return true;
 }
 
-//=================================================================================================
-
 bool Geom_SphericalSurface::IsVPeriodic() const
 {
   return false;
 }
-
-//=================================================================================================
 
 void Geom_SphericalSurface::SetRadius(const double R)
 {
@@ -126,16 +102,12 @@ void Geom_SphericalSurface::SetRadius(const double R)
   radius = R;
 }
 
-//=================================================================================================
-
 void Geom_SphericalSurface::SetSphere(const gp_Sphere& S)
 {
 
   radius = S.Radius();
   pos    = S.Position();
 }
-
-//=================================================================================================
 
 void Geom_SphericalSurface::Bounds(double& U1, double& U2, double& V1, double& V2) const
 {
@@ -145,8 +117,6 @@ void Geom_SphericalSurface::Bounds(double& U1, double& U2, double& V1, double& V
   V1 = -M_PI / 2.0;
   V2 = M_PI / 2.0;
 }
-
-//=================================================================================================
 
 void Geom_SphericalSurface::Coefficients(double& A1,
                                          double& A2,
@@ -159,9 +129,6 @@ void Geom_SphericalSurface::Coefficients(double& A1,
                                          double& C3,
                                          double& D) const
 {
-
-  // Dans le repere local de la sphere :
-  // X*X + Y*Y + Z*Z - radius * radius = 0
 
   Trsf T;
   T.SetTransformation(pos);
@@ -189,21 +156,15 @@ void Geom_SphericalSurface::Coefficients(double& A1,
   D          = T14 * T14 + T24 * T24 + T34 * T34 - radius * radius;
 }
 
-//=================================================================================================
-
 void Geom_SphericalSurface::D0(const double U, const double V, Pnt& P) const
 {
   ElSLib::SphereD0(U, V, pos, radius, P);
 }
 
-//=================================================================================================
-
 void Geom_SphericalSurface::D1(const double U, const double V, Pnt& P, Vec& D1U, Vec& D1V) const
 {
   ElSLib::SphereD1(U, V, pos, radius, P, D1U, D1V);
 }
-
-//=================================================================================================
 
 void Geom_SphericalSurface::D2(const double U,
                                const double V,
@@ -216,8 +177,6 @@ void Geom_SphericalSurface::D2(const double U,
 {
   ElSLib::SphereD2(U, V, pos, radius, P, D1U, D1V, D2U, D2V, D2UV);
 }
-
-//=================================================================================================
 
 void Geom_SphericalSurface::D3(const double U,
                                const double V,
@@ -235,8 +194,6 @@ void Geom_SphericalSurface::D3(const double U,
   ElSLib::SphereD3(U, V, pos, radius, P, D1U, D1V, D2U, D2V, D2UV, D3U, D3V, D3UUV, D3UVV);
 }
 
-//=================================================================================================
-
 Vec Geom_SphericalSurface::DN(const double U, const double V, const int Nu, const int Nv) const
 {
 
@@ -244,15 +201,11 @@ Vec Geom_SphericalSurface::DN(const double U, const double V, const int Nu, cons
   return ElSLib::SphereDN(U, V, pos, radius, Nu, Nv);
 }
 
-//=================================================================================================
-
 gp_Sphere Geom_SphericalSurface::Sphere() const
 {
 
   return gp_Sphere(pos, radius);
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> Geom_SphericalSurface::UIso(const double U) const
 {
@@ -261,15 +214,11 @@ occ::handle<Geom_Curve> Geom_SphericalSurface::UIso(const double U) const
   return iso;
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> Geom_SphericalSurface::VIso(const double V) const
 {
   occ::handle<Geom_Circle> GC = new Geom_Circle(ElSLib::SphereVIso(pos, radius, V));
   return GC;
 }
-
-//=================================================================================================
 
 double Geom_SphericalSurface::Volume() const
 {
@@ -277,16 +226,12 @@ double Geom_SphericalSurface::Volume() const
   return (4.0 * M_PI * radius * radius * radius) / 3.0;
 }
 
-//=================================================================================================
-
 void Geom_SphericalSurface::Transform(const Trsf& T)
 {
 
   radius = radius * std::abs(T.ScaleFactor());
   pos.Transform(T);
 }
-
-//=================================================================================================
 
 void Geom_SphericalSurface::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

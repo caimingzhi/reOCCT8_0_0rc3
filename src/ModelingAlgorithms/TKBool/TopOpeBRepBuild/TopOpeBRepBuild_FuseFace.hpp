@@ -68,16 +68,12 @@ private:
 
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 inline TopOpeBRepBuild_FuseFace::TopOpeBRepBuild_FuseFace()
     : myInternal(false),
       myModified(false),
       myDone(false)
 {
 }
-
-//=================================================================================================
 
 inline TopOpeBRepBuild_FuseFace::TopOpeBRepBuild_FuseFace(const NCollection_List<TopoDS_Shape>& LIF,
                                                           const NCollection_List<TopoDS_Shape>& LRF,
@@ -86,63 +82,45 @@ inline TopOpeBRepBuild_FuseFace::TopOpeBRepBuild_FuseFace(const NCollection_List
   Init(LIF, LRF, CXM);
 }
 
-//=================================================================================================
-
 inline bool TopOpeBRepBuild_FuseFace::IsDone() const
 {
   return myDone;
 }
-
-//=================================================================================================
 
 inline bool TopOpeBRepBuild_FuseFace::IsModified() const
 {
   return myModified;
 }
 
-//=================================================================================================
-
 inline const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_FuseFace::LFuseFace() const
 {
   return myLFF;
 }
-
-//=================================================================================================
 
 inline const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_FuseFace::LInternEdge() const
 {
   return myLIE;
 }
 
-//=================================================================================================
-
 inline const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_FuseFace::LExternEdge() const
 {
   return myLEE;
 }
-
-//=================================================================================================
 
 inline const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_FuseFace::LModifEdge() const
 {
   return myLME;
 }
 
-//=================================================================================================
-
 inline const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_FuseFace::LInternVertex() const
 {
   return myLIV;
 }
 
-//=================================================================================================
-
 inline const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_FuseFace::LExternVertex() const
 {
   return myLEV;
 }
-
-//=================================================================================================
 
 inline const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_FuseFace::LModifVertex() const
 {

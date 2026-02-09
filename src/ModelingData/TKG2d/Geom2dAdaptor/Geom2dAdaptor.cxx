@@ -12,8 +12,6 @@
 #include <Geom2dAdaptor.hpp>
 #include <gp_Hypr2d.hpp>
 
-//=================================================================================================
-
 occ::handle<Geom2d_Curve> Geom2dAdaptor::MakeCurve(const Adaptor2d_Curve2d& HC)
 {
   occ::handle<Geom2d_Curve> C2D;
@@ -85,7 +83,6 @@ occ::handle<Geom2d_Curve> Geom2dAdaptor::MakeCurve(const Adaptor2d_Curve2d& HC)
       throw Standard_DomainError("Geom2dAdaptor::MakeCurve, OtherCurve");
   }
 
-  // trim the curve if necassary.
   if (!C2D.IsNull()
       && ((HC.FirstParameter() != C2D->FirstParameter())
           || (HC.LastParameter() != C2D->LastParameter())))

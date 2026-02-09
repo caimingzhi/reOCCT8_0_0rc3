@@ -8,13 +8,11 @@
 
 #include <algorithm>
 
-//! Pair of Morton code and primitive ID.
 typedef std::pair<unsigned int, int> BVH_EncodedLink;
 
 namespace BVH
 {
-  //! Lookup table for expanding 8-bit value to 24-bit Morton code component.
-  //! Each bit is spread to every 3rd position for interleaving with other components.
+
   constexpr unsigned int THE_MORTON_LUT[256] = {
     0x000000, 0x000001, 0x000008, 0x000009, 0x000040, 0x000041, 0x000048, 0x000049, 0x000200,
     0x000201, 0x000208, 0x000209, 0x000240, 0x000241, 0x000248, 0x000249, 0x001000, 0x001001,
@@ -46,17 +44,11 @@ namespace BVH
     0x249009, 0x249040, 0x249041, 0x249048, 0x249049, 0x249200, 0x249201, 0x249208, 0x249209,
     0x249240, 0x249241, 0x249248, 0x249249};
 
-  //! Encodes 10-bit voxel coordinates into 30-bit Morton code using LUT.
-  //! @param theVoxelX X coordinate (0-1023)
-  //! @param theVoxelY Y coordinate (0-1023)
-  //! @param theVoxelZ Z coordinate (0-1023)
-  //! @return 30-bit Morton code with interleaved bits
   constexpr unsigned int EncodeMortonCode(unsigned int theVoxelX,
                                           unsigned int theVoxelY,
                                           unsigned int theVoxelZ)
   {
-    // Split each 10-bit coordinate into two 8-bit lookups (upper 2 bits + lower 8 bits)
-    // For 10-bit values, we use lower 8 bits via LUT and handle upper 2 bits separately
+
     return (THE_MORTON_LUT[theVoxelX & 0xFF] | (THE_MORTON_LUT[(theVoxelX >> 8) & 0x03] << 24))
            | ((THE_MORTON_LUT[theVoxelY & 0xFF] | (THE_MORTON_LUT[(theVoxelY >> 8) & 0x03] << 24))
               << 1)
@@ -65,8 +57,6 @@ namespace BVH
   }
 } // namespace BVH
 
-//! Performs radix sort of a BVH primitive set using
-//! 10-bit Morton codes (or 1024 x 1024 x 1024 grid).
 template <class T, int N>
 class BVH_RadixSorter : public BVH_Sorter<T, N>
 {
@@ -74,83 +64,63 @@ public:
   typedef typename BVH::VectorType<T, N>::Type BVH_VecNt;
 
 public:
-  //! Creates new BVH radix sorter for the given AABB.
   BVH_RadixSorter(const BVH_Box<T, N>& theBox)
       : myBox(theBox)
   {
   }
 
-  //! Sorts the set.
   void Perform(BVH_Set<T, N>* theSet) override { Perform(theSet, 0, theSet->Size() - 1); }
 
-  //! Sorts the given (inclusive) range in the set.
   void Perform(BVH_Set<T, N>* theSet, const int theStart, const int theFinal) override;
 
-  //! Returns Morton codes assigned to BVH primitives.
   const NCollection_Array1<BVH_EncodedLink>& EncodedLinks() const { return *myEncodedLinks; }
 
 protected:
-  //! Axis-aligned bounding box (AABB) to perform sorting.
   BVH_Box<T, N> myBox;
 
-  //! Morton codes assigned to BVH primitives.
   Handle(NCollection_Shared<NCollection_Array1<BVH_EncodedLink>>) myEncodedLinks;
 };
 
 namespace BVH
 {
-  // Radix sort STL predicate for 32-bit integer.
+
   struct BitPredicate
   {
     unsigned int myBit;
 
-    //! Creates new radix sort predicate.
     BitPredicate(const int theDigit)
         : myBit(1U << theDigit)
     {
     }
 
-    //! Returns predicate value.
-    bool operator()(const BVH_EncodedLink theLink) const
-    {
-      return !(theLink.first & myBit); // 0-bit to the left side
-    }
+    bool operator()(const BVH_EncodedLink theLink) const { return !(theLink.first & myBit); }
   };
 
-  //! STL compare tool used in binary search algorithm.
   struct BitComparator
   {
     unsigned int myBit;
 
-    //! Creates new STL comparator.
     BitComparator(const int theDigit)
         : myBit(1U << theDigit)
     {
     }
 
-    //! Checks left value for the given bit.
-    bool operator()(BVH_EncodedLink theLink1, BVH_EncodedLink /*theLink2*/)
-    {
-      return !(theLink1.first & myBit);
-    }
+    bool operator()(BVH_EncodedLink theLink1, BVH_EncodedLink) { return !(theLink1.first & myBit); }
   };
 
-  //! Tool object for sorting link array using radix sort algorithm.
   class RadixSorter
   {
   public:
     typedef NCollection_Array1<BVH_EncodedLink>::iterator LinkIterator;
 
   private:
-    //! Structure defining sorting range.
     struct SortRange
     {
-      LinkIterator myStart; //!< Start element of exclusive sorting range
-      LinkIterator myFinal; //!< Final element of exclusive sorting range
-      int          myDigit; //!< Bit number used for partition operation
+      LinkIterator myStart;
+      LinkIterator myFinal;
+      int          myDigit;
     };
 
-    //! Functor class to run sorting in parallel.
     class Functor
     {
     public:
@@ -160,7 +130,6 @@ namespace BVH
       {
       }
 
-      //! Runs sorting function for the given range.
       void operator()(const int theIndex) const
       {
         RadixSorter::Sort(mySplits[theIndex].myStart,
@@ -198,7 +167,6 @@ namespace BVH
     }
 
   protected:
-    // Performs MSD (most significant digit) radix sort.
     static void perform(LinkIterator theStart, LinkIterator theFinal, int theDigit = 29)
     {
       while (theStart != theFinal && theDigit >= 0)
@@ -211,15 +179,13 @@ namespace BVH
   };
 } // namespace BVH
 
-//=================================================================================================
-
 template <class T, int N>
 void BVH_RadixSorter<T, N>::Perform(BVH_Set<T, N>* theSet, const int theStart, const int theFinal)
 {
   Standard_STATIC_ASSERT(N == 2 || N == 3 || N == 4);
 
   const int aDimension = 1024;
-  const int aNbEffComp = N == 2 ? 2 : 3; // 4th component is ignored
+  const int aNbEffComp = N == 2 ? 2 : 3;
 
   const BVH_VecNt aSceneMin = myBox.CornerMin();
   const BVH_VecNt aSceneMax = myBox.CornerMax();
@@ -231,13 +197,11 @@ void BVH_RadixSorter<T, N>::Perform(BVH_Set<T, N>* theSet, const int theStart, c
 
   myEncodedLinks = new NCollection_Shared<NCollection_Array1<BVH_EncodedLink>>(theStart, theFinal);
 
-  // Step 1 -- Assign Morton code to each primitive using LUT for faster encoding
   for (int aPrimIdx = theStart; aPrimIdx <= theFinal; ++aPrimIdx)
   {
     const BVH_VecNt aCenter = theSet->Box(aPrimIdx).Center();
     const BVH_VecNt aVoxelF = (aCenter - aSceneMin) * aReverseSize;
 
-    // Compute voxel coordinates clamped to valid range
     const int aVoxelX =
       std::clamp(BVH::IntFloor(BVH::VecComp<T, N>::Get(aVoxelF, 0)), 0, aDimension - 1);
     const int aVoxelY =
@@ -247,7 +211,6 @@ void BVH_RadixSorter<T, N>::Perform(BVH_Set<T, N>* theSet, const int theStart, c
         ? std::clamp(BVH::IntFloor(BVH::VecComp<T, N>::Get(aVoxelF, 2)), 0, aDimension - 1)
         : 0;
 
-    // Use LUT-based Morton code encoding for better performance
     const unsigned int aMortonCode = BVH::EncodeMortonCode(static_cast<unsigned int>(aVoxelX),
                                                            static_cast<unsigned int>(aVoxelY),
                                                            static_cast<unsigned int>(aVoxelZ));
@@ -255,7 +218,6 @@ void BVH_RadixSorter<T, N>::Perform(BVH_Set<T, N>* theSet, const int theStart, c
     myEncodedLinks->ChangeValue(aPrimIdx) = BVH_EncodedLink(aMortonCode, aPrimIdx);
   }
 
-  // Step 2 -- Sort primitives by their Morton codes using radix sort
   BVH::RadixSorter::Sort(myEncodedLinks->begin(), myEncodedLinks->end(), 29, this->IsParallel());
 
   NCollection_Array1<int> aLinkMap(theStart, theFinal);
@@ -264,7 +226,6 @@ void BVH_RadixSorter<T, N>::Perform(BVH_Set<T, N>* theSet, const int theStart, c
     aLinkMap(myEncodedLinks->Value(aLinkIdx).second) = aLinkIdx;
   }
 
-  // Step 3 -- Rearranging primitive list according to Morton codes (in place)
   int aPrimIdx = theStart;
   while (aPrimIdx <= theFinal)
   {

@@ -9,11 +9,10 @@ public:
   Standard_EXPORT AdvApp2Var_SysBase();
   Standard_EXPORT ~AdvApp2Var_SysBase();
 
-  //
   Standard_EXPORT int mainial_();
 
   Standard_EXPORT static int macinit_(int*, int*);
-  //
+
   Standard_EXPORT int mcrdelt_(integer*  iunit,
                                integer*  isize,
                                void*     t,
@@ -68,41 +67,25 @@ private:
   int macrchk_();
   int mcrlist_(integer* ier) const;
 
-  /* Maximum number of allowed allocation requests.
-     Currently the maximum known number of requests is 7 - see
-     AdvApp2Var_MathBase::mmresol_(). So the current value is a safe margin and
-     a reasonable balance to not provoke stack overflow (especially in
-     multi-threaded execution). Previous number of 1000 was excessive but
-     tolerable when used for static memory.
-  */
   static const int MAX_ALLOC_NB = 32;
 
   enum
   {
-    static_allocation = 0, /* indicates static allocation, currently not used */
-    heap_allocation   = 1  /* indicates heap allocation */
+    static_allocation = 0,
+    heap_allocation   = 1
   };
 
-  /* Describes an individual memory allocation request.
-     See format description in the AdvApp2Var_SysBase.cxx.
-     The field order is preserved and the sizes are chosen to minimize
-     memory footprint. Fields containing address have the intptr_t type
-     for easier arithmetic and to avoid casts in the source code.
-
-     No initialization constructor should be provided to avoid wasting
-     time when allocating a field mcrgene_.
-  */
   struct mitem
   {
     unsigned char prot;
-    unsigned char unit; // unit of allocation: 1, 2, 4 or 8
+    unsigned char unit;
     integer       reqsize;
     intptr_t      loc;
     intptr_t      offset;
-    unsigned char alloctype; // static_allocation or heap_allocation
+    unsigned char alloctype;
     integer       size;
     intptr_t      addr;
-    integer       userzone; // not used
+    integer       userzone;
     intptr_t      startaddr;
     intptr_t      endaddr;
     integer       rank;
@@ -115,13 +98,6 @@ private:
     unsigned char lprot;
   } mcrgene_;
 
-  /* Contains statistics on allocation requests.
-     Index 0 corresponds to static_allocation, 1 - to heap allocation.
-     nrqst - number of allocation requests;
-     ndelt - number of deallocation requests;
-     nbyte - current number of allocated bytes;
-     mbyte - maximum number of ever allocated bytes.
-  */
   struct
   {
     integer nrqst[2], ndelt[2], nbyte[2], mbyte[2];

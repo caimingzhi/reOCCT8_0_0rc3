@@ -7,8 +7,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_Curve3D, BRep_GCurve)
 
-//=================================================================================================
-
 BRep_Curve3D::BRep_Curve3D(const occ::handle<Geom_Curve>& C, const TopLoc_Location& L)
     : BRep_GCurve(L,
                   C.IsNull() ? RealFirst() : C->FirstParameter(),
@@ -17,36 +15,26 @@ BRep_Curve3D::BRep_Curve3D(const occ::handle<Geom_Curve>& C, const TopLoc_Locati
 {
 }
 
-//=================================================================================================
-
 void BRep_Curve3D::D0(const double U, gp_Pnt& P) const
 {
-  // should be D0 NYI
+
   P = myCurve->Value(U);
 }
-
-//=================================================================================================
 
 bool BRep_Curve3D::IsCurve3D() const
 {
   return true;
 }
 
-//=================================================================================================
-
 const occ::handle<Geom_Curve>& BRep_Curve3D::Curve3D() const
 {
   return myCurve;
 }
 
-//=================================================================================================
-
 void BRep_Curve3D::Curve3D(const occ::handle<Geom_Curve>& C)
 {
   myCurve = C;
 }
-
-//=================================================================================================
 
 occ::handle<BRep_CurveRepresentation> BRep_Curve3D::Copy() const
 {
@@ -55,8 +43,6 @@ occ::handle<BRep_CurveRepresentation> BRep_Curve3D::Copy() const
   C->SetRange(First(), Last());
   return C;
 }
-
-//=================================================================================================
 
 void BRep_Curve3D::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

@@ -1,7 +1,6 @@
 #include <IVtkTools.hpp>
 #include <IVtkVTK_ShapeData.hpp>
 
-// prevent disabling some MSVC warning messages by VTK headers
 #ifdef _MSC_VER
   #pragma warning(push)
 #endif
@@ -13,14 +12,11 @@
 
 namespace IVtkTools
 {
-  //============================================================================
-  // Method: InitLookupTable
-  // Purpose: Returns vtkLookupTable instance initialized by standrad OCCT colors.
-  //============================================================================
+
   vtkSmartPointer<vtkLookupTable> InitLookupTable()
   {
     vtkSmartPointer<vtkLookupTable> aColorTable = vtkSmartPointer<vtkLookupTable>::New();
-    // Set colors table for 3D shapes
+
     double aRange[2];
     aRange[0] = MT_Undefined;
     aRange[1] = MT_ShadedFace;
@@ -28,47 +24,29 @@ namespace IVtkTools
     aColorTable->SetNumberOfTableValues(9);
     aColorTable->SetTableRange(aRange);
     aColorTable->SetValueRange(0, 1);
-    /*
-      MT_Undefined     = -1   Undefined
-      MT_IsoLine       =  0   IsoLine
-      MT_FreeVertex    =  1   Free vertex
-      MT_SharedVertex  =  2   Shared vertex
-      MT_FreeEdge      =  3   Free edge
-      MT_BoundaryEdge  =  4   Boundary edge (related to a single face)
-      MT_SharedEdge    =  5   Shared edge (related to several faces)
-      MT_WireFrameFace =  6   Wireframe face
-      MT_ShadedFace    =  7   Shaded face
-    */
-    aColorTable->SetTableValue(0, 0, 0, 0);       // Undefined
-    aColorTable->SetTableValue(1, 0.5, 0.5, 0.5); // gray for IsoLine
-    aColorTable->SetTableValue(2, 1, 0, 0);       // red for Free vertex
-    aColorTable->SetTableValue(3, 1, 1, 0);       // yellow for Shared vertex
-    aColorTable->SetTableValue(4, 1, 0, 0);       // red for Free edge
-    aColorTable->SetTableValue(5, 0, 1, 0); // green for Boundary edge (related to a single face)
-    aColorTable->SetTableValue(6, 1, 1, 0); // yellow for Shared edge (related to several faces)
-    aColorTable->SetTableValue(7, 1, 1, 0); // yellow for Wireframe face
-    aColorTable->SetTableValue(8, 1, 1, 0); // yellow for Shaded face
+
+    aColorTable->SetTableValue(0, 0, 0, 0);
+    aColorTable->SetTableValue(1, 0.5, 0.5, 0.5);
+    aColorTable->SetTableValue(2, 1, 0, 0);
+    aColorTable->SetTableValue(3, 1, 1, 0);
+    aColorTable->SetTableValue(4, 1, 0, 0);
+    aColorTable->SetTableValue(5, 0, 1, 0);
+    aColorTable->SetTableValue(6, 1, 1, 0);
+    aColorTable->SetTableValue(7, 1, 1, 0);
+    aColorTable->SetTableValue(8, 1, 1, 0);
     return aColorTable;
   }
 
-  //============================================================================
-  //  Method: SetLookupTableColor
-  // Purpose: Set a color for given type of sub-shapes.
-  //============================================================================
   void SetLookupTableColor(vtkLookupTable*     theColorTable,
                            const IVtk_MeshType theColorRole,
                            const double        theR,
                            const double        theG,
                            const double        theB,
-                           const double /*theA*/)
+                           const double)
   {
     theColorTable->SetTableValue(theColorRole + 1, theR, theG, theB);
   }
 
-  //============================================================================
-  //  Method: GetLookupTableColor
-  // Purpose: Get a color for given type of sub-shapes.
-  //============================================================================
   void GetLookupTableColor(vtkLookupTable*     theColorTable,
                            const IVtk_MeshType theColorRole,
                            double&             theR,
@@ -82,10 +60,6 @@ namespace IVtkTools
     theB = aRgb[2];
   }
 
-  //============================================================================
-  //  Method: GetLookupTableColor
-  // Purpose: Get a color for given type of sub-shapes.
-  //============================================================================
   void GetLookupTableColor(vtkLookupTable*     theColorTable,
                            const IVtk_MeshType theColorRole,
                            double&             theR,
@@ -97,19 +71,11 @@ namespace IVtkTools
     GetLookupTableColor(theColorTable, theColorRole, theR, theG, theB);
   }
 
-  //============================================================================
-  //  Method: InitShapeMapper
-  // Purpose: Set up the initial shape mapper parameters with default OCC colors.
-  //============================================================================
   void InitShapeMapper(vtkMapper* theMapper)
   {
     InitShapeMapper(theMapper, InitLookupTable());
   }
 
-  //============================================================================
-  //  Method: InitShapeMapper
-  // Purpose: Set up the initial shape mapper parameters with user colors.
-  //============================================================================
   void InitShapeMapper(vtkMapper* theMapper, vtkLookupTable* theColorTable)
   {
     theMapper->ScalarVisibilityOn();

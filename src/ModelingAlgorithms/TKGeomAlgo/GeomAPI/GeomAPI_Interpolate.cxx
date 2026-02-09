@@ -9,8 +9,6 @@
 #include <Standard_Integer.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 static bool CheckPoints(const NCollection_Array1<gp_Pnt>& PointArray, const double Tolerance)
 {
   int    ii;
@@ -23,8 +21,6 @@ static bool CheckPoints(const NCollection_Array1<gp_Pnt>& PointArray, const doub
   }
   return result;
 }
-
-//=================================================================================================
 
 static bool CheckTangents(const NCollection_Array1<gp_Vec>& Tangents,
                           const NCollection_Array1<bool>&   TangentFlags,
@@ -46,8 +42,6 @@ static bool CheckTangents(const NCollection_Array1<gp_Vec>& Tangents,
   return result;
 }
 
-//=================================================================================================
-
 static bool CheckParameters(const NCollection_Array1<double>& Parameters)
 {
   int    ii;
@@ -60,8 +54,6 @@ static bool CheckParameters(const NCollection_Array1<double>& Parameters)
   }
   return result;
 }
-
-//=================================================================================================
 
 static void BuildParameters(const bool                                PeriodicFlag,
                             const NCollection_Array1<gp_Pnt>&         PointsArray,
@@ -90,8 +82,6 @@ static void BuildParameters(const bool                                PeriodicFl
     ParametersPtr->SetValue(index, ParametersPtr->Value(ii) + distance);
   }
 }
-
-//=================================================================================================
 
 static void BuildPeriodicTangent(const NCollection_Array1<gp_Pnt>& PointsArray,
                                  NCollection_Array1<gp_Vec>&       TangentsArray,
@@ -132,8 +122,6 @@ static void BuildPeriodicTangent(const NCollection_Array1<gp_Pnt>& PointsArray,
     TangentsArray.SetValue(1, a_vector);
   }
 }
-
-//=================================================================================================
 
 static void BuildTangents(const NCollection_Array1<gp_Pnt>& PointsArray,
                           NCollection_Array1<gp_Vec>&       TangentsArray,
@@ -194,12 +182,6 @@ static void BuildTangents(const NCollection_Array1<gp_Pnt>& PointsArray,
   }
 }
 
-//=======================================================================
-// function : BuildTangents
-// purpose  : scale the given tangent so that they have the length of
-// the size of the derivative of the lagrange interpolation
-//
-//=======================================================================
 static void ScaleTangents(const NCollection_Array1<gp_Pnt>& PointsArray,
                           NCollection_Array1<gp_Vec>&       TangentsArray,
                           const NCollection_Array1<bool>&   TangentFlags,
@@ -259,8 +241,6 @@ static void ScaleTangents(const NCollection_Array1<gp_Pnt>& PointsArray,
   }
 }
 
-//=================================================================================================
-
 GeomAPI_Interpolate::GeomAPI_Interpolate(const occ::handle<NCollection_HArray1<gp_Pnt>>& PointsPtr,
                                          const bool   PeriodicFlag,
                                          const double Tolerance)
@@ -286,8 +266,6 @@ GeomAPI_Interpolate::GeomAPI_Interpolate(const occ::handle<NCollection_HArray1<g
     myTangentFlags->SetValue(ii, false);
   }
 }
-
-//=================================================================================================
 
 GeomAPI_Interpolate::GeomAPI_Interpolate(
   const occ::handle<NCollection_HArray1<gp_Pnt>>& PointsPtr,
@@ -332,8 +310,6 @@ GeomAPI_Interpolate::GeomAPI_Interpolate(
   }
 }
 
-//=================================================================================================
-
 void GeomAPI_Interpolate::Load(const NCollection_Array1<gp_Vec>&             Tangents,
                                const occ::handle<NCollection_HArray1<bool>>& TangentFlagsPtr,
                                const bool                                    Scale)
@@ -370,8 +346,6 @@ void GeomAPI_Interpolate::Load(const NCollection_Array1<gp_Vec>&             Tan
   }
 }
 
-//=================================================================================================
-
 void GeomAPI_Interpolate::Load(const gp_Vec& InitialTangent,
                                const gp_Vec& FinalTangent,
                                const bool    Scale)
@@ -397,8 +371,6 @@ void GeomAPI_Interpolate::Load(const gp_Vec& InitialTangent,
   }
 }
 
-//=================================================================================================
-
 void GeomAPI_Interpolate::Perform()
 {
   if (myPeriodic)
@@ -411,12 +383,10 @@ void GeomAPI_Interpolate::Perform()
   }
 }
 
-//=================================================================================================
-
 void GeomAPI_Interpolate::PerformPeriodic()
 {
   int degree, ii, jj, index, index1,
-    //  index2,
+
     mult_index, half_order, inversion_problem, num_points, num_distinct_knots, num_poles;
 
   double period;
@@ -428,9 +398,6 @@ void GeomAPI_Interpolate::PerformPeriodic()
   num_poles = num_points + 1;
   if (num_points == 2 && !myTangentRequest)
   {
-    //
-    // build a periodic curve of degree 1
-    //
 
     degree = 1;
     NCollection_Array1<int> deg1_mults(1, num_poles);
@@ -487,10 +454,6 @@ void GeomAPI_Interpolate::PerformPeriodic()
     if (num_points >= 3)
     {
 
-      //
-      //   only enter here if there are more than 3 points otherwise
-      //   it means we have already the tangent
-      //
       BuildPeriodicTangent(myPoints->Array1(),
                            myTangents->ChangeArray1(),
                            myTangentFlags->ChangeArray1(),
@@ -550,21 +513,14 @@ void GeomAPI_Interpolate::PerformPeriodic()
       index = 3;
       for (ii = myPoints->Lower() + 1; ii <= myPoints->Upper(); ii++)
       {
-        //
-        // copy all the given points since the last one will be initialized
-        // below by the first point in the array myPoints
-        //
+
         poles.SetValue(index, myPoints->Value(ii));
         index += 1;
       }
     }
     contact_order_array.SetValue(num_poles - 1, 1);
     parameters.SetValue(num_poles - 1, myParameters->Value(myParameters->Upper()));
-    //
-    // for the periodic curve ONLY  the tangent of the first point
-    // will be used since the curve should close itself at the first
-    // point See BuildPeriodicTangent
-    //
+
     for (jj = 1; jj <= 3; jj++)
     {
       a_point.SetCoord(jj, myTangents->Value(1).Coord(jj));
@@ -589,8 +545,6 @@ void GeomAPI_Interpolate::PerformPeriodic()
     }
   }
 }
-
-//=================================================================================================
 
 void GeomAPI_Interpolate::PerformNonPeriodic()
 {
@@ -676,15 +630,10 @@ void GeomAPI_Interpolate::PerformNonPeriodic()
       }
       break;
     case 3:
-      //
-      // check if the boundary conditions are set
-      //
+
       if (num_points >= 3)
       {
-        //
-        // cannot build the tangents with degree 3 with only 2 points
-        // if those where not given in advance
-        //
+
         BuildTangents(myPoints->Array1(),
                       myTangents->ChangeArray1(),
                       myTangentFlags->ChangeArray1(),
@@ -715,10 +664,7 @@ void GeomAPI_Interpolate::PerformNonPeriodic()
           index3 += 1;
           if (myTangentFlags->Value(index1))
           {
-            //
-            // set the multiplicities, the order of the contact, the
-            // the flatknots,
-            //
+
             mults.SetValue(mult_index, mults.Value(mult_index) + 1);
             contact_order_array(index) = 1;
             flatknots.SetValue(index3, myParameters->Value(ii));
@@ -785,11 +731,6 @@ void GeomAPI_Interpolate::PerformNonPeriodic()
   }
 }
 
-//=======================================================================
-// function : occ::handle<Geom_BSplineCurve>&
-// purpose  :
-//=======================================================================
-
 const occ::handle<Geom_BSplineCurve>& GeomAPI_Interpolate::Curve() const
 {
   if (!myIsDone)
@@ -797,14 +738,10 @@ const occ::handle<Geom_BSplineCurve>& GeomAPI_Interpolate::Curve() const
   return myCurve;
 }
 
-//=================================================================================================
-
 GeomAPI_Interpolate::operator occ::handle<Geom_BSplineCurve>() const
 {
   return myCurve;
 }
-
-//=================================================================================================
 
 bool GeomAPI_Interpolate::IsDone() const
 {

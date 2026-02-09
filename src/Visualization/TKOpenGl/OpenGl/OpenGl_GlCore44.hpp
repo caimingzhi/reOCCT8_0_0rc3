@@ -2,17 +2,16 @@
 
 #include <OpenGl_GlCore32.hpp>
 
-//! OpenGL 3.3 definition.
 struct OpenGl_GlCore33 : public OpenGl_GlCore32
 {
 private:
   typedef OpenGl_GlCore32 theBaseClass_t;
 
-public: //! @name GL_ARB_blend_func_extended (added to OpenGL 3.3 core)
+public:
   using theBaseClass_t::glBindFragDataLocationIndexed;
   using theBaseClass_t::glGetFragDataIndex;
 
-public: //! @name GL_ARB_sampler_objects (added to OpenGL 3.3 core)
+public:
   using theBaseClass_t::glBindSampler;
   using theBaseClass_t::glDeleteSamplers;
   using theBaseClass_t::glGenSamplers;
@@ -28,12 +27,12 @@ public: //! @name GL_ARB_sampler_objects (added to OpenGL 3.3 core)
   using theBaseClass_t::glSamplerParameterIuiv;
   using theBaseClass_t::glSamplerParameteriv;
 
-public: //! @name GL_ARB_timer_query (added to OpenGL 3.3 core)
+public:
   using theBaseClass_t::glGetQueryObjecti64v;
   using theBaseClass_t::glGetQueryObjectui64v;
   using theBaseClass_t::glQueryCounter;
 
-public: //! @name GL_ARB_vertex_type_2_10_10_10_rev (added to OpenGL 3.3 core)
+public:
   using theBaseClass_t::glVertexAttribP1ui;
   using theBaseClass_t::glVertexAttribP1uiv;
   using theBaseClass_t::glVertexAttribP2ui;
@@ -43,21 +42,20 @@ public: //! @name GL_ARB_vertex_type_2_10_10_10_rev (added to OpenGL 3.3 core)
   using theBaseClass_t::glVertexAttribP4ui;
   using theBaseClass_t::glVertexAttribP4uiv;
 
-public: //! @name OpenGL 3.3 additives to 3.2
+public:
   using theBaseClass_t::glVertexAttribDivisor;
 };
 
-//! OpenGL 4.0 definition.
 struct OpenGl_GlCore40 : public OpenGl_GlCore33
 {
 private:
   typedef OpenGl_GlCore33 theBaseClass_t;
 
-public: //! @name GL_ARB_draw_indirect (added to OpenGL 4.0 core)
+public:
   using theBaseClass_t::glDrawArraysIndirect;
   using theBaseClass_t::glDrawElementsIndirect;
 
-public: //! @name GL_ARB_gpu_shader_fp64 (added to OpenGL 4.0 core)
+public:
   using theBaseClass_t::glGetUniformdv;
   using theBaseClass_t::glUniform1d;
   using theBaseClass_t::glUniform1dv;
@@ -77,7 +75,7 @@ public: //! @name GL_ARB_gpu_shader_fp64 (added to OpenGL 4.0 core)
   using theBaseClass_t::glUniformMatrix4x2dv;
   using theBaseClass_t::glUniformMatrix4x3dv;
 
-public: //! @name GL_ARB_shader_subroutine (added to OpenGL 4.0 core)
+public:
   using theBaseClass_t::glGetActiveSubroutineName;
   using theBaseClass_t::glGetActiveSubroutineUniformiv;
   using theBaseClass_t::glGetActiveSubroutineUniformName;
@@ -87,11 +85,11 @@ public: //! @name GL_ARB_shader_subroutine (added to OpenGL 4.0 core)
   using theBaseClass_t::glGetUniformSubroutineuiv;
   using theBaseClass_t::glUniformSubroutinesuiv;
 
-public: //! @name GL_ARB_tessellation_shader (added to OpenGL 4.0 core)
+public:
   using theBaseClass_t::glPatchParameterfv;
   using theBaseClass_t::glPatchParameteri;
 
-public: //! @name GL_ARB_transform_feedback2 (added to OpenGL 4.0 core)
+public:
   using theBaseClass_t::glBindTransformFeedback;
   using theBaseClass_t::glDeleteTransformFeedbacks;
   using theBaseClass_t::glDrawTransformFeedback;
@@ -100,13 +98,13 @@ public: //! @name GL_ARB_transform_feedback2 (added to OpenGL 4.0 core)
   using theBaseClass_t::glPauseTransformFeedback;
   using theBaseClass_t::glResumeTransformFeedback;
 
-public: //! @name GL_ARB_transform_feedback3 (added to OpenGL 4.0 core)
+public:
   using theBaseClass_t::glBeginQueryIndexed;
   using theBaseClass_t::glDrawTransformFeedbackStream;
   using theBaseClass_t::glEndQueryIndexed;
   using theBaseClass_t::glGetQueryIndexediv;
 
-public: //! @name OpenGL 4.0 additives to 3.3
+public:
   using theBaseClass_t::glBlendEquationi;
   using theBaseClass_t::glBlendEquationSeparatei;
   using theBaseClass_t::glBlendFunci;
@@ -114,25 +112,24 @@ public: //! @name OpenGL 4.0 additives to 3.3
   using theBaseClass_t::glMinSampleShading;
 };
 
-//! OpenGL 4.1 definition.
 struct OpenGl_GlCore41 : public OpenGl_GlCore40
 {
 private:
   typedef OpenGl_GlCore40 theBaseClass_t;
 
-public: //! @name GL_ARB_ES2_compatibility (added to OpenGL 4.1 core)
+public:
   using theBaseClass_t::glClearDepthf;
   using theBaseClass_t::glDepthRangef;
   using theBaseClass_t::glGetShaderPrecisionFormat;
   using theBaseClass_t::glReleaseShaderCompiler;
   using theBaseClass_t::glShaderBinary;
 
-public: //! @name GL_ARB_get_program_binary (added to OpenGL 4.1 core)
+public:
   using theBaseClass_t::glGetProgramBinary;
   using theBaseClass_t::glProgramBinary;
   using theBaseClass_t::glProgramParameteri;
 
-public: //! @name GL_ARB_separate_shader_objects (added to OpenGL 4.1 core)
+public:
   using theBaseClass_t::glActiveShaderProgram;
   using theBaseClass_t::glBindProgramPipeline;
   using theBaseClass_t::glCreateShaderProgramv;
@@ -194,7 +191,7 @@ public: //! @name GL_ARB_separate_shader_objects (added to OpenGL 4.1 core)
   using theBaseClass_t::glUseProgramStages;
   using theBaseClass_t::glValidateProgramPipeline;
 
-public: //! @name GL_ARB_vertex_attrib_64bit (added to OpenGL 4.1 core)
+public:
   using theBaseClass_t::glGetVertexAttribLdv;
   using theBaseClass_t::glVertexAttribL1d;
   using theBaseClass_t::glVertexAttribL1dv;
@@ -206,7 +203,7 @@ public: //! @name GL_ARB_vertex_attrib_64bit (added to OpenGL 4.1 core)
   using theBaseClass_t::glVertexAttribL4dv;
   using theBaseClass_t::glVertexAttribLPointer;
 
-public: //! @name GL_ARB_viewport_array (added to OpenGL 4.1 core)
+public:
   using theBaseClass_t::glDepthRangeArrayv;
   using theBaseClass_t::glDepthRangeIndexed;
   using theBaseClass_t::glGetDoublei_v;
@@ -219,44 +216,42 @@ public: //! @name GL_ARB_viewport_array (added to OpenGL 4.1 core)
   using theBaseClass_t::glViewportIndexedfv;
 };
 
-//! OpenGL 4.2 definition.
 struct OpenGl_GlCore42 : public OpenGl_GlCore41
 {
 private:
   typedef OpenGl_GlCore41 theBaseClass_t;
 
-public: //! @name GL_ARB_base_instance (added to OpenGL 4.2 core)
+public:
   using theBaseClass_t::glDrawArraysInstancedBaseInstance;
   using theBaseClass_t::glDrawElementsInstancedBaseInstance;
   using theBaseClass_t::glDrawElementsInstancedBaseVertexBaseInstance;
 
-public: //! @name GL_ARB_transform_feedback_instanced (added to OpenGL 4.2 core)
+public:
   using theBaseClass_t::glDrawTransformFeedbackInstanced;
   using theBaseClass_t::glDrawTransformFeedbackStreamInstanced;
 
-public: //! @name GL_ARB_internalformat_query (added to OpenGL 4.2 core)
+public:
   using theBaseClass_t::glGetInternalformativ;
 
-public: //! @name GL_ARB_shader_atomic_counters (added to OpenGL 4.2 core)
+public:
   using theBaseClass_t::glGetActiveAtomicCounterBufferiv;
 
-public: //! @name GL_ARB_shader_image_load_store (added to OpenGL 4.2 core)
+public:
   using theBaseClass_t::glBindImageTexture;
   using theBaseClass_t::glMemoryBarrier;
 
-public: //! @name GL_ARB_texture_storage (added to OpenGL 4.2 core)
+public:
   using theBaseClass_t::glTexStorage1D;
   using theBaseClass_t::glTexStorage2D;
   using theBaseClass_t::glTexStorage3D;
 };
 
-//! OpenGL 4.3 definition.
 struct OpenGl_GlCore43 : public OpenGl_GlCore42
 {
 private:
   typedef OpenGl_GlCore42 theBaseClass_t;
 
-public: //! @name OpenGL 4.3 additives to 4.2
+public:
   using theBaseClass_t::glBindVertexBuffer;
   using theBaseClass_t::glClearBufferData;
   using theBaseClass_t::glClearBufferSubData;
@@ -302,13 +297,12 @@ public: //! @name OpenGL 4.3 additives to 4.2
   using theBaseClass_t::glVertexBindingDivisor;
 };
 
-//! OpenGL 4.4 definition.
 struct OpenGl_GlCore44 : public OpenGl_GlCore43
 {
 private:
   typedef OpenGl_GlCore43 theBaseClass_t;
 
-public: //! @name OpenGL 4.4 additives to 4.3
+public:
   using theBaseClass_t::glBindBuffersBase;
   using theBaseClass_t::glBindBuffersRange;
   using theBaseClass_t::glBindImageTextures;

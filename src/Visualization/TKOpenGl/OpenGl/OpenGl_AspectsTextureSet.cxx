@@ -1,15 +1,4 @@
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OpenGl_AspectsTextureSet.hpp>
 
@@ -18,8 +7,6 @@
 #include <OpenGl_TextureSet.hpp>
 
 #include <Graphic3d_TextureParams.hpp>
-
-//=================================================================================================
 
 void OpenGl_AspectsTextureSet::Release(OpenGl_Context* theCtx)
 {
@@ -30,7 +17,7 @@ void OpenGl_AspectsTextureSet::Release(OpenGl_Context* theCtx)
 
   if (!myTextures[1].IsNull())
   {
-    // ReleaseResource() will have no effect until nullifying all copies
+
     myTextures[1]->InitZero();
   }
 
@@ -51,10 +38,9 @@ void OpenGl_AspectsTextureSet::Release(OpenGl_Context* theCtx)
       }
       else
       {
-        // OpenGl_PointSprite will be actually released later by OpenGl_AspectsSprite,
-        // see order OpenGl_Aspects::Release()
+
         const TCollection_AsciiString aName = aTextureRes->ResourceId();
-        aTextureRes.Nullify(); // we need nullify all handles before ReleaseResource() call
+        aTextureRes.Nullify();
         theCtx->ReleaseResource(aName, true);
       }
     }
@@ -62,8 +48,6 @@ void OpenGl_AspectsTextureSet::Release(OpenGl_Context* theCtx)
   }
   myIsTextureReady = false;
 }
-
-//=================================================================================================
 
 void OpenGl_AspectsTextureSet::UpdateRediness(const occ::handle<Graphic3d_Aspects>& theAspect)
 {
@@ -116,14 +100,12 @@ void OpenGl_AspectsTextureSet::UpdateRediness(const occ::handle<Graphic3d_Aspect
     }
     else
     {
-      // just invalidate texture parameters
+
       aResource->Sampler()->SetParameters(aTexture->GetParams());
       aResIter.ChangeUnit() = aResource->Sampler()->Parameters()->TextureUnit();
     }
   }
 }
-
-//=================================================================================================
 
 void OpenGl_AspectsTextureSet::build(const occ::handle<OpenGl_Context>&     theCtx,
                                      const occ::handle<Graphic3d_Aspects>&  theAspect,
@@ -141,7 +123,6 @@ void OpenGl_AspectsTextureSet::build(const occ::handle<OpenGl_Context>&     theC
     ++aNbTexturesNew;
   }
 
-  // release old texture resources
   if (aNbTexturesOld != aNbTexturesNew)
   {
     Release(theCtx.get());
@@ -214,7 +195,7 @@ void OpenGl_AspectsTextureSet::build(const occ::handle<OpenGl_Context>&     theC
         else
         {
           const TCollection_AsciiString aTextureKey = aResource->ResourceId();
-          aResource.Nullify(); // we need nullify all handles before ReleaseResource() call
+          aResource.Nullify();
           theCtx->ReleaseResource(aTextureKey, true);
         }
       }
@@ -248,7 +229,6 @@ void OpenGl_AspectsTextureSet::build(const occ::handle<OpenGl_Context>&     theC
           aResource->Sampler()->SetParameters(aTexture->GetParams());
         }
 
-        // update occupation of texture units
         const Graphic3d_TextureUnit aTexUnit = aResource->Sampler()->Parameters()->TextureUnit();
         aResIter0.ChangeUnit()               = aTexUnit;
         if (aResIter0.Unit() < aPrevTextureUnit)
@@ -269,7 +249,7 @@ void OpenGl_AspectsTextureSet::build(const occ::handle<OpenGl_Context>&     theC
   {
     myTextures[0]->ChangeLast()     = theSprite;
     myTextures[0]->ChangeLastUnit() = theCtx->SpriteTextureUnit();
-    // Graphic3d_TextureUnit_PointSprite
+
     if (!theSprite.IsNull())
     {
       theSprite->Sampler()->Parameters()->SetTextureUnit(theCtx->SpriteTextureUnit());

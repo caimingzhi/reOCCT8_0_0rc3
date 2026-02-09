@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <STEPEdit.hpp>
 
@@ -25,14 +14,7 @@
 
 occ::handle<Interface_Protocol> STEPEdit::Protocol()
 {
-  /*
-    static occ::handle<StepData_FileProtocol> proto;
-    if (!proto.IsNull()) return proto;
-    proto =  new StepData_FileProtocol;
-    proto->Add (StepAP214::Protocol());
-    proto->Add (HeaderSection::Protocol());
-    return proto;
-  */
+
   return StepAP214::Protocol();
 }
 
@@ -77,7 +59,7 @@ occ::handle<IFSelect_SelectSignature> STEPEdit::NewSelectShapeRepr()
 {
   occ::handle<IFSelect_SelectSignature> sel =
     new IFSelect_SelectSignature(STEPEdit::SignType(), "SHAPE_REPRESENTATION", false);
-  // REPRESENTATION_RELATIONSHIP passe par CONTEXT_DEPENDENT_SHAPE_REPRESENTATION
+
   sel->SetInput(new IFSelect_SelectModelEntities);
   return sel;
 }

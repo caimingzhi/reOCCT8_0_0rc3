@@ -8,8 +8,6 @@
 #include <Standard_Real.hpp>
 class Geom2d_Curve;
 
-//! This package provides the bisecting line between two
-//! geometric elements.
 class Bisector
 {
 public:

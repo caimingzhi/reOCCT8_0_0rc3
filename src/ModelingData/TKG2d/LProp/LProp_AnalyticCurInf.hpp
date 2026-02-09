@@ -6,8 +6,6 @@
 #include <GeomAbs_CurveType.hpp>
 class LProp_CurAndInf;
 
-//! Computes the locals extremas of curvature of a gp curve
-//! Remark : a gp curve has not inflection.
 class LProp_AnalyticCurInf
 {
 public:

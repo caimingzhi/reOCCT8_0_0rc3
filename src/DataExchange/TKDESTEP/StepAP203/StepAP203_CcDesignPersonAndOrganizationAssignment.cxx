@@ -5,12 +5,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepAP203_CcDesignPersonAndOrganizationAssignment,
                            StepBasic_PersonAndOrganizationAssignment)
 
-//=================================================================================================
-
 StepAP203_CcDesignPersonAndOrganizationAssignment::
   StepAP203_CcDesignPersonAndOrganizationAssignment() = default;
-
-//=================================================================================================
 
 void StepAP203_CcDesignPersonAndOrganizationAssignment::Init(
   const occ::handle<StepBasic_PersonAndOrganization>&
@@ -25,15 +21,11 @@ void StepAP203_CcDesignPersonAndOrganizationAssignment::Init(
   theItems = aItems;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<StepAP203_PersonOrganizationItem>>
   StepAP203_CcDesignPersonAndOrganizationAssignment::Items() const
 {
   return theItems;
 }
-
-//=================================================================================================
 
 void StepAP203_CcDesignPersonAndOrganizationAssignment::SetItems(
   const occ::handle<NCollection_HArray1<StepAP203_PersonOrganizationItem>>& aItems)

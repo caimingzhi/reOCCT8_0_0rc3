@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_EditForm.hpp>
 #include <IFSelect_ParamEditor.hpp>
@@ -55,21 +44,21 @@ TCollection_AsciiString IFSelect_ParamEditor::Label() const
   return thelabel;
 }
 
-bool IFSelect_ParamEditor::Recognize(const occ::handle<IFSelect_EditForm>& /*form*/) const
+bool IFSelect_ParamEditor::Recognize(const occ::handle<IFSelect_EditForm>&) const
 {
   return true;
-} // no constraint
+}
 
 occ::handle<TCollection_HAsciiString> IFSelect_ParamEditor::StringValue(
-  const occ::handle<IFSelect_EditForm>& /*form*/,
+  const occ::handle<IFSelect_EditForm>&,
   const int num) const
 {
   return TypedValue(num)->HStringValue();
 }
 
 bool IFSelect_ParamEditor::Load(const occ::handle<IFSelect_EditForm>& form,
-                                const occ::handle<Standard_Transient>& /*ent*/,
-                                const occ::handle<Interface_InterfaceModel>& /*model*/) const
+                                const occ::handle<Standard_Transient>&,
+                                const occ::handle<Interface_InterfaceModel>&) const
 {
   int i, nb = NbValues();
   for (i = 1; i <= nb; i++)
@@ -79,8 +68,8 @@ bool IFSelect_ParamEditor::Load(const occ::handle<IFSelect_EditForm>& form,
 }
 
 bool IFSelect_ParamEditor::Apply(const occ::handle<IFSelect_EditForm>& form,
-                                 const occ::handle<Standard_Transient>& /*ent*/,
-                                 const occ::handle<Interface_InterfaceModel>& /*model*/) const
+                                 const occ::handle<Standard_Transient>&,
+                                 const occ::handle<Interface_InterfaceModel>&) const
 {
   int i, nb = NbValues();
   for (i = 1; i <= nb; i++)
@@ -98,7 +87,7 @@ occ::handle<IFSelect_ParamEditor> IFSelect_ParamEditor::StaticEditor(
   if (list.IsNull())
     return editor;
   int i, nb = list->Length();
-  //  if (nb == 0) return editor;
+
   editor = new IFSelect_ParamEditor(nb + 10, label);
   for (i = 1; i <= nb; i++)
   {

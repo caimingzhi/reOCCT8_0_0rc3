@@ -3,21 +3,15 @@
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 
-//=================================================================================================
-
 void BRepLProp_CurveTool::Value(const BRepAdaptor_Curve& C, const double U, gp_Pnt& P)
 {
   P = C.Value(U);
 }
 
-//=================================================================================================
-
 void BRepLProp_CurveTool::D1(const BRepAdaptor_Curve& C, const double U, gp_Pnt& P, gp_Vec& V1)
 {
   C.D1(U, P, V1);
 }
-
-//=================================================================================================
 
 void BRepLProp_CurveTool::D2(const BRepAdaptor_Curve& C,
                              const double             U,
@@ -28,8 +22,6 @@ void BRepLProp_CurveTool::D2(const BRepAdaptor_Curve& C,
   C.D2(U, P, V1, V2);
 }
 
-//=================================================================================================
-
 void BRepLProp_CurveTool::D3(const BRepAdaptor_Curve& C,
                              const double             U,
                              gp_Pnt&                  P,
@@ -39,8 +31,6 @@ void BRepLProp_CurveTool::D3(const BRepAdaptor_Curve& C,
 {
   C.D3(U, P, V1, V2, V3);
 }
-
-//=================================================================================================
 
 int BRepLProp_CurveTool::Continuity(const BRepAdaptor_Curve& C)
 {
@@ -65,14 +55,10 @@ int BRepLProp_CurveTool::Continuity(const BRepAdaptor_Curve& C)
   return 0;
 }
 
-//=================================================================================================
-
 double BRepLProp_CurveTool::FirstParameter(const BRepAdaptor_Curve& C)
 {
   return C.FirstParameter();
 }
-
-//=================================================================================================
 
 double BRepLProp_CurveTool::LastParameter(const BRepAdaptor_Curve& C)
 {

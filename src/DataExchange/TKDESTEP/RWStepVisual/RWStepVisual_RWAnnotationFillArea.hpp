@@ -11,7 +11,6 @@ class StepVisual_AnnotationFillArea;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AnnotationFillArea
 class RWStepVisual_RWAnnotationFillArea
 {
 public:

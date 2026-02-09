@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_EditForm.hpp>
 #include <IGESData_BasicEditor.hpp>
@@ -30,14 +19,12 @@ static bool IsTimeStamp(const occ::handle<TCollection_HAsciiString>& val)
 {
   if (val.IsNull())
     return false;
-  //  La date peut etre sur 13 ou 15 caracteres (15 : bonjour l an 2000!)
-  //  forme [YY]YYMMDD.HHMMSS
+
   int lng = val->Length();
   if (lng != 13 && lng != 15)
     return false;
-  lng -= 13; // devient 0 ou 2 (offset siecle)
+  lng -= 13;
 
-  //  Cas du siecle present :
   if (lng == 2)
   {
     char uncar = val->Value(1);
@@ -48,7 +35,6 @@ static bool IsTimeStamp(const occ::handle<TCollection_HAsciiString>& val)
       return false;
   }
 
-  //  On y va
   char dizmois = val->Value(lng + 3);
   char dizjour = val->Value(lng + 5);
   char dizheur = val->Value(lng + 8);
@@ -93,9 +79,10 @@ static bool IsTimeStamp(const occ::handle<TCollection_HAsciiString>& val)
       case 9:
         if (uncar < '0' || uncar > '9')
           return false;
-        // clang-format off
-      if (dizheur == '2' && (uncar < '0' || uncar > '3')) return false; //szv#4:S4163:12Mar99 extra break
-        // clang-format on
+
+        if (dizheur == '2' && (uncar < '0' || uncar > '3'))
+          return false;
+
         break;
       case 10:
         if (uncar < '0' || uncar > '5')
@@ -124,7 +111,7 @@ IGESSelect_EditHeader::IGESSelect_EditHeader()
     : IFSelect_Editor(30)
 {
   int i, nb;
-  //  Definition
+
   occ::handle<Interface_TypedValue> start = new Interface_TypedValue("Start Section");
   start->SetMaxLength(72);
   SetValue(1, start, "Start");
@@ -177,13 +164,13 @@ IGESSelect_EditHeader::IGESSelect_EditHeader()
   unitflag->SetIntegerLimit(false, 1);
   unitflag->SetIntegerLimit(true, 11);
   SetValue(15, unitflag, "G14:UnitFlag", IFSelect_Optional);
-  //  On prend a la source ...  Mieux vaudrait "recopier" les definitions ...
+
   occ::handle<Interface_TypedValue> unitname =
     new Interface_TypedValue("Units Name", Interface_ParamEnum);
   unitname->StartEnum(1);
   for (i = 1; i <= 11; i++)
     unitname->AddEnumValue(IGESData_BasicEditor::UnitFlagName(i), i);
-  //  similaire a Interface_Static::Static("XSTEP.iges.unit");
+
   SetValue(16, unitname, "G15:UnitName", IFSelect_Optional);
   occ::handle<Interface_TypedValue> unitval =
     new Interface_TypedValue("Computed Unit Value", Interface_ParamReal);
@@ -253,21 +240,21 @@ TCollection_AsciiString IGESSelect_EditHeader::Label() const
   return TCollection_AsciiString("IGES Header");
 }
 
-bool IGESSelect_EditHeader::Recognize(const occ::handle<IFSelect_EditForm>& /*form*/) const
+bool IGESSelect_EditHeader::Recognize(const occ::handle<IFSelect_EditForm>&) const
 {
   return true;
-} // ??
+}
 
 occ::handle<TCollection_HAsciiString> IGESSelect_EditHeader::StringValue(
-  const occ::handle<IFSelect_EditForm>& /*form*/,
+  const occ::handle<IFSelect_EditForm>&,
   const int num) const
 {
-  //  Default Values
+
   return TypedValue(num)->HStringValue();
 }
 
 bool IGESSelect_EditHeader::Load(const occ::handle<IFSelect_EditForm>& form,
-                                 const occ::handle<Standard_Transient>& /*ent*/,
+                                 const occ::handle<Standard_Transient>&,
                                  const occ::handle<Interface_InterfaceModel>& model) const
 {
   occ::handle<IGESData_IGESModel> modl = occ::down_cast<IGESData_IGESModel>(model);
@@ -328,8 +315,8 @@ bool IGESSelect_EditHeader::Update(const occ::handle<IFSelect_EditForm>&        
   if (num == 15)
   {
     if (!enforce)
-      return false; // quand meme ...
-                    //    Unit Flag : mettre a jour UnitName et UnitValue
+      return false;
+
     int         unitflag = val->IntegerValue();
     const char* unitname = IGESData_BasicEditor::UnitFlagName(unitflag);
     if (unitname[0] == '\0')
@@ -340,19 +327,19 @@ bool IGESSelect_EditHeader::Update(const occ::handle<IFSelect_EditForm>&        
   if (num == 16)
   {
     if (!enforce)
-      return false; // quand meme ...
-                    //    Unit Name : mettre a jour UnitFlag et UnitValue
+      return false;
+
     int unitflag = IGESData_BasicEditor::UnitNameFlag(val->ToCString());
     if (unitflag == 0)
-      return false; // pas bon
+      return false;
     form->Touch(15, new TCollection_HAsciiString(unitflag));
     form->Touch(17, new TCollection_HAsciiString(IGESData_BasicEditor::UnitFlagValue(unitflag)));
   }
 
   if (num == 25)
   {
-    //    Unit Version : mettre a jour son nom
-    int version = 3; // par defaut ...
+
+    int version = 3;
     if (!val.IsNull())
       version = atoi(val->ToCString());
     const char* versname = IGESData_BasicEditor::IGESVersionName(version);
@@ -362,7 +349,7 @@ bool IGESSelect_EditHeader::Update(const occ::handle<IFSelect_EditForm>&        
   }
   if (num == 27)
   {
-    //   Drafting : mettre a jour son nom
+
     int draft = 0;
     if (!val.IsNull())
       draft = atoi(val->ToCString());
@@ -375,7 +362,7 @@ bool IGESSelect_EditHeader::Update(const occ::handle<IFSelect_EditForm>&        
 }
 
 bool IGESSelect_EditHeader::Apply(const occ::handle<IFSelect_EditForm>& form,
-                                  const occ::handle<Standard_Transient>& /*ent*/,
+                                  const occ::handle<Standard_Transient>&,
                                   const occ::handle<Interface_InterfaceModel>& model) const
 {
   occ::handle<IGESData_IGESModel> modl = occ::down_cast<IGESData_IGESModel>(model);
@@ -462,7 +449,6 @@ bool IGESSelect_EditHeader::Apply(const occ::handle<IFSelect_EditForm>& form,
 
   modl->SetGlobalSection(GS);
 
-  //  Pour l unite
   if (form->IsModified(15) || form->IsModified(16))
   {
     IGESData_BasicEditor bed(modl, occ::down_cast<IGESData_Protocol>(modl->Protocol()));

@@ -35,27 +35,14 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DNaming_RevolutionDriver, TFunction_Driver)
 
-// OCAF
-//=================================================================================================
-
 DNaming_RevolutionDriver::DNaming_RevolutionDriver() = default;
 
-//=======================================================================
-// function : Validate
-// purpose  : Validates labels of a function in <theLog>.
-//=======================================================================
 void DNaming_RevolutionDriver::Validate(occ::handle<TFunction_Logbook>&) const {}
 
-//=======================================================================
-// function : MustExecute
-// purpose  : Analyses in <theLog> if the loaded function must be executed
-//=======================================================================
 bool DNaming_RevolutionDriver::MustExecute(const occ::handle<TFunction_Logbook>&) const
 {
   return true;
 }
-
-//=================================================================================================
 
 int DNaming_RevolutionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
 {
@@ -64,7 +51,6 @@ int DNaming_RevolutionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) co
   if (aFunction.IsNull())
     return -1;
 
-  // Save location
   occ::handle<TNaming_NamedShape> aPrevRevol = DNaming::GetFunctionResult(aFunction);
   TopLoc_Location                 aLocation;
   if (!aPrevRevol.IsNull() && !aPrevRevol->IsEmpty())
@@ -72,7 +58,6 @@ int DNaming_RevolutionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) co
     aLocation = aPrevRevol->Get().Location();
   }
 
-  // Basis for Revol
   occ::handle<TDataStd_UAttribute> aBasObject = DNaming::GetObjectArg(aFunction, REVOL_BASIS);
   occ::handle<TNaming_NamedShape>  aBasisNS   = DNaming::GetObjectValue(aBasObject);
   if (aBasisNS.IsNull() || aBasisNS->IsEmpty())
@@ -88,9 +73,9 @@ int DNaming_RevolutionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) co
     occ::handle<BRepCheck_Wire> aCheck = new BRepCheck_Wire(TopoDS::Wire(aBasis));
     if (aCheck->Closed(true) == BRepCheck_NoError)
     {
-      BRepBuilderAPI_MakeFace aMaker(TopoDS::Wire(aBasis), true); // Makes planar face
+      BRepBuilderAPI_MakeFace aMaker(TopoDS::Wire(aBasis), true);
       if (aMaker.IsDone())
-        aBASIS = aMaker.Face(); // aMaker.Face();
+        aBASIS = aMaker.Face();
     }
   }
   else if (aBasis.ShapeType() == TopAbs_FACE)
@@ -105,7 +90,7 @@ int DNaming_RevolutionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) co
   bool                            anIsAttachment = false;
   if (DNaming::IsAttachment(aBasObject))
   {
-    aContextOfBasis = DNaming::GetAttachmentsContext(aBasObject); // a Context of Revolution basis
+    aContextOfBasis = DNaming::GetAttachmentsContext(aBasObject);
     if (aContextOfBasis.IsNull() || aContextOfBasis->IsEmpty())
     {
       aFunction->SetFailure(WRONG_ARGUMENT);
@@ -114,7 +99,6 @@ int DNaming_RevolutionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) co
     anIsAttachment = true;
   }
 
-  // Axis
   occ::handle<TDataStd_UAttribute> anAxObject = DNaming::GetObjectArg(aFunction, REVOL_AXIS);
   occ::handle<TNaming_NamedShape>  anAxNS     = DNaming::GetObjectValue(anAxObject);
   gp_Ax1                           anAXIS;
@@ -196,7 +180,7 @@ int DNaming_RevolutionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) co
         return -1;
       }
     }
-    // Naming
+
     if (anIsAttachment)
       LoadNamingDS(RESPOSITION(aFunction), aMakeRevol, aBASIS, aContextOfBasis->Get());
     else
@@ -210,7 +194,7 @@ int DNaming_RevolutionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) co
       aFunction->SetFailure(WRONG_ARGUMENT);
       return -1;
     }
-    // Reverse
+
     int aRev = DNaming::GetInteger(aFunction, REVOL_REV)->Get();
     if (aRev)
       anAXIS.Reverse();
@@ -249,7 +233,6 @@ int DNaming_RevolutionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) co
       }
     }
 
-    // Naming
     if (anIsAttachment)
       LoadNamingDS(RESPOSITION(aFunction), aMakeRevol, aBASIS, aContextOfBasis->Get());
     else
@@ -261,7 +244,6 @@ int DNaming_RevolutionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) co
     return -1;
   }
 
-  // restore location
   if (!aLocation.IsIdentity())
     TNaming::Displace(RESPOSITION(aFunction), aLocation, true);
 
@@ -270,7 +252,6 @@ int DNaming_RevolutionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) co
   return 0;
 }
 
-//=======================================================================
 static void LoadSeamEdge(BRepPrimAPI_MakeRevol& mkRevol,
                          const TDF_Label&       ResultLabel,
                          const TopoDS_Shape&    ShapeIn)
@@ -314,7 +295,6 @@ static void LoadSeamEdge(BRepPrimAPI_MakeRevol& mkRevol,
   }
 }
 
-//=======================================================================
 static bool HasDangle(const TopoDS_Shape& ShapeIn)
 {
   if (ShapeIn.ShapeType() == TopAbs_SOLID)
@@ -330,7 +310,6 @@ static bool HasDangle(const TopoDS_Shape& ShapeIn)
   return false;
 }
 
-//=======================================================================
 static void BuildAtomicMap(const TopoDS_Shape&                                     S,
                            NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& M)
 {
@@ -349,8 +328,6 @@ static void BuildAtomicMap(const TopoDS_Shape&                                  
     M.Add(S);
 }
 
-//=================================================================================================
-
 bool HasDangleShapes(const TopoDS_Shape& ShapeIn)
 {
   if (ShapeIn.ShapeType() == TopAbs_COMPOUND || ShapeIn.ShapeType() == TopAbs_COMPSOLID)
@@ -366,8 +343,6 @@ bool HasDangleShapes(const TopoDS_Shape& ShapeIn)
     return HasDangle(ShapeIn);
   return false;
 }
-
-//=================================================================================================
 
 void DNaming_RevolutionDriver::LoadNamingDS(const TDF_Label&       theResultLabel,
                                             BRepPrimAPI_MakeRevol& MS,
@@ -392,11 +367,9 @@ void DNaming_RevolutionDriver::LoadNamingDS(const TDF_Label&       theResultLabe
   else
     Builder.Generated(Context, MS.Shape());
 
-  // Insert lateral face : Face from Edge
   TNaming_Builder LateralFaceBuilder(theResultLabel.NewChild());
   DNaming::LoadAndOrientGeneratedShapes(MS, Basis, TopAbs_EDGE, LateralFaceBuilder, SubShapes);
 
-  // is full
   TopoDS_Shape StartShape = MS.FirstShape();
   TopoDS_Shape EndShape   = MS.LastShape();
   bool         isFull(false);
@@ -411,7 +384,7 @@ void DNaming_RevolutionDriver::LoadNamingDS(const TDF_Label&       theResultLabe
     occ::handle<BRepCheck_Wire> aCheck = new BRepCheck_Wire(TopoDS::Wire(Basis));
     if (aCheck->Closed() != BRepCheck_NoError)
     {
-      isBasisClosed = false; // open
+      isBasisClosed = false;
       TopExp::Vertices(TopoDS::Wire(Basis), Vfirst, Vlast);
     }
   }
@@ -423,22 +396,22 @@ void DNaming_RevolutionDriver::LoadNamingDS(const TDF_Label&       theResultLabe
     {
       occ::handle<BRepCheck_Wire> aCheck = new BRepCheck_Wire(aMakeWire.Wire());
       if (aCheck->Closed() != BRepCheck_NoError)
-      {                        // check for circle case
-        isBasisClosed = false; // open
+      {
+        isBasisClosed = false;
         TopExp::Vertices(TopoDS::Edge(Basis), Vfirst, Vlast);
       }
     }
   }
   if (isFull)
   {
-    // seam edge
+
     LoadSeamEdge(MS, theResultLabel, Basis);
 
     if (hasDangle)
     {
       if (!isBasisClosed)
       {
-        // dangle edges
+
         const NCollection_List<TopoDS_Shape>&    Shapes = MS.Generated(Vfirst);
         NCollection_List<TopoDS_Shape>::Iterator it(Shapes);
         for (; it.More(); it.Next())
@@ -482,8 +455,8 @@ void DNaming_RevolutionDriver::LoadNamingDS(const TDF_Label&       theResultLabe
     }
   }
   else
-  { // if(!isFull)
-    // Insert start shape
+  {
+
     if (!StartShape.IsNull())
     {
       if (StartShape.ShapeType() != TopAbs_COMPOUND)
@@ -515,7 +488,6 @@ void DNaming_RevolutionDriver::LoadNamingDS(const TDF_Label&       theResultLabe
       }
     }
 
-    // Insert end shape
     if (!EndShape.IsNull())
     {
       if (EndShape.ShapeType() != TopAbs_COMPOUND)
@@ -550,7 +522,7 @@ void DNaming_RevolutionDriver::LoadNamingDS(const TDF_Label&       theResultLabe
     {
       if (!isBasisClosed)
       {
-        // dangle edges
+
         const NCollection_List<TopoDS_Shape>&    Shapes = MS.Generated(Vfirst);
         NCollection_List<TopoDS_Shape>::Iterator it(Shapes);
         for (; it.More(); it.Next())

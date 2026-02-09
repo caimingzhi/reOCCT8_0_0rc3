@@ -14,8 +14,6 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_Map.hpp>
 
-//=================================================================================================
-
 void TopExp::MapShapes(const TopoDS_Shape&                                            S,
                        const TopAbs_ShapeEnum                                         T,
                        NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& M)
@@ -27,8 +25,6 @@ void TopExp::MapShapes(const TopoDS_Shape&                                      
     Ex.Next();
   }
 }
-
-//=================================================================================================
 
 void TopExp::MapShapes(const TopoDS_Shape&                                            S,
                        NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& M,
@@ -44,8 +40,6 @@ void TopExp::MapShapes(const TopoDS_Shape&                                      
   }
 }
 
-//=================================================================================================
-
 void TopExp::MapShapes(const TopoDS_Shape&                                     S,
                        NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& M,
                        const bool                                              cumOri,
@@ -57,8 +51,6 @@ void TopExp::MapShapes(const TopoDS_Shape&                                     S
     MapShapes(It.Value(), M);
 }
 
-//=================================================================================================
-
 void TopExp::MapShapesAndAncestors(
   const TopoDS_Shape&    S,
   const TopAbs_ShapeEnum TS,
@@ -68,11 +60,10 @@ void TopExp::MapShapesAndAncestors(
 {
   NCollection_List<TopoDS_Shape> empty;
 
-  // visit ancestors
   TopExp_Explorer exa(S, TA);
   while (exa.More())
   {
-    // visit shapes
+
     const TopoDS_Shape& anc = exa.Current();
     TopExp_Explorer     exs(anc, TS);
     while (exs.More())
@@ -86,7 +77,6 @@ void TopExp::MapShapesAndAncestors(
     exa.Next();
   }
 
-  // visit shapes not under ancestors
   TopExp_Explorer ex(S, TS, TA);
   while (ex.More())
   {
@@ -96,8 +86,6 @@ void TopExp::MapShapesAndAncestors(
     ex.Next();
   }
 }
-
-//=================================================================================================
 
 void TopExp::MapShapesAndUniqueAncestors(
   const TopoDS_Shape&    S,
@@ -109,11 +97,10 @@ void TopExp::MapShapesAndUniqueAncestors(
 {
   NCollection_List<TopoDS_Shape> empty;
 
-  // visit ancestors
   TopExp_Explorer exa(S, TA);
   while (exa.More())
   {
-    // visit shapes
+
     const TopoDS_Shape& anc = exa.Current();
     TopExp_Explorer     exs(anc, TS);
     while (exs.More())
@@ -122,7 +109,7 @@ void TopExp::MapShapesAndUniqueAncestors(
       if (index == 0)
         index = M.Add(exs.Current(), empty);
       NCollection_List<TopoDS_Shape>& aList = M(index);
-      // check if anc already exists in a list
+
       NCollection_List<TopoDS_Shape>::Iterator it(aList);
       for (; it.More(); it.Next())
         if (useOrientation ? anc.IsEqual(it.Value()) : anc.IsSame(it.Value()))
@@ -134,7 +121,6 @@ void TopExp::MapShapesAndUniqueAncestors(
     exa.Next();
   }
 
-  // visit shapes not under ancestors
   TopExp_Explorer ex(S, TS, TA);
   while (ex.More())
   {
@@ -144,8 +130,6 @@ void TopExp::MapShapesAndUniqueAncestors(
     ex.Next();
   }
 }
-
-//=================================================================================================
 
 TopoDS_Vertex TopExp::FirstVertex(const TopoDS_Edge& E, const bool CumOri)
 {
@@ -159,8 +143,6 @@ TopoDS_Vertex TopExp::FirstVertex(const TopoDS_Edge& E, const bool CumOri)
   return TopoDS_Vertex();
 }
 
-//=================================================================================================
-
 TopoDS_Vertex TopExp::LastVertex(const TopoDS_Edge& E, const bool CumOri)
 {
   TopoDS_Iterator ite(E, CumOri);
@@ -173,16 +155,12 @@ TopoDS_Vertex TopExp::LastVertex(const TopoDS_Edge& E, const bool CumOri)
   return TopoDS_Vertex();
 }
 
-//=================================================================================================
-
 void TopExp::Vertices(const TopoDS_Edge& E,
                       TopoDS_Vertex&     Vfirst,
                       TopoDS_Vertex&     Vlast,
                       const bool         CumOri)
 {
-  // minor optimization for case when Vfirst and Vlast are non-null:
-  // at least for VC++ 10, it is faster if we use boolean flags than
-  // if we nullify vertices at that point (see #27021)
+
   bool isFirstDefined = false;
   bool isLastDefined  = false;
 
@@ -210,11 +188,9 @@ void TopExp::Vertices(const TopoDS_Edge& E,
     Vlast.Nullify();
 }
 
-//=================================================================================================
-
 void TopExp::Vertices(const TopoDS_Wire& W, TopoDS_Vertex& Vfirst, TopoDS_Vertex& Vlast)
 {
-  Vfirst = Vlast = TopoDS_Vertex(); // nullify
+  Vfirst = Vlast = TopoDS_Vertex();
 
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> vmap;
   TopoDS_Iterator                                        it(W);
@@ -227,7 +203,7 @@ void TopExp::Vertices(const TopoDS_Wire& W, TopoDS_Vertex& Vfirst, TopoDS_Vertex
       TopExp::Vertices(E, V2, V1);
     else
       TopExp::Vertices(E, V1, V2);
-    // add or remove in the vertex map
+
     V1.Orientation(TopAbs_FORWARD);
     V2.Orientation(TopAbs_REVERSED);
     if (!vmap.Add(V1))
@@ -238,16 +214,14 @@ void TopExp::Vertices(const TopoDS_Wire& W, TopoDS_Vertex& Vfirst, TopoDS_Vertex
     it.Next();
   }
   if (vmap.IsEmpty())
-  { // closed
+  {
     TopoDS_Shape aLocalShape = V2.Oriented(TopAbs_FORWARD);
     Vfirst                   = TopoDS::Vertex(aLocalShape);
     aLocalShape              = V2.Oriented(TopAbs_REVERSED);
     Vlast                    = TopoDS::Vertex(aLocalShape);
-    //    Vfirst = TopoDS::Vertex(V2.Oriented(TopAbs_FORWARD));
-    //    Vlast  = TopoDS::Vertex(V2.Oriented(TopAbs_REVERSED));
   }
   else if (vmap.Extent() == 2)
-  { // open
+  {
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator ite(vmap);
 
     while (ite.More() && ite.Key().Orientation() != TopAbs_FORWARD)
@@ -261,8 +235,6 @@ void TopExp::Vertices(const TopoDS_Wire& W, TopoDS_Vertex& Vfirst, TopoDS_Vertex
       Vlast = TopoDS::Vertex(ite.Key());
   }
 }
-
-//=================================================================================================
 
 bool TopExp::CommonVertex(const TopoDS_Edge& E1, const TopoDS_Edge& E2, TopoDS_Vertex& V)
 {
@@ -281,4 +253,4 @@ bool TopExp::CommonVertex(const TopoDS_Edge& E1, const TopoDS_Edge& E2, TopoDS_V
     return true;
   }
   return false;
-} // CommonVertex
+}

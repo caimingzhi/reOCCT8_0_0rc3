@@ -4,12 +4,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_ConstantSurface3dElementCoordinateSystem,
                            StepFEA_FeaRepresentationItem)
 
-//=================================================================================================
-
 StepFEA_ConstantSurface3dElementCoordinateSystem::
   StepFEA_ConstantSurface3dElementCoordinateSystem() = default;
-
-//=================================================================================================
 
 void StepFEA_ConstantSurface3dElementCoordinateSystem::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentationItem_Name,
@@ -23,28 +19,20 @@ void StepFEA_ConstantSurface3dElementCoordinateSystem::Init(
   theAngle = aAngle;
 }
 
-//=================================================================================================
-
 int StepFEA_ConstantSurface3dElementCoordinateSystem::Axis() const
 {
   return theAxis;
 }
-
-//=================================================================================================
 
 void StepFEA_ConstantSurface3dElementCoordinateSystem::SetAxis(const int aAxis)
 {
   theAxis = aAxis;
 }
 
-//=================================================================================================
-
 double StepFEA_ConstantSurface3dElementCoordinateSystem::Angle() const
 {
   return theAngle;
 }
-
-//=================================================================================================
 
 void StepFEA_ConstantSurface3dElementCoordinateSystem::SetAngle(const double aAngle)
 {

@@ -9,11 +9,7 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepAP203_RWCcDesignApproval::RWStepAP203_RWCcDesignApproval() = default;
-
-//=================================================================================================
 
 void RWStepAP203_RWCcDesignApproval::ReadStep(
   const occ::handle<StepData_StepReaderData>&    data,
@@ -21,11 +17,9 @@ void RWStepAP203_RWCcDesignApproval::ReadStep(
   occ::handle<Interface_Check>&                  ach,
   const occ::handle<StepAP203_CcDesignApproval>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "cc_design_approval"))
     return;
-
-  // Inherited fields of ApprovalAssignment
 
   occ::handle<StepBasic_Approval> aApprovalAssignment_AssignedApproval;
   data->ReadEntity(num,
@@ -34,8 +28,6 @@ void RWStepAP203_RWCcDesignApproval::ReadStep(
                    ach,
                    STANDARD_TYPE(StepBasic_Approval),
                    aApprovalAssignment_AssignedApproval);
-
-  // Own fields of CcDesignApproval
 
   occ::handle<NCollection_HArray1<StepAP203_ApprovedItem>> aItems;
   int                                                      sub2 = 0;
@@ -52,22 +44,15 @@ void RWStepAP203_RWCcDesignApproval::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aApprovalAssignment_AssignedApproval, aItems);
 }
-
-//=================================================================================================
 
 void RWStepAP203_RWCcDesignApproval::WriteStep(
   StepData_StepWriter&                           SW,
   const occ::handle<StepAP203_CcDesignApproval>& ent) const
 {
 
-  // Inherited fields of ApprovalAssignment
-
   SW.Send(ent->StepBasic_ApprovalAssignment::AssignedApproval());
-
-  // Own fields of CcDesignApproval
 
   SW.OpenSub();
   for (int i1 = 1; i1 <= ent->Items()->Length(); i1++)
@@ -78,17 +63,11 @@ void RWStepAP203_RWCcDesignApproval::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepAP203_RWCcDesignApproval::Share(const occ::handle<StepAP203_CcDesignApproval>& ent,
                                            Interface_EntityIterator& iter) const
 {
 
-  // Inherited fields of ApprovalAssignment
-
   iter.AddItem(ent->StepBasic_ApprovalAssignment::AssignedApproval());
-
-  // Own fields of CcDesignApproval
 
   for (int i2 = 1; i2 <= ent->Items()->Length(); i2++)
   {

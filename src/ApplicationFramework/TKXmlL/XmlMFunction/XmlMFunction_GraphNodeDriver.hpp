@@ -10,7 +10,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class XmlObjMgt_Persistent;
 
-//! XML persistence driver for dependencies of a function.
 class XmlMFunction_GraphNodeDriver : public XmlMDF_ADriver
 {
 

@@ -30,40 +30,32 @@ static TCollection_AsciiString       lastunit;
 static occ::handle<Units_Dimensions> lastdimension;
 static double                        lastvalue, lastmove;
 
-//=================================================================================================
-
 void Units::UnitsFile(const char* afile)
 {
   unitsfile = TCollection_AsciiString(afile);
 }
-
-//=================================================================================================
 
 void Units::LexiconFile(const char* afile)
 {
   lexiconfile = TCollection_AsciiString(afile);
 }
 
-//=================================================================================================
-
 occ::handle<Units_UnitsDictionary> Units::DictionaryOfUnits(const bool amode)
 {
   if (unitsdictionary.IsNull())
   {
-    //      std::cout<<"Allocation du dictionnaire"<<std::endl;
+
     unitsdictionary = new Units_UnitsDictionary();
-    //      std::cout<<"Creation du dictionnaire"<<std::endl;
+
     unitsdictionary->Creates();
   }
   else if (amode)
   {
-    //      std::cout<<"Creation du dictionnaire"<<std::endl;
+
     unitsdictionary->Creates();
   }
   return unitsdictionary;
 }
-
-//=================================================================================================
 
 occ::handle<Units_Quantity> Units::Quantity(const char* aquantity)
 {
@@ -86,8 +78,6 @@ occ::handle<Units_Quantity> Units::Quantity(const char* aquantity)
 #endif
   return nullquantity;
 }
-
-//=================================================================================================
 
 static TCollection_AsciiString symbol_string, quantity_string;
 
@@ -131,35 +121,29 @@ const char* Units::FirstQuantity(const char* aunit)
   return nullptr;
 }
 
-//=================================================================================================
-
 occ::handle<Units_Lexicon> Units::LexiconUnits(const bool amode)
 {
   if (lexiconunits.IsNull())
   {
-    //      std::cout<<"Allocation du lexique d'unites"<<std::endl;
+
     lexiconunits = new Units_UnitsLexicon();
-    //      std::cout<<"Creation du lexique d'unites"<<std::endl;
+
     lexiconunits->Creates(amode);
   }
   return lexiconunits;
 }
 
-//=================================================================================================
-
 occ::handle<Units_Lexicon> Units::LexiconFormula()
 {
   if (lexiconformula.IsNull())
   {
-    //      std::cout<<"Allocation du lexique d'expression"<<std::endl;
+
     lexiconformula = new Units_Lexicon();
-    //      std::cout<<"Creation du lexique d'expression"<<std::endl;
+
     lexiconformula->Creates();
   }
   return lexiconformula;
 }
-
-//=================================================================================================
 
 occ::handle<Units_Dimensions> Units::NullDimensions()
 {
@@ -168,8 +152,6 @@ occ::handle<Units_Dimensions> Units::NullDimensions()
   return nulldimensions;
 }
 
-//=================================================================================================
-
 double Units::Convert(const double avalue, const char* afirstunit, const char* asecondunit)
 {
   Units_Measurement measurement(avalue, afirstunit);
@@ -177,16 +159,12 @@ double Units::Convert(const double avalue, const char* afirstunit, const char* a
   return measurement.Measurement();
 }
 
-//=================================================================================================
-
 double Units::ToSI(const double aData, const char* aUnit)
 {
 
   occ::handle<Units_Dimensions> aDimBid;
   return Units::ToSI(aData, aUnit, aDimBid);
 }
-
-//=================================================================================================
 
 double Units::ToSI(const double aData, const char* aUnit, occ::handle<Units_Dimensions>& dim)
 {
@@ -215,15 +193,11 @@ double Units::ToSI(const double aData, const char* aUnit, occ::handle<Units_Dime
   return (aData + lastmove) * lastvalue;
 }
 
-//=================================================================================================
-
 double Units::FromSI(const double aData, const char* aUnit)
 {
   occ::handle<Units_Dimensions> aDimBid;
   return Units::FromSI(aData, aUnit, aDimBid);
 }
-
-//=================================================================================================
 
 double Units::FromSI(const double aData, const char* aUnit, occ::handle<Units_Dimensions>& dim)
 {
@@ -251,8 +225,6 @@ double Units::FromSI(const double aData, const char* aUnit, occ::handle<Units_Di
   dim = lastdimension;
   return (aData / lastvalue) - lastmove;
 }
-
-//=================================================================================================
 
 occ::handle<Units_Dimensions> Units::Dimensions(const char* aType)
 {

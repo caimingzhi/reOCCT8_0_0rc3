@@ -11,7 +11,6 @@ class StepShape_VertexLoop : public StepShape_Loop
 {
 
 public:
-  //! Returns a VertexLoop
   Standard_EXPORT StepShape_VertexLoop();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

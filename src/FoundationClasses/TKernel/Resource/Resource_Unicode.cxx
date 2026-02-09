@@ -33,14 +33,13 @@ void Resource_Unicode::ConvertSJISToUnicode(const char* fromstr, TCollection_Ext
 
   unsigned char* currentstr = ((unsigned char*)fromstr);
   unsigned int   pl, ph;
-  // BIG INDIAN USED HERE
+
   while (*currentstr != '\0')
   {
     if (issjis1(*currentstr))
     {
 
       ph = ((unsigned int)*currentstr);
-      // Be Careful with first and second !!
 
       currentstr++;
 
@@ -67,14 +66,13 @@ void Resource_Unicode::ConvertEUCToUnicode(const char* fromstr, TCollection_Exte
 
   unsigned char* currentstr = ((unsigned char*)fromstr);
   unsigned int   pl, ph;
-  // BIG INDIAN USED HERE
+
   while (*currentstr != '\0')
   {
     if (iseuc(*currentstr))
     {
 
       ph = ((unsigned int)*currentstr);
-      // Be Careful with first and second !!
 
       currentstr++;
 
@@ -101,14 +99,13 @@ void Resource_Unicode::ConvertGBToUnicode(const char* fromstr, TCollection_Exten
 
   unsigned char* currentstr = ((unsigned char*)fromstr);
   unsigned int   pl, ph;
-  // BIG INDIAN USED HERE
+
   while (*currentstr != '\0')
   {
     if (isshift(*currentstr))
     {
 
       ph = ((unsigned int)*currentstr);
-      // Be Careful with first and second !!
 
       currentstr++;
 
@@ -209,7 +206,7 @@ bool Resource_Unicode::ConvertGBKToUnicode(const char* fromstr, TCollection_Exte
       }
       if (*currentch <= 0x7F)
       {
-        // ASCII symbol
+
         TCollection_ExtendedString curext(((char)*currentch));
         currentch++;
         tostr.Insert(0, curext);
@@ -221,14 +218,14 @@ bool Resource_Unicode::ConvertGBKToUnicode(const char* fromstr, TCollection_Exte
     {
       if (*currentch <= 0x7F)
       {
-        // ASCII symbol
+
         TCollection_ExtendedString curext(((char)*currentch));
         currentch++;
         tostr.AssignCat(curext);
       }
       else if (*currentch == 0x80)
       {
-        // Special symbol
+
         char16_t                   curcar = ((char16_t)((0x20 << 8) | 0xAC));
         TCollection_ExtendedString curext(curcar);
         tostr.AssignCat(curext);
@@ -236,7 +233,7 @@ bool Resource_Unicode::ConvertGBKToUnicode(const char* fromstr, TCollection_Exte
       }
       else if (*currentch >= 0x81 && *currentch <= 0xFE)
       {
-        // Chinese symbol
+
         gb1 = (unsigned int)(*currentch);
         currentch++;
       }
@@ -315,7 +312,7 @@ bool Resource_Unicode::ConvertBig5ToUnicode(const char* fromstr, TCollection_Ext
                 NCollection_UtfString<char16_t> aStr16 = aStr32.ToUtf16();
 
                 if (aStr16.Size() != 4)
-                  return false; // not a surrogate pair
+                  return false;
                 const char16_t* aChar16 = aStr16.ToCString();
                 tostr.Insert(aLength + 1, (char16_t)(*aChar16));
                 aChar16++;
@@ -329,7 +326,7 @@ bool Resource_Unicode::ConvertBig5ToUnicode(const char* fromstr, TCollection_Ext
       }
       if (*currentch <= 0x7F)
       {
-        // ASCII symbol
+
         TCollection_ExtendedString curext(((char)*currentch));
         currentch++;
         tostr.Insert(0, curext);
@@ -341,14 +338,14 @@ bool Resource_Unicode::ConvertBig5ToUnicode(const char* fromstr, TCollection_Ext
     {
       if (*currentch <= 0x7F)
       {
-        // ASCII symbol
+
         TCollection_ExtendedString curext(((char)*currentch));
         currentch++;
         tostr.AssignCat(curext);
       }
       else if (*currentch >= 0x81 && *currentch <= 0xFE)
       {
-        // Chinese symbol
+
         big5lead = (unsigned int)(*currentch);
         currentch++;
       }
@@ -368,7 +365,6 @@ bool Resource_Unicode::ConvertUnicodeToSJIS(const TCollection_ExtendedString& fr
   bool         finished = false;
   char16_t     curcar;
   unsigned int pl, ph;
-  // BIG INDIAN USED HERE
 
   while (!finished)
   {
@@ -423,7 +419,6 @@ bool Resource_Unicode::ConvertUnicodeToEUC(const TCollection_ExtendedString& fro
   bool         finished = false;
   char16_t     curcar;
   unsigned int pl, ph;
-  // BIG INDIAN USED HERE
 
   while (!finished)
   {
@@ -478,7 +473,6 @@ bool Resource_Unicode::ConvertUnicodeToGB(const TCollection_ExtendedString& from
   bool         finished = false;
   char16_t     curcar;
   unsigned int pl, ph;
-  // BIG INDIAN USED HERE
 
   while (!finished)
   {
@@ -533,7 +527,6 @@ bool Resource_Unicode::ConvertUnicodeToANSI(const TCollection_ExtendedString& fr
   bool         finished = false;
   char16_t     curcar;
   unsigned int pl, ph;
-  // BIG INDIAN USED HERE
 
   while (!finished)
   {
@@ -762,13 +755,12 @@ bool Resource_Unicode::ConvertUnicodeToFormat(const Resource_FormatType         
         char16_t aFromChar = theFromStr.Value(aToCharInd + 1);
         if (aFromChar == 0)
         {
-          // zero value should be handled explicitly to avoid false conversion by
-          // selected code page that may have unused values (encoded as zero)
+
           theToStr[aToCharInd] = '\0';
         }
         else
         {
-          // find the character in the code page
+
           for (unsigned char anIndCP = 0; aFromChar != 0 && anIndCP < 128; ++anIndCP)
           {
             if (aCodePage[anIndCP] == aFromChar)
@@ -777,7 +769,7 @@ bool Resource_Unicode::ConvertUnicodeToFormat(const Resource_FormatType         
               isFind               = true;
             }
           }
-          // if character is not found, put '?'
+
           if (!isFind)
           {
             theToStr[aToCharInd] = '?';

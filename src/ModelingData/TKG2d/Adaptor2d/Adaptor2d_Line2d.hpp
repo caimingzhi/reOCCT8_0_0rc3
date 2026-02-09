@@ -21,8 +21,6 @@ class gp_Parab2d;
 class Geom2d_BezierCurve;
 class Geom2d_BSplineCurve;
 
-//! Use by the TopolTool to trim a surface.
-
 class Adaptor2d_Line2d : public Adaptor2d_Curve2d
 {
   DEFINE_STANDARD_RTTIEXT(Adaptor2d_Line2d, Adaptor2d_Curve2d)
@@ -34,7 +32,6 @@ public:
                                    const double    UFirst,
                                    const double    ULast);
 
-  //! Shallow copy of adaptor
   Standard_EXPORT occ::handle<Adaptor2d_Curve2d> ShallowCopy() const override;
 
   Standard_EXPORT void Load(const gp_Lin2d& L);
@@ -47,23 +44,11 @@ public:
 
   Standard_EXPORT GeomAbs_Shape Continuity() const override;
 
-  //! If necessary, breaks the curve in intervals of
-  //! continuity <S>. And returns the number of
-  //! intervals.
   Standard_EXPORT int NbIntervals(const GeomAbs_Shape S) const override;
 
-  //! Stores in <T> the parameters bounding the intervals
-  //! of continuity <S>.
-  //!
-  //! The array must provide enough room to accommodate
-  //! for the parameters. i.e. T.Length() > NbIntervals()
   Standard_EXPORT void Intervals(NCollection_Array1<double>& T,
                                  const GeomAbs_Shape         S) const override;
 
-  //! Returns a curve equivalent of <me> between
-  //! parameters <First> and <Last>. <Tol> is used to
-  //! test for 3d points confusion.
-  //! If <First> >= <Last>
   Standard_EXPORT occ::handle<Adaptor2d_Curve2d> Trim(const double First,
                                                       const double Last,
                                                       const double Tol) const override;

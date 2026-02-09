@@ -1,4 +1,4 @@
-// Created on : Thu Mar 24 18:30:11 2022
+
 
 #include "RWStepVisual_RWComplexTriangulatedFace.hpp"
 #include <StepVisual_ComplexTriangulatedFace.hpp>
@@ -16,11 +16,7 @@
 #include <StepVisual_FaceOrSurface.hpp>
 #include <Standard_Transient.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWComplexTriangulatedFace::RWStepVisual_RWComplexTriangulatedFace() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWComplexTriangulatedFace::ReadStep(
   const occ::handle<StepData_StepReaderData>&            theData,
@@ -28,18 +24,14 @@ void RWStepVisual_RWComplexTriangulatedFace::ReadStep(
   occ::handle<Interface_Check>&                          theCheck,
   const occ::handle<StepVisual_ComplexTriangulatedFace>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 8, theCheck, "complex_triangulated_face"))
   {
     return;
   }
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theCheck, aRepresentationItem_Name);
-
-  // Inherited fields of TessellatedFace
 
   occ::handle<StepVisual_CoordinatesList> aTessellatedFace_Coordinates;
   theData->ReadEntity(theNum,
@@ -90,8 +82,6 @@ void RWStepVisual_RWComplexTriangulatedFace::ReadStep(
     hasTessellatedFace_GeometricLink = false;
     aTessellatedFace_GeometricLink   = StepVisual_FaceOrSurface();
   }
-
-  // Own fields of ComplexTriangulatedFace
 
   occ::handle<NCollection_HArray1<int>> aPnindex;
   int                                   sub6 = 0;
@@ -160,7 +150,6 @@ void RWStepVisual_RWComplexTriangulatedFace::ReadStep(
     }
   }
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aTessellatedFace_Coordinates,
                aTessellatedFace_Pnmax,
@@ -172,18 +161,12 @@ void RWStepVisual_RWComplexTriangulatedFace::ReadStep(
                aTriangleFans);
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWComplexTriangulatedFace::WriteStep(
   StepData_StepWriter&                                   theSW,
   const occ::handle<StepVisual_ComplexTriangulatedFace>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Own fields of TessellatedFace
 
   theSW.Send(theEnt->Coordinates());
 
@@ -211,8 +194,6 @@ void RWStepVisual_RWComplexTriangulatedFace::WriteStep(
   {
     theSW.SendUndef();
   }
-
-  // Own fields of ComplexTriangulatedFace
 
   theSW.OpenSub();
   for (int i5 = 1; i5 <= theEnt->Pnindex()->Length(); i5++)
@@ -255,16 +236,10 @@ void RWStepVisual_RWComplexTriangulatedFace::WriteStep(
   theSW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWComplexTriangulatedFace::Share(
   const occ::handle<StepVisual_ComplexTriangulatedFace>& theEnt,
   Interface_EntityIterator&                              theIter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of TessellatedFace
 
   theIter.AddItem(theEnt->StepVisual_TessellatedFace::Coordinates());
 
@@ -272,6 +247,4 @@ void RWStepVisual_RWComplexTriangulatedFace::Share(
   {
     theIter.AddItem(theEnt->StepVisual_TessellatedFace::GeometricLink().Value());
   }
-
-  // Own fields of ComplexTriangulatedFace
 }

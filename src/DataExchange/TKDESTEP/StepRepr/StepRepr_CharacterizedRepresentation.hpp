@@ -13,7 +13,6 @@ class StepRepr_CharacterizedRepresentation : public StepRepr_Representation
 public:
   Standard_EXPORT StepRepr_CharacterizedRepresentation();
 
-  //! Returns a CharacterizedRepresentation
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>& theName,
     const occ::handle<TCollection_HAsciiString>& theDescription,

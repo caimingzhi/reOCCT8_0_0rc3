@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_ComplexTriangulatedSurfaceSet;
 
-//! Read & Write tool for ComplexTriangulatedSurfaceSet
 class RWStepVisual_RWComplexTriangulatedSurfaceSet
 {
 

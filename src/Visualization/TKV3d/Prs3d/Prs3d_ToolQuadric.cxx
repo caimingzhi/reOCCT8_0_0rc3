@@ -4,8 +4,6 @@
 #include <Poly_Triangle.hpp>
 #include <NCollection_Array1.hpp>
 
-//=================================================================================================
-
 void Prs3d_ToolQuadric::FillArray(occ::handle<Graphic3d_ArrayOfTriangles>& theArray,
                                   const gp_Trsf&                           theTrsf) const
 {
@@ -20,7 +18,7 @@ void Prs3d_ToolQuadric::FillArray(occ::handle<Graphic3d_ArrayOfTriangles>& theAr
   const double aStepV = 1.0f / myStacksNb;
   if (theArray->EdgeNumberAllocated() > 0)
   {
-    // indexed array
+
     for (int aU = 0; aU <= mySlicesNb; ++aU)
     {
       const double aParamU = aU * aStepU;
@@ -42,7 +40,7 @@ void Prs3d_ToolQuadric::FillArray(occ::handle<Graphic3d_ArrayOfTriangles>& theAr
   }
   else
   {
-    // non-indexed array
+
     for (int aU = 0; aU < mySlicesNb; ++aU)
     {
       const double aParamU = aU * aStepU;
@@ -66,8 +64,6 @@ void Prs3d_ToolQuadric::FillArray(occ::handle<Graphic3d_ArrayOfTriangles>& theAr
   }
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_ArrayOfTriangles> Prs3d_ToolQuadric::CreateTriangulation(
   const gp_Trsf& theTrsf) const
 {
@@ -75,8 +71,6 @@ occ::handle<Graphic3d_ArrayOfTriangles> Prs3d_ToolQuadric::CreateTriangulation(
   FillArray(aTriangulation, theTrsf);
   return aTriangulation;
 }
-
-//=================================================================================================
 
 occ::handle<Poly_Triangulation> Prs3d_ToolQuadric::CreatePolyTriangulation(
   const gp_Trsf& theTrsf) const
@@ -86,7 +80,6 @@ occ::handle<Poly_Triangulation> Prs3d_ToolQuadric::CreatePolyTriangulation(
   float aStepU = 1.0f / mySlicesNb;
   float aStepV = 1.0f / myStacksNb;
 
-  // Fill triangles
   for (int aU = 0, anIndex = 0; aU <= mySlicesNb; ++aU)
   {
     const double aParamU = aU * aStepU;
@@ -109,8 +102,6 @@ occ::handle<Poly_Triangulation> Prs3d_ToolQuadric::CreatePolyTriangulation(
   }
   return aTriangulation;
 }
-
-//=================================================================================================
 
 void Prs3d_ToolQuadric::FillArray(occ::handle<Graphic3d_ArrayOfTriangles>& theArray,
                                   occ::handle<Poly_Triangulation>&         theTriangulation,

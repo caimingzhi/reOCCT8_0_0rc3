@@ -25,12 +25,8 @@
 #include <StepKinematics_SurfacePairWithRange.hpp>
 #include <StepKinematics_UniversalPairWithRange.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWActuatedKinPairAndOrderKinPair::
   RWStepKinematics_RWActuatedKinPairAndOrderKinPair() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
   const occ::handle<StepData_StepReaderData>&                       theData,
@@ -38,11 +34,11 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
   occ::handle<Interface_Check>&                                     theArch,
   const occ::handle<StepKinematics_ActuatedKinPairAndOrderKinPair>& theEnt) const
 {
-  int theNum = 0; // num0;
+  int theNum = 0;
   theData->NamedForComplex("ACTUATED_KINEMATIC_PAIR", "ACKNPR", num0, theNum, theArch);
   if (!theData->CheckNbParams(theNum, 6, theArch, "kinematic actuated_kinematic_pair"))
     return;
-  // Own fields of ActuatedKinematicPair
+
   occ::handle<StepKinematics_ActuatedKinematicPair> anActuatedKinematicPair =
     new StepKinematics_ActuatedKinematicPair;
   StepKinematics_ActuatedDirection aTX   = StepKinematics_adNotActuated;
@@ -203,10 +199,8 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
 
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->NamedForComplex("GEOMETRIC_REPRESENTATION_ITEM", "GMRPIT", num0, theNum, theArch);
-  // geometricrepresentation_item is non-defined
 
   theData->NamedForComplex("ITEM_DEFINED_TRANSFORMATION", "ITDFTR", num0, theNum, theArch);
-  // Own fields of item_defined_transformation
 
   occ::handle<TCollection_HAsciiString> aItemDefinedTransformation_Name;
   if (strcmp(theData->ParamCValue(theNum, 1), "*"))
@@ -250,8 +244,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
 
   theData->NamedForComplex("KINEMATIC_PAIR", "KNMPR", num0, theNum, theArch);
 
-  // Inherited fields of KinematicPair
-
   occ::handle<StepKinematics_KinematicJoint> aKinematicPair_Joint;
   theData->ReadEntity(theNum,
                       1,
@@ -260,13 +252,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                       STANDARD_TYPE(StepKinematics_KinematicJoint),
                       aKinematicPair_Joint);
 
-  // Select pair supertype
   theNum                                                   = theData->NextForComplex(theNum);
   const char*                               aPairSuperType = theData->CType(theNum);
   occ::handle<StepKinematics_KinematicPair> aKinematicPair;
   if (!strcmp(aPairSuperType, "LOW_ORDER_KINEMATIC_PAIR"))
   {
-    // Own fields of low_order_kinematic_pair
+
     bool aLowOrderKinematicPair_TX = true;
     bool aLowOrderKinematicPair_TY = true;
     bool aLowOrderKinematicPair_TZ = true;
@@ -326,13 +317,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     const char* aPairtype = theData->CType(theNum);
     if (!strcmp(aPairtype, "REVOLUTE_PAIR"))
     {
-      // Own fields of revolute_pair is non-defined
 
       if (theData->NamedForComplex("REVOLUTE_PAIR_WITH_RANGE", "RPWR", num0, theNum, theArch))
       {
         if (theData->CheckNbParams(theNum, 2, theArch, "REVOLUTE_PAIR_WITH_RANGE"))
         {
-          // Own fields of revolute_pair_with_range
+
           aKinematicPair = new StepKinematics_RevolutePairWithRange;
           double aLowerLimitActualRotation;
           bool   hasLowerLimitActualRotation = true;
@@ -367,7 +357,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
           }
           occ::handle<StepKinematics_RevolutePairWithRange> aLocalPair =
             occ::down_cast<StepKinematics_RevolutePairWithRange>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -386,12 +376,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                            hasUpperLimitActualRotation,
                            aUpperLimitActualRotation);
         }
-        else // revolute_pair_with_range hasn't params
+        else
         {
           aKinematicPair = new StepKinematics_RevolutePair;
           occ::handle<StepKinematics_RevolutePair> aLocalPair =
             occ::down_cast<StepKinematics_RevolutePair>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -410,13 +400,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     }
     else if (!strcmp(aPairtype, "CYLINDRICAL_PAIR"))
     {
-      // Own fields of cylindrical_pair is non-defined
 
       if (theData->NamedForComplex("CYLINDRICAL_PAIR_WITH_RANGE", "CPW0", num0, theNum, theArch))
       {
         if (theData->CheckNbParams(theNum, 4, theArch, "CYLINDRICAL_PAIR_WITH_RANGE"))
         {
-          // Own fields of cylindrical_pair_with_range
+
           aKinematicPair = new StepKinematics_CylindricalPairWithRange;
 
           double aLowerLimitActualTranslation;
@@ -484,7 +473,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
           }
           occ::handle<StepKinematics_CylindricalPairWithRange> aLocalPair =
             occ::down_cast<StepKinematics_CylindricalPairWithRange>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -507,12 +496,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                            hasUpperLimitActualRotation,
                            aUpperLimitActualRotation);
         }
-        else // cylindrical_pair_with_range hasn't params
+        else
         {
           aKinematicPair = new StepKinematics_CylindricalPair;
           occ::handle<StepKinematics_CylindricalPair> aLocalPair =
             occ::down_cast<StepKinematics_CylindricalPair>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -531,13 +520,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     }
     else if (!strcmp(aPairtype, "SPHERICAL_PAIR"))
     {
-      // Own fields of cylindrical_pair is non-defined
 
       if (theData->NamedForComplex("SPHERICAL_PAIR_WITH_RANGE", "SPW0", num0, theNum, theArch))
       {
         if (theData->CheckNbParams(theNum, 6, theArch, "SPHERICAL_PAIR_WITH_RANGE"))
         {
-          // Own fields of spherical_pair_with_range
+
           aKinematicPair = new StepKinematics_SphericalPairWithRange;
 
           double aLowerLimitYaw;
@@ -613,7 +601,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
           }
           occ::handle<StepKinematics_SphericalPairWithRange> aLocalPair =
             occ::down_cast<StepKinematics_SphericalPairWithRange>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -640,12 +628,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                            hasUpperLimitRoll,
                            aUpperLimitRoll);
         }
-        else // spherical_pair_with_range hasn't params
+        else
         {
           aKinematicPair = new StepKinematics_SphericalPair;
           occ::handle<StepKinematics_SphericalPair> aLocalPair =
             occ::down_cast<StepKinematics_SphericalPair>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -664,14 +652,13 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     }
     else if (!strcmp(aPairtype, "SPHERICAL_PAIR_WITH_PIN"))
     {
-      // Own fields of spherical_pair_with_pin is non-defined
 
       if (theData
             ->NamedForComplex("SPHERICAL_PAIR_WITH_PIN_AND_RANGE", "SPWPAR", num0, theNum, theArch))
       {
         if (theData->CheckNbParams(theNum, 4, theArch, "SPHERICAL_PAIR_WITH_PIN_AND_RANGE"))
         {
-          // Own fields of spherical_pair_with_pin_and_range
+
           aKinematicPair = new StepKinematics_SphericalPairWithPinAndRange;
 
           double aLowerLimitYaw;
@@ -723,7 +710,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
           }
           occ::handle<StepKinematics_SphericalPairWithPinAndRange> aLocalPair =
             occ::down_cast<StepKinematics_SphericalPairWithPinAndRange>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -746,12 +733,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                            hasUpperLimitRoll,
                            aUpperLimitRoll);
         }
-        else // spherical_pair_with_pin_and_range hasn't params
+        else
         {
           aKinematicPair = new StepKinematics_SphericalPairWithPin;
           occ::handle<StepKinematics_SphericalPairWithPin> aLocalPair =
             occ::down_cast<StepKinematics_SphericalPairWithPin>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -772,14 +759,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     }
     else if (!strcmp(aPairtype, "PRISMATIC_PAIR"))
     {
-      // Own fields of prismatic_pair is non-defined
 
       if (theData->NamedForComplex("PRISMATIC_PAIR_WITH_RANGE", "PPW0", num0, theNum, theArch))
       {
         if (theData->CheckNbParams(theNum, 2, theArch, "PRISMATIC_PAIR_WITH_RANGE"))
         {
           aKinematicPair = new StepKinematics_PrismaticPairWithRange;
-          // Own fields of prismatic_pair_with_range
 
           double aLowerLimitActualTranslation;
           bool   hasLowerLimitActualTranslation = true;
@@ -814,7 +799,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
           }
           occ::handle<StepKinematics_PrismaticPairWithRange> aLocalPair =
             occ::down_cast<StepKinematics_PrismaticPairWithRange>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -833,12 +818,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                            hasUpperLimitActualTranslation,
                            aUpperLimitActualTranslation);
         }
-        else // prismatic_pair_with_range hasn't params
+        else
         {
           aKinematicPair = new StepKinematics_PrismaticPair;
           occ::handle<StepKinematics_PrismaticPair> aLocalPair =
             occ::down_cast<StepKinematics_PrismaticPair>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -857,7 +842,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     }
     else if (!strcmp(aPairtype, "UNIVERSAL_PAIR"))
     {
-      // Own fields of universal_pair
 
       aKinematicPair = new StepKinematics_UniversalPair;
       double aInputSkewAngle;
@@ -876,7 +860,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
       {
         if (theData->CheckNbParams(theNum, 4, theArch, "UNIVERSAL_PAIR_WITH_RANGE"))
         {
-          // Own fields of universal_pair_with_range
 
           double aLowerLimitFirstRotation;
           bool   hasLowerLimitFirstRotation = true;
@@ -944,7 +927,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
           aKinematicPair = new StepKinematics_UniversalPairWithRange;
           occ::handle<StepKinematics_UniversalPairWithRange> aLocalPair =
             occ::down_cast<StepKinematics_UniversalPairWithRange>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -969,12 +952,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                            hasUpperLimitSecondRotation,
                            aUpperLimitSecondRotation);
         }
-        else // universal_pair_with_range hasn't params
+        else
         {
           aKinematicPair = new StepKinematics_UniversalPair;
           occ::handle<StepKinematics_UniversalPair> aLocalPair =
             occ::down_cast<StepKinematics_UniversalPair>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -995,13 +978,11 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     }
     else if (!strcmp(aPairtype, "PLANAR_PAIR"))
     {
-      // Own fields of planar_pair is non-defined
 
       if (theData->NamedForComplex("PLANAR_PAIR_WITH_RANGE", "PPWR", num0, theNum, theArch))
       {
         if (theData->CheckNbParams(theNum, 6, theArch, "UNIVERSAL_PAIR_WITH_RANGE"))
         {
-          // Own fields of universal_pair_with_range
 
           aKinematicPair = new StepKinematics_PlanarPairWithRange;
           double aLowerLimitActualRotation;
@@ -1101,7 +1082,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
           }
           occ::handle<StepKinematics_PlanarPairWithRange> aLocalPair =
             occ::down_cast<StepKinematics_PlanarPairWithRange>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1128,12 +1109,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                            hasUpperLimitActualTranslationY,
                            aUpperLimitActualTranslationY);
         }
-        else // universal_pair_with_range hasn't params
+        else
         {
           aKinematicPair = new StepKinematics_PlanarPair;
           occ::handle<StepKinematics_PlanarPair> aLocalPair =
             occ::down_cast<StepKinematics_PlanarPair>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1157,8 +1138,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     const char* aPairtype = theData->CType(theNum);
     if (!strcmp(aPairtype, "GEAR_PAIR"))
     {
-
-      // Inherited fields of GearPair
 
       double aGearPair_RadiusFirstLink;
       theData->ReadReal(theNum,
@@ -1187,7 +1166,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
       {
         if (theData->CheckNbParams(theNum, 2, theArch, "GEAR_PAIR_WITH_RANGE"))
         {
-          // Own fields of GearPairWithRange
 
           aKinematicPair = new StepKinematics_GearPairWithRange;
 
@@ -1224,7 +1202,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
           }
           occ::handle<StepKinematics_GearPairWithRange> aLocalPair =
             occ::down_cast<StepKinematics_GearPairWithRange>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1242,12 +1220,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                            hasUpperLimitActualRotation1,
                            aUpperLimitActualRotation1);
         }
-        else // StepKinematics_GearPairWithRange hasn't params
+        else
         {
           aKinematicPair = new StepKinematics_GearPair;
           occ::handle<StepKinematics_GearPair> aLocalPair =
             occ::down_cast<StepKinematics_GearPair>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1266,7 +1244,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     else if (!strcmp(aPairtype, "RACK_AND_PINION_PAIR"))
     {
 
-      // Inherited fields of RackAndPinionPair
       double aRackAndPinionPair_PinionRadius;
       theData->ReadReal(theNum,
                         1,
@@ -1279,7 +1256,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
       {
         if (theData->CheckNbParams(theNum, 2, theArch, "RACK_AND_PINION_PAIR_WITH_RANGE"))
         {
-          // Own fields of GearPairWithRange
 
           aKinematicPair = new StepKinematics_RackAndPinionPairWithRange;
 
@@ -1317,7 +1293,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
 
           occ::handle<StepKinematics_RackAndPinionPairWithRange> aLocalPair =
             occ::down_cast<StepKinematics_RackAndPinionPairWithRange>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1331,12 +1307,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                            hasUpperLimitRackDisplacement,
                            aUpperLimitRackDisplacement);
         }
-        else // StepKinematics_RackAndPinionPairWithRange hasn't params
+        else
         {
           aKinematicPair = new StepKinematics_RackAndPinionPair;
           occ::handle<StepKinematics_RackAndPinionPair> aLocalPair =
             occ::down_cast<StepKinematics_RackAndPinionPair>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1350,7 +1326,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     }
     else if (!strcmp(aPairtype, "SCREW_PAIR"))
     {
-      // Inherited fields of ScrewPair
 
       double aScrewPair_Pitch;
       theData->ReadReal(theNum, 1, "screw_pair.pitch", theArch, aScrewPair_Pitch);
@@ -1359,7 +1334,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
       {
         if (theData->CheckNbParams(theNum, 2, theArch, "SCREW_PAIR_WITH_RANGE"))
         {
-          // Own fields of ScrewPairWithRange
 
           aKinematicPair = new StepKinematics_ScrewPairWithRange;
           double aLowerLimitActualRotation;
@@ -1396,7 +1370,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
 
           occ::handle<StepKinematics_ScrewPairWithRange> aLocalPair =
             occ::down_cast<StepKinematics_ScrewPairWithRange>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1410,12 +1384,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                            hasUpperLimitActualRotation,
                            aUpperLimitActualRotation);
         }
-        else // StepKinematics_ScrewPairWithRange hasn't params
+        else
         {
           aKinematicPair = new StepKinematics_ScrewPair;
           occ::handle<StepKinematics_ScrewPair> aLocalPair =
             occ::down_cast<StepKinematics_ScrewPair>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1428,14 +1402,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
       }
     }
   }
-  else // "HIGH_ORDER_KINEMATIC_PAIR"
+  else
   {
     theNum                = theData->NextForComplex(theNum);
     const char* aPairtype = theData->CType(theNum);
     if (!strcmp(aPairtype, "POINT_ON_PLANAR_CURVE_PAIR"))
     {
-
-      // Inherited fields of PointOnPlanarCurvePair
 
       occ::handle<StepGeom_Curve> aPointOnPlanarCurvePair_PairCurve;
       theData->ReadEntity(theNum,
@@ -1460,7 +1432,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
       {
         if (theData->CheckNbParams(theNum, 7, theArch, "POINT_ON_PLANAR_CURVE_PAIR_WITH_RANGE"))
         {
-          // Own fields of PointOnPlanarCurvePairWithRange
 
           aKinematicPair = new StepKinematics_PointOnPlanarCurvePairWithRange;
 
@@ -1545,7 +1516,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
           }
           occ::handle<StepKinematics_PointOnPlanarCurvePairWithRange> aLocalPair =
             occ::down_cast<StepKinematics_PointOnPlanarCurvePairWithRange>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1569,12 +1540,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                            hasUpperLimitRoll,
                            aUpperLimitRoll);
         }
-        else // point_on_planar_curve_pair_with_range hasn't params
+        else
         {
           aKinematicPair = new StepKinematics_PointOnPlanarCurvePair;
           occ::handle<StepKinematics_PointOnPlanarCurvePair> aLocalPair =
             occ::down_cast<StepKinematics_PointOnPlanarCurvePair>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1589,7 +1560,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     }
     else if (!strcmp(aPairtype, "POINT_ON_SURFACE_PAIR"))
     {
-      // Inherited fields of PointOnSurfacePair
 
       occ::handle<StepGeom_Surface> aPointOnSurfacePair_PairSurface;
       theData->ReadEntity(theNum,
@@ -1604,7 +1574,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
       {
         if (theData->CheckNbParams(theNum, 2, theArch, "POINT_ON_SURFACE_PAIR_WITH_RANGE "))
         {
-          // Own fields of PointOnSurfacePairWithRange
 
           aKinematicPair = new StepKinematics_PointOnSurfacePairWithRange;
 
@@ -1689,7 +1658,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
           }
           occ::handle<StepKinematics_PointOnSurfacePairWithRange> aLocalPair =
             occ::down_cast<StepKinematics_PointOnSurfacePairWithRange>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1712,12 +1681,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                            hasUpperLimitRoll,
                            aUpperLimitRoll);
         }
-        else // StepKinematics_PointOnSurfacePairWithRange hasn't params
+        else
         {
           aKinematicPair = new StepKinematics_PointOnSurfacePair;
           occ::handle<StepKinematics_PointOnSurfacePair> aLocalPair =
             occ::down_cast<StepKinematics_PointOnSurfacePair>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1731,7 +1700,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     }
     else if (!strcmp(aPairtype, "PLANAR_CURVE_PAIR"))
     {
-      // Inherited fields of PlanarCurvePair
 
       occ::handle<StepGeom_Curve> aPlanarCurvePair_Curve1;
       theData->ReadEntity(theNum,
@@ -1760,7 +1728,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
       {
         if (theData->CheckNbParams(theNum, 2, theArch, "PLANAR_CURVE_PAIR_RANGE"))
         {
-          // Own fields of PlanarCurvePairRange
+
           aKinematicPair = new StepKinematics_PlanarCurvePairRange;
 
           occ::handle<StepGeom_TrimmedCurve> aRangeOnCurve1;
@@ -1781,7 +1749,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
 
           occ::handle<StepKinematics_PlanarCurvePairRange> aLocalPair =
             occ::down_cast<StepKinematics_PlanarCurvePairRange>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1795,12 +1763,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                            aRangeOnCurve1,
                            aRangeOnCurve2);
         }
-        else // StepKinematics_ScrewPairWithRange hasn't params
+        else
         {
           aKinematicPair = new StepKinematics_PlanarCurvePair;
           occ::handle<StepKinematics_PlanarCurvePair> aLocalPair =
             occ::down_cast<StepKinematics_PlanarCurvePair>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1816,7 +1784,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     }
     else if (!strcmp(aPairtype, "SURFACE_PAIR"))
     {
-      // Inherited fields of SurfacePair
 
       occ::handle<StepGeom_Surface> aSurfacePair_Surface1;
       theData->ReadEntity(theNum,
@@ -1846,7 +1813,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
         if (theData->CheckNbParams(theNum, 4, theArch, "SURFACE_PAIR_WITH_RANGE"))
         {
           aKinematicPair = new StepKinematics_SurfacePairWithRange;
-          // Own fields of SurfacePairWithRange
 
           occ::handle<StepGeom_RectangularTrimmedSurface> aRangeOnSurface1;
           theData->ReadEntity(theNum,
@@ -1898,7 +1864,7 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
 
           occ::handle<StepKinematics_SurfacePairWithRange> aLocalPair =
             occ::down_cast<StepKinematics_SurfacePairWithRange>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1916,12 +1882,12 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                            hasUpperLimitActualRotation,
                            aUpperLimitActualRotation);
         }
-        else // StepKinematics_SurfacePairWithRange hasn't params
+        else
         {
           aKinematicPair = new StepKinematics_SurfacePair;
           occ::handle<StepKinematics_SurfacePair> aLocalPair =
             occ::down_cast<StepKinematics_SurfacePair>(aKinematicPair);
-          // Initialize kinematic_pair
+
           aLocalPair->Init(aRepresentationItem_Name,
                            aItemDefinedTransformation_Name,
                            hasItemDefinedTransformation_Description,
@@ -1938,7 +1904,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
   }
   theData->NamedForComplex("REPRESENTATION_ITEM", "RPRITM", num0, theNum, theArch);
 
-  // Own fields of representation_item
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
   anActuatedKinematicPair->Init(aRepresentationItem_Name,
                                 aItemDefinedTransformation_Name,
@@ -1960,9 +1925,8 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                                 hasRZ,
                                 aRZ);
 
-  // Initialize kinematic_pair
   aKinematicPair->SetName(aRepresentationItem_Name);
-  // Initialize entity
+
   theEnt->Init(aRepresentationItem_Name,
                aItemDefinedTransformation_Name,
                hasItemDefinedTransformation_Description,
@@ -1974,13 +1938,10 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
                aKinematicPair);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
   StepData_StepWriter&                                              theSW,
   const occ::handle<StepKinematics_ActuatedKinPairAndOrderKinPair>& theEnt) const
 {
-  // --- Instance of plex component BoundedCurve ---
 
   theSW.StartEntity("(ACTUATED_KINEMATIC_PAIR");
 
@@ -2112,7 +2073,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
   theSW.StartEntity("(GEOMETRIC_REPRESENTATION_ITEM");
 
   theSW.StartEntity("(ITEM_DEFINED_TRANSFORMATION");
-  // Inherited fields of ItemDefinedTransformation
 
   theSW.Send(theEnt->ItemDefinedTransformation()->Name());
 
@@ -2128,8 +2088,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
   theSW.Send(theEnt->ItemDefinedTransformation()->TransformItem2());
 
   theSW.StartEntity("(KINEMATIC_PAIR");
-
-  // Own fields of KinematicPair
 
   theSW.Send(theEnt->Joint());
   if (theEnt->GetOrderKinematicPair()->IsKind(STANDARD_TYPE(StepKinematics_LowOrderKinematicPair)))
@@ -2159,7 +2117,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       {
         occ::handle<StepKinematics_RevolutePairWithRange> aRevolutePairWithRange =
           occ::down_cast<StepKinematics_RevolutePairWithRange>(theEnt->GetOrderKinematicPair());
-        // Own fields of RevolutePairWithRange
 
         if (aRevolutePairWithRange->HasLowerLimitActualRotation())
         {
@@ -2185,7 +2142,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       {
         occ::handle<StepKinematics_CylindricalPairWithRange> aCylindricalPairWithRange =
           occ::down_cast<StepKinematics_CylindricalPairWithRange>(theEnt->GetOrderKinematicPair());
-        // Own fields of CylindricalPairWithRange
 
         if (aCylindricalPairWithRange->HasLowerLimitActualTranslation())
         {
@@ -2225,7 +2181,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       {
         occ::handle<StepKinematics_SphericalPairWithRange> aSphericalPairWithRange =
           occ::down_cast<StepKinematics_SphericalPairWithRange>(theEnt->GetOrderKinematicPair());
-        // Own fields of SphericalPairWithRange
 
         if (aSphericalPairWithRange->HasLowerLimitYaw())
         {
@@ -2281,7 +2236,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
         occ::handle<StepKinematics_SphericalPairWithPinAndRange> aSphericalPairWithPinAndRange =
           occ::down_cast<StepKinematics_SphericalPairWithPinAndRange>(
             theEnt->GetOrderKinematicPair());
-        // Own fields of SphericalPairWithPinAndRange
 
         if (aSphericalPairWithPinAndRange->HasLowerLimitYaw())
         {
@@ -2321,7 +2275,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       {
         occ::handle<StepKinematics_PrismaticPairWithRange> aPrismaticPairWithRange =
           occ::down_cast<StepKinematics_PrismaticPairWithRange>(theEnt->GetOrderKinematicPair());
-        // Own fields of PrismaticPairWithRange
 
         if (aPrismaticPairWithRange->HasLowerLimitActualTranslation())
         {
@@ -2343,7 +2296,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       theSW.StartEntity("(UNIVERSAL_PAIR");
       occ::handle<StepKinematics_UniversalPair> anUniversalPair =
         occ::down_cast<StepKinematics_UniversalPair>(theEnt->GetOrderKinematicPair());
-      // Own fields of UniversalPair
 
       if (anUniversalPair->HasInputSkewAngle())
       {
@@ -2358,7 +2310,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       {
         occ::handle<StepKinematics_UniversalPairWithRange> anUniversalPairWithRange =
           occ::down_cast<StepKinematics_UniversalPairWithRange>(theEnt->GetOrderKinematicPair());
-        // Own fields of UniversalPairWithRange
 
         if (anUniversalPairWithRange->HasLowerLimitFirstRotation())
         {
@@ -2398,7 +2349,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       theSW.StartEntity("(GEAR_PAIR");
       occ::handle<StepKinematics_GearPair> aGearPair =
         occ::down_cast<StepKinematics_GearPair>(theEnt->GetOrderKinematicPair());
-      // Own fields of GearPair
 
       theSW.Send(aGearPair->RadiusFirstLink());
 
@@ -2415,7 +2365,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       {
         occ::handle<StepKinematics_GearPairWithRange> aGearPairWithRange =
           occ::down_cast<StepKinematics_GearPairWithRange>(theEnt->GetOrderKinematicPair());
-        // Own fields of GearPairWithRange
 
         if (aGearPairWithRange->HasLowerLimitActualRotation1())
         {
@@ -2438,7 +2387,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       theSW.StartEntity("RACK_AND_PINION_PAIR");
       occ::handle<StepKinematics_RackAndPinionPair> aRackAndPinionPair =
         occ::down_cast<StepKinematics_RackAndPinionPair>(theEnt->GetOrderKinematicPair());
-      // Own fields of RackAndPinionPair
 
       theSW.Send(aRackAndPinionPair->PinionRadius());
 
@@ -2449,7 +2397,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
         occ::handle<StepKinematics_RackAndPinionPairWithRange> aRackAndPinionPairWithRange =
           occ::down_cast<StepKinematics_RackAndPinionPairWithRange>(
             theEnt->GetOrderKinematicPair());
-        // Own fields of aRackAndPinionPairWithRange
 
         if (aRackAndPinionPairWithRange->HasLowerLimitRackDisplacement())
         {
@@ -2471,7 +2418,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       theSW.StartEntity("SCREW_PAIR");
       occ::handle<StepKinematics_ScrewPair> aScrewPair =
         occ::down_cast<StepKinematics_ScrewPair>(theEnt->GetOrderKinematicPair());
-      // Own fields of ScrewPair
 
       theSW.Send(aScrewPair->Pitch());
 
@@ -2480,7 +2426,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       {
         occ::handle<StepKinematics_ScrewPairWithRange> aScrewPairWithRange =
           occ::down_cast<StepKinematics_ScrewPairWithRange>(theEnt->GetOrderKinematicPair());
-        // Own fields of aRackAndPinionPairWithRange
 
         if (aScrewPairWithRange->HasLowerLimitActualRotation())
         {
@@ -2506,7 +2451,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       theSW.StartEntity("POINT_ON_PLANAR_CURVE_PAIR");
       occ::handle<StepKinematics_PointOnPlanarCurvePair> aPointOnPlanarCurvePair =
         occ::down_cast<StepKinematics_PointOnPlanarCurvePair>(theEnt->GetOrderKinematicPair());
-      // Own fields of PointOnPlanarCurvePair
 
       theSW.Send(aPointOnPlanarCurvePair->PairCurve());
 
@@ -2520,7 +2464,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
           aPointOnPlanarCurvePairWithRange =
             occ::down_cast<StepKinematics_PointOnPlanarCurvePairWithRange>(
               theEnt->GetOrderKinematicPair());
-        // Own fields of PointOnPlanarCurvePairWithRange
 
         theSW.Send(aPointOnPlanarCurvePairWithRange->RangeOnPairCurve());
 
@@ -2573,7 +2516,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       theSW.StartEntity("POINT_ON_SURFACE_PAIR");
       occ::handle<StepKinematics_PointOnSurfacePair> aPointOnSurfacePair =
         occ::down_cast<StepKinematics_PointOnSurfacePair>(theEnt->GetOrderKinematicPair());
-      // Own fields of PointOnSurfacePair
 
       theSW.Send(aPointOnSurfacePair->PairSurface());
 
@@ -2584,7 +2526,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
         occ::handle<StepKinematics_PointOnSurfacePairWithRange> aPointOnSurfacePairWithRange =
           occ::down_cast<StepKinematics_PointOnSurfacePairWithRange>(
             theEnt->GetOrderKinematicPair());
-        // Own fields of PointOnSurfacePairWithRange
 
         theSW.Send(aPointOnSurfacePairWithRange->RangeOnPairSurface());
 
@@ -2636,7 +2577,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       theSW.StartEntity("PLANAR_CURVE_PAIR");
       occ::handle<StepKinematics_PlanarCurvePair> aPlanarCurvePair =
         occ::down_cast<StepKinematics_PlanarCurvePair>(theEnt->GetOrderKinematicPair());
-      // Own fields of PlanarCurvePair
 
       theSW.Send(aPlanarCurvePair->Curve1());
 
@@ -2648,7 +2588,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       {
         occ::handle<StepKinematics_PlanarCurvePairRange> aPlanarCurvePairRange =
           occ::down_cast<StepKinematics_PlanarCurvePairRange>(theEnt->GetOrderKinematicPair());
-        // Own fields of PlanarCurvePairRange
 
         theSW.Send(aPlanarCurvePairRange->RangeOnCurve1());
 
@@ -2660,7 +2599,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       theSW.StartEntity("SURFACE_PAIR");
       occ::handle<StepKinematics_SurfacePair> aSurfacePair =
         occ::down_cast<StepKinematics_SurfacePair>(theEnt->GetOrderKinematicPair());
-      // Own fields of SurfacePair
 
       theSW.Send(aSurfacePair->Surface1());
 
@@ -2674,7 +2612,6 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
       {
         occ::handle<StepKinematics_SurfacePairWithRange> aSurfacePairWithRange =
           occ::down_cast<StepKinematics_SurfacePairWithRange>(theEnt->GetOrderKinematicPair());
-        // Own fields of SurfacePairWithRange
 
         theSW.Send(aSurfacePairWithRange->RangeOnSurface1());
 
@@ -2697,12 +2634,9 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
     }
   }
 
-  // Own fields of RepresentationItem
   theSW.StartEntity("REPRESENTATION_ITEM");
   theSW.Send(theEnt->Name());
 }
-
-//=================================================================================================
 
 void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::Share(
   const occ::handle<StepKinematics_ActuatedKinPairAndOrderKinPair>& theEnt,

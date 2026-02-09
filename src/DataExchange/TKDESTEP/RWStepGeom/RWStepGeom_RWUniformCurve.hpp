@@ -11,7 +11,6 @@ class StepGeom_UniformCurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for UniformCurve
 class RWStepGeom_RWUniformCurve
 {
 public:

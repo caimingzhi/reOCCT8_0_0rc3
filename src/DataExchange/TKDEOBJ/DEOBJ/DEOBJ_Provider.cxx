@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DEOBJ_Provider.hpp>
 
@@ -24,18 +13,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DEOBJ_Provider, DE_Provider)
 
-//=================================================================================================
-
 DEOBJ_Provider::DEOBJ_Provider() = default;
-
-//=================================================================================================
 
 DEOBJ_Provider::DEOBJ_Provider(const occ::handle<DE_ConfigurationNode>& theNode)
     : DE_Provider(theNode)
 {
 }
-
-//=================================================================================================
 
 bool DEOBJ_Provider::Read(const TCollection_AsciiString&       thePath,
                           const occ::handle<TDocStd_Document>& theDocument,
@@ -46,8 +29,6 @@ bool DEOBJ_Provider::Read(const TCollection_AsciiString&       thePath,
   return Read(thePath, theDocument, theProgress);
 }
 
-//=================================================================================================
-
 bool DEOBJ_Provider::Write(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
                            occ::handle<XSControl_WorkSession>&  theWS,
@@ -56,8 +37,6 @@ bool DEOBJ_Provider::Write(const TCollection_AsciiString&       thePath,
   (void)theWS;
   return Write(thePath, theDocument, theProgress);
 }
-
-//=================================================================================================
 
 bool DEOBJ_Provider::Read(const TCollection_AsciiString&       thePath,
                           const occ::handle<TDocStd_Document>& theDocument,
@@ -95,8 +74,6 @@ bool DEOBJ_Provider::Read(const TCollection_AsciiString&       thePath,
                                       UnitsMethods_LengthUnit_Millimeter);
   return true;
 }
-
-//=================================================================================================
 
 bool DEOBJ_Provider::Write(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
@@ -150,8 +127,6 @@ bool DEOBJ_Provider::Write(const TCollection_AsciiString&       thePath,
   return true;
 }
 
-//=================================================================================================
-
 bool DEOBJ_Provider::Read(const TCollection_AsciiString&      thePath,
                           TopoDS_Shape&                       theShape,
                           occ::handle<XSControl_WorkSession>& theWS,
@@ -161,8 +136,6 @@ bool DEOBJ_Provider::Read(const TCollection_AsciiString&      thePath,
   return Read(thePath, theShape, theProgress);
 }
 
-//=================================================================================================
-
 bool DEOBJ_Provider::Write(const TCollection_AsciiString&      thePath,
                            const TopoDS_Shape&                 theShape,
                            occ::handle<XSControl_WorkSession>& theWS,
@@ -171,8 +144,6 @@ bool DEOBJ_Provider::Write(const TCollection_AsciiString&      thePath,
   (void)theWS;
   return Write(thePath, theShape, theProgress);
 }
-
-//=================================================================================================
 
 bool DEOBJ_Provider::Read(const TCollection_AsciiString& thePath,
                           TopoDS_Shape&                  theShape,
@@ -212,8 +183,6 @@ bool DEOBJ_Provider::Read(const TCollection_AsciiString& thePath,
   return true;
 }
 
-//=================================================================================================
-
 bool DEOBJ_Provider::Write(const TCollection_AsciiString& thePath,
                            const TopoDS_Shape&            theShape,
                            const Message_ProgressRange&   theProgress)
@@ -224,14 +193,10 @@ bool DEOBJ_Provider::Write(const TCollection_AsciiString& thePath,
   return Write(thePath, aDoc, theProgress);
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DEOBJ_Provider::GetFormat() const
 {
   return TCollection_AsciiString("OBJ");
 }
-
-//=================================================================================================
 
 TCollection_AsciiString DEOBJ_Provider::GetVendor() const
 {

@@ -10,7 +10,6 @@ class StepBasic_CalendarDate : public StepBasic_Date
 {
 
 public:
-  //! Returns a CalendarDate
   Standard_EXPORT StepBasic_CalendarDate();
 
   Standard_EXPORT void Init(const int aYearComponent,

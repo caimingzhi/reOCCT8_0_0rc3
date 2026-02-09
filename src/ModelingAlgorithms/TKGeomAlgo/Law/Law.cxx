@@ -148,7 +148,6 @@ occ::handle<Law_BSpline> Law::Reparametrize(const Adaptor3d_Curve& Curve,
                                             const bool             Rev,
                                             const int              NbPoints)
 {
-  // On evalue la longeur approximative de la courbe.
 
   int    i;
   double DDFirst = DFirst, DDLast = DLast;
@@ -239,9 +238,9 @@ occ::handle<Law_BSpline> Law::Reparametrize(const Adaptor3d_Curve& Curve,
 }
 
 static double eval2(const double p,
-                    //			   const double        first,
+
                     const double,
-                    //			   const double        last,
+
                     const double,
                     const double                    mil,
                     const bool                      hasfirst,
@@ -322,7 +321,7 @@ occ::handle<Law_BSpline> Law::ScaleCub(const double First,
                                        const double VFirst,
                                        const double VLast)
 {
-  // int i;
+
   double                     Milieu = 0.5 * (First + Last);
   NCollection_Array1<double> pol(1, 5);
   NCollection_Array1<double> knot(1, 3);

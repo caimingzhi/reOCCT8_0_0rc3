@@ -1,33 +1,19 @@
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_Dump.hpp>
 
 #include <cstdarg>
 
-//=================================================================================================
-
 void Standard_Dump::AddValuesSeparator(Standard_OStream& theOStream)
 {
-  // Check if the stream has any content by checking the current write position
+
   std::streampos aPos = theOStream.tellp();
   if (aPos <= 0)
   {
-    // Stream is empty or at the beginning, no separator needed
+
     return;
   }
 
-  // Try to cast to Standard_SStream (std::stringstream)
   Standard_SStream* anSStream = dynamic_cast<Standard_SStream*>(&theOStream);
   if (anSStream != nullptr)
   {
@@ -39,7 +25,6 @@ void Standard_Dump::AddValuesSeparator(Standard_OStream& theOStream)
     return;
   }
 
-  // Try to cast to std::ostringstream (for cases where users use ostringstream directly)
   std::ostringstream* anOStrStream = dynamic_cast<std::ostringstream*>(&theOStream);
   if (anOStrStream != nullptr)
   {
@@ -51,13 +36,10 @@ void Standard_Dump::AddValuesSeparator(Standard_OStream& theOStream)
   }
   else
   {
-    // For other stream types where we cannot read the content,
-    // we add the separator unconditionally since we know the stream is not empty
+
     theOStream << ", ";
   }
 }
-
-//=================================================================================================
 
 void Standard_Dump::DumpKeyToClass(Standard_OStream&              theOStream,
                                    const TCollection_AsciiString& theKey,
@@ -66,8 +48,6 @@ void Standard_Dump::DumpKeyToClass(Standard_OStream&              theOStream,
   AddValuesSeparator(theOStream);
   theOStream << "\"" << theKey << "\": {" << theField << "}";
 }
-
-//=================================================================================================
 
 void Standard_Dump::DumpCharacterValues(Standard_OStream& theOStream, int theCount, ...)
 {
@@ -82,8 +62,6 @@ void Standard_Dump::DumpCharacterValues(Standard_OStream& theOStream, int theCou
   va_end(vl);
 }
 
-//=================================================================================================
-
 void Standard_Dump::DumpRealValues(Standard_OStream& theOStream, int theCount, ...)
 {
   va_list vl;
@@ -96,8 +74,6 @@ void Standard_Dump::DumpRealValues(Standard_OStream& theOStream, int theCount, .
   }
   va_end(vl);
 }
-
-//=================================================================================================
 
 bool Standard_Dump::ProcessStreamName(const TCollection_AsciiString& theStreamStr,
                                       const TCollection_AsciiString& theName,
@@ -126,8 +102,6 @@ bool Standard_Dump::ProcessStreamName(const TCollection_AsciiString& theStreamSt
   return aResult;
 }
 
-//=================================================================================================
-
 bool Standard_Dump::ProcessFieldName(const TCollection_AsciiString& theStreamStr,
                                      const TCollection_AsciiString& theName,
                                      int&                           theStreamPos)
@@ -154,8 +128,6 @@ bool Standard_Dump::ProcessFieldName(const TCollection_AsciiString& theStreamStr
 
   return aResult;
 }
-
-//=================================================================================================
 
 bool Standard_Dump::InitRealValues(const TCollection_AsciiString& theStreamStr,
                                    int&                           theStreamPos,
@@ -202,8 +174,6 @@ bool Standard_Dump::InitRealValues(const TCollection_AsciiString& theStreamStr,
   return true;
 }
 
-//=================================================================================================
-
 bool Standard_Dump::InitValue(const TCollection_AsciiString& theStreamStr,
                               int&                           theStreamPos,
                               TCollection_AsciiString&       theValue)
@@ -234,8 +204,6 @@ bool Standard_Dump::InitValue(const TCollection_AsciiString& theStreamStr,
   return true;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString Standard_Dump::GetPointerInfo(
   const occ::handle<Standard_Transient>& thePointer,
   const bool                             isShortInfo)
@@ -245,8 +213,6 @@ TCollection_AsciiString Standard_Dump::GetPointerInfo(
 
   return GetPointerInfo(thePointer.get(), isShortInfo);
 }
-
-//=================================================================================================
 
 TCollection_AsciiString Standard_Dump::GetPointerInfo(const void* thePointer,
                                                       const bool  isShortInfo)
@@ -272,9 +238,6 @@ TCollection_AsciiString Standard_Dump::GetPointerInfo(const void* thePointer,
   return aPtrStr.str().c_str();
 }
 
-// =======================================================================
-// DumpFieldToName
-// =======================================================================
 TCollection_AsciiString Standard_Dump::DumpFieldToName(const TCollection_AsciiString& theField)
 {
   TCollection_AsciiString aName = theField;
@@ -308,17 +271,11 @@ TCollection_AsciiString Standard_Dump::DumpFieldToName(const TCollection_AsciiSt
   return aName;
 }
 
-// =======================================================================
-// Text
-// =======================================================================
 TCollection_AsciiString Standard_Dump::Text(const Standard_SStream& theStream)
 {
   return TCollection_AsciiString(theStream.str().c_str());
 }
 
-// =======================================================================
-// FormatJson
-// =======================================================================
 TCollection_AsciiString Standard_Dump::FormatJson(const Standard_SStream& theStream,
                                                   const int               theIndent)
 {
@@ -336,7 +293,7 @@ TCollection_AsciiString Standard_Dump::FormatJson(const Standard_SStream& theStr
     char aSymbol = aStreamStr.Value(anIndex);
     if (anIndex == 1 && aText.IsEmpty() && aSymbol != '{')
     {
-      // append opening brace for json start
+
       aSymbol = '{';
       anIndex--;
     }
@@ -380,21 +337,21 @@ TCollection_AsciiString Standard_Dump::FormatJson(const Standard_SStream& theStr
         for (int anIndent = 0; anIndent < anIndentCount; anIndent++)
           aText += anIndentStr;
         if (anIndex + 1 < aStreamStr.Length() && aStreamStr.Value(anIndex + 1) == ' ')
-          anIndex++; // skip empty value after comma
+          anIndex++;
       }
       else
         aText += aSymbol;
     }
     else if (aSymbol == '\n')
     {
-      aText += ""; // json does not support multi-lined values, skip this symbol
+      aText += "";
     }
     else
       aText += aSymbol;
 
     if (anIndex == aStreamStr.Length() && aSymbol != '}')
     {
-      // append closing brace for json end
+
       aSymbol = '}';
 
       anIndentCount--;
@@ -407,9 +364,6 @@ TCollection_AsciiString Standard_Dump::FormatJson(const Standard_SStream& theStr
   return aText;
 }
 
-// =======================================================================
-// SplitJson
-// =======================================================================
 bool Standard_Dump::SplitJson(
   const TCollection_AsciiString&                                           theStreamStr,
   NCollection_IndexedDataMap<TCollection_AsciiString, Standard_DumpValue>& theKeyToValues)
@@ -460,9 +414,6 @@ bool Standard_Dump::SplitJson(
   return true;
 }
 
-// =======================================================================
-// HierarchicalValueIndices
-// =======================================================================
 NCollection_List<int> Standard_Dump::HierarchicalValueIndices(
   const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theValues)
 {
@@ -476,16 +427,13 @@ NCollection_List<int> Standard_Dump::HierarchicalValueIndices(
   return anIndices;
 }
 
-// =======================================================================
-// splitKeyToValue
-// =======================================================================
 bool Standard_Dump::splitKeyToValue(
   const TCollection_AsciiString&                                           theStreamStr,
   int                                                                      theStartIndex,
   int&                                                                     theNextIndex,
   NCollection_IndexedDataMap<TCollection_AsciiString, Standard_DumpValue>& theValues)
 {
-  // find key value: "key"
+
   int aStartIndex = theStartIndex;
   int aCloseIndex =
     nextClosePosition(theStreamStr, aStartIndex + 1, Standard_JsonKey_None, Standard_JsonKey_Quote);
@@ -494,13 +442,11 @@ bool Standard_Dump::splitKeyToValue(
 
   TCollection_AsciiString aSplitKey = theStreamStr.SubString(aStartIndex, aCloseIndex - 1);
 
-  // key to value
   aStartIndex           = aCloseIndex + 1;
   Standard_JsonKey aKey = Standard_JsonKey_None;
   if (!jsonKey(theStreamStr, aStartIndex, aCloseIndex, aKey))
     return false;
 
-  // find value
   aStartIndex = aCloseIndex;
   aKey        = Standard_JsonKey_None;
   jsonKey(theStreamStr, aStartIndex, aCloseIndex, aKey);
@@ -536,7 +482,7 @@ bool Standard_Dump::splitKeyToValue(
     {
       Standard_JsonKey aKeyTmp = Standard_JsonKey_None;
       if (jsonKey(theStreamStr, aStartIndex, aCloseIndex, aKeyTmp)
-          && aKeyTmp == Standard_JsonKey_Quote) // emptyValue
+          && aKeyTmp == Standard_JsonKey_Quote)
       {
         aSplitValue  = "";
         theNextIndex = aCloseIndex;
@@ -588,7 +534,7 @@ bool Standard_Dump::splitKeyToValue(
   if (theValues.FindFromKey(aSplitKey, aValue))
   {
     int anIndex = 1;
-    // increment key until the new key does not exist in the container
+
     TCollection_AsciiString anIndexedSuffix =
       TCollection_AsciiString("_") + TCollection_AsciiString(anIndex);
     while (theValues.FindFromKey(TCollection_AsciiString(aSplitKey + anIndexedSuffix), aValue))
@@ -603,9 +549,6 @@ bool Standard_Dump::splitKeyToValue(
   return true;
 }
 
-// =======================================================================
-// jsonKey
-// =======================================================================
 bool Standard_Dump::jsonKey(const TCollection_AsciiString& theStreamStr,
                             int                            theStartIndex,
                             int&                           theNextIndex,
@@ -629,17 +572,11 @@ bool Standard_Dump::jsonKey(const TCollection_AsciiString& theStreamStr,
   return false;
 }
 
-// =======================================================================
-// HasChildKey
-// =======================================================================
 bool Standard_Dump::HasChildKey(const TCollection_AsciiString& theSourceValue)
 {
   return theSourceValue.Search(JsonKeyToString(Standard_JsonKey_SeparatorKeyToValue)) >= 0;
 }
 
-// =======================================================================
-// JsonKeyToString
-// =======================================================================
 const char* Standard_Dump::JsonKeyToString(const Standard_JsonKey theKey)
 {
   switch (theKey)
@@ -665,17 +602,11 @@ const char* Standard_Dump::JsonKeyToString(const Standard_JsonKey theKey)
   return "";
 }
 
-// =======================================================================
-// JsonKeyLength
-// =======================================================================
 int Standard_Dump::JsonKeyLength(const Standard_JsonKey theKey)
 {
   return (int)strlen(JsonKeyToString(theKey));
 }
 
-// =======================================================================
-// nextClosePosition
-// =======================================================================
 int Standard_Dump::nextClosePosition(const TCollection_AsciiString& theSourceValue,
                                      const int                      theStartPosition,
                                      const Standard_JsonKey         theOpenKey,

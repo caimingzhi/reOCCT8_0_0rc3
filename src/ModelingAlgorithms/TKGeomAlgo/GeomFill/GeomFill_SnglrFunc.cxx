@@ -11,8 +11,6 @@ GeomFill_SnglrFunc::GeomFill_SnglrFunc(const occ::handle<Adaptor3d_Curve>& HC)
 {
 }
 
-//=================================================================================================
-
 occ::handle<Adaptor3d_Curve> GeomFill_SnglrFunc::ShallowCopy() const
 {
   occ::handle<GeomFill_SnglrFunc> aCopy = new GeomFill_SnglrFunc(myHCurve->ShallowCopy());

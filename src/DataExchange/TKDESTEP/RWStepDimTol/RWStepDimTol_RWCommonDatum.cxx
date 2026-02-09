@@ -6,22 +6,16 @@
 #include <StepDimTol_Datum.hpp>
 #include <StepRepr_ProductDefinitionShape.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWCommonDatum::RWStepDimTol_RWCommonDatum() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWCommonDatum::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                           const int                                   num,
                                           occ::handle<Interface_Check>&               ach,
                                           const occ::handle<StepDimTol_CommonDatum>&  ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 9, ach, "common_datum"))
     return;
-
-  // Inherited fields of ShapeAspect
 
   occ::handle<TCollection_HAsciiString> aShapeAspect_Name;
   data->ReadString(num, 1, "shape_aspect.name", ach, aShapeAspect_Name);
@@ -47,8 +41,6 @@ void RWStepDimTol_RWCommonDatum::ReadStep(const occ::handle<StepData_StepReaderD
                     ach,
                     aShapeAspect_ProductDefinitional);
 
-  // Inherited fields of Datum
-
   occ::handle<TCollection_HAsciiString> aDatum_Name;
   data->ReadString(num, 5, "shape_aspect.name", ach, aDatum_Name);
 
@@ -69,12 +61,9 @@ void RWStepDimTol_RWCommonDatum::ReadStep(const occ::handle<StepData_StepReaderD
   StepData_Logical aDatum_ProductDefinitional;
   data->ReadLogical(num, 8, "shape_aspect.product_definitional", ach, aDatum_ProductDefinitional);
 
-  // Inherited fields of Datum
-
   occ::handle<TCollection_HAsciiString> aDatum_Identification;
   data->ReadString(num, 9, "datum.identification", ach, aDatum_Identification);
 
-  // Initialize entity
   ent->Init(aShapeAspect_Name,
             aShapeAspect_Description,
             aShapeAspect_OfShape,
@@ -86,13 +75,9 @@ void RWStepDimTol_RWCommonDatum::ReadStep(const occ::handle<StepData_StepReaderD
             aDatum_Identification);
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWCommonDatum::WriteStep(StepData_StepWriter&                       SW,
                                            const occ::handle<StepDimTol_CommonDatum>& ent) const
 {
-
-  // Inherited fields of ShapeAspect
 
   SW.Send(ent->StepRepr_ShapeAspect::Name());
 
@@ -102,8 +87,6 @@ void RWStepDimTol_RWCommonDatum::WriteStep(StepData_StepWriter&                 
 
   SW.SendLogical(ent->StepRepr_ShapeAspect::ProductDefinitional());
 
-  // Inherited fields of Datum->ShapeAspect
-
   SW.Send(ent->Datum()->StepRepr_ShapeAspect::Name());
 
   SW.Send(ent->Datum()->StepRepr_ShapeAspect::Description());
@@ -112,22 +95,14 @@ void RWStepDimTol_RWCommonDatum::WriteStep(StepData_StepWriter&                 
 
   SW.SendLogical(ent->Datum()->StepRepr_ShapeAspect::ProductDefinitional());
 
-  // Inherited fields of Datum
-
   SW.Send(ent->Datum()->Identification());
 }
-
-//=================================================================================================
 
 void RWStepDimTol_RWCommonDatum::Share(const occ::handle<StepDimTol_CommonDatum>& ent,
                                        Interface_EntityIterator&                  iter) const
 {
 
-  // Inherited fields of ShapeAspect
-
   iter.AddItem(ent->StepRepr_ShapeAspect::OfShape());
-
-  // Inherited fields of Datum
 
   iter.AddItem(ent->Datum()->StepRepr_ShapeAspect::OfShape());
 }

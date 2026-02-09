@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_FullyConstrainedPair;
 
-//! Read & Write tool for FullyConstrainedPair
 class RWStepKinematics_RWFullyConstrainedPair
 {
 public:

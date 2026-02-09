@@ -21,8 +21,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_Check, Standard_Transient)
 
-//=================================================================================================
-
 TopOpeBRepDS_Check::TopOpeBRepDS_Check(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
 {
   myHDS = HDS;
@@ -32,8 +30,6 @@ TopOpeBRepDS_Check::TopOpeBRepDS_Check(const occ::handle<TopOpeBRepDS_HDataStruc
   myMapShapeStatus.Clear();
 }
 
-//=================================================================================================
-
 TopOpeBRepDS_Check::TopOpeBRepDS_Check()
 {
   myMapSurfaceStatus.Clear();
@@ -42,26 +38,24 @@ TopOpeBRepDS_Check::TopOpeBRepDS_Check()
   myMapShapeStatus.Clear();
 }
 
-//=================================================================================================
-
 bool CheckEdgeParameter(const occ::handle<TopOpeBRepDS_HDataStructure>& myHDS);
 
 bool TopOpeBRepDS_Check::ChkIntg()
 {
   const TopOpeBRepDS_DataStructure& DS = myHDS->DS();
   bool                              bI = false;
-  // Check the integrity of the DS
+
   int i, nshape = DS.NbShapes();
   for (i = 1; i <= nshape; i++)
   {
-    // Integrity of Interferences : Check support and geometry
+
     const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI = DS.ShapeInterferences(i);
     bI                                                                 = ChkIntgInterf(LI);
   }
   int nsurface = DS.NbSurfaces();
   for (i = 1; i <= nsurface; i++)
   {
-    // Integrity of Interferences : Check support and geometry
+
     const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI = DS.SurfaceInterferences(i);
     bI                                                                 = bI && ChkIntgInterf(LI);
   }
@@ -69,7 +63,7 @@ bool TopOpeBRepDS_Check::ChkIntg()
   int ncurve = DS.NbCurves();
   for (i = 1; i <= ncurve; i++)
   {
-    // Integrity of Interferences : Check support and geometry
+
     const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI = DS.CurveInterferences(i);
     bI                                                                 = bI && ChkIntgInterf(LI);
   }
@@ -77,18 +71,15 @@ bool TopOpeBRepDS_Check::ChkIntg()
   int npoint = DS.NbPoints();
   for (i = 1; i <= npoint; i++)
   {
-    // Integrity of Interferences : Check support and geometry
+
     const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI = DS.PointInterferences(i);
     bI                                                                 = bI && ChkIntgInterf(LI);
   }
 
-  //  CheckEdgeParameter();
   CheckEdgeParameter(myHDS);
 
   return bI;
 }
-
-//=================================================================================================
 
 bool TopOpeBRepDS_Check::ChkIntgInterf(
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI)
@@ -106,11 +97,9 @@ bool TopOpeBRepDS_Check::ChkIntgInterf(
   return IsOK;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_Check::CheckDS(const int I, const TopOpeBRepDS_Kind K)
 {
-  // geometry
+
   switch (K)
   {
     case TopOpeBRepDS_SURFACE:
@@ -157,7 +146,6 @@ bool TopOpeBRepDS_Check::CheckDS(const int I, const TopOpeBRepDS_Kind K)
       break;
   }
 
-  // topology
   if (myHDS->NbShapes() < I)
   {
     if (myMapShapeStatus.IsBound(I))
@@ -204,8 +192,6 @@ bool TopOpeBRepDS_Check::CheckDS(const int I, const TopOpeBRepDS_Kind K)
   return true;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_Check::ChkIntgSamDom()
 {
   bool                        b = true, bb = false;
@@ -213,7 +199,7 @@ bool TopOpeBRepDS_Check::ChkIntgSamDom()
   int                         NbSh = myHDS->NbShapes(), i, Curr, Loc;
   for (i = 1; i <= NbSh; i++)
   {
-    // Verifie que les Shapes de mySameDomaine existe bien dans la DS
+
     const TopoDS_Shape&                   Sind = myHDS->Shape(i);
     const NCollection_List<TopoDS_Shape>& losi = BDS.ShapeSameDomain(Sind);
     if (!CheckShapes(losi))
@@ -221,7 +207,6 @@ bool TopOpeBRepDS_Check::ChkIntgSamDom()
       b = false;
     }
 
-    // Verification de SameDomaineRef
     Curr = BDS.SameDomainRef(i);
     Loc  = BDS.SameDomainRef(Curr);
     if (Curr && (Curr != Loc))
@@ -231,15 +216,13 @@ bool TopOpeBRepDS_Check::ChkIntgSamDom()
 
     if (Curr)
     {
-      // Verification du type des differents Shapes SameDomain
+
       const TopoDS_Shape& Sref = myHDS->Shape(Curr);
       if (Sind.ShapeType() != Sref.ShapeType())
       {
         b = false;
       }
 
-      // Verifier que ShapeSameDomain(Sref) contient bien Sind
-      // sauf si Sind == Sref
       if (i != Curr)
       {
         const NCollection_List<TopoDS_Shape>&    losr = BDS.ShapeSameDomain(Sref);
@@ -266,8 +249,6 @@ bool TopOpeBRepDS_Check::ChkIntgSamDom()
   return b;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_Check::CheckShapes(const NCollection_List<TopoDS_Shape>& LS) const
 {
   int                                      index;
@@ -283,16 +264,14 @@ bool TopOpeBRepDS_Check::CheckShapes(const NCollection_List<TopoDS_Shape>& LS) c
   return true;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_Check::OneVertexOnPnt()
 {
   bool b = true;
-  //  int i, j, k;
+
   int i, j;
   int Curr1, Curr2, sdr1, sdr2;
   int NbVe = 0, NbPo = myHDS->NbPoints();
-  //  double tol, tol1, tol2, Dist;
+
   double                      tol1, tol2, Dist;
   NCollection_IndexedMap<int> vert;
   vert.Clear();
@@ -364,9 +343,6 @@ bool TopOpeBRepDS_Check::OneVertexOnPnt()
   return b;
 }
 
-//=================================================================================================
-
-/// bool TopOpeBRepDS_Check::CheckEdgeParameter() const
 bool CheckEdgeParameter(const occ::handle<TopOpeBRepDS_HDataStructure>& myHDS)
 {
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it1;
@@ -375,7 +351,7 @@ bool CheckEdgeParameter(const occ::handle<TopOpeBRepDS_HDataStructure>& myHDS)
   bool                                                               IsOK = true;
   for (i = 1; i <= nshape; i++)
   {
-    // Integrity of Interferences : Check parameter of EdgeInterferences
+
     const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI = DS.ShapeInterferences(i);
     it1.Initialize(LI);
     while (it1.More())
@@ -398,7 +374,7 @@ bool CheckEdgeParameter(const occ::handle<TopOpeBRepDS_HDataStructure>& myHDS)
   int ncurve = DS.NbCurves();
   for (i = 1; i <= ncurve; i++)
   {
-    // Integrity of Interferences : Check parameter of CurvesInterferences
+
     const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI = DS.CurveInterferences(i);
     it1.Initialize(LI);
     while (it1.More())
@@ -420,22 +396,18 @@ bool CheckEdgeParameter(const occ::handle<TopOpeBRepDS_HDataStructure>& myHDS)
   return IsOK;
 }
 
-//=================================================================================================
-
 Standard_OStream& TopOpeBRepDS_Check::PrintIntg(Standard_OStream& OS)
 {
   OS << std::endl << std::endl << "************************************************" << std::endl;
   OS << "state of the DS : (only the tested elements)" << std::endl << std::endl;
 
-  // Display of the geometry
   PrintMap(myMapSurfaceStatus, "Surface", OS);
   PrintMap(myMapCurveStatus, "Curve", OS);
   PrintMap(myMapPointStatus, "Point", OS);
 
-  // display of the topology
   NCollection_DataMap<int, TopOpeBRepDS_CheckStatus> MapVertex, MapEdge, MapWire, MapFace, MapSolid;
   int                                                i;
-  // different Map keep their index of myMapShapeStatus
+
   for (NCollection_DataMap<int, TopOpeBRepDS_CheckStatus>::Iterator DMI(myMapShapeStatus);
        DMI.More();
        DMI.Next())
@@ -474,8 +446,6 @@ Standard_OStream& TopOpeBRepDS_Check::PrintIntg(Standard_OStream& OS)
   return OS;
 }
 
-//=================================================================================================
-
 Standard_OStream& TopOpeBRepDS_Check::PrintMap(
   NCollection_DataMap<int, TopOpeBRepDS_CheckStatus>& MapStat,
   const char*                                         eltstr,
@@ -498,10 +468,6 @@ Standard_OStream& TopOpeBRepDS_Check::PrintMap(
   return OS;
 }
 
-//=======================================================================
-// function : PrintElts
-// purpose  : Print the elements in the state stat of MapStat
-//=======================================================================
 Standard_OStream& TopOpeBRepDS_Check::PrintElts(
   NCollection_DataMap<int, TopOpeBRepDS_CheckStatus>& MapStat,
   const TopOpeBRepDS_CheckStatus                      Stat,
@@ -532,8 +498,6 @@ Standard_OStream& TopOpeBRepDS_Check::PrintElts(
   return OS;
 }
 
-//=================================================================================================
-
 Standard_OStream& TopOpeBRepDS_Check::Print(const TopOpeBRepDS_CheckStatus stat,
                                             Standard_OStream&              OS)
 {
@@ -550,8 +514,6 @@ Standard_OStream& TopOpeBRepDS_Check::Print(const TopOpeBRepDS_CheckStatus stat,
   }
   return OS;
 }
-
-//=================================================================================================
 
 Standard_OStream& TopOpeBRepDS_Check::PrintShape(const TopAbs_ShapeEnum SE, Standard_OStream& OS)
 {
@@ -581,8 +543,6 @@ Standard_OStream& TopOpeBRepDS_Check::PrintShape(const TopAbs_ShapeEnum SE, Stan
   return OS;
 }
 
-//=================================================================================================
-
 Standard_OStream& TopOpeBRepDS_Check::PrintShape(const int index, Standard_OStream& OS)
 {
   if (myHDS->NbShapes() < index)
@@ -601,14 +561,10 @@ Standard_OStream& TopOpeBRepDS_Check::PrintShape(const int index, Standard_OStre
   return OS;
 }
 
-//=================================================================================================
-
 const occ::handle<TopOpeBRepDS_HDataStructure>& TopOpeBRepDS_Check::HDS() const
 {
   return myHDS;
 }
-
-//=================================================================================================
 
 occ::handle<TopOpeBRepDS_HDataStructure>& TopOpeBRepDS_Check::ChangeHDS()
 {

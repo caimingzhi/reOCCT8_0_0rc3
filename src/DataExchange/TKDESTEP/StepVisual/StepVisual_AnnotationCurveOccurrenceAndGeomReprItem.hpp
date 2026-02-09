@@ -4,9 +4,6 @@
 
 #include <StepVisual_AnnotationCurveOccurrence.hpp>
 
-//! Added for Dimensional Tolerances
-//! Complex STEP entity AnnotationCurveOccurrence & AnnotationOccurrence &
-//! GeometricRepresentationItem & RepresentationItem & StyledItem
 class StepVisual_AnnotationCurveOccurrenceAndGeomReprItem
     : public StepVisual_AnnotationCurveOccurrence
 {

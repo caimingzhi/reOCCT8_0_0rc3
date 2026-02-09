@@ -28,13 +28,12 @@ void IGESAppli_ToolNodalResults::ReadOwnParams(const occ::handle<IGESAppli_Nodal
   double tempTime;
   int    nbval   = 0;
   int    nbnodes = 0;
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   occ::handle<IGESDimen_GeneralNote>                            tempNote;
   occ::handle<NCollection_HArray2<double>>                      tempData;
   occ::handle<NCollection_HArray1<occ::handle<IGESAppli_Node>>> tempNodes;
   occ::handle<NCollection_HArray1<int>>                         tempNodeIdentifiers;
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadEntity(IR,
                 PR.Current(),
                 "General Note describing the analysis case",
@@ -43,7 +42,7 @@ void IGESAppli_ToolNodalResults::ReadOwnParams(const occ::handle<IGESAppli_Nodal
   PR.ReadInteger(PR.Current(), "Subcase number", tempSubCaseNum);
   PR.ReadReal(PR.Current(), "Analysis time used", tempTime);
   bool tempFlag = PR.ReadInteger(PR.Current(), "No. of values", nbval);
-  // szv#4:S4163:12Mar99 moved in if
+
   if (PR.ReadInteger(PR.Current(), "No. of nodes", nbnodes))
   {
     tempData            = new NCollection_HArray2<double>(1, nbnodes, 1, nbval);
@@ -52,7 +51,7 @@ void IGESAppli_ToolNodalResults::ReadOwnParams(const occ::handle<IGESAppli_Nodal
     for (int i = 1; i <= nbnodes; i++)
     {
       int aitem;
-      // Check  whether nbval properly read or not.
+
       occ::handle<IGESAppli_Node> aNode;
 
       if (PR.ReadInteger(PR.Current(), "Node no. identifier", aitem))
@@ -60,7 +59,7 @@ void IGESAppli_ToolNodalResults::ReadOwnParams(const occ::handle<IGESAppli_Nodal
       if (PR.ReadEntity(IR, PR.Current(), "FEM Node", STANDARD_TYPE(IGESAppli_Node), aNode))
         tempNodes->SetValue(i, aNode);
       if (tempFlag)
-        // Check  whether nbval properly read or not.
+
         for (int j = 1; j <= nbval; j++)
         {
           double aval;
@@ -131,9 +130,9 @@ void IGESAppli_ToolNodalResults::OwnCopy(const occ::handle<IGESAppli_NodalResult
 }
 
 IGESData_DirChecker IGESAppli_ToolNodalResults::DirChecker(
-  const occ::handle<IGESAppli_NodalResults>& /* ent */) const
+  const occ::handle<IGESAppli_NodalResults>&) const
 {
-  IGESData_DirChecker DC(146, 0, 34); // Type = 146 Form No. = 0 to 34
+  IGESData_DirChecker DC(146, 0, 34);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefVoid);
   DC.LineWeight(IGESData_DefVoid);
@@ -306,8 +305,7 @@ void IGESAppli_ToolNodalResults::OwnDump(const occ::handle<IGESAppli_NodalResult
                                          Standard_OStream&                          S,
                                          const int                                  level) const
 {
-  //  int nbnodes = ent->NbNodes();
-  //  int nbdata  = ent->NbData ();
+
   S << "IGESAppli_NodalResults\n";
 
   S << "General Note : ";
@@ -322,7 +320,7 @@ void IGESAppli_ToolNodalResults::OwnDump(const occ::handle<IGESAppli_NodalResult
   S << "Data : ";
   if (level < 6)
     S << " [ask level > 5]";
-  //  IGESData_DumpRectVals(S ,-level,1, ent->NbData(),ent->Data);
+
   S << "\n";
   if (level > 4)
   {

@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 #include <math_NewtonFunctionSetRoot.hpp>
@@ -27,8 +16,6 @@ namespace
 {
   const double TOLERANCE = 1.0e-6;
 
-  // Simple 2x2 system: x^2 + y^2 = 1, x - y = 0
-  // Solution: x = y = +/-1/sqrt(2)
   class CircleLineSystem : public math_FunctionSetWithDerivatives
   {
   public:
@@ -38,17 +25,17 @@ namespace
 
     bool Value(const math_Vector& X, math_Vector& F) override
     {
-      F(1) = X(1) * X(1) + X(2) * X(2) - 1.0; // x^2 + y^2 - 1 = 0
-      F(2) = X(1) - X(2);                     // x - y = 0
+      F(1) = X(1) * X(1) + X(2) * X(2) - 1.0;
+      F(2) = X(1) - X(2);
       return true;
     }
 
     bool Derivatives(const math_Vector& X, math_Matrix& D) override
     {
-      D(1, 1) = 2.0 * X(1); // df1/dx = 2x
-      D(1, 2) = 2.0 * X(2); // df1/dy = 2y
-      D(2, 1) = 1.0;        // df2/dx = 1
-      D(2, 2) = -1.0;       // df2/dy = -1
+      D(1, 1) = 2.0 * X(1);
+      D(1, 2) = 2.0 * X(2);
+      D(2, 1) = 1.0;
+      D(2, 2) = -1.0;
       return true;
     }
 
@@ -60,8 +47,6 @@ namespace
     }
   };
 
-  // Linear system: 2x + y = 3, x + 2y = 3
-  // Solution: x = 1, y = 1
   class LinearSystem : public math_FunctionSetWithDerivatives
   {
   public:
@@ -71,17 +56,17 @@ namespace
 
     bool Value(const math_Vector& X, math_Vector& F) override
     {
-      F(1) = 2.0 * X(1) + X(2) - 3.0; // 2x + y - 3 = 0
-      F(2) = X(1) + 2.0 * X(2) - 3.0; // x + 2y - 3 = 0
+      F(1) = 2.0 * X(1) + X(2) - 3.0;
+      F(2) = X(1) + 2.0 * X(2) - 3.0;
       return true;
     }
 
     bool Derivatives(const math_Vector&, math_Matrix& D) override
     {
-      D(1, 1) = 2.0; // df1/dx = 2
-      D(1, 2) = 1.0; // df1/dy = 1
-      D(2, 1) = 1.0; // df2/dx = 1
-      D(2, 2) = 2.0; // df2/dy = 2
+      D(1, 1) = 2.0;
+      D(1, 2) = 1.0;
+      D(2, 1) = 1.0;
+      D(2, 2) = 2.0;
       return true;
     }
 
@@ -93,8 +78,6 @@ namespace
     }
   };
 
-  // Single equation: x^2 - 4 = 0
-  // Solution: x = +/-2
   class QuadraticFunction : public math_FunctionSetWithDerivatives
   {
   public:
@@ -122,8 +105,6 @@ namespace
     }
   };
 
-  // 3x3 system: x + y + z = 6, x - y = 0, 2z = 4
-  // Solution: x = 2, y = 2, z = 2
   class ThreeVariableSystem : public math_FunctionSetWithDerivatives
   {
   public:
@@ -133,9 +114,9 @@ namespace
 
     bool Value(const math_Vector& X, math_Vector& F) override
     {
-      F(1) = X(1) + X(2) + X(3) - 6.0; // x + y + z - 6 = 0
-      F(2) = X(1) - X(2);              // x - y = 0
-      F(3) = 2.0 * X(3) - 4.0;         // 2z - 4 = 0
+      F(1) = X(1) + X(2) + X(3) - 6.0;
+      F(2) = X(1) - X(2);
+      F(3) = 2.0 * X(3) - 4.0;
       return true;
     }
 
@@ -196,14 +177,14 @@ TEST(math_NewtonFunctionSetRoot, QuadraticSingleVariable)
   math_NewtonFunctionSetRoot solver(func, tolerance, 1.0e-6);
 
   math_Vector startingPoint(1, 1);
-  startingPoint(1) = 1.5; // Start near positive root
+  startingPoint(1) = 1.5;
 
   solver.Perform(func, startingPoint);
 
   EXPECT_TRUE(solver.IsDone());
 
   const math_Vector& root = solver.Root();
-  EXPECT_NEAR(fabs(root(1)), 2.0, TOLERANCE); // Should find +/-2
+  EXPECT_NEAR(fabs(root(1)), 2.0, TOLERANCE);
 }
 
 TEST(math_NewtonFunctionSetRoot, CircleLineIntersection)
@@ -217,7 +198,7 @@ TEST(math_NewtonFunctionSetRoot, CircleLineIntersection)
   math_NewtonFunctionSetRoot solver(func, tolerance, 1.0e-6);
 
   math_Vector startingPoint(1, 2);
-  startingPoint(1) = 0.7; // Start near positive solution
+  startingPoint(1) = 0.7;
   startingPoint(2) = 0.7;
 
   solver.Perform(func, startingPoint);
@@ -227,7 +208,7 @@ TEST(math_NewtonFunctionSetRoot, CircleLineIntersection)
   const math_Vector& root = solver.Root();
   EXPECT_NEAR(fabs(root(1)), M_SQRT1_2, 1.0e-5);
   EXPECT_NEAR(fabs(root(2)), M_SQRT1_2, 1.0e-5);
-  EXPECT_NEAR(root(1), root(2), TOLERANCE); // x = y constraint
+  EXPECT_NEAR(root(1), root(2), TOLERANCE);
 }
 
 TEST(math_NewtonFunctionSetRoot, ThreeVariableSystem)
@@ -295,13 +276,13 @@ TEST(math_NewtonFunctionSetRoot, AlternativeConstructor)
 {
   LinearSystem func;
 
-  math_NewtonFunctionSetRoot solver(func, 1.0e-6); // Only function tolerance
+  math_NewtonFunctionSetRoot solver(func, 1.0e-6);
 
   math_Vector tolerance(1, 2);
   tolerance(1) = 1.0e-6;
   tolerance(2) = 1.0e-6;
 
-  solver.SetTolerance(tolerance); // Set x tolerance separately
+  solver.SetTolerance(tolerance);
 
   math_Vector startingPoint(1, 2);
   startingPoint(1) = 0.0;
@@ -324,7 +305,7 @@ TEST(math_NewtonFunctionSetRoot, CustomIterations)
   tolerance(1) = 1.0e-6;
   tolerance(2) = 1.0e-6;
 
-  math_NewtonFunctionSetRoot solver(func, tolerance, 1.0e-6, 10); // Limited iterations
+  math_NewtonFunctionSetRoot solver(func, tolerance, 1.0e-6, 10);
 
   math_Vector startingPoint(1, 2);
   startingPoint(1) = 0.0;
@@ -354,7 +335,7 @@ TEST(math_NewtonFunctionSetRoot, ConvergenceIterations)
 
   EXPECT_TRUE(solver.IsDone());
   EXPECT_GT(solver.NbIterations(), 0);
-  EXPECT_LT(solver.NbIterations(), 20); // Should converge reasonably fast
+  EXPECT_LT(solver.NbIterations(), 20);
 }
 
 TEST(math_NewtonFunctionSetRoot, DerivativeMatrix)
@@ -379,7 +360,6 @@ TEST(math_NewtonFunctionSetRoot, DerivativeMatrix)
   EXPECT_EQ(jacobian.RowNumber(), 2);
   EXPECT_EQ(jacobian.ColNumber(), 2);
 
-  // For linear system, Jacobian should be constant
   EXPECT_NEAR(jacobian(1, 1), 2.0, TOLERANCE);
   EXPECT_NEAR(jacobian(1, 2), 1.0, TOLERANCE);
   EXPECT_NEAR(jacobian(2, 1), 1.0, TOLERANCE);
@@ -407,7 +387,6 @@ TEST(math_NewtonFunctionSetRoot, FunctionSetErrors)
   const math_Vector& errors = solver.FunctionSetErrors();
   EXPECT_EQ(errors.Length(), 2);
 
-  // Errors should be very small at the root
   EXPECT_LT(fabs(errors(1)), 1.0e-5);
   EXPECT_LT(fabs(errors(2)), 1.0e-5);
 }
@@ -430,7 +409,6 @@ TEST(math_NewtonFunctionSetRoot, OutputMethods)
 
   EXPECT_TRUE(solver.IsDone());
 
-  // Test output methods
   math_Vector rootCopy(1, 2);
   solver.Root(rootCopy);
   EXPECT_NEAR(rootCopy(1), 1.0, TOLERANCE);
@@ -467,7 +445,7 @@ TEST(math_NewtonFunctionSetRoot, IterationCount)
 
   int iterations = solver.NbIterations();
   EXPECT_GT(iterations, 0);
-  EXPECT_LE(iterations, 100); // Default max iterations
+  EXPECT_LE(iterations, 100);
 }
 
 TEST(math_NewtonFunctionSetRoot, GoodStartingPoint)
@@ -481,13 +459,13 @@ TEST(math_NewtonFunctionSetRoot, GoodStartingPoint)
   math_NewtonFunctionSetRoot solver(func, tolerance, 1.0e-6);
 
   math_Vector startingPoint(1, 2);
-  startingPoint(1) = 0.99; // Very close to solution
+  startingPoint(1) = 0.99;
   startingPoint(2) = 1.01;
 
   solver.Perform(func, startingPoint);
 
   EXPECT_TRUE(solver.IsDone());
-  EXPECT_LE(solver.NbIterations(), 5); // Should converge quickly
+  EXPECT_LE(solver.NbIterations(), 5);
 }
 
 TEST(math_NewtonFunctionSetRoot, TightTolerances)

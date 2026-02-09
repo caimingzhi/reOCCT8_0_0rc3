@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <StepTidy_DirectionReducer.hpp>
 
@@ -17,8 +6,6 @@
 #include <StepGeom_Axis1Placement.hpp>
 #include <StepGeom_Axis2Placement3d.hpp>
 #include <StepGeom_Vector.hpp>
-
-//==================================================================================================
 
 StepTidy_DirectionReducer::StepTidy_DirectionReducer(
   const occ::handle<XSControl_WorkSession>& theWS)
@@ -28,8 +15,6 @@ StepTidy_DirectionReducer::StepTidy_DirectionReducer(
   registerReplacer(STANDARD_TYPE(StepGeom_Axis2Placement3d), replaceAxis2Placement3d);
   registerReplacer(STANDARD_TYPE(StepGeom_Vector), replaceVector);
 }
-
-//==================================================================================================
 
 bool StepTidy_DirectionReducer::replaceAxis1Placement(
   const occ::handle<StepGeom_Direction>& theOldEntity,
@@ -45,8 +30,6 @@ bool StepTidy_DirectionReducer::replaceAxis1Placement(
   }
   return false;
 }
-
-//==================================================================================================
 
 bool StepTidy_DirectionReducer::replaceAxis2Placement3d(
   const occ::handle<StepGeom_Direction>& theOldEntity,
@@ -67,8 +50,6 @@ bool StepTidy_DirectionReducer::replaceAxis2Placement3d(
   }
   return false;
 }
-
-//==================================================================================================
 
 bool StepTidy_DirectionReducer::replaceVector(const occ::handle<StepGeom_Direction>& theOldEntity,
                                               const occ::handle<StepGeom_Direction>& theNewEntity,

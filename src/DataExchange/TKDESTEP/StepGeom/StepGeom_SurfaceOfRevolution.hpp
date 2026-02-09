@@ -12,7 +12,6 @@ class StepGeom_SurfaceOfRevolution : public StepGeom_SweptSurface
 {
 
 public:
-  //! Returns a SurfaceOfRevolution
   Standard_EXPORT StepGeom_SurfaceOfRevolution();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

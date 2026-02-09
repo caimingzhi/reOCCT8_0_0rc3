@@ -18,8 +18,6 @@ public:
                                         const occ::handle<Geom2d_BSplineCurve>& CurveUV1,
                                         const occ::handle<Geom2d_BSplineCurve>& CurveUV2);
 
-  //! theTang variable has been entered only for compatibility with
-  //! the alias IntPatch_WLine. They are not used in this class.
   Standard_EXPORT BRepApprox_ApproxLine(const occ::handle<IntSurf_LineOn2S>& lin,
                                         const bool                           theTang = false);
 

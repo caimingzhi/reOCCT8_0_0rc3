@@ -6,11 +6,7 @@
 #include <NCollection_Sequence.hpp>
 #include <NCollection_HSequence.hpp>
 
-//=================================================================================================
-
 StepFEA_SymmetricTensor42d::StepFEA_SymmetricTensor42d() = default;
-
-//=================================================================================================
 
 int StepFEA_SymmetricTensor42d::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -21,12 +17,10 @@ int StepFEA_SymmetricTensor42d::CaseNum(const occ::handle<Standard_Transient>& e
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<double>> StepFEA_SymmetricTensor42d::AnisotropicSymmetricTensor42d()
   const
 {
-  // return occ::down_cast<NCollection_HArray1<double>>(Value());
+
   occ::handle<StepData_SelectArrReal> SSR = occ::down_cast<StepData_SelectArrReal>(Value());
   if (SSR.IsNull())
     return new NCollection_HArray1<double>(1, 6);

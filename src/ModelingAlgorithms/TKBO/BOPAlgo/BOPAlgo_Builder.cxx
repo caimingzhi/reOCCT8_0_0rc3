@@ -20,8 +20,6 @@
 #include <TopoDS_Shape.hpp>
 #include <NCollection_Map.hpp>
 
-//=================================================================================================
-
 BOPAlgo_Builder::BOPAlgo_Builder()
     : myArguments(myAllocator),
       myMapFence(100, myAllocator),
@@ -37,8 +35,6 @@ BOPAlgo_Builder::BOPAlgo_Builder()
       myCheckInverted(true)
 {
 }
-
-//=================================================================================================
 
 BOPAlgo_Builder::BOPAlgo_Builder(const occ::handle<NCollection_BaseAllocator>& theAllocator)
     : BOPAlgo_BuilderShape(theAllocator),
@@ -57,8 +53,6 @@ BOPAlgo_Builder::BOPAlgo_Builder(const occ::handle<NCollection_BaseAllocator>& t
 {
 }
 
-//=================================================================================================
-
 BOPAlgo_Builder::~BOPAlgo_Builder()
 {
   if (myEntryPoint == 1)
@@ -71,8 +65,6 @@ BOPAlgo_Builder::~BOPAlgo_Builder()
   }
 }
 
-//=================================================================================================
-
 void BOPAlgo_Builder::Clear()
 {
   BOPAlgo_BuilderShape::Clear();
@@ -84,8 +76,6 @@ void BOPAlgo_Builder::Clear()
   myInParts.Clear();
 }
 
-//=================================================================================================
-
 void BOPAlgo_Builder::AddArgument(const TopoDS_Shape& theShape)
 {
   if (myMapFence.Add(theShape))
@@ -94,14 +84,12 @@ void BOPAlgo_Builder::AddArgument(const TopoDS_Shape& theShape)
   }
 }
 
-//=================================================================================================
-
 void BOPAlgo_Builder::SetArguments(const NCollection_List<TopoDS_Shape>& theShapes)
 {
   NCollection_List<TopoDS_Shape>::Iterator aIt;
-  //
+
   myArguments.Clear();
-  //
+
   aIt.Initialize(theShapes);
   for (; aIt.More(); aIt.Next())
   {
@@ -110,21 +98,17 @@ void BOPAlgo_Builder::SetArguments(const NCollection_List<TopoDS_Shape>& theShap
   }
 }
 
-//=================================================================================================
-
 void BOPAlgo_Builder::CheckData()
 {
   int aNb = myArguments.Extent();
   if (aNb < 2)
   {
-    AddError(new BOPAlgo_AlertTooFewArguments); // too few arguments to process
+    AddError(new BOPAlgo_AlertTooFewArguments);
     return;
   }
-  //
+
   CheckFiller();
 }
-
-//=================================================================================================
 
 void BOPAlgo_Builder::CheckFiller()
 {
@@ -136,24 +120,19 @@ void BOPAlgo_Builder::CheckFiller()
   GetReport()->Merge(myPaveFiller->GetReport());
 }
 
-//=================================================================================================
-
 void BOPAlgo_Builder::Prepare()
 {
   BRep_Builder    aBB;
   TopoDS_Compound aC;
-  //
-  // 1. myShape is empty compound
+
   aBB.MakeCompound(aC);
   myShape = aC;
 }
 
-//=================================================================================================
-
 void BOPAlgo_Builder::Perform(const Message_ProgressRange& theRange)
 {
   GetReport()->Clear();
-  //
+
   if (myEntryPoint == 1)
   {
     if (myPaveFiller)
@@ -162,12 +141,12 @@ void BOPAlgo_Builder::Perform(const Message_ProgressRange& theRange)
       myPaveFiller = nullptr;
     }
   }
-  //
+
   occ::handle<NCollection_BaseAllocator> aAllocator =
     NCollection_BaseAllocator::CommonBaseAllocator();
-  //
+
   BOPAlgo_PaveFiller* pPF = new BOPAlgo_PaveFiller(aAllocator);
-  //
+
   pPF->SetArguments(myArguments);
   pPF->SetRunParallel(myRunParallel);
   Message_ProgressScope aPS(theRange, "Performing General Fuse operation", 10);
@@ -175,14 +154,12 @@ void BOPAlgo_Builder::Perform(const Message_ProgressRange& theRange)
   pPF->SetNonDestructive(myNonDestructive);
   pPF->SetGlue(myGlue);
   pPF->SetUseOBB(myUseOBB);
-  //
+
   pPF->Perform(aPS.Next(9));
-  //
+
   myEntryPoint = 1;
   PerformInternal(*pPF, aPS.Next(1));
 }
-
-//=================================================================================================
 
 void BOPAlgo_Builder::PerformWithFiller(const BOPAlgo_PaveFiller&    theFiller,
                                         const Message_ProgressRange& theRange)
@@ -196,26 +173,22 @@ void BOPAlgo_Builder::PerformWithFiller(const BOPAlgo_PaveFiller&    theFiller,
   PerformInternal(theFiller, theRange);
 }
 
-//=================================================================================================
-
 void BOPAlgo_Builder::PerformInternal(const BOPAlgo_PaveFiller&    theFiller,
                                       const Message_ProgressRange& theRange)
 {
   GetReport()->Clear();
-  //
+
   try
   {
     OCC_CATCH_SIGNALS
     PerformInternal1(theFiller, theRange);
   }
-  //
+
   catch (Standard_Failure const&)
   {
     AddError(new BOPAlgo_AlertBuilderFailed);
   }
 }
-
-//=================================================================================================
 
 BOPAlgo_Builder::NbShapes BOPAlgo_Builder::getNbShapes() const
 {
@@ -264,26 +237,21 @@ BOPAlgo_Builder::NbShapes BOPAlgo_Builder::getNbShapes() const
   return aCounter;
 }
 
-//=================================================================================================
-
 void BOPAlgo_Builder::fillPIConstants(const double theWhole, BOPAlgo_PISteps& theSteps) const
 {
-  // Fill in the constants:
+
   if (myFillHistory)
   {
-    // for FillHistroty, which takes about 5% of the whole operation
+
     theSteps.SetStep(PIOperation_FillHistory, 0.05 * theWhole);
   }
 
-  // and for PostTreat, which takes about 3% of the whole operation
   theSteps.SetStep(PIOperation_PostTreat, 0.03 * theWhole);
 }
 
-//=================================================================================================
-
 void BOPAlgo_Builder::fillPISteps(BOPAlgo_PISteps& theSteps) const
 {
-  // Compute the rest of the operations - all depend on the number of sub-shapes of certain type
+
   NbShapes aNbShapes = getNbShapes();
 
   theSteps.SetStep(PIOperation_TreatVertices, aNbShapes.NbVertices());
@@ -296,8 +264,6 @@ void BOPAlgo_Builder::fillPISteps(BOPAlgo_PISteps& theSteps) const
   theSteps.SetStep(PIOperation_TreatCompounds, aNbShapes.NbCompounds());
 }
 
-//=================================================================================================
-
 void BOPAlgo_Builder::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
                                        const Message_ProgressRange& theRange)
 {
@@ -306,76 +272,72 @@ void BOPAlgo_Builder::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
   myContext        = myPaveFiller->Context();
   myFuzzyValue     = myPaveFiller->FuzzyValue();
   myNonDestructive = myPaveFiller->NonDestructive();
-  //
+
   Message_ProgressScope aPS(theRange, "Building the result of General Fuse operation", 100);
-  // 1. CheckData
+
   CheckData();
   if (HasErrors())
   {
     return;
   }
-  //
-  // 2. Prepare
+
   Prepare();
   if (HasErrors())
   {
     return;
   }
-  //
+
   BOPAlgo_PISteps aSteps(PIOperation_Last);
   analyzeProgress(100., aSteps);
-  // 3. Fill Images
-  // 3.1 Vertice
+
   FillImagesVertices(aPS.Next(aSteps.GetStep(PIOperation_TreatVertices)));
   if (HasErrors())
   {
     return;
   }
-  //
+
   BuildResult(TopAbs_VERTEX);
   if (HasErrors())
   {
     return;
   }
-  // 3.2 Edges
+
   FillImagesEdges(aPS.Next(aSteps.GetStep(PIOperation_TreatEdges)));
   if (HasErrors())
   {
     return;
   }
-  //
+
   BuildResult(TopAbs_EDGE);
   if (HasErrors())
   {
     return;
   }
-  //
-  // 3.3 Wires
+
   FillImagesContainers(TopAbs_WIRE, aPS.Next(aSteps.GetStep(PIOperation_TreatWires)));
   if (HasErrors())
   {
     return;
   }
-  //
+
   BuildResult(TopAbs_WIRE);
   if (HasErrors())
   {
     return;
   }
 
-  // 3.4 Faces
   FillImagesFaces(aPS.Next(aSteps.GetStep(PIOperation_TreatFaces)));
   if (HasErrors())
   {
     return;
   }
-  //
+
   BuildResult(TopAbs_FACE);
   if (HasErrors())
   {
     return;
   }
-  // 3.5 Shells
+
   FillImagesContainers(TopAbs_SHELL, aPS.Next(aSteps.GetStep(PIOperation_TreatShells)));
   if (HasErrors())
   {
@@ -387,7 +349,7 @@ void BOPAlgo_Builder::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
   {
     return;
   }
-  // 3.6 Solids
+
   FillImagesSolids(aPS.Next(aSteps.GetStep(PIOperation_TreatSolids)));
   if (HasErrors())
   {
@@ -399,7 +361,7 @@ void BOPAlgo_Builder::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
   {
     return;
   }
-  // 3.7 CompSolids
+
   FillImagesContainers(TopAbs_COMPSOLID, aPS.Next(aSteps.GetStep(PIOperation_TreatCompsolids)));
   if (HasErrors())
   {
@@ -412,7 +374,6 @@ void BOPAlgo_Builder::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
     return;
   }
 
-  // 3.8 Compounds
   FillImagesCompounds(aPS.Next(aSteps.GetStep(PIOperation_TreatCompounds)));
   if (HasErrors())
   {
@@ -424,19 +385,15 @@ void BOPAlgo_Builder::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
   {
     return;
   }
-  //
-  // 4 History
+
   PrepareHistory(aPS.Next(aSteps.GetStep(PIOperation_FillHistory)));
   if (HasErrors())
   {
     return;
   }
-  //
-  // 5 Post-treatment
+
   PostTreat(aPS.Next(aSteps.GetStep(PIOperation_PostTreat)));
 }
-
-//=================================================================================================
 
 void BOPAlgo_Builder::PostTreat(const Message_ProgressRange& theRange)
 {
@@ -445,7 +402,7 @@ void BOPAlgo_Builder::PostTreat(const Message_ProgressRange& theRange)
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aMA;
   if (myPaveFiller->NonDestructive())
   {
-    // MapToAvoid
+
     aNbS = myDS->NbSourceShapes();
     for (i = 0; i < aNbS; ++i)
     {
@@ -458,14 +415,12 @@ void BOPAlgo_Builder::PostTreat(const Message_ProgressRange& theRange)
       }
     }
   }
-  //
+
   Message_ProgressScope aPS(theRange, "Post treatment of result shape", 2);
   BOPTools_AlgoTools::CorrectTolerances(myShape, aMA, 0.05, myRunParallel);
   aPS.Next();
   BOPTools_AlgoTools::CorrectShapeTolerances(myShape, aMA, myRunParallel);
 }
-
-//=================================================================================================
 
 void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
                                const TopAbs_State                    theObjState,
@@ -477,7 +432,6 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
   if (HasErrors())
     return;
 
-  // Report for the method
   occ::handle<Message_Report> aReport = theReport.IsNull() ? myReport : theReport;
 
   if (myArguments.IsEmpty() || myShape.IsNull())
@@ -485,7 +439,7 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
     aReport->AddAlert(Message_Fail, new BOPAlgo_AlertBuilderFailed());
     return;
   }
-  // Check the input data
+
   if ((theObjState != TopAbs_IN && theObjState != TopAbs_OUT)
       || (theToolsState != TopAbs_IN && theToolsState != TopAbs_OUT))
   {
@@ -493,7 +447,6 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
     return;
   }
 
-  // Check input shapes
   bool hasObjects = !theObjects.IsEmpty();
   bool hasTools   = !theTools.IsEmpty();
   if (!hasObjects && !hasTools)
@@ -502,7 +455,6 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
     return;
   }
 
-  // Check that all input solids are from the arguments
   for (int i = 0; i < 2; ++i)
   {
     const NCollection_List<TopoDS_Shape>&    aList = !i ? theObjects : theTools;
@@ -510,14 +462,13 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
     for (; itLS.More(); itLS.Next())
     {
       const TopoDS_Shape& aS = itLS.Value();
-      // Check if the shape belongs to the arguments of operation
+
       if (myDS->Index(aS) < 0)
       {
         aReport->AddAlert(Message_Fail, new BOPAlgo_AlertUnknownShape(aS));
         return;
       }
 
-      // Check if the shape is a solid or collection of them
       if (aS.ShapeType() != TopAbs_SOLID)
       {
         NCollection_List<TopoDS_Shape>                         aLS;
@@ -538,17 +489,10 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
     }
   }
 
-  // Classification of the faces relatively solids has been made
-  // on the stage of Solids splitting. All results are saved into
-  // myInParts map, which connects the solids with its IN faces from
-  // other arguments. All faces not contained in the list of IN faces
-  // will be considered as OUT.
-
-  // Prepare the maps of splits of solids faces with orientations
   NCollection_IndexedMap<TopoDS_Shape> aMObjFacesOri, aMToolFacesOri;
-  // Prepare the maps of splits of solids faces
+
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aMObjFaces, aMToolFaces;
-  // Copy the list of IN faces of the solids into map
+
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> anINObjects, anINTools;
 
   for (int i = 0; i < 2; ++i)
@@ -591,7 +535,6 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
           }
         }
 
-        // Copy the list of IN faces into a map
         const NCollection_List<TopoDS_Shape>* pLFIN = myInParts.Seek(aS);
         if (pLFIN)
         {
@@ -605,23 +548,17 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
     }
   }
 
-  // Now we need to select all faces which will participate in
-  // building of the resulting solids. The final set of faces
-  // depends on the given states for the groups.
   bool isObjectsIN = (theObjState == TopAbs_IN), isToolsIN = (theToolsState == TopAbs_IN);
 
-  // Shortcuts
-  bool bAvoidIN     = (!isObjectsIN && !isToolsIN), // avoid all in faces
-    bAvoidINforBoth = (isObjectsIN != isToolsIN);   // avoid faces IN for both groups
+  bool bAvoidIN = (!isObjectsIN && !isToolsIN), bAvoidINforBoth = (isObjectsIN != isToolsIN);
 
-  // Choose which SD faces are needed to be taken - equally or differently oriented faces
   bool isSameOriNeeded = (theObjState == theToolsState);
-  // Resulting faces
+
   NCollection_IndexedMap<TopoDS_Shape>                   aMResFacesOri;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMResFacesFence;
-  // Fence map
+
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMFence, aMFToAvoid;
-  // Oriented fence map
+
   NCollection_Map<TopoDS_Shape> aMFenceOri;
 
   for (int i = 0; i < 2; ++i)
@@ -643,36 +580,32 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
       bool isIN         = anINMap.Contains(aFIm);
       bool isINOpposite = anOppositeINMap.Contains(aFIm);
 
-      // Filtering for FUSE - avoid any IN faces
       if (bAvoidIN && (isIN || isINOpposite))
         continue;
 
-      // Filtering for CUT - avoid faces IN for both groups
       if (bAvoidINforBoth && isIN && isINOpposite)
         continue;
 
-      // Treatment of SD faces
       if (!aMFence.Add(aFIm))
       {
         if (!anOppositeMap.Contains(aFIm))
         {
-          // The face belongs to only one group
+
           if (bTakeIN != isSameOriNeeded)
             aMFToAvoid.Add(aFIm);
         }
         else
         {
-          // The face belongs to both groups.
-          // Using its orientation decide if it is needed in the result or not.
+
           bool isSameOri = !aMFenceOri.Add(aFIm);
           if (isSameOriNeeded == isSameOri)
           {
-            // Take the shape without classification
+
             if (aMResFacesFence.Add(aFIm))
               aMResFacesOri.Add(aFIm);
           }
           else
-            // Remove the face
+
             aMFToAvoid.Add(aFIm);
 
           continue;
@@ -697,7 +630,6 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
     }
   }
 
-  // Remove the faces which has to be avoided
   NCollection_List<TopoDS_Shape> aResFaces;
   const int                      aNbRF = aMResFacesOri.Extent();
   for (int i = 1; i <= aNbRF; ++i)
@@ -709,7 +641,6 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
   Message_ProgressScope aPS(theRange, nullptr, 2);
   BRep_Builder          aBB;
 
-  // Try to build closed solids from the faces
   BOPAlgo_BuilderSolid aBS;
   aBS.SetShapes(aResFaces);
   aBS.SetRunParallel(myRunParallel);
@@ -717,19 +648,17 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
   aBS.SetFuzzyValue(myFuzzyValue);
   aBS.Perform(aPS.Next());
 
-  // Resulting solids
   NCollection_List<TopoDS_Shape> aResSolids;
 
   aMFence.Clear();
   if (!aBS.HasErrors())
   {
-    // If any, add solids into resulting compound
+
     NCollection_List<TopoDS_Shape>::Iterator itA(aBS.Areas());
     for (; itA.More(); itA.Next())
     {
       const TopoDS_Shape& aSolid = itA.Value();
-      // The solid must contain at least one face
-      // from either of objects or tools
+
       TopExp_Explorer expF(aSolid, TopAbs_FACE);
       for (; expF.More(); expF.Next())
       {
@@ -749,7 +678,6 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
     return;
   }
 
-  // Collect unused faces
   TopoDS_Compound anUnUsedFaces;
   aBB.MakeCompound(anUnUsedFaces);
 
@@ -760,34 +688,32 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
       aBB.Add(anUnUsedFaces, itLF.Value());
   }
 
-  // Build blocks from the unused faces
   NCollection_List<TopoDS_Shape> aLCB;
   BOPTools_AlgoTools::MakeConnexityBlocks(anUnUsedFaces, TopAbs_EDGE, TopAbs_FACE, aLCB);
 
-  // Build solid from each block
   NCollection_List<TopoDS_Shape>::Iterator itCB(aLCB);
   for (; itCB.More(); itCB.Next())
   {
     const TopoDS_Shape& aCB = itCB.Value();
     TopoDS_Shell        aShell;
     aBB.MakeShell(aShell);
-    // Add faces of the block to the shell
+
     TopExp_Explorer anExpF(aCB, TopAbs_FACE);
     for (; anExpF.More(); anExpF.Next())
       aBB.Add(aShell, TopoDS::Face(anExpF.Current()));
 
     BOPTools_AlgoTools::OrientFacesOnShell(aShell);
-    // Make solid out of the shell
+
     TopoDS_Solid aSolid;
     aBB.MakeSolid(aSolid);
     aBB.Add(aSolid, aShell);
-    // Add new solid to result
+
     aResSolids.Append(aSolid);
   }
 
   if (!bAvoidIN)
   {
-    // Fill solids with internal parts coming with the solids
+
     NCollection_List<TopoDS_Shape> anInParts;
     for (int i = 0; i < 2; ++i)
     {
@@ -798,15 +724,15 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
         TopExp_Explorer expS(itLS.Value(), TopAbs_SOLID);
         for (; expS.More(); expS.Next())
         {
-          const TopoDS_Shape& aS = expS.Current(); // Solid
+          const TopoDS_Shape& aS = expS.Current();
           for (TopoDS_Iterator it(aS); it.More(); it.Next())
           {
             const TopoDS_Shape& aSInt = it.Value();
             if (aSInt.Orientation() == TopAbs_INTERNAL)
-              anInParts.Append(aSInt); // vertex or edge
+              anInParts.Append(aSInt);
             else
             {
-              // shell treatment
+
               TopoDS_Iterator itInt(aSInt);
               if (itInt.More() && itInt.Value().Orientation() == TopAbs_INTERNAL)
                 anInParts.Append(aSInt);
@@ -819,7 +745,6 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
     BOPAlgo_Tools::FillInternals(aResSolids, anInParts, myImages, myContext);
   }
 
-  // Combine solids into compound
   TopoDS_Shape aResult;
   aBB.MakeCompound(TopoDS::Compound(aResult));
 

@@ -3,8 +3,6 @@
 
 #include <Standard_Dump.hpp>
 
-//=================================================================================================
-
 Aspect_GenId::Aspect_GenId()
     : myFreeCount(INT_MAX / 2 + 1),
       myLength(INT_MAX / 2 + 1),
@@ -12,8 +10,6 @@ Aspect_GenId::Aspect_GenId()
       myUpperBound(INT_MAX / 2)
 {
 }
-
-//=================================================================================================
 
 Aspect_GenId::Aspect_GenId(const int theLow, const int theUpper)
     : myFreeCount(theUpper - theLow + 1),
@@ -27,15 +23,11 @@ Aspect_GenId::Aspect_GenId(const int theLow, const int theUpper)
   }
 }
 
-//=================================================================================================
-
 void Aspect_GenId::Free()
 {
   myFreeCount = myLength;
   myFreeIds.Clear();
 }
-
-//=================================================================================================
 
 void Aspect_GenId::Free(const int theId)
 {
@@ -53,8 +45,6 @@ void Aspect_GenId::Free(const int theId)
   }
 }
 
-//=================================================================================================
-
 int Aspect_GenId::Next()
 {
   int aNewId = 0;
@@ -64,8 +54,6 @@ int Aspect_GenId::Next()
   }
   return aNewId;
 }
-
-//=================================================================================================
 
 bool Aspect_GenId::Next(int& theId)
 {
@@ -84,8 +72,6 @@ bool Aspect_GenId::Next(int& theId)
   theId = myLowerBound + myLength - myFreeCount - 1;
   return true;
 }
-
-//=================================================================================================
 
 void Aspect_GenId::DumpJson(Standard_OStream& theOStream, int) const
 {

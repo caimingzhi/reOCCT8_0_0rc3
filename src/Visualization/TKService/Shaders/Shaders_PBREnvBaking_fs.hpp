@@ -233,5 +233,3 @@ static const char Shaders_PBREnvBaking_fs[] =
   "  occFragColor = vec4 (bakeSpecularMap (aViewDirection, aRoughness), 1.0);\n"
   "#endif\n"
   "}\n";
-
-// clang-format on

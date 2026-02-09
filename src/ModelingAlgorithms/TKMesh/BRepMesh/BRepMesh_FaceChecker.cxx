@@ -10,11 +10,9 @@ namespace
 {
   const double MaxTangentAngle = 5. * M_PI / 180.;
 
-  //! Functor to be used to fill segments and bounding box tree in parallel.
   class SegmentsFiller
   {
   public:
-    //! Constructor.
     SegmentsFiller(const IMeshData::IFaceHandle&                    theDFace,
                    Handle(BRepMesh_FaceChecker::ArrayOfSegments)&   theWiresSegments,
                    Handle(BRepMesh_FaceChecker::ArrayOfBndBoxTree)& theWiresBndBoxTree)
@@ -26,7 +24,6 @@ namespace
       myWiresBndBoxTree = new BRepMesh_FaceChecker::ArrayOfBndBoxTree(0, myDFace->WiresNb() - 1);
     }
 
-    //! Performs initialization of wire with the given index.
     void operator()(const int theWireIndex) const
     {
       const IMeshData::IWireHandle& aDWire = myDFace->GetWire(theWireIndex);
@@ -45,7 +42,6 @@ namespace
 
       for (int aEdgeIt = 0; aEdgeIt < aDWire->EdgesNb(); ++aEdgeIt)
       {
-        // TODO: check 2d wire for consistency.
 
         const IMeshData::IEdgePtr&      aDEdge = aDWire->GetEdge(aEdgeIt);
         const IMeshData::IPCurveHandle& aPCurve =
@@ -80,12 +76,9 @@ namespace
     Handle(BRepMesh_FaceChecker::ArrayOfBndBoxTree)& myWiresBndBoxTree;
   };
 
-  //! Selector.
-  //! Used to identify segments with overlapped bounding boxes.
   class BndBox2dTreeSelector : public IMeshData::BndBox2dTree::Selector
   {
   public:
-    //! Constructor.
     BndBox2dTreeSelector(const double theTolerance)
         : myMaxLoopSize(M_PI * theTolerance * theTolerance),
           mySelfSegmentIndex(-1),
@@ -94,13 +87,11 @@ namespace
     {
     }
 
-    //! Sets working set of segments.
     void SetSegments(const Handle(BRepMesh_FaceChecker::Segments)& theSegments)
     {
       mySegments = theSegments;
     }
 
-    //! Resets current selector.
     void Reset(const BRepMesh_FaceChecker::Segment* theSegment, const int theSelfSegmentIndex)
     {
       myIndices.Clear();
@@ -114,10 +105,8 @@ namespace
       myBox.Enlarge(Precision::Confusion());
     }
 
-    //! Indicates should the given box be rejected or not.
     bool Reject(const Bnd_Box2d& theBox) const override { return myBox.IsOut(theBox); }
 
-    //! Accepts segment with the given index in case if it fits conditions.
     bool Accept(const int& theSegmentIndex) override
     {
       const BRepMesh_FaceChecker::Segment& aSegment = mySegments->Value(theSegmentIndex);
@@ -174,7 +163,6 @@ namespace
       return false;
     }
 
-    //! Returns indices of intersecting segments.
     const IMeshData::VectorOfInteger& Indices() const { return myIndices; }
 
   private:
@@ -187,8 +175,6 @@ namespace
   };
 } // namespace
 
-//=================================================================================================
-
 BRepMesh_FaceChecker::BRepMesh_FaceChecker(const IMeshData::IFaceHandle& theFace,
                                            const IMeshTools_Parameters&  theParameters)
     : myDFace(theFace),
@@ -196,11 +182,7 @@ BRepMesh_FaceChecker::BRepMesh_FaceChecker(const IMeshData::IFaceHandle& theFace
 {
 }
 
-//=================================================================================================
-
 BRepMesh_FaceChecker::~BRepMesh_FaceChecker() = default;
-
-//=================================================================================================
 
 bool BRepMesh_FaceChecker::Perform()
 {
@@ -216,8 +198,6 @@ bool BRepMesh_FaceChecker::Perform()
   return myIntersectingEdges->IsEmpty();
 }
 
-//=================================================================================================
-
 void BRepMesh_FaceChecker::collectSegments()
 {
   SegmentsFiller aSegmentsFiller(myDFace, myWiresSegments, myWiresBndBoxTree);
@@ -226,15 +206,12 @@ void BRepMesh_FaceChecker::collectSegments()
   myWiresIntersectingEdges = new ArrayOfMapOfIEdgePtr(0, myDFace->WiresNb() - 1);
 }
 
-//=================================================================================================
-
 void BRepMesh_FaceChecker::perform(const int theWireIndex) const
 {
   const occ::handle<Segments>&      aSegments1 = myWiresSegments->Value(theWireIndex);
   Handle(IMeshData::MapOfIEdgePtr)& aIntersections =
     myWiresIntersectingEdges->ChangeValue(theWireIndex);
 
-  // TODO: Tolerance is set to twice value of face deflection in order to fit regressions.
   BndBox2dTreeSelector aSelector(2 * myDFace->GetDeflection());
   for (int aWireIt = theWireIndex; aWireIt < myDFace->WiresNb(); ++aWireIt)
   {
@@ -265,8 +242,6 @@ void BRepMesh_FaceChecker::perform(const int theWireIndex) const
     }
   }
 }
-
-//=================================================================================================
 
 void BRepMesh_FaceChecker::collectResult()
 {

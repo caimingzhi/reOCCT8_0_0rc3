@@ -146,21 +146,21 @@ static int OCC73_SelectionMode(Draw_Interpretor& di, int argc, const char** argv
   }
 
   occ::handle<TDocStd_Document> D;
-  // std::cout << "OCC73_SelectionMode  1" << std::endl;
+
   if (!DDocStd::GetDocument(argv[1], D))
     return 1;
   TDF_Label L;
-  // std::cout << "OCC73_SelectionMode  2" << std::endl;
+
   if (!DDF::FindLabel(D->GetData(), argv[2], L))
     return 1;
 
   occ::handle<TPrsStd_AISViewer> viewer;
-  // std::cout << "OCC73_SelectionMode  3" << std::endl;
+
   if (!TPrsStd_AISViewer::Find(L, viewer))
     return 1;
 
   occ::handle<TPrsStd_AISPresentation> prs;
-  // std::cout << "OCC73_SelectionMode  4" << std::endl;
+
   if (L.FindAttribute(TPrsStd_AISPresentation::GetID(), prs))
   {
     if (argc == 4)
@@ -171,11 +171,10 @@ static int OCC73_SelectionMode(Draw_Interpretor& di, int argc, const char** argv
     else
     {
       int SelectionMode = prs->SelectionMode();
-      // std::cout << "SelectionMode = " << SelectionMode << std::endl;
+
       di << SelectionMode;
     }
   }
-  // std::cout << "OCC73_SelectionMode  5" << std::endl;
 
   return 0;
 }
@@ -205,20 +204,17 @@ static int OCC10bug(Draw_Interpretor& di, int argc, const char** argv)
   TCollection_AsciiString name(argv[1]);
   double                  Length = Draw::Atof(argv[3]);
 
-  // Construction de l'AIS_PlaneTrihedron
   occ::handle<AIS_PlaneTrihedron> theAISPlaneTri;
 
   bool IsBound = GetMapOfAIS().IsBound2(name);
   if (IsBound)
   {
-    // on recupere la shape dans la map des objets displayes
+
     occ::handle<AIS_InteractiveObject> aShape = GetMapOfAIS().Find2(name);
 
-    // On verifie que l'AIS InteraciveObject est bien
-    // un AIS_PlaneTrihedron
     if (aShape->Type() == AIS_KindOfInteractive_Datum && aShape->Signature() == 4)
     {
-      // On downcast aShape de AIS_InteractiveObject a AIS_PlaneTrihedron
+
       theAISPlaneTri = occ::down_cast<AIS_PlaneTrihedron>(aShape);
 
       theAISPlaneTri->SetLength(Length);
@@ -231,15 +227,12 @@ static int OCC10bug(Draw_Interpretor& di, int argc, const char** argv)
   {
     TopoDS_Face FaceB = TopoDS::Face(S);
 
-    // Construction du Plane
-    // recuperation des edges des faces.
     TopExp_Explorer FaceExpB(FaceB, TopAbs_EDGE);
 
     TopoDS_Edge EdgeB = TopoDS::Edge(FaceExpB.Current());
-    // declarations
+
     gp_Pnt A, B, C;
 
-    // si il y a plusieurs edges
     if (FaceExpB.More())
     {
       FaceExpB.Next();
@@ -252,17 +245,16 @@ static int OCC10bug(Draw_Interpretor& di, int argc, const char** argv)
     }
     else
     {
-      // FaceB a 1 unique edge courbe
+
       BRepAdaptor_Curve theCurveB(EdgeB);
       A = theCurveB.Value(0.1);
       B = theCurveB.Value(0.9);
       C = theCurveB.Value(0.5);
     }
-    // Construction du Geom_Plane
+
     GC_MakePlane                   MkPlane(A, B, C);
     const occ::handle<Geom_Plane>& theGeomPlane = MkPlane.Value();
 
-    // on le display & bind
     theAISPlaneTri = new AIS_PlaneTrihedron(theGeomPlane);
 
     theAISPlaneTri->SetLength(Length);
@@ -370,10 +362,6 @@ static int OCC74bug_get(Draw_Interpretor& di, int argc, const char** argv)
 #include <Prs3d_ShadingAspect.hpp>
 class AIS_InteractiveObject;
 
-//=======================================================================
-// function : OCC30182
-// purpose  : Testing different interfaces of Image_AlienPixMap::Load()
-//=======================================================================
 static int OCC30182(Draw_Interpretor& di, int theNbArgs, const char** theArgVec)
 {
   if (ViewerTest::CurrentView().IsNull())
@@ -384,7 +372,7 @@ static int OCC30182(Draw_Interpretor& di, int theNbArgs, const char** theArgVec)
 
   TCollection_AsciiString aPrsName, anImgPath;
   int                     anOffset = 0;
-  int                     aSrc     = 0; // 0 - file name, 1 - file stream, 2 - memory buffer
+  int                     aSrc     = 0;
   for (int anArgIter = 1; anArgIter < theNbArgs; ++anArgIter)
   {
     TCollection_AsciiString anArg(theArgVec[anArgIter]);
@@ -497,10 +485,6 @@ static int OCC30182(Draw_Interpretor& di, int theNbArgs, const char** theArgVec)
   return 0;
 }
 
-//=======================================================================
-// function : OCC31956
-// purpose  : Testing Image_AlienPixMap::Save() overload for saving into a memory buffer or stream
-//=======================================================================
 static int OCC31956(Draw_Interpretor& di, int theNbArgs, const char** theArgVec)
 {
   if (ViewerTest::CurrentView().IsNull())

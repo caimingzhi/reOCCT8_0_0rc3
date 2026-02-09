@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_TessellatedShapeRepresentation;
 
-//! Read & Write tool for TessellatedShapeRepresentation
 class RWStepVisual_RWTessellatedShapeRepresentation
 {
 

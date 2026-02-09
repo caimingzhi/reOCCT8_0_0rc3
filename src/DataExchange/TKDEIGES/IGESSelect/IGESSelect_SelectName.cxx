@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IGESData_IGESEntity.hpp>
 #include <IGESSelect_SelectName.hpp>
@@ -35,9 +24,9 @@ occ::handle<TCollection_HAsciiString> IGESSelect_SelectName::Name() const
   return thename;
 }
 
-bool IGESSelect_SelectName::Sort(const int /*rank*/,
+bool IGESSelect_SelectName::Sort(const int,
                                  const occ::handle<Standard_Transient>& ent,
-                                 const occ::handle<Interface_InterfaceModel>& /*model*/) const
+                                 const occ::handle<Interface_InterfaceModel>&) const
 {
   DeclareAndCast(IGESData_IGESEntity, igesent, ent);
   if (igesent.IsNull())
@@ -47,13 +36,12 @@ bool IGESSelect_SelectName::Sort(const int /*rank*/,
   if (thename.IsNull())
     return false;
   occ::handle<TCollection_HAsciiString> name = igesent->NameValue();
-  //  std::cout<<"SelectName:"<<thename->ToCString()<<",with:"<<name->ToCString()<<",IsSameString="<<thename->IsSameString
-  //  (name,false)<<std::endl;
+
   int nb0 = thename->Length();
   int nb1 = name->Length();
   int nbf = (nb1 <= nb0 ? nb1 : nb0);
   int nbt = (nb1 >= nb0 ? nb1 : nb0);
-  int i; // svv Jan11 2000 : porting on DEC
+  int i;
   for (i = 1; i <= nbf; i++)
   {
     if (name->Value(i) != thename->Value(i))

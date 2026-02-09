@@ -11,7 +11,6 @@ class StepBasic_Effectivity;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for Effectivity
 class RWStepBasic_RWEffectivity
 {
 public:

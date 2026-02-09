@@ -13,10 +13,6 @@ namespace
   static std::atomic<int> THE_SHADER_OBJECT_COUNTER(0);
 }
 
-// =======================================================================
-// function : Graphic3d_ShaderObject
-// purpose  : Creates a shader object from specified file
-// =======================================================================
 Graphic3d_ShaderObject::Graphic3d_ShaderObject(const Graphic3d_TypeOfShaderObject theType)
     : myType(theType)
 {
@@ -24,10 +20,6 @@ Graphic3d_ShaderObject::Graphic3d_ShaderObject(const Graphic3d_TypeOfShaderObjec
          + TCollection_AsciiString(++THE_SHADER_OBJECT_COUNTER);
 }
 
-// =======================================================================
-// function : CreatFromFile
-// purpose  : Creates new shader object from specified file
-// =======================================================================
 occ::handle<Graphic3d_ShaderObject> Graphic3d_ShaderObject::CreateFromFile(
   const Graphic3d_TypeOfShaderObject theType,
   const TCollection_AsciiString&     thePath)
@@ -48,10 +40,6 @@ occ::handle<Graphic3d_ShaderObject> Graphic3d_ShaderObject::CreateFromFile(
   return aShader;
 }
 
-// =======================================================================
-// function : CreatFromSource
-// purpose  : Creates new shader object from specified source
-// =======================================================================
 occ::handle<Graphic3d_ShaderObject> Graphic3d_ShaderObject::CreateFromSource(
   const Graphic3d_TypeOfShaderObject theType,
   const TCollection_AsciiString&     theSource)
@@ -61,22 +49,12 @@ occ::handle<Graphic3d_ShaderObject> Graphic3d_ShaderObject::CreateFromSource(
   return aShader;
 }
 
-// =======================================================================
-// function : ~Graphic3d_ShaderObject
-// purpose  : Releases resources of shader object
-// =======================================================================
 Graphic3d_ShaderObject::~Graphic3d_ShaderObject() = default;
 
-// =======================================================================
-// function : IsDone
-// purpose  : Checks if the shader object is valid or not
-// =======================================================================
 bool Graphic3d_ShaderObject::IsDone() const
 {
   return !mySource.IsEmpty();
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_ShaderObject> Graphic3d_ShaderObject::CreateFromSource(
   TCollection_AsciiString&       theSource,
@@ -137,7 +115,7 @@ occ::handle<Graphic3d_ShaderObject> Graphic3d_ShaderObject::CreateFromSource(
         {
           aSrcInStructs = "\nin VertexData\n{";
         }
-        else // requires theInName/theOutName
+        else
         {
           aSrcInStructs  = "\nin  VertexData\n{";
           aSrcOutStructs = "\nout VertexData\n{";

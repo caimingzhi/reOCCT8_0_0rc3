@@ -12,7 +12,6 @@ class StepShape_BoxedHalfSpace : public StepShape_HalfSpaceSolid
 {
 
 public:
-  //! Returns a BoxedHalfSpace
   Standard_EXPORT StepShape_BoxedHalfSpace();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

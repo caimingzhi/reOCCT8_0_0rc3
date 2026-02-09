@@ -7,12 +7,6 @@
 #include <gp_Pnt2d.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   Creation d une Ellipse 2d de gp de centre <Center> et de sommets     +
-//   <S1> et <S2>.                                                        +
-//   <CenterS1> donne le grand axe .                                      +
-//   <S1> donne le grand rayon et <S2> le petit rayon.                    +
-//=========================================================================
 gce_MakeElips2d::gce_MakeElips2d(const gp_Pnt2d& S1, const gp_Pnt2d& S2, const gp_Pnt2d& Center)
 {
   double   D1 = S1.Distance(Center);

@@ -11,7 +11,6 @@ class StepVisual_PresentationSize : public Standard_Transient
 {
 
 public:
-  //! Returns a PresentationSize
   Standard_EXPORT StepVisual_PresentationSize();
 
   Standard_EXPORT void Init(const StepVisual_PresentationSizeAssignmentSelect& aUnit,

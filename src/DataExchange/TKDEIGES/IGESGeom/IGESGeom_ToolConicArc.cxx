@@ -20,35 +20,19 @@
 
 #include <cstdio>
 
-// MGE 28/07/98
-//=================================================================================================
-
 IGESGeom_ToolConicArc::IGESGeom_ToolConicArc() = default;
 
-//=================================================================================================
-
 void IGESGeom_ToolConicArc::ReadOwnParams(const occ::handle<IGESGeom_ConicArc>& ent,
-                                          const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                          const occ::handle<IGESData_IGESReaderData>&,
                                           IGESData_ParamReader& PR) const
 {
-  // MGE 28/07/98
-  // Building of messages
-  //======================================
+
   Message_Msg Msg83("XSTEP_83");
   Message_Msg Msg84("XSTEP_84");
-  //======================================
 
-  // bool st; //szv#4:S4163:12Mar99 not needed
   double A, B = 0., C = 0., D = 0., E = 0., F = 0., ZT;
   gp_XY  tempStart, tempEnd;
 
-  /* PR.ReadReal(PR.Current(), Msg81, A); //szv#4:S4163:12Mar99 `st=` not needed
-   PR.ReadReal(PR.Current(), Msg81, B); //szv#4:S4163:12Mar99 `st=` not needed
-   PR.ReadReal(PR.Current(), Msg81, C); //szv#4:S4163:12Mar99 `st=` not needed
-   PR.ReadReal(PR.Current(), Msg81, D); //szv#4:S4163:12Mar99 `st=` not needed
-   PR.ReadReal(PR.Current(), Msg81, E); //szv#4:S4163:12Mar99 `st=` not needed
-   PR.ReadReal(PR.Current(), Msg81, F); //szv#4:S4163:12Mar99 `st=` not needed
-   */
   if ((!PR.ReadReal(PR.Current(), A)) || (!PR.ReadReal(PR.Current(), B))
       || (!PR.ReadReal(PR.Current(), C)) || (!PR.ReadReal(PR.Current(), D))
       || (!PR.ReadReal(PR.Current(), E)) || (!PR.ReadReal(PR.Current(), F)))
@@ -58,29 +42,16 @@ void IGESGeom_ToolConicArc::ReadOwnParams(const occ::handle<IGESGeom_ConicArc>& 
   }
 
   if (!PR.ReadReal(PR.Current(), ZT))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg82("XSTEP_82");
     PR.SendFail(Msg82);
   }
-  PR.ReadXY(PR.CurrentList(1, 2), Msg83, tempStart); // szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadXY(PR.CurrentList(1, 2), Msg84, tempEnd);   // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadXY(PR.CurrentList(1, 2), Msg83, tempStart);
+  PR.ReadXY(PR.CurrentList(1, 2), Msg84, tempEnd);
 
-  /*
-    st = PR.ReadReal(PR.Current(), "Conic Coefficient A", A);
-    st = PR.ReadReal(PR.Current(), "Conic Coefficient B", B);
-    st = PR.ReadReal(PR.Current(), "Conic Coefficient C", C);
-    st = PR.ReadReal(PR.Current(), "Conic Coefficient D", D);
-    st = PR.ReadReal(PR.Current(), "Conic Coefficient E", E);
-    st = PR.ReadReal(PR.Current(), "Conic Coefficient F", F);
-    st = PR.ReadReal(PR.Current(), "Z-plane shift", ZT);
-    st = PR.ReadXY(PR.CurrentList(1, 2), "Starting Point Of Arc", tempStart);
-    st = PR.ReadXY(PR.CurrentList(1, 2), "End Point Of Arc", tempEnd);
-  */
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(A, B, C, D, E, F, ZT, tempStart, tempEnd);
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolConicArc::WriteOwnParams(const occ::handle<IGESGeom_ConicArc>& ent,
                                            IGESData_IGESWriter&                  IW) const
@@ -100,18 +71,14 @@ void IGESGeom_ToolConicArc::WriteOwnParams(const occ::handle<IGESGeom_ConicArc>&
   IW.Send(ent->EndPoint().Y());
 }
 
-//=================================================================================================
-
-void IGESGeom_ToolConicArc::OwnShared(const occ::handle<IGESGeom_ConicArc>& /* ent */,
-                                      Interface_EntityIterator& /* iter */) const
+void IGESGeom_ToolConicArc::OwnShared(const occ::handle<IGESGeom_ConicArc>&,
+                                      Interface_EntityIterator&) const
 {
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolConicArc::OwnCopy(const occ::handle<IGESGeom_ConicArc>& another,
                                     const occ::handle<IGESGeom_ConicArc>& ent,
-                                    Interface_CopyTool& /* TC */) const
+                                    Interface_CopyTool&) const
 {
   double A, B, C, D, E, F;
   another->Equation(A, B, C, D, E, F);
@@ -126,114 +93,43 @@ void IGESGeom_ToolConicArc::OwnCopy(const occ::handle<IGESGeom_ConicArc>& anothe
             another->EndPoint().XY());
 }
 
-//=================================================================================================
-
 bool IGESGeom_ToolConicArc::OwnCorrect(const occ::handle<IGESGeom_ConicArc>& ent) const
 {
-  return ent->OwnCorrect(); //  form selon coefs. 1 Ellipse, 2 Hyper, 3 Para
+  return ent->OwnCorrect();
 }
 
-//=================================================================================================
-
-IGESData_DirChecker IGESGeom_ToolConicArc::DirChecker(
-  const occ::handle<IGESGeom_ConicArc>& /* ent */) const
+IGESData_DirChecker IGESGeom_ToolConicArc::DirChecker(const occ::handle<IGESGeom_ConicArc>&) const
 {
   IGESData_DirChecker DC(104, 0, 3);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolConicArc::OwnCheck(const occ::handle<IGESGeom_ConicArc>& ent,
                                      const Interface_ShareTool&,
                                      occ::handle<Interface_Check>& ach) const
 {
-  // MGE 28/07/98
-  // Building of messages
-  //=====================================
-  // Message_Msg Msg71("XSTEP_71");
-  //=====================================
 
-  // char mess[80]; //szv#4:S4163:12Mar99 not needed
   int cfn = ent->ComputedFormNumber();
   int fn  = ent->FormNumber();
   if (cfn == 0)
   {
   }
-  // ach.AddFail("Coefficients do not define correctly a Conic");
+
   else if (fn != 0 && fn != cfn)
   {
     Message_Msg Msg71("XSTEP_71");
     ach->SendFail(Msg71);
   }
-
-  // szv#4:S4163:12Mar99 not needed
-  // if (ach.HasFailed()) return;    // les tests suivant deviennent sans objet
-  // double eps = 1.E-04;     // Tolerance des Tests ??
-  // double A,B,C,D,E,F;
-  // ent->Equation(A,B,C,D,E,F);
-  // double x = ent->StartPoint().X();
-  // double y = ent->StartPoint().Y();
-  // double eq = (A*x*x + B*x*y + C*y*y + D*x + E*y + F);
-  //  These messages are transferred in the translation procedure
-  /*  if (eq < -eps || eq > eps) {
-      Sprintf(mess,"Start point does not satisfy conic equation, gap over %f",
-          Interface_MSG::Intervalled(eq));
-      ach.AddFail(mess,"Start point does not satisfy conic equation, gap over %f");
-
-    }
-  */
-  // szv#4:S4163:12Mar99 not needed
-  // x = ent->EndPoint().X();
-  // y = ent->EndPoint().Y();
-  // eq = (A*x*x + B*x*y + C*y*y + D*x + E*y + F);
-  /*  if (eq < -eps || eq > eps) {
-      Sprintf(mess,"End point does not satisfy conic equation, gap over %f",
-          Interface_MSG::Intervalled(eq));
-      ach.AddFail(mess,"End point does not satisfy conic equation, gap over %f");
-    }
-  */
-  /*   Les tests qui suivant ont-ils un sens ??
-    if (ent->FormNumber() == 2)    // Hyperbola
-      {
-        double xc = -D / (2 * A);
-        double yc = -E / (2 * C);
-        gp_Dir2d d0(gp_Dir2d::D::X);
-        gp_Dir2d d1(ent->StartPoint().X() - xc, ent->StartPoint().Y() - yc);
-        gp_Dir2d d2(ent->EndPoint().X()   - xc, ent->EndPoint().Y()   - yc);
-        double t1 = d0.Angle(d1);
-        double t2 = d0.Angle(d2);
-        t1 += (t1  >  0 ? 0 : 2*M_PI);
-        t2 += (t2  >  0 ? 0 : 2*M_PI);
-        t2 += (t1 <= t2 ? 0 : 2*M_PI);
-        if ( !(0 <= t1 && t1 <= 2*M_PI) || !(0 <= t2-t1 && t2-t1 <= 2*M_PI) )
-      ach.AddFail("Parameter Error for Hyperbola");
-      }
-    else if (ent->FormNumber() == 3)
-      {
-        double xc = -D / (2 * A);
-        double yc = -E / (2 * C);
-        gp_Dir2d d0(gp_Dir2d::D::X);
-        gp_Dir2d d1(ent->StartPoint().X() - xc, ent->StartPoint().Y() - yc);
-        gp_Dir2d d2(ent->EndPoint().X()   - xc, ent->EndPoint().Y()   - yc);
-        double t1 = d0.Angle(d1);
-        double t2 = d0.Angle(d2);
-        if ( !(-M_PI/2 < t1 && t1 < M_PI/2) || !(-M_PI/2 < t2 && t2 < M_PI/2) )
-      ach.AddFail("Parameter Error for Parabola");
-      }
-  */
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolConicArc::OwnDump(const occ::handle<IGESGeom_ConicArc>& ent,
-                                    const IGESData_IGESDumper& /* dumper */,
+                                    const IGESData_IGESDumper&,
                                     Standard_OStream& S,
                                     const int         level) const
 {

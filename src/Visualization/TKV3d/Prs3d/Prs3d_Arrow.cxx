@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Prs3d_Arrow.hpp>
 
@@ -25,8 +13,6 @@
 #include <Prs3d_ToolCylinder.hpp>
 #include <Prs3d_ToolDisk.hpp>
 
-//=================================================================================================
-
 void Prs3d_Arrow::Draw(const occ::handle<Graphic3d_Group>& theGroup,
                        const gp_Pnt&                       theLocation,
                        const gp_Dir&                       theDirection,
@@ -38,8 +24,6 @@ void Prs3d_Arrow::Draw(const occ::handle<Graphic3d_Group>& theGroup,
   theGroup->AddPrimitiveArray(aPrimitives);
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_ArrayOfSegments> Prs3d_Arrow::DrawSegments(const gp_Pnt& theLocation,
                                                                  const gp_Dir& theDir,
                                                                  const double  theAngle,
@@ -49,10 +33,8 @@ occ::handle<Graphic3d_ArrayOfSegments> Prs3d_Arrow::DrawSegments(const gp_Pnt& t
   occ::handle<Graphic3d_ArrayOfSegments> aSegments =
     new Graphic3d_ArrayOfSegments(theNbSegments + 1, 2 * (2 * theNbSegments));
 
-  // center of the base circle of the arrow
   const gp_XYZ aC = theLocation.XYZ() + theDir.XYZ() * (-theLength);
 
-  // construction of i,j mark for the circle
   gp_Dir aN;
   if (std::abs(theDir.X()) <= std::abs(theDir.Y()) && std::abs(theDir.X()) <= std::abs(theDir.Z()))
   {
@@ -103,8 +85,6 @@ occ::handle<Graphic3d_ArrayOfSegments> Prs3d_Arrow::DrawSegments(const gp_Pnt& t
   return aSegments;
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_ArrayOfTriangles> Prs3d_Arrow::DrawShaded(const gp_Ax1& theAxis,
                                                                 const double  theTubeRadius,
                                                                 const double  theAxisLength,
@@ -134,7 +114,7 @@ occ::handle<Graphic3d_ArrayOfTriangles> Prs3d_Arrow::DrawShaded(const gp_Ax1& th
   }
   if (aNbTrisCone > 0)
   {
-    // longer syntax to workaround msvc10 32-bit optimizer bug (#0031876)
+
     aMaxVertexs += Prs3d_ToolDisk::VerticesNb(theNbFacettes, 1);
     aMaxVertexs += Prs3d_ToolCylinder::VerticesNb(theNbFacettes, 1);
   }

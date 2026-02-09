@@ -7,7 +7,6 @@
 #include <gp_XYZ.hpp>
 #include <gp_XY.hpp>
 
-//! define a constraint on the Plate
 class Plate_PinpointConstraint
 {
 public:

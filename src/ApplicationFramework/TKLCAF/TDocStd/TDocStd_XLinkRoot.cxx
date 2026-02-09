@@ -10,18 +10,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDocStd_XLinkRoot, TDF_Attribute)
 
-//=======================================================================
-//             CLASS METHODS
-//=======================================================================
-//=================================================================================================
-
 const Standard_GUID& TDocStd_XLinkRoot::GetID()
 {
   static Standard_GUID myID("5d587401-5690-11d1-8940-080009dc3333");
   return myID;
 }
-
-//=================================================================================================
 
 occ::handle<TDocStd_XLinkRoot> TDocStd_XLinkRoot::Set(const occ::handle<TDF_Data>& aDF)
 {
@@ -34,17 +27,13 @@ occ::handle<TDocStd_XLinkRoot> TDocStd_XLinkRoot::Set(const occ::handle<TDF_Data
   return xRefRoot;
 }
 
-//=================================================================================================
-
 void TDocStd_XLinkRoot::Insert(const TDocStd_XLinkPtr& anXLinkPtr)
 {
   occ::handle<TDocStd_XLinkRoot> xRefRoot = TDocStd_XLinkRoot::Set(anXLinkPtr->Label().Data());
-  // Insertion at beginning because the order is not significant.
+
   anXLinkPtr->Next(xRefRoot->First());
   xRefRoot->First(anXLinkPtr);
 }
-
-//=================================================================================================
 
 void TDocStd_XLinkRoot::Remove(const TDocStd_XLinkPtr& anXLinkPtr)
 {
@@ -72,51 +61,32 @@ void TDocStd_XLinkRoot::Remove(const TDocStd_XLinkPtr& anXLinkPtr)
   }
 }
 
-//=======================================================================
-//             INSTANCE METHODS
-//=======================================================================
-
-//=================================================================================================
-
 TDocStd_XLinkRoot::TDocStd_XLinkRoot()
     : myFirst(nullptr)
 {
 }
-
-//=================================================================================================
 
 const Standard_GUID& TDocStd_XLinkRoot::ID() const
 {
   return GetID();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDocStd_XLinkRoot::BackupCopy() const
 {
   return new TDocStd_XLinkRoot;
-} // Does nothing.
+}
 
-//=================================================================================================
-
-void TDocStd_XLinkRoot::Restore(const occ::handle<TDF_Attribute>& /*anAttribute*/) {
-} // Does nothing.
-
-//=================================================================================================
+void TDocStd_XLinkRoot::Restore(const occ::handle<TDF_Attribute>&) {}
 
 occ::handle<TDF_Attribute> TDocStd_XLinkRoot::NewEmpty() const
 {
   return new TDocStd_XLinkRoot;
 }
 
-//=================================================================================================
-
 void TDocStd_XLinkRoot::Paste(const occ::handle<TDF_Attribute>&,
                               const occ::handle<TDF_RelocationTable>&) const
 {
-} // Does nothing.
-
-//=================================================================================================
+}
 
 Standard_OStream& TDocStd_XLinkRoot::Dump(Standard_OStream& anOS) const
 {

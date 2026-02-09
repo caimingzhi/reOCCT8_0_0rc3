@@ -11,7 +11,6 @@ class StepGeom_IntersectionCurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for IntersectionCurve
 class RWStepGeom_RWIntersectionCurve
 {
 public:

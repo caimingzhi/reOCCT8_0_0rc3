@@ -21,9 +21,6 @@ class Standard_OutOfRange;
 class GeomFill_SectionGenerator;
 class GeomFill_Line;
 
-//! Approximate a BSplineSurface passing by all the
-//! curves described in the SectionGenerator
-
 class GeomFill_AppSurf : public AppBlend_Approx
 {
 public:
@@ -45,26 +42,16 @@ public:
                             const int    NbIt,
                             const bool   KnownParameters = false);
 
-  //! Define the type of parametrization used in the approximation
   Standard_EXPORT void SetParType(const Approx_ParametrizationType ParType);
 
-  //! Define the Continuity used in the approximation
   Standard_EXPORT void SetContinuity(const GeomAbs_Shape C);
 
-  //! define the Weights associed to the criterium used in
-  //! the optimization.
-  //!
-  //! if Wi <= 0
   Standard_EXPORT void SetCriteriumWeight(const double W1, const double W2, const double W3);
 
-  //! returns the type of parametrization used in the approximation
   Standard_EXPORT Approx_ParametrizationType ParType() const;
 
-  //! returns the Continuity used in the approximation
   Standard_EXPORT GeomAbs_Shape Continuity() const;
 
-  //! returns the Weights (as percent) associed to the criterium used in
-  //! the optimization.
   Standard_EXPORT void CriteriumWeight(double& W1, double& W2, double& W3) const;
 
   Standard_EXPORT void Perform(const occ::handle<GeomFill_Line>& Lin,

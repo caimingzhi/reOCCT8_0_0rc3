@@ -3,67 +3,31 @@
 #include <NCollection_Buffer.hpp>
 #include <OpenGl_Buffer.hpp>
 
-//! Compatibility layer for old OpenGL without VBO.
-//! Make sure to pass pointer from GetDataOffset() instead of NULL.
-//! Method GetDataOffset() returns pointer to real data in this class
-//! (while base class OpenGl_VertexBuffer always return NULL).
-//!
-//! Methods Bind()/Unbind() do nothing (do not affect OpenGL state)
-//! and ::GetTarget() is never used.
-//! For this reason there is no analog for OpenGl_IndexBuffer.
-//! Just pass GetDataOffset() to glDrawElements() directly as last argument.
-//!
-//! Class overrides methods init() and subData() to copy data into own memory buffer.
-//! Extra method initLink() might be used to pass existing buffer through handle without copying the
-//! data.
-//!
-//! Method Create() creates dummy identifier for this object which should NOT be passed to OpenGL
-//! functions.
 template <class BaseBufferT>
 class OpenGl_BufferCompatT : public BaseBufferT
 {
 
 public:
-  //! Create uninitialized VBO.
-  OpenGl_BufferCompatT()
-  {
-    //
-  }
+  OpenGl_BufferCompatT() {}
 
-  //! Destroy object.
   ~OpenGl_BufferCompatT() override { Release(nullptr); }
 
-  //! Return TRUE.
   bool IsVirtual() const override { return true; }
 
-  //! Creates VBO name (id) if not yet generated.
-  //! Data should be initialized by another method.
   inline bool Create(const occ::handle<OpenGl_Context>& theGlCtx) override;
 
-  //! Destroy object - will release memory if any.
   inline void Release(OpenGl_Context* theGlCtx) override;
 
-  //! Bind this VBO.
-  void Bind(const occ::handle<OpenGl_Context>&) const override
-  {
-    //
-  }
+  void Bind(const occ::handle<OpenGl_Context>&) const override {}
 
-  //! Unbind this VBO.
-  void Unbind(const occ::handle<OpenGl_Context>&) const override
-  {
-    //
-  }
+  void Unbind(const occ::handle<OpenGl_Context>&) const override {}
 
-public: //! @name advanced methods
-  //! Initialize buffer with existing data.
-  //! Data will NOT be copied by this method!
+public:
   inline bool initLink(const occ::handle<NCollection_Buffer>& theData,
                        const unsigned int                     theComponentsNb,
                        const int                              theElemsNb,
                        const unsigned int                     theDataType);
 
-  //! Initialize buffer with new data (data will be copied).
   inline bool init(const occ::handle<OpenGl_Context>& theGlCtx,
                    const unsigned int                 theComponentsNb,
                    const int                          theElemsNb,
@@ -71,14 +35,12 @@ public: //! @name advanced methods
                    const unsigned int                 theDataType,
                    const int                          theStride) override;
 
-  //! Update part of the buffer with new data.
   inline bool subData(const occ::handle<OpenGl_Context>& theGlCtx,
                       const int                          theElemFrom,
                       const int                          theElemsNb,
                       const void*                        theData,
                       const unsigned int                 theDataType) override;
 
-  //! Read back buffer sub-range.
   inline bool getSubData(const occ::handle<OpenGl_Context>& theGlCtx,
                          const int                          theElemFrom,
                          const int                          theElemsNb,
@@ -86,23 +48,19 @@ public: //! @name advanced methods
                          const unsigned int                 theDataType) override;
 
 protected:
-  occ::handle<NCollection_Buffer> myData; //!< buffer data
+  occ::handle<NCollection_Buffer> myData;
 };
-
-//=================================================================================================
 
 template <class BaseBufferT>
 bool OpenGl_BufferCompatT<BaseBufferT>::Create(const occ::handle<OpenGl_Context>&)
 {
   if (BaseBufferT::myBufferId == OpenGl_Buffer::NO_BUFFER)
   {
-    BaseBufferT::myBufferId = (unsigned int)-1; // dummy identifier...
+    BaseBufferT::myBufferId = (unsigned int)-1;
     myData                  = new NCollection_Buffer(Graphic3d_Buffer::DefaultAllocator());
   }
   return BaseBufferT::myBufferId != OpenGl_Buffer::NO_BUFFER;
 }
-
-//=================================================================================================
 
 template <class BaseBufferT>
 void OpenGl_BufferCompatT<BaseBufferT>::Release(OpenGl_Context*)
@@ -116,8 +74,6 @@ void OpenGl_BufferCompatT<BaseBufferT>::Release(OpenGl_Context*)
   BaseBufferT::myBufferId = OpenGl_Buffer::NO_BUFFER;
   myData.Nullify();
 }
-
-//=================================================================================================
 
 template <class BaseBufferT>
 bool OpenGl_BufferCompatT<BaseBufferT>::initLink(const occ::handle<NCollection_Buffer>& theData,
@@ -133,7 +89,7 @@ bool OpenGl_BufferCompatT<BaseBufferT>::initLink(const occ::handle<NCollection_B
 
   if (BaseBufferT::myBufferId == OpenGl_Buffer::NO_BUFFER)
   {
-    BaseBufferT::myBufferId = (unsigned int)-1; // dummy identifier...
+    BaseBufferT::myBufferId = (unsigned int)-1;
   }
   myData                      = theData;
   BaseBufferT::myDataType     = theDataType;
@@ -142,8 +98,6 @@ bool OpenGl_BufferCompatT<BaseBufferT>::initLink(const occ::handle<NCollection_B
   BaseBufferT::myOffset       = myData->ChangeData();
   return true;
 }
-
-//=================================================================================================
 
 template <class BaseBufferT>
 bool OpenGl_BufferCompatT<BaseBufferT>::init(const occ::handle<OpenGl_Context>& theCtx,
@@ -178,8 +132,6 @@ bool OpenGl_BufferCompatT<BaseBufferT>::init(const occ::handle<OpenGl_Context>& 
   return true;
 }
 
-//=================================================================================================
-
 template <class BaseBufferT>
 bool OpenGl_BufferCompatT<BaseBufferT>::subData(const occ::handle<OpenGl_Context>&,
                                                 const int          theElemFrom,
@@ -203,8 +155,6 @@ bool OpenGl_BufferCompatT<BaseBufferT>::subData(const occ::handle<OpenGl_Context
   memcpy(myData->ChangeData() + anOffset, theData, aNbBytes);
   return true;
 }
-
-//=================================================================================================
 
 template <class BaseBufferT>
 bool OpenGl_BufferCompatT<BaseBufferT>::getSubData(const occ::handle<OpenGl_Context>&,

@@ -4,8 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Units_Token, Standard_Transient)
 
-//=================================================================================================
-
 Units_Token::Units_Token()
 {
   theword       = " ";
@@ -13,8 +11,6 @@ Units_Token::Units_Token()
   thevalue      = 0.;
   thedimensions = new Units_Dimensions(0., 0., 0., 0., 0., 0., 0., 0., 0.);
 }
-
-//=================================================================================================
 
 Units_Token::Units_Token(const char* aword)
 {
@@ -24,8 +20,6 @@ Units_Token::Units_Token(const char* aword)
   thedimensions = new Units_Dimensions(0., 0., 0., 0., 0., 0., 0., 0., 0.);
 }
 
-//=================================================================================================
-
 Units_Token::Units_Token(const char* aword, const char* amean)
 {
   theword       = aword;
@@ -34,8 +28,6 @@ Units_Token::Units_Token(const char* aword, const char* amean)
   thedimensions = new Units_Dimensions(0., 0., 0., 0., 0., 0., 0., 0., 0.);
 }
 
-//=================================================================================================
-
 Units_Token::Units_Token(const char* aword, const char* amean, const double avalue)
 {
   theword       = aword;
@@ -43,8 +35,6 @@ Units_Token::Units_Token(const char* aword, const char* amean, const double aval
   thevalue      = avalue;
   thedimensions = new Units_Dimensions(0., 0., 0., 0., 0., 0., 0., 0., 0.);
 }
-
-//=================================================================================================
 
 Units_Token::Units_Token(const char*                          aword,
                          const char*                          amean,
@@ -68,8 +58,6 @@ Units_Token::Units_Token(const char*                          aword,
                                          adimensions->SolidAngle());
 }
 
-//=================================================================================================
-
 occ::handle<Units_Token> Units_Token::Creates() const
 {
   TCollection_AsciiString word = Word();
@@ -77,14 +65,10 @@ occ::handle<Units_Token> Units_Token::Creates() const
   return new Units_Token(word.ToCString(), mean.ToCString(), Value(), Dimensions());
 }
 
-//=================================================================================================
-
 int Units_Token::Length() const
 {
   return theword.Length();
 }
-
-//=================================================================================================
 
 void Units_Token::Dimensions(const occ::handle<Units_Dimensions>& adimensions)
 {
@@ -102,8 +86,6 @@ void Units_Token::Dimensions(const occ::handle<Units_Dimensions>& adimensions)
                                          adimensions->SolidAngle());
 }
 
-//=================================================================================================
-
 Units_Token::Units_Token(const occ::handle<Units_Token>& atoken)
 {
   theword       = atoken->Word();
@@ -111,8 +93,6 @@ Units_Token::Units_Token(const occ::handle<Units_Token>& atoken)
   thevalue      = atoken->Value();
   thedimensions = atoken->Dimensions();
 }
-
-//=================================================================================================
 
 void Units_Token::Update(const char* amean)
 {
@@ -124,17 +104,11 @@ void Units_Token::Update(const char* amean)
   themean = string;
 }
 
-//=================================================================================================
-
 occ::handle<Units_Token> Units_Token::Add(const int) const
 {
-  //  const char* s=new char[thelength+1];
-  //  strcpy(s,theword);
-  //  s[thelength-1]=s[thelength-1]+int(i);
+
   return new Units_Token();
 }
-
-//=================================================================================================
 
 occ::handle<Units_Token> Units_Token::Add(const occ::handle<Units_Token>& atoken) const
 {
@@ -145,8 +119,6 @@ occ::handle<Units_Token> Units_Token::Add(const occ::handle<Units_Token>& atoken
     return new Units_Token(" ");
 }
 
-//=================================================================================================
-
 occ::handle<Units_Token> Units_Token::Subtract(const occ::handle<Units_Token>& atoken) const
 {
   TCollection_AsciiString word = Word();
@@ -155,8 +127,6 @@ occ::handle<Units_Token> Units_Token::Subtract(const occ::handle<Units_Token>& a
   else
     return new Units_Token(" ");
 }
-
-//=================================================================================================
 
 occ::handle<Units_Token> Units_Token::Multiply(const occ::handle<Units_Token>& atoken) const
 {
@@ -171,14 +141,10 @@ occ::handle<Units_Token> Units_Token::Multiply(const occ::handle<Units_Token>& a
                          thedimensions * (atoken->Dimensions()));
 }
 
-//=================================================================================================
-
 double Units_Token::Multiplied(const double avalue) const
 {
   return avalue * thevalue;
 }
-
-//=================================================================================================
 
 occ::handle<Units_Token> Units_Token::Divide(const occ::handle<Units_Token>& atoken) const
 {
@@ -200,14 +166,10 @@ occ::handle<Units_Token> Units_Token::Divide(const occ::handle<Units_Token>& ato
                          thedimensions / (atoken->Dimensions()));
 }
 
-//=================================================================================================
-
 double Units_Token::Divided(const double avalue) const
 {
   return avalue / thevalue;
 }
-
-//=================================================================================================
 
 occ::handle<Units_Token> Units_Token::Power(const occ::handle<Units_Token>& atoken) const
 {
@@ -221,8 +183,6 @@ occ::handle<Units_Token> Units_Token::Power(const occ::handle<Units_Token>& atok
                          pow(thevalue, atoken->Value()),
                          pow(thedimensions, atoken->Value()));
 }
-
-//=================================================================================================
 
 occ::handle<Units_Token> Units_Token::Power(const double anexponent) const
 {
@@ -238,8 +198,6 @@ occ::handle<Units_Token> Units_Token::Power(const double anexponent) const
                          pow(thedimensions, anexponent));
 }
 
-//=================================================================================================
-
 bool Units_Token::IsEqual(const char* astring) const
 {
   TCollection_AsciiString string = Word();
@@ -254,8 +212,6 @@ bool Units_Token::IsEqual(const char* astring) const
     return false;
 }
 
-//=================================================================================================
-
 bool Units_Token::IsEqual(const occ::handle<Units_Token>& atoken) const
 {
   TCollection_AsciiString string1 = Word();
@@ -266,8 +222,6 @@ bool Units_Token::IsEqual(const occ::handle<Units_Token>& atoken) const
   else
     return false;
 }
-
-//=================================================================================================
 
 void Units_Token::Dump(const int ashift, const int alevel) const
 {
@@ -291,20 +245,10 @@ void Units_Token::Dump(const int ashift, const int alevel) const
     thedimensions->Dump(ashift);
 }
 
-//=======================================================================
-// function : operator +
-// purpose  :
-//=======================================================================
-
 occ::handle<Units_Token> operator+(const occ::handle<Units_Token>& atoken, const int aninteger)
 {
   return atoken->Add(aninteger);
 }
-
-//=======================================================================
-// function : operator +
-// purpose  :
-//=======================================================================
 
 occ::handle<Units_Token> operator+(const occ::handle<Units_Token>& atoken1,
                                    const occ::handle<Units_Token>& atoken2)
@@ -312,21 +256,11 @@ occ::handle<Units_Token> operator+(const occ::handle<Units_Token>& atoken1,
   return atoken1->Add(atoken2);
 }
 
-//=======================================================================
-// function : operator -
-// purpose  :
-//=======================================================================
-
 occ::handle<Units_Token> operator-(const occ::handle<Units_Token>& atoken1,
                                    const occ::handle<Units_Token>& atoken2)
 {
   return atoken1->Subtract(atoken2);
 }
-
-//=======================================================================
-// function : operator *
-// purpose  :
-//=======================================================================
 
 occ::handle<Units_Token> operator*(const occ::handle<Units_Token>& atoken1,
                                    const occ::handle<Units_Token>& atoken2)
@@ -334,18 +268,11 @@ occ::handle<Units_Token> operator*(const occ::handle<Units_Token>& atoken1,
   return atoken1->Multiply(atoken2);
 }
 
-//=======================================================================
-// function : operator /
-// purpose  :
-//=======================================================================
-
 occ::handle<Units_Token> operator/(const occ::handle<Units_Token>& atoken1,
                                    const occ::handle<Units_Token>& atoken2)
 {
   return atoken1->Divide(atoken2);
 }
-
-//=================================================================================================
 
 occ::handle<Units_Token> pow(const occ::handle<Units_Token>& atoken1,
                              const occ::handle<Units_Token>& atoken2)
@@ -353,89 +280,35 @@ occ::handle<Units_Token> pow(const occ::handle<Units_Token>& atoken1,
   return atoken1->Power(atoken2);
 }
 
-//=================================================================================================
-
 occ::handle<Units_Token> pow(const occ::handle<Units_Token>& atoken, const double areal)
 {
   return atoken->Power(areal);
 }
-
-//=======================================================================
-// function : operator ==
-// purpose  :
-//=======================================================================
 
 bool operator==(const occ::handle<Units_Token>& atoken, const char* astring)
 {
   return atoken->IsEqual(astring);
 }
 
-//=======================================================================
-// function : operator ==
-// purpose  :
-//=======================================================================
-
-// bool operator ==(const occ::handle<Units_Token>& atoken1,const occ::handle<Units_Token>&
-// atoken2)
-//{
-//   return atoken1->IsEqual(atoken2);
-// }
-
-//=======================================================================
-// function : operator !=
-// purpose  :
-//=======================================================================
-
 bool operator!=(const occ::handle<Units_Token>& atoken, const char* astring)
 {
   return atoken->IsNotEqual(astring);
 }
-
-//=======================================================================
-// function : operator !=
-// purpose  :
-//=======================================================================
-
-// bool operator !=(const occ::handle<Units_Token>& atoken1,const occ::handle<Units_Token>&
-// atoken2)
-//{
-//   return atoken1->IsNotEqual(atoken2);
-// }
-
-//=======================================================================
-// function : operator <=
-// purpose  :
-//=======================================================================
 
 bool operator<=(const occ::handle<Units_Token>& atoken, const char* astring)
 {
   return atoken->IsLessOrEqual(astring);
 }
 
-//=======================================================================
-// function : operator >
-// purpose  :
-//=======================================================================
-
 bool operator>(const occ::handle<Units_Token>& atoken, const char* astring)
 {
   return atoken->IsGreater(astring);
 }
 
-//=======================================================================
-// function : operator >
-// purpose  :
-//=======================================================================
-
 bool operator>(const occ::handle<Units_Token>& atoken1, const occ::handle<Units_Token>& atoken2)
 {
   return atoken1->IsGreater(atoken2);
 }
-
-//=======================================================================
-// function : operator >=
-// purpose  :
-//=======================================================================
 
 bool operator>=(const occ::handle<Units_Token>& atoken1, const occ::handle<Units_Token>& atoken2)
 {

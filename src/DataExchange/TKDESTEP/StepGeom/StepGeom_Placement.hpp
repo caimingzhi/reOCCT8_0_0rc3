@@ -11,7 +11,6 @@ class StepGeom_Placement : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a Placement
   Standard_EXPORT StepGeom_Placement();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

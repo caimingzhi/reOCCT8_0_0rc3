@@ -24,9 +24,6 @@
 
 #include <cstdio>
 
-//=======================================================================
-// Section: Work with shapes
-//=======================================================================
 static int addShape(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -52,7 +49,7 @@ static int addShape(Draw_Interpretor& di, int argc, const char** argv)
   double aLengthUnit = 1.;
   if (!XCAFDoc_DocumentTool::GetLengthUnit(Doc, aLengthUnit))
   {
-    XSAlgo_ShapeProcessor::PrepareForTransfer(); // update unit info
+    XSAlgo_ShapeProcessor::PrepareForTransfer();
     aLengthUnit = UnitsMethods::GetCasCadeLengthUnit(UnitsMethods_LengthUnit_Meter);
     XCAFDoc_DocumentTool::SetLengthUnit(Doc, aLengthUnit);
   }
@@ -88,10 +85,9 @@ static int newShape(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   occ::handle<XCAFDoc_ShapeTool> myAssembly = XCAFDoc_DocumentTool::ShapeTool(Doc->Main());
-  // XCAFDoc_ShapeTool myAssembly;
-  //   myAssembly.Init(Doc);
+
   aLabel = myAssembly->NewShape();
-  //  di<<"New Shape at ChildTag"<<aLabel.Tag()<<"\n";
+
   TCollection_AsciiString Entry;
   TDF_Tool::Entry(aLabel, Entry);
   di << Entry.ToCString();
@@ -116,10 +112,9 @@ static int setShape(Draw_Interpretor& di, int argc, const char** argv)
   TDF_Label aLabel;
   TDF_Tool::Label(Doc->GetData(), argv[2], aLabel);
   TopoDS_Shape aShape;
-  //   if (aLabel.IsNull()) di<<"Null Label\n";
+
   aShape = DBRep::Get(argv[3]);
-  //  XCAFDoc_ShapeTool myAssembly;
-  //  myAssembly.Init(Doc);
+
   occ::handle<XCAFDoc_ShapeTool> myAssembly = XCAFDoc_DocumentTool::ShapeTool(Doc->Main());
   myAssembly->SetShape(aLabel, aShape);
   return 0;
@@ -148,8 +143,7 @@ static int getShape(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
   TopoDS_Shape aShape;
-  //  XCAFDoc_ShapeTool myAssembly;
-  //  myAssembly.Init(Doc);
+
   occ::handle<XCAFDoc_ShapeTool> myAssembly = XCAFDoc_DocumentTool::ShapeTool(Doc->Main());
   aShape                                    = myAssembly->GetShape(aLabel);
   const char* name1                         = argv[1];
@@ -181,8 +175,7 @@ static int removeShape(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
   TopoDS_Shape aShape;
-  //  XCAFDoc_ShapeTool myAssembly;
-  //  myAssembly.Init(Doc);
+
   occ::handle<XCAFDoc_ShapeTool> myAssembly       = XCAFDoc_DocumentTool::ShapeTool(Doc->Main());
   bool                           removeCompletely = true;
   if (argc == 4 && Draw::Atoi(argv[3]) == 0)
@@ -210,15 +203,14 @@ static int findShape(Draw_Interpretor& di, int argc, const char** argv)
   TDF_Label    aLabel;
   TopoDS_Shape aShape;
   aShape = DBRep::Get(argv[2]);
-  //  XCAFDoc_ShapeTool myAssembly;
-  //  myAssembly.Init(Doc);
+
   occ::handle<XCAFDoc_ShapeTool> myAssembly   = XCAFDoc_DocumentTool::ShapeTool(Doc->Main());
   bool                           findInstance = ((argc == 4) && argv[3][0] == '1');
   aLabel                                      = myAssembly->FindShape(aShape, findInstance);
   TCollection_AsciiString Entry;
   TDF_Tool::Entry(aLabel, Entry);
   di << Entry.ToCString();
-  // di<<"Label with Shape is "<<Entry<<"\n";
+
   return 0;
 }
 
@@ -328,32 +320,31 @@ static int labelInfo(Draw_Interpretor& di, int argc, const char** argv)
 
   TDF_Label aLabel;
   TDF_Tool::Label(Doc->GetData(), argv[2], aLabel);
-  //  XCAFDoc_ShapeTool myAssembly;
-  //  myAssembly.Init(Doc);
+
   occ::handle<XCAFDoc_ShapeTool> myAssembly = XCAFDoc_DocumentTool::ShapeTool(Doc->Main());
   TCollection_AsciiString        Entry;
 
   if (myAssembly->IsShape(aLabel))
   {
-    // di<<"There are a TopLevelShape\n";
+
     Entry = "There are a TopLevelShape";
     di << Entry.ToCString();
   }
   if (myAssembly->IsComponent(aLabel))
   {
-    // di<<"There are a Component\n";
+
     Entry = "There are a Component";
     di << Entry.ToCString();
   }
   if (myAssembly->IsAssembly(aLabel))
   {
-    // di<<"There are an Assembly\n";
+
     Entry = "There are an Assembly";
     di << Entry.ToCString();
   }
   if (myAssembly->IsFree(aLabel))
   {
-    // di<<"This Shape don't used\n";
+
     Entry = "This Shape don't used";
     di << Entry.ToCString();
   }
@@ -386,7 +377,7 @@ static int getUsers(Draw_Interpretor& di, int argc, const char** argv)
   TCollection_AsciiString         Entry;
   Entry = myAssembly->GetUsers(aLabel, labseq, getsubchilds);
   di << Entry.ToCString();
-  // di<<myAssembly->GetUsers(aLabel, labseq, getsubchilds)<<" assemblies use this component\n";
+
   return 0;
 }
 
@@ -411,14 +402,10 @@ static int nbComponents(Draw_Interpretor& di, int argc, const char** argv)
   TDF_Label aLabel;
   TDF_Tool::Label(Doc->GetData(), argv[2], aLabel);
   occ::handle<XCAFDoc_ShapeTool> myAssembly = XCAFDoc_DocumentTool::ShapeTool(Doc->Main());
-  //  XCAFDoc_ShapeTool myAssembly->
-  //  myAssembly->Init(Doc);
-  // di<<"This assembly has ";
+
   TCollection_AsciiString Entry;
   Entry = myAssembly->NbComponents(aLabel, getsubchilds);
   di << Entry.ToCString();
-  // di<<" components\n";
-  // di<<"This assembly has "<<myAssembly->NbComponents( aLabel, getsubchilds )<<" components\n";
 
   return 0;
 }
@@ -443,8 +430,7 @@ static int addComponent(Draw_Interpretor& di, int argc, const char** argv)
   TopoDS_Shape aShape;
   aShape                                    = DBRep::Get(argv[3]);
   occ::handle<XCAFDoc_ShapeTool> myAssembly = XCAFDoc_DocumentTool::ShapeTool(Doc->Main());
-  //  XCAFDoc_ShapeTool myAssembly->
-  //  myAssembly->Init(Doc);
+
   myAssembly->AddComponent(aLabel, aShape);
   TCollection_AsciiString Entry;
   TDF_Tool::Entry(aLabel, Entry);
@@ -471,8 +457,7 @@ static int removeComponent(Draw_Interpretor& di, int argc, const char** argv)
   TDF_Label aLabel;
   TDF_Tool::Label(Doc->GetData(), argv[2], aLabel);
   occ::handle<XCAFDoc_ShapeTool> myAssembly = XCAFDoc_DocumentTool::ShapeTool(Doc->Main());
-  //  XCAFDoc_ShapeTool myAssembly->
-  //  myAssembly->Init(Doc);
+
   myAssembly->RemoveComponent(aLabel);
   return 0;
 }
@@ -495,13 +480,12 @@ static int getReferredShape(Draw_Interpretor& di, int argc, const char** argv)
   TDF_Label aLabel, RootLabel;
   TDF_Tool::Label(Doc->GetData(), argv[2], aLabel);
   occ::handle<XCAFDoc_ShapeTool> myAssembly = XCAFDoc_DocumentTool::ShapeTool(Doc->Main());
-  //  XCAFDoc_ShapeTool myAssembly->
-  //  myAssembly->Init(Doc);
+
   myAssembly->GetReferredShape(aLabel, RootLabel);
 
   TCollection_AsciiString Entry;
   TDF_Tool::Entry(RootLabel, Entry);
-  // di<<"Label with Shape is ";
+
   di << Entry.ToCString();
   return 0;
 }
@@ -525,8 +509,7 @@ static int getTopLevelShapes(Draw_Interpretor& di, int argc, const char** argv)
   NCollection_Sequence<TDF_Label> Labels;
 
   occ::handle<XCAFDoc_ShapeTool> myAssembly = XCAFDoc_DocumentTool::ShapeTool(Doc->Main());
-  //  XCAFDoc_ShapeTool myAssembly->
-  //  myAssembly->Init(Doc);
+
   myAssembly->GetShapes(Labels);
   TCollection_AsciiString Entry;
   if (Labels.Length() >= 1)
@@ -595,8 +578,6 @@ static int getFreeShapes(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int getOneShape(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs != 3)
@@ -625,10 +606,6 @@ static int getOneShape(Draw_Interpretor& theDI, int theNbArgs, const char** theA
   return 0;
 }
 
-//=======================================================================
-// function : XDumpLocation
-// purpose  : Dump Transformation() of XCAFDoc_Location attribute
-//=======================================================================
 static int XDumpLocation(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 3)
@@ -658,10 +635,10 @@ static int XDumpLocation(Draw_Interpretor& di, int argc, const char** argv)
   gp_Trsf         aTrsf   = aTopLoc.Transformation();
 
   di << "Transformation (3 rows * 4 columns matrix):";
-  for (int i = 1; i <= 3; i++) // row number
+  for (int i = 1; i <= 3; i++)
   {
     di << " (";
-    for (int j = 1; j <= 4; j++) // column number
+    for (int j = 1; j <= 4; j++)
     {
       if (j > 1)
         di << ",";
@@ -1071,16 +1048,13 @@ static int updateAssemblies(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  // Get XDE document
   occ::handle<TDocStd_Document> aDoc;
   DDocStd::GetDocument(argv[1], aDoc);
   if (aDoc.IsNull())
     return 1;
 
-  // Get XDE shape tool
   occ::handle<XCAFDoc_ShapeTool> aShapeTool = XCAFDoc_DocumentTool::ShapeTool(aDoc->Main());
 
-  // Update assemblies
   aShapeTool->UpdateAssemblies();
 
   return 0;
@@ -1285,10 +1259,6 @@ static int XAutoNaming(Draw_Interpretor& theDI, int theNbArgs, const char** theA
   return 0;
 }
 
-//=======================================================================
-// function : parseXYZ
-// purpose  : Converts three string arguments, to gp_XYZ with check
-//=======================================================================
 static bool parseXYZ(const char** theArgVec, gp_XYZ& thePnt)
 {
   const TCollection_AsciiString aXYZ[3] = {theArgVec[0], theArgVec[1], theArgVec[2]};
@@ -1301,10 +1271,6 @@ static bool parseXYZ(const char** theArgVec, gp_XYZ& thePnt)
   return true;
 }
 
-//=======================================================================
-// function : setLocation
-// purpose  : Sets location to the shape at the label in XDE document
-//=======================================================================
 static int setLocation(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
   if (theArgNb < 4)
@@ -1313,7 +1279,7 @@ static int setLocation(Draw_Interpretor&, int theArgNb, const char** theArgVec)
                         << " for details";
     return 1;
   }
-  // get and check the document
+
   occ::handle<TDocStd_Document> aDoc;
   DDocStd::GetDocument(theArgVec[1], aDoc);
   if (aDoc.IsNull())
@@ -1321,7 +1287,7 @@ static int setLocation(Draw_Interpretor&, int theArgNb, const char** theArgVec)
     Message::SendFail() << "Error: " << theArgVec[1] << " is not a document";
     return 1;
   }
-  // get and check the label
+
   TDF_Label aShapeLabel;
   TDF_Tool::Label(aDoc->GetData(), theArgVec[2], aShapeLabel);
   if (aShapeLabel.IsNull())
@@ -1329,7 +1295,7 @@ static int setLocation(Draw_Interpretor&, int theArgNb, const char** theArgVec)
     Message::SendFail() << "Error: no such Label: " << theArgVec[2];
     return 1;
   }
-  // get the transformation
+
   gp_Trsf aTransformation;
   for (int anArgIter = 3; anArgIter < theArgNb; ++anArgIter)
   {
@@ -1354,7 +1320,7 @@ static int setLocation(Draw_Interpretor&, int theArgNb, const char** theArgVec)
       anArgIter += 3;
       aCurTransformation.SetTranslation(aMoveXYZ);
     }
-    // first check scale with base point
+
     else if (anArg == "-scale" && anArgIter + 4 < theArgNb
              && parseXYZ(theArgVec + anArgIter + 1, aScalePnt)
              && Draw::ParseReal(theArgVec[anArgIter + 4], aScale))
@@ -1362,7 +1328,7 @@ static int setLocation(Draw_Interpretor&, int theArgNb, const char** theArgVec)
       anArgIter += 4;
       aCurTransformation.SetScale(gp_Pnt(aScalePnt), aScale);
     }
-    // second check for scale with scale factor only
+
     else if (anArg == "-scale" && anArgIter + 1 < theArgNb
              && Draw::ParseReal(theArgVec[anArgIter + 1], aScale))
     {
@@ -1379,7 +1345,6 @@ static int setLocation(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   }
   TopLoc_Location aLoc(aTransformation);
 
-  // Create the ShapeTool and try to set location
   occ::handle<XCAFDoc_ShapeTool> anAssembly = XCAFDoc_DocumentTool::ShapeTool(aDoc->Main());
   TDF_Label                      aRefLabel;
   if (anAssembly->SetLocation(aShapeLabel, aLoc, aRefLabel))
@@ -1405,8 +1370,6 @@ static int setLocation(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   return 0;
 }
 
-//=================================================================================================
-
 void XDEDRAW_Shapes::InitCommands(Draw_Interpretor& di)
 {
   static bool initactor = false;
@@ -1415,10 +1378,6 @@ void XDEDRAW_Shapes::InitCommands(Draw_Interpretor& di)
     return;
   }
   initactor = true;
-
-  //=====================================
-  // Work with shapes
-  //=====================================
 
   const char* g = "XDE shape's commands";
 

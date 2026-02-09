@@ -21,7 +21,7 @@ namespace
 {
 
 #if defined(_WIN32) && !defined(OCCT_UWP)
-  //! For a 64-bit app running under 64-bit Windows, this is FALSE.
+
   static bool isWow64()
   {
     typedef BOOL(WINAPI * LPFN_ISWOW64PROCESS)(HANDLE, PBOOL);
@@ -38,7 +38,6 @@ namespace
 
 #elif defined(__ANDROID__)
 
-  //! Simple number parser.
   static const char* parseNumber(int&        theResult,
                                  const char* theInput,
                                  const char* theLimit,
@@ -78,7 +77,6 @@ namespace
     return aCharIter;
   }
 
-  //! Read CPUs mask from sysfs.
   static uint32_t readCpuMask(const char* thePath)
   {
     FILE* aFileHandle = fopen(thePath, "rb");
@@ -116,7 +114,6 @@ namespace
         aChunkEnd = anEnd;
       }
 
-      // get first value
       int anIndexLower = 0;
       aCharIter        = parseNumber(anIndexLower, aCharIter, aChunkEnd);
       if (aCharIter == NULL)
@@ -125,7 +122,6 @@ namespace
         return aCpuMask;
       }
 
-      // if we're not at the end of the item, expect a dash and integer; extract end value.
       int anIndexUpper = anIndexLower;
       if (aCharIter < aChunkEnd && *aCharIter == '-')
       {
@@ -137,7 +133,6 @@ namespace
         }
       }
 
-      // set bits CPU list
       for (int aCpuIndex = anIndexLower; aCpuIndex <= anIndexUpper; ++aCpuIndex)
       {
         if ((unsigned int)aCpuIndex < 32)
@@ -166,14 +161,10 @@ namespace
 #endif
 } // namespace
 
-//=================================================================================================
-
 bool OSD_Parallel::ToUseOcctThreads()
 {
   return OSD_Parallel_ToUseOcctThreads;
 }
-
-//=================================================================================================
 
 void OSD_Parallel::SetUseOcctThreads(bool theToUseOcct)
 {
@@ -184,10 +175,6 @@ void OSD_Parallel::SetUseOcctThreads(bool theToUseOcct)
 #endif
 }
 
-//=======================================================================
-// function : NbLogicalProcessors
-// purpose  : Returns number of logical processors.
-//=======================================================================
 int OSD_Parallel::NbLogicalProcessors()
 {
   static int aNumLogicalProcessors = 0;
@@ -196,8 +183,7 @@ int OSD_Parallel::NbLogicalProcessors()
     return aNumLogicalProcessors;
   }
 #ifdef _WIN32
-  // GetSystemInfo() will return the number of processors in a data field in a SYSTEM_INFO
-  // structure.
+
   SYSTEM_INFO aSysInfo;
   #ifndef OCCT_UWP
   if (isWow64())
@@ -207,7 +193,6 @@ int OSD_Parallel::NbLogicalProcessors()
     HMODULE  aKern32      = GetModuleHandleW(L"kernel32");
     LPFN_GSI aFuncSysInfo = (LPFN_GSI)GetProcAddress(aKern32, "GetNativeSystemInfo");
 
-    // So, they suggest 32-bit apps should call this instead of the other in WOW64
     if (aFuncSysInfo != NULL)
     {
       aFuncSysInfo(&aSysInfo);
@@ -238,10 +223,6 @@ int OSD_Parallel::NbLogicalProcessors()
   }
   #endif
 
-  // These are the choices. We'll check number of processors online.
-  // _SC_NPROCESSORS_CONF   Number of processors configured
-  // _SC_NPROCESSORS_MAX    Max number of processors supported by platform
-  // _SC_NPROCESSORS_ONLN   Number of processors online
   aNumLogicalProcessors = (int)sysconf(_SC_NPROCESSORS_ONLN);
 #endif
   return aNumLogicalProcessors;

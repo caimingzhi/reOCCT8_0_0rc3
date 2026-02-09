@@ -11,7 +11,6 @@ class StepGeom_BSplineCurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for BSplineCurve
 class RWStepGeom_RWBSplineCurve
 {
 public:

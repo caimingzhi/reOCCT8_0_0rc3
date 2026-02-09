@@ -10,25 +10,19 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_DatumDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMXCAFDoc_DatumDriver::BinMXCAFDoc_DatumDriver(const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_Datum)->Name())
 {
 }
-
-//=================================================================================================
 
 occ::handle<TDF_Attribute> BinMXCAFDoc_DatumDriver::NewEmpty() const
 {
   return new XCAFDoc_Datum();
 }
 
-//=================================================================================================
-
 bool BinMXCAFDoc_DatumDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                     const occ::handle<TDF_Attribute>& theTarget,
-                                    BinObjMgt_RRelocationTable& /*theRelocTable*/) const
+                                    BinObjMgt_RRelocationTable&) const
 {
   occ::handle<XCAFDoc_Datum> anAtt = occ::down_cast<XCAFDoc_Datum>(theTarget);
   TCollection_AsciiString    aName, aDescr, anId;
@@ -41,12 +35,9 @@ bool BinMXCAFDoc_DatumDriver::Paste(const BinObjMgt_Persistent&       theSource,
   return true;
 }
 
-//=================================================================================================
-
-void BinMXCAFDoc_DatumDriver::Paste(
-  const occ::handle<TDF_Attribute>& theSource,
-  BinObjMgt_Persistent&             theTarget,
-  NCollection_IndexedMap<occ::handle<Standard_Transient>>& /*theRelocTable*/) const
+void BinMXCAFDoc_DatumDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
+                                    BinObjMgt_Persistent&             theTarget,
+                                    NCollection_IndexedMap<occ::handle<Standard_Transient>>&) const
 {
   occ::handle<XCAFDoc_Datum> anAtt = occ::down_cast<XCAFDoc_Datum>(theSource);
   if (!anAtt->GetName().IsNull())

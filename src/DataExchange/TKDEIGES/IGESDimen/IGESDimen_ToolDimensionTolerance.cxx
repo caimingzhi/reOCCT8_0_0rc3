@@ -14,10 +14,10 @@ IGESDimen_ToolDimensionTolerance::IGESDimen_ToolDimensionTolerance() = default;
 
 void IGESDimen_ToolDimensionTolerance::ReadOwnParams(
   const occ::handle<IGESDimen_DimensionTolerance>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /*IR*/,
+  const occ::handle<IGESData_IGESReaderData>&,
   IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   int    tempNbProps;
   int    tempSecondTolFlag;
   int    tempTolTyp;
@@ -29,27 +29,24 @@ void IGESDimen_ToolDimensionTolerance::ReadOwnParams(
   int    tempPrecision;
 
   if (PR.DefinedElseSkip())
-    // clang-format off
-    PR.ReadInteger(PR.Current(), "Number of properties", tempNbProps); //szv#4:S4163:12Mar99 `st=` not needed
+
+    PR.ReadInteger(PR.Current(), "Number of properties", tempNbProps);
   else
     tempNbProps = 8;
 
-  PR.ReadInteger(PR.Current(), "Secondary Tolerance Flag",
-		 tempSecondTolFlag); //szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadInteger(PR.Current(), "Tolerance Type", tempTolTyp); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "Secondary Tolerance Flag", tempSecondTolFlag);
+  PR.ReadInteger(PR.Current(), "Tolerance Type", tempTolTyp);
   if (PR.DefinedElseSkip())
-    PR.ReadInteger(PR.Current(), "Tolerance Placement Flag",
-		   tempTolPlaceFlag); //szv#4:S4163:12Mar99 `st=` not needed
+    PR.ReadInteger(PR.Current(), "Tolerance Placement Flag", tempTolPlaceFlag);
   else
     tempTolPlaceFlag = 2;
 
-  PR.ReadReal(PR.Current(), "Upper Tolerance", tempUpperTol); //szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadReal(PR.Current(), "Lower Tolerance", tempLowerTol); //szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadBoolean(PR.Current(), "Sign Suppression Flag",
-		 tempSignSupFlag); //szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadInteger(PR.Current(), "Fraction Flag", tempFracFlag); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
-  PR.ReadInteger(PR.Current(), "Precision", tempPrecision); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Upper Tolerance", tempUpperTol);
+  PR.ReadReal(PR.Current(), "Lower Tolerance", tempLowerTol);
+  PR.ReadBoolean(PR.Current(), "Sign Suppression Flag", tempSignSupFlag);
+  PR.ReadInteger(PR.Current(), "Fraction Flag", tempFracFlag);
+
+  PR.ReadInteger(PR.Current(), "Precision", tempPrecision);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempNbProps,
@@ -78,16 +75,15 @@ void IGESDimen_ToolDimensionTolerance::WriteOwnParams(
   IW.Send(ent->Precision());
 }
 
-void IGESDimen_ToolDimensionTolerance::OwnShared(
-  const occ::handle<IGESDimen_DimensionTolerance>& /*ent*/,
-  Interface_EntityIterator& /*iter*/) const
+void IGESDimen_ToolDimensionTolerance::OwnShared(const occ::handle<IGESDimen_DimensionTolerance>&,
+                                                 Interface_EntityIterator&) const
 {
 }
 
 void IGESDimen_ToolDimensionTolerance::OwnCopy(
   const occ::handle<IGESDimen_DimensionTolerance>& another,
   const occ::handle<IGESDimen_DimensionTolerance>& ent,
-  Interface_CopyTool& /*TC*/) const
+  Interface_CopyTool&) const
 {
   ent->Init(8,
             another->SecondaryToleranceFlag(),
@@ -113,12 +109,12 @@ bool IGESDimen_ToolDimensionTolerance::OwnCorrect(
               ent->LowerTolerance(),
               (ent->SignSuppressionFlag() ? 1 : 0),
               ent->FractionFlag(),
-              ent->Precision()); // nbpropertyvalues=8
+              ent->Precision());
   return res;
 }
 
 IGESData_DirChecker IGESDimen_ToolDimensionTolerance::DirChecker(
-  const occ::handle<IGESDimen_DimensionTolerance>& /*ent*/) const
+  const occ::handle<IGESDimen_DimensionTolerance>&) const
 {
   IGESData_DirChecker DC(406, 29);
   DC.Structure(IGESData_DefVoid);
@@ -151,9 +147,9 @@ void IGESDimen_ToolDimensionTolerance::OwnCheck(
 }
 
 void IGESDimen_ToolDimensionTolerance::OwnDump(const occ::handle<IGESDimen_DimensionTolerance>& ent,
-                                               const IGESData_IGESDumper& /*dumper*/,
+                                               const IGESData_IGESDumper&,
                                                Standard_OStream& S,
-                                               const int /*level*/) const
+                                               const int) const
 {
   S << "IGESDimen_DimensionTolerance\n"
     << "Number of property values : " << ent->NbPropertyValues() << "\n"

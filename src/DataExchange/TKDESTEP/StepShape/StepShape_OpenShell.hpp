@@ -9,7 +9,6 @@ class StepShape_OpenShell : public StepShape_ConnectedFaceSet
 {
 
 public:
-  //! Returns a OpenShell
   Standard_EXPORT StepShape_OpenShell();
 
   DEFINE_STANDARD_RTTIEXT(StepShape_OpenShell, StepShape_ConnectedFaceSet)

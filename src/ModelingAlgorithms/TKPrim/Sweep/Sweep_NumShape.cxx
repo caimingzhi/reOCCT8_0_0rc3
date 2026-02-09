@@ -1,7 +1,5 @@
 #include <Sweep_NumShape.hpp>
 
-//=================================================================================================
-
 Sweep_NumShape::Sweep_NumShape()
     : myType(TopAbs_SHAPE),
       myIndex(0),
@@ -11,8 +9,6 @@ Sweep_NumShape::Sweep_NumShape()
 
 {
 }
-
-//=================================================================================================
 
 Sweep_NumShape::Sweep_NumShape(const int              Index,
                                const TopAbs_ShapeEnum Type,
@@ -27,8 +23,6 @@ Sweep_NumShape::Sweep_NumShape(const int              Index,
 {
 }
 
-//=================================================================================================
-
 void Sweep_NumShape::Init(const int              Index,
                           const TopAbs_ShapeEnum Type,
                           const bool             Closed,
@@ -41,8 +35,6 @@ void Sweep_NumShape::Init(const int              Index,
   myBegInf = BegInf;
   myEndInf = EndInf;
 }
-
-//=================================================================================================
 
 TopAbs_Orientation Sweep_NumShape::Orientation() const
 {

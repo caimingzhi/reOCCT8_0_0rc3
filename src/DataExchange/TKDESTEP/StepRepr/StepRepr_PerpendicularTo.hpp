@@ -4,7 +4,6 @@
 #include <Standard_Type.hpp>
 #include <StepRepr_DerivedShapeAspect.hpp>
 
-//! Added for Dimensional Tolerances
 class StepRepr_PerpendicularTo : public StepRepr_DerivedShapeAspect
 {
 

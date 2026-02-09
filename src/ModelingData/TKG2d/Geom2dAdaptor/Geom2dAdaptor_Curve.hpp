@@ -21,38 +21,27 @@ class gp_Parab2d;
 class Geom2d_BezierCurve;
 class Geom2d_BSplineCurve;
 
-//! An interface between the services provided by any
-//! curve from the package Geom2d and those required
-//! of the curve by algorithms which use it.
-//!
-//! Polynomial coefficients of BSpline curves used for their evaluation are
-//! cached for better performance. Therefore these evaluations are not
-//! thread-safe and parallel evaluations need to be prevented.
 class Geom2dAdaptor_Curve : public Adaptor2d_Curve2d
 {
   DEFINE_STANDARD_RTTIEXT(Geom2dAdaptor_Curve, Adaptor2d_Curve2d)
 public:
-  //! Internal structure for 2D offset curve evaluation data.
   struct OffsetData
   {
-    occ::handle<Geom2dAdaptor_Curve> BasisAdaptor; //!< Adaptor for basis curve
-    double                           Offset = 0.0; //!< Offset distance
+    occ::handle<Geom2dAdaptor_Curve> BasisAdaptor;
+    double                           Offset = 0.0;
   };
 
-  //! Internal structure for Bezier curve evaluation data.
   struct BezierData
   {
-    mutable occ::handle<BSplCLib_Cache> Cache; //!< Cached data for evaluation
+    mutable occ::handle<BSplCLib_Cache> Cache;
   };
 
-  //! Internal structure for BSpline curve evaluation data.
   struct BSplineData
   {
-    occ::handle<Geom2d_BSplineCurve>    Curve; //!< BSpline curve to prevent downcasts
-    mutable occ::handle<BSplCLib_Cache> Cache; //!< Cached data for evaluation
+    occ::handle<Geom2d_BSplineCurve>    Curve;
+    mutable occ::handle<BSplCLib_Cache> Cache;
   };
 
-  //! Variant type for 2D curve-specific evaluation data.
   using CurveDataVariant = std::variant<std::monostate, OffsetData, BezierData, BSplineData>;
 
 public:
@@ -60,15 +49,12 @@ public:
 
   Standard_EXPORT Geom2dAdaptor_Curve(const occ::handle<Geom2d_Curve>& C);
 
-  //! Standard_ConstructionError is raised if Ufirst>Ulast
   Standard_EXPORT Geom2dAdaptor_Curve(const occ::handle<Geom2d_Curve>& C,
                                       const double                     UFirst,
                                       const double                     ULast);
 
-  //! Shallow copy of adaptor
   Standard_EXPORT occ::handle<Adaptor2d_Curve2d> ShallowCopy() const override;
 
-  //! Reset currently loaded curve (undone Load()).
   Standard_EXPORT void Reset();
 
   void Load(const occ::handle<Geom2d_Curve>& theCurve)
@@ -80,7 +66,6 @@ public:
     load(theCurve, theCurve->FirstParameter(), theCurve->LastParameter());
   }
 
-  //! Standard_ConstructionError is raised if theUFirst > theULast + Precision::PConfusion()
   void Load(const occ::handle<Geom2d_Curve>& theCurve,
             const double                     theUFirst,
             const double                     theULast)
@@ -104,23 +89,11 @@ public:
 
   Standard_EXPORT GeomAbs_Shape Continuity() const override;
 
-  //! If necessary, breaks the curve in intervals of
-  //! continuity <S>. And returns the number of
-  //! intervals.
   Standard_EXPORT int NbIntervals(const GeomAbs_Shape S) const override;
 
-  //! Stores in <T> the parameters bounding the intervals
-  //! of continuity <S>.
-  //!
-  //! The array must provide enough room to accommodate
-  //! for the parameters. i.e. T.Length() > NbIntervals()
   Standard_EXPORT void Intervals(NCollection_Array1<double>& T,
                                  const GeomAbs_Shape         S) const override;
 
-  //! Returns a curve equivalent of <me> between
-  //! parameters <First> and <Last>. <Tol> is used to
-  //! test for 3d points confusion.
-  //! If <First> >= <Last>
   Standard_EXPORT occ::handle<Adaptor2d_Curve2d> Trim(const double First,
                                                       const double Last,
                                                       const double Tol) const override;
@@ -131,42 +104,22 @@ public:
 
   Standard_EXPORT double Period() const override;
 
-  //! Computes the point of parameter U on the curve
   Standard_EXPORT gp_Pnt2d Value(const double U) const override;
 
-  //! Computes the point of parameter U.
   Standard_EXPORT void D0(const double U, gp_Pnt2d& P) const override;
 
-  //! Computes the point of parameter U on the curve with its
-  //! first derivative.
-  //! Raised if the continuity of the current interval
-  //! is not C1.
   Standard_EXPORT void D1(const double U, gp_Pnt2d& P, gp_Vec2d& V) const override;
 
-  //! Returns the point P of parameter U, the first and second
-  //! derivatives V1 and V2.
-  //! Raised if the continuity of the current interval
-  //! is not C2.
   Standard_EXPORT void D2(const double U, gp_Pnt2d& P, gp_Vec2d& V1, gp_Vec2d& V2) const override;
 
-  //! Returns the point P of parameter U, the first, the second
-  //! and the third derivative.
-  //! Raised if the continuity of the current interval
-  //! is not C3.
   Standard_EXPORT void D3(const double U,
                           gp_Pnt2d&    P,
                           gp_Vec2d&    V1,
                           gp_Vec2d&    V2,
                           gp_Vec2d&    V3) const override;
 
-  //! The returned vector gives the value of the derivative for the
-  //! order of derivation N.
-  //! Raised if the continuity of the current interval
-  //! is not CN.
-  //! Raised if N < 1.
   Standard_EXPORT gp_Vec2d DN(const double U, const int N) const override;
 
-  //! returns the parametric resolution
   Standard_EXPORT double Resolution(const double Ruv) const override;
 
   GeomAbs_CurveType GetType() const override { return myTypeCurve; }
@@ -202,12 +155,8 @@ private:
                             const double                     UFirst,
                             const double                     ULast);
 
-  //! Check theU relates to start or finish point of B-spline curve and return indices of span the
-  //! point is located
   bool IsBoundary(const double theU, int& theSpanStart, int& theSpanFinish) const;
 
-  //! Rebuilds B-spline cache
-  //! \param theParameter the value on the knot axis which identifies the caching span
   void RebuildCache(const double theParameter) const;
 
 protected:
@@ -215,5 +164,5 @@ protected:
   GeomAbs_CurveType         myTypeCurve;
   double                    myFirst;
   double                    myLast;
-  CurveDataVariant myCurveData; ///< Curve-specific evaluation data (BSpline, Bezier, offset)
+  CurveDataVariant          myCurveData;
 };

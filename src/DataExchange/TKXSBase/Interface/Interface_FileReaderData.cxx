@@ -1,21 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//====================================================================
-// #10 smh 22.12.99 Protection (case of unexisting directory entry in file)
-// sln 21.01.2002 OCC133: Exception handling was added in method
-// Interface_FileReaderData::BoundEntity
-//====================================================================
 
 #include <Interface_FileParameter.hpp>
 #include <Interface_FileReaderData.hpp>
@@ -28,13 +11,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Interface_FileReaderData, Standard_Transient)
 
-//  Stores Data from a File (Preserved in Literal form)
-//  Each standard can use it as a base (literal parameter lists,
-//  associated entities) and add its own data to it.
-//  Works under the control of FileReaderTool
-//  Optimization : Fields not possible, because Param is const. Too bad
-//  So, we assume that we read one file at a time (reasonable assumption)
-//  We note in field a file number, relative to which we optimize
 static int thefic = 0;
 static int thenm0 = -1;
 static int thenp0 = -1;
@@ -64,14 +40,12 @@ int Interface_FileReaderData::NbEntities() const
   return nb;
 }
 
-//  ....            Management of Parameters attached to Records            ....
-
 void Interface_FileReaderData::InitParams(const int num)
 {
   thenumpar.SetValue(num, theparams->NbParams());
 }
 
-void Interface_FileReaderData::AddParam(const int /*num*/,
+void Interface_FileReaderData::AddParam(const int,
                                         const char*               aval,
                                         const Interface_ParamType atype,
                                         const int                 nument)
@@ -79,7 +53,7 @@ void Interface_FileReaderData::AddParam(const int /*num*/,
   theparams->Append(aval, -1, atype, nument);
 }
 
-void Interface_FileReaderData::AddParam(const int /*num*/,
+void Interface_FileReaderData::AddParam(const int,
                                         const TCollection_AsciiString& aval,
                                         const Interface_ParamType      atype,
                                         const int                      nument)
@@ -87,7 +61,7 @@ void Interface_FileReaderData::AddParam(const int /*num*/,
   theparams->Append(aval.ToCString(), aval.Length(), atype, nument);
 }
 
-void Interface_FileReaderData::AddParam(const int /*num*/, const Interface_FileParameter& FP)
+void Interface_FileReaderData::AddParam(const int, const Interface_FileParameter& FP)
 {
   theparams->Append(FP);
 }
@@ -112,7 +86,7 @@ int Interface_FileReaderData::NbParams(const int num) const
 occ::handle<Interface_ParamList> Interface_FileReaderData::Params(const int num) const
 {
   if (num == 0)
-    return theparams->Params(0, 0); // complet
+    return theparams->Params(0, 0);
   else if (num == 1)
     return theparams->Params(0, thenumpar(1));
   else
@@ -217,10 +191,8 @@ bool Interface_FileReaderData::ResetErrorLoad()
   return res;
 }
 
-//  ....        Management of Entities Associated with File Data       ....
-
 const occ::handle<Standard_Transient>& Interface_FileReaderData::BoundEntity(const int num) const
-//      {  return theents(num);  }
+
 {
   if (num >= theents.Lower() && num <= theents.Upper())
   {
@@ -232,41 +204,11 @@ const occ::handle<Standard_Transient>& Interface_FileReaderData::BoundEntity(con
     return dummy;
   }
 }
-/*  //static occ::handle<Standard_Transient> dummy;
-  {
-  //smh#10 Protection. If iges entity does not exist, return null pointer.
-    try {
-      OCC_CATCH_SIGNALS
-      occ::handle<Standard_Transient> temp = theents.Value(num);
-    }
-  ////sln 21.01.2002 OCC133: Exception handling
- // catch (Standard_OutOfRange) {
- //   std::cout<<" Catch of sln"<<std::endl;
-
- //   return dummy;
- // }
-    catch (Standard_Failure) {
-
-    // some work-around, the best would be to modify CDL to
-    // return "occ::handle<Standard_Transient>" not "const occ::handle<Standard_Transient>&"
-      static occ::handle<Standard_Transient> dummy;
-     // std::cout<<" Catch of smh"<<std::endl;
-    return dummy;
-    }
-  }
-   //std::cout<<" Normal"<<std::endl;
-  if (theents.Value(num).IsImmutable()) std::cout << "IMMUTABLE:"<<num<<std::endl;
-  return theents(num);
-}
-*/
 
 void Interface_FileReaderData::BindEntity(const int num, const occ::handle<Standard_Transient>& ent)
-//      {  theents.SetValue(num,ent);  }
+
 {
-  //  #ifdef OCCT_DEBUG
-  //    if (ent.IsImmutable())
-  //      std::cout << "Bind IMMUTABLE:"<<num<<std::endl;
-  //  #endif
+
   theents.SetValue(num, ent);
 }
 

@@ -7,18 +7,12 @@
 #include <NCollection_Array2.hpp>
 #include <Standard_Integer.hpp>
 
-//=================================================================================================
-
 GeomFill_Generator::GeomFill_Generator() = default;
-
-//=================================================================================================
 
 void GeomFill_Generator::Perform(const double PTol)
 {
-  // Perform the profile of the sections.
-  GeomFill_Profiler::Perform(PTol);
 
-  // Create the surface.
+  GeomFill_Profiler::Perform(PTol);
 
   int  i, j;
   int  NbUPoles    = NbPoles();

@@ -5,28 +5,20 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_SweptSurface, Geom_Surface)
 
-//=================================================================================================
-
 GeomAbs_Shape Geom_SweptSurface::Continuity() const
 {
   return smooth;
 }
-
-//=================================================================================================
 
 const gp_Dir& Geom_SweptSurface::Direction() const
 {
   return direction;
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> Geom_SweptSurface::BasisCurve() const
 {
   return basisCurve;
 }
-
-//=================================================================================================
 
 void Geom_SweptSurface::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

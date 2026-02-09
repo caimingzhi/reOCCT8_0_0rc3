@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_DimensionalLocationWithPath, StepShape_DimensionalLocation)
 
-//=================================================================================================
-
 StepShape_DimensionalLocationWithPath::StepShape_DimensionalLocationWithPath() = default;
-
-//=================================================================================================
 
 void StepShape_DimensionalLocationWithPath::Init(
   const occ::handle<TCollection_HAsciiString>& aShapeAspectRelationship_Name,
@@ -27,14 +23,10 @@ void StepShape_DimensionalLocationWithPath::Init(
   thePath = aPath;
 }
 
-//=================================================================================================
-
 occ::handle<StepRepr_ShapeAspect> StepShape_DimensionalLocationWithPath::Path() const
 {
   return thePath;
 }
-
-//=================================================================================================
 
 void StepShape_DimensionalLocationWithPath::SetPath(const occ::handle<StepRepr_ShapeAspect>& aPath)
 {

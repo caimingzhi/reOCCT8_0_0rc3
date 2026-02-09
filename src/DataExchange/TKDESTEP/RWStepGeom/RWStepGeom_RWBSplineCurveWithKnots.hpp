@@ -12,8 +12,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class Interface_ShareTool;
 
-//! Read & Write Module for BSplineCurveWithKnots
-//! Check added by CKY , 7-OCT-1996
 class RWStepGeom_RWBSplineCurveWithKnots
 {
 public:

@@ -4,13 +4,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_GraphicDriver, Standard_Transient)
 
-//=================================================================================================
-
 Graphic3d_GraphicDriver::Graphic3d_GraphicDriver(
   const occ::handle<Aspect_DisplayConnection>& theDisp)
     : myDisplayConnection(theDisp)
 {
-  // default layers are always presented in display layer sequence and cannot be removed
+
   {
     Graphic3d_ZLayerSettings aSettings;
     aSettings.SetName("UNDERLAY");
@@ -97,28 +95,20 @@ Graphic3d_GraphicDriver::Graphic3d_GraphicDriver(
   }
 }
 
-//=================================================================================================
-
 const occ::handle<Aspect_DisplayConnection>& Graphic3d_GraphicDriver::GetDisplayConnection() const
 {
   return myDisplayConnection;
 }
-
-//=================================================================================================
 
 int Graphic3d_GraphicDriver::NewIdentification()
 {
   return myStructGenId.Next();
 }
 
-//=================================================================================================
-
 void Graphic3d_GraphicDriver::RemoveIdentification(const int theId)
 {
   myStructGenId.Free(theId);
 }
-
-//=================================================================================================
 
 const Graphic3d_ZLayerSettings& Graphic3d_GraphicDriver::ZLayerSettings(
   const Graphic3d_ZLayerId theLayerId) const
@@ -132,13 +122,10 @@ const Graphic3d_ZLayerSettings& Graphic3d_GraphicDriver::ZLayerSettings(
   return (*aLayer)->LayerSettings();
 }
 
-//=================================================================================================
-
 void Graphic3d_GraphicDriver::ZLayers(NCollection_Sequence<int>& theLayerSeq) const
 {
   theLayerSeq.Clear();
 
-  // append normal layers
   for (NCollection_List<occ::handle<Graphic3d_Layer>>::Iterator aLayerIter(myLayers);
        aLayerIter.More();
        aLayerIter.Next())
@@ -150,7 +137,6 @@ void Graphic3d_GraphicDriver::ZLayers(NCollection_Sequence<int>& theLayerSeq) co
     }
   }
 
-  // append immediate layers
   for (NCollection_List<occ::handle<Graphic3d_Layer>>::Iterator aLayerIter(myLayers);
        aLayerIter.More();
        aLayerIter.Next())
@@ -162,8 +148,6 @@ void Graphic3d_GraphicDriver::ZLayers(NCollection_Sequence<int>& theLayerSeq) co
     }
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_GraphicDriver::InsertLayerBefore(const Graphic3d_ZLayerId        theNewLayerId,
                                                 const Graphic3d_ZLayerSettings& theSettings,
@@ -201,8 +185,6 @@ void Graphic3d_GraphicDriver::InsertLayerBefore(const Graphic3d_ZLayerId        
   myLayerIds.Bind(theNewLayerId, aNewLayer);
 }
 
-//=================================================================================================
-
 void Graphic3d_GraphicDriver::InsertLayerAfter(const Graphic3d_ZLayerId        theNewLayerId,
                                                const Graphic3d_ZLayerSettings& theSettings,
                                                const Graphic3d_ZLayerId        theLayerBefore)
@@ -239,8 +221,6 @@ void Graphic3d_GraphicDriver::InsertLayerAfter(const Graphic3d_ZLayerId        t
   myLayerIds.Bind(theNewLayerId, aNewLayer);
 }
 
-//=================================================================================================
-
 void Graphic3d_GraphicDriver::RemoveZLayer(const Graphic3d_ZLayerId theLayerId)
 {
   Standard_ASSERT_RAISE(theLayerId > 0,
@@ -256,8 +236,6 @@ void Graphic3d_GraphicDriver::RemoveZLayer(const Graphic3d_ZLayerId theLayerId)
   myLayerIds.UnBind(theLayerId);
 }
 
-//=================================================================================================
-
 void Graphic3d_GraphicDriver::SetZLayerSettings(const Graphic3d_ZLayerId        theLayerId,
                                                 const Graphic3d_ZLayerSettings& theSettings)
 {
@@ -268,8 +246,6 @@ void Graphic3d_GraphicDriver::SetZLayerSettings(const Graphic3d_ZLayerId        
     "Graphic3d_GraphicDriver::SetZLayerSettings, Layer with theLayerId does not exist");
   aLayerDef->SetLayerSettings(theSettings);
 }
-
-//=================================================================================================
 
 void Graphic3d_GraphicDriver::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

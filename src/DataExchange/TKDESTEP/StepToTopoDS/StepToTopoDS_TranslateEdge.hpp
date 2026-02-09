@@ -37,8 +37,6 @@ public:
                             StepToTopoDS_NMTool&               NMTool,
                             const StepData_Factors& theLocalFactors = StepData_Factors());
 
-  //! Warning! C3D is assumed to be a Curve 3D ...
-  //! other cases to checked before calling this
   Standard_EXPORT void MakeFromCurve3D(
     const occ::handle<StepGeom_Curve>&      C3D,
     const occ::handle<StepShape_EdgeCurve>& EC,

@@ -13,8 +13,6 @@
 #include <StdPrs_PoleCurve.hpp>
 #include <NCollection_Array1.hpp>
 
-//=================================================================================================
-
 void StdPrs_PoleCurve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                            const Adaptor3d_Curve&                 aCurve,
                            const occ::handle<Prs3d_Drawer>&       aDrawer)
@@ -58,14 +56,12 @@ void StdPrs_PoleCurve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
   }
 }
 
-//=================================================================================================
-
 bool StdPrs_PoleCurve::Match(const double           X,
                              const double           Y,
                              const double           Z,
                              const double           aDistance,
                              const Adaptor3d_Curve& aCurve,
-                             const occ::handle<Prs3d_Drawer>& /*aDrawer*/)
+                             const occ::handle<Prs3d_Drawer>&)
 {
   GeomAbs_CurveType CType = aCurve.GetType();
   int               i, Nb = 0;
@@ -97,14 +93,12 @@ bool StdPrs_PoleCurve::Match(const double           X,
   return false;
 }
 
-//=================================================================================================
-
 int StdPrs_PoleCurve::Pick(const double           X,
                            const double           Y,
                            const double           Z,
                            const double           aDistance,
                            const Adaptor3d_Curve& aCurve,
-                           const occ::handle<Prs3d_Drawer>& /*aDrawer*/)
+                           const occ::handle<Prs3d_Drawer>&)
 {
   double            x, y, z, DistMin = RealLast();
   int               num = 0, i, Nb = 0;

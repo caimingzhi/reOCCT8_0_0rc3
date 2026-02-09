@@ -8,8 +8,6 @@
 #include <Standard_Transient.hpp>
 class Geom2d_Curve;
 
-//! Project 3D point (vertex) on pcurves to find Vertex Parameter
-//! on parametric representation of an edge
 class ShapeFix_EdgeProjAux : public Standard_Transient
 {
 

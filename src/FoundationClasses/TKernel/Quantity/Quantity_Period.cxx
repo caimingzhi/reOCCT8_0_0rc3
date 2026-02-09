@@ -1,38 +1,10 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// -------------------------------------------------------------
-// C matra datavision 1993
-// Period class implementation.
-// Updated :
-// -------------------------------------------------------------
 
 #include <Quantity_Period.hpp>
 #include <Quantity_PeriodDefinitionError.hpp>
 
 #include "Quantity_TimeConstants.hpp"
 
-// -----------------------------------------------------------
-// IsValid : Checks the validity of a date
-// With:
-// 0 <= dd
-// 0 <= hh
-// 0 <= mn
-// 0 <= ss
-// 0 <= mis
-// 0 <= mics
-// -----------------------------------------------------------
 bool Quantity_Period::IsValid(const int dd,
                               const int hh,
                               const int mn,
@@ -43,22 +15,11 @@ bool Quantity_Period::IsValid(const int dd,
   return (dd >= 0 && hh >= 0 && mn >= 0 && ss >= 0 && mis >= 0 && mics >= 0);
 }
 
-// -------------------------------------------------------------
-// IsValid : Checks the validity of a date
-// With:
-// 0 <= ss
-// 0 <= mics
-// -------------------------------------------------------------
 bool Quantity_Period::IsValid(const int ss, const int mics)
 {
   return (ss >= 0 && mics >= 0);
 }
 
-// -------------------------------------------------------------
-// Create : Creates a period with a number of seconds
-// ~~~~~~   and microseconds.
-//
-// -------------------------------------------------------------
 Quantity_Period::Quantity_Period(const int dd,
                                  const int hh,
                                  const int mn,
@@ -72,11 +33,6 @@ Quantity_Period::Quantity_Period(const int dd,
   SetValues(dd, hh, mn, ss, mils, mics);
 }
 
-// -------------------------------------------------------------
-// Create : Creates a period with a number of seconds
-// ~~~~~~   and microseconds.
-//
-// -------------------------------------------------------------
 Quantity_Period::Quantity_Period(const int ss, const int mics)
     : mySec(0),
       myUSec(0)
@@ -85,10 +41,6 @@ Quantity_Period::Quantity_Period(const int ss, const int mics)
   SetValues(ss, mics);
 }
 
-// -------------------------------------------------------------
-// Values : Returns a period with the number of days,hours,
-// ~~~~~~   minutes,seconds,milliseconds and microseconds.
-// -------------------------------------------------------------
 void Quantity_Period::Values(int& dd, int& hh, int& mn, int& ss, int& mis, int& mics) const
 {
   int carry = mySec;
@@ -98,10 +50,6 @@ void Quantity_Period::Values(int& dd, int& hh, int& mn, int& ss, int& mis, int& 
   extractMillisAndMicros(myUSec, mis, mics);
 }
 
-// -------------------------------------------------------------
-// Values : Returns a period with the number of seconds and
-// ~~~~~~   microseconds.
-// -------------------------------------------------------------
 void Quantity_Period::Values(int& ss, int& mics) const
 {
 
@@ -109,10 +57,6 @@ void Quantity_Period::Values(int& ss, int& mics) const
   mics = myUSec;
 }
 
-// -------------------------------------------------------------
-// SetValues : Sets a period with a number of days,hours,minutes,
-// ~~~~~~~~~   seconds and microseconds.
-// -------------------------------------------------------------
 void Quantity_Period::SetValues(const int dd,
                                 const int hh,
                                 const int mn,
@@ -124,10 +68,6 @@ void Quantity_Period::SetValues(const int dd,
             mils * USECS_PER_MSEC + mics);
 }
 
-// -------------------------------------------------------------
-// SetValues : Sets a period with a number of seconds and
-// ~~~~~~~~~   microseconds.
-// -------------------------------------------------------------
 void Quantity_Period::SetValues(const int ss, const int mics)
 {
 
@@ -139,10 +79,6 @@ void Quantity_Period::SetValues(const int ss, const int mics)
   normalizeAdditionOverflow(mySec, myUSec);
 }
 
-// -------------------------------------------------------------
-// Subtract : Subtracts a period to another period
-// ~~~~~~~~
-// -------------------------------------------------------------
 Quantity_Period Quantity_Period::Subtract(const Quantity_Period& OtherPeriod) const
 {
   Quantity_Period result(mySec, myUSec);
@@ -152,8 +88,6 @@ Quantity_Period Quantity_Period::Subtract(const Quantity_Period& OtherPeriod) co
 
   normalizeSubtractionBorrow(result.mySec, result.myUSec);
 
-  // Handle negative result (convert to absolute value)
-  // Note: after normalization, myUSec is always in [0, 999999]
   if (result.mySec < 0)
   {
     result.mySec = std::abs(result.mySec);
@@ -166,10 +100,6 @@ Quantity_Period Quantity_Period::Subtract(const Quantity_Period& OtherPeriod) co
   return (result);
 }
 
-// -------------------------------------------------------------
-// Add : Adds a period to another period
-// ~~~
-// -------------------------------------------------------------
 Quantity_Period Quantity_Period::Add(const Quantity_Period& OtherPeriod) const
 {
 

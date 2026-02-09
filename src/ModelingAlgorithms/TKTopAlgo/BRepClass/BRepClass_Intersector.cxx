@@ -60,11 +60,7 @@ static double MaxTol2DCurEdge(const TopoDS_Vertex& theV1,
 
 static bool IsInter(Bnd_Box2d& theBox, const gp_Lin2d& theL, const double theP);
 
-//=================================================================================================
-
 BRepClass_Intersector::BRepClass_Intersector() = default;
-
-//=================================================================================================
 
 double MaxTol2DCurEdge(const TopoDS_Vertex& theV1,
                        const TopoDS_Vertex& theV2,
@@ -96,12 +92,10 @@ double MaxTol2DCurEdge(const TopoDS_Vertex& theV1,
   anUr   = aS.UResolution(aTolV3D);
   aVr    = aS.VResolution(aTolV3D);
   aTol2D = std::max(anUr, aVr);
-  //
+
   aTol2D = std::max(aTol2D, theTol);
   return aTol2D;
 }
-
-//=================================================================================================
 
 bool IsInter(Bnd_Box2d& theBox, const gp_Lin2d& theL, const double theP)
 {
@@ -118,8 +112,6 @@ bool IsInter(Bnd_Box2d& theBox, const gp_Lin2d& theL, const double theP)
   }
   return !aStatusInter;
 }
-
-//=================================================================================================
 
 bool CheckOn(IntRes2d_IntersectionPoint& thePntInter,
              const TopoDS_Face&          theF,
@@ -155,9 +147,9 @@ bool CheckOn(IntRes2d_IntersectionPoint& thePntInter,
   {
     gp_Pnt2d aPntExact = (anExtPC2d.Point(aMinInd)).Value();
     double   aPar      = (anExtPC2d.Point(aMinInd)).Parameter();
-    //
+
     RefineTolerance(theF, theCur, aPar, theTolZ);
-    //
+
     if (aMinDist <= theTolZ)
     {
       IntRes2d_Transition aTrOnLin(IntRes2d_Head);
@@ -170,17 +162,15 @@ bool CheckOn(IntRes2d_IntersectionPoint& thePntInter,
       {
         aPosOnCurve = IntRes2d_End;
       }
-      //
+
       IntRes2d_Transition aTrOnCurve(aPosOnCurve);
       thePntInter = IntRes2d_IntersectionPoint(aPntExact, 0., aPar, aTrOnLin, aTrOnCurve, false);
-      //
+
       return true;
     }
   }
   return false;
 }
-
-//=================================================================================================
 
 void CheckSkip(Geom2dInt_GInter&                theInter,
                const gp_Lin2d&                  theL,
@@ -200,7 +190,7 @@ void CheckSkip(Geom2dInt_GInter&                theInter,
     return;
   }
   bool          anIsLSkip = false;
-  TopoDS_Vertex aVl; // the last vertex of current edge
+  TopoDS_Vertex aVl;
 
   occ::handle<Geom2d_Curve> aSkipC2D;
 
@@ -214,16 +204,16 @@ void CheckSkip(Geom2dInt_GInter&                theInter,
     return;
   }
   double                    aLdeb = 0.0, aLfin = 0.0;
-  occ::handle<Geom2d_Curve> aLC2D; // the next curve
+  occ::handle<Geom2d_Curve> aLC2D;
 
   aLC2D = BRep_Tool::CurveOnSurface(theE.NextEdge(), theE.Face(), aLdeb, aLfin);
   if (aLC2D.IsNull())
   {
     return;
   }
-  double   anA, aB, aC;          // coefficients of the straight line
-  double   aX1, anY1, aX2, anY2; // coordinates of the ends of edges
-  gp_Pnt2d aP1, aP2;             // the ends of edges
+  double   anA, aB, aC;
+  double   aX1, anY1, aX2, anY2;
+  gp_Pnt2d aP1, aP2;
 
   theL.Coefficients(anA, aB, aC);
 
@@ -242,7 +232,6 @@ void CheckSkip(Geom2dInt_GInter&                theInter,
   aP1 = theC2D->Value(at1);
   aP2 = aLC2D->Value(at2);
 
-  // Check if points belong to DL domain
   double aPar1 = ElCLib::Parameter(theL, aP1);
   double aPar2 = ElCLib::Parameter(theL, aP2);
 
@@ -258,7 +247,6 @@ void CheckSkip(Geom2dInt_GInter&                theInter,
   double aFV = anA * aX1 + aB * anY1 + aC;
   double aSV = anA * aX2 + aB * anY2 + aC;
 
-  // Check for getting into vertex with high tolerance
   if ((aFV * aSV) >= 0)
   {
     anIsLSkip = false;
@@ -277,7 +265,7 @@ void CheckSkip(Geom2dInt_GInter&                theInter,
     {
       return;
     }
-    // if we got
+
     theCur.Load(aSkipC2D);
     if (theCur.Curve().IsNull())
     {
@@ -291,7 +279,7 @@ void CheckSkip(Geom2dInt_GInter&                theInter,
     theCur.D0(theFin, thePfin);
 
     IntRes2d_Domain aDE(thePdeb, theDeb, atoldeb, thePfin, theFin, atolfin);
-    // temporary periodic domain
+
     if (theCur.Curve()->IsPeriodic())
     {
       aDE.SetEquivalentParameters(theCur.FirstParameter(),
@@ -308,8 +296,6 @@ void CheckSkip(Geom2dInt_GInter&                theInter,
   }
 }
 
-//=================================================================================================
-
 void BRepClass_Intersector::Perform(const gp_Lin2d&       L,
                                     const double          P,
                                     const double          Tol,
@@ -317,18 +303,17 @@ void BRepClass_Intersector::Perform(const gp_Lin2d&       L,
 {
   double                    deb = 0.0, fin = 0.0, aTolZ = Tol;
   occ::handle<Geom2d_Curve> aC2D;
-  //
+
   const TopoDS_Edge& EE = E.Edge();
   const TopoDS_Face& F  = E.Face();
 
-  //
   aC2D = BRep_Tool::CurveOnSurface(EE, F, deb, fin);
   if (aC2D.IsNull())
   {
-    done = false; // !IsDone()
+    done = false;
     return;
   }
-  //
+
   Bnd_Box2d aBond;
   gp_Pnt2d  aPntF;
   bool      anUseBndBox = E.UseBndBox();
@@ -338,11 +323,9 @@ void BRepClass_Intersector::Perform(const gp_Lin2d&       L,
     aBond.SetGap(aTolZ);
     aPntF = L.Location();
   }
-  //
+
   Geom2dAdaptor_Curve C(aC2D, deb, fin);
-  //
-  // Case of "ON": direct check of belonging to edge
-  // taking into account the tolerance
+
   if (!anUseBndBox || (anUseBndBox && !aBond.IsOut(aPntF)))
   {
     bool                       aStatusOn = false;
@@ -364,7 +347,7 @@ void BRepClass_Intersector::Perform(const gp_Lin2d&       L,
       return;
     }
   }
-  //
+
   if (anUseBndBox)
   {
     TopoDS_Vertex aVF, aVL;
@@ -385,7 +368,7 @@ void BRepClass_Intersector::Perform(const gp_Lin2d&       L,
   double toldeb = 1.e-5, tolfin = 1.e-5;
 
   IntRes2d_Domain DL;
-  //
+
   if (P != RealLast())
   {
     DL.SetValues(L.Location(),
@@ -401,7 +384,7 @@ void BRepClass_Intersector::Perform(const gp_Lin2d&       L,
   }
 
   IntRes2d_Domain DE(pdeb, deb, toldeb, pfin, fin, tolfin);
-  // temporary periodic domain
+
   if (C.Curve()->IsPeriodic())
   {
     DE.SetEquivalentParameters(C.FirstParameter(),
@@ -412,19 +395,14 @@ void BRepClass_Intersector::Perform(const gp_Lin2d&       L,
   occ::handle<Geom2d_Line> GL = new Geom2d_Line(L);
   Geom2dAdaptor_Curve      CGA(GL);
   Geom2dInt_GInter Inter(CGA, DL, C, DE, Precision::PConfusion(), Precision::PIntersection());
-  //
-  // The check is for hitting the intersector to
-  // a vertex with high tolerance
+
   if (Inter.IsEmpty())
   {
     CheckSkip(Inter, L, E, aC2D, DL, C, CGA, fin, deb, E.MaxTolerance(), pdeb, pfin);
   }
 
-  //
   SetValues(Inter);
 }
-
-//=================================================================================================
 
 void BRepClass_Intersector::LocalGeometry(const BRepClass_Edge& E,
                                           const double          U,
@@ -451,49 +429,45 @@ void BRepClass_Intersector::LocalGeometry(const BRepClass_Edge& E,
     Norm.SetCoord(Tang.Y(), -Tang.X());
 }
 
-//=================================================================================================
-
 void RefineTolerance(const TopoDS_Face&         aF,
                      const Geom2dAdaptor_Curve& aC,
                      const double               aT,
                      double&                    aTolZ)
 {
   GeomAbs_SurfaceType aTypeS;
-  //
+
   BRepAdaptor_Surface aBAS(aF, false);
-  //
+
   aTypeS = aBAS.GetType();
   if (aTypeS == GeomAbs_Cylinder)
   {
     double   aURes, aVRes, aTolX;
     gp_Pnt2d aP2D;
     gp_Vec2d aV2D;
-    //
+
     aURes = aBAS.UResolution(aTolZ);
     aVRes = aBAS.VResolution(aTolZ);
-    //
+
     aC.D1(aT, aP2D, aV2D);
     gp_Dir2d aD2D(aV2D);
-    //
+
     aTolX = aURes * aD2D.Y() + aVRes * aD2D.X();
     if (aTolX < 0.)
     {
       aTolX = -aTolX;
     }
-    //
+
     if (aTolX < Precision::Confusion())
     {
       aTolX = Precision::Confusion();
     }
-    //
+
     if (aTolX < aTolZ)
     {
       aTolZ = aTolX;
     }
   }
 }
-
-//=================================================================================================
 
 void GetTangentAsChord(const occ::handle<Geom2d_Curve>& thePCurve,
                        gp_Dir2d&                        theTangent,
@@ -503,9 +477,9 @@ void GetTangentAsChord(const occ::handle<Geom2d_Curve>& thePCurve,
 {
   double Offset = 0.1 * (theLast - theFirst);
 
-  if (theLast - theParam < Precision::PConfusion()) // theParam == theLast
+  if (theLast - theParam < Precision::PConfusion())
     Offset *= -1;
-  else if (theParam + Offset > theLast) //<theParam> is close to <theLast>
+  else if (theParam + Offset > theLast)
     Offset = 0.5 * (theLast - theParam);
 
   gp_Pnt2d aPnt2d      = thePCurve->Value(theParam);

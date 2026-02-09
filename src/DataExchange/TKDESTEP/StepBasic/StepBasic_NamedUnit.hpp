@@ -10,7 +10,6 @@ class StepBasic_NamedUnit : public Standard_Transient
 {
 
 public:
-  //! Returns a NamedUnit
   Standard_EXPORT StepBasic_NamedUnit();
 
   Standard_EXPORT void Init(const occ::handle<StepBasic_DimensionalExponents>& aDimensions);

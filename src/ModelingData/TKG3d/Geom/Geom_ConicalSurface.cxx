@@ -34,8 +34,6 @@ typedef gp_Trsf             Trsf;
 typedef gp_Vec              Vec;
 typedef gp_XYZ              XYZ;
 
-//=================================================================================================
-
 occ::handle<Geom_Geometry> Geom_ConicalSurface::Copy() const
 {
 
@@ -43,8 +41,6 @@ occ::handle<Geom_Geometry> Geom_ConicalSurface::Copy() const
   Cs = new ConicalSurface(pos, semiAngle, radius);
   return Cs;
 }
-
-//=================================================================================================
 
 Geom_ConicalSurface::Geom_ConicalSurface(const Ax3& A3, const double Ang, const double R)
     : radius(R),
@@ -58,8 +54,6 @@ Geom_ConicalSurface::Geom_ConicalSurface(const Ax3& A3, const double Ang, const 
   pos = A3;
 }
 
-//=================================================================================================
-
 Geom_ConicalSurface::Geom_ConicalSurface(const gp_Cone& C)
     : radius(C.RefRadius()),
       semiAngle(C.SemiAngle())
@@ -67,21 +61,15 @@ Geom_ConicalSurface::Geom_ConicalSurface(const gp_Cone& C)
   pos = C.Position();
 }
 
-//=================================================================================================
-
 double Geom_ConicalSurface::UReversedParameter(const double U) const
 {
   return (2. * M_PI - U);
 }
 
-//=================================================================================================
-
 double Geom_ConicalSurface::VReversedParameter(const double V) const
 {
   return (-V);
 }
-
-//=================================================================================================
 
 void Geom_ConicalSurface::VReverse()
 {
@@ -89,57 +77,41 @@ void Geom_ConicalSurface::VReverse()
   pos.ZReverse();
 }
 
-//=================================================================================================
-
 double Geom_ConicalSurface::RefRadius() const
 {
   return radius;
 }
-
-//=================================================================================================
 
 double Geom_ConicalSurface::SemiAngle() const
 {
   return semiAngle;
 }
 
-//=================================================================================================
-
 bool Geom_ConicalSurface::IsUClosed() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool Geom_ConicalSurface::IsVClosed() const
 {
   return false;
 }
 
-//=================================================================================================
-
 bool Geom_ConicalSurface::IsUPeriodic() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool Geom_ConicalSurface::IsVPeriodic() const
 {
   return false;
 }
 
-//=================================================================================================
-
 gp_Cone Geom_ConicalSurface::Cone() const
 {
 
   return gp_Cone(pos, semiAngle, radius);
 }
-
-//=================================================================================================
 
 void Geom_ConicalSurface::SetCone(const gp_Cone& C)
 {
@@ -149,8 +121,6 @@ void Geom_ConicalSurface::SetCone(const gp_Cone& C)
   pos       = C.Position();
 }
 
-//=================================================================================================
-
 void Geom_ConicalSurface::SetRadius(const double R)
 {
 
@@ -158,8 +128,6 @@ void Geom_ConicalSurface::SetRadius(const double R)
     throw Standard_ConstructionError();
   radius = R;
 }
-
-//=================================================================================================
 
 void Geom_ConicalSurface::SetSemiAngle(const double Ang)
 {
@@ -171,8 +139,6 @@ void Geom_ConicalSurface::SetSemiAngle(const double Ang)
   semiAngle = Ang;
 }
 
-//=================================================================================================
-
 Pnt Geom_ConicalSurface::Apex() const
 {
 
@@ -182,8 +148,6 @@ Pnt Geom_ConicalSurface::Apex() const
   return Pnt(Coord);
 }
 
-//=================================================================================================
-
 void Geom_ConicalSurface::Bounds(double& U1, double& U2, double& V1, double& V2) const
 {
 
@@ -192,8 +156,6 @@ void Geom_ConicalSurface::Bounds(double& U1, double& U2, double& V1, double& V2)
   V1 = -Precision::Infinite();
   V2 = Precision::Infinite();
 }
-
-//=================================================================================================
 
 void Geom_ConicalSurface::Coefficients(double& A1,
                                        double& A2,
@@ -206,8 +168,6 @@ void Geom_ConicalSurface::Coefficients(double& A1,
                                        double& C3,
                                        double& D) const
 {
-  // Dans le repere du cone :
-  // X**2 + Y**2 - (Myradius - Z * std::tan(semiAngle))**2 = 0.0
 
   Trsf T;
   T.SetTransformation(pos);
@@ -236,22 +196,16 @@ void Geom_ConicalSurface::Coefficients(double& A1,
   D           = T14 * T14 + T24 * T24 - radius * radius - T34 * T34 + 2.0 * radius * T34;
 }
 
-//=================================================================================================
-
 void Geom_ConicalSurface::D0(const double U, const double V, Pnt& P) const
 {
 
   P = ElSLib::ConeValue(U, V, pos, radius, semiAngle);
 }
 
-//=================================================================================================
-
 void Geom_ConicalSurface::D1(const double U, const double V, Pnt& P, Vec& D1U, Vec& D1V) const
 {
   ElSLib::ConeD1(U, V, pos, radius, semiAngle, P, D1U, D1V);
 }
-
-//=================================================================================================
 
 void Geom_ConicalSurface::D2(const double U,
                              const double V,
@@ -264,8 +218,6 @@ void Geom_ConicalSurface::D2(const double U,
 {
   ElSLib::ConeD2(U, V, pos, radius, semiAngle, P, D1U, D1V, D2U, D2V, D2UV);
 }
-
-//=================================================================================================
 
 void Geom_ConicalSurface::D3(const double U,
                              const double V,
@@ -283,8 +235,6 @@ void Geom_ConicalSurface::D3(const double U,
   ElSLib::ConeD3(U, V, pos, radius, semiAngle, P, D1U, D1V, D2U, D2V, D2UV, D3U, D3V, D3UUV, D3UVV);
 }
 
-//=================================================================================================
-
 Vec Geom_ConicalSurface::DN(const double U, const double V, const int Nu, const int Nv) const
 {
   Standard_RangeError_Raise_if(Nu + Nv < 1 || Nu < 0 || Nv < 0, " ");
@@ -298,15 +248,11 @@ Vec Geom_ConicalSurface::DN(const double U, const double V, const int Nu, const 
   }
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> Geom_ConicalSurface::UIso(const double U) const
 {
   occ::handle<Geom_Line> GL = new Geom_Line(ElSLib::ConeUIso(pos, radius, semiAngle, U));
   return GL;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> Geom_ConicalSurface::VIso(const double V) const
 {
@@ -314,23 +260,17 @@ occ::handle<Geom_Curve> Geom_ConicalSurface::VIso(const double V) const
   return GC;
 }
 
-//=================================================================================================
-
 void Geom_ConicalSurface::Transform(const Trsf& T)
 {
   radius = radius * std::abs(T.ScaleFactor());
   pos.Transform(T);
 }
 
-//=================================================================================================
-
 void Geom_ConicalSurface::TransformParameters(double&, double& V, const gp_Trsf& T) const
 {
   if (!Precision::IsInfinite(V))
     V *= std::abs(T.ScaleFactor());
 }
-
-//=================================================================================================
 
 gp_GTrsf2d Geom_ConicalSurface::ParametricTransformation(const gp_Trsf& T) const
 {
@@ -339,8 +279,6 @@ gp_GTrsf2d Geom_ConicalSurface::ParametricTransformation(const gp_Trsf& T) const
   T2.SetAffinity(Axis, std::abs(T.ScaleFactor()));
   return T2;
 }
-
-//=================================================================================================
 
 void Geom_ConicalSurface::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

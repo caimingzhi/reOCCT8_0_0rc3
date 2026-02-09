@@ -34,49 +34,30 @@ class HLRBRep_InterCSurf : public IntCurveSurface_Intersection
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty Constructor
   Standard_EXPORT HLRBRep_InterCSurf();
 
-  //! Compute the Intersection between the curve and the
-  //! surface
   Standard_EXPORT void Perform(const gp_Lin& theCurve, HLRBRep_Surface* theSurface);
 
-  //! Compute the Intersection between the curve and
-  //! the surface. The Curve is already sampled and
-  //! its polygon : <thePolygon> is given.
   Standard_EXPORT void Perform(const gp_Lin&                         theCurve,
                                const HLRBRep_ThePolygonOfInterCSurf& thePolygon,
                                HLRBRep_Surface*                      theSurface);
 
-  //! Compute the Intersection between the curve and
-  //! the surface. The Curve is already sampled and
-  //! its polygon : <thePolygon> is given. The Surface is
-  //! also sampled and <thePolyhedron> is given.
   Standard_EXPORT void Perform(const gp_Lin&                            theCurve,
                                const HLRBRep_ThePolygonOfInterCSurf&    thePolygon,
                                HLRBRep_Surface*                         theSurface,
                                const HLRBRep_ThePolyhedronOfInterCSurf& thePolyhedron);
 
-  //! Compute the Intersection between the curve and
-  //! the surface. The Curve is already sampled and
-  //! its polygon : <thePolygon> is given. The Surface is
-  //! also sampled and <thePolyhedron> is given.
   Standard_EXPORT void Perform(const gp_Lin&                            theCurve,
                                const HLRBRep_ThePolygonOfInterCSurf&    thePolygon,
                                HLRBRep_Surface*                         theSurface,
                                const HLRBRep_ThePolyhedronOfInterCSurf& thePolyhedron,
                                Bnd_BoundSortBox&                        theBndBSB);
 
-  //! Compute the Intersection between the curve and
-  //! the surface. The Surface is already sampled and
-  //! its polyhedron : <thePolyhedron> is given.
   Standard_EXPORT void Perform(const gp_Lin&                            theCurve,
                                HLRBRep_Surface*                         theSurface,
                                const HLRBRep_ThePolyhedronOfInterCSurf& thePolyhedron);
 
 protected:
-  //! Compute the Intersection between the curve and the
-  //! surface
   Standard_EXPORT void Perform(const gp_Lin&    theCurve,
                                HLRBRep_Surface* theSurface,
                                const double     theU0,

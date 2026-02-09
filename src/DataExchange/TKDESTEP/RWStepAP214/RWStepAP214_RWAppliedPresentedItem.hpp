@@ -11,7 +11,6 @@ class StepAP214_AppliedPresentedItem;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AppliedPresentedItem
 class RWStepAP214_RWAppliedPresentedItem
 {
 public:

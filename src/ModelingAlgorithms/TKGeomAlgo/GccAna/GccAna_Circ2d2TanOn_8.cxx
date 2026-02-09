@@ -50,12 +50,8 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
   double                     R1 = C1.Radius();
   gp_Pnt2d                   center1(C1.Location());
 
-  //=========================================================================
-  //   Processing of boundary cases.                                          +
-  //=========================================================================
-
   int nbsol1 = 1;
-  //  int nbsol2 = 0;
+
   double   Ron     = OnCirc.Radius();
   double   distcco = OnCirc.Location().Distance(center1);
   gp_Pnt2d pinterm;
@@ -107,7 +103,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
         {
           NbrSol++;
           cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(pinterm, dirx), Radius(i));
-          //    ===========================================================
+
           gp_Dir2d dc1;
           if (!SameCenter)
             dc1 = gp_Dir2d(center1.XY() - pinterm.XY());
@@ -147,10 +143,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
       }
     }
   }
-
-  //=========================================================================
-  //   General case.                                                         +
-  //=========================================================================
 
   GccAna_CircPnt2dBisec Bis(C1, Point2);
   if (Bis.IsDone())
@@ -221,7 +213,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
               for (int k = 1; k <= nbsol; k++)
               {
 
-                // pop : protection against case center1 == Center
                 if (center1.IsEqual(Center, Precision::Confusion()))
                 {
                   continue;
@@ -234,7 +225,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
                   break;
                 NbrSol++;
                 cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius(k));
-                //              ==========================================================
+
                 double distcc1 = Center.Distance(center1);
                 if (!Qualified1.IsUnqualified())
                 {

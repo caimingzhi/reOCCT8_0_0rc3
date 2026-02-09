@@ -1,5 +1,5 @@
 #ifndef No_Exception
-// #define No_Exception
+
 #endif
 
 #include <BRep_Tool.hpp>
@@ -18,8 +18,6 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_IndexedDataMap.hpp>
 #include <NCollection_Map.hpp>
-
-//=================================================================================================
 
 occ::handle<HLRBRep_Data> HLRBRep_ShapeToHLR::Load(
   const occ::handle<HLRTopoBRep_OutLiner>&                                         S,
@@ -40,7 +38,7 @@ occ::handle<HLRBRep_Data> HLRBRep_ShapeToHLR::Load(
   TopExp_Explorer exshell, exface;
 
   for (exshell.Init(S->OutLinedShape(), TopAbs_SHELL); exshell.More(); exshell.Next())
-  { // faces in a shell
+  {
 
     for (exface.Init(exshell.Current(), TopAbs_FACE); exface.More(); exface.Next())
     {
@@ -50,7 +48,7 @@ occ::handle<HLRBRep_Data> HLRBRep_ShapeToHLR::Load(
   }
 
   for (exface.Init(S->OutLinedShape(), TopAbs_FACE, TopAbs_SHELL); exface.More(); exface.Next())
-  { // faces not in a shell
+  {
     if (!FM.Contains(exface.Current()))
       FM.Add(exface.Current());
   }
@@ -60,7 +58,7 @@ occ::handle<HLRBRep_Data> HLRBRep_ShapeToHLR::Load(
   int i;
   int nbEdge = EM.Extent();
 
-  for (i = 1; i <= nbEdge; i++) // vertices back to edges
+  for (i = 1; i <= nbEdge; i++)
     TopExp::MapShapesAndAncestors(EM(i), TopAbs_VERTEX, TopAbs_EDGE, VerticesToEdges);
 
   int nbVert = VerticesToEdges.Extent();
@@ -74,20 +72,18 @@ occ::handle<HLRBRep_Data> HLRBRep_ShapeToHLR::Load(
   double                                   pf, pl;
   float                                    tf, tl;
 
-  // Create the data structure
   occ::handle<HLRBRep_Data> DS = new HLRBRep_Data(nbVert, nbEdge, nbFace);
   HLRBRep_EdgeData*         ed = nullptr;
   if (nbEdge != 0)
     ed = &(DS->EDataArray().ChangeValue(1));
-  //  ed++;
 
   for (i = 1; i <= nbFace; i++)
-  { // test of Double edges
+  {
     TopExp::MapShapesAndAncestors(FM(i), TopAbs_EDGE, TopAbs_FACE, EdgesToFaces);
   }
 
   for (i = 1; i <= nbEdge; i++)
-  { // load the Edges
+  {
     const TopoDS_Edge& Edg = TopoDS::Edge(EM(i));
     TopExp::Vertices(Edg, VF, VL);
     BRep_Tool::Range(Edg, pf, pl);
@@ -149,8 +145,6 @@ occ::handle<HLRBRep_Data> HLRBRep_ShapeToHLR::Load(
   return DS;
 }
 
-//=================================================================================================
-
 void HLRBRep_ShapeToHLR::ExploreFace(
   const occ::handle<HLRTopoBRep_OutLiner>&                             S,
   const occ::handle<HLRBRep_Data>&                                     DS,
@@ -209,8 +203,6 @@ void HLRBRep_ShapeToHLR::ExploreFace(
   DS->FaceMap().Add(theFace);
 }
 
-//=================================================================================================
-
 void HLRBRep_ShapeToHLR::ExploreShape(
   const occ::handle<HLRTopoBRep_OutLiner>&                             S,
   const occ::handle<HLRBRep_Data>&                                     DS,
@@ -222,7 +214,7 @@ void HLRBRep_ShapeToHLR::ExploreShape(
   int                                                    i = 0;
 
   for (exshell.Init(S->OriginalShape(), TopAbs_SHELL); exshell.More(); exshell.Next())
-  { // faces in a shell (open or close)
+  {
 
     bool closed = exshell.Current().Closed();
 
@@ -266,7 +258,7 @@ void HLRBRep_ShapeToHLR::ExploreShape(
   }
 
   for (exface.Init(S->OriginalShape(), TopAbs_FACE, TopAbs_SHELL); exface.More(); exface.Next())
-  { // faces not in a shell
+  {
     if (ShapeMap.Add(exface.Current()))
     {
       ExploreFace(S, DS, FM, EM, i, TopoDS::Face(exface.Current()), false);

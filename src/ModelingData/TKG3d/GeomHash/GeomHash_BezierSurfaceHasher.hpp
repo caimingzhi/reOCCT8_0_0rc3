@@ -5,12 +5,9 @@
 #include <GeomHash_PointHasher.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom_BezierSurface.
-//! Used for geometry deduplication.
-//! Hashes only metadata (degrees, pole counts, rationality) for efficiency.
 struct GeomHash_BezierSurfaceHasher
 {
-  // Hashes the Bezier surface metadata only.
+
   std::size_t operator()(const occ::handle<Geom_BezierSurface>& theSurface) const noexcept
   {
     const std::size_t aHashes[5] = {
@@ -23,20 +20,17 @@ struct GeomHash_BezierSurfaceHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two Bezier surfaces by full geometric data.
   bool operator()(const occ::handle<Geom_BezierSurface>& theSurface1,
                   const occ::handle<Geom_BezierSurface>& theSurface2) const noexcept
   {
     constexpr double aTolerance = 1e-12;
 
-    // Compare degrees
     if (theSurface1->UDegree() != theSurface2->UDegree()
         || theSurface1->VDegree() != theSurface2->VDegree())
     {
       return false;
     }
 
-    // Compare rationality
     if (theSurface1->IsURational() != theSurface2->IsURational()
         || theSurface1->IsVRational() != theSurface2->IsVRational())
     {
@@ -45,7 +39,6 @@ struct GeomHash_BezierSurfaceHasher
 
     const GeomHash_PointHasher aPointHasher;
 
-    // Compare poles
     for (int i = 1; i <= theSurface1->NbUPoles(); ++i)
     {
       for (int j = 1; j <= theSurface1->NbVPoles(); ++j)
@@ -57,7 +50,6 @@ struct GeomHash_BezierSurfaceHasher
       }
     }
 
-    // Compare weights if rational
     if (theSurface1->IsURational() || theSurface1->IsVRational())
     {
       for (int i = 1; i <= theSurface1->NbUPoles(); ++i)

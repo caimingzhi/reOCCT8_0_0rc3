@@ -15,13 +15,6 @@ Standard_EXPORT void debkeep(const int i)
 }
 #endif
 
-//=======================================================================
-// function : GKeepShape
-// purpose  :
-// compute position of shape <S> / shapes of list <LSclass>
-// return true if LS is not empty && (position == TB)
-// (return always true if LS is empty)
-//=======================================================================
 bool TopOpeBRepBuild_Builder::GKeepShape(const TopoDS_Shape&                   S,
                                          const NCollection_List<TopoDS_Shape>& LSclass,
                                          const TopAbs_State                    TB)
@@ -95,15 +88,6 @@ bool TopOpeBRepBuild_Builder::GKeepShape1(const TopoDS_Shape&                   
   return keep;
 }
 
-//=======================================================================
-// function : GKeepShapes
-// purpose  :
-// select shapes to keep from list Lin located TB compared with LSclass shapes
-// selected shapes are stored in list Lou
-// (apply GKeepShape on Lin shapes)
-// Lou is not cleared
-// S is used for trace only
-//=======================================================================
 void TopOpeBRepBuild_Builder::GKeepShapes
 #ifdef OCCT_DEBUG
   (const TopoDS_Shape& S,

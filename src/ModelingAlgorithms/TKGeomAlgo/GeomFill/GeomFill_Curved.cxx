@@ -6,11 +6,7 @@
 #include <NCollection_HArray2.hpp>
 #include <NCollection_Array1.hpp>
 
-//=================================================================================================
-
 GeomFill_Curved::GeomFill_Curved() = default;
-
-//=================================================================================================
 
 GeomFill_Curved::GeomFill_Curved(const NCollection_Array1<gp_Pnt>& P1,
                                  const NCollection_Array1<gp_Pnt>& P2,
@@ -19,8 +15,6 @@ GeomFill_Curved::GeomFill_Curved(const NCollection_Array1<gp_Pnt>& P1,
 {
   Init(P1, P2, P3, P4);
 }
-
-//=================================================================================================
 
 GeomFill_Curved::GeomFill_Curved(const NCollection_Array1<gp_Pnt>& P1,
                                  const NCollection_Array1<gp_Pnt>& P2,
@@ -34,15 +28,11 @@ GeomFill_Curved::GeomFill_Curved(const NCollection_Array1<gp_Pnt>& P1,
   Init(P1, P2, P3, P4, W1, W2, W3, W4);
 }
 
-//=================================================================================================
-
 GeomFill_Curved::GeomFill_Curved(const NCollection_Array1<gp_Pnt>& P1,
                                  const NCollection_Array1<gp_Pnt>& P2)
 {
   Init(P1, P2);
 }
-
-//=================================================================================================
 
 GeomFill_Curved::GeomFill_Curved(const NCollection_Array1<gp_Pnt>& P1,
                                  const NCollection_Array1<gp_Pnt>& P2,
@@ -51,8 +41,6 @@ GeomFill_Curved::GeomFill_Curved(const NCollection_Array1<gp_Pnt>& P1,
 {
   Init(P1, P2, W1, W2);
 }
-
-//=================================================================================================
 
 void GeomFill_Curved::Init(const NCollection_Array1<gp_Pnt>& P1,
                            const NCollection_Array1<gp_Pnt>& P2,
@@ -70,7 +58,6 @@ void GeomFill_Curved::Init(const NCollection_Array1<gp_Pnt>& P1,
   double NV = NPolV - 1;
   myPoles   = new NCollection_HArray2<gp_Pnt>(1, NPolU, 1, NPolV);
 
-  // The boundaries are not modified
   int i, j, k;
   for (i = 1; i <= NPolU; i++)
   {
@@ -106,8 +93,6 @@ void GeomFill_Curved::Init(const NCollection_Array1<gp_Pnt>& P1,
   }
 }
 
-//=================================================================================================
-
 void GeomFill_Curved::Init(const NCollection_Array1<gp_Pnt>& P1,
                            const NCollection_Array1<gp_Pnt>& P2,
                            const NCollection_Array1<gp_Pnt>& P3,
@@ -132,7 +117,6 @@ void GeomFill_Curved::Init(const NCollection_Array1<gp_Pnt>& P1,
   double NV = NPolV - 1;
   myWeights = new NCollection_HArray2<double>(1, NPolU, 1, NPolV);
 
-  // The boundaries are not modified
   int i, j;
   for (i = 1; i <= NPolU; i++)
   {
@@ -162,8 +146,6 @@ void GeomFill_Curved::Init(const NCollection_Array1<gp_Pnt>& P1,
   }
 }
 
-//=================================================================================================
-
 void GeomFill_Curved::Init(const NCollection_Array1<gp_Pnt>& P1,
                            const NCollection_Array1<gp_Pnt>& P2)
 {
@@ -186,8 +168,6 @@ void GeomFill_Curved::Init(const NCollection_Array1<gp_Pnt>& P1,
   }
 }
 
-//=================================================================================================
-
 void GeomFill_Curved::Init(const NCollection_Array1<gp_Pnt>& P1,
                            const NCollection_Array1<gp_Pnt>& P2,
                            const NCollection_Array1<double>& W1,
@@ -196,7 +176,6 @@ void GeomFill_Curved::Init(const NCollection_Array1<gp_Pnt>& P1,
   Init(P1, P2);
   IsRational = true;
 
-  // Initialisation des poids.
   int NPolU = W1.Length();
   int NPolV = W2.Length();
 

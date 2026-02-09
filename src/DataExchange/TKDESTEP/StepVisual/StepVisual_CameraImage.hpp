@@ -9,7 +9,6 @@ class StepVisual_CameraImage : public StepRepr_MappedItem
 {
 
 public:
-  //! Returns a CameraImage
   Standard_EXPORT StepVisual_CameraImage();
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_CameraImage, StepRepr_MappedItem)

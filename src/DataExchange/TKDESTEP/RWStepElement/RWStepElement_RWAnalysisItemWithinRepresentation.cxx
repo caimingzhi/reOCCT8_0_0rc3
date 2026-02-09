@@ -6,12 +6,8 @@
 #include <StepRepr_Representation.hpp>
 #include <StepRepr_RepresentationItem.hpp>
 
-//=================================================================================================
-
 RWStepElement_RWAnalysisItemWithinRepresentation::
   RWStepElement_RWAnalysisItemWithinRepresentation() = default;
-
-//=================================================================================================
 
 void RWStepElement_RWAnalysisItemWithinRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&                      data,
@@ -19,11 +15,9 @@ void RWStepElement_RWAnalysisItemWithinRepresentation::ReadStep(
   occ::handle<Interface_Check>&                                    ach,
   const occ::handle<StepElement_AnalysisItemWithinRepresentation>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "analysis_item_within_representation"))
     return;
-
-  // Own fields of AnalysisItemWithinRepresentation
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -37,18 +31,13 @@ void RWStepElement_RWAnalysisItemWithinRepresentation::ReadStep(
   occ::handle<StepRepr_Representation> aRep;
   data->ReadEntity(num, 4, "rep", ach, STANDARD_TYPE(StepRepr_Representation), aRep);
 
-  // Initialize entity
   ent->Init(aName, aDescription, aItem, aRep);
 }
-
-//=================================================================================================
 
 void RWStepElement_RWAnalysisItemWithinRepresentation::WriteStep(
   StepData_StepWriter&                                             SW,
   const occ::handle<StepElement_AnalysisItemWithinRepresentation>& ent) const
 {
-
-  // Own fields of AnalysisItemWithinRepresentation
 
   SW.Send(ent->Name());
 
@@ -59,14 +48,10 @@ void RWStepElement_RWAnalysisItemWithinRepresentation::WriteStep(
   SW.Send(ent->Rep());
 }
 
-//=================================================================================================
-
 void RWStepElement_RWAnalysisItemWithinRepresentation::Share(
   const occ::handle<StepElement_AnalysisItemWithinRepresentation>& ent,
   Interface_EntityIterator&                                        iter) const
 {
-
-  // Own fields of AnalysisItemWithinRepresentation
 
   iter.AddItem(ent->Item());
 

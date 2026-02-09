@@ -7,22 +7,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_UAttributeDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_UAttributeDriver::BinMDataStd_UAttributeDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_UAttributeDriver::NewEmpty() const
 {
   return (new TDataStd_UAttribute());
 }
-
-//=================================================================================================
 
 bool BinMDataStd_UAttributeDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                          const occ::handle<TDF_Attribute>& theTarget,
@@ -35,8 +29,6 @@ bool BinMDataStd_UAttributeDriver::Paste(const BinObjMgt_Persistent&       theSo
     anUAttr->SetID(aGUID);
   return ok;
 }
-
-//=================================================================================================
 
 void BinMDataStd_UAttributeDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,

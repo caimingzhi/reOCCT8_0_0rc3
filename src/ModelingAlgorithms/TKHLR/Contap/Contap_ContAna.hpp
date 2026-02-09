@@ -14,8 +14,6 @@ class gp_Cylinder;
 class gp_Cone;
 class gp_Lin;
 
-//! This class provides the computation of the contours
-//! for quadric surfaces.
 class Contap_ContAna
 {
 public:
@@ -45,8 +43,6 @@ public:
 
   int NbContours() const;
 
-  //! Returns GeomAbs_Line or GeomAbs_Circle, when
-  //! IsDone() returns True.
   GeomAbs_CurveType TypeContour() const;
 
   gp_Circ Circle() const;

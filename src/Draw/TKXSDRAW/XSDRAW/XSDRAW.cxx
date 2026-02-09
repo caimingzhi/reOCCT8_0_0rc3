@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DBRep.hpp>
 #include <Draw_Appli.hpp>
@@ -55,9 +44,7 @@ namespace
   static NCollection_DataMap<TCollection_AsciiString, int>           theolds;
   static occ::handle<NCollection_HSequence<TCollection_AsciiString>> thenews;
 
-  static occ::handle<IFSelect_SessionPilot> thepilot; // detient Session, Model
-
-  //=================================================================================================
+  static occ::handle<IFSelect_SessionPilot> thepilot;
 
   static void collectActiveWorkSessions(const occ::handle<XSControl_WorkSession>& theWS,
                                         const TCollection_AsciiString&            theName,
@@ -144,7 +131,7 @@ bool XSDRAW::LoadSession()
   XSControl_Functions::Init();
   XSControl_FuncShape::Init();
   XSAlgo::Init();
-  //  XSDRAW_Shape::Init();   passe a present par theCommands
+
   return true;
 }
 
@@ -155,15 +142,12 @@ void XSDRAW::LoadDraw(Draw_Interpretor& theCommands)
     return;
   }
   dejald = 1;
-  //  Pour tout faire d un coup : BRepTest & cie:
+
   LoadSession();
 
-  // skl: we make remove commands "x" and "exit" in order to this commands are
-  //      performed not in IFSelect_SessionPilot but in standard Tcl interpreter
   XSDRAW::RemoveCommand("x");
   XSDRAW::RemoveCommand("exit");
 
-  //  if (!getenv("WBHOSTTOP")) XSDRAW::RemoveCommand("xsnew");
   occ::handle<NCollection_HSequence<TCollection_AsciiString>> list =
     IFSelect_Activator::Commands(0);
   for (NCollection_HSequence<TCollection_AsciiString>::Iterator aCmdIter(*list); aCmdIter.More();
@@ -202,7 +186,7 @@ int XSDRAW::Execute(const char* command, const char* varname)
   char mess[100];
   Sprintf(mess, command, varname);
   thepilot->Execute(mess);
-  return 1; // stat ?
+  return 1;
 }
 
 occ::handle<IFSelect_SessionPilot> XSDRAW::Pilot()
@@ -279,11 +263,9 @@ void XSDRAW::SetTransferProcess(const occ::handle<Standard_Transient>& ATP)
   DeclareAndCast(Transfer_FinderProcess, FP, ATP);
   DeclareAndCast(Transfer_TransientProcess, TP, ATP);
 
-  //   Cas FinderProcess    ==> TransferWriter
   if (!FP.IsNull())
     Session()->SetMapWriter(FP);
 
-  //   Cas TransientProcess ==> TransferReader
   if (!TP.IsNull())
   {
     if (!TP->Model().IsNull() && TP->Model() != Session()->Model())
@@ -304,9 +286,7 @@ occ::handle<Transfer_FinderProcess> XSDRAW::FinderProcess()
 
 void XSDRAW::InitTransferReader(const int mode)
 {
-  //   0 nullify  1 clear
-  //   2 init TR avec contenu TP (roots)  3 init TP avec contenu TR
-  //   4 init avec model (debut scratch)
+
   Session()->InitTransferReader(mode);
 }
 
@@ -314,8 +294,6 @@ occ::handle<XSControl_TransferReader> XSDRAW::TransferReader()
 {
   return Session()->TransferReader();
 }
-
-//  ############  AUXILIAIRES  #############
 
 occ::handle<Standard_Transient> XSDRAW::GetEntity(const char* name)
 {
@@ -365,8 +343,6 @@ int XSDRAW::MoreShapes(occ::handle<NCollection_HSequence<TopoDS_Shape>>& list, c
   return XSControl_FuncShape::MoreShapes(XSDRAW::Session(), list, name);
 }
 
-//=================================================================================================
-
 double XSDRAW::GetLengthUnit(const occ::handle<TDocStd_Document>& theDoc)
 {
   if (!theDoc.IsNull())
@@ -384,8 +360,6 @@ double XSDRAW::GetLengthUnit(const occ::handle<TDocStd_Document>& theDoc)
   return UnitsMethods::GetCasCadeLengthUnit();
 }
 
-//=================================================================================================
-
 XSControl_WorkSessionMap& XSDRAW::WorkSessionList()
 {
   static std::shared_ptr<XSControl_WorkSessionMap> THE_PREVIOUS_WORK_SESSIONS;
@@ -396,8 +370,6 @@ XSControl_WorkSessionMap& XSDRAW::WorkSessionList()
   return *THE_PREVIOUS_WORK_SESSIONS;
 }
 
-//=================================================================================================
-
 void XSDRAW::CollectActiveWorkSessions(const occ::handle<XSControl_WorkSession>& theWS,
                                        const TCollection_AsciiString&            theName,
                                        XSControl_WorkSessionMap&                 theMap)
@@ -405,19 +377,14 @@ void XSDRAW::CollectActiveWorkSessions(const occ::handle<XSControl_WorkSession>&
   collectActiveWorkSessions(theWS, theName, theMap, true);
 }
 
-//=================================================================================================
-
 void XSDRAW::CollectActiveWorkSessions(const TCollection_AsciiString& theName)
 {
   collectActiveWorkSessions(Session(), theName, WorkSessionList(), true);
 }
-
-//=================================================================================================
 
 void XSDRAW::Factory(Draw_Interpretor& theDI)
 {
   XSDRAW::LoadDraw(theDI);
 }
 
-// Declare entry point PLUGINFACTORY
 DPLUGIN(XSDRAW)

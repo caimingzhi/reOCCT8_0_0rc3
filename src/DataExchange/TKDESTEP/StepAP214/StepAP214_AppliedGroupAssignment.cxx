@@ -3,11 +3,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_AppliedGroupAssignment, StepBasic_GroupAssignment)
 
-//=================================================================================================
-
 StepAP214_AppliedGroupAssignment::StepAP214_AppliedGroupAssignment() = default;
-
-//=================================================================================================
 
 void StepAP214_AppliedGroupAssignment::Init(
   const occ::handle<StepBasic_Group>&                          aGroupAssignment_AssignedGroup,
@@ -18,15 +14,11 @@ void StepAP214_AppliedGroupAssignment::Init(
   theItems = aItems;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<StepAP214_GroupItem>> StepAP214_AppliedGroupAssignment::Items()
   const
 {
   return theItems;
 }
-
-//=================================================================================================
 
 void StepAP214_AppliedGroupAssignment::SetItems(
   const occ::handle<NCollection_HArray1<StepAP214_GroupItem>>& aItems)

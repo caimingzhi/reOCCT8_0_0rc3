@@ -16,80 +16,54 @@
 
 class TDF_Label;
 
-//! Auxiliary class to iterate through vertices.
-//! Provides functionality to iterate through the vertices of a shape.
-//! It inherits from `RWMesh_ShapeIterator` and implements
-//! methods to access and manipulate vertex data.
 class RWMesh_VertexIterator : public RWMesh_ShapeIterator
 {
 public:
-  //! Main constructor.
-  //! @param[in] theLabel The label of the shape.
-  //! @param[in] theLocation The location of the shape.
-  //! @param[in] theToMapColors Flag to indicate if colors should be mapped.
-  //! @param[in] theStyle The style of the shape.
   Standard_EXPORT RWMesh_VertexIterator(const TDF_Label&       theLabel,
                                         const TopLoc_Location& theLocation,
                                         const bool             theToMapColors = false,
                                         const XCAFPrs_Style&   theStyle       = XCAFPrs_Style());
 
-  //! Auxiliary constructor.
-  //! @param[in] theShape The shape to iterate.
-  //! @param[in] theStyle The style of the shape.
   Standard_EXPORT RWMesh_VertexIterator(const TopoDS_Shape&  theShape,
                                         const XCAFPrs_Style& theStyle = XCAFPrs_Style());
 
-  //! Return true if iterator points to the valid triangulation.
   bool More() const override { return !myVertex.IsNull(); }
 
-  //! Find next value.
   Standard_EXPORT void Next() override;
 
-  //! Return current edge.
   const TopoDS_Vertex& Vertex() const { return myVertex; }
 
-  //! Return current vertex.
   const TopoDS_Shape& Shape() const override { return myVertex; }
 
-  //! Return current vertex data.
   const gp_Pnt& Point() const { return myPoint; }
 
-  //! Return true if geometry data is defined.
   bool IsEmpty() const override { return myVertex.IsNull(); }
 
 public:
-  //! Lower element index in current triangulation.
   int ElemLower() const override { return 1; }
 
-  //! Upper element index in current triangulation.
   int ElemUpper() const override { return 1; }
 
 public:
-  //! Return number of nodes for the current edge.
   int NbNodes() const override { return 1; }
 
-  //! Lower node index in current triangulation.
   int NodeLower() const override { return 1; }
 
-  //! Upper node index in current triangulation.
   int NodeUpper() const override { return 1; }
 
 public:
-  //! Return the node with specified index with applied transformation.
-  gp_Pnt node(const int /*theNode*/) const override { return myPoint; }
+  gp_Pnt node(const int) const override { return myPoint; }
 
 private:
-  //! Reset information for current vertex.
   void resetVertex()
   {
     myVertex.Nullify();
     resetShape();
   }
 
-  //! Initialize vertex properties.
   void initVertex();
 
 private:
-  TopoDS_Vertex myVertex; //!< current vertex
-  gp_Pnt        myPoint;  //!< geometry of current vertex
+  TopoDS_Vertex myVertex;
+  gp_Pnt        myPoint;
 };

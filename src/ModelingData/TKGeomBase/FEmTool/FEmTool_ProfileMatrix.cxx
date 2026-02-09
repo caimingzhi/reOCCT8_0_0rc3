@@ -11,8 +11,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(FEmTool_ProfileMatrix, FEmTool_SparseMatrix)
 
-//=================================================================================================
-
 FEmTool_ProfileMatrix::FEmTool_ProfileMatrix(const NCollection_Array1<int>& FirstIndexes)
     : profile(1, 2, 1, FirstIndexes.Length())
 {
@@ -44,15 +42,11 @@ FEmTool_ProfileMatrix::FEmTool_ProfileMatrix(const NCollection_Array1<int>& Firs
   IsDecomp      = false;
 }
 
-//=================================================================================================
-
 void FEmTool_ProfileMatrix::Init(const double Value)
 {
   ProfileMatrix->Init(Value);
   IsDecomp = false;
 }
-
-//=================================================================================================
 
 double& FEmTool_ProfileMatrix::ChangeValue(const int I, const int J)
 {
@@ -72,10 +66,6 @@ double& FEmTool_ProfileMatrix::ChangeValue(const int I, const int J)
   return ProfileMatrix->ChangeValue(Ind);
 }
 
-//=======================================================================
-// function : Decompose
-// purpose  : Choleski's decomposition
-//=======================================================================
 bool FEmTool_ProfileMatrix::Decompose()
 {
   int    i, j, k, ik, jk, DiagAddr, CurrAddr, Kmin, Kj;
@@ -98,7 +88,7 @@ bool FEmTool_ProfileMatrix::Decompose()
     a = PM[DiagAddr] - Sum;
     if (a < Eps)
     {
-      return false; // Matrix is not positive defined
+      return false;
     }
     a             = std::sqrt(a);
     SMA[DiagAddr] = a;
@@ -108,8 +98,6 @@ bool FEmTool_ProfileMatrix::Decompose()
     {
       CurrAddr = profile(2, i) - (i - j);
 
-      // Computation of Sum of S  .S  for k = 1,..,j-1
-      //                        ik  jk
       Sum  = 0;
       Kmin = std::max((i - profile(1, i)), Kj);
       ik   = profile(2, i) - i + Kmin;
@@ -125,10 +113,6 @@ bool FEmTool_ProfileMatrix::Decompose()
   return IsDecomp;
 }
 
-//=======================================================================
-// function : Solve
-// purpose  : Resolution of the system S*t(S)X = B
-//=======================================================================
 void FEmTool_ProfileMatrix::Solve(const math_Vector& B, math_Vector& X) const
 {
   if (!IsDecomp)
@@ -146,7 +130,6 @@ void FEmTool_ProfileMatrix::Solve(const math_Vector& B, math_Vector& X) const
   const int* NC = &NextCoeff->Value(1);
   NC--;
 
-  // Resolution of Sw = B;
   for (i = 1; i <= RowNumber(); i++)
   {
     DiagAddr = profile(2, i);
@@ -156,7 +139,6 @@ void FEmTool_ProfileMatrix::Solve(const math_Vector& B, math_Vector& X) const
     x[i] = (b[i] - Sum) / SMA[DiagAddr];
   }
 
-  // Resolution of t(S)X = w;
   for (i = ColNumber(); i >= 1; i--)
   {
     DiagAddr = profile(2, i);
@@ -177,8 +159,6 @@ bool FEmTool_ProfileMatrix::Prepare()
   throw Standard_NotImplemented("FEmTool_ProfileMatrix::Prepare");
 }
 
-// void FEmTool_ProfileMatrix::Solve(const math_Vector& B,const math_Vector& Init,math_Vector&
-// X,math_Vector& Residual,const double Tolerance,const int NbIterations) const
 void FEmTool_ProfileMatrix::Solve(const math_Vector&,
                                   const math_Vector&,
                                   math_Vector&,
@@ -189,10 +169,6 @@ void FEmTool_ProfileMatrix::Solve(const math_Vector&,
   throw Standard_NotImplemented("FEmTool_ProfileMatrix::Solve");
 }
 
-//=======================================================================
-// function : Multiplied
-// purpose  : MX = H*X
-//=======================================================================
 void FEmTool_ProfileMatrix::Multiplied(const math_Vector& X, math_Vector& MX) const
 {
   int     i, j, jj, DiagAddr, CurrAddr;

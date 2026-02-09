@@ -12,7 +12,6 @@
   #include <gp_Pnt.hpp>
   #include <gp_Pnt2d.hpp>
 
-//------------------------------------------------------------------
 void FEINT_DUMPPOINTS(TopOpeBRep_FaceEdgeIntersector& FEINT, const TopOpeBRepDS_DataStructure& BDS)
 {
   FEINT.InitPoint();
@@ -47,7 +46,7 @@ void FEINT_DUMPPOINTS(TopOpeBRep_FaceEdgeIntersector& FEINT, const TopOpeBRepDS_
     double       parE = FEINT.Parameter();
 
     TopOpeBRepDS_Transition T1, T2;
-    T1 = FEINT.Transition(1, EEori); // EEori bidon
+    T1 = FEINT.Transition(1, EEori);
     T2 = FEINT.Transition(2, FFori);
 
     TopoDS_Vertex V1;

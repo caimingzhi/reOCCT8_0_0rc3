@@ -1,10 +1,8 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_ActuatedKinematicPair.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_ActuatedKinematicPair, StepKinematics_KinematicPair)
-
-//=================================================================================================
 
 StepKinematics_ActuatedKinematicPair::StepKinematics_ActuatedKinematicPair()
 {
@@ -15,8 +13,6 @@ StepKinematics_ActuatedKinematicPair::StepKinematics_ActuatedKinematicPair()
   defRY = false;
   defRZ = false;
 }
-
-//=================================================================================================
 
 void StepKinematics_ActuatedKinematicPair::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -96,126 +92,90 @@ void StepKinematics_ActuatedKinematicPair::Init(
     myRZ = StepKinematics_ActuatedDirection();
 }
 
-//=================================================================================================
-
 StepKinematics_ActuatedDirection StepKinematics_ActuatedKinematicPair::TX() const
 {
   return myTX;
 }
-
-//=================================================================================================
 
 void StepKinematics_ActuatedKinematicPair::SetTX(const StepKinematics_ActuatedDirection theTX)
 {
   myTX = theTX;
 }
 
-//=================================================================================================
-
 bool StepKinematics_ActuatedKinematicPair::HasTX() const
 {
   return defTX;
 }
-
-//=================================================================================================
 
 StepKinematics_ActuatedDirection StepKinematics_ActuatedKinematicPair::TY() const
 {
   return myTY;
 }
 
-//=================================================================================================
-
 void StepKinematics_ActuatedKinematicPair::SetTY(const StepKinematics_ActuatedDirection theTY)
 {
   myTY = theTY;
 }
-
-//=================================================================================================
 
 bool StepKinematics_ActuatedKinematicPair::HasTY() const
 {
   return defTY;
 }
 
-//=================================================================================================
-
 StepKinematics_ActuatedDirection StepKinematics_ActuatedKinematicPair::TZ() const
 {
   return myTZ;
 }
-
-//=================================================================================================
 
 void StepKinematics_ActuatedKinematicPair::SetTZ(const StepKinematics_ActuatedDirection theTZ)
 {
   myTZ = theTZ;
 }
 
-//=================================================================================================
-
 bool StepKinematics_ActuatedKinematicPair::HasTZ() const
 {
   return defTZ;
 }
-
-//=================================================================================================
 
 StepKinematics_ActuatedDirection StepKinematics_ActuatedKinematicPair::RX() const
 {
   return myRX;
 }
 
-//=================================================================================================
-
 void StepKinematics_ActuatedKinematicPair::SetRX(const StepKinematics_ActuatedDirection theRX)
 {
   myRX = theRX;
 }
-
-//=================================================================================================
 
 bool StepKinematics_ActuatedKinematicPair::HasRX() const
 {
   return defRX;
 }
 
-//=================================================================================================
-
 StepKinematics_ActuatedDirection StepKinematics_ActuatedKinematicPair::RY() const
 {
   return myRY;
 }
-
-//=================================================================================================
 
 void StepKinematics_ActuatedKinematicPair::SetRY(const StepKinematics_ActuatedDirection theRY)
 {
   myRY = theRY;
 }
 
-//=================================================================================================
-
 bool StepKinematics_ActuatedKinematicPair::HasRY() const
 {
   return defRY;
 }
-
-//=================================================================================================
 
 StepKinematics_ActuatedDirection StepKinematics_ActuatedKinematicPair::RZ() const
 {
   return myRZ;
 }
 
-//=================================================================================================
-
 void StepKinematics_ActuatedKinematicPair::SetRZ(const StepKinematics_ActuatedDirection theRZ)
 {
   myRZ = theRZ;
 }
-
-//=================================================================================================
 
 bool StepKinematics_ActuatedKinematicPair::HasRZ() const
 {

@@ -1,6 +1,5 @@
 #pragma once
 
-//! Identifies the type of a curve.
 enum GeomAbs_CurveType
 {
   GeomAbs_Line,

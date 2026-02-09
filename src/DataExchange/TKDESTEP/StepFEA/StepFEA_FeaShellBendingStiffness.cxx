@@ -5,11 +5,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaShellBendingStiffness,
                            StepFEA_FeaMaterialPropertyRepresentationItem)
 
-//=================================================================================================
-
 StepFEA_FeaShellBendingStiffness::StepFEA_FeaShellBendingStiffness() = default;
-
-//=================================================================================================
 
 void StepFEA_FeaShellBendingStiffness::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentationItem_Name,
@@ -20,14 +16,10 @@ void StepFEA_FeaShellBendingStiffness::Init(
   theFeaConstants = aFeaConstants;
 }
 
-//=================================================================================================
-
 StepFEA_SymmetricTensor42d StepFEA_FeaShellBendingStiffness::FeaConstants() const
 {
   return theFeaConstants;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaShellBendingStiffness::SetFeaConstants(
   const StepFEA_SymmetricTensor42d& aFeaConstants)

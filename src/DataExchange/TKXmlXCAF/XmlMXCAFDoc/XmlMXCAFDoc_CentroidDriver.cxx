@@ -8,32 +8,23 @@
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_CentroidDriver, XmlMDF_ADriver)
 
-//=================================================================================================
-
 XmlMXCAFDoc_CentroidDriver::XmlMXCAFDoc_CentroidDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "Centroid")
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMXCAFDoc_CentroidDriver::NewEmpty() const
 {
   return (new XCAFDoc_Centroid());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMXCAFDoc_CentroidDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                        const occ::handle<TDF_Attribute>& theTarget,
                                        XmlObjMgt_RRelocationTable&) const
 {
   occ::handle<XCAFDoc_Centroid> aTPos = occ::down_cast<XCAFDoc_Centroid>(theTarget);
 
-  // position
   XmlObjMgt_DOMString aPosStr = XmlObjMgt::GetStringValue(theSource.Element());
   if (aPosStr == nullptr)
   {
@@ -45,7 +36,6 @@ bool XmlMXCAFDoc_CentroidDriver::Paste(const XmlObjMgt_Persistent&       theSour
   double      aValue;
   const char* aValueStr = static_cast<const char*>(aPosStr.GetString());
 
-  // X
   if (!XmlObjMgt::GetReal(aValueStr, aValue))
   {
     TCollection_ExtendedString aMessageString =
@@ -57,7 +47,6 @@ bool XmlMXCAFDoc_CentroidDriver::Paste(const XmlObjMgt_Persistent&       theSour
   }
   aPos.SetX(aValue);
 
-  // Y
   if (!XmlObjMgt::GetReal(aValueStr, aValue))
   {
     TCollection_ExtendedString aMessageString =
@@ -69,7 +58,6 @@ bool XmlMXCAFDoc_CentroidDriver::Paste(const XmlObjMgt_Persistent&       theSour
   }
   aPos.SetY(aValue);
 
-  // Z
   if (!XmlObjMgt::GetReal(aValueStr, aValue))
   {
     TCollection_ExtendedString aMessageString =
@@ -86,10 +74,6 @@ bool XmlMXCAFDoc_CentroidDriver::Paste(const XmlObjMgt_Persistent&       theSour
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMXCAFDoc_CentroidDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                        XmlObjMgt_Persistent&             theTarget,
                                        XmlObjMgt_SRelocationTable&) const
@@ -98,7 +82,7 @@ void XmlMXCAFDoc_CentroidDriver::Paste(const occ::handle<TDF_Attribute>& theSour
   if (!aTPos.IsNull())
   {
     gp_Pnt aPos = aTPos->Get();
-    char   buf[75]; // (24 + 1) * 3
+    char   buf[75];
     Sprintf(buf, "%.17g %.17g %.17g", aPos.X(), aPos.Y(), aPos.Z());
     XmlObjMgt::SetStringValue(theTarget.Element(), buf);
   }

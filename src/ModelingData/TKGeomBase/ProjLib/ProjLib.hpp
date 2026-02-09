@@ -22,27 +22,6 @@ class gp_Sphere;
 class gp_Torus;
 class ProjLib_ProjectedCurve;
 
-//! The ProjLib package first provides projection of curves on a plane along a given Direction.
-//! The result will be a 3D curve.
-//!
-//! The ProjLib package provides projection of curves on surfaces to compute the curve in the
-//! parametric space. It is assumed that the curve is on the surface.
-//!
-//! It provides:
-//!
-//! * Package methods to handle the easiest cases:
-//!  - Line, Circle, Ellipse, Parabola, Hyperbola on plane.
-//!  - Line, Circle on cylinder.
-//!  - Line, Circle on cone.
-//!
-//! * Classes to handle the general cases:
-//!  - Plane.
-//!  - Cylinder.
-//!  - Cone.
-//!  - Sphere.
-//!  - Torus.
-//!
-//! * A generic class to handle a Adaptor3d_Curve on a Adaptor3d_Surface.
 class ProjLib
 {
 public:
@@ -80,12 +59,8 @@ public:
 
   Standard_EXPORT static gp_Lin2d Project(const gp_Torus& To, const gp_Circ& Ci);
 
-  //! Make empty P-Curve <aC> of relevant to <PC> type
   Standard_EXPORT static void MakePCurveOfType(const ProjLib_ProjectedCurve& PC,
                                                occ::handle<Geom2d_Curve>&    aC);
 
-  //! Returns "true" if surface is analytical, that is it can be
-  //! Plane, Cylinder, Cone, Sphere, Torus.
-  //! For all other types of surface method returns "false".
   Standard_EXPORT static bool IsAnaSurf(const occ::handle<Adaptor3d_Surface>& theAS);
 };

@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -37,10 +26,6 @@ protected:
   GeomHash_CurveHasher myHasher;
 };
 
-// ============================================================================
-// Line Tests
-// ============================================================================
-
 TEST_F(GeomHash_CurveHasherTest, Line_CopiedLines_SameHash)
 {
   gp_Pnt                 aLoc(1.0, 2.0, 3.0);
@@ -60,10 +45,6 @@ TEST_F(GeomHash_CurveHasherTest, Line_DifferentLines_DifferentHash)
   EXPECT_NE(myHasher(aLine1), myHasher(aLine2));
   EXPECT_FALSE(myHasher(aLine1, aLine2));
 }
-
-// ============================================================================
-// Circle Tests
-// ============================================================================
 
 TEST_F(GeomHash_CurveHasherTest, Circle_CopiedCircles_SameHash)
 {
@@ -85,10 +66,6 @@ TEST_F(GeomHash_CurveHasherTest, Circle_DifferentRadius_DifferentHash)
   EXPECT_FALSE(myHasher(aCircle1, aCircle2));
 }
 
-// ============================================================================
-// Ellipse Tests
-// ============================================================================
-
 TEST_F(GeomHash_CurveHasherTest, Ellipse_CopiedEllipses_SameHash)
 {
   gp_Ax2                    anAxis(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(0.0, 0.0, 1.0));
@@ -108,10 +85,6 @@ TEST_F(GeomHash_CurveHasherTest, Ellipse_DifferentRadii_DifferentHash)
   EXPECT_NE(myHasher(anEllipse1), myHasher(anEllipse2));
   EXPECT_FALSE(myHasher(anEllipse1, anEllipse2));
 }
-
-// ============================================================================
-// Hyperbola Tests
-// ============================================================================
 
 TEST_F(GeomHash_CurveHasherTest, Hyperbola_CopiedHyperbolas_SameHash)
 {
@@ -133,10 +106,6 @@ TEST_F(GeomHash_CurveHasherTest, Hyperbola_DifferentRadii_DifferentHash)
   EXPECT_FALSE(myHasher(aHyp1, aHyp2));
 }
 
-// ============================================================================
-// Parabola Tests
-// ============================================================================
-
 TEST_F(GeomHash_CurveHasherTest, Parabola_CopiedParabolas_SameHash)
 {
   gp_Ax2                     anAxis(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(0.0, 0.0, 1.0));
@@ -156,10 +125,6 @@ TEST_F(GeomHash_CurveHasherTest, Parabola_DifferentFocal_DifferentHash)
   EXPECT_NE(myHasher(aPar1), myHasher(aPar2));
   EXPECT_FALSE(myHasher(aPar1, aPar2));
 }
-
-// ============================================================================
-// BezierCurve Tests
-// ============================================================================
 
 TEST_F(GeomHash_CurveHasherTest, BezierCurve_CopiedCurves_SameHash)
 {
@@ -185,19 +150,14 @@ TEST_F(GeomHash_CurveHasherTest, BezierCurve_DifferentPoles_DifferentComparison)
 
   NCollection_Array1<gp_Pnt> aPoles2(1, 3);
   aPoles2(1) = gp_Pnt(0.0, 0.0, 0.0);
-  aPoles2(2) = gp_Pnt(1.0, 3.0, 0.0); // Different
+  aPoles2(2) = gp_Pnt(1.0, 3.0, 0.0);
   aPoles2(3) = gp_Pnt(2.0, 0.0, 0.0);
 
   occ::handle<Geom_BezierCurve> aCurve1 = new Geom_BezierCurve(aPoles1);
   occ::handle<Geom_BezierCurve> aCurve2 = new Geom_BezierCurve(aPoles2);
 
-  // Hash may be same (metadata only), but comparison should differ
   EXPECT_FALSE(myHasher(aCurve1, aCurve2));
 }
-
-// ============================================================================
-// BSplineCurve Tests
-// ============================================================================
 
 TEST_F(GeomHash_CurveHasherTest, BSplineCurve_CopiedCurves_SameHash)
 {
@@ -222,10 +182,6 @@ TEST_F(GeomHash_CurveHasherTest, BSplineCurve_CopiedCurves_SameHash)
   EXPECT_TRUE(myHasher(aCurve1, aCurve2));
 }
 
-// ============================================================================
-// TrimmedCurve Tests
-// ============================================================================
-
 TEST_F(GeomHash_CurveHasherTest, TrimmedCurve_CopiedCurves_SameHash)
 {
   occ::handle<Geom_Line> aLine = new Geom_Line(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(1.0, 0.0, 0.0));
@@ -245,10 +201,6 @@ TEST_F(GeomHash_CurveHasherTest, TrimmedCurve_DifferentBounds_DifferentHash)
   EXPECT_NE(myHasher(aTrimmed1), myHasher(aTrimmed2));
   EXPECT_FALSE(myHasher(aTrimmed1, aTrimmed2));
 }
-
-// ============================================================================
-// OffsetCurve Tests
-// ============================================================================
 
 TEST_F(GeomHash_CurveHasherTest, OffsetCurve_CopiedCurves_SameHash)
 {
@@ -271,10 +223,6 @@ TEST_F(GeomHash_CurveHasherTest, OffsetCurve_DifferentOffset_DifferentHash)
   EXPECT_NE(myHasher(anOffset1), myHasher(anOffset2));
   EXPECT_FALSE(myHasher(anOffset1, anOffset2));
 }
-
-// ============================================================================
-// Cross-type Tests
-// ============================================================================
 
 TEST_F(GeomHash_CurveHasherTest, DifferentTypes_DifferentComparison)
 {
@@ -300,10 +248,6 @@ TEST_F(GeomHash_CurveHasherTest, SameObject_Equal)
   occ::handle<Geom_Line> aLine = new Geom_Line(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(1.0, 0.0, 0.0));
   EXPECT_TRUE(myHasher(aLine, aLine));
 }
-
-// ============================================================================
-// Weighted BSpline Tests
-// ============================================================================
 
 TEST_F(GeomHash_CurveHasherTest, BSplineCurve_Weighted_CopiedCurves_SameHash)
 {
@@ -351,7 +295,7 @@ TEST_F(GeomHash_CurveHasherTest, BSplineCurve_DifferentWeights_DifferentComparis
 
   NCollection_Array1<double> aWeights2(1, 4);
   aWeights2(1) = 1.0;
-  aWeights2(2) = 3.0; // Different
+  aWeights2(2) = 3.0;
   aWeights2(3) = 2.0;
   aWeights2(4) = 1.0;
 
@@ -371,10 +315,6 @@ TEST_F(GeomHash_CurveHasherTest, BSplineCurve_DifferentWeights_DifferentComparis
   EXPECT_FALSE(myHasher(aCurve1, aCurve2));
 }
 
-// ============================================================================
-// Weighted Bezier Tests
-// ============================================================================
-
 TEST_F(GeomHash_CurveHasherTest, BezierCurve_Weighted_CopiedCurves_SameHash)
 {
   NCollection_Array1<gp_Pnt> aPoles(1, 3);
@@ -393,10 +333,6 @@ TEST_F(GeomHash_CurveHasherTest, BezierCurve_Weighted_CopiedCurves_SameHash)
   EXPECT_EQ(myHasher(aCurve1), myHasher(aCurve2));
   EXPECT_TRUE(myHasher(aCurve1, aCurve2));
 }
-
-// ============================================================================
-// Axis Orientation Tests
-// ============================================================================
 
 TEST_F(GeomHash_CurveHasherTest, Circle_DifferentAxisOrientation_DifferentHash)
 {
@@ -418,10 +354,6 @@ TEST_F(GeomHash_CurveHasherTest, Line_DifferentDirection_DifferentHash)
   EXPECT_FALSE(myHasher(aLine1, aLine2));
 }
 
-// ============================================================================
-// BSpline with Different Knots Tests
-// ============================================================================
-
 TEST_F(GeomHash_CurveHasherTest, BSplineCurve_DifferentKnots_DifferentComparison)
 {
   NCollection_Array1<gp_Pnt> aPoles(1, 4);
@@ -436,7 +368,7 @@ TEST_F(GeomHash_CurveHasherTest, BSplineCurve_DifferentKnots_DifferentComparison
 
   NCollection_Array1<double> aKnots2(1, 2);
   aKnots2(1) = 0.0;
-  aKnots2(2) = 2.0; // Different
+  aKnots2(2) = 2.0;
 
   NCollection_Array1<int> aMults(1, 2);
   aMults(1) = 4;
@@ -448,13 +380,9 @@ TEST_F(GeomHash_CurveHasherTest, BSplineCurve_DifferentKnots_DifferentComparison
   EXPECT_FALSE(myHasher(aCurve1, aCurve2));
 }
 
-// ============================================================================
-// Periodic BSpline Tests
-// ============================================================================
-
 TEST_F(GeomHash_CurveHasherTest, BSplineCurve_QuadraticBezierEquivalent_CopiedCurves_SameHash)
 {
-  // Simple quadratic B-spline (Bezier-like, single span)
+
   NCollection_Array1<gp_Pnt> aPoles(1, 3);
   aPoles(1) = gp_Pnt(0.0, 0.0, 0.0);
   aPoles(2) = gp_Pnt(1.0, 2.0, 0.0);
@@ -475,16 +403,11 @@ TEST_F(GeomHash_CurveHasherTest, BSplineCurve_QuadraticBezierEquivalent_CopiedCu
   EXPECT_TRUE(myHasher(aCurve1, aCurve2));
 }
 
-// ============================================================================
-// Reversed Curve Tests
-// ============================================================================
-
 TEST_F(GeomHash_CurveHasherTest, Line_Reversed_DifferentComparison)
 {
   occ::handle<Geom_Line> aLine1 = new Geom_Line(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(1.0, 0.0, 0.0));
   occ::handle<Geom_Line> aLine2 = occ::down_cast<Geom_Line>(aLine1->Reversed());
 
-  // Reversed line has opposite direction
   EXPECT_FALSE(myHasher(aLine1, aLine2));
 }
 
@@ -498,13 +421,8 @@ TEST_F(GeomHash_CurveHasherTest, BezierCurve_Reversed_DifferentComparison)
   occ::handle<Geom_BezierCurve> aCurve1 = new Geom_BezierCurve(aPoles);
   occ::handle<Geom_BezierCurve> aCurve2 = occ::down_cast<Geom_BezierCurve>(aCurve1->Reversed());
 
-  // Reversed curve has poles in different order
   EXPECT_FALSE(myHasher(aCurve1, aCurve2));
 }
-
-// ============================================================================
-// Transformed Curve Tests
-// ============================================================================
 
 TEST_F(GeomHash_CurveHasherTest, Circle_Translated_DifferentHash)
 {
@@ -528,10 +446,6 @@ TEST_F(GeomHash_CurveHasherTest, Circle_Scaled_DifferentHash)
   EXPECT_FALSE(myHasher(aCircle1, aCircle2));
 }
 
-// ============================================================================
-// Higher Degree BSpline Tests
-// ============================================================================
-
 TEST_F(GeomHash_CurveHasherTest, BSplineCurve_HigherDegree_CopiedCurves_SameHash)
 {
   NCollection_Array1<gp_Pnt> aPoles(1, 6);
@@ -550,7 +464,6 @@ TEST_F(GeomHash_CurveHasherTest, BSplineCurve_HigherDegree_CopiedCurves_SameHash
   aMults(1) = 6;
   aMults(2) = 6;
 
-  // Degree 5 curve
   occ::handle<Geom_BSplineCurve> aCurve1 = new Geom_BSplineCurve(aPoles, aKnots, aMults, 5);
   occ::handle<Geom_BSplineCurve> aCurve2 = occ::down_cast<Geom_BSplineCurve>(aCurve1->Copy());
 
@@ -578,7 +491,6 @@ TEST_F(GeomHash_CurveHasherTest, BSplineCurve_DifferentDegree_DifferentCompariso
   aMults2(1) = 3;
   aMults2(2) = 3;
 
-  // Different degrees: 3 vs 2
   occ::handle<Geom_BSplineCurve> aCurve1 = new Geom_BSplineCurve(aPoles, aKnots, aMults1, 3);
 
   NCollection_Array1<gp_Pnt> aPoles2(1, 3);
@@ -591,13 +503,9 @@ TEST_F(GeomHash_CurveHasherTest, BSplineCurve_DifferentDegree_DifferentCompariso
   EXPECT_FALSE(myHasher(aCurve1, aCurve2));
 }
 
-// ============================================================================
-// Multiple Knot Spans Tests
-// ============================================================================
-
 TEST_F(GeomHash_CurveHasherTest, BSplineCurve_LinearMultipleSpans_CopiedCurves_SameHash)
 {
-  // Linear B-spline with multiple knots (piecewise linear)
+
   NCollection_Array1<gp_Pnt> aPoles(1, 4);
   aPoles(1) = gp_Pnt(0.0, 0.0, 0.0);
   aPoles(2) = gp_Pnt(1.0, 1.0, 0.0);
@@ -623,10 +531,6 @@ TEST_F(GeomHash_CurveHasherTest, BSplineCurve_LinearMultipleSpans_CopiedCurves_S
   EXPECT_TRUE(myHasher(aCurve1, aCurve2));
 }
 
-// ============================================================================
-// Cross-type Conic Tests
-// ============================================================================
-
 TEST_F(GeomHash_CurveHasherTest, Ellipse_vs_Hyperbola_DifferentComparison)
 {
   gp_Ax2                      anAxis(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(0.0, 0.0, 1.0));
@@ -645,22 +549,13 @@ TEST_F(GeomHash_CurveHasherTest, Circle_vs_Ellipse_DifferentComparison)
   EXPECT_FALSE(myHasher(aCircle, anEllipse));
 }
 
-// ============================================================================
-// Trimmed vs Base Curve Tests
-// ============================================================================
-
 TEST_F(GeomHash_CurveHasherTest, TrimmedCurve_vs_BaseCurve_DifferentComparison)
 {
   occ::handle<Geom_Line> aLine = new Geom_Line(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(1.0, 0.0, 0.0));
   occ::handle<Geom_TrimmedCurve> aTrimmed = new Geom_TrimmedCurve(aLine, 0.0, 10.0);
 
-  // Trimmed curve is a different type from base curve
   EXPECT_FALSE(myHasher(aLine, aTrimmed));
 }
-
-// ============================================================================
-// Edge Cases - Degenerate/Special Values
-// ============================================================================
 
 TEST_F(GeomHash_CurveHasherTest, Circle_VerySmallRadius_CopiedCircles_SameHash)
 {

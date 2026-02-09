@@ -12,14 +12,12 @@
 class ChFiDS_Spine;
 class Geom2d_Curve;
 
-//! Data characterising a band of fillet.
 class ChFiDS_Stripe : public Standard_Transient
 {
 
 public:
   Standard_EXPORT ChFiDS_Stripe();
 
-  //! Reset everything except Spine.
   Standard_EXPORT void Reset();
 
   const occ::handle<NCollection_HSequence<occ::handle<ChFiDS_SurfData>>>& SetOfSurfData() const;
@@ -118,10 +116,8 @@ public:
 
   Standard_EXPORT void SetSolidIndex(const int Index);
 
-  //! Set nb of SurfData's at end put in DS
   Standard_EXPORT void InDS(const bool First, const int Nb = 1);
 
-  //! Returns nb of SurfData's at end being in DS
   Standard_EXPORT int IsInDS(const bool First) const;
 
   DEFINE_STANDARD_RTTIEXT(ChFiDS_Stripe, Standard_Transient)
@@ -157,35 +153,25 @@ inline const occ::handle<NCollection_HSequence<occ::handle<ChFiDS_SurfData>>>& C
   return myHdata;
 }
 
-//=================================================================================================
-
 inline const occ::handle<ChFiDS_Spine>& ChFiDS_Stripe::Spine() const
 {
   return mySpine;
 }
-
-//=================================================================================================
 
 inline TopAbs_Orientation ChFiDS_Stripe::OrientationOnFace1() const
 {
   return myOr1;
 }
 
-//=================================================================================================
-
 inline TopAbs_Orientation ChFiDS_Stripe::OrientationOnFace2() const
 {
   return myOr2;
 }
 
-//=================================================================================================
-
 inline int ChFiDS_Stripe::Choix() const
 {
   return myChoix;
 }
-
-//=================================================================================================
 
 inline occ::handle<NCollection_HSequence<occ::handle<ChFiDS_SurfData>>>& ChFiDS_Stripe::
   ChangeSetOfSurfData()
@@ -193,35 +179,25 @@ inline occ::handle<NCollection_HSequence<occ::handle<ChFiDS_SurfData>>>& ChFiDS_
   return myHdata;
 }
 
-//=================================================================================================
-
 inline occ::handle<ChFiDS_Spine>& ChFiDS_Stripe::ChangeSpine()
 {
   return mySpine;
 }
-
-//=================================================================================================
 
 inline void ChFiDS_Stripe::OrientationOnFace1(const TopAbs_Orientation Or1)
 {
   myOr1 = Or1;
 }
 
-//=================================================================================================
-
 inline void ChFiDS_Stripe::OrientationOnFace2(const TopAbs_Orientation Or2)
 {
   myOr2 = Or2;
 }
 
-//=================================================================================================
-
 inline void ChFiDS_Stripe::Choix(const int C)
 {
   myChoix = C;
 }
-
-//=================================================================================================
 
 inline void ChFiDS_Stripe::FirstParameters(double& Pdeb, double& Pfin) const
 {
@@ -229,15 +205,11 @@ inline void ChFiDS_Stripe::FirstParameters(double& Pdeb, double& Pfin) const
   Pfin = parfin1;
 }
 
-//=================================================================================================
-
 inline void ChFiDS_Stripe::LastParameters(double& Pdeb, double& Pfin) const
 {
   Pdeb = pardeb2;
   Pfin = parfin2;
 }
-
-//=================================================================================================
 
 inline void ChFiDS_Stripe::ChangeFirstParameters(const double Pdeb, const double Pfin)
 {
@@ -245,148 +217,106 @@ inline void ChFiDS_Stripe::ChangeFirstParameters(const double Pdeb, const double
   parfin1 = Pfin;
 }
 
-//=================================================================================================
-
 inline void ChFiDS_Stripe::ChangeLastParameters(const double Pdeb, const double Pfin)
 {
   pardeb2 = Pdeb;
   parfin2 = Pfin;
 }
 
-//=================================================================================================
-
 inline int ChFiDS_Stripe::FirstCurve() const
 {
   return indexOfcurve1;
 }
-
-//=================================================================================================
 
 inline int ChFiDS_Stripe::LastCurve() const
 {
   return indexOfcurve2;
 }
 
-//=================================================================================================
-
 inline void ChFiDS_Stripe::ChangeFirstCurve(const int Index)
 {
   indexOfcurve1 = Index;
 }
-
-//=================================================================================================
 
 inline void ChFiDS_Stripe::ChangeLastCurve(const int Index)
 {
   indexOfcurve2 = Index;
 }
 
-//=================================================================================================
-
 inline const occ::handle<Geom2d_Curve>& ChFiDS_Stripe::FirstPCurve() const
 {
   return pcrv1;
 }
-
-//=================================================================================================
 
 inline const occ::handle<Geom2d_Curve>& ChFiDS_Stripe::LastPCurve() const
 {
   return pcrv2;
 }
 
-//=================================================================================================
-
 inline occ::handle<Geom2d_Curve>& ChFiDS_Stripe::ChangeFirstPCurve()
 {
   return pcrv1;
 }
-
-//=================================================================================================
 
 inline occ::handle<Geom2d_Curve>& ChFiDS_Stripe::ChangeLastPCurve()
 {
   return pcrv2;
 }
 
-//=================================================================================================
-
 inline int ChFiDS_Stripe::IndexFirstPointOnS1() const
 {
   return indexfirstPOnS1;
 }
-
-//=================================================================================================
 
 inline int ChFiDS_Stripe::IndexLastPointOnS1() const
 {
   return indexlastPOnS1;
 }
 
-//=================================================================================================
-
 inline int ChFiDS_Stripe::IndexFirstPointOnS2() const
 {
   return indexfirstPOnS2;
 }
-
-//=================================================================================================
 
 inline int ChFiDS_Stripe::IndexLastPointOnS2() const
 {
   return indexlastPOnS2;
 }
 
-//=================================================================================================
-
 inline void ChFiDS_Stripe::ChangeIndexFirstPointOnS1(const int Index)
 {
   indexfirstPOnS1 = Index;
 }
-
-//=================================================================================================
 
 inline void ChFiDS_Stripe::ChangeIndexLastPointOnS1(const int Index)
 {
   indexlastPOnS1 = Index;
 }
 
-//=================================================================================================
-
 inline void ChFiDS_Stripe::ChangeIndexFirstPointOnS2(const int Index)
 {
   indexfirstPOnS2 = Index;
 }
-
-//=================================================================================================
 
 inline void ChFiDS_Stripe::ChangeIndexLastPointOnS2(const int Index)
 {
   indexlastPOnS2 = Index;
 }
 
-//=================================================================================================
-
 inline TopAbs_Orientation ChFiDS_Stripe::FirstPCurveOrientation() const
 {
   return orcurv1;
 }
-
-//=================================================================================================
 
 inline TopAbs_Orientation ChFiDS_Stripe::LastPCurveOrientation() const
 {
   return orcurv2;
 }
 
-//=================================================================================================
-
 inline void ChFiDS_Stripe::FirstPCurveOrientation(const TopAbs_Orientation O)
 {
   orcurv1 = O;
 }
-
-//=================================================================================================
 
 inline void ChFiDS_Stripe::LastPCurveOrientation(const TopAbs_Orientation O)
 {

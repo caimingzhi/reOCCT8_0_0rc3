@@ -14,8 +14,7 @@ static int BuildNamedShape(Draw_Interpretor& di, int nb, const char** arg)
       return 1;
     char anEvolution = arg[3][0];
     int  a, anInc = (anEvolution == 'P' || anEvolution == 'D') ? 1 : 2;
-    //     if (anEvolution == 'G')
-    //       for(a=1;arg[3][a]!=0 && arg[3][a]!='\n';a++) if (arg[3][a]=='2') anEvolution = '2';
+
     TNaming_Builder aBuilder(aLabel);
     TopoDS_Shape    aShape1, aShape2;
 
@@ -47,7 +46,7 @@ static int BuildNamedShape(Draw_Interpretor& di, int nb, const char** arg)
           aBuilder.Delete(aShape1);
           break;
         case 'R':
-          //	aBuilder.Replace(aShape1,aShape2);
+
           aBuilder.Modify(aShape1, aShape2);
           break;
         case 'S':
@@ -58,10 +57,6 @@ static int BuildNamedShape(Draw_Interpretor& di, int nb, const char** arg)
           return 1;
       }
     }
-
-    //     if (nb >= 4) {
-    //       OnlyModif = Draw::Atoi(arg[3]);
-    //     }
   }
   else
   {

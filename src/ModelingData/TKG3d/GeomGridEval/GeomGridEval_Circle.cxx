@@ -1,23 +1,10 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GeomGridEval_Circle.hpp>
 
 #include <gp_Circ.hpp>
 
 #include <cmath>
-
-//==================================================================================================
 
 NCollection_Array1<gp_Pnt> GeomGridEval_Circle::EvaluateGrid(
   const NCollection_Array1<double>& theParams) const
@@ -30,14 +17,12 @@ NCollection_Array1<gp_Pnt> GeomGridEval_Circle::EvaluateGrid(
   const int                  aNb = theParams.Size();
   NCollection_Array1<gp_Pnt> aResult(1, aNb);
 
-  // Extract circle data from geometry
   const gp_Circ& aCirc   = myGeom->Circ();
   const gp_Pnt&  aCenter = aCirc.Location();
   const gp_Dir&  aXDir   = aCirc.Position().XDirection();
   const gp_Dir&  aYDir   = aCirc.Position().YDirection();
   const double   aRadius = aCirc.Radius();
 
-  // Pre-extract coordinates for performance
   const double aCX = aCenter.X();
   const double aCY = aCenter.Y();
   const double aCZ = aCenter.Z();
@@ -61,8 +46,6 @@ NCollection_Array1<gp_Pnt> GeomGridEval_Circle::EvaluateGrid(
   }
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_Circle::EvaluateGridD1(
   const NCollection_Array1<double>& theParams) const
@@ -97,8 +80,6 @@ NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_Circle::EvaluateGridD1(
     const double cosU = std::cos(u);
     const double sinU = std::sin(u);
 
-    // P = C + R * (cos(u) * X + sin(u) * Y)
-    // D1 = R * (-sin(u) * X + cos(u) * Y)
     aResult.ChangeValue(i - theParams.Lower()
                         + 1) = {gp_Pnt(aCX + aRadius * (cosU * aXX + sinU * aYX),
                                        aCY + aRadius * (cosU * aXY + sinU * aYY),
@@ -109,8 +90,6 @@ NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_Circle::EvaluateGridD1(
   }
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_Circle::EvaluateGridD2(
   const NCollection_Array1<double>& theParams) const
@@ -145,9 +124,6 @@ NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_Circle::EvaluateGridD2(
     const double cosU = std::cos(u);
     const double sinU = std::sin(u);
 
-    // P = C + R * (cos(u) * X + sin(u) * Y)
-    // D1 = R * (-sin(u) * X + cos(u) * Y)
-    // D2 = R * (-cos(u) * X - sin(u) * Y)
     aResult.ChangeValue(i - theParams.Lower()
                         + 1) = {gp_Pnt(aCX + aRadius * (cosU * aXX + sinU * aYX),
                                        aCY + aRadius * (cosU * aXY + sinU * aYY),
@@ -161,8 +137,6 @@ NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_Circle::EvaluateGridD2(
   }
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_Circle::EvaluateGridD3(
   const NCollection_Array1<double>& theParams) const
@@ -197,10 +171,6 @@ NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_Circle::EvaluateGridD3(
     const double cosU = std::cos(u);
     const double sinU = std::sin(u);
 
-    // P = C + R * (cos(u) * X + sin(u) * Y)
-    // D1 = R * (-sin(u) * X + cos(u) * Y)
-    // D2 = R * (-cos(u) * X - sin(u) * Y)
-    // D3 = R * (sin(u) * X - cos(u) * Y)
     aResult.ChangeValue(i - theParams.Lower()
                         + 1) = {gp_Pnt(aCX + aRadius * (cosU * aXX + sinU * aYX),
                                        aCY + aRadius * (cosU * aXY + sinU * aYY),
@@ -217,8 +187,6 @@ NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_Circle::EvaluateGridD3(
   }
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<gp_Vec> GeomGridEval_Circle::EvaluateGridDN(
   const NCollection_Array1<double>& theParams,
@@ -244,12 +212,7 @@ NCollection_Array1<gp_Vec> GeomGridEval_Circle::EvaluateGridDN(
   const double aYY = aYDir.Y();
   const double aYZ = aYDir.Z();
 
-  // Circle derivatives are cyclic with period 4:
-  // D1 = R * (-sin(u) * X + cos(u) * Y)  -> coefficients: (-sin, cos)
-  // D2 = R * (-cos(u) * X - sin(u) * Y)  -> coefficients: (-cos, -sin)
-  // D3 = R * (sin(u) * X - cos(u) * Y)   -> coefficients: (sin, -cos)
-  // D4 = R * (cos(u) * X + sin(u) * Y)   -> coefficients: (cos, sin) = D0
-  const int aPhase = (theN - 1) % 4; // 0->D1, 1->D2, 2->D3, 3->D4
+  const int aPhase = (theN - 1) % 4;
 
   for (int i = theParams.Lower(); i <= theParams.Upper(); ++i)
   {
@@ -260,19 +223,19 @@ NCollection_Array1<gp_Vec> GeomGridEval_Circle::EvaluateGridDN(
     double aCoeffX, aCoeffY;
     switch (aPhase)
     {
-      case 0: // D1, D5, D9, ...
+      case 0:
         aCoeffX = -sinU;
         aCoeffY = cosU;
         break;
-      case 1: // D2, D6, D10, ...
+      case 1:
         aCoeffX = -cosU;
         aCoeffY = -sinU;
         break;
-      case 2: // D3, D7, D11, ...
+      case 2:
         aCoeffX = sinU;
         aCoeffY = -cosU;
         break;
-      default: // D4, D8, D12, ... (case 3)
+      default:
         aCoeffX = cosU;
         aCoeffY = sinU;
         break;

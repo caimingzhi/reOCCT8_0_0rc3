@@ -12,7 +12,6 @@ class StepBasic_SiUnitAndPlaneAngleUnit : public StepBasic_SiUnit
 {
 
 public:
-  //! Returns a SiUnitAndPlaneAngleUnit
   Standard_EXPORT StepBasic_SiUnitAndPlaneAngleUnit();
 
   Standard_EXPORT void Init(const bool                 hasAprefix,

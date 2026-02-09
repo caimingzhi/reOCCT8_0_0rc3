@@ -7,7 +7,6 @@
 #include <Standard_Boolean.hpp>
 #include <Standard_Real.hpp>
 
-//! to choose the way of cutting in approximation
 class AdvApprox_Cutting
 {
 public:

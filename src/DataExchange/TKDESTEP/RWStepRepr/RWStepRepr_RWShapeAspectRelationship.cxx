@@ -5,11 +5,7 @@
 #include <StepRepr_ShapeAspect.hpp>
 #include <StepRepr_ShapeAspectRelationship.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWShapeAspectRelationship::RWStepRepr_RWShapeAspectRelationship() = default;
-
-//=================================================================================================
 
 void RWStepRepr_RWShapeAspectRelationship::ReadStep(
   const occ::handle<StepData_StepReaderData>&          data,
@@ -17,11 +13,9 @@ void RWStepRepr_RWShapeAspectRelationship::ReadStep(
   occ::handle<Interface_Check>&                        ach,
   const occ::handle<StepRepr_ShapeAspectRelationship>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "shape_aspect_relationship"))
     return;
-
-  // Own fields of ShapeAspectRelationship
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -53,18 +47,13 @@ void RWStepRepr_RWShapeAspectRelationship::ReadStep(
                    STANDARD_TYPE(StepRepr_ShapeAspect),
                    aRelatedShapeAspect);
 
-  // Initialize entity
   ent->Init(aName, hasDescription, aDescription, aRelatingShapeAspect, aRelatedShapeAspect);
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWShapeAspectRelationship::WriteStep(
   StepData_StepWriter&                                 SW,
   const occ::handle<StepRepr_ShapeAspectRelationship>& ent) const
 {
-
-  // Own fields of ShapeAspectRelationship
 
   SW.Send(ent->Name());
 
@@ -80,14 +69,10 @@ void RWStepRepr_RWShapeAspectRelationship::WriteStep(
   SW.Send(ent->RelatedShapeAspect());
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWShapeAspectRelationship::Share(
   const occ::handle<StepRepr_ShapeAspectRelationship>& ent,
   Interface_EntityIterator&                            iter) const
 {
-
-  // Own fields of ShapeAspectRelationship
 
   iter.AddItem(ent->RelatingShapeAspect());
 

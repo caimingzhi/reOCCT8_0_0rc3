@@ -13,64 +13,38 @@ class Intf_SectionPoint;
 class Intf_SectionLine;
 class Intf_TangentZone;
 
-//! Describes the Interference computation result
-//! between polygon2d or polygon3d or polyhedron
-//! (as three sequences of points of intersection,
-//! polylines of intersection and zones de tangence).
 class Intf_Interference
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Gives the number of points of intersection in the
-  //! interference.
   int NbSectionPoints() const;
 
-  //! Gives the point of intersection of address Index in
-  //! the interference.
   const Intf_SectionPoint& PntValue(const int Index) const;
 
-  //! Gives the number of polylines of intersection in the
-  //! interference.
   int NbSectionLines() const;
 
-  //! Gives the polyline of intersection at address <Index> in
-  //! the interference.
   const Intf_SectionLine& LineValue(const int Index) const;
 
-  //! Gives the number of zones of tangence in the interference.
   int NbTangentZones() const;
 
-  //! Gives the zone of tangence at address Index in the
-  //! interference.
   const Intf_TangentZone& ZoneValue(const int Index) const;
 
-  //! Gives the tolerance used for the calculation.
   double GetTolerance() const;
 
-  //! Tests if the polylines of intersection or the zones of
-  //! tangence contain the point of intersection <ThePnt>.
   Standard_EXPORT bool Contains(const Intf_SectionPoint& ThePnt) const;
 
-  //! Inserts a new zone of tangence in the current list of
-  //! tangent zones of the interference and returns True
-  //! when done.
   Standard_EXPORT bool Insert(const Intf_TangentZone& TheZone);
 
-  //! Insert a new segment of intersection in the current list of
-  //! polylines of intersection of the interference.
   Standard_EXPORT void Insert(const Intf_SectionPoint& pdeb, const Intf_SectionPoint& pfin);
 
   Standard_EXPORT void Dump() const;
 
 protected:
-  //! Empty constructor
   Standard_EXPORT Intf_Interference(const bool Self);
 
-  //! Destructor is protected, for safer inheritance
   ~Intf_Interference() = default;
 
-  //! Only one argument for the intersection.
   Standard_EXPORT void SelfInterference(const bool Self);
 
   NCollection_Sequence<Intf_SectionPoint> mySPoins;
@@ -85,52 +59,30 @@ inline int Intf_Interference::NbSectionPoints() const
   return mySPoins.Length();
 }
 
-//=======================================================================
-// Give the section point of range Index in the interference.
-//=======================================================================
-
 inline const Intf_SectionPoint& Intf_Interference::PntValue(const int Index) const
 {
   return mySPoins(Index);
 }
-
-//=======================================================================
-// Return the number of sections lines in an interference.
-//=======================================================================
 
 inline int Intf_Interference::NbSectionLines() const
 {
   return mySLines.Length();
 }
 
-//=======================================================================
-// Give the section line of range Index in the interference.
-//=======================================================================
-
 inline const Intf_SectionLine& Intf_Interference::LineValue(const int Index) const
 {
   return mySLines(Index);
 }
-
-//=======================================================================
-// Return the number of sections TangentZones in an interference.
-//=======================================================================
 
 inline int Intf_Interference::NbTangentZones() const
 {
   return myTZones.Length();
 }
 
-//=======================================================================
-// Give the tangentzone of range Index in the interference.
-//=======================================================================
-
 inline const Intf_TangentZone& Intf_Interference::ZoneValue(const int Index) const
 {
   return myTZones(Index);
 }
-
-//=================================================================================================
 
 inline double Intf_Interference::GetTolerance() const
 {

@@ -46,10 +46,6 @@ extern bool ChFi3d_GettraceDRAWFIL();
 extern void ChFi3d_CheckSurfData(const TopOpeBRepDS_DataStructure&   DStr,
                                  const occ::handle<ChFiDS_SurfData>& Data);
 #endif
-//=======================================================================
-// function : CompTra
-// purpose  : Calculate the Transition from start point.
-//=======================================================================
 
 static TopAbs_Orientation CompTra(const TopAbs_Orientation O1,
                                   const TopAbs_Orientation O2,
@@ -60,11 +56,6 @@ static TopAbs_Orientation CompTra(const TopAbs_Orientation O1,
   else
     return TopAbs::Compose(O1, O2);
 }
-
-//=======================================================================
-// function : CompCommonpoint
-// purpose  : Fill the commonpoint in case of a vertex.
-//=======================================================================
 
 static void CompCommonPoint(ChFiDS_CommonPoint&            FilPoint,
                             const TopoDS_Edge&             arc,
@@ -88,11 +79,6 @@ static void CompCommonPoint(ChFiDS_CommonPoint&            FilPoint,
                   TopAbs::Compose(arc.Orientation(), Or));
 }
 
-//=======================================================================
-// function : CpInterf
-// purpose  : Construct new SurfData sharing faces, surface and curves.
-//=======================================================================
-
 static ChFiDS_FaceInterference CpInterf(TopOpeBRepDS_DataStructure&    DStr,
                                         const ChFiDS_FaceInterference& FI)
 {
@@ -110,11 +96,6 @@ static ChFiDS_FaceInterference CpInterf(TopOpeBRepDS_DataStructure&    DStr,
   return newF;
 }
 
-//=======================================================================
-// function : CpSD
-// purpose  : Construct new SurfData sharing faces, surface and curves.
-//=======================================================================
-
 static occ::handle<ChFiDS_SurfData> CpSD(TopOpeBRepDS_DataStructure&         DStr,
                                          const occ::handle<ChFiDS_SurfData>& Data)
 {
@@ -130,8 +111,6 @@ static occ::handle<ChFiDS_SurfData> CpSD(TopOpeBRepDS_DataStructure&         DSt
   newData->ChangeInterferenceOnS2() = CpInterf(DStr, Data->InterferenceOnS2());
   return newData;
 }
-
-//=================================================================================================
 
 static bool AdjustParam(const HatchGen_Domain& Dom,
                         double&                f,
@@ -161,8 +140,6 @@ static bool AdjustParam(const HatchGen_Domain& Dom,
   return false;
 }
 
-//=================================================================================================
-
 static double ComputeAbscissa(const BRepAdaptor_Curve& C, const double U)
 {
   switch (C.GetType())
@@ -175,8 +152,6 @@ static double ComputeAbscissa(const BRepAdaptor_Curve& C, const double U)
       return 0;
   }
 }
-
-//=================================================================================================
 
 static double ParamOnSpine(const TopOpeBRepDS_DataStructure&   DStr,
                            const double                        ptg,
@@ -200,7 +175,7 @@ static double ParamOnSpine(const TopOpeBRepDS_DataStructure&   DStr,
   }
   else
   {
-    // construction of the plane containing the section of CD with parameter ptg.
+
     gp_Pnt                  PP;
     gp_Vec                  VV;
     occ::handle<Geom_Curve> c3d;
@@ -218,7 +193,6 @@ static double ParamOnSpine(const TopOpeBRepDS_DataStructure&   DStr,
     occ::handle<Geom_Plane>          pln  = new Geom_Plane(nlp);
     occ::handle<GeomAdaptor_Surface> plan = new GeomAdaptor_Surface(GeomAdaptor_Surface(pln));
 
-    // intersection plane spine.
     bool found = false;
     bool fini  = false;
     int  sens  = 1;
@@ -283,8 +257,6 @@ static double ParamOnSpine(const TopOpeBRepDS_DataStructure&   DStr,
   }
 }
 
-//=================================================================================================
-
 static bool YaUnVoisin(const occ::handle<ChFiDS_Spine>& Spine,
                        const int                        iedge,
                        int&                             ivois,
@@ -308,8 +280,6 @@ static bool YaUnVoisin(const occ::handle<ChFiDS_Spine>& Spine,
   return (ivois > 0 && ivois <= nbed);
 }
 
-//=================================================================================================
-
 void ChFi3d_Builder::Trunc(const occ::handle<ChFiDS_SurfData>&   SD,
                            const occ::handle<ChFiDS_Spine>&      Spine,
                            const occ::handle<Adaptor3d_Surface>& S1,
@@ -319,7 +289,7 @@ void ChFi3d_Builder::Trunc(const occ::handle<ChFiDS_SurfData>&   SD,
                            const int                             cntlFiOnS)
 {
   TopOpeBRepDS_DataStructure& DStr = myDS->ChangeDS();
-  // Return points and tangents on edge and spine.
+
   double        wtg = SD->InterferenceOnS1().Parameter(isfirst);
   bool          bid;
   double        wsp = ParamOnSpine(DStr, wtg, SD, Spine, iedge, false, false, tolesp, bid);
@@ -328,7 +298,7 @@ void ChFi3d_Builder::Trunc(const occ::handle<ChFiDS_SurfData>&   SD,
   TopoDS_Vertex bout1, bout2, boutemp;
 
   const BRepAdaptor_Curve& bc = Spine->CurrentElementarySpine(iedge);
-  // Modif against Vertex isolated on spine
+
   TopoDS_Edge support = bc.Edge();
   TopExp::Vertices(support, bout1, bout2);
   if (support.Orientation() == TopAbs_REVERSED)
@@ -341,7 +311,7 @@ void ChFi3d_Builder::Trunc(const occ::handle<ChFiDS_SurfData>&   SD,
   {
     bout1 = bout2;
   }
-  // finmodif
+
   double edf = bc.FirstParameter(), edl = bc.LastParameter();
   double edglen = edl - edf;
   if (Spine->Edges(iedge).Orientation() == TopAbs_FORWARD)
@@ -388,7 +358,7 @@ void ChFi3d_Builder::Trunc(const occ::handle<ChFiDS_SurfData>&   SD,
       }
     }
   }
-  // modification of lvt against isolated vertex
+
   if (!tron && YaUnVoisin(Spine, iedge, ivois, isfirst))
   {
     NCollection_List<TopoDS_Shape>::Iterator It;
@@ -400,7 +370,6 @@ void ChFi3d_Builder::Trunc(const occ::handle<ChFiDS_SurfData>&   SD,
     if (nbed < 3)
       tron = true;
   }
-  // finmodif
 
   if (tron)
   {
@@ -409,9 +378,7 @@ void ChFi3d_Builder::Trunc(const occ::handle<ChFiDS_SurfData>&   SD,
       par = edglen;
     if (cntlFiOnS)
     {
-      // detect the case where FaceInterference ends before the place we are
-      // going to truncate SD. Then we cut so that FaceInterference length to
-      // be at least zero, not negative (eap, occ354)
+
       double fiPar     = SD->Interference(cntlFiOnS).Parameter(!isfirst);
       bool   isTheCase = isfirst ? (par > fiPar) : (par < fiPar);
       if (isTheCase)
@@ -434,8 +401,6 @@ void ChFi3d_Builder::Trunc(const occ::handle<ChFiDS_SurfData>&   SD,
     }
   }
 }
-
-//=================================================================================================
 
 static double ResetProl(const TopOpeBRepDS_DataStructure&   DStr,
                         const occ::handle<ChFiDS_SurfData>& CD,
@@ -471,8 +436,6 @@ static double ResetProl(const TopOpeBRepDS_DataStructure&   DStr,
   return sppar;
 }
 
-//=================================================================================================
-
 static bool Tri(const Geom2dHatch_Hatcher& H,
                 const int                  iH,
                 NCollection_Array1<int>&   Ind,
@@ -481,7 +444,7 @@ static bool Tri(const Geom2dHatch_Hatcher& H,
                 const double               pitol,
                 int&                       Nbdom)
 {
-  //  for (int i = 1; i <= Nbdom; i++) { Ind(i) = i; }
+
   int i;
   for (i = 1; i <= Nbdom; i++)
   {
@@ -550,8 +513,6 @@ static bool Tri(const Geom2dHatch_Hatcher& H,
   return true;
 }
 
-//=================================================================================================
-
 static void FillSD(TopOpeBRepDS_DataStructure&                               DStr,
                    occ::handle<ChFiDS_SurfData>&                             CD,
                    NCollection_DataMap<int, occ::handle<Adaptor2d_Curve2d>>& M,
@@ -589,7 +550,7 @@ static void FillSD(TopOpeBRepDS_DataStructure&                               DSt
   }
   else
   {
-    // Modification to find already existing vertexes
+
     int LeType = 1;
     int NbInt  = pPH->NbPoints();
     if (NbInt > 1)
@@ -665,11 +626,6 @@ static void FillSD(TopOpeBRepDS_DataStructure&                               DSt
   }
 }
 
-//=======================================================================
-// function : SplitKPart
-// purpose  : Reconstruct SurfData depending on restrictions of faces.
-//=======================================================================
-
 bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&                 Data,
                                 NCollection_Sequence<occ::handle<ChFiDS_SurfData>>& SetData,
                                 const occ::handle<ChFiDS_Spine>&                    Spine,
@@ -681,7 +637,6 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
                                 bool&                                               intf,
                                 bool&                                               intl)
 {
-  // The hatching of each faces is started by tangency lines.
 
   double pitol = Precision::PIntersection();
 
@@ -689,7 +644,6 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
   int                                                      iH1 = 0, iH2 = 0;
   int                                                      Nb1 = 1, Nb2 = 1;
 
-  // Cutting of tangency lines (hatching).
   Geom2dHatch_Intersector   Inter(pitol, pitol);
   Geom2dHatch_Hatcher       H1(Inter, tol2d, tolapp3d), H2(Inter, tol2d, tolapp3d);
   int                       ie;
@@ -751,7 +705,6 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
     }
   }
 
-  // Return start and end vertexes of the Spine
   TopoDS_Vertex            bout1, bout2, boutemp;
   const BRepAdaptor_Curve& bc      = Spine->CurrentElementarySpine(Iedge);
   TopoDS_Edge              support = bc.Edge();
@@ -763,7 +716,6 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
     bout1   = boutemp;
   }
 
-  // Return faces.
   TopoDS_Face                      F1, F2;
   occ::handle<BRepAdaptor_Surface> bhs = occ::down_cast<BRepAdaptor_Surface>(S1);
   if (!bhs.IsNull())
@@ -773,7 +725,6 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
     F2 = bhs->Face();
   TopoDS_Face FBID;
 
-  // Restriction of SurfDatas by cut lines.
   TopOpeBRepDS_DataStructure&  DStr = myDS->ChangeDS();
   occ::handle<ChFiDS_SurfData> CD   = Data;
   CD->ChangeIndexOfS1(DStr.AddShape(F1));
@@ -783,9 +734,8 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
   NCollection_Array1<int> Ind1(1, Nb1), Ind2(1, Nb2);
   double                  wref = 0.;
 
-  int onS       = 1; // switcher of access to surfs of SurfData, eap occ293
-  int cntlFiOnS = 0; // FaceInterference to control length in OnSame
-                     // situation, eap occ354
+  int onS       = 1;
+  int cntlFiOnS = 0;
 
   if (C1.IsNull() && C2.IsNull())
   {
@@ -796,7 +746,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
   }
   else if (C1.IsNull() || (Nb1 == 1 && !H1.Domain(iH1, 1).HasFirstPoint()))
   {
-    // It is checked if the point 2d of the degenerated edge is in the face.
+
     if (C1.IsNull())
     {
       gp_Pnt2d     p2d1 = CD->Get2dPoints(false, 1);
@@ -805,10 +755,9 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
         return false;
     }
 
-    // Parsing of domains by increasing parameters,
     if (!Tri(H2, iH2, Ind2, wref, 0., pitol, Nb2))
       return false;
-    // Filling of SurfData
+
     for (int i = 1; i <= Nb2; i++)
     {
       const HatchGen_Domain& Dom2 = H2.Domain(iH2, Ind2(i));
@@ -842,7 +791,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
   }
   else if (C2.IsNull() || (Nb2 == 1 && !H2.Domain(iH2, 1).HasFirstPoint()))
   {
-    // It is checked if the point 2d of the degenerated is in the face.
+
     if (C2.IsNull())
     {
       gp_Pnt2d     p2d2 = CD->Get2dPoints(false, 2);
@@ -851,10 +800,9 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
         return false;
     }
 
-    // Parsing of domains by increasing parameters,
     if (!Tri(H1, iH1, Ind1, wref, 0., pitol, Nb1))
       return false;
-    // Filling of SurfData
+
     for (int i = 1; i <= Nb1; i++)
     {
       const HatchGen_Domain& Dom1 = H1.Domain(iH1, Ind1(i));
@@ -889,8 +837,6 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
   else
   {
 
-    // Parsing of domains by increasing parameters,
-    // if there is a 2d circle on a plane, one goes on 2D line of opposite face.
     double period1 = 0., period2 = 0.;
     if (ll1.IsPeriodic())
     {
@@ -912,7 +858,6 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
         return false;
     }
 
-    // Filling of SurfData
     NCollection_Sequence<int> ion1, ion2;
     for (int i = 1; i <= Nb1; i++)
     {
@@ -956,17 +901,9 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
       }
     }
 
-    // Processing of extensions.
-    // Do not truncate, otherwise, problems of intersection for PerformCorner
-    // -----------------------------------------------------------------
-    // After call of SplitKPart in PerformSetOfKPart, spines have been
-    // extended to the extremities by methods Extent to permit
-    // intersections. Extensions of  SurfData are preserved.
-
     if (intf)
     {
-      // We are at the beginning of the spine
-      //-------------------------
+
       int                      ifirst = 0;
       double                   dist   = RealLast(), ptg, dsp;
       const BRepAdaptor_Curve& ed     = Spine->CurrentElementarySpine(Iedge);
@@ -1067,9 +1004,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
         else
           intf = false;
       }
-      // select <onS> switcher so that to get on spine params from
-      // Interference with a face where both edges at corner are OnSame
-      // eap occ293
+
       if (intf && Spine->FirstStatus() == ChFiDS_OnSame)
       {
         TopoDS_Edge threeE[3];
@@ -1089,8 +1024,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
     }
     if (intl)
     {
-      // we are at the end of the spine
-      //-----------------------
+
       int                      ilast = 0;
       double                   dist  = RealLast(), ptg, dsp;
       double                   f     = Spine->FirstParameter(Iedge);
@@ -1194,9 +1128,6 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
           intl = false;
       }
 
-      // select <onS> switcher so that to get on spine params from
-      // Interference with a face where both edges at corner are OnSame
-      // eap occ293
       if (intl && Spine->LastStatus() == ChFiDS_OnSame)
       {
         TopoDS_Edge threeE[3];
@@ -1218,7 +1149,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
 
   if (!intf)
   {
-    // SurfData are entirely suspended before the beginning of the edge.
+
     bool okdoc = SetData.IsEmpty();
     int  i     = 1;
     while (!okdoc)
@@ -1235,7 +1166,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
   }
   if (!intl)
   {
-    // SurfData are entirely suspended after the end of the edge.
+
     bool okdoc = SetData.IsEmpty();
     int  i     = 1;
     while (!okdoc)
@@ -1252,8 +1183,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
       okdoc = (SetData.IsEmpty() || i > SetData.Length());
     }
   }
-  // Add parameters of the spine on SurfDatas.
-  //  for (int i = 1; i <= SetData.Length(); i++) {
+
   int i;
   for (i = 1; i <= SetData.Length(); i++)
   {
@@ -1281,12 +1211,12 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
 
   if (intf && !SetData.IsEmpty())
   {
-    // extension of the spine
+
     Spine->SetFirstParameter(SetData.First()->FirstSpineParam());
   }
   else
   {
-    // Trnncation at the beginning.
+
     for (i = 1; i <= SetData.Length(); i++)
     {
       occ::handle<ChFiDS_SurfData>& CD8 = SetData.ChangeValue(i);
@@ -1313,12 +1243,12 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
 
   if (intl && !SetData.IsEmpty())
   {
-    // extension of the spine
+
     Spine->SetLastParameter(SetData.Last()->LastSpineParam());
   }
   else
   {
-    // Truncation at the end.
+
     for (i = SetData.Length(); i >= 1; i--)
     {
       occ::handle<ChFiDS_SurfData>& CD9 = SetData.ChangeValue(i);

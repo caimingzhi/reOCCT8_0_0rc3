@@ -9,8 +9,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(FEmTool_Curve, Standard_Transient)
 
-//=================================================================================================
-
 FEmTool_Curve::FEmTool_Curve(const int                Dimension,
                              const int                NbElements,
                              const PLib_HermitJacobi& TheBase,
@@ -41,8 +39,6 @@ NCollection_Array1<double>& FEmTool_Curve::Knots() const
 {
   return myKnots->ChangeArray1();
 }
-
-//=================================================================================================
 
 void FEmTool_Curve::SetElement(const int IndexOfElement, const NCollection_Array2<double>& Coeffs)
 {
@@ -81,8 +77,6 @@ void FEmTool_Curve::SetElement(const int IndexOfElement, const NCollection_Array
   myLength(IndexOfElement)                                                    = -1;
 }
 
-//=================================================================================================
-
 void FEmTool_Curve::GetElement(const int IndexOfElement, NCollection_Array2<double>& Coeffs)
 {
   int i, j, degBase, deg;
@@ -116,8 +110,6 @@ void FEmTool_Curve::GetElement(const int IndexOfElement, NCollection_Array2<doub
   }
 }
 
-//=================================================================================================
-
 void FEmTool_Curve::GetPolynom(NCollection_Array1<double>& Coeffs)
 
 {
@@ -131,8 +123,6 @@ void FEmTool_Curve::GetPolynom(NCollection_Array1<double>& Coeffs)
     Coeffs(di + i) = myPoly(i);
 }
 
-//=================================================================================================
-
 void FEmTool_Curve::D0(const double U, NCollection_Array1<double>& Pnt)
 {
   int    deg;
@@ -141,7 +131,7 @@ void FEmTool_Curve::D0(const double U, NCollection_Array1<double>& Pnt)
   if (!myIndex || (U < Uf) || (U > Ul) || (myKnots->Value(myIndex) != Uf)
       || (myKnots->Value(myIndex + 1) != Ul))
   {
-    // Search the span
+
     if (U <= myKnots->Value(2))
       myIndex = 1;
     else
@@ -163,7 +153,6 @@ void FEmTool_Curve::D0(const double U, NCollection_Array1<double>& Pnt)
   if (!HasPoly.Value(myIndex))
     Update(myIndex, 0);
 
-  // Parameter normalization: S [-1, 1]
   S = (2 * U - USum) * Denom;
   PLib::NoDerivativeEvalPolynomial(S,
                                    deg,
@@ -173,8 +162,6 @@ void FEmTool_Curve::D0(const double U, NCollection_Array1<double>& Pnt)
                                    Pnt(Pnt.Lower()));
 }
 
-//=================================================================================================
-
 void FEmTool_Curve::D1(const double U, NCollection_Array1<double>& Vec)
 {
   int    deg, i;
@@ -183,7 +170,7 @@ void FEmTool_Curve::D1(const double U, NCollection_Array1<double>& Vec)
   if (!myIndex || (U < Uf) || (U > Ul) || (myKnots->Value(myIndex) != Uf)
       || (myKnots->Value(myIndex + 1) != Ul))
   {
-    // Search the span
+
     if (U <= myKnots->Value(2))
       myIndex = 1;
     else
@@ -205,7 +192,6 @@ void FEmTool_Curve::D1(const double U, NCollection_Array1<double>& Vec)
   if (!HasDeri.Value(myIndex))
     Update(myIndex, 1);
 
-  // Parameter normalization: S [-1, 1]
   S = (2 * U - USum) * Denom;
   PLib::NoDerivativeEvalPolynomial(S,
                                    deg - 1,
@@ -219,8 +205,6 @@ void FEmTool_Curve::D1(const double U, NCollection_Array1<double>& Vec)
     Vec(i) *= S;
 }
 
-//=================================================================================================
-
 void FEmTool_Curve::D2(const double U, NCollection_Array1<double>& Vec)
 {
   int    deg, i;
@@ -229,7 +213,7 @@ void FEmTool_Curve::D2(const double U, NCollection_Array1<double>& Vec)
   if (!myIndex || (U < Uf) || (U > Ul) || (myKnots->Value(myIndex) != Uf)
       || (myKnots->Value(myIndex + 1) != Ul))
   {
-    // Search the span
+
     if (U <= myKnots->Value(2))
       myIndex = 1;
     else
@@ -251,7 +235,6 @@ void FEmTool_Curve::D2(const double U, NCollection_Array1<double>& Vec)
   if (!HasSecn.Value(myIndex))
     Update(myIndex, 2);
 
-  // Parameter normalization: S [-1, 1]
   S = (2 * U - USum) * Denom;
   PLib::NoDerivativeEvalPolynomial(
     S,
@@ -265,8 +248,6 @@ void FEmTool_Curve::D2(const double U, NCollection_Array1<double>& Vec)
   for (i = Vec.Lower(); i <= Vec.Upper(); i++)
     Vec(i) *= S;
 }
-
-//=================================================================================================
 
 void FEmTool_Curve::Length(const double FirstU, const double LastU, double& Length)
 {
@@ -393,8 +374,6 @@ int FEmTool_Curve::Degree(const int IndexOfElement) const
   return myDegree.Value(IndexOfElement);
 }
 
-//=================================================================================================
-
 void FEmTool_Curve::SetDegree(const int IndexOfElement, const int Degree)
 {
   if (Degree <= myBase.WorkDegree())
@@ -406,8 +385,6 @@ void FEmTool_Curve::SetDegree(const int IndexOfElement, const int Degree)
   else if (Degree > myBase.WorkDegree())
     throw Standard_OutOfRange("FEmTool_Curve::SetDegree");
 }
-
-//=================================================================================================
 
 void FEmTool_Curve::ReduceDegree(const int    IndexOfElement,
                                  const double Tol,
@@ -429,8 +406,6 @@ void FEmTool_Curve::ReduceDegree(const int    IndexOfElement,
     myLength(IndexOfElement)                                                    = -1;
   }
 }
-
-//=================================================================================================
 
 void FEmTool_Curve::Update(const int Index, const int Order)
 {

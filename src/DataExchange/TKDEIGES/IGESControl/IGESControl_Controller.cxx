@@ -1,18 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// #58 rln 28.12.98 changing default values for Global Section
-// sln 14.01.2002 OCC51 : verifying whether entry model of method ActorRead is IGESDatat_IGESModel
 
 #include <IFSelect_EditForm.hpp>
 #include <IFSelect_SelectModelEntities.hpp>
@@ -66,8 +52,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESControl_Controller, XSControl_Controller)
 
-//=================================================================================================
-
 IGESControl_Controller::IGESControl_Controller(const bool mod)
     : XSControl_Controller((const char*)(mod ? "FNES" : "IGES"),
                            (const char*)(mod ? "fnes" : "iges")),
@@ -92,7 +76,6 @@ IGESControl_Controller::IGESControl_Controller(const bool mod)
   flf->SetDefault(12);
   AddSessionItem(flf, "iges-float-digits-12", true);
 
-  //  --   Sender Product Identification   --  (not a static ...)
   occ::handle<IGESSelect_SetGlobalParameter> set3 = new IGESSelect_SetGlobalParameter(3);
   occ::handle<TCollection_HAsciiString>      pa3 =
     Interface_Static::Static("write.iges.header.product")->HStringValue();
@@ -102,7 +85,6 @@ IGESControl_Controller::IGESControl_Controller(const bool mod)
 
   AddSessionItem(new IGESSelect_UpdateFileName, "iges-update-file-name", true);
 
-  //  --   Receiver   --   Access by Static, adjustable
   occ::handle<IGESSelect_SetGlobalParameter> set12 = new IGESSelect_SetGlobalParameter(12);
   occ::handle<TCollection_HAsciiString>      pa12 =
     Interface_Static::Static("write.iges.header.receiver")->HStringValue();
@@ -110,7 +92,6 @@ IGESControl_Controller::IGESControl_Controller(const bool mod)
   AddSessionItem(pa12, "iges-header-val-receiver");
   AddSessionItem(set12, "iges-header-set-receiver", true);
 
-  //  --   Author   --   access by Static (started by whoami), adjustable
   occ::handle<IGESSelect_SetGlobalParameter> set21 = new IGESSelect_SetGlobalParameter(21);
   occ::handle<TCollection_HAsciiString>      pa21 =
     Interface_Static::Static("write.iges.header.author")->HStringValue();
@@ -118,15 +99,12 @@ IGESControl_Controller::IGESControl_Controller(const bool mod)
   AddSessionItem(pa21, "iges-header-val-author");
   AddSessionItem(set21, "iges-header-set-author", true);
 
-  //  --   Company (of the author)   --   access by Static, adjustable
   occ::handle<IGESSelect_SetGlobalParameter> set22 = new IGESSelect_SetGlobalParameter(22);
   occ::handle<TCollection_HAsciiString>      pa22 =
     Interface_Static::Static("write.iges.header.company")->HStringValue();
   set22->SetValue(pa22);
   AddSessionItem(pa22, "iges-header-val-company");
   AddSessionItem(set22, "iges-header-set-company", true);
-
-  //  -- STATICS
 
   TraceStatic("read.iges.bspline.approxd1.mode", 5);
   TraceStatic("read.iges.bspline.continuity", 5);
@@ -155,10 +133,6 @@ void IGESControl_Controller::Customise(occ::handle<XSControl_WorkSession>& WS)
 {
   XSControl_Controller::Customise(WS);
 
-  //   ---  SELECTIONS, SIGNATURES, COMPTEURS, EDITEURS
-  //   --   BypassGroup / xst-model-roots
-
-  // Should be already set by the above call to Customise
   occ::handle<IFSelect_SelectModelEntities> xma;
   occ::handle<Standard_Transient>           xma1 = WS->NamedItem("xst-model-all");
   if (xma1.IsNull())
@@ -293,16 +267,13 @@ void IGESControl_Controller::Customise(occ::handle<XSControl_WorkSession>& WS)
     occ::handle<IFSelect_EditForm> eddirpf = eddirp->Form(false);
     WS->AddNamedItem("iges-dir-part", eddirpf);
 
-    // szv:mySignType = typnam;
     WS->SetSignType(typnam);
   }
 }
 
-//=================================================================================================
-
 occ::handle<Interface_InterfaceModel> IGESControl_Controller::NewModel() const
 {
-  //  We take a model that we prepare with registered statics
+
   DeclareAndCast(IGESData_IGESModel, igm, Interface_InterfaceModel::Template("iges"));
   IGESData_GlobalSection GS = igm->GlobalSection();
 
@@ -315,16 +286,13 @@ occ::handle<Interface_InterfaceModel> IGESControl_Controller::NewModel() const
   return igm;
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_ActorOfTransientProcess> IGESControl_Controller::ActorRead(
   const occ::handle<Interface_InterfaceModel>& model) const
 {
   DeclareAndCast(IGESToBRep_Actor, anactiges, myAdaptorRead);
   if (!anactiges.IsNull())
   {
-    // sln 14.01.2002 OCC51 : verifying whether entry model is IGESDatat_IGESModel,
-    // if this condition is false new model is created
+
     occ::handle<Interface_InterfaceModel> aModel =
       (model->IsKind(STANDARD_TYPE(IGESData_IGESModel)) ? model : NewModel());
     anactiges->SetModel(GetCasted(IGESData_IGESModel, aModel));
@@ -332,11 +300,6 @@ occ::handle<Transfer_ActorOfTransientProcess> IGESControl_Controller::ActorRead(
   }
   return myAdaptorRead;
 }
-
-//  ####    TRANSFER (SHAPE WRITING)    ####
-//  modetrans : 0  <5.1 (group of faces),  1 BREP-5.1
-
-//=================================================================================================
 
 IFSelect_ReturnStatus IGESControl_Controller::TransferWriteShape(
   const TopoDS_Shape&                          shape,
@@ -347,8 +310,6 @@ IFSelect_ReturnStatus IGESControl_Controller::TransferWriteShape(
 {
   return XSControl_Controller::TransferWriteShape(shape, FP, model, modetrans, theProgress);
 }
-
-//=================================================================================================
 
 bool IGESControl_Controller::Init()
 {

@@ -12,46 +12,26 @@ class Interface_HGraph;
 class Interface_InterfaceModel;
 class Interface_Graph;
 
-//! Provides basic functionalities for tools which are intended
-//! for encoding/decoding specific STEP constructs
-//!
-//! It is initialized by WorkSession and allows easy access to
-//! its fields and internal data such as Model, TP and FP
-//!
-//! NOTE: Call to method Graph() with True (or for a first time,
-//! if you have updated the model since last computation of model)
-//! can take a time, so it is recommended to avoid creation of
-//! this (and derived) tool multiple times
 class STEPConstruct_Tool
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates an empty tool
   Standard_EXPORT STEPConstruct_Tool();
 
-  //! Creates a tool and loads it with worksession
   Standard_EXPORT STEPConstruct_Tool(const occ::handle<XSControl_WorkSession>& WS);
 
-  //! Returns currently loaded WorkSession
   const occ::handle<XSControl_WorkSession>& WS() const;
 
-  //! Returns current model (Null if not loaded)
   occ::handle<Interface_InterfaceModel> Model() const;
 
-  //! Returns current graph (recomputing if necessary)
   const Interface_Graph& Graph(const bool recompute = false) const;
 
-  //! Returns TransientProcess (reading; Null if not loaded)
   const occ::handle<Transfer_TransientProcess>& TransientProcess() const;
 
-  //! Returns FinderProcess (writing; Null if not loaded)
   const occ::handle<Transfer_FinderProcess>& FinderProcess() const;
 
 protected:
-  //! Load worksession; returns True if succeeded
-  //! Returns False if either FinderProcess of TransientProcess
-  //! cannot be obtained or are Null
   Standard_EXPORT bool SetWS(const occ::handle<XSControl_WorkSession>& WS);
 
 private:
@@ -68,36 +48,26 @@ private:
 #include <Transfer_FinderProcess.hpp>
 #include <XSControl_WorkSession.hpp>
 
-//=================================================================================================
-
 inline const occ::handle<XSControl_WorkSession>& STEPConstruct_Tool::WS() const
 {
   return myWS;
 }
-
-//=================================================================================================
 
 inline occ::handle<Interface_InterfaceModel> STEPConstruct_Tool::Model() const
 {
   return myWS->Model();
 }
 
-//=================================================================================================
-
 inline const Interface_Graph& STEPConstruct_Tool::Graph(const bool recompute) const
 {
-  // Note: myWS->Graph() recomputes graph each time!
+
   return recompute ? myWS->Graph() : myHGraph->Graph();
 }
-
-//=================================================================================================
 
 inline const occ::handle<Transfer_TransientProcess>& STEPConstruct_Tool::TransientProcess() const
 {
   return myTransientProcess;
 }
-
-//=================================================================================================
 
 inline const occ::handle<Transfer_FinderProcess>& STEPConstruct_Tool::FinderProcess() const
 {

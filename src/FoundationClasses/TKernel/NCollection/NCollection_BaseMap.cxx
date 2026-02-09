@@ -1,14 +1,12 @@
 #include <NCollection_BaseMap.hpp>
 #include <NCollection_Primes.hpp>
 
-//=================================================================================================
-
 bool NCollection_BaseMap::BeginResize(const int               NbBuckets,
                                       int&                    N,
                                       NCollection_ListNode**& data1,
                                       NCollection_ListNode**& data2) const
 {
-  // get next size for the buckets array
+
   N = NextPrimeForMap(NbBuckets);
   if (N <= myNbBuckets)
   {
@@ -27,14 +25,12 @@ bool NCollection_BaseMap::BeginResize(const int               NbBuckets,
   return true;
 }
 
-//=================================================================================================
-
 void NCollection_BaseMap::EndResize(const int              theNbBuckets,
                                     const int              N,
                                     NCollection_ListNode** data1,
                                     NCollection_ListNode** data2) noexcept
 {
-  (void)theNbBuckets; // obsolete parameter
+  (void)theNbBuckets;
   if (myData1)
     Standard::Free(myData1);
   if (myData2 && isDouble)
@@ -43,8 +39,6 @@ void NCollection_BaseMap::EndResize(const int              theNbBuckets,
   myData1     = data1;
   myData2     = data2;
 }
-
-//=================================================================================================
 
 void NCollection_BaseMap::Destroy(NCollection_DelMapNode fDel, bool doReleaseMemory)
 {
@@ -81,8 +75,6 @@ void NCollection_BaseMap::Destroy(NCollection_DelMapNode fDel, bool doReleaseMem
   }
 }
 
-//=================================================================================================
-
 void NCollection_BaseMap::Statistics(Standard_OStream& S) const
 {
   S << "\nMap Statistics\n---------------\n\n";
@@ -91,7 +83,6 @@ void NCollection_BaseMap::Statistics(Standard_OStream& S) const
   if (mySize == 0)
     return;
 
-  // compute statistics on 1
   int*                   sizes = new int[mySize + 1];
   int                    i, l, nb;
   NCollection_ListNode*  p;
@@ -116,7 +107,6 @@ void NCollection_BaseMap::Statistics(Standard_OStream& S) const
     sizes[l]++;
   }
 
-  // display results
   l = 0;
   for (i = 0; i <= mySize; i++)
   {
@@ -132,8 +122,6 @@ void NCollection_BaseMap::Statistics(Standard_OStream& S) const
 
   delete[] sizes;
 }
-
-//=================================================================================================
 
 int NCollection_BaseMap::NextPrimeForMap(const int N) const noexcept
 {

@@ -4,24 +4,9 @@
 #include <gp_Vec.hpp>
 #include <gp_XYZ.hpp>
 
-//! @file Geom_ExtrusionUtils.hpp
-//! @brief Shared utility functions for extrusion surface evaluation.
-//!
-//! This file provides both direct calculation functions (accepting pre-computed curve values)
-//! and template functions for evaluating points and derivatives on linear extrusion surfaces.
-//! The template functions work with both Geom_Curve (for Geom_SurfaceOfLinearExtrusion)
-//! and Adaptor3d_Curve (for GeomAdaptor_SurfaceOfLinearExtrusion).
-//!
-//! Extrusion surface: P(U,V) = C(U) + V * Direction
-
 namespace Geom_ExtrusionUtils
 {
 
-  //! Calculates point on extrusion surface from pre-computed curve point.
-  //! @param theCurvePt Pre-computed curve point C(U)
-  //! @param theV Parameter along the extrusion direction
-  //! @param theDir Extrusion direction XYZ (must be normalized)
-  //! @param theP [out] Evaluated surface point
   inline void CalculateD0(const gp_Pnt& theCurvePt,
                           const double  theV,
                           const gp_XYZ& theDir,
@@ -30,14 +15,6 @@ namespace Geom_ExtrusionUtils
     theP.SetXYZ(theCurvePt.XYZ() + theV * theDir);
   }
 
-  //! Calculates point and first derivatives on extrusion surface from pre-computed curve D1.
-  //! @param theCurvePt Pre-computed curve point C(U)
-  //! @param theCurveD1 Pre-computed curve first derivative C'(U)
-  //! @param theV Parameter along the extrusion direction
-  //! @param theDir Extrusion direction XYZ (must be normalized)
-  //! @param theP [out] Evaluated surface point
-  //! @param theD1U [out] First derivative with respect to U
-  //! @param theD1V [out] First derivative with respect to V
   inline void CalculateD1(const gp_Pnt& theCurvePt,
                           const gp_Vec& theCurveD1,
                           const double  theV,
@@ -51,19 +28,6 @@ namespace Geom_ExtrusionUtils
     theD1V.SetXYZ(theDir);
   }
 
-  //! Calculates point, first and second derivatives on extrusion surface from pre-computed curve
-  //! D2.
-  //! @param theCurvePt Pre-computed curve point C(U)
-  //! @param theCurveD1 Pre-computed curve first derivative C'(U)
-  //! @param theCurveD2 Pre-computed curve second derivative C''(U)
-  //! @param theV Parameter along the extrusion direction
-  //! @param theDir Extrusion direction XYZ (must be normalized)
-  //! @param theP [out] Evaluated surface point
-  //! @param theD1U [out] First derivative with respect to U
-  //! @param theD1V [out] First derivative with respect to V
-  //! @param theD2U [out] Second derivative with respect to U
-  //! @param theD2V [out] Second derivative with respect to V (always zero)
-  //! @param theD2UV [out] Mixed second derivative (always zero)
   inline void CalculateD2(const gp_Pnt& theCurvePt,
                           const gp_Vec& theCurveD1,
                           const gp_Vec& theCurveD2,
@@ -84,24 +48,6 @@ namespace Geom_ExtrusionUtils
     theD2UV.SetCoord(0.0, 0.0, 0.0);
   }
 
-  //! Calculates point and derivatives up to third order on extrusion surface from pre-computed
-  //! curve D3.
-  //! @param theCurvePt Pre-computed curve point C(U)
-  //! @param theCurveD1 Pre-computed curve first derivative C'(U)
-  //! @param theCurveD2 Pre-computed curve second derivative C''(U)
-  //! @param theCurveD3 Pre-computed curve third derivative C'''(U)
-  //! @param theV Parameter along the extrusion direction
-  //! @param theDir Extrusion direction XYZ (must be normalized)
-  //! @param theP [out] Evaluated surface point
-  //! @param theD1U [out] First derivative with respect to U
-  //! @param theD1V [out] First derivative with respect to V
-  //! @param theD2U [out] Second derivative with respect to U
-  //! @param theD2V [out] Second derivative with respect to V (always zero)
-  //! @param theD2UV [out] Mixed second derivative (always zero)
-  //! @param theD3U [out] Third derivative with respect to U
-  //! @param theD3V [out] Third derivative with respect to V (always zero)
-  //! @param theD3UUV [out] Mixed third derivative (UUV) (always zero)
-  //! @param theD3UVV [out] Mixed third derivative (UVV) (always zero)
   inline void CalculateD3(const gp_Pnt& theCurvePt,
                           const gp_Vec& theCurveD1,
                           const gp_Vec& theCurveD2,
@@ -131,12 +77,6 @@ namespace Geom_ExtrusionUtils
     theD3UVV.SetCoord(0.0, 0.0, 0.0);
   }
 
-  //! Calculates N-th derivative on extrusion surface from pre-computed curve derivative.
-  //! @param theCurveDN Pre-computed curve N-th derivative C^(theDerU)(U)
-  //! @param theDir Extrusion direction XYZ (must be normalized)
-  //! @param theDerU Derivative order with respect to U
-  //! @param theDerV Derivative order with respect to V
-  //! @return The derivative vector
   inline gp_Vec CalculateDN(const gp_Vec& theCurveDN,
                             const gp_XYZ& theDir,
                             const int     theDerU,
@@ -149,13 +89,6 @@ namespace Geom_ExtrusionUtils
     return gp_Vec(0.0, 0.0, 0.0);
   }
 
-  //! Evaluates point on extrusion surface.
-  //! @tparam CurveType Type supporting D0(param, point) method
-  //! @param theU Parameter along the basis curve
-  //! @param theV Parameter along the extrusion direction
-  //! @param theBasis Basis curve
-  //! @param theDir Extrusion direction XYZ (must be normalized)
-  //! @param theP [out] Evaluated point
   template <typename CurveType>
   inline void D0(const double     theU,
                  const double     theV,
@@ -168,15 +101,6 @@ namespace Geom_ExtrusionUtils
     CalculateD0(aCurvePt, theV, theDir, theP);
   }
 
-  //! Evaluates point and first derivatives on extrusion surface.
-  //! @tparam CurveType Type supporting D1(param, point, vec) method
-  //! @param theU Parameter along the basis curve
-  //! @param theV Parameter along the extrusion direction
-  //! @param theBasis Basis curve
-  //! @param theDir Extrusion direction XYZ (must be normalized)
-  //! @param theP [out] Evaluated point
-  //! @param theD1U [out] First derivative with respect to U
-  //! @param theD1V [out] First derivative with respect to V
   template <typename CurveType>
   inline void D1(const double     theU,
                  const double     theV,
@@ -192,18 +116,6 @@ namespace Geom_ExtrusionUtils
     CalculateD1(aCurvePt, aCurveD1, theV, theDir, theP, theD1U, theD1V);
   }
 
-  //! Evaluates point, first and second derivatives on extrusion surface.
-  //! @tparam CurveType Type supporting D2(param, point, vec, vec) method
-  //! @param theU Parameter along the basis curve
-  //! @param theV Parameter along the extrusion direction
-  //! @param theBasis Basis curve
-  //! @param theDir Extrusion direction XYZ (must be normalized)
-  //! @param theP [out] Evaluated point
-  //! @param theD1U [out] First derivative with respect to U
-  //! @param theD1V [out] First derivative with respect to V
-  //! @param theD2U [out] Second derivative with respect to U
-  //! @param theD2V [out] Second derivative with respect to V
-  //! @param theD2UV [out] Mixed second derivative
   template <typename CurveType>
   inline void D2(const double     theU,
                  const double     theV,
@@ -232,22 +144,6 @@ namespace Geom_ExtrusionUtils
                 theD2UV);
   }
 
-  //! Evaluates point, first, second and third derivatives on extrusion surface.
-  //! @tparam CurveType Type supporting D3(param, point, vec, vec, vec) method
-  //! @param theU Parameter along the basis curve
-  //! @param theV Parameter along the extrusion direction
-  //! @param theBasis Basis curve
-  //! @param theDir Extrusion direction XYZ (must be normalized)
-  //! @param theP [out] Evaluated point
-  //! @param theD1U [out] First derivative with respect to U
-  //! @param theD1V [out] First derivative with respect to V
-  //! @param theD2U [out] Second derivative with respect to U
-  //! @param theD2V [out] Second derivative with respect to V
-  //! @param theD2UV [out] Mixed second derivative
-  //! @param theD3U [out] Third derivative with respect to U
-  //! @param theD3V [out] Third derivative with respect to V
-  //! @param theD3UUV [out] Mixed third derivative (UUV)
-  //! @param theD3UVV [out] Mixed third derivative (UVV)
   template <typename CurveType>
   inline void D3(const double     theU,
                  const double     theV,
@@ -285,14 +181,6 @@ namespace Geom_ExtrusionUtils
                 theD3UVV);
   }
 
-  //! Evaluates N-th derivative on extrusion surface.
-  //! @tparam CurveType Type supporting DN(param, order) method
-  //! @param theU Parameter along the basis curve
-  //! @param theBasis Basis curve
-  //! @param theDir Extrusion direction XYZ (must be normalized)
-  //! @param theDerU Derivative order with respect to U
-  //! @param theDerV Derivative order with respect to V
-  //! @return The derivative vector
   template <typename CurveType>
   inline gp_Vec DN(const double     theU,
                    const CurveType& theBasis,

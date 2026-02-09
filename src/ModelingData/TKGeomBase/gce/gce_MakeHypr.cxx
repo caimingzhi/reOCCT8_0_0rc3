@@ -5,12 +5,6 @@
 #include <gp_Pnt.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   Creation d une Hyperbole 3d de gp de centre <Center> et de sommets   +
-//   <S1> et <S2>.                                                        +
-//   <CenterS1> donne le grand axe .                                      +
-//   <S1> donne le grand rayon et <S2> le petit rayon.                    +
-//=========================================================================
 gce_MakeHypr::gce_MakeHypr(const gp_Pnt& S1, const gp_Pnt& S2, const gp_Pnt& Center)
 {
   gp_Dir XAxis(gp_XYZ(S1.XYZ() - Center.XYZ()));

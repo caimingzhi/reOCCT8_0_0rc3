@@ -8,14 +8,11 @@
 #include <StepKinematics_KinematicJoint.hpp>
 #include <StepGeom_Curve.hpp>
 
-//! Representation of STEP entity LinearFlexibleAndPlanarCurvePair
 class StepKinematics_LinearFlexibleAndPlanarCurvePair : public StepKinematics_HighOrderKinematicPair
 {
 public:
-  //! default constructor
   Standard_EXPORT StepKinematics_LinearFlexibleAndPlanarCurvePair();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
     const occ::handle<TCollection_HAsciiString>&      theItemDefinedTransformation_Name,
@@ -27,14 +24,12 @@ public:
     const occ::handle<StepGeom_Curve>&                thePairCurve,
     const bool                                        theOrientation);
 
-  //! Returns field PairCurve
   Standard_EXPORT occ::handle<StepGeom_Curve> PairCurve() const;
-  //! Sets field PairCurve
+
   Standard_EXPORT void SetPairCurve(const occ::handle<StepGeom_Curve>& thePairCurve);
 
-  //! Returns field Orientation
   Standard_EXPORT bool Orientation() const;
-  //! Sets field Orientation
+
   Standard_EXPORT void SetOrientation(const bool theOrientation);
 
   DEFINE_STANDARD_RTTIEXT(StepKinematics_LinearFlexibleAndPlanarCurvePair,

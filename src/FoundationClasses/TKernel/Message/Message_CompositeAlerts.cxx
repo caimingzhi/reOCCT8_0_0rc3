@@ -1,15 +1,4 @@
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Message_CompositeAlerts.hpp>
 
@@ -18,8 +7,6 @@
 #include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Message_CompositeAlerts, Standard_Transient)
-
-//=================================================================================================
 
 const NCollection_List<occ::handle<Message_Alert>>& Message_CompositeAlerts::Alerts(
   const Message_Gravity theGravity) const
@@ -31,8 +18,6 @@ const NCollection_List<occ::handle<Message_Alert>>& Message_CompositeAlerts::Ale
                          anEmptyList);
   return myAlerts[theGravity];
 }
-
-//=================================================================================================
 
 bool Message_CompositeAlerts::AddAlert(Message_Gravity                   theGravity,
                                        const occ::handle<Message_Alert>& theAlert)
@@ -46,23 +31,20 @@ bool Message_CompositeAlerts::AddAlert(Message_Gravity                   theGrav
   NCollection_List<occ::handle<Message_Alert>>& aList = myAlerts[theGravity];
   if (theAlert->SupportsMerge() && !aList.IsEmpty())
   {
-    // merge is performed only for alerts of exactly same type
+
     const occ::handle<Standard_Type>& aType = theAlert->DynamicType();
     for (NCollection_List<occ::handle<Message_Alert>>::Iterator anIt(aList); anIt.More();
          anIt.Next())
     {
-      // if merged successfully, just return
+
       if (aType == anIt.Value()->DynamicType() && theAlert->Merge(anIt.Value()))
         return false;
     }
   }
 
-  // if not merged, just add to the list
   aList.Append(theAlert);
   return true;
 }
-
-//=================================================================================================
 
 bool Message_CompositeAlerts::RemoveAlert(Message_Gravity                   theGravity,
                                           const occ::handle<Message_Alert>& theAlert)
@@ -82,8 +64,6 @@ bool Message_CompositeAlerts::RemoveAlert(Message_Gravity                   theG
   return anAlerts.Remove(theAlert);
 }
 
-//=================================================================================================
-
 bool Message_CompositeAlerts::HasAlert(const occ::handle<Message_Alert>& theAlert)
 {
   for (int aGravIter = Message_Trace; aGravIter <= Message_Fail; ++aGravIter)
@@ -97,8 +77,6 @@ bool Message_CompositeAlerts::HasAlert(const occ::handle<Message_Alert>& theAler
   }
   return false;
 }
-
-//=================================================================================================
 
 bool Message_CompositeAlerts::HasAlert(const occ::handle<Standard_Type>& theType,
                                        Message_Gravity                   theGravity)
@@ -120,8 +98,6 @@ bool Message_CompositeAlerts::HasAlert(const occ::handle<Standard_Type>& theType
   return false;
 }
 
-//=================================================================================================
-
 void Message_CompositeAlerts::Clear()
 {
   for (unsigned int i = 0; i < sizeof(myAlerts) / sizeof(myAlerts[0]); ++i)
@@ -129,8 +105,6 @@ void Message_CompositeAlerts::Clear()
     myAlerts[i].Clear();
   }
 }
-
-//=================================================================================================
 
 void Message_CompositeAlerts::Clear(Message_Gravity theGravity)
 {
@@ -140,8 +114,6 @@ void Message_CompositeAlerts::Clear(Message_Gravity theGravity)
                          Standard_VOID_RETURN);
   myAlerts[theGravity].Clear();
 }
-
-//=================================================================================================
 
 void Message_CompositeAlerts::Clear(const occ::handle<Standard_Type>& theType)
 {
@@ -160,8 +132,6 @@ void Message_CompositeAlerts::Clear(const occ::handle<Standard_Type>& theType)
     }
   }
 }
-
-//=================================================================================================
 
 void Message_CompositeAlerts::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

@@ -7,31 +7,20 @@ class TDF_Label;
 class TDocStd_Document;
 class XCAFDoc_ShapeTool;
 
-//! Iterator in depth along the assembly tree.
 class XCAFDoc_AssemblyIterator
 {
 public:
-  //! Constructs iterator starting from assembly roots.
-  //! \param[in]       theDoc   - document to iterate.
-  //! \param [in, opt] theLevel - max level of hierarchy to reach (INT_MAX is for no limit).
   Standard_EXPORT XCAFDoc_AssemblyIterator(const occ::handle<TDocStd_Document>& theDoc,
                                            const int                            theLevel = INT_MAX);
 
-  //! Constructs iterator starting from the specified position in the assembly tree.
-  //! \param[in]       theDoc   - document to iterate.
-  //! \param[in]       theRoot  - assembly item to start iterating from.
-  //! \param [in, opt] theLevel - max level of hierarchy to reach (INT_MAX is for no limit).
   Standard_EXPORT XCAFDoc_AssemblyIterator(const occ::handle<TDocStd_Document>& theDoc,
                                            const XCAFDoc_AssemblyItemId&        theRoot,
                                            const int                            theLevel = INT_MAX);
 
-  //! \return true if there is still something to iterate, false -- otherwise.
   Standard_EXPORT bool More() const;
 
-  //! Moves depth-first iterator to the next position.
   Standard_EXPORT void Next();
 
-  //! \return current item.
   Standard_EXPORT XCAFDoc_AssemblyItemId Current() const;
 
 private:
@@ -46,8 +35,8 @@ private:
                   AuxAssemblyItem&                                 theAuxItem) const;
 
 private:
-  occ::handle<XCAFDoc_ShapeTool>        myShapeTool; //!< Document shape tool.
-  NCollection_Sequence<AuxAssemblyItem> myFringe;    //!< Items pending for iteration.
-  int                                   myMaxLevel;  //!< Limit on max depth of iteration.
-  int                                   mySeedLevel; //!< Level of hierarchy where we start.
+  occ::handle<XCAFDoc_ShapeTool>        myShapeTool;
+  NCollection_Sequence<AuxAssemblyItem> myFringe;
+  int                                   myMaxLevel;
+  int                                   mySeedLevel;
 };

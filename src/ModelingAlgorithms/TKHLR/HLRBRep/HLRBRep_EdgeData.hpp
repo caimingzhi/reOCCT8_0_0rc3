@@ -10,7 +10,6 @@
 #include <HLRBRep_Curve.hpp>
 class TopoDS_Edge;
 
-// resolve name collisions with X11 headers
 #ifdef Status
   #undef Status
 #endif
@@ -156,8 +155,6 @@ inline bool HLRBRep_EdgeData::Selected() const
   return (myFlags & EMaskSelected) != 0;
 }
 
-//=================================================================================================
-
 inline void HLRBRep_EdgeData::Selected(const bool B)
 {
   if (B)
@@ -166,14 +163,10 @@ inline void HLRBRep_EdgeData::Selected(const bool B)
     myFlags &= ~EMaskSelected;
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_EdgeData::Rg1Line() const
 {
   return (myFlags & EMaskRg1Line) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::Rg1Line(const bool B)
 {
@@ -183,14 +176,10 @@ inline void HLRBRep_EdgeData::Rg1Line(const bool B)
     myFlags &= ~EMaskRg1Line;
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_EdgeData::RgNLine() const
 {
   return (myFlags & EMaskRgNLine) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::RgNLine(const bool B)
 {
@@ -200,14 +189,10 @@ inline void HLRBRep_EdgeData::RgNLine(const bool B)
     myFlags &= ~EMaskRgNLine;
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_EdgeData::Vertical() const
 {
   return (myFlags & EMaskVertical) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::Vertical(const bool B)
 {
@@ -217,14 +202,10 @@ inline void HLRBRep_EdgeData::Vertical(const bool B)
     myFlags &= ~EMaskVertical;
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_EdgeData::Simple() const
 {
   return (myFlags & EMaskSimple) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::Simple(const bool B)
 {
@@ -234,14 +215,10 @@ inline void HLRBRep_EdgeData::Simple(const bool B)
     myFlags &= ~EMaskSimple;
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_EdgeData::OutLVSta() const
 {
   return (myFlags & EMaskOutLVSta) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::OutLVSta(const bool B)
 {
@@ -251,14 +228,10 @@ inline void HLRBRep_EdgeData::OutLVSta(const bool B)
     myFlags &= ~EMaskOutLVSta;
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_EdgeData::OutLVEnd() const
 {
   return (myFlags & EMaskOutLVEnd) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::OutLVEnd(const bool B)
 {
@@ -268,14 +241,10 @@ inline void HLRBRep_EdgeData::OutLVEnd(const bool B)
     myFlags &= ~EMaskOutLVEnd;
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_EdgeData::CutAtSta() const
 {
   return (myFlags & EMaskCutAtSta) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::CutAtSta(const bool B)
 {
@@ -285,14 +254,10 @@ inline void HLRBRep_EdgeData::CutAtSta(const bool B)
     myFlags &= ~EMaskCutAtSta;
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_EdgeData::CutAtEnd() const
 {
   return (myFlags & EMaskCutAtEnd) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::CutAtEnd(const bool B)
 {
@@ -302,14 +267,10 @@ inline void HLRBRep_EdgeData::CutAtEnd(const bool B)
     myFlags &= ~EMaskCutAtEnd;
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_EdgeData::VerAtSta() const
 {
   return (myFlags & EMaskVerAtSta) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::VerAtSta(const bool B)
 {
@@ -319,14 +280,10 @@ inline void HLRBRep_EdgeData::VerAtSta(const bool B)
     myFlags &= ~EMaskVerAtSta;
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_EdgeData::VerAtEnd() const
 {
   return (myFlags & EMaskVerAtEnd) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::VerAtEnd(const bool B)
 {
@@ -336,14 +293,10 @@ inline void HLRBRep_EdgeData::VerAtEnd(const bool B)
     myFlags &= ~EMaskVerAtEnd;
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_EdgeData::AutoIntersectionDone() const
 {
   return (myFlags & EMaskIntDone) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::AutoIntersectionDone(const bool B)
 {
@@ -353,14 +306,10 @@ inline void HLRBRep_EdgeData::AutoIntersectionDone(const bool B)
     myFlags &= ~EMaskIntDone;
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_EdgeData::Used() const
 {
   return (myFlags & EMaskUsed) != 0;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::Used(const bool B)
 {
@@ -370,70 +319,50 @@ inline void HLRBRep_EdgeData::Used(const bool B)
     myFlags &= ~EMaskUsed;
 }
 
-//=================================================================================================
-
 inline int HLRBRep_EdgeData::HideCount() const
 {
   return myHideCount;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::HideCount(const int I)
 {
   myHideCount = I;
 }
 
-//=================================================================================================
-
 inline int HLRBRep_EdgeData::VSta() const
 {
   return myVSta;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::VSta(const int I)
 {
   myVSta = I;
 }
 
-//=================================================================================================
-
 inline int HLRBRep_EdgeData::VEnd() const
 {
   return myVEnd;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_EdgeData::VEnd(const int I)
 {
   myVEnd = I;
 }
 
-//=================================================================================================
-
 inline HLRAlgo_EdgeStatus& HLRBRep_EdgeData::Status()
 {
   return myStatus;
 }
-
-//=================================================================================================
 
 inline HLRBRep_Curve& HLRBRep_EdgeData::ChangeGeometry()
 {
   return myGeometry;
 }
 
-//=================================================================================================
-
 inline const HLRBRep_Curve& HLRBRep_EdgeData::Geometry() const
 {
   return myGeometry;
 }
-
-//=================================================================================================
 
 inline float HLRBRep_EdgeData::Tolerance() const
 {

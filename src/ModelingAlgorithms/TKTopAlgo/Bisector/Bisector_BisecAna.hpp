@@ -17,19 +17,12 @@ class GccInt_Bisec;
 class Geom2d_Geometry;
 class gp_Trsf2d;
 
-//! This class provides the bisecting line between two
-//! geometric elements.The elements are Circles,Lines or
-//! Points.
 class Bisector_BisecAna : public Bisector_Curve
 {
 
 public:
   Standard_EXPORT Bisector_BisecAna();
 
-  //! Performs the bisecting line between the curves
-  //! <Cu1> and <Cu2>.
-  //! <oncurve> is True if the point <P> is common to <Cu1>
-  //! and <Cu2>.
   Standard_EXPORT void Perform(const occ::handle<Geom2d_Curve>& Cu1,
                                const occ::handle<Geom2d_Curve>& Cu2,
                                const gp_Pnt2d&                  P,
@@ -40,9 +33,6 @@ public:
                                const double                     Tolerance,
                                const bool                       oncurve = true);
 
-  //! Performs the bisecting line between the curve
-  //! <Cu1> and the point <Pnt>.
-  //! <oncurve> is True if the point <P> is the point <Pnt>.
   Standard_EXPORT void Perform(const occ::handle<Geom2d_Curve>& Cu,
                                const occ::handle<Geom2d_Point>& Pnt,
                                const gp_Pnt2d&                  P,
@@ -52,9 +42,6 @@ public:
                                const double                     Tolerance,
                                const bool                       oncurve = true);
 
-  //! Performs the bisecting line between the curve
-  //! <Cu> and the point <Pnt>.
-  //! <oncurve> is True if the point <P> is the point <Pnt>.
   Standard_EXPORT void Perform(const occ::handle<Geom2d_Point>& Pnt,
                                const occ::handle<Geom2d_Curve>& Cu,
                                const gp_Pnt2d&                  P,
@@ -64,8 +51,6 @@ public:
                                const double                     Tolerance,
                                const bool                       oncurve = true);
 
-  //! Performs the bisecting line between the two points
-  //! <Pnt1> and <Pnt2>.
   Standard_EXPORT void Perform(const occ::handle<Geom2d_Point>& Pnt1,
                                const occ::handle<Geom2d_Point>& Pnt2,
                                const gp_Pnt2d&                  P,
@@ -81,20 +66,14 @@ public:
 
   Standard_EXPORT bool IsExtendAtEnd() const override;
 
-  //! Trim <me> by a domain defined by the curve <Cu>.
-  //! This domain is the set of the points which are
-  //! nearest from <Cu> than the extremitis of <Cu>.
   Standard_EXPORT void SetTrim(const occ::handle<Geom2d_Curve>& Cu);
 
-  //! Trim <me> by a domain defined by uf and ul
   Standard_EXPORT void SetTrim(const double uf, const double ul);
 
   Standard_EXPORT void Reverse() override;
 
   Standard_EXPORT double ReversedParameter(const double U) const override;
 
-  //! Returns the order of continuity of the curve.
-  //! Raised if N < 0.
   Standard_EXPORT bool IsCN(const int N) const override;
 
   Standard_EXPORT occ::handle<Geom2d_Geometry> Copy() const override;
@@ -133,17 +112,10 @@ public:
 
   Standard_EXPORT double ParameterOfEndPoint() const;
 
-  //! If necessary, breaks the curve in intervals of
-  //! continuity <C1>. And returns the number of
-  //! intervals.
   Standard_EXPORT int NbIntervals() const override;
 
-  //! Returns the first parameter of the current
-  //! interval.
   Standard_EXPORT double IntervalFirst(const int Index) const override;
 
-  //! Returns the last parameter of the current
-  //! interval.
   Standard_EXPORT double IntervalLast(const int Index) const override;
 
   Standard_EXPORT void Dump(const int Deep = 0, const int Offset = 0) const;
@@ -151,8 +123,6 @@ public:
   DEFINE_STANDARD_RTTIEXT(Bisector_BisecAna, Bisector_Curve)
 
 private:
-  //! Returns the distance between the point <P> and
-  //! the bisecting <Bis>.
   Standard_EXPORT double Distance(const gp_Pnt2d&                  P,
                                   const occ::handle<GccInt_Bisec>& Bis,
                                   const gp_Vec2d&                  V1,

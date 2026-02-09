@@ -13,17 +13,15 @@ IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_ModelPostProcessor, IMeshTools_ModelAlgo)
 
 namespace
 {
-  //! Commits 3D polygons and polygons on triangulations for corresponding edges.
+
   class PolygonCommitter
   {
   public:
-    //! Constructor
     PolygonCommitter(const occ::handle<IMeshData_Model>& theModel)
         : myModel(theModel)
     {
     }
 
-    //! Main functor.
     void operator()(const int theEdgeIndex) const
     {
       const IMeshData::IEdgeHandle& aDEdge = myModel->GetEdge(theEdgeIndex);
@@ -44,7 +42,6 @@ namespace
     }
 
   private:
-    //! Commits 3d polygon to topological edge
     void commitPolygon3D(const IMeshData::IEdgeHandle& theDEdge) const
     {
       const IMeshData::ICurveHandle& aCurve = theDEdge->GetCurve();
@@ -63,10 +60,9 @@ namespace
       BRepMesh_ShapeTool::UpdateEdge(theDEdge->GetEdge(), aPoly3D);
     }
 
-    //! Commits all polygons on triangulations correspondent to the given edge.
     void commitPolygons(const IMeshData::IEdgeHandle& theDEdge) const
     {
-      // Collect pcurves associated with the given edge on the specific surface.
+
       IMeshData::IDMapOfIFacePtrsListOfIPCurves aMapOfPCurves;
       for (int aPCurveIt = 0; aPCurveIt < theDEdge->PCurvesNb(); ++aPCurveIt)
       {
@@ -87,7 +83,6 @@ namespace
         aPCurves.Append(aPCurve);
       }
 
-      // Commit polygons related to separate face.
       const TopoDS_Edge&                                  aEdge = theDEdge->GetEdge();
       IMeshData::IDMapOfIFacePtrsListOfIPCurves::Iterator aPolygonIt(aMapOfPCurves);
       for (; aPolygonIt.More(); aPolygonIt.Next())
@@ -122,7 +117,6 @@ namespace
       }
     }
 
-    //! Collects polygonal data for the given pcurve
     occ::handle<Poly_PolygonOnTriangulation> collectPolygon(
       const IMeshData::IPCurveHandle& thePCurve,
       const double                    theDeflection) const
@@ -146,11 +140,9 @@ namespace
     occ::handle<IMeshData_Model> myModel;
   };
 
-  //! Estimates and updates deflection of triangulations for corresponding faces.
   class DeflectionEstimator
   {
   public:
-    //! Constructor
     DeflectionEstimator(const occ::handle<IMeshData_Model>& theModel,
                         const IMeshTools_Parameters&        theParams)
         : myModel(theModel),
@@ -160,7 +152,6 @@ namespace
     {
     }
 
-    //! Main functor.
     void operator()(const int theFaceIndex) const
     {
       const IMeshData::IFaceHandle& aDFace = myModel->GetFace(theFaceIndex);
@@ -187,15 +178,9 @@ namespace
   };
 } // namespace
 
-//=================================================================================================
-
 BRepMesh_ModelPostProcessor::BRepMesh_ModelPostProcessor() = default;
 
-//=================================================================================================
-
 BRepMesh_ModelPostProcessor::~BRepMesh_ModelPostProcessor() = default;
-
-//=================================================================================================
 
 bool BRepMesh_ModelPostProcessor::performInternal(const occ::handle<IMeshData_Model>& theModel,
                                                   const IMeshTools_Parameters&        theParameters,
@@ -207,14 +192,8 @@ bool BRepMesh_ModelPostProcessor::performInternal(const occ::handle<IMeshData_Mo
     return false;
   }
 
-  // TODO: Force single threaded solution due to data races on edges sharing the same TShape
-  OSD_Parallel::For(0,
-                    theModel->EdgesNb(),
-                    PolygonCommitter(theModel),
-                    true /*!theParameters.InParallel*/);
+  OSD_Parallel::For(0, theModel->EdgesNb(), PolygonCommitter(theModel), true);
 
-  // Estimate deflection here due to BRepLib::EstimateDeflection requires
-  // existence of both Poly_Triangulation and Poly_PolygonOnTriangulation.
   OSD_Parallel::For(0,
                     theModel->FacesNb(),
                     DeflectionEstimator(theModel, theParameters),

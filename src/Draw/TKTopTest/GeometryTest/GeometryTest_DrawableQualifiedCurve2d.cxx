@@ -7,8 +7,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(GeometryTest_DrawableQualifiedCurve2d, DrawTrSurf_Curve2d)
 
-//=================================================================================================
-
 GeometryTest_DrawableQualifiedCurve2d::GeometryTest_DrawableQualifiedCurve2d(
   const occ::handle<Geom2d_Curve>& theCurve,
   const GccEnt_Position            thePosition,
@@ -18,8 +16,6 @@ GeometryTest_DrawableQualifiedCurve2d::GeometryTest_DrawableQualifiedCurve2d(
 {
   look = Draw_orange;
 }
-
-//=================================================================================================
 
 GeometryTest_DrawableQualifiedCurve2d::GeometryTest_DrawableQualifiedCurve2d(
   const occ::handle<Geom2d_Curve>& theCurve,
@@ -42,14 +38,10 @@ GeometryTest_DrawableQualifiedCurve2d::GeometryTest_DrawableQualifiedCurve2d(
   look = Draw_orange;
 }
 
-//=================================================================================================
-
 void GeometryTest_DrawableQualifiedCurve2d::DrawOn(Draw_Display& theDisplay) const
 {
   DrawTrSurf_Curve2d::DrawOn(theDisplay);
 }
-
-//=================================================================================================
 
 void GeometryTest_DrawableQualifiedCurve2d::Dump(Standard_OStream& theStream) const
 {
@@ -57,8 +49,6 @@ void GeometryTest_DrawableQualifiedCurve2d::Dump(Standard_OStream& theStream) co
   theStream << "Position :" << GccEnt::PositionToString(myPosition) << "\n";
   DrawTrSurf_Curve2d::Dump(theStream);
 }
-
-//=================================================================================================
 
 void GeometryTest_DrawableQualifiedCurve2d::Whatis(Draw_Interpretor& theDI) const
 {

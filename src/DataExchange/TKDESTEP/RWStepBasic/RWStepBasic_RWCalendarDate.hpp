@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_CalendarDate;
 class StepData_StepWriter;
 
-//! Read & Write Module for CalendarDate
 class RWStepBasic_RWCalendarDate
 {
 public:

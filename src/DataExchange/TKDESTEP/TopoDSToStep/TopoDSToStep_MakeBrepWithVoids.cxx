@@ -30,15 +30,9 @@
 #include <Transfer_FinderProcess.hpp>
 #include <TransferBRep_ShapeMapper.hpp>
 
-//: d7
 #ifdef OCCT_DEBUG
   #define DEBUG
 #endif
-
-//=============================================================================
-// Create a BrepWithVoids of StepShape from a Solid of TopoDS containing
-// more than one closed shell
-//=============================================================================
 
 TopoDSToStep_MakeBrepWithVoids::TopoDSToStep_MakeBrepWithVoids(
   const TopoDS_Solid&                        aSolid,
@@ -63,7 +57,7 @@ TopoDSToStep_MakeBrepWithVoids::TopoDSToStep_MakeBrepWithVoids(
 
   try
   {
-    // BRepClass3d::OuterShell requires geometry when the solid has voids
+
     aOutShell = BRepClass3d::OuterShell(aSolid);
   }
   catch (...)
@@ -83,19 +77,17 @@ TopoDSToStep_MakeBrepWithVoids::TopoDSToStep_MakeBrepWithVoids(
     if (It.Value().ShapeType() == TopAbs_SHELL)
     {
       TopoDS_Shell CurrentShell = TopoDS::Shell(It.Value());
-      if (!aOutShell.IsNull()
-          && !aOutShell.IsEqual(CurrentShell)) //: e0 abv 25 Mar 98: voids should be reversed
-                                               //: according to EXPRESS for ABSR
+      if (!aOutShell.IsNull() && !aOutShell.IsEqual(CurrentShell))
+
         CurrentShell.Reverse();
-      //: d7 abv 16 Mar 98: try to treat 'open' shells as closed since flag
-      // IsClosed() is often incorrect (taken from MakeManifoldSolid(Solid))
+
       aTool.Init(aMap, false, aStepModel->InternalParameters.WriteSurfaceCurMode);
       StepB.Init(CurrentShell, aTool, FP, aWriteTessGeom, theLocalFactors, aPS.Next());
       TopoDSToStep::AddResult(FP, aTool);
       if (StepB.IsDone())
       {
         aCShell = occ::down_cast<StepShape_ClosedShell>(StepB.Value());
-        // si OPEN on le force a CLOSED mais que c est une honte !
+
         if (aCShell.IsNull())
         {
           occ::handle<StepShape_OpenShell> aOShell =
@@ -131,30 +123,6 @@ TopoDSToStep_MakeBrepWithVoids::TopoDSToStep_MakeBrepWithVoids(
       else
         std::cout << "Shell not mapped" << std::endl;
 #endif
-      /* //:d7
-        if (It.Value().Closed()) {
-          aTool.Init(aMap, false);
-          StepB.Init(CurrentShell, aTool, FP);
-          TopoDSToStep::AddResult ( FP, aTool );
-          if (StepB.IsDone()) {
-            aCShell = occ::down_cast<StepShape_ClosedShell>(StepB.Value());
-            if ( aOutShell.IsEqual(It.Value()) )
-              aOuter = aCShell;
-            else
-              S.Append(aCShell);
-          }
-          else {
-      #ifdef OCCT_DEBUG
-            std::cout << "Shell not mapped" << std::endl;
-      #endif
-            done = false;
-          }
-        }
-        else {
-          // Error Handling : the Shape is not closed
-          done = false;
-        }
-      */
     }
   }
   if (!aPS.More())
@@ -168,13 +136,9 @@ TopoDSToStep_MakeBrepWithVoids::TopoDSToStep_MakeBrepWithVoids(
     for (int i = 1; i <= N; i++)
     {
       aOCShell = new StepShape_OrientedClosedShell;
-      // Warning : the Oriented Shell Orientation is not always
-      //           TRUE.
-      //           Shall check the TopoDS_Shell orientation.
-      // => if the Shell is reversed, shall create an OrientedShell.
-      aOCShell->Init(aName, occ::down_cast<StepShape_ClosedShell>(S.Value(i)),
-                     false); //: e0
-      //: e0			 true);
+
+      aOCShell->Init(aName, occ::down_cast<StepShape_ClosedShell>(S.Value(i)), false);
+
       aVoids->SetValue(i, aOCShell);
     }
 
@@ -219,20 +183,11 @@ TopoDSToStep_MakeBrepWithVoids::TopoDSToStep_MakeBrepWithVoids(
   }
 }
 
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
-
 const occ::handle<StepShape_BrepWithVoids>& TopoDSToStep_MakeBrepWithVoids::Value() const
 {
   StdFail_NotDone_Raise_if(!done, "TopoDSToStep_MakeBrepWithVoids::Value() - no result");
   return theBrepWithVoids;
 }
-
-// ============================================================================
-// Method  : TopoDSToStep_MakeBrepWithVoids::TessellatedValue
-// Purpose : Returns TessellatedItem as the optional result
-// ============================================================================
 
 const occ::handle<StepVisual_TessellatedItem>& TopoDSToStep_MakeBrepWithVoids::TessellatedValue()
   const

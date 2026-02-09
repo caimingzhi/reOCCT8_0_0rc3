@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DE_Wrapper.hpp>
 
@@ -43,14 +32,10 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 DE_Wrapper::DE_Wrapper()
     : myKeepUpdates(false)
 {
 }
-
-//=================================================================================================
 
 DE_Wrapper::DE_Wrapper(const occ::handle<DE_Wrapper>& theWrapper)
     : DE_Wrapper()
@@ -79,14 +64,10 @@ DE_Wrapper::DE_Wrapper(const occ::handle<DE_Wrapper>& theWrapper)
   theWrapper->myKeepUpdates = myKeepUpdates;
 }
 
-//=================================================================================================
-
 const occ::handle<DE_Wrapper>& DE_Wrapper::GlobalWrapper()
 {
   return THE_GLOBAL_CONFIGURATION();
 }
-
-//=================================================================================================
 
 void DE_Wrapper::SetGlobalWrapper(const occ::handle<DE_Wrapper>& theWrapper)
 {
@@ -96,15 +77,11 @@ void DE_Wrapper::SetGlobalWrapper(const occ::handle<DE_Wrapper>& theWrapper)
   }
 }
 
-//=================================================================================================
-
 std::mutex& DE_Wrapper::GlobalLoadMutex()
 {
   static std::mutex THE_GLOBAL_LOAD_MUTEX;
   return THE_GLOBAL_LOAD_MUTEX;
 }
-
-//=================================================================================================
 
 bool DE_Wrapper::Read(const TCollection_AsciiString&       thePath,
                       const occ::handle<TDocStd_Document>& theDocument,
@@ -127,8 +104,6 @@ bool DE_Wrapper::Read(const TCollection_AsciiString&       thePath,
   return aProvider->Read(thePath, theDocument, theWS, theProgress);
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::Write(const TCollection_AsciiString&       thePath,
                        const occ::handle<TDocStd_Document>& theDocument,
                        occ::handle<XSControl_WorkSession>&  theWS,
@@ -150,8 +125,6 @@ bool DE_Wrapper::Write(const TCollection_AsciiString&       thePath,
   return aProvider->Write(thePath, theDocument, theWS, theProgress);
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::Read(const TCollection_AsciiString&       thePath,
                       const occ::handle<TDocStd_Document>& theDocument,
                       const Message_ProgressRange&         theProgress)
@@ -168,8 +141,6 @@ bool DE_Wrapper::Read(const TCollection_AsciiString&       thePath,
   return aProvider->Read(thePath, theDocument, theProgress);
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::Write(const TCollection_AsciiString&       thePath,
                        const occ::handle<TDocStd_Document>& theDocument,
                        const Message_ProgressRange&         theProgress)
@@ -185,8 +156,6 @@ bool DE_Wrapper::Write(const TCollection_AsciiString&       thePath,
   }
   return aProvider->Write(thePath, theDocument, theProgress);
 }
-
-//=================================================================================================
 
 bool DE_Wrapper::Read(const TCollection_AsciiString&      thePath,
                       TopoDS_Shape&                       theShape,
@@ -205,8 +174,6 @@ bool DE_Wrapper::Read(const TCollection_AsciiString&      thePath,
   return aProvider->Read(thePath, theShape, theWS, theProgress);
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::Write(const TCollection_AsciiString&      thePath,
                        const TopoDS_Shape&                 theShape,
                        occ::handle<XSControl_WorkSession>& theWS,
@@ -224,8 +191,6 @@ bool DE_Wrapper::Write(const TCollection_AsciiString&      thePath,
   return aProvider->Write(thePath, theShape, theWS, theProgress);
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::Read(const TCollection_AsciiString& thePath,
                       TopoDS_Shape&                  theShape,
                       const Message_ProgressRange&   theProgress)
@@ -239,8 +204,6 @@ bool DE_Wrapper::Read(const TCollection_AsciiString& thePath,
   return aProvider->Read(thePath, theShape, theProgress);
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::Write(const TCollection_AsciiString& thePath,
                        const TopoDS_Shape&            theShape,
                        const Message_ProgressRange&   theProgress)
@@ -253,16 +216,12 @@ bool DE_Wrapper::Write(const TCollection_AsciiString& thePath,
   return aProvider->Write(thePath, theShape, theProgress);
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::Load(const TCollection_AsciiString& theResource, const bool theIsRecursive)
 {
   occ::handle<DE_ConfigurationContext> aResource = new DE_ConfigurationContext();
   aResource->Load(theResource);
   return Load(aResource, theIsRecursive);
 }
-
-//=================================================================================================
 
 bool DE_Wrapper::Load(const occ::handle<DE_ConfigurationContext>& theResource,
                       const bool                                  theIsRecursive)
@@ -296,8 +255,6 @@ bool DE_Wrapper::Load(const occ::handle<DE_ConfigurationContext>& theResource,
   return true;
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::Save(const TCollection_AsciiString&                   theResourcePath,
                       const bool                                       theIsRecursive,
                       const NCollection_List<TCollection_AsciiString>& theFormats,
@@ -326,8 +283,6 @@ bool DE_Wrapper::Save(const TCollection_AsciiString&                   theResour
   aFile.Close();
   return true;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString DE_Wrapper::Save(
   const bool                                       theIsRecursive,
@@ -405,8 +360,6 @@ TCollection_AsciiString DE_Wrapper::Save(
   return aResult;
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::Bind(const occ::handle<DE_ConfigurationNode>& theNode)
 {
   if (theNode.IsNull())
@@ -425,8 +378,6 @@ bool DE_Wrapper::Bind(const occ::handle<DE_ConfigurationNode>& theNode)
   }
   return aVendorMap->Add(aVendorName, theNode) > 0;
 }
-
-//=================================================================================================
 
 bool DE_Wrapper::UnBind(const occ::handle<DE_ConfigurationNode>& theNode)
 {
@@ -447,8 +398,6 @@ bool DE_Wrapper::UnBind(const occ::handle<DE_ConfigurationNode>& theNode)
   return aVendorMap->Size() != aPrevSize;
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::Find(const TCollection_AsciiString&     theFormat,
                       const TCollection_AsciiString&     theVendor,
                       occ::handle<DE_ConfigurationNode>& theNode) const
@@ -457,8 +406,6 @@ bool DE_Wrapper::Find(const TCollection_AsciiString&     theFormat,
     aVendorMap = myConfiguration.Seek(theFormat);
   return aVendorMap != nullptr && aVendorMap->FindFromKey(theVendor, theNode);
 }
-
-//=================================================================================================
 
 void DE_Wrapper::ChangePriority(const TCollection_AsciiString&                   theFormat,
                                 const NCollection_List<TCollection_AsciiString>& theVendorPriority,
@@ -471,7 +418,7 @@ void DE_Wrapper::ChangePriority(const TCollection_AsciiString&                  
   }
   NCollection_IndexedDataMap<TCollection_AsciiString, occ::handle<DE_ConfigurationNode>>
     aNewVendorMap;
-  // Sets according to the input priority
+
   for (NCollection_List<TCollection_AsciiString>::Iterator aPriorIter(theVendorPriority);
        aPriorIter.More();
        aPriorIter.Next())
@@ -484,7 +431,7 @@ void DE_Wrapper::ChangePriority(const TCollection_AsciiString&                  
       aNewVendorMap.Add(aVendorName, aNode);
     }
   }
-  // Sets not used elements
+
   for (NCollection_IndexedDataMap<TCollection_AsciiString,
                                   occ::handle<DE_ConfigurationNode>>::Iterator
          aVendorIter(aVendorMap);
@@ -505,8 +452,6 @@ void DE_Wrapper::ChangePriority(const TCollection_AsciiString&                  
   myConfiguration.Bind(theFormat, aNewVendorMap);
 }
 
-//=================================================================================================
-
 void DE_Wrapper::ChangePriority(const NCollection_List<TCollection_AsciiString>& theVendorPriority,
                                 const bool                                       theToDisable)
 {
@@ -521,8 +466,6 @@ void DE_Wrapper::ChangePriority(const NCollection_List<TCollection_AsciiString>&
   }
 }
 
-//=================================================================================================
-
 const NCollection_DataMap<
   TCollection_AsciiString,
   NCollection_IndexedDataMap<TCollection_AsciiString, occ::handle<DE_ConfigurationNode>>>&
@@ -531,14 +474,10 @@ const NCollection_DataMap<
   return myConfiguration;
 }
 
-//=================================================================================================
-
 occ::handle<DE_Wrapper> DE_Wrapper::Copy() const
 {
   return new DE_Wrapper(*this);
 }
-
-//=================================================================================================
 
 bool DE_Wrapper::FindProvider(const TCollection_AsciiString& thePath,
                               const bool                     theToImport,
@@ -553,8 +492,6 @@ bool DE_Wrapper::FindProvider(const TCollection_AsciiString& thePath,
     return FindWriteProvider(thePath, theProvider);
   }
 }
-
-//=================================================================================================
 
 bool DE_Wrapper::FindReadProvider(const TCollection_AsciiString& thePath,
                                   const bool                     theCheckContent,
@@ -593,8 +530,6 @@ bool DE_Wrapper::FindReadProvider(const TCollection_AsciiString& thePath,
   }
   return false;
 }
-
-//=================================================================================================
 
 bool DE_Wrapper::FindReadProvider(const TCollection_AsciiString& thePath,
                                   std::istream&                  theStream,
@@ -635,8 +570,6 @@ bool DE_Wrapper::FindReadProvider(const TCollection_AsciiString& thePath,
   return false;
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::FindWriteProvider(const TCollection_AsciiString& thePath,
                                    occ::handle<DE_Provider>&      theProvider) const
 {
@@ -668,8 +601,6 @@ bool DE_Wrapper::FindWriteProvider(const TCollection_AsciiString& thePath,
   return false;
 }
 
-//=================================================================================================
-
 Standard_EXPORT void DE_Wrapper::UpdateLoad(const bool theToForceUpdate) const
 {
   for (NCollection_DataMap<TCollection_AsciiString,
@@ -695,8 +626,6 @@ Standard_EXPORT void DE_Wrapper::UpdateLoad(const bool theToForceUpdate) const
   }
 }
 
-//=================================================================================================
-
 void DE_Wrapper::sort(const occ::handle<DE_ConfigurationContext>& theResource)
 {
   const TCollection_AsciiString aScope(THE_CONFIGURATION_SCOPE() + '.' + "priority");
@@ -715,8 +644,6 @@ void DE_Wrapper::sort(const occ::handle<DE_ConfigurationContext>& theResource)
     ChangePriority(aFormatIter.Key(), aVendorPriority, true);
   }
 }
-
-//=================================================================================================
 
 bool DE_Wrapper::Read(DE_Provider::ReadStreamList&         theStreams,
                       const occ::handle<TDocStd_Document>& theDocument,
@@ -748,8 +675,6 @@ bool DE_Wrapper::Read(DE_Provider::ReadStreamList&         theStreams,
   return aProvider->Read(theStreams, theDocument, theWS, theProgress);
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::Write(DE_Provider::WriteStreamList&        theStreams,
                        const occ::handle<TDocStd_Document>& theDocument,
                        occ::handle<XSControl_WorkSession>&  theWS,
@@ -778,8 +703,6 @@ bool DE_Wrapper::Write(DE_Provider::WriteStreamList&        theStreams,
 
   return aProvider->Write(theStreams, theDocument, theWS, theProgress);
 }
-
-//=================================================================================================
 
 bool DE_Wrapper::Read(DE_Provider::ReadStreamList&         theStreams,
                       const occ::handle<TDocStd_Document>& theDocument,
@@ -810,8 +733,6 @@ bool DE_Wrapper::Read(DE_Provider::ReadStreamList&         theStreams,
   return aProvider->Read(theStreams, theDocument, theProgress);
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::Write(DE_Provider::WriteStreamList&        theStreams,
                        const occ::handle<TDocStd_Document>& theDocument,
                        const Message_ProgressRange&         theProgress)
@@ -839,8 +760,6 @@ bool DE_Wrapper::Write(DE_Provider::WriteStreamList&        theStreams,
 
   return aProvider->Write(theStreams, theDocument, theProgress);
 }
-
-//=================================================================================================
 
 bool DE_Wrapper::Read(DE_Provider::ReadStreamList&        theStreams,
                       TopoDS_Shape&                       theShape,
@@ -872,8 +791,6 @@ bool DE_Wrapper::Read(DE_Provider::ReadStreamList&        theStreams,
   return aProvider->Read(theStreams, theShape, theWS, theProgress);
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::Write(DE_Provider::WriteStreamList&       theStreams,
                        const TopoDS_Shape&                 theShape,
                        occ::handle<XSControl_WorkSession>& theWS,
@@ -903,8 +820,6 @@ bool DE_Wrapper::Write(DE_Provider::WriteStreamList&       theStreams,
   return aProvider->Write(theStreams, theShape, theWS, theProgress);
 }
 
-//=================================================================================================
-
 bool DE_Wrapper::Read(DE_Provider::ReadStreamList& theStreams,
                       TopoDS_Shape&                theShape,
                       const Message_ProgressRange& theProgress)
@@ -933,8 +848,6 @@ bool DE_Wrapper::Read(DE_Provider::ReadStreamList& theStreams,
 
   return aProvider->Read(theStreams, theShape, theProgress);
 }
-
-//=================================================================================================
 
 bool DE_Wrapper::Write(DE_Provider::WriteStreamList& theStreams,
                        const TopoDS_Shape&           theShape,

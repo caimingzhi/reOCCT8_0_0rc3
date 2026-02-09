@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_KinematicTopologyDirectedStructure;
 
-//! Read & Write tool for KinematicTopologyDirectedStructure
 class RWStepKinematics_RWKinematicTopologyDirectedStructure
 {
 public:

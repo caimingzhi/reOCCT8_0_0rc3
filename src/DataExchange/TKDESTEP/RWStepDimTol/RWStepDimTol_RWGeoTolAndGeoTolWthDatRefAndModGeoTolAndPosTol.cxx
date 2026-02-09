@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -24,12 +13,8 @@
 #include <NCollection_HArray1.hpp>
 #include <StepDimTol_ModifiedGeometricTolerance.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol::
   RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol::ReadStep(
   const occ::handle<StepData_StepReaderData>&                                  data,
@@ -37,11 +22,11 @@ void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol::ReadStep(
   occ::handle<Interface_Check>&                                                ach,
   const occ::handle<StepDimTol_GeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol>& ent) const
 {
-  int num = 0; // num0;
+  int num = 0;
   data->NamedForComplex("GEOMETRIC_TOLERANCE", "GMTTLR", num0, num, ach);
   if (!data->CheckNbParams(num, 4, ach, "geometric_tolerance"))
     return;
-  // Own fields of GeometricTolerance
+
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
   occ::handle<TCollection_HAsciiString> aDescription;
@@ -52,7 +37,7 @@ void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol::ReadStep(
   data->ReadEntity(num, 4, "toleranced_shape_aspect", ach, aTolerancedShapeAspect);
 
   data->NamedForComplex("GEOMETRIC_TOLERANCE_WITH_DATUM_REFERENCE", "GTWDR", num0, num, ach);
-  // Own fields of GeometricToleranceWithDatumReference
+
   occ::handle<NCollection_HArray1<StepDimTol_DatumSystemOrReference>> aDatumSystem;
   int                                                                 sub5 = 0;
   if (data->ReadSubList(num, 1, "datum_system", ach, sub5))
@@ -67,13 +52,13 @@ void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol::ReadStep(
       aDatumSystem->SetValue(i0, anIt0);
     }
   }
-  // Initialize entity
+
   occ::handle<StepDimTol_GeometricToleranceWithDatumReference> GTWDR =
     new StepDimTol_GeometricToleranceWithDatumReference;
   GTWDR->SetDatumSystem(aDatumSystem);
 
   data->NamedForComplex("MODIFIED_GEOMETRIC_TOLERANCE", "MDGMTL", num0, num, ach);
-  // Own fields of ModifiedGeometricTolerance
+
   StepDimTol_LimitCondition aModifier = StepDimTol_MaximumMaterialCondition;
   if (data->ParamType(num, 1) == Interface_ParamEnum)
   {
@@ -93,11 +78,8 @@ void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol::ReadStep(
     new StepDimTol_ModifiedGeometricTolerance;
   MGT->SetModifier(aModifier);
 
-  // Initialize entity
   ent->Init(aName, aDescription, aMagnitude, aTolerancedShapeAspect, GTWDR, MGT);
 }
-
-//=================================================================================================
 
 void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol::WriteStep(
   StepData_StepWriter&                                                         SW,
@@ -135,16 +117,14 @@ void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol::WriteStep(
   SW.StartEntity("POSITION_TOLERANCE");
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol::Share(
   const occ::handle<StepDimTol_GeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol>& ent,
   Interface_EntityIterator&                                                    iter) const
 {
-  // Own fields of GeometricTolerance
+
   iter.AddItem(ent->Magnitude());
   iter.AddItem(ent->TolerancedShapeAspect().Value());
-  // Own fields of GeometricToleranceWithDatumReference
+
   for (int i3 = 1;
        i3 <= ent->GetGeometricToleranceWithDatumReference()->DatumSystemAP242()->Length();
        i3++)

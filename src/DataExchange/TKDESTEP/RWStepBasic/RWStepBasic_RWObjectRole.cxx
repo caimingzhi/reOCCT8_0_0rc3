@@ -4,22 +4,16 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWObjectRole::RWStepBasic_RWObjectRole() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWObjectRole::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                         const int                                   num,
                                         occ::handle<Interface_Check>&               ach,
                                         const occ::handle<StepBasic_ObjectRole>&    ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "object_role"))
     return;
-
-  // Own fields of ObjectRole
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -35,17 +29,12 @@ void RWStepBasic_RWObjectRole::ReadStep(const occ::handle<StepData_StepReaderDat
     hasDescription = false;
   }
 
-  // Initialize entity
   ent->Init(aName, hasDescription, aDescription);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWObjectRole::WriteStep(StepData_StepWriter&                     SW,
                                          const occ::handle<StepBasic_ObjectRole>& ent) const
 {
-
-  // Own fields of ObjectRole
 
   SW.Send(ent->Name());
 
@@ -57,11 +46,7 @@ void RWStepBasic_RWObjectRole::WriteStep(StepData_StepWriter&                   
     SW.SendUndef();
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWObjectRole::Share(const occ::handle<StepBasic_ObjectRole>&,
                                      Interface_EntityIterator&) const
 {
-
-  // Own fields of ObjectRole
 }

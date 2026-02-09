@@ -8,52 +8,34 @@
 #include <Standard_Real.hpp>
 #include <Standard_Boolean.hpp>
 
-//! This class represents a bounding sphere of a geometric entity
-//! (triangle, segment of line or whatever else).
 class Bnd_Sphere
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_EXPORT Bnd_Sphere();
 
-  //! Constructor of a definite sphere
   Standard_EXPORT Bnd_Sphere(const gp_XYZ& theCntr,
                              const double  theRad,
                              const int     theU,
                              const int     theV);
 
-  //! Returns the U parameter on shape
   int U() const;
 
-  //! Returns the V parameter on shape
   int V() const;
 
-  //! Returns validity status, indicating that this
-  //! sphere corresponds to a real entity
   bool IsValid() const;
 
   void SetValid(const bool isValid);
 
-  //! Returns center of sphere object
   const gp_XYZ& Center() const;
 
-  //! Returns the radius value
   double Radius() const;
 
-  //! Calculate and return minimal and maximal distance to sphere.
-  //! NOTE: This function is tightly optimized; any modifications
-  //! may affect performance!
   Standard_EXPORT void Distances(const gp_XYZ& theXYZ, double& theMin, double& theMax) const;
 
-  //! Calculate and return minimal and maximal distance to sphere.
-  //! NOTE: This function is tightly optimized; any modifications
-  //! may affect performance!
   Standard_EXPORT void SquareDistances(const gp_XYZ& theXYZ, double& theMin, double& theMax) const;
 
-  //! Projects a point on entity.
-  //! Returns true if success
   Standard_EXPORT bool Project(const gp_XYZ& theNode,
                                gp_XYZ&       theProjNode,
                                double&       theDist,
@@ -78,19 +60,6 @@ private:
   int    myU;
   int    myV;
 };
-
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
 inline int Bnd_Sphere::U() const
 {

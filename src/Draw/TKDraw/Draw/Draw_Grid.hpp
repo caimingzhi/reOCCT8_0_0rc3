@@ -10,25 +10,18 @@ class Draw_Grid : public Draw_Drawable3D
 {
 
 public:
-  //! Creates a grid.
   Standard_EXPORT Draw_Grid();
 
-  //! Sets the steps along the X, Y & Z axis.
   Standard_EXPORT void Steps(const double StepX, const double StepY, const double StepZ);
 
-  //! Returns the step along the X axis.
   double StepX() const;
 
-  //! Returns the step along the Y axis.
   double StepY() const;
 
-  //! Returns the step along the Z axis.
   double StepZ() const;
 
-  //! Returns if the grid is active or not.
   bool IsActive() const;
 
-  //! Displays the grid.
   Standard_EXPORT void DrawOn(Draw_Display& Out) const override;
 
   DEFINE_STANDARD_RTTIEXT(Draw_Grid, Draw_Drawable3D)
@@ -45,30 +38,15 @@ inline double Draw_Grid::StepX() const
   return myStepX;
 }
 
-//=======================================================================
-// Function : StepY
-// Purpose  : Returns the step along the Y axis.
-//=======================================================================
-
 inline double Draw_Grid::StepY() const
 {
   return myStepY;
 }
 
-//=======================================================================
-// Function : StepZ
-// Purpose  : Returns the step along the Z axis.
-//=======================================================================
-
 inline double Draw_Grid::StepZ() const
 {
   return myStepZ;
 }
-
-//=======================================================================
-// Function : IsActive
-// Purpose  : Returns if the grid is active or not.
-//=======================================================================
 
 inline bool Draw_Grid::IsActive() const
 {

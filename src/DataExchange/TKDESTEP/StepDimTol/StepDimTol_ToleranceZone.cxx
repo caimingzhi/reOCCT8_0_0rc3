@@ -6,11 +6,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_ToleranceZone, StepRepr_ShapeAspect)
 
-//=================================================================================================
-
 StepDimTol_ToleranceZone::StepDimTol_ToleranceZone() = default;
-
-//=================================================================================================
 
 void StepDimTol_ToleranceZone::Init(
   const occ::handle<TCollection_HAsciiString>&                            theName,

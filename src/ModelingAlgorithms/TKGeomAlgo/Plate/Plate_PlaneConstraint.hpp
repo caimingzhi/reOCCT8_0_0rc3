@@ -8,7 +8,6 @@
 class gp_XY;
 class gp_Pln;
 
-//! constraint a point to belong to a Plane
 class Plate_PlaneConstraint
 {
 public:

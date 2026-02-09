@@ -24,8 +24,6 @@ IMPLEMENT_STANDARD_RTTIEXT(TDF_Attribute, Standard_Transient)
 
 #define TDF_DATA_COMMIT_OPTIMIZED
 
-//=================================================================================================
-
 TDF_Attribute::TDF_Attribute()
     : myLabelNode(nullptr),
       myTransaction(0),
@@ -35,14 +33,10 @@ TDF_Attribute::TDF_Attribute()
 {
 }
 
-//=================================================================================================
-
 const TDF_Label TDF_Attribute::Label() const
 {
   return TDF_Label(myLabelNode);
 }
-
-//=================================================================================================
 
 bool TDF_Attribute::FindAttribute(const Standard_GUID&        anID,
                                   occ::handle<TDF_Attribute>& anAttribute) const
@@ -50,35 +44,25 @@ bool TDF_Attribute::FindAttribute(const Standard_GUID&        anID,
   return Label().FindAttribute(anID, anAttribute);
 }
 
-//=================================================================================================
-
 bool TDF_Attribute::IsAttribute(const Standard_GUID& anID) const
 {
   return Label().IsAttribute(anID);
 }
-
-//=================================================================================================
 
 void TDF_Attribute::AddAttribute(const occ::handle<TDF_Attribute>& otherAttribute) const
 {
   Label().AddAttribute(otherAttribute);
 }
 
-//=================================================================================================
-
 bool TDF_Attribute::ForgetAttribute(const Standard_GUID& anID) const
 {
   return Label().ForgetAttribute(anID);
 }
 
-//=================================================================================================
-
 void TDF_Attribute::ForgetAllAttributes(const bool clearChildren) const
 {
   Label().ForgetAllAttributes(clearChildren);
 }
-
-//=================================================================================================
 
 void TDF_Attribute::Forget(const int aTransaction)
 {
@@ -92,17 +76,13 @@ void TDF_Attribute::Forget(const int aTransaction)
   Validate(false);
 }
 
-//=================================================================================================
-
 void TDF_Attribute::Resume()
 {
   myTransaction      = mySavedTransaction;
-  mySavedTransaction = -1; // To say "just resumed"!
+  mySavedTransaction = -1;
   myFlags            = (myFlags & ~TDF_AttributeForgottenMsk);
   Validate(true);
 }
-
-//=================================================================================================
 
 int TDF_Attribute::UntilTransaction() const
 {
@@ -115,68 +95,38 @@ int TDF_Attribute::UntilTransaction() const
   throw Standard_DomainError("The attribute structure is wrong.");
 }
 
-//=================================================================================================
-
 void TDF_Attribute::AfterAddition() {}
-
-//=================================================================================================
 
 void TDF_Attribute::BeforeRemoval() {}
 
-//=================================================================================================
-
 void TDF_Attribute::BeforeForget() {}
-
-//=================================================================================================
 
 void TDF_Attribute::AfterResume() {}
 
-//=======================================================================
-// function : BeforeUndo
-// purpose  : Before application of a TDF_Delta.
-//=======================================================================
-
-bool TDF_Attribute::BeforeUndo(const occ::handle<TDF_AttributeDelta>& /*anAttDelta*/,
-                               const bool /*forceIt*/)
+bool TDF_Attribute::BeforeUndo(const occ::handle<TDF_AttributeDelta>&, const bool)
 {
   return true;
 }
 
-//=======================================================================
-// function : AfterUndo
-// purpose  : After application of a TDF_Delta.
-//=======================================================================
-
-bool TDF_Attribute::AfterUndo(const occ::handle<TDF_AttributeDelta>& /*anAttDelta*/,
-                              const bool /*forceIt*/)
+bool TDF_Attribute::AfterUndo(const occ::handle<TDF_AttributeDelta>&, const bool)
 {
   return true;
 }
 
-//=================================================================================================
-
-bool TDF_Attribute::AfterRetrieval(const bool /*forceIt*/)
+bool TDF_Attribute::AfterRetrieval(const bool)
 {
   return true;
 }
-
-//=================================================================================================
 
 void TDF_Attribute::BeforeCommitTransaction() {}
 
-//=======================================================================
-// function : Backup
-// purpose  : Backups the attribute.
-//=======================================================================
-
 void TDF_Attribute::Backup()
 {
-  // The attribute must be valid and attached to a label.
+
   if (IsValid() && (myLabelNode != nullptr))
   {
     occ::handle<TDF_Data> aData = myLabelNode->Data();
 
-    // check that modification is allowed
     if (!aData->IsModificationAllowed())
     {
       TCollection_AsciiString aMess;
@@ -188,13 +138,13 @@ void TDF_Attribute::Backup()
 
     const int currentTransaction = aData->Transaction();
     if (myTransaction < currentTransaction)
-    { //"!=" is less secure.
+    {
       occ::handle<TDF_Attribute> backup = BackupCopy();
 #ifdef TDF_DATA_COMMIT_OPTIMIZED
       myLabelNode->AttributesModified(true);
 #endif
       backup->myLabelNode   = myLabelNode;
-      backup->myNext        = this; // Back reference;
+      backup->myNext        = this;
       backup->myBackup      = myBackup;
       backup->myTransaction = myTransaction;
       backup->Backup(true);
@@ -205,19 +155,12 @@ void TDF_Attribute::Backup()
   }
 }
 
-//=======================================================================
-// function : BackupCopy
-// purpose  : Standard implementation of BackupCopy.
-//=======================================================================
-
 occ::handle<TDF_Attribute> TDF_Attribute::BackupCopy() const
 {
   occ::handle<TDF_Attribute> copy = NewEmpty();
   copy->Restore(this);
   return copy;
 }
-
-//=================================================================================================
 
 void TDF_Attribute::RemoveBackup()
 {
@@ -226,42 +169,29 @@ void TDF_Attribute::RemoveBackup()
     throw Standard_DomainError("Impossible to remove a nonexistent backup.");
 #endif
   myBackup->BeforeRemoval();
-  myBackup->myLabelNode = nullptr; // Absolutely necessary!
-  myBackup->myNext.Nullify();      // Absolutely necessary!
+  myBackup->myLabelNode = nullptr;
+  myBackup->myNext.Nullify();
   myBackup = myBackup->myBackup;
   if (!myBackup.IsNull())
-    myBackup->myNext = this; // New back reference.
+    myBackup->myNext = this;
 }
 
-//=======================================================================
-// function : References
-// purpose  : Adds the referenced attributes or labels.
-//=======================================================================
-
-void TDF_Attribute::References(const occ::handle<TDF_DataSet>& /*aDataSet*/) const {}
-
-//=================================================================================================
+void TDF_Attribute::References(const occ::handle<TDF_DataSet>&) const {}
 
 occ::handle<TDF_DeltaOnAddition> TDF_Attribute::DeltaOnAddition() const
 {
   return new TDF_DeltaOnAddition(this);
 }
 
-//=================================================================================================
-
 occ::handle<TDF_DeltaOnForget> TDF_Attribute::DeltaOnForget() const
 {
   return new TDF_DeltaOnForget(this);
 }
 
-//=================================================================================================
-
 occ::handle<TDF_DeltaOnResume> TDF_Attribute::DeltaOnResume() const
 {
   return new TDF_DeltaOnResume(this);
 }
-
-//=================================================================================================
 
 occ::handle<TDF_DeltaOnModification> TDF_Attribute::DeltaOnModification(
   const occ::handle<TDF_Attribute>& anOldAttribute) const
@@ -269,25 +199,16 @@ occ::handle<TDF_DeltaOnModification> TDF_Attribute::DeltaOnModification(
   return new TDF_DefaultDeltaOnModification(anOldAttribute);
 }
 
-//=================================================================================================
-
 void TDF_Attribute::DeltaOnModification(const occ::handle<TDF_DeltaOnModification>& aDelta)
 {
   Backup();
   Restore(aDelta->Attribute());
 }
 
-//=================================================================================================
-
 occ::handle<TDF_DeltaOnRemoval> TDF_Attribute::DeltaOnRemoval() const
 {
   return new TDF_DefaultDeltaOnRemoval(this);
-} // myBackup
-
-//=======================================================================
-// function : Dump
-// purpose  : This method is equivalent to operator <<
-//=======================================================================
+}
 
 Standard_OStream& TDF_Attribute::Dump(Standard_OStream& anOS) const
 {
@@ -300,23 +221,19 @@ Standard_OStream& TDF_Attribute::Dump(Standard_OStream& anOS) const
     anOS << " Forgotten";
   char                toto[45];
   Standard_PCharacter pStr;
-  //
+
   pStr = toto;
   ID().ToCString(pStr);
   anOS << ";\tID = " << toto << std::endl;
   return anOS;
 }
 
-//=================================================================================================
-
 void TDF_Attribute::ExtendedDump(Standard_OStream& anOS,
-                                 const TDF_IDFilter& /*aFilter*/,
-                                 NCollection_IndexedMap<occ::handle<TDF_Attribute>>& /*aMap*/) const
+                                 const TDF_IDFilter&,
+                                 NCollection_IndexedMap<occ::handle<TDF_Attribute>>&) const
 {
   Dump(anOS);
 }
-
-//=================================================================================================
 
 void TDF_Attribute::DumpJson(Standard_OStream& theOStream, int) const
 {

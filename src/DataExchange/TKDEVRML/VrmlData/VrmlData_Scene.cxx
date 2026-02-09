@@ -16,7 +16,7 @@
 #include <VrmlData_Sphere.hpp>
 #include <VrmlData_TextureCoordinate.hpp>
 #include <VrmlData_UnknownNode.hpp>
-// #include <VrmlData_WorldInfo.hpp>
+
 #include <NCollection_Vector.hpp>
 #include <TopoDS.hpp>
 #include <TopExp_Explorer.hpp>
@@ -42,8 +42,6 @@ static void dumpNodeHeader(Standard_OStream&              theStream,
                            const char*                    theType,
                            const char*                    theName);
 
-//=================================================================================================
-
 VrmlData_Scene::VrmlData_Scene(const occ::handle<NCollection_IncAllocator>& theAlloc)
     : myLinearScale(1.),
       myStatus(VrmlData_StatusOK),
@@ -61,8 +59,6 @@ VrmlData_Scene::VrmlData_Scene(const occ::handle<NCollection_IncAllocator>& theA
   myAllNodes.Append(myWorldInfo);
 }
 
-//=================================================================================================
-
 const occ::handle<VrmlData_Node>& VrmlData_Scene::AddNode(const occ::handle<VrmlData_Node>& theN,
                                                           const bool isTopLevel)
 {
@@ -72,8 +68,7 @@ const occ::handle<VrmlData_Node>& VrmlData_Scene::AddNode(const occ::handle<Vrml
       std::lock_guard<std::mutex>       aLock(myMutex);
       const occ::handle<VrmlData_Node>& aNode =
         myAllNodes.Append((&theN->Scene() == this) ? theN : theN->Clone(nullptr));
-      // Name is checked for uniqueness. If not, letter 'D' is appended until
-      // the name proves to be unique.
+
       if (aNode->Name()[0] != '\0')
         while (!myNamedNodes.Add(aNode))
           aNode->setName(aNode->Name(), "D");
@@ -86,11 +81,6 @@ const occ::handle<VrmlData_Node>& VrmlData_Scene::AddNode(const occ::handle<Vrml
   return aNullNode;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  : Export to text stream (file or else)
-//=======================================================================
-
 Standard_OStream& operator<<(Standard_OStream& theOutput, const VrmlData_Scene& theScene)
 {
   VrmlData_Scene&             aScene = const_cast<VrmlData_Scene&>(theScene);
@@ -101,8 +91,6 @@ Standard_OStream& operator<<(Standard_OStream& theOutput, const VrmlData_Scene& 
   aScene.myNamedNodesOut.Clear();
   aScene.myUnnamedNodesOut.Clear();
   aScene.myAutoNameCounter = 0;
-
-  // Dummy write
 
   VrmlData_Scene::Iterator anIterD(aScene.myLstNodes);
   for (; anIterD.More(); anIterD.Next())
@@ -119,8 +107,6 @@ Standard_OStream& operator<<(Standard_OStream& theOutput, const VrmlData_Scene& 
   aScene.myOutput = &theOutput;
   aScene.myNamedNodesOut.Clear();
   theOutput << "#VRML V2.0 utf8\n\n";
-
-  // Real write
 
   VrmlData_Scene::Iterator anIter(aScene.myLstNodes);
   for (; anIter.More(); anIter.Next())
@@ -139,8 +125,6 @@ Standard_OStream& operator<<(Standard_OStream& theOutput, const VrmlData_Scene& 
   return theOutput;
 }
 
-//=================================================================================================
-
 void VrmlData_Scene::SetVrmlDir(const TCollection_ExtendedString& theDir)
 {
   TCollection_ExtendedString& aDir = myVrmlDir.Append(theDir);
@@ -157,14 +141,10 @@ void VrmlData_Scene::SetVrmlDir(const TCollection_ExtendedString& theDir)
 #endif
 }
 
-//=================================================================================================
-
 const occ::handle<VrmlData_WorldInfo>& VrmlData_Scene::WorldInfo() const
 {
   return myWorldInfo;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Scene::readLine(VrmlData_InBuffer& theBuffer)
 {
@@ -173,17 +153,13 @@ VrmlData_ErrorStatus VrmlData_Scene::readLine(VrmlData_InBuffer& theBuffer)
   {
     return VrmlData_EndOfFile;
   }
-  // Read a line.
+
   theBuffer.Input.getline(theBuffer.Line, sizeof(theBuffer.Line));
 
-  // Check the number of read symbols.
-  // If maximum number is read, process the array of symbols separately
-  // rolling back the array to the last comma or space symbol.
   std::streamsize aNbChars = theBuffer.Input.gcount();
   if (theBuffer.Input.rdstate() & std::ios::failbit && aNbChars == sizeof(theBuffer.Line) - 1)
   {
-    // Clear the error.
-    // We will fix it here below.
+
     theBuffer.Input.clear();
     size_t anInd = aNbChars - 1;
     for (; anInd > 0; anInd--)
@@ -195,14 +171,13 @@ VrmlData_ErrorStatus VrmlData_Scene::readLine(VrmlData_InBuffer& theBuffer)
         break;
       }
     }
-    if (anInd == 0) // no possible to rolling back
+    if (anInd == 0)
     {
       return VrmlData_UnrecoverableError;
     }
     theBuffer.Input.seekg(-static_cast<std::streamoff>((aNbChars - anInd - 1)), std::ios::cur);
   }
 
-  // Check the reading status.
   theBuffer.LineCount++;
   const int stat = theBuffer.Input.rdstate();
   if (stat & std::ios::badbit)
@@ -225,34 +200,31 @@ VrmlData_ErrorStatus VrmlData_Scene::readLine(VrmlData_InBuffer& theBuffer)
   return aStatus;
 }
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_Scene::ReadLine(VrmlData_InBuffer& theBuffer)
 {
   VrmlData_ErrorStatus aStatus(VrmlData_StatusOK);
 
   while (aStatus == VrmlData_StatusOK)
   {
-    // Find the first significant character of the line
+
     for (; *theBuffer.LinePtr != '\0'; theBuffer.LinePtr++)
     {
       if (*theBuffer.LinePtr != ' ' && *theBuffer.LinePtr != '\t' && *theBuffer.LinePtr != ',')
       {
         if (*theBuffer.LinePtr == '\n' || *theBuffer.LinePtr == '\r' || *theBuffer.LinePtr == '#')
-          // go requesting the next line
+
           break;
         goto nonempty_line;
       }
     }
-    // the line is empty here (no significant characters). Read the next one.
+
     aStatus = readLine(theBuffer);
   }
 
-  // error or EOF detected
   return aStatus;
 
 nonempty_line:
-  // Try to detect comment
+
   if (!theBuffer.IsProcessed)
   {
     bool  isQuoted(false);
@@ -280,8 +252,6 @@ nonempty_line:
   return aStatus;
 }
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_Scene::readHeader(VrmlData_InBuffer& theBuffer)
 {
   VrmlData_ErrorStatus aStat = readLine(theBuffer);
@@ -290,8 +260,7 @@ VrmlData_ErrorStatus VrmlData_Scene::readHeader(VrmlData_InBuffer& theBuffer)
     return VrmlData_NotVrmlFile;
   }
   TCollection_AsciiString aHeader(theBuffer.LinePtr);
-  // The max possible header size is 25 (with spaces)
-  // 4 (max BOM size) + 11 (search string) + 9 (max size for encoding)
+
   if (aHeader.Length() <= 25 && aHeader.Search("#VRML V2.0") != -1)
   {
     aStat = readLine(theBuffer);
@@ -303,21 +272,14 @@ VrmlData_ErrorStatus VrmlData_Scene::readHeader(VrmlData_InBuffer& theBuffer)
   return aStat;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  : Import from text stream (file or else)
-//=======================================================================
-
 VrmlData_Scene& VrmlData_Scene::operator<<(Standard_IStream& theInput)
 {
   VrmlData_InBuffer           aBuffer(theInput);
   std::lock_guard<std::mutex> aLock(myMutex);
-  // Read the VRML header
+
   myStatus                                          = readHeader(aBuffer);
   const occ::handle<VrmlData_UnknownNode> aNullNode = new VrmlData_UnknownNode(*this);
-  //   if (myStatus == StatusOK)
-  //     myStatus = ReadLine (aBuffer);
-  // Read VRML data by nodes
+
   for (;;)
   {
     if (!VrmlData_Node::OK(myStatus, ReadLine(aBuffer)))
@@ -326,14 +288,13 @@ VrmlData_Scene& VrmlData_Scene::operator<<(Standard_IStream& theInput)
         myStatus = VrmlData_StatusOK;
       break;
     }
-    // this line provides the method ReadNode in the present context
+
     occ::handle<VrmlData_Node> aNode;
     myStatus = aNullNode->ReadNode(aBuffer, aNode);
-    // Unknown nodes are not stored however they do not generate error
+
     if (myStatus != VrmlData_StatusOK)
       break;
-    if (!aNode.IsNull() /*&&
-        !aNode->IsKind (STANDARD_TYPE(VrmlData_UnknownNode))*/)
+    if (!aNode.IsNull())
     {
       if (!aNode->IsKind(STANDARD_TYPE(VrmlData_WorldInfo)))
         myLstNodes.Append(aNode);
@@ -353,11 +314,8 @@ VrmlData_Scene& VrmlData_Scene::operator<<(Standard_IStream& theInput)
   return *this;
 }
 
-//=================================================================================================
-
-occ::handle<VrmlData_Node> VrmlData_Scene::FindNode(
-  const char* theName,
-  const occ::handle<Standard_Type>& /*theType*/) const
+occ::handle<VrmlData_Node> VrmlData_Scene::FindNode(const char* theName,
+                                                    const occ::handle<Standard_Type>&) const
 {
   occ::handle<VrmlData_Node> aResult;
 #ifdef USE_LIST_API
@@ -382,8 +340,6 @@ occ::handle<VrmlData_Node> VrmlData_Scene::FindNode(
   return aResult;
 }
 
-//=================================================================================================
-
 occ::handle<VrmlData_Node> VrmlData_Scene::FindNode(const char* theName, gp_Trsf& theLocation) const
 {
   gp_Trsf                    aLoc;
@@ -394,14 +350,14 @@ occ::handle<VrmlData_Node> VrmlData_Scene::FindNode(const char* theName, gp_Trsf
     const occ::handle<VrmlData_Node>& aNode = anIter.Value();
     if (aNode.IsNull())
       continue;
-    // Match a top-level node name
+
     if (strcmp(aNode->Name(), theName) == 0)
     {
       aResult     = aNode;
       theLocation = aLoc;
       break;
     }
-    // Try a Group type of node
+
     if (aNode->IsKind(STANDARD_TYPE(VrmlData_Group)))
     {
       const occ::handle<VrmlData_Group> aGroup = occ::down_cast<VrmlData_Group>(aNode);
@@ -415,8 +371,6 @@ occ::handle<VrmlData_Node> VrmlData_Scene::FindNode(const char* theName, gp_Trsf
   }
   return aResult;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Scene::ReadWord(VrmlData_InBuffer&       theBuffer,
                                               TCollection_AsciiString& theWord)
@@ -440,8 +394,6 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadWord(VrmlData_InBuffer&       theBuffer
   return aStatus;
 }
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_Scene::createNode(VrmlData_InBuffer&                theBuffer,
                                                 occ::handle<VrmlData_Node>&       theNode,
                                                 const occ::handle<Standard_Type>& theType)
@@ -450,7 +402,6 @@ VrmlData_ErrorStatus VrmlData_Scene::createNode(VrmlData_InBuffer&              
   occ::handle<VrmlData_Node> aNode;
   TCollection_AsciiString    aName;
 
-  // Read the DEF token to assign the node name
   if (VrmlData_Node::OK(aStatus, ReadLine(theBuffer)))
   {
     if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "DEF"))
@@ -468,7 +419,7 @@ VrmlData_ErrorStatus VrmlData_Scene::createNode(VrmlData_InBuffer&              
   const char* strName = aName.ToCString();
   if (aStatus == VrmlData_StatusOK)
   {
-    // create the new node
+
     if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "Appearance"))
       aNode = new VrmlData_Appearance(*this, strName);
     else if (!VRMLDATA_LCOMPARE_SKIP(theBuffer.LinePtr, "ShapeHints")
@@ -484,7 +435,6 @@ VrmlData_ErrorStatus VrmlData_Scene::createNode(VrmlData_InBuffer&              
     {
       aNode = new VrmlData_Coordinate(*this, strName);
 
-      // Check for "Coordinate3"
       if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "3"))
         theBuffer.LinePtr++;
     }
@@ -534,9 +484,7 @@ VrmlData_ErrorStatus VrmlData_Scene::createNode(VrmlData_InBuffer&              
           {
             theBuffer.LinePtr++;
             int aLevelCounter(0);
-            // This loop searches for any opening bracket '['.
-            // Such bracket increments the level counter. A closing bracket decrements
-            // the counter. The loop terminates when the counter becomes negative.
+
             while (aLevelCounter >= 0 && (aStatus = ReadLine(theBuffer)) == VrmlData_StatusOK)
             {
               int aChar;
@@ -587,16 +535,12 @@ VrmlData_ErrorStatus VrmlData_Scene::createNode(VrmlData_InBuffer&              
   return aStatus;
 }
 
-//=================================================================================================
-
 VrmlData_Scene::operator TopoDS_Shape() const
 {
   TopoDS_Shape aShape;
   VrmlData_Scene::createShape(aShape, myLstNodes, nullptr);
   return aShape;
 }
-
-//=================================================================================================
 
 TopoDS_Shape VrmlData_Scene::GetShape(
   NCollection_DataMap<occ::handle<TopoDS_TShape>, occ::handle<VrmlData_Appearance>>& aMap)
@@ -606,14 +550,12 @@ TopoDS_Shape VrmlData_Scene::GetShape(
   return aShape;
 }
 
-//=================================================================================================
-
 void VrmlData_Scene::createShape(
   TopoDS_Shape&                                                                      outShape,
   const NCollection_List<occ::handle<VrmlData_Node>>&                                lstNodes,
   NCollection_DataMap<occ::handle<TopoDS_TShape>, occ::handle<VrmlData_Appearance>>* pMapShapeApp)
 {
-  TopoDS_Shape aSingleShape; // used when there is a single ShapeNode
+  TopoDS_Shape aSingleShape;
   bool         isSingleShape(true);
   BRep_Builder aBuilder;
   outShape.Nullify();
@@ -623,7 +565,7 @@ void VrmlData_Scene::createShape(
   Iterator anIter(lstNodes);
   for (; anIter.More(); anIter.Next())
   {
-    // Try a Shape type of node
+
     const occ::handle<VrmlData_ShapeNode> aNodeShape =
       occ::down_cast<VrmlData_ShapeNode>(anIter.Value());
     if (!aNodeShape.IsNull())
@@ -643,12 +585,12 @@ void VrmlData_Scene::createShape(
             const occ::handle<VrmlData_Appearance>& anAppearance = aNodeShape->Appearance();
             if (!anAppearance.IsNull())
             {
-              // Check if the current topology is a single face
+
               if (aTShape->IsKind(STANDARD_TYPE(TopoDS_TFace)))
                 pMapShapeApp->Bind(aTShape, anAppearance);
               else
               {
-                // This is not a face, explode it in faces and bind each face
+
                 TopoDS_Shape aCurShape;
                 aCurShape.TShape(aTShape);
                 TopExp_Explorer anExp(aCurShape, TopAbs_FACE);
@@ -664,7 +606,7 @@ void VrmlData_Scene::createShape(
       }
       continue;
     }
-    // Try a Group type of node
+
     const occ::handle<VrmlData_Group> aNodeGroup = occ::down_cast<VrmlData_Group>(anIter.Value());
     if (!aNodeGroup.IsNull())
     {
@@ -680,8 +622,6 @@ void VrmlData_Scene::createShape(
   if (isSingleShape)
     outShape = aSingleShape;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Scene::ReadReal(VrmlData_InBuffer& theBuffer,
                                               double&            theResult,
@@ -706,8 +646,6 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadReal(VrmlData_InBuffer& theBuffer,
   }
   return aStatus;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Scene::ReadXYZ(VrmlData_InBuffer& theBuffer,
                                              gp_XYZ&            theXYZ,
@@ -751,8 +689,6 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadXYZ(VrmlData_InBuffer& theBuffer,
   return aStatus;
 }
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_Scene::ReadXY(VrmlData_InBuffer& theBuffer,
                                             gp_XY&             theXY,
                                             bool               isScale,
@@ -791,12 +727,6 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadXY(VrmlData_InBuffer& theBuffer,
   return aStatus;
 }
 
-//=======================================================================
-// function : ReadArrIndex
-// purpose  : Read the body of the data node (comma-separated list of int
-//           multiplets)
-//=======================================================================
-
 VrmlData_ErrorStatus VrmlData_Scene::ReadArrIndex(VrmlData_InBuffer& theBuffer,
                                                   const int**&       theArray,
                                                   size_t&            theNBlocks) const
@@ -805,7 +735,7 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadArrIndex(VrmlData_InBuffer& theBuffer,
   theNBlocks = 0;
   if (VrmlData_Node::OK(aStatus, ReadLine(theBuffer)))
   {
-    if (theBuffer.LinePtr[0] != '[') // opening bracket
+    if (theBuffer.LinePtr[0] != '[')
       aStatus = VrmlData_VrmlFormatError;
     else
     {
@@ -815,10 +745,9 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadArrIndex(VrmlData_InBuffer& theBuffer,
       bool                           isMore(true);
       long                           anIntValue;
 
-      // Loop reading integers from the stream
       while (isMore && VrmlData_Node::OK(aStatus, ReadLine(theBuffer)))
       {
-        // closing bracket, in case that it follows a comma
+
         if (theBuffer.LinePtr[0] == ']')
         {
           theBuffer.LinePtr++;
@@ -826,7 +755,7 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadArrIndex(VrmlData_InBuffer& theBuffer,
         }
         if (!VrmlData_Node::OK(aStatus, VrmlData_Node::ReadInteger(theBuffer, anIntValue)))
           break;
-        // Check for valid delimiter (']' or ',')
+
         if (!VrmlData_Node::OK(aStatus, ReadLine(theBuffer)))
           break;
         if (theBuffer.LinePtr[0] == ']')
@@ -838,20 +767,19 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadArrIndex(VrmlData_InBuffer& theBuffer,
         {
           if (vecInt.Length() > 2)
           {
-            // additional check for redundant point:
-            // ignore last point which is a duplicate of first point
+
             if (anIntValue == vecInt[0])
             {
               continue;
             }
           }
-          // The input value is a node index, store it in the buffer vector
+
           vecInt.Append(static_cast<int>(anIntValue));
         }
         if ((anIntValue < 0 || !isMore) && vecInt.Length() > 0)
         {
           const int aLen = vecInt.Length();
-          // The input is the end-of-face, store and close this face
+
           int* bufFace = static_cast<int*>(myAllocator->Allocate((aLen + 1) * sizeof(int)));
           if (bufFace == nullptr)
           {
@@ -887,8 +815,6 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadArrIndex(VrmlData_InBuffer& theBuffer,
   }
   return aStatus;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Scene::WriteArrIndex(const char*  thePrefix,
                                                    const int**  theArrIndex,
@@ -946,8 +872,6 @@ VrmlData_ErrorStatus VrmlData_Scene::WriteArrIndex(const char*  thePrefix,
   return aStatus;
 }
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_Scene::WriteXYZ(const gp_XYZ& theXYZ,
                                               const bool    isApplyScale,
                                               const char*   thePostfix) const
@@ -972,11 +896,6 @@ VrmlData_ErrorStatus VrmlData_Scene::WriteXYZ(const gp_XYZ& theXYZ,
   }
   return WriteLine(buf);
 }
-
-//=======================================================================
-// function : WriteLine
-// purpose  : write the given string prepending the current indentation
-//=======================================================================
 
 VrmlData_ErrorStatus VrmlData_Scene::WriteLine(const char* theLin0,
                                                const char* theLin1,
@@ -1014,17 +933,13 @@ VrmlData_ErrorStatus VrmlData_Scene::WriteLine(const char* theLin0,
     if (stat & std::ios::badbit)
       aStatus = VrmlData_UnrecoverableError;
     else if (stat & std::ios::failbit)
-      //       if (stat & std::ios::eofbit)
-      //         aStatus = VrmlData_EndOfFile;
-      //       else
+
       aStatus = VrmlData_GeneralError;
     if (theIndent > 0)
       aCurrentIndent += myIndent;
   }
   return myStatus;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Scene::WriteNode(const char*                       thePrefix,
                                                const occ::handle<VrmlData_Node>& theNode) const
@@ -1041,8 +956,7 @@ VrmlData_ErrorStatus VrmlData_Scene::WriteNode(const char*                      
     {
       if (isNoName && IsDummyWrite())
       {
-        // We are in a tentative 'write' session (nothing is written).
-        // The goal is to identify multiply referred nodes.
+
         void* addrNode = theNode.operator->();
         if (!const_cast<NCollection_Map<void*>&>(myUnnamedNodesOut).Add(addrNode))
         {
@@ -1053,17 +967,17 @@ VrmlData_ErrorStatus VrmlData_Scene::WriteNode(const char*                      
             Sprintf(buf, "_%d", ++const_cast<int&>(myAutoNameCounter));
             bidNode->myName = &buf[0];
           } while (myNamedNodes.Contains(bidNode));
-          // We found the vacant automatic name, let us assign to it.
+
           theNode->setName(&buf[0]);
           const_cast<NCollection_Map<occ::handle<VrmlData_Node>>&>(myNamedNodes).Add(theNode);
-          return aStatus; // do not search under already duplicated node
+          return aStatus;
         }
       }
       if (isNoName)
         aStatus = theNode->Write(thePrefix);
       else
       {
-        // If the node name consists of blank characters, we do not write it
+
         const char* nptr = theNode->Name();
         for (; *nptr != '\0'; nptr++)
           if (*nptr != ' ' && *nptr != '\t')
@@ -1072,7 +986,7 @@ VrmlData_ErrorStatus VrmlData_Scene::WriteNode(const char*                      
           aStatus = theNode->Write(thePrefix);
         else
         {
-          // Name is written under DEF clause
+
           TCollection_AsciiString buf;
           if (myNamedNodesOut.Contains(theNode))
           {
@@ -1098,26 +1012,14 @@ VrmlData_ErrorStatus VrmlData_Scene::WriteNode(const char*                      
   return aStatus;
 }
 
-//=================================================================================================
-
 void VrmlData_Scene::Dump(Standard_OStream& theStream) const
 {
   theStream << " ===== Diagnostic Dump of a Scene (" << myAllNodes.Extent() << " nodes)\n";
 
-  /*
-  Iterator anIterA(myAllNodes);
-  for (; anIterA.More(); anIterA.Next())
-    dumpNode(theStream, anIterA.Value(), "");
-  */
   Iterator anIter(myLstNodes);
   for (; anIter.More(); anIter.Next())
     dumpNode(theStream, anIter.Value(), "  ");
 }
-
-//=======================================================================
-// function : dumpNode
-// purpose  : static (local) function
-//=======================================================================
 
 void dumpNode(Standard_OStream&                 theStream,
               const occ::handle<VrmlData_Node>& theNode,
@@ -1200,8 +1102,7 @@ void dumpNode(Standard_OStream&                 theStream,
   }
   else if (theNode->IsKind(STANDARD_TYPE(VrmlData_Material)))
   {
-    //     const occ::handle<VrmlData_Material> aMaterial =
-    //       Handle(VrmlData_Material)::DownCast (theNode);
+
     dumpNodeHeader(theStream, theIndent, "Material", theNode->Name());
   }
   else if (theNode->IsKind(STANDARD_TYPE(VrmlData_Normal)))
@@ -1219,8 +1120,6 @@ void dumpNode(Standard_OStream&                 theStream,
     dumpNodeHeader(theStream, theIndent, buf, theNode->Name());
   }
 }
-
-//=================================================================================================
 
 void dumpNodeHeader(Standard_OStream&              theStream,
                     const TCollection_AsciiString& theIndent,

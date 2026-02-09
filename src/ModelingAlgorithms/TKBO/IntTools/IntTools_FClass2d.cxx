@@ -30,17 +30,12 @@
 
 #include <cstdio>
 
-// #define DEBUG_PCLASS_POLYGON
 #ifdef DEBUG_PCLASS_POLYGON
   #include <DrawTrSurf.hpp>
   #include <Geom2d_BSplineCurve.hpp>
 #endif
 
-//=================================================================================================
-
 IntTools_FClass2d::IntTools_FClass2d() = default;
-
-//=================================================================================================
 
 IntTools_FClass2d::IntTools_FClass2d(const TopoDS_Face& aFace, const double TolUV)
     : Toluv(TolUV),
@@ -49,14 +44,10 @@ IntTools_FClass2d::IntTools_FClass2d(const TopoDS_Face& aFace, const double TolU
   Init(Face, Toluv);
 }
 
-//=================================================================================================
-
 bool IntTools_FClass2d::IsHole() const
 {
   return myIsHole;
 }
-
-//=================================================================================================
 
 void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
 {
@@ -67,7 +58,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
   double FlecheU, FlecheV, TolVertex1, TolVertex;
   double uFirst, uLast;
   double aPrCf, aPrCf2;
-  //
+
   TopoDS_Edge                    edge;
   TopoDS_Vertex                  Va, Vb;
   TopAbs_Orientation             Or;
@@ -79,32 +70,28 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
   NCollection_DataMap<int, int>  anIndexMap;
   NCollection_Sequence<gp_Vec2d> aD1Prev;
   NCollection_Sequence<gp_Vec2d> aD1Next;
-  //
+
   aPrCf    = Precision::Confusion();
   aPrCf2   = aPrCf * aPrCf;
   myIsHole = true;
-  //
+
   Toluv = TolUV;
   Face  = aFace;
   Face.Orientation(TopAbs_FORWARD);
   occ::handle<BRepAdaptor_Surface> surf = new BRepAdaptor_Surface();
   surf->Initialize(aFace, false);
-  //
+
   Tole = 0.;
   Tol  = 0.;
   Umin = Vmin = RealLast();
   Umax = Vmax = -Umin;
   BadWire     = 0;
-  //
-  // if face has several wires and one of them is bad,
-  // it is necessary to process all of them for correct
-  // calculation of Umin, Umax, Vmin, Vmax - ifv, 23.08.06
-  //
+
   aExpF.Init(Face, TopAbs_WIRE);
   for (; aExpF.More(); aExpF.Next())
   {
     const TopoDS_Wire& aW = *((TopoDS_Wire*)&aExpF.Current());
-    //
+
     firstpoint            = 1;
     FlecheU               = 0.;
     FlecheV               = 0.;
@@ -113,20 +100,19 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
     WireIsNotEmpty        = false;
     Ancienpnt3dinitialise = false;
     Ancienpnt3d.SetCoord(0., 0., 0.);
-    //
+
     SeqPnt2d.Clear();
     anIndexMap.Clear();
     aD1Prev.Clear();
     aD1Next.Clear();
-    //
-    // NbEdges
+
     NbEdges = 0;
     aExp.Init(aW, TopAbs_EDGE);
     for (; aExp.More(); aExp.Next())
     {
       NbEdges++;
     }
-    //
+
     aWExp.Init(aW, Face);
     for (; aWExp.More(); aWExp.Next())
     {
@@ -137,24 +123,24 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
       {
         continue;
       }
-      //
+
       aC2D = BRep_Tool::CurveOnSurface(edge, Face, pfbid, plbid);
       if (aC2D.IsNull())
       {
         return;
       }
-      //
+
       BRepAdaptor_Curve2d C(edge, Face);
       BRepAdaptor_Curve   C3d;
-      //------------------------------------------
+
       degenerated = false;
       if (BRep_Tool::Degenerated(edge) || BRep_Tool::IsClosed(edge, Face))
       {
         degenerated = true;
       }
-      //
+
       TopExp::Vertices(edge, Va, Vb);
-      //
+
       TolVertex1 = 0.;
       TolVertex  = 0.;
       if (Va.IsNull())
@@ -173,17 +159,15 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
       {
         TolVertex = BRep_Tool::Tolerance(Vb);
       }
-      //
+
       if (TolVertex < TolVertex1)
       {
         TolVertex = TolVertex1;
       }
-      //
-      //-- Verification of cases when forgotten to code degenereted
+
       if (!degenerated)
       {
-        // check that whole curve is located in vicinity of its middle point
-        // (within sphere of Precision::Confusion() diameter)
+
         C3d.Initialize(edge, Face);
         gp_Pnt P3da       = C3d.Value(0.5 * (pfbid + plbid));
         du                = plbid - pfbid;
@@ -201,22 +185,21 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
             break;
           }
         }
-      } // if(!degenerated)
-      //-- ----------------------------------------
+      }
+
       Tole = BRep_Tool::Tolerance(edge);
       if (Tole > Tol)
       {
         Tol = Tole;
       }
-      //
-      // NbSamples +> nbs
+
       nbs = Geom2dInt_Geom2dCurveTool::NbSamples(C);
       if (nbs > 2)
       {
         nbs *= 4;
       }
       du = (plbid - pfbid) / (double)(nbs - 1);
-      //
+
       if (Or == TopAbs_FORWARD)
       {
         u      = pfbid;
@@ -230,11 +213,10 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
         uLast  = pfbid;
         du     = -du;
       }
-      //
-      // aPrms
+
       aNbs1 = nbs + 1;
       NCollection_Array1<double> aPrms(1, aNbs1);
-      //
+
       if (nbs == 2)
       {
         double aCoef = 0.0025;
@@ -252,12 +234,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
         }
         aPrms(aNbs1) = uLast;
       }
-      //
-      //-- ------------------------------------------------------------
-      //-- Check distance uv between the start point of the edge
-      //-- and the last point saved in SeqPnt2d
-      //-- To to set the first point of the current
-      //-- afar from the last saved point
+
       Avant = SeqPnt2d.Length();
       for (iX = firstpoint; iX <= aNbs1; iX++)
       {
@@ -266,7 +243,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
         double   aDstX;
         gp_Pnt2d P2d;
         gp_Pnt   P3d;
-        //
+
         u   = aPrms(iX);
         P2d = C.Value(u);
         if (P2d.X() < Umin)
@@ -277,7 +254,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
           Vmin = P2d.Y();
         if (P2d.Y() > Vmax)
           Vmax = P2d.Y();
-        //
+
         aDstX = RealLast();
         if (!degenerated)
         {
@@ -290,7 +267,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
             }
           }
         }
-        //
+
         IsRealCurve3d = true;
         if (aDstX < aPrCf2)
         {
@@ -298,7 +275,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
           {
             double aDstX1;
             gp_Pnt MidP3d;
-            //
+
             MidP3d = C3d.Value(0.5 * (u + aPrms(iX - 1)));
             aDstX1 = P3d.SquareDistance(MidP3d);
             if (aDstX1 < aPrCf2)
@@ -307,7 +284,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
             }
           }
         }
-        //
+
         if (IsRealCurve3d)
         {
           if (!degenerated)
@@ -317,13 +294,13 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
           }
           SeqPnt2d.Append(P2d);
         }
-        //
+
         ii = SeqPnt2d.Length();
         if (ii > (Avant + 4))
         {
           double   ul, dU, dV;
           gp_Pnt2d Pp;
-          //
+
           gp_Lin2d Lin(SeqPnt2d(ii - 2), gp_Dir2d(gp_Vec2d(SeqPnt2d(ii - 2), SeqPnt2d(ii))));
           ul = ElCLib::Parameter(Lin, SeqPnt2d(ii - 1));
           Pp = ElCLib::Value(ul, Lin);
@@ -338,19 +315,17 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
             FlecheV = dV;
           }
         }
-      } // for(iX=firstpoint; iX<=aNbs1; iX++) {
-      //
+      }
+
       if (BadWire)
       {
-        continue; // if face has several wires and one of them is bad,
-                  // it is necessary to process all of them for correct
-                  // calculation of Umin, Umax, Vmin, Vmax - ifv, 23.08.06
+        continue;
       }
-      //
+
       if (firstpoint == 1)
         firstpoint = 2;
       WireIsNotEmpty = true;
-      // Append the derivative of the first parameter.
+
       double   aU = aPrms(1);
       gp_Pnt2d aP;
       gp_Vec2d aV;
@@ -362,7 +337,6 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
 
       aD1Next.Append(aV);
 
-      // Append the derivative of the last parameter.
       aU = aPrms(aNbs1);
       C.D1(aU, aP, aV);
 
@@ -374,26 +348,24 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
       else
         aD1Prev.Prepend(aV);
 
-      // Fill the map anIndexMap.
       if (Avant > 0)
         anIndexMap.Bind(Avant, aD1Next.Length());
       else
         anIndexMap.Bind(1, aD1Next.Length());
-    } // for(;aWExp.More(); aWExp.Next()) {
-    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    //
+    }
+
     if (NbEdges)
     {
-      //-- count ++ with normal explorer and -- with Wire Explorer
+
       NCollection_Array1<gp_Pnt2d> PClass(1, 2);
       gp_Pnt2d                     anInitPnt(0., 0.);
-      //
+
       PClass.Init(anInitPnt);
       TabClass.Append(CSLib_Class2d(PClass, FlecheU, FlecheV, Umin, Vmin, Umax, Vmax));
       BadWire = 1;
       TabOrien.Append(-1);
     }
-    //
+
     else if (WireIsNotEmpty)
     {
       if (SeqPnt2d.Length() > 3)
@@ -423,9 +395,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
         bool   isChanged  = false;
         while (aDefl > anExpThick && aDiscrDefl > 1e-7)
         {
-          // Deflection of the polygon is too much for this ratio of area and perimeter,
-          // and this might lead to self-intersections.
-          // Discretize the wire more tightly to eliminate the error.
+
           firstpoint = 1;
           isChanged  = true;
           SeqPnt2d.Clear();
@@ -484,7 +454,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
         {
           Poly::PolygonProperties(SeqPnt2d, aS, aPer);
         }
-        //
+
         if (FlecheU < Toluv)
           FlecheU = Toluv;
 
@@ -492,7 +462,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
           FlecheV = Toluv;
 
         TabClass.Append(CSLib_Class2d(SeqPnt2d, FlecheU, FlecheV, Umin, Vmin, Umax, Vmax));
-        //
+
         if (std::abs(aS) < Precision::SquareConfusion())
         {
           BadWire = 1;
@@ -520,14 +490,14 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
         SeqPnt2d.Clear();
         TabClass.Append(CSLib_Class2d(SeqPnt2d, FlecheU, FlecheV, Umin, Vmin, Umax, Vmax));
       }
-    } // else if(WireIsNotEmpty)
-  } // for(; aExpF.More();  aExpF.Next()) {
-  //
+    }
+  }
+
   int nbtabclass = TabClass.Length();
-  //
+
   if (nbtabclass > 0)
   {
-    //-- if an error on a wire was detected : all TabOrien set to -1
+
     if (BadWire)
     {
       TabOrien(1) = -1;
@@ -564,8 +534,6 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
   }
 }
 
-//=================================================================================================
-
 TopAbs_State IntTools_FClass2d::PerformInfinitePoint() const
 {
   if (Umax == -RealLast() || Vmax == -RealLast() || Umin == RealLast() || Vmin == RealLast())
@@ -576,8 +544,6 @@ TopAbs_State IntTools_FClass2d::PerformInfinitePoint() const
   return (Perform(P, false));
 }
 
-//=================================================================================================
-
 TopAbs_State IntTools_FClass2d::Perform(const gp_Pnt2d& _Puv, const bool RecadreOnPeriodic) const
 {
   int nbtabclass = TabClass.Length();
@@ -586,7 +552,6 @@ TopAbs_State IntTools_FClass2d::Perform(const gp_Pnt2d& _Puv, const bool Recadre
     return TopAbs_IN;
   }
 
-  //-- U1 is the First Param and U2 is in this case U1+Period
   double       u       = _Puv.X();
   double       v       = _Puv.Y();
   double       uu      = u;
@@ -603,24 +568,24 @@ TopAbs_State IntTools_FClass2d::Perform(const gp_Pnt2d& _Puv, const bool Recadre
 
   bool urecadre, vrecadre, bUseClassifier;
   int  dedans = 1;
-  //
+
   urecadre = false;
   vrecadre = false;
-  //
+
   if (RecadreOnPeriodic)
   {
     double du, dv;
     if (IsUPer)
     {
       GeomInt::AdjustPeriodic(uu, Umin, Umax, uperiod, uu, du);
-    } // if (IsUPer) {
-    //
+    }
+
     if (IsVPer)
     {
       GeomInt::AdjustPeriodic(vv, Vmin, Vmax, vperiod, vv, dv);
-    } // if (IsVPer) {
+    }
   }
-  //
+
   for (;;)
   {
     dedans = 1;
@@ -655,7 +620,7 @@ TopAbs_State IntTools_FClass2d::Perform(const gp_Pnt2d& _Puv, const bool Recadre
           dedans = 0;
           break;
         }
-      } // for(n=1; n<=nbtabclass; n++)
+      }
 
       if (dedans == 0)
       {
@@ -665,20 +630,20 @@ TopAbs_State IntTools_FClass2d::Perform(const gp_Pnt2d& _Puv, const bool Recadre
       {
         aStatus = (dedans == 1) ? TopAbs_IN : TopAbs_OUT;
       }
-    } // if(TabOrien(1)!=-1) {
-    // compute state of the point using face classifier
+    }
+
     if (bUseClassifier)
     {
-      // compute tolerance to use in face classifier
+
       double aURes, aVRes, aFCTol;
       bool   bUIn, bVIn;
-      //
+
       aURes = surf->UResolution(Toluv);
       aVRes = surf->VResolution(Toluv);
-      //
+
       bUIn = (u >= Umin) && (u <= Umax);
       bVIn = (v >= Vmin) && (v <= Vmax);
-      //
+
       if (bUIn == bVIn)
       {
         aFCTol = std::min(aURes, aVRes);
@@ -687,7 +652,6 @@ TopAbs_State IntTools_FClass2d::Perform(const gp_Pnt2d& _Puv, const bool Recadre
       {
         aFCTol = (!bUIn) ? aURes : aVRes;
       }
-      //
 
       if (myFExplorer.get() == nullptr)
         myFExplorer.reset(new BRepClass_FaceExplorer(Face));
@@ -738,10 +702,8 @@ TopAbs_State IntTools_FClass2d::Perform(const gp_Pnt2d& _Puv, const bool Recadre
         return aStatus;
       }
     }
-  } // while (1)
+  }
 }
-
-//=================================================================================================
 
 TopAbs_State IntTools_FClass2d::TestOnRestriction(const gp_Pnt2d& _Puv,
                                                   const double    Tol,
@@ -753,7 +715,6 @@ TopAbs_State IntTools_FClass2d::TestOnRestriction(const gp_Pnt2d& _Puv,
     return TopAbs_IN;
   }
 
-  //-- U1 is the First Param and U2 in this case is U1+Period
   double u  = _Puv.X();
   double v  = _Puv.Y();
   double uu = u, vv = v;
@@ -774,14 +735,14 @@ TopAbs_State IntTools_FClass2d::TestOnRestriction(const gp_Pnt2d& _Puv,
     if (IsUPer)
     {
       GeomInt::AdjustPeriodic(uu, Umin, Umax, uperiod, uu, du);
-    } // if (IsUPer) {
-    //
+    }
+
     if (IsVPer)
     {
       GeomInt::AdjustPeriodic(vv, Vmin, Vmax, vperiod, vv, dv);
-    } // if (IsVPer) {
+    }
   }
-  //
+
   for (;;)
   {
     dedans = 1;
@@ -828,7 +789,7 @@ TopAbs_State IntTools_FClass2d::TestOnRestriction(const gp_Pnt2d& _Puv,
       }
     }
     else
-    { //-- TabOrien(1)=-1  Wrong  Wire
+    {
 
       if (myFExplorer.get() == nullptr)
         myFExplorer.reset(new BRepClass_FaceExplorer(Face));
@@ -865,10 +826,8 @@ TopAbs_State IntTools_FClass2d::TestOnRestriction(const gp_Pnt2d& _Puv,
       if (v > Vmax || !IsVPer)
         return aStatus;
     }
-  } // for (;;)
+  }
 }
-
-//=================================================================================================
 
 IntTools_FClass2d::~IntTools_FClass2d()
 {

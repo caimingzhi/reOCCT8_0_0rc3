@@ -13,7 +13,6 @@ class StepVisual_CoordinatesList : public StepVisual_TessellatedItem
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Returns a coordinate list
   Standard_EXPORT StepVisual_CoordinatesList();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&    theName,

@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ProductConceptContext, StepBasic_ApplicationContextElement)
 
-//=================================================================================================
-
 StepBasic_ProductConceptContext::StepBasic_ProductConceptContext() = default;
-
-//=================================================================================================
 
 void StepBasic_ProductConceptContext::Init(
   const occ::handle<TCollection_HAsciiString>&     aApplicationContextElement_Name,
@@ -21,14 +17,10 @@ void StepBasic_ProductConceptContext::Init(
   theMarketSegmentType = aMarketSegmentType;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepBasic_ProductConceptContext::MarketSegmentType() const
 {
   return theMarketSegmentType;
 }
-
-//=================================================================================================
 
 void StepBasic_ProductConceptContext::SetMarketSegmentType(
   const occ::handle<TCollection_HAsciiString>& aMarketSegmentType)

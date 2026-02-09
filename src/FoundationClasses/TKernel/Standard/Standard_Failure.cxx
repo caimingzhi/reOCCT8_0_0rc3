@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_Failure.hpp>
 
@@ -21,11 +9,9 @@
 
 namespace
 {
-  //! Global parameter defining default length of stack trace.
-  static int Standard_Failure_DefaultStackTraceLength = 0;
-} // namespace
 
-//=================================================================================================
+  static int Standard_Failure_DefaultStackTraceLength = 0;
+}
 
 Standard_Failure::StringRef* Standard_Failure::StringRef::Allocate(const char* theString)
 {
@@ -44,8 +30,6 @@ Standard_Failure::StringRef* Standard_Failure::StringRef::Allocate(const char* t
   return aStrPtr;
 }
 
-//=================================================================================================
-
 Standard_Failure::StringRef* Standard_Failure::StringRef::Copy(StringRef* theString)
 {
   if (theString == nullptr)
@@ -56,8 +40,6 @@ Standard_Failure::StringRef* Standard_Failure::StringRef::Copy(StringRef* theStr
   ++theString->Counter;
   return theString;
 }
-
-//=================================================================================================
 
 void Standard_Failure::StringRef::Free(StringRef* theString)
 {
@@ -70,14 +52,12 @@ void Standard_Failure::StringRef::Free(StringRef* theString)
   }
 }
 
-//=================================================================================================
-
 void Standard_Failure::captureStackTrace()
 {
   const int aStackLength = Standard_Failure_DefaultStackTraceLength;
   if (aStackLength > 0)
   {
-    // Limit stack allocation to 64KB to prevent stack overflow
+
     const int aStackBufLen = std::clamp(aStackLength * 200, 2048, 65536);
     char*     aStackBuffer = (char*)alloca(aStackBufLen);
     if (aStackBuffer != nullptr)
@@ -91,16 +71,12 @@ void Standard_Failure::captureStackTrace()
   }
 }
 
-//=================================================================================================
-
 Standard_Failure::Standard_Failure()
     : myMessage(nullptr),
       myStackTrace(nullptr)
 {
   captureStackTrace();
 }
-
-//=================================================================================================
 
 Standard_Failure::Standard_Failure(const char* theMessage)
     : myMessage(nullptr),
@@ -110,8 +86,6 @@ Standard_Failure::Standard_Failure(const char* theMessage)
   captureStackTrace();
 }
 
-//=================================================================================================
-
 Standard_Failure::Standard_Failure(const char* theMessage, const char* theStackTrace)
     : myMessage(nullptr),
       myStackTrace(nullptr)
@@ -119,8 +93,6 @@ Standard_Failure::Standard_Failure(const char* theMessage, const char* theStackT
   myMessage    = StringRef::Allocate(theMessage);
   myStackTrace = StringRef::Allocate(theStackTrace);
 }
-
-//=================================================================================================
 
 Standard_Failure::Standard_Failure(const Standard_Failure& theOther)
     : std::exception(theOther),
@@ -130,8 +102,6 @@ Standard_Failure::Standard_Failure(const Standard_Failure& theOther)
   myMessage    = StringRef::Copy(theOther.myMessage);
   myStackTrace = StringRef::Copy(theOther.myStackTrace);
 }
-
-//=================================================================================================
 
 Standard_Failure& Standard_Failure::operator=(const Standard_Failure& theOther)
 {
@@ -145,29 +115,21 @@ Standard_Failure& Standard_Failure::operator=(const Standard_Failure& theOther)
   return *this;
 }
 
-//=================================================================================================
-
 Standard_Failure::~Standard_Failure()
 {
   StringRef::Free(myMessage);
   StringRef::Free(myStackTrace);
 }
 
-//=================================================================================================
-
 const char* Standard_Failure::what() const noexcept
 {
   return myMessage != nullptr ? myMessage->GetMessage() : "";
 }
 
-//=================================================================================================
-
 const char* Standard_Failure::GetStackString() const
 {
   return myStackTrace != nullptr ? myStackTrace->GetMessage() : "";
 }
-
-//=================================================================================================
 
 void Standard_Failure::Print(Standard_OStream& theStream) const
 {
@@ -185,14 +147,10 @@ void Standard_Failure::Print(Standard_OStream& theStream) const
   }
 }
 
-//=================================================================================================
-
 int Standard_Failure::DefaultStackTraceLength()
 {
   return Standard_Failure_DefaultStackTraceLength;
 }
-
-//=================================================================================================
 
 void Standard_Failure::SetDefaultStackTraceLength(int theNbStackTraces)
 {

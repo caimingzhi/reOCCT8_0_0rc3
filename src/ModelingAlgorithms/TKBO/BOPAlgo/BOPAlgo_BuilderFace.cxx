@@ -28,7 +28,7 @@
 #include <NCollection_List.hpp>
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_IndexedDataMap.hpp>
-//
+
 static bool IsGrowthWire(const TopoDS_Shape&,
                          const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>&);
 
@@ -36,15 +36,11 @@ static bool IsInside(const TopoDS_Shape&, const TopoDS_Shape&, occ::handle<IntTo
 static void MakeInternalWires(const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>&,
                               NCollection_List<TopoDS_Shape>&);
 
-//=================================================================================================
-
 BOPAlgo_BuilderFace::BOPAlgo_BuilderFace()
 
 {
   myOrientation = TopAbs_EXTERNAL;
 }
-
-//=================================================================================================
 
 BOPAlgo_BuilderFace::BOPAlgo_BuilderFace(const occ::handle<NCollection_BaseAllocator>& theAllocator)
     : BOPAlgo_BuilderArea(theAllocator)
@@ -52,11 +48,7 @@ BOPAlgo_BuilderFace::BOPAlgo_BuilderFace(const occ::handle<NCollection_BaseAlloc
   myOrientation = TopAbs_EXTERNAL;
 }
 
-//=================================================================================================
-
 BOPAlgo_BuilderFace::~BOPAlgo_BuilderFace() = default;
-
-//=================================================================================================
 
 void BOPAlgo_BuilderFace::SetFace(const TopoDS_Face& theFace)
 {
@@ -65,21 +57,15 @@ void BOPAlgo_BuilderFace::SetFace(const TopoDS_Face& theFace)
   myFace.Orientation(TopAbs_FORWARD);
 }
 
-//=================================================================================================
-
 TopAbs_Orientation BOPAlgo_BuilderFace::Orientation() const
 {
   return myOrientation;
 }
 
-//=================================================================================================
-
 const TopoDS_Face& BOPAlgo_BuilderFace::Face() const
 {
   return myFace;
 }
-
-//=================================================================================================
 
 void BOPAlgo_BuilderFace::CheckData()
 {
@@ -94,42 +80,38 @@ void BOPAlgo_BuilderFace::CheckData()
   }
 }
 
-//=================================================================================================
-
 void BOPAlgo_BuilderFace::Perform(const Message_ProgressRange& theRange)
 {
   Message_ProgressScope aPS(theRange, nullptr, 100);
 
   GetReport()->Clear();
-  //
+
   CheckData();
   if (HasErrors())
   {
     return;
   }
-  //
+
   PerformShapesToAvoid(aPS.Next(1));
   if (HasErrors())
   {
     return;
   }
-  //
+
   PerformLoops(aPS.Next(10));
   if (HasErrors())
   {
     return;
   }
-  //
+
   PerformAreas(aPS.Next(80));
   if (HasErrors())
   {
     return;
   }
-  //
+
   PerformInternalShapes(aPS.Next(9));
 }
-
-//=================================================================================================
 
 void BOPAlgo_BuilderFace::PerformShapesToAvoid(const Message_ProgressRange& theRange)
 {
@@ -138,11 +120,11 @@ void BOPAlgo_BuilderFace::PerformShapesToAvoid(const Message_ProgressRange& theR
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
                                            aMVE;
   NCollection_List<TopoDS_Shape>::Iterator aIt;
-  //
+
   myShapesToAvoid.Clear();
-  //
+
   Message_ProgressScope aPS(theRange, nullptr, 1);
-  //
+
   for (;;)
   {
     if (UserBreak(aPS))
@@ -150,8 +132,7 @@ void BOPAlgo_BuilderFace::PerformShapesToAvoid(const Message_ProgressRange& theR
       return;
     }
     bFound = false;
-    //
-    // 1. MEF
+
     aMVE.Clear();
     aIt.Initialize(myShapes);
     for (; aIt.More(); aIt.Next())
@@ -163,19 +144,18 @@ void BOPAlgo_BuilderFace::PerformShapesToAvoid(const Message_ProgressRange& theR
       }
     }
     aNbV = aMVE.Extent();
-    //
-    // 2. myEdgesToAvoid
+
     for (i = 1; i <= aNbV; ++i)
     {
       const TopoDS_Vertex& aV = (*(TopoDS_Vertex*)(&aMVE.FindKey(i)));
-      //
+
       NCollection_List<TopoDS_Shape>& aLE = aMVE.ChangeFromKey(aV);
       aNbE                                = aLE.Extent();
       if (!aNbE)
       {
         continue;
       }
-      //
+
       const TopoDS_Edge& aE1 = (*(TopoDS_Edge*)(&aLE.First()));
       if (aNbE == 1)
       {
@@ -196,7 +176,7 @@ void BOPAlgo_BuilderFace::PerformShapesToAvoid(const Message_ProgressRange& theR
         if (aE2.IsSame(aE1))
         {
           TopoDS_Vertex aV1x, aV2x;
-          //
+
           TopExp::Vertices(aE1, aV1x, aV2x);
           if (aV1x.IsSame(aV2x))
           {
@@ -207,16 +187,14 @@ void BOPAlgo_BuilderFace::PerformShapesToAvoid(const Message_ProgressRange& theR
           myShapesToAvoid.Add(aE2);
         }
       }
-    } // for (i=1; i<=aNbE; ++i) {
-    //
+    }
+
     if (!bFound)
     {
       break;
     }
   }
 }
-
-//=================================================================================================
 
 void BOPAlgo_BuilderFace::PerformLoops(const Message_ProgressRange& theRange)
 {
@@ -230,13 +208,12 @@ void BOPAlgo_BuilderFace::PerformLoops(const Message_ProgressRange& theRange)
   BRep_Builder                  aBB;
   BOPAlgo_WireEdgeSet           aWES(myAllocator);
   BOPAlgo_WireSplitter          aWSp(myAllocator);
-  //
+
   Message_ProgressScope aMainScope(theRange, "Making wires", 10);
-  //
-  // 1.
+
   myLoops.Clear();
   aWES.SetFace(myFace);
-  //
+
   aIt.Initialize(myShapes);
   for (; aIt.More(); aIt.Next())
   {
@@ -246,7 +223,7 @@ void BOPAlgo_BuilderFace::PerformLoops(const Message_ProgressRange& theRange)
       aWES.AddStartElement(aE);
     }
   }
-  //
+
   aWSp.SetWES(aWES);
   aWSp.SetRunParallel(myRunParallel);
   aWSp.SetContext(myContext);
@@ -255,7 +232,7 @@ void BOPAlgo_BuilderFace::PerformLoops(const Message_ProgressRange& theRange)
   {
     return;
   }
-  //
+
   const NCollection_List<TopoDS_Shape>& aLW = aWES.Shapes();
   aIt.Initialize(aLW);
   for (; aIt.More(); aIt.Next())
@@ -263,10 +240,9 @@ void BOPAlgo_BuilderFace::PerformLoops(const Message_ProgressRange& theRange)
     const TopoDS_Shape& aW = aIt.Value();
     myLoops.Append(aW);
   }
-  // Post Treatment
+
   NCollection_Map<TopoDS_Shape> aMEP;
-  //
-  // a. collect all edges that are in loops
+
   aIt.Initialize(myLoops);
   for (; aIt.More(); aIt.Next())
   {
@@ -282,16 +258,14 @@ void BOPAlgo_BuilderFace::PerformLoops(const Message_ProgressRange& theRange)
   {
     return;
   }
-  //
-  // b. collect all edges that are to avoid
+
   aNbEA = myShapesToAvoid.Extent();
   for (i = 1; i <= aNbEA; ++i)
   {
     const TopoDS_Shape& aE = myShapesToAvoid(i);
     aMEP.Add(aE);
   }
-  //
-  // c. add all edges that are not processed to myShapesToAvoid
+
   aIt.Initialize(myShapes);
   for (; aIt.More(); aIt.Next())
   {
@@ -301,21 +275,21 @@ void BOPAlgo_BuilderFace::PerformLoops(const Message_ProgressRange& theRange)
       myShapesToAvoid.Add(aE);
     }
   }
-  //
+
   if (UserBreak(aMainScope))
   {
     return;
   }
-  // 2. Internal Wires
+
   myLoopsInternal.Clear();
-  //
+
   aNbEA = myShapesToAvoid.Extent();
   for (i = 1; i <= aNbEA; ++i)
   {
     const TopoDS_Shape& aEE = myShapesToAvoid(i);
     TopExp::MapShapesAndAncestors(aEE, TopAbs_VERTEX, TopAbs_EDGE, aVEMap);
   }
-  //
+
   bFlag = true;
   for (i = 1; (i <= aNbEA) && bFlag; ++i)
   {
@@ -324,21 +298,21 @@ void BOPAlgo_BuilderFace::PerformLoops(const Message_ProgressRange& theRange)
     {
       continue;
     }
-    //
+
     if (UserBreak(aMainScope))
     {
       return;
     }
-    // make new wire
+
     TopoDS_Wire aW;
     aBB.MakeWire(aW);
     aBB.Add(aW, aEE);
-    //
+
     aItW.Initialize(aW);
     for (; aItW.More() && bFlag; aItW.Next())
     {
       const TopoDS_Edge& aE = (*(TopoDS_Edge*)(&aItW.Value()));
-      //
+
       TopoDS_Iterator aItE(aE);
       for (; aItE.More() && bFlag; aItE.Next())
       {
@@ -356,30 +330,27 @@ void BOPAlgo_BuilderFace::PerformLoops(const Message_ProgressRange& theRange)
               bFlag = !bFlag;
             }
           }
-        } // for (; aIt.More(); aIt.Next()) {
-      } // for (; aItE.More(); aItE.Next()) {
-    } // for (; aItW.More(); aItW.Next()) {
+        }
+      }
+    }
     aW.Closed(BRep_Tool::IsClosed(aW));
     myLoopsInternal.Append(aW);
-  } // for (i = 1; (i <= aNbEA) && bFlag; ++i) {
+  }
 }
-
-//=================================================================================================
 
 void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
 {
   myAreas.Clear();
   BRep_Builder aBB;
-  // Location of the myFace
+
   TopLoc_Location aLoc;
-  // Get surface from myFace
+
   const occ::handle<Geom_Surface>& aS = BRep_Tool::Surface(myFace, aLoc);
-  // Get tolerance of myFace
+
   double aTol = BRep_Tool::Tolerance(myFace);
 
   Message_ProgressScope aMainScope(theRange, nullptr, 10);
 
-  // Check if there are no loops at all
   if (myLoops.IsEmpty())
   {
     if (myContext->IsInfiniteFace(myFace))
@@ -393,16 +364,12 @@ void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
     return;
   }
 
-  // The new faces
   NCollection_List<TopoDS_Shape> aNewFaces;
-  // The hole faces which has to be classified relatively new faces
+
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aHoleFaces;
-  // Map of the edges of the hole faces for quick check of the growths.
-  // If the analyzed wire contains any of the edges from the hole faces
-  // it is considered as growth.
+
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aMHE;
 
-  // Analyze the new wires - classify them to be the holes and growths
   Message_ProgressScope aPSClass(aMainScope.Next(5), "Making faces", myLoops.Size());
   NCollection_List<TopoDS_Shape>::Iterator aItLL(myLoops);
   for (; aItLL.More(); aItLL.Next(), aPSClass.Next())
@@ -421,12 +388,11 @@ void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
     bool bIsGrowth = IsGrowthWire(aWire, aMHE);
     if (!bIsGrowth)
     {
-      // Fast check did not give the result, run classification
+
       IntTools_FClass2d& aClsf = myContext->FClass2d(aFace);
       bIsGrowth                = !aClsf.IsHole();
     }
 
-    // Save the face
     if (bIsGrowth)
     {
       aNewFaces.Append(aFace);
@@ -440,33 +406,27 @@ void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
 
   if (aHoleFaces.IsEmpty())
   {
-    // No holes, stop the analysis
+
     myAreas.Append(aNewFaces);
     return;
   }
 
-  // Classify holes relatively faces
-
-  // Prepare tree with the boxes of the hole faces
   BOPTools_Box2dTree aBoxTree;
   int                i, aNbH = aHoleFaces.Extent();
   aBoxTree.SetSize(aNbH);
   for (i = 1; i <= aNbH; ++i)
   {
     const TopoDS_Face& aHFace = TopoDS::Face(aHoleFaces(i));
-    //
+
     Bnd_Box2d aBox;
     BRepTools::AddUVBounds(aHFace, aBox);
     aBoxTree.Add(i, Bnd_Tools::Bnd2BVH(aBox));
   }
 
-  // Build BVH
   aBoxTree.Build();
 
-  // Find outer growth face that is most close to each hole face
   NCollection_IndexedDataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> aHoleFaceMap;
 
-  // Selector
   BOPTools_Box2dTreeSelector aSelector;
   aSelector.SetBVHSet(&aBoxTree);
 
@@ -480,7 +440,6 @@ void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
     }
     const TopoDS_Face& aFace = TopoDS::Face(aItLS.Value());
 
-    // Build box
     Bnd_Box2d aBox;
     BRepTools::AddUVBounds(aFace, aBox);
 
@@ -494,11 +453,10 @@ void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
     {
       int                 k     = aItLI.Value();
       const TopoDS_Shape& aHole = aHoleFaces(k);
-      // Check if it is inside
+
       if (!IsInside(aHole, aFace, myContext))
         continue;
 
-      // Save the relation
       TopoDS_Shape* pFaceWas = aHoleFaceMap.ChangeSeek(aHole);
       if (pFaceWas)
       {
@@ -514,7 +472,6 @@ void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
     }
   }
 
-  // Make the back map from faces to holes
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     aFaceHolesMap;
 
@@ -523,14 +480,13 @@ void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
   {
     const TopoDS_Shape& aHole = aHoleFaceMap.FindKey(i);
     const TopoDS_Shape& aFace = aHoleFaceMap(i);
-    //
+
     NCollection_List<TopoDS_Shape>* pLHoles = aFaceHolesMap.ChangeSeek(aFace);
     if (!pLHoles)
       pLHoles = &aFaceHolesMap(aFaceHolesMap.Add(aFace, NCollection_List<TopoDS_Shape>()));
     pLHoles->Append(aHole);
   }
 
-  // Add unused holes to the original face
   if (aHoleFaces.Extent() != aHoleFaceMap.Extent())
   {
     Bnd_Box aBoxF;
@@ -549,12 +505,11 @@ void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
         if (!aHoleFaceMap.Contains(aHole))
           anUnUsedHoles.Append(aHole);
       }
-      // Save it
+
       aNewFaces.Append(aFace);
     }
   }
 
-  // Add Holes to Faces and add them to myAreas
   Message_ProgressScope aPSU(aMainScope.Next(), nullptr, aNewFaces.Size());
   aItLS.Initialize(aNewFaces);
   for (; aItLS.More(); aItLS.Next(), aPSU.Next())
@@ -568,48 +523,39 @@ void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
     const NCollection_List<TopoDS_Shape>* pLHoles = aFaceHolesMap.Seek(aFace);
     if (pLHoles)
     {
-      // update faces with the holes
+
       NCollection_List<TopoDS_Shape>::Iterator aItLH(*pLHoles);
       for (; aItLH.More(); aItLH.Next())
       {
         const TopoDS_Shape& aFHole = aItLH.Value();
-        // The hole face contains only one wire
+
         TopoDS_Iterator aItW(aFHole);
         aBB.Add(aFace, aItW.Value());
       }
 
-      // update classifier
       myContext->FClass2d(aFace).Init(aFace, aTol);
     }
 
-    // The face is just a draft that does not contain any internal shapes
     myAreas.Append(aFace);
   }
 }
 
-//=================================================================================================
-
 void BOPAlgo_BuilderFace::PerformInternalShapes(const Message_ProgressRange& theRange)
 {
   if (myAvoidInternalShapes)
-    // User-defined option to avoid internal edges
-    // in the result is in force.
+
     return;
 
   if (myLoopsInternal.IsEmpty())
-    // No edges left for classification
+
     return;
 
-  // Prepare tree with the boxes of the edges to classify
   BOPTools_Box2dTree aBoxTree;
 
-  // Map of edges to classify
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> anEdgesMap;
 
-  // Main progress scope
   Message_ProgressScope aMainScope(theRange, "Adding internal shapes", 3);
 
-  // Fill the tree and the map
   NCollection_List<TopoDS_Shape>::Iterator itLE(myLoopsInternal);
   for (; itLE.More(); itLE.Next())
   {
@@ -625,22 +571,18 @@ void BOPAlgo_BuilderFace::PerformInternalShapes(const Message_ProgressRange& the
       {
         Bnd_Box2d aBoxE;
         BRepTools::AddUVBounds(myFace, aE, aBoxE);
-        // Make sure the index of edge in the map and
-        // of the box in the tree is the same
+
         aBoxTree.Add(anEdgesMap.Add(aE), Bnd_Tools::Bnd2BVH(aBoxE));
       }
     }
   }
 
-  // Build BVH
   aBoxTree.Build();
 
   aMainScope.Next();
 
-  // Fence map
   NCollection_Map<int> aMEDone;
 
-  // Classify edges relatively faces
   Message_ProgressScope                    aPSClass(aMainScope.Next(), nullptr, myAreas.Size());
   NCollection_List<TopoDS_Shape>::Iterator itLF(myAreas);
   for (; itLF.More(); itLF.Next(), aPSClass.Next())
@@ -651,18 +593,15 @@ void BOPAlgo_BuilderFace::PerformInternalShapes(const Message_ProgressRange& the
     }
     TopoDS_Face& aF = *(TopoDS_Face*)&itLF.Value();
 
-    // Build box
     Bnd_Box2d aBoxF;
     BRepTools::AddUVBounds(aF, aBoxF);
 
-    // Select edges for the classification
     BOPTools_Box2dTreeSelector aSelector;
     aSelector.SetBVHSet(&aBoxTree);
     aSelector.SetBox(Bnd_Tools::Bnd2BVH(aBoxF));
     if (!aSelector.Select())
       continue;
 
-    // Collect edges inside the face
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> anEdgesInside;
 
     const NCollection_List<int>&    aLI = aSelector.Indices();
@@ -684,11 +623,9 @@ void BOPAlgo_BuilderFace::PerformInternalShapes(const Message_ProgressRange& the
     if (anEdgesInside.IsEmpty())
       continue;
 
-    // Make internal wires
     NCollection_List<TopoDS_Shape> aLSI;
     MakeInternalWires(anEdgesInside, aLSI);
 
-    // Add wires to a face
     NCollection_List<TopoDS_Shape>::Iterator itLSI(aLSI);
     for (; itLSI.More(); itLSI.Next())
     {
@@ -696,13 +633,11 @@ void BOPAlgo_BuilderFace::PerformInternalShapes(const Message_ProgressRange& the
       BRep_Builder().Add(aF, aWI);
     }
 
-    // Condition of early exit
     if (aMEDone.Extent() == anEdgesMap.Extent())
-      // All edges are classified and added into the faces
+
       return;
   }
 
-  // Some edges are left unclassified - warn user about them
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> anEdgesUnUsed;
   for (int i = 1; i <= anEdgesMap.Extent(); ++i)
   {
@@ -710,11 +645,9 @@ void BOPAlgo_BuilderFace::PerformInternalShapes(const Message_ProgressRange& the
       anEdgesUnUsed.Add(anEdgesMap(i));
   }
 
-  // Make internal wires
   NCollection_List<TopoDS_Shape> aLSI;
   MakeInternalWires(anEdgesUnUsed, aLSI);
 
-  // Make compound
   TopoDS_Compound aWShape;
   BRep_Builder().MakeCompound(aWShape);
   BRep_Builder().Add(aWShape, myFace);
@@ -729,11 +662,8 @@ void BOPAlgo_BuilderFace::PerformInternalShapes(const Message_ProgressRange& the
     BRep_Builder().Add(aWShape, aCE);
   }
 
-  // Add warning
   AddWarning(new BOPAlgo_AlertFaceBuilderUnusedEdges(aWShape));
 }
-
-//=================================================================================================
 
 void MakeInternalWires(const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theME,
                        NCollection_List<TopoDS_Shape>& theWires)
@@ -744,14 +674,14 @@ void MakeInternalWires(const NCollection_IndexedMap<TopoDS_Shape, TopTools_Shape
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
                aMVE;
   BRep_Builder aBB;
-  //
+
   aNbE = theME.Extent();
   for (i = 1; i <= aNbE; ++i)
   {
     const TopoDS_Shape& aE = theME(i);
     TopExp::MapShapesAndAncestors(aE, TopAbs_VERTEX, TopAbs_EDGE, aMVE);
   }
-  //
+
   for (i = 1; i <= aNbE; ++i)
   {
     TopoDS_Shape aEE = theME(i);
@@ -759,18 +689,17 @@ void MakeInternalWires(const NCollection_IndexedMap<TopoDS_Shape, TopTools_Shape
     {
       continue;
     }
-    //
-    // make a new shell
+
     TopoDS_Wire aW;
     aBB.MakeWire(aW);
     aEE.Orientation(TopAbs_INTERNAL);
     aBB.Add(aW, aEE);
-    //
+
     TopoDS_Iterator aItAdded(aW);
     for (; aItAdded.More(); aItAdded.Next())
     {
       const TopoDS_Shape& aE = aItAdded.Value();
-      //
+
       TopExp_Explorer aExp(aE, TopAbs_VERTEX);
       for (; aExp.More(); aExp.Next())
       {
@@ -793,57 +722,44 @@ void MakeInternalWires(const NCollection_IndexedMap<TopoDS_Shape, TopTools_Shape
   }
 }
 
-//=================================================================================================
-
 bool IsInside(const TopoDS_Shape&            theWire,
               const TopoDS_Shape&            theF,
               occ::handle<IntTools_Context>& theContext)
 {
-  // Check if the wire is located inside the face:
-  // take unique point from the wire and classify it relatively the face
 
-  // Avoid edges of the face
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aFaceEdgesMap;
   TopExp::MapShapes(theF, TopAbs_EDGE, aFaceEdgesMap);
 
-  // Get classification tool from the context
   const TopoDS_Face& aF          = TopoDS::Face(theF);
   IntTools_FClass2d& aClassifier = theContext->FClass2d(aF);
 
   bool isInside = false;
 
-  // Iterate on wire edges until first classification is performed
   TopExp_Explorer anExp(theWire, TopAbs_EDGE);
   for (; anExp.More(); anExp.Next())
   {
     const TopoDS_Edge& aE = TopoDS::Edge(anExp.Current());
     if (BRep_Tool::Degenerated(aE))
-      // Avoid checking degenerated edges.
+
       continue;
 
     if (aFaceEdgesMap.Contains(aE))
-      // Face contains the edge from the wire, thus the wire cannot be
-      // inside that face.
+
       return isInside;
 
-    // Get 2d curve of the edge on the face
     double                           aT1, aT2;
     const occ::handle<Geom2d_Curve>& aC2D = BRep_Tool::CurveOnSurface(aE, aF, aT1, aT2);
     if (aC2D.IsNull())
       continue;
 
-    // Get middle point on the curve
     gp_Pnt2d aP2D = aC2D->Value((aT1 + aT2) / 2.);
 
-    // Classify the point
     TopAbs_State aState = aClassifier.Perform(aP2D);
     isInside            = (aState == TopAbs_IN);
     break;
   }
   return isInside;
 }
-
-//=================================================================================================
 
 bool IsGrowthWire(const TopoDS_Shape&                                                  theWire,
                   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMHE)

@@ -1,14 +1,10 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_PlanarCurvePair.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_PlanarCurvePair, StepKinematics_HighOrderKinematicPair)
 
-//=================================================================================================
-
 StepKinematics_PlanarCurvePair::StepKinematics_PlanarCurvePair() = default;
-
-//=================================================================================================
 
 void StepKinematics_PlanarCurvePair::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -37,42 +33,30 @@ void StepKinematics_PlanarCurvePair::Init(
   myOrientation = theOrientation;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_Curve> StepKinematics_PlanarCurvePair::Curve1() const
 {
   return myCurve1;
 }
-
-//=================================================================================================
 
 void StepKinematics_PlanarCurvePair::SetCurve1(const occ::handle<StepGeom_Curve>& theCurve1)
 {
   myCurve1 = theCurve1;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_Curve> StepKinematics_PlanarCurvePair::Curve2() const
 {
   return myCurve2;
 }
-
-//=================================================================================================
 
 void StepKinematics_PlanarCurvePair::SetCurve2(const occ::handle<StepGeom_Curve>& theCurve2)
 {
   myCurve2 = theCurve2;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PlanarCurvePair::Orientation() const
 {
   return myOrientation;
 }
-
-//=================================================================================================
 
 void StepKinematics_PlanarCurvePair::SetOrientation(const bool theOrientation)
 {

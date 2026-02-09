@@ -9,9 +9,6 @@ namespace RWStepBasic_RWSource
   static constexpr char sNotKnown[] = ".NOT_KNOWN.";
   static constexpr char sMade[]     = ".MADE.";
 
-  //! Convert StepBasic_Source to string
-  //! @param theSourceEnum The StepBasic_Source value to convert
-  //! @return The corresponding string representation or nullptr if not found
   inline const char* ConvertToString(const StepBasic_Source theSourceEnum)
   {
     switch (theSourceEnum)
@@ -26,10 +23,6 @@ namespace RWStepBasic_RWSource
     return nullptr;
   }
 
-  //! Convert string to StepBasic_Source
-  //! @param theSourceStr The string to convert
-  //! @param theResultEnum The corresponding StepBasic_Source value
-  //! @return true if the conversion was successful, false otherwise
   inline bool ConvertToEnum(const char* theSourceStr, StepBasic_Source& theResultEnum)
   {
     if (IsEqual(theSourceStr, sBought))

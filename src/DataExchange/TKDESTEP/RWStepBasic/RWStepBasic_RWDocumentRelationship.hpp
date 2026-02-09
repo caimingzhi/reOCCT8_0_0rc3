@@ -11,7 +11,6 @@ class StepBasic_DocumentRelationship;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for DocumentRelationship
 class RWStepBasic_RWDocumentRelationship
 {
 public:

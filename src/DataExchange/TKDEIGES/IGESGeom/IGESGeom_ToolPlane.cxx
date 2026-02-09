@@ -20,42 +20,25 @@
 
 #include <cstdio>
 
-// MGE 30/07/98
-//=================================================================================================
-
 IGESGeom_ToolPlane::IGESGeom_ToolPlane() = default;
-
-//=================================================================================================
 
 void IGESGeom_ToolPlane::ReadOwnParams(const occ::handle<IGESGeom_Plane>&          ent,
                                        const occ::handle<IGESData_IGESReaderData>& IR,
                                        IGESData_ParamReader&                       PR) const
 {
-  // MGE 30/07/98
 
   double                           A, B = 0., C = 0., D = 0., aSize = 0.;
   occ::handle<IGESData_IGESEntity> aCurve;
   gp_XYZ                           attach(0., 0., 0.);
   IGESData_Status                  aStatus;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  /*  PR.ReadReal(PR.Current(), Msg135, A); //szv#4:S4163:12Mar99 `st=` not needed
-    PR.ReadReal(PR.Current(), Msg135, B); //szv#4:S4163:12Mar99 `st=` not needed
-    PR.ReadReal(PR.Current(), Msg135, C); //szv#4:S4163:12Mar99 `st=` not needed
-    PR.ReadReal(PR.Current(), Msg135, D); //szv#4:S4163:12Mar99 `st=` not needed
-  */
   if ((!PR.ReadReal(PR.Current(), A)) || (!PR.ReadReal(PR.Current(), B))
       || (!PR.ReadReal(PR.Current(), C)) || (!PR.ReadReal(PR.Current(), D)))
   {
     Message_Msg Msg135("XSTEP_135");
     PR.SendFail(Msg135);
   }
-  /*
-    st = PR.ReadReal(PR.Current(), "Coefficient Of Plane", A);
-    st = PR.ReadReal(PR.Current(), "Coefficient Of Plane", B);
-    st = PR.ReadReal(PR.Current(), "Coefficient Of Plane", C);
-    st = PR.ReadReal(PR.Current(), "Coefficient Of Plane", D);
-  */
+
   if (PR.IsParamDefined(PR.CurrentNumber()))
   {
     if (!PR.ReadEntity(IR, PR.Current(), aStatus, aCurve, true))
@@ -82,34 +65,24 @@ void IGESGeom_ToolPlane::ReadOwnParams(const occ::handle<IGESGeom_Plane>&       
         }
       }
     }
-  } // szv#4:S4163:12Mar99 `st=` not needed
-    // st = PR.ReadEntity(IR, PR.Current(), "Bounding Curve", aCurve,true);
-  //  in principle required if FormNumber != 0 ... see OwnCheck (Load accepts)
+  }
 
   if (PR.IsParamDefined(PR.CurrentNumber()))
   {
     Message_Msg Msg139("XSTEP_139");
 
-    PR.ReadXYZ(PR.CurrentList(1, 3), Msg139, attach); // szv#4:S4163:12Mar99 `st=` not needed
-    // st = PR.ReadXYZ(PR.CurrentList(1, 3), "Coord of DisplaySymbol", attach);
+    PR.ReadXYZ(PR.CurrentList(1, 3), Msg139, attach);
 
     if (!PR.ReadReal(PR.Current(), aSize))
     {
       Message_Msg Msg138("XSTEP_138");
       PR.SendFail(Msg138);
-    } // szv#4:S4163:12Mar99 `st=` not needed
-    // st = PR.ReadReal(PR.Current(), "DisplaySymbol Size", aSize);
-  } // else {
-  /* for (int i = 1; i <= 4; i ++) st = PR.DefinedElseSkip();
-   PR.AddWarning("Display Symbol not defined at all");
-  */
-  // }
+    }
+  }
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(A, B, C, D, aCurve, attach, aSize);
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolPlane::WriteOwnParams(const occ::handle<IGESGeom_Plane>& ent,
                                         IGESData_IGESWriter&               IW) const
@@ -129,15 +102,11 @@ void IGESGeom_ToolPlane::WriteOwnParams(const occ::handle<IGESGeom_Plane>& ent,
   IW.Send(ent->SymbolSize());
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolPlane::OwnShared(const occ::handle<IGESGeom_Plane>& ent,
                                    Interface_EntityIterator&          iter) const
 {
   iter.GetOneItem(ent->BoundingCurve());
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolPlane::OwnCopy(const occ::handle<IGESGeom_Plane>& another,
                                  const occ::handle<IGESGeom_Plane>& ent,
@@ -152,8 +121,6 @@ void IGESGeom_ToolPlane::OwnCopy(const occ::handle<IGESGeom_Plane>& another,
   ent->SetFormNumber(another->FormNumber());
 }
 
-//=================================================================================================
-
 IGESData_DirChecker IGESGeom_ToolPlane::DirChecker(const occ::handle<IGESGeom_Plane>& ent) const
 {
   IGESData_DirChecker DC(108, -1, 1);
@@ -161,7 +128,6 @@ IGESData_DirChecker IGESGeom_ToolPlane::DirChecker(const occ::handle<IGESGeom_Pl
   if (ent->FormNumber() != 0)
   {
     DC.LineFont(IGESData_DefAny);
-    //      DC.LineWeight(IGESData_DefValue);
   }
   else
   {
@@ -173,29 +139,17 @@ IGESData_DirChecker IGESGeom_ToolPlane::DirChecker(const occ::handle<IGESGeom_Pl
   return DC;
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolPlane::OwnCheck(const occ::handle<IGESGeom_Plane>& ent,
                                   const Interface_ShareTool&,
                                   occ::handle<Interface_Check>& ach) const
 {
-  // MGE 30/07/98
-  // Building of messages
-  //========================================
-  // Message_Msg Msg71("XSTEP_71");
-  // Message_Msg Msg137("XSTEP_137");
-  //========================================
 
-  // szv#4:S4163:12Mar99 not needed
-  // double eps = 1.E-06;  // ?? Precision
-  // double A,B,C,D;
-  // ent->Equation(A,B,C,D);
   if (ent->FormNumber() < -1 || ent->FormNumber() > 1)
   {
     Message_Msg Msg71("XSTEP_71");
     ach->SendFail(Msg71);
   }
-  // szv#4:S4163:12Mar99 `!=` wrong operation on bool
+
   bool unbounded1 = ent->BoundingCurve().IsNull();
   bool unbounded2 = (ent->FormNumber() == 0);
   if ((unbounded1 && !unbounded2) || (!unbounded1 && unbounded2))
@@ -203,26 +157,10 @@ void IGESGeom_ToolPlane::OwnCheck(const occ::handle<IGESGeom_Plane>& ent,
     Message_Msg Msg137("XSTEP_137");
     ach->SendFail(Msg137);
   }
-  // These messages are transferred in the translation procedure
-  //  if ( (A*A + B*B + C*C) < eps)    //  not null !
-  //    ach.SendFail("Incorrect Coefficients for the Plane");
+
   if (!ent->HasBoundingCurve())
     return;
-  //  Symbol : check if Size defined > 0 (otherwise, has no meaning)
-  /*  double ec = 0.;
-    if (ent->SymbolSize() > 0.) ec = A*ent->SymbolAttach().X() + B*ent->SymbolAttach().Y() +
-        C * ent->SymbolAttach().Z() - D;
-    if ( ec > eps || ec < -eps) {
-      char mess[80];
-      Sprintf(mess,"Symbol Attach not in the Plane, gap/equation over %f",
-          Interface_MSG::Intervalled(ec));
-      ach.SendWarning(mess,"Symbol Attach not in the Plane");
-
-    }
-  */
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolPlane::OwnDump(const occ::handle<IGESGeom_Plane>& ent,
                                  const IGESData_IGESDumper&         dumper,

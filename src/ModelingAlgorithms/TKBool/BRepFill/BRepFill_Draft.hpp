@@ -42,13 +42,8 @@ public:
 
   Standard_EXPORT bool IsDone() const;
 
-  //! Returns the draft surface
-  //! To have the complete shape
-  //! you have to use the Shape() methode.
   Standard_EXPORT TopoDS_Shell Shell() const;
 
-  //! Returns the list of shapes generated from the
-  //! shape <S>.
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& Generated(const TopoDS_Shape& S);
 
   Standard_EXPORT TopoDS_Shape Shape() const;

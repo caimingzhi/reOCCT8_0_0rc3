@@ -11,49 +11,22 @@ namespace MathSys
 {
   using namespace MathUtils;
 
-  //! Configuration for Levenberg-Marquardt algorithm.
-  //! Extends base Config with damping parameter settings.
   struct LMConfig : Config
   {
-    double LambdaInit     = 1.0e-3;  //!< Initial damping parameter
-    double LambdaIncrease = 10.0;    //!< Factor to increase lambda on rejected step
-    double LambdaDecrease = 0.1;     //!< Factor to decrease lambda on accepted step
-    double LambdaMax      = 1.0e10;  //!< Maximum lambda value before failing
-    double LambdaMin      = 1.0e-12; //!< Minimum lambda value
+    double LambdaInit     = 1.0e-3;
+    double LambdaIncrease = 10.0;
+    double LambdaDecrease = 0.1;
+    double LambdaMax      = 1.0e10;
+    double LambdaMin      = 1.0e-12;
 
-    //! Default constructor.
     LMConfig() = default;
 
-    //! Constructor with custom tolerance.
-    //! @param theTolerance convergence tolerance
-    //! @param theMaxIter maximum iterations
     explicit LMConfig(double theTolerance, int theMaxIter = 100)
         : Config(theTolerance, theMaxIter)
     {
     }
   };
 
-  //! Levenberg-Marquardt algorithm for nonlinear least squares.
-  //!
-  //! Minimizes ||F(X)||^2 where F is a vector function of vector X.
-  //! Combines Gauss-Newton method (fast near minimum) with gradient
-  //! descent (robust far from minimum) using adaptive damping.
-  //!
-  //! Algorithm:
-  //! 1. Compute F(X) and Jacobian J at current point
-  //! 2. Solve (J^T*J + lambda*I) * dX = -J^T*F for correction dX
-  //! 3. If ||F(X+dX)||^2 < ||F(X)||^2: accept step, decrease lambda
-  //! 4. Otherwise: reject step, increase lambda
-  //! 5. Repeat until convergence
-  //!
-  //! @tparam FuncSetType type with NbVariables(), NbEquations(),
-  //!         Value(const math_Vector& X, math_Vector& F) and
-  //!         Derivatives(const math_Vector& X, math_Matrix& J) or
-  //!         Values(const math_Vector& X, math_Vector& F, math_Matrix& J)
-  //! @param theFunc function set providing residuals and Jacobian
-  //! @param theStart initial guess vector
-  //! @param theConfig Levenberg-Marquardt configuration
-  //! @return result containing solution vector if converged
   template <typename FuncSetType>
   VectorResult LevenbergMarquardt(FuncSetType&       theFunc,
                                   const math_Vector& theStart,
@@ -64,7 +37,6 @@ namespace MathSys
     const int aNbVars = theFunc.NbVariables();
     const int aNbEqs  = theFunc.NbEquations();
 
-    // Check dimensions
     if (theStart.Length() != aNbVars)
     {
       aResult.Status = Status::InvalidInput;
@@ -74,7 +46,6 @@ namespace MathSys
     const int aVarLower = theStart.Lower();
     const int aVarUpper = theStart.Upper();
 
-    // Working vectors and matrices
     math_Vector aSol = theStart;
     math_Vector aF(1, aNbEqs);
     math_Vector aFNew(1, aNbEqs);
@@ -86,26 +57,22 @@ namespace MathSys
 
     double aLambda = theConfig.LambdaInit;
 
-    // Evaluate initial residual
     if (!theFunc.Value(aSol, aF))
     {
       aResult.Status = Status::NumericalError;
       return aResult;
     }
 
-    // Compute initial ||F||^2
     double aChi2 = 0.0;
     for (int i = 1; i <= aNbEqs; ++i)
     {
       aChi2 += aF(i) * aF(i);
     }
 
-    // Main iteration loop
     for (int anIter = 0; anIter < theConfig.MaxIterations; ++anIter)
     {
       aResult.NbIterations = anIter + 1;
 
-      // Check F convergence
       bool aFConverged = true;
       for (int i = 1; i <= aNbEqs; ++i)
       {
@@ -124,14 +91,12 @@ namespace MathSys
         return aResult;
       }
 
-      // Compute Jacobian
       if (!theFunc.Derivatives(aSol, aJac))
       {
         aResult.Status = Status::NumericalError;
         return aResult;
       }
 
-      // Compute J^T * J
       for (int i = aVarLower; i <= aVarUpper; ++i)
       {
         for (int j = aVarLower; j <= aVarUpper; ++j)
@@ -145,7 +110,6 @@ namespace MathSys
         }
       }
 
-      // Compute J^T * F (negative gradient of chi^2)
       for (int i = aVarLower; i <= aVarUpper; ++i)
       {
         double aSum = 0.0;
@@ -154,10 +118,9 @@ namespace MathSys
           aSum += aJac(k, i) * aF(k);
         }
         aJtF(i)  = aSum;
-        aGrad(i) = 2.0 * aSum; // Gradient of chi^2 = 2 * J^T * F
+        aGrad(i) = 2.0 * aSum;
       }
 
-      // Check gradient convergence
       double aGradNorm = 0.0;
       for (int i = aVarLower; i <= aVarUpper; ++i)
       {
@@ -174,18 +137,16 @@ namespace MathSys
         return aResult;
       }
 
-      // Inner loop: try to find an acceptable step
       bool aStepAccepted = false;
       for (int aLamIter = 0; aLamIter < 20 && !aStepAccepted; ++aLamIter)
       {
-        // Add damping: J^T*J + lambda*I
+
         math_Matrix aDamped = aJtJ;
         for (int i = aVarLower; i <= aVarUpper; ++i)
         {
           aDamped(i, i) += aLambda;
         }
 
-        // Solve (J^T*J + lambda*I) * dX = -J^T*F
         math_Vector aNegJtF(aVarLower, aVarUpper);
         for (int i = aVarLower; i <= aVarUpper; ++i)
         {
@@ -195,7 +156,7 @@ namespace MathSys
         auto aLinResult = MathLin::Solve(aDamped, aNegJtF);
         if (!aLinResult.IsDone())
         {
-          // Matrix is singular, increase damping
+
           aLambda *= theConfig.LambdaIncrease;
           if (aLambda > theConfig.LambdaMax)
           {
@@ -209,17 +170,15 @@ namespace MathSys
 
         aDeltaX = *aLinResult.Solution;
 
-        // Compute new solution
         math_Vector aSolNew(aVarLower, aVarUpper);
         for (int i = aVarLower; i <= aVarUpper; ++i)
         {
           aSolNew(i) = aSol(i) + aDeltaX(i);
         }
 
-        // Evaluate new residual
         if (!theFunc.Value(aSolNew, aFNew))
         {
-          // Function evaluation failed, increase damping
+
           aLambda *= theConfig.LambdaIncrease;
           if (aLambda > theConfig.LambdaMax)
           {
@@ -231,17 +190,15 @@ namespace MathSys
           continue;
         }
 
-        // Compute new ||F||^2
         double aChi2New = 0.0;
         for (int i = 1; i <= aNbEqs; ++i)
         {
           aChi2New += aFNew(i) * aFNew(i);
         }
 
-        // Accept or reject step
         if (aChi2New < aChi2)
         {
-          // Step accepted
+
           aSol  = aSolNew;
           aF    = aFNew;
           aChi2 = aChi2New;
@@ -252,7 +209,6 @@ namespace MathSys
           }
           aStepAccepted = true;
 
-          // Check X convergence
           bool aXConverged = true;
           for (int i = aVarLower; i <= aVarUpper; ++i)
           {
@@ -273,7 +229,7 @@ namespace MathSys
         }
         else
         {
-          // Step rejected, increase damping
+
           aLambda *= theConfig.LambdaIncrease;
           if (aLambda > theConfig.LambdaMax)
           {
@@ -287,7 +243,7 @@ namespace MathSys
 
       if (!aStepAccepted)
       {
-        // Failed to find acceptable step
+
         aResult.Status   = Status::NotConverged;
         aResult.Solution = aSol;
         aResult.Value    = aChi2;
@@ -295,24 +251,12 @@ namespace MathSys
       }
     }
 
-    // Max iterations reached
     aResult.Status   = Status::MaxIterations;
     aResult.Solution = aSol;
     aResult.Value    = aChi2;
     return aResult;
   }
 
-  //! Levenberg-Marquardt with bounds constraints.
-  //!
-  //! Minimizes ||F(X)||^2 subject to theInfBound <= X <= theSupBound.
-  //! Solution is clamped to bounds after each step.
-  //!
-  //! @param theFunc function set providing residuals and Jacobian
-  //! @param theStart initial guess vector
-  //! @param theInfBound lower bounds for solution
-  //! @param theSupBound upper bounds for solution
-  //! @param theConfig Levenberg-Marquardt configuration
-  //! @return result containing solution vector if converged
   template <typename FuncSetType>
   VectorResult LevenbergMarquardtBounded(FuncSetType&       theFunc,
                                          const math_Vector& theStart,
@@ -325,7 +269,6 @@ namespace MathSys
     const int aNbVars = theFunc.NbVariables();
     const int aNbEqs  = theFunc.NbEquations();
 
-    // Check dimensions
     if (theStart.Length() != aNbVars || theInfBound.Length() != aNbVars
         || theSupBound.Length() != aNbVars)
     {
@@ -336,7 +279,6 @@ namespace MathSys
     const int aVarLower = theStart.Lower();
     const int aVarUpper = theStart.Upper();
 
-    // Working vectors and matrices
     math_Vector aSol = theStart;
     math_Vector aF(1, aNbEqs);
     math_Vector aFNew(1, aNbEqs);
@@ -346,7 +288,6 @@ namespace MathSys
     math_Matrix aJtJ(aVarLower, aVarUpper, aVarLower, aVarUpper);
     math_Vector aJtF(aVarLower, aVarUpper);
 
-    // Clamp initial solution to bounds
     for (int i = aVarLower; i <= aVarUpper; ++i)
     {
       aSol(i) = MathUtils::Clamp(aSol(i), theInfBound(i), theSupBound(i));
@@ -354,26 +295,22 @@ namespace MathSys
 
     double aLambda = theConfig.LambdaInit;
 
-    // Evaluate initial residual
     if (!theFunc.Value(aSol, aF))
     {
       aResult.Status = Status::NumericalError;
       return aResult;
     }
 
-    // Compute initial ||F||^2
     double aChi2 = 0.0;
     for (int i = 1; i <= aNbEqs; ++i)
     {
       aChi2 += aF(i) * aF(i);
     }
 
-    // Main iteration loop
     for (int anIter = 0; anIter < theConfig.MaxIterations; ++anIter)
     {
       aResult.NbIterations = anIter + 1;
 
-      // Check F convergence
       bool aFConverged = true;
       for (int i = 1; i <= aNbEqs; ++i)
       {
@@ -392,14 +329,12 @@ namespace MathSys
         return aResult;
       }
 
-      // Compute Jacobian
       if (!theFunc.Derivatives(aSol, aJac))
       {
         aResult.Status = Status::NumericalError;
         return aResult;
       }
 
-      // Compute J^T * J
       for (int i = aVarLower; i <= aVarUpper; ++i)
       {
         for (int j = aVarLower; j <= aVarUpper; ++j)
@@ -413,7 +348,6 @@ namespace MathSys
         }
       }
 
-      // Compute J^T * F
       for (int i = aVarLower; i <= aVarUpper; ++i)
       {
         double aSum = 0.0;
@@ -425,7 +359,6 @@ namespace MathSys
         aGrad(i) = 2.0 * aSum;
       }
 
-      // Check gradient convergence
       double aGradNorm = 0.0;
       for (int i = aVarLower; i <= aVarUpper; ++i)
       {
@@ -442,18 +375,16 @@ namespace MathSys
         return aResult;
       }
 
-      // Inner loop: try to find an acceptable step
       bool aStepAccepted = false;
       for (int aLamIter = 0; aLamIter < 20 && !aStepAccepted; ++aLamIter)
       {
-        // Add damping
+
         math_Matrix aDamped = aJtJ;
         for (int i = aVarLower; i <= aVarUpper; ++i)
         {
           aDamped(i, i) += aLambda;
         }
 
-        // Solve (J^T*J + lambda*I) * dX = -J^T*F
         math_Vector aNegJtF(aVarLower, aVarUpper);
         for (int i = aVarLower; i <= aVarUpper; ++i)
         {
@@ -476,14 +407,12 @@ namespace MathSys
 
         aDeltaX = *aLinResult.Solution;
 
-        // Compute new solution with bounds clamping
         math_Vector aSolNew(aVarLower, aVarUpper);
         for (int i = aVarLower; i <= aVarUpper; ++i)
         {
           aSolNew(i) = MathUtils::Clamp(aSol(i) + aDeltaX(i), theInfBound(i), theSupBound(i));
         }
 
-        // Evaluate new residual
         if (!theFunc.Value(aSolNew, aFNew))
         {
           aLambda *= theConfig.LambdaIncrease;
@@ -497,14 +426,12 @@ namespace MathSys
           continue;
         }
 
-        // Compute new ||F||^2
         double aChi2New = 0.0;
         for (int i = 1; i <= aNbEqs; ++i)
         {
           aChi2New += aFNew(i) * aFNew(i);
         }
 
-        // Accept or reject step
         if (aChi2New < aChi2)
         {
           aSol  = aSolNew;
@@ -517,7 +444,6 @@ namespace MathSys
           }
           aStepAccepted = true;
 
-          // Check X convergence
           bool aXConverged = true;
           for (int i = aVarLower; i <= aVarUpper; ++i)
           {
@@ -558,7 +484,6 @@ namespace MathSys
       }
     }
 
-    // Max iterations reached
     aResult.Status   = Status::MaxIterations;
     aResult.Solution = aSol;
     aResult.Value    = aChi2;

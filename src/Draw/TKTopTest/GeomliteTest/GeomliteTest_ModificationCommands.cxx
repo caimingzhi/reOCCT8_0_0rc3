@@ -20,8 +20,6 @@
   #include <stdio.h>
 #endif
 
-//=================================================================================================
-
 static int extendcurve(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 4)
@@ -50,8 +48,6 @@ static int extendcurve(Draw_Interpretor& di, int n, const char** a)
   DrawTrSurf::Set(a[1], GB);
   return 0;
 }
-
-//=================================================================================================
 
 static int extendsurf(Draw_Interpretor& di, int n, const char** a)
 {
@@ -93,9 +89,7 @@ static int extendsurf(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
-static int samerange(Draw_Interpretor& /*di*/, int n, const char** a)
+static int samerange(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 6)
     return 1;
@@ -114,12 +108,7 @@ static int samerange(Draw_Interpretor& /*di*/, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : setweight
-// purpose  : Changes a weight of a pole on B-spline curve/surface
-//=======================================================================
-
-static int setweight(Draw_Interpretor& /*di*/, int n, const char** a)
+static int setweight(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4 || n > 5)
   {
@@ -182,8 +171,6 @@ static int setweight(Draw_Interpretor& /*di*/, int n, const char** a)
   Message::SendFail() << a[1] << " is not a B-spline nor a Bezier curve/surface";
   return 1;
 }
-
-//=================================================================================================
 
 void GeomliteTest::ModificationCommands(Draw_Interpretor& theCommands)
 {

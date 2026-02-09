@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_SurfacePairWithRange;
 
-//! Read & Write tool for SurfacePairWithRange
 class RWStepKinematics_RWSurfacePairWithRange
 {
 public:

@@ -10,7 +10,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! Presentation Attribute Driver.
 class BinMDataXtd_PresentationDriver : public BinMDF_ADriver
 {
 

@@ -5,12 +5,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaSecantCoefficientOfLinearThermalExpansion,
                            StepFEA_FeaMaterialPropertyRepresentationItem)
 
-//=================================================================================================
-
 StepFEA_FeaSecantCoefficientOfLinearThermalExpansion::
   StepFEA_FeaSecantCoefficientOfLinearThermalExpansion() = default;
-
-//=================================================================================================
 
 void StepFEA_FeaSecantCoefficientOfLinearThermalExpansion::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentationItem_Name,
@@ -24,15 +20,11 @@ void StepFEA_FeaSecantCoefficientOfLinearThermalExpansion::Init(
   theReferenceTemperature = aReferenceTemperature;
 }
 
-//=================================================================================================
-
 StepFEA_SymmetricTensor23d StepFEA_FeaSecantCoefficientOfLinearThermalExpansion::FeaConstants()
   const
 {
   return theFeaConstants;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaSecantCoefficientOfLinearThermalExpansion::SetFeaConstants(
   const StepFEA_SymmetricTensor23d& aFeaConstants)
@@ -40,14 +32,10 @@ void StepFEA_FeaSecantCoefficientOfLinearThermalExpansion::SetFeaConstants(
   theFeaConstants = aFeaConstants;
 }
 
-//=================================================================================================
-
 double StepFEA_FeaSecantCoefficientOfLinearThermalExpansion::ReferenceTemperature() const
 {
   return theReferenceTemperature;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaSecantCoefficientOfLinearThermalExpansion::SetReferenceTemperature(
   const double aReferenceTemperature)

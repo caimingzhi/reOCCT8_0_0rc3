@@ -145,8 +145,6 @@ static char* getEncodingName(const char* theEncodingName)
   return aResult;
 }
 
-//=================================================================================================
-
 LDOM_XmlWriter::LDOM_XmlWriter(const char* theEncoding)
     : myEncodingName(::getEncodingName(theEncoding)),
       myIndent(0),
@@ -157,8 +155,6 @@ LDOM_XmlWriter::LDOM_XmlWriter(const char* theEncoding)
   ;
 }
 
-//=================================================================================================
-
 LDOM_XmlWriter::~LDOM_XmlWriter()
 {
   delete[] myEncodingName;
@@ -168,8 +164,6 @@ LDOM_XmlWriter::~LDOM_XmlWriter()
     delete[] myABuffer;
   }
 }
-
-//=================================================================================================
 
 void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOM_Document& aDoc)
 {
@@ -185,11 +179,9 @@ void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOM_Document& aD
   Write(theOStream, aDoc.getDocumentElement());
 }
 
-//=================================================================================================
-
 void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOM_Node& theNode)
 {
-  // Get the name and value out for convenience
+
   LDOMString aNodeName  = theNode.getNodeName();
   LDOMString aNodeValue = theNode.getNodeValue();
 
@@ -214,11 +206,9 @@ void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOM_Node& theNod
         anIndentString = &aSpaces[0];
       }
 
-      // Output the element start tag.
       Write(theOStream, anIndentString);
       Write(theOStream, aNodeName.GetString());
 
-      // Output any attributes of this element
       const LDOM_Element& anElemToWrite = (const LDOM_Element&)theNode;
       LDOM_NodeList       aListAtt      = anElemToWrite.GetAttributesList();
       int                 aListInd      = aListAtt.getLength();
@@ -229,11 +219,10 @@ void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOM_Node& theNod
         WriteAttribute(theOStream, aChild);
       }
 
-      //  Test for the presence of children
       LDOM_Node aChild = theNode.getFirstChild();
       if (aChild != nullptr)
       {
-        // There are children. Close start-tag, and output children.
+
         Write(theOStream, chCloseAngle);
         if (aChild.getNodeType() == LDOM_Node::ELEMENT_NODE && myIndent > 0)
         {
@@ -262,7 +251,6 @@ void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOM_Node& theNod
           } while (aChild.getNodeType() == LDOM_Node::ATTRIBUTE_NODE);
         }
 
-        // Done with children.  Output the end tag.
         if (isChildElem)
         {
           Write(theOStream, anIndentString);
@@ -279,8 +267,7 @@ void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOM_Node& theNod
       }
       else
       {
-        //  There were no children. Output the short form close of
-        //  the element start tag, making it an empty-element tag.
+
         Write(theOStream, chForwardSlash);
         Write(theOStream, chCloseAngle);
       }
@@ -313,10 +300,6 @@ void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOM_Node& theNod
   }
 }
 
-//=======================================================================
-// function :
-// purpose  : Stream out an LDOMString
-//=======================================================================
 void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOMBasicString& theString)
 {
   switch (theString.Type())
@@ -331,7 +314,7 @@ void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOMBasicString& 
 
       break;
     }
-    case LDOMBasicString::LDOM_AsciiHashed: // attr names and element tags
+    case LDOMBasicString::LDOM_AsciiHashed:
     case LDOMBasicString::LDOM_AsciiDocClear:
     {
       const char* aStr = theString.GetString();
@@ -368,17 +351,11 @@ void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const LDOMBasicString& 
   }
 }
 
-//=================================================================================================
-
 void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const char theChar)
 {
   theOStream.write(&theChar, sizeof(char));
 }
 
-//=======================================================================
-// function : Write
-// purpose  : Stream out a char *
-//=======================================================================
 void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const char* theString)
 {
   size_t aLength = strlen(theString);
@@ -388,10 +365,6 @@ void LDOM_XmlWriter::Write(Standard_OStream& theOStream, const char* theString)
   }
 }
 
-//=======================================================================
-// function : WriteAttribute()
-// purpose  : Stream out an XML attribute.
-//=======================================================================
 void LDOM_XmlWriter::WriteAttribute(Standard_OStream& theOStream, const LDOM_Node& theAtt)
 {
   const char*      aName     = theAtt.getNodeName().GetString();
@@ -399,7 +372,6 @@ void LDOM_XmlWriter::WriteAttribute(Standard_OStream& theOStream, const LDOM_Nod
 
   int aLength = 0;
 
-  // Integer attribute value
   if (aValueStr.Type() == LDOMBasicString::LDOM_Integer)
   {
     int anIntValue;
@@ -426,7 +398,7 @@ void LDOM_XmlWriter::WriteAttribute(Standard_OStream& theOStream, const LDOM_Nod
             chDoubleQuote);
     aLength = (int)strlen(myABuffer);
   }
-  else // String attribute value
+  else
   {
     char*       encStr;
     const char* aValue = aValueStr.GetString();

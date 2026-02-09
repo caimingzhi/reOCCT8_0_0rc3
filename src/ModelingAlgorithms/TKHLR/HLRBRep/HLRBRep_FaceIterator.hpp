@@ -17,25 +17,18 @@ public:
 
   Standard_EXPORT HLRBRep_FaceIterator();
 
-  //! Begin an exploration of the edges of the face <fd>
   Standard_EXPORT void InitEdge(HLRBRep_FaceData& fd);
 
   bool MoreEdge() const;
 
   Standard_EXPORT void NextEdge();
 
-  //! Returns True if the current edge is the first of a
-  //! wire.
   bool BeginningOfWire() const;
 
-  //! Returns True if the current edge is the last of a
-  //! wire.
   bool EndOfWire() const;
 
-  //! Skip the current wire in the exploration.
   void SkipWire();
 
-  //! Returns the edges of the current wire.
   occ::handle<HLRAlgo_EdgesBlock> Wire() const;
 
   int Edge() const;
@@ -62,28 +55,20 @@ private:
 #include <HLRAlgo_WiresBlock.hpp>
 #include <HLRAlgo_EdgesBlock.hpp>
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceIterator::MoreEdge() const
 {
   return iWire <= nbWires;
 }
-
-//=================================================================================================
 
 inline bool HLRBRep_FaceIterator::BeginningOfWire() const
 {
   return iEdge == 1;
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceIterator::EndOfWire() const
 {
   return iEdge == nbEdges;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_FaceIterator::SkipWire()
 {
@@ -91,49 +76,35 @@ inline void HLRBRep_FaceIterator::SkipWire()
   NextEdge();
 }
 
-//=================================================================================================
-
 inline occ::handle<HLRAlgo_EdgesBlock> HLRBRep_FaceIterator::Wire() const
 {
   return myWires->Wire(iWire);
 }
-
-//=================================================================================================
 
 inline int HLRBRep_FaceIterator::Edge() const
 {
   return myEdges->Edge(iEdge);
 }
 
-//=================================================================================================
-
 inline TopAbs_Orientation HLRBRep_FaceIterator::Orientation() const
 {
   return myEdges->Orientation(iEdge);
 }
-
-//=================================================================================================
 
 inline bool HLRBRep_FaceIterator::OutLine() const
 {
   return myEdges->OutLine(iEdge);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceIterator::Internal() const
 {
   return myEdges->Internal(iEdge);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_FaceIterator::Double() const
 {
   return myEdges->Double(iEdge);
 }
-
-//=================================================================================================
 
 inline bool HLRBRep_FaceIterator::IsoLine() const
 {

@@ -141,7 +141,7 @@ static int GetAllNewShapes(Draw_Interpretor& di, int nb, const char** arg)
     TCollection_AsciiString aName((nb == 4) ? arg[3] : "");
 
     if (arg[2][0] == '0')
-    { // label
+    {
       TDF_Label aLabel;
       if (!QADNaming::Entry(arg, aLabel))
         return 1;
@@ -168,7 +168,7 @@ static int GetAllNewShapes(Draw_Interpretor& di, int nb, const char** arg)
       }
     }
     else
-    { // shape
+    {
       occ::handle<TDF_Data> DF;
       if (!DDF::GetDF(arg[1], DF))
       {
@@ -223,7 +223,7 @@ static int GetAllOldShapes(Draw_Interpretor& di, int nb, const char** arg)
     TCollection_AsciiString aName((nb == 4) ? arg[3] : "");
 
     if (arg[2][0] == '0')
-    { // label
+    {
       TDF_Label aLabel;
       if (!QADNaming::Entry(arg, aLabel))
         return 1;
@@ -250,7 +250,7 @@ static int GetAllOldShapes(Draw_Interpretor& di, int nb, const char** arg)
       }
     }
     else
-    { // shape
+    {
       occ::handle<TDF_Data> DF;
       if (!DDF::GetDF(arg[1], DF))
       {

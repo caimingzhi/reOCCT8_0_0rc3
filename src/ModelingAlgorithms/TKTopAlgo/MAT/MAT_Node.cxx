@@ -4,8 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MAT_Node, Standard_Transient)
 
-//=================================================================================================
-
 MAT_Node::MAT_Node(const int                   GeomIndex,
                    const occ::handle<MAT_Arc>& LinkedArc,
                    const double                Distance)
@@ -16,21 +14,15 @@ MAT_Node::MAT_Node(const int                   GeomIndex,
   aLinkedArc = LinkedArc.get();
 }
 
-//=================================================================================================
-
 int MAT_Node::GeomIndex() const
 {
   return geomIndex;
 }
 
-//=================================================================================================
-
 int MAT_Node::Index() const
 {
   return nodeIndex;
 }
-
-//=================================================================================================
 
 void MAT_Node::LinkedArcs(NCollection_Sequence<occ::handle<MAT_Arc>>& S) const
 {
@@ -51,8 +43,6 @@ void MAT_Node::LinkedArcs(NCollection_Sequence<occ::handle<MAT_Arc>>& S) const
   }
 }
 
-//=================================================================================================
-
 void MAT_Node::NearElts(NCollection_Sequence<occ::handle<MAT_BasicElt>>& S) const
 {
   S.Clear();
@@ -68,11 +58,6 @@ void MAT_Node::NearElts(NCollection_Sequence<occ::handle<MAT_BasicElt>>& S) cons
 
     occ::handle<MAT_Arc> CA   = LA->Neighbour(Me, MAT_Left);
     bool                 Pair = false;
-
-    //---------------------------------------------------------
-    // Recuperation des deux elements separes pour un arc sur
-    // deux.
-    //---------------------------------------------------------
 
     while (CA != LA)
     {
@@ -90,14 +75,10 @@ void MAT_Node::NearElts(NCollection_Sequence<occ::handle<MAT_BasicElt>>& S) cons
   }
 }
 
-//=================================================================================================
-
 double MAT_Node::Distance() const
 {
   return distance;
 }
-
-//=================================================================================================
 
 bool MAT_Node::PendingNode() const
 {
@@ -105,28 +86,20 @@ bool MAT_Node::PendingNode() const
   return (!((MAT_Arc*)aLinkedArc)->HasNeighbour(Me, MAT_Left));
 }
 
-//=================================================================================================
-
 bool MAT_Node::OnBasicElt() const
 {
   return (Distance() == 0.0);
 }
-
-//=================================================================================================
 
 bool MAT_Node::Infinite() const
 {
   return (Distance() == Precision::Infinite());
 }
 
-//=================================================================================================
-
 void MAT_Node::SetLinkedArc(const occ::handle<MAT_Arc>& LinkedArc)
 {
   aLinkedArc = LinkedArc.get();
 }
-
-//=================================================================================================
 
 void MAT_Node::SetIndex(const int anIndex)
 {

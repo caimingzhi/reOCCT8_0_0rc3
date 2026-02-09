@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <TransferBRep.hpp>
 
@@ -33,7 +22,6 @@
 
 #include <cstdio>
 
-// #include <TransferBRep_Analyzer.hxx>
 static void ShapeAppend(const occ::handle<Transfer_Binder>&                     binder,
                         const occ::handle<NCollection_HSequence<TopoDS_Shape>>& shapes)
 {
@@ -160,7 +148,7 @@ TopAbs_Orientation TransferBRep::ShapeState(const occ::handle<Transfer_FinderPro
   if (sm.IsNull())
     return TopAbs_EXTERNAL;
   const TopoDS_Shape& mapped = sm->Value();
-  //  equality is assumed, we only test the orientation
+
   if (mapped.Orientation() != shape.Orientation())
     return TopAbs_REVERSED;
   return TopAbs_FORWARD;
@@ -209,10 +197,6 @@ occ::handle<TransferBRep_ShapeMapper> TransferBRep::ShapeMapper(
   return occ::down_cast<TransferBRep_ShapeMapper>(FP->Mapped(index));
 }
 
-// Functions to collect transfer result information
-
-//=================================================================================================
-
 static void FillInfo(const occ::handle<Transfer_Binder>&                 Binder,
                      const occ::handle<Interface_Check>&                 Check,
                      const occ::handle<TransferBRep_TransferResultInfo>& Info)
@@ -245,25 +229,22 @@ static void FillInfo(const occ::handle<Transfer_Binder>&                 Binder,
   Info->NoResultWarningFail() += NRWF;
 }
 
-//=================================================================================================
-
 void TransferBRep::TransferResultInfo(
   const occ::handle<Transfer_TransientProcess>&                                     TP,
   const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>&        EntityTypes,
   occ::handle<NCollection_HSequence<occ::handle<TransferBRep_TransferResultInfo>>>& InfoSeq)
 {
-  // create output Sequence in accordance with required ShapeTypes
+
   InfoSeq = new NCollection_HSequence<occ::handle<TransferBRep_TransferResultInfo>>;
   if (TP.IsNull() || EntityTypes.IsNull())
     return;
   int SeqLen = EntityTypes->Length();
-  int i; // svv Jan11 2000 : porting on DEC
+  int i;
   for (i = 1; i <= SeqLen; i++)
   {
     InfoSeq->Append(new TransferBRep_TransferResultInfo);
   }
 
-  // fill Sequence
   int NbMapped = TP->NbMapped();
   for (i = 1; i <= NbMapped; i++)
   {
@@ -274,38 +255,34 @@ void TransferBRep::TransferResultInfo(
       continue;
     const occ::handle<Interface_Check> Check = Binder->Check();
 
-    // find appropriate element in the Sequence
     for (int index = 1; index <= SeqLen; index++)
     {
       if (Entity->IsKind(EntityTypes->Value(index)->DynamicType()))
       {
         occ::handle<TransferBRep_TransferResultInfo> Info = InfoSeq->Value(index);
-        // fill element
+
         FillInfo(Binder, Check, Info);
       }
     }
   }
 }
 
-//=================================================================================================
-
 void TransferBRep::TransferResultInfo(
   const occ::handle<Transfer_FinderProcess>&                                        FP,
   const occ::handle<NCollection_HSequence<int>>&                                    ShapeTypes,
   occ::handle<NCollection_HSequence<occ::handle<TransferBRep_TransferResultInfo>>>& InfoSeq)
 {
-  // create output Sequence in accordance with required ShapeTypes
+
   InfoSeq = new NCollection_HSequence<occ::handle<TransferBRep_TransferResultInfo>>;
   if (FP.IsNull() || ShapeTypes.IsNull())
     return;
   int SeqLen = ShapeTypes->Length();
-  int i; // svv Jan11 2000 : porting on DEC
+  int i;
   for (i = 1; i <= SeqLen; i++)
   {
     InfoSeq->Append(new TransferBRep_TransferResultInfo);
   }
 
-  // fill Sequence
   int NbMapped = FP->NbMapped();
   for (i = 1; i <= NbMapped; i++)
   {
@@ -319,38 +296,20 @@ void TransferBRep::TransferResultInfo(
     TopoDS_Shape     S         = Mapper->Value();
     TopAbs_ShapeEnum ShapeType = S.ShapeType();
 
-    // find appropriate element in the Sequence
     for (int index = 1; index <= SeqLen; index++)
     {
-      // JR/Hp :
+
       TopAbs_ShapeEnum CurrentType = (TopAbs_ShapeEnum)ShapeTypes->Value(index);
-      //      TopAbs_ShapeEnum CurrentType = (TopAbs_ShapeEnum)ShapeTypes->Value (index);
+
       if (CurrentType == ShapeType || CurrentType == TopAbs_SHAPE)
       {
         occ::handle<TransferBRep_TransferResultInfo> Info = InfoSeq->Value(index);
-        // fill element
+
         FillInfo(Binder, Check, Info);
       }
     }
   }
 }
-
-//  ########  CHECK LOURD  ########
-
-// # # # # # #    Enchainement General du CHECK LOURD    # # # # # #
-
-/*
-Interface_CheckIterator TransferBRep::BRepCheck
-  (const TopoDS_Shape& shape, const int lev)
-{
-  Interface_CheckIterator result;
-  TransferBRep_Analyzer ana;
-  ana.Check (shape,lev);
-  return ana.CheckResult ();
-}
-*/
-
-//  ###  conversion resultat -> starting
 
 Interface_CheckIterator TransferBRep::ResultCheckList(
   const Interface_CheckIterator&               chl,
@@ -487,8 +446,6 @@ Interface_CheckIterator TransferBRep::CheckObject(const Interface_CheckIterator&
   return nchl;
 }
 
-//=================================================================================================
-
 void TransferBRep::PrintResultInfo(const occ::handle<Message_Printer>&                 Printer,
                                    const Message_Msg&                                  Header,
                                    const occ::handle<TransferBRep_TransferResultInfo>& ResultInfo,
@@ -507,56 +464,56 @@ void TransferBRep::PrintResultInfo(const occ::handle<Message_Printer>&          
   Message_Msg aLocalHeader = Header;
   Printer->Send(aLocalHeader, Message_Info);
 
-  Message_Msg EPMSG30("Result.Print.MSG30"); //    Result: %d
+  Message_Msg EPMSG30("Result.Print.MSG30");
   EPMSG30.Arg(R);
   Printer->Send(EPMSG30, Message_Info);
   if (printEmpty || (RW > 0))
   {
-    Message_Msg EPMSG32("Result.Print.MSG32"); //    Result + Warning(s): %d
+    Message_Msg EPMSG32("Result.Print.MSG32");
     EPMSG32.Arg(RW);
     Printer->Send(EPMSG32, Message_Info);
   }
   if (printEmpty || (RF > 0))
   {
-    Message_Msg EPMSG34("Result.Print.MSG34"); //    Result + Fail(s): %d
+    Message_Msg EPMSG34("Result.Print.MSG34");
     EPMSG34.Arg(RF);
     Printer->Send(EPMSG34, Message_Info);
   }
   if (printEmpty || (RWF > 0))
   {
-    Message_Msg EPMSG36("Result.Print.MSG36"); //    Result + Warning(s) + Fail(s): %d
+    Message_Msg EPMSG36("Result.Print.MSG36");
     EPMSG36.Arg(RWF);
     Printer->Send(EPMSG36, Message_Info);
   }
-  Message_Msg EPMSG38("Result.Print.MSG38"); //    TOTAL Result: %d
+  Message_Msg EPMSG38("Result.Print.MSG38");
   EPMSG38.Arg(R + RW + RF + RWF);
   Printer->Send(EPMSG38, Message_Info);
   if (printEmpty || (NR > 0))
   {
-    Message_Msg EPMSG40("Result.Print.MSG40"); //    No Result: %d
+    Message_Msg EPMSG40("Result.Print.MSG40");
     EPMSG40.Arg(NR);
     Printer->Send(EPMSG40, Message_Info);
   }
   if (printEmpty || (NRW > 0))
   {
-    Message_Msg EPMSG42("Result.Print.MSG42"); //    No Result + Warning(s): %d
+    Message_Msg EPMSG42("Result.Print.MSG42");
     EPMSG42.Arg(NRW);
     Printer->Send(EPMSG42, Message_Info);
   }
   if (printEmpty || (NRF > 0))
   {
-    Message_Msg EPMSG44("Result.Print.MSG44"); //    No Result + Fail(s): %d
+    Message_Msg EPMSG44("Result.Print.MSG44");
     EPMSG44.Arg(NRF);
     Printer->Send(EPMSG44, Message_Info);
   }
   if (printEmpty || (NRWF > 0))
   {
-    Message_Msg EPMSG46("Result.Print.MSG46"); //    No Result + Warning(s) + Fail(s): %d
+    Message_Msg EPMSG46("Result.Print.MSG46");
     EPMSG46.Arg(NRWF);
     Printer->Send(EPMSG46, Message_Info);
   }
 
-  Message_Msg EPMSG48("Result.Print.MSG48"); //    TOTAL No Result: %d
+  Message_Msg EPMSG48("Result.Print.MSG48");
   EPMSG48.Arg(NR + NRW + NRF + NRWF);
   Printer->Send(EPMSG48, Message_Info);
 }

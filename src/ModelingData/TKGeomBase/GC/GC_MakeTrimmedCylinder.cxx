@@ -8,11 +8,6 @@
 #include <Standard_NotImplemented.hpp>
 #include <StdFail_NotDone.hpp>
 
-//===========================================================================
-//   Creation of a cylinder limited by three points <P1>, <P2> and <P3>.    +
-//   the height og the resulting cylinder is the distance from <P1> to <P2> +
-//   The radius is the distance from <P3> to axis <P1P2>.                   +
-//===========================================================================
 GC_MakeTrimmedCylinder::GC_MakeTrimmedCylinder(const gp_Pnt& P1, const gp_Pnt& P2, const gp_Pnt& P3)
 {
   GC_MakeCylindricalSurface Cyl(P1, P2, P3);
@@ -29,10 +24,6 @@ GC_MakeTrimmedCylinder::GC_MakeTrimmedCylinder(const gp_Pnt& P1, const gp_Pnt& P
   }
 }
 
-//=========================================================================
-//   Creation of a cylinder limited by a circle and height.               +
-//=========================================================================
-
 GC_MakeTrimmedCylinder::GC_MakeTrimmedCylinder(const gp_Circ& Circ, const double Height)
 {
   GC_MakeCylindricalSurface Cyl(Circ);
@@ -42,9 +33,6 @@ GC_MakeTrimmedCylinder::GC_MakeTrimmedCylinder(const gp_Circ& Circ, const double
     TheCyl = new Geom_RectangularTrimmedSurface(Cyl.Value(), 0., 2. * M_PI, 0., Height, true, true);
   }
 }
-
-//=========================================================================
-//=========================================================================
 
 GC_MakeTrimmedCylinder::GC_MakeTrimmedCylinder(const gp_Ax1& A1,
                                                const double  Radius,

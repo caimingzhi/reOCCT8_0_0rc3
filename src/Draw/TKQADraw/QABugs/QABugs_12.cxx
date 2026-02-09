@@ -19,9 +19,6 @@
 #include <Geom_TrimmedCurve.hpp>
 #include <BRepOffsetAPI_ThruSections.hpp>
 
-//=======================================================================
-//  OCC895
-//=======================================================================
 static int OCC895(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 2 || argc > 5)
@@ -35,11 +32,6 @@ static int OCC895(Draw_Interpretor& di, int argc, const char** argv)
   const int    reverse = (argc > 3) ? Draw::Atoi(argv[3]) : 0;
   const int    order   = (argc > 4) ? Draw::Atoi(argv[4]) : 0;
 
-  // Make a wire from the first arc for ThruSections.
-  //
-  // This arc is rotated 5 degrees about the Z axis.
-  // I don't know why, but if we don't rotate it,
-  // the final shell is not twisted.
   gp_Pnt center1(0, 10, 0);
   gp_Ax2 axis1 =
     reverse ? gp_Ax2(center1, gp::DY(), gp::DZ()) : gp_Ax2(center1, -gp::DY(), gp::DX());
@@ -55,7 +47,6 @@ static int OCC895(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   occ::handle<Geom_TrimmedCurve> arc1 = makeArc1.Value();
 
-  // Create wire 1
   BRepBuilderAPI_MakeEdge makeEdge1(arc1, arc1->StartPoint(), arc1->EndPoint());
   if (!makeEdge1.IsDone())
     return 1;
@@ -66,7 +57,6 @@ static int OCC895(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   TopoDS_Wire wire1 = makeWire1.Wire();
 
-  // Make a wire from the second arc for ThruSections.
   gp_Pnt center2(10, 0, 0);
   gp_Ax2 axis2(center2, -gp::DX(), gp::DZ());
 
@@ -79,7 +69,6 @@ static int OCC895(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   occ::handle<Geom_TrimmedCurve> arc2 = makeArc2.Value();
 
-  // Create wire 2
   BRepBuilderAPI_MakeEdge makeEdge2(arc2, arc2->StartPoint(), arc2->EndPoint());
   if (!makeEdge2.IsDone())
     return 1;

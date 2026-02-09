@@ -16,9 +16,9 @@ void IGESSolid_RightAngularWedge::Init(const gp_XYZ& aSize,
 {
   theSize         = aSize;
   theXSmallLength = LowX;
-  theCorner       = aCorner; // default (0,0,0)
-  theXAxis        = anXAxis; // default (1,0,0)
-  theZAxis        = anZAxis; // default (0,0,1)
+  theCorner       = aCorner;
+  theXAxis        = anXAxis;
+  theZAxis        = anZAxis;
   InitTypeAndForm(152, 0);
 }
 
@@ -85,7 +85,7 @@ gp_Dir IGESSolid_RightAngularWedge::TransformedXAxis() const
 
 gp_Dir IGESSolid_RightAngularWedge::YAxis() const
 {
-  return gp_Dir(theXAxis ^ theZAxis); // ^ overloaded
+  return gp_Dir(theXAxis ^ theZAxis);
 }
 
 gp_Dir IGESSolid_RightAngularWedge::TransformedYAxis() const

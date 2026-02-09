@@ -11,8 +11,6 @@ static const int ParameterMask   = 1;
 static const int RangeMask       = 2;
 static const int DegeneratedMask = 4;
 
-//=================================================================================================
-
 BRep_TEdge::BRep_TEdge()
     : myTolerance(RealEpsilon()),
       myFlags(0)
@@ -21,14 +19,10 @@ BRep_TEdge::BRep_TEdge()
   SameRange(true);
 }
 
-//=================================================================================================
-
 bool BRep_TEdge::SameParameter() const
 {
   return (myFlags & ParameterMask) != 0;
 }
-
-//=================================================================================================
 
 void BRep_TEdge::SameParameter(const bool S)
 {
@@ -38,14 +32,10 @@ void BRep_TEdge::SameParameter(const bool S)
     myFlags &= ~ParameterMask;
 }
 
-//=================================================================================================
-
 bool BRep_TEdge::SameRange() const
 {
   return (myFlags & RangeMask) != 0;
 }
-
-//=================================================================================================
 
 void BRep_TEdge::SameRange(const bool S)
 {
@@ -55,14 +45,10 @@ void BRep_TEdge::SameRange(const bool S)
     myFlags &= ~RangeMask;
 }
 
-//=================================================================================================
-
 bool BRep_TEdge::Degenerated() const
 {
   return (myFlags & DegeneratedMask) != 0;
 }
-
-//=================================================================================================
 
 void BRep_TEdge::Degenerated(const bool S)
 {
@@ -72,19 +58,17 @@ void BRep_TEdge::Degenerated(const bool S)
     myFlags &= ~DegeneratedMask;
 }
 
-//=================================================================================================
-
 occ::handle<TopoDS_TShape> BRep_TEdge::EmptyCopy() const
 {
   occ::handle<BRep_TEdge> TE = new BRep_TEdge();
   TE->Tolerance(myTolerance);
-  // copy the curves representations
+
   NCollection_List<occ::handle<BRep_CurveRepresentation>>&          l = TE->ChangeCurves();
   NCollection_List<occ::handle<BRep_CurveRepresentation>>::Iterator itr(myCurves);
 
   while (itr.More())
   {
-    // on ne recopie PAS les polygones
+
     if (itr.Value()->IsKind(STANDARD_TYPE(BRep_GCurve))
         || itr.Value()->IsKind(STANDARD_TYPE(BRep_CurveOn2Surfaces)))
     {
@@ -99,8 +83,6 @@ occ::handle<TopoDS_TShape> BRep_TEdge::EmptyCopy() const
 
   return TE;
 }
-
-//=================================================================================================
 
 void BRep_TEdge::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

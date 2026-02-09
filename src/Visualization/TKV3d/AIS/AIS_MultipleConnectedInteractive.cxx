@@ -7,15 +7,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_MultipleConnectedInteractive, AIS_InteractiveObject)
 
-//=================================================================================================
-
 AIS_MultipleConnectedInteractive::AIS_MultipleConnectedInteractive()
     : AIS_InteractiveObject(PrsMgr_TOP_AllView)
 {
   myHasOwnPresentations = false;
 }
-
-//=================================================================================================
 
 occ::handle<AIS_InteractiveObject> AIS_MultipleConnectedInteractive::connect(
   const occ::handle<AIS_InteractiveObject>&   theAnotherObj,
@@ -36,7 +32,6 @@ occ::handle<AIS_InteractiveObject> AIS_MultipleConnectedInteractive::connect(
     aNewMultiConnected->myAssemblyOwner = myAssemblyOwner;
     aNewMultiConnected->SetLocalTransformation(aMultiConnected->LocalTransformationGeom());
 
-    // Perform deep copy of instance tree
     for (NCollection_List<occ::handle<PrsMgr_PresentableObject>>::Iterator anIter(
            aMultiConnected->Children());
          anIter.More();
@@ -71,22 +66,16 @@ occ::handle<AIS_InteractiveObject> AIS_MultipleConnectedInteractive::connect(
   return anObjectToAdd;
 }
 
-//=================================================================================================
-
 bool AIS_MultipleConnectedInteractive::HasConnection() const
 {
   return (Children().Size() != 0);
 }
-
-//=================================================================================================
 
 void AIS_MultipleConnectedInteractive::Disconnect(
   const occ::handle<AIS_InteractiveObject>& anotherIObj)
 {
   RemoveChild(anotherIObj);
 }
-
-//=================================================================================================
 
 void AIS_MultipleConnectedInteractive::DisconnectAll()
 {
@@ -96,8 +85,6 @@ void AIS_MultipleConnectedInteractive::DisconnectAll()
     RemoveChild(Children().First());
   }
 }
-
-//=================================================================================================
 
 void AIS_MultipleConnectedInteractive::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                                const occ::handle<Prs3d_Presentation>&,
@@ -116,8 +103,6 @@ void AIS_MultipleConnectedInteractive::Compute(const occ::handle<PrsMgr_Presenta
     }
   }
 }
-
-//=================================================================================================
 
 bool AIS_MultipleConnectedInteractive::AcceptShapeDecomposition() const
 {
@@ -140,11 +125,8 @@ bool AIS_MultipleConnectedInteractive::AcceptShapeDecomposition() const
   return false;
 }
 
-//=================================================================================================
-
-void AIS_MultipleConnectedInteractive::ComputeSelection(
-  const occ::handle<SelectMgr_Selection>& /*theSelection*/,
-  const int theMode)
+void AIS_MultipleConnectedInteractive::ComputeSelection(const occ::handle<SelectMgr_Selection>&,
+                                                        const int theMode)
 {
   if (theMode == 0)
   {
@@ -171,8 +153,6 @@ void AIS_MultipleConnectedInteractive::ComputeSelection(
     aChild->ComputeSelection(aSelection, theMode);
   }
 }
-
-//=================================================================================================
 
 void AIS_MultipleConnectedInteractive::SetContext(const occ::handle<AIS_InteractiveContext>& theCtx)
 {

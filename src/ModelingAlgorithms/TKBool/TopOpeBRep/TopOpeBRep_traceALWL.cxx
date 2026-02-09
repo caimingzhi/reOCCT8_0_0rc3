@@ -149,5 +149,4 @@ bool TopOpeBRep_GetcontextALWLNBP(int& n)
   return b;
 }
 
-// #ifdef OCCT_DEBUG
 #endif

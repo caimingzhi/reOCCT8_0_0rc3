@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:14 2020
+
 
 #include "RWStepRepr_RWRepresentationReference.hpp"
 
@@ -9,11 +9,7 @@
 #include <TCollection_HAsciiString.hpp>
 #include <StepRepr_RepresentationContextReference.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWRepresentationReference::RWStepRepr_RWRepresentationReference() = default;
-
-//=================================================================================================
 
 void RWStepRepr_RWRepresentationReference::ReadStep(
   const occ::handle<StepData_StepReaderData>&          theData,
@@ -21,11 +17,9 @@ void RWStepRepr_RWRepresentationReference::ReadStep(
   occ::handle<Interface_Check>&                        theAch,
   const occ::handle<StepRepr_RepresentationReference>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 2, theAch, "representation_reference"))
     return;
-
-  // Own fields of RepresentationReference
 
   occ::handle<TCollection_HAsciiString> aId;
   theData->ReadString(theNum, 1, "id", theAch, aId);
@@ -38,32 +32,23 @@ void RWStepRepr_RWRepresentationReference::ReadStep(
                       STANDARD_TYPE(StepRepr_RepresentationContextReference),
                       aContextOfItems);
 
-  // Initialize entity
   theEnt->Init(aId, aContextOfItems);
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWRepresentationReference::WriteStep(
   StepData_StepWriter&                                 SW,
   const occ::handle<StepRepr_RepresentationReference>& theEnt) const
 {
 
-  // Own fields of RepresentationReference
-
   SW.Send(theEnt->Id());
 
   SW.Send(theEnt->ContextOfItems());
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWRepresentationReference::Share(
   const occ::handle<StepRepr_RepresentationReference>& theEnt,
   Interface_EntityIterator&                            iter) const
 {
-
-  // Own fields of RepresentationReference
 
   iter.AddItem(theEnt->ContextOfItems());
 }

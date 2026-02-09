@@ -15,29 +15,22 @@ class TopoDS_Wire;
 class GeomFill_SectionLaw;
 class TopoDS_Edge;
 
-//! Build Section Law, with an Vertex, or an Wire
 class BRepFill_ShapeLaw : public BRepFill_SectionLaw
 {
 
 public:
-  //! Construct an constant Law
   Standard_EXPORT BRepFill_ShapeLaw(const TopoDS_Vertex& V, const bool Build = true);
 
-  //! Construct an constant Law
   Standard_EXPORT BRepFill_ShapeLaw(const TopoDS_Wire& W, const bool Build = true);
 
-  //! Construct an evolutive Law
   Standard_EXPORT BRepFill_ShapeLaw(const TopoDS_Wire&               W,
                                     const occ::handle<Law_Function>& L,
                                     const bool                       Build = true);
 
-  //! Say if the input shape is a vertex.
   Standard_EXPORT bool IsVertex() const override;
 
-  //! Say if the Law is Constant.
   Standard_EXPORT bool IsConstant() const override;
 
-  //! Give the law build on a concatenated section
   Standard_EXPORT occ::handle<GeomFill_SectionLaw> ConcatenedLaw() const override;
 
   Standard_EXPORT GeomAbs_Shape Continuity(const int Index, const double TolAngular) const override;
@@ -67,8 +60,6 @@ private:
 #include <TopoDS_Shape.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
-
-//=================================================================================================
 
 inline const TopoDS_Edge& BRepFill_ShapeLaw::Edge(const int Index) const
 {

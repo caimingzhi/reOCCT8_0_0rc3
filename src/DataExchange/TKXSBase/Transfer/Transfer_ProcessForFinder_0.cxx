@@ -28,8 +28,6 @@
 #include <NCollection_IndexedDataMap.hpp>
 #include <Transfer_VoidBinder.hpp>
 
-//=================================================================================================
-
 Transfer_ProcessForFinder::Transfer_ProcessForFinder(const int nb)
     : themap(nb)
 {
@@ -41,8 +39,6 @@ Transfer_ProcessForFinder::Transfer_ProcessForFinder(const int nb)
   thetrace     = 0;
   theindex     = 0;
 }
-
-//=================================================================================================
 
 Transfer_ProcessForFinder::Transfer_ProcessForFinder(
   const occ::handle<Message_Messenger>& messenger,
@@ -58,8 +54,6 @@ Transfer_ProcessForFinder::Transfer_ProcessForFinder(
   theindex = 0;
 }
 
-//=================================================================================================
-
 void Transfer_ProcessForFinder::Clear()
 {
   thelevel = 0;
@@ -70,8 +64,6 @@ void Transfer_ProcessForFinder::Clear()
   thelastobj.Nullify();
   thelastbnd.Nullify();
 }
-
-//=================================================================================================
 
 void Transfer_ProcessForFinder::Clean()
 {
@@ -85,7 +77,6 @@ void Transfer_ProcessForFinder::Clean()
   if (unb == 0)
     return;
 
-  // Redo the map -> offsets
   NCollection_Array1<int> unbs(1, nb);
   unbs.Init(0);
   NCollection_IndexedDataMap<occ::handle<Transfer_Finder>,
@@ -103,7 +94,6 @@ void Transfer_ProcessForFinder::Clean()
   }
   themap.Assign(newmap);
 
-  // Update Root List
   NCollection_IndexedMap<int> aNewRoots;
   for (i = 1; i <= theroots.Extent(); i++)
   {
@@ -115,21 +105,16 @@ void Transfer_ProcessForFinder::Clean()
   theroots.Clear();
   theroots = aNewRoots;
 
-  // The rest: cleaning
   thelastobj.Nullify();
   thelastbnd.Nullify();
   theindex = 0;
 }
-
-//=================================================================================================
 
 void Transfer_ProcessForFinder::Resize(const int nb)
 {
   if (nb > themap.NbBuckets())
     themap.ReSize(nb);
 }
-
-//=================================================================================================
 
 void Transfer_ProcessForFinder::SetActor(const occ::handle<Transfer_ActorOfProcessForFinder>& actor)
 {
@@ -148,14 +133,10 @@ void Transfer_ProcessForFinder::SetActor(const occ::handle<Transfer_ActorOfProce
     theactor->SetNext(actor);
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_ActorOfProcessForFinder> Transfer_ProcessForFinder::Actor() const
 {
   return theactor;
 }
-
-//=================================================================================================
 
 occ::handle<Transfer_Binder> Transfer_ProcessForFinder::Find(
   const occ::handle<Transfer_Finder>& start) const
@@ -174,8 +155,6 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::Find(
   return occ::handle<Transfer_Binder>();
 }
 
-//=================================================================================================
-
 bool Transfer_ProcessForFinder::IsBound(const occ::handle<Transfer_Finder>& start) const
 {
   occ::handle<Transfer_Binder> binder = Find(start);
@@ -183,8 +162,6 @@ bool Transfer_ProcessForFinder::IsBound(const occ::handle<Transfer_Finder>& star
     return false;
   return binder->HasResult();
 }
-
-//=================================================================================================
 
 bool Transfer_ProcessForFinder::IsAlreadyUsed(const occ::handle<Transfer_Finder>& start) const
 {
@@ -197,8 +174,6 @@ bool Transfer_ProcessForFinder::IsAlreadyUsed(const occ::handle<Transfer_Finder>
   }
   return (binder->Status() == Transfer_StatusUsed);
 }
-
-//=================================================================================================
 
 occ::handle<Transfer_Binder> Transfer_ProcessForFinder::FindAndMask(
   const occ::handle<Transfer_Finder>& start)
@@ -217,8 +192,6 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::FindAndMask(
   return thelastbnd;
 }
 
-//=================================================================================================
-
 void Transfer_ProcessForFinder::Bind(const occ::handle<Transfer_Finder>& start,
                                      const occ::handle<Transfer_Binder>& binder)
 {
@@ -227,7 +200,7 @@ void Transfer_ProcessForFinder::Bind(const occ::handle<Transfer_Finder>& start,
   occ::handle<Transfer_Binder> former = FindAndMask(start);
   if (!former.IsNull())
   {
-    // We admit VoidBinder: then we resume our Check
+
     if (former->DynamicType() == STANDARD_TYPE(Transfer_VoidBinder))
     {
       binder->Merge(former);
@@ -260,15 +233,11 @@ void Transfer_ProcessForFinder::Bind(const occ::handle<Transfer_Finder>& start,
   }
 }
 
-//=================================================================================================
-
 void Transfer_ProcessForFinder::Rebind(const occ::handle<Transfer_Finder>& start,
                                        const occ::handle<Transfer_Binder>& binder)
 {
   Bind(start, binder);
 }
-
-//=================================================================================================
 
 bool Transfer_ProcessForFinder::Unbind(const occ::handle<Transfer_Finder>& start)
 {
@@ -297,8 +266,6 @@ bool Transfer_ProcessForFinder::Unbind(const occ::handle<Transfer_Finder>& start
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_Binder> Transfer_ProcessForFinder::FindElseBind(
   const occ::handle<Transfer_Finder>& start)
 {
@@ -310,8 +277,6 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::FindElseBind(
   return binder;
 }
 
-//=================================================================================================
-
 void Transfer_ProcessForFinder::SetMessenger(const occ::handle<Message_Messenger>& messenger)
 {
   if (messenger.IsNull())
@@ -320,28 +285,20 @@ void Transfer_ProcessForFinder::SetMessenger(const occ::handle<Message_Messenger
     themessenger = messenger;
 }
 
-//=================================================================================================
-
 occ::handle<Message_Messenger> Transfer_ProcessForFinder::Messenger() const
 {
   return themessenger;
 }
-
-//=================================================================================================
 
 void Transfer_ProcessForFinder::SetTraceLevel(const int tracelev)
 {
   thetrace = tracelev;
 }
 
-//=================================================================================================
-
 int Transfer_ProcessForFinder::TraceLevel() const
 {
   return thetrace;
 }
-
-//=================================================================================================
 
 void Transfer_ProcessForFinder::SendFail(const occ::handle<Transfer_Finder>& start,
                                          const Message_Msg&                  amsg)
@@ -349,15 +306,11 @@ void Transfer_ProcessForFinder::SendFail(const occ::handle<Transfer_Finder>& sta
   AddFail(start, amsg);
 }
 
-//=================================================================================================
-
 void Transfer_ProcessForFinder::SendWarning(const occ::handle<Transfer_Finder>& start,
                                             const Message_Msg&                  amsg)
 {
   AddWarning(start, amsg);
 }
-
-//=================================================================================================
 
 void Transfer_ProcessForFinder::SendMsg(const occ::handle<Transfer_Finder>& start,
                                         const Message_Msg&                  amsg)
@@ -368,7 +321,7 @@ void Transfer_ProcessForFinder::SendMsg(const occ::handle<Transfer_Finder>& star
     binder = new Transfer_VoidBinder;
     Bind(start, binder);
   }
-  // Feeds the trace: Causing rule (user messages)
+
   if (thetrace > 0)
   {
     StartTrace(binder, start, thelevel, 6);
@@ -379,8 +332,6 @@ void Transfer_ProcessForFinder::SendMsg(const occ::handle<Transfer_Finder>& star
     aSender << std::endl;
   }
 }
-
-//=================================================================================================
 
 void Transfer_ProcessForFinder::AddFail(const occ::handle<Transfer_Finder>& start,
                                         const char*                         mess,
@@ -404,16 +355,12 @@ void Transfer_ProcessForFinder::AddFail(const occ::handle<Transfer_Finder>& star
   }
 }
 
-//=================================================================================================
-
 void Transfer_ProcessForFinder::AddError(const occ::handle<Transfer_Finder>& start,
                                          const char*                         mess,
                                          const char*                         orig)
 {
   AddFail(start, mess, orig);
 }
-
-//=================================================================================================
 
 void Transfer_ProcessForFinder::AddFail(const occ::handle<Transfer_Finder>& start,
                                         const Message_Msg&                  amsg)
@@ -425,8 +372,6 @@ void Transfer_ProcessForFinder::AddFail(const occ::handle<Transfer_Finder>& star
   else
     AddFail(start, TCollection_AsciiString(amsg.Value()).ToCString());
 }
-
-//=================================================================================================
 
 void Transfer_ProcessForFinder::AddWarning(const occ::handle<Transfer_Finder>& start,
                                            const char*                         mess,
@@ -450,8 +395,6 @@ void Transfer_ProcessForFinder::AddWarning(const occ::handle<Transfer_Finder>& s
   }
 }
 
-//=================================================================================================
-
 void Transfer_ProcessForFinder::AddWarning(const occ::handle<Transfer_Finder>& start,
                                            const Message_Msg&                  amsg)
 {
@@ -463,18 +406,14 @@ void Transfer_ProcessForFinder::AddWarning(const occ::handle<Transfer_Finder>& s
     AddWarning(start, TCollection_AsciiString(amsg.Value()).ToCString());
 }
 
-//=================================================================================================
-
 void Transfer_ProcessForFinder::Mend(const occ::handle<Transfer_Finder>& start, const char* pref)
 {
   occ::handle<Transfer_Binder> binder = FindAndMask(start);
   if (binder.IsNull())
-    return; // nothing to do ...
+    return;
   occ::handle<Interface_Check> ach = binder->CCheck();
   ach->Mend(pref);
 }
-
-//=================================================================================================
 
 occ::handle<Interface_Check> Transfer_ProcessForFinder::Check(
   const occ::handle<Transfer_Finder>& start) const
@@ -488,8 +427,6 @@ occ::handle<Interface_Check> Transfer_ProcessForFinder::Check(
   return binder->Check();
 }
 
-//=================================================================================================
-
 void Transfer_ProcessForFinder::BindTransient(const occ::handle<Transfer_Finder>&    start,
                                               const occ::handle<Standard_Transient>& res)
 {
@@ -498,7 +435,7 @@ void Transfer_ProcessForFinder::BindTransient(const occ::handle<Transfer_Finder>
   occ::handle<Transfer_Binder>                  former = Find(start);
   occ::handle<Transfer_SimpleBinderOfTransient> binder =
     occ::down_cast<Transfer_SimpleBinderOfTransient>(former);
-  // Binding in place?
+
   if (!binder.IsNull())
   {
     if (binder->Status() == Transfer_StatusVoid)
@@ -507,7 +444,7 @@ void Transfer_ProcessForFinder::BindTransient(const occ::handle<Transfer_Finder>
       return;
     }
   }
-  // Otherwise, redo
+
   binder = new Transfer_SimpleBinderOfTransient;
   binder->SetResult(res);
   if (former.IsNull())
@@ -515,8 +452,6 @@ void Transfer_ProcessForFinder::BindTransient(const occ::handle<Transfer_Finder>
   else
     Rebind(start, binder);
 }
-
-//=================================================================================================
 
 const occ::handle<Standard_Transient>& Transfer_ProcessForFinder::FindTransient(
   const occ::handle<Transfer_Finder>& start) const
@@ -530,8 +465,6 @@ const occ::handle<Standard_Transient>& Transfer_ProcessForFinder::FindTransient(
     return aDummy;
   return binder->Result();
 }
-
-//=================================================================================================
 
 void Transfer_ProcessForFinder::BindMultiple(const occ::handle<Transfer_Finder>& start)
 {
@@ -547,8 +480,6 @@ void Transfer_ProcessForFinder::BindMultiple(const occ::handle<Transfer_Finder>&
   else
     Bind(start, new Transfer_MultipleBinder);
 }
-
-//=================================================================================================
 
 void Transfer_ProcessForFinder::AddMultiple(const occ::handle<Transfer_Finder>&    start,
                                             const occ::handle<Standard_Transient>& res)
@@ -566,16 +497,12 @@ void Transfer_ProcessForFinder::AddMultiple(const occ::handle<Transfer_Finder>& 
   multr->AddResult(res);
 }
 
-//=================================================================================================
-
 bool Transfer_ProcessForFinder::FindTypedTransient(const occ::handle<Transfer_Finder>& start,
                                                    const occ::handle<Standard_Type>&   atype,
                                                    occ::handle<Standard_Transient>&    val) const
 {
   return GetTypedTransient(Find(start), atype, val);
 }
-
-//=================================================================================================
 
 bool Transfer_ProcessForFinder::GetTypedTransient(const occ::handle<Transfer_Binder>& binder,
                                                   const occ::handle<Standard_Type>&   atype,
@@ -584,36 +511,26 @@ bool Transfer_ProcessForFinder::GetTypedTransient(const occ::handle<Transfer_Bin
   return Transfer_SimpleBinderOfTransient::GetTypedResult(binder, atype, val);
 }
 
-//=================================================================================================
-
 int Transfer_ProcessForFinder::NbMapped() const
 {
   return themap.Extent();
 }
-
-//=================================================================================================
 
 const occ::handle<Transfer_Finder>& Transfer_ProcessForFinder::Mapped(const int num) const
 {
   return themap.FindKey(num);
 }
 
-//=================================================================================================
-
 int Transfer_ProcessForFinder::MapIndex(const occ::handle<Transfer_Finder>& start) const
 {
   return themap.FindIndex(start);
 }
-
-//=================================================================================================
 
 occ::handle<Transfer_Binder> Transfer_ProcessForFinder::MapItem(const int num) const
 {
   occ::handle<Transfer_Binder> binder = themap.FindFromIndex(num);
   return binder;
 }
-
-//=================================================================================================
 
 void Transfer_ProcessForFinder::SetRoot(const occ::handle<Transfer_Finder>& start)
 {
@@ -627,21 +544,15 @@ void Transfer_ProcessForFinder::SetRoot(const occ::handle<Transfer_Finder>& star
     StartTrace(MapItem(index), start, thelevel, 3);
 }
 
-//=================================================================================================
-
 void Transfer_ProcessForFinder::SetRootManagement(const bool stat)
 {
   therootm = stat;
 }
 
-//=================================================================================================
-
 int Transfer_ProcessForFinder::NbRoots() const
 {
   return theroots.Extent();
 }
-
-//=================================================================================================
 
 const occ::handle<Transfer_Finder>& Transfer_ProcessForFinder::Root(const int num) const
 {
@@ -651,8 +562,6 @@ const occ::handle<Transfer_Finder>& Transfer_ProcessForFinder::Root(const int nu
   return themap.FindKey(ind);
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_Binder> Transfer_ProcessForFinder::RootItem(const int num) const
 {
   int ind = 0;
@@ -660,8 +569,6 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::RootItem(const int num) 
     ind = theroots.FindKey(num);
   return themap.FindFromIndex(ind);
 }
-
-//=================================================================================================
 
 int Transfer_ProcessForFinder::RootIndex(const occ::handle<Transfer_Finder>& start) const
 {
@@ -671,26 +578,20 @@ int Transfer_ProcessForFinder::RootIndex(const occ::handle<Transfer_Finder>& sta
   return theroots.FindIndex(index);
 }
 
-//=================================================================================================
-
 int Transfer_ProcessForFinder::NestingLevel() const
 {
   return thelevel;
 }
-
-//=================================================================================================
 
 void Transfer_ProcessForFinder::ResetNestingLevel()
 {
   thelevel = 0;
 }
 
-//=================================================================================================
-
 bool Transfer_ProcessForFinder::Recognize(const occ::handle<Transfer_Finder>& start) const
 {
   occ::handle<Transfer_ActorOfProcessForFinder> actor = theactor;
-  // We scan the Next until we have a Result
+
   while (!actor.IsNull())
   {
     if (actor->Recognize(start))
@@ -700,17 +601,12 @@ bool Transfer_ProcessForFinder::Recognize(const occ::handle<Transfer_Finder>& st
   return false;
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_Binder> Transfer_ProcessForFinder::Transferring(
   const occ::handle<Transfer_Finder>& start,
   const Message_ProgressRange&        theProgress)
 {
   occ::handle<Transfer_Binder> former = FindAndMask(start);
-  // Transfer already done with Result?
 
-  // We consider that this new Transfer request therefore corresponds to a
-  // additional use: note "AlreadyUsed", therefore non-modifiable result
   bool hasDeadLoop = false;
   if (!former.IsNull())
   {
@@ -719,7 +615,7 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::Transferring(
       former->SetAlreadyUsed();
       return former;
     }
-    // Initial State: perhaps already done... or infeasible!
+
     Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
     Transfer_StatusExec             statex  = former->StatusExec();
     switch (statex)
@@ -762,10 +658,6 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::Transferring(
   occ::handle<Transfer_Binder> binder;
   bool                         newbind = false;
 
-  // Handle dead loop condition detected before calling TransferProduct
-  // When hasDeadLoop is true, we know:
-  // 1. former is NOT null (hasDeadLoop only set inside !former.IsNull() block)
-  // 2. former->StatusExec() == Transfer_StatusLoop (that's what triggered hasDeadLoop)
   if (hasDeadLoop)
   {
     Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
@@ -784,7 +676,6 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::Transferring(
   {
     Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
 
-    // Transfer under protection for exceptions (for notification in fact)
     int oldlev = thelevel;
     try
     {
@@ -810,20 +701,17 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::Transferring(
     }
   }
 
-  // Unprotected transfer (thus, dbx by hand in case of crash by Raise)
   else
     binder = TransferProduct(start, theProgress);
 
   if (theProgress.UserBreak())
     return occ::handle<Transfer_Binder>();
 
-  // Conclusion: Note in the Map
-
   if (!newbind && !binder.IsNull())
   {
     if (former.IsNull())
     {
-      // Maybe <theactor> did Bind himself... check if not do it
+
       if (!IsBound(start))
         Bind(start, binder);
       else
@@ -837,11 +725,9 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::Transferring(
   else
   {
     if (!former.IsNull())
-      former->SetStatusExec(Transfer_StatusDone); //+
+      former->SetStatusExec(Transfer_StatusDone);
     return occ::handle<Transfer_Binder>();
   }
-
-  // Manage Roots (if provided)
 
   if (therootl >= thelevel)
   {
@@ -854,17 +740,14 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::Transferring(
   return thelastbnd;
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_Binder> Transfer_ProcessForFinder::TransferProduct(
   const occ::handle<Transfer_Finder>& start,
   const Message_ProgressRange&        theProgress)
 {
-  thelevel++; // if decrements and == 0, root transfer
+  thelevel++;
   occ::handle<Transfer_Binder>                  binder;
   occ::handle<Transfer_ActorOfProcessForFinder> actor = theactor;
 
-  // We scan the Next until we have a Result
   Message_ProgressScope aScope(theProgress, nullptr, 1, true);
   while (!actor.IsNull())
   {
@@ -885,7 +768,7 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::TransferProduct(
       thelevel--;
     return binder;
   }
-  // Root level management (.. take a closer look..)
+
   if (therootl == 0 && binder->StatusExec() == Transfer_StatusDone)
     therootl = thelevel - 1;
 
@@ -894,8 +777,6 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::TransferProduct(
   return binder;
 }
 
-//=================================================================================================
-
 bool Transfer_ProcessForFinder::Transfer(const occ::handle<Transfer_Finder>& start,
                                          const Message_ProgressRange&        theProgress)
 {
@@ -903,21 +784,15 @@ bool Transfer_ProcessForFinder::Transfer(const occ::handle<Transfer_Finder>& sta
   return (!binder.IsNull());
 }
 
-//=================================================================================================
-
 void Transfer_ProcessForFinder::SetErrorHandle(const bool err)
 {
   theerrh = err;
 }
 
-//=================================================================================================
-
 bool Transfer_ProcessForFinder::ErrorHandle() const
 {
   return theerrh;
 }
-
-//=================================================================================================
 
 void Transfer_ProcessForFinder::StartTrace(const occ::handle<Transfer_Binder>& binder,
                                            const occ::handle<Transfer_Finder>& start,
@@ -925,10 +800,9 @@ void Transfer_ProcessForFinder::StartTrace(const occ::handle<Transfer_Binder>& b
                                            const int                           mode) const
 {
   Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
-  // ###  Fail (Roots:50)  --  Start start->DynamicType()
-  // ###  Fail (Roots:50)  --  Start id:#label.. Type:start->DynamicType()
+
   if (thetrace > 3)
-  { // Internal to be switch when searching bug (trace >= 4)
+  {
     if (mode == 1)
       aSender << "  ###  Fail";
     if (mode == 2)
@@ -974,8 +848,6 @@ void Transfer_ProcessForFinder::StartTrace(const occ::handle<Transfer_Binder>& b
   aSender << std::endl;
 }
 
-//=================================================================================================
-
 void Transfer_ProcessForFinder::PrintTrace(const occ::handle<Transfer_Finder>& start,
                                            Standard_OStream&                   S) const
 {
@@ -983,14 +855,10 @@ void Transfer_ProcessForFinder::PrintTrace(const occ::handle<Transfer_Finder>& s
     S << " Type:" << start->DynamicType()->Name();
 }
 
-//=================================================================================================
-
 bool Transfer_ProcessForFinder::IsLooping(const int alevel) const
 {
   return alevel > NbMapped();
 }
-
-//=================================================================================================
 
 Transfer_IteratorOfProcessForFinder Transfer_ProcessForFinder::RootResult(
   const bool withstart) const
@@ -1011,8 +879,6 @@ Transfer_IteratorOfProcessForFinder Transfer_ProcessForFinder::RootResult(
   return iter;
 }
 
-//=================================================================================================
-
 Transfer_IteratorOfProcessForFinder Transfer_ProcessForFinder::CompleteResult(
   const bool withstart) const
 {
@@ -1031,8 +897,6 @@ Transfer_IteratorOfProcessForFinder Transfer_ProcessForFinder::CompleteResult(
   return iter;
 }
 
-//=================================================================================================
-
 Transfer_IteratorOfProcessForFinder Transfer_ProcessForFinder::AbnormalResult() const
 {
   Transfer_IteratorOfProcessForFinder iter(true);
@@ -1044,12 +908,10 @@ Transfer_IteratorOfProcessForFinder Transfer_ProcessForFinder::AbnormalResult() 
       continue;
     Transfer_StatusExec statex = binder->StatusExec();
     if (statex != Transfer_StatusInitial && statex != Transfer_StatusDone)
-      iter.Add(binder, Mapped(i)); // we note the "not normal" cases
+      iter.Add(binder, Mapped(i));
   }
   return iter;
 }
-
-//=================================================================================================
 
 Interface_CheckIterator Transfer_ProcessForFinder::CheckList(const bool erronly) const
 {
@@ -1075,8 +937,6 @@ Interface_CheckIterator Transfer_ProcessForFinder::CheckList(const bool erronly)
   }
   return list;
 }
-
-//=================================================================================================
 
 Transfer_IteratorOfProcessForFinder Transfer_ProcessForFinder::ResultOne(
   const occ::handle<Transfer_Finder>& start,
@@ -1107,8 +967,6 @@ Transfer_IteratorOfProcessForFinder Transfer_ProcessForFinder::ResultOne(
   }
   return iter;
 }
-
-//=================================================================================================
 
 Interface_CheckIterator Transfer_ProcessForFinder::CheckListOne(
   const occ::handle<Transfer_Finder>& start,
@@ -1148,8 +1006,6 @@ Interface_CheckIterator Transfer_ProcessForFinder::CheckListOne(
   return list;
 }
 
-//=================================================================================================
-
 bool Transfer_ProcessForFinder::IsCheckListEmpty(const occ::handle<Transfer_Finder>& start,
                                                  const int                           level,
                                                  const bool                          erronly) const
@@ -1181,11 +1037,9 @@ bool Transfer_ProcessForFinder::IsCheckListEmpty(const occ::handle<Transfer_Find
   return true;
 }
 
-//=================================================================================================
-
 void Transfer_ProcessForFinder::RemoveResult(const occ::handle<Transfer_Finder>& start,
                                              const int                           level,
-                                             const bool /*compute*/)
+                                             const bool)
 {
   int max = NbMapped();
   int ind = MapIndex(start);
@@ -1206,8 +1060,6 @@ void Transfer_ProcessForFinder::RemoveResult(const occ::handle<Transfer_Finder>&
       continue;
   }
 }
-
-//=================================================================================================
 
 int Transfer_ProcessForFinder::CheckNum(const occ::handle<Transfer_Finder>&) const
 {

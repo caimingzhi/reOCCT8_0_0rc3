@@ -4,9 +4,6 @@
 #include <math_Vector.hpp>
 #include <NCollection_Sequence.hpp>
 
-//==========================================================================
-// function : An empty constructor.
-//==========================================================================
 math_KronrodSingleIntegration::math_KronrodSingleIntegration()
     : myIsDone(false),
       myValue(0.),
@@ -16,11 +13,6 @@ math_KronrodSingleIntegration::math_KronrodSingleIntegration()
       myNbIterReached(0)
 {
 }
-
-//==========================================================================
-// function : Constructor
-//
-//==========================================================================
 
 math_KronrodSingleIntegration::math_KronrodSingleIntegration(math_Function& theFunction,
                                                              const double   theLower,
@@ -35,11 +27,6 @@ math_KronrodSingleIntegration::math_KronrodSingleIntegration(math_Function& theF
 {
   Perform(theFunction, theLower, theUpper, theNbPnts);
 }
-
-//==========================================================================
-// function : Constructor
-//
-//==========================================================================
 
 math_KronrodSingleIntegration::math_KronrodSingleIntegration(math_Function& theFunction,
                                                              const double   theLower,
@@ -57,17 +44,12 @@ math_KronrodSingleIntegration::math_KronrodSingleIntegration(math_Function& theF
   Perform(theFunction, theLower, theUpper, theNbPnts, theTolerance, theMaxNbIter);
 }
 
-//==========================================================================
-// function : Perform
-//           Computation of the integral.
-//==========================================================================
-
 void math_KronrodSingleIntegration::Perform(math_Function& theFunction,
                                             const double   theLower,
                                             const double   theUpper,
                                             const int      theNbPnts)
 {
-  // const double aMinVol = Epsilon(1.);
+
   const double aPtol = 1.e-9;
   myNbIterReached    = 0;
 
@@ -83,7 +65,6 @@ void math_KronrodSingleIntegration::Perform(math_Function& theFunction,
     return;
   }
 
-  // Get an odd value of number of initial points.
   myNbPntsReached = (theNbPnts % 2 == 0) ? theNbPnts + 1 : theNbPnts;
   myErrorReached  = RealLast();
 
@@ -113,17 +94,10 @@ void math_KronrodSingleIntegration::Perform(math_Function& theFunction,
   if (!myIsDone)
     return;
 
-  // double anAbsVal = std::abs(myValue);
-
   myAbsolutError = myErrorReached;
-
-  // if (anAbsVal > aMinVol)
-  // myErrorReached /= anAbsVal;
 
   myNbIterReached++;
 }
-
-//=================================================================================================
 
 void math_KronrodSingleIntegration::Perform(math_Function& theFunction,
                                             const double   theLower,
@@ -135,13 +109,12 @@ void math_KronrodSingleIntegration::Perform(math_Function& theFunction,
   double aMinVol  = Epsilon(1.);
   myNbIterReached = 0;
 
-  // Check prerequisites.
   if (theNbPnts < 3 || theTolerance <= 0.)
   {
     myIsDone = false;
     return;
   }
-  // Get an odd value of number of initial points.
+
   myNbPntsReached = (theNbPnts % 2 == 0) ? theNbPnts + 1 : theNbPnts;
 
   int         aNGauss = myNbPntsReached / 2;
@@ -157,7 +130,6 @@ void math_KronrodSingleIntegration::Perform(math_Function& theFunction,
     return;
   }
 
-  // First iteration
   myIsDone = GKRule(theFunction,
                     theLower,
                     theUpper,
@@ -201,7 +173,7 @@ void math_KronrodSingleIntegration::Perform(math_Function& theFunction,
 
   while (myErrorReached > theTolerance && myNbIterReached < theMaxNbIter)
   {
-    // Searching interval with max error
+
     nbints = anIntervals.Length() - 1;
     nint   = 0;
     maxerr = 0.;
@@ -250,8 +222,6 @@ void math_KronrodSingleIntegration::Perform(math_Function& theFunction,
     if (count > 50)
       return;
 
-    // Inserting new interval
-
     anIntervals.InsertAfter(nint, c);
     anErrors(nint) = e1;
     anErrors.InsertAfter(nint, e2);
@@ -260,12 +230,10 @@ void math_KronrodSingleIntegration::Perform(math_Function& theFunction,
   }
 }
 
-//=================================================================================================
-
 bool math_KronrodSingleIntegration::GKRule(math_Function& theFunction,
                                            const double   theLower,
                                            const double   theUpper,
-                                           const math_Vector& /*theGaussP*/,
+                                           const math_Vector&,
                                            const math_Vector& theGaussW,
                                            const math_Vector& theKronrodP,
                                            const math_Vector& theKronrodW,
@@ -290,7 +258,6 @@ bool math_KronrodSingleIntegration::GKRule(math_Function& theFunction,
   double aXm = 0.5 * (theUpper + theLower);
   double aXr = 0.5 * (theUpper - theLower);
 
-  // Compute Gauss quadrature
   aGaussVal = 0.;
   theValue  = 0.;
 
@@ -310,7 +277,6 @@ bool math_KronrodSingleIntegration::GKRule(math_Function& theFunction,
     theValue += (aVal1 + aVal2) * theKronrodW.Value(i);
   }
 
-  // Compute value in the middle point.
   if (!theFunction.Value(aXm, aVal1))
   {
     IsDone = false;
@@ -323,7 +289,6 @@ bool math_KronrodSingleIntegration::GKRule(math_Function& theFunction,
   if (i == aNPnt2)
     aGaussVal += aVal1 * theGaussW.Value(aNPnt2 / 2);
 
-  // Compute Kronrod quadrature
   for (i = 1; i < aNPnt2; i += 2)
   {
     aDx = aXr * theKronrodP.Value(i);
@@ -351,8 +316,6 @@ bool math_KronrodSingleIntegration::GKRule(math_Function& theFunction,
   theValue *= aXr;
   aGaussVal *= aXr;
 
-  // Compute the error and the new number of Kronrod points.
-
   theError = std::abs(theValue - aGaussVal);
 
   double scale = 1.;
@@ -360,8 +323,6 @@ bool math_KronrodSingleIntegration::GKRule(math_Function& theFunction,
     scale = std::pow((200. * theError / asc), 1.5);
   if (scale < 1.)
     theError = std::min(theError, asc * scale);
-
-  // theFunction.GetStateNumber();
 
   return true;
 }

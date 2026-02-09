@@ -36,16 +36,11 @@ bool Draw_ParseFailed = true;
 static bool autodisp  = true;
 static bool repaint2d = false, repaint3d = false;
 
-//! Returns dictionary of variables
-//! Variables are stored in a map Integer, Transient.
-//! The Integer Value is the content of the Tcl variable.
 static NCollection_Map<occ::handle<Draw_Drawable3D>>& Draw_changeDrawables()
 {
   static NCollection_Map<occ::handle<Draw_Drawable3D>> theVariables;
   return theVariables;
 }
-
-//=================================================================================================
 
 static int         p_id   = 0;
 static int         p_X    = 0;
@@ -53,9 +48,6 @@ static int         p_Y    = 0;
 static int         p_b    = 0;
 static const char* p_Name = "";
 
-//=======================================================================
-// save
-//=======================================================================
 static int save(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs != 3)
@@ -112,9 +104,6 @@ static int save(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
   return 0;
 }
 
-//=======================================================================
-// read
-//=======================================================================
 static int restore(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs != 3)
@@ -146,7 +135,7 @@ static int restore(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVe
     occ::handle<Draw_Drawable3D> aDrawable = Draw_Drawable3D::Restore(aType, *aStream);
     if (aDrawable.IsNull())
     {
-      // assume that this file stores a DBRep_DrawableShape variable
+
       aStream->seekg(0, std::ios::beg);
       aDrawable = Draw_Drawable3D::Restore("DBRep_DrawableShape", *aStream);
     }
@@ -163,10 +152,6 @@ static int restore(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVe
   theDI << aVarName;
   return 0;
 }
-
-//=======================================================================
-// display
-//=======================================================================
 
 static int display(Draw_Interpretor& di, int n, const char** a)
 {
@@ -190,10 +175,6 @@ static int display(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// erase, clear, donly
-//=======================================================================
-
 static int erase(Draw_Interpretor& di, int n, const char** a)
 {
   static bool draw_erase_mute = false;
@@ -210,10 +191,9 @@ static int erase(Draw_Interpretor& di, int n, const char** a)
 
   if (n <= 1 || donly)
   {
-    // clear, 2dclear, donly, erase (without arguments)
+
     int i;
 
-    // solve the names for "." before erasing
     if (donly)
     {
       for (i = 1; i < n; i++)
@@ -228,7 +208,6 @@ static int erase(Draw_Interpretor& di, int n, const char** a)
       }
     }
 
-    // sauvegarde des proteges visibles
     NCollection_Sequence<occ::handle<Draw_Drawable3D>> prot;
     for (NCollection_Map<occ::handle<Draw_Drawable3D>>::Iterator aMapIt(Draw::Drawables());
          aMapIt.More();
@@ -244,14 +223,12 @@ static int erase(Draw_Interpretor& di, int n, const char** a)
       }
     }
 
-    // effacement de toutes les variables
     int erasemode = 1;
     if (a[0][0] == '2')
       erasemode = 2;
     if (a[0][0] == 'c')
       erasemode = 3;
 
-    // effacement des graphiques non variables
     if (erasemode == 2)
       dout.Clear2D();
     else if (erasemode == 3)
@@ -259,7 +236,6 @@ static int erase(Draw_Interpretor& di, int n, const char** a)
     else
       dout.Clear();
 
-    // affichage pour donly
     if (donly)
     {
       for (i = 1; i < n; i++)
@@ -277,7 +253,6 @@ static int erase(Draw_Interpretor& di, int n, const char** a)
       }
     }
 
-    // afficahge des proteges
     for (i = 1; i <= prot.Length(); i++)
       dout << prot(i);
   }
@@ -306,10 +281,6 @@ static int erase(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// draw
-//=======================================================================
-
 static int draw(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 3)
@@ -334,10 +305,6 @@ static int draw(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// protect, unprotect
-//=======================================================================
-
 static int protect(Draw_Interpretor& di, int n, const char** a)
 {
   if (n <= 1)
@@ -355,10 +322,6 @@ static int protect(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// autodisplay
-//=======================================================================
-
 static int autodisplay(Draw_Interpretor& di, int n, const char** a)
 {
   if (n <= 1)
@@ -373,10 +336,6 @@ static int autodisplay(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=======================================================================
-// whatis
-//=======================================================================
 
 static int whatis(Draw_Interpretor& di, int n, const char** a)
 {
@@ -393,10 +352,6 @@ static int whatis(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// value
-//=======================================================================
-
 static int value(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 2)
@@ -406,37 +361,29 @@ static int value(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int dname(Draw_Interpretor& di, int n, const char** a)
 {
   if (n <= 1)
   {
     return 1;
   }
-  //
+
   Standard_PCharacter          pC;
   int                          i;
   occ::handle<Draw_Drawable3D> aD;
-  //
+
   for (i = 1; i < n; ++i)
   {
     aD = Draw::Get(a[i]);
     if (!aD.IsNull())
     {
-      // modified by NIZNHY-PKV Tue Jun 10 10:18:13 2008f
-      // di << a[i];
+
       pC = (Standard_PCharacter)aD->Name();
       di << pC;
-      // modified by NIZNHY-PKV Tue Jun 10 10:18:18 2008t
     }
   }
   return 0;
 }
-
-//=======================================================================
-// dump
-//=======================================================================
 
 static int dump(Draw_Interpretor& DI, int n, const char** a)
 {
@@ -458,10 +405,6 @@ static int dump(Draw_Interpretor& DI, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// copy
-//=======================================================================
-
 static int copy(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 3)
@@ -479,7 +422,7 @@ static int copy(Draw_Interpretor&, int n, const char** a)
       if (cop)
         D = D->Copy();
       else
-        // clear old name
+
         Draw::Set(a[i], occ::handle<Draw_Drawable3D>());
 
       Draw::Set(a[i + 1], D);
@@ -487,8 +430,6 @@ static int copy(Draw_Interpretor&, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int repaintall(Draw_Interpretor&, int, const char**)
 {
@@ -501,8 +442,6 @@ static int repaintall(Draw_Interpretor&, int, const char**)
   dout.Flush();
   return 0;
 }
-
-//=================================================================================================
 
 static int set(Draw_Interpretor& di, int n, const char** a)
 {
@@ -521,9 +460,7 @@ static int set(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
-static int dsetenv(Draw_Interpretor& /*di*/, int argc, const char** argv)
+static int dsetenv(Draw_Interpretor&, int argc, const char** argv)
 {
   if (argc < 2)
   {
@@ -542,8 +479,6 @@ static int dsetenv(Draw_Interpretor& /*di*/, int argc, const char** argv)
   return env.Failed();
 }
 
-//=================================================================================================
-
 static int dgetenv(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 2)
@@ -557,8 +492,6 @@ static int dgetenv(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int isdraw(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 2)
@@ -570,8 +503,6 @@ static int isdraw(Draw_Interpretor& di, int n, const char** a)
     di << "1";
   return 0;
 }
-
-//=================================================================================================
 
 int isprot(Draw_Interpretor& di, int n, const char** a)
 {
@@ -589,8 +520,6 @@ int isprot(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int pick(Draw_Interpretor&, int n, const char** a)
 {
@@ -615,8 +544,6 @@ static int pick(Draw_Interpretor&, int n, const char** a)
   Draw::Set(a[5], b);
   return 0;
 }
-
-//=================================================================================================
 
 static int lastrep(Draw_Interpretor& di, int n, const char** a)
 {
@@ -651,17 +578,14 @@ static int lastrep(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 void Draw::Set(const char* name, const occ::handle<Draw_Drawable3D>& D)
 {
   Draw::Set(name, D, autodisp);
 }
 
-// MKV 29.03.05
 static char* tracevar(ClientData CD, Tcl_Interp*, const char* name, const char*, int)
 {
-  // protect if the map was destroyed before the interpreter
+
   if (Draw::Drawables().IsEmpty())
   {
     return nullptr;
@@ -669,7 +593,6 @@ static char* tracevar(ClientData CD, Tcl_Interp*, const char* name, const char*,
 
   Draw_Interpretor& aCommands = Draw::GetInterpretor();
 
-  // MSV 9.10.14 CR25344
   occ::handle<Draw_Drawable3D> D(reinterpret_cast<Draw_Drawable3D*>(CD));
   if (D.IsNull())
   {
@@ -697,8 +620,6 @@ static char* tracevar(ClientData CD, Tcl_Interp*, const char* name, const char*,
   }
 }
 
-//=================================================================================================
-
 void Draw::Set(const char* name, const occ::handle<Draw_Drawable3D>& D, const bool displ)
 {
   Draw_Interpretor& aCommands = Draw::GetInterpretor();
@@ -714,7 +635,7 @@ void Draw::Set(const char* name, const occ::handle<Draw_Drawable3D>& D, const bo
   }
   else
   {
-    // Check if the variable with the same name exists
+
     ClientData                   aCD = Tcl_VarTraceInfo(aCommands.Interp(),
                                       name,
                                       TCL_TRACE_UNSETS | TCL_TRACE_WRITES,
@@ -738,7 +659,6 @@ void Draw::Set(const char* name, const occ::handle<Draw_Drawable3D>& D, const bo
       Draw_changeDrawables().Add(D);
       D->Name(Tcl_SetVar(aCommands.Interp(), name, name, 0));
 
-      // set the trace function
       Tcl_TraceVar(aCommands.Interp(),
                    name,
                    TCL_TRACE_UNSETS | TCL_TRACE_WRITES,
@@ -755,8 +675,6 @@ void Draw::Set(const char* name, const occ::handle<Draw_Drawable3D>& D, const bo
   }
 }
 
-//=================================================================================================
-
 void Draw::Set(const char* theName, const double theValue)
 {
   if (occ::handle<Draw_Number> aNumber = occ::down_cast<Draw_Number>(Draw::GetExisting(theName)))
@@ -769,8 +687,6 @@ void Draw::Set(const char* theName, const double theValue)
     Draw::Set(theName, aNumber, false);
   }
 }
-
-//=================================================================================================
 
 occ::handle<Draw_Drawable3D> Draw::getDrawable(const char*& theName, bool theToAllowPick)
 {
@@ -801,8 +717,6 @@ occ::handle<Draw_Drawable3D> Draw::getDrawable(const char*& theName, bool theToA
   return aDrawable;
 }
 
-//=================================================================================================
-
 bool Draw::Get(const char* theName, double& theValue)
 {
   if (occ::handle<Draw_Number> aNumber = occ::down_cast<Draw_Number>(Draw::GetExisting(theName)))
@@ -813,8 +727,6 @@ bool Draw::Get(const char* theName, double& theValue)
   return false;
 }
 
-//=================================================================================================
-
 void Draw::LastPick(int& view, int& X, int& Y, int& button)
 {
   view   = p_id;
@@ -823,17 +735,12 @@ void Draw::LastPick(int& view, int& X, int& Y, int& button)
   button = p_b;
 }
 
-//=================================================================================================
-
 void Draw::Repaint()
 {
   repaint2d = true;
   repaint3d = true;
 }
 
-//=================================================================================================
-
-// static int trigo (Draw_Interpretor& di, int n, const char** a)
 static int trigo(Draw_Interpretor& di, int, const char** a)
 {
 
@@ -856,10 +763,6 @@ static int trigo(Draw_Interpretor& di, int, const char** a)
 
   return 0;
 }
-
-//=======================================================================
-// Atof and Atoi
-//=======================================================================
 
 static bool Numeric(char c)
 {
@@ -911,13 +814,13 @@ static double ParseValue(char*& theName)
     }
     default:
     {
-      // process a string
+
       char* p = theName;
       while (Numeric(*p))
       {
         ++p;
       }
-      // process scientific notation
+
       if ((*p == 'e') || (*p == 'E'))
       {
         if (Numeric(*(p + 1)) || *(p + 1) == '+' || *(p + 1) == '-')
@@ -932,15 +835,15 @@ static double ParseValue(char*& theName)
       char c = *p;
       *p     = '\0';
 
-      if (Numeric(*theName)) // numeric literal
+      if (Numeric(*theName))
       {
         x = Atof(theName);
       }
-      else if (!Draw::Get((const char*)theName, x)) // variable
+      else if (!Draw::Get((const char*)theName, x))
       {
-        // search for a function ...
+
         *p = c;
-        // count arguments
+
         int   argc = 1;
         char* q    = p;
         while ((*q == ' ') || (*q == '\t'))
@@ -975,8 +878,7 @@ static double ParseValue(char*& theName)
           }
           else
           {
-            // build function call
-            // replace , and first and last () by space
+
             if (argc > 1)
             {
               while (*p != '(')
@@ -1011,7 +913,6 @@ static double ParseValue(char*& theName)
 
               Draw_Interpretor& aCommands = Draw::GetInterpretor();
 
-              // call the function, save the current result
               TCollection_AsciiString sv(aCommands.Result());
               if (*aCommands.Result())
               {
@@ -1108,11 +1009,9 @@ static double Parse(char*& name)
   }
 }
 
-//=================================================================================================
-
 double Draw::Atof(const char* theName)
 {
-  // copy the string
+
   NCollection_Array1<char> aBuff(0, (int)strlen(theName));
   char*                    n = &aBuff.ChangeFirst();
   strcpy(n, theName);
@@ -1124,8 +1023,6 @@ double Draw::Atof(const char* theName)
     Draw_ParseFailed = true;
   return x;
 }
-
-//=================================================================================================
 
 bool Draw::ParseReal(const char* theExpressionString, double& theParsedRealValue)
 {
@@ -1139,14 +1036,10 @@ bool Draw::ParseReal(const char* theExpressionString, double& theParsedRealValue
   return true;
 }
 
-//=================================================================================================
-
 int Draw::Atoi(const char* name)
 {
   return (int)Draw::Atof(name);
 }
-
-//=================================================================================================
 
 bool Draw::ParseInteger(const char* theExpressionString, int& theParsedIntegerValue)
 {
@@ -1164,29 +1057,20 @@ bool Draw::ParseInteger(const char* theExpressionString, int& theParsedIntegerVa
   return true;
 }
 
-//=================================================================================================
-
 void Draw::Set(const char* Name, const char* val)
 {
   Standard_PCharacter pName, pVal;
-  //
+
   pName = (Standard_PCharacter)Name;
   pVal  = (Standard_PCharacter)val;
-  //
+
   Tcl_SetVar(Draw::GetInterpretor().Interp(), pName, pVal, 0);
 }
-
-//=================================================================================================
 
 const NCollection_Map<occ::handle<Draw_Drawable3D>>& Draw::Drawables()
 {
   return Draw_changeDrawables();
 }
-
-//=======================================================================
-// Command management
-// refresh the screen
-//=======================================================================
 
 static void before()
 {
@@ -1212,8 +1096,6 @@ static void after(int)
 extern void (*Draw_BeforeCommand)();
 extern void (*Draw_AfterCommand)(int);
 
-//=================================================================================================
-
 void Draw::VariableCommands(Draw_Interpretor& theCommandsArg)
 {
   static bool Done = false;
@@ -1221,14 +1103,11 @@ void Draw::VariableCommands(Draw_Interpretor& theCommandsArg)
     return;
   Done = true;
 
-  // set up start and stop command
   Draw_BeforeCommand = &before;
   Draw_AfterCommand  = &after;
 
-  // Register save/restore tools
   Draw_Number::RegisterFactory();
 
-  // set up some variables
   const char*              n;
   occ::handle<Draw_Axis3D> theAxes3d = new Draw_Axis3D(gp_Pnt(0, 0, 0), Draw_bleu, 20);
   n                                  = "axes";
@@ -1306,13 +1185,10 @@ void Draw::VariableCommands(Draw_Interpretor& theCommandsArg)
   theCommandsArg.Add("dname", "dname name, print name", __FILE__, dname, g);
   theCommandsArg.Add("dump", "dump name1 name2 ...", __FILE__, dump, g);
   theCommandsArg.Add("copy", "copy name1 toname1 name2 toname2 ...", __FILE__, copy, g);
-  // san - 02/08/2002 - `rename` command changed to `renamevar` since it conflicts with
-  // the built-in Tcl command `rename`
-  // theCommands.Add("rename","rename name1 toname1 name2 toname2 ...",__FILE__,copy,g);
+
   theCommandsArg.Add("renamevar", "renamevar name1 toname1 name2 toname2 ...", __FILE__, copy, g);
   theCommandsArg.Add("dset", "var1 value1 vr2 value2 ...", __FILE__, set, g);
 
-  // commands to access C environment variables; see Mantis issue #23197
   theCommandsArg.Add("dgetenv",
                      "var : get value of environment variable in C subsystem",
                      __FILE__,

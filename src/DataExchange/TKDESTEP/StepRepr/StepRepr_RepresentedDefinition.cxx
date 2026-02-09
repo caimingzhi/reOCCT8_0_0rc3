@@ -6,11 +6,7 @@
 #include <StepRepr_ShapeAspect.hpp>
 #include <StepRepr_ShapeAspectRelationship.hpp>
 
-//=================================================================================================
-
 StepRepr_RepresentedDefinition::StepRepr_RepresentedDefinition() = default;
-
-//=================================================================================================
 
 int StepRepr_RepresentedDefinition::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -29,21 +25,15 @@ int StepRepr_RepresentedDefinition::CaseNum(const occ::handle<Standard_Transient
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_GeneralProperty> StepRepr_RepresentedDefinition::GeneralProperty() const
 {
   return occ::down_cast<StepBasic_GeneralProperty>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepRepr_PropertyDefinition> StepRepr_RepresentedDefinition::PropertyDefinition() const
 {
   return occ::down_cast<StepRepr_PropertyDefinition>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepRepr_PropertyDefinitionRelationship> StepRepr_RepresentedDefinition::
   PropertyDefinitionRelationship() const
@@ -51,14 +41,10 @@ occ::handle<StepRepr_PropertyDefinitionRelationship> StepRepr_RepresentedDefinit
   return occ::down_cast<StepRepr_PropertyDefinitionRelationship>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepRepr_ShapeAspect> StepRepr_RepresentedDefinition::ShapeAspect() const
 {
   return occ::down_cast<StepRepr_ShapeAspect>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepRepr_ShapeAspectRelationship> StepRepr_RepresentedDefinition::
   ShapeAspectRelationship() const

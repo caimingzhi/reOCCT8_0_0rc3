@@ -22,10 +22,8 @@ class Geom2dInt_TheIntConicCurveOfGInter : public IntRes2d_Intersection
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor.
   Geom2dInt_TheIntConicCurveOfGInter();
 
-  //! Intersection between a line and a parametric curve.
   Geom2dInt_TheIntConicCurveOfGInter(const gp_Lin2d&          L,
                                      const IntRes2d_Domain&   D1,
                                      const Adaptor2d_Curve2d& PCurve,
@@ -33,7 +31,6 @@ public:
                                      const double             TolConf,
                                      const double             Tol);
 
-  //! Intersection between a line and a parametric curve.
   Standard_EXPORT Geom2dInt_TheIntConicCurveOfGInter(const gp_Circ2d&         C,
                                                      const IntRes2d_Domain&   D1,
                                                      const Adaptor2d_Curve2d& PCurve,
@@ -41,7 +38,6 @@ public:
                                                      const double             TolConf,
                                                      const double             Tol);
 
-  //! Intersection between an ellipse and a parametric curve.
   Standard_EXPORT Geom2dInt_TheIntConicCurveOfGInter(const gp_Elips2d&        E,
                                                      const IntRes2d_Domain&   D1,
                                                      const Adaptor2d_Curve2d& PCurve,
@@ -49,7 +45,6 @@ public:
                                                      const double             TolConf,
                                                      const double             Tol);
 
-  //! Intersection between a parabola and a parametric curve.
   Standard_EXPORT Geom2dInt_TheIntConicCurveOfGInter(const gp_Parab2d&        Prb,
                                                      const IntRes2d_Domain&   D1,
                                                      const Adaptor2d_Curve2d& PCurve,
@@ -57,8 +52,6 @@ public:
                                                      const double             TolConf,
                                                      const double             Tol);
 
-  //! Intersection between the main branch of an hyperbola
-  //! and a parametric curve.
   Standard_EXPORT Geom2dInt_TheIntConicCurveOfGInter(const gp_Hypr2d&         H,
                                                      const IntRes2d_Domain&   D1,
                                                      const Adaptor2d_Curve2d& PCurve,
@@ -66,7 +59,6 @@ public:
                                                      const double             TolConf,
                                                      const double             Tol);
 
-  //! Intersection between a line and a parametric curve.
   void Perform(const gp_Lin2d&          L,
                const IntRes2d_Domain&   D1,
                const Adaptor2d_Curve2d& PCurve,
@@ -74,7 +66,6 @@ public:
                const double             TolConf,
                const double             Tol);
 
-  //! Intersection between a line and a parametric curve.
   void Perform(const gp_Circ2d&         C,
                const IntRes2d_Domain&   D1,
                const Adaptor2d_Curve2d& PCurve,
@@ -82,7 +73,6 @@ public:
                const double             TolConf,
                const double             Tol);
 
-  //! Intersection between an ellipse and a parametric curve.
   void Perform(const gp_Elips2d&        E,
                const IntRes2d_Domain&   D1,
                const Adaptor2d_Curve2d& PCurve,
@@ -90,7 +80,6 @@ public:
                const double             TolConf,
                const double             Tol);
 
-  //! Intersection between a parabola and a parametric curve.
   void Perform(const gp_Parab2d&        Prb,
                const IntRes2d_Domain&   D1,
                const Adaptor2d_Curve2d& PCurve,
@@ -98,8 +87,6 @@ public:
                const double             TolConf,
                const double             Tol);
 
-  //! Intersection between the main branch of an hyperbola
-  //! and a parametric curve.
   void Perform(const gp_Hypr2d&         H,
                const IntRes2d_Domain&   D1,
                const Adaptor2d_Curve2d& PCurve,
@@ -108,8 +95,6 @@ public:
                const double             Tol);
 
 private:
-  //! Intersection between a conic fom gp
-  //! and a parametric curve.
   void Perform(const IntCurve_IConicTool& ICurve,
                const IntRes2d_Domain&     D1,
                const Adaptor2d_Curve2d&   PCurve,

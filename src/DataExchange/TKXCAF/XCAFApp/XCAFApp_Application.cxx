@@ -8,8 +8,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFApp_Application, TDocStd_Application)
 
-//=================================================================================================
-
 occ::handle<XCAFApp_Application> XCAFApp_Application::GetApplication()
 {
   static occ::handle<XCAFApp_Application> locApp;
@@ -18,31 +16,22 @@ occ::handle<XCAFApp_Application> XCAFApp_Application::GetApplication()
   return locApp;
 }
 
-//=================================================================================================
-
 XCAFApp_Application::XCAFApp_Application()
 {
-  // register driver for presentation
+
   occ::handle<TPrsStd_DriverTable> table = TPrsStd_DriverTable::Get();
   table->AddDriver(XCAFPrs_Driver::GetID(), new XCAFPrs_Driver);
 }
 
-//=================================================================================================
-
 const char* XCAFApp_Application::ResourcesName()
 {
   return static_cast<const char*>("XCAF");
-  //  return static_cast<const char*>("Standard");
 }
-
-//=================================================================================================
 
 void XCAFApp_Application::InitDocument(const occ::handle<CDM_Document>& aDoc) const
 {
   XCAFDoc_DocumentTool::Set(occ::down_cast<TDocStd_Document>(aDoc)->Main());
 }
-
-//=================================================================================================
 
 void XCAFApp_Application::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

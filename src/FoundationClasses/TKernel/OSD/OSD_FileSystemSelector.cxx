@@ -1,26 +1,13 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OSD_FileSystemSelector.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OSD_FileSystemSelector, OSD_FileSystem)
 
-//=================================================================================================
-
 void OSD_FileSystemSelector::AddProtocol(const occ::handle<OSD_FileSystem>& theFileSystem,
                                          bool                               theIsPreferred)
 {
-  myProtocols.Remove(theFileSystem); // avoid duplicates
+  myProtocols.Remove(theFileSystem);
   if (theIsPreferred)
   {
     myProtocols.Prepend(theFileSystem);
@@ -31,14 +18,10 @@ void OSD_FileSystemSelector::AddProtocol(const occ::handle<OSD_FileSystem>& theF
   }
 }
 
-//=================================================================================================
-
 void OSD_FileSystemSelector::RemoveProtocol(const occ::handle<OSD_FileSystem>& theFileSystem)
 {
   myProtocols.Remove(theFileSystem);
 }
-
-//=================================================================================================
 
 bool OSD_FileSystemSelector::IsSupportedPath(const TCollection_AsciiString& theUrl) const
 {
@@ -53,8 +36,6 @@ bool OSD_FileSystemSelector::IsSupportedPath(const TCollection_AsciiString& theU
   }
   return false;
 }
-
-//=================================================================================================
 
 bool OSD_FileSystemSelector::IsOpenIStream(const std::shared_ptr<std::istream>& theStream) const
 {
@@ -80,8 +61,6 @@ bool OSD_FileSystemSelector::IsOpenIStream(const std::shared_ptr<std::istream>& 
   return false;
 }
 
-//=================================================================================================
-
 bool OSD_FileSystemSelector::IsOpenOStream(const std::shared_ptr<std::ostream>& theStream) const
 {
   std::shared_ptr<OSD_OStreamBuffer> aFileStream =
@@ -105,8 +84,6 @@ bool OSD_FileSystemSelector::IsOpenOStream(const std::shared_ptr<std::ostream>& 
   }
   return false;
 }
-
-//=================================================================================================
 
 std::shared_ptr<std::istream> OSD_FileSystemSelector::OpenIStream(
   const TCollection_AsciiString&       theUrl,
@@ -132,8 +109,6 @@ std::shared_ptr<std::istream> OSD_FileSystemSelector::OpenIStream(
   return std::shared_ptr<std::istream>();
 }
 
-//=================================================================================================
-
 std::shared_ptr<std::ostream> OSD_FileSystemSelector::OpenOStream(
   const TCollection_AsciiString& theUrl,
   const std::ios_base::openmode  theMode)
@@ -154,8 +129,6 @@ std::shared_ptr<std::ostream> OSD_FileSystemSelector::OpenOStream(
   }
   return std::shared_ptr<std::ostream>();
 }
-
-//=================================================================================================
 
 std::shared_ptr<std::streambuf> OSD_FileSystemSelector::OpenStreamBuffer(
   const TCollection_AsciiString& theUrl,

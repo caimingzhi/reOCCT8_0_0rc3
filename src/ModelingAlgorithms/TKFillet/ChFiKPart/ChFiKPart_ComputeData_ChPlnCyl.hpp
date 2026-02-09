@@ -16,11 +16,6 @@ bool ChFiKPart_MakeChamfer(TopOpeBRepDS_DataStructure&         DStr,
                            const TopAbs_Orientation            Ofpl,
                            const bool                          plandab);
 
-// File:	ChFiKPart_ComputeData_ChPlnCyl.cxx
-// Created:	Fri May 10 09:43:15 1996
-// Author:	Stagiaire Xuan Trang PHAMPHU
-//		<xpu@phylox>
-
 bool ChFiKPart_MakeChamfer(TopOpeBRepDS_DataStructure&         DStr,
                            const occ::handle<ChFiDS_SurfData>& Data,
                            const ChFiDS_ChamfMode              theMode,

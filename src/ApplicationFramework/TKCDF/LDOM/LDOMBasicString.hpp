@@ -9,9 +9,6 @@ class LDOM_NullPtr;
 class TCollection_AsciiString;
 class TCollection_ExtendedString;
 
-//  Block of comments describing class LDOMBasicString
-//
-
 class LDOMBasicString
 {
   friend class LDOM_MemManager;
@@ -22,11 +19,11 @@ public:
   {
     LDOM_NULL = 0,
     LDOM_Integer,
-    //    LDOM_Real,
-    LDOM_AsciiFree,     // String not connected to any container
-    LDOM_AsciiDoc,      // String connected to LDOM_Document (container)
-    LDOM_AsciiDocClear, // --"--"--, consists of only XML-valid chars
-    LDOM_AsciiHashed    // String connected to hash table
+
+    LDOM_AsciiFree,
+    LDOM_AsciiDoc,
+    LDOM_AsciiDocClear,
+    LDOM_AsciiHashed
   };
 
   Standard_EXPORT ~LDOMBasicString();
@@ -35,17 +32,12 @@ public:
 
   Standard_EXPORT bool GetInteger(int& aResult) const;
 
-  //    Conversion to Integer (only for LDOM_Integer)
-
   const char* GetString() const
   {
     return myType == LDOM_Integer || myType == LDOM_NULL ? "" : (const char*)myVal.ptr;
   }
 
-  //    Conversion to char * (only for LDOM_Ascii*)
-
   Standard_EXPORT bool equals(const LDOMBasicString& anOther) const;
-  //    Compare two strings by content
 
   Standard_EXPORT LDOMBasicString& operator=(const LDOM_NullPtr*);
 
@@ -65,7 +57,6 @@ public:
     return myType != anOther.myType || myVal.i != anOther.myVal.i;
   }
 
-  //      AGV auxiliary API
   Standard_EXPORT operator TCollection_AsciiString() const;
 
   Standard_EXPORT operator TCollection_ExtendedString() const;
@@ -76,11 +67,7 @@ public:
     myVal.ptr = nullptr;
   }
 
-  // Empty constructor
-
   Standard_EXPORT LDOMBasicString(const LDOMBasicString& anOther);
-
-  // Copy constructor
 
   LDOMBasicString(const int aValue)
       : myType(LDOM_Integer)
@@ -89,18 +76,14 @@ public:
   }
 
   Standard_EXPORT LDOMBasicString(const char* aValue);
-  //    Create LDOM_AsciiFree
 
   Standard_EXPORT LDOMBasicString(const char* aValue, const occ::handle<LDOM_MemManager>& aDoc);
-  //    Create LDOM_AsciiDoc
 
   Standard_EXPORT LDOMBasicString(const char*                         aValue,
                                   const int                           aLen,
                                   const occ::handle<LDOM_MemManager>& aDoc);
-  //    Create LDOM_AsciiDoc
 
 protected:
-  // ---------- PROTECTED METHODS ----------
   void SetDirect(const StringType aType, const char* aValue)
   {
     myType    = aType;
@@ -108,8 +91,6 @@ protected:
   }
 
 protected:
-  // ---------- PROTECTED FIELDS ----------
-
   StringType myType;
 
   union

@@ -8,23 +8,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_SelectionManager, Standard_Transient)
 
-//=================================================================================================
-
 SelectMgr_SelectionManager::SelectMgr_SelectionManager(
   const occ::handle<SelectMgr_ViewerSelector>& theSelector)
     : mySelector(theSelector)
 {
 }
 
-//=================================================================================================
-
 bool SelectMgr_SelectionManager::Contains(
   const occ::handle<SelectMgr_SelectableObject>& theObject) const
 {
   return myGlobal.Contains(theObject);
 }
-
-//=================================================================================================
 
 void SelectMgr_SelectionManager::Load(const occ::handle<SelectMgr_SelectableObject>& theObject,
                                       const int                                      theMode)
@@ -51,8 +45,6 @@ void SelectMgr_SelectionManager::Load(const occ::handle<SelectMgr_SelectableObje
   if (theMode != -1)
     loadMode(theObject, theMode);
 }
-
-//=================================================================================================
 
 void SelectMgr_SelectionManager::Remove(const occ::handle<SelectMgr_SelectableObject>& theObject)
 {
@@ -87,8 +79,6 @@ void SelectMgr_SelectionManager::Remove(const occ::handle<SelectMgr_SelectableOb
 
   theObject->ClearSelections();
 }
-
-//=================================================================================================
 
 void SelectMgr_SelectionManager::Activate(const occ::handle<SelectMgr_SelectableObject>& theObject,
                                           const int                                      theMode)
@@ -131,7 +121,6 @@ void SelectMgr_SelectionManager::Activate(const occ::handle<SelectMgr_Selectable
         mySelector->RemoveSelectionOfObject(theObject, aSelection);
       }
       theObject->RecomputePrimitives(theMode);
-      // pass through SelectMgr_TOU_Partial
     }
       [[fallthrough]];
     case SelectMgr_TOU_Partial:
@@ -172,8 +161,6 @@ void SelectMgr_SelectionManager::Activate(const occ::handle<SelectMgr_Selectable
   }
 }
 
-//=================================================================================================
-
 void SelectMgr_SelectionManager::Deactivate(
   const occ::handle<SelectMgr_SelectableObject>& theObject,
   const int                                      theMode)
@@ -210,8 +197,6 @@ void SelectMgr_SelectionManager::Deactivate(
     mySelector->Deactivate(aSel);
   }
 }
-
-//=================================================================================================
 
 bool SelectMgr_SelectionManager::IsActivated(
   const occ::handle<SelectMgr_SelectableObject>& theObject,
@@ -257,12 +242,6 @@ bool SelectMgr_SelectionManager::IsActivated(
   return !aSelection.IsNull() && mySelector->Status(aSelection) == SelectMgr_SOS_Activated;
 }
 
-//=======================================================================
-// function : ClearSelectionStructures
-// purpose  : Removes sensitive entities from all viewer selectors
-//           after method Clear() was called to the selection they belonged to
-//           or it was recomputed somehow
-//=======================================================================
 void SelectMgr_SelectionManager::ClearSelectionStructures(
   const occ::handle<SelectMgr_SelectableObject>& theObj,
   const int                                      theMode)
@@ -308,11 +287,6 @@ void SelectMgr_SelectionManager::ClearSelectionStructures(
   mySelector->RebuildObjectsTree();
 }
 
-//=======================================================================
-// function : RestoreSelectionStructuress
-// purpose  : Re-adds newely calculated sensitive  entities of recomputed selection
-//           defined by mode theMode to all viewer selectors contained that selection.
-//=======================================================================
 void SelectMgr_SelectionManager::RestoreSelectionStructures(
   const occ::handle<SelectMgr_SelectableObject>& theObj,
   const int                                      theMode)
@@ -357,8 +331,6 @@ void SelectMgr_SelectionManager::RestoreSelectionStructures(
   mySelector->RebuildObjectsTree();
 }
 
-//=================================================================================================
-
 void SelectMgr_SelectionManager::recomputeSelectionMode(
   const occ::handle<SelectMgr_SelectableObject>& theObject,
   const occ::handle<SelectMgr_Selection>&        theSelection,
@@ -372,8 +344,6 @@ void SelectMgr_SelectionManager::recomputeSelectionMode(
   theSelection->UpdateStatus(SelectMgr_TOU_None);
   theSelection->UpdateBVHStatus(SelectMgr_TBU_None);
 }
-
-//=================================================================================================
 
 void SelectMgr_SelectionManager::RecomputeSelection(
   const occ::handle<SelectMgr_SelectableObject>& theObject,
@@ -438,13 +408,6 @@ void SelectMgr_SelectionManager::RecomputeSelection(
   }
 }
 
-//=======================================================================
-// function : Update
-// purpose  : Selections are recalculated if they are flagged
-//           "TO RECALCULATE" and activated in one of selectors.
-//           If ForceUpdate = True, and they are "TO RECALCULATE"
-//           This is done without caring for the state of activation.
-//=======================================================================
 void SelectMgr_SelectionManager::Update(const occ::handle<SelectMgr_SelectableObject>& theObject,
                                         const bool                                     theIsForce)
 {
@@ -473,9 +436,8 @@ void SelectMgr_SelectionManager::Update(const occ::handle<SelectMgr_SelectableOb
         case SelectMgr_TOU_Full:
         {
           ClearSelectionStructures(theObject, aSelection->Mode());
-          theObject->RecomputePrimitives(aSelection->Mode()); // no break on purpose...
+          theObject->RecomputePrimitives(aSelection->Mode());
           RestoreSelectionStructures(theObject, aSelection->Mode());
-          // pass through SelectMgr_TOU_Partial
         }
           [[fallthrough]];
         case SelectMgr_TOU_Partial:
@@ -492,8 +454,6 @@ void SelectMgr_SelectionManager::Update(const occ::handle<SelectMgr_SelectableOb
     }
   }
 }
-
-//=================================================================================================
 
 void SelectMgr_SelectionManager::loadMode(const occ::handle<SelectMgr_SelectableObject>& theObject,
                                           const int                                      theMode)
@@ -531,8 +491,6 @@ void SelectMgr_SelectionManager::loadMode(const occ::handle<SelectMgr_Selectable
   buildBVH(aNewSel);
 }
 
-//=================================================================================================
-
 void SelectMgr_SelectionManager::buildBVH(const occ::handle<SelectMgr_Selection>& theSelection)
 {
   if (mySelector->ToPrebuildBVH())
@@ -565,8 +523,6 @@ void SelectMgr_SelectionManager::buildBVH(const occ::handle<SelectMgr_Selection>
   }
 }
 
-//=================================================================================================
-
 void SelectMgr_SelectionManager::SetUpdateMode(
   const occ::handle<SelectMgr_SelectableObject>& theObject,
   const SelectMgr_TypeOfUpdate                   theType)
@@ -580,8 +536,6 @@ void SelectMgr_SelectionManager::SetUpdateMode(
   }
 }
 
-//=================================================================================================
-
 void SelectMgr_SelectionManager::SetUpdateMode(
   const occ::handle<SelectMgr_SelectableObject>& theObject,
   const int                                      theMode,
@@ -593,13 +547,6 @@ void SelectMgr_SelectionManager::SetUpdateMode(
   }
 }
 
-//=======================================================================
-// function : SetSelectionSensitivity
-// purpose  : Allows to manage sensitivity of a particular selection of interactive object theObject
-// and
-//           changes previous sensitivity value of all sensitive entities in selection with theMode
-//           to the given theNewSensitivity.
-//=======================================================================
 void SelectMgr_SelectionManager::SetSelectionSensitivity(
   const occ::handle<SelectMgr_SelectableObject>& theObject,
   const int                                      theMode,
@@ -626,8 +573,6 @@ void SelectMgr_SelectionManager::SetSelectionSensitivity(
     mySelector->myTolerances.Add(theNewSens);
   }
 }
-
-//=================================================================================================
 
 void SelectMgr_SelectionManager::UpdateSelection(
   const occ::handle<SelectMgr_SelectableObject>& theObject)

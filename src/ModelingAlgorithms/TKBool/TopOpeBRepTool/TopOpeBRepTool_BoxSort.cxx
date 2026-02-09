@@ -33,19 +33,12 @@
 #define MTOhbt occ::handle<TopOpeBRepTool_HBoxTool>
 #define MTClioloi NCollection_List<int>::Iterator
 
-//=================================================================================================
-
 TopOpeBRepTool_BoxSort::TopOpeBRepTool_BoxSort() = default;
-
-//=================================================================================================
 
 TopOpeBRepTool_BoxSort::TopOpeBRepTool_BoxSort(const MTOhbt& HBT)
 {
   SetHBoxTool(HBT);
 }
-
-// modified by NIZNHY-PKV Mon Dec 16 10:26:00 2002 f
-//=================================================================================================
 
 TopOpeBRepTool_BoxSort::~TopOpeBRepTool_BoxSort()
 {
@@ -55,32 +48,20 @@ TopOpeBRepTool_BoxSort::~TopOpeBRepTool_BoxSort()
   }
 }
 
-// modified by NIZNHY-PKV Mon Dec 16 10:26:02 2002 t
-
-//=================================================================================================
-
 void TopOpeBRepTool_BoxSort::SetHBoxTool(const MTOhbt& HBT)
 {
   myHBT = HBT;
 }
-
-//=================================================================================================
 
 const MTOhbt& TopOpeBRepTool_BoxSort::HBoxTool() const
 {
   return myHBT;
 }
 
-//=================================================================================================
-
 void TopOpeBRepTool_BoxSort::Clear()
 {
   myCOB.SetVoid();
-  //  myHAB.Nullify();
-  //  myHAI.Nullify();
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_BoxSort::AddBoxes(const TopoDS_Shape&    S,
                                       const TopAbs_ShapeEnum TS,
@@ -90,8 +71,6 @@ void TopOpeBRepTool_BoxSort::AddBoxes(const TopoDS_Shape&    S,
     myHBT = new TopOpeBRepTool_HBoxTool();
   myHBT->AddBoxes(S, TS, TA);
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_BoxSort::MakeHAB(const TopoDS_Shape&    S,
                                      const TopAbs_ShapeEnum TS,
@@ -136,14 +115,10 @@ void TopOpeBRepTool_BoxSort::MakeHAB(const TopoDS_Shape&    S,
 #endif
 }
 
-//=================================================================================================
-
 const occ::handle<NCollection_HArray1<Bnd_Box>>& TopOpeBRepTool_BoxSort::HAB() const
 {
   return myHAB;
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_BoxSort::MakeHABCOB(const occ::handle<NCollection_HArray1<Bnd_Box>>& HAB,
                                         Bnd_Box&                                         COB)
@@ -158,8 +133,6 @@ void TopOpeBRepTool_BoxSort::MakeHABCOB(const occ::handle<NCollection_HArray1<Bn
   }
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRepTool_BoxSort::HABShape(const int I) const
 {
   int  iu = myHAI->Upper();
@@ -172,8 +145,6 @@ const TopoDS_Shape& TopOpeBRepTool_BoxSort::HABShape(const int I) const
   const TopoDS_Shape& S  = myHBT->Shape(im);
   return S;
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_BoxSort::MakeCOB(const TopoDS_Shape&    S,
                                      const TopAbs_ShapeEnum TS,
@@ -191,8 +162,6 @@ void TopOpeBRepTool_BoxSort::MakeCOB(const TopoDS_Shape&    S,
 #endif
 }
 
-//=================================================================================================
-
 void TopOpeBRepTool_BoxSort::AddBoxesMakeCOB(const TopoDS_Shape&    S,
                                              const TopAbs_ShapeEnum TS,
                                              const TopAbs_ShapeEnum TA)
@@ -200,8 +169,6 @@ void TopOpeBRepTool_BoxSort::AddBoxesMakeCOB(const TopoDS_Shape&    S,
   AddBoxes(S, TS, TA);
   MakeCOB(S, TS, TA);
 }
-
-//=================================================================================================
 
 const MTClioloi& TopOpeBRepTool_BoxSort::Compare(const TopoDS_Shape& S)
 {
@@ -286,16 +253,12 @@ const MTClioloi& TopOpeBRepTool_BoxSort::Compare(const TopoDS_Shape& S)
   return myIterator;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRepTool_BoxSort::TouchedShape(const MTClioloi& LI) const
 {
   int                 icur = LI.Value();
   const TopoDS_Shape& Scur = HABShape(icur);
   return Scur;
 }
-
-//=================================================================================================
 
 const Bnd_Box& TopOpeBRepTool_BoxSort::Box(const TopoDS_Shape& S) const
 {

@@ -14,7 +14,6 @@
 #include <Standard_Integer.hpp>
 #include <NCollection_HArray1.hpp>
 
-// for null derivatives
 static constexpr double BSplSLib_zero[3] = {0.0, 0.0, 0.0};
 
 #ifndef M_SQRT2
@@ -23,24 +22,15 @@ static constexpr double BSplSLib_zero[3] = {0.0, 0.0, 0.0};
 
 namespace
 {
-  //! Maximum supported degree for B-spline surfaces.
+
   static constexpr int THE_MAX_DEGREE = BSplCLib::MaxDegree();
 
-  //! Validates that the given degrees do not exceed the maximum supported degree.
-  //! @param theUDegree degree in U direction
-  //! @param theVDegree degree in V direction
-  //! @throws Standard_OutOfRange if either degree exceeds MaxDegree()
   void validateBSplineDegree([[maybe_unused]] int theUDegree, [[maybe_unused]] int theVDegree)
   {
     Standard_OutOfRange_Raise_if(theUDegree > THE_MAX_DEGREE || theVDegree > THE_MAX_DEGREE,
                                  "BSplSLib: bspline degree is greater than maximum supported");
   }
 
-  //=======================================================================
-  // struct : BSplSLib_DataContainer
-  // purpose: Auxiliary structure providing buffers for poles and knots used in
-  //         evaluation of bspline (allocated in the stack)
-  //=======================================================================
   struct BSplSLib_DataContainer
   {
     double poles[4 * (THE_MAX_DEGREE + 1) * (THE_MAX_DEGREE + 1)];
@@ -50,17 +40,6 @@ namespace
   };
 } // namespace
 
-//**************************************************************************
-//                     Evaluation methods
-//**************************************************************************
-
-//=======================================================================
-// function : RationalDerivative
-// purpose  : computes the rational derivatives when we have the
-//           the derivatives of the homogeneous numerator and the
-//           the derivatives of the denominator
-//=======================================================================
-
 void BSplSLib::RationalDerivative(const int  UDeg,
                                   const int  VDeg,
                                   const int  N,
@@ -69,51 +48,7 @@ void BSplSLib::RationalDerivative(const int  UDeg,
                                   double&    RDerivatives,
                                   const bool All)
 {
-  //
-  //  if All is True all derivatives are computed. if Not only
-  //  the requested N, M is computed
-  //
-  //                                           Numerator(u,v)
-  //   let f(u,v) be a rational function  = ------------------
-  //                                         Denominator(u,v)
-  //
-  //
-  //   Let (N,M) the order of the derivatives we want : then since
-  //   we have :
-  //
-  //         Numerator = f * Denominator
-  //
-  //   we derive :
-  //
-  //   (N,M)         1           (         (N M)                  (p q)            (N -p M-q) )
-  //  f       =  ------------    (  Numerator   -  SUM SUM  a   * f    * Denominator          )
-  //                       (0,0) (                 p<N q<M   p q                              )
-  //             Denominator
-  //
-  //   with :
-  //
-  //              ( N )  ( M )
-  //    a      =  (   )  (   )
-  //     p q      ( p )  ( q )
-  //
-  //
-  //   HDerivatives is an array where derivatives are stored in the following form
-  //   Numerator is assumee to have 3 functions that is a vector of dimension
-  //   3
-  //
-  //             (0,0)           (0,0)                       (0, DegV)           (0, DegV)
-  //     Numerator     Denominator      ...         Numerator          Denominator
-  //
-  //             (1,0)           (1,0)                       (1, DegV)           (1, DegV)
-  //     Numerator     Denominator      ...         Numerator          Denominator
-  //
-  //         ...........................................................
-  //
-  //
-  //            (DegU,0)        (DegU,0)                  (DegU, DegV)           (DegU, DegV)
-  //     Numerator     Denominator      ...         Numerator          Denominator
-  //
-  //
+
   int ii, jj, pp, qq, index, index1, index2;
   int M1, M3, M4, N1, iiM1, iiM3, jjM1, ppM1, ppM3;
   int MinN, MinN1, MinM, MinM1;
@@ -185,8 +120,6 @@ void BSplSLib::RationalDerivative(const int  UDeg,
       StoreW[index_w++] = 0.0e0;
     }
   }
-
-  // ---------------  Calculation ----------------
 
   iiM1 = -M1;
   iiM3 = -M3;
@@ -267,18 +200,6 @@ void BSplSLib::RationalDerivative(const int  UDeg,
   }
 }
 
-//=================================================================================================
-
-//
-// PrepareEval :
-//
-// Prepare all data for computing points :
-//  local arrays of knots
-//  local array  of poles (multiplied by the weights if rational)
-//
-//  The first direction to compute (smaller degree) is returned
-//  and the poles are stored according to this direction.
-
 static bool PrepareEval(const double                      U,
                         const double                      V,
                         const int                         Uindex,
@@ -295,10 +216,10 @@ static bool PrepareEval(const double                      U,
                         const NCollection_Array1<double>& VKnots,
                         const NCollection_Array1<int>*    UMults,
                         const NCollection_Array1<int>*    VMults,
-                        double&                           u1, // first  parameter to use
-                        double&                           u2, // second parameter to use
-                        int&                              d1, // first degree
-                        int&                              d2, // second degree
+                        double&                           u1,
+                        double&                           u2,
+                        int&                              d1,
+                        int&                              d2,
                         bool&                             rational,
                         BSplSLib_DataContainer&           dc)
 {
@@ -312,7 +233,7 @@ static bool PrepareEval(const double                      U,
 
   if (UDegree <= VDegree)
   {
-    // compute the indices
+
     if (uindex < UKLower || uindex > UKUpper)
       BSplCLib::LocateParameter(UDegree, UKnots, UMults, U, UPer, uindex, u1);
     else
@@ -323,7 +244,6 @@ static bool PrepareEval(const double                      U,
     else
       u2 = V;
 
-    // get the knots
     d1 = UDegree;
     d2 = VDegree;
     BSplCLib::BuildKnots(UDegree, uindex, UPer, UKnots, UMults, *dc.knots1);
@@ -339,7 +259,6 @@ static bool PrepareEval(const double                      U,
     else
       vindex = BSplCLib::PoleIndex(VDegree, vindex, VPer, *VMults);
 
-    // get the poles
     int    i, j, ip, jp;
     double w, *pole = dc.poles;
     d1            = UDegree;
@@ -349,7 +268,6 @@ static bool PrepareEval(const double                      U,
     int PLowerCol = Poles.LowerCol();
     int PUpperCol = Poles.UpperCol();
 
-    // verify if locally non rational
     if (rational)
     {
       rational = false;
@@ -393,7 +311,6 @@ static bool PrepareEval(const double                      U,
       }
     }
 
-    // copy the poles
     ip = PLowerRow + uindex;
 
     if (ip < PLowerRow)
@@ -461,7 +378,7 @@ static bool PrepareEval(const double                      U,
   }
   else
   {
-    // compute the indices
+
     if (uindex < UKLower || uindex > UKUpper)
       BSplCLib::LocateParameter(UDegree, UKnots, UMults, U, UPer, uindex, u2);
     else
@@ -471,8 +388,6 @@ static bool PrepareEval(const double                      U,
       BSplCLib::LocateParameter(VDegree, VKnots, VMults, V, VPer, vindex, u1);
     else
       u1 = V;
-
-    // get the knots
 
     d2 = UDegree;
     d1 = VDegree;
@@ -490,7 +405,6 @@ static bool PrepareEval(const double                      U,
     else
       vindex = BSplCLib::PoleIndex(VDegree, vindex, VPer, *VMults);
 
-    // get the poles
     int    i, j, ip, jp;
     double w, *pole = dc.poles;
     d1            = VDegree;
@@ -500,7 +414,6 @@ static bool PrepareEval(const double                      U,
     int PLowerCol = Poles.LowerCol();
     int PUpperCol = Poles.UpperCol();
 
-    // verify if locally non rational
     if (rational)
     {
       rational = false;
@@ -544,7 +457,6 @@ static bool PrepareEval(const double                      U,
       }
     }
 
-    // copy the poles
     jp = PLowerCol + vindex;
 
     if (jp < PLowerCol)
@@ -615,8 +527,6 @@ static bool PrepareEval(const double                      U,
   }
 }
 
-//=================================================================================================
-
 void BSplSLib::D0(const double                      U,
                   const double                      V,
                   const int                         UIndex,
@@ -635,7 +545,7 @@ void BSplSLib::D0(const double                      U,
                   const bool                        VPer,
                   gp_Pnt&                           P)
 {
-  //  int k ;
+
   double W;
   HomogeneousD0(U,
                 V,
@@ -660,8 +570,6 @@ void BSplSLib::D0(const double                      U,
   P.SetZ(P.Z() / W);
 }
 
-//=================================================================================================
-
 void BSplSLib::HomogeneousD0(const double                      U,
                              const double                      V,
                              const int                         UIndex,
@@ -682,7 +590,7 @@ void BSplSLib::HomogeneousD0(const double                      U,
                              gp_Pnt&                           P)
 {
   bool rational;
-  //  int k,dim;
+
   int    dim;
   double u1, u2;
   int    d1, d2;
@@ -733,8 +641,6 @@ void BSplSLib::HomogeneousD0(const double                      U,
   }
 }
 
-//=================================================================================================
-
 void BSplSLib::D1(const double                      U,
                   const double                      V,
                   const int                         UIndex,
@@ -756,7 +662,7 @@ void BSplSLib::D1(const double                      U,
                   gp_Vec&                           Vv)
 {
   bool rational;
-  //  int k,dim,dim2;
+
   int     dim, dim2;
   double  u1, u2;
   int     d1, d2;
@@ -852,8 +758,6 @@ void BSplSLib::D1(const double                      U,
   Vv.SetZ(resVv[2]);
 }
 
-//=================================================================================================
-
 void BSplSLib::HomogeneousD1(const double                      U,
                              const double                      V,
                              const int                         UIndex,
@@ -878,7 +782,7 @@ void BSplSLib::HomogeneousD1(const double                      U,
                              double&                           Dv)
 {
   bool rational;
-  //  int k,dim;
+
   int    dim;
   double u1, u2;
   int    d1, d2;
@@ -941,8 +845,6 @@ void BSplSLib::HomogeneousD1(const double                      U,
   }
 }
 
-//=================================================================================================
-
 void BSplSLib::D2(const double                      U,
                   const double                      V,
                   const int                         UIndex,
@@ -967,7 +869,7 @@ void BSplSLib::D2(const double                      U,
                   gp_Vec&                           Vuv)
 {
   bool rational;
-  //  int k,dim,dim2;
+
   int           dim, dim2;
   double        u1, u2;
   int           d1, d2;
@@ -1105,8 +1007,6 @@ void BSplSLib::D2(const double                      U,
   Vuv.SetZ(resVuv[2]);
 }
 
-//=================================================================================================
-
 void BSplSLib::D3(const double                      U,
                   const double                      V,
                   const int                         UIndex,
@@ -1135,7 +1035,7 @@ void BSplSLib::D3(const double                      U,
                   gp_Vec&                           Vuvv)
 {
   bool rational;
-  //  int k,dim,dim2;
+
   int           dim, dim2;
   double        u1, u2;
   int           d1, d2;
@@ -1341,8 +1241,6 @@ void BSplSLib::D3(const double                      U,
   Vuvv.SetZ(resVuvv[2]);
 }
 
-//=================================================================================================
-
 void BSplSLib::DN(const double                      U,
                   const double                      V,
                   const int                         Nu,
@@ -1417,7 +1315,7 @@ void BSplSLib::DN(const double                      U,
   if (rational)
   {
     BSplSLib::RationalDerivative(d1, d2, n1, n2, *dc.poles, *dc.ders, false);
-    result = dc.ders; // because false ci-dessus.
+    result = dc.ders;
   }
   else
   {
@@ -1428,16 +1326,6 @@ void BSplSLib::DN(const double                      U,
   Vn.SetY(result[1]);
   Vn.SetZ(result[2]);
 }
-
-//
-// Surface modifications
-//
-// a surface is processed as a curve of curves.
-// i.e : a curve of parameter u where the current point is the set of poles
-//       of the iso.
-//
-
-//=================================================================================================
 
 void BSplSLib::Iso(const double                      Param,
                    const bool                        IsU,
@@ -1455,8 +1343,6 @@ void BSplSLib::Iso(const double                      Param,
   bool   rational = Weights != nullptr;
   int    dim      = rational ? 4 : 3;
 
-  // compute local knots
-
   NCollection_LocalArray<double> locknots1(2 * Degree);
   BSplCLib::LocateParameter(Degree, Knots, Mults, u, Periodic, index, u);
   BSplCLib::BuildKnots(Degree, index, Periodic, Knots, Mults, *locknots1);
@@ -1465,9 +1351,6 @@ void BSplSLib::Iso(const double                      Param,
   else
     index = BSplCLib::PoleIndex(Degree, index, Periodic, *Mults);
 
-  // copy the local poles
-
-  //  int f1,l1,f2,l2,i,j,k;
   int f1, l1, f2, l2, i, j;
 
   if (IsU)
@@ -1517,10 +1400,8 @@ void BSplSLib::Iso(const double                      Param,
       index = f1;
   }
 
-  // compute the iso
   BSplCLib::Eval(u, Degree, *locknots1, (l2 - f2 + 1) * dim, *locpoles);
 
-  // get the result
   pole = locpoles;
 
   for (i = CPoles.Lower(); i <= CPoles.Upper(); i++)
@@ -1542,7 +1423,6 @@ void BSplSLib::Iso(const double                      Param,
     pole += dim;
   }
 
-  // if the input is not rational but weights are wanted
   if (!rational && (CWeights != nullptr))
   {
 
@@ -1550,8 +1430,6 @@ void BSplSLib::Iso(const double                      Param,
       (*CWeights)(i) = 1.;
   }
 }
-
-//=================================================================================================
 
 void BSplSLib::Reverse(NCollection_Array2<gp_Pnt>& Poles, const int Last, const bool UDirection)
 {
@@ -1621,8 +1499,6 @@ void BSplSLib::Reverse(NCollection_Array2<gp_Pnt>& Poles, const int Last, const 
     }
   }
 }
-
-//=================================================================================================
 
 void BSplSLib::Reverse(NCollection_Array2<double>& Weights, const int Last, const bool UDirection)
 {
@@ -1699,8 +1575,6 @@ void BSplSLib::Reverse(NCollection_Array2<double>& Weights, const int Last, cons
   }
 }
 
-//=================================================================================================
-
 bool BSplSLib::IsRational(const NCollection_Array2<double>& Weights,
                           const int                         I1,
                           const int                         I2,
@@ -1725,8 +1599,6 @@ bool BSplSLib::IsRational(const NCollection_Array2<double>& Weights,
   }
   return false;
 }
-
-//=================================================================================================
 
 void BSplSLib::SetPoles(const NCollection_Array2<gp_Pnt>& Poles,
                         NCollection_Array1<double>&       FP,
@@ -1774,8 +1646,6 @@ void BSplSLib::SetPoles(const NCollection_Array2<gp_Pnt>& Poles,
     }
   }
 }
-
-//=================================================================================================
 
 void BSplSLib::SetPoles(const NCollection_Array2<gp_Pnt>& Poles,
                         const NCollection_Array2<double>& Weights,
@@ -1831,8 +1701,6 @@ void BSplSLib::SetPoles(const NCollection_Array2<gp_Pnt>& Poles,
   }
 }
 
-//=================================================================================================
-
 void BSplSLib::GetPoles(const NCollection_Array1<double>& FP,
                         NCollection_Array2<gp_Pnt>&       Poles,
                         const bool                        UDirection)
@@ -1879,8 +1747,6 @@ void BSplSLib::GetPoles(const NCollection_Array1<double>& FP,
     }
   }
 }
-
-//=================================================================================================
 
 void BSplSLib::GetPoles(const NCollection_Array1<double>& FP,
                         NCollection_Array2<gp_Pnt>&       Poles,
@@ -1935,8 +1801,6 @@ void BSplSLib::GetPoles(const NCollection_Array1<double>& FP,
     }
   }
 }
-
-//=================================================================================================
 
 void BSplSLib::InsertKnots(const bool                        UDirection,
                            const int                         Degree,
@@ -1994,8 +1858,6 @@ void BSplSLib::InsertKnots(const bool                        UDirection,
   else
     GetPoles(newpoles, NewPoles, UDirection);
 }
-
-//=================================================================================================
 
 bool BSplSLib::RemoveKnot(const bool                        UDirection,
                           const int                         Index,
@@ -2055,8 +1917,6 @@ bool BSplSLib::RemoveKnot(const bool                        UDirection,
   return true;
 }
 
-//=================================================================================================
-
 void BSplSLib::IncreaseDegree(const bool                        UDirection,
                               const int                         Degree,
                               const int                         NewDegree,
@@ -2109,8 +1969,6 @@ void BSplSLib::IncreaseDegree(const bool                        UDirection,
     GetPoles(newpoles, NewPoles, UDirection);
 }
 
-//=================================================================================================
-
 void BSplSLib::Unperiodize(const bool                        UDirection,
                            const int                         Degree,
                            const NCollection_Array1<int>&    Mults,
@@ -2151,13 +2009,6 @@ void BSplSLib::Unperiodize(const bool                        UDirection,
   else
     GetPoles(newpoles, NewPoles, UDirection);
 }
-
-//=======================================================================
-// function : BuildCache
-// purpose  : Stores theTaylor expansion normalized between 0,1 in the
-//           Cache : in case of  a rational function the Poles are
-//           stored in homogeneous form
-//=======================================================================
 
 void BSplSLib::BuildCache(const double                      U,
                           const double                      V,
@@ -2292,11 +2143,6 @@ void BSplSLib::BuildCache(const double                      U,
     }
     if (Weights != nullptr)
     {
-      //
-      // means that PrepareEval did found out that the surface was
-      // locally polynomial but since the surface is constructed
-      // with some weights we need to set the weight polynomial to constant
-      //
 
       for (ii = 1; ii <= d2p1; ii++)
       {
@@ -2358,15 +2204,14 @@ void BSplSLib::BuildCache(const double                      theU,
                             isRational,
                             dc);
 
-  int d2p1        = d2 + 1;
-  int aDimension  = isRational ? 4 : 3;
-  int aCacheShift = // helps to store weights when PrepareEval did not found that the
-                    // surface is locally polynomial
+  int d2p1       = d2 + 1;
+  int aDimension = isRational ? 4 : 3;
+  int aCacheShift =
+
     (isRationalOnParam && !isRational) ? aDimension + 1 : aDimension;
 
   double aDomains[2];
-  // aDomains[0] corresponds to variable with minimal degree
-  // aDomains[1] corresponds to variable with maximal degree
+
   if (flag_u_or_v)
   {
     aDomains[0] = theUSpanDomain;
@@ -2385,8 +2230,7 @@ void BSplSLib::BuildCache(const double                      theU,
   double* aCache = (double*)&(theCacheArray(theCacheArray.LowerRow(), theCacheArray.LowerCol()));
 
   double aFactors[2];
-  // aFactors[0] corresponds to variable with minimal degree
-  // aFactors[1] corresponds to variable with maximal degree
+
   aFactors[1] = 1.0;
   int    aRow, aCol, i;
   double aCoeff;
@@ -2405,7 +2249,6 @@ void BSplSLib::BuildCache(const double                      theU,
     aFactors[1] *= aDomains[1] / (aRow + 1);
   }
 
-  // Fill the weights for the surface which is not locally polynomial
   if (aCacheShift > aDimension)
   {
     aCache = (double*)&(theCacheArray(theCacheArray.LowerRow(), theCacheArray.LowerCol()));
@@ -2422,12 +2265,6 @@ void BSplSLib::BuildCache(const double                      theU,
   }
 }
 
-//=======================================================================
-// function : CacheD0
-// purpose  : Evaluates the polynomial cache of the Bspline Curve
-//
-//=======================================================================
-
 void BSplSLib::CacheD0(const double                      UParameter,
                        const double                      VParameter,
                        const int                         UDegree,
@@ -2440,13 +2277,9 @@ void BSplSLib::CacheD0(const double                      UParameter,
                        const NCollection_Array2<double>* WeightsArray,
                        gp_Pnt&                           aPoint)
 {
-  //
-  // the CacheParameter is where the cache polynomial was evaluated in homogeneous
-  // form
-  // the SpanLenght     is the normalizing factor so that the polynomial is between
-  // 0 and 1
+
   int
-    //    ii,
+
     dimension,
     min_degree, max_degree;
 
@@ -2511,12 +2344,6 @@ void BSplSLib::CacheD0(const double                      UParameter,
   }
 }
 
-//=======================================================================
-// function : CacheD1
-// purpose  : Evaluates the polynomial cache of the Bspline Curve
-//
-//=======================================================================
-
 void BSplSLib::CacheD1(const double                      UParameter,
                        const double                      VParameter,
                        const int                         UDegree,
@@ -2531,15 +2358,9 @@ void BSplSLib::CacheD1(const double                      UParameter,
                        gp_Vec&                           aVecU,
                        gp_Vec&                           aVecV)
 {
-  //
-  // the CacheParameter is where the cache polynomial was evaluated in homogeneous
-  // form
-  // the SpanLenght     is the normalizing factor so that the polynomial is between
-  // 0 and 1
+
   int
-    //    ii,
-    //  jj,
-    //  kk,
+
     dimension,
     min_degree, max_degree;
 
@@ -2550,12 +2371,7 @@ void BSplSLib::CacheD1(const double                      UParameter,
     local_weights_array[2][2];
   double *my_vec_min, *my_vec_max, *my_point;
   my_point = (double*)&aPoint;
-  //
-  // initialize in case of rational evaluation
-  // because RationalDerivative will use all
-  // the coefficients
-  //
-  //
+
   if (WeightsArray != nullptr)
   {
 
@@ -2695,12 +2511,6 @@ void BSplSLib::CacheD1(const double                      UParameter,
   my_vec_max[2] = inverse_max * local_poles_array[1][0][2];
 }
 
-//=======================================================================
-// function : CacheD2
-// purpose  : Evaluates the polynomial cache of the Bspline Curve
-//
-//=======================================================================
-
 void BSplSLib::CacheD2(const double                      UParameter,
                        const double                      VParameter,
                        const int                         UDegree,
@@ -2718,13 +2528,9 @@ void BSplSLib::CacheD2(const double                      UParameter,
                        gp_Vec&                           aVecUV,
                        gp_Vec&                           aVecVV)
 {
-  //
-  // the CacheParameter is where the cache polynomial was evaluated in homogeneous
-  // form
-  // the SpanLenght     is the normalizing factor so that the polynomial is between
-  // 0 and 1
+
   int ii,
-    //  jj,
+
     kk, index, dimension, min_degree, max_degree;
 
   double inverse_min, inverse_max, new_parameter[2];
@@ -2735,9 +2541,6 @@ void BSplSLib::CacheD2(const double                      UParameter,
   double *my_vec_min, *my_vec_max, *my_vec_min_min, *my_vec_max_max, *my_vec_min_max, *my_point;
   my_point = (double*)&aPoint;
 
-  //
-  // initialize in case the min and max degree are less than 2
-  //
   local_poles_array[0][0][0] = 0.0e0;
   local_poles_array[0][0][1] = 0.0e0;
   local_poles_array[0][0][2] = 0.0e0;
@@ -2767,12 +2570,7 @@ void BSplSLib::CacheD2(const double                      UParameter,
   local_poles_array[2][2][0] = 0.0e0;
   local_poles_array[2][2][1] = 0.0e0;
   local_poles_array[2][2][2] = 0.0e0;
-  //
-  // initialize in case of rational evaluation
-  // because RationalDerivative will use all
-  // the coefficients
-  //
-  //
+
   if (WeightsArray != nullptr)
   {
 
@@ -2851,9 +2649,6 @@ void BSplSLib::CacheD2(const double                      UParameter,
 
   NCollection_LocalArray<double> locpoles(3 * dimension);
 
-  //
-  // initialize in case min or max degree are less than 2
-  //
   int MinIndMax = 2;
   if (max_degree < 2)
     MinIndMax = max_degree;
@@ -3000,12 +2795,6 @@ void BSplSLib::CacheD2(const double                      UParameter,
   my_vec_max_max[2] = maxmax * local_poles_array[2][0][2];
 }
 
-//=======================================================================
-// function : MovePoint
-// purpose  : Find the new poles which allows  an old point (with a
-//           given  u and v as parameters) to reach a new position
-//=======================================================================
-
 void BSplSLib::MovePoint(const double                      U,
                          const double                      V,
                          const gp_Vec&                     Displ,
@@ -3026,7 +2815,7 @@ void BSplSLib::MovePoint(const double                      U,
                          int&                              VLastIndex,
                          NCollection_Array2<gp_Pnt>&       NewPoles)
 {
-  // calculate the UBSplineBasis in the parameter U
+
   int         UFirstNonZeroBsplineIndex;
   math_Matrix UBSplineBasis(1, 1, 1, UDegree + 1);
   int         ErrorCod1 = BSplCLib::EvalBsplineBasis(0,
@@ -3035,7 +2824,7 @@ void BSplSLib::MovePoint(const double                      U,
                                              U,
                                              UFirstNonZeroBsplineIndex,
                                              UBSplineBasis);
-  // calculate the VBSplineBasis in the parameter V
+
   int         VFirstNonZeroBsplineIndex;
   math_Matrix VBSplineBasis(1, 1, 1, VDegree + 1);
   int         ErrorCod2 = BSplCLib::EvalBsplineBasis(0,
@@ -3053,7 +2842,6 @@ void BSplSLib::MovePoint(const double                      U,
     return;
   }
 
-  // find the span which is predominant for parameter U
   UFirstIndex = UFirstNonZeroBsplineIndex;
   ULastIndex  = UFirstNonZeroBsplineIndex + UDegree;
   if (UFirstIndex < UIndex1)
@@ -3075,7 +2863,6 @@ void BSplSLib::MovePoint(const double                      U,
     }
   }
 
-  // find a ukk2 if symmetry
   ukk2 = ukk1;
   if ((ukk1 + 1) <= ULastIndex)
   {
@@ -3085,7 +2872,6 @@ void BSplSLib::MovePoint(const double                      U,
     }
   }
 
-  // find the span which is predominant for parameter V
   VFirstIndex = VFirstNonZeroBsplineIndex;
   VLastIndex  = VFirstNonZeroBsplineIndex + VDegree;
 
@@ -3108,7 +2894,6 @@ void BSplSLib::MovePoint(const double                      U,
     }
   }
 
-  // find a vkk2 if symmetry
   vkk2 = vkk1;
   if ((vkk1 + 1) <= VLastIndex)
   {
@@ -3118,7 +2903,6 @@ void BSplSLib::MovePoint(const double                      U,
     }
   }
 
-  // compute the vector of displacement
   double D1 = 0.0;
   double D2 = 0.0;
   double hN, Coef, DvalU, DvalV;
@@ -3179,8 +2963,6 @@ void BSplSLib::MovePoint(const double                      U,
     Coef = 1. / D1;
   }
 
-  // compute the new poles
-
   for (int i = Poles.LowerRow(); i <= Poles.UpperRow(); i++)
   {
     if (i < ukk1)
@@ -3221,47 +3003,6 @@ void BSplSLib::MovePoint(const double                      U,
     }
   }
 }
-
-//=======================================================================
-// function : Resolution
-// purpose  : this computes an estimate for the maximum of the
-// partial derivatives both in U and in V
-//
-//
-// The calculation resembles at the calculation of curves with
-// additional index for the control point. Let Si,j be the
-// control points for ls surface  and  Di,j  the weights.
-// The checking of upper bounds for the partial derivatives
-// will be omitted and Su is the next upper bound in the polynomial case :
-//
-//
-//
-//                        |  Si,j - Si-1,j  |
-//          d *   Max     |  -------------  |
-//                i = 2,n |     ti+d - ti   |
-//                i=1.m
-//
-//
-// and in the rational case :
-//
-//
-//
-//                         Di,j * (Si,j - Sk,j) - Di-1,j * (Si-1,j - Sk,j)
-//   Max   Max       d  *  -----------------------------------------------
-// k=1,n  i dans Rj                   ti+d  - ti
-// j=1,m
-//  ----------------------------------------------------------------------
-//
-//               Min    Di,j
-//              i=1,n
-//              j=1,m
-//
-//
-//
-// with Rj = {j-d, ....,  j+d+d+1}.
-//
-//
-//=======================================================================
 
 void BSplSLib::Resolution(const NCollection_Array2<gp_Pnt>& Poles,
                           const NCollection_Array2<double>* Weights,
@@ -3554,8 +3295,6 @@ void BSplSLib::Resolution(const NCollection_Array2<gp_Pnt>& Poles,
   }
 }
 
-//=================================================================================================
-
 void BSplSLib::Interpolate(const int                         UDegree,
                            const int                         VDegree,
                            const NCollection_Array1<double>& UFlatKnots,
@@ -3571,7 +3310,6 @@ void BSplSLib::Interpolate(const int                         UDegree,
   int     VLength = VParameters.Length();
   double* poles_array;
 
-  // extraction of iso u
   dimension = 4 * ULength;
   NCollection_Array2<double> Points(1, VLength, 1, dimension);
 
@@ -3590,7 +3328,6 @@ void BSplSLib::Interpolate(const int                         UDegree,
     }
   }
 
-  // interpolation of iso u
   poles_array = (double*)&Points.ChangeValue(1, 1);
   BSplCLib::Interpolate(VDegree,
                         VFlatKnots,
@@ -3601,8 +3338,6 @@ void BSplSLib::Interpolate(const int                         UDegree,
                         InversionProblem);
   if (InversionProblem != 0)
     return;
-
-  // extraction of iso v
 
   dimension = VLength * 4;
   NCollection_Array2<double> IsoPoles(1, ULength, 1, dimension);
@@ -3622,7 +3357,7 @@ void BSplSLib::Interpolate(const int                         UDegree,
       IsoPoles(ii, ll + 3) = Points(jj, kk + 3);
     }
   }
-  // interpolation of iso v
+
   BSplCLib::Interpolate(UDegree,
                         UFlatKnots,
                         UParameters,
@@ -3630,8 +3365,6 @@ void BSplSLib::Interpolate(const int                         UDegree,
                         dimension,
                         poles_array[0],
                         InversionProblem);
-
-  // return results
 
   for (ii = 1; ii <= ULength; ii++)
   {
@@ -3644,8 +3377,6 @@ void BSplSLib::Interpolate(const int                         UDegree,
     }
   }
 }
-
-//=================================================================================================
 
 void BSplSLib::Interpolate(const int                         UDegree,
                            const int                         VDegree,
@@ -3661,7 +3392,6 @@ void BSplSLib::Interpolate(const int                         UDegree,
   int     VLength = VParameters.Length();
   double* poles_array;
 
-  // extraction of iso u
   dimension = 3 * ULength;
   NCollection_Array2<double> Points(1, VLength, 1, dimension);
 
@@ -3679,7 +3409,6 @@ void BSplSLib::Interpolate(const int                         UDegree,
     }
   }
 
-  // interpolation of iso u
   poles_array = (double*)&Points.ChangeValue(1, 1);
   BSplCLib::Interpolate(VDegree,
                         VFlatKnots,
@@ -3690,8 +3419,6 @@ void BSplSLib::Interpolate(const int                         UDegree,
                         InversionProblem);
   if (InversionProblem != 0)
     return;
-
-  // extraction of iso v
 
   dimension = VLength * 3;
   NCollection_Array2<double> IsoPoles(1, ULength, 1, dimension);
@@ -3710,7 +3437,7 @@ void BSplSLib::Interpolate(const int                         UDegree,
       IsoPoles(ii, ll + 2) = Points(jj, kk + 2);
     }
   }
-  // interpolation of iso v
+
   BSplCLib::Interpolate(UDegree,
                         UFlatKnots,
                         UParameters,
@@ -3718,8 +3445,6 @@ void BSplSLib::Interpolate(const int                         UDegree,
                         dimension,
                         poles_array[0],
                         InversionProblem);
-
-  // return results
 
   for (ii = 1; ii <= ULength; ii++)
   {
@@ -3731,8 +3456,6 @@ void BSplSLib::Interpolate(const int                         UDegree,
     }
   }
 }
-
-//=================================================================================================
 
 void BSplSLib::FunctionMultiply(const BSplSLib_EvaluatorFunction& Function,
                                 const int                         UBSplineDegree,
@@ -3752,7 +3475,7 @@ void BSplSLib::FunctionMultiply(const BSplSLib_EvaluatorFunction& Function,
                                 int&                              theStatus)
 {
   int num_uparameters,
-    //  ii,jj,kk,
+
     ii, jj, error_code, num_vparameters;
   double result;
 

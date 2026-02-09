@@ -17,7 +17,7 @@
 
 #include <ElCLib.hpp>
 
-#define myInfinite 1.e15 // the same as was in Adaptor3d_TopolTool
+#define myInfinite 1.e15
 
 static void Recadre(GeomAbs_SurfaceType                typeS1,
                     GeomAbs_SurfaceType                typeS2,
@@ -119,7 +119,7 @@ static bool CoincideOnArc(const gp_Pnt&                           Ptsommet,
     double                         tol   = std::max(tolarc, Tol3d(vtx1, Domain));
 
     if (dist <= tol && dist <= distmin)
-    { // the best coincidence
+    {
       distmin = dist;
       Vtx     = vtx1;
     }
@@ -136,8 +136,7 @@ static void VerifyTgline(const occ::handle<IntPatch_WLine>& wlin,
 
   if (std::abs(Tgl.X()) < Tol && std::abs(Tgl.Y()) < Tol && std::abs(Tgl.Z()) < Tol)
   {
-    //-- On construit une tangente plus grande
-    //-- (Eviter des points tres proches ds Walking)
+
     int  i, n, nbpt = wlin->NbPnts();
     bool forward = (nbpt - param) >= (param - 1);
     for (n = 2; n > 0; n--, forward = !forward)
@@ -234,20 +233,10 @@ static bool FindParameter(const occ::handle<IntPatch_Line>&     L,
                           const bool                            OnFirst)
 
 {
-  // MSV 28.03.2002: find parameter on WLine in 2d space
 
-  // Si la ligne est de type restriction, c est qu on provient necessairement
-  //  du cas implicite/parametree, et que la ligne est restriction de
-  //  la surface bi-parametree. Cette surface bi-parametree est necessairement
-  //  passee en argument a PutVertexOnline dans la variable OtherSurf.
+  occ::handle<IntPatch_RLine> rlin(Handle(IntPatch_RLine)::DownCast(L));
 
-  // Dans le cas d une ligne de cheminement, il faudrait voir la projection
-  // et le calcul de la tangente.
-
-  // clang-format off
-  occ::handle<IntPatch_RLine> rlin (Handle(IntPatch_RLine)::DownCast (L)); //-- aucune verification n est
-  // clang-format on
-  occ::handle<IntPatch_WLine> wlin(occ::down_cast<IntPatch_WLine>(L)); //-- faite au cast.
+  occ::handle<IntPatch_WLine> wlin(occ::down_cast<IntPatch_WLine>(L));
   gp_Pnt                      ptbid;
   gp_Vec                      d1u, d1v;
   gp_Pnt2d                    p2d;
@@ -298,9 +287,7 @@ static bool FindParameter(const occ::handle<IntPatch_Line>&     L,
     }
 
     int inf[3], sup[3];
-    // first search inside close bounding around ParamApproche;
-    // then search to the nearest end of line;
-    // and then search to the farthest end of line.
+
     inf[0] = ParamSearchInf;
     sup[0] = ParamSearchSup;
     if (ParamSearchInf - 1 < nbpt - ParamSearchSup)
@@ -377,8 +364,6 @@ inline bool ArePnt2dEqual(const gp_Pnt2d& p1,
   return std::abs(p1.X() - p2.X()) < tolU && std::abs(p1.Y() - p2.Y()) < tolV;
 }
 
-//=================================================================================================
-
 void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                                       const occ::handle<Adaptor3d_Surface>&   Surf,
                                       const occ::handle<Adaptor3d_TopolTool>& Domain,
@@ -386,11 +371,6 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                                       const bool                              OnFirst,
                                       const double                            Tol)
 {
-
-  // Domain est le domaine de restriction de la surface Surf.
-  // On intersectera un arc de Surf avec la surface OtherSurf.
-  // Si OnFirst = True, c est que la surface Surf correspond a la 1ere
-  // surface donnee aux algo d intersection.
 
   IntPatch_SearchPnt Commun;
 
@@ -400,10 +380,10 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
   int                            i, j, k;
   NCollection_Sequence<gp_Pnt>   locpt;
   NCollection_Sequence<gp_Pnt2d> locpt2;
-  // clang-format off
-  occ::handle<IntPatch_RLine> rlin (Handle(IntPatch_RLine)::DownCast (L)); //-- aucune verification n est
-  // clang-format on
-  occ::handle<IntPatch_WLine> wlin(occ::down_cast<IntPatch_WLine>(L)); //-- faite au cast.
+
+  occ::handle<IntPatch_RLine> rlin(Handle(IntPatch_RLine)::DownCast(L));
+
+  occ::handle<IntPatch_WLine> wlin(occ::down_cast<IntPatch_WLine>(L));
   int                         Nbvtx   = 0;
   double                      tolPLin = Surf->UResolution(Precision::Confusion());
   tolPLin = std::max(tolPLin, Surf->VResolution(Precision::Confusion()));
@@ -440,7 +420,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
     throw Standard_DomainError();
   }
   if (!Domain->Has3d())
-    // don't use computed deflection in the mode of pure geometric intersection
+
     PLin.ResetError();
 
   const bool SurfaceIsUClosed  = Surf->IsUClosed();
@@ -462,11 +442,6 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
       tolOVClosed = (OtherSurf->LastVParameter() - OtherSurf->FirstVParameter()) * 0.01;
   }
 
-  //------------------------------------------------------------------------
-  //-- On traite le cas ou la surface est periodique                      --
-  //-- il faut dans ce cas considerer la restriction                      --
-  //--                                la restriction decalee de +-2PI     --
-  //------------------------------------------------------------------------
   const occ::handle<Adaptor3d_Surface>& Surf1               = (OnFirst ? Surf : OtherSurf);
   const occ::handle<Adaptor3d_Surface>& Surf2               = (OnFirst ? OtherSurf : Surf);
   GeomAbs_SurfaceType                   TypeS1              = Surf1->GetType();
@@ -491,7 +466,6 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
     NumeroEdge++;
     arc = Domain->Value();
 
-    // MSV Oct 15, 2001: use tolerance of this edge if possible
     double edgeTol = Tol3d(arc, Domain, Tol);
 
     IntPatch_HInterTool::Bounds(arc, PFirst, PLast);
@@ -499,11 +473,6 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
       PFirst = -myInfinite;
     if (Precision::IsPositiveInfinite(PLast))
       PLast = myInfinite;
-    // if (Precision::IsNegativeInfinite(PFirst) ||
-    //  Precision::IsPositiveInfinite(PLast)) {
-    //  //-- std::cout<<" IntPatch_RstInt::PutVertexOnLine  ---> Restrictions Infinies
-    //  :"<<std::endl; return;
-    //}
 
     gp_Pnt2d p2dFirst, p2dLast;
     Domain->Initialize(arc);
@@ -537,18 +506,17 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
         const gp_Pnt2d& aLoc = aLin.Location();
         const gp_Dir2d& aDir = aLin.Direction();
 
-        // Here, we consider rectangular axis-aligned domain only.
         const bool isAlongU = (std::abs(aDir.X()) > std::abs(aDir.Y()));
 
         if (SurfaceIsPeriodic && !isAlongU)
         {
-          // Shift along U-direction
+
           const double aNewLocation = ElCLib::InPeriod(aLoc.X(), aXmin, aXmin + M_PI + M_PI);
           OffsetU                   = aNewLocation - aLoc.X();
         }
         else if (SurfaceIsBiPeriodic && isAlongU)
         {
-          // Shift along V-direction
+
           const double aNewLocation = ElCLib::InPeriod(aLoc.Y(), aYmin, aYmin + M_PI + M_PI);
           OffsetV                   = aNewLocation - aLoc.Y();
         }
@@ -565,8 +533,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
       break;
       case GeomAbs_BSplineCurve:
       {
-        // szv:const double nbs = (arc->NbKnots() * arc->Degree())*(arc->LastParameter() -
-        // arc->FirstParameter())/(PLast-PFirst);
+
         const double nbs = (arc->NbKnots() * arc->Degree()) * (PLast - PFirst)
                            / (arc->LastParameter() - arc->FirstParameter());
         NbEchant = (nbs < 2.0 ? 2 : (int)nbs);
@@ -635,10 +602,6 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
         locpt.Clear();
         locpt2.Clear();
 
-        // We do not need in putting vertex into tangent zone(s).
-        // Therefore, only section points are interested by us.
-        // Boundary of WLine (its first/last points) will be
-        // marked by some vertex later. See bug #29494.
         const int aNbSectionPts = Commun.NbSectionPoints();
         for (i = 1; i <= aNbSectionPts; i++)
         {
@@ -662,14 +625,8 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
 
           W = (1. - par) * Brise.Parameter(Irang) + par * Brise.Parameter(Irang + 1);
 
-          //------------------------------------------------------------------------
-          //-- On a trouve un point 2d approche Ua,Va  intersection de la ligne
-          //-- de cheminement et de la restriction.
-          //--
-          //-- On injecte ce point ds les intersections Courbe-Surface
-          //--
           IntPatch_CSFunction thefunc(OtherSurf, arc, Surf);
-          // MSV: extend UV bounds to not miss solution near the boundary
+
           const double         margCoef = 0.004;
           bool                 refined  = false;
           IntPatch_CurvIntSurf IntCS(U, V, W, thefunc, edgeTol, margCoef);
@@ -680,7 +637,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
             gp_Pnt anOldPnt, aNewPnt;
             OtherSurf->D0(U, V, anOldPnt);
             OtherSurf->D0(U2, V2, aNewPnt);
-            // if (anOldPnt.SquareDistance(aNewPnt) < Precision::SquareConfusion())
+
             double aTolConf = std::max(Precision::Confusion(), edgeTol);
 
             if (anOldPnt.SquareDistance(aNewPnt) < aTolConf * aTolConf)
@@ -740,7 +697,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
 
               if (typL == IntPatch_Walking && found && possiblyClosed)
               {
-                // check in 2d
+
                 if (SurfaceIsUClosed || SurfaceIsVClosed)
                 {
                   GetLinePoint2d(L, paramline, OnFirst, U, V);
@@ -772,10 +729,6 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
               else
                 vtxTol = edgeTol;
 
-              //-- It is necessary to test that the point does not already exist
-              //--   - It can be already a point on arc
-              //--        BUT on a different arc
-              // MSV 27.03.2002: find the nearest point; add check in 2d
               int    ivtx = 0;
               double dmin = RealLast();
               for (j = 1; j <= Nbvtx; j++)
@@ -825,8 +778,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                     }
                     else
                     {
-                      // cancel previous solution because this point is better
-                      // but its tolerance is not large enough
+
                       ivtx = 0;
                     }
                     dmin = dist;
@@ -840,7 +792,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                   vtxTol = ptline.Tolerance();
                   if (!VtxOnArc)
                   {
-                    // now we should repeat attempt to coincide on a bound of arc
+
                     VtxOnArc = CoincideOnArc(ptsommet, arc, Surf, vtxTol, Domain, vtxarc);
                     if (VtxOnArc)
                     {
@@ -870,7 +822,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
               nbTreated++;
               if (!ivtx)
               {
-                Sommet.SetValue(ptsommet, vtxTol, false); // pour tangence
+                Sommet.SetValue(ptsommet, vtxTol, false);
                 if (OnFirst)
                   Sommet.SetParameters(U1, V1, U2, V2);
                 else
@@ -879,11 +831,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                 if (VtxOnArc)
                   Sommet.SetVertex(OnFirst, vtxarc);
 
-                //---------------------------------------------------------
-                //-- lbr : On remplace le point d indice paramline sur la -
-                //-- ligne par le vertex .                                -
-                //---------------------------------------------------------
-                Sommet.SetParameter(paramline); // sur ligne d intersection
+                Sommet.SetParameter(paramline);
                 Sommet.SetArc(OnFirst, arc, paramarc, transline, transarc);
 
                 if (typL == IntPatch_Walking)
@@ -899,25 +847,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
               }
               else
               {
-                // CAS DE FIGURE : en appelant s1 la surf sur laquelle on
-                //   connait les pts sur restriction, et s2 celle sur laquelle
-                //   on les cherche. Le point trouve verifie necessairement
-                //   IsOnDomS1 = True.
-                //  Pas vtxS1, pas vtxS2 :
-                //   on recupere le point et on applique SetArcOnS2 et
-                //   eventuellement SetVertexOnS2. Si on a deja IsOnDomS2,
-                //   on considere que le point est deja traite, mais ne devrait
-                //   pas se produire.
-                //  vtxS1, pas vtxS2     :
-                //   si pas IsOnDomS2 : pour chaque occurrence, faire SetArcOnS2,
-                //   et eventuellement SetVertexOnS2.
-                //   si IsOnDomS2 : impossible, on doit avoir IsVtxOnS2.
-                //  vtxS1,vtxS2          :
-                //   on doit avoir VtxOnArc = True. On duplique chaque occurrence
-                //   "sur S1" du point en changeant ArcOnS2.
-                //  pas vtxS1, vtxS2     :
-                //   on doit avoir VtxOnArc = True. On duplique le point sur S1
-                //   en changeant ArcOnS2.
+
                 bool OnDifferentRst =
                   ((OnFirst && ptline.IsOnDomS1() && ptline.ArcOnS1() != arc)
                    || (!OnFirst && ptline.IsOnDomS2() && ptline.ArcOnS2() != arc));
@@ -929,7 +859,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                       || (OnDifferentRst))
                   {
                     ptline.SetArc(OnFirst, arc, paramarc, transline, transarc);
-                    // ptline.SetParameter(paramline); //-- rajout lbr le 20 nov 97
+
                     if (VtxOnArc)
                       ptline.SetVertex(OnFirst, vtxarc);
                     if (typL == IntPatch_Walking)
@@ -977,7 +907,6 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                   }
                   else
                   {
-                    //-- std::cout << "pb dans RstInt  Type 1 " << std::endl;
                   }
                 }
                 else
@@ -1036,7 +965,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                   else if ((OnFirst && ptline.IsVertexOnS2())
                            || (!OnFirst && ptline.IsVertexOnS1()))
                   {
-                    //                on doit avoir vtxons2 = vtxarc... pas de verif...
+
                     Sommet = ptline;
                     Sommet.SetArc(OnFirst, arc, paramarc, transline, transarc);
                     if (typL == IntPatch_Walking)
@@ -1089,7 +1018,6 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                   }
                   else
                   {
-                    //-- std::cout << "pb dans RstInt  Type 2 " << std::endl;
                   }
                 }
               }
@@ -1097,8 +1025,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
           }
           if (nbTreated == 2 && typL == IntPatch_Walking)
           {
-            // We processed a tangent zone, and both ends have been treated.
-            // So mark WLine as having arc
+
             if (OnFirst)
               wlin->SetArcOnS1(arc);
             else
@@ -1114,9 +1041,6 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
     Domain->Next();
   }
 
-  //--------------------------------------------------------------------------------
-  //-- On reprend la ligne et on recale les parametres des vertex.
-  //--
   if (typL == IntPatch_Walking)
   {
     double pu1, pv1, pu2, pv2;
@@ -1140,7 +1064,6 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
         else if (Surf1->IsUClosed())
         {
           pu1 = Surf1->LastUParameter() - Surf1->FirstUParameter();
-          // std::cout<<" UClosed1 "<<pu1<<std::endl;
         }
         if (Surf1->IsVPeriodic())
         {
@@ -1149,7 +1072,6 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
         else if (Surf1->IsVClosed())
         {
           pv1 = Surf1->LastVParameter() - Surf1->FirstVParameter();
-          // std::cout<<" VClosed1 "<<pv1<<std::endl;
         }
 
         break;
@@ -1176,7 +1098,6 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
         else if (Surf2->IsUClosed())
         {
           pu2 = Surf2->LastUParameter() - Surf2->FirstUParameter();
-          // std::cout<<" UClosed2 "<<pu2<<std::endl;
         }
 
         if (Surf2->IsVPeriodic())
@@ -1186,31 +1107,11 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
         else if (Surf2->IsVClosed())
         {
           pv2 = Surf2->LastVParameter() - Surf2->FirstVParameter();
-          // std::cout<<" VClosed2 "<<pv2<<std::endl;
         }
 
         break;
       }
     }
-
-    /*
-        if(pu1==0) {
-          pu1=Surf1->LastUParameter() - Surf1->FirstUParameter();
-          pu1+=pu1;
-        }
-        if(pu2==0) {
-          pu2=Surf2->LastUParameter() - Surf2->FirstUParameter();
-          pu2+=pu2;
-        }
-        if(pv1==0) {
-          pv1=Surf1->LastVParameter() - Surf1->FirstVParameter();
-          pv1+=pv1;
-        }
-        if(pv2==0) {
-          pv2=Surf2->LastVParameter() - Surf2->FirstVParameter();
-          pv2+=pv2;
-        }
-    */
 
     wlin->SetPeriod(pu1, pv1, pu2, pv2);
     wlin->ComputeVertexParameters(Tol);

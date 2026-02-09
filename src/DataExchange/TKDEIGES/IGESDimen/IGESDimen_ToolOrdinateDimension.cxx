@@ -33,7 +33,7 @@ void IGESDimen_ToolOrdinateDimension::ReadOwnParams(
     occ::handle<IGESData_IGESEntity> ent;
     if (!PR.ReadEntity(IR, PR.Current(), "Line or Leader", ent))
     {
-    } // WARNING : Two possible Types allowed :
+    }
     else if (ent->IsKind(STANDARD_TYPE(IGESDimen_WitnessLine)))
     {
       witLine = GetCasted(IGESDimen_WitnessLine, ent);
@@ -62,14 +62,14 @@ void IGESDimen_ToolOrdinateDimension::WriteOwnParams(
   IGESData_IGESWriter&                            IW) const
 {
   IW.Send(ent->Note());
-  if (ent->FormNumber() == 0) // either WitnessLine or  LeaderArrow
+  if (ent->FormNumber() == 0)
   {
     if (ent->IsLine())
       IW.Send(ent->WitnessLine());
     else
       IW.Send(ent->Leader());
   }
-  else // both   WitnessLine and LeaderArrow
+  else
   {
     IW.Send(ent->WitnessLine());
     IW.Send(ent->Leader());
@@ -96,7 +96,7 @@ void IGESDimen_ToolOrdinateDimension::OwnCopy(
 }
 
 IGESData_DirChecker IGESDimen_ToolOrdinateDimension::DirChecker(
-  const occ::handle<IGESDimen_OrdinateDimension>& /*ent*/) const
+  const occ::handle<IGESDimen_OrdinateDimension>&) const
 {
   IGESData_DirChecker DC(218, 0, 1);
   DC.Structure(IGESData_DefVoid);

@@ -25,22 +25,16 @@ IMPLEMENT_DOMSTRING(MirrorRefString, "mirror")
 
 IMPLEMENT_DOMSTRING(TrueString, "true")
 
-//=================================================================================================
-
 XmlMDataXtd_PatternStdDriver::XmlMDataXtd_PatternStdDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataXtd_PatternStdDriver::NewEmpty() const
 {
   return (new TDataXtd_PatternStd());
 }
-
-//=================================================================================================
 
 bool XmlMDataXtd_PatternStdDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                          const occ::handle<TDF_Attribute>& theTarget,
@@ -202,8 +196,6 @@ bool XmlMDataXtd_PatternStdDriver::Paste(const XmlObjMgt_Persistent&       theSo
   return true;
 }
 
-//=================================================================================================
-
 void XmlMDataXtd_PatternStdDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                          XmlObjMgt_Persistent&             theTarget,
                                          XmlObjMgt_SRelocationTable&       theRelocTable) const
@@ -227,7 +219,7 @@ void XmlMDataXtd_PatternStdDriver::Paste(const occ::handle<TDF_Attribute>& theSo
 
   if (signature < 5)
   {
-    // axis 1
+
     TNS = aP->Axis1();
     aNb = theRelocTable.FindIndex(TNS);
     if (aNb == 0)
@@ -236,7 +228,6 @@ void XmlMDataXtd_PatternStdDriver::Paste(const occ::handle<TDF_Attribute>& theSo
     }
     anElem.setAttribute(::Axis1RefString(), aNb);
 
-    // real value 1
     TReal = aP->Value1();
     aNb   = theRelocTable.FindIndex(TReal);
     if (aNb == 0)
@@ -245,7 +236,6 @@ void XmlMDataXtd_PatternStdDriver::Paste(const occ::handle<TDF_Attribute>& theSo
     }
     anElem.setAttribute(::Value1RefString(), aNb);
 
-    // number of instances 1
     TInt = aP->NbInstances1();
     aNb  = theRelocTable.FindIndex(TInt);
     if (aNb == 0)
@@ -256,7 +246,7 @@ void XmlMDataXtd_PatternStdDriver::Paste(const occ::handle<TDF_Attribute>& theSo
 
     if (signature > 2)
     {
-      // axis 2
+
       TNS = aP->Axis2();
       aNb = theRelocTable.FindIndex(TNS);
       if (aNb == 0)
@@ -265,7 +255,6 @@ void XmlMDataXtd_PatternStdDriver::Paste(const occ::handle<TDF_Attribute>& theSo
       }
       anElem.setAttribute(::Axis2RefString(), aNb);
 
-      // real value 2
       TReal = aP->Value2();
       aNb   = theRelocTable.FindIndex(TReal);
       if (aNb == 0)
@@ -274,7 +263,6 @@ void XmlMDataXtd_PatternStdDriver::Paste(const occ::handle<TDF_Attribute>& theSo
       }
       anElem.setAttribute(::Value2RefString(), aNb);
 
-      // number of instances 2
       TInt = aP->NbInstances2();
       aNb  = theRelocTable.FindIndex(TInt);
       if (aNb == 0)

@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_ApplicationContext;
 class StepData_StepWriter;
 
-//! Read & Write Module for ApplicationContext
 class RWStepBasic_RWApplicationContext
 {
 public:

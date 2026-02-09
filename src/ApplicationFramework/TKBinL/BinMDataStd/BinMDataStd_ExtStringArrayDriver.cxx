@@ -9,25 +9,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_ExtStringArrayDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_ExtStringArrayDriver::BinMDataStd_ExtStringArrayDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_ExtStringArray)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_ExtStringArrayDriver::NewEmpty() const
 {
   return new TDataStd_ExtStringArray();
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 
 bool BinMDataStd_ExtStringArrayDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                              const occ::handle<TDF_Attribute>& theTarget,
@@ -78,11 +69,6 @@ bool BinMDataStd_ExtStringArrayDriver::Paste(const BinObjMgt_Persistent&       t
   return ok;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
-
 void BinMDataStd_ExtStringArrayDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
   BinObjMgt_Persistent&             theTarget,
@@ -99,7 +85,6 @@ void BinMDataStd_ExtStringArrayDriver::Paste(
 
   theTarget << (uint8_t)(anAtt->GetDelta() ? 1 : 0);
 
-  // process user defined guid
   if (anAtt->ID() != TDataStd_ExtStringArray::GetID())
     theTarget << anAtt->ID();
 }

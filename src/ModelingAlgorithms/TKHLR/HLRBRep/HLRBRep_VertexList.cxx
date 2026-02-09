@@ -7,8 +7,6 @@
 #include <Standard_NoMoreObject.hpp>
 #include <Standard_NoSuchObject.hpp>
 
-//=================================================================================================
-
 HLRBRep_VertexList::HLRBRep_VertexList(const HLRBRep_EdgeInterferenceTool&                     T,
                                        const NCollection_List<HLRAlgo_Interference>::Iterator& I)
     : myIterator(I),
@@ -20,21 +18,15 @@ HLRBRep_VertexList::HLRBRep_VertexList(const HLRBRep_EdgeInterferenceTool&      
   Next();
 }
 
-//=================================================================================================
-
 bool HLRBRep_VertexList::IsPeriodic() const
 {
   return myTool.IsPeriodic();
 }
 
-//=================================================================================================
-
 bool HLRBRep_VertexList::More() const
 {
   return (fromEdge || fromInterf);
 }
-
-//=================================================================================================
 
 void HLRBRep_VertexList::Next()
 {
@@ -60,8 +52,6 @@ void HLRBRep_VertexList::Next()
   }
 }
 
-//=================================================================================================
-
 const HLRAlgo_Intersection& HLRBRep_VertexList::Current() const
 {
   if (fromEdge)
@@ -72,21 +62,15 @@ const HLRAlgo_Intersection& HLRBRep_VertexList::Current() const
     throw Standard_NoSuchObject("HLRBRep_VertexList::Current");
 }
 
-//=================================================================================================
-
 bool HLRBRep_VertexList::IsBoundary() const
 {
   return fromEdge;
 }
 
-//=================================================================================================
-
 bool HLRBRep_VertexList::IsInterference() const
 {
   return fromInterf;
 }
-
-//=================================================================================================
 
 TopAbs_Orientation HLRBRep_VertexList::Orientation() const
 {
@@ -96,8 +80,6 @@ TopAbs_Orientation HLRBRep_VertexList::Orientation() const
     throw Standard_DomainError("HLRBRep_VertexList::Orientation");
 }
 
-//=================================================================================================
-
 TopAbs_Orientation HLRBRep_VertexList::Transition() const
 {
   if (fromInterf)
@@ -105,8 +87,6 @@ TopAbs_Orientation HLRBRep_VertexList::Transition() const
   else
     throw Standard_DomainError("HLRBRep_VertexList::Transition");
 }
-
-//=================================================================================================
 
 TopAbs_Orientation HLRBRep_VertexList::BoundaryTransition() const
 {

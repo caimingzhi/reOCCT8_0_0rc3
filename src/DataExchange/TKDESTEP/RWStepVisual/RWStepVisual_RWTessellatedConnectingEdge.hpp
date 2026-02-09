@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_TessellatedConnectingEdge;
 
-//! Read & Write tool for TessellatedConnectingEdge
 class RWStepVisual_RWTessellatedConnectingEdge
 {
 

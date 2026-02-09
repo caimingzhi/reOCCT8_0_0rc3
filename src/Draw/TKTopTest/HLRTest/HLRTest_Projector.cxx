@@ -6,25 +6,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRTest_Projector, Draw_Drawable3D)
 
-//=================================================================================================
-
 HLRTest_Projector::HLRTest_Projector(const HLRAlgo_Projector& P)
     : myProjector(P)
 {
 }
 
-//=================================================================================================
-
 void HLRTest_Projector::DrawOn(Draw_Display&) const {}
-
-//=================================================================================================
 
 occ::handle<Draw_Drawable3D> HLRTest_Projector::Copy() const
 {
   return new HLRTest_Projector(myProjector);
 }
-
-//=================================================================================================
 
 void HLRTest_Projector::Dump(Standard_OStream& S) const
 {
@@ -43,8 +35,6 @@ void HLRTest_Projector::Dump(Standard_OStream& S) const
   }
   S << std::endl;
 }
-
-//=================================================================================================
 
 void HLRTest_Projector::Save(Standard_OStream& theStream) const
 {
@@ -74,8 +64,6 @@ void HLRTest_Projector::Save(Standard_OStream& theStream) const
   theStream << aTranslationVector.Coord(3) << " ";
   theStream << "\n";
 }
-
-//=================================================================================================
 
 occ::handle<Draw_Drawable3D> HLRTest_Projector::Restore(Standard_IStream& theStream)
 {
@@ -110,8 +98,6 @@ occ::handle<Draw_Drawable3D> HLRTest_Projector::Restore(Standard_IStream& theStr
   occ::handle<HLRTest_Projector> aTestProjector = new HLRTest_Projector(anAlgoProtector);
   return aTestProjector;
 }
-
-//=================================================================================================
 
 void HLRTest_Projector::Whatis(Draw_Interpretor& I) const
 {

@@ -1,32 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// pdn 10.12.98: tr9_r0501-ug
-// pdn 28.12.98: PRO10366 shifting pcurve between two singularities
-//: k7 abv 5.01.99: USA60022.igs ent 243: FixMissingSeam() improved
-//: l2 abv 10.01.99: USA60022 7289: corrections for reversed face
-// gka 11.01.99 file PRO7755.stp #2018: work-around error in BRepLib_MakeFace
-//: p4 abv, pdn 23.02.99: PRO9234 #15720: call BRepTools::Update() for faces
-//    rln 03.03.99 S4135: transmission of parameter precision to SA_Surface::NbSingularities
-//: q5 abv 19.03.99 code improvement
-//%14 pdn 15.03.99 adding function for fixing null area wires
-//%15 pdn 20.03.99 code improvement
-//    abv 09.04.99 S4136: improve tolerance management; remove unused flag Closed
-// #4  szv          S4163: optimization
-//    smh 31.01.01 BUC60810 : Case of small wire on face in solid
-// sln 25.09.2001  checking order of 3d and 2d representation curves
-// abv 19.10.2001  FixAddNaturalBound improved and extracted as separate fix
-// skl,pdn 14.05.2002  OCC55 (correction precision for small faces)
 
 #include <Bnd_Box.hpp>
 #include <BndLib_Add2dCurve.hpp>
@@ -106,8 +78,6 @@ static bool IsSurfaceUVPeriodic(const occ::handle<GeomAdaptor_Surface>& theSurf)
           || theSurf->GetType() == GeomAbs_Sphere);
 }
 
-//=================================================================================================
-
 ShapeFix_Face::ShapeFix_Face()
 {
   myFwd     = true;
@@ -115,8 +85,6 @@ ShapeFix_Face::ShapeFix_Face()
   myFixWire = new ShapeFix_Wire;
   ClearModes();
 }
-
-//=================================================================================================
 
 ShapeFix_Face::ShapeFix_Face(const TopoDS_Face& face)
 {
@@ -126,8 +94,6 @@ ShapeFix_Face::ShapeFix_Face(const TopoDS_Face& face)
   ClearModes();
   Init(face);
 }
-
-//=================================================================================================
 
 void ShapeFix_Face::ClearModes()
 {
@@ -144,15 +110,11 @@ void ShapeFix_Face::ClearModes()
   myFixPeriodicDegenerated   = -1;
 }
 
-//=================================================================================================
-
 void ShapeFix_Face::SetMsgRegistrator(const occ::handle<ShapeExtend_BasicMsgRegistrator>& msgreg)
 {
   ShapeFix_Root::SetMsgRegistrator(msgreg);
   myFixWire->SetMsgRegistrator(msgreg);
 }
-
-//=================================================================================================
 
 void ShapeFix_Face::SetPrecision(const double preci)
 {
@@ -160,15 +122,11 @@ void ShapeFix_Face::SetPrecision(const double preci)
   myFixWire->SetPrecision(preci);
 }
 
-//=================================================================================================
-
 void ShapeFix_Face::SetMinTolerance(const double mintol)
 {
   ShapeFix_Root::SetMinTolerance(mintol);
   myFixWire->SetMinTolerance(mintol);
 }
-
-//=================================================================================================
 
 void ShapeFix_Face::SetMaxTolerance(const double maxtol)
 {
@@ -176,16 +134,12 @@ void ShapeFix_Face::SetMaxTolerance(const double maxtol)
   myFixWire->SetMaxTolerance(maxtol);
 }
 
-//=================================================================================================
-
 void ShapeFix_Face::Init(const occ::handle<Geom_Surface>& surf, const double preci, const bool fwd)
 {
   myStatus                               = 0;
   occ::handle<ShapeAnalysis_Surface> sas = new ShapeAnalysis_Surface(surf);
   Init(sas, preci, fwd);
 }
-
-//=================================================================================================
 
 void ShapeFix_Face::Init(const occ::handle<ShapeAnalysis_Surface>& surf,
                          const double                              preci,
@@ -202,12 +156,10 @@ void ShapeFix_Face::Init(const occ::handle<ShapeAnalysis_Surface>& surf,
     myFace.Orientation(TopAbs_REVERSED);
 }
 
-//=================================================================================================
-
 void ShapeFix_Face::Init(const TopoDS_Face& theFace)
 {
   myStatus = 0;
-  // Check if surface is null. It doesn't make sense to create ShapeAnalysis_Surface in that case.
+
   const occ::handle<Geom_Surface> aSurface = BRep_Tool::Surface(theFace);
   if (!aSurface.IsNull())
   {
@@ -218,23 +170,16 @@ void ShapeFix_Face::Init(const TopoDS_Face& theFace)
   myShape = myFace;
 }
 
-//=================================================================================================
-
 void ShapeFix_Face::Add(const TopoDS_Wire& wire)
 {
   if (wire.IsNull())
     return;
   BRep_Builder B;
-  // szv#4:S4163:12Mar99 SGI warns
-  TopoDS_Shape fc = myFace.Oriented(TopAbs_FORWARD); //: l2 abv 10 Jan 99: Oriented()
+
+  TopoDS_Shape fc = myFace.Oriented(TopAbs_FORWARD);
   B.Add(fc, wire);
 }
 
-//=======================================================================
-// function : SplitWire
-// purpose  : auxiliary - try to split wire (it is needed if some segments
-//           were removed in ShapeFix_Wire::FixSelfIntersection() )
-//=======================================================================
 static bool SplitWire(const TopoDS_Face&                  face,
                       const TopoDS_Wire&                  wire,
                       NCollection_Sequence<TopoDS_Shape>& aResWires)
@@ -280,7 +225,7 @@ static bool SplitWire(const TopoDS_Face&                  face,
       }
       if (V1.IsSame(V0))
       {
-        // check that V0 and V1 are same in 2d too
+
         double                    a1, b1, a2, b2;
         occ::handle<Geom2d_Curve> curve1 = BRep_Tool::CurveOnSurface(E1, face, a1, b1);
         occ::handle<Geom2d_Curve> curve2 = BRep_Tool::CurveOnSurface(E2, face, a2, b2);
@@ -296,7 +241,7 @@ static bool SplitWire(const TopoDS_Face&                  face,
         double maxResolution = 2 * std::max(anAdaptor.UResolution(tol), anAdaptor.VResolution(tol));
         if (v0.SquareDistance(v1) < maxResolution)
         {
-          // new wire is closed, put it into sequence
+
           aResWires.Append(sewd1->Wire());
           break;
         }
@@ -304,7 +249,7 @@ static bool SplitWire(const TopoDS_Face&                  face,
     }
     if (!IsConnectedEdge)
     {
-      // create new notclosed wire
+
       aResWires.Append(sewd1->Wire());
     }
     if (UsedEdges.Extent() == sewd->NbEdges())
@@ -313,8 +258,6 @@ static bool SplitWire(const TopoDS_Face&                  face,
 
   return true;
 }
-
-//=================================================================================================
 
 bool ShapeFix_Face::Perform()
 {
@@ -326,11 +269,10 @@ bool ShapeFix_Face::Perform()
 
   BRep_Builder B;
   TopoDS_Shape aInitFace = myFace;
-  // perform first part of fixes on wires
+
   bool isfixReorder = false;
   bool isReplaced   = false;
 
-  // gka fix in order to avoid lost messages (following OCC21771)
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> aMapReorderedWires;
 
   double aSavPreci = Precision();
@@ -339,10 +281,10 @@ bool ShapeFix_Face::Perform()
     theAdvFixWire->SetFace(myFace, mySurf);
 
     int usFixLackingMode = theAdvFixWire->FixLackingMode();
-    // int usFixNotchedEdgesMode = theAdvFixWire->FixNotchedEdgesMode(); // CR0024983
+
     int usFixSelfIntersectionMode   = theAdvFixWire->FixSelfIntersectionMode();
     theAdvFixWire->FixLackingMode() = false;
-    // theAdvFixWire->FixNotchedEdgesMode() = false; // CR0024983
+
     theAdvFixWire->FixSelfIntersectionMode() = false;
 
     bool         fixed = false;
@@ -353,7 +295,6 @@ bool ShapeFix_Face::Perform()
     TopoDS_Face  tmpFace     = TopoDS::Face(emptyCopied);
     tmpFace.Orientation(TopAbs_FORWARD);
 
-    // skl 29.03.2010 (OCC21623)
     if (myAutoCorrectPrecisionMode)
     {
       double size     = ShapeFix::LeastEdgeSize(S);
@@ -389,13 +330,13 @@ bool ShapeFix_Face::Perform()
       }
       if (theAdvFixWire->Perform())
       {
-        // fixed = true;
+
         isfixReorder  = (theAdvFixWire->StatusReorder(ShapeExtend_DONE) || isfixReorder);
         fixed         = (theAdvFixWire->StatusSmall(ShapeExtend_DONE)
                  || theAdvFixWire->StatusConnected(ShapeExtend_DONE)
                  || theAdvFixWire->StatusEdgeCurves(ShapeExtend_DONE)
-                 || theAdvFixWire->StatusNotches(ShapeExtend_DONE) || // CR0024983
-                 theAdvFixWire->StatusFixTails(ShapeExtend_DONE)
+                 || theAdvFixWire->StatusNotches(ShapeExtend_DONE)
+                 || theAdvFixWire->StatusFixTails(ShapeExtend_DONE)
                  || theAdvFixWire->StatusDegenerated(ShapeExtend_DONE)
                  || theAdvFixWire->StatusClosed(ShapeExtend_DONE));
         TopoDS_Wire w = theAdvFixWire->Wire();
@@ -439,13 +380,11 @@ bool ShapeFix_Face::Perform()
   }
 
   myResult              = myFace;
-  TopoDS_Shape savShape = myFace; // gka BUG 6555
+  TopoDS_Shape savShape = myFace;
 
-  // Specific case for conic surfaces
   if (NeedFix(myFixPeriodicDegenerated))
     this->FixPeriodicDegenerated();
 
-  // fix missing seam
   if (NeedFix(myFixMissingSeamMode))
   {
     if (FixMissingSeam())
@@ -454,15 +393,12 @@ bool ShapeFix_Face::Perform()
     }
   }
 
-  // cycle by all possible faces coming from FixMissingSeam
-  // each face is processed as if it was single
   TopExp_Explorer exp(myResult, TopAbs_FACE);
   for (; exp.More(); exp.Next())
   {
     myFace                  = TopoDS::Face(exp.Current());
     bool NeedCheckSplitWire = false;
 
-    // perform second part of fixes on wires
     if (NeedFix(myFixWireMode))
     {
       theAdvFixWire->SetFace(myFace, mySurf);
@@ -525,14 +461,13 @@ bool ShapeFix_Face::Perform()
         if (theAdvFixWire->StatusRemovedSegment())
           NeedCheckSplitWire = true;
 
-        // fix for loop of wire
         NCollection_Sequence<TopoDS_Shape> aLoopWires;
         if (NeedFix(myFixLoopWiresMode) && FixLoopWire(aLoopWires))
         {
           if (aLoopWires.Length() > 1)
-            // clang-format off
-            SendWarning ( wire, Message_Msg ( "FixAdvFace.FixLoopWire.MSG0" ) );// Wire was split on several wires
-          // clang-format on
+
+            SendWarning(wire, Message_Msg("FixAdvFace.FixLoopWire.MSG0"));
+
           myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_DONE7);
           fixed = true;
           int k = 1;
@@ -552,8 +487,7 @@ bool ShapeFix_Face::Perform()
       {
         if (!myFwd)
           tmpFace.Orientation(TopAbs_REVERSED);
-        if (!isReplaced && !aInitFace.IsSame(myResult)
-            && !Context().IsNull()) // gka 06.09.04 BUG 6555
+        if (!isReplaced && !aInitFace.IsSame(myResult) && !Context().IsNull())
           Context()->Replace(aInitFace, savShape);
         if (!Context().IsNull())
           Context()->Replace(S, tmpFace);
@@ -564,8 +498,7 @@ bool ShapeFix_Face::Perform()
 
     if (NeedCheckSplitWire)
     {
-      // try to split wire - it is needed if some segments were removed
-      // in ShapeFix_Wire::FixSelfIntersection()
+
       TopoDS_Shape S = myFace;
       if (!Context().IsNull())
         S = Context()->Apply(myFace);
@@ -602,7 +535,6 @@ bool ShapeFix_Face::Perform()
       }
     }
 
-    // fix intersecting wires
     if (FixWiresTwoCoincEdges())
       myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_DONE7);
     if (NeedFix(myFixIntersectingWiresMode))
@@ -613,7 +545,6 @@ bool ShapeFix_Face::Perform()
       }
     }
 
-    // fix orientation
     NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
       MapWires;
     MapWires.Clear();
@@ -625,7 +556,6 @@ bool ShapeFix_Face::Perform()
 
     BRepTools::Update(myFace);
 
-    // fix natural bounds
     bool NeedSplit = true;
     if (FixAddNaturalBound())
     {
@@ -633,7 +563,6 @@ bool ShapeFix_Face::Perform()
       myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_DONE5);
     }
 
-    // split face
     if (NeedFix(myFixSplitFaceMode) && NeedSplit && MapWires.Extent() > 1)
     {
       if (FixSplitFace(MapWires))
@@ -641,17 +570,13 @@ bool ShapeFix_Face::Perform()
     }
   }
 
-  // return the original preci
   SetPrecision(aSavPreci);
   theAdvFixWire->SetPrecision(aSavPreci);
 
-  // cycle by all possible faces coming from FixAddNaturalBound
-  // each face is processed as if it was single
   for (exp.Init(myResult, TopAbs_FACE); exp.More(); exp.Next())
   {
     myFace = TopoDS::Face(exp.Current());
 
-    // fix small-area wires
     if (NeedFix(myFixSmallAreaWireMode, false))
     {
       const bool isRemoveFace = NeedFix(myRemoveSmallAreaFaceMode, false);
@@ -664,7 +589,7 @@ bool ShapeFix_Face::Perform()
   {
     if (Status(ShapeExtend_DONE) && !isReplaced && !aInitFace.IsSame(savShape))
     {
-      // gka fix in order to avoid lost messages (following OCC21771)
+
       if (aMapReorderedWires.Extent())
       {
         TopoDS_Iterator aItW(aInitFace, false);
@@ -681,7 +606,7 @@ bool ShapeFix_Face::Perform()
       }
       Context()->Replace(aInitFace, savShape);
     }
-    myResult = Context()->Apply(aInitFace); // gka 06.09.04
+    myResult = Context()->Apply(aInitFace);
   }
   else if (!Status(ShapeExtend_DONE))
     myResult = aInitFace;
@@ -689,10 +614,6 @@ bool ShapeFix_Face::Perform()
   return Status(ShapeExtend_DONE);
 }
 
-//=================================================================================================
-
-// Shift all pcurves of edges in the given wire on the given face
-// to vector <vec>
 static void Shift2dWire(const TopoDS_Wire&                        w,
                         const TopoDS_Face&                        f,
                         const gp_Vec2d                            vec,
@@ -714,7 +635,7 @@ static void Shift2dWire(const TopoDS_Wire&                        w,
     C2d->Transform(tr2d);
     if (recompute3d)
     {
-      // recompute 3d curve and vertex
+
       sbe.RemoveCurve3d(edge);
       sbe.BuildCurve3d(edge);
       B.UpdateVertex(sae.FirstVertex(edge), theSurface->Value(C2d->Value(cf)), 0.);
@@ -722,7 +643,6 @@ static void Shift2dWire(const TopoDS_Wire&                        w,
   }
 }
 
-// Cut interval from the sequence of intervals
 static bool CutInterval(NCollection_Sequence<gp_Pnt2d>& intervals,
                         const gp_Pnt2d&                 toAddI,
                         const double                    period)
@@ -730,11 +650,11 @@ static bool CutInterval(NCollection_Sequence<gp_Pnt2d>& intervals,
   if (intervals.Length() <= 0)
     return false;
   for (int j = 0; j < 2; j++)
-  { // try twice, align to bottom and to top
+  {
     for (int i = 1; i <= intervals.Length(); i++)
     {
       gp_Pnt2d interval = intervals(i);
-      // ACIS907, OCC921 a054a.sat (face 124)
+
       double   shift = ShapeAnalysis::AdjustByPeriod((j ? toAddI.X() : toAddI.Y()),
                                                    0.5 * (interval.X() + interval.Y()),
                                                    period);
@@ -746,7 +666,7 @@ static bool CutInterval(NCollection_Sequence<gp_Pnt2d>& intervals,
         if (toAdd.Y() < interval.Y())
         {
           intervals.InsertBefore(i, interval);
-          intervals.ChangeValue(i + 1).SetX(toAdd.Y()); // i++...
+          intervals.ChangeValue(i + 1).SetX(toAdd.Y());
         }
         intervals.ChangeValue(i).SetY(toAdd.X());
       }
@@ -761,7 +681,6 @@ static bool CutInterval(NCollection_Sequence<gp_Pnt2d>& intervals,
   return true;
 }
 
-// Find middle of the biggest interval
 static double FindBestInterval(NCollection_Sequence<gp_Pnt2d>& intervals)
 {
   double shift = 0., max = -1.;
@@ -776,13 +695,6 @@ static double FindBestInterval(NCollection_Sequence<gp_Pnt2d>& intervals)
   return shift;
 }
 
-//=================================================================================================
-
-// Detect missing natural boundary on spherical surfaces and add it if
-// necessary
-// pdn 981202: add natural bounds if missing (on sphere only)
-//: abv 28.08.01: rewritten and extended for toruses
-
 bool ShapeFix_Face::FixAddNaturalBound()
 {
   if (mySurf.IsNull())
@@ -796,7 +708,6 @@ bool ShapeFix_Face::FixAddNaturalBound()
     myFace         = TopoDS::Face(S);
   }
 
-  // collect wires in sequence
   NCollection_Sequence<TopoDS_Shape> ws;
   NCollection_Sequence<TopoDS_Shape> vs;
   TopoDS_Iterator                    wi(myFace, false);
@@ -810,7 +721,6 @@ bool ShapeFix_Face::FixAddNaturalBound()
       vs.Append(wi.Value());
   }
 
-  // deal with the case of an empty face: just create a new face by a standard tool
   if (ws.IsEmpty() && !IsSurfaceUVInfinite(mySurf->Surface()))
   {
     BRepBuilderAPI_MakeFace aFaceBuilder(mySurf->Surface(), Precision::Confusion());
@@ -821,11 +731,8 @@ bool ShapeFix_Face::FixAddNaturalBound()
     if (!Context().IsNull())
       Context()->Replace(myFace, aNewFace);
 
-    // taking into account orientation
     myFace = aNewFace;
 
-    // gka 11.01.99 file PRO7755.stp entity #2018 surface #1895: error BRepLib_MakeFace func
-    // IsDegenerated
     occ::handle<ShapeFix_Edge> sfe = myFixWire->FixEdgeTool();
     for (TopExp_Explorer Eed(myFace, TopAbs_EDGE); Eed.More(); Eed.Next())
     {
@@ -833,22 +740,18 @@ bool ShapeFix_Face::FixAddNaturalBound()
       sfe->FixVertexTolerance(edg, myFace);
     }
 
-    //    B.UpdateFace (myFace,myPrecision);
-    // clang-format off
-    SendWarning ( myFace, Message_Msg ( "FixAdvFace.FixOrientation.MSG0" ) );// Face created with natural bounds
-    // clang-format on
+    SendWarning(myFace, Message_Msg("FixAdvFace.FixOrientation.MSG0"));
+
     BRepTools::Update(myFace);
     myResult = myFace;
     return true;
   }
 
-  // check if surface doesn't need natural bounds
   if (!isNeedAddNaturalBound(ws))
   {
     return false;
   }
 
-  // Collect information on free intervals in U and V
   NCollection_Sequence<gp_Pnt2d> intU, intV, centers;
   double                         SUF, SUL, SVF, SVL;
   mySurf->Bounds(SUF, SUL, SVF, SVL);
@@ -860,14 +763,13 @@ bool ShapeFix_Face::FixAddNaturalBound()
   for (i = 1; i <= nb; i++)
   {
     double Umin, Vmin, Umax, Vmax;
-    //     Bnd_Box2d B;
+
     TopoDS_Wire  aw        = TopoDS::Wire(ws.Value(i));
     TopoDS_Face  aWireFace = TopoDS::Face(myFace.EmptyCopied());
     BRep_Builder aB;
     aB.Add(aWireFace, aw);
     ShapeAnalysis::GetFaceUVBounds(aWireFace, Umin, Umax, Vmin, Vmax);
 
-    // PTV 01.11.2002 ACIS907, OCC921 end
     if (mySurf->IsUClosed())
       CutInterval(intU, gp_Pnt2d(Umin, Umax), SUL - SUF);
     if (mySurf->IsVClosed())
@@ -875,14 +777,12 @@ bool ShapeFix_Face::FixAddNaturalBound()
     centers.Append(gp_Pnt2d(0.5 * (Umin + Umax), 0.5 * (Vmin + Vmax)));
   }
 
-  // find best interval and thus compute shift
   gp_Pnt2d shift(0., 0.);
   if (mySurf->IsUClosed())
     shift.SetX(FindBestInterval(intU));
   if (mySurf->IsVClosed())
     shift.SetY(FindBestInterval(intV));
 
-  // Adjust all other wires to be inside outer one
   gp_Pnt2d center(shift.X() + 0.5 * (SUL - SUF), shift.Y() + 0.5 * (SVL - SVF));
   for (i = 1; i <= nb; i++)
   {
@@ -895,7 +795,6 @@ bool ShapeFix_Face::FixAddNaturalBound()
     Shift2dWire(wire, myFace, sh.XY(), mySurf);
   }
 
-  // Create naturally bounded surface and add that wire to sequence
   TopLoc_Location           L;
   occ::handle<Geom_Surface> surf = BRep_Tool::Surface(myFace, L);
   BRepBuilderAPI_MakeFace   mf(surf, Precision::Confusion());
@@ -912,13 +811,10 @@ bool ShapeFix_Face::FixAddNaturalBound()
     Shift2dWire(wire, myFace, shift.XY(), mySurf, true);
   }
 
-  // Fix possible case on sphere when gap contains degenerated edge
-  // and thus has a common part with natural boundary
-  // Such hole should be merged with boundary
   if (mySurf->Adaptor3d()->GetType() == GeomAbs_Sphere && ws.Length() == nb + 1)
   {
     occ::handle<ShapeExtend_WireData> bnd = new ShapeExtend_WireData(TopoDS::Wire(ws.Last()));
-    // code to become separate method FixTouchingWires()
+
     for (i = 1; i <= nb; i++)
     {
       occ::handle<ShapeExtend_WireData> sbwd = new ShapeExtend_WireData(TopoDS::Wire(ws.Value(i)));
@@ -926,7 +822,7 @@ bool ShapeFix_Face::FixAddNaturalBound()
       {
         if (!BRep_Tool::Degenerated(sbwd->Edge(j)))
           continue;
-        // find corresponding place in boundary
+
         ShapeAnalysis_Edge sae;
         TopoDS_Vertex      V = sae.FirstVertex(sbwd->Edge(j));
         int                k;
@@ -939,7 +835,7 @@ bool ShapeFix_Face::FixAddNaturalBound()
         }
         if (k > bnd->NbEdges())
           continue;
-        // and insert hole to that place
+
         BRep_Builder B;
         B.Degenerated(sbwd->Edge(j), false);
         B.Degenerated(bnd->Edge(k), false);
@@ -957,7 +853,6 @@ bool ShapeFix_Face::FixAddNaturalBound()
     }
   }
 
-  // Create resulting face
   BRep_Builder B;
   TopoDS_Shape S = myFace.EmptyCopied();
   S.Orientation(TopAbs_FORWARD);
@@ -972,13 +867,10 @@ bool ShapeFix_Face::FixAddNaturalBound()
   myFace = TopoDS::Face(S);
   BRepTools::Update(myFace);
 
-  // clang-format off
-  SendWarning ( myFace, Message_Msg ( "FixAdvFace.FixOrientation.MSG0" ) );// Face created with natural bounds
-  // clang-format on
+  SendWarning(myFace, Message_Msg("FixAdvFace.FixOrientation.MSG0"));
+
   return true;
 }
-
-//=================================================================================================
 
 bool ShapeFix_Face::FixOrientation()
 {
@@ -988,29 +880,25 @@ bool ShapeFix_Face::FixOrientation()
   return FixOrientation(MapWires);
 }
 
-//=================================================================================================
-
 bool ShapeFix_Face::isNeedAddNaturalBound(
   const NCollection_Sequence<TopoDS_Shape>& theOrientedWires)
 {
-  // if fix is not needed
+
   if (!NeedFix(myFixAddNaturalBoundMode))
   {
     return false;
   }
-  // if surface is not double-closed
+
   if (mySurf && !IsSurfaceUVPeriodic(mySurf->Adaptor3d()))
   {
     return false;
   }
-  // if face has an OUTER bound
+
   if (ShapeAnalysis::IsOuterBound(myFace))
   {
     return false;
   }
-  // check that not any wire has a seam edge and not any edge is degenerated.
-  // because the presence of a seam or degenerated edge indicates that this wire should be an
-  // external one, and in case of its incorrect orientation, this will be corrected.
+
   int aNbOriented = theOrientedWires.Length();
   for (int i = 1; i <= aNbOriented; i++)
   {
@@ -1032,8 +920,6 @@ bool ShapeFix_Face::isNeedAddNaturalBound(
   return true;
 }
 
-//=================================================================================================
-
 bool ShapeFix_Face::FixOrientation(
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
     MapWires)
@@ -1047,7 +933,7 @@ bool ShapeFix_Face::FixOrientation(
   }
   NCollection_Sequence<TopoDS_Shape> ws;
   NCollection_Sequence<TopoDS_Shape> allSubShapes;
-  // smh: BUC60810 : protection against very small wires (one-edge, null-length)
+
   NCollection_Sequence<TopoDS_Shape> VerySmallWires;
   for (TopoDS_Iterator wi(myFace, false); wi.More(); wi.Next())
   {
@@ -1056,7 +942,7 @@ bool ShapeFix_Face::FixOrientation(
             && wi.Value().Orientation() != TopAbs_REVERSED))
     {
       allSubShapes.Append(wi.Value());
-      // ws.Append (wi.Value());
+
       continue;
     }
 
@@ -1108,17 +994,15 @@ bool ShapeFix_Face::FixOrientation(
   int          nbAll = allSubShapes.Length();
   BRep_Builder B;
 
-  // if no wires, just do nothing
   if (nb <= 0)
     return false;
 
   bool                      isAddNaturalBounds = isNeedAddNaturalBound(ws);
   NCollection_Sequence<int> aSeqReversed;
-  // if wire is only one, check its orientation
+
   if (nb == 1)
   {
-    // skl 12.04.2002 for cases with nbwires>1 (VerySmallWires>1)
-    // make face with only one wire (ws.Value(1))
+
     TopoDS_Shape dummy = myFace.EmptyCopied();
     TopoDS_Face  af    = TopoDS::Face(dummy);
     af.Orientation(TopAbs_FORWARD);
@@ -1129,25 +1013,16 @@ bool ShapeFix_Face::FixOrientation(
       occ::handle<ShapeExtend_WireData> sbdw = new ShapeExtend_WireData(TopoDS::Wire(ws.Value(1)));
       sbdw->Reverse(myFace);
       ws.SetValue(1, sbdw->Wire());
-      // clang-format off
-      SendWarning(sbdw->Wire(), Message_Msg("FixAdvFace.FixOrientation.MSG5"));// Wire on face was reversed
-      // clang-format on
+
+      SendWarning(sbdw->Wire(), Message_Msg("FixAdvFace.FixOrientation.MSG5"));
+
       done = true;
     }
   }
-  // in case of several wires, perform complex analysis
-  // TEST CAUTION
-  // Multiple wires: relative orientations
-  // Each wire must "contain" all the others
-  // Obviously, in the case of leopard skin, there may be a problem
+
   else if (!mySurf.IsNull())
   {
-    // Take each wire (NB: curves present!)
-    // In principle, we should reject unclosed wires (see missing seam?)
-    // We classify it relative to the others, which must all be either IN or
-    // OUT. Otherwise, there is nesting -> SDB. If IN, OK, if OUT, we reverse
-    // (NB: not myClos here, so no stitching problem)
-    // If there is at least one inversion, the face must be redone (see myRebil)
+
     bool   uclosed = mySurf->IsUClosed();
     bool   vclosed = mySurf->IsVClosed();
     double SUF, SUL, SVF, SVL;
@@ -1166,7 +1041,7 @@ bool ShapeFix_Face::FixOrientation(
     NCollection_Array1<Bnd_Box2d> aWireBoxes(1, nb);
     double                        uMiddle = 0, vMiddle = 0;
     bool                          isFirst = true;
-    // create Bounding boxes for each wire
+
     for (i = 1; i <= nb; i++)
     {
       TopoDS_Shape    aShape = ws.Value(i);
@@ -1187,7 +1062,7 @@ bool ShapeFix_Face::FixOrientation(
         double              aLast  = cw->LastParameter();
         if (cw->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)) && (cf < aFirst || cl > aLast))
         {
-          // avoiding problems with segment in Bnd_Box
+
           gac.Load(cw);
         }
         else
@@ -1224,10 +1099,7 @@ bool ShapeFix_Face::FixOrientation(
       TopoDS_Face  af    = TopoDS::Face(dummy);
       af.Orientation(TopAbs_FORWARD);
       B.Add(af, aw);
-      // PTV OCC945 06.11.2002 files ie_exhaust-A.stp (entities 3782,  3787)
-      // tolerance is too big. It is seems that to identify placement of 2d point
-      // it is enough Precision::PConfusion(), cause wea re know that 2d point in TopAbs_ON
-      // BRepTopAdaptor_FClass2d clas (af,toluv);
+
       bool                           CheckShift = true;
       BRepTopAdaptor_FClass2d        clas(af, ::Precision::PConfusion());
       TopAbs_State                   sta    = TopAbs_OUT;
@@ -1237,7 +1109,7 @@ bool ShapeFix_Face::FixOrientation(
       for (int j = 1; j <= nbAll; j++)
       {
         aWireIt++;
-        // if(i==j) continue;
+
         TopoDS_Shape aSh2 = allSubShapes.Value(j);
         if (aw == aSh2)
           continue;
@@ -1267,7 +1139,7 @@ bool ShapeFix_Face::FixOrientation(
         {
           CheckShift     = true;
           TopoDS_Wire bw = TopoDS::Wire(aSh2);
-          // int numin =0;
+
           Bnd_Box2d aBox2 = aWireBoxes.Value(aWireIt);
           if (aBox2.IsOut(aBox1))
             continue;
@@ -1325,7 +1197,7 @@ bool ShapeFix_Face::FixOrientation(
                   found = (staout != clas.Perform(unp1, false));
                 }
               }
-              // Additional check of diagonal steps for toroidal surfaces
+
               if (!found && uclosed && vclosed)
               {
                 for (double dX = -1.0; dX <= 1.0 && !found; dX += 2.0)
@@ -1358,10 +1230,9 @@ bool ShapeFix_Face::FixOrientation(
       }
 
       if (sta == TopAbs_UNKNOWN)
-      { // ERREUR
-        // clang-format off
-        SendWarning ( aw, Message_Msg ( "FixAdvFace.FixOrientation.MSG11" ) );// Cannot orient wire
-        // clang-format on
+      {
+
+        SendWarning(aw, Message_Msg("FixAdvFace.FixOrientation.MSG11"));
       }
       else
       {
@@ -1370,13 +1241,13 @@ bool ShapeFix_Face::FixOrientation(
         {
           if (staout == TopAbs_IN)
           {
-            // wire is OUT but InfinitePoint is IN => need to reverse
+
             ShapeExtend_WireData sewd(aw);
             sewd.Reverse(myFace);
             ws.SetValue(i, sewd.Wire());
-            // clang-format off
-            SendWarning ( sewd.Wire(), Message_Msg ( "FixAdvFace.FixOrientation.MSG5" ) );// Wire on face was reversed
-            // clang-format on
+
+            SendWarning(sewd.Wire(), Message_Msg("FixAdvFace.FixOrientation.MSG5"));
+
             aSeqReversed.Append(i);
             done = true;
             SI.Bind(ws.Value(i), 1);
@@ -1409,13 +1280,13 @@ bool ShapeFix_Face::FixOrientation(
           const NCollection_List<TopoDS_Shape>& IW = MW.Find(aw);
           if (tmpi == 3)
           {
-            // wire is OUT but InfinitePoint is IN => need to reverse
+
             ShapeExtend_WireData sewd(aw);
             sewd.Reverse(myFace);
             ws.SetValue(i, sewd.Wire());
-            // clang-format off
-            SendWarning ( sewd.Wire(), Message_Msg ( "FixAdvFace.FixOrientation.MSG5" ) );// Wire on face was reversed
-            // clang-format on
+
+            SendWarning(sewd.Wire(), Message_Msg("FixAdvFace.FixOrientation.MSG5"));
+
             aSeqReversed.Append(i);
             done = true;
             MapWires.Bind(ws.Value(i), IW);
@@ -1427,13 +1298,13 @@ bool ShapeFix_Face::FixOrientation(
         {
           if (tmpi == 2)
           {
-            // wire is IN but InfinitePoint is OUT => need to reverse
+
             ShapeExtend_WireData sewd(aw);
             sewd.Reverse(myFace);
             ws.SetValue(i, sewd.Wire());
-            // clang-format off
-            SendWarning ( sewd.Wire(), Message_Msg ( "FixAdvFace.FixOrientation.MSG5" ) );// Wire on face was reversed
-            // clang-format on
+
+            SendWarning(sewd.Wire(), Message_Msg("FixAdvFace.FixOrientation.MSG5"));
+
             aSeqReversed.Append(i);
             done = true;
           }
@@ -1445,7 +1316,6 @@ bool ShapeFix_Face::FixOrientation(
   if (isAddNaturalBounds && nb == aSeqReversed.Length())
     done = false;
 
-  // Should I rebuild? if myRebil is set
   if (done)
   {
     TopoDS_Shape S = myFace.EmptyCopied();
@@ -1475,12 +1345,6 @@ bool ShapeFix_Face::FixOrientation(
   return done;
 }
 
-//=======================================================================
-// function : CheckWire
-// purpose  : auxiliary for FixMissingSeam
-//=======================================================================
-//: i7 abv 18 Sep 98: ProSTEP TR9 r0501-ug.stp: algorithm of fixing missing seam changed
-// test whether the wire is opened on period of periodical surface
 static bool CheckWire(const TopoDS_Wire& wire,
                       const TopoDS_Face& face,
                       const double       dU,
@@ -1545,8 +1409,6 @@ static bool CheckWire(const TopoDS_Wire& wire,
   return isuopen || isvopen;
 }
 
-//=================================================================================================
-
 bool ShapeFix_Face::FixMissingSeam()
 {
   if (mySurf.IsNull())
@@ -1566,7 +1428,6 @@ bool ShapeFix_Face::FixMissingSeam()
     myFace         = TopoDS::Face(S);
   }
 
-  //%pdn: surface should be made periodic before (see ShapeCustom_Surface)!
   if (mySurf->Surface()->IsKind(STANDARD_TYPE(Geom_BSplineSurface)))
   {
     occ::handle<Geom_BSplineSurface> BSpl = occ::down_cast<Geom_BSplineSurface>(mySurf->Surface());
@@ -1579,7 +1440,6 @@ bool ShapeFix_Face::FixMissingSeam()
   double fU1, fU2, fV1, fV2;
   BRepTools::UVBounds(myFace, fU1, fU2, fV1, fV2);
 
-  // pdn OCC55 fix to faces without the wires to avoid identical first and last parameters
   if (::Precision::IsInfinite(SUF) || ::Precision::IsInfinite(SUL))
   {
     if (::Precision::IsInfinite(SUF))
@@ -1611,8 +1471,8 @@ bool ShapeFix_Face::FixMissingSeam()
 
   URange = std::min(std::abs(SUL - SUF), Precision::Infinite());
   VRange = std::min(std::abs(SVL - SVF), Precision::Infinite());
-  //  double UTol = 0.2 * URange, VTol = 0.2 * VRange;
-  int ismodeu = 0, ismodev = 0; // szv#4:S4163:12Mar99 was Boolean
+
+  int ismodeu = 0, ismodev = 0;
   int isdeg1 = 0, isdeg2 = 0;
 
   NCollection_Sequence<TopoDS_Shape> ws;
@@ -1656,8 +1516,7 @@ bool ShapeFix_Face::FixMissingSeam()
       {
         w2     = wire;
         isdeg2 = isdeg;
-        //: abv 29.08.01: If wires are contraversal, reverse one of them
-        // If first one is single degenerated edge, reverse it; else second
+
         if (isdeg1)
         {
           w1.Reverse();
@@ -1670,11 +1529,10 @@ bool ShapeFix_Face::FixMissingSeam()
         }
       }
     }
-    //    else return false; //  abort
+
     else
     {
-      //: abv 30.08.09: if more than one open wires and more than two of them are
-      // completely degenerated, remove any of them
+
       if (isdeg || isdeg1 || isdeg2)
       {
         ws.Remove(isdeg ? i : isdeg2 ? isdeg2 : isdeg1);
@@ -1691,8 +1549,7 @@ bool ShapeFix_Face::FixMissingSeam()
     occ::down_cast<Geom_ToroidalSurface>(mySurf->Surface());
   bool anIsDegeneratedTor =
     (aTorSurf.IsNull() ? false : aTorSurf->MajorRadius() < aTorSurf->MinorRadius());
-  // if the second wire is not null, we don't need mark the torus as degenerated
-  // and should process it as a regular one.
+
   if (anIsDegeneratedTor && !w2.IsNull())
   {
     anIsDegeneratedTor = false;
@@ -1702,10 +1559,7 @@ bool ShapeFix_Face::FixMissingSeam()
     return false;
   else if (w2.IsNull())
   {
-    // For spheres and BSpline cone-like surfaces(bug 24055):
-    // If only one of wires limiting face on surface is open in 2d,
-    // this may means that degenerated edge should be added, and
-    // then usual procedure applied
+
     gp_Pnt2d p;
     gp_Dir2d d;
     double   aRange;
@@ -1781,7 +1635,6 @@ bool ShapeFix_Face::FixMissingSeam()
     ws.Append(w2);
   }
 
-  // Check consistency of orientations of the two wires that need to be connected by a seam
   double       uf = SUF, vf = SVF;
   int          coord  = (ismodeu ? 1 : 0);
   int          isneg  = (ismodeu ? ismodeu : -ismodev);
@@ -1795,11 +1648,6 @@ bool ShapeFix_Face::FixMissingSeam()
   B.Add(S, w2);
   ShapeAnalysis::GetFaceUVBounds(TopoDS::Face(S), m2[0][0], m2[0][1], m2[1][0], m2[1][1]);
 
-  // For the case when surface is closed only in one direction it is necessary to check
-  // validity of orientation of the open wires in parametric space.
-  // In case of U closed surface wire with minimal V coordinate should be directed in positive
-  // direction by U In case of V closed surface wire with minimal U coordinate should be directed in
-  // negative direction by V
   if (!vclosed || !uclosed || anIsDegeneratedTor)
   {
     double deltaOther = 0.5 * (m2[coord][0] + m2[coord][1]) - 0.5 * (m1[coord][0] + m1[coord][1]);
@@ -1810,7 +1658,6 @@ bool ShapeFix_Face::FixMissingSeam()
     }
   }
 
-  // sort original wires
   occ::handle<ShapeFix_Wire> sfw = new ShapeFix_Wire;
   sfw->SetFace(myFace, mySurf);
   sfw->SetPrecision(Precision());
@@ -1823,7 +1670,6 @@ bool ShapeFix_Face::FixMissingSeam()
   TopoDS_Wire w11 = wd1->Wire();
   TopoDS_Wire w21 = wd2->Wire();
 
-  //: abv 29.08.01: reconstruct face taking into account reversing
   TopoDS_Shape dummy = myFace.EmptyCopied();
   TopoDS_Face  tmpF  = TopoDS::Face(dummy);
   tmpF.Orientation(TopAbs_FORWARD);
@@ -1836,8 +1682,7 @@ bool ShapeFix_Face::FixMissingSeam()
       wire = w21;
     else
     {
-      // other wires (not boundary) are considered as holes; make sure to have them oriented
-      // accordingly
+
       TopoDS_Shape curface = tmpF.EmptyCopied();
       B.Add(curface, wire);
       curface.Orientation(myFace.Orientation());
@@ -1849,9 +1694,6 @@ bool ShapeFix_Face::FixMissingSeam()
 
   tmpF.Orientation(myFace.Orientation());
 
-  // A special kind of FixShifted is necessary for torus-like
-  // surfaces to adjust wires by period ALONG the missing SEAM direction
-  // tr9_r0501-ug.stp #187640
   if (uclosed && vclosed && !anIsDegeneratedTor)
   {
     double shiftw2 = ShapeAnalysis::AdjustByPeriod(
@@ -1896,8 +1738,7 @@ bool ShapeFix_Face::FixMissingSeam()
         }
       }
     }
-    // abv 05 Feb 02: OCC34
-    // by the way, select proper split place by V to avoid extra intersections
+
     if (m1[coord][1] - m1[coord][0] <= period)
     {
       double other = 0.5 * (m1[coord][0] + m1[coord][1] - period);
@@ -1908,8 +1749,6 @@ bool ShapeFix_Face::FixMissingSeam()
     }
   }
 
-  // find the best place by u and v to insert a seam
-  // (so as to minimize splitting edges as possible)
   ShapeAnalysis_Edge sae;
   int                foundU = 0, foundV = 0;
   int                nb1 = wd1->NbEdges();
@@ -1922,7 +1761,7 @@ bool ShapeFix_Face::FixMissingSeam()
     if (!sae.PCurve(edge1, tmpF, c2d, f, l, true))
       return false;
     gp_Pnt2d pos1 = c2d->Value(l).XY();
-    // the best place is end of edge which is nearest to 0
+
     bool skipU = !uclosed;
     if (uclosed && ismodeu)
     {
@@ -1954,7 +1793,7 @@ bool ShapeFix_Face::FixMissingSeam()
       else
         break;
     }
-    // or yet better - if it is end of some edges on both wires
+
     for (int i2 = 1; i1 <= nb1 && i2 <= nb2; i2++)
     {
       TopoDS_Edge edge2 = wd2->Edge(i2);
@@ -1984,28 +1823,25 @@ bool ShapeFix_Face::FixMissingSeam()
     }
   }
 
-  // pdn fixing RTS on offsets
   if (uf < SUF || uf > SUL)
     uf += ShapeAnalysis::AdjustToPeriod(uf, SUF, SUF + URange);
   if (vf < SVF || vf > SVL)
     vf += ShapeAnalysis::AdjustToPeriod(vf, SVF, SVF + VRange);
 
-  // Create fictive grid and call ComposeShell to insert a seam
   occ::handle<Geom_RectangularTrimmedSurface> RTS =
     new Geom_RectangularTrimmedSurface(mySurf->Surface(), uf, uf + URange, vf, vf + VRange);
   occ::handle<NCollection_HArray2<occ::handle<Geom_Surface>>> grid =
     new NCollection_HArray2<occ::handle<Geom_Surface>>(1, 1, 1, 1);
-  grid->SetValue(1, 1, RTS); // mySurf->Surface() );
+  grid->SetValue(1, 1, RTS);
   occ::handle<ShapeExtend_CompositeSurface> G = new ShapeExtend_CompositeSurface(grid);
   TopLoc_Location                           L;
 
-  // addition non-manifold topology
   int j = 1;
   for (; j <= aSeqNonManif.Length(); j++)
     B.Add(tmpF, aSeqNonManif.Value(j));
 
   ShapeFix_ComposeShell CompShell;
-  CompShell.Init(G, L, tmpF, ::Precision::Confusion()); // myPrecision
+  CompShell.Init(G, L, tmpF, ::Precision::Confusion());
   if (Context().IsNull())
     SetContext(new ShapeBuild_ReShape);
   CompShell.ClosedMode() = true;
@@ -2013,15 +1849,12 @@ bool ShapeFix_Face::FixMissingSeam()
   CompShell.SetMaxTolerance(MaxTolerance());
   CompShell.Perform();
 
-  // abv 03.07.00: CAX-IF TRJ4: trj4_k1_goe-tu-214.stp: #785: reset mySurf
   mySurf = new ShapeAnalysis_Surface(RTS);
 
   myResult = CompShell.Result();
 
   Context()->Replace(myFace, myResult);
 
-  // Remove small wires and / or faces that can be generated by ComposeShell
-  // (see tests bugs step bug30052_4, de step_3 E6)
   int             nbFaces = 0;
   TopExp_Explorer expF(myResult, TopAbs_FACE);
   for (; expF.More(); expF.Next())
@@ -2064,17 +1897,14 @@ bool ShapeFix_Face::FixMissingSeam()
         continue;
       myFace = TopoDS::Face(aShape);
     }
-    BRepTools::Update(myFace); //: p4
+    BRepTools::Update(myFace);
   }
   myResult = Context()->Apply(myResult);
 
-  SendWarning(Message_Msg("FixAdvFace.FixMissingSeam.MSG0")); // Missing seam-edge added
+  SendWarning(Message_Msg("FixAdvFace.FixMissingSeam.MSG0"));
   return true;
 }
 
-//=================================================================================================
-
-//%14 pdn 24.02.99 PRO10109, USA60293 fix wire on face with small area.
 bool ShapeFix_Face::FixSmallAreaWire(const bool theIsRemoveSmallFace)
 {
   if (!Context().IsNull())
@@ -2105,7 +1935,7 @@ bool ShapeFix_Face::FixSmallAreaWire(const bool theIsRemoveSmallFace)
       new ShapeAnalysis_Wire(aWire, myFace, aTolerance3d);
     if (anAnalyzer->CheckSmallArea(aWire))
     {
-      // Null area wire detected, wire skipped
+
       SendWarning(aWire, Message_Msg("FixAdvFace.FixSmallAreaWire.MSG0"));
       ++nbRemoved;
     }
@@ -2133,8 +1963,6 @@ bool ShapeFix_Face::FixSmallAreaWire(const bool theIsRemoveSmallFace)
   myFace = aFace;
   return true;
 }
-
-//=================================================================================================
 
 static void FindNext(
   const TopoDS_Shape&                                            aVert,
@@ -2199,7 +2027,7 @@ static bool isClosed2D(const TopoDS_Face& aFace, const TopoDS_Wire& aWire)
   for (int i = 1; i <= asaw->NbEdges() && isClosed; i++)
   {
     TopoDS_Edge edge1 = asaw->WireData()->Edge(i);
-    // checking that wire is closed in 2D space with tolerance of vertex.
+
     ShapeAnalysis_Edge sae;
     TopoDS_Vertex      v1 = sae.FirstVertex(edge1);
     asaw->SetPrecision(BRep_Tool::Tolerance(v1));
@@ -2208,8 +2036,6 @@ static bool isClosed2D(const TopoDS_Face& aFace, const TopoDS_Wire& aWire)
   }
   return isClosed;
 }
-
-//=================================================================================================
 
 bool ShapeFix_Face::FixLoopWire(NCollection_Sequence<TopoDS_Shape>& aResWires)
 {
@@ -2227,7 +2053,6 @@ bool ShapeFix_Face::FixLoopWire(NCollection_Sequence<TopoDS_Shape>& aResWires)
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMapEdges;
   NCollection_Sequence<TopoDS_Shape>                     aSeqWires;
 
-  // collecting wires from common vertex belonging more than 2 edges
   int i = 1;
   for (; i <= aMapVertices.Extent(); i++)
   {
@@ -2279,7 +2104,7 @@ bool ShapeFix_Face::FixLoopWire(NCollection_Sequence<TopoDS_Shape>& aResWires)
   }
   else
   {
-    // collecting whole wire from two not closed wires having two common vertices.
+
     for (i = 1; i <= aSeqWires.Length(); i++)
     {
       TopoDS_Vertex aV1, aV2;
@@ -2314,7 +2139,7 @@ bool ShapeFix_Face::FixLoopWire(NCollection_Sequence<TopoDS_Shape>& aResWires)
     }
     else
     {
-      // collecting wires having one common vertex
+
       for (i = 1; i <= aSeqWires.Length(); i++)
       {
         TopoDS_Vertex aV1, aV2;
@@ -2345,7 +2170,6 @@ bool ShapeFix_Face::FixLoopWire(NCollection_Sequence<TopoDS_Shape>& aResWires)
   }
   bool isClosed = true;
 
-  // checking that obtained wires is closed in 2D space
   if (mySurf && mySurf->Adaptor3d()->GetType() != GeomAbs_Plane)
   {
 
@@ -2363,8 +2187,6 @@ bool ShapeFix_Face::FixLoopWire(NCollection_Sequence<TopoDS_Shape>& aResWires)
   return !aResWires.IsEmpty() && isClosed;
 }
 
-//=================================================================================================
-
 bool ShapeFix_Face::SplitEdge(
   const occ::handle<ShapeExtend_WireData>&                               sewd,
   const int                                                              num,
@@ -2378,7 +2200,7 @@ bool ShapeFix_Face::SplitEdge(
   ShapeFix_SplitTool aTool;
   if (aTool.SplitEdge(edge, param, vert, myFace, newE1, newE2, preci, 0.01 * preci))
   {
-    // change context
+
     occ::handle<ShapeExtend_WireData> wd = new ShapeExtend_WireData;
     wd->Add(newE1);
     wd->Add(newE2);
@@ -2390,7 +2212,6 @@ bool ShapeFix_Face::SplitEdge(
       BRepTools::Update(E);
     }
 
-    // change sewd and boxes
     sewd->Set(newE1, num);
     if (num == sewd->NbEdges())
       sewd->Add(newE2);
@@ -2411,7 +2232,7 @@ bool ShapeFix_Face::SplitEdge(
       double              aLast  = c2d->LastParameter();
       if (c2d->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)) && (cf < aFirst || cl > aLast))
       {
-        // pdn avoiding problems with segment in Bnd_Box
+
         gac.Load(c2d);
       }
       else
@@ -2427,7 +2248,7 @@ bool ShapeFix_Face::SplitEdge(
       double              aLast  = c2d->LastParameter();
       if (c2d->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)) && (cf < aFirst || cl > aLast))
       {
-        // pdn avoiding problems with segment in Bnd_Box
+
         gac.Load(c2d);
       }
       else
@@ -2439,8 +2260,6 @@ bool ShapeFix_Face::SplitEdge(
   }
   return false;
 }
-
-//=================================================================================================
 
 bool ShapeFix_Face::SplitEdge(
   const occ::handle<ShapeExtend_WireData>&                               sewd,
@@ -2456,7 +2275,7 @@ bool ShapeFix_Face::SplitEdge(
   ShapeFix_SplitTool aTool;
   if (aTool.SplitEdge(edge, param1, param2, vert, myFace, newE1, newE2, preci, 0.01 * preci))
   {
-    // change context
+
     occ::handle<ShapeExtend_WireData> wd = new ShapeExtend_WireData;
     wd->Add(newE1);
     wd->Add(newE2);
@@ -2468,7 +2287,6 @@ bool ShapeFix_Face::SplitEdge(
       BRepTools::Update(E);
     }
 
-    // change sewd and boxes
     sewd->Set(newE1, num);
     if (num == sewd->NbEdges())
       sewd->Add(newE2);
@@ -2489,7 +2307,7 @@ bool ShapeFix_Face::SplitEdge(
       double              aLast  = c2d->LastParameter();
       if (c2d->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)) && (cf < aFirst || cl > aLast))
       {
-        // pdn avoiding problems with segment in Bnd_Box
+
         gac.Load(c2d);
       }
       else
@@ -2505,7 +2323,7 @@ bool ShapeFix_Face::SplitEdge(
       double              aLast  = c2d->LastParameter();
       if (c2d->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)) && (cf < aFirst || cl > aLast))
       {
-        // pdn avoiding problems with segment in Bnd_Box
+
         gac.Load(c2d);
       }
       else
@@ -2518,15 +2336,11 @@ bool ShapeFix_Face::SplitEdge(
   return false;
 }
 
-//=================================================================================================
-
 bool ShapeFix_Face::FixIntersectingWires()
 {
   ShapeFix_IntersectionTool ITool(Context(), Precision(), MaxTolerance());
   return ITool.FixIntersectingWires(myFace);
 }
-
-//=================================================================================================
 
 bool ShapeFix_Face::FixWiresTwoCoincEdges()
 {
@@ -2596,8 +2410,6 @@ bool ShapeFix_Face::FixWiresTwoCoincEdges()
   return isFixed;
 }
 
-//=================================================================================================
-
 bool ShapeFix_Face::FixSplitFace(
   const NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
     MapWires)
@@ -2618,14 +2430,14 @@ bool ShapeFix_Face::FixSplitFace(
     NbWires++;
     if (MapWires.IsBound(wire))
     {
-      // if wire not closed --> stop split and return false
+
       occ::handle<ShapeExtend_WireData> sewd = new ShapeExtend_WireData(wire);
       NbEdges                                = sewd->NbEdges();
       if (NbEdges == 0)
       {
         continue;
       }
-      //
+
       TopoDS_Edge        E1 = sewd->Edge(1);
       TopoDS_Edge        E2 = sewd->Edge(NbEdges);
       TopoDS_Vertex      V1, V2;
@@ -2636,7 +2448,7 @@ bool ShapeFix_Face::FixSplitFace(
       {
         return false;
       }
-      // create face
+
       TopoDS_Shape emptyCopied = S.EmptyCopied();
       TopoDS_Face  tmpFace     = TopoDS::Face(emptyCopied);
       tmpFace.Orientation(TopAbs_FORWARD);
@@ -2691,12 +2503,6 @@ bool ShapeFix_Face::FixSplitFace(
   return false;
 }
 
-//=======================================================================
-// function : IsPeriodicConicalLoop
-// purpose  : Checks whether the passed wire makes up a periodic loop on
-//           passed conical surface
-//=======================================================================
-
 static bool IsPeriodicConicalLoop(const occ::handle<Geom_ConicalSurface>& theSurf,
                                   const TopoDS_Wire&                      theWire,
                                   const double                            theTolerance,
@@ -2718,7 +2524,6 @@ static bool IsPeriodicConicalLoop(const occ::handle<Geom_ConicalSurface>& theSur
   double aMaxU = -aMinU;
   double aMaxV = aMaxU;
 
-  // Iterate over the edges to check whether the wire is periodic on conical surface
   TopoDS_Iterator aWireIter(theWire, false);
   for (; aWireIter.More(); aWireIter.Next())
   {
@@ -2766,13 +2571,8 @@ static bool IsPeriodicConicalLoop(const occ::handle<Geom_ConicalSurface>& theSur
   return is2PIDelta && isAroundApex;
 }
 
-//=================================================================================================
-
 bool ShapeFix_Face::FixPeriodicDegenerated()
 {
-  /* =====================
-   *  Prepare fix routine
-   * ===================== */
 
   if (!Context().IsNull())
   {
@@ -2780,11 +2580,6 @@ bool ShapeFix_Face::FixPeriodicDegenerated()
     myFace           = TopoDS::Face(aSh);
   }
 
-  /* ================================================
-   *  Check if fix can be applied on the passed face
-   * ================================================ */
-
-  // Collect all wires owned by the face
   NCollection_Sequence<TopoDS_Shape> aWireSeq;
   for (TopoDS_Iterator aWireIt(myFace, false); aWireIt.More(); aWireIt.Next())
   {
@@ -2796,19 +2591,15 @@ bool ShapeFix_Face::FixPeriodicDegenerated()
     aWireSeq.Append(aWireIt.Value());
   }
 
-  // Get number of wires and surface
   int                       aNbWires = aWireSeq.Length();
   occ::handle<Geom_Surface> aSurface = BRep_Tool::Surface(myFace);
 
-  // Only single wires on conical surfaces are checked
   if (aNbWires != 1 || aSurface.IsNull()
       || aSurface->DynamicType() != STANDARD_TYPE(Geom_ConicalSurface))
     return false;
 
-  // Get the single wire
   TopoDS_Wire aSoleWire = TopoDS::Wire(aWireSeq.Value(1));
 
-  // Check whether this wire is belting the conical surface by period
   occ::handle<Geom_ConicalSurface> aConeSurf = occ::down_cast<Geom_ConicalSurface>(aSurface);
   double aMinLoopU = 0.0, aMaxLoopU = 0.0, aMinLoopV = 0.0, aMaxLoopV = 0.0;
   bool   isUDecrease = false;
@@ -2825,45 +2616,30 @@ bool ShapeFix_Face::FixPeriodicDegenerated()
   if (!isConicLoop)
     return false;
 
-  /* ===============
-   *  Retrieve apex
-   * =============== */
-
-  // Get base circle of the conical surface (the circle it was built from)
   occ::handle<Geom_Curve>  aConeBaseCrv  = aConeSurf->VIso(0.0);
   occ::handle<Geom_Circle> aConeBaseCirc = occ::down_cast<Geom_Circle>(aConeBaseCrv);
 
-  // Retrieve conical props
   double aConeBaseR = aConeBaseCirc->Radius();
   double aSemiAngle = aConeSurf->SemiAngle();
 
   if (fabs(aSemiAngle) <= Precision::Confusion())
-    return false; // Bad surface
+    return false;
 
-  // Find the V parameter of the apex
   double aConeBaseH = aConeBaseR / std::sin(aSemiAngle);
   double anApexV    = -aConeBaseH;
 
-  // Get apex vertex
   TopoDS_Vertex anApex = BRepBuilderAPI_MakeVertex(aConeSurf->Apex());
-
-  // ====================================
-  //  Build degenerated edge in the apex
-  // ====================================
 
   TopoDS_Edge  anApexEdge;
   BRep_Builder aBuilder;
   aBuilder.MakeEdge(anApexEdge);
 
-  // Check if positional relationship between the initial wire and apex
-  // line in 2D is going to be consistent
   if (fabs(anApexV - aMinLoopV) <= Precision() || fabs(anApexV - aMaxLoopV) <= Precision()
       || (anApexV < aMaxLoopV && anApexV > aMinLoopV))
     return false;
 
   occ::handle<Geom2d_Line> anApexCurve2d;
 
-  // Apex curve below the wire
   if (anApexV < aMinLoopV)
   {
     anApexCurve2d = new Geom2d_Line(gp_Pnt2d(aMinLoopU, anApexV), gp_Dir2d(gp_Dir2d::D::X));
@@ -2871,7 +2647,6 @@ bool ShapeFix_Face::FixPeriodicDegenerated()
       aSoleWire.Reverse();
   }
 
-  // Apex curve above the wire
   if (anApexV > aMaxLoopV)
   {
     anApexCurve2d = new Geom2d_Line(gp_Pnt2d(aMaxLoopU, anApexV), gp_Dir2d(gp_Dir2d::D::NX));
@@ -2879,7 +2654,6 @@ bool ShapeFix_Face::FixPeriodicDegenerated()
       aSoleWire.Reverse();
   }
 
-  // Create degenerated edge & wire for apex
   aBuilder.UpdateEdge(anApexEdge, anApexCurve2d, myFace, Precision());
   aBuilder.Add(anApexEdge, anApex);
   aBuilder.Add(anApexEdge, anApex.Reversed());
@@ -2887,16 +2661,10 @@ bool ShapeFix_Face::FixPeriodicDegenerated()
   aBuilder.Range(anApexEdge, 0, fabs(aMaxLoopU - aMinLoopU));
   TopoDS_Wire anApexWire = BRepBuilderAPI_MakeWire(anApexEdge);
 
-  // ===============================================================
-  //  Finalize the fix building new face and setting up the results
-  // ===============================================================
-
-  // Collect the resulting set of wires
   NCollection_Sequence<TopoDS_Shape> aNewWireSeq;
   aNewWireSeq.Append(aSoleWire);
   aNewWireSeq.Append(anApexWire);
 
-  // Assemble new face
   TopoDS_Face aNewFace = TopoDS::Face(myFace.EmptyCopied());
   aNewFace.Orientation(TopAbs_FORWARD);
   BRep_Builder aFaceBuilder;
@@ -2907,7 +2675,6 @@ bool ShapeFix_Face::FixPeriodicDegenerated()
   }
   aNewFace.Orientation(myFace.Orientation());
 
-  // Adjust the resulting state of the healing tool
   myResult = aNewFace;
   Context()->Replace(myFace, myResult);
 

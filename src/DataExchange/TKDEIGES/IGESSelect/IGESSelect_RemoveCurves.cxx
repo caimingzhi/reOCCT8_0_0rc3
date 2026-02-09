@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_ContextModif.hpp>
 #include <IGESBasic_HArray1OfHArray1OfIGESEntity.hpp>
@@ -70,7 +59,7 @@ static bool Edit(const occ::handle<Standard_Transient>& ent, const bool UV)
     if (UV && !c3d.IsNull())
     {
       if (cuv.IsNull() || c3d.IsNull())
-        return false; // rien a faire
+        return false;
       cuv.Nullify();
       if (pref == 1)
         pref = 0;
@@ -80,7 +69,7 @@ static bool Edit(const occ::handle<Standard_Transient>& ent, const bool UV)
     else if (!cuv.IsNull())
     {
       if (cuv.IsNull() || c3d.IsNull())
-        return false; // rien a faire
+        return false;
       c3d.Nullify();
       if (pref == 2)
         pref = 0;
@@ -111,20 +100,20 @@ static bool Edit(const occ::handle<Standard_Transient>& ent, const bool UV)
       if (UV)
       {
         if (cuv.IsNull() || c3d.IsNull())
-          continue; // rien a faire
+          continue;
         cuv.Nullify();
         arcuv->SetValue(i, cuv);
       }
       else
       {
         if (cuv.IsNull() || c3d.IsNull())
-          continue; // rien a faire
+          continue;
         c3d.Nullify();
         arc3d->SetValue(i, c3d);
         res = true;
       }
     }
-    //    Y a-t-il eu de la retouche ?
+
     int pref = bndy->PreferenceType();
     if (UV)
     {
@@ -149,8 +138,8 @@ static bool Edit(const occ::handle<Standard_Transient>& ent, const bool UV)
 }
 
 void IGESSelect_RemoveCurves::Performing(IFSelect_ContextModif& ctx,
-                                         const occ::handle<IGESData_IGESModel>& /*target*/,
-                                         Interface_CopyTool& /*TC*/) const
+                                         const occ::handle<IGESData_IGESModel>&,
+                                         Interface_CopyTool&) const
 {
   for (ctx.Start(); ctx.More(); ctx.Next())
   {

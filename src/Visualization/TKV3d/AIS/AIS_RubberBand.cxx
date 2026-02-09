@@ -15,8 +15,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_RubberBand, AIS_InteractiveObject)
 
-//=================================================================================================
-
 AIS_RubberBand::AIS_RubberBand()
     : myIsPolygonClosed(true)
 {
@@ -32,8 +30,6 @@ AIS_RubberBand::AIS_RubberBand()
   SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_2d, Aspect_TOTP_LEFT_LOWER));
   SetZLayer(Graphic3d_ZLayerId_TopOSD);
 }
-
-//=================================================================================================
 
 AIS_RubberBand::AIS_RubberBand(const Quantity_Color&   theLineColor,
                                const Aspect_TypeOfLine theLineType,
@@ -53,8 +49,6 @@ AIS_RubberBand::AIS_RubberBand(const Quantity_Color&   theLineColor,
   SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_2d, Aspect_TOTP_LEFT_LOWER));
   SetZLayer(Graphic3d_ZLayerId_TopOSD);
 }
-
-//=================================================================================================
 
 AIS_RubberBand::AIS_RubberBand(const Quantity_Color&   theLineColor,
                                const Aspect_TypeOfLine theLineType,
@@ -77,16 +71,12 @@ AIS_RubberBand::AIS_RubberBand(const Quantity_Color&   theLineColor,
   SetZLayer(Graphic3d_ZLayerId_TopOSD);
 }
 
-//=================================================================================================
-
 AIS_RubberBand::~AIS_RubberBand()
 {
   myPoints.Clear();
   myTriangles.Nullify();
   myBorders.Nullify();
 }
-
-//=================================================================================================
 
 void AIS_RubberBand::SetRectangle(const int theMinX,
                                   const int theMinY,
@@ -100,106 +90,76 @@ void AIS_RubberBand::SetRectangle(const int theMinX,
   myPoints.Append(NCollection_Vec2<int>(theMaxX, theMinY));
 }
 
-//=================================================================================================
-
 void AIS_RubberBand::AddPoint(const NCollection_Vec2<int>& thePoint)
 {
   myPoints.Append(thePoint);
 }
-
-//=================================================================================================
 
 void AIS_RubberBand::RemoveLastPoint()
 {
   myPoints.Remove(myPoints.Length());
 }
 
-//=================================================================================================
-
 const NCollection_Sequence<NCollection_Vec2<int>>& AIS_RubberBand::Points() const
 {
   return myPoints;
 }
-
-//=================================================================================================
 
 Quantity_Color AIS_RubberBand::LineColor() const
 {
   return myDrawer->LineAspect()->Aspect()->Color();
 }
 
-//=================================================================================================
-
 void AIS_RubberBand::SetLineColor(const Quantity_Color& theColor)
 {
   myDrawer->LineAspect()->SetColor(theColor);
 }
-
-//=================================================================================================
 
 Quantity_Color AIS_RubberBand::FillColor() const
 {
   return myDrawer->ShadingAspect()->Color();
 }
 
-//=================================================================================================
-
 void AIS_RubberBand::SetFillColor(const Quantity_Color& theColor)
 {
   myDrawer->ShadingAspect()->SetColor(theColor);
 }
-
-//=================================================================================================
 
 void AIS_RubberBand::SetLineWidth(const double theWidth) const
 {
   myDrawer->LineAspect()->SetWidth(theWidth);
 }
 
-//=================================================================================================
-
 double AIS_RubberBand::LineWidth() const
 {
   return myDrawer->LineAspect()->Aspect()->Width();
 }
-
-//=================================================================================================
 
 void AIS_RubberBand::SetLineType(const Aspect_TypeOfLine theType)
 {
   myDrawer->LineAspect()->SetTypeOfLine(theType);
 }
 
-//=================================================================================================
-
 Aspect_TypeOfLine AIS_RubberBand::LineType() const
 {
   return myDrawer->LineAspect()->Aspect()->Type();
 }
-
-//=================================================================================================
 
 void AIS_RubberBand::SetFillTransparency(const double theValue) const
 {
   myDrawer->ShadingAspect()->SetTransparency(theValue);
 }
 
-//=================================================================================================
-
 double AIS_RubberBand::FillTransparency() const
 {
   return myDrawer->ShadingAspect()->Transparency();
 }
-
-//=================================================================================================
 
 void AIS_RubberBand::SetFilling(const bool theIsFilling)
 {
   myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(theIsFilling ? Aspect_IS_SOLID
                                                                      : Aspect_IS_EMPTY);
 }
-
-//=================================================================================================
 
 void AIS_RubberBand::SetFilling(const Quantity_Color theColor, const double theTransparency)
 {
@@ -208,29 +168,21 @@ void AIS_RubberBand::SetFilling(const Quantity_Color theColor, const double theT
   SetFillColor(theColor);
 }
 
-//=================================================================================================
-
 bool AIS_RubberBand::IsFilling() const
 {
   Aspect_InteriorStyle aStyle = myDrawer->ShadingAspect()->Aspect()->InteriorStyle();
   return aStyle != Aspect_IS_EMPTY;
 }
 
-//=================================================================================================
-
 bool AIS_RubberBand::IsPolygonClosed() const
 {
   return myIsPolygonClosed;
 }
 
-//=================================================================================================
-
 void AIS_RubberBand::SetPolygonClosed(bool theIsPolygonClosed)
 {
   myIsPolygonClosed = theIsPolygonClosed;
 }
-
-//=================================================================================================
 
 bool AIS_RubberBand::fillTriangles()
 {
@@ -321,8 +273,6 @@ bool AIS_RubberBand::fillTriangles()
   return true;
 }
 
-//=================================================================================================
-
 void AIS_RubberBand::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                              const occ::handle<Prs3d_Presentation>& thePresentation,
                              const int                              theMode)
@@ -332,7 +282,6 @@ void AIS_RubberBand::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     return;
   }
 
-  // Draw filling
   if (IsFilling() && fillTriangles())
   {
     occ::handle<Graphic3d_Group> aGroup1 = thePresentation->NewGroup();
@@ -340,7 +289,6 @@ void AIS_RubberBand::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     aGroup1->AddPrimitiveArray(myTriangles);
   }
 
-  // Draw frame
   if (myBorders.IsNull()
       || myBorders->VertexNumber() != myPoints.Length() + (myIsPolygonClosed ? 1 : 0))
   {

@@ -7,23 +7,17 @@
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 GeomAPI_ExtremaSurfaceSurface::GeomAPI_ExtremaSurfaceSurface()
     : myIsDone(false),
       myIndex(0)
 {
 }
 
-//=================================================================================================
-
 GeomAPI_ExtremaSurfaceSurface::GeomAPI_ExtremaSurfaceSurface(const occ::handle<Geom_Surface>& S1,
                                                              const occ::handle<Geom_Surface>& S2)
 {
   Init(S1, S2);
 }
-
-//=================================================================================================
 
 GeomAPI_ExtremaSurfaceSurface::GeomAPI_ExtremaSurfaceSurface(const occ::handle<Geom_Surface>& S1,
                                                              const occ::handle<Geom_Surface>& S2,
@@ -38,8 +32,6 @@ GeomAPI_ExtremaSurfaceSurface::GeomAPI_ExtremaSurfaceSurface(const occ::handle<G
 {
   Init(S1, S2, U1min, U1max, V1min, V1max, U2min, U2max, V2min, V2max);
 }
-
-//=================================================================================================
 
 void GeomAPI_ExtremaSurfaceSurface::Init(const occ::handle<Geom_Surface>& S1,
                                          const occ::handle<Geom_Surface>& S2)
@@ -57,8 +49,6 @@ void GeomAPI_ExtremaSurfaceSurface::Init(const occ::handle<Geom_Surface>& S1,
   if (myIsDone)
   {
 
-    // evaluate the lower distance and its index;
-
     double Dist2, Dist2Min = myExtSS.SquareDistance(1);
     myIndex = 1;
 
@@ -73,8 +63,6 @@ void GeomAPI_ExtremaSurfaceSurface::Init(const occ::handle<Geom_Surface>& S1,
     }
   }
 }
-
-//=================================================================================================
 
 void GeomAPI_ExtremaSurfaceSurface::Init(const occ::handle<Geom_Surface>& S1,
                                          const occ::handle<Geom_Surface>& S2,
@@ -110,8 +98,6 @@ void GeomAPI_ExtremaSurfaceSurface::Init(const occ::handle<Geom_Surface>& S1,
   if (myIsDone)
   {
 
-    // evaluate the lower distance and its index;
-
     double Dist2, Dist2Min = myExtSS.SquareDistance(1);
     myIndex = 1;
 
@@ -127,8 +113,6 @@ void GeomAPI_ExtremaSurfaceSurface::Init(const occ::handle<Geom_Surface>& S1,
   }
 }
 
-//=================================================================================================
-
 int GeomAPI_ExtremaSurfaceSurface::NbExtrema() const
 {
   if (myIsDone)
@@ -136,8 +120,6 @@ int GeomAPI_ExtremaSurfaceSurface::NbExtrema() const
   else
     return 0;
 }
-
-//=================================================================================================
 
 void GeomAPI_ExtremaSurfaceSurface::Points(const int Index, gp_Pnt& P1, gp_Pnt& P2) const
 {
@@ -150,8 +132,6 @@ void GeomAPI_ExtremaSurfaceSurface::Points(const int Index, gp_Pnt& P1, gp_Pnt& 
   P1 = PS1.Value();
   P2 = PS2.Value();
 }
-
-//=================================================================================================
 
 void GeomAPI_ExtremaSurfaceSurface::Parameters(const int Index,
                                                double&   U1,
@@ -169,8 +149,6 @@ void GeomAPI_ExtremaSurfaceSurface::Parameters(const int Index,
   PS2.Parameter(U2, V2);
 }
 
-//=================================================================================================
-
 double GeomAPI_ExtremaSurfaceSurface::Distance(const int Index) const
 {
   Standard_OutOfRange_Raise_if(Index < 1 || Index > NbExtrema(),
@@ -179,16 +157,12 @@ double GeomAPI_ExtremaSurfaceSurface::Distance(const int Index) const
   return sqrt(myExtSS.SquareDistance(Index));
 }
 
-//=================================================================================================
-
 void GeomAPI_ExtremaSurfaceSurface::NearestPoints(gp_Pnt& P1, gp_Pnt& P2) const
 {
   StdFail_NotDone_Raise_if(!myIsDone, "GeomAPI_ExtremaSurfaceSurface::NearestPoints");
 
   Points(myIndex, P1, P2);
 }
-
-//=================================================================================================
 
 void GeomAPI_ExtremaSurfaceSurface::LowerDistanceParameters(double& U1,
                                                             double& V1,
@@ -200,8 +174,6 @@ void GeomAPI_ExtremaSurfaceSurface::LowerDistanceParameters(double& U1,
   Parameters(myIndex, U1, V1, U2, V2);
 }
 
-//=================================================================================================
-
 double GeomAPI_ExtremaSurfaceSurface::LowerDistance() const
 {
   StdFail_NotDone_Raise_if(!myIsDone, "GeomAPI_ExtremaSurfaceSurface::LowerDistance");
@@ -209,14 +181,10 @@ double GeomAPI_ExtremaSurfaceSurface::LowerDistance() const
   return sqrt(myExtSS.SquareDistance(myIndex));
 }
 
-//=================================================================================================
-
 GeomAPI_ExtremaSurfaceSurface::operator double() const
 {
   return LowerDistance();
 }
-
-//=================================================================================================
 
 GeomAPI_ExtremaSurfaceSurface::operator int() const
 {

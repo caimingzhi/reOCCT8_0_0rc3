@@ -2,15 +2,11 @@
 #include <TopoDS_Shape.hpp>
 #include <NCollection_List.hpp>
 
-//=================================================================================================
-
 TopOpeBRepDS_ShapeWithState::TopOpeBRepDS_ShapeWithState()
     : myState(TopAbs_UNKNOWN),
       myIsSplitted(false)
 {
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& TopOpeBRepDS_ShapeWithState::Part(
   const TopAbs_State aState) const
@@ -29,8 +25,6 @@ const NCollection_List<TopoDS_Shape>& TopOpeBRepDS_ShapeWithState::Part(
   }
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_ShapeWithState::AddPart(const TopoDS_Shape& aShape, const TopAbs_State aState)
 {
   switch (aState)
@@ -48,8 +42,6 @@ void TopOpeBRepDS_ShapeWithState::AddPart(const TopoDS_Shape& aShape, const TopA
       break;
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_ShapeWithState::AddParts(const NCollection_List<TopoDS_Shape>& aListOfShape,
                                            const TopAbs_State                    aState)
@@ -82,28 +74,20 @@ void TopOpeBRepDS_ShapeWithState::AddParts(const NCollection_List<TopoDS_Shape>&
   }
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_ShapeWithState::SetState(const TopAbs_State aState)
 {
   myState = aState;
 }
-
-//=================================================================================================
 
 TopAbs_State TopOpeBRepDS_ShapeWithState::State() const
 {
   return myState;
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_ShapeWithState::SetIsSplitted(const bool aFlag)
 {
   myIsSplitted = aFlag;
 }
-
-//=================================================================================================
 
 bool TopOpeBRepDS_ShapeWithState::IsSplitted() const
 {

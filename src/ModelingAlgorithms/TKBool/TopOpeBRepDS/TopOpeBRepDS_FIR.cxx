@@ -1,18 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// Robert Boehne 30 May 2000 : Dec Osf
 
 #include <TopExp_Explorer.hpp>
 #include <TopoDS.hpp>
@@ -33,7 +19,6 @@
 Standard_EXPORT bool FUN_Parameters(const gp_Pnt& Pnt, const TopoDS_Shape& F, double& u, double& v);
 Standard_EXPORT bool FUN_edgeofface(const TopoDS_Shape& E, const TopoDS_Shape& F);
 
-//------------------------------------------------------
 bool FUN_isPonF(const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LIF,
                 const gp_Pnt&                                                   P,
                 const TopOpeBRepDS_DataStructure&                               BDS,
@@ -55,7 +40,7 @@ bool FUN_isPonF(const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& 
       Pok = true;
     else
     {
-      // P est NOK pour une face de LIF : arret
+
       double u, v;
       Pok = FUN_Parameters(P, F, u, v);
       if (!Pok)
@@ -65,7 +50,6 @@ bool FUN_isPonF(const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& 
   return Pok;
 }
 
-//------------------------------------------------------
 bool FUN_findPonF(const TopoDS_Edge&                                              E,
                   const TopOpeBRepDS_DataStructure&                               BDS,
                   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LIF,
@@ -138,7 +122,7 @@ bool FUN_findPonF(const TopoDS_Edge&                                            
 
     BAC.D0(par, P);
     Pok = FUN_isPonF(LIF, P, BDS, E);
-    // P est OK pour toutes les faces de LIF : on arrete de chercher
+
     if (Pok)
     {
       break;
@@ -147,7 +131,6 @@ bool FUN_findPonF(const TopoDS_Edge&                                            
   return Pok;
 }
 
-// --------------------------------------------------------
 static void FDS_ADDEDGE(const bool,
                         const TCollection_AsciiString&,
                         const int,
@@ -161,15 +144,12 @@ static void FDS_ADDEDGE(const bool,
   FITool.Add(FI, F, Ecpx, isEGsp, I);
 }
 
-//------------------------------------------------------
-// EGsp = edge splittee de iEG ( Null si iEG n'est pas splittee)
 void FUN_reduceEDGEgeometry1(NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI,
                              const TopOpeBRepDS_DataStructure&                         BDS,
                              const int                                                 iFI,
                              const int                                                 iEG,
                              const TopoDS_Shape&                                       EGsp,
-                             // const NCollection_DataMap<TopoDS_Shape,
-                             // TopOpeBRepDS_ListOfShapeOn1State, TopTools_ShapeMapHasher>& MEsp)
+
                              const NCollection_DataMap<TopoDS_Shape,
                                                        TopOpeBRepDS_ListOfShapeOn1State,
                                                        TopTools_ShapeMapHasher>&)
@@ -179,7 +159,6 @@ void FUN_reduceEDGEgeometry1(NCollection_List<occ::handle<TopOpeBRepDS_Interfere
   if (!ili.More())
     return;
 
-  // choix de l'arete Ecpx, lieu de resolution de la transition complexe
   const TopoDS_Face& FI     = TopoDS::Face(BDS.Shape(iFI));
   bool               isEGsp = (!EGsp.IsNull());
   TopoDS_Edge        Ecpx;
@@ -198,7 +177,7 @@ void FUN_reduceEDGEgeometry1(NCollection_List<occ::handle<TopOpeBRepDS_Interfere
     if (isEGsp)
       isPok = FUN_tool_findPinE(Ecpx, Pok, parPok);
     else
-      isPok = FUN_findPonF(Ecpx, BDS, LI, Pok, parPok); // NYI pas necessaire
+      isPok = FUN_findPonF(Ecpx, BDS, LI, Pok, parPok);
     if (!isPok)
     {
       LI.Clear();
@@ -206,25 +185,6 @@ void FUN_reduceEDGEgeometry1(NCollection_List<occ::handle<TopOpeBRepDS_Interfere
     }
     FITool.SetEdgePntPar(Pok, parPok);
   }
-
-  // xpu :090498 :
-  //      CTS20205 : sp(e5) = sp(e4 of rank=1) and c3d(e5) c3d(e4) are diff oriented
-  //            As transitions on face<iFI> are given relative to the geometry of e5,
-  //            we have to complement them.
-  //  bool toreverse = false;
-  //  bool hsdm = !BDS.ShapeSameDomain(iEG).IsEmpty();
-  //  if (hsdm) {
-  //    bool sameoriented = false;
-  //    bool ok =
-  //    FUN_tool_curvesSO(TopoDS::Edge(Ecpx),parPok,TopoDS::Edge(BDS.Shape(iEG)),
-  //			       sameoriented);
-  //    if (ok) toreverse = !sameoriented;
-  //  }
-  // xpu :090498
-
-  // FI = face de reference (shape), iFI (indice)
-  // E = arete geometrie d'interference (shape), iEG (indice)
-  // LI = liste d'interf de geom iEG et dont les Support() sont a transitionner complexe
 
   occ::handle<TopOpeBRepDS_Interference>                             I1, I2;
   TopOpeBRepDS_Kind                                                  GT1, ST1, GT2, ST2;
@@ -246,7 +206,7 @@ void FUN_reduceEDGEgeometry1(NCollection_List<occ::handle<TopOpeBRepDS_Interfere
       continue;
     }
 
-    bool               isComplex = false; // True if at least two interfs on the same edge
+    bool               isComplex = false;
     const TopoDS_Face& F1        = TopoDS::Face(BDS.Shape(S1));
 
     NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it2(it1);
@@ -270,21 +230,11 @@ void FUN_reduceEDGEgeometry1(NCollection_List<occ::handle<TopOpeBRepDS_Interfere
       {
         isComplex = true;
 
-        //	TopOpeBRepDS_Transition T1 = I1->Transition(); TopAbs_Orientation O1 =
-        // T1.Orientation(TopAbs_IN); // xpu :090498 	bool revT1 = toreverse &&
-        //(M_FORWARD(O1) || M_REVERSED(O1));      // xpu :090498 	if (revT1)
-        // I1->ChangeTransition() = T1.Complement();  //xpu :090498
         FITool.Init(FI, Ecpx, isEGsp, I1);
         FDS_ADDEDGE(TRCF, "\ninit transition complexe F", iFI, FITool, FI, F1, Ecpx, isEGsp, I1);
-        //	if (revT1) I1->ChangeTransition() = T1.Complement();  //xpu :090498
       }
 
-      //      TopOpeBRepDS_Transition T2 = I2->Transition(); TopAbs_Orientation O2 =
-      //      T2.Orientation(TopAbs_IN);  // xpu :090498 bool revT2 = toreverse &&
-      //      (M_FORWARD(O2) || M_REVERSED(O2));       // xpu :090498 if (revT2)
-      //      I2->ChangeTransition() = T2.Complement();  //xpu :090498
       FDS_ADDEDGE(TRCF, "add transition complexe F", iFI, FITool, FI, F2, Ecpx, isEGsp, I2);
-      //      if (revT2) I2->ChangeTransition() = T2.Complement();  //xpu :090498
 
       LI.Remove(it2);
     }
@@ -293,10 +243,9 @@ void FUN_reduceEDGEgeometry1(NCollection_List<occ::handle<TopOpeBRepDS_Interfere
       FITool.Transition(I1);
     }
     it1.Next();
-  } // it1.More()
-} // FUN_reduceEDGEgeometry1
+  }
+}
 
-//------------------------------------------------------
 void FUN_GmapS(
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>&                                  LI,
   const TopOpeBRepDS_DataStructure&                                                          BDS,
@@ -320,7 +269,6 @@ void FUN_GmapS(
   }
 }
 
-//------------------------------------------------------
 TopAbs_State FUN_stateedgeface(const TopoDS_Shape& E, const TopoDS_Shape& F, gp_Pnt& P)
 {
   TopAbs_State state = TopAbs_UNKNOWN;
@@ -329,7 +277,7 @@ TopAbs_State FUN_stateedgeface(const TopoDS_Shape& E, const TopoDS_Shape& F, gp_
   double u, v;
   bool   Pok = FUN_Parameters(P, F, u, v);
   if (Pok)
-  { // classifier u,v dans F
+  {
     TopOpeBRepTool_ShapeClassifier& PSC = FSC_GetPSC(F);
     gp_Pnt2d                        Puv(u, v);
     PSC.StateP2DReference(Puv);
@@ -343,7 +291,6 @@ TopAbs_State FUN_stateedgeface(const TopoDS_Shape& E, const TopoDS_Shape& F, gp_
 #define M_OUT(ssstate) ((ssstate) == TopAbs_OUT)
 #define M_UNK(ssstate) ((ssstate) == TopAbs_UNK)
 
-//------------------------------------------------------
 void FUN_reduceEDGEgeometry(NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI,
                             const TopOpeBRepDS_DataStructure&                         BDS,
                             const int                                                 iFI,
@@ -358,17 +305,15 @@ void FUN_reduceEDGEgeometry(NCollection_List<occ::handle<TopOpeBRepDS_Interferen
   FUN_GmapS(LI, BDS, mosd);
 
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>> LIout;
-  // modified by NIZNHY-PKV Thu Mar 16 09:44:24 2000 f
+
   int i, aN;
   aN = mosd.Extent();
-  // for(int i=1,n=mosd.Extent(); i<=n; i++) {
-  // modified by NIZNHY-PKV Thu Mar 16 09:44:27 2000 t
+
   for (i = 1; i <= aN; i++)
   {
     const TopoDS_Shape& EG  = mosd.FindKey(i);
     int                 iEG = BDS.Shape(EG);
 
-    // donnees samedomain attachees a l'arete iEG
     const NCollection_List<TopoDS_Shape>& esdeg    = BDS.ShapeSameDomain(iEG);
     bool                                  egissect = BDS.IsSectionEdge(TopoDS::Edge(EG));
     bool                                  eghasesd = (!esdeg.IsEmpty());
@@ -376,8 +321,7 @@ void FUN_reduceEDGEgeometry(NCollection_List<occ::handle<TopOpeBRepDS_Interferen
     NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LIEG =
       mosd.ChangeFromKey(EG).ChangeInterferences();
     int nExt = LIEG.Extent();
-    // LIEG = toutes les interferences dont le Support() est une
-    // face possedant une interference dont la Geometry() est EG.
+
     if (nExt == 0)
     {
       continue;
@@ -390,19 +334,11 @@ void FUN_reduceEDGEgeometry(NCollection_List<occ::handle<TopOpeBRepDS_Interferen
     else if (nExt >= 2)
     {
       bool isEGsp = MEsp.IsBound(EG);
-      // modified by NIZNHY-PKV Thu Mar 16 11:03:44 2000 from
-      // int nEGsp = 0;
-      // modified by NIZNHY-PKV Thu Mar 16 11:03:49 2000 to
+
       if (isEGsp)
       {
         const TopOpeBRepDS_ListOfShapeOn1State& los1 = MEsp.Find(EG);
         isEGsp                                       = los1.IsSplit();
-        // modified by NIZNHY-PKV Thu Mar 16 11:02:40 2000 from
-        // if ( isEGsp ) {
-        //   const NCollection_List<TopoDS_Shape>& los = los1.ListOnState();
-        //   nEGsp = los.Extent();
-        // }
-        // modified by NIZNHY-PKV Thu Mar 16 11:02:46 2000 to
       }
 
       if (isEGsp)
@@ -411,11 +347,9 @@ void FUN_reduceEDGEgeometry(NCollection_List<occ::handle<TopOpeBRepDS_Interferen
         NCollection_List<TopoDS_Shape>::Iterator itlos(los);
         for (; itlos.More(); itlos.Next())
         {
-          // EGsp est une arete splitee de EG.
+
           const TopoDS_Shape& EGsp = itlos.Value();
 
-          // LISFIN = liste des interferences de LI dont le Support()
-          // est une face contenant geometriquement l'arete EGsp
           NCollection_List<occ::handle<TopOpeBRepDS_Interference>>           LISFIN;
           NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator itLIEG(LIEG);
           for (; itLIEG.More(); itLIEG.Next())
@@ -440,7 +374,7 @@ void FUN_reduceEDGEgeometry(NCollection_List<occ::handle<TopOpeBRepDS_Interferen
                 LISFIN.Append(ILIEG);
               }
             }
-          } // itLIEG.More
+          }
 
           int nLISFIN = LISFIN.Extent();
           if (nLISFIN >= 2)
@@ -450,13 +384,10 @@ void FUN_reduceEDGEgeometry(NCollection_List<occ::handle<TopOpeBRepDS_Interferen
 
             if (gb)
             {
-              // modified by NIZNHY-PKV Thu Mar 16 10:40:57 2000 f
-              //  we have to rest at least one  Interference on the face.
-              //  To kill all of them is too bravely.
+
               occ::handle<TopOpeBRepDS_Interference> anInterference = LISFIN.First();
               LISFIN.Clear();
               LISFIN.Append(anInterference);
-              // modified by NIZNHY-PKV Thu Mar 16 10:41:01 2000 t
             }
             else
               FUN_reduceEDGEgeometry1(LISFIN, BDS, iFI, iEG, EGsp, MEsp);
@@ -466,13 +397,10 @@ void FUN_reduceEDGEgeometry(NCollection_List<occ::handle<TopOpeBRepDS_Interferen
           if (nLISFIN)
             LIout.Append(LISFIN);
         }
-      } // isEGsp
+      }
       else
       {
-        // iFI = face de reference (indice)
-        // E = arete geometrie d'interference (shape), iEG (indice)
-        // LIEG = liste d'interferences de geometrie EG
-        //        et dont les Support() sont a transitionner complexe
+
         TopoDS_Shape Enull;
         FUN_reduceEDGEgeometry1(LIEG, BDS, iFI, iEG, Enull, MEsp);
         LIout.Append(LIEG);
@@ -482,16 +410,12 @@ void FUN_reduceEDGEgeometry(NCollection_List<occ::handle<TopOpeBRepDS_Interferen
 
   LI.Clear();
   LI.Append(LIout);
-} // FUN_reduceEDGEgeometry
-
-//=================================================================================================
+}
 
 TopOpeBRepDS_FIR::TopOpeBRepDS_FIR(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
     : myHDS(HDS)
 {
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_FIR::ProcessFaceInterferences(
   const NCollection_DataMap<TopoDS_Shape,
@@ -511,8 +435,6 @@ void TopOpeBRepDS_FIR::ProcessFaceInterferences(
     }
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_FIR::ProcessFaceInterferences(
   const int                                           SIX,
@@ -536,6 +458,6 @@ void TopOpeBRepDS_FIR::ProcessFaceInterferences(
   LI.Append(lFE);
   LI.Append(lFEF);
   LI.Append(lE);
-  // MSV: filter duplicates
+
   ::FUN_reducedoublons(LI, BDS, SIX);
 }

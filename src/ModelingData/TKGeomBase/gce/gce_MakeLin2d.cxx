@@ -6,30 +6,17 @@
 #include <gp_Pnt2d.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   Creation d une ligne 2d de gp a partir d un Ax2d de gp.              +
-//=========================================================================
 gce_MakeLin2d::gce_MakeLin2d(const gp_Ax2d& A)
 {
   TheLin2d = gp_Lin2d(A);
   TheError = gce_Done;
 }
 
-//=========================================================================
-//   Creation d une ligne 2d de gp a partir de son origine P (Pnt2d de gp)+
-//   et d une direction V (Dir2d de gp).                                  +
-//=========================================================================
-
 gce_MakeLin2d::gce_MakeLin2d(const gp_Pnt2d& P, const gp_Dir2d& V)
 {
   TheLin2d = gp_Lin2d(P, V);
   TheError = gce_Done;
 }
-
-//=========================================================================
-//   Creation d une ligne 2d de gp a partir des parametres de son         +
-//    equation.                                                           +
-//=========================================================================
 
 gce_MakeLin2d::gce_MakeLin2d(const double A, const double B, const double C)
 {
@@ -44,11 +31,6 @@ gce_MakeLin2d::gce_MakeLin2d(const double A, const double B, const double C)
   }
 }
 
-//=========================================================================
-//   Creation d une ligne 2d de gp passant par les deux points <P1> et    +
-//   <P2>.                                                                +
-//=========================================================================
-
 gce_MakeLin2d::gce_MakeLin2d(const gp_Pnt2d& P1, const gp_Pnt2d& P2)
 {
   if (P1.Distance(P2) >= gp::Resolution())
@@ -62,21 +44,11 @@ gce_MakeLin2d::gce_MakeLin2d(const gp_Pnt2d& P1, const gp_Pnt2d& P2)
   }
 }
 
-//=========================================================================
-//   Creation d une ligne 2d de gp <TheLine> parallele a une autre ligne  +
-//   <Line1> passant par le point <Point1>.                               +
-//=========================================================================
-
 gce_MakeLin2d::gce_MakeLin2d(const gp_Lin2d& Line, const gp_Pnt2d& Point)
 {
   TheLin2d = gp_Lin2d(Point, Line.Direction());
   TheError = gce_Done;
 }
-
-//=========================================================================
-//   Creation d une ligne 2d de gp <TheLine> parallele a une autre ligne  +
-//   <Line1> a une distance <Dist1>.                                      +
-//=========================================================================
 
 gce_MakeLin2d::gce_MakeLin2d(const gp_Lin2d& Line, const double Dist)
 {

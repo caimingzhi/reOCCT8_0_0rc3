@@ -11,7 +11,6 @@ class StepShape_Edge : public StepShape_TopologicalRepresentationItem
 {
 
 public:
-  //! Returns a Edge
   Standard_EXPORT StepShape_Edge();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

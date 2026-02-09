@@ -1,15 +1,4 @@
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Graphic3d_CLight.hpp>
 
@@ -24,8 +13,6 @@ namespace
 {
   static std::atomic<int> THE_LIGHT_COUNTER(0);
 }
-
-//=================================================================================================
 
 void Graphic3d_CLight::makeId()
 {
@@ -49,8 +36,6 @@ void Graphic3d_CLight::makeId()
   myId = TCollection_AsciiString("Graphic3d_CLight_") + aTypeSuffix
          + TCollection_AsciiString(++THE_LIGHT_COUNTER);
 }
-
-//=================================================================================================
 
 Graphic3d_CLight::Graphic3d_CLight(Graphic3d_TypeOfLightSource theType)
     : myPosition(0.0, 0.0, 0.0),
@@ -95,8 +80,6 @@ Graphic3d_CLight::Graphic3d_CLight(Graphic3d_TypeOfLightSource theType)
   makeId();
 }
 
-//=================================================================================================
-
 void Graphic3d_CLight::CopyFrom(const occ::handle<Graphic3d_CLight>& theLight)
 {
   myName      = theLight->myName;
@@ -126,23 +109,17 @@ void Graphic3d_CLight::CopyFrom(const occ::handle<Graphic3d_CLight>& theLight)
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_CLight::SetColor(const Quantity_Color& theColor)
 {
   updateRevisionIf(myColor.GetRGB().IsDifferent(theColor));
   myColor.SetRGB(theColor);
 }
 
-//=================================================================================================
-
 void Graphic3d_CLight::SetEnabled(bool theIsOn)
 {
   updateRevisionIf(myIsEnabled != theIsOn);
   myIsEnabled = theIsOn;
 }
-
-//=================================================================================================
 
 void Graphic3d_CLight::SetCastShadows(bool theToCast)
 {
@@ -156,8 +133,6 @@ void Graphic3d_CLight::SetCastShadows(bool theToCast)
   myToCastShadows = theToCast;
 }
 
-//=================================================================================================
-
 void Graphic3d_CLight::SetHeadlight(bool theValue)
 {
   if (myType == Graphic3d_TypeOfLightSource_Ambient)
@@ -168,8 +143,6 @@ void Graphic3d_CLight::SetHeadlight(bool theValue)
   updateRevisionIf(myIsHeadlight != theValue);
   myIsHeadlight = theValue;
 }
-
-//=================================================================================================
 
 void Graphic3d_CLight::SetDirection(const gp_Dir& theDir)
 {
@@ -186,8 +159,6 @@ void Graphic3d_CLight::SetDirection(const gp_Dir& theDir)
   myDirection.z() = static_cast<float>(theDir.Z());
 }
 
-//=================================================================================================
-
 void Graphic3d_CLight::SetPosition(const gp_Pnt& thePosition)
 {
   Standard_ProgramError_Raise_if(myType != Graphic3d_TypeOfLightSource_Spot
@@ -197,8 +168,6 @@ void Graphic3d_CLight::SetPosition(const gp_Pnt& thePosition)
   myPosition = thePosition;
 }
 
-//=================================================================================================
-
 void Graphic3d_CLight::SetDisplayPosition(const gp_Pnt& thePosition)
 {
   Standard_ProgramError_Raise_if(myType == Graphic3d_TypeOfLightSource_Ambient,
@@ -207,8 +176,6 @@ void Graphic3d_CLight::SetDisplayPosition(const gp_Pnt& thePosition)
   myPosition = thePosition;
 }
 
-//=================================================================================================
-
 void Graphic3d_CLight::SetIntensity(float theValue)
 {
   Standard_OutOfRange_Raise_if(theValue <= 0.0f,
@@ -216,8 +183,6 @@ void Graphic3d_CLight::SetIntensity(float theValue)
   updateRevisionIf(std::abs(myIntensity - theValue) > ShortRealEpsilon());
   myIntensity = theValue;
 }
-
-//=================================================================================================
 
 void Graphic3d_CLight::SetAngle(float theAngle)
 {
@@ -228,8 +193,6 @@ void Graphic3d_CLight::SetAngle(float theAngle)
   updateRevisionIf(std::abs(changeAngle() - theAngle) > ShortRealEpsilon());
   changeAngle() = theAngle;
 }
-
-//=================================================================================================
 
 void Graphic3d_CLight::SetAttenuation(float theConstAttenuation, float theLinearAttenuation)
 {
@@ -246,8 +209,6 @@ void Graphic3d_CLight::SetAttenuation(float theConstAttenuation, float theLinear
   changeLinearAttenuation() = theLinearAttenuation;
 }
 
-//=================================================================================================
-
 void Graphic3d_CLight::SetConcentration(float theConcentration)
 {
   Standard_ProgramError_Raise_if(myType != Graphic3d_TypeOfLightSource_Spot,
@@ -257,8 +218,6 @@ void Graphic3d_CLight::SetConcentration(float theConcentration)
   updateRevisionIf(std::abs(changeConcentration() - theConcentration) > ShortRealEpsilon());
   changeConcentration() = theConcentration;
 }
-
-//=================================================================================================
 
 void Graphic3d_CLight::SetSmoothRadius(float theValue)
 {
@@ -272,8 +231,6 @@ void Graphic3d_CLight::SetSmoothRadius(float theValue)
   mySmoothness = theValue;
 }
 
-//=================================================================================================
-
 void Graphic3d_CLight::SetSmoothAngle(float theValue)
 {
   Standard_ProgramError_Raise_if(myType != Graphic3d_TypeOfLightSource_Directional,
@@ -283,8 +240,6 @@ void Graphic3d_CLight::SetSmoothAngle(float theValue)
   updateRevisionIf(std::abs(mySmoothness - theValue) > ShortRealEpsilon());
   mySmoothness = theValue;
 }
-
-//=================================================================================================
 
 void Graphic3d_CLight::SetRange(float theValue)
 {
@@ -296,8 +251,6 @@ void Graphic3d_CLight::SetRange(float theValue)
   updateRevisionIf(std::abs(Range() - theValue) > ShortRealEpsilon());
   myDirection.w() = theValue;
 };
-
-//=================================================================================================
 
 void Graphic3d_CLight::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

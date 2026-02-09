@@ -29,14 +29,8 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
   gp_XY CPrim(0., 0.), CSecn(0., 0.), CTroi(0., 0.);
   int   LastGradientIndex, FirstNonZero, LastZero;
 
-  // (0.0) initialisations generales
   Jerk.Init(0.0);
-  math_Matrix Base(1,
-                   5,
-                   1,
-                   MyBSplOrder); // On shouhaite utiliser la derive troisieme
-                                 // Dans EvalBsplineBasis C"' <=> DerivOrder = 4
-                                 // et il faut ajouter 1 rang dans la matrice Base => 5 rangs
+  math_Matrix Base(1, 5, 1, MyBSplOrder);
 
   ier = BSplCLib::EvalBsplineBasis(3,
                                    MyBSplOrder,
@@ -49,7 +43,6 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
   LastZero     = FirstNonZero - 1;
   FirstNonZero = 2 * LastZero + 1;
 
-  // (0.1) evaluation de CPrim et CScn
   for (ii = 1; ii <= MyBSplOrder; ii++)
   {
     CPrim += Base(2, ii) * MyPoles->Value(ii + LastZero).Coord();
@@ -57,7 +50,6 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
     CTroi += Base(4, ii) * MyPoles->Value(ii + LastZero).Coord();
   }
 
-  // (1) Evaluation de la secousse locale = W*W
   double NormeCPrim       = CPrim.Modulus();
   double InvNormeCPrim    = 1 / NormeCPrim;
   double InvNormeCPrim2   = InvNormeCPrim * InvNormeCPrim;
@@ -79,7 +71,6 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
 
   if (MyDerivativeOrder >= 1)
   {
-    // (2) Evaluation du gradient de la secousse locale.
 
     math_Vector WGrad(1, 2 * MyBSplOrder + MyNbValAux), NumGrad(1, 2 * MyBSplOrder),
       NGrad1(1, 2 * MyBSplOrder), NGrad2(1, 2 * MyBSplOrder), GradNormeCPrim(1, 2 * MyBSplOrder),
@@ -104,7 +95,6 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
     for (ii = 1; ii <= MyBSplOrder; ii++)
     {
 
-      //     (2.1) Derivation en X
       GradNormeCPrim(jj) = XPrim * Base(2, ii) * InvNormeCPrim;
       NGDNCPrim(jj) = (XPrim * Base(3, ii) + XSecn * Base(2, ii)) - AuxBis * GradNormeCPrim(jj);
       GradDeriveNormeCPrim(jj) = NGDNCPrim(jj) * InvNormeCPrim2;
@@ -117,8 +107,6 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
       Jerk(kk)      = Facteur * WGrad(jj);
 
       jj += 1;
-
-      //     (2.2) Derivation en Y
 
       GradNormeCPrim(jj) = YPrim * Base(2, ii) * InvNormeCPrim;
       NGDNCPrim(jj) = (YPrim * Base(3, ii) + YSecn * Base(2, ii)) - AuxBis * GradNormeCPrim(jj);
@@ -136,7 +124,7 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
     }
     if (MyNbValAux == 1)
     {
-      //    (2.3) Gestion de la variable de glissement
+
       LastGradientIndex       = Jerk.Lower() + 2 * MyPoles->Length() + 1;
       WGrad(WGrad.Upper())    = 0.0;
       Jerk(LastGradientIndex) = 0.0;
@@ -149,8 +137,6 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
 
     if (MyDerivativeOrder >= 2)
     {
-
-      // (3) Evaluation du Hessien de la tension locale ----------------------
 
       double FacteurX  = (1 - std::pow(XPrim * InvNormeCPrim, 2)) * InvNormeCPrim;
       double FacteurY  = (1 - std::pow(YPrim * InvNormeCPrim, 2)) * InvNormeCPrim;
@@ -181,7 +167,6 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
           ProduitV = Base(2, II) * Base(4, JJ) - Base(4, II) * Base(2, JJ);
           HNumRho  = Base(2, II) * Base(3, JJ) - Base(3, II) * Base(2, JJ);
 
-          // derivation en XiXj
           Aux1 = InvNormeCPrim2 * GradNormeCPrim(jj - 1);
           DeriveAuxBis =
             2 * ((XPrim * Base(3, JJ) + XSecn * Base(2, JJ)) * InvNormeCPrim - ProduitC1C2 * Aux1);
@@ -202,7 +187,6 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
           Jerk(k1) = Facteur * (WGrad(ii - 1) * WGrad(jj - 1) + FacteurW * VIntermed);
           k1++;
 
-          // derivation en XiYj
           Aux1 = InvNormeCPrim2 * GradNormeCPrim(jj);
           DeriveAuxBis =
             2 * ((YPrim * Base(3, JJ) + YSecn * Base(2, JJ)) * InvNormeCPrim - ProduitC1C2 * Aux1);
@@ -222,8 +206,6 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
           Jerk(k1)  = Facteur * (WGrad(ii - 1) * WGrad(jj) + FacteurW * VIntermed);
           k1++;
 
-          // derivation en YiXj
-          // DSeconde calcule ci-dessus
           Aux1 = InvNormeCPrim2 * GradNormeCPrim(jj - 1);
           DeriveAuxBis =
             2 * ((XPrim * Base(3, JJ) + XSecn * Base(2, JJ)) * InvNormeCPrim - ProduitC1C2 * Aux1);
@@ -243,7 +225,6 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
           Jerk(k2) = Facteur * (WGrad(ii) * WGrad(jj - 1) + FacteurW * VIntermed);
           k2++;
 
-          // derivation en YiYj
           Aux1 = InvNormeCPrim2 * GradNormeCPrim(jj);
           DeriveAuxBis =
             2 * ((YPrim * Base(3, JJ) + YSecn * Base(2, JJ)) * InvNormeCPrim - ProduitC1C2 * Aux1);
@@ -263,12 +244,9 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
           k2++;
         }
 
-        // case where jj = ii: triangular fill
         Produit  = pow(Base(2, II), 2);
         Produit2 = 2 * Base(2, II) * Base(3, II);
-        //           ProduitV2 = Base
 
-        // derivation en XiXi
         Aux1 = InvNormeCPrim2 * GradNormeCPrim(ii - 1);
         DeriveAuxBis =
           2 * ((XPrim * Base(3, II) + XSecn * Base(2, II)) * InvNormeCPrim - ProduitC1C2 * Aux1);
@@ -283,7 +261,7 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
               - 2.5 * DSeconde * Numerateur;
         VIntermed = InvDenominateur * (Aux - 3.5 * GradNormeCPrim(ii - 1) * NumduGrad(ii - 1));
         Jerk(k1)  = Facteur * (WGrad(ii - 1) * WGrad(ii - 1) + FacteurW * VIntermed);
-        // derivation en XiYi
+
         Aux1 = InvNormeCPrim2 * GradNormeCPrim(ii);
         DeriveAuxBis =
           2 * ((YPrim * Base(3, II) + YSecn * Base(2, II)) * InvNormeCPrim - ProduitC1C2 * Aux1);
@@ -301,8 +279,6 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
         Jerk(k2)  = Facteur * (WGrad(ii) * WGrad(ii - 1) + FacteurW * VIntermed);
         k2++;
 
-        // derivation en YiYi
-        // Aux1 et DeriveAuxBis calcules au pas precedent ...
         HDeriveNormeCPrim = (Produit2 - DeriveAuxBis * GradNormeCPrim(ii)
                              - AuxBis * (Produit * InvNormeCPrim - YPrim * Base(2, II) * Aux1))
                               * InvNormeCPrim2
@@ -318,6 +294,5 @@ bool FairCurve_DistributionOfJerk::Value(const math_Vector& TParam, math_Vector&
     }
   }
 
-  // sortie standard
   return Ok;
 }

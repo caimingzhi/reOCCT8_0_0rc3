@@ -18,19 +18,11 @@ IMPLEMENT_STANDARD_RTTIEXT(VrmlData_IndexedLineSet, VrmlData_Geometry)
   #pragma warning(disable : 4996)
 #endif
 
-//=================================================================================================
-
-Quantity_Color VrmlData_IndexedLineSet::GetColor(const int /*iFace*/, const int /*iVertex*/)
+Quantity_Color VrmlData_IndexedLineSet::GetColor(const int, const int)
 {
-  // TODO
+
   return Quantity_NOC_BLACK;
 }
-
-//=======================================================================
-// function : TShape
-// purpose  : Query the shape. This method checks the flag myIsModified;
-//           if True it should rebuild the shape presentation.
-//=======================================================================
 
 const occ::handle<TopoDS_TShape>& VrmlData_IndexedLineSet::TShape()
 {
@@ -42,7 +34,6 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedLineSet::TShape()
     BRep_Builder  aBuilder;
     const gp_XYZ* arrNodes = myCoords->Values();
 
-    // Create the Wire
     TopoDS_Wire aWire;
     aBuilder.MakeWire(aWire);
     for (i = 0; i < (int)myNbPolygons; i++)
@@ -66,11 +57,6 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedLineSet::TShape()
   return myTShape;
 }
 
-//=======================================================================
-// function : Clone
-// purpose  : Create a copy of this node
-//=======================================================================
-
 occ::handle<VrmlData_Node> VrmlData_IndexedLineSet::Clone(
   const occ::handle<VrmlData_Node>& theOther) const
 {
@@ -88,24 +74,19 @@ occ::handle<VrmlData_Node> VrmlData_IndexedLineSet::Clone(
   }
   else
   {
-    // Create a dummy node to pass the different Scene instance to methods Clone
+
     const occ::handle<VrmlData_UnknownNode> aDummyNode = new VrmlData_UnknownNode(aResult->Scene());
     if (!myCoords.IsNull())
       aResult->SetCoordinates(occ::down_cast<VrmlData_Coordinate>(myCoords->Clone(aDummyNode)));
     if (!myColors.IsNull())
       aResult->SetColors(occ::down_cast<VrmlData_Color>(myColors->Clone(aDummyNode)));
-    // TODO: Replace the following lines with the relevant copying
+
     aResult->SetPolygons(myNbPolygons, myArrPolygons);
     aResult->SetColorInd(myNbColors, myArrColorInd);
   }
   aResult->SetColorPerVertex(myColorPerVertex);
   return aResult;
 }
-
-//=======================================================================
-// function : Read
-// purpose  : Read the Node from input stream.
-//=======================================================================
 
 VrmlData_ErrorStatus VrmlData_IndexedLineSet::Read(VrmlData_InBuffer& theBuffer)
 {
@@ -119,8 +100,7 @@ VrmlData_ErrorStatus VrmlData_IndexedLineSet::Read(VrmlData_InBuffer& theBuffer)
       aStatus = aScene.ReadArrIndex(theBuffer, myArrPolygons, myNbPolygons);
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "colorIndex"))
       aStatus = aScene.ReadArrIndex(theBuffer, myArrColorInd, myNbColors);
-    // These two checks should be the last one to avoid their interference
-    // with the other tokens (e.g., coordIndex)
+
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "color"))
     {
       occ::handle<VrmlData_Node> aNode;
@@ -138,20 +118,15 @@ VrmlData_ErrorStatus VrmlData_IndexedLineSet::Read(VrmlData_InBuffer& theBuffer)
     if (!OK(aStatus))
       break;
   }
-  // Read the terminating (closing) brace
+
   if (OK(aStatus) || aStatus == VrmlData_EmptyData)
     if (OK(aStatus, readBrace(theBuffer)))
     {
-      // Post-processing
+
       ;
     }
   return aStatus;
 }
-
-//=======================================================================
-// function : Write
-// purpose  : Write the Node to output stream
-//=======================================================================
 
 VrmlData_ErrorStatus VrmlData_IndexedLineSet::Write(const char* thePrefix) const
 {
@@ -177,12 +152,6 @@ VrmlData_ErrorStatus VrmlData_IndexedLineSet::Write(const char* thePrefix) const
   }
   return aStatus;
 }
-
-//=======================================================================
-// function : IsDefault
-// purpose  : Returns True if the node is default,
-//           so that it should not be written.
-//=======================================================================
 
 bool VrmlData_IndexedLineSet::IsDefault() const
 {

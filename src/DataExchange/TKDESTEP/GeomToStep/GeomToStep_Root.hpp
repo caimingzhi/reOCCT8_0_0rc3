@@ -7,8 +7,6 @@
 
 #include <Standard_Boolean.hpp>
 
-//! This class implements the common services for
-//! all classes of GeomToStep which report error.
 class GeomToStep_Root
 {
 public:

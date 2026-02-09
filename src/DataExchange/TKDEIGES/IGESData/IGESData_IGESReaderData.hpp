@@ -19,40 +19,23 @@ class Interface_ParamSet;
 class Interface_Check;
 class IGESData_DirPart;
 
-//! specific FileReaderData for IGES
-//! contains header as GlobalSection, and for each Entity, its
-//! directory part as DirPart, list of Parameters as ParamSet
-//! Each Item has a DirPart, plus classically a ParamSet and the
-//! correspondent recognized Entity (inherited from FileReaderData)
-//! Parameters are accessed through specific objects, ParamReaders
 class IGESData_IGESReaderData : public Interface_FileReaderData
 {
 
 public:
-  //! creates IGESReaderData correctly dimensioned (for arrays)
-  //! <nbe> count of entities, that is, half nb of directory lines
-  //! <nbp> : count of parameters
   Standard_EXPORT IGESData_IGESReaderData(const int nbe, const int nbp);
 
-  //! adds a start line to start section
   Standard_EXPORT void AddStartLine(const char* aval);
 
-  //! Returns the Start Section in once
   Standard_EXPORT occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>>
                   StartSection() const;
 
-  //! adds a parameter to global section's parameter list
   Standard_EXPORT void AddGlobal(const Interface_ParamType atype, const char* aval);
 
-  //! reads header (as GlobalSection) content from the ParamSet
-  //! after it has been filled by successive calls to AddGlobal
   Standard_EXPORT void SetGlobalSection();
 
-  //! returns header as GlobalSection
   Standard_EXPORT const IGESData_GlobalSection& GlobalSection() const;
 
-  //! fills a DirPart, designated by its rank (that is, (N+1)/2 if N
-  //! is its first number in section D)
   Standard_EXPORT void SetDirPart(const int   num,
                                   const int   i1,
                                   const int   i2,
@@ -76,10 +59,8 @@ public:
                                   const char* label,
                                   const char* subs);
 
-  //! returns DirPart identified by record no (half Dsect number)
   Standard_EXPORT const IGESData_DirPart& DirPart(const int num) const;
 
-  //! returns values recorded in directory part n0 <num>
   Standard_EXPORT void DirValues(const int    num,
                                  int&         i1,
                                  int&         i2,
@@ -103,33 +84,18 @@ public:
                                  const char*& label,
                                  const char*& subs) const;
 
-  //! returns "type" and "form" info from a directory part
   Standard_EXPORT IGESData_IGESType DirType(const int num) const;
 
-  //! Returns count of recorded Entities (i.e. size of Directory)
   Standard_EXPORT int NbEntities() const override;
 
-  //! determines next suitable record from num; that is num+1 except
-  //! for last one which gives 0
   Standard_EXPORT int FindNextRecord(const int num) const override;
 
-  //! determines reference numbers in EntityNumber fields (called by
-  //! SetEntities from IGESReaderTool)
-  //! works on "Integer" type Parameters, because IGES does not
-  //! distinguish Integer and Entity Refs : every Integer which is
-  //! odd and less than twice NbRecords can be an Entity Ref ...
-  //! (Ref Number is then (N+1)/2 if N is the Integer Value)
   Standard_EXPORT void SetEntityNumbers();
 
-  //! Returns the recorded Global Check
   Standard_EXPORT occ::handle<Interface_Check> GlobalCheck() const;
 
-  //! allows to set a default line weight, will be later applied at
-  //! load time, on Entities which have no specified line weight
   Standard_EXPORT void SetDefaultLineWeight(const double defw);
 
-  //! Returns the recorded Default Line Weight, if there is
-  //! (else, returns 0)
   Standard_EXPORT double DefaultLineWeight() const;
 
   DEFINE_STANDARD_RTTIEXT(IGESData_IGESReaderData, Interface_FileReaderData)

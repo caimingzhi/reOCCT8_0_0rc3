@@ -6,23 +6,17 @@
 
 static NCollection_DoubleMap<Standard_GUID, TCollection_ExtendedString> guidprogidmap;
 
-//=================================================================================================
-
 const Standard_GUID& TDF::LowestID()
 {
   static Standard_GUID lowestID("00000000-0000-0000-0000-000000000000");
   return lowestID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDF::UppestID()
 {
   static Standard_GUID uppestID("ffffffff-ffff-ffff-ffff-ffffffffffff");
   return uppestID;
 }
-
-//=================================================================================================
 
 void TDF::AddLinkGUIDToProgID(const Standard_GUID& ID, const TCollection_ExtendedString& ProgID)
 {
@@ -31,8 +25,6 @@ void TDF::AddLinkGUIDToProgID(const Standard_GUID& ID, const TCollection_Extende
 
   guidprogidmap.Bind(ID, ProgID);
 }
-
-//=================================================================================================
 
 bool TDF::GUIDFromProgID(const TCollection_ExtendedString& ProgID, Standard_GUID& ID)
 {
@@ -43,8 +35,6 @@ bool TDF::GUIDFromProgID(const TCollection_ExtendedString& ProgID, Standard_GUID
   }
   return false;
 }
-
-//=================================================================================================
 
 bool TDF::ProgIDFromGUID(const Standard_GUID& ID, TCollection_ExtendedString& ProgID)
 {

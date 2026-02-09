@@ -9,7 +9,6 @@ class StepShape_Loop : public StepShape_TopologicalRepresentationItem
 {
 
 public:
-  //! Returns a Loop
   Standard_EXPORT StepShape_Loop();
 
   DEFINE_STANDARD_RTTIEXT(StepShape_Loop, StepShape_TopologicalRepresentationItem)

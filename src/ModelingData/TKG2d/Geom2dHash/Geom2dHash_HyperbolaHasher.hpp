@@ -5,11 +5,9 @@
 #include <Geom2dHash_AxisPlacement.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom2d_Hyperbola (2D hyperbola).
-//! Used for geometry deduplication.
 struct Geom2dHash_HyperbolaHasher
 {
-  // Hashes the hyperbola by its position, major radius, and minor radius.
+
   std::size_t operator()(const occ::handle<Geom2d_Hyperbola>& theHyperbola) const noexcept
   {
     constexpr double aTolerance = 1e-12;
@@ -23,7 +21,6 @@ struct Geom2dHash_HyperbolaHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two hyperbolas by their positions and radii.
   bool operator()(const occ::handle<Geom2d_Hyperbola>& theHyperbola1,
                   const occ::handle<Geom2d_Hyperbola>& theHyperbola2) const noexcept
   {

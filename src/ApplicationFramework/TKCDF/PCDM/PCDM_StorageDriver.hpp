@@ -11,45 +11,21 @@
 class PCDM_Document;
 class CDM_Document;
 
-//! persistent implementation of storage.
-//!
-//! The application must redefine one the two Make()
-//! methods. The first one, if the application wants to
-//! put only one document in the storage file.
-//!
-//! The second method should be redefined to put
-//! additional document that could be used by the
-//! retrieval instead of the principal document, depending
-//! on the schema used during the retrieval.
-//! For example, a second document could be a standard
-//! CDMShape_Document. This means that a client
-//! application will already be able to extract a CDMShape_Document
-//! of the file, if the Shape Schema remains unchanged.
 class PCDM_StorageDriver : public PCDM_Writer
 {
 
 public:
-  //! raises NotImplemented.
   Standard_EXPORT virtual occ::handle<PCDM_Document> Make(
     const occ::handle<CDM_Document>& aDocument);
 
-  //! By default, puts in the Sequence the document returns
-  //! by the previous Make method.
   Standard_EXPORT virtual void Make(const occ::handle<CDM_Document>&                  aDocument,
                                     NCollection_Sequence<occ::handle<PCDM_Document>>& Documents);
 
-  //! Warning! raises DriverError if an error occurs during inside the
-  //! Make method.
-  //! stores the content of the Document into a new file.
-  //!
-  //! by default Write will use Make method to build a persistent
-  //! document and the Schema method to write the persistent document.
   Standard_EXPORT void Write(
     const occ::handle<CDM_Document>&  aDocument,
     const TCollection_ExtendedString& aFileName,
     const Message_ProgressRange&      theRange = Message_ProgressRange()) override;
 
-  //! Write <theDocument> to theOStream
   Standard_EXPORT void Write(
     const occ::handle<CDM_Document>& theDocument,
     Standard_OStream&                theOStream,

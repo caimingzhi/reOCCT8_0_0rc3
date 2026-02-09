@@ -7,11 +7,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_DataSet, Standard_Transient)
 
-//=================================================================================================
-
 TDF_DataSet::TDF_DataSet() = default;
-
-//=================================================================================================
 
 void TDF_DataSet::Clear()
 {
@@ -19,8 +15,6 @@ void TDF_DataSet::Clear()
   myLabelMap.Clear();
   myAttributeMap.Clear();
 }
-
-//=================================================================================================
 
 Standard_OStream& TDF_DataSet::Dump(Standard_OStream& anOS) const
 {

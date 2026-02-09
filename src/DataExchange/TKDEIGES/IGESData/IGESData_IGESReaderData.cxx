@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IGESData_DirPart.hpp>
 #include <IGESData_IGESModel.hpp>
@@ -107,8 +96,6 @@ void IGESData_IGESReaderData::SetDirPart(const int   num,
           res2,
           label,
           subs);
-  ////  thedirs(num) = DP;  // check if useful
-  // InitParams(num); gka optimization memory
 }
 
 const IGESData_DirPart& IGESData_IGESReaderData::DirPart(const int num) const
@@ -180,58 +167,17 @@ int IGESData_IGESReaderData::FindNextRecord(const int num) const
     return (num + 1);
 }
 
-// Reference to other entities: this is both very simple and problematic
-// Very simple: a reference to an entity is a number (in directory list)
-// which equals (2*N-1) if N is the true rank of the entity
-// Problematic: this number is an Integer... nothing distinguishes it from another
-// Hence criterion: any odd integer less than 2*NbRecords CAN be a
-// reference... It's up to each entity to sort it out afterwards...
-//  Attention, a reference can be given as "Negative Pointer"
-// N.B.: DirPart not concerned (specific reading ensured by IGESEntity)
-
-void IGESData_IGESReaderData::SetEntityNumbers()
-{
-  //   We try to rely solely on IGESRead calculation
-  /*
-    int nbd = thedirs.Upper();
-    for (int i = 1; i <= nbd; i ++) {
-      int nbp = NbParams(i);
-      for (int j = 1; j <= nbp; j ++) {
-        Interface_FileParameter& FP = ChangeParam(i,j);
-        if (FP.ParamType() == Interface_ParamInteger) {
-      int val = atoi(FP.CValue());
-      if (val > 0) {
-        if (val != ((val/2) *2) && val < 2*nbd) {  // candidat possible
-          FP.SetEntityNumber((val+1)/2);
-        }
-      } else if (val < 0) {
-        int mval = -val;
-        if (mval != ((mval/2) *2) && mval < 2*nbd) {  // candidat possible
-          FP.SetEntityNumber((mval+1)/2);
-        }
-      }
-
-        }
-      }
-    }
-  */
-}
-
-//=================================================================================================
+void IGESData_IGESReaderData::SetEntityNumbers() {}
 
 occ::handle<Interface_Check> IGESData_IGESReaderData::GlobalCheck() const
 {
   return thechk;
 }
 
-//=================================================================================================
-
 void IGESData_IGESReaderData::SetDefaultLineWeight(const double defw)
 {
   thedefw = defw;
 }
-
-//=================================================================================================
 
 double IGESData_IGESReaderData::DefaultLineWeight() const
 {

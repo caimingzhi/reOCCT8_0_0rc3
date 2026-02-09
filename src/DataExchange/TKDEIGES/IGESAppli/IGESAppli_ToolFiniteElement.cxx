@@ -26,17 +26,16 @@ void IGESAppli_ToolFiniteElement::ReadOwnParams(const occ::handle<IGESAppli_Fini
   int                                   tempTopology;
   occ::handle<TCollection_HAsciiString> tempName;
   int                                   nbval = 0;
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   occ::handle<NCollection_HArray1<occ::handle<IGESAppli_Node>>> tempData;
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadInteger(PR.Current(), "Topology type", tempTopology);
   PR.ReadInteger(PR.Current(), "No. of nodes defining element", nbval);
   tempData = new NCollection_HArray1<occ::handle<IGESAppli_Node>>(1, nbval);
   for (int i = 1; i <= nbval; i++)
   {
     occ::handle<IGESAppli_Node> tempNode;
-    // szv#4:S4163:12Mar99 moved in if
+
     if (PR.ReadEntity(IR,
                       PR.Current(),
                       "Node defining element",
@@ -44,7 +43,7 @@ void IGESAppli_ToolFiniteElement::ReadOwnParams(const occ::handle<IGESAppli_Fini
                       tempNode))
       tempData->SetValue(i, tempNode);
   }
-  PR.ReadText(PR.Current(), "Element type name", tempName); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadText(PR.Current(), "Element type name", tempName);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempTopology, tempData, tempName);
@@ -87,9 +86,9 @@ void IGESAppli_ToolFiniteElement::OwnCopy(const occ::handle<IGESAppli_FiniteElem
 }
 
 IGESData_DirChecker IGESAppli_ToolFiniteElement::DirChecker(
-  const occ::handle<IGESAppli_FiniteElement>& /* ent */) const
+  const occ::handle<IGESAppli_FiniteElement>&) const
 {
-  IGESData_DirChecker DC(136, 0); // Form no = 0 & Type = 136
+  IGESData_DirChecker DC(136, 0);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefAny);
   DC.LineWeight(IGESData_DefVoid);
@@ -101,9 +100,9 @@ IGESData_DirChecker IGESAppli_ToolFiniteElement::DirChecker(
   return DC;
 }
 
-void IGESAppli_ToolFiniteElement::OwnCheck(const occ::handle<IGESAppli_FiniteElement>& /* ent */,
+void IGESAppli_ToolFiniteElement::OwnCheck(const occ::handle<IGESAppli_FiniteElement>&,
                                            const Interface_ShareTool&,
-                                           occ::handle<Interface_Check>& /* ach */) const
+                                           occ::handle<Interface_Check>&) const
 {
 }
 

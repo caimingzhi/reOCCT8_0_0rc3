@@ -6,45 +6,33 @@
 class Geom_Line;
 class Geom_Point;
 
-//! Constructs line datums to be used in construction of
-//! composite shapes.
 class AIS_Line : public AIS_InteractiveObject
 {
   DEFINE_STANDARD_RTTIEXT(AIS_Line, AIS_InteractiveObject)
 public:
-  //! Initializes the line aLine.
   Standard_EXPORT AIS_Line(const occ::handle<Geom_Line>& aLine);
 
-  //! Initializes a starting point aStartPoint
-  //! and a finishing point aEndPoint for the line.
   Standard_EXPORT AIS_Line(const occ::handle<Geom_Point>& aStartPoint,
                            const occ::handle<Geom_Point>& aEndPoint);
 
-  //! Returns the signature 5.
   int Signature() const override { return 5; }
 
-  //! Returns the type Datum.
   AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive_Datum; }
 
-  //! Constructs an infinite line.
   const occ::handle<Geom_Line>& Line() const { return myComponent; }
 
-  //! Returns the starting point thePStart and the end point thePEnd of the line set by SetPoints.
   void Points(occ::handle<Geom_Point>& thePStart, occ::handle<Geom_Point>& thePEnd) const
   {
     thePStart = myStartPoint;
     thePEnd   = myEndPoint;
   }
 
-  //! instantiates an infinite line.
   void SetLine(const occ::handle<Geom_Line>& theLine)
   {
     myComponent     = theLine;
     myLineIsSegment = false;
   }
 
-  //! Sets the starting point thePStart and ending point thePEnd of the
-  //! infinite line to create a finite line segment.
   void SetPoints(const occ::handle<Geom_Point>& thePStart, const occ::handle<Geom_Point>& thePEnd)
   {
     myStartPoint    = thePStart;
@@ -52,17 +40,12 @@ public:
     myLineIsSegment = true;
   }
 
-  //! Provides a new color setting aColor for the line in the drawing tool, or "Drawer".
   Standard_EXPORT void SetColor(const Quantity_Color& aColor) override;
 
-  //! Provides the new width setting aValue for the line in
-  //! the drawing tool, or "Drawer".
   Standard_EXPORT void SetWidth(const double aValue) override;
 
-  //! Removes the color setting and returns the original color.
   Standard_EXPORT void UnsetColor() override;
 
-  //! Removes the width setting and returns the original width.
   Standard_EXPORT void UnsetWidth() override;
 
 private:
@@ -82,7 +65,7 @@ private:
 
   Standard_EXPORT void ComputeSegmentLineSelection(
     const occ::handle<SelectMgr_Selection>& aSelection);
-  //! Replace aspects of already computed groups with the new value.
+
   void replaceWithNewLineAspect(const occ::handle<Prs3d_LineAspect>& theAspect);
 
 private:

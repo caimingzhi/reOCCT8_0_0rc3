@@ -6,8 +6,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//! defines an abstract curve with
-//! curvilinear parametrization
 class Approx_CurvlinFunc : public Standard_Transient
 {
 
@@ -24,56 +22,38 @@ public:
                                      const occ::handle<Adaptor3d_Surface>& S2,
                                      const double                          Tol);
 
-  //! ---Purpose Update the tolerance to used
   Standard_EXPORT void SetTol(const double Tol);
 
   Standard_EXPORT double FirstParameter() const;
 
   Standard_EXPORT double LastParameter() const;
 
-  //! Returns the number of intervals for continuity
-  //! <S>. May be one if Continuity(me) >= <S>
   Standard_EXPORT int NbIntervals(const GeomAbs_Shape S) const;
 
-  //! Stores in <T> the parameters bounding the intervals
-  //! of continuity <S>.
-  //!
-  //! The array must provide enough room to accommodate
-  //! for the parameters. i.e. T.Length() > NbIntervals()
   Standard_EXPORT void Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const;
 
-  //! if First < 0 or Last > 1
   Standard_EXPORT void Trim(const double First, const double Last, const double Tol);
 
-  //! Computes length of the curve.
   Standard_EXPORT void Length();
 
-  //! Computes length of the curve segment.
   Standard_EXPORT double Length(Adaptor3d_Curve& C, const double FirstU, const double LasrU) const;
 
   Standard_EXPORT double GetLength() const;
 
-  //! returns original parameter corresponding S. if
-  //! Case == 1 computation is performed on myC2D1 and mySurf1,
-  //! otherwise it is done on myC2D2 and mySurf2.
   Standard_EXPORT double GetUParameter(Adaptor3d_Curve& C,
                                        const double     S,
                                        const int        NumberOfCurve) const;
 
-  //! returns original parameter corresponding S.
   Standard_EXPORT double GetSParameter(const double U) const;
 
-  //! if myCase != 1
   Standard_EXPORT bool EvalCase1(const double                S,
                                  const int                   Order,
                                  NCollection_Array1<double>& Result) const;
 
-  //! if myCase != 2
   Standard_EXPORT bool EvalCase2(const double                S,
                                  const int                   Order,
                                  NCollection_Array1<double>& Result) const;
 
-  //! if myCase != 3
   Standard_EXPORT bool EvalCase3(const double                S,
                                  const int                   Order,
                                  NCollection_Array1<double>& Result);
@@ -87,7 +67,6 @@ private:
                             occ::handle<NCollection_HArray1<double>>& Si,
                             occ::handle<NCollection_HArray1<double>>& Ui) const;
 
-  //! returns curvilinear parameter corresponding U.
   Standard_EXPORT double GetSParameter(Adaptor3d_Curve& C,
                                        const double     U,
                                        const double     Length) const;

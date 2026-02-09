@@ -11,7 +11,6 @@ class StepGeom_CompositeCurveOnSurface;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for CompositeCurveOnSurface
 class RWStepGeom_RWCompositeCurveOnSurface
 {
 public:

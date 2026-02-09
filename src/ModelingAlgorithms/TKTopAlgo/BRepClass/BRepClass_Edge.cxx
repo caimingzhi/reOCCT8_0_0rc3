@@ -5,15 +5,11 @@
 #include <TopoDS_Vertex.hpp>
 #include <TopExp.hpp>
 
-//=================================================================================================
-
 BRepClass_Edge::BRepClass_Edge()
     : myMaxTolerance(Precision::Infinite()),
       myUseBndBox(false)
 {
 }
-
-//=================================================================================================
 
 void BRepClass_Edge::SetNextEdge(
   const NCollection_IndexedDataMap<TopoDS_Shape,
@@ -43,8 +39,6 @@ void BRepClass_Edge::SetNextEdge(
     }
   }
 }
-
-//=================================================================================================
 
 BRepClass_Edge::BRepClass_Edge(const TopoDS_Edge& E, const TopoDS_Face& F)
     : myEdge(E),

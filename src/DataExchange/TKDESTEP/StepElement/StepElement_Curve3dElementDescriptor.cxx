@@ -3,11 +3,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepElement_Curve3dElementDescriptor, StepElement_ElementDescriptor)
 
-//=================================================================================================
-
 StepElement_Curve3dElementDescriptor::StepElement_Curve3dElementDescriptor() = default;
-
-//=================================================================================================
 
 void StepElement_Curve3dElementDescriptor::Init(
   const StepElement_ElementOrder               aElementDescriptor_TopologyOrder,
@@ -22,16 +18,12 @@ void StepElement_Curve3dElementDescriptor::Init(
   thePurpose = aPurpose;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<
   occ::handle<NCollection_HSequence<occ::handle<StepElement_CurveElementPurposeMember>>>>>
   StepElement_Curve3dElementDescriptor::Purpose() const
 {
   return thePurpose;
 }
-
-//=================================================================================================
 
 void StepElement_Curve3dElementDescriptor::SetPurpose(
   const occ::handle<NCollection_HArray1<

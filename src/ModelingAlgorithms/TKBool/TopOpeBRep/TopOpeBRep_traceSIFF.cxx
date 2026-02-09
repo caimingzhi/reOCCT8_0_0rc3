@@ -100,8 +100,6 @@ void TopOpeBRep_traceSIFF::End(const TCollection_AsciiString& s, Standard_OStrea
   myopen = false;
 }
 
-//////////////////////////////////////////////////////////////////////////
-
 TopOpeBRep_traceSIFF SIFF;
 
 Standard_EXPORT void TopOpeBRep_SettraceSIFF(const bool b, int n, char** a)
@@ -115,5 +113,4 @@ Standard_EXPORT bool TopOpeBRep_GettraceSIFF()
   return b;
 }
 
-// #ifdef OCCT_DEBUG
 #endif

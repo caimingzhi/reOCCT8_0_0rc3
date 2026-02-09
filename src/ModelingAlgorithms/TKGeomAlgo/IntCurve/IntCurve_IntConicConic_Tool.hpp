@@ -1,16 +1,12 @@
 #pragma once
 
 #include <IntCurve_IntImpConicParConic.hpp>
-// #include <IntCurve_IConicPConicTool.hxx>
+
 #include <IntRes2d_Domain.hpp>
 #include <IntRes2d_Transition.hpp>
 #include <IntRes2d_Position.hpp>
 
 static double PIpPI = M_PI + M_PI;
-
-//======================================================================
-//==========          P R O T O T Y P E S                   ============
-//======================================================================
 
 void Determine_Transition_LC(const IntRes2d_Position,
                              gp_Vec2d&,
@@ -21,12 +17,9 @@ void Determine_Transition_LC(const IntRes2d_Position,
                              const gp_Vec2d&,
                              IntRes2d_Transition&,
                              const double);
-//======================================================================
+
 double NormalizeOnCircleDomain(const double Param, const IntRes2d_Domain& Domain);
 
-//=====================================================================
-//====   C l a s s e     I n t e r v a l      !! Specifique !! ========
-//=====================================================================
 class Interval
 {
 public:
@@ -44,9 +37,6 @@ public:
   Interval IntersectionWithBounded(const Interval& Inter);
 };
 
-//======================================================================
-//==  C L A S S E    P E R I O D I C    I N T E R V A L  (Specifique)
-//======================================================================
 class PeriodicInterval
 {
 public:

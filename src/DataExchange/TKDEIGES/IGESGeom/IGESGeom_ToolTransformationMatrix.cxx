@@ -14,21 +14,14 @@
 #include <NCollection_Array2.hpp>
 #include <NCollection_HArray2.hpp>
 
-// MGE 03/08/98
-//=================================================================================================
-
 IGESGeom_ToolTransformationMatrix::IGESGeom_ToolTransformationMatrix() = default;
-
-//=================================================================================================
 
 void IGESGeom_ToolTransformationMatrix::ReadOwnParams(
   const occ::handle<IGESGeom_TransformationMatrix>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /*IR*/,
+  const occ::handle<IGESData_IGESReaderData>&,
   IGESData_ParamReader& PR) const
 {
-  // MGE 03/08/98
 
-  // bool st; //szv#4:S4163:12Mar99 not needed
   double                                   temp;
   occ::handle<NCollection_HArray2<double>> aMatrix = new NCollection_HArray2<double>(1, 3, 1, 4);
 
@@ -36,8 +29,7 @@ void IGESGeom_ToolTransformationMatrix::ReadOwnParams(
   {
     for (int J = 1; J <= 4; J++)
     {
-      // st = PR.ReadReal(PR.Current(), Msg215, temp); //szv#4:S4163:12Mar99 moved in if
-      // st = PR.ReadReal(PR.Current(), "Matrix Elements", temp);
+
       if (PR.ReadReal(PR.Current(), temp))
         aMatrix->SetValue(I, J, temp);
       else
@@ -52,8 +44,6 @@ void IGESGeom_ToolTransformationMatrix::ReadOwnParams(
   ent->Init(aMatrix);
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolTransformationMatrix::WriteOwnParams(
   const occ::handle<IGESGeom_TransformationMatrix>& ent,
   IGESData_IGESWriter&                              IW) const
@@ -67,20 +57,15 @@ void IGESGeom_ToolTransformationMatrix::WriteOwnParams(
   }
 }
 
-//=================================================================================================
-
-void IGESGeom_ToolTransformationMatrix::OwnShared(
-  const occ::handle<IGESGeom_TransformationMatrix>& /*ent*/,
-  Interface_EntityIterator& /*iter*/) const
+void IGESGeom_ToolTransformationMatrix::OwnShared(const occ::handle<IGESGeom_TransformationMatrix>&,
+                                                  Interface_EntityIterator&) const
 {
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolTransformationMatrix::OwnCopy(
   const occ::handle<IGESGeom_TransformationMatrix>& another,
   const occ::handle<IGESGeom_TransformationMatrix>& ent,
-  Interface_CopyTool& /*TC*/) const
+  Interface_CopyTool&) const
 {
   occ::handle<NCollection_HArray2<double>> data = new NCollection_HArray2<double>(1, 3, 1, 4);
   for (int I = 1; I <= 3; I++)
@@ -95,8 +80,6 @@ void IGESGeom_ToolTransformationMatrix::OwnCopy(
   ent->SetFormNumber(another->FormNumber());
 }
 
-//=================================================================================================
-
 bool IGESGeom_ToolTransformationMatrix::OwnCorrect(
   const occ::handle<IGESGeom_TransformationMatrix>& ent) const
 {
@@ -109,15 +92,13 @@ bool IGESGeom_ToolTransformationMatrix::OwnCorrect(
   return true;
 }
 
-//=================================================================================================
-
 IGESData_DirChecker IGESGeom_ToolTransformationMatrix::DirChecker(
-  const occ::handle<IGESGeom_TransformationMatrix>& /*ent*/) const
+  const occ::handle<IGESGeom_TransformationMatrix>&) const
 {
   IGESData_DirChecker DC(124);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefAny);
+
   DC.Color(IGESData_DefAny);
   DC.BlankStatusIgnored();
   DC.SubordinateStatusIgnored();
@@ -127,18 +108,11 @@ IGESData_DirChecker IGESGeom_ToolTransformationMatrix::DirChecker(
   return DC;
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolTransformationMatrix::OwnCheck(
   const occ::handle<IGESGeom_TransformationMatrix>& ent,
   const Interface_ShareTool&,
   occ::handle<Interface_Check>& ach) const
 {
-  // MGE 03/08/98
-  // Building of messages
-  //========================================
-  // Message_Msg Msg71("XSTEP_71");
-  //========================================
 
   int form = ent->FormNumber();
   if ((form != 0) && (form != 1) && ((form < 10) || (form > 12)))
@@ -146,33 +120,13 @@ void IGESGeom_ToolTransformationMatrix::OwnCheck(
     Message_Msg Msg71("XSTEP_71");
     ach->SendFail(Msg71);
   }
-  // These messages are transferred in the translation procedure
-  /*
-    if (form > 1) return;    // what follows : orthogonal matrix
-    if (form == 0 && ent->Value().IsNegative())
-      ach.AddFail("For Form 0, Determinant is not Positive");
-    else if (form == 1 && !ent->Value().IsNegative())
-      ach.AddFail("For Form 1, Determinant is not Negative");
-
-    double p12 = ent->Data(1,1)*ent->Data(2,1) +
-      ent->Data(1,2)*ent->Data(2,2) + ent->Data(1,3)*ent->Data(2,3);
-    double p13 = ent->Data(1,1)*ent->Data(3,1) +
-      ent->Data(1,2)*ent->Data(3,2) + ent->Data(1,3)*ent->Data(3,3);
-    double p23 = ent->Data(2,1)*ent->Data(3,1) +
-      ent->Data(2,2)*ent->Data(3,2) + ent->Data(2,3)*ent->Data(3,3);
-    double ep = 1.e-05;  // ?? Tolorance des tests ?
-    if (p12 < -ep || p12 > ep || p13 < -ep || p13 > ep || p23 < -ep || p23 > ep)
-      ach.AddFail("Matrix is not orthogonal");
-  */
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolTransformationMatrix::OwnDump(
   const occ::handle<IGESGeom_TransformationMatrix>& ent,
-  const IGESData_IGESDumper& /*dumper*/,
+  const IGESData_IGESDumper&,
   Standard_OStream& S,
-  const int /*level*/) const
+  const int) const
 {
   S << "IGESGeom_TransformationMatrix\n"
     << "| R11, R12, R13, T1 |       " << ent->Data(1, 1) << ", " << ent->Data(1, 2) << ", "

@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
@@ -104,7 +92,7 @@ void AppParCurves::Bernstein(const int          NbPoles,
 
 void AppParCurves::SecondDerivativeBernstein(const double U, math_Vector& DDA)
 {
-  //  double U1 = 1-U, Y0, Y1, Xs;
+
   double Y0, Y1, Xs;
   int    NbPoles = DDA.Length();
   int    id, j, N4, deg = NbPoles - 1;
@@ -112,7 +100,6 @@ void AppParCurves::SecondDerivativeBernstein(const double U, math_Vector& DDA)
   math_Vector B(1, deg - 1);
   B(1) = 1.;
 
-  // Cas particulier si degre = 1:
   if (deg == 1)
   {
     DDA(1) = 0.0;
@@ -162,13 +149,11 @@ void AppParCurves::SplineFunction(const int           nbpoles,
                                   math_Matrix&        DA,
                                   math_IntegerVector& index)
 {
-  //  double U, NewU, co, diff, t1, t2;
+
   double U, NewU;
-  //  gp_Pnt2d Pt, P0;
-  //  gp_Vec2d V1;
-  //  int i, j, k, iter, in, ik, deg1 = deg+1;
+
   int i, j, deg1 = deg + 1;
-  //  int oldkindex, kindex, theindex, ttindex;
+
   int         oldkindex, kindex, theindex;
   math_Vector locpoles(1, deg1);
   math_Vector locdpoles(1, deg1);
@@ -194,7 +179,6 @@ void AppParCurves::SplineFunction(const int           nbpoles,
 
     oldkindex = kindex;
 
-    // On stocke les index:
     index(i) = kindex - deg - 1;
 
     locpoles(1) = 1.0;

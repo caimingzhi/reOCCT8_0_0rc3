@@ -7,21 +7,15 @@ static const char* IST = "ISOTROPIC_SYMMETRIC_TENSOR2_3D";
 static const char* OST = "ORTHOTROPIC_SYMMETRIC_TENSOR2_3D";
 static const char* AST = "ANISOTROPIC_SYMMETRIC_TENSOR2_3D";
 
-//=================================================================================================
-
 StepFEA_SymmetricTensor23dMember::StepFEA_SymmetricTensor23dMember()
     : mycase(0)
 {
 }
 
-//=================================================================================================
-
 bool StepFEA_SymmetricTensor23dMember::HasName() const
 {
   return mycase > 0;
 }
-
-//=================================================================================================
 
 const char* StepFEA_SymmetricTensor23dMember::Name() const
 {
@@ -39,8 +33,6 @@ const char* StepFEA_SymmetricTensor23dMember::Name() const
   return "";
 }
 
-//=================================================================================================
-
 static int CompareNames(const char* name)
 {
   int thecase = 0;
@@ -55,15 +47,11 @@ static int CompareNames(const char* name)
   return thecase;
 }
 
-//=================================================================================================
-
 bool StepFEA_SymmetricTensor23dMember::SetName(const char* name)
 {
   mycase = CompareNames(name);
   return (mycase > 0);
 }
-
-//=================================================================================================
 
 bool StepFEA_SymmetricTensor23dMember::Matches(const char* name) const
 {

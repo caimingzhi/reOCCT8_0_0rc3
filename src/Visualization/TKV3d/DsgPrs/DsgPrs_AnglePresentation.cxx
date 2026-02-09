@@ -24,8 +24,6 @@
 
 #include <cstdio>
 
-//=================================================================================================
-
 static int AboveInBelowCone(const gp_Circ& CMax, const gp_Circ& CMin, const gp_Circ& C)
 {
   const double D  = CMax.Location().Distance(CMin.Location());
@@ -42,13 +40,9 @@ static int AboveInBelowCone(const gp_Circ& CMax, const gp_Circ& CMin, const gp_C
   return 0;
 }
 
-//==========================================================================
-// function : DsgPrs_AnglePresentation::Add
-// purpose  : draws the presentation of the cone's angle;
-//==========================================================================
 void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                    const occ::handle<Prs3d_Drawer>&       aDrawer,
-                                   const double /*aVal*/,
+                                   const double,
                                    const TCollection_ExtendedString& aText,
                                    const gp_Circ&                    aCircle,
                                    const gp_Pnt&                     aPosition,
@@ -78,11 +72,9 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   gp_Pnt P1 = ElCLib::Value(0., myCircle);
   gp_Pnt P2 = ElCLib::Value(M_PI, myCircle);
 
-  // clang-format off
-  gce_MakePln mkPln(P1, P2, Apex); // create a plane which defines plane for projection aPosition on it
-  // clang-format on
+  gce_MakePln mkPln(P1, P2, Apex);
 
-  gp_Vec aVector(mkPln.Value().Location(), aPosition); // project aPosition on a plane
+  gp_Vec aVector(mkPln.Value().Location(), aPosition);
   gp_Vec Normal = mkPln.Value().Axis().Direction();
   Normal        = (aVector * Normal) * Normal;
 
@@ -103,17 +95,16 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
     OppositePnt   = P1;
   }
 
-  // clang-format off
-  aPnt = AttachmentPnt ;                          // Creating of circle which defines a plane for a dimension arc
-  gp_Vec Vec(AttachmentPnt, Apex);                // Dimension arc is a part of the circle 
+  aPnt = AttachmentPnt;
+  gp_Vec Vec(AttachmentPnt, Apex);
   Vec.Scale(2.);
   aPnt.Translate(Vec);
-  GC_MakeCircle mkCirc(AttachmentPnt, OppositePnt, aPnt); 
-  gp_Circ aCircle2 = mkCirc.Value()->Circ();
+  GC_MakeCircle mkCirc(AttachmentPnt, OppositePnt, aPnt);
+  gp_Circ       aCircle2 = mkCirc.Value()->Circ();
 
-  int i;
-  double AttParam = ElCLib::Parameter(aCircle2, AttachmentPnt);  //must be equal to zero (look circle construction)
-  // clang-format on
+  int    i;
+  double AttParam = ElCLib::Parameter(aCircle2, AttachmentPnt);
+
   double OppParam = ElCLib::Parameter(aCircle2, OppositePnt);
 
   while (AttParam >= 2. * M_PI)
@@ -121,7 +112,6 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   while (OppParam >= 2. * M_PI)
     OppParam -= 2. * M_PI;
 
-  //-------------------------- Compute angle ------------------------
   if (txt.Length() == 0)
   {
     double angle = UnitsAPI::CurrentFromLS(std::abs(OppParam), "PLANE ANGLE");
@@ -129,13 +119,12 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
     Sprintf(res, "%g", angle);
     txt = TCollection_ExtendedString(res);
   }
-  //-----------------------------------------------------------------
 
-  bool IsArrowOut = true; // Is arrows inside or outside of the cone
+  bool IsArrowOut = true;
   if (ElCLib::Parameter(aCircle2, tmpPnt) < OppParam)
-    // clang-format off
-    if( 2. * myCircle.Radius() > 4. * myArrowSize ) IsArrowOut = false;  //four times more than an arrow size
-  // clang-format on
+
+    if (2. * myCircle.Radius() > 4. * myArrowSize)
+      IsArrowOut = false;
 
   double angle = OppParam - AttParam;
   double param = AttParam;
@@ -191,7 +180,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
   }
 
-  if (AboveInBelowCone(VmaxCircle, VminCircle, myCircle) == 1 && !IsConeTrimmed) // above
+  if (AboveInBelowCone(VmaxCircle, VminCircle, myCircle) == 1 && !IsConeTrimmed)
   {
     aPrims = new Graphic3d_ArrayOfPolylines(3);
     aPrims->AddVertex(AttachmentPnt);
@@ -215,8 +204,6 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   }
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 }
-
-//=================================================================================================
 
 void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                    const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -256,7 +243,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   {
     if (std::abs(theval) < M_PI)
     {
-      // test if uco is in the opposite sector
+
       if (uco > udeb + M_PI && uco < ufin + M_PI)
       {
         udeb += M_PI;
@@ -301,7 +288,6 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   gp_Ax1 ax1(ptarr, axisdir);
   gp_Dir dirarr(-vecarr);
 
-  // calculate angle of rotation
   gp_Pnt       ptarr2(ptarr.XYZ() + length * dirarr.XYZ());
   const double parcir = ElCLib::Parameter(cer, ptarr2);
   gp_Pnt       ptarr3 = ElCLib::Value(parcir, cer);
@@ -328,11 +314,6 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
 
   aGroup->AddPrimitiveArray(aPrims);
 }
-
-//==========================================================================
-// function : DsgPrs_AnglePresentation::Add
-// purpose  : Adds prezentation of angle between two faces
-//==========================================================================
 
 void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                    const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -382,7 +363,6 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
                                         FirstParAttachCirc,
                                         LastParAttachCirc);
 
-  // Creating the angle's arc or line if null angle
   occ::handle<Graphic3d_ArrayOfPrimitives> aPrims;
   if (theval > Precision::Angular() && std::abs(M_PI - theval) > Precision::Angular())
   {
@@ -398,14 +378,13 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
     aPrims = new Graphic3d_ArrayOfSegments(4);
   }
-  else // null angle
+  else
   {
     aPrims = new Graphic3d_ArrayOfSegments(6);
     aPrims->AddVertex(OffsetPoint);
     aPrims->AddVertex(EndOfArrow1);
   }
 
-  // Add presentation of arrows
   DsgPrs::ComputeSymbol(aPresentation,
                         LA,
                         EndOfArrow1,
@@ -414,31 +393,28 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
                         DirOfArrow2,
                         ArrowPrs);
 
-  // Drawing the text
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, OffsetPoint);
 
-  // Line from AttachmentPoint1 to end of Arrow1
   aPrims->AddVertex(AttachmentPoint1);
   aPrims->AddVertex(EndOfArrow1);
-  // Line from "projection" of AttachmentPoint2 to end of Arrow2
+
   aPrims->AddVertex(ProjAttachPoint2);
   aPrims->AddVertex(EndOfArrow2);
 
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // Line or arc from AttachmentPoint2 to its "projection"
   if (AttachmentPoint2.Distance(ProjAttachPoint2) > Precision::Confusion())
   {
     if (isPlane)
     {
-      // Creating the line from AttachmentPoint2 to its projection
+
       aPrims = new Graphic3d_ArrayOfSegments(2);
       aPrims->AddVertex(AttachmentPoint2);
       aPrims->AddVertex(ProjAttachPoint2);
     }
     else
     {
-      // Creating the arc from AttachmentPoint2 to its projection
+
       const double Alpha      = std::abs(LastParAttachCirc - FirstParAttachCirc);
       const int    NodeNumber = std::max(4, int(50. * Alpha / M_PI));
       const double delta      = Alpha / (double)(NodeNumber - 1);
@@ -450,8 +426,6 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
   }
 }
-
-//=================================================================================================
 
 void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                    const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -503,7 +477,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   {
     if (std::abs(theval) < M_PI)
     {
-      // test if uco is in the opposite sector
+
       if (uco > udeb + M_PI && uco < ufin + M_PI)
       {
         udeb += M_PI;
@@ -547,7 +521,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
 
   gp_Ax1 ax1(ptarr, Norm);
   gp_Dir dirarr(-vecarr);
-  // calculate the angle of rotation
+
   gp_Pnt       ptarr2(ptarr.XYZ() + length * dirarr.XYZ());
   const double parcir = ElCLib::Parameter(cer, ptarr2);
   gp_Pnt       ptarr3 = ElCLib::Value(parcir, cer);
@@ -582,11 +556,6 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
 
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 }
-
-//==========================================================================
-// function : DsgPrs_AnglePresentation::Add
-// purpose  : It is possible to choose the symbol of extremities of the face (arrow, point...)
-//==========================================================================
 
 void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                    const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -629,7 +598,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   {
     if (std::abs(theval) < M_PI)
     {
-      // test if uco is in the opposite sector
+
       if (uco > udeb + M_PI && uco < ufin + M_PI)
       {
         udeb += M_PI;
@@ -667,14 +636,13 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   if (length < Precision::Confusion())
     length = 1.e-04;
 
-  // Lines of recall
   gp_Vec vecarr;
   gp_Pnt ptarr;
   ElCLib::D1(uc1, cer, ptarr, vecarr);
 
   gp_Ax1 ax1(ptarr, Norm);
   gp_Dir dirarr(-vecarr);
-  // calculate angle of rotation
+
   gp_Pnt       ptarr2(ptarr.XYZ() + length * dirarr.XYZ());
   const double parcir = ElCLib::Parameter(cer, ptarr2);
   gp_Pnt       ptarr3 = ElCLib::Value(parcir, cer);
@@ -700,11 +668,8 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
 
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // One traces the arrows
   DsgPrs::ComputeSymbol(aPresentation, LA, ptarr, ptarr1, dirarr, dirarr2, ArrowPrs);
 }
-
-//=================================================================================================
 
 void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                    const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -748,7 +713,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   {
     if (std::abs(theval) < M_PI)
     {
-      // test if uco is in the opposite sector
+
       if (uco > udeb + M_PI && uco < ufin + M_PI)
       {
         udeb += M_PI;
@@ -792,7 +757,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
 
   gp_Ax1 ax1(ptarr, Norm);
   gp_Dir dirarr(-vecarr);
-  // calculate the angle of rotation
+
   gp_Pnt       ptarr2(ptarr.XYZ() + length * dirarr.XYZ());
   const double parcir = ElCLib::Parameter(cer, ptarr2);
   gp_Pnt       ptarr3 = ElCLib::Value(parcir, cer);

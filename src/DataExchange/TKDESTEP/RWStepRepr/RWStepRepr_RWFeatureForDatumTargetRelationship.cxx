@@ -5,12 +5,8 @@
 #include <StepRepr_ShapeAspect.hpp>
 #include <StepRepr_FeatureForDatumTargetRelationship.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWFeatureForDatumTargetRelationship::RWStepRepr_RWFeatureForDatumTargetRelationship() =
   default;
-
-//=================================================================================================
 
 void RWStepRepr_RWFeatureForDatumTargetRelationship::ReadStep(
   const occ::handle<StepData_StepReaderData>&                    data,
@@ -18,11 +14,9 @@ void RWStepRepr_RWFeatureForDatumTargetRelationship::ReadStep(
   occ::handle<Interface_Check>&                                  ach,
   const occ::handle<StepRepr_FeatureForDatumTargetRelationship>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "feature_for_datum_target-relationship"))
     return;
-
-  // Own fields of ShapeAspectRelationship
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -54,18 +48,13 @@ void RWStepRepr_RWFeatureForDatumTargetRelationship::ReadStep(
                    STANDARD_TYPE(StepRepr_ShapeAspect),
                    aRelatedShapeAspect);
 
-  // Initialize entity
   ent->Init(aName, hasDescription, aDescription, aRelatingShapeAspect, aRelatedShapeAspect);
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWFeatureForDatumTargetRelationship::WriteStep(
   StepData_StepWriter&                                           SW,
   const occ::handle<StepRepr_FeatureForDatumTargetRelationship>& ent) const
 {
-
-  // Own fields of ShapeAspectRelationship
 
   SW.Send(ent->Name());
 
@@ -81,14 +70,10 @@ void RWStepRepr_RWFeatureForDatumTargetRelationship::WriteStep(
   SW.Send(ent->RelatedShapeAspect());
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWFeatureForDatumTargetRelationship::Share(
   const occ::handle<StepRepr_FeatureForDatumTargetRelationship>& ent,
   Interface_EntityIterator&                                      iter) const
 {
-
-  // Own fields of ShapeAspectRelationship
 
   iter.AddItem(ent->RelatingShapeAspect());
 

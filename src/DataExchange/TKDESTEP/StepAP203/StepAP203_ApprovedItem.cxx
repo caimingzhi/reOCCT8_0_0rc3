@@ -12,11 +12,7 @@
 #include <StepRepr_ConfigurationEffectivity.hpp>
 #include <StepRepr_ConfigurationItem.hpp>
 
-//=================================================================================================
-
 StepAP203_ApprovedItem::StepAP203_ApprovedItem() = default;
-
-//=================================================================================================
 
 int StepAP203_ApprovedItem::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -47,22 +43,16 @@ int StepAP203_ApprovedItem::CaseNum(const occ::handle<Standard_Transient>& ent) 
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ProductDefinitionFormation> StepAP203_ApprovedItem::
   ProductDefinitionFormation() const
 {
   return occ::down_cast<StepBasic_ProductDefinitionFormation>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ProductDefinition> StepAP203_ApprovedItem::ProductDefinition() const
 {
   return occ::down_cast<StepBasic_ProductDefinition>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepRepr_ConfigurationEffectivity> StepAP203_ApprovedItem::ConfigurationEffectivity()
   const
@@ -70,56 +60,40 @@ occ::handle<StepRepr_ConfigurationEffectivity> StepAP203_ApprovedItem::Configura
   return occ::down_cast<StepRepr_ConfigurationEffectivity>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepRepr_ConfigurationItem> StepAP203_ApprovedItem::ConfigurationItem() const
 {
   return occ::down_cast<StepRepr_ConfigurationItem>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_SecurityClassification> StepAP203_ApprovedItem::SecurityClassification() const
 {
   return occ::down_cast<StepBasic_SecurityClassification>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepAP203_ChangeRequest> StepAP203_ApprovedItem::ChangeRequest() const
 {
   return occ::down_cast<StepAP203_ChangeRequest>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepAP203_Change> StepAP203_ApprovedItem::Change() const
 {
   return occ::down_cast<StepAP203_Change>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepAP203_StartRequest> StepAP203_ApprovedItem::StartRequest() const
 {
   return occ::down_cast<StepAP203_StartRequest>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepAP203_StartWork> StepAP203_ApprovedItem::StartWork() const
 {
   return occ::down_cast<StepAP203_StartWork>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_Certification> StepAP203_ApprovedItem::Certification() const
 {
   return occ::down_cast<StepBasic_Certification>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_Contract> StepAP203_ApprovedItem::Contract() const
 {

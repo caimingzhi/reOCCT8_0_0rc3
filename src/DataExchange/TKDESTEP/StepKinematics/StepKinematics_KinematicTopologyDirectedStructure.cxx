@@ -1,16 +1,12 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_KinematicTopologyDirectedStructure.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_KinematicTopologyDirectedStructure,
                            StepRepr_Representation)
 
-//=================================================================================================
-
 StepKinematics_KinematicTopologyDirectedStructure::
   StepKinematics_KinematicTopologyDirectedStructure() = default;
-
-//=================================================================================================
 
 void StepKinematics_KinematicTopologyDirectedStructure::Init(
   const occ::handle<TCollection_HAsciiString>& theRepresentation_Name,
@@ -26,15 +22,11 @@ void StepKinematics_KinematicTopologyDirectedStructure::Init(
   myParent = theParent;
 }
 
-//=================================================================================================
-
 occ::handle<StepKinematics_KinematicTopologyStructure>
   StepKinematics_KinematicTopologyDirectedStructure::Parent() const
 {
   return myParent;
 }
-
-//=================================================================================================
 
 void StepKinematics_KinematicTopologyDirectedStructure::SetParent(
   const occ::handle<StepKinematics_KinematicTopologyStructure>& theParent)

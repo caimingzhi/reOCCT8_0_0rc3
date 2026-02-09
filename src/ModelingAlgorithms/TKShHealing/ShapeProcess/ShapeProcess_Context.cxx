@@ -22,15 +22,11 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 ShapeProcess_Context::ShapeProcess_Context()
 {
   myMessenger = Message::DefaultMessenger();
   myTraceLev  = 1;
 }
-
-//=================================================================================================
 
 ShapeProcess_Context::ShapeProcess_Context(const char* file, const char* scope)
 {
@@ -38,8 +34,6 @@ ShapeProcess_Context::ShapeProcess_Context(const char* file, const char* scope)
   myMessenger = Message::DefaultMessenger();
   myTraceLev  = 1;
 }
-
-//=================================================================================================
 
 bool ShapeProcess_Context::Init(const char* file, const char* scope)
 {
@@ -56,18 +50,14 @@ bool ShapeProcess_Context::Init(const char* file, const char* scope)
   {
     SetScope(scope);
   }
-  return true; // myRC->Length() >0; NOT IMPLEMENTED
+  return true;
 }
-
-//=================================================================================================
 
 occ::handle<Resource_Manager> ShapeProcess_Context::LoadResourceManager(const char* name)
 {
-  // Mutex is needed because we are initializing and changing static variables here, so
-  // without mutex it leads to race condition.
+
   std::lock_guard<std::mutex> aLock(GetShapeProcessMutex());
-  // Optimisation of loading resource file: file is load only once
-  // and reloaded only if file date has changed
+
   static occ::handle<Resource_Manager> sRC;
   static std::time_t                   sMtime, sUMtime;
   static TCollection_AsciiString       sName;
@@ -123,20 +113,14 @@ occ::handle<Resource_Manager> ShapeProcess_Context::LoadResourceManager(const ch
       sUMtime = aUMtime;
     }
   }
-  // Creating copy of sRC for thread safety of Resource_Manager variables
-  // We should return copy because calling of Resource_Manager::SetResource() for one object
-  // in multiple threads causes race condition
+
   return new Resource_Manager(*sRC);
 }
-
-//=================================================================================================
 
 const occ::handle<Resource_Manager>& ShapeProcess_Context::ResourceManager() const
 {
   return myRC;
 }
-
-//=================================================================================================
 
 void ShapeProcess_Context::SetScope(const char* scope)
 {
@@ -154,15 +138,11 @@ void ShapeProcess_Context::SetScope(const char* scope)
   myScope->Append(str);
 }
 
-//=================================================================================================
-
 void ShapeProcess_Context::UnSetScope()
 {
   if (!myScope.IsNull() && myScope->Length() > 0)
     myScope->Remove(myScope->Length());
 }
-
-//=================================================================================================
 
 static occ::handle<TCollection_HAsciiString> MakeName(
   const occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>>& scope,
@@ -185,8 +165,6 @@ bool ShapeProcess_Context::IsParamSet(const char* param) const
   return !myRC.IsNull() && myRC->Find(MakeName(myScope, param)->ToCString());
 }
 
-//=================================================================================================
-
 bool ShapeProcess_Context::GetString(const char* param, TCollection_AsciiString& str) const
 {
   if (myRC.IsNull())
@@ -204,8 +182,6 @@ bool ShapeProcess_Context::GetString(const char* param, TCollection_AsciiString&
   return true;
 }
 
-//=================================================================================================
-
 bool ShapeProcess_Context::GetReal(const char* param, double& val) const
 {
   if (myRC.IsNull())
@@ -221,7 +197,6 @@ bool ShapeProcess_Context::GetReal(const char* param, double& val) const
     return true;
   }
 
-  // if not real, try to treat as alias "&param"
   str.LeftAdjust();
   if (str.Value(1) == '&')
   {
@@ -250,8 +225,6 @@ bool ShapeProcess_Context::GetReal(const char* param, double& val) const
   return false;
 }
 
-//=================================================================================================
-
 bool ShapeProcess_Context::GetInteger(const char* param, int& val) const
 {
   if (myRC.IsNull())
@@ -267,7 +240,6 @@ bool ShapeProcess_Context::GetInteger(const char* param, int& val) const
     return true;
   }
 
-  // if not integer, try to treat as alias "&param"
   str.LeftAdjust();
   if (str.Value(1) == '&')
   {
@@ -296,8 +268,6 @@ bool ShapeProcess_Context::GetInteger(const char* param, int& val) const
   return false;
 }
 
-//=================================================================================================
-
 bool ShapeProcess_Context::GetBoolean(const char* param, bool& val) const
 {
   if (myRC.IsNull())
@@ -320,15 +290,11 @@ bool ShapeProcess_Context::GetBoolean(const char* param, bool& val) const
   return false;
 }
 
-//=================================================================================================
-
 double ShapeProcess_Context::RealVal(const char* param, const double def) const
 {
   double val;
   return GetReal(param, val) ? val : def;
 }
-
-//=================================================================================================
 
 bool ShapeProcess_Context::BooleanVal(const char* param, const bool def) const
 {
@@ -336,15 +302,11 @@ bool ShapeProcess_Context::BooleanVal(const char* param, const bool def) const
   return GetBoolean(param, val) ? val : def;
 }
 
-//=================================================================================================
-
 int ShapeProcess_Context::IntegerVal(const char* param, const int def) const
 {
   int val;
   return GetInteger(param, val) ? val : def;
 }
-
-//=================================================================================================
 
 const char* ShapeProcess_Context::StringVal(const char* param, const char* def) const
 {
@@ -367,8 +329,6 @@ const char* ShapeProcess_Context::StringVal(const char* param, const char* def) 
   return def;
 }
 
-//=================================================================================================
-
 void ShapeProcess_Context::SetMessenger(const occ::handle<Message_Messenger>& messenger)
 {
   if (messenger.IsNull())
@@ -377,21 +337,15 @@ void ShapeProcess_Context::SetMessenger(const occ::handle<Message_Messenger>& me
     myMessenger = messenger;
 }
 
-//=================================================================================================
-
 occ::handle<Message_Messenger> ShapeProcess_Context::Messenger() const
 {
   return myMessenger;
 }
 
-//=================================================================================================
-
 void ShapeProcess_Context::SetTraceLevel(const int tracelev)
 {
   myTraceLev = tracelev;
 }
-
-//=================================================================================================
 
 int ShapeProcess_Context::TraceLevel() const
 {

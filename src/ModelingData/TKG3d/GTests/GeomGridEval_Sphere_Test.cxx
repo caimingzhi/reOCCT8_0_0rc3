@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -38,27 +27,22 @@ namespace
   }
 } // namespace
 
-//==================================================================================================
-// Grid evaluation tests
-//==================================================================================================
-
 TEST(GeomGridEval_SphereTest, GridBasicEvaluation)
 {
-  // Sphere: Radius=5, Center(0,0,0), Z-axis
+
   occ::handle<Geom_SphericalSurface> aSphere =
     new Geom_SphericalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 5.0);
 
   GeomGridEval_Sphere anEval(aSphere);
   EXPECT_FALSE(anEval.Geometry().IsNull());
 
-  NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 9);       // Longitude
-  NCollection_Array1<double> aVParams = CreateUniformParams(-M_PI / 2, M_PI / 2, 7); // Latitude
+  NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 9);
+  NCollection_Array1<double> aVParams = CreateUniformParams(-M_PI / 2, M_PI / 2, 7);
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
   EXPECT_EQ(aGrid.RowLength(), 7);
   EXPECT_EQ(aGrid.ColLength(), 9);
 
-  // Verify points
   for (int iU = 1; iU <= 9; ++iU)
   {
     for (int iV = 1; iV <= 7; ++iV)
@@ -174,7 +158,6 @@ TEST(GeomGridEval_SphereTest, GridDerivativeDN)
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 5);
   NCollection_Array1<double> aVParams = CreateUniformParams(-M_PI / 2, M_PI / 2, 4);
 
-  // Test D4U (4th derivative in U)
   NCollection_Array2<gp_Vec> aD4U = anEval.EvaluateGridDN(aUParams, aVParams, 4, 0);
   for (int iU = 1; iU <= 5; ++iU)
   {
@@ -186,17 +169,12 @@ TEST(GeomGridEval_SphereTest, GridDerivativeDN)
   }
 }
 
-//==================================================================================================
-// Points evaluation tests
-//==================================================================================================
-
 TEST(GeomGridEval_SphereTest, PointsBasicEvaluation)
 {
   occ::handle<Geom_SphericalSurface> aSphere =
     new Geom_SphericalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 5.0);
   GeomGridEval_Sphere anEval(aSphere);
 
-  // Create arbitrary UV pairs
   NCollection_Array1<gp_Pnt2d> aUVPairs(1, 10);
   aUVPairs.SetValue(1, gp_Pnt2d(0.0, 0.0));
   aUVPairs.SetValue(2, gp_Pnt2d(M_PI / 4, M_PI / 6));
@@ -324,7 +302,6 @@ TEST(GeomGridEval_SphereTest, PointsDerivativeDN)
   aUVPairs.SetValue(4, gp_Pnt2d(M_PI, -M_PI / 6));
   aUVPairs.SetValue(5, gp_Pnt2d(3 * M_PI / 2, -M_PI / 4));
 
-  // Test D4U
   NCollection_Array1<gp_Vec> aD4U = anEval.EvaluatePointsDN(aUVPairs, 4, 0);
   for (int i = 1; i <= 5; ++i)
   {
@@ -333,7 +310,6 @@ TEST(GeomGridEval_SphereTest, PointsDerivativeDN)
     EXPECT_NEAR((aD4U.Value(i) - aExpected).Magnitude(), 0.0, THE_TOLERANCE);
   }
 
-  // Test mixed D2UV
   NCollection_Array1<gp_Vec> aD2UV = anEval.EvaluatePointsDN(aUVPairs, 2, 2);
   for (int i = 1; i <= 5; ++i)
   {
@@ -345,7 +321,7 @@ TEST(GeomGridEval_SphereTest, PointsDerivativeDN)
 
 TEST(GeomGridEval_SphereTest, PointsTransformedSphere)
 {
-  // Sphere with offset center and tilted axis
+
   gp_Ax3                             anAxis(gp_Pnt(5, 3, 2), gp_Dir(1, 1, 1));
   occ::handle<Geom_SphericalSurface> aSphere = new Geom_SphericalSurface(anAxis, 4.0);
   GeomGridEval_Sphere                anEval(aSphere);
@@ -368,29 +344,27 @@ TEST(GeomGridEval_SphereTest, PointsTransformedSphere)
 
 TEST(GeomGridEval_SphereTest, PointsAtPoles)
 {
-  // Test evaluation at sphere poles
+
   occ::handle<Geom_SphericalSurface> aSphere =
     new Geom_SphericalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 5.0);
   GeomGridEval_Sphere anEval(aSphere);
 
   NCollection_Array1<gp_Pnt2d> aUVPairs(1, 5);
-  // North pole at V = PI/2
+
   aUVPairs.SetValue(1, gp_Pnt2d(0.0, M_PI / 2));
   aUVPairs.SetValue(2, gp_Pnt2d(M_PI / 2, M_PI / 2));
   aUVPairs.SetValue(3, gp_Pnt2d(M_PI, M_PI / 2));
-  // South pole at V = -PI/2
+
   aUVPairs.SetValue(4, gp_Pnt2d(0.0, -M_PI / 2));
   aUVPairs.SetValue(5, gp_Pnt2d(M_PI, -M_PI / 2));
 
   NCollection_Array1<gp_Pnt> aPoints = anEval.EvaluatePoints(aUVPairs);
 
-  // All points at north pole should be at (0, 0, 5)
   for (int i = 1; i <= 3; ++i)
   {
     EXPECT_NEAR(aPoints.Value(i).Distance(gp_Pnt(0, 0, 5)), 0.0, THE_TOLERANCE);
   }
 
-  // All points at south pole should be at (0, 0, -5)
   for (int i = 4; i <= 5; ++i)
   {
     EXPECT_NEAR(aPoints.Value(i).Distance(gp_Pnt(0, 0, -5)), 0.0, THE_TOLERANCE);
@@ -399,20 +373,19 @@ TEST(GeomGridEval_SphereTest, PointsAtPoles)
 
 TEST(GeomGridEval_SphereTest, PointsOnEquator)
 {
-  // Test points on equator (V=0)
+
   occ::handle<Geom_SphericalSurface> aSphere =
     new Geom_SphericalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 5.0);
   GeomGridEval_Sphere anEval(aSphere);
 
   NCollection_Array1<gp_Pnt2d> aUVPairs(1, 4);
-  aUVPairs.SetValue(1, gp_Pnt2d(0.0, 0.0));          // (5, 0, 0)
-  aUVPairs.SetValue(2, gp_Pnt2d(M_PI / 2, 0.0));     // (0, 5, 0)
-  aUVPairs.SetValue(3, gp_Pnt2d(M_PI, 0.0));         // (-5, 0, 0)
-  aUVPairs.SetValue(4, gp_Pnt2d(3 * M_PI / 2, 0.0)); // (0, -5, 0)
+  aUVPairs.SetValue(1, gp_Pnt2d(0.0, 0.0));
+  aUVPairs.SetValue(2, gp_Pnt2d(M_PI / 2, 0.0));
+  aUVPairs.SetValue(3, gp_Pnt2d(M_PI, 0.0));
+  aUVPairs.SetValue(4, gp_Pnt2d(3 * M_PI / 2, 0.0));
 
   NCollection_Array1<gp_Pnt> aPoints = anEval.EvaluatePoints(aUVPairs);
 
-  // Points on equator should be at distance 5 from origin and Z=0
   for (int i = 1; i <= 4; ++i)
   {
     const gp_Pnt& aPnt = aPoints.Value(i);

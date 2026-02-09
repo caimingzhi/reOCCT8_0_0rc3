@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ElCLib.hpp>
 #include <GccAna_Circ2d2TanOn.hpp>
@@ -32,16 +20,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_Sequence.hpp>
 
-//=========================================================================
-//  Circles tangent to two circles C1 and C2 and centered on a straight line.   +
-//  We start by distinguishing various boundary cases that will be processed separately. +
-//  In the general case:                                                  +
-//  ====================                                                  +
-//  We calculate bissectrices to two circles that give us     +
-//  all possible locations of centers of all circles tangent to C1 and C2. + We intersect these
-//  bissectrices with straight line which gives us  + points among which we are going to find
-//  solutions.   + The choices are made basing on Qualifiers of C1 and C2.  +
-//=========================================================================
 GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
                                          const GccEnt_QualifiedCirc& Qualified2,
                                          const gp_Lin2d&             OnLine,
@@ -91,10 +69,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
   double d3    = dist1 - R1;
   double d4    = dist2 - R2;
 
-  //=========================================================================
-  //  Processing of boundary cases.                                           +
-  //=========================================================================
-
   if (std::abs(d3 - d4) < Tol
       && (Qualified1.IsEnclosed() || Qualified1.IsOutside() || Qualified1.IsUnqualified())
       && (Qualified2.IsEnclosed() || Qualified2.IsOutside() || Qualified2.IsUnqualified()))
@@ -137,7 +111,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
         {
           NbrSol++;
           cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius(i));
-          //        ==========================================================
+
           WellDone       = true;
           double distcc1 = Center.Distance(center1);
           double distcc2 = Center.Distance(center2);
@@ -187,10 +161,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
       }
     }
   }
-
-  //=========================================================================
-  //   General case.                                                       +
-  //=========================================================================
 
   if (!WellDone)
   {
@@ -306,7 +276,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
                 {
                   NbrSol++;
                   cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius(k));
-                  //                ==========================================================
+
                   double distcc1 = Center.Distance(center1);
                   double distcc2 = Center.Distance(center2);
                   if (!Qualified1.IsUnqualified())
@@ -377,8 +347,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
     }
   }
 }
-
-//========================================================================
 
 bool GccAna_Circ2d2TanOn::IsDone() const
 {

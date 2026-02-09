@@ -11,7 +11,6 @@ class StepGeom_Line;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for Line
 class RWStepGeom_RWLine
 {
 public:

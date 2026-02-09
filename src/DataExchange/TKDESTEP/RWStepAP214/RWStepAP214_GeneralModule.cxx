@@ -1,19 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//: k4 abv 30.11.98: TR9: warnings for BWV
-//: n5 abv 15 Feb 99: S4132 complex type bounded_curve + surface_curve
-//: j4 gka 16.03.99 S4134
 
 #include <Interface_Category.hpp>
 #include <Interface_Check.hpp>
@@ -988,139 +973,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_GeneralModule, StepData_GeneralModule)
 
-// #define DeclareAndCast(atype,result,start) \  NON car Name
-//  Handle(atype) result = Handle(atype)::DownCast (start)
-//  Removed from Rev2 to Rev4 :  <StepVisual_AnnotationCurveOccurrence.hpp>
-//  Removed from Rev2 to Rev4 :  <StepVisual_AnnotationFillArea.hpp>
-//  Removed from Rev2 to Rev4 :  <StepVisual_AnnotationFillAreaOccurrence.hpp>
-//  Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-//  Removed from Rev2 to Rev4 :  <StepVisual_AnnotationSubfigureOccurrence.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_AnnotationSymbol.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_AnnotationSymbolOccurrence.hxx>
-//  Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-//  Removed from Rev2 to Rev4 :  <StepAP214_AutoDesignViewArea.hxx>
-//  Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-//  Removed from Rev2 to Rev4 :  <StepVisual_CompositeTextWithAssociatedCurves.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_CompositeTextWithBlankingBox.hxx>
-//  Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-//  Removed from Rev2 to Rev4 :  <StepShape_CsgRepresentation.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_DefinedSymbol.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_DimensionCurve.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_DimensionCurveTerminator.hxx>
-//  Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-//  Removed from Rev2 to Rev4 :  <StepVisual_DraughtingCallout.hpp>
-//  Removed from Rev2 to Rev4 :  <StepVisual_DraughtingSubfigureRepresentation.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_DraughtingSymbolRepresentation.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_DraughtingTextLiteralWithDelineation.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_DrawingDefinition.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_DrawingRevision.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_ExternallyDefinedHatchStyle.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_ExternallyDefinedSymbol.hxx>
-//  Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-//  Removed from Rev2 to Rev4 :  <StepVisual_ExternallyDefinedTileStyle.hxx>
-//  Removed from Rev2 to Rev4 :  <StepShape_FaceBasedSurfaceModel.hpp>
-//  Removed from Rev2 to Rev4 :  <StepVisual_FillAreaStyleHatching.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_FillAreaStyleTileSymbolWithStyle.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_FillAreaStyleTiles.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_MechanicalDesignPresentationArea.hxx>
-//  Removed from Rev2 to Rev4 :  <StepShape_NonManifoldSurfaceShapeRepresentation.hpp>
-//  Removed from Rev2 to Rev4 :  <StepAP214_OneDirectionRepeatFactor.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_PreDefinedSymbol.hxx>
-//  Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-//  Removed from Rev2 to Rev4 :  <StepVisual_ProductDataRepresentationView.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_SymbolColour.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_SymbolRepresentation.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_SymbolRepresentationMap.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_SymbolStyle.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_SymbolTarget.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_TerminatorSymbol.hxx>
-//  Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-//  Removed from Rev2 to Rev4 :  <StepVisual_TextLiteralWithAssociatedCurves.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_TextLiteralWithBlankingBox.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_TextLiteralWithDelineation.hxx>
-//  Removed from Rev2 to Rev4 :  <StepVisual_TextLiteralWithExtent.hxx>
-//  Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-//  Removed from Rev2 to Rev4 :  <StepVisual_TextStyleWithMirror.hxx>
-//  Removed from Rev2 to Rev4 :  <StepAP214_TwoDirectionRepeatFactor.hxx>
-//  Added by FMA
-//  Added by CKY  for Rev4
-//  full Rev4
-//   Added by CKY (JUL-1998) for AP214 CC1 -> CC2
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWAnnotationCurveOccurrence.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWAnnotationFillArea.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWAnnotationFillAreaOccurrence.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWAnnotationOccurrence.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWAnnotationSubfigureOccurrence.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWAnnotationSymbol.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWAnnotationSymbolOccurrence.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWAnnotationText.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWAnnotationTextOccurrence.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepAP214_RWAutoDesignViewArea.hxx>
-//  Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWCompositeTextWithAssociatedCurves.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWCompositeTextWithBlankingBox.hxx>
-//  Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-//  Removed from Rev2 to Rev4 :  <RWStepShape_RWCsgRepresentation.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWDefinedSymbol.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWDimensionCurve.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWDimensionCurveTerminator.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWDraughtingAnnotationOccurrence.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWDraughtingCallout.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWDraughtingSubfigureRepresentation.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWDraughtingSymbolRepresentation.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWDraughtingTextLiteralWithDelineation.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWDrawingDefinition.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWDrawingRevision.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWExternallyDefinedHatchStyle.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWExternallyDefinedSymbol.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWExternallyDefinedTextFont.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWExternallyDefinedTileStyle.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepShape_RWFaceBasedSurfaceModel.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWFillAreaStyleHatching.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWFillAreaStyleTileSymbolWithStyle.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWFillAreaStyleTiles.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWMechanicalDesignPresentationArea.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepShape_RWNonManifoldSurfaceShapeRepresentation.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepAP214_RWOneDirectionRepeatFactor.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWPreDefinedSymbol.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWPreDefinedTextFont.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWProductDataRepresentationView.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWSymbolColour.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWSymbolRepresentation.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWSymbolRepresentationMap.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWSymbolStyle.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWSymbolTarget.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWTerminatorSymbol.hxx>
-//  Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWTextLiteralWithAssociatedCurves.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWTextLiteralWithBlankingBox.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWTextLiteralWithDelineation.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWTextLiteralWithExtent.hxx>
-//  Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-//  Removed from Rev2 to Rev4 :  <RWStepVisual_RWTextStyleWithMirror.hxx>
-//  Removed from Rev2 to Rev4 :  <RWStepAP214_RWTwoDirectionRepeatFactor.hxx>
-//  Added by FMA  for Rev4
-//  full Rev4
-//   Added by CKY (JUL-1998) for AP214 CC1 -> CC2
-// Added from CC2 to DIS :j4
-//  Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
-//  Added by ABV 10.11.99 for AP203
-//  Added by ABV 13.01.00 for CAX-IF TRJ3
-//  Added by ABV 18.04.00 for CAX-IF TRJ4 (dimensions)
-//  Added by ABV 10.05.00 for CAX-IF TRJ4 (external references)
-//  Added by CKY , 25 APR 2001 for Dimensional Tolerances (CAX-IF TRJ7)
-//  abv 28.12.01: CAX-IF TRJ9: edge_based_wireframe
-// Addef for AP209
-//  23.01.2003
-//  ptv 28.01.2003
-//   TR12J 04.06.2003 G&DT entities GKA
-//  added by skl 10.02.2004 for TRJ13
 #include <StepBasic_ConversionBasedUnitAndMassUnit.hpp>
 #include "../RWStepBasic/RWStepBasic_RWConversionBasedUnitAndMassUnit.hpp"
 #include <StepBasic_MassMeasureWithUnit.hpp>
 #include "../RWStepBasic/RWStepBasic_RWMassMeasureWithUnit.hpp"
 
-// Added by ika for GD&T AP242
 #include "../RWStepRepr/RWStepRepr_RWApex.hpp"
 #include "../RWStepRepr/RWStepRepr_RWCentreOfSymmetry.hpp"
 #include "../RWStepRepr/RWStepRepr_RWGeometricAlignment.hpp"
@@ -1231,7 +1088,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_GeneralModule, StepData_GeneralModule)
 #include <StepVisual_AnnotationCurveOccurrenceAndGeomReprItem.hpp>
 #include "../RWStepVisual/RWStepVisual_RWAnnotationCurveOccurrenceAndGeomReprItem.hpp"
 
-// Added for kinematics implementation
 #include "../RWStepKinematics/RWStepKinematics_RWActuatedKinPairAndOrderKinPair.hpp"
 #include "../RWStepKinematics/RWStepKinematics_RWActuatedKinematicPair.hpp"
 #include "../RWStepKinematics/RWStepKinematics_RWContextDependentKinematicLinkRepresentation.hpp"
@@ -1405,8 +1261,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_GeneralModule, StepData_GeneralModule)
 
 static int catsh, catdr, catstr, catdsc, cataux;
 
-//=================================================================================================
-
 RWStepAP214_GeneralModule::RWStepAP214_GeneralModule()
 {
   Interface_Category::Init();
@@ -1416,35 +1270,6 @@ RWStepAP214_GeneralModule::RWStepAP214_GeneralModule()
   catdsc = Interface_Category::Number("Description");
   cataux = Interface_Category::Number("Auxiliary");
 }
-
-//=================================================================================================
-
-/*
-void RWStepAP214_GeneralModule::FillShared (const occ::handle<Interface_InterfaceModel>& model,
-                                            const int CN,
-                                            const occ::handle<Standard_Transient>& ent,
-                                            Interface_EntityIterator& iter) const
-{
-  switch (CN) {
-  case 261 : {
-    DeclareAndCast(StepShape_ShapeDefinitionRepresentation,anent,ent);
-    RWStepShape_RWShapeDefinitionRepresentation tool;
-    tool.Share(model,anent,iter);
-  }
-    break;
-  case 391 : {
-    DeclareAndCast(StepShape_ContextDependentShapeRepresentation,anent,ent);
-    RWStepShape_RWContextDependentShapeRepresentation tool;
-    tool.Share(model,anent,iter);
-  }
-    break;
-    default : FillSharedCase (CN,ent,iter);  // all other cases
-    break;
-  }
-}
-*/
-
-//=================================================================================================
 
 void RWStepAP214_GeneralModule::FillSharedCase(const int                              CN,
                                                const occ::handle<Standard_Transient>& ent,
@@ -3058,10 +2883,6 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
     }
     break;
 
-      // ------------
-      // Added by FMA
-      // ------------
-
     case 333:
     {
       DeclareAndCast(StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx, anent, ent);
@@ -3107,10 +2928,6 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
     }
     break;
 
-      // ------------
-      // Added by CKY
-      // ------------
-
     case 340:
     {
       DeclareAndCast(StepBasic_ProductDefinitionContext, anent, ent);
@@ -3119,11 +2936,7 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
     }
     break;
 
-      // -----------
-      // Added for Rev4
-      // -----------
-
-    case 341: // TimeMeasureWithUnit
+    case 341:
     {
       DeclareAndCast(StepBasic_MeasureWithUnit, anent, ent);
       RWStepBasic_RWMeasureWithUnit tool;
@@ -3132,22 +2945,22 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
     break;
 
     case 342:
-    case 343: // RatioUnit, TimeUnit
+    case 343:
     {
       DeclareAndCast(StepBasic_NamedUnit, anent, ent);
       RWStepBasic_RWNamedUnit tool;
       tool.Share(anent, iter);
     }
     break;
-      //  343 a 347 : no Shared
-    case 348: // ApprovalDateTime
+
+    case 348:
     {
       DeclareAndCast(StepBasic_ApprovalDateTime, anent, ent);
       RWStepBasic_RWApprovalDateTime tool;
       tool.Share(anent, iter);
     }
     break;
-    case 349: // CameraImage 2d and 3d
+    case 349:
     case 350:
     {
       DeclareAndCast(StepVisual_CameraImage, anent, ent);
@@ -3197,7 +3010,7 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
       tool.Share(anent, iter);
     }
     break;
-    //: n5 abv 15 Feb 99: S4132 complex type bounded_curve + surface_curve
+
     case 358:
     {
       DeclareAndCast(StepGeom_SurfaceCurveAndBoundedCurve, anent, ent);
@@ -3206,7 +3019,6 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
     }
     break;
 
-      //  AP214 : CC1 -> CC2
     case 366:
     {
       DeclareAndCast(StepAP214_AutoDesignDocumentReference, anent, ent);
@@ -3376,7 +3188,6 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
     }
     break;
 
-    //: S4134: Added from CD to DIS
     case 392:
     {
       DeclareAndCast(StepAP214_AppliedDateAndTimeAssignment, anent, ent);
@@ -3449,9 +3260,6 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
     break;
     case 402:
     {
-      //	DeclareAndCast(StepBasic_CharacterizedObject,anent,ent);
-      //	RWStepBasic_RWCharacterizedObject tool;
-      //	tool.Share (anent,iter);
     }
     break;
     case 403:
@@ -3477,7 +3285,6 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
     }
     break;
 
-    // Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
     case 406:
     {
       DeclareAndCast(StepRepr_MeasureRepresentationItem, anent, ent);
@@ -3514,7 +3321,6 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
     }
     break;
 
-    // Added by ABV 10.11.99 for AP203
     case 413:
     {
       DeclareAndCast(StepBasic_Action, anent, ent);
@@ -3720,7 +3526,6 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
     }
     break;
 
-      // Added by ABV 18.04.00 for CAX-IF TRJ4
     case 442:
     {
       DeclareAndCast(StepShape_AngularLocation, anent, ent);
@@ -3778,7 +3583,6 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
     }
     break;
 
-      // Added by ABV 10.05.00 for CAX-IF TRJ4 (external references)
     case 450:
     {
       DeclareAndCast(StepBasic_DocumentRepresentationType, anent, ent);
@@ -3879,7 +3683,6 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
     }
     break;
 
-      // Added by CKY 25 APR 2001 for CAX-IF TRJ7 (dimensional tolerances)
     case 470:
     {
       DeclareAndCast(StepRepr_CompositeShapeAspect, anent, ent);
@@ -3894,21 +3697,21 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
       tool.Share(anent, iter);
     }
     break;
-    case 472: // same as ShapeAspect
+    case 472:
     {
       DeclareAndCast(StepRepr_Extension, anent, ent);
       RWStepRepr_RWExtension tool;
       tool.Share(anent, iter);
     }
     break;
-    case 473: // same as DimensionalLocation
+    case 473:
     {
       DeclareAndCast(StepShape_DirectedDimensionalLocation, anent, ent);
       RWStepShape_RWDimensionalLocation tool;
       tool.Share(anent, iter);
     }
     break;
-      // cases 474, 478, 479 : no shared entities
+
     case 475:
     {
       DeclareAndCast(StepShape_ToleranceValue, anent, ent);
@@ -3952,7 +3755,7 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
       tool.Share(anent, iter);
     }
     break;
-    case 484: // same as ShapeAspectRelationship
+    case 484:
     {
       DeclareAndCast(StepRepr_ShapeAspectRelationship, anent, ent);
       RWStepRepr_RWShapeAspectRelationship tool;
@@ -3960,7 +3763,6 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
     }
     break;
 
-    // abv 28.12.01
     case 485:
     {
       DeclareAndCast(StepShape_CompoundShapeRepresentation, anent, ent);
@@ -4010,7 +3812,7 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
       tool.Share(anent, iter);
     }
     break;
-    // gka 0.8.01.02 TRJ9
+
     case 492:
     {
       DeclareAndCast(StepGeom_OrientedSurface, anent, ent);
@@ -4207,13 +4009,7 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
       tool.Share(anent, iter);
     }
     break;
-      // case 523:
-      //     {
-      //       DeclareAndCast(StepFEA_CurveElementEndCoordinateSystem,anent,ent);
-      //       RWStepFEA_RWCurveElementEndCoordinateSystem tool;
-      //       tool.Share(anent,iter);
-      //     }
-      //     break;
+
     case 524:
     {
       DeclareAndCast(StepFEA_CurveElementEndOffset, anent, ent);
@@ -4473,27 +4269,7 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
       tool.Share(anent, iter);
     }
     break;
-      // case 561:
-      //     {
-      //       DeclareAndCast(StepFEA_SymmetricTensor22d,anent,ent);
-      //       RWStepFEA_RWSymmetricTensor22d tool;
-      //       tool.Share(anent,iter);
-      //     }
-      //     break;
-      // case 562:
-      //     {
-      //       DeclareAndCast(StepFEA_SymmetricTensor42d,anent,ent);
-      //       RWStepFEA_RWSymmetricTensor42d tool;
-      //       tool.Share(anent,iter);
-      //     }
-      //     break;
-      // case 563:
-      //     {
-      //       DeclareAndCast(StepFEA_SymmetricTensor43d,anent,ent);
-      //       RWStepFEA_RWSymmetricTensor43d tool;
-      //       tool.Share(anent,iter);
-      //     }
-      //     break;
+
     case 564:
     {
       DeclareAndCast(StepFEA_Volume3dElementRepresentation, anent, ent);
@@ -4564,13 +4340,7 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
       tool.Share(anent, iter);
     }
     break;
-      // case 574:
-      //     {
-      //       DeclareAndCast(StepFEA_FeaModelDefinition,anent,ent);
-      //       RWStepFEA_RWFeaModelDefinition tool;
-      //       tool.Share(anent,iter);
-      //     }
-      //     break;
+
     case 575:
     {
       DeclareAndCast(StepFEA_NodeDefinition, anent, ent);
@@ -4642,7 +4412,6 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
     }
     break;
 
-      //  TR12J 04.06.2003 G&DT entities GKA
     case 609:
     {
       DeclareAndCast(StepDimTol_CylindricityTolerance, anent, ent);
@@ -4996,7 +4765,7 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
       tool.Share(anent, iter);
     }
     break;
-    // case 681: no shared attributes
+
     case 682:
     {
       DeclareAndCast(StepDimTol_ToleranceZone, anent, ent);
@@ -5011,8 +4780,7 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
       tool.Share(anent, iter);
     }
     break;
-    // case 684: no shared attributes
-    // case 685: no shared attributes
+
     case 686:
     {
       DeclareAndCast(StepDimTol_DatumReferenceCompartment, anent, ent);
@@ -5027,7 +4795,7 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
       tool.Share(anent, iter);
     }
     break;
-    // case 688: no shared attributes
+
     case 689:
     {
       DeclareAndCast(StepDimTol_DatumSystem, anent, ent);
@@ -5922,8 +5690,6 @@ void RWStepAP214_GeneralModule::FillSharedCase(const int                        
   }
 }
 
-//=================================================================================================
-
 void RWStepAP214_GeneralModule::CheckCase(const int                              CN,
                                           const occ::handle<Standard_Transient>& ent,
                                           const Interface_ShareTool&             shares,
@@ -5980,13 +5746,7 @@ void RWStepAP214_GeneralModule::CheckCase(const int                             
       tool.Check(anent, shares, ach);
       break;
     }
-      //    case 131:
-      //      {
-      //	DeclareAndCast(StepShape_FaceBound,anent,ent);
-      //	RWStepShape_RWFaceBound tool;
-      //	tool.Check(anent,shares,ach);
-      //	break;
-      //      }
+
     case 239:
     {
       DeclareAndCast(StepGeom_RationalBSplineCurve, anent, ent);
@@ -6034,18 +5794,12 @@ void RWStepAP214_GeneralModule::CheckCase(const int                             
   }
 }
 
-//=================================================================================================
-
-void RWStepAP214_GeneralModule::CopyCase(const int /*CN*/,
-                                         const occ::handle<Standard_Transient>& /*entfrom*/,
-                                         const occ::handle<Standard_Transient>& /*entto*/,
-                                         Interface_CopyTool& /*TC*/) const
+void RWStepAP214_GeneralModule::CopyCase(const int,
+                                         const occ::handle<Standard_Transient>&,
+                                         const occ::handle<Standard_Transient>&,
+                                         Interface_CopyTool&) const
 {
 }
-
-// --- Construction of empty classe ---
-
-//=================================================================================================
 
 bool RWStepAP214_GeneralModule::NewVoid(const int CN, occ::handle<Standard_Transient>& ent) const
 {
@@ -6909,10 +6663,6 @@ bool RWStepAP214_GeneralModule::NewVoid(const int CN, occ::handle<Standard_Trans
       ent = new StepShape_LoopAndPath;
       break;
 
-      // ------------
-      // Added by FMA
-      // ------------
-
     case 333:
       ent = new StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx;
       break;
@@ -6935,17 +6685,9 @@ bool RWStepAP214_GeneralModule::NewVoid(const int CN, occ::handle<Standard_Trans
       ent = new StepBasic_MechanicalContext;
       break;
 
-      // ------------
-      // Added by CKY
-      // ------------
-
     case 340:
       ent = new StepBasic_DesignContext;
       break;
-
-      // ------------
-      // Added for Rev4
-      // ------------
 
     case 341:
       ent = new StepBasic_TimeMeasureWithUnit;
@@ -6995,14 +6737,13 @@ bool RWStepAP214_GeneralModule::NewVoid(const int CN, occ::handle<Standard_Trans
     case 356:
       ent = new StepVisual_PresentationLayerUsage;
       break;
-    case 357: // LECTURE SEULEMENT, origine CATIA. CKY 2-SEP-1997
+    case 357:
       ent = new StepBasic_UncertaintyMeasureWithUnit;
       break;
-    case 358: //: n5
+    case 358:
       ent = new StepGeom_SurfaceCurveAndBoundedCurve;
       break;
 
-      //  Added CKY : AP214 CC1 -> CC2
     case 366:
       ent = new StepAP214_AutoDesignDocumentReference;
       break;
@@ -7085,7 +6826,6 @@ bool RWStepAP214_GeneralModule::NewVoid(const int CN, occ::handle<Standard_Trans
       ent = new StepShape_ContextDependentShapeRepresentation;
       break;
 
-    //: S4134: Added from CD to DIS
     case 392:
       ent = new StepAP214_AppliedDateAndTimeAssignment;
       break;
@@ -7149,7 +6889,7 @@ bool RWStepAP214_GeneralModule::NewVoid(const int CN, occ::handle<Standard_Trans
     case 412:
       ent = new StepBasic_ConversionBasedUnitAndVolumeUnit;
       break;
-    // Added by ABV 10.11.99 for AP203
+
     case 413:
       ent = new StepBasic_Action;
       break;
@@ -7303,7 +7043,7 @@ bool RWStepAP214_GeneralModule::NewVoid(const int CN, occ::handle<Standard_Trans
     case 463:
       ent = new StepShape_DefinitionalRepresentationAndShapeRepresentation;
       break;
-      //  added by CKY, 25 APR 2001
+
     case 470:
       ent = new StepRepr_CompositeShapeAspect;
       break;
@@ -7371,7 +7111,7 @@ bool RWStepAP214_GeneralModule::NewVoid(const int CN, occ::handle<Standard_Trans
     case 491:
       ent = new StepShape_NonManifoldSurfaceShapeRepresentation;
       break;
-      // Add gka 08.01.02 TRJ9 DIS->IS
+
     case 492:
       ent = new StepGeom_OrientedSurface;
       break;
@@ -7459,9 +7199,7 @@ bool RWStepAP214_GeneralModule::NewVoid(const int CN, occ::handle<Standard_Trans
     case 522:
       ent = new StepFEA_Node;
       break;
-      // case 523:
-      //     ent = new StepFEA_CurveElementEndCoordinateSystem;
-      //     break;
+
     case 524:
       ent = new StepFEA_CurveElementEndOffset;
       break;
@@ -7573,15 +7311,7 @@ bool RWStepAP214_GeneralModule::NewVoid(const int CN, occ::handle<Standard_Trans
     case 560:
       ent = new StepFEA_Surface3dElementRepresentation;
       break;
-      // case 561:
-      //     ent = new StepFEA_SymmetricTensor22d;
-      //     break;
-      // case 562:
-      //     ent = new StepFEA_SymmetricTensor42d;
-      //     break;
-      // case 563:
-      //     ent = new StepFEA_SymmetricTensor43d;
-      //     break;
+
     case 564:
       ent = new StepFEA_Volume3dElementRepresentation;
       break;
@@ -8245,11 +7975,9 @@ bool RWStepAP214_GeneralModule::NewVoid(const int CN, occ::handle<Standard_Trans
   return true;
 }
 
-//=================================================================================================
-
 int RWStepAP214_GeneralModule::CategoryNumber(const int CN,
-                                              const occ::handle<Standard_Transient>& /*ent*/,
-                                              const Interface_ShareTool& /*shares*/) const
+                                              const occ::handle<Standard_Transient>&,
+                                              const Interface_ShareTool&) const
 {
   switch (CN)
   {
@@ -8596,7 +8324,7 @@ int RWStepAP214_GeneralModule::CategoryNumber(const int CN,
     case 260:
       return catdr;
     case 261:
-      return catsh; // plutot que dsc
+      return catsh;
     case 262:
     case 263:
       return catsh;
@@ -8726,8 +8454,8 @@ int RWStepAP214_GeneralModule::CategoryNumber(const int CN,
     case 357:
       return cataux;
     case 358:
-      return catsh; //: n5
-      //  CC1 -> CC2
+      return catsh;
+
     case 366:
     case 367:
     case 368:
@@ -8759,7 +8487,7 @@ int RWStepAP214_GeneralModule::CategoryNumber(const int CN,
       return cataux;
     case 391:
       return catsh;
-    // CD -> DIS
+
     case 392:
     case 393:
     case 394:
@@ -8776,7 +8504,7 @@ int RWStepAP214_GeneralModule::CategoryNumber(const int CN,
     case 404:
     case 405:
       return catsh;
-    // CAX TRJ 2
+
     case 406:
     case 407:
     case 408:
@@ -8785,7 +8513,7 @@ int RWStepAP214_GeneralModule::CategoryNumber(const int CN,
     case 411:
     case 412:
       return cataux;
-    // AP203
+
     case 413:
     case 414:
     case 415:
@@ -8824,7 +8552,7 @@ int RWStepAP214_GeneralModule::CategoryNumber(const int CN,
     case 447:
     case 448:
     case 449:
-      return catdsc; // ??
+      return catdsc;
     case 450:
     case 451:
     case 452:
@@ -8838,9 +8566,9 @@ int RWStepAP214_GeneralModule::CategoryNumber(const int CN,
     case 460:
     case 461:
     case 462:
-      return catdsc; // ??
+      return catdsc;
     case 463:
-      return catdr; // same as 98
+      return catdr;
     case 471:
     case 472:
     case 473:
@@ -9177,15 +8905,12 @@ int RWStepAP214_GeneralModule::CategoryNumber(const int CN,
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> RWStepAP214_GeneralModule::Name(
-  const int /*CN*/,
-  const occ::handle<Standard_Transient>& /*ent*/,
+  const int,
+  const occ::handle<Standard_Transient>&,
   const Interface_ShareTool&) const
 {
-  //   On joue par down-cast et non par CN, car Name est en general heritee
-  //   (on pourrait filtrer par CN pour decider quel down-cast faire ...)
+
   occ::handle<TCollection_HAsciiString> nom;
   return nom;
 }

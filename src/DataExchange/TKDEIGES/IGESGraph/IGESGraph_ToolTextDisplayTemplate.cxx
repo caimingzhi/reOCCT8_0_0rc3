@@ -24,7 +24,6 @@ void IGESGraph_ToolTextDisplayTemplate::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&       IR,
   IGESData_ParamReader&                             PR) const
 {
-  // bool              st; //szv#4:S4163:12Mar99 not needed
 
   double                             boxWidth;
   double                             boxHeight;
@@ -36,20 +35,16 @@ void IGESGraph_ToolTextDisplayTemplate::ReadOwnParams(
   int                                rotateFlag;
   gp_XYZ                             corner;
 
-  // Reading boxWidth(Real)
-  // clang-format off
-  PR.ReadReal(PR.Current(), "Character box width", boxWidth); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Character box width", boxWidth);
 
-  // Reading boxHeight(Real)
-  PR.ReadReal(PR.Current(), "Character box height", boxHeight); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadReal(PR.Current(), "Character box height", boxHeight);
 
   int curnum = PR.CurrentNumber();
   if (PR.DefinedElseSkip())
   {
-    // Reading fontCode(Integer, must be positive)
-    PR.ReadInteger(PR.Current(), "Font Code", fontCode); // szv#4:S4163:12Mar99 `st=` not needed
-    // Reading fontEnt(TextFontDef) ?
+
+    PR.ReadInteger(PR.Current(), "Font Code", fontCode);
+
     if (fontCode < 0)
     {
       fontEnt = GetCasted(IGESGraph_TextFontDef, PR.ParamEntity(IR, curnum));
@@ -58,29 +53,21 @@ void IGESGraph_ToolTextDisplayTemplate::ReadOwnParams(
     }
   }
   else
-    fontCode = 1; // Default Value
+    fontCode = 1;
 
   if (PR.DefinedElseSkip())
-    // Reading slantAngle(Real)
-    PR.ReadReal(PR.Current(), "Slant Angle", slantAngle); // szv#4:S4163:12Mar99 `st=` not needed
+
+    PR.ReadReal(PR.Current(), "Slant Angle", slantAngle);
   else
-    slantAngle = M_PI / 2.0; // Default Value
+    slantAngle = M_PI / 2.0;
 
-  // Reading rotationAngle(Real)
-  // clang-format off
-  PR.ReadReal (PR.Current(), "Rotation Angle", rotationAngle); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadReal(PR.Current(), "Rotation Angle", rotationAngle);
 
-  // Reading mirrorFlag(Integer)
-  PR.ReadInteger(PR.Current(), "Mirror Flag", mirrorFlag); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "Mirror Flag", mirrorFlag);
 
-  // Reading rotateFlag(Integer)
-  PR.ReadInteger(PR.Current(), "Rotate Flag", rotateFlag); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "Rotate Flag", rotateFlag);
 
-  // Reading corner(XYZ)
-  PR.ReadXYZ(PR.CurrentList(1, 3),
-             "Lower left coordinates/Increments",
-             corner); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadXYZ(PR.CurrentList(1, 3), "Lower left coordinates/Increments", corner);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(boxWidth,
@@ -102,7 +89,7 @@ void IGESGraph_ToolTextDisplayTemplate::WriteOwnParams(
   IW.Send(ent->BoxHeight());
 
   if (ent->IsFontEntity())
-    IW.Send(ent->FontEntity(), true); // negative
+    IW.Send(ent->FontEntity(), true);
   else
     IW.Send(ent->FontCode());
 
@@ -164,7 +151,7 @@ void IGESGraph_ToolTextDisplayTemplate::OwnCopy(
 }
 
 IGESData_DirChecker IGESGraph_ToolTextDisplayTemplate::DirChecker(
-  const occ::handle<IGESGraph_TextDisplayTemplate>& /*ent*/) const
+  const occ::handle<IGESGraph_TextDisplayTemplate>&) const
 {
   IGESData_DirChecker DC(312, 0, 1);
   DC.Structure(IGESData_DefVoid);
@@ -177,10 +164,9 @@ IGESData_DirChecker IGESGraph_ToolTextDisplayTemplate::DirChecker(
   return DC;
 }
 
-void IGESGraph_ToolTextDisplayTemplate::OwnCheck(
-  const occ::handle<IGESGraph_TextDisplayTemplate>& /*ent*/,
-  const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /*ach*/) const
+void IGESGraph_ToolTextDisplayTemplate::OwnCheck(const occ::handle<IGESGraph_TextDisplayTemplate>&,
+                                                 const Interface_ShareTool&,
+                                                 occ::handle<Interface_Check>&) const
 {
 }
 

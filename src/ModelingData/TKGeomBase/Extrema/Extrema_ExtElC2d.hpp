@@ -12,9 +12,6 @@ class gp_Elips2d;
 class gp_Hypr2d;
 class gp_Parab2d;
 
-//! It calculates all the distance between two elementary
-//! curves.
-//! These distances can be maximum or minimum.
 class Extrema_ExtElC2d
 {
 public:
@@ -22,57 +19,32 @@ public:
 
   Standard_EXPORT Extrema_ExtElC2d();
 
-  //! Calculates the distance between two lines.
-  //! AngTol is used to test if the lines are parallel:
-  //! Angle(C1,C2) < AngTol.
   Standard_EXPORT Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Lin2d& C2, const double AngTol);
 
-  //! Calculates the distance between a line and a
-  //! circle.
   Standard_EXPORT Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Circ2d& C2, const double Tol);
 
-  //! Calculates the distance between a line and an
-  //! ellipse.
   Standard_EXPORT Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Elips2d& C2);
 
-  //! Calculates the distance between a line and a
-  //! hyperbola.
   Standard_EXPORT Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Hypr2d& C2);
 
-  //! Calculates the distance between a line and a
-  //! parabola.
   Standard_EXPORT Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Parab2d& C2);
 
-  //! Calculates the distance between two circles.
-  //! The circles can be parallel or identical.
   Standard_EXPORT Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Circ2d& C2);
 
-  //! Calculates the distance between a circle and an
-  //! ellipse.
   Standard_EXPORT Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Elips2d& C2);
 
-  //! Calculates the distance between a circle and a
-  //! hyperbola.
   Standard_EXPORT Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Hypr2d& C2);
 
-  //! Calculates the distance between a circle and a
-  //! parabola.
   Standard_EXPORT Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Parab2d& C2);
 
-  //! Returns True if the distances are found.
   Standard_EXPORT bool IsDone() const;
 
-  //! Returns True if the two curves are parallel.
   Standard_EXPORT bool IsParallel() const;
 
-  //! Returns the number of extremum distances.
   Standard_EXPORT int NbExt() const;
 
-  //! Returns the value of the Nth extremum square distance.
   Standard_EXPORT double SquareDistance(const int N = 1) const;
 
-  //! Returns the points of the Nth extremum distance.
-  //! P1 is on the first curve, P2 on the second one.
   Standard_EXPORT void Points(const int N, Extrema_POnCurv2d& P1, Extrema_POnCurv2d& P2) const;
 
 private:

@@ -3,6 +3,4 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_DummyNode, StepFEA_NodeRepresentation)
 
-//=================================================================================================
-
 StepFEA_DummyNode::StepFEA_DummyNode() = default;

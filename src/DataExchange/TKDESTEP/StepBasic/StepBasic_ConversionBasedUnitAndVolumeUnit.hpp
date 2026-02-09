@@ -10,7 +10,6 @@ class StepBasic_ConversionBasedUnitAndVolumeUnit : public StepBasic_ConversionBa
 {
 
 public:
-  //! Returns a ConversionBasedUnitAndVolumeUnit
   Standard_EXPORT StepBasic_ConversionBasedUnitAndVolumeUnit();
 
   Standard_EXPORT void SetVolumeUnit(const occ::handle<StepBasic_VolumeUnit>& aVolumeUnit);

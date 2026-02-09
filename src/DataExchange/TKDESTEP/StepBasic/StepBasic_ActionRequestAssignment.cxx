@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ActionRequestAssignment, Standard_Transient)
 
-//=================================================================================================
-
 StepBasic_ActionRequestAssignment::StepBasic_ActionRequestAssignment() = default;
-
-//=================================================================================================
 
 void StepBasic_ActionRequestAssignment::Init(
   const occ::handle<StepBasic_VersionedActionRequest>& aAssignedActionRequest)
@@ -17,15 +13,11 @@ void StepBasic_ActionRequestAssignment::Init(
   theAssignedActionRequest = aAssignedActionRequest;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_VersionedActionRequest> StepBasic_ActionRequestAssignment::
   AssignedActionRequest() const
 {
   return theAssignedActionRequest;
 }
-
-//=================================================================================================
 
 void StepBasic_ActionRequestAssignment::SetAssignedActionRequest(
   const occ::handle<StepBasic_VersionedActionRequest>& aAssignedActionRequest)

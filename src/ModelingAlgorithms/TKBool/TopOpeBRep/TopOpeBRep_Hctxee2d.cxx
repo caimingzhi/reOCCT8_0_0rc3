@@ -22,11 +22,7 @@ IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRep_Hctxee2d, Standard_Transient)
 Standard_EXPORT bool TopOpeBRep_GettracePROEDG();
 #endif
 
-//=================================================================================================
-
 TopOpeBRep_Hctxee2d::TopOpeBRep_Hctxee2d() = default;
-
-//=================================================================================================
 
 void TopOpeBRep_Hctxee2d::SetEdges(const TopoDS_Edge&         E1,
                                    const TopoDS_Edge&         E2,
@@ -96,7 +92,7 @@ void TopOpeBRep_Hctxee2d::SetEdges(const TopoDS_Edge&         E1,
     occ::handle<Geom_Curve>   NC;
     bool                      dgE2 = BRep_Tool::Degenerated(myEdge2);
     if (dgE2)
-    { // xpu210998 : cto900Q3
+    {
       TopExp_Explorer      exv(myEdge2, TopAbs_VERTEX);
       const TopoDS_Vertex& v2  = TopoDS::Vertex(exv.Current());
       gp_Pnt               pt2 = BRep_Tool::Pnt(v2);
@@ -104,7 +100,7 @@ void TopOpeBRep_Hctxee2d::SetEdges(const TopoDS_Edge&         E1,
       double               d;
       bool                 ok = FUN_tool_projPonF(pt2, F1, uv2, d);
       if (!ok)
-        return; // nyiRaise
+        return;
       occ::handle<Geom_Surface> aS1  = BRep_Tool::Surface(F1);
       bool                      apex = FUN_tool_onapex(uv2, aS1);
       if (apex)
@@ -134,11 +130,11 @@ void TopOpeBRep_Hctxee2d::SetEdges(const TopoDS_Edge&         E1,
       }
       else
       {
-      } // NYIxpu210998
-    } // dgE2
+      }
+    }
     else
     {
-      // project curve of edge 2 on surface of face 1
+
       TopLoc_Location         loc;
       occ::handle<Geom_Curve> C = BRep_Tool::Curve(myEdge2, loc, first, last);
       NC                        = occ::down_cast<Geom_Curve>(C->Transformed(loc.Transformation()));
@@ -169,10 +165,7 @@ void TopOpeBRep_Hctxee2d::SetEdges(const TopoDS_Edge&         E1,
 #endif
     }
   }
-
-} // SetEdges
-
-//=================================================================================================
+}
 
 const TopoDS_Shape& TopOpeBRep_Hctxee2d::Edge(const int Index) const
 {
@@ -184,8 +177,6 @@ const TopoDS_Shape& TopOpeBRep_Hctxee2d::Edge(const int Index) const
     throw Standard_Failure("TopOpeBRep_Hctxee2d::Edge");
 }
 
-//=================================================================================================
-
 const Geom2dAdaptor_Curve& TopOpeBRep_Hctxee2d::Curve(const int Index) const
 {
   if (Index == 1)
@@ -195,8 +186,6 @@ const Geom2dAdaptor_Curve& TopOpeBRep_Hctxee2d::Curve(const int Index) const
   else
     throw Standard_Failure("TopOpeBRep_Hctxee2d::Curve");
 }
-
-//=================================================================================================
 
 const IntRes2d_Domain& TopOpeBRep_Hctxee2d::Domain(const int Index) const
 {

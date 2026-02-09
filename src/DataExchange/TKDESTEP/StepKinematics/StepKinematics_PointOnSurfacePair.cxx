@@ -1,14 +1,10 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_PointOnSurfacePair.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_PointOnSurfacePair, StepKinematics_HighOrderKinematicPair)
 
-//=================================================================================================
-
 StepKinematics_PointOnSurfacePair::StepKinematics_PointOnSurfacePair() = default;
-
-//=================================================================================================
 
 void StepKinematics_PointOnSurfacePair::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -31,14 +27,10 @@ void StepKinematics_PointOnSurfacePair::Init(
   myPairSurface = thePairSurface;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_Surface> StepKinematics_PointOnSurfacePair::PairSurface() const
 {
   return myPairSurface;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnSurfacePair::SetPairSurface(
   const occ::handle<StepGeom_Surface>& thePairSurface)

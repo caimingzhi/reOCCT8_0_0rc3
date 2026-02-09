@@ -18,25 +18,22 @@
 IGESDefs_ToolMacroDef::IGESDefs_ToolMacroDef() = default;
 
 void IGESDefs_ToolMacroDef::ReadOwnParams(const occ::handle<IGESDefs_MacroDef>& ent,
-                                          const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                          const occ::handle<IGESData_IGESReaderData>&,
                                           IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   occ::handle<TCollection_HAsciiString>                                   macro;
   int                                                                     entityTypeID;
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> langStatements;
   occ::handle<TCollection_HAsciiString>                                   endMacro;
 
-  PR.ReadText(PR.Current(), "MACRO", macro); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadText(PR.Current(), "MACRO", macro);
 
-  // clang-format off
-  PR.ReadInteger(PR.Current(), "Entity Type ID", entityTypeID); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadInteger(PR.Current(), "Entity Type ID", entityTypeID);
 
   int tempCurrent = PR.CurrentNumber();
-  // Counting the no. of language statements.
-  int nbval; // svv Jan 10 2000 : porting on DEC
+
+  int nbval;
   for (nbval = 0; PR.CurrentNumber() != PR.NbParams();
        nbval++, PR.SetCurrentNumber(PR.CurrentNumber() + 1))
     ;
@@ -52,14 +49,13 @@ void IGESDefs_ToolMacroDef::ReadOwnParams(const occ::handle<IGESDefs_MacroDef>& 
     for (int i = 1; i <= nbval; i++)
     {
       occ::handle<TCollection_HAsciiString> langStat;
-      // st = PR.ReadText(PR.Current(), "Language Statement", langStat); //szv#4:S4163:12Mar99 moved
-      // in if
+
       if (PR.ReadText(PR.Current(), "Language Statement", langStat))
         langStatements->SetValue(i, langStat);
     }
   }
 
-  PR.ReadText(PR.Current(), "END MACRO", endMacro); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadText(PR.Current(), "END MACRO", endMacro);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(macro, entityTypeID, langStatements, endMacro);
@@ -76,14 +72,14 @@ void IGESDefs_ToolMacroDef::WriteOwnParams(const occ::handle<IGESDefs_MacroDef>&
   IW.Send(ent->ENDMACRO());
 }
 
-void IGESDefs_ToolMacroDef::OwnShared(const occ::handle<IGESDefs_MacroDef>& /* ent */,
-                                      Interface_EntityIterator& /* iter */) const
+void IGESDefs_ToolMacroDef::OwnShared(const occ::handle<IGESDefs_MacroDef>&,
+                                      Interface_EntityIterator&) const
 {
 }
 
 void IGESDefs_ToolMacroDef::OwnCopy(const occ::handle<IGESDefs_MacroDef>& another,
                                     const occ::handle<IGESDefs_MacroDef>& ent,
-                                    Interface_CopyTool& /* TC */) const
+                                    Interface_CopyTool&) const
 {
 
   occ::handle<TCollection_HAsciiString> macro = new TCollection_HAsciiString(another->MACRO());
@@ -103,8 +99,7 @@ void IGESDefs_ToolMacroDef::OwnCopy(const occ::handle<IGESDefs_MacroDef>& anothe
   ent->Init(macro, entityTypeID, langStatements, endMacro);
 }
 
-IGESData_DirChecker IGESDefs_ToolMacroDef::DirChecker(
-  const occ::handle<IGESDefs_MacroDef>& /* ent */) const
+IGESData_DirChecker IGESDefs_ToolMacroDef::DirChecker(const occ::handle<IGESDefs_MacroDef>&) const
 {
   IGESData_DirChecker DC(306, 0);
   DC.Structure(IGESData_DefVoid);
@@ -118,14 +113,14 @@ IGESData_DirChecker IGESDefs_ToolMacroDef::DirChecker(
   return DC;
 }
 
-void IGESDefs_ToolMacroDef::OwnCheck(const occ::handle<IGESDefs_MacroDef>& /* ent */,
+void IGESDefs_ToolMacroDef::OwnCheck(const occ::handle<IGESDefs_MacroDef>&,
                                      const Interface_ShareTool&,
-                                     occ::handle<Interface_Check>& /* ach */) const
+                                     occ::handle<Interface_Check>&) const
 {
 }
 
 void IGESDefs_ToolMacroDef::OwnDump(const occ::handle<IGESDefs_MacroDef>& ent,
-                                    const IGESData_IGESDumper& /* dumper */,
+                                    const IGESData_IGESDumper&,
                                     Standard_OStream& S,
                                     const int         level) const
 {

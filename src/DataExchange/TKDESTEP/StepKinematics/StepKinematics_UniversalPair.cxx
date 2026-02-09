@@ -1,17 +1,13 @@
-// Created on : Sat May 02 12:41:16 2020
+
 
 #include <StepKinematics_UniversalPair.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_UniversalPair, StepKinematics_LowOrderKinematicPair)
 
-//=================================================================================================
-
 StepKinematics_UniversalPair::StepKinematics_UniversalPair()
 {
   defInputSkewAngle = false;
 }
-
-//=================================================================================================
 
 void StepKinematics_UniversalPair::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -53,21 +49,15 @@ void StepKinematics_UniversalPair::Init(
     myInputSkewAngle = 0;
 }
 
-//=================================================================================================
-
 double StepKinematics_UniversalPair::InputSkewAngle() const
 {
   return myInputSkewAngle;
 }
 
-//=================================================================================================
-
 void StepKinematics_UniversalPair::SetInputSkewAngle(const double theInputSkewAngle)
 {
   myInputSkewAngle = theInputSkewAngle;
 }
-
-//=================================================================================================
 
 bool StepKinematics_UniversalPair::HasInputSkewAngle() const
 {

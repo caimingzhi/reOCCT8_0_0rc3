@@ -14,7 +14,6 @@ class StepRepr_GlobalUncertaintyAssignedContext : public StepRepr_Representation
 {
 
 public:
-  //! Returns a GlobalUncertaintyAssignedContext
   Standard_EXPORT StepRepr_GlobalUncertaintyAssignedContext();
 
   Standard_EXPORT void Init(

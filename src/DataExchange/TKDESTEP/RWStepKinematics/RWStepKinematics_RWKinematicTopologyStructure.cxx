@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include "RWStepKinematics_RWKinematicTopologyStructure.hpp"
 
@@ -12,12 +12,8 @@
 #include <NCollection_HArray1.hpp>
 #include <StepRepr_RepresentationContext.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWKinematicTopologyStructure::RWStepKinematics_RWKinematicTopologyStructure() =
   default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWKinematicTopologyStructure::ReadStep(
   const occ::handle<StepData_StepReaderData>&                   theData,
@@ -25,11 +21,9 @@ void RWStepKinematics_RWKinematicTopologyStructure::ReadStep(
   occ::handle<Interface_Check>&                                 theArch,
   const occ::handle<StepKinematics_KinematicTopologyStructure>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 3, theArch, "kinematic_topology_structure"))
     return;
-
-  // Inherited fields of Representation
 
   occ::handle<TCollection_HAsciiString> aRepresentation_Name;
   theData->ReadString(theNum, 1, "representation.name", theArch, aRepresentation_Name);
@@ -63,18 +57,13 @@ void RWStepKinematics_RWKinematicTopologyStructure::ReadStep(
                       STANDARD_TYPE(StepRepr_RepresentationContext),
                       aRepresentation_ContextOfItems);
 
-  // Initialize entity
   theEnt->Init(aRepresentation_Name, aRepresentation_Items, aRepresentation_ContextOfItems);
 }
-
-//=================================================================================================
 
 void RWStepKinematics_RWKinematicTopologyStructure::WriteStep(
   StepData_StepWriter&                                          theSW,
   const occ::handle<StepKinematics_KinematicTopologyStructure>& theEnt) const
 {
-
-  // Own fields of Representation
 
   theSW.Send(theEnt->Name());
 
@@ -89,14 +78,10 @@ void RWStepKinematics_RWKinematicTopologyStructure::WriteStep(
   theSW.Send(theEnt->ContextOfItems());
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWKinematicTopologyStructure::Share(
   const occ::handle<StepKinematics_KinematicTopologyStructure>& theEnt,
   Interface_EntityIterator&                                     iter) const
 {
-
-  // Inherited fields of Representation
 
   for (int i1 = 1; i1 <= theEnt->StepRepr_Representation::Items()->Length(); i1++)
   {

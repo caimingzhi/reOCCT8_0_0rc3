@@ -37,8 +37,6 @@ typedef gp_Trsf                       Trsf;
 typedef gp_Vec                        Vec;
 typedef gp_XYZ                        XYZ;
 
-//=================================================================================================
-
 occ::handle<Geom_Geometry> Geom_SurfaceOfLinearExtrusion::Copy() const
 {
 
@@ -46,8 +44,6 @@ occ::handle<Geom_Geometry> Geom_SurfaceOfLinearExtrusion::Copy() const
   Sr = new SurfaceOfLinearExtrusion(basisCurve, direction);
   return Sr;
 }
-
-//=================================================================================================
 
 Geom_SurfaceOfLinearExtrusion::Geom_SurfaceOfLinearExtrusion(const occ::handle<Geom_Curve>& C,
                                                              const Dir&                     V)
@@ -57,15 +53,11 @@ Geom_SurfaceOfLinearExtrusion::Geom_SurfaceOfLinearExtrusion(const occ::handle<G
   smooth     = C->Continuity();
 }
 
-//=================================================================================================
-
 void Geom_SurfaceOfLinearExtrusion::UReverse()
 {
 
   basisCurve->Reverse();
 }
-
-//=================================================================================================
 
 double Geom_SurfaceOfLinearExtrusion::UReversedParameter(const double U) const
 {
@@ -73,14 +65,10 @@ double Geom_SurfaceOfLinearExtrusion::UReversedParameter(const double U) const
   return basisCurve->ReversedParameter(U);
 }
 
-//=================================================================================================
-
 void Geom_SurfaceOfLinearExtrusion::VReverse()
 {
   direction.Reverse();
 }
-
-//=================================================================================================
 
 double Geom_SurfaceOfLinearExtrusion::VReversedParameter(const double V) const
 {
@@ -88,22 +76,16 @@ double Geom_SurfaceOfLinearExtrusion::VReversedParameter(const double V) const
   return (-V);
 }
 
-//=================================================================================================
-
 void Geom_SurfaceOfLinearExtrusion::SetDirection(const Dir& V)
 {
   direction = V;
 }
-
-//=================================================================================================
 
 void Geom_SurfaceOfLinearExtrusion::SetBasisCurve(const occ::handle<Geom_Curve>& C)
 {
   smooth     = C->Continuity();
   basisCurve = occ::down_cast<Geom_Curve>(C->Copy());
 }
-
-//=================================================================================================
 
 void Geom_SurfaceOfLinearExtrusion::Bounds(double& U1, double& U2, double& V1, double& V2) const
 {
@@ -114,14 +96,10 @@ void Geom_SurfaceOfLinearExtrusion::Bounds(double& U1, double& U2, double& V1, d
   U2 = basisCurve->LastParameter();
 }
 
-//=================================================================================================
-
 void Geom_SurfaceOfLinearExtrusion::D0(const double U, const double V, Pnt& P) const
 {
   Geom_ExtrusionUtils::D0(U, V, *basisCurve, direction.XYZ(), P);
 }
-
-//=================================================================================================
 
 void Geom_SurfaceOfLinearExtrusion::D1(const double U,
                                        const double V,
@@ -131,8 +109,6 @@ void Geom_SurfaceOfLinearExtrusion::D1(const double U,
 {
   Geom_ExtrusionUtils::D1(U, V, *basisCurve, direction.XYZ(), P, D1U, D1V);
 }
-
-//=================================================================================================
 
 void Geom_SurfaceOfLinearExtrusion::D2(const double U,
                                        const double V,
@@ -145,8 +121,6 @@ void Geom_SurfaceOfLinearExtrusion::D2(const double U,
 {
   Geom_ExtrusionUtils::D2(U, V, *basisCurve, direction.XYZ(), P, D1U, D1V, D2U, D2V, D2UV);
 }
-
-//=================================================================================================
 
 void Geom_SurfaceOfLinearExtrusion::D3(const double U,
                                        const double V,
@@ -165,8 +139,6 @@ void Geom_SurfaceOfLinearExtrusion::D3(const double U,
     D3(U, V, *basisCurve, direction.XYZ(), P, D1U, D1V, D2U, D2V, D2UV, D3U, D3V, D3UUV, D3UVV);
 }
 
-//=================================================================================================
-
 Vec Geom_SurfaceOfLinearExtrusion::DN(const double U,
                                       const double,
                                       const int Nu,
@@ -176,8 +148,6 @@ Vec Geom_SurfaceOfLinearExtrusion::DN(const double U,
   return Geom_ExtrusionUtils::DN(U, *basisCurve, direction.XYZ(), Nu, Nv);
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> Geom_SurfaceOfLinearExtrusion::UIso(const double U) const
 {
 
@@ -185,8 +155,6 @@ occ::handle<Geom_Curve> Geom_SurfaceOfLinearExtrusion::UIso(const double U) cons
   L = new Geom_Line(basisCurve->Value(U), direction);
   return L;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> Geom_SurfaceOfLinearExtrusion::VIso(const double V) const
 {
@@ -198,8 +166,6 @@ occ::handle<Geom_Curve> Geom_SurfaceOfLinearExtrusion::VIso(const double V) cons
   return C;
 }
 
-//=================================================================================================
-
 bool Geom_SurfaceOfLinearExtrusion::IsCNu(const int N) const
 {
 
@@ -207,15 +173,11 @@ bool Geom_SurfaceOfLinearExtrusion::IsCNu(const int N) const
   return basisCurve->IsCN(N);
 }
 
-//=================================================================================================
-
 bool Geom_SurfaceOfLinearExtrusion::IsCNv(const int) const
 {
 
   return true;
 }
-
-//=================================================================================================
 
 void Geom_SurfaceOfLinearExtrusion::Transform(const Trsf& T)
 {
@@ -223,15 +185,11 @@ void Geom_SurfaceOfLinearExtrusion::Transform(const Trsf& T)
   basisCurve->Transform(T);
 }
 
-//=================================================================================================
-
 bool Geom_SurfaceOfLinearExtrusion::IsUClosed() const
 {
 
   return basisCurve->IsClosed();
 }
-
-//=================================================================================================
 
 bool Geom_SurfaceOfLinearExtrusion::IsUPeriodic() const
 {
@@ -239,23 +197,17 @@ bool Geom_SurfaceOfLinearExtrusion::IsUPeriodic() const
   return basisCurve->IsPeriodic();
 }
 
-//=================================================================================================
-
 bool Geom_SurfaceOfLinearExtrusion::IsVClosed() const
 {
 
   return false;
 }
 
-//=================================================================================================
-
 bool Geom_SurfaceOfLinearExtrusion::IsVPeriodic() const
 {
 
   return false;
 }
-
-//=================================================================================================
 
 void Geom_SurfaceOfLinearExtrusion::TransformParameters(double&        U,
                                                         double&        V,
@@ -266,23 +218,19 @@ void Geom_SurfaceOfLinearExtrusion::TransformParameters(double&        U,
     V *= std::abs(T.ScaleFactor());
 }
 
-//=================================================================================================
-
 gp_GTrsf2d Geom_SurfaceOfLinearExtrusion::ParametricTransformation(const gp_Trsf& T) const
 {
-  // transformation in the V Direction
+
   gp_GTrsf2d TV;
   gp_Ax2d    Axis(gp::Origin2d(), gp::DX2d());
   TV.SetAffinity(Axis, std::abs(T.ScaleFactor()));
-  // transformation in the U Direction
+
   gp_GTrsf2d TU;
   Axis = gp_Ax2d(gp::Origin2d(), gp::DY2d());
   TU.SetAffinity(Axis, basisCurve->ParametricTransformation(T));
 
   return TU * TV;
 }
-
-//=================================================================================================
 
 void Geom_SurfaceOfLinearExtrusion::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

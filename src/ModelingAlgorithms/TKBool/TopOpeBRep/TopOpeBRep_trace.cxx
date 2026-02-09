@@ -1,8 +1,6 @@
 #ifdef OCCT_DEBUG
 
   #include <Standard_Type.hpp>
-// #include <Standard_OStream.hpp>
-// #include <stdio.h>
 
 static bool TopOpeBRep_traceFITOL = false;
 
@@ -247,7 +245,7 @@ Standard_EXPORT void TopOpeBRep_SetcontextTOL0(const bool b)
   TopOpeBRep_contextTOL0 = b;
 }
 
-Standard_EXPORT bool TopOpeBRep_GetcontextTOL0(char* /*str*/)
+Standard_EXPORT bool TopOpeBRep_GetcontextTOL0(char*)
 {
   if (TopOpeBRep_contextTOL0)
   {
@@ -288,5 +286,4 @@ Standard_EXPORT bool TopOpeBRep_GetcontextNONOG()
   return TopOpeBRep_contextNONOG;
 }
 
-// #ifdef OCCT_DEBUG
 #endif

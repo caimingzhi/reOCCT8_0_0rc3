@@ -12,7 +12,6 @@ class StepGeom_OffsetCurve3d : public StepGeom_Curve
 {
 
 public:
-  //! Returns a OffsetCurve3d
   Standard_EXPORT StepGeom_OffsetCurve3d();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

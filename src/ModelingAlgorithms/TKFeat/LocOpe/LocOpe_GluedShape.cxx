@@ -15,18 +15,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(LocOpe_GluedShape, LocOpe_GeneratedShape)
 
-//=================================================================================================
-
 LocOpe_GluedShape::LocOpe_GluedShape() = default;
-
-//=================================================================================================
 
 LocOpe_GluedShape::LocOpe_GluedShape(const TopoDS_Shape& S)
     : myShape(S)
 {
 }
-
-//=================================================================================================
 
 void LocOpe_GluedShape::Init(const TopoDS_Shape& S)
 {
@@ -37,11 +31,9 @@ void LocOpe_GluedShape::Init(const TopoDS_Shape& S)
   myGEdges.Clear();
 }
 
-//=================================================================================================
-
 void LocOpe_GluedShape::GlueOnFace(const TopoDS_Face& F)
 {
-  //  for (TopExp_Explorer exp(myShape,TopAbs_FACE); exp.More();exp.Next()) {
+
   TopExp_Explorer exp(myShape, TopAbs_FACE);
   for (; exp.More(); exp.Next())
   {
@@ -54,10 +46,8 @@ void LocOpe_GluedShape::GlueOnFace(const TopoDS_Face& F)
   {
     throw Standard_ConstructionError();
   }
-  myMap.Add(exp.Current()); // bonne orientation
+  myMap.Add(exp.Current());
 }
-
-//=================================================================================================
 
 void LocOpe_GluedShape::MapEdgeAndVertices()
 {
@@ -65,8 +55,6 @@ void LocOpe_GluedShape::MapEdgeAndVertices()
   {
     return;
   }
-
-  // Edges et faces generes
 
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     theMapEF;
@@ -87,7 +75,7 @@ void LocOpe_GluedShape::MapEdgeAndVertices()
       {
         continue;
       }
-      // Est-ce un edge de connexite entre les faces collees
+
       if (theMapEF.FindFromKey(edg).Extent() != 2)
       {
         throw Standard_ConstructionError();
@@ -102,10 +90,9 @@ void LocOpe_GluedShape::MapEdgeAndVertices()
 
       if (itl.More())
       {
-        //	myGEdges.Append(edg);
+
         myGEdges.Append(edg.Reversed());
-        myGShape.Bind(edg, itl.Value()); // voir orientation,
-                                         // mais devrait etre bon
+        myGShape.Bind(edg, itl.Value());
       }
 
       mapdone.Add(edg);
@@ -151,8 +138,6 @@ void LocOpe_GluedShape::MapEdgeAndVertices()
     }
   }
 
-  // liste de faces
-
   for (exp.Init(myShape, TopAbs_FACE); exp.More(); exp.Next())
   {
     if (!myMap.Contains(exp.Current()))
@@ -161,8 +146,6 @@ void LocOpe_GluedShape::MapEdgeAndVertices()
     }
   }
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& LocOpe_GluedShape::GeneratingEdges()
 {
@@ -173,8 +156,6 @@ const NCollection_List<TopoDS_Shape>& LocOpe_GluedShape::GeneratingEdges()
   return myGEdges;
 }
 
-//=================================================================================================
-
 TopoDS_Edge LocOpe_GluedShape::Generated(const TopoDS_Vertex& V)
 {
   if (myGShape.IsEmpty())
@@ -184,8 +165,6 @@ TopoDS_Edge LocOpe_GluedShape::Generated(const TopoDS_Vertex& V)
   return TopoDS::Edge(myGShape(V));
 }
 
-//=================================================================================================
-
 TopoDS_Face LocOpe_GluedShape::Generated(const TopoDS_Edge& E)
 {
   if (myGShape.IsEmpty())
@@ -194,8 +173,6 @@ TopoDS_Face LocOpe_GluedShape::Generated(const TopoDS_Edge& E)
   }
   return TopoDS::Face(myGShape(E));
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& LocOpe_GluedShape::OrientedFaces()
 {

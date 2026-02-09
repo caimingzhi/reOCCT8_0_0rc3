@@ -5,7 +5,6 @@
 
 #include <Standard_Transient.hpp>
 
-//! Added for Dimensional Tolerances
 class StepShape_ToleranceValue : public Standard_Transient
 {
 

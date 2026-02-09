@@ -10,27 +10,16 @@
 #include <TDataXtd_GeometryEnum.hpp>
 #include <TDataXtd_ConstraintEnum.hpp>
 
-//! This package defines extension of standard attributes for
-//! modelling (mainly for work with geometry).
 class TDataXtd
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Appends to <anIDList> the list of the attributes
-  //! IDs of this package. CAUTION: <anIDList> is NOT
-  //! cleared before use.
-  //! Print of TDataExt enumeration
-  //! =============================
   Standard_EXPORT static void IDList(NCollection_List<Standard_GUID>& anIDList);
 
-  //! Prints the name of the geometry dimension <GEO> as a String on
-  //! the Stream <S> and returns <S>.
   Standard_EXPORT static Standard_OStream& Print(const TDataXtd_GeometryEnum GEO,
                                                  Standard_OStream&           S);
 
-  //! Prints the name of the constraint <CTR> as a String on
-  //! the Stream <S> and returns <S>.
   Standard_EXPORT static Standard_OStream& Print(const TDataXtd_ConstraintEnum CTR,
                                                  Standard_OStream&             S);
 

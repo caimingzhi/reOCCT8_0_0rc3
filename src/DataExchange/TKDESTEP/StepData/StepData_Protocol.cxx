@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_Transient.hpp>
 #include <Standard_Type.hpp>
@@ -27,8 +16,6 @@
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(StepData_Protocol, Interface_Protocol)
 
-//  The base Protocol recognizes UnknownEntity
-// static TCollection_AsciiString  thename("(DEFAULT)");
 static const char* thename = "(DEFAULT)";
 
 StepData_Protocol::StepData_Protocol() = default;
@@ -38,7 +25,7 @@ int StepData_Protocol::NbResources() const
   return 0;
 }
 
-occ::handle<Interface_Protocol> StepData_Protocol::Resource(const int /*num*/) const
+occ::handle<Interface_Protocol> StepData_Protocol::Resource(const int) const
 {
   occ::handle<Interface_Protocol> nulproto;
   return nulproto;
@@ -91,8 +78,6 @@ bool StepData_Protocol::IsUnknownEntity(const occ::handle<Standard_Transient>& e
   return false;
 }
 
-//  ####    Description for LateBinding (runtime entity description support)
-
 int StepData_Protocol::DescrNumber(const occ::handle<StepData_EDescr>& adescr) const
 {
   if (thedscnum.IsBound(adescr))
@@ -105,9 +90,6 @@ void StepData_Protocol::AddDescr(const occ::handle<StepData_EDescr>& adescr, con
   occ::handle<StepData_ESDescr> sd = occ::down_cast<StepData_ESDescr>(adescr);
   thedscnum.Bind(adescr, CN);
 
-  //  Simple descriptor: stored according to its name
-  //  Otherwise what to do? Store according to the passed number in alpha-numeric form...
-  //  (temporary solution)
   if (!sd.IsNull())
     thedscnam.Bind(sd->TypeName(), sd);
   char fonom[10];

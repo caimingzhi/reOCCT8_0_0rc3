@@ -12,11 +12,10 @@
 #include <algorithm>
 #include <utility>
 
-// Template traits for 2D/3D point and vector operations
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 struct BSplCLib_CurveTraits
 {
-  // Coordinate operations
+
   static void PointToCoords(double* carr, const Point& pnt, double op)
   {
     if constexpr (Dimension == 2)
@@ -189,16 +188,11 @@ struct BSplCLib_CurveTraits
   }
 };
 
-//! Stack-allocated arrays for knot/multiplicity pairs.
-//! Size=1: single knot constructor (knotValue, multiplicity)
-//! Size=2: Bezier constructor (degree) with knots {0,1} and mults {degree+1, degree+1}
-//! @tparam Size number of knots in the array (1 or 2)
 template <int Size>
 struct BSplCLib_KnotArrays
 {
   static_assert(Size == 1 || Size == 2, "BSplCLib_KnotArrays: Size must be 1 or 2");
 
-  //! Constructor for single knot (Size=1)
   template <int N = Size, typename = typename std::enable_if<N == 1>::type>
   BSplCLib_KnotArrays(double theKnotValue, int theMultiplicity)
       : myKnotBuffer{theKnotValue},
@@ -208,7 +202,6 @@ struct BSplCLib_KnotArrays
   {
   }
 
-  //! Constructor for Bezier knots (Size=2)
   template <int N = Size, typename = typename std::enable_if<N == 2>::type>
   BSplCLib_KnotArrays(int theDegree)
       : myKnotBuffer{0.0, 1.0},
@@ -227,20 +220,14 @@ public:
   NCollection_Array1<int>    Mult;
 };
 
-//! Maximum supported degree for B-spline curves.
 static constexpr int THE_MAX_DEGREE = BSplCLib::MaxDegree();
 
-//! Validates that the given degree does not exceed the maximum supported degree.
-//! @param theDegree degree of the B-spline curve
-//! @throws Standard_OutOfRange if degree exceeds MaxDegree()
 inline void validateBSplineDegree([[maybe_unused]] int theDegree)
 {
   Standard_OutOfRange_Raise_if(theDegree > THE_MAX_DEGREE,
                                "BSplCLib: bspline degree is greater than maximum supported");
 }
 
-// Auxiliary structure providing buffers for poles and knots used in evaluation of bspline
-// (allocated in the stack)
 template <int Dimension>
 struct BSplCLib_DataContainer_T
 {
@@ -249,10 +236,6 @@ struct BSplCLib_DataContainer_T
   double ders[Dimension * 4];
 };
 
-// Reverses the order of elements in the array using std::reverse.
-// Works with any NCollection_Array1-like container.
-// @param[in,out] theArray - array to be reversed
-// @param[in] theL - length parameter for reversal
 template <typename Array>
 void BSplCLib_Reverse(Array& theArray, const int theL)
 {
@@ -267,21 +250,6 @@ void BSplCLib_Reverse(Array& theArray, const int theL)
   }
 }
 
-// Removes a knot from the B-spline curve
-// @param[in] Index - index of the knot to remove
-// @param[in] Mult - multiplicity of the knot
-// @param[in] Degree - degree of the B-spline
-// @param[in] Periodic - whether the curve is periodic
-// @param[in] Poles - original poles
-// @param[in] Weights - optional weights for rational curves
-// @param[in] Knots - knot sequence
-// @param[in] Mults - multiplicities
-// @param[out] NewPoles - resulting poles after knot removal
-// @param[out] NewWeights - resulting weights
-// @param[out] NewKnots - resulting knot sequence
-// @param[out] NewMults - resulting multiplicities
-// @param[in] Tolerance - tolerance for knot removal
-// @returns true if knot removal was successful
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 bool BSplCLib_RemoveKnot(const int                         Index,
                          const int                         Mult,
@@ -332,21 +300,6 @@ bool BSplCLib_RemoveKnot(const int                         Index,
   return true;
 }
 
-// Inserts an array of knots and multiplicities into the B-spline curve
-// @param[in] Degree - degree of the B-spline
-// @param[in] Periodic - whether the curve is periodic
-// @param[in] Poles - original poles
-// @param[in] Weights - optional weights for rational curves
-// @param[in] Knots - original knot sequence
-// @param[in] Mults - original multiplicities
-// @param[in] AddKnots - knots to be inserted
-// @param[in] AddMults - multiplicities of knots to be inserted
-// @param[out] NewPoles - resulting poles
-// @param[out] NewWeights - resulting weights
-// @param[out] NewKnots - resulting knot sequence
-// @param[out] NewMults - resulting multiplicities
-// @param[in] Epsilon - tolerance for knot comparison
-// @param[in] Add - whether to add or replace knots
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_InsertKnots(const int                         Degree,
                           const bool                        Periodic,
@@ -397,17 +350,6 @@ void BSplCLib_InsertKnots(const int                         Degree,
     PLib::GetPoles(newpoles, NewPoles);
 }
 
-// Inserts a single knot into the B-spline curve
-// @param[in] U - parameter value of the knot to insert
-// @param[in] UMult - multiplicity of the knot
-// @param[in] Degree - degree of the B-spline
-// @param[in] Periodic - whether the curve is periodic
-// @param[in] Poles - original poles
-// @param[in] Weights - optional weights for rational curves
-// @param[in] Knots - original knot sequence
-// @param[in] Mults - original multiplicities
-// @param[out] NewPoles - resulting poles
-// @param[out] NewWeights - resulting weights
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_InsertKnot(const int,
                          const double                      U,
@@ -440,17 +382,6 @@ void BSplCLib_InsertKnot(const int,
                                                                  true);
 }
 
-// Raises the multiplicity of a knot in the B-spline curve
-// @param[in] KnotIndex - index of the knot
-// @param[in] Mult - target multiplicity
-// @param[in] Degree - degree of the B-spline
-// @param[in] Periodic - whether the curve is periodic
-// @param[in] Poles - original poles
-// @param[in] Weights - optional weights for rational curves
-// @param[in] Knots - knot sequence
-// @param[in] Mults - original multiplicities
-// @param[out] NewPoles - resulting poles
-// @param[out] NewWeights - resulting weights
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_RaiseMultiplicity(const int                         KnotIndex,
                                 const int                         Mult,
@@ -482,18 +413,6 @@ void BSplCLib_RaiseMultiplicity(const int                         KnotIndex,
                                                                  true);
 }
 
-// Increases the degree of the B-spline curve
-// @param[in] Degree - current degree
-// @param[in] NewDegree - target degree
-// @param[in] Periodic - whether the curve is periodic
-// @param[in] Poles - original poles
-// @param[in] Weights - optional weights for rational curves
-// @param[in] Knots - original knot sequence
-// @param[in] Mults - original multiplicities
-// @param[out] NewPoles - resulting poles
-// @param[out] NewWeights - resulting weights
-// @param[out] NewKnots - resulting knot sequence
-// @param[out] NewMults - resulting multiplicities
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_IncreaseDegree(const int                         Degree,
                              const int                         NewDegree,
@@ -538,16 +457,6 @@ void BSplCLib_IncreaseDegree(const int                         Degree,
     PLib::GetPoles(newpoles, NewPoles);
 }
 
-// Converts a periodic B-spline curve to non-periodic
-// @param[in] Degree - degree of the B-spline
-// @param[in] Mults - original multiplicities
-// @param[in] Knots - original knot sequence
-// @param[in] Poles - original poles
-// @param[in] Weights - optional weights for rational curves
-// @param[out] NewMults - resulting multiplicities
-// @param[out] NewKnots - resulting knot sequence
-// @param[out] NewPoles - resulting poles
-// @param[out] NewWeights - resulting weights
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_Unperiodize(const int                         Degree,
                           const NCollection_Array1<int>&    Mults,
@@ -581,19 +490,6 @@ void BSplCLib_Unperiodize(const int                         Degree,
     PLib::GetPoles(newpoles, NewPoles);
 }
 
-// Trims the B-spline curve to a parameter range
-// @param[in] Degree - degree of the B-spline
-// @param[in] Periodic - whether the curve is periodic
-// @param[in] Knots - original knot sequence
-// @param[in] Mults - original multiplicities
-// @param[in] Poles - original poles
-// @param[in] Weights - optional weights for rational curves
-// @param[in] U1 - start parameter for trimming
-// @param[in] U2 - end parameter for trimming
-// @param[out] NewKnots - resulting knot sequence
-// @param[out] NewMults - resulting multiplicities
-// @param[out] NewPoles - resulting poles
-// @param[out] NewWeights - resulting weights
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_Trimming(const int                         Degree,
                        const bool                        Periodic,
@@ -640,12 +536,6 @@ void BSplCLib_Trimming(const int                         Degree,
     PLib::GetPoles(newpoles, NewPoles);
 }
 
-// Builds the local array for B-spline evaluation
-// @param[in] Degree - degree of the B-spline
-// @param[in] Index - starting index in poles array
-// @param[in] Poles - poles array
-// @param[in] Weights - optional weights for rational curves
-// @param[out] LP - local poles array for evaluation
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_BuildEval(const int                         Degree,
                         const int                         Index,
@@ -687,18 +577,6 @@ void BSplCLib_BuildEval(const int                         Degree,
   }
 }
 
-// Prepares data for B-spline evaluation by storing poles and knots in local arrays
-// @param[in,out] u - parameter value
-// @param[in,out] index - knot span index
-// @param[out] dim - dimension of the curve
-// @param[out] rational - whether the curve is rational
-// @param[in] Degree - degree of the B-spline
-// @param[in] Periodic - whether the curve is periodic
-// @param[in] Poles - poles array
-// @param[in] Weights - optional weights for rational curves
-// @param[in] Knots - knot sequence
-// @param[in] Mults - multiplicities
-// @param[out] dc - data container for evaluation
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 static void PrepareEval_T(double&                              u,
                           int&                                 index,
@@ -712,17 +590,15 @@ static void PrepareEval_T(double&                              u,
                           const NCollection_Array1<int>*       Mults,
                           BSplCLib_DataContainer_T<Dimension>& dc)
 {
-  // Set the Index
+
   BSplCLib::LocateParameter(Degree, Knots, Mults, u, Periodic, index, u);
 
-  // make the knots
   BSplCLib::BuildKnots(Degree, index, Periodic, Knots, Mults, *dc.knots);
   if (Mults == NULL)
     index -= Knots.Lower() + Degree;
   else
     index = BSplCLib::PoleIndex(Degree, index, Periodic, *Mults);
 
-  // check truly rational
   rational = (Weights != NULL);
   if (rational)
   {
@@ -730,7 +606,6 @@ static void PrepareEval_T(double&                              u,
     rational   = BSplCLib::IsRational(*Weights, WLower, WLower + Degree);
   }
 
-  // make the poles
   if (rational)
   {
     dim = Dimension + 1;
@@ -751,16 +626,6 @@ static void PrepareEval_T(double&                              u,
   }
 }
 
-// Evaluates the point on the B-spline curve at parameter U
-// @param[in] U - parameter value
-// @param[in] Index - knot span index
-// @param[in] Degree - degree of the B-spline
-// @param[in] Periodic - whether the curve is periodic
-// @param[in] Poles - poles array
-// @param[in] Weights - optional weights for rational curves
-// @param[in] Knots - knot sequence
-// @param[in] Mults - multiplicities
-// @param[out] P - resulting point
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_D0(const double                      U,
                  const int                         Index,
@@ -801,17 +666,6 @@ void BSplCLib_D0(const double                      U,
     Traits::CoordsToPointDirect(P, dc.poles);
 }
 
-// Evaluates the point and first derivative on the B-spline curve at parameter U
-// @param[in] U - parameter value
-// @param[in] Index - knot span index
-// @param[in] Degree - degree of the B-spline
-// @param[in] Periodic - whether the curve is periodic
-// @param[in] Poles - poles array
-// @param[in] Weights - optional weights for rational curves
-// @param[in] Knots - knot sequence
-// @param[in] Mults - multiplicities
-// @param[out] P - resulting point
-// @param[out] V - first derivative vector
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_D1(const double                      U,
                  const int                         Index,
@@ -854,18 +708,6 @@ void BSplCLib_D1(const double                      U,
   Traits::CoordsToVectorDirect(V, result + Dimension);
 }
 
-// Evaluates the point and first two derivatives on the B-spline curve at parameter U
-// @param[in] U - parameter value
-// @param[in] Index - knot span index
-// @param[in] Degree - degree of the B-spline
-// @param[in] Periodic - whether the curve is periodic
-// @param[in] Poles - poles array
-// @param[in] Weights - optional weights for rational curves
-// @param[in] Knots - knot sequence
-// @param[in] Mults - multiplicities
-// @param[out] P - resulting point
-// @param[out] V1 - first derivative vector
-// @param[out] V2 - second derivative vector
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_D2(const double                      U,
                  const int                         Index,
@@ -913,19 +755,6 @@ void BSplCLib_D2(const double                      U,
     Traits::CoordsToVectorDirect(V2, result + 2 * Dimension);
 }
 
-// Evaluates the point and first three derivatives on the B-spline curve at parameter U
-// @param[in] U - parameter value
-// @param[in] Index - knot span index
-// @param[in] Degree - degree of the B-spline
-// @param[in] Periodic - whether the curve is periodic
-// @param[in] Poles - poles array
-// @param[in] Weights - optional weights for rational curves
-// @param[in] Knots - knot sequence
-// @param[in] Mults - multiplicities
-// @param[out] P - resulting point
-// @param[out] V1 - first derivative vector
-// @param[out] V2 - second derivative vector
-// @param[out] V3 - third derivative vector
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_D3(const double                      U,
                  const int                         Index,
@@ -978,17 +807,6 @@ void BSplCLib_D3(const double                      U,
     Traits::CoordsToVectorDirect(V3, result + 3 * Dimension);
 }
 
-// Evaluates the Nth derivative on the B-spline curve at parameter U
-// @param[in] U - parameter value
-// @param[in] N - order of derivative
-// @param[in] Index - knot span index
-// @param[in] Degree - degree of the B-spline
-// @param[in] Periodic - whether the curve is periodic
-// @param[in] Poles - poles array
-// @param[in] Weights - optional weights for rational curves
-// @param[in] Knots - knot sequence
-// @param[in] Mults - multiplicities
-// @param[out] VN - Nth derivative vector
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_DN(const double                      U,
                  const int                         N,
@@ -1039,12 +857,6 @@ void BSplCLib_DN(const double                      U,
   }
 }
 
-// Solves a banded system of equations for B-spline poles
-// @param[in] Matrix - coefficient matrix
-// @param[in] UpperBandWidth - upper bandwidth of the matrix
-// @param[in] LowerBandWidth - lower bandwidth of the matrix
-// @param[in,out] PolesArray - poles array containing right-hand side and receiving solution
-// @returns error status
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 int BSplCLib_SolveBandedSystem(const math_Matrix& Matrix,
                                const int          UpperBandWidth,
@@ -1057,14 +869,6 @@ int BSplCLib_SolveBandedSystem(const math_Matrix& Matrix,
   return BSplCLib::SolveBandedSystem(Matrix, UpperBandWidth, LowerBandWidth, Dimension, PArray[0]);
 }
 
-// Solves a banded system of equations for rational B-spline poles with weights
-// @param[in] Matrix - coefficient matrix
-// @param[in] UpperBandWidth - upper bandwidth of the matrix
-// @param[in] LowerBandWidth - lower bandwidth of the matrix
-// @param[in] HomogeneousFlag - whether to use homogeneous coordinates
-// @param[in,out] PolesArray - poles array containing right-hand side and receiving solution
-// @param[in,out] WeightsArray - weights array
-// @returns error status
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 int BSplCLib_SolveBandedSystem(const math_Matrix&          Matrix,
                                const int                   UpperBandWidth,
@@ -1085,17 +889,6 @@ int BSplCLib_SolveBandedSystem(const math_Matrix&          Matrix,
                                      WArray[0]);
 }
 
-// Evaluates the B-spline curve at a given parameter
-// @param[in] Parameter - parameter value
-// @param[in] PeriodicFlag - whether the curve is periodic
-// @param[in] HomogeneousFlag - whether to use homogeneous coordinates
-// @param[in,out] ExtrapMode - extrapolation mode
-// @param[in] Degree - degree of the B-spline
-// @param[in] FlatKnots - flat knot sequence
-// @param[in] PolesArray - poles array
-// @param[in] WeightsArray - weights array
-// @param[out] aPoint - resulting point
-// @param[out] aWeight - resulting weight
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_Eval(const double                      Parameter,
                    const bool                        PeriodicFlag,
@@ -1158,14 +951,6 @@ void BSplCLib_Eval(const double                      Parameter,
     aPoint.SetCoord(kk + 1, P[kk]);
 }
 
-// Evaluates the point on cached B-spline curve at parameter
-// @param[in] Parameter - parameter value
-// @param[in] Degree - degree of the polynomial
-// @param[in] CacheParameter - cache parameter offset
-// @param[in] SpanLenght - span length
-// @param[in] PolesArray - cached poles array
-// @param[in] WeightsArray - optional cached weights
-// @param[out] aPoint - resulting point
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_CacheD0(const double                      Parameter,
                       const int                         Degree,
@@ -1198,15 +983,6 @@ void BSplCLib_CacheD0(const double                      Parameter,
   }
 }
 
-// Evaluates the point and first derivative on cached B-spline curve at parameter
-// @param[in] Parameter - parameter value
-// @param[in] Degree - degree of the polynomial
-// @param[in] CacheParameter - cache parameter offset
-// @param[in] SpanLenght - span length
-// @param[in] PolesArray - cached poles array
-// @param[in] WeightsArray - optional cached weights
-// @param[out] aPoint - resulting point
-// @param[out] aVector - first derivative vector
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_CacheD1(const double                      Parameter,
                       const int                         Degree,
@@ -1249,16 +1025,6 @@ void BSplCLib_CacheD1(const double                      Parameter,
   Traits::CopyCoords(myVector, LocalPDerivatives + Dimension);
 }
 
-// Evaluates the point and first two derivatives on cached B-spline curve at parameter
-// @param[in] Parameter - parameter value
-// @param[in] Degree - degree of the polynomial
-// @param[in] CacheParameter - cache parameter offset
-// @param[in] SpanLenght - span length
-// @param[in] PolesArray - cached poles array
-// @param[in] WeightsArray - optional cached weights
-// @param[out] aPoint - resulting point
-// @param[out] aVector1 - first derivative vector
-// @param[out] aVector2 - second derivative vector
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_CacheD2(const double                      Parameter,
                       const int                         Degree,
@@ -1331,17 +1097,6 @@ void BSplCLib_CacheD2(const double                      Parameter,
   Traits::CopyCoords(myVector2, LocalPDerivatives + Dimension * 2);
 }
 
-// Evaluates the point and first three derivatives on cached B-spline curve at parameter
-// @param[in] Parameter - parameter value
-// @param[in] Degree - degree of the polynomial
-// @param[in] CacheParameter - cache parameter offset
-// @param[in] SpanLenght - span length
-// @param[in] PolesArray - cached poles array
-// @param[in] WeightsArray - optional cached weights
-// @param[out] aPoint - resulting point
-// @param[out] aVector1 - first derivative vector
-// @param[out] aVector2 - second derivative vector
-// @param[out] aVector3 - third derivative vector
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_CacheD3(const double                      Parameter,
                       const int                         Degree,
@@ -1417,16 +1172,6 @@ void BSplCLib_CacheD3(const double                      Parameter,
   Traits::CopyCoords(myVector3, LocalPDerivatives + Dimension * 3);
 }
 
-// Builds cache for efficient B-spline evaluation (Point version)
-// @param[in] U - parameter value
-// @param[in] SpanDomain - span domain
-// @param[in] Periodic - whether the curve is periodic
-// @param[in] Degree - degree of the B-spline
-// @param[in] FlatKnots - flat knot sequence
-// @param[in] Poles - poles array
-// @param[in] Weights - optional weights for rational curves
-// @param[out] CachePoles - cached poles array
-// @param[out] CacheWeights - cached weights array
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_BuildCache(const double                      U,
                          const double                      SpanDomain,
@@ -1501,16 +1246,6 @@ void BSplCLib_BuildCache(const double                      U,
   }
 }
 
-// Builds cache for efficient B-spline evaluation (Array2 version)
-// @param[in] theParameter - parameter value
-// @param[in] theSpanDomain - span domain
-// @param[in] thePeriodicFlag - whether the curve is periodic
-// @param[in] theDegree - degree of the B-spline
-// @param[in] theSpanIndex - span index
-// @param[in] theFlatKnots - flat knot sequence
-// @param[in] thePoles - poles array
-// @param[in] theWeights - optional weights for rational curves
-// @param[out] theCacheArray - 2D cache array
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_BuildCache(const double                      theParameter,
                          const double                      theSpanDomain,
@@ -1569,13 +1304,6 @@ void BSplCLib_BuildCache(const double                      theParameter,
                            1.0);
 }
 
-// Interpolates points to create a B-spline curve
-// @param[in] Degree - degree of the B-spline
-// @param[in] FlatKnots - flat knot sequence
-// @param[in] Parameters - parameter values at points
-// @param[in] ContactOrderArray - contact order at each point
-// @param[in,out] Poles - poles array to be computed
-// @param[out] InversionProblem - status of matrix inversion
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_Interpolate(const int                         Degree,
                           const NCollection_Array1<double>& FlatKnots,
@@ -1598,14 +1326,6 @@ void BSplCLib_Interpolate(const int                         Degree,
                         InversionProblem);
 }
 
-// Interpolates weighted points to create a rational B-spline curve
-// @param[in] Degree - degree of the B-spline
-// @param[in] FlatKnots - flat knot sequence
-// @param[in] Parameters - parameter values at points
-// @param[in] ContactOrderArray - contact order at each point
-// @param[in,out] Poles - poles array to be computed
-// @param[in,out] Weights - weights array
-// @param[out] InversionProblem - status of matrix inversion
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_Interpolate(const int                         Degree,
                           const NCollection_Array1<double>& FlatKnots,
@@ -1628,18 +1348,6 @@ void BSplCLib_Interpolate(const int                         Degree,
                         InversionProblem);
 }
 
-// Moves a point on the B-spline curve by modifying poles
-// @param[in] U - parameter value where point is moved
-// @param[in] Displ - displacement vector
-// @param[in] Index1 - first pole index to modify
-// @param[in] Index2 - last pole index to modify
-// @param[in] Degree - degree of the B-spline
-// @param[in] Poles - original poles
-// @param[in] Weights - optional weights for rational curves
-// @param[in] FlatKnots - flat knot sequence
-// @param[out] FirstIndex - first modified pole index
-// @param[out] LastIndex - last modified pole index
-// @param[out] NewPoles - resulting poles
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_MovePoint(const double                      U,
                         const Vector&                     Displ,
@@ -1653,7 +1361,7 @@ void BSplCLib_MovePoint(const double                      U,
                         int&                              LastIndex,
                         Array1OfPoints&                   NewPoles)
 {
-  // calculate the BSplineBasis in the parameter U
+
   int         FirstNonZeroBsplineIndex;
   math_Matrix BSplineBasis(1, 1, 1, Degree + 1);
   int         ErrorCode =
@@ -1670,7 +1378,6 @@ void BSplCLib_MovePoint(const double                      U,
     return;
   }
 
-  // find the span which is predominant for parameter U
   FirstIndex = FirstNonZeroBsplineIndex;
   LastIndex  = FirstNonZeroBsplineIndex + Degree;
   if (FirstIndex < Index1)
@@ -1691,7 +1398,6 @@ void BSplCLib_MovePoint(const double                      U,
     }
   }
 
-  // find a kk2 if symmetry
   kk2 = kk1;
   i   = kk1 - FirstNonZeroBsplineIndex + 2;
   if ((kk1 + 1) <= LastIndex)
@@ -1702,7 +1408,6 @@ void BSplCLib_MovePoint(const double                      U,
     }
   }
 
-  // compute the vector of displacement
   double D1 = 0.0;
   double D2 = 0.0;
   double hN, Coef, Dval;
@@ -1746,8 +1451,6 @@ void BSplCLib_MovePoint(const double                      U,
     Coef = 1. / D1;
   }
 
-  // compute the new poles
-
   for (i = Poles.Lower(); i <= Poles.Upper(); i++)
   {
     if (i >= FirstIndex && i <= LastIndex)
@@ -1773,19 +1476,6 @@ void BSplCLib_MovePoint(const double                      U,
   }
 }
 
-// Moves a point and tangent on the B-spline curve by modifying poles
-// @param[in] U - parameter value where point and tangent are moved
-// @param[in] Delta - displacement vector for point
-// @param[in] DeltaDerivatives - displacement vector for tangent
-// @param[in] Tolerance - tolerance for computation
-// @param[in] Degree - degree of the B-spline
-// @param[in] StartingCondition - starting boundary condition
-// @param[in] EndingCondition - ending boundary condition
-// @param[in] Poles - original poles
-// @param[in] Weights - optional weights for rational curves
-// @param[in] FlatKnots - flat knot sequence
-// @param[out] NewPoles - resulting poles
-// @param[out] ErrorStatus - error status of the operation
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_MovePointAndTangent(const double                      U,
                                   const Vector&                     Delta,
@@ -1829,14 +1519,6 @@ void BSplCLib_MovePointAndTangent(const double                      U,
                                 ErrorStatus);
 }
 
-// Computes the parametric tolerance corresponding to a 3D tolerance
-// @param[in] Poles - poles array
-// @param[in] Weights - optional weights for rational curves
-// @param[in] NumPoles - number of poles
-// @param[in] FlatKnots - flat knot sequence
-// @param[in] Degree - degree of the B-spline
-// @param[in] Tolerance3D - 3D tolerance
-// @param[out] UTolerance - computed parametric tolerance
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_Resolution(const Array1OfPoints&             Poles,
                          const NCollection_Array1<double>* Weights,
@@ -1858,15 +1540,6 @@ void BSplCLib_Resolution(const Array1OfPoints&             Poles,
                        UTolerance);
 }
 
-// Multiplies the B-spline curve by a function
-// @param[in] FunctionPtr - evaluator function to multiply with
-// @param[in] BSplineDegree - degree of the B-spline
-// @param[in] BSplineFlatKnots - flat knot sequence of the B-spline
-// @param[in] Poles - original poles
-// @param[in] FlatKnots - flat knot sequence for result
-// @param[in] NewDegree - degree of result
-// @param[out] NewPoles - resulting poles
-// @param[out] theStatus - status of the operation
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_FunctionMultiply(const BSplCLib_EvaluatorFunction& FunctionPtr,
                                const int                         BSplineDegree,
@@ -1897,15 +1570,6 @@ void BSplCLib_FunctionMultiply(const BSplCLib_EvaluatorFunction& FunctionPtr,
                              theStatus);
 }
 
-// Reparameterizes the B-spline curve using a function
-// @param[in] FunctionPtr - evaluator function for reparameterization
-// @param[in] BSplineDegree - degree of the B-spline
-// @param[in] BSplineFlatKnots - flat knot sequence of the B-spline
-// @param[in] Poles - original poles
-// @param[in] FlatKnots - flat knot sequence for result
-// @param[in] NewDegree - degree of result
-// @param[out] NewPoles - resulting poles
-// @param[out] theStatus - status of the operation
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_FunctionReparameterise(const BSplCLib_EvaluatorFunction& FunctionPtr,
                                      const int                         BSplineDegree,
@@ -1936,12 +1600,6 @@ void BSplCLib_FunctionReparameterise(const BSplCLib_EvaluatorFunction& FunctionP
                                    theStatus);
 }
 
-// Computes coefficients of a Bezier curve from poles (Bezier syntax wrapper)
-// Uses stack-allocated flat knots for efficiency.
-// @param[in] Poles - Bezier poles array
-// @param[in] Weights - optional weights for rational curves
-// @param[out] CachePoles - cached poles array
-// @param[out] CacheWeights - cached weights array
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_PolesCoefficients_Bezier(const Array1OfPoints&             Poles,
                                        const NCollection_Array1<double>* Weights,
@@ -1963,13 +1621,6 @@ void BSplCLib_PolesCoefficients_Bezier(const Array1OfPoints&             Poles,
                                                                 CacheWeights);
 }
 
-// Increases the degree of a Bezier curve (Bezier syntax wrapper)
-// Uses stack-allocated knot arrays for efficiency.
-// @param[in] NewDegree - new degree
-// @param[in] Poles - Bezier poles array
-// @param[in] Weights - optional weights for rational curves
-// @param[out] NewPoles - resulting poles array
-// @param[out] NewWeights - resulting weights array
 template <typename Point, typename Vector, typename Array1OfPoints, int Dimension>
 void BSplCLib_IncreaseDegree_Bezier(const int                         NewDegree,
                                     const Array1OfPoints&             Poles,

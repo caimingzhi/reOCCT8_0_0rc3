@@ -9,7 +9,6 @@
 #include <Standard_OStream.hpp>
 class TopOpeBRepDS_Transition;
 
-//! An interference with a parameter.
 class TopOpeBRepDS_CurvePointInterference : public TopOpeBRepDS_Interference
 {
 

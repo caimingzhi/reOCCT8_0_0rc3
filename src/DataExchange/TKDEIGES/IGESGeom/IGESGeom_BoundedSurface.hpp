@@ -9,41 +9,23 @@
 #include <IGESData_IGESEntity.hpp>
 class IGESGeom_Boundary;
 
-//! defines BoundedSurface, Type <143> Form <0>
-//! in package IGESGeom
-//! A bounded surface is used to communicate trimmed
-//! surfaces. The surface and trimming curves are assumed
-//! to be represented parametrically.
 class IGESGeom_BoundedSurface : public IGESData_IGESEntity
 {
 
 public:
   Standard_EXPORT IGESGeom_BoundedSurface();
 
-  //! This method is used to set the fields of the class
-  //! BoundedSurface
-  //! - aType     : Type of bounded surface representation
-  //! - aSurface  : Surface entity to be bounded
-  //! - allBounds : Array of boundary entities
   Standard_EXPORT void Init(
     const int                                                               aType,
     const occ::handle<IGESData_IGESEntity>&                                 aSurface,
     const occ::handle<NCollection_HArray1<occ::handle<IGESGeom_Boundary>>>& allBounds);
 
-  //! returns the type of Bounded surface representation
-  //! 0 = The boundary entities may only reference model space curves
-  //! 1 = The boundary entities may reference both model space curves
-  //! and associated parameter space curve representations
   Standard_EXPORT int RepresentationType() const;
 
-  //! returns the bounded surface
   Standard_EXPORT occ::handle<IGESData_IGESEntity> Surface() const;
 
-  //! returns the number of boundaries
   Standard_EXPORT int NbBoundaries() const;
 
-  //! returns boundary entity
-  //! raises exception if Index <= 0 or Index > NbBoundaries()
   Standard_EXPORT occ::handle<IGESGeom_Boundary> Boundary(const int Index) const;
 
   DEFINE_STANDARD_RTTIEXT(IGESGeom_BoundedSurface, IGESData_IGESEntity)

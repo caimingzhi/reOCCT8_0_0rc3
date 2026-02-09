@@ -1,15 +1,4 @@
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OpenGl_FrameStats.hpp>
 
@@ -23,22 +12,16 @@ IMPLEMENT_STANDARD_RTTIEXT(OpenGl_FrameStats, Graphic3d_FrameStats)
 
 namespace
 {
-  //! Return estimated data size.
+
   static size_t estimatedDataSize(const occ::handle<OpenGl_Resource>& theRes)
   {
     return !theRes.IsNull() ? theRes->EstimatedDataSize() : 0;
   }
 } // namespace
 
-//=================================================================================================
-
 OpenGl_FrameStats::OpenGl_FrameStats() = default;
 
-//=================================================================================================
-
 OpenGl_FrameStats::~OpenGl_FrameStats() = default;
-
-//=================================================================================================
 
 bool OpenGl_FrameStats::IsFrameUpdated(occ::handle<OpenGl_FrameStats>& thePrev) const
 {
@@ -47,7 +30,7 @@ bool OpenGl_FrameStats::IsFrameUpdated(occ::handle<OpenGl_FrameStats>& thePrev) 
   {
     thePrev = new OpenGl_FrameStats();
   }
-  // check just a couple of major counters
+
   else if (myLastFrameIndex == thePrev->myLastFrameIndex
            && std::abs(aFrame.FrameRate() - thePrev->myCountersTmp.FrameRate()) <= 0.001
            && std::abs(aFrame.FrameRateCpu() - thePrev->myCountersTmp.FrameRateCpu()) <= 0.001
@@ -72,8 +55,6 @@ bool OpenGl_FrameStats::IsFrameUpdated(occ::handle<OpenGl_FrameStats>& thePrev) 
   thePrev->myCountersTmp    = aFrame;
   return true;
 }
-
-//=================================================================================================
 
 void OpenGl_FrameStats::updateStatistics(const occ::handle<Graphic3d_CView>& theView,
                                          bool                                theIsImmediateOnly)
@@ -154,29 +135,29 @@ void OpenGl_FrameStats::updateStatistics(const occ::handle<Graphic3d_CView>& the
 
     {
       size_t& aMemFbos = myCountersTmp[Graphic3d_FrameStatsCounter_EstimatedBytesFbos];
-      // main FBOs
+
       aMemFbos += estimatedDataSize(aView->myMainSceneFbos[0]);
       aMemFbos += estimatedDataSize(aView->myMainSceneFbos[1]);
       aMemFbos += estimatedDataSize(aView->myImmediateSceneFbos[0]);
       aMemFbos += estimatedDataSize(aView->myImmediateSceneFbos[1]);
-      // OIT FBOs
+
       aMemFbos += estimatedDataSize(aView->myMainSceneFbosOit[0]);
       aMemFbos += estimatedDataSize(aView->myMainSceneFbosOit[1]);
       aMemFbos += estimatedDataSize(aView->myImmediateSceneFbosOit[0]);
       aMemFbos += estimatedDataSize(aView->myImmediateSceneFbosOit[1]);
       aMemFbos += estimatedDataSize(aView->myDepthPeelingFbos);
-      // shadowmap FBOs
+
       aMemFbos += aView->myShadowMaps->EstimatedDataSize();
-      // dump FBO
+
       aMemFbos += estimatedDataSize(aView->myFBO);
-      // RayTracing FBO
+
       aMemFbos += estimatedDataSize(aView->myOpenGlFBO);
       aMemFbos += estimatedDataSize(aView->myOpenGlFBO2);
       aMemFbos += estimatedDataSize(aView->myRaytraceFBO1[0]);
       aMemFbos += estimatedDataSize(aView->myRaytraceFBO1[1]);
       aMemFbos += estimatedDataSize(aView->myRaytraceFBO2[0]);
       aMemFbos += estimatedDataSize(aView->myRaytraceFBO2[1]);
-      // also RayTracing
+
       aMemFbos += estimatedDataSize(aView->myRaytraceOutputTexture[0]);
       aMemFbos += estimatedDataSize(aView->myRaytraceOutputTexture[1]);
       aMemFbos += estimatedDataSize(aView->myRaytraceVisualErrorTexture[0]);
@@ -187,7 +168,7 @@ void OpenGl_FrameStats::updateStatistics(const occ::handle<Graphic3d_CView>& the
       aMemFbos += estimatedDataSize(aView->myRaytraceTileSamplesTexture[1]);
     }
     {
-      // Ray Tracing geometry
+
       size_t& aMemGeom = myCountersTmp[Graphic3d_FrameStatsCounter_EstimatedBytesGeom];
       aMemGeom += estimatedDataSize(aView->mySceneNodeInfoTexture);
       aMemGeom += estimatedDataSize(aView->mySceneMinPointTexture);
@@ -202,8 +183,6 @@ void OpenGl_FrameStats::updateStatistics(const occ::handle<Graphic3d_CView>& the
     }
   }
 }
-
-//=================================================================================================
 
 void OpenGl_FrameStats::updateStructures(
   int                                                        theViewId,

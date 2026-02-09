@@ -5,14 +5,12 @@
 #include <SWDRAW_ShapeProcessAPI.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 static int ApplySequence(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 4)
   {
     di << "Specify result, shape, resource name and prefix (optional)\n";
-    return 1 /* Error */;
+    return 1;
   }
   const char* arg1 = argv[1];
   const char* arg2 = argv[2];
@@ -24,19 +22,17 @@ static int ApplySequence(Draw_Interpretor& di, int argc, const char** argv)
   if (Shape.IsNull())
   {
     di << "Shape unknown : " << arg2 << "\n";
-    return 1 /* Error */;
+    return 1;
   }
 
   ShapeProcessAPI_ApplySequence seq(arg3, arg4);
-  // clang-format off
-  TopoDS_Shape result = seq.PrepareShape(Shape, true, TopAbs_FACE);//fill history map for faces and above
-  // clang-format on
+
+  TopoDS_Shape result = seq.PrepareShape(Shape, true, TopAbs_FACE);
+
   seq.PrintPreparationResult();
   DBRep::Set(arg1, result);
   return 0;
 }
-
-//=================================================================================================
 
 void SWDRAW_ShapeProcessAPI::InitCommands(Draw_Interpretor& theCommands)
 {
@@ -46,7 +42,7 @@ void SWDRAW_ShapeProcessAPI::InitCommands(Draw_Interpretor& theCommands)
 
     initactor = true;
 
-    const char* g = SWDRAW::GroupName(); // "Tests of DivideTool";
+    const char* g = SWDRAW::GroupName();
 
     theCommands.Add("DT_ApplySeq",
                     "DT_ApplySeq result shape rscfilename [prefix]",

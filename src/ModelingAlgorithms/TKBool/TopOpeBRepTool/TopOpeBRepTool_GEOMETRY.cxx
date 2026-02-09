@@ -15,7 +15,6 @@
 #include <TopOpeBRepTool_ShapeTool.hpp>
 #include <Precision.hpp>
 
-// ----------------------------------------------------------------------
 Standard_EXPORT occ::handle<Geom2d_Curve> BASISCURVE2D(const occ::handle<Geom2d_Curve>& C)
 {
   occ::handle<Standard_Type> T = C->DynamicType();
@@ -27,30 +26,6 @@ Standard_EXPORT occ::handle<Geom2d_Curve> BASISCURVE2D(const occ::handle<Geom2d_
     return C;
 }
 
-/*// ----------------------------------------------------------------------
-Standard_EXPORT bool FUN_tool_IsUViso(const occ::handle<Geom2d_Curve>& PC,
-                     bool& isoU,bool& isoV,
-                     gp_Dir2d& d2d,gp_Pnt2d& o2d)
-{
-  isoU = isoV = false;
-  if (PC.IsNull()) return false;
-  occ::handle<Geom2d_Curve> LLL = BASISCURVE2D(PC);
-  occ::handle<Standard_Type> T2 = LLL->DynamicType();
-  bool isline2d = (T2 == STANDARD_TYPE(Geom2d_Line));
-  if (!isline2d) return false;
-
-  occ::handle<Geom2d_Line> L = occ::down_cast<Geom2d_Line>(LLL);
-  d2d = L->Direction();
-  isoU = (std::abs(d2d.X()) < Precision::Parametric(Precision::Confusion()));
-  isoV = (std::abs(d2d.Y()) < Precision::Parametric(Precision::Confusion()));
-  bool isoUV = isoU || isoV;
-  if (!isoUV) return false;
-
-  o2d = L->Location();
-  return true;
-}*/
-
-// ----------------------------------------------------------------------
 Standard_EXPORT gp_Dir FUN_tool_dirC(const double par, const occ::handle<Geom_Curve>& C)
 {
   gp_Pnt p;
@@ -60,7 +35,6 @@ Standard_EXPORT gp_Dir FUN_tool_dirC(const double par, const occ::handle<Geom_Cu
   return dirC;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_onapex(const gp_Pnt2d& p2d, const occ::handle<Geom_Surface>& S)
 {
   bool                isapex = false;
@@ -87,12 +61,9 @@ Standard_EXPORT bool FUN_tool_onapex(const gp_Pnt2d& p2d, const occ::handle<Geom
   return isapex;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT gp_Dir FUN_tool_ngS(const gp_Pnt2d& p2d, const occ::handle<Geom_Surface>& S)
 {
-  // ###############################
-  // nyi : all geometries are direct
-  // ###############################
+
   gp_Pnt p;
   gp_Vec d1u, d1v;
   S->D1(p2d.X(), p2d.Y(), p, d1u, d1v);
@@ -124,7 +95,7 @@ Standard_EXPORT gp_Dir FUN_tool_ngS(const gp_Pnt2d& p2d, const occ::handle<Geom_
 
         double x = p2d.X();
         double y = p2d.Y();
-        // NYIXPU : devrait plutot etre fait sur les faces & TopOpeBRepTool_TOOL::minDUV...
+
         if (onvf)
           y += 1.;
         else
@@ -136,12 +107,10 @@ Standard_EXPORT gp_Dir FUN_tool_ngS(const gp_Pnt2d& p2d, const occ::handle<Geom_
     }
     if (ST == GeomAbs_Sphere)
     {
-      //      double deuxpi = 2*M_PI;
+
       double pisur2 = M_PI * .5;
       double u = p2d.X(), v = p2d.Y();
-      //      bool u0  =(std::abs(u) < toluv);
-      //      bool u2pi=(std::abs(u-deuxpi) < toluv);
-      //      bool apex = u0 || u2pi;
+
       bool vpisur2      = (std::abs(v - pisur2) < toluv);
       bool vmoinspisur2 = (std::abs(v + pisur2) < toluv);
       bool apex         = vpisur2 || vmoinspisur2;
@@ -150,7 +119,7 @@ Standard_EXPORT gp_Dir FUN_tool_ngS(const gp_Pnt2d& p2d, const occ::handle<Geom_
         gp_Pnt center = GS.Sphere().Location();
         gp_Pnt value  = GS.Value(u, v);
         gp_Vec ng(center, value);
-        //	ng.Reverse();
+
         return ng;
       }
     }
@@ -166,7 +135,6 @@ Standard_EXPORT gp_Dir FUN_tool_ngS(const gp_Pnt2d& p2d, const occ::handle<Geom_
   return ngS;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_line(const occ::handle<Geom_Curve>& C3d)
 {
   occ::handle<Geom_Curve> C = TopOpeBRepTool_ShapeTool::BASISCURVE(C3d);
@@ -175,7 +143,6 @@ Standard_EXPORT bool FUN_tool_line(const occ::handle<Geom_Curve>& C3d)
   return line;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_quadCT(const GeomAbs_CurveType& CT)
 {
   bool isquad = false;
@@ -192,7 +159,6 @@ Standard_EXPORT bool FUN_quadCT(const GeomAbs_CurveType& CT)
   return isquad;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_quad(const occ::handle<Geom_Curve>& C3d)
 {
   occ::handle<Geom_Curve> C = TopOpeBRepTool_ShapeTool::BASISCURVE(C3d);
@@ -204,10 +170,9 @@ Standard_EXPORT bool FUN_tool_quad(const occ::handle<Geom_Curve>& C3d)
   return quad;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_quad(const occ::handle<Geom2d_Curve>& pc)
 {
-  occ::handle<Geom2d_Curve> pcb = BASISCURVE2D(pc); // NYI TopOpeBRepTool_ShapeTool
+  occ::handle<Geom2d_Curve> pcb = BASISCURVE2D(pc);
   if (pcb.IsNull())
     return false;
   Geom2dAdaptor_Curve GC2d(pcb);
@@ -226,10 +191,9 @@ Standard_EXPORT bool FUN_tool_quad(const occ::handle<Geom2d_Curve>& pc)
   return isquad;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_line(const occ::handle<Geom2d_Curve>& pc)
 {
-  occ::handle<Geom2d_Curve> pcb = BASISCURVE2D(pc); // NYI TopOpeBRepTool_ShapeTool
+  occ::handle<Geom2d_Curve> pcb = BASISCURVE2D(pc);
   if (pcb.IsNull())
     return false;
   Geom2dAdaptor_Curve GC2d(pcb);
@@ -238,7 +202,6 @@ Standard_EXPORT bool FUN_tool_line(const occ::handle<Geom2d_Curve>& pc)
   return typ == GeomAbs_Line;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_quad(const occ::handle<Geom_Surface>& S)
 {
   if (S.IsNull())
@@ -259,7 +222,6 @@ Standard_EXPORT bool FUN_tool_quad(const occ::handle<Geom_Surface>& S)
   return isquad;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_closed(const occ::handle<Geom_Surface>& S,
                                      bool&                            uclosed,
                                      double&                          uperiod,
@@ -271,7 +233,7 @@ Standard_EXPORT bool FUN_tool_closed(const occ::handle<Geom_Surface>& S,
     return false;
   uclosed = S->IsUClosed();
   if (uclosed)
-    uclosed = S->IsUPeriodic(); // xpu261098 (BUC60382)
+    uclosed = S->IsUPeriodic();
   if (uclosed)
     uperiod = S->UPeriod();
   vclosed = S->IsVClosed();
@@ -283,9 +245,8 @@ Standard_EXPORT bool FUN_tool_closed(const occ::handle<Geom_Surface>& S,
   return closed;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT void FUN_tool_UpdateBnd2d(Bnd_Box2d& B2d, const Bnd_Box2d& newB2d)
 {
-  //  B2d.SetVoid(); -> DOESN'T EMPTY THE  BOX
+
   B2d = newB2d;
 }

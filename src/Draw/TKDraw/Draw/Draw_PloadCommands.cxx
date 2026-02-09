@@ -8,19 +8,10 @@
 #include <OSD_SharedLibrary.hpp>
 #include <Resource_Manager.hpp>
 
-//! Searches for the existence of the plugin file according to its name thePluginName:
-//! - if thePluginName is empty then it defaults to DrawPlugin
-//! - the search directory is defined according to the variable
-//!   CSF_<filename>Defaults (if it is omitted then it defaults to
-//!   $CASROOT/src/DrawResources)
-//! - finally existence of the file is verified in the search directory
-//! - if the file exists but corresponding variable (CSF_...) has not been
-//!   explicitly set, it is forced to (for further reuse by Resource_Manager)
-//! @return TRUE if the file exists, otherwise - False
 static bool findPluginFile(TCollection_AsciiString& thePluginName,
                            TCollection_AsciiString& thePluginDir)
 {
-  // check if the file name has been specified and use default value if not
+
   if (thePluginName.IsEmpty())
   {
     thePluginName += "DrawPlugin";
@@ -32,7 +23,6 @@ static bool findPluginFile(TCollection_AsciiString& thePluginName,
 
   bool aToSetCSFVariable = false;
 
-  // the order of search : by CSF_<PluginFileName>Defaults and then by CASROOT
   const TCollection_AsciiString aCSFVariable =
     TCollection_AsciiString("CSF_") + thePluginName + "Defaults";
   thePluginDir = OSD_Environment(aCSFVariable).Value();
@@ -41,16 +31,16 @@ static bool findPluginFile(TCollection_AsciiString& thePluginName,
     thePluginDir = OSD_Environment("DRAWHOME").Value();
     if (!thePluginDir.IsEmpty())
     {
-      aToSetCSFVariable = true; // CSF variable to be set later
+      aToSetCSFVariable = true;
     }
     else
     {
-      // now try by CSF_OCCTResourcePath
+
       thePluginDir = OSD_Environment("CSF_OCCTResourcePath").Value();
       if (!thePluginDir.IsEmpty())
       {
         thePluginDir += "/DrawResources";
-        aToSetCSFVariable = true; // CSF variable to be set later
+        aToSetCSFVariable = true;
       }
       else
       {
@@ -61,7 +51,6 @@ static bool findPluginFile(TCollection_AsciiString& thePluginName,
     }
   }
 
-  // search directory name has been constructed, now check whether it and the file exist
   const TCollection_AsciiString aPluginFileName = thePluginDir + "/" + thePluginName;
   OSD_File                      aPluginFile(aPluginFileName);
   if (!aPluginFile.Exists())
@@ -89,10 +78,6 @@ static bool findPluginFile(TCollection_AsciiString& thePluginName,
   return true;
 }
 
-//! Resolve keys within input map (groups, aliases and toolkits) to the list of destination toolkits
-//! (plugins to load).
-//! @param theMap [in] [out] map to resolve (will be rewritten)
-//! @param theResMgr [in] resource manager to resolve keys
 static void resolveKeys(NCollection_IndexedMap<TCollection_AsciiString>& theMap,
                         const occ::handle<Resource_Manager>&             theResMgr)
 {
@@ -129,7 +114,7 @@ static void resolveKeys(NCollection_IndexedMap<TCollection_AsciiString>& theMap,
         }
         else
         {
-          aMap.Add(aResource); // It is toolkit
+          aMap.Add(aResource);
         }
       }
     }
@@ -143,7 +128,6 @@ static void resolveKeys(NCollection_IndexedMap<TCollection_AsciiString>& theMap,
       resolveKeys(aMap2, theResMgr);
     }
 
-    //
     const int aMap2Extent = aMap2.Extent();
     for (int k = 1; k <= aMap2Extent; ++k)
     {
@@ -153,8 +137,6 @@ static void resolveKeys(NCollection_IndexedMap<TCollection_AsciiString>& theMap,
 
   theMap.Assign(aMap);
 }
-
-//=================================================================================================
 
 static int Pload(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -174,7 +156,7 @@ static int Pload(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
   }
   if (aMap.IsEmpty())
   {
-    aMap.Add("DEFAULT"); // Load DEFAULT key
+    aMap.Add("DEFAULT");
   }
 
   TCollection_AsciiString aPluginDir, aPluginDir2;
@@ -207,7 +189,6 @@ static int Pload(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 
     Draw::Load(theDI, aResource, aPluginFileName, aPluginDir, aPluginDir2, false);
 
-    // Load TclScript
     const TCollection_AsciiString aTclScriptDir = OSD_Environment("CSF_DrawPluginTclDir").Value();
     const TCollection_AsciiString aTclScriptFileName = aTclScriptDir + "/" + aValue + ".tcl";
     const TCollection_AsciiString aTclScriptFileNameDefaults = aPluginDir + "/" + aValue + ".tcl";
@@ -231,8 +212,6 @@ static int Pload(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
   return 0;
 }
 
-//=================================================================================================
-
 static int dtryload(Draw_Interpretor& di, int n, const char** argv)
 {
   if (n != 2)
@@ -253,8 +232,6 @@ static int dtryload(Draw_Interpretor& di, int n, const char** argv)
   }
   return 0;
 }
-
-//=================================================================================================
 
 void Draw::PloadCommands(Draw_Interpretor& theCommands)
 {

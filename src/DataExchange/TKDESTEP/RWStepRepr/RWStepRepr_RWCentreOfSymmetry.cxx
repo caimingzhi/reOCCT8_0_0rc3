@@ -6,11 +6,7 @@
 #include <StepRepr_CentreOfSymmetry.hpp>
 #include <StepRepr_ProductDefinitionShape.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWCentreOfSymmetry::RWStepRepr_RWCentreOfSymmetry() = default;
-
-//=================================================================================================
 
 void RWStepRepr_RWCentreOfSymmetry::ReadStep(
   const occ::handle<StepData_StepReaderData>&   data,
@@ -18,11 +14,9 @@ void RWStepRepr_RWCentreOfSymmetry::ReadStep(
   occ::handle<Interface_Check>&                 ach,
   const occ::handle<StepRepr_CentreOfSymmetry>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "centre_of_symmetry"))
     return;
-
-  // Inherited fields of ShapeAspect
 
   occ::handle<TCollection_HAsciiString> aShapeAspect_Name;
   data->ReadString(num, 1, "shape_aspect.name", ach, aShapeAspect_Name);
@@ -48,21 +42,16 @@ void RWStepRepr_RWCentreOfSymmetry::ReadStep(
                     ach,
                     aShapeAspect_ProductDefinitional);
 
-  // Initialize entity
   ent->Init(aShapeAspect_Name,
             aShapeAspect_Description,
             aShapeAspect_OfShape,
             aShapeAspect_ProductDefinitional);
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWCentreOfSymmetry::WriteStep(
   StepData_StepWriter&                          SW,
   const occ::handle<StepRepr_CentreOfSymmetry>& ent) const
 {
-
-  // Inherited fields of ShapeAspect
 
   SW.Send(ent->Name());
 
@@ -73,13 +62,9 @@ void RWStepRepr_RWCentreOfSymmetry::WriteStep(
   SW.SendLogical(ent->ProductDefinitional());
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWCentreOfSymmetry::Share(const occ::handle<StepRepr_CentreOfSymmetry>& ent,
                                           Interface_EntityIterator&                     iter) const
 {
-
-  // Inherited fields of ShapeAspect
 
   iter.AddItem(ent->OfShape());
 }

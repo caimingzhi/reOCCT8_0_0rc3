@@ -11,7 +11,6 @@ class StepShape_Edge;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for Edge
 class RWStepShape_RWEdge
 {
 public:

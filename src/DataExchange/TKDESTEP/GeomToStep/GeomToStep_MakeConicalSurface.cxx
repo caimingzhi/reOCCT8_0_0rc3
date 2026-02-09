@@ -8,10 +8,6 @@
 #include <StepGeom_ConicalSurface.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d' une conical_surface de prostep a partir d' une ConicalSurface
-// de Geom
-//=============================================================================
 GeomToStep_MakeConicalSurface::GeomToStep_MakeConicalSurface(
   const occ::handle<Geom_ConicalSurface>& CS,
   const StepData_Factors&                 theLocalFactors)
@@ -35,10 +31,6 @@ GeomToStep_MakeConicalSurface::GeomToStep_MakeConicalSurface(
   theConicalSurface = CSstep;
   done              = true;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_ConicalSurface>& GeomToStep_MakeConicalSurface::Value() const
 {

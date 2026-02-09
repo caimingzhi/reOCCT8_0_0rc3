@@ -6,13 +6,9 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeExtend_MsgRegistrator, ShapeExtend_BasicMsgRegistrator)
 
-//=================================================================================================
-
 ShapeExtend_MsgRegistrator::ShapeExtend_MsgRegistrator()
 
   = default;
-
-//=================================================================================================
 
 void ShapeExtend_MsgRegistrator::Send(const occ::handle<Standard_Transient>& object,
                                       const Message_Msg&                     message,
@@ -37,8 +33,6 @@ void ShapeExtend_MsgRegistrator::Send(const occ::handle<Standard_Transient>& obj
     myMapTransient.Bind(object, list);
   }
 }
-
-//=================================================================================================
 
 void ShapeExtend_MsgRegistrator::Send(const TopoDS_Shape& shape,
                                       const Message_Msg&  message,

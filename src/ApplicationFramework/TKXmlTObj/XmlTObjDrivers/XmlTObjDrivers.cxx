@@ -22,7 +22,7 @@ const occ::handle<Standard_Transient>& XmlTObjDrivers::Factory(const Standard_GU
     std::cout << "XmlTObjDrivers : Storage Plugin" << std::endl;
 #endif
     static occ::handle<Standard_Transient> model_sd =
-      new XmlTObjDrivers_DocumentStorageDriver("Copyright: Open CASCADE 2004"); // default copyright
+      new XmlTObjDrivers_DocumentStorageDriver("Copyright: Open CASCADE 2004");
     return model_sd;
   }
 
@@ -38,8 +38,6 @@ const occ::handle<Standard_Transient>& XmlTObjDrivers::Factory(const Standard_GU
   return XmlLDrivers::Factory(aGUID);
 }
 
-//=================================================================================================
-
 void XmlTObjDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
 {
   theApp->DefineFormat("TObjXml",
@@ -48,8 +46,6 @@ void XmlTObjDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp
                        new XmlTObjDrivers_DocumentRetrievalDriver,
                        new XmlTObjDrivers_DocumentStorageDriver("Copyright: Open Cascade, 2004"));
 }
-
-//=================================================================================================
 
 void XmlTObjDrivers::AddDrivers(const occ::handle<XmlMDF_ADriverTable>& aDriverTable,
                                 const occ::handle<Message_Messenger>&   anMsgDrv)

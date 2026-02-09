@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -29,18 +18,12 @@ void RWStepVisual_RWCompositeText::ReadStep(const occ::handle<StepData_StepReade
                                             const occ::handle<StepVisual_CompositeText>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 2, ach, "composite_text has not 2 parameter(s)"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
-  data->ReadString(num, 1, "name", ach, aName);
 
-  // --- own field : collectedText ---
+  data->ReadString(num, 1, "name", ach, aName);
 
   occ::handle<NCollection_HArray1<StepVisual_TextOrCharacter>> aCollectedText;
   StepVisual_TextOrCharacter                                   aCollectedTextItem;
@@ -52,7 +35,7 @@ void RWStepVisual_RWCompositeText::ReadStep(const occ::handle<StepData_StepReade
     aCollectedText = new NCollection_HArray1<StepVisual_TextOrCharacter>(1, nb2);
     for (int i2 = 1; i2 <= nb2; i2++)
     {
-      // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
       if (data->ReadEntity(nsub2, i2, "collected_text", ach, aCollectedTextItem))
         aCollectedText->SetValue(i2, aCollectedTextItem);
     }
@@ -62,8 +45,6 @@ void RWStepVisual_RWCompositeText::ReadStep(const occ::handle<StepData_StepReade
     ach->AddFail("Parameter #2 (collected_text) is not a LIST");
   }
 
-  //--- Initialisation of the read entity ---
-
   ent->Init(aName, aCollectedText);
 }
 
@@ -71,11 +52,7 @@ void RWStepVisual_RWCompositeText::WriteStep(StepData_StepWriter&               
                                              const occ::handle<StepVisual_CompositeText>& ent) const
 {
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
-
-  // --- own field : collectedText ---
 
   SW.OpenSub();
   for (int i2 = 1; i2 <= ent->NbCollectedText(); i2++)

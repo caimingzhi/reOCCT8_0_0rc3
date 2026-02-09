@@ -63,10 +63,9 @@ occ::handle<Expr_GeneralExpression> Expr_ArcTangent::Derivative(
   occ::handle<Expr_GeneralExpression> derop = op->Derivative(X);
 
   occ::handle<Expr_Square> sq = new Expr_Square(Expr::CopyShare(op));
-  // 1 + X2
+
   occ::handle<Expr_Sum> thesum = 1.0 + sq->ShallowSimplified();
 
-  // ArcTangent'(F(X)) = F'(X)/(1+F(X)2)
   occ::handle<Expr_Division> thediv = derop / thesum->ShallowSimplified();
 
   return thediv->ShallowSimplified();

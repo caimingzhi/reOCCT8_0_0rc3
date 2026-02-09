@@ -36,7 +36,6 @@
 #include <TopoDS_Vertex.hpp>
 #include <TopoDS_Wire.hpp>
 
-// The minimal tolerance of approximation (edges can be defined with yet smaller tolerance)
 static const double MINIMAL_TOLERANCE = 0.0001;
 
 namespace
@@ -57,8 +56,6 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 TopoDS_Wire BRepAlgo::ConvertWire(const TopoDS_Wire& theWire,
                                   const double       theAngleTol,
                                   const TopoDS_Face& theFace)
@@ -69,7 +66,7 @@ TopoDS_Wire BRepAlgo::ConvertWire(const TopoDS_Wire& theWire,
   NCollection_Vector<OrientedCurve> vecCurve;
 
   BRepTools_WireExplorer anExpE(theWire, theFace);
-  // Explore the edges in the current wire, in their connection order
+
   for (; anExpE.More(); anExpE.Next())
   {
     const TopoDS_Edge&  anEdge = anExpE.Current();
@@ -82,7 +79,6 @@ TopoDS_Wire BRepAlgo::ConvertWire(const TopoDS_Wire& theWire,
     Geom2dConvert_ApproxArcsSegments                       anAlgo(aCurve, aTol, theAngleTol);
     const NCollection_Sequence<occ::handle<Geom2d_Curve>>& aResultApprox = anAlgo.GetResult();
 
-    // Form the array of approximated elementary curves
     if (anEdge.Orientation() == TopAbs_REVERSED)
     {
       for (int iCrv = aResultApprox.Length(); iCrv > 0; iCrv--)
@@ -113,7 +109,7 @@ TopoDS_Wire BRepAlgo::ConvertWire(const TopoDS_Wire& theWire,
 
   if (vecCurve.Length() > 0)
   {
-    // Build the first vertex
+
     BRep_Builder aVBuilder;
     gp_Pnt2d     aPnt[2] = {vecCurve(0).Point(false), vecCurve(vecCurve.Length() - 1).Point(true)};
     double       aDist   = aPnt[0].Distance(aPnt[1]);
@@ -129,7 +125,6 @@ TopoDS_Wire BRepAlgo::ConvertWire(const TopoDS_Wire& theWire,
     TopoDS_Vertex aFirstVertex;
     aVBuilder.MakeVertex(aFirstVertex, aPnt3d, aDist);
 
-    // Loop creating edges
     BRepBuilderAPI_MakeWire aMkWire;
     TopoDS_Edge             anEdgeRes;
     TopoDS_Vertex           aVertex = aFirstVertex;
@@ -192,8 +187,6 @@ TopoDS_Wire BRepAlgo::ConvertWire(const TopoDS_Wire& theWire,
   return aResult;
 }
 
-//=================================================================================================
-
 TopoDS_Face BRepAlgo::ConvertFace(const TopoDS_Face& theFace, const double theAngleTolerance)
 {
   TopoDS_Face                     aResult;
@@ -214,22 +207,18 @@ TopoDS_Face BRepAlgo::ConvertFace(const TopoDS_Face& theFace, const double theAn
   return aResult;
 }
 
-//=================================================================================================
-
 TopoDS_Wire BRepAlgo::ConcatenateWire(const TopoDS_Wire&  W,
                                       const GeomAbs_Shape Option,
                                       const double        TolAngular)
 {
 
-  int nb_curve, // number of curves in the Wire
-    index;
+  int                    nb_curve, index;
   BRepTools_WireExplorer WExp(W);
   TopoDS_Edge            edge;
   TopLoc_Location        L;
-  double                 First = 0., Last = 0., // extremal values for the curve
-    First0 = 0., toler = 0., tolleft, tolright; // Vertex tolerances
-  TopoDS_Vertex Vfirst, Vlast;                  // Vertex of the Wire
-  gp_Pnt        Pfirst, Plast;                  //, Pint;  corresponding points
+  double                 First = 0., Last = 0., First0 = 0., toler = 0., tolleft, tolright;
+  TopoDS_Vertex          Vfirst, Vlast;
+  gp_Pnt                 Pfirst, Plast;
 
   BRepLib_MakeWire MakeResult;
   double           closed_tolerance = 0.0;
@@ -238,31 +227,29 @@ TopoDS_Wire BRepAlgo::ConcatenateWire(const TopoDS_Wire&  W,
   nb_curve = 0;
 
   while (WExp.More())
-  { // computation of the curve number
+  {
     nb_curve++;
     WExp.Next();
   }
 
   if (nb_curve > 1)
   {
-    NCollection_Array1<occ::handle<Geom_BSplineCurve>> tab(0,
-                                                           nb_curve
-                                                             - 1); // array of the wire's curve
-    NCollection_Array1<double> tabtolvertex(0, nb_curve - 2); // array of the tolerance's vertex
+    NCollection_Array1<occ::handle<Geom_BSplineCurve>> tab(0, nb_curve - 1);
+    NCollection_Array1<double>                         tabtolvertex(0, nb_curve - 2);
 
     WExp.Init(W);
 
     for (index = 0; index < nb_curve; index++)
-    { // main loop
+    {
       edge                                    = WExp.Current();
       const occ::handle<Geom_Curve>& aCurve   = BRep_Tool::Curve(edge, L, First, Last);
       occ::handle<Geom_TrimmedCurve> aTrCurve = new Geom_TrimmedCurve(aCurve, First, Last);
-      tab(index) = GeomConvert::CurveToBSplineCurve(aTrCurve); // storage in a array
+      tab(index)                              = GeomConvert::CurveToBSplineCurve(aTrCurve);
       tab(index)->Transform(L.Transformation());
       GeomConvert::C0BSplineToC1BSplineCurve(tab(index), Precision::Confusion());
 
       if (index >= 1)
-      { // continuity test loop
+      {
         if (edge.Orientation() == TopAbs_REVERSED)
           tab(index)->Reverse();
         tolleft                 = BRep_Tool::Tolerance(TopExp::LastVertex(edge));
@@ -271,10 +258,10 @@ TopoDS_Wire BRepAlgo::ConcatenateWire(const TopoDS_Wire&  W,
       }
 
       if (index == 0)
-      { // storage of the first edge features
+      {
         First0 = First;
         if (edge.Orientation() == TopAbs_REVERSED)
-        { //(useful for the closed wire)
+        {
           Vfirst = TopExp::LastVertex(edge);
           tab(index)->Reverse();
         }
@@ -283,7 +270,7 @@ TopoDS_Wire BRepAlgo::ConcatenateWire(const TopoDS_Wire&  W,
       }
 
       if (index == nb_curve - 1)
-      { // storage of the last edge features
+      {
         if (edge.Orientation() == TopAbs_REVERSED)
           Vlast = TopExp::FirstVertex(edge);
         else
@@ -292,8 +279,7 @@ TopoDS_Wire BRepAlgo::ConcatenateWire(const TopoDS_Wire&  W,
       WExp.Next();
     }
 
-    if (BRep_Tool::Tolerance(Vfirst)
-        > BRep_Tool::Tolerance(Vlast)) // computation of the closing tolerance
+    if (BRep_Tool::Tolerance(Vfirst) > BRep_Tool::Tolerance(Vlast))
       toler = BRep_Tool::Tolerance(Vfirst);
     else
       toler = BRep_Tool::Tolerance(Vlast);
@@ -301,35 +287,30 @@ TopoDS_Wire BRepAlgo::ConcatenateWire(const TopoDS_Wire&  W,
     Pfirst = BRep_Tool::Pnt(Vfirst);
     Plast  = BRep_Tool::Pnt(Vlast);
 
-    if ((Pfirst.Distance(Plast) <= toler) && // C0 continuity test at the closing point
-        (GeomLProp::
-           Continuity(tab(nb_curve - 1), tab(0), Last, First0, true, true, toler, TolAngular)
-         >= GeomAbs_G1))
+    if ((Pfirst.Distance(Plast) <= toler)
+        && (GeomLProp::
+              Continuity(tab(nb_curve - 1), tab(0), Last, First0, true, true, toler, TolAngular)
+            >= GeomAbs_G1))
     {
-      // clang-format off
-      closed_tolerance =toler;                                        //if ClosedG1!=0 it will be True and
-      // clang-format on
+
+      closed_tolerance = toler;
+
       closed_flag = true;
-    } // with the toler value
-    occ::handle<NCollection_HArray1<occ::handle<Geom_BSplineCurve>>>
-                                          concatcurve;    // array of the concatenated curves
-    occ::handle<NCollection_HArray1<int>> ArrayOfIndices; // array of the remaining Vertex
+    }
+    occ::handle<NCollection_HArray1<occ::handle<Geom_BSplineCurve>>> concatcurve;
+    occ::handle<NCollection_HArray1<int>>                            ArrayOfIndices;
     if (Option == GeomAbs_G1)
-      GeomConvert::ConcatG1(tab,
-                            tabtolvertex,
-                            concatcurve,
-                            closed_flag,
-                            closed_tolerance); // G1 concatenation
+      GeomConvert::ConcatG1(tab, tabtolvertex, concatcurve, closed_flag, closed_tolerance);
     else
       GeomConvert::ConcatC1(tab,
                             tabtolvertex,
                             ArrayOfIndices,
                             concatcurve,
                             closed_flag,
-                            closed_tolerance); // C1 concatenation
+                            closed_tolerance);
 
     for (index = 0; index <= (concatcurve->Length() - 1); index++)
-    { // building of the resulting Wire
+    {
       BRepLib_MakeEdge EdgeBuilder(concatcurve->Value(index));
       edge = EdgeBuilder.Edge();
       MakeResult.Add(edge);
@@ -357,8 +338,6 @@ TopoDS_Wire BRepAlgo::ConcatenateWire(const TopoDS_Wire&  W,
   }
   return MakeResult.Wire();
 }
-
-//=================================================================================================
 
 TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
 {
@@ -529,8 +508,8 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
           }
           default:
             break;
-        } // end of switch
-      } // end of else
+        }
+      }
 
       if (isSameCurve)
       {
@@ -538,36 +517,34 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
 
         if (aBasisCurve->IsPeriodic())
         {
-          // Treat periodic curves.
+
           const double aPeriod = aBasisCurve->Period();
 
           if (isSameDir)
           {
-            // Check if first parameter is greater then the last one.
+
             while (NewFpar > NewLpar)
             {
               NewFpar -= aPeriod;
             }
           }
           else
-          { // !isSameDir
-            // Check if last parameter is greater then the first one.
+          {
+
             while (NewLpar > NewFpar)
             {
               NewLpar -= aPeriod;
             }
 
-            // Change parameters
             const double aTmpPar = NewLpar;
 
             NewLpar = NewFpar;
             NewFpar = aTmpPar;
           }
 
-          // Udjust parameters on periodic curves.
           if (IsFwdSeq.Last())
           {
-            // The current curve should be after the previous one.
+
             ElCLib::AdjustPeriodic(LparSeq.Last(),
                                    LparSeq.Last() + aPeriod,
                                    Precision::PConfusion(),
@@ -576,7 +553,7 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
           }
           else
           {
-            // The current curve should be before the previous one.
+
             ElCLib::AdjustPeriodic(FparSeq.Last() - aPeriod,
                                    FparSeq.Last(),
                                    Precision::PConfusion(),
@@ -586,7 +563,7 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
         }
         else if (!isSameDir)
         {
-          // Not periodic curves. Opposite dirs.
+
           const double aTmpPar = NewLpar;
 
           NewLpar = NewFpar;
@@ -595,18 +572,18 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
 
         if (IsFwdSeq.Last())
         {
-          // Update last parameter
+
           LparSeq(LparSeq.Length()) = NewLpar;
         }
         else
         {
-          // Update first parameter
+
           FparSeq(FparSeq.Length()) = NewFpar;
         }
       }
       else
       {
-        // Add new curve.
+
         CurveSeq.Append(aCurve);
         FparSeq.Append(fpar);
         LparSeq.Append(lpar);
@@ -644,11 +621,9 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
   if (CurveSeq.IsEmpty())
     return ResEdge;
 
-  int nb_curve = CurveSeq.Length();                                        // number of curves
-  NCollection_Array1<occ::handle<Geom_BSplineCurve>> tab(0, nb_curve - 1); // array of the curves
-  NCollection_Array1<double>                         tabtolvertex(0,
-                                          nb_curve
-                                            - 1); //(0,nb_curve-2);  //array of the tolerances
+  int                                                nb_curve = CurveSeq.Length();
+  NCollection_Array1<occ::handle<Geom_BSplineCurve>> tab(0, nb_curve - 1);
+  NCollection_Array1<double>                         tabtolvertex(0, nb_curve - 1);
 
   int i;
 
@@ -668,11 +643,6 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
       {
         tab(i - 1)->Reverse();
       }
-
-      // Temporary
-      // char* name = new char[100];
-      // Sprintf(name, "c%d", i);
-      // DrawTrSurf::Set(name, tab(i-1));
 
       if (i > 1)
         tabtolvertex(i - 2) = TolSeq(i - 1) * 5.;
@@ -696,15 +666,14 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
       closed_tolerance = BRep_Tool::Tolerance(FirstVertex);
     }
 
-    occ::handle<NCollection_HArray1<occ::handle<Geom_BSplineCurve>>>
-                                          concatcurve;    // array of the concatenated curves
-    occ::handle<NCollection_HArray1<int>> ArrayOfIndices; // array of the remaining Vertex
+    occ::handle<NCollection_HArray1<occ::handle<Geom_BSplineCurve>>> concatcurve;
+    occ::handle<NCollection_HArray1<int>>                            ArrayOfIndices;
     GeomConvert::ConcatC1(tab,
                           tabtolvertex,
                           ArrayOfIndices,
                           concatcurve,
                           closed_flag,
-                          closed_tolerance); // C1 concatenation
+                          closed_tolerance);
 
     if (concatcurve->Length() > 1)
     {

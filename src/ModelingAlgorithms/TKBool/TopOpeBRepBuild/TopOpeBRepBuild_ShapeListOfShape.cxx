@@ -15,18 +15,12 @@
 #include <TopoDS_Vertex.hpp>
 #include <TCollection_AsciiString.hpp>
 
-//=================================================================================================
-
 TopOpeBRepBuild_ShapeListOfShape::TopOpeBRepBuild_ShapeListOfShape() = default;
-
-//=================================================================================================
 
 TopOpeBRepBuild_ShapeListOfShape::TopOpeBRepBuild_ShapeListOfShape(const TopoDS_Shape& S)
 {
   myShape = S;
 }
-
-//=================================================================================================
 
 TopOpeBRepBuild_ShapeListOfShape::TopOpeBRepBuild_ShapeListOfShape(
   const TopoDS_Shape&                   S,
@@ -36,28 +30,20 @@ TopOpeBRepBuild_ShapeListOfShape::TopOpeBRepBuild_ShapeListOfShape(
   myList  = L;
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_ShapeListOfShape::List() const
 {
   return myList;
 }
-
-//=================================================================================================
 
 NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_ShapeListOfShape::ChangeList()
 {
   return myList;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRepBuild_ShapeListOfShape::Shape() const
 {
   return myShape;
 }
-
-//=================================================================================================
 
 TopoDS_Shape& TopOpeBRepBuild_ShapeListOfShape::ChangeShape()
 {

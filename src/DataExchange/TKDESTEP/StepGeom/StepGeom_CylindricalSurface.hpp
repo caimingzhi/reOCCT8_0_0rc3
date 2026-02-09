@@ -11,7 +11,6 @@ class StepGeom_CylindricalSurface : public StepGeom_ElementarySurface
 {
 
 public:
-  //! Returns a CylindricalSurface
   Standard_EXPORT StepGeom_CylindricalSurface();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&  aName,

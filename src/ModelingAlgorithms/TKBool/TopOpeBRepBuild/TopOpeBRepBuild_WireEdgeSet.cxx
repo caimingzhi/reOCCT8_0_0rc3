@@ -30,15 +30,11 @@ TopOpeBRepBuild_Builder* LOCAL_PBUILDER_DEB = NULL;
 void debwesclo(const int) {}
 #endif
 
-//=================================================================================================
-
-TopOpeBRepBuild_WireEdgeSet::TopOpeBRepBuild_WireEdgeSet(const TopoDS_Shape& F, void* const /*A*/)
+TopOpeBRepBuild_WireEdgeSet::TopOpeBRepBuild_WireEdgeSet(const TopoDS_Shape& F, void* const)
     : TopOpeBRepBuild_ShapeSet(TopAbs_VERTEX)
 {
   myFace = TopoDS::Face(F);
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_WireEdgeSet::AddShape(const TopoDS_Shape& S)
 {
@@ -60,8 +56,6 @@ void TopOpeBRepBuild_WireEdgeSet::AddShape(const TopoDS_Shape& S)
     return;
   ProcessAddShape(S);
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_WireEdgeSet::AddStartElement(const TopoDS_Shape& S)
 {
@@ -86,21 +80,15 @@ void TopOpeBRepBuild_WireEdgeSet::AddStartElement(const TopoDS_Shape& S)
   ProcessAddStartElement(S);
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_WireEdgeSet::AddElement(const TopoDS_Shape& S)
 {
   TopOpeBRepBuild_ShapeSet::AddElement(S);
 }
 
-//=================================================================================================
-
 const TopoDS_Face& TopOpeBRepBuild_WireEdgeSet::Face() const
 {
   return myFace;
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_WireEdgeSet::InitNeighbours(const TopoDS_Shape& E)
 {
@@ -110,22 +98,13 @@ void TopOpeBRepBuild_WireEdgeSet::InitNeighbours(const TopoDS_Shape& E)
   FindNeighbours();
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_WireEdgeSet::FindNeighbours()
 {
   while (mySubShapeExplorer.More())
   {
 
-    // l = list of edges neighbour of edge myCurrentShape through
-    // the vertex mySubShapeExplorer.Current(), which is a vertex of the
-    // edge myCurrentShape.
     const TopoDS_Shape&                   V = mySubShapeExplorer.Current();
     const NCollection_List<TopoDS_Shape>& l = MakeNeighboursList(myCurrentShape, V);
-
-    // myIncidentShapesIter iterates on the neighbour edges of the edge
-    // given as InitNeighbours() argument (this edge has been stored
-    // in the field myCurrentShape).
 
     myIncidentShapesIter.Initialize(l);
     if (myIncidentShapesIter.More())
@@ -135,10 +114,6 @@ void TopOpeBRepBuild_WireEdgeSet::FindNeighbours()
   }
 }
 
-//=======================================================================
-// function : MakeNeighboursList
-// purpose  : recherche des edges connexes a Earg par Varg
-//=======================================================================
 const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_WireEdgeSet::MakeNeighboursList(
   const TopoDS_Shape& Earg,
   const TopoDS_Shape& Varg)
@@ -151,13 +126,11 @@ const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_WireEdgeSet::MakeNeighbour
 
   if (nclosing)
   {
-    // build myCurrentShapeNeighbours =
-    // edge list made of connected shapes to Earg through Varg
 
     myCurrentShapeNeighbours.Clear();
     for (NCollection_List<TopoDS_Shape>::Iterator it(l); it.More(); it.Next())
     {
-      const TopoDS_Shape& curn = it.Value(); // current neighbour
+      const TopoDS_Shape& curn = it.Value();
       bool                k    = VertexConnectsEdgesClosing(V, E, curn);
       if (k)
       {
@@ -171,11 +144,6 @@ const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_WireEdgeSet::MakeNeighbour
     {
 
       const TopoDS_Face& F = myFace;
-
-      // plusieurs aretes de couture connexes a E par V et telles que :
-      // orientation de V dans E # orientation de V dans ces aretes.
-      // on ne garde,parmi les aretes de couture connexes,
-      // que l'arete A qui verifie tg(E) ^ tg(A) > 0
 
       gp_Vec2d                  d1E;
       gp_Pnt2d                  pE;
@@ -225,13 +193,13 @@ const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_WireEdgeSet::MakeNeighbour
         bool t2 = ((cross > 0) && oVE == TopAbs_REVERSED) || ((cross < 0) && oVE == TopAbs_FORWARD);
 
         if (t2)
-        { //-- t1
-          // c'est la bonne IsClosed,on ne garde qu'elle parmi les IsClosed
+        {
+
           lclo.Next();
         }
         else
         {
-          // on vire l'arete IsClosed
+
           myCurrentShapeNeighbours.Remove(lclo);
         }
       }
@@ -242,10 +210,7 @@ const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_WireEdgeSet::MakeNeighbour
   {
     return l;
   }
-
-} // MakeNeighoursList
-
-//=================================================================================================
+}
 
 bool TopOpeBRepBuild_WireEdgeSet::VertexConnectsEdges(const TopoDS_Shape& V,
                                                       const TopoDS_Shape& E1,
@@ -273,33 +238,10 @@ bool TopOpeBRepBuild_WireEdgeSet::VertexConnectsEdges(const TopoDS_Shape& V,
   return false;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepBuild_WireEdgeSet::VertexConnectsEdgesClosing(const TopoDS_Shape& V,
                                                              const TopoDS_Shape& E1,
                                                              const TopoDS_Shape& E2) const
 {
-
-  //-----------------------------------------------------------------------
-  // bool VertexConnectsEdgesClosing :
-  //  Let S the set of incident edges on vertex V.
-  //  S contains at least one closed edge on the periodic face to build.
-  // (the face implied in closing test of edge is myFace)
-  //  E1,E2 are S shapes (sharing V).
-  //
-  //  if E1 and E2 are not closed : edges are NOT connected
-  //  if E1 or E2 is/are closed :
-  //    if V changes of relative orientation between E1,E2 : edges are connected
-  //    else : edges are NOT connected
-  //
-  //  example with E1 NOT closed, E2 closed :
-  //
-  //  E1 FORWARD, V REVERSED on E1
-  //  E2 FORWARD, V FORWARD on E2       --> edges are connected
-  //
-  //  E1 FORWARD, V REVERSED on E1
-  //  E2 REVERSED, V FORWARD on E2      --> edges are NOT connected
-  //-----------------------------------------------------------------------
 
   bool c1 = IsClosed(E1);
   bool c2 = IsClosed(E2);
@@ -307,12 +249,6 @@ bool TopOpeBRepBuild_WireEdgeSet::VertexConnectsEdgesClosing(const TopoDS_Shape&
   bool               testconnect = c1 || c2;
   bool               resu        = false;
   TopAbs_Orientation o1, o2;
-
-  // SSCONNEX = False ==> on selectionne E2 de facon a creer ulterieurement
-  // (defaut)             autant de faces que de composantes connexes en UV.
-  // SSCONNEX = True ==> on prend toute arete E2 qui partage V avec E1
-  //                     et telle que orientation(V/E1) # orientation(V/E2)
-  //                     ==> face de part et d'autre des coutures
 
   if ((c1 && c2))
   {
@@ -330,8 +266,7 @@ bool TopOpeBRepBuild_WireEdgeSet::VertexConnectsEdgesClosing(const TopoDS_Shape&
   }
   else
   {
-    // cto 012 O2 arete de couture de face cylindrique
-    // chainage des composantes splitees ON et OUT de meme orientation
+
     TopAbs_Orientation oe1  = E1.Orientation();
     TopAbs_Orientation oe2  = E2.Orientation();
     bool               iseq = E1.IsEqual(E2);
@@ -342,8 +277,6 @@ bool TopOpeBRepBuild_WireEdgeSet::VertexConnectsEdgesClosing(const TopoDS_Shape&
   }
   return resu;
 }
-
-//=================================================================================================
 
 int TopOpeBRepBuild_WireEdgeSet::NbClosingShapes(const NCollection_List<TopoDS_Shape>& L) const
 {
@@ -356,8 +289,6 @@ int TopOpeBRepBuild_WireEdgeSet::NbClosingShapes(const NCollection_List<TopoDS_S
   }
   return n;
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_WireEdgeSet::LocalD1(const TopoDS_Shape& SF,
                                           const TopoDS_Shape& SE,
@@ -392,8 +323,6 @@ void TopOpeBRepBuild_WireEdgeSet::LocalD1(const TopoDS_Shape& SF,
   d1E.SetCoord(u, v);
 }
 
-//=================================================================================================
-
 bool TopOpeBRepBuild_WireEdgeSet::IsClosed(const TopoDS_Shape& E) const
 {
 #ifdef OCCT_DEBUG
@@ -407,8 +336,6 @@ bool TopOpeBRepBuild_WireEdgeSet::IsClosed(const TopoDS_Shape& E) const
   bool               closed = BRep_Tool::IsClosed(EE, myFace);
   return closed;
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_WireEdgeSet::IsUVISO(const TopoDS_Edge& E,
                                           const TopoDS_Face& F,
@@ -437,8 +364,6 @@ void TopOpeBRepBuild_WireEdgeSet::IsUVISO(const TopoDS_Edge& E,
   }
 }
 
-//=================================================================================================
-
 bool TopOpeBRepBuild_WireEdgeSet::IsUClosed(const TopoDS_Shape& E) const
 {
   const TopoDS_Edge& EE = TopoDS::Edge(E);
@@ -446,8 +371,6 @@ bool TopOpeBRepBuild_WireEdgeSet::IsUClosed(const TopoDS_Shape& E) const
   IsUVISO(EE, myFace, closed, bid);
   return closed;
 }
-
-//=================================================================================================
 
 bool TopOpeBRepBuild_WireEdgeSet::IsVClosed(const TopoDS_Shape& E) const
 {
@@ -457,8 +380,6 @@ bool TopOpeBRepBuild_WireEdgeSet::IsVClosed(const TopoDS_Shape& E) const
   return closed;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString TopOpeBRepBuild_WireEdgeSet::SNameVEE(const TopoDS_Shape&,
                                                               const TopoDS_Shape&,
                                                               const TopoDS_Shape&) const
@@ -466,8 +387,6 @@ TCollection_AsciiString TopOpeBRepBuild_WireEdgeSet::SNameVEE(const TopoDS_Shape
   TCollection_AsciiString str;
   return str;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString TopOpeBRepBuild_WireEdgeSet::SNameVEL(
   const TopoDS_Shape&,
@@ -478,11 +397,7 @@ TCollection_AsciiString TopOpeBRepBuild_WireEdgeSet::SNameVEL(
   return str;
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_WireEdgeSet::DumpSS() {}
-
-//=================================================================================================
 
 TCollection_AsciiString TopOpeBRepBuild_WireEdgeSet::SName(const TopoDS_Shape&,
                                                            const TCollection_AsciiString& sb,
@@ -492,8 +407,6 @@ TCollection_AsciiString TopOpeBRepBuild_WireEdgeSet::SName(const TopoDS_Shape&,
   return str;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString TopOpeBRepBuild_WireEdgeSet::SNameori(const TopoDS_Shape&,
                                                               const TCollection_AsciiString& sb,
                                                               const TCollection_AsciiString&) const
@@ -502,8 +415,6 @@ TCollection_AsciiString TopOpeBRepBuild_WireEdgeSet::SNameori(const TopoDS_Shape
   return str;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString TopOpeBRepBuild_WireEdgeSet::SName(const NCollection_List<TopoDS_Shape>&,
                                                            const TCollection_AsciiString&,
                                                            const TCollection_AsciiString&) const
@@ -511,8 +422,6 @@ TCollection_AsciiString TopOpeBRepBuild_WireEdgeSet::SName(const NCollection_Lis
   TCollection_AsciiString str;
   return str;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString TopOpeBRepBuild_WireEdgeSet::SNameori(const NCollection_List<TopoDS_Shape>&,
                                                               const TCollection_AsciiString&,

@@ -7,15 +7,11 @@
 #include <TopoDS_Shape.hpp>
 #include <NCollection_List.hpp>
 
-//=================================================================================================
-
 BRepBuilderAPI_GTransform::BRepBuilderAPI_GTransform(const gp_GTrsf& T)
     : myGTrsf(T)
 {
   myModification = new BRepTools_GTrsfModification(T);
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_GTransform::BRepBuilderAPI_GTransform(const TopoDS_Shape& S,
                                                      const gp_GTrsf&     T,
@@ -25,8 +21,6 @@ BRepBuilderAPI_GTransform::BRepBuilderAPI_GTransform(const TopoDS_Shape& S,
   myModification = new BRepTools_GTrsfModification(T);
   Perform(S, Copy);
 }
-
-//=================================================================================================
 
 void BRepBuilderAPI_GTransform::Perform(const TopoDS_Shape& S, const bool Copy)
 {
@@ -38,10 +32,7 @@ void BRepBuilderAPI_GTransform::Perform(const TopoDS_Shape& S, const bool Copy)
     occ::down_cast<BRepTools_GTrsfModification>(myModification);
   theModif->GTrsf() = myGTrsf;
   DoModif(Slocal, myModification);
-  //  myHist.Filter (Shape());
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepBuilderAPI_GTransform::Modified(const TopoDS_Shape& F)
 {
@@ -57,8 +48,6 @@ const NCollection_List<TopoDS_Shape>& BRepBuilderAPI_GTransform::Modified(const 
   }
   return myGenerated;
 }
-
-//=================================================================================================
 
 TopoDS_Shape BRepBuilderAPI_GTransform::ModifiedShape(const TopoDS_Shape& S) const
 {

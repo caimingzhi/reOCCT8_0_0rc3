@@ -6,10 +6,6 @@
 #include <StepGeom_ToroidalSurface.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d' une toroidal_surface de prostep a partir d' une ToroidalSurface
-// de Geom
-//=============================================================================
 GeomToStep_MakeToroidalSurface::GeomToStep_MakeToroidalSurface(
   const occ::handle<Geom_ToroidalSurface>& S,
   const StepData_Factors&                  theLocalFactors)
@@ -29,10 +25,6 @@ GeomToStep_MakeToroidalSurface::GeomToStep_MakeToroidalSurface(
   theToroidalSurface = Surf;
   done               = true;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_ToroidalSurface>& GeomToStep_MakeToroidalSurface::Value() const
 {

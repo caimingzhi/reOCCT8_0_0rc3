@@ -6,8 +6,6 @@
 #include <BinMFunction_ScopeDriver.hpp>
 #include <Message_Messenger.hpp>
 
-//=================================================================================================
-
 void BinMFunction::AddDrivers(const occ::handle<BinMDF_ADriverTable>& theDriverTable,
                               const occ::handle<Message_Messenger>&   theMsgDriver)
 {

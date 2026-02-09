@@ -7,13 +7,9 @@
 
 #define RAISE_IF_NOSUCHOBJECT 0
 
-//=================================================================================================
-
 HatchGen_PointOnHatching::HatchGen_PointOnHatching()
 
   = default;
-
-//=================================================================================================
 
 HatchGen_PointOnHatching::HatchGen_PointOnHatching(const IntRes2d_IntersectionPoint& Point)
 {
@@ -38,16 +34,11 @@ HatchGen_PointOnHatching::HatchGen_PointOnHatching(const IntRes2d_IntersectionPo
   myPoints.Clear();
 }
 
-//=======================================================================
-// Function : AddPoint
-// Purpose  : Adds a point on element to the point.
-//=======================================================================
-
 void HatchGen_PointOnHatching::AddPoint(const HatchGen_PointOnElement& Point,
                                         const double                   Confusion)
 {
   int NbPnt = myPoints.Length();
-  // for (int IPnt = 1 ;
+
   int IPnt;
   for (IPnt = 1; IPnt <= NbPnt && myPoints(IPnt).IsDifferent(Point, Confusion); IPnt++)
     ;
@@ -55,21 +46,10 @@ void HatchGen_PointOnHatching::AddPoint(const HatchGen_PointOnElement& Point,
     myPoints.Append(Point);
 }
 
-//=======================================================================
-// Function : NbPoints
-// Purpose  : Returns the number of elements intersecting the hatching at
-//            this point.
-//=======================================================================
-
 int HatchGen_PointOnHatching::NbPoints() const
 {
   return myPoints.Length();
 }
-
-//=======================================================================
-// Function : Point
-// Purpose  : Returns the Index-th point on element of the point.
-//=======================================================================
 
 const HatchGen_PointOnElement& HatchGen_PointOnHatching::Point(const int Index) const
 {
@@ -81,11 +61,6 @@ const HatchGen_PointOnElement& HatchGen_PointOnHatching::Point(const int Index) 
   return Point;
 }
 
-//=======================================================================
-// Function : RemPoint
-// Purpose  : Removes the Index-th point on element of the point..
-//=======================================================================
-
 void HatchGen_PointOnHatching::RemPoint(const int Index)
 {
 #if RAISE_IF_NOSUCHOBJECT
@@ -95,20 +70,10 @@ void HatchGen_PointOnHatching::RemPoint(const int Index)
   myPoints.Remove(Index);
 }
 
-//=======================================================================
-// Function : ClrPoints
-// Purpose  : Removes all the points on element of the point.
-//=======================================================================
-
 void HatchGen_PointOnHatching::ClrPoints()
 {
   myPoints.Clear();
 }
-
-//=======================================================================
-// Function : IsLower
-// Purpose  : Tests if the point is lower than an other.
-//=======================================================================
 
 bool HatchGen_PointOnHatching::IsLower(const HatchGen_PointOnHatching& Point,
                                        const double                    Confusion) const
@@ -116,29 +81,17 @@ bool HatchGen_PointOnHatching::IsLower(const HatchGen_PointOnHatching& Point,
   return (Point.myParam - myParam > Confusion);
 }
 
-//=======================================================================
-// Function : IsEqual
-// Purpose  : Tests if the point is equal to an other.
-//=======================================================================
-
 bool HatchGen_PointOnHatching::IsEqual(const HatchGen_PointOnHatching& Point,
                                        const double                    Confusion) const
 {
   return (std::abs(Point.myParam - myParam) <= Confusion);
 }
 
-//=======================================================================
-// Function : IsGreater
-// Purpose  : Tests if the point is greater than an other.
-//=======================================================================
-
 bool HatchGen_PointOnHatching::IsGreater(const HatchGen_PointOnHatching& Point,
                                          const double                    Confusion) const
 {
   return (myParam - Point.myParam > Confusion);
 }
-
-//=================================================================================================
 
 void HatchGen_PointOnHatching::Dump(const int Index) const
 {

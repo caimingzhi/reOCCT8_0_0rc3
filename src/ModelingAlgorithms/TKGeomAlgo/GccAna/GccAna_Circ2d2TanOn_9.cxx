@@ -99,7 +99,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
             gp_Pnt2d pt(Intp.Point(l).Value());
             gp_Ax2d  axe(pt, dirx);
             cirsol(NbrSol) = gp_Circ2d(axe, L1.Distance(pt));
-            //          ===============================================
+
             gp_Dir2d dc1(originL1.XY() - pt.XY());
             gp_Dir2d dc2(originL2.XY() - pt.XY());
             if (!Qualified1.IsUnqualified())
@@ -133,7 +133,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
   }
   else if (Qualified1.IsEnclosed() && Qualified2.IsEnclosed())
   {
-    //============================================================
+
     if (Bis.IsDone())
     {
       if (Bis.NbSolutions() == 2)
@@ -147,7 +147,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
   }
   else if (Qualified1.IsEnclosed() && Qualified2.IsOutside())
   {
-    //===========================================================
+
     if (Bis.IsDone())
     {
       if (Bis.NbSolutions() >= 1)
@@ -164,7 +164,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
   }
   else if (Qualified1.IsOutside() && Qualified2.IsEnclosed())
   {
-    //===========================================================
+
     if (Bis.IsDone())
     {
       if (Bis.NbSolutions() >= 1)
@@ -181,7 +181,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
   }
   else if (Qualified1.IsOutside() && Qualified2.IsOutside())
   {
-    //==========================================================
+
     if (Bis.IsDone())
     {
       if (Bis.NbSolutions() >= 1)
@@ -194,7 +194,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
   }
   else if (Qualified1.IsUnqualified() && Qualified2.IsEnclosed())
   {
-    //=============================================================
+
     if (Bis.IsDone())
     {
       nbsol = 2;
@@ -215,7 +215,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
   }
   else if (Qualified1.IsUnqualified() && Qualified2.IsOutside())
   {
-    //==============================================================
+
     if (Bis.IsDone())
     {
       nbsol = 2;
@@ -233,7 +233,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
   }
   else if (Qualified1.IsEnclosed() && Qualified2.IsUnqualified())
   {
-    //===============================================================
+
     if (Bis.IsDone())
     {
       nbsol = 2;
@@ -254,7 +254,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
   }
   else if (Qualified1.IsOutside() && Qualified2.IsUnqualified())
   {
-    //==============================================================
+
     if (Bis.IsDone())
     {
       nbsol = 2;
@@ -272,7 +272,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
   }
   else if (Qualified1.IsUnqualified() && Qualified2.IsUnqualified())
   {
-    //==================================================================
+
     nbsol = 4;
     i     = 1;
     j     = 2;
@@ -301,9 +301,9 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
                 gp_Pnt2d pt(Intp.Point(i).Value());
                 gp_Ax2d  axe(pt, dirx);
                 cirsol(NbrSol) = gp_Circ2d(axe,
-                                           //              ===============================
+
                                            L1.Distance(Intp.Point(l).Value()));
-                //                                         ===================================
+
                 gp_Dir2d dc1(originL1.XY() - pt.XY());
                 gp_Dir2d dc2(originL2.XY() - pt.XY());
                 if (!Qualified1.IsUnqualified())

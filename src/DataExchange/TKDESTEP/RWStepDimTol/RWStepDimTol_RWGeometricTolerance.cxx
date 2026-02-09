@@ -6,11 +6,7 @@
 #include <StepDimTol_GeometricTolerance.hpp>
 #include <StepDimTol_GeometricToleranceTarget.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWGeometricTolerance::RWStepDimTol_RWGeometricTolerance() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWGeometricTolerance::ReadStep(
   const occ::handle<StepData_StepReaderData>&       data,
@@ -18,11 +14,9 @@ void RWStepDimTol_RWGeometricTolerance::ReadStep(
   occ::handle<Interface_Check>&                     ach,
   const occ::handle<StepDimTol_GeometricTolerance>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "geometric_tolerance"))
     return;
-
-  // Own fields of GeometricTolerance
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -36,18 +30,13 @@ void RWStepDimTol_RWGeometricTolerance::ReadStep(
   StepDimTol_GeometricToleranceTarget aTolerancedShapeAspect;
   data->ReadEntity(num, 4, "toleranced_shape_aspect", ach, aTolerancedShapeAspect);
 
-  // Initialize entity
   ent->Init(aName, aDescription, aMagnitude, aTolerancedShapeAspect);
 }
-
-//=================================================================================================
 
 void RWStepDimTol_RWGeometricTolerance::WriteStep(
   StepData_StepWriter&                              SW,
   const occ::handle<StepDimTol_GeometricTolerance>& ent) const
 {
-
-  // Own fields of GeometricTolerance
 
   SW.Send(ent->Name());
 
@@ -58,13 +47,9 @@ void RWStepDimTol_RWGeometricTolerance::WriteStep(
   SW.Send(ent->TolerancedShapeAspect().Value());
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWGeometricTolerance::Share(const occ::handle<StepDimTol_GeometricTolerance>& ent,
                                               Interface_EntityIterator& iter) const
 {
-
-  // Own fields of GeometricTolerance
 
   iter.AddItem(ent->Magnitude());
 

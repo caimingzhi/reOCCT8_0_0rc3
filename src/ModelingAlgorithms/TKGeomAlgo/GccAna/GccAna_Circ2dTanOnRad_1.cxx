@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ElCLib.hpp>
 #include <GccAna_Circ2dTanOnRad.hpp>
@@ -26,20 +14,6 @@
 #include <Standard_Integer.hpp>
 #include <NCollection_Array1.hpp>
 
-//=========================================================================
-//   Circle tangent to straight line  Qualified1 (L1)                         +
-//          center on straight line OnLine                                  +
-//          of radius Radius.                                              +
-//                                                                        +
-//  Initialize the table of solutions cirsol and all fields.              +
-//  Elimine depending on the qualifier the cases not being solutions.     +
-//  Create L1para : parallel to L1 in the direction required by the       +
-//                  qualifier at distance Radius.                         +
-//  Point P of intersection between L1para and OnLine will give the center point +
-//  of the solution.                                                +
-//  Create solutions cirsol with center P and radius Radius.          +
-//  Fill the fields.                                                +
-//=========================================================================
 GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const GccEnt_QualifiedLin& Qualified1,
                                              const gp_Lin2d&            OnLine,
                                              const double               Radius,
@@ -82,19 +56,19 @@ GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const GccEnt_QualifiedLin& Qualifie
   {
     if (Qualified1.IsEnclosed())
     {
-      //   ============================
+
       eps(1) = -1;
       nbsol  = 1;
     }
     else if (Qualified1.IsOutside())
     {
-      //   ================================
+
       eps(1) = 1;
       nbsol  = 1;
     }
     else
     {
-      //   ====
+
       eps(1) = 1;
       eps(2) = -1;
       nbsol  = 2;
@@ -116,7 +90,7 @@ GccAna_Circ2dTanOnRad::GccAna_Circ2dTanOnRad(const GccEnt_QualifiedLin& Qualifie
             NbrSol++;
             gp_Pnt2d Center(Intp.Point(i).Value());
             cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-            //           =====================================================
+
             gp_Dir2d dc1(origin1.XY() - Center.XY());
             if (!Qualified1.IsUnqualified())
             {

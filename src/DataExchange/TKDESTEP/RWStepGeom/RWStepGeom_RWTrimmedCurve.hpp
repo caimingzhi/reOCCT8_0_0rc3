@@ -11,7 +11,6 @@ class StepGeom_TrimmedCurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for TrimmedCurve
 class RWStepGeom_RWTrimmedCurve
 {
 public:

@@ -10,8 +10,6 @@
 
 static bool IsInternal(const TopoDS_Shell& aSx);
 
-//=================================================================================================
-
 TopoDS_Shell BRepClass3d::OuterShell(const TopoDS_Solid& aSolid)
 {
   bool                        bFound;
@@ -21,16 +19,15 @@ TopoDS_Shell BRepClass3d::OuterShell(const TopoDS_Solid& aSolid)
   TopoDS_Iterator             aIt;
   BRep_Builder                aBB;
   BRepClass3d_SolidClassifier aSC;
-  //
+
   if (aSolid.IsNull())
   {
     return aDummy;
   }
-  //
+
   aTol   = 1.e-7;
   bFound = false;
-  //
-  // if solid has one shell, it will return, without checking orientation
+
   int aShellCounter = 0;
   for (aIt.Initialize(aSolid); aIt.More(); aIt.Next())
   {
@@ -51,7 +48,7 @@ TopoDS_Shell BRepClass3d::OuterShell(const TopoDS_Solid& aSolid)
   {
     return aShell;
   }
-  //
+
   for (aIt.Initialize(aSolid); aIt.More(); aIt.Next())
   {
     const TopoDS_Shape& aSx = aIt.Value();
@@ -63,7 +60,7 @@ TopoDS_Shell BRepClass3d::OuterShell(const TopoDS_Solid& aSolid)
         aSDx = aSolid;
         aSDx.EmptyCopy();
         aBB.Add(aSDx, aShell);
-        //
+
         aSC.Load(aSDx);
         aSC.PerformInfinitePoint(aTol);
         if (aSC.State() == TopAbs_OUT)
@@ -74,25 +71,23 @@ TopoDS_Shell BRepClass3d::OuterShell(const TopoDS_Solid& aSolid)
       }
     }
   }
-  //
+
   if (!bFound)
   {
     return aDummy;
   }
-  //
+
   return aShell;
 }
-
-//=================================================================================================
 
 bool IsInternal(const TopoDS_Shell& aSx)
 {
   bool               bInternal;
   TopAbs_Orientation aOr;
   TopoDS_Iterator    aIt;
-  //
+
   bInternal = false;
-  //
+
   aIt.Initialize(aSx);
   if (aIt.More())
   {
@@ -100,6 +95,6 @@ bool IsInternal(const TopoDS_Shell& aSx)
     aOr                     = aSy.Orientation();
     bInternal               = (aOr == TopAbs_INTERNAL);
   }
-  //
+
   return bInternal;
 }

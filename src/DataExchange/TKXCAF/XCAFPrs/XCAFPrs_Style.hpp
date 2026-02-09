@@ -6,67 +6,49 @@
 #include <XCAFDoc_VisMaterial.hpp>
 #include <Standard_HashUtils.hpp>
 
-//! Represents a set of styling settings applicable to a (sub)shape
 class XCAFPrs_Style
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor - colors are unset, visibility is TRUE.
   Standard_EXPORT XCAFPrs_Style();
 
-  //! Return TRUE if style is empty - does not override any properties.
   bool IsEmpty() const
   {
     return !myHasColorSurf && !myHasColorCurv && myMaterial.IsNull() && myIsVisible;
   }
 
-  //! Return material.
   const occ::handle<XCAFDoc_VisMaterial>& Material() const { return myMaterial; }
 
-  //! Set material.
   void SetMaterial(const occ::handle<XCAFDoc_VisMaterial>& theMaterial)
   {
     myMaterial = theMaterial;
   }
 
-  //! Return TRUE if surface color has been defined.
   bool IsSetColorSurf() const { return myHasColorSurf; }
 
-  //! Return surface color.
   const Quantity_Color& GetColorSurf() const { return myColorSurf.GetRGB(); }
 
-  //! Set surface color.
   void SetColorSurf(const Quantity_Color& theColor) { SetColorSurf(Quantity_ColorRGBA(theColor)); }
 
-  //! Return surface color.
   const Quantity_ColorRGBA& GetColorSurfRGBA() const { return myColorSurf; }
 
-  //! Set surface color.
   Standard_EXPORT void SetColorSurf(const Quantity_ColorRGBA& theColor);
 
-  //! Manage surface color setting
   Standard_EXPORT void UnSetColorSurf();
 
-  //! Return TRUE if curve color has been defined.
   bool IsSetColorCurv() const { return myHasColorCurv; }
 
-  //! Return curve color.
   const Quantity_Color& GetColorCurv() const { return myColorCurv; }
 
-  //! Set curve color.
   Standard_EXPORT void SetColorCurv(const Quantity_Color& col);
 
-  //! Manage curve color setting
   Standard_EXPORT void UnSetColorCurv();
 
-  //! Assign visibility.
   void SetVisibility(const bool theVisibility) { myIsVisible = theVisibility; }
 
-  //! Manage visibility.
   bool IsVisible() const { return myIsVisible; }
 
-  //! Return base color texture.
   const occ::handle<Image_Texture>& BaseColorTexture() const
   {
     static const occ::handle<Image_Texture> THE_NULL_TEXTURE;
@@ -86,8 +68,6 @@ public:
     return THE_NULL_TEXTURE;
   }
 
-  //! Returns True if styles are the same
-  //! Methods for using Style as key in maps
   bool IsEqual(const XCAFPrs_Style& theOther) const
   {
     if (myIsVisible != theOther.myIsVisible)
@@ -105,13 +85,11 @@ public:
            && (!myHasColorCurv || myColorCurv == theOther.myColorCurv);
   }
 
-  //! Returns True if styles are the same.
   bool operator==(const XCAFPrs_Style& theOther) const { return IsEqual(theOther); }
 
   template <class T>
   friend struct std::hash;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
 protected:

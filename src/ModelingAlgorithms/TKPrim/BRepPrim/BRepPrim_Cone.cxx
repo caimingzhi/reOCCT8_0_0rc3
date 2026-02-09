@@ -10,8 +10,6 @@
 #include <Standard_DomainError.hpp>
 #include <TopoDS_Face.hpp>
 
-//=================================================================================================
-
 BRepPrim_Cone::BRepPrim_Cone(const double  Angle,
                              const gp_Ax2& Position,
                              const double  Height,
@@ -27,13 +25,10 @@ BRepPrim_Cone::BRepPrim_Cone(const double  Angle,
   if ((M_PI / 2 - myHalfAngle) * Height < Precision::Confusion())
     throw Standard_DomainError("cone with angle > PI/2");
 
-  // cut at top
   VMax(Height / std::cos(myHalfAngle));
   VMin(0.);
   SetMeridian();
 }
-
-//=================================================================================================
 
 BRepPrim_Cone::BRepPrim_Cone(const double Angle)
     : BRepPrim_Revolution(gp::XOY(), 0, RealLast()),
@@ -46,8 +41,6 @@ BRepPrim_Cone::BRepPrim_Cone(const double Angle)
   SetMeridian();
 }
 
-//=================================================================================================
-
 BRepPrim_Cone::BRepPrim_Cone(const double Angle, const gp_Pnt& Apex)
     : BRepPrim_Revolution(gp_Ax2(Apex, gp_Dir(gp_Dir::D::Z), gp_Dir(gp_Dir::D::X)), 0, RealLast()),
       myHalfAngle(Angle),
@@ -59,8 +52,6 @@ BRepPrim_Cone::BRepPrim_Cone(const double Angle, const gp_Pnt& Apex)
   SetMeridian();
 }
 
-//=================================================================================================
-
 BRepPrim_Cone::BRepPrim_Cone(const double Angle, const gp_Ax2& Axes)
     : BRepPrim_Revolution(Axes, 0, RealLast()),
       myHalfAngle(Angle)
@@ -71,16 +62,12 @@ BRepPrim_Cone::BRepPrim_Cone(const double Angle, const gp_Ax2& Axes)
   SetMeridian();
 }
 
-//=================================================================================================
-
 BRepPrim_Cone::BRepPrim_Cone(const double R1, const double R2, const double H)
     : BRepPrim_Revolution(gp::XOY(), 0, 0)
 {
   SetParameters(R1, R2, H);
   SetMeridian();
 }
-
-//=================================================================================================
 
 BRepPrim_Cone::BRepPrim_Cone(const gp_Pnt& Center, const double R1, const double R2, const double H)
     : BRepPrim_Revolution(gp_Ax2(Center, gp_Dir(gp_Dir::D::Z), gp_Dir(gp_Dir::D::X)), 0, 0)
@@ -89,16 +76,12 @@ BRepPrim_Cone::BRepPrim_Cone(const gp_Pnt& Center, const double R1, const double
   SetMeridian();
 }
 
-//=================================================================================================
-
 BRepPrim_Cone::BRepPrim_Cone(const gp_Ax2& Axes, const double R1, const double R2, const double H)
     : BRepPrim_Revolution(Axes, 0, 0)
 {
   SetParameters(R1, R2, H);
   SetMeridian();
 }
-
-//=================================================================================================
 
 TopoDS_Face BRepPrim_Cone::MakeEmptyLateralFace() const
 {
@@ -107,8 +90,6 @@ TopoDS_Face BRepPrim_Cone::MakeEmptyLateralFace() const
   myBuilder.Builder().MakeFace(F, C, Precision::Confusion());
   return F;
 }
-
-//=================================================================================================
 
 void BRepPrim_Cone::SetMeridian()
 {
@@ -123,8 +104,6 @@ void BRepPrim_Cone::SetMeridian()
   Meridian(L, L2d);
 }
 
-//=================================================================================================
-
 void BRepPrim_Cone::SetParameters(const double R1, const double R2, const double H)
 {
   if (((R1 != 0) && (R1 < Precision::Confusion())) || ((R2 != 0) && (R2 < Precision::Confusion())))
@@ -137,7 +116,6 @@ void BRepPrim_Cone::SetParameters(const double R1, const double R2, const double
   myRadius    = R1;
   myHalfAngle = std::atan((R2 - R1) / H);
 
-  // cut top and bottom
   VMin(0.);
   VMax(std::sqrt(H * H + (R2 - R1) * (R2 - R1)));
 }

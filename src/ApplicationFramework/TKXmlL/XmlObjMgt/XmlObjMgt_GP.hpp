@@ -8,7 +8,6 @@ class gp_Trsf;
 class gp_Mat;
 class gp_XYZ;
 
-//! Translation of gp (simple geometry) objects
 class XmlObjMgt_GP
 {
 public:

@@ -7,7 +7,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Drawable3D, Standard_Transient)
 
-//! Return the map of factory functions.
 static NCollection_DataMap<const char*, Draw_Drawable3D::FactoryFunction_t, Standard_CStringHasher>&
   getFactoryMap()
 {
@@ -18,14 +17,10 @@ static NCollection_DataMap<const char*, Draw_Drawable3D::FactoryFunction_t, Stan
   return myToolMap;
 }
 
-//=================================================================================================
-
 void Draw_Drawable3D::RegisterFactory(const char* theType, const FactoryFunction_t& theFactory)
 {
   getFactoryMap().Bind(theType, theFactory);
 }
-
-//=================================================================================================
 
 occ::handle<Draw_Drawable3D> Draw_Drawable3D::Restore(const char*       theType,
                                                       Standard_IStream& theStream)
@@ -38,8 +33,6 @@ occ::handle<Draw_Drawable3D> Draw_Drawable3D::Restore(const char*       theType,
   return occ::handle<Draw_Drawable3D>();
 }
 
-//=================================================================================================
-
 Draw_Drawable3D::Draw_Drawable3D()
     : myXmin(0.0),
       myXmax(0.0),
@@ -51,21 +44,15 @@ Draw_Drawable3D::Draw_Drawable3D()
 {
 }
 
-//=================================================================================================
-
 bool Draw_Drawable3D::PickReject(const double X, const double Y, const double Prec) const
 {
   return ((X + Prec < myXmin) || (X - Prec > myXmax) || (Y + Prec < myYmin) || (Y - Prec > myYmax));
 }
 
-//=================================================================================================
-
 occ::handle<Draw_Drawable3D> Draw_Drawable3D::Copy() const
 {
   return this;
 }
-
-//=================================================================================================
 
 void Draw_Drawable3D::Dump(Standard_OStream& S) const
 {
@@ -73,14 +60,10 @@ void Draw_Drawable3D::Dump(Standard_OStream& S) const
   S << myYmin << " " << myYmax << "\n";
 }
 
-//=================================================================================================
-
 void Draw_Drawable3D::Save(Standard_OStream&) const
 {
   throw Standard_NotImplemented("Draw_Drawable3D::Save() should be redefined in sub-class");
 }
-
-//=================================================================================================
 
 void Draw_Drawable3D::Whatis(Draw_Interpretor& S) const
 {

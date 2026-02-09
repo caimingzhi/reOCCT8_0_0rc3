@@ -1,8 +1,5 @@
 #pragma once
 
-//! The terms of this enumeration define the types
-//! of available constraint.
-//! ==================
 enum TDataXtd_ConstraintEnum
 {
   TDataXtd_RADIUS,

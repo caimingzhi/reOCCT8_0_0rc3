@@ -12,19 +12,11 @@
 #include <StepGeom_Ellipse.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d'une ellipse de prostep a partir d'une ellipse 3d de gp
-//=============================================================================
 GeomToStep_MakeEllipse::GeomToStep_MakeEllipse(const gp_Elips&         E,
                                                const StepData_Factors& theLocalFactors)
 {
 #include "GeomToStep_MakeEllipse_gen.hpp"
 }
-
-//=============================================================================
-// Creation d'une ellipse de prostep a partir d'une ellipse de
-// Geom
-//=============================================================================
 
 GeomToStep_MakeEllipse::GeomToStep_MakeEllipse(const occ::handle<Geom_Ellipse>& Cer,
                                                const StepData_Factors&          theLocalFactors)
@@ -33,11 +25,6 @@ GeomToStep_MakeEllipse::GeomToStep_MakeEllipse(const occ::handle<Geom_Ellipse>& 
   E = Cer->Elips();
 #include "GeomToStep_MakeEllipse_gen.hpp"
 }
-
-//=============================================================================
-// Creation d'une ellipse 2d de prostep a partir d'une ellipse de
-// Geom2d
-//=============================================================================
 
 GeomToStep_MakeEllipse::GeomToStep_MakeEllipse(const occ::handle<Geom2d_Ellipse>& Cer,
                                                const StepData_Factors&            theLocalFactors)
@@ -60,10 +47,6 @@ GeomToStep_MakeEllipse::GeomToStep_MakeEllipse(const occ::handle<Geom2d_Ellipse>
   theEllipse = EStep;
   done       = true;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_Ellipse>& GeomToStep_MakeEllipse::Value() const
 {

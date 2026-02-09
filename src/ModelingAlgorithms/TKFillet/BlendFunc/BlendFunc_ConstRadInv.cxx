@@ -201,7 +201,7 @@ bool BlendFunc_ConstRadInv::Value(const math_Vector& X, math_Vector& F)
   }
   if (norm2 < Eps)
   {
-    norm2 = 1; // Unsatisfactory, but it is not necessary to stop
+    norm2 = 1;
   }
 
   gp_Vec resul;
@@ -289,14 +289,14 @@ bool BlendFunc_ConstRadInv::Derivatives(const math_Vector& X, math_Matrix& D)
   norm2     = ncrossns2.Magnitude();
   if (norm1 < Eps)
   {
-    norm1 = 1; // Unsatisfactory, but it is not necessary to stop
+    norm1 = 1;
 #ifdef OCCT_DEBUG
     std::cout << " ConstRadInv : Surface singuliere " << std::endl;
 #endif
   }
   if (norm2 < Eps)
   {
-    norm2 = 1; // Unsatisfactory, but it is not necessary to stop
+    norm2 = 1;
 #ifdef OCCT_DEBUG
     std::cout << " ConstRadInv : Surface singuliere " << std::endl;
 #endif
@@ -304,8 +304,6 @@ bool BlendFunc_ConstRadInv::Derivatives(const math_Vector& X, math_Matrix& D)
 
   ndotns1 = nplan.Dot(ns1);
   ndotns2 = nplan.Dot(ns2);
-
-  // Derived compared to u1
 
   temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
   grosterme = ncrossns1.Dot(nplan.Crossed(temp)) / norm1 / norm1;
@@ -316,8 +314,6 @@ bool BlendFunc_ConstRadInv::Derivatives(const math_Vector& X, math_Matrix& D)
                        -ray1 / norm1,
                        temp,
                        d1u1);
-
-  // Derived compared to v1
 
   temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
   grosterme = ncrossns1.Dot(nplan.Crossed(temp)) / norm1 / norm1;
@@ -346,9 +342,6 @@ bool BlendFunc_ConstRadInv::Derivatives(const math_Vector& X, math_Matrix& D)
     D(4, 4) = resul2.Z();
   }
 
-  // derived compared to w (parameter on guideline)
-  // It is assumed that the radius is constant
-
   grosterme = ncrossns1.Dot(dnplan.Crossed(ns1)) / norm1 / norm1;
   resul1.SetLinearForm(-ray1 / norm1 * (grosterme * ndotns1 - dnplan.Dot(ns1)),
                        nplan,
@@ -369,7 +362,6 @@ bool BlendFunc_ConstRadInv::Derivatives(const math_Vector& X, math_Matrix& D)
   D(3, 2) = resul1.Y() + resul2.Y();
   D(4, 2) = resul1.Z() + resul2.Z();
 
-  // Derived compared to u2
   temp      = d2u2.Crossed(d1v2).Added(d1u2.Crossed(d2uv2));
   grosterme = ncrossns2.Dot(nplan.Crossed(temp)) / norm2 / norm2;
   resul1.SetLinearForm(ray2 / norm2 * (grosterme * ndotns2 - nplan.Dot(temp)),
@@ -380,7 +372,6 @@ bool BlendFunc_ConstRadInv::Derivatives(const math_Vector& X, math_Matrix& D)
                        temp);
   resul1.Subtract(d1u2);
 
-  // Derived compared to v2
   temp      = d2uv2.Crossed(d1v2).Added(d1u2.Crossed(d2v2));
   grosterme = ncrossns2.Dot(nplan.Crossed(temp)) / norm2 / norm2;
   resul2.SetLinearForm(ray2 / norm2 * (grosterme * ndotns2 - nplan.Dot(temp)),
@@ -491,14 +482,14 @@ bool BlendFunc_ConstRadInv::Values(const math_Vector& X, math_Vector& F, math_Ma
   norm2     = ncrossns2.Magnitude();
   if (norm1 < Eps)
   {
-    norm1 = 1; // Unsatisfactory, but it is not necessary to stop
+    norm1 = 1;
 #ifdef OCCT_DEBUG
     std::cout << " ConstRadInv : Surface singuliere " << std::endl;
 #endif
   }
   if (norm2 < Eps)
   {
-    norm2 = 1; // Unsatisfactory, but it is not necessary to stop
+    norm2 = 1;
 #ifdef OCCT_DEBUG
     std::cout << " ConstRadInv : Surface singuliere " << std::endl;
 #endif
@@ -516,8 +507,6 @@ bool BlendFunc_ConstRadInv::Values(const math_Vector& X, math_Vector& F, math_Ma
   F(3) = resul1.Y();
   F(4) = resul1.Z();
 
-  // Derived compared to u1
-
   temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
   grosterme = ncrossns1.Dot(nplan.Crossed(temp)) / norm1 / norm1;
   resul1.SetLinearForm(-ray1 / norm1 * (grosterme * ndotns1 - nplan.Dot(temp)),
@@ -527,8 +516,6 @@ bool BlendFunc_ConstRadInv::Values(const math_Vector& X, math_Vector& F, math_Ma
                        -ray1 / norm1,
                        temp,
                        d1u1);
-
-  // Derived compared to v1
 
   temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
   grosterme = ncrossns1.Dot(nplan.Crossed(temp)) / norm1 / norm1;
@@ -557,9 +544,6 @@ bool BlendFunc_ConstRadInv::Values(const math_Vector& X, math_Vector& F, math_Ma
     D(4, 4) = resul2.Z();
   }
 
-  // derived compared to w (parameter on guideline)
-  // It is assumed that the raduis is constant
-
   grosterme = ncrossns1.Dot(dnplan.Crossed(ns1)) / norm1 / norm1;
   resul1.SetLinearForm(-ray1 / norm1 * (grosterme * ndotns1 - dnplan.Dot(ns1)),
                        nplan,
@@ -580,7 +564,6 @@ bool BlendFunc_ConstRadInv::Values(const math_Vector& X, math_Vector& F, math_Ma
   D(3, 2) = resul1.Y() + resul2.Y();
   D(4, 2) = resul1.Z() + resul2.Z();
 
-  // Derived compared to u2
   temp      = d2u2.Crossed(d1v2).Added(d1u2.Crossed(d2uv2));
   grosterme = ncrossns2.Dot(nplan.Crossed(temp)) / norm2 / norm2;
   resul1.SetLinearForm(ray2 / norm2 * (grosterme * ndotns2 - nplan.Dot(temp)),
@@ -591,7 +574,6 @@ bool BlendFunc_ConstRadInv::Values(const math_Vector& X, math_Vector& F, math_Ma
                        temp);
   resul1.Subtract(d1u2);
 
-  // Derived compared to v2
   temp      = d2uv2.Crossed(d1v2).Added(d1u2.Crossed(d2v2));
   grosterme = ncrossns2.Dot(nplan.Crossed(temp)) / norm2 / norm2;
   resul2.SetLinearForm(ray2 / norm2 * (grosterme * ndotns2 - nplan.Dot(temp)),

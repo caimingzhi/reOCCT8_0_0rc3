@@ -6,19 +6,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataXtd_Presentation, TDF_Attribute)
 
-//=================================================================================================
-
 Quantity_NameOfColor TDataXtd_Presentation::getColorNameFromOldEnum(int theOld)
 {
   int aNew = theOld;
   if (theOld >= 43)
   {
     --aNew;
-  } // Quantity_NOC_CHARTREUSE1 merged to Quantity_NOC_CHARTREUSE1
+  }
   if (theOld >= 124)
   {
     --aNew;
-  } // Quantity_NOC_GOLD1 merged to Quantity_NOC_GOLD
+  }
   if (theOld >= 136 && theOld < 223)
   {
     if (theOld == 146)
@@ -57,31 +55,31 @@ Quantity_NameOfColor TDataXtd_Presentation::getColorNameFromOldEnum(int theOld)
     if (theOld > 212)
     {
       aNew += 1;
-    } // old Quantity_NOC_GRAY8
+    }
     else if (theOld > 201)
     {
       aNew += 2;
-    } // old Quantity_NOC_GRAY7
+    }
     else if (theOld > 190)
     {
       aNew += 3;
-    } // old Quantity_NOC_GRAY6
+    }
     else if (theOld > 179)
     {
       aNew += 4;
-    } // old Quantity_NOC_GRAY5
+    }
     else if (theOld > 168)
     {
       aNew += 5;
-    } // old Quantity_NOC_GRAY4
+    }
     else if (theOld > 157)
     {
       aNew += 6;
-    } // old Quantity_NOC_GRAY3
+    }
     else if (theOld > 146)
     {
       aNew += 7;
-    } // old Quantity_NOC_GRAY2
+    }
     else
     {
       aNew += 8;
@@ -91,11 +89,11 @@ Quantity_NameOfColor TDataXtd_Presentation::getColorNameFromOldEnum(int theOld)
   if (theOld > 228)
   {
     aNew += 3;
-  } // moved Quantity_NOC_GRAY96, 97, 98
+  }
   if (theOld >= 230)
   {
     --aNew;
-  } // Quantity_NOC_GREEN1 merged to Quantity_NOC_GREEN
+  }
   if (theOld == 235)
   {
     return Quantity_NOC_GRAY97;
@@ -111,27 +109,27 @@ Quantity_NameOfColor TDataXtd_Presentation::getColorNameFromOldEnum(int theOld)
   if (theOld >= 238)
   {
     aNew -= 3;
-  } // moved Quantity_NOC_GRAY96, 97, 98
+  }
   if (theOld >= 360)
   {
     --aNew;
-  } // Quantity_NOC_ORANGE1 merged to Quantity_NOC_ORANGE
+  }
   if (theOld >= 365)
   {
     --aNew;
-  } // Quantity_NOC_ORANGERED1 merged to Quantity_NOC_ORANGERED
+  }
   if (theOld >= 413)
   {
     --aNew;
-  } // Quantity_NOC_RED1 merged to Quantity_NOC_RED
+  }
   if (theOld >= 489)
   {
     --aNew;
-  } // Quantity_NOC_TOMATO1 merged to Quantity_NOC_TOMATO
+  }
   if (theOld >= 511)
   {
     --aNew;
-  } // Quantity_NOC_YELLOW1 merged to Quantity_NOC_YELLOW
+  }
   if (aNew > Quantity_NOC_WHITE)
   {
     return Quantity_NOC_WHITE;
@@ -139,15 +137,19 @@ Quantity_NameOfColor TDataXtd_Presentation::getColorNameFromOldEnum(int theOld)
   return (Quantity_NameOfColor)aNew;
 }
 
-//=================================================================================================
-
 int TDataXtd_Presentation::getOldColorNameFromNewEnum(Quantity_NameOfColor theNew)
 {
   int anOld = theNew;
-  // clang-format off
-  if (theNew >= Quantity_NOC_CHARTREUSE2)  { ++anOld; }  // Quantity_NOC_CHARTREUSE1 merged to Quantity_NOC_CHARTREUSE1
-  if (theNew >= Quantity_NOC_GOLD2)        { ++anOld; }  // Quantity_NOC_GOLD1 merged to Quantity_NOC_GOLD
-  // clang-format on
+
+  if (theNew >= Quantity_NOC_CHARTREUSE2)
+  {
+    ++anOld;
+  }
+  if (theNew >= Quantity_NOC_GOLD2)
+  {
+    ++anOld;
+  }
+
   if (theNew >= Quantity_NOC_GRAY2 && theNew <= Quantity_NOC_GRAY89)
   {
     if (theNew == Quantity_NOC_GRAY2)
@@ -232,20 +234,39 @@ int TDataXtd_Presentation::getOldColorNameFromNewEnum(Quantity_NameOfColor theNe
   if (theNew >= Quantity_NOC_GREEN)
   {
     anOld -= 3;
-  } // moved Quantity_NOC_GRAY96, 97, 98
-    // clang-format off
-  if (theNew >= Quantity_NOC_GREEN2)     { ++anOld; }    // Quantity_NOC_GREEN1 merged to Quantity_NOC_GREEN
-  if (theNew >= Quantity_NOC_HONEYDEW)   { anOld += 3; } // moved Quantity_NOC_GRAY96, 97, 98
-  if (theNew >= Quantity_NOC_ORANGE2)    { ++anOld; }    // Quantity_NOC_ORANGE1 merged to Quantity_NOC_ORANGE
-  if (theNew >= Quantity_NOC_ORANGERED2) { ++anOld; }    // Quantity_NOC_ORANGERED1 merged to Quantity_NOC_ORANGERED
-  if (theNew >= Quantity_NOC_RED2)       { ++anOld; }    // Quantity_NOC_RED1 merged to Quantity_NOC_RED
-  if (theNew >= Quantity_NOC_TOMATO2)    { ++anOld; }    // Quantity_NOC_TOMATO1 merged to Quantity_NOC_TOMATO
-  if (theNew >= Quantity_NOC_YELLOW2)    { ++anOld; }    // Quantity_NOC_YELLOW1 merged to Quantity_NOC_YELLOW
-  // clang-format on
+  }
+
+  if (theNew >= Quantity_NOC_GREEN2)
+  {
+    ++anOld;
+  }
+  if (theNew >= Quantity_NOC_HONEYDEW)
+  {
+    anOld += 3;
+  }
+  if (theNew >= Quantity_NOC_ORANGE2)
+  {
+    ++anOld;
+  }
+  if (theNew >= Quantity_NOC_ORANGERED2)
+  {
+    ++anOld;
+  }
+  if (theNew >= Quantity_NOC_RED2)
+  {
+    ++anOld;
+  }
+  if (theNew >= Quantity_NOC_TOMATO2)
+  {
+    ++anOld;
+  }
+  if (theNew >= Quantity_NOC_YELLOW2)
+  {
+    ++anOld;
+  }
+
   return anOld;
 }
-
-//=================================================================================================
 
 TDataXtd_Presentation::TDataXtd_Presentation()
     : myDriverGUID("00000000-0000-0000-0000-000000000000"),
@@ -264,8 +285,6 @@ TDataXtd_Presentation::TDataXtd_Presentation()
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDataXtd_Presentation> TDataXtd_Presentation::Set(const TDF_Label&     theLabel,
                                                               const Standard_GUID& theDriverId)
 {
@@ -281,8 +300,6 @@ occ::handle<TDataXtd_Presentation> TDataXtd_Presentation::Set(const TDF_Label&  
   return aPresentation;
 }
 
-//=================================================================================================
-
 void TDataXtd_Presentation::Unset(const TDF_Label& theLabel)
 {
   occ::handle<TDataXtd_Presentation> aPresentation;
@@ -290,29 +307,21 @@ void TDataXtd_Presentation::Unset(const TDF_Label& theLabel)
     theLabel.ForgetAttribute(aPresentation);
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataXtd_Presentation::GetID()
 {
   static Standard_GUID TDataXtd_PresentationID("04fb4d00-5690-11d1-8940-080009dc3333");
   return TDataXtd_PresentationID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataXtd_Presentation::ID() const
 {
   return GetID();
 }
 
-//=================================================================================================
-
 Standard_GUID TDataXtd_Presentation::GetDriverGUID() const
 {
   return myDriverGUID;
 }
-
-//=================================================================================================
 
 void TDataXtd_Presentation::SetDriverGUID(const Standard_GUID& theGUID)
 {
@@ -323,56 +332,40 @@ void TDataXtd_Presentation::SetDriverGUID(const Standard_GUID& theGUID)
   }
 }
 
-//=================================================================================================
-
 bool TDataXtd_Presentation::IsDisplayed() const
 {
   return myIsDisplayed;
 }
-
-//=================================================================================================
 
 bool TDataXtd_Presentation::HasOwnMaterial() const
 {
   return myHasOwnMaterial;
 }
 
-//=================================================================================================
-
 bool TDataXtd_Presentation::HasOwnTransparency() const
 {
   return myHasOwnTransparency;
 }
-
-//=================================================================================================
 
 bool TDataXtd_Presentation::HasOwnColor() const
 {
   return myHasOwnColor;
 }
 
-//=================================================================================================
-
 bool TDataXtd_Presentation::HasOwnWidth() const
 {
   return myHasOwnWidth;
 }
-
-//=================================================================================================
 
 bool TDataXtd_Presentation::HasOwnMode() const
 {
   return myHasOwnMode;
 }
 
-//=================================================================================================
-
 bool TDataXtd_Presentation::HasOwnSelectionMode() const
 {
   return myHasOwnSelectionMode;
 }
-
-//=================================================================================================
 
 void TDataXtd_Presentation::SetDisplayed(const bool theIsDisplayed)
 {
@@ -382,8 +375,6 @@ void TDataXtd_Presentation::SetDisplayed(const bool theIsDisplayed)
     myIsDisplayed = theIsDisplayed;
   }
 }
-
-//=================================================================================================
 
 void TDataXtd_Presentation::SetMaterialIndex(const int theMaterialIndex)
 {
@@ -395,8 +386,6 @@ void TDataXtd_Presentation::SetMaterialIndex(const int theMaterialIndex)
   }
 }
 
-//=================================================================================================
-
 void TDataXtd_Presentation::SetTransparency(const double theValue)
 {
   if (!myHasOwnTransparency || myTransparency != theValue)
@@ -406,8 +395,6 @@ void TDataXtd_Presentation::SetTransparency(const double theValue)
     myHasOwnTransparency = true;
   }
 }
-
-//=================================================================================================
 
 void TDataXtd_Presentation::SetColor(const Quantity_NameOfColor theColor)
 {
@@ -419,8 +406,6 @@ void TDataXtd_Presentation::SetColor(const Quantity_NameOfColor theColor)
   }
 }
 
-//=================================================================================================
-
 void TDataXtd_Presentation::SetWidth(const double theWidth)
 {
   if (!myHasOwnWidth || myWidth != theWidth)
@@ -430,8 +415,6 @@ void TDataXtd_Presentation::SetWidth(const double theWidth)
     myHasOwnWidth = true;
   }
 }
-
-//=================================================================================================
 
 void TDataXtd_Presentation::SetMode(const int theMode)
 {
@@ -443,17 +426,10 @@ void TDataXtd_Presentation::SetMode(const int theMode)
   }
 }
 
-//=======================================================================
-// function : GetNbSelectionModes
-// purpose  : Returns the number of selection modes of the attribute.
-//         : It starts with 1 .. GetNbSelectionModes().
-//=======================================================================
 Standard_EXPORT int TDataXtd_Presentation::GetNbSelectionModes() const
 {
   return mySelectionModes.Extent();
 }
-
-//=================================================================================================
 
 void TDataXtd_Presentation::SetSelectionMode(const int theSelectionMode, const bool theTransaction)
 {
@@ -468,8 +444,6 @@ void TDataXtd_Presentation::SetSelectionMode(const int theSelectionMode, const b
   }
 }
 
-//=================================================================================================
-
 void TDataXtd_Presentation::AddSelectionMode(const int theSelectionMode, const bool theTransaction)
 {
   if (!myHasOwnSelectionMode || !HasSelectionMode(theSelectionMode))
@@ -481,42 +455,30 @@ void TDataXtd_Presentation::AddSelectionMode(const int theSelectionMode, const b
   }
 }
 
-//=================================================================================================
-
 int TDataXtd_Presentation::MaterialIndex() const
 {
   return myMaterialIndex;
 }
-
-//=================================================================================================
 
 double TDataXtd_Presentation::Transparency() const
 {
   return myTransparency;
 }
 
-//=================================================================================================
-
 Quantity_NameOfColor TDataXtd_Presentation::Color() const
 {
   return myColor;
 }
-
-//=================================================================================================
 
 double TDataXtd_Presentation::Width() const
 {
   return myWidth;
 }
 
-//=================================================================================================
-
 int TDataXtd_Presentation::Mode() const
 {
   return myMode;
 }
-
-//=================================================================================================
 
 int TDataXtd_Presentation::SelectionMode(const int index) const
 {
@@ -530,8 +492,6 @@ int TDataXtd_Presentation::SelectionMode(const int index) const
   return aSelectionMode;
 }
 
-//=================================================================================================
-
 void TDataXtd_Presentation::UnsetMaterial()
 {
   if (myHasOwnMaterial)
@@ -540,8 +500,6 @@ void TDataXtd_Presentation::UnsetMaterial()
     myHasOwnMaterial = false;
   }
 }
-
-//=================================================================================================
 
 void TDataXtd_Presentation::UnsetTransparency()
 {
@@ -552,8 +510,6 @@ void TDataXtd_Presentation::UnsetTransparency()
   }
 }
 
-//=================================================================================================
-
 void TDataXtd_Presentation::UnsetColor()
 {
   if (myHasOwnColor)
@@ -562,8 +518,6 @@ void TDataXtd_Presentation::UnsetColor()
     myHasOwnColor = false;
   }
 }
-
-//=================================================================================================
 
 void TDataXtd_Presentation::UnsetWidth()
 {
@@ -574,8 +528,6 @@ void TDataXtd_Presentation::UnsetWidth()
   }
 }
 
-//=================================================================================================
-
 void TDataXtd_Presentation::UnsetMode()
 {
   if (myHasOwnMode)
@@ -584,8 +536,6 @@ void TDataXtd_Presentation::UnsetMode()
     myHasOwnMode = false;
   }
 }
-
-//=================================================================================================
 
 void TDataXtd_Presentation::UnsetSelectionMode()
 {
@@ -596,8 +546,6 @@ void TDataXtd_Presentation::UnsetSelectionMode()
     mySelectionModes.Clear();
   }
 }
-
-//=================================================================================================
 
 occ::handle<TDF_Attribute> TDataXtd_Presentation::BackupCopy() const
 {
@@ -622,14 +570,10 @@ occ::handle<TDF_Attribute> TDataXtd_Presentation::BackupCopy() const
   return aCopy;
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDataXtd_Presentation::NewEmpty() const
 {
   return new TDataXtd_Presentation();
 }
-
-//=================================================================================================
 
 void TDataXtd_Presentation::Restore(const occ::handle<TDF_Attribute>& theAttribute)
 {
@@ -657,8 +601,6 @@ void TDataXtd_Presentation::Restore(const occ::handle<TDF_Attribute>& theAttribu
   myIsDisplayed = aPresentation->IsDisplayed();
   myDriverGUID  = aPresentation->GetDriverGUID();
 }
-
-//=================================================================================================
 
 void TDataXtd_Presentation::Paste(const occ::handle<TDF_Attribute>& theInto,
                                   const occ::handle<TDF_RelocationTable>&) const
@@ -731,10 +673,6 @@ void TDataXtd_Presentation::Paste(const occ::handle<TDF_Attribute>& theInto,
   anInto->myDriverGUID  = myDriverGUID;
 }
 
-//=======================================================================
-// function : HasSelectionMode
-// purpose  : Checks a list of selection modes.
-//=======================================================================
 bool TDataXtd_Presentation::HasSelectionMode(const int theSelectionMode) const
 {
   bool                            ret(false);

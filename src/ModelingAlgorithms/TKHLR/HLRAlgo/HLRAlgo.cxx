@@ -15,8 +15,6 @@ static const double sinu5 = sin(5. * M_PI / 14.);
 static const double cosu6 = cos(6. * M_PI / 14.);
 static const double sinu6 = sin(6. * M_PI / 14.);
 
-//=================================================================================================
-
 void HLRAlgo::UpdateMinMax(const double x,
                            const double y,
                            const double z,
@@ -54,8 +52,6 @@ void HLRAlgo::UpdateMinMax(const double x,
   }
 }
 
-//=================================================================================================
-
 void HLRAlgo::EnlargeMinMax(const double tol, double Min[16], double Max[16])
 {
   int i = 0;
@@ -67,8 +63,6 @@ void HLRAlgo::EnlargeMinMax(const double tol, double Min[16], double Max[16])
   }
 }
 
-//=================================================================================================
-
 void HLRAlgo::InitMinMax(const double Big, double Min[16], double Max[16])
 {
   int i = 0;
@@ -79,8 +73,6 @@ void HLRAlgo::InitMinMax(const double Big, double Min[16], double Max[16])
     i++;
   }
 }
-
-//=================================================================================================
 
 void HLRAlgo::EncodeMinMax(HLRAlgo_EdgesBlock::MinMaxIndices& Min,
                            HLRAlgo_EdgesBlock::MinMaxIndices& Max,
@@ -120,8 +112,6 @@ void HLRAlgo::EncodeMinMax(HLRAlgo_EdgesBlock::MinMaxIndices& Min,
   MM.Max[7] += (Max.Max[6] & 0x00007fff) << 16;
 }
 
-//=================================================================================================
-
 double HLRAlgo::SizeBox(HLRAlgo_EdgesBlock::MinMaxIndices& Min,
                         HLRAlgo_EdgesBlock::MinMaxIndices& Max)
 {
@@ -136,8 +126,6 @@ double HLRAlgo::SizeBox(HLRAlgo_EdgesBlock::MinMaxIndices& Min,
   }
   return s;
 }
-
-//=================================================================================================
 
 void HLRAlgo::DecodeMinMax(const HLRAlgo_EdgesBlock::MinMaxIndices& MM,
                            HLRAlgo_EdgesBlock::MinMaxIndices&       Min,
@@ -176,8 +164,6 @@ void HLRAlgo::DecodeMinMax(const HLRAlgo_EdgesBlock::MinMaxIndices& MM,
   Min.Max[7] = MM.Min[7] & 0x00007fff;
   Max.Max[7] = MM.Max[7] & 0x00007fff;
 }
-
-//=================================================================================================
 
 void HLRAlgo::AddMinMax(HLRAlgo_EdgesBlock::MinMaxIndices& IMin,
                         HLRAlgo_EdgesBlock::MinMaxIndices& IMax,

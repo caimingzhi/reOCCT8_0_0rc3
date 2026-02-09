@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Geom_BezierSurface.hpp>
 #include <gp_Pnt.hpp>
@@ -22,7 +11,7 @@ class Geom_BezierSurface_Test : public ::testing::Test
 protected:
   void SetUp() override
   {
-    // Create a simple Bezier surface for testing
+
     NCollection_Array2<gp_Pnt> aPoles(1, 3, 1, 3);
     for (int i = 1; i <= 3; ++i)
     {
@@ -40,10 +29,9 @@ protected:
 
 TEST_F(Geom_BezierSurface_Test, CopyConstructorBasicProperties)
 {
-  // Test copy constructor
+
   occ::handle<Geom_BezierSurface> aCopiedSurface = new Geom_BezierSurface(*myOriginalSurface);
 
-  // Verify basic properties are identical
   EXPECT_EQ(myOriginalSurface->UDegree(), aCopiedSurface->UDegree());
   EXPECT_EQ(myOriginalSurface->VDegree(), aCopiedSurface->VDegree());
   EXPECT_EQ(myOriginalSurface->NbUPoles(), aCopiedSurface->NbUPoles());
@@ -56,7 +44,6 @@ TEST_F(Geom_BezierSurface_Test, CopyConstructorPoles)
 {
   occ::handle<Geom_BezierSurface> aCopiedSurface = new Geom_BezierSurface(*myOriginalSurface);
 
-  // Verify all poles are identical
   for (int i = 1; i <= myOriginalSurface->NbUPoles(); ++i)
   {
     for (int j = 1; j <= myOriginalSurface->NbVPoles(); ++j)
@@ -70,17 +57,15 @@ TEST_F(Geom_BezierSurface_Test, CopyConstructorPoles)
 
 TEST_F(Geom_BezierSurface_Test, CopyMethodUsesOptimizedConstructor)
 {
-  // Test that Copy() method uses the optimized copy constructor
+
   occ::handle<Geom_Geometry>      aCopiedGeom    = myOriginalSurface->Copy();
   occ::handle<Geom_BezierSurface> aCopiedSurface = occ::down_cast<Geom_BezierSurface>(aCopiedGeom);
 
   EXPECT_FALSE(aCopiedSurface.IsNull());
 
-  // Verify the copy is functionally identical
   EXPECT_EQ(myOriginalSurface->UDegree(), aCopiedSurface->UDegree());
   EXPECT_EQ(myOriginalSurface->VDegree(), aCopiedSurface->VDegree());
 
-  // Test evaluation at several points
   for (double u = 0.0; u <= 1.0; u += 0.5)
   {
     for (double v = 0.0; v <= 1.0; v += 0.5)
@@ -94,7 +79,7 @@ TEST_F(Geom_BezierSurface_Test, CopyMethodUsesOptimizedConstructor)
 
 TEST_F(Geom_BezierSurface_Test, RationalSurfaceCopyConstructor)
 {
-  // Create a rational Bezier surface
+
   NCollection_Array2<gp_Pnt> aPoles(1, 2, 1, 2);
   aPoles(1, 1) = gp_Pnt(0, 0, 0);
   aPoles(1, 2) = gp_Pnt(1, 0, 0);
@@ -112,7 +97,6 @@ TEST_F(Geom_BezierSurface_Test, RationalSurfaceCopyConstructor)
 
   EXPECT_TRUE(aCopiedRational->IsURational() || aCopiedRational->IsVRational());
 
-  // Verify weights are copied correctly
   for (int i = 1; i <= aRationalSurface->NbUPoles(); ++i)
   {
     for (int j = 1; j <= aRationalSurface->NbVPoles(); ++j)
@@ -126,11 +110,9 @@ TEST_F(Geom_BezierSurface_Test, CopyIndependence)
 {
   occ::handle<Geom_BezierSurface> aCopiedSurface = new Geom_BezierSurface(*myOriginalSurface);
 
-  // Modify the original surface
   gp_Pnt aNewPole(10, 10, 10);
   myOriginalSurface->SetPole(2, 2, aNewPole);
 
-  // Verify the copied surface is not affected
   gp_Pnt anOrigPole = aCopiedSurface->Pole(2, 2);
   EXPECT_FALSE(anOrigPole.IsEqual(aNewPole, 1e-10));
 }

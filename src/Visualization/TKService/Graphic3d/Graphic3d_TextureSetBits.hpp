@@ -2,7 +2,6 @@
 
 #include <Graphic3d_TextureUnit.hpp>
 
-//! Standard texture units combination bits.
 enum Graphic3d_TextureSetBits
 {
   Graphic3d_TextureSetBits_NONE      = 0,

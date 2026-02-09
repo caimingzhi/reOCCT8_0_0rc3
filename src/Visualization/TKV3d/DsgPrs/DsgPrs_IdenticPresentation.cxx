@@ -42,7 +42,6 @@ void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
   anArrayOfPoints->AddVertex(aPntAttach.X(), aPntAttach.Y(), aPntAttach.Z());
   aPresentation->CurrentGroup()->AddPrimitiveArray(anArrayOfPoints);
 
-  // texte
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, aPntOffset);
 }
 
@@ -61,14 +60,13 @@ void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
   aPrims->AddVertex(aFAttach);
   aPrims->AddVertex(aSAttach);
 
-  // trait joignant aPntOffset
   gp_Vec v1(aFAttach, aSAttach);
   gp_Vec v2(aSAttach, aPntOffset);
 
   aPrims->AddVertex(aPntOffset);
   if (!v1.IsParallel(v2, Precision::Angular()))
   {
-    // on joint aPntOffset a son projete
+
     gp_Lin ll(aFAttach, gp_Dir(v1));
     aPrims->AddVertex(ElCLib::Value(ElCLib::Parameter(ll, aPntOffset), ll));
   }
@@ -77,7 +75,6 @@ void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
 
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // texte
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, aPntOffset);
 }
 
@@ -108,7 +105,6 @@ void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
 
   occ::handle<Graphic3d_ArrayOfPolylines> aPrims;
 
-  // trait joignant aPntOffset
   if (std::abs((aPntOffset.Distance(aCenter) - rad)) >= Precision::Confusion())
   {
     aPrims = new Graphic3d_ArrayOfPolylines(nbp + 2, 2);
@@ -125,11 +121,9 @@ void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
 
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // texte
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, aPntOffset);
 }
 
-// jfa 16/10/2000
 void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                      const occ::handle<Prs3d_Drawer>&       aDrawer,
                                      const TCollection_ExtendedString&      aText,
@@ -158,7 +152,6 @@ void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
 
   occ::handle<Graphic3d_ArrayOfPolylines> aPrims;
 
-  // trait joignant aPntOffset
   if (aPntOffset.Distance(aPntOnCirc) >= Precision::Confusion())
   {
     aPrims = new Graphic3d_ArrayOfPolylines(nbp + 2, 2);
@@ -175,13 +168,9 @@ void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
 
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // texte
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, aPntOffset);
 }
 
-// jfa 16/10/2000 end
-
-// jfa 10/10/2000
 void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                      const occ::handle<Prs3d_Drawer>&       aDrawer,
                                      const TCollection_ExtendedString&      aText,
@@ -205,7 +194,6 @@ void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
 
   occ::handle<Graphic3d_ArrayOfPolylines> aPrims;
 
-  // trait joignant aPntOffset
   if (!aPntOnElli.IsEqual(aPntOffset, Precision::Confusion()))
   {
     aPrims = new Graphic3d_ArrayOfPolylines(nbp + 2, 2);
@@ -222,8 +210,5 @@ void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
 
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // texte
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, aPntOffset);
 }
-
-// jfa 10/10/2000 end

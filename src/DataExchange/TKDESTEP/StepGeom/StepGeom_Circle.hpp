@@ -11,7 +11,6 @@ class StepGeom_Circle : public StepGeom_Conic
 {
 
 public:
-  //! Returns a Circle
   Standard_EXPORT StepGeom_Circle();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

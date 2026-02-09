@@ -17,94 +17,50 @@ class IntCurveSurface_IntersectionPoint;
 class gp_Pnt;
 class TopoDS_Face;
 
-//! Computes the intersection between a face and a
-//! curve. To intersect one curve with shape method
-//! Init(Shape, curve, tTol) should be used. To
-//! intersect a few curves with specified shape it is
-//! necessary to load shape one time using method
-//! Load(shape, tol) and find intersection points for
-//! each curve using method Init(curve). For
-//! iteration by intersection points method More() and
-//! Next() should be used.
-//!
-//! Example:
-//! Inter.Load(shape, tol);
-//! for( i =1; i <= nbCurves;i++)
-//! {
-//! Inter.Init(curve);
-//! for( ;Inter.More(); Inter.Next())
-//! {
-//! .......
-//! }
-//! }
 class BRepIntCurveSurface_Inter
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor;
   Standard_EXPORT BRepIntCurveSurface_Inter();
 
-  //! Load the Shape, the curve and initialize the
-  //! tolerance used for the classification.
   Standard_EXPORT void Init(const TopoDS_Shape&      theShape,
                             const GeomAdaptor_Curve& theCurve,
                             const double             theTol);
 
-  //! Load the Shape, the curve and initialize the
-  //! tolerance used for the classification.
   Standard_EXPORT void Init(const TopoDS_Shape& theShape,
                             const gp_Lin&       theLine,
                             const double        theTol);
 
-  //! Load the Shape, and initialize the
-  //! tolerance used for the classification.
   Standard_EXPORT void Load(const TopoDS_Shape& theShape, const double theTol);
 
-  //! Method to find intersections of specified curve with loaded shape.
   Standard_EXPORT void Init(const GeomAdaptor_Curve& theCurve);
 
-  //! returns True if there is a current face.
   Standard_EXPORT bool More() const;
 
-  //! Sets the next intersection point to check.
   Standard_EXPORT void Next();
 
-  //! returns the current Intersection point.
   Standard_EXPORT IntCurveSurface_IntersectionPoint Point() const;
 
-  //! returns the current geometric Point
   Standard_EXPORT const gp_Pnt& Pnt() const;
 
-  //! returns the U parameter of the current point
-  //! on the current face.
   Standard_EXPORT double U() const;
 
-  //! returns the V parameter of the current point
-  //! on the current face.
   Standard_EXPORT double V() const;
 
-  //! returns the parameter of the current point
-  //! on the curve.
   Standard_EXPORT double W() const;
 
-  //! returns the current state (IN or ON)
   Standard_EXPORT TopAbs_State State() const;
 
-  //! returns the transition of the line on the surface (IN or OUT or UNKNOWN)
   Standard_EXPORT IntCurveSurface_TransitionOnCurve Transition() const;
 
-  //! returns the current face.
   Standard_EXPORT const TopoDS_Face& Face() const;
 
 protected:
-  //! Internal function
   Standard_EXPORT void Find();
 
-  //! Method check found intersection point
   Standard_EXPORT bool FindPoint();
 
-  //! Method to clear fields of class
   Standard_EXPORT void Clear();
 
 private:

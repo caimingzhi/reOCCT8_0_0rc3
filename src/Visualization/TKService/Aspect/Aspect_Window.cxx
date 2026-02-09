@@ -6,10 +6,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Aspect_Window, Standard_Transient)
 
-//-Aliases
-//-Global data definitions
-//-Destructors
-//-Constructors
 Aspect_Window::Aspect_Window()
     : MyBackgroundFillMethod(Aspect_FM_NONE)
 {
@@ -63,8 +59,6 @@ void Aspect_Window::SetBackground(const Quantity_Color&           theFirstColor,
 {
   MyGradientBackground.SetColors(theFirstColor, theSecondColor, theFillMethod);
 }
-
-//=================================================================================================
 
 void Aspect_Window::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

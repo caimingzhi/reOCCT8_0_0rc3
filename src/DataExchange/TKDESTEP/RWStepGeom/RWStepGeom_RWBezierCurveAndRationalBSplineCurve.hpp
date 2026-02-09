@@ -11,7 +11,6 @@ class StepGeom_BezierCurveAndRationalBSplineCurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for BezierCurveAndRationalBSplineCurve
 class RWStepGeom_RWBezierCurveAndRationalBSplineCurve
 {
 public:

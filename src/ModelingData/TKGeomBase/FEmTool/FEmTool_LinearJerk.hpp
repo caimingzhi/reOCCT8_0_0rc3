@@ -11,7 +11,6 @@
 #include <NCollection_HArray2.hpp>
 #include <math_Vector.hpp>
 
-//! Criterion of LinearJerk To Hermit-Jacobi elements
 class FEmTool_LinearJerk : public FEmTool_ElementaryCriterion
 {
 

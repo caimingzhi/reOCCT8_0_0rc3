@@ -5,11 +5,7 @@
 #include <StepRepr_ProductDefinitionShape.hpp>
 #include <StepRepr_ShapeAspect.hpp>
 
-//=================================================================================================
-
 StepDimTol_GeometricToleranceTarget::StepDimTol_GeometricToleranceTarget() = default;
-
-//=================================================================================================
 
 int StepDimTol_GeometricToleranceTarget::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {

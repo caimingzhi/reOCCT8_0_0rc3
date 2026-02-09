@@ -21,8 +21,6 @@
 #include <Precision.hpp>
 #include <TopOpeBRepDS_DataStructure.hpp>
 
-//=================================================================================================
-
 bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
                           const occ::handle<ChFiDS_SurfData>& Data,
                           const gp_Pln&                       Pl1,
@@ -35,7 +33,6 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
                           const TopAbs_Orientation            Of1)
 {
 
-  // calcul du cylindre
   gp_Ax3 Pos1 = Pl1.Position();
   gp_Dir D1   = Pos1.XDirection().Crossed(Pos1.YDirection());
   if (Or1 == TopAbs_REVERSED)
@@ -52,8 +49,7 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
   gp_Pnt             Pv;
   if (LInt.IsDone())
   {
-    // On met l origine du cylindre au point de depart fourni sur la
-    // ligne guide.
+
     Pv = ElCLib::Value(ElCLib::Parameter(LInt.Line(1), ElCLib::Value(First, Spine)), LInt.Line(1));
   }
   else
@@ -76,8 +72,6 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
   occ::handle<Geom_CylindricalSurface> gcyl = new Geom_CylindricalSurface(CylAx3, Radius);
   Data->ChangeSurf(ChFiKPart_IndexSurfaceInDS(gcyl, DStr));
 
-  // On regarde si l orientation du cylindre est la meme que celle
-  // des faces.
   gp_Pnt P;
   gp_Vec deru, derv;
   ElSLib::CylinderD1(0., 0., CylAx3, Radius, P, deru, derv);
@@ -98,10 +92,8 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
     Data->ChangeOrientation() = TopAbs_FORWARD;
   }
 
-  // On charge les FaceInterferences avec les pcurves et courbes 3d.
-
   double u, v;
-  // La face 1.
+
   ElSLib::PlaneParameters(Pos1, P, u, v);
   gp_Pnt2d p2dPln(u, v);
   gp_Dir2d dir2dPln(AxisCylinder.Dot(Pos1.XDirection()), AxisCylinder.Dot(Pos1.YDirection()));
@@ -126,7 +118,6 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
                                                  GLin2dPln1,
                                                  GLin2dCyl1);
 
-  // La face 2.
   ElSLib::CylinderD1(Ang, 0., CylAx3, Radius, P, deru, derv);
   norcyl    = deru.Crossed(derv);
   norpl     = Pos2.XDirection().Crossed(Pos2.YDirection());

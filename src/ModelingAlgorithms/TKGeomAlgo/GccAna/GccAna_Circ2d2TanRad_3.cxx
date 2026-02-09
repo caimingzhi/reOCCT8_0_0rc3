@@ -11,19 +11,6 @@
 #include <Standard_NegativeValue.hpp>
 #include <NCollection_Array1.hpp>
 
-// circular tangent to a line and a point and a given radius
-//=============================================================
-//========================================================================
-// Initialize WellDone to false.                                         +
-// Return line L1.                                                       +
-// Leave with error if the construction is impossible.                   +
-// Create parallel to L1 in the proper direction.                        +
-// Create the circle with center at Point1 of radius Radius.             +
-// Intersect the parallel and the circle.                                +
-//                              ==> The center point of the  solution.   +
-// Create the solution to be added to already found solutions.           +
-// Fill the fields.                                                      +
-//========================================================================
 GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1,
                                            const gp_Pnt2d&            Point2,
                                            const double               Radius,
@@ -77,7 +64,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
     }
     else if (Qualified1.IsEnclosed())
     {
-      //  =================================
+
       if ((-ydir * (cxloc - lxloc) + xdir * (cyloc - lyloc) < 0.0))
       {
         WellDone = true;
@@ -101,7 +88,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
     }
     else if (Qualified1.IsOutside())
     {
-      //  ================================
+
       if ((-ydir * (cxloc - lxloc) + xdir * (cyloc - lyloc) > 0.0))
       {
         WellDone = true;
@@ -124,7 +111,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
     }
     else if (Qualified1.IsUnqualified())
     {
-      //  ====================================
+
       if (displ1 - Radius * 2.0 > 0.0)
       {
         if ((-ydir * (cxloc - lxloc) + xdir * (cyloc - lyloc) > 0.0))
@@ -153,14 +140,13 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
     {
       if (displ1 < 1.e-10)
       {
-        // particular case when Point2 is on the line
-        // construct two solutions directly
+
         for (int jcote = 1; jcote <= nbcote; jcote++)
         {
           NbrSol++;
           gp_Pnt2d Center(cxloc - cote(jcote) * ydir * Radius, cyloc + cote(jcote) * xdir * Radius);
           cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-          //        =======================================================
+
           qualifier2(NbrSol) = GccEnt_noqualifier;
           if (!Qualified1.IsUnqualified())
           {
@@ -199,7 +185,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
                 NbrSol++;
                 gp_Pnt2d Center(Intp.Point(i).Value());
                 cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-                //            =======================================================
+
                 gp_Dir2d dc1(origin1.XY() - Center.XY());
                 qualifier2(NbrSol) = GccEnt_noqualifier;
                 if (!Qualified1.IsUnqualified())
@@ -233,7 +219,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
       WellDone  = true;
       NbrSol    = 1;
       cirsol(1) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-      //    ==================================================
+
       qualifier2(1) = GccEnt_noqualifier;
       TheSame1(1)   = 0;
       TheSame2(1)   = 0;

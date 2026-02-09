@@ -32,50 +32,31 @@ class IntCurveSurface_HInter : public IntCurveSurface_Intersection
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty Constructor
   Standard_EXPORT IntCurveSurface_HInter();
 
-  //! Compute the Intersection between the curve and the
-  //! surface
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Curve>&   Curve,
                                const occ::handle<Adaptor3d_Surface>& Surface);
 
-  //! Compute the Intersection between the curve and
-  //! the surface. The Curve is already sampled and
-  //! its polygon : <Polygon> is given.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Curve>&       Curve,
                                const IntCurveSurface_ThePolygonOfHInter& Polygon,
                                const occ::handle<Adaptor3d_Surface>&     Surface);
 
-  //! Compute the Intersection between the curve and
-  //! the surface. The Curve is already sampled and
-  //! its polygon : <Polygon> is given. The Surface is
-  //! also sampled and <Polyhedron> is given.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Curve>&          Curve,
                                const IntCurveSurface_ThePolygonOfHInter&    ThePolygon,
                                const occ::handle<Adaptor3d_Surface>&        Surface,
                                const IntCurveSurface_ThePolyhedronOfHInter& Polyhedron);
 
-  //! Compute the Intersection between the curve and
-  //! the surface. The Curve is already sampled and
-  //! its polygon : <Polygon> is given. The Surface is
-  //! also sampled and <Polyhedron> is given.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Curve>&          Curve,
                                const IntCurveSurface_ThePolygonOfHInter&    ThePolygon,
                                const occ::handle<Adaptor3d_Surface>&        Surface,
                                const IntCurveSurface_ThePolyhedronOfHInter& Polyhedron,
                                Bnd_BoundSortBox&                            BndBSB);
 
-  //! Compute the Intersection between the curve and
-  //! the surface. The Surface is already sampled and
-  //! its polyhedron : <Polyhedron> is given.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Curve>&          Curve,
                                const occ::handle<Adaptor3d_Surface>&        Surface,
                                const IntCurveSurface_ThePolyhedronOfHInter& Polyhedron);
 
 protected:
-  //! Compute the Intersection between the curve and the
-  //! surface
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Curve>&   Curve,
                                const occ::handle<Adaptor3d_Surface>& Surface,
                                const double                          U0,

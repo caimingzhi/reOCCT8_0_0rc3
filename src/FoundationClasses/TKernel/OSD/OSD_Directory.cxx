@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OSD_Directory.hpp>
 
@@ -38,18 +26,12 @@ void _osd_wnt_set_error(OSD_Error&, int, ...);
 const OSD_WhoAmI Iam = OSD_WDirectory;
 #endif
 
-//=================================================================================================
-
 OSD_Directory::OSD_Directory() = default;
-
-//=================================================================================================
 
 OSD_Directory::OSD_Directory(const OSD_Path& theName)
     : OSD_FileNode(theName)
 {
 }
-
-//=================================================================================================
 
 void OSD_Directory::Build(const OSD_Protection& theProtect)
 {
@@ -64,21 +46,20 @@ void OSD_Directory::Build(const OSD_Protection& theProtect)
   bool isOK = Exists();
   if (!isOK)
   {
-    // myError will be set to fail by Exists() if intermediate dirs do not exist
+
     myError.Reset();
 
-    // create directory if it does not exist;
     TCollection_ExtendedString aDirNameW(aDirName);
     if (CreateDirectoryW(aDirNameW.ToWideString(), NULL))
     {
       isOK = true;
     }
-    // if failed due to absence of intermediate directories, create them recursively
+
     else if (GetLastError() == ERROR_PATH_NOT_FOUND)
     {
       OSD_Path aSupPath = myPath;
       aSupPath.UpTrek();
-      aSupPath.SetName(myPath.TrekValue(myPath.TrekLength())); // incredible, but required!
+      aSupPath.SetName(myPath.TrekValue(myPath.TrekLength()));
       OSD_Directory aSupDir(aSupPath);
       aSupDir.Build(theProtect);
       if (aSupDir.Failed())
@@ -113,7 +94,7 @@ void OSD_Directory::Build(const OSD_Protection& theProtect)
   {
     OSD_Path aSupPath = myPath;
     aSupPath.UpTrek();
-    aSupPath.SetName(myPath.TrekValue(myPath.TrekLength())); // incredible, but required!
+    aSupPath.SetName(myPath.TrekValue(myPath.TrekLength()));
     OSD_Directory aSupDir(aSupPath);
     aSupDir.Build(theProtect);
     if (aSupDir.Failed())
@@ -132,8 +113,6 @@ void OSD_Directory::Build(const OSD_Protection& theProtect)
 #endif
 }
 
-//=================================================================================================
-
 OSD_Directory OSD_Directory::BuildTemporary()
 {
 #ifdef _WIN32
@@ -150,14 +129,14 @@ OSD_Directory OSD_Directory::BuildTemporary()
   aDir.Build(OSD_Protection());
   return aDir;
 #else
-  // create a temporary directory with 0700 permissions
+
   char aTmpName[] = "/tmp/CSFXXXXXX";
   if (nullptr == mkdtemp(aTmpName))
   {
-    return OSD_Directory(); // can't create a directory
+    return OSD_Directory();
   }
 
-  unlink(aTmpName); // destroys link but directory still exists while current process lives
+  unlink(aTmpName);
   OSD_Directory aDir;
   aDir.SetPath(TCollection_AsciiString(aTmpName));
   return aDir;

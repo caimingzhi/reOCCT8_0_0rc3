@@ -1,18 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//  Modified by skv - Thu Jul  7 14:37:05 2005 OCC9134
 
 #include <ElCLib.hpp>
 #include <ElSLib.hpp>
@@ -98,7 +84,6 @@ void Extrema_ExtElCS::Perform(const gp_Lin& C, const gp_Cylinder& S)
     gp_Pnt PonAxis = myPOnC1.Value();
     gp_Pnt PC      = myPOnC2.Value();
 
-    // line intersects the cylinder
     if (radius - PonAxis.Distance(PC) > Precision::PConfusion())
     {
       IntAna_Quadric      theQuadric(S);
@@ -112,7 +97,7 @@ void Extrema_ExtElCS::Perform(const gp_Lin& C, const gp_Cylinder& S)
         myNbExt = Inters.NbPoints();
         if (myNbExt > 0)
         {
-          // Not more than 2 additional points from perpendiculars.
+
           mySqDist = new NCollection_HArray1<double>(1, myNbExt + 2);
           myPoint1 = new NCollection_HArray1<Extrema_POnCurv>(1, myNbExt + 2);
           myPoint2 = new NCollection_HArray1<Extrema_POnSurf>(1, myNbExt + 2);
@@ -133,7 +118,7 @@ void Extrema_ExtElCS::Perform(const gp_Lin& C, const gp_Cylinder& S)
     }
     else
     {
-      // line is tangent or outside of the cylinder
+
       Extrema_ExtPElS ExPS(PC, S, Precision::Confusion());
       if (ExPS.IsDone())
       {
@@ -156,13 +141,7 @@ void Extrema_ExtElCS::Perform(const gp_Lin& C, const gp_Cylinder& S)
 
   if (isParallel)
   {
-    // Line direction is similar to cylinder axis of rotation.
-    // The case is possible when either extrema returned parallel status
-    // or Intersection tool returned infinite number of solutions.
-    // This is possible due to Intersection algorithm uses more precise
-    // characteristics to consider given geometries parallel.
-    // In the latter case there may be several extremas, thus we look for
-    // the one with the lowest distance and use it as a final solution.
+
     mySqDist         = new NCollection_HArray1<double>(1, 1);
     double    aDist  = Extrem.SquareDistance(1);
     const int aNbExt = Extrem.NbExt();
@@ -188,8 +167,6 @@ Extrema_ExtElCS::Extrema_ExtElCS(const gp_Lin& C, const gp_Cone& S)
   Perform(C, S);
 }
 
-// void Extrema_ExtElCS::Perform(const gp_Lin& C,
-//			      const gp_Cone& S)
 void Extrema_ExtElCS::Perform(const gp_Lin&, const gp_Cone&)
 {
   throw Standard_NotImplemented();
@@ -202,9 +179,6 @@ Extrema_ExtElCS::Extrema_ExtElCS(const gp_Lin& C, const gp_Sphere& S)
 
 void Extrema_ExtElCS::Perform(const gp_Lin& C, const gp_Sphere& S)
 {
-  // In case of intersection - return four points:
-  // 2 intersection points and 2 perpendicular.
-  // No intersection - only min and max.
 
   myDone        = false;
   myNbExt       = 0;
@@ -226,7 +200,7 @@ void Extrema_ExtElCS::Perform(const gp_Lin& C, const gp_Sphere& S)
       {
         myNbExt   = aLinSphere.NbPoints();
         aStartIdx = myNbExt;
-        // Not more than 2 additional points from perpendiculars.
+
         mySqDist = new NCollection_HArray1<double>(1, myNbExt + 2);
         myPoint1 = new NCollection_HArray1<Extrema_POnCurv>(1, myNbExt + 2);
         myPoint2 = new NCollection_HArray1<Extrema_POnSurf>(1, myNbExt + 2);
@@ -275,14 +249,10 @@ Extrema_ExtElCS::Extrema_ExtElCS(const gp_Lin& C, const gp_Torus& S)
   Perform(C, S);
 }
 
-// void Extrema_ExtElCS::Perform(const gp_Lin& C,
-//			      const gp_Torus& S)
 void Extrema_ExtElCS::Perform(const gp_Lin&, const gp_Torus&)
 {
   throw Standard_NotImplemented();
 }
-
-//        Circle-?
 
 Extrema_ExtElCS::Extrema_ExtElCS(const gp_Circ& C, const gp_Pln& S)
 {
@@ -310,19 +280,19 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Pln& S)
 
     gp_Dir ExtLine = NCirc ^ NPln;
     ExtLine        = ExtLine ^ NCirc;
-    //
+
     gp_Dir XDir = Pos.XDirection();
     double T[2];
     T[0] = XDir.AngleWithRef(ExtLine, NCirc);
     if (T[0] < 0.)
     {
-      // Put in period
+
       T[0] += M_PI;
     }
     T[1] = T[0] + M_PI;
-    //
+
     myNbExt = 2;
-    // Check intersection
+
     IntAna_IntConicQuad anInter(C, S, Precision::Angular(), Precision::Confusion());
 
     if (anInter.IsDone() && anInter.IsInQuadric())
@@ -359,10 +329,10 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Pln& S)
         myPoint2->SetValue(i + 1, POnS);
         mySqDist->SetValue(i + 1, PC.SquareDistance(PP));
       }
-      //
+
       if (myNbExt > 2)
       {
-        // Add intersection points
+
         for (i = 1; i <= anInter.NbPoints(); ++i)
         {
           double t = anInter.ParamOnConic(i);
@@ -393,18 +363,14 @@ Extrema_ExtElCS::Extrema_ExtElCS(const gp_Circ& C, const gp_Cylinder& S)
   Perform(C, S);
 }
 
-//  Modified by skv - Thu Jul  7 14:37:05 2005 OCC9134 Begin
-// Implementation of the method.
 void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Cylinder& S)
 {
   myDone  = false;
   myIsPar = false;
   myNbExt = 0;
 
-  // Get an axis line of the cylinder.
   gp_Lin anAxis(S.Axis());
 
-  // Compute extrema between the circle and the line.
   Extrema_ExtElC anExtC(anAxis, C, 0.);
 
   if (!anExtC.IsDone())
@@ -424,7 +390,6 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Cylinder& S)
     constexpr double aTolConf = Precision::Confusion();
     double           aCylRad  = S.Radius();
 
-    // Check whether two objects have intersection points
     IntAna_Quadric      aCylQuad(S);
     IntAna_IntConicQuad aCircCylInter(C, aCylQuad);
     int                 aNbInter = 0;
@@ -439,7 +404,7 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Cylinder& S)
 
     if (!isParallel)
     {
-      // Compute the extremas.
+
       myNbExt  = 2 * aNbExt + aNbInter;
       mySqDist = new NCollection_HArray1<double>(1, myNbExt);
       myPoint1 = new NCollection_HArray1<Extrema_POnCurv>(1, myNbExt);
@@ -485,7 +450,6 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Cylinder& S)
         }
       }
 
-      // Adding intersection points to the list of extremas
       for (i = 1; i <= aNbInter; i++)
       {
         double aU;
@@ -509,12 +473,6 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Cylinder& S)
 
   if (isParallel)
   {
-    // The case is possible when either extrema returned parallel status
-    // or Intersection tool returned infinite number of solutions.
-    // This is possible due to Intersection algorithm uses more precise
-    // characteristics to consider given geometries parallel.
-    // In the latter case there may be several extremas, thus we look for
-    // the one with the lowest distance and use it as a final solution.
 
     myIsPar      = true;
     myNbExt      = 1;
@@ -536,28 +494,20 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Cylinder& S)
   }
 }
 
-//  Modified by skv - Thu Jul  7 14:37:05 2005 OCC9134 End
-
 Extrema_ExtElCS::Extrema_ExtElCS(const gp_Circ& C, const gp_Cone& S)
 {
   Perform(C, S);
 }
 
-// void Extrema_ExtElCS::Perform(const gp_Circ& C,
-//			 const gp_Cone& S)
 void Extrema_ExtElCS::Perform(const gp_Circ&, const gp_Cone&)
 {
   throw Standard_NotImplemented();
 }
 
-//=================================================================================================
-
 Extrema_ExtElCS::Extrema_ExtElCS(const gp_Circ& C, const gp_Sphere& S)
 {
   Perform(C, S);
 }
-
-//=================================================================================================
 
 void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Sphere& S)
 {
@@ -567,12 +517,11 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Sphere& S)
 
   if (gp_Lin(C.Axis()).SquareDistance(S.Location()) < Precision::SquareConfusion())
   {
-    // Circle and sphere are parallel
+
     myIsPar = true;
     myDone  = true;
     myNbExt = 1;
 
-    // Compute distance from circle to the sphere
     double aSqDistLoc = C.Location().SquareDistance(S.Location());
     double aSqDist    = aSqDistLoc + C.Radius() * C.Radius();
     double aDist      = sqrt(aSqDist) - S.Radius();
@@ -581,18 +530,15 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Sphere& S)
     return;
   }
 
-  // Intersect sphere with circle's plane
   gp_Pln             CPln(C.Location(), C.Axis().Direction());
   IntAna_QuadQuadGeo anInter(CPln, S);
   if (!anInter.IsDone())
-    // not done
+
     return;
 
   if (anInter.TypeInter() != IntAna_Circle)
   {
-    // Intersection is empty or just a point.
-    // The parallel case has already been considered,
-    // thus, here we have to find only one minimal solution
+
     myNbExt = 1;
     myDone  = true;
 
@@ -600,45 +546,36 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Sphere& S)
     myPoint1 = new NCollection_HArray1<Extrema_POnCurv>(1, 1);
     myPoint2 = new NCollection_HArray1<Extrema_POnSurf>(1, 1);
 
-    // Compute parameter on circle
     const double aT = ElCLib::Parameter(C, S.Location());
-    // Compute point on circle
+
     gp_Pnt aPOnC = ElCLib::Value(aT, C);
 
-    // Compute parameters on sphere
     double aU, aV;
     ElSLib::Parameters(S, aPOnC, aU, aV);
-    // Compute point on sphere
+
     gp_Pnt aPOnS = ElSLib::Value(aU, aV, S);
 
-    // Save solution
     myPoint1->SetValue(1, Extrema_POnCurv(aT, aPOnC));
     myPoint2->SetValue(1, Extrema_POnSurf(aU, aV, aPOnS));
     mySqDist->SetValue(1, aPOnC.SquareDistance(aPOnS));
     return;
   }
 
-  // Here, the intersection is a circle
-
-  // Intersection circle
   gp_Circ aCInt = anInter.Circle(1);
 
-  // Perform intersection of the input circle with the intersection circle
   Extrema_ExtElC anExtC(C, aCInt);
-  bool           isExtremaCircCircValid = anExtC.IsDone() // Check if intersection is done
-                                && !anExtC.IsParallel() // Parallel case has already been considered
-                                                        // clang-format off
-                                          && anExtC.NbExt() > 0; // Check that some solutions have been found
-                                                        // clang-format on
+  bool           isExtremaCircCircValid = anExtC.IsDone() && !anExtC.IsParallel()
+
+                                && anExtC.NbExt() > 0;
+
   if (!isExtremaCircCircValid)
-    // not done
+
     return;
 
   myDone = true;
 
-  // Few solutions
   double aNbExt = anExtC.NbExt();
-  // Find the minimal distance
+
   double aMinSqDist = ::RealLast();
   for (int i = 1; i <= aNbExt; ++i)
   {
@@ -647,7 +584,6 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Sphere& S)
       aMinSqDist = aSqDist;
   }
 
-  // Collect all solutions close to the minimal one
   NCollection_List<int> aSols;
   for (int i = 1; i <= aNbExt; ++i)
   {
@@ -656,7 +592,6 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Sphere& S)
       aSols.Append(i);
   }
 
-  // Save all minimal solutions
   myNbExt = aSols.Extent();
 
   mySqDist = new NCollection_HArray1<double>(1, myNbExt);
@@ -669,13 +604,11 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Sphere& S)
     Extrema_POnCurv P1, P2;
     anExtC.Points(it.Value(), P1, P2);
 
-    // Compute parameters on sphere
     double aU, aV;
     ElSLib::Parameters(S, P1.Value(), aU, aV);
-    // Compute point on sphere
+
     gp_Pnt aPOnS = ElSLib::Value(aU, aV, S);
 
-    // Save solution
     myPoint1->SetValue(iSol, P1);
     myPoint2->SetValue(iSol, Extrema_POnSurf(aU, aV, aPOnS));
     mySqDist->SetValue(iSol, P1.Value().SquareDistance(aPOnS));
@@ -687,8 +620,6 @@ Extrema_ExtElCS::Extrema_ExtElCS(const gp_Circ& C, const gp_Torus& S)
   Perform(C, S);
 }
 
-// void Extrema_ExtElCS::Perform(const gp_Circ& C,
-//			      const gp_Torus& S)
 void Extrema_ExtElCS::Perform(const gp_Circ&, const gp_Torus&)
 {
   throw Standard_NotImplemented();

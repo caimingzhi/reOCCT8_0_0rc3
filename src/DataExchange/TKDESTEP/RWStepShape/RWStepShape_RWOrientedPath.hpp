@@ -11,7 +11,6 @@ class StepShape_OrientedPath;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for OrientedPath
 class RWStepShape_RWOrientedPath
 {
 public:

@@ -10,56 +10,37 @@ class Standard_Transient;
 class Interface_InterfaceModel;
 class TCollection_AsciiString;
 
-//! A SelectRange keeps or rejects a sub-set of the input set,
-//! that is the Entities of which rank in the iteration list
-//! is in a given range (for instance form 2nd to 6th, etc...)
 class IFSelect_SelectRange : public IFSelect_SelectExtract
 {
 
 public:
-  //! Creates a SelectRange. Default is Take all the input list
   Standard_EXPORT IFSelect_SelectRange();
 
-  //! Sets a Range for numbers, with a lower and a upper limits
-  //! Error if rankto is lower then rankfrom
   Standard_EXPORT void SetRange(const occ::handle<IFSelect_IntParam>& rankfrom,
                                 const occ::handle<IFSelect_IntParam>& rankto);
 
-  //! Sets a unique number (only one Entity will be sorted as True)
   Standard_EXPORT void SetOne(const occ::handle<IFSelect_IntParam>& rank);
 
-  //! Sets a Lower limit but no upper limit
   Standard_EXPORT void SetFrom(const occ::handle<IFSelect_IntParam>& rankfrom);
 
-  //! Sets an Upper limit but no lower limit (equivalent to lower 1)
   Standard_EXPORT void SetUntil(const occ::handle<IFSelect_IntParam>& rankto);
 
-  //! Returns True if a Lower limit is defined
   Standard_EXPORT bool HasLower() const;
 
-  //! Returns Lower limit (if there is; else, value is senseless)
   Standard_EXPORT occ::handle<IFSelect_IntParam> Lower() const;
 
-  //! Returns Value of Lower Limit (0 if none is defined)
   Standard_EXPORT int LowerValue() const;
 
-  //! Returns True if a Lower limit is defined
   Standard_EXPORT bool HasUpper() const;
 
-  //! Returns Upper limit (if there is; else, value is senseless)
   Standard_EXPORT occ::handle<IFSelect_IntParam> Upper() const;
 
-  //! Returns Value of Upper Limit (0 if none is defined)
   Standard_EXPORT int UpperValue() const;
 
-  //! Returns True for an Entity of which occurrence number in the
-  //! iteration is inside the selected Range (considers <rank>)
   Standard_EXPORT bool Sort(const int                                    rank,
                             const occ::handle<Standard_Transient>&       ent,
                             const occ::handle<Interface_InterfaceModel>& model) const override;
 
-  //! Returns a text defining the criterium : following cases,
-  //! " From .. Until .." or "From .." or "Until .." or "Rank no .."
   Standard_EXPORT TCollection_AsciiString ExtractLabel() const override;
 
   DEFINE_STANDARD_RTTIEXT(IFSelect_SelectRange, IFSelect_SelectExtract)

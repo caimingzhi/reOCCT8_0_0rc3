@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_SurfaceStyleReflectanceAmbientDiffuseSpecular;
 
-//! Read & Write tool for SurfaceStyleReflectanceAmbientDiffuseSpecular
 class RWStepVisual_RWSurfaceStyleReflectanceAmbientDiffuseSpecular
 {
 public:

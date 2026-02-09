@@ -7,8 +7,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_Font, OpenGl_Resource)
 
-//=================================================================================================
-
 OpenGl_Font::OpenGl_Font(const occ::handle<Font_FTFont>& theFont,
                          const TCollection_AsciiString&  theKey)
     : myKey(theKey),
@@ -22,14 +20,10 @@ OpenGl_Font::OpenGl_Font(const occ::handle<Font_FTFont>& theFont,
   memset(&myLastTilePx, 0, sizeof(myLastTilePx));
 }
 
-//=================================================================================================
-
 OpenGl_Font::~OpenGl_Font()
 {
   Release(nullptr);
 }
-
-//=================================================================================================
 
 void OpenGl_Font::Release(OpenGl_Context* theCtx)
 {
@@ -43,7 +37,7 @@ void OpenGl_Font::Release(OpenGl_Context* theCtx)
     occ::handle<OpenGl_Texture>& aTexture = myTextures.ChangeValue(anIter);
     if (aTexture->IsValid())
     {
-      // application can not handle this case by exception - this is bug in code
+
       Standard_ASSERT_RETURN(
         theCtx != nullptr,
         "OpenGl_Font destroyed without GL context! Possible GPU memory leakage...",
@@ -56,8 +50,6 @@ void OpenGl_Font::Release(OpenGl_Context* theCtx)
   myTextures.Clear();
 }
 
-//=================================================================================================
-
 size_t OpenGl_Font::EstimatedDataSize() const
 {
   size_t aSize = 0;
@@ -69,8 +61,6 @@ size_t OpenGl_Font::EstimatedDataSize() const
   }
   return aSize;
 }
-
-//=================================================================================================
 
 bool OpenGl_Font::Init(const occ::handle<OpenGl_Context>& theCtx)
 {
@@ -93,12 +83,9 @@ bool OpenGl_Font::Init(const occ::handle<OpenGl_Context>& theCtx)
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_Font::createTexture(const occ::handle<OpenGl_Context>& theCtx)
 {
-  // Single font might define very wide range of symbols, with very few of them actually used in
-  // text. Limit single texture with circa 4096 glyphs.
+
   static const int THE_MAX_GLYPHS_PER_TEXTURE = 4096;
 
   myTileSizeY = myFont->GlyphMaxSizeY(true);
@@ -125,7 +112,7 @@ bool OpenGl_Font::createTexture(const occ::handle<OpenGl_Context>& theCtx)
 
   Image_PixMap aBlackImg;
   if (!aBlackImg.InitZero(Image_Format_Alpha, size_t(aTextureSizeX), size_t(aTextureSizeY))
-      || !aTexture->Init(theCtx, aBlackImg, Graphic3d_TypeOfTexture_2D, true)) // myTextureFormat
+      || !aTexture->Init(theCtx, aBlackImg, Graphic3d_TypeOfTexture_2D, true))
   {
     theCtx->PushMessage(GL_DEBUG_SOURCE_APPLICATION,
                         GL_DEBUG_TYPE_ERROR,
@@ -138,8 +125,6 @@ bool OpenGl_Font::createTexture(const occ::handle<OpenGl_Context>& theCtx)
 
   return true;
 }
-
-//=================================================================================================
 
 bool OpenGl_Font::renderGlyph(const occ::handle<OpenGl_Context>& theCtx, const char32_t theChar)
 {
@@ -210,8 +195,6 @@ bool OpenGl_Font::renderGlyph(const occ::handle<OpenGl_Context>& theCtx, const c
   myTiles.Append(aTile);
   return true;
 }
-
-//=================================================================================================
 
 bool OpenGl_Font::RenderGlyph(const occ::handle<OpenGl_Context>& theCtx,
                               const char32_t                     theUChar,

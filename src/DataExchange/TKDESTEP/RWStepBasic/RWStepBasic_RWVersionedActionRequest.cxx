@@ -4,11 +4,7 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWVersionedActionRequest::RWStepBasic_RWVersionedActionRequest() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWVersionedActionRequest::ReadStep(
   const occ::handle<StepData_StepReaderData>&          data,
@@ -16,11 +12,9 @@ void RWStepBasic_RWVersionedActionRequest::ReadStep(
   occ::handle<Interface_Check>&                        ach,
   const occ::handle<StepBasic_VersionedActionRequest>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "versioned_action_request"))
     return;
-
-  // Own fields of VersionedActionRequest
 
   occ::handle<TCollection_HAsciiString> aId;
   data->ReadString(num, 1, "id", ach, aId);
@@ -42,18 +36,13 @@ void RWStepBasic_RWVersionedActionRequest::ReadStep(
     hasDescription = false;
   }
 
-  // Initialize entity
   ent->Init(aId, aVersion, aPurpose, hasDescription, aDescription);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWVersionedActionRequest::WriteStep(
   StepData_StepWriter&                                 SW,
   const occ::handle<StepBasic_VersionedActionRequest>& ent) const
 {
-
-  // Own fields of VersionedActionRequest
 
   SW.Send(ent->Id());
 
@@ -69,12 +58,8 @@ void RWStepBasic_RWVersionedActionRequest::WriteStep(
     SW.SendUndef();
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWVersionedActionRequest::Share(
   const occ::handle<StepBasic_VersionedActionRequest>&,
   Interface_EntityIterator&) const
 {
-
-  // Own fields of VersionedActionRequest
 }

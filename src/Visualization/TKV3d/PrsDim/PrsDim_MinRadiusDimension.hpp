@@ -3,21 +3,14 @@
 #include <PrsDim_EllipseRadiusDimension.hpp>
 #include <DsgPrs_ArrowSide.hpp>
 
-//! Ellipse Min radius dimension of a Shape which
-//! can be Edge or Face (planar or cylindrical(surface of
-//! extrusion or surface of offset))
 class PrsDim_MinRadiusDimension : public PrsDim_EllipseRadiusDimension
 {
   DEFINE_STANDARD_RTTIEXT(PrsDim_MinRadiusDimension, PrsDim_EllipseRadiusDimension)
 public:
-  //! Max Ellipse radius dimension
-  //! Shape can be edge, planar face or cylindrical face
   Standard_EXPORT PrsDim_MinRadiusDimension(const TopoDS_Shape&               aShape,
                                             const double                      aVal,
                                             const TCollection_ExtendedString& aText);
 
-  //! Max Ellipse radius dimension with position
-  //! Shape can be edge, planar face or cylindrical face
   Standard_EXPORT PrsDim_MinRadiusDimension(const TopoDS_Shape&               aShape,
                                             const double                      aVal,
                                             const TCollection_ExtendedString& aText,

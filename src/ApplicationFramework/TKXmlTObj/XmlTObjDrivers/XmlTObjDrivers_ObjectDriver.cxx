@@ -8,34 +8,20 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlTObjDrivers_ObjectDriver, XmlMDF_ADriver)
 
-//=================================================================================================
-
 XmlTObjDrivers_ObjectDriver::XmlTObjDrivers_ObjectDriver(
   const occ::handle<Message_Messenger>& theMessageDriver)
     : XmlMDF_ADriver(theMessageDriver, nullptr)
 {
 }
 
-//=======================================================================
-// function : NewEmpty
-// purpose  : Creates a new attribute
-//=======================================================================
-
 occ::handle<TDF_Attribute> XmlTObjDrivers_ObjectDriver::NewEmpty() const
 {
   return new TObj_TObject;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : Translate the contents of <aSource> and put it
-//           into <aTarget>, using the relocation table
-//           <aRelocTable> to keep the sharings.
-//=======================================================================
-
 bool XmlTObjDrivers_ObjectDriver::Paste(const XmlObjMgt_Persistent&       Source,
                                         const occ::handle<TDF_Attribute>& Target,
-                                        XmlObjMgt_RRelocationTable& /*RelocTable*/) const
+                                        XmlObjMgt_RRelocationTable&) const
 {
   TCollection_ExtendedString aString;
   if (XmlObjMgt::GetExtendedString(Source, aString))
@@ -50,17 +36,9 @@ bool XmlTObjDrivers_ObjectDriver::Paste(const XmlObjMgt_Persistent&       Source
   return false;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : Translate the contents of <aSource> and put it
-//           into <aTarget>, using the relocation table
-//           <aRelocTable> to keep the sharings.
-//           anObject is stored as a Name of class derived from TObj_Object
-//=======================================================================
-
 void XmlTObjDrivers_ObjectDriver::Paste(const occ::handle<TDF_Attribute>& Source,
                                         XmlObjMgt_Persistent&             Target,
-                                        XmlObjMgt_SRelocationTable& /*RelocTable*/) const
+                                        XmlObjMgt_SRelocationTable&) const
 {
   occ::handle<TObj_TObject> aTObj     = occ::down_cast<TObj_TObject>(Source);
   occ::handle<TObj_Object>  anIObject = aTObj->Get();

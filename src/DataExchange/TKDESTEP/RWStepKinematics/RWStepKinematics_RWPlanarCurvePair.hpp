@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_PlanarCurvePair;
 
-//! Read & Write tool for PlanarCurvePair
 class RWStepKinematics_RWPlanarCurvePair
 {
 public:

@@ -7,18 +7,12 @@
 #include <Message_ProgressScope.hpp>
 #include <TopTools_LocationSet.hpp>
 
-//=================================================================================================
-
 TopTools_LocationSet::TopTools_LocationSet() = default;
-
-//=================================================================================================
 
 void TopTools_LocationSet::Clear()
 {
   myMap.Clear();
 }
-
-//=================================================================================================
 
 int TopTools_LocationSet::Add(const TopLoc_Location& L)
 {
@@ -36,8 +30,6 @@ int TopTools_LocationSet::Add(const TopLoc_Location& L)
   return myMap.Add(L);
 }
 
-//=================================================================================================
-
 const TopLoc_Location& TopTools_LocationSet::Location(const int I) const
 {
   static TopLoc_Location identity;
@@ -46,16 +38,12 @@ const TopLoc_Location& TopTools_LocationSet::Location(const int I) const
   return myMap(I);
 }
 
-//=================================================================================================
-
 int TopTools_LocationSet::Index(const TopLoc_Location& L) const
 {
   if (L.IsIdentity())
     return 0;
   return myMap.FindIndex(L);
 }
-
-//=================================================================================================
 
 static void WriteTrsf(const gp_Trsf& T, Standard_OStream& OS, const bool compact)
 {
@@ -90,8 +78,6 @@ static void WriteTrsf(const gp_Trsf& T, Standard_OStream& OS, const bool compact
     OS << " )";
   OS << "\n";
 }
-
-//=================================================================================================
 
 void TopTools_LocationSet::Dump(Standard_OStream& OS) const
 {
@@ -136,8 +122,6 @@ void TopTools_LocationSet::Dump(Standard_OStream& OS) const
   }
 }
 
-//=================================================================================================
-
 void TopTools_LocationSet::Write(Standard_OStream&            OS,
                                  const Message_ProgressRange& theProgress) const
 {
@@ -147,7 +131,6 @@ void TopTools_LocationSet::Write(Standard_OStream&            OS,
   int i, nbLoc = myMap.Extent();
   OS << "Locations " << nbLoc << "\n";
 
-  // OCC19559
   Message_ProgressScope PS(theProgress, "Locations", nbLoc);
   for (i = 1; i <= nbLoc && PS.More(); i++, PS.Next())
   {
@@ -180,8 +163,6 @@ void TopTools_LocationSet::Write(Standard_OStream&            OS,
   OS.precision(prec);
 }
 
-//=================================================================================================
-
 static void ReadTrsf(gp_Trsf& T, Standard_IStream& IS)
 {
   double V1[3], V2[3], V3[3];
@@ -206,8 +187,6 @@ static void ReadTrsf(gp_Trsf& T, Standard_IStream& IS)
   return;
 }
 
-//=================================================================================================
-
 void TopTools_LocationSet::Read(Standard_IStream& IS, const Message_ProgressRange& theProgress)
 {
   myMap.Clear();
@@ -228,7 +207,6 @@ void TopTools_LocationSet::Read(Standard_IStream& IS, const Message_ProgressRang
   TopLoc_Location L;
   gp_Trsf         T;
 
-  // OCC19559
   Message_ProgressScope PS(theProgress, "Locations", nbLoc);
   for (i = 1; i <= nbLoc && PS.More(); i++, PS.Next())
   {

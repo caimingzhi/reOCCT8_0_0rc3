@@ -4,15 +4,9 @@
 #include <Select3D_SensitivePoly.hpp>
 #include <SelectMgr_SelectingVolumeManager.hpp>
 
-//! A framework to define selection of triangles in a view.
-//! This comes into play in the detection of meshing and triangulation in surfaces.
-//! In some cases this class can raise Standard_ConstructionError and
-//! Standard_OutOfRange exceptions. For more details see Select3D_SensitivePoly.
 class Select3D_SensitiveTriangle : public Select3D_SensitiveEntity
 {
 public:
-  //! Constructs a sensitive triangle object defined by the
-  //! owner theOwnerId, the points P1, P2, P3, and the type of sensitivity Sensitivity.
   Standard_EXPORT Select3D_SensitiveTriangle(
     const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
     const gp_Pnt&                             thePnt0,
@@ -20,11 +14,9 @@ public:
     const gp_Pnt&                             thePnt2,
     const Select3D_TypeOfSensitivity          theType = Select3D_TOS_INTERIOR);
 
-  //! Checks whether the triangle overlaps current selecting volume
   Standard_EXPORT bool Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                SelectBasics_PickResult&             thePickResult) override;
 
-  //! Returns the 3D points P1, P2, P3 used at the time of construction.
   void Points3D(gp_Pnt& thePnt0, gp_Pnt& thePnt1, gp_Pnt& thePnt2) const
   {
     thePnt0 = myPoints[0];
@@ -32,31 +24,24 @@ public:
     thePnt2 = myPoints[2];
   }
 
-  //! Returns the center point of the sensitive triangle created at construction time.
   gp_Pnt Center3D() const { return myCentroid; }
 
-  //! Returns the copy of this
   Standard_EXPORT occ::handle<Select3D_SensitiveEntity> GetConnected() override;
 
-  //! Returns bounding box of the triangle. If location transformation is set, it
-  //! will be applied
   Standard_EXPORT Select3D_BndBox3d BoundingBox() override;
 
-  //! Returns TRUE if BVH tree is in invalidated state
   bool ToBuildBVH() const override { return false; }
 
-  //! Returns the amount of points
   int NbSubElements() const override { return 3; }
 
   gp_Pnt CenterOfGeometry() const override { return myCentroid; }
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(Select3D_SensitiveTriangle, Select3D_SensitiveEntity)
 
 private:
-  Select3D_TypeOfSensitivity mySensType; //!< Type of sensitivity: boundary or interior
-  gp_Pnt                     myCentroid; //!< Center of triangle
+  Select3D_TypeOfSensitivity mySensType;
+  gp_Pnt                     myCentroid;
   gp_Pnt                     myPoints[3];
 };

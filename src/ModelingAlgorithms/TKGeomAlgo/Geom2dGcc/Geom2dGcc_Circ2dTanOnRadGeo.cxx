@@ -1,25 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//========================================================================
-//       circulaire tangent a un element de type :  - Cercle.            +
-//                                                  - Ligne.             +
-//                                                  - Point.             +
-//                  centre sur un deuxieme element de type :  - Cercle.  +
-//                                                            - Ligne.   +
-//                  de rayon donne : Radius.                             +
-//========================================================================
 
 #include <Adaptor2d_OffsetCurve.hpp>
 #include <ElCLib.hpp>
@@ -43,31 +22,11 @@
 
 static const int aNbSolMAX = 8;
 
-//=========================================================================
-//  Cercle tangent  :  a un cercle Qualified1 (C1).                       +
-//         centre   :  sur une droite OnLine.                             +
-//         de rayon :  Radius.                                            +
-//                                                                        +
-//  On initialise le tableau de solutions cirsol ainsi que tous les       +
-//  champs.                                                               +
-//  On elimine en fonction du qualifieur les cas ne presentant pas de     +
-//  solutions.                                                            +
-//  On resoud l equation du second degre indiquant que le point de centre +
-//  recherche (xc,yc) est a une distance Radius du cercle C1 et           +
-//                        sur la droite OnLine.                           +
-//  Les solutions sont representees par les cercles :                     +
-//                   - de centre Pntcen(xc,yc)                            +
-//                   - de rayon Radius.                                   +
-//=========================================================================
 Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve& Qualified1,
                                                          const gp_Lin2d&         OnLine,
                                                          const double            Radius,
                                                          const double            Tolerance)
     :
-
-      //=========================================================================
-      // Initialisation des champs.                                             +
-      //=========================================================================
 
       cirsol(1, aNbSolMAX),
       qualifier1(1, aNbSolMAX),
@@ -78,10 +37,6 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
       pararg1(1, aNbSolMAX),
       parcen3(1, aNbSolMAX)
 {
-
-  //=========================================================================
-  // Traitement.                                                            +
-  //=========================================================================
 
   gp_Dir2d dirx(gp_Dir2d::D::X);
   double   Tol      = std::abs(Tolerance);
@@ -109,19 +64,19 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
   {
     if (Qualified1.IsEnclosed())
     {
-      //    ===========================
+
       nbrcote1 = 1;
       Coef(1)  = Radius;
     }
     else if (Qualified1.IsOutside())
     {
-      //   ===============================
+
       nbrcote1 = 1;
       Coef(1)  = -Radius;
     }
     else if (Qualified1.IsUnqualified())
     {
-      //   ===================================
+
       nbrcote1 = 2;
       Coef(1)  = Radius;
       Coef(2)  = -Radius;
@@ -131,7 +86,7 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
     for (int jcote1 = 1; jcote1 <= nbrcote1; jcote1++)
     {
       occ::handle<Geom2dAdaptor_Curve> HCu1 = new Geom2dAdaptor_Curve(Cu1);
-      // Adaptor2d_OffsetCurve C2(HCu1,Coef(jcote1));
+
       Adaptor2d_OffsetCurve C2(HCu1, -Coef(jcote1));
       firstparam = std::max(C2.FirstParameter(), thefirst);
       lastparam  = std::min(C2.LastParameter(), thelast);
@@ -151,7 +106,7 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
             NbrSol++;
             gp_Pnt2d Center(Intp.Point(i).Value());
             cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-            //           =======================================================
+
             qualifier1(NbrSol) = Qualified1.Qualifier();
             TheSame1(NbrSol)   = 0;
             pararg1(NbrSol)    = Intp.Point(i).ParamOnSecond();
@@ -167,32 +122,11 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
   }
 }
 
-//=========================================================================
-//  Cercle tangent  :  a un cercle Qualified1 (C1).                       +
-//         centre   :  sur une droite OnLine.                             +
-//         de rayon :  Radius.                                            +
-//                                                                        +
-//  On initialise le tableau de solutions cirsol ainsi que tous les       +
-//  champs.                                                               +
-//  On elimine en fonction du qualifieur les cas ne presentant pas de     +
-//  solutions.                                                            +
-//  On resoud l equation du second degre indiquant que le point de centre +
-//  recherche (xc,yc) est a une distance Radius du cercle C1 et           +
-//                        sur la droite OnLine.                           +
-//  Les solutions sont representees par les cercles :                     +
-//                   - de centre Pntcen(xc,yc)                            +
-//                   - de rayon Radius.                                   +
-//=========================================================================
-
 Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve& Qualified1,
                                                          const gp_Circ2d&        OnCirc,
                                                          const double            Radius,
                                                          const double            Tolerance)
     :
-
-      //=========================================================================
-      // Initialisation des champs.                                             +
-      //=========================================================================
 
       cirsol(1, aNbSolMAX),
       qualifier1(1, aNbSolMAX),
@@ -203,10 +137,6 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
       pararg1(1, aNbSolMAX),
       parcen3(1, aNbSolMAX)
 {
-
-  //=========================================================================
-  // Traitement.                                                            +
-  //=========================================================================
 
   gp_Dir2d dirx(gp_Dir2d::D::X);
   double   thefirst = -100000.;
@@ -234,19 +164,19 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
   {
     if (Qualified1.IsEnclosed())
     {
-      //    ===========================
+
       nbrcote1 = 1;
       cote1(1) = Radius;
     }
     else if (Qualified1.IsOutside())
     {
-      //   ===============================
+
       nbrcote1 = 1;
       cote1(1) = -Radius;
     }
     else if (Qualified1.IsUnqualified())
     {
-      //   ===================================
+
       nbrcote1 = 2;
       cote1(1) = Radius;
       cote1(2) = -Radius;
@@ -262,7 +192,7 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
     for (int jcote1 = 1; jcote1 <= nbrcote1; jcote1++)
     {
       occ::handle<Geom2dAdaptor_Curve> HCu1 = new Geom2dAdaptor_Curve(Cu1);
-      // Adaptor2d_OffsetCurve C2(HCu1,cote1(jcote1));
+
       Adaptor2d_OffsetCurve C2(HCu1, -cote1(jcote1));
       firstparam = std::max(C2.FirstParameter(), thefirst);
       lastparam  = std::min(C2.LastParameter(), thelast);
@@ -282,7 +212,7 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
             NbrSol++;
             gp_Pnt2d Center(Intp.Point(i).Value());
             cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-            //           =======================================================
+
             qualifier1(NbrSol) = Qualified1.Qualifier();
             TheSame1(NbrSol)   = 0;
             pararg1(NbrSol)    = Intp.Point(i).ParamOnSecond();
@@ -298,32 +228,11 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
   }
 }
 
-//=========================================================================
-//  Cercle tangent  :  a un cercle Qualified1 (C1).                       +
-//         centre   :  sur une droite OnLine.                             +
-//         de rayon :  Radius.                                            +
-//                                                                        +
-//  On initialise le tableau de solutions cirsol ainsi que tous les       +
-//  champs.                                                               +
-//  On elimine en fonction du qualifieur les cas ne presentant pas de     +
-//  solutions.                                                            +
-//  On resoud l equation du second degre indiquant que le point de centre +
-//  recherche (xc,yc) est a une distance Radius du cercle C1 et           +
-//                        sur la droite OnLine.                           +
-//  Les solutions sont representees par les cercles :                     +
-//                   - de centre Pntcen(xc,yc)                            +
-//                   - de rayon Radius.                                   +
-//=========================================================================
-
 Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const GccEnt_QualifiedCirc& Qualified1,
                                                          const Geom2dAdaptor_Curve&  OnCurv,
                                                          const double                Radius,
                                                          const double                Tolerance)
     :
-
-      //=========================================================================
-      // Initialisation des champs.                                             +
-      //=========================================================================
 
       cirsol(1, aNbSolMAX),
       qualifier1(1, aNbSolMAX),
@@ -334,10 +243,6 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const GccEnt_QualifiedC
       pararg1(1, aNbSolMAX),
       parcen3(1, aNbSolMAX)
 {
-
-  //=========================================================================
-  // Traitement.                                                            +
-  //=========================================================================
 
   gp_Dir2d dirx(gp_Dir2d::D::X);
   double   thefirst = -100000.;
@@ -367,19 +272,19 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const GccEnt_QualifiedC
   {
     if (Qualified1.IsEnclosed())
     {
-      //    ===========================
+
       nbrcote1 = 1;
       cote1(1) = Radius;
     }
     else if (Qualified1.IsOutside())
     {
-      //   ===============================
+
       nbrcote1 = 1;
       cote1(1) = -Radius;
     }
     else if (Qualified1.IsUnqualified())
     {
-      //   ===================================
+
       nbrcote1 = 2;
       cote1(1) = Radius;
       cote1(2) = -Radius;
@@ -413,7 +318,7 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const GccEnt_QualifiedC
             NbrSol++;
             gp_Pnt2d Center(Intp.Point(i).Value());
             cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-            //           =======================================================
+
             double distcc1 = Center.Distance(center1);
             if (!Qualified1.IsUnqualified())
             {
@@ -445,32 +350,11 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const GccEnt_QualifiedC
   }
 }
 
-//=========================================================================
-//  Cercle tangent  :  a un cercle Qualified1 (C1).                       +
-//         centre   :  sur une droite OnLine.                             +
-//         de rayon :  Radius.                                            +
-//                                                                        +
-//  On initialise le tableau de solutions cirsol ainsi que tous les       +
-//  champs.                                                               +
-//  On elimine en fonction du qualifieur les cas ne presentant pas de     +
-//  solutions.                                                            +
-//  On resoud l equation du second degre indiquant que le point de centre +
-//  recherche (xc,yc) est a une distance Radius du cercle C1 et           +
-//                        sur la droite OnLine.                           +
-//  Les solutions sont representees par les cercles :                     +
-//                   - de centre Pntcen(xc,yc)                            +
-//                   - de rayon Radius.                                   +
-//=========================================================================
-
 Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const GccEnt_QualifiedLin& Qualified1,
                                                          const Geom2dAdaptor_Curve& OnCurv,
                                                          const double               Radius,
                                                          const double               Tolerance)
     :
-
-      //=========================================================================
-      // Initialisation des champs.                                             +
-      //=========================================================================
 
       cirsol(1, aNbSolMAX),
       qualifier1(1, aNbSolMAX),
@@ -481,10 +365,6 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const GccEnt_QualifiedL
       pararg1(1, aNbSolMAX),
       parcen3(1, aNbSolMAX)
 {
-
-  //=========================================================================
-  // Traitement.                                                            +
-  //=========================================================================
 
   gp_Dir2d dirx(gp_Dir2d::D::X);
   double   thefirst = -100000.;
@@ -514,19 +394,19 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const GccEnt_QualifiedL
   {
     if (Qualified1.IsEnclosed())
     {
-      //    ===========================
+
       nbrcote1 = 1;
       cote1(1) = Radius;
     }
     else if (Qualified1.IsOutside())
     {
-      //   ===============================
+
       nbrcote1 = 1;
       cote1(1) = -Radius;
     }
     else if (Qualified1.IsUnqualified())
     {
-      //   ===================================
+
       nbrcote1 = 2;
       cote1(1) = Radius;
       cote1(2) = -Radius;
@@ -535,7 +415,7 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const GccEnt_QualifiedL
     for (int jcote1 = 1; jcote1 <= nbrcote1; jcote1++)
     {
       gp_Pnt2d        Point(dir1.XY() + cote1(jcote1) * norm1.XY());
-      gp_Lin2d        Line(Point, dir1); // ligne avec deport.
+      gp_Lin2d        Line(Point, dir1);
       IntRes2d_Domain D1;
       firstparam = std::max(Geom2dGcc_CurveTool::FirstParameter(OnCurv), thefirst);
       lastparam  = std::min(Geom2dGcc_CurveTool::LastParameter(OnCurv), thelast);
@@ -555,7 +435,7 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const GccEnt_QualifiedL
             NbrSol++;
             gp_Pnt2d Center(Intp.Point(i).Value());
             cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-            //           =======================================================
+
             gp_Dir2d dc1(origin1.XY() - Center.XY());
             if (!Qualified1.IsUnqualified())
             {
@@ -583,32 +463,11 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const GccEnt_QualifiedL
   }
 }
 
-//=========================================================================
-//  Cercle tangent  :  a un cercle Qualified1 (C1).                       +
-//         centre   :  sur une droite OnLine.                             +
-//         de rayon :  Radius.                                            +
-//                                                                        +
-//  On initialise le tableau de solutions cirsol ainsi que tous les       +
-//  champs.                                                               +
-//  On elimine en fonction du qualifieur les cas ne presentant pas de     +
-//  solutions.                                                            +
-//  On resoud l equation du second degre indiquant que le point de centre +
-//  recherche (xc,yc) est a une distance Radius du cercle C1 et           +
-//                        sur la droite OnLine.                           +
-//  Les solutions sont representees par les cercles :                     +
-//                   - de centre Pntcen(xc,yc)                            +
-//                   - de rayon Radius.                                   +
-//=========================================================================
-
 Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&    Qualified1,
                                                          const Geom2dAdaptor_Curve& OnCurv,
                                                          const double               Radius,
                                                          const double               Tolerance)
     :
-
-      //=========================================================================
-      // Initialisation des champs.                                             +
-      //=========================================================================
 
       cirsol(1, aNbSolMAX),
       qualifier1(1, aNbSolMAX),
@@ -619,10 +478,6 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
       pararg1(1, aNbSolMAX),
       parcen3(1, aNbSolMAX)
 {
-
-  //=========================================================================
-  // Traitement.                                                            +
-  //=========================================================================
 
   gp_Dir2d dirx(gp_Dir2d::D::X);
   double   thefirst = -100000.;
@@ -650,19 +505,19 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
   {
     if (Qualified1.IsEnclosed())
     {
-      //    ===========================
+
       nbrcote1 = 1;
       cote1(1) = Radius;
     }
     else if (Qualified1.IsOutside())
     {
-      //   ===============================
+
       nbrcote1 = 1;
       cote1(1) = -Radius;
     }
     else if (Qualified1.IsUnqualified())
     {
-      //   ===================================
+
       nbrcote1 = 2;
       cote1(1) = Radius;
       cote1(2) = -Radius;
@@ -671,7 +526,7 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
     for (int jcote1 = 1; jcote1 <= nbrcote1; jcote1++)
     {
       occ::handle<Geom2dAdaptor_Curve> HCu1 = new Geom2dAdaptor_Curve(Cu1);
-      // Adaptor2d_OffsetCurve C1(HCu1,cote1(jcote1));
+
       Adaptor2d_OffsetCurve C1(HCu1, -cote1(jcote1));
       firstparam = std::max(C1.FirstParameter(), thefirst);
       lastparam  = std::min(C1.LastParameter(), thelast);
@@ -701,7 +556,7 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
             NbrSol++;
             gp_Pnt2d Center(Intp.Point(i).Value());
             cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-            //           =======================================================
+
             qualifier1(NbrSol) = Qualified1.Qualifier();
             TheSame1(NbrSol)   = 0;
             pararg1(NbrSol)    = Intp.Point(i).ParamOnFirst();
@@ -717,32 +572,11 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const Geom2dGcc_QCurve&
   }
 }
 
-//=========================================================================
-//  Cercle tangent  :  a un cercle Qualified1 (C1).                       +
-//         centre   :  sur une droite OnLine.                             +
-//         de rayon :  Radius.                                            +
-//                                                                        +
-//  On initialise le tableau de solutions cirsol ainsi que tous les       +
-//  champs.                                                               +
-//  On elimine en fonction du qualifieur les cas ne presentant pas de     +
-//  solutions.                                                            +
-//  On resoud l equation du second degre indiquant que le point de centre +
-//  recherche (xc,yc) est a une distance Radius du cercle C1 et           +
-//                        sur la droite OnLine.                           +
-//  Les solutions sont representees par les cercles :                     +
-//                   - de centre Pntcen(xc,yc)                            +
-//                   - de rayon Radius.                                   +
-//=========================================================================
-
 Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const gp_Pnt2d&            Point1,
                                                          const Geom2dAdaptor_Curve& OnCurv,
                                                          const double               Radius,
                                                          const double               Tolerance)
     :
-
-      //=========================================================================
-      // Initialisation des champs.                                             +
-      //=========================================================================
 
       cirsol(1, aNbSolMAX),
       qualifier1(1, aNbSolMAX),
@@ -753,10 +587,6 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const gp_Pnt2d&        
       pararg1(1, aNbSolMAX),
       parcen3(1, aNbSolMAX)
 {
-
-  //=========================================================================
-  // Traitement.                                                            +
-  //=========================================================================
 
   gp_Dir2d dirx(gp_Dir2d::D::X);
   double   thefirst = -100000.;
@@ -773,7 +603,7 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const gp_Pnt2d&        
   }
   else
   {
-    //     gp_Dir2d Dir(-y1dir,x1dir);
+
     gp_Circ2d       Circ(gp_Ax2d(Point1, gp_Dir2d(gp_Dir2d::D::X)), Radius);
     IntRes2d_Domain D1(ElCLib::Value(0., Circ),
                        0.,
@@ -800,7 +630,7 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const gp_Pnt2d&        
           NbrSol++;
           gp_Pnt2d Center(Intp.Point(i).Value());
           cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-          //         =======================================================
+
           qualifier1(NbrSol) = GccEnt_noqualifier;
           TheSame1(NbrSol)   = 0;
           pararg1(NbrSol)    = Intp.Point(i).ParamOnFirst();
@@ -814,8 +644,6 @@ Geom2dGcc_Circ2dTanOnRadGeo::Geom2dGcc_Circ2dTanOnRadGeo(const gp_Pnt2d&        
     }
   }
 }
-
-//=========================================================================
 
 bool Geom2dGcc_Circ2dTanOnRadGeo::IsDone() const
 {

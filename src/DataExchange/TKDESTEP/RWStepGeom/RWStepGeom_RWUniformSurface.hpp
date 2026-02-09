@@ -11,7 +11,6 @@ class StepGeom_UniformSurface;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for UniformSurface
 class RWStepGeom_RWUniformSurface
 {
 public:

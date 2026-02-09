@@ -12,7 +12,6 @@ class StepVisual_PresentationStyleByContext : public StepVisual_PresentationStyl
 {
 
 public:
-  //! Returns a PresentationStyleByContext
   Standard_EXPORT StepVisual_PresentationStyleByContext();
 
   Standard_EXPORT void Init(

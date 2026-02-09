@@ -6,11 +6,9 @@
 #include <GeomHash_CurveHasher.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom_OffsetCurve (3D offset curve).
-//! Used for geometry deduplication.
 struct GeomHash_OffsetCurveHasher
 {
-  // Hashes the offset curve by its offset distance, direction, and basis curve.
+
   std::size_t operator()(const occ::handle<Geom_OffsetCurve>& theCurve) const noexcept
   {
     constexpr double aTolerance = 1e-12;
@@ -25,7 +23,6 @@ struct GeomHash_OffsetCurveHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two offset curves.
   bool operator()(const occ::handle<Geom_OffsetCurve>& theCurve1,
                   const occ::handle<Geom_OffsetCurve>& theCurve2) const noexcept
   {

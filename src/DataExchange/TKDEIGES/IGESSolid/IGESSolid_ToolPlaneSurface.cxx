@@ -15,12 +15,7 @@
 #include <Interface_ShareTool.hpp>
 #include <Message_Msg.hpp>
 
-// MGE 31/07/98
-//=================================================================================================
-
 IGESSolid_ToolPlaneSurface::IGESSolid_ToolPlaneSurface() = default;
-
-//=================================================================================================
 
 void IGESSolid_ToolPlaneSurface::ReadOwnParams(const occ::handle<IGESSolid_PlaneSurface>&  ent,
                                                const occ::handle<IGESData_IGESReaderData>& IR,
@@ -28,12 +23,11 @@ void IGESSolid_ToolPlaneSurface::ReadOwnParams(const occ::handle<IGESSolid_Plane
 {
   occ::handle<IGESGeom_Point>     tempLocation;
   occ::handle<IGESGeom_Direction> tempNormal;
-  occ::handle<IGESGeom_Direction> tempRefdir; // default Unparametrised
+  occ::handle<IGESGeom_Direction> tempRefdir;
   IGESData_Status                 aStatus;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, STANDARD_TYPE(IGESGeom_Point), tempLocation))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg174("XSTEP_174");
     switch (aStatus)
     {
@@ -63,12 +57,9 @@ void IGESSolid_ToolPlaneSurface::ReadOwnParams(const occ::handle<IGESSolid_Plane
       }
     }
   }
-  /*
-    st = PR.ReadEntity(IR, PR.Current(), "Point on axis",
-               STANDARD_TYPE(IGESGeom_Point), tempLocation);
-  */
+
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, STANDARD_TYPE(IGESGeom_Direction), tempNormal))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg175("XSTEP_175");
     switch (aStatus)
     {
@@ -98,15 +89,12 @@ void IGESSolid_ToolPlaneSurface::ReadOwnParams(const occ::handle<IGESSolid_Plane
       }
     }
   }
-  /*
-    st = PR.ReadEntity(IR, PR.Current(), "Normal direction",
-               STANDARD_TYPE(IGESGeom_Direction), tempNormal);
-  */
+
   if (ent->FormNumber() == 1)
   {
-    // Parametrised surface
+
     if (!PR.ReadEntity(IR, PR.Current(), aStatus, STANDARD_TYPE(IGESGeom_Direction), tempRefdir))
-    { // szv#4:S4163:12Mar99 `st=` not needed
+    {
       Message_Msg Msg176("XSTEP_176");
       switch (aStatus)
       {
@@ -137,15 +125,10 @@ void IGESSolid_ToolPlaneSurface::ReadOwnParams(const occ::handle<IGESSolid_Plane
       }
     }
   }
-  /*
-      st = PR.ReadEntity(IR, PR.Current(), "Reference direction",
-                 STANDARD_TYPE(IGESGeom_Direction), tempRefdir);
-  */
+
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempLocation, tempNormal, tempRefdir);
 }
-
-//=================================================================================================
 
 void IGESSolid_ToolPlaneSurface::WriteOwnParams(const occ::handle<IGESSolid_PlaneSurface>& ent,
                                                 IGESData_IGESWriter&                       IW) const
@@ -156,8 +139,6 @@ void IGESSolid_ToolPlaneSurface::WriteOwnParams(const occ::handle<IGESSolid_Plan
     IW.Send(ent->ReferenceDir());
 }
 
-//=================================================================================================
-
 void IGESSolid_ToolPlaneSurface::OwnShared(const occ::handle<IGESSolid_PlaneSurface>& ent,
                                            Interface_EntityIterator&                  iter) const
 {
@@ -165,8 +146,6 @@ void IGESSolid_ToolPlaneSurface::OwnShared(const occ::handle<IGESSolid_PlaneSurf
   iter.GetOneItem(ent->Normal());
   iter.GetOneItem(ent->ReferenceDir());
 }
-
-//=================================================================================================
 
 void IGESSolid_ToolPlaneSurface::OwnCopy(const occ::handle<IGESSolid_PlaneSurface>& another,
                                          const occ::handle<IGESSolid_PlaneSurface>& ent,
@@ -186,10 +165,8 @@ void IGESSolid_ToolPlaneSurface::OwnCopy(const occ::handle<IGESSolid_PlaneSurfac
   }
 }
 
-//=================================================================================================
-
 IGESData_DirChecker IGESSolid_ToolPlaneSurface::DirChecker(
-  const occ::handle<IGESSolid_PlaneSurface>& /*ent*/) const
+  const occ::handle<IGESSolid_PlaneSurface>&) const
 {
   IGESData_DirChecker DC(190, 0, 1);
 
@@ -202,18 +179,10 @@ IGESData_DirChecker IGESSolid_ToolPlaneSurface::DirChecker(
   return DC;
 }
 
-//=================================================================================================
-
 void IGESSolid_ToolPlaneSurface::OwnCheck(const occ::handle<IGESSolid_PlaneSurface>& ent,
                                           const Interface_ShareTool&,
                                           occ::handle<Interface_Check>& ach) const
 {
-
-  // MGE 31/07/98
-  // Building of messages
-  //========================================
-  // Message_Msg Msg177("XSTEP_177");
-  //========================================
 
   int fn = 0;
   if (ent->IsParametrised())
@@ -224,8 +193,6 @@ void IGESSolid_ToolPlaneSurface::OwnCheck(const occ::handle<IGESSolid_PlaneSurfa
     ach->SendFail(Msg177);
   }
 }
-
-//=================================================================================================
 
 void IGESSolid_ToolPlaneSurface::OwnDump(const occ::handle<IGESSolid_PlaneSurface>& ent,
                                          const IGESData_IGESDumper&                 dumper,

@@ -13,20 +13,6 @@
 #include <IntRes2d_Domain.hpp>
 #include <Precision.hpp>
 
-//=======================================================================
-// Perform() for
-//              Line      - Parabola
-//              Line      - Hyperbola
-//              Circle    - Parabola
-//              Circle    - Ellipse
-//              Circle    - Hyperbola
-//              Parabola  - Parabola
-//              Ellipse    - Parabola
-//              Parabola  - Hyperbola
-//              Ellipse    - Ellipse
-//              Ellipse    - Hyperbola
-//              Hyperbola - Hyperbola
-//=======================================================================
 static const double PARAM_MAX_ON_PARABOLA  = 100000000.0;
 static const double PARAM_MAX_ON_HYPERBOLA = 10000.0;
 static const double TOL_EXACT_INTER        = 1.e-7;
@@ -63,8 +49,7 @@ static bool SET_BOUNDED_DOMAIN(const IntRes2d_Domain& domain,
     }
   }
   bool result = bsup > binf;
-  //   if(bsup<=binf) return(false);
-  //   return(true);
+
   return result;
 }
 
@@ -86,10 +71,6 @@ void SetBinfBsupFromIntAna2d(const IntAna2d_AnaIntersection& theIntAna2d,
                              const double                    maxtol,
                              const double                    LIMITE);
 
-//=======================================================================
-// function : Perform
-// purpose  : Line - Parabola
-//=======================================================================
 void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L,
                                      const IntRes2d_Domain& DL,
                                      const gp_Parab2d&      P,
@@ -116,7 +97,6 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L,
   IntAna2d_AnaIntersection theIntAna2d;
 
   maxtol *= 100.0;
-  //  if(maxtol<0.000001) maxtol = 0.000001;
 
   gp_Vec2d Offset(maxtol * L.Direction().Y(), maxtol * L.Direction().X());
   gp_Lin2d Lp(L.Translated(Offset));
@@ -185,7 +165,7 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L,
         }
       }
       IntRes2d_Domain DPModif(Pntinf, binf, ft, Pntsup, bsup, lt);
-      //      Inter.Perform(ITool,DL,PCurve,DPModif,TolConf,Tol);
+
       Inter.Perform(ITool, DL, PCurve, DPModif, TOL_EXACT_INTER, TOL_EXACT_INTER);
       this->SetValues(Inter);
       wasSet = true;
@@ -205,10 +185,6 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L,
   }
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Line - Hyperbola
-//=======================================================================
 void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L,
                                      const IntRes2d_Domain& DL,
                                      const gp_Hypr2d&       H,
@@ -308,10 +284,6 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L,
   }
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Circle - Parabola
-//=======================================================================
 void IntCurve_IntConicConic::Perform(const gp_Circ2d&       C,
                                      const IntRes2d_Domain& DC,
                                      const gp_Parab2d&      P,
@@ -412,10 +384,6 @@ void IntCurve_IntConicConic::Perform(const gp_Circ2d&       C,
   }
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Circle - Ellipse
-//=======================================================================
 void IntCurve_IntConicConic::Perform(const gp_Circ2d&       C,
                                      const IntRes2d_Domain& DC,
                                      const gp_Elips2d&      E,
@@ -461,10 +429,6 @@ void IntCurve_IntConicConic::Perform(const gp_Circ2d&       C,
   this->SetValues(Inter);
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Circle - Hyperbola
-//=======================================================================
 void IntCurve_IntConicConic::Perform(const gp_Circ2d&       C,
                                      const IntRes2d_Domain& DC,
                                      const gp_Hypr2d&       H,
@@ -562,10 +526,6 @@ void IntCurve_IntConicConic::Perform(const gp_Circ2d&       C,
   }
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Parabola - Parabola
-//=======================================================================
 void IntCurve_IntConicConic::Perform(const gp_Parab2d&      P1,
                                      const IntRes2d_Domain& DP1,
                                      const gp_Parab2d&      P2,
@@ -665,10 +625,6 @@ void IntCurve_IntConicConic::Perform(const gp_Parab2d&      P1,
   }
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Ellipse - Parabola
-//=======================================================================
 void IntCurve_IntConicConic::Perform(const gp_Elips2d&      E,
                                      const IntRes2d_Domain& DE,
                                      const gp_Parab2d&      P,
@@ -687,8 +643,6 @@ void IntCurve_IntConicConic::Perform(const gp_Elips2d&      E,
   {
     D.SetEquivalentParameters(DE.FirstParameter(), DE.FirstParameter() + M_PI + M_PI);
   }
-
-  //-- std::cout<<" Parab Elips "<<std::endl;
 
   double   binf = Precision::Infinite(), bsup = -Precision::Infinite(), maxtol;
   gp_Pnt2d Pntinf, Pntsup;
@@ -725,7 +679,7 @@ void IntCurve_IntConicConic::Perform(const gp_Elips2d&      E,
                             maxtol,
                             PARAM_MAX_ON_PARABOLA);
   }
-  //-- std::cout<<" binf,bsup "<<binf<<" "<<bsup<<std::endl;
+
   if (binf <= bsup)
   {
     if (!BOUNDED_DOMAIN(DP))
@@ -768,8 +722,7 @@ void IntCurve_IntConicConic::Perform(const gp_Elips2d&      E,
           return;
         }
       }
-      //-- std::cout<<"BOUNDED  binf,bsup "<<binf<<" "<<bsup<<std::endl;
-      //-- std::cout<<"Domain   "<<DP.FirstParameter()<<" "<<DP.LastParameter()<<std::endl;
+
       IntRes2d_Domain DPModif(Pntinf, binf, ft, Pntsup, bsup, lt);
       Inter.Perform(ITool, D, PCurve, DPModif, TolConf, Tol);
     }
@@ -781,10 +734,6 @@ void IntCurve_IntConicConic::Perform(const gp_Elips2d&      E,
   }
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Parabola - Hyperbola
-//=======================================================================
 void IntCurve_IntConicConic::Perform(const gp_Parab2d&      P,
                                      const IntRes2d_Domain& DP,
                                      const gp_Hypr2d&       H,
@@ -882,11 +831,6 @@ void IntCurve_IntConicConic::Perform(const gp_Parab2d&      P,
   }
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Ellipse - Ellipse
-//=======================================================================
-
 void IntCurve_IntConicConic::Perform(const gp_Elips2d&      E1,
                                      const IntRes2d_Domain& DE1,
                                      const gp_Elips2d&      E2,
@@ -932,10 +876,6 @@ void IntCurve_IntConicConic::Perform(const gp_Elips2d&      E1,
   this->SetValues(Inter);
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Ellipse - Hyperbola
-//=======================================================================
 void IntCurve_IntConicConic::Perform(const gp_Elips2d&      E,
                                      const IntRes2d_Domain& DE,
                                      const gp_Hypr2d&       H,
@@ -1039,11 +979,6 @@ void IntCurve_IntConicConic::Perform(const gp_Elips2d&      E,
   }
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Hyperbola - Hyperbola
-//=======================================================================
-
 void IntCurve_IntConicConic::Perform(const gp_Hypr2d&       H1,
                                      const IntRes2d_Domain& DH1,
                                      const gp_Hypr2d&       H2,
@@ -1123,8 +1058,6 @@ void IntCurve_IntConicConic::Perform(const gp_Hypr2d&       H1,
         lt     = DH2.LastTolerance();
       }
 
-      //-- lbr le 22 sept 97
-      //-- binf=-5.6 bsup=-5.3 DH2=(5.6,5.7) -> binf=+5.6 bsup=-5.3
       if (binf >= bsup)
       {
         done = true;
@@ -1140,8 +1073,6 @@ void IntCurve_IntConicConic::Perform(const gp_Hypr2d&       H1,
     done = true;
   }
 }
-
-//----------------------------------------------------------------------
 
 void SetBinfBsupFromIntAna2d(const IntAna2d_AnaIntersection& theIntAna2d,
                              double&                         binf,

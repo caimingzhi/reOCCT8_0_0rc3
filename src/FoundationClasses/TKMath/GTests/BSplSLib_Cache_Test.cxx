@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BSplSLib.hpp>
 #include <BSplSLib_Cache.hpp>
@@ -28,16 +17,11 @@ namespace
   constexpr double THE_TOLERANCE = 1e-10;
 }
 
-//==================================================================================================
-// Test fixture for BSplSLib_Cache tests
-//==================================================================================================
-
 class BSplSLib_CacheTest : public ::testing::Test
 {
 protected:
   void SetUp() override {}
 
-  //! Creates flat knots array from knots and multiplicities
   void createFlatKnots(const NCollection_Array1<double>& theKnots,
                        const NCollection_Array1<int>&    theMults,
                        NCollection_Array1<double>&       theFlatKnots) const
@@ -53,26 +37,19 @@ protected:
   }
 };
 
-//==================================================================================================
-// Non-rational surface tests
-//==================================================================================================
-
 TEST_F(BSplSLib_CacheTest, D0_NonRationalSurface)
 {
-  // Create a biquadratic Bezier surface
+
   NCollection_Array2<gp_Pnt> aPoles(1, 3, 1, 3);
 
-  // Row 1 (v=0)
   aPoles(1, 1) = gp_Pnt(0, 0, 0);
   aPoles(2, 1) = gp_Pnt(1, 0, 1);
   aPoles(3, 1) = gp_Pnt(2, 0, 0);
 
-  // Row 2 (v=0.5)
   aPoles(1, 2) = gp_Pnt(0, 1, 1);
   aPoles(2, 2) = gp_Pnt(1, 1, 2);
   aPoles(3, 2) = gp_Pnt(2, 1, 1);
 
-  // Row 3 (v=1)
   aPoles(1, 3) = gp_Pnt(0, 2, 0);
   aPoles(2, 3) = gp_Pnt(1, 2, 1);
   aPoles(3, 3) = gp_Pnt(2, 2, 0);
@@ -102,26 +79,22 @@ TEST_F(BSplSLib_CacheTest, D0_NonRationalSurface)
   const int aDegreeU = 2;
   const int aDegreeV = 2;
 
-  // Create cache
   occ::handle<BSplSLib_Cache> aCache =
     new BSplSLib_Cache(aDegreeU, false, aFlatKnotsU, aDegreeV, false, aFlatKnotsV, nullptr);
   aCache->BuildCache(0.5, 0.5, aFlatKnotsU, aFlatKnotsV, aPoles, nullptr);
 
-  // Test at several parameter values
   for (double u = 0.0; u <= 1.0; u += 0.2)
   {
     for (double v = 0.0; v <= 1.0; v += 0.2)
     {
       gp_Pnt aCachePnt, aDirectPnt;
 
-      // Cached evaluation
       if (!aCache->IsCacheValid(u, v))
       {
         aCache->BuildCache(u, v, aFlatKnotsU, aFlatKnotsV, aPoles, nullptr);
       }
       aCache->D0(u, v, aCachePnt);
 
-      // Direct evaluation using BSplSLib::D0
       BSplSLib::D0(u,
                    v,
                    0,
@@ -140,7 +113,6 @@ TEST_F(BSplSLib_CacheTest, D0_NonRationalSurface)
                    false,
                    aDirectPnt);
 
-      // Compare
       EXPECT_NEAR(aCachePnt.X(), aDirectPnt.X(), THE_TOLERANCE)
         << "D0 X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCachePnt.Y(), aDirectPnt.Y(), THE_TOLERANCE)
@@ -153,20 +125,17 @@ TEST_F(BSplSLib_CacheTest, D0_NonRationalSurface)
 
 TEST_F(BSplSLib_CacheTest, D1_NonRationalSurface)
 {
-  // Create a biquadratic Bezier surface
+
   NCollection_Array2<gp_Pnt> aPoles(1, 3, 1, 3);
 
-  // Row 1 (v=0)
   aPoles(1, 1) = gp_Pnt(0, 0, 0);
   aPoles(2, 1) = gp_Pnt(1, 0, 1);
   aPoles(3, 1) = gp_Pnt(2, 0, 0);
 
-  // Row 2 (v=0.5)
   aPoles(1, 2) = gp_Pnt(0, 1, 1);
   aPoles(2, 2) = gp_Pnt(1, 1, 2);
   aPoles(3, 2) = gp_Pnt(2, 1, 1);
 
-  // Row 3 (v=1)
   aPoles(1, 3) = gp_Pnt(0, 2, 0);
   aPoles(2, 3) = gp_Pnt(1, 2, 1);
   aPoles(3, 3) = gp_Pnt(2, 2, 0);
@@ -196,12 +165,10 @@ TEST_F(BSplSLib_CacheTest, D1_NonRationalSurface)
   const int aDegreeU = 2;
   const int aDegreeV = 2;
 
-  // Create cache
   occ::handle<BSplSLib_Cache> aCache =
     new BSplSLib_Cache(aDegreeU, false, aFlatKnotsU, aDegreeV, false, aFlatKnotsV, nullptr);
   aCache->BuildCache(0.5, 0.5, aFlatKnotsU, aFlatKnotsV, aPoles, nullptr);
 
-  // Test at several parameter values
   for (double u = 0.0; u <= 1.0; u += 0.2)
   {
     for (double v = 0.0; v <= 1.0; v += 0.2)
@@ -209,14 +176,12 @@ TEST_F(BSplSLib_CacheTest, D1_NonRationalSurface)
       gp_Pnt aCachePnt, aDirectPnt;
       gp_Vec aCacheTanU, aCacheTanV, aDirectTanU, aDirectTanV;
 
-      // Cached evaluation
       if (!aCache->IsCacheValid(u, v))
       {
         aCache->BuildCache(u, v, aFlatKnotsU, aFlatKnotsV, aPoles, nullptr);
       }
       aCache->D1(u, v, aCachePnt, aCacheTanU, aCacheTanV);
 
-      // Direct evaluation using BSplSLib::D1
       BSplSLib::D1(u,
                    v,
                    0,
@@ -237,7 +202,6 @@ TEST_F(BSplSLib_CacheTest, D1_NonRationalSurface)
                    aDirectTanU,
                    aDirectTanV);
 
-      // Compare point
       EXPECT_NEAR(aCachePnt.X(), aDirectPnt.X(), THE_TOLERANCE)
         << "D1 point X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCachePnt.Y(), aDirectPnt.Y(), THE_TOLERANCE)
@@ -245,7 +209,6 @@ TEST_F(BSplSLib_CacheTest, D1_NonRationalSurface)
       EXPECT_NEAR(aCachePnt.Z(), aDirectPnt.Z(), THE_TOLERANCE)
         << "D1 point Z mismatch at u=" << u << ", v=" << v;
 
-      // Compare tangent U
       EXPECT_NEAR(aCacheTanU.X(), aDirectTanU.X(), THE_TOLERANCE)
         << "D1 tangentU X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCacheTanU.Y(), aDirectTanU.Y(), THE_TOLERANCE)
@@ -253,7 +216,6 @@ TEST_F(BSplSLib_CacheTest, D1_NonRationalSurface)
       EXPECT_NEAR(aCacheTanU.Z(), aDirectTanU.Z(), THE_TOLERANCE)
         << "D1 tangentU Z mismatch at u=" << u << ", v=" << v;
 
-      // Compare tangent V
       EXPECT_NEAR(aCacheTanV.X(), aDirectTanV.X(), THE_TOLERANCE)
         << "D1 tangentV X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCacheTanV.Y(), aDirectTanV.Y(), THE_TOLERANCE)
@@ -266,20 +228,17 @@ TEST_F(BSplSLib_CacheTest, D1_NonRationalSurface)
 
 TEST_F(BSplSLib_CacheTest, D2_NonRationalSurface)
 {
-  // Create a biquadratic Bezier surface
+
   NCollection_Array2<gp_Pnt> aPoles(1, 3, 1, 3);
 
-  // Row 1 (v=0)
   aPoles(1, 1) = gp_Pnt(0, 0, 0);
   aPoles(2, 1) = gp_Pnt(1, 0, 1);
   aPoles(3, 1) = gp_Pnt(2, 0, 0);
 
-  // Row 2 (v=0.5)
   aPoles(1, 2) = gp_Pnt(0, 1, 1);
   aPoles(2, 2) = gp_Pnt(1, 1, 2);
   aPoles(3, 2) = gp_Pnt(2, 1, 1);
 
-  // Row 3 (v=1)
   aPoles(1, 3) = gp_Pnt(0, 2, 0);
   aPoles(2, 3) = gp_Pnt(1, 2, 1);
   aPoles(3, 3) = gp_Pnt(2, 2, 0);
@@ -309,12 +268,10 @@ TEST_F(BSplSLib_CacheTest, D2_NonRationalSurface)
   const int aDegreeU = 2;
   const int aDegreeV = 2;
 
-  // Create cache
   occ::handle<BSplSLib_Cache> aCache =
     new BSplSLib_Cache(aDegreeU, false, aFlatKnotsU, aDegreeV, false, aFlatKnotsV, nullptr);
   aCache->BuildCache(0.5, 0.5, aFlatKnotsU, aFlatKnotsV, aPoles, nullptr);
 
-  // Test at several parameter values
   for (double u = 0.0; u <= 1.0; u += 0.2)
   {
     for (double v = 0.0; v <= 1.0; v += 0.2)
@@ -324,14 +281,12 @@ TEST_F(BSplSLib_CacheTest, D2_NonRationalSurface)
       gp_Vec aCacheCurvU, aCacheCurvV, aCacheCurvUV;
       gp_Vec aDirectCurvU, aDirectCurvV, aDirectCurvUV;
 
-      // Cached evaluation
       if (!aCache->IsCacheValid(u, v))
       {
         aCache->BuildCache(u, v, aFlatKnotsU, aFlatKnotsV, aPoles, nullptr);
       }
       aCache->D2(u, v, aCachePnt, aCacheTanU, aCacheTanV, aCacheCurvU, aCacheCurvV, aCacheCurvUV);
 
-      // Direct evaluation using BSplSLib::D2
       BSplSLib::D2(u,
                    v,
                    0,
@@ -355,7 +310,6 @@ TEST_F(BSplSLib_CacheTest, D2_NonRationalSurface)
                    aDirectCurvV,
                    aDirectCurvUV);
 
-      // Compare point
       EXPECT_NEAR(aCachePnt.X(), aDirectPnt.X(), THE_TOLERANCE)
         << "D2 point X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCachePnt.Y(), aDirectPnt.Y(), THE_TOLERANCE)
@@ -363,7 +317,6 @@ TEST_F(BSplSLib_CacheTest, D2_NonRationalSurface)
       EXPECT_NEAR(aCachePnt.Z(), aDirectPnt.Z(), THE_TOLERANCE)
         << "D2 point Z mismatch at u=" << u << ", v=" << v;
 
-      // Compare tangent U
       EXPECT_NEAR(aCacheTanU.X(), aDirectTanU.X(), THE_TOLERANCE)
         << "D2 tangentU X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCacheTanU.Y(), aDirectTanU.Y(), THE_TOLERANCE)
@@ -371,7 +324,6 @@ TEST_F(BSplSLib_CacheTest, D2_NonRationalSurface)
       EXPECT_NEAR(aCacheTanU.Z(), aDirectTanU.Z(), THE_TOLERANCE)
         << "D2 tangentU Z mismatch at u=" << u << ", v=" << v;
 
-      // Compare tangent V
       EXPECT_NEAR(aCacheTanV.X(), aDirectTanV.X(), THE_TOLERANCE)
         << "D2 tangentV X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCacheTanV.Y(), aDirectTanV.Y(), THE_TOLERANCE)
@@ -379,7 +331,6 @@ TEST_F(BSplSLib_CacheTest, D2_NonRationalSurface)
       EXPECT_NEAR(aCacheTanV.Z(), aDirectTanV.Z(), THE_TOLERANCE)
         << "D2 tangentV Z mismatch at u=" << u << ", v=" << v;
 
-      // Compare second derivatives
       EXPECT_NEAR(aCacheCurvU.X(), aDirectCurvU.X(), THE_TOLERANCE)
         << "D2 curvU X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCacheCurvU.Y(), aDirectCurvU.Y(), THE_TOLERANCE)
@@ -404,26 +355,19 @@ TEST_F(BSplSLib_CacheTest, D2_NonRationalSurface)
   }
 }
 
-//==================================================================================================
-// Rational surface tests
-//==================================================================================================
-
 TEST_F(BSplSLib_CacheTest, D0_RationalSurface)
 {
-  // Create a rational biquadratic Bezier surface (can represent sphere patch)
+
   NCollection_Array2<gp_Pnt> aPoles(1, 3, 1, 3);
 
-  // Row 1 (v=0)
   aPoles(1, 1) = gp_Pnt(1, 0, 0);
   aPoles(2, 1) = gp_Pnt(1, 1, 0);
   aPoles(3, 1) = gp_Pnt(0, 1, 0);
 
-  // Row 2 (v=0.5)
   aPoles(1, 2) = gp_Pnt(1, 0, 1);
   aPoles(2, 2) = gp_Pnt(1, 1, 1);
   aPoles(3, 2) = gp_Pnt(0, 1, 1);
 
-  // Row 3 (v=1)
   aPoles(1, 3) = gp_Pnt(0, 0, 1);
   aPoles(2, 3) = gp_Pnt(0, 0, 1);
   aPoles(3, 3) = gp_Pnt(0, 0, 1);
@@ -465,26 +409,22 @@ TEST_F(BSplSLib_CacheTest, D0_RationalSurface)
   const int aDegreeU = 2;
   const int aDegreeV = 2;
 
-  // Create cache
   occ::handle<BSplSLib_Cache> aCache =
     new BSplSLib_Cache(aDegreeU, false, aFlatKnotsU, aDegreeV, false, aFlatKnotsV, &aWeights);
   aCache->BuildCache(0.5, 0.5, aFlatKnotsU, aFlatKnotsV, aPoles, &aWeights);
 
-  // Test at several parameter values
   for (double u = 0.0; u <= 1.0; u += 0.2)
   {
     for (double v = 0.0; v <= 1.0; v += 0.2)
     {
       gp_Pnt aCachePnt, aDirectPnt;
 
-      // Cached evaluation
       if (!aCache->IsCacheValid(u, v))
       {
         aCache->BuildCache(u, v, aFlatKnotsU, aFlatKnotsV, aPoles, &aWeights);
       }
       aCache->D0(u, v, aCachePnt);
 
-      // Direct evaluation using BSplSLib::D0
       BSplSLib::D0(u,
                    v,
                    0,
@@ -503,7 +443,6 @@ TEST_F(BSplSLib_CacheTest, D0_RationalSurface)
                    false,
                    aDirectPnt);
 
-      // Compare
       EXPECT_NEAR(aCachePnt.X(), aDirectPnt.X(), THE_TOLERANCE)
         << "Rational D0 X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCachePnt.Y(), aDirectPnt.Y(), THE_TOLERANCE)
@@ -516,20 +455,17 @@ TEST_F(BSplSLib_CacheTest, D0_RationalSurface)
 
 TEST_F(BSplSLib_CacheTest, D1_RationalSurface)
 {
-  // Create a rational biquadratic Bezier surface
+
   NCollection_Array2<gp_Pnt> aPoles(1, 3, 1, 3);
 
-  // Row 1 (v=0)
   aPoles(1, 1) = gp_Pnt(1, 0, 0);
   aPoles(2, 1) = gp_Pnt(1, 1, 0);
   aPoles(3, 1) = gp_Pnt(0, 1, 0);
 
-  // Row 2 (v=0.5)
   aPoles(1, 2) = gp_Pnt(1, 0, 1);
   aPoles(2, 2) = gp_Pnt(1, 1, 1);
   aPoles(3, 2) = gp_Pnt(0, 1, 1);
 
-  // Row 3 (v=1)
   aPoles(1, 3) = gp_Pnt(0, 0, 1);
   aPoles(2, 3) = gp_Pnt(0, 0, 1);
   aPoles(3, 3) = gp_Pnt(0, 0, 1);
@@ -571,12 +507,10 @@ TEST_F(BSplSLib_CacheTest, D1_RationalSurface)
   const int aDegreeU = 2;
   const int aDegreeV = 2;
 
-  // Create cache
   occ::handle<BSplSLib_Cache> aCache =
     new BSplSLib_Cache(aDegreeU, false, aFlatKnotsU, aDegreeV, false, aFlatKnotsV, &aWeights);
   aCache->BuildCache(0.5, 0.5, aFlatKnotsU, aFlatKnotsV, aPoles, &aWeights);
 
-  // Test at several parameter values
   for (double u = 0.0; u <= 1.0; u += 0.2)
   {
     for (double v = 0.0; v <= 1.0; v += 0.2)
@@ -584,14 +518,12 @@ TEST_F(BSplSLib_CacheTest, D1_RationalSurface)
       gp_Pnt aCachePnt, aDirectPnt;
       gp_Vec aCacheTanU, aCacheTanV, aDirectTanU, aDirectTanV;
 
-      // Cached evaluation
       if (!aCache->IsCacheValid(u, v))
       {
         aCache->BuildCache(u, v, aFlatKnotsU, aFlatKnotsV, aPoles, &aWeights);
       }
       aCache->D1(u, v, aCachePnt, aCacheTanU, aCacheTanV);
 
-      // Direct evaluation using BSplSLib::D1
       BSplSLib::D1(u,
                    v,
                    0,
@@ -612,7 +544,6 @@ TEST_F(BSplSLib_CacheTest, D1_RationalSurface)
                    aDirectTanU,
                    aDirectTanV);
 
-      // Compare point
       EXPECT_NEAR(aCachePnt.X(), aDirectPnt.X(), THE_TOLERANCE)
         << "Rational D1 point X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCachePnt.Y(), aDirectPnt.Y(), THE_TOLERANCE)
@@ -620,7 +551,6 @@ TEST_F(BSplSLib_CacheTest, D1_RationalSurface)
       EXPECT_NEAR(aCachePnt.Z(), aDirectPnt.Z(), THE_TOLERANCE)
         << "Rational D1 point Z mismatch at u=" << u << ", v=" << v;
 
-      // Compare tangent U
       EXPECT_NEAR(aCacheTanU.X(), aDirectTanU.X(), THE_TOLERANCE)
         << "Rational D1 tangentU X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCacheTanU.Y(), aDirectTanU.Y(), THE_TOLERANCE)
@@ -628,7 +558,6 @@ TEST_F(BSplSLib_CacheTest, D1_RationalSurface)
       EXPECT_NEAR(aCacheTanU.Z(), aDirectTanU.Z(), THE_TOLERANCE)
         << "Rational D1 tangentU Z mismatch at u=" << u << ", v=" << v;
 
-      // Compare tangent V
       EXPECT_NEAR(aCacheTanV.X(), aDirectTanV.X(), THE_TOLERANCE)
         << "Rational D1 tangentV X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCacheTanV.Y(), aDirectTanV.Y(), THE_TOLERANCE)
@@ -641,20 +570,17 @@ TEST_F(BSplSLib_CacheTest, D1_RationalSurface)
 
 TEST_F(BSplSLib_CacheTest, D2_RationalSurface)
 {
-  // Create a rational biquadratic Bezier surface
+
   NCollection_Array2<gp_Pnt> aPoles(1, 3, 1, 3);
 
-  // Row 1 (v=0)
   aPoles(1, 1) = gp_Pnt(1, 0, 0);
   aPoles(2, 1) = gp_Pnt(1, 1, 0);
   aPoles(3, 1) = gp_Pnt(0, 1, 0);
 
-  // Row 2 (v=0.5)
   aPoles(1, 2) = gp_Pnt(1, 0, 1);
   aPoles(2, 2) = gp_Pnt(1, 1, 1);
   aPoles(3, 2) = gp_Pnt(0, 1, 1);
 
-  // Row 3 (v=1)
   aPoles(1, 3) = gp_Pnt(0, 0, 1);
   aPoles(2, 3) = gp_Pnt(0, 0, 1);
   aPoles(3, 3) = gp_Pnt(0, 0, 1);
@@ -696,12 +622,10 @@ TEST_F(BSplSLib_CacheTest, D2_RationalSurface)
   const int aDegreeU = 2;
   const int aDegreeV = 2;
 
-  // Create cache
   occ::handle<BSplSLib_Cache> aCache =
     new BSplSLib_Cache(aDegreeU, false, aFlatKnotsU, aDegreeV, false, aFlatKnotsV, &aWeights);
   aCache->BuildCache(0.5, 0.5, aFlatKnotsU, aFlatKnotsV, aPoles, &aWeights);
 
-  // Test at several parameter values
   for (double u = 0.0; u <= 1.0; u += 0.2)
   {
     for (double v = 0.0; v <= 1.0; v += 0.2)
@@ -711,14 +635,12 @@ TEST_F(BSplSLib_CacheTest, D2_RationalSurface)
       gp_Vec aCacheCurvU, aCacheCurvV, aCacheCurvUV;
       gp_Vec aDirectCurvU, aDirectCurvV, aDirectCurvUV;
 
-      // Cached evaluation
       if (!aCache->IsCacheValid(u, v))
       {
         aCache->BuildCache(u, v, aFlatKnotsU, aFlatKnotsV, aPoles, &aWeights);
       }
       aCache->D2(u, v, aCachePnt, aCacheTanU, aCacheTanV, aCacheCurvU, aCacheCurvV, aCacheCurvUV);
 
-      // Direct evaluation using BSplSLib::D2
       BSplSLib::D2(u,
                    v,
                    0,
@@ -742,7 +664,6 @@ TEST_F(BSplSLib_CacheTest, D2_RationalSurface)
                    aDirectCurvV,
                    aDirectCurvUV);
 
-      // Compare point
       EXPECT_NEAR(aCachePnt.X(), aDirectPnt.X(), THE_TOLERANCE)
         << "Rational D2 point X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCachePnt.Y(), aDirectPnt.Y(), THE_TOLERANCE)
@@ -750,7 +671,6 @@ TEST_F(BSplSLib_CacheTest, D2_RationalSurface)
       EXPECT_NEAR(aCachePnt.Z(), aDirectPnt.Z(), THE_TOLERANCE)
         << "Rational D2 point Z mismatch at u=" << u << ", v=" << v;
 
-      // Compare tangent U
       EXPECT_NEAR(aCacheTanU.X(), aDirectTanU.X(), THE_TOLERANCE)
         << "Rational D2 tangentU X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCacheTanU.Y(), aDirectTanU.Y(), THE_TOLERANCE)
@@ -758,7 +678,6 @@ TEST_F(BSplSLib_CacheTest, D2_RationalSurface)
       EXPECT_NEAR(aCacheTanU.Z(), aDirectTanU.Z(), THE_TOLERANCE)
         << "Rational D2 tangentU Z mismatch at u=" << u << ", v=" << v;
 
-      // Compare tangent V
       EXPECT_NEAR(aCacheTanV.X(), aDirectTanV.X(), THE_TOLERANCE)
         << "Rational D2 tangentV X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCacheTanV.Y(), aDirectTanV.Y(), THE_TOLERANCE)
@@ -766,7 +685,6 @@ TEST_F(BSplSLib_CacheTest, D2_RationalSurface)
       EXPECT_NEAR(aCacheTanV.Z(), aDirectTanV.Z(), THE_TOLERANCE)
         << "Rational D2 tangentV Z mismatch at u=" << u << ", v=" << v;
 
-      // Compare second derivatives
       EXPECT_NEAR(aCacheCurvU.X(), aDirectCurvU.X(), THE_TOLERANCE)
         << "Rational D2 curvU X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCacheCurvU.Y(), aDirectCurvU.Y(), THE_TOLERANCE)
@@ -791,16 +709,11 @@ TEST_F(BSplSLib_CacheTest, D2_RationalSurface)
   }
 }
 
-//==================================================================================================
-// Test with different degrees in U and V
-//==================================================================================================
-
 TEST_F(BSplSLib_CacheTest, D1_DifferentDegrees_UGreaterV)
 {
-  // Create a surface with degree 3 in U, degree 2 in V
+
   NCollection_Array2<gp_Pnt> aPoles(1, 4, 1, 3);
 
-  // Fill poles
   for (int i = 1; i <= 4; ++i)
   {
     for (int j = 1; j <= 3; ++j)
@@ -834,12 +747,10 @@ TEST_F(BSplSLib_CacheTest, D1_DifferentDegrees_UGreaterV)
   const int aDegreeU = 3;
   const int aDegreeV = 2;
 
-  // Create cache
   occ::handle<BSplSLib_Cache> aCache =
     new BSplSLib_Cache(aDegreeU, false, aFlatKnotsU, aDegreeV, false, aFlatKnotsV, nullptr);
   aCache->BuildCache(0.5, 0.5, aFlatKnotsU, aFlatKnotsV, aPoles, nullptr);
 
-  // Test at several parameter values
   for (double u = 0.0; u <= 1.0; u += 0.25)
   {
     for (double v = 0.0; v <= 1.0; v += 0.25)
@@ -847,14 +758,12 @@ TEST_F(BSplSLib_CacheTest, D1_DifferentDegrees_UGreaterV)
       gp_Pnt aCachePnt, aDirectPnt;
       gp_Vec aCacheTanU, aCacheTanV, aDirectTanU, aDirectTanV;
 
-      // Cached evaluation
       if (!aCache->IsCacheValid(u, v))
       {
         aCache->BuildCache(u, v, aFlatKnotsU, aFlatKnotsV, aPoles, nullptr);
       }
       aCache->D1(u, v, aCachePnt, aCacheTanU, aCacheTanV);
 
-      // Direct evaluation using BSplSLib::D1
       BSplSLib::D1(u,
                    v,
                    0,
@@ -875,7 +784,6 @@ TEST_F(BSplSLib_CacheTest, D1_DifferentDegrees_UGreaterV)
                    aDirectTanU,
                    aDirectTanV);
 
-      // Compare
       EXPECT_NEAR(aCachePnt.X(), aDirectPnt.X(), THE_TOLERANCE)
         << "DifferentDeg D1 point X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCacheTanU.X(), aDirectTanU.X(), THE_TOLERANCE)
@@ -888,10 +796,9 @@ TEST_F(BSplSLib_CacheTest, D1_DifferentDegrees_UGreaterV)
 
 TEST_F(BSplSLib_CacheTest, D1_DifferentDegrees_VGreaterU)
 {
-  // Create a surface with degree 2 in U, degree 3 in V
+
   NCollection_Array2<gp_Pnt> aPoles(1, 3, 1, 4);
 
-  // Fill poles
   for (int i = 1; i <= 3; ++i)
   {
     for (int j = 1; j <= 4; ++j)
@@ -925,12 +832,10 @@ TEST_F(BSplSLib_CacheTest, D1_DifferentDegrees_VGreaterU)
   const int aDegreeU = 2;
   const int aDegreeV = 3;
 
-  // Create cache
   occ::handle<BSplSLib_Cache> aCache =
     new BSplSLib_Cache(aDegreeU, false, aFlatKnotsU, aDegreeV, false, aFlatKnotsV, nullptr);
   aCache->BuildCache(0.5, 0.5, aFlatKnotsU, aFlatKnotsV, aPoles, nullptr);
 
-  // Test at several parameter values
   for (double u = 0.0; u <= 1.0; u += 0.25)
   {
     for (double v = 0.0; v <= 1.0; v += 0.25)
@@ -938,14 +843,12 @@ TEST_F(BSplSLib_CacheTest, D1_DifferentDegrees_VGreaterU)
       gp_Pnt aCachePnt, aDirectPnt;
       gp_Vec aCacheTanU, aCacheTanV, aDirectTanU, aDirectTanV;
 
-      // Cached evaluation
       if (!aCache->IsCacheValid(u, v))
       {
         aCache->BuildCache(u, v, aFlatKnotsU, aFlatKnotsV, aPoles, nullptr);
       }
       aCache->D1(u, v, aCachePnt, aCacheTanU, aCacheTanV);
 
-      // Direct evaluation using BSplSLib::D1
       BSplSLib::D1(u,
                    v,
                    0,
@@ -966,7 +869,6 @@ TEST_F(BSplSLib_CacheTest, D1_DifferentDegrees_VGreaterU)
                    aDirectTanU,
                    aDirectTanV);
 
-      // Compare
       EXPECT_NEAR(aCachePnt.X(), aDirectPnt.X(), THE_TOLERANCE)
         << "DifferentDeg V>U D1 point X mismatch at u=" << u << ", v=" << v;
       EXPECT_NEAR(aCacheTanU.X(), aDirectTanU.X(), THE_TOLERANCE)

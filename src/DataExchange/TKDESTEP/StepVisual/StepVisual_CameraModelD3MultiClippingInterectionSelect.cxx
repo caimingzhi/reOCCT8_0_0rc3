@@ -3,12 +3,8 @@
 #include <StepGeom_Plane.hpp>
 #include <StepVisual_CameraModelD3MultiClippingUnion.hpp>
 
-//=================================================================================================
-
 StepVisual_CameraModelD3MultiClippingInterectionSelect::
   StepVisual_CameraModelD3MultiClippingInterectionSelect() = default;
-
-//=================================================================================================
 
 int StepVisual_CameraModelD3MultiClippingInterectionSelect::CaseNum(
   const occ::handle<Standard_Transient>& ent) const

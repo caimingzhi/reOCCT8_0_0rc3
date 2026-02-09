@@ -2,14 +2,10 @@
 #include <XmlObjMgt_Document.hpp>
 #include <XmlObjMgt_Persistent.hpp>
 
-//=================================================================================================
-
 XmlObjMgt_Persistent::XmlObjMgt_Persistent()
     : myID(0)
 {
 }
-
-//=================================================================================================
 
 XmlObjMgt_Persistent::XmlObjMgt_Persistent(const XmlObjMgt_Element& theElement)
     : myElement(theElement),
@@ -18,8 +14,6 @@ XmlObjMgt_Persistent::XmlObjMgt_Persistent(const XmlObjMgt_Element& theElement)
   if (theElement != nullptr)
     theElement.getAttribute(XmlObjMgt::IdString()).GetInteger(myID);
 }
-
-//=================================================================================================
 
 XmlObjMgt_Persistent::XmlObjMgt_Persistent(const XmlObjMgt_Element&   theElement,
                                            const XmlObjMgt_DOMString& theRef)
@@ -37,23 +31,16 @@ XmlObjMgt_Persistent::XmlObjMgt_Persistent(const XmlObjMgt_Element&   theElement
   }
 }
 
-//=======================================================================
-// function : CreateElement
-// purpose  : <theType id="theID"/>
-//=======================================================================
 void XmlObjMgt_Persistent::CreateElement(XmlObjMgt_Element&         theParent,
                                          const XmlObjMgt_DOMString& theType,
                                          const int                  theID)
 {
-  // AGV  XmlObjMgt_Document& anOwnerDoc =
-  // AGV    (XmlObjMgt_Document&)theParent.getOwnerDocument();
+
   XmlObjMgt_Document anOwnerDoc = XmlObjMgt_Document(theParent.getOwnerDocument());
   myElement                     = anOwnerDoc.createElement(theType);
   theParent.appendChild(myElement);
   SetId(theID);
 }
-
-//=================================================================================================
 
 void XmlObjMgt_Persistent::SetId(const int theId)
 {

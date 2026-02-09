@@ -38,7 +38,7 @@ IMPLEMENT_STANDARD_RTTIEXT(ShapeFix_Shell, ShapeFix_Root)
 
 namespace
 {
-  // Type aliases for unordered maps with custom allocators
+
   using FaceEdgesMap = NCollection_IndexedDataMap<TopoDS_Face, NCollection_Array1<TopoDS_Edge>>;
   using EdgeFacesAllocator =
     NCollection_Allocator<std::pair<const TopoDS_Edge, NCollection_DynamicArray<TopoDS_Face>>>;
@@ -48,11 +48,8 @@ namespace
                                           TopTools_ShapeMapHasher,
                                           EdgeFacesAllocator>;
 
-  // Default increment for dynamic array of faces per edge
   constexpr int DEFAULT_EDGE_FACES_INCREMENT = 5;
 } // namespace
-
-//=================================================================================================
 
 ShapeFix_Shell::ShapeFix_Shell()
 {
@@ -64,8 +61,6 @@ ShapeFix_Shell::ShapeFix_Shell()
   myNonManifold        = false;
 }
 
-//=================================================================================================
-
 ShapeFix_Shell::ShapeFix_Shell(const TopoDS_Shell& shape)
 {
   myStatus             = ShapeExtend::EncodeStatus(ShapeExtend_OK);
@@ -76,16 +71,12 @@ ShapeFix_Shell::ShapeFix_Shell(const TopoDS_Shell& shape)
   myNonManifold = false;
 }
 
-//=================================================================================================
-
 void ShapeFix_Shell::Init(const TopoDS_Shell& shell)
 {
   myShape    = shell;
   myShell    = shell;
   myNbShells = 0;
 }
-
-//=================================================================================================
 
 bool ShapeFix_Shell::Perform(const Message_ProgressRange& theProgress)
 {
@@ -98,10 +89,8 @@ bool ShapeFix_Shell::Perform(const Message_ProgressRange& theProgress)
   {
     TopoDS_Shape S = Context()->Apply(myShell);
 
-    // Get the number of faces for progress indication
     int aNbFaces = S.NbChildren();
 
-    // Start progress scope (no need to check if progress exists -- it is safe)
     Message_ProgressScope aPS(theProgress, "Fixing face", aNbFaces);
 
     for (TopoDS_Iterator iter(S); iter.More() && aPS.More(); iter.Next(), aPS.Next())
@@ -116,7 +105,6 @@ bool ShapeFix_Shell::Perform(const Message_ProgressRange& theProgress)
       }
     }
 
-    // Halt algorithm in case of user's abort
     if (!aPS.More())
       return false;
   }
@@ -137,9 +125,8 @@ bool ShapeFix_Shell::Perform(const Message_ProgressRange& theProgress)
       if (aSas.HasFreeEdges())
       {
         aCurShell.Closed(false);
-        // clang-format off
-        SendWarning (Message_Msg ("FixAdvShell.FixClosedFlag.MSG0"));//Shell has incorrect flag isClosed
-        // clang-format on
+
+        SendWarning(Message_Msg("FixAdvShell.FixClosedFlag.MSG0"));
       }
       aSas.Clear();
     }
@@ -151,8 +138,6 @@ bool ShapeFix_Shell::Perform(const Message_ProgressRange& theProgress)
     status = true;
   return status;
 }
-
-//=================================================================================================
 
 static bool GetFreeEdges(const TopoDS_Shape&                                     aShape,
                          NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& MapEdges)
@@ -171,13 +156,6 @@ static bool GetFreeEdges(const TopoDS_Shape&                                    
   return !MapEdges.IsEmpty();
 }
 
-/// Groups connected faces into separate sequences using existing connectivity data.
-/// Uses depth-first search to find connected components through shared edges.
-/// Each face appears in exactly one group, ensuring no duplicates across groups.
-/// Groups are sorted by size with the largest group first.
-/// @param theFaceEdges Map from faces to their constituent edges
-/// @param theEdgeFaces Map from edges to faces that contain them
-/// @return List of face sequences, each representing one connected component
 static NCollection_List<NCollection_Sequence<TopoDS_Shape>> GetConnectedFaceGroups(
   const FaceEdgesMap& theFaceEdges,
   const EdgeFacesMap& theEdgeFaces)
@@ -201,10 +179,8 @@ static NCollection_List<NCollection_Sequence<TopoDS_Shape>> GetConnectedFaceGrou
       continue;
     }
 
-    // Start new connected group
     NCollection_Sequence<TopoDS_Shape> aConnectedGroup;
 
-    // DFS traversal using STL stack with NCollection_Allocator
     using StackAllocator = NCollection_Allocator<TopoDS_Face>;
     std::stack<TopoDS_Face, std::deque<TopoDS_Face, StackAllocator>> aStack;
     aStack.push(aStartFace);
@@ -216,7 +192,6 @@ static NCollection_List<NCollection_Sequence<TopoDS_Shape>> GetConnectedFaceGrou
       aStack.pop();
       aConnectedGroup.Append(aCurrentFace);
 
-      // Find connected faces through shared edges
       auto aFaceEdgesIter = theFaceEdges.Seek(aCurrentFace);
       if (aFaceEdgesIter)
       {
@@ -247,7 +222,6 @@ static NCollection_List<NCollection_Sequence<TopoDS_Shape>> GetConnectedFaceGrou
       }
     }
 
-    // Insert in sorted order (largest groups first)
     bool anIsInserted = false;
 
     for (NCollection_List<NCollection_Sequence<TopoDS_Shape>>::Iterator anIter(aConnectedGroups);
@@ -271,15 +245,6 @@ static NCollection_List<NCollection_Sequence<TopoDS_Shape>> GetConnectedFaceGrou
   return aConnectedGroups;
 }
 
-/// Creates shells from connected face groups using connectivity analysis.
-/// Processes only the largest connected group for shell construction, improving efficiency
-/// by focusing on faces that are actually topologically connected.
-/// @param theLfaces Input sequence of faces to process; returns unprocessed faces
-/// @param theMapMultiConnectEdges Map of edges shared by more than 2 faces (multiconnectivity mode)
-/// @param theSeqShells Output sequence of created shells
-/// @param theMapFaceShells Output map linking faces to their containing shells
-/// @param theErrFaces Output sequence of faces that could not be processed (e.g., Mobius-like)
-/// @return true if shell construction was successful, false otherwise
 static bool GetShells(
   NCollection_Sequence<TopoDS_Shape>&                                       theLfaces,
   const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>&             theMapMultiConnectEdges,
@@ -299,8 +264,6 @@ static bool GetShells(
   int                                aFaceIdx = 1, aFacesInShellCount = 1;
   NCollection_Sequence<TopoDS_Shape> aSeqUnconnectFaces;
 
-  // Using STL containers because number of faces or edges can be too high
-  // to keep them on flat basket OCCT map
   using EdgeMapAllocator =
     NCollection_Allocator<std::pair<const TopoDS_Edge, std::pair<bool, bool>>>;
   using EdgeOrientedMap = std::unordered_map<TopoDS_Edge,
@@ -347,7 +310,6 @@ static bool GetShells(
 
       auto& aFacesArray = aEdgeFaces[anEdge];
 
-      // Check if face already exists in the array
       bool aFaceExists = false;
       for (int aFaceCheckIdx = 0; aFaceCheckIdx < aFacesArray.Length(); ++aFaceCheckIdx)
       {
@@ -370,17 +332,14 @@ static bool GetShells(
     }
   }
 
-  // Get connected groups of faces using existing connectivity data
   NCollection_List<NCollection_Sequence<TopoDS_Shape>> aConnectedGroups =
     GetConnectedFaceGroups(aFaceEdges, aEdgeFaces);
 
-  // Process only the largest connected group for shell construction
   if (aConnectedGroups.IsEmpty())
   {
     return false;
   }
 
-  // Some assumption that each edge can be in two orientations
   aNumberOfEdges = static_cast<size_t>((aNumberOfEdges / 2) + 1);
 
   EdgeOrientedMap aProcessedEdges;
@@ -395,15 +354,13 @@ static bool GetShells(
 
     int         aBadOrientationCount = 0, aGoodOrientationCount = 0;
     TopoDS_Face F1 = TopoDS::Face(aProcessingFaces.Value(aFaceIdx));
-    // Get edges of the face
+
     const NCollection_Array1<TopoDS_Edge>& aFaceEdgesArray = aFaceEdges.FindFromKey(F1);
 
     for (int anEdgeInd = aFaceEdgesArray.Lower(); anEdgeInd <= aFaceEdgesArray.Upper(); ++anEdgeInd)
     {
       const TopoDS_Edge& edge = aFaceEdgesArray.Value(anEdgeInd);
 
-      // if multiconnexity mode is equal to true faces contains
-      // the same multiconnexity edges are not added to one shell.
       if (anIsMultiConnex && theMapMultiConnectEdges.Contains(edge))
         continue;
 
@@ -456,15 +413,13 @@ static bool GetShells(
 
       if (!aPair.first && !aPair.second)
       {
-        // if edge is processed in this face it is removed from map of processed edges
+
         aProcessedEdges.erase(aProcessedEdgeIt);
       }
     }
 
     if (!aBadOrientationCount && !aGoodOrientationCount && aTempProcessedEdges.IsEmpty())
       continue;
-
-    // if face can not be added to shell it added to sequence of error faces.
 
     if (aGoodOrientationCount != 0 && aBadOrientationCount != 0)
     {
@@ -473,9 +428,6 @@ static bool GetShells(
       aFacesInShellCount++;
       continue;
     }
-
-    // Addition of face to shell. In the dependance of orientation faces in the shell
-    //  added face can be reversed.
 
     if ((aGoodOrientationCount != 0 || aBadOrientationCount != 0) || aFacesInShellCount == 1)
     {
@@ -531,9 +483,6 @@ static bool GetShells(
       theMapFaceShells.Bind(F1, nshell);
       aProcessingFaces.Remove(aFaceIdx);
 
-      // check if closed shell is obtained in multi connex mode and add to sequence of
-      // shells and new shell begin to construct.
-      // (check is n*2)
       if (anIsMultiConnex && BRep_Tool::IsClosed(nshell))
       {
         nshell.Closed(true);
@@ -546,8 +495,7 @@ static bool GetShells(
 
       aFaceIdx = 0;
     }
-    // if shell contains of one face. This face is added to sequence of faces.
-    //  This shell is removed.
+
     if (aProcessingFaces.Length() && aFaceIdx == aProcessingFaces.Length()
         && aFacesInShellCount <= 2)
     {
@@ -578,7 +526,7 @@ static bool GetShells(
     }
     if (numFace > 1)
     {
-      // close all closed shells in no multi connex mode
+
       if (!anIsMultiConnex)
         nshell.Closed(BRep_Tool::IsClosed(nshell));
       theSeqShells.Append(nshell);
@@ -591,14 +539,13 @@ static bool GetShells(
     }
   }
 
-  // Add all unprocessed connected groups (second group and after) to unconnected faces
   int aGroupIndex = 1;
   for (NCollection_List<NCollection_Sequence<TopoDS_Shape>>::Iterator aGroupIter(aConnectedGroups);
        aGroupIter.More();
        aGroupIter.Next(), ++aGroupIndex)
   {
     if (aGroupIndex == 1)
-      continue; // Skip first group (already processed)
+      continue;
 
     const NCollection_Sequence<TopoDS_Shape>& aUnprocessedGroup = aGroupIter.Value();
     for (int anUnprocFaceIdx = 1; anUnprocFaceIdx <= aUnprocessedGroup.Length(); ++anUnprocFaceIdx)
@@ -609,7 +556,6 @@ static bool GetShells(
 
   theLfaces = std::move(aProcessingFaces);
 
-  // Add unconnected faces from the largest group that couldn't be added to shells
   for (int j1 = 1; j1 <= aSeqUnconnectFaces.Length(); j1++)
   {
     theLfaces.Append(aSeqUnconnectFaces.Value(j1));
@@ -618,12 +564,6 @@ static bool GetShells(
   return aDone;
 }
 
-//=======================================================================
-// function : AddMultiConexityFaces
-// purpose  : In this function faces have only of multiconnexity boundary
-//            are added to shells having free boundary contains the same
-//            multiconnexity edges as faces.
-//=======================================================================
 static bool AddMultiConexityFaces(
   NCollection_Sequence<TopoDS_Shape>&                           Lface,
   const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapMultiConnectEdges,
@@ -636,7 +576,7 @@ static bool AddMultiConexityFaces(
   const bool                                                                      NonManifold)
 {
   bool done = false;
-  //  BRep_Builder aB;
+
   NCollection_Sequence<TopoDS_Shape> llPosibleShells;
   NCollection_Sequence<TopoDS_Shape> AddShapes;
   for (int i1 = 1; i1 <= Lface.Length(); i1++)
@@ -646,7 +586,6 @@ static bool AddMultiConexityFaces(
 
     int aNbMultEdges = 0;
 
-    // Finds faces having only multiconnexity boundary.
     for (TopoDS_Iterator aItWires(aShape, false); aItWires.More(); aItWires.Next())
     {
       int aNbEdges = 0;
@@ -668,7 +607,6 @@ static bool AddMultiConexityFaces(
     }
   }
 
-  // Attempt to create shell from unconnected which have not only multiconnexity boundary.
   NCollection_Sequence<TopoDS_Shape> aTmpShells;
   if (!llPosibleShells.IsEmpty())
   {
@@ -698,7 +636,6 @@ static bool AddMultiConexityFaces(
     }
   }
 
-  // Add chosen faces to shells.
   for (int k1 = 1; k1 <= AddShapes.Length(); k1++)
   {
     NCollection_DataMap<TopoDS_Shape, int, TopTools_ShapeMapHasher> MapOtherShells;
@@ -708,9 +645,6 @@ static bool AddMultiConexityFaces(
     if (!GetFreeEdges(aSh, mapEdges))
       continue;
     NCollection_List<TopoDS_Shape> lfaces;
-
-    // Fill MapOtherShells which will contain shells with orientation in which selected shape aSh
-    // will be add.
 
     for (NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator amapIter(mapEdges);
          amapIter.More();
@@ -752,7 +686,6 @@ static bool AddMultiConexityFaces(
         continue;
       int nbdir = 0, nbrev = 0;
 
-      // add only free face whome all edges contains in the shell as open boundary.
       for (NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator aIte(mapShellEdges);
            aIte.More();
            aIte.Next())
@@ -780,15 +713,10 @@ static bool AddMultiConexityFaces(
     }
     if (MapOtherShells.IsEmpty())
     {
-      //      i1++;
+
       continue;
     }
 
-    // Adds face to open shells containing the same multishared edges.
-    // For nonmanifold mode creation ine shell from face and shells containing the same multishared
-    // edges.
-    //  If one face can be added to a few shells (case of compsolid) face will be added to each
-    //  shell.
     done         = true;
     int FirstRev = 0, FirstInd = 0;
     int ind = 0;
@@ -841,10 +769,6 @@ static bool AddMultiConexityFaces(
   return done;
 }
 
-//=======================================================================
-// function : BoxIn
-// purpose  : Check if one face contains inside other.
-//=======================================================================
 static int BoxIn(const Bnd_Box& theBox1, const Bnd_Box& theBox2)
 {
   int    aNumIn = 0;
@@ -864,12 +788,6 @@ static int BoxIn(const Bnd_Box& theBox1, const Bnd_Box& theBox2)
   return aNumIn;
 }
 
-//=======================================================================
-// function : GetClosedShells
-// purpose  : Check if one shell is a part from other shell.
-//            For case of compsolid when a few shells are created from
-//            the same set of faces.
-//=======================================================================
 static void GetClosedShells(NCollection_Sequence<TopoDS_Shape>& Shells,
                             NCollection_Sequence<TopoDS_Shape>& aRemainShells)
 {
@@ -906,16 +824,12 @@ static void GetClosedShells(NCollection_Sequence<TopoDS_Shape>& Shells,
   }
 }
 
-//=======================================================================
-// function : GlueClosedCandidate
-// purpose  : First, attempt to create closed shells from sequence of open shells.
-//=======================================================================
 static void GlueClosedCandidate(
   NCollection_Sequence<TopoDS_Shape>&                           OpenShells,
   const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapMultiConnectEdges,
   NCollection_Sequence<TopoDS_Shape>&                           aSeqNewShells)
 {
-  // Creating new shells if some open shells contain the same free boundary.
+
   for (int i = 1; i < OpenShells.Length(); i++)
   {
     TopoDS_Shape                                           aShell = OpenShells.Value(i);
@@ -939,8 +853,6 @@ static void GlueClosedCandidate(
     if (mapEdges1.Extent() > (dire.Extent() + reve.Extent()))
       continue;
 
-    // Filling map MapOtherShells which contains candidate to creation of closed shell
-    //  with aShell.
     NCollection_DataMap<TopoDS_Shape, bool, TopTools_ShapeMapHasher> MapOtherShells;
     for (int j = i + 1; j <= OpenShells.Length(); j++)
     {
@@ -959,7 +871,6 @@ static void GlueClosedCandidate(
         {
           isAddShell = false;
           break;
-          // continue;
         }
         isAddShell = (dire.Contains(edge2) || reve.Contains(edge2));
         if ((edge2.Orientation() == TopAbs_FORWARD && dire.Contains(edge2))
@@ -976,7 +887,7 @@ static void GlueClosedCandidate(
 
     if (!MapOtherShells.IsEmpty())
     {
-      // Case of compsolid when more than two shells have the same free boundary.
+
       NCollection_Sequence<TopoDS_Shape> aSeqCandidate;
       aSeqCandidate.Append(OpenShells.Value(i));
 
@@ -987,9 +898,6 @@ static void GlueClosedCandidate(
       {
         aSeqCandidate.Append(aIt.Key());
       }
-
-      // Creation of all possible shells from chosen candidate.
-      //  And the addition of them to temporary sequence.
 
       NCollection_Sequence<TopoDS_Shape> aTmpSeq;
       for (int k = 1; k <= aSeqCandidate.Length(); k++)
@@ -1016,7 +924,6 @@ static void GlueClosedCandidate(
         }
       }
 
-      // Choice from temporary sequence shells contains different set of faces (case of compsolid)
       NCollection_Sequence<TopoDS_Shape> aRemainShells;
       GetClosedShells(aTmpSeq, aRemainShells);
       aSeqNewShells.Append(aRemainShells);
@@ -1053,15 +960,9 @@ static void GlueClosedCandidate(
       aSeqNewShells.Append(aNewShell);
     }
 
-    // OpenShells.ChangeValue(i) = aShell;
     OpenShells.Remove(i--);
   }
 }
-
-//=======================================================================
-// function : CreateNonManifoldShells
-// purpose  : Attempt to create max possible shells from open shells.
-//=======================================================================
 
 static void CreateNonManifoldShells(
   NCollection_Sequence<TopoDS_Shape>&                           SeqShells,
@@ -1079,10 +980,9 @@ static void CreateNonManifoldShells(
          mit.More();
          mit.Next())
     {
-      // for(TopExp_Explorer aExp(aShell,TopAbs_EDGE); aExp.More(); aExp.Next(),nbe++) {
-      // TopoDS_Shape ae = aExp.Current();
+
       const TopoDS_Shape& ae = mit.Key();
-      // if( aMapMultiConnectEdges.Contains(aExp.Current())) {
+
       if (medeg.Contains(ae))
       {
         if (aMap.Contains(ae))
@@ -1171,11 +1071,7 @@ static void CreateNonManifoldShells(
            alit1.Next())
       {
         const TopoDS_Shape& oldShell = alit1.Key();
-        // while(aMapShells.Contains(oldShell)) {
-        //   TopoDS_Shape ss = aMapShells.FindFromKey(oldShell);
-        //   if(ss.IsSame(oldShell)) break;
-        //   oldShell = ss;
-        // }
+
         aMapShells.Add(oldShell, aNewShell);
       }
     }
@@ -1202,20 +1098,14 @@ static void CreateNonManifoldShells(
     SeqShells.Append(MapNewShells.FindKey(ii));
 }
 
-//=======================================================================
-// function : CreateClosedShell
-// purpose  : Attempt to create max possible shells from open shells.
-//=======================================================================
-
 static void CreateClosedShell(
   NCollection_Sequence<TopoDS_Shape>&                           OpenShells,
   const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapMultiConnectEdges)
 {
   NCollection_Sequence<TopoDS_Shape> aNewShells;
-  // First, attempt to create closed shells.
+
   GlueClosedCandidate(OpenShells, aMapMultiConnectEdges, aNewShells);
 
-  // Creating new shells if some open shells contain the multishared same edges.
   for (int i = 1; i < OpenShells.Length(); i++)
   {
     bool         isAddShell = false;
@@ -1281,17 +1171,15 @@ static void CreateClosedShell(
   OpenShells.Append(aNewShells);
 }
 
-//=================================================================================================
-
 bool ShapeFix_Shell::FixFaceOrientation(const TopoDS_Shell& shell,
                                         const bool          isAccountMultiConex,
                                         const bool          NonManifold)
 {
-  // myStatus = ShapeExtend::EncodeStatus (ShapeExtend_OK);
-  bool                               done = false;
-  NCollection_Sequence<TopoDS_Shape> aSeqShells;
-  NCollection_Sequence<TopoDS_Shape> aErrFaces; // Compound of faces like to Mebiuce leaf.
-  NCollection_Sequence<TopoDS_Shape> Lface;
+
+  bool                                                                     done = false;
+  NCollection_Sequence<TopoDS_Shape>                                       aSeqShells;
+  NCollection_Sequence<TopoDS_Shape>                                       aErrFaces;
+  NCollection_Sequence<TopoDS_Shape>                                       Lface;
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> aMapFaceShells;
   myShell                                                              = shell;
   myShape                                                              = shell;
@@ -1320,19 +1208,18 @@ bool ShapeFix_Shell::FixFaceOrientation(const TopoDS_Shell& shell,
       if (!BRep_Tool::Degenerated(E))
         isFreeBoundaries = true;
     }
-    // Finds multishared edges
+
     else if (isAccountMultiConex && aFaceCount > 2)
       aMapMultiConnectEdges.Add(aMapEdgeFaces.FindKey(k));
   }
   if (BRep_Tool::IsClosed(myShell) ? isFreeBoundaries : !isFreeBoundaries)
   {
     myShell.Closed(!isFreeBoundaries);
-    // clang-format off
-    SendWarning (Message_Msg ("FixAdvShell.FixClosedFlag.MSG0"));//Shell has incorrect flag isClosed
-    // clang-format on
+
+    SendWarning(Message_Msg("FixAdvShell.FixClosedFlag.MSG0"));
   }
   bool isGetShells = true;
-  // Gets possible shells with taking in account of multiconnexity.
+
   while (isGetShells && Lface.Length())
   {
     NCollection_Sequence<TopoDS_Shape> aTmpSeqShells;
@@ -1355,8 +1242,6 @@ bool ShapeFix_Shell::FixFaceOrientation(const TopoDS_Shell& shell,
         aMapFaceShells.UnBind(Lface.Value(jj));
     }
 
-    // Addition of faces having only multiconnexity boundary to shells having holes
-    //  containing only the multiconnexity edges
     aIsDone = AddMultiConexityFaces(Lface,
                                     aMapMultiConnectEdges,
                                     aSeqShells,
@@ -1369,7 +1254,6 @@ bool ShapeFix_Shell::FixFaceOrientation(const TopoDS_Shell& shell,
   if (!aErrFaces.IsEmpty())
   {
 
-    // if Shell contains of Mebius faces one shell will be created from each those face.
     BRep_Builder B;
     B.MakeCompound(myErrFaces);
     TopoDS_Compound aCompShells;
@@ -1407,9 +1291,9 @@ bool ShapeFix_Shell::FixFaceOrientation(const TopoDS_Shell& shell,
 
     done     = true;
     myStatus = ShapeExtend::EncodeStatus(ShapeExtend_FAIL);
-    // clang-format off
-    SendWarning ( Message_Msg ( "FixAdvShell.FixOrientation.MSG20" ) );// Impossible to orient faces in shell, several shells created
-    // clang-format on
+
+    SendWarning(Message_Msg("FixAdvShell.FixOrientation.MSG20"));
+
     return true;
   }
   if (aNumMultShell > 1)
@@ -1425,13 +1309,11 @@ bool ShapeFix_Shell::FixFaceOrientation(const TopoDS_Shell& shell,
       }
     }
     if (OpenShells.Length() > 1)
-      // Attempt of creation closed shell from open shells with taking into account multiconnexity.
+
       CreateClosedShell(OpenShells, aMapMultiConnectEdges);
     aSeqShells.Append(OpenShells);
   }
 
-  // In the case if NonManifold is equal to true one non-manifold shell will be created.
-  // Else compound from shells will be created if length of sequence of shape >1.
   if (Lface.Length())
   {
 
@@ -1472,46 +1354,36 @@ bool ShapeFix_Shell::FixFaceOrientation(const TopoDS_Shell& shell,
     if (!Context().IsNull())
       Context()->Replace(shell, myShape);
     if (myNbShells == 1)
-      // clang-format off
-      SendWarning ( Message_Msg ( "FixAdvShell.FixOrientation.MSG0" ) );// Faces were incorrectly oriented in the shell, corrected
+
+      SendWarning(Message_Msg("FixAdvShell.FixOrientation.MSG0"));
     else
-      SendWarning ( Message_Msg ( "FixAdvShell.FixOrientation.MSG30" ) );// Improperly connected shell split into parts
-    // clang-format on
+      SendWarning(Message_Msg("FixAdvShell.FixOrientation.MSG30"));
+
     return true;
   }
   else
     return false;
 }
 
-//=================================================================================================
-
 bool ShapeFix_Shell::Status(const ShapeExtend_Status status) const
 {
   return ShapeExtend::DecodeStatus(myStatus, status);
 }
-
-//=================================================================================================
 
 TopoDS_Shell ShapeFix_Shell::Shell()
 {
   return myShell;
 }
 
-//=================================================================================================
-
 TopoDS_Shape ShapeFix_Shell::Shape()
 {
   return myShape;
 }
 
-//=================================================================================================
-
 TopoDS_Compound ShapeFix_Shell::ErrorFaces() const
 {
   return myErrFaces;
 }
-
-//=================================================================================================
 
 void ShapeFix_Shell::SetMsgRegistrator(const occ::handle<ShapeExtend_BasicMsgRegistrator>& msgreg)
 {
@@ -1519,15 +1391,11 @@ void ShapeFix_Shell::SetMsgRegistrator(const occ::handle<ShapeExtend_BasicMsgReg
   myFixFace->SetMsgRegistrator(msgreg);
 }
 
-//=================================================================================================
-
 void ShapeFix_Shell::SetPrecision(const double preci)
 {
   ShapeFix_Root::SetPrecision(preci);
   myFixFace->SetPrecision(preci);
 }
-
-//=================================================================================================
 
 void ShapeFix_Shell::SetMinTolerance(const double mintol)
 {
@@ -1535,22 +1403,16 @@ void ShapeFix_Shell::SetMinTolerance(const double mintol)
   myFixFace->SetMinTolerance(mintol);
 }
 
-//=================================================================================================
-
 void ShapeFix_Shell::SetMaxTolerance(const double maxtol)
 {
   ShapeFix_Root::SetMaxTolerance(maxtol);
   myFixFace->SetMaxTolerance(maxtol);
 }
 
-//=================================================================================================
-
 int ShapeFix_Shell::NbShells() const
 {
   return myNbShells;
 }
-
-//=================================================================================================
 
 void ShapeFix_Shell::SetNonManifoldFlag(const bool isNonManifold)
 {

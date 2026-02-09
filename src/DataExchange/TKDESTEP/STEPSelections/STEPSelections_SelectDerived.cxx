@@ -31,9 +31,9 @@ static occ::handle<Standard_Type> GetStepType(const occ::handle<StepData_ReadWri
 }
 
 bool STEPSelections_SelectDerived::Matches(const occ::handle<Standard_Transient>& ent,
-                                           const occ::handle<Interface_InterfaceModel>& /*model*/,
+                                           const occ::handle<Interface_InterfaceModel>&,
                                            const TCollection_AsciiString& text,
-                                           const bool /*exact*/) const
+                                           const bool) const
 {
   int                                   CN;
   occ::handle<StepData_ReadWriteModule> module;

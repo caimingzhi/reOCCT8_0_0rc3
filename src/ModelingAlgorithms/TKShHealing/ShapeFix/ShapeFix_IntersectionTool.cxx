@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BndLib_Add2dCurve.hpp>
 #include <BRep_Builder.hpp>
@@ -45,9 +34,6 @@
 #include <TopoDS_Wire.hpp>
 #include <TopoDS_Shape.hpp>
 
-// gka 06.09.04 BUG 6555 shape is modified always independently either intersection was fixed or not
-//=================================================================================================
-
 ShapeFix_IntersectionTool::ShapeFix_IntersectionTool(const occ::handle<ShapeBuild_ReShape>& context,
                                                      const double                           preci,
                                                      const double                           maxtol)
@@ -57,12 +43,6 @@ ShapeFix_IntersectionTool::ShapeFix_IntersectionTool(const occ::handle<ShapeBuil
   myMaxTol  = maxtol;
 }
 
-//=======================================================================
-// function : GetPointOnEdge
-// purpose  : auxiliary
-//: h0 abv 29 May 98: PRO10105 1949: like in BRepCheck, point is to be taken
-// from 3d curve (but only if edge is SameParameter)
-//=======================================================================
 static gp_Pnt GetPointOnEdge(const TopoDS_Edge&                        edge,
                              const occ::handle<ShapeAnalysis_Surface>& surf,
                              const Geom2dAdaptor_Curve&                Crv2d,
@@ -79,8 +59,6 @@ static gp_Pnt GetPointOnEdge(const TopoDS_Edge&                        edge,
   gp_Pnt2d aP2d = Crv2d.Value(param);
   return surf->Adaptor3d()->Value(aP2d.X(), aP2d.Y());
 }
-
-//=================================================================================================
 
 bool ShapeFix_IntersectionTool::SplitEdge(const TopoDS_Edge&   edge,
                                           const double         param,
@@ -102,7 +80,7 @@ bool ShapeFix_IntersectionTool::SplitEdge(const TopoDS_Edge&   edge,
   sae.PCurve(edge, face, c2d, a, b, true);
   if (std::abs(a - param) < 0.01 * preci || std::abs(b - param) < 0.01 * preci)
     return false;
-  // check distance between edge and new vertex
+
   gp_Pnt          P1;
   TopLoc_Location L;
   if (BRep_Tool::SameParameter(edge) && !BRep_Tool::Degenerated(edge))
@@ -126,7 +104,7 @@ bool ShapeFix_IntersectionTool::SplitEdge(const TopoDS_Edge&   edge,
   gp_Pnt P2 = BRep_Tool::Pnt(vert);
   if (P1.Distance(P2) > preci)
   {
-    // return false;
+
     BRep_Builder B;
     B.UpdateVertex(vert, P1.Distance(P2));
   }
@@ -152,7 +130,7 @@ bool ShapeFix_IntersectionTool::SplitEdge(const TopoDS_Edge&   edge,
   BRep_Builder       B;
   TopoDS_Edge        wE = edge;
   wE.Orientation(TopAbs_FORWARD);
-  TopoDS_Shape aTmpShape = vert.Oriented(TopAbs_REVERSED); // for porting
+  TopoDS_Shape aTmpShape = vert.Oriented(TopAbs_REVERSED);
   newE1 = sbe.CopyReplaceVertices(wE, sae.FirstVertex(wE), TopoDS::Vertex(aTmpShape));
   sbe.CopyPCurves(newE1, wE);
   transferParameters->TransferRange(newE1, first, param, true);
@@ -177,8 +155,6 @@ bool ShapeFix_IntersectionTool::SplitEdge(const TopoDS_Edge&   edge,
   return true;
 }
 
-//=================================================================================================
-
 bool ShapeFix_IntersectionTool::CutEdge(const TopoDS_Edge& edge,
                                         const double       pend,
                                         const double       cut,
@@ -194,7 +170,6 @@ bool ShapeFix_IntersectionTool::CutEdge(const TopoDS_Edge& edge,
   if (aRange < 10. * Precision::PConfusion())
     return false;
 
-  // case pcurve is trimm of line
   if (!BRep_Tool::SameParameter(edge))
   {
     ShapeAnalysis_Edge        sae;
@@ -210,13 +185,13 @@ bool ShapeFix_IntersectionTool::CutEdge(const TopoDS_Edge& edge,
           BRep_Builder B;
           B.Range(edge, std::min(pend, cut), std::max(pend, cut));
           if (std::abs(pend - lp) < Precision::PConfusion())
-          { // cut from the beginning
+          {
             double cut3d = (cut - fp) * (b - a) / (lp - fp);
             B.Range(edge, a + cut3d, b, true);
             iscutline = true;
           }
           else if (std::abs(pend - fp) < Precision::PConfusion())
-          { // cut from the end
+          {
             double cut3d = (lp - cut) * (b - a) / (lp - fp);
             B.Range(edge, a, b - cut3d, true);
             iscutline = true;
@@ -229,7 +204,6 @@ bool ShapeFix_IntersectionTool::CutEdge(const TopoDS_Edge& edge,
     return false;
   }
 
-  // det-study on 03/12/01 checking the old and new ranges
   if (std::abs(std::abs(a - b) - aRange) < Precision::PConfusion())
     return false;
   if (aRange < 10. * Precision::PConfusion())
@@ -240,12 +214,6 @@ bool ShapeFix_IntersectionTool::CutEdge(const TopoDS_Edge& edge,
 
   return true;
 }
-
-//=======================================================================
-// function : SplitEdge1
-// purpose  : split edge[a,b] om two part e1[a,param]
-//           and e2[param,b] using vertex vert
-//=======================================================================
 
 bool ShapeFix_IntersectionTool::SplitEdge1(
   const occ::handle<ShapeExtend_WireData>&                               sewd,
@@ -263,7 +231,6 @@ bool ShapeFix_IntersectionTool::SplitEdge1(
   if (!SplitEdge(edge, param, vert, face, newE1, newE2, preci))
     return false;
 
-  // change context
   occ::handle<ShapeExtend_WireData> wd = new ShapeExtend_WireData;
   wd->Add(newE1);
   wd->Add(newE2);
@@ -275,14 +242,12 @@ bool ShapeFix_IntersectionTool::SplitEdge1(
     BRepTools::Update(E);
   }
 
-  // change sewd
   sewd->Set(newE1, num);
   if (num == sewd->NbEdges())
     sewd->Add(newE2);
   else
     sewd->Add(newE2, num + 1);
 
-  // change boxes
   boxes.UnBind(edge);
   TopLoc_Location                  L;
   const occ::handle<Geom_Surface>& S = BRep_Tool::Surface(face, L);
@@ -297,7 +262,7 @@ bool ShapeFix_IntersectionTool::SplitEdge1(
     double              aLast  = c2d->LastParameter();
     if (c2d->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)) && (cf < aFirst || cl > aLast))
     {
-      // pdn avoiding problems with segment in Bnd_Box
+
       gac.Load(c2d);
     }
     else
@@ -313,7 +278,7 @@ bool ShapeFix_IntersectionTool::SplitEdge1(
     double              aLast  = c2d->LastParameter();
     if (c2d->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)) && (cf < aFirst || cl > aLast))
     {
-      // pdn avoiding problems with segment in Bnd_Box
+
       gac.Load(c2d);
     }
     else
@@ -324,13 +289,6 @@ bool ShapeFix_IntersectionTool::SplitEdge1(
 
   return true;
 }
-
-//=======================================================================
-// function : SplitEdge2
-// purpose  : auxiliary: split edge[a,b] om two part e1[a,param1]
-//                     and e2[param2,b] using vertex vert
-//                     (remove segment (param1,param2) from edge)
-//=======================================================================
 
 bool ShapeFix_IntersectionTool::SplitEdge2(
   const occ::handle<ShapeExtend_WireData>&                               sewd,
@@ -347,7 +305,7 @@ bool ShapeFix_IntersectionTool::SplitEdge2(
   double      param = (param1 + param2) / 2;
   if (!SplitEdge(edge, param, vert, face, newE1, newE2, preci))
     return false;
-  // cut new edges by param1 and param2
+
   bool                      IsCutLine;
   occ::handle<Geom2d_Curve> Crv1, Crv2;
   double                    fp1, lp1, fp2, lp2;
@@ -385,7 +343,6 @@ bool ShapeFix_IntersectionTool::SplitEdge2(
     }
   }
 
-  // change context
   occ::handle<ShapeExtend_WireData> wd = new ShapeExtend_WireData;
   wd->Add(newE1);
   wd->Add(newE2);
@@ -397,14 +354,12 @@ bool ShapeFix_IntersectionTool::SplitEdge2(
     BRepTools::Update(E);
   }
 
-  // change sewd
   sewd->Set(newE1, num);
   if (num == sewd->NbEdges())
     sewd->Add(newE2);
   else
     sewd->Add(newE2, num + 1);
 
-  // change boxes
   boxes.UnBind(edge);
   TopLoc_Location                  L;
   const occ::handle<Geom_Surface>& S = BRep_Tool::Surface(face, L);
@@ -418,7 +373,7 @@ bool ShapeFix_IntersectionTool::SplitEdge2(
     double              aLast  = c2d->LastParameter();
     if (c2d->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)) && (cf < aFirst || cl > aLast))
     {
-      // pdn avoiding problems with segment in Bnd_Box
+
       gac.Load(c2d);
     }
     else
@@ -434,7 +389,7 @@ bool ShapeFix_IntersectionTool::SplitEdge2(
     double              aLast  = c2d->LastParameter();
     if (c2d->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)) && (cf < aFirst || cl > aLast))
     {
-      // pdn avoiding problems with segment in Bnd_Box
+
       gac.Load(c2d);
     }
     else
@@ -446,8 +401,6 @@ bool ShapeFix_IntersectionTool::SplitEdge2(
   return true;
 }
 
-//=================================================================================================
-
 bool ShapeFix_IntersectionTool::UnionVertexes(
   const occ::handle<ShapeExtend_WireData>&                               sewd,
   TopoDS_Edge&                                                           edge1,
@@ -456,7 +409,7 @@ bool ShapeFix_IntersectionTool::UnionVertexes(
   NCollection_DataMap<TopoDS_Shape, Bnd_Box2d, TopTools_ShapeMapHasher>& boxes,
   const Bnd_Box2d&                                                       B2) const
 {
-  // union vertexes
+
   bool               res = false;
   ShapeBuild_Edge    sbe;
   ShapeAnalysis_Edge sae;
@@ -479,20 +432,15 @@ bool ShapeFix_IntersectionTool::UnionVertexes(
     double tolv = std::max(BRep_Tool::Tolerance(V1F), BRep_Tool::Tolerance(V2F));
     if (!V2F.IsSame(V1F) && d11 < tolv)
     {
-      // union vertexes V1F and V2F
+
       B.UpdateVertex(V1F, tolv);
       TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2, V1F, V2L);
-      //      std::cout<<"union vertexes V1F and V2F"<<std::endl;
-      //      gp_Pnt Ptmp = BRep_Tool::Pnt(V1F);
-      //      B.MakeVertex(V,Ptmp,tolv);
-      //      myContext->Replace(V1F,V);
-      //      myContext->Replace(V2F,V);
-      //      TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2,V,V2L);
+
       myContext->Replace(edge2, NewE);
       sewd->Set(NewE, num2);
       edge2 = NewE;
-      boxes.Bind(NewE, B2); // update boxes
-      // replace vertex in other edge
+      boxes.Bind(NewE, B2);
+
       int num21, num22;
       if (num2 > 1)
         num21 = num2 - 1;
@@ -511,36 +459,36 @@ bool ShapeFix_IntersectionTool::UnionVertexes(
       if (V21F.IsSame(V2F))
       {
         NewE = sbe.CopyReplaceVertices(edge21, V1F, V21L);
-        // NewE = sbe.CopyReplaceVertices(edge21,V,V21L);
+
         if (boxes.IsBound(edge21))
-          boxes.Bind(NewE, boxes.Find(edge21)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge21));
         myContext->Replace(edge21, NewE);
         sewd->Set(NewE, num21);
       }
       if (V21L.IsSame(V2F))
       {
         NewE = sbe.CopyReplaceVertices(edge21, V21F, V1F);
-        // NewE = sbe.CopyReplaceVertices(edge21,V21F,V);
+
         if (boxes.IsBound(edge21))
-          boxes.Bind(NewE, boxes.Find(edge21)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge21));
         myContext->Replace(edge21, NewE);
         sewd->Set(NewE, num21);
       }
       if (V22F.IsSame(V2F))
       {
         NewE = sbe.CopyReplaceVertices(edge22, V1F, V22L);
-        // NewE = sbe.CopyReplaceVertices(edge22,V,V22L);
+
         if (boxes.IsBound(edge22))
-          boxes.Bind(NewE, boxes.Find(edge22)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge22));
         myContext->Replace(edge22, NewE);
         sewd->Set(NewE, num22);
       }
       if (V22L.IsSame(V2F))
       {
         NewE = sbe.CopyReplaceVertices(edge22, V22F, V1F);
-        // NewE = sbe.CopyReplaceVertices(edge22,V22F,V);
+
         if (boxes.IsBound(edge22))
-          boxes.Bind(NewE, boxes.Find(edge22)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge22));
         myContext->Replace(edge22, NewE);
         sewd->Set(NewE, num22);
       }
@@ -552,21 +500,16 @@ bool ShapeFix_IntersectionTool::UnionVertexes(
     double tolv = std::max(BRep_Tool::Tolerance(V1F), BRep_Tool::Tolerance(V2L));
     if (!V2L.IsSame(V1F) && d12 < tolv)
     {
-      // union vertexes V1F and V2L
+
       B.UpdateVertex(V1F, tolv);
       TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2, V2F, V1F);
-      //      std::cout<<"union vertexes V1F and V2L"<<std::endl;
-      //      gp_Pnt Ptmp = BRep_Tool::Pnt(V1F);
-      //      B.MakeVertex(V,Ptmp,tolv);
-      //      myContext->Replace(V1F,V);
-      //      myContext->Replace(V2L,V);
-      //      TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2,V2F,V);
+
       myContext->Replace(edge2, NewE);
       sewd->Set(NewE, num2);
       edge2 = NewE;
-      // boxes.Bind(NewE,boxes.Find(edge2)); // update boxes
-      boxes.Bind(NewE, B2); // update boxes
-      // replace vertex in other edge
+
+      boxes.Bind(NewE, B2);
+
       int num21, num22;
       if (num2 > 1)
         num21 = num2 - 1;
@@ -585,36 +528,36 @@ bool ShapeFix_IntersectionTool::UnionVertexes(
       if (V21F.IsSame(V2L))
       {
         NewE = sbe.CopyReplaceVertices(edge21, V1F, V21L);
-        // NewE = sbe.CopyReplaceVertices(edge21,V,V21L);
+
         if (boxes.IsBound(edge21))
-          boxes.Bind(NewE, boxes.Find(edge21)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge21));
         myContext->Replace(edge21, NewE);
         sewd->Set(NewE, num21);
       }
       if (V21L.IsSame(V2L))
       {
         NewE = sbe.CopyReplaceVertices(edge21, V21F, V1F);
-        // NewE = sbe.CopyReplaceVertices(edge21,V21F,V);
+
         if (boxes.IsBound(edge21))
-          boxes.Bind(NewE, boxes.Find(edge21)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge21));
         myContext->Replace(edge21, NewE);
         sewd->Set(NewE, num21);
       }
       if (V22F.IsSame(V2L))
       {
         NewE = sbe.CopyReplaceVertices(edge22, V1F, V22L);
-        // NewE = sbe.CopyReplaceVertices(edge22,V,V22L);
+
         if (boxes.IsBound(edge22))
-          boxes.Bind(NewE, boxes.Find(edge22)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge22));
         myContext->Replace(edge22, NewE);
         sewd->Set(NewE, num22);
       }
       if (V22L.IsSame(V2L))
       {
         NewE = sbe.CopyReplaceVertices(edge22, V22F, V1F);
-        // NewE = sbe.CopyReplaceVertices(edge22,V22F,V);
+
         if (boxes.IsBound(edge22))
-          boxes.Bind(NewE, boxes.Find(edge22)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge22));
         myContext->Replace(edge22, NewE);
         sewd->Set(NewE, num22);
       }
@@ -626,20 +569,15 @@ bool ShapeFix_IntersectionTool::UnionVertexes(
     double tolv = std::max(BRep_Tool::Tolerance(V1L), BRep_Tool::Tolerance(V2F));
     if (!V2F.IsSame(V1L) && d21 < tolv)
     {
-      // union vertexes V1L and V2F
+
       B.UpdateVertex(V1L, tolv);
       TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2, V1L, V2L);
-      //      std::cout<<"union vertexes V1L and V2F"<<std::endl;
-      //      gp_Pnt Ptmp = BRep_Tool::Pnt(V1L);
-      //      B.MakeVertex(V,Ptmp,tolv);
-      //      myContext->Replace(V1L,V);
-      //      myContext->Replace(V2F,V);
-      //      TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2,V,V2L);
+
       myContext->Replace(edge2, NewE);
       sewd->Set(NewE, num2);
       edge2 = NewE;
-      boxes.Bind(NewE, B2); // update boxes
-      // replace vertex in other edge
+      boxes.Bind(NewE, B2);
+
       int num21, num22;
       if (num2 > 1)
         num21 = num2 - 1;
@@ -658,36 +596,36 @@ bool ShapeFix_IntersectionTool::UnionVertexes(
       if (V21F.IsSame(V2F))
       {
         NewE = sbe.CopyReplaceVertices(edge21, V1L, V21L);
-        // NewE = sbe.CopyReplaceVertices(edge21,V,V21L);
+
         if (boxes.IsBound(edge21))
-          boxes.Bind(NewE, boxes.Find(edge21)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge21));
         myContext->Replace(edge21, NewE);
         sewd->Set(NewE, num21);
       }
       if (V21L.IsSame(V2F))
       {
         NewE = sbe.CopyReplaceVertices(edge21, V21F, V1L);
-        // NewE = sbe.CopyReplaceVertices(edge21,V21F,V);
+
         if (boxes.IsBound(edge21))
-          boxes.Bind(NewE, boxes.Find(edge21)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge21));
         myContext->Replace(edge21, NewE);
         sewd->Set(NewE, num21);
       }
       if (V22F.IsSame(V2F))
       {
         NewE = sbe.CopyReplaceVertices(edge22, V1L, V22L);
-        // NewE = sbe.CopyReplaceVertices(edge22,V,V22L);
+
         if (boxes.IsBound(edge22))
-          boxes.Bind(NewE, boxes.Find(edge22)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge22));
         myContext->Replace(edge22, NewE);
         sewd->Set(NewE, num22);
       }
       if (V22L.IsSame(V2F))
       {
         NewE = sbe.CopyReplaceVertices(edge22, V22F, V1L);
-        // NewE = sbe.CopyReplaceVertices(edge22,V22F,V);
+
         if (boxes.IsBound(edge22))
-          boxes.Bind(NewE, boxes.Find(edge22)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge22));
         myContext->Replace(edge22, NewE);
         sewd->Set(NewE, num22);
       }
@@ -699,20 +637,15 @@ bool ShapeFix_IntersectionTool::UnionVertexes(
     double tolv = std::max(BRep_Tool::Tolerance(V1L), BRep_Tool::Tolerance(V2L));
     if (!V2L.IsSame(V1L) && d22 < tolv)
     {
-      // union vertexes V1L and V2L
+
       B.UpdateVertex(V1L, tolv);
       TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2, V2F, V1L);
-      //      std::cout<<"union vertexes V1L and V2L"<<std::endl;
-      //      gp_Pnt Ptmp = BRep_Tool::Pnt(V1L);
-      //      B.MakeVertex(V,Ptmp,tolv);
-      //      myContext->Replace(V1L,V);
-      //      myContext->Replace(V2L,V);
-      //      TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2,V2F,V);
+
       myContext->Replace(edge2, NewE);
       sewd->Set(NewE, num2);
       edge2 = NewE;
-      boxes.Bind(NewE, B2); // update boxes
-      // replace vertex in other edge
+      boxes.Bind(NewE, B2);
+
       int num21, num22;
       if (num2 > 1)
         num21 = num2 - 1;
@@ -731,36 +664,36 @@ bool ShapeFix_IntersectionTool::UnionVertexes(
       if (V21F.IsSame(V2L))
       {
         NewE = sbe.CopyReplaceVertices(edge21, V1L, V21L);
-        // NewE = sbe.CopyReplaceVertices(edge21,V,V21L);
+
         if (boxes.IsBound(edge21))
-          boxes.Bind(NewE, boxes.Find(edge21)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge21));
         myContext->Replace(edge21, NewE);
         sewd->Set(NewE, num21);
       }
       if (V21L.IsSame(V2L))
       {
         NewE = sbe.CopyReplaceVertices(edge21, V21F, V1L);
-        // NewE = sbe.CopyReplaceVertices(edge21,V21F,V);
+
         if (boxes.IsBound(edge21))
-          boxes.Bind(NewE, boxes.Find(edge21)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge21));
         myContext->Replace(edge21, NewE);
         sewd->Set(NewE, num21);
       }
       if (V22F.IsSame(V2L))
       {
         NewE = sbe.CopyReplaceVertices(edge22, V1L, V22L);
-        // NewE = sbe.CopyReplaceVertices(edge22,V,V22L);
+
         if (boxes.IsBound(edge22))
-          boxes.Bind(NewE, boxes.Find(edge22)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge22));
         myContext->Replace(edge22, NewE);
         sewd->Set(NewE, num22);
       }
       if (V22L.IsSame(V2L))
       {
         NewE = sbe.CopyReplaceVertices(edge22, V22F, V1L);
-        // NewE = sbe.CopyReplaceVertices(edge22,V22F,V);
+
         if (boxes.IsBound(edge22))
-          boxes.Bind(NewE, boxes.Find(edge22)); // update boxes
+          boxes.Bind(NewE, boxes.Find(edge22));
         myContext->Replace(edge22, NewE);
         sewd->Set(NewE, num22);
       }
@@ -771,14 +704,12 @@ bool ShapeFix_IntersectionTool::UnionVertexes(
   return res;
 }
 
-//=================================================================================================
-
 static Bnd_Box2d CreateBoxes2d(
   const occ::handle<ShapeExtend_WireData>&                               sewd,
   const TopoDS_Face&                                                     face,
   NCollection_DataMap<TopoDS_Shape, Bnd_Box2d, TopTools_ShapeMapHasher>& boxes)
 {
-  // create box2d for edges from wire
+
   Bnd_Box2d                        aTotalBox;
   TopLoc_Location                  L;
   const occ::handle<Geom_Surface>& S = BRep_Tool::Surface(face, L);
@@ -796,7 +727,7 @@ static Bnd_Box2d CreateBoxes2d(
       double              aLast  = c2d->LastParameter();
       if (c2d->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)) && (cf < aFirst || cl > aLast))
       {
-        // pdn avoiding problems with segment in Bnd_Box
+
         gac.Load(c2d);
       }
       else
@@ -809,8 +740,6 @@ static Bnd_Box2d CreateBoxes2d(
   return aTotalBox;
 }
 
-//=================================================================================================
-
 static void SelectIntPnt(const Geom2dInt_GInter&     Inter,
                          IntRes2d_IntersectionPoint& IP,
                          IntRes2d_Transition&        Tr1,
@@ -821,7 +750,7 @@ static void SelectIntPnt(const Geom2dInt_GInter&     Inter,
   Tr2 = IP.TransitionOfSecond();
   if (Inter.NbPoints() == 2)
   {
-    // possible second point is better?
+
     int status1 = 0, status2 = 0;
     if (Tr1.PositionOnCurve() == IntRes2d_Middle)
       status1 += 1;
@@ -845,8 +774,6 @@ static void SelectIntPnt(const Geom2dInt_GInter&     Inter,
   }
 }
 
-//=================================================================================================
-
 bool ShapeFix_IntersectionTool::FindVertAndSplitEdge(
   const double                                                           param1,
   const TopoDS_Edge&                                                     edge1,
@@ -859,7 +786,7 @@ bool ShapeFix_IntersectionTool::FindVertAndSplitEdge(
   NCollection_DataMap<TopoDS_Shape, Bnd_Box2d, TopTools_ShapeMapHasher>& boxes,
   const bool                                                             aTmpKey) const
 {
-  // find needed vertex from edge2 and split edge1 using it
+
   ShapeAnalysis_Edge                 sae;
   occ::handle<ShapeAnalysis_Surface> sas = new ShapeAnalysis_Surface(BRep_Tool::Surface(face));
   gp_Pnt                             pi1 = GetPointOnEdge(edge1, sas, Crv1, param1);
@@ -897,16 +824,13 @@ bool ShapeFix_IntersectionTool::FindVertAndSplitEdge(
     {
       B.UpdateVertex(V, tolV);
       MaxTolVert = std::max(MaxTolVert, tolV);
-      //      NbSplit++;
+
       num1--;
       return true;
-      // break;
     }
   }
   return false;
 }
-
-//=================================================================================================
 
 bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_WireData>& sewd,
                                                      const TopoDS_Face&                 face,
@@ -916,10 +840,6 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
 {
   if (myContext.IsNull() || face.IsNull())
     return false;
-
-  // double area2d = ShapeAnalysis::TotCross2D(sewd,face);
-  // if(area2d<Precision::PConfusion()*Precision::PConfusion()) return false; //gka
-  // 06.09.04 BUG 6555
 
   TopoDS_Shape SF         = Context()->Apply(face);
   double       MaxTolVert = 0.0;
@@ -931,9 +851,6 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
   MaxTolVert = std::min(MaxTolVert, myMaxTol);
   ShapeAnalysis_Edge sae;
 
-  // step 1 : intersection of adjacent edges
-
-  // step 2 : intersection of non-adjacent edges
   NCollection_DataMap<TopoDS_Shape, Bnd_Box2d, TopTools_ShapeMapHasher> boxes;
   (void)CreateBoxes2d(sewd, face, boxes);
   occ::handle<ShapeAnalysis_Surface> sas = new ShapeAnalysis_Surface(BRep_Tool::Surface(face));
@@ -944,10 +861,10 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
   bool isDone     = false;
   for (int num1 = 1; num1 < sewd->NbEdges() && NbSplit < 30; num1++)
   {
-    // for each edge from first wire
+
     for (int num2 = num1 + 2; num2 <= sewd->NbEdges() && NbSplit < 30; num2++)
     {
-      // for each edge from second wire
+
       if (num1 == 1 && num2 == sewd->NbEdges())
         continue;
       TopoDS_Edge edge1 = sewd->Edge(num1);
@@ -962,7 +879,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
       Bnd_Box2d B2 = boxes.Find(edge2);
       if (!B1.IsOut(B2))
       {
-        // intersection is possible...
+
         double                    a1, b1, a2, b2;
         occ::handle<Geom2d_Curve> Crv1, Crv2;
         if (!sae.PCurve(edge1, face, Crv1, a1, b1, false))
@@ -977,7 +894,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
         Inter.Perform(C1, d1, C2, d2, tolint, tolint);
         if (!Inter.IsDone())
           continue;
-        // intersection is point
+
         if (Inter.NbPoints() > 0 && Inter.NbPoints() < 3)
         {
           IntRes2d_IntersectionPoint IP;
@@ -992,7 +909,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
             BRep_Builder  B;
             TopoDS_Vertex V;
             double        tolV = 0;
-            // analysis for edge1
+
             bool          ModifE1 = false;
             TopoDS_Vertex VF1     = sae.FirstVertex(edge1);
             gp_Pnt        PVF1    = BRep_Tool::Pnt(VF1);
@@ -1022,10 +939,10 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               ModifE1 = CutEdge(edge1, ((dista > distb) ? a1 : b1), param1, face, IsCutLine);
               if (ModifE1)
                 NbCut++;
-              // not needed split edge, if one of parts is too small
+
               ModifE1 = ModifE1 || distmin < Precision::Confusion();
             }
-            // analysis for edge2
+
             bool          ModifE2 = false;
             TopoDS_Vertex VF2     = sae.FirstVertex(edge2);
             gp_Pnt        PVF2    = BRep_Tool::Pnt(VF2);
@@ -1055,7 +972,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               ModifE2 = CutEdge(edge2, ((dista > distb) ? a2 : b2), param2, face, IsCutLine);
               if (ModifE2)
                 NbCut++;
-              // not needed split edge, if one of parts is too small
+
               ModifE2 = ModifE2 || distmin < Precision::Confusion();
             }
             if (ModifE1 && !ModifE2)
@@ -1100,7 +1017,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
           }
           if (Tr1.PositionOnCurve() == IntRes2d_Middle && Tr2.PositionOnCurve() != IntRes2d_Middle)
           {
-            // find needed vertex from edge2 and split edge1 using it
+
             double param1 = IP.ParamOnFirst();
             if (FindVertAndSplitEdge(param1,
                                      edge1,
@@ -1119,7 +1036,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
           }
           if (Tr1.PositionOnCurve() != IntRes2d_Middle && Tr2.PositionOnCurve() == IntRes2d_Middle)
           {
-            // find needed vertex from edge1 and split edge2 using it
+
             double param2 = IP.ParamOnSecond();
             if (FindVertAndSplitEdge(param2,
                                      edge2,
@@ -1138,12 +1055,12 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
           }
           if (Tr1.PositionOnCurve() != IntRes2d_Middle && Tr2.PositionOnCurve() != IntRes2d_Middle)
           {
-            // union vertexes
+
             if (UnionVertexes(sewd, edge1, edge2, num2, boxes, B2))
-              nbReplaced++; // gka 06.09.04
+              nbReplaced++;
           }
         }
-        // intersection is segment
+
         if (Inter.NbSegments() == 1)
         {
           IntRes2d_IntersectionSegment IS = Inter.Segment(1);
@@ -1164,18 +1081,15 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
             gp_Pnt                     Pnt12  = GetPointOnEdge(edge1, sas, C1, p12);
             gp_Pnt                     Pnt21  = GetPointOnEdge(edge2, sas, C2, p21);
             gp_Pnt                     Pnt22  = GetPointOnEdge(edge2, sas, C2, p22);
-            // next string commented by skl 29.12.2004 for OCC7624
-            // if( Pnt11.Distance(Pnt21)>myPreci || Pnt12.Distance(Pnt22)>myPreci ) continue;
+
             if (Pnt11.Distance(Pnt21) > MaxTolVert || Pnt12.Distance(Pnt22) > MaxTolVert)
               continue;
-            // analysis for edge1
+
             TopoDS_Vertex V1  = sae.FirstVertex(edge1);
             gp_Pnt        PV1 = BRep_Tool::Pnt(V1);
             TopoDS_Vertex V2  = sae.LastVertex(edge1);
             gp_Pnt        PV2 = BRep_Tool::Pnt(V2);
-            // double tol1 = BRep_Tool::Tolerance(V1);
-            // double tol2 = BRep_Tool::Tolerance(V2);
-            // double maxtol = std::max(tol1,tol2);
+
             double dist1   = Pnt11.Distance(PV1);
             double dist2   = Pnt12.Distance(PV1);
             double maxdist = std::max(dist1, dist2);
@@ -1186,7 +1100,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               pdist = std::max(std::abs(a1 - p11), std::abs(a1 - p12));
             if (maxdist < MaxTolVert || pdist < std::abs(b1 - a1) * 0.01)
             {
-              // if(maxdist<maxtol || pdist<std::abs(b1-a1)*0.01) {
+
               newtol      = maxdist;
               NewV        = V1;
               IsModified1 = true;
@@ -1198,7 +1112,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               pdist = std::max(std::abs(a1 - p11), std::abs(a1 - p12));
             else
               pdist = std::max(std::abs(b1 - p11), std::abs(b1 - p12));
-            // if(maxdist<maxtol || pdist<std::abs(b1-a1)*0.01) {
+
             if (maxdist < MaxTolVert || pdist < std::abs(b1 - a1) * 0.01)
             {
               if ((IsModified1 && maxdist < newtol) || !IsModified1)
@@ -1210,7 +1124,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
             }
             if (IsModified1)
             {
-              // cut edge1 and update tolerance NewV
+
               double dista = std::abs(a1 - p11) + std::abs(a1 - p12);
               double distb = std::abs(b1 - p11) + std::abs(b1 - p12);
               double pend, cut;
@@ -1232,14 +1146,12 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               else
                 newtol = BRep_Tool::Tolerance(NewV);
             }
-            // analysis for edge2
+
             TopoDS_Vertex V12  = sae.FirstVertex(edge2);
             gp_Pnt        PV12 = BRep_Tool::Pnt(V12);
             TopoDS_Vertex V22  = sae.LastVertex(edge2);
             gp_Pnt        PV22 = BRep_Tool::Pnt(V22);
-            // tol1 = BRep_Tool::Tolerance(V1);
-            // tol2 = BRep_Tool::Tolerance(V2);
-            // maxtol = std::max(tol1,tol2);
+
             dist1   = Pnt21.Distance(PV12);
             dist2   = Pnt22.Distance(PV12);
             maxdist = std::max(dist1, dist2);
@@ -1247,7 +1159,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               pdist = std::max(std::abs(b2 - p21), std::abs(b2 - p22));
             else
               pdist = std::max(std::abs(a2 - p21), std::abs(a2 - p22));
-            // if(maxdist<maxtol || pdist<std::abs(b2-a2)*0.01) {
+
             if (maxdist < MaxTolVert || pdist < std::abs(b2 - a2) * 0.01)
             {
               newtol      = maxdist;
@@ -1261,7 +1173,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               pdist = std::max(std::abs(a2 - p21), std::abs(a2 - p22));
             else
               pdist = std::max(std::abs(b2 - p21), std::abs(b2 - p22));
-            // if(maxdist<maxtol || pdist<std::abs(b2-a2)*0.01) {
+
             if (maxdist < MaxTolVert || pdist < std::abs(b2 - a2) * 0.01)
             {
               if ((IsModified2 && maxdist < newtol) || !IsModified2)
@@ -1273,7 +1185,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
             }
             if (IsModified2)
             {
-              // cut edge1 and update tolerance NewV
+
               double dista = std::abs(a2 - p21) + std::abs(a2 - p22);
               double distb = std::abs(b2 - p21) + std::abs(b2 - p22);
               double pend, cut;
@@ -1330,7 +1242,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               bool FixSegment = true;
               if (tolV < MaxTolVert)
               {
-                // create new vertex and split each intersecting edge on two edges
+
                 B.MakeVertex(NewV, Pnt10, tolV);
                 if (SplitEdge2(sewd, face, num2, p21, p22, NewV, tolV, boxes))
                 {
@@ -1346,11 +1258,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               }
               else if (FixSegment)
               {
-                // if( std::abs(p12-p11)>std::abs(b1-a1)/2 || std::abs(p22-p21)>std::abs(b2-a2)/2 )
-                // {
-                //  segment is big and we have to split each intersecting edge
-                //  on 3 edges --> middle edge - edge based on segment
-                //  after we can remove edges made from segment
+
                 gp_Pnt P01((Pnt11.X() + Pnt21.X()) / 2,
                            (Pnt11.Y() + Pnt21.Y()) / 2,
                            (Pnt11.Z() + Pnt21.Z()) / 2);
@@ -1364,31 +1272,12 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                 if (tolV1 > MaxTolVert || tolV2 > MaxTolVert)
                   continue;
                 TopoDS_Vertex NewV1, NewV2;
-                /*
-                                // parameters for splitting: a1..p11..p12..b1 and a2..p21..p22..b2
-                   ??? int nbseg1=3, nbseg2=3, kv1=0, kv2=0;
-                                if(P01.Distance(PV1)<Max(tolV1,BRep_Tool::Tolerance(V1))) {
-                                  NewV1 = V1;
-                                  if(tolV1>BRep_Tool::Tolerance(V1))
-                                    B.UpdateVertex(NewV1,tolV1);
-                                  //akey1++;
-                                  nbseg1--;
-                                  kv1 = 1;
-                                }
-                                else if(P01.Distance(PV2)<Max(tolV1,BRep_Tool::Tolerance(V2))) {
-                                  NewV1 = V2;
-                                  if(tolV1>BRep_Tool::Tolerance(V2))
-                                    B.UpdateVertex(NewV1,tolV1);
-                                  //akey1++;
-                                  nbseg1--;
-                                  kv1 = 1;
-                                }
-                */
+
                 TopoDS_Edge tmpE, SegE;
-                // split edge1
+
                 int    akey1 = 0, akey2 = 0;
                 double newTolerance;
-                // analysis fo P01
+
                 newTolerance = std::max(tolV1, BRep_Tool::Tolerance(V1));
                 if (P01.Distance(PV1) < newTolerance)
                 {
@@ -1403,7 +1292,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                   NewV1.Orientation(V2.Orientation());
                   akey1++;
                 }
-                // analysis fo P02
+
                 newTolerance = std::max(tolV2, BRep_Tool::Tolerance(V1));
                 if (P02.Distance(PV1) < newTolerance)
                 {
@@ -1421,12 +1310,12 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                 if (akey1 > 1 || akey2 > 1)
                   continue;
                 int dnum1 = 0, numseg1 = num1;
-                // prepare vertices
+
                 if (akey1 == 0)
                   B.MakeVertex(NewV1, P01, tolV1);
                 if (akey2 == 0)
                   B.MakeVertex(NewV2, P02, tolV2);
-                // split
+
                 if (akey1 == 0 && akey2 > 0)
                 {
                   if (SplitEdge1(sewd, face, num1, p11, NewV1, tolV1, boxes))
@@ -1457,7 +1346,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                   occ::handle<Geom2d_Curve> c2d;
                   sae.PCurve(tmpE, face, c2d, a, b, false);
                   if ((a - p12) * (b - p12) > 0)
-                  { // p12 - external for [a,b] => split next edge
+                  {
                     if (SplitEdge1(sewd, face, num1 + 1, p12, NewV2, tolV2, boxes))
                     {
                       NbSplit++;
@@ -1475,9 +1364,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                     }
                   }
                 }
-                // SegE = sewd->Edge(numseg1); // get edge from segment
-                //  split edge2
-                //  replace vertices if it is necessary
+
                 ShapeBuild_Edge sbe;
                 akey1 = 0, akey2 = 0;
 
@@ -1495,11 +1382,11 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                     myContext->Replace(V12, NewV1.Reversed());
                     V12 = TopoDS::Vertex(NewV1.Reversed());
                   }
-                  nbReplaced++; // gka 06.09.04
+                  nbReplaced++;
                   TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2, NewV1, V22);
                   myContext->Replace(edge2, NewE);
                   sewd->Set(NewE, num2 + dnum1);
-                  boxes.Bind(NewE, B2); // update boxes
+                  boxes.Bind(NewE, B2);
                   edge2 = NewE;
                   akey1 = 1;
                 }
@@ -1517,11 +1404,11 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                     myContext->Replace(V22, NewV1.Reversed());
                     V22 = TopoDS::Vertex(NewV1.Reversed());
                   }
-                  nbReplaced++; // gka 06.09.04
+                  nbReplaced++;
                   TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2, V12, NewV1);
                   myContext->Replace(edge2, NewE);
                   sewd->Set(NewE, num2 + dnum1);
-                  boxes.Bind(NewE, B2); // update boxes
+                  boxes.Bind(NewE, B2);
                   edge2 = NewE;
                   akey1 = 2;
                 }
@@ -1539,11 +1426,11 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                     myContext->Replace(V12, NewV2.Reversed());
                     V12 = TopoDS::Vertex(NewV2.Reversed());
                   }
-                  nbReplaced++; // gka 06.09.04
+                  nbReplaced++;
                   TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2, NewV2, V22);
                   myContext->Replace(edge2, NewE);
                   sewd->Set(NewE, num2 + dnum1);
-                  boxes.Bind(NewE, B2); // update boxes
+                  boxes.Bind(NewE, B2);
                   edge2 = NewE;
                   akey2 = 1;
                 }
@@ -1561,23 +1448,23 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                     myContext->Replace(V22, NewV2.Reversed());
                     V22 = TopoDS::Vertex(NewV2.Reversed());
                   }
-                  nbReplaced++; // gka 06.09.04
+                  nbReplaced++;
                   TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2, V12, NewV2);
                   myContext->Replace(edge2, NewE);
                   sewd->Set(NewE, num2 + dnum1);
-                  boxes.Bind(NewE, B2); // update boxes
+                  boxes.Bind(NewE, B2);
                   edge2 = NewE;
                   akey2 = 2;
                 }
                 int dnum2 = 0, numseg2 = num2 + dnum1;
-                // split
+
                 if (akey1 == 0 && akey2 > 0)
                 {
                   if (SplitEdge1(sewd, face, num2 + dnum1, p21, NewV1, tolV1, boxes))
                   {
                     NbSplit++;
                     dnum2 = 1;
-                    // numseg2=num2+dnum1+1;
+
                     numseg2 = num2 + dnum1;
                   }
                 }
@@ -1587,7 +1474,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                   {
                     NbSplit++;
                     dnum2 = 1;
-                    // numseg2=num2+dnum1;
+
                     numseg2 = num2 + dnum1 + 1;
                   }
                 }
@@ -1603,7 +1490,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                   occ::handle<Geom2d_Curve> c2d;
                   sae.PCurve(tmpE, face, c2d, a, b, false);
                   if ((a - p22) * (b - p22) > 0)
-                  { // p22 - external for [a,b] => split next edge
+                  {
                     if (SplitEdge1(sewd, face, num2 + dnum1 + dnum2, p22, NewV2, tolV2, boxes))
                     {
                       NbSplit++;
@@ -1621,12 +1508,10 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                     }
                   }
                 }
-                // remove segment
+
                 sewd->Remove(numseg2);
                 sewd->Remove(numseg1);
                 NbRemoved = NbRemoved + 2;
-                // num1--;
-                // break;
               }
             }
           }
@@ -1638,14 +1523,11 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
   return isDone;
 }
 
-//=================================================================================================
-
 bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
 {
   if (myContext.IsNull() || face.IsNull())
     return false;
-  // TopoDS_Shape S = context->Apply(face);
-  // TopoDS_Shape SF = TopoDS::Face(S);
+
   TopoDS_Shape                       SF  = face;
   TopAbs_Orientation                 ori = face.Orientation();
   NCollection_Sequence<TopoDS_Shape> SeqWir;
@@ -1663,7 +1545,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
     SeqWir.Append(wire);
   }
   if (SeqWir.Length() < 2)
-    return false; // gka 06.09.04
+    return false;
 
   double MaxTolVert = 0.0;
   for (TopExp_Explorer exp(SF, TopAbs_VERTEX); exp.More(); exp.Next())
@@ -1671,11 +1553,10 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
     double tolV = BRep_Tool::Tolerance(TopoDS::Vertex(exp.Current()));
     MaxTolVert  = std::max(MaxTolVert, tolV);
   }
-  bool                               isDone = false; // gka 06.09.04
+  bool                               isDone = false;
   ShapeAnalysis_Edge                 sae;
   occ::handle<ShapeAnalysis_Surface> sas = new ShapeAnalysis_Surface(BRep_Tool::Surface(face));
 
-  // precompute edge boxes for all wires
   NCollection_Sequence<NCollection_DataMap<TopoDS_Shape, Bnd_Box2d, TopTools_ShapeMapHasher>>
                                   aSeqWirEdgeBoxes;
   NCollection_Sequence<Bnd_Box2d> aSeqWirBoxes;
@@ -1707,18 +1588,18 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
       {
         continue;
       }
-      // detect possible intersections:
+
       int  NbModif      = 0;
-      int  nbReplaced   = 0;     // gka 06.09.04
-      bool hasModifWire = false; // gka 06.09.04
+      int  nbReplaced   = 0;
+      bool hasModifWire = false;
       for (int num1 = 1; num1 <= sewd1->NbEdges() && NbModif < 30; num1++)
       {
-        // for each edge from first wire
-        TopoDS_Edge edge1 = sewd1->Edge(num1); // gka 06.09.04
+
+        TopoDS_Edge edge1 = sewd1->Edge(num1);
 
         for (int num2 = 1; num2 <= sewd2->NbEdges() && NbModif < 30; num2++)
         {
-          // for each edge from second wire
+
           TopoDS_Edge edge2 = sewd2->Edge(num2);
           if (edge1.IsSame(edge2))
             continue;
@@ -1730,13 +1611,13 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
           Bnd_Box2d B2 = boxes2.Find(edge2);
           if (!B1.IsOut(B2))
           {
-            // intersection is possible...
+
             double                    a1, b1, a2, b2;
             occ::handle<Geom2d_Curve> Crv1, Crv2;
             if (!sae.PCurve(edge1, face, Crv1, a1, b1, false))
-              continue; // return false; gka 06.09.04
+              continue;
             if (!sae.PCurve(edge2, face, Crv2, a2, b2, false))
-              continue; // return false;gka 06.09.04
+              continue;
             double              tolint = 1.0e-10;
             Geom2dAdaptor_Curve C1(Crv1), C2(Crv2);
             IntRes2d_Domain     d1(C1.Value(a1), a1, tolint, C1.Value(b1), b1, tolint);
@@ -1745,7 +1626,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
             Inter.Perform(C1, d1, C2, d2, tolint, tolint);
             if (!Inter.IsDone())
               continue;
-            // intersection is point
+
             if (Inter.NbPoints() > 0 && Inter.NbPoints() < 3)
             {
               IntRes2d_IntersectionPoint IP;
@@ -1754,7 +1635,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
               if (Tr1.PositionOnCurve() == IntRes2d_Middle
                   && Tr2.PositionOnCurve() == IntRes2d_Middle)
               {
-                // create new vertex and split both edges
+
                 double        param1 = IP.ParamOnFirst();
                 double        param2 = IP.ParamOnSecond();
                 gp_Pnt        pi1    = GetPointOnEdge(edge1, sas, C1, param1);
@@ -1785,7 +1666,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
               if (Tr1.PositionOnCurve() == IntRes2d_Middle
                   && Tr2.PositionOnCurve() != IntRes2d_Middle)
               {
-                // find needed vertex from edge2 and split edge1 using it
+
                 double param1 = IP.ParamOnFirst();
                 if (FindVertAndSplitEdge(param1,
                                          edge1,
@@ -1805,7 +1686,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
               if (Tr1.PositionOnCurve() != IntRes2d_Middle
                   && Tr2.PositionOnCurve() == IntRes2d_Middle)
               {
-                // find needed vertex from edge1 and split edge2 using it
+
                 double param2 = IP.ParamOnSecond();
                 if (FindVertAndSplitEdge(param2,
                                          edge2,
@@ -1825,13 +1706,13 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
               if (Tr1.PositionOnCurve() != IntRes2d_Middle
                   && Tr2.PositionOnCurve() != IntRes2d_Middle)
               {
-                // union vertexes
+
                 if (UnionVertexes(sewd2, edge1, edge2, num2, boxes2, B2))
-                  nbReplaced++; // gka 06.09.04
+                  nbReplaced++;
               }
             }
             hasModifWire = (hasModifWire || NbModif || nbReplaced);
-            // intersection is segment
+
             if (Inter.NbSegments() == 1)
             {
               IntRes2d_IntersectionSegment IS = Inter.Segment(1);
@@ -1853,7 +1734,6 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                 gp_Pnt                     Pnt21  = GetPointOnEdge(edge2, sas, C2, p21);
                 gp_Pnt                     Pnt22  = GetPointOnEdge(edge2, sas, C2, p22);
 
-                // analysis for edge1
                 TopoDS_Vertex V1      = sae.FirstVertex(edge1);
                 gp_Pnt        PV1     = BRep_Tool::Pnt(V1);
                 TopoDS_Vertex V2      = sae.LastVertex(edge1);
@@ -1890,7 +1770,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                 }
                 if (IsModified1)
                 {
-                  // cut edge1 and update tolerance NewV
+
                   double dista = std::abs(a1 - p11) + std::abs(a1 - p12);
                   double distb = std::abs(b1 - p11) + std::abs(b1 - p12);
                   double pend, cut;
@@ -1914,7 +1794,6 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                   }
                 }
 
-                // analysis for edge2
                 TopoDS_Vertex V12  = sae.FirstVertex(edge2);
                 gp_Pnt        PV12 = BRep_Tool::Pnt(V12);
                 TopoDS_Vertex V22  = sae.LastVertex(edge2);
@@ -1950,7 +1829,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                 }
                 if (IsModified2)
                 {
-                  // cut edge1 and update tolerance NewV
+
                   double dista = std::abs(a2 - p21) + std::abs(a2 - p22);
                   double distb = std::abs(b2 - p21) + std::abs(b2 - p22);
                   double pend, cut;
@@ -1976,20 +1855,18 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
 
                 if (IsModified1 || IsModified2)
                 {
-                  // necessary to make intersect with the same pair of the edges once again with
-                  // modified ranges
+
                   num2--;
-                  hasModifWire = true; // gka 06.09.04
+                  hasModifWire = true;
                   continue;
                 }
                 else
                 {
-                  // create new vertex and split edge1 and edge2 using it
+
                   if (std::abs(p12 - p11) > std::abs(b1 - a1) / 2
                       || std::abs(p22 - p21) > std::abs(b2 - a2) / 2)
                   {
-                    // segment is big and we have to split each intersecting edge
-                    // on 3 edges --> middle edge - edge based on segment
+
                     gp_Pnt P01((Pnt11.X() + Pnt21.X()) / 2,
                                (Pnt11.Y() + Pnt21.Y()) / 2,
                                (Pnt11.Z() + Pnt21.Z()) / 2);
@@ -2003,12 +1880,12 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                     if (tolV1 > MaxTolVert || tolV2 > MaxTolVert)
                       continue;
 
-                    hasModifWire = true; // gka 06.09.04
+                    hasModifWire = true;
                     TopoDS_Vertex NewV1, NewV2;
                     TopoDS_Edge   tmpE, SegE;
-                    // split edge1
+
                     int akey1 = 0, akey2 = 0;
-                    // analysis fo P01
+
                     if (P01.Distance(PV1) < std::max(tolV1, BRep_Tool::Tolerance(V1)))
                     {
                       NewV1 = V1;
@@ -2023,7 +1900,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                         B.UpdateVertex(NewV1, tolV1);
                       akey1++;
                     }
-                    // analysis fo P02
+
                     if (P02.Distance(PV1) < std::max(tolV2, BRep_Tool::Tolerance(V1)))
                     {
                       NewV2 = V1;
@@ -2040,12 +1917,12 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                     }
                     if (akey1 > 1 || akey2 > 1)
                       continue;
-                    // prepare vertices
+
                     if (akey1 == 0)
                       B.MakeVertex(NewV1, P01, tolV1);
                     if (akey2 == 0)
                       B.MakeVertex(NewV2, P02, tolV2);
-                    // split
+
                     int numseg1 = num1;
                     if (akey1 == 0 && akey2 > 0)
                     {
@@ -2065,7 +1942,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                     }
                     if (akey1 == 0 && akey2 == 0)
                     {
-                      int num1split2 = num1; // what edge to split by point 2
+                      int num1split2 = num1;
                       if (SplitEdge1(sewd1, face, num1, p11, NewV1, tolV1, boxes1))
                       {
                         NbModif++;
@@ -2074,7 +1951,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                         occ::handle<Geom2d_Curve> c2d;
                         sae.PCurve(tmpE, face, c2d, a, b, false);
                         if ((a - p12) * (b - p12) > 0)
-                        { // p12 - external for [a,b] => split next edge
+                        {
                           num1split2++;
                         }
                       }
@@ -2084,9 +1961,8 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                         numseg1 = num1 + 1;
                       }
                     }
-                    SegE = sewd1->Edge(numseg1); // get edge from segment
-                    // split edge2
-                    // replace vertices if it is necessary
+                    SegE = sewd1->Edge(numseg1);
+
                     ShapeBuild_Edge sbe;
                     akey1 = 0, akey2 = 0;
                     if (P01.Distance(PV12) < tolV1)
@@ -2097,7 +1973,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                       TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2, NewV1, V22);
                       myContext->Replace(edge2, NewE);
                       sewd2->Set(NewE, num2);
-                      boxes2.Bind(NewE, B2); // update boxes2
+                      boxes2.Bind(NewE, B2);
                       edge2 = NewE;
                       akey1 = 1;
                     }
@@ -2109,7 +1985,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                       TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2, V12, NewV1);
                       myContext->Replace(edge2, NewE);
                       sewd2->Set(NewE, num2);
-                      boxes2.Bind(NewE, B2); // update boxes2
+                      boxes2.Bind(NewE, B2);
                       edge2 = NewE;
                       akey1 = 2;
                     }
@@ -2121,7 +1997,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                       TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2, NewV2, V22);
                       myContext->Replace(edge2, NewE);
                       sewd2->Set(NewE, num2);
-                      boxes2.Bind(NewE, B2); // update boxes2
+                      boxes2.Bind(NewE, B2);
                       edge2 = NewE;
                       akey2 = 1;
                     }
@@ -2133,11 +2009,11 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                       TopoDS_Edge NewE = sbe.CopyReplaceVertices(edge2, V12, NewV2);
                       myContext->Replace(edge2, NewE);
                       sewd2->Set(NewE, num2);
-                      boxes2.Bind(NewE, B2); // update boxes2
+                      boxes2.Bind(NewE, B2);
                       edge2 = NewE;
                       akey2 = 2;
                     }
-                    // split
+
                     int numseg2 = num2;
                     if (akey1 == 0 && akey2 > 0)
                     {
@@ -2167,7 +2043,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                         occ::handle<Geom2d_Curve> c2d;
                         sae.PCurve(tmpE, face, c2d, a, b, false);
                         if ((a - p22) * (b - p22) > 0)
-                        { // p22 - external for [a,b] => split next edge
+                        {
                           num2split2++;
                         }
                       }
@@ -2178,7 +2054,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                       }
                     }
                     tmpE = sewd2->Edge(numseg2);
-                    boxes2.Bind(tmpE, boxes1.Find(SegE)); // update boxes2
+                    boxes2.Bind(tmpE, boxes1.Find(SegE));
                     if (!sae.FirstVertex(SegE).IsSame(sae.FirstVertex(tmpE)))
                     {
                       SegE.Reverse();
@@ -2190,7 +2066,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                   }
                   else
                   {
-                    // split each intersecting edge on two edges
+
                     gp_Pnt P0((Pnt11.X() + Pnt12.X()) / 2,
                               (Pnt11.Y() + Pnt12.Y()) / 2,
                               (Pnt11.Z() + Pnt12.Z()) / 2);
@@ -2219,7 +2095,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                   }
                 }
               }
-            } // end if(Inter.NbSegments()==1)
+            }
           }
         }
       }
@@ -2229,14 +2105,14 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
         SeqWir.SetValue(n1, sewd1->Wire());
         myContext->Replace(wire1, sewd1->Wire());
         wire1 = sewd1->Wire();
-        // recompute boxes for wire1
+
         boxes1.Clear();
         Bnd_Box2d aNewBox1 = CreateBoxes2d(sewd1, face, boxes1);
         aSeqWirBoxes.SetValue(n1, aNewBox1);
         SeqWir.SetValue(n2, sewd2->Wire());
         myContext->Replace(wire2, sewd2->Wire());
         wire2 = sewd2->Wire();
-        // recompute boxes for wire2
+
         boxes2.Clear();
         Bnd_Box2d aNewBox2 = CreateBoxes2d(sewd2, face, boxes2);
         aSeqWirBoxes.SetValue(n2, aNewBox2);
@@ -2246,7 +2122,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
 
   if (isDone)
   {
-    // update face
+
     TopoDS_Shape emptyCopied = face.EmptyCopied();
     TopoDS_Face  newface     = TopoDS::Face(emptyCopied);
     newface.Orientation(TopAbs_FORWARD);

@@ -6,7 +6,6 @@
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
 
-//! A root class for the standard presentation algorithms of the StdPrs package.
 class Prs3d_Root
 {
 public:

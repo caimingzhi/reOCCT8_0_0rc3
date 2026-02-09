@@ -2,20 +2,7 @@
 
 #include <Standard_Macro.hpp>
 #include <Standard_TypeDef.hpp>
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// required for correct APIENTRY definition
 #if defined(_WIN32) && !defined(APIENTRY) && !defined(__CYGWIN__) && !defined(__SCITECH_SNAP__)
   #define WIN32_LEAN_AND_MEAN
   #include <windows.h>
@@ -39,7 +26,6 @@
   #define GL_APICALL GLAPI
 #endif
 
-// exclude modern definitions and system-provided glext.h, should be defined before gl.h inclusion
 #ifndef GL_GLEXT_LEGACY
   #define GL_GLEXT_LEGACY
 #endif
@@ -187,12 +173,12 @@ typedef double GLclampd;
 #define GL_COLOR_CLEAR_VALUE 0x0C22
 #define GL_COLOR_WRITEMASK 0x0C23
 
-#define GL_UNPACK_LSB_FIRST 0x0CF1 // only desktop
+#define GL_UNPACK_LSB_FIRST 0x0CF1
 #define GL_UNPACK_ROW_LENGTH 0x0CF2
 #define GL_UNPACK_SKIP_ROWS 0x0CF3
 #define GL_UNPACK_SKIP_PIXELS 0x0CF4
 #define GL_UNPACK_ALIGNMENT 0x0CF5
-#define GL_PACK_LSB_FIRST 0x0D01 // only desktop
+#define GL_PACK_LSB_FIRST 0x0D01
 #define GL_PACK_ROW_LENGTH 0x0D02
 #define GL_PACK_SKIP_ROWS 0x0D03
 #define GL_PACK_SKIP_PIXELS 0x0D04
@@ -334,13 +320,11 @@ typedef double GLclampd;
 #define GL_RGB8 0x8051
 #define GL_RGBA8 0x8058
 
-// only in desktop OpenGL
 #define GL_LUMINANCE16 0x8042
 
-// in core since OpenGL ES 3.0, extension GL_OES_rgb8_rgba8
 #define GL_LUMINANCE8 0x8040
-// GL_EXT_texture_format_BGRA8888
-#define GL_BGRA_EXT 0x80E1 // same as GL_BGRA on desktop
+
+#define GL_BGRA_EXT 0x80E1
 
 #define GL_R16 0x822A
 #define GL_RGB4 0x804F
@@ -375,14 +359,13 @@ typedef double GLclampd;
 #define GL_TEXTURE_HEIGHT 0x1001
 #define GL_TEXTURE_INTERNAL_FORMAT 0x1003
 
-// OpenGL ES 3.0+ or OES_texture_half_float
 #define GL_HALF_FLOAT_OES 0x8D61
 
 #if !defined(HAVE_EGL)
   #if defined(__ANDROID__) || defined(__QNX__) || defined(__EMSCRIPTEN__) || defined(HAVE_GLES2)   \
     || defined(OCCT_UWP)
     #if !defined(__APPLE__)
-      #define HAVE_EGL // EAGL is used instead of EGL
+      #define HAVE_EGL
     #endif
   #elif !defined(_WIN32) && !defined(__APPLE__) && !defined(HAVE_XLIB)
     #define HAVE_EGL
@@ -390,7 +373,6 @@ typedef double GLclampd;
 #endif
 struct Aspect_XDisplay;
 
-// GL version can be defined by system gl.h header
 #ifdef GL_VERSION_1_2
   #undef GL_VERSION_1_2
   #undef GL_VERSION_1_3
@@ -410,31 +392,26 @@ struct Aspect_XDisplay;
   #undef GL_VERSION_4_5
 #endif
 #ifdef GL_COPY_READ_BUFFER_BINDING
-  // suppress iOS SDK -Wmacro-redefined warnings
+
   #undef GL_DRAW_FRAMEBUFFER_BINDING
   #undef GL_COPY_READ_BUFFER_BINDING
   #undef GL_COPY_WRITE_BUFFER_BINDING
 #endif
-// include glext.h provided by Khronos group
+
 #include <OpenGl_glext.h>
 
 class OpenGl_Context;
 
-//! Mega structure defines the complete list of OpenGL functions.
 struct OpenGl_GlFunctions
 {
 
-  //! Check glGetError(); defined for debugging purposes.
-  //! @return TRUE on error
   Standard_EXPORT static bool debugPrintError(const char* theName);
 
-  //! Read OpenGL version.
   Standard_EXPORT static void readGlVersion(int& theGlVerMajor, int& theGlVerMinor);
 
-  //! Load functions.
   Standard_EXPORT void load(OpenGl_Context& theCtx, bool theIsCoreProfile);
 
-public: //! @name OpenGL 1.1
+public:
   typedef void(APIENTRYP glClearColor_t)(GLclampf theRed,
                                          GLclampf theGreen,
                                          GLclampf theBlue,
@@ -504,16 +481,16 @@ public: //! @name OpenGL 1.1
   typedef void(APIENTRYP glGetPointerv_t)(GLenum pname, GLvoid** params);
   glGetPointerv_t glGetPointerv;
 
-  typedef void(APIENTRYP glReadBuffer_t)(GLenum src); // added to OpenGL ES 3.0
+  typedef void(APIENTRYP glReadBuffer_t)(GLenum src);
   glReadBuffer_t glReadBuffer;
 
-  typedef void(APIENTRYP glDrawBuffer_t)(GLenum mode); // added to OpenGL ES 3.0
+  typedef void(APIENTRYP glDrawBuffer_t)(GLenum mode);
   glDrawBuffer_t glDrawBuffer;
 
   typedef void(APIENTRYP glPixelTransferi_t)(GLenum pname, GLint param);
   glPixelTransferi_t glPixelTransferi;
 
-public: //! @name Depth Buffer
+public:
   typedef void(APIENTRYP glClearDepth_t)(GLclampd theDepth);
   glClearDepth_t glClearDepth;
 
@@ -526,11 +503,11 @@ public: //! @name Depth Buffer
   typedef void(APIENTRYP glDepthRange_t)(GLclampd theNearValue, GLclampd theFarValue);
   glDepthRange_t glDepthRange;
 
-public: //! @name Transformation
+public:
   typedef void(APIENTRYP glViewport_t)(GLint theX, GLint theY, GLsizei theWidth, GLsizei theHeight);
   glViewport_t glViewport;
 
-public: //! @name Vertex Arrays
+public:
   typedef void(APIENTRYP glDrawArrays_t)(GLenum theMode, GLint theFirst, GLsizei theCount);
   glDrawArrays_t glDrawArrays;
 
@@ -540,7 +517,7 @@ public: //! @name Vertex Arrays
                                            const GLvoid* theIndices);
   glDrawElements_t glDrawElements;
 
-public: //! @name Raster functions
+public:
   typedef void(APIENTRYP glPixelStorei_t)(GLenum theParamName, GLint theParam);
   glPixelStorei_t glPixelStorei;
 
@@ -553,7 +530,7 @@ public: //! @name Raster functions
                                          GLvoid* pixels);
   glReadPixels_t glReadPixels;
 
-public: //! @name Stenciling
+public:
   typedef void(APIENTRYP glStencilFunc_t)(GLenum func, GLint ref, GLuint mask);
   glStencilFunc_t glStencilFunc;
 
@@ -566,7 +543,7 @@ public: //! @name Stenciling
   typedef void(APIENTRYP glClearStencil_t)(GLint s);
   glClearStencil_t glClearStencil;
 
-public: //! @name Texture mapping
+public:
   typedef void(APIENTRYP glTexParameterf_t)(GLenum target, GLenum pname, GLfloat param);
   glTexParameterf_t glTexParameterf;
 
@@ -639,7 +616,7 @@ public: //! @name Texture mapping
                                                 GLsizei height);
   glCopyTexSubImage2D_t glCopyTexSubImage2D;
 
-public: // not part of OpenGL ES 2.0
+public:
   typedef void(APIENTRYP glTexImage1D_t)(GLenum        target,
                                          GLint         level,
                                          GLint         internalFormat,
@@ -689,7 +666,7 @@ public: // not part of OpenGL ES 2.0
   typedef void(APIENTRYP glPointSize_t)(GLfloat theSize);
   glPointSize_t glPointSize;
 
-public: //! @name OpenGL 1.1 FFP (obsolete, removed since 3.1)
+public:
   typedef void(APIENTRYP glTexEnvi_t)(GLenum target, GLenum pname, GLint param);
   glTexEnvi_t glTexEnvi;
 
@@ -699,11 +676,11 @@ public: //! @name OpenGL 1.1 FFP (obsolete, removed since 3.1)
   typedef void(APIENTRYP glLogicOp_t)(GLenum opcode);
   glLogicOp_t glLogicOp;
 
-public: //! @name Begin/End primitive specification (removed since 3.1)
+public:
   typedef void(APIENTRYP glColor4fv_t)(const GLfloat* theVec);
   glColor4fv_t glColor4fv;
 
-public: //! @name Matrix operations (removed since 3.1)
+public:
   typedef void(APIENTRYP glMatrixMode_t)(GLenum theMode);
   glMatrixMode_t glMatrixMode;
 
@@ -713,14 +690,14 @@ public: //! @name Matrix operations (removed since 3.1)
   typedef void(APIENTRYP glLoadMatrixf_t)(const GLfloat* theMatrix);
   glLoadMatrixf_t glLoadMatrixf;
 
-public: //! @name Line and Polygon stipple (removed since 3.1)
+public:
   typedef void(APIENTRYP glLineStipple_t)(GLint theFactor, GLushort thePattern);
   glLineStipple_t glLineStipple;
 
   typedef void(APIENTRYP glPolygonStipple_t)(const GLubyte* theMask);
   glPolygonStipple_t glPolygonStipple;
 
-public: //! @name Fixed pipeline lighting (removed since 3.1)
+public:
   typedef void(APIENTRYP glShadeModel_t)(GLenum theMode);
   glShadeModel_t glShadeModel;
 
@@ -745,11 +722,11 @@ public: //! @name Fixed pipeline lighting (removed since 3.1)
   typedef void(APIENTRYP glColorMaterial_t)(GLenum face, GLenum mode);
   glColorMaterial_t glColorMaterial;
 
-public: //! @name clipping plane (removed since 3.1)
+public:
   typedef void(APIENTRYP glClipPlane_t)(GLenum thePlane, const GLdouble* theEquation);
   glClipPlane_t glClipPlane;
 
-public: //! @name Display lists (removed since 3.1)
+public:
   typedef void(APIENTRYP glDeleteLists_t)(GLuint theList, GLsizei theRange);
   glDeleteLists_t glDeleteLists;
 
@@ -771,21 +748,21 @@ public: //! @name Display lists (removed since 3.1)
   typedef void(APIENTRYP glListBase_t)(GLuint theBase);
   glListBase_t glListBase;
 
-public: //! @name Current raster position and Rectangles (removed since 3.1)
+public:
   typedef void(APIENTRYP glRasterPos2i_t)(GLint x, GLint y);
   glRasterPos2i_t glRasterPos2i;
 
   typedef void(APIENTRYP glRasterPos3fv_t)(const GLfloat* theVec);
   glRasterPos3fv_t glRasterPos3fv;
 
-public: //! @name Texture mapping (removed since 3.1)
+public:
   typedef void(APIENTRYP glTexGeni_t)(GLenum coord, GLenum pname, GLint param);
   glTexGeni_t glTexGeni;
 
   typedef void(APIENTRYP glTexGenfv_t)(GLenum coord, GLenum pname, const GLfloat* params);
   glTexGenfv_t glTexGenfv;
 
-public: //! @name Pixel copying (removed since 3.1)
+public:
   typedef void(APIENTRYP glDrawPixels_t)(GLsizei       width,
                                          GLsizei       height,
                                          GLenum        format,
@@ -806,7 +783,7 @@ public: //! @name Pixel copying (removed since 3.1)
                                      const GLubyte* bitmap);
   glBitmap_t glBitmap;
 
-public: //! @name Edge flags and fixed-function vertex processing (removed since 3.1)
+public:
   typedef void(APIENTRYP glIndexPointer_t)(GLenum theType, GLsizei theStride, const GLvoid* thePtr);
   glIndexPointer_t glIndexPointer;
 
@@ -854,7 +831,7 @@ public: //! @name Edge flags and fixed-function vertex processing (removed since
   typedef void(APIENTRYP glPolygonMode_t)(GLenum face, GLenum mode);
   glPolygonMode_t glPolygonMode;
 
-public: //! @name OpenGL ES 3.2
+public:
   typedef void(APIENTRYP glBlendBarrier_t)();
   glBlendBarrier_t glBlendBarrier;
 
@@ -868,7 +845,7 @@ public: //! @name OpenGL ES 3.2
                                                    GLfloat maxW);
   glPrimitiveBoundingBox_t glPrimitiveBoundingBox;
 
-public: //! @name OpenGL 1.2
+public:
   PFNGLBLENDCOLORPROC        glBlendColor;
   PFNGLBLENDEQUATIONPROC     glBlendEquation;
   PFNGLDRAWRANGEELEMENTSPROC glDrawRangeElements;
@@ -876,7 +853,7 @@ public: //! @name OpenGL 1.2
   PFNGLTEXSUBIMAGE3DPROC     glTexSubImage3D;
   PFNGLCOPYTEXSUBIMAGE3DPROC glCopyTexSubImage3D;
 
-public: //! @name OpenGL 1.3
+public:
   PFNGLACTIVETEXTUREPROC           glActiveTexture;
   PFNGLSAMPLECOVERAGEPROC          glSampleCoverage;
   PFNGLCOMPRESSEDTEXIMAGE3DPROC    glCompressedTexImage3D;
@@ -887,7 +864,7 @@ public: //! @name OpenGL 1.3
   PFNGLCOMPRESSEDTEXSUBIMAGE1DPROC glCompressedTexSubImage1D;
   PFNGLGETCOMPRESSEDTEXIMAGEPROC   glGetCompressedTexImage;
 
-public: //! @name OpenGL 1.4
+public:
   PFNGLBLENDFUNCSEPARATEPROC glBlendFuncSeparate;
   PFNGLMULTIDRAWARRAYSPROC   glMultiDrawArrays;
   PFNGLMULTIDRAWELEMENTSPROC glMultiDrawElements;
@@ -896,7 +873,7 @@ public: //! @name OpenGL 1.4
   PFNGLPOINTPARAMETERIPROC   glPointParameteri;
   PFNGLPOINTPARAMETERIVPROC  glPointParameteriv;
 
-public: //! @name OpenGL 1.5
+public:
   PFNGLGENQUERIESPROC           glGenQueries;
   PFNGLDELETEQUERIESPROC        glDeleteQueries;
   PFNGLISQUERYPROC              glIsQuery;
@@ -917,7 +894,7 @@ public: //! @name OpenGL 1.5
   PFNGLGETBUFFERPARAMETERIVPROC glGetBufferParameteriv;
   PFNGLGETBUFFERPOINTERVPROC    glGetBufferPointerv;
 
-public: //! @name OpenGL 2.0
+public:
   PFNGLBLENDEQUATIONSEPARATEPROC    glBlendEquationSeparate;
   PFNGLDRAWBUFFERSPROC              glDrawBuffers;
   PFNGLSTENCILOPSEPARATEPROC        glStencilOpSeparate;
@@ -1012,7 +989,7 @@ public: //! @name OpenGL 2.0
   PFNGLVERTEXATTRIB4USVPROC         glVertexAttrib4usv;
   PFNGLVERTEXATTRIBPOINTERPROC      glVertexAttribPointer;
 
-public: //! @name OpenGL 2.1
+public:
   PFNGLUNIFORMMATRIX2X3FVPROC glUniformMatrix2x3fv;
   PFNGLUNIFORMMATRIX3X2FVPROC glUniformMatrix3x2fv;
   PFNGLUNIFORMMATRIX2X4FVPROC glUniformMatrix2x4fv;
@@ -1020,7 +997,7 @@ public: //! @name OpenGL 2.1
   PFNGLUNIFORMMATRIX3X4FVPROC glUniformMatrix3x4fv;
   PFNGLUNIFORMMATRIX4X3FVPROC glUniformMatrix4x3fv;
 
-public: //! @name GL_ARB_framebuffer_object (added to OpenGL 3.0 core)
+public:
   PFNGLISRENDERBUFFERPROC                      glIsRenderbuffer;
   PFNGLBINDRENDERBUFFERPROC                    glBindRenderbuffer;
   PFNGLDELETERENDERBUFFERSPROC                 glDeleteRenderbuffers;
@@ -1042,17 +1019,17 @@ public: //! @name GL_ARB_framebuffer_object (added to OpenGL 3.0 core)
   PFNGLRENDERBUFFERSTORAGEMULTISAMPLEPROC      glRenderbufferStorageMultisample;
   PFNGLFRAMEBUFFERTEXTURELAYERPROC             glFramebufferTextureLayer;
 
-public: //! @name GL_ARB_vertex_array_object (added to OpenGL 3.0 core)
+public:
   PFNGLBINDVERTEXARRAYPROC    glBindVertexArray;
   PFNGLDELETEVERTEXARRAYSPROC glDeleteVertexArrays;
   PFNGLGENVERTEXARRAYSPROC    glGenVertexArrays;
   PFNGLISVERTEXARRAYPROC      glIsVertexArray;
 
-public: //! @name GL_ARB_map_buffer_range (added to OpenGL 3.0 core)
+public:
   PFNGLMAPBUFFERRANGEPROC         glMapBufferRange;
   PFNGLFLUSHMAPPEDBUFFERRANGEPROC glFlushMappedBufferRange;
 
-public: //! @name OpenGL 3.0
+public:
   PFNGLCOLORMASKIPROC                  glColorMaski;
   PFNGLGETBOOLEANI_VPROC               glGetBooleani_v;
   PFNGLGETINTEGERI_VPROC               glGetIntegeri_v;
@@ -1112,7 +1089,7 @@ public: //! @name OpenGL 3.0
   PFNGLCLEARBUFFERFIPROC               glClearBufferfi;
   PFNGLGETSTRINGIPROC                  glGetStringi;
 
-public: //! @name GL_ARB_uniform_buffer_object (added to OpenGL 3.1 core)
+public:
   PFNGLGETUNIFORMINDICESPROC         glGetUniformIndices;
   PFNGLGETACTIVEUNIFORMSIVPROC       glGetActiveUniformsiv;
   PFNGLGETACTIVEUNIFORMNAMEPROC      glGetActiveUniformName;
@@ -1121,25 +1098,25 @@ public: //! @name GL_ARB_uniform_buffer_object (added to OpenGL 3.1 core)
   PFNGLGETACTIVEUNIFORMBLOCKNAMEPROC glGetActiveUniformBlockName;
   PFNGLUNIFORMBLOCKBINDINGPROC       glUniformBlockBinding;
 
-public: //! @name GL_ARB_copy_buffer (added to OpenGL 3.1 core)
+public:
   PFNGLCOPYBUFFERSUBDATAPROC glCopyBufferSubData;
 
-public: //! @name OpenGL 3.1
+public:
   PFNGLDRAWARRAYSINSTANCEDPROC   glDrawArraysInstanced;
   PFNGLDRAWELEMENTSINSTANCEDPROC glDrawElementsInstanced;
   PFNGLTEXBUFFERPROC             glTexBuffer;
   PFNGLPRIMITIVERESTARTINDEXPROC glPrimitiveRestartIndex;
 
-public: //! @name GL_ARB_draw_elements_base_vertex (added to OpenGL 3.2 core)
+public:
   PFNGLDRAWELEMENTSBASEVERTEXPROC          glDrawElementsBaseVertex;
   PFNGLDRAWRANGEELEMENTSBASEVERTEXPROC     glDrawRangeElementsBaseVertex;
   PFNGLDRAWELEMENTSINSTANCEDBASEVERTEXPROC glDrawElementsInstancedBaseVertex;
   PFNGLMULTIDRAWELEMENTSBASEVERTEXPROC     glMultiDrawElementsBaseVertex;
 
-public: //! @name GL_ARB_provoking_vertex (added to OpenGL 3.2 core)
+public:
   PFNGLPROVOKINGVERTEXPROC glProvokingVertex;
 
-public: //! @name GL_ARB_sync (added to OpenGL 3.2 core)
+public:
   PFNGLFENCESYNCPROC      glFenceSync;
   PFNGLISSYNCPROC         glIsSync;
   PFNGLDELETESYNCPROC     glDeleteSync;
@@ -1148,22 +1125,22 @@ public: //! @name GL_ARB_sync (added to OpenGL 3.2 core)
   PFNGLGETINTEGER64VPROC  glGetInteger64v;
   PFNGLGETSYNCIVPROC      glGetSynciv;
 
-public: //! @name GL_ARB_texture_multisample (added to OpenGL 3.2 core)
+public:
   PFNGLTEXIMAGE2DMULTISAMPLEPROC glTexImage2DMultisample;
   PFNGLTEXIMAGE3DMULTISAMPLEPROC glTexImage3DMultisample;
   PFNGLGETMULTISAMPLEFVPROC      glGetMultisamplefv;
   PFNGLSAMPLEMASKIPROC           glSampleMaski;
 
-public: //! @name OpenGL 3.2
+public:
   PFNGLGETINTEGER64I_VPROC        glGetInteger64i_v;
   PFNGLGETBUFFERPARAMETERI64VPROC glGetBufferParameteri64v;
   PFNGLFRAMEBUFFERTEXTUREPROC     glFramebufferTexture;
 
-public: //! @name GL_ARB_blend_func_extended (added to OpenGL 3.3 core)
+public:
   PFNGLBINDFRAGDATALOCATIONINDEXEDPROC glBindFragDataLocationIndexed;
   PFNGLGETFRAGDATAINDEXPROC            glGetFragDataIndex;
 
-public: //! @name GL_ARB_sampler_objects (added to OpenGL 3.3 core)
+public:
   PFNGLGENSAMPLERSPROC             glGenSamplers;
   PFNGLDELETESAMPLERSPROC          glDeleteSamplers;
   PFNGLISSAMPLERPROC               glIsSampler;
@@ -1179,12 +1156,12 @@ public: //! @name GL_ARB_sampler_objects (added to OpenGL 3.3 core)
   PFNGLGETSAMPLERPARAMETERFVPROC   glGetSamplerParameterfv;
   PFNGLGETSAMPLERPARAMETERIUIVPROC glGetSamplerParameterIuiv;
 
-public: //! @name GL_ARB_timer_query (added to OpenGL 3.3 core)
+public:
   PFNGLQUERYCOUNTERPROC        glQueryCounter;
   PFNGLGETQUERYOBJECTI64VPROC  glGetQueryObjecti64v;
   PFNGLGETQUERYOBJECTUI64VPROC glGetQueryObjectui64v;
 
-public: //! @name GL_ARB_vertex_type_2_10_10_10_rev (added to OpenGL 3.3 core)
+public:
   PFNGLVERTEXATTRIBP1UIPROC  glVertexAttribP1ui;
   PFNGLVERTEXATTRIBP1UIVPROC glVertexAttribP1uiv;
   PFNGLVERTEXATTRIBP2UIPROC  glVertexAttribP2ui;
@@ -1194,14 +1171,14 @@ public: //! @name GL_ARB_vertex_type_2_10_10_10_rev (added to OpenGL 3.3 core)
   PFNGLVERTEXATTRIBP4UIPROC  glVertexAttribP4ui;
   PFNGLVERTEXATTRIBP4UIVPROC glVertexAttribP4uiv;
 
-public: //! @name OpenGL 3.3
+public:
   PFNGLVERTEXATTRIBDIVISORPROC glVertexAttribDivisor;
 
-public: //! @name GL_ARB_draw_indirect (added to OpenGL 4.0 core)
+public:
   PFNGLDRAWARRAYSINDIRECTPROC   glDrawArraysIndirect;
   PFNGLDRAWELEMENTSINDIRECTPROC glDrawElementsIndirect;
 
-public: //! @name GL_ARB_gpu_shader_fp64 (added to OpenGL 4.0 core)
+public:
   PFNGLUNIFORM1DPROC          glUniform1d;
   PFNGLUNIFORM2DPROC          glUniform2d;
   PFNGLUNIFORM3DPROC          glUniform3d;
@@ -1221,7 +1198,7 @@ public: //! @name GL_ARB_gpu_shader_fp64 (added to OpenGL 4.0 core)
   PFNGLUNIFORMMATRIX4X3DVPROC glUniformMatrix4x3dv;
   PFNGLGETUNIFORMDVPROC       glGetUniformdv;
 
-public: //! @name GL_ARB_shader_subroutine (added to OpenGL 4.0 core)
+public:
   PFNGLGETSUBROUTINEUNIFORMLOCATIONPROC   glGetSubroutineUniformLocation;
   PFNGLGETSUBROUTINEINDEXPROC             glGetSubroutineIndex;
   PFNGLGETACTIVESUBROUTINEUNIFORMIVPROC   glGetActiveSubroutineUniformiv;
@@ -1231,11 +1208,11 @@ public: //! @name GL_ARB_shader_subroutine (added to OpenGL 4.0 core)
   PFNGLGETUNIFORMSUBROUTINEUIVPROC        glGetUniformSubroutineuiv;
   PFNGLGETPROGRAMSTAGEIVPROC              glGetProgramStageiv;
 
-public: //! @name GL_ARB_tessellation_shader (added to OpenGL 4.0 core)
+public:
   PFNGLPATCHPARAMETERIPROC  glPatchParameteri;
   PFNGLPATCHPARAMETERFVPROC glPatchParameterfv;
 
-public: //! @name GL_ARB_transform_feedback2 (added to OpenGL 4.0 core)
+public:
   PFNGLBINDTRANSFORMFEEDBACKPROC    glBindTransformFeedback;
   PFNGLDELETETRANSFORMFEEDBACKSPROC glDeleteTransformFeedbacks;
   PFNGLGENTRANSFORMFEEDBACKSPROC    glGenTransformFeedbacks;
@@ -1244,32 +1221,32 @@ public: //! @name GL_ARB_transform_feedback2 (added to OpenGL 4.0 core)
   PFNGLRESUMETRANSFORMFEEDBACKPROC  glResumeTransformFeedback;
   PFNGLDRAWTRANSFORMFEEDBACKPROC    glDrawTransformFeedback;
 
-public: //! @name GL_ARB_transform_feedback3 (added to OpenGL 4.0 core)
+public:
   PFNGLDRAWTRANSFORMFEEDBACKSTREAMPROC glDrawTransformFeedbackStream;
   PFNGLBEGINQUERYINDEXEDPROC           glBeginQueryIndexed;
   PFNGLENDQUERYINDEXEDPROC             glEndQueryIndexed;
   PFNGLGETQUERYINDEXEDIVPROC           glGetQueryIndexediv;
 
-public: //! @name OpenGL 4.0
+public:
   PFNGLMINSAMPLESHADINGPROC       glMinSampleShading;
   PFNGLBLENDEQUATIONIPROC         glBlendEquationi;
   PFNGLBLENDEQUATIONSEPARATEIPROC glBlendEquationSeparatei;
   PFNGLBLENDFUNCIPROC             glBlendFunci;
   PFNGLBLENDFUNCSEPARATEIPROC     glBlendFuncSeparatei;
 
-public: //! @name GL_ARB_ES2_compatibility (added to OpenGL 4.1 core)
+public:
   PFNGLRELEASESHADERCOMPILERPROC    glReleaseShaderCompiler;
   PFNGLSHADERBINARYPROC             glShaderBinary;
   PFNGLGETSHADERPRECISIONFORMATPROC glGetShaderPrecisionFormat;
   PFNGLDEPTHRANGEFPROC              glDepthRangef;
   PFNGLCLEARDEPTHFPROC              glClearDepthf;
 
-public: //! @name GL_ARB_get_program_binary (added to OpenGL 4.1 core)
+public:
   PFNGLGETPROGRAMBINARYPROC  glGetProgramBinary;
   PFNGLPROGRAMBINARYPROC     glProgramBinary;
   PFNGLPROGRAMPARAMETERIPROC glProgramParameteri;
 
-public: //! @name GL_ARB_separate_shader_objects (added to OpenGL 4.1 core)
+public:
   PFNGLUSEPROGRAMSTAGESPROC          glUseProgramStages;
   PFNGLACTIVESHADERPROGRAMPROC       glActiveShaderProgram;
   PFNGLCREATESHADERPROGRAMVPROC      glCreateShaderProgramv;
@@ -1331,7 +1308,7 @@ public: //! @name GL_ARB_separate_shader_objects (added to OpenGL 4.1 core)
   PFNGLVALIDATEPROGRAMPIPELINEPROC   glValidateProgramPipeline;
   PFNGLGETPROGRAMPIPELINEINFOLOGPROC glGetProgramPipelineInfoLog;
 
-public: //! @name GL_ARB_vertex_attrib_64bit (added to OpenGL 4.1 core)
+public:
   PFNGLVERTEXATTRIBL1DPROC      glVertexAttribL1d;
   PFNGLVERTEXATTRIBL2DPROC      glVertexAttribL2d;
   PFNGLVERTEXATTRIBL3DPROC      glVertexAttribL3d;
@@ -1343,7 +1320,7 @@ public: //! @name GL_ARB_vertex_attrib_64bit (added to OpenGL 4.1 core)
   PFNGLVERTEXATTRIBLPOINTERPROC glVertexAttribLPointer;
   PFNGLGETVERTEXATTRIBLDVPROC   glGetVertexAttribLdv;
 
-public: //! @name GL_ARB_viewport_array (added to OpenGL 4.1 core)
+public:
   PFNGLVIEWPORTARRAYVPROC    glViewportArrayv;
   PFNGLVIEWPORTINDEXEDFPROC  glViewportIndexedf;
   PFNGLVIEWPORTINDEXEDFVPROC glViewportIndexedfv;
@@ -1355,35 +1332,34 @@ public: //! @name GL_ARB_viewport_array (added to OpenGL 4.1 core)
   PFNGLGETFLOATI_VPROC       glGetFloati_v;
   PFNGLGETDOUBLEI_VPROC      glGetDoublei_v;
 
-public: //! @name OpenGL 4.1
-        //
-public: //! @name GL_ARB_base_instance (added to OpenGL 4.2 core)
+public:
+public:
   PFNGLDRAWARRAYSINSTANCEDBASEINSTANCEPROC   glDrawArraysInstancedBaseInstance;
   PFNGLDRAWELEMENTSINSTANCEDBASEINSTANCEPROC glDrawElementsInstancedBaseInstance;
   PFNGLDRAWELEMENTSINSTANCEDBASEVERTEXBASEINSTANCEPROC
   glDrawElementsInstancedBaseVertexBaseInstance;
 
-public: //! @name GL_ARB_transform_feedback_instanced (added to OpenGL 4.2 core)
+public:
   PFNGLDRAWTRANSFORMFEEDBACKINSTANCEDPROC       glDrawTransformFeedbackInstanced;
   PFNGLDRAWTRANSFORMFEEDBACKSTREAMINSTANCEDPROC glDrawTransformFeedbackStreamInstanced;
 
-public: //! @name GL_ARB_internalformat_query (added to OpenGL 4.2 core)
+public:
   PFNGLGETINTERNALFORMATIVPROC glGetInternalformativ;
 
-public: //! @name GL_ARB_shader_atomic_counters (added to OpenGL 4.2 core)
+public:
   PFNGLGETACTIVEATOMICCOUNTERBUFFERIVPROC glGetActiveAtomicCounterBufferiv;
 
-public: //! @name GL_ARB_shader_image_load_store (added to OpenGL 4.2 core)
+public:
   PFNGLBINDIMAGETEXTUREPROC glBindImageTexture;
   PFNGLMEMORYBARRIERPROC    glMemoryBarrier;
 
-public: //! @name GL_ARB_texture_storage (added to OpenGL 4.2 core)
+public:
   PFNGLTEXSTORAGE1DPROC glTexStorage1D;
   PFNGLTEXSTORAGE2DPROC glTexStorage2D;
   PFNGLTEXSTORAGE3DPROC glTexStorage3D;
 
-public: //! @name OpenGL 4.2
-public: //! @name OpenGL 4.3
+public:
+public:
   PFNGLCLEARBUFFERDATAPROC                 glClearBufferData;
   PFNGLCLEARBUFFERSUBDATAPROC              glClearBufferSubData;
   PFNGLDISPATCHCOMPUTEPROC                 glDispatchCompute;
@@ -1428,7 +1404,7 @@ public: //! @name OpenGL 4.3
   PFNGLOBJECTPTRLABELPROC                  glObjectPtrLabel;
   PFNGLGETOBJECTPTRLABELPROC               glGetObjectPtrLabel;
 
-public: //! @name OpenGL 4.4
+public:
   PFNGLBUFFERSTORAGEPROC     glBufferStorage;
   PFNGLCLEARTEXIMAGEPROC     glClearTexImage;
   PFNGLCLEARTEXSUBIMAGEPROC  glClearTexSubImage;
@@ -1439,7 +1415,7 @@ public: //! @name OpenGL 4.4
   PFNGLBINDIMAGETEXTURESPROC glBindImageTextures;
   PFNGLBINDVERTEXBUFFERSPROC glBindVertexBuffers;
 
-public: //! @name OpenGL 4.5
+public:
   PFNGLCLIPCONTROLPROC                              glClipControl;
   PFNGLCREATETRANSFORMFEEDBACKSPROC                 glCreateTransformFeedbacks;
   PFNGLTRANSFORMFEEDBACKBUFFERBASEPROC              glTransformFeedbackBufferBase;
@@ -1551,16 +1527,16 @@ public: //! @name OpenGL 4.5
   PFNGLREADNPIXELSPROC                              glReadnPixels;
   PFNGLTEXTUREBARRIERPROC                           glTextureBarrier;
 
-public: //! @name OpenGL 4.6
+public:
   PFNGLSPECIALIZESHADERPROC               glSpecializeShader;
   PFNGLMULTIDRAWARRAYSINDIRECTCOUNTPROC   glMultiDrawArraysIndirectCount;
   PFNGLMULTIDRAWELEMENTSINDIRECTCOUNTPROC glMultiDrawElementsIndirectCount;
   PFNGLPOLYGONOFFSETCLAMPPROC             glPolygonOffsetClamp;
 
-public: //! @name GL_EXT_geometry_shader4
+public:
   PFNGLPROGRAMPARAMETERIEXTPROC glProgramParameteriEXT;
 
-public: //! @name GL_ARB_bindless_texture
+public:
   PFNGLGETTEXTUREHANDLEARBPROC             glGetTextureHandleARB;
   PFNGLGETTEXTURESAMPLERHANDLEARBPROC      glGetTextureSamplerHandleARB;
   PFNGLMAKETEXTUREHANDLERESIDENTARBPROC    glMakeTextureHandleResidentARB;
@@ -1579,14 +1555,12 @@ public: //! @name GL_ARB_bindless_texture
   PFNGLGETVERTEXATTRIBLUI64VARBPROC        glGetVertexAttribLui64vARB;
 
 #if defined(_WIN32)
-public: //! @name wgl extensions
+public:
   typedef const char*(WINAPI* wglGetExtensionsStringARB_t)(HDC theDeviceContext);
   wglGetExtensionsStringARB_t wglGetExtensionsStringARB;
 
   typedef BOOL(WINAPI* wglSwapIntervalEXT_t)(int theInterval);
   wglSwapIntervalEXT_t wglSwapIntervalEXT;
-
-  // WGL_ARB_pixel_format
 
   #ifndef WGL_NUMBER_PIXEL_FORMATS_ARB
     #define WGL_NUMBER_PIXEL_FORMATS_ARB 0x2000
@@ -1642,12 +1616,10 @@ public: //! @name wgl extensions
     #define WGL_TYPE_RGBA_ARB 0x202B
     #define WGL_TYPE_COLORINDEX_ARB 0x202C
 
-  #endif // WGL_NUMBER_PIXEL_FORMATS_ARB
+  #endif
 
-  // WGL_ARB_multisample
   #define WGL_SAMPLES_ARB 0x2042
 
-  // WGL_ARB_create_context_robustness
   #define WGL_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB 0x8256
   #define WGL_NO_RESET_NOTIFICATION_ARB 0x8261
   #define WGL_LOSE_CONTEXT_ON_RESET_ARB 0x8252
@@ -1660,8 +1632,6 @@ public: //! @name wgl extensions
                                                   unsigned int* theNumFormatsOut);
   wglChoosePixelFormatARB_t wglChoosePixelFormatARB;
 
-  // WGL_ARB_create_context_profile
-
   #ifndef WGL_CONTEXT_MAJOR_VERSION_ARB
     #define WGL_CONTEXT_MAJOR_VERSION_ARB 0x2091
     #define WGL_CONTEXT_MINOR_VERSION_ARB 0x2092
@@ -1669,21 +1639,17 @@ public: //! @name wgl extensions
     #define WGL_CONTEXT_FLAGS_ARB 0x2094
     #define WGL_CONTEXT_PROFILE_MASK_ARB 0x9126
 
-    // WGL_CONTEXT_FLAGS bits
     #define WGL_CONTEXT_DEBUG_BIT_ARB 0x0001
     #define WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB 0x0002
 
-    // WGL_CONTEXT_PROFILE_MASK_ARB bits
     #define WGL_CONTEXT_CORE_PROFILE_BIT_ARB 0x00000001
     #define WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB 0x00000002
-  #endif // WGL_CONTEXT_MAJOR_VERSION_ARB
+  #endif
 
   typedef HGLRC(WINAPI* wglCreateContextAttribsARB_t)(HDC        theDevCtx,
                                                       HGLRC      theShareContext,
                                                       const int* theAttribs);
   wglCreateContextAttribsARB_t wglCreateContextAttribsARB;
-
-  // WGL_NV_DX_interop
 
   typedef BOOL(WINAPI* wglDXSetResourceShareHandleNV_t)(void* theObjectD3d, HANDLE theShareHandle);
   typedef HANDLE(WINAPI* wglDXOpenDeviceNV_t)(void* theDeviceD3d);
@@ -1717,8 +1683,6 @@ public: //! @name wgl extensions
     #define WGL_ACCESS_WRITE_DISCARD_NV 0x0002
   #endif
 
-  // WGL_AMD_gpu_association
-
   #define WGL_GPU_RENDERER_STRING_AMD 0x1F01
   #define WGL_GPU_OPENGL_VERSION_STRING_AMD 0x1F02
   #define WGL_GPU_FASTEST_TARGET_GPUS_AMD 0x21A2
@@ -1741,22 +1705,18 @@ public: //! @name wgl extensions
   wglGetContextGPUIDAMD_t wglGetContextGPUIDAMD;
 
 #elif defined(__APPLE__)
-public: //! @name CGL extensions
+public:
 
 #else
-public: //! @name glX extensions
-  // GLX_EXT_swap_control
-  // typedef int         (*glXSwapIntervalEXT_t)(Display* theDisplay, GLXDrawable theDrawable, int
-  // theInterval);
+public:
   typedef int (*glXSwapIntervalEXT_t)();
   glXSwapIntervalEXT_t glXSwapIntervalEXT;
 
   typedef int (*glXSwapIntervalSGI_t)(int theInterval);
   glXSwapIntervalSGI_t glXSwapIntervalSGI;
 
-  // GLX_MESA_query_renderer
   #ifndef GLX_RENDERER_VENDOR_ID_MESA
-    // for glXQueryRendererIntegerMESA() and glXQueryCurrentRendererIntegerMESA()
+
     #define GLX_RENDERER_VENDOR_ID_MESA 0x8183
     #define GLX_RENDERER_DEVICE_ID_MESA 0x8184
     #define GLX_RENDERER_VERSION_MESA 0x8185
@@ -1770,7 +1730,7 @@ public: //! @name glX extensions
     #define GLX_RENDERER_OPENGL_ES2_PROFILE_VERSION_MESA 0x818D
 
     #define GLX_RENDERER_ID_MESA 0x818E
-  #endif // GLX_RENDERER_VENDOR_ID_MESA
+  #endif
 
   typedef int (*glXQueryRendererIntegerMESA_t)(Aspect_XDisplay* theDisplay,
                                                int              theScreen,

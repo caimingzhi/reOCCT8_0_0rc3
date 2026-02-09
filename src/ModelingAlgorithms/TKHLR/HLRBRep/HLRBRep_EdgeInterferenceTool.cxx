@@ -5,14 +5,10 @@
 #include <HLRBRep_Data.hpp>
 #include <HLRBRep_EdgeInterferenceTool.hpp>
 
-//=================================================================================================
-
 HLRBRep_EdgeInterferenceTool::HLRBRep_EdgeInterferenceTool(const occ::handle<HLRBRep_Data>& DS)
     : myDS(DS)
 {
 }
-
-//=================================================================================================
 
 void HLRBRep_EdgeInterferenceTool::LoadEdge()
 {
@@ -29,8 +25,6 @@ void HLRBRep_EdgeInterferenceTool::LoadEdge()
   inter[1].Index(ed.VEnd());
 }
 
-//=================================================================================================
-
 void HLRBRep_EdgeInterferenceTool::EdgeGeometry(const double Param,
                                                 gp_Dir&      Tgt,
                                                 gp_Dir&      Nrm,
@@ -42,8 +36,6 @@ void HLRBRep_EdgeInterferenceTool::EdgeGeometry(const double Param,
   Nrm.SetCoord(NmLE.X(), NmLE.Y(), 0);
 }
 
-//=================================================================================================
-
 bool HLRBRep_EdgeInterferenceTool::SameInterferences(const HLRAlgo_Interference& I1,
                                                      const HLRAlgo_Interference& I2) const
 {
@@ -54,16 +46,12 @@ bool HLRBRep_EdgeInterferenceTool::SameInterferences(const HLRAlgo_Interference&
   return false;
 }
 
-//=================================================================================================
-
 bool HLRBRep_EdgeInterferenceTool::SameVertexAndInterference(const HLRAlgo_Interference& I) const
 {
   if (I.Intersection().Index() == inter[cur].Index())
     return true;
   return I.Intersection().Orientation() == ((cur == 0) ? TopAbs_FORWARD : TopAbs_REVERSED);
 }
-
-//=================================================================================================
 
 void HLRBRep_EdgeInterferenceTool::InterferenceBoundaryGeometry(const HLRAlgo_Interference& I,
                                                                 gp_Dir&                     Tang,

@@ -1,15 +1,4 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRepLib_ToolTriangulatedShape.hpp>
 
@@ -22,8 +11,6 @@
 #include <TopoDS.hpp>
 #include <TopoDS_Face.hpp>
 
-//=================================================================================================
-
 void BRepLib_ToolTriangulatedShape::ComputeNormals(const TopoDS_Face&                     theFace,
                                                    const occ::handle<Poly_Triangulation>& theTris,
                                                    Poly_Connect& thePolyConnect)
@@ -33,12 +20,11 @@ void BRepLib_ToolTriangulatedShape::ComputeNormals(const TopoDS_Face&           
     return;
   }
 
-  // take in face the surface location
   const TopoDS_Face         aZeroFace = TopoDS::Face(theFace.Located(TopLoc_Location()));
   occ::handle<Geom_Surface> aSurf     = BRep_Tool::Surface(aZeroFace);
   if (!theTris->HasUVNodes() || aSurf.IsNull())
   {
-    // compute normals by averaging triangulation normals sharing the same vertex
+
     Poly::ComputeNormals(theTris);
     return;
   }
@@ -49,7 +35,7 @@ void BRepLib_ToolTriangulatedShape::ComputeNormals(const TopoDS_Face&           
   theTris->AddNormals();
   for (int aNodeIter = 1; aNodeIter <= theTris->NbNodes(); ++aNodeIter)
   {
-    // try to retrieve normal from real surface first, when UV coordinates are available
+
     if (GeomLib::NormEstim(aSurf, theTris->UVNode(aNodeIter), aTol, aNorm) > 1)
     {
       if (thePolyConnect.Triangulation() != theTris)
@@ -57,7 +43,6 @@ void BRepLib_ToolTriangulatedShape::ComputeNormals(const TopoDS_Face&           
         thePolyConnect.Load(theTris);
       }
 
-      // compute flat normals
       gp_XYZ eqPlan(0.0, 0.0, 0.0);
       for (thePolyConnect.Initialize(aNodeIter); thePolyConnect.More(); thePolyConnect.Next())
       {

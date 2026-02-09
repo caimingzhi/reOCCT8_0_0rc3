@@ -8,22 +8,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_NoteBinDataDriver, BinMXCAFDoc_NoteDriver)
 
-//=================================================================================================
-
 BinMXCAFDoc_NoteBinDataDriver::BinMXCAFDoc_NoteBinDataDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMXCAFDoc_NoteDriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_NoteBinData)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMXCAFDoc_NoteBinDataDriver::NewEmpty() const
 {
   return new XCAFDoc_NoteBinData();
 }
-
-//=================================================================================================
 
 bool BinMXCAFDoc_NoteBinDataDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                           const occ::handle<TDF_Attribute>& theTarget,
@@ -53,8 +47,6 @@ bool BinMXCAFDoc_NoteBinDataDriver::Paste(const BinObjMgt_Persistent&       theS
 
   return true;
 }
-
-//=================================================================================================
 
 void BinMXCAFDoc_NoteBinDataDriver::Paste(
   const occ::handle<TDF_Attribute>&                        theSource,

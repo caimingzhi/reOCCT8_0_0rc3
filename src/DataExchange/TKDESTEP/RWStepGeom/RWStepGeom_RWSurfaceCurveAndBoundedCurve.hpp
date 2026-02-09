@@ -11,7 +11,6 @@ class StepGeom_SurfaceCurveAndBoundedCurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read StepGeom_SurfaceCurveAndBoundedCurve
 class RWStepGeom_RWSurfaceCurveAndBoundedCurve
 {
 public:

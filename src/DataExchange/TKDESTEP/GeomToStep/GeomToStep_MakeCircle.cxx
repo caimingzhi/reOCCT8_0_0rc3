@@ -12,19 +12,11 @@
 #include <StepGeom_Circle.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d' un cercle de prostep a partir d' un cercle 3d de gp
-//=============================================================================
 GeomToStep_MakeCircle::GeomToStep_MakeCircle(const gp_Circ&          C,
                                              const StepData_Factors& theLocalFactors)
 {
 #include "GeomToStep_MakeCircle_gen.hpp"
 }
-
-//=============================================================================
-// Creation d' un cercle de prostep a partir d' un cercle de
-// Geom
-//=============================================================================
 
 GeomToStep_MakeCircle::GeomToStep_MakeCircle(const occ::handle<Geom_Circle>& Cer,
                                              const StepData_Factors&         theLocalFactors)
@@ -33,11 +25,6 @@ GeomToStep_MakeCircle::GeomToStep_MakeCircle(const occ::handle<Geom_Circle>& Cer
   C = Cer->Circ();
 #include "GeomToStep_MakeCircle_gen.hpp"
 }
-
-//=============================================================================
-// Creation d' un cercle 2d de prostep a partir d' un cercle de
-// Geom2d
-//=============================================================================
 
 GeomToStep_MakeCircle::GeomToStep_MakeCircle(const occ::handle<Geom2d_Circle>& Cer,
                                              const StepData_Factors&           theLocalFactors)
@@ -59,10 +46,6 @@ GeomToStep_MakeCircle::GeomToStep_MakeCircle(const occ::handle<Geom2d_Circle>& C
   theCircle = CStep;
   done      = true;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_Circle>& GeomToStep_MakeCircle::Value() const
 {

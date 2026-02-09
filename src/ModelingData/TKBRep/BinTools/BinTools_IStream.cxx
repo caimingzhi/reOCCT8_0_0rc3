@@ -1,20 +1,7 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BinTools_IStream.hpp>
 #include <Storage_StreamTypeMismatchError.hpp>
-
-//=================================================================================================
 
 BinTools_IStream::BinTools_IStream(Standard_IStream& theStream)
     : myStream(&theStream),
@@ -23,16 +10,12 @@ BinTools_IStream::BinTools_IStream(Standard_IStream& theStream)
 {
 }
 
-//=================================================================================================
-
 BinTools_ObjectType BinTools_IStream::ReadType()
 {
   myLastType = BinTools_ObjectType(myStream->get());
   myPosition++;
   return myLastType;
 }
-
-//=================================================================================================
 
 bool BinTools_IStream::IsReference()
 {
@@ -41,8 +24,6 @@ bool BinTools_IStream::IsReference()
          || myLastType == BinTools_ObjectType_Reference32
          || myLastType == BinTools_ObjectType_Reference64;
 }
-
-//=================================================================================================
 
 uint64_t BinTools_IStream::ReadReference()
 {
@@ -93,18 +74,14 @@ uint64_t BinTools_IStream::ReadReference()
     aMsg << "BinTools_IStream::ReadReference: invalid reference " << (char)myLastType << std::endl;
     throw Standard_Failure(aMsg.str().c_str());
   }
-  return aCurrentPos - aDelta - 1; // add a type-byte
+  return aCurrentPos - aDelta - 1;
 }
-
-//=================================================================================================
 
 void BinTools_IStream::GoTo(const uint64_t& thePosition)
 {
   myStream->seekg(std::streampos(thePosition));
   myPosition = thePosition;
 }
-
-//=================================================================================================
 
 TopAbs_ShapeEnum BinTools_IStream::ShapeType()
 {
@@ -113,8 +90,6 @@ TopAbs_ShapeEnum BinTools_IStream::ShapeType()
     >> 2);
 }
 
-//=================================================================================================
-
 TopAbs_Orientation BinTools_IStream::ShapeOrientation()
 {
   return TopAbs_Orientation(
@@ -122,17 +97,11 @@ TopAbs_Orientation BinTools_IStream::ShapeOrientation()
     & 3);
 }
 
-//=================================================================================================
-
 BinTools_IStream::operator bool() const
 {
   return static_cast<bool>(*myStream);
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_IStream& BinTools_IStream::operator>>(double& theValue)
 {
   if (!myStream->read((char*)&theValue, sizeof(double)))
@@ -144,10 +113,6 @@ BinTools_IStream& BinTools_IStream::operator>>(double& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_IStream& BinTools_IStream::operator>>(int& theValue)
 {
   if (!myStream->read((char*)&theValue, sizeof(int)))
@@ -159,10 +124,6 @@ BinTools_IStream& BinTools_IStream::operator>>(int& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_IStream& BinTools_IStream::operator>>(gp_Pnt& theValue)
 {
   double aValue;
@@ -179,10 +140,6 @@ BinTools_IStream& BinTools_IStream::operator>>(gp_Pnt& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_IStream& BinTools_IStream::operator>>(uint8_t& theValue)
 {
   myStream->read((char*)&theValue, sizeof(uint8_t));
@@ -190,10 +147,6 @@ BinTools_IStream& BinTools_IStream::operator>>(uint8_t& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_IStream& BinTools_IStream::operator>>(float& theValue)
 {
   myStream->read((char*)&theValue, sizeof(float));
@@ -201,10 +154,6 @@ BinTools_IStream& BinTools_IStream::operator>>(float& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_IStream& BinTools_IStream::operator>>(gp_Trsf& theValue)
 {
   double aV1[3], aV2[3], aV3[3], aV[3];
@@ -226,8 +175,6 @@ BinTools_IStream& BinTools_IStream::operator>>(gp_Trsf& theValue)
   return *this;
 }
 
-//=================================================================================================
-
 void BinTools_IStream::ReadBools(bool& theBool1, bool& theBool2, bool& theBool3)
 {
   uint8_t aByte = ReadByte();
@@ -235,8 +182,6 @@ void BinTools_IStream::ReadBools(bool& theBool1, bool& theBool2, bool& theBool3)
   theBool2      = (aByte & 2) == 2;
   theBool3      = (aByte & 4) == 4;
 }
-
-//=================================================================================================
 
 void BinTools_IStream::ReadBools(bool& theBool1,
                                  bool& theBool2,

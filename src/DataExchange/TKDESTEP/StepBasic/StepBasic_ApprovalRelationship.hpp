@@ -11,7 +11,6 @@ class StepBasic_ApprovalRelationship : public Standard_Transient
 {
 
 public:
-  //! Returns a ApprovalRelationship
   Standard_EXPORT StepBasic_ApprovalRelationship();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

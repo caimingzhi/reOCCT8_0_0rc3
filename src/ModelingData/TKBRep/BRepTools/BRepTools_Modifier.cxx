@@ -30,15 +30,11 @@
 
 static void SetShapeFlags(const TopoDS_Shape& theInSh, TopoDS_Shape& theOutSh);
 
-//=================================================================================================
-
 BRepTools_Modifier::BRepTools_Modifier(bool theMutableInput)
     : myDone(false),
       myMutableInput(theMutableInput)
 {
 }
-
-//=================================================================================================
 
 BRepTools_Modifier::BRepTools_Modifier(const TopoDS_Shape& S)
     : myShape(S),
@@ -47,8 +43,6 @@ BRepTools_Modifier::BRepTools_Modifier(const TopoDS_Shape& S)
 {
   Put(S);
 }
-
-//=================================================================================================
 
 BRepTools_Modifier::BRepTools_Modifier(const TopoDS_Shape&                        S,
                                        const occ::handle<BRepTools_Modification>& M)
@@ -60,16 +54,12 @@ BRepTools_Modifier::BRepTools_Modifier(const TopoDS_Shape&                      
   Perform(M);
 }
 
-//=================================================================================================
-
 void BRepTools_Modifier::Init(const TopoDS_Shape& S)
 {
   myShape = S;
   myDone  = false;
   Put(S);
 }
-
-//=================================================================================================
 
 #ifdef DEBUG_Modifier
 static NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> MapE, MapF;
@@ -111,7 +101,7 @@ void BRepTools_Modifier::Perform(const occ::handle<BRepTools_Modification>& M,
 
   if (!aPS.More())
   {
-    // The processing was broken
+
     return;
   }
 
@@ -131,17 +121,7 @@ void BRepTools_Modifier::Perform(const occ::handle<BRepTools_Modification>& M,
     myMap(myShape).Orientation(myShape.Orientation());
   }
 
-  // Update the continuities
-
   BRep_Builder aBB;
-
-  /*
-    bool RecomputeTriangles = false;
-    double MaxDeflection = RealFirst();
-    occ::handle<Poly_Triangulation> Tr;
-    occ::handle<Poly_Polygon3D> Po;
-    TopLoc_Location Loc;
-  */
 
   for (int ii = 1; ii <= aMEF.Extent(); ii++)
   {
@@ -177,16 +157,9 @@ void BRepTools_Modifier::Perform(const occ::handle<BRepTools_Modification>& M,
     }
     theIter.Next();
   }
-  /*
-    if (RecomputeTriangles) {
-      BRepMesh_IncrementalMesh(myMap(myShape),MaxDeflection);
-    }
-  */
 
   myDone = true;
 }
-
-//=================================================================================================
 
 void BRepTools_Modifier::Put(const TopoDS_Shape& S)
 {
@@ -200,8 +173,6 @@ void BRepTools_Modifier::Put(const TopoDS_Shape& S)
     }
   }
 }
-
-//=================================================================================================
 
 bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
                                  const occ::handle<BRepTools_Modification>& M,
@@ -223,10 +194,7 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
   TopAbs_Orientation ResOr = TopAbs_FORWARD;
   BRep_Builder       B;
   double             tol;
-  bool               No3DCurve = false; // en fait, si on n`a pas de
-  // modif geometry 3d , it is necessary to test the existence of a curve 3d.
-
-  // new geometry ?
+  bool               No3DCurve = false;
 
   switch (ts)
   {
@@ -244,18 +212,17 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
         result.Location(S.Location(), false);
         if (aNSinfo.myRevFace)
           ResOr = TopAbs_REVERSED;
-        // set specifics flags of a Face
+
         B.NaturalRestriction(TopoDS::Face(result), BRep_Tool::NaturalRestriction(TopoDS::Face(S)));
       }
 
-      // update triangulation on the copied face
       occ::handle<Poly_Triangulation> aTriangulation;
       if (M->NewTriangulation(TopoDS::Face(S), aTriangulation))
       {
-        if (rebuild) // the copied face already exists => update it
+        if (rebuild)
           B.UpdateFace(TopoDS::Face(result), aTriangulation);
         else
-        { // create new face with bare triangulation
+        {
           B.MakeFace(TopoDS::Face(result), aTriangulation);
           result.Location(S.Location(), false);
         }
@@ -274,7 +241,7 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
         {
           B.MakeEdge(TopoDS::Edge(result));
           B.Degenerated(TopoDS::Edge(result), BRep_Tool::Degenerated(TopoDS::Edge(S)));
-          B.UpdateEdge(TopoDS::Edge(result), aNCinfo.myToler); // OCC217
+          B.UpdateEdge(TopoDS::Edge(result), aNCinfo.myToler);
           No3DCurve = true;
         }
         else
@@ -286,21 +253,18 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
           No3DCurve = false;
         }
         result.Location(S.Location(), false);
-        //	result.Orientation(S.Orientation());
 
-        // set specifics flags of an Edge
         B.SameParameter(TopoDS::Edge(result), BRep_Tool::SameParameter(TopoDS::Edge(S)));
         B.SameRange(TopoDS::Edge(result), BRep_Tool::SameRange(TopoDS::Edge(S)));
       }
 
-      // update polygonal structure on the edge
       occ::handle<Poly_Polygon3D> aPolygon;
       if (M->NewPolygon(TopoDS::Edge(S), aPolygon))
       {
-        if (rebuild) // the copied edge already exists => update it
+        if (rebuild)
           B.UpdateEdge(TopoDS::Edge(result), aPolygon, S.Location());
         else
-        { // create new edge with bare polygon
+        {
           B.MakeEdge(TopoDS::Edge(result), aPolygon);
           result.Location(S.Location(), false);
         }
@@ -310,8 +274,6 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
     break;
     default:;
   }
-
-  // rebuild sub-shapes and test new sub-shape ?
 
   bool newgeom = rebuild;
   theNewGeom   = rebuild;
@@ -326,10 +288,10 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
     }
 
     Message_ProgressScope aPS(theProgress, "Converting SubShapes", aShapeCount);
-    //
+
     for (it.Initialize(S, false); it.More() && aPS.More(); it.Next())
     {
-      // always call Rebuild
+
       bool isSubNewGeom = false;
       bool subrebuilt   = Rebuild(it.Value(), M, isSubNewGeom, aPS.Next());
       rebuild           = subrebuilt || rebuild;
@@ -337,21 +299,18 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
     }
     if (!aPS.More())
     {
-      // The processing was broken
+
       return false;
     }
   }
   if (theNewGeom)
     myHasNewGeom.Add(S);
 
-  // make an empty copy
   if (rebuild && !newgeom)
   {
     result = S.EmptyCopied();
     result.Orientation(TopAbs_FORWARD);
   }
-
-  // copy the sub-elements
 
   if (rebuild)
   {
@@ -368,8 +327,8 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
 
     if (ts == TopAbs_FACE)
     {
-      // pcurves
-      occ::handle<Geom2d_Curve> curve2d; //,curve2d1;
+
+      occ::handle<Geom2d_Curve> curve2d;
       TopoDS_Face               face = TopoDS::Face(S);
       TopAbs_Orientation        fcor = face.Orientation();
       if (fcor != TopAbs_REVERSED)
@@ -391,15 +350,7 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
                              curve2d,
                              tol))
         {
-          // rem dub 16/09/97 : Make constant topology or not make at all.
-          // Do not make if CopySurface = 1
-          // Attention, TRUE sewing edges (ReallyClosed)
-          // stay even if  CopySurface is true.
 
-          // check that edge contains two pcurves on this surface:
-          // either it is true seam on the current face, or belongs to two faces
-          // built on that same surface (see OCC21772)
-          // Note: this check could be made separate method in BRepTools
           bool isClosed = false;
           if (BRep_Tool::IsClosed(edge, face))
           {
@@ -411,7 +362,7 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
               if (resface.IsNull())
                 resface = face;
               occ::handle<Geom_Surface> aSurf = BRep_Tool::Surface(TopoDS::Face(resface), aLoc);
-              // check other faces sharing the same surface
+
               TopExp_Explorer aExpF(myShape, TopAbs_FACE);
               for (; aExpF.More() && !isClosed; aExpF.Next())
               {
@@ -471,7 +422,7 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
           occ::handle<Geom_Curve> C3D =
             BRep_Tool::Curve(TopoDS::Edge(myMap(ex.Current())), theLoc, theF, theL);
           if (C3D.IsNull())
-          { // Update vertices
+          {
             double          param;
             TopExp_Explorer ex2(edge, TopAbs_VERTEX);
             while (ex2.More())
@@ -486,33 +437,28 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
               TopAbs_Orientation vtxrelat = vertex.Orientation();
               if (edge.Orientation() == TopAbs_REVERSED)
               {
-                // Update considere l'edge FORWARD, et le vertex en relatif
+
                 vtxrelat = TopAbs::Reverse(vtxrelat);
               }
-              // if (myMap(edge).Orientation() == TopAbs_REVERSED) {
-              //   vtxrelat= TopAbs::Reverse(vtxrelat);
-              // }
 
               TopoDS_Vertex aLocalVertex = TopoDS::Vertex(myMap(vertex));
               aLocalVertex.Orientation(vtxrelat);
-              // B.UpdateVertex(TopoDS::Vertex
-              //(myMap(vertex).Oriented(vtxrelat)),
+
               B.UpdateVertex(aLocalVertex, param, TopoDS::Edge(myMap(edge)), tol);
               ex2.Next();
             }
           }
         }
 
-        // Copy polygon on triangulation
         occ::handle<Poly_PolygonOnTriangulation> aPolyOnTria_1, aPolyOnTria_2;
         bool aNewPonT = M->NewPolygonOnTriangulation(edge, face, aPolyOnTria_1);
         if (BRepTools::IsReallyClosed(edge, face))
         {
-          // Obtain triangulation on reversed edge
+
           TopoDS_Edge anEdgeRev = edge;
           anEdgeRev.Reverse();
           aNewPonT = M->NewPolygonOnTriangulation(anEdgeRev, face, aPolyOnTria_2) || aNewPonT;
-          // It there is only one polygon on triangulation, store it to aPolyOnTria_1
+
           if (aPolyOnTria_1.IsNull() && !aPolyOnTria_2.IsNull())
           {
             aPolyOnTria_1 = aPolyOnTria_2;
@@ -538,10 +484,9 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
       }
     }
 
-    //    else if (ts == TopAbs_EDGE) {
     else if (ts == TopAbs_EDGE && !No3DCurve)
     {
-      // Vertices
+
       double             param;
       const TopoDS_Edge& edge = TopoDS::Edge(S);
       TopAbs_Orientation edor = edge.Orientation();
@@ -561,23 +506,18 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
         TopAbs_Orientation vtxrelat = vertex.Orientation();
         if (edor == TopAbs_REVERSED)
         {
-          // Update considere l'edge FORWARD, et le vertex en relatif
+
           vtxrelat = TopAbs::Reverse(vtxrelat);
         }
 
-        // if (result.Orientation() == TopAbs_REVERSED) {
-        //   vtxrelat= TopAbs::Reverse(vtxrelat);
-        // }
         TopoDS_Vertex aLocalVertex = TopoDS::Vertex(myMap(vertex));
         aLocalVertex.Orientation(vtxrelat);
-        // B.UpdateVertex(TopoDS::Vertex(myMap(vertex).Oriented(vtxrelat)),
+
         if (myMutableInput || !aLocalVertex.IsSame(vertex))
           B.UpdateVertex(aLocalVertex, param, TopoDS::Edge(result), tol);
         ex.Next();
       }
     }
-
-    // update flags
 
     result.Orientable(S.Orientable());
     result.Closed(S.Closed());
@@ -586,7 +526,6 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
   else
     result = S;
 
-  // Set flag of the shape.
   result.Orientation(ResOr);
 
   SetShapeFlags(S, result);
@@ -605,7 +544,7 @@ void BRepTools_Modifier::CreateNewVertices(
   gp_Pnt       aPnt;
   for (int i = 1; i <= theMVE.Extent(); i++)
   {
-    // fill MyMap only with vertices with NewPoint == true
+
     const TopoDS_Vertex& aV     = TopoDS::Vertex(theMVE.FindKey(i));
     bool                 IsNewP = M->NewPoint(aV, aPnt, aToler);
     if (IsNewP)
@@ -672,7 +611,7 @@ void BRepTools_Modifier::FillNewSurfaceInfo(const occ::handle<BRepTools_Modifica
     }
     else
     {
-      // check if subshapes will be modified
+
       bool            notRebuilded = true;
       TopExp_Explorer exE(aF, TopAbs_EDGE);
       while (exE.More() && notRebuilded)
@@ -698,7 +637,7 @@ void BRepTools_Modifier::FillNewSurfaceInfo(const occ::handle<BRepTools_Modifica
       }
       if (notRebuilded)
       {
-        // subshapes is not going to be modified
+
         myNonUpdFace.Add(aF);
       }
     }
@@ -715,12 +654,6 @@ void BRepTools_Modifier::CreateOtherVertices(
   const occ::handle<BRepTools_Modification>&                 M)
 {
   double aToler;
-  // The following logic in some ways repeats the logic from the Rebuild() method.
-  // If the face with its subshapes is not going to be modified
-  //(i.e. NewSurface() for this face and NewCurve(), NewPoint() for its edges/vertices returns
-  // false) then the calling of NewCurve2d() for this face with its edges is not performed.
-  // Therefore, the updating of vertices will not present in such cases and
-  // the EmptyCopied() operation for vertices from this face is not needed.
 
   for (int i = 1; i <= theMVE.Extent(); i++)
   {
@@ -747,8 +680,7 @@ void BRepTools_Modifier::CreateOtherVertices(
             if (!myNonUpdFace.Contains(aF))
             {
               occ::handle<Geom2d_Curve> aCurve2d;
-              // some NewCurve2d()s may use NewE arg internally, so the
-              // null TShape as an arg may lead to the exceptions
+
               TopoDS_Edge aDummyE = TopoDS::Edge(anE.EmptyCopied());
               if (M->NewCurve2d(anE, aF, aDummyE, TopoDS_Face(), aCurve2d, aToler))
               {

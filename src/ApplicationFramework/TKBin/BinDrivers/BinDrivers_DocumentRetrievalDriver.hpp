@@ -14,7 +14,6 @@ class BinDrivers_DocumentRetrievalDriver : public BinLDrivers_DocumentRetrievalD
 {
 
 public:
-  //! Constructor
   Standard_EXPORT BinDrivers_DocumentRetrievalDriver();
 
   Standard_EXPORT occ::handle<BinMDF_ADriverTable> AttributeDrivers(
@@ -29,10 +28,8 @@ public:
   Standard_EXPORT void CheckShapeSection(const Storage_Position& thePos,
                                          Standard_IStream&       theIS) override;
 
-  //! Clears the NamedShape driver
   Standard_EXPORT void Clear() override;
 
-  //! Enables reading in the quick part access mode.
   Standard_EXPORT void EnableQuickPartReading(
     const occ::handle<Message_Messenger>& theMessageDriver,
     bool                                  theValue) override;

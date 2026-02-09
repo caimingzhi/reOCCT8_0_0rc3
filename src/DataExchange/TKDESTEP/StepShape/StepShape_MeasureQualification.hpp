@@ -11,7 +11,6 @@
 class TCollection_HAsciiString;
 class StepShape_ValueQualifier;
 
-//! Added for Dimensional Tolerances
 class StepShape_MeasureQualification : public Standard_Transient
 {
 

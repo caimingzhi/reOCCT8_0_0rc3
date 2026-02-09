@@ -10,8 +10,6 @@
 class Expr_GeneralExpression;
 class Expr_NamedUnknown;
 
-//! Describes an iterator on NamedUnknowns contained
-//! in any GeneralExpression.
 class Expr_UnknownIterator
 {
 public:

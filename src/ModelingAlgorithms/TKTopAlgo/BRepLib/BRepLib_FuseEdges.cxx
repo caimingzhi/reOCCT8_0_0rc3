@@ -79,8 +79,6 @@ static void BCSmoothing(occ::handle<Geom_BSplineCurve>& theC,
       }
     }
 
-    // Prepare knots for inserting;
-
     int aNbAdd = aKnotIndex.Length();
 
     if (aNbAdd == 0)
@@ -130,7 +128,7 @@ static void MakeClosedCurve(occ::handle<Geom_Curve>& C, const gp_Pnt& PF, double
 {
   occ::handle<Geom_BSplineCurve> aBC   = occ::down_cast<Geom_BSplineCurve>(C);
   GeomAbs_Shape                  aCont = aBC->Continuity();
-  // Find new origin
+
   aBC->SetPeriodic();
   int    fk = aBC->FirstUKnotIndex();
   int    lk = aBC->LastUKnotIndex();
@@ -158,7 +156,7 @@ static void MakeClosedCurve(occ::handle<Geom_Curve>& C, const gp_Pnt& PF, double
   }
   if (porig > l)
   {
-    // try to project
+
     GeomAdaptor_Curve   aGAC(aBC);
     Extrema_LocateExtPC aPrj(PF, aGAC, pmin, Precision::PConfusion());
     if (aPrj.IsDone())
@@ -184,12 +182,9 @@ static void MakeClosedCurve(occ::handle<Geom_Curve>& C, const gp_Pnt& PF, double
   l = C->LastParameter();
 }
 
-//=================================================================================================
+BRepLib_FuseEdges::BRepLib_FuseEdges(const TopoDS_Shape& theShape,
 
-BRepLib_FuseEdges::BRepLib_FuseEdges(
-  const TopoDS_Shape& theShape,
-  //                                                   const bool PerformNow)
-  const bool)
+                                     const bool)
     : myShape(theShape),
       myShapeDone(false),
       myEdgesDone(false),
@@ -197,16 +192,10 @@ BRepLib_FuseEdges::BRepLib_FuseEdges(
       myNbConnexEdge(0),
       myConcatBSpl(false)
 {
-  //  if (theShape.ShapeType() != TopAbs_SHELL && theShape.ShapeType() != TopAbs_SOLID)
-  //    throw Standard_ConstructionError("FuseEdges");
+
   Standard_NullObject_Raise_if(theShape.IsNull(), "FuseEdges");
   myMapFaces.Clear();
 }
-
-//=======================================================================
-// function : AvoidEdges
-// purpose  : set edges to avoid being fused
-//=======================================================================
 
 void BRepLib_FuseEdges::AvoidEdges(
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMapEdg)
@@ -214,18 +203,10 @@ void BRepLib_FuseEdges::AvoidEdges(
   myAvoidEdg = theMapEdg;
 }
 
-//=================================================================================================
-
 void BRepLib_FuseEdges::SetConcatBSpl(const bool theConcatBSpl)
 {
   myConcatBSpl = theConcatBSpl;
 }
-
-//=======================================================================
-// function : Edges
-// purpose  : returns  all the list of edges to be fused each list of the
-//           map represent a set of connex edges that can be fused.
-//=======================================================================
 
 void BRepLib_FuseEdges::Edges(
   NCollection_DataMap<int, NCollection_List<TopoDS_Shape>>& theMapLstEdg)
@@ -238,11 +219,6 @@ void BRepLib_FuseEdges::Edges(
 
   theMapLstEdg = myMapLstEdg;
 }
-
-//=======================================================================
-// function : ResultEdges
-// purpose  : returns  all the fused edges
-//=======================================================================
 
 void BRepLib_FuseEdges::ResultEdges(NCollection_DataMap<int, TopoDS_Shape>& theMapEdg)
 {
@@ -259,11 +235,6 @@ void BRepLib_FuseEdges::ResultEdges(NCollection_DataMap<int, TopoDS_Shape>& theM
 
   theMapEdg = myMapEdg;
 }
-
-//=======================================================================
-// function : Faces
-// purpose  : returns  all the faces that have been modified after perform
-//=======================================================================
 
 void BRepLib_FuseEdges::Faces(
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& theMapFac)
@@ -286,8 +257,6 @@ void BRepLib_FuseEdges::Faces(
 
   theMapFac = myMapFaces;
 }
-
-//=================================================================================================
 
 int BRepLib_FuseEdges::NbVertices()
 {
@@ -315,8 +284,6 @@ int BRepLib_FuseEdges::NbVertices()
   return nbvertices;
 }
 
-//=================================================================================================
-
 TopoDS_Shape& BRepLib_FuseEdges::Shape()
 {
   Standard_NullObject_Raise_if(myShape.IsNull(), "FuseEdges : No Shape");
@@ -339,18 +306,9 @@ TopoDS_Shape& BRepLib_FuseEdges::Shape()
   return myShape;
 }
 
-//=======================================================================
-// function : BuildListEdges
-// purpose  : Build the all the lists of edges that are to be fused
-//=======================================================================
-
 void BRepLib_FuseEdges::BuildListEdges()
 {
-  //--------------------------------------------------------
-  // Step One : Build the map ancestors
-  //--------------------------------------------------------
 
-  // Clear the maps
   myMapLstEdg.Clear();
   myMapVerLstEdg.Clear();
   myMapEdgLstFac.Clear();
@@ -361,18 +319,16 @@ void BRepLib_FuseEdges::BuildListEdges()
   int                                                    iEdg;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> mapUniqEdg;
 
-  // for each edge of myMapEdgLstFac
   for (iEdg = 1; iEdg <= myMapEdgLstFac.Extent(); iEdg++)
   {
     const TopoDS_Shape&            edgecur = myMapEdgLstFac.FindKey(iEdg);
     NCollection_List<TopoDS_Shape> LstEdg;
 
-    // if edge not already treated
     if (!mapUniqEdg.Contains(edgecur)
         && (edgecur.Orientation() == TopAbs_FORWARD || edgecur.Orientation() == TopAbs_REVERSED))
     {
       if (myAvoidEdg.Contains(edgecur))
-        continue; // edge is not allowed to be fused
+        continue;
       BuildListConnexEdge(edgecur, mapUniqEdg, LstEdg);
       if (LstEdg.Extent() > 1)
       {
@@ -386,14 +342,9 @@ void BRepLib_FuseEdges::BuildListEdges()
   myResultEdgesDone = false;
 }
 
-//=======================================================================
-// function : BuildListResultEdges
-// purpose  : Build the result fused edges
-//=======================================================================
-
 void BRepLib_FuseEdges::BuildListResultEdges()
 {
-  // if we have edges to fuse
+
   if (myMapLstEdg.Extent() > 0)
   {
     NCollection_DataMap<int, NCollection_List<TopoDS_Shape>>::Iterator itLstEdg;
@@ -412,7 +363,6 @@ void BRepLib_FuseEdges::BuildListResultEdges()
 
       TopoDS_Edge OldEdge = TopoDS::Edge(LmapEdg.First());
 
-      // the first edge of the list will be replaced by the result fusion edge
       if (OldEdge.Orientation() == TopAbs_REVERSED)
       {
         VL = TopExp::FirstVertex(TopoDS::Edge(LmapEdg.First()), true);
@@ -429,8 +379,7 @@ void BRepLib_FuseEdges::BuildListResultEdges()
       {
         C = occ::down_cast<Geom_Curve>(C->Transformed(loc.Transformation()));
       }
-      // if the curve is trimmed we get the basis curve to fit the new vertices
-      // otherwise the makeedge will fail.
+
       if (C->DynamicType() == STANDARD_TYPE(Geom_TrimmedCurve))
       {
         C = occ::down_cast<Geom_TrimmedCurve>(C)->BasisCurve();
@@ -438,7 +387,7 @@ void BRepLib_FuseEdges::BuildListResultEdges()
 
       if (myConcatBSpl)
       {
-        // Prepare common BSpline curve
+
         if (C->DynamicType() == STANDARD_TYPE(Geom_BSplineCurve))
         {
           NCollection_List<TopoDS_Shape>::Iterator anEdgIter(LmapEdg);
@@ -452,7 +401,7 @@ void BRepLib_FuseEdges::BuildListResultEdges()
             aTC                        = new Geom_TrimmedCurve(aC, f, l);
             if (!Concat.Add(aTC, Precision::Confusion()))
             {
-              // cannot merge curves
+
               throw Standard_ConstructionError("FuseEdges : Concatenation failed");
             }
           }
@@ -466,7 +415,7 @@ void BRepLib_FuseEdges::BuildListResultEdges()
 
       if (VF.IsSame(VL) && isBSpline)
       {
-        // closed edge
+
         f          = C->FirstParameter();
         l          = C->LastParameter();
         gp_Pnt aPf = C->Value(f);
@@ -480,7 +429,7 @@ void BRepLib_FuseEdges::BuildListResultEdges()
         {
           MakeClosedCurve(C, PF, f, l);
         }
-        //
+
         ME.Init(C, VF, VL, f, l);
         if (!ME.IsDone())
         {
@@ -491,13 +440,9 @@ void BRepLib_FuseEdges::BuildListResultEdges()
       {
         ME.Init(C, VF, VL);
       }
-      //      BRepLib_MakeEdge ME(C,VF,VL);
 
       if (!ME.IsDone())
       {
-        // the MakeEdge has fails, one reason could be that the new Vertices are outside
-        // the curve which is not infinite and limited to old vertices
-        // we try to use ExtendCurveToPoint, then rebuild the NewEdge
 
         occ::handle<Geom_BoundedCurve> ExtC = occ::down_cast<Geom_BoundedCurve>(C->Copy());
         if (!ExtC.IsNull())
@@ -525,8 +470,6 @@ void BRepLib_FuseEdges::BuildListResultEdges()
   }
 }
 
-//=================================================================================================
-
 void BRepLib_FuseEdges::Perform()
 {
   if (!myResultEdgesDone)
@@ -534,7 +477,6 @@ void BRepLib_FuseEdges::Perform()
     BuildListResultEdges();
   }
 
-  // if we have fused edges
   if (myMapEdg.Extent() > 0)
   {
     NCollection_DataMap<int, NCollection_List<TopoDS_Shape>>::Iterator itLstEdg;
@@ -557,7 +499,6 @@ void BRepLib_FuseEdges::Perform()
 
       itEdg.Initialize(LmapEdg);
 
-      // the other edges of the list will be removed
       while (itEdg.More())
       {
         if (!OldEdge.IsSame(TopoDS::Edge(itEdg.Value())))
@@ -568,10 +509,8 @@ void BRepLib_FuseEdges::Perform()
       }
     }
 
-    // perform the effective substitution
     Bsub.Build(myShape);
 
-    // before copying the resulting shape, map the modified faces into myMapFaces
     TopExp_Explorer exp(myShape, TopAbs_FACE);
 
     for (; exp.More(); exp.Next())
@@ -592,15 +531,6 @@ void BRepLib_FuseEdges::Perform()
   myShapeDone = true;
 }
 
-//=======================================================================
-// function : BuildListConnexEdge
-// purpose  : giving one edge, build the list of connex edges which have
-// vertices that have only two connex edges. All the edges that are added
-// to the list must be added also to the mapUniq, in order for the caller
-// to not treat again these edges.
-// This list is always oriented in the "Forward" direction.
-//=======================================================================
-
 void BRepLib_FuseEdges::BuildListConnexEdge(
   const TopoDS_Shape&                                     theEdge,
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theMapUniq,
@@ -617,7 +547,6 @@ void BRepLib_FuseEdges::BuildListConnexEdge(
   theMapUniq.Add(edgecur);
   TopAbs_Orientation ori2;
 
-  // we first build the list of edges connex to edgecur by looking from the last Vertex VL
   while (NextConnexEdge(VL, edgecur, edgeconnex))
   {
     if (theMapUniq.Contains(edgeconnex))
@@ -626,8 +555,7 @@ void BRepLib_FuseEdges::BuildListConnexEdge(
     }
     theLstEdg.Append(edgeconnex);
     edgecur = edgeconnex;
-    // here take care about internal or external edges. It is non-sense to build
-    // the connex list with such edges.
+
     ori2 = edgecur.Orientation();
     if (ori2 == TopAbs_EXTERNAL || ori2 == TopAbs_INTERNAL)
     {
@@ -640,7 +568,6 @@ void BRepLib_FuseEdges::BuildListConnexEdge(
   edgecur = theEdge;
   VF      = TopExp::FirstVertex(TopoDS::Edge(theEdge), true);
 
-  // then we build the list of edges connex to edgecur by looking from the first Vertex VF
   while (NextConnexEdge(VF, edgecur, edgeconnex))
   {
     if (theMapUniq.Contains(edgeconnex))
@@ -649,8 +576,7 @@ void BRepLib_FuseEdges::BuildListConnexEdge(
     }
     theLstEdg.Prepend(edgeconnex);
     edgecur = edgeconnex;
-    // here take care about internal or external edges. It is non-sense to build
-    // the connex list with such edges.
+
     ori2 = edgecur.Orientation();
     if (ori2 == TopAbs_EXTERNAL || ori2 == TopAbs_INTERNAL)
     {
@@ -661,15 +587,6 @@ void BRepLib_FuseEdges::BuildListConnexEdge(
   }
 }
 
-//=======================================================================
-// function : NextConnexEdge
-// purpose  : Look for an edge connex to theEdge at theVertex.
-// the connex edge must satisfies the following criteria :
-//   * theVertex must have exactly 2 connex edges.
-//   * the 2 connex edges must have exactly the 2 same connex faces
-//   * the 2 connex edges must lie on the same support.
-//=======================================================================
-
 bool BRepLib_FuseEdges::NextConnexEdge(const TopoDS_Vertex& theVertex,
                                        const TopoDS_Shape&  theEdge,
                                        TopoDS_Shape&        theEdgeConnex) const
@@ -679,7 +596,6 @@ bool BRepLib_FuseEdges::NextConnexEdge(const TopoDS_Vertex& theVertex,
   bool                                     HasConnex = true;
   NCollection_List<TopoDS_Shape>::Iterator itEdg, itFac1, itFac2;
 
-  // 1st condition
   if (LmapEdg.Extent() == 2)
   {
     itEdg.Initialize(LmapEdg);
@@ -691,9 +607,8 @@ bool BRepLib_FuseEdges::NextConnexEdge(const TopoDS_Vertex& theVertex,
     }
 
     if (myAvoidEdg.Contains(theEdgeConnex))
-      HasConnex = false; // edge is not allowed to be fused
+      HasConnex = false;
 
-    // 2nd condition
     if (HasConnex)
     {
       const NCollection_List<TopoDS_Shape>& LmapFac1 = myMapEdgLstFac.FindFromKey(theEdge);
@@ -703,7 +618,6 @@ bool BRepLib_FuseEdges::NextConnexEdge(const TopoDS_Vertex& theVertex,
       {
         itFac1.Initialize(LmapFac1);
 
-        // for each face in LmapFac1 we look in LmapFac2 if it exists
         while (itFac1.More() && HasConnex)
         {
           const TopoDS_Shape& face1 = itFac1.Value();
@@ -720,7 +634,6 @@ bool BRepLib_FuseEdges::NextConnexEdge(const TopoDS_Vertex& theVertex,
           itFac1.Next();
         }
 
-        // 3rd condition : same support
         if (HasConnex)
         {
           HasConnex = SameSupport(TopoDS::Edge(theEdge), TopoDS::Edge(theEdgeConnex));
@@ -736,11 +649,6 @@ bool BRepLib_FuseEdges::NextConnexEdge(const TopoDS_Vertex& theVertex,
   return HasConnex;
 }
 
-//=======================================================================
-// function : SameSupport
-// purpose  : Edges SameSupport ou pas
-//=======================================================================
-
 bool BRepLib_FuseEdges::SameSupport(const TopoDS_Edge& E1, const TopoDS_Edge& E2) const
 {
 
@@ -755,8 +663,7 @@ bool BRepLib_FuseEdges::SameSupport(const TopoDS_Edge& E1, const TopoDS_Edge& E2
   occ::handle<Standard_Type> typC1, typC2;
 
   C1 = BRep_Tool::Curve(E1, loc, f1, l1);
-  // modified by NIZNHY-PKV Mon Nov 15 16:24:10 1999
-  // degenerated edges has no 3D curve
+
   if (C1.IsNull())
     return false;
 
@@ -766,8 +673,7 @@ bool BRepLib_FuseEdges::SameSupport(const TopoDS_Edge& E1, const TopoDS_Edge& E2
     C1                             = occ::down_cast<Geom_Curve>(GG1);
   }
   C2 = BRep_Tool::Curve(E2, loc, f2, l2);
-  // modified by NIZNHY-PKV Mon Nov 15 16:24:38 1999
-  // degenerated edges has no 3D curve
+
   if (C2.IsNull())
     return false;
 
@@ -804,7 +710,6 @@ bool BRepLib_FuseEdges::SameSupport(const TopoDS_Edge& E1, const TopoDS_Edge& E2
     return false;
   }
 
-  // On a presomption de confusion
   constexpr double tollin = Precision::Confusion();
   constexpr double tolang = Precision::Angular();
   if (typC1 == STANDARD_TYPE(Geom_Line))
@@ -816,8 +721,7 @@ bool BRepLib_FuseEdges::SameSupport(const TopoDS_Edge& E1, const TopoDS_Edge& E2
 
     if (dir1.IsParallel(dir2, tolang))
     {
-      // on verifie que l'on n'a pas de cas degenere. Par exemple E1 et E2 connexes
-      // mais bouclant l'un sur l'autre (cas tres rare)
+
       gp_Pnt pf1 = BRep_Tool::Pnt(TopExp::FirstVertex(E1, true));
       gp_Pnt pl1 = BRep_Tool::Pnt(TopExp::LastVertex(E1, true));
       gp_Pnt pf2 = BRep_Tool::Pnt(TopExp::FirstVertex(E2, true));
@@ -849,7 +753,7 @@ bool BRepLib_FuseEdges::SameSupport(const TopoDS_Edge& E1, const TopoDS_Edge& E2
 
     if (myConcatBSpl)
     {
-      // Check G1 continuity
+
       gp_Pnt aPf1, aPl1, aPf2, aPl2;
       gp_Vec aDf1, aDl1, aDf2, aDl2;
 
@@ -868,9 +772,7 @@ bool BRepLib_FuseEdges::SameSupport(const TopoDS_Edge& E1, const TopoDS_Edge& E2
       if (aPl1.Distance(aPl2) <= tollin && aDl1.IsParallel(aDl2, tolang))
         return true;
     }
-    // we must ensure that before fuse two bsplines, the end of one curve does not
-    // corresponds to the beginning of the second.
-    // we could add a special treatment for periodic bspline. This is not done for the moment.
+
     if (std::abs(f2 - l1) > tollin && std::abs(f1 - l2) > tollin)
     {
       return false;
@@ -958,8 +860,6 @@ bool BRepLib_FuseEdges::SameSupport(const TopoDS_Edge& E1, const TopoDS_Edge& E2
   else if (typC1 == STANDARD_TYPE(Geom_BezierCurve))
   {
 
-    // we must ensure that before fuse two bezier, the end of one curve does not
-    // corresponds to the beginning of the second.
     if (std::abs(f2 - l1) > tollin && std::abs(f1 - l2) > tollin)
     {
       return false;
@@ -1020,16 +920,11 @@ bool BRepLib_FuseEdges::SameSupport(const TopoDS_Edge& E1, const TopoDS_Edge& E2
   return false;
 }
 
-//=================================================================================================
-
 bool BRepLib_FuseEdges::UpdatePCurve(const TopoDS_Edge&                    theOldEdge,
                                      TopoDS_Edge&                          theNewEdge,
                                      const NCollection_List<TopoDS_Shape>& theLstEdg) const
 {
 
-  // get the pcurve of edge to substitute (theOldEdge)
-  // using CurveOnSurface with Index syntax, so we can update the pcurve
-  // on all the faces
   BRep_Builder              B;
   occ::handle<Geom2d_Curve> Curv2d;
   occ::handle<Geom_Surface> Surf;
@@ -1037,7 +932,6 @@ bool BRepLib_FuseEdges::UpdatePCurve(const TopoDS_Edge&                    theOl
   double                    ef, el, cf, cl;
   int                       iedg = 1;
 
-  // take care that we want only Pcurve that maps on the surface where the 3D edges lies.
   const NCollection_List<TopoDS_Shape>& LmapFac = myMapEdgLstFac.FindFromKey(theOldEdge);
 
   BRep_Tool::CurveOnSurface(theOldEdge, Curv2d, Surf, loc, cf, cl, iedg);
@@ -1047,8 +941,6 @@ bool BRepLib_FuseEdges::UpdatePCurve(const TopoDS_Edge&                    theOl
   while (!Curv2d.IsNull())
   {
 
-    // we look for a face that contains the same surface as the one that cames
-    // from CurveOnSurface
     bool                                     SameSurf = false;
     NCollection_List<TopoDS_Shape>::Iterator itFac;
 
@@ -1068,12 +960,8 @@ bool BRepLib_FuseEdges::UpdatePCurve(const TopoDS_Edge&                    theOl
 
       BRep_Tool::Range(theNewEdge, ef, el);
 
-      // modified by NIZNHY-PKV Mon Nov 15 14:59:48 1999 _from
       TopoDS_Edge aFEdge = theOldEdge;
       aFEdge.Orientation(TopAbs_FORWARD);
-
-      // take care if the edge is on the closing curve of a closed surface. In that case
-      // we get the second pcurve by reversing the edge and calling again CurveOnSurface method
 
       BRep_Tool::CurveOnSurface(aFEdge, Curv2d, Surf, loc, cf, cl, iedg);
       if (BRep_Tool::IsClosed(theOldEdge, Surf, loc))
@@ -1091,7 +979,7 @@ bool BRepLib_FuseEdges::UpdatePCurve(const TopoDS_Edge&                    theOl
       }
       else
       {
-        // update the new edge
+
         if (Curv2d->DynamicType() == STANDARD_TYPE(Geom2d_TrimmedCurve))
           Curv2d = occ::down_cast<Geom2d_TrimmedCurve>(Curv2d)->BasisCurve();
         double f, l;
@@ -1114,12 +1002,11 @@ bool BRepLib_FuseEdges::UpdatePCurve(const TopoDS_Edge&                    theOl
             if (BC.IsNull())
               BC = new Geom2d_TrimmedCurve(C, first, last);
             if (!Concat.Add(BC, Precision::PConfusion()))
-              // cannot merge pcurves
+
               return false;
           }
           Curv2d = Concat.BSplineCurve();
 
-          // check that new curve 2d is same range
           double first = Curv2d->FirstParameter();
           double last  = Curv2d->LastParameter();
           if (std::abs(first - ef) > Precision::PConfusion()
@@ -1137,10 +1024,6 @@ bool BRepLib_FuseEdges::UpdatePCurve(const TopoDS_Edge&                    theOl
         B.UpdateEdge(theNewEdge, Curv2d, Surf, loc, BRep_Tool::Tolerance(theNewEdge));
       }
 
-      // the old pcurve range is cf,cl. The new 3d edge range is ef,el. if we want
-      // the pcurve to be samerange we must adapt the parameter of the edge. In general
-      // cases cf=ef and cl=el expect for periodic curve if the new edge is going over
-      // the value 0.
       if (!pcurveRebuilt)
       {
         if (theOldEdge.Orientation() == TopAbs_REVERSED)
@@ -1154,14 +1037,13 @@ bool BRepLib_FuseEdges::UpdatePCurve(const TopoDS_Edge&                    theOl
       }
     }
 
-    // get next pcurve
     iedg++;
     BRep_Tool::CurveOnSurface(theOldEdge, Curv2d, Surf, loc, cf, cl, iedg);
   }
 
   if (pcurveRebuilt)
   {
-    // force same parameter
+
     B.SameParameter(theNewEdge, false);
     BRepLib::SameParameter(theNewEdge, BRep_Tool::Tolerance(theNewEdge));
   }

@@ -1,6 +1,5 @@
 #pragma once
 
-//! Error status.
 enum HatchGen_ErrorStatus
 {
   HatchGen_NoProblem,

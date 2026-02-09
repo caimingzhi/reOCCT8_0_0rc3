@@ -11,7 +11,6 @@ static int _NbVariables()
   return 2;
 }
 
-// 3d _Value
 static bool _Value(const Adaptor3d_Curve& C1,
                    const Adaptor3d_Curve& C2,
                    const math_Vector&     X,
@@ -30,7 +29,6 @@ static bool _Value(const Adaptor3d_Curve& C1,
   return true;
 }
 
-// 2d _Value
 static bool _Value(const Adaptor2d_Curve2d& C1,
                    const Adaptor2d_Curve2d& C2,
                    const math_Vector&       X,
@@ -49,9 +47,6 @@ static bool _Value(const Adaptor2d_Curve2d& C1,
   return true;
 }
 
-//! F = (x2(v) - x1(u))^2 + (y2(v) - y1(u))^2 + (z2(v) - z1(u))^2
-
-// 3d _Gradient
 static bool _Gradient(const Adaptor3d_Curve& C1,
                       const Adaptor3d_Curve& C2,
                       const math_Vector&     X,
@@ -77,7 +72,6 @@ static bool _Gradient(const Adaptor3d_Curve& C1,
   return true;
 }
 
-// 2d _Graient
 static bool _Gradient(const Adaptor2d_Curve2d& C1,
                       const Adaptor2d_Curve2d& C2,
                       const math_Vector&       X,
@@ -103,7 +97,6 @@ static bool _Gradient(const Adaptor2d_Curve2d& C1,
   return true;
 }
 
-// 3d _Hessian
 static bool _Hessian(const Adaptor3d_Curve& C1,
                      const Adaptor3d_Curve& C2,
                      const math_Vector&     X,
@@ -137,7 +130,6 @@ static bool _Hessian(const Adaptor3d_Curve& C1,
   return true;
 }
 
-// 2d _Hessian
 static bool _Hessian(const Adaptor2d_Curve2d& C1,
                      const Adaptor2d_Curve2d& C2,
                      const math_Vector&       X,
@@ -169,10 +161,6 @@ static bool _Hessian(const Adaptor2d_Curve2d& C1,
   return true;
 }
 
-// C0
-
-//=================================================================================================
-
 Extrema_GlobOptFuncCCC0::Extrema_GlobOptFuncCCC0(const Adaptor3d_Curve& C1,
                                                  const Adaptor3d_Curve& C2)
     : myC1_3d(&C1),
@@ -182,8 +170,6 @@ Extrema_GlobOptFuncCCC0::Extrema_GlobOptFuncCCC0(const Adaptor3d_Curve& C1,
 {
   myType = 1;
 }
-
-//=================================================================================================
 
 Extrema_GlobOptFuncCCC0::Extrema_GlobOptFuncCCC0(const Adaptor2d_Curve2d& C1,
                                                  const Adaptor2d_Curve2d& C2)
@@ -195,14 +181,10 @@ Extrema_GlobOptFuncCCC0::Extrema_GlobOptFuncCCC0(const Adaptor2d_Curve2d& C1,
   myType = 2;
 }
 
-//=================================================================================================
-
 int Extrema_GlobOptFuncCCC0::NbVariables() const
 {
   return _NbVariables();
 }
-
-//=================================================================================================
 
 bool Extrema_GlobOptFuncCCC0::Value(const math_Vector& X, double& F)
 {
@@ -211,10 +193,6 @@ bool Extrema_GlobOptFuncCCC0::Value(const math_Vector& X, double& F)
   else
     return _Value(*myC1_2d, *myC2_2d, X, F);
 }
-
-// C1
-
-//=================================================================================================
 
 Extrema_GlobOptFuncCCC1::Extrema_GlobOptFuncCCC1(const Adaptor3d_Curve& C1,
                                                  const Adaptor3d_Curve& C2)
@@ -226,8 +204,6 @@ Extrema_GlobOptFuncCCC1::Extrema_GlobOptFuncCCC1(const Adaptor3d_Curve& C1,
   myType = 1;
 }
 
-//=================================================================================================
-
 Extrema_GlobOptFuncCCC1::Extrema_GlobOptFuncCCC1(const Adaptor2d_Curve2d& C1,
                                                  const Adaptor2d_Curve2d& C2)
     : myC1_3d(nullptr),
@@ -238,14 +214,10 @@ Extrema_GlobOptFuncCCC1::Extrema_GlobOptFuncCCC1(const Adaptor2d_Curve2d& C1,
   myType = 2;
 }
 
-//=================================================================================================
-
 int Extrema_GlobOptFuncCCC1::NbVariables() const
 {
   return _NbVariables();
 }
-
-//=================================================================================================
 
 bool Extrema_GlobOptFuncCCC1::Value(const math_Vector& X, double& F)
 {
@@ -255,8 +227,6 @@ bool Extrema_GlobOptFuncCCC1::Value(const math_Vector& X, double& F)
     return _Value(*myC1_2d, *myC2_2d, X, F);
 }
 
-//=================================================================================================
-
 bool Extrema_GlobOptFuncCCC1::Gradient(const math_Vector& X, math_Vector& G)
 {
   if (myType == 1)
@@ -265,16 +235,10 @@ bool Extrema_GlobOptFuncCCC1::Gradient(const math_Vector& X, math_Vector& G)
     return _Gradient(*myC1_2d, *myC2_2d, X, G);
 }
 
-//=================================================================================================
-
 bool Extrema_GlobOptFuncCCC1::Values(const math_Vector& X, double& F, math_Vector& G)
 {
   return (Value(X, F) && Gradient(X, G));
 }
-
-// C2
-
-//=================================================================================================
 
 Extrema_GlobOptFuncCCC2::Extrema_GlobOptFuncCCC2(const Adaptor3d_Curve& C1,
                                                  const Adaptor3d_Curve& C2)
@@ -286,8 +250,6 @@ Extrema_GlobOptFuncCCC2::Extrema_GlobOptFuncCCC2(const Adaptor3d_Curve& C1,
   myType = 1;
 }
 
-//=================================================================================================
-
 Extrema_GlobOptFuncCCC2::Extrema_GlobOptFuncCCC2(const Adaptor2d_Curve2d& C1,
                                                  const Adaptor2d_Curve2d& C2)
     : myC1_3d(nullptr),
@@ -298,14 +260,10 @@ Extrema_GlobOptFuncCCC2::Extrema_GlobOptFuncCCC2(const Adaptor2d_Curve2d& C1,
   myType = 2;
 }
 
-//=================================================================================================
-
 int Extrema_GlobOptFuncCCC2::NbVariables() const
 {
   return _NbVariables();
 }
-
-//=================================================================================================
 
 bool Extrema_GlobOptFuncCCC2::Value(const math_Vector& X, double& F)
 {
@@ -315,8 +273,6 @@ bool Extrema_GlobOptFuncCCC2::Value(const math_Vector& X, double& F)
     return _Value(*myC1_2d, *myC2_2d, X, F);
 }
 
-//=================================================================================================
-
 bool Extrema_GlobOptFuncCCC2::Gradient(const math_Vector& X, math_Vector& G)
 {
   if (myType == 1)
@@ -325,14 +281,10 @@ bool Extrema_GlobOptFuncCCC2::Gradient(const math_Vector& X, math_Vector& G)
     return _Gradient(*myC1_2d, *myC2_2d, X, G);
 }
 
-//=================================================================================================
-
 bool Extrema_GlobOptFuncCCC2::Values(const math_Vector& X, double& F, math_Vector& G)
 {
   return (Value(X, F) && Gradient(X, G));
 }
-
-//=================================================================================================
 
 bool Extrema_GlobOptFuncCCC2::Values(const math_Vector& X,
                                      double&            F,

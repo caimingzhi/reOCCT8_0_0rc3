@@ -9,13 +9,6 @@
 #include <Standard_Transient.hpp>
 #include <Standard_OStream.hpp>
 
-//! defines a Normal node of VRML specifying properties of geometry
-//! and its appearance.
-//! This node defines a set of 3D surface normal vectors to be used by vertex-based shape
-//! nodes (IndexedFaceSet, IndexedLineSet, PointSet) that follow it in the scene graph. This
-//! node does not produce a visible result during rendering; it simply replaces the current
-//! normals in the rendering state for subsequent nodes to use. This node contains one
-//! multiple-valued field that contains the normal vectors.
 class Vrml_Normal : public Standard_Transient
 {
 

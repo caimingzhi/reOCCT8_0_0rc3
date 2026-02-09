@@ -16,13 +16,12 @@ void RWStepBasic_RWConversionBasedUnitAndVolumeUnit::ReadStep(
   const occ::handle<StepBasic_ConversionBasedUnitAndVolumeUnit>& ent) const
 {
   int num = num0;
-  // --- Instance of plex component ConversionBasedUnit ---
+
   if (!data->CheckNbParams(num, 2, ach, "conversion_based_unit"))
     return;
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- field : conversionFactor ---
   occ::handle<Standard_Transient> aConversionFactor;
   data->ReadEntity(num,
                    2,

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IGESGraph_Color.hpp>
 #include <IGESSelect_SignColor.hpp>
@@ -22,7 +11,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_SignColor, IFSelect_Signature)
 
-static TCollection_AsciiString valbuf; // to prepare value and keep some time
+static TCollection_AsciiString valbuf;
 
 static const char* ColName(const int mode)
 {
@@ -62,7 +51,6 @@ const char* IGESSelect_SignColor::Value(const occ::handle<Standard_Transient>&  
   DeclareAndCast(IGESGraph_Color, color, igesent->Color());
   valbuf.Clear();
 
-  //  Color Number
   if (themode < 2 || themode > 6)
   {
     if (rank == 0)
@@ -78,8 +66,6 @@ const char* IGESSelect_SignColor::Value(const occ::handle<Standard_Transient>&  
       valbuf.AssignCat("D");
       valbuf.AssignCat(IFSelect_Signature::IntValue(num));
     }
-
-    //  Color Name
   }
   else if (themode == 2)
   {
@@ -115,8 +101,6 @@ const char* IGESSelect_SignColor::Value(const occ::handle<Standard_Transient>&  
     int num = (model.IsNull() ? 0 : 2 * model->Number(color) - 1);
     valbuf.AssignCat("D");
     valbuf.AssignCat(IFSelect_Signature::IntValue(num));
-
-    //  RGB
   }
   else if (themode == 3)
   {
@@ -154,8 +138,6 @@ const char* IGESSelect_SignColor::Value(const occ::handle<Standard_Transient>&  
     valbuf.AssignCat(",");
     if (blue >= 0)
       valbuf.AssignCat(IFSelect_Signature::IntValue(int(blue)));
-
-    //  RED value
   }
   else if (themode == 4)
   {
@@ -187,8 +169,6 @@ const char* IGESSelect_SignColor::Value(const occ::handle<Standard_Transient>&  
       color->RGBIntensity(red, green, blue);
     if (red >= 0)
       return IFSelect_Signature::IntValue(int(red));
-
-    //  GREEN Value
   }
   else if (themode == 5)
   {
@@ -220,8 +200,6 @@ const char* IGESSelect_SignColor::Value(const occ::handle<Standard_Transient>&  
       color->RGBIntensity(red, green, blue);
     if (green >= 0)
       return IFSelect_Signature::IntValue(int(green));
-
-    //  BLUE Value
   }
   else if (themode == 6)
   {

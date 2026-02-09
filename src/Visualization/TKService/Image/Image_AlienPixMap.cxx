@@ -10,7 +10,7 @@
   #endif
 #elif defined(HAVE_WINCODEC)
   #include <wincodec.h>
-  // prevent warnings on MSVC10
+
   #include <Standard_WarningsDisable.hpp>
   #include <Standard_TypeDef.hpp>
   #include <Standard_WarningsRestore.hpp>
@@ -115,11 +115,9 @@ namespace
     }
   }
 
-  //! Wrapper for accessing C++ stream from FreeImage.
   class Image_FreeImageStream
   {
   public:
-    //! Construct wrapper over input stream.
     Image_FreeImageStream(std::istream& theStream)
         : myIStream(&theStream),
           myOStream(nullptr),
@@ -127,7 +125,6 @@ namespace
     {
     }
 
-    //! Construct wrapper over output stream.
     Image_FreeImageStream(std::ostream& theStream)
         : myIStream(nullptr),
           myOStream(&theStream),
@@ -135,7 +132,6 @@ namespace
     {
     }
 
-    //! Get io object.
     FreeImageIO GetFiIO() const
     {
       FreeImageIO anIo;
@@ -149,7 +145,7 @@ namespace
       if (myOStream != nullptr)
       {
         anIo.write_proc = writeProc;
-        // seek and tell are also used for saving in some formats (.tif for example)
+
         anIo.seek_proc = seekProcOut;
         anIo.tell_proc = tellProcOut;
       }
@@ -157,7 +153,6 @@ namespace
     }
 
   public:
-    //! Simulate fread().
     static unsigned int DLL_CALLCONV readProc(void*        theBuffer,
                                               unsigned int theSize,
                                               unsigned int theCount,
@@ -172,13 +167,11 @@ namespace
       if (!aThis->myIStream->read((char*)theBuffer,
                                   std::streamsize(theSize) * std::streamsize(theCount)))
       {
-        // aThis->myIStream->clear();
       }
       const std::streamsize aNbRead = aThis->myIStream->gcount();
       return (unsigned int)(aNbRead / theSize);
     }
 
-    //! Simulate fwrite().
     static unsigned int DLL_CALLCONV writeProc(void*        theBuffer,
                                                unsigned int theSize,
                                                unsigned int theCount,
@@ -194,7 +187,6 @@ namespace
       return 0;
     }
 
-    //! Simulate fseek().
     static int DLL_CALLCONV seekProcIn(fi_handle theHandle, long theOffset, int theOrigin)
     {
       Image_FreeImageStream* aThis = (Image_FreeImageStream*)theHandle;
@@ -261,7 +253,6 @@ namespace
       return isSeekDone ? 0 : -1;
     }
 
-    //! Simulate ftell().
     static long DLL_CALLCONV tellProcIn(fi_handle theHandle)
     {
       Image_FreeImageStream* aThis = (Image_FreeImageStream*)theHandle;
@@ -286,14 +277,12 @@ namespace
 
 #elif defined(HAVE_WINCODEC)
 
-  //! Return a zero GUID
   static GUID getNullGuid()
   {
     GUID aGuid = {0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
     return aGuid;
   }
 
-  //! Returns GUID of image format from file name
   static GUID getFileFormatFromName(const TCollection_AsciiString& theFileName)
   {
     TCollection_AsciiString aFileNameLower = theFileName;
@@ -322,24 +311,19 @@ namespace
     return aFileFormat;
   }
 
-  //! Sentry over IUnknown pointer.
   template <class T>
   class Image_ComPtr
   {
   public:
-    //! Empty constructor.
     Image_ComPtr()
         : myPtr(NULL)
     {
     }
 
-    //! Destructor.
     ~Image_ComPtr() { Nullify(); }
 
-    //! Return TRUE if pointer is NULL.
     bool IsNull() const { return myPtr == NULL; }
 
-    //! Release the pointer.
     void Nullify()
     {
       if (myPtr != NULL)
@@ -349,27 +333,22 @@ namespace
       }
     }
 
-    //! Return pointer for initialization.
     T*& ChangePtr()
     {
       Standard_ASSERT_RAISE(myPtr == NULL, "Pointer cannot be initialized twice!");
       return myPtr;
     }
 
-    //! Return pointer.
     T* get() { return myPtr; }
 
-    //! Return pointer.
     T* operator->() { return get(); }
 
-    //! Cast handle to contained type
     T& operator*() { return *get(); }
 
   private:
     T* myPtr;
   };
 
-  //! Convert WIC GUID to Image_Format.
   static Image_Format convertFromWicFormat(const WICPixelFormatGUID& theFormat)
   {
     if (theFormat == GUID_WICPixelFormat32bppBGRA)
@@ -399,7 +378,6 @@ namespace
     return Image_Format_UNKNOWN;
   }
 
-  //! Convert Image_Format to WIC GUID.
   static WICPixelFormatGUID convertToWicFormat(Image_Format theFormat)
   {
     switch (theFormat)
@@ -414,17 +392,18 @@ namespace
         return GUID_WICPixelFormat24bppBGR;
       case Image_Format_Gray:
         return GUID_WICPixelFormat8bppGray;
-        // clang-format off
-      case Image_Format_Alpha:  return GUID_WICPixelFormat8bppGray; // GUID_WICPixelFormat8bppAlpha
-        // clang-format on
+
+      case Image_Format_Alpha:
+        return GUID_WICPixelFormat8bppGray;
+
       case Image_Format_Gray16:
         return GUID_WICPixelFormat16bppGray;
-      case Image_Format_GrayF: // GUID_WICPixelFormat32bppGrayFloat
+      case Image_Format_GrayF:
       case Image_Format_AlphaF:
-      case Image_Format_RGBAF: // GUID_WICPixelFormat128bppRGBAFloat
-      case Image_Format_RGBF:  // GUID_WICPixelFormat96bppRGBFloat
-      case Image_Format_RGBA:  // GUID_WICPixelFormat32bppRGBA
-      case Image_Format_RGB32: // GUID_WICPixelFormat32bppRGB
+      case Image_Format_RGBAF:
+      case Image_Format_RGBF:
+      case Image_Format_RGBA:
+      case Image_Format_RGB32:
       default:
         return getNullGuid();
     }
@@ -432,8 +411,6 @@ namespace
 
 #endif
 } // namespace
-
-//=================================================================================================
 
 Image_AlienPixMap::Image_AlienPixMap()
 #ifdef HAVE_WINCODEC
@@ -445,14 +422,10 @@ Image_AlienPixMap::Image_AlienPixMap()
   SetTopDown(false);
 }
 
-//=================================================================================================
-
 Image_AlienPixMap::~Image_AlienPixMap()
 {
   Clear();
 }
-
-//=================================================================================================
 
 bool Image_AlienPixMap::InitWrapper(Image_Format,
                                     uint8_t*,
@@ -464,13 +437,11 @@ bool Image_AlienPixMap::InitWrapper(Image_Format,
   return false;
 }
 
-//=================================================================================================
-
 #ifdef HAVE_FREEIMAGE
 bool Image_AlienPixMap::InitTrash(Image_Format thePixelFormat,
                                   const size_t theSizeX,
                                   const size_t theSizeY,
-                                  const size_t /*theSizeRowBytes*/)
+                                  const size_t)
 {
   Clear();
   FREE_IMAGE_TYPE aFormatFI     = convertToFreeFormat(thePixelFormat);
@@ -487,7 +458,7 @@ bool Image_AlienPixMap::InitTrash(Image_Format thePixelFormat,
                                                FreeImage_GetBPP(anImage));
   if (thePixelFormat == Image_Format_BGR32 || thePixelFormat == Image_Format_RGB32)
   {
-    // FreeImage_SetTransparent (anImage, FALSE);
+
     aFormat = (aFormat == Image_Format_BGRA) ? Image_Format_BGR32 : Image_Format_RGB32;
   }
 
@@ -498,7 +469,6 @@ bool Image_AlienPixMap::InitTrash(Image_Format thePixelFormat,
                             FreeImage_GetPitch(anImage));
   SetTopDown(false);
 
-  // assign image after wrapper initialization (virtual Clear() called inside)
   myLibImage = anImage;
   return true;
 }
@@ -542,13 +512,11 @@ bool Image_AlienPixMap::InitTrash(Image_Format thePixelFormat,
 }
 #endif
 
-//=================================================================================================
-
 bool Image_AlienPixMap::InitCopy(const Image_PixMap& theCopy)
 {
   if (&theCopy == this)
   {
-    // self-copying disallowed
+
     return false;
   }
   if (!InitTrash(theCopy.Format(), theCopy.SizeX(), theCopy.SizeY(), theCopy.SizeRowBytes()))
@@ -560,12 +528,11 @@ bool Image_AlienPixMap::InitCopy(const Image_PixMap& theCopy)
   {
     if (SizeRowBytes() == theCopy.SizeRowBytes() && TopDownInc() == theCopy.TopDownInc())
     {
-      // copy with one call
+
       memcpy(ChangeData(), theCopy.Data(), std::min(SizeBytes(), theCopy.SizeBytes()));
       return true;
     }
 
-    // copy row-by-row
     const size_t aRowSizeBytes = std::min(SizeRowBytes(), theCopy.SizeRowBytes());
     for (size_t aRow = 0; aRow < myData.SizeY; ++aRow)
     {
@@ -574,12 +541,9 @@ bool Image_AlienPixMap::InitCopy(const Image_PixMap& theCopy)
     return true;
   }
 
-  // pixel format conversion required
   Clear();
   return false;
 }
-
-//=================================================================================================
 
 void Image_AlienPixMap::Clear()
 {
@@ -605,8 +569,6 @@ void Image_AlienPixMap::Clear()
 #endif
 }
 
-//=================================================================================================
-
 bool Image_AlienPixMap::IsTopDownDefault()
 {
 #ifdef HAVE_FREEIMAGE
@@ -617,8 +579,6 @@ bool Image_AlienPixMap::IsTopDownDefault()
   return false;
 #endif
 }
-
-//=================================================================================================
 
 #ifdef HAVE_FREEIMAGE
 bool Image_AlienPixMap::Load(const uint8_t*                 theData,
@@ -647,7 +607,7 @@ bool Image_AlienPixMap::Load(const uint8_t*                 theData,
   }
   if (aFIF == FIF_UNKNOWN)
   {
-    // no signature? try to guess the file format from the file extension
+
     aFIF = FreeImage_GetFIFFromFilename(theImagePath.ToCString());
   }
   if ((aFIF == FIF_UNKNOWN) || !FreeImage_FIFSupportsReading(aFIF))
@@ -664,13 +624,12 @@ bool Image_AlienPixMap::Load(const uint8_t*                 theData,
   int aLoadFlags = 0;
   if (aFIF == FIF_GIF)
   {
-    // 'Play' the GIF to generate each frame (as 32bpp) instead of returning raw frame data when
-    // loading
+
     aLoadFlags = GIF_PLAYBACK;
   }
   else if (aFIF == FIF_ICO)
   {
-    // convert to 32bpp and create an alpha channel from the AND-mask when loading
+
     aLoadFlags = ICO_MAKEALPHA;
   }
 
@@ -735,7 +694,6 @@ bool Image_AlienPixMap::Load(const uint8_t*                 theData,
                             FreeImage_GetPitch(anImage));
   SetTopDown(false);
 
-  // assign image after wrapper initialization (virtual Clear() called inside)
   myLibImage = anImage;
   return true;
 }
@@ -750,7 +708,7 @@ bool Image_AlienPixMap::Load(std::istream& theStream, const TCollection_AsciiStr
   FREE_IMAGE_FORMAT aFIF = FreeImage_GetFileTypeFromHandle(&aFiIO, &aStream, 0);
   if (aFIF == FIF_UNKNOWN)
   {
-    // no signature? try to guess the file format from the file extension
+
     aFIF = FreeImage_GetFIFFromFilename(theFileName.ToCString());
   }
   if ((aFIF == FIF_UNKNOWN) || !FreeImage_FIFSupportsReading(aFIF))
@@ -763,13 +721,12 @@ bool Image_AlienPixMap::Load(std::istream& theStream, const TCollection_AsciiStr
   int aLoadFlags = 0;
   if (aFIF == FIF_GIF)
   {
-    // 'Play' the GIF to generate each frame (as 32bpp) instead of returning raw frame data when
-    // loading
+
     aLoadFlags = GIF_PLAYBACK;
   }
   else if (aFIF == FIF_ICO)
   {
-    // convert to 32bpp and create an alpha channel from the AND-mask when loading
+
     aLoadFlags = ICO_MAKEALPHA;
   }
 
@@ -798,7 +755,6 @@ bool Image_AlienPixMap::Load(std::istream& theStream, const TCollection_AsciiStr
                             FreeImage_GetPitch(anImage));
   SetTopDown(false);
 
-  // assign image after wrapper initialization (virtual Clear() called inside)
   myLibImage = anImage;
   return true;
 }
@@ -932,7 +888,6 @@ bool Image_AlienPixMap::Load(std::istream& theStream, const TCollection_AsciiStr
 {
   Clear();
 
-  // fallback copying stream data into transient buffer
   const std::streamoff aStart = theStream.tellg();
   theStream.seekg(0, std::ios::end);
   const int aLen = int(theStream.tellg() - aStart);
@@ -1001,8 +956,6 @@ bool Image_AlienPixMap::Load(const uint8_t*, const size_t, const TCollection_Asc
 }
 #endif
 
-//=================================================================================================
-
 bool Image_AlienPixMap::savePPM(const TCollection_AsciiString& theFileName) const
 {
   if (IsEmpty())
@@ -1010,23 +963,20 @@ bool Image_AlienPixMap::savePPM(const TCollection_AsciiString& theFileName) cons
     return false;
   }
 
-  // Open file
   FILE* aFile = OSD_OpenFile(theFileName.ToCString(), "wb");
   if (aFile == nullptr)
   {
     return false;
   }
 
-  // Write header
   fprintf(aFile, "P6\n%d %d\n255\n", (int)SizeX(), (int)SizeY());
 
-  // Write pixel data
   uint8_t aByte;
   for (size_t aRow = 0; aRow < SizeY(); ++aRow)
   {
     for (size_t aCol = 0; aCol < SizeX(); ++aCol)
     {
-      // extremely SLOW but universal (implemented for all supported pixel formats)
+
       const Quantity_ColorRGBA aColor = PixelColor((int)aCol, (int)aRow);
       aByte                           = static_cast<uint8_t>(aColor.GetRGB().Red() * 255.0);
       fwrite(&aByte, 1, 1, aFile);
@@ -1037,12 +987,9 @@ bool Image_AlienPixMap::savePPM(const TCollection_AsciiString& theFileName) cons
     }
   }
 
-  // Close file
   fclose(aFile);
   return true;
 }
-
-//=================================================================================================
 
 #ifdef HAVE_WINCODEC
 static bool convertData(const Image_AlienPixMap&  theSrcPixMapData,
@@ -1097,8 +1044,6 @@ static bool convertData(const Image_AlienPixMap&  theSrcPixMapData,
 }
 #endif
 
-//=================================================================================================
-
 bool Image_AlienPixMap::Save(uint8_t*                       theBuffer,
                              const size_t                   theLength,
                              const TCollection_AsciiString& theFileName)
@@ -1139,8 +1084,7 @@ bool Image_AlienPixMap::Save(uint8_t*                       theBuffer,
   bool isSaved = false;
   if (theBuffer != nullptr)
   {
-    // a memory buffer wrapped by FreeImage is read only (images can be loaded but not be saved)
-    // so we call FreeImage_OpenMemory() with default arguments and just memcpy in requested buffer.
+
     FIMEMORY* aFiMem = FreeImage_OpenMemory();
     isSaved          = (FreeImage_SaveToMemory(anImageFormat, anImageToDump, aFiMem) != FALSE);
     BYTE* aData      = nullptr;
@@ -1298,8 +1242,6 @@ bool Image_AlienPixMap::Save(uint8_t*                       theBuffer,
   }
   if (aWicStream->Commit(STGC_DEFAULT) != S_OK)
   {
-    // Message::Send ("Error: cannot commit data to WIC File Stream", Message_Fail);
-    // return false;
   }
   return true;
 #else
@@ -1476,12 +1418,8 @@ bool Image_AlienPixMap::Save(std::ostream& theStream, const TCollection_AsciiStr
   }
   if (aStream->Commit(STGC_DEFAULT) != S_OK)
   {
-    // Message::Send ("Error: cannot commit data to Stream", Message_Fail);
-    // return false;
   }
 
-  // WIC doesn't have the way to encode image directly in std::ostream
-  // so we use a workaround to transfer data from IStream to std::ostream
   STATSTG aStat;
   if (aStream->Stat(&aStat, STATFLAG_NONAME) != S_OK)
   {
@@ -1520,8 +1458,6 @@ bool Image_AlienPixMap::Save(std::ostream& theStream, const TCollection_AsciiStr
 #endif
 }
 
-//=================================================================================================
-
 bool Image_AlienPixMap::AdjustGamma(const double theGammaCorr)
 {
 #ifdef HAVE_FREEIMAGE
@@ -1533,13 +1469,11 @@ bool Image_AlienPixMap::AdjustGamma(const double theGammaCorr)
 }
 
 #ifdef HAVE_FREEIMAGE
-//=================================================================================================
 
 FIBITMAP* Image_AlienPixMap::getImageToDump(const int theFormat)
 {
   FIBITMAP* anImageToDump = myLibImage;
-  // FreeImage doesn't provide flexible format conversion API
-  // so we should perform multiple conversions in some cases!
+
   switch (theFormat)
   {
     case FIF_PNG:
@@ -1547,7 +1481,7 @@ FIBITMAP* Image_AlienPixMap::getImageToDump(const int theFormat)
     {
       if (Format() == Image_Format_BGR32 || Format() == Image_Format_RGB32)
       {
-        // stupid FreeImage treats reserved byte as alpha if some bytes not set to 0xFF
+
         for (size_t aRow = 0; aRow < SizeY(); ++aRow)
         {
           for (size_t aCol = 0; aCol < SizeX(); ++aCol)
@@ -1588,7 +1522,6 @@ FIBITMAP* Image_AlienPixMap::getImageToDump(const int theFormat)
         aTmpBitmap = aTmpBitmap24;
       }
 
-      // need conversion to image with palette (requires 24bit bitmap)
       anImageToDump = FreeImage_ColorQuantize(aTmpBitmap, FIQ_NNQUANT);
       if (aTmpBitmap != myLibImage)
       {

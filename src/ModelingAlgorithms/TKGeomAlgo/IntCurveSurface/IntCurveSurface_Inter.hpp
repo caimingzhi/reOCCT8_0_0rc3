@@ -25,19 +25,6 @@
 #include <NCollection_Array2.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
 #include <Adaptor3d_Curve.hpp>
 #include <Adaptor3d_Surface.hpp>
@@ -79,9 +66,6 @@ namespace IntCurveSurface_InterUtils
   constexpr double THE_TOLERANCE_ANGULAIRE = 1.e-12;
   constexpr double THE_TOLTANGENCY         = 0.00000001;
 
-  //! Project theLine and its X-axis symmetric line to thePln and
-  //! intersect resulting curve with theBasCurvProj.
-  //! Then estimate max and min parameters of intersection on theBasCurvProj.
   inline void ProjectIntersectAndEstLim(const gp_Lin&        theLine,
                                         const gp_Pln&        thePln,
                                         const ProjLib_Plane& theBasCurvProj,
@@ -96,14 +80,12 @@ namespace IntCurveSurface_InterUtils
     }
     gp_Lin2d aLin2d = aLineProj.Line();
 
-    // make a second line X-axe symmetric to the first one
     gp_Pnt2d aP1 = aLin2d.Location();
     gp_Pnt2d aP2(aP1.XY() + aLin2d.Direction().XY());
     gp_Pnt2d aP1sym(aP1.X(), -aP1.Y());
     gp_Pnt2d aP2sym(aP2.X(), -aP2.Y());
     gp_Lin2d aLin2dsym(aP1sym, gp_Vec2d(aP1sym, aP2sym));
 
-    // intersect projections
     IntAna2d_Conic           aCon(aLin2d);
     IntAna2d_Conic           aConSym(aLin2dsym);
     IntAna2d_AnaIntersection anIntersect;
@@ -124,10 +106,9 @@ namespace IntCurveSurface_InterUtils
         anIntersect.Perform(theBasCurvProj.Parabola(), aCon);
         break;
       default:
-        return; // not infinite curve
+        return;
     }
 
-    // retrieve params of intersections
     int aNbIntPnt    = anIntersect.IsDone() ? anIntersect.NbPoints() : 0;
     int aNbIntPntSym = anIntersectSym.IsDone() ? anIntersectSym.NbPoints() : 0;
     int iPnt, aNbPnt = std::max(aNbIntPnt, aNbIntPntSym);
@@ -157,7 +138,6 @@ namespace IntCurveSurface_InterUtils
     }
   }
 
-  //! Estimate limits for infinite surfaces (generic fallback).
   inline void EstLimForInfSurf(double& U1new, double& U2new, double& V1new, double& V2new)
   {
     U1new = std::max(U1new, -1.e10);
@@ -166,9 +146,6 @@ namespace IntCurveSurface_InterUtils
     V2new = std::min(V2new, 1.e10);
   }
 
-  //! Estimate limits for infinite extrusion surfaces.
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
   template <typename SurfaceType, typename SurfaceTool>
   void EstLimForInfExtr(const gp_Lin&      Line,
                         const SurfaceType& surface,
@@ -370,9 +347,6 @@ namespace IntCurveSurface_InterUtils
     }
   }
 
-  //! Estimate V1 and V2 for infinite surfaces of revolution.
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
   template <typename SurfaceType, typename SurfaceTool>
   void EstLimForInfRevl(const gp_Lin&      Line,
                         const SurfaceType& surface,
@@ -403,7 +377,6 @@ namespace IntCurveSurface_InterUtils
     gp_Vec                       aXVec       = aRevAx.Direction();
     constexpr double             aTolAng     = Precision::Angular();
 
-    // make plane to project a basis curve
     gp_Pnt O  = aRevAx.Location();
     double aU = 0.;
     gp_Pnt P  = aBasisCurve->Value(aU);
@@ -413,13 +386,12 @@ namespace IntCurveSurface_InterUtils
       aU += 1.;
       P = aBasisCurve->Value(aU);
       if (aU > 3)
-        // basis curve is a line coinciding with aXVec, P is any not on aXVec
+
         P = gp_Pnt(aU, aU + 1, aU + 2);
     }
     gp_Vec aNVec = aXVec ^ gp_Vec(O, P);
     gp_Pln aPln(gp_Ax3(O, aNVec, aXVec));
 
-    // project basic curve
     ProjLib_Plane aBasCurvProj(aPln);
     switch (aBasisCurve->GetType())
     {
@@ -433,20 +405,20 @@ namespace IntCurveSurface_InterUtils
         aBasCurvProj.Project(aBasisCurve->Parabola());
         break;
       default:
-        return; // not infinite curve
+        return;
     }
     if (!aBasCurvProj.IsDone())
     {
       return;
     }
-    // make plane to project Line
+
     if (aXVec.IsParallel(Line.Direction(), aTolAng))
     {
       P = Line.Location();
       while (O.SquareDistance(P) <= Precision::PConfusion())
       {
         aU += 1.;
-        P = gp_Pnt(aU, aU + 1, aU + 2); // any not on aXVec
+        P = gp_Pnt(aU, aU + 1, aU + 2);
       }
       aNVec = aXVec ^ gp_Vec(O, P);
     }
@@ -455,11 +427,8 @@ namespace IntCurveSurface_InterUtils
 
     aPln = gp_Pln(gp_Ax3(O, aNVec, aXVec));
 
-    // make a second plane perpendicular to the first one, rotated around aXVec
     gp_Pln aPlnPrp = aPln.Rotated(gp_Ax1(O, aXVec), M_PI / 2.);
 
-    // project Line and its X-axe symmetric one to plane and intersect
-    // resulting curve with projection of Basic Curve
     double aVmin = RealLast(), aVmax = -aVmin;
     bool   aNoInt1 = false, aNoInt2 = false;
     ProjectIntersectAndEstLim(Line, aPln, aBasCurvProj, aVmin, aVmax, aNoInt1);
@@ -480,9 +449,6 @@ namespace IntCurveSurface_InterUtils
       V2new = aVmax;
   }
 
-  //! Estimate limits for infinite offset surfaces.
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
   template <typename SurfaceType, typename SurfaceTool>
   void EstLimForInfOffs(const gp_Lin&      Line,
                         const SurfaceType& surface,
@@ -504,7 +470,6 @@ namespace IntCurveSurface_InterUtils
 
     GeomAbs_SurfaceType aTypeOfBasSurf = aBasSurf->GetType();
 
-    //  case for plane, cylinder and cone - make equivalent surface;
     if (aTypeOfBasSurf == GeomAbs_Plane)
     {
       gp_Pln aPln = aBasSurf->Plane();
@@ -708,9 +673,6 @@ namespace IntCurveSurface_InterUtils
     }
   }
 
-  //! Convert section point to surface and curve parameters.
-  //! @tparam PolyhedronType The polyhedron type
-  //! @tparam PolygonType The polygon type
   template <typename PolyhedronType, typename PolygonType>
   void SectionPointToParameters(const Intf_SectionPoint& Sp,
                                 const PolyhedronType&    Polyhedron,
@@ -726,14 +688,11 @@ namespace IntCurveSurface_InterUtils
 
     int    Pt1, Pt2, Pt3;
     double u1 = 0., v1 = 0., param;
-    //----------------------------------------------------------------------
-    //--          Approximate parameter calculation on surface            --
-    //----------------------------------------------------------------------
 
     Sp.InfoSecond(typ, Adr1, Adr2, Param);
     switch (typ)
     {
-      case Intf_VERTEX: //-- Adr1 is the vertex number
+      case Intf_VERTEX:
       {
         Polyhedron.Parameters(Adr1, u1, v1);
         break;
@@ -775,9 +734,7 @@ namespace IntCurveSurface_InterUtils
         break;
       }
     }
-    //----------------------------------------------------------------------
-    //--              Approximate point calculation on Curve              --
-    //----------------------------------------------------------------------
+
     int SegIndex;
 
     Sp.InfoFirst(typ, SegIndex, param);
@@ -786,11 +743,6 @@ namespace IntCurveSurface_InterUtils
     V = v1;
   }
 
-  //! Compute transitions at intersection point.
-  //! @tparam CurveType The curve type
-  //! @tparam CurveTool The curve tool class
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
   template <typename CurveType, typename CurveTool, typename SurfaceType, typename SurfaceTool>
   void ComputeTransitions(const CurveType&                   curve,
                           const double                       w,
@@ -814,12 +766,12 @@ namespace IntCurveSurface_InterUtils
       CosDir /= Norm;
       if (-CosDir > THE_TOLERANCE_ANGULAIRE)
       {
-        //--  --Curve--->    <----Surface----
+
         TransOnCurve = IntCurveSurface_In;
       }
       else if (CosDir > THE_TOLERANCE_ANGULAIRE)
       {
-        //--  --Curve--->  ----Surface-->
+
         TransOnCurve = IntCurveSurface_Out;
       }
       else
@@ -833,9 +785,6 @@ namespace IntCurveSurface_InterUtils
     }
   }
 
-  //! Compute parameters on quadric surface from a point.
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
   template <typename SurfaceType, typename SurfaceTool>
   void ComputeParamsOnQuadric(const SurfaceType& surface, const gp_Pnt& P, double& u, double& v)
   {
@@ -867,9 +816,6 @@ namespace IntCurveSurface_InterUtils
     }
   }
 
-  //! Sample surface points into array and compute bounding box.
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
   template <typename SurfaceType, typename SurfaceTool>
   void DoSurface(const SurfaceType&          theSurface,
                  const double                theU0,
@@ -913,9 +859,6 @@ namespace IntCurveSurface_InterUtils
     theGap      = std::max(Ures, Vres);
   }
 
-  //! Compute new bounds for surface based on intersection with bounding box corners.
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
   template <typename SurfaceType, typename SurfaceTool>
   void DoNewBounds(const SurfaceType&                theSurface,
                    const double                      theU0,
@@ -1021,13 +964,6 @@ namespace IntCurveSurface_InterUtils
     }
   }
 
-  //! Compute intersection point with parameter validation and transition computation.
-  //! Returns true if the point is valid and should be appended.
-  //! @tparam CurveType The curve type
-  //! @tparam CurveTool The curve tool class
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
-  //! @param[out] thePoint The computed intersection point (valid only if returns true)
   template <typename CurveType, typename CurveTool, typename SurfaceType, typename SurfaceTool>
   bool ComputeAppendPoint(const CurveType&                   theCurve,
                           const double                       theLw,
@@ -1084,15 +1020,6 @@ namespace IntCurveSurface_InterUtils
     return true;
   }
 
-  //! Process analytical intersection of conic with quadric.
-  //! Returns status and computes intersection points.
-  //! @tparam CurveType The curve type
-  //! @tparam CurveTool The curve tool class
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
-  //! @param[out] theIsParallel Set to true if curve is parallel or in quadric
-  //! @param[out] thePoints Vector of computed intersection points
-  //! @return true if the operation was done successfully
   template <typename CurveType, typename CurveTool, typename SurfaceType, typename SurfaceTool>
   bool ProcessIntAna(const CurveType&                                       theCurve,
                      const SurfaceType&                                     theSurface,
@@ -1136,14 +1063,6 @@ namespace IntCurveSurface_InterUtils
     return true;
   }
 
-  //! Perform intersection between curve and quadric surface.
-  //! Uses exact quadric-curve intersection algorithm.
-  //! @tparam QuadCurvExactType The exact quadric-curve intersection type
-  //! @tparam CurveType The curve type
-  //! @tparam CurveTool The curve tool class
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
-  //! @param[out] thePoints Vector of computed intersection points
   template <typename QuadCurvExactType,
             typename CurveType,
             typename CurveTool,
@@ -1182,12 +1101,6 @@ namespace IntCurveSurface_InterUtils
     }
   }
 
-  //! Process line-torus intersection.
-  //! @tparam CurveType The curve type
-  //! @tparam CurveTool The curve tool class
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
-  //! @return true if intersection was processed successfully, false if fallback is needed
   template <typename CurveType, typename CurveTool, typename SurfaceType, typename SurfaceTool>
   bool ProcessLinTorus(const gp_Lin&                                          theLine,
                        const CurveType&                                       theCurve,
@@ -1223,7 +1136,6 @@ namespace IntCurveSurface_InterUtils
     return true;
   }
 
-  //! Structure to hold sorted intersection start points.
   struct SortedStartPoints
   {
     NCollection_Vector<double> TabU;
@@ -1247,10 +1159,6 @@ namespace IntCurveSurface_InterUtils
     }
   };
 
-  //! Collect section points from interference and convert to parameters.
-  //! @tparam InterferenceType The interference type
-  //! @tparam PolyhedronType The polyhedron type
-  //! @tparam PolygonType The polygon type
   template <typename InterferenceType, typename PolyhedronType, typename PolygonType>
   void CollectInterferencePoints(const InterferenceType& theInterference,
                                  const PolyhedronType&   thePolyhedron,
@@ -1289,8 +1197,6 @@ namespace IntCurveSurface_InterUtils
     }
   }
 
-  //! Sort start points by W, then U, then V parameters.
-  //! Uses bubble sort to eliminate duplicates.
   inline void SortStartPoints(SortedStartPoints& thePoints)
   {
     int NbStartPoints = thePoints.Size();
@@ -1299,7 +1205,6 @@ namespace IntCurveSurface_InterUtils
 
     double ptol = 10 * Precision::PConfusion();
 
-    // Sort by W
     bool Triok;
     do
     {
@@ -1317,7 +1222,6 @@ namespace IntCurveSurface_InterUtils
       }
     } while (!Triok);
 
-    // Sort by U for same W
     do
     {
       Triok = true;
@@ -1337,7 +1241,6 @@ namespace IntCurveSurface_InterUtils
       }
     } while (!Triok);
 
-    // Sort by V for same W and U
     do
     {
       Triok = true;
@@ -1358,12 +1261,6 @@ namespace IntCurveSurface_InterUtils
     } while (!Triok);
   }
 
-  //! Process sorted start points through exact intersection.
-  //! @tparam ExactInterType The exact intersection type
-  //! @tparam CurveType The curve type
-  //! @tparam CurveTool The curve tool class
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
   template <typename ExactInterType,
             typename CurveType,
             typename CurveTool,
@@ -1428,7 +1325,6 @@ namespace IntCurveSurface_InterUtils
     }
   }
 
-  //! Structure to hold UV parameter bounds.
   struct UVBounds
   {
     double U0;
@@ -1453,9 +1349,6 @@ namespace IntCurveSurface_InterUtils
     }
   };
 
-  //! Decompose surface into UV intervals based on C2 continuity.
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
   template <typename SurfaceType, typename SurfaceTool>
   void DecomposeSurfaceIntervals(const SurfaceType&            theSurface,
                                  NCollection_Vector<UVBounds>& theIntervals)
@@ -1519,8 +1412,6 @@ namespace IntCurveSurface_InterUtils
     }
   }
 
-  //! Clamp UV parameters to prevent double overflow.
-  //! Protection from double type overflow in square magnitude computation.
   inline void ClampUVParameters(double& theU1, double& theU2, double& theV1, double& theV2)
   {
     constexpr double THE_PARAM_LIMIT = 1.0e50;
@@ -1547,12 +1438,6 @@ namespace IntCurveSurface_InterImpl
   constexpr int    THE_NBSAMPLESONPARAB    = 16;
   constexpr int    THE_NBSAMPLESONHYPR     = 32;
 
-  //! Perform intersection decomposing surface by C2 intervals.
-  //! @tparam CurveType The curve type
-  //! @tparam CurveTool The curve tool class
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
-  //! @tparam PerformBoundsFunc Callback type for Perform with bounds
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -1578,15 +1463,6 @@ namespace IntCurveSurface_InterImpl
     }
   }
 
-  //! Perform intersection with given UV bounds.
-  //! @tparam CurveType The curve type
-  //! @tparam CurveTool The curve tool class
-  //! @tparam SurfaceType The surface type
-  //! @tparam SurfaceTool The surface tool class
-  //! @tparam PolygonType The polygon type
-  //! @tparam PerformConicFunc Callback for conic surface intersection
-  //! @tparam InternalPerformFunc Callback for internal perform
-  //! @tparam InternalPerformQuadricFunc Callback for quadric perform
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -1605,7 +1481,7 @@ namespace IntCurveSurface_InterImpl
                      InternalPerformFunc        theInternalPerform,
                      InternalPerformQuadricFunc theInternalPerformQuadric)
   {
-    // Protection from double type overflow (bug26525).
+
     double UU1 = theU1, UU2 = theU2, VV1 = theV1, VV2 = theV2;
     IntCurveSurface_InterUtils::ClampUVParameters(UU1, UU2, VV1, VV2);
 
@@ -1675,7 +1551,6 @@ namespace IntCurveSurface_InterImpl
     }
   }
 
-  //! Perform with polygon, creating polyhedron internally.
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -1707,7 +1582,6 @@ namespace IntCurveSurface_InterImpl
     thePerformPoly(theCurve, thePolygon, theSurface, polyhedron);
   }
 
-  //! Perform with polyhedron, creating polygon internally.
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -1731,7 +1605,6 @@ namespace IntCurveSurface_InterImpl
     thePerformPoly(theCurve, polygon, theSurface, thePolyhedron);
   }
 
-  //! Perform with both polygon and polyhedron provided.
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -1757,7 +1630,6 @@ namespace IntCurveSurface_InterImpl
     theInternalPerform(theCurve, thePolygon, theSurface, thePolyhedron, u1, v1, u2, v2);
   }
 
-  //! Perform with polygon, polyhedron and bounding sort box.
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -1784,7 +1656,6 @@ namespace IntCurveSurface_InterImpl
     theInternalPerform(theCurve, thePolygon, theSurface, thePolyhedron, u1, v1, u2, v2, theBSB);
   }
 
-  //! Internal perform with interference from BSB.
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -1844,7 +1715,6 @@ namespace IntCurveSurface_InterImpl
     }
   }
 
-  //! Internal perform without BSB.
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -1903,7 +1773,6 @@ namespace IntCurveSurface_InterImpl
     }
   }
 
-  //! Internal perform for curve-quadric intersection.
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -1928,7 +1797,6 @@ namespace IntCurveSurface_InterImpl
     }
   }
 
-  //! Internal perform with polygon and UV bounds, creating polyhedron as needed.
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -2005,7 +1873,6 @@ namespace IntCurveSurface_InterImpl
     }
   }
 
-  //! Perform conic (line) surface intersection.
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -2187,7 +2054,6 @@ namespace IntCurveSurface_InterImpl
     }
   }
 
-  //! Perform conic (circle) surface intersection.
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -2243,7 +2109,6 @@ namespace IntCurveSurface_InterImpl
     }
   }
 
-  //! Perform conic (ellipse) surface intersection.
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -2299,7 +2164,6 @@ namespace IntCurveSurface_InterImpl
     }
   }
 
-  //! Perform conic (parabola) surface intersection.
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -2378,7 +2242,6 @@ namespace IntCurveSurface_InterImpl
     }
   }
 
-  //! Perform conic (hyperbola) surface intersection.
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,
@@ -2457,7 +2320,6 @@ namespace IntCurveSurface_InterImpl
     }
   }
 
-  //! Append analytical intersection results.
   template <typename CurveType,
             typename CurveTool,
             typename SurfaceType,

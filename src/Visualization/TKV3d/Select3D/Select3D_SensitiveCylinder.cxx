@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveCylinder, Select3D_SensitiveEntity)
 
-//=================================================================================================
-
 Select3D_SensitiveCylinder::Select3D_SensitiveCylinder(
   const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
   const double                              theBottomRad,
@@ -19,8 +17,6 @@ Select3D_SensitiveCylinder::Select3D_SensitiveCylinder(
       myIsHollow(theIsHollow)
 {
 }
-
-//=================================================================================================
 
 bool Select3D_SensitiveCylinder::Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                          SelectBasics_PickResult&             thePickResult)
@@ -58,16 +54,12 @@ bool Select3D_SensitiveCylinder::Matches(SelectBasics_SelectingVolumeManager& th
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<Select3D_SensitiveEntity> Select3D_SensitiveCylinder::GetConnected()
 {
   occ::handle<Select3D_SensitiveEntity> aNewEntity =
     new Select3D_SensitiveCylinder(myOwnerId, myBottomRadius, myTopRadius, myHeight, myTrsf);
   return aNewEntity;
 }
-
-//=================================================================================================
 
 Select3D_BndBox3d Select3D_SensitiveCylinder::BoundingBox()
 {
@@ -81,8 +73,6 @@ Select3D_BndBox3d Select3D_SensitiveCylinder::BoundingBox()
 
   return aBox;
 }
-
-//=================================================================================================
 
 gp_Pnt Select3D_SensitiveCylinder::CenterOfGeometry() const
 {

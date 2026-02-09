@@ -11,7 +11,6 @@ class StepAP214_AutoDesignPresentedItem;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AutoDesignPresentedItem
 class RWStepAP214_RWAutoDesignPresentedItem
 {
 public:

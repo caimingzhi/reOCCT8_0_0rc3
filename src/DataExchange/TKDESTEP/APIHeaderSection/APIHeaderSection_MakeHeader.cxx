@@ -13,7 +13,7 @@
 #include <StepData_StepModel.hpp>
 
 #include <cstdio>
-// This is a generic header for any STEP scheme
+
 static occ::handle<TCollection_HAsciiString>                                   nulstr;
 static occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> nularr;
 
@@ -70,16 +70,15 @@ void APIHeaderSection_MakeHeader::Init(const char* nameval)
 {
   done = true;
 
-  // - File Name
   char timestamp[50];
 
   if (fn.IsNull())
     fn = new HeaderSection_FileName;
   occ::handle<TCollection_HAsciiString> name = new TCollection_HAsciiString(nameval);
   fn->SetName(name);
-  // clang-format off
-  Interface_MSG::TDate (timestamp,0,0,0,0,0,1,"C:%4.4d-%2.2d-%2.2dT%2.2d:%2.2d:%2.2d");  // actually
-  // clang-format on
+
+  Interface_MSG::TDate(timestamp, 0, 0, 0, 0, 0, 1, "C:%4.4d-%2.2d-%2.2dT%2.2d:%2.2d:%2.2d");
+
   occ::handle<TCollection_HAsciiString> tst = new TCollection_HAsciiString(timestamp);
   fn->SetTimeStamp(tst);
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> authors =
@@ -96,17 +95,13 @@ void APIHeaderSection_MakeHeader::Init(const char* nameval)
   char procver[80];
   Sprintf(procver, XSTEP_PROCESSOR_VERSION, "STEP");
   occ::handle<TCollection_HAsciiString> pv = new TCollection_HAsciiString(procver);
-  // occ::handle<TCollection_HAsciiString> pv =
-  // new TCollection_HAsciiString(XSTEP_VERSION);
+
   fn->SetPreprocessorVersion(pv);
 
-  occ::handle<TCollection_HAsciiString> sys =
-    new TCollection_HAsciiString(XSTEP_SYSTEM_VERSION); // #58 rln
+  occ::handle<TCollection_HAsciiString> sys = new TCollection_HAsciiString(XSTEP_SYSTEM_VERSION);
   fn->SetOriginatingSystem(sys);
   occ::handle<TCollection_HAsciiString> auth = new TCollection_HAsciiString("Unknown");
   fn->SetAuthorisation(auth);
-
-  // - File Description
 
   if (fd.IsNull())
     fd = new HeaderSection_FileDescription;
@@ -117,8 +112,6 @@ void APIHeaderSection_MakeHeader::Init(const char* nameval)
   fd->SetDescription(descr);
   occ::handle<TCollection_HAsciiString> il = new TCollection_HAsciiString("2;1");
   fd->SetImplementationLevel(il);
-
-  // - File Schema
 
   if (fs.IsNull())
     fs = new HeaderSection_FileSchema;
@@ -144,7 +137,6 @@ void APIHeaderSection_MakeHeader::Apply(const occ::handle<StepData_StepModel>& m
   if (HasFs() && !model->HasHeaderEntity(STANDARD_TYPE(HeaderSection_FileSchema)))
   {
 
-    // Schema defined? If not take it from the protocole
     occ::handle<TCollection_HAsciiString>                                   sch;
     occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> schid =
       fs->SchemaIdentifiers();
@@ -159,7 +151,7 @@ void APIHeaderSection_MakeHeader::Apply(const occ::handle<StepData_StepModel>& m
     {
       if (sch->Length() < 2)
         sch.Nullify();
-    } // not defined
+    }
     if (sch.IsNull())
     {
       occ::handle<StepData_Protocol> stepro = occ::down_cast<StepData_Protocol>(model->Protocol());
@@ -175,27 +167,15 @@ void APIHeaderSection_MakeHeader::Apply(const occ::handle<StepData_StepModel>& m
     model->AddHeaderEntity(header.Value());
 }
 
-// ========
-// FileName
-// ========
-
 occ::handle<StepData_StepModel> APIHeaderSection_MakeHeader::NewModel(
   const occ::handle<Interface_Protocol>& protocol) const
 {
   occ::handle<StepData_StepModel> stepmodel = new StepData_StepModel;
   stepmodel->SetProtocol(protocol);
 
-  // - Make Header information
-
   Apply(stepmodel);
   return stepmodel;
 }
-
-//   ########        Individual Queries / Actions        ########
-
-// ========
-// FileName
-// ========
 
 bool APIHeaderSection_MakeHeader::HasFn() const
 {
@@ -206,33 +186,6 @@ occ::handle<HeaderSection_FileName> APIHeaderSection_MakeHeader::FnValue() const
 {
   return fn;
 }
-
-/*
-void APIHeaderSection_MakeHeader::SetNameFromShapeType(const int shapetype)
-{
-  occ::handle<TCollection_HAsciiString> name;
-  switch(shapetype)
-    {
-    case 1: // face_based_surface_model
-      name = new TCollection_HAsciiString
-    ("Euclid Face Based Surface Model");
-      break;
-    case 2: // manifold_solid_brep
-      name = new TCollection_HAsciiString
-    ("Euclid Manifold Solid Brep Model");
-      break;
-    case 3: // facetted_brep
-      name = new TCollection_HAsciiString
-    ("Euclid Facetted Brep Model");
-      break;
-    default : // others ?
-      name = new TCollection_HAsciiString
-    ("Euclid Shape Model");
-      break;
-    }
-  SetName(aName);
-}
-*/
 
 void APIHeaderSection_MakeHeader::SetName(const occ::handle<TCollection_HAsciiString>& aName)
 {
@@ -362,10 +315,6 @@ occ::handle<TCollection_HAsciiString> APIHeaderSection_MakeHeader::Authorisation
   return (fn.IsNull() ? nulstr : fn->Authorisation());
 }
 
-// ===========
-// File Schema
-// ===========
-
 bool APIHeaderSection_MakeHeader::HasFs() const
 {
   return (!fs.IsNull());
@@ -412,8 +361,6 @@ int APIHeaderSection_MakeHeader::NbSchemaIdentifiers() const
   return (fs.IsNull() ? 0 : fs->NbSchemaIdentifiers());
 }
 
-//=================================================================================================
-
 void APIHeaderSection_MakeHeader::AddSchemaIdentifier(
   const occ::handle<TCollection_HAsciiString>& aSchem)
 {
@@ -422,7 +369,6 @@ void APIHeaderSection_MakeHeader::AddSchemaIdentifier(
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> idents =
     fs->SchemaIdentifiers();
 
-  // check that requested subschema is already in the list
   int i;
   for (i = 1; !idents.IsNull() && i <= idents->Length(); i++)
   {
@@ -430,7 +376,6 @@ void APIHeaderSection_MakeHeader::AddSchemaIdentifier(
       return;
   }
 
-  // add a subshema
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> ids =
     new NCollection_HArray1<occ::handle<TCollection_HAsciiString>>(
       1,
@@ -443,10 +388,6 @@ void APIHeaderSection_MakeHeader::AddSchemaIdentifier(
 
   fs->SetSchemaIdentifiers(ids);
 }
-
-// ================
-// File Description
-// ================
 
 bool APIHeaderSection_MakeHeader::HasFd() const
 {

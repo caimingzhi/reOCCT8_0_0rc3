@@ -17,7 +17,6 @@ class StepGeom_TrimmedCurve : public StepGeom_BoundedCurve
 {
 
 public:
-  //! Returns a TrimmedCurve
   Standard_EXPORT StepGeom_TrimmedCurve();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

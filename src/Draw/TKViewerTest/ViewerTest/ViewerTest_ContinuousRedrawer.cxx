@@ -1,15 +1,4 @@
-// Copyright (c) 2019-2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ViewerTest_ContinuousRedrawer.hpp>
 
@@ -18,15 +7,11 @@
 #include <OSD_Timer.hpp>
 #include <V3d_View.hpp>
 
-//=================================================================================================
-
 ViewerTest_ContinuousRedrawer& ViewerTest_ContinuousRedrawer::Instance()
 {
   static ViewerTest_ContinuousRedrawer aRedrawer;
   return aRedrawer;
 }
-
-//=================================================================================================
 
 ViewerTest_ContinuousRedrawer::ViewerTest_ContinuousRedrawer()
     : myThread(doThreadWrapper),
@@ -37,14 +22,10 @@ ViewerTest_ContinuousRedrawer::ViewerTest_ContinuousRedrawer()
 {
 }
 
-//=================================================================================================
-
 ViewerTest_ContinuousRedrawer::~ViewerTest_ContinuousRedrawer()
 {
   Stop();
 }
-
-//=================================================================================================
 
 void ViewerTest_ContinuousRedrawer::Start(const occ::handle<V3d_View>& theView, double theTargetFps)
 {
@@ -72,8 +53,6 @@ void ViewerTest_ContinuousRedrawer::Start(const occ::handle<V3d_View>& theView, 
   }
 }
 
-//=================================================================================================
-
 void ViewerTest_ContinuousRedrawer::Stop(const occ::handle<V3d_View>& theView)
 {
   if (!theView.IsNull() && myView != theView)
@@ -92,8 +71,6 @@ void ViewerTest_ContinuousRedrawer::Stop(const occ::handle<V3d_View>& theView)
   myView.Nullify();
 }
 
-//=================================================================================================
-
 void ViewerTest_ContinuousRedrawer::Pause()
 {
   if (!myToPause)
@@ -102,8 +79,6 @@ void ViewerTest_ContinuousRedrawer::Pause()
     myToPause = true;
   }
 }
-
-//=================================================================================================
 
 void ViewerTest_ContinuousRedrawer::doThreadLoop()
 {

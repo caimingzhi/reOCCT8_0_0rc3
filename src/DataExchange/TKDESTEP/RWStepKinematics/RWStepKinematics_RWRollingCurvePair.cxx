@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:16 2020
+
 
 #include "RWStepKinematics_RWRollingCurvePair.hpp"
 
@@ -12,11 +12,7 @@
 #include <StepKinematics_KinematicJoint.hpp>
 #include <StepGeom_Curve.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWRollingCurvePair::RWStepKinematics_RWRollingCurvePair() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWRollingCurvePair::ReadStep(
   const occ::handle<StepData_StepReaderData>&         theData,
@@ -24,16 +20,12 @@ void RWStepKinematics_RWRollingCurvePair::ReadStep(
   occ::handle<Interface_Check>&                       theArch,
   const occ::handle<StepKinematics_RollingCurvePair>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 9, theArch, "rolling_curve_pair"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
-
-  // Inherited fields of ItemDefinedTransformation
 
   occ::handle<TCollection_HAsciiString> aItemDefinedTransformation_Name;
   theData->ReadString(theNum,
@@ -74,8 +66,6 @@ void RWStepKinematics_RWRollingCurvePair::ReadStep(
                       STANDARD_TYPE(StepRepr_RepresentationItem),
                       aItemDefinedTransformation_TransformItem2);
 
-  // Inherited fields of KinematicPair
-
   occ::handle<StepKinematics_KinematicJoint> aKinematicPair_Joint;
   theData->ReadEntity(theNum,
                       6,
@@ -83,8 +73,6 @@ void RWStepKinematics_RWRollingCurvePair::ReadStep(
                       theArch,
                       STANDARD_TYPE(StepKinematics_KinematicJoint),
                       aKinematicPair_Joint);
-
-  // Inherited fields of PlanarCurvePair
 
   occ::handle<StepGeom_Curve> aPlanarCurvePair_Curve1;
   theData->ReadEntity(theNum,
@@ -109,7 +97,6 @@ void RWStepKinematics_RWRollingCurvePair::ReadStep(
                        theArch,
                        aPlanarCurvePair_Orientation);
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aItemDefinedTransformation_Name,
                hasItemDefinedTransformation_Description,
@@ -122,18 +109,12 @@ void RWStepKinematics_RWRollingCurvePair::ReadStep(
                aPlanarCurvePair_Orientation);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWRollingCurvePair::WriteStep(
   StepData_StepWriter&                                theSW,
   const occ::handle<StepKinematics_RollingCurvePair>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Inherited fields of ItemDefinedTransformation
 
   theSW.Send(theEnt->ItemDefinedTransformation()->Name());
 
@@ -148,11 +129,7 @@ void RWStepKinematics_RWRollingCurvePair::WriteStep(
 
   theSW.Send(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Own fields of KinematicPair
-
   theSW.Send(theEnt->Joint());
-
-  // Own fields of PlanarCurvePair
 
   theSW.Send(theEnt->Curve1());
 
@@ -161,26 +138,16 @@ void RWStepKinematics_RWRollingCurvePair::WriteStep(
   theSW.SendBoolean(theEnt->Orientation());
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWRollingCurvePair::Share(
   const occ::handle<StepKinematics_RollingCurvePair>& theEnt,
   Interface_EntityIterator&                           iter) const
 {
 
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of ItemDefinedTransformation
-
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem1());
 
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Inherited fields of KinematicPair
-
   iter.AddItem(theEnt->StepKinematics_KinematicPair::Joint());
-
-  // Inherited fields of PlanarCurvePair
 
   iter.AddItem(theEnt->StepKinematics_PlanarCurvePair::Curve1());
 

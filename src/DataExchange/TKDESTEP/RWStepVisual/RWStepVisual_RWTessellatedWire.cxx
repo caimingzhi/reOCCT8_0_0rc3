@@ -1,4 +1,4 @@
-// Created on : Thu Mar 24 18:30:12 2022
+
 
 #include "RWStepVisual_RWTessellatedWire.hpp"
 #include <StepVisual_TessellatedWire.hpp>
@@ -10,11 +10,7 @@
 #include <NCollection_HArray1.hpp>
 #include <StepVisual_PathOrCompositeCurve.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWTessellatedWire::RWStepVisual_RWTessellatedWire() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWTessellatedWire::ReadStep(
   const occ::handle<StepData_StepReaderData>&    theData,
@@ -22,18 +18,14 @@ void RWStepVisual_RWTessellatedWire::ReadStep(
   occ::handle<Interface_Check>&                  theCheck,
   const occ::handle<StepVisual_TessellatedWire>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 3, theCheck, "tessellated_wire"))
   {
     return;
   }
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theCheck, aRepresentationItem_Name);
-
-  // Own fields of TessellatedWire
 
   occ::handle<NCollection_HArray1<StepVisual_TessellatedEdgeOrVertex>> aItems;
   int                                                                  sub2 = 0;
@@ -62,22 +54,15 @@ void RWStepVisual_RWTessellatedWire::ReadStep(
     aGeometricModelLink   = StepVisual_PathOrCompositeCurve();
   }
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name, aItems, hasGeometricModelLink, aGeometricModelLink);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWTessellatedWire::WriteStep(
   StepData_StepWriter&                           theSW,
   const occ::handle<StepVisual_TessellatedWire>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Own fields of TessellatedWire
 
   theSW.OpenSub();
   for (int i1 = 1; i1 <= theEnt->Items()->Length(); i1++)
@@ -97,15 +82,9 @@ void RWStepVisual_RWTessellatedWire::WriteStep(
   }
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWTessellatedWire::Share(const occ::handle<StepVisual_TessellatedWire>& theEnt,
                                            Interface_EntityIterator& theIter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Own fields of TessellatedWire
 
   for (int i1 = 1; i1 <= theEnt->Items()->Length(); i1++)
   {

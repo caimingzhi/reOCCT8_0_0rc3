@@ -23,15 +23,11 @@ IMPLEMENT_STANDARD_RTTIEXT(VrmlData_Geometry, VrmlData_Node)
   #pragma warning(disable : 4996)
 #endif
 
-//=================================================================================================
-
 const gp_XYZ& VrmlData_ArrayVec3d::Value(const size_t i) const
 {
   static gp_XYZ anOrigin(0., 0., 0.);
   return i < myLength ? myArray[i] : anOrigin;
 }
-
-//=================================================================================================
 
 bool VrmlData_ArrayVec3d::AllocateValues(const size_t theLength)
 {
@@ -40,8 +36,6 @@ bool VrmlData_ArrayVec3d::AllocateValues(const size_t theLength)
   myLength = theLength;
   return (myArray != nullptr);
 }
-
-//=================================================================================================
 
 const occ::handle<TopoDS_TShape>& VrmlData_Box::TShape()
 {
@@ -62,8 +56,6 @@ const occ::handle<TopoDS_TShape>& VrmlData_Box::TShape()
   return myTShape;
 }
 
-//=================================================================================================
-
 occ::handle<VrmlData_Node> VrmlData_Box::Clone(const occ::handle<VrmlData_Node>& theOther) const
 {
   occ::handle<VrmlData_Box> aResult = occ::down_cast<VrmlData_Box>(VrmlData_Node::Clone(theOther));
@@ -72,8 +64,6 @@ occ::handle<VrmlData_Node> VrmlData_Box::Clone(const occ::handle<VrmlData_Node>&
   aResult->SetSize(mySize);
   return aResult;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Box::Read(VrmlData_InBuffer& theBuffer)
 {
@@ -88,8 +78,6 @@ VrmlData_ErrorStatus VrmlData_Box::Read(VrmlData_InBuffer& theBuffer)
   return aStatus;
 }
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_Box::Write(const char* thePrefix) const
 {
   static char          header[] = "Box {";
@@ -103,8 +91,6 @@ VrmlData_ErrorStatus VrmlData_Box::Write(const char* thePrefix) const
   }
   return aStatus;
 }
-
-//=================================================================================================
 
 const occ::handle<TopoDS_TShape>& VrmlData_Cone::TShape()
 {
@@ -130,8 +116,6 @@ const occ::handle<TopoDS_TShape>& VrmlData_Cone::TShape()
   return myTShape;
 }
 
-//=================================================================================================
-
 occ::handle<VrmlData_Node> VrmlData_Cone::Clone(const occ::handle<VrmlData_Node>& theOther) const
 {
   occ::handle<VrmlData_Cone> aResult =
@@ -144,8 +128,6 @@ occ::handle<VrmlData_Node> VrmlData_Cone::Clone(const occ::handle<VrmlData_Node>
   aResult->SetFaces(myHasBottom, myHasSide);
   return aResult;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Cone::Read(VrmlData_InBuffer& theBuffer)
 {
@@ -174,13 +156,11 @@ VrmlData_ErrorStatus VrmlData_Cone::Read(VrmlData_InBuffer& theBuffer)
     if (!OK(aStatus))
       break;
   }
-  // Read the terminating (closing) brace
+
   if (OK(aStatus))
     aStatus = readBrace(theBuffer);
   return aStatus;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Cone::Write(const char* thePrefix) const
 {
@@ -208,18 +188,6 @@ VrmlData_ErrorStatus VrmlData_Cone::Write(const char* thePrefix) const
   }
   return aStatus;
 }
-
-//=================================================================================================
-
-// bool VrmlData_Cone::IsDefault () const
-// {
-//   return
-//     (myHasBottom && myHasSide &&
-//      ((myBottomRadius - 1.)*(myBottomRadius-1.) < Precision::Confusion()) &&
-//      ((myHeight - 2.)*(myHeight - 2.) < Precision::Confusion()));
-// }
-
-//=================================================================================================
 
 const occ::handle<TopoDS_TShape>& VrmlData_Cylinder::TShape()
 {
@@ -249,8 +217,6 @@ const occ::handle<TopoDS_TShape>& VrmlData_Cylinder::TShape()
   return myTShape;
 }
 
-//=================================================================================================
-
 occ::handle<VrmlData_Node> VrmlData_Cylinder::Clone(
   const occ::handle<VrmlData_Node>& theOther) const
 {
@@ -263,8 +229,6 @@ occ::handle<VrmlData_Node> VrmlData_Cylinder::Clone(
   aResult->SetFaces(myHasBottom, myHasSide, myHasTop);
   return aResult;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Cylinder::Read(VrmlData_InBuffer& theBuffer)
 {
@@ -300,13 +264,10 @@ VrmlData_ErrorStatus VrmlData_Cylinder::Read(VrmlData_InBuffer& theBuffer)
       break;
   }
 
-  // Read the terminating (closing) brace
   if (OK(aStatus))
     aStatus = readBrace(theBuffer);
   return aStatus;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Cylinder::Write(const char* thePrefix) const
 {
@@ -337,18 +298,6 @@ VrmlData_ErrorStatus VrmlData_Cylinder::Write(const char* thePrefix) const
   return aStatus;
 }
 
-//=================================================================================================
-
-// bool VrmlData_Cylinder::IsDefault () const
-// {
-//   return
-//     (myHasBottom && myHasSide && myHasTop &&
-//      ((myRadius - 1.)*(myRadius - 1.) < Precision::Confusion()) &&
-//      ((myHeight - 2.)*(myHeight - 2.) < Precision::Confusion()));
-// }
-
-//=================================================================================================
-
 const occ::handle<TopoDS_TShape>& VrmlData_Sphere::TShape()
 {
   if (myIsModified)
@@ -366,8 +315,6 @@ const occ::handle<TopoDS_TShape>& VrmlData_Sphere::TShape()
   return myTShape;
 }
 
-//=================================================================================================
-
 occ::handle<VrmlData_Node> VrmlData_Sphere::Clone(const occ::handle<VrmlData_Node>& theOther) const
 {
   occ::handle<VrmlData_Sphere> aResult =
@@ -378,8 +325,6 @@ occ::handle<VrmlData_Node> VrmlData_Sphere::Clone(const occ::handle<VrmlData_Nod
   return aResult;
 }
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_Sphere::Read(VrmlData_InBuffer& theBuffer)
 {
   VrmlData_ErrorStatus aStatus;
@@ -389,13 +334,10 @@ VrmlData_ErrorStatus VrmlData_Sphere::Read(VrmlData_InBuffer& theBuffer)
     else
       break;
 
-  // Read the terminating (closing) brace
   if (OK(aStatus))
     aStatus = readBrace(theBuffer);
   return aStatus;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Sphere::Write(const char* thePrefix) const
 {
@@ -411,15 +353,6 @@ VrmlData_ErrorStatus VrmlData_Sphere::Write(const char* thePrefix) const
   return aStatus;
 }
 
-//=================================================================================================
-
-// bool VrmlData_Sphere::IsDefault () const
-// {
-//   return ((myRadius - 1.)*(myRadius - 1.) < Precision::Confusion())
-// }
-
-//=================================================================================================
-
 bool VrmlData_TextureCoordinate::AllocateValues(const size_t theLength)
 {
   myPoints =
@@ -427,8 +360,6 @@ bool VrmlData_TextureCoordinate::AllocateValues(const size_t theLength)
   myLength = theLength;
   return (myPoints != nullptr);
 }
-
-//=================================================================================================
 
 occ::handle<VrmlData_Node> VrmlData_TextureCoordinate::Clone(
   const occ::handle<VrmlData_Node>& theOther) const
@@ -449,20 +380,18 @@ occ::handle<VrmlData_Node> VrmlData_TextureCoordinate::Clone(
   return aResult;
 }
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_TextureCoordinate::Read(VrmlData_InBuffer& theBuffer)
 {
   VrmlData_ErrorStatus      aStatus;
   NCollection_Vector<gp_XY> vecValues;
   if (OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
   {
-    // Match the name with the current word in the stream
+
     if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "point"))
-      // Read the body of the data node (comma-separated list of duplets)
+
       if (OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
       {
-        if (theBuffer.LinePtr[0] != '[') // opening bracket
+        if (theBuffer.LinePtr[0] != '[')
           aStatus = VrmlData_VrmlFormatError;
         else
         {
@@ -472,7 +401,7 @@ VrmlData_ErrorStatus VrmlData_TextureCoordinate::Read(VrmlData_InBuffer& theBuff
             gp_XY anXY;
             if (!OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
               break;
-            // closing bracket, in case that it follows a comma
+
             if (theBuffer.LinePtr[0] == ']')
             {
               theBuffer.LinePtr++;
@@ -488,7 +417,7 @@ VrmlData_ErrorStatus VrmlData_TextureCoordinate::Read(VrmlData_InBuffer& theBuff
               theBuffer.LinePtr++;
             }
             else if (theBuffer.LinePtr[0] == ']')
-            { // closing bracket
+            {
               theBuffer.LinePtr++;
               break;
             }
@@ -511,21 +440,6 @@ VrmlData_ErrorStatus VrmlData_TextureCoordinate::Read(VrmlData_InBuffer& theBuff
   return aStatus;
 }
 
-//=================================================================================================
-
-// occ::handle<VrmlData_Node> VrmlData_ArrayVec3d::Clone
-//                                 (const occ::handle<VrmlData_Node>& theOther) const
-// {
-//   VrmlData_Node::Clone (theOther);
-//   const occ::handle<VrmlData_ArrayVec3d> anArrayNode =
-//     Handle(VrmlData_ArrayVec3d)::DownCast (theOther);
-//   if (anArrayNode.IsNull() == false)
-//     anArrayNode->SetValues (myLength, myArray);
-//   return theOther;
-// }
-
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_ArrayVec3d::ReadArray(VrmlData_InBuffer& theBuffer,
                                                     const char*        theName,
                                                     const bool         isScale)
@@ -534,7 +448,7 @@ VrmlData_ErrorStatus VrmlData_ArrayVec3d::ReadArray(VrmlData_InBuffer& theBuffer
   NCollection_Vector<gp_XYZ> vecValues;
   if (OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
   {
-    // Match the name with the current word in the stream
+
     if (theName)
     {
       const size_t aNameLen = strlen(theName);
@@ -545,20 +459,20 @@ VrmlData_ErrorStatus VrmlData_ArrayVec3d::ReadArray(VrmlData_InBuffer& theBuffer
     }
     else
     {
-      // Skip the word in the input
+
       while (theBuffer.LinePtr[0] != ' ' && theBuffer.LinePtr[0] != ','
              && theBuffer.LinePtr[0] != '\t' && theBuffer.LinePtr[0] != '\n'
              && theBuffer.LinePtr[0] != '\r' && theBuffer.LinePtr[0] != '\0')
         theBuffer.LinePtr++;
     }
-    // Read the body of the data node (list of triplets)
+
     if (OK(aStatus) && OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
     {
-      if (theBuffer.LinePtr[0] != '[') // opening bracket
+      if (theBuffer.LinePtr[0] != '[')
       {
-        // Handle case when brackets are omitted for single element of array
+
         gp_XYZ anXYZ;
-        // Read three numbers (XYZ value)
+
         if (!OK(aStatus, Scene().ReadXYZ(theBuffer, anXYZ, isScale, false)))
           aStatus = VrmlData_VrmlFormatError;
         else
@@ -572,20 +486,20 @@ VrmlData_ErrorStatus VrmlData_ArrayVec3d::ReadArray(VrmlData_InBuffer& theBuffer
           gp_XYZ anXYZ;
           if (!OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
             break;
-          // closing bracket, in case that it follows a comma
+
           if (theBuffer.LinePtr[0] == ']')
           {
             theBuffer.LinePtr++;
             break;
           }
-          // Read three numbers (XYZ value)
+
           if (!OK(aStatus, Scene().ReadXYZ(theBuffer, anXYZ, isScale, false)))
             break;
           vecValues.Append(anXYZ);
           if (!OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
             break;
           if (theBuffer.LinePtr[0] == ']')
-          { // closing bracket
+          {
             theBuffer.LinePtr++;
             break;
           }
@@ -608,8 +522,6 @@ VrmlData_ErrorStatus VrmlData_ArrayVec3d::ReadArray(VrmlData_InBuffer& theBuffer
   return aStatus;
 }
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_ArrayVec3d::WriteArray(const char* theName, const bool isScale) const
 {
   VrmlData_ErrorStatus aStatus(VrmlData_StatusOK);
@@ -630,14 +542,10 @@ VrmlData_ErrorStatus VrmlData_ArrayVec3d::WriteArray(const char* theName, const 
   return aStatus;
 }
 
-//=================================================================================================
-
 bool VrmlData_ArrayVec3d::IsDefault() const
 {
   return myLength == 0;
 }
-
-//=================================================================================================
 
 occ::handle<VrmlData_Node> VrmlData_Coordinate::Clone(
   const occ::handle<VrmlData_Node>& theOther) const
@@ -657,14 +565,10 @@ occ::handle<VrmlData_Node> VrmlData_Coordinate::Clone(
   return aResult;
 }
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_Coordinate::Read(VrmlData_InBuffer& theBuffer)
 {
   return VrmlData_ArrayVec3d::ReadArray(theBuffer, "point", true);
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Coordinate::Write(const char* thePrefix) const
 {
@@ -677,8 +581,6 @@ VrmlData_ErrorStatus VrmlData_Coordinate::Write(const char* thePrefix) const
   }
   return aStatus;
 }
-
-//=================================================================================================
 
 occ::handle<VrmlData_Node> VrmlData_Color::Clone(const occ::handle<VrmlData_Node>& theOther) const
 {
@@ -697,14 +599,10 @@ occ::handle<VrmlData_Node> VrmlData_Color::Clone(const occ::handle<VrmlData_Node
   return aResult;
 }
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_Color::Read(VrmlData_InBuffer& theBuffer)
 {
   return ReadArray(theBuffer, "color", false);
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Color::Write(const char* thePrefix) const
 {
@@ -717,8 +615,6 @@ VrmlData_ErrorStatus VrmlData_Color::Write(const char* thePrefix) const
   }
   return aStatus;
 }
-
-//=================================================================================================
 
 occ::handle<VrmlData_Node> VrmlData_Normal::Clone(const occ::handle<VrmlData_Node>& theOther) const
 {
@@ -737,14 +633,10 @@ occ::handle<VrmlData_Node> VrmlData_Normal::Clone(const occ::handle<VrmlData_Nod
   return aResult;
 }
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_Normal::Read(VrmlData_InBuffer& theBuffer)
 {
   return VrmlData_ArrayVec3d::ReadArray(theBuffer, "vector", false);
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_Normal::Write(const char* thePrefix) const
 {

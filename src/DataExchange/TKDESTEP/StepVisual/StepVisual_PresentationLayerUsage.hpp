@@ -7,7 +7,6 @@
 class StepVisual_PresentationLayerAssignment;
 class StepVisual_PresentationRepresentation;
 
-//! Added from StepVisual Rev2 to Rev4
 class StepVisual_PresentationLayerUsage : public Standard_Transient
 {
 

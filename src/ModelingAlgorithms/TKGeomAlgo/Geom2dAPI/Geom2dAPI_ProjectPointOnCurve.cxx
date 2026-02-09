@@ -4,23 +4,17 @@
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 Geom2dAPI_ProjectPointOnCurve::Geom2dAPI_ProjectPointOnCurve()
     : myIndex(-1)
 {
   myIsDone = false;
 }
 
-//=================================================================================================
-
 Geom2dAPI_ProjectPointOnCurve::Geom2dAPI_ProjectPointOnCurve(const gp_Pnt2d&                  P,
                                                              const occ::handle<Geom2d_Curve>& Curve)
 {
   Init(P, Curve);
 }
-
-//=================================================================================================
 
 Geom2dAPI_ProjectPointOnCurve::Geom2dAPI_ProjectPointOnCurve(const gp_Pnt2d&                  P,
                                                              const occ::handle<Geom2d_Curve>& Curve,
@@ -30,14 +24,10 @@ Geom2dAPI_ProjectPointOnCurve::Geom2dAPI_ProjectPointOnCurve(const gp_Pnt2d&    
   Init(P, Curve, Umin, Usup);
 }
 
-//=================================================================================================
-
 void Geom2dAPI_ProjectPointOnCurve::Init(const gp_Pnt2d& P, const occ::handle<Geom2d_Curve>& Curve)
 {
   Init(P, Curve, Curve->FirstParameter(), Curve->LastParameter());
 }
-
-//=================================================================================================
 
 void Geom2dAPI_ProjectPointOnCurve::Init(const gp_Pnt2d&                  P,
                                          const occ::handle<Geom2d_Curve>& Curve,
@@ -51,8 +41,6 @@ void Geom2dAPI_ProjectPointOnCurve::Init(const gp_Pnt2d&                  P,
   myExtPC = theExtPC2d;
 
   myIsDone = myExtPC.IsDone() && (myExtPC.NbExt() > 0);
-
-  // evaluate the lower distance and its index;
 
   if (myIsDone)
   {
@@ -71,8 +59,6 @@ void Geom2dAPI_ProjectPointOnCurve::Init(const gp_Pnt2d&                  P,
   }
 }
 
-//=================================================================================================
-
 int Geom2dAPI_ProjectPointOnCurve::NbPoints() const
 {
   if (myIsDone)
@@ -81,16 +67,12 @@ int Geom2dAPI_ProjectPointOnCurve::NbPoints() const
     return 0;
 }
 
-//=================================================================================================
-
 gp_Pnt2d Geom2dAPI_ProjectPointOnCurve::Point(const int Index) const
 {
   Standard_OutOfRange_Raise_if(Index < 1 || Index > NbPoints(),
                                "Geom2dAPI_ProjectPointOnCurve::Point");
   return (myExtPC.Point(Index)).Value();
 }
-
-//=================================================================================================
 
 double Geom2dAPI_ProjectPointOnCurve::Parameter(const int Index) const
 {
@@ -99,16 +81,12 @@ double Geom2dAPI_ProjectPointOnCurve::Parameter(const int Index) const
   return (myExtPC.Point(Index)).Parameter();
 }
 
-//=================================================================================================
-
 void Geom2dAPI_ProjectPointOnCurve::Parameter(const int Index, double& U) const
 {
   Standard_OutOfRange_Raise_if(Index < 1 || Index > NbPoints(),
                                "Geom2dAPI_ProjectPointOnCurve::Parameter");
   U = (myExtPC.Point(Index)).Parameter();
 }
-
-//=================================================================================================
 
 double Geom2dAPI_ProjectPointOnCurve::Distance(const int Index) const
 {
@@ -117,8 +95,6 @@ double Geom2dAPI_ProjectPointOnCurve::Distance(const int Index) const
   return sqrt(myExtPC.SquareDistance(Index));
 }
 
-//=================================================================================================
-
 gp_Pnt2d Geom2dAPI_ProjectPointOnCurve::NearestPoint() const
 {
   StdFail_NotDone_Raise_if(!myIsDone, "Geom2dAPI_ProjectPointOnCurve:NearestPoint");
@@ -126,21 +102,15 @@ gp_Pnt2d Geom2dAPI_ProjectPointOnCurve::NearestPoint() const
   return (myExtPC.Point(myIndex)).Value();
 }
 
-//=================================================================================================
-
 Geom2dAPI_ProjectPointOnCurve::operator int() const
 {
   return NbPoints();
 }
 
-//=================================================================================================
-
 Geom2dAPI_ProjectPointOnCurve::operator gp_Pnt2d() const
 {
   return NearestPoint();
 }
-
-//=================================================================================================
 
 double Geom2dAPI_ProjectPointOnCurve::LowerDistanceParameter() const
 {
@@ -149,16 +119,12 @@ double Geom2dAPI_ProjectPointOnCurve::LowerDistanceParameter() const
   return (myExtPC.Point(myIndex)).Parameter();
 }
 
-//=================================================================================================
-
 double Geom2dAPI_ProjectPointOnCurve::LowerDistance() const
 {
   StdFail_NotDone_Raise_if(!myIsDone, "Geom2dAPI_ProjectPointOnCurve:LowerDistance");
 
   return sqrt(myExtPC.SquareDistance(myIndex));
 }
-
-//=================================================================================================
 
 Geom2dAPI_ProjectPointOnCurve::operator double() const
 {

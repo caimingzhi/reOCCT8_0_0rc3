@@ -7,29 +7,21 @@
 #include <Units_UnitsDictionary.hpp>
 #include <Units_UnitsSystem.hpp>
 
-//=================================================================================================
-
 Units_Explorer::Units_Explorer()
 {
   thecurrentquantity = 1;
   thecurrentunit     = 1;
 }
 
-//=================================================================================================
-
 Units_Explorer::Units_Explorer(const occ::handle<Units_UnitsSystem>& aunitssystem)
 {
   Init(aunitssystem);
 }
 
-//=================================================================================================
-
 Units_Explorer::Units_Explorer(const occ::handle<Units_UnitsDictionary>& aunitsdictionary)
 {
   Init(aunitsdictionary);
 }
-
-//=================================================================================================
 
 Units_Explorer::Units_Explorer(const occ::handle<Units_UnitsSystem>& aunitssystem,
                                const char*                           aquantity)
@@ -37,15 +29,11 @@ Units_Explorer::Units_Explorer(const occ::handle<Units_UnitsSystem>& aunitssyste
   Init(aunitssystem, aquantity);
 }
 
-//=================================================================================================
-
 Units_Explorer::Units_Explorer(const occ::handle<Units_UnitsDictionary>& aunitsdictionary,
                                const char*                               aquantity)
 {
   Init(aunitsdictionary, aquantity);
 }
-
-//=================================================================================================
 
 void Units_Explorer::Init(const occ::handle<Units_UnitsSystem>& aunitssystem)
 {
@@ -56,8 +44,6 @@ void Units_Explorer::Init(const occ::handle<Units_UnitsSystem>& aunitssystem)
     theunitssequence = thequantitiessequence->Value(thecurrentquantity)->Sequence();
   thecurrentunit = 1;
 }
-
-//=================================================================================================
 
 void Units_Explorer::Init(const occ::handle<Units_UnitsDictionary>& aunitsdictionary)
 {
@@ -74,8 +60,6 @@ void Units_Explorer::Init(const occ::handle<Units_UnitsDictionary>& aunitsdictio
     theunitssequence = thequantitiessequence->Value(thecurrentquantity)->Sequence();
   thecurrentunit = 1;
 }
-
-//=================================================================================================
 
 void Units_Explorer::Init(const occ::handle<Units_UnitsSystem>& aunitssystem, const char* aquantity)
 {
@@ -98,8 +82,6 @@ void Units_Explorer::Init(const occ::handle<Units_UnitsSystem>& aunitssystem, co
   std::cout << " La grandeur physique " << aquantity << " n'existe pas." << std::endl;
 #endif
 }
-
-//=================================================================================================
 
 void Units_Explorer::Init(const occ::handle<Units_UnitsDictionary>& aunitsdictionary,
                           const char*                               aquantity)
@@ -131,14 +113,10 @@ void Units_Explorer::Init(const occ::handle<Units_UnitsDictionary>& aunitsdictio
 #endif
 }
 
-//=================================================================================================
-
 bool Units_Explorer::MoreQuantity() const
 {
   return thecurrentquantity <= thequantitiessequence->Length();
 }
-
-//=================================================================================================
 
 void Units_Explorer::NextQuantity()
 {
@@ -148,35 +126,25 @@ void Units_Explorer::NextQuantity()
     theunitssequence = thequantitiessequence->Value(thecurrentquantity)->Sequence();
 }
 
-//=================================================================================================
-
 TCollection_AsciiString Units_Explorer::Quantity() const
 {
   return thequantitiessequence->Value(thecurrentquantity)->Name();
 }
-
-//=================================================================================================
 
 bool Units_Explorer::MoreUnit() const
 {
   return thecurrentunit <= theunitssequence->Length();
 }
 
-//=================================================================================================
-
 void Units_Explorer::NextUnit()
 {
   thecurrentunit++;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString Units_Explorer::Unit() const
 {
   return theunitssequence->Value(thecurrentunit)->SymbolsSequence()->Value(1)->String();
 }
-
-//=================================================================================================
 
 bool Units_Explorer::IsActive() const
 {

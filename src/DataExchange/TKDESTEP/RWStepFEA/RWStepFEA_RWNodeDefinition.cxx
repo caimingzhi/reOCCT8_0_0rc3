@@ -5,22 +5,16 @@
 #include <StepFEA_NodeDefinition.hpp>
 #include <StepRepr_ProductDefinitionShape.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWNodeDefinition::RWStepFEA_RWNodeDefinition() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWNodeDefinition::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                           const int                                   num,
                                           occ::handle<Interface_Check>&               ach,
                                           const occ::handle<StepFEA_NodeDefinition>&  ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "node_definition"))
     return;
-
-  // Inherited fields of ShapeAspect
 
   occ::handle<TCollection_HAsciiString> aShapeAspect_Name;
   data->ReadString(num, 1, "shape_aspect.name", ach, aShapeAspect_Name);
@@ -43,20 +37,15 @@ void RWStepFEA_RWNodeDefinition::ReadStep(const occ::handle<StepData_StepReaderD
                     ach,
                     aShapeAspect_ProductDefinitional);
 
-  // Initialize entity
   ent->Init(aShapeAspect_Name,
             aShapeAspect_Description,
             aShapeAspect_OfShape,
             aShapeAspect_ProductDefinitional);
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWNodeDefinition::WriteStep(StepData_StepWriter&                       SW,
                                            const occ::handle<StepFEA_NodeDefinition>& ent) const
 {
-
-  // Inherited fields of ShapeAspect
 
   SW.Send(ent->StepRepr_ShapeAspect::Name());
 
@@ -67,13 +56,9 @@ void RWStepFEA_RWNodeDefinition::WriteStep(StepData_StepWriter&                 
   SW.SendLogical(ent->StepRepr_ShapeAspect::ProductDefinitional());
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWNodeDefinition::Share(const occ::handle<StepFEA_NodeDefinition>& ent,
                                        Interface_EntityIterator&                  iter) const
 {
-
-  // Inherited fields of ShapeAspect
 
   iter.AddItem(ent->StepRepr_ShapeAspect::OfShape());
 }

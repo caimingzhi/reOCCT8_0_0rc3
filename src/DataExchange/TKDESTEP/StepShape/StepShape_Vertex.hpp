@@ -9,7 +9,6 @@ class StepShape_Vertex : public StepShape_TopologicalRepresentationItem
 {
 
 public:
-  //! Returns a Vertex
   Standard_EXPORT StepShape_Vertex();
 
   DEFINE_STANDARD_RTTIEXT(StepShape_Vertex, StepShape_TopologicalRepresentationItem)

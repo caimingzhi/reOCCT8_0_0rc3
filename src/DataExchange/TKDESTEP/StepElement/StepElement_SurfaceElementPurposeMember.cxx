@@ -6,21 +6,15 @@ IMPLEMENT_STANDARD_RTTIEXT(StepElement_SurfaceElementPurposeMember, StepData_Sel
 static const char* ESEP = "ENUMERATED_SURFACE_ELEMENT_PURPOSE";
 static const char* ADEP = "APPLICATION_DEFINED_ELEMENT_PURPOSE";
 
-//=================================================================================================
-
 StepElement_SurfaceElementPurposeMember::StepElement_SurfaceElementPurposeMember()
     : mycase(0)
 {
 }
 
-//=================================================================================================
-
 bool StepElement_SurfaceElementPurposeMember::HasName() const
 {
   return mycase > 0;
 }
-
-//=================================================================================================
 
 const char* StepElement_SurfaceElementPurposeMember::Name() const
 {
@@ -36,9 +30,7 @@ const char* StepElement_SurfaceElementPurposeMember::Name() const
   return "";
 }
 
-//=================================================================================================
-
-static int CompareNames(const char* name, int& /*numen*/)
+static int CompareNames(const char* name, int&)
 {
   int thecase = 0;
   if (!name || name[0] == '\0')
@@ -54,8 +46,6 @@ static int CompareNames(const char* name, int& /*numen*/)
   return thecase;
 }
 
-//=================================================================================================
-
 bool StepElement_SurfaceElementPurposeMember::SetName(const char* name)
 {
   int numit = 0;
@@ -64,8 +54,6 @@ bool StepElement_SurfaceElementPurposeMember::SetName(const char* name)
     SetInteger(numit);
   return (mycase > 0);
 }
-
-//=================================================================================================
 
 bool StepElement_SurfaceElementPurposeMember::Matches(const char* name) const
 {

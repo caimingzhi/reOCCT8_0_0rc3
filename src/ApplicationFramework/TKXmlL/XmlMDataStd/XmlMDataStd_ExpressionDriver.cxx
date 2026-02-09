@@ -11,25 +11,17 @@
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_ExpressionDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(VariablesString, "variables")
 
-//=================================================================================================
-
 XmlMDataStd_ExpressionDriver::XmlMDataStd_ExpressionDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataStd_ExpressionDriver::NewEmpty() const
 {
   return (new TDataStd_Expression());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDataStd_ExpressionDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                          const occ::handle<TDF_Attribute>& theTarget,
                                          XmlObjMgt_RRelocationTable&       theRelocTable) const
@@ -40,7 +32,6 @@ bool XmlMDataStd_ExpressionDriver::Paste(const XmlObjMgt_Persistent&       theSo
   int                        aNb;
   TCollection_ExtendedString aMsgString;
 
-  // expression
   TCollection_ExtendedString aString;
   if (!XmlObjMgt::GetExtendedString(theSource, aString))
   {
@@ -50,13 +41,11 @@ bool XmlMDataStd_ExpressionDriver::Paste(const XmlObjMgt_Persistent&       theSo
   }
   aC->SetExpression(aString);
 
-  // variables
   XmlObjMgt_DOMString aDOMStr = anElem.getAttribute(::VariablesString());
   if (aDOMStr != nullptr)
   {
     const char* aVs = static_cast<const char*>(aDOMStr.GetString());
 
-    // first variable
     if (!XmlObjMgt::GetInteger(aVs, aNb))
     {
       aMsgString =
@@ -78,7 +67,6 @@ bool XmlMDataStd_ExpressionDriver::Paste(const XmlObjMgt_Persistent&       theSo
       }
       aC->GetVariables().Append(aV);
 
-      // next variable
       if (!XmlObjMgt::GetInteger(aVs, aNb))
         aNb = 0;
     }
@@ -87,10 +75,6 @@ bool XmlMDataStd_ExpressionDriver::Paste(const XmlObjMgt_Persistent&       theSo
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMDataStd_ExpressionDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                          XmlObjMgt_Persistent&             theTarget,
                                          XmlObjMgt_SRelocationTable&       theRelocTable) const
@@ -101,10 +85,8 @@ void XmlMDataStd_ExpressionDriver::Paste(const occ::handle<TDF_Attribute>& theSo
   int                        aNb;
   occ::handle<TDF_Attribute> TV;
 
-  // expression
   XmlObjMgt::SetExtendedString(theTarget, aC->Name());
 
-  // variables
   int nbvar = aC->GetVariables().Extent();
   if (nbvar >= 1)
   {

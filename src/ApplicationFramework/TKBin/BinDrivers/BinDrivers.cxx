@@ -18,8 +18,6 @@
 static Standard_GUID BinStorageDriver("03a56835-8269-11d5-aab2-0050044b1af1");
 static Standard_GUID BinRetrievalDriver("03a56836-8269-11d5-aab2-0050044b1af1");
 
-//=================================================================================================
-
 const occ::handle<Standard_Transient>& BinDrivers::Factory(const Standard_GUID& theGUID)
 {
   if (theGUID == BinStorageDriver)
@@ -43,8 +41,6 @@ const occ::handle<Standard_Transient>& BinDrivers::Factory(const Standard_GUID& 
   throw Standard_Failure("BinDrivers : unknown GUID");
 }
 
-//=================================================================================================
-
 void BinDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
 {
   theApp->DefineFormat("BinOcaf",
@@ -53,8 +49,6 @@ void BinDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
                        new BinDrivers_DocumentRetrievalDriver,
                        new BinDrivers_DocumentStorageDriver);
 }
-
-//=================================================================================================
 
 occ::handle<BinMDF_ADriverTable> BinDrivers::AttributeDrivers(
   const occ::handle<Message_Messenger>& aMsgDrv)

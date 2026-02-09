@@ -11,7 +11,6 @@ class StepShape_Sphere : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a Sphere
   Standard_EXPORT StepShape_Sphere();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

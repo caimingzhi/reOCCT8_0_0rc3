@@ -30,12 +30,10 @@ void V3d::ArrowOfRadius(const occ::handle<Graphic3d_Group>& garrow,
   double    Xn, Yn, Zn, X, Y, Z, X1 = 0., Y1 = 0., Z1 = 0., Norme;
   const int NbPoints = 10;
 
-  //      Centre du cercle base de la fleche :
   Xc = X0 - Dx * Lng;
   Yc = Y0 - Dy * Lng;
   Zc = Z0 - Dz * Lng;
 
-  //      Construction d'un repere i,j pour le cercle:
   Xn = 0., Yn = 0., Zn = 0.;
 
   if (std::abs(Dx) <= std::abs(Dy) && std::abs(Dx) <= std::abs(Dz))
@@ -104,7 +102,6 @@ void V3d::CircleInPlane(const occ::handle<Graphic3d_Group>& gcircle,
     VY = DY / Norme;
     VZ = DZ / Norme;
 
-    // Construction of marker i,j for the circle:
     Xn = 0., Yn = 0., Zn = 0.;
     if (std::abs(VX) <= std::abs(VY) && std::abs(VX) <= std::abs(VZ))
       Xn = 1.;
@@ -155,14 +152,10 @@ void V3d::SwitchViewsinWindow(const occ::handle<V3d_View>& aPreviousView,
   aNextView->Viewer()->SetViewOn(aNextView);
 }
 
-//=================================================================================================
-
 const char* V3d::TypeOfOrientationToString(V3d_TypeOfOrientation theType)
 {
   return V3d_Table_PrintTypeOfOrientation[theType];
 }
-
-//=================================================================================================
 
 bool V3d::TypeOfOrientationFromString(const char* theTypeString, V3d_TypeOfOrientation& theType)
 {

@@ -15,7 +15,6 @@ class StepAP214_AutoDesignOrganizationAssignment : public StepBasic_Organization
 {
 
 public:
-  //! Returns a AutoDesignOrganizationAssignment
   Standard_EXPORT StepAP214_AutoDesignOrganizationAssignment();
 
   Standard_EXPORT void Init(

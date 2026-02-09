@@ -1,20 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// pdn 24.12.98 t3d_opt.stp: treatment of unsorted uncertainties
-//: n5 abv 15 Feb 99: S4132 complex type bounded_curve + surface_curve -> surface_curve
-// :j4 gka 15.03.99 S4134
-// sln 03.10.2001. BUC61003. Correction of alphabetic order of complex entity's items
 
 #include <Interface_Check.hpp>
 #include <Interface_ParamType.hpp>
@@ -34,15 +18,9 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepBasic_Address.hpp>
 #include <StepShape_AdvancedBrepShapeRepresentation.hpp>
 #include <StepShape_AdvancedFace.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_AnnotationCurveOccurrence.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_AnnotationFillArea.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_AnnotationFillAreaOccurrence.hpp>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_AnnotationOccurrence.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_AnnotationSubfigureOccurrence.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_AnnotationSymbol.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_AnnotationSymbolOccurrence.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_AnnotationText.hpp>
 #include <StepVisual_AnnotationTextOccurrence.hpp>
 
@@ -68,7 +46,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepAP214_AutoDesignPersonAndOrganizationAssignment.hpp>
 #include <StepAP214_AutoDesignPresentedItem.hpp>
 #include <StepAP214_AutoDesignSecurityClassificationAssignment.hpp>
-// Removed from Rev2 to Rev4 : <StepAP214_AutoDesignViewArea.hxx>
+
 #include <StepGeom_Axis1Placement.hpp>
 #include <StepGeom_Axis2Placement2d.hpp>
 #include <StepGeom_Axis2Placement3d.hpp>
@@ -104,11 +82,9 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepGeom_CompositeCurve.hpp>
 #include <StepGeom_CompositeCurveOnSurface.hpp>
 #include <StepGeom_CompositeCurveSegment.hpp>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_CompositeText.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_CompositeTextWithAssociatedCurves.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_CompositeTextWithBlankingBox.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_CompositeTextWithExtent.hpp>
 
 #include <StepGeom_Conic.hpp>
@@ -118,7 +94,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepVisual_ContextDependentOverRidingStyledItem.hpp>
 #include <StepBasic_ConversionBasedUnit.hpp>
 #include <StepBasic_CoordinatedUniversalTimeOffset.hpp>
-// Removed from Rev2 to Rev4 : <StepShape_CsgRepresentation.hxx>
+
 #include <StepShape_CsgShapeRepresentation.hpp>
 #include <StepShape_CsgSolid.hpp>
 #include <StepGeom_Curve.hpp>
@@ -132,25 +108,20 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepBasic_DateAndTime.hpp>
 #include <StepBasic_DateRole.hpp>
 #include <StepBasic_DateTimeRole.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_DefinedSymbol.hxx>
+
 #include <StepRepr_DefinitionalRepresentation.hpp>
 #include <StepGeom_DegeneratePcurve.hpp>
 #include <StepGeom_DegenerateToroidalSurface.hpp>
 #include <StepRepr_DescriptiveRepresentationItem.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_DimensionCurve.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_DimensionCurveTerminator.hxx>
+
 #include <StepBasic_DimensionalExponents.hpp>
 #include <StepGeom_Direction.hpp>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_DraughtingAnnotationOccurrence.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_DraughtingCallout.hpp>
+
 #include <StepVisual_DraughtingPreDefinedColour.hpp>
 #include <StepVisual_DraughtingPreDefinedCurveFont.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_DraughtingSubfigureRepresentation.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_DraughtingSymbolRepresentation.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_DraughtingTextLiteralWithDelineation.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_DrawingDefinition.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_DrawingRevision.hxx>
+
 #include <StepShape_Edge.hpp>
 #include <StepShape_EdgeCurve.hpp>
 #include <StepShape_EdgeLoop.hpp>
@@ -159,15 +130,14 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepGeom_EvaluatedDegeneratePcurve.hpp>
 #include <StepBasic_ExternalSource.hpp>
 #include <StepVisual_ExternallyDefinedCurveFont.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_ExternallyDefinedHatchStyle.hxx>
+
 #include <StepBasic_ExternallyDefinedItem.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_ExternallyDefinedSymbol.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_ExternallyDefinedTextFont.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_ExternallyDefinedTileStyle.hxx>
+
 #include <StepShape_ExtrudedAreaSolid.hpp>
 #include <StepShape_Face.hpp>
-// Removed from Rev2 to Rev4 : <StepShape_FaceBasedSurfaceModel.hpp>
+
 #include <StepShape_FaceBound.hpp>
 #include <StepShape_FaceOuterBound.hpp>
 #include <StepShape_FaceSurface.hpp>
@@ -175,9 +145,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepShape_FacetedBrepShapeRepresentation.hpp>
 #include <StepVisual_FillAreaStyle.hpp>
 #include <StepVisual_FillAreaStyleColour.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_FillAreaStyleHatching.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_FillAreaStyleTileSymbolWithStyle.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_FillAreaStyleTiles.hxx>
+
 #include <StepRepr_FunctionallyDefinedTransformation.hpp>
 #include <StepShape_GeometricCurveSet.hpp>
 #include <StepGeom_GeometricRepresentationContext.hpp>
@@ -206,11 +174,11 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepBasic_MeasureWithUnit.hpp>
 #include <StepVisual_MechanicalDesignGeometricPresentationArea.hpp>
 #include <StepVisual_MechanicalDesignGeometricPresentationRepresentation.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_MechanicalDesignPresentationArea.hxx>
+
 #include <StepBasic_NamedUnit.hpp>
 #include <StepGeom_OffsetCurve3d.hpp>
 #include <StepGeom_OffsetSurface.hpp>
-// Removed from Rev2 to Rev4 : <StepAP214_OneDirectionRepeatFactor.hxx>
+
 #include <StepShape_OpenShell.hpp>
 #include <StepBasic_OrdinalDate.hpp>
 #include <StepBasic_Organization.hpp>
@@ -247,8 +215,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepVisual_PreDefinedColour.hpp>
 #include <StepVisual_PreDefinedCurveFont.hpp>
 #include <StepVisual_PreDefinedItem.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_PreDefinedSymbol.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_PreDefinedTextFont.hpp>
 
 #include <StepVisual_PresentationArea.hpp>
@@ -264,7 +231,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepBasic_Product.hpp>
 #include <StepBasic_ProductCategory.hpp>
 #include <StepBasic_ProductContext.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_ProductDataRepresentationView.hxx>
+
 #include <StepBasic_ProductDefinition.hpp>
 #include <StepBasic_ProductDefinitionContext.hpp>
 #include <StepBasic_ProductDefinitionFormation.hpp>
@@ -326,31 +293,22 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepVisual_SurfaceStyleUsage.hpp>
 #include <StepShape_SweptAreaSolid.hpp>
 #include <StepGeom_SweptSurface.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_SymbolColour.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_SymbolRepresentation.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_SymbolRepresentationMap.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_SymbolStyle.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_SymbolTarget.hxx>
+
 #include <StepVisual_Template.hpp>
 #include <StepVisual_TemplateInstance.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_TerminatorSymbol.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_TextLiteral.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_TextLiteralWithAssociatedCurves.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_TextLiteralWithBlankingBox.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_TextLiteralWithDelineation.hxx>
-// Removed from Rev2 to Rev4 : <StepVisual_TextLiteralWithExtent.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_TextStyle.hpp>
 #include <StepVisual_TextStyleForDefinedFont.hpp>
 #include <StepVisual_TextStyleWithBoxCharacteristics.hpp>
-// Removed from Rev2 to Rev4 : <StepVisual_TextStyleWithMirror.hxx>
+
 #include <StepShape_TopologicalRepresentationItem.hpp>
 #include <StepGeom_ToroidalSurface.hpp>
 #include <StepShape_Torus.hpp>
 #include <StepShape_TransitionalShapeRepresentation.hpp>
 #include <StepGeom_TrimmedCurve.hpp>
-// Removed from Rev2 to Rev4 : <StepAP214_TwoDirectionRepeatFactor.hxx>
+
 #include <StepBasic_UncertaintyMeasureWithUnit.hpp>
 #include <StepGeom_UniformCurve.hpp>
 #include <StepGeom_UniformSurface.hpp>
@@ -375,7 +333,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepGeom_GeometricRepresentationContextAndGlobalUnitAssignedContext.hpp>
 #include <StepShape_LoopAndPath.hpp>
 
-// Added by FMA
 #include <StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx.hpp>
 #include <StepGeom_GeometricRepresentationContextAndParametricRepresentationContext.hpp>
 #include <StepBasic_ConversionBasedUnitAndSolidAngleUnit.hpp>
@@ -384,7 +341,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepShape_FacetedBrepAndBrepWithVoids.hpp>
 #include <StepBasic_MechanicalContext.hpp>
 
-// full Rev4
 #include <StepBasic_TimeMeasureWithUnit.hpp>
 #include <StepBasic_RatioUnit.hpp>
 #include <StepBasic_TimeUnit.hpp>
@@ -401,8 +357,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepRepr_ItemDefinedTransformation.hpp>
 #include <StepVisual_PresentedItemRepresentation.hpp>
 #include <StepVisual_PresentationLayerUsage.hpp>
-
-//  Added by CKY (JUL-1998) for AP214 CC1 -> CC2
 
 #include <StepAP214_AutoDesignDocumentReference.hpp>
 #include <StepBasic_Document.hpp>
@@ -478,15 +432,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepBasic/RWStepBasic_RWAddress.hpp"
 #include "../RWStepShape/RWStepShape_RWAdvancedBrepShapeRepresentation.hpp"
 #include "../RWStepShape/RWStepShape_RWAdvancedFace.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWAnnotationCurveOccurrence.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWAnnotationFillArea.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWAnnotationFillAreaOccurrence.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWAnnotationOccurrence.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWAnnotationSubfigureOccurrence.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWAnnotationSymbol.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWAnnotationSymbolOccurrence.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWAnnotationText.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWAnnotationTextOccurrence.hxx>
+
 #include "../RWStepBasic/RWStepBasic_RWApplicationContext.hpp"
 #include "../RWStepBasic/RWStepBasic_RWApplicationContextElement.hpp"
 #include "../RWStepBasic/RWStepBasic_RWApplicationProtocolDefinition.hpp"
@@ -507,7 +453,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "RWStepAP214_RWAutoDesignPersonAndOrganizationAssignment.hpp"
 #include "RWStepAP214_RWAutoDesignPresentedItem.hpp"
 #include "RWStepAP214_RWAutoDesignSecurityClassificationAssignment.hpp"
-// Removed from Rev2 to Rev4 : <RWStepAP214_RWAutoDesignViewArea.hxx>
+
 #include "../RWStepGeom/RWStepGeom_RWAxis1Placement.hpp"
 #include "../RWStepGeom/RWStepGeom_RWAxis2Placement2d.hpp"
 #include "../RWStepGeom/RWStepGeom_RWAxis2Placement3d.hpp"
@@ -544,9 +490,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepGeom/RWStepGeom_RWCompositeCurveOnSurface.hpp"
 #include "../RWStepGeom/RWStepGeom_RWCompositeCurveSegment.hpp"
 #include "../RWStepVisual/RWStepVisual_RWCompositeText.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWCompositeTextWithAssociatedCurves.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWCompositeTextWithBlankingBox.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include "../RWStepVisual/RWStepVisual_RWCompositeTextWithExtent.hpp"
 
 #include "../RWStepGeom/RWStepGeom_RWConic.hpp"
@@ -556,7 +500,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepVisual/RWStepVisual_RWContextDependentOverRidingStyledItem.hpp"
 #include "../RWStepBasic/RWStepBasic_RWConversionBasedUnit.hpp"
 #include "../RWStepBasic/RWStepBasic_RWCoordinatedUniversalTimeOffset.hpp"
-// Removed from Rev2 to Rev4 : <RWStepShape_RWCsgRepresentation.hxx>
+
 #include "../RWStepShape/RWStepShape_RWCsgShapeRepresentation.hpp"
 #include "../RWStepShape/RWStepShape_RWCsgSolid.hpp"
 #include "../RWStepGeom/RWStepGeom_RWCurve.hpp"
@@ -570,24 +514,18 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepBasic/RWStepBasic_RWDateAndTime.hpp"
 #include "../RWStepBasic/RWStepBasic_RWDateRole.hpp"
 #include "../RWStepBasic/RWStepBasic_RWDateTimeRole.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWDefinedSymbol.hxx>
+
 #include "../RWStepRepr/RWStepRepr_RWDefinitionalRepresentation.hpp"
 #include "../RWStepGeom/RWStepGeom_RWDegeneratePcurve.hpp"
 #include "../RWStepGeom/RWStepGeom_RWDegenerateToroidalSurface.hpp"
 #include "../RWStepRepr/RWStepRepr_RWDescriptiveRepresentationItem.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWDimensionCurve.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWDimensionCurveTerminator.hxx>
+
 #include "../RWStepBasic/RWStepBasic_RWDimensionalExponents.hpp"
 #include "../RWStepGeom/RWStepGeom_RWDirection.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWDraughtingAnnotationOccurrence.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWDraughtingCallout.hxx>
+
 #include "../RWStepVisual/RWStepVisual_RWDraughtingPreDefinedColour.hpp"
 #include "../RWStepVisual/RWStepVisual_RWDraughtingPreDefinedCurveFont.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWDraughtingSubfigureRepresentation.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWDraughtingSymbolRepresentation.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWDraughtingTextLiteralWithDelineation.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWDrawingDefinition.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWDrawingRevision.hxx>
+
 #include "../RWStepShape/RWStepShape_RWEdge.hpp"
 #include "../RWStepShape/RWStepShape_RWEdgeCurve.hpp"
 #include "../RWStepShape/RWStepShape_RWEdgeLoop.hpp"
@@ -596,14 +534,12 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepGeom/RWStepGeom_RWEvaluatedDegeneratePcurve.hpp"
 #include "../RWStepBasic/RWStepBasic_RWExternalSource.hpp"
 #include "../RWStepVisual/RWStepVisual_RWExternallyDefinedCurveFont.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWExternallyDefinedHatchStyle.hxx>
+
 #include "../RWStepBasic/RWStepBasic_RWExternallyDefinedItem.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWExternallyDefinedSymbol.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWExternallyDefinedTextFont.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWExternallyDefinedTileStyle.hxx>
+
 #include "../RWStepShape/RWStepShape_RWExtrudedAreaSolid.hpp"
 #include "../RWStepShape/RWStepShape_RWFace.hpp"
-// Removed from Rev2 to Rev4 : <RWStepShape_RWFaceBasedSurfaceModel.hxx>
+
 #include "../RWStepShape/RWStepShape_RWFaceBound.hpp"
 #include "../RWStepShape/RWStepShape_RWFaceOuterBound.hpp"
 #include "../RWStepShape/RWStepShape_RWFaceSurface.hpp"
@@ -611,9 +547,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepShape/RWStepShape_RWFacetedBrepShapeRepresentation.hpp"
 #include "../RWStepVisual/RWStepVisual_RWFillAreaStyle.hpp"
 #include "../RWStepVisual/RWStepVisual_RWFillAreaStyleColour.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWFillAreaStyleHatching.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWFillAreaStyleTileSymbolWithStyle.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWFillAreaStyleTiles.hxx>
+
 #include "../RWStepRepr/RWStepRepr_RWFunctionallyDefinedTransformation.hpp"
 #include "../RWStepShape/RWStepShape_RWGeometricCurveSet.hpp"
 #include "../RWStepGeom/RWStepGeom_RWGeometricRepresentationContext.hpp"
@@ -643,11 +577,11 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepRepr/RWStepRepr_RWMechanicalDesignAndDraughtingRelationship.hpp"
 #include "../RWStepVisual/RWStepVisual_RWMechanicalDesignGeometricPresentationArea.hpp"
 #include "../RWStepVisual/RWStepVisual_RWMechanicalDesignGeometricPresentationRepresentation.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWMechanicalDesignPresentationArea.hxx>
+
 #include "../RWStepBasic/RWStepBasic_RWNamedUnit.hpp"
 #include "../RWStepGeom/RWStepGeom_RWOffsetCurve3d.hpp"
 #include "../RWStepGeom/RWStepGeom_RWOffsetSurface.hpp"
-// Removed from Rev2 to Rev4 : <RWStepAP214_RWOneDirectionRepeatFactor.hxx>
+
 #include "../RWStepShape/RWStepShape_RWOpenShell.hpp"
 #include "../RWStepBasic/RWStepBasic_RWOrdinalDate.hpp"
 #include "../RWStepBasic/RWStepBasic_RWOrganization.hpp"
@@ -684,8 +618,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepVisual/RWStepVisual_RWPreDefinedColour.hpp"
 #include "../RWStepVisual/RWStepVisual_RWPreDefinedCurveFont.hpp"
 #include "../RWStepVisual/RWStepVisual_RWPreDefinedItem.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWPreDefinedSymbol.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWPreDefinedTextFont.hxx>
+
 #include "../RWStepVisual/RWStepVisual_RWPresentationArea.hpp"
 #include "../RWStepVisual/RWStepVisual_RWPresentationLayerAssignment.hpp"
 #include "../RWStepVisual/RWStepVisual_RWPresentationRepresentation.hpp"
@@ -699,7 +632,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepBasic/RWStepBasic_RWProduct.hpp"
 #include "../RWStepBasic/RWStepBasic_RWProductCategory.hpp"
 #include "../RWStepBasic/RWStepBasic_RWProductContext.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWProductDataRepresentationView.hxx>
+
 #include "../RWStepBasic/RWStepBasic_RWProductDefinition.hpp"
 #include "../RWStepBasic/RWStepBasic_RWProductDefinitionContext.hpp"
 #include "../RWStepBasic/RWStepBasic_RWProductDefinitionFormation.hpp"
@@ -761,31 +694,22 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepVisual/RWStepVisual_RWSurfaceStyleUsage.hpp"
 #include "../RWStepShape/RWStepShape_RWSweptAreaSolid.hpp"
 #include "../RWStepGeom/RWStepGeom_RWSweptSurface.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWSymbolColour.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWSymbolRepresentation.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWSymbolRepresentationMap.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWSymbolStyle.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWSymbolTarget.hxx>
+
 #include "../RWStepVisual/RWStepVisual_RWTemplate.hpp"
 #include "../RWStepVisual/RWStepVisual_RWTemplateInstance.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWTerminatorSymbol.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include "../RWStepVisual/RWStepVisual_RWTextLiteral.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWTextLiteralWithAssociatedCurves.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWTextLiteralWithBlankingBox.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWTextLiteralWithDelineation.hxx>
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWTextLiteralWithExtent.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include "../RWStepVisual/RWStepVisual_RWTextStyle.hpp"
 #include "../RWStepVisual/RWStepVisual_RWTextStyleForDefinedFont.hpp"
 #include "../RWStepVisual/RWStepVisual_RWTextStyleWithBoxCharacteristics.hpp"
-// Removed from Rev2 to Rev4 : <RWStepVisual_RWTextStyleWithMirror.hxx>
+
 #include "../RWStepShape/RWStepShape_RWTopologicalRepresentationItem.hpp"
 #include "../RWStepGeom/RWStepGeom_RWToroidalSurface.hpp"
 #include "../RWStepShape/RWStepShape_RWTorus.hpp"
 #include "../RWStepShape/RWStepShape_RWTransitionalShapeRepresentation.hpp"
 #include "../RWStepGeom/RWStepGeom_RWTrimmedCurve.hpp"
-// Removed from Rev2 to Rev4 : <RWStepAP214_RWTwoDirectionRepeatFactor.hxx>
+
 #include "../RWStepBasic/RWStepBasic_RWUncertaintyMeasureWithUnit.hpp"
 #include "../RWStepGeom/RWStepGeom_RWUniformCurve.hpp"
 #include "../RWStepGeom/RWStepGeom_RWUniformSurface.hpp"
@@ -810,7 +734,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepGeom/RWStepGeom_RWGeometricRepresentationContextAndGlobalUnitAssignedContext.hpp"
 #include "../RWStepShape/RWStepShape_RWLoopAndPath.hpp"
 
-// Added by FMA
 #include "../RWStepGeom/RWStepGeom_RWGeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx.hpp"
 #include "../RWStepGeom/RWStepGeom_RWGeometricRepresentationContextAndParametricRepresentationContext.hpp"
 #include "../RWStepBasic/RWStepBasic_RWConversionBasedUnitAndSolidAngleUnit.hpp"
@@ -819,22 +742,17 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepShape/RWStepShape_RWFacetedBrepAndBrepWithVoids.hpp"
 #include "../RWStepBasic/RWStepBasic_RWMechanicalContext.hpp"
 
-// full Rev4
 #include "../RWStepBasic/RWStepBasic_RWSiUnitAndRatioUnit.hpp"
 #include "../RWStepBasic/RWStepBasic_RWSiUnitAndTimeUnit.hpp"
 #include "../RWStepBasic/RWStepBasic_RWConversionBasedUnitAndRatioUnit.hpp"
 #include "../RWStepBasic/RWStepBasic_RWConversionBasedUnitAndTimeUnit.hpp"
 #include "../RWStepBasic/RWStepBasic_RWApprovalDateTime.hpp"
-// not yet #include <StepVisual_CameraImage2dWithScale.hpp> derived
-// not yet #include <StepVisual_CameraImage3dWithScale.hpp> derived
-// not yet #include <StepVisual_CartesianTransformationOperator2d.hxx> derived
+
 #include "../RWStepBasic/RWStepBasic_RWDerivedUnit.hpp"
 #include "../RWStepBasic/RWStepBasic_RWDerivedUnitElement.hpp"
 #include "../RWStepRepr/RWStepRepr_RWItemDefinedTransformation.hpp"
 #include "../RWStepVisual/RWStepVisual_RWPresentedItemRepresentation.hpp"
 #include "../RWStepVisual/RWStepVisual_RWPresentationLayerUsage.hpp"
-
-//  Added by CKY (JUL-1998) for AP214 CC1 -> CC2
 
 #include "RWStepAP214_RWAutoDesignDocumentReference.hpp"
 #include "../RWStepBasic/RWStepBasic_RWDocument.hpp"
@@ -858,7 +776,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 
 #include "../RWStepShape/RWStepShape_RWContextDependentShapeRepresentation.hpp"
 
-// Added from CD to DIS (S4134)
 #include <StepAP214_AppliedDateAndTimeAssignment.hpp>
 #include <StepAP214_AppliedDateAssignment.hpp>
 #include <StepAP214_AppliedApprovalAssignment.hpp>
@@ -889,7 +806,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepShape/RWStepShape_RWRevolvedFaceSolid.hpp"
 #include "../RWStepShape/RWStepShape_RWSweptFaceSolid.hpp"
 
-// Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
 #include <StepRepr_MeasureRepresentationItem.hpp>
 #include "../RWStepRepr/RWStepRepr_RWMeasureRepresentationItem.hpp"
 #include <StepBasic_SiUnitAndAreaUnit.hpp>
@@ -901,7 +817,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepBasic/RWStepBasic_RWConversionBasedUnitAndAreaUnit.hpp"
 #include "../RWStepBasic/RWStepBasic_RWConversionBasedUnitAndVolumeUnit.hpp"
 
-// Added by ABV 10.11.99 for AP203
 #include <StepBasic_Action.hpp>
 #include <StepBasic_ActionAssignment.hpp>
 #include <StepBasic_ActionMethod.hpp>
@@ -959,11 +874,9 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepBasic/RWStepBasic_RWProductCategoryRelationship.hpp"
 #include "../RWStepBasic/RWStepBasic_RWActionRequestSolution.hpp"
 
-// Added by ABV 13.01.00 for CAX-IF TRJ3
 #include <StepVisual_DraughtingModel.hpp>
 #include "../RWStepVisual/RWStepVisual_RWDraughtingModel.hpp"
 
-// Added by ABV 18.04.00 for CAX-IF TRJ4 (dimensions)
 #include <StepShape_AngularLocation.hpp>
 #include <StepShape_AngularSize.hpp>
 #include <StepShape_DimensionalCharacteristicRepresentation.hpp>
@@ -981,7 +894,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepShape/RWStepShape_RWDimensionalSizeWithPath.hpp"
 #include "../RWStepShape/RWStepShape_RWShapeDimensionRepresentation.hpp"
 
-// Added by ABV 10.05.00 for CAX-IF TRJ4 (external references)
 #include <StepBasic_DocumentRepresentationType.hpp>
 #include <StepBasic_ObjectRole.hpp>
 #include <StepBasic_RoleAssociation.hpp>
@@ -1009,11 +921,9 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "RWStepAP214_RWExternallyDefinedGeneralProperty.hpp"
 #include "RWStepAP214_RWAppliedExternalIdentificationAssignment.hpp"
 
-// abv 11.07.00: CAX-IF TRJ4: k1_geo-ac.stp
 #include <StepShape_DefinitionalRepresentationAndShapeRepresentation.hpp>
 #include "../RWStepShape/RWStepShape_RWDefinitionalRepresentationAndShapeRepresentation.hpp"
 
-// Added by CKY , 25 APR 2001 for Dimensional Tolerances (CAX-IF TRJ7)
 #include <StepRepr_CompositeShapeAspect.hpp>
 #include <StepRepr_DerivedShapeAspect.hpp>
 #include <StepRepr_Extension.hpp>
@@ -1039,7 +949,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepShape/RWStepShape_RWMeasureRepresentationItemAndQualifiedRepresentationItem.hpp"
 #include "../RWStepRepr/RWStepRepr_RWCompoundRepresentationItem.hpp"
 
-// abv 28.12.01: CAX-IF TRJ9: edge_based_wireframe
 #include <StepShape_CompoundShapeRepresentation.hpp>
 #include <StepShape_ConnectedEdgeSet.hpp>
 #include <StepShape_ConnectedFaceShapeRepresentation.hpp>
@@ -1055,7 +964,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepShape/RWStepShape_RWFaceBasedSurfaceModel.hpp"
 #include "../RWStepShape/RWStepShape_RWNonManifoldSurfaceShapeRepresentation.hpp"
 
-// gka 08.01.02 TRJ9
 #include <StepGeom_OrientedSurface.hpp>
 #include <StepShape_Subface.hpp>
 #include <StepShape_Subedge.hpp>
@@ -1068,7 +976,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepShape/RWStepShape_RWSeamEdge.hpp"
 #include "../RWStepShape/RWStepShape_RWConnectedFaceSubSet.hpp"
 
-// Added for AP209
 #include <StepBasic_EulerAngles.hpp>
 #include <StepBasic_MassUnit.hpp>
 #include <StepBasic_ThermodynamicTemperatureUnit.hpp>
@@ -1230,7 +1137,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepFEA/RWStepFEA_RWAlignedSurface3dElementCoordinateSystem.hpp"
 #include "../RWStepFEA/RWStepFEA_RWConstantSurface3dElementCoordinateSystem.hpp"
 
-// 23.01.2003
 #include <StepFEA_CurveElementIntervalLinearlyVarying.hpp>
 #include <StepFEA_FeaCurveSectionGeometricRelationship.hpp>
 #include <StepFEA_FeaSurfaceSectionGeometricRelationship.hpp>
@@ -1238,13 +1144,11 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepFEA/RWStepFEA_RWFeaCurveSectionGeometricRelationship.hpp"
 #include "../RWStepFEA/RWStepFEA_RWFeaSurfaceSectionGeometricRelationship.hpp"
 
-// PTV 28.01.2003 TRJ11 AP214 external references
 #include <StepBasic_DocumentProductAssociation.hpp>
 #include <StepBasic_DocumentProductEquivalence.hpp>
 #include "../RWStepBasic/RWStepBasic_RWDocumentProductAssociation.hpp"
 #include "../RWStepBasic/RWStepBasic_RWDocumentProductEquivalence.hpp"
 
-//  TR12J 04.06.2003 G&DT entities GKA
 #include <StepShape_ShapeRepresentationWithParameters.hpp>
 #include <StepDimTol_AngularityTolerance.hpp>
 #include <StepDimTol_ConcentricityTolerance.hpp>
@@ -1306,13 +1210,11 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <StepDimTol_GeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol.hpp>
 #include "../RWStepDimTol/RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol.hpp"
 
-// added by skl 10.02.2004 for TRJ13
 #include <StepBasic_ConversionBasedUnitAndMassUnit.hpp>
 #include "../RWStepBasic/RWStepBasic_RWConversionBasedUnitAndMassUnit.hpp"
 #include <StepBasic_MassMeasureWithUnit.hpp>
 #include "../RWStepBasic/RWStepBasic_RWMassMeasureWithUnit.hpp"
 
-// Added by ika for GD&T AP242
 #include "../RWStepRepr/RWStepRepr_RWApex.hpp"
 #include "../RWStepRepr/RWStepRepr_RWCentreOfSymmetry.hpp"
 #include "../RWStepRepr/RWStepRepr_RWGeometricAlignment.hpp"
@@ -1457,7 +1359,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include "../RWStepVisual/RWStepVisual_RWSurfaceStyleRendering.hpp"
 #include "../RWStepVisual/RWStepVisual_RWSurfaceStyleRenderingWithProperties.hpp"
 
-// Added for kinematics implementation
 #include "../RWStepGeom/RWStepGeom_RWSuParameters.hpp"
 #include "../RWStepKinematics/RWStepKinematics_RWActuatedKinPairAndOrderKinPair.hpp"
 #include "../RWStepKinematics/RWStepKinematics_RWActuatedKinematicPair.hpp"
@@ -1620,7 +1521,6 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule, StepData_ReadWriteModule
 #include <string_view>
 #include <mutex>
 
-// -- General Declarations (Recognize, StepType) ---
 namespace
 {
 
@@ -2006,13 +1906,10 @@ namespace
   static constexpr std::string_view Reco_ViewVolume("VIEW_VOLUME");
   static constexpr std::string_view Reco_WeekOfYearAndDayDate("WEEK_OF_YEAR_AND_DAY_DATE");
 
-  // Added by FMA for Rev4
-
   static constexpr std::string_view Reco_SolidAngleUnit("SOLID_ANGLE_UNIT");
   static constexpr std::string_view Reco_MechanicalContext("MECHANICAL_CONTEXT");
   static constexpr std::string_view Reco_DesignContext("DESIGN_CONTEXT");
 
-  // Added for full Rev4
   static constexpr std::string_view Reco_TimeMeasureWithUnit("TIME_MEASURE_WITH_UNIT");
   static constexpr std::string_view Reco_RatioUnit("RATIO_UNIT");
   static constexpr std::string_view Reco_TimeUnit("TIME_UNIT");
@@ -2027,8 +1924,6 @@ namespace
   static constexpr std::string_view Reco_PresentedItemRepresentation(
     "PRESENTED_ITEM_REPRESENTATION");
   static constexpr std::string_view Reco_PresentationLayerUsage("PRESENTATION_LAYER_USAGE");
-
-  // Added for AP214 : CC1 -> CC2
 
   static constexpr std::string_view Reco_AutoDesignDocumentReference(
     "AUTO_DESIGN_DOCUMENT_REFERENCE");
@@ -2070,7 +1965,6 @@ namespace
   static constexpr std::string_view Reco_ContextDependentShapeRepresentation(
     "CONTEXT_DEPENDENT_SHAPE_REPRESENTATION");
 
-  // Added from CD To DIS (S4134)
   static constexpr std::string_view Reco_AppliedDateAndTimeAssignment(
     "APPLIED_DATE_AND_TIME_ASSIGNMENT");
   static constexpr std::string_view Reco_AppliedDateAssignment("APPLIED_DATE_ASSIGNMENT");
@@ -2090,12 +1984,10 @@ namespace
   static constexpr std::string_view Reco_RevolvedFaceSolid("REVOLVED_FACE_SOLID");
   static constexpr std::string_view Reco_SweptFaceSolid("SWEPT_FACE_SOLID");
 
-  // Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
   static constexpr std::string_view Reco_MeasureRepresentationItem("MEASURE_REPRESENTATION_ITEM");
   static constexpr std::string_view Reco_AreaUnit("AREA_UNIT");
   static constexpr std::string_view Reco_VolumeUnit("VOLUME_UNIT");
 
-  // Added by ABV 10.11.99 for AP203
   static constexpr std::string_view Reco_Action("ACTION");
   static constexpr std::string_view Reco_ActionAssignment("ACTION_ASSIGNMENT");
   static constexpr std::string_view Reco_ActionMethod("ACTION_METHOD");
@@ -2130,7 +2022,7 @@ namespace
     "PRODUCT_CATEGORY_RELATIONSHIP");
   static constexpr std::string_view Reco_ActionRequestSolution("ACTION_REQUEST_SOLUTION");
   static constexpr std::string_view Reco_DraughtingModel("DRAUGHTING_MODEL");
-  // Added by ABV 18.04.00 for CAX-IF TRJ4
+
   static constexpr std::string_view Reco_AngularLocation("ANGULAR_LOCATION");
   static constexpr std::string_view Reco_AngularSize("ANGULAR_SIZE");
   static constexpr std::string_view Reco_DimensionalCharacteristicRepresentation(
@@ -2142,7 +2034,7 @@ namespace
   static constexpr std::string_view Reco_DimensionalSizeWithPath("DIMENSIONAL_SIZE_WITH_PATH");
   static constexpr std::string_view Reco_ShapeDimensionRepresentation(
     "SHAPE_DIMENSION_REPRESENTATION");
-  // Added by ABV 10.05.00 for CAX-IF TRJ4 (external references)
+
   static constexpr std::string_view Reco_DocumentRepresentationType("DOCUMENT_REPRESENTATION_TYPE");
   static constexpr std::string_view Reco_ObjectRole("OBJECT_ROLE");
   static constexpr std::string_view Reco_RoleAssociation("ROLE_ASSOCIATION");
@@ -2159,7 +2051,7 @@ namespace
     "EXTERNALLY_DEFINED_GENERAL_PROPERTY");
   static constexpr std::string_view Reco_AppliedExternalIdentificationAssignment(
     "APPLIED_EXTERNAL_IDENTIFICATION_ASSIGNMENT");
-  // Added by CKY , 25 APR 2001 for Dimensional Tolerances (CAX-IF TRJ7)
+
   static constexpr std::string_view Reco_CompositeShapeAspect("COMPOSITE_SHAPE_ASPECT");
   static constexpr std::string_view Reco_DerivedShapeAspect("DERIVED_SHAPE_ASPECT");
   static constexpr std::string_view Reco_Extension("EXTENSION");
@@ -2190,14 +2082,12 @@ namespace
   static constexpr std::string_view Reco_NonManifoldSurfaceShapeRepresentation(
     "NON_MANIFOLD_SURFACE_SHAPE_REPRESENTATION");
 
-  // gka 08.01.02
   static constexpr std::string_view Reco_OrientedSurface("ORIENTED_SURFACE");
   static constexpr std::string_view Reco_Subface("SUBFACE");
   static constexpr std::string_view Reco_Subedge("SUBEDGE");
   static constexpr std::string_view Reco_SeamEdge("SEAM_EDGE");
   static constexpr std::string_view Reco_ConnectedFaceSubSet("CONNECTED_FACE_SUB_SET");
 
-  // Added for AP209
   static constexpr std::string_view Reco_EulerAngles("EULER_ANGLES");
   static constexpr std::string_view Reco_MassUnit("MASS_UNIT");
   static constexpr std::string_view Reco_MassMeasureWithUnit("MASS_MEASURE_WITH_UNIT");
@@ -2233,7 +2123,7 @@ namespace
   static constexpr std::string_view Reco_Curve3dElementRepresentation(
     "CURVE_3D_ELEMENT_REPRESENTATION");
   static constexpr std::string_view Reco_Node("NODE");
-  // static constexpr std::string_view Reco_CurveElementEndCoordinateSystem(" ");
+
   static constexpr std::string_view Reco_CurveElementEndOffset("CURVE_ELEMENT_END_OFFSET");
   static constexpr std::string_view Reco_CurveElementEndRelease("CURVE_ELEMENT_END_RELEASE");
   static constexpr std::string_view Reco_CurveElementInterval("CURVE_ELEMENT_INTERVAL");
@@ -2283,9 +2173,7 @@ namespace
     "PARAMETRIC_SURFACE_3D_ELEMENT_COORDINATE_SYSTEM");
   static constexpr std::string_view Reco_Surface3dElementRepresentation(
     "SURFACE_3D_ELEMENT_REPRESENTATION");
-  // static constexpr std::string_view Reco_SymmetricTensor22d(" ");
-  // static constexpr std::string_view Reco_SymmetricTensor42d(" ");
-  // static constexpr std::string_view Reco_SymmetricTensor43d(" ");
+
   static constexpr std::string_view Reco_Volume3dElementRepresentation(
     "VOLUME_3D_ELEMENT_REPRESENTATION");
   static constexpr std::string_view Reco_DataEnvironment("DATA_ENVIRONMENT");
@@ -2300,7 +2188,7 @@ namespace
   static constexpr std::string_view Reco_FreedomsList("FREEDOMS_LIST");
   static constexpr std::string_view Reco_ProductDefinitionFormationRelationship(
     "PRODUCT_DEFINITION_FORMATION_RELATIONSHIP");
-  // static constexpr std::string_view Reco_FeaModelDefinition("FEA_MODEL_DEFINITION");
+
   static constexpr std::string_view Reco_NodeDefinition("NODE_DEFINITION");
   static constexpr std::string_view Reco_StructuralResponseProperty("STRUCTURAL_RESPONSE_PROPERTY");
   static constexpr std::string_view Reco_StructuralResponsePropertyDefinitionRepresentation(
@@ -2316,11 +2204,9 @@ namespace
   static constexpr std::string_view Reco_FeaSurfaceSectionGeometricRelationship(
     "FEA_SURFACE_SECTION_GEOMETRIC_RELATIONSHIP");
 
-  // PTV 28.01.2003 TRJ11 AP214 external references
   static constexpr std::string_view Reco_DocumentProductAssociation("DOCUMENT_PRODUCT_ASSOCIATION");
   static constexpr std::string_view Reco_DocumentProductEquivalence("DOCUMENT_PRODUCT_EQUIVALENCE");
 
-  // Added by SKL 18.06.2003 for Dimensional Tolerances (CAX-IF TRJ11)
   static constexpr std::string_view Reco_ShapeRepresentationWithParameters(
     "SHAPE_REPRESENTATION_WITH_PARAMETERS");
   static constexpr std::string_view Reco_AngularityTolerance("ANGULARITY_TOLERANCE");
@@ -2351,7 +2237,6 @@ namespace
   static constexpr std::string_view Reco_DatumTarget("DATUM_TARGET");
   static constexpr std::string_view Reco_PlacedDatumTargetFeature("PLACED_DATUM_TARGET_FEATURE");
 
-  // Added by ika for GD&T AP242
   static constexpr std::string_view Reco_Apex("APEX");
   static constexpr std::string_view Reco_CentreOfSymmetry("CENTRE_OF_SYMMETRY");
   static constexpr std::string_view Reco_GeometricAlignment("GEOMETRIC_ALIGNMENT");
@@ -3004,9 +2889,6 @@ namespace
   static constexpr std::string_view s_CNGMRP("CNGMRP");
   static constexpr std::string_view s_CGRR("CGRR");
 
-  // -- Definition of the libraries --
-
-  // Hasher for std::string_view using OCCT hash utilities.
   struct StringViewHasher
   {
     size_t operator()(const std::string_view& theKey) const noexcept
@@ -3023,14 +2905,12 @@ namespace
 
   using StringViewDataMap = NCollection_DataMap<std::string_view, int, StringViewHasher>;
 
-  // Static maps for theTypenums and theTypeshor
   static StringViewDataMap THE_TYPENUMS;
-  // Static map for theTypeshor
+
   static StringViewDataMap THE_TYPESHOR;
-  // Static allocator for the maps
+
   static occ::handle<NCollection_IncAllocator> THE_INC_ALLOCATOR;
 
-  // Initialize theTypenums map
   static void initializeTypenums(StringViewDataMap& theTypenums)
   {
     theTypenums.Clear(THE_INC_ALLOCATOR);
@@ -3353,11 +3233,11 @@ namespace
     theTypenums.Bind(Reco_VertexLoop, 315);
     theTypenums.Bind(Reco_ViewVolume, 317);
     theTypenums.Bind(Reco_WeekOfYearAndDayDate, 318);
-    // Added by FMA  for Rev4
+
     theTypenums.Bind(Reco_SolidAngleUnit, 336);
     theTypenums.Bind(Reco_MechanicalContext, 339);
-    theTypenums.Bind(Reco_DesignContext, 340); // by CKY
-    // full Rev4 (simple types)
+    theTypenums.Bind(Reco_DesignContext, 340);
+
     theTypenums.Bind(Reco_TimeMeasureWithUnit, 341);
     theTypenums.Bind(Reco_RatioUnit, 342);
     theTypenums.Bind(Reco_TimeUnit, 343);
@@ -3370,8 +3250,6 @@ namespace
     theTypenums.Bind(Reco_ItemDefinedTransformation, 354);
     theTypenums.Bind(Reco_PresentedItemRepresentation, 355);
     theTypenums.Bind(Reco_PresentationLayerUsage, 356);
-
-    //  AP214 : CC1 -> CC2
 
     theTypenums.Bind(Reco_AutoDesignDocumentReference, 366);
 
@@ -3402,7 +3280,7 @@ namespace
     theTypenums.Bind(Reco_MaterialDesignation, 390);
 
     theTypenums.Bind(Reco_ContextDependentShapeRepresentation, 391);
-    // Added from CD to DIS (S4134)
+
     theTypenums.Bind(Reco_AppliedDateAndTimeAssignment, 392);
     theTypenums.Bind(Reco_AppliedDateAssignment, 393);
     theTypenums.Bind(Reco_AppliedApprovalAssignment, 394);
@@ -3418,12 +3296,10 @@ namespace
     theTypenums.Bind(Reco_RevolvedFaceSolid, 404);
     theTypenums.Bind(Reco_SweptFaceSolid, 405);
 
-    // Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
     theTypenums.Bind(Reco_MeasureRepresentationItem, 406);
     theTypenums.Bind(Reco_AreaUnit, 407);
     theTypenums.Bind(Reco_VolumeUnit, 408);
 
-    // Added by ABV 10.11.99 for AP203
     theTypenums.Bind(Reco_Action, 413);
     theTypenums.Bind(Reco_ActionAssignment, 414);
     theTypenums.Bind(Reco_ActionMethod, 415);
@@ -3463,7 +3339,6 @@ namespace
     theTypenums.Bind(Reco_DimensionalSizeWithPath, 448);
     theTypenums.Bind(Reco_ShapeDimensionRepresentation, 449);
 
-    // Added by ABV 10.05.00 for CAX-IF TRJ4 (external references)
     theTypenums.Bind(Reco_DocumentRepresentationType, 450);
     theTypenums.Bind(Reco_ObjectRole, 451);
     theTypenums.Bind(Reco_RoleAssociation, 452);
@@ -3478,7 +3353,6 @@ namespace
     theTypenums.Bind(Reco_ExternallyDefinedGeneralProperty, 461);
     theTypenums.Bind(Reco_AppliedExternalIdentificationAssignment, 462);
 
-    // Added by CKY, 25 APR 2001 for CAX-IF TRJ7 (dimensional tolerances)
     theTypenums.Bind(Reco_CompositeShapeAspect, 470);
     theTypenums.Bind(Reco_DerivedShapeAspect, 471);
     theTypenums.Bind(Reco_Extension, 472);
@@ -3495,7 +3369,6 @@ namespace
     theTypenums.Bind(Reco_ValueRange, 483);
     theTypenums.Bind(Reco_ShapeAspectDerivingRelationship, 484);
 
-    // abv 27.12.01
     theTypenums.Bind(Reco_CompoundShapeRepresentation, 485);
     theTypenums.Bind(Reco_ConnectedEdgeSet, 486);
     theTypenums.Bind(Reco_ConnectedFaceShapeRepresentation, 487);
@@ -3504,14 +3377,12 @@ namespace
     theTypenums.Bind(Reco_FaceBasedSurfaceModel, 490);
     theTypenums.Bind(Reco_NonManifoldSurfaceShapeRepresentation, 491);
 
-    // gka 08.01.02
     theTypenums.Bind(Reco_OrientedSurface, 492);
     theTypenums.Bind(Reco_Subface, 493);
     theTypenums.Bind(Reco_Subedge, 494);
     theTypenums.Bind(Reco_SeamEdge, 495);
     theTypenums.Bind(Reco_ConnectedFaceSubSet, 496);
 
-    // AP209
     theTypenums.Bind(Reco_EulerAngles, 500);
     theTypenums.Bind(Reco_MassUnit, 501);
     theTypenums.Bind(Reco_ThermodynamicTemperatureUnit, 502);
@@ -3535,7 +3406,7 @@ namespace
     theTypenums.Bind(Reco_Curve3dElementProperty, 520);
     theTypenums.Bind(Reco_Curve3dElementRepresentation, 521);
     theTypenums.Bind(Reco_Node, 522);
-    //  theTypenums.Bind (Reco_CurveElementEndCoordinateSystem,523);
+
     theTypenums.Bind(Reco_CurveElementEndOffset, 524);
     theTypenums.Bind(Reco_CurveElementEndRelease, 525);
     theTypenums.Bind(Reco_CurveElementInterval, 526);
@@ -3573,9 +3444,7 @@ namespace
     theTypenums.Bind(Reco_ParametricCurve3dElementCoordinateSystem, 558);
     theTypenums.Bind(Reco_ParametricSurface3dElementCoordinateSystem, 559);
     theTypenums.Bind(Reco_Surface3dElementRepresentation, 560);
-    //  theTypenums.Bind (Reco_SymmetricTensor22d,561);
-    //  theTypenums.Bind (Reco_SymmetricTensor42d,562);
-    //  theTypenums.Bind (Reco_SymmetricTensor43d,563);
+
     theTypenums.Bind(Reco_Volume3dElementRepresentation, 564);
     theTypenums.Bind(Reco_DataEnvironment, 565);
     theTypenums.Bind(Reco_MaterialPropertyRepresentation, 566);
@@ -3586,7 +3455,7 @@ namespace
     theTypenums.Bind(Reco_FreedomAndCoefficient, 571);
     theTypenums.Bind(Reco_FreedomsList, 572);
     theTypenums.Bind(Reco_ProductDefinitionFormationRelationship, 573);
-    //  theTypenums.Bind (Reco_FeaModelDefinition,574);
+
     theTypenums.Bind(Reco_NodeDefinition, 575);
     theTypenums.Bind(Reco_StructuralResponseProperty, 576);
     theTypenums.Bind(Reco_StructuralResponsePropertyDefinitionRepresentation, 577);
@@ -3596,11 +3465,9 @@ namespace
     theTypenums.Bind(Reco_FeaCurveSectionGeometricRelationship, 582);
     theTypenums.Bind(Reco_FeaSurfaceSectionGeometricRelationship, 583);
 
-    // ptv 28.01.2003
     theTypenums.Bind(Reco_DocumentProductAssociation, 600);
     theTypenums.Bind(Reco_DocumentProductEquivalence, 601);
 
-    // Added by SKL 18.06.2003 for Dimensional Tolerances (CAX-IF TRJ11)
     theTypenums.Bind(Reco_CylindricityTolerance, 609);
     theTypenums.Bind(Reco_ShapeRepresentationWithParameters, 610);
     theTypenums.Bind(Reco_AngularityTolerance, 611);
@@ -3630,7 +3497,6 @@ namespace
 
     theTypenums.Bind(Reco_MassMeasureWithUnit, 651);
 
-    // Added by ika for GD&T AP242
     theTypenums.Bind(Reco_Apex, 660);
     theTypenums.Bind(Reco_CentreOfSymmetry, 661);
     theTypenums.Bind(Reco_GeometricAlignment, 662);
@@ -3786,24 +3652,11 @@ namespace
     theTypenums.Bind(Reco_MechanicalDesignAndDraughtingRelationship, 824);
   }
 
-  // Initialize theTypeshor map
   static void initializeTypeshor(StringViewDataMap& theTypeshor)
   {
     theTypeshor.Clear(THE_INC_ALLOCATOR);
     theTypeshor.ReSize(528);
-    //    SHORT NAMES
-    //    NB : la liste est celle de AP203
-    //    Directement exploite pour les types simples
-    //    Pour les types complexes, l option prise est de convertir les noms courts
-    //    en noms longs et de refaire l essai
 
-    // 203  theTypeshor.Bind ("ACTASS",ACTION_ASSIGNMENT);
-    // 203  theTypeshor.Bind ("ACTDRC",ACTION_DIRECTIVE);
-    // 203  theTypeshor.Bind ("ACTMTH",ACTION_METHOD);
-    // 203  theTypeshor.Bind ("ACRQAS",ACTION_REQUEST_ASSIGNMENT);
-    // 203  theTypeshor.Bind ("ACRQSL",ACTION_REQUEST_SOLUTION);
-    // 203  theTypeshor.Bind ("ACRQST",ACTION_REQUEST_STATUS);
-    // 203  theTypeshor.Bind ("ACTSTT",ACTION_STATUS);
     theTypeshor.Bind(s_ADDRSS, 1);
     theTypeshor.Bind(s_ABSR, 2);
     theTypeshor.Bind(s_ADVFC, 3);
@@ -3816,7 +3669,7 @@ namespace
     theTypeshor.Bind(s_ANSYOC, 10);
     theTypeshor.Bind(s_ANNTXT, 11);
     theTypeshor.Bind(s_ANTXOC, 12);
-    // 203  theTypeshor.Bind ("ALPRRL",ALTERNATE_PRODUCT_RELATIONSHIP);
+
     theTypeshor.Bind(s_APPCNT, 13);
     theTypeshor.Bind(s_APCNEL, 14);
     theTypeshor.Bind(s_APPRDF, 15);
@@ -3828,8 +3681,7 @@ namespace
     theTypeshor.Bind(s_APPRL, 20);
     theTypeshor.Bind(s_APPSTT, 21);
     theTypeshor.Bind(s_ARINST, 22);
-    // 203  theTypeshor.Bind ("AMWU",AREA_MEASURE_WITH_UNIT);
-    // 203  theTypeshor.Bind ("ARUNT",AREA_UNIT);
+
     theTypeshor.Bind(s_ASCMUS, 379);
     theTypeshor.Bind(s_ACUS, 384);
     theTypeshor.Bind(s_AX1PLC, 35);
@@ -3855,20 +3707,8 @@ namespace
     theTypeshor.Bind(s_CMRUSG, 58);
     theTypeshor.Bind(s_CRTPNT, 59);
     theTypeshor.Bind(s_CRTROP, 60);
-    // 203  theTypeshor.Bind ("CTO2",CARTESIAN_TRANSFORMATION_OPERATOR_2D);
-    theTypeshor.Bind(s_CTO3, 61);
-    // 203  theTypeshor.Bind ("CCDSAP",CC_DESIGN_APPROVAL);
-    // 203  theTypeshor.Bind ("CCDSCR",CC_DESIGN_CERTIFICATION);
-    // 203  theTypeshor.Bind ("CCDSCN",CC_DESIGN_CONTRACT);
-    // 203  theTypeshor.Bind ("CDDATA",CC_DESIGN_DATE_AND_TIME_ASSIGNMENT);
-    // 203  theTypeshor.Bind ("CDPAOA",CC_DESIGN_PERSON_AND_ORGANIZATION_ASSIGNMENT);
-    // 203  theTypeshor.Bind ("CDSC",CC_DESIGN_SECURITY_CLASSIFICATION);
-    // 203  theTypeshor.Bind ("CDS",CC_DESIGN_SPECIFICATION_REFERENCE);
-    // 203  theTypeshor.Bind ("CRTFCT",CERTIFICATION);
-    // 203  theTypeshor.Bind ("CRTASS",CERTIFICATION_ASSIGNMENT);
-    // 203  theTypeshor.Bind ("CRTTYP",CERTIFICATION_TYPE);
 
-    // 203  theTypeshor.Bind ("CHNRQS",CHANGE_REQUEST);
+    theTypeshor.Bind(s_CTO3, 61);
 
     theTypeshor.Bind(s_CLSSHL, 63);
     theTypeshor.Bind(s_CLRRGB, 65);
@@ -3876,24 +3716,18 @@ namespace
     theTypeshor.Bind(s_CMPCRV, 67);
     theTypeshor.Bind(s_CCOS, 68);
     theTypeshor.Bind(s_CMCRSG, 69);
-    // 203  theTypeshor.Bind ("CNFDSG",CONFIGURATION_DESIGN);
-    // 203  theTypeshor.Bind ("CNFEFF",CONFIGURATION_EFFECTIVITY);
-    // 203  theTypeshor.Bind ("CNFITM",CONFIGURATION_ITEM);
 
     theTypeshor.Bind(s_CMPTXT, 70);
     theTypeshor.Bind(s_CTWAC, 71);
     theTypeshor.Bind(s_CTWBB, 72);
     theTypeshor.Bind(s_CTWE, 73);
     theTypeshor.Bind(s_CNCSRF, 75);
-    // 203  theTypeshor.Bind ("CNEDST",CONNECTED_EDGE_SET);
+
     theTypeshor.Bind(s_CNFCST, 76);
     theTypeshor.Bind(s_CNDPIN, 77);
     theTypeshor.Bind(s_CDORSI, 78);
     theTypeshor.Bind(s_CDSR, 391);
-    // 203  theTypeshor.Bind ("CNDPUN",CONTEXT_DEPENDENT_UNIT);
-    // 203  theTypeshor.Bind ("CNTRCT",CONTRACT);
-    // 203  theTypeshor.Bind ("CNTASS",CONTRACT_ASSIGNMENT);
-    // 203  theTypeshor.Bind ("CNTTYP",CONTRACT_TYPE);
+
     theTypeshor.Bind(s_CNBSUN, 79);
     theTypeshor.Bind(s_CUTO, 80);
     theTypeshor.Bind(s_CSSHRP, 82);
@@ -3906,7 +3740,6 @@ namespace
     theTypeshor.Bind(s_CSFP, 89);
     theTypeshor.Bind(s_CYLSRF, 90);
 
-    // 203  theTypeshor.Bind ("DTDEFF",DATED_EFFECTIVITY);
     theTypeshor.Bind(s_DTANTM, 92);
     theTypeshor.Bind(s_DATA, 93);
     theTypeshor.Bind(s_DTASS, 94);
@@ -3920,9 +3753,9 @@ namespace
     theTypeshor.Bind(s_DMNCRV, 102);
     theTypeshor.Bind(s_DMCRTR, 103);
     theTypeshor.Bind(s_DSGCNT, 340);
-    // 203  theTypeshor.Bind ("DMFR",DESIGN_MAKE_FROM_RELATIONSHIP);
+
     theTypeshor.Bind(s_DMNEXP, 104);
-    // 203  theTypeshor.Bind ("DRCACT",DIRECTED_ACTION);
+
     theTypeshor.Bind(s_DRCTN, 105);
     theTypeshor.Bind(s_DRANOC, 106);
     theTypeshor.Bind(s_DRGCLL, 107);
@@ -3934,14 +3767,11 @@ namespace
     theTypeshor.Bind(s_DRWDFN, 113);
     theTypeshor.Bind(s_DRWRVS, 114);
     theTypeshor.Bind(s_DCMNT, 367);
-    // 203  theTypeshor.Bind ("DCMRFR",DOCUMENT_REFERENCE);
+
     theTypeshor.Bind(s_DCMRLT, 369);
     theTypeshor.Bind(s_DCMTYP, 370);
     theTypeshor.Bind(s_DCUSCN, 371);
-    // 203  theTypeshor.Bind ("DCWTCL",DOCUMENT_WITH_CLASS);
 
-    // 203  theTypeshor.Bind ("EBWM",EDGE_BASED_WIREFRAME_MODEL);
-    // 203  theTypeshor.Bind ("EBWSR",EDGE_BASED_WIREFRAME_SHAPE_REPRESENTATION);
     theTypeshor.Bind(s_EDGCRV, 116);
     theTypeshor.Bind(s_EDGLP, 117);
     theTypeshor.Bind(s_EFFCTV, 372);
@@ -3956,7 +3786,6 @@ namespace
     theTypeshor.Bind(s_EDTF, 126);
     theTypeshor.Bind(s_EDTS, 127);
     theTypeshor.Bind(s_EXARSL, 128);
-    // 203  theTypeshor.Bind ("EXCACT",EXECUTED_ACTION);
 
     theTypeshor.Bind(s_FCBND, 131);
     theTypeshor.Bind(s_FCOTBN, 132);
@@ -3989,19 +3818,17 @@ namespace
 
     theTypeshor.Bind(s_LCLTM, 160);
 
-    // 203  theTypeshor.Bind ("LTEFF",LOT_EFFECTIVITY);
     theTypeshor.Bind(s_MNSLBR, 162);
     theTypeshor.Bind(s_MSSR, 163);
     theTypeshor.Bind(s_MPPITM, 164);
     theTypeshor.Bind(s_MDGPA, 166);
     theTypeshor.Bind(s_MDGPR, 167);
-    // 203  theTypeshor.Bind ("MMWU",MASS_MEASURE_WITH_UNIT);
-    // 203  theTypeshor.Bind ("MSSUNT",MASS_UNIT);
+
     theTypeshor.Bind(s_MSWTUN, 165);
     theTypeshor.Bind(s_MCHCNT, 339);
     theTypeshor.Bind(s_NMDUNT, 169);
     theTypeshor.Bind(s_NAUO, 380);
-    // 203  theTypeshor.Bind ("OFCR2D",OFFSET_CURVE_2D);
+
     theTypeshor.Bind(s_OFCR3D, 171);
     theTypeshor.Bind(s_OFFSRF, 172);
     theTypeshor.Bind(s_ODRF, 173);
@@ -4011,8 +3838,7 @@ namespace
     theTypeshor.Bind(s_ORGASS, 177);
     theTypeshor.Bind(s_ORGRL, 178);
     theTypeshor.Bind(s_ORGADD, 179);
-    // 203  theTypeshor.Bind ("ORGPRJ",ORGANIZATIONAL_PROJECT);
-    // 203  theTypeshor.Bind ("ORGRLT",ORGANIZATION_RELATIONSHIP);
+
     theTypeshor.Bind(s_ORCLSH, 180);
     theTypeshor.Bind(s_ORNEDG, 181);
     theTypeshor.Bind(s_ORNFC, 182);
@@ -4056,9 +3882,7 @@ namespace
     theTypeshor.Bind(s_PRSITM, 222);
     theTypeshor.Bind(s_PRDCT, 223);
     theTypeshor.Bind(s_PRDCTG, 224);
-    // 203  theTypeshor.Bind ("PRCTRL",PRODUCT_CATEGORY_RELATIONSHIP);
-    // 203  theTypeshor.Bind ("PRDCNC",PRODUCT_CONCEPT);
-    // 203  theTypeshor.Bind ("PRCNCN",PRODUCT_CONCEPT_CONTEXT);
+
     theTypeshor.Bind(s_PRDCNT, 225);
     theTypeshor.Bind(s_PRDDFN, 227);
     theTypeshor.Bind(s_PRDFCN, 228);
@@ -4097,15 +3921,14 @@ namespace
     theTypeshor.Bind(s_SCRCLS, 255);
     theTypeshor.Bind(s_SCCLAS, 256);
     theTypeshor.Bind(s_SCCLLV, 257);
-    // 203  theTypeshor.Bind ("SRNMEF",SERIAL_NUMBERED_EFFECTIVITY);
+
     theTypeshor.Bind(s_SHPASP, 258);
     theTypeshor.Bind(s_SHASRL, 259);
     theTypeshor.Bind(s_SHDFRP, 261);
     theTypeshor.Bind(s_SHPRPR, 262);
     theTypeshor.Bind(s_SHRPRL, 387);
     theTypeshor.Bind(s_SBSM, 263);
-    // 203  theTypeshor.Bind ("SBWM",SHELL_BASED_WIREFRAME_MODEL);
-    // 203  theTypeshor.Bind ("SBWSR",SHELL_BASED_WIREFRAME_SHAPE_REPRESENTATION);
+
     theTypeshor.Bind(s_SUNT, 264);
     theTypeshor.Bind(s_SAMWU, 265);
     theTypeshor.Bind(s_SLANUN, 336);
@@ -4114,8 +3937,7 @@ namespace
     theTypeshor.Bind(s_SHUO, 383);
     theTypeshor.Bind(s_SPHSRF, 269);
     theTypeshor.Bind(s_STYITM, 270);
-    // 203  theTypeshor.Bind ("STRRQS",START_REQUEST);
-    // 203  theTypeshor.Bind ("STRWRK",START_WORK);
+
     theTypeshor.Bind(s_SPPRRL, 385);
     theTypeshor.Bind(s_SRFC, 271);
     theTypeshor.Bind(s_SRFCRV, 272);
@@ -4156,13 +3978,9 @@ namespace
     theTypeshor.Bind(s_UNFCRV, 311);
     theTypeshor.Bind(s_UNFSRF, 312);
 
-    // 203  theTypeshor.Bind ("VRACRQ",VERSIONED_ACTION_REQUEST);
-
     theTypeshor.Bind(s_VRTLP, 315);
     theTypeshor.Bind(s_VRTPNT, 316);
-    // 203  theTypeshor.Bind ("VRTSHL",VERTEX_SHELL);
-    // 203  theTypeshor.Bind ("VMWU",VOLUME_MEASURE_WITH_UNIT);
-    // 203  theTypeshor.Bind ("VLMUNT",VOLUME_UNIT);
+
     theTypeshor.Bind(s_VWVLM, 317);
     theTypeshor.Bind(s_WOYADD, 318);
     theTypeshor.Bind(s_TMWU, 341);
@@ -4174,7 +3992,7 @@ namespace
     theTypeshor.Bind(s_DRUNEL, 353);
     theTypeshor.Bind(s_PRITRP, 355);
     theTypeshor.Bind(s_MFUO, 378);
-    // 203  theTypeshor.Bind ("WRSHL",WIRE_SHELL);
+
     theTypeshor.Bind(s_MTRDSG, 390);
     theTypeshor.Bind(s_ADATA, 392);
     theTypeshor.Bind(s_APDTAS, 393);
@@ -4190,12 +4008,10 @@ namespace
     theTypeshor.Bind(s_RVFCSL, 404);
     theTypeshor.Bind(s_SWFCSL, 405);
 
-    // Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
     theTypeshor.Bind(s_MSRPIT, 406);
     theTypeshor.Bind(s_ARUNT, 407);
     theTypeshor.Bind(s_VLMUNT, 408);
 
-    // Added by ABV 10.11.99 for AP203
     theTypeshor.Bind(s_ACTION, 413);
     theTypeshor.Bind(s_ACTASS, 414);
     theTypeshor.Bind(s_ACTMTH, 415);
@@ -4275,14 +4091,7 @@ namespace
     theTypeshor.Bind(s_PDFR, 573);
     theTypeshor.Bind(s_DCP1, 600);
     theTypeshor.Bind(s_DCPREQ, 601);
-    //  theTypeshor.Bind (AngularLocation);
-    //  theTypeshor.Bind (AngularSize);
-    //  theTypeshor.Bind (DimensionalCharacteristicRepresentation);
-    //  theTypeshor.Bind (DimensionalLocation);
-    //  theTypeshor.Bind (DimensionalLocationWithPath);
-    //  theTypeshor.Bind (DimensionalSize);
-    //  theTypeshor.Bind (DimensionalSizeWithPath);
-    //  theTypeshor.Bind (ShapeDimensionRepresentation);
+
     theTypeshor.Bind(s_CYLTLR, 609);
     theTypeshor.Bind(s_SRWP, 610);
     theTypeshor.Bind(s_ANGTLR, 611);
@@ -4348,32 +4157,22 @@ RWStepAP214_ReadWriteModule::RWStepAP214_ReadWriteModule()
   }
 }
 
-// --- Case Recognition ---
-
 int RWStepAP214_ReadWriteModule::CaseStep(const TCollection_AsciiString& key) const
 {
-  // FMA - le 25-07-96 : Optimisation -> on teste en premier les types les plus
-  //                     frequents dans le fichier cad geometry/topology
+
   int num;
   if (key.IsEqual(Reco_CartesianPoint))
-    return 59; // car tres courant
+    return 59;
   if (THE_TYPENUMS.Find(static_cast<std::string_view>(key), num))
     return num;
   if (THE_TYPESHOR.Find(static_cast<std::string_view>(key), num))
-    return num; // AJOUT DES TYPES COURTS
+    return num;
   return 0;
 }
-
-// --- External Mapping Case Recognition ---
-
-//=================================================================================================
 
 int RWStepAP214_ReadWriteModule::CaseStep(
   const NCollection_Sequence<TCollection_AsciiString>& theTypes) const
 {
-
-  // Optimized by FMA : le test sur le nombre de composant est repete meme
-  //                    si la valeur testee est la meme.
 
   int NbComp = theTypes.Length();
   if (NbComp < 2)
@@ -4384,9 +4183,7 @@ int RWStepAP214_ReadWriteModule::CaseStep(
   }
   else
   {
-    // SHORT TYPES
-    //  Pas tres elegant : on convertit d abord
-    //  Sinon, il faudrait sortir des routines
+
     int i, num = 0;
     for (i = 1; i <= NbComp; i++)
     {
@@ -4409,12 +4206,10 @@ int RWStepAP214_ReadWriteModule::CaseStep(
       return CaseStep(longs);
     }
 
-    // sln 03.10.2001. BUC61003. Correction of alphabetic order of complex entity's items (ascending
-    // sorting)
     NCollection_Sequence<TCollection_AsciiString> types;
     for (i = 1; i <= theTypes.Length(); i++)
       types.Append(theTypes(i));
-    // do ascending sorting
+
     bool                    isOK = false;
     TCollection_AsciiString tmpStr;
     int                     aLen = types.Length() - 1;
@@ -4520,7 +4315,7 @@ int RWStepAP214_ReadWriteModule::CaseStep(
         return 323;
       }
     }
-    // Added by FMA
+
     else if (NbComp == 6)
     {
       if (types(1).IsEqual(StepType(52)) && types(2).IsEqual(StepType(134))
@@ -4532,7 +4327,7 @@ int RWStepAP214_ReadWriteModule::CaseStep(
     }
     else if (NbComp == 5)
     {
-      //: n5 abv 15 Feb 99: S4132 complex type bounded_curve + surface_curve
+
       if ((types(1).IsEqual(StepType(48))) && (types(2).IsEqual(StepType(84)))
           && (types(3).IsEqual(StepType(144))) && (types(4).IsEqual(StepType(247)))
           && (types(5).IsEqual(StepType(272))))
@@ -4586,7 +4381,7 @@ int RWStepAP214_ReadWriteModule::CaseStep(
       {
         return 332;
       }
-      // Added by FMA
+
       else if ((types(1).IsEqual(StepType(143)) && types(2).IsEqual(StepType(148))
                 && types(3).IsEqual(StepType(149)) && types(4).IsEqual(StepType(246))))
       {
@@ -4670,7 +4465,7 @@ int RWStepAP214_ReadWriteModule::CaseStep(
           && (types(3).IsEqual(StepType(264))))
       {
         return 327;
-      } // pdn t3d_opt
+      }
       else if ((types(1).IsEqual(StepType(169))) && (types(2).IsEqual(StepType(264)))
                && (types(3).IsEqual(StepType(158))))
       {
@@ -4696,7 +4491,7 @@ int RWStepAP214_ReadWriteModule::CaseStep(
       {
         return 331;
       }
-      // Added by FMA
+
       else if ((types(1).IsEqual(StepType(79))) && (types(2).IsEqual(StepType(169)))
                && (types(3).IsEqual(StepType(336))))
       {
@@ -4717,7 +4512,7 @@ int RWStepAP214_ReadWriteModule::CaseStep(
       {
         return 338;
       }
-      // full Rev4 (CKY 30-MARS-1997)
+
       else if ((types(1).IsEqual(StepType(169))) && (types(2).IsEqual(StepType(342)))
                && (types(3).IsEqual(StepType(264))))
       {
@@ -4741,15 +4536,15 @@ int RWStepAP214_ReadWriteModule::CaseStep(
       else if ((types(1).IsEqual(StepType(157))) && (types(2).IsEqual(StepType(165)))
                && (types(3).IsEqual(StepType(310))))
       {
-        return 357; // LECTURE SEULEMENT (READ ONLY), origine CATIA. CKY 2-SEP-1997
+        return 357;
       }
-      //      Additional non-alphabetic (CKY 5 MAI 1998)
+
       else if ((types(1).IsEqual(StepType(169))) && (types(2).IsEqual(StepType(158)))
                && (types(3).IsEqual(StepType(264))))
       {
         return 327;
       }
-      //      CC1 -> CC2 (CKY 1-JUL-1998)
+
       else if ((types(1).IsEqual(StepType(249))) && (types(2).IsEqual(StepType(388)))
                && (types(3).IsEqual(StepType(387))))
       {
@@ -4775,13 +4570,13 @@ int RWStepAP214_ReadWriteModule::CaseStep(
       {
         return 412;
       }
-      // abv 11.07.00: CAX-IF TRJ4: k1_geo-ac.stp
+
       else if ((types(1).IsEqual(StepType(98))) && (types(2).IsEqual(StepType(245)))
                && (types(3).IsEqual(StepType(262))))
       {
         return 463;
       }
-      // CKY 25 APR 2001; CAX-IF TR7J (dim.tol.)
+
       else if ((types(1).IsEqual(StepType(406))) && (types(2).IsEqual(StepType(480)))
                && (types(3).IsEqual(StepType(247))))
       {
@@ -4839,11 +4634,6 @@ int RWStepAP214_ReadWriteModule::CaseStep(
   return 0;
 }
 
-//=======================================================================
-// function : IsComplex
-// purpose  : External Mapping Recognition
-//=======================================================================
-
 bool RWStepAP214_ReadWriteModule::IsComplex(const int CN) const
 {
   switch (CN)
@@ -4876,7 +4666,7 @@ bool RWStepAP214_ReadWriteModule::IsComplex(const int CN) const
       return true;
     case 332:
       return true;
-      // Added by FMA
+
     case 333:
       return true;
     case 334:
@@ -4897,9 +4687,9 @@ bool RWStepAP214_ReadWriteModule::IsComplex(const int CN) const
       return true;
     case 357:
       return true;
-    case 358: //: n5
+    case 358:
       return true;
-      //  AP214 CC1 -> CC2
+
     case 389:
       return true;
     case 409:
@@ -4951,8 +4741,6 @@ bool RWStepAP214_ReadWriteModule::IsComplex(const int CN) const
       return false;
   }
 }
-
-//=================================================================================================
 
 const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) const
 {
@@ -5590,14 +5378,14 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
       return Reco_ViewVolume;
     case 318:
       return Reco_WeekOfYearAndDayDate;
-      // Added by FMA
+
     case 336:
       return Reco_SolidAngleUnit;
     case 339:
       return Reco_MechanicalContext;
     case 340:
       return Reco_DesignContext;
-      // Added for full Rev4
+
     case 341:
       return Reco_TimeMeasureWithUnit;
     case 342:
@@ -5622,8 +5410,6 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
       return Reco_PresentedItemRepresentation;
     case 356:
       return Reco_PresentationLayerUsage;
-
-      //  AP214 : CC1 -> CC2
 
     case 366:
       return Reco_AutoDesignDocumentReference;
@@ -5678,7 +5464,7 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
       return Reco_MaterialDesignation;
     case 391:
       return Reco_ContextDependentShapeRepresentation;
-    //: S4134: Added from CD to DIS
+
     case 392:
       return Reco_AppliedDateAndTimeAssignment;
     case 393:
@@ -5708,7 +5494,6 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
     case 405:
       return Reco_SweptFaceSolid;
 
-    // Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
     case 406:
       return Reco_MeasureRepresentationItem;
     case 407:
@@ -5716,7 +5501,6 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
     case 408:
       return Reco_VolumeUnit;
 
-    // Added by ABV 10.11.99 for AP203
     case 413:
       return Reco_Action;
     case 414:
@@ -5776,7 +5560,6 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
     case 441:
       return Reco_DraughtingModel;
 
-    // Added by ABV 18.04.00 for CAX-IF TRJ4
     case 442:
       return Reco_AngularLocation;
     case 443:
@@ -5794,7 +5577,6 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
     case 449:
       return Reco_ShapeDimensionRepresentation;
 
-    // Added by ABV 10.05.00 for CAX-IF TRJ4 (external references)
     case 450:
       return Reco_DocumentRepresentationType;
     case 451:
@@ -5822,7 +5604,6 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
     case 462:
       return Reco_AppliedExternalIdentificationAssignment;
 
-    // Added by CKY 25 APR 2001 for CAX-IF TRJ7 (dim.tol.)
     case 470:
       return Reco_CompositeShapeAspect;
     case 471:
@@ -5868,7 +5649,6 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
     case 491:
       return Reco_NonManifoldSurfaceShapeRepresentation;
 
-    // gka 08.01.02
     case 492:
       return Reco_OrientedSurface;
     case 493:
@@ -5880,7 +5660,6 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
     case 496:
       return Reco_ConnectedFaceSubSet;
 
-    // AP209
     case 500:
       return Reco_EulerAngles;
     case 501:
@@ -5927,7 +5706,7 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
       return Reco_Curve3dElementRepresentation;
     case 522:
       return Reco_Node;
-      //  case 523: return Reco_CurveElementEndCoordinateSystem;
+
     case 524:
       return Reco_CurveElementEndOffset;
     case 525:
@@ -6002,9 +5781,7 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
       return Reco_ParametricSurface3dElementCoordinateSystem;
     case 560:
       return Reco_Surface3dElementRepresentation;
-      //  case 561: return Reco_SymmetricTensor22d;
-      //  case 562: return Reco_SymmetricTensor42d;
-      //  case 563: return Reco_SymmetricTensor43d;
+
     case 564:
       return Reco_Volume3dElementRepresentation;
     case 565:
@@ -6025,7 +5802,7 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
       return Reco_FreedomsList;
     case 573:
       return Reco_ProductDefinitionFormationRelationship;
-      //  case 574: return Reco_FeaModelDefinition;
+
     case 575:
       return Reco_NodeDefinition;
     case 576:
@@ -6043,13 +5820,11 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
     case 583:
       return Reco_FeaSurfaceSectionGeometricRelationship;
 
-    // ptv 28.01.2003
     case 600:
       return Reco_DocumentProductAssociation;
     case 601:
       return Reco_DocumentProductEquivalence;
 
-    // Added by SKL 18.06.2003 for Dimensional Tolerances (CAX-IF TRJ11)
     case 609:
       return Reco_CylindricityTolerance;
     case 610:
@@ -6106,7 +5881,6 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
     case 651:
       return Reco_MassMeasureWithUnit;
 
-    // Added by ika for GD&T AP242
     case 660:
       return Reco_Apex;
     case 661:
@@ -6416,11 +6190,6 @@ const std::string_view& RWStepAP214_ReadWriteModule::StepType(const int CN) cons
   }
 }
 
-//=======================================================================
-// function : ComplexType
-// purpose  : Complex Type (list of types)
-//=======================================================================
-
 bool RWStepAP214_ReadWriteModule::ComplexType(
   const int                                      CN,
   NCollection_Sequence<TCollection_AsciiString>& types) const
@@ -6584,7 +6353,7 @@ bool RWStepAP214_ReadWriteModule::ComplexType(
       types.Append(TCollection_AsciiString(StepType(165)));
       types.Append(TCollection_AsciiString(StepType(310)));
       break;
-    case 358: //: n5
+    case 358:
       types.Append(TCollection_AsciiString(StepType(48)));
       types.Append(TCollection_AsciiString(StepType(84)));
       types.Append(TCollection_AsciiString(StepType(144)));
@@ -6754,8 +6523,6 @@ bool RWStepAP214_ReadWriteModule::ComplexType(
   }
   return true;
 }
-
-//=================================================================================================
 
 void RWStepAP214_ReadWriteModule::ReadStep(const int                                   CN,
                                            const occ::handle<StepData_StepReaderData>& data,
@@ -9031,10 +8798,6 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
     }
     break;
 
-      // ------------
-      // Added by FMA
-      // ------------
-
     case 333:
     {
       DeclareAndCast(StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx, anent, ent);
@@ -9087,7 +8850,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
     }
     break;
 
-    case 340: // added by CKY : DesignContext cf ProductDefinitionContext
+    case 340:
     {
       DeclareAndCast(StepBasic_ProductDefinitionContext, anent, ent);
       RWStepBasic_RWProductDefinitionContext tool;
@@ -9095,11 +8858,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
       break;
     }
 
-      // -----------
-      // Added for Rev4
-      // -----------
-
-    case 341: // TimeMeasureWithUnit
+    case 341:
     {
       DeclareAndCast(StepBasic_MeasureWithUnit, anent, ent);
       RWStepBasic_RWMeasureWithUnit tool;
@@ -9108,7 +8867,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
     break;
 
     case 342:
-    case 343: // RatioUnit, TimeUnit
+    case 343:
     {
       DeclareAndCast(StepBasic_NamedUnit, anent, ent);
       RWStepBasic_RWNamedUnit tool;
@@ -9144,14 +8903,14 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
     }
     break;
 
-    case 348: // ApprovalDateTime
+    case 348:
     {
       DeclareAndCast(StepBasic_ApprovalDateTime, anent, ent);
       RWStepBasic_RWApprovalDateTime tool;
       tool.ReadStep(data, num, ach, anent);
     }
     break;
-    case 349: // CameraImage 2d and 3d
+    case 349:
     case 350:
     {
       DeclareAndCast(StepVisual_CameraImage, anent, ent);
@@ -9202,8 +8961,6 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
     }
     break;
 
-      // Added for CATIA -  CKY 15-SEP-1997
-      // RWUncertaintyMeasureWithUnit sait lire cette variante
     case 357:
     {
       DeclareAndCast(StepBasic_UncertaintyMeasureWithUnit, anent, ent);
@@ -9212,7 +8969,6 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
     }
     break;
 
-      //: n5 abv 15 Feb 99: S4132 complex type bounded_curve + surface_curve
     case 358:
     {
       DeclareAndCast(StepGeom_SurfaceCurveAndBoundedCurve, anent, ent);
@@ -9221,7 +8977,6 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
     }
     break;
 
-      //  AP214 : CC1 -> CC2
     case 366:
     {
       DeclareAndCast(StepAP214_AutoDesignDocumentReference, anent, ent);
@@ -9391,7 +9146,6 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
     }
     break;
 
-      //: S4134: Added from CD to DIS
     case 392:
     {
       DeclareAndCast(StepAP214_AppliedDateAndTimeAssignment, anent, ent);
@@ -9492,7 +9246,6 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
     }
     break;
 
-    // Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
     case 406:
     {
       DeclareAndCast(StepRepr_MeasureRepresentationItem, anent, ent);
@@ -9543,7 +9296,6 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
     }
     break;
 
-    // Added by ABV 10.11.99 for AP203
     case 413:
     {
       DeclareAndCast(StepBasic_Action, anent, ent);
@@ -9749,7 +9501,6 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
     }
     break;
 
-    // Added by ABV 18.04.00 for CAX-IF TRJ4
     case 442:
     {
       DeclareAndCast(StepShape_AngularLocation, anent, ent);
@@ -9807,7 +9558,6 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
     }
     break;
 
-      // Added by ABV 10.05.00 for CAX-IF TRJ4 (external references)
     case 450:
     {
       DeclareAndCast(StepBasic_DocumentRepresentationType, anent, ent);
@@ -9907,7 +9657,6 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
     }
     break;
 
-      // Added by CKY 25 APR 2001 for CAX-IF TRJ7 (dimensional tolerances)
     case 470:
     {
       DeclareAndCast(StepRepr_CompositeShapeAspect, anent, ent);
@@ -9929,7 +9678,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
       tool.ReadStep(data, num, ach, anent);
     }
     break;
-    case 473: // same as DimensionalLocation
+    case 473:
     {
       DeclareAndCast(StepShape_DirectedDimensionalLocation, anent, ent);
       RWStepShape_RWDimensionalLocation tool;
@@ -9992,7 +9741,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
       tool.ReadStep(data, num, ach, anent);
     }
     break;
-    case 482: // the same types
+    case 482:
     case 483:
     {
       DeclareAndCast(StepRepr_CompoundRepresentationItem, anent, ent);
@@ -10000,7 +9749,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
       tool.ReadStep(data, num, ach, anent);
     }
     break;
-    case 484: // same as ShapeAspectRelationship
+    case 484:
     {
       DeclareAndCast(StepRepr_ShapeAspectRelationship, anent, ent);
       RWStepRepr_RWShapeAspectRelationship tool;
@@ -10008,7 +9757,6 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
     }
     break;
 
-    // Added by ABV 27.12.01 for CAX-IF TRJ9
     case 485:
     {
       DeclareAndCast(StepShape_CompoundShapeRepresentation, anent, ent);
@@ -10255,13 +10003,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
       tool.ReadStep(data, num, ach, anent);
     }
     break;
-      // case 523:
-      //     {
-      //       DeclareAndCast(StepFEA_CurveElementEndCoordinateSystem,anent,ent);
-      //       RWStepFEA_RWCurveElementEndCoordinateSystem tool;
-      //       tool.ReadStep (data,num,ach,anent);
-      //     }
-      //     break;
+
     case 524:
     {
       DeclareAndCast(StepFEA_CurveElementEndOffset, anent, ent);
@@ -10521,27 +10263,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
       tool.ReadStep(data, num, ach, anent);
     }
     break;
-      // case 561:
-      //     {
-      //       DeclareAndCast(StepFEA_SymmetricTensor22d,anent,ent);
-      //       RWStepFEA_RWSymmetricTensor22d tool;
-      //       tool.ReadStep (data,num,ach,anent);
-      //     }
-      //     break;
-      // case 562:
-      //     {
-      //       DeclareAndCast(StepFEA_SymmetricTensor42d,anent,ent);
-      //       RWStepFEA_RWSymmetricTensor42d tool;
-      //       tool.ReadStep (data,num,ach,anent);
-      //     }
-      //     break;
-      // case 563:
-      //     {
-      //       DeclareAndCast(StepFEA_SymmetricTensor43d,anent,ent);
-      //       RWStepFEA_RWSymmetricTensor43d tool;
-      //       tool.ReadStep (data,num,ach,anent);
-      //     }
-      //     break;
+
     case 564:
     {
       DeclareAndCast(StepFEA_Volume3dElementRepresentation, anent, ent);
@@ -12078,8 +11800,6 @@ void RWStepAP214_ReadWriteModule::ReadStep(const int                            
   return;
 }
 
-//=================================================================================================
-
 void RWStepAP214_ReadWriteModule::WriteStep(const int                              CN,
                                             StepData_StepWriter&                   SW,
                                             const occ::handle<Standard_Transient>& ent) const
@@ -12092,7 +11812,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_Address, anent, ent);
       RWStepBasic_RWAddress tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12101,7 +11821,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_AdvancedBrepShapeRepresentation, anent, ent);
       RWStepShape_RWAdvancedBrepShapeRepresentation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12110,7 +11830,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_AdvancedFace, anent, ent);
       RWStepShape_RWAdvancedFace tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12148,7 +11868,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_MappedItem, anent, ent);
       RWStepRepr_RWMappedItem tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12157,7 +11877,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_StyledItem, anent, ent);
       RWStepVisual_RWStyledItem tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12166,7 +11886,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ApplicationContext, anent, ent);
       RWStepBasic_RWApplicationContext tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12175,7 +11895,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ApplicationContextElement, anent, ent);
       RWStepBasic_RWApplicationContextElement tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12184,7 +11904,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ApplicationProtocolDefinition, anent, ent);
       RWStepBasic_RWApplicationProtocolDefinition tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12193,7 +11913,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_Approval, anent, ent);
       RWStepBasic_RWApproval tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12202,7 +11922,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ApprovalPersonOrganization, anent, ent);
       RWStepBasic_RWApprovalPersonOrganization tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12211,7 +11931,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ApprovalRelationship, anent, ent);
       RWStepBasic_RWApprovalRelationship tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12220,7 +11940,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ApprovalRole, anent, ent);
       RWStepBasic_RWApprovalRole tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12229,7 +11949,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ApprovalStatus, anent, ent);
       RWStepBasic_RWApprovalStatus tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12238,7 +11958,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_AreaInSet, anent, ent);
       RWStepVisual_RWAreaInSet tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12247,7 +11967,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepAP214_AutoDesignActualDateAndTimeAssignment, anent, ent);
       RWStepAP214_RWAutoDesignActualDateAndTimeAssignment tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12256,7 +11976,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepAP214_AutoDesignActualDateAssignment, anent, ent);
       RWStepAP214_RWAutoDesignActualDateAssignment tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12265,7 +11985,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepAP214_AutoDesignApprovalAssignment, anent, ent);
       RWStepAP214_RWAutoDesignApprovalAssignment tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12274,7 +11994,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepAP214_AutoDesignDateAndPersonAssignment, anent, ent);
       RWStepAP214_RWAutoDesignDateAndPersonAssignment tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12283,7 +12003,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepAP214_AutoDesignGroupAssignment, anent, ent);
       RWStepAP214_RWAutoDesignGroupAssignment tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12292,7 +12012,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepAP214_AutoDesignNominalDateAndTimeAssignment, anent, ent);
       RWStepAP214_RWAutoDesignNominalDateAndTimeAssignment tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12301,7 +12021,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepAP214_AutoDesignNominalDateAssignment, anent, ent);
       RWStepAP214_RWAutoDesignNominalDateAssignment tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12310,7 +12030,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepAP214_AutoDesignOrganizationAssignment, anent, ent);
       RWStepAP214_RWAutoDesignOrganizationAssignment tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12319,7 +12039,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepAP214_AutoDesignPersonAndOrganizationAssignment, anent, ent);
       RWStepAP214_RWAutoDesignPersonAndOrganizationAssignment tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12328,7 +12048,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepAP214_AutoDesignPresentedItem, anent, ent);
       RWStepAP214_RWAutoDesignPresentedItem tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12337,7 +12057,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepAP214_AutoDesignSecurityClassificationAssignment, anent, ent);
       RWStepAP214_RWAutoDesignSecurityClassificationAssignment tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12346,7 +12066,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Axis1Placement, anent, ent);
       RWStepGeom_RWAxis1Placement tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12355,7 +12075,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Axis2Placement2d, anent, ent);
       RWStepGeom_RWAxis2Placement2d tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12364,7 +12084,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Axis2Placement3d, anent, ent);
       RWStepGeom_RWAxis2Placement3d tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12373,7 +12093,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_BSplineCurve, anent, ent);
       RWStepGeom_RWBSplineCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12382,7 +12102,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_BSplineCurveWithKnots, anent, ent);
       RWStepGeom_RWBSplineCurveWithKnots tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12391,7 +12111,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_BSplineSurface, anent, ent);
       RWStepGeom_RWBSplineSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12400,7 +12120,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_BSplineSurfaceWithKnots, anent, ent);
       RWStepGeom_RWBSplineSurfaceWithKnots tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12409,7 +12129,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_BackgroundColour, anent, ent);
       RWStepVisual_RWBackgroundColour tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12418,7 +12138,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_BezierCurve, anent, ent);
       RWStepGeom_RWBezierCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12427,7 +12147,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_BezierSurface, anent, ent);
       RWStepGeom_RWBezierSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12436,7 +12156,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_Block, anent, ent);
       RWStepShape_RWBlock tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12445,7 +12165,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_BooleanResult, anent, ent);
       RWStepShape_RWBooleanResult tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12454,7 +12174,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_BoundaryCurve, anent, ent);
       RWStepGeom_RWBoundaryCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12463,7 +12183,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_BoundedCurve, anent, ent);
       RWStepGeom_RWBoundedCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12472,7 +12192,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_BoundedSurface, anent, ent);
       RWStepGeom_RWBoundedSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12481,7 +12201,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_BoxDomain, anent, ent);
       RWStepShape_RWBoxDomain tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12490,7 +12210,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_BoxedHalfSpace, anent, ent);
       RWStepShape_RWBoxedHalfSpace tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12499,7 +12219,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_BrepWithVoids, anent, ent);
       RWStepShape_RWBrepWithVoids tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12508,7 +12228,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_CalendarDate, anent, ent);
       RWStepBasic_RWCalendarDate tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12517,7 +12237,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_CameraImage, anent, ent);
       RWStepVisual_RWCameraImage tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12526,7 +12246,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_CameraModel, anent, ent);
       RWStepVisual_RWCameraModel tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12535,7 +12255,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_CameraModelD2, anent, ent);
       RWStepVisual_RWCameraModelD2 tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12544,7 +12264,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_CameraModelD3, anent, ent);
       RWStepVisual_RWCameraModelD3 tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12553,7 +12273,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_CameraUsage, anent, ent);
       RWStepVisual_RWCameraUsage tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12562,7 +12282,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_CartesianPoint, anent, ent);
       RWStepGeom_RWCartesianPoint tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12571,7 +12291,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_CartesianTransformationOperator, anent, ent);
       RWStepGeom_RWCartesianTransformationOperator tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12580,7 +12300,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_CartesianTransformationOperator3d, anent, ent);
       RWStepGeom_RWCartesianTransformationOperator3d tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12589,7 +12309,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Circle, anent, ent);
       RWStepGeom_RWCircle tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12598,7 +12318,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_ClosedShell, anent, ent);
       RWStepShape_RWClosedShell tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12607,7 +12327,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_Colour, anent, ent);
       RWStepVisual_RWColour tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12616,7 +12336,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_ColourRgb, anent, ent);
       RWStepVisual_RWColourRgb tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12625,7 +12345,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_ColourSpecification, anent, ent);
       RWStepVisual_RWColourSpecification tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12634,7 +12354,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_CompositeCurve, anent, ent);
       RWStepGeom_RWCompositeCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12643,7 +12363,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_CompositeCurveOnSurface, anent, ent);
       RWStepGeom_RWCompositeCurveOnSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12652,7 +12372,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_CompositeCurveSegment, anent, ent);
       RWStepGeom_RWCompositeCurveSegment tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12661,7 +12381,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_CompositeText, anent, ent);
       RWStepVisual_RWCompositeText tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12670,7 +12390,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_CompositeTextWithExtent, anent, ent);
       RWStepVisual_RWCompositeTextWithExtent tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12679,7 +12399,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Conic, anent, ent);
       RWStepGeom_RWConic tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12688,7 +12408,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_ConicalSurface, anent, ent);
       RWStepGeom_RWConicalSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12697,7 +12417,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_ConnectedFaceSet, anent, ent);
       RWStepShape_RWConnectedFaceSet tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12706,7 +12426,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_ContextDependentInvisibility, anent, ent);
       RWStepVisual_RWContextDependentInvisibility tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12715,7 +12435,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_ContextDependentOverRidingStyledItem, anent, ent);
       RWStepVisual_RWContextDependentOverRidingStyledItem tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12724,7 +12444,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ConversionBasedUnit, anent, ent);
       RWStepBasic_RWConversionBasedUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12733,7 +12453,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_CoordinatedUniversalTimeOffset, anent, ent);
       RWStepBasic_RWCoordinatedUniversalTimeOffset tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12742,7 +12462,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_CsgShapeRepresentation, anent, ent);
       RWStepShape_RWCsgShapeRepresentation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12751,7 +12471,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_CsgSolid, anent, ent);
       RWStepShape_RWCsgSolid tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12760,7 +12480,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Curve, anent, ent);
       RWStepGeom_RWCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12769,7 +12489,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_CurveBoundedSurface, anent, ent);
       RWStepGeom_RWCurveBoundedSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12778,7 +12498,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_CurveReplica, anent, ent);
       RWStepGeom_RWCurveReplica tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12787,7 +12507,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_CurveStyle, anent, ent);
       RWStepVisual_RWCurveStyle tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12796,7 +12516,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_CurveStyleFont, anent, ent);
       RWStepVisual_RWCurveStyleFont tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12805,7 +12525,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_CurveStyleFontPattern, anent, ent);
       RWStepVisual_RWCurveStyleFontPattern tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12814,7 +12534,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_CylindricalSurface, anent, ent);
       RWStepGeom_RWCylindricalSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12823,7 +12543,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_Date, anent, ent);
       RWStepBasic_RWDate tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12832,7 +12552,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_DateAndTime, anent, ent);
       RWStepBasic_RWDateAndTime tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12841,7 +12561,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_DateRole, anent, ent);
       RWStepBasic_RWDateRole tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12850,7 +12570,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_DateTimeRole, anent, ent);
       RWStepBasic_RWDateTimeRole tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12859,7 +12579,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_DefinitionalRepresentation, anent, ent);
       RWStepRepr_RWDefinitionalRepresentation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12868,7 +12588,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_DegeneratePcurve, anent, ent);
       RWStepGeom_RWDegeneratePcurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12877,7 +12597,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_DegenerateToroidalSurface, anent, ent);
       RWStepGeom_RWDegenerateToroidalSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12886,7 +12606,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_DescriptiveRepresentationItem, anent, ent);
       RWStepRepr_RWDescriptiveRepresentationItem tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12895,7 +12615,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_DimensionalExponents, anent, ent);
       RWStepBasic_RWDimensionalExponents tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12904,7 +12624,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Direction, anent, ent);
       RWStepGeom_RWDirection tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12913,7 +12633,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_StyledItem, anent, ent);
       RWStepVisual_RWStyledItem tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12929,7 +12649,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_DraughtingPreDefinedColour, anent, ent);
       RWStepVisual_RWDraughtingPreDefinedColour tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12938,7 +12658,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_DraughtingPreDefinedCurveFont, anent, ent);
       RWStepVisual_RWDraughtingPreDefinedCurveFont tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12947,7 +12667,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_Edge, anent, ent);
       RWStepShape_RWEdge tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12956,7 +12676,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_EdgeCurve, anent, ent);
       RWStepShape_RWEdgeCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12965,7 +12685,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_EdgeLoop, anent, ent);
       RWStepShape_RWEdgeLoop tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12974,7 +12694,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_ElementarySurface, anent, ent);
       RWStepGeom_RWElementarySurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12983,7 +12703,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Ellipse, anent, ent);
       RWStepGeom_RWEllipse tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -12992,7 +12712,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_EvaluatedDegeneratePcurve, anent, ent);
       RWStepGeom_RWEvaluatedDegeneratePcurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13001,7 +12721,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ExternalSource, anent, ent);
       RWStepBasic_RWExternalSource tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13010,7 +12730,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_ExternallyDefinedCurveFont, anent, ent);
       RWStepVisual_RWExternallyDefinedCurveFont tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13020,7 +12740,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ExternallyDefinedItem, anent, ent);
       RWStepBasic_RWExternallyDefinedItem tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13029,7 +12749,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_ExtrudedAreaSolid, anent, ent);
       RWStepShape_RWExtrudedAreaSolid tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13038,7 +12758,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_Face, anent, ent);
       RWStepShape_RWFace tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13047,7 +12767,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_FaceBound, anent, ent);
       RWStepShape_RWFaceBound tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13056,7 +12776,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_FaceOuterBound, anent, ent);
       RWStepShape_RWFaceOuterBound tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13065,7 +12785,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_FaceSurface, anent, ent);
       RWStepShape_RWFaceSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13074,7 +12794,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_FacetedBrep, anent, ent);
       RWStepShape_RWFacetedBrep tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13083,7 +12803,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_FacetedBrepShapeRepresentation, anent, ent);
       RWStepShape_RWFacetedBrepShapeRepresentation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13092,7 +12812,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_FillAreaStyle, anent, ent);
       RWStepVisual_RWFillAreaStyle tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13101,7 +12821,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_FillAreaStyleColour, anent, ent);
       RWStepVisual_RWFillAreaStyleColour tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13110,7 +12830,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_FunctionallyDefinedTransformation, anent, ent);
       RWStepRepr_RWFunctionallyDefinedTransformation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13119,7 +12839,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_GeometricCurveSet, anent, ent);
       RWStepShape_RWGeometricCurveSet tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13128,7 +12848,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_GeometricRepresentationContext, anent, ent);
       RWStepGeom_RWGeometricRepresentationContext tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13137,7 +12857,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_GeometricRepresentationItem, anent, ent);
       RWStepGeom_RWGeometricRepresentationItem tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13146,7 +12866,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_GeometricSet, anent, ent);
       RWStepShape_RWGeometricSet tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13155,7 +12875,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_GeometricallyBoundedSurfaceShapeRepresentation, anent, ent);
       RWStepShape_RWGeometricallyBoundedSurfaceShapeRepresentation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13164,7 +12884,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_GeometricallyBoundedWireframeShapeRepresentation, anent, ent);
       RWStepShape_RWGeometricallyBoundedWireframeShapeRepresentation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13173,7 +12893,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_GlobalUncertaintyAssignedContext, anent, ent);
       RWStepRepr_RWGlobalUncertaintyAssignedContext tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13182,7 +12902,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_GlobalUnitAssignedContext, anent, ent);
       RWStepRepr_RWGlobalUnitAssignedContext tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13191,7 +12911,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_Group, anent, ent);
       RWStepBasic_RWGroup tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13200,7 +12920,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_GroupRelationship, anent, ent);
       RWStepBasic_RWGroupRelationship tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13209,7 +12929,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_HalfSpaceSolid, anent, ent);
       RWStepShape_RWHalfSpaceSolid tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13218,7 +12938,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Hyperbola, anent, ent);
       RWStepGeom_RWHyperbola tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13227,7 +12947,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_IntersectionCurve, anent, ent);
       RWStepGeom_RWIntersectionCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13236,7 +12956,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_Invisibility, anent, ent);
       RWStepVisual_RWInvisibility tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13245,7 +12965,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_LengthMeasureWithUnit, anent, ent);
       RWStepBasic_RWLengthMeasureWithUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13254,7 +12974,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_LengthUnit, anent, ent);
       RWStepBasic_RWLengthUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13263,7 +12983,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Line, anent, ent);
       RWStepGeom_RWLine tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13272,7 +12992,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_LocalTime, anent, ent);
       RWStepBasic_RWLocalTime tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13281,7 +13001,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_Loop, anent, ent);
       RWStepShape_RWLoop tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13290,7 +13010,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_ManifoldSolidBrep, anent, ent);
       RWStepShape_RWManifoldSolidBrep tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13299,7 +13019,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_ManifoldSurfaceShapeRepresentation, anent, ent);
       RWStepShape_RWManifoldSurfaceShapeRepresentation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13308,7 +13028,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_MappedItem, anent, ent);
       RWStepRepr_RWMappedItem tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13317,7 +13037,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_MeasureWithUnit, anent, ent);
       RWStepBasic_RWMeasureWithUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13326,7 +13046,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_MechanicalDesignGeometricPresentationArea, anent, ent);
       RWStepVisual_RWMechanicalDesignGeometricPresentationArea tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13335,7 +13055,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_MechanicalDesignGeometricPresentationRepresentation, anent, ent);
       RWStepVisual_RWMechanicalDesignGeometricPresentationRepresentation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13344,7 +13064,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_NamedUnit, anent, ent);
       RWStepBasic_RWNamedUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13353,7 +13073,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_OffsetCurve3d, anent, ent);
       RWStepGeom_RWOffsetCurve3d tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13362,7 +13082,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_OffsetSurface, anent, ent);
       RWStepGeom_RWOffsetSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13371,7 +13091,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_OpenShell, anent, ent);
       RWStepShape_RWOpenShell tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13380,7 +13100,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_OrdinalDate, anent, ent);
       RWStepBasic_RWOrdinalDate tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13389,7 +13109,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_Organization, anent, ent);
       RWStepBasic_RWOrganization tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13398,7 +13118,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_OrganizationRole, anent, ent);
       RWStepBasic_RWOrganizationRole tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13407,7 +13127,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_OrganizationalAddress, anent, ent);
       RWStepBasic_RWOrganizationalAddress tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13416,7 +13136,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_OrientedClosedShell, anent, ent);
       RWStepShape_RWOrientedClosedShell tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13425,7 +13145,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_OrientedEdge, anent, ent);
       RWStepShape_RWOrientedEdge tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13434,7 +13154,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_OrientedFace, anent, ent);
       RWStepShape_RWOrientedFace tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13443,7 +13163,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_OrientedOpenShell, anent, ent);
       RWStepShape_RWOrientedOpenShell tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13452,7 +13172,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_OrientedPath, anent, ent);
       RWStepShape_RWOrientedPath tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13461,7 +13181,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_OuterBoundaryCurve, anent, ent);
       RWStepGeom_RWOuterBoundaryCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13470,7 +13190,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_OverRidingStyledItem, anent, ent);
       RWStepVisual_RWOverRidingStyledItem tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13479,7 +13199,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Parabola, anent, ent);
       RWStepGeom_RWParabola tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13488,7 +13208,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_ParametricRepresentationContext, anent, ent);
       RWStepRepr_RWParametricRepresentationContext tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13497,7 +13217,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_Path, anent, ent);
       RWStepShape_RWPath tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13506,7 +13226,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Pcurve, anent, ent);
       RWStepGeom_RWPcurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13515,7 +13235,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_Person, anent, ent);
       RWStepBasic_RWPerson tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13524,7 +13244,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_PersonAndOrganization, anent, ent);
       RWStepBasic_RWPersonAndOrganization tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13533,7 +13253,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_PersonAndOrganizationRole, anent, ent);
       RWStepBasic_RWPersonAndOrganizationRole tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13542,7 +13262,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_PersonalAddress, anent, ent);
       RWStepBasic_RWPersonalAddress tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13551,7 +13271,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Placement, anent, ent);
       RWStepGeom_RWPlacement tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13560,7 +13280,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_PlanarBox, anent, ent);
       RWStepVisual_RWPlanarBox tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13569,7 +13289,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_PlanarExtent, anent, ent);
       RWStepVisual_RWPlanarExtent tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13578,7 +13298,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Plane, anent, ent);
       RWStepGeom_RWPlane tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13587,7 +13307,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_PlaneAngleMeasureWithUnit, anent, ent);
       RWStepBasic_RWPlaneAngleMeasureWithUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13596,7 +13316,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_PlaneAngleUnit, anent, ent);
       RWStepBasic_RWPlaneAngleUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13605,7 +13325,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Point, anent, ent);
       RWStepGeom_RWPoint tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13614,7 +13334,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_PointOnCurve, anent, ent);
       RWStepGeom_RWPointOnCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13623,7 +13343,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_PointOnSurface, anent, ent);
       RWStepGeom_RWPointOnSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13632,7 +13352,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_PointReplica, anent, ent);
       RWStepGeom_RWPointReplica tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13641,7 +13361,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_PointStyle, anent, ent);
       RWStepVisual_RWPointStyle tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13650,7 +13370,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_PolyLoop, anent, ent);
       RWStepShape_RWPolyLoop tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13659,7 +13379,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Polyline, anent, ent);
       RWStepGeom_RWPolyline tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13668,7 +13388,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_PreDefinedColour, anent, ent);
       RWStepVisual_RWPreDefinedColour tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13677,7 +13397,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_PreDefinedCurveFont, anent, ent);
       RWStepVisual_RWPreDefinedCurveFont tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13687,7 +13407,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_PreDefinedItem, anent, ent);
       RWStepVisual_RWPreDefinedItem tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13696,7 +13416,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_PresentationArea, anent, ent);
       RWStepVisual_RWPresentationArea tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13705,7 +13425,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_PresentationLayerAssignment, anent, ent);
       RWStepVisual_RWPresentationLayerAssignment tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13714,7 +13434,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_PresentationRepresentation, anent, ent);
       RWStepVisual_RWPresentationRepresentation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13723,7 +13443,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_PresentationSet, anent, ent);
       RWStepVisual_RWPresentationSet tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13732,7 +13452,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_PresentationSize, anent, ent);
       RWStepVisual_RWPresentationSize tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13741,7 +13461,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_PresentationStyleAssignment, anent, ent);
       RWStepVisual_RWPresentationStyleAssignment tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13750,7 +13470,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_PresentationStyleByContext, anent, ent);
       RWStepVisual_RWPresentationStyleByContext tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13759,7 +13479,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_PresentationView, anent, ent);
       RWStepVisual_RWPresentationView tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13768,7 +13488,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_Product, anent, ent);
       RWStepBasic_RWProduct tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13777,7 +13497,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ProductCategory, anent, ent);
       RWStepBasic_RWProductCategory tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13786,7 +13506,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ProductContext, anent, ent);
       RWStepBasic_RWProductContext tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13795,7 +13515,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ProductDefinition, anent, ent);
       RWStepBasic_RWProductDefinition tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13804,7 +13524,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ProductDefinitionContext, anent, ent);
       RWStepBasic_RWProductDefinitionContext tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13813,7 +13533,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ProductDefinitionFormation, anent, ent);
       RWStepBasic_RWProductDefinitionFormation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13822,7 +13542,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ProductDefinitionFormationWithSpecifiedSource, anent, ent);
       RWStepBasic_RWProductDefinitionFormationWithSpecifiedSource tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13831,7 +13551,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_ProductDefinitionShape, anent, ent);
       RWStepRepr_RWProductDefinitionShape tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13840,7 +13560,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ProductRelatedProductCategory, anent, ent);
       RWStepBasic_RWProductRelatedProductCategory tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13849,7 +13569,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ProductType, anent, ent);
       RWStepBasic_RWProductType tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13858,7 +13578,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_PropertyDefinition, anent, ent);
       RWStepRepr_RWPropertyDefinition tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13867,7 +13587,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_PropertyDefinitionRepresentation, anent, ent);
       RWStepRepr_RWPropertyDefinitionRepresentation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13876,7 +13596,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_QuasiUniformCurve, anent, ent);
       RWStepGeom_RWQuasiUniformCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13885,7 +13605,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_QuasiUniformSurface, anent, ent);
       RWStepGeom_RWQuasiUniformSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13894,7 +13614,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_RatioMeasureWithUnit, anent, ent);
       RWStepBasic_RWRatioMeasureWithUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13903,7 +13623,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_RationalBSplineCurve, anent, ent);
       RWStepGeom_RWRationalBSplineCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13912,7 +13632,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_RationalBSplineSurface, anent, ent);
       RWStepGeom_RWRationalBSplineSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13921,7 +13641,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_RectangularCompositeSurface, anent, ent);
       RWStepGeom_RWRectangularCompositeSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13930,7 +13650,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_RectangularTrimmedSurface, anent, ent);
       RWStepGeom_RWRectangularTrimmedSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13939,7 +13659,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepAP214_RepItemGroup, anent, ent);
       RWStepAP214_RWRepItemGroup tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13948,7 +13668,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_ReparametrisedCompositeCurveSegment, anent, ent);
       RWStepGeom_RWReparametrisedCompositeCurveSegment tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13957,7 +13677,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_Representation, anent, ent);
       RWStepRepr_RWRepresentation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13966,7 +13686,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_RepresentationContext, anent, ent);
       RWStepRepr_RWRepresentationContext tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13975,7 +13695,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_RepresentationItem, anent, ent);
       RWStepRepr_RWRepresentationItem tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13984,7 +13704,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_RepresentationMap, anent, ent);
       RWStepRepr_RWRepresentationMap tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -13993,7 +13713,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_RepresentationRelationship, anent, ent);
       RWStepRepr_RWRepresentationRelationship tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14002,7 +13722,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_RevolvedAreaSolid, anent, ent);
       RWStepShape_RWRevolvedAreaSolid tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14011,7 +13731,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_RightAngularWedge, anent, ent);
       RWStepShape_RWRightAngularWedge tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14020,7 +13740,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_RightCircularCone, anent, ent);
       RWStepShape_RWRightCircularCone tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14029,7 +13749,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_RightCircularCylinder, anent, ent);
       RWStepShape_RWRightCircularCylinder tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14038,7 +13758,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_SeamCurve, anent, ent);
       RWStepGeom_RWSeamCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14047,7 +13767,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_SecurityClassification, anent, ent);
       RWStepBasic_RWSecurityClassification tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14056,7 +13776,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_SecurityClassificationLevel, anent, ent);
       RWStepBasic_RWSecurityClassificationLevel tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14065,7 +13785,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_ShapeAspect, anent, ent);
       RWStepRepr_RWShapeAspect tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14074,7 +13794,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_ShapeAspectRelationship, anent, ent);
       RWStepRepr_RWShapeAspectRelationship tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14083,7 +13803,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepRepr_ShapeAspectTransition, anent, ent);
       RWStepRepr_RWShapeAspectTransition tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14092,7 +13812,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_ShapeDefinitionRepresentation, anent, ent);
       RWStepShape_RWShapeDefinitionRepresentation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14101,7 +13821,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_ShapeRepresentation, anent, ent);
       RWStepShape_RWShapeRepresentation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14110,7 +13830,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_ShellBasedSurfaceModel, anent, ent);
       RWStepShape_RWShellBasedSurfaceModel tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14119,7 +13839,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_SiUnit, anent, ent);
       RWStepBasic_RWSiUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14128,7 +13848,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_SolidAngleMeasureWithUnit, anent, ent);
       RWStepBasic_RWSolidAngleMeasureWithUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14137,7 +13857,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_SolidModel, anent, ent);
       RWStepShape_RWSolidModel tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14146,7 +13866,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_SolidReplica, anent, ent);
       RWStepShape_RWSolidReplica tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14155,7 +13875,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_Sphere, anent, ent);
       RWStepShape_RWSphere tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14164,7 +13884,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_SphericalSurface, anent, ent);
       RWStepGeom_RWSphericalSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14173,7 +13893,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_StyledItem, anent, ent);
       RWStepVisual_RWStyledItem tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14182,7 +13902,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Surface, anent, ent);
       RWStepGeom_RWSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14191,7 +13911,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_SurfaceCurve, anent, ent);
       RWStepGeom_RWSurfaceCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14200,7 +13920,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_SurfaceOfLinearExtrusion, anent, ent);
       RWStepGeom_RWSurfaceOfLinearExtrusion tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14209,7 +13929,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_SurfaceOfRevolution, anent, ent);
       RWStepGeom_RWSurfaceOfRevolution tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14218,7 +13938,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_SurfacePatch, anent, ent);
       RWStepGeom_RWSurfacePatch tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14227,7 +13947,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_SurfaceReplica, anent, ent);
       RWStepGeom_RWSurfaceReplica tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14236,7 +13956,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_SurfaceSideStyle, anent, ent);
       RWStepVisual_RWSurfaceSideStyle tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14245,7 +13965,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_SurfaceStyleBoundary, anent, ent);
       RWStepVisual_RWSurfaceStyleBoundary tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14254,7 +13974,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_SurfaceStyleControlGrid, anent, ent);
       RWStepVisual_RWSurfaceStyleControlGrid tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14263,7 +13983,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_SurfaceStyleFillArea, anent, ent);
       RWStepVisual_RWSurfaceStyleFillArea tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14272,7 +13992,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_SurfaceStyleParameterLine, anent, ent);
       RWStepVisual_RWSurfaceStyleParameterLine tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14281,7 +14001,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_SurfaceStyleSegmentationCurve, anent, ent);
       RWStepVisual_RWSurfaceStyleSegmentationCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14290,7 +14010,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_SurfaceStyleSilhouette, anent, ent);
       RWStepVisual_RWSurfaceStyleSilhouette tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14299,7 +14019,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_SurfaceStyleUsage, anent, ent);
       RWStepVisual_RWSurfaceStyleUsage tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14308,7 +14028,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_SweptAreaSolid, anent, ent);
       RWStepShape_RWSweptAreaSolid tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14317,7 +14037,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_SweptSurface, anent, ent);
       RWStepGeom_RWSweptSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14326,7 +14046,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_Template, anent, ent);
       RWStepVisual_RWTemplate tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14335,7 +14055,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_TemplateInstance, anent, ent);
       RWStepVisual_RWTemplateInstance tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14344,7 +14064,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_TextLiteral, anent, ent);
       RWStepVisual_RWTextLiteral tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14353,7 +14073,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_TextStyle, anent, ent);
       RWStepVisual_RWTextStyle tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14362,7 +14082,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_TextStyleForDefinedFont, anent, ent);
       RWStepVisual_RWTextStyleForDefinedFont tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14371,7 +14091,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_TextStyleWithBoxCharacteristics, anent, ent);
       RWStepVisual_RWTextStyleWithBoxCharacteristics tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14380,7 +14100,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_TopologicalRepresentationItem, anent, ent);
       RWStepShape_RWTopologicalRepresentationItem tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14389,7 +14109,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_ToroidalSurface, anent, ent);
       RWStepGeom_RWToroidalSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14398,7 +14118,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_Torus, anent, ent);
       RWStepShape_RWTorus tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14407,7 +14127,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_TransitionalShapeRepresentation, anent, ent);
       RWStepShape_RWTransitionalShapeRepresentation tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14416,7 +14136,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_TrimmedCurve, anent, ent);
       RWStepGeom_RWTrimmedCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14425,7 +14145,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_UncertaintyMeasureWithUnit, anent, ent);
       RWStepBasic_RWUncertaintyMeasureWithUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14434,7 +14154,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_UniformCurve, anent, ent);
       RWStepGeom_RWUniformCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14443,7 +14163,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_UniformSurface, anent, ent);
       RWStepGeom_RWUniformSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14452,7 +14172,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_Vector, anent, ent);
       RWStepGeom_RWVector tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14461,7 +14181,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_Vertex, anent, ent);
       RWStepShape_RWVertex tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14470,7 +14190,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_VertexLoop, anent, ent);
       RWStepShape_RWVertexLoop tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14479,7 +14199,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_VertexPoint, anent, ent);
       RWStepShape_RWVertexPoint tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14488,7 +14208,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepVisual_ViewVolume, anent, ent);
       RWStepVisual_RWViewVolume tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14497,7 +14217,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_WeekOfYearAndDayDate, anent, ent);
       RWStepBasic_RWWeekOfYearAndDayDate tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14506,7 +14226,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_UniformCurveAndRationalBSplineCurve, anent, ent);
       RWStepGeom_RWUniformCurveAndRationalBSplineCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14515,7 +14235,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve, anent, ent);
       RWStepGeom_RWBSplineCurveWithKnotsAndRationalBSplineCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14524,7 +14244,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_QuasiUniformCurveAndRationalBSplineCurve, anent, ent);
       RWStepGeom_RWQuasiUniformCurveAndRationalBSplineCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14533,7 +14253,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_BezierCurveAndRationalBSplineCurve, anent, ent);
       RWStepGeom_RWBezierCurveAndRationalBSplineCurve tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14542,7 +14262,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface, anent, ent);
       RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14551,7 +14271,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_UniformSurfaceAndRationalBSplineSurface, anent, ent);
       RWStepGeom_RWUniformSurfaceAndRationalBSplineSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14560,7 +14280,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface, anent, ent);
       RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14569,7 +14289,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepGeom_BezierSurfaceAndRationalBSplineSurface, anent, ent);
       RWStepGeom_RWBezierSurfaceAndRationalBSplineSurface tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14578,7 +14298,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_SiUnitAndLengthUnit, anent, ent);
       RWStepBasic_RWSiUnitAndLengthUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14587,7 +14307,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_SiUnitAndPlaneAngleUnit, anent, ent);
       RWStepBasic_RWSiUnitAndPlaneAngleUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14596,7 +14316,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ConversionBasedUnitAndLengthUnit, anent, ent);
       RWStepBasic_RWConversionBasedUnitAndLengthUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14605,7 +14325,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ConversionBasedUnitAndPlaneAngleUnit, anent, ent);
       RWStepBasic_RWConversionBasedUnitAndPlaneAngleUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14616,7 +14336,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
                      anent,
                      ent);
       RWStepGeom_RWGeometricRepresentationContextAndGlobalUnitAssignedContext tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
@@ -14625,21 +14345,17 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_LoopAndPath, anent, ent);
       RWStepShape_RWLoopAndPath tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
 
     break;
 
-      // ------------
-      // Added by FMA
-      // ------------
-
     case 333:
     {
       DeclareAndCast(StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx, anent, ent);
       RWStepGeom_RWGeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
     break;
@@ -14648,7 +14364,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_ConversionBasedUnitAndSolidAngleUnit, anent, ent);
       RWStepBasic_RWConversionBasedUnitAndSolidAngleUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
     break;
@@ -14657,7 +14373,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_SiUnitAndSolidAngleUnit, anent, ent);
       RWStepBasic_RWSiUnitAndSolidAngleUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
     break;
@@ -14665,7 +14381,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_SolidAngleUnit, anent, ent);
       RWStepBasic_RWSolidAngleUnit tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
     break;
@@ -14673,7 +14389,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepShape_FacetedBrepAndBrepWithVoids, anent, ent);
       RWStepShape_RWFacetedBrepAndBrepWithVoids tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
     break;
@@ -14683,7 +14399,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
                      anent,
                      ent);
       RWStepGeom_RWGeometricRepresentationContextAndParametricRepresentationContext tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
     break;
@@ -14691,25 +14407,21 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     {
       DeclareAndCast(StepBasic_MechanicalContext, anent, ent);
       RWStepBasic_RWMechanicalContext tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
     }
     break;
 
-    case 340: // added by CKY : DesignContext cf ProductDefinitionContext
+    case 340:
     {
       DeclareAndCast(StepBasic_ProductDefinitionContext, anent, ent);
       RWStepBasic_RWProductDefinitionContext tool;
-      //      if (anent.IsNull()) return;
+
       tool.WriteStep(SW, anent);
       break;
     }
 
-      // -----------
-      // Added for Rev4
-      // -----------
-
-    case 341: // TimeMeasureWithUnit
+    case 341:
     {
       DeclareAndCast(StepBasic_MeasureWithUnit, anent, ent);
       RWStepBasic_RWMeasureWithUnit tool;
@@ -14718,7 +14430,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     break;
 
     case 342:
-    case 343: // RatioUnit, TimeUnit
+    case 343:
     {
       DeclareAndCast(StepBasic_NamedUnit, anent, ent);
       RWStepBasic_RWNamedUnit tool;
@@ -14754,14 +14466,14 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     }
     break;
 
-    case 348: // ApprovalDateTime
+    case 348:
     {
       DeclareAndCast(StepBasic_ApprovalDateTime, anent, ent);
       RWStepBasic_RWApprovalDateTime tool;
       tool.WriteStep(SW, anent);
     }
     break;
-    case 349: // CameraImage 2d and 3d
+    case 349:
     case 350:
     {
       DeclareAndCast(StepVisual_CameraImage, anent, ent);
@@ -14812,7 +14524,6 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     }
     break;
 
-      //: n5 abv 15 Feb 99: S4132 complex type bounded_curve + surface_curve
     case 358:
     {
       DeclareAndCast(StepGeom_SurfaceCurveAndBoundedCurve, anent, ent);
@@ -14821,7 +14532,6 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
       break;
     }
 
-      //  AP214 : CC1 -> CC2
     case 366:
     {
       DeclareAndCast(StepAP214_AutoDesignDocumentReference, anent, ent);
@@ -14991,7 +14701,6 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     }
     break;
 
-      //: S4134: Added from CD to DIS
     case 392:
     {
       DeclareAndCast(StepAP214_AppliedDateAndTimeAssignment, anent, ent);
@@ -15092,7 +14801,6 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     }
     break;
 
-    // Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
     case 406:
     {
       DeclareAndCast(StepRepr_MeasureRepresentationItem, anent, ent);
@@ -15143,7 +14851,6 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     }
     break;
 
-    // Added by ABV 10.11.99 for AP203
     case 413:
     {
       DeclareAndCast(StepBasic_Action, anent, ent);
@@ -15349,7 +15056,6 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     }
     break;
 
-    // Added by ABV 18.04.00 for CAX-IF TRJ4
     case 442:
     {
       DeclareAndCast(StepShape_AngularLocation, anent, ent);
@@ -15407,7 +15113,6 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     }
     break;
 
-      // Added by ABV 10.05.00 for CAX-IF TRJ4 (external references)
     case 450:
     {
       DeclareAndCast(StepBasic_DocumentRepresentationType, anent, ent);
@@ -15507,7 +15212,6 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     }
     break;
 
-      // Added by CKY 25 APR 2001 for CAX-IF TRJ7 (dimensional tolerances)
     case 470:
     {
       DeclareAndCast(StepRepr_CompositeShapeAspect, anent, ent);
@@ -15529,7 +15233,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
       tool.WriteStep(SW, anent);
     }
     break;
-    case 473: // same as DimensionalLocation
+    case 473:
     {
       DeclareAndCast(StepShape_DirectedDimensionalLocation, anent, ent);
       RWStepShape_RWDimensionalLocation tool;
@@ -15601,7 +15305,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     }
     break;
 
-    case 484: // same as ShapeAspectRelationship
+    case 484:
     {
       DeclareAndCast(StepRepr_ShapeAspectRelationship, anent, ent);
       RWStepRepr_RWShapeAspectRelationship tool;
@@ -15609,7 +15313,6 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
     }
     break;
 
-      // abv 28.12.01
     case 485:
     {
       DeclareAndCast(StepShape_CompoundShapeRepresentation, anent, ent);
@@ -15855,13 +15558,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
       tool.WriteStep(SW, anent);
     }
     break;
-      // case 523:
-      //     {
-      //       DeclareAndCast(StepFEA_CurveElementEndCoordinateSystem,anent,ent);
-      //       RWStepFEA_RWCurveElementEndCoordinateSystem tool;
-      //       tool.WriteStep (SW,anent);
-      //     }
-      //     break;
+
     case 524:
     {
       DeclareAndCast(StepFEA_CurveElementEndOffset, anent, ent);
@@ -16121,27 +15818,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
       tool.WriteStep(SW, anent);
     }
     break;
-      // case 561:
-      //     {
-      //       DeclareAndCast(StepFEA_SymmetricTensor22d,anent,ent);
-      //       RWStepFEA_RWSymmetricTensor22d tool;
-      //       tool.WriteStep (SW,anent);
-      //     }
-      //     break;
-      // case 562:
-      //     {
-      //       DeclareAndCast(StepFEA_SymmetricTensor42d,anent,ent);
-      //       RWStepFEA_RWSymmetricTensor42d tool;
-      //       tool.WriteStep (SW,anent);
-      //     }
-      //     break;
-      // case 563:
-      //     {
-      //       DeclareAndCast(StepFEA_SymmetricTensor43d,anent,ent);
-      //       RWStepFEA_RWSymmetricTensor43d tool;
-      //       tool.WriteStep (SW,anent);
-      //     }
-      //     break;
+
     case 564:
     {
       DeclareAndCast(StepFEA_Volume3dElementRepresentation, anent, ent);
@@ -17510,8 +17187,6 @@ void RWStepAP214_ReadWriteModule::WriteStep(const int                           
       aTool.WriteStep(SW, anEnt);
       break;
     }
-
-      // --------------------------------------------------------------------
 
     case 804:
     {

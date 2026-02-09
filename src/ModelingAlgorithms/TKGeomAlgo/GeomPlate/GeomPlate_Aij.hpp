@@ -6,7 +6,6 @@
 
 #include <gp_Vec.hpp>
 
-//! A structure containing indexes of two normals and its cross product
 class GeomPlate_Aij
 {
 public:

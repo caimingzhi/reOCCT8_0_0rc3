@@ -16,8 +16,6 @@
 #include <gp_Pnt.hpp>
 #include <NCollection_Array1.hpp>
 
-//=================================================================================================
-
 occ::handle<Geom2d_Curve> GeomAPI::To2d(const occ::handle<Geom_Curve>& C, const gp_Pln& P)
 {
   occ::handle<Geom2d_Curve>        result;
@@ -34,8 +32,6 @@ occ::handle<Geom2d_Curve> GeomAPI::To2d(const occ::handle<Geom_Curve>& C, const 
 
   return result;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> GeomAPI::To3d(const occ::handle<Geom2d_Curve>& C, const gp_Pln& P)
 {

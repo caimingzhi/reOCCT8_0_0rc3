@@ -13,26 +13,18 @@
 #include <Standard_NotImplemented.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 ProjLib_Sphere::ProjLib_Sphere() = default;
-
-//=================================================================================================
 
 ProjLib_Sphere::ProjLib_Sphere(const gp_Sphere& Sp)
 {
   Init(Sp);
 }
 
-//=================================================================================================
-
 ProjLib_Sphere::ProjLib_Sphere(const gp_Sphere& Sp, const gp_Circ& C)
 {
   Init(Sp);
   Project(C);
 }
-
-//=================================================================================================
 
 void ProjLib_Sphere::Init(const gp_Sphere& Sp)
 {
@@ -41,18 +33,6 @@ void ProjLib_Sphere::Init(const gp_Sphere& Sp)
   myIsPeriodic = false;
   isDone       = false;
 }
-
-//=======================================================================
-// function : EvalPnt2d / EvalDir2d
-// purpose  : returns the Projected Pnt / Dir in the parametrization range
-//           of mySphere.
-//           P is a point on a sphere with the same Position as Sp,
-//           but with a radius equal to 1. ( in order to avoid to divide
-//           by Radius)
-//                / X = cosV cosU        U = Atan(Y/X)
-//            P = | Y = cosV sinU   ==>
-//                \ Z = sinV             V = std::asin( Z)
-//=======================================================================
 
 static gp_Pnt2d EvalPnt2d(const gp_Vec& P, const gp_Sphere& Sp)
 {
@@ -80,17 +60,11 @@ static gp_Pnt2d EvalPnt2d(const gp_Vec& P, const gp_Sphere& Sp)
   return gp_Pnt2d(U, V);
 }
 
-//=================================================================================================
-
 void ProjLib_Sphere::Project(const gp_Circ& C)
 {
-  gp_Pnt O;          // O Location of Sp;
-  gp_Dir Xc, Yc, Zc; // X Y Z Direction of C;
-  gp_Dir Xs, Ys, Zs; // X Y Z Direction of Sp;
-
-  // Check the validity :
-  //                      Xc & Yc must be perpendicular to Zs ->IsoV;
-  //                      O,Zs is in the Plane O,Xc,Yc;       ->IsoU;
+  gp_Pnt O;
+  gp_Dir Xc, Yc, Zc;
+  gp_Dir Xs, Ys, Zs;
 
   O  = mySphere.Location();
   Xc = C.Position().XDirection();
@@ -120,15 +94,12 @@ void ProjLib_Sphere::Project(const gp_Circ& C)
         && (std::abs(P2d1.Y() - M_PI / 2.) < Precision::PConfusion()
             || std::abs(P2d1.Y() + M_PI / 2.) < Precision::PConfusion()))
     {
-      // then P1 is on the apex of the sphere and U is undefined
-      // The value of U is given by P2d2.Y() .
+
       P2d1.SetX(P2d2.X());
     }
     else if (std::abs(std::abs(P2d1.X() - P2d2.X()) - M_PI) < Precision::PConfusion())
     {
-      // then we have U2 = U1 + PI; V2;
-      // we have to assume that U1 = U2
-      //   so V2 = PI - V2;
+
       P2d2.SetX(P2d1.X());
       if (P2d2.Y() < 0.)
         P2d2.SetY(-M_PI - P2d2.Y());
@@ -147,7 +118,6 @@ void ProjLib_Sphere::Project(const gp_Circ& C)
   {
     myType = GeomAbs_Line;
 
-    // P2d(U,V) :first point of the PCurve.
     double U = Xs.AngleWithRef(Xc, Xs ^ Ys);
     if (U < 0)
       U += 2 * M_PI;
@@ -180,13 +150,10 @@ void ProjLib_Sphere::Project(const gp_Hypr& H)
   ProjLib_Projector::Project(H);
 }
 
-//=================================================================================================
-
 void ProjLib_Sphere::SetInBounds(const double U)
 {
   StdFail_NotDone_Raise_if(!isDone, "ProjLib_Sphere:SetInBounds");
 
-  // first set the y of the first point in -pi/2 pi/2
   double newY, Y = ElCLib::Value(U, myLin).Y();
   newY = ElCLib::InPeriod(Y, -M_PI, M_PI);
 
@@ -197,18 +164,16 @@ void ProjLib_Sphere::SetInBounds(const double U)
   gp_Ax2d   Axis;
   double    Tol = 1.e-7;
   gp_Dir2d  D2d = myLin.Direction();
-  //  Modified by skv - Tue Aug  1 16:29:59 2006 OCC13116 Begin
-  //   if ((P.Y() > M_PI/2) ||
+
   if ((P.Y() - M_PI / 2 > Tol) ||
-      //  Modified by skv - Tue Aug  1 16:29:59 2006 OCC13116 End
+
       (std::abs(P.Y() - M_PI / 2) < Tol && D2d.IsEqual(gp::DY2d(), Tol)))
   {
     Axis = gp_Ax2d(gp_Pnt2d(0., M_PI / 2.), gp::DX2d());
   }
-  //  Modified by skv - Tue Aug  1 16:29:59 2006 OCC13116 Begin
-  //   else if ((P.Y() < -M_PI/2) ||
+
   else if ((P.Y() + M_PI / 2 < -Tol) ||
-           //  Modified by skv - Tue Aug  1 16:29:59 2006 OCC13116 End
+
            (std::abs(P.Y() + M_PI / 2) < Tol && D2d.IsOpposite(gp::DY2d(), Tol)))
   {
     Axis = gp_Ax2d(gp_Pnt2d(0., -M_PI / 2.), gp::DX2d());
@@ -221,7 +186,6 @@ void ProjLib_Sphere::SetInBounds(const double U)
 
   myLin.Translate(gp_Vec2d(M_PI, 0.));
 
-  // il faut maintenant recadrer en U
   double newX, X = ElCLib::Value(U, myLin).X();
   newX = ElCLib::InPeriod(X, 0., 2. * M_PI);
   myLin.Translate(gp_Vec2d(newX - X, 0.));

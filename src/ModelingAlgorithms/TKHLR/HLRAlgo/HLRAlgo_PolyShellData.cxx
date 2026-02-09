@@ -5,14 +5,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRAlgo_PolyShellData, Standard_Transient)
 
-//=================================================================================================
-
 HLRAlgo_PolyShellData::HLRAlgo_PolyShellData(const int nbFace)
     : myPolyg(1, nbFace)
 {
 }
-
-//=================================================================================================
 
 void HLRAlgo_PolyShellData::UpdateGlobalMinMax(Bnd_Box& theBox)
 {
@@ -28,8 +24,6 @@ void HLRAlgo_PolyShellData::UpdateGlobalMinMax(Bnd_Box& theBox)
     aPd->UpdateGlobalMinMax(theBox);
   }
 }
-
-//=================================================================================================
 
 void HLRAlgo_PolyShellData::UpdateHiding(const int nbHiding)
 {

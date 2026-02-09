@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #ifndef _WIN32
 
@@ -21,10 +9,7 @@
   #include <OSD_WhoAmI.hpp>
 
   #include <sys/stat.h>
-// Ci-joint le tableau de gestion des protection (Ajout et Retrait). Les
-// tableaux sont des tableaux a deux dimensions, indices par l'enumeration
-// OSD_SingleProtection. Il y a en tout 16 possibilites dans l enumeration.
-// Voir JPT pour tous renseignements....
+
 static OSD_SingleProtection TabProtAdd[16][16] = {{OSD_None,
                                                    OSD_R,
                                                    OSD_W,
@@ -298,8 +283,6 @@ static OSD_SingleProtection TabProtAdd[16][16] = {{OSD_None,
                                                    OSD_RWXD}
 
 };
-
-// -----------------------
 
 static OSD_SingleProtection TabProtSub[16][16] = {{OSD_None,
                                                    OSD_None,
@@ -575,10 +558,6 @@ static OSD_SingleProtection TabProtSub[16][16] = {{OSD_None,
 
 };
 
-// const OSD_WhoAmI Iam = OSD_WProtection;
-
-// Initialize System, Group, World for read only and User for read & write
-
 OSD_Protection::OSD_Protection()
 {
   s = OSD_R;
@@ -672,8 +651,6 @@ void OSD_Protection::Sub(OSD_SingleProtection& aProtection, const OSD_SingleProt
   aProtection = TabProtSub[aProtection][aRight];
 }
 
-/* Get internal UNIX's access rights for user, group and other */
-
 int OSD_Protection::Internal() const
 {
 
@@ -720,10 +697,6 @@ int OSD_Protection::Internal() const
 
 #else
 
-//------------------------------------------------------------------------
-//-------------------  WNT Sources of OSD_Protection ---------------------
-//------------------------------------------------------------------------
-
   #include <OSD_Protection.hpp>
 
   #define FLAG_READ 0x00000001
@@ -741,8 +714,7 @@ OSD_Protection ::OSD_Protection()
   u = OSD_RWXD;
   g = OSD_RX;
   w = OSD_RX;
-
-} // end constructor ( 1 )
+}
 
 OSD_Protection ::OSD_Protection(const OSD_SingleProtection System,
                                 const OSD_SingleProtection User,
@@ -751,8 +723,7 @@ OSD_Protection ::OSD_Protection(const OSD_SingleProtection System,
 {
 
   SetValues(System, User, Group, World);
-
-} // end constructor ( 2 )
+}
 
 void OSD_Protection ::Values(OSD_SingleProtection& System,
                              OSD_SingleProtection& User,
@@ -763,8 +734,7 @@ void OSD_Protection ::Values(OSD_SingleProtection& System,
   User   = u;
   Group  = g;
   World  = w;
-
-} // end OSD_Protection :: Values
+}
 
 void OSD_Protection ::SetValues(const OSD_SingleProtection System,
                                 const OSD_SingleProtection User,
@@ -776,64 +746,55 @@ void OSD_Protection ::SetValues(const OSD_SingleProtection System,
   u = User;
   g = Group;
   w = World;
-
-} // end OSD_Protection :: SetValues
+}
 
 void OSD_Protection ::SetSystem(const OSD_SingleProtection priv)
 {
 
   s = priv;
-
-} // end OSD_Protection :: SetSystem
+}
 
 void OSD_Protection ::SetUser(const OSD_SingleProtection priv)
 {
 
   u = priv;
-
-} // end OSD_Protection :: SetUser
+}
 
 void OSD_Protection ::SetGroup(const OSD_SingleProtection priv)
 {
 
   g = priv;
-
-} // end OSD_Protection :: SetGroup
+}
 
 void OSD_Protection ::SetWorld(const OSD_SingleProtection priv)
 {
 
   w = priv;
-
-} // end OSD_Protection :: SetWorld
+}
 
 OSD_SingleProtection OSD_Protection ::System() const
 {
 
   return s;
-
-} // end OSD_Protection :: System
+}
 
 OSD_SingleProtection OSD_Protection ::User() const
 {
 
   return u;
-
-} // end OSD_Protection :: User
+}
 
 OSD_SingleProtection OSD_Protection ::Group() const
 {
 
   return g;
-
-} // end OSD_Protection :: Group
+}
 
 OSD_SingleProtection OSD_Protection ::World() const
 {
 
   return w;
-
-} // end OSD_Protection :: World
+}
 
 void OSD_Protection ::Add(OSD_SingleProtection& aProt, const OSD_SingleProtection aRight)
 {
@@ -862,8 +823,7 @@ void OSD_Protection ::Add(OSD_SingleProtection& aProt, const OSD_SingleProtectio
     sMask |= FLAG_DELETE;
 
   aProt = _get_prot(sMask);
-
-} // end OSD_Protection :: Add
+}
 
 void OSD_Protection ::Sub(OSD_SingleProtection& aProt, const OSD_SingleProtection aRight)
 {
@@ -891,15 +851,13 @@ void OSD_Protection ::Sub(OSD_SingleProtection& aProt, const OSD_SingleProtectio
     pMask &= ~FLAG_DELETE;
 
   aProt = _get_prot(pMask);
-
-} // end OSD_Protection :: Sub
+}
 
 int OSD_Protection ::Internal() const
 {
 
   return 0;
-
-} // end OSD_Protection :: Internal
+}
 
 static int __fastcall _get_mask(OSD_SingleProtection p)
 {
@@ -923,8 +881,7 @@ static int __fastcall _get_mask(OSD_SingleProtection p)
     retVal |= FLAG_DELETE;
 
   return retVal;
-
-} // end _get_mask
+}
 
 static OSD_SingleProtection __fastcall _get_prot(int m)
 {
@@ -1027,11 +984,9 @@ static OSD_SingleProtection __fastcall _get_prot(int m)
     default:
 
       retVal = OSD_None;
-
-  } // end switch
+  }
 
   return retVal;
-
-} // end _get_prot
+}
 
 #endif

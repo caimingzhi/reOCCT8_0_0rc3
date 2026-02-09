@@ -11,42 +11,27 @@ class Expr_UnaryExpression : public Expr_GeneralExpression
 {
 
 public:
-  //! Returns the operand used
   const occ::handle<Expr_GeneralExpression>& Operand() const;
 
-  //! Sets the operand used
-  //! Raises InvalidOperand if <exp> contains <me>.
   Standard_EXPORT void SetOperand(const occ::handle<Expr_GeneralExpression>& exp);
 
-  //! Returns the number of sub-expressions contained
-  //! in <me> ( >= 0)
   Standard_EXPORT int NbSubExpressions() const override;
 
-  //! Returns the <I>-th sub-expression of <me>.
-  //! Raises OutOfRange if <I> > NbSubExpressions(me)
   Standard_EXPORT const occ::handle<Expr_GeneralExpression>& SubExpression(
     const int I) const override;
 
-  //! Does <me> contains NamedUnknown ?
   Standard_EXPORT bool ContainsUnknowns() const override;
 
-  //! Tests if <exp> is contained in <me>.
   Standard_EXPORT bool Contains(const occ::handle<Expr_GeneralExpression>& exp) const override;
 
-  //! Replaces all occurrences of <var> with <with> in <me>
-  //! Raises InvalidOperand if <with> contains <me>.
   Standard_EXPORT void Replace(const occ::handle<Expr_NamedUnknown>&      var,
                                const occ::handle<Expr_GeneralExpression>& with) override;
 
-  //! Returns a GeneralExpression after replacement of
-  //! NamedUnknowns by an associated expression, and after
-  //! values computation.
   Standard_EXPORT occ::handle<Expr_GeneralExpression> Simplified() const override;
 
   DEFINE_STANDARD_RTTIEXT(Expr_UnaryExpression, Expr_GeneralExpression)
 
 protected:
-  //! Sets the operand used during creation
   Standard_EXPORT void CreateOperand(const occ::handle<Expr_GeneralExpression>& exp);
 
 private:

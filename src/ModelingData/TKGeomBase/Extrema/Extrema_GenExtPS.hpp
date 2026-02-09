@@ -13,32 +13,15 @@
 
 class Adaptor3d_Surface;
 
-//! It calculates all the extremum distances
-//! between a point and a surface.
-//! These distances can be minimum or maximum.
 class Extrema_GenExtPS
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor.
   Standard_EXPORT Extrema_GenExtPS();
 
-  //! Destructor.
   Standard_EXPORT ~Extrema_GenExtPS();
 
-  //! It calculates all the distances.
-  //! The function F(u,v)=distance(P,S(u,v)) has an
-  //! extremum when gradient(F)=0. The algorithm searches
-  //! all the zeros inside the definition ranges of the
-  //! surface.
-  //! NbU and NbV are used to locate the close points
-  //! to find the zeros. They must be great enough
-  //! such that if there is N extrema, there will
-  //! be N extrema between P and the grid.
-  //! TolU et TolV are used to determine the conditions
-  //! to stop the iterations; at the iteration number n:
-  //! (Un - Un-1) < TolU and (Vn - Vn-1) < TolV .
   Standard_EXPORT Extrema_GenExtPS(const gp_Pnt&            P,
                                    const Adaptor3d_Surface& S,
                                    const int                NbU,
@@ -48,18 +31,6 @@ public:
                                    const Extrema_ExtFlag    F = Extrema_ExtFlag_MINMAX,
                                    const Extrema_ExtAlgo    A = Extrema_ExtAlgo_Grad);
 
-  //! It calculates all the distances.
-  //! The function F(u,v)=distance(P,S(u,v)) has an
-  //! extremum when gradient(F)=0. The algorithm searches
-  //! all the zeros inside the definition ranges of the
-  //! surface.
-  //! NbU and NbV are used to locate the close points
-  //! to find the zeros. They must be great enough
-  //! such that if there is N extrema, there will
-  //! be N extrema between P and the grid.
-  //! TolU et TolV are used to determine the conditions
-  //! to stop the iterations; at the iteration number n:
-  //! (Un - Un-1) < TolU and (Vn - Vn-1) < TolV .
   Standard_EXPORT Extrema_GenExtPS(const gp_Pnt&            P,
                                    const Adaptor3d_Surface& S,
                                    const int                NbU,
@@ -89,25 +60,18 @@ public:
                                   const double             TolU,
                                   const double             TolV);
 
-  //! the algorithm is done with the point P.
-  //! An exception is raised if the fields have not
-  //! been initialized.
   Standard_EXPORT void Perform(const gp_Pnt& P);
 
   Standard_EXPORT void SetFlag(const Extrema_ExtFlag F);
 
   Standard_EXPORT void SetAlgo(const Extrema_ExtAlgo A);
 
-  //! Returns True if the distances are found.
   Standard_EXPORT bool IsDone() const;
 
-  //! Returns the number of extremum distances.
   Standard_EXPORT int NbExt() const;
 
-  //! Returns the value of the Nth resulting square distance.
   Standard_EXPORT double SquareDistance(const int N) const;
 
-  //! Returns the point of the Nth resulting distance.
   Standard_EXPORT const Extrema_POnSurf& Point(const int N) const;
 
 private:
@@ -115,13 +79,10 @@ private:
 
   Standard_EXPORT void FindSolution(const gp_Pnt& P, const Extrema_POnSurfParams& theParams);
 
-  //! Selection of points to build grid, depending on the type of surface
   Standard_EXPORT void GetGridPoints(const Adaptor3d_Surface& theSurf);
 
-  //! Creation of grid of parametric points
   Standard_EXPORT void BuildGrid(const gp_Pnt& thePoint);
 
-  //! Compute new edge parameters.
   Standard_EXPORT const Extrema_POnSurfParams& ComputeEdgeParameters(
     const bool                   IsUEdge,
     const Extrema_POnSurfParams& theParam0,
@@ -130,7 +91,6 @@ private:
     const double                 theDiffTol);
 
 private:
-  // disallow copies
   Extrema_GenExtPS(const Extrema_GenExtPS&)            = delete;
   Extrema_GenExtPS& operator=(const Extrema_GenExtPS&) = delete;
 

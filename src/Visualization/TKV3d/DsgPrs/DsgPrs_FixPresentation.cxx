@@ -13,8 +13,6 @@
 #include <Prs3d_LineAspect.hpp>
 #include <Prs3d_Presentation.hpp>
 
-//=================================================================================================
-
 void DsgPrs_FixPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                  const occ::handle<Prs3d_Drawer>&       aDrawer,
                                  const gp_Pnt&                          aPntAttach,
@@ -27,16 +25,14 @@ void DsgPrs_FixPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresent
 
   occ::handle<Graphic3d_ArrayOfSegments> aPrims = new Graphic3d_ArrayOfSegments(10);
 
-  // Trace du segment de raccordement
   aPrims->AddVertex(aPntAttach);
   aPrims->AddVertex(aPntEnd);
 
-  // trace du symbole 'Fix'
-  gp_Vec dirac(aPntAttach, aPntEnd); // vecteur directeur du seg. de raccord
+  gp_Vec dirac(aPntAttach, aPntEnd);
   dirac.Normalize();
   gp_Vec norac = dirac.Crossed(gp_Vec(aNormPln));
   gp_Ax1 ax(aPntEnd, aNormPln);
-  norac.Rotate(ax, M_PI / 8); // vecteur normal au seg. de raccord
+  norac.Rotate(ax, M_PI / 8);
   norac *= (symbsize / 2);
   gp_Pnt P1 = aPntEnd.Translated(norac);
   gp_Pnt P2 = aPntEnd.Translated(-norac);
@@ -44,7 +40,6 @@ void DsgPrs_FixPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresent
   aPrims->AddVertex(P1);
   aPrims->AddVertex(P2);
 
-  // trace des 'dents'
   norac *= 0.8;
   P1 = aPntEnd.Translated(norac);
   P2 = aPntEnd.Translated(-norac);

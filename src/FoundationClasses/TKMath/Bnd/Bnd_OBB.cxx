@@ -14,63 +14,51 @@
 
 namespace
 {
-  // Precomputed sqrt(3)
-  constexpr double SQRT_3 = 1.7320508075688772935;
-} // namespace
 
-//! Auxiliary class to select from the points stored in
-//! BVH tree the two points giving the extreme projection
-//! parameters on the axis
+  constexpr double SQRT_3 = 1.7320508075688772935;
+}
+
 class OBB_ExtremePointsSelector
     : public BVH_Traverse<double, 3, BVH_BoxSet<double, 3, gp_XYZ>, Bnd_Range>
 {
 public:
-  //! Constructor
   OBB_ExtremePointsSelector()
       : myPrmMin(RealLast()),
         myPrmMax(RealFirst())
   {
   }
 
-public: //! @name Set axis for projection
-  //! Sets the axis
+public:
   void SetAxis(const gp_XYZ& theAxis) { myAxis = theAxis; }
 
-public: //! @name Clears the points from previous runs
-  //! Clear
+public:
   void Clear()
   {
     myPrmMin = RealLast();
     myPrmMax = RealFirst();
   }
 
-public: //! @name Getting the results
-  //! Returns the minimal projection parameter
+public:
   double MinPrm() const { return myPrmMin; }
 
-  //! Returns the maximal projection parameter
   double MaxPrm() const { return myPrmMax; }
 
-  //! Returns the minimal projection point
   const gp_XYZ& MinPnt() const { return myPntMin; }
 
-  //! Returns the maximal projection point
   const gp_XYZ& MaxPnt() const { return myPntMax; }
 
-public: //! @name Definition of rejection/acceptance rules
-  //! Defines the rules for node rejection
+public:
   bool RejectNode(const BVH_Vec3d& theCMin,
                   const BVH_Vec3d& theCMax,
                   Bnd_Range&       theMetric) const override
   {
     if (myPrmMin > myPrmMax)
-      // No parameters computed yet
+
       return false;
 
     double aPrmMin = myPrmMin, aPrmMax = myPrmMax;
     bool   isToReject = true;
 
-    // Check if the current node is between already found parameters
     for (int i = 0; i < 2; ++i)
     {
       double x = !i ? theCMin.x() : theCMax.x();
@@ -101,23 +89,20 @@ public: //! @name Definition of rejection/acceptance rules
     return isToReject;
   }
 
-  //! Rules for node rejection by the metric
   bool RejectMetric(const Bnd_Range& theMetric) const override
   {
     if (myPrmMin > myPrmMax)
-      // no parameters computed
+
       return false;
 
     double aMin, aMax;
     if (!theMetric.GetBounds(aMin, aMax))
-      // void metric
+
       return false;
 
-    // Check if the box of the branch is inside of the already computed parameters
     return aMin > myPrmMin && aMax < myPrmMax;
   }
 
-  //! Defines the rules for leaf acceptance
   bool Accept(const int theIndex, const Bnd_Range&) override
   {
     const gp_XYZ& theLeaf = myBVHSet->Element(theIndex);
@@ -135,20 +120,18 @@ public: //! @name Definition of rejection/acceptance rules
     return true;
   }
 
-public: //! @name Choosing the best branch
-  //! Returns true if the metric of the left branch is better than the metric of the right
+public:
   bool IsMetricBetter(const Bnd_Range& theLeft, const Bnd_Range& theRight) const override
   {
     if (myPrmMin > myPrmMax)
-      // no parameters computed
+
       return true;
 
     double aMin[2], aMax[2];
     if (!theLeft.GetBounds(aMin[0], aMax[0]) || !theRight.GetBounds(aMin[1], aMax[1]))
-      // void metrics
+
       return true;
 
-    // Choose branch with larger extension over computed parameters
     double anExt[2] = {0.0, 0.0};
     for (int i = 0; i < 2; ++i)
     {
@@ -160,56 +143,37 @@ public: //! @name Choosing the best branch
     return anExt[0] > anExt[1];
   }
 
-protected:         //! @name Fields
-  gp_XYZ myAxis;   //!< Axis to project the points to
-  double myPrmMin; //!< Minimal projection parameter
-  double myPrmMax; //!< Maximal projection parameter
-  gp_XYZ myPntMin; //!< Minimal projection point
-  gp_XYZ myPntMax; //!< Maximal projection point
+protected:
+  gp_XYZ myAxis;
+  double myPrmMin;
+  double myPrmMax;
+  gp_XYZ myPntMin;
+  gp_XYZ myPntMax;
 };
 
-//! Tool for OBB construction
 class OBBTool
 {
 public:
-  //! Constructor. theL - list of points.
-  //! theLT is a pointer to the list of tolerances
-  //! (i-th element of this array is a tolerance
-  //! of i-th point in theL). If theLT is empty
-  //! then the tolerance of every point is equal to 0.
-  //! Attention! The objects, which theL and theLT links on,
-  //! must be available during all time of OBB creation
-  //! (i.e. while the object of OBBTool exists).
   OBBTool(const NCollection_Array1<gp_Pnt>& theL,
           const NCollection_Array1<double>* theLT        = nullptr,
           bool                              theIsOptimal = false);
 
-  //! DiTO algorithm for OBB construction
-  //! (http://www.idt.mdh.se/~tla/publ/FastOBBs.pdf)
   void ProcessDiTetrahedron();
 
-  //! Creates OBB with already computed parameters
   void BuildBox(Bnd_OBB& theBox);
 
 protected:
-  // Computes the extreme points on the set of Initial axes
   void ComputeExtremePoints();
 
-  //! Works with the triangle set by the points in myTriIdx.
-  //! If theIsBuiltTrg == TRUE, new set of triangles will be
-  //! recomputed.
   void ProcessTriangle(const int  theIdx1,
                        const int  theIdx2,
                        const int  theIdx3,
                        const bool theIsBuiltTrg);
 
-  //! Computes myTriIdx[2]
   void FillToTriangle3();
 
-  //! Computes myTriIdx[3] and myTriIdx[4]
   void FillToTriangle5(const gp_XYZ& theNormal, const gp_XYZ& theBarryCenter);
 
-  //! Returns half of the Surface area of the box
   static double ComputeQuality(const double* const thePrmArr)
   {
     const double aDX = thePrmArr[1] - thePrmArr[0], aDY = thePrmArr[3] - thePrmArr[2],
@@ -219,12 +183,9 @@ protected:
   }
 
 protected:
-  //! Assignment operator is forbidden
   OBBTool& operator=(const OBBTool&);
 
 private:
-  //! Params structure stores the two values meaning
-  //! min and max parameters on the axis
   struct Params
   {
     Params()
@@ -243,8 +204,6 @@ private:
     double _ParamMax;
   };
 
-  //! Computes the Minimal and maximal parameters on the vector
-  //! connecting the points myLExtremalPoints[theId1] and myLExtremalPoints[theId2]
   void ComputeParams(const int theId1, const int theId2, double& theMin, double& theMax)
   {
     theMin = myParams[theId1][theId2]._ParamMin;
@@ -260,9 +219,6 @@ private:
     }
   }
 
-  //! Looks for the min-max parameters on the axis.
-  //! For optimal case projects all the points on the axis,
-  //! for not optimal - only the set of extreme points.
   void FindMinMax(const gp_XYZ& theAxis, double& theMin, double& theMax)
   {
     theMin = RealLast(), theMax = RealFirst();
@@ -282,7 +238,6 @@ private:
     }
   }
 
-  //! Projects the set of points on the axis
   void Project(const gp_XYZ& theAxis,
                double&       theMin,
                double&       theMax,
@@ -293,7 +248,7 @@ private:
 
     if (myOptimal)
     {
-      // Project BVH
+
       OBB_ExtremePointsSelector anExtremePointsSelector;
       anExtremePointsSelector.SetBVHSet(myPointBoxSet.get());
       anExtremePointsSelector.SetAxis(theAxis);
@@ -307,7 +262,7 @@ private:
     }
     else
     {
-      // Project all points
+
       for (int iP = myPntsList.Lower(); iP <= myPntsList.Upper(); ++iP)
       {
         const gp_XYZ& aPoint = myPntsList(iP).XYZ();
@@ -329,48 +284,29 @@ private:
   }
 
 private:
-  //! Number of the initial axes.
   static const int myNbInitAxes = 7;
 
-  //! Number of extremal points
   static const int myNbExtremalPoints = 2 * myNbInitAxes;
 
-  //! The source list of points
   const NCollection_Array1<gp_Pnt>& myPntsList;
 
-  //! Pointer to the array of tolerances
   const NCollection_Array1<double>* myListOfTolers;
 
-  //! Points of ditetrahedron
-  //! given by their indices in myLExtremalPoints.
   int myTriIdx[5]{};
 
-  //! List of extremal points
   gp_XYZ myLExtremalPoints[myNbExtremalPoints];
 
-  //! The axes of the box (always normalized or
-  //! can be null-vector)
   gp_XYZ myAxes[3];
 
-  //! The surface area of the OBB
   double myQualityCriterion;
 
-  //! Defines if the OBB should be computed more tight.
-  //! Takes more time, but the volume is less.
   bool myOptimal;
 
-  //! Point box set organized with BVH
   opencascade::handle<BVH_BoxSet<double, 3, gp_XYZ>> myPointBoxSet;
 
-  //! Stored min/max parameters for the axes between extremal points
   Params myParams[myNbExtremalPoints][myNbExtremalPoints];
 };
 
-//=======================================================================
-// Function : SetMinMax
-// purpose :
-//    ATTENTION!!! thePrmArr must be initialized before this method calling.
-//=======================================================================
 static inline void SetMinMax(double* const thePrmArr, const double theNewParam)
 {
   if (theNewParam < thePrmArr[0])
@@ -383,8 +319,6 @@ static inline void SetMinMax(double* const thePrmArr, const double theNewParam)
   }
 }
 
-//=================================================================================================
-
 OBBTool::OBBTool(const NCollection_Array1<gp_Pnt>& theL,
                  const NCollection_Array1<double>* theLT,
                  const bool                        theIsOptimal)
@@ -395,13 +329,12 @@ OBBTool::OBBTool(const NCollection_Array1<gp_Pnt>& theL,
 {
   if (myOptimal)
   {
-    // Use linear builder for BVH construction with 30 elements in the leaf
+
     opencascade::handle<BVH_LinearBuilder<double, 3>> aLBuilder =
       new BVH_LinearBuilder<double, 3>(30);
     myPointBoxSet = new BVH_BoxSet<double, 3, gp_XYZ>(aLBuilder);
     myPointBoxSet->SetSize(myPntsList.Length());
 
-    // Add the points into Set
     for (int iP = theL.Lower(); iP <= theL.Upper(); ++iP)
     {
       const gp_Pnt&      aP   = theL(iP);
@@ -417,20 +350,9 @@ OBBTool::OBBTool(const NCollection_Array1<gp_Pnt>& theL,
   ComputeExtremePoints();
 }
 
-//=================================================================================================
-
 void OBBTool::ComputeExtremePoints()
 {
-  // Six initial axes show great quality on the Optimal OBB, plus
-  // the performance is better (due to the less number of operations).
-  // But they show worse quality for the not optimal approach.
-  // const double a = (sqrt(5) - 1) / 2.;
-  // const gp_XYZ anInitialAxes6[myNbInitAxes] = { gp_XYZ (0, 1, a),
-  //                                              gp_XYZ (0, 1, -a),
-  //                                              gp_XYZ (1, a, 0),
-  //                                              gp_XYZ (1, -a, 0),
-  //                                              gp_XYZ (a, 0, 1),
-  //                                              gp_XYZ (a, 0, -1) };
+
   const gp_XYZ anInitialAxes7[myNbInitAxes] = {gp_XYZ(1.0, 0.0, 0.0),
                                                gp_XYZ(0.0, 1.0, 0.0),
                                                gp_XYZ(0.0, 0.0, 1.0),
@@ -439,12 +361,10 @@ void OBBTool::ComputeExtremePoints()
                                                gp_XYZ(1.0, -1.0, 1.0) / SQRT_3,
                                                gp_XYZ(1.0, -1.0, -1.0) / SQRT_3};
 
-  // Set of initial axes
   const gp_XYZ* anInitialAxesArray = anInitialAxes7;
 
-  // Min and Max parameter
   double aParams[myNbExtremalPoints];
-  // Look for the extremal points (myLExtremalPoints)
+
   for (int anAxeInd = 0, aPrmInd = -1; anAxeInd < myNbInitAxes; ++anAxeInd)
   {
     int aMinInd = ++aPrmInd, aMaxInd = ++aPrmInd;
@@ -457,14 +377,11 @@ void OBBTool::ComputeExtremePoints()
             &myLExtremalPoints[aMaxInd]);
   }
 
-  // For not optimal box it is necessary to compute the max axis
-  // created by the maximally distant extreme points
   if (!myOptimal)
   {
     for (int i = 0; i < 5; i++)
       myTriIdx[i] = INT_MAX;
 
-    // Compute myTriIdx[0] and myTriIdx[1].
     double aMaxSqDist = -1.0;
     for (int aPrmInd = 0; aPrmInd < myNbExtremalPoints; aPrmInd += 2)
     {
@@ -478,17 +395,10 @@ void OBBTool::ComputeExtremePoints()
       }
     }
 
-    // Compute the maximal axis orthogonal to the found one
     FillToTriangle3();
   }
 }
 
-//=======================================================================
-// Function : FillToTriangle3
-// purpose : Two value of myTriIdx array is known. Let us find myTriIdx[2].
-//            It must be in maximal distance from the infinite axis going
-//            through the points with indexes myTriIdx[0] and myTriIdx[1].
-//=======================================================================
 void OBBTool::FillToTriangle3()
 {
   const gp_XYZ& aP0        = myLExtremalPoints[myTriIdx[0]];
@@ -509,15 +419,6 @@ void OBBTool::FillToTriangle3()
   }
 }
 
-//=======================================================================
-// Function : FillToTriangle5
-// purpose : Three value of myTriIdx array is known.
-//            Let us find myTriIdx[3] and myTriIdx[4].
-//           They must be in the different sides of the plane of
-//            triangle set by points myTriIdx[0], myTriIdx[1] and
-//            myTriIdx[2]. Moreover, the distance from these points
-//            to the triangle plane must be maximal.
-//=======================================================================
 void OBBTool::FillToTriangle5(const gp_XYZ& theNormal, const gp_XYZ& theBarryCenter)
 {
   double aParams[2] = {0.0, 0.0};
@@ -543,7 +444,6 @@ void OBBTool::FillToTriangle5(const gp_XYZ& theNormal, const gp_XYZ& theBarryCen
     }
   }
 
-  // The points must be in the different sides of the triangle plane.
   if (id3 >= 0 && aParams[0] < -Precision::Confusion())
     myTriIdx[3] = id3;
 
@@ -551,12 +451,6 @@ void OBBTool::FillToTriangle5(const gp_XYZ& theNormal, const gp_XYZ& theBarryCen
     myTriIdx[4] = id4;
 }
 
-//=======================================================================
-// Function : ProcessTriangle
-// purpose : Choose the optimal box with triple axes containing normal
-//            to the triangle and some edge of the triangle (3rd axis is
-//            computed from these two ones).
-//=======================================================================
 void OBBTool::ProcessTriangle(const int  theIdx1,
                               const int  theIdx2,
                               const int  theIdx3,
@@ -564,14 +458,11 @@ void OBBTool::ProcessTriangle(const int  theIdx1,
 {
   const int aNbAxes = 3;
 
-  // All axes must be normalized in order to provide correct area computation
-  // (see ComputeQuality(...) method).
   int    ID1[3] = {theIdx2, theIdx3, theIdx1}, ID2[3] = {theIdx1, theIdx2, theIdx3};
   gp_XYZ aYAxis[aNbAxes] = {(myLExtremalPoints[ID1[0]] - myLExtremalPoints[ID2[0]]),
                             (myLExtremalPoints[ID1[1]] - myLExtremalPoints[ID2[1]]),
                             (myLExtremalPoints[ID1[2]] - myLExtremalPoints[ID2[2]])};
 
-  // Normal to the triangle plane
   gp_XYZ aZAxis = aYAxis[0].Crossed(aYAxis[1]);
 
   double aSqMod = aZAxis.SquareModulus();
@@ -588,20 +479,18 @@ void OBBTool::ProcessTriangle(const int  theIdx1,
   if (theIsBuiltTrg)
     FillToTriangle5(aZAxis, myLExtremalPoints[theIdx1]);
 
-  // Min and Max parameter
   const int aNbPoints = 2 * aNbAxes;
 
-  // Compute Min/Max params for ZAxis
   double aParams[aNbPoints];
-  FindMinMax(aZAxis, aParams[4], aParams[5]); // Compute params on ZAxis once
+  FindMinMax(aZAxis, aParams[4], aParams[5]);
 
   int aMinIdx = -1;
   for (int anAxeInd = 0; anAxeInd < aNbAxes; anAxeInd++)
   {
     const gp_XYZ& aAX = aXAxis[anAxeInd];
-    // Compute params on XAxis
+
     FindMinMax(aAX, aParams[0], aParams[1]);
-    // Compute params on YAxis checking for stored values
+
     ComputeParams(ID1[anAxeInd], ID2[anAxeInd], aParams[2], aParams[3]);
 
     const double anArea = ComputeQuality(aParams);
@@ -620,16 +509,9 @@ void OBBTool::ProcessTriangle(const int  theIdx1,
   myAxes[2] = aZAxis;
 }
 
-//=======================================================================
-// Function : ProcessDiTetrahedron
-// purpose : DiTo-algorithm (http://www.idt.mdh.se/~tla/publ/FastOBBs.pdf)
-//=======================================================================
 void OBBTool::ProcessDiTetrahedron()
 {
-  // To compute the optimal OBB it is necessary to check all possible
-  // axes created by the extremal points. It is also necessary to project
-  // all the points on the axis, as for each different axis there will be
-  // different extremal points.
+
   if (myOptimal)
   {
     for (int i = 0; i < myNbExtremalPoints - 2; i++)
@@ -645,7 +527,7 @@ void OBBTool::ProcessDiTetrahedron()
   }
   else
   {
-    // Use the standard DiTo approach
+
     ProcessTriangle(myTriIdx[0], myTriIdx[1], myTriIdx[2], true);
 
     if (myTriIdx[3] <= myNbExtremalPoints)
@@ -664,13 +546,10 @@ void OBBTool::ProcessDiTetrahedron()
   }
 }
 
-//=================================================================================================
-
 void OBBTool::BuildBox(Bnd_OBB& theBox)
 {
   theBox.SetVoid();
 
-  // In fact, use Precision::SquareConfusion().
   const bool isOBB =
     myAxes[0].SquareModulus() * myAxes[1].SquareModulus() * myAxes[2].SquareModulus() > 1.0e-14;
 
@@ -722,7 +601,6 @@ void OBBTool::BuildBox(Bnd_OBB& theBox)
     }
   }
 
-  // Half-sizes
   const double aHX = 0.5 * (aParams[1] - aParams[0]);
   const double aHY = 0.5 * (aParams[3] - aParams[2]);
   const double aHZ = 0.5 * (aParams[5] - aParams[4]);
@@ -739,10 +617,6 @@ void OBBTool::BuildBox(Bnd_OBB& theBox)
   theBox.SetAABox(!isOBB);
 }
 
-// =======================================================================
-// function : ReBuild
-// purpose  : http://www.idt.mdh.se/~tla/publ/
-// =======================================================================
 void Bnd_OBB::ReBuild(const NCollection_Array1<gp_Pnt>& theListOfPoints,
                       const NCollection_Array1<double>* theListOfTolerances,
                       const bool                        theIsOptimal)
@@ -777,12 +651,12 @@ void Bnd_OBB::ReBuild(const NCollection_Array1<gp_Pnt>& theListOfPoints,
       myAxes[0]  = aDP / aDPm;
       if (std::abs(myAxes[0].X()) > std::abs(myAxes[0].Y()))
       {
-        // Z-coord. is maximal or X-coord. is maximal
+
         myAxes[1].SetCoord(-myAxes[0].Z(), 0.0, myAxes[0].X());
       }
       else
       {
-        // Z-coord. is maximal or Y-coord. is maximal
+
         myAxes[1].SetCoord(0.0, -myAxes[0].Z(), myAxes[0].Y());
       }
 
@@ -799,8 +673,6 @@ void Bnd_OBB::ReBuild(const NCollection_Array1<gp_Pnt>& theListOfPoints,
   aTool.BuildBox(*this);
 }
 
-//=================================================================================================
-
 bool Bnd_OBB::IsOut(const Bnd_OBB& theOther) const
 {
   if (IsVoid() || theOther.IsVoid())
@@ -813,52 +685,28 @@ bool Bnd_OBB::IsOut(const Bnd_OBB& theOther) const
             || (std::abs(theOther.myCenter.Z() - myCenter.Z()) > theOther.myHDims[2] + myHDims[2]));
   }
 
-  // According to the Separating Axis Theorem for Oriented Bounding Boxes
-  // it is necessary to check the 15 separating axes (Ls):
-  // - 6 axes of the boxes;
-  // - 9 cross products of the axes of the boxes.
-  // If any of these axes is valid, the boxes do not interfere.
-
-  // The algorithm is following:
-  // 1. Compute the "length" for j-th BndBox (j=1...2) according to the formula:
-  //    L(j)=Sum(myHDims[i]*std::abs(myAxes[i].Dot(Ls)))
-  // 2. If (theCenter2 - theCenter1).Dot(Ls) > (L(1) + L(2))
-  //    then the considered OBBs are not interfered in terms of the axis Ls.
-  //
-  // If OBBs are not interfered in terms of at least one axis (of 15) then
-  // they are not interfered at all.
-
-  // Precomputed difference between centers
   gp_XYZ D = theOther.myCenter - myCenter;
-
-  // Check the axes of the this box, i.e. L is one of myAxes
-  // Since the Dot product of two of these directions is null, it could be skipped:
-  // myXDirection.Dot(myYDirection) = 0
 
   for (int i = 0; i < 3; ++i)
   {
-    // Length of the second segment
+
     double aLSegm2 = 0;
     for (int j = 0; j < 3; ++j)
       aLSegm2 += theOther.myHDims[j] * std::abs(theOther.myAxes[j].Dot(myAxes[i]));
 
-    // Distance between projected centers
     double aDistCC = std::abs(D.Dot(myAxes[i]));
 
     if (aDistCC > myHDims[i] + aLSegm2)
       return true;
   }
 
-  // Check the axes of the Other box, i.e. L is one of theOther.myAxes
-
   for (int i = 0; i < 3; ++i)
   {
-    // Length of the first segment
+
     double aLSegm1 = 0.;
     for (int j = 0; j < 3; ++j)
       aLSegm1 += myHDims[j] * std::abs(myAxes[j].Dot(theOther.myAxes[i]));
 
-    // Distance between projected centers
     double aDistCC = std::abs(D.Dot(theOther.myAxes[i]));
 
     if (aDistCC > aLSegm1 + theOther.myHDims[i])
@@ -867,12 +715,11 @@ bool Bnd_OBB::IsOut(const Bnd_OBB& theOther) const
 
   const double aTolNull = Epsilon(1.0);
 
-  // Check the axes produced by the cross products
   for (int i = 0; i < 3; ++i)
   {
     for (int j = 0; j < 3; ++j)
     {
-      // Separating axis
+
       gp_XYZ aLAxe = myAxes[i].Crossed(theOther.myAxes[j]);
 
       const double aNorm = aLAxe.Modulus();
@@ -881,17 +728,14 @@ bool Bnd_OBB::IsOut(const Bnd_OBB& theOther) const
 
       aLAxe /= aNorm;
 
-      // Length of the first segment
       double aLSegm1 = 0.;
       for (int k = 0; k < 3; ++k)
         aLSegm1 += myHDims[k] * std::abs(myAxes[k].Dot(aLAxe));
 
-      // Length of the second segment
       double aLSegm2 = 0.;
       for (int k = 0; k < 3; ++k)
         aLSegm2 += theOther.myHDims[k] * std::abs(theOther.myAxes[k].Dot(aLAxe));
 
-      // Distance between projected centers
       double aDistCC = std::abs(D.Dot(aLAxe));
 
       if (aDistCC > aLSegm1 + aLSegm2)
@@ -902,14 +746,8 @@ bool Bnd_OBB::IsOut(const Bnd_OBB& theOther) const
   return false;
 }
 
-//=================================================================================================
-
 bool Bnd_OBB::IsOut(const gp_Pnt& theP) const
 {
-  // 1. Project the point to myAxes[i] (i=0...2).
-  // 2. Check, whether the absolute value of the correspond
-  //    projection parameter is greater than myHDims[i].
-  //    In this case, IsOut method will return TRUE.
 
   const gp_XYZ aRV = theP.XYZ() - myCenter;
 
@@ -917,10 +755,6 @@ bool Bnd_OBB::IsOut(const gp_Pnt& theP) const
           || (std::abs(myAxes[2].Dot(aRV)) > myHDims[2]));
 }
 
-// =======================================================================
-// function : IsCompletelyInside
-// purpose  : Checks if every vertex of theOther is completely inside *this
-// =======================================================================
 bool Bnd_OBB::IsCompletelyInside(const Bnd_OBB& theOther) const
 {
   if (IsVoid() || theOther.IsVoid())
@@ -936,8 +770,6 @@ bool Bnd_OBB::IsCompletelyInside(const Bnd_OBB& theOther) const
 
   return true;
 }
-
-//=================================================================================================
 
 void Bnd_OBB::Add(const gp_Pnt& theP)
 {
@@ -960,8 +792,6 @@ void Bnd_OBB::Add(const gp_Pnt& theP)
     ReBuild(NCollection_Array1<gp_Pnt>(aList[0], 0, 8));
   }
 }
-
-//=================================================================================================
 
 void Bnd_OBB::Add(const Bnd_OBB& theOther)
 {
@@ -987,8 +817,6 @@ void Bnd_OBB::Add(const Bnd_OBB& theOther)
     }
   }
 }
-
-//=================================================================================================
 
 void Bnd_OBB::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

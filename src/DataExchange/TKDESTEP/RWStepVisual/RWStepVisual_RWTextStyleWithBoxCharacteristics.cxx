@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -30,32 +19,24 @@ void RWStepVisual_RWTextStyleWithBoxCharacteristics::ReadStep(
   const occ::handle<StepVisual_TextStyleWithBoxCharacteristics>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num,
                            3,
                            ach,
                            "text_style_with_box_characteristics has not 3 parameter(s)"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- inherited field : characterAppearance ---
-
   occ::handle<StepVisual_TextStyleForDefinedFont> aCharacterAppearance;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
   data->ReadEntity(num,
                    2,
                    "character_appearance",
                    ach,
                    STANDARD_TYPE(StepVisual_TextStyleForDefinedFont),
                    aCharacterAppearance);
-
-  // --- own field : characteristics ---
 
   int                     numr, numpr;
   TCollection_AsciiString TypeHeigth("BOX_HEIGHT");
@@ -76,11 +57,10 @@ void RWStepVisual_RWTextStyleWithBoxCharacteristics::ReadStep(
     aCharacteristics = new NCollection_HArray1<StepVisual_BoxCharacteristicSelect>(1, nb3);
     for (int i3 = 1; i3 <= nb3; i3++)
     {
-      // Looks for true type :
-      // szv#4:S4163:12Mar99 `bool statType =` not needed
+
       if (data->ReadTypedParam(nsub3, i3, true, "characteristics", ach, numr, numpr, TrueType))
       {
-        // szv#4:S4163:12Mar99 `bool stat3 =` not needed
+
         if (data->ReadReal(numr, numpr, "characteristics", ach, aCharacteristicsItem))
         {
           aBoxCharacteristicSelect.SetRealValue(aCharacteristicsItem);
@@ -114,8 +94,6 @@ void RWStepVisual_RWTextStyleWithBoxCharacteristics::ReadStep(
     ach->AddFail("Parameter #3 (characteristics) is not a LIST");
   }
 
-  //--- Initialisation of the read entity ---
-
   ent->Init(aName, aCharacterAppearance, aCharacteristics);
 }
 
@@ -124,16 +102,9 @@ void RWStepVisual_RWTextStyleWithBoxCharacteristics::WriteStep(
   const occ::handle<StepVisual_TextStyleWithBoxCharacteristics>& ent) const
 {
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
 
-  // --- inherited field characterAppearance ---
-
   SW.Send(ent->CharacterAppearance());
-
-  // --- own field : characteristics ---
-  // Attention : a modifier avant utilisation
 
   SW.Send(ent->Characteristics());
 }

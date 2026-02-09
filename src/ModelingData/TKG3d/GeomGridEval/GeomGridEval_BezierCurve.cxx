@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GeomGridEval_BezierCurve.hpp>
 
@@ -19,9 +8,7 @@
 
 namespace
 {
-  //! Creates a BSplCLib_Cache for a Bezier curve.
-  //! @param theCurve the Bezier curve geometry
-  //! @return initialized cache ready for evaluation
+
   occ::handle<BSplCLib_Cache> CreateBezierCache(const occ::handle<Geom_BezierCurve>& theCurve)
   {
     const int                  aDegree = theCurve->Degree();
@@ -36,8 +23,6 @@ namespace
     return aCache;
   }
 } // namespace
-
-//==================================================================================================
 
 NCollection_Array1<gp_Pnt> GeomGridEval_BezierCurve::EvaluateGrid(
   const NCollection_Array1<double>& theParams) const
@@ -60,8 +45,6 @@ NCollection_Array1<gp_Pnt> GeomGridEval_BezierCurve::EvaluateGrid(
   }
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_BezierCurve::EvaluateGridD1(
   const NCollection_Array1<double>& theParams) const
@@ -86,8 +69,6 @@ NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_BezierCurve::EvaluateGrid
   return aResult;
 }
 
-//==================================================================================================
-
 NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_BezierCurve::EvaluateGridD2(
   const NCollection_Array1<double>& theParams) const
 {
@@ -110,8 +91,6 @@ NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_BezierCurve::EvaluateGrid
   }
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_BezierCurve::EvaluateGridD3(
   const NCollection_Array1<double>& theParams) const
@@ -136,8 +115,6 @@ NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_BezierCurve::EvaluateGrid
   return aResult;
 }
 
-//==================================================================================================
-
 NCollection_Array1<gp_Vec> GeomGridEval_BezierCurve::EvaluateGridDN(
   const NCollection_Array1<double>& theParams,
   int                               theN) const
@@ -150,7 +127,6 @@ NCollection_Array1<gp_Vec> GeomGridEval_BezierCurve::EvaluateGridDN(
   const int                  aNb = theParams.Size();
   NCollection_Array1<gp_Vec> aResult(1, aNb);
 
-  // For Bezier curves, derivatives become zero when order exceeds degree
   const int aDegree = myGeom->Degree();
   if (theN > aDegree)
   {
@@ -162,26 +138,23 @@ NCollection_Array1<gp_Vec> GeomGridEval_BezierCurve::EvaluateGridDN(
     return aResult;
   }
 
-  // Get poles and weights from geometry
   const NCollection_Array1<gp_Pnt>& aPoles   = myGeom->Poles();
   const NCollection_Array1<double>* aWeights = myGeom->Weights();
 
-  // Use pre-defined flat knots from BSplCLib
   NCollection_Array1<double> aFlatKnots(BSplCLib::FlatBezierKnots(aDegree), 1, 2 * (aDegree + 1));
 
-  // Bezier has a single span (index 0 with flat knots), non-periodic
   for (int i = theParams.Lower(); i <= theParams.Upper(); ++i)
   {
     gp_Vec aDN;
     BSplCLib::DN(theParams.Value(i),
                  theN,
-                 0, // span index (single span for Bezier with flat knots)
+                 0,
                  aDegree,
-                 false, // not periodic
+                 false,
                  aPoles,
                  aWeights,
                  aFlatKnots,
-                 nullptr, // no multiplicities with flat knots
+                 nullptr,
                  aDN);
     aResult.SetValue(i - theParams.Lower() + 1, aDN);
   }

@@ -2,8 +2,6 @@
 #include <BRepBlend_SurfCurvConstRadInv.hpp>
 #include <math_Matrix.hpp>
 
-//=================================================================================================
-
 BRepBlend_SurfCurvConstRadInv::BRepBlend_SurfCurvConstRadInv(
   const occ::handle<Adaptor3d_Surface>& S,
   const occ::handle<Adaptor3d_Curve>&   C,
@@ -15,8 +13,6 @@ BRepBlend_SurfCurvConstRadInv::BRepBlend_SurfCurvConstRadInv(
       choix(0)
 {
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfCurvConstRadInv::Set(const double R, const int Choix)
 {
@@ -42,14 +38,10 @@ void BRepBlend_SurfCurvConstRadInv::Set(const double R, const int Choix)
   }
 }
 
-//=================================================================================================
-
 int BRepBlend_SurfCurvConstRadInv::NbEquations() const
 {
   return 3;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfCurvConstRadInv::Value(const math_Vector& X, math_Vector& F)
 {
@@ -75,8 +67,6 @@ bool BRepBlend_SurfCurvConstRadInv::Value(const math_Vector& X, math_Vector& F)
   F(3) = ref.SquareMagnitude() - ray * ray;
   return true;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfCurvConstRadInv::Derivatives(const math_Vector& X, math_Matrix& D)
 {
@@ -150,8 +140,6 @@ bool BRepBlend_SurfCurvConstRadInv::Derivatives(const math_Vector& X, math_Matri
 
   return true;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfCurvConstRadInv::Values(const math_Vector& X, math_Vector& F, math_Matrix& D)
 {
@@ -229,14 +217,10 @@ bool BRepBlend_SurfCurvConstRadInv::Values(const math_Vector& X, math_Vector& F,
   return true;
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfCurvConstRadInv::Set(const occ::handle<Adaptor2d_Curve2d>& Rst)
 {
   rst = Rst;
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfCurvConstRadInv::GetTolerance(math_Vector& Tolerance, const double Tol) const
 {
@@ -248,8 +232,6 @@ void BRepBlend_SurfCurvConstRadInv::GetTolerance(math_Vector& Tolerance, const d
   Tolerance(3) = rst->Resolution(std::min(ru, rv));
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfCurvConstRadInv::GetBounds(math_Vector& InfBound, math_Vector& SupBound) const
 {
   InfBound(1) = guide->FirstParameter();
@@ -259,8 +241,6 @@ void BRepBlend_SurfCurvConstRadInv::GetBounds(math_Vector& InfBound, math_Vector
   InfBound(3) = rst->FirstParameter();
   SupBound(3) = rst->LastParameter();
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfCurvConstRadInv::IsSolution(const math_Vector& Sol, const double Tol)
 {

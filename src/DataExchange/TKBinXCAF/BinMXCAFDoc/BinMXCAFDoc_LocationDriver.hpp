@@ -34,7 +34,6 @@ public:
                                  TopLoc_Location&            theLoc,
                                  BinObjMgt_RRelocationTable& theMap) const;
 
-  //! Translate transient location to storable
   Standard_EXPORT void Translate(
     const TopLoc_Location&                                   theLoc,
     BinObjMgt_Persistent&                                    theTarget,

@@ -22,9 +22,6 @@ namespace RWStepBasic_RWSiPrefix
   static constexpr char spKilo[]  = ".KILO.";
   static constexpr char spDeca[]  = ".DECA.";
 
-  //! Convert StepBasic_SiPrefix to string
-  //! @param theSourceEnum The StepBasic_SiPrefix value to convert
-  //! @return The corresponding string representation or nullptr if not found
   inline const char* ConvertToString(const StepBasic_SiPrefix theSourceEnum)
   {
     switch (theSourceEnum)
@@ -62,13 +59,9 @@ namespace RWStepBasic_RWSiPrefix
       case StepBasic_spDeca:
         return spDeca;
     }
-    return nullptr; // Default value
+    return nullptr;
   }
 
-  //! Convert string to StepBasic_SiPrefix
-  //! @param thePrefixStr The string to convert
-  //! @param theResultEnum The corresponding StepBasic_SiPrefix value
-  //! @return true if the conversion was successful, false otherwise
   inline bool ConvertToEnum(const char* thePrefixStr, StepBasic_SiPrefix& theResultEnum)
   {
     if (IsEqual(thePrefixStr, spExa))

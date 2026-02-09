@@ -4,11 +4,9 @@
 
 #include <iostream>
 
-//! Auxiliary tool for buffered reading from input stream within chunks of constant size.
 class Standard_ReadBuffer
 {
 public:
-  //! Constructor with initialization.
   Standard_ReadBuffer(int64_t theDataLen, size_t theChunkLen, bool theIsPartialPayload = false)
       : myBufferPtr(nullptr),
         myBufferEnd(nullptr),
@@ -21,14 +19,6 @@ public:
     Init(theDataLen, theChunkLen, theIsPartialPayload);
   }
 
-  //! Initialize the buffer.
-  //! @param[in] theDataLen   the full length of input data to read from stream.
-  //! @param[in] theChunkLen  the length of single chunk to read
-  //! @param[in] theIsPartialPayload  when FALSE, theDataLen will be automatically aligned to the
-  //! multiple of theChunkLen;
-  //!                                 when TRUE, last chunk will be read from stream exactly till
-  //!                                 theDataLen allowing portion of chunk to be uninitialized
-  //!                                 (useful for interleaved data)
   void Init(int64_t theDataLen, size_t theChunkLen, bool theIsPartialPayload = false)
   {
     myDataRead = 0;
@@ -55,19 +45,14 @@ public:
     }
   }
 
-  //! Return TRUE if amount of read bytes is equal to requested length of entire data.
   bool IsDone() const { return myDataRead == myDataLen; }
 
-  //! Read next chunk.
-  //! @return pointer to the chunk or NULL on error / end of reading buffer
   template <typename Chunk_T, typename Stream_T>
   Chunk_T* ReadChunk(Stream_T& theStream)
   {
     return reinterpret_cast<Chunk_T*>(readRawDataChunk(theStream));
   }
 
-  //! Read next chunk.
-  //! @return pointer to the chunk or NULL on error / end of reading buffer
   template <typename Stream_T>
   char* ReadDataChunk(Stream_T& theStream)
   {
@@ -75,8 +60,6 @@ public:
   }
 
 private:
-  //! Read next chunk.
-  //! @return pointer to the chunk or NULL on error / end of reading buffer
   template <typename Stream_T>
   char* readRawDataChunk(Stream_T& theStream)
   {
@@ -92,8 +75,8 @@ private:
     }
 
     const int64_t aDataLeft = myDataLen - myDataRead;
-    if (aDataLeft <= 0) // myDataLen is normally multiple of myChunkLen, but can be smaller in
-                        // interleaved data
+    if (aDataLeft <= 0)
+
     {
       myBufferPtr = nullptr;
       return nullptr;
@@ -112,28 +95,25 @@ private:
     return myBufferPtr;
   }
 
-  //! Read from stl stream.
   bool readStream(std::istream& theStream, size_t theLen)
   {
     theStream.read(myBuffer, theLen);
     return theStream.good();
   }
 
-  //! Read from FILE stream.
   bool readStream(FILE* theStream, size_t theLen)
   {
     return ::fread(myBuffer, 1, theLen, theStream) == theLen;
   }
 
 private:
-  char        myBuffer[4096]; //!< data cache
-  char*       myBufferPtr;    //!< current position within the buffer
-  const char* myBufferEnd;    //!< end of the buffer
-  int64_t     myDataLen;      //!< length of entire data to read
-  int64_t     myDataRead;     //!< amount of data already processed
-  // clang-format off
-  size_t      myChunkLen;     //!< length of single chunk that caller would like to read (e.g. iterator increment)
-  size_t      myNbChunks;     //!< number of cached chunks
-  size_t      myBufferLen;    //!< effective length of the buffer to be read at once (multiple of chunk length)
-  // clang-format on
+  char        myBuffer[4096];
+  char*       myBufferPtr;
+  const char* myBufferEnd;
+  int64_t     myDataLen;
+  int64_t     myDataRead;
+
+  size_t myChunkLen;
+  size_t myNbChunks;
+  size_t myBufferLen;
 };

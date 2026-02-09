@@ -43,10 +43,6 @@ static bool                     LinkComputed;
 
 static void DrawCurve(const occ::handle<Geom2d_Curve>& aCurve, const int Indice);
 
-//==========================================================================
-// function : topoLoad
-//           loading of a face in the explorer.
-//==========================================================================
 static int topoload(Draw_Interpretor&, int argc, const char** argv)
 {
   if (argc < 2)
@@ -69,10 +65,6 @@ static int topoload(Draw_Interpretor&, int argc, const char** argv)
   return 0;
 }
 
-//==========================================================================
-// function : drawcont
-//           visualization of the contour defined by the explorer.
-//==========================================================================
 static int drawcont(Draw_Interpretor&, int, const char**)
 {
   occ::handle<Geom2d_TrimmedCurve> C;
@@ -87,11 +79,6 @@ static int drawcont(Draw_Interpretor&, int, const char**)
   return 0;
 }
 
-//==========================================================================
-// function : mat
-//           calculate the map of locations bisector on the contour defined by
-//           the explorer.
-//==========================================================================
 static int mat(Draw_Interpretor&, int n, const char** a)
 {
   GeomAbs_JoinType theJoinType = GeomAbs_Arc;
@@ -108,11 +95,6 @@ static int mat(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//============================================================================
-// function : zone
-//           construction and display of the proximity zone associated to the
-//           base elements defined by the edge or the vertex.
-//============================================================================
 static int zone(Draw_Interpretor&, int argc, const char** argv)
 {
   if (argc < 2)
@@ -145,12 +127,6 @@ static int zone(Draw_Interpretor&, int argc, const char** argv)
   return 0;
 }
 
-//==========================================================================
-// function : side
-//           side = left  => calculation to the left of the contour.
-//           side = right => calculation to the right of the contour.
-//==========================================================================
-
 static int side(Draw_Interpretor&, int, const char** argv)
 {
   if (!strcmp(argv[1], "right"))
@@ -161,10 +137,6 @@ static int side(Draw_Interpretor&, int, const char** argv)
   return 0;
 }
 
-//==========================================================================
-// function : result
-//           Complete display of the calculated map.
-//==========================================================================
 static int result(Draw_Interpretor&, int, const char**)
 {
   int  i, NbArcs = 0;
@@ -179,14 +151,6 @@ static int result(Draw_Interpretor&, int, const char**)
   return 0;
 }
 
-//==========================================================================
-// function : DrawCurve
-//           Display of curve <aCurve> of Geom2d in a color defined by <Indice>.
-//  Indice = 1 yellow,
-//  Indice = 2 blue,
-//  Indice = 3 red,
-//  Indice = 4 green.
-//==========================================================================
 void DrawCurve(const occ::handle<Geom2d_Curve>& aCurve, const int Indice)
 {
   occ::handle<Standard_Type>      type = aCurve->DynamicType();
@@ -203,14 +167,13 @@ void DrawCurve(const occ::handle<Geom2d_Curve>& aCurve, const int Indice)
       curve = occ::down_cast<Bisector_BisecAna>(curve)->Geom2dCurve();
       type  = curve->DynamicType();
     }
-    // PB of representation of semi_infinite curves.
+
     gp_Parab2d gpParabola;
     gp_Hypr2d  gpHyperbola;
     double     Focus;
     double     Limit = 50000.;
     double     delta = 400;
 
-    // PB of representation of semi_infinite curves.
     if (aCurve->LastParameter() == Precision::Infinite())
     {
 
@@ -244,7 +207,6 @@ void DrawCurve(const occ::handle<Geom2d_Curve>& aCurve, const int Indice)
     {
       CurveDraw = aCurve;
     }
-    // end PB.
   }
   else
   {
@@ -272,10 +234,6 @@ void DrawCurve(const occ::handle<Geom2d_Curve>& aCurve, const int Indice)
   dout << dr;
   dout.Flush();
 }
-
-//==========================================================================
-// function BRepTest:: MatCommands
-//==========================================================================
 
 void BRepTest::MatCommands(Draw_Interpretor& theCommands)
 {

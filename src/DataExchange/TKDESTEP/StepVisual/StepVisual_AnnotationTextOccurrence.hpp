@@ -8,7 +8,6 @@ class StepVisual_AnnotationTextOccurrence : public StepVisual_AnnotationOccurren
 {
 
 public:
-  //! Returns a AnnotationTextOccurrence
   Standard_EXPORT StepVisual_AnnotationTextOccurrence();
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_AnnotationTextOccurrence, StepVisual_AnnotationOccurrence)

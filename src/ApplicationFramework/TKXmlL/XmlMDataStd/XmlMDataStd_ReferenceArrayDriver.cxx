@@ -15,25 +15,17 @@ IMPLEMENT_DOMSTRING(LastIndexString, "last")
 IMPLEMENT_DOMSTRING(ExtString, "string")
 IMPLEMENT_DOMSTRING(AttributeIDString, "refarrattguid")
 
-//=================================================================================================
-
 XmlMDataStd_ReferenceArrayDriver::XmlMDataStd_ReferenceArrayDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataStd_ReferenceArrayDriver::NewEmpty() const
 {
   return new TDataStd_ReferenceArray();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDataStd_ReferenceArrayDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                              const occ::handle<TDF_Attribute>& theTarget,
                                              XmlObjMgt_RRelocationTable&) const
@@ -41,7 +33,6 @@ bool XmlMDataStd_ReferenceArrayDriver::Paste(const XmlObjMgt_Persistent&       t
   int                      aFirstInd, aLastInd;
   const XmlObjMgt_Element& anElement = theSource;
 
-  // Read the FirstIndex; if the attribute is absent initialize to 1
   XmlObjMgt_DOMString aFirstIndex = anElement.getAttribute(::FirstIndexString());
   if (aFirstIndex == nullptr)
     aFirstInd = 1;
@@ -55,7 +46,6 @@ bool XmlMDataStd_ReferenceArrayDriver::Paste(const XmlObjMgt_Persistent&       t
     return false;
   }
 
-  // Read the LastIndex; the attribute should present
   if (!anElement.getAttribute(::LastIndexString()).GetInteger(aLastInd))
   {
     TCollection_ExtendedString aMessageString =
@@ -70,13 +60,12 @@ bool XmlMDataStd_ReferenceArrayDriver::Paste(const XmlObjMgt_Persistent&       t
     occ::down_cast<TDataStd_ReferenceArray>(theTarget);
   aReferenceArray->Init(aFirstInd, aLastInd);
 
-  // attribute id
   Standard_GUID       aGUID;
   XmlObjMgt_DOMString aGUIDStr = anElement.getAttribute(::AttributeIDString());
   if (aGUIDStr.Type() == XmlObjMgt_DOMString::LDOM_NULL)
-    aGUID = TDataStd_ReferenceArray::GetID(); // default case
+    aGUID = TDataStd_ReferenceArray::GetID();
   else
-    aGUID = Standard_GUID(static_cast<const char*>(aGUIDStr.GetString())); // user defined case
+    aGUID = Standard_GUID(static_cast<const char*>(aGUIDStr.GetString()));
 
   aReferenceArray->SetID(aGUID);
 
@@ -109,8 +98,8 @@ bool XmlMDataStd_ReferenceArrayDriver::Paste(const XmlObjMgt_Persistent&       t
         myMessageDriver->Send(aMessage, Message_Fail);
         return false;
       }
-      // Find label by entry
-      TDF_Label tLab; // Null label.
+
+      TDF_Label tLab;
       if (anEntry.Length() > 0)
       {
         TDF_Tool::Label(aReferenceArray->Label().Data(), anEntry, tLab, true);
@@ -121,7 +110,6 @@ bool XmlMDataStd_ReferenceArrayDriver::Paste(const XmlObjMgt_Persistent&       t
     }
   }
 
-  // Last reference
   aValueStr = XmlObjMgt::GetStringValue(*aCurElement);
   if (aValueStr == nullptr)
   {
@@ -137,8 +125,8 @@ bool XmlMDataStd_ReferenceArrayDriver::Paste(const XmlObjMgt_Persistent&       t
       myMessageDriver->Send(aMessage, Message_Fail);
       return false;
     }
-    // Find label by entry
-    TDF_Label tLab; // Null label.
+
+    TDF_Label tLab;
     if (anEntry.Length() > 0)
     {
       TDF_Tool::Label(aReferenceArray->Label().Data(), anEntry, tLab, true);
@@ -149,10 +137,6 @@ bool XmlMDataStd_ReferenceArrayDriver::Paste(const XmlObjMgt_Persistent&       t
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMDataStd_ReferenceArrayDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                              XmlObjMgt_Persistent&             theTarget,
                                              XmlObjMgt_SRelocationTable&) const
@@ -179,7 +163,7 @@ void XmlMDataStd_ReferenceArrayDriver::Paste(const occ::handle<TDF_Attribute>& t
     const TDF_Label& label = aReferenceArray->Value(i);
     if (!label.IsNull() && L.IsDescendant(label.Root()))
     {
-      // Internal reference
+
       TCollection_AsciiString anEntry;
       TDF_Tool::Entry(label, anEntry);
 
@@ -192,7 +176,7 @@ void XmlMDataStd_ReferenceArrayDriver::Paste(const occ::handle<TDF_Attribute>& t
   }
   if (aReferenceArray->ID() != TDataStd_ReferenceArray::GetID())
   {
-    // convert GUID
+
     char                aGuidStr[Standard_GUID_SIZE_ALLOC];
     Standard_PCharacter pGuidStr = aGuidStr;
     aReferenceArray->ID().ToCString(pGuidStr);

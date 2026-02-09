@@ -18,7 +18,6 @@ class StepGeom_GeometricRepresentationContextAndGlobalUnitAssignedContext
 {
 
 public:
-  //! Returns a GeometricRepresentationContextAndGlobalUnitAssignedContext
   Standard_EXPORT StepGeom_GeometricRepresentationContextAndGlobalUnitAssignedContext();
 
   Standard_EXPORT void Init(

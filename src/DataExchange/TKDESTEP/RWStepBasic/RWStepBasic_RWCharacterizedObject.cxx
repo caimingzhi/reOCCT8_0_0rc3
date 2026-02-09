@@ -4,11 +4,7 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWCharacterizedObject::RWStepBasic_RWCharacterizedObject() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWCharacterizedObject::ReadStep(
   const occ::handle<StepData_StepReaderData>&       data,
@@ -16,11 +12,9 @@ void RWStepBasic_RWCharacterizedObject::ReadStep(
   occ::handle<Interface_Check>&                     ach,
   const occ::handle<StepBasic_CharacterizedObject>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "characterized_object"))
     return;
-
-  // Own fields of CharacterizedObject
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -36,18 +30,13 @@ void RWStepBasic_RWCharacterizedObject::ReadStep(
     hasDescription = false;
   }
 
-  // Initialize entity
   ent->Init(aName, hasDescription, aDescription);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWCharacterizedObject::WriteStep(
   StepData_StepWriter&                              SW,
   const occ::handle<StepBasic_CharacterizedObject>& ent) const
 {
-
-  // Own fields of CharacterizedObject
 
   SW.Send(ent->Name());
 
@@ -59,10 +48,7 @@ void RWStepBasic_RWCharacterizedObject::WriteStep(
     SW.SendUndef();
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWCharacterizedObject::Share(const occ::handle<StepBasic_CharacterizedObject>&,
                                               Interface_EntityIterator&) const
 {
-  // Own fields of CharacterizedObject
 }

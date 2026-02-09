@@ -6,7 +6,6 @@
 #include <Standard_Integer.hpp>
 #include <Standard_Real.hpp>
 
-//! Interactive Draw object of type "MVC"
 class DrawFairCurve_MinimalVariation : public DrawFairCurve_Batten
 {
 

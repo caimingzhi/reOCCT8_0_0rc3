@@ -30,8 +30,6 @@ public:
 
   Standard_EXPORT void SetGeomTool(const TopOpeBRepTool_GeomTool& GT);
 
-  //! Approximates curves.
-  //! Returns False in the case of failure
   Standard_EXPORT bool MakeCurves(const double                     min,
                                   const double                     max,
                                   const occ::handle<Geom_Curve>&   C3D,

@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GeomConvert.hpp>
 
@@ -57,8 +45,6 @@ typedef NCollection_Array2<double> Array2OfReal;
 typedef NCollection_Array1<int>    Array1OfInteger;
 typedef NCollection_Array2<gp_Pnt> Array2OfPnt;
 typedef gp_Pnt                     Pnt;
-
-//=================================================================================================
 
 static occ::handle<Geom_BSplineSurface> BSplineSurfaceBuilder(
   const Convert_ElementarySurfaceToBSplineSurface& Convert)
@@ -107,8 +93,6 @@ static occ::handle<Geom_BSplineSurface> BSplineSurfaceBuilder(
                                   Convert.IsVPeriodic());
   return TheSurface;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_BSplineSurface> GeomConvert::SplitBSplineSurface(
   const occ::handle<Geom_BSplineSurface>& S,
@@ -160,8 +144,6 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SplitBSplineSurface(
   }
   return S1;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_BSplineSurface> GeomConvert::SplitBSplineSurface(
   const occ::handle<Geom_BSplineSurface>& S,
@@ -230,15 +212,13 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SplitBSplineSurface(
   return S1;
 }
 
-//=================================================================================================
-
 occ::handle<Geom_BSplineSurface> GeomConvert::SplitBSplineSurface(
   const occ::handle<Geom_BSplineSurface>& S,
   const double                            FromU1,
   const double                            ToU2,
   const double                            FromV1,
   const double                            ToV2,
-  //   const double ParametricTolerance,
+
   const double,
   const bool SameUOrientation,
   const bool SameVOrientation)
@@ -274,8 +254,6 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SplitBSplineSurface(
   }
   return NewSurface;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_BSplineSurface> GeomConvert::SplitBSplineSurface(
   const occ::handle<Geom_BSplineSurface>& S,
@@ -334,8 +312,6 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SplitBSplineSurface(
   return NewSurface;
 }
 
-//=================================================================================================
-
 occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
   const occ::handle<Geom_Surface>& Sr)
 {
@@ -347,7 +323,6 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
   double VFirst = std::min(V1, V2);
   double VLast  = std::max(V1, V2);
 
-  // If the surface Sr is infinite stop the computation
   if (Precision::IsNegativeInfinite(UFirst) || Precision::IsPositiveInfinite(ULast)
       || Precision::IsNegativeInfinite(VFirst) || Precision::IsPositiveInfinite(VLast))
   {
@@ -362,7 +337,7 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
     OffsetSur = occ::down_cast<Geom_OffsetSurface>(Sr);
     S         = OffsetSur->Surface();
     if (!S.IsNull())
-    { // Convert the equivalent surface.
+    {
       return SurfaceToBSplineSurface(S);
     }
   }
@@ -397,11 +372,10 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
         new (Geom_RectangularTrimmedSurface)(Surf, UFirst, ULast, VFirst, VLast);
       return SurfaceToBSplineSurface(aStrim);
     }
-    //
-    // For cylinders, cones, spheres, toruses
+
     const bool   isUClosed = std::abs((ULast - UFirst) - 2. * M_PI) <= Precision::PConfusion();
     const double eps       = 100. * Epsilon(2. * M_PI);
-    //
+
     if (Surf->IsKind(STANDARD_TYPE(Geom_Plane)))
     {
       NCollection_Array2<gp_Pnt> Poles(1, 2, 1, 2);
@@ -475,11 +449,10 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
     {
       occ::handle<Geom_SphericalSurface> TheElSurf = occ::down_cast<Geom_SphericalSurface>(Surf);
       gp_Sphere                          Sph       = TheElSurf->Sphere();
-      // OCC217
+
       if (isUClosed)
       {
-        // if (Strim->IsVClosed()) {
-        // Convert_SphereToBSplineSurface Convert (Sph, UFirst, ULast);
+
         Convert_SphereToBSplineSurface Convert(Sph, VFirst, VLast, false);
         TheSurface = BSplineSurfaceBuilder(Convert);
         int aNbK   = TheSurface->NbUKnots();
@@ -501,10 +474,7 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
       occ::handle<Geom_ToroidalSurface> TheElSurf = occ::down_cast<Geom_ToroidalSurface>(Surf);
 
       gp_Torus Tr = TheElSurf->Torus();
-      //
-      // if isUClosed = true and U trim does not coincide with first period of torus,
-      // method CheckAndSegment shifts position of U seam boundary of surface.
-      // probably bug? So, for this case we must build not periodic surface.
+
       bool isUFirstPeriod = UFirst >= 0. && ULast <= 2. * M_PI;
       bool isVFirstPeriod = VFirst >= 0. && VLast <= 2. * M_PI;
       if (isUClosed && isUFirstPeriod)
@@ -555,7 +525,6 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
       int  NbVPoles, NbVKnots;
       bool periodic = false;
 
-      // Poles of meridian = Vpoles
       NbVPoles = C->NbPoles();
       NCollection_Array1<gp_Pnt> Poles(1, NbVPoles);
       C->Poles(Poles);
@@ -574,13 +543,13 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
       }
       else
       {
-        // Nombre de spans : ouverture maximale = 150 degres ( = PI / 1.2 rds)
+
         const int nbUSpans = (int)std::trunc(1.2 * (ULast - UFirst) / M_PI) + 1;
         AlfaU              = (ULast - UFirst) / (nbUSpans * 2);
         NbUPoles           = 2 * nbUSpans + 1;
         NbUKnots           = nbUSpans + 1;
       }
-      // Compute Knots and Mults
+
       NCollection_Array1<double> UKnots(1, NbUKnots);
       NCollection_Array1<int>    UMults(1, NbUKnots);
       int                        i, j;
@@ -600,7 +569,6 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
       C->Knots(VKnots);
       C->Multiplicities(VMults);
 
-      // Compute the poles.
       NCollection_Array2<gp_Pnt> NewPoles(1, NbUPoles, 1, NbVPoles);
       NCollection_Array2<double> NewWeights(1, NbUPoles, 1, NbVPoles);
       gp_Trsf                    Trsf;
@@ -773,7 +741,7 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
       GeomConvert_ApproxSurface BSpS(Sr, Tol3d, cont, cont, MaxDegree, MaxDegree, MaxSeg, 1);
       TheSurface = BSpS.Surface();
     }
-  } // Fin du cas Rectangular::TrimmedSurface
+  }
 
   else
   {
@@ -808,7 +776,6 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
       int  NbVPoles, NbVKnots;
       bool periodic = true;
 
-      // Poles of meridian = Vpoles
       NbVPoles = C->NbPoles();
       NCollection_Array1<gp_Pnt> Poles(1, NbVPoles);
       C->Poles(Poles);
@@ -822,7 +789,6 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
       AlfaU    = M_PI / 3.;
       NbUPoles = 6;
 
-      // Compute Knots and Mults
       NCollection_Array1<double> UKnots(1, NbUKnots);
       NCollection_Array1<int>    UMults(1, NbUKnots);
       int                        i, j;
@@ -837,7 +803,6 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
       C->Knots(VKnots);
       C->Multiplicities(VMults);
 
-      // Compute the poles.
       NCollection_Array2<gp_Pnt> NewPoles(1, NbUPoles, 1, NbVPoles);
       NCollection_Array2<double> NewWeights(1, NbUPoles, 1, NbVPoles);
       gp_Trsf                    Trsf;
@@ -921,16 +886,16 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
 
     else if (S->IsKind(STANDARD_TYPE(Geom_BSplineSurface)))
     {
-      TheSurface = occ::down_cast<Geom_BSplineSurface>(S->Copy()); // Just a copy
+      TheSurface = occ::down_cast<Geom_BSplineSurface>(S->Copy());
     }
 
     else
-    { // In other cases => Approx
+    {
       double              Tol3d     = 1.e-4;
       int                 MaxDegree = 14, MaxSeg;
       GeomAbs_Shape       ucont = GeomAbs_C0, vcont = GeomAbs_C0;
       GeomAdaptor_Surface AS(Sr);
-      //
+
       if (Sr->IsCNu(2))
       {
         ucont = GeomAbs_C2;
@@ -939,7 +904,7 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
       {
         ucont = GeomAbs_C1;
       }
-      //
+
       if (Sr->IsCNv(2))
       {
         vcont = GeomAbs_C2;
@@ -948,11 +913,11 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
       {
         vcont = GeomAbs_C1;
       }
-      //
+
       MaxSeg = 4 * (AS.NbUIntervals(GeomAbs_CN) + 1) * (AS.NbVIntervals(GeomAbs_CN) + 1);
       GeomConvert_ApproxSurface BSpS(Sr, Tol3d, ucont, vcont, MaxDegree, MaxDegree, MaxSeg, 1);
       TheSurface = BSpS.Surface();
     }
-  } // Fin du cas direct
+  }
   return TheSurface;
 }

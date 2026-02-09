@@ -10,7 +10,6 @@ class StepBasic_DateTimeRole : public Standard_Transient
 {
 
 public:
-  //! Returns a DateTimeRole
   Standard_EXPORT StepBasic_DateTimeRole();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName);

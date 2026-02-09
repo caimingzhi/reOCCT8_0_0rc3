@@ -9,11 +9,6 @@
 
 class TCollection_ExtendedString;
 
-//! Root class for drivers. A driver assigns a physical container
-//! to data to be stored or retrieved, for instance a file.
-//! The FSD package provides two derived concrete classes :
-//! -   FSD_File is a general driver which defines a
-//! file as the container of data.
 class Storage_BaseDriver : public Standard_Transient
 {
 public:
@@ -29,15 +24,11 @@ public:
   Standard_EXPORT static TCollection_AsciiString ReadMagicNumber(Standard_IStream& theIStream);
 
 public:
-  //!@name Virtual methods, to be provided by descendants
-
   Standard_EXPORT virtual Storage_Error Open(const TCollection_AsciiString& aName,
                                              const Storage_OpenMode         aMode) = 0;
 
-  //! returns True if we are at end of the stream
   Standard_EXPORT virtual bool IsEnd() = 0;
 
-  //! return position in the file. Return -1 upon error.
   Standard_EXPORT virtual Storage_Position Tell() = 0;
 
   Standard_EXPORT virtual Storage_Error BeginWriteInfoSection() = 0;
@@ -174,8 +165,6 @@ public:
   Standard_EXPORT virtual Storage_Error Close() = 0;
 
 public:
-  //!@name Output methods
-
   Standard_EXPORT virtual Storage_BaseDriver& PutReference(const int aValue) = 0;
 
   Standard_EXPORT virtual Storage_BaseDriver& PutCharacter(const char aValue) = 0;
@@ -203,8 +192,6 @@ public:
   Storage_BaseDriver& operator<<(const float aValue) { return PutShortReal(aValue); }
 
 public:
-  //!@name Input methods
-
   Standard_EXPORT virtual Storage_BaseDriver& GetReference(int& aValue) = 0;
 
   Standard_EXPORT virtual Storage_BaseDriver& GetCharacter(char& aValue) = 0;

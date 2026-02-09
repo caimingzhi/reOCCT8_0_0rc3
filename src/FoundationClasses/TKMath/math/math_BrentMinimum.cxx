@@ -1,16 +1,4 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <math_BrentMinimum.hpp>
 #include <math_Function.hpp>
@@ -18,10 +6,8 @@
 
 namespace
 {
-  constexpr double CGOLD = 0.3819660; // 0.5*(3 - sqrt(5))
-} // namespace
-
-//=================================================================================================
+  constexpr double CGOLD = 0.3819660;
+}
 
 inline void SHFT(double& theA, double& theB, double& theC, double& theD)
 {
@@ -29,8 +15,6 @@ inline void SHFT(double& theA, double& theB, double& theC, double& theD)
   theB = theC;
   theC = theD;
 }
-
-//=================================================================================================
 
 math_BrentMinimum::math_BrentMinimum(const double theTolX,
                                      const int    theNbIterations,
@@ -49,8 +33,6 @@ math_BrentMinimum::math_BrentMinimum(const double theTolX,
       myF(false)
 {
 }
-
-//=================================================================================================
 
 math_BrentMinimum::math_BrentMinimum(const double theTolX,
                                      const double theFbx,
@@ -71,11 +53,7 @@ math_BrentMinimum::math_BrentMinimum(const double theTolX,
 {
 }
 
-//=================================================================================================
-
 math_BrentMinimum::~math_BrentMinimum() = default;
-
-//=================================================================================================
 
 void math_BrentMinimum::Perform(math_Function& F, const double ax, const double bx, const double cx)
 {
@@ -170,8 +148,6 @@ void math_BrentMinimum::Perform(math_Function& F, const double ax, const double 
   Done = false;
   return;
 }
-
-//=================================================================================================
 
 void math_BrentMinimum::Dump(Standard_OStream& o) const
 {

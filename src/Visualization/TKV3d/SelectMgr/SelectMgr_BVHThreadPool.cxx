@@ -1,15 +1,4 @@
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <SelectMgr_BVHThreadPool.hpp>
 
@@ -19,8 +8,6 @@
 #include <Standard_ErrorHandler.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_BVHThreadPool, Standard_Transient)
-
-//=================================================================================================
 
 SelectMgr_BVHThreadPool::SelectMgr_BVHThreadPool(int theNbThreads)
     : myToStopBVHThread(false),
@@ -42,14 +29,10 @@ SelectMgr_BVHThreadPool::SelectMgr_BVHThreadPool(int theNbThreads)
   }
 }
 
-//=================================================================================================
-
 SelectMgr_BVHThreadPool::~SelectMgr_BVHThreadPool()
 {
   StopThreads();
 }
-
-//=================================================================================================
 
 void SelectMgr_BVHThreadPool::StopThreads()
 {
@@ -67,16 +50,12 @@ void SelectMgr_BVHThreadPool::StopThreads()
   myIsStarted       = false;
 }
 
-//=================================================================================================
-
 void SelectMgr_BVHThreadPool::WaitThreads()
 {
   myIdleEvent.Wait();
 
   Sentry aSentry(this);
 }
-
-//=================================================================================================
 
 void SelectMgr_BVHThreadPool::AddEntity(const occ::handle<Select3D_SensitiveEntity>& theEntity)
 {
@@ -101,8 +80,6 @@ void SelectMgr_BVHThreadPool::AddEntity(const occ::handle<Select3D_SensitiveEnti
     }
   }
 }
-
-//=================================================================================================
 
 void SelectMgr_BVHThreadPool::BVHThread::performThread()
 {
@@ -130,7 +107,6 @@ void SelectMgr_BVHThreadPool::BVHThread::performThread()
       myPool->myBVHToBuildList.RemoveFirst();
     }
 
-    // Lock thread mutex while building BVH
     std::lock_guard<std::mutex> aThreadLock(myMutex);
 
     if (!anEntity.IsNull())
@@ -159,8 +135,6 @@ void SelectMgr_BVHThreadPool::BVHThread::performThread()
     }
   }
 }
-
-//=================================================================================================
 
 void* SelectMgr_BVHThreadPool::BVHThread::runThread(void* theTask)
 {

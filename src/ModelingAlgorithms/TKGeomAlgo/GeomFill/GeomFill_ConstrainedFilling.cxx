@@ -28,7 +28,6 @@ Standard_IMPORT void Law_draw1dcurve(const occ::handle<Law_BSpline>& bs,
                                      const gp_Vec2d&                 tra,
                                      const double                    scal);
 
-  // Pour les mesures.
   #include <OSD_Chronometer.hpp>
 static OSD_Chronometer totclock, parclock, appclock, cstclock;
 #endif
@@ -87,9 +86,7 @@ static void sortbounds(const int                       nb,
                        bool*                           rev,
                        GeomFill_CornerState*           stat)
 {
-  // trier les bords (facon bourinos),
-  // flaguer ceux a renverser,
-  // flaguer les baillements au coins.
+
   int                            i, j;
   occ::handle<GeomFill_Boundary> temp;
   rev[0] = false;
@@ -104,7 +101,7 @@ static void sortbounds(const int                       nb,
     for (j = i + 1; j <= nb - 1; j++)
     {
       bound[j]->Points(qf, ql);
-      //  Modified by skv - Fri Jun 18 12:52:54 2004 OCC6129 Begin
+
       double df = qf.Distance(pl);
       double dl = ql.Distance(pl);
       if (df < dl)
@@ -129,7 +126,6 @@ static void sortbounds(const int                       nb,
           rev[i + 1] = true;
         }
       }
-      //  Modified by skv - Fri Jun 18 12:52:54 2004 OCC6129 End
     }
   }
   if (!rev[nb - 1])
@@ -139,8 +135,6 @@ static void sortbounds(const int                       nb,
   bound[0]->Points(qf, ql);
   stat[0].Gap(pl.Distance(qf));
 
-  // flaguer les angles entre tangentes au coins et entre les normales au
-  // coins pour les bords contraints.
   gp_Pnt pbid;
   gp_Vec tgi, nori, tgn, norn;
   double fi, fn, li, ln;
@@ -178,13 +172,13 @@ static void coonscnd(const int                       nb,
                      occ::handle<GeomFill_Boundary>* bound,
                      bool*                           rev,
                      GeomFill_CornerState*           stat,
-                     //		     occ::handle<GeomFill_TgtField>* tga,
+
                      occ::handle<GeomFill_TgtField>*,
                      double* mintg)
 {
   double fact_normalization = 100.;
   int    i;
-  // Pour chaque coin contraint, on controle les bounds adjascents.
+
   for (i = 0; i < nb; i++)
   {
     if (stat[i].HasConstraint())
@@ -245,8 +239,7 @@ static void killcorners(const int                       nb,
                         occ::handle<GeomFill_TgtField>* tga)
 {
   int i;
-  // Pour chaque  bound, on  controle l etat  des extremites  et on flingue
-  // eventuellement le champ tangent et les derivees du bound.
+
   for (i = 0; i < nb; i++)
   {
     int    inext = (i + 1) % nb;
@@ -280,11 +273,6 @@ static void killcorners(const int                       nb,
   }
 }
 
-//=======================================================================
-// class : GeomFill_ConstrainedFilling_Eval
-// purpose: The evaluator for curve approximation
-//=======================================================================
-
 class GeomFill_ConstrainedFilling_Eval : public AdvApprox_EvaluatorFunction
 {
 public:
@@ -297,24 +285,22 @@ public:
                 double  StartEnd[2],
                 double* Parameter,
                 int*    DerivativeRequest,
-                double* Result, // [Dimension]
+                double* Result,
                 int*    ErrorCode) override;
 
 private:
   GeomFill_ConstrainedFilling& curfil;
 };
 
-void GeomFill_ConstrainedFilling_Eval::Evaluate(int*, /*Dimension*/
-                                                double /*StartEnd*/[2],
+void GeomFill_ConstrainedFilling_Eval::Evaluate(int*,
+                                                double[2],
                                                 double* Parameter,
                                                 int*    DerivativeRequest,
-                                                double* Result, // [Dimension]
+                                                double* Result,
                                                 int*    ErrorCode)
 {
   *ErrorCode = curfil.Eval(*Parameter, *DerivativeRequest, Result[0]);
 }
-
-//=================================================================================================
 
 GeomFill_ConstrainedFilling::GeomFill_ConstrainedFilling(const int MaxDeg, const int MaxSeg)
     : degmax(MaxDeg),
@@ -328,8 +314,6 @@ GeomFill_ConstrainedFilling::GeomFill_ConstrainedFilling(const int MaxDeg, const
   memset(ibound, 0, sizeof(ibound));
   memset(mig, 0, sizeof(mig));
 }
-
-//=================================================================================================
 
 void GeomFill_ConstrainedFilling::Init(const occ::handle<GeomFill_Boundary>& B1,
                                        const occ::handle<GeomFill_Boundary>& B2,
@@ -352,10 +336,8 @@ void GeomFill_ConstrainedFilling::Init(const occ::handle<GeomFill_Boundary>& B1,
   int i;
   sortbounds(3, bound, rev, stcor);
 
-  // on reoriente.
   rev[2] = !rev[2];
 
-  // on reparamettre tout le monde entre 0. et 1.
 #ifdef OCCT_DEBUG
   parclock.Start();
 #endif
@@ -367,9 +349,6 @@ void GeomFill_ConstrainedFilling::Init(const occ::handle<GeomFill_Boundary>& B1,
   parclock.Stop();
 #endif
 
-  // On cree le carreau algorithmique (u,(1-u)) et les champs tangents
-  // 1er jus.
-  // On cree donc le bord manquant.
   gp_Pnt                                 p1 = bound[1]->Value(1.);
   gp_Pnt                                 p2 = bound[2]->Value(1.);
   gp_Pnt                                 ppp(0.5 * (p1.XYZ() + p2.XYZ()));
@@ -395,8 +374,7 @@ void GeomFill_ConstrainedFilling::Init(const occ::handle<GeomFill_Boundary>& B1,
 
   if (!NoCheck)
   {
-    // On  verifie enfin les conditions  de compatibilites sur les derivees
-    // aux coins maintenant qu on a quelque chose a quoi les comparer.
+
     bool nrev[3];
     nrev[0] = nrev[1] = false;
     nrev[2]           = true;
@@ -404,7 +382,7 @@ void GeomFill_ConstrainedFilling::Init(const occ::handle<GeomFill_Boundary>& B1,
     coonscnd(3, bound, nrev, stcor, ttgalg, mig);
     killcorners(3, bound, rev, nrev, stcor, ttgalg);
   }
-  // on remet les coins en place (on duplique la pointe).
+
   stcor[3] = stcor[2];
 
   for (i = 0; i <= 3; i++)
@@ -426,8 +404,6 @@ void GeomFill_ConstrainedFilling::Init(const occ::handle<GeomFill_Boundary>& B1,
 
   Build();
 }
-
-//=================================================================================================
 
 void GeomFill_ConstrainedFilling::Init(const occ::handle<GeomFill_Boundary>& B1,
                                        const occ::handle<GeomFill_Boundary>& B2,
@@ -452,11 +428,9 @@ void GeomFill_ConstrainedFilling::Init(const occ::handle<GeomFill_Boundary>& B1,
   int i;
   sortbounds(4, bound, rev, stcor);
 
-  // on reoriente.
   rev[2] = !rev[2];
   rev[3] = !rev[3];
 
-  // on reparamettre tout le monde entre 0. et 1.
 #ifdef OCCT_DEBUG
   parclock.Start();
 #endif
@@ -468,16 +442,13 @@ void GeomFill_ConstrainedFilling::Init(const occ::handle<GeomFill_Boundary>& B1,
   parclock.Stop();
 #endif
 
-  // On cree le carreau algorithmique (u,(1-u)) et les champs tangents
-  // 1er jus.
   ptch = new GeomFill_CoonsAlgPatch(bound[0], bound[1], bound[2], bound[3]);
   for (i = 0; i <= 3; i++)
   {
     if (bound[i]->HasNormals())
       tgalg[i] = new GeomFill_TgtOnCoons(ptch, i);
   }
-  // on calcule le min de chacun des champs tangents pour l evaluation
-  // des tolerances.
+
   for (i = 0; i <= 3; i++)
   {
     mig[i] = 1.;
@@ -487,15 +458,14 @@ void GeomFill_ConstrainedFilling::Init(const occ::handle<GeomFill_Boundary>& B1,
 
   if (!NoCheck)
   {
-    // On  verifie enfin les conditions  de compatibilites sur les derivees
-    // aux coins maintenant qu on a quelque chose a quoi les comparer.
+
     bool nrev[4];
     nrev[0] = nrev[1] = false;
     nrev[2] = nrev[3] = true;
     coonscnd(4, bound, nrev, stcor, tgalg, mig);
     killcorners(4, bound, rev, nrev, stcor, tgalg);
   }
-  // On verifie les champs tangents ne changent pas de direction.
+
   for (i = 0; i <= 3; i++)
   {
     mig[i] = 1.;
@@ -516,8 +486,6 @@ void GeomFill_ConstrainedFilling::Init(const occ::handle<GeomFill_Boundary>& B1,
   Build();
 }
 
-//=================================================================================================
-
 void GeomFill_ConstrainedFilling::SetDomain(const double                               l,
                                             const occ::handle<GeomFill_BoundWithSurf>& B)
 {
@@ -531,8 +499,6 @@ void GeomFill_ConstrainedFilling::SetDomain(const double                        
     dom[3] = std::min(1., std::abs(l));
 }
 
-//=================================================================================================
-
 void GeomFill_ConstrainedFilling::ReBuild()
 {
   if (!appdone)
@@ -543,21 +509,15 @@ void GeomFill_ConstrainedFilling::ReBuild()
   PerformSurface();
 }
 
-//=================================================================================================
-
 occ::handle<GeomFill_Boundary> GeomFill_ConstrainedFilling::Boundary(const int I) const
 {
   return ptch->Bound(I);
 }
 
-//=================================================================================================
-
 occ::handle<Geom_BSplineSurface> GeomFill_ConstrainedFilling::Surface() const
 {
   return surf;
 }
-
-//=================================================================================================
 
 void GeomFill_ConstrainedFilling::Build()
 {
@@ -614,8 +574,6 @@ void GeomFill_ConstrainedFilling::Build()
   std::cout << std::endl;
 #endif
 }
-
-//=================================================================================================
 
 void GeomFill_ConstrainedFilling::PerformApprox()
 {
@@ -675,11 +633,9 @@ void GeomFill_ConstrainedFilling::PerformApprox()
   }
 }
 
-//=================================================================================================
-
 void GeomFill_ConstrainedFilling::MatchKnots()
 {
-  // on n insere rien si les domaines valent 1.
+
   int i, j, l;
   int ind[4];
   nm[0]    = mults[0];
@@ -943,16 +899,8 @@ void GeomFill_ConstrainedFilling::MatchKnots()
   pq[3] = Law::MixTgt(degree[0], nk[0]->Array1(), nm[0]->Array1(), true, ind[3]);
 }
 
-//=================================================================================================
-
 void GeomFill_ConstrainedFilling::PerformS0()
 {
-  // On construit les poles de S0 par combinaison des poles des bords,
-  // des poles des fonctions ab, des points c selon la formule :
-  // S0(i,j) = ab[0](j)*ncpol[0](i) + ab[1](i)*ncpol[1](j)
-  //         + ab[2](j)*ncpol[2](i) + ab[3](i)*ncpol[3](j)
-  //         - ab[3](i)*ab[0](j)*c[0] - ab[0](j)*ab[1](i)*c[1]
-  //         - ab[1](i)*ab[2](j)*c[2] - ab[2](j)*ab[3](i)*c[3]
 
   int i, j;
   int ni                          = ncpol[0]->Length();
@@ -995,15 +943,9 @@ void GeomFill_ConstrainedFilling::PerformS0()
   }
 }
 
-//=================================================================================================
-
 void GeomFill_ConstrainedFilling::PerformS1()
 {
-  // on construit en temporaire les poles des champs tangents
-  // definis par :
-  // tgte[ibound](u) - d/dv (S0(u,vbound)) pour ibound = 0 ou 2
-  // tgte[ibound](v) - d/du (S0(ubound,v)) pour ibound = 1 ou 3
-  // sur les bords ou tgte est defini.
+
   gp_XYZ*                           nt[4];
   const NCollection_Array2<gp_Pnt>& ss0 = S0->Array2();
   int                               l, i, j, k;
@@ -1077,7 +1019,7 @@ void GeomFill_ConstrainedFilling::PerformS1()
       }
     }
   }
-  // on calcul les termes correctifs pour le melange.
+
   double coef0 = degree[0] / (nk[0]->Value(2) - nk[0]->Value(1));
   double coef1 = degree[1] / (nk[1]->Value(2) - nk[1]->Value(1));
   gp_XYZ vtemp, vtemp0, vtemp1;
@@ -1143,13 +1085,6 @@ void GeomFill_ConstrainedFilling::PerformS1()
     v[3].SetXYZ(vtemp);
   }
 
-  // On construit les poles de S1 par combinaison des poles des
-  // champs tangents, des poles des fonctions pq, des duv au coins
-  // selon la formule :
-  // S1(i,j) = pq[0](j)*ntpol[0](i) + pq[1](i)*ntpol[1](j)
-  //         + pq[2](j)*ntpol[2](i) + pq[3](i)*ntpol[3](j)
-  //         - pq[3](i)*pq[0](j)*v[0] - pq[0](j)*pq[1](i)*v[1]
-  //         - pq[1](i)*pq[2](j)*v[2] - pq[2](j)*pq[3](i)*v[3]
   S1                              = new NCollection_HArray2<gp_Pnt>(1, ni, 1, nj);
   NCollection_Array2<gp_Pnt>& ss1 = S1->ChangeArray2();
   const gp_XYZ&               v0  = v[0].XYZ();
@@ -1227,7 +1162,6 @@ void GeomFill_ConstrainedFilling::PerformS1()
     }
   }
 
-  // Un petit menage
   for (i = 0; i <= 3; i++)
   {
     if (nt[i])
@@ -1236,8 +1170,6 @@ void GeomFill_ConstrainedFilling::PerformS1()
     }
   }
 }
-
-//=================================================================================================
 
 void GeomFill_ConstrainedFilling::PerformSurface()
 {
@@ -1261,16 +1193,12 @@ void GeomFill_ConstrainedFilling::PerformSurface()
                                  degree[1]);
 }
 
-//=================================================================================================
-
 bool GeomFill_ConstrainedFilling::CheckTgte(const int I)
 {
   occ::handle<GeomFill_Boundary> bou = ptch->Bound(I);
   if (!bou->HasNormals())
     return true;
-  // On prend 13 points le long du bord et on verifie que le triedre
-  // forme par la tangente a la courbe la normale et la tangente du
-  // peigne ne change pas d orientation.
+
   double ll = 1. / 12., pmix = 0;
   for (int iu = 0; iu < 13; iu++)
   {
@@ -1292,8 +1220,6 @@ bool GeomFill_ConstrainedFilling::CheckTgte(const int I)
   return true;
 }
 
-//=================================================================================================
-
 void GeomFill_ConstrainedFilling::MinTgte(const int I)
 {
   if (!ptch->Bound(I)->HasNormals())
@@ -1310,8 +1236,6 @@ void GeomFill_ConstrainedFilling::MinTgte(const int I)
   }
   mig[I] = sqrt(minmag);
 }
-
-//=================================================================================================
 
 int GeomFill_ConstrainedFilling::Eval(const double W, const int Ord, double& Result) const
 {
@@ -1362,8 +1286,6 @@ int GeomFill_ConstrainedFilling::Eval(const double W, const int Ord, double& Res
   }
   return 0;
 }
-
-//=================================================================================================
 
 void GeomFill_ConstrainedFilling::CheckCoonsAlgPatch(const int I)
 {
@@ -1416,8 +1338,6 @@ void GeomFill_ConstrainedFilling::CheckCoonsAlgPatch(const int I)
   }
 }
 
-//=================================================================================================
-
 void GeomFill_ConstrainedFilling::CheckTgteField(const int I)
 {
   if (tgalg[I].IsNull())
@@ -1454,8 +1374,6 @@ void GeomFill_ConstrainedFilling::CheckTgteField(const int I)
   if (caplisse)
     std::cout << "sur bord " << I << " le champ tangent change de cote!" << std::endl;
 }
-
-//=================================================================================================
 
 void GeomFill_ConstrainedFilling::CheckApprox(const int I)
 {
@@ -1510,8 +1428,6 @@ void GeomFill_ConstrainedFilling::CheckApprox(const int I)
     std::cout << "Angle max    : " << maxang << " deg" << std::endl;
   }
 }
-
-//=================================================================================================
 
 void GeomFill_ConstrainedFilling::CheckResult(const int I)
 {

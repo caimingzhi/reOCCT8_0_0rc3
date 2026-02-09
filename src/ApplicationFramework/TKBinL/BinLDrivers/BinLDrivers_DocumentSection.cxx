@@ -2,16 +2,12 @@
 #include <TDocStd_FormatVersion.hpp>
 #include <BinMDataStd.hpp>
 
-//=================================================================================================
-
 BinLDrivers_DocumentSection::BinLDrivers_DocumentSection()
     : myIsPostRead(false)
 {
   myValue[0] = 0;
   myValue[1] = 0;
 }
-
-//=================================================================================================
 
 BinLDrivers_DocumentSection::BinLDrivers_DocumentSection(const TCollection_AsciiString& theName,
                                                          const bool                     isPostRead)
@@ -22,49 +18,35 @@ BinLDrivers_DocumentSection::BinLDrivers_DocumentSection(const TCollection_Ascii
   myValue[1] = 0;
 }
 
-//=================================================================================================
-
 const TCollection_AsciiString& BinLDrivers_DocumentSection::Name() const
 {
   return myName;
 }
-
-//=================================================================================================
 
 uint64_t BinLDrivers_DocumentSection::Offset() const
 {
   return myValue[0];
 }
 
-//=================================================================================================
-
 void BinLDrivers_DocumentSection::SetOffset(const uint64_t theOffset)
 {
   myValue[0] = theOffset;
 }
-
-//=================================================================================================
 
 bool BinLDrivers_DocumentSection::IsPostRead() const
 {
   return myIsPostRead;
 }
 
-//=================================================================================================
-
 uint64_t BinLDrivers_DocumentSection::Length() const
 {
   return myValue[1];
 }
 
-//=================================================================================================
-
 void BinLDrivers_DocumentSection::SetLength(const uint64_t theLength)
 {
   myValue[1] = theLength;
 }
-
-//=================================================================================================
 
 void BinLDrivers_DocumentSection::WriteTOC(Standard_OStream&           theStream,
                                            const TDocStd_FormatVersion theDocFormatVersion)
@@ -79,14 +61,11 @@ void BinLDrivers_DocumentSection::WriteTOC(Standard_OStream&           theStream
 
     strncpy(&aBuf[sizeof(int)], myName.ToCString(), sizeof(aBuf) - sizeof(int) - 1);
 
-    // Calculate the length of the buffer: size_t + string.
-    // If the length is not multiple of size_t, it is properly increased
     const size_t aLen     = strlen(&aBuf[sizeof(int)]);
     size_t       aBufSize = (aLen / sizeof(int)) * sizeof(int);
     if (aBufSize < aLen)
       aBufSize += sizeof(int);
 
-    // Write the buffer: size + string
 #ifdef DO_INVERSE
     aBufSz[0] = InverseInt((int)aBufSize);
 #else
@@ -94,12 +73,9 @@ void BinLDrivers_DocumentSection::WriteTOC(Standard_OStream&           theStream
 #endif
     theStream.write(&aBuf[0], aBufSize + sizeof(int));
 
-    // Store the address of Offset word in the file
     myValue[0] = (uint64_t)theStream.tellp();
     myValue[1] = 0;
 
-    // Write the placeholders of Offset and Length of the section that should
-    // be written afterwards
     aBufSz[0] = 0;
     aBufSz[1] = 0;
     aBufSz[2] = 0;
@@ -114,8 +90,6 @@ void BinLDrivers_DocumentSection::WriteTOC(Standard_OStream&           theStream
   }
 }
 
-//=================================================================================================
-
 void BinLDrivers_DocumentSection::Write(Standard_OStream&           theStream,
                                         const uint64_t              theOffset,
                                         const TDocStd_FormatVersion theDocFormatVersion)
@@ -126,12 +100,11 @@ void BinLDrivers_DocumentSection::Write(Standard_OStream&           theStream,
   myValue[1] = aSectionEnd - theOffset;
   if (theDocFormatVersion <= TDocStd_FormatVersion_VERSION_9)
   {
-    // Check the limits for a 4-bytes integer.
+
     if (myValue[0] > INT_MAX || myValue[1] > INT_MAX)
       throw Standard_OutOfRange(
         "BinLDrivers_DocumentSection::Write : file size is too big, needs int64.");
 
-    // Old documents stored file position as 4-bytes values.
     int32_t aValInt[3] = {int32_t(myValue[0]), int32_t(myValue[1]), int32_t(myIsPostRead ? 1 : 0)};
 #ifdef DO_INVERSE
     aValInt[0] = InverseInt(aValInt[0]);
@@ -153,8 +126,6 @@ void BinLDrivers_DocumentSection::Write(Standard_OStream&           theStream,
 
   theStream.seekp((std::streamsize)aSectionEnd);
 }
-
-//=================================================================================================
 
 bool BinLDrivers_DocumentSection::ReadTOC(BinLDrivers_DocumentSection& theSection,
                                           Standard_IStream&            theStream,
@@ -178,7 +149,7 @@ bool BinLDrivers_DocumentSection::ReadTOC(BinLDrivers_DocumentSection& theSectio
     uint64_t aValue[3];
     if (theDocFormatVersion <= TDocStd_FormatVersion_VERSION_9)
     {
-      // Old documents stored file position as 4-bytes values.
+
       int32_t aValInt[3];
       theStream.read((char*)&aValInt[0], 3 * sizeof(int32_t));
 #ifdef DO_INVERSE

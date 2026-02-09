@@ -11,7 +11,6 @@ class StepKinematics_MechanismStateRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for MechanismStateRepresentation
 class RWStepKinematics_RWMechanismStateRepresentation
 {
 public:

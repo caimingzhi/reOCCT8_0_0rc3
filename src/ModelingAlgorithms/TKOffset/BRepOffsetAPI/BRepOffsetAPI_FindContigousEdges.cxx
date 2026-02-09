@@ -4,8 +4,6 @@
 #include <Standard_OutOfRange.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 BRepOffsetAPI_FindContigousEdges::BRepOffsetAPI_FindContigousEdges(const double tolerance,
                                                                    const bool   option)
 {
@@ -13,35 +11,25 @@ BRepOffsetAPI_FindContigousEdges::BRepOffsetAPI_FindContigousEdges(const double 
   Init(tolerance, option);
 }
 
-//=================================================================================================
-
 void BRepOffsetAPI_FindContigousEdges::Init(const double tolerance, const bool option)
 {
   mySewing->Init(tolerance, option, false, true);
 }
-
-//=================================================================================================
 
 void BRepOffsetAPI_FindContigousEdges::Add(const TopoDS_Shape& aShape)
 {
   mySewing->Add(aShape);
 }
 
-//=================================================================================================
-
 void BRepOffsetAPI_FindContigousEdges::Perform()
 {
   mySewing->Perform();
 }
 
-//=================================================================================================
-
 int BRepOffsetAPI_FindContigousEdges::NbContigousEdges() const
 {
   return mySewing->NbContigousEdges();
 }
-
-//=================================================================================================
 
 const TopoDS_Edge& BRepOffsetAPI_FindContigousEdges::ContigousEdge(const int index) const
 {
@@ -49,8 +37,6 @@ const TopoDS_Edge& BRepOffsetAPI_FindContigousEdges::ContigousEdge(const int ind
                                "BRepOffsetAPI_FindContigousEdges::ContigousEdge");
   return mySewing->ContigousEdge(index);
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_FindContigousEdges::ContigousEdgeCouple(
   const int index) const
@@ -60,8 +46,6 @@ const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_FindContigousEdges::Contigou
   return mySewing->ContigousEdgeCouple(index);
 }
 
-//=================================================================================================
-
 const TopoDS_Edge& BRepOffsetAPI_FindContigousEdges::SectionToBoundary(
   const TopoDS_Edge& section) const
 {
@@ -70,14 +54,10 @@ const TopoDS_Edge& BRepOffsetAPI_FindContigousEdges::SectionToBoundary(
   return mySewing->SectionToBoundary(section);
 }
 
-//=================================================================================================
-
 int BRepOffsetAPI_FindContigousEdges::NbDegeneratedShapes() const
 {
   return mySewing->NbDegeneratedShapes();
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& BRepOffsetAPI_FindContigousEdges::DegeneratedShape(const int index) const
 {
@@ -86,29 +66,21 @@ const TopoDS_Shape& BRepOffsetAPI_FindContigousEdges::DegeneratedShape(const int
   return mySewing->DegeneratedShape(index);
 }
 
-//=================================================================================================
-
 bool BRepOffsetAPI_FindContigousEdges::IsDegenerated(const TopoDS_Shape& aShape) const
 {
   return mySewing->IsDegenerated(aShape);
 }
-
-//=================================================================================================
 
 bool BRepOffsetAPI_FindContigousEdges::IsModified(const TopoDS_Shape& aShape) const
 {
   return mySewing->IsModified(aShape);
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& BRepOffsetAPI_FindContigousEdges::Modified(const TopoDS_Shape& aShape) const
 {
   Standard_NoSuchObject_Raise_if(!IsModified(aShape), "BRepOffsetAPI_FindContigousEdges::Modified");
   return mySewing->Modified(aShape);
 }
-
-//=================================================================================================
 
 void BRepOffsetAPI_FindContigousEdges::Dump() const
 {

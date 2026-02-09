@@ -1,22 +1,5 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// #71 rln 09.03.99: S4135: new class _TrsfModification and method ::ScaleShape
-//     abv 08.05.99: S4190: new class and method ConvertToRevolution
-//     gka 01.08.99 S4188 : new class and method LimitDegreeShape
-//     abv 16.06.99 general function ApplyModifier() implemented
-//     gka 21.06.99 general LimitDegreeShape renamed to BSplineRestriction
-//     szv 03.01.01 PositiveCones merged with DirectFaces
+
 #include <ShapeCustom.hpp>
 #include <ShapeCustom_DirectModification.hpp>
 #include <ShapeCustom_TrsfModification.hpp>
@@ -38,10 +21,7 @@
 
 namespace
 {
-  //=======================================================================
-  // function : UpdateHistoryShape
-  // purpose  : Updates ShapeBuild_ReShape by the info of the given shape
-  //=======================================================================
+
   bool UpdateHistoryShape(const TopoDS_Shape&                    theShape,
                           const BRepTools_Modifier&              theModifier,
                           const occ::handle<ShapeBuild_ReShape>& theReShape)
@@ -54,7 +34,7 @@ namespace
     }
     catch (Standard_NoSuchObject const&)
     {
-      // the sub shape isn't in the map
+
       aResult.Nullify();
     }
 
@@ -67,10 +47,6 @@ namespace
     return false;
   }
 
-  //=======================================================================
-  // function : UpdateHistory
-  // purpose  : Recursively updates ShapeBuild_ReShape to add information of all sub-shapes
-  //=======================================================================
   void UpdateHistory(const TopoDS_Shape&                    theShape,
                      const BRepTools_Modifier&              theModifier,
                      const occ::handle<ShapeBuild_ReShape>& theReShape)
@@ -85,10 +61,6 @@ namespace
     }
   }
 
-  //=======================================================================
-  // function : UpdateShapeBuild
-  // purpose  : Recursively updates ShapeBuild_ReShape to add information of all sub-shapes
-  //=======================================================================
   void UpdateShapeBuild(const TopoDS_Shape&                    theShape,
                         const BRepTools_Modifier&              theModifier,
                         const occ::handle<ShapeBuild_ReShape>& theReShape)
@@ -98,8 +70,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 TopoDS_Shape ShapeCustom::ApplyModifier(
   const TopoDS_Shape&                                                       S,
   const occ::handle<BRepTools_Modification>&                                M,
@@ -108,10 +78,9 @@ TopoDS_Shape ShapeCustom::ApplyModifier(
   const Message_ProgressRange&                                              theProgress,
   const occ::handle<ShapeBuild_ReShape>&                                    aReShape)
 {
-  // protect against INTERNAL/EXTERNAL shapes
+
   TopoDS_Shape SF = S.Oriented(TopAbs_FORWARD);
 
-  // Process COMPOUNDs separately in order to handle sharing in assemblies
   if (SF.ShapeType() == TopAbs_COMPOUND)
   {
     bool            locModified = false;
@@ -148,7 +117,7 @@ TopoDS_Shape ShapeCustom::ApplyModifier(
 
     if (!aPS.More())
     {
-      // Was cancelled
+
       return S;
     }
 
@@ -173,7 +142,7 @@ TopoDS_Shape ShapeCustom::ApplyModifier(
   }
 
   Message_ProgressScope aPS(theProgress, "Modify the Shape", 1);
-  // Modify the shape
+
   MD.Init(SF);
   MD.Perform(M, aPS.Next());
 
@@ -196,22 +165,18 @@ TopoDS_Shape ShapeCustom::ApplyModifier(
   return aResult;
 }
 
-//=================================================================================================
-
 TopoDS_Shape ShapeCustom::DirectFaces(const TopoDS_Shape& S)
 {
-  // Create a modification description
+
   occ::handle<ShapeCustom_DirectModification> DM = new ShapeCustom_DirectModification();
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> context;
   BRepTools_Modifier                                                       MD;
   return ApplyModifier(S, DM, context, MD);
 }
 
-//=================================================================================================
-
 TopoDS_Shape ShapeCustom::ScaleShape(const TopoDS_Shape& S, const double scale)
 {
-  // Create a modification description
+
   gp_Trsf T;
   T.SetScale(gp_Pnt(0, 0, 0), scale);
   occ::handle<ShapeCustom_TrsfModification> TM = new ShapeCustom_TrsfModification(T);
@@ -219,8 +184,6 @@ TopoDS_Shape ShapeCustom::ScaleShape(const TopoDS_Shape& S, const double scale)
   BRepTools_Modifier                                                       MD;
   return ShapeCustom::ApplyModifier(S, TM, context, MD);
 }
-
-//=================================================================================================
 
 TopoDS_Shape ShapeCustom::BSplineRestriction(
   const TopoDS_Shape&                                   S,
@@ -234,7 +197,6 @@ TopoDS_Shape ShapeCustom::BSplineRestriction(
   const bool                                            Rational,
   const occ::handle<ShapeCustom_RestrictionParameters>& aParameters)
 {
-  // Create a modification description
 
   occ::handle<ShapeCustom_BSplineRestriction> BSR = new ShapeCustom_BSplineRestriction();
   BSR->SetTol3d(Tol3d);
@@ -246,35 +208,29 @@ TopoDS_Shape ShapeCustom::BSplineRestriction(
   BSR->SetPriority(Degree);
   BSR->SetConvRational(Rational);
   BSR->SetRestrictionParameters(aParameters);
-  // Modify the shape
+
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> context;
   BRepTools_Modifier                                                       MD;
   return ShapeCustom::ApplyModifier(S, BSR, context, MD);
 }
 
-//=================================================================================================
-
 TopoDS_Shape ShapeCustom::ConvertToRevolution(const TopoDS_Shape& S)
 {
-  // Create a modification description
+
   occ::handle<ShapeCustom_ConvertToRevolution> CRev = new ShapeCustom_ConvertToRevolution();
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> context;
   BRepTools_Modifier                                                       MD;
   return ShapeCustom::ApplyModifier(S, CRev, context, MD);
 }
 
-//=================================================================================================
-
 TopoDS_Shape ShapeCustom::SweptToElementary(const TopoDS_Shape& S)
 {
-  // Create a modification description
+
   occ::handle<ShapeCustom_SweptToElementary> SE = new ShapeCustom_SweptToElementary();
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> context;
   BRepTools_Modifier                                                       MD;
   return ShapeCustom::ApplyModifier(S, SE, context, MD);
 }
-
-//=================================================================================================
 
 TopoDS_Shape ShapeCustom::ConvertToBSpline(const TopoDS_Shape& S,
                                            const bool          extrMode,
@@ -282,7 +238,7 @@ TopoDS_Shape ShapeCustom::ConvertToBSpline(const TopoDS_Shape& S,
                                            const bool          offsetMode,
                                            const bool          planeMode)
 {
-  // Create a modification description
+
   occ::handle<ShapeCustom_ConvertToBSpline> BSRev = new ShapeCustom_ConvertToBSpline();
   BSRev->SetExtrusionMode(extrMode);
   BSRev->SetRevolutionMode(revolMode);

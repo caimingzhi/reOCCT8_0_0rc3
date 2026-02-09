@@ -12,7 +12,6 @@
 #include <NCollection_DataMap.hpp>
 #include <ShapeExtend_Status.hpp>
 
-//! Provides methods for fixing wireframe of shape
 class ShapeFix_Wireframe : public ShapeFix_Root
 {
 
@@ -21,23 +20,14 @@ public:
 
   Standard_EXPORT ShapeFix_Wireframe(const TopoDS_Shape& shape);
 
-  //! Clears all statuses
   Standard_EXPORT virtual void ClearStatuses();
 
-  //! Loads a shape, resets statuses
   Standard_EXPORT void Load(const TopoDS_Shape& shape);
 
-  //! Fixes gaps between ends of curves of adjacent edges
-  //! (both 3d and pcurves) in wires
-  //! If precision is 0.0, uses Precision::Confusion().
   Standard_EXPORT bool FixWireGaps();
 
-  //! Fixes small edges in shape by merging adjacent edges
-  //! If precision is 0.0, uses Precision::Confusion().
   Standard_EXPORT bool FixSmallEdges();
 
-  //! Auxiliary tool for FixSmallEdges which checks for small edges and fills the maps.
-  //! Returns True if at least one small edge has been found.
   Standard_EXPORT bool CheckSmallEdges(
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theSmallEdges,
     NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
@@ -46,13 +36,6 @@ public:
                                                             theFaceWithSmall,
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theMultyEdges);
 
-  //! Auxiliary tool for FixSmallEdges which merges small edges.
-  //! If theModeDrop is equal to true then small edges,
-  //! which cannot be connected with adjacent edges are dropped.
-  //! Otherwise they are kept.
-  //! theLimitAngle specifies maximum allowed tangency
-  //! discontinuity between adjacent edges.
-  //! If theLimitAngle is equal to -1, this angle is not taken into account.
   Standard_EXPORT bool MergeSmallEdges(
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theSmallEdges,
     NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
@@ -63,29 +46,16 @@ public:
     const bool                                              theModeDrop   = false,
     const double                                            theLimitAngle = -1);
 
-  //! Decodes the status of the last FixWireGaps.
-  //! OK - No gaps were found
-  //! DONE1 - Some gaps in 3D were fixed
-  //! DONE2 - Some gaps in 2D were fixed
-  //! FAIL1 - Failed to fix some gaps in 3D
-  //! FAIL2 - Failed to fix some gaps in 2D
   bool StatusWireGaps(const ShapeExtend_Status status) const;
 
-  //! Decodes the status of the last FixSmallEdges.
-  //! OK - No small edges were found
-  //! DONE1 - Some small edges were fixed
-  //! FAIL1 - Failed to fix some small edges
   bool StatusSmallEdges(const ShapeExtend_Status status) const;
 
   TopoDS_Shape Shape();
 
-  //! Returns mode managing removing small edges.
   bool& ModeDropSmallEdges();
 
-  //! Set limit angle for merging edges.
   void SetLimitAngle(const double theLimitAngle);
 
-  //! Get limit angle for merging edges.
   double LimitAngle() const;
 
   DEFINE_STANDARD_RTTIEXT(ShapeFix_Wireframe, ShapeFix_Root)
@@ -100,57 +70,32 @@ private:
   int    myStatusSmallEdges;
 };
 
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <ShapeExtend.hpp>
-
-//=================================================================================================
 
 inline bool ShapeFix_Wireframe::StatusWireGaps(const ShapeExtend_Status status) const
 {
   return ShapeExtend::DecodeStatus(myStatusWireGaps, status);
 }
 
-//=================================================================================================
-
 inline bool ShapeFix_Wireframe::StatusSmallEdges(const ShapeExtend_Status status) const
 {
   return ShapeExtend::DecodeStatus(myStatusSmallEdges, status);
 }
-
-//=================================================================================================
 
 inline TopoDS_Shape ShapeFix_Wireframe::Shape()
 {
   return myShape;
 }
 
-//=================================================================================================
-
 inline bool& ShapeFix_Wireframe::ModeDropSmallEdges()
 {
   return myModeDrop;
 }
 
-//=================================================================================================
-
 inline void ShapeFix_Wireframe::SetLimitAngle(const double theLimitAngle)
 {
   myLimitAngle = theLimitAngle;
 }
-
-//=================================================================================================
 
 inline double ShapeFix_Wireframe::LimitAngle() const
 {

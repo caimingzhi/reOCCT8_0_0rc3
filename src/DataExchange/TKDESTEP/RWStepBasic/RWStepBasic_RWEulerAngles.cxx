@@ -8,22 +8,16 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWEulerAngles::RWStepBasic_RWEulerAngles() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWEulerAngles::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                          const int                                   num,
                                          occ::handle<Interface_Check>&               ach,
                                          const occ::handle<StepBasic_EulerAngles>&   ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 1, ach, "euler_angles"))
     return;
-
-  // Own fields of EulerAngles
 
   occ::handle<NCollection_HArray1<double>> aAngles;
   int                                      sub1 = 0;
@@ -40,17 +34,12 @@ void RWStepBasic_RWEulerAngles::ReadStep(const occ::handle<StepData_StepReaderDa
     }
   }
 
-  // Initialize entity
   ent->Init(aAngles);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWEulerAngles::WriteStep(StepData_StepWriter&                      SW,
                                           const occ::handle<StepBasic_EulerAngles>& ent) const
 {
-
-  // Own fields of EulerAngles
 
   SW.OpenSub();
   for (int i0 = 1; i0 <= ent->Angles()->Length(); i0++)
@@ -61,10 +50,7 @@ void RWStepBasic_RWEulerAngles::WriteStep(StepData_StepWriter&                  
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWEulerAngles::Share(const occ::handle<StepBasic_EulerAngles>&,
                                       Interface_EntityIterator&) const
 {
-  // Own fields of EulerAngles
 }

@@ -8,8 +8,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_PolygonOnSurface, BRep_CurveRepresentation)
 
-//=================================================================================================
-
 BRep_PolygonOnSurface::BRep_PolygonOnSurface(const occ::handle<Poly_Polygon2D>& P,
                                              const occ::handle<Geom_Surface>&   S,
                                              const TopLoc_Location&             L)
@@ -19,14 +17,10 @@ BRep_PolygonOnSurface::BRep_PolygonOnSurface(const occ::handle<Poly_Polygon2D>& 
 {
 }
 
-//=================================================================================================
-
 bool BRep_PolygonOnSurface::IsPolygonOnSurface() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool BRep_PolygonOnSurface::IsPolygonOnSurface(const occ::handle<Geom_Surface>& S,
                                                const TopLoc_Location&           L) const
@@ -34,28 +28,20 @@ bool BRep_PolygonOnSurface::IsPolygonOnSurface(const occ::handle<Geom_Surface>& 
   return (S == mySurface) && (L == myLocation);
 }
 
-//=================================================================================================
-
 const occ::handle<Geom_Surface>& BRep_PolygonOnSurface::Surface() const
 {
   return mySurface;
 }
-
-//=================================================================================================
 
 const occ::handle<Poly_Polygon2D>& BRep_PolygonOnSurface::Polygon() const
 {
   return myPolygon2D;
 }
 
-//=================================================================================================
-
 void BRep_PolygonOnSurface::Polygon(const occ::handle<Poly_Polygon2D>& P)
 {
   myPolygon2D = P;
 }
-
-//=================================================================================================
 
 occ::handle<BRep_CurveRepresentation> BRep_PolygonOnSurface::Copy() const
 {
@@ -63,8 +49,6 @@ occ::handle<BRep_CurveRepresentation> BRep_PolygonOnSurface::Copy() const
     new BRep_PolygonOnSurface(myPolygon2D, mySurface, Location());
   return P;
 }
-
-//=================================================================================================
 
 void BRep_PolygonOnSurface::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

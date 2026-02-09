@@ -4,35 +4,24 @@
 #include <StepData_StepWriter.hpp>
 #include <StepElement_SurfaceSectionField.hpp>
 
-//=================================================================================================
-
 RWStepElement_RWSurfaceSectionField::RWStepElement_RWSurfaceSectionField() = default;
-
-//=================================================================================================
 
 void RWStepElement_RWSurfaceSectionField::ReadStep(
   const occ::handle<StepData_StepReaderData>& data,
   const int                                   num,
   occ::handle<Interface_Check>&               ach,
-  const occ::handle<StepElement_SurfaceSectionField>& /*ent*/) const
+  const occ::handle<StepElement_SurfaceSectionField>&) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 0, ach, "surface_section_field"))
     return;
-
-  // Initialize entity
-  //  ent->Init();
 }
-
-//=================================================================================================
 
 void RWStepElement_RWSurfaceSectionField::WriteStep(
   StepData_StepWriter&,
   const occ::handle<StepElement_SurfaceSectionField>&) const
 {
 }
-
-//=================================================================================================
 
 void RWStepElement_RWSurfaceSectionField::Share(const occ::handle<StepElement_SurfaceSectionField>&,
                                                 Interface_EntityIterator&) const

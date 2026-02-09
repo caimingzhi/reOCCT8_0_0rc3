@@ -5,6 +5,4 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDocStd_CompoundDelta, TDF_Delta)
 
-//=================================================================================================
-
 TDocStd_CompoundDelta::TDocStd_CompoundDelta() = default;

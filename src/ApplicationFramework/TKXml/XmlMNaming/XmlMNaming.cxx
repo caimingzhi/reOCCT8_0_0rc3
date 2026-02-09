@@ -5,8 +5,6 @@
 #include <XmlMNaming_NamedShapeDriver.hpp>
 #include <XmlMNaming_NamingDriver.hpp>
 
-//=================================================================================================
-
 void XmlMNaming::AddDrivers(const occ::handle<XmlMDF_ADriverTable>& aDriverTable,
                             const occ::handle<Message_Messenger>&   aMessageDriver)
 {

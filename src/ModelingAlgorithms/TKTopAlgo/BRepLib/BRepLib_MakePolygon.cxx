@@ -10,19 +10,13 @@
 #include <TopoDS_Vertex.hpp>
 #include <TopoDS_Wire.hpp>
 
-//=================================================================================================
-
 BRepLib_MakePolygon::BRepLib_MakePolygon() = default;
-
-//=================================================================================================
 
 BRepLib_MakePolygon::BRepLib_MakePolygon(const gp_Pnt& P1, const gp_Pnt& P2)
 {
   Add(P1);
   Add(P2);
 }
-
-//=================================================================================================
 
 BRepLib_MakePolygon::BRepLib_MakePolygon(const gp_Pnt& P1,
                                          const gp_Pnt& P2,
@@ -35,8 +29,6 @@ BRepLib_MakePolygon::BRepLib_MakePolygon(const gp_Pnt& P1,
   if (Cl)
     Close();
 }
-
-//=================================================================================================
 
 BRepLib_MakePolygon::BRepLib_MakePolygon(const gp_Pnt& P1,
                                          const gp_Pnt& P2,
@@ -52,15 +44,11 @@ BRepLib_MakePolygon::BRepLib_MakePolygon(const gp_Pnt& P1,
     Close();
 }
 
-//=================================================================================================
-
 BRepLib_MakePolygon::BRepLib_MakePolygon(const TopoDS_Vertex& V1, const TopoDS_Vertex& V2)
 {
   Add(V1);
   Add(V2);
 }
-
-//=================================================================================================
 
 BRepLib_MakePolygon::BRepLib_MakePolygon(const TopoDS_Vertex& V1,
                                          const TopoDS_Vertex& V2,
@@ -73,8 +61,6 @@ BRepLib_MakePolygon::BRepLib_MakePolygon(const TopoDS_Vertex& V1,
   if (Cl)
     Close();
 }
-
-//=================================================================================================
 
 BRepLib_MakePolygon::BRepLib_MakePolygon(const TopoDS_Vertex& V1,
                                          const TopoDS_Vertex& V2,
@@ -90,8 +76,6 @@ BRepLib_MakePolygon::BRepLib_MakePolygon(const TopoDS_Vertex& V1,
     Close();
 }
 
-//=================================================================================================
-
 void BRepLib_MakePolygon::Add(const gp_Pnt& P)
 {
   BRep_Builder  B;
@@ -99,8 +83,6 @@ void BRepLib_MakePolygon::Add(const gp_Pnt& P)
   B.MakeVertex(V, P, Precision::Confusion());
   Add(V);
 }
-
-//=================================================================================================
 
 void BRepLib_MakePolygon::Add(const TopoDS_Vertex& V)
 {
@@ -144,7 +126,7 @@ void BRepLib_MakePolygon::Add(const TopoDS_Vertex& V)
     }
     else
     {
-      // restore the previous last vertex
+
       if (second)
         myLastVertex.Nullify();
       else
@@ -153,25 +135,19 @@ void BRepLib_MakePolygon::Add(const TopoDS_Vertex& V)
   }
 }
 
-//=================================================================================================
-
 bool BRepLib_MakePolygon::Added() const
 {
   return !myEdge.IsNull();
 }
-
-//=================================================================================================
 
 void BRepLib_MakePolygon::Close()
 {
   if (myFirstVertex.IsNull() || myLastVertex.IsNull())
     return;
 
-  // check not already closed
   if (myShape.Closed())
     return;
 
-  // build the last edge
   BRep_Builder B;
   myEdge.Nullify();
   BRepLib_MakeEdge ME(myLastVertex, myFirstVertex);
@@ -183,42 +159,30 @@ void BRepLib_MakePolygon::Close()
   }
 }
 
-//=================================================================================================
-
 const TopoDS_Vertex& BRepLib_MakePolygon::FirstVertex() const
 {
   return myFirstVertex;
 }
-
-//=================================================================================================
 
 const TopoDS_Vertex& BRepLib_MakePolygon::LastVertex() const
 {
   return myLastVertex;
 }
 
-//=================================================================================================
-
 const TopoDS_Edge& BRepLib_MakePolygon::Edge() const
 {
   return myEdge;
 }
-
-//=================================================================================================
 
 const TopoDS_Wire& BRepLib_MakePolygon::Wire()
 {
   return TopoDS::Wire(Shape());
 }
 
-//=================================================================================================
-
 BRepLib_MakePolygon::operator TopoDS_Edge() const
 {
   return Edge();
 }
-
-//=================================================================================================
 
 BRepLib_MakePolygon::operator TopoDS_Wire()
 {

@@ -7,12 +7,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_GeometricToleranceWithDatumReference,
                            StepDimTol_GeometricTolerance)
 
-//=================================================================================================
-
 StepDimTol_GeometricToleranceWithDatumReference::StepDimTol_GeometricToleranceWithDatumReference() =
   default;
-
-//=================================================================================================
 
 void StepDimTol_GeometricToleranceWithDatumReference::Init(
   const occ::handle<TCollection_HAsciiString>& theGeometricTolerance_Name,
@@ -37,8 +33,6 @@ void StepDimTol_GeometricToleranceWithDatumReference::Init(
   }
 }
 
-//=================================================================================================
-
 void StepDimTol_GeometricToleranceWithDatumReference::Init(
   const occ::handle<TCollection_HAsciiString>& theGeometricTolerance_Name,
   const occ::handle<TCollection_HAsciiString>& theGeometricTolerance_Description,
@@ -54,8 +48,6 @@ void StepDimTol_GeometricToleranceWithDatumReference::Init(
   myDatumSystem = theDatumSystem;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<occ::handle<StepDimTol_DatumReference>>>
   StepDimTol_GeometricToleranceWithDatumReference::DatumSystem() const
 {
@@ -70,15 +62,11 @@ occ::handle<NCollection_HArray1<occ::handle<StepDimTol_DatumReference>>>
   return aDatumSystem;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<StepDimTol_DatumSystemOrReference>>
   StepDimTol_GeometricToleranceWithDatumReference::DatumSystemAP242() const
 {
   return myDatumSystem;
 }
-
-//=================================================================================================
 
 void StepDimTol_GeometricToleranceWithDatumReference::SetDatumSystem(
   const occ::handle<NCollection_HArray1<occ::handle<StepDimTol_DatumReference>>>& theDatumSystem)
@@ -93,8 +81,6 @@ void StepDimTol_GeometricToleranceWithDatumReference::SetDatumSystem(
     myDatumSystem->SetValue(i, anAux);
   }
 }
-
-//=================================================================================================
 
 void StepDimTol_GeometricToleranceWithDatumReference::SetDatumSystem(
   const occ::handle<NCollection_HArray1<StepDimTol_DatumSystemOrReference>>& theDatumSystem)

@@ -16,7 +16,6 @@
 class AdvApp2Var_Context;
 class AdvApp2Var_Node;
 
-//! used to store constraints on a line U = Ui or V = Vj
 class AdvApp2Var_Iso : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(AdvApp2Var_Iso, Standard_Transient)

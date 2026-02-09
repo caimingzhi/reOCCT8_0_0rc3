@@ -7,13 +7,9 @@
 class StdObjMgt_Persistent;
 class Standard_GUID;
 
-//! Auxiliary data used to read persistent objects from a file.
 class StdObjMgt_ReadData
 {
 public:
-  //! Auxiliary class used to automate begin and end of
-  //! reading object (eating opening and closing parenthesis)
-  //! at constructor and destructor
   class ObjectSentry
   {
   public:

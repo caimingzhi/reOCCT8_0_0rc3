@@ -18,25 +18,21 @@
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(HLRBRep_InternalAlgo, Standard_Transient)
 
-extern int nbPtIntersection;   // total P.I.
-extern int nbSegIntersection;  // total S.I
-extern int nbClassification;   // total classification
-extern int nbOkIntersection;   // pairs of intersecting edges
-extern int nbCal1Intersection; // pairs of unrejected edges
-extern int nbCal2Intersection; // true intersections (not vertex)
-extern int nbCal3Intersection; // curve-surface intersections
+extern int nbPtIntersection;
+extern int nbSegIntersection;
+extern int nbClassification;
+extern int nbOkIntersection;
+extern int nbCal1Intersection;
+extern int nbCal2Intersection;
+extern int nbCal3Intersection;
 
 static int HLRBRep_InternalAlgo_TRACE   = true;
 static int HLRBRep_InternalAlgo_TRACE10 = true;
-
-//=================================================================================================
 
 HLRBRep_InternalAlgo::HLRBRep_InternalAlgo()
     : myDebug(false)
 {
 }
-
-//=================================================================================================
 
 HLRBRep_InternalAlgo::HLRBRep_InternalAlgo(const occ::handle<HLRBRep_InternalAlgo>& A)
 {
@@ -46,21 +42,15 @@ HLRBRep_InternalAlgo::HLRBRep_InternalAlgo(const occ::handle<HLRBRep_InternalAlg
   myDebug  = A->Debug();
 }
 
-//=================================================================================================
-
 void HLRBRep_InternalAlgo::Projector(const HLRAlgo_Projector& P)
 {
   myProj = P;
 }
 
-//=================================================================================================
-
 HLRAlgo_Projector& HLRBRep_InternalAlgo::Projector()
 {
   return myProj;
 }
-
-//=================================================================================================
 
 void HLRBRep_InternalAlgo::Update()
 {
@@ -164,8 +154,6 @@ void HLRBRep_InternalAlgo::Update()
   }
 }
 
-//=================================================================================================
-
 void HLRBRep_InternalAlgo::Load(const occ::handle<HLRTopoBRep_OutLiner>& S,
                                 const occ::handle<Standard_Transient>&   SData,
                                 const int                                nbIso)
@@ -174,15 +162,11 @@ void HLRBRep_InternalAlgo::Load(const occ::handle<HLRTopoBRep_OutLiner>& S,
   myDS.Nullify();
 }
 
-//=================================================================================================
-
 void HLRBRep_InternalAlgo::Load(const occ::handle<HLRTopoBRep_OutLiner>& S, const int nbIso)
 {
   myShapes.Append(HLRBRep_ShapeBounds(S, nbIso, 0, 0, 0, 0, 0, 0));
   myDS.Nullify();
 }
-
-//=================================================================================================
 
 int HLRBRep_InternalAlgo::Index(const occ::handle<HLRTopoBRep_OutLiner>& S) const
 {
@@ -195,8 +179,6 @@ int HLRBRep_InternalAlgo::Index(const occ::handle<HLRTopoBRep_OutLiner>& S) cons
   return 0;
 }
 
-//=================================================================================================
-
 void HLRBRep_InternalAlgo::Remove(const int I)
 {
   Standard_OutOfRange_Raise_if(I == 0 || I > myShapes.Length(),
@@ -207,8 +189,6 @@ void HLRBRep_InternalAlgo::Remove(const int I)
   myDS.Nullify();
 }
 
-//=================================================================================================
-
 void HLRBRep_InternalAlgo::ShapeData(const int I, const occ::handle<Standard_Transient>& SData)
 {
   Standard_OutOfRange_Raise_if(I == 0 || I > myShapes.Length(),
@@ -217,21 +197,15 @@ void HLRBRep_InternalAlgo::ShapeData(const int I, const occ::handle<Standard_Tra
   myShapes(I).ShapeData(SData);
 }
 
-//=================================================================================================
-
 NCollection_Sequence<HLRBRep_ShapeBounds>& HLRBRep_InternalAlgo::SeqOfShapeBounds()
 {
   return myShapes;
 }
 
-//=================================================================================================
-
 int HLRBRep_InternalAlgo::NbShapes() const
 {
   return myShapes.Length();
 }
-
-//=================================================================================================
 
 HLRBRep_ShapeBounds& HLRBRep_InternalAlgo::ShapeBounds(const int I)
 {
@@ -240,8 +214,6 @@ HLRBRep_ShapeBounds& HLRBRep_InternalAlgo::ShapeBounds(const int I)
 
   return myShapes(I);
 }
-
-//=================================================================================================
 
 void HLRBRep_InternalAlgo::InitEdgeStatus()
 {
@@ -259,7 +231,7 @@ void HLRBRep_InternalAlgo::InitEdgeStatus()
     if (ed.Selected())
       ed.Status().ShowAll();
   }
-  //  for (int f = 1; f <= nf; f++) {
+
   int f;
   for (f = 1; f <= nf; f++)
   {
@@ -315,8 +287,6 @@ void HLRBRep_InternalAlgo::InitEdgeStatus()
   }
 }
 
-//=================================================================================================
-
 void HLRBRep_InternalAlgo::Select()
 {
   if (!myDS.IsNull())
@@ -339,8 +309,6 @@ void HLRBRep_InternalAlgo::Select()
     }
   }
 }
-
-//=================================================================================================
 
 void HLRBRep_InternalAlgo::Select(const int I)
 {
@@ -371,8 +339,6 @@ void HLRBRep_InternalAlgo::Select(const int I)
   }
 }
 
-//=================================================================================================
-
 void HLRBRep_InternalAlgo::SelectEdge(const int I)
 {
   if (!myDS.IsNull())
@@ -393,8 +359,6 @@ void HLRBRep_InternalAlgo::SelectEdge(const int I)
     }
   }
 }
-
-//=================================================================================================
 
 void HLRBRep_InternalAlgo::SelectFace(const int I)
 {
@@ -417,8 +381,6 @@ void HLRBRep_InternalAlgo::SelectFace(const int I)
   }
 }
 
-//=================================================================================================
-
 void HLRBRep_InternalAlgo::ShowAll()
 {
   if (!myDS.IsNull())
@@ -433,8 +395,6 @@ void HLRBRep_InternalAlgo::ShowAll()
     }
   }
 }
-
-//=================================================================================================
 
 void HLRBRep_InternalAlgo::ShowAll(const int I)
 {
@@ -457,8 +417,6 @@ void HLRBRep_InternalAlgo::ShowAll(const int I)
   }
 }
 
-//=================================================================================================
-
 void HLRBRep_InternalAlgo::HideAll()
 {
   if (!myDS.IsNull())
@@ -473,8 +431,6 @@ void HLRBRep_InternalAlgo::HideAll()
     }
   }
 }
-
-//=================================================================================================
 
 void HLRBRep_InternalAlgo::HideAll(const int I)
 {
@@ -497,8 +453,6 @@ void HLRBRep_InternalAlgo::HideAll(const int I)
   }
 }
 
-//=================================================================================================
-
 void HLRBRep_InternalAlgo::PartialHide()
 {
   if (!myDS.IsNull())
@@ -514,8 +468,6 @@ void HLRBRep_InternalAlgo::PartialHide()
     Select();
   }
 }
-
-//=================================================================================================
 
 void HLRBRep_InternalAlgo::Hide()
 {
@@ -538,8 +490,6 @@ void HLRBRep_InternalAlgo::Hide()
   }
 }
 
-//=================================================================================================
-
 void HLRBRep_InternalAlgo::Hide(const int I)
 {
   if (!myDS.IsNull())
@@ -555,8 +505,6 @@ void HLRBRep_InternalAlgo::Hide(const int I)
     HideSelected(I, true);
   }
 }
-
-//=================================================================================================
 
 void HLRBRep_InternalAlgo::Hide(const int I, const int J)
 {
@@ -598,8 +546,6 @@ void HLRBRep_InternalAlgo::Hide(const int I, const int J)
     }
   }
 }
-
-//=================================================================================================
 
 void HLRBRep_InternalAlgo::HideSelected(const int I, const bool SideFace)
 {
@@ -723,7 +669,6 @@ void HLRBRep_InternalAlgo::HideSelected(const int I, const bool SideFace)
       }
     }
 
-    //--
     NCollection_Array1<int>    Val(1, nf);
     NCollection_Array1<double> Size(1, nf);
     NCollection_Array1<int>    Index(1, nf);
@@ -758,27 +703,6 @@ void HLRBRep_InternalAlgo::HideSelected(const int I, const bool SideFace)
       Index(tt) = tt;
     }
 
-    //-- ======================================================================
-    /*    bool TriOk; //-- a refaire
-        do {
-          int t,tp1;
-          TriOk=true;
-          for(t=1,tp1=2;t<nf;t++,tp1++) {
-        if(Val(Index(t))<Val(Index(tp1))) {
-          int q=Index(t); Index(t)=Index(tp1); Index(tp1)=q;
-          TriOk=false;
-        }
-        else if(Val(Index(t))==Val(Index(tp1))) {
-          if(Size(Index(t))<Size(Index(tp1))) {
-            int q=Index(t); Index(t)=Index(tp1); Index(tp1)=q;
-            TriOk=false;
-          }
-        }
-          }
-        }
-        while(TriOk==false);
-    */
-    //-- ======================================================================
     if (nf > 2)
     {
       int i, ir, k, l;
@@ -906,21 +830,15 @@ void HLRBRep_InternalAlgo::HideSelected(const int I, const bool SideFace)
   }
 }
 
-//=================================================================================================
-
 void HLRBRep_InternalAlgo::Debug(const bool deb)
 {
   myDebug = deb;
 }
 
-//=================================================================================================
-
 bool HLRBRep_InternalAlgo::Debug() const
 {
   return myDebug;
 }
-
-//=================================================================================================
 
 occ::handle<HLRBRep_Data> HLRBRep_InternalAlgo::DataStructure() const
 {

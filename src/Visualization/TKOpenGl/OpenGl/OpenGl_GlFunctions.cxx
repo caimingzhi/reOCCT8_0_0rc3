@@ -1,15 +1,4 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OpenGl_GlNative.hpp>
 
@@ -33,10 +22,6 @@
   #include <emscripten/html5.h>
 #endif
 
-// This debug macros can be enabled to help debugging OpenGL implementations
-// without solid / working debugging capabilities.
-// #define TO_TRACE
-
 #define WrapProxyProc(theFunc) this->theFunc = opencascade::theFunc
 #define WrapProxyProc5(theFunc1, theFunc2, theFunc3, theFunc4, theFunc5)                           \
   WrapProxyProc(theFunc1);                                                                         \
@@ -53,7 +38,7 @@
   #define WrapProxyDef(theFunc) this->theFunc = opencascade::theFunc
 #else
   #define OpenGl_TRACE(theName)
-  // skip wrapper and set pointer to global function
+
   #define WrapProxyDef(theFunc)                                                                    \
     this->theFunc = opencascade::theFunc;                                                          \
     this->theFunc = ::theFunc;
@@ -71,7 +56,7 @@ namespace opencascade
   static void APIENTRY glReadBuffer(GLenum mode)
   {
 #if defined(GL_ES_VERSION_2_0)
-    ::glEnable(0xFFFF); // added to OpenGL ES 3.0
+    ::glEnable(0xFFFF);
     (void)mode;
 #else
     ::glReadBuffer(mode);
@@ -85,7 +70,7 @@ namespace opencascade
                                                 GLint* params)
   {
 #if defined(GL_ES_VERSION_2_0)
-    ::glEnable(0xFFFF); // added to OpenGL ES 3.1
+    ::glEnable(0xFFFF);
     (void)target;
     (void)level;
     (void)pname;
@@ -102,7 +87,7 @@ namespace opencascade
                                                 GLfloat* params)
   {
 #if defined(GL_ES_VERSION_2_0)
-    ::glEnable(0xFFFF); // added to OpenGL ES 3.1
+    ::glEnable(0xFFFF);
     (void)target;
     (void)level;
     (void)pname;
@@ -117,7 +102,7 @@ namespace opencascade
   {
 #if defined(GL_ES_VERSION_2_0)
     *params = NULL;
-    ::glEnable(0xFFFF); // added to OpenGL ES 3.2
+    ::glEnable(0xFFFF);
     (void)name;
 #else
     ::glGetPointerv(name, params);
@@ -135,8 +120,6 @@ namespace opencascade
 #endif
     OpenGl_TRACE(glDrawBuffer)
   }
-
-  // Miscellaneous
 
   static void APIENTRY glClearColor(GLclampf theRed,
                                     GLclampf theGreen,
@@ -262,8 +245,6 @@ namespace opencascade
     OpenGl_TRACE(glHint)
   }
 
-  // Depth Buffer
-
   static void APIENTRY glClearDepth(GLclampd theDepth)
   {
 #if defined(GL_ES_VERSION_2_0)
@@ -316,15 +297,11 @@ namespace opencascade
     OpenGl_TRACE(glDepthRangef)
   }
 
-  // Transformation
-
   static void APIENTRY glViewport(GLint theX, GLint theY, GLsizei theWidth, GLsizei theHeight)
   {
     ::glViewport(theX, theY, theWidth, theHeight);
     OpenGl_TRACE(glViewport)
   }
-
-  // Vertex Arrays
 
   static void APIENTRY glDrawArrays(GLenum theMode, GLint theFirst, GLsizei theCount)
   {
@@ -340,8 +317,6 @@ namespace opencascade
     ::glDrawElements(theMode, theCount, theType, theIndices);
     OpenGl_TRACE(glDrawElements)
   }
-
-  // Raster functions
 
   static void APIENTRY glPixelStorei(GLenum theParamName, GLint theParam)
   {
@@ -360,8 +335,6 @@ namespace opencascade
     ::glReadPixels(x, y, width, height, format, type, pixels);
     OpenGl_TRACE(glReadPixels)
   }
-
-  // Stenciling
 
   static void APIENTRY glStencilFunc(GLenum func, GLint ref, GLuint mask)
   {
@@ -386,8 +359,6 @@ namespace opencascade
     ::glClearStencil(s);
     OpenGl_TRACE(glClearStencil)
   }
-
-  // Texture mapping
 
   static void APIENTRY glTexParameterf(GLenum target, GLenum pname, GLfloat param)
   {
@@ -502,8 +473,6 @@ namespace opencascade
     ::glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
     OpenGl_TRACE(glCopyTexSubImage2D)
   }
-
-  // desktop extensions - not supported in OpenGL ES 2.0
 
   static void APIENTRY glTexImage1D(GLenum        target,
                                     GLint         level,
@@ -675,8 +644,6 @@ namespace opencascade
 
 #if defined(GL_ES_VERSION_2_0)
 
-  // OpenGL ES 1.1
-
   static void APIENTRY glActiveTexture(GLenum texture)
   {
     ::glActiveTexture(texture);
@@ -767,8 +734,6 @@ namespace opencascade
     ::glSampleCoverage(value, invert);
     OpenGl_TRACE(glSampleCoverage)
   }
-
-  // OpenGL ES 2.0
 
   static void APIENTRY glBlendColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
   {
@@ -1332,7 +1297,6 @@ namespace opencascade
   }
 
 #else
-  // legacy OpenGL 1.1 FFP
 
   static void APIENTRY glTexEnvi(GLenum target, GLenum pname, GLint param)
   {
@@ -1346,15 +1310,11 @@ namespace opencascade
     OpenGl_TRACE(glGetTexEnviv)
   }
 
-  // Begin/End primitive specification (removed since 3.1)
-
   static void APIENTRY glColor4fv(const GLfloat* theVec)
   {
     ::glColor4fv(theVec);
     OpenGl_TRACE(glColor4fv)
   }
-
-  // Matrix operations (removed since 3.1)
 
   static void APIENTRY glMatrixMode(GLenum theMode)
   {
@@ -1374,8 +1334,6 @@ namespace opencascade
     OpenGl_TRACE(glLoadMatrixf)
   }
 
-  // Line and Polygon stipple (removed since 3.1)
-
   static void APIENTRY glLineStipple(GLint theFactor, GLushort thePattern)
   {
     ::glLineStipple(theFactor, thePattern);
@@ -1387,8 +1345,6 @@ namespace opencascade
     ::glPolygonStipple(theMask);
     OpenGl_TRACE(glPolygonStipple)
   }
-
-  // Fixed pipeline lighting (removed since 3.1)
 
   static void APIENTRY glShadeModel(GLenum theMode)
   {
@@ -1438,15 +1394,11 @@ namespace opencascade
     OpenGl_TRACE(glColorMaterial)
   }
 
-  // clipping plane (removed since 3.1)
-
   static void APIENTRY glClipPlane(GLenum thePlane, const GLdouble* theEquation)
   {
     ::glClipPlane(thePlane, theEquation);
     OpenGl_TRACE(glClipPlane)
   }
-
-  // Display lists (removed since 3.1)
 
   static void APIENTRY glDeleteLists(GLuint theList, GLsizei theRange)
   {
@@ -1490,8 +1442,6 @@ namespace opencascade
     OpenGl_TRACE(glListBase)
   }
 
-  // Current raster position and Rectangles (removed since 3.1)
-
   static void APIENTRY glRasterPos2i(GLint x, GLint y)
   {
     ::glRasterPos2i(x, y);
@@ -1504,8 +1454,6 @@ namespace opencascade
     OpenGl_TRACE(glRasterPos3fv)
   }
 
-  // Texture mapping (removed since 3.1)
-
   static void APIENTRY glTexGeni(GLenum coord, GLenum pname, GLint param)
   {
     ::glTexGeni(coord, pname, param);
@@ -1517,8 +1465,6 @@ namespace opencascade
     ::glTexGenfv(coord, pname, params);
     OpenGl_TRACE(glTexGenfv)
   }
-
-  // Pixel copying (removed since 3.1)
 
   static void APIENTRY
     glDrawPixels(GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid* pixels)
@@ -1544,8 +1490,6 @@ namespace opencascade
     ::glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap);
     OpenGl_TRACE(glBitmap)
   }
-
-  // Edge flags and fixed-function vertex processing (removed since 3.1)
 
   static void APIENTRY glIndexPointer(GLenum theType, GLsizei theStride, const GLvoid* thePtr)
   {
@@ -1606,8 +1550,6 @@ namespace opencascade
 #endif
 } // namespace opencascade
 
-//=================================================================================================
-
 bool OpenGl_GlFunctions::debugPrintError(const char* theName)
 {
   const int anErr = ::glGetError();
@@ -1615,7 +1557,7 @@ bool OpenGl_GlFunctions::debugPrintError(const char* theName)
   {
     Message::SendFail() << theName
                         << "(), unhandled GL error: " << OpenGl_Context::FormatGlError(anErr);
-    // there is no glSetError(), just emulate non-clear state
+
     switch (anErr)
     {
       case GL_INVALID_VALUE:
@@ -1635,17 +1577,15 @@ bool OpenGl_GlFunctions::debugPrintError(const char* theName)
   return anErr != GL_NO_ERROR;
 }
 
-//=================================================================================================
-
 void OpenGl_GlFunctions::readGlVersion(int& theGlVerMajor, int& theGlVerMinor)
 {
-  // reset values
+
   theGlVerMajor = 0;
   theGlVerMinor = 0;
 
   bool toCheckVer3 = true;
 #if defined(__EMSCRIPTEN__)
-  // WebGL 1.0 prints annoying invalid enumeration warnings to console.
+
   toCheckVer3 = false;
   if (EMSCRIPTEN_WEBGL_CONTEXT_HANDLE aWebGlCtx = emscripten_webgl_get_current_context())
   {
@@ -1657,17 +1597,12 @@ void OpenGl_GlFunctions::readGlVersion(int& theGlVerMajor, int& theGlVerMinor)
   }
 #endif
 
-  // Available since OpenGL 3.0 and OpenGL ES 3.0.
   if (toCheckVer3)
   {
     GLint aMajor = 0, aMinor = 0;
     ::glGetIntegerv(GL_MAJOR_VERSION, &aMajor);
     ::glGetIntegerv(GL_MINOR_VERSION, &aMinor);
-    // glGetError() sometimes does not report an error here even if
-    // GL does not know GL_MAJOR_VERSION and GL_MINOR_VERSION constants.
-    // This happens on some renderers like e.g. Cygwin MESA.
-    // Thus checking additionally if GL has put anything to
-    // the output variables.
+
     if (::glGetError() == GL_NO_ERROR && aMajor != 0 && aMinor != 0)
     {
       theGlVerMajor = aMajor;
@@ -1684,20 +1619,13 @@ void OpenGl_GlFunctions::readGlVersion(int& theGlVerMajor, int& theGlVerMinor)
     }
   }
 
-  // Read version string.
-  // Notice that only first two numbers split by point '2.1 XXXXX' are significant.
-  // Following trash (after space) is vendor-specific.
-  // New drivers also returns micro version of GL like '3.3.0' which has no meaning
-  // and should be considered as vendor-specific too.
   const char* aVerStr = (const char*)::glGetString(GL_VERSION);
   if (aVerStr == nullptr || *aVerStr == '\0')
   {
-    // invalid GL context
+
     return;
   }
 
-  // #if defined(GL_ES_VERSION_2_0)
-  //  skip "OpenGL ES-** " section
   for (; *aVerStr != '\0'; ++aVerStr)
   {
     if (*aVerStr >= '0' && *aVerStr <= '9')
@@ -1705,9 +1633,7 @@ void OpenGl_GlFunctions::readGlVersion(int& theGlVerMajor, int& theGlVerMinor)
       break;
     }
   }
-  // #endif
 
-  // parse string for major number
   char   aMajorStr[32];
   char   aMinorStr[32];
   size_t aMajIter = 0;
@@ -1722,7 +1648,6 @@ void OpenGl_GlFunctions::readGlVersion(int& theGlVerMajor, int& theGlVerMinor)
   memcpy(aMajorStr, aVerStr, aMajIter);
   aMajorStr[aMajIter] = '\0';
 
-  // parse string for minor number
   aVerStr += aMajIter + 1;
   size_t aMinIter = 0;
   while (aVerStr[aMinIter] >= '0' && aVerStr[aMinIter] <= '9')
@@ -1736,7 +1661,6 @@ void OpenGl_GlFunctions::readGlVersion(int& theGlVerMajor, int& theGlVerMinor)
   memcpy(aMinorStr, aVerStr, aMinIter);
   aMinorStr[aMinIter] = '\0';
 
-  // read numbers
   theGlVerMajor = atoi(aMajorStr);
   theGlVerMinor = atoi(aMinorStr);
 #if defined(__EMSCRIPTEN__)
@@ -1761,8 +1685,6 @@ void OpenGl_GlFunctions::readGlVersion(int& theGlVerMajor, int& theGlVerMinor)
   }
 }
 
-//=================================================================================================
-
 void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
 {
 #if !defined(GL_ES_VERSION_2_0)
@@ -1771,7 +1693,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
   {
     isCoreProfile = (theIsCoreProfile);
 
-    // detect Core profile
     if (!isCoreProfile)
     {
       GLint aProfile = 0;
@@ -1783,7 +1704,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
   (void)theIsCoreProfile;
 #endif
 
-  // set built-in functions
   WrapProxyDef5(glGetIntegerv, glClearColor, glClear, glColorMask, glBlendFunc);
   WrapProxyDef5(glCullFace, glFrontFace, glLineWidth, glPolygonOffset, glScissor);
   WrapProxyDef5(glEnable, glDisable, glIsEnabled, glGetBooleanv, glGetFloatv);
@@ -1886,7 +1806,7 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
                 glVertexAttrib4f,
                 glVertexAttrib4fv);
   WrapProxyDef(glVertexAttribPointer);
-  // empty fallbacks
+
   WrapProxyProc5(glAlphaFunc, glPointSize, glLogicOp, glPolygonMode, glGetTexLevelParameteriv);
   WrapProxyProc(glGetTexLevelParameterfv);
 #else
@@ -1910,7 +1830,7 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
 
   if (theCtx.IsGlGreaterEqual(3, 0))
   {
-    // retrieve auxiliary function in advance
+
     theCtx.FindProc("glGetStringi", theCtx.myFuncs->glGetStringi);
   }
 
@@ -1942,7 +1862,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
   theCtx.arbFBOBlit     = nullptr;
   theCtx.extGS          = nullptr;
 
-  //! Make record shorter to retrieve function pointer using variable with same name
   const char* aLastFailedProc = nullptr;
 #define FindProcShort(theFunc) theCtx.FindProcVerbose(aLastFailedProc, #theFunc, this->theFunc)
 #define checkExtensionShort theCtx.CheckExtension
@@ -1955,7 +1874,7 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
   theCtx.hasFboSRGB  = isGlGreaterEqualShort(3, 0);
   if (!isGlGreaterEqualShort(3, 0) && checkExtensionShort("GL_EXT_sRGB"))
   {
-    // limited support
+
     theCtx.hasTexSRGB = true;
     theCtx.hasFboSRGB = true;
   }
@@ -1963,14 +1882,9 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     isGlGreaterEqualShort(3, 0) || checkExtensionShort("GL_OES_fbo_render_mipmap");
   theCtx.hasSRGBControl   = checkExtensionShort("GL_EXT_sRGB_write_control");
   theCtx.hasPackRowLength = isGlGreaterEqualShort(3, 0);
-  // clang-format off
-  theCtx.hasUnpackRowLength = isGlGreaterEqualShort (3, 0); // || checkExtensionShort ("GL_EXT_unpack_subimage");
-  // NPOT textures has limited support within OpenGL ES 2.0
-  // which are relaxed by OpenGL ES 3.0 or some extensions
-  //theCtx.arbNPTW = isGlGreaterEqualShort (3, 0)
-  //           || checkExtensionShort ("GL_OES_texture_npot")
-  //           || checkExtensionShort ("GL_NV_texture_npot_2D_mipmap");
-  // clang-format on
+
+  theCtx.hasUnpackRowLength = isGlGreaterEqualShort(3, 0);
+
   theCtx.arbNPTW   = true;
   theCtx.arbTexRG  = isGlGreaterEqualShort(3, 0) || checkExtensionShort("GL_EXT_texture_rg");
   theCtx.extBgra   = checkExtensionShort("GL_EXT_texture_format_BGRA8888");
@@ -1981,7 +1895,7 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
   theCtx.core11fwd = (OpenGl_GlCore11Fwd*)this;
   if (isGlGreaterEqualShort(2, 0))
   {
-    // enable compatible functions
+
     theCtx.core20    = (OpenGl_GlCore20*)this;
     theCtx.core20fwd = (OpenGl_GlCore20*)this;
     theCtx.core15    = (OpenGl_GlCore15*)this;
@@ -1997,18 +1911,13 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
       && FindProcShort(glSamplerParameteri) && FindProcShort(glSamplerParameteriv)
       && FindProcShort(glSamplerParameterf) && FindProcShort(glSamplerParameterfv)
       && FindProcShort(glGetSamplerParameteriv) && FindProcShort(glGetSamplerParameterfv))
-  //&& FindProcShort (glSamplerParameterIiv) // only on Desktop or with extensions
-  // GL_OES_texture_border_clamp/GL_EXT_texture_border_clamp
-  //&& FindProcShort (glSamplerParameterIuiv)
-  //&& FindProcShort (glGetSamplerParameterIiv)
-  //&& FindProcShort (glGetSamplerParameterIuiv))
+
   {
     theCtx.arbSamplerObject = (OpenGl_ArbSamplerObject*)this;
   }
   theCtx.extFragDepth = !isGlGreaterEqualShort(3, 0) && checkExtensionShort("GL_EXT_frag_depth");
   if (isGlGreaterEqualShort(3, 1) && FindProcShort(glTexStorage2DMultisample))
   {
-    //
   }
 
   theCtx.hasUintIndex =
@@ -2054,14 +1963,13 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
   const bool hasVAO = isGlGreaterEqualShort(3, 0) && FindProcShort(glBindVertexArray)
                       && FindProcShort(glDeleteVertexArrays) && FindProcShort(glGenVertexArrays)
                       && FindProcShort(glIsVertexArray);
-  #ifndef __EMSCRIPTEN__ // latest Emscripten does not pretend having / simulating mapping buffer
-                         // functions
+  #ifndef __EMSCRIPTEN__
+
   const bool hasMapBufferRange =
     isGlGreaterEqualShort(3, 0) && FindProcShort(glMapBufferRange) && FindProcShort(glUnmapBuffer)
     && FindProcShort(glGetBufferPointerv) && FindProcShort(glFlushMappedBufferRange);
   #endif
 
-  // load OpenGL ES 3.0 new functions
   const bool has30es =
     isGlGreaterEqualShort(3, 0) && hasVAO
   #ifndef __EMSCRIPTEN__
@@ -2117,7 +2025,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.hasGetBufferData = true;
   }
 
-  // load OpenGL ES 3.1 new functions
   const bool has31es =
     isGlGreaterEqualShort(3, 1) && has30es && FindProcShort(glDispatchCompute)
     && FindProcShort(glDispatchComputeIndirect) && FindProcShort(glDrawArraysIndirect)
@@ -2159,10 +2066,9 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.checkWrongVersion(3, 1, aLastFailedProc);
   }
 
-  // initialize debug context extension
   if (isGlGreaterEqualShort(3, 2) || checkExtensionShort("GL_KHR_debug"))
   {
-    // this functionality become a part of OpenGL ES 3.2
+
     theCtx.arbDbg = NULL;
     if (isGlGreaterEqualShort(3, 2) && FindProcShort(glDebugMessageControl)
         && FindProcShort(glDebugMessageInsert) && FindProcShort(glDebugMessageCallback)
@@ -2170,8 +2076,7 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     {
       theCtx.arbDbg = (OpenGl_ArbDbg*)this;
     }
-    // According to GL_KHR_debug spec, all functions should have KHR suffix.
-    // However, some implementations can export these functions without suffix.
+
     else if (!isGlGreaterEqualShort(3, 2)
              && theCtx.FindProc("glDebugMessageControlKHR", this->glDebugMessageControl)
              && theCtx.FindProc("glDebugMessageInsertKHR", this->glDebugMessageInsert)
@@ -2182,7 +2087,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     }
   }
 
-  // load OpenGL ES 3.2 new functions
   const bool has32es =
     isGlGreaterEqualShort(3, 2) && has31es && hasTexBuffer32 && theCtx.arbDbg != NULL
     && FindProcShort(glBlendBarrier) && FindProcShort(glCopyImageSubData)
@@ -2209,9 +2113,8 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.checkWrongVersion(3, 2, aLastFailedProc);
   }
 
-  // clang-format off
-  theCtx.arbTboRGB32 = isGlGreaterEqualShort (3, 2); // OpenGL ES 3.2 introduces TBO already supporting RGB32 format
-  // clang-format on
+  theCtx.arbTboRGB32 = isGlGreaterEqualShort(3, 2);
+
   theCtx.extDrawBuffers = checkExtensionShort("GL_EXT_draw_buffers")
                           && theCtx.FindProc("glDrawBuffersEXT", this->glDrawBuffers);
   theCtx.arbDrawBuffers = checkExtensionShort("GL_ARB_draw_buffers")
@@ -2226,8 +2129,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.hasDrawBuffers = OpenGl_FeatureInExtensions;
   }
 
-  // float textures available since OpenGL ES 3.0+,
-  // but renderable only since 3.2+ or with extension
   theCtx.hasFloatBuffer = theCtx.hasHalfFloatBuffer = OpenGl_FeatureNotAvailable;
   if (isGlGreaterEqualShort(3, 2))
   {
@@ -2242,7 +2143,7 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     }
     if (checkExtensionShort("GL_EXT_color_buffer_half_float"))
     {
-      // GL_HALF_FLOAT_OES for OpenGL ES 2.0 and GL_HALF_FLOAT for OpenGL ES 3.0+
+
       theCtx.hasHalfFloatBuffer =
         isGlGreaterEqualShort(3, 0) ? OpenGl_FeatureInCore : OpenGl_FeatureInExtensions;
     }
@@ -2255,14 +2156,14 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
                                                           : OpenGl_FeatureNotAvailable;
   theCtx.hasGlslBitwiseOps =
     isGlGreaterEqualShort(3, 0) ? OpenGl_FeatureInCore : OpenGl_FeatureNotAvailable;
-  // without hasHighp, dFdx/dFdy precision is considered too low for flat shading (visual artifacts)
+
   theCtx.hasFlatShading = isGlGreaterEqualShort(3, 0) ? OpenGl_FeatureInCore
                                                       : (theCtx.oesStdDerivatives && theCtx.hasHighp
                                                            ? OpenGl_FeatureInExtensions
                                                            : OpenGl_FeatureNotAvailable);
   if (!isGlGreaterEqualShort(3, 1) && theCtx.Vendor().Search("qualcomm") != -1)
   {
-    // dFdx/dFdy are completely broken on tested Adreno devices with versions below OpenGl ES 3.1
+
     theCtx.hasFlatShading = OpenGl_FeatureNotAvailable;
   }
 
@@ -2320,9 +2221,8 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
   bool has40 = false, has41 = false, has42 = false, has43 = false, has44 = false, has45 = false,
        has46 = false;
 
-  // retrieve platform-dependent extensions
   #if defined(HAVE_EGL)
-    //
+
   #elif defined(_WIN32)
   if (FindProcShort(wglGetExtensionsStringARB))
   {
@@ -2375,10 +2275,9 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     FindProcShort(glXQueryRendererStringMESA);
     FindProcShort(glXQueryCurrentRendererStringMESA);
   }
-    // extSwapTear = checkExtensionShort (aGlxExts, "GLX_EXT_swap_control_tear");
+
   #endif
 
-  // load OpenGL 1.2 new functions
   has12 = isGlGreaterEqualShort(1, 2) && FindProcShort(glBlendColor)
           && FindProcShort(glBlendEquation) && FindProcShort(glDrawRangeElements)
           && FindProcShort(glTexImage3D) && FindProcShort(glTexSubImage3D)
@@ -2388,7 +2287,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.checkWrongVersion(1, 2, aLastFailedProc);
   }
 
-  // load OpenGL 1.3 new functions
   has13 = isGlGreaterEqualShort(1, 3) && FindProcShort(glActiveTexture)
           && FindProcShort(glSampleCoverage) && FindProcShort(glCompressedTexImage3D)
           && FindProcShort(glCompressedTexImage2D) && FindProcShort(glCompressedTexImage1D)
@@ -2399,7 +2297,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.checkWrongVersion(1, 3, aLastFailedProc);
   }
 
-  // load OpenGL 1.4 new functions
   has14 = isGlGreaterEqualShort(1, 4) && FindProcShort(glBlendFuncSeparate)
           && FindProcShort(glMultiDrawArrays) && FindProcShort(glMultiDrawElements)
           && FindProcShort(glPointParameterf) && FindProcShort(glPointParameterfv)
@@ -2409,7 +2306,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.checkWrongVersion(1, 4, aLastFailedProc);
   }
 
-  // load OpenGL 1.5 new functions
   has15 = isGlGreaterEqualShort(1, 5) && FindProcShort(glGenQueries)
           && FindProcShort(glDeleteQueries) && FindProcShort(glIsQuery)
           && FindProcShort(glBeginQuery) && FindProcShort(glEndQuery) && FindProcShort(glGetQueryiv)
@@ -2430,7 +2326,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.checkWrongVersion(1, 5, aLastFailedProc);
   }
 
-  // load OpenGL 2.0 new functions
   has20 = isGlGreaterEqualShort(2, 0) && FindProcShort(glBlendEquationSeparate)
           && FindProcShort(glDrawBuffers) && FindProcShort(glStencilOpSeparate)
           && FindProcShort(glStencilFuncSeparate) && FindProcShort(glStencilMaskSeparate)
@@ -2481,7 +2376,7 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     const char* aGlslVer = (const char*)::glGetString(GL_SHADING_LANGUAGE_VERSION);
     if (aGlslVer == nullptr || *aGlslVer == '\0')
     {
-      // broken context has been detected
+
       theCtx.checkWrongVersion(2, 0, "GLSL 1.1");
     }
     else
@@ -2495,7 +2390,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.checkWrongVersion(2, 0, aLastFailedProc);
   }
 
-  // load OpenGL 2.1 new functions
   has21 = isGlGreaterEqualShort(2, 1) && FindProcShort(glUniformMatrix2x3fv)
           && FindProcShort(glUniformMatrix3x2fv) && FindProcShort(glUniformMatrix2x4fv)
           && FindProcShort(glUniformMatrix4x2fv) && FindProcShort(glUniformMatrix3x4fv)
@@ -2505,7 +2399,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.checkWrongVersion(2, 1, aLastFailedProc);
   }
 
-  // load GL_ARB_framebuffer_object (added to OpenGL 3.0 core)
   const bool hasFBO =
     (isGlGreaterEqualShort(3, 0) || checkExtensionShort("GL_ARB_framebuffer_object"))
     && FindProcShort(glIsRenderbuffer) && FindProcShort(glBindRenderbuffer)
@@ -2520,18 +2413,15 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     && FindProcShort(glBlitFramebuffer) && FindProcShort(glRenderbufferStorageMultisample)
     && FindProcShort(glFramebufferTextureLayer);
 
-  // load GL_ARB_vertex_array_object (added to OpenGL 3.0 core)
   const bool hasVAO =
     (isGlGreaterEqualShort(3, 0) || checkExtensionShort("GL_ARB_vertex_array_object"))
     && FindProcShort(glBindVertexArray) && FindProcShort(glDeleteVertexArrays)
     && FindProcShort(glGenVertexArrays) && FindProcShort(glIsVertexArray);
 
-  // load GL_ARB_map_buffer_range (added to OpenGL 3.0 core)
   const bool hasMapBufferRange =
     (isGlGreaterEqualShort(3, 0) || checkExtensionShort("GL_ARB_map_buffer_range"))
     && FindProcShort(glMapBufferRange) && FindProcShort(glFlushMappedBufferRange);
 
-  // load OpenGL 3.0 new functions
   has30 = isGlGreaterEqualShort(3, 0) && hasFBO && hasVAO && hasMapBufferRange
           && FindProcShort(glColorMaski) && FindProcShort(glGetBooleani_v)
           && FindProcShort(glGetIntegeri_v) && FindProcShort(glEnablei) && FindProcShort(glDisablei)
@@ -2567,7 +2457,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.checkWrongVersion(3, 0, aLastFailedProc);
   }
 
-  // load GL_ARB_uniform_buffer_object (added to OpenGL 3.1 core)
   const bool hasUBO =
     (isGlGreaterEqualShort(3, 1) || checkExtensionShort("GL_ARB_uniform_buffer_object"))
     && FindProcShort(glGetUniformIndices) && FindProcShort(glGetActiveUniformsiv)
@@ -2575,23 +2464,19 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     && FindProcShort(glGetActiveUniformBlockiv) && FindProcShort(glGetActiveUniformBlockName)
     && FindProcShort(glUniformBlockBinding);
 
-  // load GL_ARB_copy_buffer (added to OpenGL 3.1 core)
   const bool hasCopyBufSubData =
     (isGlGreaterEqualShort(3, 1) || checkExtensionShort("GL_ARB_copy_buffer"))
     && FindProcShort(glCopyBufferSubData);
 
   if (has30)
   {
-    // NPOT textures are required by OpenGL 2.0 specifications
-    // but doesn't hardware accelerated by some ancient OpenGL 2.1 hardware (GeForce FX, RadeOn 9700
-    // etc.)
+
     theCtx.arbNPTW  = true;
     theCtx.arbTexRG = true;
 
     theCtx.core30 = (OpenGl_GlCore30*)this;
   }
 
-  // load OpenGL 3.1 new functions
   has31 = isGlGreaterEqualShort(3, 1) && hasUBO && hasCopyBufSubData
           && FindProcShort(glDrawArraysInstanced) && FindProcShort(glDrawElementsInstanced)
           && FindProcShort(glTexBuffer) && FindProcShort(glPrimitiveRestartIndex);
@@ -2604,14 +2489,12 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
   {
     theCtx.checkWrongVersion(3, 1, aLastFailedProc);
 
-    // initialize TBO extension (ARB)
     if (checkExtensionShort("GL_ARB_texture_buffer_object")
         && theCtx.FindProc("glTexBufferARB", this->glTexBuffer))
     {
       theCtx.arbTBO = (OpenGl_ArbTBO*)this;
     }
 
-    // initialize hardware instancing extension (ARB)
     if (checkExtensionShort("GL_ARB_draw_instanced")
         && theCtx.FindProc("glDrawArraysInstancedARB", this->glDrawArraysInstanced)
         && theCtx.FindProc("glDrawElementsInstancedARB", this->glDrawElementsInstanced))
@@ -2622,32 +2505,27 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
 
   theCtx.arbTboRGB32 = checkExtensionShort("GL_ARB_texture_buffer_object_rgb32");
 
-  // load GL_ARB_draw_elements_base_vertex (added to OpenGL 3.2 core)
   const bool hasDrawElemsBaseVert =
     (isGlGreaterEqualShort(3, 2) || checkExtensionShort("GL_ARB_draw_elements_base_vertex"))
     && FindProcShort(glDrawElementsBaseVertex) && FindProcShort(glDrawRangeElementsBaseVertex)
     && FindProcShort(glDrawElementsInstancedBaseVertex)
     && FindProcShort(glMultiDrawElementsBaseVertex);
 
-  // load GL_ARB_provoking_vertex (added to OpenGL 3.2 core)
   const bool hasProvokingVert =
     (isGlGreaterEqualShort(3, 2) || checkExtensionShort("GL_ARB_provoking_vertex"))
     && FindProcShort(glProvokingVertex);
 
-  // load GL_ARB_sync (added to OpenGL 3.2 core)
   const bool hasSync = (isGlGreaterEqualShort(3, 2) || checkExtensionShort("GL_ARB_sync"))
                        && FindProcShort(glFenceSync) && FindProcShort(glIsSync)
                        && FindProcShort(glDeleteSync) && FindProcShort(glClientWaitSync)
                        && FindProcShort(glWaitSync) && FindProcShort(glGetInteger64v)
                        && FindProcShort(glGetSynciv);
 
-  // load GL_ARB_texture_multisample (added to OpenGL 3.2 core)
   const bool hasTextureMultisample =
     (isGlGreaterEqualShort(3, 2) || checkExtensionShort("GL_ARB_texture_multisample"))
     && FindProcShort(glTexImage2DMultisample) && FindProcShort(glTexImage3DMultisample)
     && FindProcShort(glGetMultisamplefv) && FindProcShort(glSampleMaski);
 
-  // load OpenGL 3.2 new functions
   has32 = isGlGreaterEqualShort(3, 2) && hasDrawElemsBaseVert && hasProvokingVert && hasSync
           && hasTextureMultisample && FindProcShort(glGetInteger64i_v)
           && FindProcShort(glGetBufferParameteri64v) && FindProcShort(glFramebufferTexture);
@@ -2660,12 +2538,10 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.checkWrongVersion(3, 2, aLastFailedProc);
   }
 
-  // load GL_ARB_blend_func_extended (added to OpenGL 3.3 core)
   const bool hasBlendFuncExtended =
     (isGlGreaterEqualShort(3, 3) || checkExtensionShort("GL_ARB_blend_func_extended"))
     && FindProcShort(glBindFragDataLocationIndexed) && FindProcShort(glGetFragDataIndex);
 
-  // load GL_ARB_sampler_objects (added to OpenGL 3.3 core)
   const bool hasSamplerObjects =
     (isGlGreaterEqualShort(3, 3) || checkExtensionShort("GL_ARB_sampler_objects"))
     && FindProcShort(glGenSamplers) && FindProcShort(glDeleteSamplers) && FindProcShort(glIsSampler)
@@ -2680,13 +2556,11 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.arbSamplerObject = (OpenGl_ArbSamplerObject*)this;
   }
 
-  // load GL_ARB_timer_query (added to OpenGL 3.3 core)
   const bool hasTimerQuery =
     (isGlGreaterEqualShort(3, 3) || checkExtensionShort("GL_ARB_timer_query"))
     && FindProcShort(glQueryCounter) && FindProcShort(glGetQueryObjecti64v)
     && FindProcShort(glGetQueryObjectui64v);
 
-  // load GL_ARB_vertex_type_2_10_10_10_rev (added to OpenGL 3.3 core)
   const bool hasVertType21010101rev =
     (isGlGreaterEqualShort(3, 3) || checkExtensionShort("GL_ARB_vertex_type_2_10_10_10_rev"))
     && FindProcShort(glVertexAttribP1ui) && FindProcShort(glVertexAttribP1uiv)
@@ -2694,7 +2568,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     && FindProcShort(glVertexAttribP3ui) && FindProcShort(glVertexAttribP3uiv)
     && FindProcShort(glVertexAttribP4ui) && FindProcShort(glVertexAttribP4uiv);
 
-  // load OpenGL 3.3 extra functions
   has33 = isGlGreaterEqualShort(3, 3) && hasBlendFuncExtended && hasSamplerObjects && hasTimerQuery
           && hasVertType21010101rev && FindProcShort(glVertexAttribDivisor);
   if (has33)
@@ -2706,12 +2579,10 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.checkWrongVersion(3, 3, aLastFailedProc);
   }
 
-  // load GL_ARB_draw_indirect (added to OpenGL 4.0 core)
   const bool hasDrawIndirect =
     (isGlGreaterEqualShort(4, 0) || checkExtensionShort("GL_ARB_draw_indirect"))
     && FindProcShort(glDrawArraysIndirect) && FindProcShort(glDrawElementsIndirect);
 
-  // load GL_ARB_gpu_shader_fp64 (added to OpenGL 4.0 core)
   const bool hasShaderFP64 =
     (isGlGreaterEqualShort(4, 0) || checkExtensionShort("GL_ARB_gpu_shader_fp64"))
     && FindProcShort(glUniform1d) && FindProcShort(glUniform2d) && FindProcShort(glUniform3d)
@@ -2723,7 +2594,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     && FindProcShort(glUniformMatrix3x4dv) && FindProcShort(glUniformMatrix4x2dv)
     && FindProcShort(glUniformMatrix4x3dv) && FindProcShort(glGetUniformdv);
 
-  // load GL_ARB_shader_subroutine (added to OpenGL 4.0 core)
   const bool hasShaderSubroutine =
     (isGlGreaterEqualShort(4, 0) || checkExtensionShort("GL_ARB_shader_subroutine"))
     && FindProcShort(glGetSubroutineUniformLocation) && FindProcShort(glGetSubroutineIndex)
@@ -2732,12 +2602,10 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     && FindProcShort(glUniformSubroutinesuiv) && FindProcShort(glGetUniformSubroutineuiv)
     && FindProcShort(glGetProgramStageiv);
 
-  // load GL_ARB_tessellation_shader (added to OpenGL 4.0 core)
   const bool hasTessellationShader =
     (isGlGreaterEqualShort(4, 0) || checkExtensionShort("GL_ARB_tessellation_shader"))
     && FindProcShort(glPatchParameteri) && FindProcShort(glPatchParameterfv);
 
-  // load GL_ARB_transform_feedback2 (added to OpenGL 4.0 core)
   const bool hasTrsfFeedback2 =
     (isGlGreaterEqualShort(4, 0) || checkExtensionShort("GL_ARB_transform_feedback2"))
     && FindProcShort(glBindTransformFeedback) && FindProcShort(glDeleteTransformFeedbacks)
@@ -2745,13 +2613,11 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     && FindProcShort(glPauseTransformFeedback) && FindProcShort(glResumeTransformFeedback)
     && FindProcShort(glDrawTransformFeedback);
 
-  // load GL_ARB_transform_feedback3 (added to OpenGL 4.0 core)
   const bool hasTrsfFeedback3 =
     (isGlGreaterEqualShort(4, 0) || checkExtensionShort("GL_ARB_transform_feedback3"))
     && FindProcShort(glDrawTransformFeedbackStream) && FindProcShort(glBeginQueryIndexed)
     && FindProcShort(glEndQueryIndexed) && FindProcShort(glGetQueryIndexediv);
 
-  // load OpenGL 4.0 new functions
   has40 = isGlGreaterEqualShort(4, 0) && hasDrawIndirect && hasShaderFP64 && hasShaderSubroutine
           && hasTessellationShader && hasTrsfFeedback2 && hasTrsfFeedback3
           && FindProcShort(glMinSampleShading) && FindProcShort(glBlendEquationi)
@@ -2759,27 +2625,24 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
           && FindProcShort(glBlendFuncSeparatei);
   if (has40)
   {
-    theCtx.arbTboRGB32 = true; // in core since OpenGL 4.0
+    theCtx.arbTboRGB32 = true;
   }
   else
   {
     theCtx.checkWrongVersion(4, 0, aLastFailedProc);
   }
 
-  // load GL_ARB_ES2_compatibility (added to OpenGL 4.1 core)
   const bool hasES2Compatibility =
     (isGlGreaterEqualShort(4, 1) || checkExtensionShort("GL_ARB_ES2_compatibility"))
     && FindProcShort(glReleaseShaderCompiler) && FindProcShort(glShaderBinary)
     && FindProcShort(glGetShaderPrecisionFormat) && FindProcShort(glDepthRangef)
     && FindProcShort(glClearDepthf);
 
-  // load GL_ARB_get_program_binary (added to OpenGL 4.1 core)
   const bool hasGetProgramBinary =
     (isGlGreaterEqualShort(4, 1) || checkExtensionShort("GL_ARB_get_program_binary"))
     && FindProcShort(glGetProgramBinary) && FindProcShort(glProgramBinary)
     && FindProcShort(glProgramParameteri);
 
-  // load GL_ARB_separate_shader_objects (added to OpenGL 4.1 core)
   const bool hasSeparateShaderObjects =
     (isGlGreaterEqualShort(4, 1) || checkExtensionShort("GL_ARB_separate_shader_objects"))
     && FindProcShort(glUseProgramStages) && FindProcShort(glActiveShaderProgram)
@@ -2813,7 +2676,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     && FindProcShort(glProgramUniformMatrix3x4dv) && FindProcShort(glProgramUniformMatrix4x3dv)
     && FindProcShort(glValidateProgramPipeline) && FindProcShort(glGetProgramPipelineInfoLog);
 
-  // load GL_ARB_vertex_attrib_64bit (added to OpenGL 4.1 core)
   const bool hasVertAttrib64bit =
     (isGlGreaterEqualShort(4, 1) || checkExtensionShort("GL_ARB_vertex_attrib_64bit"))
     && FindProcShort(glVertexAttribL1d) && FindProcShort(glVertexAttribL2d)
@@ -2822,7 +2684,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     && FindProcShort(glVertexAttribL3dv) && FindProcShort(glVertexAttribL4dv)
     && FindProcShort(glVertexAttribLPointer) && FindProcShort(glGetVertexAttribLdv);
 
-  // load GL_ARB_viewport_array (added to OpenGL 4.1 core)
   const bool hasViewportArray =
     (isGlGreaterEqualShort(4, 1) || checkExtensionShort("GL_ARB_viewport_array"))
     && FindProcShort(glViewportArrayv) && FindProcShort(glViewportIndexedf)
@@ -2842,35 +2703,29 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.checkWrongVersion(4, 1, aLastFailedProc);
   }
 
-  // load GL_ARB_base_instance (added to OpenGL 4.2 core)
   const bool hasBaseInstance =
     (isGlGreaterEqualShort(4, 2) || checkExtensionShort("GL_ARB_base_instance"))
     && FindProcShort(glDrawArraysInstancedBaseInstance)
     && FindProcShort(glDrawElementsInstancedBaseInstance)
     && FindProcShort(glDrawElementsInstancedBaseVertexBaseInstance);
 
-  // load GL_ARB_transform_feedback_instanced (added to OpenGL 4.2 core)
   const bool hasTrsfFeedbackInstanced =
     (isGlGreaterEqualShort(4, 2) || checkExtensionShort("GL_ARB_transform_feedback_instanced"))
     && FindProcShort(glDrawTransformFeedbackInstanced)
     && FindProcShort(glDrawTransformFeedbackStreamInstanced);
 
-  // load GL_ARB_internalformat_query (added to OpenGL 4.2 core)
   const bool hasInternalFormatQuery =
     (isGlGreaterEqualShort(4, 2) || checkExtensionShort("GL_ARB_internalformat_query"))
     && FindProcShort(glGetInternalformativ);
 
-  // load GL_ARB_shader_atomic_counters (added to OpenGL 4.2 core)
   const bool hasShaderAtomicCounters =
     (isGlGreaterEqualShort(4, 2) || checkExtensionShort("GL_ARB_shader_atomic_counters"))
     && FindProcShort(glGetActiveAtomicCounterBufferiv);
 
-  // load GL_ARB_shader_image_load_store (added to OpenGL 4.2 core)
   const bool hasShaderImgLoadStore =
     (isGlGreaterEqualShort(4, 2) || checkExtensionShort("GL_ARB_shader_image_load_store"))
     && FindProcShort(glBindImageTexture) && FindProcShort(glMemoryBarrier);
 
-  // load GL_ARB_texture_storage (added to OpenGL 4.2 core)
   const bool hasTextureStorage =
     (isGlGreaterEqualShort(4, 2) || checkExtensionShort("GL_ARB_texture_storage"))
     && FindProcShort(glTexStorage1D) && FindProcShort(glTexStorage2D)
@@ -2920,7 +2775,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.checkWrongVersion(4, 3, aLastFailedProc);
   }
 
-  // load GL_ARB_clear_texture (added to OpenGL 4.4 core)
   bool arbTexClear = (isGlGreaterEqualShort(4, 4) || checkExtensionShort("GL_ARB_clear_texture"))
                      && FindProcShort(glClearTexImage) && FindProcShort(glClearTexSubImage);
 
@@ -2999,7 +2853,7 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
                          && FindProcShort(glGetnTexImage) && FindProcShort(glGetnUniformdv);
   if (has45 && !hasGetnTexImage)
   {
-    // Intel driver exports only ARB-suffixed functions in a violation to OpenGL 4.5 specs
+
     hasGetnTexImage =
       checkExtensionShort("GL_ARB_robustness")
       && theCtx.FindProc("glGetnCompressedTexImageARB", this->glGetnCompressedTexImage)
@@ -3032,7 +2886,7 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
                       && FindProcShort(glMultiDrawElementsIndirectCount);
   if (has46 && !hasIndParams)
   {
-    // Intel driver exports only ARB-suffixed functions in a violation to OpenGL 4.6 specs
+
     hasIndParams =
       checkExtensionShort("GL_ARB_indirect_parameters")
       && theCtx.FindProc("glMultiDrawArraysIndirectCountARB", this->glMultiDrawArraysIndirectCount)
@@ -3059,7 +2913,6 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     theCtx.checkWrongVersion(4, 6, aLastFailedProc);
   }
 
-  // initialize debug context extension
   if (checkExtensionShort("GL_ARB_debug_output"))
   {
     theCtx.arbDbg = nullptr;
@@ -3076,21 +2929,18 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     }
   }
 
-  // initialize FBO extension (ARB)
   if (hasFBO)
   {
     theCtx.arbFBO     = (OpenGl_ArbFBO*)this;
     theCtx.arbFBOBlit = (OpenGl_ArbFBOBlit*)this;
-    theCtx.extPDS     = true; // extension for EXT, but part of ARB
+    theCtx.extPDS     = true;
   }
 
-  // initialize GS extension (EXT)
   if (checkExtensionShort("GL_EXT_geometry_shader4") && FindProcShort(glProgramParameteriEXT))
   {
     theCtx.extGS = (OpenGl_ExtGS*)this;
   }
 
-  // initialize bindless texture extension (ARB)
   if (checkExtensionShort("GL_ARB_bindless_texture") && FindProcShort(glGetTextureHandleARB)
       && FindProcShort(glGetTextureSamplerHandleARB)
       && FindProcShort(glMakeTextureHandleResidentARB)
@@ -3116,12 +2966,10 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     if (!has32 && checkExtensionShort("GL_ARB_texture_multisample")
         && FindProcShort(glTexImage2DMultisample))
     {
-      //
     }
     if (!has43 && checkExtensionShort("GL_ARB_texture_storage_multisample")
         && FindProcShort(glTexStorage2DMultisample))
     {
-      //
     }
   }
 #endif

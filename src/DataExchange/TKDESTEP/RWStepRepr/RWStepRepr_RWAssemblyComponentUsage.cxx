@@ -6,11 +6,7 @@
 #include <StepRepr_AssemblyComponentUsage.hpp>
 #include <StepRepr_ProductDefinitionShape.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWAssemblyComponentUsage::RWStepRepr_RWAssemblyComponentUsage() = default;
-
-//=================================================================================================
 
 void RWStepRepr_RWAssemblyComponentUsage::ReadStep(
   const occ::handle<StepData_StepReaderData>&         data,
@@ -18,11 +14,9 @@ void RWStepRepr_RWAssemblyComponentUsage::ReadStep(
   occ::handle<Interface_Check>&                       ach,
   const occ::handle<StepRepr_AssemblyComponentUsage>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 6, ach, "assembly_component_usage"))
     return;
-
-  // Inherited fields of ProductDefinitionRelationship
 
   occ::handle<TCollection_HAsciiString> aProductDefinitionRelationship_Id;
   data->ReadString(num,
@@ -97,8 +91,6 @@ void RWStepRepr_RWAssemblyComponentUsage::ReadStep(
     }
   }
 
-  // Own fields of AssemblyComponentUsage
-
   occ::handle<TCollection_HAsciiString> aReferenceDesignator;
   bool                                  hasReferenceDesignator = true;
   if (data->IsParamDefined(num, 6))
@@ -110,7 +102,6 @@ void RWStepRepr_RWAssemblyComponentUsage::ReadStep(
     hasReferenceDesignator = false;
   }
 
-  // Initialize entity
   ent->Init(aProductDefinitionRelationship_Id,
             aProductDefinitionRelationship_Name,
             hasProductDefinitionRelationship_Description,
@@ -121,14 +112,10 @@ void RWStepRepr_RWAssemblyComponentUsage::ReadStep(
             aReferenceDesignator);
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWAssemblyComponentUsage::WriteStep(
   StepData_StepWriter&                                SW,
   const occ::handle<StepRepr_AssemblyComponentUsage>& ent) const
 {
-
-  // Inherited fields of ProductDefinitionRelationship
 
   SW.Send(ent->StepBasic_ProductDefinitionRelationship::Id());
 
@@ -145,8 +132,6 @@ void RWStepRepr_RWAssemblyComponentUsage::WriteStep(
 
   SW.Send(ent->StepBasic_ProductDefinitionRelationship::RelatedProductDefinitionAP242().Value());
 
-  // Own fields of AssemblyComponentUsage
-
   if (ent->HasReferenceDesignator())
   {
     SW.Send(ent->ReferenceDesignator());
@@ -155,20 +140,14 @@ void RWStepRepr_RWAssemblyComponentUsage::WriteStep(
     SW.SendUndef();
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWAssemblyComponentUsage::Share(
   const occ::handle<StepRepr_AssemblyComponentUsage>& ent,
   Interface_EntityIterator&                           iter) const
 {
-
-  // Inherited fields of ProductDefinitionRelationship
 
   iter.AddItem(
     ent->StepBasic_ProductDefinitionRelationship::RelatingProductDefinitionAP242().Value());
 
   iter.AddItem(
     ent->StepBasic_ProductDefinitionRelationship::RelatedProductDefinitionAP242().Value());
-
-  // Own fields of AssemblyComponentUsage
 }

@@ -1,16 +1,4 @@
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GCPnts_QuasiUniformAbscissa.hpp>
 
@@ -20,15 +8,11 @@
 #include <Standard_ConstructionError.hpp>
 #include <NCollection_Array1.hpp>
 
-//=================================================================================================
-
 GCPnts_QuasiUniformAbscissa::GCPnts_QuasiUniformAbscissa()
     : myDone(false),
       myNbPoints(0)
 {
 }
-
-//=================================================================================================
 
 GCPnts_QuasiUniformAbscissa::GCPnts_QuasiUniformAbscissa(const Adaptor3d_Curve& theC,
                                                          const int              theNbPoints)
@@ -37,8 +21,6 @@ GCPnts_QuasiUniformAbscissa::GCPnts_QuasiUniformAbscissa(const Adaptor3d_Curve& 
 {
   Initialize(theC, theNbPoints);
 }
-
-//=================================================================================================
 
 GCPnts_QuasiUniformAbscissa::GCPnts_QuasiUniformAbscissa(const Adaptor3d_Curve& theC,
                                                          const int              theNbPoints,
@@ -50,8 +32,6 @@ GCPnts_QuasiUniformAbscissa::GCPnts_QuasiUniformAbscissa(const Adaptor3d_Curve& 
   Initialize(theC, theNbPoints, theU1, theU2);
 }
 
-//=================================================================================================
-
 GCPnts_QuasiUniformAbscissa::GCPnts_QuasiUniformAbscissa(const Adaptor2d_Curve2d& theC,
                                                          const int                theNbPoints)
     : myDone(false),
@@ -59,8 +39,6 @@ GCPnts_QuasiUniformAbscissa::GCPnts_QuasiUniformAbscissa(const Adaptor2d_Curve2d
 {
   Initialize(theC, theNbPoints);
 }
-
-//=================================================================================================
 
 GCPnts_QuasiUniformAbscissa::GCPnts_QuasiUniformAbscissa(const Adaptor2d_Curve2d& theC,
                                                          const int                theNbPoints,
@@ -72,21 +50,15 @@ GCPnts_QuasiUniformAbscissa::GCPnts_QuasiUniformAbscissa(const Adaptor2d_Curve2d
   Initialize(theC, theNbPoints, theU1, theU2);
 }
 
-//=================================================================================================
-
 void GCPnts_QuasiUniformAbscissa::Initialize(const Adaptor3d_Curve& theC, const int theNbPoints)
 {
   Initialize(theC, theNbPoints, theC.FirstParameter(), theC.LastParameter());
 }
 
-//=================================================================================================
-
 void GCPnts_QuasiUniformAbscissa::Initialize(const Adaptor2d_Curve2d& theC, const int theNbPoints)
 {
   Initialize(theC, theNbPoints, theC.FirstParameter(), theC.LastParameter());
 }
-
-//=================================================================================================
 
 void GCPnts_QuasiUniformAbscissa::Initialize(const Adaptor3d_Curve& theC,
                                              const int              theNbPoints,
@@ -96,8 +68,6 @@ void GCPnts_QuasiUniformAbscissa::Initialize(const Adaptor3d_Curve& theC,
   initialize(theC, theNbPoints, theU1, theU2);
 }
 
-//=================================================================================================
-
 void GCPnts_QuasiUniformAbscissa::Initialize(const Adaptor2d_Curve2d& theC,
                                              const int                theNbPoints,
                                              const double             theU1,
@@ -105,8 +75,6 @@ void GCPnts_QuasiUniformAbscissa::Initialize(const Adaptor2d_Curve2d& theC,
 {
   initialize(theC, theNbPoints, theU1, theU2);
 }
-
-//=================================================================================================
 
 template <class TheCurve>
 void GCPnts_QuasiUniformAbscissa::initialize(const TheCurve& theC,
@@ -131,16 +99,14 @@ void GCPnts_QuasiUniformAbscissa::initialize(const TheCurve& theC,
     theNbPoints <= 1,
     "GCPnts_QuasiUniformAbscissa::Initialize(), number of points should be >= 2");
 
-  // evaluate the approximative length of the 3dCurve
   myNbPoints           = theNbPoints;
   double       aLength = 0.0;
   const double dU      = (theU2 - theU1) / (2 * theNbPoints - 1);
 
-  NCollection_Array1<gp_Pnt2d>                 aLP(1, 2 * theNbPoints); // table Length <-> Param
+  NCollection_Array1<gp_Pnt2d>                 aLP(1, 2 * theNbPoints);
   typename GCPnts_TCurveTypes<TheCurve>::Point aP1, aP2;
   aP1 = theC.Value(theU1);
 
-  // On additionne toutes les distances
   for (int i = 0; i < 2 * theNbPoints; ++i)
   {
     aP2                = theC.Value(theU1 + i * dU);
@@ -150,10 +116,8 @@ void GCPnts_QuasiUniformAbscissa::initialize(const TheCurve& theC,
     aP1        = aP2;
   }
 
-  // On cherche a mettre NbPoints dans la curve.
-  // on met les points environ a Length/NbPoints.
   if (IsEqual(aLength, 0.0))
-  { // use usual analytical grid
+  {
     double aStep = (theU2 - theU1) / (theNbPoints - 1);
     myParams     = new NCollection_HArray1<double>(1, theNbPoints);
     myParams->SetValue(1, theU1);

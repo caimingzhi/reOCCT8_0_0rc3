@@ -13,8 +13,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_C0RegularityFilter, SelectMgr_Filter)
 
-//=================================================================================================
-
 AIS_C0RegularityFilter::AIS_C0RegularityFilter(const TopoDS_Shape& aShape)
 {
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
@@ -50,14 +48,10 @@ AIS_C0RegularityFilter::AIS_C0RegularityFilter(const TopoDS_Shape& aShape)
   }
 }
 
-//=================================================================================================
-
 bool AIS_C0RegularityFilter::ActsOn(const TopAbs_ShapeEnum aType) const
 {
   return (aType == TopAbs_EDGE);
 }
-
-//=================================================================================================
 
 bool AIS_C0RegularityFilter::IsOk(const occ::handle<SelectMgr_EntityOwner>& EO) const
 {

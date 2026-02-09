@@ -9,6 +9,5 @@ class XSDRAWDE
 {
   DEFINE_STANDARD_ALLOC
 public:
-  //! Loads all Draw commands of XSDRAWDE. Used for plugin.
   Standard_EXPORT static void Factory(Draw_Interpretor& theDI);
 };

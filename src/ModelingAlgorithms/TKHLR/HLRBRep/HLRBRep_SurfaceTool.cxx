@@ -2,8 +2,6 @@
 
 #include <HLRBRep_Surface.hpp>
 
-//=================================================================================================
-
 int HLRBRep_SurfaceTool::NbSamplesU(const HLRBRep_Surface* theSurf)
 {
   int                       nbs;
@@ -52,8 +50,6 @@ int HLRBRep_SurfaceTool::NbSamplesU(const HLRBRep_Surface* theSurf)
   return nbs;
 }
 
-//=================================================================================================
-
 int HLRBRep_SurfaceTool::NbSamplesV(const HLRBRep_Surface* theSurf)
 {
   int                       nbs;
@@ -98,8 +94,6 @@ int HLRBRep_SurfaceTool::NbSamplesV(const HLRBRep_Surface* theSurf)
   return nbs;
 }
 
-//=================================================================================================
-
 int HLRBRep_SurfaceTool::NbSamplesU(const HLRBRep_Surface* theSurf,
                                     const double           theU1,
                                     const double           theU2)
@@ -118,8 +112,6 @@ int HLRBRep_SurfaceTool::NbSamplesU(const HLRBRep_Surface* theSurf,
   }
   return n;
 }
-
-//=================================================================================================
 
 int HLRBRep_SurfaceTool::NbSamplesV(const HLRBRep_Surface* theSurf,
                                     const double           theV1,

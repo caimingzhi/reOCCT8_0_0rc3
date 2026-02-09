@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFGraph_AllShared.hpp>
 #include <IFSelect_PacketList.hpp>
@@ -29,7 +18,6 @@ IFSelect_ShareOutResult::IFSelect_ShareOutResult(
 {
   theshareout = sho;
   theeval     = false;
-  //  thedisplist = new NCollection_Sequence<int>();
 }
 
 IFSelect_ShareOutResult::IFSelect_ShareOutResult(const occ::handle<IFSelect_ShareOut>& sho,
@@ -39,7 +27,6 @@ IFSelect_ShareOutResult::IFSelect_ShareOutResult(const occ::handle<IFSelect_Shar
 {
   theshareout = sho;
   theeval     = false;
-  //  thedisplist = new NCollection_Sequence<int>();
 }
 
 IFSelect_ShareOutResult::IFSelect_ShareOutResult(
@@ -50,7 +37,6 @@ IFSelect_ShareOutResult::IFSelect_ShareOutResult(
 {
   thedispatch = disp;
   theeval     = false;
-  //  thedisplist = new NCollection_Sequence<int>();
 }
 
 IFSelect_ShareOutResult::IFSelect_ShareOutResult(const occ::handle<IFSelect_Dispatch>& disp,
@@ -60,7 +46,6 @@ IFSelect_ShareOutResult::IFSelect_ShareOutResult(const occ::handle<IFSelect_Disp
 {
   thedispatch = disp;
   theeval     = false;
-  //  thedisplist = new NCollection_Sequence<int>();
 }
 
 occ::handle<IFSelect_ShareOut> IFSelect_ShareOutResult::ShareOut() const
@@ -81,7 +66,7 @@ void IFSelect_ShareOutResult::Reset()
 void IFSelect_ShareOutResult::Evaluate()
 {
   if (theeval)
-    return; // already done. if not OK, do Reset before
+    return;
   Prepare();
   theeval = true;
 }
@@ -111,7 +96,7 @@ int IFSelect_ShareOutResult::NbPackets()
 void IFSelect_ShareOutResult::Prepare()
 {
   thedisplist.Clear();
-  //  On alimente thedispres, thedisplist
+
   thedispres.Reset();
   IFGraph_AllShared              A(thegraph);
   occ::handle<IFSelect_Dispatch> disp = thedispatch;
@@ -121,13 +106,13 @@ void IFSelect_ShareOutResult::Prepare()
     nb    = theshareout->NbDispatches();
     first = theshareout->LastRun() + 1;
   }
-  int i; // svv Jan11 2000 : porting on DEC
+  int i;
   for (i = first; i <= nb; i++)
   {
     if (!theshareout.IsNull())
       disp = theshareout->Dispatch(i);
     if (disp->FinalSelection().IsNull())
-      continue; // Dispatch neutralise
+      continue;
     IFGraph_SubPartsIterator packs(thegraph, false);
     disp->Packets(thegraph, packs);
     for (packs.Start(); packs.More(); packs.Next())
@@ -136,14 +121,14 @@ void IFSelect_ShareOutResult::Prepare()
       if (iter.NbEntities() == 0)
         continue;
       thedispres.AddPart();
-      thedispres.GetFromIter(iter); // we register this packet
+      thedispres.GetFromIter(iter);
       A.ResetData();
       A.GetFromIter(iter);
-      thedisplist.Append(i); // n0 of producer dispatch
+      thedisplist.Append(i);
     }
   }
   thedispnum = thepacknum = 1;
-  thepackdisp             = 1; // calculation on 1st Dispatch
+  thepackdisp             = 1;
   thenbindisp             = 0;
   for (i = thepacknum; i <= thedisplist.Length(); i++)
   {
@@ -156,7 +141,7 @@ void IFSelect_ShareOutResult::Prepare()
 bool IFSelect_ShareOutResult::More()
 {
   return thedispres.More();
-} // thepacknum < thedisplist.Length());
+}
 
 void IFSelect_ShareOutResult::Next()
 {
@@ -169,7 +154,7 @@ void IFSelect_ShareOutResult::Next()
   {
     thenbindisp = 0;
 #if !defined No_Exception
-//    std::cout<<" ** **  IFSelect_ShareOutResult::Next, void dispatch ignored"<<std::endl;
+
 #endif
     return;
   }
@@ -199,7 +184,7 @@ void IFSelect_ShareOutResult::NextDispatch()
     if (thedispnum != thedisplist.Value(thepacknum))
     {
       thedispnum = thedisplist.Value(thepacknum);
-      //  Calcul donnees propres au Dispatch
+
       thepackdisp = 1;
       thenbindisp = 0;
       for (int i = thepacknum; i <= thedisplist.Length(); i++)
@@ -213,7 +198,7 @@ void IFSelect_ShareOutResult::NextDispatch()
       return;
     }
   }
-  thepacknum = thedisplist.Length() + 1; // no next dispatch ...
+  thepacknum = thedisplist.Length() + 1;
   thedispnum = thepackdisp = thenbindisp = 0;
 }
 
@@ -240,10 +225,10 @@ Interface_EntityIterator IFSelect_ShareOutResult::PacketRoot()
 
 Interface_EntityIterator IFSelect_ShareOutResult::PacketContent()
 {
-  //  IFGraph_Cumulate G(thegraph);
+
   Interface_EntityIterator iter = thedispres.Entities();
   Interface_Graph          G(thegraph);
-  //  G.GetFromIter(thedispres.Entities(),0);
+
   for (iter.Start(); iter.More(); iter.Next())
     G.GetFromEntity(iter.Value(), true);
   Interface_GraphContent GC(G);

@@ -9,8 +9,6 @@
 class Expr_NamedUnknown;
 class TCollection_AsciiString;
 
-//! This class describes any reel value defined in an
-//! expression.
 class Expr_NumericValue : public Expr_GeneralExpression
 {
 
@@ -21,60 +19,38 @@ public:
 
   Standard_EXPORT void SetValue(const double val);
 
-  //! Returns the number of sub-expressions contained
-  //! in <me> ( >= 0)
   Standard_EXPORT int NbSubExpressions() const override;
 
-  //! Returns the <I>-th sub-expression of <me>
-  //! raises OutOfRange if <I> > NbSubExpressions(me)
   Standard_EXPORT const occ::handle<Expr_GeneralExpression>& SubExpression(
     const int I) const override;
 
-  //! Returns a GeneralExpression after replacement of
-  //! NamedUnknowns by an associated expression and after
-  //! values computation.
   Standard_EXPORT occ::handle<Expr_GeneralExpression> Simplified() const override;
 
-  //! Returns a GeneralExpression after a simplification
-  //! of the arguments of <me>.
   Standard_EXPORT occ::handle<Expr_GeneralExpression> ShallowSimplified() const override;
 
-  //! Returns a copy of <me> having the same unknowns and functions.
   Standard_EXPORT occ::handle<Expr_GeneralExpression> Copy() const override;
 
-  //! Tests if <me> contains NamedUnknown.
   Standard_EXPORT bool ContainsUnknowns() const override;
 
-  //! Tests if <exp> is contained in <me>.
   Standard_EXPORT bool Contains(const occ::handle<Expr_GeneralExpression>& exp) const override;
 
-  //! Tests if <me> and <Other> define the same expression.
-  //! This method does not include any simplification before
-  //! testing.
   Standard_EXPORT bool IsIdentical(const occ::handle<Expr_GeneralExpression>& Other) const override;
 
   Standard_EXPORT bool IsLinear() const override;
 
-  //! Returns the derivative on <X> unknown of <me>
   Standard_EXPORT occ::handle<Expr_GeneralExpression> Derivative(
     const occ::handle<Expr_NamedUnknown>& X) const override;
 
-  //! Returns the <N>-th derivative on <X> unknown of <me>.
-  //! Raises OutOfRange if <N> <= 0
   Standard_EXPORT occ::handle<Expr_GeneralExpression> NDerivative(
     const occ::handle<Expr_NamedUnknown>& X,
     const int                             N) const override;
 
-  //! Replaces all occurrences of <var> with <with> in <me>
   Standard_EXPORT void Replace(const occ::handle<Expr_NamedUnknown>&      var,
                                const occ::handle<Expr_GeneralExpression>& with) override;
 
-  //! Returns the value of <me> (as a Real) by
-  //! replacement of <vars> by <vals>.
   Standard_EXPORT double Evaluate(const NCollection_Array1<occ::handle<Expr_NamedUnknown>>& vars,
                                   const NCollection_Array1<double>& vals) const override;
 
-  //! returns a string representing <me> in a readable way.
   Standard_EXPORT TCollection_AsciiString String() const override;
 
   DEFINE_STANDARD_RTTIEXT(Expr_NumericValue, Expr_GeneralExpression)

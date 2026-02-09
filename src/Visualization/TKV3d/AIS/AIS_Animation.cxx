@@ -4,8 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Animation, Standard_Transient)
 
-//=================================================================================================
-
 AIS_Animation::AIS_Animation(const TCollection_AsciiString& theAnimationName)
     : myName(theAnimationName),
       myState(AnimationState_Stopped),
@@ -15,22 +13,16 @@ AIS_Animation::AIS_Animation(const TCollection_AsciiString& theAnimationName)
 {
 }
 
-//=================================================================================================
-
 AIS_Animation::~AIS_Animation()
 {
   Clear();
 }
-
-//=================================================================================================
 
 void AIS_Animation::Clear()
 {
   myAnimations.Clear();
   myOwnDuration = 0.0;
 }
-
-//=================================================================================================
 
 void AIS_Animation::Add(const occ::handle<AIS_Animation>& theAnimation)
 {
@@ -54,8 +46,6 @@ void AIS_Animation::Add(const occ::handle<AIS_Animation>& theAnimation)
   UpdateTotalDuration();
 }
 
-//=================================================================================================
-
 occ::handle<AIS_Animation> AIS_Animation::Find(
   const TCollection_AsciiString& theAnimationName) const
 {
@@ -70,8 +60,6 @@ occ::handle<AIS_Animation> AIS_Animation::Find(
   }
   return occ::handle<AIS_Animation>();
 }
-
-//=================================================================================================
 
 bool AIS_Animation::Remove(const occ::handle<AIS_Animation>& theAnimation)
 {
@@ -88,8 +76,6 @@ bool AIS_Animation::Remove(const occ::handle<AIS_Animation>& theAnimation)
   }
   return false;
 }
-
-//=================================================================================================
 
 bool AIS_Animation::Replace(const occ::handle<AIS_Animation>& theAnimationOld,
                             const occ::handle<AIS_Animation>& theAnimationNew)
@@ -108,8 +94,6 @@ bool AIS_Animation::Replace(const occ::handle<AIS_Animation>& theAnimationOld,
   return false;
 }
 
-//=================================================================================================
-
 void AIS_Animation::CopyFrom(const occ::handle<AIS_Animation>& theOther)
 {
   myAnimations.Clear();
@@ -124,8 +108,6 @@ void AIS_Animation::CopyFrom(const occ::handle<AIS_Animation>& theOther)
   myOwnDuration = theOther->myOwnDuration;
 }
 
-//=================================================================================================
-
 void AIS_Animation::UpdateTotalDuration()
 {
   myChildrenDuration = 0.0;
@@ -137,8 +119,6 @@ void AIS_Animation::UpdateTotalDuration()
       std::max(myChildrenDuration, anIter.Value()->StartPts() + anIter.Value()->Duration());
   }
 }
-
-//=================================================================================================
 
 void AIS_Animation::StartTimer(const double theStartPts,
                                const double thePlaySpeed,
@@ -160,8 +140,6 @@ void AIS_Animation::StartTimer(const double theStartPts,
   }
 }
 
-//=================================================================================================
-
 double AIS_Animation::UpdateTimer()
 {
   if (myTimer.IsNull())
@@ -173,8 +151,6 @@ double AIS_Animation::UpdateTimer()
   Update(anElapsedTime);
   return anElapsedTime;
 }
-
-//=================================================================================================
 
 void AIS_Animation::Start(const bool theToUpdate)
 {
@@ -199,8 +175,6 @@ void AIS_Animation::Start(const bool theToUpdate)
   }
 }
 
-//=================================================================================================
-
 void AIS_Animation::Pause()
 {
   myState = AnimationState_Paused;
@@ -216,8 +190,6 @@ void AIS_Animation::Pause()
     anIter.ChangeValue()->Stop();
   }
 }
-
-//=================================================================================================
 
 void AIS_Animation::Stop()
 {
@@ -237,8 +209,6 @@ void AIS_Animation::Stop()
   }
 }
 
-//=================================================================================================
-
 bool AIS_Animation::Update(const double thePts)
 {
   AIS_AnimationProgress aPosition;
@@ -250,8 +220,6 @@ bool AIS_Animation::Update(const double thePts)
   updateWithChildren(aPosition);
   return thePts < myPtsStart + Duration();
 }
-
-//=================================================================================================
 
 void AIS_Animation::updateWithChildren(const AIS_AnimationProgress& thePosition)
 {

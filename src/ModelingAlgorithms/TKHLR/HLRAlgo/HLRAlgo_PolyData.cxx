@@ -10,33 +10,24 @@ IMPLEMENT_STANDARD_RTTIEXT(HLRAlgo_PolyData, Standard_Transient)
 #ifdef OCCT_DEBUG
 static int HLRAlgo_PolyData_ERROR = false;
 #endif
-//=================================================================================================
 
 HLRAlgo_PolyData::HLRAlgo_PolyData() = default;
-
-//=================================================================================================
 
 void HLRAlgo_PolyData::HNodes(const occ::handle<NCollection_HArray1<gp_XYZ>>& HNodes)
 {
   myHNodes = HNodes;
 }
 
-//=================================================================================================
-
 void HLRAlgo_PolyData::HTData(const occ::handle<NCollection_HArray1<HLRAlgo_TriangleData>>& HTData)
 {
   myHTData = HTData;
 }
-
-//=================================================================================================
 
 void HLRAlgo_PolyData::HPHDat(
   const occ::handle<NCollection_HArray1<HLRAlgo_PolyHidingData>>& HPHDat)
 {
   myHPHDat = HPHDat;
 }
-
-//=================================================================================================
 
 void HLRAlgo_PolyData::UpdateGlobalMinMax(Bnd_Box& theBox)
 {
@@ -58,8 +49,6 @@ void HLRAlgo_PolyData::UpdateGlobalMinMax(Bnd_Box& theBox)
     }
   }
 }
-
-//=================================================================================================
 
 void HLRAlgo_PolyData::HideByPolyData(const HLRAlgo_BiPoint::PointsT& thePoints,
                                       Triangle&                       theTriangle,
@@ -188,8 +177,6 @@ void HLRAlgo_PolyData::HideByPolyData(const HLRAlgo_BiPoint::PointsT& thePoints,
     }
   }
 }
-
-//=================================================================================================
 
 void HLRAlgo_PolyData::hideByOneTriangle(const HLRAlgo_BiPoint::PointsT& thePoints,
                                          Triangle&                       theTriangle,

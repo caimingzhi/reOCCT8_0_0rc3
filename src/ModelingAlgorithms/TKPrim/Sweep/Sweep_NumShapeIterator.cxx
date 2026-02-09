@@ -1,8 +1,6 @@
 #include <Standard_NoSuchObject.hpp>
 #include <Sweep_NumShapeIterator.hpp>
 
-//=================================================================================================
-
 Sweep_NumShapeIterator::Sweep_NumShapeIterator()
     : myNumShape(0, TopAbs_SHAPE),
       myCurrentNumShape(0, TopAbs_SHAPE),
@@ -10,8 +8,6 @@ Sweep_NumShapeIterator::Sweep_NumShapeIterator()
       myMore(false)
 {
 }
-
-//=================================================================================================
 
 void Sweep_NumShapeIterator::Init(const Sweep_NumShape& aShape)
 {
@@ -42,8 +38,6 @@ void Sweep_NumShapeIterator::Init(const Sweep_NumShape& aShape)
     }
   }
 }
-
-//=================================================================================================
 
 void Sweep_NumShapeIterator::Next()
 {

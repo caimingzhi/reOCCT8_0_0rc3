@@ -7,10 +7,6 @@
 #include <StepGeom_SphericalSurface.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d' une conical_surface de prostep a partir d' une SphericalSurface
-// de Geom
-//=============================================================================
 GeomToStep_MakeSphericalSurface::GeomToStep_MakeSphericalSurface(
   const occ::handle<Geom_SphericalSurface>& S,
   const StepData_Factors&                   theLocalFactors)
@@ -28,10 +24,6 @@ GeomToStep_MakeSphericalSurface::GeomToStep_MakeSphericalSurface(
   theSphericalSurface = Surf;
   done                = true;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_SphericalSurface>& GeomToStep_MakeSphericalSurface::Value() const
 {

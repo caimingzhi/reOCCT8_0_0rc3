@@ -7,11 +7,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_RunoutZoneDefinition, StepDimTol_ToleranceZoneDefinition)
 
-//=================================================================================================
-
 StepDimTol_RunoutZoneDefinition::StepDimTol_RunoutZoneDefinition() = default;
-
-//=================================================================================================
 
 void StepDimTol_RunoutZoneDefinition::Init(
   const occ::handle<StepDimTol_ToleranceZone>&                               theZone,

@@ -20,8 +20,6 @@ namespace
   static const occ::handle<SelectMgr_EntityOwner> THE_NULL_ENTITYOWNER;
 } // namespace
 
-//=================================================================================================
-
 SelectMgr_SelectableObject::SelectMgr_SelectableObject(
   const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d)
     : PrsMgr_PresentableObject(aTypeOfPresentation3d),
@@ -30,10 +28,6 @@ SelectMgr_SelectableObject::SelectMgr_SelectableObject(
 {
 }
 
-//==================================================
-// Function: Destructor
-// Purpose : Clears all selections of the object
-//==================================================
 SelectMgr_SelectableObject::~SelectMgr_SelectableObject()
 {
   for (NCollection_Sequence<occ::handle<SelectMgr_Selection>>::Iterator aSelIter(myselections);
@@ -44,16 +38,6 @@ SelectMgr_SelectableObject::~SelectMgr_SelectableObject()
   }
 }
 
-//==================================================
-// Function: RecomputePrimitives
-// Purpose : IMPORTANT: Do not use this method to update
-//           selection primitives except implementing custom
-//           selection manager! This method does not take
-//           into account necessary BVH updates, but may
-//           invalidate the pointers it refers to.
-//           TO UPDATE SELECTION properly from outside classes,
-//           use method UpdateSelection.
-//==================================================
 void SelectMgr_SelectableObject::RecomputePrimitives()
 {
   for (NCollection_Sequence<occ::handle<SelectMgr_Selection>>::Iterator aSelIter(myselections);
@@ -64,16 +48,6 @@ void SelectMgr_SelectableObject::RecomputePrimitives()
   }
 }
 
-//==================================================
-// Function: RecomputePrimitives
-// Purpose : IMPORTANT: Do not use this method to update
-//           selection primitives except implementing custom
-//           selection manager! This method does not take
-//           into account necessary BVH updates, but may
-//           invalidate the pointers it refers to.
-//           TO UPDATE SELECTION properly from outside classes,
-//           use method UpdateSelection.
-//==================================================
 void SelectMgr_SelectableObject::RecomputePrimitives(const int theMode)
 {
   SelectMgr_SelectableObject* aSelParent = dynamic_cast<SelectMgr_SelectableObject*>(Parent());
@@ -116,8 +90,6 @@ void SelectMgr_SelectableObject::RecomputePrimitives(const int theMode)
   myselections.Append(aNewSel);
 }
 
-//=================================================================================================
-
 void SelectMgr_SelectableObject::ClearSelections(const bool theToUpdate)
 {
   for (NCollection_Sequence<occ::handle<SelectMgr_Selection>>::Iterator aSelIter(myselections);
@@ -133,8 +105,6 @@ void SelectMgr_SelectableObject::ClearSelections(const bool theToUpdate)
     }
   }
 }
-
-//=================================================================================================
 
 const occ::handle<SelectMgr_Selection>& SelectMgr_SelectableObject::Selection(
   const int theMode) const
@@ -156,8 +126,6 @@ const occ::handle<SelectMgr_Selection>& SelectMgr_SelectableObject::Selection(
   }
   return THE_NULL_SELECTION;
 }
-
-//=================================================================================================
 
 void SelectMgr_SelectableObject::AddSelection(const occ::handle<SelectMgr_Selection>& theSel,
                                               const int                               theMode)
@@ -201,8 +169,6 @@ void SelectMgr_SelectableObject::AddSelection(const occ::handle<SelectMgr_Select
   }
 }
 
-//=================================================================================================
-
 void SelectMgr_SelectableObject::ResetTransformation()
 {
   for (NCollection_Sequence<occ::handle<SelectMgr_Selection>>::Iterator aSelIter(myselections);
@@ -216,8 +182,6 @@ void SelectMgr_SelectableObject::ResetTransformation()
 
   PrsMgr_PresentableObject::ResetTransformation();
 }
-
-//=================================================================================================
 
 void SelectMgr_SelectableObject::UpdateTransformation()
 {
@@ -239,8 +203,6 @@ void SelectMgr_SelectableObject::UpdateTransformation()
   }
 }
 
-//=================================================================================================
-
 void SelectMgr_SelectableObject::UpdateTransformations(
   const occ::handle<SelectMgr_Selection>& theSel)
 {
@@ -261,16 +223,12 @@ void SelectMgr_SelectableObject::UpdateTransformations(
   }
 }
 
-//=================================================================================================
-
 void SelectMgr_SelectableObject::HilightSelected(
   const occ::handle<PrsMgr_PresentationManager>&,
   const NCollection_Sequence<occ::handle<SelectMgr_EntityOwner>>&)
 {
   throw Standard_NotImplemented("SelectMgr_SelectableObject::HilightSelected");
 }
-
-//=================================================================================================
 
 void SelectMgr_SelectableObject::ClearSelected()
 {
@@ -280,15 +238,11 @@ void SelectMgr_SelectableObject::ClearSelected()
   }
 }
 
-//=================================================================================================
-
 void SelectMgr_SelectableObject::ClearDynamicHighlight(
   const occ::handle<PrsMgr_PresentationManager>& theMgr)
 {
   theMgr->ClearImmediateDraw();
 }
-
-//=================================================================================================
 
 void SelectMgr_SelectableObject::HilightOwnerWithColor(
   const occ::handle<PrsMgr_PresentationManager>&,
@@ -297,8 +251,6 @@ void SelectMgr_SelectableObject::HilightOwnerWithColor(
 {
   throw Standard_NotImplemented("SelectMgr_SelectableObject::HilightOwnerWithColor");
 }
-
-//=================================================================================================
 
 occ::handle<Prs3d_Presentation> SelectMgr_SelectableObject::GetHilightPresentation(
   const occ::handle<PrsMgr_PresentationManager>& theMgr)
@@ -314,8 +266,6 @@ occ::handle<Prs3d_Presentation> SelectMgr_SelectableObject::GetHilightPresentati
   return myHilightPrs;
 }
 
-//=================================================================================================
-
 occ::handle<Prs3d_Presentation> SelectMgr_SelectableObject::GetSelectPresentation(
   const occ::handle<PrsMgr_PresentationManager>& theMgr)
 {
@@ -329,8 +279,6 @@ occ::handle<Prs3d_Presentation> SelectMgr_SelectableObject::GetSelectPresentatio
 
   return mySelectionPrs;
 }
-
-//=================================================================================================
 
 void SelectMgr_SelectableObject::ErasePresentations(bool theToRemove)
 {
@@ -354,21 +302,17 @@ void SelectMgr_SelectableObject::ErasePresentations(bool theToRemove)
   }
 }
 
-//=================================================================================================
-
 void SelectMgr_SelectableObject::SetZLayer(const Graphic3d_ZLayerId theLayerId)
 {
-  // update own presentations
+
   PrsMgr_PresentableObject::SetZLayer(theLayerId);
 
-  // update selection presentations
   if (!mySelectionPrs.IsNull())
     mySelectionPrs->SetZLayer(theLayerId);
 
   if (!myHilightPrs.IsNull())
     myHilightPrs->SetZLayer(theLayerId);
 
-  // update all entity owner presentations
   for (NCollection_Sequence<occ::handle<SelectMgr_Selection>>::Iterator aSelIter(myselections);
        aSelIter.More();
        aSelIter.Next())
@@ -391,8 +335,6 @@ void SelectMgr_SelectableObject::SetZLayer(const Graphic3d_ZLayerId theLayerId)
   }
 }
 
-//=================================================================================================
-
 void SelectMgr_SelectableObject::UpdateClipping()
 {
   PrsMgr_PresentableObject::UpdateClipping();
@@ -406,12 +348,6 @@ void SelectMgr_SelectableObject::UpdateClipping()
   }
 }
 
-//=======================================================================
-// function : updateSelection
-// purpose  : Sets update status FULL to selections of the object. Must be
-//           used as the only method of UpdateSelection from outer classes
-//           to prevent BVH structures from being outdated.
-//=======================================================================
 void SelectMgr_SelectableObject::updateSelection(const int theMode)
 {
   if (theMode == -1)
@@ -439,10 +375,6 @@ void SelectMgr_SelectableObject::updateSelection(const int theMode)
   }
 }
 
-//=======================================================================
-// function : SetAssemblyOwner
-// purpose  : Sets common entity owner for assembly sensitive object entities
-//=======================================================================
 void SelectMgr_SelectableObject::SetAssemblyOwner(
   const occ::handle<SelectMgr_EntityOwner>& theOwner,
   const int                                 theMode)
@@ -484,8 +416,6 @@ void SelectMgr_SelectableObject::SetAssemblyOwner(
   }
 }
 
-//=================================================================================================
-
 Bnd_Box SelectMgr_SelectableObject::BndBoxOfSelected(
   const occ::handle<NCollection_Shared<NCollection_IndexedMap<occ::handle<SelectMgr_EntityOwner>>>>&
     theOwners)
@@ -525,10 +455,6 @@ Bnd_Box SelectMgr_SelectableObject::BndBoxOfSelected(
   return aBnd;
 }
 
-//=======================================================================
-// function : GlobalSelOwner
-// purpose  : Returns entity owner corresponding to selection of the object as a whole
-//=======================================================================
 occ::handle<SelectMgr_EntityOwner> SelectMgr_SelectableObject::GlobalSelOwner() const
 {
   const occ::handle<SelectMgr_Selection>& aGlobalSel = Selection(myGlobalSelMode);
@@ -539,14 +465,10 @@ occ::handle<SelectMgr_EntityOwner> SelectMgr_SelectableObject::GlobalSelOwner() 
   return THE_NULL_ENTITYOWNER;
 }
 
-//=================================================================================================
-
 const occ::handle<SelectMgr_EntityOwner>& SelectMgr_SelectableObject::GetAssemblyOwner() const
 {
   return THE_NULL_ENTITYOWNER;
 }
-
-//=================================================================================================
 
 void SelectMgr_SelectableObject::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

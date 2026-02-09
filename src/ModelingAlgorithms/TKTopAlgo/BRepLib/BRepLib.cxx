@@ -61,7 +61,6 @@
 
 #include <algorithm>
 
-// TODO - not thread-safe static variables
 static double                  thePrecision = Precision::Confusion();
 static occ::handle<Geom_Plane> thePlane;
 
@@ -70,10 +69,6 @@ static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
                                      const bool          IsMutableInput,
                                      BRepTools_ReShape&  theReshaper);
 
-//=======================================================================
-// function: BRepLib_ComparePoints
-// purpose:  implementation of IsLess() function for two points
-//=======================================================================
 struct BRepLib_ComparePoints
 {
   bool operator()(const gp_Pnt& theP1, const gp_Pnt& theP2)
@@ -93,28 +88,20 @@ struct BRepLib_ComparePoints
   }
 };
 
-//=================================================================================================
-
 void BRepLib::Precision(const double P)
 {
   thePrecision = P;
 }
-
-//=================================================================================================
 
 double BRepLib::Precision()
 {
   return thePrecision;
 }
 
-//=================================================================================================
-
 void BRepLib::Plane(const occ::handle<Geom_Plane>& P)
 {
   thePlane = P;
 }
-
-//=================================================================================================
 
 const occ::handle<Geom_Plane>& BRepLib::Plane()
 {
@@ -122,8 +109,6 @@ const occ::handle<Geom_Plane>& BRepLib::Plane()
     thePlane = new Geom_Plane(gp::XOY());
   return thePlane;
 }
-
-//=================================================================================================
 
 bool BRepLib::CheckSameRange(const TopoDS_Edge& AnEdge, const double Tolerance)
 {
@@ -160,8 +145,6 @@ bool BRepLib::CheckSameRange(const TopoDS_Edge& AnEdge, const double Tolerance)
   }
   return IsSameRange;
 }
-
-//=================================================================================================
 
 void BRepLib::SameRange(const TopoDS_Edge& AnEdge, const double Tolerance)
 {
@@ -244,11 +227,6 @@ void BRepLib::SameRange(const TopoDS_Edge& AnEdge, const double Tolerance)
   B.SameRange(AnEdge, true);
 }
 
-//=======================================================================
-// function : EvaluateMaxSegment
-// purpose  : return MaxSegment to pass in approximation, if MaxSegment==0 provided
-//=======================================================================
-
 static int evaluateMaxSegment(const int                       aMaxSegment,
                               const Adaptor3d_CurveOnSurface& aCurveOnSurface)
 {
@@ -273,18 +251,16 @@ static int evaluateMaxSegment(const int                       aMaxSegment,
   return aReturn;
 }
 
-//=================================================================================================
-
 bool BRepLib::BuildCurve3d(const TopoDS_Edge&  AnEdge,
                            const double        Tolerance,
                            const GeomAbs_Shape Continuity,
                            const int           MaxDegree,
                            const int           MaxSegment)
 {
-  int // ErrorCode,
-      //                    ReturnCode = 0,
+  int
+
     ii,
-    //                   num_knots,
+
     jj;
 
   TopLoc_Location LocalLoc, L[2], LC;
@@ -293,21 +269,16 @@ bool BRepLib::BuildCurve3d(const TopoDS_Edge&  AnEdge,
   occ::handle<Geom_Surface> SurfacePtr, SurfaceArray[2];
 
   int not_done;
-  // if the edge has a 3d curve returns true
 
   const occ::handle<Geom_Curve> C = BRep_Tool::Curve(AnEdge, LocalLoc, f, l);
   if (!C.IsNull())
     return true;
-  //
-  // this should not exists but UpdateEdge makes funny things
-  // if the edge is not same range
-  //
+
   if (!CheckSameRange(AnEdge, Precision::Confusion()))
   {
     SameRange(AnEdge, Tolerance);
   }
 
-  // search a curve on a plane
   occ::handle<Geom_Surface> S;
   occ::handle<Geom2d_Curve> PC;
   int                       i = 0;
@@ -332,30 +303,28 @@ bool BRepLib::BuildCurve3d(const TopoDS_Edge&  AnEdge,
   }
   if (!P.IsNull())
   {
-    // compute the 3d curve
+
     gp_Ax2                  axes = P->Position().Ax2();
     occ::handle<Geom_Curve> C3d  = GeomLib::To3d(axes, PC);
     if (C3d.IsNull())
       return false;
-    // update the edge
+
     double First, Last;
 
     BRep_Builder B;
     B.UpdateEdge(AnEdge, C3d, LocalLoc, 0.0e0);
     BRep_Tool::Range(AnEdge, S, LC, First, Last);
-    B.Range(AnEdge, First, Last); // Do not forget 3D range.(PRO6412)
+    B.Range(AnEdge, First, Last);
   }
   else
   {
-    //
-    // compute the 3d curve using existing surface
-    //
+
     fc = f;
     lc = l;
     if (!BRep_Tool::Degenerated(AnEdge))
     {
       jj = 0;
-      // BRep_Tool::CurveOnSurface expects Index >= 1, so start from 1.
+
       for (ii = 1; ii < 3; ii++)
       {
         BRep_Tool::CurveOnSurface(TopoDS::Edge(AnEdge),
@@ -403,18 +372,14 @@ bool BRepLib::BuildCurve3d(const TopoDS_Edge&  AnEdge,
                             evaluateMaxSegment(MaxSegment, CurveOnSurface));
       BRep_Builder B;
       tolerance = BRep_Tool::Tolerance(AnEdge);
-      // Patch
-      // max_deviation = std::max(tolerance, max_deviation) ;
+
       max_deviation = std::max(tolerance, Tolerance);
       if (NewCurvePtr.IsNull())
         return false;
       B.UpdateEdge(TopoDS::Edge(AnEdge), NewCurvePtr, L[0], max_deviation);
       if (jj == 1)
       {
-        //
-        // if there is only one curve on surface attached to the edge
-        // than it can be qualified sameparameter
-        //
+
         B.SameParameter(TopoDS::Edge(AnEdge), true);
       }
     }
@@ -426,15 +391,11 @@ bool BRepLib::BuildCurve3d(const TopoDS_Edge&  AnEdge,
   return true;
 }
 
-//=================================================================================================
-
 bool BRepLib::BuildCurves3d(const TopoDS_Shape& S)
 
 {
   return BRepLib::BuildCurves3d(S, 1.0e-5);
 }
-
-//=================================================================================================
 
 bool BRepLib::BuildCurves3d(const TopoDS_Shape& S,
                             const double        Tolerance,
@@ -459,8 +420,6 @@ bool BRepLib::BuildCurves3d(const TopoDS_Shape& S,
   return ok;
 }
 
-//=================================================================================================
-
 bool BRepLib::UpdateEdgeTol(const TopoDS_Edge& AnEdge,
                             const double       MinToleranceRequested,
                             const double       MaxToleranceToCheck)
@@ -470,8 +429,8 @@ bool BRepLib::UpdateEdgeTol(const TopoDS_Edge& AnEdge,
     geom_reference_curve_flag = 0, max_sampling_points = 90, min_sampling_points = 30;
 
   double factor = 100.0e0,
-         //     sampling_array[2],
-    safe_factor         = 1.4e0, current_last, current_first, max_distance, coded_edge_tolerance,
+
+         safe_factor    = 1.4e0, current_last, current_first, max_distance, coded_edge_tolerance,
          edge_tolerance = 0.0e0;
   occ::handle<NCollection_HArray1<double>> parameters_ptr;
   occ::handle<BRep_GCurve>                 geometric_representation_ptr;
@@ -521,10 +480,9 @@ bool BRepLib::UpdateEdgeTol(const TopoDS_Edge& AnEdge,
         curve2d_ptr    = geometric_representation_ptr->PCurve();
         local_location = geometric_representation_ptr->Location();
         current_first  = geometric_representation_ptr->First();
-        // first = geometric_representation_ptr->First();
+
         current_last = geometric_representation_ptr->Last();
-        // must be inverted
-        //
+
         if (!local_location.IsIdentity())
         {
           surface_ptr = occ::down_cast<Geom_Surface>(
@@ -582,8 +540,7 @@ bool BRepLib::UpdateEdgeTol(const TopoDS_Edge& AnEdge,
     if (!geometric_representation_ptr.IsNull() && curve_index != curve_on_surface_index)
     {
       has_closed_curve = has_curve = false;
-      //	first = geometric_representation_ptr->First();
-      //	last =  geometric_representation_ptr->Last();
+
       local_location = geometric_representation_ptr->Location();
       if (geometric_representation_ptr->IsCurveOnSurface())
       {
@@ -653,8 +610,6 @@ bool BRepLib::UpdateEdgeTol(const TopoDS_Edge& AnEdge,
   return true;
 }
 
-//=================================================================================================
-
 bool BRepLib::UpdateEdgeTolerance(const TopoDS_Shape& S,
                                   const double        MinToleranceRequested,
                                   const double        MaxToleranceToCheck)
@@ -680,8 +635,6 @@ bool BRepLib::UpdateEdgeTolerance(const TopoDS_Shape& S,
   }
   return return_status;
 }
-
-//=================================================================================================
 
 static void GetEdgeTol(const TopoDS_Edge& theEdge, const TopoDS_Face& theFace, double& theEdTol)
 {
@@ -751,10 +704,6 @@ static void GetEdgeTol(const TopoDS_Edge& theEdge, const TopoDS_Face& theFace, d
   theEdTol = d2;
 }
 
-//=======================================================================
-// function : UpdTolMap
-// purpose  : Update map ShToTol (shape to tolerance)
-//=======================================================================
 static void UpdTolMap(
   const TopoDS_Shape&                                                 theSh,
   double                                                              theNewTol,
@@ -768,7 +717,7 @@ static void UpdTolMap(
     aShTol = BRep_Tool::Tolerance(TopoDS::Edge(theSh));
   else
     return;
-  //
+
   if (theNewTol > aShTol)
   {
     const double* anOldtol = theShToTol.Seek(theSh);
@@ -779,10 +728,6 @@ static void UpdTolMap(
   }
 }
 
-//=======================================================================
-// function : UpdShTol
-// purpose  : Update vertices/edges/faces according to ShToTol map (create copies of necessary)
-//=======================================================================
 static void UpdShTol(
   const NCollection_DataMap<TopoDS_Shape, double, TopTools_ShapeMapHasher>& theShToTol,
   const bool                                                                IsMutableInput,
@@ -796,7 +741,7 @@ static void UpdShTol(
   {
     const TopoDS_Shape& aSh  = SHToTolit.Key();
     double              aTol = SHToTolit.Value();
-    //
+
     TopoDS_Shape        aNsh;
     const TopoDS_Shape& aVsh = theReshaper.Value(aSh);
     bool UseOldSh            = IsMutableInput || theReshaper.IsNewShape(aSh) || !aVsh.IsSame(aSh);
@@ -805,20 +750,19 @@ static void UpdShTol(
     else
     {
       aNsh = aSh.EmptyCopied();
-      // add subshapes from the original shape
+
       TopoDS_Iterator sit(aSh);
       for (; sit.More(); sit.Next())
         aB.Add(aNsh, sit.Value());
-      //
+
       aNsh.Free(aSh.Free());
       aNsh.Checked(aSh.Checked());
       aNsh.Orientable(aSh.Orientable());
       aNsh.Closed(aSh.Closed());
       aNsh.Infinite(aSh.Infinite());
       aNsh.Convex(aSh.Convex());
-      //
     }
-    //
+
     switch (aSh.ShapeType())
     {
       case TopAbs_FACE:
@@ -844,13 +788,11 @@ static void UpdShTol(
       default:
         break;
     }
-    //
+
     if (!UseOldSh)
       theReshaper.Replace(aSh, aNsh);
   }
 }
-
-//=================================================================================================
 
 static void InternalSameParameter(const TopoDS_Shape& theSh,
                                   BRepTools_ReShape&  theReshaper,
@@ -887,7 +829,7 @@ static void InternalSameParameter(const TopoDS_Shape& theSh,
       double      aNewTol  = -1;
       TopoDS_Edge aResEdge = BRepLib::SameParameter(aNE, theTol, aNewTol, UseOldEdge);
       if (!UseOldEdge && !aResEdge.IsNull())
-        // NE have been empty-copied
+
         theReshaper.Replace(aNE, aResEdge);
       if (aNewTol > 0)
       {
@@ -922,30 +864,21 @@ static void InternalSameParameter(const TopoDS_Shape& theSh,
       TopoDS_Shape aNe      = theReshaper.Value(E);
       double       aNewEtol = -1;
       GetEdgeTol(TopoDS::Edge(aNe), curface, aNewEtol);
-      if (aNewEtol >= 0) // not equal to -1
+      if (aNewEtol >= 0)
         UpdTolMap(E, aNewEtol, aShToTol);
     }
   }
 
-  //
   UpdShTol(aShToTol, IsMutableInput, theReshaper, false);
 
   InternalUpdateTolerances(theSh, false, IsMutableInput, theReshaper);
 }
 
-//================================================================
-// function : SameParameter
-// WARNING  : New spec DUB LBO 9/9/97.
-//  Recode in the edge the best tolerance found,
-//  for vertex extremities it is required to find something else
-//================================================================
 void BRepLib::SameParameter(const TopoDS_Shape& S, const double Tolerance, const bool forced)
 {
   BRepTools_ReShape reshaper;
   InternalSameParameter(S, reshaper, Tolerance, forced, true);
 }
-
-//=================================================================================================
 
 void BRepLib::SameParameter(const TopoDS_Shape& S,
                             BRepTools_ReShape&  theReshaper,
@@ -954,8 +887,6 @@ void BRepLib::SameParameter(const TopoDS_Shape& S,
 {
   InternalSameParameter(S, theReshaper, Tolerance, forced, false);
 }
-
-//=================================================================================================
 
 static bool EvalTol(const occ::handle<Geom2d_Curve>& pc,
                     const occ::handle<Geom_Surface>& s,
@@ -989,8 +920,6 @@ static bool EvalTol(const occ::handle<Geom2d_Curve>& pc,
   return (ok > 2);
 }
 
-//=================================================================================================
-
 static double ComputeTol(const occ::handle<Adaptor3d_Curve>&   c3d,
                          const occ::handle<Adaptor2d_Curve2d>& c2d,
                          const occ::handle<Adaptor3d_Surface>& surf,
@@ -1001,7 +930,6 @@ static double ComputeTol(const occ::handle<Adaptor3d_Curve>&   c3d,
   NCollection_Array1<double> dist(1, nbp + 10);
   dist.Init(-1.);
 
-  // Adaptor3d_CurveOnSurface  cons(c2d,surf);
   double uf = surf->FirstUParameter(), ul = surf->LastUParameter(), vf = surf->FirstVParameter(),
          vl = surf->LastVParameter();
   double du = 0.01 * (ul - uf), dv = 0.01 * (vl - vf);
@@ -1105,13 +1033,10 @@ static double ComputeTol(const occ::handle<Adaptor3d_Curve>&   c3d,
     }
   }
 
-  // d2 = 1.5*sqrt(d2);
   d2 = (!ana) ? 1.5 * d2 : 1.5 * sqrt(D2);
   d2 = std::max(d2, 1.e-7);
   return d2;
 }
-
-//=================================================================================================
 
 static void GetCurve3d(const TopoDS_Edge&                                       theEdge,
                        occ::handle<Geom_Curve>&                                 theC3d,
@@ -1121,9 +1046,9 @@ static void GetCurve3d(const TopoDS_Edge&                                       
                        NCollection_List<occ::handle<BRep_CurveRepresentation>>& theCList)
 {
   const occ::handle<BRep_TEdge>& aTE = *((occ::handle<BRep_TEdge>*)&theEdge.TShape());
-  // clang-format off
-  theCList = aTE->ChangeCurves(); // current function (i.e. GetCurve3d()) will not change any of this curves
-  // clang-format on
+
+  theCList = aTE->ChangeCurves();
+
   NCollection_List<occ::handle<BRep_CurveRepresentation>>::Iterator anIt(theCList);
   bool                                                              NotDone = true;
   while (NotDone && anIt.More())
@@ -1141,8 +1066,6 @@ static void GetCurve3d(const TopoDS_Edge&                                       
   }
 }
 
-//=================================================================================================
-
 void UpdateVTol(const TopoDS_Vertex& theV1, const TopoDS_Vertex& theV2, double theTol)
 {
   BRep_Builder aB;
@@ -1151,8 +1074,6 @@ void UpdateVTol(const TopoDS_Vertex& theV1, const TopoDS_Vertex& theV2, double t
   if (!theV2.IsNull())
     aB.UpdateVertex(theV2, theTol);
 }
-
-//=================================================================================================
 
 void BRepLib::SameParameter(const TopoDS_Edge& theEdge, const double theTolerance)
 {
@@ -1165,8 +1086,6 @@ void BRepLib::SameParameter(const TopoDS_Edge& theEdge, const double theToleranc
     UpdateVTol(aV1, aV2, aNewTol);
   }
 }
-
-//=================================================================================================
 
 TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
                                    const double       theTolerance,
@@ -1193,13 +1112,13 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
   }
   else
   {
-    // clang-format off
-    aNE = TopoDS::Edge(theEdge.EmptyCopied()); //will be modified a little bit later, so copy anyway  
-    GetCurve3d(aNE, C3d, f3d, l3d, L3d, CList); //C3d pointer and CList will be differ after copying
-    // clang-format on
+
+    aNE = TopoDS::Edge(theEdge.EmptyCopied());
+    GetCurve3d(aNE, C3d, f3d, l3d, L3d, CList);
+
     aNTE = *((occ::handle<BRep_TEdge>*)&aNE.TShape());
     TopoDS_Iterator sit(theEdge);
-    for (; sit.More(); sit.Next()) // add vertices from old edge to the new ones
+    for (; sit.More(); sit.Next())
       B.Add(aNE, sit.Value());
   }
 
@@ -1214,7 +1133,6 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
   Geom2dAdaptor_Curve&             GAC2d = *HC2d;
   GeomAdaptor_Surface&             GAS   = *HS;
 
-  // modified by NIZHNY-OCC486  Tue Aug 27 17:15:13 2002 :
   bool                       m_TrimmedPeriodical = false;
   occ::handle<Standard_Type> TheType             = C3d->DynamicType();
   if (TheType == STANDARD_TYPE(Geom_TrimmedCurve))
@@ -1222,15 +1140,12 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
     occ::handle<Geom_Curve> gtC(occ::down_cast<Geom_TrimmedCurve>(C3d)->BasisCurve());
     m_TrimmedPeriodical = gtC->IsPeriodic();
   }
-  // modified by NIZHNY-OCC486  Tue Aug 27 17:15:17 2002 .
 
   if (!C3d->IsPeriodic())
   {
     double Udeb = C3d->FirstParameter();
     double Ufin = C3d->LastParameter();
-    // modified by NIZHNY-OCC486  Tue Aug 27 17:17:14 2002 :
-    // if (Udeb > f3d) f3d = Udeb;
-    // if (l3d > Ufin) l3d = Ufin;
+
     if (!m_TrimmedPeriodical)
     {
       if (Udeb > f3d)
@@ -1238,7 +1153,6 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
       if (l3d > Ufin)
         l3d = Ufin;
     }
-    // modified by NIZHNY-OCC486  Tue Aug 27 17:17:55 2002 .
   }
   if (!L3d.IsIdentity())
   {
@@ -1251,9 +1165,8 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
   bool   IsSameP = true;
   double maxdist = 0.;
 
-  //  Modified by skv - Thu Jun  3 12:39:19 2004 OCC5898 Begin
   double anEdgeTol = BRep_Tool::Tolerance(aNE);
-  //  Modified by skv - Thu Jun  3 12:39:20 2004 OCC5898 End
+
   bool         SameRange = BRep_Tool::SameRange(aNE);
   bool         YaPCu     = false;
   const double BigError  = 1.e10;
@@ -1284,7 +1197,6 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
         PC[1] = GCurve->PCurve2();
       }
 
-      // Eval tol2d to compute SameRange
       double TolSameRange = std::max(GAC.Resolution(theTolerance), Precision::PConfusion());
       for (int i = 0; i < 2; i++)
       {
@@ -1325,7 +1237,7 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
           isBSP = true;
 
           if (bs2d->IsPeriodic())
-          { // -------- IFV, Jan 2000
+          {
             gp_Pnt2d NewOriginPoint;
             bs2d->D0(bs2d->FirstParameter(), NewOriginPoint);
             if (std::abs(OriginPoint.X() - NewOriginPoint.X()) > Precision::PConfusion()
@@ -1377,7 +1289,7 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
               Geom2dConvert::C0BSplineToC1BSplineCurve(bs2d, Tol2dbail);
 
               if (bs2d->IsPeriodic())
-              { // -------- IFV, Jan 2000
+              {
                 gp_Pnt2d NewOriginPoint;
                 bs2d->D0(bs2d->FirstParameter(), NewOriginPoint);
                 if (std::abs(OriginPoint.X() - NewOriginPoint.X()) > Precision::PConfusion()
@@ -1418,7 +1330,7 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
               int                        NbKnots = bs2d->NbKnots();
               NCollection_Array1<double> Knots(1, NbKnots);
               bs2d->Knots(Knots);
-              //	    BSplCLib::Reparametrize(f3d,l3d,Knots);
+
               BSplCLib::Reparametrize(fC0, lC0, Knots);
               bs2d->SetKnots(Knots);
               GAC2d.Load(bs2d, f3d, l3d);
@@ -1441,7 +1353,6 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
               }
             }
 
-            // check, if new BSpline "good" or not --------- IFV, Jan of 2000
             GeomAbs_Shape cont  = bs2d->Continuity();
             bool          IsBad = false;
 
@@ -1474,7 +1385,7 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
               }
               if (IsBad)
               {
-                // To avoid failures in Approx_CurvilinearParameter
+
                 bs2d->Resolution(std::max(1.e-3, theTolerance), dtcur);
                 if (dtmin < dtcur)
                   IsBad = false;
@@ -1482,10 +1393,8 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
             }
 
             if (IsBad)
-            { // if BSpline "bad", try to reparametrize it
-              // by its curve length
+            {
 
-              //	      GeomAbs_Shape cont = bs2d->Continuity();
               if (cont > GeomAbs_C2)
                 cont = GeomAbs_C2;
               int maxdeg = bs2d->Degree();
@@ -1509,7 +1418,7 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
                   int                        NbKnots = bs2d->NbKnots();
                   NCollection_Array1<double> Knots(1, NbKnots);
                   bs2d->Knots(Knots);
-                  //		  BSplCLib::Reparametrize(f3d,l3d,Knots);
+
                   BSplCLib::Reparametrize(fC0, lC0, Knots);
                   bs2d->SetKnots(Knots);
                   GAC2d.Load(bs2d, f3d, l3d);
@@ -1522,10 +1431,10 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
 
         if (goodpc)
         {
-          //	  Approx_SameParameter SameP(HC,HC2d,HS,Tolerance);
+
           double                                aTol     = (isANA && isBSP) ? 1.e-7 : theTolerance;
-          const occ::handle<Adaptor3d_Curve>&   aHCurv   = HC;   // to avoid ambiguity
-          const occ::handle<Adaptor2d_Curve2d>& aHCurv2d = HC2d; // to avoid ambiguity
+          const occ::handle<Adaptor3d_Curve>&   aHCurv   = HC;
+          const occ::handle<Adaptor2d_Curve2d>& aHCurv2d = HC2d;
           Approx_SameParameter                  SameP(aHCurv, aHCurv2d, HS, aTol);
 
           if (SameP.IsSameParameter())
@@ -1562,9 +1471,7 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
           }
           else
           {
-            // Approx_SameParameter has failed.
-            // Consequently, the situation might be,
-            // when 3D and 2D-curve do not have same-range.
+
             GeomLib::SameRange(TolSameRange,
                                PC[i],
                                GCurve->First(),
@@ -1584,7 +1491,6 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
         else
           IsSameP = false;
 
-        //  Modified by skv - Thu Jun  3 12:39:19 2004 OCC5898 Begin
         if (!IsSameP)
         {
           double Prec_Surf = BRepCheck::PrecSurface(HS);
@@ -1595,7 +1501,6 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
             IsSameP = true;
           }
         }
-        //  Modified by skv - Thu Jun  3 12:39:20 2004 OCC5898 End
       }
     }
     It.Next();
@@ -1604,14 +1509,10 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
   B.SameRange(aNE, true);
   if (IsSameP)
   {
-    // Reduce eventually the tolerance of the edge, as
-    // all its representations are processed (except for some associated
-    // to planes and not stored in the edge !)
-    // The same cannot be done with vertices that cannot be enlarged
-    // or left as is.
+
     if (YaPCu)
     {
-      // Avoid setting too small tolerances.
+
       maxdist   = std::max(maxdist, Precision::Confusion());
       theNewTol = maxdist;
       aNTE->Modified(true);
@@ -1623,20 +1524,17 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
   return aNE;
 }
 
-//=================================================================================================
-
 static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
                                      const bool          IsVerifyTolerance,
                                      const bool          IsMutableInput,
                                      BRepTools_ReShape&  theReshaper)
 {
   NCollection_DataMap<TopoDS_Shape, double, TopTools_ShapeMapHasher> aShToTol;
-  // Harmonize tolerances
-  // with rule Tolerance(VERTEX)>=Tolerance(EDGE)>=Tolerance(FACE)
+
   double tol = 0;
   if (IsVerifyTolerance)
   {
-    // Set tolerance to its minimum value
+
     occ::handle<Geom_Surface> S;
     TopLoc_Location           l;
     TopExp_Explorer           ex;
@@ -1688,7 +1586,7 @@ static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
           if (aZmin > dMax)
             dMax = aZmin;
           tol = tol * dMax;
-          // Do not process tolerances > 1.
+
           if (tol > 1.)
             tol = 0.99;
         }
@@ -1697,7 +1595,6 @@ static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
     }
   }
 
-  // Process edges
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     parents;
   TopExp::MapShapesAndAncestors(theOldShape, TopAbs_EDGE, TopAbs_FACE, parents);
@@ -1710,20 +1607,18 @@ static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
     {
       const TopoDS_Face& FF = TopoDS::Face(lConx.Value());
       double             Ftol;
-      if (IsVerifyTolerance && aShToTol.IsBound(FF)) // first condition for speed-up
+      if (IsVerifyTolerance && aShToTol.IsBound(FF))
         Ftol = aShToTol(FF);
       else
-        Ftol = BRep_Tool::Tolerance(FF); // tolerance have not been updated
+        Ftol = BRep_Tool::Tolerance(FF);
       tol = std::max(tol, Ftol);
     }
-    // Update can only increase tolerance, so if the edge has a greater
-    //  tolerance than its faces it is not concerned
+
     const TopoDS_Edge& EK = TopoDS::Edge(parents.FindKey(iCur));
     if (tol > BRep_Tool::Tolerance(EK))
       aShToTol.Bind(EK, tol);
   }
 
-  // Vertices are processed
   const double BigTol = 1.e10;
   parents.Clear();
 
@@ -1752,7 +1647,7 @@ static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
       const TopLoc_Location&                                            Eloc = E.Location();
       while (itcr.More())
       {
-        // For each CurveRepresentation, check the provided parameter
+
         const occ::handle<BRep_CurveRepresentation>& cr  = itcr.Value();
         const TopLoc_Location&                       loc = cr->Location();
         TopLoc_Location                              L   = (Eloc * loc);
@@ -1760,7 +1655,7 @@ static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
         {
           const occ::handle<Geom_Curve>& C = cr->Curve3D();
           if (!C.IsNull())
-          { // edge non degenerated
+          {
             p3d = C->Value(par);
             p3d.Transform(L.Transformation());
             double aDist = p3d.SquareDistance(aPV);
@@ -1798,18 +1693,17 @@ static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
     }
     tol = std::max(tol, sqrt(aMaxDist));
     tol += 2. * Epsilon(tol);
-    //
+
     double                           aVTol    = BRep_Tool::Tolerance(V);
     bool                             anUpdTol = tol > aVTol;
     const occ::handle<BRep_TVertex>& aTV      = *((occ::handle<BRep_TVertex>*)&V.TShape());
     bool                             toAdd    = false;
     if (IsVerifyTolerance)
     {
-      // ASet minimum value of the tolerance
-      // Attention to sharing of the vertex by other shapes
-      toAdd = Initialized.Add(aTV) && aVTol != tol; // if Vtol == tol => no need to update toler
+
+      toAdd = Initialized.Add(aTV) && aVTol != tol;
     }
-    //'Initialized' map is not used anywhere outside this block
+
     if (anUpdTol || toAdd)
       aShToTol.Bind(V, tol);
   }
@@ -1817,15 +1711,11 @@ static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
   UpdShTol(aShToTol, IsMutableInput, theReshaper, true);
 }
 
-//=================================================================================================
-
 void BRepLib::UpdateTolerances(const TopoDS_Shape& S, const bool verifyFaceTolerance)
 {
   BRepTools_ReShape aReshaper;
   InternalUpdateTolerances(S, verifyFaceTolerance, true, aReshaper);
 }
-
-//=================================================================================================
 
 void BRepLib::UpdateTolerances(const TopoDS_Shape& S,
                                BRepTools_ReShape&  theReshaper,
@@ -1833,8 +1723,6 @@ void BRepLib::UpdateTolerances(const TopoDS_Shape& S,
 {
   InternalUpdateTolerances(S, verifyFaceTolerance, false, theReshaper);
 }
-
-//=================================================================================================
 
 void BRepLib::UpdateInnerTolerances(const TopoDS_Shape& aShape)
 {
@@ -1892,12 +1780,11 @@ void BRepLib::UpdateInnerTolerances(const TopoDS_Shape& aShape)
               : ((k == 0) ? theRep(j)->FirstParameter() : theRep(j)->LastParameter());
           gp_Pnt aPoint = theRep(j)->Value(ParamOnCurve);
           double aDist  = Center.Distance(aPoint);
-          // aDist *= 1.1;
+
           aDist += 2. * Epsilon(aDist);
           if (aDist > MaxDist)
             MaxDist = aDist;
 
-          // Update tolerances of vertices
           if (k == 0 && !V1.IsNull())
           {
             double aDist1 = Pnt1.Distance(aPoint);
@@ -1932,11 +1819,9 @@ void BRepLib::UpdateInnerTolerances(const TopoDS_Shape& aShape)
   }
 }
 
-//=================================================================================================
-
 bool BRepLib::OrientClosedSolid(TopoDS_Solid& solid)
 {
-  // Set material inside the solid
+
   BRepClass3d_SolidClassifier where(solid);
   where.PerformInfinitePoint(Precision::Confusion());
   if (where.State() == TopAbs_IN)
@@ -1949,7 +1834,6 @@ bool BRepLib::OrientClosedSolid(TopoDS_Solid& solid)
   return true;
 }
 
-// Structure for calculation of properties, necessary for decision about continuity
 class SurfaceProperties
 {
 public:
@@ -1964,7 +1848,6 @@ public:
   {
   }
 
-  // Calculate derivatives on surface related to the point on curve
   void Calculate(const double theParamOnCurve)
   {
     gp_Pnt2d aUV;
@@ -1972,14 +1855,12 @@ public:
     mySurfaceProps.SetParameters(aUV.X(), aUV.Y());
   }
 
-  // Returns point just calculated
   gp_Pnt Value() { return mySurfaceProps.Value().Transformed(mySurfaceTrsf); }
 
-  // Calculate a derivative orthogonal to curve's tangent vector
   gp_Vec Derivative()
   {
     gp_Vec aDeriv;
-    // direction orthogonal to tangent vector of the curve
+
     gp_Vec2d anOrtho(-myCurveTangent.Y(), myCurveTangent.X());
     double   aLen = anOrtho.Magnitude();
     if (aLen < Precision::Confusion())
@@ -1998,8 +1879,6 @@ public:
     return aNormal.Transformed(mySurfaceTrsf);
   }
 
-  // Calculate principal curvatures, which consist of minimal and maximal normal curvatures and
-  // the directions on the tangent plane (principal direction) where the extremums are reached
   void Curvature(gp_Dir& thePrincipalDir1,
                  double& theCurvature1,
                  gp_Dir& thePrincipalDir2,
@@ -2024,20 +1903,14 @@ public:
   }
 
 private:
-  GeomLProp_SLProps         mySurfaceProps; // properties calculator
+  GeomLProp_SLProps         mySurfaceProps;
   gp_Trsf                   mySurfaceTrsf;
   occ::handle<Geom2d_Curve> myCurve2d;
-  bool                      myIsReversed; // the face based on the surface is reversed
+  bool                      myIsReversed;
 
-  // tangent vector to Pcurve in UV
   gp_Vec2d myCurveTangent;
 };
 
-//=======================================================================
-// function : tgtfaces
-// purpose  : check the angle at the border between two squares.
-//           Two shares should have a shared front edge.
-//=======================================================================
 GeomAbs_Shape BRepLib::ContinuityOfFaces(const TopoDS_Edge& theEdge,
                                          const TopoDS_Face& theFace1,
                                          const TopoDS_Face& theFace2,
@@ -2053,7 +1926,7 @@ GeomAbs_Shape BRepLib::ContinuityOfFaces(const TopoDS_Edge& theEdge,
   if (!theFace1.IsSame(theFace2) && BRep_Tool::IsClosed(theEdge, theFace1)
       && BRep_Tool::IsClosed(theEdge, theFace2))
   {
-    // Find the edge in the face 1: this edge will have correct orientation
+
     TopoDS_Face aFace1 = theFace1;
     aFace1.Orientation(TopAbs_FORWARD);
     TopExp_Explorer anExplo(aFace1, TopAbs_EDGE);
@@ -2078,10 +1951,10 @@ GeomAbs_Shape BRepLib::ContinuityOfFaces(const TopoDS_Edge& theEdge,
   }
   else
   {
-    // Obtaining of pcurves of edge on two faces.
+
     anEdgeInFace1 = anEdgeInFace2 = theEdge;
     aCurve1 = BRep_Tool::CurveOnSurface(anEdgeInFace1, theFace1, aFirst, aLast);
-    // For the case of seam edge
+
     if (theFace1.IsSame(theFace2))
       anEdgeInFace2.Reverse();
     aCurve2 = BRep_Tool::CurveOnSurface(anEdgeInFace2, theFace2, aFirst, aLast);
@@ -2101,7 +1974,6 @@ GeomAbs_Shape BRepLib::ContinuityOfFaces(const TopoDS_Edge& theEdge,
   if (aSurface2->IsKind(STANDARD_TYPE(Geom_RectangularTrimmedSurface)))
     aSurface2 = occ::down_cast<Geom_RectangularTrimmedSurface>(aSurface2)->BasisSurface();
 
-  // seam edge on elementary surface is always CN
   bool isElementary = (aSurface1->IsKind(STANDARD_TYPE(Geom_ElementarySurface))
                        && aSurface2->IsKind(STANDARD_TYPE(Geom_ElementarySurface)));
   if (isSeam && isElementary)
@@ -2118,8 +1990,8 @@ GeomAbs_Shape BRepLib::ContinuityOfFaces(const TopoDS_Edge& theEdge,
   occ::handle<BRepAdaptor_Curve> aHC2;
 
   eps = (l - f) / 100.;
-  f += eps; // to avoid calculations on
-  l -= eps; // points of pointed squares.
+  f += eps;
+  l -= eps;
 
   const double anAngleTol2 = theAngleTol * theAngleTol;
 
@@ -2133,14 +2005,9 @@ GeomAbs_Shape BRepLib::ContinuityOfFaces(const TopoDS_Edge& theEdge,
   double        u;
   for (int i = 0; i <= 20 && aCont > GeomAbs_C0; i++)
   {
-    // First suppose that this is sameParameter
+
     u = f + (l - f) * i / 20;
 
-    // Check conditions for G1 and C1 continuity:
-    // * calculate a derivative in tangent plane of each surface
-    //   orthogonal to curve's tangent vector
-    // * continuity is C1 if the vectors are equal
-    // * continuity is G1 if the vectors are just parallel
     aCurCont = GeomAbs_C0;
 
     aSP1.Calculate(u);
@@ -2166,10 +2033,10 @@ GeomAbs_Shape BRepLib::ContinuityOfFaces(const TopoDS_Edge& theEdge,
 
     if (!isSmoothSuspect)
     {
-      // Refine by projection
+
       if (aHC2.IsNull())
       {
-        // adaptor for pcurve on the second surface
+
         aHC2 = new BRepAdaptor_Curve(anEdgeInFace2, theFace2);
         ext.Initialize(*aHC2, f, l, Precision::PConfusion());
       }
@@ -2187,20 +2054,15 @@ GeomAbs_Shape BRepLib::ContinuityOfFaces(const TopoDS_Edge& theEdge,
     {
       aCurCont = GeomAbs_G1;
       if (std::abs(std::sqrt(aSqLen1) - std::sqrt(aSqLen2)) < Precision::Confusion()
-          && aDer1.Dot(aDer2) > Precision::SquareConfusion()) // <= check vectors are codirectional
+          && aDer1.Dot(aDer2) > Precision::SquareConfusion())
         aCurCont = GeomAbs_C1;
     }
     else
       return GeomAbs_C0;
 
     if (aCont < GeomAbs_G2)
-      continue; // no need further processing, because maximal continuity is less than G2
+      continue;
 
-    // Check conditions for G2 and C2 continuity:
-    // * calculate principal curvatures on each surface
-    // * continuity is C2 if directions of principal curvatures are equal on different surfaces
-    // * continuity is G2 if directions of principal curvatures are just parallel
-    //   and values of curvatures are the same
     aSP1.Curvature(aCrvDir1[0], aCrvLen1[0], aCrvDir1[1], aCrvLen1[1]);
     aSP2.Curvature(aCrvDir2[0], aCrvLen2[0], aCrvDir2[1], aCrvLen2[1]);
     for (int aStep = 0; aStep <= 1; ++aStep)
@@ -2225,20 +2087,11 @@ GeomAbs_Shape BRepLib::ContinuityOfFaces(const TopoDS_Edge& theEdge,
       aCont = aCurCont;
   }
 
-  // according to the list of supported elementary surfaces,
-  // if the continuity is C2, than it is totally CN
   if (isElementary && aCont == GeomAbs_C2)
     aCont = GeomAbs_CN;
   return aCont;
 }
 
-//=======================================================================
-// function : EncodeRegularity
-// purpose  : Code the regularities on all edges of the shape, boundary of
-//            two faces that do not have it.
-//            Takes into account that compound may consists of same solid
-//            placed with different transformations
-//=======================================================================
 static void EncodeRegularity(
   const TopoDS_Shape&                                           theShape,
   const double                                                  theTolAng,
@@ -2248,9 +2101,9 @@ static void EncodeRegularity(
 {
   TopoDS_Shape    aShape = theShape;
   TopLoc_Location aNullLoc;
-  aShape.Location(aNullLoc); // nullify location
+  aShape.Location(aNullLoc);
   if (!theMap.Add(aShape))
-    return; // do not need to process shape twice
+    return;
 
   if (aShape.ShapeType() == TopAbs_COMPOUND || aShape.ShapeType() == TopAbs_COMPSOLID)
   {
@@ -2276,7 +2129,7 @@ static void EncodeRegularity(
       TopoDS_Edge E = TopoDS::Edge(M.FindKey(i));
       if (!theEdgesToEncode.IsEmpty())
       {
-        // process only the edges from the list to update their regularity
+
         TopoDS_Shape aPureEdge = E.Located(aNullLoc);
         aPureEdge.Orientation(TopAbs_FORWARD);
         if (!theEdgesToEncode.Contains(aPureEdge))
@@ -2302,7 +2155,7 @@ static void EncodeRegularity(
         }
       }
       if (!found && !F1.IsNull())
-      { // is it a sewing edge?
+      {
         TopAbs_Orientation orE = E.Orientation();
         TopoDS_Edge        curE;
         for (Ex.Init(F1, TopAbs_EDGE); Ex.More() && !found; Ex.Next())
@@ -2330,29 +2183,17 @@ static void EncodeRegularity(
   }
 }
 
-//=======================================================================
-// function : EncodeRegularity
-// purpose  : code the regularities on all edges of the shape, boundary of
-//            two faces that do not have it.
-//=======================================================================
-
 void BRepLib::EncodeRegularity(const TopoDS_Shape& S, const double TolAng)
 {
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMap;
   ::EncodeRegularity(S, TolAng, aMap);
 }
 
-//=======================================================================
-// function : EncodeRegularity
-// purpose  : code the regularities on all edges in the list that do not
-//            have it, and which are boundary of two faces on the shape.
-//=======================================================================
-
 void BRepLib::EncodeRegularity(const TopoDS_Shape&                   S,
                                const NCollection_List<TopoDS_Shape>& LE,
                                const double                          TolAng)
 {
-  // Collect edges without location and orientation
+
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aPureEdges;
   TopLoc_Location                                        aNullLoc;
   NCollection_List<TopoDS_Shape>::Iterator               anEdgeIt(LE);
@@ -2367,11 +2208,6 @@ void BRepLib::EncodeRegularity(const TopoDS_Shape&                   S,
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMap;
   ::EncodeRegularity(S, TolAng, aMap, aPureEdges);
 }
-
-//=======================================================================
-// function : EncodeRegularity
-// purpose  : code the regularity between 2 faces connected by edge
-//=======================================================================
 
 void BRepLib::EncodeRegularity(TopoDS_Edge&       E,
                                const TopoDS_Face& F1,
@@ -2395,11 +2231,6 @@ void BRepLib::EncodeRegularity(TopoDS_Edge&       E,
   }
 }
 
-//=======================================================================
-// function : EnsureNormalConsistency
-// purpose  : Corrects the normals in Poly_Triangulation of faces.
-//              Returns TRUE if any correction is done.
-//=======================================================================
 bool BRepLib::EnsureNormalConsistency(const TopoDS_Shape& theShape,
                                       const double        theAngTol,
                                       const bool          theForceComputeNormals)
@@ -2408,7 +2239,6 @@ bool BRepLib::EnsureNormalConsistency(const TopoDS_Shape& theShape,
 
   bool aRetVal = false, isNormalsFound = false;
 
-  // compute normals if they are absent
   TopExp_Explorer anExpFace(theShape, TopAbs_FACE);
   for (; anExpFace.More(); anExpFace.Next())
   {
@@ -2460,7 +2290,6 @@ bool BRepLib::EnsureNormalConsistency(const TopoDS_Shape& theShape,
     return aRetVal;
   }
 
-  // loop by edges
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     aMapEF;
   TopExp::MapShapesAndAncestors(theShape, TopAbs_EDGE, TopAbs_FACE, aMapEF);
@@ -2495,7 +2324,7 @@ bool BRepLib::EnsureNormalConsistency(const TopoDS_Shape& theShape,
 
     for (int anEdgNode = aPTEF1->Nodes().Lower(); anEdgNode <= aPTEF1->Nodes().Upper(); anEdgNode++)
     {
-      // Number of node
+
       const int aFNodF1 = aPTEF1->Nodes().Value(anEdgNode);
       const int aFNodF2 = aPTEF2->Nodes().Value(anEdgNode);
 
@@ -2518,23 +2347,18 @@ bool BRepLib::EnsureNormalConsistency(const TopoDS_Shape& theShape,
   return aRetVal;
 }
 
-//=================================================================================================
-
 namespace
 {
-  //! Tool to estimate deflection of the given UV point
-  //! with regard to its representation in 3D space.
+
   struct EvalDeflection
   {
     BRepAdaptor_Surface Surface;
 
-    //! Initializes tool with the given face.
     EvalDeflection(const TopoDS_Face& theFace)
         : Surface(theFace)
     {
     }
 
-    //! Evaluates deflection of the given 2d point from its 3d representation.
     double Eval(const gp_Pnt2d& thePoint2d, const gp_Pnt& thePoint3d)
     {
       gp_Pnt aPnt;
@@ -2543,26 +2367,22 @@ namespace
     }
   };
 
-  //! Represents link of triangulation.
   struct Link
   {
     int Node[2];
 
-    //! Constructor
     Link(const int theNode1, const int theNode2)
     {
       Node[0] = theNode1;
       Node[1] = theNode2;
     }
 
-    //! Returns true if this link has the same nodes as the other.
     bool IsEqual(const Link& theOther) const
     {
       return ((Node[0] == theOther.Node[0] && Node[1] == theOther.Node[1])
               || (Node[0] == theOther.Node[1] && Node[1] == theOther.Node[0]));
     }
 
-    //! Alias for IsEqual.
     bool operator==(const Link& theOther) const { return IsEqual(theOther); }
   };
 } // namespace
@@ -2603,9 +2423,6 @@ void BRepLib::UpdateDeflection(const TopoDS_Shape& theShape)
       continue;
     }
 
-    // Collect all nodes of degenerative edges and skip elements
-    // build upon them due to huge distortions introduced by passage
-    // from UV space to 3D.
     NCollection_Map<int> aDegNodes;
     TopExp_Explorer      anExpEdge(aFace, TopAbs_EDGE);
     for (; anExpEdge.More(); anExpEdge.Next())
@@ -2652,7 +2469,6 @@ void BRepLib::UpdateDeflection(const TopoDS_Shape& theShape)
                                 aPT->UVNode(aNode[1]),
                                 aPT->UVNode(aNode[2])};
 
-      // Check midpoint of triangle.
       const gp_Pnt   aMid3d_t = (aP3d[0].XYZ() + aP3d[1].XYZ() + aP3d[2].XYZ()) / 3.;
       const gp_Pnt2d aMid2d_t = (aP2d[0].XY() + aP2d[1].XY() + aP2d[2].XY()) / 3.;
 
@@ -2664,7 +2480,7 @@ void BRepLib::UpdateDeflection(const TopoDS_Shape& theShape)
         const Link aLink(aNode[i], aNode[j]);
         if (!aLinks.Add(aLink))
         {
-          // Do not estimate boundary links due to high distortions at the edge.
+
           const gp_Pnt& aP3d1 = aP3d[i];
           const gp_Pnt& aP3d2 = aP3d[j];
 
@@ -2682,8 +2498,6 @@ void BRepLib::UpdateDeflection(const TopoDS_Shape& theShape)
     aPT->Deflection(std::sqrt(aSqDeflection));
   }
 }
-
-//=================================================================================================
 
 void BRepLib::SortFaces(const TopoDS_Shape& Sh, NCollection_List<TopoDS_Shape>& LF)
 {
@@ -2747,12 +2561,10 @@ void BRepLib::SortFaces(const TopoDS_Shape& Sh, NCollection_List<TopoDS_Shape>& 
   LF.Append(LTri);
 }
 
-//=================================================================================================
-
 void BRepLib::ReverseSortFaces(const TopoDS_Shape& Sh, NCollection_List<TopoDS_Shape>& LF)
 {
   LF.Clear();
-  // Use the allocator of the result LF for intermediate results
+
   NCollection_List<TopoDS_Shape> LTri(LF.Allocator()), LPlan(LF.Allocator()), LCyl(LF.Allocator()),
     LCon(LF.Allocator()), LSphere(LF.Allocator()), LTor(LF.Allocator()), LOther(LF.Allocator());
   TopExp_Explorer exp(Sh, TopAbs_FACE);
@@ -2808,27 +2620,25 @@ void BRepLib::ReverseSortFaces(const TopoDS_Shape& Sh, NCollection_List<TopoDS_S
   LF.Append(LPlan);
 }
 
-//=================================================================================================
-
 void BRepLib::BoundingVertex(const NCollection_List<TopoDS_Shape>& theLV,
                              gp_Pnt&                               theNewCenter,
                              double&                               theNewTol)
 {
   int aNb;
-  //
+
   aNb = theLV.Extent();
   if (aNb < 2)
   {
     return;
   }
-  //
+
   else if (aNb == 2)
   {
     int           m, n;
     double        aR[2], dR, aD, aEps;
     TopoDS_Vertex aV[2];
     gp_Pnt        aP[2];
-    //
+
     aEps = RealEpsilon();
     for (m = 0; m < aNb; ++m)
     {
@@ -2836,19 +2646,19 @@ void BRepLib::BoundingVertex(const NCollection_List<TopoDS_Shape>& theLV,
       aP[m] = BRep_Tool::Pnt(aV[m]);
       aR[m] = BRep_Tool::Tolerance(aV[m]);
     }
-    //
-    m = 0; // max R
-    n = 1; // min R
+
+    m = 0;
+    n = 1;
     if (aR[0] < aR[1])
     {
       m = 1;
       n = 0;
     }
-    //
-    dR = aR[m] - aR[n]; // dR >= 0.
+
+    dR = aR[m] - aR[n];
     gp_Vec aVD(aP[m], aP[n]);
     aD = aVD.Magnitude();
-    //
+
     if (aD <= dR || aD < aEps)
     {
       theNewCenter = aP[m];
@@ -2859,24 +2669,20 @@ void BRepLib::BoundingVertex(const NCollection_List<TopoDS_Shape>& theLV,
       double aRr;
       gp_XYZ aXYZr;
       gp_Pnt aPr;
-      //
+
       aRr   = 0.5 * (aR[m] + aR[n] + aD);
       aXYZr = 0.5 * (aP[m].XYZ() + aP[n].XYZ() - aVD.XYZ() * (dR / aD));
       aPr.SetXYZ(aXYZr);
-      //
+
       theNewCenter = aPr;
       theNewTol    = aRr;
-      // aBB.MakeVertex (aVnew, aPr, aRr);
     }
     return;
-  } // else if (aNb==2) {
-  //
+  }
+
   else
-  { // if (aNb>2)
-    // compute the point
-    //
-    // issue 0027540 - sum of doubles may depend on the order
-    // of addition, thus sort the coordinates for stable result
+  {
+
     int                                      i;
     NCollection_Array1<gp_Pnt>               aPoints(0, aNb - 1);
     NCollection_List<TopoDS_Shape>::Iterator aIt(theLV);
@@ -2886,21 +2692,20 @@ void BRepLib::BoundingVertex(const NCollection_List<TopoDS_Shape>& theLV,
       gp_Pnt               aPi = BRep_Tool::Pnt(aVi);
       aPoints(i)               = aPi;
     }
-    //
+
     std::sort(aPoints.begin(), aPoints.end(), BRepLib_ComparePoints());
-    //
+
     gp_XYZ aXYZ(0., 0., 0.);
     for (i = 0; i < aNb; ++i)
     {
       aXYZ += aPoints(i).XYZ();
     }
     aXYZ.Divide((double)aNb);
-    //
+
     gp_Pnt aP(aXYZ);
-    //
-    // compute the tolerance for the new vertex
+
     double aTi, aDi, aDmax;
-    //
+
     aDmax = -1.;
     aIt.Initialize(theLV);
     for (; aIt.More(); aIt.Next())
@@ -2916,13 +2721,11 @@ void BRepLib::BoundingVertex(const NCollection_List<TopoDS_Shape>& theLV,
         aDmax = aDi;
       }
     }
-    //
+
     theNewCenter = aP;
     theNewTol    = aDmax;
   }
 }
-
-//=================================================================================================
 
 void BRepLib::ExtendFace(const TopoDS_Face& theF,
                          const double       theExtVal,
@@ -2932,25 +2735,23 @@ void BRepLib::ExtendFace(const TopoDS_Face& theF,
                          const bool         theExtVMax,
                          TopoDS_Face&       theFExtended)
 {
-  // Get face bounds
+
   BRepAdaptor_Surface aBAS(theF);
   double              aFUMin = aBAS.FirstUParameter(), aFUMax = aBAS.LastUParameter(),
          aFVMin = aBAS.FirstVParameter(), aFVMax = aBAS.LastVParameter();
   const double aTol = BRep_Tool::Tolerance(theF);
 
-  // Surface to build the face
   occ::handle<Geom_Surface> aS;
 
   const GeomAbs_SurfaceType aType = aBAS.GetType();
-  // treat analytical surfaces first
+
   if (aType == GeomAbs_Plane || aType == GeomAbs_Sphere || aType == GeomAbs_Cylinder
       || aType == GeomAbs_Torus || aType == GeomAbs_Cone)
   {
-    // Get basis transformed basis surface
+
     occ::handle<Geom_Surface> aSurf =
       occ::down_cast<Geom_Surface>(aBAS.Surface().Surface()->Transformed(aBAS.Trsf()));
 
-    // Get bounds of the basis surface
     double aSUMin, aSUMax, aSVMin, aSVMax;
     aSurf->Bounds(aSUMin, aSUMax, aSVMin, aSVMax);
 
@@ -2958,7 +2759,7 @@ void BRepLib::ExtendFace(const TopoDS_Face& theF,
     double anUPeriod   = isUPeriodic ? aBAS.UPeriod() : 0.0;
     if (isUPeriodic)
     {
-      // Adjust face bounds to first period
+
       double aDelta = aFUMax - aFUMin;
       aFUMin = std::max(aSUMin, aFUMin + anUPeriod * std::ceil((aSUMin - aFUMin) / anUPeriod));
       aFUMax = aFUMin + aDelta;
@@ -2968,13 +2769,12 @@ void BRepLib::ExtendFace(const TopoDS_Face& theF,
     double aVPeriod    = isVPeriodic ? aBAS.VPeriod() : 0.0;
     if (isVPeriodic)
     {
-      // Adjust face bounds to first period
+
       double aDelta = aFVMax - aFVMin;
       aFVMin        = std::max(aSVMin, aFVMin + aVPeriod * std::ceil((aSVMin - aFVMin) / aVPeriod));
       aFVMax        = aFVMin + aDelta;
     }
 
-    // Enlarge the face
     double anURes = 0., aVRes = 0.;
     if (theExtUMin || theExtUMax)
       anURes = aBAS.UResolution(theExtVal);
@@ -2990,8 +2790,6 @@ void BRepLib::ExtendFace(const TopoDS_Face& theF,
     if (theExtVMax)
       aFVMax = std::min(isVPeriodic ? aFVMin + aVPeriod : aSVMax, aFVMax + aVRes);
 
-    // Check if the periodic surface should become closed.
-    // In this case, use the basis surface with basis bounds.
     constexpr double anEps = Precision::PConfusion();
     if (isUPeriodic && std::abs(aFUMax - aFUMin - anUPeriod) < anEps)
     {
@@ -3008,7 +2806,6 @@ void BRepLib::ExtendFace(const TopoDS_Face& theF,
   }
   else
   {
-    // General case
 
     occ::handle<Geom_BoundedSurface> aSB =
       occ::down_cast<Geom_BoundedSurface>(BRep_Tool::Surface(theF));
@@ -3018,35 +2815,32 @@ void BRepLib::ExtendFace(const TopoDS_Face& theF,
       return;
     }
 
-    // Get surfaces bounds
     double aSUMin, aSUMax, aSVMin, aSVMax;
     aSB->Bounds(aSUMin, aSUMax, aSVMin, aSVMax);
 
     bool isUClosed = aSB->IsUClosed();
     bool isVClosed = aSB->IsVClosed();
 
-    // Check if the extension in necessary directions is done
     bool isExtUMin = false, isExtUMax = false, isExtVMin = false, isExtVMax = false;
 
-    // UMin
     if (theExtUMin && !isUClosed && !Precision::IsInfinite(aSUMin))
     {
       GeomLib::ExtendSurfByLength(aSB, theExtVal, 1, true, false);
       isExtUMin = true;
     }
-    // UMax
+
     if (theExtUMax && !isUClosed && !Precision::IsInfinite(aSUMax))
     {
       GeomLib::ExtendSurfByLength(aSB, theExtVal, 1, true, true);
       isExtUMax = true;
     }
-    // VMin
+
     if (theExtVMin && !isVClosed && !Precision::IsInfinite(aSVMax))
     {
       GeomLib::ExtendSurfByLength(aSB, theExtVal, 1, false, false);
       isExtVMin = true;
     }
-    // VMax
+
     if (theExtVMax && !isVClosed && !Precision::IsInfinite(aSVMax))
     {
       GeomLib::ExtendSurfByLength(aSB, theExtVal, 1, false, true);
@@ -3055,7 +2849,6 @@ void BRepLib::ExtendFace(const TopoDS_Face& theF,
 
     aS = aSB;
 
-    // Get new bounds
     aS->Bounds(aSUMin, aSUMax, aSVMin, aSVMax);
     if (isExtUMin)
       aFUMin = aSUMin;

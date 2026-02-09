@@ -14,10 +14,6 @@
 class TopoDS_Wire;
 class TopoDS_Shape;
 
-//! Compute a topological surface (a shell) using
-//! generating wires. The face of the shell will be
-//! ruled surfaces passing by the wires.
-//! The wires must have the same number of edges.
 class BRepFill_Generator
 {
 public:
@@ -27,35 +23,24 @@ public:
 
   Standard_EXPORT void AddWire(const TopoDS_Wire& Wire);
 
-  //! Compute the shell.
   Standard_EXPORT void Perform();
 
   const TopoDS_Shell& Shell() const;
 
-  //! Returns all the shapes created
   Standard_EXPORT const NCollection_DataMap<TopoDS_Shape,
                                             NCollection_List<TopoDS_Shape>,
                                             TopTools_ShapeMapHasher>&
                         Generated() const;
 
-  //! Returns the shapes created from a subshape
-  //! <SSection> of a section.
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& GeneratedShapes(
     const TopoDS_Shape& SSection) const;
 
-  //! Returns a modified shape in the constructed shell,
-  //! If shape is not changed (replaced) during operation => returns the same shape
   Standard_EXPORT TopoDS_Shape ResultShape(const TopoDS_Shape& theShape) const;
 
-  //! Sets the mutable input state
-  //! If true then the input profile can be modified
-  //! inside the operation. Default value is true.
   Standard_EXPORT void SetMutableInput(const bool theIsMutableInput);
 
-  //! Returns the current mutable input state
   Standard_EXPORT bool IsMutableInput() const;
 
-  //! Returns status of the operation
   BRepFill_ThruSectionErrorStatus GetStatus() const { return myStatus; }
 
 private:

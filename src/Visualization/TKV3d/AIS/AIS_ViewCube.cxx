@@ -25,7 +25,6 @@ namespace
   constexpr int THE_NB_DISK_SLICES    = 20;
   constexpr int THE_NB_ARROW_FACETTES = 20;
 
-  //! Return the number of non-zero components.
   static int nbDirectionComponents(const gp_Dir& theDir)
   {
     int aNbComps = 0;
@@ -40,8 +39,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 AIS_ViewCubeSensitive::AIS_ViewCubeSensitive(const occ::handle<SelectMgr_EntityOwner>& theOwner,
                                              const occ::handle<Graphic3d_ArrayOfTriangles>& theTris)
     : Select3D_SensitivePrimitiveArray(theOwner)
@@ -49,21 +46,17 @@ AIS_ViewCubeSensitive::AIS_ViewCubeSensitive(const occ::handle<SelectMgr_EntityO
   InitTriangulation(theTris->Attributes(), theTris->Indices(), TopLoc_Location());
 }
 
-//=================================================================================================
-
 bool AIS_ViewCubeSensitive::Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                     SelectBasics_PickResult&             thePickResult)
 {
   return isValidRay(theMgr) && Select3D_SensitivePrimitiveArray::Matches(theMgr, thePickResult);
 }
 
-//=================================================================================================
-
 bool AIS_ViewCubeSensitive::isValidRay(const SelectBasics_SelectingVolumeManager& theMgr) const
 {
   if (theMgr.GetActiveSelectionType() != SelectMgr_SelectionType_Point)
   {
-    // disallow rectangular selection
+
     return false;
   }
 
@@ -77,28 +70,20 @@ bool AIS_ViewCubeSensitive::isValidRay(const SelectBasics_SelectingVolumeManager
   return true;
 }
 
-//=================================================================================================
-
 bool AIS_ViewCube::IsBoxSide(V3d_TypeOfOrientation theOrient)
 {
   return nbDirectionComponents(V3d::GetProjAxis(theOrient)) == 1;
 }
-
-//=================================================================================================
 
 bool AIS_ViewCube::IsBoxEdge(V3d_TypeOfOrientation theOrient)
 {
   return nbDirectionComponents(V3d::GetProjAxis(theOrient)) == 2;
 }
 
-//=================================================================================================
-
 bool AIS_ViewCube::IsBoxCorner(V3d_TypeOfOrientation theOrient)
 {
   return nbDirectionComponents(V3d::GetProjAxis(theOrient)) == 3;
 }
-
-//=================================================================================================
 
 AIS_ViewCube::AIS_ViewCube()
     : myBoxEdgeAspect(new Prs3d_ShadingAspect()),
@@ -143,7 +128,6 @@ AIS_ViewCube::AIS_ViewCube()
   setDefaultAttributes();
   setDefaultHighlightAttributes();
 
-  // setup default labels
   myBoxSideLabels.Bind(V3d_TypeOfOrientation_Zup_Front, "FRONT");
   myBoxSideLabels.Bind(V3d_TypeOfOrientation_Zup_Back, "BACK");
   myBoxSideLabels.Bind(V3d_TypeOfOrientation_Zup_Top, "TOP");
@@ -155,11 +139,8 @@ AIS_ViewCube::AIS_ViewCube()
   myAxesLabels.Bind(Prs3d_DatumParts_YAxis, "Y");
   myAxesLabels.Bind(Prs3d_DatumParts_ZAxis, "Z");
 
-  // define default size
   SetSize(70.0);
 }
-
-//=================================================================================================
 
 void AIS_ViewCube::setDefaultAttributes()
 {
@@ -168,10 +149,9 @@ void AIS_ViewCube::setDefaultAttributes()
   myDrawer->TextAspect()->SetColor(Quantity_NOC_BLACK);
   myDrawer->TextAspect()->SetFont(Font_NOF_SANS_SERIF);
   myDrawer->TextAspect()->SetHeight(16.0);
-  // clang-format off
-  myDrawer->TextAspect()->Aspect()->SetTextZoomable (true); // the whole object is drawn within transformation-persistence
-  // this should be forced back-face culling regardless Closed flag
-  // clang-format on
+
+  myDrawer->TextAspect()->Aspect()->SetTextZoomable(true);
+
   myDrawer->TextAspect()->Aspect()->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_BackCulled);
 
   Graphic3d_MaterialAspect aMat(Graphic3d_NameOfMaterial_UserDefined);
@@ -180,7 +160,7 @@ void AIS_ViewCube::setDefaultAttributes()
 
   const occ::handle<Graphic3d_AspectFillArea3d>& aShading = myDrawer->ShadingAspect()->Aspect();
   aShading->SetInteriorStyle(Aspect_IS_SOLID);
-  // this should be forced back-face culling regardless Closed flag
+
   aShading->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_BackCulled);
   aShading->SetInteriorColor(aMat.Color());
   aShading->SetFrontMaterial(aMat);
@@ -191,8 +171,6 @@ void AIS_ViewCube::setDefaultAttributes()
   *myBoxCornerAspect->Aspect() = *aShading;
   myBoxCornerAspect->SetColor(Quantity_NOC_GRAY30);
 }
-
-//=================================================================================================
 
 void AIS_ViewCube::setDefaultHighlightAttributes()
 {
@@ -208,8 +186,6 @@ void AIS_ViewCube::setDefaultHighlightAttributes()
   myDynHilightDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
   myDynHilightDrawer->SetColor(Quantity_NOC_CYAN1);
 }
-
-//=================================================================================================
 
 void AIS_ViewCube::SetYup(bool theIsYup, bool theToUpdateLabels)
 {
@@ -250,8 +226,6 @@ void AIS_ViewCube::SetYup(bool theIsYup, bool theToUpdateLabels)
   SetToUpdate();
 }
 
-//=================================================================================================
-
 void AIS_ViewCube::ResetStyles()
 {
   UnsetAttributes();
@@ -270,8 +244,6 @@ void AIS_ViewCube::ResetStyles()
   myAxesPadding       = 1.0;
   SetSize(70.0);
 }
-
-//=================================================================================================
 
 void AIS_ViewCube::SetSize(double theValue, bool theToAdaptAnother)
 {
@@ -295,8 +267,6 @@ void AIS_ViewCube::SetSize(double theValue, bool theToAdaptAnother)
   }
 }
 
-//=================================================================================================
-
 void AIS_ViewCube::SetRoundRadius(const double theValue)
 {
   Standard_OutOfRange_Raise_if(theValue < 0.0 || theValue > 0.5,
@@ -307,8 +277,6 @@ void AIS_ViewCube::SetRoundRadius(const double theValue)
     SetToUpdate();
   }
 }
-
-//=================================================================================================
 
 void AIS_ViewCube::createRoundRectangleTriangles(
   const occ::handle<Graphic3d_ArrayOfTriangles>& theTris,
@@ -378,7 +346,6 @@ void AIS_ViewCube::createRoundRectangleTriangles(
                            .Transformed(theTrsf));
     }
 
-    // split triangle fan
     theTris->AddTriangleFanEdges(aVertFirst + 1, theTris->VertexNumber(), true);
   }
   else
@@ -403,8 +370,6 @@ void AIS_ViewCube::createRoundRectangleTriangles(
   }
 }
 
-//=================================================================================================
-
 void AIS_ViewCube::createBoxPartTriangles(const occ::handle<Graphic3d_ArrayOfTriangles>& theTris,
                                           int&                                           theNbNodes,
                                           int&                                           theNbTris,
@@ -423,8 +388,6 @@ void AIS_ViewCube::createBoxPartTriangles(const occ::handle<Graphic3d_ArrayOfTri
     createBoxCornerTriangles(theTris, theNbNodes, theNbTris, theDir);
   }
 }
-
-//=================================================================================================
 
 void AIS_ViewCube::createBoxSideTriangles(const occ::handle<Graphic3d_ArrayOfTriangles>& theTris,
                                           int&                                           theNbNodes,
@@ -446,8 +409,6 @@ void AIS_ViewCube::createBoxSideTriangles(const occ::handle<Graphic3d_ArrayOfTri
                                 myRoundRadius * mySize,
                                 aTrsf);
 }
-
-//=================================================================================================
 
 void AIS_ViewCube::createBoxEdgeTriangles(const occ::handle<Graphic3d_ArrayOfTriangles>& theTris,
                                           int&                                           theNbNodes,
@@ -475,8 +436,6 @@ void AIS_ViewCube::createBoxEdgeTriangles(const occ::handle<Graphic3d_ArrayOfTri
                                 aTrsf);
 }
 
-//=================================================================================================
-
 void AIS_ViewCube::createBoxCornerTriangles(const occ::handle<Graphic3d_ArrayOfTriangles>& theTris,
                                             int&                  theNbNodes,
                                             int&                  theNbTris,
@@ -496,7 +455,7 @@ void AIS_ViewCube::createBoxCornerTriangles(const occ::handle<Graphic3d_ArrayOfT
     }
 
     const double anEdgeHWidth = myBoxFacetExtension * gp_XY(1.0, 1.0).Modulus() * 0.5;
-    const double aHeight      = anEdgeHWidth * std::sqrt(2.0 / 3.0); // tetrahedron height
+    const double aHeight      = anEdgeHWidth * std::sqrt(2.0 / 3.0);
     const gp_Pnt aPos         = aDir.XYZ() * (aHSize * gp_Vec(1.0, 1.0, 1.0).Magnitude() + aHeight);
     const gp_Ax2 aPosition(aPos, aDir.Reversed());
     gp_Ax3       aSystem(aPosition);
@@ -549,8 +508,6 @@ void AIS_ViewCube::createBoxCornerTriangles(const occ::handle<Graphic3d_ArrayOfT
   }
 }
 
-//=================================================================================================
-
 void AIS_ViewCube::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                            const occ::handle<Prs3d_Presentation>& thePrs,
                            const int                              theMode)
@@ -564,7 +521,6 @@ void AIS_ViewCube::Compute(const occ::handle<PrsMgr_PresentationManager>&,
   const gp_Pnt aLocation =
     (mySize * 0.5 + myBoxFacetExtension + myAxesPadding) * gp_XYZ(-1.0, -1.0, -1.0);
 
-  // Display axes
   if (myToDisplayAxes)
   {
     const double anAxisSize = mySize + 2.0 * myBoxFacetExtension + myAxesPadding;
@@ -624,7 +580,6 @@ void AIS_ViewCube::Compute(const occ::handle<PrsMgr_PresentationManager>&,
       }
     }
 
-    // Display center
     {
       occ::handle<Graphic3d_Group> aGroup = thePrs->NewGroup();
       aGroup->SetClosed(true);
@@ -640,7 +595,6 @@ void AIS_ViewCube::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     }
   }
 
-  // Display box sides
   {
     int aNbNodes = 0, aNbTris = 0;
     for (int aPartIter = V3d_Xpos; aPartIter <= int(V3d_Zneg); ++aPartIter)
@@ -671,11 +625,11 @@ void AIS_ViewCube::Compute(const occ::handle<PrsMgr_PresentationManager>&,
         }
 
         const int aFirstNode = aSegs->VertexNumber();
-        // clang-format off
-        for (int aVertIter = (aNbTris - aTriFrom) > 2 ? aTriNodesFrom + 2 : aTriNodesFrom + 1; // skip triangle fan center
-                                                               // clang-format on
-            aVertIter <= aTris->VertexNumber();
-            ++aVertIter)
+
+        for (int aVertIter = (aNbTris - aTriFrom) > 2 ? aTriNodesFrom + 2 : aTriNodesFrom + 1;
+
+             aVertIter <= aTris->VertexNumber();
+             ++aVertIter)
         {
           aSegs->AddVertex(aTris->Vertice(aVertIter));
         }
@@ -697,7 +651,6 @@ void AIS_ViewCube::Compute(const occ::handle<PrsMgr_PresentationManager>&,
       }
     }
 
-    // Display box sides labels
     occ::handle<Graphic3d_Group> aTextGroup = thePrs->NewGroup();
     aTextGroup->SetGroupPrimitivesAspect(myDrawer->TextAspect()->Aspect());
     for (int aPartIter = V3d_Xpos; aPartIter <= int(V3d_Zneg); ++aPartIter)
@@ -731,7 +684,7 @@ void AIS_ViewCube::Compute(const occ::handle<PrsMgr_PresentationManager>&,
         }
       }
 
-      const double anOffset = 2.0; // extra offset to avoid overlapping with triangulation
+      const double anOffset = 2.0;
       const gp_Pnt aPos     = aDir.XYZ() * (mySize * 0.5 + myBoxFacetExtension + anOffset);
       const gp_Ax2 aPosition(aPos, aDir, anUp.Crossed(aDir));
 
@@ -746,7 +699,6 @@ void AIS_ViewCube::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     }
   }
 
-  // Display box edges
   {
     int aNbNodes = 0, aNbTris = 0;
     for (int aPartIter = V3d_XposYpos; aPartIter <= int(V3d_YposZneg); ++aPartIter)
@@ -774,7 +726,6 @@ void AIS_ViewCube::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     }
   }
 
-  // Display box corners
   {
     int aNbNodes = 0, aNbTris = 0;
     for (int aPartIter = V3d_XposYposZpos; aPartIter <= int(V3d_XnegYnegZneg); ++aPartIter)
@@ -802,8 +753,6 @@ void AIS_ViewCube::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     }
   }
 }
-
-//=================================================================================================
 
 void AIS_ViewCube::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection,
                                     const int                               theMode)
@@ -844,28 +793,20 @@ void AIS_ViewCube::ComputeSelection(const occ::handle<SelectMgr_Selection>& theS
   }
 }
 
-//=================================================================================================
-
 double AIS_ViewCube::Duration() const
 {
   return myViewAnimation->OwnDuration();
 }
-
-//=================================================================================================
 
 void AIS_ViewCube::SetDuration(double theDurationSec)
 {
   myViewAnimation->SetOwnDuration(theDurationSec);
 }
 
-//=================================================================================================
-
 bool AIS_ViewCube::HasAnimation() const
 {
   return !myViewAnimation->IsStopped();
 }
-
-//=================================================================================================
 
 void AIS_ViewCube::viewFitAll(const occ::handle<V3d_View>&         theView,
                               const occ::handle<Graphic3d_Camera>& theCamera)
@@ -881,8 +822,6 @@ void AIS_ViewCube::viewFitAll(const occ::handle<V3d_View>&         theView,
     theView->FitMinMax(theCamera, aBndBox, 0.01, 10.0 * Precision::Confusion());
   }
 }
-
-//=================================================================================================
 
 void AIS_ViewCube::StartAnimation(const occ::handle<AIS_ViewCubeOwner>& theOwner)
 {
@@ -908,7 +847,7 @@ void AIS_ViewCube::StartAnimation(const occ::handle<AIS_ViewCubeOwner>& theOwner
     const gp_Dir aNewDir = myEndState->Direction();
     if (!myToResetCameraUp && !aNewDir.IsEqual(myStartState->Direction(), Precision::Angular()))
     {
-      // find the Up direction closest to current instead of default one
+
       const gp_Ax1 aNewDirAx1(gp::Origin(), aNewDir);
       const gp_Dir anOldUp     = myStartState->Up();
       const gp_Dir anUpList[4] = {
@@ -941,8 +880,6 @@ void AIS_ViewCube::StartAnimation(const occ::handle<AIS_ViewCubeOwner>& theOwner
   myViewAnimation->StartTimer(0.0, 1.0, true, false);
 }
 
-//=================================================================================================
-
 bool AIS_ViewCube::updateAnimation()
 {
   const double aPts = myViewAnimation->UpdateTimer();
@@ -955,8 +892,6 @@ bool AIS_ViewCube::updateAnimation()
   }
   return true;
 }
-
-//=================================================================================================
 
 bool AIS_ViewCube::UpdateAnimation(const bool theToUpdate)
 {
@@ -975,8 +910,6 @@ bool AIS_ViewCube::UpdateAnimation(const bool theToUpdate)
   return true;
 }
 
-//=================================================================================================
-
 void AIS_ViewCube::HandleClick(const occ::handle<AIS_ViewCubeOwner>& theOwner)
 {
   if (!myToAutoStartAnim)
@@ -994,8 +927,6 @@ void AIS_ViewCube::HandleClick(const occ::handle<AIS_ViewCubeOwner>& theOwner)
     UpdateAnimation(true);
   }
 }
-
-//=================================================================================================
 
 void AIS_ViewCube::HilightOwnerWithColor(const occ::handle<PrsMgr_PresentationManager>& thePrsMgr,
                                          const occ::handle<Prs3d_Drawer>&               theStyle,
@@ -1042,16 +973,12 @@ void AIS_ViewCube::HilightOwnerWithColor(const occ::handle<PrsMgr_PresentationMa
   }
 }
 
-//=================================================================================================
-
 void AIS_ViewCube::HilightSelected(
   const occ::handle<PrsMgr_PresentationManager>&,
   const NCollection_Sequence<occ::handle<SelectMgr_EntityOwner>>& theSeq)
 {
-  // this method should never be called since AIS_InteractiveObject::HandleClick() has been
-  // overridden
+
   if (theSeq.Size() == 1)
   {
-    // HandleClick (Handle(AIS_ViewCubeOwner)::DownCast (theSeq.First()));
   }
 }

@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include "RWStepKinematics_RWPlanarCurvePairRange.hpp"
 
@@ -13,11 +13,7 @@
 #include <StepGeom_Curve.hpp>
 #include <StepGeom_TrimmedCurve.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWPlanarCurvePairRange::RWStepKinematics_RWPlanarCurvePairRange() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWPlanarCurvePairRange::ReadStep(
   const occ::handle<StepData_StepReaderData>&             theData,
@@ -25,16 +21,12 @@ void RWStepKinematics_RWPlanarCurvePairRange::ReadStep(
   occ::handle<Interface_Check>&                           theArch,
   const occ::handle<StepKinematics_PlanarCurvePairRange>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 11, theArch, "planar_curve_pair_range"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
-
-  // Inherited fields of ItemDefinedTransformation
 
   occ::handle<TCollection_HAsciiString> aItemDefinedTransformation_Name;
   theData->ReadString(theNum,
@@ -75,8 +67,6 @@ void RWStepKinematics_RWPlanarCurvePairRange::ReadStep(
                       STANDARD_TYPE(StepRepr_RepresentationItem),
                       aItemDefinedTransformation_TransformItem2);
 
-  // Inherited fields of KinematicPair
-
   occ::handle<StepKinematics_KinematicJoint> aKinematicPair_Joint;
   theData->ReadEntity(theNum,
                       6,
@@ -84,8 +74,6 @@ void RWStepKinematics_RWPlanarCurvePairRange::ReadStep(
                       theArch,
                       STANDARD_TYPE(StepKinematics_KinematicJoint),
                       aKinematicPair_Joint);
-
-  // Inherited fields of PlanarCurvePair
 
   occ::handle<StepGeom_Curve> aPlanarCurvePair_Curve1;
   theData->ReadEntity(theNum,
@@ -110,8 +98,6 @@ void RWStepKinematics_RWPlanarCurvePairRange::ReadStep(
                        theArch,
                        aPlanarCurvePair_Orientation);
 
-  // Own fields of PlanarCurvePairRange
-
   occ::handle<StepGeom_TrimmedCurve> aRangeOnCurve1;
   theData->ReadEntity(theNum,
                       10,
@@ -128,7 +114,6 @@ void RWStepKinematics_RWPlanarCurvePairRange::ReadStep(
                       STANDARD_TYPE(StepGeom_TrimmedCurve),
                       aRangeOnCurve2);
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aItemDefinedTransformation_Name,
                hasItemDefinedTransformation_Description,
@@ -143,18 +128,12 @@ void RWStepKinematics_RWPlanarCurvePairRange::ReadStep(
                aRangeOnCurve2);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWPlanarCurvePairRange::WriteStep(
   StepData_StepWriter&                                    theSW,
   const occ::handle<StepKinematics_PlanarCurvePairRange>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Inherited fields of ItemDefinedTransformation
 
   theSW.Send(theEnt->ItemDefinedTransformation()->Name());
 
@@ -169,11 +148,7 @@ void RWStepKinematics_RWPlanarCurvePairRange::WriteStep(
 
   theSW.Send(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Own fields of KinematicPair
-
   theSW.Send(theEnt->Joint());
-
-  // Own fields of PlanarCurvePair
 
   theSW.Send(theEnt->Curve1());
 
@@ -181,39 +156,25 @@ void RWStepKinematics_RWPlanarCurvePairRange::WriteStep(
 
   theSW.SendBoolean(theEnt->Orientation());
 
-  // Own fields of PlanarCurvePairRange
-
   theSW.Send(theEnt->RangeOnCurve1());
 
   theSW.Send(theEnt->RangeOnCurve2());
 }
-
-//=================================================================================================
 
 void RWStepKinematics_RWPlanarCurvePairRange::Share(
   const occ::handle<StepKinematics_PlanarCurvePairRange>& theEnt,
   Interface_EntityIterator&                               iter) const
 {
 
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of ItemDefinedTransformation
-
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem1());
 
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Inherited fields of KinematicPair
-
   iter.AddItem(theEnt->StepKinematics_KinematicPair::Joint());
-
-  // Inherited fields of PlanarCurvePair
 
   iter.AddItem(theEnt->StepKinematics_PlanarCurvePair::Curve1());
 
   iter.AddItem(theEnt->StepKinematics_PlanarCurvePair::Curve2());
-
-  // Own fields of PlanarCurvePairRange
 
   iter.AddItem(theEnt->RangeOnCurve1());
 

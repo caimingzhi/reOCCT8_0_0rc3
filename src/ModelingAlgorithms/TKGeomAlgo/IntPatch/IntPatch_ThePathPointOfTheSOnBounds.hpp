@@ -57,10 +57,6 @@ private:
   double                         param;
 };
 
-//=================================================================================================
-// Inline implementations
-//=================================================================================================
-
 inline void IntPatch_ThePathPointOfTheSOnBounds::SetValue(const gp_Pnt&                         P,
                                                           const double                          Tol,
                                                           const occ::handle<Adaptor3d_HVertex>& V,

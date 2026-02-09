@@ -11,14 +11,8 @@
 #include <Standard_NoSuchObject.hpp>
 #include <TopAbs.hpp>
 
-//=================================================================================================
-
 HLRBRep_EdgeBuilder::HLRBRep_EdgeBuilder(HLRBRep_VertexList& VList)
 {
-  // at creation the EdgeBuilder explore the VertexList
-  // and use it to build a list of "AreaLimit" on the edge.
-  // An area is a part of the curve between
-  // two consecutive vertices
 
   Standard_DomainError_Raise_if(!VList.More(), "EdgeBuilder  : Empty vertex list");
 
@@ -26,11 +20,10 @@ HLRBRep_EdgeBuilder::HLRBRep_EdgeBuilder(HLRBRep_VertexList& VList)
   TopAbs_State                   before, after, ebefore, eafter;
   HLRAlgo_Intersection           V;
 
-  // loop on the Vertices
   for (; VList.More(); VList.Next())
   {
     before = after = ebefore = eafter = TopAbs_UNKNOWN;
-    // compute the states
+
     if (VList.IsBoundary())
     {
       switch (VList.Orientation())
@@ -105,7 +98,6 @@ HLRBRep_EdgeBuilder::HLRBRep_EdgeBuilder(HLRBRep_VertexList& VList)
       }
     }
 
-    // create the Limit and connect to list
     V   = VList.Current();
     cur = new HLRBRep_AreaLimit(V,
                                 VList.IsBoundary(),
@@ -127,14 +119,12 @@ HLRBRep_EdgeBuilder::HLRBRep_EdgeBuilder(HLRBRep_VertexList& VList)
     }
   }
 
-  // periodicity, make a circular list
   if (VList.IsPeriodic())
   {
     last->Next(myLimits);
     myLimits->Previous(last);
   }
 
-  // process UNKNOWN areas
   TopAbs_State stat  = TopAbs_UNKNOWN;
   TopAbs_State estat = TopAbs_UNKNOWN;
 
@@ -158,18 +148,16 @@ HLRBRep_EdgeBuilder::HLRBRep_EdgeBuilder(HLRBRep_VertexList& VList)
       }
     }
     cur = cur->Next();
-    // test for periodicicity
+
     if (cur == myLimits)
       break;
   }
 
-  // error if no interferences
   Standard_DomainError_Raise_if(stat == TopAbs_UNKNOWN, "EdgeBuilder : No interferences");
-  // if no boundary the edge covers the whole curve
+
   if (estat == TopAbs_UNKNOWN)
     estat = TopAbs_IN;
 
-  // propagate states
   cur = myLimits;
   while (!cur.IsNull())
   {
@@ -191,19 +179,14 @@ HLRBRep_EdgeBuilder::HLRBRep_EdgeBuilder(HLRBRep_VertexList& VList)
       break;
   }
 
-  // initialise with IN parts
   Builds(TopAbs_IN);
 }
-
-//=================================================================================================
 
 void HLRBRep_EdgeBuilder::InitAreas()
 {
   left  = myLimits->Previous();
   right = myLimits;
 }
-
-//=================================================================================================
 
 void HLRBRep_EdgeBuilder::NextArea()
 {
@@ -212,16 +195,12 @@ void HLRBRep_EdgeBuilder::NextArea()
     right = right->Next();
 }
 
-//=================================================================================================
-
 void HLRBRep_EdgeBuilder::PreviousArea()
 {
   right = left;
   if (!left.IsNull())
     left = left->Previous();
 }
-
-//=================================================================================================
 
 bool HLRBRep_EdgeBuilder::HasArea() const
 {
@@ -233,8 +212,6 @@ bool HLRBRep_EdgeBuilder::HasArea() const
   return true;
 }
 
-//=================================================================================================
-
 TopAbs_State HLRBRep_EdgeBuilder::AreaState() const
 {
   TopAbs_State stat = TopAbs_UNKNOWN;
@@ -244,8 +221,6 @@ TopAbs_State HLRBRep_EdgeBuilder::AreaState() const
     stat = right->StateBefore();
   return stat;
 }
-
-//=================================================================================================
 
 TopAbs_State HLRBRep_EdgeBuilder::AreaEdgeState() const
 {
@@ -257,21 +232,15 @@ TopAbs_State HLRBRep_EdgeBuilder::AreaEdgeState() const
   return stat;
 }
 
-//=================================================================================================
-
 occ::handle<HLRBRep_AreaLimit> HLRBRep_EdgeBuilder::LeftLimit() const
 {
   return left;
 }
 
-//=================================================================================================
-
 occ::handle<HLRBRep_AreaLimit> HLRBRep_EdgeBuilder::RightLimit() const
 {
   return right;
 }
-
-//=================================================================================================
 
 void HLRBRep_EdgeBuilder::Builds(const TopAbs_State ToBuild)
 {
@@ -292,21 +261,17 @@ void HLRBRep_EdgeBuilder::Builds(const TopAbs_State ToBuild)
   current = 3;
 }
 
-//=================================================================================================
-
 bool HLRBRep_EdgeBuilder::MoreEdges() const
 {
   return HasArea();
 }
 
-//=================================================================================================
-
 void HLRBRep_EdgeBuilder::NextEdge()
 {
-  // clean the current edge
+
   while (AreaState() == toBuild)
     NextArea();
-  // go to the next edge
+
   while (HasArea())
   {
     if ((AreaState() == toBuild) && (AreaEdgeState() == TopAbs_IN))
@@ -321,14 +286,10 @@ void HLRBRep_EdgeBuilder::NextEdge()
   }
 }
 
-//=================================================================================================
-
 bool HLRBRep_EdgeBuilder::MoreVertices() const
 {
   return (current < 3);
 }
-
-//=================================================================================================
 
 void HLRBRep_EdgeBuilder::NextVertex()
 {
@@ -350,8 +311,6 @@ void HLRBRep_EdgeBuilder::NextVertex()
     throw Standard_NoSuchObject("EdgeBuilder::NextVertex : No current edge");
 }
 
-//=================================================================================================
-
 const HLRAlgo_Intersection& HLRBRep_EdgeBuilder::Current() const
 {
   if (current == 1)
@@ -361,8 +320,6 @@ const HLRAlgo_Intersection& HLRBRep_EdgeBuilder::Current() const
   else
     throw Standard_NoSuchObject("EdgeBuilder::Current : No current vertex");
 }
-
-//=================================================================================================
 
 bool HLRBRep_EdgeBuilder::IsBoundary() const
 {
@@ -374,8 +331,6 @@ bool HLRBRep_EdgeBuilder::IsBoundary() const
     throw Standard_NoSuchObject("EdgeBuilder::IsBoundary : No current vertex");
 }
 
-//=================================================================================================
-
 bool HLRBRep_EdgeBuilder::IsInterference() const
 {
   if (current == 1)
@@ -385,8 +340,6 @@ bool HLRBRep_EdgeBuilder::IsInterference() const
   else
     throw Standard_NoSuchObject("EdgeBuilder::IsInterference : No current vertex");
 }
-
-//=================================================================================================
 
 TopAbs_Orientation HLRBRep_EdgeBuilder::Orientation() const
 {
@@ -405,10 +358,8 @@ TopAbs_Orientation HLRBRep_EdgeBuilder::Orientation() const
     else
       return TopAbs_REVERSED;
   }
-  return TopAbs_EXTERNAL; // only for WNT.
+  return TopAbs_EXTERNAL;
 }
-
-//=================================================================================================
 
 void HLRBRep_EdgeBuilder::Destroy()
 {

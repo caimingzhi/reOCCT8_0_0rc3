@@ -19,11 +19,8 @@ class TopOpeBRepTool_ShapeTool
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Returns the tolerance of the shape <S>.
-  //! If the shape <S> is Null, returns 0.
   Standard_EXPORT static double Tolerance(const TopoDS_Shape& S);
 
-  //! Returns 3D point of vertex <S>.
   Standard_EXPORT static gp_Pnt Pnt(const TopoDS_Shape& S);
 
   Standard_EXPORT static occ::handle<Geom_Curve> BASISCURVE(const occ::handle<Geom_Curve>& C);
@@ -50,15 +47,8 @@ public:
                                        double&            Vmin,
                                        double&            Vmax);
 
-  //! adjust u,v values in UVBounds of the domain of the
-  //! geometric shape <S>, according to Uperiodicity and
-  //! VPeriodicity of the domain.
-  //! <S> is assumed to be a face.
-  //! u and/or v is/are not modified when the domain is
-  //! not periodic in U and/or V .
   Standard_EXPORT static void AdjustOnPeriodic(const TopoDS_Shape& S, double& u, double& v);
 
-  //! indicates whether shape S1 is a closing shape on S2 or not.
   Standard_EXPORT static bool Closed(const TopoDS_Shape& S1, const TopoDS_Shape& S2);
 
   Standard_EXPORT static double PeriodizeParameter(const double        par,
@@ -77,15 +67,12 @@ public:
 
   Standard_EXPORT static bool EdgesSameOriented(const TopoDS_Shape& E1, const TopoDS_Shape& E2);
 
-  //! Compute tangent T, normal N, curvature C at point of parameter
-  //! P on curve BRAC. Returns the tolerance indicating if T,N are null.
   Standard_EXPORT static double EdgeData(const BRepAdaptor_Curve& BRAC,
                                          const double             P,
                                          gp_Dir&                  T,
                                          gp_Dir&                  N,
                                          double&                  C);
 
-  //! Same as previous on edge E.
   Standard_EXPORT static double EdgeData(const TopoDS_Shape& E,
                                          const double        P,
                                          gp_Dir&             T,

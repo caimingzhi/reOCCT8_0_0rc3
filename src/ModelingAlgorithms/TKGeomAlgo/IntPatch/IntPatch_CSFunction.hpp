@@ -7,15 +7,11 @@
 
 class math_Matrix;
 
-//! this function is associated to the intersection between
-//! a curve on surface and a surface.
 class IntPatch_CSFunction : public math_FunctionSetWithDerivatives
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! S1 is the surface on which the intersection is searched.
-  //! C is a curve on the surface S2.
   Standard_EXPORT IntPatch_CSFunction(const occ::handle<Adaptor3d_Surface>& S1,
                                       const occ::handle<Adaptor2d_Curve2d>& C,
                                       const occ::handle<Adaptor3d_Surface>& S2);

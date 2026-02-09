@@ -6,8 +6,6 @@
 
 class Geom2d_BSplineCurve;
 
-//! Checks for the end tangents : whether or not those
-//! are reversed
 class GeomLib_Check2dBSplineCurve
 {
 public:
@@ -23,11 +21,6 @@ public:
 
   Standard_EXPORT void FixTangent(const bool FirstFlag, const bool LastFlag);
 
-  //! modifies the curve
-  //! by fixing the first or the last tangencies
-  //!
-  //! if Index3D not in the Range [1,Nb3dSpaces]
-  //! if the Approx is not Done
   Standard_EXPORT occ::handle<Geom2d_BSplineCurve> FixedTangent(const bool FirstFlag,
                                                                 const bool LastFlag);
 

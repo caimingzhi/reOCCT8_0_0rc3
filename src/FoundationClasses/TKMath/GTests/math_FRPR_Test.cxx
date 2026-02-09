@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <math_FRPR.hpp>
 #include <math_MultipleVarFunctionWithGradient.hpp>
@@ -28,7 +17,6 @@
 namespace
 {
 
-  // Quadratic bowl function: f(x,y) = (x-1)^2 + (y-2)^2, minimum at (1, 2) with value 0
   class QuadraticBowlFunction : public math_MultipleVarFunctionWithGradient
   {
   public:
@@ -57,7 +45,6 @@ namespace
     }
   };
 
-  // Rosenbrock function: f(x,y) = (1-x)^2 + 100*(y-x^2)^2, minimum at (1, 1) with value 0
   class RosenbrockFunction : public math_MultipleVarFunctionWithGradient
   {
   public:
@@ -90,7 +77,6 @@ namespace
     }
   };
 
-  // 3D quadratic function: f(x,y,z) = (x-1)^2 + 2*(y-2)^2 + 3*(z-3)^2, minimum at (1,2,3)
   class Quadratic3DFunction : public math_MultipleVarFunctionWithGradient
   {
   public:
@@ -121,7 +107,6 @@ namespace
     }
   };
 
-  // Linear function: f(x,y) = 2*x + 3*y (unbounded, no minimum)
   class LinearFunction : public math_MultipleVarFunctionWithGradient
   {
   public:
@@ -149,7 +134,6 @@ namespace
     }
   };
 
-  // Quartic function with flat minimum: f(x,y) = (x-1)^4 + (y-2)^4
   class QuarticFunction : public math_MultipleVarFunctionWithGradient
   {
   public:
@@ -180,15 +164,15 @@ namespace
     }
   };
 
-} // anonymous namespace
+} // namespace
 
 TEST(MathFRPRTest, QuadraticBowlOptimization)
 {
-  // Test FRPR on simple quadratic bowl function
+
   QuadraticBowlFunction aFunc;
 
   math_Vector aStartPoint(1, 2);
-  aStartPoint(1) = 0.0; // Start at (0, 0)
+  aStartPoint(1) = 0.0;
   aStartPoint(2) = 0.0;
 
   math_FRPR aSolver(aFunc, 1.0e-10);
@@ -205,14 +189,14 @@ TEST(MathFRPRTest, QuadraticBowlOptimization)
 
 TEST(MathFRPRTest, RosenbrockOptimization)
 {
-  // Test FRPR on the challenging Rosenbrock function
+
   RosenbrockFunction aFunc;
 
   math_Vector aStartPoint(1, 2);
-  aStartPoint(1) = 0.0; // Start at (0, 0)
+  aStartPoint(1) = 0.0;
   aStartPoint(2) = 0.0;
 
-  math_FRPR aSolver(aFunc, 1.0e-8, 500); // More iterations for challenging function
+  math_FRPR aSolver(aFunc, 1.0e-8, 500);
   aSolver.Perform(aFunc, aStartPoint);
 
   EXPECT_TRUE(aSolver.IsDone()) << "Should find minimum for Rosenbrock function";
@@ -225,11 +209,11 @@ TEST(MathFRPRTest, RosenbrockOptimization)
 
 TEST(MathFRPRTest, ThreeDimensionalOptimization)
 {
-  // Test FRPR on 3D quadratic function
+
   Quadratic3DFunction aFunc;
 
   math_Vector aStartPoint(1, 3);
-  aStartPoint(1) = 0.0; // Start at (0, 0, 0)
+  aStartPoint(1) = 0.0;
   aStartPoint(2) = 0.0;
   aStartPoint(3) = 0.0;
 
@@ -247,14 +231,13 @@ TEST(MathFRPRTest, ThreeDimensionalOptimization)
 
 TEST(MathFRPRTest, CustomTolerance)
 {
-  // Test with different tolerance values
+
   QuadraticBowlFunction aFunc;
 
   math_Vector aStartPoint(1, 2);
   aStartPoint(1) = 0.0;
   aStartPoint(2) = 0.0;
 
-  // Loose tolerance
   math_FRPR aSolver1(aFunc, 1.0e-3);
   aSolver1.Perform(aFunc, aStartPoint);
 
@@ -262,7 +245,6 @@ TEST(MathFRPRTest, CustomTolerance)
   EXPECT_NEAR(aSolver1.Location()(1), 1.0, 1.0e-2) << "Location should be approximately correct";
   EXPECT_NEAR(aSolver1.Location()(2), 2.0, 1.0e-2) << "Location should be approximately correct";
 
-  // Tight tolerance
   math_FRPR aSolver2(aFunc, 1.0e-12);
   aSolver2.Perform(aFunc, aStartPoint);
 
@@ -273,14 +255,13 @@ TEST(MathFRPRTest, CustomTolerance)
 
 TEST(MathFRPRTest, CustomIterationLimit)
 {
-  // Test with custom iteration limits
-  RosenbrockFunction aFunc; // More challenging function
+
+  RosenbrockFunction aFunc;
 
   math_Vector aStartPoint(1, 2);
   aStartPoint(1) = 0.0;
   aStartPoint(2) = 0.0;
 
-  // Few iterations
   math_FRPR aSolver1(aFunc, 1.0e-10, 10);
   aSolver1.Perform(aFunc, aStartPoint);
 
@@ -289,7 +270,6 @@ TEST(MathFRPRTest, CustomIterationLimit)
     EXPECT_LE(aSolver1.NbIterations(), 10) << "Should respect iteration limit";
   }
 
-  // Many iterations
   math_FRPR aSolver2(aFunc, 1.0e-10, 1000);
   aSolver2.Perform(aFunc, aStartPoint);
 
@@ -298,7 +278,7 @@ TEST(MathFRPRTest, CustomIterationLimit)
 
 TEST(MathFRPRTest, GradientAccess)
 {
-  // Test gradient vector access
+
   QuadraticBowlFunction aFunc;
 
   math_Vector aStartPoint(1, 2);
@@ -314,7 +294,6 @@ TEST(MathFRPRTest, GradientAccess)
   EXPECT_NEAR(aGrad(1), 0.0, 1.0e-8) << "Gradient should be near zero at minimum";
   EXPECT_NEAR(aGrad(2), 0.0, 1.0e-8) << "Gradient should be near zero at minimum";
 
-  // Test gradient output method
   math_Vector aGradOut(1, 2);
   aSolver.Gradient(aGradOut);
   EXPECT_NEAR(aGradOut(1), 0.0, 1.0e-8) << "Output gradient should match";
@@ -323,7 +302,7 @@ TEST(MathFRPRTest, GradientAccess)
 
 TEST(MathFRPRTest, LocationAccess)
 {
-  // Test location vector access methods
+
   QuadraticBowlFunction aFunc;
 
   math_Vector aStartPoint(1, 2);
@@ -335,7 +314,6 @@ TEST(MathFRPRTest, LocationAccess)
 
   EXPECT_TRUE(aSolver.IsDone()) << "Should find minimum";
 
-  // Test location output method
   math_Vector aLocOut(1, 2);
   aSolver.Location(aLocOut);
   EXPECT_NEAR(aLocOut(1), 1.0, 1.0e-6) << "Output location should match";
@@ -344,7 +322,7 @@ TEST(MathFRPRTest, LocationAccess)
 
 TEST(MathFRPRTest, CustomZEPS)
 {
-  // Test with custom ZEPS (machine epsilon) parameter
+
   QuadraticBowlFunction aFunc;
 
   math_Vector aStartPoint(1, 2);
@@ -361,14 +339,12 @@ TEST(MathFRPRTest, CustomZEPS)
 
 TEST(MathFRPRTest, UnperformedState)
 {
-  // Test state handling before Perform() is called
+
   QuadraticBowlFunction aFunc;
   math_FRPR             aSolver(aFunc, 1.0e-10);
 
-  // Before Perform() is called, solver should report not done
   EXPECT_FALSE(aSolver.IsDone()) << "Solver should not be done before Perform()";
 
-  // In release builds, verify the solver maintains consistent state
   if (!aSolver.IsDone())
   {
     EXPECT_FALSE(aSolver.IsDone()) << "State should be consistent when not done";
@@ -377,7 +353,7 @@ TEST(MathFRPRTest, UnperformedState)
 
 TEST(MathFRPRTest, DimensionCompatibility)
 {
-  // Test dimension compatibility handling
+
   QuadraticBowlFunction aFunc;
 
   math_Vector aStartPoint(1, 2);
@@ -389,22 +365,20 @@ TEST(MathFRPRTest, DimensionCompatibility)
 
   EXPECT_TRUE(aSolver.IsDone()) << "Should find minimum";
 
-  // Test with correctly dimensioned vectors
-  math_Vector aCorrectVec(1, 2); // 2D vector for 2D function
+  math_Vector aCorrectVec(1, 2);
   aSolver.Location(aCorrectVec);
   aSolver.Gradient(aCorrectVec);
 
-  // Verify the results make sense
   EXPECT_EQ(aCorrectVec.Length(), 2) << "Vector should have correct dimension";
 }
 
 TEST(MathFRPRTest, StartingNearMinimum)
 {
-  // Test when starting point is already near the minimum
+
   QuadraticBowlFunction aFunc;
 
   math_Vector aStartPoint(1, 2);
-  aStartPoint(1) = 1.001; // Very close to minimum at (1, 2)
+  aStartPoint(1) = 1.001;
   aStartPoint(2) = 1.999;
 
   math_FRPR aSolver(aFunc, 1.0e-10);
@@ -418,14 +392,14 @@ TEST(MathFRPRTest, StartingNearMinimum)
 
 TEST(MathFRPRTest, QuarticFlatMinimum)
 {
-  // Test with quartic function that has very flat minimum
+
   QuarticFunction aFunc;
 
   math_Vector aStartPoint(1, 2);
   aStartPoint(1) = 0.0;
   aStartPoint(2) = 0.0;
 
-  math_FRPR aSolver(aFunc, 1.0e-8); // Slightly looser tolerance for flat minimum
+  math_FRPR aSolver(aFunc, 1.0e-8);
   aSolver.Perform(aFunc, aStartPoint);
 
   EXPECT_TRUE(aSolver.IsDone()) << "Should handle quartic function with flat minimum";
@@ -435,28 +409,26 @@ TEST(MathFRPRTest, QuarticFlatMinimum)
 
 TEST(MathFRPRTest, LinearFunctionUnbounded)
 {
-  // Test with unbounded linear function
+
   LinearFunction aFunc;
 
   math_Vector aStartPoint(1, 2);
   aStartPoint(1) = 0.0;
   aStartPoint(2) = 0.0;
 
-  math_FRPR aSolver(aFunc, 1.0e-10, 50); // Limited iterations
+  math_FRPR aSolver(aFunc, 1.0e-10, 50);
   aSolver.Perform(aFunc, aStartPoint);
 
-  // The algorithm may or may not converge for unbounded functions
-  // depending on implementation details and stopping criteria
   if (aSolver.IsDone())
   {
-    // If it "converges", it should have done some work
+
     EXPECT_GT(aSolver.NbIterations(), 0) << "Should have performed some iterations";
   }
 }
 
 TEST(MathFRPRTest, MultipleCalls)
 {
-  // Test multiple calls to Perform with same instance
+
   QuadraticBowlFunction aFunc1;
   Quadratic3DFunction   aFunc2;
 
@@ -471,12 +443,10 @@ TEST(MathFRPRTest, MultipleCalls)
 
   math_FRPR aSolver(aFunc1, 1.0e-10);
 
-  // First call with 2D function
   aSolver.Perform(aFunc1, aStartPoint2D);
   EXPECT_TRUE(aSolver.IsDone()) << "First call should succeed";
   EXPECT_NEAR(aSolver.Location()(1), 1.0, 1.0e-6) << "First minimum should be correct";
 
-  // Second call with 3D function - need to create new solver with appropriate function
   math_FRPR aSolver2(aFunc2, 1.0e-10);
   aSolver2.Perform(aFunc2, aStartPoint3D);
   EXPECT_TRUE(aSolver2.IsDone()) << "Second call should succeed";

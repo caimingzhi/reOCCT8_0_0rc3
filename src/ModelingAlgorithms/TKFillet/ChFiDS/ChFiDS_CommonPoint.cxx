@@ -3,8 +3,6 @@
 #include <TopoDS_Edge.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//=================================================================================================
-
 ChFiDS_CommonPoint::ChFiDS_CommonPoint()
     : tol(0.0),
       prmarc(0.0),
@@ -16,8 +14,6 @@ ChFiDS_CommonPoint::ChFiDS_CommonPoint()
 {
 }
 
-//=================================================================================================
-
 void ChFiDS_CommonPoint::Reset()
 {
   tol       = 0.;
@@ -25,12 +21,6 @@ void ChFiDS_CommonPoint::Reset()
   isonarc   = false;
   hasvector = false;
 }
-
-//=======================================================================
-// function : SetArc
-// purpose  :
-// 30/09/1997 : PMN On n'ecrabouille plus la tolerance
-//=======================================================================
 
 void ChFiDS_CommonPoint::SetArc(const double             Tol,
                                 const TopoDS_Edge&       A,
@@ -45,14 +35,10 @@ void ChFiDS_CommonPoint::SetArc(const double             Tol,
   traarc = TArc;
 }
 
-//=================================================================================================
-
 void ChFiDS_CommonPoint::SetParameter(const double Param)
 {
   prmtg = Param;
 }
-
-//=================================================================================================
 
 const TopoDS_Edge& ChFiDS_CommonPoint::Arc() const
 {
@@ -63,8 +49,6 @@ const TopoDS_Edge& ChFiDS_CommonPoint::Arc() const
   return arc;
 }
 
-//=================================================================================================
-
 TopAbs_Orientation ChFiDS_CommonPoint::TransitionOnArc() const
 {
   if (!isonarc)
@@ -74,8 +58,6 @@ TopAbs_Orientation ChFiDS_CommonPoint::TransitionOnArc() const
   return traarc;
 }
 
-//=================================================================================================
-
 double ChFiDS_CommonPoint::ParameterOnArc() const
 {
   if (!isonarc)
@@ -84,8 +66,6 @@ double ChFiDS_CommonPoint::ParameterOnArc() const
   }
   return prmarc;
 }
-
-//=================================================================================================
 
 double ChFiDS_CommonPoint::Parameter() const
 {

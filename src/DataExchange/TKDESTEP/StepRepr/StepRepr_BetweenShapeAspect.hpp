@@ -5,7 +5,6 @@
 
 #include <StepRepr_ContinuosShapeAspect.hpp>
 
-//! Added for Dimensional Tolerances
 class StepRepr_BetweenShapeAspect : public StepRepr_ContinuosShapeAspect
 {
 

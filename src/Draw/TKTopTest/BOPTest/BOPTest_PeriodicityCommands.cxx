@@ -28,17 +28,15 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 void BOPTest::PeriodicityCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
   if (done)
     return;
   done = true;
-  // Chapter's name
+
   const char* group = "BOPTest commands";
-  // Commands
+
   theCommands.Add("makeperiodic",
                   "makeperiodic result shape [-x/y/z period [-trim first]]\n"
                   "\t\tMake the shape periodic in the required directions.\n"
@@ -59,7 +57,6 @@ void BOPTest::PeriodicityCommands(Draw_Interpretor& theCommands)
     GetTwins,
     group);
 
-  // Repetition commands
   theCommands.Add(
     "repeatshape",
     "repeatshape result -x/y/z times\n"
@@ -78,8 +75,6 @@ void BOPTest::PeriodicityCommands(Draw_Interpretor& theCommands)
                   group);
 }
 
-//=================================================================================================
-
 int MakePeriodic(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
   if (theArgc < 5)
@@ -88,7 +83,6 @@ int MakePeriodic(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     return 1;
   }
 
-  // Get the shape to make periodic
   TopoDS_Shape aShape = DBRep::Get(theArgv[2]);
   if (aShape.IsNull())
   {
@@ -101,7 +95,7 @@ int MakePeriodic(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 
   for (int i = 3; i < theArgc;)
   {
-    // Get periodicity
+
     int iDir = i;
 
     int aDirID = -1;
@@ -133,7 +127,7 @@ int MakePeriodic(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     ++i;
     if (theArgc > i + 1)
     {
-      // Check if trimming is necessary
+
       if (!strcmp(theArgv[i], "-trim"))
       {
         if (theArgc == (i + 1))
@@ -151,13 +145,10 @@ int MakePeriodic(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 
   getPeriodicityMaker().SetRunParallel(BOPTest_Objects::RunParallel());
 
-  // Perform operation
   getPeriodicityMaker().Perform();
 
-  // Print Error/Warning messages
   BOPTest::ReportAlerts(getPeriodicityMaker().GetReport());
 
-  // Set the history of the operation in session
   BRepTest_Objects::SetHistory(getPeriodicityMaker().History());
 
   if (getPeriodicityMaker().HasErrors())
@@ -165,14 +156,11 @@ int MakePeriodic(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     return 0;
   }
 
-  // Draw the result shape
   const TopoDS_Shape& aResult = getPeriodicityMaker().Shape();
   DBRep::Set(theArgv[1], aResult);
 
   return 0;
 }
-
-//=================================================================================================
 
 int GetTwins(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
@@ -182,7 +170,6 @@ int GetTwins(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     return 1;
   }
 
-  // Get the shape to find twins
   TopoDS_Shape aShape = DBRep::Get(theArgv[2]);
   if (aShape.IsNull())
   {
@@ -208,8 +195,6 @@ int GetTwins(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 
   return 0;
 }
-
-//=================================================================================================
 
 int RepeatShape(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
@@ -250,10 +235,8 @@ int RepeatShape(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     getPeriodicityMaker().RepeatShape(aDirID, aTimes);
   }
 
-  // Print Error/Warning messages
   BOPTest::ReportAlerts(getPeriodicityMaker().GetReport());
 
-  // Set the history of the operation in session
   BRepTest_Objects::SetHistory(getPeriodicityMaker().History());
 
   if (getPeriodicityMaker().HasErrors())
@@ -261,21 +244,17 @@ int RepeatShape(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     return 0;
   }
 
-  // Draw the result shape
   const TopoDS_Shape& aResult = getPeriodicityMaker().RepeatedShape();
   DBRep::Set(theArgv[1], aResult);
 
   return 0;
 }
 
-//=================================================================================================
-
 int ClearRepetitions(Draw_Interpretor&, int theArgc, const char** theArgv)
 {
-  // Clear all previous repetitions
+
   getPeriodicityMaker().ClearRepetitions();
 
-  // Set the history of the operation in session
   BRepTest_Objects::SetHistory(getPeriodicityMaker().History());
 
   if (theArgc > 1)

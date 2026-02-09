@@ -17,32 +17,11 @@ class gp_Ax3;
 class gp_Lin;
 class gp_Circ;
 
-//! Provides functions for basic geometric computation on
-//! elementary surfaces.
-//! This includes:
-//! -   calculation of a point or derived vector on a surface
-//! where the surface is provided by the gp package, or
-//! defined in canonical form (as in the gp package), and
-//! the point is defined with a parameter,
-//! -   evaluation of the parameters corresponding to a
-//! point on an elementary surface from gp,
-//! -   calculation of isoparametric curves on an elementary
-//! surface defined in canonical form (as in the gp package).
-//! Notes:
-//! -   ElSLib stands for Elementary Surfaces Library.
-//! -   If the surfaces provided by the gp package are not
-//! explicitly parameterized, they still have an implicit
-//! parameterization, similar to that which they infer on
-//! the equivalent Geom surfaces.
-//! Note: ElSLib stands for Elementary Surfaces Library.
 class ElSLib
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! For elementary surfaces from the gp package (planes,
-  //! cones, cylinders, spheres and tori), computes the point
-  //! of parameters (U, V).
   static gp_Pnt Value(const double U, const double V, const gp_Pln& Pl);
 
   static gp_Pnt Value(const double U, const double V, const gp_Cone& C);
@@ -53,11 +32,6 @@ public:
 
   static gp_Pnt Value(const double U, const double V, const gp_Torus& T);
 
-  //! For elementary surfaces from the gp package (planes,
-  //! cones, cylinders, spheres and tori), computes the
-  //! derivative vector of order Nu and Nv in the u and v
-  //! parametric directions respectively, at the point of
-  //! parameters (U, V).
   static gp_Vec DN(const double U, const double V, const gp_Pln& Pl, const int Nu, const int Nv);
 
   static gp_Vec DN(const double U, const double V, const gp_Cone& C, const int Nu, const int Nv);
@@ -72,9 +46,6 @@ public:
 
   static gp_Vec DN(const double U, const double V, const gp_Torus& T, const int Nu, const int Nv);
 
-  //! For elementary surfaces from the gp package (planes,
-  //! cones, cylinders, spheres and tori), computes the point P
-  //! of parameters (U, V).inline
   static void D0(const double U, const double V, const gp_Pln& Pl, gp_Pnt& P);
 
   static void D0(const double U, const double V, const gp_Cone& C, gp_Pnt& P);
@@ -85,11 +56,6 @@ public:
 
   static void D0(const double U, const double V, const gp_Torus& T, gp_Pnt& P);
 
-  //! For elementary surfaces from the gp package (planes,
-  //! cones, cylinders, spheres and tori), computes:
-  //! -   the point P of parameters (U, V), and
-  //! -   the first derivative vectors Vu and Vv at this point in
-  //! the u and v parametric directions respectively.
   static void D1(const double  U,
                  const double  V,
                  const gp_Pln& Pl,
@@ -125,12 +91,6 @@ public:
                  gp_Vec&         Vu,
                  gp_Vec&         Vv);
 
-  //! For elementary surfaces from the gp package (cones,
-  //! cylinders, spheres and tori), computes:
-  //! -   the point P of parameters (U, V), and
-  //! -   the first derivative vectors Vu and Vv at this point in
-  //! the u and v parametric directions respectively, and
-  //! -   the second derivative vectors Vuu, Vvv and Vuv at this point.
   static void D2(const double   U,
                  const double   V,
                  const gp_Cone& C,
@@ -171,15 +131,6 @@ public:
                  gp_Vec&         Vvv,
                  gp_Vec&         Vuv);
 
-  //! For elementary surfaces from the gp package (cones,
-  //! cylinders, spheres and tori), computes:
-  //! -   the point P of parameters (U,V), and
-  //! -   the first derivative vectors Vu and Vv at this point in
-  //! the u and v parametric directions respectively, and
-  //! -   the second derivative vectors Vuu, Vvv and Vuv at
-  //! this point, and
-  //! -   the third derivative vectors Vuuu, Vvvv, Vuuv and
-  //! Vuvv at this point.
   static void D3(const double   U,
                  const double   V,
                  const gp_Cone& C,
@@ -222,14 +173,6 @@ public:
                  gp_Vec&          Vuuv,
                  gp_Vec&          Vuvv);
 
-  //! Surface evaluation
-  //! The following functions compute the point and the
-  //! derivatives on elementary surfaces defined with their
-  //! geometric characteristics.
-  //! You don't need to create the surface to use these functions.
-  //! These functions are called by the previous ones.
-  //! Example:
-  //! A cylinder is defined with its position and its radius.
   static void D3(const double    U,
                  const double    V,
                  const gp_Torus& T,
@@ -465,9 +408,6 @@ public:
                                        gp_Vec&       Vuuv,
                                        gp_Vec&       Vuvv);
 
-  //! The following functions compute the parametric values
-  //! corresponding to a given point on a elementary surface.
-  //! The point should be on the surface.
   Standard_EXPORT static void TorusD3(const double  U,
                                       const double  V,
                                       const gp_Ax3& Pos,
@@ -484,56 +424,27 @@ public:
                                       gp_Vec&       Vuuv,
                                       gp_Vec&       Vuvv);
 
-  //! parametrization
-  //! P (U, V) =
-  //! Pl.Location() + U * Pl.XDirection() + V * Pl.YDirection()
   static void Parameters(const gp_Pln& Pl, const gp_Pnt& P, double& U, double& V);
 
-  //! parametrization
-  //! P (U, V) = Location + V * ZDirection +
-  //! Radius * (std::cos(U) * XDirection + Sin (U) * YDirection)
   static void Parameters(const gp_Cylinder& C, const gp_Pnt& P, double& U, double& V);
 
-  //! parametrization
-  //! P (U, V) = Location + V * ZDirection +
-  //! (Radius + V * Tan (SemiAngle)) *
-  //! (std::cos(U) * XDirection + std::sin(U) * YDirection)
   static void Parameters(const gp_Cone& C, const gp_Pnt& P, double& U, double& V);
 
-  //! parametrization
-  //! P (U, V) = Location +
-  //! Radius * Cos (V) * (Cos (U) * XDirection + Sin (U) * YDirection) +
-  //! Radius * Sin (V) * ZDirection
   static void Parameters(const gp_Sphere& S, const gp_Pnt& P, double& U, double& V);
 
-  //! parametrization
-  //! P (U, V) = Location +
-  //! (MajorRadius + MinorRadius * std::cos(U)) *
-  //! (std::cos(V) * XDirection - std::sin(V) * YDirection) +
-  //! MinorRadius * std::sin(U) * ZDirection
   static void Parameters(const gp_Torus& T, const gp_Pnt& P, double& U, double& V);
 
-  //! parametrization
-  //! P (U, V) =
-  //! Pl.Location() + U * Pl.XDirection() + V * Pl.YDirection()
   Standard_EXPORT static void PlaneParameters(const gp_Ax3& Pos,
                                               const gp_Pnt& P,
                                               double&       U,
                                               double&       V);
 
-  //! parametrization
-  //! P (U, V) = Location + V * ZDirection +
-  //! Radius * (std::cos(U) * XDirection + Sin (U) * YDirection)
   Standard_EXPORT static void CylinderParameters(const gp_Ax3& Pos,
                                                  const double  Radius,
                                                  const gp_Pnt& P,
                                                  double&       U,
                                                  double&       V);
 
-  //! parametrization
-  //! P (U, V) = Location + V * ZDirection +
-  //! (Radius + V * Tan (SemiAngle)) *
-  //! (std::cos(U) * XDirection + std::sin(U) * YDirection)
   Standard_EXPORT static void ConeParameters(const gp_Ax3& Pos,
                                              const double  Radius,
                                              const double  SAngle,
@@ -541,21 +452,12 @@ public:
                                              double&       U,
                                              double&       V);
 
-  //! parametrization
-  //! P (U, V) = Location +
-  //! Radius * Cos (V) * (Cos (U) * XDirection + Sin (U) * YDirection) +
-  //! Radius * Sin (V) * ZDirection
   Standard_EXPORT static void SphereParameters(const gp_Ax3& Pos,
                                                const double  Radius,
                                                const gp_Pnt& P,
                                                double&       U,
                                                double&       V);
 
-  //! parametrization
-  //! P (U, V) = Location +
-  //! (MajorRadius + MinorRadius * std::cos(U)) *
-  //! (std::cos(V) * XDirection - std::sin(V) * YDirection) +
-  //! MinorRadius * std::sin(U) * ZDirection
   Standard_EXPORT static void TorusParameters(const gp_Ax3& Pos,
                                               const double  MajorRadius,
                                               const double  MinorRadius,
@@ -563,49 +465,37 @@ public:
                                               double&       U,
                                               double&       V);
 
-  //! compute the U Isoparametric gp_Lin of the plane.
   Standard_EXPORT static gp_Lin PlaneUIso(const gp_Ax3& Pos, const double U);
 
-  //! compute the U Isoparametric gp_Lin of the cylinder.
   Standard_EXPORT static gp_Lin CylinderUIso(const gp_Ax3& Pos,
                                              const double  Radius,
                                              const double  U);
 
-  //! compute the U Isoparametric gp_Lin of the cone.
   Standard_EXPORT static gp_Lin ConeUIso(const gp_Ax3& Pos,
                                          const double  Radius,
                                          const double  SAngle,
                                          const double  U);
 
-  //! compute the U Isoparametric gp_Circ of the sphere,
-  //! (the meridian is not trimmed).
   Standard_EXPORT static gp_Circ SphereUIso(const gp_Ax3& Pos, const double Radius, const double U);
 
-  //! compute the U Isoparametric gp_Circ of the torus.
   Standard_EXPORT static gp_Circ TorusUIso(const gp_Ax3& Pos,
                                            const double  MajorRadius,
                                            const double  MinorRadius,
                                            const double  U);
 
-  //! compute the V Isoparametric gp_Lin of the plane.
   Standard_EXPORT static gp_Lin PlaneVIso(const gp_Ax3& Pos, const double V);
 
-  //! compute the V Isoparametric gp_Circ of the cylinder.
   Standard_EXPORT static gp_Circ CylinderVIso(const gp_Ax3& Pos,
                                               const double  Radius,
                                               const double  V);
 
-  //! compute the V Isoparametric gp_Circ of the cone.
   Standard_EXPORT static gp_Circ ConeVIso(const gp_Ax3& Pos,
                                           const double  Radius,
                                           const double  SAngle,
                                           const double  V);
 
-  //! compute the V Isoparametric gp_Circ of the sphere,
-  //! (the meridian is not trimmed).
   Standard_EXPORT static gp_Circ SphereVIso(const gp_Ax3& Pos, const double Radius, const double V);
 
-  //! compute the V Isoparametric gp_Circ of the torus.
   Standard_EXPORT static gp_Circ TorusVIso(const gp_Ax3& Pos,
                                            const double  MajorRadius,
                                            const double  MinorRadius,

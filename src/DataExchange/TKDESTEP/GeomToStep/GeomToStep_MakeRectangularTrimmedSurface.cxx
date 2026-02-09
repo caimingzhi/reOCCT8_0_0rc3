@@ -13,10 +13,6 @@
 #include <StepGeom_Surface.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d' une rectangular_trimmed_surface de STEP
-// a partir d' une RectangularTrimmedSurface de Geom
-//=============================================================================
 GeomToStep_MakeRectangularTrimmedSurface::GeomToStep_MakeRectangularTrimmedSurface(
   const occ::handle<Geom_RectangularTrimmedSurface>& RTSurf,
   const StepData_Factors&                            theLocalFactors)
@@ -36,10 +32,6 @@ GeomToStep_MakeRectangularTrimmedSurface::GeomToStep_MakeRectangularTrimmedSurfa
 
   double U1, U2, V1, V2;
   RTSurf->Bounds(U1, U2, V1, V2);
-
-  // -----------------------------------------
-  // Modification of the Trimming Parameters ?
-  // -----------------------------------------
 
   double                    AngleFact  = 180. / M_PI;
   double                    uFact      = 1.;
@@ -82,10 +74,6 @@ GeomToStep_MakeRectangularTrimmedSurface::GeomToStep_MakeRectangularTrimmedSurfa
   theRectangularTrimmedSurface = StepRTS;
   done                         = true;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_RectangularTrimmedSurface>& GeomToStep_MakeRectangularTrimmedSurface::
   Value() const

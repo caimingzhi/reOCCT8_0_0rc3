@@ -25,8 +25,6 @@
 #include <XmlMDataStd_VariableDriver.hpp>
 #include <XmlMDF_ADriverTable.hpp>
 
-//=================================================================================================
-
 void XmlMDataStd::AddDrivers(const occ::handle<XmlMDF_ADriverTable>& aDriverTable,
                              const occ::handle<Message_Messenger>&   anMsgDrv)
 {

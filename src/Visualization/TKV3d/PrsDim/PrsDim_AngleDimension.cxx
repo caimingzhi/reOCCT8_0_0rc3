@@ -42,7 +42,6 @@ namespace
   constexpr char16_t THE_DEGREE_SYMBOL     = 0x00B0;
   constexpr double   THE_3D_TEXT_MARGIN    = 0.1;
 
-  //! Returns true if the given points lie on a same line.
   static bool isSameLine(const gp_Pnt& theFirstPoint,
                          const gp_Pnt& theCenterPoint,
                          const gp_Pnt& theSecondPoint)
@@ -54,8 +53,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Edge& theFirstEdge,
                                              const TopoDS_Edge& theSecondEdge)
     : PrsDim_Dimension(PrsDim_KOD_PLANEANGLE)
@@ -63,8 +60,6 @@ PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Edge& theFirstEdge,
   Init();
   SetMeasuredGeometry(theFirstEdge, theSecondEdge);
 }
-
-//=================================================================================================
 
 PrsDim_AngleDimension::PrsDim_AngleDimension(const gp_Pnt& theFirstPoint,
                                              const gp_Pnt& theSecondPoint,
@@ -75,8 +70,6 @@ PrsDim_AngleDimension::PrsDim_AngleDimension(const gp_Pnt& theFirstPoint,
   SetMeasuredGeometry(theFirstPoint, theSecondPoint, theThirdPoint);
 }
 
-//=================================================================================================
-
 PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Vertex& theFirstVertex,
                                              const TopoDS_Vertex& theSecondVertex,
                                              const TopoDS_Vertex& theThirdVertex)
@@ -86,16 +79,12 @@ PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Vertex& theFirstVertex
   SetMeasuredGeometry(theFirstVertex, theSecondVertex, theThirdVertex);
 }
 
-//=================================================================================================
-
 PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Face& theCone)
     : PrsDim_Dimension(PrsDim_KOD_PLANEANGLE)
 {
   Init();
   SetMeasuredGeometry(theCone);
 }
-
-//=================================================================================================
 
 PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Face& theFirstFace,
                                              const TopoDS_Face& theSecondFace)
@@ -105,8 +94,6 @@ PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Face& theFirstFace,
   SetMeasuredGeometry(theFirstFace, theSecondFace);
 }
 
-//=================================================================================================
-
 PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Face& theFirstFace,
                                              const TopoDS_Face& theSecondFace,
                                              const gp_Pnt&      thePoint)
@@ -115,8 +102,6 @@ PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Face& theFirstFace,
   Init();
   SetMeasuredGeometry(theFirstFace, theSecondFace, thePoint);
 }
-
-//=================================================================================================
 
 void PrsDim_AngleDimension::SetMeasuredGeometry(const TopoDS_Edge& theFirstEdge,
                                                 const TopoDS_Edge& theSecondEdge)
@@ -136,8 +121,6 @@ void PrsDim_AngleDimension::SetMeasuredGeometry(const TopoDS_Edge& theFirstEdge,
 
   SetToUpdate();
 }
-
-//=================================================================================================
 
 void PrsDim_AngleDimension::SetMeasuredGeometry(const gp_Pnt& theFirstPoint,
                                                 const gp_Pnt& theSecondPoint,
@@ -161,8 +144,6 @@ void PrsDim_AngleDimension::SetMeasuredGeometry(const gp_Pnt& theFirstPoint,
   SetToUpdate();
 }
 
-//=================================================================================================
-
 void PrsDim_AngleDimension::SetMeasuredGeometry(const TopoDS_Vertex& theFirstVertex,
                                                 const TopoDS_Vertex& theSecondVertex,
                                                 const TopoDS_Vertex& theThirdVertex)
@@ -185,8 +166,6 @@ void PrsDim_AngleDimension::SetMeasuredGeometry(const TopoDS_Vertex& theFirstVer
   SetToUpdate();
 }
 
-//=================================================================================================
-
 void PrsDim_AngleDimension::SetMeasuredGeometry(const TopoDS_Face& theCone)
 {
   myFirstShape      = theCone;
@@ -202,8 +181,6 @@ void PrsDim_AngleDimension::SetMeasuredGeometry(const TopoDS_Face& theCone)
 
   SetToUpdate();
 }
-
-//=================================================================================================
 
 void PrsDim_AngleDimension::SetMeasuredGeometry(const TopoDS_Face& theFirstFace,
                                                 const TopoDS_Face& theSecondFace)
@@ -221,8 +198,6 @@ void PrsDim_AngleDimension::SetMeasuredGeometry(const TopoDS_Face& theFirstFace,
 
   SetToUpdate();
 }
-
-//=================================================================================================
 
 void PrsDim_AngleDimension::SetMeasuredGeometry(const TopoDS_Face& theFirstFace,
                                                 const TopoDS_Face& theSecondFace,
@@ -242,8 +217,6 @@ void PrsDim_AngleDimension::SetMeasuredGeometry(const TopoDS_Face& theFirstFace,
   SetToUpdate();
 }
 
-//=================================================================================================
-
 void PrsDim_AngleDimension::Init()
 {
   SetType(PrsDim_TypeOfAngle_Interior);
@@ -253,13 +226,11 @@ void PrsDim_AngleDimension::Init()
   SetFlyout(15.0);
 }
 
-//=================================================================================================
-
 gp_Pnt PrsDim_AngleDimension::GetCenterOnArc(const gp_Pnt& theFirstAttach,
                                              const gp_Pnt& theSecondAttach,
                                              const gp_Pnt& theCenter) const
 {
-  // construct plane where the circle and the arc are located
+
   gce_MakePln aConstructPlane(theFirstAttach, theSecondAttach, theCenter);
   if (!aConstructPlane.IsDone())
   {
@@ -267,8 +238,7 @@ gp_Pnt PrsDim_AngleDimension::GetCenterOnArc(const gp_Pnt& theFirstAttach,
   }
 
   gp_Pln aPlane = aConstructPlane.Value();
-  // to have an exterior angle presentation, a plane for further constructed circle should be
-  // reversed
+
   if (myType == PrsDim_TypeOfAngle_Exterior)
   {
     gp_Ax1 anAxis = aPlane.Axis();
@@ -279,7 +249,6 @@ gp_Pnt PrsDim_AngleDimension::GetCenterOnArc(const gp_Pnt& theFirstAttach,
 
   double aRadius = theFirstAttach.Distance(theCenter);
 
-  // construct circle forming the arc
   gce_MakeCirc aConstructCircle(theCenter, aPlane, aRadius);
   if (!aConstructCircle.IsDone())
   {
@@ -288,15 +257,12 @@ gp_Pnt PrsDim_AngleDimension::GetCenterOnArc(const gp_Pnt& theFirstAttach,
 
   gp_Circ aCircle = aConstructCircle.Value();
 
-  // compute angle parameters of arc end-points on circle
   double aParamBeg = ElCLib::Parameter(aCircle, theFirstAttach);
   double aParamEnd = ElCLib::Parameter(aCircle, theSecondAttach);
   ElCLib::AdjustPeriodic(0.0, M_PI * 2, Precision::PConfusion(), aParamBeg, aParamEnd);
 
   return ElCLib::Value((aParamBeg + aParamEnd) * 0.5, aCircle);
 }
-
-//=================================================================================================
 
 gp_Dir PrsDim_AngleDimension::GetNormalForMinAngle() const
 {
@@ -307,10 +273,6 @@ gp_Dir PrsDim_AngleDimension::GetNormalForMinAngle() const
   return aFirst.AngleWithRef(aSecond, aNormal) < 0.0 ? aNormal.Reversed() : aNormal;
 }
 
-//=======================================================================
-// function : DrawArc
-// purpose  : draws the arc between two attach points
-//=======================================================================
 void PrsDim_AngleDimension::DrawArc(const occ::handle<Prs3d_Presentation>& thePresentation,
                                     const gp_Pnt&                          theFirstAttach,
                                     const gp_Pnt&                          theSecondAttach,
@@ -320,8 +282,6 @@ void PrsDim_AngleDimension::DrawArc(const occ::handle<Prs3d_Presentation>& thePr
 {
   gp_Pln aPlane(myCenterPoint, GetNormalForMinAngle());
 
-  // to have an exterior angle presentation, a plane for further constructed circle should be
-  // reversed
   if (myType == PrsDim_TypeOfAngle_Exterior)
   {
     gp_Ax1 anAxis = aPlane.Axis();
@@ -330,7 +290,6 @@ void PrsDim_AngleDimension::DrawArc(const occ::handle<Prs3d_Presentation>& thePr
     aPlane.SetAxis(gp_Ax1(anAxis.Location(), aDir));
   }
 
-  // construct circle forming the arc
   gce_MakeCirc aConstructCircle(theCenter, aPlane, theRadius);
   if (!aConstructCircle.IsDone())
   {
@@ -339,27 +298,24 @@ void PrsDim_AngleDimension::DrawArc(const occ::handle<Prs3d_Presentation>& thePr
 
   gp_Circ aCircle = aConstructCircle.Value();
 
-  // construct the arc
   GC_MakeArcOfCircle aConstructArc(aCircle, theFirstAttach, theSecondAttach, true);
   if (!aConstructArc.IsDone())
   {
     return;
   }
 
-  // generate points with specified deflection
   const occ::handle<Geom_TrimmedCurve>& anArcCurve = aConstructArc.Value();
 
   GeomAdaptor_Curve anArcAdaptor(anArcCurve,
                                  anArcCurve->FirstParameter(),
                                  anArcCurve->LastParameter());
 
-  // compute number of discretization elements in old-fanshioned way
   gp_Vec aCenterToFirstVec(theCenter, theFirstAttach);
   gp_Vec aCenterToSecondVec(theCenter, theSecondAttach);
   double anAngle = aCenterToFirstVec.Angle(aCenterToSecondVec);
   if (myType == PrsDim_TypeOfAngle_Exterior)
     anAngle = 2.0 * M_PI - anAngle;
-  // it sets 50 points on PI, and a part of points if angle is less
+
   const int aNbPoints = std::max(4, int(50.0 * anAngle / M_PI));
 
   GCPnts_UniformAbscissa aMakePnts(anArcAdaptor, aNbPoints);
@@ -368,12 +324,10 @@ void PrsDim_AngleDimension::DrawArc(const occ::handle<Prs3d_Presentation>& thePr
     return;
   }
 
-  // init data arrays for graphical and selection primitives
   occ::handle<Graphic3d_ArrayOfPolylines> aPrimSegments = new Graphic3d_ArrayOfPolylines(aNbPoints);
 
   SelectionGeometry::Curve& aSensitiveCurve = mySelectionGeom.NewCurve();
 
-  // load data into arrays
   for (int aPntIt = 1; aPntIt <= aMakePnts.NbPoints(); ++aPntIt)
   {
     gp_Pnt aPnt = anArcAdaptor.Value(aMakePnts.Parameter(aPntIt));
@@ -383,7 +337,6 @@ void PrsDim_AngleDimension::DrawArc(const occ::handle<Prs3d_Presentation>& thePr
     aSensitiveCurve.Append(aPnt);
   }
 
-  // add display presentation
   if (!myDrawer->DimensionAspect()->IsText3d() && theMode == ComputeMode_All)
   {
     thePresentation->CurrentGroup()->SetStencilTestOptions(true);
@@ -398,8 +351,6 @@ void PrsDim_AngleDimension::DrawArc(const occ::handle<Prs3d_Presentation>& thePr
   }
 }
 
-//=================================================================================================
-
 void PrsDim_AngleDimension::DrawArcWithText(const occ::handle<Prs3d_Presentation>& thePresentation,
                                             const gp_Pnt&                          theFirstAttach,
                                             const gp_Pnt&                          theSecondAttach,
@@ -413,7 +364,6 @@ void PrsDim_AngleDimension::DrawArcWithText(const occ::handle<Prs3d_Presentation
 
   double aRadius = theFirstAttach.Distance(myCenterPoint);
 
-  // construct circle forming the arc
   gce_MakeCirc aConstructCircle(theCenter, aPlane, aRadius);
   if (!aConstructCircle.IsDone())
   {
@@ -422,21 +372,17 @@ void PrsDim_AngleDimension::DrawArcWithText(const occ::handle<Prs3d_Presentation
 
   gp_Circ aCircle = aConstructCircle.Value();
 
-  // compute angle parameters of arc end-points on circle
   double aParamBeg = ElCLib::Parameter(aCircle, theFirstAttach);
   double aParamEnd = ElCLib::Parameter(aCircle, theSecondAttach);
   ElCLib::AdjustPeriodic(0.0, M_PI * 2, Precision::PConfusion(), aParamBeg, aParamEnd);
 
-  // middle point of arc parameter on circle
   double aParamMid = (aParamBeg + aParamEnd) * 0.5;
 
-  // add text graphical primitives
   if (theMode == ComputeMode_All || theMode == ComputeMode_Text)
   {
     gp_Pnt aTextPos = ElCLib::Value(aParamMid, aCircle);
     gp_Dir aTextDir = gce_MakeDir(theFirstAttach, theSecondAttach);
 
-    // Drawing text
     drawText(thePresentation, aTextPos, aTextDir, theText, theLabelPosition);
   }
 
@@ -452,14 +398,13 @@ void PrsDim_AngleDimension::DrawArcWithText(const occ::handle<Prs3d_Presentation
 
   if (isLineBreak)
   {
-    // compute gap for label as parametric size of sector on circle segment
+
     double aSectorOfText = theTextWidth / aRadius;
     double aTextBegin    = aParamMid - aSectorOfText * 0.5;
     double aTextEnd      = aParamMid + aSectorOfText * 0.5;
     gp_Pnt aTextPntBeg   = ElCLib::Value(aTextBegin, aCircle);
     gp_Pnt aTextPntEnd   = ElCLib::Value(aTextEnd, aCircle);
 
-    // Drawing arcs
     if (aTextBegin > aParamBeg)
     {
       DrawArc(thePresentation, theFirstAttach, aTextPntBeg, theCenter, aRadius, theMode);
@@ -475,16 +420,12 @@ void PrsDim_AngleDimension::DrawArcWithText(const occ::handle<Prs3d_Presentation
   }
 }
 
-//=================================================================================================
-
 bool PrsDim_AngleDimension::CheckPlane(const gp_Pln& thePlane) const
 {
   return thePlane.Contains(myFirstPoint, Precision::Confusion())
          || thePlane.Contains(mySecondPoint, Precision::Confusion())
          || thePlane.Contains(myCenterPoint, Precision::Confusion());
 }
-
-//=================================================================================================
 
 void PrsDim_AngleDimension::ComputePlane()
 {
@@ -493,8 +434,6 @@ void PrsDim_AngleDimension::ComputePlane()
     return;
   }
 
-  // Compute working plane so that Y axis is codirectional
-  // with Y axis of text coordinate system (necessary for text alignment)
   gp_Vec aFirstVec   = gp_Vec(myCenterPoint, myFirstPoint);
   gp_Vec aSecondVec  = gp_Vec(myCenterPoint, mySecondPoint);
   gp_Vec aDirectionN = aSecondVec ^ aFirstVec;
@@ -504,35 +443,25 @@ void PrsDim_AngleDimension::ComputePlane()
   myPlane = gp_Pln(gp_Ax3(myCenterPoint, gp_Dir(aDirectionN), gp_Dir(aDirectionX)));
 }
 
-//=================================================================================================
-
 const TCollection_AsciiString& PrsDim_AngleDimension::GetModelUnits() const
 {
   return myDrawer->DimAngleModelUnits();
 }
-
-//=================================================================================================
 
 const TCollection_AsciiString& PrsDim_AngleDimension::GetDisplayUnits() const
 {
   return myDrawer->DimAngleDisplayUnits();
 }
 
-//=================================================================================================
-
 void PrsDim_AngleDimension::SetModelUnits(const TCollection_AsciiString& theUnits)
 {
   myDrawer->SetDimAngleModelUnits(theUnits);
 }
 
-//=================================================================================================
-
 void PrsDim_AngleDimension::SetDisplayUnits(const TCollection_AsciiString& theUnits)
 {
   myDrawer->SetDimAngleDisplayUnits(theUnits);
 }
-
-//=================================================================================================
 
 double PrsDim_AngleDimension::ComputeValue() const
 {
@@ -549,10 +478,6 @@ double PrsDim_AngleDimension::ComputeValue() const
   return anAngle > 0.0 ? anAngle : (2.0 * M_PI + anAngle);
 }
 
-//=======================================================================
-// function : Compute
-// purpose  : Having three gp_Pnt points compute presentation
-//=======================================================================
 void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                     const occ::handle<Prs3d_Presentation>& thePresentation,
                                     const int                              theMode)
@@ -564,24 +489,20 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     return;
   }
 
-  // Parameters for presentation
   occ::handle<Prs3d_DimensionAspect> aDimensionAspect = myDrawer->DimensionAspect();
 
   thePresentation->CurrentGroup()->SetPrimitivesAspect(aDimensionAspect->LineAspect()->Aspect());
 
   double anArrowLength = aDimensionAspect->ArrowAspect()->Length();
 
-  // prepare label string and compute its geometrical width
   double                     aLabelWidth;
   TCollection_ExtendedString aLabelString = GetValueString(aLabelWidth);
 
-  // add margins to label width
   if (aDimensionAspect->IsText3d())
   {
     aLabelWidth += aDimensionAspect->TextAspect()->Height() * THE_3D_TEXT_MARGIN * 2.0;
   }
 
-  // Get parameters from aspect or adjust it according with custom text position
   double                                anExtensionSize = aDimensionAspect->ExtensionSize();
   Prs3d_DimensionTextHorizontalPosition aHorisontalTextPos =
     aDimensionAspect->TextHorizontalPosition();
@@ -591,7 +512,6 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     AdjustParameters(myFixedTextPosition, anExtensionSize, aHorisontalTextPos, myFlyout);
   }
 
-  // Handle user-defined and automatic arrow placement
   bool isArrowsExternal = false;
   int  aLabelPosition   = LabelPosition_None;
 
@@ -602,7 +522,6 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
   gp_Pnt aSecondAttach =
     myCenterPoint.Translated(gp_Vec(myCenterPoint, mySecondPoint).Normalized() * GetFlyout());
 
-  // Arrows positions and directions
   gp_Vec aWorkingPlaneDir(GetNormalForMinAngle());
 
   gp_Dir aFirstExtensionDir  = aWorkingPlaneDir.Reversed() ^ gp_Vec(myCenterPoint, aFirstAttach);
@@ -633,12 +552,10 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     aSecondArrowEnd.Translate(-aSecondArrowVec);
   }
 
-  // Group1: stenciling text and the angle dimension arc
   thePresentation->NewGroup();
 
   int aHPosition = aLabelPosition & LabelPosition_HMask;
 
-  // draw text label
   switch (aHPosition)
   {
     case LabelPosition_HCenter:
@@ -659,7 +576,6 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
         break;
       }
 
-      // compute text primitives
       if (theMode == ComputeMode_All || theMode == ComputeMode_Text)
       {
         gp_Vec aDimensionDir(aFirstAttach, aSecondAttach);
@@ -718,7 +634,6 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     break;
   }
 
-  // dimension arc without text
   if ((theMode == ComputeMode_All || theMode == ComputeMode_Line)
       && aHPosition != LabelPosition_HCenter)
   {
@@ -736,7 +651,6 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
             theMode);
   }
 
-  // arrows and arrow extensions
   if (theMode == ComputeMode_All || theMode == ComputeMode_Line)
   {
     thePresentation->NewGroup();
@@ -777,7 +691,6 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     }
   }
 
-  // flyouts
   if (theMode == ComputeMode_All)
   {
     thePresentation->NewGroup();
@@ -797,10 +710,6 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
   mySelectionGeom.IsComputed = true;
 }
 
-//=======================================================================
-// function : ComputeFlyoutSelection
-// purpose  : computes selection for flyouts
-//=======================================================================
 void PrsDim_AngleDimension::ComputeFlyoutSelection(
   const occ::handle<SelectMgr_Selection>&   theSelection,
   const occ::handle<SelectMgr_EntityOwner>& theOwner)
@@ -816,8 +725,6 @@ void PrsDim_AngleDimension::ComputeFlyoutSelection(
 
   theSelection->Add(aSensitiveEntity);
 }
-
-//=================================================================================================
 
 bool PrsDim_AngleDimension::InitTwoEdgesAngle(gp_Pln& theComputedPlane)
 {
@@ -846,7 +753,6 @@ bool PrsDim_AngleDimension::InitTwoEdgesAngle(gp_Pln& theComputedPlane)
                        : gp_Pln(aSecondLin.Location(),
                                 gp_Vec(aFirstLin.Direction()) ^ gp_Vec(aSecondLin.Direction()));
 
-  // Compute geometry for this plane and edges
   bool                    isInfinite1, isInfinite2;
   gp_Pnt                  aFirstPoint1, aLastPoint1, aFirstPoint2, aLastPoint2;
   occ::handle<Geom_Curve> aFirstCurve = aFirstLine, aSecondCurve = aSecondLine;
@@ -867,7 +773,6 @@ bool PrsDim_AngleDimension::InitTwoEdgesAngle(gp_Pln& theComputedPlane)
   bool isSameLines = aFirstLin.Direction().IsEqual(aSecondLin.Direction(), Precision::Angular())
                      && aFirstLin.Location().IsEqual(aSecondLin.Location(), Precision::Confusion());
 
-  // It can be the same gp_Lin geometry but the different begin and end parameters
   bool isSameEdges = (aFirstPoint1.IsEqual(aFirstPoint2, Precision::Confusion())
                       && aLastPoint1.IsEqual(aLastPoint2, Precision::Confusion()))
                      || (aFirstPoint1.IsEqual(aLastPoint2, Precision::Confusion())
@@ -875,13 +780,12 @@ bool PrsDim_AngleDimension::InitTwoEdgesAngle(gp_Pln& theComputedPlane)
 
   if (isParallelLines)
   {
-    // Zero angle, it could not handle this geometry
+
     if (isSameLines && isSameEdges)
     {
       return false;
     }
 
-    // Handle the case of Pi angle
     const double aParam11 = ElCLib::Parameter(aFirstLin, aFirstPoint1);
     const double aParam12 = ElCLib::Parameter(aFirstLin, aLastPoint1);
     const double aParam21 = ElCLib::Parameter(aFirstLin, aFirstPoint2);
@@ -896,7 +800,7 @@ bool PrsDim_AngleDimension::InitTwoEdgesAngle(gp_Pln& theComputedPlane)
   }
   else
   {
-    // Find intersection
+
     gp_Lin2d aFirstLin2d  = ProjLib::Project(theComputedPlane, aFirstLin);
     gp_Lin2d aSecondLin2d = ProjLib::Project(theComputedPlane, aSecondLin);
 
@@ -920,9 +824,6 @@ bool PrsDim_AngleDimension::InitTwoEdgesAngle(gp_Pln& theComputedPlane)
       return IsValidPoints(myFirstPoint, myCenterPoint, mySecondPoint);
     }
 
-    // |
-    // | <- dimension should be here
-    // *----
     myFirstPoint = myCenterPoint.Distance(aFirstPoint1) > myCenterPoint.Distance(aLastPoint1)
                      ? aFirstPoint1
                      : aLastPoint1;
@@ -935,10 +836,6 @@ bool PrsDim_AngleDimension::InitTwoEdgesAngle(gp_Pln& theComputedPlane)
   return IsValidPoints(myFirstPoint, myCenterPoint, mySecondPoint);
 }
 
-//=======================================================================
-// function : InitTwoFacesAngle
-// purpose  : initialization of angle dimension between two faces
-//=======================================================================
 bool PrsDim_AngleDimension::InitTwoFacesAngle()
 {
   TopoDS_Face aFirstFace  = TopoDS::Face(myFirstShape);
@@ -959,7 +856,7 @@ bool PrsDim_AngleDimension::InitTwoFacesAngle()
 
   if (aFirstSurfType == PrsDim_KOS_Plane && aSecondSurfType == PrsDim_KOS_Plane)
   {
-    // Planar faces angle
+
     occ::handle<Geom_Plane> aFirstPlane  = occ::down_cast<Geom_Plane>(aFirstBasisSurf);
     occ::handle<Geom_Plane> aSecondPlane = occ::down_cast<Geom_Plane>(aSecondBasisSurf);
     return PrsDim::InitAngleBetweenPlanarFaces(aFirstFace,
@@ -971,7 +868,7 @@ bool PrsDim_AngleDimension::InitTwoFacesAngle()
   }
   else
   {
-    // Curvilinear faces angle
+
     return PrsDim::InitAngleBetweenCurvilinearFaces(aFirstFace,
                                                     aSecondFace,
                                                     aFirstSurfType,
@@ -983,10 +880,6 @@ bool PrsDim_AngleDimension::InitTwoFacesAngle()
   }
 }
 
-//=======================================================================
-// function : InitTwoFacesAngle
-// purpose  : initialization of angle dimension between two faces
-//=======================================================================
 bool PrsDim_AngleDimension::InitTwoFacesAngle(const gp_Pnt& thePointOnFirstFace)
 {
   TopoDS_Face aFirstFace  = TopoDS::Face(myFirstShape);
@@ -1008,7 +901,7 @@ bool PrsDim_AngleDimension::InitTwoFacesAngle(const gp_Pnt& thePointOnFirstFace)
   myFirstPoint = thePointOnFirstFace;
   if (aFirstSurfType == PrsDim_KOS_Plane && aSecondSurfType == PrsDim_KOS_Plane)
   {
-    // Planar faces angle
+
     occ::handle<Geom_Plane> aFirstPlane  = occ::down_cast<Geom_Plane>(aFirstBasisSurf);
     occ::handle<Geom_Plane> aSecondPlane = occ::down_cast<Geom_Plane>(aSecondBasisSurf);
     return PrsDim::InitAngleBetweenPlanarFaces(aFirstFace,
@@ -1021,7 +914,7 @@ bool PrsDim_AngleDimension::InitTwoFacesAngle(const gp_Pnt& thePointOnFirstFace)
   }
   else
   {
-    // Curvilinear faces angle
+
     return PrsDim::InitAngleBetweenCurvilinearFaces(aFirstFace,
                                                     aSecondFace,
                                                     aFirstSurfType,
@@ -1034,10 +927,6 @@ bool PrsDim_AngleDimension::InitTwoFacesAngle(const gp_Pnt& thePointOnFirstFace)
   }
 }
 
-//=======================================================================
-// function : InitConeAngle
-// purpose  : initialization of the cone angle
-//=======================================================================
 bool PrsDim_AngleDimension::InitConeAngle()
 {
   if (myFirstShape.IsNull())
@@ -1049,7 +938,7 @@ bool PrsDim_AngleDimension::InitConeAngle()
   gp_Pln      aPln;
   gp_Cone     aCone;
   gp_Circ     aCircle;
-  // A surface from the Face
+
   occ::handle<Geom_Surface>             aSurf;
   occ::handle<Geom_OffsetSurface>       aOffsetSurf;
   occ::handle<Geom_ConicalSurface>      aConicalSurf;
@@ -1066,11 +955,11 @@ bool PrsDim_AngleDimension::InitConeAngle()
   PrsDim::GetPlaneFromFace(aConeShape, aPln, aSurf, aSurfType, anOffset);
   if (aSurfType == PrsDim_KOS_Revolution)
   {
-    // Surface of revolution
+
     aRevSurf = occ::down_cast<Geom_SurfaceOfRevolution>(aSurf);
     gp_Lin                  aLin(aRevSurf->Axis());
     occ::handle<Geom_Curve> aBasisCurve = aRevSurf->BasisCurve();
-    // Must be a part of line (basis curve should be linear)
+
     if (aBasisCurve->DynamicType() != STANDARD_TYPE(Geom_Line))
       return false;
 
@@ -1078,14 +967,12 @@ bool PrsDim_AngleDimension::InitConeAngle()
     gp_Pnt aLast1  = aConeAdaptor.Value(0., aMaxV);
     gp_Vec aVec1(aFirst1, aLast1);
 
-    // Projection <aFirst> on <aLin>
     gp_Pnt aFirst2 = ElCLib::Value(ElCLib::Parameter(aLin, aFirst1), aLin);
-    // Projection <aLast> on <aLin>
+
     gp_Pnt aLast2 = ElCLib::Value(ElCLib::Parameter(aLin, aLast1), aLin);
 
     gp_Vec aVec2(aFirst2, aLast2);
 
-    // Check if two parts of revolution are parallel (it's a cylinder) or normal (it's a circle).
     if (aVec1.IsParallel(aVec2, Precision::Angular())
         || aVec1.IsNormal(aVec2, Precision::Angular()))
       return false;
@@ -1099,7 +986,7 @@ bool PrsDim_AngleDimension::InitConeAngle()
     aType = aSurf->DynamicType();
     if (aType == STANDARD_TYPE(Geom_OffsetSurface) || anOffset > 0.01)
     {
-      // Offset surface
+
       aOffsetSurf = new Geom_OffsetSurface(aSurf, anOffset);
       aSurf       = aOffsetSurf->Surface();
       BRepBuilderAPI_MakeFace aMkFace(aSurf, Precision::Confusion());
@@ -1113,7 +1000,6 @@ bool PrsDim_AngleDimension::InitConeAngle()
     myCenterPoint = aConicalSurf->Apex();
   }
 
-  // A circle where the angle is drawn
   occ::handle<Geom_Curve> aCurve;
   double                  aMidV = (aMinV + aMaxV) / 2.5;
   aCurve                        = aSurf->VIso(aMidV);
@@ -1136,8 +1022,6 @@ bool PrsDim_AngleDimension::InitConeAngle()
   return true;
 }
 
-//=================================================================================================
-
 bool PrsDim_AngleDimension::IsValidPoints(const gp_Pnt& theFirstPoint,
                                           const gp_Pnt& theCenterPoint,
                                           const gp_Pnt& theSecondPoint) const
@@ -1148,10 +1032,6 @@ bool PrsDim_AngleDimension::IsValidPoints(const gp_Pnt& theFirstPoint,
               > Precision::Angular();
 }
 
-//=======================================================================
-// function : isArrowVisible
-// purpose  : compares given and internal arrows types, returns true if the type should be shown
-//=======================================================================
 bool PrsDim_AngleDimension::isArrowVisible(
   const PrsDim_TypeOfAngleArrowVisibility theArrowType) const
 {
@@ -1171,8 +1051,6 @@ bool PrsDim_AngleDimension::isArrowVisible(
   return false;
 }
 
-//=================================================================================================
-
 gp_Pnt PrsDim_AngleDimension::GetTextPosition() const
 {
   if (!IsValid())
@@ -1185,12 +1063,10 @@ gp_Pnt PrsDim_AngleDimension::GetTextPosition() const
     return myFixedTextPosition;
   }
 
-  // Counts text position according to the dimension parameters
   gp_Pnt aTextPosition(gp::Origin());
 
   occ::handle<Prs3d_DimensionAspect> aDimensionAspect = myDrawer->DimensionAspect();
 
-  // Prepare label string and compute its geometrical width
   double                     aLabelWidth;
   TCollection_ExtendedString aLabelString = GetValueString(aLabelWidth);
 
@@ -1199,12 +1075,10 @@ gp_Pnt PrsDim_AngleDimension::GetTextPosition() const
   gp_Pnt aSecondAttach =
     myCenterPoint.Translated(gp_Vec(myCenterPoint, mySecondPoint).Normalized() * GetFlyout());
 
-  // Handle user-defined and automatic arrow placement
   bool isArrowsExternal = false;
   int  aLabelPosition   = LabelPosition_None;
   FitTextAlignment(aDimensionAspect->TextHorizontalPosition(), aLabelPosition, isArrowsExternal);
 
-  // Get text position
   switch (aLabelPosition & LabelPosition_HMask)
   {
     case LabelPosition_HCenter:
@@ -1243,8 +1117,6 @@ gp_Pnt PrsDim_AngleDimension::GetTextPosition() const
   return aTextPosition;
 }
 
-//=================================================================================================
-
 void PrsDim_AngleDimension::SetTextPosition(const gp_Pnt& theTextPos)
 {
   if (!IsValid())
@@ -1252,7 +1124,6 @@ void PrsDim_AngleDimension::SetTextPosition(const gp_Pnt& theTextPos)
     return;
   }
 
-  // The text position point for angle dimension should belong to the working plane.
   if (!GetPlane().Contains(theTextPos, Precision::Confusion()))
   {
     throw Standard_ProgramError(
@@ -1263,8 +1134,6 @@ void PrsDim_AngleDimension::SetTextPosition(const gp_Pnt& theTextPos)
   myFixedTextPosition   = theTextPos;
 }
 
-//=================================================================================================
-
 void PrsDim_AngleDimension::AdjustParameters(const gp_Pnt& theTextPos,
                                              double&       theExtensionSize,
                                              Prs3d_DimensionTextHorizontalPosition& theAlignment,
@@ -1273,10 +1142,8 @@ void PrsDim_AngleDimension::AdjustParameters(const gp_Pnt& theTextPos,
   occ::handle<Prs3d_DimensionAspect> aDimensionAspect = myDrawer->DimensionAspect();
   double                             anArrowLength    = aDimensionAspect->ArrowAspect()->Length();
 
-  // Build circle with radius that is equal to distance from text position to the center point.
   double aRadius = gp_Vec(myCenterPoint, theTextPos).Magnitude();
 
-  // Set attach points in positive direction of the flyout.
   gp_Pnt aFirstAttach =
     myCenterPoint.Translated(gp_Vec(myCenterPoint, myFirstPoint).Normalized() * aRadius);
   gp_Pnt aSecondAttach =
@@ -1289,7 +1156,6 @@ void PrsDim_AngleDimension::AdjustParameters(const gp_Pnt& theTextPos,
   }
   gp_Circ aCircle = aConstructCircle.Value();
 
-  // Default values
   theExtensionSize = aDimensionAspect->ArrowAspect()->Length();
   theAlignment     = Prs3d_DTHP_Center;
 
@@ -1305,7 +1171,6 @@ void PrsDim_AngleDimension::AdjustParameters(const gp_Pnt& theTextPos,
   ElCLib::AdjustPeriodic(0.0, M_PI * 2, Precision::PConfusion(), aParamBeg, aParamEnd);
   double aTextPar = ElCLib::Parameter(aCircle, theTextPos);
 
-  // Horizontal center
   if (aTextPar > aParamBeg && aTextPar < aParamEnd)
   {
     theFlyout = aRadius;
@@ -1322,7 +1187,6 @@ void PrsDim_AngleDimension::AdjustParameters(const gp_Pnt& theTextPos,
     return;
   }
 
-  // Text on the extensions
   gp_Lin aFirstLine      = gce_MakeLin(myCenterPoint, myFirstPoint);
   gp_Lin aSecondLine     = gce_MakeLin(myCenterPoint, mySecondPoint);
   gp_Pnt aFirstTextProj  = PrsDim::Nearest(aFirstLine, theTextPos);
@@ -1364,8 +1228,6 @@ void PrsDim_AngleDimension::AdjustParameters(const gp_Pnt& theTextPos,
   }
 }
 
-//=================================================================================================
-
 void PrsDim_AngleDimension::FitTextAlignment(
   const Prs3d_DimensionTextHorizontalPosition& theHorizontalTextPos,
   int&                                         theLabelPosition,
@@ -1375,11 +1237,9 @@ void PrsDim_AngleDimension::FitTextAlignment(
 
   double anArrowLength = aDimensionAspect->ArrowAspect()->Length();
 
-  // Prepare label string and compute its geometrical width
   double                     aLabelWidth;
   TCollection_ExtendedString aLabelString = GetValueString(aLabelWidth);
 
-  // add margins to label width
   if (aDimensionAspect->IsText3d())
   {
     aLabelWidth += aDimensionAspect->TextAspect()->Height() * THE_3D_TEXT_MARGIN * 2.0;
@@ -1390,7 +1250,6 @@ void PrsDim_AngleDimension::FitTextAlignment(
   gp_Pnt aSecondAttach =
     myCenterPoint.Translated(gp_Vec(myCenterPoint, mySecondPoint).Normalized() * GetFlyout());
 
-  // Handle user-defined and automatic arrow placement
   switch (aDimensionAspect->ArrowOrientation())
   {
     case Prs3d_DAO_External:
@@ -1404,7 +1263,6 @@ void PrsDim_AngleDimension::FitTextAlignment(
       gp_Vec anAttachVector(aFirstAttach, aSecondAttach);
       double aDimensionWidth = anAttachVector.Magnitude();
 
-      // Add margin to ensure a small tail between text and arrow
       double anArrowMargin = aDimensionAspect->IsText3d()
                                ? aDimensionAspect->TextAspect()->Height() * THE_3D_TEXT_MARGIN
                                : 0.0;
@@ -1416,7 +1274,6 @@ void PrsDim_AngleDimension::FitTextAlignment(
     }
   }
 
-  // Handle user-defined and automatic text placement
   switch (theHorizontalTextPos)
   {
     case Prs3d_DTHP_Left:

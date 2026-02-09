@@ -14,10 +14,6 @@
 #include <Prs3d_Text.hpp>
 #include <TCollection_ExtendedString.hpp>
 
-//==========================================================================
-// function : DsgPrs_DiameterPresentation::Add
-// purpose  : it is possible to choose the symbol of extremities of the face (arrow, point ...)
-//==========================================================================
 void DsgPrs_DiameterPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                       const occ::handle<Prs3d_Drawer>&       aDrawer,
                                       const TCollection_ExtendedString&      aText,
@@ -32,7 +28,6 @@ void DsgPrs_DiameterPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
   double parat    = ElCLib::Parameter(aCircle, AttachmentPoint);
   gp_Pnt ptoncirc = ElCLib::Value(parat, aCircle);
 
-  // sideline
   gp_Pnt center = aCircle.Location();
   gp_Vec vecrap(ptoncirc, center);
 
@@ -55,13 +50,11 @@ void DsgPrs_DiameterPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
   aPrims->AddVertex(OppositePoint);
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // value
   TCollection_ExtendedString Text = aText;
   if (IsDiamSymbol)
-    Text = TCollection_ExtendedString("\330  ") + aText; // VRO (2007-05-17) inserted a blank.
+    Text = TCollection_ExtendedString("\330  ") + aText;
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), Text, AttachmentPoint);
 
-  // arrows
   gp_Dir arrdir(vecrap);
   if (inside)
     arrdir.Reverse();
@@ -84,7 +77,7 @@ static bool DsgPrs_InDomain(const double fpar, const double lpar, const double p
     if (lpar > fpar)
       return ((para >= fpar) && (para <= lpar));
     else
-    { // fpar > lpar
+    {
       double delta = 2. * M_PI - fpar;
       double lp, par, fp;
       lp  = lpar + delta;
@@ -104,11 +97,6 @@ static bool DsgPrs_InDomain(const double fpar, const double lpar, const double p
   return false;
 }
 
-//=======================================================================
-// function : DsgPrs_DiameterPresentation::Add
-// purpose  : SZY 12-february-98
-//=======================================================================
-
 void DsgPrs_DiameterPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                       const occ::handle<Prs3d_Drawer>&       aDrawer,
                                       const TCollection_ExtendedString&      aText,
@@ -116,7 +104,7 @@ void DsgPrs_DiameterPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
                                       const gp_Circ&                         aCircle,
                                       const double                           uFirst,
                                       const double                           uLast,
-                                      const DsgPrs_ArrowSide                 ArrowPrs, // ArrowSide
+                                      const DsgPrs_ArrowSide                 ArrowPrs,
                                       const bool                             IsDiamSymbol)
 {
   double fpara = uFirst;
@@ -131,7 +119,7 @@ void DsgPrs_DiameterPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
   double parEndOfArrow = ElCLib::Parameter(aCircle, AttachmentPoint);
   gp_Pnt EndOfArrow;
-  gp_Pnt DrawPosition = AttachmentPoint; // point of attachment
+  gp_Pnt DrawPosition = AttachmentPoint;
 
   gp_Pnt Center      = aCircle.Location();
   gp_Pnt FirstPoint  = ElCLib::Value(uFirst, aCircle);
@@ -139,12 +127,12 @@ void DsgPrs_DiameterPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
 
   if (!DsgPrs_InDomain(fpara, lpara, parEndOfArrow))
   {
-    double otherpar = parEndOfArrow + M_PI; // not in domain
+    double otherpar = parEndOfArrow + M_PI;
     if (otherpar > 2 * M_PI)
       otherpar -= 2 * M_PI;
     if (DsgPrs_InDomain(fpara, lpara, otherpar))
     {
-      parEndOfArrow = otherpar; // parameter on circle
+      parEndOfArrow = otherpar;
       EndOfArrow    = ElCLib::Value(parEndOfArrow, aCircle);
     }
     else
@@ -155,12 +143,12 @@ void DsgPrs_DiameterPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
       gp_Lin L2(Center, dir2);
       if (L1.Distance(AttachmentPoint) < L2.Distance(AttachmentPoint))
       {
-        EndOfArrow   = FirstPoint; //***
+        EndOfArrow   = FirstPoint;
         DrawPosition = ElCLib::Value(ElCLib::Parameter(L1, AttachmentPoint), L1);
       }
       else
       {
-        EndOfArrow   = SecondPoint; //***
+        EndOfArrow   = SecondPoint;
         DrawPosition = ElCLib::Value(ElCLib::Parameter(L2, AttachmentPoint), L2);
       }
     }
@@ -176,13 +164,11 @@ void DsgPrs_DiameterPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
   aPrims->AddVertex(EndOfArrow);
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // text
   TCollection_ExtendedString Text = aText;
   if (IsDiamSymbol)
-    Text = TCollection_ExtendedString("\330 ") + Text; //  => \330 | \370?
+    Text = TCollection_ExtendedString("\330 ") + Text;
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), Text, DrawPosition);
 
-  // Add presentation of arrow
   gp_Dir DirOfArrow(gp_Vec(DrawPosition, EndOfArrow).XYZ());
   DsgPrs::ComputeSymbol(aPresentation,
                         LA,

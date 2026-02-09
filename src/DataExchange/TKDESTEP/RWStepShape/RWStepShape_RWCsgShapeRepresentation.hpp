@@ -11,7 +11,6 @@ class StepShape_CsgShapeRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for CsgShapeRepresentation
 class RWStepShape_RWCsgShapeRepresentation
 {
 public:

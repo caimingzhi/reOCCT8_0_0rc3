@@ -10,7 +10,6 @@ class StepVisual_SurfaceStyleControlGrid : public Standard_Transient
 {
 
 public:
-  //! Returns a SurfaceStyleControlGrid
   Standard_EXPORT StepVisual_SurfaceStyleControlGrid();
 
   Standard_EXPORT void Init(const occ::handle<StepVisual_CurveStyle>& aStyleOfControlGrid);

@@ -5,8 +5,6 @@
 #include <NCollection_Array1.hpp>
 #include <Prs3d_ToolQuadric.hpp>
 
-//=================================================================================================
-
 Prs3d_ToolDisk::Prs3d_ToolDisk(const double theInnerRadius,
                                const double theOuterRadius,
                                const int    theNbSlices,
@@ -20,16 +18,12 @@ Prs3d_ToolDisk::Prs3d_ToolDisk(const double theInnerRadius,
   myStacksNb = theNbStacks;
 }
 
-//=================================================================================================
-
 gp_Pnt Prs3d_ToolDisk::Vertex(const double theU, const double theV) const
 {
   const double aU      = myStartAngle + theU * (myEndAngle - myStartAngle);
   const double aRadius = myInnerRadius + (myOuterRadius - myInnerRadius) * theV;
   return gp_Pnt(std::cos(aU) * aRadius, std::sin(aU) * aRadius, 0.0);
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_ArrayOfTriangles> Prs3d_ToolDisk::Create(const double   theInnerRadius,
                                                                const double   theOuterRadius,

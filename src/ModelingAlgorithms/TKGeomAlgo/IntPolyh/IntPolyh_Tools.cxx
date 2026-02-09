@@ -4,8 +4,6 @@
 #include <Precision.hpp>
 #include <IntCurveSurface_ThePolyhedronOfHInter.hpp>
 
-//=================================================================================================
-
 void IntPolyh_Tools::IsEnlargePossible(const occ::handle<Adaptor3d_Surface>& theSurf,
                                        bool&                                 theUEnlarge,
                                        bool&                                 theVEnlarge)
@@ -13,14 +11,12 @@ void IntPolyh_Tools::IsEnlargePossible(const occ::handle<Adaptor3d_Surface>& the
   theUEnlarge = false;
   theVEnlarge = false;
 
-  // In the context of IntPolyh_Intersection only BSpline and Bezier surfaces
-  // should be enlarged
   if (theSurf->GetType() == GeomAbs_BSplineSurface || theSurf->GetType() == GeomAbs_BezierSurface)
   {
-    // Check U periodicity and closeness
+
     if (!theSurf->IsUClosed() && !theSurf->IsUPeriodic())
     {
-      // Check that surface is not infinite in U direction
+
       if (!Precision::IsInfinite(theSurf->FirstUParameter())
           && !Precision::IsInfinite(theSurf->LastUParameter()))
       {
@@ -28,10 +24,9 @@ void IntPolyh_Tools::IsEnlargePossible(const occ::handle<Adaptor3d_Surface>& the
       }
     }
 
-    // Check V periodicity and closeness
     if (!theSurf->IsVClosed() && !theSurf->IsVPeriodic())
     {
-      // Check that surface is not infinite in V direction
+
       if (!Precision::IsInfinite(theSurf->FirstVParameter())
           && !Precision::IsInfinite(theSurf->LastVParameter()))
       {
@@ -41,10 +36,6 @@ void IntPolyh_Tools::IsEnlargePossible(const occ::handle<Adaptor3d_Surface>& the
   }
 }
 
-//=======================================================================
-// function : EnlargeZone
-// purpose  : Enlarges the sampling zone of the surface
-//=======================================================================
 static void EnlargeZone(const occ::handle<Adaptor3d_Surface>& theSurf,
                         double&                               u0,
                         double&                               u1,
@@ -53,7 +44,7 @@ static void EnlargeZone(const occ::handle<Adaptor3d_Surface>& theSurf,
 {
   bool isToEnlargeU, isToEnlargeV;
   IntPolyh_Tools::IsEnlargePossible(theSurf, isToEnlargeU, isToEnlargeV);
-  // Enlarge U
+
   if (isToEnlargeU)
   {
     double delta_u = 0.01 * std::abs(u1 - u0);
@@ -69,8 +60,6 @@ static void EnlargeZone(const occ::handle<Adaptor3d_Surface>& theSurf,
   }
 }
 
-//=================================================================================================
-
 void IntPolyh_Tools::MakeSampling(const occ::handle<Adaptor3d_Surface>& theSurf,
                                   const int                             theNbSU,
                                   const int                             theNbSV,
@@ -78,29 +67,26 @@ void IntPolyh_Tools::MakeSampling(const occ::handle<Adaptor3d_Surface>& theSurf,
                                   NCollection_Array1<double>&           theUPars,
                                   NCollection_Array1<double>&           theVPars)
 {
-  // Resize arrays
+
   theUPars.Resize(1, theNbSU, false);
   theVPars.Resize(1, theNbSV, false);
-  //
+
   double u0, u1, v0, v1;
   u0 = theSurf->FirstUParameter();
   u1 = theSurf->LastUParameter();
   v0 = theSurf->FirstVParameter();
   v1 = theSurf->LastVParameter();
 
-  // Enlarge surface intersection zone if necessary
   if (theEnlargeZone)
     EnlargeZone(theSurf, u0, u1, v0, v1);
 
   int aNbSamplesU1 = theNbSU - 1;
   int aNbSamplesV1 = theNbSV - 1;
 
-  // U step
   double dU = (u1 - u0) / double(aNbSamplesU1);
-  // V step
+
   double dV = (v1 - v0) / double(aNbSamplesV1);
 
-  // Fill arrays
   for (int i = 0; i < theNbSU; ++i)
   {
     double aU = u0 + i * dU;
@@ -110,7 +96,7 @@ void IntPolyh_Tools::MakeSampling(const occ::handle<Adaptor3d_Surface>& theSurf,
     }
     theUPars.SetValue(i + 1, aU);
   }
-  //
+
   for (int i = 0; i < theNbSV; ++i)
   {
     double aV = v0 + i * dV;
@@ -122,8 +108,6 @@ void IntPolyh_Tools::MakeSampling(const occ::handle<Adaptor3d_Surface>& theSurf,
   }
 }
 
-//=================================================================================================
-
 double IntPolyh_Tools::ComputeDeflection(const occ::handle<Adaptor3d_Surface>& theSurf,
                                          const NCollection_Array1<double>&     theUPars,
                                          const NCollection_Array1<double>&     theVPars)
@@ -132,8 +116,6 @@ double IntPolyh_Tools::ComputeDeflection(const occ::handle<Adaptor3d_Surface>& t
   double                                aDeflTol = polyhedron.DeflectionOverEstimation();
   return aDeflTol;
 }
-
-//=================================================================================================
 
 void IntPolyh_Tools::FillArrayOfPointNormal(const occ::handle<Adaptor3d_Surface>& theSurf,
                                             const NCollection_Array1<double>&     theUPars,
@@ -151,11 +133,11 @@ void IntPolyh_Tools::FillArrayOfPointNormal(const occ::handle<Adaptor3d_Surface>
     for (int j = 1; j <= aNbV; ++j)
     {
       double aV = theVPars(j);
-      // Compute the point
+
       gp_Pnt aP;
       gp_Vec aDU, aDV;
       theSurf->D1(aU, aV, aP, aDU, aDV);
-      // Compute normal
+
       gp_Vec aVNorm  = aDU.Crossed(aDV);
       double aLength = aVNorm.Magnitude();
       if (aLength > gp::Resolution())
@@ -167,7 +149,6 @@ void IntPolyh_Tools::FillArrayOfPointNormal(const occ::handle<Adaptor3d_Surface>
         aVNorm.SetCoord(0.0, 0.0, 0.0);
       }
 
-      // Save the pair
       IntPolyh_PointNormal& aPN = thePoints[iCnt];
       aPN.Point                 = aP;
       aPN.Normal                = aVNorm;

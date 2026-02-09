@@ -11,7 +11,6 @@ class StepRepr_GlobalUncertaintyAssignedContext;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for GlobalUncertaintyAssignedContext
 class RWStepRepr_RWGlobalUncertaintyAssignedContext
 {
 public:

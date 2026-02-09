@@ -5,12 +5,8 @@
 #include <StepFEA_AlignedCurve3dElementCoordinateSystem.hpp>
 #include <StepFEA_FeaAxis2Placement3d.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWAlignedCurve3dElementCoordinateSystem::
   RWStepFEA_RWAlignedCurve3dElementCoordinateSystem() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWAlignedCurve3dElementCoordinateSystem::ReadStep(
   const occ::handle<StepData_StepReaderData>&                       data,
@@ -18,16 +14,12 @@ void RWStepFEA_RWAlignedCurve3dElementCoordinateSystem::ReadStep(
   occ::handle<Interface_Check>&                                     ach,
   const occ::handle<StepFEA_AlignedCurve3dElementCoordinateSystem>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "aligned_curve3d_element_coordinate_system"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   data->ReadString(num, 1, "representation_item.name", ach, aRepresentationItem_Name);
-
-  // Own fields of AlignedCurve3dElementCoordinateSystem
 
   occ::handle<StepFEA_FeaAxis2Placement3d> aCoordinateSystem;
   data->ReadEntity(num,
@@ -37,36 +29,23 @@ void RWStepFEA_RWAlignedCurve3dElementCoordinateSystem::ReadStep(
                    STANDARD_TYPE(StepFEA_FeaAxis2Placement3d),
                    aCoordinateSystem);
 
-  // Initialize entity
   ent->Init(aRepresentationItem_Name, aCoordinateSystem);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWAlignedCurve3dElementCoordinateSystem::WriteStep(
   StepData_StepWriter&                                              SW,
   const occ::handle<StepFEA_AlignedCurve3dElementCoordinateSystem>& ent) const
 {
 
-  // Inherited fields of RepresentationItem
-
   SW.Send(ent->StepRepr_RepresentationItem::Name());
-
-  // Own fields of AlignedCurve3dElementCoordinateSystem
 
   SW.Send(ent->CoordinateSystem());
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWAlignedCurve3dElementCoordinateSystem::Share(
   const occ::handle<StepFEA_AlignedCurve3dElementCoordinateSystem>& ent,
   Interface_EntityIterator&                                         iter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Own fields of AlignedCurve3dElementCoordinateSystem
 
   iter.AddItem(ent->CoordinateSystem());
 }

@@ -4,7 +4,6 @@
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
 
-//! base class for range index management
 class IntTools_BaseRangeSample
 {
 public:

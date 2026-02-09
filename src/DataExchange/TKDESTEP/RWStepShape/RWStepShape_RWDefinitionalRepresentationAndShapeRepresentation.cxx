@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -32,21 +21,13 @@ void RWStepShape_RWDefinitionalRepresentationAndShapeRepresentation::ReadStep(
 
   int num = num0;
 
-  // skip definitional_representation
-
   num = data->NextForComplex(num);
-
-  // --- Instance of plex component definitional_representation ---
 
   if (!data->CheckNbParams(num, 3, ach, "representation"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
-
-  // --- inherited field : items ---
 
   occ::handle<NCollection_HArray1<occ::handle<StepRepr_RepresentationItem>>> aItems;
   occ::handle<StepRepr_RepresentationItem>                                   anent2;
@@ -67,8 +48,6 @@ void RWStepShape_RWDefinitionalRepresentationAndShapeRepresentation::ReadStep(
     }
   }
 
-  // --- inherited field : contextOfItems ---
-
   occ::handle<StepRepr_RepresentationContext> aContextOfItems;
   data->ReadEntity(num,
                    3,
@@ -77,10 +56,8 @@ void RWStepShape_RWDefinitionalRepresentationAndShapeRepresentation::ReadStep(
                    STANDARD_TYPE(StepRepr_RepresentationContext),
                    aContextOfItems);
 
-  // skip shape_representation
   num = data->NextForComplex(num);
 
-  //--- Initialisation of the read entity ---
   ent->Init(aName, aItems, aContextOfItems);
 }
 
@@ -89,17 +66,11 @@ void RWStepShape_RWDefinitionalRepresentationAndShapeRepresentation::WriteStep(
   const occ::handle<StepShape_DefinitionalRepresentationAndShapeRepresentation>& ent) const
 {
 
-  // --- Instance of plex component ConversionBasedUnit ---
-
   SW.StartEntity("DEFINITIONAL_REPRESENTATION");
 
   SW.StartEntity("REPRESENTATION");
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
-
-  // --- inherited field items ---
 
   SW.OpenSub();
   for (int i2 = 1; i2 <= ent->NbItems(); i2++)
@@ -108,11 +79,7 @@ void RWStepShape_RWDefinitionalRepresentationAndShapeRepresentation::WriteStep(
   }
   SW.CloseSub();
 
-  // --- inherited field contextOfItems ---
-
   SW.Send(ent->ContextOfItems());
-
-  // --- Instance of plex component LengthUnit ---
 
   SW.StartEntity("SHAPE_REPRESENTATION");
 }

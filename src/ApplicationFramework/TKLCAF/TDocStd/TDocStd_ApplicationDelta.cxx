@@ -6,11 +6,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDocStd_ApplicationDelta, Standard_Transient)
 
-//=================================================================================================
-
 TDocStd_ApplicationDelta::TDocStd_ApplicationDelta() = default;
-
-//=================================================================================================
 
 void TDocStd_ApplicationDelta::Dump(Standard_OStream& anOS) const
 {

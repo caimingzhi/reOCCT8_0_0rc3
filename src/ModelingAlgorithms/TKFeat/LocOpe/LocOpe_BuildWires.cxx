@@ -21,31 +21,21 @@ static int FindFirstEdge(const NCollection_IndexedDataMap<TopoDS_Shape,
                                                           TopTools_ShapeMapHasher>&,
                          const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>&);
 
-//=================================================================================================
-
 LocOpe_BuildWires::LocOpe_BuildWires()
     : myDone(false)
 {
 }
 
-//=================================================================================================
-
-//  Modified by skv - Mon May 31 12:58:27 2004 OCC5865 Begin
 LocOpe_BuildWires::LocOpe_BuildWires(const NCollection_List<TopoDS_Shape>&   L,
                                      const occ::handle<LocOpe_WiresOnShape>& PW)
 {
   Perform(L, PW);
 }
 
-//  Modified by skv - Mon May 31 12:58:28 2004 OCC5865 End
-
-//=================================================================================================
-
-//  Modified by skv - Mon May 31 12:59:09 2004 OCC5865 Begin
 void LocOpe_BuildWires::Perform(const NCollection_List<TopoDS_Shape>&   L,
                                 const occ::handle<LocOpe_WiresOnShape>& PW)
 {
-  //  Modified by skv - Mon May 31 12:59:10 2004 OCC5865 End
+
   myDone = false;
   myRes.Clear();
 
@@ -60,8 +50,7 @@ void LocOpe_BuildWires::Perform(const NCollection_List<TopoDS_Shape>&   L,
     const TopoDS_Shape& edg = itl.Value();
     if (theMap.Add(edg) && edg.ShapeType() == TopAbs_EDGE)
     {
-      B.Add(C, edg.Oriented(TopAbs_FORWARD)); // orientation importante pour
-      // appel a TopExp::Vertices
+      B.Add(C, edg.Oriented(TopAbs_FORWARD));
     }
   }
 
@@ -70,13 +59,12 @@ void LocOpe_BuildWires::Perform(const NCollection_List<TopoDS_Shape>&   L,
   TopExp::MapShapesAndAncestors(C, TopAbs_VERTEX, TopAbs_EDGE, theMapVE);
 
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> Bords;
-  //  for (int i = 1; i <= theMapVE.Extent(); i++) {
+
   int i;
 
   for (i = 1; i <= theMapVE.Extent(); i++)
   {
-    //  Modified by skv - Mon May 31 13:07:50 2004 OCC5865 Begin
-    //     if (theMapVE(i).Extent() == 1) {
+
     TopoDS_Vertex vtx = TopoDS::Vertex(theMapVE.FindKey(i));
     TopoDS_Edge   etmp;
     TopoDS_Vertex aV_border;
@@ -85,7 +73,6 @@ void LocOpe_BuildWires::Perform(const NCollection_List<TopoDS_Shape>&   L,
         || (PW->OnVertex(vtx, aV_border) || PW->OnEdge(vtx, etmp, partmp)))
     {
       Bords.Add(vtx);
-      //  Modified by skv - Mon May 31 13:07:50 2004 OCC5865 End
     }
   }
 
@@ -137,7 +124,7 @@ void LocOpe_BuildWires::Perform(const NCollection_List<TopoDS_Shape>&   L,
         VL = Vl;
       }
       else
-      { // on doit avoir Vl == VL
+      {
         mapE.Add(theEdge.Oriented(TopAbs_REVERSED));
         VL = Vf;
       }
@@ -147,9 +134,9 @@ void LocOpe_BuildWires::Perform(const NCollection_List<TopoDS_Shape>&   L,
     B.MakeWire(newWire);
 
     if (mapV.Contains(VL))
-    { // on sort avec une boucle a recreer
+    {
       TopoDS_Vertex Vf;
-      //      for (int j = 1; j<= mapE.Extent(); j++) {
+
       int j;
       for (j = 1; j <= mapE.Extent(); j++)
       {
@@ -175,7 +162,7 @@ void LocOpe_BuildWires::Perform(const NCollection_List<TopoDS_Shape>&   L,
       newWire.Closed(true);
     }
     else
-    { // on sort sur un bord : wire ouvert...
+    {
       mapV.Add(VL);
       for (int j = 1; j <= mapE.Extent(); j++)
       {
@@ -209,14 +196,10 @@ void LocOpe_BuildWires::Perform(const NCollection_List<TopoDS_Shape>&   L,
   myDone = true;
 }
 
-//=================================================================================================
-
 bool LocOpe_BuildWires::IsDone() const
 {
   return myDone;
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& LocOpe_BuildWires::Result() const
 {
@@ -226,8 +209,6 @@ const NCollection_List<TopoDS_Shape>& LocOpe_BuildWires::Result() const
   }
   return myRes;
 }
-
-//=================================================================================================
 
 static int FindFirstEdge(const NCollection_IndexedDataMap<TopoDS_Shape,
                                                           NCollection_List<TopoDS_Shape>,

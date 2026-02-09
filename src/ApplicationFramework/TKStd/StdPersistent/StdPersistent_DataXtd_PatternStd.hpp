@@ -7,21 +7,18 @@
 class StdPersistent_DataXtd_PatternStd : public StdObjMgt_Attribute<TDataXtd_PatternStd>
 {
 public:
-  //! Read persistent data from a file.
   inline void Read(StdObjMgt_ReadData& theReadData)
   {
     theReadData >> mySignature >> myAxis1Reversed >> myAxis2Reversed >> myAxis1 >> myAxis2
       >> myValue1 >> myValue2 >> myNb1 >> myNb2 >> myMirror;
   }
 
-  //! Write persistent data to a file.
   inline void Write(StdObjMgt_WriteData& theWriteData)
   {
     theWriteData << mySignature << myAxis1Reversed << myAxis2Reversed << myAxis1 << myAxis2
                  << myValue1 << myValue2 << myNb1 << myNb2 << myMirror;
   }
 
-  //! Gets persistent child objects
   inline void PChildren(StdObjMgt_Persistent::SequenceOfPersistent& theChildren) const
   {
     theChildren.Append(myAxis1);
@@ -33,10 +30,8 @@ public:
     theChildren.Append(myMirror);
   }
 
-  //! Returns persistent type name
   inline const char* PName() const { return "PDataXtd_PatternStd"; }
 
-  //! Import transient attribute from the persistent data.
   void Import(const occ::handle<TDataXtd_PatternStd>& theAttribute) const;
 
 private:

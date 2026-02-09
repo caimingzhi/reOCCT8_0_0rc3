@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_SphericalPairWithPinAndRange;
 
-//! Read & Write tool for SphericalPairWithPinAndRange
 class RWStepKinematics_RWSphericalPairWithPinAndRange
 {
 public:

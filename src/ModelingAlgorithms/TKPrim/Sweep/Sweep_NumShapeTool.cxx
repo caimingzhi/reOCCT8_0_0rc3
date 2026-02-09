@@ -2,14 +2,10 @@
 #include <Standard_OutOfRange.hpp>
 #include <Sweep_NumShapeTool.hpp>
 
-//=================================================================================================
-
 Sweep_NumShapeTool::Sweep_NumShapeTool(const Sweep_NumShape& aShape)
     : myNumShape(aShape)
 {
 }
-
-//=================================================================================================
 
 int Sweep_NumShapeTool::NbShapes() const
 {
@@ -30,8 +26,6 @@ int Sweep_NumShapeTool::NbShapes() const
   }
 }
 
-//=================================================================================================
-
 int Sweep_NumShapeTool::Index(const Sweep_NumShape& aShape) const
 {
   if (aShape.Type() == TopAbs_EDGE)
@@ -51,8 +45,6 @@ int Sweep_NumShapeTool::Index(const Sweep_NumShape& aShape) const
   }
 }
 
-//=================================================================================================
-
 Sweep_NumShape Sweep_NumShapeTool::Shape(const int anIndex) const
 {
   if (anIndex == 1)
@@ -65,21 +57,15 @@ Sweep_NumShape Sweep_NumShapeTool::Shape(const int anIndex) const
   }
 }
 
-//=================================================================================================
-
 TopAbs_ShapeEnum Sweep_NumShapeTool::Type(const Sweep_NumShape& aShape) const
 {
   return aShape.Type();
 }
 
-//=================================================================================================
-
 TopAbs_Orientation Sweep_NumShapeTool::Orientation(const Sweep_NumShape& aShape) const
 {
   return aShape.Orientation();
 }
-
-//=================================================================================================
 
 bool Sweep_NumShapeTool::HasFirstVertex() const
 {
@@ -88,16 +74,12 @@ bool Sweep_NumShapeTool::HasFirstVertex() const
   return true;
 }
 
-//=================================================================================================
-
 bool Sweep_NumShapeTool::HasLastVertex() const
 {
   if (myNumShape.Type() == TopAbs_EDGE)
     return !myNumShape.EndInfinite();
   return true;
 }
-
-//=================================================================================================
 
 Sweep_NumShape Sweep_NumShapeTool::FirstVertex() const
 {
@@ -112,8 +94,6 @@ Sweep_NumShape Sweep_NumShapeTool::FirstVertex() const
   }
   return myNumShape;
 }
-
-//=================================================================================================
 
 Sweep_NumShape Sweep_NumShapeTool::LastVertex() const
 {

@@ -8,11 +8,7 @@
 #include <StepDimTol_ToleranceZone.hpp>
 #include <StepRepr_ShapeAspect.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWRunoutZoneDefinition::RWStepDimTol_RWRunoutZoneDefinition() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWRunoutZoneDefinition::ReadStep(
   const occ::handle<StepData_StepReaderData>&         data,
@@ -20,11 +16,9 @@ void RWStepDimTol_RWRunoutZoneDefinition::ReadStep(
   occ::handle<Interface_Check>&                       ach,
   const occ::handle<StepDimTol_RunoutZoneDefinition>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "runout_zone_definition"))
     return;
-
-  // inherited fields from ToleranceZoneDefinition
 
   occ::handle<StepDimTol_ToleranceZone> aToleranceZone;
   data->ReadEntity(num,
@@ -57,17 +51,13 @@ void RWStepDimTol_RWRunoutZoneDefinition::ReadStep(
                    STANDARD_TYPE(StepDimTol_RunoutZoneOrientation),
                    anOrientation);
 
-  // Initialize entity
   ent->Init(aToleranceZone, anItems, anOrientation);
 }
-
-//=================================================================================================
 
 void RWStepDimTol_RWRunoutZoneDefinition::WriteStep(
   StepData_StepWriter&                                SW,
   const occ::handle<StepDimTol_RunoutZoneDefinition>& ent) const
 {
-  // Inherited fields of ToleranceZoneDefinition
 
   SW.Send(ent->Zone());
 
@@ -79,14 +69,10 @@ void RWStepDimTol_RWRunoutZoneDefinition::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWRunoutZoneDefinition::Share(
   const occ::handle<StepDimTol_RunoutZoneDefinition>& ent,
   Interface_EntityIterator&                           iter) const
 {
-
-  // Inherited fields from ToleranceZoneDefinition
 
   iter.AddItem(ent->Zone());
 

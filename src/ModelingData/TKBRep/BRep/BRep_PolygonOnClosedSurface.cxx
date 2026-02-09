@@ -7,8 +7,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_PolygonOnClosedSurface, BRep_PolygonOnSurface)
 
-//=================================================================================================
-
 BRep_PolygonOnClosedSurface::BRep_PolygonOnClosedSurface(const occ::handle<Poly_Polygon2D>& P1,
                                                          const occ::handle<Poly_Polygon2D>& P2,
                                                          const occ::handle<Geom_Surface>&   S,
@@ -18,28 +16,20 @@ BRep_PolygonOnClosedSurface::BRep_PolygonOnClosedSurface(const occ::handle<Poly_
 {
 }
 
-//=================================================================================================
-
 bool BRep_PolygonOnClosedSurface::IsPolygonOnClosedSurface() const
 {
   return true;
 }
-
-//=================================================================================================
 
 const occ::handle<Poly_Polygon2D>& BRep_PolygonOnClosedSurface::Polygon2() const
 {
   return myPolygon2;
 }
 
-//=================================================================================================
-
 void BRep_PolygonOnClosedSurface::Polygon2(const occ::handle<Poly_Polygon2D>& P)
 {
   myPolygon2 = P;
 }
-
-//=================================================================================================
 
 occ::handle<BRep_CurveRepresentation> BRep_PolygonOnClosedSurface::Copy() const
 {
@@ -47,8 +37,6 @@ occ::handle<BRep_CurveRepresentation> BRep_PolygonOnClosedSurface::Copy() const
     new BRep_PolygonOnClosedSurface(Polygon(), myPolygon2, Surface(), Location());
   return P;
 }
-
-//=================================================================================================
 
 void BRep_PolygonOnClosedSurface::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

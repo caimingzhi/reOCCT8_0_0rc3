@@ -44,39 +44,37 @@ private:
 };
 
 void GeomPlate_MakeApprox_Eval::Evaluate(int* Dimension,
-                                         // Dimension
+
                                          double* UStartEnd,
-                                         // StartEnd[2] in U
+
                                          double* VStartEnd,
-                                         // StartEnd[2] in V
+
                                          int* FavorIso,
-                                         // Choice of constante, 1 for U, 2 for V
+
                                          double* ConstParam,
-                                         // Value of constant parameter
+
                                          int* NbParams,
-                                         // Number of parameters N
+
                                          double* Parameters,
-                                         // Values of parameters,
+
                                          int* UOrder,
-                                         // Derivative Request in U
+
                                          int* VOrder,
-                                         // Derivative Request in V
+
                                          double* Result,
-                                         // Result[Dimension,N]
+
                                          int* ErrorCode) const
-// Error Code
+
 {
   *ErrorCode = 0;
   int    idim, jpar;
   double Upar, Vpar;
 
-  // Dimension incorrecte
   if (*Dimension != 3)
   {
     *ErrorCode = 1;
   }
 
-  // Parametres incorrects
   if (*FavorIso == 1)
   {
     Upar = *ConstParam;
@@ -110,7 +108,6 @@ void GeomPlate_MakeApprox_Eval::Evaluate(int* Dimension,
     }
   }
 
-  // Initialisation
   for (idim = 1; idim <= *Dimension; idim++)
   {
     for (jpar = 1; jpar <= *NbParams; jpar++)
@@ -121,7 +118,7 @@ void GeomPlate_MakeApprox_Eval::Evaluate(int* Dimension,
 
   int    Order = *UOrder + *VOrder;
   gp_Pnt pnt;
-  // gp_Vec vect, v1, v2, v3, v4, v5, v6, v7, v8, v9;
+
   gp_Vec v1, v2, v3, v4, v5;
 
   if (*FavorIso == 1)
@@ -248,8 +245,6 @@ void GeomPlate_MakeApprox_Eval::Evaluate(int* Dimension,
   }
 }
 
-//=================================================================================================
-
 GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>& SurfPlate,
                                            const AdvApp2Var_Criterion&           PlateCrit,
                                            const double                          Tol3d,
@@ -281,7 +276,6 @@ GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>&
 
   AdvApprox_DichoCutting myDec;
 
-  // POP pour WNT
   GeomPlate_MakeApprox_Eval  ev(myPlate);
   AdvApp2Var_ApproxAFunc2Var AppPlate(nb1,
                                       nb2,
@@ -304,7 +298,7 @@ GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>&
                                       dgmax,
                                       Nbmax,
                                       ev,
-                                      //				      dgmax,dgmax,Nbmax,myPlateSurfEval,
+
                                       PlateCrit,
                                       myDec,
                                       myDec);
@@ -317,8 +311,6 @@ GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>&
   std::cout << "  Criterium error : " << myCritError << std::endl;
 #endif
 }
-
-//=================================================================================================
 
 GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>& SurfPlate,
                                            const double                          Tol3d,
@@ -337,10 +329,8 @@ GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>&
   if (CritOrder >= 0)
   {
 
-    //    contraintes 2d d'ordre 0
     myPlate->Constraints(Seq2d);
 
-    //    contraintes 3d correspondantes sur plate
     int i, nbp = Seq2d.Length();
     for (i = 1; i <= nbp; i++)
     {
@@ -349,14 +339,14 @@ GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>&
       gp_Vec v1h, v2h, v3h;
       if (CritOrder == 0)
       {
-        //    a l'ordre 0
+
         myPlate->D0(P2d.X(), P2d.Y(), PP);
         gp_XYZ P3d(PP.X(), PP.Y(), PP.Z());
         Seq3d.Append(P3d);
       }
       else
       {
-        //    a l'ordre 1
+
         myPlate->D1(P2d.X(), P2d.Y(), PP, v1h, v2h);
         v3h = v1h ^ v2h;
         gp_XYZ P3d(v3h.X(), v3h.Y(), v3h.Z());
@@ -407,7 +397,7 @@ GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>&
   if (CritOrder == -1)
   {
     myPrec = 1;
-    // POP pour NT
+
     GeomPlate_MakeApprox_Eval  ev(myPlate);
     AdvApp2Var_ApproxAFunc2Var AppPlate(nb1,
                                         nb2,
@@ -443,7 +433,7 @@ GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>&
   else if (CritOrder == 0)
   {
     GeomPlate_PlateG0Criterion Crit0(Seq2d, Seq3d, seuil);
-    // POP pour NT
+
     GeomPlate_MakeApprox_Eval  ev(myPlate);
     AdvApp2Var_ApproxAFunc2Var AppPlate(nb1,
                                         nb2,
@@ -466,7 +456,7 @@ GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>&
                                         dgmax,
                                         Nbmax,
                                         ev,
-                                        //					dgmax,dgmax,Nbmax,myPlateSurfEval,
+
                                         Crit0,
                                         myDec,
                                         myDec);
@@ -482,7 +472,7 @@ GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>&
   else if (CritOrder == 1)
   {
     GeomPlate_PlateG1Criterion Crit1(Seq2d, Seq3d, seuil);
-    // POP pour NT
+
     GeomPlate_MakeApprox_Eval  ev(myPlate);
     AdvApp2Var_ApproxAFunc2Var AppPlate(nb1,
                                         nb2,
@@ -505,7 +495,7 @@ GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>&
                                         dgmax,
                                         Nbmax,
                                         ev,
-                                        //					dgmax,dgmax,Nbmax,myPlateSurfEval,
+
                                         Crit1,
                                         myDec,
                                         myDec);
@@ -520,21 +510,15 @@ GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>&
   }
 }
 
-//=================================================================================================
-
 occ::handle<Geom_BSplineSurface> GeomPlate_MakeApprox::Surface() const
 {
   return mySurface;
 }
 
-//=================================================================================================
-
 double GeomPlate_MakeApprox::ApproxError() const
 {
   return myAppError;
 }
-
-//=================================================================================================
 
 double GeomPlate_MakeApprox::CriterionError() const
 {

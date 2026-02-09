@@ -1,8 +1,6 @@
 #include <TopOpeBRepDS_Filter.hpp>
 #include <TopOpeBRepDS_HDataStructure.hpp>
 
-//=================================================================================================
-
 TopOpeBRepDS_Filter::TopOpeBRepDS_Filter(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
                                          const TopOpeBRepTool_PShapeClassifier&          pClassif)
     : myHDS(HDS),
@@ -10,15 +8,11 @@ TopOpeBRepDS_Filter::TopOpeBRepDS_Filter(const occ::handle<TopOpeBRepDS_HDataStr
 {
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_Filter::ProcessInterferences()
 {
   ProcessEdgeInterferences();
   ProcessCurveInterferences();
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_Filter::ProcessEdgeInterferences()
 {
@@ -36,8 +30,6 @@ void TopOpeBRepDS_Filter::ProcessEdgeInterferences()
     }
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_Filter::ProcessFaceInterferences(
   const NCollection_DataMap<TopoDS_Shape,
@@ -59,8 +51,6 @@ void TopOpeBRepDS_Filter::ProcessFaceInterferences(
   }
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_Filter::ProcessCurveInterferences()
 {
   TopOpeBRepDS_DataStructure& BDS = myHDS->ChangeDS();
@@ -70,7 +60,3 @@ void TopOpeBRepDS_Filter::ProcessCurveInterferences()
     ProcessCurveInterferences(i);
   }
 }
-
-// ProcessFaceInterferences  : voir FilterFaceInterferences.cxx
-// ProcessEdgeInterferences  : voir FilterEdgeInterferences.cxx
-// ProcessCurveInterferences : voir FilterCurveInterferences.cxx

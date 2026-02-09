@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_Drawer, Standard_Transient)
 
-//=================================================================================================
-
 void MeshVS_Drawer::Assign(const occ::handle<MeshVS_Drawer>& aDrawer)
 {
   if (!aDrawer.IsNull())
@@ -20,8 +18,6 @@ void MeshVS_Drawer::Assign(const occ::handle<MeshVS_Drawer>& aDrawer)
   }
 }
 
-//=================================================================================================
-
 void MeshVS_Drawer::SetInteger(const int Key, const int Value)
 {
   if (myIntegers.IsBound(Key))
@@ -29,8 +25,6 @@ void MeshVS_Drawer::SetInteger(const int Key, const int Value)
   else
     myIntegers.Bind(Key, Value);
 }
-
-//=================================================================================================
 
 void MeshVS_Drawer::SetDouble(const int Key, const double Value)
 {
@@ -40,8 +34,6 @@ void MeshVS_Drawer::SetDouble(const int Key, const double Value)
     myDoubles.Bind(Key, Value);
 }
 
-//=================================================================================================
-
 void MeshVS_Drawer::SetBoolean(const int Key, const bool Value)
 {
   if (myBooleans.IsBound(Key))
@@ -49,8 +41,6 @@ void MeshVS_Drawer::SetBoolean(const int Key, const bool Value)
   else
     myBooleans.Bind(Key, Value);
 }
-
-//=================================================================================================
 
 void MeshVS_Drawer::SetColor(const int Key, const Quantity_Color& Value)
 {
@@ -60,8 +50,6 @@ void MeshVS_Drawer::SetColor(const int Key, const Quantity_Color& Value)
     myColors.Bind(Key, Value);
 }
 
-//=================================================================================================
-
 void MeshVS_Drawer::SetMaterial(const int Key, const Graphic3d_MaterialAspect& Value)
 {
   if (myMaterials.IsBound(Key))
@@ -69,8 +57,6 @@ void MeshVS_Drawer::SetMaterial(const int Key, const Graphic3d_MaterialAspect& V
   else
     myMaterials.Bind(Key, Value);
 }
-
-//=================================================================================================
 
 void MeshVS_Drawer::SetAsciiString(const int Key, const TCollection_AsciiString& Value)
 {
@@ -80,8 +66,6 @@ void MeshVS_Drawer::SetAsciiString(const int Key, const TCollection_AsciiString&
     myAsciiString.Bind(Key, Value);
 }
 
-//=================================================================================================
-
 bool MeshVS_Drawer::GetInteger(const int Key, int& Value) const
 {
   bool aRes = myIntegers.IsBound(Key);
@@ -89,8 +73,6 @@ bool MeshVS_Drawer::GetInteger(const int Key, int& Value) const
     Value = myIntegers.Find(Key);
   return aRes;
 }
-
-//=================================================================================================
 
 bool MeshVS_Drawer::GetDouble(const int Key, double& Value) const
 {
@@ -100,8 +82,6 @@ bool MeshVS_Drawer::GetDouble(const int Key, double& Value) const
   return aRes;
 }
 
-//=================================================================================================
-
 bool MeshVS_Drawer::GetBoolean(const int Key, bool& Value) const
 {
   bool aRes = myBooleans.IsBound(Key);
@@ -109,8 +89,6 @@ bool MeshVS_Drawer::GetBoolean(const int Key, bool& Value) const
     Value = myBooleans.Find(Key);
   return aRes;
 }
-
-//=================================================================================================
 
 bool MeshVS_Drawer::GetColor(const int Key, Quantity_Color& Value) const
 {
@@ -120,8 +98,6 @@ bool MeshVS_Drawer::GetColor(const int Key, Quantity_Color& Value) const
   return aRes;
 }
 
-//=================================================================================================
-
 bool MeshVS_Drawer::GetMaterial(const int Key, Graphic3d_MaterialAspect& Value) const
 {
   bool aRes = myMaterials.IsBound(Key);
@@ -129,8 +105,6 @@ bool MeshVS_Drawer::GetMaterial(const int Key, Graphic3d_MaterialAspect& Value) 
     Value = myMaterials.Find(Key);
   return aRes;
 }
-
-//=================================================================================================
 
 bool MeshVS_Drawer::GetAsciiString(const int Key, TCollection_AsciiString& Value) const
 {
@@ -140,8 +114,6 @@ bool MeshVS_Drawer::GetAsciiString(const int Key, TCollection_AsciiString& Value
   return aRes;
 }
 
-//=================================================================================================
-
 bool MeshVS_Drawer::RemoveInteger(const int Key)
 {
   bool aRes = myIntegers.IsBound(Key);
@@ -149,8 +121,6 @@ bool MeshVS_Drawer::RemoveInteger(const int Key)
     myIntegers.UnBind(Key);
   return aRes;
 }
-
-//=================================================================================================
 
 bool MeshVS_Drawer::RemoveDouble(const int Key)
 {
@@ -160,8 +130,6 @@ bool MeshVS_Drawer::RemoveDouble(const int Key)
   return aRes;
 }
 
-//=================================================================================================
-
 bool MeshVS_Drawer::RemoveBoolean(const int Key)
 {
   bool aRes = myBooleans.IsBound(Key);
@@ -169,8 +137,6 @@ bool MeshVS_Drawer::RemoveBoolean(const int Key)
     myBooleans.UnBind(Key);
   return aRes;
 }
-
-//=================================================================================================
 
 bool MeshVS_Drawer::RemoveColor(const int Key)
 {
@@ -180,8 +146,6 @@ bool MeshVS_Drawer::RemoveColor(const int Key)
   return aRes;
 }
 
-//=================================================================================================
-
 bool MeshVS_Drawer::RemoveMaterial(const int Key)
 {
   bool aRes = myMaterials.IsBound(Key);
@@ -189,8 +153,6 @@ bool MeshVS_Drawer::RemoveMaterial(const int Key)
     myMaterials.UnBind(Key);
   return aRes;
 }
-
-//=================================================================================================
 
 bool MeshVS_Drawer::RemoveAsciiString(const int Key)
 {

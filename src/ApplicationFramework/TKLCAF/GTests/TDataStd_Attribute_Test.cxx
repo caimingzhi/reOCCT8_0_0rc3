@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <TDataStd_AsciiString.hpp>
 #include <TDataStd_BooleanArray.hpp>
@@ -35,16 +24,14 @@
 
 TEST(TDataStd_Attribute_Test, OCC29371_AttributeGUIDsNotNull)
 {
-  // Create document and label
+
   occ::handle<TDocStd_Application> anApp = new TDocStd_Application();
   occ::handle<TDocStd_Document>    aDoc;
   anApp->NewDocument("BinOcaf", aDoc);
   TDF_Label aLab = aDoc->Main();
 
-  // Null GUID for comparison
   Standard_GUID aNullGuid("00000000-0000-0000-0000-000000000000");
 
-  // Test each TDataStd attribute type has non-null GUID
   occ::handle<TDataStd_AsciiString> aStrAtt = new TDataStd_AsciiString();
   aLab.AddAttribute(aStrAtt);
   EXPECT_NE(aNullGuid, aStrAtt->ID());

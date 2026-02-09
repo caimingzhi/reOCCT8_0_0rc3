@@ -1,47 +1,33 @@
-// Copyright (c) 2019-2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <WNT_HIDSpaceMouse.hpp>
 
 namespace
 {
-  //! Enumeration of known Space Mouse models.
+
   enum SpacePid
   {
-    // VENDOR_ID_LOGITECH
-    SpacePid_SpaceMouse        = 0xC603,
-    SpacePid_CADMan            = 0xC605,
-    SpacePid_SpaceMouseClassic = 0xC606,
-    SpacePid_SpaceBall5000     = 0xC621,
-    SpacePid_SpaceTraveler     = 0xC623,
-    SpacePid_SpacePilot        = 0xC625,
-    SpacePid_SpaceNavigator =
-      0xC626, //!< has only 2 "menu" buttons (second one is treated as SpaceVKey_Fit)
-    SpacePid_SpaceExplorer = 0xC627, //!< 15 buttons
-    SpacePid_NavigatorForNotebooks =
-      0xC628, //!< has only 2 "menu" buttons (second one is treated as SpaceVKey_Fit)
-    SpacePid_SpacePilotPro = 0xC629, //!< 31 buttons
-    SpacePid_SpaceMousePro = 0xC62B, //!< has only 15 buttons, but codes range from 0 to 26
-    // VENDOR_ID_3DCONNEXION
-    SpacePid_SpaceMouseWireless1    = 0xC62E, //!< [plugged in] has only  2 buttons
-    SpacePid_SpaceMouseWireless2    = 0xC62F, //!< [wireless]   has only  2 buttons
-    SpacePid_SpaceMouseProWireless1 = 0xC631, //!< [plugged in] has only 15 buttons
-    SpacePid_SpaceMouseProWireless2 = 0xC632, //!< [wireless]   has only 15 buttons
-    SpacePid_SpaceMouseEnterprise   = 0xC633, //!< 31 buttons
+
+    SpacePid_SpaceMouse            = 0xC603,
+    SpacePid_CADMan                = 0xC605,
+    SpacePid_SpaceMouseClassic     = 0xC606,
+    SpacePid_SpaceBall5000         = 0xC621,
+    SpacePid_SpaceTraveler         = 0xC623,
+    SpacePid_SpacePilot            = 0xC625,
+    SpacePid_SpaceNavigator        = 0xC626,
+    SpacePid_SpaceExplorer         = 0xC627,
+    SpacePid_NavigatorForNotebooks = 0xC628,
+    SpacePid_SpacePilotPro         = 0xC629,
+    SpacePid_SpaceMousePro         = 0xC62B,
+
+    SpacePid_SpaceMouseWireless1    = 0xC62E,
+    SpacePid_SpaceMouseWireless2    = 0xC62F,
+    SpacePid_SpaceMouseProWireless1 = 0xC631,
+    SpacePid_SpaceMouseProWireless2 = 0xC632,
+    SpacePid_SpaceMouseEnterprise   = 0xC633,
     SpacePid_SpaceMouseCompact      = 0xC635
   };
 
-  //! Enumeration of known keys available on various Space Mouse models.
   enum SpaceVKey
   {
     SpaceVKey_INVALID = 0,
@@ -78,13 +64,11 @@ namespace
     SpaceVKey_Minus,
   };
 
-  //! The raw value range on tested device is [-350; 350].
   enum
   {
     THE_RAW_RANGE_350 = 350
   };
 
-  //! Convert key state bit into virtual key.
   static SpaceVKey hidToSpaceKey(unsigned long theProductId, unsigned short theKeyBit)
   {
     static const SpaceVKey THE_PILOT_KEYS[] = {
@@ -111,7 +95,6 @@ namespace
                                                    SpaceVKey_Rotate};
     const int              THE_NB_EXPLORER_KEYS = sizeof(THE_EXPLORER_KEYS) / sizeof(SpaceVKey);
 
-    // shared by latest 3Dconnexion hardware
     static const SpaceVKey THE_SPACEMOUSEPRO_KEYS[] = {
       SpaceVKey_Menu,  SpaceVKey_Fit,    SpaceVKey_Top,     SpaceVKey_Left,     SpaceVKey_Right,
       SpaceVKey_Front, SpaceVKey_Bottom, SpaceVKey_Back,    SpaceVKey_RollCW,   SpaceVKey_RollCCW,
@@ -146,8 +129,6 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 WNT_HIDSpaceMouse::WNT_HIDSpaceMouse(unsigned long  theProductId,
                                      const uint8_t* theData,
                                      size_t         theSize)
@@ -157,8 +138,6 @@ WNT_HIDSpaceMouse::WNT_HIDSpaceMouse(unsigned long  theProductId,
       myValueRange(THE_RAW_RANGE_350)
 {
 }
-
-//=================================================================================================
 
 bool WNT_HIDSpaceMouse::IsKnownProduct(unsigned long theProductId)
 {
@@ -181,8 +160,6 @@ bool WNT_HIDSpaceMouse::IsKnownProduct(unsigned long theProductId)
   return false;
 }
 
-//=================================================================================================
-
 NCollection_Vec3<double> WNT_HIDSpaceMouse::Translation(bool& theIsIdle, bool theIsQuadric) const
 {
   theIsIdle = true;
@@ -190,8 +167,6 @@ NCollection_Vec3<double> WNT_HIDSpaceMouse::Translation(bool& theIsIdle, bool th
            ? fromRawVec3(theIsIdle, myData + 1, true, theIsQuadric)
            : NCollection_Vec3<double>();
 }
-
-//=================================================================================================
 
 NCollection_Vec3<double> WNT_HIDSpaceMouse::Rotation(bool& theIsIdle, bool theIsQuadric) const
 {
@@ -206,8 +181,6 @@ NCollection_Vec3<double> WNT_HIDSpaceMouse::Rotation(bool& theIsIdle, bool theIs
   }
   return NCollection_Vec3<double>();
 }
-
-//=================================================================================================
 
 NCollection_Vec3<double> WNT_HIDSpaceMouse::fromRawVec3(bool&          theIsIdle,
                                                         const uint8_t* theData,
@@ -250,12 +223,11 @@ NCollection_Vec3<double> WNT_HIDSpaceMouse::fromRawVec3(bool&          theIsIdle
     }
   }
 
-  // determine raw value range
   for (int aCompIter = 0; aCompIter < 3; ++aCompIter)
   {
     if (aRaw16[aCompIter] > myValueRange || -aRaw16[aCompIter] > myValueRange)
     {
-      myValueRange = 32767; // SHRT_MAX
+      myValueRange = 32767;
       break;
     }
   }
@@ -272,8 +244,6 @@ NCollection_Vec3<double> WNT_HIDSpaceMouse::fromRawVec3(bool&          theIsIdle
   }
   return aVec / (double(myValueRange) * double(myValueRange));
 }
-
-//=================================================================================================
 
 Aspect_VKey WNT_HIDSpaceMouse::HidToSpaceKey(unsigned short theKeyBit) const
 {

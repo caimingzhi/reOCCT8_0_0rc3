@@ -9,10 +9,6 @@
 class StepGeom_ToroidalSurface;
 class Geom_ToroidalSurface;
 
-//! This class implements the mapping between class
-//! ToroidalSurface from Geom and the class
-//! ToroidalSurface from StepGeom which describes a
-//! toroidal_surface from Prostep
 class GeomToStep_MakeToroidalSurface : public GeomToStep_Root
 {
 public:

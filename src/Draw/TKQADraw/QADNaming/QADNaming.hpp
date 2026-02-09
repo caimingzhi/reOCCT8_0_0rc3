@@ -26,29 +26,21 @@ public:
                                        const occ::handle<TDF_Data>&    Data,
                                        NCollection_List<TopoDS_Shape>& Shapes);
 
-  //! theStatus = 0  Not found,
-  //! theStatus = 1  One shape,
-  //! theStatus = 2  More than one shape.
   Standard_EXPORT static TCollection_AsciiString GetEntry(const TopoDS_Shape&          Shape,
                                                           const occ::handle<TDF_Data>& Data,
                                                           int&                         theStatus);
 
-  //! returns label by first two arguments (df and entry string)
   Standard_EXPORT static bool Entry(void* const theArguments, TDF_Label& theLabel);
 
   Standard_EXPORT static void AllCommands(Draw_Interpretor& DI);
 
-  //! commands relatives to NamedShape
   Standard_EXPORT static void BasicCommands(Draw_Interpretor& DI);
 
-  //! loading NamedShape to the Data Framework
   Standard_EXPORT static void BuilderCommands(Draw_Interpretor& DI);
 
-  //! loading NamedShape to the Data Framework
   Standard_EXPORT static void IteratorsCommands(Draw_Interpretor& DI);
 
   Standard_EXPORT static void ToolsCommands(Draw_Interpretor& DI);
 
-  //! commands relatives to Naming
   Standard_EXPORT static void SelectionCommands(Draw_Interpretor& DI);
 };

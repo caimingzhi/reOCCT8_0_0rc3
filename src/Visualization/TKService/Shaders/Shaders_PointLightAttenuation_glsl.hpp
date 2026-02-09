@@ -37,5 +37,3 @@ static const char Shaders_PointLightAttenuation_glsl[] =
   "  }\n"
   "  return occRangedPointLightAttenuation (theDistance, theRange);\n"
   "}\n";
-
-// clang-format on

@@ -4,8 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TopoDS_AlertAttribute, Message_Attribute)
 
-//=================================================================================================
-
 TopoDS_AlertAttribute::TopoDS_AlertAttribute(const TopoDS_Shape&            theShape,
                                              const TCollection_AsciiString& theName)
     : Message_AttributeStream(Standard_SStream(), theName),
@@ -16,8 +14,6 @@ TopoDS_AlertAttribute::TopoDS_AlertAttribute(const TopoDS_Shape&            theS
 
   SetStream(aStream);
 }
-
-//=================================================================================================
 
 void TopoDS_AlertAttribute::Send(const occ::handle<Message_Messenger>& theMessenger,
                                  const TopoDS_Shape&                   theShape)
@@ -40,8 +36,6 @@ void TopoDS_AlertAttribute::Send(const occ::handle<Message_Messenger>& theMessen
     Message_AlertExtended::AddAlert(aReport, new TopoDS_AlertAttribute(theShape), Message_Info);
   }
 }
-
-//=================================================================================================
 
 void TopoDS_AlertAttribute::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

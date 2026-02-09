@@ -12,7 +12,6 @@ class StepGeom_DegeneratePcurve : public StepGeom_Point
 {
 
 public:
-  //! Returns a DegeneratePcurve
   Standard_EXPORT StepGeom_DegeneratePcurve();
 
   Standard_EXPORT void Init(

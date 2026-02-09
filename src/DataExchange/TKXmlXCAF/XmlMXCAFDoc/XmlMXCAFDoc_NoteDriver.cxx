@@ -8,19 +8,15 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_NoteDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(UserName, "user_name")
 IMPLEMENT_DOMSTRING(TimeStamp, "time_stamp")
 
-//=================================================================================================
-
 XmlMXCAFDoc_NoteDriver::XmlMXCAFDoc_NoteDriver(const occ::handle<Message_Messenger>& theMsgDriver,
                                                const char*                           theName)
     : XmlMDF_ADriver(theMsgDriver, theName)
 {
 }
 
-//=================================================================================================
-
 bool XmlMXCAFDoc_NoteDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                    const occ::handle<TDF_Attribute>& theTarget,
-                                   XmlObjMgt_RRelocationTable& /*theRelocTable*/) const
+                                   XmlObjMgt_RRelocationTable&) const
 {
   const XmlObjMgt_Element& anElement = theSource;
 
@@ -38,11 +34,9 @@ bool XmlMXCAFDoc_NoteDriver::Paste(const XmlObjMgt_Persistent&       theSource,
   return true;
 }
 
-//=================================================================================================
-
 void XmlMXCAFDoc_NoteDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                    XmlObjMgt_Persistent&             theTarget,
-                                   XmlObjMgt_SRelocationTable& /*theRelocTable*/) const
+                                   XmlObjMgt_SRelocationTable&) const
 {
   occ::handle<XCAFDoc_Note> aNote = occ::down_cast<XCAFDoc_Note>(theSource);
   if (aNote.IsNull())

@@ -27,34 +27,21 @@ void IGESDimen_ToolSectionedArea::ReadOwnParams(const occ::handle<IGESDimen_Sect
   double                                                             tempDistance, tempAngle;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> tempIslands;
   occ::handle<IGESData_IGESEntity>                                   anent;
-  // bool st; //szv#4:S4163:12Mar99 moved down
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadEntity(IR, PR.Current(), "Exterior curve", extCurve, (ent->FormNumber() == 1));
   PR.ReadInteger(PR.Current(), "Fill pattern", tempPattern);
   PR.ReadXYZ(PR.CurrentList(1, 3), "Passing point", passPnt);
   PR.ReadReal(PR.Current(), "Distance between lines", tempDistance);
 
   if (PR.DefinedElseSkip())
-    // clang-format off
-    PR.ReadReal(PR.Current(), "Angle between line and X axis", tempAngle); //szv#4:S4163:12Mar99 `st=` not needed
+
+    PR.ReadReal(PR.Current(), "Angle between line and X axis", tempAngle);
   else
     tempAngle = M_PI / 4.0;
 
   bool st = PR.ReadInteger(PR.Current(), "Number of island curves", nbislands);
   if (st && nbislands > 0)
-    PR.ReadEnts (IR,PR.CurrentList(nbislands),"Island curves",tempIslands); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
-  /*
-      {
-        tempIslands = new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, nbislands);
-        for (int i=1; i<=nbislands; i++)
-      {
-            st = PR.ReadEntity(IR, PR.Current(), "Island curves", anent);
-        if (st) tempIslands->SetValue(i, anent);
-      }
-      }
-  */
+    PR.ReadEnts(IR, PR.CurrentList(nbislands), "Island curves", tempIslands);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(extCurve, tempPattern, passPnt, tempDistance, tempAngle, tempIslands);
@@ -110,7 +97,7 @@ void IGESDimen_ToolSectionedArea::OwnCopy(const occ::handle<IGESDimen_SectionedA
 }
 
 IGESData_DirChecker IGESDimen_ToolSectionedArea::DirChecker(
-  const occ::handle<IGESDimen_SectionedArea>& /* ent */) const
+  const occ::handle<IGESDimen_SectionedArea>&) const
 {
   IGESData_DirChecker DC(230, 0, 1);
   DC.Structure(IGESData_DefVoid);
@@ -123,9 +110,9 @@ IGESData_DirChecker IGESDimen_ToolSectionedArea::DirChecker(
   return DC;
 }
 
-void IGESDimen_ToolSectionedArea::OwnCheck(const occ::handle<IGESDimen_SectionedArea>& /* ent */,
+void IGESDimen_ToolSectionedArea::OwnCheck(const occ::handle<IGESDimen_SectionedArea>&,
                                            const Interface_ShareTool&,
-                                           occ::handle<Interface_Check>& /* ach */) const
+                                           occ::handle<Interface_Check>&) const
 {
 }
 

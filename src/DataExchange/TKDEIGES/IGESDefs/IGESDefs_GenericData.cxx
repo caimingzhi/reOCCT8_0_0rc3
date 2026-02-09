@@ -17,9 +17,7 @@ void IGESDefs_GenericData::Init(
   const occ::handle<NCollection_HArray1<int>>&                             allTypes,
   const occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>>& allValues)
 {
-  // rln May 11, 2000 BUC60660
-  // Number of TYPE/VALUE pairs is 0 and arrays are null handles,
-  // this caused exception
+
   if (!allTypes.IsNull() && !allValues.IsNull()
       && (allValues->Lower() != 1 || allTypes->Lower() != 1
           || allTypes->Length() != allValues->Length()))
@@ -33,7 +31,7 @@ void IGESDefs_GenericData::Init(
 
 int IGESDefs_GenericData::NbPropertyValues() const
 {
-  //  return 2 * theTypes->Length() + 2;
+
   return theNbPropertyValues;
 }
 

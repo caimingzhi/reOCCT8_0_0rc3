@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DsgPrs.hpp>
 
@@ -96,7 +84,7 @@ void DsgPrs::ComputeSymbol(const occ::handle<Prs3d_Presentation>&    aPresentati
 
     case DsgPrs_AS_LASTPT:
     {
-      // On dessine un rond
+
       occ::handle<Graphic3d_ArrayOfPoints> anArrayOfPoints = new Graphic3d_ArrayOfPoints(1);
       anArrayOfPoints->AddVertex(pt2.X(), pt2.Y(), pt2.Z());
       aPresentation->CurrentGroup()->AddPrimitiveArray(anArrayOfPoints);
@@ -118,9 +106,9 @@ void DsgPrs::ComputeSymbol(const occ::handle<Prs3d_Presentation>&    aPresentati
 
     case DsgPrs_AS_FIRSTAR_LASTPT:
     {
-      // an Arrow
+
       Prs3d_Arrow::Draw(aGroup, pt1, dir1, LA->ArrowAspect()->Angle(), LA->ArrowAspect()->Length());
-      // a Round
+
       occ::handle<Graphic3d_ArrayOfPoints> anArrayOfPoints = new Graphic3d_ArrayOfPoints(1);
       anArrayOfPoints->AddVertex(pt2.X(), pt2.Y(), pt2.Z());
       aGroup->SetPrimitivesAspect(aMarkerAsp);
@@ -130,10 +118,9 @@ void DsgPrs::ComputeSymbol(const occ::handle<Prs3d_Presentation>&    aPresentati
 
     case DsgPrs_AS_FIRSTPT_LASTAR:
     {
-      // an Arrow
+
       Prs3d_Arrow::Draw(aGroup, pt2, dir2, LA->ArrowAspect()->Angle(), LA->ArrowAspect()->Length());
 
-      // a Round
       if (drawFromCenter)
       {
         occ::handle<Graphic3d_ArrayOfPoints> anArrayOfPoints = new Graphic3d_ArrayOfPoints(1);
@@ -145,8 +132,6 @@ void DsgPrs::ComputeSymbol(const occ::handle<Prs3d_Presentation>&    aPresentati
     }
   }
 }
-
-//=================================================================================================
 
 void DsgPrs::ComputePlanarFacesLengthPresentation(const double  FirstArrowLength,
                                                   const double  SecondArrowLength,
@@ -165,7 +150,7 @@ void DsgPrs::ComputePlanarFacesLengthPresentation(const double  FirstArrowLength
   EndOfArrow1 = ElCLib::Value(ElCLib::Parameter(FirstLin, OffsetPoint), FirstLin);
   EndOfArrow2 = ElCLib::Value(ElCLib::Parameter(SecondLin, OffsetPoint), SecondLin);
 
-  if (EndOfArrow1.SquareDistance(EndOfArrow2) > Precision::SquareConfusion()) // not null length
+  if (EndOfArrow1.SquareDistance(EndOfArrow2) > Precision::SquareConfusion())
   {
     gp_Dir LengthDir(gp_Vec(EndOfArrow1, EndOfArrow2));
     if ((FirstArrowLength + SecondArrowLength) * (FirstArrowLength + SecondArrowLength)
@@ -174,11 +159,9 @@ void DsgPrs::ComputePlanarFacesLengthPresentation(const double  FirstArrowLength
     else
       DirOfArrow1 = LengthDir;
   }
-  else // null length
+  else
     DirOfArrow1 = PlaneOfFaces.Axis().Direction();
 }
-
-//=================================================================================================
 
 void DsgPrs::ComputeCurvilinearFacesLengthPresentation(const double FirstArrowLength,
                                                        const double SecondArrowLength,
@@ -269,8 +252,6 @@ void DsgPrs::ComputeCurvilinearFacesLengthPresentation(const double FirstArrowLe
   }
 }
 
-//=================================================================================================
-
 void DsgPrs::ComputeFacesAnglePresentation(const double  ArrowLength,
                                            const double  Value,
                                            const gp_Pnt& CenterPoint,
@@ -296,7 +277,7 @@ void DsgPrs::ComputeFacesAnglePresentation(const double  ArrowLength,
 {
   if (Value > Precision::Angular() && std::abs(M_PI - Value) > Precision::Angular())
   {
-    // Computing presentation of angle's arc
+
     gp_Ax2 ax(CenterPoint, axisdir, dir1);
     AngleCirc.SetPosition(ax);
     AngleCirc.SetRadius(CenterPoint.Distance(OffsetPoint));
@@ -335,7 +316,7 @@ void DsgPrs::ComputeFacesAnglePresentation(const double  ArrowLength,
       FirstParAngleCirc = Par1;
       LastParAngleCirc  = Par2;
     }
-    else // Sign1 == -1 && Sign2 == -1
+    else
     {
       AngleCirc.SetPosition(gp_Ax2(CenterPoint, axisdir, gp_Dir(PosVec)));
       Par0              = 0.;
@@ -345,7 +326,6 @@ void DsgPrs::ComputeFacesAnglePresentation(const double  ArrowLength,
       LastParAngleCirc  = Par2;
     }
 
-    // Computing presentation of arrows
     EndOfArrow1 = ElCLib::Value(Par1, AngleCirc);
     EndOfArrow2 = ElCLib::Value(Par2, AngleCirc);
     double beta = 0.;
@@ -362,7 +342,7 @@ void DsgPrs::ComputeFacesAnglePresentation(const double  ArrowLength,
       DirOfArrow2.Reverse();
     }
   }
-  else // dir1 and dir2 are parallel
+  else
   {
     gp_Dir ArrowDir = axisdir ^ dir1;
     DirOfArrow1     = ArrowDir;
@@ -372,7 +352,6 @@ void DsgPrs::ComputeFacesAnglePresentation(const double  ArrowLength,
     EndOfArrow2 = EndOfArrow1;
   }
 
-  // Line or arc from AttachmentPoint2 to its "projection"
   gp_Lin SecondLin(CenterPoint, dir2);
   if (SecondLin.Contains(AttachmentPoint2, Precision::Confusion()))
     ProjAttachPoint2 = AttachmentPoint2;
@@ -410,7 +389,7 @@ void DsgPrs::ComputeFacesAnglePresentation(const double  ArrowLength,
   }
 }
 
-void DsgPrs::ComputeFilletRadiusPresentation(const double /*ArrowLength*/,
+void DsgPrs::ComputeFilletRadiusPresentation(const double,
                                              const double  Value,
                                              const gp_Pnt& Position,
                                              const gp_Dir& NormalDir,
@@ -434,10 +413,10 @@ void DsgPrs::ComputeFilletRadiusPresentation(const double /*ArrowLength*/,
              || Value <= Precision::Confusion();
   if (!SpecCase)
   {
-    // Computing presentation of fillet's arc
+
     gp_Ax2 ax(Center, NormalDir, dir1);
     FilletCirc.SetPosition(ax);
-    FilletCirc.SetRadius(Center.Distance(FirstPoint)); //***
+    FilletCirc.SetRadius(Center.Distance(FirstPoint));
     gp_Vec vec1(dir1);
     vec1 *= FilletCirc.Radius();
     gp_Vec vec2(dir2);
@@ -456,25 +435,25 @@ void DsgPrs::ComputeFilletRadiusPresentation(const double /*ArrowLength*/,
     gp_Lin L2(Center, dir2);
     if (Sign1 != Sign2)
     {
-      DrawPosition = Position; //***
+      DrawPosition = Position;
       gp_Dir direction(PosVec);
       double angle = dir1.Angle(direction);
       if ((dir1 ^ direction) * NormalDir < 0.0e0)
         angle = -angle;
       if (Sign1 == -1)
         angle += M_PI;
-      EndOfArrow = ElCLib::Value(angle, FilletCirc); //***
+      EndOfArrow = ElCLib::Value(angle, FilletCirc);
     }
     else
     {
       if (L1.Distance(Position) < L2.Distance(Position))
       {
-        EndOfArrow   = FirstPoint; //***
+        EndOfArrow   = FirstPoint;
         DrawPosition = ElCLib::Value(ElCLib::Parameter(L1, Position), L1);
       }
       else
       {
-        EndOfArrow   = SecondPoint; //***
+        EndOfArrow   = SecondPoint;
         DrawPosition = ElCLib::Value(ElCLib::Parameter(L2, Position), L2);
       }
     }
@@ -487,7 +466,7 @@ void DsgPrs::ComputeFilletRadiusPresentation(const double /*ArrowLength*/,
     FirstParCirc = ElCLib::Parameter(FilletCirc, FirstPoint);
     LastParCirc  = ElCLib::Parameter(FilletCirc, SecondPoint);
   }
-  else // Angle equal 0 or PI or R = 0
+  else
   {
     DrawPosition = Position;
     EndOfArrow   = BasePnt;
@@ -500,8 +479,6 @@ void DsgPrs::ComputeFilletRadiusPresentation(const double /*ArrowLength*/,
   }
   DirOfArrow.SetXYZ(gp_Dir(gp_Vec(DrawPosition, EndOfArrow)).XYZ());
 }
-
-//=================================================================================================
 
 void DsgPrs::ComputeRadiusLine(const gp_Pnt& aCenter,
                                const gp_Pnt& anEndOfArrow,
@@ -538,22 +515,20 @@ void DsgPrs::ComputeRadiusLine(const gp_Pnt& aCenter,
   }
 }
 
-//=================================================================================================
-
 double DsgPrs::DistanceFromApex(const gp_Elips& elips, const gp_Pnt& Apex, const double par)
 {
   double dist;
   double parApex = ElCLib::Parameter(elips, Apex);
   if (parApex == 0.0 || parApex == M_PI)
-  {                     // Major case
-    if (parApex == 0.0) // pos Apex
+  {
+    if (parApex == 0.0)
       dist = (par < M_PI) ? par : (2 * M_PI - par);
-    else // neg Apex
+    else
       dist = (par < M_PI) ? (M_PI - par) : (par - M_PI);
   }
   else
-  {                          // Minor case
-    if (parApex == M_PI / 2) // pos Apex
+  {
+    if (parApex == M_PI / 2)
     {
       if (par <= parApex + M_PI && par > parApex)
         dist = par - parApex;
@@ -562,10 +537,10 @@ double DsgPrs::DistanceFromApex(const gp_Elips& elips, const gp_Pnt& Apex, const
         if (par > parApex + M_PI)
           dist = 2 * M_PI - par + parApex;
         else
-          dist = parApex - par; // 0 < par < M_PI/2
+          dist = parApex - par;
       }
     }
-    else // neg Apex == 3/2 PI
+    else
     {
       if (par <= parApex && par >= M_PI / 2)
         dist = parApex - par;
@@ -574,7 +549,7 @@ double DsgPrs::DistanceFromApex(const gp_Elips& elips, const gp_Pnt& Apex, const
         if (par > parApex)
           dist = par - parApex;
         else
-          dist = par + M_PI / 2; // 0 < par < PI/2
+          dist = par + M_PI / 2;
       }
     }
   }

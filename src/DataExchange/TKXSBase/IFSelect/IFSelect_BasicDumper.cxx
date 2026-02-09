@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_BasicDumper.hpp>
 #include <IFSelect_DispGlobal.hpp>
@@ -42,11 +31,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_BasicDumper, IFSelect_SessionDumper)
 
-// #include <IFSelect_SelectTextType.hxx>
 #define FIRSTCHAR 1
-
-// Literal param "own" in the form  :"<val>" -> first = 3
-// Now, simplified form         : <val>  directly -> first = 1
 
 IFSelect_BasicDumper::IFSelect_BasicDumper() = default;
 
@@ -207,8 +192,6 @@ bool IFSelect_BasicDumper::ReadOwn(IFSelect_SessionFile&            file,
     }
     else
       return false;
-    //    item = new IFSelect_SelectTextType (file.TextValue(2).ToCString(),exact);
-    //    return true;
   }
   if (type.IsEqual("IFSelect_SelectShared"))
   {

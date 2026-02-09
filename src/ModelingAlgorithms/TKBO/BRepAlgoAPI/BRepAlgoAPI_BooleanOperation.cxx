@@ -13,10 +13,6 @@
 
 #include <cstdio>
 
-//=======================================================================
-// class : BRepAlgoAPI_DumpOper
-// purpose : Dumps the arguments ad script to perform operation in DRAW
-//=======================================================================
 class BRepAlgoAPI_DumpOper
 {
 public:
@@ -31,30 +27,23 @@ public:
     myPath                           = pathdump.ToCString();
   };
 
-  //
   virtual ~BRepAlgoAPI_DumpOper() = default;
 
-  //
   bool IsDump() const { return myIsDump; };
 
-  //
   void SetIsDumpArgs(const bool bFlag) { myIsDumpArgs = bFlag; }
 
-  //
   bool IsDumpArgs() const { return myIsDumpArgs; };
 
-  //
   void SetIsDumpRes(const bool bFlag) { myIsDumpRes = bFlag; };
 
-  //
   bool IsDumpRes() const { return myIsDumpRes; };
 
-  //
   void Dump(const TopoDS_Shape& theShape1,
             const TopoDS_Shape& theShape2,
             const TopoDS_Shape& theResult,
             BOPAlgo_Operation   theOperation);
-  //
+
 protected:
   bool        myIsDump;
   bool        myIsDumpArgs;
@@ -62,22 +51,16 @@ protected:
   const char* myPath;
 };
 
-//=================================================================================================
-
 BRepAlgoAPI_BooleanOperation::BRepAlgoAPI_BooleanOperation()
     : myOperation(BOPAlgo_UNKNOWN)
 {
 }
-
-//=================================================================================================
 
 BRepAlgoAPI_BooleanOperation::BRepAlgoAPI_BooleanOperation(const BOPAlgo_PaveFiller& thePF)
     : BRepAlgoAPI_BuilderAlgo(thePF),
       myOperation(BOPAlgo_UNKNOWN)
 {
 }
-
-//=================================================================================================
 
 BRepAlgoAPI_BooleanOperation::BRepAlgoAPI_BooleanOperation(const TopoDS_Shape&     theS1,
                                                            const TopoDS_Shape&     theS2,
@@ -87,8 +70,6 @@ BRepAlgoAPI_BooleanOperation::BRepAlgoAPI_BooleanOperation(const TopoDS_Shape&  
   myArguments.Append(theS1);
   myTools.Append(theS2);
 }
-
-//=================================================================================================
 
 BRepAlgoAPI_BooleanOperation::BRepAlgoAPI_BooleanOperation(const TopoDS_Shape&       theS1,
                                                            const TopoDS_Shape&       theS2,
@@ -101,29 +82,25 @@ BRepAlgoAPI_BooleanOperation::BRepAlgoAPI_BooleanOperation(const TopoDS_Shape&  
   myTools.Append(theS2);
 }
 
-//=================================================================================================
-
 void BRepAlgoAPI_BooleanOperation::Build(const Message_ProgressRange& theRange)
 {
-  // Set Not Done status by default
+
   NotDone();
-  // Clear from previous runs
+
   Clear();
-  // Check for availability of arguments and tools
-  // Both should be present
+
   if (myArguments.IsEmpty() || myTools.IsEmpty())
   {
     AddError(new BOPAlgo_AlertTooFewArguments);
     return;
   }
-  // Check if the operation is set
+
   if (myOperation == BOPAlgo_UNKNOWN)
   {
     AddError(new BOPAlgo_AlertBOPNotSet);
     return;
   }
 
-  // DEBUG option for dumping shapes and scripts
   BRepAlgoAPI_DumpOper aDumpOper;
   {
     if (aDumpOper.IsDump())
@@ -154,15 +131,14 @@ void BRepAlgoAPI_BooleanOperation::Build(const Message_ProgressRange& theRange)
   }
 
   Message_ProgressScope aPS(theRange, aPSName, myIsIntersectionNeeded ? 100 : 30);
-  // If necessary perform intersection of the argument shapes
+
   if (myIsIntersectionNeeded)
   {
-    // Combine Objects and Tools into a single list for intersection
+
     NCollection_List<TopoDS_Shape> aLArgs = myArguments;
     for (NCollection_List<TopoDS_Shape>::Iterator it(myTools); it.More(); it.Next())
       aLArgs.Append(it.Value());
 
-    // Perform intersection
     IntersectShapes(aLArgs, aPS.Next(70));
     if (HasErrors())
     {
@@ -175,7 +151,6 @@ void BRepAlgoAPI_BooleanOperation::Build(const Message_ProgressRange& theRange)
     }
   }
 
-  // Builder Initialization
   if (myOperation == BOPAlgo_SECTION)
   {
     myBuilder = new BOPAlgo_Section(myAllocator);
@@ -189,7 +164,6 @@ void BRepAlgoAPI_BooleanOperation::Build(const Message_ProgressRange& theRange)
     ((BOPAlgo_BOP*)myBuilder)->SetOperation(myOperation);
   }
 
-  // Build the result
   BuildResult(aPS.Next(30));
   if (HasErrors())
   {
@@ -204,10 +178,6 @@ void BRepAlgoAPI_BooleanOperation::Build(const Message_ProgressRange& theRange)
   }
 }
 
-//=======================================================================
-// function : Dump
-// purpose  : DEBUG: Dumping the shapes and script of the operation
-//=======================================================================
 void BRepAlgoAPI_DumpOper::Dump(const TopoDS_Shape& theShape1,
                                 const TopoDS_Shape& theShape2,
                                 const TopoDS_Shape& theResult,
@@ -217,7 +187,7 @@ void BRepAlgoAPI_DumpOper::Dump(const TopoDS_Shape& theShape1,
   {
     return;
   }
-  //
+
   TCollection_AsciiString aPath(myPath);
   aPath += "/";
   int                     aNumOper = 1;

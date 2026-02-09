@@ -3,7 +3,6 @@
 
 #define TOLERANCE_ANGULAIRE 0.00000001
 
-//----------------------------------------------------------------------
 double NormalizeOnDomain(double& Param, const IntRes2d_Domain& TheDomain)
 {
   double modParam = Param;
@@ -30,7 +29,6 @@ double NormalizeOnDomain(double& Param, const IntRes2d_Domain& TheDomain)
   return (modParam);
 }
 
-//----------------------------------------------------------------------
 void Determine_Position(IntRes2d_Position&     Pos1,
                         const IntRes2d_Domain& TheDomain,
                         const gp_Pnt2d&        Pnt1,
@@ -65,7 +63,6 @@ void Determine_Position(IntRes2d_Position&     Pos1,
   }
 }
 
-//----------------------------------------------------------------------
 void Determine_Transition(const IntRes2d_Position Pos1,
                           gp_Vec2d&               Tan1,
                           const gp_Vec2d&         Norm1,
@@ -74,7 +71,7 @@ void Determine_Transition(const IntRes2d_Position Pos1,
                           gp_Vec2d&               Tan2,
                           const gp_Vec2d&         Norm2,
                           IntRes2d_Transition&    T2,
-                          //			  const double        Tolerance_Angulaire) {
+
                           const double)
 {
 
@@ -86,7 +83,7 @@ void Determine_Transition(const IntRes2d_Position Pos1,
     Tan1      = Norm1;
     courbure1 = false;
     if (Tan1.Magnitude() <= gp::Resolution())
-    { // transition undecided
+    {
       decide = false;
     }
   }
@@ -96,7 +93,7 @@ void Determine_Transition(const IntRes2d_Position Pos1,
     Tan2      = Norm2;
     courbure2 = false;
     if (Tan2.Magnitude() <= gp::Resolution())
-    { // transition undecided
+    {
       decide = false;
     }
   }
@@ -112,7 +109,7 @@ void Determine_Transition(const IntRes2d_Position Pos1,
     double norm = Tan1.Magnitude() * Tan2.Magnitude();
 
     if (std::abs(sgn) <= TOLERANCE_ANGULAIRE * norm)
-    { // Transition TOUCH #########
+    {
       bool opos = (Tan1.Dot(Tan2)) < 0;
       if (!(courbure1 || courbure2))
       {
@@ -159,7 +156,7 @@ void Determine_Transition(const IntRes2d_Position Pos1,
           }
         }
         else
-        { // Val1 > Val2
+        {
           T2.SetValue(true, Pos2, IntRes2d_Outside, opos);
           if (opos)
           {
@@ -178,7 +175,7 @@ void Determine_Transition(const IntRes2d_Position Pos1,
       T2.SetValue(false, Pos2, IntRes2d_Out);
     }
     else
-    { // sgn>0
+    {
       T1.SetValue(false, Pos1, IntRes2d_Out);
       T2.SetValue(false, Pos2, IntRes2d_In);
     }

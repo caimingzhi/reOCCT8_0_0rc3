@@ -1,18 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// #1 svv   10.01.00 : porting on DEC
-// smh#14 17.03.2000 : FRA62479 Clearing of gtool
 
 #include <IFGraph_SubPartsIterator.hpp>
 #include <IFSelect_CheckCounter.hpp>
@@ -71,14 +57,9 @@
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_WorkSession, Standard_Transient)
 
 #define Flag_Incorrect 2
-//  (Bit Map n0 2)
 
-static bool                    errhand; // pb : only one at a time, but it goes so fast
+static bool                    errhand;
 static TCollection_AsciiString bufstr;
-
-//  #################################################################
-
-//=================================================================================================
 
 IFSelect_WorkSession::IFSelect_WorkSession()
 {
@@ -91,14 +72,10 @@ IFSelect_WorkSession::IFSelect_WorkSession()
   themodelstat = false;
 }
 
-//=================================================================================================
-
 void IFSelect_WorkSession::SetErrorHandle(const bool toHandle)
 {
   theerrhand = errhand = toHandle;
 }
-
-//=================================================================================================
 
 void IFSelect_WorkSession::SetProtocol(const occ::handle<Interface_Protocol>& protocol)
 {
@@ -106,8 +83,6 @@ void IFSelect_WorkSession::SetProtocol(const occ::handle<Interface_Protocol>& pr
   Interface_Protocol::SetActive(protocol);
   thegtool->SetProtocol(protocol);
 }
-
-//=================================================================================================
 
 void IFSelect_WorkSession::SetSignType(const occ::handle<IFSelect_Signature>& signtype)
 {
@@ -118,23 +93,16 @@ void IFSelect_WorkSession::SetSignType(const occ::handle<IFSelect_Signature>& si
     thenames.Bind("xst-sign-type", signtype);
 }
 
-//=================================================================================================
-
 occ::handle<IFSelect_Signature> IFSelect_WorkSession::SignType() const
 {
   return occ::down_cast<IFSelect_Signature>(thegtool->SignType());
 }
 
-//=================================================================================================
-
 void IFSelect_WorkSession::SetShareOut(const occ::handle<IFSelect_ShareOut>& shareout)
 {
   theshareout = shareout;
   thecopier->SetShareOut(theshareout);
-  // ... should add Params, Dispatches, etc...
 }
-
-//=================================================================================================
 
 void IFSelect_WorkSession::SetModel(const occ::handle<Interface_InterfaceModel>& model,
                                     const bool                                   clearpointed)
@@ -143,21 +111,18 @@ void IFSelect_WorkSession::SetModel(const occ::handle<Interface_InterfaceModel>&
     theloaded.Clear();
   myModel = model;
   if (!thegtool.IsNull())
-    thegtool->ClearEntities(); // smh#14 FRA62479
+    thegtool->ClearEntities();
   myModel->SetGTool(thegtool);
 
   thegraph.Nullify();
-  ComputeGraph(); // does something if Protocol present. Otherwise, does nothing
-  ClearData(3);   // Reset CheckList, to be redone
+  ComputeGraph();
+  ClearData(3);
   thecheckrun.Clear();
 
-  //  UPDATE of SelectPointed  I.E.  clear their content
   if (clearpointed)
     ClearData(4);
   ClearData(0);
 }
-
-//=================================================================================================
 
 IFSelect_ReturnStatus IFSelect_WorkSession::ReadFile(const char* filename)
 {
@@ -194,8 +159,6 @@ IFSelect_ReturnStatus IFSelect_WorkSession::ReadFile(const char* filename)
   SetLoadedFile(filename);
   return status;
 }
-
-//=================================================================================================
 
 IFSelect_ReturnStatus IFSelect_WorkSession::ReadStream(const char*   theName,
                                                        std::istream& theIStream)
@@ -234,18 +197,14 @@ IFSelect_ReturnStatus IFSelect_WorkSession::ReadStream(const char*   theName,
   return status;
 }
 
-//=================================================================================================
-
 int IFSelect_WorkSession::NbStartingEntities() const
 {
   return (myModel.IsNull() ? 0 : myModel->NbEntities());
 }
 
-//=================================================================================================
-
 occ::handle<Standard_Transient> IFSelect_WorkSession::StartingEntity(const int num) const
 {
-  occ::handle<Standard_Transient> res; // Null by default
+  occ::handle<Standard_Transient> res;
   if (myModel.IsNull())
     return res;
   if (num < 1 || num > myModel->NbEntities())
@@ -253,21 +212,17 @@ occ::handle<Standard_Transient> IFSelect_WorkSession::StartingEntity(const int n
   return myModel->Value(num);
 }
 
-//=================================================================================================
-
 int IFSelect_WorkSession::StartingNumber(const occ::handle<Standard_Transient>& ent) const
 {
   return (myModel.IsNull() ? 0 : myModel->Number(ent));
 }
 
-//=================================================================================================
-
 int IFSelect_WorkSession::NumberFromLabel(const char* val, const int afternum) const
 {
   int i, cnt = 0, num = atoi(val);
   if (num > 0 || myModel.IsNull())
-    return num; // a direct n0 : won !
-                //  Otherwise, consider it as a label; to be treated in CaseNonSensitive ...
+    return num;
+
   if (num > myModel->NbEntities())
   {
     num = 0;
@@ -289,8 +244,6 @@ int IFSelect_WorkSession::NumberFromLabel(const char* val, const int afternum) c
   return num;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::EntityLabel(
   const occ::handle<Standard_Transient>& ent) const
 {
@@ -300,8 +253,6 @@ occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::EntityLabel(
     return nullptr;
   return myModel->StringLabel(ent);
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::EntityName(
   const occ::handle<Standard_Transient>& ent) const
@@ -317,28 +268,20 @@ occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::EntityName(
   return module->Name(CN, ent, sht);
 }
 
-//=================================================================================================
-
 int IFSelect_WorkSession::CategoryNumber(const occ::handle<Standard_Transient>& ent) const
 {
   return (myModel.IsNull() ? -1 : myModel->CategoryNumber(StartingNumber(ent)));
 }
-
-//=================================================================================================
 
 const char* IFSelect_WorkSession::CategoryName(const occ::handle<Standard_Transient>& ent) const
 {
   return Interface_Category::Name(CategoryNumber(ent));
 }
 
-//=================================================================================================
-
 const char* IFSelect_WorkSession::ValidityName(const occ::handle<Standard_Transient>& ent) const
 {
   return ((StartingNumber(ent) == 0) ? "" : IFSelect_SignValidity::CVal(ent, myModel));
 }
-
-//=================================================================================================
 
 void IFSelect_WorkSession::ClearData(const int mode)
 {
@@ -371,13 +314,11 @@ void IFSelect_WorkSession::ClearData(const int mode)
     }
     case 4:
     {
-      //  UPDATE of SelectPointed  I.E.  clear their content
-      //  AS WELL AS editors (in fact, the EditForm)
-      //  Counters  I.E.  we erase their content (to reevaluate)
+
       occ::handle<NCollection_HSequence<int>> list =
         ItemIdents(STANDARD_TYPE(IFSelect_SelectPointed));
       int nb = list->Length();
-      int i; // svv #1
+      int i;
       for (i = 1; i <= nb; i++)
       {
         DeclareAndCast(IFSelect_SelectPointed, sp, Item(list->Value(i)));
@@ -411,8 +352,6 @@ void IFSelect_WorkSession::ClearData(const int mode)
   }
 }
 
-//=================================================================================================
-
 bool IFSelect_WorkSession::ComputeGraph(const bool enforce)
 {
   if (theprotocol.IsNull())
@@ -429,12 +368,12 @@ bool IFSelect_WorkSession::ComputeGraph(const bool enforce)
   }
   if (myModel->NbEntities() == 0)
     return false;
-  //  We must calculate the graph for good
+
   thegraph = new Interface_HGraph(myModel, themodelstat);
   int nb   = myModel->NbEntities();
   if (themodelstat)
   {
-    int i; // svv #1
+    int i;
     for (i = 1; i <= nb; i++)
       thegraph->CGraph().SetStatus(i, 0);
     Interface_BitMap& bm = thegraph->CGraph().CBitMap();
@@ -445,7 +384,7 @@ bool IFSelect_WorkSession::ComputeGraph(const bool enforce)
   thecheckdone = true;
   if (themodelstat)
   {
-    //  Calculation of categories, now memorized in the model
+
     Interface_Category  categ(thegtool);
     Interface_ShareTool sht(thegraph);
     int                 i = 1;
@@ -456,15 +395,11 @@ bool IFSelect_WorkSession::ComputeGraph(const bool enforce)
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<Interface_HGraph> IFSelect_WorkSession::HGraph()
 {
   ComputeGraph();
   return thegraph;
 }
-
-//=================================================================================================
 
 const Interface_Graph& IFSelect_WorkSession::Graph()
 {
@@ -473,8 +408,6 @@ const Interface_Graph& IFSelect_WorkSession::Graph()
     throw Standard_DomainError("IFSelect WorkSession : Graph not available");
   return thegraph->Graph();
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_WorkSession::Shareds(
   const occ::handle<Standard_Transient>& ent)
@@ -487,8 +420,6 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
   return thegraph->Graph().Shareds(ent).Content();
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_WorkSession::Sharings(
   const occ::handle<Standard_Transient>& ent)
 {
@@ -499,8 +430,6 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
     return list;
   return thegraph->Graph().Sharings(ent).Content();
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::IsLoaded() const
 {
@@ -517,8 +446,6 @@ bool IFSelect_WorkSession::IsLoaded() const
   return false;
 }
 
-//=================================================================================================
-
 bool IFSelect_WorkSession::ComputeCheck(const bool enforce)
 {
   if (enforce)
@@ -534,7 +461,7 @@ bool IFSelect_WorkSession::ComputeCheck(const bool enforce)
   myModel->FillSemanticChecks(checklist, false);
   if (themodelstat)
   {
-    //  And we update the Graph (BitMap) !  Flag Incorrect (STX + SEM)
+
     Interface_BitMap& BM = CG.CBitMap();
     BM.Init(false, Flag_Incorrect);
     int num, nb = CG.Size();
@@ -554,8 +481,6 @@ bool IFSelect_WorkSession::ComputeCheck(const bool enforce)
   return true;
 }
 
-//=================================================================================================
-
 Interface_CheckIterator IFSelect_WorkSession::ModelCheckList(const bool complete)
 {
   Interface_CheckIterator checks;
@@ -569,8 +494,6 @@ Interface_CheckIterator IFSelect_WorkSession::ModelCheckList(const bool complete
   checks.SetName((char*)(complete ? "Model Complete Check List" : "Model Syntactic Check List"));
   return checks;
 }
-
-//=================================================================================================
 
 Interface_CheckIterator IFSelect_WorkSession::CheckOne(const occ::handle<Standard_Transient>& ent,
                                                        const bool complete)
@@ -598,17 +521,10 @@ Interface_CheckIterator IFSelect_WorkSession::CheckOne(const occ::handle<Standar
   return checks;
 }
 
-//  #####################################################################
-//  ....                        THE VARIABLES                        ....
-
-//=================================================================================================
-
 int IFSelect_WorkSession::MaxIdent() const
 {
   return theitems.Extent();
 }
-
-//=================================================================================================
 
 occ::handle<Standard_Transient> IFSelect_WorkSession::Item(const int id) const
 {
@@ -619,8 +535,6 @@ occ::handle<Standard_Transient> IFSelect_WorkSession::Item(const int id) const
     return res;
   return theitems.FindKey(id);
 }
-
-//=================================================================================================
 
 int IFSelect_WorkSession::ItemIdent(const occ::handle<Standard_Transient>& item) const
 {
@@ -634,15 +548,13 @@ int IFSelect_WorkSession::ItemIdent(const occ::handle<Standard_Transient>& item)
   return id;
 }
 
-//=================================================================================================
-
 occ::handle<Standard_Transient> IFSelect_WorkSession::NamedItem(const char* name) const
 {
   occ::handle<Standard_Transient> res;
   if (name[0] == '\0')
     return res;
   if (name[0] == '#')
-  { // #nnn : not a name but an id number
+  {
     int id = atoi(&name[1]);
     return Item(id);
   }
@@ -650,8 +562,6 @@ occ::handle<Standard_Transient> IFSelect_WorkSession::NamedItem(const char* name
     res.Nullify();
   return res;
 }
-
-//=================================================================================================
 
 occ::handle<Standard_Transient> IFSelect_WorkSession::NamedItem(
   const occ::handle<TCollection_HAsciiString>& name) const
@@ -662,15 +572,13 @@ occ::handle<Standard_Transient> IFSelect_WorkSession::NamedItem(
   return res;
 }
 
-//=================================================================================================
-
 int IFSelect_WorkSession::NameIdent(const char* name) const
 {
   occ::handle<Standard_Transient> res;
   if (name[0] == '\0')
     return 0;
   if (name[0] == '#')
-  { // #nnn : not a name but an id number
+  {
     int id = atoi(&name[1]);
     return id;
   }
@@ -678,8 +586,6 @@ int IFSelect_WorkSession::NameIdent(const char* name) const
     return 0;
   return ItemIdent(res);
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::HasName(const occ::handle<Standard_Transient>& item) const
 {
@@ -694,8 +600,6 @@ bool IFSelect_WorkSession::HasName(const occ::handle<Standard_Transient>& item) 
   return att->IsKind(STANDARD_TYPE(TCollection_HAsciiString));
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::Name(
   const occ::handle<Standard_Transient>& item) const
 {
@@ -704,12 +608,10 @@ occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::Name(
     return res;
   int id = theitems.FindIndex(item);
   if (id == 0)
-    return res; // Null
+    return res;
   occ::handle<Standard_Transient> att = theitems.FindFromIndex(id);
   return GetCasted(TCollection_HAsciiString, att);
 }
-
-//=================================================================================================
 
 int IFSelect_WorkSession::AddItem(const occ::handle<Standard_Transient>& item, const bool active)
 {
@@ -725,13 +627,10 @@ int IFSelect_WorkSession::AddItem(const occ::handle<Standard_Transient>& item, c
   else
     id = theitems.Add(item, item);
 
-  //  Special cases : Dispatch,Modifier
   if (active)
     SetActive(item, true);
   return id;
 }
-
-//=================================================================================================
 
 int IFSelect_WorkSession::AddNamedItem(const char*                            name,
                                        const occ::handle<Standard_Transient>& item,
@@ -741,8 +640,7 @@ int IFSelect_WorkSession::AddNamedItem(const char*                            na
     return 0;
   if (name[0] == '#' || name[0] == '!')
     return 0;
-  // #nnn : not a name but a number. !... : reserved (forbidden for a name)
-  //   name already taken : we overwrite the old value
+
   if (name[0] != '\0')
     thenames.Bind(name, item);
 
@@ -754,7 +652,7 @@ int IFSelect_WorkSession::AddNamedItem(const char*                            na
       att = item;
     if (name[0] != '\0')
     {
-      //      if (!att->IsKind(STANDARD_TYPE(TCollection_HAsciiString))) overwriting allowed !
+
       att = new TCollection_HAsciiString(name);
     }
   }
@@ -763,13 +661,10 @@ int IFSelect_WorkSession::AddNamedItem(const char*                            na
   else
     id = theitems.Add(item, item);
 
-  //  Special cases : Dispatch,Modifier
   if (active)
     SetActive(item, true);
   return id;
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::SetActive(const occ::handle<Standard_Transient>& item, const bool mode)
 {
@@ -791,7 +686,7 @@ bool IFSelect_WorkSession::SetActive(const occ::handle<Standard_Transient>& item
       if (num <= theshareout->LastRun())
         return false;
       theshareout->RemoveDispatch(num);
-      SetFileRoot(disp, ""); // if onlynamed : also cleans ShareOut
+      SetFileRoot(disp, "");
       return true;
     }
   }
@@ -799,30 +694,24 @@ bool IFSelect_WorkSession::SetActive(const occ::handle<Standard_Transient>& item
   return false;
 }
 
-//=================================================================================================
-
 bool IFSelect_WorkSession::RemoveNamedItem(const char* name)
 {
   occ::handle<Standard_Transient> item = NamedItem(name);
   if (item.IsNull())
     return false;
   if (!RemoveItem(item))
-    return false; // which takes care of everything
+    return false;
   return true;
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::RemoveName(const char* name)
 {
   occ::handle<Standard_Transient> item = NamedItem(name);
   if (item.IsNull())
     return false;
-  theitems.Add(item, item); // remains but without name
+  theitems.Add(item, item);
   return thenames.UnBind(name);
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::RemoveItem(const occ::handle<Standard_Transient>& item)
 {
@@ -833,23 +722,19 @@ bool IFSelect_WorkSession::RemoveItem(const occ::handle<Standard_Transient>& ite
     return false;
   occ::handle<Standard_Transient>& att = theitems.ChangeFromIndex(id);
   if (att.IsNull())
-    return false; // already canceled
+    return false;
 
-  //  Special cases : Dispatch,Modifier
   theshareout->RemoveItem(item);
 
-  //  Mark "Removed" in the Map (we cannot empty it)
   if (att->IsKind(STANDARD_TYPE(TCollection_HAsciiString)))
   {
     if (!thenames.UnBind(GetCasted(TCollection_HAsciiString, att)->ToCString()))
       return false;
   }
-  att.Nullify(); // cf ChangeFromIndex
-                 //  id = theitems.Add(item,att);
+  att.Nullify();
+
   return true;
 }
-
-//=================================================================================================
 
 void IFSelect_WorkSession::ClearItems()
 {
@@ -857,8 +742,6 @@ void IFSelect_WorkSession::ClearItems()
   theitems.Clear();
   theshareout->Clear(false);
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::ItemLabel(const int id) const
 {
@@ -944,8 +827,6 @@ occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::ItemLabel(const int 
   return res;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<int>> IFSelect_WorkSession::ItemIdents(
   const occ::handle<Standard_Type>& type) const
 {
@@ -958,8 +839,6 @@ occ::handle<NCollection_HSequence<int>> IFSelect_WorkSession::ItemIdents(
   }
   return list;
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> IFSelect_WorkSession::
   ItemNames(const occ::handle<Standard_Type>& type) const
@@ -975,10 +854,6 @@ occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> IFSele
   }
   return list;
 }
-
-// ..  Search by label : search in list(names) or iterative
-
-//=================================================================================================
 
 occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> IFSelect_WorkSession::
   ItemNamesForLabel(const char* label) const
@@ -1008,8 +883,6 @@ occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> IFSele
   return list;
 }
 
-//=================================================================================================
-
 int IFSelect_WorkSession::NextIdentForLabel(const char* label, const int id, const int mode) const
 {
   int nb = MaxIdent();
@@ -1023,7 +896,7 @@ int IFSelect_WorkSession::NextIdentForLabel(const char* label, const int id, con
       case 0:
         if (!strcmp(lab->ToCString(), label))
           return i;
-        break; // switch
+        break;
       case 1:
         if (lab->Search(label) == 1)
           return i;
@@ -1033,16 +906,11 @@ int IFSelect_WorkSession::NextIdentForLabel(const char* label, const int id, con
           return i;
         break;
       default:
-        break; // break from switch
+        break;
     }
   }
-  return 0; // here : not found
+  return 0;
 }
-
-//  #################################################################
-//  ....                Parameters (Int and Text)                ....
-
-//=================================================================================================
 
 occ::handle<Standard_Transient> IFSelect_WorkSession::NewParamFromStatic(const char* statname,
                                                                          const char* name)
@@ -1068,14 +936,10 @@ occ::handle<Standard_Transient> IFSelect_WorkSession::NewParamFromStatic(const c
   return param;
 }
 
-//=================================================================================================
-
 occ::handle<IFSelect_IntParam> IFSelect_WorkSession::IntParam(const int id) const
 {
   return occ::down_cast<IFSelect_IntParam>(Item(id));
 }
-
-//=================================================================================================
 
 int IFSelect_WorkSession::IntValue(const occ::handle<IFSelect_IntParam>& par) const
 {
@@ -1085,8 +949,6 @@ int IFSelect_WorkSession::IntValue(const occ::handle<IFSelect_IntParam>& par) co
     return 0;
 }
 
-//=================================================================================================
-
 occ::handle<IFSelect_IntParam> IFSelect_WorkSession::NewIntParam(const char* name)
 {
   occ::handle<IFSelect_IntParam> intpar = new IFSelect_IntParam;
@@ -1094,8 +956,6 @@ occ::handle<IFSelect_IntParam> IFSelect_WorkSession::NewIntParam(const char* nam
     intpar.Nullify();
   return intpar;
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::SetIntValue(const occ::handle<IFSelect_IntParam>& par, const int val)
 {
@@ -1105,14 +965,10 @@ bool IFSelect_WorkSession::SetIntValue(const occ::handle<IFSelect_IntParam>& par
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::TextParam(const int id) const
 {
   return occ::down_cast<TCollection_HAsciiString>(Item(id));
 }
-
-//=================================================================================================
 
 TCollection_AsciiString IFSelect_WorkSession::TextValue(
   const occ::handle<TCollection_HAsciiString>& par) const
@@ -1131,8 +987,6 @@ occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::NewTextParam(const c
   return textpar;
 }
 
-//=================================================================================================
-
 bool IFSelect_WorkSession::SetTextValue(const occ::handle<TCollection_HAsciiString>& par,
                                         const char*                                  val)
 {
@@ -1142,11 +996,6 @@ bool IFSelect_WorkSession::SetTextValue(const occ::handle<TCollection_HAsciiStri
   par->AssignCat(val);
   return true;
 }
-
-//  ########################################################################
-//  ....                           SIGNATURES                           ....
-
-//=================================================================================================
 
 occ::handle<IFSelect_Signature> IFSelect_WorkSession::Signature(const int id) const
 {
@@ -1163,17 +1012,10 @@ const char* IFSelect_WorkSession::SignValue(const occ::handle<IFSelect_Signature
   return sign->Value(ent, myModel);
 }
 
-//  ########################################################################
-//  ....                        SELECTIONS & Cie                        ....
-
-//=================================================================================================
-
 occ::handle<IFSelect_Selection> IFSelect_WorkSession::Selection(const int id) const
 {
   return GetCasted(IFSelect_Selection, Item(id));
 }
-
-//=================================================================================================
 
 Interface_EntityIterator IFSelect_WorkSession::EvalSelection(
   const occ::handle<IFSelect_Selection>& sel) const
@@ -1185,7 +1027,7 @@ Interface_EntityIterator IFSelect_WorkSession::EvalSelection(
     try
     {
       OCC_CATCH_SIGNALS
-      iter = EvalSelection(sel); // normal call (therefore, code not duplicated)
+      iter = EvalSelection(sel);
     }
     catch (Standard_Failure const& anException)
     {
@@ -1204,15 +1046,11 @@ Interface_EntityIterator IFSelect_WorkSession::EvalSelection(
   return iter;
 }
 
-//=================================================================================================
-
 IFSelect_SelectionIterator IFSelect_WorkSession::Sources(
   const occ::handle<IFSelect_Selection>& sel) const
 {
   return IFSelect_SelectionIterator(sel);
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_WorkSession::
   SelectionResult(const occ::handle<IFSelect_Selection>& sel) const
@@ -1224,7 +1062,7 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
     try
     {
       OCC_CATCH_SIGNALS
-      res = SelectionResult(sel); // appel normal (->code unique)
+      res = SelectionResult(sel);
     }
     catch (Standard_Failure const& anException)
     {
@@ -1242,16 +1080,14 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
     std::cout << " ***  Data for Evaluation not available  ***" << std::endl;
     return new NCollection_HSequence<occ::handle<Standard_Transient>>();
   }
-  //  if (ItemIdent(sel) == 0)
+
   if (sel.IsNull())
   {
     std::cout << " Selection :  Unknown" << std::endl;
     return res;
-  } // std::cout<<Handle
+  }
   return EvalSelection(sel).Content();
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_WorkSession::
   SelectionResultFromList(
@@ -1264,7 +1100,6 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
   if (deduct.IsNull())
     return SelectionResult(sel);
 
-  //   We will search for the last deduction in the input chain
   occ::handle<IFSelect_Selection> ssel, newinput;
   ssel = sel;
   int i, nb = MaxIdent();
@@ -1277,20 +1112,14 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
     ssel = newinput;
   }
 
-  //  we're there (finally, we should be)
-  //  ssel is the last selection examined, deduct its downcast
-  //  input its Input (null if sel is not a deduction)
   deduct = GetCasted(IFSelect_SelectDeduct, ssel);
 
   deduct->Alternate()->SetList(list);
 
-  //   We execute then we clean
   occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> res = SelectionResult(sel);
-  ////  deduct->SetInput (newinput);
+
   return res;
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::SetItemSelection(const occ::handle<Standard_Transient>& item,
                                             const occ::handle<IFSelect_Selection>& sel)
@@ -1301,7 +1130,7 @@ bool IFSelect_WorkSession::SetItemSelection(const occ::handle<Standard_Transient
   {
     if (ItemIdent(disp) == 0)
       return false;
-    //  Selection Nulle : Annuler FinalSelection
+
     if (!sel.IsNull() && ItemIdent(sel) == 0)
       return false;
     disp->SetFinalSelection(sel);
@@ -1313,22 +1142,18 @@ bool IFSelect_WorkSession::SetItemSelection(const occ::handle<Standard_Transient
       return false;
     if (!sel.IsNull() && ItemIdent(sel) == 0)
       return false;
-    //   Selection Nulle : Annuler Selection
+
     modif->SetSelection(sel);
     return true;
   }
   return false;
 }
 
-//=================================================================================================
-
 bool IFSelect_WorkSession::ResetItemSelection(const occ::handle<Standard_Transient>& item)
 {
   occ::handle<IFSelect_Selection> nulsel;
   return SetItemSelection(item, nulsel);
 }
-
-//=================================================================================================
 
 occ::handle<IFSelect_Selection> IFSelect_WorkSession::ItemSelection(
   const occ::handle<Standard_Transient>& item) const
@@ -1340,20 +1165,13 @@ occ::handle<IFSelect_Selection> IFSelect_WorkSession::ItemSelection(
     return disp->FinalSelection();
   if (ItemIdent(modif) > 0)
     return modif->Selection();
-  return sel; // Null or unknown -> Null
+  return sel;
 }
-
-//  ######################################################################
-//  ....                        Les COMPTEURS                         ....
-
-//=================================================================================================
 
 occ::handle<IFSelect_SignCounter> IFSelect_WorkSession::SignCounter(const int id) const
 {
   return GetCasted(IFSelect_SignCounter, Item(id));
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::ComputeCounter(const occ::handle<IFSelect_SignCounter>& counter,
                                           const bool                               forced)
@@ -1364,8 +1182,6 @@ bool IFSelect_WorkSession::ComputeCounter(const occ::handle<IFSelect_SignCounter
     return false;
   return counter->ComputeSelected(Graph(), forced);
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::ComputeCounterFromList(
   const occ::handle<IFSelect_SignCounter>&                                   counter,
@@ -1382,11 +1198,6 @@ bool IFSelect_WorkSession::ComputeCounterFromList(
   return true;
 }
 
-//  ######################################################################
-//  ....                        Les DISPATCHES                        ....
-
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<int>> IFSelect_WorkSession::AppliedDispatches() const
 {
   occ::handle<NCollection_HSequence<int>> list = new NCollection_HSequence<int>();
@@ -1398,21 +1209,15 @@ occ::handle<NCollection_HSequence<int>> IFSelect_WorkSession::AppliedDispatches(
   return list;
 }
 
-//=================================================================================================
-
 void IFSelect_WorkSession::ClearShareOut(const bool onlydisp)
 {
   theshareout->Clear(onlydisp);
 }
 
-//=================================================================================================
-
 occ::handle<IFSelect_Dispatch> IFSelect_WorkSession::Dispatch(const int id) const
 {
   return GetCasted(IFSelect_Dispatch, Item(id));
 }
-
-//=================================================================================================
 
 int IFSelect_WorkSession::DispatchRank(const occ::handle<IFSelect_Dispatch>& disp) const
 {
@@ -1421,31 +1226,21 @@ int IFSelect_WorkSession::DispatchRank(const occ::handle<IFSelect_Dispatch>& dis
   return theshareout->DispatchRank(disp);
 }
 
-//  ######################################################################
-//  ....                        Les MODIFIERS                         ....
-
-//=================================================================================================
-
 void IFSelect_WorkSession::SetModelCopier(const occ::handle<IFSelect_ModelCopier>& copier)
 {
   thecopier = copier;
   thecopier->SetShareOut(theshareout);
 }
 
-//=================================================================================================
-
 int IFSelect_WorkSession::NbFinalModifiers(const bool formodel) const
 {
   return theshareout->NbModifiers(formodel);
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<int>> IFSelect_WorkSession::FinalModifierIdents(
   const bool formodel) const
 {
-  //  return ItemIdents(STANDARD_TYPE(IFSelect_Modifier));
-  //  We give the list in ModelCopier order, which is authoritative
+
   occ::handle<NCollection_HSequence<int>> list = new NCollection_HSequence<int>();
   int                                     nbm  = theshareout->NbModifiers(formodel);
   for (int i = 1; i <= nbm; i++)
@@ -1453,21 +1248,15 @@ occ::handle<NCollection_HSequence<int>> IFSelect_WorkSession::FinalModifierIdent
   return list;
 }
 
-//=================================================================================================
-
 occ::handle<IFSelect_GeneralModifier> IFSelect_WorkSession::GeneralModifier(const int id) const
 {
   return GetCasted(IFSelect_GeneralModifier, Item(id));
 }
 
-//=================================================================================================
-
 occ::handle<IFSelect_Modifier> IFSelect_WorkSession::ModelModifier(const int id) const
 {
   return GetCasted(IFSelect_Modifier, Item(id));
 }
-
-//=================================================================================================
 
 int IFSelect_WorkSession::ModifierRank(const occ::handle<IFSelect_GeneralModifier>& modif) const
 {
@@ -1476,8 +1265,6 @@ int IFSelect_WorkSession::ModifierRank(const occ::handle<IFSelect_GeneralModifie
   return theshareout->ModifierRank(modif);
 }
 
-//=================================================================================================
-
 bool IFSelect_WorkSession::ChangeModifierRank(const bool formodel,
                                               const int  before,
                                               const int  after)
@@ -1485,13 +1272,11 @@ bool IFSelect_WorkSession::ChangeModifierRank(const bool formodel,
   return theshareout->ChangeModifierRank(formodel, before, after);
 }
 
-//=================================================================================================
-
 void IFSelect_WorkSession::ClearFinalModifiers()
 {
   occ::handle<NCollection_HSequence<int>> list = FinalModifierIdents(true);
   int                                     nb   = list->Length();
-  int                                     i; // svv #1
+  int                                     i;
   for (i = 1; i <= nb; i++)
     RemoveItem(GeneralModifier(list->Value(i)));
   list = FinalModifierIdents(false);
@@ -1499,8 +1284,6 @@ void IFSelect_WorkSession::ClearFinalModifiers()
   for (i = 1; i <= nb; i++)
     RemoveItem(GeneralModifier(list->Value(i)));
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::SetAppliedModifier(const occ::handle<IFSelect_GeneralModifier>& modif,
                                               const occ::handle<Standard_Transient>&       item)
@@ -1535,8 +1318,6 @@ bool IFSelect_WorkSession::SetAppliedModifier(const occ::handle<IFSelect_General
   return false;
 }
 
-//=================================================================================================
-
 bool IFSelect_WorkSession::ResetAppliedModifier(const occ::handle<IFSelect_GeneralModifier>& modif)
 {
   if (ItemIdent(modif) == 0)
@@ -1544,8 +1325,6 @@ bool IFSelect_WorkSession::ResetAppliedModifier(const occ::handle<IFSelect_Gener
 
   return theshareout->RemoveItem(modif);
 }
-
-//=================================================================================================
 
 occ::handle<Standard_Transient> IFSelect_WorkSession::UsesAppliedModifier(
   const occ::handle<IFSelect_GeneralModifier>& modif) const
@@ -1561,24 +1340,17 @@ occ::handle<Standard_Transient> IFSelect_WorkSession::UsesAppliedModifier(
   return res;
 }
 
-//  #################################################################
-//  ....                       Transformer                       ....
-
-//=================================================================================================
-
 occ::handle<IFSelect_Transformer> IFSelect_WorkSession::Transformer(const int id) const
 {
   return GetCasted(IFSelect_Transformer, Item(id));
 }
-
-//=================================================================================================
 
 int IFSelect_WorkSession::RunTransformer(const occ::handle<IFSelect_Transformer>& transf)
 {
   int effect = 0;
   if (transf.IsNull() || !IsLoaded())
     return effect;
-  occ::handle<Interface_InterfaceModel> newmod; // Null au depart
+  occ::handle<Interface_InterfaceModel> newmod;
   Interface_CheckIterator               checks;
   checks.SetName("X-STEP WorkSession : RunTransformer");
   bool res = transf->Perform(thegraph->Graph(), theprotocol, checks, newmod);
@@ -1594,7 +1366,7 @@ int IFSelect_WorkSession::RunTransformer(const occ::handle<IFSelect_Transformer>
 
   if (newmod.IsNull())
     return (res ? 1 : -1);
-  //  UPDATE of SelectPointed
+
   occ::handle<NCollection_HSequence<int>> list = ItemIdents(STANDARD_TYPE(IFSelect_SelectPointed));
   int                                     nb   = list->Length();
   for (int i = 1; i <= nb; i++)
@@ -1634,15 +1406,11 @@ int IFSelect_WorkSession::RunTransformer(const occ::handle<IFSelect_Transformer>
   return effect;
 }
 
-//=================================================================================================
-
 int IFSelect_WorkSession::RunModifier(const occ::handle<IFSelect_Modifier>& modif, const bool copy)
 {
-  occ::handle<IFSelect_Selection> sel; // null
+  occ::handle<IFSelect_Selection> sel;
   return RunModifierSelected(modif, sel, copy);
 }
-
-//=================================================================================================
 
 int IFSelect_WorkSession::RunModifierSelected(const occ::handle<IFSelect_Modifier>&  modif,
                                               const occ::handle<IFSelect_Selection>& sel,
@@ -1657,8 +1425,6 @@ int IFSelect_WorkSession::RunModifierSelected(const occ::handle<IFSelect_Modifie
   return RunTransformer(stf);
 }
 
-//=================================================================================================
-
 occ::handle<IFSelect_Transformer> IFSelect_WorkSession::NewTransformStandard(const bool  copy,
                                                                              const char* name)
 {
@@ -1668,9 +1434,6 @@ occ::handle<IFSelect_Transformer> IFSelect_WorkSession::NewTransformStandard(con
     stf.Nullify();
   return stf;
 }
-
-//    This is a direct action: could be done by a Transformer ...
-//=================================================================================================
 
 bool IFSelect_WorkSession::SetModelContent(const occ::handle<IFSelect_Selection>& sel,
                                            const bool                             keep)
@@ -1710,10 +1473,10 @@ bool IFSelect_WorkSession::SetModelContent(const occ::handle<IFSelect_Selection>
   TC.FillModel(newmod);
   if (newmod->NbEntities() == 0)
     return false;
-  //    Update (don't forget SelectPointed)
+
   theoldel = myModel;
   SetModel(newmod, false);
-  //  UPDATE of SelectPointed
+
   occ::handle<NCollection_HSequence<int>> pts = ItemIdents(STANDARD_TYPE(IFSelect_SelectPointed));
   nb                                          = pts->Length();
   for (i = 1; i <= nb; i++)
@@ -1724,31 +1487,20 @@ bool IFSelect_WorkSession::SetModelContent(const occ::handle<IFSelect_Selection>
   return true;
 }
 
-//  #################################################################
-//  ....                        File Name                        ....
-
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::FilePrefix() const
 {
   return theshareout->Prefix();
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::DefaultFileRoot() const
 {
   return theshareout->DefaultRootName();
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::FileExtension() const
 {
   return theshareout->Extension();
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::FileRoot(
   const occ::handle<IFSelect_Dispatch>& disp) const
@@ -1756,21 +1508,15 @@ occ::handle<TCollection_HAsciiString> IFSelect_WorkSession::FileRoot(
   return theshareout->RootName(theshareout->DispatchRank(disp));
 }
 
-//=================================================================================================
-
 void IFSelect_WorkSession::SetFilePrefix(const char* name)
 {
   theshareout->SetPrefix(new TCollection_HAsciiString(name));
 }
 
-//=================================================================================================
-
 void IFSelect_WorkSession::SetFileExtension(const char* name)
 {
   theshareout->SetExtension(new TCollection_HAsciiString(name));
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::SetDefaultFileRoot(const char* name)
 {
@@ -1780,8 +1526,6 @@ bool IFSelect_WorkSession::SetDefaultFileRoot(const char* name)
   return theshareout->SetDefaultRootName(defrt);
 }
 
-//=================================================================================================
-
 bool IFSelect_WorkSession::SetFileRoot(const occ::handle<IFSelect_Dispatch>& disp,
                                        const char*                           namefile)
 {
@@ -1789,38 +1533,28 @@ bool IFSelect_WorkSession::SetFileRoot(const occ::handle<IFSelect_Dispatch>& dis
   if (id == 0)
     return false;
   int nd = theshareout->DispatchRank(disp);
-  /*  if (theonlynamed) {
-      if      (nd == 0 && namefile[0] != 0)
-        theshareout->AddDispatch(disp);
-      else if (nd != 0 && namefile[0] == 0)
-        theshareout->RemoveDispatch (nd);
-    }  */
+
   if (nd == 0)
     return false;
-  //  The order below prevented to change the root name on a given dispatch !
-  //  if (theshareout->HasRootName(nd)) return false;
+
   occ::handle<TCollection_HAsciiString> filename;
   if (namefile[0] != '\0')
     filename = new TCollection_HAsciiString(namefile);
   return theshareout->SetRootName(nd, filename);
 }
 
-//=================================================================================================
-
 const char* IFSelect_WorkSession::GiveFileRoot(const char* file) const
 {
   OSD_Path path(file);
   if (!OSD_Path::IsValid(TCollection_AsciiString(file)))
-    return file; // tant pis ..
+    return file;
   bufstr = path.Name();
   return bufstr.ToCString();
 }
 
-//=================================================================================================
-
 const char* IFSelect_WorkSession::GiveFileComplete(const char* file) const
 {
-  //  add if needed: Prefix; Extension
+
   bufstr.Clear();
   bufstr.AssignCat(file);
   int                                   i, j = 0, nb = bufstr.Length();
@@ -1859,19 +1593,15 @@ const char* IFSelect_WorkSession::GiveFileComplete(const char* file) const
   return bufstr.ToCString();
 }
 
-//=================================================================================================
-
 void IFSelect_WorkSession::ClearFile()
 {
   thecopier->ClearResult();
   theshareout->ClearResult(true);
 }
 
-//=================================================================================================
-
 void IFSelect_WorkSession::EvaluateFile()
 {
-  ////...
+
   if (!IsLoaded())
     return;
   Interface_CheckIterator checks;
@@ -1881,7 +1611,7 @@ void IFSelect_WorkSession::EvaluateFile()
     try
     {
       OCC_CATCH_SIGNALS
-      EvaluateFile(); // normal call (therefore, code not duplicated)
+      EvaluateFile();
     }
     catch (Standard_Failure const& anException)
     {
@@ -1908,14 +1638,10 @@ void IFSelect_WorkSession::EvaluateFile()
   thecheckrun = checks;
 }
 
-//=================================================================================================
-
 int IFSelect_WorkSession::NbFiles() const
 {
   return thecopier->NbFiles();
 }
-
-//=================================================================================================
 
 occ::handle<Interface_InterfaceModel> IFSelect_WorkSession::FileModel(const int num) const
 {
@@ -1925,8 +1651,6 @@ occ::handle<Interface_InterfaceModel> IFSelect_WorkSession::FileModel(const int 
   return mod;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString IFSelect_WorkSession::FileName(const int num) const
 {
   TCollection_AsciiString name;
@@ -1935,14 +1659,10 @@ TCollection_AsciiString IFSelect_WorkSession::FileName(const int num) const
   return name;
 }
 
-//=================================================================================================
-
 void IFSelect_WorkSession::BeginSentFiles(const bool record)
 {
   thecopier->BeginSentFiles(theshareout, record);
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> IFSelect_WorkSession::
   SentFiles() const
@@ -1950,14 +1670,9 @@ occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> IFSele
   return thecopier->SentFiles();
 }
 
-//  #########################################################################
-//  ....    Transfer Action properly speaking: the big deal!    ....
-
-//=================================================================================================
-
 bool IFSelect_WorkSession::SendSplit()
 {
-  ////...
+
   Interface_CheckIterator checks;
 
   if (errhand)
@@ -1966,7 +1681,7 @@ bool IFSelect_WorkSession::SendSplit()
     try
     {
       OCC_CATCH_SIGNALS
-      return SendSplit(); // normal call (therefore, code not duplicated)
+      return SendSplit();
     }
     catch (Standard_Failure const& anException)
     {
@@ -2000,12 +1715,7 @@ bool IFSelect_WorkSession::SendSplit()
     checks = thecopier->SendCopied(thelibrary, theprotocol);
   else
   {
-    /*
-    IFSelect_ShareOutResult eval (ShareOut(), thegraph->Graph());
-    checks = thecopier->Send (eval, thelibrary, theprotocol);
-    thecopier->SetRemaining (thegraph->CGraph());
-    */
-    //  Decomposer
+
     if (theshareout.IsNull())
       return false;
     int                             i, nbd = theshareout->NbDispatches();
@@ -2024,7 +1734,7 @@ bool IFSelect_WorkSession::SendSplit()
         Interface_EntityIterator iter = packs.Entities();
         if (iter.NbEntities() == 0)
           continue;
-        //  Write a list of entities
+
         occ::handle<IFSelect_SelectPointed> sp = new IFSelect_SelectPointed;
         sp->SetList(iter.Content());
         nf++;
@@ -2051,8 +1761,6 @@ bool IFSelect_WorkSession::SendSplit()
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<IFSelect_PacketList> IFSelect_WorkSession::EvalSplit() const
 {
   occ::handle<IFSelect_PacketList> pks;
@@ -2061,8 +1769,6 @@ occ::handle<IFSelect_PacketList> IFSelect_WorkSession::EvalSplit() const
   IFSelect_ShareOutResult sho(ShareOut(), thegraph->Graph());
   return sho.Packets();
 }
-
-//=================================================================================================
 
 Interface_EntityIterator IFSelect_WorkSession::SentList(const int newcount) const
 {
@@ -2081,8 +1787,6 @@ Interface_EntityIterator IFSelect_WorkSession::SentList(const int newcount) cons
   return iter;
 }
 
-//=================================================================================================
-
 int IFSelect_WorkSession::MaxSendingCount() const
 {
   int newcount = 0;
@@ -2099,8 +1803,6 @@ int IFSelect_WorkSession::MaxSendingCount() const
   }
   return newcount;
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::SetRemaining(const IFSelect_RemainMode mode)
 {
@@ -2135,7 +1837,7 @@ bool IFSelect_WorkSession::SetRemaining(const IFSelect_RemainMode mode)
     {
       theoldel = myModel;
       SetModel(newmod, false);
-      //  UPDATE of SelectPointed
+
       occ::handle<NCollection_HSequence<int>> list =
         ItemIdents(STANDARD_TYPE(IFSelect_SelectPointed));
       int nb = list->Length();
@@ -2173,12 +1875,6 @@ bool IFSelect_WorkSession::SetRemaining(const IFSelect_RemainMode mode)
     sout << " -- Maximum Sending Count (i.e. duplication in files) " << MaxSendingCount()
          << std::endl;
 
-    /*
-        sout<< " - Now, dispatches are deactivated"<<std::endl;
-        nb = theshareout->NbDispatches();
-        for (int i = nb; i > theshareout->LastRun(); i --)
-          theshareout->RemoveDispatch(i);
-    */
     return true;
   }
   else if (mode == IFSelect_RemainUndo)
@@ -2193,11 +1889,9 @@ bool IFSelect_WorkSession::SetRemaining(const IFSelect_RemainMode mode)
     return false;
 }
 
-//=================================================================================================
-
 IFSelect_ReturnStatus IFSelect_WorkSession::SendAll(const char* filename, const bool computegraph)
 {
-  ////...
+
   Interface_CheckIterator checks;
   if (!IsLoaded())
     return IFSelect_RetVoid;
@@ -2244,13 +1938,11 @@ IFSelect_ReturnStatus IFSelect_WorkSession::SendAll(const char* filename, const 
   return IFSelect_RetError;
 }
 
-//=================================================================================================
-
 IFSelect_ReturnStatus IFSelect_WorkSession::SendSelected(const char* filename,
                                                          const occ::handle<IFSelect_Selection>& sel,
                                                          const bool computegraph)
 {
-  ////...
+
   if (!IsLoaded())
     return IFSelect_RetVoid;
   Interface_CheckIterator checks;
@@ -2268,7 +1960,7 @@ IFSelect_ReturnStatus IFSelect_WorkSession::SendSelected(const char* filename,
     {
       OCC_CATCH_SIGNALS
       ComputeGraph(computegraph);
-      return SendSelected(filename, sel); // normal call
+      return SendSelected(filename, sel);
     }
     catch (Standard_Failure const& anException)
     {
@@ -2282,7 +1974,7 @@ IFSelect_ReturnStatus IFSelect_WorkSession::SendSelected(const char* filename,
       return IFSelect_RetFail;
     }
   }
-  //  if (ItemIdent(sel) == 0) return 3;
+
   Interface_EntityIterator iter = sel->UniqueResult(thegraph->Graph());
   if (iter.NbEntities() == 0)
     return IFSelect_RetVoid;
@@ -2295,8 +1987,6 @@ IFSelect_ReturnStatus IFSelect_WorkSession::SendSelected(const char* filename,
   return IFSelect_RetError;
 }
 
-//=================================================================================================
-
 IFSelect_ReturnStatus IFSelect_WorkSession::WriteFile(const char* filename)
 {
   if (WorkLibrary().IsNull())
@@ -2306,8 +1996,6 @@ IFSelect_ReturnStatus IFSelect_WorkSession::WriteFile(const char* filename)
     return IFSelect_RetVoid;
   return SendAll(filename);
 }
-
-//=================================================================================================
 
 IFSelect_ReturnStatus IFSelect_WorkSession::WriteFile(const char* filename,
                                                       const occ::handle<IFSelect_Selection>& sel)
@@ -2319,11 +2007,6 @@ IFSelect_ReturnStatus IFSelect_WorkSession::WriteFile(const char* filename,
     return IFSelect_RetVoid;
   return SendSelected(filename, sel);
 }
-
-//  ################################################################
-//  ....        Specific Actions on Selections        ....
-
-//=================================================================================================
 
 int IFSelect_WorkSession::NbSources(const occ::handle<IFSelect_Selection>& sel) const
 {
@@ -2338,8 +2021,6 @@ int IFSelect_WorkSession::NbSources(const occ::handle<IFSelect_Selection>& sel) 
     return GetCasted(IFSelect_SelectCombine, sel)->NbInputs();
   return 0;
 }
-
-//=================================================================================================
 
 occ::handle<IFSelect_Selection> IFSelect_WorkSession::Source(
   const occ::handle<IFSelect_Selection>& sel,
@@ -2364,8 +2045,6 @@ occ::handle<IFSelect_Selection> IFSelect_WorkSession::Source(
   return sr;
 }
 
-//=================================================================================================
-
 bool IFSelect_WorkSession::IsReversedSelectExtract(const occ::handle<IFSelect_Selection>& sel) const
 {
   if (ItemIdent(sel) == 0)
@@ -2375,8 +2054,6 @@ bool IFSelect_WorkSession::IsReversedSelectExtract(const occ::handle<IFSelect_Se
     return false;
   return (!sxt->IsDirect());
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::ToggleSelectExtract(const occ::handle<IFSelect_Selection>& sel)
 {
@@ -2388,8 +2065,6 @@ bool IFSelect_WorkSession::ToggleSelectExtract(const occ::handle<IFSelect_Select
   sxt->SetDirect(!sxt->IsDirect());
   return true;
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::SetInputSelection(const occ::handle<IFSelect_Selection>& sel,
                                              const occ::handle<IFSelect_Selection>& inp)
@@ -2413,8 +2088,6 @@ bool IFSelect_WorkSession::SetInputSelection(const occ::handle<IFSelect_Selectio
   return false;
 }
 
-//=================================================================================================
-
 bool IFSelect_WorkSession::SetControl(const occ::handle<IFSelect_Selection>& sel,
                                       const occ::handle<IFSelect_Selection>& sc,
                                       const bool                             formain)
@@ -2431,8 +2104,6 @@ bool IFSelect_WorkSession::SetControl(const occ::handle<IFSelect_Selection>& sel
   return true;
 }
 
-//=================================================================================================
-
 int IFSelect_WorkSession::CombineAdd(const occ::handle<IFSelect_Selection>& sel,
                                      const occ::handle<IFSelect_Selection>& seladd,
                                      const int                              atnum)
@@ -2445,8 +2116,6 @@ int IFSelect_WorkSession::CombineAdd(const occ::handle<IFSelect_Selection>& sel,
   csel->Add(seladd, atnum);
   return csel->NbInputs();
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::CombineRemove(const occ::handle<IFSelect_Selection>& selcomb,
                                          const occ::handle<IFSelect_Selection>& selrem)
@@ -2468,8 +2137,6 @@ bool IFSelect_WorkSession::CombineRemove(const occ::handle<IFSelect_Selection>& 
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<IFSelect_Selection> IFSelect_WorkSession::NewSelectPointed(
   const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& list,
   const char*                                                                name)
@@ -2481,8 +2148,6 @@ occ::handle<IFSelect_Selection> IFSelect_WorkSession::NewSelectPointed(
     sel.Nullify();
   return sel;
 }
-
-//=================================================================================================
 
 bool IFSelect_WorkSession::SetSelectPointed(
   const occ::handle<IFSelect_Selection>&                                     sel,
@@ -2501,11 +2166,6 @@ bool IFSelect_WorkSession::SetSelectPointed(
   return true;
 }
 
-//  ###########################################################################
-//  ....         Analysis of a CheckIterator in relation to a graph        ....
-
-//=================================================================================================
-
 static void IFSelect_QueryProp(Interface_IntList&       list,
                                TCollection_AsciiString& ana,
                                const int                num,
@@ -2516,11 +2176,9 @@ static void IFSelect_QueryProp(Interface_IntList&       list,
   for (i = 1; i <= nb; i++)
   {
     if (i > 1)
-      list.SetNumber(num); // because recursive call + depth first
+      list.SetNumber(num);
     int n = list.Value(i);
-    //    is there a need to propagate?
-    //  1 W/place  2 F/place  3 Wprop 4Wprop+W/place  5Wprop+F/place
-    //  6 Fprop  7 Fprop+W/place  8 Fprop+F/place
+
     char val = ana.Value(n);
     switch (val)
     {
@@ -2562,8 +2220,6 @@ static void IFSelect_QueryProp(Interface_IntList&       list,
   }
 }
 
-//=================================================================================================
-
 void IFSelect_WorkSession::QueryCheckList(const Interface_CheckIterator& chl)
 {
   if (!IsLoaded())
@@ -2579,11 +2235,9 @@ void IFSelect_WorkSession::QueryCheckList(const Interface_CheckIterator& chl)
     else if (ach->HasWarnings())
       thecheckana.SetValue(num, '1');
   }
-  //  analysis according to the graph ... codes : blc = nothing
-  //  1 W/place  2 F/place  3 Wprop 4Wprop+W/place  5Wprop+F/place
-  //  6 Fprop  7 Fprop+W/place  8 Fprop+F/place
-  Interface_IntList list; // = thegraph->Graph().SharingNums(0);
-                          //   two passes : first Warning, then Fail
+
+  Interface_IntList list;
+
   for (i = 1; i <= nb; i++)
   {
     char val  = thecheckana.Value(i);
@@ -2604,8 +2258,6 @@ void IFSelect_WorkSession::QueryCheckList(const Interface_CheckIterator& chl)
   }
 }
 
-//=================================================================================================
-
 int IFSelect_WorkSession::QueryCheckStatus(const occ::handle<Standard_Transient>& ent) const
 {
   if (!IsLoaded())
@@ -2616,10 +2268,7 @@ int IFSelect_WorkSession::QueryCheckStatus(const occ::handle<Standard_Transient>
   if (thecheckana.Length() < num)
     return -1;
   char val = thecheckana.Value(num);
-  //  codes : blc = rien -> 0
-  //  1 W/place -> 1   2 F/place -> 2
-  //  3 Wprop -> 10    4 Wprop+W/place -> 11    5 Wprop+F/place -> 12
-  //  6 Fprop -> 20    7 Fprop+W/place -> 21    8 Fprop+F/place -> 22
+
   if (val == ' ')
     return 0;
   if (val == '1')
@@ -2641,8 +2290,6 @@ int IFSelect_WorkSession::QueryCheckStatus(const occ::handle<Standard_Transient>
   return 0;
 }
 
-//=================================================================================================
-
 int IFSelect_WorkSession::QueryParent(const occ::handle<Standard_Transient>& entdad,
                                       const occ::handle<Standard_Transient>& entson) const
 {
@@ -2652,8 +2299,7 @@ int IFSelect_WorkSession::QueryParent(const occ::handle<Standard_Transient>& ent
     return -1;
   if (ndad == nson)
     return 0;
-  //  we will calculate: for each immediate parent, of <son>, status with <dad> + 1
-  //  nb: not protected against loops ...
+
   occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> list =
     thegraph->Graph().Sharings(entson).Content();
   if (list.IsNull())
@@ -2667,16 +2313,8 @@ int IFSelect_WorkSession::QueryParent(const occ::handle<Standard_Transient>& ent
     if (stat >= 0)
       return stat + 1;
   }
-  return -1; // not yet implemented ...
+  return -1;
 }
-
-//  ###########################################################################
-//  ....      Dumps and Evaluations, not easy to pass as arguments      ....
-
-//  ####    ####    ####    ####    ####    ####    ####    ####    ####
-//  ....        DumpShare        ....
-
-//=================================================================================================
 
 void IFSelect_WorkSession::SetParams(
   const NCollection_Vector<occ::handle<Standard_Transient>>& params,
@@ -2693,11 +2331,10 @@ void IFSelect_WorkSession::SetParams(
     editor->AddValue(val);
   }
   AddNamedItem("xst-params-edit", editor);
-  //  The EditForm
+
   occ::handle<IFSelect_EditForm> paramsall = editor->Form(false);
   AddNamedItem("xst-params-all", paramsall);
 
-  //  We tackle the partial EditForms
   NCollection_Sequence<int> listgen, listload, listsend, listsplit, listread, listwrite;
   for (i = uselist.Lower(); i <= uselist.Upper(); i++)
   {
@@ -2752,8 +2389,6 @@ void IFSelect_WorkSession::SetParams(
     AddNamedItem("xst-params-write", paramswrite);
 }
 
-//=================================================================================================
-
 void IFSelect_WorkSession::TraceStatics(const int use, const int mode) const
 {
   Message_Messenger::StreamBuffer sout = Message::SendInfo();
@@ -2795,7 +2430,6 @@ void IFSelect_WorkSession::TraceStatics(const int use, const int mode) const
       sout << "******************************************" << std::endl << std::endl;
   }
 
-  //    Echainements particuliers (use > 0)
   if (use == 5)
   {
     TraceStatics(-2, mode);
@@ -2809,17 +2443,14 @@ void IFSelect_WorkSession::TraceStatics(const int use, const int mode) const
       sout << std::endl;
   }
 
-  //    Valeurs particulieres
   if (use == 1 || use == -1)
-  { // General : trace
+  {
     if (mode == 0)
     {
-      //      sout << "Trace Level   :
-      //      "<<Message_PrinterOStream::Default()->GetTraceLevel()<<std::endl;
     }
   }
   else if (use == 4 || use == -4)
-  { // Split : Prefix & cie
+  {
     if (mode == 0)
     {
       occ::handle<TCollection_HAsciiString> str = theshareout->Prefix();
@@ -2840,18 +2471,12 @@ void IFSelect_WorkSession::TraceStatics(const int use, const int mode) const
     }
   }
 
-  //  LIST THE STATICS
-  //  Go through the ParamEditor ...
-
-  //    Fin
   if (use > 0)
   {
     if (mode == 0)
       sout << "******************************************" << std::endl << std::endl;
   }
 }
-
-//=================================================================================================
 
 void IFSelect_WorkSession::DumpShare() const
 {
@@ -2907,11 +2532,6 @@ void IFSelect_WorkSession::DumpShare() const
     sout << "  ***   No active Modifiers   ***" << std::endl;
 }
 
-//  ####    ####    ####    ####    ####    ####    ####    ####    ####
-//  ....        ListItems        ....
-
-//=================================================================================================
-
 void IFSelect_WorkSession::ListItems(const char* lab) const
 {
   Message_Messenger::StreamBuffer sout = Message::SendInfo();
@@ -2925,7 +2545,7 @@ void IFSelect_WorkSession::ListItems(const char* lab) const
     const occ::handle<Standard_Transient>& var   = theitems.FindKey(i);
     occ::handle<TCollection_HAsciiString>  label = ItemLabel(i);
     if (label.IsNull())
-      continue; //  -> item supprime
+      continue;
     if (!str.IsNull())
     {
       if (label->Location(str, 1, label->Length()) == 0)
@@ -2939,11 +2559,6 @@ void IFSelect_WorkSession::ListItems(const char* lab) const
     sout << var->DynamicType()->Name() << std::endl << "    " << label->ToCString() << std::endl;
   }
 }
-
-//  ####    ####    ####    ####    ####    ####    ####    ####    ####
-//  ....        ListModifiers
-
-//=================================================================================================
 
 void IFSelect_WorkSession::ListFinalModifiers(const bool formodel) const
 {
@@ -2963,17 +2578,12 @@ void IFSelect_WorkSession::ListFinalModifiers(const bool formodel) const
   }
 }
 
-//  ####    ####    ####    ####    ####    ####    ####    ####    ####
-//  ....        DumpSelection        ....
-
-//=================================================================================================
-
 void IFSelect_WorkSession::DumpSelection(const occ::handle<IFSelect_Selection>& sel) const
 {
   Message_Messenger::StreamBuffer sout = Message::SendInfo();
   if (ItemIdent(sel) == 0)
   {
-    sout << "Selection :  Unknown" << std::endl; // sout<<Handle
+    sout << "Selection :  Unknown" << std::endl;
     return;
   }
   sout << "        **********  Selection";
@@ -2992,15 +2602,6 @@ void IFSelect_WorkSession::DumpSelection(const occ::handle<IFSelect_Selection>& 
   }
   sout << " Nb Inputs:" << nb << std::endl;
 }
-
-//              ##########################################
-//              #########    Fonctions complementaires
-//              ##########################################
-
-//  ####    ####    ####    ####    ####    ####    ####    ####    ####
-//  ....        DumpModel        ....
-
-//=================================================================================================
 
 occ::handle<IFSelect_Selection> IFSelect_WorkSession::GiveSelection(const char* selname) const
 {
@@ -3021,7 +2622,6 @@ occ::handle<IFSelect_Selection> IFSelect_WorkSession::GiveSelection(const char* 
       if (nivp <= 0)
         nf = n;
     }
-    ////    if (selname[n] == ' ') { nb = n; break; }
   }
 
   occ::handle<IFSelect_Selection> sel;
@@ -3035,8 +2635,6 @@ occ::handle<IFSelect_Selection> IFSelect_WorkSession::GiveSelection(const char* 
   }
   occ::handle<Standard_Transient> item = NamedItem(nomsel);
 
-  //  Parentheses? try Signature (later: parameterized Selection)
-  //  NB: we count the levels of parentheses (reflected nesting)
   if (np > 0 && nf > 0)
   {
     occ::handle<IFSelect_SelectSignature> selsign;
@@ -3054,7 +2652,7 @@ occ::handle<IFSelect_Selection> IFSelect_WorkSession::GiveSelection(const char* 
       return sel;
     }
 
-    selsign->SetInput(new IFSelect_SelectModelEntities); // by default
+    selsign->SetInput(new IFSelect_SelectModelEntities);
     sel = selsign;
   }
 
@@ -3064,21 +2662,17 @@ occ::handle<IFSelect_Selection> IFSelect_WorkSession::GiveSelection(const char* 
   return sel;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_WorkSession::GiveList(
   const occ::handle<Standard_Transient>& obj) const
 {
-  //   Already a list
+
   DeclareAndCast(NCollection_HSequence<occ::handle<Standard_Transient>>, list, obj);
   if (!list.IsNull())
     return list;
 
-  //   Nothing at all: returns nothing at all
   if (obj.IsNull())
     return list;
 
-  //   A selection: its result (standard)
   DeclareAndCast(IFSelect_Selection, sel, obj);
   if (!sel.IsNull())
   {
@@ -3086,7 +2680,6 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
     return iter.Content();
   }
 
-  //   The model: its content
   list = new NCollection_HSequence<occ::handle<Standard_Transient>>();
   if (obj == myModel)
   {
@@ -3095,11 +2688,9 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
       list->Append(myModel->Value(i));
   }
 
-  //   A model entity: this entity
   else if (StartingNumber(obj) > 0)
     list->Append(obj);
 
-  //   A Text: its interpretation
   else
   {
     DeclareAndCast(TCollection_HAsciiString, str, obj);
@@ -3107,11 +2698,8 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
       return GiveList(str->ToCString());
   }
 
-  //  If it's not all that: an empty list
   return list;
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_WorkSession::GiveList(
   const char* first,
@@ -3125,8 +2713,6 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
   if (second && second[0] == ' ')
     return GiveList(first, &second[1]);
 
-  //   NULL list will be interpreted as SelectionResult (raw selection)
-  //   otherwise as SelectionResultFromList
   if (second && second[0] != '\0')
     list = GiveList(second, "");
 
@@ -3134,18 +2720,15 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
   return list;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_WorkSession::
   GiveListFromList(const char* selname, const occ::handle<Standard_Transient>& ent) const
 {
   occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> list;
   int                                                                 num;
 
-  //   LIST DEFINED BY DEFAULT (in this case, the input list is ignored)
   if (selname[0] == '(')
   {
-    //  list of entities given one after another: (ID,ID,ID...)
+
     char                 entid[50];
     int                  i, j = 0;
     NCollection_Map<int> numap;
@@ -3179,13 +2762,7 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
   if (num > 0)
     return GiveList(StartingEntity(num));
 
-  //  Other cases: is there an input list.
-  //   Si OUI -> SelectionResultFromList.  Si NON -> SelectionResult
-  //   If an isolated entity -> we make it a list
-
-  list = GiveList(ent); // ent NULL -> list NULL otherwise interpreted
-
-  //    Decomposition term1 term2 ...
+  list = GiveList(ent);
 
   char nomsel[500];
   nomsel[0] = '\0';
@@ -3194,8 +2771,7 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
   {
     nomsel[n]     = selname[n];
     nomsel[n + 1] = '\0';
-    //    if (selname[n] == '(') { np = n; nivp ++; }
-    //    if (selname[n] == ')') { nivp --;  if (nivp <= 0) nf = n; }
+
     if (selname[n] == ' ')
     {
       nb        = n;
@@ -3224,8 +2800,6 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
   return list;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_WorkSession::
   GiveListCombined(const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& l1,
                    const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& l2,
@@ -3235,7 +2809,6 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
   if (l1.IsNull() || l2.IsNull())
     return list;
 
-  //  mode < 0 l1-l2  = 0 l1&l2  > 0 l1|l2 (l1+l2)
   NCollection_Map<occ::handle<Standard_Transient>> numap;
   int                                              i, n = l2->Length();
   for (i = n; i > 0; i--)
@@ -3248,7 +2821,6 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
       list->Append(ent);
   }
 
-  //  entities from l1 not already in l2
   n = l1->Length();
   for (i = n; i > 0; i--)
   {
@@ -3258,13 +2830,13 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
 
     if (numap.Contains(ent))
     {
-      //    in l1 and in l2
+
       if (mode == 0)
         list->Append(ent);
     }
     else
     {
-      //    in l1 but not in l2
+
       if (mode != 0)
         list->Append(ent);
     }
@@ -3273,8 +2845,6 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
   list->Reverse();
   return list;
 }
-
-//=================================================================================================
 
 void IFSelect_WorkSession::DumpModel(const int level, Standard_OStream& S)
 {
@@ -3365,7 +2935,6 @@ void IFSelect_WorkSession::DumpModel(const int level, Standard_OStream& S)
     else
       C = CT.CompleteCheckList();
 
-    //  Check List: if empty (not requested), naturally passed
     try
     {
       OCC_CATCH_SIGNALS
@@ -3383,25 +2952,13 @@ void IFSelect_WorkSession::DumpModel(const int level, Standard_OStream& S)
     << "There are " << nbent << " Entities, of which " << nbr << " Root(s)" << std::endl;
 }
 
-//  ....        TraceDumpModel        ....  (Model + CheckList)
-
-//=================================================================================================
-
 void IFSelect_WorkSession::TraceDumpModel(const int mode)
 {
-  // clang-format off
-  Message_Messenger::StreamBuffer sout = Message::SendInfo(); // should it be changed to SendTrace()?
-  // clang-format on
+
+  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+
   DumpModel(mode, sout);
-  //  if      (mode <= 4)  {  DumpModel (mode,sout);  return;  }
-
-  //  else if (mode <= 7) PrintCheckList (ModelCheckList(),false, mode-5);
-  //  else if (mode <=10) PrintCheckList (ModelCheckList(),true , mode-8);
 }
-
-//  ....        DumpEntity        ....
-
-//=================================================================================================
 
 void IFSelect_WorkSession::DumpEntity(const occ::handle<Standard_Transient>& ent,
                                       const int                              level,
@@ -3428,22 +2985,14 @@ void IFSelect_WorkSession::DumpEntity(const occ::handle<Standard_Transient>& ent
   thelibrary->DumpEntity(myModel, theprotocol, ent, S, level);
 }
 
-//  ....        DumpEntity        ....
-
-//=================================================================================================
-
 void IFSelect_WorkSession::TraceDumpEntity(const occ::handle<Standard_Transient>& ent,
                                            const int                              level) const
 {
-  // clang-format off
-  Message_Messenger::StreamBuffer sout = Message::SendInfo(); // should it be changed to SendTrace()?
-  // clang-format on
+
+  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+
   DumpEntity(ent, level, sout);
 }
-
-//  ....        PrintEntityStatus        ....
-
-//=================================================================================================
 
 void IFSelect_WorkSession::PrintEntityStatus(const occ::handle<Standard_Transient>& ent,
                                              Standard_OStream&                      S)
@@ -3508,16 +3057,12 @@ void IFSelect_WorkSession::PrintEntityStatus(const occ::handle<Standard_Transien
   }
 }
 
-//  ....        PrintCheckList        ....
-
-//=================================================================================================
-
 void IFSelect_WorkSession::PrintCheckList(Standard_OStream&              S,
                                           const Interface_CheckIterator& checklist,
                                           const bool                     failsonly,
                                           const IFSelect_PrintCount      mode) const
 {
-  //  mode : 0  comptage   1 n0s entites   2 n0s+id ents
+
   if (mode == IFSelect_ItemsByEntity)
     checklist.Print(S, myModel, failsonly);
   else
@@ -3530,10 +3075,6 @@ void IFSelect_WorkSession::PrintCheckList(Standard_OStream&              S,
   }
 }
 
-//  ....        PrintSignatureList        ....
-
-//=================================================================================================
-
 void IFSelect_WorkSession::PrintSignatureList(Standard_OStream&                          S,
                                               const occ::handle<IFSelect_SignatureList>& signlist,
                                               const IFSelect_PrintCount                  mode) const
@@ -3542,11 +3083,6 @@ void IFSelect_WorkSession::PrintSignatureList(Standard_OStream&                 
     return;
   signlist->PrintList(S, myModel, mode);
 }
-
-//  ####    ####    ####    ####    ####    ####    ####    ####    ####
-//  ....        EvaluateSelection        ....
-
-//=================================================================================================
 
 void IFSelect_WorkSession::EvaluateSelection(const occ::handle<IFSelect_Selection>& sel) const
 {
@@ -3557,7 +3093,7 @@ void IFSelect_WorkSession::EvaluateSelection(const occ::handle<IFSelect_Selectio
     try
     {
       OCC_CATCH_SIGNALS
-      EvaluateSelection(sel); // normal call (->unique code)
+      EvaluateSelection(sel);
     }
     catch (Standard_Failure const& anException)
     {
@@ -3578,16 +3114,11 @@ void IFSelect_WorkSession::EvaluateSelection(const occ::handle<IFSelect_Selectio
   {
     sout << " Selection :  Unknown" << std::endl;
     return;
-  } // sout<<Handle
+  }
   Interface_EntityIterator iter = EvalSelection(sel);
   ListEntities(iter, 1, sout);
   sout << "****  (Unique) RootResult, Selection 	: " << sel->Label() << std::endl;
 }
-
-//  ####    ####    ####    ####    ####    ####    ####    ####    ####
-//  ....        EvaluateDispatch        ....
-
-//=================================================================================================
 
 void IFSelect_WorkSession::EvaluateDispatch(const occ::handle<IFSelect_Dispatch>& disp,
                                             const int                             mode) const
@@ -3599,7 +3130,7 @@ void IFSelect_WorkSession::EvaluateDispatch(const occ::handle<IFSelect_Dispatch>
     try
     {
       OCC_CATCH_SIGNALS
-      EvaluateDispatch(disp, mode); // normal call (->unique code)
+      EvaluateDispatch(disp, mode);
     }
     catch (Standard_Failure const& anException)
     {
@@ -3621,12 +3152,12 @@ void IFSelect_WorkSession::EvaluateDispatch(const occ::handle<IFSelect_Dispatch>
   {
     sout << "Dispatch :  Unknown" << std::endl;
     return;
-  } // sout<<Handle
+  }
   if (disp->FinalSelection().IsNull())
   {
     sout << "Dispatch  : No Final Selection" << std::endl;
     return;
-  } // sout<<Handle
+  }
   sout << " --- Dispatch Label : " << disp->Label() << std::endl;
 
   IFSelect_ShareOutResult eval(disp, thegraph->Graph());
@@ -3644,7 +3175,6 @@ void IFSelect_WorkSession::EvaluateDispatch(const occ::handle<IFSelect_Dispatch>
     ListEntities(evres->Entities(numpack), (mode ? 2 : -1), sout);
   }
 
-  ////  Interface_EntityIterator iterem = disp->Remainder(thegraph->Graph());
   if (mode == 0)
     return;
   if (mode == 1 || mode == 3)
@@ -3679,11 +3209,6 @@ void IFSelect_WorkSession::EvaluateDispatch(const occ::handle<IFSelect_Dispatch>
   }
 }
 
-//  ####    ####    ####    ####    ####    ####    ####    ####    ####
-//  ....        EvaluateComplete        ....
-
-//=================================================================================================
-
 void IFSelect_WorkSession::EvaluateComplete(const int mode) const
 {
   Message_Messenger::StreamBuffer sout = Message::SendInfo();
@@ -3693,7 +3218,7 @@ void IFSelect_WorkSession::EvaluateComplete(const int mode) const
     try
     {
       OCC_CATCH_SIGNALS
-      EvaluateComplete(mode); // normal call (therefore, code not duplicated)
+      EvaluateComplete(mode);
     }
     catch (Standard_Failure const& anException)
     {
@@ -3765,11 +3290,6 @@ void IFSelect_WorkSession::EvaluateComplete(const int mode) const
   }
 }
 
-//  ####    ####    ####    ####    ####    ####    ####    ####    ####
-//  ....      Routine Interne : ListEntities
-
-//=================================================================================================
-
 void IFSelect_WorkSession::ListEntities(const Interface_EntityIterator& iter,
                                         const int                       mmode,
                                         Standard_OStream&               sout) const
@@ -3796,7 +3316,7 @@ void IFSelect_WorkSession::ListEntities(const Interface_EntityIterator& iter,
       if (!titre && mode == 1)
         sout << "Number/Id.           Category Validity    Type\n-----------          ----...."
              << std::endl;
-      //          123456789 123456789 123456  123456789 123456789 123456
+
       if (!titre && mode == 0)
         sout << "  Keys : R Root   ? Unknown   * Unloaded" << std::endl;
       if (!titre && mode == 2)
@@ -3806,7 +3326,7 @@ void IFSelect_WorkSession::ListEntities(const Interface_EntityIterator& iter,
       int                                    num = myModel->Number(ent);
       if (mode == 1)
       {
-        // n0 id (root?) category validity tracetype
+
         sout << Interface_MSG::Blanks(num, 6);
         myModel->Print(ent, sout, 0);
         if (!tool.IsShared(ent))

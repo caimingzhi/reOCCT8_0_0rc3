@@ -7,8 +7,6 @@
 #include <NCollection_Array1.hpp>
 #include <Standard_Integer.hpp>
 
-//=================================================================================================
-
 static bool CheckParameters(const NCollection_Array1<double>& Parameters)
 {
   int    ii;
@@ -21,8 +19,6 @@ static bool CheckParameters(const NCollection_Array1<double>& Parameters)
   }
   return result;
 }
-
-//=================================================================================================
 
 static void BuildParameters(const bool                                PeriodicFlag,
                             const NCollection_Array1<double>&         PointsArray,
@@ -51,8 +47,6 @@ static void BuildParameters(const bool                                PeriodicFl
   }
 }
 
-//=================================================================================================
-
 static void BuildPeriodicTangent(const NCollection_Array1<double>& PointsArray,
                                  NCollection_Array1<double>&       TangentsArray,
                                  NCollection_Array1<bool>&         TangentFlags,
@@ -67,9 +61,7 @@ static void BuildPeriodicTangent(const NCollection_Array1<double>& PointsArray,
   }
   else if (!TangentFlags.Value(1))
   {
-    // Pour les periodiques on evalue la tangente du point de fermeture
-    // par une interpolation de degre 2 entre le dernier point, le point
-    // de fermeture et le deuxieme point.
+
     int    degree      = 2;
     double period      = (ParametersArray.Value(ParametersArray.Upper())
                      - ParametersArray.Value(ParametersArray.Lower()));
@@ -91,14 +83,12 @@ static void BuildPeriodicTangent(const NCollection_Array1<double>& PointsArray,
   }
 }
 
-//=================================================================================================
-
 static void BuildTangents(const NCollection_Array1<double>& PointsArray,
                           NCollection_Array1<double>&       TangentsArray,
                           NCollection_Array1<bool>&         TangentFlags,
                           const NCollection_Array1<double>& ParametersArray)
 {
-  int     degree = 3; //,ii;
+  int     degree = 3;
   double *point_array, *parameter_array, eval_result[2];
 
   if (PointsArray.Length() < 3)
@@ -140,8 +130,6 @@ static void BuildTangents(const NCollection_Array1<double>& PointsArray,
   }
 }
 
-//=================================================================================================
-
 Law_Interpolate::Law_Interpolate(const occ::handle<NCollection_HArray1<double>>& PointsPtr,
                                  const bool                                      PeriodicFlag,
                                  const double                                    Tolerance)
@@ -152,15 +140,13 @@ Law_Interpolate::Law_Interpolate(const occ::handle<NCollection_HArray1<double>>&
       myTangentRequest(false)
 
 {
-  // int ii;
+
   myTangents     = new NCollection_HArray1<double>(myPoints->Lower(), myPoints->Upper());
   myTangentFlags = new NCollection_HArray1<bool>(myPoints->Lower(), myPoints->Upper());
 
   BuildParameters(PeriodicFlag, PointsPtr->Array1(), myParameters);
   myTangentFlags->Init(false);
 }
-
-//=================================================================================================
 
 Law_Interpolate::Law_Interpolate(const occ::handle<NCollection_HArray1<double>>& PointsPtr,
                                  const occ::handle<NCollection_HArray1<double>>& ParametersPtr,
@@ -173,7 +159,7 @@ Law_Interpolate::Law_Interpolate(const occ::handle<NCollection_HArray1<double>>&
       myPeriodic(PeriodicFlag),
       myTangentRequest(false)
 {
-  // int ii;
+
   if (PeriodicFlag)
   {
     if ((PointsPtr->Length()) + 1 != ParametersPtr->Length())
@@ -191,12 +177,10 @@ Law_Interpolate::Law_Interpolate(const occ::handle<NCollection_HArray1<double>>&
   myTangentFlags->Init(false);
 }
 
-//=================================================================================================
-
 void Law_Interpolate::Load(const NCollection_Array1<double>&             Tangents,
                            const occ::handle<NCollection_HArray1<bool>>& TangentFlagsPtr)
 {
-  // bool result;
+
   int ii;
   myTangentRequest = true;
   myTangentFlags   = TangentFlagsPtr;
@@ -211,19 +195,15 @@ void Law_Interpolate::Load(const NCollection_Array1<double>&             Tangent
   }
 }
 
-//=================================================================================================
-
 void Law_Interpolate::Load(const double InitialTangent, const double FinalTangent)
 {
-  // bool result;
+
   myTangentRequest = true;
   myTangentFlags->SetValue(1, true);
   myTangents->SetValue(1, InitialTangent);
   myTangentFlags->SetValue(myPoints->Length(), true);
   myTangents->SetValue(myPoints->Length(), FinalTangent);
 }
-
-//=================================================================================================
 
 void Law_Interpolate::Perform()
 {
@@ -237,19 +217,15 @@ void Law_Interpolate::Perform()
   }
 }
 
-//=================================================================================================
-
 void Law_Interpolate::PerformPeriodic()
 {
   int degree, ii,
-    // jj,
+
     index, index1,
-    // index2,
+
     mult_index, half_order, inversion_problem, num_points, num_distinct_knots, num_poles;
 
   double period;
-
-  // gp_Pnt a_point;
 
   num_points = myPoints->Length();
   period = myParameters->Value(myParameters->Upper()) - myParameters->Value(myParameters->Lower());
@@ -342,21 +318,14 @@ void Law_Interpolate::PerformPeriodic()
     index = 3;
     for (ii = myPoints->Lower() + 1; ii <= myPoints->Upper(); ii++)
     {
-      //
-      // copy all the given points since the last one will be initialized
-      // below by the first point in the array myPoints
-      //
+
       poles.SetValue(index, myPoints->Value(ii));
       index += 1;
     }
   }
   contact_order_array.SetValue(num_poles - 1, 1);
   parameters.SetValue(num_poles - 1, myParameters->Value(myParameters->Upper()));
-  //
-  // for the periodic curve ONLY  the tangent of the first point
-  // will be used since the curve should close itself at the first
-  // point See BuildPeriodicTangent
-  //
+
   poles.SetValue(num_poles - 1, myTangents->Value(1));
   parameters.SetValue(num_poles, myParameters->Value(myParameters->Upper()));
   poles.SetValue(num_poles, myPoints->Value(1));
@@ -376,12 +345,10 @@ void Law_Interpolate::PerformPeriodic()
   }
 }
 
-//=================================================================================================
-
 void Law_Interpolate::PerformNonPeriodic()
 {
   int degree, ii,
-    // jj,
+
     index, index1, index2, index3, mult_index, inversion_problem, num_points, num_distinct_knots,
     num_poles;
 
@@ -464,15 +431,10 @@ void Law_Interpolate::PerformNonPeriodic()
       }
       break;
     case 3:
-      //
-      // check if the boundary conditions are set
-      //
+
       if (num_points >= 3)
       {
-        //
-        // cannot build the tangents with degree 3 with only 2 points
-        // if those where not given in advance
-        //
+
         BuildTangents(myPoints->Array1(),
                       myTangents->ChangeArray1(),
                       myTangentFlags->ChangeArray1(),
@@ -499,10 +461,7 @@ void Law_Interpolate::PerformNonPeriodic()
           index3 += 1;
           if (myTangentFlags->Value(index1))
           {
-            //
-            // set the multiplicities, the order of the contact, the
-            // the flatknots,
-            //
+
             mults.SetValue(mult_index, mults.Value(mult_index) + 1);
             contact_order_array(index) = 1;
             flatknots.SetValue(index3, myParameters->Value(ii));
@@ -561,19 +520,12 @@ void Law_Interpolate::PerformNonPeriodic()
   }
 }
 
-//=======================================================================
-// function : occ::handle<Geom_BSplineCurve>&
-// purpose  :
-//=======================================================================
-
 const occ::handle<Law_BSpline>& Law_Interpolate::Curve() const
 {
   if (!myIsDone)
     throw StdFail_NotDone(" ");
   return myCurve;
 }
-
-//=================================================================================================
 
 bool Law_Interpolate::IsDone() const
 {

@@ -8,10 +8,7 @@ IMPLEMENT_STANDARD_RTTIEXT(OpenGl_CappingPlaneResource, OpenGl_Resource)
 
 namespace
 {
-  //! 12 plane vertices, interleaved:
-  //!  - 4 floats, position
-  //!  - 4 floats, normal
-  //!  - 4 floats, UV texture coordinates
+
   static const GLfloat THE_CAPPING_PLN_VERTS[12 * (4 + 4 + 4)] = {
     0.0f,  0.0f, 0.0f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  0.0f,  0.0f, 1.0f,
     0.0f,  0.0f, 1.0f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  -1.0f, 0.0f, 0.0f,
@@ -28,9 +25,7 @@ namespace
     0.0f,  0.0f, 0.0f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  0.0f,  0.0f, 1.0f,
     1.0f,  0.0f, 0.0f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,  0.0f,  0.0f, 0.0f,
     0.0f,  0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,  1.0f,  0.0f, 0.0f};
-} // namespace
-
-//=================================================================================================
+}
 
 OpenGl_CappingPlaneResource::OpenGl_CappingPlaneResource(
   const occ::handle<Graphic3d_ClipPlane>& thePlane)
@@ -53,14 +48,10 @@ OpenGl_CappingPlaneResource::OpenGl_CappingPlaneResource(
   }
 }
 
-//=================================================================================================
-
 OpenGl_CappingPlaneResource::~OpenGl_CappingPlaneResource()
 {
   Release(nullptr);
 }
-
-//=================================================================================================
 
 void OpenGl_CappingPlaneResource::Update(const occ::handle<OpenGl_Context>&    theCtx,
                                          const occ::handle<Graphic3d_Aspects>& theObjAspect)
@@ -68,8 +59,6 @@ void OpenGl_CappingPlaneResource::Update(const occ::handle<OpenGl_Context>&    t
   updateTransform(theCtx);
   updateAspect(theObjAspect);
 }
-
-//=================================================================================================
 
 void OpenGl_CappingPlaneResource::Release(OpenGl_Context* theContext)
 {
@@ -79,14 +68,12 @@ void OpenGl_CappingPlaneResource::Release(OpenGl_Context* theContext)
   myAspectMod   = (unsigned int)-1;
 }
 
-//=================================================================================================
-
 void OpenGl_CappingPlaneResource::updateAspect(const occ::handle<Graphic3d_Aspects>& theObjAspect)
 {
   if (myAspect == nullptr)
   {
     myAspect    = new OpenGl_Aspects();
-    myAspectMod = myPlaneRoot->MCountAspect() - 1; // mark out of sync
+    myAspectMod = myPlaneRoot->MCountAspect() - 1;
   }
 
   if (theObjAspect.IsNull())
@@ -110,7 +97,7 @@ void OpenGl_CappingPlaneResource::updateAspect(const occ::handle<Graphic3d_Aspec
 
   if (myPlaneRoot->ToUseObjectMaterial())
   {
-    // only front material currently supported by capping rendering
+
     myFillAreaAspect->SetFrontMaterial(theObjAspect->FrontMaterial());
     myFillAreaAspect->SetInteriorColor(theObjAspect->InteriorColor());
   }
@@ -134,14 +121,12 @@ void OpenGl_CappingPlaneResource::updateAspect(const occ::handle<Graphic3d_Aspec
   myAspect->SetAspect(myFillAreaAspect);
 }
 
-//=================================================================================================
-
 void OpenGl_CappingPlaneResource::updateTransform(const occ::handle<OpenGl_Context>& theCtx)
 {
   if (myEquationMod == myPlaneRoot->MCountEquation()
       && myLocalOrigin.IsEqual(theCtx->ShaderManager()->LocalOrigin(), gp::Resolution()))
   {
-    return; // nothing to update
+    return;
   }
 
   myEquationMod = myPlaneRoot->MCountEquation();
@@ -150,11 +135,9 @@ void OpenGl_CappingPlaneResource::updateTransform(const occ::handle<OpenGl_Conte
   const Graphic3d_ClipPlane::Equation& anEq = myPlaneRoot->GetEquation();
   const double anEqW = theCtx->ShaderManager()->LocalClippingPlaneW(*myPlaneRoot);
 
-  // re-evaluate infinite plane transformation matrix
   const NCollection_Vec3<float> aNorm(anEq.xyz());
   const NCollection_Vec3<float> T(anEq.xyz() * -anEqW);
 
-  // project plane normal onto OX to find left vector
   const float             aProjLen = sqrt((float)anEq.xz().SquareModulus());
   NCollection_Vec3<float> aLeft;
   if (aProjLen < ShortRealSmall())

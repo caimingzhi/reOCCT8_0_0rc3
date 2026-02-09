@@ -4,51 +4,40 @@
 
 #include <Standard_Macro.hpp>
 
-//! Abstract properties of geometric object.
 class BVH_Properties : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(BVH_Properties, Standard_Transient)
 public:
-  //! Releases resources of object properties.
   Standard_EXPORT ~BVH_Properties() override = 0;
 };
 
-//! Stores transform properties of geometric object.
 template <class T, int N>
 class BVH_Transform : public BVH_Properties
 {
 public:
-  //! Type of transformation matrix.
   typedef typename BVH::MatrixType<T, N>::Type BVH_MatNt;
 
 public:
-  //! Creates new identity transformation.
   BVH_Transform() = default;
 
-  //! Creates new transformation with specified matrix.
   BVH_Transform(const BVH_MatNt& theTransform)
       : myTransform(theTransform)
   {
   }
 
-  //! Releases resources of transformation properties.
   ~BVH_Transform() override = default;
 
-  //! Returns transformation matrix.
   const BVH_MatNt& Transform() const { return myTransform; }
 
-  //! Sets new transformation matrix.
   void SetTransform(const BVH_MatNt& theTransform);
 
-  //! Returns inversed transformation matrix.
   const BVH_MatNt& Inversed() const { return myTransformInversed; }
 
-  //! Applies transformation matrix to bounding box.
   BVH_Box<T, N> Apply(const BVH_Box<T, N>& theBox) const;
 
 protected:
-  BVH_MatNt myTransform;         //!< Transformation matrix
-  BVH_MatNt myTransformInversed; //!< Inversed transformation matrix
+  BVH_MatNt myTransform;
+  BVH_MatNt myTransformInversed;
 };
 
 namespace BVH
@@ -56,7 +45,6 @@ namespace BVH
   template <class T, int N>
   struct MatrixOp
   {
-    // Not implemented
   };
 
   template <class T>
@@ -78,7 +66,6 @@ namespace BVH
   template <class T, int N>
   struct UnitVector
   {
-    // Not implemented
   };
 
   template <class T>
@@ -145,16 +132,12 @@ namespace BVH
   };
 } // namespace BVH
 
-//=================================================================================================
-
 template <class T, int N>
 void BVH_Transform<T, N>::SetTransform(const BVH_MatNt& theTransform)
 {
   myTransform = theTransform;
   BVH::MatrixOp<T, N>::Inverse(myTransform, myTransformInversed);
 }
-
-//=================================================================================================
 
 template <class T, int N>
 BVH_Box<T, N> BVH_Transform<T, N>::Apply(const BVH_Box<T, N>& theBox) const

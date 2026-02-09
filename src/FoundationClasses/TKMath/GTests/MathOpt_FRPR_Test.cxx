@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -25,12 +14,6 @@ namespace
 {
   constexpr double THE_TOLERANCE = 1.0e-6;
 
-  // ============================================================================
-  // Test function classes for new API
-  // ============================================================================
-
-  //! Quadratic function: f(x,y) = (x-1)^2 + (y-2)^2
-  //! Minimum at (1, 2) with f = 0
   struct QuadraticFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -49,8 +32,6 @@ namespace
     }
   };
 
-  //! Rosenbrock function: f(x,y) = 100*(y-x^2)^2 + (1-x)^2
-  //! Minimum at (1, 1) with f = 0
   struct RosenbrockFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -73,8 +54,6 @@ namespace
     }
   };
 
-  //! Booth function: f(x,y) = (x + 2y - 7)^2 + (2x + y - 5)^2
-  //! Minimum at (1, 3) with f = 0
   struct BoothFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -99,8 +78,6 @@ namespace
     }
   };
 
-  //! Sphere function in N dimensions: f(x) = sum(x_i^2)
-  //! Minimum at origin with f = 0
   struct SphereFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -123,8 +100,6 @@ namespace
     }
   };
 
-  //! Beale function: f(x,y) = (1.5 - x + xy)^2 + (2.25 - x + xy^2)^2 + (2.625 - x + xy^3)^2
-  //! Minimum at (3, 0.5) with f = 0
   struct BealeFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -152,10 +127,6 @@ namespace
       return true;
     }
   };
-
-  // ============================================================================
-  // Old API adapter class
-  // ============================================================================
 
   class QuadraticFuncOld : public math_MultipleVarFunctionWithGradient
   {
@@ -214,10 +185,6 @@ namespace
   };
 
 } // namespace
-
-// ============================================================================
-// Basic FRPR tests
-// ============================================================================
 
 TEST(MathOpt_FRPRTest, Quadratic_FletcherReeves)
 {
@@ -349,13 +316,9 @@ TEST(MathOpt_FRPRTest, Sphere5D)
   EXPECT_NEAR(*aResult.Value, 0.0, THE_TOLERANCE);
 }
 
-// ============================================================================
-// Numerical gradient tests
-// ============================================================================
-
 TEST(MathOpt_FRPRTest, NumericalGradient_Quadratic)
 {
-  // Value-only function
+
   struct QuadraticValueOnly
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -385,10 +348,6 @@ TEST(MathOpt_FRPRTest, NumericalGradient_Quadratic)
   EXPECT_NEAR(*aResult.Value, 0.0, 1.0e-4);
 }
 
-// ============================================================================
-// Comparison with old API
-// ============================================================================
-
 TEST(MathOpt_FRPRTest, CompareWithOldAPI_Quadratic)
 {
   QuadraticFuncOld anOldFunc;
@@ -398,11 +357,9 @@ TEST(MathOpt_FRPRTest, CompareWithOldAPI_Quadratic)
   aStart(1) = 5.0;
   aStart(2) = 7.0;
 
-  // Old API - construct with tolerance and max iterations, then call Perform
   math_FRPR anOldSolver(anOldFunc, 1.0e-8, 100);
   anOldSolver.Perform(anOldFunc, aStart);
 
-  // New API
   MathOpt::FRPRConfig aConfig;
   aConfig.MaxIterations = 100;
   aConfig.Tolerance     = 1.0e-8;
@@ -411,7 +368,6 @@ TEST(MathOpt_FRPRTest, CompareWithOldAPI_Quadratic)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find the same minimum
   EXPECT_NEAR(anOldSolver.Location()(1), (*aNewResult.Solution)(1), THE_TOLERANCE);
   EXPECT_NEAR(anOldSolver.Location()(2), (*aNewResult.Solution)(2), THE_TOLERANCE);
   EXPECT_NEAR(anOldSolver.Minimum(), *aNewResult.Value, THE_TOLERANCE);
@@ -426,11 +382,9 @@ TEST(MathOpt_FRPRTest, CompareWithOldAPI_Rosenbrock)
   aStart(1) = -1.0;
   aStart(2) = 1.0;
 
-  // Old API - construct with tolerance and max iterations, then call Perform
   math_FRPR anOldSolver(anOldFunc, 1.0e-6, 2000);
   anOldSolver.Perform(anOldFunc, aStart);
 
-  // New API
   MathOpt::FRPRConfig aConfig;
   aConfig.MaxIterations = 2000;
   aConfig.Tolerance     = 1.0e-6;
@@ -439,14 +393,9 @@ TEST(MathOpt_FRPRTest, CompareWithOldAPI_Rosenbrock)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find the minimum (with reasonable tolerance for Rosenbrock)
   EXPECT_NEAR(anOldSolver.Location()(1), (*aNewResult.Solution)(1), 0.01);
   EXPECT_NEAR(anOldSolver.Location()(2), (*aNewResult.Solution)(2), 0.01);
 }
-
-// ============================================================================
-// Comparison with BFGS
-// ============================================================================
 
 TEST(MathOpt_FRPRTest, CompareWithBFGS)
 {
@@ -471,15 +420,10 @@ TEST(MathOpt_FRPRTest, CompareWithBFGS)
   ASSERT_TRUE(aFRPRResult.IsDone());
   ASSERT_TRUE(aBFGSResult.IsDone());
 
-  // Both should find the same minimum
   EXPECT_NEAR(*aFRPRResult.Value, *aBFGSResult.Value, THE_TOLERANCE);
   EXPECT_NEAR((*aFRPRResult.Solution)(1), (*aBFGSResult.Solution)(1), THE_TOLERANCE);
   EXPECT_NEAR((*aFRPRResult.Solution)(2), (*aBFGSResult.Solution)(2), THE_TOLERANCE);
 }
-
-// ============================================================================
-// Formula comparison tests
-// ============================================================================
 
 TEST(MathOpt_FRPRTest, FormulaComparison)
 {
@@ -512,7 +456,6 @@ TEST(MathOpt_FRPRTest, FormulaComparison)
   ASSERT_TRUE(aResultPR.IsDone());
   ASSERT_TRUE(aResultHS.IsDone());
 
-  // All should find the same minimum
   EXPECT_NEAR(*aResultFR.Value, *aResultPR.Value, THE_TOLERANCE);
   EXPECT_NEAR(*aResultFR.Value, *aResultHS.Value, THE_TOLERANCE);
   EXPECT_NEAR((*aResultFR.Solution)(1), 1.0, THE_TOLERANCE);

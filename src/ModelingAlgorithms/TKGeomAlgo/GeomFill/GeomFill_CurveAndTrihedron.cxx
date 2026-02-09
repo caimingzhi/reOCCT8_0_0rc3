@@ -14,8 +14,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_CurveAndTrihedron, GeomFill_LocationLaw)
 
-//=================================================================================================
-
 GeomFill_CurveAndTrihedron::GeomFill_CurveAndTrihedron(
   const occ::handle<GeomFill_TrihedronLaw>& Trihedron)
 {
@@ -24,8 +22,6 @@ GeomFill_CurveAndTrihedron::GeomFill_CurveAndTrihedron(
   Trans.SetIdentity();
   WithTrans = false;
 }
-
-//=================================================================================================
 
 occ::handle<GeomFill_LocationLaw> GeomFill_CurveAndTrihedron::Copy() const
 {
@@ -36,8 +32,6 @@ occ::handle<GeomFill_LocationLaw> GeomFill_CurveAndTrihedron::Copy() const
   copy->SetTrsf(Trans);
   return copy;
 }
-
-//=================================================================================================
 
 bool GeomFill_CurveAndTrihedron::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
 {
@@ -51,22 +45,18 @@ const occ::handle<Adaptor3d_Curve>& GeomFill_CurveAndTrihedron::GetCurve() const
   return myCurve;
 }
 
-//=================================================================================================
-
 void GeomFill_CurveAndTrihedron::SetTrsf(const gp_Mat& Transfo)
 {
   Trans = Transfo;
   gp_Mat Aux;
   Aux.SetIdentity();
   Aux -= Trans;
-  WithTrans = false; // Au cas ou Trans = I
+  WithTrans = false;
   for (int ii = 1; ii <= 3 && !WithTrans; ii++)
     for (int jj = 1; jj <= 3 && !WithTrans; jj++)
       if (std::abs(Aux.Value(ii, jj)) > 1.e-14)
         WithTrans = true;
 }
-
-//=================================================================================================
 
 bool GeomFill_CurveAndTrihedron::D0(const double Param, gp_Mat& M, gp_Vec& V)
 {
@@ -83,8 +73,6 @@ bool GeomFill_CurveAndTrihedron::D0(const double Param, gp_Mat& M, gp_Vec& V)
   }
   return Ok;
 }
-
-//=================================================================================================
 
 bool GeomFill_CurveAndTrihedron::D0(const double Param,
                                     gp_Mat&      M,
@@ -104,8 +92,6 @@ bool GeomFill_CurveAndTrihedron::D0(const double Param,
   }
   return Ok;
 }
-
-//=================================================================================================
 
 bool GeomFill_CurveAndTrihedron::D1(const double Param,
                                     gp_Mat&      M,
@@ -132,8 +118,6 @@ bool GeomFill_CurveAndTrihedron::D1(const double Param,
 
   return Ok;
 }
-
-//=================================================================================================
 
 bool GeomFill_CurveAndTrihedron::D2(const double Param,
                                     gp_Mat&      M,
@@ -168,8 +152,6 @@ bool GeomFill_CurveAndTrihedron::D2(const double Param,
   return Ok;
 }
 
-//=================================================================================================
-
 int GeomFill_CurveAndTrihedron::NbIntervals(const GeomAbs_Shape S) const
 {
   int Nb_Sec, Nb_Law;
@@ -194,8 +176,6 @@ int GeomFill_CurveAndTrihedron::NbIntervals(const GeomAbs_Shape S) const
   GeomLib::FuseIntervals(IntC, IntL, Inter, Precision::PConfusion() * 0.99);
   return Inter.Length() - 1;
 }
-
-//=================================================================================================
 
 void GeomFill_CurveAndTrihedron::Intervals(NCollection_Array1<double>& T,
                                            const GeomAbs_Shape         S) const
@@ -226,15 +206,11 @@ void GeomFill_CurveAndTrihedron::Intervals(NCollection_Array1<double>& T,
     T(ii) = Inter(ii);
 }
 
-//=================================================================================================
-
 void GeomFill_CurveAndTrihedron::SetInterval(const double First, const double Last)
 {
   myLaw->SetInterval(First, Last);
   myTrimmed = myCurve->Trim(First, Last, 0);
 }
-
-//=================================================================================================
 
 void GeomFill_CurveAndTrihedron::GetInterval(double& First, double& Last) const
 {
@@ -242,25 +218,16 @@ void GeomFill_CurveAndTrihedron::GetInterval(double& First, double& Last) const
   Last  = myTrimmed->LastParameter();
 }
 
-//=================================================================================================
-
 void GeomFill_CurveAndTrihedron::GetDomain(double& First, double& Last) const
 {
   First = myCurve->FirstParameter();
   Last  = myCurve->LastParameter();
 }
 
-//==================================================================
-// Function:
-// Purpose : GetMaximalNorm
-//          On suppose les triedre normee => return 1
-//==================================================================
 double GeomFill_CurveAndTrihedron::GetMaximalNorm()
 {
   return 1.;
 }
-
-//=================================================================================================
 
 void GeomFill_CurveAndTrihedron::GetAverageLaw(gp_Mat& AM, gp_Vec& AV)
 {
@@ -282,8 +249,6 @@ void GeomFill_CurveAndTrihedron::GetAverageLaw(gp_Mat& AM, gp_Vec& AV)
   AV /= 11;
 }
 
-//=================================================================================================
-
 bool GeomFill_CurveAndTrihedron::IsTranslation(double& Error) const
 {
   GeomAbs_CurveType Type;
@@ -295,8 +260,6 @@ bool GeomFill_CurveAndTrihedron::IsTranslation(double& Error) const
   }
   return false;
 }
-
-//=================================================================================================
 
 bool GeomFill_CurveAndTrihedron::IsRotation(double& Error) const
 {
@@ -310,11 +273,8 @@ bool GeomFill_CurveAndTrihedron::IsRotation(double& Error) const
   return false;
 }
 
-//=================================================================================================
-
 void GeomFill_CurveAndTrihedron::Rotation(gp_Pnt& Centre) const
 {
-  //  GeomAbs_CurveType Type;
-  //  Type = myCurve->GetType();
+
   Centre = myCurve->Circle().Location();
 }

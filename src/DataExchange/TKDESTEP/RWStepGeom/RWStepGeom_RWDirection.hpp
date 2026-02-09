@@ -11,8 +11,6 @@ class StepGeom_Direction;
 class StepData_StepWriter;
 class Interface_ShareTool;
 
-//! Read & Write Module for Direction
-//! Check added by CKY , 7-OCT-1996
 class RWStepGeom_RWDirection
 {
 public:

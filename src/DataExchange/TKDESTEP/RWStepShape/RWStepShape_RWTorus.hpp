@@ -11,7 +11,6 @@ class StepShape_Torus;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for Torus
 class RWStepShape_RWTorus
 {
 public:

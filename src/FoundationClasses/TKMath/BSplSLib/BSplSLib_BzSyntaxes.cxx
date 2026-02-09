@@ -5,8 +5,6 @@
 #include <BSplCLib.hpp>
 #include <NCollection_Array1.hpp>
 
-//=================================================================================================
-
 void BSplSLib::PolesCoefficients(const NCollection_Array2<gp_Pnt>& Poles,
                                  const NCollection_Array2<double>* Weights,
                                  NCollection_Array2<gp_Pnt>&       CachePoles,
@@ -50,7 +48,7 @@ void BSplSLib::PolesCoefficients(const NCollection_Array2<gp_Pnt>& Poles,
   }
   else
   {
-    // BuilCache exige que les resultats soient formates en [MaxCoeff,MinCoeff]
+
     NCollection_Array2<gp_Pnt> CPoles(1, vclas, 1, uclas);
     NCollection_Array2<double> CWeights(1, vclas, 1, uclas);
     int                        ii, jj;

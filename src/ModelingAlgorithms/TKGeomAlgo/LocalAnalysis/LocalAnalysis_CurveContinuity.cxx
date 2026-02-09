@@ -1,16 +1,4 @@
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Geom_Curve.hpp>
 #include <GeomLProp_CLProps.hpp>
@@ -21,13 +9,11 @@
 #include <LocalAnalysis_StatusErrorType.hpp>
 #include <StdFail_NotDone.hpp>
 
-/***********************************************************************/
 void LocalAnalysis_CurveContinuity::CurvC0(GeomLProp_CLProps& Curv1, GeomLProp_CLProps& Curv2)
 {
   myContC0 = (Curv1.Value()).Distance(Curv2.Value());
 }
 
-/****************************************************************************/
 void LocalAnalysis_CurveContinuity::CurvC1(GeomLProp_CLProps& Curv1, GeomLProp_CLProps& Curv2)
 {
   gp_Vec V1, V2;
@@ -61,12 +47,10 @@ void LocalAnalysis_CurveContinuity::CurvC1(GeomLProp_CLProps& Curv1, GeomLProp_C
   }
 }
 
-/*********************************************************************************/
-
 void LocalAnalysis_CurveContinuity::CurvC2(GeomLProp_CLProps& Curv1, GeomLProp_CLProps& Curv2)
 {
   gp_Vec V1, V2, V12, V22;
-  //  gp_Dir D1, D2;
+
   double norm1, norm2, norm12, norm22, ang;
   V1     = Curv1.D1();
   V2     = Curv2.D1();
@@ -113,8 +97,6 @@ void LocalAnalysis_CurveContinuity::CurvC2(GeomLProp_CLProps& Curv1, GeomLProp_C
   }
 }
 
-/*********************************************************************************/
-
 void LocalAnalysis_CurveContinuity::CurvG1(GeomLProp_CLProps& Curv1, GeomLProp_CLProps& Curv2)
 {
   gp_Dir Tang1, Tang2;
@@ -135,8 +117,6 @@ void LocalAnalysis_CurveContinuity::CurvG1(GeomLProp_CLProps& Curv1, GeomLProp_C
     myErrorStatus = LocalAnalysis_TangentNotDefined;
   }
 }
-
-/*********************************************************************************/
 
 void LocalAnalysis_CurveContinuity::CurvG2(GeomLProp_CLProps& Curv1, GeomLProp_CLProps& Curv2)
 {
@@ -177,8 +157,6 @@ void LocalAnalysis_CurveContinuity::CurvG2(GeomLProp_CLProps& Curv1, GeomLProp_C
   }
 }
 
-/*********************************************************************************/
-
 LocalAnalysis_CurveContinuity::LocalAnalysis_CurveContinuity(const occ::handle<Geom_Curve>& Curv1,
                                                              const double                   u1,
                                                              const occ::handle<Geom_Curve>& Curv2,
@@ -218,14 +196,14 @@ LocalAnalysis_CurveContinuity::LocalAnalysis_CurveContinuity(const occ::handle<G
   switch (Order)
   {
     case GeomAbs_C0:
-    { // TypeCont=GeomAbs_C0;
+    {
       GeomLProp_CLProps Curve1(Curv1, u1, 0, myepsnul);
       GeomLProp_CLProps Curve2(Curv2, u2, 0, myepsnul);
       CurvC0(Curve1, Curve2);
     }
     break;
     case GeomAbs_C1:
-    { // TypeCont=GeomAbs_C1;
+    {
 
       GeomLProp_CLProps Curve1(Curv1, u1, 1, myepsnul);
       GeomLProp_CLProps Curve2(Curv2, u2, 1, myepsnul);
@@ -234,7 +212,7 @@ LocalAnalysis_CurveContinuity::LocalAnalysis_CurveContinuity(const occ::handle<G
     }
     break;
     case GeomAbs_C2:
-    { // TypeCont=GeomAbs_C2;
+    {
 
       GeomLProp_CLProps Curve1(Curv1, u1, 2, myepsnul);
       GeomLProp_CLProps Curve2(Curv2, u2, 2, myepsnul);
@@ -244,7 +222,7 @@ LocalAnalysis_CurveContinuity::LocalAnalysis_CurveContinuity(const occ::handle<G
     }
     break;
     case GeomAbs_G1:
-    { // TypeCont=GeomAbs_G1;
+    {
       GeomLProp_CLProps Curve1(Curv1, u1, 1, myepsnul);
       GeomLProp_CLProps Curve2(Curv2, u2, 1, myepsnul);
       CurvC0(Curve1, Curve2);
@@ -252,7 +230,7 @@ LocalAnalysis_CurveContinuity::LocalAnalysis_CurveContinuity(const occ::handle<G
     }
     break;
     case GeomAbs_G2:
-    { // TypeCont=GeomAbs_G2;
+    {
       GeomLProp_CLProps Curve1(Curv1, u1, 2, myepsnul);
       GeomLProp_CLProps Curve2(Curv2, u2, 2, myepsnul);
       CurvC0(Curve1, Curve2);
@@ -266,8 +244,6 @@ LocalAnalysis_CurveContinuity::LocalAnalysis_CurveContinuity(const occ::handle<G
   }
 }
 
-/*********************************************************************************/
-
 bool LocalAnalysis_CurveContinuity::IsC0() const
 {
   if (!myIsDone)
@@ -277,8 +253,6 @@ bool LocalAnalysis_CurveContinuity::IsC0() const
   return myContC0 <= myepsC0;
 }
 
-/*********************************************************************************/
-
 bool LocalAnalysis_CurveContinuity::IsC1() const
 {
   if (!myIsDone)
@@ -287,8 +261,6 @@ bool LocalAnalysis_CurveContinuity::IsC1() const
   }
   return IsC0() && ((myContC1 <= myepsC1) || (std::abs(myContC1 - M_PI) <= myepsC1));
 }
-
-/*********************************************************************************/
 
 bool LocalAnalysis_CurveContinuity::IsC2() const
 {
@@ -313,8 +285,6 @@ bool LocalAnalysis_CurveContinuity::IsC2() const
   return false;
 }
 
-/*********************************************************************************/
-
 bool LocalAnalysis_CurveContinuity::IsG1() const
 {
   if (!myIsDone)
@@ -324,15 +294,10 @@ bool LocalAnalysis_CurveContinuity::IsG1() const
   return IsC0() && ((myContG1 <= myepsG1 || (std::abs(myContG1 - M_PI) <= myepsG1)));
 }
 
-/*********************************************************************************/
-
 bool LocalAnalysis_CurveContinuity::IsG2() const
 {
   double CRBINF, CRBNUL;
   int    IETA1, IETA2;
-  // etat des coubures IETA. -> 0 Crbure nulle
-  //			   -> 1 Crbure finie
-  //			   -> 2 Crbure infinie
 
   if (!myIsDone)
   {
@@ -377,8 +342,6 @@ bool LocalAnalysis_CurveContinuity::IsG2() const
     return false;
 }
 
-/*********************************************************************************/
-
 double LocalAnalysis_CurveContinuity::C0Value() const
 {
   if (!myIsDone)
@@ -387,8 +350,6 @@ double LocalAnalysis_CurveContinuity::C0Value() const
   }
   return (myContC0);
 }
-
-/*********************************************************************************/
 
 double LocalAnalysis_CurveContinuity::C1Angle() const
 {
@@ -399,8 +360,6 @@ double LocalAnalysis_CurveContinuity::C1Angle() const
   return (myContC1);
 }
 
-/*********************************************************************************/
-
 double LocalAnalysis_CurveContinuity::C2Angle() const
 {
   if (!myIsDone)
@@ -409,8 +368,6 @@ double LocalAnalysis_CurveContinuity::C2Angle() const
   }
   return (myContC2);
 }
-
-/*********************************************************************************/
 
 double LocalAnalysis_CurveContinuity::G1Angle() const
 {
@@ -421,8 +378,6 @@ double LocalAnalysis_CurveContinuity::G1Angle() const
   return (myContG1);
 }
 
-/*********************************************************************************/
-
 double LocalAnalysis_CurveContinuity::G2Angle() const
 {
   if (!myIsDone)
@@ -431,8 +386,6 @@ double LocalAnalysis_CurveContinuity::G2Angle() const
   }
   return (myContG2);
 }
-
-/*********************************************************************************/
 
 double LocalAnalysis_CurveContinuity::C1Ratio() const
 {
@@ -443,8 +396,6 @@ double LocalAnalysis_CurveContinuity::C1Ratio() const
   return (myLambda1);
 }
 
-/*********************************************************************************/
-
 double LocalAnalysis_CurveContinuity::C2Ratio() const
 {
   if (!myIsDone)
@@ -454,7 +405,6 @@ double LocalAnalysis_CurveContinuity::C2Ratio() const
   return (myLambda2);
 }
 
-/********************************************************************************/
 double LocalAnalysis_CurveContinuity::G2CurvatureVariation() const
 {
   if (!myIsDone)
@@ -464,21 +414,16 @@ double LocalAnalysis_CurveContinuity::G2CurvatureVariation() const
   return (myG2Variation);
 }
 
-/********************************************************************************/
-
 bool LocalAnalysis_CurveContinuity::IsDone() const
 {
   return (myIsDone);
 }
-
-/*********************************************************************************/
 
 LocalAnalysis_StatusErrorType LocalAnalysis_CurveContinuity::StatusError() const
 {
   return myErrorStatus;
 }
 
-/*************************************************************************/
 GeomAbs_Shape LocalAnalysis_CurveContinuity::ContinuityStatus() const
 {
   if (!myIsDone)
@@ -487,5 +432,3 @@ GeomAbs_Shape LocalAnalysis_CurveContinuity::ContinuityStatus() const
   }
   return (myTypeCont);
 }
-
-/*********************************************************************************/

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_Type.hpp>
 #include <StepGeom_QuasiUniformSurface.hpp>
@@ -35,10 +24,10 @@ void StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface::Init(
   const occ::handle<StepGeom_QuasiUniformSurface>&    aQuasiUniformSurface,
   const occ::handle<StepGeom_RationalBSplineSurface>& aRationalBSplineSurface)
 {
-  // --- classe own fields ---
+
   quasiUniformSurface    = aQuasiUniformSurface;
   rationalBSplineSurface = aRationalBSplineSurface;
-  // --- classe inherited fields ---
+
   StepGeom_BSplineSurface::Init(aName,
                                 aUDegree,
                                 aVDegree,
@@ -60,7 +49,6 @@ void StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface::Init(
   const StepData_Logical                                                        aSelfIntersect,
   const occ::handle<NCollection_HArray2<double>>&                               aWeightsData)
 {
-  // --- classe inherited fields ---
 
   StepGeom_BSplineSurface::Init(aName,
                                 aUDegree,
@@ -71,8 +59,6 @@ void StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface::Init(
                                 aVClosed,
                                 aSelfIntersect);
 
-  // --- ANDOR component fields ---
-
   quasiUniformSurface = new StepGeom_QuasiUniformSurface();
   quasiUniformSurface->Init(aName,
                             aUDegree,
@@ -82,8 +68,6 @@ void StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface::Init(
                             aUClosed,
                             aVClosed,
                             aSelfIntersect);
-
-  // --- ANDOR component fields ---
 
   rationalBSplineSurface = new StepGeom_RationalBSplineSurface();
   rationalBSplineSurface->Init(aName,
@@ -120,10 +104,6 @@ occ::handle<StepGeom_RationalBSplineSurface> StepGeom_QuasiUniformSurfaceAndRati
 {
   return rationalBSplineSurface;
 }
-
-//--- Specific Methods for AND classe field access ---
-
-//--- Specific Methods for AND classe field access ---
 
 void StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface::SetWeightsData(
   const occ::handle<NCollection_HArray2<double>>& aWeightsData)

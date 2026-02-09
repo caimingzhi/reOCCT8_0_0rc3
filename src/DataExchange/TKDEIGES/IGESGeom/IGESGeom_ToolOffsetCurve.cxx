@@ -17,22 +17,14 @@
 #include <Message_Msg.hpp>
 #include <Standard_DomainError.hpp>
 
-// MGE 30/07/98
-//=================================================================================================
-
 IGESGeom_ToolOffsetCurve::IGESGeom_ToolOffsetCurve() = default;
-
-//=================================================================================================
 
 void IGESGeom_ToolOffsetCurve::ReadOwnParams(const occ::handle<IGESGeom_OffsetCurve>&    ent,
                                              const occ::handle<IGESData_IGESReaderData>& IR,
                                              IGESData_ParamReader&                       PR) const
 {
-  // MGE 30/07/98
-  // Building of messages
-  //========================================
+
   Message_Msg Msg121("XSTEP_121");
-  //========================================
 
   int                              anOffsetType, aFunctionCoord, aTaperedOffsetType;
   double                           offDistance1, offDistance2;
@@ -41,9 +33,7 @@ void IGESGeom_ToolOffsetCurve::ReadOwnParams(const occ::handle<IGESGeom_OffsetCu
   occ::handle<IGESData_IGESEntity> aBaseCurve;
   occ::handle<IGESData_IGESEntity> aFunction;
   IGESData_Status                  aStatus;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  // Reading the curve entity to be offset
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, aBaseCurve))
   {
     Message_Msg Msg110("XSTEP_110");
@@ -67,18 +57,14 @@ void IGESGeom_ToolOffsetCurve::ReadOwnParams(const occ::handle<IGESGeom_OffsetCu
       {
       }
     }
-  } // szv#4:S4163:12Mar99 `st=` not needed
-  // st = PR.ReadEntity(IR, PR.Current(), "Curve to be offset", aBaseCurve);
+  }
 
-  // Reading the offset distance flag
   if (!PR.ReadInteger(PR.Current(), anOffsetType))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg111("XSTEP_111");
     PR.SendFail(Msg111);
   }
-  // st = PR.ReadInteger(PR.Current(), "Offset Distance Flag", anOffsetType);
 
-  // Reading the curve entity describing the offset as a function, can be Null
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, aFunction, true))
   {
     Message_Msg Msg112("XSTEP_112");
@@ -102,83 +88,59 @@ void IGESGeom_ToolOffsetCurve::ReadOwnParams(const occ::handle<IGESGeom_OffsetCu
       {
       }
     }
-  } // szv#4:S4163:12Mar99 `st=` not needed
-  /*
-    st = PR.ReadEntity(IR, PR.Current(), "Curve whose coordinate describes the offset", aFunction,
-    true);
-  */
+  }
 
-  // Reading the coordinate describing the offset as a function
   if (!PR.ReadInteger(PR.Current(), aFunctionCoord))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg113("XSTEP_113");
     PR.SendFail(Msg113);
   }
-  // st = PR.ReadInteger(PR.Current(), "Coordinate of the curve", aFunctionCoord);
 
-  // Reading the tapered offset type flag
   if (!PR.ReadInteger(PR.Current(), aTaperedOffsetType))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg114("XSTEP_114");
     PR.SendFail(Msg114);
   }
-  // st = PR.ReadInteger(PR.Current(), "Tapered offset type flag", aTaperedOffsetType);
 
-  // Reading the first offset distance
   if (!PR.ReadReal(PR.Current(), offDistance1))
   {
     Message_Msg Msg115("XSTEP_115");
     PR.SendFail(Msg115);
-  } // szv#4:S4163:12Mar99 `st=` not needed
-  // st = PR.ReadReal(PR.Current(), "First Offset distance", offDistance1);
+  }
 
-  // Reading the arc length or parameter value of the first offset distance
   if (!PR.ReadReal(PR.Current(), arcLength1))
   {
     Message_Msg Msg116("XSTEP_116");
     PR.SendFail(Msg116);
-  } // szv#4:S4163:12Mar99 `st=` not needed
-  // st = PR.ReadReal(PR.Current(), "Arc length of first offset distance", arcLength1);
+  }
 
-  // Reading the second offset distance
   if (!PR.ReadReal(PR.Current(), offDistance2))
   {
     Message_Msg Msg117("XSTEP_117");
     PR.SendFail(Msg117);
-  } // szv#4:S4163:12Mar99 `st=` not needed
-  // st = PR.ReadReal(PR.Current(), "Second Offset distance", offDistance2);
+  }
 
-  // Reading the arc length or parameter value of the second offset distance
   if (!PR.ReadReal(PR.Current(), arcLength2))
   {
     Message_Msg Msg118("XSTEP_118");
     PR.SendFail(Msg118);
-  } // szv#4:S4163:12Mar99 `st=` not needed
-  // st = PR.ReadReal(PR.Current(), "Arc length of Second offset distance", arcLength2);
+  }
 
-  // Reading the Unit vector normal to plane
-  PR.ReadXYZ(PR.CurrentList(1, 3), Msg121, aNormalVec); // szv#4:S4163:12Mar99 `st=` not needed
-  // st = PR.ReadXYZ (PR.CurrentList(1, 3), "Unit vector normal to plane", aNormalVec);
+  PR.ReadXYZ(PR.CurrentList(1, 3), Msg121, aNormalVec);
 
-  // Reading the offset curve starting parameter value
   if (!PR.ReadReal(PR.Current(), anOffsetParam))
   {
     Message_Msg Msg119("XSTEP_119");
     PR.SendFail(Msg119);
-  } // szv#4:S4163:12Mar99 `st=` not needed
-  // st = PR.ReadReal(PR.Current(), "Starting parameter value of Offset curve", anOffsetParam);
+  }
 
-  // Reading the offset curve ending parameter value
   if (!PR.ReadReal(PR.Current(), anotherOffsetParam))
   {
     Message_Msg Msg120("XSTEP_120");
     PR.SendFail(Msg120);
-  } // szv#4:S4163:12Mar99 `st=` not needed
-  // st = PR.ReadReal(PR.Current(), "Ending parameter value of Offset curve", anotherOffsetParam);
+  }
 
-  // Reading the Unit vector normal to plane
-  PR.ReadXYZ(PR.CurrentList(1, 3), Msg121, aNormalVec); // szv#4:S4163:12Mar99 `st=` not needed
-  // st = PR.ReadXYZ (PR.CurrentList(1, 3), "Unit vector normal to plane", aNormalVec);
+  PR.ReadXYZ(PR.CurrentList(1, 3), Msg121, aNormalVec);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(aBaseCurve,
@@ -194,8 +156,6 @@ void IGESGeom_ToolOffsetCurve::ReadOwnParams(const occ::handle<IGESGeom_OffsetCu
             anOffsetParam,
             anotherOffsetParam);
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolOffsetCurve::WriteOwnParams(const occ::handle<IGESGeom_OffsetCurve>& ent,
                                               IGESData_IGESWriter&                     IW) const
@@ -218,16 +178,12 @@ void IGESGeom_ToolOffsetCurve::WriteOwnParams(const occ::handle<IGESGeom_OffsetC
   IW.Send(ent->EndParameter());
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolOffsetCurve::OwnShared(const occ::handle<IGESGeom_OffsetCurve>& ent,
                                          Interface_EntityIterator&                iter) const
 {
   iter.GetOneItem(ent->BaseCurve());
   iter.GetOneItem(ent->Function());
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolOffsetCurve::OwnCopy(const occ::handle<IGESGeom_OffsetCurve>& another,
                                        const occ::handle<IGESGeom_OffsetCurve>& ent,
@@ -264,8 +220,6 @@ void IGESGeom_ToolOffsetCurve::OwnCopy(const occ::handle<IGESGeom_OffsetCurve>& 
             anOffsetParam2);
 }
 
-//=================================================================================================
-
 bool IGESGeom_ToolOffsetCurve::OwnCorrect(const occ::handle<IGESGeom_OffsetCurve>& ent) const
 {
   if (ent->OffsetType() == 3)
@@ -273,12 +227,12 @@ bool IGESGeom_ToolOffsetCurve::OwnCorrect(const occ::handle<IGESGeom_OffsetCurve
   occ::handle<IGESData_IGESEntity> func = ent->Function();
   if (func.IsNull())
     return false;
-  //  OffsetType != 3 : reconstruct with Null Offset Function
+
   func.Nullify();
   ent->Init(ent->BaseCurve(),
             ent->OffsetType(),
             func,
-            0, // func+coord Nuls
+            0,
             ent->TaperedOffsetType(),
             ent->FirstOffsetDistance(),
             ent->ArcLength1(),
@@ -290,32 +244,22 @@ bool IGESGeom_ToolOffsetCurve::OwnCorrect(const occ::handle<IGESGeom_OffsetCurve
   return true;
 }
 
-//=================================================================================================
-
 IGESData_DirChecker IGESGeom_ToolOffsetCurve::DirChecker(
-  const occ::handle<IGESGeom_OffsetCurve>& /* ent */) const
+  const occ::handle<IGESGeom_OffsetCurve>&) const
 {
   IGESData_DirChecker DC(130, 0);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolOffsetCurve::OwnCheck(const occ::handle<IGESGeom_OffsetCurve>& ent,
                                         const Interface_ShareTool&,
                                         occ::handle<Interface_Check>& ach) const
 {
-  // MGE 30/07/98
-  // Building of messages
-  //========================================
-  // Message_Msg Msg111("XSTEP_111");
-  // Message_Msg Msg114("XSTEP_114");
-  //========================================
 
   int ot = ent->OffsetType();
   if (ot < 1 || ot > 3)
@@ -323,20 +267,13 @@ void IGESGeom_ToolOffsetCurve::OwnCheck(const occ::handle<IGESGeom_OffsetCurve>&
     Message_Msg Msg111("XSTEP_111");
     ach->SendFail(Msg111);
   }
-  /*  if (ot == 3)  if (ent->Function().IsNull())
-      ach.SendFail("Offset Function Not Defined while Offset Type = 3");
-    if (ot == 3 && (ent->FunctionParameter() < 1 || ent->FunctionParameter() > 3))
-      ach.SendFail("Offset Function Parameter != 1-2 or 3 (rq : for X-Y or Z)");
-  */
-  if (ot != 1 && //: l9 abv 15.01.99: CTS22023 and TEC0278: only if ot is function
-      ((ent->TaperedOffsetType() < 1) || (ent->TaperedOffsetType() > 2)))
+
+  if (ot != 1 && ((ent->TaperedOffsetType() < 1) || (ent->TaperedOffsetType() > 2)))
   {
     Message_Msg Msg114("XSTEP_114");
     ach->SendFail(Msg114);
   }
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolOffsetCurve::OwnDump(const occ::handle<IGESGeom_OffsetCurve>& ent,
                                        const IGESData_IGESDumper&               dumper,

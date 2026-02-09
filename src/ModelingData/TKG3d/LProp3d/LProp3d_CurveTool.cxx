@@ -3,14 +3,10 @@
 #include <gp_Vec.hpp>
 #include <LProp3d_CurveTool.hpp>
 
-//=================================================================================================
-
 void LProp3d_CurveTool::Value(const occ::handle<Adaptor3d_Curve>& C, const double U, gp_Pnt& P)
 {
   P = C->Value(U);
 }
-
-//=================================================================================================
 
 void LProp3d_CurveTool::D1(const occ::handle<Adaptor3d_Curve>& C,
                            const double                        U,
@@ -19,8 +15,6 @@ void LProp3d_CurveTool::D1(const occ::handle<Adaptor3d_Curve>& C,
 {
   C->D1(U, P, V1);
 }
-
-//=================================================================================================
 
 void LProp3d_CurveTool::D2(const occ::handle<Adaptor3d_Curve>& C,
                            const double                        U,
@@ -31,8 +25,6 @@ void LProp3d_CurveTool::D2(const occ::handle<Adaptor3d_Curve>& C,
   C->D2(U, P, V1, V2);
 }
 
-//=================================================================================================
-
 void LProp3d_CurveTool::D3(const occ::handle<Adaptor3d_Curve>& C,
                            const double                        U,
                            gp_Pnt&                             P,
@@ -42,8 +34,6 @@ void LProp3d_CurveTool::D3(const occ::handle<Adaptor3d_Curve>& C,
 {
   C->D3(U, P, V1, V2, V3);
 }
-
-//=================================================================================================
 
 int LProp3d_CurveTool::Continuity(const occ::handle<Adaptor3d_Curve>& C)
 {
@@ -68,14 +58,10 @@ int LProp3d_CurveTool::Continuity(const occ::handle<Adaptor3d_Curve>& C)
   return 0;
 }
 
-//=================================================================================================
-
 double LProp3d_CurveTool::FirstParameter(const occ::handle<Adaptor3d_Curve>& C)
 {
   return C->FirstParameter();
 }
-
-//=================================================================================================
 
 double LProp3d_CurveTool::LastParameter(const occ::handle<Adaptor3d_Curve>& C)
 {

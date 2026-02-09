@@ -1,8 +1,6 @@
 #include <Geom_BSplineCurve.hpp>
 #include <GeomFill_SectionGenerator.hpp>
 
-//=================================================================================================
-
 GeomFill_SectionGenerator::GeomFill_SectionGenerator()
 {
   if (mySequence.Length() > 1)
@@ -17,8 +15,6 @@ GeomFill_SectionGenerator::GeomFill_SectionGenerator()
   }
 }
 
-//=================================================================================================
-
 void GeomFill_SectionGenerator::SetParam(const occ::handle<NCollection_HArray1<double>>& Params)
 {
   int ii, L = Params->Upper() - Params->Lower() + 1;
@@ -28,8 +24,6 @@ void GeomFill_SectionGenerator::SetParam(const occ::handle<NCollection_HArray1<d
     myParams->SetValue(ii, Params->Value(Params->Lower() + ii - 1));
   }
 }
-
-//=================================================================================================
 
 void GeomFill_SectionGenerator::GetShape(int& NbPoles,
                                          int& NbKnots,
@@ -43,40 +37,31 @@ void GeomFill_SectionGenerator::GetShape(int& NbPoles,
   NbPoles2d                        = 0;
 }
 
-//=================================================================================================
-
 void GeomFill_SectionGenerator::Knots(NCollection_Array1<double>& TKnots) const
 {
   (occ::down_cast<Geom_BSplineCurve>(mySequence(1)))->Knots(TKnots);
 }
-
-//=================================================================================================
 
 void GeomFill_SectionGenerator::Mults(NCollection_Array1<int>& TMults) const
 {
   (occ::down_cast<Geom_BSplineCurve>(mySequence(1)))->Multiplicities(TMults);
 }
 
-//=================================================================================================
-
 bool GeomFill_SectionGenerator::Section(const int                   P,
                                         NCollection_Array1<gp_Pnt>& Poles,
-                                        NCollection_Array1<gp_Vec>&, // DPoles,
+                                        NCollection_Array1<gp_Vec>&,
                                         NCollection_Array1<gp_Pnt2d>& Poles2d,
-                                        NCollection_Array1<gp_Vec2d>&, // DPoles2d,
+                                        NCollection_Array1<gp_Vec2d>&,
                                         NCollection_Array1<double>& Weigths,
-                                        NCollection_Array1<double>& // DWeigths
-) const
+                                        NCollection_Array1<double>&) const
 {
   Section(P, Poles, Poles2d, Weigths);
   return false;
 }
 
-//=================================================================================================
-
 void GeomFill_SectionGenerator::Section(const int                   P,
                                         NCollection_Array1<gp_Pnt>& Poles,
-                                        NCollection_Array1<gp_Pnt2d>&, // Poles2d,
+                                        NCollection_Array1<gp_Pnt2d>&,
                                         NCollection_Array1<double>& Weigths) const
 {
   occ::handle<Geom_BSplineCurve> C = occ::down_cast<Geom_BSplineCurve>(mySequence(P));
@@ -84,8 +69,6 @@ void GeomFill_SectionGenerator::Section(const int                   P,
   C->Poles(Poles);
   C->Weights(Weigths);
 }
-
-//=================================================================================================
 
 double GeomFill_SectionGenerator::Parameter(const int P) const
 {

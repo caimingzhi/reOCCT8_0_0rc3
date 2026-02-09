@@ -1,4 +1,4 @@
-// Created on : Thu Mar 24 18:30:12 2022
+
 
 #include "RWStepVisual_RWTessellatedShell.hpp"
 #include <StepVisual_TessellatedShell.hpp>
@@ -10,11 +10,7 @@
 #include <NCollection_HArray1.hpp>
 #include <StepShape_ConnectedFaceSet.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWTessellatedShell::RWStepVisual_RWTessellatedShell() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWTessellatedShell::ReadStep(
   const occ::handle<StepData_StepReaderData>&     theData,
@@ -22,18 +18,14 @@ void RWStepVisual_RWTessellatedShell::ReadStep(
   occ::handle<Interface_Check>&                   theCheck,
   const occ::handle<StepVisual_TessellatedShell>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 3, theCheck, "tessellated_shell"))
   {
     return;
   }
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theCheck, aRepresentationItem_Name);
-
-  // Own fields of TessellatedShell
 
   occ::handle<NCollection_HArray1<occ::handle<StepVisual_TessellatedStructuredItem>>> aItems;
   int                                                                                 sub2 = 0;
@@ -72,22 +64,15 @@ void RWStepVisual_RWTessellatedShell::ReadStep(
     aTopologicalLink.Nullify();
   }
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name, aItems, hasTopologicalLink, aTopologicalLink);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWTessellatedShell::WriteStep(
   StepData_StepWriter&                            theSW,
   const occ::handle<StepVisual_TessellatedShell>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Own fields of TessellatedShell
 
   theSW.OpenSub();
   for (int i1 = 1; i1 <= theEnt->Items()->Length(); i1++)
@@ -107,15 +92,9 @@ void RWStepVisual_RWTessellatedShell::WriteStep(
   }
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWTessellatedShell::Share(const occ::handle<StepVisual_TessellatedShell>& theEnt,
                                             Interface_EntityIterator& theIter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Own fields of TessellatedShell
 
   for (int i1 = 1; i1 <= theEnt->Items()->Length(); i1++)
   {

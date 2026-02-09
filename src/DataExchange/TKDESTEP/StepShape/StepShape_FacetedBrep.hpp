@@ -9,7 +9,6 @@ class StepShape_FacetedBrep : public StepShape_ManifoldSolidBrep
 {
 
 public:
-  //! Returns a FacetedBrep
   Standard_EXPORT StepShape_FacetedBrep();
 
   DEFINE_STANDARD_RTTIEXT(StepShape_FacetedBrep, StepShape_ManifoldSolidBrep)

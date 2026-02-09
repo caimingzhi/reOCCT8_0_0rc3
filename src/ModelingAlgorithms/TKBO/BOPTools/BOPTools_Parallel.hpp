@@ -7,20 +7,17 @@
 
 #include <mutex>
 
-//! Implementation of Functors/Starters
 class BOPTools_Parallel
 {
   template <class TypeSolverVector>
   class Functor
   {
   public:
-    //! Constructor.
     explicit Functor(TypeSolverVector& theSolverVec)
         : mySolvers(theSolverVec)
     {
     }
 
-    //! Defines functor interface.
     void operator()(const int theIndex) const
     {
       typename TypeSolverVector::value_type& aSolver = mySolvers[theIndex];
@@ -35,24 +32,20 @@ class BOPTools_Parallel
     TypeSolverVector& mySolvers;
   };
 
-  //! Functor storing map of thread id -> algorithm context
   template <class TypeSolverVector, class TypeContext>
   class ContextFunctor
   {
   public:
-    //! Constructor
     explicit ContextFunctor(TypeSolverVector& theVector)
         : mySolverVector(theVector)
     {
     }
 
-    //! Binds main thread context
     void SetContext(const opencascade::handle<TypeContext>& theContext)
     {
       myContextMap.Bind(OSD_Thread::Current(), theContext);
     }
 
-    //! Returns current thread context
     const opencascade::handle<TypeContext>& GetThreadContext() const
     {
       const Standard_ThreadId aThreadID = OSD_Thread::Current();
@@ -64,7 +57,6 @@ class BOPTools_Parallel
         }
       }
 
-      // Create new context
       opencascade::handle<TypeContext> aContext =
         new TypeContext(NCollection_BaseAllocator::CommonBaseAllocator());
 
@@ -73,7 +65,6 @@ class BOPTools_Parallel
       return myContextMap(aThreadID);
     }
 
-    //! Defines functor interface
     void operator()(const int theIndex) const
     {
       const opencascade::handle<TypeContext>& aContext = GetThreadContext();
@@ -93,12 +84,10 @@ class BOPTools_Parallel
     mutable std::mutex                                                               myMutex;
   };
 
-  //! Functor storing array of algorithm contexts per thread in pool
   template <class TypeSolverVector, class TypeContext>
   class ContextFunctor2
   {
   public:
-    //! Constructor
     explicit ContextFunctor2(TypeSolverVector&               theVector,
                              const OSD_ThreadPool::Launcher& thePoolLauncher)
         : mySolverVector(theVector),
@@ -106,15 +95,12 @@ class BOPTools_Parallel
     {
     }
 
-    //! Binds main thread context
     void SetContext(const opencascade::handle<TypeContext>& theContext)
     {
-      // clang-format off
-      myContextArray.ChangeLast() = theContext; // OSD_ThreadPool::Launcher::UpperThreadIndex() is reserved for a main thread
-      // clang-format on
+
+      myContextArray.ChangeLast() = theContext;
     }
 
-    //! Defines functor interface with serialized thread index.
     void operator()(int theThreadIndex, int theIndex) const
     {
       opencascade::handle<TypeContext>& aContext = myContextArray.ChangeValue(theThreadIndex);
@@ -137,7 +123,6 @@ class BOPTools_Parallel
   };
 
 public:
-  //! Pure version
   template <class TypeSolverVector>
   static void Perform(bool theIsRunParallel, TypeSolverVector& theSolverVector)
   {
@@ -145,7 +130,6 @@ public:
     OSD_Parallel::For(0, theSolverVector.Length(), aFunctor, !theIsRunParallel);
   }
 
-  //! Context dependent version
   template <class TypeSolverVector, class TypeContext>
   static void Perform(bool                              theIsRunParallel,
                       TypeSolverVector&                 theSolverVector,

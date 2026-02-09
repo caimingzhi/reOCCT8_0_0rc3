@@ -13,15 +13,11 @@
 #include <NCollection_Array1.hpp>
 #include <Standard_Integer.hpp>
 
-//=======================================================================
-// function : OnSurface_Value
-// purpose  : Evaluate current point of the projected curve
-//=======================================================================
 static gp_Pnt OnSurface_Value(const double                        U,
                               const occ::handle<Adaptor3d_Curve>& myCurve,
                               Extrema_ExtPS*                      myExtPS)
 {
-  // Try to find the closest solution point.
+
   myExtPS->Perform(myCurve->Value(U));
 
   double Dist2Min = RealLast();
@@ -46,21 +42,14 @@ static gp_Pnt OnSurface_Value(const double                        U,
   }
 }
 
-//=================================================================================================
-
-static bool OnSurface_D1(const double,                        // U,
-                         gp_Pnt&,                             // P,
-                         gp_Vec&,                             // V,
-                         const occ::handle<Adaptor3d_Curve>&, //  myCurve,
-                         Extrema_ExtPS*)                      // myExtPS)
+static bool OnSurface_D1(const double,
+                         gp_Pnt&,
+                         gp_Vec&,
+                         const occ::handle<Adaptor3d_Curve>&,
+                         Extrema_ExtPS*)
 {
   return false;
 }
-
-//=======================================================================
-//  class  : ProjLib_OnSurface
-// purpose  : Use to approximate the projection on a plane
-//=======================================================================
 
 class ProjLib_OnSurface : public AppCont_Function
 
@@ -84,7 +73,7 @@ public:
   double LastParameter() const override { return myCurve->LastParameter(); }
 
   bool Value(const double theT,
-             NCollection_Array1<gp_Pnt2d>& /*thePnt2d*/,
+             NCollection_Array1<gp_Pnt2d>&,
              NCollection_Array1<gp_Pnt>& thePnt) const override
   {
     thePnt(1) = OnSurface_Value(theT, myCurve, myExtPS);
@@ -92,7 +81,7 @@ public:
   }
 
   bool D1(const double theT,
-          NCollection_Array1<gp_Vec2d>& /*theVec2d*/,
+          NCollection_Array1<gp_Vec2d>&,
           NCollection_Array1<gp_Vec>& theVec) const override
   {
     gp_Pnt aPnt;
@@ -108,23 +97,11 @@ private:
   Extrema_ExtPS*               myExtPS;
 };
 
-//=====================================================================//
-//                                                                     //
-//  D E S C R I P T I O N   O F   T H E   C L A S S  :                 //
-//                                                                     //
-//         P r o j L i b _ A p p r o x P r o j e c t O n P l a n e     //
-//                                                                     //
-//=====================================================================//
-
-//=================================================================================================
-
 ProjLib_ProjectOnSurface::ProjLib_ProjectOnSurface()
     : myTolerance(0.0),
       myIsDone(false)
 {
 }
-
-//=================================================================================================
 
 ProjLib_ProjectOnSurface::ProjLib_ProjectOnSurface(const occ::handle<Adaptor3d_Surface>& S)
     : myTolerance(0.0),
@@ -133,15 +110,11 @@ ProjLib_ProjectOnSurface::ProjLib_ProjectOnSurface(const occ::handle<Adaptor3d_S
   mySurface = S;
 }
 
-//=================================================================================================
-
 void ProjLib_ProjectOnSurface::Load(const occ::handle<Adaptor3d_Surface>& S)
 {
   mySurface = S;
   myIsDone  = false;
 }
-
-//=================================================================================================
 
 void ProjLib_ProjectOnSurface::Load(const occ::handle<Adaptor3d_Curve>& C, const double Tolerance)
 {
@@ -167,31 +140,28 @@ void ProjLib_ProjectOnSurface::Load(const occ::handle<Adaptor3d_Curve>& C, const
     int                 NbCurves = Fit.NbMultiCurves();
     int                 MaxDeg   = 0;
 
-    // To convert the MultiCurve to BSpline, all constituent Bezier curves
-    // must have the same degree -> Calculate MaxDeg
     int NbPoles = 1;
     for (i = 1; i <= NbCurves; i++)
     {
       int Deg = Fit.Value(i).Degree();
       MaxDeg  = std::max(MaxDeg, Deg);
     }
-    NbPoles = MaxDeg * NbCurves + 1; // Poles on the BSpline
+    NbPoles = MaxDeg * NbCurves + 1;
     NCollection_Array1<gp_Pnt> Poles(1, NbPoles);
 
-    NCollection_Array1<gp_Pnt> TempPoles(1, MaxDeg + 1); // for degree elevation
+    NCollection_Array1<gp_Pnt> TempPoles(1, MaxDeg + 1);
 
-    NCollection_Array1<double> Knots(1, NbCurves + 1); // Knots of the BSpline
+    NCollection_Array1<double> Knots(1, NbCurves + 1);
 
     int Compt = 1;
     for (i = 1; i <= Fit.NbMultiCurves(); i++)
     {
       Fit.Parameters(i, Knots(i), Knots(i + 1));
 
-      AppParCurves_MultiCurve    MC = Fit.Value(i);              // Load the i-th Curve
-      NCollection_Array1<gp_Pnt> LocalPoles(1, MC.Degree() + 1); // Get the poles
+      AppParCurves_MultiCurve    MC = Fit.Value(i);
+      NCollection_Array1<gp_Pnt> LocalPoles(1, MC.Degree() + 1);
       MC.Curve(1, Poles);
 
-      // Possible degree elevation
       int Inc = MaxDeg - MC.Degree();
       if (Inc > 0)
       {
@@ -200,7 +170,7 @@ void ProjLib_ProjectOnSurface::Load(const occ::handle<Adaptor3d_Curve>& C, const
                                  BSplCLib::NoWeights(),
                                  TempPoles,
                                  BSplCLib::NoWeights());
-        // update the poles of the PCurve
+
         for (int j = 1; j <= MaxDeg + 1; j++)
         {
           Poles.SetValue(Compt, TempPoles(j));
@@ -209,7 +179,7 @@ void ProjLib_ProjectOnSurface::Load(const occ::handle<Adaptor3d_Curve>& C, const
       }
       else
       {
-        // update the poles of the PCurve
+
         for (int j = 1; j <= MaxDeg + 1; j++)
         {
           Poles.SetValue(Compt, LocalPoles(j));
@@ -219,8 +189,6 @@ void ProjLib_ProjectOnSurface::Load(const occ::handle<Adaptor3d_Curve>& C, const
 
       Compt--;
     }
-
-    // update the fields of ProjLib_Approx
 
     int NbKnots = NbCurves + 1;
 
@@ -236,11 +204,7 @@ void ProjLib_ProjectOnSurface::Load(const occ::handle<Adaptor3d_Curve>& C, const
   }
 }
 
-//=================================================================================================
-
 ProjLib_ProjectOnSurface::~ProjLib_ProjectOnSurface() = default;
-
-//=================================================================================================
 
 occ::handle<Geom_BSplineCurve> ProjLib_ProjectOnSurface::BSpline() const
 {

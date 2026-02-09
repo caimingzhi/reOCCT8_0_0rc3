@@ -3,11 +3,7 @@
 #include <StepDimTol_DatumReferenceModifierWithValue.hpp>
 #include <StepDimTol_SimpleDatumReferenceModifierMember.hpp>
 
-//=================================================================================================
-
 StepDimTol_DatumReferenceModifier::StepDimTol_DatumReferenceModifier() = default;
-
-//=================================================================================================
 
 int StepDimTol_DatumReferenceModifier::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {

@@ -7,18 +7,12 @@
 class TDF_Label;
 class AIS_InteractiveObject;
 
-//! An implementation of TPrsStd_Driver for planes.
 class TPrsStd_PlaneDriver : public TPrsStd_Driver
 {
 
 public:
-  //! Constructs an empty plane driver.
   Standard_EXPORT TPrsStd_PlaneDriver();
 
-  //! Build the AISObject (if null) or update it.
-  //! No compute is done.
-  //! Returns <True> if information was found
-  //! and AISObject updated.
   Standard_EXPORT bool Update(const TDF_Label&                    aLabel,
                               occ::handle<AIS_InteractiveObject>& anAISObject) override;
 

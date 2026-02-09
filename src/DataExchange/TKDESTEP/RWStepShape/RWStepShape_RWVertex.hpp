@@ -10,7 +10,6 @@ class Interface_Check;
 class StepShape_Vertex;
 class StepData_StepWriter;
 
-//! Read & Write Module for Vertex
 class RWStepShape_RWVertex
 {
 public:

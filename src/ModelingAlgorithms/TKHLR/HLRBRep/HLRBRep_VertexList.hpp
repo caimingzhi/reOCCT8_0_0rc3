@@ -20,35 +20,22 @@ public:
   Standard_EXPORT HLRBRep_VertexList(const HLRBRep_EdgeInterferenceTool&                     T,
                                      const NCollection_List<HLRAlgo_Interference>::Iterator& I);
 
-  //! Returns True when the curve is periodic.
   Standard_EXPORT bool IsPeriodic() const;
 
-  //! Returns True when there are more vertices.
   Standard_EXPORT bool More() const;
 
-  //! Proceeds to the next vertex.
   Standard_EXPORT void Next();
 
-  //! Returns the current vertex
   Standard_EXPORT const HLRAlgo_Intersection& Current() const;
 
-  //! Returns True if the current vertex is on the boundary of the edge.
   Standard_EXPORT bool IsBoundary() const;
 
-  //! Returns True if the current vertex is an
-  //! interference.
   Standard_EXPORT bool IsInterference() const;
 
-  //! Returns the orientation of the current vertex if
-  //! it is on the boundary of the edge.
   Standard_EXPORT TopAbs_Orientation Orientation() const;
 
-  //! Returns the transition of the current vertex if
-  //! it is an interference.
   Standard_EXPORT TopAbs_Orientation Transition() const;
 
-  //! Returns the transition of the current vertex
-  //! relative to the boundary if it is an interference.
   Standard_EXPORT TopAbs_Orientation BoundaryTransition() const;
 
 private:

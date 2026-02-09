@@ -30,8 +30,6 @@ typedef gp_Trsf                    Trsf;
 typedef gp_Vec                     Vec;
 typedef gp_XYZ                     XYZ;
 
-//=================================================================================================
-
 occ::handle<Geom_Geometry> Geom_ToroidalSurface::Copy() const
 {
 
@@ -39,8 +37,6 @@ occ::handle<Geom_Geometry> Geom_ToroidalSurface::Copy() const
   Cs = new ToroidalSurface(pos, majorRadius, minorRadius);
   return Cs;
 }
-
-//=================================================================================================
 
 Geom_ToroidalSurface::Geom_ToroidalSurface(const Ax3&   A3,
                                            const double MajorRadius,
@@ -60,8 +56,6 @@ Geom_ToroidalSurface::Geom_ToroidalSurface(const Ax3&   A3,
   }
 }
 
-//=================================================================================================
-
 Geom_ToroidalSurface::Geom_ToroidalSurface(const gp_Torus& T)
     : majorRadius(T.MajorRadius()),
       minorRadius(T.MinorRadius())
@@ -70,15 +64,11 @@ Geom_ToroidalSurface::Geom_ToroidalSurface(const gp_Torus& T)
   pos = T.Position();
 }
 
-//=================================================================================================
-
 double Geom_ToroidalSurface::MajorRadius() const
 {
 
   return majorRadius;
 }
-
-//=================================================================================================
 
 double Geom_ToroidalSurface::MinorRadius() const
 {
@@ -86,15 +76,11 @@ double Geom_ToroidalSurface::MinorRadius() const
   return minorRadius;
 }
 
-//=================================================================================================
-
 double Geom_ToroidalSurface::UReversedParameter(const double U) const
 {
 
   return (2. * M_PI - U);
 }
-
-//=================================================================================================
 
 double Geom_ToroidalSurface::VReversedParameter(const double V) const
 {
@@ -102,15 +88,11 @@ double Geom_ToroidalSurface::VReversedParameter(const double V) const
   return (2. * M_PI - V);
 }
 
-//=================================================================================================
-
 bool Geom_ToroidalSurface::IsUClosed() const
 {
 
   return true;
 }
-
-//=================================================================================================
 
 bool Geom_ToroidalSurface::IsVClosed() const
 {
@@ -118,23 +100,17 @@ bool Geom_ToroidalSurface::IsVClosed() const
   return true;
 }
 
-//=================================================================================================
-
 bool Geom_ToroidalSurface::IsUPeriodic() const
 {
 
   return true;
 }
 
-//=================================================================================================
-
 bool Geom_ToroidalSurface::IsVPeriodic() const
 {
 
   return true;
 }
-
-//=================================================================================================
 
 void Geom_ToroidalSurface::SetMajorRadius(const double MajorRadius)
 {
@@ -145,8 +121,6 @@ void Geom_ToroidalSurface::SetMajorRadius(const double MajorRadius)
     majorRadius = MajorRadius;
 }
 
-//=================================================================================================
-
 void Geom_ToroidalSurface::SetMinorRadius(const double MinorRadius)
 {
 
@@ -156,8 +130,6 @@ void Geom_ToroidalSurface::SetMinorRadius(const double MinorRadius)
     minorRadius = MinorRadius;
 }
 
-//=================================================================================================
-
 void Geom_ToroidalSurface::SetTorus(const gp_Torus& T)
 {
 
@@ -166,14 +138,10 @@ void Geom_ToroidalSurface::SetTorus(const gp_Torus& T)
   pos         = T.Position();
 }
 
-//=================================================================================================
-
 double Geom_ToroidalSurface::Area() const
 {
   return 4.0 * M_PI * M_PI * minorRadius * majorRadius;
 }
-
-//=================================================================================================
 
 void Geom_ToroidalSurface::Bounds(double& U1, double& U2, double& V1, double& V2) const
 {
@@ -184,8 +152,6 @@ void Geom_ToroidalSurface::Bounds(double& U1, double& U2, double& V1, double& V2
   V2 = 2 * M_PI;
 }
 
-//=================================================================================================
-
 void Geom_ToroidalSurface::Coefficients(Array1OfReal& Coef) const
 {
 
@@ -193,22 +159,16 @@ void Geom_ToroidalSurface::Coefficients(Array1OfReal& Coef) const
   Tor.Coefficients(Coef);
 }
 
-//=================================================================================================
-
 void Geom_ToroidalSurface::D0(const double U, const double V, Pnt& P) const
 {
 
   ElSLib::TorusD0(U, V, pos, majorRadius, minorRadius, P);
 }
 
-//=================================================================================================
-
 void Geom_ToroidalSurface::D1(const double U, const double V, Pnt& P, Vec& D1U, Vec& D1V) const
 {
   ElSLib::TorusD1(U, V, pos, majorRadius, minorRadius, P, D1U, D1V);
 }
-
-//=================================================================================================
 
 void Geom_ToroidalSurface::D2(const double U,
                               const double V,
@@ -221,8 +181,6 @@ void Geom_ToroidalSurface::D2(const double U,
 {
   ElSLib::TorusD2(U, V, pos, majorRadius, minorRadius, P, D1U, D1V, D2U, D2V, D2UV);
 }
-
-//=================================================================================================
 
 void Geom_ToroidalSurface::D3(const double U,
                               const double V,
@@ -255,8 +213,6 @@ void Geom_ToroidalSurface::D3(const double U,
                   D3UVV);
 }
 
-//=================================================================================================
-
 Vec Geom_ToroidalSurface::DN(const double U, const double V, const int Nu, const int Nv) const
 {
 
@@ -264,15 +220,11 @@ Vec Geom_ToroidalSurface::DN(const double U, const double V, const int Nu, const
   return ElSLib::TorusDN(U, V, pos, majorRadius, minorRadius, Nu, Nv);
 }
 
-//=================================================================================================
-
 gp_Torus Geom_ToroidalSurface::Torus() const
 {
 
   return gp_Torus(pos, majorRadius, minorRadius);
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> Geom_ToroidalSurface::UIso(const double U) const
 {
@@ -281,8 +233,6 @@ occ::handle<Geom_Curve> Geom_ToroidalSurface::UIso(const double U) const
   return GC;
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> Geom_ToroidalSurface::VIso(const double V) const
 {
   occ::handle<Geom_Circle> GC =
@@ -290,15 +240,11 @@ occ::handle<Geom_Curve> Geom_ToroidalSurface::VIso(const double V) const
   return GC;
 }
 
-//=================================================================================================
-
 double Geom_ToroidalSurface::Volume() const
 {
 
   return (M_PI * minorRadius * minorRadius) * (2.0 * M_PI * majorRadius);
 }
-
-//=================================================================================================
 
 void Geom_ToroidalSurface::Transform(const Trsf& T)
 {
@@ -307,8 +253,6 @@ void Geom_ToroidalSurface::Transform(const Trsf& T)
   minorRadius = minorRadius * std::abs(T.ScaleFactor());
   pos.Transform(T);
 }
-
-//=================================================================================================
 
 void Geom_ToroidalSurface::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

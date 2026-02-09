@@ -13,7 +13,7 @@ IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_MeshTool, Standard_Transient)
 
 namespace
 {
-  //! Returns index of triangle node opposite to the given link.
+
   int findApexIndex(const int (&aNodes)[3], const BRepMesh_Edge& theLink)
   {
     int i = 0;
@@ -29,19 +29,13 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 BRepMesh_MeshTool::BRepMesh_MeshTool(
   const occ::handle<BRepMesh_DataStructureOfDelaun>& theStructure)
     : myStructure(theStructure)
 {
 }
 
-//=================================================================================================
-
 BRepMesh_MeshTool::~BRepMesh_MeshTool() = default;
-
-//=================================================================================================
 
 void BRepMesh_MeshTool::Legalize(const int theLinkIndex)
 {
@@ -95,8 +89,6 @@ void BRepMesh_MeshTool::Legalize(const int theLinkIndex)
   }
 }
 
-//=================================================================================================
-
 void BRepMesh_MeshTool::EraseItemsConnectedTo(const int theNodeIndex)
 {
   BRepMesh_SelectorOfDataStructureOfDelaun aSelector(myStructure);
@@ -107,8 +99,6 @@ void BRepMesh_MeshTool::EraseItemsConnectedTo(const int theNodeIndex)
   EraseFreeLinks(aLoopEdges);
   myStructure->RemoveNode(theNodeIndex);
 }
-
-//=================================================================================================
 
 void BRepMesh_MeshTool::CleanFrontierLinks()
 {
@@ -136,7 +126,7 @@ void BRepMesh_MeshTool::CleanFrontierLinks()
       {
         if (aFrontierId == e[n] && !o[n])
         {
-          // Destruction of external triangles on boundary edges
+
           isTriangleFound = true;
           aTrianglesToErase.Add(aPriorElemId);
 
@@ -151,8 +141,6 @@ void BRepMesh_MeshTool::CleanFrontierLinks()
   EraseFreeLinks(aLoopEdges);
 }
 
-//=================================================================================================
-
 void BRepMesh_MeshTool::EraseTriangles(const IMeshData::MapOfInteger&  theTriangles,
                                        IMeshData::MapOfIntegerInteger& theLoopEdges)
 {
@@ -162,8 +150,6 @@ void BRepMesh_MeshTool::EraseTriangles(const IMeshData::MapOfInteger&  theTriang
     EraseTriangle(aFreeTriangles.Key(), theLoopEdges);
   }
 }
-
-//=================================================================================================
 
 void BRepMesh_MeshTool::EraseTriangle(const int                       theTriangleIndex,
                                       IMeshData::MapOfIntegerInteger& theLoopEdges)
@@ -184,8 +170,6 @@ void BRepMesh_MeshTool::EraseTriangle(const int                       theTriangl
   }
 }
 
-//=================================================================================================
-
 void BRepMesh_MeshTool::EraseFreeLinks()
 {
   for (int i = 1; i <= myStructure->NbLinks(); i++)
@@ -203,8 +187,6 @@ void BRepMesh_MeshTool::EraseFreeLinks()
     }
   }
 }
-
-//=================================================================================================
 
 void BRepMesh_MeshTool::collectTrianglesOnFreeLinksAroundNodesOf(
   const BRepMesh_Edge&     theConstraint,
@@ -250,8 +232,6 @@ void BRepMesh_MeshTool::collectTrianglesOnFreeLinksAroundNodesOf(
   }
 }
 
-//=================================================================================================
-
 void BRepMesh_MeshTool::EraseFreeLinks(const IMeshData::MapOfIntegerInteger& theLinks)
 {
   IMeshData::MapOfIntegerInteger::Iterator aFreeEdges(theLinks);
@@ -263,8 +243,6 @@ void BRepMesh_MeshTool::EraseFreeLinks(const IMeshData::MapOfIntegerInteger& the
     }
   }
 }
-
-//=================================================================================================
 
 Handle(IMeshData::MapOfInteger) BRepMesh_MeshTool::GetEdgesByType(
   const BRepMesh_DegreeOfFreedom theEdgeType) const
@@ -283,8 +261,6 @@ Handle(IMeshData::MapOfInteger) BRepMesh_MeshTool::GetEdgesByType(
 
   return aResult;
 }
-
-//=================================================================================================
 
 void BRepMesh_MeshTool::DumpTriangles(const char*              theFileName,
                                       IMeshData::MapOfInteger* theTriangles)

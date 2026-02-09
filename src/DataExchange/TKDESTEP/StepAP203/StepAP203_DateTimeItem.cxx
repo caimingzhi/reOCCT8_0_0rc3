@@ -10,11 +10,7 @@
 #include <StepBasic_ProductDefinition.hpp>
 #include <StepBasic_SecurityClassification.hpp>
 
-//=================================================================================================
-
 StepAP203_DateTimeItem::StepAP203_DateTimeItem() = default;
-
-//=================================================================================================
 
 int StepAP203_DateTimeItem::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -41,42 +37,30 @@ int StepAP203_DateTimeItem::CaseNum(const occ::handle<Standard_Transient>& ent) 
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ProductDefinition> StepAP203_DateTimeItem::ProductDefinition() const
 {
   return occ::down_cast<StepBasic_ProductDefinition>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepAP203_ChangeRequest> StepAP203_DateTimeItem::ChangeRequest() const
 {
   return occ::down_cast<StepAP203_ChangeRequest>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepAP203_StartRequest> StepAP203_DateTimeItem::StartRequest() const
 {
   return occ::down_cast<StepAP203_StartRequest>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepAP203_Change> StepAP203_DateTimeItem::Change() const
 {
   return occ::down_cast<StepAP203_Change>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepAP203_StartWork> StepAP203_DateTimeItem::StartWork() const
 {
   return occ::down_cast<StepAP203_StartWork>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_ApprovalPersonOrganization> StepAP203_DateTimeItem::
   ApprovalPersonOrganization() const
@@ -84,21 +68,15 @@ occ::handle<StepBasic_ApprovalPersonOrganization> StepAP203_DateTimeItem::
   return occ::down_cast<StepBasic_ApprovalPersonOrganization>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_Contract> StepAP203_DateTimeItem::Contract() const
 {
   return occ::down_cast<StepBasic_Contract>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_SecurityClassification> StepAP203_DateTimeItem::SecurityClassification() const
 {
   return occ::down_cast<StepBasic_SecurityClassification>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_Certification> StepAP203_DateTimeItem::Certification() const
 {

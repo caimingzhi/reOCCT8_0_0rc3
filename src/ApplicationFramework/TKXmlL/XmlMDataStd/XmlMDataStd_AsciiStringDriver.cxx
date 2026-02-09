@@ -11,22 +11,16 @@
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_AsciiStringDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(AttributeIDString, "asciiguid")
 
-//=================================================================================================
-
 XmlMDataStd_AsciiStringDriver::XmlMDataStd_AsciiStringDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataStd_AsciiStringDriver::NewEmpty() const
 {
   return (new TDataStd_AsciiString());
 }
-
-//=================================================================================================
 
 bool XmlMDataStd_AsciiStringDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                           const occ::handle<TDF_Attribute>& theTarget,
@@ -36,14 +30,14 @@ bool XmlMDataStd_AsciiStringDriver::Paste(const XmlObjMgt_Persistent&       theS
   {
     const TCollection_AsciiString aString = XmlObjMgt::GetStringValue(theSource);
     occ::down_cast<TDataStd_AsciiString>(theTarget)->Set(aString);
-    // attribute id
+
     Standard_GUID            aGUID;
     const XmlObjMgt_Element& anElement = theSource;
     XmlObjMgt_DOMString      aGUIDStr  = anElement.getAttribute(::AttributeIDString());
     if (aGUIDStr.Type() == XmlObjMgt_DOMString::LDOM_NULL)
-      aGUID = TDataStd_AsciiString::GetID(); // default case
+      aGUID = TDataStd_AsciiString::GetID();
     else
-      aGUID = Standard_GUID(static_cast<const char*>(aGUIDStr.GetString())); // user defined case
+      aGUID = Standard_GUID(static_cast<const char*>(aGUIDStr.GetString()));
 
     occ::down_cast<TDataStd_AsciiString>(theTarget)->SetID(aGUID);
     return true;
@@ -51,8 +45,6 @@ bool XmlMDataStd_AsciiStringDriver::Paste(const XmlObjMgt_Persistent&       theS
   myMessageDriver->Send("error retrieving AsciiString for type TDataStd_AsciiString", Message_Fail);
   return false;
 }
-
-//=================================================================================================
 
 void XmlMDataStd_AsciiStringDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                           XmlObjMgt_Persistent&             theTarget,
@@ -65,7 +57,7 @@ void XmlMDataStd_AsciiStringDriver::Paste(const occ::handle<TDF_Attribute>& theS
   XmlObjMgt::SetStringValue(theTarget, aString);
   if (aS->ID() != TDataStd_AsciiString::GetID())
   {
-    // convert GUID
+
     char                aGuidStr[Standard_GUID_SIZE_ALLOC];
     Standard_PCharacter pGuidStr = aGuidStr;
     aS->ID().ToCString(pGuidStr);

@@ -10,7 +10,6 @@ class DrawTrSurf_BezierCurve : public DrawTrSurf_Curve
   DEFINE_STANDARD_RTTIEXT(DrawTrSurf_BezierCurve, DrawTrSurf_Curve)
   Draw_Drawable3D_FACTORY
 public:
-  //! creates a drawable Bezier curve from a Bezier curve of package Geom.
   Standard_EXPORT DrawTrSurf_BezierCurve(const occ::handle<Geom_BezierCurve>& C);
 
   Standard_EXPORT DrawTrSurf_BezierCurve(const occ::handle<Geom_BezierCurve>& C,
@@ -27,11 +26,6 @@ public:
 
   void ClearPoles() { drawPoles = false; }
 
-  //! Returns in <Index> the index of the first pole of the
-  //! curve projected by the Display <D> at a distance lower
-  //! than <Prec> from <X,Y>. If no pole is found index is
-  //! set to 0, else index is always greater than the input
-  //! value of index.
   Standard_EXPORT void FindPole(const double        X,
                                 const double        Y,
                                 const Draw_Display& D,
@@ -42,7 +36,6 @@ public:
 
   Draw_Color PolesColor() const { return polesLook; }
 
-  //! For variable copy.
   Standard_EXPORT occ::handle<Draw_Drawable3D> Copy() const override;
 
 private:

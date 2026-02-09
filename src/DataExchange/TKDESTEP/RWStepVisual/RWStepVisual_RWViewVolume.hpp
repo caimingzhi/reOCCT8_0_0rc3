@@ -11,7 +11,6 @@ class StepVisual_ViewVolume;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ViewVolume
 class RWStepVisual_RWViewVolume
 {
 public:

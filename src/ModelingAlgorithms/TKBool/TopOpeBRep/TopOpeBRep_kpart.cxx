@@ -20,8 +20,6 @@
 extern bool TopOpeBRep_GetcontextNEWKP();
 #endif
 
-// VP<STATIC_lastVPind> is the vp on which was computed the last CPI.
-// if no CPI is computed yet, <STATIC_lastVPind> = 0.
 static int STATIC_lastVPind;
 
 #define M_FORWARD(st) (st == TopAbs_FORWARD)
@@ -29,12 +27,11 @@ static int STATIC_lastVPind;
 #define M_INTERNAL(st) (st == TopAbs_INTERNAL)
 #define M_EXTERNAL(st) (st == TopAbs_EXTERNAL)
 
-//-----------------------------------------------------------------------
 static void FUNBREP_Periodize(const TopOpeBRep_LineInter&                   L,
                               const occ::handle<TopOpeBRepDS_Interference>& Ifound,
                               double&                                       PIfound,
                               double&                                       parline)
-//-----------------------------------------------------------------------
+
 {
   const TopOpeBRepDS_Transition& TIfound  = Ifound->Transition();
   TopAbs_Orientation             OTIfound = TIfound.Orientation(TopAbs_IN);
@@ -62,26 +59,24 @@ static void FUNBREP_Periodize(const TopOpeBRep_LineInter&                   L,
       {
         throw Standard_ProgramError("FUNBREP_Periodize");
       }
-    } // onfl
+    }
     else
     {
       parline = PIfound = std::min(parline, PIfound);
     }
-  } // IsPeriodic
+  }
   else
   {
     parline = PIfound = std::min(parline, PIfound);
   }
 }
 
-//-----------------------------------------------------------------------
 static bool FUNBREP_HasSameGPoint(const TopOpeBRepDS_Point&                     DSP,
                                   const occ::handle<TopOpeBRepDS_Interference>& I,
                                   const TopOpeBRepDS_DataStructure&             BDS)
-//-----------------------------------------------------------------------
+
 {
-  // returns <true> if <DSP> shares same geometric point with
-  // <I> geometry.
+
   int  G      = I->Geometry();
   bool samegp = false;
   if (I->GeometryType() == TopOpeBRepDS_POINT)
@@ -97,12 +92,11 @@ static bool FUNBREP_HasSameGPoint(const TopOpeBRepDS_Point&                     
   return samegp;
 }
 
-//-----------------------------------------------------------------------
 static bool FUNBREP_SameUV(const TopOpeBRep_VPointInter& VP1,
                            const TopOpeBRep_VPointInter& VP2,
                            const int                     sind,
                            const double                  toluv)
-//-----------------------------------------------------------------------
+
 {
   double u1 = 0., v1 = 0., u2 = 0., v2 = 0.;
   if (sind == 1)
@@ -121,7 +115,6 @@ static bool FUNBREP_SameUV(const TopOpeBRep_VPointInter& VP1,
   return sameuv;
 }
 
-//----------------------------------------------------------------------
 bool FUNBREP_topowalki_new(const occ::handle<TopOpeBRepDS_Interference>&                   Ifound,
                            const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& DSCIL,
                            const TopOpeBRep_LineInter&                                     L,
@@ -130,7 +123,7 @@ bool FUNBREP_topowalki_new(const occ::handle<TopOpeBRepDS_Interference>&        
                            const bool                                                      samepar,
                            const bool                                                      couture,
                            TopOpeBRepDS_Transition& transLine)
-//----------------------------------------------------------------------
+
 {
   if (L.TypeLineCurve() != TopOpeBRep_WALKING)
   {
@@ -145,22 +138,17 @@ bool FUNBREP_topowalki_new(const occ::handle<TopOpeBRepDS_Interference>&        
 
   bool LITdefinie = DSCIL.IsEmpty() ? false : !DSCIL.Last()->Transition().IsUnknown();
 
-  // dealing with INTERNAL/EXTERNAL <E> :
-  // ------------------------------------
   TopAbs_Orientation Eori = E.Orientation();
   bool               EFR  = M_FORWARD(Eori) || M_REVERSED(Eori);
   if (!EFR)
-  { // E INTERNAL ou EXTERNAL
-    // we assume transition for first vp on non oriented edge to be FORWARD
-    //                          last vp on non oriented edge to be REVERSED
+  {
+
     if (iVP == iINON1)
       transLine = TopOpeBRepDS_Transition(TopAbs_OUT, TopAbs_IN);
     if (iVP == iINONn)
       transLine = TopOpeBRepDS_Transition(TopAbs_IN, TopAbs_OUT);
   }
 
-  // no last defined transition :
-  // ----------------------------
   if (!LITdefinie)
   {
     if (onsort)
@@ -169,8 +157,6 @@ bool FUNBREP_topowalki_new(const occ::handle<TopOpeBRepDS_Interference>&        
       return false;
   }
 
-  // has last defined transition :
-  // -----------------------------
   bool keep = true;
   if (LITdefinie)
   {
@@ -186,10 +172,7 @@ bool FUNBREP_topowalki_new(const occ::handle<TopOpeBRepDS_Interference>&        
 
     if (couture)
     {
-      // vp describing the same geometric point on closing edge :
-      // it is the same vp described on the FORWARD and REVERSED closing edge -> we keep it only
-      // once INFO : on walking, vp line parameter is the vp index on the walking samepar =>
-      // describes same CPI
+
       bool samevponcouture = samepar && keep;
       if (samevponcouture)
       {
@@ -197,15 +180,11 @@ bool FUNBREP_topowalki_new(const occ::handle<TopOpeBRepDS_Interference>&        
       }
     }
 
-    { // kpart JYL 971204 for closing walking, first and current VP same parameter,
-      //                  lastonentre && onsort,
-      //                  first VP is first walking point (PIfound == 1.0),
-      //                  current VP is the second one on walking and not the last.
+    {
+
       const occ::handle<TopOpeBRepDS_Interference>& anI           = DSCIL.First();
       const TopOpeBRepDS_Transition&                lasttransLine = anI->Transition();
-      // xpu12-12-97 : line is built on only 2 vp,
-      //  DSCIL->First() == DSCIL->Last()
-      //  lasttransLine = DSCIL's first transition
+
       double PIfound    = TopOpeBRepDS_InterferenceTool::Parameter(Ifound);
       bool   fermee     = L.IsVClosed();
       bool   lastonsort = LITdefinie && M_FORWARD(lasttransLine.Orientation(TopAbs_OUT));
@@ -221,10 +200,10 @@ bool FUNBREP_topowalki_new(const occ::handle<TopOpeBRepDS_Interference>&        
         keep = false;
       }
     }
-  } // LITdefinie
+  }
 
   return keep;
-} // FUNBREP_topowalki_new
+}
 
 #ifdef OCCT_DEBUG
 extern bool GLOBAL_bvpr;
@@ -232,26 +211,25 @@ extern bool GLOBAL_bvpr;
 Standard_EXPORT void debvpr2(void) {}
 #endif
 
-//----------------------------------------------------------------------
 bool FUNBREP_topowalki(const occ::handle<TopOpeBRepDS_Interference>&                   Ifound,
                        const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& DSCIL,
                        const TopOpeBRep_LineInter&                                     L,
                        const TopOpeBRep_VPointInter&                                   VP,
                        const TopOpeBRepDS_Transition& lasttransLine,
-                       // const TopOpeBRepDS_DataStructure& BDS,
+
                        const TopOpeBRepDS_DataStructure&,
                        const TopoDS_Shape& E,
-                       // const TopoDS_Shape& F,
+
                        const TopoDS_Shape&,
-                       // const double toluv,
+
                        const double,
                        const bool CPIfound,
                        const bool samepar,
                        const bool couture,
-                       // double& parline,
+
                        double&,
                        TopOpeBRepDS_Transition& transLine)
-//----------------------------------------------------------------------
+
 {
   if (L.TypeLineCurve() != TopOpeBRep_WALKING)
   {
@@ -306,7 +284,7 @@ bool FUNBREP_topowalki(const occ::handle<TopOpeBRepDS_Interference>&            
     if (onsort)
     {
       bool condCTS19305 = false;
-      // start debug 971216 : CTS19305
+
       condCTS19305 = (!CPIfound);
       condCTS19305 = condCTS19305 && (!fermee);
       condCTS19305 = condCTS19305 && (!lastdefinie);
@@ -316,14 +294,14 @@ bool FUNBREP_topowalki(const occ::handle<TopOpeBRepDS_Interference>&            
         keep      = true;
         transLine = TopOpeBRepDS_Transition(TopAbs_OUT, TopAbs_IN);
       }
-      // end debug 971216 :
+
       else
         keep = false;
     }
     if (iVP == iINONn)
       keep = false;
     if (!EFR)
-    { // E INTERNAL ou EXTERNAL
+    {
       if (iVP == iINON1)
       {
         transLine = TopOpeBRepDS_Transition(TopAbs_OUT, TopAbs_IN);
@@ -365,11 +343,6 @@ bool FUNBREP_topowalki(const occ::handle<TopOpeBRepDS_Interference>&            
       }
     }
 
-    // vp describing the same geometric point on closing edge :
-    // it is the same vp described on the FORWARD and REVERSED closing edge -> we keep it only once
-    // INFO : on walking, vp line parameter is the vp index on the walking
-    // samepar => describes same CPI
-
     bool samevponcouture = samepar && couture;
     if (keep && samevponcouture)
     {
@@ -387,7 +360,6 @@ bool FUNBREP_topowalki(const occ::handle<TopOpeBRepDS_Interference>&            
       {
         double PIfound = TopOpeBRepDS_InterferenceTool::Parameter(Ifound);
 
-        // 971204
         bool cond1 = true;
         cond1      = cond1 && (lastdefinie && !lastonsort);
         cond1      = cond1 && onsort;
@@ -401,7 +373,6 @@ bool FUNBREP_topowalki(const occ::handle<TopOpeBRepDS_Interference>&            
           return keep;
         }
 
-        // PRO12107
         bool cond2 = true;
         cond2      = cond2 && (lastdefinie && !lastonsort);
         cond1      = cond1 && onsort;
@@ -415,16 +386,14 @@ bool FUNBREP_topowalki(const occ::handle<TopOpeBRepDS_Interference>&            
           return keep;
         }
       }
-    } // keep
-
-  } // keep && LITdefinie
+    }
+  }
 
   if (keep)
     STATIC_lastVPind = iVP;
   return keep;
-} // FUNBREP_topowalki
+}
 
-//----------------------------------------------------------------------
 bool FUNBREP_topogline_new(const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& DSCIL,
                            const TopOpeBRep_LineInter&                                     L,
                            const TopOpeBRep_VPointInter&                                   VP,
@@ -434,7 +403,7 @@ bool FUNBREP_topogline_new(const NCollection_List<occ::handle<TopOpeBRepDS_Inter
                            const bool                                                      couture,
                            double&                                                         parline,
                            TopOpeBRepDS_Transition& transLine)
-//----------------------------------------------------------------------
+
 {
   if (L.TypeLineCurve() == TopOpeBRep_WALKING)
   {
@@ -445,24 +414,11 @@ bool FUNBREP_topogline_new(const NCollection_List<occ::handle<TopOpeBRepDS_Inter
   int iINON1, iINONn, nINON;
   L.VPBounds(iINON1, iINONn, nINON);
 
-  // if VP<iVP> is on 3
-  //            and VP on 1 has transition OUT/IN,
-  //                VP on 2 has transition IN/OUT,
-  // same VP will be kept.
-
-  // the line is described with (VPmin,VPmax) boundaries.
-  // if VP == VPmax, as we are only regarding IN/OUT transitions->ok
-  // if VP == VPmin :
   bool dscilempty = DSCIL.IsEmpty();
   bool notkept    = !dscilempty && (iVP == 1);
   if (notkept)
     return false;
 
-  // <transLine> : for unknown current transition
-  // ------------
-  // (see TopOpeBRep_FacesFiller::ProcessVPonR)
-  // vpmin with transition UNKNOWN               => transLine-> OUT/IN
-  // vpmin OUT/IN, vpmax with transition UNKNOWN => transLine-> IN/OUT
   TopOpeBRepDS_Transition                LIT;
   occ::handle<TopOpeBRepDS_Interference> I;
   bool                                   LITdefinie, LITonsort;
@@ -491,8 +447,6 @@ bool FUNBREP_topogline_new(const NCollection_List<occ::handle<TopOpeBRepDS_Inter
   bool hasfol = hasfp || haslp;
   bool keep   = true;
 
-  // no last defined transition :
-  // ----------------------------
   if (!LITdefinie)
   {
     if (onsort)
@@ -501,8 +455,6 @@ bool FUNBREP_topogline_new(const NCollection_List<occ::handle<TopOpeBRepDS_Inter
       keep = false;
   }
 
-  // has last defined transition :
-  // -----------------------------
   if (LITdefinie)
   {
     bool LprecIsEntrant = (LITdefinie && !LITonsort);
@@ -514,22 +466,15 @@ bool FUNBREP_topogline_new(const NCollection_List<occ::handle<TopOpeBRepDS_Inter
     if (sameparoncouture && hasfol && keep)
     {
 
-      // INFO : on geometric line, vp parameter on line is the point on
-      //        curve's parameter.
       TopOpeBRepDS_Point pntVP  = TopOpeBRep_PointGeomTool::MakePoint(VP);
       bool               samegp = FUNBREP_HasSameGPoint(pntVP, I, BDS);
 
-      // !fermee : same p3d && samepar        => same CPI
-      // fermee  : (same p3d && samepar
-      //           && sameUVon1 && sameUVon2) => same CPI
       bool fermee = L.IsVClosed();
       if (!fermee && samegp)
         keep = false;
       if (fermee && samegp)
       {
-        // 2 vp describing a closing line describe the same 3dpoint
-        // have same parameter, but do not describe the same uv
-        // points on the closed surface (cobo121)
+
         const TopOpeBRep_VPointInter& lastVP    = L.VPoint(STATIC_lastVPind);
         bool                          sameUVon1 = FUNBREP_SameUV(VP, lastVP, 1, toluv);
         bool                          sameUVon2 = FUNBREP_SameUV(VP, lastVP, 2, toluv);
@@ -539,39 +484,35 @@ bool FUNBREP_topogline_new(const NCollection_List<occ::handle<TopOpeBRepDS_Inter
     if (sameparoncouture && !hasfol)
     {
 
-      // we have to parametrize the found interference (parameter PIfound)
-      // and next interference (parline)
       const occ::handle<TopOpeBRepDS_Interference>& Ifound = DSCIL.First();
       double PIfound = TopOpeBRepDS_InterferenceTool::Parameter(Ifound);
       FUNBREP_Periodize(L, Ifound, PIfound, parline);
       TopOpeBRepDS_InterferenceTool::Parameter(Ifound, PIfound);
       transLine = LIT.Complement();
     }
-  } // LITdefinie
+  }
 
   if (keep)
     STATIC_lastVPind = iVP;
   return keep;
+}
 
-} // FUNBREP_topogline_new
-
-//----------------------------------------------------------------------
 static bool FUNBREP_topogline(const occ::handle<TopOpeBRepDS_Interference>& Ifound,
                               const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& DSCIL,
                               const TopOpeBRep_LineInter&                                     L,
                               const TopOpeBRep_VPointInter&                                   VP,
                               const TopOpeBRepDS_DataStructure&                               BDS,
                               const TopoDS_Shape&                                             E,
-                              // const TopoDS_Shape& F,
+
                               const TopoDS_Shape&,
                               const double toluv,
-                              // const bool CPIfound,
+
                               const bool,
                               const bool               samepar,
                               const bool               couture,
                               double&                  parline,
                               TopOpeBRepDS_Transition& transLine)
-//----------------------------------------------------------------------
+
 {
   if (L.TypeLineCurve() == TopOpeBRep_WALKING)
   {
@@ -596,7 +537,7 @@ static bool FUNBREP_topogline(const occ::handle<TopOpeBRepDS_Interference>& Ifou
   bool fermee = L.IsVClosed();
 
   if (!EFR)
-  { // E INTERNAL ou EXTERNAL
+  {
     if (iVP == iINON1)
       transLine = TopOpeBRepDS_Transition(TopAbs_OUT, TopAbs_IN);
     if (iVP == iINONn)
@@ -610,19 +551,13 @@ static bool FUNBREP_topogline(const occ::handle<TopOpeBRepDS_Interference>& Ifou
   occ::handle<TopOpeBRepDS_Interference> I;
   bool                                   dscilempty = DSCIL.IsEmpty();
 
-  // xpu : 28-05-97 : if VP<iVP> is on 3 and
-  // VP on 1 has transition OUT/IN, VP on 2 has transition IN/OUT,
-  // same VP will be kept.
-  // the line is described with (VPmin,VPmax) boundaries.
-  // if VP is VPmax, as we are only regarding IN/OUT transitions->ok
-  // if VP is VPmin :
-  bool newvvv = true; // xpu : 28-05-97
+  bool newvvv = true;
   if (newvvv)
   {
     bool notkept = !dscilempty && (iVP == 1);
     if (notkept)
       return false;
-  } // 28-05-97 : xpu
+  }
 
   if (!dscilempty)
   {
@@ -633,11 +568,8 @@ static bool FUNBREP_topogline(const occ::handle<TopOpeBRepDS_Interference>& Ifou
       LITonsort = (LIT.Orientation(TopAbs_OUT) == TopAbs_FORWARD);
   }
 
-  // xpu : 21-05-97 (see TopOpeBRep_FacesFiller::ProcessVPonR)
-  // vpmin with transition UNKNOWN =>transLine-> OUT/IN
-  // vpmin OUT/IN, vpmax with transition UNKNOWN =>transLine-> IN/OUT
   bool trliunk   = transLine.IsUnknown();
-  bool newvv     = true; // xpu : 21-05-97
+  bool newvv     = true;
   bool isfirstvp = (iVP == iINON1);
   bool islastvp  = (iVP == iINONn);
   if (newvv && trliunk)
@@ -653,7 +585,7 @@ static bool FUNBREP_topogline(const occ::handle<TopOpeBRepDS_Interference>& Ifou
         transLine = LIT.Complement();
         onsort    = true;
       }
-  } // 21-05-97 :xpu
+  }
 
   bool hasfp  = L.HasFirstPoint();
   bool haslp  = L.HasLastPoint();
@@ -680,18 +612,14 @@ static bool FUNBREP_topogline(const occ::handle<TopOpeBRepDS_Interference>& Ifou
     {
       if (keep)
       {
-        // INFO : on geometric line, vp parameter on line is the point on
-        //        curve parameter.
+
         TopOpeBRepDS_Point            pntVP  = TopOpeBRep_PointGeomTool::MakePoint(VP);
         bool                          samegp = FUNBREP_HasSameGPoint(pntVP, I, BDS);
         const TopOpeBRep_VPointInter& lastVP = L.VPoint(STATIC_lastVPind);
-        // if the line is not closed, same p3d and samepar represent
-        // same CPI.else :
+
         if (fermee)
         {
-          // 2 vp describing a closing line describe the same 3dpoint
-          // have same parameter, but do not describe the same uv
-          // points on the closed surface (cobo121)
+
           bool sameUVon1 = FUNBREP_SameUV(VP, lastVP, 1, toluv);
           bool sameUVon2 = FUNBREP_SameUV(VP, lastVP, 2, toluv);
           samegp         = samegp && sameUVon1 && sameUVon2;
@@ -702,7 +630,7 @@ static bool FUNBREP_topogline(const occ::handle<TopOpeBRepDS_Interference>& Ifou
     }
     if (sameparoncouture && !hasfol)
     {
-      // parametrize Ifound (parameter PIfound) and next interference (parline)
+
       double PIfound = TopOpeBRepDS_InterferenceTool::Parameter(Ifound);
       FUNBREP_Periodize(L, Ifound, PIfound, parline);
       TopOpeBRepDS_InterferenceTool::Parameter(Ifound, PIfound);
@@ -714,15 +642,13 @@ static bool FUNBREP_topogline(const occ::handle<TopOpeBRepDS_Interference>& Ifou
   if (keep)
     STATIC_lastVPind = iVP;
   return keep;
+}
 
-} // end of FUNBREP_topogline
-
-//-----------------------------------------------------------------------
 static bool TopoParameter(const TopOpeBRep_LineInter&                   L,
                           const occ::handle<TopOpeBRepDS_Interference>& I,
                           const double                                  parline,
                           const bool                                    closingedge)
-//-----------------------------------------------------------------------
+
 {
   if (I.IsNull())
     return false;
@@ -732,10 +658,7 @@ static bool TopoParameter(const TopOpeBRep_LineInter&                   L,
     samepar = (std::abs(parline - pCPI) < Precision::PConfusion());
   else
   {
-    // trouve et couture et courbe periodique :
-    // on retourne vrai pour laisser a FUNBREP_topokpart
-    // le soin de definir correctement les couples
-    // (parametre, transition) pour les points confondus sur couture.
+
     bool perio = L.IsPeriodic();
     if (perio)
     {
@@ -749,7 +672,6 @@ static bool TopoParameter(const TopOpeBRep_LineInter&                   L,
   return samepar;
 }
 
-//----------------------------------------------------------------------
 Standard_EXPORT bool FUNBREP_topokpart(
   const occ::handle<TopOpeBRepDS_Interference>&                   Ifound,
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& DSCIL,
@@ -761,15 +683,15 @@ Standard_EXPORT bool FUNBREP_topokpart(
   const double                                                    toluv,
   double&                                                         parline,
   TopOpeBRepDS_Transition&                                        transLine)
-//----------------------------------------------------------------------
+
 {
   bool keep = true;
 
   bool CPIfound = !Ifound.IsNull();
   bool couture  = TopOpeBRepTool_ShapeTool::Closed(TopoDS::Edge(E), TopoDS::Face(F));
-  // clang-format off
-  bool samepar = false; // = True if current VPoint falls on an existing geometry with an equal parameter.
-  // clang-format on
+
+  bool samepar = false;
+
   if (!CPIfound)
     samepar = false;
   else
@@ -777,14 +699,7 @@ Standard_EXPORT bool FUNBREP_topokpart(
 
   TopOpeBRepDS_Transition lasttransLine;
   if (!DSCIL.IsEmpty())
-    lasttransLine = DSCIL.Last()->Transition(); // xpu12-12-97
-
-  // A line is valid if at least it has VPi1 and VPi2 with i1 < i2 and :
-  // transition on line for VPi1 : OUT/IN and for VPi2 : IN/OUT.
-  // When <VPj> is on j=i1/i2, we keep it (returning true).
-  // Rmq :VP internal to the face is given with transition on line
-  // OUT/IN or IN/OUT if it is on the beginning or on the end
-  // of the line.
+    lasttransLine = DSCIL.Last()->Transition();
 
   if (L.TypeLineCurve() == TopOpeBRep_WALKING)
   {
@@ -820,4 +735,4 @@ Standard_EXPORT bool FUNBREP_topokpart(
                              transLine);
   }
   return keep;
-} // end of FUNBREP_tpokpart
+}

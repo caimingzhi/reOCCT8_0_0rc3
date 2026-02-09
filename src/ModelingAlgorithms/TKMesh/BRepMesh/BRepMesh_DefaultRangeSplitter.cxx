@@ -3,10 +3,8 @@
 #include <GeomAdaptor_Curve.hpp>
 #include <BRep_Tool.hpp>
 
-//=================================================================================================
-
 void BRepMesh_DefaultRangeSplitter::Reset(const IMeshData::IFaceHandle& theDFace,
-                                          const IMeshTools_Parameters& /*theParameters*/)
+                                          const IMeshTools_Parameters&)
 {
   myDFace        = theDFace;
   myRangeU.first = myRangeV.first = 1.e100;
@@ -15,8 +13,6 @@ void BRepMesh_DefaultRangeSplitter::Reset(const IMeshData::IFaceHandle& theDFace
   myTolerance.first = myTolerance.second = Precision::Confusion();
 }
 
-//=================================================================================================
-
 void BRepMesh_DefaultRangeSplitter::AddPoint(const gp_Pnt2d& thePoint)
 {
   myRangeU.first  = std::min(thePoint.X(), myRangeU.first);
@@ -24,8 +20,6 @@ void BRepMesh_DefaultRangeSplitter::AddPoint(const gp_Pnt2d& thePoint)
   myRangeV.first  = std::min(thePoint.Y(), myRangeV.first);
   myRangeV.second = std::max(thePoint.Y(), myRangeV.second);
 }
-
-//=================================================================================================
 
 void BRepMesh_DefaultRangeSplitter::AdjustRange()
 {
@@ -65,14 +59,10 @@ void BRepMesh_DefaultRangeSplitter::AdjustRange()
   }
 }
 
-//=================================================================================================
-
 bool BRepMesh_DefaultRangeSplitter::IsValid()
 {
   return myIsValid;
 }
-
-//=================================================================================================
 
 gp_Pnt2d BRepMesh_DefaultRangeSplitter::Scale(const gp_Pnt2d& thePoint,
                                               const bool      isToFaceBasis) const
@@ -83,24 +73,17 @@ gp_Pnt2d BRepMesh_DefaultRangeSplitter::Scale(const gp_Pnt2d& thePoint,
                                   thePoint.Y() * myDelta.second + myRangeV.first);
 }
 
-//=================================================================================================
-
 Handle(IMeshData::ListOfPnt2d) BRepMesh_DefaultRangeSplitter::GenerateSurfaceNodes(
-  const IMeshTools_Parameters& /*theParameters*/) const
+  const IMeshTools_Parameters&) const
 {
   return Handle(IMeshData::ListOfPnt2d)();
 }
 
-//=================================================================================================
-
-void BRepMesh_DefaultRangeSplitter::computeTolerance(const double /*theLenU*/,
-                                                     const double /*theLenV*/)
+void BRepMesh_DefaultRangeSplitter::computeTolerance(const double, const double)
 {
   const double aDiffU = myRangeU.second - myRangeU.first;
   const double aDiffV = myRangeV.second - myRangeV.first;
 
-  // Slightly increase exact resolution so to cover links with approximate
-  // length equal to resolution itself on sub-resolution differences.
   const double             aTolerance = BRep_Tool::Tolerance(myDFace->GetFace());
   const Adaptor3d_Surface& aSurface   = GetSurface()->Surface();
   const double             aResU      = aSurface.UResolution(aTolerance) * 1.1;
@@ -111,8 +94,6 @@ void BRepMesh_DefaultRangeSplitter::computeTolerance(const double /*theLenU*/,
   myTolerance.second         = std::max(std::min(aDeflectionUV, aResV), 1e-7 * aDiffV);
 }
 
-//=================================================================================================
-
 void BRepMesh_DefaultRangeSplitter::computeDelta(const double theLengthU, const double theLengthV)
 {
   const double aDiffU = myRangeU.second - myRangeU.first;
@@ -121,8 +102,6 @@ void BRepMesh_DefaultRangeSplitter::computeDelta(const double theLengthU, const 
   myDelta.first  = aDiffU / (theLengthU < myTolerance.first ? 1. : theLengthU);
   myDelta.second = aDiffV / (theLengthV < myTolerance.second ? 1. : theLengthV);
 }
-
-//=================================================================================================
 
 double BRepMesh_DefaultRangeSplitter::computeLengthU()
 {
@@ -152,8 +131,6 @@ double BRepMesh_DefaultRangeSplitter::computeLengthU()
   return longu / 3.;
 }
 
-//=================================================================================================
-
 double BRepMesh_DefaultRangeSplitter::computeLengthV()
 {
   double longv = 0.0;
@@ -182,8 +159,6 @@ double BRepMesh_DefaultRangeSplitter::computeLengthV()
   return longv / 3.;
 }
 
-//=================================================================================================
-
 void BRepMesh_DefaultRangeSplitter::updateRange(const double theGeomFirst,
                                                 const double theGeomLast,
                                                 const bool   isPeriodic,
@@ -203,8 +178,6 @@ void BRepMesh_DefaultRangeSplitter::updateRange(const double theGeomFirst,
     {
       if ((theDiscreteFirst < theGeomLast) && (theDiscreteLast > theGeomFirst))
       {
-        // Protection against the faces whose pcurve is out of the surface's domain
-        //(see issue #23675 and test cases "bugs iges buc60820*")
 
         if (theGeomFirst > theDiscreteFirst)
         {

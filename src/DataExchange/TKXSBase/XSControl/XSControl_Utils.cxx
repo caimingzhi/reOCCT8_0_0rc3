@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRep_Builder.hpp>
 #include <BRepTools.hpp>
@@ -45,9 +34,6 @@ static TCollection_ExtendedString bufext;
 static const char16_t*            voidext = {nullptr};
 
 XSControl_Utils::XSControl_Utils() = default;
-
-//  #########################################################
-//  #######           TRACE   Functions           #######
 
 void XSControl_Utils::TraceLine(const char* line) const
 {
@@ -101,9 +87,6 @@ void XSControl_Utils::TraceLines(const occ::handle<Standard_Transient>& lines) c
     sout << lin1e->String();
 }
 
-//  #########################################################
-//  #######   TRANSIENT : Some  basic  access   #######
-
 bool XSControl_Utils::IsKind(const occ::handle<Standard_Transient>& item,
                              const occ::handle<Standard_Type>&      what) const
 {
@@ -133,8 +116,6 @@ const char* XSControl_Utils::TypeName(const occ::handle<Standard_Transient>& ite
   return tn;
 }
 
-//  #######       TRANSIENT : List functions       #######
-
 occ::handle<Standard_Transient> XSControl_Utils::TraValue(
   const occ::handle<Standard_Transient>& seqval,
   const int                              num) const
@@ -158,7 +139,7 @@ occ::handle<Standard_Transient> XSControl_Utils::TraValue(
       val = seqt->Value(num);
     return val;
   }
-  //  throw Standard_TypeMismatch("XSControl_Utils::SeqTraValue");
+
   return val;
 }
 
@@ -174,8 +155,6 @@ void XSControl_Utils::AppendTra(
 {
   seqval->Append(traval);
 }
-
-//  #######           DATES           #######
 
 const char* XSControl_Utils::DateString(const int yy,
                                         const int mm,
@@ -202,15 +181,11 @@ void XSControl_Utils::DateValues(const char* text,
   Interface_MSG::NDate(text, yy, mm, dd, hh, mn, ss);
 }
 
-//  ##########################################################
-//  #######           STRING : Basic Ascii           #######
-
 const char* XSControl_Utils::ToCString(const occ::handle<TCollection_HAsciiString>& strval) const
 {
-  // JR/Hp
+
   const char* astr = (const char*)(strval.IsNull() ? "" : strval->ToCString());
   return astr;
-  //         return (strval.IsNull() ? "" : strval->ToCString());
 }
 
 const char* XSControl_Utils::ToCString(const TCollection_AsciiString& strval) const
@@ -227,8 +202,6 @@ TCollection_AsciiString XSControl_Utils::ToAString(const char* strcon) const
 {
   return TCollection_AsciiString(strcon);
 }
-
-//  #######         STRING : Basic Extended         #######
 
 const char16_t* XSControl_Utils::ToEString(
   const occ::handle<TCollection_HExtendedString>& strval) const
@@ -250,8 +223,6 @@ TCollection_ExtendedString XSControl_Utils::ToXString(const char16_t* strcon) co
 {
   return TCollection_ExtendedString(strcon);
 }
-
-//  #######        STRING : Ascii <-> Extended        #######
 
 const char16_t* XSControl_Utils::AsciiToExtended(const char* str) const
 {
@@ -283,47 +254,41 @@ const char* XSControl_Utils::ExtendedToAscii(const char16_t* str) const
   return bufasc.ToCString();
 }
 
-//  #######              STRING : LISTES              #######
-
 const char* XSControl_Utils::CStrValue(const occ::handle<Standard_Transient>& list,
                                        const int                              num) const
 {
   DeclareAndCast(NCollection_HSequence<occ::handle<TCollection_HAsciiString>>, linha, list);
   if (!linha.IsNull())
   {
-    // JR/Hp
+
     const char* astr = (const char*)(num > linha->Length() ? "" : linha->Value(num)->ToCString());
     return astr;
-    //    return (num > linha->Length() ? "" : linha->Value(num)->ToCString());
   }
 
   DeclareAndCast(NCollection_HSequence<TCollection_AsciiString>, lina, list);
   if (!lina.IsNull())
   {
-    // JR/Hp
+
     const char* astr = (const char*)(num > lina->Length() ? "" : lina->Value(num).ToCString());
     return astr;
-    //    return (num > lina->Length() ? "" : lina->Value(num).ToCString());
   }
 
   DeclareAndCast(NCollection_HSequence<occ::handle<TCollection_HExtendedString>>, linhe, list);
   if (!linhe.IsNull())
   {
-    // JR/Hp
+
     const char* astr =
       (const char*)(num > linhe->Length() ? "" : ExtendedToAscii(linhe->Value(num)->ToExtString()));
     return astr;
-    //   return (num > linhe->Length() ? "" : ExtendedToAscii(linhe->Value(num)->ToExtString()));
   }
 
   DeclareAndCast(NCollection_HSequence<TCollection_ExtendedString>, linee, list);
   if (!linee.IsNull())
   {
-    // JR/Hp
+
     const char* astr =
       (const char*)(num > linee->Length() ? "" : ExtendedToAscii(linee->Value(num).ToExtString()));
     return astr;
-    //    return (num > linee->Length() ? "" : ExtendedToAscii(linee->Value(num).T
   }
 
   DeclareAndCast(TCollection_HAsciiString, lin1a, list);
@@ -389,9 +354,6 @@ void XSControl_Utils::AppendEStr(
   seqval->Append(new TCollection_HExtendedString(strval));
 }
 
-//  ##########################################################
-//  #######           SHAPES : Basic access           #######
-
 TopoDS_Shape XSControl_Utils::CompoundFromSeq(
   const occ::handle<NCollection_HSequence<TopoDS_Shape>>& seqval) const
 {
@@ -422,7 +384,7 @@ TopAbs_ShapeEnum XSControl_Utils::ShapeType(const TopoDS_Shape& shape, const boo
       typ = ShapeType(sh, compound);
     if (res == TopAbs_SHAPE)
       res = typ;
-    //   Equality: OK;  Pseudo-Equality: EDGE/WIRE or FACE/SHELL
+
     else if (res == TopAbs_EDGE && typ == TopAbs_WIRE)
       res = typ;
     else if (res == TopAbs_WIRE && typ == TopAbs_EDGE)
@@ -448,7 +410,6 @@ TopoDS_Shape XSControl_Utils::SortedCompound(const TopoDS_Shape&    shape,
   TopoDS_Shape     sh, sh0;
   int              nb = 0;
 
-  //  Compound: we take it, either as is, or its content
   if (typ == TopAbs_COMPOUND || typ == TopAbs_COMPSOLID)
   {
     TopoDS_Compound C;
@@ -483,7 +444,6 @@ TopoDS_Shape XSControl_Utils::SortedCompound(const TopoDS_Shape&    shape,
     return C;
   }
 
-  //   Egalite : OK;  Pseudo-Egalite : EDGE/WIRE ou FACE/SHELL
   if (typ == type)
     return shape;
   if (typ == TopAbs_EDGE && type == TopAbs_WIRE)
@@ -491,7 +451,7 @@ TopoDS_Shape XSControl_Utils::SortedCompound(const TopoDS_Shape&    shape,
     BRep_Builder B;
     TopoDS_Wire  W;
     B.MakeWire(W);
-    B.Add(W, shape); // ne passe pas ! : TopoDS::Edge(shape)
+    B.Add(W, shape);
     return W;
   }
   if (typ == TopAbs_FACE && type == TopAbs_SHELL)
@@ -499,20 +459,17 @@ TopoDS_Shape XSControl_Utils::SortedCompound(const TopoDS_Shape&    shape,
     BRep_Builder B;
     TopoDS_Shell S;
     B.MakeShell(S);
-    B.Add(S, shape); // ne passe pas ! : TopoDS::Face(shape));
+    B.Add(S, shape);
     S.Closed(BRep_Tool::IsClosed(S));
     return S;
   }
 
-  //   Le reste : selon exploration
   if (!explore)
   {
     TopoDS_Shape nulsh;
     return nulsh;
   }
 
-  //  Ici, on doit explorer
-  //  SOLID + mode COMPOUND : reconduire les SHELLs
   if (typ == TopAbs_SOLID && compound)
   {
     TopoDS_Compound C;
@@ -534,7 +491,6 @@ TopoDS_Shape XSControl_Utils::SortedCompound(const TopoDS_Shape&    shape,
     return C;
   }
 
-  //  Exploration classique
   TopoDS_Compound CC;
   BRep_Builder    BB;
   BB.MakeCompound(CC);
@@ -550,8 +506,6 @@ TopoDS_Shape XSControl_Utils::SortedCompound(const TopoDS_Shape&    shape,
     return sh;
   return CC;
 }
-
-//  #######               SHAPES : Liste               #######
 
 TopoDS_Shape XSControl_Utils::ShapeValue(
   const occ::handle<NCollection_HSequence<TopoDS_Shape>>& seqval,
@@ -576,8 +530,6 @@ void XSControl_Utils::AppendShape(const occ::handle<NCollection_HSequence<TopoDS
   seqval->Append(shape);
 }
 
-//  #######            SHAPES <-> Transient            #######
-
 occ::handle<Standard_Transient> XSControl_Utils::ShapeBinder(const TopoDS_Shape& shape,
                                                              const bool          hs) const
 {
@@ -601,9 +553,6 @@ TopoDS_Shape XSControl_Utils::BinderShape(const occ::handle<Standard_Transient>&
     return hs->Shape();
   return sh;
 }
-
-//  ##########################################################
-//  #######        LISTES : Fonctions Generales        #######
 
 int XSControl_Utils::SeqLength(const occ::handle<Standard_Transient>& seqval) const
 {
@@ -631,7 +580,7 @@ int XSControl_Utils::SeqLength(const occ::handle<Standard_Transient>& seqval) co
   DeclareAndCast(NCollection_HSequence<int>, seqi, seqval);
   if (!seqi.IsNull())
     return seqi->Length();
-  //  throw Standard_TypeMismatch("XSControl_Utils::SeqLength");
+
   return 0;
 }
 

@@ -8,7 +8,6 @@
 class TopoDS_Shape;
 class gp_Pnt;
 
-//! Contains the colors of a shape.
 class HLRBRep_BiPoint
 {
 public:

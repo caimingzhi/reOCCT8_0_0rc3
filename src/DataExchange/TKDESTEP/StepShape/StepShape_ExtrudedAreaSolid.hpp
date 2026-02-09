@@ -12,7 +12,6 @@ class StepShape_ExtrudedAreaSolid : public StepShape_SweptAreaSolid
 {
 
 public:
-  //! Returns a ExtrudedAreaSolid
   Standard_EXPORT StepShape_ExtrudedAreaSolid();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&     aName,

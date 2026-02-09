@@ -11,7 +11,6 @@ class StepDimTol_GeoTolAndGeoTolWthDatRef;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for GeoTolAndGeoTolWthDatRef
 class RWStepDimTol_RWGeoTolAndGeoTolWthDatRef
 {
 public:

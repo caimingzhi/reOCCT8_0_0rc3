@@ -19,35 +19,28 @@
 #include <Message_Msg.hpp>
 #include <Standard_DomainError.hpp>
 
-// MGE 03/08/98
 IGESBasic_ToolSingleParent::IGESBasic_ToolSingleParent() = default;
 
 void IGESBasic_ToolSingleParent::ReadOwnParams(const occ::handle<IGESBasic_SingleParent>&  ent,
                                                const occ::handle<IGESData_IGESReaderData>& IR,
                                                IGESData_ParamReader&                       PR) const
 {
-  // MGE 03/08/98
-  // Building of messages
-  //========================================
+
   Message_Msg Msg207("XSTEP_207");
-  //========================================
 
   int                              tempNbParentEntities;
   occ::handle<IGESData_IGESEntity> tempParent;
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   int                                                                nbval = 0;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> tempChildren;
   IGESData_Status                                                    aStatus;
 
   if (!PR.ReadInteger(PR.Current(), tempNbParentEntities))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg204("XSTEP_204");
     PR.SendFail(Msg204);
   }
-  // st = PR.ReadInteger(PR.Current(), Msg205, nbval); //szv#4:S4163:12Mar99 moved down
 
-  //  st = PR.ReadInteger (PR.Current(),"Number of Parent entities",tempNbParentEntities);
-  //  st = PR.ReadInteger(PR.Current(), "Count of Children", nbval);
   if (!PR.ReadInteger(PR.Current(), nbval))
   {
     Message_Msg Msg205("XSTEP_205");
@@ -55,8 +48,8 @@ void IGESBasic_ToolSingleParent::ReadOwnParams(const occ::handle<IGESBasic_Singl
     nbval = -1;
   }
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, tempParent))
-  { // szv#4:S4163:12Mar99 `st=` not needed
-    // st = PR.ReadEntity(IR,PR.Current(),"ParentEntity",tempParent);
+  {
+
     Message_Msg Msg206("XSTEP_206");
     switch (aStatus)
     {
@@ -80,10 +73,9 @@ void IGESBasic_ToolSingleParent::ReadOwnParams(const occ::handle<IGESBasic_Singl
     }
   }
 
-  // clang-format off
-  if (nbval > 0) PR.ReadEnts (IR,PR.CurrentList(nbval),Msg207,tempChildren); //szv#4:S4163:12Mar99 `st=` not needed
-  //st = PR.ReadEnts (IR,PR.CurrentList(nbval),"Child Entities",tempChildren);
-  // clang-format on
+  if (nbval > 0)
+    PR.ReadEnts(IR, PR.CurrentList(nbval), Msg207, tempChildren);
+
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempNbParentEntities, tempParent, tempChildren);
 }
@@ -135,13 +127,13 @@ bool IGESBasic_ToolSingleParent::OwnCorrect(const occ::handle<IGESBasic_SinglePa
   for (int i = 1; i <= nb; i++)
     EntArray->SetValue(i, ent->Child(i));
   ent->Init(1, ent->SingleParent(), EntArray);
-  return true; // nbparents = 1
+  return true;
 }
 
 IGESData_DirChecker IGESBasic_ToolSingleParent::DirChecker(
-  const occ::handle<IGESBasic_SingleParent>& /* ent */) const
+  const occ::handle<IGESBasic_SingleParent>&) const
 {
-  IGESData_DirChecker DC(402, 9); // Form no = 9 & Type = 402
+  IGESData_DirChecker DC(402, 9);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
@@ -153,11 +145,7 @@ void IGESBasic_ToolSingleParent::OwnCheck(const occ::handle<IGESBasic_SinglePare
                                           const Interface_ShareTool&,
                                           occ::handle<Interface_Check>& ach) const
 {
-  // MGE 03/08/98
-  // Building of messages
-  //========================================
-  //  Message_Msg Msg204("XSTEP_204");
-  //========================================
+
   if (ent->NbParentEntities() != 1)
   {
     Message_Msg Msg204("XSTEP_204");

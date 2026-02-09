@@ -6,19 +6,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 enum StepElement_Volume3dElementShape
 {
   StepElement_Hexahedron,
@@ -31,15 +18,12 @@ enum StepElement_Volume3dElementShape
 #include <StepElement_ElementOrder.hpp>
 class TCollection_HAsciiString;
 
-//! Representation of STEP entity Volume3dElementDescriptor
 class StepElement_Volume3dElementDescriptor : public StepElement_ElementDescriptor
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT StepElement_Volume3dElementDescriptor();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const StepElement_ElementOrder               aElementDescriptor_TopologyOrder,
     const occ::handle<TCollection_HAsciiString>& aElementDescriptor_Description,
@@ -47,20 +31,16 @@ public:
                                            aPurpose,
     const StepElement_Volume3dElementShape aShape);
 
-  //! Returns field Purpose
   Standard_EXPORT occ::handle<
     NCollection_HArray1<occ::handle<StepElement_VolumeElementPurposeMember>>>
     Purpose() const;
 
-  //! Set field Purpose
   Standard_EXPORT void SetPurpose(
     const occ::handle<NCollection_HArray1<occ::handle<StepElement_VolumeElementPurposeMember>>>&
       Purpose);
 
-  //! Returns field Shape
   Standard_EXPORT StepElement_Volume3dElementShape Shape() const;
 
-  //! Set field Shape
   Standard_EXPORT void SetShape(const StepElement_Volume3dElementShape Shape);
 
   DEFINE_STANDARD_RTTIEXT(StepElement_Volume3dElementDescriptor, StepElement_ElementDescriptor)

@@ -11,7 +11,6 @@ class StepGeom_Circle;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for Circle
 class RWStepGeom_RWCircle
 {
 public:

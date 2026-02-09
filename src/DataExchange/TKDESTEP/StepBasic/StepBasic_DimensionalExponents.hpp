@@ -9,7 +9,6 @@ class StepBasic_DimensionalExponents : public Standard_Transient
 {
 
 public:
-  //! Returns a DimensionalExponents
   Standard_EXPORT StepBasic_DimensionalExponents();
 
   Standard_EXPORT void Init(const double aLengthExponent,

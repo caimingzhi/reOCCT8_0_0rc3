@@ -31,15 +31,6 @@ class GeomInt_TheComputeLineOfWLApprox
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! The MultiLine <Line> will be approximated until tolerances
-  //! will be reached.
-  //! The approximation will be done from degreemin to degreemax
-  //! with a cutting if the corresponding boolean is True.
-  //! If <Squares> is True, the computation will be done with
-  //! no iteration at all.
-  //!
-  //! The multiplicities of the internal knots is set by
-  //! default.
   Standard_EXPORT GeomInt_TheComputeLineOfWLApprox(
     const GeomInt_TheMultiLineOfWLApprox& Line,
     const int                             degreemin       = 4,
@@ -51,12 +42,6 @@ public:
     const Approx_ParametrizationType      parametrization = Approx_ChordLength,
     const bool                            Squares         = false);
 
-  //! The MultiLine <Line> will be approximated until tolerances
-  //! will be reached.
-  //! The approximation will be done from degreemin to degreemax
-  //! with a cutting if the corresponding boolean is True.
-  //! If <Squares> is True, the computation will be done with
-  //! no iteration at all.
   Standard_EXPORT GeomInt_TheComputeLineOfWLApprox(const GeomInt_TheMultiLineOfWLApprox& Line,
                                                    const math_Vector&                    Parameters,
                                                    const int    degreemin    = 4,
@@ -67,7 +52,6 @@ public:
                                                    const bool   cutting      = true,
                                                    const bool   Squares      = false);
 
-  //! Initializes the fields of the algorithm.
   Standard_EXPORT GeomInt_TheComputeLineOfWLApprox(const math_Vector& Parameters,
                                                    const int          degreemin    = 4,
                                                    const int          degreemax    = 8,
@@ -77,7 +61,6 @@ public:
                                                    const bool         cutting      = true,
                                                    const bool         Squares      = false);
 
-  //! Initializes the fields of the algorithm.
   Standard_EXPORT GeomInt_TheComputeLineOfWLApprox(
     const int                        degreemin       = 4,
     const int                        degreemax       = 8,
@@ -88,11 +71,8 @@ public:
     const Approx_ParametrizationType parametrization = Approx_ChordLength,
     const bool                       Squares         = false);
 
-  //! Constructs an interpolation of the MultiLine <Line>
-  //! The result will be a C2 curve of degree 3.
   Standard_EXPORT void Interpol(const GeomInt_TheMultiLineOfWLApprox& Line);
 
-  //! Initializes the fields of the algorithm.
   Standard_EXPORT void Init(const int                        degreemin       = 4,
                             const int                        degreemax       = 8,
                             const double                     Tolerance3d     = 1.0e-03,
@@ -102,66 +82,39 @@ public:
                             const Approx_ParametrizationType parametrization = Approx_ChordLength,
                             const bool                       Squares         = false);
 
-  //! runs the algorithm after having initialized the fields.
   Standard_EXPORT void Perform(const GeomInt_TheMultiLineOfWLApprox& Line);
 
-  //! The approximation will begin with the
-  //! set of parameters <ThePar>.
   Standard_EXPORT void SetParameters(const math_Vector& ThePar);
 
-  //! The approximation will be done with the
-  //! set of knots <Knots>. The multiplicities will be set
-  //! with the degree and the desired continuity.
   Standard_EXPORT void SetKnots(const NCollection_Array1<double>& Knots);
 
-  //! The approximation will be done with the
-  //! set of knots <Knots> and the multiplicities <Mults>.
   Standard_EXPORT void SetKnotsAndMultiplicities(const NCollection_Array1<double>& Knots,
                                                  const NCollection_Array1<int>&    Mults);
 
-  //! changes the degrees of the approximation.
   Standard_EXPORT void SetDegrees(const int degreemin, const int degreemax);
 
-  //! Changes the tolerances of the approximation.
   Standard_EXPORT void SetTolerances(const double Tolerance3d, const double Tolerance2d);
 
-  //! sets the continuity of the spline.
-  //! if C = 2, the spline will be C2.
   Standard_EXPORT void SetContinuity(const int C);
 
-  //! changes the first and the last constraint points.
   Standard_EXPORT void SetConstraints(const AppParCurves_Constraint firstC,
                                       const AppParCurves_Constraint lastC);
 
-  //! Sets periodic flag.
-  //! If thePeriodic = true, algorithm tries to build periodic
-  //! multicurve using corresponding C1 boundary condition for first and last multipoints.
-  //! Multiline must be closed.
   Standard_EXPORT void SetPeriodic(const bool thePeriodic);
 
-  //! returns False if at a moment of the approximation,
-  //! the status NoApproximation has been sent by the user
-  //! when more points were needed.
   Standard_EXPORT bool IsAllApproximated() const;
 
-  //! returns False if the status NoPointsAdded has been sent.
   Standard_EXPORT bool IsToleranceReached() const;
 
-  //! returns the tolerances 2d and 3d of the MultiBSpCurve.
   Standard_EXPORT void Error(double& tol3d, double& tol2d) const;
 
-  //! returns the result of the approximation.
   Standard_EXPORT const AppParCurves_MultiBSpCurve& Value() const;
 
-  //! returns the result of the approximation.
   Standard_EXPORT AppParCurves_MultiBSpCurve& ChangeValue();
 
-  //! returns the new parameters of the approximation
-  //! corresponding to the points of the MultiBSpCurve.
   Standard_EXPORT const NCollection_Array1<double>& Parameters() const;
 
 private:
-  //! is internally used in the algorithm.
   Standard_EXPORT bool Compute(const GeomInt_TheMultiLineOfWLApprox& Line,
                                const int                             fpt,
                                const int                             lpt,
@@ -169,12 +122,10 @@ private:
                                const NCollection_Array1<double>&     Knots,
                                NCollection_Array1<int>&              Mults);
 
-  //! is internally used in the algorithm.
   Standard_EXPORT bool ComputeCurve(const GeomInt_TheMultiLineOfWLApprox& Line,
                                     const int                             firspt,
                                     const int                             lastpt);
 
-  //! computes new parameters between firstP and lastP.
   Standard_EXPORT void Parameters(const GeomInt_TheMultiLineOfWLApprox& Line,
                                   const int                             firstP,
                                   const int                             LastP,

@@ -15,7 +15,6 @@ IMPLEMENT_STANDARD_RTTIEXT(TDataStd_DeltaOnModificationOfExtStringArray, TDF_Del
 #ifdef OCCT_DEBUG
   #define MAXUP 1000
 #endif
-//=================================================================================================
 
 TDataStd_DeltaOnModificationOfExtStringArray::TDataStd_DeltaOnModificationOfExtStringArray(
   const occ::handle<TDataStd_ExtStringArray>& OldAtt)
@@ -58,7 +57,7 @@ TDataStd_DeltaOnModificationOfExtStringArray::TDataStd_DeltaOnModificationOfExtS
         {
           aCase = 3;
           N     = myUp2;
-        } // Up1 > Up2
+        }
 
         NCollection_List<int> aList;
         for (i = Arr1->Lower(); i <= N; i++)
@@ -90,8 +89,6 @@ TDataStd_DeltaOnModificationOfExtStringArray::TDataStd_DeltaOnModificationOfExtS
 #endif
   }
 }
-
-//=================================================================================================
 
 void TDataStd_DeltaOnModificationOfExtStringArray::Apply()
 {
@@ -130,7 +127,7 @@ void TDataStd_DeltaOnModificationOfExtStringArray::Apply()
   else if (myUp1 < myUp2)
     aCase = 2;
   else
-    aCase = 3; // Up1 > Up2
+    aCase = 3;
 
   if (aCase == 1 && (myIndxes.IsNull() || myValues.IsNull()))
     return;
@@ -155,7 +152,7 @@ void TDataStd_DeltaOnModificationOfExtStringArray::Apply()
     aCurAtt->myValue = strArr;
   }
   else
-  { // == 3
+  {
     int                                                          low = aStrArr->Lower();
     occ::handle<NCollection_HArray1<TCollection_ExtendedString>> strArr =
       new NCollection_HArray1<TCollection_ExtendedString>(low, myUp1);

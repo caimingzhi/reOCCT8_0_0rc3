@@ -11,15 +11,12 @@
 class TCollection_HAsciiString;
 class StepRepr_RepresentationContext;
 
-//! Representation of STEP entity ElementRepresentation
 class StepFEA_ElementRepresentation : public StepRepr_Representation
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT StepFEA_ElementRepresentation();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>& aRepresentation_Name,
     const occ::handle<NCollection_HArray1<occ::handle<StepRepr_RepresentationItem>>>&
@@ -27,11 +24,9 @@ public:
     const occ::handle<StepRepr_RepresentationContext>& aRepresentation_ContextOfItems,
     const occ::handle<NCollection_HArray1<occ::handle<StepFEA_NodeRepresentation>>>& aNodeList);
 
-  //! Returns field NodeList
   Standard_EXPORT occ::handle<NCollection_HArray1<occ::handle<StepFEA_NodeRepresentation>>>
                   NodeList() const;
 
-  //! Set field NodeList
   Standard_EXPORT void SetNodeList(
     const occ::handle<NCollection_HArray1<occ::handle<StepFEA_NodeRepresentation>>>& NodeList);
 

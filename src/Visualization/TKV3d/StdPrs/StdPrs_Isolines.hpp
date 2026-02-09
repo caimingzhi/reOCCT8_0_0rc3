@@ -13,22 +13,9 @@
 
 class TopLoc_Location;
 
-//! Tool for computing isoline representation for a face or surface.
-//! Depending on a flags set to the given Prs3d_Drawer instance, on-surface (is used
-//! by default) or on-triangulation isoline builder algorithm will be used.
-//! If the given shape is not triangulated, on-surface isoline builder will be applied
-//! regardless of Prs3d_Drawer flags.
 class StdPrs_Isolines : public Prs3d_Root
 {
 public:
-  //! Computes isolines presentation for a TopoDS face.
-  //! This method chooses proper version of isoline builder algorithm : on triangulation
-  //! or surface depending on the flag passed from Prs3d_Drawer attributes.
-  //! This method is a default way to display isolines for a given TopoDS face.
-  //! @param[in] thePresentation  the presentation.
-  //! @param[in] theFace  the face.
-  //! @param[in] theDrawer  the display settings.
-  //! @param[in] theDeflection  the deflection for isolines-on-surface version.
   inline static void Add(const occ::handle<Prs3d_Presentation>& thePresentation,
                          const TopoDS_Face&                     theFace,
                          const occ::handle<Prs3d_Drawer>&       theDrawer,
@@ -44,13 +31,6 @@ public:
     }
   }
 
-  //! Computes isolines presentation for a TopoDS face.
-  //! This method chooses proper version of isoline builder algorithm : on triangulation
-  //! or surface depending on the flag passed from Prs3d_Drawer attributes.
-  //! This method is a default way to display isolines for a given TopoDS face.
-  //! @param[in] theFace  the face.
-  //! @param[in] theDrawer  the display settings.
-  //! @param[in] theDeflection  the deflection for isolines-on-surface version.
   static void Add(const TopoDS_Face&                                            theFace,
                   const occ::handle<Prs3d_Drawer>&                              theDrawer,
                   const double                                                  theDeflection,
@@ -67,38 +47,17 @@ public:
     }
   }
 
-  //! Computes isolines on triangulation and adds them to a presentation.
-  //! @param[in] thePresentation  the presentation.
-  //! @param[in] theFace  the face.
-  //! @param[in] theDrawer  the display settings.
   Standard_EXPORT static void AddOnTriangulation(
     const occ::handle<Prs3d_Presentation>& thePresentation,
     const TopoDS_Face&                     theFace,
     const occ::handle<Prs3d_Drawer>&       theDrawer);
 
-  //! Computes isolines on triangulation.
-  //! @param[in] theFace  the face.
-  //! @param[in] theDrawer  the display settings.
-  //! @param[out] theUPolylines  the sequence of result polylines
-  //! @param[out] theVPolylines  the sequence of result polylines
   Standard_EXPORT static void AddOnTriangulation(
     const TopoDS_Face&                                            theFace,
     const occ::handle<Prs3d_Drawer>&                              theDrawer,
     NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theUPolylines,
     NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theVPolylines);
 
-  //! Computes isolines on triangulation and adds them to a presentation.
-  //! @param[in] thePresentation  the presentation.
-  //! @param[in] theTriangulation  the triangulation.
-  //! @param[in] theSurface  the definition of triangulated surface. The surface
-  //!        adapter is used to precisely evaluate isoline points using surface
-  //!        law and fit them on triangulation. If NULL is passed, the method will
-  //!        use linear interpolation of triangle node's UV coordinates to evaluate
-  //!        isoline points.
-  //! @param[in] theLocation  the location transformation defined for triangulation (surface).
-  //! @param[in] theDrawer  the display settings.
-  //! @param[in] theUIsoParams  the parameters of u isolines to compute.
-  //! @param[in] theVIsoParams  the parameters of v isolines to compute.
   Standard_EXPORT static void AddOnTriangulation(
     const occ::handle<Prs3d_Presentation>& thePresentation,
     const occ::handle<Poly_Triangulation>& theTriangulation,
@@ -108,22 +67,11 @@ public:
     const NCollection_Sequence<double>&    theUIsoParams,
     const NCollection_Sequence<double>&    theVIsoParams);
 
-  //! Computes isolines on surface and adds them to presentation.
-  //! @param[in] thePresentation  the presentation.
-  //! @param[in] theFace  the face.
-  //! @param[in] theDrawer  the display settings.
-  //! @param[in] theDeflection  the deflection value.
   Standard_EXPORT static void AddOnSurface(const occ::handle<Prs3d_Presentation>& thePresentation,
                                            const TopoDS_Face&                     theFace,
                                            const occ::handle<Prs3d_Drawer>&       theDrawer,
                                            const double                           theDeflection);
 
-  //! Computes isolines on surface and adds them to presentation.
-  //! @param[in] theFace  the face
-  //! @param[in] theDrawer  the display settings
-  //! @param[in] theDeflection  the deflection value
-  //! @param[out] theUPolylines  the sequence of result polylines
-  //! @param[out] theVPolylines  the sequence of result polylines
   Standard_EXPORT static void AddOnSurface(
     const TopoDS_Face&                                            theFace,
     const occ::handle<Prs3d_Drawer>&                              theDrawer,
@@ -131,13 +79,6 @@ public:
     NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theUPolylines,
     NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theVPolylines);
 
-  //! Computes isolines on surface and adds them to presentation.
-  //! @param[in] thePresentation  the presentation.
-  //! @param[in] theSurface  the surface.
-  //! @param[in] theDrawer  the display settings.
-  //! @param[in] theDeflection  the deflection value.
-  //! @param[in] theUIsoParams  the parameters of u isolines to compute.
-  //! @param[in] theVIsoParams  the parameters of v isolines to compute.
   Standard_EXPORT static void AddOnSurface(const occ::handle<Prs3d_Presentation>&  thePresentation,
                                            const occ::handle<BRepAdaptor_Surface>& theSurface,
                                            const occ::handle<Prs3d_Drawer>&        theDrawer,
@@ -145,17 +86,6 @@ public:
                                            const NCollection_Sequence<double>&     theUIsoParams,
                                            const NCollection_Sequence<double>&     theVIsoParams);
 
-  //! Evaluate sequence of parameters for drawing uv isolines for a given face.
-  //! @param[in] theFace  the face.
-  //! @param[in] theNbIsoU  the number of u isolines.
-  //! @param[in] theNbIsoV  the number of v isolines.
-  //! @param[in] theUVLimit  the u, v parameter value limit.
-  //! @param[out] theUIsoParams  the sequence of u isoline parameters.
-  //! @param[out] theVIsoParams  the sequence of v isoline parameters.
-  //! @param[out] theUmin  the lower U boundary of  theFace.
-  //! @param[out] theUmax  the upper U boundary of  theFace.
-  //! @param[out] theVmin  the lower V boundary of  theFace.
-  //! @param[out] theVmax  the upper V boundary of  theFace.
   Standard_EXPORT static void UVIsoParameters(const TopoDS_Face&            theFace,
                                               const int                     theNbIsoU,
                                               const int                     theNbIsoV,
@@ -168,14 +98,12 @@ public:
                                               double&                       theVmax);
 
 public:
-  //! Auxiliary structure defining 3D point on isoline.
   struct PntOnIso
   {
-    gp_Pnt Pnt;   //!< 3D point
-    double Param; //!< parameter along the line (for sorting)
+    gp_Pnt Pnt;
+    double Param;
   };
 
-  //! Auxiliary structure defining segment of isoline.
   struct SegOnIso
   {
 
@@ -192,14 +120,6 @@ public:
   };
 
 private:
-  //! Computes isolines on surface.
-  //! @param[in] theSurface  the surface
-  //! @param[in] theDrawer  the display settings
-  //! @param[in] theDeflection  the deflection value
-  //! @param[in] theUIsoParams  the parameters of u isolines to compute
-  //! @param[in] theVIsoParams  the parameters of v isolines to compute
-  //! @param[out] theUPolylines  the sequence of result polylines
-  //! @param[out] theVPolylines  the sequence of result polylines
   Standard_EXPORT static void addOnSurface(
     const occ::handle<BRepAdaptor_Surface>&                       theSurface,
     const occ::handle<Prs3d_Drawer>&                              theDrawer,
@@ -209,20 +129,6 @@ private:
     NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theUPolylines,
     NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theVPolylines);
 
-  //! Computes isolines on triangulation.
-  //! @param[in] thePresentation  the presentation
-  //! @param[in] theTriangulation  the triangulation
-  //! @param[in] theSurface  the definition of triangulated surface. The surface
-  //!        adapter is used to precisely evaluate isoline points using surface
-  //!        law and fit them on triangulation. If NULL is passed, the method will
-  //!        use linear interpolation of triangle node's UV coordinates to evaluate
-  //!        isoline points
-  //! @param[in] theLocation  the location transformation defined for triangulation (surface)
-  //! @param[in] theDrawer  the display settings
-  //! @param[in] theUIsoParams  the parameters of u isolines to compute
-  //! @param[in] theVIsoParams  the parameters of v isolines to compute
-  //! @param[out] theUPolylines  the sequence of result polylines
-  //! @param[out] theVPolylines  the sequence of result polylines
   Standard_EXPORT static void addOnTriangulation(
     const occ::handle<Poly_Triangulation>&                        theTriangulation,
     const occ::handle<Geom_Surface>&                              theSurface,
@@ -232,16 +138,6 @@ private:
     NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theUPolylines,
     NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theVPolylines);
 
-  //! Find isoline segment on a triangle.
-  //! @param[in] theSurface  the surface.
-  //! @param[in] theIsU      when true than U isoline is specified, V isoline otherwise
-  //! @param[in] theIsoline  the isoline in uv coordinates.
-  //! @param[in] theNodesXYZ  the XYZ coordinates of triangle nodes.
-  //! @param[in] theNodesUV  the UV coordinates of triangle nodes.
-  //! @param[out] theSegment  the XYZ points of crossed triangle's links.
-  //!                         with U cross point parameter for V isoline
-  //!                         or V parameters for U isoline (depending on theIsU)
-  //! @return TRUE if the isoline passes through the triangle.
   Standard_EXPORT static bool findSegmentOnTriangulation(
     const occ::handle<Geom_Surface>& theSurface,
     const bool                       theIsU,

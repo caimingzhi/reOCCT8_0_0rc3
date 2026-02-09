@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ElSLib.hpp>
 #include <Extrema_ExtPElS.hpp>
@@ -27,8 +15,6 @@
 
 static const double ExtPElS_MyEps = Epsilon(2. * M_PI);
 
-//=============================================================================
-
 Extrema_ExtPElS::Extrema_ExtPElS()
 {
   myDone  = false;
@@ -39,51 +25,30 @@ Extrema_ExtPElS::Extrema_ExtPElS()
   }
 }
 
-//=============================================================================
-
 Extrema_ExtPElS::Extrema_ExtPElS(const gp_Pnt& P, const gp_Cylinder& S, const double Tol)
 {
 
   Perform(P, S, Tol);
 }
 
-/*-----------------------------------------------------------------------------
-Function:
-Find 2 extreme distances between point P and cylinder S.
-
-Method:
-  Let Pp be the projection of P in plane XOY of the cylinder;
-  2 cases are considered:
-  1- distance(Pp,O) < Tol:
-     There are infinite solutions; IsDone() = false.
-  2- distance(Pp,O) > Tol:
-     let V = OP.OZ,
-          U1 = angle(OX,OPp) with 0 < U1 < 2.*M_PI
-      U2 = U1 + M_PI with 0 < U2 < 2.*M_PI;
-     then (U1,V) corresponds to the min distance.
-     and  (U2,V) corresponds to the max distance.
------------------------------------------------------------------------------*/
-
 void Extrema_ExtPElS::Perform(const gp_Pnt& P, const gp_Cylinder& S, const double Tol)
 {
   myDone  = false;
   myNbExt = 0;
 
-  // Projection of point P in plane XOY of the cylinder ...
   gp_Ax3 Pos = S.Position();
   gp_Pnt O   = Pos.Location();
   gp_Vec OZ(Pos.Direction());
   double V  = gp_Vec(O, P).Dot(OZ);
   gp_Pnt Pp = P.Translated(OZ.Multiplied(-V));
 
-  // Calculation of extrema
   gp_Vec OPp(O, Pp);
   if (OPp.Magnitude() < Tol)
   {
     return;
   }
   gp_Vec myZ = Pos.XDirection() ^ Pos.YDirection();
-  double U1  = gp_Vec(Pos.XDirection()).AngleWithRef(OPp, myZ); //-M_PI<U1<M_PI
+  double U1  = gp_Vec(Pos.XDirection()).AngleWithRef(OPp, myZ);
   if (U1 > -ExtPElS_MyEps && U1 < ExtPElS_MyEps)
   {
     U1 = 0.;
@@ -106,42 +71,10 @@ void Extrema_ExtPElS::Perform(const gp_Pnt& P, const gp_Cylinder& S, const doubl
   myDone  = true;
 }
 
-//=============================================================================
-
 Extrema_ExtPElS::Extrema_ExtPElS(const gp_Pnt& P, const gp_Cone& S, const double Tol)
 {
   Perform(P, S, Tol);
 }
-
-/*-----------------------------------------------------------------------------
-Function:
-   Find 2 extreme distances between point P and cone S.
-
-Method:
-  Let M the top of the cone.
-  2 cases are considered:
-  1- distance(P,M) < Tol:
-     there is a minimum in M.
-  2- distance(P,M) > Tol:
-     Let Pp the projection of P in the plane XOY of the cone;
-     2 cases are considered:
-     1- distance(Pp,O) < Tol:
-     There is an infinite number of solutions; IsDone() = false.
-     2- distance(Pp,O) > Tol:
-        There exist 2 extrema:
-        Let Vm = value of v for point M,
-             Vp = value of v for point P,
-             U1 = angle(OX,OPp) if Vp > Vm )
-             -angle(OX,OPp) otherwise      ) with 0. < U1 < 2*M_PI,
-             U2 = U1 + M_PI with 0. < U2 < 2*M_PI;
-        We are in plane PpOZ.
-       Let A the angle of the cone,
-             B = angle(MP,MO) with 0. < B < M_PI,
-         L = longueur(MP),
-         V1 = (L * cos(B-A)) + Vm,
-         V2 = (L * cos(B+A)) + Vm;
-       then (U1,V1) and (U2,V2) correspond to min distances.
------------------------------------------------------------------------------*/
 
 void Extrema_ExtPElS::Perform(const gp_Pnt& P, const gp_Cone& S, const double Tol)
 {
@@ -159,7 +92,6 @@ void Extrema_ExtPElS::Perform(const gp_Pnt& P, const gp_Cone& S, const double To
   double L2 = MP.SquareMagnitude();
   double Vm = -(S.RefRadius() / std::sin(A));
 
-  // Case when P is mixed with S ...
   if (L2 < Tol * Tol)
   {
     mySqDist[0] = L2;
@@ -176,7 +108,6 @@ void Extrema_ExtPElS::Perform(const gp_Pnt& P, const gp_Cone& S, const double To
   else
     DirZ = gp_Vec(M, O);
 
-  // Projection of P in the reference plane of the cone ...
   double Zp = gp_Vec(O, P).Dot(OZ);
 
   gp_Pnt Pp = P.Translated(OZ.Multiplied(-Zp));
@@ -185,7 +116,7 @@ void Extrema_ExtPElS::Perform(const gp_Pnt& P, const gp_Cone& S, const double To
     return;
   double U1, V1, U2, V2;
   bool   Same = DirZ.Dot(MP) >= 0.0;
-  U1          = gp_Vec(Pos.XDirection()).AngleWithRef(OPp, myZ); //-M_PI<U1<M_PI
+  U1          = gp_Vec(Pos.XDirection()).AngleWithRef(OPp, myZ);
   if (U1 > -ExtPElS_MyEps && U1 < ExtPElS_MyEps)
   {
     U1 = 0.;
@@ -235,34 +166,10 @@ void Extrema_ExtPElS::Perform(const gp_Pnt& P, const gp_Cone& S, const double To
   myDone  = true;
 }
 
-//=============================================================================
-
 Extrema_ExtPElS::Extrema_ExtPElS(const gp_Pnt& P, const gp_Sphere& S, const double Tol)
 {
   Perform(P, S, Tol);
 }
-
-/*-----------------------------------------------------------------------------
-Function:
-  Find 2 extreme distances between point P and sphere S.
-
-Method:
-   Let O be the origin of the sphere.
-  2 cases are considered:
-  1- distance(P,O) < Tol:
-     There is an infinite number of solutions; IsDone() = false
-  2- distance(P,O) > Tol:
-     Let Pp be the projection of point P in the plane XOY of the sphere;
-     2 cases are considered:
-     1- distance(Pp,O) < Tol:
-        2 solutions are: (0,-M_PI/2.) and (0.,M_PI/2.)
-     2- distance(Pp,O) > Tol:
-        Let U1 = angle(OX,OPp) with 0. < U1 < 2.*M_PI,
-         U2 = U1 + M_PI avec 0. < U2 < 2*M_PI,
-         V1 = angle(OPp,OP) with -M_PI/2. < V1 < M_PI/2. ,
-    then (U1, V1) corresponds to the min distance
-    and  (U2,-V1) corresponds to the max distance.
------------------------------------------------------------------------------*/
 
 void Extrema_ExtPElS::Perform(const gp_Pnt& P, const gp_Sphere& S, const double Tol)
 {
@@ -272,19 +179,16 @@ void Extrema_ExtPElS::Perform(const gp_Pnt& P, const gp_Sphere& S, const double 
   gp_Ax3 Pos = S.Position();
   gp_Vec OP(Pos.Location(), P);
 
-  // Case when P is mixed with O ...
   if (OP.SquareMagnitude() < Tol * Tol)
   {
     return;
   }
 
-  // Projection if P in plane XOY of the sphere ...
   gp_Pnt O = Pos.Location();
   gp_Vec OZ(Pos.Direction());
   double Zp = OP.Dot(OZ);
   gp_Pnt Pp = P.Translated(OZ.Multiplied(-Zp));
 
-  // Calculation of extrema ...
   gp_Vec OPp(O, Pp);
   double U1, U2, V;
   if (OPp.SquareMagnitude() < Tol * Tol)
@@ -332,45 +236,22 @@ void Extrema_ExtPElS::Perform(const gp_Pnt& P, const gp_Sphere& S, const double 
   myDone  = true;
 }
 
-//=============================================================================
-
 Extrema_ExtPElS::Extrema_ExtPElS(const gp_Pnt& P, const gp_Torus& S, const double Tol)
 {
   Perform(P, S, Tol);
 }
 
-/*-----------------------------------------------------------------------------
-Function:
-  Find 2 extreme distances between point P and torus S.
-
-  Method:
-  Let Pp be the projection of point P in plane XOY of the torus;
-  2 cases are considered:
-  1- distance(Pp,O) < Tol:
-     There is an infinite number of solutions; IsDone() = false.
-  2- distance(Pp,O) > Tol:
-     One is located in plane PpOZ;
-     Let V1 = angle(OX,OPp) with 0. < V1 < 2.*M_PI,
-     V2 = V1 + M_PI with 0. < V2 < 2.*M_PI,
-     O1 and O2 centers of circles (O1 on coord. posit.)
-         U1 = angle(OPp,O1P),
-     U2 = angle(OPp,PO2);
-     then (U1,V1) corresponds to the min distance
-     and  (U2,V2) corresponds to the max distance.
------------------------------------------------------------------------------*/
 void Extrema_ExtPElS::Perform(const gp_Pnt& P, const gp_Torus& S, const double Tol)
 {
   const double tol2 = Tol * Tol;
   myDone            = false;
   myNbExt           = 0;
 
-  // Projection of P in plane XOY ...
   gp_Ax3 Pos = S.Position();
   gp_Pnt O   = Pos.Location();
   gp_Vec OZ(Pos.Direction());
   gp_Pnt Pp = P.Translated(OZ.Multiplied(-(gp_Vec(O, P).Dot(Pos.Direction()))));
 
-  // Calculation of extrema ...
   gp_Vec OPp(O, Pp);
   double R2 = OPp.SquareMagnitude();
   if (R2 < tol2)
@@ -453,13 +334,12 @@ Extrema_ExtPElS::Extrema_ExtPElS(const gp_Pnt& P, const gp_Pln& S, const double 
 
 void Extrema_ExtPElS::Perform(const gp_Pnt& P,
                               const gp_Pln& S,
-                              //			       const double Tol)
+
                               const double)
 {
   myDone  = false;
   myNbExt = 0;
 
-  // Projection of point P in plane XOY of the cylinder ...
   gp_Pnt O = S.Location();
   gp_Vec OZ(S.Axis().Direction());
   double U, V = gp_Vec(O, P).Dot(OZ);
@@ -472,14 +352,10 @@ void Extrema_ExtPElS::Perform(const gp_Pnt& P,
   myDone      = true;
 }
 
-//=============================================================================
-
 bool Extrema_ExtPElS::IsDone() const
 {
   return myDone;
 }
-
-//=============================================================================
 
 int Extrema_ExtPElS::NbExt() const
 {
@@ -490,8 +366,6 @@ int Extrema_ExtPElS::NbExt() const
   return myNbExt;
 }
 
-//=============================================================================
-
 double Extrema_ExtPElS::SquareDistance(const int N) const
 {
   if ((N < 1) || (N > NbExt()))
@@ -501,8 +375,6 @@ double Extrema_ExtPElS::SquareDistance(const int N) const
   return mySqDist[N - 1];
 }
 
-//=============================================================================
-
 const Extrema_POnSurf& Extrema_ExtPElS::Point(const int N) const
 {
   if ((N < 1) || (N > NbExt()))
@@ -511,5 +383,3 @@ const Extrema_POnSurf& Extrema_ExtPElS::Point(const int N) const
   }
   return myPoint[N - 1];
 }
-
-//=============================================================================

@@ -11,8 +11,6 @@
 #include <NCollection_DataMap.hpp>
 #include <gp_Pnt.hpp>
 
-//! Defines a revolution form (using Revol from BRepSweep)
-//! with modifications provided for the RevolutionForm feature.
 class LocOpe_RevolutionForm
 {
 public:

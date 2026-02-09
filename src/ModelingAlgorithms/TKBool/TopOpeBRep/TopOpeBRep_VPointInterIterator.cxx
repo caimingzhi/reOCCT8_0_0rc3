@@ -2,8 +2,6 @@
 #include <TopOpeBRep_VPointInter.hpp>
 #include <TopOpeBRep_VPointInterIterator.hpp>
 
-//=================================================================================================
-
 TopOpeBRep_VPointInterIterator::TopOpeBRep_VPointInterIterator()
     : myLineInter(nullptr),
       myVPointIndex(0),
@@ -12,14 +10,10 @@ TopOpeBRep_VPointInterIterator::TopOpeBRep_VPointInterIterator()
 {
 }
 
-//=================================================================================================
-
 TopOpeBRep_VPointInterIterator::TopOpeBRep_VPointInterIterator(const TopOpeBRep_LineInter& LI)
 {
   Init(LI);
 }
-
-//=================================================================================================
 
 void TopOpeBRep_VPointInterIterator::Init(const TopOpeBRep_LineInter& LI, const bool checkkeep)
 {
@@ -27,8 +21,6 @@ void TopOpeBRep_VPointInterIterator::Init(const TopOpeBRep_LineInter& LI, const 
   mycheckkeep = checkkeep;
   Init();
 }
-
-//=================================================================================================
 
 void TopOpeBRep_VPointInterIterator::Init()
 {
@@ -47,14 +39,10 @@ void TopOpeBRep_VPointInterIterator::Init()
   }
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_VPointInterIterator::More() const
 {
   return (myVPointIndex <= myVPointNb);
 }
-
-//=================================================================================================
 
 void TopOpeBRep_VPointInterIterator::Next()
 {
@@ -72,8 +60,6 @@ void TopOpeBRep_VPointInterIterator::Next()
   }
 }
 
-//=================================================================================================
-
 const TopOpeBRep_VPointInter& TopOpeBRep_VPointInterIterator::CurrentVP()
 {
   if (!More())
@@ -82,8 +68,6 @@ const TopOpeBRep_VPointInter& TopOpeBRep_VPointInterIterator::CurrentVP()
   return VP;
 }
 
-//=================================================================================================
-
 TopOpeBRep_VPointInter& TopOpeBRep_VPointInterIterator::ChangeCurrentVP()
 {
   if (!More())
@@ -91,8 +75,6 @@ TopOpeBRep_VPointInter& TopOpeBRep_VPointInterIterator::ChangeCurrentVP()
   TopOpeBRep_VPointInter& VP = myLineInter->ChangeVPoint(myVPointIndex);
   return VP;
 }
-
-//=================================================================================================
 
 int TopOpeBRep_VPointInterIterator::CurrentVPIndex() const
 {

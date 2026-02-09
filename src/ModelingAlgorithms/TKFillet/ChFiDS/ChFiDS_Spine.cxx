@@ -14,8 +14,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ChFiDS_Spine, Standard_Transient)
 
-//=================================================================================================
-
 ChFiDS_Spine::ChFiDS_Spine()
     : splitdone(false),
       myMode(ChFiDS_ClassicChamfer),
@@ -39,8 +37,6 @@ ChFiDS_Spine::ChFiDS_Spine()
       errorstate(ChFiDS_Ok)
 {
 }
-
-//=================================================================================================
 
 ChFiDS_Spine::ChFiDS_Spine(const double Tol)
     : splitdone(false),
@@ -66,21 +62,15 @@ ChFiDS_Spine::ChFiDS_Spine(const double Tol)
 {
 }
 
-//=================================================================================================
-
 void ChFiDS_Spine::AppendElSpine(const occ::handle<ChFiDS_ElSpine>& Els)
 {
   elspines.Append(Els);
 }
 
-//=================================================================================================
-
 void ChFiDS_Spine::AppendOffsetElSpine(const occ::handle<ChFiDS_ElSpine>& Els)
 {
   offset_elspines.Append(Els);
 }
-
-//=================================================================================================
 
 occ::handle<ChFiDS_ElSpine> ChFiDS_Spine::ElSpine(const TopoDS_Edge& E) const
 {
@@ -114,40 +104,30 @@ occ::handle<ChFiDS_ElSpine> ChFiDS_Spine::ElSpine(const double W) const
   }
 }
 
-//=================================================================================================
-
 NCollection_List<occ::handle<ChFiDS_ElSpine>>& ChFiDS_Spine::ChangeElSpines()
 {
   return elspines;
 }
-
-//=================================================================================================
 
 NCollection_List<occ::handle<ChFiDS_ElSpine>>& ChFiDS_Spine::ChangeOffsetElSpines()
 {
   return offset_elspines;
 }
 
-//=================================================================================================
-
 void ChFiDS_Spine::SplitDone(const bool B)
 {
   splitdone = B;
 }
-
-//=================================================================================================
 
 bool ChFiDS_Spine::SplitDone() const
 {
   return splitdone;
 }
 
-//=================================================================================================
-
 void ChFiDS_Spine::Reset(const bool AllData)
 {
   splitdone = false;
-  // if(AllData && !isconstant.IsNull()) isconstant->ChangeArray1().Init(0);
+
   elspines.Clear();
   if (AllData)
   {
@@ -157,8 +137,6 @@ void ChFiDS_Spine::Reset(const bool AllData)
   }
 }
 
-//=================================================================================================
-
 double ChFiDS_Spine::FirstParameter() const
 {
   if (firstprolon)
@@ -166,16 +144,12 @@ double ChFiDS_Spine::FirstParameter() const
   return 0.;
 }
 
-//=================================================================================================
-
 double ChFiDS_Spine::LastParameter() const
 {
   if (lastprolon)
     return lastparam;
   return abscissa->Value(abscissa->Upper());
 }
-
-//=================================================================================================
 
 void ChFiDS_Spine::SetFirstParameter(const double Par)
 {
@@ -188,8 +162,6 @@ void ChFiDS_Spine::SetFirstParameter(const double Par)
   firstprolon = true;
   firstparam  = Par;
 }
-
-//=================================================================================================
 
 void ChFiDS_Spine::SetLastParameter(const double Par)
 {
@@ -204,8 +176,6 @@ void ChFiDS_Spine::SetLastParameter(const double Par)
   lastparam  = Par;
 }
 
-//=================================================================================================
-
 double ChFiDS_Spine::FirstParameter(const int IndexSpine) const
 {
   if (IndexSpine == 1)
@@ -213,14 +183,10 @@ double ChFiDS_Spine::FirstParameter(const int IndexSpine) const
   return abscissa->Value(IndexSpine - 1);
 }
 
-//=================================================================================================
-
 double ChFiDS_Spine::LastParameter(const int IndexSpine) const
 {
   return abscissa->Value(IndexSpine);
 }
-
-//=================================================================================================
 
 double ChFiDS_Spine::Length(const int IndexSpine) const
 {
@@ -229,21 +195,15 @@ double ChFiDS_Spine::Length(const int IndexSpine) const
   return abscissa->Value(IndexSpine) - abscissa->Value(IndexSpine - 1);
 }
 
-//=================================================================================================
-
 bool ChFiDS_Spine::IsPeriodic() const
 {
   return (firstState == ChFiDS_Closed);
 }
 
-//=================================================================================================
-
 bool ChFiDS_Spine::IsClosed() const
 {
   return (FirstVertex().IsSame(LastVertex()));
 }
-
-//=================================================================================================
 
 TopoDS_Vertex ChFiDS_Spine::FirstVertex() const
 {
@@ -253,8 +213,6 @@ TopoDS_Vertex ChFiDS_Spine::FirstVertex() const
   return TopExp::LastVertex(E);
 }
 
-//=================================================================================================
-
 TopoDS_Vertex ChFiDS_Spine::LastVertex() const
 {
   TopoDS_Edge E = TopoDS::Edge(spine.Last());
@@ -262,8 +220,6 @@ TopoDS_Vertex ChFiDS_Spine::LastVertex() const
     return TopExp::LastVertex(E);
   return TopExp::FirstVertex(E);
 }
-
-//=================================================================================================
 
 double ChFiDS_Spine::Absc(const TopoDS_Vertex& V) const
 {
@@ -293,8 +249,6 @@ double ChFiDS_Spine::Absc(const TopoDS_Vertex& V) const
   return -1.;
 }
 
-//=================================================================================================
-
 double ChFiDS_Spine::Period() const
 {
   if (!IsPeriodic())
@@ -302,14 +256,10 @@ double ChFiDS_Spine::Period() const
   return abscissa->Value(abscissa->Upper());
 }
 
-//=================================================================================================
-
 double ChFiDS_Spine::Resolution(const double R3d) const
 {
   return R3d;
 }
-
-//=================================================================================================
 
 void ChFiDS_Spine::SetFirstTgt(const double W)
 {
@@ -319,16 +269,13 @@ void ChFiDS_Spine::SetFirstTgt(const double W)
   if (W >= Precision::Confusion())
     std::cout << "Interior extension at start of the guideline" << std::endl;
 #endif
-  // The flag is suspended if is already positioned to avoid
-  // stopping d1
+
   hasfirsttgt = false;
   D1(W, firstori, firsttgt);
-  // and it is reset.
+
   hasfirsttgt = true;
   firsttgtpar = W;
 }
-
-//=================================================================================================
 
 void ChFiDS_Spine::SetLastTgt(const double W)
 {
@@ -340,30 +287,23 @@ void ChFiDS_Spine::SetLastTgt(const double W)
   if (L <= -Precision::Confusion())
     std::cout << "Interior extension at the end of guideline" << std::endl;
 #endif
-  // The flag is suspended if is already positioned to avoid
-  // stopping d1
+
   haslasttgt = false;
   D1(W, lastori, lasttgt);
-  // and it is reset.
+
   haslasttgt = true;
   lasttgtpar = W;
 }
-
-//=================================================================================================
 
 bool ChFiDS_Spine::HasFirstTgt() const
 {
   return hasfirsttgt;
 }
 
-//=================================================================================================
-
 bool ChFiDS_Spine::HasLastTgt() const
 {
   return haslasttgt;
 }
-
-//=================================================================================================
 
 void ChFiDS_Spine::SetReference(const double W)
 {
@@ -375,8 +315,6 @@ void ChFiDS_Spine::SetReference(const double W)
     valref = W;
 }
 
-//=================================================================================================
-
 void ChFiDS_Spine::SetReference(const int I)
 {
   hasref = true;
@@ -385,8 +323,6 @@ void ChFiDS_Spine::SetReference(const int I)
   else
     valref = (abscissa->Value(I) + abscissa->Value(I - 1)) * 0.5;
 }
-
-//=================================================================================================
 
 int ChFiDS_Spine::Index(const double W, const bool Forward) const
 {
@@ -415,8 +351,6 @@ int ChFiDS_Spine::Index(const double W, const bool Forward) const
   return ind;
 }
 
-//=================================================================================================
-
 int ChFiDS_Spine::Index(const TopoDS_Edge& E) const
 {
   for (int IE = 1; IE <= spine.Length(); IE++)
@@ -427,14 +361,10 @@ int ChFiDS_Spine::Index(const TopoDS_Edge& E) const
   return 0;
 }
 
-//=================================================================================================
-
 void ChFiDS_Spine::UnsetReference()
 {
   hasref = false;
 }
-
-//=================================================================================================
 
 void ChFiDS_Spine::Load()
 {
@@ -456,8 +386,6 @@ void ChFiDS_Spine::Load()
   indexofcurve = 1;
   myCurve.Initialize(TopoDS::Edge(spine.Value(1)));
 
-  // Here, we should update tolesp according to curve parameter range
-  // if tolesp candidate less than default initial value.
   const double umin = FirstParameter();
   const double umax = LastParameter();
 
@@ -468,14 +396,10 @@ void ChFiDS_Spine::Load()
   }
 }
 
-//=================================================================================================
-
 double ChFiDS_Spine::Absc(const double U)
 {
   return Absc(U, indexofcurve);
 }
-
-//=================================================================================================
 
 double ChFiDS_Spine::Absc(const double U, const int I)
 {
@@ -498,8 +422,6 @@ double ChFiDS_Spine::Absc(const double U, const int I)
   return L;
 }
 
-//=================================================================================================
-
 void ChFiDS_Spine::Parameter(const double AbsC, double& U, const bool Oriented)
 {
   int Index;
@@ -510,8 +432,6 @@ void ChFiDS_Spine::Parameter(const double AbsC, double& U, const bool Oriented)
   }
   Parameter(Index, AbsC, U, Oriented);
 }
-
-//=================================================================================================
 
 void ChFiDS_Spine::Parameter(const int Index, const double AbsC, double& U, const bool Oriented)
 {
@@ -538,8 +458,7 @@ void ChFiDS_Spine::Parameter(const int Index, const double AbsC, double& U, cons
   }
   double t    = L / Length(Index);
   double uapp = (1. - t) * myCurve.FirstParameter() + t * myCurve.LastParameter();
-  //  GCPnts_AbscissaPoint GCP;
-  //  GCP.Perform(myCurve,L,myCurve.FirstParameter(),uapp,BRep_Tool::Tolerance(myCurve.Edge()));
+
   GCPnts_AbscissaPoint GCP(myCurve, L, myCurve.FirstParameter(), uapp);
   U = GCP.Parameter();
   if (Or == TopAbs_REVERSED && Oriented)
@@ -547,8 +466,6 @@ void ChFiDS_Spine::Parameter(const int Index, const double AbsC, double& U, cons
     U = (myCurve.LastParameter() + myCurve.FirstParameter()) - U;
   }
 }
-
-//=================================================================================================
 
 void ChFiDS_Spine::Prepare(double& L, int& Ind) const
 {
@@ -624,8 +541,6 @@ void ChFiDS_Spine::Prepare(double& L, int& Ind) const
   }
 }
 
-//=================================================================================================
-
 gp_Pnt ChFiDS_Spine::Value(const double AbsC)
 {
 
@@ -658,20 +573,15 @@ gp_Pnt ChFiDS_Spine::Value(const double AbsC)
   }
   double t    = L / Length(Index);
   double uapp = (1. - t) * myCurve.FirstParameter() + t * myCurve.LastParameter();
-  //  GCPnts_AbscissaPoint GCP;
-  //  GCP.Perform(myCurve,L,myCurve.FirstParameter(),uapp,BRep_Tool::Tolerance(myCurve.Edge()));
+
   GCPnts_AbscissaPoint GCP(myCurve, L, myCurve.FirstParameter(), uapp);
   return myCurve.Value(GCP.Parameter());
 }
-
-//=================================================================================================
 
 void ChFiDS_Spine::D0(const double AbsC, gp_Pnt& P)
 {
   P = Value(AbsC);
 }
-
-//=================================================================================================
 
 void ChFiDS_Spine::D1(const double AbsC, gp_Pnt& P, gp_Vec& V1)
 {
@@ -706,8 +616,7 @@ void ChFiDS_Spine::D1(const double AbsC, gp_Pnt& P, gp_Vec& V1)
     }
     double t    = L / Length(Index);
     double uapp = (1. - t) * myCurve.FirstParameter() + t * myCurve.LastParameter();
-    //    GCPnts_AbscissaPoint GCP;
-    //    GCP.Perform(myCurve,L,myCurve.FirstParameter(),uapp,BRep_Tool::Tolerance(myCurve.Edge()));
+
     GCPnts_AbscissaPoint GCP(myCurve, L, myCurve.FirstParameter(), uapp);
     myCurve.D1(GCP.Parameter(), P, V1);
     double D1 = 1. / V1.Magnitude();
@@ -716,8 +625,6 @@ void ChFiDS_Spine::D1(const double AbsC, gp_Pnt& P, gp_Vec& V1)
     V1.Multiply(D1);
   }
 }
-
-//=================================================================================================
 
 void ChFiDS_Spine::D2(const double AbsC, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2)
 {
@@ -755,8 +662,7 @@ void ChFiDS_Spine::D2(const double AbsC, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2)
     }
     double t    = L / Length(Index);
     double uapp = (1. - t) * myCurve.FirstParameter() + t * myCurve.LastParameter();
-    //    GCPnts_AbscissaPoint GCP;
-    //    GCP.Perform(myCurve,L,myCurve.FirstParameter(),uapp,BRep_Tool::Tolerance(myCurve.Edge()));
+
     GCPnts_AbscissaPoint GCP(myCurve, L, myCurve.FirstParameter(), uapp);
     myCurve.D2(GCP.Parameter(), P, V1, V2);
     double N1 = V1.SquareMagnitude();
@@ -772,8 +678,6 @@ void ChFiDS_Spine::D2(const double AbsC, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2)
   }
 }
 
-//=================================================================================================
-
 void ChFiDS_Spine::SetCurrent(const int Index)
 {
   if (Index != indexofcurve)
@@ -782,8 +686,6 @@ void ChFiDS_Spine::SetCurrent(const int Index)
     myCurve.Initialize(TopoDS::Edge(spine.Value(indexofcurve)));
   }
 }
-
-//=================================================================================================
 
 const BRepAdaptor_Curve& ChFiDS_Spine::CurrentElementarySpine(const int Index)
 {
@@ -795,14 +697,10 @@ const BRepAdaptor_Curve& ChFiDS_Spine::CurrentElementarySpine(const int Index)
   return myCurve;
 }
 
-//=================================================================================================
-
 GeomAbs_CurveType ChFiDS_Spine::GetType() const
 {
   return myCurve.GetType();
 }
-
-//=================================================================================================
 
 gp_Lin ChFiDS_Spine::Line() const
 {
@@ -819,8 +717,6 @@ gp_Lin ChFiDS_Spine::Line() const
   return LL;
 }
 
-//=================================================================================================
-
 gp_Circ ChFiDS_Spine::Circle() const
 {
   gp_Ax2 Ac = myCurve.Circle().Position();
@@ -836,19 +732,10 @@ gp_Circ ChFiDS_Spine::Circle() const
   return gp_Circ(A, myCurve.Circle().Radius());
 }
 
-//=======================================================================
-// function : SetErrorStatus
-// purpose  : met a jour le statut d'erreur
-//=======================================================================
 void ChFiDS_Spine::SetErrorStatus(const ChFiDS_ErrorStatus state)
 {
   errorstate = state;
 }
-
-//=======================================================================
-// function : ErrorStatus
-// purpose  : renvoie le statut d'erreur concernant la spine
-//=======================================================================
 
 ChFiDS_ErrorStatus ChFiDS_Spine::ErrorStatus() const
 {

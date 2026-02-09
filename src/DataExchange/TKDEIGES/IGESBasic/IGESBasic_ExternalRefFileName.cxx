@@ -12,7 +12,6 @@ void IGESBasic_ExternalRefFileName::Init(const occ::handle<TCollection_HAsciiStr
   theExtRefFileIdentifier = aFileIdent;
   theExtRefEntitySymbName = anExtName;
   InitTypeAndForm(416, FormNumber());
-  //  FormNumber 0-2 : meaning not clear. Could be 0:Definition  2:Entity
 }
 
 void IGESBasic_ExternalRefFileName::SetForEntity(const bool F)

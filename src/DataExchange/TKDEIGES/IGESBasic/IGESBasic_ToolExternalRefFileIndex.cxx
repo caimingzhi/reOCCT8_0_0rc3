@@ -25,7 +25,7 @@ void IGESBasic_ToolExternalRefFileIndex::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&        IR,
   IGESData_ParamReader&                              PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   int                                                                     num, i;
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> tempNames;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>      tempEntities;
@@ -41,15 +41,10 @@ void IGESBasic_ToolExternalRefFileIndex::ReadOwnParams(
     for (i = 1; i <= num; i++)
     {
       occ::handle<TCollection_HAsciiString> tempNam;
-      if (PR.ReadText(PR.Current(),
-                      "External Reference Entity",
-                      tempNam)) // szv#4:S4163:12Mar99 `st=` not needed
+      if (PR.ReadText(PR.Current(), "External Reference Entity", tempNam))
         tempNames->SetValue(i, tempNam);
       occ::handle<IGESData_IGESEntity> tempEnt;
-      if (PR.ReadEntity(IR,
-                        PR.Current(),
-                        "Internal Entity",
-                        tempEnt)) // szv#4:S4163:12Mar99 `st=` not needed
+      if (PR.ReadEntity(IR, PR.Current(), "Internal Entity", tempEnt))
         tempEntities->SetValue(i, tempEnt);
     }
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
@@ -98,7 +93,7 @@ void IGESBasic_ToolExternalRefFileIndex::OwnCopy(
 }
 
 IGESData_DirChecker IGESBasic_ToolExternalRefFileIndex::DirChecker(
-  const occ::handle<IGESBasic_ExternalRefFileIndex>& /* ent */) const
+  const occ::handle<IGESBasic_ExternalRefFileIndex>&) const
 {
   IGESData_DirChecker DC(402, 12);
   DC.Structure(IGESData_DefVoid);
@@ -113,9 +108,9 @@ IGESData_DirChecker IGESBasic_ToolExternalRefFileIndex::DirChecker(
 }
 
 void IGESBasic_ToolExternalRefFileIndex::OwnCheck(
-  const occ::handle<IGESBasic_ExternalRefFileIndex>& /* ent */,
+  const occ::handle<IGESBasic_ExternalRefFileIndex>&,
   const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /* ach */) const
+  occ::handle<Interface_Check>&) const
 {
 }
 

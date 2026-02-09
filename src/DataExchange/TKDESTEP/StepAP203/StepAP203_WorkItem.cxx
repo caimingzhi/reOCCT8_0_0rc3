@@ -2,11 +2,7 @@
 #include <StepAP203_WorkItem.hpp>
 #include <StepBasic_ProductDefinitionFormation.hpp>
 
-//=================================================================================================
-
 StepAP203_WorkItem::StepAP203_WorkItem() = default;
-
-//=================================================================================================
 
 int StepAP203_WorkItem::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -16,8 +12,6 @@ int StepAP203_WorkItem::CaseNum(const occ::handle<Standard_Transient>& ent) cons
     return 1;
   return 0;
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_ProductDefinitionFormation> StepAP203_WorkItem::ProductDefinitionFormation()
   const

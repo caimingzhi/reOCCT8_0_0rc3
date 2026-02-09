@@ -12,28 +12,20 @@
 #include <Transfer_SimpleBinderOfTransient.hpp>
 #include <NCollection_IndexedDataMap.hpp>
 
-//=================================================================================================
-
 Transfer_ActorOfProcessForFinder::Transfer_ActorOfProcessForFinder() = default;
 
-//=================================================================================================
-
-bool Transfer_ActorOfProcessForFinder::Recognize(const occ::handle<Transfer_Finder>& /*start*/)
+bool Transfer_ActorOfProcessForFinder::Recognize(const occ::handle<Transfer_Finder>&)
 {
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_Binder> Transfer_ActorOfProcessForFinder::Transferring(
-  const occ::handle<Transfer_Finder>& /*start*/,
-  const occ::handle<Transfer_ProcessForFinder>& /*TP*/,
-  const Message_ProgressRange& /*theProgress*/)
+  const occ::handle<Transfer_Finder>&,
+  const occ::handle<Transfer_ProcessForFinder>&,
+  const Message_ProgressRange&)
 {
   return NullResult();
 }
-
-//=================================================================================================
 
 occ::handle<Transfer_SimpleBinderOfTransient> Transfer_ActorOfProcessForFinder::TransientResult(
   const occ::handle<Standard_Transient>& res) const
@@ -46,15 +38,11 @@ occ::handle<Transfer_SimpleBinderOfTransient> Transfer_ActorOfProcessForFinder::
   return binder;
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_Binder> Transfer_ActorOfProcessForFinder::NullResult() const
 {
   occ::handle<Transfer_Binder> binder;
   return binder;
 }
-
-//=================================================================================================
 
 void Transfer_ActorOfProcessForFinder::SetNext(
   const occ::handle<Transfer_ActorOfProcessForFinder>& next)
@@ -72,21 +60,15 @@ void Transfer_ActorOfProcessForFinder::SetNext(
     thenext->SetNext(next);
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_ActorOfProcessForFinder> Transfer_ActorOfProcessForFinder::Next() const
 {
   return thenext;
 }
 
-//=================================================================================================
-
 void Transfer_ActorOfProcessForFinder::SetLast(const bool mode)
 {
   thelast = mode;
 }
-
-//=================================================================================================
 
 bool Transfer_ActorOfProcessForFinder::IsLast() const
 {

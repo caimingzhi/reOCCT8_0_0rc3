@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_IntParam.hpp>
 #include <IFSelect_PacketList.hpp>
@@ -64,8 +53,7 @@ IGESSelect_Activator::IGESSelect_Activator()
     return;
   }
   THE_IGESSelect_Activator_initActivator = 1;
-  //  Add ( 0,"load");
-  //  Add ( 0,"loadiges");    // homonyme
+
   SetForGroup("XSTEP-IGES");
 
   Add(5, "listviews");
@@ -110,16 +98,16 @@ IFSelect_ReturnStatus IGESSelect_Activator::Do(const int                        
   int         argc = pilot->NbWords();
   const char* arg1 = pilot->Word(1).ToCString();
   const char* arg2 = pilot->Word(2).ToCString();
-  //  const char* arg3 = pilot->Word(3).ToCString();
+
   occ::handle<IFSelect_WorkSession> WS = pilot->Session();
 
   switch (number)
   {
 
-    case 5: //        ****    ListViews (without additional sorting)
-    case 6: //        ****    ListDrawings
+    case 5:
+    case 6:
     case 7:
-    { //        ****    ListS(ingle)Views
+    {
       int listmode = 0;
       if (argc == 2 && arg1[0] == '?')
         argc = -1;
@@ -159,7 +147,7 @@ IFSelect_ReturnStatus IGESSelect_Activator::Do(const int                        
         vs->AddModel(WS->Model());
       else
       {
-        //   on demande une selection
+
         DeclareAndCast(IFSelect_Selection, sel, WS->NamedItem(arg2));
         if (sel.IsNull())
         {
@@ -207,7 +195,7 @@ IFSelect_ReturnStatus IGESSelect_Activator::Do(const int                        
     }
 
     case 10:
-    { //        ****    IGESType (form Type/Form)
+    {
       if (argc < 2)
       {
         std::cout << "Give the desired type number, + optionally the form\n"
@@ -225,12 +213,12 @@ IFSelect_ReturnStatus IGESSelect_Activator::Do(const int                        
     }
 
     case 11:
-    { //        ****    IGES BypassGroup
+    {
       return pilot->RecordItem(new IGESSelect_SelectBypassGroup);
     }
 
     case 12:
-    { //        ****    IGES Name
+    {
       if (argc < 2)
       {
         std::cout << "Give a TextParam Name for IGESName" << std::endl;
@@ -242,12 +230,12 @@ IFSelect_ReturnStatus IGESSelect_Activator::Do(const int                        
     }
 
     case 13:
-    { //        ****    IGES VisibleStatus
+    {
       return pilot->RecordItem(new IGESSelect_SelectVisibleStatus);
     }
 
     case 14:
-    { //        ****    IGES LevelNumber
+    {
       if (argc < 2)
       {
         std::cout << "Give IntParam name for Level" << std::endl;
@@ -265,33 +253,33 @@ IFSelect_ReturnStatus IGESSelect_Activator::Do(const int                        
     }
 
     case 21:
-    { //        ****    IGES FromDrawing
+    {
       return pilot->RecordItem(new IGESSelect_SelectFromDrawing);
     }
     case 22:
-    { //        ****    IGES FromSingleView
+    {
       return pilot->RecordItem(new IGESSelect_SelectFromSingleView);
     }
     case 23:
-    { //        ****    IGES FromDrawing
+    {
       return pilot->RecordItem(new IGESSelect_SelectDrawingFrom);
     }
     case 24:
-    { //        ****    IGES FromDrawing
+    {
       return pilot->RecordItem(new IGESSelect_SelectSingleViewFrom);
     }
 
     case 31:
-    { //        ****    IGES DispatchPerDrawing
+    {
       return pilot->RecordItem(new IGESSelect_DispPerDrawing);
     }
     case 32:
-    { //        ****    IGES DispatchPerSingleView
+    {
       return pilot->RecordItem(new IGESSelect_DispPerSingleView);
     }
 
     case 40:
-    { //        ****    FloatFormat
+    {
       char prem = ' ';
       if (argc < 2)
         prem = '?';
@@ -351,7 +339,7 @@ IFSelect_ReturnStatus IGESSelect_Activator::Do(const int                        
     }
 
     case 41:
-    { //        ****    SetGlobalParameter
+    {
       if (argc < 3)
       {
         std::cout << "Give integer=n0 param to change + TextParam name for the value" << std::endl;
@@ -375,45 +363,45 @@ IFSelect_ReturnStatus IGESSelect_Activator::Do(const int                        
     }
 
     case 42:
-    { //        ****    Set IGES Version 5.1
+    {
       return pilot->RecordItem(new IGESSelect_SetVersion5);
     }
     case 43:
-    { //        ****    Update Creation Date
+    {
       return pilot->RecordItem(new IGESSelect_UpdateCreationDate);
     }
     case 44:
-    { //        ****    Update Last Change Date
+    {
       return pilot->RecordItem(new IGESSelect_UpdateLastChange);
     }
     case 45:
-    { //        ****    Update File Name
+    {
       return pilot->RecordItem(new IGESSelect_UpdateFileName);
     }
 
     case 50:
-    { //        ****    AutoCorrect
+    {
       return pilot->RecordItem(new IGESSelect_AutoCorrect);
     }
     case 51:
-    { //        ****    Compute Status
+    {
       return pilot->RecordItem(new IGESSelect_ComputeStatus);
     }
     case 52:
-    { //        ****    Rebuild Groups
+    {
       return pilot->RecordItem(new IGESSelect_RebuildGroups);
     }
     case 53:
-    { //        ****    Rebuild Drawings
+    {
       return pilot->RecordItem(new IGESSelect_RebuildDrawings);
     }
     case 54:
-    { //        ****    Add Group
+    {
       return pilot->RecordItem(new IGESSelect_AddGroup);
     }
 
     case 60:
-    { //        ****    Spline To BSpline
+    {
       if (argc < 2)
       {
         std::cout << "For SplineToBSpline, give mode :\n"
@@ -435,7 +423,7 @@ IFSelect_ReturnStatus IGESSelect_Activator::Do(const int                        
     }
 
     case 70:
-    { //        ****    SetUseFlag
+    {
       int usefl = atoi(arg1);
       if (argc > 2)
       {

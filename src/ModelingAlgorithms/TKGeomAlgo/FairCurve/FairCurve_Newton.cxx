@@ -1,8 +1,6 @@
 #include <FairCurve_Newton.hpp>
 #include <math_MultipleVarFunctionWithHessian.hpp>
 
-//=================================================================================================
-
 FairCurve_Newton::FairCurve_Newton(const math_MultipleVarFunctionWithHessian& theFunction,
                                    const double                               theSpatialTolerance,
                                    const double                               theCriteriumTolerance,
@@ -18,13 +16,6 @@ FairCurve_Newton::FairCurve_Newton(const math_MultipleVarFunctionWithHessian& th
 {
 }
 
-//=======================================================================
-// function : IsConverged
-// purpose  : Convert if the steps are too small or if the criterion
-//           progresses little with a reasonable step, this last
-//           requirement allows detecting infinite slidings
-//           (case when the criterion varies troo slowly).
-//=======================================================================
 bool FairCurve_Newton::IsConverged() const
 {
   const double N = TheStep.Norm();

@@ -18,18 +18,17 @@
 IGESSolid_ToolSphere::IGESSolid_ToolSphere() = default;
 
 void IGESSolid_ToolSphere::ReadOwnParams(const occ::handle<IGESSolid_Sphere>& ent,
-                                         const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                         const occ::handle<IGESData_IGESReaderData>&,
                                          IGESData_ParamReader& PR) const
 {
   double tempRadius, tempreal;
   gp_XYZ tempCenter;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  PR.ReadReal(PR.Current(), "Radius", tempRadius); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Radius", tempRadius);
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Center (X)", tempreal); //szv#4:S4163:12Mar99 moved in if
+
     if (PR.ReadReal(PR.Current(), "Center (X)", tempreal))
       tempCenter.SetX(tempreal);
   }
@@ -38,7 +37,7 @@ void IGESSolid_ToolSphere::ReadOwnParams(const occ::handle<IGESSolid_Sphere>& en
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Center (Y)", tempreal); //szv#4:S4163:12Mar99 moved in if
+
     if (PR.ReadReal(PR.Current(), "Center (Y)", tempreal))
       tempCenter.SetY(tempreal);
   }
@@ -47,7 +46,7 @@ void IGESSolid_ToolSphere::ReadOwnParams(const occ::handle<IGESSolid_Sphere>& en
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Center (Z)", tempreal); //szv#4:S4163:12Mar99 moved in if
+
     if (PR.ReadReal(PR.Current(), "Center (Z)", tempreal))
       tempCenter.SetZ(tempreal);
   }
@@ -67,20 +66,19 @@ void IGESSolid_ToolSphere::WriteOwnParams(const occ::handle<IGESSolid_Sphere>& e
   IW.Send(ent->Center().Z());
 }
 
-void IGESSolid_ToolSphere::OwnShared(const occ::handle<IGESSolid_Sphere>& /* ent */,
-                                     Interface_EntityIterator& /* iter */) const
+void IGESSolid_ToolSphere::OwnShared(const occ::handle<IGESSolid_Sphere>&,
+                                     Interface_EntityIterator&) const
 {
 }
 
 void IGESSolid_ToolSphere::OwnCopy(const occ::handle<IGESSolid_Sphere>& another,
                                    const occ::handle<IGESSolid_Sphere>& ent,
-                                   Interface_CopyTool& /* TC */) const
+                                   Interface_CopyTool&) const
 {
   ent->Init(another->Radius(), another->Center().XYZ());
 }
 
-IGESData_DirChecker IGESSolid_ToolSphere::DirChecker(
-  const occ::handle<IGESSolid_Sphere>& /* ent */) const
+IGESData_DirChecker IGESSolid_ToolSphere::DirChecker(const occ::handle<IGESSolid_Sphere>&) const
 {
   IGESData_DirChecker DC(158, 0);
 
@@ -102,7 +100,7 @@ void IGESSolid_ToolSphere::OwnCheck(const occ::handle<IGESSolid_Sphere>& ent,
 }
 
 void IGESSolid_ToolSphere::OwnDump(const occ::handle<IGESSolid_Sphere>& ent,
-                                   const IGESData_IGESDumper& /* dumper */,
+                                   const IGESData_IGESDumper&,
                                    Standard_OStream& S,
                                    const int         level) const
 {

@@ -1,15 +1,4 @@
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ShapePersistent_Geom2d.hpp>
 #include <ShapePersistent_Geom2d_Curve.hpp>
@@ -19,9 +8,6 @@
 #include <Geom2d_TrimmedCurve.hpp>
 #include <Geom2d_OffsetCurve.hpp>
 
-//=======================================================================
-// Direction
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::
   instance<ShapePersistent_Geom2d::Direction, Geom2d_Direction, gp_Dir2d>::PName() const
@@ -37,9 +23,6 @@ void ShapePersistent_Geom::instance<ShapePersistent_Geom2d::Direction, Geom2d_Di
   theWriteData << aMyGeom->Dir2d();
 }
 
-//=======================================================================
-// VectorWithMagnitude
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::instance<ShapePersistent_Geom2d::VectorWithMagnitude,
                                            Geom2d_VectorWithMagnitude,
@@ -58,9 +41,6 @@ void ShapePersistent_Geom::instance<ShapePersistent_Geom2d::VectorWithMagnitude,
   theWriteData << aMyGeom->Vec2d();
 }
 
-//=======================================================================
-// AxisPlacement
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::
   instance<ShapePersistent_Geom2d::AxisPlacement, Geom2d_AxisPlacement, gp_Ax2d>::PName() const
@@ -77,9 +57,6 @@ void ShapePersistent_Geom::instance<ShapePersistent_Geom2d::AxisPlacement,
   write(theWriteData, aMyGeom->Ax2d());
 }
 
-//=======================================================================
-// Transformation
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::
   instance<ShapePersistent_Geom2d::Transformation, Geom2d_Transformation, gp_Trsf2d>::PName() const
@@ -101,10 +78,6 @@ void ShapePersistent_Geom2d::instance<ShapePersistent_Geom2d::Transformation,
 {
   theWriteData << myTransient->Trsf2d();
 }
-
-//=======================================================================
-// Curve
-//=======================================================================
 
 Handle(ShapePersistent_Geom2d::Curve) ShapePersistent_Geom2d::Translate(
   const occ::handle<Geom2d_Curve>&                                                         theCurve,

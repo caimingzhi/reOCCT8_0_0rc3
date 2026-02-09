@@ -5,15 +5,12 @@
 
 typedef std::pair<int, int> MeshVS_NodePair;
 
-//! Provides symmetric hash methods pair of integers.
 struct MeshVS_SymmetricPairHasher
 {
-  //! Computes a hash code for the node pair
-  //! @param theNodePair the node pair which hash code is to be computed
-  //! @return a computed hash code
+
   size_t operator()(const MeshVS_NodePair& theNodePair) const noexcept
   {
-    // Combine two int values into a single hash value.
+
     int aCombination[2]{theNodePair.first, theNodePair.second};
     if (aCombination[0] > aCombination[1])
     {

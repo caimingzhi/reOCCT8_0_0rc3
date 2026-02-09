@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_Person;
 class StepData_StepWriter;
 
-//! Read & Write Module for Person
 class RWStepBasic_RWPerson
 {
 public:

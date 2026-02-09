@@ -8,8 +8,6 @@
 class gp_XY;
 class Plate_D1;
 
-//! define a PinPoint (no G0) G2 Constraint used to load a Non
-//! Linear Plate
 class NLPlate_HPG2Constraint : public NLPlate_HPG1Constraint
 {
 

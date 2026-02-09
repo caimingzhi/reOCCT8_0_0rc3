@@ -12,7 +12,6 @@ class StepBasic_SiUnitAndTimeUnit : public StepBasic_SiUnit
 {
 
 public:
-  //! Returns a SiUnitAndTimeUnit
   Standard_EXPORT StepBasic_SiUnitAndTimeUnit();
 
   Standard_EXPORT void Init(const bool                 hasAprefix,

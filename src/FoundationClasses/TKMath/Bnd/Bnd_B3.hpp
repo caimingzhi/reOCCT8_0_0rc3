@@ -13,128 +13,71 @@
 
 #include <array>
 
-//! Template class for 3D bounding box.
-//! This is a base template that is instantiated for double and float.
 template <typename RealType>
 class Bnd_B3
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor.
   constexpr Bnd_B3() noexcept;
 
-  //! Constructor.
   constexpr Bnd_B3(const gp_XYZ& theCenter, const gp_XYZ& theHSize) noexcept;
 
-  //! Constructor.
   constexpr Bnd_B3(const std::array<RealType, 3>& theCenter,
                    const std::array<RealType, 3>& theHSize) noexcept;
 
-  //! Returns True if the box is void (non-initialized).
   constexpr bool IsVoid() const noexcept;
 
-  //! Reset the box data.
   void Clear() noexcept;
 
-  //! Update the box by a point.
   void Add(const gp_XYZ& thePnt);
 
-  //! Update the box by a point.
   void Add(const gp_Pnt& thePnt);
 
-  //! Update the box by another box.
   void Add(const Bnd_B3<RealType>& theBox);
 
-  //! Query the lower corner: (Center - HSize). You must make sure that
-  //! the box is NOT VOID (see IsVoid()), otherwise the method returns
-  //! irrelevant result.
   gp_XYZ CornerMin() const noexcept;
 
-  //! Query the upper corner: (Center + HSize). You must make sure that
-  //! the box is NOT VOID (see IsVoid()), otherwise the method returns
-  //! irrelevant result.
   gp_XYZ CornerMax() const noexcept;
 
-  //! Query the square diagonal. If the box is VOID (see method IsVoid())
-  //! then a very big real value is returned.
   constexpr double SquareExtent() const noexcept;
 
-  //! Extend the Box by the absolute value of theDiff.
   void Enlarge(const double theDiff) noexcept;
 
-  //! Limit the Box by the internals of theOtherBox.
-  //! Returns True if the limitation takes place, otherwise False
-  //! indicating that the boxes do not intersect.
   bool Limit(const Bnd_B3<RealType>& theOtherBox);
 
-  //! Transform the bounding box with the given transformation.
-  //! The resulting box will be larger if theTrsf contains rotation.
   [[nodiscard]] Bnd_B3<RealType> Transformed(const gp_Trsf& theTrsf) const;
 
-  //! Check the given point for the inclusion in the Box.
-  //! Returns True if the point is outside.
   constexpr bool IsOut(const gp_XYZ& thePnt) const noexcept;
 
-  //! Check a sphere for the intersection with the current box.
-  //! Returns True if there is no intersection between boxes. If the
-  //! parameter 'IsSphereHollow' is True, then the intersection is not
-  //! reported for a box that is completely inside the sphere (otherwise
-  //! this method would report an intersection).
   bool IsOut(const gp_XYZ& theCenter,
              const double  theRadius,
              const bool    isSphereHollow = false) const;
 
-  //! Check the given box for the intersection with the current box.
-  //! Returns True if there is no intersection between boxes.
   constexpr bool IsOut(const Bnd_B3<RealType>& theOtherBox) const noexcept;
 
-  //! Check the given box oriented by the given transformation
-  //! for the intersection with the current box.
-  //! Returns True if there is no intersection between boxes.
   bool IsOut(const Bnd_B3<RealType>& theOtherBox, const gp_Trsf& theTrsf) const;
 
-  //! Check the given Line for the intersection with the current box.
-  //! Returns True if there is no intersection.
-  //! isRay==True means intersection check with the positive half-line
-  //! theOverthickness is the addition to the size of the current box
-  //! (may be negative). If positive, it can be treated as the thickness
-  //! of the line 'theLine' or the radius of the cylinder along 'theLine'
   bool IsOut(const gp_Ax1& theLine,
              const bool    isRay            = false,
              const double  theOverthickness = 0.0) const;
 
-  //! Check the given Plane for the intersection with the current box.
-  //! Returns True if there is no intersection.
   bool IsOut(const gp_Ax3& thePlane) const;
 
-  //! Check that the box 'this' is inside the given box 'theBox'. Returns
-  //! True if 'this' box is fully inside 'theBox'.
   constexpr bool IsIn(const Bnd_B3<RealType>& theBox) const noexcept;
 
-  //! Check that the box 'this' is inside the given box 'theBox'
-  //! transformed by 'theTrsf'. Returns True if 'this' box is fully
-  //! inside the transformed 'theBox'.
   bool IsIn(const Bnd_B3<RealType>& theBox, const gp_Trsf& theTrsf) const;
 
-  //! Set the Center coordinates
   void SetCenter(const gp_XYZ& theCenter) noexcept;
 
-  //! Set the Center coordinates
   void SetCenter(const std::array<RealType, 3>& theCenter) noexcept;
 
-  //! Set the HSize (half-diagonal) coordinates.
-  //! All components of theHSize must be non-negative.
   void SetHSize(const gp_XYZ& theHSize) noexcept;
 
-  //! Set the HSize (half-diagonal) coordinates.
-  //! All components of theHSize must be non-negative.
   void SetHSize(const std::array<RealType, 3>& theHSize) noexcept;
 
-  //! Get the Center coordinates
   constexpr const std::array<RealType, 3>& Center() const noexcept;
 
-  //! Get the HSize (half-diagonal) coordinates
   constexpr const std::array<RealType, 3>& HSize() const noexcept;
 
 protected:
@@ -150,15 +93,12 @@ protected:
             || std::abs(aDist.Z()) > aHSize.Z());
   }
 
-  //! Constant representing a very large value for void box initialization
   static constexpr RealType THE_RealLast = RealType(1e30);
 
 private:
   std::array<RealType, 3> myCenter;
   std::array<RealType, 3> myHSize;
 };
-
-//=================================================================================================
 
 template <typename RealType>
 constexpr inline Bnd_B3<RealType>::Bnd_B3() noexcept
@@ -167,16 +107,12 @@ constexpr inline Bnd_B3<RealType>::Bnd_B3() noexcept
 {
 }
 
-//=================================================================================================
-
 template <typename RealType>
 constexpr inline Bnd_B3<RealType>::Bnd_B3(const gp_XYZ& theCenter, const gp_XYZ& theHSize) noexcept
     : myCenter{RealType(theCenter.X()), RealType(theCenter.Y()), RealType(theCenter.Z())},
       myHSize{RealType(theHSize.X()), RealType(theHSize.Y()), RealType(theHSize.Z())}
 {
 }
-
-//=================================================================================================
 
 template <typename RealType>
 constexpr inline Bnd_B3<RealType>::Bnd_B3(const std::array<RealType, 3>& theCenter,
@@ -185,8 +121,6 @@ constexpr inline Bnd_B3<RealType>::Bnd_B3(const std::array<RealType, 3>& theCent
       myHSize(theHSize)
 {
 }
-
-//=================================================================================================
 
 template <typename RealType>
 inline void Bnd_B3<RealType>::Clear() noexcept
@@ -199,23 +133,17 @@ inline void Bnd_B3<RealType>::Clear() noexcept
   myHSize[2]  = -THE_RealLast;
 }
 
-//=================================================================================================
-
 template <typename RealType>
 constexpr inline bool Bnd_B3<RealType>::IsVoid() const noexcept
 {
   return (myHSize[0] < -1e-5);
 }
 
-//=================================================================================================
-
 template <typename RealType>
 inline void Bnd_B3<RealType>::Add(const gp_Pnt& thePnt)
 {
   Add(thePnt.XYZ());
 }
-
-//=================================================================================================
 
 template <typename RealType>
 inline void Bnd_B3<RealType>::Add(const Bnd_B3<RealType>& theBox)
@@ -227,15 +155,11 @@ inline void Bnd_B3<RealType>::Add(const Bnd_B3<RealType>& theBox)
   }
 }
 
-//=================================================================================================
-
 template <typename RealType>
 inline gp_XYZ Bnd_B3<RealType>::CornerMin() const noexcept
 {
   return gp_XYZ(myCenter[0] - myHSize[0], myCenter[1] - myHSize[1], myCenter[2] - myHSize[2]);
 }
-
-//=================================================================================================
 
 template <typename RealType>
 inline gp_XYZ Bnd_B3<RealType>::CornerMax() const noexcept
@@ -243,15 +167,11 @@ inline gp_XYZ Bnd_B3<RealType>::CornerMax() const noexcept
   return gp_XYZ(myCenter[0] + myHSize[0], myCenter[1] + myHSize[1], myCenter[2] + myHSize[2]);
 }
 
-//=================================================================================================
-
 template <typename RealType>
 constexpr inline double Bnd_B3<RealType>::SquareExtent() const noexcept
 {
   return 4 * (myHSize[0] * myHSize[0] + myHSize[1] * myHSize[1] + myHSize[2] * myHSize[2]);
 }
-
-//=================================================================================================
 
 template <typename RealType>
 inline void Bnd_B3<RealType>::SetCenter(const gp_XYZ& theCenter) noexcept
@@ -261,8 +181,6 @@ inline void Bnd_B3<RealType>::SetCenter(const gp_XYZ& theCenter) noexcept
   myCenter[2] = RealType(theCenter.Z());
 }
 
-//=================================================================================================
-
 template <typename RealType>
 inline void Bnd_B3<RealType>::SetHSize(const gp_XYZ& theHSize) noexcept
 {
@@ -271,15 +189,11 @@ inline void Bnd_B3<RealType>::SetHSize(const gp_XYZ& theHSize) noexcept
   myHSize[2] = RealType(theHSize.Z());
 }
 
-//=================================================================================================
-
 template <typename RealType>
 inline void Bnd_B3<RealType>::SetCenter(const std::array<RealType, 3>& theCenter) noexcept
 {
   myCenter = theCenter;
 }
-
-//=================================================================================================
 
 template <typename RealType>
 inline void Bnd_B3<RealType>::SetHSize(const std::array<RealType, 3>& theHSize) noexcept
@@ -287,23 +201,17 @@ inline void Bnd_B3<RealType>::SetHSize(const std::array<RealType, 3>& theHSize) 
   myHSize = theHSize;
 }
 
-//=================================================================================================
-
 template <typename RealType>
 constexpr inline const std::array<RealType, 3>& Bnd_B3<RealType>::Center() const noexcept
 {
   return myCenter;
 }
 
-//=================================================================================================
-
 template <typename RealType>
 constexpr inline const std::array<RealType, 3>& Bnd_B3<RealType>::HSize() const noexcept
 {
   return myHSize;
 }
-
-//=================================================================================================
 
 template <typename RealType>
 inline void Bnd_B3<RealType>::Enlarge(const double aDiff) noexcept
@@ -314,8 +222,6 @@ inline void Bnd_B3<RealType>::Enlarge(const double aDiff) noexcept
   myHSize[2] += RealType(aD);
 }
 
-//=================================================================================================
-
 template <typename RealType>
 constexpr inline bool Bnd_B3<RealType>::IsOut(const gp_XYZ& thePnt) const noexcept
 {
@@ -323,8 +229,6 @@ constexpr inline bool Bnd_B3<RealType>::IsOut(const gp_XYZ& thePnt) const noexce
           || std::abs(RealType(thePnt.Y()) - myCenter[1]) > myHSize[1]
           || std::abs(RealType(thePnt.Z()) - myCenter[2]) > myHSize[2]);
 }
-
-//=================================================================================================
 
 template <typename RealType>
 constexpr inline bool Bnd_B3<RealType>::IsOut(const Bnd_B3<RealType>& theBox) const noexcept
@@ -334,8 +238,6 @@ constexpr inline bool Bnd_B3<RealType>::IsOut(const Bnd_B3<RealType>& theBox) co
           || std::abs(theBox.myCenter[2] - myCenter[2]) > theBox.myHSize[2] + myHSize[2]);
 }
 
-//=================================================================================================
-
 template <typename RealType>
 constexpr inline bool Bnd_B3<RealType>::IsIn(const Bnd_B3<RealType>& theBox) const noexcept
 {
@@ -343,8 +245,6 @@ constexpr inline bool Bnd_B3<RealType>::IsIn(const Bnd_B3<RealType>& theBox) con
           && std::abs(theBox.myCenter[1] - myCenter[1]) < theBox.myHSize[1] - myHSize[1]
           && std::abs(theBox.myCenter[2] - myCenter[2]) < theBox.myHSize[2] - myHSize[2]);
 }
-
-//=================================================================================================
 
 template <typename RealType>
 void Bnd_B3<RealType>::Add(const gp_XYZ& thePnt)
@@ -402,8 +302,6 @@ void Bnd_B3<RealType>::Add(const gp_XYZ& thePnt)
   }
 }
 
-//=================================================================================================
-
 template <typename RealType>
 bool Bnd_B3<RealType>::Limit(const Bnd_B3<RealType>& theBox)
 {
@@ -414,7 +312,7 @@ bool Bnd_B3<RealType>::Limit(const Bnd_B3<RealType>& theBox)
   const RealType sumH[3]  = {theBox.myHSize[0] + myHSize[0],
                              theBox.myHSize[1] + myHSize[1],
                              theBox.myHSize[2] + myHSize[2]};
-  // check the condition IsOut
+
   if (!compareDist(sumH, diffC))
   {
     const RealType diffH[3] = {theBox.myHSize[0] - myHSize[0],
@@ -422,37 +320,37 @@ bool Bnd_B3<RealType>::Limit(const Bnd_B3<RealType>& theBox)
                                theBox.myHSize[2] - myHSize[2]};
     if (diffC[0] - diffH[0] > 0.)
     {
-      const RealType aShift = (diffC[0] - diffH[0]) / 2; // positive
+      const RealType aShift = (diffC[0] - diffH[0]) / 2;
       myCenter[0] += aShift;
       myHSize[0] -= aShift;
     }
     else if (diffC[0] + diffH[0] < 0.)
     {
-      const RealType aShift = (diffC[0] + diffH[0]) / 2; // negative
+      const RealType aShift = (diffC[0] + diffH[0]) / 2;
       myCenter[0] += aShift;
       myHSize[0] += aShift;
     }
     if (diffC[1] - diffH[1] > 0.)
     {
-      const RealType aShift = (diffC[1] - diffH[1]) / 2; // positive
+      const RealType aShift = (diffC[1] - diffH[1]) / 2;
       myCenter[1] += aShift;
       myHSize[1] -= aShift;
     }
     else if (diffC[1] + diffH[1] < 0.)
     {
-      const RealType aShift = (diffC[1] + diffH[1]) / 2; // negative
+      const RealType aShift = (diffC[1] + diffH[1]) / 2;
       myCenter[1] += aShift;
       myHSize[1] += aShift;
     }
     if (diffC[2] - diffH[2] > 0.)
     {
-      const RealType aShift = (diffC[2] - diffH[2]) / 2; // positive
+      const RealType aShift = (diffC[2] - diffH[2]) / 2;
       myCenter[2] += aShift;
       myHSize[2] -= aShift;
     }
     else if (diffC[2] + diffH[2] < 0.)
     {
-      const RealType aShift = (diffC[2] + diffH[2]) / 2; // negative
+      const RealType aShift = (diffC[2] + diffH[2]) / 2;
       myCenter[2] += aShift;
       myHSize[2] += aShift;
     }
@@ -460,8 +358,6 @@ bool Bnd_B3<RealType>::Limit(const Bnd_B3<RealType>& theBox)
   }
   return aResult;
 }
-
-//=================================================================================================
 
 template <typename RealType>
 Bnd_B3<RealType> Bnd_B3<RealType>::Transformed(const gp_Trsf& theTrsf) const
@@ -506,8 +402,6 @@ Bnd_B3<RealType> Bnd_B3<RealType>::Transformed(const gp_Trsf& theTrsf) const
   return aResult;
 }
 
-//=================================================================================================
-
 template <typename RealType>
 bool Bnd_B3<RealType>::IsOut(const gp_XYZ& theCenter,
                              const double  theRadius,
@@ -516,7 +410,7 @@ bool Bnd_B3<RealType>::IsOut(const gp_XYZ& theCenter,
   bool aResult(true);
   if (!isSphereHollow)
   {
-    // vector from the center of the sphere to the nearest box face
+
     const double aDist[3] = {std::abs(theCenter.X() - double(myCenter[0])) - double(myHSize[0]),
                              std::abs(theCenter.Y() - double(myCenter[1])) - double(myHSize[1]),
                              std::abs(theCenter.Z() - double(myCenter[2])) - double(myHSize[2])};
@@ -534,7 +428,7 @@ bool Bnd_B3<RealType>::IsOut(const gp_XYZ& theCenter,
     const double aDistC[3] = {std::abs(theCenter.X() - double(myCenter[0])),
                               std::abs(theCenter.Y() - double(myCenter[1])),
                               std::abs(theCenter.Z() - double(myCenter[2]))};
-    // vector from the center of the sphere to the nearest box face
+
     double aDist[3] = {aDistC[0] - double(myHSize[0]),
                        aDistC[1] - double(myHSize[1]),
                        aDistC[2] - double(myHSize[2])};
@@ -547,8 +441,7 @@ bool Bnd_B3<RealType>::IsOut(const gp_XYZ& theCenter,
       aD += aDist[2] * aDist[2];
     if (aD < theRadius * theRadius)
     {
-      // the box intersects the solid sphere; check if it is completely
-      // inside the circle (in such case return isOut==True)
+
       aDist[0] = aDistC[0] + double(myHSize[0]);
       aDist[1] = aDistC[1] + double(myHSize[1]);
       aDist[2] = aDistC[2] + double(myHSize[2]);
@@ -558,8 +451,6 @@ bool Bnd_B3<RealType>::IsOut(const gp_XYZ& theCenter,
   }
   return aResult;
 }
-
-//=================================================================================================
 
 template <typename RealType>
 bool Bnd_B3<RealType>::IsOut(const Bnd_B3<RealType>& theBox, const gp_Trsf& theTrsf) const
@@ -582,8 +473,7 @@ bool Bnd_B3<RealType>::IsOut(const Bnd_B3<RealType>& theBox, const gp_Trsf& theT
   }
   else
   {
-    // theBox is transformed and we check the resulting (enlarged) box against
-    // 'this' box.
+
     const double* aMat = &theTrsf.HVectorialPart().Value(1, 1);
 
     gp_XYZ aCenter((double)theBox.myCenter[0],
@@ -620,8 +510,7 @@ bool Bnd_B3<RealType>::IsOut(const Bnd_B3<RealType>& theBox, const gp_Trsf& theT
 
     else
     {
-      // theBox is rotated, scaled and translated. We apply the reverse
-      // translation and scaling then check against the rotated box 'this'
+
       if ((std::abs(aMat[0] * aDist[0] + aMat[3] * aDist[1] + aMat[6] * aDist[2])
            > theBox.myHSize[0] * aScaleAbs
                + (aMatAbs[0] * myHSize[0] + aMatAbs[3] * myHSize[1] + aMatAbs[6] * myHSize[2]))
@@ -637,8 +526,6 @@ bool Bnd_B3<RealType>::IsOut(const Bnd_B3<RealType>& theBox, const gp_Trsf& theT
   return aResult;
 }
 
-//=================================================================================================
-
 template <typename RealType>
 bool Bnd_B3<RealType>::IsOut(const gp_Ax3& thePlane) const
 {
@@ -648,15 +535,12 @@ bool Bnd_B3<RealType>::IsOut(const gp_Ax3& thePlane) const
   const gp_XYZ& aDir     = thePlane.Direction().XYZ();
   const gp_XYZ  aBoxCenter((double)myCenter[0], (double)myCenter[1], (double)myCenter[2]);
   const double  aDist0 = (aBoxCenter - anOrigin) * aDir;
-  // Find the signed distances from two opposite corners of the box to the plane
-  // If the distances are not the same sign, then the plane crosses the box
-  const double aDist1 = // proj of HSize on aDir
-    double(myHSize[0]) * std::abs(aDir.X()) + double(myHSize[1]) * std::abs(aDir.Y())
-    + double(myHSize[2]) * std::abs(aDir.Z());
+
+  const double aDist1 = double(myHSize[0]) * std::abs(aDir.X())
+                        + double(myHSize[1]) * std::abs(aDir.Y())
+                        + double(myHSize[2]) * std::abs(aDir.Z());
   return ((aDist0 + aDist1) * (aDist0 - aDist1) > 0.);
 }
-
-//=================================================================================================
 
 template <typename RealType>
 bool Bnd_B3<RealType>::IsOut(const gp_Ax1& theLine,
@@ -672,7 +556,6 @@ bool Bnd_B3<RealType>::IsOut(const gp_Ax1& theLine,
                      (double)myCenter[1] - theLine.Location().Y(),
                      (double)myCenter[2] - theLine.Location().Z());
 
-  // Find the parameter interval in X dimension
   double aHSize = (double)myHSize[0] + theOverthickness;
   if (aDir.X() > aRes)
   {
@@ -685,11 +568,10 @@ bool Bnd_B3<RealType>::IsOut(const gp_Ax1& theLine,
     anInter0[1] = (aDiff.X() - aHSize) / aDir.X();
   }
   else
-    // the line is orthogonal to OX axis. Test for inclusion in box limits
-    if (std::abs(aDiff.X()) > aHSize)
-      return true;
 
-  // Find the parameter interval in Y dimension
+    if (std::abs(aDiff.X()) > aHSize)
+    return true;
+
   aHSize = (double)myHSize[1] + theOverthickness;
   if (aDir.Y() > aRes)
   {
@@ -702,11 +584,10 @@ bool Bnd_B3<RealType>::IsOut(const gp_Ax1& theLine,
     anInter1[1] = (aDiff.Y() - aHSize) / aDir.Y();
   }
   else
-    // the line is orthogonal to OY axis. Test for inclusion in box limits
-    if (std::abs(aDiff.Y()) > aHSize)
-      return true;
 
-  // Intersect Y-interval with X-interval
+    if (std::abs(aDiff.Y()) > aHSize)
+    return true;
+
   if (anInter0[0] > (anInter1[1] + aRes) || anInter0[1] < (anInter1[0] - aRes))
     return true;
   if (anInter1[0] > anInter0[0])
@@ -716,7 +597,6 @@ bool Bnd_B3<RealType>::IsOut(const gp_Ax1& theLine,
   if (isRay && anInter0[1] < -aRes)
     return true;
 
-  // Find the parameter interval in Z dimension
   aHSize = (double)myHSize[2] + theOverthickness;
   if (aDir.Z() > aRes)
   {
@@ -729,15 +609,13 @@ bool Bnd_B3<RealType>::IsOut(const gp_Ax1& theLine,
     anInter1[1] = (aDiff.Z() - aHSize) / aDir.Z();
   }
   else
-    // the line is orthogonal to OZ axis. Test for inclusion in box limits
+
     return (std::abs(aDiff.Z()) > aHSize);
   if (isRay && anInter1[1] < -aRes)
     return true;
 
   return (anInter0[0] > (anInter1[1] + aRes) || anInter0[1] < (anInter1[0] - aRes));
 }
-
-//=================================================================================================
 
 template <typename RealType>
 bool Bnd_B3<RealType>::IsIn(const Bnd_B3<RealType>& theBox, const gp_Trsf& theTrsf) const
@@ -760,8 +638,7 @@ bool Bnd_B3<RealType>::IsIn(const Bnd_B3<RealType>& theBox, const gp_Trsf& theTr
   }
   else
   {
-    // theBox is rotated, scaled and translated. We apply the reverse
-    // translation and scaling then check against the rotated box 'this'
+
     const double* aMat = &theTrsf.HVectorialPart().Value(1, 1);
     gp_XYZ        aCenter((double)theBox.myCenter[0],
                    (double)theBox.myCenter[1],
@@ -787,10 +664,6 @@ bool Bnd_B3<RealType>::IsIn(const Bnd_B3<RealType>& theBox, const gp_Trsf& theTr
   return aResult;
 }
 
-//=================================================================================================
-
-//! 3D bounding box with double precision
 using Bnd_B3d = Bnd_B3<double>;
 
-//! 3D bounding box with single precision
 using Bnd_B3f = Bnd_B3<float>;

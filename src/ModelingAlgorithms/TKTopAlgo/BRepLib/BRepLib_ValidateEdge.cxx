@@ -1,15 +1,4 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRepLib_ValidateEdge.hpp>
 
@@ -18,8 +7,6 @@
 #include <Extrema_LocateExtPC.hpp>
 #include <GeomLib_CheckCurveOnSurface.hpp>
 #include <utility>
-
-//=================================================================================================
 
 BRepLib_ValidateEdge::BRepLib_ValidateEdge(occ::handle<Adaptor3d_Curve>          theReferenceCurve,
                                            occ::handle<Adaptor3d_CurveOnSurface> theOtherCurve,
@@ -37,22 +24,16 @@ BRepLib_ValidateEdge::BRepLib_ValidateEdge(occ::handle<Adaptor3d_Curve>         
 {
 }
 
-//=================================================================================================
-
 bool BRepLib_ValidateEdge::CheckTolerance(double theToleranceToCheck)
 {
   return correctTolerance(theToleranceToCheck) > myCalculatedDistance;
 }
-
-//=================================================================================================
 
 double BRepLib_ValidateEdge::GetMaxDistance()
 {
   double aCorrectedTolerance = myCalculatedDistance * 1.00001;
   return aCorrectedTolerance;
 }
-
-//=================================================================================================
 
 void BRepLib_ValidateEdge::UpdateTolerance(double& theToleranceToUpdate)
 {
@@ -62,8 +43,6 @@ void BRepLib_ValidateEdge::UpdateTolerance(double& theToleranceToUpdate)
     theToleranceToUpdate = aCorrectedTolerance;
   }
 }
-
-//=================================================================================================
 
 double BRepLib_ValidateEdge::correctTolerance(double theTolerance)
 {
@@ -76,15 +55,11 @@ double BRepLib_ValidateEdge::correctTolerance(double theTolerance)
   return aCorrectedTolerance;
 }
 
-//=================================================================================================
-
 void BRepLib_ValidateEdge::SetExitIfToleranceExceeded(double theToleranceForChecking)
 {
   myExitIfToleranceExceeded = true;
   myToleranceForChecking    = correctTolerance(theToleranceForChecking);
 }
-
-//=================================================================================================
 
 void BRepLib_ValidateEdge::Process()
 {
@@ -97,8 +72,6 @@ void BRepLib_ValidateEdge::Process()
     processApprox();
   }
 }
-
-//=================================================================================================
 
 void BRepLib_ValidateEdge::processApprox()
 {
@@ -130,7 +103,7 @@ void BRepLib_ValidateEdge::processApprox()
       {
         aMaxSquareDistance = aSquareDistance;
       }
-      // Stop process for best performance
+
       if (myExitIfToleranceExceeded && aMaxSquareDistance > aSquareToleranceForChecking)
       {
         myCalculatedDistance = std::sqrt(aMaxSquareDistance);
@@ -201,7 +174,7 @@ void BRepLib_ValidateEdge::processApprox()
       else
       {
         myIsDone = false;
-        // Stop process for best performance
+
         return;
       }
 
@@ -221,15 +194,13 @@ void BRepLib_ValidateEdge::processApprox()
       else
       {
         myIsDone = false;
-        // Stop process for best performance
+
         return;
       }
     }
   }
   myCalculatedDistance = std::sqrt(aMaxSquareDistance);
 }
-
-//=================================================================================================
 
 void BRepLib_ValidateEdge::processExact()
 {

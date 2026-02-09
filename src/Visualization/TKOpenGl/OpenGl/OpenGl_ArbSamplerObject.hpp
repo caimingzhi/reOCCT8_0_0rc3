@@ -2,8 +2,6 @@
 
 #include <OpenGl_GlFunctions.hpp>
 
-//! Provide Sampler Object functionality (texture parameters stored independently from texture
-//! itself). Available since OpenGL 3.3+ (GL_ARB_sampler_objects extension) and OpenGL ES 3.0+.
 struct OpenGl_ArbSamplerObject : protected OpenGl_GlFunctions
 {
   using OpenGl_GlFunctions::glBindSampler;

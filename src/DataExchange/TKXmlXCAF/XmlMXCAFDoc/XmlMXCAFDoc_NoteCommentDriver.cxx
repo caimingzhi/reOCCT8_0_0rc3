@@ -7,22 +7,16 @@
 IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_NoteCommentDriver, XmlMXCAFDoc_NoteDriver)
 IMPLEMENT_DOMSTRING(Comment, "comment")
 
-//=================================================================================================
-
 XmlMXCAFDoc_NoteCommentDriver::XmlMXCAFDoc_NoteCommentDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMXCAFDoc_NoteDriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_NoteComment)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMXCAFDoc_NoteCommentDriver::NewEmpty() const
 {
   return new XCAFDoc_NoteComment();
 }
-
-//=================================================================================================
 
 bool XmlMXCAFDoc_NoteCommentDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                           const occ::handle<TDF_Attribute>& theTarget,
@@ -45,8 +39,6 @@ bool XmlMXCAFDoc_NoteCommentDriver::Paste(const XmlObjMgt_Persistent&       theS
   return true;
 }
 
-//=================================================================================================
-
 void XmlMXCAFDoc_NoteCommentDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                           XmlObjMgt_Persistent&             theTarget,
                                           XmlObjMgt_SRelocationTable&       theRelocTable) const
@@ -59,8 +51,6 @@ void XmlMXCAFDoc_NoteCommentDriver::Paste(const occ::handle<TDF_Attribute>& theS
 
   theTarget.Element().setAttribute(::Comment(), aComment);
 }
-
-//=================================================================================================
 
 XmlMXCAFDoc_NoteCommentDriver::XmlMXCAFDoc_NoteCommentDriver(
   const occ::handle<Message_Messenger>& theMsgDriver,

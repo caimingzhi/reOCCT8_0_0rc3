@@ -8,11 +8,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_GeometricToleranceWithModifiers,
                            StepDimTol_GeometricTolerance)
 
-//=================================================================================================
-
 StepDimTol_GeometricToleranceWithModifiers::StepDimTol_GeometricToleranceWithModifiers() = default;
-
-//=================================================================================================
 
 void StepDimTol_GeometricToleranceWithModifiers::Init(
   const occ::handle<TCollection_HAsciiString>& theName,

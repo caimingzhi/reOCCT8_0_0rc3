@@ -12,26 +12,15 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DNaming_SelectionDriver, TFunction_Driver)
 
-// #define SEL_DEB 1
 #ifdef OCCT_DEBUG
   #include <TDF_Tool.hpp>
   #include <NCollection_Map.hpp>
 #endif
-//=================================================================================================
 
 DNaming_SelectionDriver::DNaming_SelectionDriver() = default;
 
-//=======================================================================
-// function : Validate
-// purpose  : Validates labels of a function in <theLog>.
-//=======================================================================
 void DNaming_SelectionDriver::Validate(occ::handle<TFunction_Logbook>&) const {}
 
-//=======================================================================
-// function : MustExecute
-// purpose  : Analyse in <theLog> if the loaded function must be
-//           executed (i.e.arguments are modified) or not.
-//=======================================================================
 bool DNaming_SelectionDriver::MustExecute(const occ::handle<TFunction_Logbook>&) const
 {
   return true;
@@ -50,11 +39,7 @@ static void Write(const TopoDS_Shape& shape, const char* filename)
   save.close();
 }
 #endif
-//=======================================================================
-// function : Execute
-// purpose  : Execute the function and push in <theLog> the impacted
-//           labels (see method SetImpacted).
-//=======================================================================
+
 #include <TNaming_NamedShape.hpp>
 #include <NCollection_List.hpp>
 #include <Standard_Handle.hpp>
@@ -101,14 +86,6 @@ int DNaming_SelectionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) con
     std::cout << "\tLabel = " << anEntry << std::endl;
   }
 #endif
-  //***
-  //  TDF_IDFilter aFilterForReferers;
-  //  aFilterForReferers.Keep(TNaming_NamedShape::GetID());
-  //  TDF_IDFilter aFilterForReferences;
-  //  aFilterForReferences.Keep(TNaming_NamedShape::GetID());
-  //   NCollection_Map<TDF_Label> aMap1;
-  //  TDF_Tool::OutReferences(aLabel, /*aFilterForReferers, aFilterForReferences, */outRefs);
-  //***
 
   if (aSelector.Solve(aMap))
   {

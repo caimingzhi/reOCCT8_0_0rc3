@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDoc_MaterialTool.hpp>
 
@@ -31,11 +20,7 @@ IMPLEMENT_DERIVED_ATTRIBUTE_WITH_TYPE(XCAFDoc_MaterialTool,
                                       "xcaf",
                                       "MaterialTool")
 
-//=================================================================================================
-
 XCAFDoc_MaterialTool::XCAFDoc_MaterialTool() = default;
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_MaterialTool> XCAFDoc_MaterialTool::Set(const TDF_Label& L)
 {
@@ -49,22 +34,16 @@ occ::handle<XCAFDoc_MaterialTool> XCAFDoc_MaterialTool::Set(const TDF_Label& L)
   return A;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_MaterialTool::GetID()
 {
   static Standard_GUID MatTblID("efd212f9-6dfd-11d4-b9c8-0060b0ee281b");
   return MatTblID;
 }
 
-//=================================================================================================
-
 TDF_Label XCAFDoc_MaterialTool::BaseLabel() const
 {
   return Label();
 }
-
-//=================================================================================================
 
 const occ::handle<XCAFDoc_ShapeTool>& XCAFDoc_MaterialTool::ShapeTool()
 {
@@ -73,15 +52,11 @@ const occ::handle<XCAFDoc_ShapeTool>& XCAFDoc_MaterialTool::ShapeTool()
   return myShapeTool;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_MaterialTool::IsMaterial(const TDF_Label& lab) const
 {
   occ::handle<XCAFDoc_Material> MatAttr;
   return lab.FindAttribute(XCAFDoc_Material::GetID(), MatAttr);
 }
-
-//=================================================================================================
 
 void XCAFDoc_MaterialTool::GetMaterialLabels(NCollection_Sequence<TDF_Label>& Labels) const
 {
@@ -94,8 +69,6 @@ void XCAFDoc_MaterialTool::GetMaterialLabels(NCollection_Sequence<TDF_Label>& La
       Labels.Append(L);
   }
 }
-
-//=================================================================================================
 
 TDF_Label XCAFDoc_MaterialTool::AddMaterial(
   const occ::handle<TCollection_HAsciiString>& aName,
@@ -112,19 +85,15 @@ TDF_Label XCAFDoc_MaterialTool::AddMaterial(
   return MatL;
 }
 
-//=================================================================================================
-
 void XCAFDoc_MaterialTool::SetMaterial(const TDF_Label& L, const TDF_Label& MatL) const
 {
-  // set reference
+
   occ::handle<TDataStd_TreeNode> refNode, mainNode;
   mainNode = TDataStd_TreeNode::Set(MatL, XCAFDoc::MaterialRefGUID());
   refNode  = TDataStd_TreeNode::Set(L, XCAFDoc::MaterialRefGUID());
-  refNode->Remove(); // abv: fix against bug in TreeNode::Append()
+  refNode->Remove();
   mainNode->Append(refNode);
 }
-
-//=================================================================================================
 
 void XCAFDoc_MaterialTool::SetMaterial(
   const TDF_Label&                             L,
@@ -137,8 +106,6 @@ void XCAFDoc_MaterialTool::SetMaterial(
   TDF_Label MatL = AddMaterial(aName, aDescription, aDensity, aDensName, aDensValType);
   SetMaterial(L, MatL);
 }
-
-//=================================================================================================
 
 bool XCAFDoc_MaterialTool::GetMaterial(const TDF_Label&                       MatL,
                                        occ::handle<TCollection_HAsciiString>& aName,
@@ -161,8 +128,6 @@ bool XCAFDoc_MaterialTool::GetMaterial(const TDF_Label&                       Ma
   return true;
 }
 
-//=================================================================================================
-
 double XCAFDoc_MaterialTool::GetDensityForShape(const TDF_Label& ShapeL)
 {
   double                         Dens = 0.0;
@@ -175,20 +140,15 @@ double XCAFDoc_MaterialTool::GetDensityForShape(const TDF_Label& ShapeL)
   {
     return Dens;
   }
-  // default dimension fo density - gram/sm^3
-  // we transfer "sm" into "mm"
+
   Dens = MatAttr->GetDensity() * 0.001;
   return Dens;
 }
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc_MaterialTool::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 void XCAFDoc_MaterialTool::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

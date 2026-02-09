@@ -6,11 +6,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_ToleranceZoneDefinition, Standard_Transient)
 
-//=================================================================================================
-
 StepDimTol_ToleranceZoneDefinition::StepDimTol_ToleranceZoneDefinition() = default;
-
-//=================================================================================================
 
 void StepDimTol_ToleranceZoneDefinition::Init(
   const occ::handle<StepDimTol_ToleranceZone>&                               theZone,

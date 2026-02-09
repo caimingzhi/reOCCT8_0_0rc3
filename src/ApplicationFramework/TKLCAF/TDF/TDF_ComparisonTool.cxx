@@ -8,10 +8,6 @@
 #include <NCollection_List.hpp>
 #include <TDF_RelocationTable.hpp>
 
-//=======================================================================
-// function : Compare
-// purpose  : Comparison method between 2 DataSets.
-//=======================================================================
 void TDF_ComparisonTool::Compare(const occ::handle<TDF_DataSet>&         aSourceDataSet,
                                  const occ::handle<TDF_DataSet>&         aTargetDataSet,
                                  const TDF_IDFilter&                     aFilter,
@@ -28,7 +24,6 @@ void TDF_ComparisonTool::Compare(const occ::handle<TDF_DataSet>&         aSource
 
   NCollection_DataMap<TDF_Label, TDF_Label>& the2LabMap = aRelocationTable->LabelTable();
 
-  // Try to match source and target roots by their tag.
   for (; srcRootItr.More(); srcRootItr.Next())
   {
     const TDF_Label& srcLab = srcRootItr.Value();
@@ -38,7 +33,7 @@ void TDF_ComparisonTool::Compare(const occ::handle<TDF_DataSet>&         aSource
       if (srcLab.Tag() == trgLab.Tag())
       {
         the2LabMap.Bind(srcLab, trgLab);
-        // Now, compare recursively!
+
         TDF_ComparisonTool::Compare(srcLab,
                                     trgLab,
                                     aSourceDataSet,
@@ -49,16 +44,7 @@ void TDF_ComparisonTool::Compare(const occ::handle<TDF_DataSet>&         aSource
       }
     }
   }
-
-  // The relocation attribute table is now ready,
-  // except for the label unattached attributes,
-  // because we cannot treat them.
 }
-
-//=======================================================================
-// function : Compare
-// purpose  : Internal recursive comparison method.
-//=======================================================================
 
 void TDF_ComparisonTool::Compare(const TDF_Label&                        aSrcLabel,
                                  const TDF_Label&                        aTrgLabel,
@@ -73,7 +59,6 @@ void TDF_ComparisonTool::Compare(const TDF_Label&                        aSrcLab
 
   occ::handle<TDF_Attribute> tAtt;
 
-  // Compare source and target attributes.
   for (TDF_AttributeIterator attItr(aSrcLabel); attItr.More(); attItr.Next())
   {
     const occ::handle<TDF_Attribute> sAtt = attItr.Value();
@@ -87,7 +72,6 @@ void TDF_ComparisonTool::Compare(const TDF_Label&                        aSrcLab
     }
   }
 
-  // Do the same for the children.
   TDF_ChildIterator childItr1, childItr2;
   for (childItr1.Initialize(aSrcLabel); childItr1.More(); childItr1.Next())
   {
@@ -116,8 +100,6 @@ void TDF_ComparisonTool::Compare(const TDF_Label&                        aSrcLab
   }
 }
 
-//=================================================================================================
-
 bool TDF_ComparisonTool::SourceUnbound(const occ::handle<TDF_DataSet>&         aRefDataSet,
                                        const occ::handle<TDF_RelocationTable>& aRelocationTable,
                                        const TDF_IDFilter&                     aFilter,
@@ -129,8 +111,6 @@ bool TDF_ComparisonTool::SourceUnbound(const occ::handle<TDF_DataSet>&         a
   else
     return Unbound(aRefDataSet, aRelocationTable, aFilter, aDiffDataSet, anOption, true);
 }
-
-//=================================================================================================
 
 bool TDF_ComparisonTool::TargetUnbound(const occ::handle<TDF_DataSet>&         aRefDataSet,
                                        const occ::handle<TDF_RelocationTable>& aRelocationTable,
@@ -144,11 +124,6 @@ bool TDF_ComparisonTool::TargetUnbound(const occ::handle<TDF_DataSet>&         a
     return Unbound(aRefDataSet, aRelocationTable, aFilter, aDiffDataSet, anOption, false);
 }
 
-//=======================================================================
-// function : Unbound
-// purpose  : Internal function used by SourceUnbound and TargetUnbound.
-//=======================================================================
-
 bool TDF_ComparisonTool::Unbound(const occ::handle<TDF_DataSet>&         aRefDataSet,
                                  const occ::handle<TDF_RelocationTable>& aRelocationTable,
                                  const TDF_IDFilter&                     aFilter,
@@ -158,7 +133,6 @@ bool TDF_ComparisonTool::Unbound(const occ::handle<TDF_DataSet>&         aRefDat
 {
   bool hasDiff = false;
 
-  // Labels
   if ((anOption & 1) != 0)
   {
     const NCollection_Map<TDF_Label>&                refLabs    = aRefDataSet->Labels();
@@ -177,7 +151,6 @@ bool TDF_ComparisonTool::Unbound(const occ::handle<TDF_DataSet>&         aRefDat
     hasDiff = (diffLabs.Extent() > 0);
   }
 
-  // Attributes
   if ((anOption & 2) != 0)
   {
     const NCollection_Map<occ::handle<TDF_Attribute>>& refAtts  = aRefDataSet->Attributes();
@@ -204,11 +177,6 @@ bool TDF_ComparisonTool::Unbound(const occ::handle<TDF_DataSet>&         aRefDat
   return hasDiff;
 }
 
-//=======================================================================
-// function : Cut
-// purpose  : Removes the attributes contained into <aDataSet>
-//=======================================================================
-
 void TDF_ComparisonTool::Cut(const occ::handle<TDF_DataSet>& aDataSet)
 {
   if (aDataSet->IsEmpty())
@@ -216,7 +184,6 @@ void TDF_ComparisonTool::Cut(const occ::handle<TDF_DataSet>& aDataSet)
 
   const NCollection_Map<occ::handle<TDF_Attribute>>& refAtts = aDataSet->Attributes();
 
-  // Removes the attributes.
   NCollection_Map<occ::handle<TDF_Attribute>>::Iterator refAttMItr(refAtts);
   for (; refAttMItr.More(); refAttMItr.Next())
   {
@@ -224,12 +191,6 @@ void TDF_ComparisonTool::Cut(const occ::handle<TDF_DataSet>& aDataSet)
     locAtt->Label().ForgetAttribute(locAtt);
   }
 }
-
-//=======================================================================
-// function : IsSelfContained
-// purpose  : Returns true if all the labels of <aDataSet> are
-//          descendant of <aLabel>.
-//=======================================================================
 
 bool TDF_ComparisonTool::IsSelfContained(const TDF_Label&                aLabel,
                                          const occ::handle<TDF_DataSet>& aDataSet)

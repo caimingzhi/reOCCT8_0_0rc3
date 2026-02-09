@@ -1,18 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// init. de MinRad et MaxRad (PRO15604), JCT 09/10/98
 
 #include <ElCLib.hpp>
 #include <GccAna_Circ2d3Tan.hpp>
@@ -32,18 +18,11 @@
 #include <IntAna2d_IntPoint.hpp>
 #include <NCollection_Array1.hpp>
 
-//===========================================================================
-//   Creation of a circle tangent to a circle, a straight line and a point. +
-//===========================================================================
 GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                                      const GccEnt_QualifiedLin&  Qualified2,
                                      const gp_Pnt2d&             Point3,
                                      const double                Tolerance)
     :
-
-      //=========================================================================
-      //   Initialization of fields.                                           +
-      //=========================================================================
 
       cirsol(1, 4),
       qualifier1(1, 4),
@@ -75,10 +54,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
     throw GccEnt_BadQualifier();
     return;
   }
-
-  //=========================================================================
-  //   Processing.                                                          +
-  //=========================================================================
 
   gp_Circ2d C1(Qualified1.Qualified());
   gp_Lin2d  L2(Qualified2.Qualified());
@@ -221,7 +196,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
               {
                 if (NbrSol == 4)
                   break;
-                // pop : if the radius is too great - no creation
+
                 if (Radius(k) > MaxRad)
                   break;
                 if (std::abs(Radius(k)) < MinRad)
@@ -229,7 +204,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
 
                 NbrSol++;
                 cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius(k));
-                //               ==========================================================
+
                 double distcc1 = Center.Distance(center1);
                 if (!Qualified1.IsUnqualified())
                 {
@@ -269,10 +244,9 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                 else
                 {
                   TheSame1(NbrSol) = 0;
-                  //  modified by NIZHNY-EAP Mon Nov  1 13:48:21 1999 ___BEGIN___
-                  //		   gp_Dir2d dc(C1.Location().XY()-Center.XY());
+
                   gp_Dir2d dc(Center.XY() - C1.Location().XY());
-                  //  modified by NIZHNY-EAP Mon Nov  1 13:48:55 1999 ___END___
+
                   pnttg1sol(NbrSol) = gp_Pnt2d(Center.XY() + Radius(k) * dc.XY());
                   par1sol(NbrSol)   = ElCLib::Parameter(cirsol(NbrSol), pnttg1sol(NbrSol));
                   pararg1(NbrSol)   = ElCLib::Parameter(C1, pnttg1sol(NbrSol));

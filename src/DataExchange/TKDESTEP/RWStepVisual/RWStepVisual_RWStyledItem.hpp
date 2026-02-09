@@ -11,7 +11,6 @@ class StepVisual_StyledItem;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for StyledItem
 class RWStepVisual_RWStyledItem
 {
 public:

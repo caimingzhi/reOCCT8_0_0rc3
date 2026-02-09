@@ -26,8 +26,6 @@ IMPLEMENT_STANDARD_RTTIEXT(VrmlData_IndexedFaceSet, VrmlData_Faceted)
   #pragma warning(disable : 4996)
 #endif
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_Faceted::readData(VrmlData_InBuffer& theBuffer)
 {
   VrmlData_ErrorStatus aStatus(VrmlData_EmptyData);
@@ -61,8 +59,6 @@ VrmlData_ErrorStatus VrmlData_Faceted::readData(VrmlData_InBuffer& theBuffer)
   return aStatus;
 }
 
-//=================================================================================================
-
 const occ::handle<TopoDS_TShape>& VrmlData_IndexedFaceSet::TShape()
 {
   if (myNbPolygons == 0)
@@ -75,7 +71,6 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedFaceSet::TShape()
     return myTShape;
   }
 
-  // list of nodes:
   const gp_XYZ* arrNodes = myCoords->Values();
   const int     nNodes   = (int)myCoords->Length();
 
@@ -90,7 +85,7 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedFaceSet::TShape()
     int        nn        = arrIndice[0];
     if (nn < 3)
     {
-      // bad polygon
+
       continue;
     }
     NCollection_Sequence<int> aPolygon;
@@ -105,10 +100,10 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedFaceSet::TShape()
     }
     if (in <= nn)
     {
-      // bad index of node in polygon
+
       continue;
     }
-    // calculate normal
+
     gp_XYZ aSum;
     gp_XYZ aPrevP = arrNodes[aPolygon(1)];
     for (in = 2; in < aPolygon.Length(); in++)
@@ -122,14 +117,14 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedFaceSet::TShape()
     }
     if (aSum.Modulus() < Precision::Confusion())
     {
-      // degenerate polygon
+
       continue;
     }
     gp_Dir aNormal(aSum);
     mapPolyId.Add(i);
     aPolygons.Append(aPolygon);
     aNorms.Append(aNormal);
-    // collect info about used indices
+
     for (in = 1; in <= aPolygon.Length(); in++)
     {
       mapNodeId.Add(arrIndice[in]);
@@ -143,7 +138,7 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedFaceSet::TShape()
     myTShape.Nullify();
     return myTShape;
   }
-  // prepare vector of nodes
+
   NCollection_Vector<gp_XYZ>    aNodes;
   NCollection_DataMap<int, int> mapIdId;
   for (i = 0; i < nNodes; i++)
@@ -155,7 +150,7 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedFaceSet::TShape()
       aNodes.Append(aN1);
     }
   }
-  // update polygon indices
+
   NCollection_List<NCollection_Sequence<int>>::Iterator itP(aPolygons);
   for (; itP.More(); itP.Next())
   {
@@ -166,7 +161,7 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedFaceSet::TShape()
       aPolygon.ChangeValue(in) = newIdx;
     }
   }
-  // calculate triangles
+
   NCollection_List<Poly_Triangle> aTriangles;
   itP.Init(aPolygons);
   for (NCollection_List<gp_Dir>::Iterator itN(aNorms); itP.More(); itP.Next(), itN.Next())
@@ -190,15 +185,14 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedFaceSet::TShape()
     return myTShape;
   }
 
-  // Triangulation creation
   occ::handle<Poly_Triangulation> aTriangulation =
     new Poly_Triangulation(aNodes.Length(), aTriangles.Extent(), false);
-  // Copy the triangulation vertices
+
   for (i = 0; i < aNodes.Length(); i++)
   {
     aTriangulation->SetNode(i + 1, gp_Pnt(aNodes(i)));
   }
-  // Copy the triangles.
+
   NCollection_List<Poly_Triangle>::Iterator itT(aTriangles);
   for (i = 1; itT.More(); itT.Next(), i++)
   {
@@ -209,14 +203,13 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedFaceSet::TShape()
   aFace->Triangulation(aTriangulation);
   myTShape = aFace;
 
-  // Normals should be defined; if they are not, compute them
   if (myNormals.IsNull())
   {
     Poly::ComputeNormals(aTriangulation);
   }
   else
   {
-    // Copy the normals. Currently only normals-per-vertex are supported.
+
     if (myNormalPerVertex)
     {
       aTriangulation->AddNormals();
@@ -232,7 +225,7 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedFaceSet::TShape()
       {
         for (i = 0; i < (int)myNbPolygons; i++)
         {
-          if (mapPolyId.Contains(i)) // check to avoid previously skipped faces
+          if (mapPolyId.Contains(i))
           {
             const int* anArrNodes;
             Polygon(i, anArrNodes);
@@ -249,7 +242,6 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedFaceSet::TShape()
     }
     else
     {
-      // TODO ..
     }
   }
 
@@ -257,8 +249,6 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedFaceSet::TShape()
 
   return myTShape;
 }
-
-//=================================================================================================
 
 occ::handle<VrmlData_Node> VrmlData_IndexedFaceSet::Clone(
   const occ::handle<VrmlData_Node>& theOther) const
@@ -280,7 +270,7 @@ occ::handle<VrmlData_Node> VrmlData_IndexedFaceSet::Clone(
   }
   else
   {
-    // Create a dummy node to pass the different Scene instance to methods Clone
+
     const occ::handle<VrmlData_UnknownNode> aDummyNode = new VrmlData_UnknownNode(aResult->Scene());
     if (!myCoords.IsNull())
       aResult->SetCoordinates(occ::down_cast<VrmlData_Coordinate>(myCoords->Clone(aDummyNode)));
@@ -288,7 +278,7 @@ occ::handle<VrmlData_Node> VrmlData_IndexedFaceSet::Clone(
       aResult->SetNormals(occ::down_cast<VrmlData_Normal>(myNormals->Clone(aDummyNode)));
     if (!myColors.IsNull())
       aResult->SetColors(occ::down_cast<VrmlData_Color>(myColors->Clone(aDummyNode)));
-    // TODO: Replace the following lines with the relevant copying
+
     aResult->SetPolygons(myNbPolygons, myArrPolygons);
     aResult->SetNormalInd(myNbNormals, myArrNormalInd);
     aResult->SetColorInd(myNbColors, myArrColorInd);
@@ -298,8 +288,6 @@ occ::handle<VrmlData_Node> VrmlData_IndexedFaceSet::Clone(
   aResult->SetColorPerVertex(myColorPerVertex);
   return aResult;
 }
-
-//=================================================================================================
 
 VrmlData_ErrorStatus VrmlData_IndexedFaceSet::Read(VrmlData_InBuffer& theBuffer)
 {
@@ -318,17 +306,6 @@ VrmlData_ErrorStatus VrmlData_IndexedFaceSet::Read(VrmlData_InBuffer& theBuffer)
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "coordIndex"))
     {
       aStatus = aScene.ReadArrIndex(theBuffer, myArrPolygons, myNbPolygons);
-      // for (int i = 0; i < myNbPolygons; i++)
-      //{
-      //   const int * anArray = myArrPolygons[i];
-      //   int nbPoints = anArray[0];
-      //   std::cout << "i = " << i << "  indexes:";
-      //   for (int ip = 1; ip <= nbPoints; ip++)
-      //   {
-      //     std::cout << " " << anArray[ip];
-      //   }
-      //   std::cout << std::endl;
-      // }
     }
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "colorIndex"))
       aStatus = aScene.ReadArrIndex(theBuffer, myArrColorInd, myNbColors);
@@ -336,8 +313,7 @@ VrmlData_ErrorStatus VrmlData_IndexedFaceSet::Read(VrmlData_InBuffer& theBuffer)
       aStatus = aScene.ReadArrIndex(theBuffer, myArrNormalInd, myNbNormals);
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "texCoordIndex"))
       aStatus = aScene.ReadArrIndex(theBuffer, myArrTextureInd, myNbTextures);
-    // These four checks should be the last one to avoid their interference
-    // with the other tokens (e.g., coordIndex)
+
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "texCoord"))
     {
       occ::handle<VrmlData_Node> aNode;
@@ -365,48 +341,15 @@ VrmlData_ErrorStatus VrmlData_IndexedFaceSet::Read(VrmlData_InBuffer& theBuffer)
     if (!OK(aStatus))
       break;
   }
-  // Read the terminating (closing) brace
+
   if (OK(aStatus) || aStatus == VrmlData_EmptyData)
     if (OK(aStatus, readBrace(theBuffer)))
     {
-      // Post-processing
+
       ;
     }
   return aStatus;
 }
-
-// //=======================================================================
-// //function : dummyReadBrackets
-// //purpose  : static (local) function
-// //=======================================================================
-
-// VrmlData_ErrorStatus dummyReadBrackets (VrmlData_InBuffer& theBuffer)
-// {
-//   VrmlData_ErrorStatus aStatus;
-//   int aLevelCounter (0);
-//   // This loop searches for any opening bracket.
-//   // Such bracket increments the level counter. A closing bracket decrements
-//   // the counter. The loop terminates when the counter becomes zero.
-//   while ((aStatus = VrmlData_Scene::ReadLine(theBuffer)) == VrmlData_StatusOK)
-//   {
-//     int aChar;
-//     while ((aChar = theBuffer.LinePtr[0]) != '\0') {
-//       theBuffer.LinePtr++;
-//       if        (aChar == '[') {
-//         aLevelCounter++;
-//         break;
-//       } else if (aChar == ']') {
-//         aLevelCounter--;
-//         break;
-//       }
-//     }
-//     if (aLevelCounter <= 0)
-//       break;
-//   }
-//   return aStatus;
-// }
-
-//=================================================================================================
 
 bool VrmlData_IndexedFaceSet::IsDefault() const
 {
@@ -418,8 +361,6 @@ bool VrmlData_IndexedFaceSet::IsDefault() const
   return aResult;
 }
 
-//=================================================================================================
-
 VrmlData_ErrorStatus VrmlData_IndexedFaceSet::Write(const char* thePrefix) const
 {
   static char           header[] = "IndexedFaceSet {";
@@ -428,7 +369,6 @@ VrmlData_ErrorStatus VrmlData_IndexedFaceSet::Write(const char* thePrefix) const
   if (OK(aStatus, aScene.WriteLine(thePrefix, header, GlobalIndent())))
   {
 
-    // Write the attributes of interface "VrmlData_Faceted"
     if (!IsCCW())
       aStatus = aScene.WriteLine("ccw         FALSE");
     if (OK(aStatus) && !IsSolid())
@@ -471,10 +411,8 @@ VrmlData_ErrorStatus VrmlData_IndexedFaceSet::Write(const char* thePrefix) const
   return aStatus;
 }
 
-//=================================================================================================
-
-Quantity_Color VrmlData_IndexedFaceSet::GetColor(const int /*iFace*/, const int /*iVertex*/)
+Quantity_Color VrmlData_IndexedFaceSet::GetColor(const int, const int)
 {
-  // TODO
+
   return Quantity_NOC_BLACK;
 }

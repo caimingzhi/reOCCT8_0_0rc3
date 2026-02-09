@@ -8,8 +8,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_PrsBuilder, Standard_Transient)
 
-//=================================================================================================
-
 MeshVS_PrsBuilder::MeshVS_PrsBuilder(const occ::handle<MeshVS_Mesh>&       Parent,
                                      const MeshVS_DisplayModeFlags&        Flags,
                                      const occ::handle<MeshVS_DataSource>& DS,
@@ -31,16 +29,12 @@ MeshVS_PrsBuilder::MeshVS_PrsBuilder(const occ::handle<MeshVS_Mesh>&       Paren
   myPriority = Priority;
 }
 
-//=================================================================================================
-
 void MeshVS_PrsBuilder::CustomBuild(const occ::handle<Prs3d_Presentation>&,
                                     const TColStd_PackedMapOfInteger&,
                                     TColStd_PackedMapOfInteger&,
                                     const int) const
 {
 }
-
-//=================================================================================================
 
 occ::handle<Select3D_SensitiveEntity> MeshVS_PrsBuilder::CustomSensitiveEntity(
   const occ::handle<SelectMgr_EntityOwner>&,
@@ -49,14 +43,10 @@ occ::handle<Select3D_SensitiveEntity> MeshVS_PrsBuilder::CustomSensitiveEntity(
   return nullptr;
 }
 
-//=================================================================================================
-
 occ::handle<MeshVS_DataSource> MeshVS_PrsBuilder::DataSource() const
 {
   return myDataSource;
 }
-
-//=================================================================================================
 
 occ::handle<MeshVS_DataSource> MeshVS_PrsBuilder::GetDataSource() const
 {
@@ -66,56 +56,40 @@ occ::handle<MeshVS_DataSource> MeshVS_PrsBuilder::GetDataSource() const
     return myDataSource;
 }
 
-//=================================================================================================
-
 void MeshVS_PrsBuilder::SetDataSource(const occ::handle<MeshVS_DataSource>& DS)
 {
   myDataSource = DS;
 }
-
-//=================================================================================================
 
 int MeshVS_PrsBuilder::GetFlags() const
 {
   return myFlags;
 }
 
-//=================================================================================================
-
 int MeshVS_PrsBuilder::GetId() const
 {
   return myId;
 }
-
-//=================================================================================================
 
 bool MeshVS_PrsBuilder::TestFlags(const int DisplayMode) const
 {
   return ((DisplayMode & GetFlags()) > 0);
 }
 
-//=================================================================================================
-
 void MeshVS_PrsBuilder::SetExcluding(const bool state)
 {
   myIsExcluding = state;
 }
-
-//=================================================================================================
 
 bool MeshVS_PrsBuilder::IsExcludingOn() const
 {
   return myIsExcluding;
 }
 
-//=================================================================================================
-
 int MeshVS_PrsBuilder::GetPriority() const
 {
   return myPriority;
 }
-
-//=================================================================================================
 
 occ::handle<MeshVS_Drawer> MeshVS_PrsBuilder::GetDrawer() const
 {
@@ -125,36 +99,22 @@ occ::handle<MeshVS_Drawer> MeshVS_PrsBuilder::GetDrawer() const
     return myDrawer;
 }
 
-//=================================================================================================
-
 void MeshVS_PrsBuilder::SetDrawer(const occ::handle<MeshVS_Drawer>& Dr)
 {
   myDrawer = Dr;
 }
-
-//=================================================================================================
 
 occ::handle<MeshVS_Drawer> MeshVS_PrsBuilder::Drawer() const
 {
   return myDrawer;
 }
 
-//================================================================
-// Function : SetPresentationManager
-// Purpose  : Set presentation manager. This method is used by
-//            MeshVS_Mesh::Compute methodto assign presentation
-//            manager to the builder.
-//================================================================
 void MeshVS_PrsBuilder::SetPresentationManager(
   const occ::handle<PrsMgr_PresentationManager>& thePrsMgr)
 {
   myPrsMgr = thePrsMgr;
 }
 
-//================================================================
-// Function : GetPresentationManager
-// Purpose  : Get presentation manager
-//================================================================
 occ::handle<PrsMgr_PresentationManager> MeshVS_PrsBuilder::GetPresentationManager() const
 {
   return myPrsMgr;

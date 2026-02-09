@@ -11,7 +11,6 @@ class StepBasic_ApplicationContextElement;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ApplicationContextElement
 class RWStepBasic_RWApplicationContextElement
 {
 public:

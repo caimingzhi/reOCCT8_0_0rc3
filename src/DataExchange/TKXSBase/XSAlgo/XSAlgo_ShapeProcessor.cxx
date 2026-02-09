@@ -1,15 +1,4 @@
-// Copyright (c) 2000-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include "XSAlgo_ShapeProcessor.hpp"
 
@@ -40,8 +29,6 @@
 #include <sstream>
 #include <unordered_set>
 
-//=============================================================================
-
 XSAlgo_ShapeProcessor::XSAlgo_ShapeProcessor(
   const XSAlgo_ShapeProcessor::ParameterMap& theParameters,
   const DE_ShapeFixParameters&               theShapeFixParameters)
@@ -50,16 +37,12 @@ XSAlgo_ShapeProcessor::XSAlgo_ShapeProcessor(
   FillParameterMap(theShapeFixParameters, false, myParameters);
 }
 
-//=============================================================================
-
 XSAlgo_ShapeProcessor::XSAlgo_ShapeProcessor(const DE_ShapeFixParameters& theParameters)
 {
   XSAlgo_ShapeProcessor::ParameterMap aMap;
   FillParameterMap(theParameters, false, aMap);
   myParameters = aMap;
 }
-
-//=============================================================================
 
 TopoDS_Shape XSAlgo_ShapeProcessor::ProcessShape(const TopoDS_Shape&                  theShape,
                                                  const ShapeProcess::OperationsFlags& theOperations,
@@ -75,8 +58,6 @@ TopoDS_Shape XSAlgo_ShapeProcessor::ProcessShape(const TopoDS_Shape&            
                                                                       : theShape;
 }
 
-//=============================================================================
-
 void XSAlgo_ShapeProcessor::initializeContext(const TopoDS_Shape& theShape)
 {
   myContext = new ShapeProcess_ShapeContext(theShape, nullptr);
@@ -87,7 +68,7 @@ void XSAlgo_ShapeProcessor::initializeContext(const TopoDS_Shape& theShape)
     myContext->ResourceManager()->SetResource(aParameterIter.Key().ToCString(),
                                               aParameterIter.Value().ToCString());
   }
-  // Read and set detalization level.
+
   TCollection_AsciiString aResult;
   if (myParameters.Find("DetalizationLevel", aResult) && aResult.IsIntegerValue())
   {
@@ -95,15 +76,13 @@ void XSAlgo_ShapeProcessor::initializeContext(const TopoDS_Shape& theShape)
       static_cast<TopAbs_ShapeEnum>(aResult.IntegerValue());
     myContext->SetDetalisation(aDetalizationLevel);
   }
-  // Read and set non-manifold flag.
+
   if (myParameters.Find("NonManifold", aResult) && aResult.IsIntegerValue())
   {
     const bool aNonManifold = static_cast<bool>(aResult.IntegerValue());
     myContext->SetNonManifold(aNonManifold);
   }
 }
-
-//=============================================================================
 
 void XSAlgo_ShapeProcessor::addMessages(const occ::handle<ShapeExtend_MsgRegistrator>& theMessages,
                                         const TopoDS_Shape&                            theShape,
@@ -128,8 +107,6 @@ void XSAlgo_ShapeProcessor::addMessages(const occ::handle<ShapeExtend_MsgRegistr
                           TCollection_AsciiString(aMessage.Original()).ToCString());
   }
 }
-
-//=============================================================================
 
 void XSAlgo_ShapeProcessor::MergeShapeTransferInfo(
   const occ::handle<Transfer_TransientProcess>& theTransientProcess,
@@ -169,10 +146,10 @@ void XSAlgo_ShapeProcessor::MergeShapeTransferInfo(
     }
     else
     {
-      // Some of edges may be modified.
+
       BRepTools_ReShape aReShaper;
       bool              aHasModifiedEdges = false;
-      // Remember modifications.
+
       for (TopExp_Explorer anExpSE(anOriginalShape, TopAbs_EDGE); anExpSE.More(); anExpSE.Next())
       {
         if (theModifiedShapesMap.IsBound(anExpSE.Current()))
@@ -182,7 +159,7 @@ void XSAlgo_ShapeProcessor::MergeShapeTransferInfo(
           aReShaper.Replace(anExpSE.Current(), aModifiedShape);
         }
       }
-      // Apply modifications and store result in binder.
+
       if (aHasModifiedEdges)
       {
         TopoDS_Shape aReshapedShape = aReShaper.Apply(anOriginalShape);
@@ -190,15 +167,12 @@ void XSAlgo_ShapeProcessor::MergeShapeTransferInfo(
       }
     }
 
-    // update messages
     if (aToPrint)
     {
       addMessages(theMessages, anOriginalShape, aShapeBinder);
     }
   }
 }
-
-//=============================================================================
 
 void XSAlgo_ShapeProcessor::MergeTransferInfo(
   const occ::handle<Transfer_TransientProcess>& theTransientProcess,
@@ -213,8 +187,6 @@ void XSAlgo_ShapeProcessor::MergeTransferInfo(
                                 theFirstTPItemIndex,
                                 myContext->Messages());
 }
-
-//=============================================================================
 
 void XSAlgo_ShapeProcessor::MergeShapeTransferInfo(
   const occ::handle<Transfer_FinderProcess>& theFinderProcess,
@@ -243,8 +215,7 @@ void XSAlgo_ShapeProcessor::MergeShapeTransferInfo(
     if (aResultBinder.IsNull())
     {
       aResultBinder = new TransferBRep_ShapeBinder(aResultShape);
-      // if <orig> shape was split, put entities corresponding to new shapes
-      //  into Transfer_TransientListBinder.
+
       if (anOriginalShape.ShapeType() > aResultShape.ShapeType())
       {
         TopoDS_Shape                              aSubShape;
@@ -293,15 +264,12 @@ void XSAlgo_ShapeProcessor::MergeShapeTransferInfo(
       anOriginalBinder->AddResult(aResultBinder);
     }
 
-    // update messages
     if (aToPrint)
     {
       addMessages(theMessages, anOriginalShape, aResultBinder);
     }
   }
 }
-
-//=============================================================================
 
 void XSAlgo_ShapeProcessor::MergeTransferInfo(
   const occ::handle<Transfer_FinderProcess>& theFinderProcess) const
@@ -312,8 +280,6 @@ void XSAlgo_ShapeProcessor::MergeTransferInfo(
   }
   return MergeShapeTransferInfo(theFinderProcess, myContext->Map(), myContext->Messages());
 }
-
-//=============================================================================
 
 TopoDS_Edge XSAlgo_ShapeProcessor::MakeEdgeOnCurve(const TopoDS_Edge& aSourceEdge)
 {
@@ -340,8 +306,6 @@ TopoDS_Edge XSAlgo_ShapeProcessor::MakeEdgeOnCurve(const TopoDS_Edge& aSourceEdg
   return aResult;
 }
 
-//=============================================================================
-
 bool XSAlgo_ShapeProcessor::CheckPCurve(const TopoDS_Edge& theEdge,
                                         const TopoDS_Face& theFace,
                                         const double       thePrecision,
@@ -349,7 +313,6 @@ bool XSAlgo_ShapeProcessor::CheckPCurve(const TopoDS_Edge& theEdge,
 {
   ShapeAnalysis_Edge anEdgeAnalyzer;
 
-  // Retrieve pcurve and its parameters.
   double                    aCurve2DParam1;
   double                    aCurve2DParam2;
   occ::handle<Geom2d_Curve> aCurve2D;
@@ -358,17 +321,15 @@ bool XSAlgo_ShapeProcessor::CheckPCurve(const TopoDS_Edge& theEdge,
     return false;
   }
 
-  // Check for pcurve longer than surface.
   occ::handle<Geom_Surface> aSurface = BRep_Tool::Surface(theFace);
   double                    aFaceSurfaceU1, aFaceSurfaceU2, aFaceSurfaceV1, aFaceSurfaceV2;
   aSurface->Bounds(aFaceSurfaceU1, aFaceSurfaceU2, aFaceSurfaceV1, aFaceSurfaceV2);
   const gp_Pnt2d aCurve2DPoint1 = aCurve2D->Value(aCurve2DParam1);
   const gp_Pnt2d aCurve2DPoint2 = aCurve2D->Value(aCurve2DParam2);
-  // Multi-periodic? Better to discard (beware of infinite values)
+
   const double anEdgeSpanX = std::abs(aCurve2DPoint1.X() - aCurve2DPoint2.X());
   const double anEdgeSpanY = std::abs(aCurve2DPoint1.Y() - aCurve2DPoint2.Y());
-  // So if span of pcurve along U or V is longer than 6/8 of the surface span, discard it.
-  // Why exactly 6/8? No idea, but it's the same as in the original code.
+
   if (anEdgeSpanX / 8. > (aFaceSurfaceU2 / 6. - aFaceSurfaceU1 / 6.)
       || anEdgeSpanY / 8. > (aFaceSurfaceV2 / 6. - aFaceSurfaceV1 / 6.))
   {
@@ -376,9 +337,6 @@ bool XSAlgo_ShapeProcessor::CheckPCurve(const TopoDS_Edge& theEdge,
     return false;
   }
 
-  // Second Check: 2D and 3D consistency (if the Pcurve has not been dropped)
-  // We also check that it does not wrap around too much...
-  // Example: UVV in DEGREES on a surface in RADIANS, adjusted = 57 turns!
   occ::handle<Geom_Curve> aCurve3D;
   double                  aCurve3DParam1;
   double                  aCurve3DParam2;
@@ -401,18 +359,12 @@ bool XSAlgo_ShapeProcessor::CheckPCurve(const TopoDS_Edge& theEdge,
     return false;
   }
 
-  //
-  // pdn checking deviation between pcurve and 3D curve
-  //
-
-  // Make temporary edge for analysis
   if (aCurve3D.IsNull())
   {
     return false;
   }
   TopoDS_Edge aTmpEdge = MakeEdgeOnCurve(theEdge);
 
-  // fill it with pcurve(s)
   BRep_Builder              aBuilder;
   occ::handle<Geom2d_Curve> aSeamPCurve;
   if (theIsSeam)
@@ -439,22 +391,20 @@ bool XSAlgo_ShapeProcessor::CheckPCurve(const TopoDS_Edge& theEdge,
     aBuilder.SameParameter(aTmpEdge, false);
   }
 
-  // call FixSP to see what it will do
   occ::handle<ShapeFix_Edge> anEdgeFixer = new ShapeFix_Edge;
   anEdgeFixer->FixSameParameter(aTmpEdge);
   double aTolerance         = BRep_Tool::Tolerance(aTmpEdge);
   bool   aSameRangeFlag     = BRep_Tool::SameRange(aTmpEdge);
   bool   aSameParameterFlag = BRep_Tool::SameParameter(aTmpEdge);
 
-  // if result is not nice, try to call projection and take the best
   if (aTolerance > std::min(1., 2. * thePrecision) || !aSameRangeFlag)
   {
-    // pdn trying to recompute pcurve
+
     TopoDS_Edge anEdgePr = MakeEdgeOnCurve(theEdge);
     anEdgeFixer->FixAddPCurve(anEdgePr, theFace, theIsSeam, thePrecision);
     anEdgeFixer->FixSameParameter(anEdgePr);
     const double aTolerancePr = BRep_Tool::Tolerance(anEdgePr);
-    // pdn choose the best pcurve
+
     if (aTolerancePr < aTolerance || !aSameRangeFlag)
     {
       aSameRangeFlag     = BRep_Tool::SameRange(anEdgePr);
@@ -464,7 +414,6 @@ bool XSAlgo_ShapeProcessor::CheckPCurve(const TopoDS_Edge& theEdge,
     }
   }
 
-  // get corrected pcurve from the temporary edge, and put to original
   anEdgeAnalyzer.PCurve(aTmpEdge, theFace, aCurve2D, aCurve2DParam1, aCurve2DParam2, false);
   if (theIsSeam)
   {
@@ -477,7 +426,7 @@ bool XSAlgo_ShapeProcessor::CheckPCurve(const TopoDS_Edge& theEdge,
                           aReversedTmpEdgeParam1,
                           aReversedTmpEdgeParam2,
                           false);
-    if (theEdge.Orientation() == TopAbs_REVERSED) //: abv 14.11.01: coneEl.sat loop
+    if (theEdge.Orientation() == TopAbs_REVERSED)
     {
       aBuilder.UpdateEdge(theEdge, aSeamPCurve, aCurve2D, theFace, aTolerance);
     }
@@ -506,8 +455,6 @@ bool XSAlgo_ShapeProcessor::CheckPCurve(const TopoDS_Edge& theEdge,
   return true;
 }
 
-//=============================================================================
-
 XSAlgo_ShapeProcessor::ProcessingData XSAlgo_ShapeProcessor::ReadProcessingData(
   const TCollection_AsciiString& theFileResourceName,
   const TCollection_AsciiString& theScopeResourceName)
@@ -517,12 +464,11 @@ XSAlgo_ShapeProcessor::ProcessingData XSAlgo_ShapeProcessor::ReadProcessingData(
     new ShapeProcess_ShapeContext(TopoDS_Shape(), aFileName);
   if (!aContext->ResourceManager()->IsInitialized())
   {
-    // If resource file wasn't found, use static values instead
+
     Interface_Static::FillMap(aContext->ResourceManager()->GetMap());
   }
   const TCollection_AsciiString aScope = Interface_Static::CVal(theScopeResourceName.ToCString());
 
-  // Copy parameters to the result.
   XSAlgo_ShapeProcessor::ParameterMap                                          aResultParameters;
   ShapeProcess::OperationsFlags                                                aResultFlags;
   const NCollection_DataMap<TCollection_AsciiString, TCollection_AsciiString>& aMap =
@@ -535,17 +481,15 @@ XSAlgo_ShapeProcessor::ProcessingData XSAlgo_ShapeProcessor::ReadProcessingData(
     TCollection_AsciiString aKey = anIter.Key();
     if (!aKey.StartsWith(aScope))
     {
-      // Ignore all parameters that don't start with the specified scope.
+
       continue;
     }
 
-    // Remove scope prefix and dot
-    // "FromIGES.FixShape.FixFreeFaceMode" -> "FixShape.FixFreeFaceMode"
     aKey = aKey.SubString(aScope.Length() + 2, aKey.Length());
 
     if (aKey.IsEqual("exec.op"))
     {
-      // Parse operation flags using Token method
+
       int                           aTokenCount = 1;
       TCollection_AsciiString       aToken;
       const TCollection_AsciiString aSeparators(" \t,;");
@@ -568,8 +512,6 @@ XSAlgo_ShapeProcessor::ProcessingData XSAlgo_ShapeProcessor::ReadProcessingData(
   }
   return {aResultParameters, aResultFlags};
 }
-
-//=============================================================================
 
 void XSAlgo_ShapeProcessor::FillParameterMap(const DE_ShapeFixParameters&         theParameters,
                                              const bool                           theIsReplace,
@@ -712,8 +654,6 @@ void XSAlgo_ShapeProcessor::FillParameterMap(const DE_ShapeFixParameters&       
                theMap);
 }
 
-//=============================================================================
-
 void XSAlgo_ShapeProcessor::SetShapeFixParameters(
   const DE_ShapeFixParameters&               theParameters,
   const XSAlgo_ShapeProcessor::ParameterMap& theAdditionalParameters,
@@ -732,8 +672,6 @@ void XSAlgo_ShapeProcessor::SetShapeFixParameters(
   }
 }
 
-//=============================================================================
-
 void XSAlgo_ShapeProcessor::SetParameter(const char*                          theKey,
                                          const DE_ShapeFixParameters::FixMode theValue,
                                          const bool                           theIsReplace,
@@ -747,8 +685,6 @@ void XSAlgo_ShapeProcessor::SetParameter(const char*                          th
     theMap);
 }
 
-//=============================================================================
-
 void XSAlgo_ShapeProcessor::SetParameter(const char*                          theKey,
                                          const double                         theValue,
                                          const bool                           theIsReplace,
@@ -756,8 +692,6 @@ void XSAlgo_ShapeProcessor::SetParameter(const char*                          th
 {
   SetParameter(theKey, TCollection_AsciiString(theValue), theIsReplace, theMap);
 }
-
-//=============================================================================
 
 void XSAlgo_ShapeProcessor::SetParameter(const char*                          theKey,
                                          const TCollection_AsciiString&       theValue,
@@ -776,8 +710,6 @@ void XSAlgo_ShapeProcessor::SetParameter(const char*                          th
     }
   }
 }
-
-//=============================================================================
 
 void XSAlgo_ShapeProcessor::PrepareForTransfer()
 {

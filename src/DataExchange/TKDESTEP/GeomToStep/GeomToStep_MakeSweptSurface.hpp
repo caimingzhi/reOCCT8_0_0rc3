@@ -9,11 +9,6 @@
 class StepGeom_SweptSurface;
 class Geom_SweptSurface;
 
-//! This class implements the mapping between classes
-//! SweptSurface from Geom and the class SweptSurface from
-//! StepGeom which describes a SweptSurface from prostep.
-//! As SweptSurface is an abstract SweptSurface this class
-//! is an access to the sub-class required.
 class GeomToStep_MakeSweptSurface : public GeomToStep_Root
 {
 public:

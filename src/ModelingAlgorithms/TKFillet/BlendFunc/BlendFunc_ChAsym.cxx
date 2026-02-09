@@ -12,8 +12,6 @@
 #include <Precision.hpp>
 #include <Standard_NotImplemented.hpp>
 
-//=================================================================================================
-
 BlendFunc_ChAsym::BlendFunc_ChAsym(const occ::handle<Adaptor3d_Surface>& S1,
                                    const occ::handle<Adaptor3d_Surface>& S2,
                                    const occ::handle<Adaptor3d_Curve>&   C)
@@ -33,32 +31,20 @@ BlendFunc_ChAsym::BlendFunc_ChAsym(const occ::handle<Adaptor3d_Surface>& S1,
 {
 }
 
-//=================================================================================================
-
 int BlendFunc_ChAsym::NbEquations() const
 {
   return 4;
 }
-
-//=================================================================================================
 
 void BlendFunc_ChAsym::Set(const double Param)
 {
   param = Param;
 }
 
-//=======================================================================
-// function : Set
-// purpose  : Segmente la courbe a sa partie utile.
-//           La precision est prise arbitrairement petite !?
-//=======================================================================
-
 void BlendFunc_ChAsym::Set(const double First, const double Last)
 {
   tcurv = curv->Trim(First, Last, 1.e-12);
 }
-
-//=================================================================================================
 
 void BlendFunc_ChAsym::GetTolerance(math_Vector& Tolerance, const double Tol) const
 {
@@ -67,8 +53,6 @@ void BlendFunc_ChAsym::GetTolerance(math_Vector& Tolerance, const double Tol) co
   Tolerance(3) = surf2->UResolution(Tol);
   Tolerance(4) = surf2->VResolution(Tol);
 }
-
-//=================================================================================================
 
 void BlendFunc_ChAsym::GetBounds(math_Vector& InfBound, math_Vector& SupBound) const
 {
@@ -91,8 +75,6 @@ void BlendFunc_ChAsym::GetBounds(math_Vector& InfBound, math_Vector& SupBound) c
     }
   }
 }
-
-//=================================================================================================
 
 bool BlendFunc_ChAsym::IsSolution(const math_Vector& Sol, const double Tol)
 {
@@ -187,14 +169,10 @@ bool BlendFunc_ChAsym::IsSolution(const math_Vector& Sol, const double Tol)
   return false;
 }
 
-//=================================================================================================
-
 double BlendFunc_ChAsym::GetMinimalDistance() const
 {
   return distmin;
 }
-
-//=================================================================================================
 
 bool BlendFunc_ChAsym::ComputeValues(const math_Vector& X, const int DegF, const int DegL)
 {
@@ -226,7 +204,7 @@ bool BlendFunc_ChAsym::ComputeValues(const math_Vector& X, const int DegF, const
   Nsurf1 = d1u1.Crossed(d1v1);
   tsurf1 = Nsurf1.Crossed(np);
 
-  gp_Vec nps1(ptgui, pt1), s1s2(pt1, pt2); //, tempVec;
+  gp_Vec nps1(ptgui, pt1), s1s2(pt1, pt2);
   PScaInv = 1. / tsurf1.Dot(s1s2);
   F4      = np.Dot(tsurf1.Crossed(s1s2)) * PScaInv;
 
@@ -283,8 +261,6 @@ bool BlendFunc_ChAsym::ComputeValues(const math_Vector& X, const int DegF, const
   return true;
 }
 
-//=================================================================================================
-
 bool BlendFunc_ChAsym::Value(const math_Vector& X, math_Vector& F)
 {
   const bool Error = ComputeValues(X, 0, 0);
@@ -292,16 +268,12 @@ bool BlendFunc_ChAsym::Value(const math_Vector& X, math_Vector& F)
   return Error;
 }
 
-//=================================================================================================
-
 bool BlendFunc_ChAsym::Derivatives(const math_Vector& X, math_Matrix& D)
 {
   const bool Error = ComputeValues(X, 1, 1);
   D                = DX;
   return Error;
 }
-
-//=================================================================================================
 
 bool BlendFunc_ChAsym::Values(const math_Vector& X, math_Vector& F, math_Matrix& D)
 {
@@ -311,28 +283,20 @@ bool BlendFunc_ChAsym::Values(const math_Vector& X, math_Vector& F, math_Matrix&
   return Error;
 }
 
-//=================================================================================================
-
 const gp_Pnt& BlendFunc_ChAsym::PointOnS1() const
 {
   return pt1;
 }
-
-//=================================================================================================
 
 const gp_Pnt& BlendFunc_ChAsym::PointOnS2() const
 {
   return pt2;
 }
 
-//=================================================================================================
-
 bool BlendFunc_ChAsym::IsTangencyPoint() const
 {
   return istangent;
 }
-
-//=================================================================================================
 
 const gp_Vec& BlendFunc_ChAsym::TangentOnS1() const
 {
@@ -341,16 +305,12 @@ const gp_Vec& BlendFunc_ChAsym::TangentOnS1() const
   return tg1;
 }
 
-//=================================================================================================
-
 const gp_Vec2d& BlendFunc_ChAsym::Tangent2dOnS1() const
 {
   if (istangent)
     throw Standard_DomainError("BlendFunc_ChAsym::Tangent2dOnS1");
   return tg12d;
 }
-
-//=================================================================================================
 
 const gp_Vec& BlendFunc_ChAsym::TangentOnS2() const
 {
@@ -359,16 +319,12 @@ const gp_Vec& BlendFunc_ChAsym::TangentOnS2() const
   return tg2;
 }
 
-//=================================================================================================
-
 const gp_Vec2d& BlendFunc_ChAsym::Tangent2dOnS2() const
 {
   if (istangent)
     throw Standard_DomainError("BlendFunc_ChAsym::Tangent2dOnS2");
   return tg22d;
 }
-
-//=================================================================================================
 
 bool BlendFunc_ChAsym::TwistOnS1() const
 {
@@ -377,20 +333,12 @@ bool BlendFunc_ChAsym::TwistOnS1() const
   return tg1.Dot(nplan) < 0.;
 }
 
-//=================================================================================================
-
 bool BlendFunc_ChAsym::TwistOnS2() const
 {
   if (istangent)
     throw Standard_DomainError("BlendFunc_ChAsym::TwistOnS2");
   return tg2.Dot(nplan) < 0.;
 }
-
-//=======================================================================
-// function : Tangent
-// purpose  : TgF,NmF et TgL,NmL les tangentes et normales respectives
-//           aux surfaces S1 et S2
-//=======================================================================
 
 void BlendFunc_ChAsym::Tangent(const double U1,
                                const double V1,
@@ -437,9 +385,7 @@ void BlendFunc_ChAsym::Tangent(const double U1,
     TgL.Reverse();
 }
 
-//=================================================================================================
-
-void BlendFunc_ChAsym::Section(const double /*Param*/,
+void BlendFunc_ChAsym::Section(const double,
                                const double U1,
                                const double V1,
                                const double U2,
@@ -459,42 +405,30 @@ void BlendFunc_ChAsym::Section(const double /*Param*/,
   Pfin = ElCLib::Parameter(C, Pt2);
 }
 
-//=================================================================================================
-
 bool BlendFunc_ChAsym::IsRational() const
 {
   return false;
 }
-
-//=================================================================================================
 
 double BlendFunc_ChAsym::GetSectionSize() const
 {
   throw Standard_NotImplemented("BlendFunc_ChAsym::GetSectionSize()");
 }
 
-//=================================================================================================
-
 void BlendFunc_ChAsym::GetMinimalWeight(NCollection_Array1<double>& Weights) const
 {
   Weights.Init(1);
 }
-
-//=================================================================================================
 
 int BlendFunc_ChAsym::NbIntervals(const GeomAbs_Shape S) const
 {
   return curv->NbIntervals(BlendFunc::NextShape(S));
 }
 
-//=================================================================================================
-
 void BlendFunc_ChAsym::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const
 {
   curv->Intervals(T, BlendFunc::NextShape(S));
 }
-
-//=================================================================================================
 
 void BlendFunc_ChAsym::GetShape(int& NbPoles, int& NbKnots, int& Degree, int& NbPoles2d)
 {
@@ -504,10 +438,6 @@ void BlendFunc_ChAsym::GetShape(int& NbPoles, int& NbKnots, int& Degree, int& Nb
   Degree    = 1;
 }
 
-//=======================================================================
-// function : GetTolerance
-// purpose  : Determine les Tolerances a utiliser dans les approximations.
-//=======================================================================
 void BlendFunc_ChAsym::GetTolerance(const double BoundTol,
                                     const double,
                                     const double,
@@ -517,23 +447,17 @@ void BlendFunc_ChAsym::GetTolerance(const double BoundTol,
   Tol3d.Init(BoundTol);
 }
 
-//=================================================================================================
-
 void BlendFunc_ChAsym::Knots(NCollection_Array1<double>& TKnots)
 {
   TKnots(1) = 0.;
   TKnots(2) = 1.;
 }
 
-//=================================================================================================
-
 void BlendFunc_ChAsym::Mults(NCollection_Array1<int>& TMults)
 {
   TMults(1) = 2;
   TMults(2) = 2;
 }
-
-//=================================================================================================
 
 void BlendFunc_ChAsym::Section(const Blend_Point&            P,
                                NCollection_Array1<gp_Pnt>&   Poles,
@@ -561,8 +485,6 @@ void BlendFunc_ChAsym::Section(const Blend_Point&            P,
   Weights(low) = 1.0;
   Weights(upp) = 1.0;
 }
-
-//=================================================================================================
 
 bool BlendFunc_ChAsym::Section(const Blend_Point&            P,
                                NCollection_Array1<gp_Pnt>&   Poles,
@@ -678,23 +600,19 @@ bool BlendFunc_ChAsym::Section(const Blend_Point&            P,
   return (!istangent);
 }
 
-//=================================================================================================
-
-bool BlendFunc_ChAsym::Section(const Blend_Point& /*P*/,
-                               NCollection_Array1<gp_Pnt>& /*Poles*/,
-                               NCollection_Array1<gp_Vec>& /*DPoles*/,
-                               NCollection_Array1<gp_Vec>& /*D2Poles*/,
-                               NCollection_Array1<gp_Pnt2d>& /*Poles2d*/,
-                               NCollection_Array1<gp_Vec2d>& /*DPoles2d*/,
-                               NCollection_Array1<gp_Vec2d>& /*D2Poles2d*/,
-                               NCollection_Array1<double>& /*Weights*/,
-                               NCollection_Array1<double>& /*DWeights*/,
-                               NCollection_Array1<double>& /*D2Weights*/)
+bool BlendFunc_ChAsym::Section(const Blend_Point&,
+                               NCollection_Array1<gp_Pnt>&,
+                               NCollection_Array1<gp_Vec>&,
+                               NCollection_Array1<gp_Vec>&,
+                               NCollection_Array1<gp_Pnt2d>&,
+                               NCollection_Array1<gp_Vec2d>&,
+                               NCollection_Array1<gp_Vec2d>&,
+                               NCollection_Array1<double>&,
+                               NCollection_Array1<double>&,
+                               NCollection_Array1<double>&)
 {
   return false;
 }
-
-//=================================================================================================
 
 void BlendFunc_ChAsym::Resolution(const int    IC2d,
                                   const double Tol,
@@ -712,8 +630,6 @@ void BlendFunc_ChAsym::Resolution(const int    IC2d,
     TolV = surf2->VResolution(Tol);
   }
 }
-
-//=================================================================================================
 
 void BlendFunc_ChAsym::Set(const double Dist1, const double Angle, const int Choix)
 {

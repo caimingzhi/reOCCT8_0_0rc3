@@ -9,8 +9,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRAlgo_PolyAlgo, Standard_Transient)
 
-//=================================================================================================
-
 HLRAlgo_PolyAlgo::HLRAlgo_PolyAlgo()
     : myNbrShell(0),
       myCurShell(0),
@@ -20,14 +18,10 @@ HLRAlgo_PolyAlgo::HLRAlgo_PolyAlgo()
   myTriangle.TolAng   = 0.0001;
 }
 
-//=================================================================================================
-
 void HLRAlgo_PolyAlgo::Init(const int theNbShells)
 {
   myHShell.Resize(1, theNbShells, false);
 }
-
-//=================================================================================================
 
 void HLRAlgo_PolyAlgo::Clear()
 {
@@ -35,8 +29,6 @@ void HLRAlgo_PolyAlgo::Clear()
   myHShell.Move(anEmpty);
   myNbrShell = 0;
 }
-
-//=================================================================================================
 
 void HLRAlgo_PolyAlgo::Update()
 {
@@ -165,7 +157,7 @@ void HLRAlgo_PolyAlgo::Update()
         xPolyTMax = -Big;
         yPolyTMax = -Big;
         zPolyTMax = -Big;
-        int                            otheri, nbHide = 0; // min,max;
+        int                            otheri, nbHide = 0;
         double                         X1, X2, X3, Y1, Y2, Y3, Z1, Z2, Z3;
         double                         dn, dnx, dny, dnz, dx1, dy1, dz1, dx2, dy2, dz2, dx3, dy3;
         double                         adx1, ady1, adx2, ady2, adx3, ady3;
@@ -358,8 +350,6 @@ void HLRAlgo_PolyAlgo::Update()
   }
 }
 
-//=================================================================================================
-
 void HLRAlgo_PolyAlgo::NextHide()
 {
   myFound = false;
@@ -389,8 +379,6 @@ void HLRAlgo_PolyAlgo::NextHide()
     }
   }
 }
-
-//=================================================================================================
 
 HLRAlgo_BiPoint::PointsT& HLRAlgo_PolyAlgo::Hide(HLRAlgo_EdgeStatus& theStatus,
                                                  int&                theIndex,
@@ -439,8 +427,6 @@ HLRAlgo_BiPoint::PointsT& HLRAlgo_PolyAlgo::Hide(HLRAlgo_EdgeStatus& theStatus,
   return aPoints;
 }
 
-//=================================================================================================
-
 void HLRAlgo_PolyAlgo::NextShow()
 {
   myFound = false;
@@ -468,8 +454,6 @@ void HLRAlgo_PolyAlgo::NextShow()
     }
   }
 }
-
-//=================================================================================================
 
 HLRAlgo_BiPoint::PointsT& HLRAlgo_PolyAlgo::Show(int&  Index,
                                                  bool& reg1,

@@ -11,8 +11,6 @@
 class Expr_GeneralRelation;
 class Expr_SingleRelation;
 
-//! Iterates on every basic relation contained in
-//! a GeneralRelation.
 class Expr_RelationIterator
 {
 public:
@@ -20,13 +18,10 @@ public:
 
   Standard_EXPORT Expr_RelationIterator(const occ::handle<Expr_GeneralRelation>& rel);
 
-  //! Returns False if no other relation remains.
   Standard_EXPORT bool More() const;
 
   Standard_EXPORT void Next();
 
-  //! Returns current basic relation.
-  //! Exception is raised if no more relation remains.
   Standard_EXPORT occ::handle<Expr_SingleRelation> Value() const;
 
 private:

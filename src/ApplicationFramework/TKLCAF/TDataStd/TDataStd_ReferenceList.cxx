@@ -11,18 +11,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_ReferenceList, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_ReferenceList::GetID()
 {
   static Standard_GUID TDataStd_ReferenceListID("FCC1A658-59FF-4218-931B-0320A2B469A7");
   return TDataStd_ReferenceListID;
 }
 
-//=======================================================================
-// function : SetAttr
-// purpose  : Implements Set functionality
-//=======================================================================
 static occ::handle<TDataStd_ReferenceList> SetAttr(const TDF_Label&     label,
                                                    const Standard_GUID& theGuid)
 {
@@ -36,45 +30,31 @@ static occ::handle<TDataStd_ReferenceList> SetAttr(const TDF_Label&     label,
   return A;
 }
 
-//=================================================================================================
-
 TDataStd_ReferenceList::TDataStd_ReferenceList()
     : myID(GetID())
 {
 }
-
-//=================================================================================================
 
 occ::handle<TDataStd_ReferenceList> TDataStd_ReferenceList::Set(const TDF_Label& label)
 {
   return SetAttr(label, GetID());
 }
 
-//=======================================================================
-// function : Set
-// purpose  : Set user defined attribute with specific ID
-//=======================================================================
 occ::handle<TDataStd_ReferenceList> TDataStd_ReferenceList::Set(const TDF_Label&     label,
                                                                 const Standard_GUID& theGuid)
 {
   return SetAttr(label, theGuid);
 }
 
-//=================================================================================================
-
 bool TDataStd_ReferenceList::IsEmpty() const
 {
   return myList.IsEmpty();
 }
 
-//=================================================================================================
-
 int TDataStd_ReferenceList::Extent() const
 {
   return myList.Extent();
 }
-
-//=================================================================================================
 
 void TDataStd_ReferenceList::Prepend(const TDF_Label& value)
 {
@@ -82,15 +62,11 @@ void TDataStd_ReferenceList::Prepend(const TDF_Label& value)
   myList.Prepend(value);
 }
 
-//=================================================================================================
-
 void TDataStd_ReferenceList::Append(const TDF_Label& value)
 {
   Backup();
   myList.Append(value);
 }
-
-//=================================================================================================
 
 bool TDataStd_ReferenceList::InsertBefore(const TDF_Label& value, const TDF_Label& before_value)
 {
@@ -107,8 +83,6 @@ bool TDataStd_ReferenceList::InsertBefore(const TDF_Label& value, const TDF_Labe
   return false;
 }
 
-// Inserts the label before the <index> position.
-// The indices start with 1 .. Extent().
 bool TDataStd_ReferenceList::InsertBefore(const int index, const TDF_Label& before_value)
 {
   int                                   i(1);
@@ -127,8 +101,6 @@ bool TDataStd_ReferenceList::InsertBefore(const int index, const TDF_Label& befo
   return found;
 }
 
-//=================================================================================================
-
 bool TDataStd_ReferenceList::InsertAfter(const TDF_Label& value, const TDF_Label& after_value)
 {
   NCollection_List<TDF_Label>::Iterator itr(myList);
@@ -144,8 +116,6 @@ bool TDataStd_ReferenceList::InsertAfter(const TDF_Label& value, const TDF_Label
   return false;
 }
 
-// Inserts the label after the <index> position.
-// The indices start with 1 .. Extent().
 bool TDataStd_ReferenceList::InsertAfter(const int index, const TDF_Label& after_value)
 {
   int                                   i(1);
@@ -164,8 +134,6 @@ bool TDataStd_ReferenceList::InsertAfter(const int index, const TDF_Label& after
   return found;
 }
 
-//=================================================================================================
-
 bool TDataStd_ReferenceList::Remove(const TDF_Label& value)
 {
   NCollection_List<TDF_Label>::Iterator itr(myList);
@@ -181,10 +149,6 @@ bool TDataStd_ReferenceList::Remove(const TDF_Label& value)
   return false;
 }
 
-//=======================================================================
-// function : Remove
-// purpose  : Removes a label at the <index> position.
-//=======================================================================
 bool TDataStd_ReferenceList::Remove(const int index)
 {
   int                                   i(1);
@@ -203,43 +167,31 @@ bool TDataStd_ReferenceList::Remove(const int index)
   return found;
 }
 
-//=================================================================================================
-
 void TDataStd_ReferenceList::Clear()
 {
   Backup();
   myList.Clear();
 }
 
-//=================================================================================================
-
 const TDF_Label& TDataStd_ReferenceList::First() const
 {
   return myList.First();
 }
-
-//=================================================================================================
 
 const TDF_Label& TDataStd_ReferenceList::Last() const
 {
   return myList.Last();
 }
 
-//=================================================================================================
-
 const NCollection_List<TDF_Label>& TDataStd_ReferenceList::List() const
 {
   return myList;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_ReferenceList::ID() const
 {
   return myID;
 }
-
-//=================================================================================================
 
 void TDataStd_ReferenceList::SetID(const Standard_GUID& theGuid)
 {
@@ -249,22 +201,16 @@ void TDataStd_ReferenceList::SetID(const Standard_GUID& theGuid)
   myID = theGuid;
 }
 
-//=================================================================================================
-
 void TDataStd_ReferenceList::SetID()
 {
   Backup();
   myID = GetID();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDataStd_ReferenceList::NewEmpty() const
 {
   return new TDataStd_ReferenceList();
 }
-
-//=================================================================================================
 
 void TDataStd_ReferenceList::Restore(const occ::handle<TDF_Attribute>& With)
 {
@@ -277,8 +223,6 @@ void TDataStd_ReferenceList::Restore(const occ::handle<TDF_Attribute>& With)
   }
   myID = aList->ID();
 }
-
-//=================================================================================================
 
 void TDataStd_ReferenceList::Paste(const occ::handle<TDF_Attribute>&       Into,
                                    const occ::handle<TDF_RelocationTable>& RT) const
@@ -299,10 +243,6 @@ void TDataStd_ReferenceList::Paste(const occ::handle<TDF_Attribute>&       Into,
   aList->SetID(myID);
 }
 
-//=======================================================================
-// function : References
-// purpose  : Adds the referenced attributes or labels.
-//=======================================================================
 void TDataStd_ReferenceList::References(const occ::handle<TDF_DataSet>& aDataSet) const
 {
   if (!Label().IsImported())
@@ -315,8 +255,6 @@ void TDataStd_ReferenceList::References(const occ::handle<TDF_DataSet>& aDataSet
   }
 }
 
-//=================================================================================================
-
 Standard_OStream& TDataStd_ReferenceList::Dump(Standard_OStream& anOS) const
 {
   anOS << "\nReferenceList: ";
@@ -326,8 +264,6 @@ Standard_OStream& TDataStd_ReferenceList::Dump(Standard_OStream& anOS) const
   anOS << std::endl;
   return anOS;
 }
-
-//=================================================================================================
 
 void TDataStd_ReferenceList::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Geom2d_Hyperbola.hpp>
 #include <Geom_Hyperbola.hpp>
@@ -25,10 +14,6 @@
 #include <StepGeom_Hyperbola.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d'une hyperbola de prostep a partir d'une hyperbola de
-// Geom2d
-//=============================================================================
 GeomToStep_MakeHyperbola::GeomToStep_MakeHyperbola(const occ::handle<Geom2d_Hyperbola>& C,
                                                    const StepData_Factors& theLocalFactors)
 {
@@ -50,11 +35,6 @@ GeomToStep_MakeHyperbola::GeomToStep_MakeHyperbola(const occ::handle<Geom2d_Hype
   theHyperbola = HStep;
   done         = true;
 }
-
-//=============================================================================
-// Creation d'une hyperbola de prostep a partir d'une hyperbola de
-// Geom
-//=============================================================================
 
 GeomToStep_MakeHyperbola::GeomToStep_MakeHyperbola(const occ::handle<Geom_Hyperbola>& C,
                                                    const StepData_Factors& theLocalFactors)
@@ -78,10 +58,6 @@ GeomToStep_MakeHyperbola::GeomToStep_MakeHyperbola(const occ::handle<Geom_Hyperb
   theHyperbola = HStep;
   done         = true;
 }
-
-//=============================================================================
-// return the result
-//=============================================================================
 
 const occ::handle<StepGeom_Hyperbola>& GeomToStep_MakeHyperbola::Value() const
 {

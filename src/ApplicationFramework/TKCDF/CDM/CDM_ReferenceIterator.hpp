@@ -25,7 +25,6 @@ public:
 
   Standard_EXPORT int ReferenceIdentifier() const;
 
-  //! returns the Document Version in the reference.
   Standard_EXPORT int DocumentVersion() const;
 
 private:

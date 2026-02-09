@@ -33,7 +33,6 @@ public:
                                const double             TolConf,
                                const double             Tol);
 
-  //! Set / get minimum number of points in polygon for intersection.
   Standard_EXPORT void SetMinNbSamples(const int theMinNbSamples);
   Standard_EXPORT int  GetMinNbSamples() const;
 
@@ -57,11 +56,6 @@ protected:
                                const double             DeltaV);
 
 private:
-  //! Method to find intersection between two curves
-  //! : returns false for case when some points of polygon
-  //! : were replaced on line and exact point of intersection was not found
-  //! : for case when point of intersection was found
-  //! : during prelimanary search for line (case of bad parameterization of Bspline for example).
   Standard_EXPORT bool findIntersect(
     const Adaptor2d_Curve2d&                                  Curve1,
     const IntRes2d_Domain&                                    Domain1,
@@ -79,6 +73,5 @@ private:
   IntRes2d_Domain DomainOnCurve1;
   IntRes2d_Domain DomainOnCurve2;
 
-  //! Minimal number of sample points
   int myMinPntNb;
 };

@@ -19,39 +19,60 @@ void IGESDraw_ToolView::ReadOwnParams(const occ::handle<IGESDraw_View>&         
                                       const occ::handle<IGESData_IGESReaderData>& IR,
                                       IGESData_ParamReader&                       PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   int                         tempViewNumber;
   double                      tempScaleFactor;
   occ::handle<IGESGeom_Plane> tempLeftPlane, tempTopPlane, tempRightPlane;
   occ::handle<IGESGeom_Plane> tempBottomPlane, tempBackPlane, tempFrontPlane;
 
-  // clang-format off
-  PR.ReadInteger(PR.Current(), "View Number", tempViewNumber); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "View Number", tempViewNumber);
 
   if (PR.DefinedElseSkip())
-    PR.ReadReal(PR.Current(), "Scale Factor", tempScaleFactor); //szv#4:S4163:12Mar99 `st=` not needed
+    PR.ReadReal(PR.Current(), "Scale Factor", tempScaleFactor);
   else
-    tempScaleFactor = 1.0;      // Setting to default value of 1.0
+    tempScaleFactor = 1.0;
 
-  PR.ReadEntity(IR, PR.Current(), "Left Side Of View Volume",
-		STANDARD_TYPE(IGESGeom_Plane), tempLeftPlane,   true); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR,
+                PR.Current(),
+                "Left Side Of View Volume",
+                STANDARD_TYPE(IGESGeom_Plane),
+                tempLeftPlane,
+                true);
 
-  PR.ReadEntity(IR, PR.Current(), "Top Side Of View Volume",
-		STANDARD_TYPE(IGESGeom_Plane), tempTopPlane,    true); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR,
+                PR.Current(),
+                "Top Side Of View Volume",
+                STANDARD_TYPE(IGESGeom_Plane),
+                tempTopPlane,
+                true);
 
-  PR.ReadEntity(IR, PR.Current(), "Right Side Of View Volume",
-		STANDARD_TYPE(IGESGeom_Plane), tempRightPlane,  true); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR,
+                PR.Current(),
+                "Right Side Of View Volume",
+                STANDARD_TYPE(IGESGeom_Plane),
+                tempRightPlane,
+                true);
 
-  PR.ReadEntity(IR, PR.Current(), "Bottom Side Of View Volume",
-		STANDARD_TYPE(IGESGeom_Plane), tempBottomPlane, true); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR,
+                PR.Current(),
+                "Bottom Side Of View Volume",
+                STANDARD_TYPE(IGESGeom_Plane),
+                tempBottomPlane,
+                true);
 
-  PR.ReadEntity(IR, PR.Current(), "Back Side Of View Volume",
-		STANDARD_TYPE(IGESGeom_Plane), tempBackPlane,   true); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR,
+                PR.Current(),
+                "Back Side Of View Volume",
+                STANDARD_TYPE(IGESGeom_Plane),
+                tempBackPlane,
+                true);
 
-  PR.ReadEntity(IR, PR.Current(), "Front Side Of View Volume",
-		STANDARD_TYPE(IGESGeom_Plane), tempFrontPlane,  true); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadEntity(IR,
+                PR.Current(),
+                "Front Side Of View Volume",
+                STANDARD_TYPE(IGESGeom_Plane),
+                tempFrontPlane,
+                true);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempViewNumber,
@@ -111,7 +132,7 @@ void IGESDraw_ToolView::OwnCopy(const occ::handle<IGESDraw_View>& another,
             tempFrontPlane);
 }
 
-IGESData_DirChecker IGESDraw_ToolView::DirChecker(const occ::handle<IGESDraw_View>& /*ent*/) const
+IGESData_DirChecker IGESDraw_ToolView::DirChecker(const occ::handle<IGESDraw_View>&) const
 {
   IGESData_DirChecker DC(410, 0);
   DC.Structure(IGESData_DefVoid);

@@ -16,8 +16,6 @@
 #include <XCAFDoc_ViewTool.hpp>
 #include <XCAFView_Object.hpp>
 
-//=================================================================================================
-
 static int setView(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -61,8 +59,6 @@ static int setView(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int removeView(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -89,8 +85,6 @@ static int removeView(Draw_Interpretor& di, int argc, const char** argv)
   aViewTool->RemoveView(aLabel);
   return 0;
 }
-
-//=================================================================================================
 
 static int setClippingPlanes(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -130,8 +124,6 @@ static int setClippingPlanes(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int isView(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -163,8 +155,6 @@ static int isView(Draw_Interpretor& di, int argc, const char** argv)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int getRefShapes(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -200,8 +190,6 @@ static int getRefShapes(Draw_Interpretor& di, int argc, const char** argv)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int getRefGDTs(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -242,8 +230,6 @@ static int getRefGDTs(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int getRefClippingPlanes(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -283,8 +269,6 @@ static int getRefClippingPlanes(Draw_Interpretor& di, int argc, const char** arg
   return 0;
 }
 
-//=================================================================================================
-
 static int setName(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 4)
@@ -318,8 +302,6 @@ static int setName(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int getName(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -350,8 +332,6 @@ static int getName(Draw_Interpretor& di, int argc, const char** argv)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int setType(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -390,8 +370,6 @@ static int setType(Draw_Interpretor& di, int argc, const char** argv)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int getType(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -436,8 +414,6 @@ static int getType(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int setProjectionPoint(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 6)
@@ -472,8 +448,6 @@ static int setProjectionPoint(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int getProjectionPoint(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -505,8 +479,6 @@ static int getProjectionPoint(Draw_Interpretor& di, int argc, const char** argv)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int setViewDir(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -541,8 +513,6 @@ static int setViewDir(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int getViewDir(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -574,8 +544,6 @@ static int getViewDir(Draw_Interpretor& di, int argc, const char** argv)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int setUpDir(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -610,8 +578,6 @@ static int setUpDir(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int getUpDir(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -643,8 +609,6 @@ static int getUpDir(Draw_Interpretor& di, int argc, const char** argv)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int setZoomFactor(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -679,8 +643,6 @@ static int setZoomFactor(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int getZoomFactor(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -711,8 +673,6 @@ static int getZoomFactor(Draw_Interpretor& di, int argc, const char** argv)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int setWindowSize(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -748,8 +708,6 @@ static int setWindowSize(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int getWindowSize(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -781,8 +739,6 @@ static int getWindowSize(Draw_Interpretor& di, int argc, const char** argv)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int setFrontPlaneDistance(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -817,8 +773,6 @@ static int setFrontPlaneDistance(Draw_Interpretor& di, int argc, const char** ar
   return 0;
 }
 
-//=================================================================================================
-
 static int unsetFrontPlaneDistance(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -851,8 +805,6 @@ static int unsetFrontPlaneDistance(Draw_Interpretor& di, int argc, const char** 
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int getFrontPlaneDistance(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -888,8 +840,6 @@ static int getFrontPlaneDistance(Draw_Interpretor& di, int argc, const char** ar
   return 0;
 }
 
-//=================================================================================================
-
 static int setBackPlaneDistance(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 4)
@@ -923,8 +873,6 @@ static int setBackPlaneDistance(Draw_Interpretor& di, int argc, const char** arg
   return 0;
 }
 
-//=================================================================================================
-
 static int unsetBackPlaneDistance(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -957,8 +905,6 @@ static int unsetBackPlaneDistance(Draw_Interpretor& di, int argc, const char** a
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int getBackPlaneDistance(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -994,8 +940,6 @@ static int getBackPlaneDistance(Draw_Interpretor& di, int argc, const char** arg
   return 0;
 }
 
-//=================================================================================================
-
 static int setViewVolumeSidesClipping(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 4)
@@ -1029,8 +973,6 @@ static int setViewVolumeSidesClipping(Draw_Interpretor& di, int argc, const char
   return 0;
 }
 
-//=================================================================================================
-
 static int getViewVolumeSidesClipping(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -1061,8 +1003,6 @@ static int getViewVolumeSidesClipping(Draw_Interpretor& di, int argc, const char
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int dump(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1167,8 +1107,6 @@ static int dump(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int addClippingPlane(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 5)
@@ -1202,8 +1140,6 @@ static int addClippingPlane(Draw_Interpretor& di, int argc, const char** argv)
   di << anEntry << "\n";
   return 0;
 }
-
-//=================================================================================================
 
 static int getClippingPlane(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1239,8 +1175,6 @@ static int getClippingPlane(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int removeClippingPlane(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -1273,8 +1207,6 @@ static int removeClippingPlane(Draw_Interpretor& di, int argc, const char** argv
   return 0;
 }
 
-//=================================================================================================
-
 static int getClippingPlaneCapping(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -1302,8 +1234,6 @@ static int getClippingPlaneCapping(Draw_Interpretor& di, int argc, const char** 
   di << aClippingPlaneTool->GetCapping(aLabel);
   return 0;
 }
-
-//=================================================================================================
 
 void XDEDRAW_Views::InitCommands(Draw_Interpretor& di)
 {

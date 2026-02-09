@@ -12,45 +12,24 @@
 class TDF_Label;
 class TDF_RelocationTable;
 
-//! Attribute containing parameters of presentation of the shape,
-//! e.g. the shape attached to the same label and displayed using
-//! TPrsStd tools (see TPrsStd_AISPresentation).
 class TDataXtd_Presentation : public TDF_Attribute
 {
 public:
-  //!@name Attribute mechanics
-
-  //! Empty constructor
   Standard_EXPORT TDataXtd_Presentation();
 
-  //! Create if not found the TDataXtd_Presentation attribute and set its driver GUID
   Standard_EXPORT static occ::handle<TDataXtd_Presentation> Set(const TDF_Label&     theLabel,
                                                                 const Standard_GUID& theDriverId);
 
-  //! Remove attribute of this type from the label
   Standard_EXPORT static void Unset(const TDF_Label& theLabel);
 
-  //! Returns the ID of the attribute.
   Standard_EXPORT const Standard_GUID& ID() const override;
 
-  //! Returns the ID of the attribute.
   Standard_EXPORT static const Standard_GUID& GetID();
 
-  //! Restores the contents from <anAttribute> into this
-  //! one. It is used when aborting a transaction.
   Standard_EXPORT void Restore(const occ::handle<TDF_Attribute>& anAttribute) override;
 
-  //! Returns an new empty attribute from the good end
-  //! type. It is used by the copy algorithm.
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 
-  //! This method is different from the "Copy" one,
-  //! because it is used when copying an attribute from
-  //! a source structure into a target structure. This
-  //! method pastes the current attribute to the label
-  //! corresponding to the insertor. The pasted
-  //! attribute may be a brand new one or a new version
-  //! of the previous one.
   Standard_EXPORT void Paste(
     const occ::handle<TDF_Attribute>&       intoAttribute,
     const occ::handle<TDF_RelocationTable>& aRelocTationable) const override;
@@ -60,12 +39,8 @@ public:
   DEFINE_STANDARD_RTTIEXT(TDataXtd_Presentation, TDF_Attribute)
 
 public:
-  //!@name Access to data
-
-  //! Returns the GUID of the driver managing display of associated AIS object
   Standard_EXPORT Standard_GUID GetDriverGUID() const;
 
-  //! Sets the GUID of the driver managing display of associated AIS object
   Standard_EXPORT void SetDriverGUID(const Standard_GUID& theGUID);
 
   Standard_EXPORT bool IsDisplayed() const;
@@ -94,15 +69,8 @@ public:
 
   Standard_EXPORT void SetMode(const int theMode);
 
-  //! Returns the number of selection modes of the attribute.
-  //! It starts with 1 .. GetNbSelectionModes().
   Standard_EXPORT int GetNbSelectionModes() const;
 
-  //! Sets selection mode.
-  //! If "theTransaction" flag is OFF, modification of the attribute doesn't influence the
-  //! transaction mechanism (the attribute doesn't participate in undo/redo because of this
-  //! modification). Certainly, if any other data of the attribute is modified (display mode, color,
-  //! ...), the attribute will be included into undo/redo.
   Standard_EXPORT void SetSelectionMode(const int  theSelectionMode,
                                         const bool theTransaction = true);
   Standard_EXPORT void AddSelectionMode(const int  theSelectionMode,
@@ -133,12 +101,8 @@ public:
   Standard_EXPORT void UnsetSelectionMode();
 
 public:
-  //! Convert values of old Quantity_NameOfColor to new enumeration for reading old documents
-  //! after #0030969 (Coding Rules - refactor Quantity_Color.cxx color table definition).
   Standard_EXPORT static Quantity_NameOfColor getColorNameFromOldEnum(int theOld);
 
-  //! Convert Quantity_NameOfColor to old enumeration value for writing documents in compatible
-  //! format.
   Standard_EXPORT static int getOldColorNameFromNewEnum(Quantity_NameOfColor theNew);
 
 private:
@@ -157,6 +121,5 @@ private:
   bool                  myHasOwnMode;
   bool                  myHasOwnSelectionMode;
 
-  //! Checks a list of selection modes.
   bool HasSelectionMode(const int theSelectionMode) const;
 };

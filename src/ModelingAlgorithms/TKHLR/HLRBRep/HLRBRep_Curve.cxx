@@ -17,27 +17,15 @@
 #include <NCollection_Array1.hpp>
 #include <TopoDS_Edge.hpp>
 
-// OCC155 // jfa 05.03.2002 // bad vectors projection
-//=================================================================================================
-
 HLRBRep_Curve::HLRBRep_Curve() = default;
-
-//=================================================================================================
 
 void HLRBRep_Curve::Curve(const TopoDS_Edge& E)
 {
   myCurve.Initialize(E);
 }
 
-//=================================================================================================
-
 double HLRBRep_Curve::Parameter2d(const double P3d) const
 {
-  // Mathematical formula for lines
-
-  //        myOF P3d (myOF myVX - myOZ myVX + myOX myVZ)
-  // Res -> --------------------------------------------
-  //        (-myOF + myOZ) (-myOF + myOZ + P3d myVZ)
 
   switch (myType)
   {
@@ -52,22 +40,14 @@ double HLRBRep_Curve::Parameter2d(const double P3d) const
     case GeomAbs_Ellipse:
       return P3d + myOX;
 
-    default: // implemented to avoid gcc compiler warnings
+    default:
       break;
   }
   return P3d;
 }
 
-//=================================================================================================
-
 double HLRBRep_Curve::Parameter3d(const double P2d) const
 {
-  // Mathematical formula for lines
-
-  //                                 2
-  //                   (-myOF + myOZ)  P2d
-  // P3d -> -----------------------------------------------------
-  //        (myOF - myOZ) (myOF myVX + P2d myVZ) + myOF myOX myVZ
 
   if (myType == GeomAbs_Line)
   {
@@ -86,8 +66,6 @@ double HLRBRep_Curve::Parameter3d(const double P2d) const
 
   return P2d;
 }
-
-//=================================================================================================
 
 double HLRBRep_Curve::Update(double TotMin[16], double TotMax[16])
 {
@@ -108,14 +86,12 @@ double HLRBRep_Curve::Update(double TotMin[16], double TotMax[16])
         D1.Transform(((HLRAlgo_Projector*)myProj)->Transformation());
         if (D1.IsParallel(gp::DZ(), Precision::Angular()))
           myType = GeomAbs_Circle;
-        else if (std::abs(D1.Dot(gp::DZ()))
-                 < Precision::Angular()
-                     * 10) //*10: The minor radius of ellipse should not be too small.
+        else if (std::abs(D1.Dot(gp::DZ())) < Precision::Angular() * 10)
           myType = GeomAbs_OtherCurve;
         else
         {
           myType = GeomAbs_Ellipse;
-          // compute the angle offset
+
           gp_Dir D3 = D1.Crossed(gp::DZ());
           gp_Dir D2 = HLRBRep_BCurveTool::Circle(myCurve).XAxis().Direction();
           D2.Transform(((HLRAlgo_Projector*)myProj)->Transformation());
@@ -131,7 +107,7 @@ double HLRBRep_Curve::Update(double TotMin[16], double TotMax[16])
         D1.Transform(((HLRAlgo_Projector*)myProj)->Transformation());
         if (D1.IsParallel(gp::DZ(), Precision::Angular()))
         {
-          myOX   = 0.; // no offset on the angle
+          myOX   = 0.;
           myType = GeomAbs_Ellipse;
         }
       }
@@ -155,15 +131,15 @@ double HLRBRep_Curve::Update(double TotMin[16], double TotMax[16])
 
   if (myType == GeomAbs_Line)
   {
-    // compute the values for a line
+
     gp_Lin L;
-    double l3d = 1.; // length of the 3d bezier curve
+    double l3d = 1.;
     if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_Line)
     {
       L = HLRBRep_BCurveTool::Line(myCurve);
     }
     else
-    { // bezier degree 1
+    {
       gp_Pnt PL;
       gp_Vec VL;
       HLRBRep_BCurveTool::D1(myCurve, 0, PL, VL);
@@ -196,8 +172,6 @@ double HLRBRep_Curve::Update(double TotMin[16], double TotMax[16])
   }
   return (UpdateMinMax(TotMin, TotMax));
 }
-
-//=================================================================================================
 
 double HLRBRep_Curve::UpdateMinMax(double TotMin[16], double TotMax[16])
 {
@@ -258,8 +232,6 @@ double HLRBRep_Curve::UpdateMinMax(double TotMin[16], double TotMax[16])
   return tolMinMax;
 }
 
-//=================================================================================================
-
 double HLRBRep_Curve::Z(const double U) const
 {
   gp_Pnt P3d;
@@ -267,8 +239,6 @@ double HLRBRep_Curve::Z(const double U) const
   P3d.Transform(((HLRAlgo_Projector*)myProj)->Transformation());
   return P3d.Z();
 }
-
-//=================================================================================================
 
 void HLRBRep_Curve::Tangent(const bool AtStart, gp_Pnt2d& P, gp_Dir2d& D) const
 {
@@ -284,34 +254,16 @@ void HLRBRep_Curve::Tangent(const bool AtStart, gp_Pnt2d& P, gp_Dir2d& D) const
   CLP.Tangent(D);
 }
 
-//=================================================================================================
-
 void HLRBRep_Curve::D0(const double U, gp_Pnt2d& P) const
 {
-  /* gp_Pnt P3d;
-  HLRBRep_BCurveTool::D0(myCurve,U,P3d);
-  P3d.Transform(((HLRAlgo_Projector*) myProj)->Transformation());
-  if (((HLRAlgo_Projector*) myProj)->Perspective()) {
-    double R = 1.-P3d.Z()/((HLRAlgo_Projector*) myProj)->Focus();
-    P.SetCoord(P3d.X()/R,P3d.Y()/R);
-  }
-  else P.SetCoord(P3d.X(),P3d.Y()); */
+
   gp_Pnt P3d;
   HLRBRep_BCurveTool::D0(myCurve, U, P3d);
   ((HLRAlgo_Projector*)myProj)->Project(P3d, P);
 }
 
-//=================================================================================================
-
 void HLRBRep_Curve::D1(const double U, gp_Pnt2d& P, gp_Vec2d& V) const
 {
-  // Mathematical formula for lines
-
-  //        X'[t]      X[t] Z'[t]
-  // D1 =  -------- + -------------
-  //           Z[t]          Z[t] 2
-  //       1 - ----   f (1 - ----)
-  //            f             f
 
   gp_Pnt P3D;
   gp_Vec V13D;
@@ -329,23 +281,13 @@ void HLRBRep_Curve::D1(const double U, gp_Pnt2d& P, gp_Vec2d& V) const
   }
   else
   {
-    // OCC155
+
     myProj->Project(P3D, V13D, P, V);
   }
 }
 
-//=================================================================================================
-
 void HLRBRep_Curve::D2(const double U, gp_Pnt2d& P, gp_Vec2d& V1, gp_Vec2d& V2) const
 {
-  // Mathematical formula for lines
-
-  //                                   2
-  //       2 X'[t] Z'[t]   2 X[t] Z'[t]      X''[t]     X[t] Z''[t]
-  // D2 =  ------------- + -------------- + -------- + -------------
-  //              Z[t] 2    2      Z[t] 3       Z[t]          Z[t] 2
-  //       f (1 - ----)    f  (1 - ----)    1 - ----   f (1 - ----)
-  //               f                f            f             f
 
   gp_Pnt P3D;
   gp_Vec V13D, V23D;
@@ -373,18 +315,12 @@ void HLRBRep_Curve::D2(const double U, gp_Pnt2d& P, gp_Vec2d& V1, gp_Vec2d& V2) 
   }
 }
 
-//=================================================================================================
-
 void HLRBRep_Curve::D3(const double, gp_Pnt2d&, gp_Vec2d&, gp_Vec2d&, gp_Vec2d&) const {}
-
-//=================================================================================================
 
 gp_Vec2d HLRBRep_Curve::DN(const double, const int) const
 {
   return gp_Vec2d();
 }
-
-//=================================================================================================
 
 gp_Lin2d HLRBRep_Curve::Line() const
 {
@@ -394,16 +330,12 @@ gp_Lin2d HLRBRep_Curve::Line() const
   return gp_Lin2d(P, V);
 }
 
-//=================================================================================================
-
 gp_Circ2d HLRBRep_Curve::Circle() const
 {
   gp_Circ C = HLRBRep_BCurveTool::Circle(myCurve);
   C.Transform(myProj->Transformation());
   return ProjLib::Project(gp_Pln(gp::XOY()), C);
 }
-
-//=================================================================================================
 
 gp_Elips2d HLRBRep_Curve::Ellipse() const
 {
@@ -413,7 +345,7 @@ gp_Elips2d HLRBRep_Curve::Ellipse() const
     E.Transform(myProj->Transformation());
     return ProjLib::Project(gp_Pln(gp::XOY()), E);
   }
-  // this is a circle
+
   gp_Circ C = HLRBRep_BCurveTool::Circle(myCurve);
   C.Transform(myProj->Transformation());
   const gp_Dir& D1  = C.Axis().Direction();
@@ -428,28 +360,22 @@ gp_Elips2d HLRBRep_Curve::Ellipse() const
   return El;
 }
 
-//=================================================================================================
-
 gp_Hypr2d HLRBRep_Curve::Hyperbola() const
 {
   return gp_Hypr2d();
 }
-
-//=================================================================================================
 
 gp_Parab2d HLRBRep_Curve::Parabola() const
 {
   return gp_Parab2d();
 }
 
-//=================================================================================================
-
 void HLRBRep_Curve::Poles(NCollection_Array1<gp_Pnt2d>& TP) const
 {
   int                        i1 = TP.Lower();
   int                        i2 = TP.Upper();
   NCollection_Array1<gp_Pnt> TP3(i1, i2);
-  //-- HLRBRep_BCurveTool::Poles(myCurve,TP3);
+
   if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_BSplineCurve)
   {
     (HLRBRep_BCurveTool::BSpline(myCurve))->Poles(TP3);
@@ -465,15 +391,13 @@ void HLRBRep_Curve::Poles(NCollection_Array1<gp_Pnt2d>& TP) const
   }
 }
 
-//=================================================================================================
-
 void HLRBRep_Curve::Poles(const occ::handle<Geom_BSplineCurve>& aCurve,
                           NCollection_Array1<gp_Pnt2d>&         TP) const
 {
   int                        i1 = TP.Lower();
   int                        i2 = TP.Upper();
   NCollection_Array1<gp_Pnt> TP3(i1, i2);
-  //-- HLRBRep_BCurveTool::Poles(myCurve,TP3);
+
   aCurve->Poles(TP3);
 
   for (int i = i1; i <= i2; i++)
@@ -483,29 +407,24 @@ void HLRBRep_Curve::Poles(const occ::handle<Geom_BSplineCurve>& aCurve,
   }
 }
 
-//=================================================================================================
-
 void HLRBRep_Curve::PolesAndWeights(NCollection_Array1<gp_Pnt2d>& TP,
                                     NCollection_Array1<double>&   TW) const
 {
   int                        i1 = TP.Lower();
   int                        i2 = TP.Upper();
   NCollection_Array1<gp_Pnt> TP3(i1, i2);
-  //-- HLRBRep_BCurveTool::PolesAndWeights(myCurve,TP3,TW);
 
   if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_BSplineCurve)
   {
     occ::handle<Geom_BSplineCurve> HB = (HLRBRep_BCurveTool::BSpline(myCurve));
     HB->Poles(TP3);
     HB->Weights(TW);
-    //-- (HLRBRep_BCurveTool::BSpline(myCurve))->PolesAndWeights(TP3,TW);
   }
   else
   {
     occ::handle<Geom_BezierCurve> HB = (HLRBRep_BCurveTool::Bezier(myCurve));
     HB->Poles(TP3);
     HB->Weights(TW);
-    //-- (HLRBRep_BCurveTool::Bezier(myCurve))->PolesAndWeights(TP3,TW);
   }
   for (int i = i1; i <= i2; i++)
   {
@@ -513,8 +432,6 @@ void HLRBRep_Curve::PolesAndWeights(NCollection_Array1<gp_Pnt2d>& TP,
     TP(i).SetCoord(TP3(i).X(), TP3(i).Y());
   }
 }
-
-//=================================================================================================
 
 void HLRBRep_Curve::PolesAndWeights(const occ::handle<Geom_BSplineCurve>& aCurve,
                                     NCollection_Array1<gp_Pnt2d>&         TP,
@@ -523,11 +440,9 @@ void HLRBRep_Curve::PolesAndWeights(const occ::handle<Geom_BSplineCurve>& aCurve
   int                        i1 = TP.Lower();
   int                        i2 = TP.Upper();
   NCollection_Array1<gp_Pnt> TP3(i1, i2);
-  //-- HLRBRep_BCurveTool::PolesAndWeights(myCurve,TP3,TW);
 
   aCurve->Poles(TP3);
   aCurve->Weights(TW);
-  //-- (HLRBRep_BCurveTool::BSpline(myCurve))->PolesAndWeights(TP3,TW);
 
   for (int i = i1; i <= i2; i++)
   {
@@ -535,8 +450,6 @@ void HLRBRep_Curve::PolesAndWeights(const occ::handle<Geom_BSplineCurve>& aCurve
     TP(i).SetCoord(TP3(i).X(), TP3(i).Y());
   }
 }
-
-//=================================================================================================
 
 void HLRBRep_Curve::Knots(NCollection_Array1<double>& kn) const
 {
@@ -546,8 +459,6 @@ void HLRBRep_Curve::Knots(NCollection_Array1<double>& kn) const
     HB->Knots(kn);
   }
 }
-
-//=================================================================================================
 
 void HLRBRep_Curve::Multiplicities(NCollection_Array1<int>& mu) const
 {

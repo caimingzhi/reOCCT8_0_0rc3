@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Adaptor3d_Surface.hpp>
 #include <ElSLib.hpp>
@@ -33,8 +22,6 @@ static void Analyse(const NCollection_Array2<gp_Pnt>& array2,
                     int&                              theNbSamplesU,
                     int&                              theNbSamplesV);
 
-//=================================================================================================
-
 IntTools_TopolTool::IntTools_TopolTool()
 {
   myNbSmplU = 0;
@@ -42,8 +29,6 @@ IntTools_TopolTool::IntTools_TopolTool()
   myDU      = 1.;
   myDV      = 1.;
 }
-
-//=================================================================================================
 
 IntTools_TopolTool::IntTools_TopolTool(const occ::handle<Adaptor3d_Surface>& theSurface)
 {
@@ -54,26 +39,20 @@ IntTools_TopolTool::IntTools_TopolTool(const occ::handle<Adaptor3d_Surface>& the
   myDV      = 1.;
 }
 
-//=================================================================================================
-
 void IntTools_TopolTool::Initialize()
 {
   throw Standard_NotImplemented("IntTools_TopolTool::Initialize ()");
 }
 
-//=================================================================================================
-
 void IntTools_TopolTool::Initialize(const occ::handle<Adaptor3d_Surface>& theSurface)
 {
   Adaptor3d_TopolTool::Initialize(theSurface);
-  // myS = theSurface;
+
   myNbSmplU = 0;
   myNbSmplV = 0;
   myDU      = 1.;
   myDV      = 1.;
 }
-
-//=================================================================================================
 
 void IntTools_TopolTool::ComputeSamplePoints()
 {
@@ -165,8 +144,6 @@ void IntTools_TopolTool::ComputeSamplePoints()
       if (nbsv < 2)
         nbsv = 2;
 
-      //    if(nbsu < 10) nbsu = 10;
-      //    if(nbsv < 10) nbsv = 10;
       if (nbsu > aMaxNbSample)
         nbsu = aMaxNbSample;
       if (nbsv > aMaxNbSample)
@@ -197,9 +174,6 @@ void IntTools_TopolTool::ComputeSamplePoints()
       }
       nbsv = (int)(vsup - vinf);
       nbsv /= 10;
-
-      //     if(nbsu < 2) nbsu = 2;
-      //     if(nbsv < 2) nbsv = 2;
 
       if (nbsu < 10)
         nbsu = 10;
@@ -312,7 +286,7 @@ void IntTools_TopolTool::ComputeSamplePoints()
         nbsu = 10;
       if (nbsv < 10)
         nbsv = 10;
-      // Check anisotropy
+
       double anULen = (usup - uinf) / myS->UResolution(1.);
       double anVLen = (vsup - vinf) / myS->VResolution(1.);
       double aRatio = anULen / anVLen;
@@ -362,8 +336,6 @@ void IntTools_TopolTool::ComputeSamplePoints()
   myDV = (vsup - vinf) / (myNbSmplV + 1);
 }
 
-//=================================================================================================
-
 int IntTools_TopolTool::NbSamplesU()
 {
   if (myNbSmplU <= 0)
@@ -372,8 +344,6 @@ int IntTools_TopolTool::NbSamplesU()
   }
   return myNbSmplU;
 }
-
-//=================================================================================================
 
 int IntTools_TopolTool::NbSamplesV()
 {
@@ -384,8 +354,6 @@ int IntTools_TopolTool::NbSamplesV()
   return myNbSmplV;
 }
 
-//=================================================================================================
-
 int IntTools_TopolTool::NbSamples()
 {
   if (myNbSmplU <= 0)
@@ -394,8 +362,6 @@ int IntTools_TopolTool::NbSamples()
   }
   return (myNbSmplU * myNbSmplV);
 }
-
-//=================================================================================================
 
 void IntTools_TopolTool::SamplePoint(const int Index, gp_Pnt2d& P2d, gp_Pnt& P3d)
 {
@@ -415,8 +381,6 @@ void IntTools_TopolTool::SamplePoint(const int Index, gp_Pnt2d& P2d, gp_Pnt& P3d
   else
     Adaptor3d_TopolTool::SamplePoint(Index, P2d, P3d);
 }
-
-//=================================================================================================
 
 void Analyse(const NCollection_Array2<gp_Pnt>& array2, int& theNbSamplesU, int& theNbSamplesV)
 {
@@ -441,7 +405,7 @@ void Analyse(const NCollection_Array2<gp_Pnt>& array2, int& theNbSamplesU, int& 
       int locnbch = 0;
 
       for (j = array2.LowerCol() + 2; j < array2.UpperCol(); j++)
-      { //-- essai
+      {
         const gp_Pnt& Ax = array2.Value(i, j - 1);
         const gp_Pnt& Bx = array2.Value(i, j);
         const gp_Pnt& Cx = array2.Value(i, j + 1);
@@ -492,7 +456,7 @@ void Analyse(const NCollection_Array2<gp_Pnt>& array2, int& theNbSamplesU, int& 
       int locnbch = 0;
 
       for (i = array2.LowerRow() + 2; i < array2.UpperRow(); i++)
-      { //-- essai
+      {
         const gp_Pnt& Ax = array2.Value(i - 1, j);
         const gp_Pnt& Bx = array2.Value(i, j);
         const gp_Pnt& Cx = array2.Value(i + 1, j);
@@ -527,9 +491,6 @@ void Analyse(const NCollection_Array2<gp_Pnt>& array2, int& theNbSamplesU, int& 
   }
   theNbSamplesU = nbch + 5;
 }
-
-// Modified IFV
-//=================================================================================================
 
 void IntTools_TopolTool::SamplePnts(const double theDefl, const int theNUmin, const int theNVmin)
 {

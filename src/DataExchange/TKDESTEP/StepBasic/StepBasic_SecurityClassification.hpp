@@ -11,7 +11,6 @@ class StepBasic_SecurityClassification : public Standard_Transient
 {
 
 public:
-  //! Returns a SecurityClassification
   Standard_EXPORT StepBasic_SecurityClassification();
 
   Standard_EXPORT void Init(

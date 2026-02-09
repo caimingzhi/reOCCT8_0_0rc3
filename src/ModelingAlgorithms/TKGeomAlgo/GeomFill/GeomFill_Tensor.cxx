@@ -12,8 +12,7 @@ GeomFill_Tensor::GeomFill_Tensor(const int NbRow, const int NbCol, const int NbM
 
 void GeomFill_Tensor::Init(const double InitialValue)
 {
-  // int I, T = nbrow * nbcol *  nbmat;
-  // for (I=1; I<=T; I++) {Tab(I) = InitialValue;}
+
   Tab.Init(InitialValue);
 }
 

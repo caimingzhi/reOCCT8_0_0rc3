@@ -1,14 +1,10 @@
-// Created on : Sat May 02 12:41:14 2020
+
 
 #include <StepKinematics_SphericalPairSelect.hpp>
 #include <StepKinematics_SphericalPair.hpp>
 #include <StepKinematics_SphericalPairWithPin.hpp>
 
-//=================================================================================================
-
 StepKinematics_SphericalPairSelect::StepKinematics_SphericalPairSelect() = default;
-
-//=================================================================================================
 
 int StepKinematics_SphericalPairSelect::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -21,14 +17,10 @@ int StepKinematics_SphericalPairSelect::CaseNum(const occ::handle<Standard_Trans
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepKinematics_SphericalPair> StepKinematics_SphericalPairSelect::SphericalPair() const
 {
   return occ::down_cast<StepKinematics_SphericalPair>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepKinematics_SphericalPairWithPin> StepKinematics_SphericalPairSelect::
   SphericalPairWithPin() const

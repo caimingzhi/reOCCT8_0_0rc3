@@ -1,23 +1,10 @@
-// Copyright (c) 2015-2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <RWObj_ObjWriterContext.hpp>
 
 #include <Message.hpp>
 #include <NCollection_IndexedMap.hpp>
 #include <OSD_OpenFile.hpp>
-
-//=================================================================================================
 
 static void splitLines(const TCollection_AsciiString&                   theString,
                        NCollection_IndexedMap<TCollection_AsciiString>& theLines)
@@ -49,14 +36,12 @@ static void splitLines(const TCollection_AsciiString&                   theStrin
     }
     else if (aChar == '\r' && theString.Value(aCharIter + 1) == '\n')
     {
-      // CRLF
+
       ++aCharIter;
     }
     aLineFrom = aCharIter + 1;
   }
 }
-
-//=================================================================================================
 
 RWObj_ObjWriterContext::RWObj_ObjWriterContext(const TCollection_AsciiString& theName)
     : NbFaces(0),
@@ -75,8 +60,6 @@ RWObj_ObjWriterContext::RWObj_ObjWriterContext(const TCollection_AsciiString& th
   }
 }
 
-//=================================================================================================
-
 RWObj_ObjWriterContext::~RWObj_ObjWriterContext()
 {
   if (myFile != nullptr)
@@ -86,16 +69,12 @@ RWObj_ObjWriterContext::~RWObj_ObjWriterContext()
   }
 }
 
-//=================================================================================================
-
 bool RWObj_ObjWriterContext::Close()
 {
   bool isOk = ::fclose(myFile) == 0;
   myFile    = nullptr;
   return isOk;
 }
-
-//=================================================================================================
 
 bool RWObj_ObjWriterContext::WriteHeader(
   const int                                                                           theNbNodes,
@@ -139,16 +118,12 @@ bool RWObj_ObjWriterContext::WriteHeader(
   return isOk;
 }
 
-//=================================================================================================
-
 bool RWObj_ObjWriterContext::WriteActiveMaterial(const TCollection_AsciiString& theMaterial)
 {
   myActiveMaterial = theMaterial;
   return !theMaterial.IsEmpty() ? Fprintf(myFile, "usemtl %s\n", theMaterial.ToCString()) != 0
                                 : Fprintf(myFile, "usemtl\n") != 0;
 }
-
-//=================================================================================================
 
 bool RWObj_ObjWriterContext::WriteTriangle(const NCollection_Vec3<int>& theTri)
 {
@@ -203,8 +178,6 @@ bool RWObj_ObjWriterContext::WriteTriangle(const NCollection_Vec3<int>& theTri)
     return Fprintf(myFile, "f %d %d %d\n", aTriPos[0], aTriPos[1], aTriPos[2]) != 0;
   }
 }
-
-//=================================================================================================
 
 bool RWObj_ObjWriterContext::WriteQuad(const NCollection_Vec4<int>& theQuad)
 {
@@ -267,36 +240,26 @@ bool RWObj_ObjWriterContext::WriteQuad(const NCollection_Vec4<int>& theQuad)
   }
 }
 
-//=================================================================================================
-
 bool RWObj_ObjWriterContext::WriteVertex(const NCollection_Vec3<float>& theValue)
 {
   return Fprintf(myFile, "v %f %f %f\n", theValue.x(), theValue.y(), theValue.z()) != 0;
 }
-
-//=================================================================================================
 
 bool RWObj_ObjWriterContext::WriteNormal(const NCollection_Vec3<float>& theValue)
 {
   return Fprintf(myFile, "vn %f %f %f\n", theValue.x(), theValue.y(), theValue.z()) != 0;
 }
 
-//=================================================================================================
-
 bool RWObj_ObjWriterContext::WriteTexCoord(const NCollection_Vec2<float>& theValue)
 {
   return Fprintf(myFile, "vt %f %f\n", theValue.x(), theValue.y()) != 0;
 }
-
-//=================================================================================================
 
 bool RWObj_ObjWriterContext::WriteGroup(const TCollection_AsciiString& theValue)
 {
   return !theValue.IsEmpty() ? Fprintf(myFile, "g %s\n", theValue.ToCString()) != 0
                              : Fprintf(myFile, "g\n") != 0;
 }
-
-//=================================================================================================
 
 void RWObj_ObjWriterContext::FlushFace(int theNbNodes)
 {

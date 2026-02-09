@@ -48,10 +48,8 @@ static void FDS_sortGb(const occ::handle<TopOpeBRepDS_HDataStructure>&          
       LIGb1.Append(I);
     else
       LIGb0.Append(I);
-  } // it(LI)
+  }
 }
-
-//=================================================================================================
 
 #define FORWARD (1)
 #define REVERSED (2)
@@ -142,8 +140,6 @@ int TopOpeBRepDS_TOOL::EShareG(const occ::handle<TopOpeBRepDS_HDataStructure>& H
   return (lEsd.Extent());
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_TOOL::ShareG(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
                                const int                                       i1,
                                const int                                       i2)
@@ -165,15 +161,12 @@ bool TopOpeBRepDS_TOOL::ShareG(const occ::handle<TopOpeBRepDS_HDataStructure>& H
   return false;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_TOOL::GetEsd(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
                                const TopoDS_Shape&                             S,
                                const int                                       ie,
                                int&                                            iesd)
 {
-  // recall : method ::SameDomain(s) returns an iterator on the list of shapes
-  //          sdm to s (ie actually sharing geometric domain with s)
+
   iesd = 0;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> mesdS;
   TopExp_Explorer                                        ex(S, TopAbs_EDGE);
@@ -187,8 +180,6 @@ bool TopOpeBRepDS_TOOL::GetEsd(const occ::handle<TopOpeBRepDS_HDataStructure>& H
     if (!hsd)
       continue;
     mesdS.Add(e);
-    //    NCollection_List<TopoDS_Shape>::Iterator itt(HDS->SameDomain(e));
-    //    for (; itt.More(); itt.Next()) mesdS.Add(itt.Value());
   }
 
   NCollection_List<TopoDS_Shape>::Iterator it(HDS->SameDomain(HDS->Shape(ie)));
@@ -203,8 +194,6 @@ bool TopOpeBRepDS_TOOL::GetEsd(const occ::handle<TopOpeBRepDS_HDataStructure>& H
   }
   return false;
 }
-
-//=================================================================================================
 
 bool TopOpeBRepDS_TOOL::ShareSplitON(const occ::handle<TopOpeBRepDS_HDataStructure>&     HDS,
                                      const NCollection_DataMap<TopoDS_Shape,
@@ -230,7 +219,7 @@ bool TopOpeBRepDS_TOOL::ShareSplitON(const occ::handle<TopOpeBRepDS_HDataStructu
   int                                   nsp1 = lsp1.Extent();
   if (nsp1 == 0)
     return false;
-  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> mesp1; // map of splits on of <s1>
+  NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> mesp1;
   NCollection_List<TopoDS_Shape>::Iterator               it(lsp1);
   for (; it.More(); it.Next())
     mesp1.Add(it.Value());
@@ -257,10 +246,6 @@ bool TopOpeBRepDS_TOOL::ShareSplitON(const occ::handle<TopOpeBRepDS_HDataStructu
   return false;
 }
 
-//=======================================================================
-// function : GetConfig
-// purpose  : returns relative geometric config
-//=======================================================================
 #define SAMEORIENTED (1)
 #define DIFFORIENTED (2)
 

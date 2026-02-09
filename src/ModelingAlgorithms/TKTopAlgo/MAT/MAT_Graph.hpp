@@ -14,64 +14,31 @@ class MAT_Arc;
 class MAT_BasicElt;
 class MAT_Node;
 
-//! The Class Graph permits the exploration of the
-//! Bisector Locus.
 class MAT_Graph : public Standard_Transient
 {
 
 public:
-  //! Empty constructor.
   Standard_EXPORT MAT_Graph();
 
-  //! Construct <me> from the result of the method
-  //! <CreateMat> of the class <MAT> from <MAT>.
-  //!
-  //! <SemiInfinite> : if some bisector are infinites.
-  //! <TheRoots>     : Set of the bisectors.
-  //! <NbBasicElts>  : Number of Basic Elements.
-  //! <NbArcs>       : Number of Arcs = Number of Bisectors.
   Standard_EXPORT void Perform(const bool                             SemiInfinite,
                                const occ::handle<MAT_ListOfBisector>& TheRoots,
                                const int                              NbBasicElts,
                                const int                              NbArcs);
 
-  //! Return the Arc of index <Index> in <theArcs>.
   Standard_EXPORT occ::handle<MAT_Arc> Arc(const int Index) const;
 
-  //! Return the BasicElt of index <Index> in <theBasicElts>.
   Standard_EXPORT occ::handle<MAT_BasicElt> BasicElt(const int Index) const;
 
-  //! Return the Node of index <Index> in <theNodes>.
   Standard_EXPORT occ::handle<MAT_Node> Node(const int Index) const;
 
-  //! Return the number of arcs of <me>.
   Standard_EXPORT int NumberOfArcs() const;
 
-  //! Return the number of nodes of <me>.
   Standard_EXPORT int NumberOfNodes() const;
 
-  //! Return the number of basic elements of <me>.
   Standard_EXPORT int NumberOfBasicElts() const;
 
-  //! Return the number of infinites nodes of <me>.
   Standard_EXPORT int NumberOfInfiniteNodes() const;
 
-  //! Merge two BasicElts. The End of the BasicElt Elt1
-  //! of IndexElt1 becomes The End of the BasicElt Elt2
-  //! of IndexElt2. Elt2 is replaced in the arcs by
-  //! Elt1, Elt2 is eliminated.
-  //!
-  //! <MergeArc1> is True if the fusion of the BasicElts =>
-  //! a fusion of two Arcs which separated the same elements.
-  //! In this case <GeomIndexArc1> and <GeomIndexArc2> are the
-  //! Geometric Index of this arcs.
-  //!
-  //! If the BasicElt corresponds to a close line,
-  //! the StartArc and the EndArc of Elt1 can separate the same
-  //! elements.
-  //! In this case there is a fusion of this arcs, <MergeArc2>
-  //! is true and <GeomIndexArc3> and <GeomIndexArc4> are the
-  //! Geometric Index of this arcs.
   Standard_EXPORT void FusionOfBasicElts(const int IndexElt1,
                                          const int IndexElt2,
                                          bool&     MergeArc1,
@@ -93,10 +60,6 @@ public:
   DEFINE_STANDARD_RTTIEXT(MAT_Graph, Standard_Transient)
 
 private:
-  //! Merge two Arcs. the second node of <Arc2> becomes
-  //! the first node of <Arc1>. Update of the first
-  //! node and the neighbours of <Arc1>.
-  //! <Arc2> is eliminated.
   Standard_EXPORT void FusionOfArcs(const occ::handle<MAT_Arc>& Arc1,
                                     const occ::handle<MAT_Arc>& Arc2);
 

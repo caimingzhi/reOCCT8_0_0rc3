@@ -3,16 +3,12 @@
 #include <TopOpeBRepDS_Interference.hpp>
 #include <TopOpeBRepDS_SurfaceCurveInterference.hpp>
 
-//=================================================================================================
-
 TopOpeBRepDS_CurveIterator::TopOpeBRepDS_CurveIterator(
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& L)
     : TopOpeBRepDS_InterferenceIterator(L)
 {
   Match();
 }
-
-//=================================================================================================
 
 bool TopOpeBRepDS_CurveIterator::MatchInterference(
   const occ::handle<TopOpeBRepDS_Interference>& I) const
@@ -22,16 +18,12 @@ bool TopOpeBRepDS_CurveIterator::MatchInterference(
   return r;
 }
 
-//=================================================================================================
-
 int TopOpeBRepDS_CurveIterator::Current() const
 {
   occ::handle<TopOpeBRepDS_Interference> I = Value();
   int                                    G = I->Geometry();
   return G;
 }
-
-//=================================================================================================
 
 TopAbs_Orientation TopOpeBRepDS_CurveIterator::Orientation(const TopAbs_State S) const
 {
@@ -40,8 +32,6 @@ TopAbs_Orientation TopOpeBRepDS_CurveIterator::Orientation(const TopAbs_State S)
   TopAbs_Orientation                     o = T.Orientation(S);
   return o;
 }
-
-//=================================================================================================
 
 const occ::handle<Geom2d_Curve>& TopOpeBRepDS_CurveIterator::PCurve() const
 {

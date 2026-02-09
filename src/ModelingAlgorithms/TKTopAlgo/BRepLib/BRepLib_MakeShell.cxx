@@ -20,14 +20,10 @@
 #include <TopoDS_Wire.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 BRepLib_MakeShell::BRepLib_MakeShell()
     : myError(BRepLib_EmptyShell)
 {
 }
-
-//=================================================================================================
 
 BRepLib_MakeShell::BRepLib_MakeShell(const occ::handle<Geom_Surface>& S, const bool Segment)
 {
@@ -35,8 +31,6 @@ BRepLib_MakeShell::BRepLib_MakeShell(const occ::handle<Geom_Surface>& S, const b
   S->Bounds(UMin, UMax, VMin, VMax);
   Init(S, UMin, UMax, VMin, VMax, Segment);
 }
-
-//=================================================================================================
 
 BRepLib_MakeShell::BRepLib_MakeShell(const occ::handle<Geom_Surface>& S,
                                      const double                     UMin,
@@ -47,8 +41,6 @@ BRepLib_MakeShell::BRepLib_MakeShell(const occ::handle<Geom_Surface>& S,
 {
   Init(S, UMin, UMax, VMin, VMax, Segment);
 }
-
-//=================================================================================================
 
 void BRepLib_MakeShell::Init(const occ::handle<Geom_Surface>& S,
                              const double                     UMin,
@@ -67,7 +59,6 @@ void BRepLib_MakeShell::Init(const occ::handle<Geom_Surface>& S,
   myError              = BRepLib_EmptyShell;
   constexpr double tol = Precision::Confusion();
 
-  // Make a shell from a surface
   GeomAdaptor_Surface GS(BS, UMin, UMax, VMin, VMax);
 
   int nu = GS.NbUIntervals(GeomAbs_C2);
@@ -79,7 +70,6 @@ void BRepLib_MakeShell::Init(const occ::handle<Geom_Surface>& S,
   if (nu == 0 || nv == 0)
     return;
 
-  // arrays of parameters and pcurves
   NCollection_Array1<double>                    upars(1, nu + 1);
   NCollection_Array1<double>                    vpars(1, nv + 1);
   NCollection_Array1<occ::handle<Geom2d_Curve>> uisos(1, nu + 1);
@@ -105,17 +95,12 @@ void BRepLib_MakeShell::Init(const occ::handle<Geom_Surface>& S,
       visos(iv) = new Geom2d_Line(gp_Pnt2d(0., v), du);
   }
 
-  // create row by row
-
-  // create the shell
   BRep_Builder B;
   B.MakeShell(TopoDS::Shell(myShape));
 
-  // arrays of edges and vertices for each row
   NCollection_Array1<TopoDS_Shape> botedges(1, nu);
   NCollection_Array1<TopoDS_Shape> botvertices(1, nu + 1);
 
-  // copies of the first ones for periodic case
   NCollection_Array1<TopoDS_Shape> fbotedges(1, nu);
   NCollection_Array1<TopoDS_Shape> fbotvertices(1, nu + 1);
 
@@ -124,7 +109,6 @@ void BRepLib_MakeShell::Init(const occ::handle<Geom_Surface>& S,
   TopoDS_Edge   eleft, eright, etop, ebot, feleft;
   TopoDS_Vertex vlb, vlt, vrb, vrt, fvlt;
 
-  // init the botedges and botvertices
   if (!Precision::IsInfinite(vpars(1)))
   {
     if (!Precision::IsInfinite(upars(1)))
@@ -159,7 +143,6 @@ void BRepLib_MakeShell::Init(const occ::handle<Geom_Surface>& S,
   for (iv = 1; iv <= nv; iv++)
   {
 
-    // compute the first edge and vertices of the line
     vrb = TopoDS::Vertex(botvertices(1));
 
     if (vperiodic && iv == nv)
@@ -195,14 +178,9 @@ void BRepLib_MakeShell::Init(const occ::handle<Geom_Surface>& S,
     fvlt   = vrt;
     feleft = eright;
 
-    // make the row of faces
-
     for (iu = 1; iu <= nu; iu++)
     {
 
-      // create the face at iu, iv
-
-      // the surface
       occ::handle<Geom_Surface> SS = occ::down_cast<Geom_Surface>(BS->Copy());
       if (GS.GetType() == GeomAbs_BSplineSurface && Segment)
       {
@@ -213,11 +191,7 @@ void BRepLib_MakeShell::Init(const occ::handle<Geom_Surface>& S,
       }
       B.MakeFace(F, SS, tol);
 
-      // the wire
-
       B.MakeWire(W);
-
-      // the vertices
 
       vlb = vrb;
       vrb = TopoDS::Vertex(botvertices(iu + 1));
@@ -237,8 +211,6 @@ void BRepLib_MakeShell::Init(const occ::handle<Geom_Surface>& S,
 
       botvertices(iu)     = vlt;
       botvertices(iu + 1) = vrt;
-
-      // the edges
 
       eleft = eright;
 
@@ -358,12 +330,10 @@ void BRepLib_MakeShell::Init(const occ::handle<Geom_Surface>& S,
     }
   }
 
-  // codage des courbes 3d et regularites.
   BRepLib::BuildCurves3d(myShape, tol);
   BRepLib::EncodeRegularity(myShape);
   myShape.Closed(BRep_Tool::IsClosed(myShape));
 
-  // Additional checking for degenerated edges
   bool             isDegenerated;
   double           aFirst, aLast;
   constexpr double aTol = Precision::Confusion();
@@ -381,24 +351,15 @@ void BRepLib_MakeShell::Init(const occ::handle<Geom_Surface>& S,
   Done();
 }
 
-//=================================================================================================
-
 BRepLib_ShellError BRepLib_MakeShell::Error() const
 {
   return myError;
 }
 
-//=======================================================================
-// function : TopoDS_Shell&
-// purpose  :
-//=======================================================================
-
 const TopoDS_Shell& BRepLib_MakeShell::Shell() const
 {
   return TopoDS::Shell(myShape);
 }
-
-//=================================================================================================
 
 BRepLib_MakeShell::operator TopoDS_Shell() const
 {

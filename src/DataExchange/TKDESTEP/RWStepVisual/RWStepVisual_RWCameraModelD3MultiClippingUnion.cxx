@@ -8,12 +8,8 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWCameraModelD3MultiClippingUnion::RWStepVisual_RWCameraModelD3MultiClippingUnion() =
   default;
-
-//=================================================================================================
 
 void RWStepVisual_RWCameraModelD3MultiClippingUnion::ReadStep(
   const occ::handle<StepData_StepReaderData>&                    data,
@@ -21,15 +17,13 @@ void RWStepVisual_RWCameraModelD3MultiClippingUnion::ReadStep(
   occ::handle<Interface_Check>&                                  ach,
   const occ::handle<StepVisual_CameraModelD3MultiClippingUnion>& ent) const
 {
-  // Number of Parameter Control
+
   if (!data->CheckNbParams(num, 2, ach, "camera_model_d3_multi_clipping_union"))
     return;
 
-  // Inherited field : name
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // Own field : shape_clipping
   occ::handle<NCollection_HArray1<StepVisual_CameraModelD3MultiClippingUnionSelect>> aShapeClipping;
   StepVisual_CameraModelD3MultiClippingUnionSelect                                   anEnt;
   int                                                                                nbSub;
@@ -45,20 +39,16 @@ void RWStepVisual_RWCameraModelD3MultiClippingUnion::ReadStep(
     }
   }
 
-  // Initialization of the read entity
   ent->Init(aName, aShapeClipping);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWCameraModelD3MultiClippingUnion::WriteStep(
   StepData_StepWriter&                                           SW,
   const occ::handle<StepVisual_CameraModelD3MultiClippingUnion>& ent) const
 {
-  // Inherited field name
+
   SW.Send(ent->Name());
 
-  // Own field: shape_clipping
   SW.OpenSub();
   for (int i = 1; i <= ent->ShapeClipping()->Length(); i++)
   {
@@ -67,13 +57,11 @@ void RWStepVisual_RWCameraModelD3MultiClippingUnion::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWCameraModelD3MultiClippingUnion::Share(
   const occ::handle<StepVisual_CameraModelD3MultiClippingUnion>& ent,
   Interface_EntityIterator&                                      iter) const
 {
-  // Own field: shape_clipping
+
   int i, nb = ent->ShapeClipping()->Length();
   for (i = 1; i <= nb; i++)
     iter.AddItem(ent->ShapeClipping()->Value(i).Value());

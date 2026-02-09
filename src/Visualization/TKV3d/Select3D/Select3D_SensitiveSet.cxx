@@ -6,20 +6,15 @@ IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveSet, Select3D_SensitiveEntity)
 
 namespace
 {
-  //! Default BVH tree builder for sensitive set (optimal for large set of small primitives - for
-  //! not too long construction time).
+
   static occ::handle<Select3D_BVHBuilder3d> THE_SENS_SET_BUILDER =
     new BVH_LinearBuilder<double, 3>(BVH_Constants_LeafNodeSizeSmall, BVH_Constants_MaxTreeDepth);
-} // namespace
-
-//=================================================================================================
+}
 
 const occ::handle<Select3D_BVHBuilder3d>& Select3D_SensitiveSet::DefaultBVHBuilder()
 {
   return THE_SENS_SET_BUILDER;
 }
-
-//=================================================================================================
 
 void Select3D_SensitiveSet::SetDefaultBVHBuilder(
   const occ::handle<Select3D_BVHBuilder3d>& theBuilder)
@@ -27,10 +22,6 @@ void Select3D_SensitiveSet::SetDefaultBVHBuilder(
   THE_SENS_SET_BUILDER = theBuilder;
 }
 
-//=======================================================================
-// function : Select3D_SensitiveSet
-// purpose  : Creates new empty sensitive set and its content
-//=======================================================================
 Select3D_SensitiveSet::Select3D_SensitiveSet(const occ::handle<SelectMgr_EntityOwner>& theOwnerId)
     : Select3D_SensitiveEntity(theOwnerId),
       myDetectedIdx(-1)
@@ -40,10 +31,6 @@ Select3D_SensitiveSet::Select3D_SensitiveSet(const occ::handle<SelectMgr_EntityO
   myContent.MarkDirty();
 }
 
-//=======================================================================
-// function : BVH
-// purpose  : Builds BVH tree for sensitive set
-//=======================================================================
 void Select3D_SensitiveSet::BVH()
 {
   myContent.GetBVH();
@@ -51,7 +38,7 @@ void Select3D_SensitiveSet::BVH()
 
 namespace
 {
-  //! This structure describes the node in BVH
+
   struct NodeInStack
   {
     NodeInStack(int theId = 0, bool theIsFullInside = false)
@@ -60,14 +47,11 @@ namespace
     {
     }
 
-    int Id;           //!< node identifier
-                      // clang-format off
-    bool IsFullInside; //!< if the node is completely inside the current selection volume
-                      // clang-format on
+    int Id;
+
+    bool IsFullInside;
   };
 } // namespace
-
-//=================================================================================================
 
 bool Select3D_SensitiveSet::processElements(SelectBasics_SelectingVolumeManager& theMgr,
                                             int                                  theFirstElem,
@@ -80,7 +64,7 @@ bool Select3D_SensitiveSet::processElements(SelectBasics_SelectingVolumeManager&
   SelectBasics_PickResult aPickResult;
   for (int anIdx = theFirstElem; anIdx <= theLastElem; anIdx++)
   {
-    if (!theMgr.IsOverlapAllowed()) // inclusion test
+    if (!theMgr.IsOverlapAllowed())
     {
       if (!elementIsInside(theMgr, anIdx, theIsFullInside))
       {
@@ -91,7 +75,7 @@ bool Select3D_SensitiveSet::processElements(SelectBasics_SelectingVolumeManager&
         return false;
       }
     }
-    else // overlap test
+    else
     {
       if (!overlapsElement(aPickResult, theMgr, anIdx, theIsFullInside))
       {
@@ -109,8 +93,6 @@ bool Select3D_SensitiveSet::processElements(SelectBasics_SelectingVolumeManager&
 
   return true;
 }
-
-//=================================================================================================
 
 bool Select3D_SensitiveSet::matches(SelectBasics_SelectingVolumeManager& theMgr,
                                     SelectBasics_PickResult&             thePickResult,
@@ -160,7 +142,7 @@ bool Select3D_SensitiveSet::matches(SelectBasics_SelectingVolumeManager& theMgr,
     {
       const BVH_Vec4i& aData = aBVH->NodeInfoBuffer()[aNode.Id];
 
-      if (aData.x() == 0) // is inner node
+      if (aData.x() == 0)
       {
         NodeInStack aLeft(aData.y(), toCheckFullInside), aRight(aData.z(), toCheckFullInside);
         bool        toCheckLft = true, toCheckRgh = true;
@@ -183,16 +165,15 @@ bool Select3D_SensitiveSet::matches(SelectBasics_SelectingVolumeManager& theMgr,
           }
         }
 
-        if (!theMgr.IsOverlapAllowed()) // inclusion test
+        if (!theMgr.IsOverlapAllowed())
         {
           if (!theToCheckAllInside)
           {
             if (!toCheckLft || !toCheckRgh)
             {
-              return false; // no inclusion
+              return false;
             }
 
-            // skip extra checks
             toCheckLft &= !aLeft.IsFullInside;
             toCheckRgh &= !aRight.IsFullInside;
           }
@@ -243,34 +224,18 @@ bool Select3D_SensitiveSet::matches(SelectBasics_SelectingVolumeManager& theMgr,
   return aMatchesNb != -1 || (!theToCheckAllInside && !theMgr.IsOverlapAllowed());
 }
 
-//=======================================================================
-// function : BoundingBox
-// purpose  : This method should be redefined in Select3D_SensitiveSet
-//            descendants
-//=======================================================================
 Select3D_BndBox3d Select3D_SensitiveSet::BoundingBox()
 {
   return Select3D_BndBox3d(NCollection_Vec3<double>(RealLast()),
                            NCollection_Vec3<double>(RealFirst()));
 }
 
-//=======================================================================
-// function : CenterOfGeometry
-// purpose  : This method should be redefined in Select3D_SensitiveSet
-//            descendants
-//=======================================================================
 gp_Pnt Select3D_SensitiveSet::CenterOfGeometry() const
 {
   return gp_Pnt(RealLast(), RealLast(), RealLast());
 }
 
-//=======================================================================
-// function : Clear
-// purpose  : Destroys cross-reference to avoid memory leak
-//=======================================================================
 void Select3D_SensitiveSet::Clear() {}
-
-//=================================================================================================
 
 void Select3D_SensitiveSet::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

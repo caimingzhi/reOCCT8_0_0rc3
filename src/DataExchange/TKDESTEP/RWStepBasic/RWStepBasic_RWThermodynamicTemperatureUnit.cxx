@@ -5,11 +5,7 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWThermodynamicTemperatureUnit::RWStepBasic_RWThermodynamicTemperatureUnit() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWThermodynamicTemperatureUnit::ReadStep(
   const occ::handle<StepData_StepReaderData>&                data,
@@ -17,11 +13,9 @@ void RWStepBasic_RWThermodynamicTemperatureUnit::ReadStep(
   occ::handle<Interface_Check>&                              ach,
   const occ::handle<StepBasic_ThermodynamicTemperatureUnit>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 1, ach, "thermodynamic_temperature_unit"))
     return;
-
-  // Inherited fields of NamedUnit
 
   occ::handle<StepBasic_DimensionalExponents> aNamedUnit_Dimensions;
   data->ReadEntity(num,
@@ -31,30 +25,21 @@ void RWStepBasic_RWThermodynamicTemperatureUnit::ReadStep(
                    STANDARD_TYPE(StepBasic_DimensionalExponents),
                    aNamedUnit_Dimensions);
 
-  // Initialize entity
   ent->Init(aNamedUnit_Dimensions);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWThermodynamicTemperatureUnit::WriteStep(
   StepData_StepWriter&                                       SW,
   const occ::handle<StepBasic_ThermodynamicTemperatureUnit>& ent) const
 {
 
-  // Inherited fields of NamedUnit
-
   SW.Send(ent->StepBasic_NamedUnit::Dimensions());
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWThermodynamicTemperatureUnit::Share(
   const occ::handle<StepBasic_ThermodynamicTemperatureUnit>& ent,
   Interface_EntityIterator&                                  iter) const
 {
-
-  // Inherited fields of NamedUnit
 
   iter.AddItem(ent->StepBasic_NamedUnit::Dimensions());
 }

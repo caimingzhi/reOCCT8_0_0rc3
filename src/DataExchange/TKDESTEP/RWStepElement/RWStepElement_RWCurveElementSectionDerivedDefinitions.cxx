@@ -9,12 +9,8 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepElement_RWCurveElementSectionDerivedDefinitions::
   RWStepElement_RWCurveElementSectionDerivedDefinitions() = default;
-
-//=================================================================================================
 
 void RWStepElement_RWCurveElementSectionDerivedDefinitions::ReadStep(
   const occ::handle<StepData_StepReaderData>&                           data,
@@ -22,11 +18,9 @@ void RWStepElement_RWCurveElementSectionDerivedDefinitions::ReadStep(
   occ::handle<Interface_Check>&                                         ach,
   const occ::handle<StepElement_CurveElementSectionDerivedDefinitions>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 12, ach, "curve_element_section_derived_definitions"))
     return;
-
-  // Inherited fields of CurveElementSectionDefinition
 
   occ::handle<TCollection_HAsciiString> aCurveElementSectionDefinition_Description;
   data->ReadString(num,
@@ -41,8 +35,6 @@ void RWStepElement_RWCurveElementSectionDerivedDefinitions::ReadStep(
                  "curve_element_section_definition.section_angle",
                  ach,
                  aCurveElementSectionDefinition_SectionAngle);
-
-  // Own fields of CurveElementSectionDerivedDefinitions
 
   double aCrossSectionalArea;
   data->ReadReal(num, 3, "cross_sectional_area", ach, aCrossSectionalArea);
@@ -136,7 +128,6 @@ void RWStepElement_RWCurveElementSectionDerivedDefinitions::ReadStep(
   StepElement_MeasureOrUnspecifiedValue aPolarMoment;
   data->ReadEntity(num, 12, "polar_moment", ach, aPolarMoment);
 
-  // Initialize entity
   ent->Init(aCurveElementSectionDefinition_Description,
             aCurveElementSectionDefinition_SectionAngle,
             aCrossSectionalArea,
@@ -151,20 +142,14 @@ void RWStepElement_RWCurveElementSectionDerivedDefinitions::ReadStep(
             aPolarMoment);
 }
 
-//=================================================================================================
-
 void RWStepElement_RWCurveElementSectionDerivedDefinitions::WriteStep(
   StepData_StepWriter&                                                  SW,
   const occ::handle<StepElement_CurveElementSectionDerivedDefinitions>& ent) const
 {
 
-  // Inherited fields of CurveElementSectionDefinition
-
   SW.Send(ent->StepElement_CurveElementSectionDefinition::Description());
 
   SW.Send(ent->StepElement_CurveElementSectionDefinition::SectionAngle());
-
-  // Own fields of CurveElementSectionDerivedDefinitions
 
   SW.Send(ent->CrossSectionalArea());
 
@@ -217,16 +202,10 @@ void RWStepElement_RWCurveElementSectionDerivedDefinitions::WriteStep(
   SW.Send(ent->PolarMoment().Value());
 }
 
-//=================================================================================================
-
 void RWStepElement_RWCurveElementSectionDerivedDefinitions::Share(
   const occ::handle<StepElement_CurveElementSectionDerivedDefinitions>& ent,
   Interface_EntityIterator&                                             iter) const
 {
-
-  // Inherited fields of CurveElementSectionDefinition
-
-  // Own fields of CurveElementSectionDerivedDefinitions
 
   for (int i1 = 1; i1 <= ent->ShearArea()->Length(); i1++)
   {

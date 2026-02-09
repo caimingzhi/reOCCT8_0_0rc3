@@ -6,8 +6,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMeshData_Model, IMeshData_Model)
 
-//=================================================================================================
-
 BRepMeshData_Model::BRepMeshData_Model(const TopoDS_Shape& theShape)
     : IMeshData_Model(theShape),
       myMaxSize(0.),
@@ -18,18 +16,12 @@ BRepMeshData_Model::BRepMeshData_Model(const TopoDS_Shape& theShape)
   myAllocator->SetThreadSafe(true);
 }
 
-//=================================================================================================
-
 BRepMeshData_Model::~BRepMeshData_Model() = default;
-
-//=================================================================================================
 
 int BRepMeshData_Model::FacesNb() const
 {
   return myDFaces.Size();
 }
-
-//=================================================================================================
 
 const IMeshData::IFaceHandle& BRepMeshData_Model::AddFace(const TopoDS_Face& theFace)
 {
@@ -37,29 +29,21 @@ const IMeshData::IFaceHandle& BRepMeshData_Model::AddFace(const TopoDS_Face& the
   return myDFaces.Append(aFace);
 }
 
-//=================================================================================================
-
 const IMeshData::IFaceHandle& BRepMeshData_Model::GetFace(const int theIndex) const
 {
   return myDFaces(theIndex);
 }
-
-//=================================================================================================
 
 int BRepMeshData_Model::EdgesNb() const
 {
   return myDEdges.Size();
 }
 
-//=================================================================================================
-
 const IMeshData::IEdgeHandle& BRepMeshData_Model::AddEdge(const TopoDS_Edge& theEdge)
 {
   IMeshData::IEdgeHandle aEdge(new (myAllocator) BRepMeshData_Edge(theEdge, myAllocator));
   return myDEdges.Append(aEdge);
 }
-
-//=================================================================================================
 
 const IMeshData::IEdgeHandle& BRepMeshData_Model::GetEdge(const int theIndex) const
 {

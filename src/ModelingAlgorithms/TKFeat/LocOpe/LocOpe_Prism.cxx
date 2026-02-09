@@ -23,15 +23,11 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_IndexedDataMap.hpp>
 
-//=================================================================================================
-
 LocOpe_Prism::LocOpe_Prism()
     : myIsTrans(false),
       myDone(false)
 {
 }
-
-//=================================================================================================
 
 LocOpe_Prism::LocOpe_Prism(const TopoDS_Shape& Base, const gp_Vec& V)
     : myBase(Base),
@@ -42,8 +38,6 @@ LocOpe_Prism::LocOpe_Prism(const TopoDS_Shape& Base, const gp_Vec& V)
   IntPerf();
 }
 
-//=================================================================================================
-
 LocOpe_Prism::LocOpe_Prism(const TopoDS_Shape& Base, const gp_Vec& V, const gp_Vec& Vtra)
     : myBase(Base),
       myVec(V),
@@ -53,8 +47,6 @@ LocOpe_Prism::LocOpe_Prism(const TopoDS_Shape& Base, const gp_Vec& V, const gp_V
 {
   IntPerf();
 }
-
-//=================================================================================================
 
 void LocOpe_Prism::Perform(const TopoDS_Shape& Base, const gp_Vec& V)
 {
@@ -70,8 +62,6 @@ void LocOpe_Prism::Perform(const TopoDS_Shape& Base, const gp_Vec& V)
   IntPerf();
 }
 
-//=================================================================================================
-
 void LocOpe_Prism::Perform(const TopoDS_Shape& Base, const gp_Vec& V, const gp_Vec& Vtra)
 {
   myMap.Clear();
@@ -86,8 +76,6 @@ void LocOpe_Prism::Perform(const TopoDS_Shape& Base, const gp_Vec& V, const gp_V
   myIsTrans = true;
   IntPerf();
 }
-
-//=================================================================================================
 
 void LocOpe_Prism::IntPerf()
 {
@@ -130,7 +118,7 @@ void LocOpe_Prism::IntPerf()
 
   else
   {
-    // Cas base != FACE
+
     NCollection_IndexedDataMap<TopoDS_Shape,
                                NCollection_List<TopoDS_Shape>,
                                TopTools_ShapeMapHasher>
@@ -159,7 +147,7 @@ void LocOpe_Prism::IntPerf()
     }
     if (toremove)
     {
-      // Rajouter les faces de FirstShape et LastShape
+
       for (exp.Init(myFirstShape, TopAbs_FACE); exp.More(); exp.Next())
       {
         lfaces.Append(exp.Current());
@@ -194,7 +182,7 @@ void LocOpe_Prism::IntPerf()
 
   if (myIsTrans)
   {
-    // m-a-j des descendants
+
     TopExp_Explorer anExp;
     for (anExp.Init(myBase, TopAbs_EDGE); anExp.More(); anExp.Next())
     {
@@ -210,8 +198,6 @@ void LocOpe_Prism::IntPerf()
   myDone = true;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& LocOpe_Prism::Shape() const
 {
   if (!myDone)
@@ -221,28 +207,20 @@ const TopoDS_Shape& LocOpe_Prism::Shape() const
   return myRes;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& LocOpe_Prism::FirstShape() const
 {
   return myFirstShape;
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& LocOpe_Prism::LastShape() const
 {
   return myLastShape;
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& LocOpe_Prism::Shapes(const TopoDS_Shape& S) const
 {
   return myMap(S);
 }
-
-//=================================================================================================
 
 void LocOpe_Prism::Curves(NCollection_Sequence<occ::handle<Geom_Curve>>& Scurves) const
 {
@@ -261,8 +239,6 @@ void LocOpe_Prism::Curves(NCollection_Sequence<occ::handle<Geom_Curve>>& Scurves
     Scurves.Append(trlin);
   }
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> LocOpe_Prism::BarycCurve() const
 {

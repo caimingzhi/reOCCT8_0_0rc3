@@ -1273,5 +1273,3 @@ static const char Shaders_RaytraceBase_fs[] =
   "               aWeight.w);\n"
   "}\n"
   "#endif\n";
-
-// clang-format on

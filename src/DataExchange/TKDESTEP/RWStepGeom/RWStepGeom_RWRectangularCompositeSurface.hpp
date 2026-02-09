@@ -11,7 +11,6 @@ class StepGeom_RectangularCompositeSurface;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for RectangularCompositeSurface
 class RWStepGeom_RWRectangularCompositeSurface
 {
 public:

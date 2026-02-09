@@ -22,20 +22,8 @@ class StepAP214_AutoDesignDateAndPersonItem : public StepData_SelectType
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Returns a AutoDesignDateAndPersonItem SelectType
   Standard_EXPORT StepAP214_AutoDesignDateAndPersonItem();
 
-  //! Recognizes a AutoDesignDateAndPersonItem Kind Entity that is :
-  //! 1     AutoDesignOrganizationAssignment from StepAP214,
-  //! 2     Product from StepBasic,
-  //! 3     ProductDefinition from StepBasic,
-  //! 4     ProductDefinitionFormation from StepBasic,
-  //! 5     Representation from StepRepr,
-  //! 6     AutoDesignDocumentReference from StepAP214,
-  //! 7     ExternallyDefinedRepresentation from StepRepr,
-  //! 8     ProductDefinitionRelationship from StepBasic,
-  //! 9     ProductDefinitionWithAssociatedDocuments from StepBasic
-  //! 0 else
   Standard_EXPORT int CaseNum(const occ::handle<Standard_Transient>& ent) const override;
 
   Standard_EXPORT occ::handle<StepAP214_AutoDesignOrganizationAssignment>

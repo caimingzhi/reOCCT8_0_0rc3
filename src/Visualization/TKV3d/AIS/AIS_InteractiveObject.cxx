@@ -13,16 +13,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_InteractiveObject, SelectMgr_SelectableObject)
 
-//=================================================================================================
-
 AIS_InteractiveObject::AIS_InteractiveObject(
   const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d)
     : SelectMgr_SelectableObject(aTypeOfPresentation3d),
       myCTXPtr(nullptr)
 {
 }
-
-//=================================================================================================
 
 void AIS_InteractiveObject::Redisplay(const bool AllModes)
 {
@@ -31,8 +27,6 @@ void AIS_InteractiveObject::Redisplay(const bool AllModes)
 
   myCTXPtr->Redisplay(this, false, AllModes);
 }
-
-//=================================================================================================
 
 bool AIS_InteractiveObject::ProcessDragging(const occ::handle<AIS_InteractiveContext>&,
                                             const occ::handle<V3d_View>&,
@@ -44,14 +38,10 @@ bool AIS_InteractiveObject::ProcessDragging(const occ::handle<AIS_InteractiveCon
   return false;
 }
 
-//=================================================================================================
-
 occ::handle<AIS_InteractiveContext> AIS_InteractiveObject::GetContext() const
 {
   return myCTXPtr;
 }
-
-//=================================================================================================
 
 void AIS_InteractiveObject::SetContext(const occ::handle<AIS_InteractiveContext>& theCtx)
 {
@@ -67,22 +57,16 @@ void AIS_InteractiveObject::SetContext(const occ::handle<AIS_InteractiveContext>
   }
 }
 
-//=================================================================================================
-
 void AIS_InteractiveObject::SetDisplayStatus(PrsMgr_DisplayStatus theStatus)
 {
   myDisplayStatus = theStatus;
 }
-
-//=================================================================================================
 
 bool AIS_InteractiveObject::HasPresentation() const
 {
   return HasInteractiveContext()
          && myCTXPtr->MainPrsMgr()->HasPresentation(this, myDrawer->DisplayMode());
 }
-
-//=================================================================================================
 
 occ::handle<Prs3d_Presentation> AIS_InteractiveObject::Presentation() const
 {
@@ -95,8 +79,6 @@ occ::handle<Prs3d_Presentation> AIS_InteractiveObject::Presentation() const
     myCTXPtr->MainPrsMgr()->Presentation(this, myDrawer->DisplayMode(), false);
   return aPrs;
 }
-
-//=================================================================================================
 
 void AIS_InteractiveObject::SetAspect(const occ::handle<Prs3d_BasicAspect>& theAspect)
 {
@@ -131,8 +113,6 @@ void AIS_InteractiveObject::SetAspect(const occ::handle<Prs3d_BasicAspect>& theA
     aGroup->SetGroupPrimitivesAspect(aTextAspect->Aspect());
   }
 }
-
-//=================================================================================================
 
 void AIS_InteractiveObject::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

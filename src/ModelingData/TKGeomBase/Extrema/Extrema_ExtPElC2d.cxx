@@ -14,7 +14,6 @@
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=============================================================================
 Extrema_ExtPElC2d::Extrema_ExtPElC2d()
 {
   myDone  = false;
@@ -26,8 +25,6 @@ Extrema_ExtPElC2d::Extrema_ExtPElC2d()
     myIsMin[i]  = false;
   }
 }
-
-//=============================================================================
 
 Extrema_ExtPElC2d::Extrema_ExtPElC2d(const gp_Pnt2d& P,
                                      const gp_Lin2d& L,
@@ -63,8 +60,6 @@ void Extrema_ExtPElC2d::Perform(const gp_Pnt2d& P,
   }
 }
 
-//=============================================================================
-
 Extrema_ExtPElC2d::Extrema_ExtPElC2d(const gp_Pnt2d&  P,
                                      const gp_Circ2d& C,
                                      const double     Tol,
@@ -80,7 +75,7 @@ void Extrema_ExtPElC2d::Perform(const gp_Pnt2d&  P,
                                 const double     Uinf,
                                 const double     Usup)
 {
-  //  gp_Pnt2d OC, P1, P2, OL;
+
   gp_Pnt2d OC(C.Location());
   myNbExt = 0;
 
@@ -137,8 +132,6 @@ void Extrema_ExtPElC2d::Perform(const gp_Pnt2d&  P,
   }
 }
 
-//=============================================================================
-
 Extrema_ExtPElC2d::Extrema_ExtPElC2d(const gp_Pnt2d&   P,
                                      const gp_Elips2d& E,
                                      const double      Tol,
@@ -156,7 +149,7 @@ void Extrema_ExtPElC2d::Perform(const gp_Pnt2d&   P,
 {
   myDone  = false;
   myNbExt = 0;
-  //  gp_Pnt2d OR, P1, P2;
+
   gp_Pnt2d OR;
   OR = E.Location();
 
@@ -196,8 +189,6 @@ void Extrema_ExtPElC2d::Perform(const gp_Pnt2d&   P,
     myDone = true;
   }
 }
-
-//=============================================================================
 
 Extrema_ExtPElC2d::Extrema_ExtPElC2d(const gp_Pnt2d&  P,
                                      const gp_Hypr2d& C,
@@ -262,13 +253,11 @@ void Extrema_ExtPElC2d::Perform(const gp_Pnt2d&  P,
           myPoint[myNbExt]  = Extrema_POnCurv2d(Us, Cu);
           myNbExt++;
         }
-      } // if ((Us >= Uinf) && (Us <= Usup))
-    } // if (Vs > 0.)
-  } // for (int NoSol = 1; ...
+      }
+    }
+  }
   myDone = true;
 }
-
-//=============================================================================
 
 Extrema_ExtPElC2d::Extrema_ExtPElC2d(const gp_Pnt2d&   P,
                                      const gp_Parab2d& C,
@@ -329,19 +318,15 @@ void Extrema_ExtPElC2d::Perform(const gp_Pnt2d&   P,
         myPoint[myNbExt]  = Extrema_POnCurv2d(Us, Cu);
         myNbExt++;
       }
-    } // if ((Us >= Uinf) && (Us <= Usup))
-  } // for (int NoSol = 1; ...
+    }
+  }
   myDone = true;
 }
-
-//=============================================================================
 
 bool Extrema_ExtPElC2d::IsDone() const
 {
   return myDone;
 }
-
-//=============================================================================
 
 int Extrema_ExtPElC2d::NbExt() const
 {
@@ -352,8 +337,6 @@ int Extrema_ExtPElC2d::NbExt() const
   return myNbExt;
 }
 
-//=============================================================================
-
 double Extrema_ExtPElC2d::SquareDistance(const int N) const
 {
   if ((N < 1) || (N > NbExt()))
@@ -362,8 +345,6 @@ double Extrema_ExtPElC2d::SquareDistance(const int N) const
   }
   return mySqDist[N - 1];
 }
-
-//=============================================================================
 
 bool Extrema_ExtPElC2d::IsMin(const int N) const
 {
@@ -374,8 +355,6 @@ bool Extrema_ExtPElC2d::IsMin(const int N) const
   return myIsMin[N - 1];
 }
 
-//=============================================================================
-
 const Extrema_POnCurv2d& Extrema_ExtPElC2d::Point(const int N) const
 {
   if ((N < 1) || (N > NbExt()))
@@ -384,5 +363,3 @@ const Extrema_POnCurv2d& Extrema_ExtPElC2d::Point(const int N) const
   }
   return myPoint[N - 1];
 }
-
-//=============================================================================

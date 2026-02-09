@@ -5,11 +5,7 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWProductCategoryRelationship::RWStepBasic_RWProductCategoryRelationship() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWProductCategoryRelationship::ReadStep(
   const occ::handle<StepData_StepReaderData>&               data,
@@ -17,11 +13,9 @@ void RWStepBasic_RWProductCategoryRelationship::ReadStep(
   occ::handle<Interface_Check>&                             ach,
   const occ::handle<StepBasic_ProductCategoryRelationship>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "product_category_relationship"))
     return;
-
-  // Own fields of ProductCategoryRelationship
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -48,18 +42,13 @@ void RWStepBasic_RWProductCategoryRelationship::ReadStep(
                    STANDARD_TYPE(StepBasic_ProductCategory),
                    aSubCategory);
 
-  // Initialize entity
   ent->Init(aName, hasDescription, aDescription, aCategory, aSubCategory);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWProductCategoryRelationship::WriteStep(
   StepData_StepWriter&                                      SW,
   const occ::handle<StepBasic_ProductCategoryRelationship>& ent) const
 {
-
-  // Own fields of ProductCategoryRelationship
 
   SW.Send(ent->Name());
 
@@ -75,14 +64,10 @@ void RWStepBasic_RWProductCategoryRelationship::WriteStep(
   SW.Send(ent->SubCategory());
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWProductCategoryRelationship::Share(
   const occ::handle<StepBasic_ProductCategoryRelationship>& ent,
   Interface_EntityIterator&                                 iter) const
 {
-
-  // Own fields of ProductCategoryRelationship
 
   iter.AddItem(ent->Category());
 

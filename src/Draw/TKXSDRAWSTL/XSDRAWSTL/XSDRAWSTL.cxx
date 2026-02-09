@@ -1,15 +1,4 @@
-// Copyright (c) 2023 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XSDRAWSTL.hpp>
 
@@ -54,8 +43,6 @@ extern bool VDisplayAISObject(const TCollection_AsciiString&            theName,
                               const occ::handle<AIS_InteractiveObject>& theAISObj,
                               bool                                      theReplaceIfExists = true);
 
-//=================================================================================================
-
 static int writestl(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3 || argc > 4)
@@ -79,8 +66,6 @@ static int writestl(Draw_Interpretor& di, int argc, const char** argv)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int readstl(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
@@ -158,7 +143,7 @@ static int readstl(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     if (anIsMulti)
     {
       NCollection_Sequence<occ::handle<Poly_Triangulation>> aTriangList;
-      // Read STL file to the triangulation list.
+
       RWStl::ReadFile(aFilePath.ToCString(), aMergeAngle, aTriangList, aProgress->Start());
       BRep_Builder aB;
       TopoDS_Face  aFace;
@@ -185,7 +170,7 @@ static int readstl(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     }
     else
     {
-      // Read STL file to the triangulation.
+
       occ::handle<Poly_Triangulation> aTriangulation =
         RWStl::ReadFile(aFilePath.ToCString(), aMergeAngle, aProgress->Start());
 
@@ -205,8 +190,6 @@ static int readstl(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   return 0;
 }
 
-//=================================================================================================
-
 static int createmesh(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs < 3)
@@ -223,7 +206,6 @@ static int createmesh(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
     return 0;
   }
 
-  // Progress indicator
   OSD_Path                            aFile(theArgVec[2]);
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(theDI, 1);
   occ::handle<Poly_Triangulation>     aSTLMesh  = RWStl::ReadFile(aFile, aProgress->Start());
@@ -239,7 +221,6 @@ static int createmesh(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
 
   aMesh->GetDrawer()->SetColor(MeshVS_DA_EdgeColor, Quantity_NOC_YELLOW);
 
-  // Hide all nodes by default
   occ::handle<TColStd_HPackedMapOfInteger> aNodes = new TColStd_HPackedMapOfInteger();
   const int                                aLen   = aSTLMesh->NbNodes();
   for (int anIndex = 1; anIndex <= aLen; anIndex++)
@@ -257,8 +238,6 @@ static int createmesh(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
 
   return 0;
 }
-
-//=================================================================================================
 
 static int create3d(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -286,7 +265,6 @@ static int create3d(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
 
   aMesh->GetDrawer()->SetColor(MeshVS_DA_EdgeColor, Quantity_NOC_YELLOW);
 
-  // Hide all nodes by default
   occ::handle<TColStd_HPackedMapOfInteger> aNodes = new TColStd_HPackedMapOfInteger();
   int                                      aLen   = aDS->GetAllNodes().Extent();
   for (int anIndex = 1; anIndex <= aLen; anIndex++)
@@ -304,8 +282,6 @@ static int create3d(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
 
   return 0;
 }
-
-//=================================================================================================
 
 occ::handle<MeshVS_Mesh> getMesh(const char* theName, Draw_Interpretor& theDI)
 {
@@ -329,8 +305,6 @@ occ::handle<MeshVS_Mesh> getMesh(const char* theName, Draw_Interpretor& theDI)
       return aMesh;
   }
 }
-
-//=================================================================================================
 
 static int setcolor(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec, int theParam)
 {
@@ -358,21 +332,15 @@ static int setcolor(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   return 0;
 }
 
-//=================================================================================================
-
 static int meshcolor(Draw_Interpretor& theInterp, int theNbArgs, const char** theArgVec)
 {
   return setcolor(theInterp, theNbArgs, theArgVec, MeshVS_DA_InteriorColor);
 }
 
-//=================================================================================================
-
 static int linecolor(Draw_Interpretor& theInterp, int theNbArgs, const char** theArgVec)
 {
   return setcolor(theInterp, theNbArgs, theArgVec, MeshVS_DA_EdgeColor);
 }
-
-//=================================================================================================
 
 static int meshmat(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -407,8 +375,6 @@ static int meshmat(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVe
   return 0;
 }
 
-//=================================================================================================
-
 static int shrink(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs < 3)
@@ -431,8 +397,6 @@ static int shrink(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int closed(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
@@ -462,8 +426,6 @@ static int closed(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   return 0;
 }
 
-//=================================================================================================
-
 static int mdisplay(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs < 2)
@@ -485,8 +447,6 @@ static int mdisplay(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int merase(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -511,8 +471,6 @@ static int merase(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int hidesel(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -570,8 +528,6 @@ static int hidesel(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVe
   return 0;
 }
 
-//=================================================================================================
-
 static int showonly(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs < 2)
@@ -621,8 +577,6 @@ static int showonly(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   return 0;
 }
 
-//=================================================================================================
-
 static int showall(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs < 2)
@@ -651,8 +605,6 @@ static int showall(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVe
 
   return 0;
 }
-
-//=================================================================================================
 
 static int meshcolors(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -715,7 +667,7 @@ static int meshcolors(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
             new MeshVS_ElementalColorPrsBuilder(aMesh,
                                                 MeshVS_DMF_ElementalColorDataPrs
                                                   | MeshVS_DMF_OCCMask);
-          // Color
+
           const TColStd_PackedMapOfInteger& anAllElements =
             aMesh->GetDataSource()->GetAllElements();
 
@@ -743,7 +695,6 @@ static int meshcolors(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
                                             MeshVS_DMF_NodalColorDataPrs | MeshVS_DMF_OCCMask);
           aMesh->AddBuilder(aBuilder, true);
 
-          // Color
           const TColStd_PackedMapOfInteger& anAllNodes = aMesh->GetDataSource()->GetAllNodes();
           for (TColStd_PackedMapOfInteger::Iterator anIter(anAllNodes); anIter.More();
                anIter.Next())
@@ -756,40 +707,34 @@ static int meshcolors(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
 
         if (aMode.IsEqual("nodaltex"))
         {
-          // assign nodal builder to the mesh
+
           occ::handle<MeshVS_NodalColorPrsBuilder> aBuilder =
             new MeshVS_NodalColorPrsBuilder(aMesh,
                                             MeshVS_DMF_NodalColorDataPrs | MeshVS_DMF_OCCMask);
           aMesh->AddBuilder(aBuilder, true);
           aBuilder->UseTexture(true);
 
-          // prepare color map for texture
           NCollection_Sequence<Quantity_Color> aColorMap;
           aColorMap.Append((Quantity_NameOfColor)Quantity_NOC_RED);
           aColorMap.Append((Quantity_NameOfColor)Quantity_NOC_YELLOW);
           aColorMap.Append((Quantity_NameOfColor)Quantity_NOC_BLUE1);
 
-          // prepare scale map for mesh - it will be assigned to mesh as texture coordinates
-          // make mesh color interpolated from minimum X coord to maximum X coord
           occ::handle<MeshVS_DataSource> aDataSource = aMesh->GetDataSource();
           double                         aMinX, aMinY, aMinZ, aMaxX, aMaxY, aMaxZ;
 
-          // get bounding box for calculations
           aDataSource->GetBoundingBox().Get(aMinX, aMinY, aMinZ, aMaxX, aMaxY, aMaxZ);
           double aDelta = aMaxX - aMinX;
 
-          // assign color scale map values (0..1) to nodes
           NCollection_DataMap<int, double> aScaleMap;
           NCollection_Array1<double>       aCoords(1, 3);
           int                              aNbNodes;
           MeshVS_EntityType                aType;
 
-          // iterate nodes
           const TColStd_PackedMapOfInteger& anAllNodes = aMesh->GetDataSource()->GetAllNodes();
           for (TColStd_PackedMapOfInteger::Iterator anIter(anAllNodes); anIter.More();
                anIter.Next())
           {
-            // get node coordinates to aCoord variable
+
             aDataSource->GetGeom(anIter.Key(), false, aCoords, aNbNodes, aType);
 
             double aScaleValue;
@@ -805,7 +750,6 @@ static int meshcolors(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
             aScaleMap.Bind(anIter.Key(), aScaleValue);
           }
 
-          // set color map for builder and a color for invalid scale value
           aBuilder->SetColorMap(aColorMap);
           aBuilder->SetInvalidColor(Quantity_NOC_BLACK);
           aBuilder->SetTextureCoords(aScaleMap);
@@ -830,8 +774,6 @@ static int meshcolors(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
 
   return 0;
 }
-
-//=================================================================================================
 
 static int meshvectors(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -962,7 +904,7 @@ static int meshvectors(Draw_Interpretor& theDI, int theNbArgs, const char** theA
         aNorm = gp_Vec(aCoords.Value(1), aCoords.Value(2), aCoords.Value(3));
         if (aNorm.Magnitude() < gp::Resolution())
         {
-          aNorm = gp_Vec(0, 0, 1); // method GetGeom(...) returns coordinates of nodes
+          aNorm = gp_Vec(0, 0, 1);
         }
       }
       else
@@ -980,8 +922,6 @@ static int meshvectors(Draw_Interpretor& theDI, int theNbArgs, const char** theA
 
   return 0;
 }
-
-//=================================================================================================
 
 static int meshtext(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -1007,7 +947,6 @@ static int meshtext(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
     return 0;
   }
 
-  // Prepare triangle labels
   NCollection_DataMap<int, TCollection_AsciiString> aLabels;
   int aLen = aMesh->GetDataSource()->GetAllElements().Extent();
   for (int anIndex = 1; anIndex <= aLen; anIndex++)
@@ -1022,8 +961,6 @@ static int meshtext(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
 
   return 0;
 }
-
-//=================================================================================================
 
 static int meshdeform(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -1108,8 +1045,6 @@ static int meshdeform(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
   return 0;
 }
 
-//=================================================================================================
-
 static int mesh_edge_width(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   try
@@ -1163,8 +1098,6 @@ static int mesh_edge_width(Draw_Interpretor& theDI, int theNbArgs, const char** 
   return 0;
 }
 
-//=================================================================================================
-
 static int meshinfo(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs != 2)
@@ -1196,15 +1129,13 @@ static int meshinfo(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
 
 namespace
 {
-  // Singleton to ensure DESTL plugin is registered only once
+
   void DESTLSingleton()
   {
     static DE_PluginHolder<DESTL_ConfigurationNode> aHolder;
     (void)aHolder;
   }
 } // namespace
-
-//=================================================================================================
 
 void XSDRAWSTL::Factory(Draw_Interpretor& theDI)
 {
@@ -1215,10 +1146,9 @@ void XSDRAWSTL::Factory(Draw_Interpretor& theDI)
   }
   aIsActivated = true;
 
-  //! Ensure DESTL plugin is registered
   DESTLSingleton();
 
-  const char* aGroup = "XSTEP-STL/VRML"; // Step transfer file commands
+  const char* aGroup = "XSTEP-STL/VRML";
 
   theDI.Add("writestl",
             "shape file [ascii/binary (0/1) : 1 by default] [InParallel (0/1) : 0 by default]",
@@ -1262,9 +1192,7 @@ void XSDRAWSTL::Factory(Draw_Interpretor& theDI)
   theDI.Add("mesh_edge_width", "set width of edges", __FILE__, mesh_edge_width, aGroup);
   theDI.Add("meshinfo", "displays the number of nodes and triangles", __FILE__, meshinfo, aGroup);
 
-  // Load XSDRAW session for pilot activation
   XSDRAW::LoadDraw(theDI);
 }
 
-// Declare entry point PLUGINFACTORY
 DPLUGIN(XSDRAWSTL)

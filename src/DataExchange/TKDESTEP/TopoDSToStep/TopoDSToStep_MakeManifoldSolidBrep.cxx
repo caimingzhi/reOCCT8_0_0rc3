@@ -46,7 +46,7 @@ static std::pair<occ::handle<StepShape_ManifoldSolidBrep>, occ::handle<StepVisua
     aTessItem = StepB.TessellatedValue();
     occ::handle<StepShape_ClosedShell> aCShell =
       occ::down_cast<StepShape_ClosedShell>(StepB.Value());
-    // si OPEN on le force a CLOSED mais que c est une honte !
+
     if (aCShell.IsNull())
     {
       occ::handle<StepShape_OpenShell> aOShell = occ::down_cast<StepShape_OpenShell>(StepB.Value());
@@ -65,10 +65,6 @@ static std::pair<occ::handle<StepShape_ManifoldSolidBrep>, occ::handle<StepVisua
 
   return std::make_pair(theManifoldSolidBrep, aTessItem);
 }
-
-//=============================================================================
-// Create a ManifoldSolidBrep of StepShape from a Shell of TopoDS
-//=============================================================================
 
 TopoDSToStep_MakeManifoldSolidBrep::TopoDSToStep_MakeManifoldSolidBrep(
   const TopoDS_Shell&                        aShell,
@@ -90,11 +86,6 @@ TopoDSToStep_MakeManifoldSolidBrep::TopoDSToStep_MakeManifoldSolidBrep(
     FP->AddWarning(errShape, " Closed Shell not mapped to ManifoldSolidBrep");
   }
 }
-
-//=============================================================================
-// Create a ManifoldSolidBrep of StepShape from a Solid of TopoDS containing
-// only one closed shell
-//=============================================================================
 
 TopoDSToStep_MakeManifoldSolidBrep::TopoDSToStep_MakeManifoldSolidBrep(
   const TopoDS_Solid&                        aSolid,
@@ -144,20 +135,11 @@ TopoDSToStep_MakeManifoldSolidBrep::TopoDSToStep_MakeManifoldSolidBrep(
   }
 }
 
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
-
 const occ::handle<StepShape_ManifoldSolidBrep>& TopoDSToStep_MakeManifoldSolidBrep::Value() const
 {
   StdFail_NotDone_Raise_if(!done, "TopoDSToStep_MakeManifoldSolidBrep::Value() - no result");
   return theManifoldSolidBrep;
 }
-
-// ============================================================================
-// Method  : TopoDSToStep_MakeManifoldSolidBrep::TessellatedValue
-// Purpose : Returns TessellatedItem as the optional result
-// ============================================================================
 
 const occ::handle<StepVisual_TessellatedItem>& TopoDSToStep_MakeManifoldSolidBrep::
   TessellatedValue() const

@@ -11,7 +11,6 @@ class StepRepr_RepresentationRelationship : public Standard_Transient
 {
 
 public:
-  //! Returns a RepresentationRelationship
   Standard_EXPORT StepRepr_RepresentationRelationship();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

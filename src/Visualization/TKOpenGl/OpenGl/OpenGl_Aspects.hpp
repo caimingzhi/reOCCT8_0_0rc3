@@ -6,29 +6,21 @@
 #include <OpenGl_AspectsSprite.hpp>
 #include <Graphic3d_Aspects.hpp>
 
-//! The element holding Graphic3d_Aspects.
 class OpenGl_Aspects : public OpenGl_Element
 {
 public:
-  //! Empty constructor.
   Standard_EXPORT OpenGl_Aspects();
 
-  //! Create and assign parameters.
   Standard_EXPORT OpenGl_Aspects(const occ::handle<Graphic3d_Aspects>& theAspect);
 
-  //! Return aspect.
   const occ::handle<Graphic3d_Aspects>& Aspect() const { return myAspect; }
 
-  //! Assign parameters.
   Standard_EXPORT void SetAspect(const occ::handle<Graphic3d_Aspects>& theAspect);
 
-  //! Returns Shading Model.
   Graphic3d_TypeOfShadingModel ShadingModel() const { return myShadingModel; }
 
-  //! Set if lighting should be disabled or not.
   void SetNoLighting() { myShadingModel = Graphic3d_TypeOfShadingModel_Unlit; }
 
-  //! Returns textures map.
   const occ::handle<OpenGl_TextureSet>& TextureSet(const occ::handle<OpenGl_Context>& theCtx,
                                                    bool theToHighlight = false) const
   {
@@ -37,31 +29,24 @@ public:
     return myResTextureSet.TextureSet(theCtx, myAspect, aSprite, aSpriteA, theToHighlight);
   }
 
-  //! Init and return OpenGl shader program resource.
-  //! @return shader program resource.
   const occ::handle<OpenGl_ShaderProgram>& ShaderProgramRes(
     const occ::handle<OpenGl_Context>& theCtx) const
   {
     return myResProgram.ShaderProgram(theCtx, myAspect->ShaderProgram());
   }
 
-  //! @return marker size
   float MarkerSize() const { return myResSprite.MarkerSize(); }
 
-  //! Return TRUE if OpenGl point sprite resource defines texture.
   bool HasPointSprite(const occ::handle<OpenGl_Context>& theCtx) const
   {
     return myResSprite.HasPointSprite(theCtx, myAspect);
   }
 
-  //! Return TRUE if OpenGl point sprite resource defined by obsolete Display List (bitmap).
   bool IsDisplayListSprite(const occ::handle<OpenGl_Context>& theCtx) const
   {
     return myResSprite.IsDisplayListSprite(theCtx, myAspect);
   }
 
-  //! Init and return OpenGl point sprite resource.
-  //! @return point sprite texture.
   const occ::handle<OpenGl_PointSprite>& SpriteRes(const occ::handle<OpenGl_Context>& theCtx,
                                                    bool theIsAlphaSprite) const
   {
@@ -71,14 +56,11 @@ public:
   Standard_EXPORT void Render(const occ::handle<OpenGl_Workspace>& theWorkspace) const override;
   Standard_EXPORT void Release(OpenGl_Context* theContext) override;
 
-  //! Update presentation aspects parameters after their modification.
   void SynchronizeAspects() override { SetAspect(myAspect); }
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
 protected:
-  //! OpenGl resources
   mutable OpenGl_AspectsProgram    myResProgram;
   mutable OpenGl_AspectsTextureSet myResTextureSet;
   mutable OpenGl_AspectsSprite     myResSprite;

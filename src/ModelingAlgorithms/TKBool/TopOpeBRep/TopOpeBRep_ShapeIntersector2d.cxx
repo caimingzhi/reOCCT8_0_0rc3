@@ -7,8 +7,6 @@ extern bool TopOpeBRep_GettraceSI();
 extern bool TopOpeBRep_GetcontextFFOR();
 #endif
 
-//=================================================================================================
-
 TopOpeBRep_ShapeIntersector2d::TopOpeBRep_ShapeIntersector2d()
 {
   Reset();
@@ -16,8 +14,6 @@ TopOpeBRep_ShapeIntersector2d::TopOpeBRep_ShapeIntersector2d()
   myFaceScanner.ChangeBoxSort().SetHBoxTool(myHBoxTool);
   myEdgeScanner.ChangeBoxSort().SetHBoxTool(myHBoxTool);
 }
-
-//=================================================================================================
 
 void TopOpeBRep_ShapeIntersector2d::Reset()
 {
@@ -30,8 +26,6 @@ void TopOpeBRep_ShapeIntersector2d::Reset()
   myEEFFInit = false;
 }
 
-//=================================================================================================
-
 void TopOpeBRep_ShapeIntersector2d::Init(const TopoDS_Shape& S1, const TopoDS_Shape& S2)
 {
   Reset();
@@ -40,14 +34,10 @@ void TopOpeBRep_ShapeIntersector2d::Init(const TopoDS_Shape& S1, const TopoDS_Sh
   myHBoxTool->Clear();
 }
 
-//=================================================================================================
-
 void TopOpeBRep_ShapeIntersector2d::SetIntersectionDone()
 {
   myIntersectionDone = (myFFDone || myEEFFDone);
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& TopOpeBRep_ShapeIntersector2d::CurrentGeomShape(const int Index) const
 {
@@ -72,15 +62,11 @@ const TopoDS_Shape& TopOpeBRep_ShapeIntersector2d::CurrentGeomShape(const int In
   throw Standard_ProgramError("CurrentGeomShape : no intersection 2d");
 }
 
-//=================================================================================================
-
 void TopOpeBRep_ShapeIntersector2d::InitIntersection(const TopoDS_Shape& S1, const TopoDS_Shape& S2)
 {
   Init(S1, S2);
   InitFFIntersection();
 }
-
-//=================================================================================================
 
 bool TopOpeBRep_ShapeIntersector2d::MoreIntersection() const
 {
@@ -100,8 +86,6 @@ bool TopOpeBRep_ShapeIntersector2d::MoreIntersection() const
 
   return res;
 }
-
-//=================================================================================================
 
 #ifdef OCCT_DEBUG
 void TopOpeBRep_ShapeIntersector2d::DumpCurrent(const int K) const
@@ -125,8 +109,6 @@ void TopOpeBRep_ShapeIntersector2d::DumpCurrent(const int) const
 {
 #endif
 }
-
-//=================================================================================================
 
 #ifdef OCCT_DEBUG
 int TopOpeBRep_ShapeIntersector2d::Index(const int K) const
@@ -157,15 +139,13 @@ int TopOpeBRep_ShapeIntersector2d::Index(const int) const
 }
 #endif
 
-//=================================================================================================
-
 void TopOpeBRep_ShapeIntersector2d::NextIntersection()
 {
   myIntersectionDone = false;
 
   if (myFFDone)
   {
-    // precedant etat du More() : 2 faces
+
     myFFDone = false;
     InitEEFFIntersection();
     FindEEFFIntersection();
@@ -192,12 +172,6 @@ void TopOpeBRep_ShapeIntersector2d::NextIntersection()
   }
 }
 
-// ========
-// FFFFFFFF
-// ========
-
-//=================================================================================================
-
 void TopOpeBRep_ShapeIntersector2d::InitFFIntersection()
 {
   if (!myFFInit)
@@ -213,17 +187,13 @@ void TopOpeBRep_ShapeIntersector2d::InitFFIntersection()
   myFFInit = true;
 }
 
-//=================================================================================================
-
 void TopOpeBRep_ShapeIntersector2d::FindFFIntersection()
 {
   myFFDone = false;
-  //  myFFSameDomain = false;
 
   if (MoreFFCouple())
   {
 
-    // The two candidate intersecting GeomShapes GS1,GS2 and their types t1,t2
     const TopoDS_Shape& GS1 = myFaceScanner.Current();
     const TopoDS_Shape& GS2 = myFaceExplorer.Current();
 
@@ -246,16 +216,12 @@ void TopOpeBRep_ShapeIntersector2d::FindFFIntersection()
   SetIntersectionDone();
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_ShapeIntersector2d::MoreFFCouple() const
 {
   bool more1 = myFaceScanner.More();
   bool more2 = myFaceExplorer.More();
   return (more1 && more2);
 }
-
-//=================================================================================================
 
 void TopOpeBRep_ShapeIntersector2d::NextFFCouple()
 {
@@ -273,23 +239,17 @@ void TopOpeBRep_ShapeIntersector2d::NextFFCouple()
   }
 }
 
-// ========
-// EEFFEEFF
-// ========
-
-//=================================================================================================
-
 void TopOpeBRep_ShapeIntersector2d::InitEEFFIntersection()
 {
-  // prepare exploration of the edges of the two current SameDomain faces
-  TopoDS_Shape face1 = myFaceScanner.Current();  // -26-08-96
-  TopoDS_Shape face2 = myFaceExplorer.Current(); // -26-08-96
+
+  TopoDS_Shape face1 = myFaceScanner.Current();
+  TopoDS_Shape face2 = myFaceExplorer.Current();
 
 #ifdef OCCT_DEBUG
   if (TopOpeBRep_GetcontextFFOR())
   {
-    face1.Orientation(TopAbs_FORWARD); //-05/07
-    face2.Orientation(TopAbs_FORWARD); //-05/07
+    face1.Orientation(TopAbs_FORWARD);
+    face2.Orientation(TopAbs_FORWARD);
     std::cout << "ctx : InitEEFFIntersection : faces FORWARD" << std::endl;
   }
 #endif
@@ -305,8 +265,6 @@ void TopOpeBRep_ShapeIntersector2d::InitEEFFIntersection()
 
   myEEFFInit = true;
 }
-
-//=================================================================================================
 
 void TopOpeBRep_ShapeIntersector2d::FindEEFFIntersection()
 {
@@ -338,16 +296,12 @@ void TopOpeBRep_ShapeIntersector2d::FindEEFFIntersection()
   SetIntersectionDone();
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_ShapeIntersector2d::MoreEEFFCouple() const
 {
   bool more1 = myEdgeScanner.More();
   bool more2 = myEdgeExplorer.More();
   return (more1 && more2);
 }
-
-//=================================================================================================
 
 void TopOpeBRep_ShapeIntersector2d::NextEEFFCouple()
 {
@@ -359,8 +313,6 @@ void TopOpeBRep_ShapeIntersector2d::NextEEFFCouple()
   }
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRep_ShapeIntersector2d::Shape(const int Index) const
 {
   if (Index == 1)
@@ -370,8 +322,6 @@ const TopoDS_Shape& TopOpeBRep_ShapeIntersector2d::Shape(const int Index) const
 
   throw Standard_ProgramError("ShapeIntersector : no shape");
 }
-
-//=================================================================================================
 
 TopOpeBRep_EdgesIntersector& TopOpeBRep_ShapeIntersector2d::ChangeEdgesIntersector()
 {

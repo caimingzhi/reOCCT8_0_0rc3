@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -33,12 +22,8 @@ void RWStepAP214_RWAppliedOrganizationAssignment::ReadStep(
   const occ::handle<StepAP214_AppliedOrganizationAssignment>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 3, ach, "applied_organization_assignment"))
     return;
-
-  // --- inherited field : assignedOrganization ---
 
   occ::handle<StepBasic_Organization> aAssignedOrganization;
   data->ReadEntity(num,
@@ -48,12 +33,8 @@ void RWStepAP214_RWAppliedOrganizationAssignment::ReadStep(
                    STANDARD_TYPE(StepBasic_Organization),
                    aAssignedOrganization);
 
-  // --- inherited field : role ---
-
   occ::handle<StepBasic_OrganizationRole> aRole;
   data->ReadEntity(num, 2, "role", ach, STANDARD_TYPE(StepBasic_OrganizationRole), aRole);
-
-  // --- own field : items ---
 
   occ::handle<NCollection_HArray1<StepAP214_OrganizationItem>> aItems;
   StepAP214_OrganizationItem                                   aItemsItem;
@@ -70,8 +51,6 @@ void RWStepAP214_RWAppliedOrganizationAssignment::ReadStep(
     }
   }
 
-  //--- Initialisation of the read entity ---
-
   ent->Init(aAssignedOrganization, aRole, aItems);
 }
 
@@ -80,15 +59,9 @@ void RWStepAP214_RWAppliedOrganizationAssignment::WriteStep(
   const occ::handle<StepAP214_AppliedOrganizationAssignment>& ent) const
 {
 
-  // --- inherited field assignedOrganization ---
-
   SW.Send(ent->AssignedOrganization());
 
-  // --- inherited field role ---
-
   SW.Send(ent->Role());
-
-  // --- own field : items ---
 
   SW.OpenSub();
   for (int i3 = 1; i3 <= ent->NbItems(); i3++)

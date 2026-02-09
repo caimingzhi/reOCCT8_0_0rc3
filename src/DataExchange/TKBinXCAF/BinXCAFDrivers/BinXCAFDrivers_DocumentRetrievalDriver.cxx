@@ -7,11 +7,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinXCAFDrivers_DocumentRetrievalDriver,
                            BinDrivers_DocumentRetrievalDriver)
 
-//=================================================================================================
-
 BinXCAFDrivers_DocumentRetrievalDriver::BinXCAFDrivers_DocumentRetrievalDriver() = default;
-
-//=================================================================================================
 
 occ::handle<BinMDF_ADriverTable> BinXCAFDrivers_DocumentRetrievalDriver::AttributeDrivers(
   const occ::handle<Message_Messenger>& theMsgDriver)

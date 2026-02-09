@@ -10,10 +10,7 @@ IMPLEMENT_STANDARD_RTTIEXT(PrsDim_DimensionOwner, SelectMgr_EntityOwner)
 
 namespace
 {
-  //=======================================================================
-  // function : HighlightMode
-  // purpose  : Return corresponding compute mode for selection type.
-  //=======================================================================
+
   static PrsDim_Dimension::ComputeMode HighlightMode(const int theSelMode)
   {
     switch (theSelMode)
@@ -28,8 +25,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 PrsDim_DimensionOwner::PrsDim_DimensionOwner(
   const occ::handle<SelectMgr_SelectableObject>& theSelObject,
   const PrsDim_DimensionSelectionMode            theMode,
@@ -39,10 +34,8 @@ PrsDim_DimensionOwner::PrsDim_DimensionOwner(
 {
 }
 
-//=================================================================================================
-
 bool PrsDim_DimensionOwner::IsHilighted(const occ::handle<PrsMgr_PresentationManager>& thePM,
-                                        const int /*theMode*/) const
+                                        const int) const
 {
   if (!HasSelectable())
   {
@@ -52,10 +45,8 @@ bool PrsDim_DimensionOwner::IsHilighted(const occ::handle<PrsMgr_PresentationMan
   return thePM->IsHighlighted(Selectable(), HighlightMode(mySelectionMode));
 }
 
-//=================================================================================================
-
 void PrsDim_DimensionOwner::Unhilight(const occ::handle<PrsMgr_PresentationManager>& thePM,
-                                      const int /*theMode*/)
+                                      const int)
 {
   if (!HasSelectable())
   {
@@ -65,11 +56,9 @@ void PrsDim_DimensionOwner::Unhilight(const occ::handle<PrsMgr_PresentationManag
   thePM->Unhighlight(Selectable());
 }
 
-//=================================================================================================
-
 void PrsDim_DimensionOwner::HilightWithColor(const occ::handle<PrsMgr_PresentationManager>& thePM,
                                              const occ::handle<Prs3d_Drawer>& theStyle,
-                                             const int /*theMode*/)
+                                             const int)
 {
   thePM->Color(Selectable(), theStyle, HighlightMode(mySelectionMode));
 }

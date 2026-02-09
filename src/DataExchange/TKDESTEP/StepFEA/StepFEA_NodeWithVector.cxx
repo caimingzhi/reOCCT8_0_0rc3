@@ -3,6 +3,4 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_NodeWithVector, StepFEA_Node)
 
-//=================================================================================================
-
 StepFEA_NodeWithVector::StepFEA_NodeWithVector() = default;

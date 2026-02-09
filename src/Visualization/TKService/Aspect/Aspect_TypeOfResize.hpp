@@ -1,7 +1,5 @@
 #pragma once
 
-//! Defines the type of Resize Window method applied
-//! by the user.
 enum Aspect_TypeOfResize
 {
   Aspect_TOR_UNKNOWN,

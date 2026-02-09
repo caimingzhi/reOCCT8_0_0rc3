@@ -18,15 +18,12 @@
 #include <Message_Msg.hpp>
 #include <Standard_DomainError.hpp>
 
-// MGE 30/07/98
 IGESGeom_ToolSplineSurface::IGESGeom_ToolSplineSurface() = default;
 
 void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_SplineSurface>& ent,
-                                               const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                               const occ::handle<IGESData_IGESReaderData>&,
                                                IGESData_ParamReader& PR) const
 {
-
-  // MGE 30/07/98
 
   int  aBoundaryType, aPatchType, allNbUSegments, allNbVSegments;
   int  i, j, k;
@@ -37,9 +34,6 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
   occ::handle<NCollection_HArray2<occ::handle<NCollection_HArray1<double>>>> allYCoeffs;
   occ::handle<NCollection_HArray2<occ::handle<NCollection_HArray1<double>>>> allZCoeffs;
 
-  // bool st; //szv#4:S4163:12Mar99 moved down
-
-  // szv#4:S4163:12Mar99 `st=` not needed
   if (!PR.ReadInteger(PR.Current(), aBoundaryType))
   {
     Message_Msg Msg140("XSTEP_140");
@@ -50,7 +44,7 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
     Message_Msg Msg278("XSTEP_278");
     PR.SendFail(Msg278);
   }
-  // st = PR.ReadInteger(PR.Current(), Msg141, allNbUSegments); //szv#4:S4163:12Mar99 moved in if
+
   if (PR.ReadInteger(PR.Current(), allNbUSegments))
   {
     ubreak          = true;
@@ -62,8 +56,6 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
     PR.SendFail(Msg141);
   }
 
-  // st = PR.ReadInteger(PR.Current(), Msg142, allNbVSegments); //szv#4:S4163:12Mar99 moved in if
-  // st = PR.ReadInteger(PR.Current(), "Number Of V Segments", allNbVSegments);
   if (PR.ReadInteger(PR.Current(), allNbVSegments))
   {
     vbreak          = true;
@@ -78,16 +70,14 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
   if (!allUBreakPoints.IsNull())
   {
     Message_Msg Msg143("XSTEP_143");
-    // clang-format off
-    PR.ReadReals(PR.CurrentList(allNbUSegments+1), Msg143, allUBreakPoints); //szv#4:S4163:12Mar99 `st=` not needed
-    //st = PR.ReadReals(PR.CurrentList(allNbUSegments+1), "U Break Points", allUBreakPoints);
+
+    PR.ReadReals(PR.CurrentList(allNbUSegments + 1), Msg143, allUBreakPoints);
   }
 
-  if (!allVBreakPoints.IsNull()){
+  if (!allVBreakPoints.IsNull())
+  {
     Message_Msg Msg144("XSTEP_144");
-    PR.ReadReals(PR.CurrentList(allNbVSegments+1), Msg144, allVBreakPoints); //szv#4:S4163:12Mar99 `st=` not needed
-    //st = PR.ReadReals(PR.CurrentList(allNbVSegments+1), "V Break Points", allVBreakPoints);
-    // clang-format on
+    PR.ReadReals(PR.CurrentList(allNbVSegments + 1), Msg144, allVBreakPoints);
   }
 
   if (ubreak && vbreak)
@@ -106,7 +96,7 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
                                                                                    allNbVSegments);
   }
 
-  occ::handle<NCollection_HArray1<double>> Temp; // = new NCollection_HArray1<double>(1, 16);
+  occ::handle<NCollection_HArray1<double>> Temp;
 
   if (!allXCoeffs.IsNull())
   {
@@ -126,7 +116,7 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
       for (j = 1; j <= allNbVSegments; j++)
       {
         st = PR.ReadReals(PR.CurrentList(16), Msg145_X, Temp);
-        // st = PR.ReadReals (PR.CurrentList(16),"X Coefficient Of Patch",Temp);
+
         if (st && Temp->Length() == 16)
           allXCoeffs->SetValue(i, j, Temp);
         else
@@ -136,7 +126,7 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
           PR.SendFail(Msg147_X);
         }
         st = PR.ReadReals(PR.CurrentList(16), Msg145_Y, Temp);
-        // st = PR.ReadReals (PR.CurrentList(16),"Y Coefficient Of Patch",Temp);
+
         if (st && Temp->Length() == 16)
           allYCoeffs->SetValue(i, j, Temp);
         else
@@ -146,7 +136,7 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
           PR.SendFail(Msg147_Y);
         }
         st = PR.ReadReals(PR.CurrentList(16), Msg145_Z, Temp);
-        // st = PR.ReadReals (PR.CurrentList(16),"Z Coefficient Of Patch",Temp);
+
         if (st && Temp->Length() == 16)
           allZCoeffs->SetValue(i, j, Temp);
         else if (i < allNbUSegments || j < allNbVSegments)
@@ -157,8 +147,7 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
         }
         else
         {
-          //  If end missing ... We redo temp !
-          //  The values were not read ... we must first re-read them !
+
           Temp = new NCollection_HArray1<double>(1, 16);
           Temp->Init(0.);
           for (k = 1; k <= 16; k++)
@@ -170,7 +159,7 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
               PR.SendFail(Msg146);
               break;
             }
-            // if (!PR.ReadReal (PR.Current(),"Z of very last patch",vl)) break;
+
             Temp->SetValue(k, vl);
           }
           allZCoeffs->SetValue(i, j, Temp);
@@ -179,13 +168,11 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
       }
       for (int kk = 1; kk <= 48; kk++)
         PR.SetCurrentNumber(PR.CurrentNumber() + 1);
-      // Skip the Arbitrary Values
     }
   }
   if (vbreak)
     for (k = 1; k <= 48 * (allNbVSegments + 1); k++)
       PR.SetCurrentNumber(PR.CurrentNumber() + 1);
-  // Skip the Arbitrary Values
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(aBoundaryType,
@@ -228,20 +215,20 @@ void IGESGeom_ToolSplineSurface::WriteOwnParams(const occ::handle<IGESGeom_Splin
         IW.Send((ent->ZPolynomial(I, J))->Value(k));
     }
     for (k = 1; k <= 48; k++)
-      IW.Send(0.0); // Send Arbitrary Values
+      IW.Send(0.0);
   }
   for (J = 1; J <= (nbVSegs + 1) * 48; J++)
-    IW.Send(0.0); // Send Arbitrary Values
+    IW.Send(0.0);
 }
 
-void IGESGeom_ToolSplineSurface::OwnShared(const occ::handle<IGESGeom_SplineSurface>& /* ent */,
-                                           Interface_EntityIterator& /* iter */) const
+void IGESGeom_ToolSplineSurface::OwnShared(const occ::handle<IGESGeom_SplineSurface>&,
+                                           Interface_EntityIterator&) const
 {
 }
 
 void IGESGeom_ToolSplineSurface::OwnCopy(const occ::handle<IGESGeom_SplineSurface>& another,
                                          const occ::handle<IGESGeom_SplineSurface>& ent,
-                                         Interface_CopyTool& /* TC */) const
+                                         Interface_CopyTool&) const
 {
 
   int aBoundaryType, aPatchType, allNbUSegments, allNbVSegments;
@@ -305,12 +292,12 @@ void IGESGeom_ToolSplineSurface::OwnCopy(const occ::handle<IGESGeom_SplineSurfac
 }
 
 IGESData_DirChecker IGESGeom_ToolSplineSurface::DirChecker(
-  const occ::handle<IGESGeom_SplineSurface>& /* ent */) const
+  const occ::handle<IGESGeom_SplineSurface>&) const
 {
   IGESData_DirChecker DC(114, 0);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
@@ -321,23 +308,15 @@ void IGESGeom_ToolSplineSurface::OwnCheck(const occ::handle<IGESGeom_SplineSurfa
                                           occ::handle<Interface_Check>& ach) const
 {
 
-  // MGE 30/07/98
-  // Building of messages
-  //========================================
-  // Message_Msg Msg140("XSTEP_140");
-  //========================================
-
   if (ent->BoundaryType() < 1 || ent->BoundaryType() > 6)
   {
     Message_Msg Msg140("XSTEP_140");
     ach->SendFail(Msg140);
   }
-  //  if (ent->PatchType() < 0 || ent->PatchType() > 1)
-  //    ach.AddFail("Incorrect Patch Type not in [0-1]");
 }
 
 void IGESGeom_ToolSplineSurface::OwnDump(const occ::handle<IGESGeom_SplineSurface>& ent,
-                                         const IGESData_IGESDumper& /* dumper */,
+                                         const IGESData_IGESDumper&,
                                          Standard_OStream& S,
                                          const int         level) const
 {

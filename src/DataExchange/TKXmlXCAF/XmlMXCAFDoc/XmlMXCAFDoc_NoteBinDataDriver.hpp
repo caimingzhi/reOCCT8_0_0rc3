@@ -2,7 +2,6 @@
 
 #include <XmlMXCAFDoc_NoteDriver.hpp>
 
-//! Attribute Driver.
 class XmlMXCAFDoc_NoteBinDataDriver : public XmlMXCAFDoc_NoteDriver
 {
 public:

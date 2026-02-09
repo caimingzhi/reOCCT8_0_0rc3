@@ -5,12 +5,8 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepElement_AnalysisItemWithinRepresentation, Standard_Transient)
 
-//=================================================================================================
-
 StepElement_AnalysisItemWithinRepresentation::StepElement_AnalysisItemWithinRepresentation() =
   default;
-
-//=================================================================================================
 
 void StepElement_AnalysisItemWithinRepresentation::Init(
   const occ::handle<TCollection_HAsciiString>&    aName,
@@ -28,14 +24,10 @@ void StepElement_AnalysisItemWithinRepresentation::Init(
   theRep = aRep;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepElement_AnalysisItemWithinRepresentation::Name() const
 {
   return theName;
 }
-
-//=================================================================================================
 
 void StepElement_AnalysisItemWithinRepresentation::SetName(
   const occ::handle<TCollection_HAsciiString>& aName)
@@ -43,15 +35,11 @@ void StepElement_AnalysisItemWithinRepresentation::SetName(
   theName = aName;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepElement_AnalysisItemWithinRepresentation::Description()
   const
 {
   return theDescription;
 }
-
-//=================================================================================================
 
 void StepElement_AnalysisItemWithinRepresentation::SetDescription(
   const occ::handle<TCollection_HAsciiString>& aDescription)
@@ -59,14 +47,10 @@ void StepElement_AnalysisItemWithinRepresentation::SetDescription(
   theDescription = aDescription;
 }
 
-//=================================================================================================
-
 occ::handle<StepRepr_RepresentationItem> StepElement_AnalysisItemWithinRepresentation::Item() const
 {
   return theItem;
 }
-
-//=================================================================================================
 
 void StepElement_AnalysisItemWithinRepresentation::SetItem(
   const occ::handle<StepRepr_RepresentationItem>& aItem)
@@ -74,14 +58,10 @@ void StepElement_AnalysisItemWithinRepresentation::SetItem(
   theItem = aItem;
 }
 
-//=================================================================================================
-
 occ::handle<StepRepr_Representation> StepElement_AnalysisItemWithinRepresentation::Rep() const
 {
   return theRep;
 }
-
-//=================================================================================================
 
 void StepElement_AnalysisItemWithinRepresentation::SetRep(
   const occ::handle<StepRepr_Representation>& aRep)

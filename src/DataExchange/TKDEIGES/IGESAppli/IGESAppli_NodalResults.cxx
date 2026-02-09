@@ -9,8 +9,6 @@ IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_NodalResults, IGESData_IGESEntity)
 
 IGESAppli_NodalResults::IGESAppli_NodalResults() = default;
 
-// Data : Col -> // Nodes.  Row : Data per Node
-
 void IGESAppli_NodalResults::Init(
   const occ::handle<IGESDimen_GeneralNote>&                            aNote,
   const int                                                            aNumber,
@@ -30,7 +28,6 @@ void IGESAppli_NodalResults::Init(
   theNodes           = allNodes;
   theData            = allData;
   InitTypeAndForm(146, FormNumber());
-  // FormNumber -> Type of the Results
 }
 
 void IGESAppli_NodalResults::SetFormNumber(const int form)

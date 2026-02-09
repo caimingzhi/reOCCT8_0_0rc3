@@ -11,7 +11,6 @@ class StepVisual_TextStyleForDefinedFont;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for TextStyleForDefinedFont
 class RWStepVisual_RWTextStyleForDefinedFont
 {
 public:

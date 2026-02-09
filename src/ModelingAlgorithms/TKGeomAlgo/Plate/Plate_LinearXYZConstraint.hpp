@@ -13,9 +13,6 @@
 #include <Standard_Real.hpp>
 class Plate_PinpointConstraint;
 
-//! define on or several constraints as linear combination of
-//! PinPointConstraint unlike the LinearScalarConstraint, usage
-//! of this kind of constraint preserve the X,Y and Z uncoupling.
 class Plate_LinearXYZConstraint
 {
 public:
@@ -37,14 +34,8 @@ public:
 
   const NCollection_Array2<double>& Coeff() const;
 
-  //! Sets the PinPointConstraint of index Index to
-  //! Value raise if Index is greater than the length of
-  //! PPC or the Row length of coeff or lower than 1
   Standard_EXPORT void SetPPC(const int Index, const Plate_PinpointConstraint& Value);
 
-  //! Sets the coeff of index (Row,Col) to Value
-  //! raise if Row (respectively Col) is greater than the
-  //! Row (respectively Column) length of coeff
   Standard_EXPORT void SetCoeff(const int Row, const int Col, const double Value);
 
 private:

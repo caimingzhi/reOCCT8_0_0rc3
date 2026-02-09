@@ -10,7 +10,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class XmlObjMgt_Persistent;
 
-//! XML persistence driver for a scope of functions.
 class XmlMFunction_ScopeDriver : public XmlMDF_ADriver
 {
 

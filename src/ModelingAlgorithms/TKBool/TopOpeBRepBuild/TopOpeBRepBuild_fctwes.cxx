@@ -12,7 +12,7 @@
 #include <TopOpeBRepTool_ShapeExplorer.hpp>
 
 #ifdef OCCT_DEBUG
-Standard_EXPORT void debfctwes(const int /*i*/) {}
+Standard_EXPORT void debfctwes(const int) {}
 
 Standard_EXPORT void debfctwesmess(const int i, const TCollection_AsciiString& s = "")
 {
@@ -38,8 +38,6 @@ bool TopOpeBRepBuild_FUN_aresamegeom(const TopoDS_Shape& S1, const TopoDS_Shape&
 #define M_REVERSED(st) (st == TopAbs_REVERSED)
 #define M_INTERNAL(st) (st == TopAbs_INTERNAL)
 #define M_EXTERNAL(st) (st == TopAbs_EXTERNAL)
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder::GFillCurveTopologyWES(const TopoDS_Shape&          F1,
                                                     const TopOpeBRepBuild_GTopo& G1,
@@ -71,12 +69,7 @@ void TopOpeBRepBuild_Builder::GFillCurveTopologyWES(const TopoDS_Shape&         
   TopOpeBRepDS_CurveIterator FCit(myDataStructure->FaceCurves(F1));
   myFaceReference = TopoDS::Face(F1);
   myFaceToFill    = TopoDS::Face(F1);
-  // modified by NIZHNY-MZV  Thu Feb 24 09:15:33 2000
-  // sometimes by the problem of tolerances we have intersection
-  // lines between SameDomain faces, but Same domain faces can not
-  // have intersection lines other than by its original edges
-  // so we skip it if we find that two SameDomain faces have
-  // new intersection edge
+
   bool hsd = myDataStructure->HasSameDomain(F1);
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aSDMap;
   if (hsd)
@@ -88,7 +81,6 @@ void TopOpeBRepBuild_Builder::GFillCurveTopologyWES(const TopoDS_Shape&         
       aSDMap.Add(SDF);
     }
   }
-  // End modified by NIZHNY-MZV  Thu Feb 24 09:21:08 2000
 
   for (; FCit.More(); FCit.Next())
   {
@@ -99,22 +91,18 @@ void TopOpeBRepBuild_Builder::GFillCurveTopologyWES(const TopoDS_Shape&         
       TopAbs_ShapeEnum                              shab = T.ShapeBefore(), shaa = T.ShapeAfter();
       if ((shaa != ShapeInterf) || (shab != ShapeInterf))
         continue;
-      // modified by NIZHNY-MZV  Thu Feb 24 09:14:31 2000
 
       int          si = I->Support();
       TopoDS_Shape SS = myDataStructure->Shape(si);
-      // see comment above
+
       if (aSDMap.Contains(SS))
         continue;
-      // End modified by NIZHNY-MZV  Thu Feb 24 09:21:34 2000
     }
     GFillCurveTopologyWES(FCit, G1, WES);
   }
 
   return;
-} // GFillCurveTopologyWES
-
-//=================================================================================================
+}
 
 void TopOpeBRepBuild_Builder::GFillCurveTopologyWES(const TopOpeBRepDS_CurveIterator& FCit,
                                                     const TopOpeBRepBuild_GTopo&      G1,
@@ -129,15 +117,13 @@ void TopOpeBRepBuild_Builder::GFillCurveTopologyWES(const TopOpeBRepDS_CurveIter
   TopOpeBRepDS_Config Conf = G1.Config1();
   TopAbs_State        TB   = TB1;
   if (Conf == TopOpeBRepDS_DIFFORIENTED)
-  { // -jyl980525
-    //    if      (TB1 == TopAbs_OUT) TB = TopAbs_IN;
-    //    else if (TB1 == TopAbs_IN ) TB = TopAbs_OUT;
+  {
   }
 
   TopoDS_Face& WESF = *((TopoDS_Face*)((void*)&WES.Face()));
   TopoDS_Face& FTF  = *((TopoDS_Face*)((void*)&myFaceToFill));
 #ifdef OCCT_DEBUG
-//  bool FTFeqWESF = myFaceReference.IsEqual(WESF);
+
 #endif
 
 #ifdef OCCT_DEBUG
@@ -181,11 +167,9 @@ void TopOpeBRepBuild_Builder::GFillCurveTopologyWES(const TopOpeBRepDS_CurveIter
     TopoDS_Shape EE = Iti.Value();
     TopoDS_Edge& E  = TopoDS::Edge(EE);
 
-    // modified by NIZHNY-MZV  Fri Mar 17 12:51:03 2000
     if (BRep_Tool::Degenerated(E))
       continue;
 
-    //    TopAbs_Orientation neworiE = FCit.Orientation(TB);
     E.Orientation(neworiE);
 
     const occ::handle<Geom2d_Curve>& PC = FCit.PCurve();
@@ -193,7 +177,7 @@ void TopOpeBRepBuild_Builder::GFillCurveTopologyWES(const TopOpeBRepDS_CurveIter
     bool EhasPConFTF =
 
       FC2D_HasCurveOnSurface(E, FTF);
-    // modified by NIZHNY-MZV  Mon Mar 27 15:24:39 2000
+
     if (!EhasPConFTF)
       myBuildTool.PCurve(FTF, E, PC);
 
@@ -201,14 +185,14 @@ void TopOpeBRepBuild_Builder::GFillCurveTopologyWES(const TopOpeBRepDS_CurveIter
 
     if (!EhasPConWESF)
     {
-      //      double tolE = BRep_Tool::Tolerance(E);
+
       double                    f2, l2, tolpc;
       occ::handle<Geom2d_Curve> C2D;
       C2D = FC2D_CurveOnSurface(E, WESF, f2, l2, tolpc);
       if (C2D.IsNull())
         throw Standard_ProgramError("GFillCurveTopologyWES");
 #ifdef OCCT_DEBUG
-//      double tol = std::max(tolE,tolpc);
+
 #endif
 
       myBuildTool.PCurve(WESF, E, C2D);
@@ -235,5 +219,4 @@ void TopOpeBRepBuild_Builder::GFillCurveTopologyWES(const TopOpeBRepDS_CurveIter
 
     WES.AddStartElement(E);
   }
-
-} // GFillCurveTopologyWES
+}

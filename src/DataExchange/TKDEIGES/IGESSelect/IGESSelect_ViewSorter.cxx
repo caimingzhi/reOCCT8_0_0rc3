@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_PacketList.hpp>
 #include <IGESData_IGESModel.hpp>
@@ -45,7 +34,7 @@ void IGESSelect_ViewSorter::Clear()
   thefinals.Clear();
   thefinals.ReSize(nb);
   theinditem.Clear();
-  theindfin.Clear(); // seq//
+  theindfin.Clear();
 }
 
 bool IGESSelect_ViewSorter::Add(const occ::handle<Standard_Transient>& ent)
@@ -70,30 +59,25 @@ bool IGESSelect_ViewSorter::Add(const occ::handle<Standard_Transient>& ent)
 
 bool IGESSelect_ViewSorter::AddEntity(const occ::handle<IGESData_IGESEntity>& igesent)
 {
-  //  Reception, controle de type et de map
+
   if (igesent.IsNull())
     return false;
   if (themap.FindIndex(igesent))
     return false;
   themap.Add(igesent);
-  //  View recovery (watch out for Drawing case)
+
   occ::handle<IGESData_IGESEntity> view;
   if (igesent->TypeNumber() == PourDrawing)
-    view = igesent; // DRAWING
+    view = igesent;
   else
   {
     if (igesent->IsKind(STANDARD_TYPE(IGESData_ViewKindEntity)))
-      view = igesent; // VIEW
+      view = igesent;
     else
       view = igesent->View();
-    /*
-        DeclareAndCast(IGESData_ViewKindEntity,trueview,view);
-        if (!trueview.IsNull())
-          if (trueview->IsSingle()) view.Nullify();  // Multiple -> Nulle
-    */
   }
-  //  On enregistre
-  int viewindex = 0; // 0 sera pour remain
+
+  int viewindex = 0;
   if (!view.IsNull())
   {
     viewindex = theitems.FindIndex(view);
@@ -128,24 +112,19 @@ int IGESSelect_ViewSorter::NbEntities() const
   return themap.Extent();
 }
 
-//  .....    Attention    .....
-
 void IGESSelect_ViewSorter::SortSingleViews(const bool alsoframes)
 {
-  // From the initial pile, we exclude : null views, and according to alsoframe the drawings
-  // Null views : see theremain (initial remain carried forward)
 
-  //  Note : the IsSingle filter has been applied by Add
   thefinals.Clear();
   int nb = theinditem.Length();
-  // int numit = 0; //szv#4:S4163:12Mar99 not needed
+
   for (int i = 1; i <= nb; i++)
   {
     int numitem    = theinditem.Value(i);
-    int finalindex = 0; // 0 sera pour remain
+    int finalindex = 0;
     if (numitem > 0)
     {
-      // numit = numitem; //szv#4:S4163:12Mar99 not needed
+
       DeclareAndCast(IGESData_IGESEntity, item, theitems.FindKey(numitem));
       bool ok = false;
       if (alsoframes)
@@ -169,22 +148,21 @@ void IGESSelect_ViewSorter::SortSingleViews(const bool alsoframes)
 
 void IGESSelect_ViewSorter::SortDrawings(const Interface_Graph& G)
 {
-  // Pour chaque item (vue ou drawing), drawing contenant, silya (sinon tant pis)
 
   thefinals.Clear();
   int nb = theinditem.Length();
-  // int numit = 0; //szv#4:S4163:12Mar99 not needed
+
   for (int i = 1; i <= nb; i++)
   {
     int numitem    = theinditem.Value(i);
-    int finalindex = 0; // 0 sera pour remain
+    int finalindex = 0;
     if (numitem > 0)
     {
-      // numit = numitem; //szv#4:S4163:12Mar99 not needed
+
       DeclareAndCast(IGESData_IGESEntity, item, theitems.FindKey(numitem));
       if (item.IsNull())
         continue;
-      //  Si cest un Drawing, il definit le Set. Sinon, chercher Drawing contenant
+
       occ::handle<Standard_Transient> drawing;
       if (item->TypeNumber() == PourDrawing)
         drawing = item;
@@ -210,8 +188,6 @@ void IGESSelect_ViewSorter::SortDrawings(const Interface_Graph& G)
     theindfin.SetValue(i, finalindex);
   }
 }
-
-//  ....    Queries    ....
 
 int IGESSelect_ViewSorter::NbSets(const bool final) const
 {
@@ -241,7 +217,7 @@ occ::handle<IFSelect_PacketList> IGESSelect_ViewSorter::Sets(const bool final) c
     list->AddPacket();
     if (final)
     {
-      //    Attention a l unicite
+
       for (i = 1; i <= nb; i++)
       {
         if (theindfin.Value(i) != num)

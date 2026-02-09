@@ -8,10 +8,6 @@
 #include <Vrml_SFRotation.hpp>
 #include <Standard_OStream.hpp>
 
-//! specifies a OrthographicCamera node of VRML specifying properties of cameras.
-//! An orthographic camera defines a parallel projection from a viewpoint. This camera does
-//! not diminish objects with distance, as a PerspectiveCamera does. The viewing volume for
-//! an orthographic camera is a rectangular parallelepiped (a box).
 class Vrml_OrthographicCamera
 {
 public:

@@ -8,25 +8,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_RealArrayDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_RealArrayDriver::BinMDataStd_RealArrayDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_RealArray)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_RealArrayDriver::NewEmpty() const
 {
   return new TDataStd_RealArray();
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 
 bool BinMDataStd_RealArrayDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                         const occ::handle<TDF_Attribute>& theTarget,
@@ -63,11 +54,6 @@ bool BinMDataStd_RealArrayDriver::Paste(const BinObjMgt_Persistent&       theSou
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
-
 void BinMDataStd_RealArrayDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
   BinObjMgt_Persistent&             theTarget,
@@ -82,7 +68,7 @@ void BinMDataStd_RealArrayDriver::Paste(
   double* aPtr = (double*)&aSourceArray(aFirstInd);
   theTarget.PutRealArray(aPtr, aLength);
   theTarget << (uint8_t)(anAtt->GetDelta() ? 1 : 0);
-  // process user defined guid
+
   if (anAtt->ID() != TDataStd_RealArray::GetID())
     theTarget << anAtt->ID();
 }

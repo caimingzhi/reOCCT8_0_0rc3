@@ -9,12 +9,9 @@
 #include <gp_Sphere.hpp>
 #include <gp_Torus.hpp>
 
-//! This class implements function which calculate square Eucluidean distance
-//! between point on surface and nearest point on Conic.
 class Extrema_GlobOptFuncCQuadric : public math_MultipleVarFunction
 {
 public:
-  //! Curve and surface should exist during all the lifetime of Extrema_GlobOptFuncCQuadric.
   Standard_EXPORT Extrema_GlobOptFuncCQuadric(const Adaptor3d_Curve* C);
 
   Standard_EXPORT Extrema_GlobOptFuncCQuadric(const Adaptor3d_Curve* C,
@@ -32,7 +29,7 @@ public:
   Standard_EXPORT int NbVariables() const override;
 
   Standard_EXPORT bool Value(const math_Vector& theX, double& theF) override;
-  //! Parameters of quadric for point on curve defined by theCT
+
   Standard_EXPORT void QuadricParameters(const math_Vector& theCT, math_Vector& theUV) const;
 
 private:
@@ -49,7 +46,7 @@ private:
   gp_Sphere                mySphere;
   gp_Torus                 myTorus;
   gp_Pnt                   myPTrim[4];
-  // Boundaries
+
   double myTf;
   double myTl;
   double myUf;

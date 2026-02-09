@@ -3,16 +3,13 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeCustom_RestrictionParameters, Standard_Transient)
 
-//=================================================================================================
-
 ShapeCustom_RestrictionParameters::ShapeCustom_RestrictionParameters()
 {
   myGMaxSeg    = 10000;
   myGMaxDegree = 15;
 
   myConvPlane = false;
-  // myConvElementarySurf = false;
-  // conversion of elementary surfaces are off by default
+
   myConvConicalSurf     = false;
   myConvSphericalSurf   = false;
   myConvCylindricalSurf = false;

@@ -14,8 +14,6 @@ class Adaptor2d_Curve2d;
 class Extrema_POnCurv2d;
 class Extrema_ExtElC2d;
 
-//! It calculates all the distance between two curves.
-//! These distances can be maximum or minimum.
 class Extrema_ExtCC2d
 {
 public:
@@ -23,13 +21,11 @@ public:
 
   Standard_EXPORT Extrema_ExtCC2d();
 
-  //! It calculates all the distances.
   Standard_EXPORT Extrema_ExtCC2d(const Adaptor2d_Curve2d& C1,
                                   const Adaptor2d_Curve2d& C2,
                                   const double             TolC1 = 1.0e-10,
                                   const double             TolC2 = 1.0e-10);
 
-  //! It calculates all the distances.
   Standard_EXPORT Extrema_ExtCC2d(const Adaptor2d_Curve2d& C1,
                                   const Adaptor2d_Curve2d& C2,
                                   const double             U1,
@@ -39,7 +35,6 @@ public:
                                   const double             TolC1 = 1.0e-10,
                                   const double             TolC2 = 1.0e-10);
 
-  //! initializes the fields.
   Standard_EXPORT void Initialize(const Adaptor2d_Curve2d& C2,
                                   const double             V1,
                                   const double             V2,
@@ -48,26 +43,16 @@ public:
 
   Standard_EXPORT void Perform(const Adaptor2d_Curve2d& C1, const double U1, const double U2);
 
-  //! Returns True if the distances are found.
   Standard_EXPORT bool IsDone() const;
 
-  //! Returns the number of extremum distances.
   Standard_EXPORT int NbExt() const;
 
-  //! Returns True if the two curves are parallel.
   Standard_EXPORT bool IsParallel() const;
 
-  //! Returns the value of the Nth extremum square distance.
   Standard_EXPORT double SquareDistance(const int N = 1) const;
 
-  //! Returns the points of the Nth extremum distance.
-  //! P1 is on the first curve, P2 on the second one.
   Standard_EXPORT void Points(const int N, Extrema_POnCurv2d& P1, Extrema_POnCurv2d& P2) const;
 
-  //! if the curve is a trimmed curve,
-  //! dist11 is a square distance between the point on C1
-  //! of parameter FirstParameter and the point of
-  //! parameter FirstParameter on C2.
   Standard_EXPORT void TrimmedSquareDistances(double&   dist11,
                                               double&   distP12,
                                               double&   distP21,
@@ -77,10 +62,8 @@ public:
                                               gp_Pnt2d& P21,
                                               gp_Pnt2d& P22) const;
 
-  //! Set flag for single extrema computation. Works on parametric solver only.
   Standard_EXPORT void SetSingleSolutionFlag(const bool theSingleSolutionFlag);
 
-  //! Get flag for single extrema computation. Works on parametric solver only.
   Standard_EXPORT bool GetSingleSolutionFlag() const;
 
 protected:
@@ -101,7 +84,7 @@ protected:
                                const double         Period2 = 0.0);
 
 private:
-  bool                                    myIsFindSingleSolution; // Default value is false.
+  bool                                    myIsFindSingleSolution;
   bool                                    myDone;
   bool                                    myIsPar;
   NCollection_Sequence<Extrema_POnCurv2d> mypoints;

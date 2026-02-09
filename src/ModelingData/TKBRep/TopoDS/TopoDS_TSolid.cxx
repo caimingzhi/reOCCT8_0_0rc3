@@ -4,14 +4,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TopoDS_TSolid, TopoDS_TShape)
 
-//=================================================================================================
-
 TopAbs_ShapeEnum TopoDS_TSolid::ShapeType() const
 {
   return TopAbs_SOLID;
 }
-
-//=================================================================================================
 
 occ::handle<TopoDS_TShape> TopoDS_TSolid::EmptyCopy() const
 {

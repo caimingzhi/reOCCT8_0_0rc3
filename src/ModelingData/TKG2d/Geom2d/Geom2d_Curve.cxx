@@ -11,8 +11,6 @@ IMPLEMENT_STANDARD_RTTIEXT(Geom2d_Curve, Geom2d_Geometry)
 
 typedef Geom2d_Curve Curve;
 
-//=================================================================================================
-
 occ::handle<Geom2d_Curve> Geom2d_Curve::Reversed() const
 {
   occ::handle<Geom2d_Curve> C = occ::down_cast<Geom2d_Curve>(Copy());
@@ -20,21 +18,15 @@ occ::handle<Geom2d_Curve> Geom2d_Curve::Reversed() const
   return C;
 }
 
-//=================================================================================================
-
 double Geom2d_Curve::TransformedParameter(const double U, const gp_Trsf2d&) const
 {
   return U;
 }
 
-//=================================================================================================
-
 double Geom2d_Curve::ParametricTransformation(const gp_Trsf2d&) const
 {
   return 1.;
 }
-
-//=================================================================================================
 
 double Geom2d_Curve::Period() const
 {
@@ -43,16 +35,12 @@ double Geom2d_Curve::Period() const
   return (LastParameter() - FirstParameter());
 }
 
-//=================================================================================================
-
 gp_Pnt2d Geom2d_Curve::Value(const double U) const
 {
   gp_Pnt2d P;
   D0(U, P);
   return P;
 }
-
-//=================================================================================================
 
 void Geom2d_Curve::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

@@ -16,8 +16,6 @@
 static TCollection_AsciiString PRODINP("dinp ");
 #endif
 
-//=================================================================================================
-
 void TopOpeBRep_VPointInter::SetPoint(const IntPatch_Point& P)
 {
   myPPOI = (IntPatch_Point*)&P;
@@ -34,8 +32,6 @@ void TopOpeBRep_VPointInter::SetPoint(const IntPatch_Point& P)
     myShapeIndex = 0;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRep_VPointInter::ArcOnS1() const
 {
   const occ::handle<Adaptor2d_Curve2d>& HAHC2  = myPPOI->ArcOnS1();
@@ -43,16 +39,12 @@ const TopoDS_Shape& TopOpeBRep_VPointInter::ArcOnS1() const
   return BRAC2P.Edge();
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRep_VPointInter::ArcOnS2() const
 {
   const occ::handle<Adaptor2d_Curve2d>& HAHC2  = myPPOI->ArcOnS2();
   const BRepAdaptor_Curve2d&            BRAC2P = *((BRepAdaptor_Curve2d*)HAHC2.get());
   return BRAC2P.Edge();
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& TopOpeBRep_VPointInter::VertexOnS1() const
 {
@@ -64,8 +56,6 @@ const TopoDS_Shape& TopOpeBRep_VPointInter::VertexOnS1() const
   return (*HBRTAHV)->Vertex();
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRep_VPointInter::VertexOnS2() const
 {
   if (!myPPOI->IsVertexOnS2())
@@ -75,8 +65,6 @@ const TopoDS_Shape& TopOpeBRep_VPointInter::VertexOnS2() const
     (occ::handle<BRepTopAdaptor_HVertex>*)&(myPPOI->VertexOnS2());
   return (*HBRTAHV)->Vertex();
 }
-
-//=================================================================================================
 
 void TopOpeBRep_VPointInter::State(const TopAbs_State S, const int I)
 {
@@ -89,8 +77,6 @@ void TopOpeBRep_VPointInter::State(const TopAbs_State S, const int I)
   UpdateKeep();
 }
 
-//=================================================================================================
-
 TopAbs_State TopOpeBRep_VPointInter::State(const int I) const
 {
   if (I == 1)
@@ -102,8 +88,6 @@ TopAbs_State TopOpeBRep_VPointInter::State(const int I) const
     throw Standard_DomainError("TopOpeBRep_VPointInter::State");
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRep_VPointInter::EdgeON(const TopoDS_Shape& Eon, const double Par, const int I)
 {
@@ -119,8 +103,6 @@ void TopOpeBRep_VPointInter::EdgeON(const TopoDS_Shape& Eon, const double Par, c
   }
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRep_VPointInter::EdgeON(const int I) const
 {
   if (I == 1)
@@ -130,8 +112,6 @@ const TopoDS_Shape& TopOpeBRep_VPointInter::EdgeON(const int I) const
   else
     throw Standard_DomainError("TopOpeBRep_VPointInter::EdgeON");
 }
-
-//=================================================================================================
 
 double TopOpeBRep_VPointInter::EdgeONParameter(const int I) const
 {
@@ -143,8 +123,6 @@ double TopOpeBRep_VPointInter::EdgeONParameter(const int I) const
     throw Standard_DomainError("TopOpeBRep_VPointInter::EdgeONParameter");
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRep_VPointInter::Edge(const int I) const
 {
   if (I == 1 && IsOnDomS1())
@@ -155,8 +133,6 @@ const TopoDS_Shape& TopOpeBRep_VPointInter::Edge(const int I) const
   return myNullShape;
 }
 
-//=================================================================================================
-
 double TopOpeBRep_VPointInter::EdgeParameter(const int I) const
 {
   if (I == 1 && IsOnDomS1())
@@ -166,13 +142,10 @@ double TopOpeBRep_VPointInter::EdgeParameter(const int I) const
   return 0.;
 }
 
-//=================================================================================================
-
 gp_Pnt2d TopOpeBRep_VPointInter::SurfaceParameters(const int I) const
 {
   double u = 0., v = 0.;
-  // if      (I == 1 && IsOnDomS1() ) ParametersOnS1(u,v);
-  // else if (I == 2 && IsOnDomS1() ) ParametersOnS2(u,v);
+
   if (I == 1)
     ParametersOnS1(u, v);
   else if (I == 2)
@@ -180,8 +153,6 @@ gp_Pnt2d TopOpeBRep_VPointInter::SurfaceParameters(const int I) const
   gp_Pnt2d p2d(u, v);
   return p2d;
 }
-
-//=================================================================================================
 
 bool TopOpeBRep_VPointInter::IsVertex(const int I) const
 {
@@ -194,8 +165,6 @@ bool TopOpeBRep_VPointInter::IsVertex(const int I) const
   return false;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRep_VPointInter::Vertex(const int I) const
 {
   if (I == 1 && IsVertexOnS1())
@@ -204,8 +173,6 @@ const TopoDS_Shape& TopOpeBRep_VPointInter::Vertex(const int I) const
     return VertexOnS2();
   return myNullShape;
 }
-
-//=================================================================================================
 
 void TopOpeBRep_VPointInter::UpdateKeep()
 {
@@ -226,16 +193,10 @@ void TopOpeBRep_VPointInter::UpdateKeep()
     condition = M_SINON(pos1) && M_SINON(pos2);
   else if (SI == 3)
     condition = M_SINON(pos1) && M_SINON(pos2);
-  // NYI : SI == 3 --> le VP devrait toujours etre Keep() (par definition)
 
   myKeep = condition;
 }
 
-//=======================================================================
-// function : EqualpP
-// purpose  : returns <True> if the 3d points and the parameters of the
-//           VPoints are same.
-//=======================================================================
 bool TopOpeBRep_VPointInter::EqualpP(const TopOpeBRep_VPointInter& VP) const
 {
   double p1     = ParameterOnLine();
@@ -249,8 +210,6 @@ bool TopOpeBRep_VPointInter::EqualpP(const TopOpeBRep_VPointInter& VP) const
   bool   pPequal = (pequal && Pequal);
   return pPequal;
 }
-
-//=================================================================================================
 
 bool TopOpeBRep_VPointInter::ParonE(const TopoDS_Edge& E, double& par) const
 {
@@ -289,8 +248,6 @@ bool TopOpeBRep_VPointInter::ParonE(const TopoDS_Edge& E, double& par) const
   return found;
 }
 
-//=================================================================================================
-
 Standard_OStream& TopOpeBRep_VPointInter::Dump(const int          I,
                                                const TopoDS_Face& F,
                                                Standard_OStream&  OS) const
@@ -328,8 +285,6 @@ Standard_OStream& TopOpeBRep_VPointInter::Dump(const int          I,
 
   return OS;
 }
-
-//=================================================================================================
 
 #ifdef OCCT_DEBUG
 Standard_OStream& TopOpeBRep_VPointInter::Dump(const TopoDS_Face& FF1,
@@ -388,8 +343,6 @@ Standard_OStream& TopOpeBRep_VPointInter::Dump(const TopoDS_Face&,
 
   return OS;
 }
-
-//=================================================================================================
 
 TopOpeBRep_PThePointOfIntersection TopOpeBRep_VPointInter::PThePointOfIntersectionDummy() const
 {

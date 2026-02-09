@@ -8,8 +8,6 @@ class IntCurve_PConic;
 class gp_Pnt2d;
 class gp_Vec2d;
 
-//! Implementation of the ParTool from IntImpParGen
-//! for conics of gp, using the class PConic from IntCurve.
 class IntCurve_PConicTool
 {
 public:

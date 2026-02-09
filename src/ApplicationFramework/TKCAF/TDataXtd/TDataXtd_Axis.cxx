@@ -16,15 +16,11 @@
 
 IMPLEMENT_DERIVED_ATTRIBUTE(TDataXtd_Axis, TDataStd_GenericEmpty)
 
-//=================================================================================================
-
 const Standard_GUID& TDataXtd_Axis::GetID()
 {
   static Standard_GUID TDataXtd_AxisID("2a96b601-ec8b-11d0-bee7-080009dc3333");
   return TDataXtd_AxisID;
 }
-
-//=================================================================================================
 
 occ::handle<TDataXtd_Axis> TDataXtd_Axis::Set(const TDF_Label& L)
 {
@@ -36,8 +32,6 @@ occ::handle<TDataXtd_Axis> TDataXtd_Axis::Set(const TDF_Label& L)
   }
   return A;
 }
-
-//=================================================================================================
 
 occ::handle<TDataXtd_Axis> TDataXtd_Axis::Set(const TDF_Label& L, const gp_Lin& line)
 {
@@ -69,18 +63,12 @@ occ::handle<TDataXtd_Axis> TDataXtd_Axis::Set(const TDF_Label& L, const gp_Lin& 
   return A;
 }
 
-//=================================================================================================
-
 TDataXtd_Axis::TDataXtd_Axis() = default;
-
-//=================================================================================================
 
 const Standard_GUID& TDataXtd_Axis::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 Standard_OStream& TDataXtd_Axis::Dump(Standard_OStream& anOS) const
 {

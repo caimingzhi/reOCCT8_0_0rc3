@@ -11,25 +11,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_ReferenceListDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_ReferenceListDriver::BinMDataStd_ReferenceListDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_ReferenceList)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_ReferenceListDriver::NewEmpty() const
 {
   return new TDataStd_ReferenceList();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool BinMDataStd_ReferenceListDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                             const occ::handle<TDF_Attribute>& theTarget,
                                             BinObjMgt_RRelocationTable&       theRelocTable) const
@@ -64,10 +56,6 @@ bool BinMDataStd_ReferenceListDriver::Paste(const BinObjMgt_Persistent&       th
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void BinMDataStd_ReferenceListDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
   BinObjMgt_Persistent&             theTarget,
@@ -94,7 +82,6 @@ void BinMDataStd_ReferenceListDriver::Paste(
     }
   }
 
-  // process user defined guid
   if (anAtt->ID() != TDataStd_ReferenceList::GetID())
     theTarget << anAtt->ID();
 }

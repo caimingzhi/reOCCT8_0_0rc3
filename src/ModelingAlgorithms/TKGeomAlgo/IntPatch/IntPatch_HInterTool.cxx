@@ -159,8 +159,6 @@ void IntPatch_HInterTool::SamplePoint(const occ::handle<Adaptor3d_Surface>& S,
 
     int perturb = (NU + NV) & 3;
 
-    //-- petite perturbation pou eviter les pbs de symetrie avec Les recherches de points int.
-
     switch (perturb)
     {
       case 1:
@@ -211,7 +209,6 @@ int IntPatch_HInterTool::NbSamplesOnArc(const occ::handle<Adaptor2d_Curve2d>& A)
 {
   GeomAbs_CurveType CurveType = A->GetType();
 
-  //  double nbsOnC = 5;
   int nbsOnC = 5;
   switch (CurveType)
   {
@@ -229,7 +226,7 @@ int IntPatch_HInterTool::NbSamplesOnArc(const occ::handle<Adaptor2d_Curve2d>& A)
       break;
     case GeomAbs_BSplineCurve:
     {
-      //-- occ::handle<Geom2d_BSplineCurve>& BSC=A->BSpline();
+
       nbsOnC = 2 + A->NbKnots() * A->Degree();
       break;
     }

@@ -3,8 +3,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_ReferenceIterator, TObj_LabelIterator)
 
-//=================================================================================================
-
 TObj_ReferenceIterator::TObj_ReferenceIterator(const TDF_Label&                  theLabel,
                                                const occ::handle<Standard_Type>& theType,
                                                const bool                        theRecursive)
@@ -13,8 +11,6 @@ TObj_ReferenceIterator::TObj_ReferenceIterator(const TDF_Label&                 
 {
   MakeStep();
 }
-
-//=================================================================================================
 
 void TObj_ReferenceIterator::MakeStep()
 {

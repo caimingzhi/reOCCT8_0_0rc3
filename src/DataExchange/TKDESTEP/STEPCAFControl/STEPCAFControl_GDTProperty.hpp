@@ -28,8 +28,6 @@
 #include <XCAFDimTolObjects_GeomToleranceType.hpp>
 #include <XCAFDimTolObjects_GeomToleranceTypeValue.hpp>
 
-//! This class provides tools for access (read)
-//! the GDT properties.
 class STEPCAFControl_GDTProperty
 {
 public:

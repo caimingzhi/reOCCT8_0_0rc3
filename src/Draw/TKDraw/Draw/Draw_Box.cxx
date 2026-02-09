@@ -6,15 +6,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Box, Draw_Drawable3D)
 
-//=================================================================================================
-
 Draw_Box::Draw_Box(const Bnd_OBB& theOBB, const Draw_Color& theColor)
     : myOBB(theOBB),
       myColor(theColor)
 {
 }
-
-//=================================================================================================
 
 void Draw_Box::ToWCS(const double theX, const double theY, const double theZ, gp_Pnt& theP) const
 {
@@ -24,15 +20,11 @@ void Draw_Box::ToWCS(const double theX, const double theY, const double theZ, gp
   theP.SetXYZ(aC + theX * aXDir + theY * aYDir + theZ * aZDir);
 }
 
-//=================================================================================================
-
 void Draw_Box::MoveX(const double theShift, gp_Pnt& thePt) const
 {
   const gp_XYZ aXDir = myOBB.XDirection();
   thePt.SetXYZ(thePt.XYZ() + theShift * aXDir);
 }
-
-//=================================================================================================
 
 void Draw_Box::MoveY(const double theShift, gp_Pnt& thePt) const
 {
@@ -40,15 +32,11 @@ void Draw_Box::MoveY(const double theShift, gp_Pnt& thePt) const
   thePt.SetXYZ(thePt.XYZ() + theShift * aYDir);
 }
 
-//=================================================================================================
-
 void Draw_Box::MoveZ(const double theShift, gp_Pnt& thePt) const
 {
   const gp_XYZ aZDir = myOBB.ZDirection();
   thePt.SetXYZ(thePt.XYZ() + theShift * aZDir);
 }
-
-//=================================================================================================
 
 void Draw_Box::DrawOn(Draw_Display& theDIS) const
 {

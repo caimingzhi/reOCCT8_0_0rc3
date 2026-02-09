@@ -11,7 +11,6 @@ class StepShape_Sphere;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for Sphere
 class RWStepShape_RWSphere
 {
 public:

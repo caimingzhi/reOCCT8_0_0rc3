@@ -10,7 +10,6 @@
 class TopoDS_Face;
 class TopoDS_Shell;
 
-//! Rebuilds connectivity between faces in shell
 class ShapeFix_FaceConnect
 {
 public:
@@ -24,7 +23,6 @@ public:
                                      const double        sewtoler,
                                      const double        fixtoler);
 
-  //! Clears internal data structure
   Standard_EXPORT void Clear();
 
 private:

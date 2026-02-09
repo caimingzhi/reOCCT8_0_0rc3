@@ -9,12 +9,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol,
                            StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMod)
 
-//=================================================================================================
-
 StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol::
   StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol() = default;
-
-//=================================================================================================
 
 void StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol::Init(
   const occ::handle<TCollection_HAsciiString>&                        theName,
@@ -35,8 +31,6 @@ void StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol::Init(
                                                            theType);
   myMaxTol = theMaxTol;
 }
-
-//=================================================================================================
 
 void StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol::Init(
   const occ::handle<TCollection_HAsciiString>&                        theName,

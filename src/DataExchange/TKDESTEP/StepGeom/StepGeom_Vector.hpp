@@ -11,7 +11,6 @@ class StepGeom_Vector : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a Vector
   Standard_EXPORT StepGeom_Vector();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

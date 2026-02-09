@@ -11,8 +11,6 @@ class StepVisual_CharacterizedObjAndRepresentationAndDraughtingModel;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for complex STEP entity Characterized_Object & Characterized_Representation
-//! & Draughting_Model & Representation
 class RWStepVisual_RWCharacterizedObjAndRepresentationAndDraughtingModel
 {
 public:

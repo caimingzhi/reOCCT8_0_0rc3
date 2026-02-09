@@ -14,7 +14,6 @@ class StepAP214_AutoDesignGroupAssignment : public StepBasic_GroupAssignment
 {
 
 public:
-  //! Returns a AutoDesignGroupAssignment
   Standard_EXPORT StepAP214_AutoDesignGroupAssignment();
 
   Standard_EXPORT void Init(

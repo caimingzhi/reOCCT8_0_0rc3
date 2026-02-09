@@ -9,16 +9,12 @@
 #include <gp_Pnt.hpp>
 #include <BRep_Tool.hpp>
 
-//=================================================================================================
-
 bool ShapeAnalysis_BoxBndTreeSelector::Reject(const Bnd_Box& theBnd) const
 {
   bool fch = myFBox.IsOut(theBnd);
   bool lch = myLBox.IsOut(theBnd);
   return fch && lch;
 }
-
-//=================================================================================================
 
 bool ShapeAnalysis_BoxBndTreeSelector::Accept(const int& theObj)
 {

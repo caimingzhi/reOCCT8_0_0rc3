@@ -11,7 +11,6 @@ class StepShape_GeometricallyBoundedSurfaceShapeRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for GeometricallyBoundedSurfaceShapeRepresentation
 class RWStepShape_RWGeometricallyBoundedSurfaceShapeRepresentation
 {
 public:

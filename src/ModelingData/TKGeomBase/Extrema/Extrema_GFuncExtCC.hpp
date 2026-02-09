@@ -10,18 +10,6 @@
 #include <Standard_OutOfRange.hpp>
 #include <NCollection_Sequence.hpp>
 
-//! Template class for function used to find extremal distance between two curves.
-//! This class inherits from math_FunctionSetWithDerivatives and is used by
-//! the algorithm math_FunctionSetRoot.
-//!
-//! @tparam TheCurve1 Type of the first curve (e.g., Adaptor3d_Curve)
-//! @tparam TheCurveTool1 Tool class for the first curve
-//! @tparam TheCurve2 Type of the second curve
-//! @tparam TheCurveTool2 Tool class for the second curve
-//! @tparam ThePOnC Point on curve type (e.g., Extrema_POnCurv)
-//! @tparam ThePoint Point type (e.g., gp_Pnt)
-//! @tparam TheVector Vector type (e.g., gp_Vec)
-//! @tparam TheSequenceOfPOnC Sequence of points on curve
 template <typename TheCurve1,
           typename TheCurveTool1,
           typename TheCurve2,
@@ -35,59 +23,42 @@ class Extrema_GFuncExtCC : public math_FunctionSetWithDerivatives
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Default constructor with tolerance.
   Extrema_GFuncExtCC(const double theTol = 1.0e-10);
 
-  //! Constructor with curves.
   Extrema_GFuncExtCC(const TheCurve1& theC1, const TheCurve2& theC2, const double theTol = 1.0e-10);
 
-  //! Sets the curve for the specified rank (1 or 2).
   void SetCurve(const int theRank, const TheCurve1& theC);
 
-  //! Sets the tolerance.
   void SetTolerance(const double theTol) { myTol = theTol; }
 
-  //! Returns the number of variables (2).
   int NbVariables() const override { return 2; }
 
-  //! Returns the number of equations (2).
   int NbEquations() const override { return 2; }
 
-  //! Calculate Fi(U,V).
   bool Value(const math_Vector& theUV, math_Vector& theF) override;
 
-  //! Calculate Fi'(U,V).
   bool Derivatives(const math_Vector& theUV, math_Matrix& theDF) override;
 
-  //! Calculate Fi(U,V) and Fi'(U,V).
   bool Values(const math_Vector& theUV, math_Vector& theF, math_Matrix& theDF) override;
 
-  //! Save the found extremum.
   int GetStateNumber() override;
 
-  //! Return the number of found extrema.
   int NbExt() const { return mySqDist.Length(); }
 
-  //! Return the value of the Nth distance.
   double SquareDistance(const int theN) const { return mySqDist.Value(theN); }
 
-  //! Return the points of the Nth extreme distance.
   void Points(const int theN, ThePOnC& theP1, ThePOnC& theP2) const;
 
-  //! Returns a pointer to the curve specified in the constructor or in SetCurve() method.
   void* CurvePtr(const int theRank) const
   {
     Standard_OutOfRange_Raise_if(theRank < 1 || theRank > 2, "Extrema_GFuncExtCC::CurvePtr()");
     return (theRank == 1 ? myC1 : myC2);
   }
 
-  //! Returns a tolerance specified in the constructor or in SetTolerance() method.
   double Tolerance() const { return myTol; }
 
-  //! Determines boundaries of subinterval for find of root.
   void SubIntervalInitialize(const math_Vector& theUfirst, const math_Vector& theUlast);
 
-  //! Computes a Tol value. If 1st derivative of curve |D1|<Tol, it is considered D1=0.
   double SearchOfTolerance(void* const theC);
 
 private:
@@ -116,12 +87,6 @@ private:
   double                       myVinfium;
   double                       myVsupremum;
 };
-
-//==================================================================================================
-// Implementation
-//==================================================================================================
-
-//==================================================================================================
 
 template <typename TheCurve1,
           typename TheCurveTool1,
@@ -180,8 +145,6 @@ double Extrema_GFuncExtCC<TheCurve1,
   return std::max(aMax * THE_TOL_FACTOR, THE_MIN_TOL);
 }
 
-//==================================================================================================
-
 template <typename TheCurve1,
           typename TheCurveTool1,
           typename TheCurve2,
@@ -213,8 +176,6 @@ Extrema_GFuncExtCC<TheCurve1,
   myMaxDerivOrderC2 = 0;
   myTolC2           = THE_MIN_TOL;
 }
-
-//==================================================================================================
 
 template <typename TheCurve1,
           typename TheCurveTool1,
@@ -276,8 +237,6 @@ Extrema_GFuncExtCC<TheCurve1,
   }
 }
 
-//==================================================================================================
-
 template <typename TheCurve1,
           typename TheCurveTool1,
           typename TheCurve2,
@@ -334,8 +293,6 @@ void Extrema_GFuncExtCC<TheCurve1,
     }
   }
 }
-
-//==================================================================================================
 
 template <typename TheCurve1,
           typename TheCurveTool1,
@@ -535,8 +492,6 @@ bool Extrema_GFuncExtCC<TheCurve1,
   return true;
 }
 
-//==================================================================================================
-
 template <typename TheCurve1,
           typename TheCurveTool1,
           typename TheCurve2,
@@ -558,8 +513,6 @@ bool Extrema_GFuncExtCC<TheCurve1,
   math_Vector F(1, 2);
   return Values(theUV, F, theDF);
 }
-
-//==================================================================================================
 
 template <typename TheCurve1,
           typename TheCurveTool1,
@@ -813,8 +766,6 @@ bool Extrema_GFuncExtCC<TheCurve1,
   return true;
 }
 
-//==================================================================================================
-
 template <typename TheCurve1,
           typename TheCurveTool1,
           typename TheCurve2,
@@ -855,8 +806,6 @@ int Extrema_GFuncExtCC<TheCurve1,
   return 0;
 }
 
-//==================================================================================================
-
 template <typename TheCurve1,
           typename TheCurveTool1,
           typename TheCurve2,
@@ -879,8 +828,6 @@ void Extrema_GFuncExtCC<TheCurve1,
   theP1 = myPoints.Value(2 * theN - 1);
   theP2 = myPoints.Value(2 * theN);
 }
-
-//==================================================================================================
 
 template <typename TheCurve1,
           typename TheCurveTool1,

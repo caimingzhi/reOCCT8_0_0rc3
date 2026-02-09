@@ -1,6 +1,5 @@
 #pragma once
 
-//! Defines modifirs
 enum XCAFDimTolObjects_GeomToleranceModif
 {
   XCAFDimTolObjects_GeomToleranceModif_Any_Cross_Section,

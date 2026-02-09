@@ -1,15 +1,12 @@
 #include <TopOpeBRepDS_Filter.hpp>
 #include <TopOpeBRepDS_ProcessInterferencesTool.hpp>
 
-//=================================================================================================
-
 void TopOpeBRepDS_Filter::ProcessCurveInterferences(const int CIX)
 {
   TopOpeBRepDS_DataStructure&                               BDS = myHDS->ChangeDS();
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI  = BDS.ChangeCurveInterferences(CIX);
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it1(LI);
 
-  // process interferences of LI with VERTEX geometry
   while (it1.More())
   {
     const occ::handle<TopOpeBRepDS_Interference>& I1  = it1.Value();
@@ -30,9 +27,6 @@ void TopOpeBRepDS_Filter::ProcessCurveInterferences(const int CIX)
         TopOpeBRepDS_Kind                             GT2 = I2->GeometryType();
         TopAbs_Orientation                            O2  = I2->Transition().Orientation(TopAbs_IN);
 
-        //	bool remove = (GT2 == GT1) && (G2 == G1);
-        // xpu140898 : USA60111 : CPI(FORWARD,v10,C1) + CPIREV(REVERSED,v10,C1)
-        //             do NOT delete CPIREV!!
         bool remove = (GT2 == GT1) && (G2 == G1) && (O1 == O2);
         if (remove)
         {

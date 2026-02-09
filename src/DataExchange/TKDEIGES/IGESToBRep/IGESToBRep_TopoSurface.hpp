@@ -20,23 +20,15 @@ class gp_Pln;
 class gp_Trsf;
 class gp_Trsf2d;
 
-//! Provides methods to transfer topologic surfaces entities
-//! from IGES to CASCADE.
 class IGESToBRep_TopoSurface : public IGESToBRep_CurveAndSurface
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates a tool TopoSurface ready to run, with
-  //! epsilons set to 1.E-04, TheModeTopo to True, the
-  //! optimization of the continuity to False.
   Standard_EXPORT IGESToBRep_TopoSurface();
 
-  //! Creates a tool TopoSurface ready to run and sets its
-  //! fields as CS's.
   Standard_EXPORT IGESToBRep_TopoSurface(const IGESToBRep_CurveAndSurface& CS);
 
-  //! Creates a tool TopoSurface ready to run.
   Standard_EXPORT IGESToBRep_TopoSurface(const double eps,
                                          const double epsGeom,
                                          const double epsCoeff,

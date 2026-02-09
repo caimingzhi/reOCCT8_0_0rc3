@@ -15,7 +15,6 @@ class StepAP214_AppliedSecurityClassificationAssignment
 {
 
 public:
-  //! Returns a AppliedSecurityClassificationAssignment
   Standard_EXPORT StepAP214_AppliedSecurityClassificationAssignment();
 
   Standard_EXPORT void Init(

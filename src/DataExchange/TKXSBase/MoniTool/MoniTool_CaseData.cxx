@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Geom2d_CartesianPoint.hpp>
 #include <Geom2d_Curve.hpp>
@@ -34,8 +23,6 @@ static NCollection_DataMap<TCollection_AsciiString, int>                        
 static NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transient>> defms;
 static bool                                                                          stachr = false;
 
-// static OSD_Timer chrono;
-//  because mess of dynamic link & perf, only create the static on 1st usage
 static OSD_Timer& chrono()
 {
   static OSD_Timer chr;
@@ -105,8 +92,6 @@ void MoniTool_CaseData::SetFail()
   thecheck = 2;
 }
 
-//  ####    DATA    ####
-
 void MoniTool_CaseData::SetChange()
 {
   thesubst = -1;
@@ -124,20 +109,18 @@ void MoniTool_CaseData::AddData(const occ::handle<Standard_Transient>& val,
   TCollection_AsciiString aname(name);
   int                     subs = thesubst;
 
-  //  SetChange (calculate position from Name)
   if (thesubst < 0)
   {
     if (name[0] != '\0')
       subs = NameNum(name);
   }
-  //  SetChange / SetReplace
+
   if (subs > 0 && subs <= thedata.Length())
   {
     thedata.SetValue(subs, val);
     thekind.SetValue(subs, kind);
     if (aname.Length() > 0)
       thednam.SetValue(subs, aname);
-    //  Ajout Normal
   }
   else
   {
@@ -150,8 +133,7 @@ void MoniTool_CaseData::AddData(const occ::handle<Standard_Transient>& val,
 
 void MoniTool_CaseData::AddRaised(const Standard_Failure& theException, const char* name)
 {
-  // Store exception type and message as text (since Standard_Failure is no longer
-  // Standard_Transient)
+
   TCollection_AsciiString aText(theException.ExceptionType());
   aText += ": ";
   aText += theException.what();
@@ -258,8 +240,6 @@ void MoniTool_CaseData::RemoveData(const int num)
   thekind.Remove(num);
   thednam.Remove(num);
 }
-
-//    ####    INTERROGATIONS    ####
 
 int MoniTool_CaseData::NbData() const
 {
@@ -386,8 +366,6 @@ int MoniTool_CaseData::NameNum(const char* name) const
   return 0;
 }
 
-//  ####    RETURN OF VALUES    ####
-
 TopoDS_Shape MoniTool_CaseData::Shape(const int nd) const
 {
   TopoDS_Shape               sh;
@@ -446,7 +424,7 @@ bool MoniTool_CaseData::Text(const int nd, const char*& text) const
 bool MoniTool_CaseData::Integer(const int nd, int& val) const
 {
   occ::handle<Geom2d_CartesianPoint> p = occ::down_cast<Geom2d_CartesianPoint>(Data(nd));
-  //  if (p.IsNull()) return false;
+
   if (thekind(nd) != 11)
     return false;
   double rval = p->X();
@@ -454,13 +432,10 @@ bool MoniTool_CaseData::Integer(const int nd, int& val) const
   return true;
 }
 
-//  ####    MESSAGES AND DEFINITIONS    ####
-
 Message_Msg MoniTool_CaseData::Msg() const
 {
   const char* defm = DefMsg(thecase.ToCString());
 
-  //  A REPRENDRE COMPLETEMENT !  Il faut analyser defm = mescode + variables
   Message_Msg mess;
   mess.Set(defm);
 

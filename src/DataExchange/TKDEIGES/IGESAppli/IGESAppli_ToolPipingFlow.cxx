@@ -26,7 +26,7 @@ void IGESAppli_ToolPipingFlow::ReadOwnParams(const occ::handle<IGESAppli_PipingF
                                              const occ::handle<IGESData_IGESReaderData>& IR,
                                              IGESData_ParamReader&                       PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   int                                                                     tempNbContextFlags;
   int                                                                     tempTypeOfFlow;
   int                                                                     i, num;
@@ -38,7 +38,6 @@ void IGESAppli_ToolPipingFlow::ReadOwnParams(const occ::handle<IGESAppli_PipingF
                                                                      tempTextDisplayTemplates;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> tempContFlowAssocs;
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   if (PR.DefinedElseSkip())
     PR.ReadInteger(PR.Current(), "Number of Context Flags", tempNbContextFlags);
   else
@@ -96,7 +95,7 @@ void IGESAppli_ToolPipingFlow::ReadOwnParams(const occ::handle<IGESAppli_PipingF
     for (num = tempFlowAssocs->Length(), i = 1; i <= num; i++)
     {
       occ::handle<IGESData_IGESEntity> tempEntity;
-      // szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "Flow Associativity",
@@ -275,11 +274,11 @@ void IGESAppli_ToolPipingFlow::OwnCopy(const occ::handle<IGESAppli_PipingFlow>& 
 
 bool IGESAppli_ToolPipingFlow::OwnCorrect(const occ::handle<IGESAppli_PipingFlow>& ent) const
 {
-  return ent->OwnCorrect(); // nbcontextflags = 1
+  return ent->OwnCorrect();
 }
 
 IGESData_DirChecker IGESAppli_ToolPipingFlow::DirChecker(
-  const occ::handle<IGESAppli_PipingFlow>& /* ent  */) const
+  const occ::handle<IGESAppli_PipingFlow>&) const
 {
   IGESData_DirChecker DC(402, 20);
   DC.Structure(IGESData_DefVoid);

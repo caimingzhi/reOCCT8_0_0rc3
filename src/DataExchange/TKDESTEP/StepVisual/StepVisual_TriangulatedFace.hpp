@@ -10,15 +10,12 @@
 #include <NCollection_Array2.hpp>
 #include <NCollection_HArray2.hpp>
 
-//! Representation of STEP entity TriangulatedFace
 class StepVisual_TriangulatedFace : public StepVisual_TessellatedFace
 {
 
 public:
-  //! Default constructor
   Standard_EXPORT StepVisual_TriangulatedFace();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>&    theRepresentationItem_Name,
     const occ::handle<StepVisual_CoordinatesList>&  theTessellatedFace_Coordinates,
@@ -29,25 +26,18 @@ public:
     const occ::handle<NCollection_HArray1<int>>&    thePnindex,
     const occ::handle<NCollection_HArray2<int>>&    theTriangles);
 
-  //! Returns field Pnindex
   Standard_EXPORT occ::handle<NCollection_HArray1<int>> Pnindex() const;
 
-  //! Sets field Pnindex
   Standard_EXPORT void SetPnindex(const occ::handle<NCollection_HArray1<int>>& thePnindex);
 
-  //! Returns number of Pnindex
   Standard_EXPORT int NbPnindex() const;
 
-  //! Returns value of Pnindex by its num
   Standard_EXPORT int PnindexValue(const int theNum) const;
 
-  //! Returns field Triangles
   Standard_EXPORT occ::handle<NCollection_HArray2<int>> Triangles() const;
 
-  //! Sets field Triangles
   Standard_EXPORT void SetTriangles(const occ::handle<NCollection_HArray2<int>>& theTriangles);
 
-  //! Returns number of Triangles
   Standard_EXPORT int NbTriangles() const;
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_TriangulatedFace, StepVisual_TessellatedFace)

@@ -26,8 +26,7 @@
 Standard_EXPORT occ::handle<Geom2d_Curve> MakePCurve(const ProjLib_ProjectedCurve& PC);
 
 static TopAbs_State FUN_staPinF3d(const gp_Pnt& P, const TopoDS_Face& F)
-// prequesitory : the compute of state(P,3dmatter of F)
-// - solid classifier -
+
 {
   TopAbs_State st = TopAbs_UNKNOWN;
   gp_Pnt2d     UV;
@@ -37,7 +36,7 @@ static TopAbs_State FUN_staPinF3d(const gp_Pnt& P, const TopoDS_Face& F)
     return st;
   double tolF = BRep_Tool::Tolerance(F);
   if (d < tolF)
-    return TopAbs_IN; // TopAbs_ON;
+    return TopAbs_IN;
   gp_Pnt pF;
   FUN_tool_value(UV, F, pF);
   gp_Dir ntF = FUN_tool_nggeomF(UV, F);
@@ -64,7 +63,7 @@ Standard_EXPORT void FUN_UNKFstasta(const TopoDS_Face&              FF,
   occ::handle<Geom_Curve> CEE = BRep_Tool::Curve(EE, fE, lE);
 
   if (CEE.IsNull())
-    return; // NYI : get points from 2d curve
+    return;
   occ::handle<Geom_Surface> SFF = BRep_Tool::Surface(FF);
 
   double ttE  = 0.41237118973;
@@ -87,17 +86,15 @@ Standard_EXPORT void FUN_UNKFstasta(const TopoDS_Face&              FF,
   gp_Vec N = d1u.Crossed(d1v);
   double FUMin, FUMax, FVMin, FVMax;
 
-  // les bornes de FF
   BRepTools::UVBounds(FF, FUMin, FUMax, FVMin, FVMax);
 
-  // les bornes de EE dans FF
   double EUMin, EUMax, EVMin, EVMax;
   if (EEofFF)
   {
     BRepTools::UVBounds(FF, EE, EUMin, EUMax, EVMin, EVMax);
   }
   else
-  { // EE n'est pas une arete de FF => EE est une arete de FS
+  {
     occ::handle<Geom2d_Curve> CEEFFx;
     if (CEE.IsNull())
     {
@@ -113,7 +110,7 @@ Standard_EXPORT void FUN_UNKFstasta(const TopoDS_Face&              FF,
     }
     else
     {
-      // modified by NIZHNY-MKK  Mon Apr  2 15:41:01 2001.BEGIN
+
       TopExp_Explorer anExp(FF, TopAbs_EDGE);
       for (; anExp.More(); anExp.Next())
       {
@@ -124,13 +121,9 @@ Standard_EXPORT void FUN_UNKFstasta(const TopoDS_Face&              FF,
       }
       if (CEEFFx.IsNull())
       {
-        // modified by NIZHNY-MKK  Mon Apr  2 15:41:16 2001.END
 
         CEEFFx = GeomProjLib::Curve2d(CEE, fE, lE, SFF);
-
-        // modified by NIZHNY-MKK  Mon Apr  2 15:41:26 2001.BEGIN
       }
-      // modified by NIZHNY-MKK  Mon Apr  2 15:41:31 2001.END
     }
     if (CEEFFx.IsNull())
       return;
@@ -150,15 +143,13 @@ Standard_EXPORT void FUN_UNKFstasta(const TopoDS_Face&              FF,
     BRepTools::UVBounds(FFx, EEx, EUMin, EUMax, EVMin, EVMax);
   }
 
-  //  bool EisoU = (abs(EVMax-EVMin) < Precision::Confusion());
   bool EisoU = (fabs(EVMax - EVMin) < Precision::Confusion());
-  //  bool EisoV = (abs(EUMax-EUMin) < Precision::Confusion());
+
   bool EisoV = (fabs(EUMax - EUMin) < Precision::Confusion());
-  // xpu161098 : bad analysis : we should choose smaller factor
-  //   cto009C1 (FF3,FS10,EG9)
-  double ttu  = 1.e-2; // double ttu = 0.1;
+
+  double ttu  = 1.e-2;
   double paru = fabs(ttu * (FUMax - FUMin));
-  double ttv  = 1.e-2; // double ttv = 0.1;
+  double ttv  = 1.e-2;
   double parv = fabs(ttv * (FVMax - FVMin));
 
   double up = u;
@@ -220,8 +211,7 @@ Standard_EXPORT void FUN_UNKFstasta(const TopoDS_Face&              FF,
 
   if (pClassif)
   {
-    // xpu151098 : evolution solid classifier (ex cto009H1)
-    // MSV : made it!
+
     pClassif->StateP3DReference(Pb);
     stateb = pClassif->State();
     pClassif->StateP3DReference(Pa);

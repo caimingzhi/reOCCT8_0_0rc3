@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_Type.hpp>
 #include <StepGeom_BSplineSurfaceWithKnots.hpp>
@@ -35,10 +24,10 @@ void StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface::Init(
   const occ::handle<StepGeom_BSplineSurfaceWithKnots>& aBSplineSurfaceWithKnots,
   const occ::handle<StepGeom_RationalBSplineSurface>&  aRationalBSplineSurface)
 {
-  // --- classe own fields ---
+
   bSplineSurfaceWithKnots = aBSplineSurfaceWithKnots;
   rationalBSplineSurface  = aRationalBSplineSurface;
-  // --- classe inherited fields ---
+
   StepGeom_BSplineSurface::Init(aName,
                                 aUDegree,
                                 aVDegree,
@@ -65,7 +54,6 @@ void StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface::Init(
   const StepGeom_KnotType                                                       aKnotSpec,
   const occ::handle<NCollection_HArray2<double>>&                               aWeightsData)
 {
-  // --- classe inherited fields ---
 
   StepGeom_BSplineSurface::Init(aName,
                                 aUDegree,
@@ -75,8 +63,6 @@ void StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface::Init(
                                 aUClosed,
                                 aVClosed,
                                 aSelfIntersect);
-
-  // --- ANDOR component fields ---
 
   bSplineSurfaceWithKnots = new StepGeom_BSplineSurfaceWithKnots();
   bSplineSurfaceWithKnots->Init(aName,
@@ -92,8 +78,6 @@ void StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface::Init(
                                 aUKnots,
                                 aVKnots,
                                 aKnotSpec);
-
-  // --- ANDOR component fields ---
 
   rationalBSplineSurface = new StepGeom_RationalBSplineSurface();
   rationalBSplineSurface->Init(aName,
@@ -130,8 +114,6 @@ occ::handle<StepGeom_RationalBSplineSurface>
 {
   return rationalBSplineSurface;
 }
-
-//--- Specific Methods for AND classe field access ---
 
 void StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface::SetUMultiplicities(
   const occ::handle<NCollection_HArray1<int>>& aUMultiplicities)
@@ -233,8 +215,6 @@ StepGeom_KnotType StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface::Kno
 {
   return bSplineSurfaceWithKnots->KnotSpec();
 }
-
-//--- Specific Methods for AND classe field access ---
 
 void StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface::SetWeightsData(
   const occ::handle<NCollection_HArray2<double>>& aWeightsData)

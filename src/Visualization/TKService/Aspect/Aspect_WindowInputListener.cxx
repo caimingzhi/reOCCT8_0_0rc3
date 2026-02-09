@@ -1,26 +1,13 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Aspect_WindowInputListener.hpp>
 
 #include <WNT_HIDSpaceMouse.hpp>
 
-//=================================================================================================
-
 Aspect_WindowInputListener::Aspect_WindowInputListener()
     : myMousePressed(Aspect_VKeyMouse_NONE),
       myMouseModifiers(Aspect_VKeyFlags_NONE),
-      //
+
       my3dMouseNoRotate(false, false, false),
       my3dMouseToReverse(true, false, false),
       my3dMouseAccelTrans(2.0f),
@@ -31,25 +18,17 @@ Aspect_WindowInputListener::Aspect_WindowInputListener()
   myEventTimer.Start();
 }
 
-//=================================================================================================
-
 Aspect_WindowInputListener::~Aspect_WindowInputListener() = default;
-
-//=================================================================================================
 
 void Aspect_WindowInputListener::KeyDown(Aspect_VKey theKey, double theTime, double thePressure)
 {
   myKeys.KeyDown(theKey, theTime, thePressure);
 }
 
-//=================================================================================================
-
 void Aspect_WindowInputListener::KeyUp(Aspect_VKey theKey, double theTime)
 {
   myKeys.KeyUp(theKey, theTime);
 }
-
-//=================================================================================================
 
 void Aspect_WindowInputListener::KeyFromAxis(Aspect_VKey theNegative,
                                              Aspect_VKey thePositive,
@@ -58,8 +37,6 @@ void Aspect_WindowInputListener::KeyFromAxis(Aspect_VKey theNegative,
 {
   myKeys.KeyFromAxis(theNegative, thePositive, theTime, thePressure);
 }
-
-//=================================================================================================
 
 void Aspect_WindowInputListener::AddTouchPoint(size_t                          theId,
                                                const NCollection_Vec2<double>& thePnt,
@@ -72,8 +49,6 @@ void Aspect_WindowInputListener::AddTouchPoint(size_t                          t
 
   myTouchPoints.Add(theId, Aspect_Touch(thePnt, false));
 }
-
-//=================================================================================================
 
 bool Aspect_WindowInputListener::RemoveTouchPoint(size_t theId, bool theClearSelectPnts)
 {
@@ -94,14 +69,12 @@ bool Aspect_WindowInputListener::RemoveTouchPoint(size_t theId, bool theClearSel
 
   if (myTouchPoints.Extent() == 1)
   {
-    // avoid incorrect transition from pinch to one finger
+
     Aspect_Touch& aFirstTouch = myTouchPoints.ChangeFromIndex(1);
     aFirstTouch.To            = aFirstTouch.From;
   }
   return true;
 }
-
-//=================================================================================================
 
 void Aspect_WindowInputListener::UpdateTouchPoint(size_t                          theId,
                                                   const NCollection_Vec2<double>& thePnt)
@@ -115,8 +88,6 @@ void Aspect_WindowInputListener::UpdateTouchPoint(size_t                        
     AddTouchPoint(theId, thePnt);
   }
 }
-
-//=================================================================================================
 
 bool Aspect_WindowInputListener::update3dMouseTranslation(const WNT_HIDSpaceMouse& theEvent)
 {
@@ -134,8 +105,6 @@ bool Aspect_WindowInputListener::update3dMouseTranslation(const WNT_HIDSpaceMous
   myKeys.KeyFromAxis(Aspect_VKey_NavSlideUp, Aspect_VKey_NavSlideDown, aTimeStamp, aTrans.z());
   return true;
 }
-
-//=================================================================================================
 
 bool Aspect_WindowInputListener::update3dMouseRotation(const WNT_HIDSpaceMouse& theEvent)
 {
@@ -175,8 +144,6 @@ bool Aspect_WindowInputListener::update3dMouseRotation(const WNT_HIDSpaceMouse& 
   return toUpdate;
 }
 
-//=================================================================================================
-
 bool Aspect_WindowInputListener::update3dMouseKeys(const WNT_HIDSpaceMouse& theEvent)
 {
   bool         toUpdate   = false;
@@ -188,7 +155,7 @@ bool Aspect_WindowInputListener::update3dMouseKeys(const WNT_HIDSpaceMouse& theE
     {
       const bool isPressed  = (aKeyState & (1 << aKeyBit)) != 0;
       const bool isReleased = my3dMouseButtonState[aKeyBit] && !isPressed;
-      // const bool isRepeated = my3dMouseButtonState[aKeyBit] &&  isPressed;
+
       my3dMouseButtonState[aKeyBit] = isPressed;
       if (!isReleased && !isPressed)
       {

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include <MoniTool_Macros.hpp>
@@ -30,8 +19,6 @@
 
 Transfer_TransferInput::Transfer_TransferInput() = default;
 
-//  Results : For the Model ...
-
 Interface_EntityIterator Transfer_TransferInput::Entities(Transfer_TransferIterator& list) const
 {
   Interface_EntityIterator iter;
@@ -43,7 +30,6 @@ Interface_EntityIterator Transfer_TransferInput::Entities(Transfer_TransferItera
     if (binder->IsKind(STANDARD_TYPE(Transfer_VoidBinder)))
       continue;
 
-    // True result : must be transient (simple or list)
     DeclareAndCast(Transfer_SimpleBinderOfTransient, transb, binder);
     DeclareAndCast(Transfer_MultipleBinder, multi, binder);
     if (!transb.IsNull())

@@ -59,13 +59,6 @@ extern void* GFABUMAKEFACEPWES_DEB;
 
 Standard_EXPORT bool FUN_tool_ClosedW(const TopoDS_Wire& W);
 
-// Unused :
-/*#ifdef OCCT_DEBUG
-static void FUN_Raise(){std::cout<<"--------- ERROR in GWESMakeFaces ---------"<<std::endl;}
-#endif*/
-
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::GWESMakeFaces(const TopoDS_Shape&             FF,
                                             TopOpeBRepBuild_WireEdgeSet&    WES,
                                             NCollection_List<TopoDS_Shape>& LOF)
@@ -91,10 +84,6 @@ void TopOpeBRepBuild_Builder::GWESMakeFaces(const TopoDS_Shape&             FF,
   TopOpeBRepBuild_FaceBuilder FABU;
   FABU.InitFaceBuilder(WES, FF, ForceClass);
 
-  // Wire checking,the aim is to rebuild faces having
-  // edges unconnected to the others (in the face UV representation)
-  // This can occur when the face has a closing edge. To avoid this,
-  // we delete the lonesome closing edge from the wire.
   bool topurge = true;
 #ifdef OCCT_DEBUG
   if (TopOpeBRepBuild_GetcontextNOPURGE())
@@ -105,7 +94,7 @@ void TopOpeBRepBuild_Builder::GWESMakeFaces(const TopoDS_Shape&             FF,
   {
     TopOpeBRepDS_DataStructure& BDS = myDataStructure->ChangeDS();
 
-    NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> mapPIE; // pseudo internal edges
+    NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> mapPIE;
     FABU.DetectPseudoInternalEdge(mapPIE);
 
     NCollection_IndexedDataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> mapVVsameG,
@@ -115,8 +104,7 @@ void TopOpeBRepBuild_Builder::GWESMakeFaces(const TopoDS_Shape&             FF,
     int nVV = mapVVsameG.Extent();
     if (nVV > 0)
     {
-      // Updating the DS with same domain vertices,
-      // filling up map <mapVVref>
+
       for (int i = 1; i <= nVV; i++)
       {
         const TopoDS_Shape& V    = mapVVsameG.FindKey(i);
@@ -127,7 +115,6 @@ void TopOpeBRepBuild_Builder::GWESMakeFaces(const TopoDS_Shape&             FF,
 
           const TopoDS_Shape& VsameG = mapVVsameG.FindFromIndex(i);
 
-          // MSV Oct 4, 2001: prefer old vertex as SameDomainReference
           int  rankVsameG = BDS.AncestorRank(VsameG);
           bool otherRef   = (rankVsameG != 0 && rankV != 1);
 
@@ -154,10 +141,6 @@ void TopOpeBRepBuild_Builder::GWESMakeFaces(const TopoDS_Shape&             FF,
   NCollection_IndexedMap<TopoDS_Shape>                            MshNOK;
   GFABUMakeFaces(FF, FABU, LOF, MWisOld);
 
-  // 2.  on periodic face F :
-  //   finds up faulty shapes MshNOK to avoid when building up shapes
-  //   (edge no longer closing that appears twice in the new face)
-
   if (topurge)
   {
 
@@ -171,7 +154,7 @@ void TopOpeBRepBuild_Builder::GWESMakeFaces(const TopoDS_Shape&             FF,
     if (tSPS)
       DEBpurclo = false;
 #endif
-  } // topurge
+  }
 
   if (topurge)
   {
@@ -183,9 +166,6 @@ void TopOpeBRepBuild_Builder::GWESMakeFaces(const TopoDS_Shape&             FF,
     LOF.Assign(LOFF);
   }
 
-  // 1.  on periodic face F :
-  //   translates edge's pcurve to have it in F's UVbounds
-  //   translates edge's pcurve to have it connexed to others in UV space
   bool corronISO = true;
 #ifdef OCCT_DEBUG
   if (TopOpeBRepBuild_GetcontextNOCORRISO())
@@ -210,17 +190,12 @@ void TopOpeBRepBuild_Builder::GWESMakeFaces(const TopoDS_Shape&             FF,
     LOF.Assign(newLOF);
   }
 
-  // xpu280898 : regularisation after GFABUMakeFaces,purge processings
   NCollection_List<TopoDS_Shape> newLOF;
   RegularizeFaces(FF, LOF, newLOF);
   LOF.Clear();
   LOF.Assign(newLOF);
+}
 
-} // GWESMakeFaces
-
-//------------------------------------------------------
-// retourne vrai si newFace contient une seule arete non orientee
-//------------------------------------------------------
 static bool FUN_purgeFon1nonoriE(const TopoDS_Shape& newFace)
 {
   TopExp_Explorer ex(newFace, TopAbs_EDGE);
@@ -235,22 +210,14 @@ static bool FUN_purgeFon1nonoriE(const TopoDS_Shape& newFace)
     bool                hasori = (ori == TopAbs_FORWARD) || (ori == TopAbs_REVERSED);
     if (!hasori)
       return true;
-    //// modified by jgv, 6.06.02 for OCC424 ////
+
     TopoDS_Edge theEdge = TopoDS::Edge(ed);
     if (BRep_Tool::Degenerated(theEdge))
       return true;
-    /////////////////////////////////////////////
   }
   return false;
 }
 
-//-- ofv --------------------------------------------------------------------
-// function : FUN_ReOrientIntExtEdge
-// purpose  : change orientation of INTERNAL (EXTERNAL) edge, if necessary
-//            FRE  - tool (edge with FORWARD or REVERSED orientation),
-//            OFRE - orientation of tool (FORWARD or REVERSED),
-//            INE  - object (edge with INTERNAL (EXTERNAL) orientation)
-//---------------------------------------------------------------------------
 static TopAbs_Orientation FUN_ReOrientIntExtEdge(const TopoDS_Edge& FRE,
                                                  TopAbs_Orientation OFRE,
                                                  const TopoDS_Edge& INE)
@@ -286,12 +253,6 @@ static TopAbs_Orientation FUN_ReOrientIntExtEdge(const TopoDS_Edge& FRE,
   return result;
 }
 
-//----------------------------------------------------------------------------
-
-//-- ofv --------------------------------------------------------------------
-// function : FUN_CheckORI
-// purpose  :
-//----------------------------------------------------------------------------
 static int FUN_CheckORI(TopAbs_Orientation O1, TopAbs_Orientation O2)
 {
   int result;
@@ -308,9 +269,6 @@ static int FUN_CheckORI(TopAbs_Orientation O1, TopAbs_Orientation O2)
     result = 4;
   return result;
 }
-
-//----------------------------------------------------------------------------
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder::GFABUMakeFaces(
   const TopoDS_Shape&                                              FF,
@@ -337,29 +295,15 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
 
   TopLoc_Location           Loc;
   occ::handle<Geom_Surface> Surf = BRep_Tool::Surface(TopoDS::Face(FF), Loc);
-  // JYL : mise en // des 5 lignes suivantes pour reprendre la correction de DPF
-  //       du 29/07/1998
-  //  GeomAdaptor_Surface GAS1(Surf);
-  //  GeomAbs_SurfaceType tt1 = GAS1.GetType();
-  //  occ::handle<Standard_Type> T = Surf->DynamicType();
-  //  bool istrim = ( T == STANDARD_TYPE(Geom_RectangularTrimmedSurface) );
-  //  if ( istrim && tt1 == GeomAbs_Plane) Surf =
-  //  occ::down_cast<Geom_RectangularTrimmedSurface>(Surf)->BasisSurface();
+
   double       tolFF = BRep_Tool::Tolerance(TopoDS::Face(FF));
   BRep_Builder BB;
 
-  //--ofv:
-  //       Unfortunately, the function GFillONPartsWES2() from file TopOpeBRepBuild_BuilderON.cxx
-  //       sets orientation of some section edges as INTERNAL or EXTERNAL, but they should be
-  //       FORWARD or REVERSED. It probably makes faces without closed boundary, for example. So, we
-  //       must check carefully edges with orientation INTERNAL(EXTERNAL). Bugs: 60936, 60937, 60938
-  //       (cut, fuse, common shapes)
   TopoDS_Compound CmpOfEdges;
   BRep_Builder    BldCmpOfEdges;
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
               mapVOE;
   TopoDS_Face tdF = TopoDS::Face(FF);
-  //--ofv.
 
   FABU.InitFace();
   for (; FABU.MoreFace(); FABU.NextFace())
@@ -368,7 +312,6 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
     int nboldW      = 0;
 
     BB.MakeFace(newFace, Surf, Loc, tolFF);
-    //    myBuildTool.CopyFace(FF,newFace);
 
     int nbw = FABU.InitWire();
     for (; FABU.MoreWire(); FABU.NextWire())
@@ -385,21 +328,15 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
       }
       else
       {
-        BldCmpOfEdges.MakeCompound(CmpOfEdges); // new compound
+        BldCmpOfEdges.MakeCompound(CmpOfEdges);
         myBuildTool.MakeWire(newWire);
         FABU.InitEdge();
         for (; FABU.MoreEdge(); FABU.NextEdge())
         {
           TopoDS_Edge newEdge = TopoDS::Edge(FABU.Edge());
-          //		  if (mEtouched.Contains(newEdge)) continue;// xpu290498
-          //		  mEtouched.Add(newEdge);// xpu290498
 
-          //--ofv:
           int nadde = FABU.AddEdgeWire(newEdge, CmpOfEdges);
           ne += nadde;
-          // int nadde = FABU.AddEdgeWire(newEdge,newWire);
-          // ne += nadde;
-          //--ofv.
 
           TopAbs_Orientation oE = newEdge.Orientation();
           if (oE == TopAbs_INTERNAL)
@@ -407,22 +344,22 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
           else if (oE == TopAbs_EXTERNAL)
             neEXTERNAL++;
 
-          // clang-format off
-		  bool hasPC = FC2D_HasCurveOnSurface(newEdge,newFace);                                     // jyl980402+
-		  if (!hasPC)                                                                                           // jyl980402+
-		    {                                                                                                   // jyl980402+
-		      double tolE = BRep_Tool::Tolerance(newEdge);                                               // jyl980402+
-		      double f2,l2,tolpc; occ::handle<Geom2d_Curve> C2D;                                              // jyl980402+
-		      //C2D = FC2D_CurveOnSurface(newEdge,newFace,f2,l2,tolpc);                                         // jyl980402+
-		      C2D = FC2D_CurveOnSurface(newEdge,newFace,f2,l2,tolpc, true);                            // xpu051198 (CTS21701)
-		      if(C2D.IsNull()) throw Standard_ProgramError("TopOpeBRepBuild_Builder::GFABUMakeFaces null PC"); // jyl980402+
-		      double tol = std::max(tolE,tolpc);                                                              // jyl980402+
-		      BRep_Builder BB_PC; BB_PC.UpdateEdge(newEdge,C2D,newFace,tol);                                    // jyl980402+
-		    }                                                                                                   // jyl980402+
-		} // FABU.MoreEdge()
-        // clang-format on
+          bool hasPC = FC2D_HasCurveOnSurface(newEdge, newFace);
+          if (!hasPC)
+          {
+            double                    tolE = BRep_Tool::Tolerance(newEdge);
+            double                    f2, l2, tolpc;
+            occ::handle<Geom2d_Curve> C2D;
 
-        //--ofv:
+            C2D = FC2D_CurveOnSurface(newEdge, newFace, f2, l2, tolpc, true);
+            if (C2D.IsNull())
+              throw Standard_ProgramError("TopOpeBRepBuild_Builder::GFABUMakeFaces null PC");
+            double       tol = std::max(tolE, tolpc);
+            BRep_Builder BB_PC;
+            BB_PC.UpdateEdge(newEdge, C2D, newFace, tol);
+          }
+        }
+
         if ((neINTERNAL == 0 && neEXTERNAL == 0) || (ne == neINTERNAL || ne == neEXTERNAL))
         {
           TopExp_Explorer EdgeEx;
@@ -443,12 +380,10 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
         }
         else
         {
-          // NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>,
-          // TopTools_ShapeMapHasher> mapVOE;
+
           mapVOE.Clear();
           TopExp::MapShapesAndAncestors(CmpOfEdges, TopAbs_VERTEX, TopAbs_EDGE, mapVOE);
-          // checking: wire is closed and regular. If wire is not close or not regular: vertex has
-          // only the one edge or vetrex has more then two shared edges, we don't modify it.
+
           bool WisClsd = true;
           for (int MapStep = 1; MapStep <= mapVOE.Extent(); MapStep++)
           {
@@ -461,7 +396,7 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
           }
           if (!WisClsd)
           {
-            // wire is not regular:
+
             TopExp_Explorer EdgeEx;
             for (EdgeEx.Init(CmpOfEdges, TopAbs_EDGE); EdgeEx.More(); EdgeEx.Next())
             {
@@ -471,8 +406,8 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
           }
           else
           {
-            // wire seems to be regular:
-            NCollection_List<TopoDS_Shape> LofAddE; // list of edges has already been added in wire
+
+            NCollection_List<TopoDS_Shape> LofAddE;
             int                            naddsame = 0;
             while (ne > (LofAddE.Extent() + naddsame))
             {
@@ -490,7 +425,6 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
                 bool               AddE1    = true;
                 bool               AddE2    = true;
 
-                // checking current edges in the list of added edges
                 NCollection_List<TopoDS_Shape>::Iterator itLofAddE(LofAddE);
                 for (; itLofAddE.More(); itLofAddE.Next())
                 {
@@ -570,26 +504,23 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
                   else
                     naddsame++;
                 }
-              } // for StepMap
-            } // while ne >
-          } // not regular
-        } // neINTERNAL(neEXTERNAL) != 0
-      } // !isold
-      //--ofv.
+              }
+            }
+          }
+        }
+      }
 
 #ifdef OCCT_DEBUG
       if (tSPS)
         std::cout << "#--- GFABUMakeFaces " << iF << " : " << ne << " edges" << std::endl;
 #endif
 
-      // xpu : 13-11-97
       if (ne != 0)
       {
         int iow = isold ? 1 : 0;
         MWisOld.Bind(newWire, iow);
       }
 
-      // <newWire> is empty :
       if (!isold)
       {
         if (ne == 0)
@@ -600,16 +531,14 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
           nbnewWwithe++;
       }
 
-      // caractere Closed() du nouveau wire newWire
       if (!isold)
       {
         bool closed = FUN_tool_ClosedW(newWire);
         myBuildTool.Closed(newWire, closed);
-      } // !isold
+      }
 
       myBuildTool.AddFaceWire(newFace, newWire);
-
-    } // FABU.MoreWire()
+    }
 
     if (nbnewWwithe == 0 && nboldW == 0)
     {
@@ -622,9 +551,6 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
       continue;
     }
 
-    // Le changement de surface de trim a basis causait la perte des regularites de l'edge
-    // j'ai change par un recadrage du trim en attendant mieux. DPF le 29/07/1998.
-    // Le danger est de modifier une donnee d'entree.
     occ::handle<Standard_Type> T      = Surf->DynamicType();
     bool                       istrim = (T == STANDARD_TYPE(Geom_RectangularTrimmedSurface));
     if (istrim)
@@ -646,8 +572,7 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
       hrts->SetTrim(oumin, oumax, ovmin, ovmax, true, true);
     }
     lnewFace.Append(newFace);
-
-  } // FABU.MoreFace()
+  }
 
 #ifdef OCCT_DEBUG
   if (tSPS)
@@ -660,9 +585,5 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
   }
 #endif
 
-  // xpu281098 : regularisation after purge processings (cto009L2,f4ou)
-  //  RegularizeFaces(FF,lnewFace,LOF);
-  //  int nLOF = LOF.Extent(); // DEB
   LOF.Append(lnewFace);
-
-} // GFABUMakeFaces
+}

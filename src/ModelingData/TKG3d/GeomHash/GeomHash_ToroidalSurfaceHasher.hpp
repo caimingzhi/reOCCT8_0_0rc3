@@ -5,11 +5,9 @@
 #include <GeomHash_AxisPlacement.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom_ToroidalSurface.
-//! Used for geometry deduplication.
 struct GeomHash_ToroidalSurfaceHasher
 {
-  // Hashes the torus by its position, major radius, and minor radius.
+
   std::size_t operator()(const occ::handle<Geom_ToroidalSurface>& theTorus) const noexcept
   {
     constexpr double aTolerance = 1e-12;
@@ -23,7 +21,6 @@ struct GeomHash_ToroidalSurfaceHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two tori by their positions, major radii, and minor radii.
   bool operator()(const occ::handle<Geom_ToroidalSurface>& theTorus1,
                   const occ::handle<Geom_ToroidalSurface>& theTorus2) const noexcept
   {

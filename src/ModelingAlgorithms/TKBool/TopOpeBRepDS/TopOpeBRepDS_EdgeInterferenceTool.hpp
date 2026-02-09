@@ -11,7 +11,6 @@ class TopoDS_Shape;
 class TopOpeBRepDS_Interference;
 class TopOpeBRepDS_Point;
 
-//! a tool computing complex transition on Edge.
 class TopOpeBRepDS_EdgeInterferenceTool
 {
 public:

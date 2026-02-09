@@ -34,8 +34,6 @@ typedef gp_Trsf Trsf;
 typedef gp_Vec  Vec;
 typedef gp_XYZ  XYZ;
 
-//=================================================================================================
-
 occ::handle<Geom_Geometry> Geom_CylindricalSurface::Copy() const
 {
 
@@ -44,16 +42,12 @@ occ::handle<Geom_Geometry> Geom_CylindricalSurface::Copy() const
   return Cs;
 }
 
-//=================================================================================================
-
 Geom_CylindricalSurface::Geom_CylindricalSurface(const gp_Cylinder& C)
     : radius(C.Radius())
 {
 
   pos = C.Position();
 }
-
-//=================================================================================================
 
 Geom_CylindricalSurface::Geom_CylindricalSurface(const Ax3& A3, const double R)
     : radius(R)
@@ -64,56 +58,40 @@ Geom_CylindricalSurface::Geom_CylindricalSurface(const Ax3& A3, const double R)
   pos = A3;
 }
 
-//=================================================================================================
-
 double Geom_CylindricalSurface::UReversedParameter(const double U) const
 {
   return (2. * M_PI - U);
 }
-
-//=================================================================================================
 
 double Geom_CylindricalSurface::VReversedParameter(const double V) const
 {
   return (-V);
 }
 
-//=================================================================================================
-
 double Geom_CylindricalSurface::Radius() const
 {
   return radius;
 }
-
-//=================================================================================================
 
 bool Geom_CylindricalSurface::IsUClosed() const
 {
   return true;
 }
 
-//=================================================================================================
-
 bool Geom_CylindricalSurface::IsVClosed() const
 {
   return false;
 }
-
-//=================================================================================================
 
 bool Geom_CylindricalSurface::IsUPeriodic() const
 {
   return true;
 }
 
-//=================================================================================================
-
 bool Geom_CylindricalSurface::IsVPeriodic() const
 {
   return false;
 }
-
-//=================================================================================================
 
 void Geom_CylindricalSurface::SetCylinder(const gp_Cylinder& C)
 {
@@ -121,8 +99,6 @@ void Geom_CylindricalSurface::SetCylinder(const gp_Cylinder& C)
   radius = C.Radius();
   pos    = C.Position();
 }
-
-//=================================================================================================
 
 void Geom_CylindricalSurface::SetRadius(const double R)
 {
@@ -134,8 +110,6 @@ void Geom_CylindricalSurface::SetRadius(const double R)
   radius = R;
 }
 
-//=================================================================================================
-
 void Geom_CylindricalSurface::Bounds(double& U1, double& U2, double& V1, double& V2) const
 {
 
@@ -144,8 +118,6 @@ void Geom_CylindricalSurface::Bounds(double& U1, double& U2, double& V1, double&
   V1 = -Precision::Infinite();
   V2 = Precision::Infinite();
 }
-
-//=================================================================================================
 
 void Geom_CylindricalSurface::Coefficients(double& A1,
                                            double& A2,
@@ -158,8 +130,6 @@ void Geom_CylindricalSurface::Coefficients(double& A1,
                                            double& C3,
                                            double& D) const
 {
-  // Dans le repere local du cylindre :
-  // X**2 + Y**2 - radius = 0.0
 
   Trsf T;
   T.SetTransformation(pos);
@@ -183,29 +153,21 @@ void Geom_CylindricalSurface::Coefficients(double& A1,
   D          = T14 * T14 + T24 * T24 - radius * radius;
 }
 
-//=================================================================================================
-
 gp_Cylinder Geom_CylindricalSurface::Cylinder() const
 {
 
   return gp_Cylinder(pos, radius);
 }
 
-//=================================================================================================
-
 void Geom_CylindricalSurface::D0(const double U, const double V, Pnt& P) const
 {
   ElSLib::CylinderD0(U, V, pos, radius, P);
 }
 
-//=================================================================================================
-
 void Geom_CylindricalSurface::D1(const double U, const double V, Pnt& P, Vec& D1U, Vec& D1V) const
 {
   ElSLib::CylinderD1(U, V, pos, radius, P, D1U, D1V);
 }
-
-//=================================================================================================
 
 void Geom_CylindricalSurface::D2(const double U,
                                  const double V,
@@ -218,8 +180,6 @@ void Geom_CylindricalSurface::D2(const double U,
 {
   ElSLib::CylinderD2(U, V, pos, radius, P, D1U, D1V, D2U, D2V, D2UV);
 }
-
-//=================================================================================================
 
 void Geom_CylindricalSurface::D3(const double U,
                                  const double V,
@@ -237,8 +197,6 @@ void Geom_CylindricalSurface::D3(const double U,
   ElSLib::CylinderD3(U, V, pos, radius, P, D1U, D1V, D2U, D2V, D2UV, D3U, D3V, D3UUV, D3UVV);
 }
 
-//=================================================================================================
-
 Vec Geom_CylindricalSurface::DN(const double U, const double V, const int Nu, const int Nv) const
 {
   Standard_RangeError_Raise_if(Nu + Nv < 1 || Nu < 0 || Nv < 0, " ");
@@ -253,23 +211,17 @@ Vec Geom_CylindricalSurface::DN(const double U, const double V, const int Nu, co
   }
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> Geom_CylindricalSurface::UIso(const double U) const
 {
   occ::handle<Geom_Line> GL = new Geom_Line(ElSLib::CylinderUIso(pos, radius, U));
   return GL;
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> Geom_CylindricalSurface::VIso(const double V) const
 {
   occ::handle<Geom_Circle> GC = new Geom_Circle(ElSLib::CylinderVIso(pos, radius, V));
   return GC;
 }
-
-//=================================================================================================
 
 void Geom_CylindricalSurface::Transform(const Trsf& T)
 {
@@ -278,15 +230,11 @@ void Geom_CylindricalSurface::Transform(const Trsf& T)
   pos.Transform(T);
 }
 
-//=================================================================================================
-
 void Geom_CylindricalSurface::TransformParameters(double&, double& V, const gp_Trsf& T) const
 {
   if (!Precision::IsInfinite(V))
     V *= std::abs(T.ScaleFactor());
 }
-
-//=================================================================================================
 
 gp_GTrsf2d Geom_CylindricalSurface::ParametricTransformation(const gp_Trsf& T) const
 {
@@ -295,8 +243,6 @@ gp_GTrsf2d Geom_CylindricalSurface::ParametricTransformation(const gp_Trsf& T) c
   T2.SetAffinity(Axis, std::abs(T.ScaleFactor()));
   return T2;
 }
-
-//=================================================================================================
 
 void Geom_CylindricalSurface::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

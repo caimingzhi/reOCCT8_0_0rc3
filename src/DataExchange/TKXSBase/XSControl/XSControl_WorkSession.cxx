@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//: i1 pdn 03.04.99  BUC60301
 
 #include <Geom2d_Point.hpp>
 #include <Interface_Check.hpp>
@@ -45,8 +32,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 XSControl_WorkSession::XSControl_WorkSession()
     : myTransferReader(new XSControl_TransferReader),
       myTransferWriter(new XSControl_TransferWriter),
@@ -54,17 +39,11 @@ XSControl_WorkSession::XSControl_WorkSession()
 {
 }
 
-//=================================================================================================
-
 void XSControl_WorkSession::ClearData(const int mode)
 {
-  // 1-2-3-4 : standard IFSelect
+
   if (mode >= 1 && mode <= 4)
     IFSelect_WorkSession::ClearData(mode);
-
-  // 5 : Transfers only
-  // 6 : Forced results only
-  // 7 : Management, including all transfers (forced/calculated), views
 
   if (mode == 5 || mode == 7)
   {
@@ -76,15 +55,11 @@ void XSControl_WorkSession::ClearData(const int mode)
   myTransferReader->SetGraph(HGraph());
 }
 
-//=================================================================================================
-
 bool XSControl_WorkSession::SelectNorm(const char* normname)
 {
   const std::lock_guard<std::mutex> aLock(GetGlobalMutex());
-  // Old norm and results
+
   myTransferReader->Clear(-1);
-  //  ????  Strictly speaking, cleanup to do in XWS: remove the items
-  //        ( at the limit, why not, redo XWS entirely)
 
   occ::handle<XSControl_Controller> newadapt = XSControl_Controller::Recorded(normname);
   if (newadapt.IsNull())
@@ -94,8 +69,6 @@ bool XSControl_WorkSession::SelectNorm(const char* normname)
   SetController(newadapt);
   return true;
 }
-
-//=================================================================================================
 
 void XSControl_WorkSession::SetController(const occ::handle<XSControl_Controller>& ctl)
 {
@@ -109,7 +82,6 @@ void XSControl_WorkSession::SetController(const occ::handle<XSControl_Controller
   ClearShareOut(false);
   ClearFile();
 
-  // Set worksession parameters from the controller
   occ::handle<XSControl_WorkSession> aWorkSession(this);
   myController->Customise(aWorkSession);
 
@@ -117,20 +89,12 @@ void XSControl_WorkSession::SetController(const occ::handle<XSControl_Controller
   myTransferWriter->SetController(myController);
 }
 
-//=================================================================================================
-
 const char* XSControl_WorkSession::SelectedNorm(const bool rsc) const
 {
-  // JR/Hp :
+
   const char* astr = (const char*)(myController.IsNull() ? "" : myController->Name(rsc));
   return astr;
 }
-
-//              ##########################################
-//              ############  Transfer Context ######
-//              ##########################################
-
-//=================================================================================================
 
 void XSControl_WorkSession::SetAllContext(
   const NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transient>>& context)
@@ -139,19 +103,11 @@ void XSControl_WorkSession::SetAllContext(
   myTransferReader->Context() = context;
 }
 
-//=================================================================================================
-
 void XSControl_WorkSession::ClearContext()
 {
   myContext.Clear();
   myTransferReader->Context().Clear();
 }
-
-//              ##########################################
-//              ############    RESULTATS FORCES    ######
-//              ##########################################
-
-//=================================================================================================
 
 bool XSControl_WorkSession::PrintTransferStatus(const int         num,
                                                 const bool        wri,
@@ -164,7 +120,6 @@ bool XSControl_WorkSession::PrintTransferStatus(const int         num,
   occ::handle<Transfer_Finder>    finder;
   occ::handle<Standard_Transient> ent;
 
-  //   ***   WRITE  ***
   if (wri)
   {
     if (FP.IsNull())
@@ -198,7 +153,7 @@ bool XSControl_WorkSession::PrintTransferStatus(const int         num,
     S << std::endl;
     ent = FP->FindTransient(finder);
     S << " -> Type " << finder->DynamicType()->Name() << std::endl;
-    FP->StartTrace(binder, finder, 0, 0); // pb sout/S
+    FP->StartTrace(binder, finder, 0, 0);
     if (!ent.IsNull())
     {
       S << " ** Transient Result, type " << ent->DynamicType()->Name();
@@ -212,7 +167,6 @@ bool XSControl_WorkSession::PrintTransferStatus(const int         num,
     }
   }
 
-  //    ***   READ   ***
   else
   {
     if (TP.IsNull())
@@ -259,7 +213,6 @@ bool XSControl_WorkSession::PrintTransferStatus(const int         num,
     TP->StartTrace(binder, ent, 0, 0);
   }
 
-  //   ***   CHECK (common READ+WRITE)   ***
   if (!binder.IsNull())
   {
     const occ::handle<Interface_Check> ch = binder->Check();
@@ -280,18 +233,15 @@ bool XSControl_WorkSession::PrintTransferStatus(const int         num,
   return true;
 }
 
-//=================================================================================================
-
 void XSControl_WorkSession::InitTransferReader(const int mode)
 {
   if (mode == 0 || mode == 5)
-    myTransferReader->Clear(-1); // full clear
+    myTransferReader->Clear(-1);
   if (myTransferReader.IsNull())
     SetTransferReader(new XSControl_TransferReader);
   else
     SetTransferReader(myTransferReader);
 
-  // mode = 0 done by SetTransferReader following Nullify
   if (mode == 1)
   {
     if (!myTransferReader.IsNull())
@@ -327,11 +277,9 @@ void XSControl_WorkSession::InitTransferReader(const int mode)
     myTransferReader->BeginTransfer();
 }
 
-//=================================================================================================
-
 void XSControl_WorkSession::SetTransferReader(const occ::handle<XSControl_TransferReader>& TR)
 {
-  if (myTransferReader != TR) // i1 pdn 03.04.99 BUC60301
+  if (myTransferReader != TR)
     myTransferReader = TR;
   if (TR.IsNull())
     return;
@@ -346,14 +294,10 @@ void XSControl_WorkSession::SetTransferReader(const occ::handle<XSControl_Transf
   TR->SetTransientProcess(TP);
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_TransientProcess> XSControl_WorkSession::MapReader() const
 {
   return myTransferReader->TransientProcess();
 }
-
-//=================================================================================================
 
 bool XSControl_WorkSession::SetMapReader(const occ::handle<Transfer_TransientProcess>& TP)
 {
@@ -364,18 +308,14 @@ bool XSControl_WorkSession::SetMapReader(const occ::handle<Transfer_TransientPro
   TP->SetGraph(HGraph());
   if (TP->Model() != Model())
     return false;
-  //  TR must not move, it's a "hook" for signatures, selections ...
-  //  On the other hand, better to reset it
-  //  occ::handle<XSControl_TransferReader> TR = new XSControl_TransferReader;
+
   occ::handle<XSControl_TransferReader> TR = myTransferReader;
   TR->Clear(-1);
 
-  SetTransferReader(TR);       // with the same but reinitializes it
-  TR->SetTransientProcess(TP); // and takes the new TP
+  SetTransferReader(TR);
+  TR->SetTransientProcess(TP);
   return true;
 }
-
-//=================================================================================================
 
 occ::handle<Standard_Transient> XSControl_WorkSession::Result(
   const occ::handle<Standard_Transient>& ent,
@@ -405,12 +345,6 @@ occ::handle<Standard_Transient> XSControl_WorkSession::Result(
   return binder;
 }
 
-//              ##########################################
-//              ############    TRANSFERT    #############
-//              ##########################################
-
-//=================================================================================================
-
 int XSControl_WorkSession::TransferReadOne(const occ::handle<Standard_Transient>& ent,
                                            const Message_ProgressRange&           theProgress)
 {
@@ -425,18 +359,10 @@ int XSControl_WorkSession::TransferReadOne(const occ::handle<Standard_Transient>
     return myTransferReader->TransferList(list, true, theProgress);
 }
 
-//=================================================================================================
-
 int XSControl_WorkSession::TransferReadRoots(const Message_ProgressRange& theProgress)
 {
   return myTransferReader->TransferRoots(Graph(), theProgress);
 }
-
-//              ##########################################
-//              ############    TRANSFERT  WRITE
-//              ##########################################
-
-//=================================================================================================
 
 occ::handle<Interface_InterfaceModel> XSControl_WorkSession::NewModel()
 {
@@ -449,14 +375,12 @@ occ::handle<Interface_InterfaceModel> XSControl_WorkSession::NewModel()
   SetModel(newmod);
   if (!myTransferReader->TransientProcess().IsNull())
     myTransferReader->TransientProcess()->Clear();
-  // clear all contains of WS
+
   myTransferReader->Clear(3);
   myTransferWriter->Clear(-1);
 
   return newmod;
 }
-
-//=================================================================================================
 
 IFSelect_ReturnStatus XSControl_WorkSession::TransferWriteShape(
   const TopoDS_Shape&          shape,
@@ -476,29 +400,22 @@ IFSelect_ReturnStatus XSControl_WorkSession::TransferWriteShape(
   status = myTransferWriter->TransferWriteShape(model, shape, theProgress);
   if (theProgress.UserBreak())
     return IFSelect_RetStop;
-  //  which takes care of everything, try/catch included
 
-  // skl insert param compgraph for XDE writing 10.12.2003
   if (compgraph)
     ComputeGraph(true);
 
   return status;
 }
 
-//=================================================================================================
-
 Interface_CheckIterator XSControl_WorkSession::TransferWriteCheckList() const
 {
   return myTransferWriter->ResultCheckList(Model());
 }
 
-//=================================================================================================
-
 void XSControl_WorkSession::ClearBinders()
 {
   const occ::handle<Transfer_FinderProcess>& FP = myTransferWriter->FinderProcess();
-  // Due to big number of chains of binders it is necessary to
-  // collect head binders of each chain in the sequence
+
   NCollection_Sequence<occ::handle<Standard_Transient>> aSeqBnd;
   NCollection_Sequence<occ::handle<Standard_Transient>> aSeqShapes;
   int                                                   i = 1;
@@ -510,12 +427,11 @@ void XSControl_WorkSession::ClearBinders()
     occ::handle<Standard_Transient> ash(FP->Mapped(i));
     aSeqShapes.Append(ash);
   }
-  // removing finder process containing result of translation.
+
   FP->Clear();
   ClearData(1);
   ClearData(5);
 
-  // removing each chain of binders
   while (aSeqBnd.Length() > 0)
   {
     occ::handle<Transfer_Binder>    aBnd = occ::down_cast<Transfer_Binder>(aSeqBnd.Value(1));

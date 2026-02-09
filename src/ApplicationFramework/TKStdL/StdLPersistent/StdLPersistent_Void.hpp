@@ -13,19 +13,14 @@ protected:
   class instance : public StdObjMgt_Attribute<AttribClass>::Static
   {
   public:
-    //! Read persistent data from a file.
     void Read(StdObjMgt_ReadData&) override {}
 
-    //! Write persistent data to a file.
     void Write(StdObjMgt_WriteData&) const override {}
 
-    //! Gets persistent child objects
     inline void PChildren(StdObjMgt_Persistent::SequenceOfPersistent&) const override {}
 
-    //! Returns persistent type name
     const char* PName() const override;
 
-    //! Import transient attribute from the persistent data
     void ImportAttribute() override {}
   };
 

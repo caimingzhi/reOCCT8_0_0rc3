@@ -1,4 +1,4 @@
-// Created on : Thu May 14 15:13:19 2020
+
 
 #include "RWStepVisual_RWSurfaceStyleRenderingWithProperties.hpp"
 #include <Interface_EntityIterator.hpp>
@@ -11,12 +11,8 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWSurfaceStyleRenderingWithProperties::
   RWStepVisual_RWSurfaceStyleRenderingWithProperties() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWSurfaceStyleRenderingWithProperties::ReadStep(
   const occ::handle<StepData_StepReaderData>&                        data,
@@ -24,11 +20,9 @@ void RWStepVisual_RWSurfaceStyleRenderingWithProperties::ReadStep(
   occ::handle<Interface_Check>&                                      ach,
   const occ::handle<StepVisual_SurfaceStyleRenderingWithProperties>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "surface_style_rendering_with_properties"))
     return;
-
-  // Inherited fields of SurfaceStyleRendering
 
   StepVisual_ShadingSurfaceMethod aSurfaceStyleRendering_RenderingMethod =
     StepVisual_ssmNormalShading;
@@ -57,8 +51,6 @@ void RWStepVisual_RWSurfaceStyleRenderingWithProperties::ReadStep(
                    STANDARD_TYPE(StepVisual_Colour),
                    aSurfaceStyleRendering_SurfaceColour);
 
-  // Own fields of SurfaceStyleRenderingWithProperties
-
   occ::handle<NCollection_HArray1<StepVisual_RenderingPropertiesSelect>> aProperties;
   int                                                                    sub3 = 0;
   if (data->ReadSubList(num, 3, "properties", ach, sub3))
@@ -74,20 +66,15 @@ void RWStepVisual_RWSurfaceStyleRenderingWithProperties::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aSurfaceStyleRendering_RenderingMethod,
             aSurfaceStyleRendering_SurfaceColour,
             aProperties);
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWSurfaceStyleRenderingWithProperties::WriteStep(
   StepData_StepWriter&                                               SW,
   const occ::handle<StepVisual_SurfaceStyleRenderingWithProperties>& ent) const
 {
-
-  // Own fields of SurfaceStyleRendering
 
   switch (ent->RenderingMethod())
   {
@@ -107,8 +94,6 @@ void RWStepVisual_RWSurfaceStyleRenderingWithProperties::WriteStep(
 
   SW.Send(ent->SurfaceColour());
 
-  // Own fields of SurfaceStyleRenderingWithProperties
-
   SW.OpenSub();
   for (int i2 = 1; i2 <= ent->Properties()->Length(); i2++)
   {
@@ -118,18 +103,12 @@ void RWStepVisual_RWSurfaceStyleRenderingWithProperties::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWSurfaceStyleRenderingWithProperties::Share(
   const occ::handle<StepVisual_SurfaceStyleRenderingWithProperties>& ent,
   Interface_EntityIterator&                                          iter) const
 {
 
-  // Inherited fields of SurfaceStyleRendering
-
   iter.AddItem(ent->StepVisual_SurfaceStyleRendering::SurfaceColour());
-
-  // Own fields of SurfaceStyleRenderingWithProperties
 
   for (int i2 = 1; i2 <= ent->Properties()->Length(); i2++)
   {

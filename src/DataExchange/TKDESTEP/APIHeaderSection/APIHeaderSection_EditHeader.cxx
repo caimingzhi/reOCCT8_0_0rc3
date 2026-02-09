@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <APIHeaderSection_EditHeader.hpp>
 #include <APIHeaderSection_MakeHeader.hpp>
@@ -29,7 +18,7 @@ static bool IsTimeStamp(const occ::handle<TCollection_HAsciiString>& val)
     return false;
   if (val->Length() != 19)
     return false;
-  //  On y va
+
   char dizmois = val->Value(6);
   char dizjour = val->Value(9);
   char dizheur = val->Value(12);
@@ -124,16 +113,16 @@ static bool IsTimeStamp(const occ::handle<TCollection_HAsciiString>& val)
 APIHeaderSection_EditHeader::APIHeaderSection_EditHeader()
     : IFSelect_Editor(10)
 {
-  //  Definition
+
   occ::handle<Interface_TypedValue> fn_name = new Interface_TypedValue("fn_name");
   SetValue(1, fn_name, "name");
   occ::handle<Interface_TypedValue> fn_time = new Interface_TypedValue("fn_time_stamp");
   fn_time->SetSatisfies(IsTimeStamp, "IsTimeStamp");
   SetValue(2, fn_time, "time");
   occ::handle<Interface_TypedValue> fn_author = new Interface_TypedValue("fn_author");
-  SetValue(3, fn_author, "author"); // 1 seul (1er de liste)
+  SetValue(3, fn_author, "author");
   occ::handle<Interface_TypedValue> fn_org = new Interface_TypedValue("fn_organization");
-  SetValue(4, fn_org, "org"); // 1 seul (1er de liste)
+  SetValue(4, fn_org, "org");
   occ::handle<Interface_TypedValue> fn_preproc =
     new Interface_TypedValue("fn_preprocessor_version");
   SetValue(5, fn_preproc, "preproc");
@@ -143,10 +132,10 @@ APIHeaderSection_EditHeader::APIHeaderSection_EditHeader()
   SetValue(7, fn_autorize, "autorize");
 
   occ::handle<Interface_TypedValue> fs_schema = new Interface_TypedValue("fs_schema_identifiers");
-  SetValue(8, fs_schema, "schema"); // 1 seul (1er de liste)
+  SetValue(8, fs_schema, "schema");
 
   occ::handle<Interface_TypedValue> fd_descr = new Interface_TypedValue("fd_description");
-  SetValue(9, fd_descr, "descr"); // 1 seul (1er de liste)
+  SetValue(9, fd_descr, "descr");
 
   occ::handle<Interface_TypedValue> fd_level = new Interface_TypedValue("fd_implementation_level");
   SetValue(10, fd_level, "level");
@@ -157,21 +146,21 @@ TCollection_AsciiString APIHeaderSection_EditHeader::Label() const
   return TCollection_AsciiString("Step Header");
 }
 
-bool APIHeaderSection_EditHeader::Recognize(const occ::handle<IFSelect_EditForm>& /*form*/) const
+bool APIHeaderSection_EditHeader::Recognize(const occ::handle<IFSelect_EditForm>&) const
 {
   return true;
-} // ??
+}
 
 occ::handle<TCollection_HAsciiString> APIHeaderSection_EditHeader::StringValue(
-  const occ::handle<IFSelect_EditForm>& /*form*/,
+  const occ::handle<IFSelect_EditForm>&,
   const int num) const
 {
-  //  Default Values
+
   return TypedValue(num)->HStringValue();
 }
 
 bool APIHeaderSection_EditHeader::Load(const occ::handle<IFSelect_EditForm>& form,
-                                       const occ::handle<Standard_Transient>& /*ent*/,
+                                       const occ::handle<Standard_Transient>&,
                                        const occ::handle<Interface_InterfaceModel>& model) const
 {
   occ::handle<StepData_StepModel> modl = occ::down_cast<StepData_StepModel>(model);
@@ -197,7 +186,7 @@ bool APIHeaderSection_EditHeader::Load(const occ::handle<IFSelect_EditForm>& for
 }
 
 bool APIHeaderSection_EditHeader::Apply(const occ::handle<IFSelect_EditForm>& form,
-                                        const occ::handle<Standard_Transient>& /*ent*/,
+                                        const occ::handle<Standard_Transient>&,
                                         const occ::handle<Interface_InterfaceModel>& model) const
 {
   occ::handle<StepData_StepModel> modl = occ::down_cast<StepData_StepModel>(model);

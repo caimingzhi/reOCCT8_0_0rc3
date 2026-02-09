@@ -4,8 +4,6 @@
 #include <TopOpeBRepDS.hpp>
 #include <TopOpeBRepDS_Transition.hpp>
 
-//=================================================================================================
-
 TopOpeBRep_Point2d::TopOpeBRep_Point2d()
     : myhaspint(false),
       myisvertex1(false),
@@ -24,8 +22,6 @@ TopOpeBRep_Point2d::TopOpeBRep_Point2d()
 {
 }
 
-//=================================================================================================
-
 const TopoDS_Vertex& TopOpeBRep_Point2d::Vertex(const int Index) const
 {
   if (!IsVertex(Index))
@@ -38,8 +34,6 @@ const TopoDS_Vertex& TopOpeBRep_Point2d::Vertex(const int Index) const
     throw Standard_Failure("TopOpeBRep_Point2d::Vertex");
 }
 
-//=================================================================================================
-
 const TopOpeBRepDS_Transition& TopOpeBRep_Point2d::Transition(const int Index) const
 {
   if (Index == 1)
@@ -50,8 +44,6 @@ const TopOpeBRepDS_Transition& TopOpeBRep_Point2d::Transition(const int Index) c
     throw Standard_Failure("TopOpeBRep_Point2d::Transition");
 }
 
-//=================================================================================================
-
 TopOpeBRepDS_Transition& TopOpeBRep_Point2d::ChangeTransition(const int Index)
 {
   if (Index == 1)
@@ -61,8 +53,6 @@ TopOpeBRepDS_Transition& TopOpeBRep_Point2d::ChangeTransition(const int Index)
   else
     throw Standard_Failure("TopOpeBRep_Point2d::ChangeTransition");
 }
-
-//=================================================================================================
 
 #ifdef OCCT_DEBUG
 void TopOpeBRep_Point2d::Dump(const int E1index, const int E2index) const
@@ -105,7 +95,7 @@ void TopOpeBRep_Point2d::Dump(const int E1index, const int E2index) const
     case TopOpeBRep_P2DINT:
       std::cout << " sts=i";
       break;
-  } // switch
+  }
   std::cout << " cfg=";
   TopOpeBRepDS::Print(myedgesconfig, std::cout);
   std::cout << std::endl;

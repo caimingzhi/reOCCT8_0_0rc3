@@ -7,8 +7,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_PolygonOnTriangulation, BRep_CurveRepresentation)
 
-//=================================================================================================
-
 BRep_PolygonOnTriangulation::BRep_PolygonOnTriangulation(
   const occ::handle<Poly_PolygonOnTriangulation>& P,
   const occ::handle<Poly_Triangulation>&          T,
@@ -19,14 +17,10 @@ BRep_PolygonOnTriangulation::BRep_PolygonOnTriangulation(
 {
 }
 
-//=================================================================================================
-
 bool BRep_PolygonOnTriangulation::IsPolygonOnTriangulation() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool BRep_PolygonOnTriangulation::IsPolygonOnTriangulation(const occ::handle<Poly_Triangulation>& T,
                                                            const TopLoc_Location& L) const
@@ -34,15 +28,11 @@ bool BRep_PolygonOnTriangulation::IsPolygonOnTriangulation(const occ::handle<Pol
   return (T == myTriangulation) && (L == myLocation);
 }
 
-//=================================================================================================
-
 void BRep_PolygonOnTriangulation::PolygonOnTriangulation(
   const occ::handle<Poly_PolygonOnTriangulation>& P)
 {
   myPolygon = P;
 }
-
-//=================================================================================================
 
 const occ::handle<Poly_PolygonOnTriangulation>& BRep_PolygonOnTriangulation::
   PolygonOnTriangulation() const
@@ -50,14 +40,10 @@ const occ::handle<Poly_PolygonOnTriangulation>& BRep_PolygonOnTriangulation::
   return myPolygon;
 }
 
-//=================================================================================================
-
 const occ::handle<Poly_Triangulation>& BRep_PolygonOnTriangulation::Triangulation() const
 {
   return myTriangulation;
 }
-
-//=================================================================================================
 
 occ::handle<BRep_CurveRepresentation> BRep_PolygonOnTriangulation::Copy() const
 {
@@ -66,8 +52,6 @@ occ::handle<BRep_CurveRepresentation> BRep_PolygonOnTriangulation::Copy() const
 
   return P;
 }
-
-//=================================================================================================
 
 void BRep_PolygonOnTriangulation::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

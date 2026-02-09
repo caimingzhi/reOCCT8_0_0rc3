@@ -11,7 +11,6 @@ class StepBasic_ProductRelatedProductCategory;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ProductRelatedProductCategory
 class RWStepBasic_RWProductRelatedProductCategory
 {
 public:

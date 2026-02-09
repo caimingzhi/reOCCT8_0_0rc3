@@ -10,7 +10,6 @@ class StepBasic_ApprovalStatus : public Standard_Transient
 {
 
 public:
-  //! Returns a ApprovalStatus
   Standard_EXPORT StepBasic_ApprovalStatus();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName);

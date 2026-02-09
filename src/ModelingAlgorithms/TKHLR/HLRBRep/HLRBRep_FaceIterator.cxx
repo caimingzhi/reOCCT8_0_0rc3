@@ -5,11 +5,7 @@
 #include <HLRBRep_FaceData.hpp>
 #include <HLRBRep_FaceIterator.hpp>
 
-//=================================================================================================
-
 HLRBRep_FaceIterator::HLRBRep_FaceIterator() = default;
-
-//=================================================================================================
 
 void HLRBRep_FaceIterator::InitEdge(HLRBRep_FaceData& fd)
 {
@@ -21,8 +17,6 @@ void HLRBRep_FaceIterator::InitEdge(HLRBRep_FaceData& fd)
   nbEdges = 0;
   NextEdge();
 }
-
-//=================================================================================================
 
 void HLRBRep_FaceIterator::NextEdge()
 {

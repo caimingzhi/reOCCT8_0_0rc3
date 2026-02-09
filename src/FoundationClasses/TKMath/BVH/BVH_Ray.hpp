@@ -4,7 +4,6 @@
 
 #include <limits>
 
-//! Describes a ray based on BVH vectors.
 template <class T, int N>
 class BVH_Ray
 {
@@ -12,12 +11,11 @@ public:
   typedef typename BVH::VectorType<T, N>::Type BVH_VecNt;
 
 public:
-  BVH_VecNt Origin;    //!< Ray origin point
-  BVH_VecNt Direct;    //!< Ray direction vector
-  BVH_VecNt InvDirect; //!< Reciprocal of direction (1/Direct)
+  BVH_VecNt Origin;
+  BVH_VecNt Direct;
+  BVH_VecNt InvDirect;
 
 public:
-  //! Creates ray with given origin and direction.
   constexpr BVH_Ray(const BVH_VecNt& theOrigin, const BVH_VecNt& theDirect) noexcept
       : Origin(theOrigin),
         Direct(theDirect),
@@ -25,7 +23,6 @@ public:
   {
   }
 
-  //! Default constructor (creates invalid ray at origin).
   constexpr BVH_Ray() noexcept
       : Origin(BVH_VecNt()),
         Direct(BVH_VecNt()),
@@ -34,13 +31,11 @@ public:
   }
 
 private:
-  //! Computes reciprocal of direction component (returns infinity for zero).
   static constexpr T invComponent(T theDir) noexcept
   {
     return (theDir != T(0)) ? (T(1) / theDir) : std::numeric_limits<T>::infinity();
   }
 
-  //! Computes reciprocal of direction vector.
   static constexpr BVH_VecNt computeInvDirect(const BVH_VecNt& theDirect) noexcept
   {
     static_assert(N >= 1 && N <= 4, "BVH_Ray only supports dimensions 1 to 4");
@@ -58,7 +53,7 @@ private:
                        invComponent(theDirect.y()),
                        invComponent(theDirect.z()));
     }
-    else // N == 4
+    else
     {
       return BVH_VecNt(invComponent(theDirect.x()),
                        invComponent(theDirect.y()),

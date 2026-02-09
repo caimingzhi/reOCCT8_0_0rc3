@@ -19,21 +19,19 @@
 IGESSolid_ToolTorus::IGESSolid_ToolTorus() = default;
 
 void IGESSolid_ToolTorus::ReadOwnParams(const occ::handle<IGESSolid_Torus>& ent,
-                                        const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                        const occ::handle<IGESData_IGESReaderData>&,
                                         IGESData_ParamReader& PR) const
 {
   double r1, r2;
   double tempreal;
   gp_XYZ tempPoint, tempAxis;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  PR.ReadReal(PR.Current(), "Radius of revolution", r1); // szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadReal(PR.Current(), "Radius of disc", r2);       // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Radius of revolution", r1);
+  PR.ReadReal(PR.Current(), "Radius of disc", r2);
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Center Point (X)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Center Point (X)", tempreal))
       tempPoint.SetX(tempreal);
   }
@@ -42,8 +40,7 @@ void IGESSolid_ToolTorus::ReadOwnParams(const occ::handle<IGESSolid_Torus>& ent,
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Center Point (Y)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Center Point (Y)", tempreal))
       tempPoint.SetY(tempreal);
   }
@@ -52,8 +49,7 @@ void IGESSolid_ToolTorus::ReadOwnParams(const occ::handle<IGESSolid_Torus>& ent,
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Center Point (Z)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Center Point (Z)", tempreal))
       tempPoint.SetZ(tempreal);
   }
@@ -62,8 +58,7 @@ void IGESSolid_ToolTorus::ReadOwnParams(const occ::handle<IGESSolid_Torus>& ent,
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Axis direction (I)", tempreal); //szv#4:S4163:12Mar99 moved
-    // in if
+
     if (PR.ReadReal(PR.Current(), "Axis direction (I)", tempreal))
       tempAxis.SetX(tempreal);
   }
@@ -72,8 +67,7 @@ void IGESSolid_ToolTorus::ReadOwnParams(const occ::handle<IGESSolid_Torus>& ent,
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Axis direction (J)", tempreal); //szv#4:S4163:12Mar99 moved
-    // in if
+
     if (PR.ReadReal(PR.Current(), "Axis direction (J)", tempreal))
       tempAxis.SetY(tempreal);
   }
@@ -82,8 +76,7 @@ void IGESSolid_ToolTorus::ReadOwnParams(const occ::handle<IGESSolid_Torus>& ent,
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Axis direction (K)", tempreal); //szv#4:S4163:12Mar99 moved
-    // in if
+
     if (PR.ReadReal(PR.Current(), "Axis direction (K)", tempreal))
       tempAxis.SetZ(tempreal);
   }
@@ -110,14 +103,14 @@ void IGESSolid_ToolTorus::WriteOwnParams(const occ::handle<IGESSolid_Torus>& ent
   IW.Send(ent->Axis().Z());
 }
 
-void IGESSolid_ToolTorus::OwnShared(const occ::handle<IGESSolid_Torus>& /* ent */,
-                                    Interface_EntityIterator& /* iter */) const
+void IGESSolid_ToolTorus::OwnShared(const occ::handle<IGESSolid_Torus>&,
+                                    Interface_EntityIterator&) const
 {
 }
 
 void IGESSolid_ToolTorus::OwnCopy(const occ::handle<IGESSolid_Torus>& another,
                                   const occ::handle<IGESSolid_Torus>& ent,
-                                  Interface_CopyTool& /* TC */) const
+                                  Interface_CopyTool&) const
 {
   ent->Init(another->MajorRadius(),
             another->DiscRadius(),
@@ -125,8 +118,7 @@ void IGESSolid_ToolTorus::OwnCopy(const occ::handle<IGESSolid_Torus>& another,
             another->Axis().XYZ());
 }
 
-IGESData_DirChecker IGESSolid_ToolTorus::DirChecker(
-  const occ::handle<IGESSolid_Torus>& /* ent */) const
+IGESData_DirChecker IGESSolid_ToolTorus::DirChecker(const occ::handle<IGESSolid_Torus>&) const
 {
   IGESData_DirChecker DC(160, 0);
 
@@ -152,7 +144,7 @@ void IGESSolid_ToolTorus::OwnCheck(const occ::handle<IGESSolid_Torus>& ent,
 }
 
 void IGESSolid_ToolTorus::OwnDump(const occ::handle<IGESSolid_Torus>& ent,
-                                  const IGESData_IGESDumper& /* dumper */,
+                                  const IGESData_IGESDumper&,
                                   Standard_OStream& S,
                                   const int         level) const
 {

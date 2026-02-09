@@ -10,35 +10,25 @@
 #include <Standard_Integer.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 GeomLib_MakeCurvefromApprox::GeomLib_MakeCurvefromApprox(const AdvApprox_ApproxAFunction& Approx)
     : myApprox(Approx)
 {
 }
-
-//=================================================================================================
 
 int GeomLib_MakeCurvefromApprox::Nb1DSpaces() const
 {
   return myApprox.NumSubSpaces(1);
 }
 
-//=================================================================================================
-
 int GeomLib_MakeCurvefromApprox::Nb2DSpaces() const
 {
   return myApprox.NumSubSpaces(2);
 }
 
-//=================================================================================================
-
 int GeomLib_MakeCurvefromApprox::Nb3DSpaces() const
 {
   return myApprox.NumSubSpaces(3);
 }
-
-//=================================================================================================
 
 occ::handle<Geom2d_BSplineCurve> GeomLib_MakeCurvefromApprox::Curve2d(const int Index2d) const
 {
@@ -59,8 +49,6 @@ occ::handle<Geom2d_BSplineCurve> GeomLib_MakeCurvefromApprox::Curve2d(const int 
 
   return C;
 }
-
-//=================================================================================================
 
 occ::handle<Geom2d_BSplineCurve> GeomLib_MakeCurvefromApprox::Curve2d(const int Index1d,
                                                                       const int Index2d) const
@@ -95,8 +83,6 @@ occ::handle<Geom2d_BSplineCurve> GeomLib_MakeCurvefromApprox::Curve2d(const int 
   return C;
 }
 
-//=================================================================================================
-
 occ::handle<Geom2d_BSplineCurve> GeomLib_MakeCurvefromApprox::Curve2dFromTwo1d(
   const int Index1d,
   const int Index2d) const
@@ -119,7 +105,6 @@ occ::handle<Geom2d_BSplineCurve> GeomLib_MakeCurvefromApprox::Curve2dFromTwo1d(
   Knots = myApprox.Knots()->Array1();
   Mults = myApprox.Multiplicities()->Array1();
 
-  //  double X,Y,W;
   for (int i = 1; i <= myApprox.NbPoles(); i++)
   {
     Poles(i).SetCoord(Poles1d1.Value(i), Poles1d2.Value(i));
@@ -130,8 +115,6 @@ occ::handle<Geom2d_BSplineCurve> GeomLib_MakeCurvefromApprox::Curve2dFromTwo1d(
 
   return C;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_BSplineCurve> GeomLib_MakeCurvefromApprox::Curve(const int Index3d) const
 {
@@ -152,8 +135,6 @@ occ::handle<Geom_BSplineCurve> GeomLib_MakeCurvefromApprox::Curve(const int Inde
 
   return C;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_BSplineCurve> GeomLib_MakeCurvefromApprox::Curve(const int Index1d,
                                                                   const int Index3d) const

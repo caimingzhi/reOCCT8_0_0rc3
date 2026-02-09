@@ -13,21 +13,8 @@
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
 GccAna_Circ2dBisec::GccAna_Circ2dBisec(const gp_Circ2d& Circ1, const gp_Circ2d& Circ2)
 {
-
-  //=========================================================================
-  //  Initialization of fields :                                            +
-  //            - circle1  (Circle : first argument)                        +
-  //            - circle2  (Line   : second argument)                       +
-  //            - intersection (Integer showing the smallest position of    +
-  //                            two circles correspondingly to each other)  +
-  //            - sameradius   (Boolean showing if the two circles have     +
-  //                            the same radius or not)                     +
-  //            - NbrSol   (Integer showing the number of solutions)        +
-  //            - WellDone (Boolean showing success or failure of the algo) +
-  //=========================================================================
 
   WellDone             = false;
   constexpr double Tol = Precision::Confusion();
@@ -112,13 +99,6 @@ GccAna_Circ2dBisec::GccAna_Circ2dBisec(const gp_Circ2d& Circ1, const gp_Circ2d& 
   }
 }
 
-//=========================================================================
-//  Processing.                                                           +
-//  Return the coordinates of centers of circles circle1 and circle2      +
-//  (xcencir1, ycencir1, xcencir2, ycencir2).                             +
-//  Also return the radiuses of two circles R1 and R2.                    +
-//=========================================================================
-
 occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) const
 {
 
@@ -164,7 +144,6 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
         R = (R1 - R2) / 2.0;
       gp_Circ2d C(acenx, R);
       bissol = new GccInt_BCirc(C);
-      //     =============================
     }
     else if ((NbrSol == 2) && (intersection == 1))
     {
@@ -174,13 +153,11 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
                      (R1 + R2) / 2.0,
                      std::sqrt((R1 * R1 + R2 * R2 - dist * dist) / 4. + R1 * R2 / 2.));
         bissol = new GccInt_BElips(E);
-        //       =============================
       }
       else if (Index == 2)
       {
         gp_Lin2d L(circle1.Location(), dircen);
         bissol = new GccInt_BLine(L);
-        //       =============================
       }
     }
     else if ((NbrSol == 2) && (intersection == 0))
@@ -191,7 +168,6 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
         {
           gp_Circ2d C(acenx, (R1 + R2) / 2.0);
           bissol = new GccInt_BCirc(C);
-          //         =============================
         }
         else
         {
@@ -199,7 +175,6 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
                        (R1 + R2) / 2.0,
                        std::sqrt((R1 * R1 + R2 * R2 - dist * dist) / 4. + R1 * R2 / 2.));
           bissol = new GccInt_BElips(E);
-          //         ==============================
         }
       }
       else if (Index == 2)
@@ -208,7 +183,6 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
         {
           gp_Circ2d C(acencen, (R1 - R2) / 2.);
           bissol = new GccInt_BCirc(C);
-          //         =============================
         }
         else
         {
@@ -216,7 +190,6 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
                        (R1 - R2) / 2.0,
                        std::sqrt((R1 * R1 + R2 * R2 - dist * dist) / 4. - R1 * R2 / 2.));
           bissol = new GccInt_BElips(E);
-          //         ==============================
         }
       }
     }
@@ -228,13 +201,11 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
         {
           gp_Lin2d L(pcen, medcen);
           bissol = new GccInt_BLine(L);
-          //         =============================
         }
         else if (Index == 2)
         {
           gp_Elips2d E(acencen, R1, std::sqrt(R1 * R1 - dist * dist / 4.0));
           bissol = new GccInt_BElips(E);
-          //         ==============================
         }
       }
       else
@@ -246,7 +217,6 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
                          (R1 - R2) / 2.0,
                          std::sqrt(dist * dist - (R1 - R2) * (R1 - R2)) / 2.0);
           bissol = new GccInt_BHyper(H1);
-          //         ===============================
         }
         else if (Index == 2)
         {
@@ -254,7 +224,6 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
                        (R1 - R2) / 2.0,
                        std::sqrt(dist * dist - (R1 - R2) * (R1 - R2)) / 2.0);
           bissol = new GccInt_BHyper(H1.OtherBranch());
-          //         ===============================
         }
         else if (Index == 3)
         {
@@ -262,7 +231,6 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
                        (R1 + R2) / 2.0,
                        std::sqrt((R1 * R1 + R2 * R2 - dist * dist) / 4. + R1 * R2 / 2.));
           bissol = new GccInt_BElips(E);
-          //         ==============================
         }
       }
     }
@@ -274,13 +242,11 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
         {
           gp_Lin2d L(pcen, dircen);
           bissol = new GccInt_BLine(L);
-          //         =============================
         }
         else if (Index == 2)
         {
           gp_Lin2d L(pcen, medcen);
           bissol = new GccInt_BLine(L);
-          //         =============================
         }
       }
       else
@@ -289,7 +255,6 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
         {
           gp_Lin2d L(pcen, dircen);
           bissol = new GccInt_BLine(L);
-          //         =============================
         }
         else if (Index == 2)
         {
@@ -297,7 +262,6 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
                        (R1 - R2) / 2.0,
                        std::sqrt(dist * dist - (R1 - R2) * (R1 - R2)) / 2.0);
           bissol = new GccInt_BHyper(H1);
-          //         ===============================
         }
         else if (Index == 3)
         {
@@ -305,7 +269,6 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
                        (R1 - R2) / 2.0,
                        std::sqrt(dist * dist - (R1 - R2) * (R1 - R2)) / 2.0);
           bissol = new GccInt_BHyper(H1.OtherBranch());
-          //         ===============================
         }
       }
     }
@@ -317,19 +280,16 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
         {
           gp_Lin2d L(pcen, medcen);
           bissol = new GccInt_BLine(L);
-          //         =============================
         }
         else if (Index == 2)
         {
           gp_Hypr2d H1(acencen, R1, std::sqrt(dist * dist - 4 * R1 * R1) / 2.0);
           bissol = new GccInt_BHyper(H1);
-          //         ===============================
         }
         else if (Index == 3)
         {
           gp_Hypr2d H1(acencen, R1, std::sqrt(dist * dist - 4 * R1 * R1) / 2.0);
           bissol = new GccInt_BHyper(H1.OtherBranch());
-          //         ===============================
         }
       }
       else
@@ -340,7 +300,6 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
                        (R1 - R2) / 2.0,
                        std::sqrt(dist * dist - (R1 - R2) * (R1 - R2)) / 2.0);
           bissol = new GccInt_BHyper(H1);
-          //         ===============================
         }
         else if (Index == 2)
         {
@@ -348,7 +307,6 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
                        (R1 - R2) / 2.0,
                        std::sqrt(dist * dist - (R1 - R2) * (R1 - R2)) / 2.0);
           bissol = new GccInt_BHyper(H1.OtherBranch());
-          //         ===============================
         }
         else if (Index == 3)
         {
@@ -356,7 +314,6 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
                        (R1 + R2) / 2.0,
                        std::sqrt(dist * dist - (R1 + R2) * (R1 + R2)) / 2.0);
           bissol = new GccInt_BHyper(H1);
-          //         ===============================
         }
         else if (Index == 4)
         {
@@ -364,15 +321,12 @@ occ::handle<GccInt_Bisec> GccAna_Circ2dBisec::ThisSolution(const int Index) cons
                        (R1 + R2) / 2.0,
                        std::sqrt(dist * dist - (R1 + R2) * (R1 + R2)) / 2.0);
           bissol = new GccInt_BHyper(H1.OtherBranch());
-          //         ===============================
         }
       }
     }
   }
   return bissol;
 }
-
-//=========================================================================
 
 bool GccAna_Circ2dBisec::IsDone() const
 {

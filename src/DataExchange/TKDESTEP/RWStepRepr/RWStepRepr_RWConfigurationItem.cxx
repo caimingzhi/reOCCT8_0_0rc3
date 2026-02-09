@@ -5,11 +5,7 @@
 #include <StepRepr_ConfigurationItem.hpp>
 #include <StepRepr_ProductConcept.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWConfigurationItem::RWStepRepr_RWConfigurationItem() = default;
-
-//=================================================================================================
 
 void RWStepRepr_RWConfigurationItem::ReadStep(
   const occ::handle<StepData_StepReaderData>&    data,
@@ -17,11 +13,9 @@ void RWStepRepr_RWConfigurationItem::ReadStep(
   occ::handle<Interface_Check>&                  ach,
   const occ::handle<StepRepr_ConfigurationItem>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 5, ach, "configuration_item"))
     return;
-
-  // Own fields of ConfigurationItem
 
   occ::handle<TCollection_HAsciiString> aId;
   data->ReadString(num, 1, "id", ach, aId);
@@ -55,18 +49,13 @@ void RWStepRepr_RWConfigurationItem::ReadStep(
     hasPurpose = false;
   }
 
-  // Initialize entity
   ent->Init(aId, aName, hasDescription, aDescription, aItemConcept, hasPurpose, aPurpose);
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWConfigurationItem::WriteStep(
   StepData_StepWriter&                           SW,
   const occ::handle<StepRepr_ConfigurationItem>& ent) const
 {
-
-  // Own fields of ConfigurationItem
 
   SW.Send(ent->Id());
 
@@ -89,13 +78,9 @@ void RWStepRepr_RWConfigurationItem::WriteStep(
     SW.SendUndef();
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWConfigurationItem::Share(const occ::handle<StepRepr_ConfigurationItem>& ent,
                                            Interface_EntityIterator& iter) const
 {
-
-  // Own fields of ConfigurationItem
 
   iter.AddItem(ent->ItemConcept());
 }

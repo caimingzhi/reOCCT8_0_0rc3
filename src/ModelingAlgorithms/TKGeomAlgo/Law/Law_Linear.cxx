@@ -20,25 +20,18 @@ void Law_Linear::Set(const double Pdeb, const double Valdeb, const double Pfin, 
   valfin = Valfin;
 }
 
-//=================================================================================================
-
 GeomAbs_Shape Law_Linear::Continuity() const
 {
   return GeomAbs_CN;
 }
 
-//=================================================================================================
-
-// int Law_Linear::NbIntervals(const GeomAbs_Shape S) const
 int Law_Linear::NbIntervals(const GeomAbs_Shape) const
 {
   return 1;
 }
 
-//=================================================================================================
-
 void Law_Linear::Intervals(NCollection_Array1<double>& T,
-                           //                           const GeomAbs_Shape S) const
+
                            const GeomAbs_Shape) const
 {
   T.SetValue(T.Lower(), pdeb);
@@ -63,11 +56,9 @@ void Law_Linear::D2(const double X, double& F, double& D, double& D2)
   D2 = 0;
 }
 
-//=================================================================================================
-
 occ::handle<Law_Function> Law_Linear::Trim(const double PFirst,
                                            const double PLast,
-                                           //				      const double Tol) const
+
                                            const double) const
 {
   occ::handle<Law_Linear> l = new (Law_Linear)();

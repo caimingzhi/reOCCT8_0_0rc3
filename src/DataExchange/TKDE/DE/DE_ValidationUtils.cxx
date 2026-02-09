@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DE_ValidationUtils.hpp>
 
@@ -21,8 +10,6 @@
 #include <OSD_File.hpp>
 #include <OSD_Protection.hpp>
 #include <fstream>
-
-//=================================================================================================
 
 bool DE_ValidationUtils::ValidateConfigurationNode(
   const occ::handle<DE_ConfigurationNode>& theNode,
@@ -53,8 +40,6 @@ bool DE_ValidationUtils::ValidateConfigurationNode(
   return true;
 }
 
-//=================================================================================================
-
 bool DE_ValidationUtils::ValidateFileForReading(const TCollection_AsciiString& thePath,
                                                 const TCollection_AsciiString& theContext,
                                                 const bool                     theIsVerbose)
@@ -73,7 +58,6 @@ bool DE_ValidationUtils::ValidateFileForReading(const TCollection_AsciiString& t
     OSD_Path aOSDPath(thePath);
     OSD_File aFile(aOSDPath);
 
-    // Check if file exists
     if (!aFile.Exists())
     {
       if (theIsVerbose)
@@ -84,7 +68,6 @@ bool DE_ValidationUtils::ValidateFileForReading(const TCollection_AsciiString& t
       return false;
     }
 
-    // Try to open for reading to verify permissions
     std::ifstream aTestFile(thePath.ToCString());
     if (!aTestFile.is_open() || !aTestFile.good())
     {
@@ -109,8 +92,6 @@ bool DE_ValidationUtils::ValidateFileForReading(const TCollection_AsciiString& t
   return true;
 }
 
-//=================================================================================================
-
 bool DE_ValidationUtils::ValidateFileForWriting(const TCollection_AsciiString& thePath,
                                                 const TCollection_AsciiString& theContext,
                                                 const bool                     theIsVerbose)
@@ -126,7 +107,7 @@ bool DE_ValidationUtils::ValidateFileForWriting(const TCollection_AsciiString& t
 
   try
   {
-    // Try to open for writing to verify permissions
+
     std::ofstream aTestFile(thePath.ToCString(), std::ios::out | std::ios::app);
     if (!aTestFile.is_open() || !aTestFile.good())
     {
@@ -137,7 +118,6 @@ bool DE_ValidationUtils::ValidateFileForWriting(const TCollection_AsciiString& t
       }
       return false;
     }
-    // File will be closed automatically when aTestFile goes out of scope
   }
   catch (const std::exception& anException)
   {
@@ -151,8 +131,6 @@ bool DE_ValidationUtils::ValidateFileForWriting(const TCollection_AsciiString& t
 
   return true;
 }
-
-//=================================================================================================
 
 bool DE_ValidationUtils::ValidateReadStreamList(const DE_Provider::ReadStreamList& theStreams,
                                                 const TCollection_AsciiString&     theContext,
@@ -176,7 +154,6 @@ bool DE_ValidationUtils::ValidateReadStreamList(const DE_Provider::ReadStreamLis
     }
   }
 
-  // Additional validation for input streams
   try
   {
     const DE_Provider::ReadStreamNode& aNode = theStreams.First();
@@ -206,8 +183,6 @@ bool DE_ValidationUtils::ValidateReadStreamList(const DE_Provider::ReadStreamLis
   return true;
 }
 
-//=================================================================================================
-
 bool DE_ValidationUtils::ValidateWriteStreamList(DE_Provider::WriteStreamList&  theStreams,
                                                  const TCollection_AsciiString& theContext,
                                                  const bool                     theIsVerbose)
@@ -230,7 +205,6 @@ bool DE_ValidationUtils::ValidateWriteStreamList(DE_Provider::WriteStreamList&  
     }
   }
 
-  // Additional validation for output streams
   try
   {
     const DE_Provider::WriteStreamNode& aNode = theStreams.First();
@@ -260,8 +234,6 @@ bool DE_ValidationUtils::ValidateWriteStreamList(DE_Provider::WriteStreamList&  
   return true;
 }
 
-//=================================================================================================
-
 bool DE_ValidationUtils::ValidateDocument(const occ::handle<TDocStd_Document>& theDocument,
                                           const TCollection_AsciiString&       theContext,
                                           const bool                           theIsVerbose)
@@ -278,8 +250,6 @@ bool DE_ValidationUtils::ValidateDocument(const occ::handle<TDocStd_Document>& t
   return true;
 }
 
-//=================================================================================================
-
 bool DE_ValidationUtils::WarnLengthUnitNotSupported(const double                   theLengthUnit,
                                                     const TCollection_AsciiString& theContext,
                                                     const bool                     theIsVerbose)
@@ -293,8 +263,6 @@ bool DE_ValidationUtils::WarnLengthUnitNotSupported(const double                
 
   return true;
 }
-
-//=================================================================================================
 
 bool DE_ValidationUtils::CreateContentBuffer(const TCollection_AsciiString&   thePath,
                                              occ::handle<NCollection_Buffer>& theBuffer)
@@ -312,8 +280,6 @@ bool DE_ValidationUtils::CreateContentBuffer(const TCollection_AsciiString&   th
   return CreateContentBuffer(*aStream, theBuffer);
 }
 
-//=================================================================================================
-
 bool DE_ValidationUtils::CreateContentBuffer(std::istream&                    theStream,
                                              occ::handle<NCollection_Buffer>& theBuffer)
 {
@@ -322,18 +288,14 @@ bool DE_ValidationUtils::CreateContentBuffer(std::istream&                    th
   theBuffer =
     new NCollection_Buffer(NCollection_BaseAllocator::CommonBaseAllocator(), aBufferLength);
 
-  // Save current stream position
   std::streampos aOriginalPos = theStream.tellg();
 
   theStream.read(reinterpret_cast<char*>(theBuffer->ChangeData()), aBufferLength);
   const std::streamsize aBytesRead = theStream.gcount();
   theBuffer->ChangeData()[aBytesRead < aBufferLength ? aBytesRead : aBufferLength - 1] = '\0';
 
-  // Clear any error flags (including EOF) BEFORE attempting to reset position
-  // This is essential because seekg() fails when EOF flag is set
   theStream.clear();
 
-  // Reset stream to original position for subsequent reads
   theStream.seekg(aOriginalPos);
 
   return true;

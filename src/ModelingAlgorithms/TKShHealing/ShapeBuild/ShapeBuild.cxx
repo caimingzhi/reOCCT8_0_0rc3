@@ -2,8 +2,6 @@
 
 #include <Geom_Plane.hpp>
 
-//=================================================================================================
-
 occ::handle<Geom_Plane> ShapeBuild::PlaneXOY()
 {
   static occ::handle<Geom_Plane> xoy;

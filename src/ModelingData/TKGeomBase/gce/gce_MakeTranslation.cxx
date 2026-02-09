@@ -3,18 +3,10 @@
 #include <gp_Trsf.hpp>
 #include <gp_Vec.hpp>
 
-//=========================================================================
-//   Creation d une translation 3d de gp de vecteur de translation Vec.   +
-//=========================================================================
 gce_MakeTranslation::gce_MakeTranslation(const gp_Vec& Vec)
 {
   TheTranslation.SetTranslation(Vec);
 }
-
-//=========================================================================
-//   Creation d une translation 3d de gp de vecteur de translation le     +
-//   vecteur reliant Point1 a Point2.                                     +
-//=========================================================================
 
 gce_MakeTranslation::gce_MakeTranslation(const gp_Pnt& Point1, const gp_Pnt& Point2)
 {

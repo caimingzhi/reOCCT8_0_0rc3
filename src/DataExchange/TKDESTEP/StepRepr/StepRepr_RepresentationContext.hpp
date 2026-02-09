@@ -10,7 +10,6 @@ class StepRepr_RepresentationContext : public Standard_Transient
 {
 
 public:
-  //! Returns a RepresentationContext
   Standard_EXPORT StepRepr_RepresentationContext();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aContextIdentifier,

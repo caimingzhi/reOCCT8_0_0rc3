@@ -19,15 +19,11 @@
 #include <NCollection_Map.hpp>
 class BOPDS_PaveBlock;
 
-//=================================================================================================
-
 BOPAlgo_Section::BOPAlgo_Section()
 
 {
   Clear();
 }
-
-//=================================================================================================
 
 BOPAlgo_Section::BOPAlgo_Section(const occ::handle<NCollection_BaseAllocator>& theAllocator)
     : BOPAlgo_Builder(theAllocator)
@@ -35,53 +31,42 @@ BOPAlgo_Section::BOPAlgo_Section(const occ::handle<NCollection_BaseAllocator>& t
   Clear();
 }
 
-//=================================================================================================
-
 BOPAlgo_Section::~BOPAlgo_Section() = default;
-
-//=================================================================================================
 
 void BOPAlgo_Section::CheckData()
 {
   int aNbArgs;
-  //
+
   aNbArgs = myArguments.Extent();
   if (!aNbArgs)
   {
     AddError(new BOPAlgo_AlertTooFewArguments);
     return;
   }
-  //
+
   CheckFiller();
 }
 
-//=================================================================================================
-
 void BOPAlgo_Section::fillPIConstants(const double theWhole, BOPAlgo_PISteps& theSteps) const
 {
-  // Fill in the constants:
+
   if (myFillHistory)
   {
-    // for FillHistroty, which takes about 10% of the whole operation
+
     theSteps.SetStep(PIOperation_FillHistory, 10. * theWhole / 100.);
   }
 
-  // and for PostTreat, which takes about 5% of the whole operation
   theSteps.SetStep(PIOperation_PostTreat, 5. * theWhole / 100.);
 }
 
-//=================================================================================================
-
 void BOPAlgo_Section::fillPISteps(BOPAlgo_PISteps& theSteps) const
 {
-  // Compute the rest of the operations - all depend on the number of sub-shapes of certain type
+
   NbShapes aNbShapes = getNbShapes();
   theSteps.SetStep(PIOperation_TreatVertices, aNbShapes.NbVertices());
   theSteps.SetStep(PIOperation_TreatEdges, aNbShapes.NbEdges());
   theSteps.SetStep(PIOperation_BuildSection, aNbShapes.NbEdges() + aNbShapes.NbFaces());
 }
-
-//=================================================================================================
 
 void BOPAlgo_Section::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
                                        const Message_ProgressRange& theRange)
@@ -90,65 +75,60 @@ void BOPAlgo_Section::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
   myPaveFiller = (BOPAlgo_PaveFiller*)&theFiller;
   myDS         = myPaveFiller->PDS();
   myContext    = myPaveFiller->Context();
-  //
-  // 1. CheckData
+
   CheckData();
   if (HasErrors())
   {
     return;
   }
-  //
-  // 2. Prepare
+
   Prepare();
   if (HasErrors())
   {
     return;
   }
-  //
+
   BOPAlgo_PISteps aSteps(PIOperation_Last);
   analyzeProgress(100., aSteps);
-  // 3. Fill Images
-  // 3.1 Vertices
+
   FillImagesVertices(aPS.Next(aSteps.GetStep(PIOperation_TreatVertices)));
   if (HasErrors())
   {
     return;
   }
-  //
+
   BuildResult(TopAbs_VERTEX);
   if (HasErrors())
   {
     return;
   }
-  // 3.2 Edges
+
   FillImagesEdges(aPS.Next(aSteps.GetStep(PIOperation_TreatEdges)));
   if (HasErrors())
   {
     return;
   }
-  //
+
   BuildResult(TopAbs_EDGE);
   if (HasErrors())
   {
     return;
   }
-  // 4. Section
+
   BuildSection(aPS.Next(aSteps.GetStep(PIOperation_BuildSection)));
   if (HasErrors())
   {
     return;
   }
-  // 5.History
+
   PrepareHistory(aPS.Next(aSteps.GetStep(PIOperation_FillHistory)));
   if (HasErrors())
   {
     return;
   }
-  // 6. Post-treatment
+
   PostTreat(aPS.Next(aSteps.GetStep(PIOperation_PostTreat)));
 }
-
-//=================================================================================================
 
 void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
 {
@@ -165,12 +145,11 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>                 aMFence(100, myAllocator);
   NCollection_Map<int>::Iterator                                         aItMI;
   NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator               aItPB;
-  //
+
   GetReport()->Clear();
-  //
+
   BOPTools_AlgoTools::MakeContainer(TopAbs_COMPOUND, aRC1);
-  //
-  // 1. aRC1
+
   aNb = myDS->NbSourceShapes();
   for (i = 0; i < aNb; ++i)
   {
@@ -183,10 +162,9 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
     {
       return;
     }
-    //
+
     const BOPDS_FaceInfo& aFI = myDS->FaceInfo(i);
-    //
-    // 1.1 Vertices that are section vertices
+
     const NCollection_Map<int>& aMVSc = aFI.VerticesSc();
     aItMI.Initialize(aMVSc);
     for (; aItMI.More(); aItMI.Next())
@@ -195,8 +173,7 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
       const TopoDS_Shape& aV = myDS->Shape(nV);
       aBB.Add(aRC1, aV);
     }
-    //
-    // 1.2 Vertices that are in a face
+
     const NCollection_Map<int>& aMI = aFI.VerticesIn();
     aItMI.Initialize(aMI);
     for (; aItMI.More(); aItMI.Next())
@@ -212,10 +189,9 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
         aBB.Add(aRC1, aV);
       }
     }
-    //
-    // 1.3 Section edges
+
     const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& aMPBSc = aFI.PaveBlocksSc();
-    //
+
     aNbPBSc = aMPBSc.Extent();
     for (j = 1; j <= aNbPBSc; ++j)
     {
@@ -225,11 +201,10 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
       aBB.Add(aRC1, aE);
     }
   }
-  //
-  // 2. Common blocks between an edge and a face
+
   const NCollection_Vector<NCollection_List<occ::handle<BOPDS_PaveBlock>>>& aPBP =
     myDS->PaveBlocksPool();
-  //
+
   aNb = aPBP.Size();
   for (i = 0; i < aNb; ++i)
   {
@@ -253,7 +228,7 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
       }
     }
   }
-  //
+
   aIt.Initialize(myArguments);
   for (; aIt.More(); aIt.Next())
   {
@@ -263,12 +238,9 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
       aLSA.Append(aSA);
     }
   }
-  //
+
   aMFence.Clear();
-  //
-  // 3. Treatment boundaries of arguments
-  //
-  // 3.1 Set to treat => aLS
+
   aIt.Initialize(aLSA);
   for (; aIt.More(); aIt.Next())
   {
@@ -277,11 +249,11 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
       return;
     }
     const TopoDS_Shape& aSA = aIt.Value();
-    //
+
     aLS.Clear();
     aMS.Clear();
     aMFence.Clear();
-    //
+
     aExp.Init(aSA, TopAbs_EDGE);
     for (; aExp.More(); aExp.Next())
     {
@@ -300,13 +272,12 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
         aLS.Append(aE);
       }
     }
-    //
-    // 3.2 aMSI
+
     aItLS.Initialize(aLS);
     for (; aItLS.More(); aItLS.Next())
     {
       const TopoDS_Shape& aS = aItLS.Value();
-      //
+
       if (myImages.IsBound(aS))
       {
         const NCollection_List<TopoDS_Shape>& aLSIm = myImages.Find(aS);
@@ -317,14 +288,14 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
           TopExp::MapShapes(aSIm, TopAbs_VERTEX, aMS);
           TopExp::MapShapes(aSIm, TopAbs_EDGE, aMS);
         }
-      } // if (myImages.IsBound(aF)){
+      }
       else
       {
         TopExp::MapShapes(aS, TopAbs_VERTEX, aMS);
         TopExp::MapShapes(aS, TopAbs_EDGE, aMS);
       }
-    } // for (; aItLS.More(); aItLS.Next()) {
-    //
+    }
+
     aNbMS = aMS.Extent();
     for (i = 1; i <= aNbMS; ++i)
     {
@@ -339,17 +310,16 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
         aMSI.Add(aS, 1);
       }
     }
-  } // for (; aIt.More(); aIt.Next()) {
-  //
+  }
+
   aMS.Clear();
   aMFence.Clear();
-  //
-  // 4. Build the result
+
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     aMVE(100, myAllocator);
-  //
+
   TopExp::MapShapesAndAncestors(aRC1, TopAbs_VERTEX, TopAbs_EDGE, aMVE);
-  //
+
   aNbMS = aMSI.Extent();
   for (i = 1; i <= aNbMS; ++i)
   {
@@ -360,9 +330,9 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
       TopExp::MapShapesAndAncestors(aV, TopAbs_VERTEX, TopAbs_EDGE, aMVE);
     }
   }
-  //
+
   BOPTools_AlgoTools::MakeContainer(TopAbs_COMPOUND, aRC);
-  //
+
   aNbMS = aMVE.Extent();
   for (i = 1; i <= aNbMS; ++i)
   {
@@ -375,7 +345,7 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
     aNbLE                                     = aLE.Extent();
     if (!aNbLE)
     {
-      // alone vertices
+
       if (aMFence.Add(aV))
       {
         aBB.Add(aRC, aV);
@@ -383,7 +353,7 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
     }
     else
     {
-      // edges
+
       aIt.Initialize(aLE);
       for (; aIt.More(); aIt.Next())
       {
@@ -395,6 +365,6 @@ void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
       }
     }
   }
-  //
+
   myShape = aRC;
 }

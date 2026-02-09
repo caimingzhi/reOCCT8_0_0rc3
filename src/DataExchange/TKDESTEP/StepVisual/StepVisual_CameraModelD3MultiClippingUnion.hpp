@@ -12,7 +12,6 @@ class TCollection_HAsciiString;
 class StepVisual_CameraModelD3MultiClippingUnion : public StepGeom_GeometricRepresentationItem
 {
 public:
-  //! Returns a StepVisual_CameraModelD3MultiClippingUnion
   Standard_EXPORT StepVisual_CameraModelD3MultiClippingUnion();
 
   Standard_EXPORT void Init(

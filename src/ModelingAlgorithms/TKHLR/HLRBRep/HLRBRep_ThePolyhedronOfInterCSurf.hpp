@@ -46,58 +46,36 @@ public:
 
   Standard_EXPORT void VMaxSingularity(const bool Sing);
 
-  //! get the size of the discretization.
   Standard_EXPORT void Size(int& nbdu, int& nbdv) const;
 
-  //! Give the number of triangles in this double array of
   Standard_EXPORT int NbTriangles() const;
 
-  //! Give the 3 points of the triangle of address Index in
-  //! the double array of triangles.
   Standard_EXPORT void Triangle(const int Index, int& P1, int& P2, int& P3) const;
 
-  //! Give the address Tricon of the triangle connexe to the
-  //! triangle of address Triang by the edge Pivot Pedge and
-  //! the third point of this connexe triangle. When we are
-  //! on a free edge TriCon==0 but the function return the
-  //! value of the triangle in the other side of Pivot on
-  //! the free edge. Used to turn around a vertex.
   Standard_EXPORT int TriConnex(const int Triang,
                                 const int Pivot,
                                 const int Pedge,
                                 int&      TriCon,
                                 int&      OtherP) const;
 
-  //! Give the number of point in the double array of
-  //! triangles ((nbdu+1)*(nbdv+1)).
   Standard_EXPORT int NbPoints() const;
 
-  //! Set the value of a field of the double array of
-  //! points.
   Standard_EXPORT void Point(const gp_Pnt& thePnt,
                              const int     lig,
                              const int     col,
                              const double  U,
                              const double  V);
 
-  //! Give the point of index i in the MaTriangle.
   Standard_EXPORT const gp_Pnt& Point(const int Index, double& U, double& V) const;
 
-  //! Give the point of index i in the MaTriangle.
   Standard_EXPORT const gp_Pnt& Point(const int Index) const;
 
-  //! Give the point of index i in the MaTriangle.
   Standard_EXPORT void Point(const int Index, gp_Pnt& P) const;
 
-  //! Give the bounding box of the MaTriangle.
   Standard_EXPORT const Bnd_Box& Bounding() const;
 
-  //! Compute the array of boxes. The box <n> corresponding
-  //! to the triangle <n>.
   Standard_EXPORT void FillBounding();
 
-  //! Give the array of boxes. The box <n> corresponding
-  //! to the triangle <n>.
   Standard_EXPORT const occ::handle<NCollection_HArray1<Bnd_Box>>& ComponentsBounding() const;
 
   Standard_EXPORT double DeflectionOverEstimation() const;
@@ -110,23 +88,16 @@ public:
 
   Standard_EXPORT bool HasVMaxSingularity() const;
 
-  //! Give the plane equation of the triangle of address Triang.
   Standard_EXPORT void PlaneEquation(const int Triang,
                                      gp_XYZ&   NormalVector,
                                      double&   PolarDistance) const;
 
-  //! Give the plane equation of the triangle of address Triang.
   Standard_EXPORT bool Contain(const int Triang, const gp_Pnt& ThePnt) const;
 
   Standard_EXPORT void Parameters(const int Index, double& U, double& V) const;
 
-  //! This method returns true if the edge based on points with
-  //! indices Index1 and Index2 represents a boundary edge. It is
-  //! necessary to take into account the boundary deflection for
-  //! this edge.
   Standard_EXPORT bool IsOnBound(const int Index1, const int Index2) const;
 
-  //! This method returns a border deflection.
   double GetBorderDeflection() const { return TheBorderDeflection; }
 
   Standard_EXPORT void Dump() const;

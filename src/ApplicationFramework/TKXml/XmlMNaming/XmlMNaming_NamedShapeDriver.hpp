@@ -29,21 +29,17 @@ public:
                              XmlObjMgt_Persistent&             theTarget,
                              XmlObjMgt_SRelocationTable&       theRelocTable) const override;
 
-  //! Input the shapes from DOM element
   Standard_EXPORT void ReadShapeSection(
     const XmlObjMgt_Element&     anElement,
     const Message_ProgressRange& theRange = Message_ProgressRange());
 
-  //! Output the shapes into DOM element
   Standard_EXPORT void WriteShapeSection(
     XmlObjMgt_Element&           anElement,
     TDocStd_FormatVersion        theStorageFormatVersion,
     const Message_ProgressRange& theRange = Message_ProgressRange());
 
-  //! Clear myShapeSet
   Standard_EXPORT void Clear();
 
-  //! get the format of topology
   TopTools_LocationSet& GetShapesLocations();
 
   DEFINE_STANDARD_RTTIEXT(XmlMNaming_NamedShapeDriver, XmlMDF_ADriver)

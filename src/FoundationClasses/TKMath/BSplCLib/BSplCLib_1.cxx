@@ -1,39 +1,16 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BSplCLib.hpp>
 #include <gp_Pnt2d.hpp>
 #include <gp_Vec2d.hpp>
 #include <Standard_NotImplemented.hpp>
 
-// BSpline Curve in 2d space
-// **************************
-
-// Include the template implementation header
 #include <BSplCLib_CurveComputation.hpp>
-
-// Explicit template instantiations for 2D types
-// This replaces the old macro-based approach with modern C++ templates
-
-//==================================================================================================
 
 void BSplCLib::Reverse(NCollection_Array1<gp_Pnt2d>& Poles, const int L)
 {
   BSplCLib_Reverse(Poles, L);
 }
-
-//==================================================================================================
 
 bool BSplCLib::RemoveKnot(const int                           Index,
                           const int                           Mult,
@@ -63,8 +40,6 @@ bool BSplCLib::RemoveKnot(const int                           Index,
                                                                                   NewMults,
                                                                                   Tolerance);
 }
-
-//==================================================================================================
 
 void BSplCLib::InsertKnots(const int                           Degree,
                            const bool                          Periodic,
@@ -97,8 +72,6 @@ void BSplCLib::InsertKnots(const int                           Degree,
                                                                             Add);
 }
 
-//==================================================================================================
-
 void BSplCLib::InsertKnot(const int,
                           const double                        U,
                           const int                           UMult,
@@ -124,8 +97,6 @@ void BSplCLib::InsertKnot(const int,
                                                                            NewWeights);
 }
 
-//==================================================================================================
-
 void BSplCLib::RaiseMultiplicity(const int                           KnotIndex,
                                  const int                           Mult,
                                  const int                           Degree,
@@ -148,8 +119,6 @@ void BSplCLib::RaiseMultiplicity(const int                           KnotIndex,
                                                                                   NewPoles,
                                                                                   NewWeights);
 }
-
-//==================================================================================================
 
 void BSplCLib::IncreaseDegree(const int                           Degree,
                               const int                           NewDegree,
@@ -176,8 +145,6 @@ void BSplCLib::IncreaseDegree(const int                           Degree,
                                                                                NewMults);
 }
 
-//==================================================================================================
-
 void BSplCLib::Unperiodize(const int                           Degree,
                            const NCollection_Array1<int>&      Mults,
                            const NCollection_Array1<double>&   Knots,
@@ -198,8 +165,6 @@ void BSplCLib::Unperiodize(const int                           Degree,
                                                                             NewPoles,
                                                                             NewWeights);
 }
-
-//==================================================================================================
 
 void BSplCLib::Trimming(const int                           Degree,
                         const bool                          Periodic,
@@ -228,8 +193,6 @@ void BSplCLib::Trimming(const int                           Degree,
                                                                          NewWeights);
 }
 
-//==================================================================================================
-
 void BSplCLib::BuildEval(const int                           Degree,
                          const int                           Index,
                          const NCollection_Array1<gp_Pnt2d>& Poles,
@@ -242,8 +205,6 @@ void BSplCLib::BuildEval(const int                           Degree,
                                                                           Weights,
                                                                           LP);
 }
-
-//==================================================================================================
 
 void BSplCLib::D0(const double                        U,
                   const int                           Index,
@@ -265,8 +226,6 @@ void BSplCLib::D0(const double                        U,
                                                                    Mults,
                                                                    P);
 }
-
-//==================================================================================================
 
 void BSplCLib::D1(const double                        U,
                   const int                           Index,
@@ -290,8 +249,6 @@ void BSplCLib::D1(const double                        U,
                                                                    P,
                                                                    V);
 }
-
-//==================================================================================================
 
 void BSplCLib::D2(const double                        U,
                   const int                           Index,
@@ -317,8 +274,6 @@ void BSplCLib::D2(const double                        U,
                                                                    V1,
                                                                    V2);
 }
-
-//==================================================================================================
 
 void BSplCLib::D3(const double                        U,
                   const int                           Index,
@@ -347,8 +302,6 @@ void BSplCLib::D3(const double                        U,
                                                                    V3);
 }
 
-//==================================================================================================
-
 void BSplCLib::DN(const double                        U,
                   const int                           N,
                   const int                           Index,
@@ -372,8 +325,6 @@ void BSplCLib::DN(const double                        U,
                                                                    VN);
 }
 
-//==================================================================================================
-
 int BSplCLib::SolveBandedSystem(const math_Matrix&            Matrix,
                                 const int                     UpperBandWidth,
                                 const int                     LowerBandWidth,
@@ -385,8 +336,6 @@ int BSplCLib::SolveBandedSystem(const math_Matrix&            Matrix,
     LowerBandWidth,
     PolesArray);
 }
-
-//==================================================================================================
 
 int BSplCLib::SolveBandedSystem(const math_Matrix&            Matrix,
                                 const int                     UpperBandWidth,
@@ -403,8 +352,6 @@ int BSplCLib::SolveBandedSystem(const math_Matrix&            Matrix,
     PolesArray,
     WeightsArray);
 }
-
-//==================================================================================================
 
 void BSplCLib::Eval(const double                        Parameter,
                     const bool                          PeriodicFlag,
@@ -429,8 +376,6 @@ void BSplCLib::Eval(const double                        Parameter,
                                                                      aWeight);
 }
 
-//==================================================================================================
-
 void BSplCLib::CacheD0(const double                        Parameter,
                        const int                           Degree,
                        const double                        CacheParameter,
@@ -447,8 +392,6 @@ void BSplCLib::CacheD0(const double                        Parameter,
                                                                         WeightsArray,
                                                                         aPoint);
 }
-
-//==================================================================================================
 
 void BSplCLib::CacheD1(const double                        Parameter,
                        const int                           Degree,
@@ -468,8 +411,6 @@ void BSplCLib::CacheD1(const double                        Parameter,
                                                                         aPoint,
                                                                         aVector);
 }
-
-//==================================================================================================
 
 void BSplCLib::CacheD2(const double                        Parameter,
                        const int                           Degree,
@@ -491,8 +432,6 @@ void BSplCLib::CacheD2(const double                        Parameter,
                                                                         aVector1,
                                                                         aVector2);
 }
-
-//==================================================================================================
 
 void BSplCLib::CacheD3(const double                        Parameter,
                        const int                           Degree,
@@ -517,8 +456,6 @@ void BSplCLib::CacheD3(const double                        Parameter,
                                                                         aVector3);
 }
 
-//==================================================================================================
-
 void BSplCLib::BuildCache(const double                        U,
                           const double                        SpanDomain,
                           const bool                          Periodic,
@@ -539,8 +476,6 @@ void BSplCLib::BuildCache(const double                        U,
                                                                            CachePoles,
                                                                            CacheWeights);
 }
-
-//==================================================================================================
 
 void BSplCLib::BuildCache(const double                        theParameter,
                           const double                        theSpanDomain,
@@ -563,8 +498,6 @@ void BSplCLib::BuildCache(const double                        theParameter,
                                                                            theCacheArray);
 }
 
-//==================================================================================================
-
 void BSplCLib::Interpolate(const int                         Degree,
                            const NCollection_Array1<double>& FlatKnots,
                            const NCollection_Array1<double>& Parameters,
@@ -579,8 +512,6 @@ void BSplCLib::Interpolate(const int                         Degree,
                                                                             Poles,
                                                                             InversionProblem);
 }
-
-//==================================================================================================
 
 void BSplCLib::Interpolate(const int                         Degree,
                            const NCollection_Array1<double>& FlatKnots,
@@ -598,8 +529,6 @@ void BSplCLib::Interpolate(const int                         Degree,
                                                                             Weights,
                                                                             InversionProblem);
 }
-
-//==================================================================================================
 
 void BSplCLib::MovePoint(const double                        U,
                          const gp_Vec2d&                     Displ,
@@ -625,8 +554,6 @@ void BSplCLib::MovePoint(const double                        U,
                                                                           LastIndex,
                                                                           NewPoles);
 }
-
-//==================================================================================================
 
 void BSplCLib::MovePointAndTangent(const double                        U,
                                    const gp_Vec2d&                     Delta,
@@ -656,8 +583,6 @@ void BSplCLib::MovePointAndTangent(const double                        U,
     ErrorStatus);
 }
 
-//==================================================================================================
-
 void BSplCLib::Resolution(const NCollection_Array1<gp_Pnt2d>& Poles,
                           const NCollection_Array1<double>*   Weights,
                           const int                           NumPoles,
@@ -674,8 +599,6 @@ void BSplCLib::Resolution(const NCollection_Array1<gp_Pnt2d>& Poles,
                                                                            Tolerance3D,
                                                                            UTolerance);
 }
-
-//==================================================================================================
 
 void BSplCLib::FunctionMultiply(const BSplCLib_EvaluatorFunction&   FunctionPtr,
                                 const int                           BSplineDegree,
@@ -695,8 +618,6 @@ void BSplCLib::FunctionMultiply(const BSplCLib_EvaluatorFunction&   FunctionPtr,
                                                                                  NewPoles,
                                                                                  theStatus);
 }
-
-//==================================================================================================
 
 void BSplCLib::FunctionReparameterise(const BSplCLib_EvaluatorFunction&   FunctionPtr,
                                       const int                           BSplineDegree,

@@ -10,15 +10,11 @@
 #include <math_Vector.hpp>
 #include <gp_Dir.hpp>
 
-//! Function for search of Cone canonic parameters: coordinates of center local coordinate system,
-//! direction of axis, radius and semi-angle from set of points
-//! by least square method.
 class GeomConvert_FuncConeLSDist : public math_MultipleVarFunction
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Constructor.
   Standard_EXPORT GeomConvert_FuncConeLSDist() = default;
 
   Standard_EXPORT GeomConvert_FuncConeLSDist(
@@ -32,10 +28,8 @@ public:
 
   void SetDir(const gp_Dir& theDir) { myDir = theDir; }
 
-  //! Number of variables.
   Standard_EXPORT int NbVariables() const override;
 
-  //! Value.
   Standard_EXPORT bool Value(const math_Vector& X, double& F) override;
 
 private:

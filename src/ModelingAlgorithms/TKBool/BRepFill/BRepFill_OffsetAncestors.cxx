@@ -6,21 +6,15 @@
 #include <TopoDS_Face.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 BRepFill_OffsetAncestors::BRepFill_OffsetAncestors()
     : myIsPerform(false)
 {
 }
 
-//=================================================================================================
-
 BRepFill_OffsetAncestors::BRepFill_OffsetAncestors(BRepFill_OffsetWire& Paral)
 {
   Perform(Paral);
 }
-
-//=================================================================================================
 
 void BRepFill_OffsetAncestors::Perform(BRepFill_OffsetWire& Paral)
 {
@@ -29,7 +23,6 @@ void BRepFill_OffsetAncestors::Perform(BRepFill_OffsetWire& Paral)
   TopExp_Explorer                          Exp;
   NCollection_List<TopoDS_Shape>::Iterator it;
 
-  // on itere sur les edges.
   for (Exp.Init(Spine, TopAbs_EDGE); Exp.More(); Exp.Next())
   {
     for (it.Initialize(Paral.GeneratedShapes(Exp.Current())); it.More(); it.Next())
@@ -38,7 +31,6 @@ void BRepFill_OffsetAncestors::Perform(BRepFill_OffsetWire& Paral)
     }
   }
 
-  // on itere sur les vertex.
   for (Exp.Init(Spine, TopAbs_VERTEX); Exp.More(); Exp.Next())
   {
     for (it.Initialize(Paral.GeneratedShapes(Exp.Current())); it.More(); it.Next())
@@ -50,24 +42,15 @@ void BRepFill_OffsetAncestors::Perform(BRepFill_OffsetWire& Paral)
   myIsPerform = true;
 }
 
-//=================================================================================================
-
 bool BRepFill_OffsetAncestors::IsDone() const
 {
   return myIsPerform;
 }
 
-//=================================================================================================
-
 bool BRepFill_OffsetAncestors::HasAncestor(const TopoDS_Edge& S1) const
 {
   return myMap.IsBound(S1);
 }
-
-//=======================================================================
-// function : TopoDS_Shape&
-// purpose  :
-//=======================================================================
 
 const TopoDS_Shape& BRepFill_OffsetAncestors::Ancestor(const TopoDS_Edge& S1) const
 {

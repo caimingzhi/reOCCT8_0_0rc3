@@ -1,4 +1,4 @@
-// Created on : Thu Mar 24 18:30:12 2022
+
 
 #include "RWStepVisual_RWTessellatedEdge.hpp"
 #include <StepVisual_TessellatedEdge.hpp>
@@ -12,11 +12,7 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWTessellatedEdge::RWStepVisual_RWTessellatedEdge() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWTessellatedEdge::ReadStep(
   const occ::handle<StepData_StepReaderData>&    theData,
@@ -24,18 +20,14 @@ void RWStepVisual_RWTessellatedEdge::ReadStep(
   occ::handle<Interface_Check>&                  theCheck,
   const occ::handle<StepVisual_TessellatedEdge>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 4, theCheck, "tessellated_edge"))
   {
     return;
   }
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theCheck, aRepresentationItem_Name);
-
-  // Own fields of TessellatedEdge
 
   occ::handle<StepVisual_CoordinatesList> aCoordinates;
   theData->ReadEntity(theNum,
@@ -72,7 +64,6 @@ void RWStepVisual_RWTessellatedEdge::ReadStep(
     }
   }
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aCoordinates,
                hasGeometricLink,
@@ -80,18 +71,12 @@ void RWStepVisual_RWTessellatedEdge::ReadStep(
                aLineStrip);
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWTessellatedEdge::WriteStep(
   StepData_StepWriter&                           theSW,
   const occ::handle<StepVisual_TessellatedEdge>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Own fields of TessellatedEdge
 
   theSW.Send(theEnt->Coordinates());
 
@@ -113,15 +98,9 @@ void RWStepVisual_RWTessellatedEdge::WriteStep(
   theSW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWTessellatedEdge::Share(const occ::handle<StepVisual_TessellatedEdge>& theEnt,
                                            Interface_EntityIterator& theIter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Own fields of TessellatedEdge
 
   theIter.AddItem(theEnt->Coordinates());
 

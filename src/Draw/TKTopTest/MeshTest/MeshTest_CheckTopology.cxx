@@ -15,25 +15,15 @@
 #include <Poly_Connect.hpp>
 #include <Precision.hpp>
 
-//=======================================================================
-// function : ComputeArea
-// purpose  : Computes area of the triangle given by its three points (either 2D or3D)
-//=======================================================================
 static double ComputeArea(const gp_XYZ& theP1, const gp_XYZ& theP2, const gp_XYZ& theP3)
 {
   return 0.5 * (theP3 - theP1).Crossed(theP2 - theP1).Modulus();
 }
 
-//=======================================================================
-// function : ComputeArea
-// purpose  : Computes area of the triangle given by its three points (either 2D or3D)
-//=======================================================================
 static double ComputeArea(const gp_XY& theP1, const gp_XY& theP2, const gp_XY& theP3)
 {
   return 0.5 * std::abs((theP3 - theP1).Crossed(theP2 - theP1));
 }
-
-//=================================================================================================
 
 void MeshTest_CheckTopology::Perform(Draw_Interpretor& di)
 {
@@ -43,7 +33,6 @@ void MeshTest_CheckTopology::Perform(Draw_Interpretor& di)
   TopExp::MapShapes(myShape, TopAbs_FACE, aMapF);
   TopExp::MapShapesAndAncestors(myShape, TopAbs_EDGE, TopAbs_FACE, aMapEF);
 
-  // check polygons
   int ie;
   for (ie = 1; ie <= aMapEF.Extent(); ie++)
   {
@@ -52,7 +41,6 @@ void MeshTest_CheckTopology::Perform(Draw_Interpretor& di)
     if (aFaces.Extent() < 2)
       continue;
 
-    // get polygon on first face
     const TopoDS_Face&                       aFace1 = TopoDS::Face(aFaces.First());
     TopLoc_Location                          aLoc1;
     occ::handle<Poly_Triangulation>          aT1 = BRep_Tool::Triangulation(aFace1, aLoc1);
@@ -67,7 +55,6 @@ void MeshTest_CheckTopology::Perform(Draw_Interpretor& di)
     }
     const NCollection_Array1<int>& aNodes1 = aPoly1->Nodes();
 
-    // cycle on other polygons
     NCollection_List<TopoDS_Shape>::Iterator it(aFaces);
     it.Next();
     for (; it.More(); it.Next())
@@ -86,14 +73,12 @@ void MeshTest_CheckTopology::Perform(Draw_Interpretor& di)
       }
       const NCollection_Array1<int>& aNodes2 = aPoly2->Nodes();
 
-      // check equality of polygons lengths
       if (aNodes2.Length() != aNodes1.Length())
       {
         myAsyncEdges.Append(ie);
         break;
       }
 
-      // check distances between corresponding points
       double aSqDefle = BRep_Tool::Tolerance(aEdge);
       aSqDefle *= aSqDefle;
       int            iF1    = aMapF.FindIndex(aFace1);
@@ -119,7 +104,6 @@ void MeshTest_CheckTopology::Perform(Draw_Interpretor& di)
     }
   }
 
-  // check triangulations
   int iF;
   for (iF = 1; iF <= aMapF.Extent(); iF++)
   {
@@ -134,7 +118,6 @@ void MeshTest_CheckTopology::Perform(Draw_Interpretor& di)
 
     const gp_Trsf& aTrsf = aLoc.Transformation();
 
-    // remember boundary nodes
     TColStd_PackedMapOfInteger aMapBndNodes;
     TopExp_Explorer            ex(aFace, TopAbs_EDGE);
     for (; ex.More(); ex.Next())
@@ -152,7 +135,6 @@ void MeshTest_CheckTopology::Perform(Draw_Interpretor& di)
 
     TColStd_PackedMapOfInteger aUsedNodes;
 
-    // check of free links and nodes
     Poly_Connect aConn(aT);
     int          nbTri = aT->NbTriangles(), i, j, n[3], t[3];
     for (i = 1; i <= nbTri; i++)
@@ -189,11 +171,11 @@ void MeshTest_CheckTopology::Perform(Draw_Interpretor& di)
       {
         if (t[j] == 0)
         {
-          // free link found
-          int k  = (j + 1) % 3; // the following node of the edge
+
+          int k  = (j + 1) % 3;
           int n1 = n[j];
           int n2 = n[k];
-          // skip if it is on boundary
+
           if (aMapBndNodes.Contains(n1) && aMapBndNodes.Contains(n2))
             continue;
           if (!myMapFaceLinks.Contains(iF))
@@ -208,7 +190,6 @@ void MeshTest_CheckTopology::Perform(Draw_Interpretor& di)
       }
     }
 
-    // check of free nodes
     int aNbNodes = aT->NbNodes();
     for (int k = 1; k <= aNbNodes; k++)
       if (!aUsedNodes.Contains(k))
@@ -218,12 +199,6 @@ void MeshTest_CheckTopology::Perform(Draw_Interpretor& di)
       }
   }
 }
-
-//=======================================================================
-// function : GetFreeLink
-// purpose  : gets the numbers of nodes of a free link with the given index
-//           in the face with the given index
-//=======================================================================
 
 void MeshTest_CheckTopology::GetFreeLink(const int theFaceIndex,
                                          const int theLinkIndex,
@@ -235,11 +210,6 @@ void MeshTest_CheckTopology::GetFreeLink(const int theFaceIndex,
   theNode1                                            = aSeq->Value(aInd);
   theNode2                                            = aSeq->Value(aInd + 1);
 }
-
-//=======================================================================
-// function : GetCrossFaceError
-// purpose  : gets the attributes of a cross face error with the given index
-//=======================================================================
 
 void MeshTest_CheckTopology::GetCrossFaceError(const int theIndex,
                                                int&      theFace1,

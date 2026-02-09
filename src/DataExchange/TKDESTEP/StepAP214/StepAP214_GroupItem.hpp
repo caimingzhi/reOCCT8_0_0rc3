@@ -27,73 +27,42 @@ class StepAP214_GroupItem : public StepData_SelectType
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Returns a GroupItem SelectType
   Standard_EXPORT StepAP214_GroupItem();
 
-  //! Recognizes a GroupItem Kind Entity that is :
-  //! 1 ->  GeometricRepresentationItem
-  //! 2 ->  GroupRelationship
-  //! 3 ->  MappedItem
-  //! 4 ->  ProductDefinition
-  //! 5 ->  ProductDefinitionFormation
-  //! 6 ->  PropertyDefinitionRepresentation
-  //! 7 ->  Representation
-  //! 8 ->  RepresentationItem
-  //! 9 ->  RepresentationRelationshipWithTransformation
-  //! 10 -> ShapeAspect
-  //! 11 -> ShapeAspectRelationship
-  //! 12 -> ShapeRepresentationRelationship
-  //! 13 -> StyledItem
-  //! 14 -> TopologicalRepresentationItem
-  //! 0 else
   Standard_EXPORT int CaseNum(const occ::handle<Standard_Transient>& ent) const override;
 
-  //! returns Value as a GeometricRepresentationItem (Null if another type)
   Standard_EXPORT virtual occ::handle<StepGeom_GeometricRepresentationItem>
     GeometricRepresentationItem() const;
 
-  //! returns Value as a GroupRelationship (Null if another type)
   Standard_EXPORT virtual occ::handle<StepBasic_GroupRelationship> GroupRelationship() const;
 
-  //! returns Value as a MappedItem (Null if another type)
   Standard_EXPORT virtual occ::handle<StepRepr_MappedItem> MappedItem() const;
 
-  //! returns Value as a ProductDefinition (Null if another type)
   Standard_EXPORT virtual occ::handle<StepBasic_ProductDefinition> ProductDefinition() const;
 
-  //! returns Value as a ProductDefinitionFormation (Null if another type)
   Standard_EXPORT virtual occ::handle<StepBasic_ProductDefinitionFormation>
     ProductDefinitionFormation() const;
 
-  //! returns Value as a PropertyDefinitionRepresentation (Null if another type)
   Standard_EXPORT virtual occ::handle<StepRepr_PropertyDefinitionRepresentation>
     PropertyDefinitionRepresentation() const;
 
-  //! returns Value as a Representation (Null if another type)
   Standard_EXPORT virtual occ::handle<StepRepr_Representation> Representation() const;
 
-  //! returns Value as a RepresentationItem (Null if another type)
   Standard_EXPORT virtual occ::handle<StepRepr_RepresentationItem> RepresentationItem() const;
 
-  //! returns Value as a RepresentationRelationshipWithTransformation (Null if another type)
   Standard_EXPORT virtual occ::handle<StepRepr_RepresentationRelationshipWithTransformation>
     RepresentationRelationshipWithTransformation() const;
 
-  //! returns Value as a ShapeAspect (Null if another type)
   Standard_EXPORT virtual occ::handle<StepRepr_ShapeAspect> ShapeAspect() const;
 
-  //! returns Value as a ShapeAspectRelationship (Null if another type)
   Standard_EXPORT virtual occ::handle<StepRepr_ShapeAspectRelationship> ShapeAspectRelationship()
     const;
 
-  //! returns Value as a ShapeRepresentationRelationship (Null if another type)
   Standard_EXPORT virtual occ::handle<StepRepr_ShapeRepresentationRelationship>
     ShapeRepresentationRelationship() const;
 
-  //! returns Value as a StyledItem (Null if another type)
   Standard_EXPORT virtual occ::handle<StepVisual_StyledItem> StyledItem() const;
 
-  //! returns Value as a TopologicalRepresentationItem (Null if another type)
   Standard_EXPORT virtual occ::handle<StepShape_TopologicalRepresentationItem>
     TopologicalRepresentationItem() const;
 };

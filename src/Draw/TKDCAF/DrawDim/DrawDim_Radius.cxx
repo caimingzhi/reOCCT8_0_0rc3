@@ -14,43 +14,29 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_Radius, DrawDim_Dimension)
 
-//=================================================================================================
-
 DrawDim_Radius::DrawDim_Radius(const TopoDS_Face& cylinder)
 {
   myCylinder = cylinder;
 }
-
-//=================================================================================================
 
 const TopoDS_Face& DrawDim_Radius::Cylinder() const
 {
   return myCylinder;
 }
 
-//=================================================================================================
-
 void DrawDim_Radius::Cylinder(const TopoDS_Face& face)
 {
   myCylinder = face;
 }
 
-//=================================================================================================
-
 void DrawDim_Radius::DrawOn(Draw_Display& dis) const
 {
-  // input
+
   TopoDS_Shape myFShape = myCylinder;
 
-  // output
   gp_Pnt  myPosition;
   gp_Circ myCircle;
 
-//=================================================================================================
-
-// void PrsDim_RadiusDimension::ComputeOneFaceRadius(const occ::handle<Prs3d_Presentation>&
-// aPresentation)
-//{
 #ifdef OCCT_DEBUG
   std::cout << "entree dans computeonefaceradius" << std::endl;
 #endif
@@ -80,22 +66,19 @@ void DrawDim_Radius::DrawOn(Draw_Display& dis) const
   if (aCurve->DynamicType() == STANDARD_TYPE(Geom_Circle))
   {
     myCircle = occ::down_cast<Geom_Circle>(aCurve)->Circ();
-  } // if (aCurve->DynamicType() ...
+  }
 
   else
   {
-    // compute a circle from 3 points on "aCurve"
+
     gp_Pnt P1, P2;
     surfAlgo.D0(uFirst, vMoy, P1);
     surfAlgo.D0(uLast, vMoy, P2);
     GC_MakeCircle mkCirc(P1, curpos, P2);
     myCircle = mkCirc.Value()->Circ();
-  } // else ...
+  }
 
   myPosition = curpos;
-
-  // DISPLAY
-  // Add(myText, curpos, mCircle, uFirst, uLast)
 
   dis.Draw(myCircle, uFirst, uLast);
   dis.DrawMarker(myPosition, Draw_Losange);

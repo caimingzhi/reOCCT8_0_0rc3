@@ -12,20 +12,14 @@
 class TDF_Label;
 class TDF_RelocationTable;
 
-//! Contains a list of doubles.
 class TDataStd_RealList : public TDF_Attribute
 {
 
 public:
-  //! Static methods
-  //! ==============
-  //! Returns the ID of the list of doubles attribute.
   Standard_EXPORT static const Standard_GUID& GetID();
 
-  //! Finds or creates a list of double values attribute.
   Standard_EXPORT static occ::handle<TDataStd_RealList> Set(const TDF_Label& label);
 
-  //! Finds or creates a list of double values attribute with explicit user defined <guid>.
   Standard_EXPORT static occ::handle<TDataStd_RealList> Set(const TDF_Label&     label,
                                                             const Standard_GUID& theGuid);
 
@@ -39,30 +33,20 @@ public:
 
   Standard_EXPORT void Append(const double value);
 
-  //! Sets the explicit GUID (user defined) for the attribute.
   Standard_EXPORT void SetID(const Standard_GUID& theGuid) override;
 
-  //! Sets default GUID for the attribute.
   Standard_EXPORT void SetID() override;
 
-  //! Inserts the <value> before the first meet of <before_value>.
   Standard_EXPORT bool InsertBefore(const double value, const double before_value);
 
-  //! Inserts the <value> before the <index> position.
-  //! The indices start with 1 .. Extent().
   Standard_EXPORT bool InsertBeforeByIndex(const int index, const double before_value);
 
-  //! Inserts the <value> after the first meet of <after_value>.
   Standard_EXPORT bool InsertAfter(const double value, const double after_value);
 
-  //! Inserts the <value> after the <index> position.
-  //! The indices start with 1 .. Extent().
   Standard_EXPORT bool InsertAfterByIndex(const int index, const double after_value);
 
-  //! Removes the first meet of the <value>.
   Standard_EXPORT bool Remove(const double value);
 
-  //! Removes a value at <index> position.
   Standard_EXPORT bool RemoveByIndex(const int index);
 
   Standard_EXPORT void Clear();
@@ -84,7 +68,6 @@ public:
 
   Standard_EXPORT Standard_OStream& Dump(Standard_OStream& anOS) const override;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(TDataStd_RealList, TDF_Attribute)

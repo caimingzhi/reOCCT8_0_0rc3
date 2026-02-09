@@ -1,30 +1,13 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// #ifndef OCCT_DEBUG
+
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
-
-// #endif
 
 #include <math_FunctionSetWithDerivatives.hpp>
 #include <math_NewtonFunctionSetRoot.hpp>
 #include <math_Recipes.hpp>
 #include <StdFail_NotDone.hpp>
-
-//=================================================================================================
 
 math_NewtonFunctionSetRoot::math_NewtonFunctionSetRoot(math_FunctionSetWithDerivatives& theFunction,
                                                        const math_Vector& theXTolerance,
@@ -47,8 +30,6 @@ math_NewtonFunctionSetRoot::math_NewtonFunctionSetRoot(math_FunctionSetWithDeriv
   SetTolerance(theXTolerance);
 }
 
-//=================================================================================================
-
 math_NewtonFunctionSetRoot::math_NewtonFunctionSetRoot(math_FunctionSetWithDerivatives& theFunction,
                                                        const double theFTolerance,
                                                        const int    theNbIterations)
@@ -68,19 +49,13 @@ math_NewtonFunctionSetRoot::math_NewtonFunctionSetRoot(math_FunctionSetWithDeriv
 {
 }
 
-//=================================================================================================
-
 math_NewtonFunctionSetRoot::~math_NewtonFunctionSetRoot() = default;
-
-//=================================================================================================
 
 void math_NewtonFunctionSetRoot::SetTolerance(const math_Vector& theXTolerance)
 {
   for (int i = 1; i <= TolX.Length(); ++i)
     TolX(i) = theXTolerance(i);
 }
-
-//=================================================================================================
 
 void math_NewtonFunctionSetRoot::Perform(math_FunctionSetWithDerivatives& theFunction,
                                          const math_Vector&               theStartingPoint)
@@ -90,8 +65,6 @@ void math_NewtonFunctionSetRoot::Perform(math_FunctionSetWithDerivatives& theFun
 
   Perform(theFunction, theStartingPoint, anInf, aSup);
 }
-
-//=================================================================================================
 
 void math_NewtonFunctionSetRoot::Perform(math_FunctionSetWithDerivatives& F,
                                          const math_Vector&               StartingPoint,
@@ -122,7 +95,6 @@ void math_NewtonFunctionSetRoot::Perform(math_FunctionSetWithDerivatives& F,
     {
       Sol(i) += DeltaX(i);
 
-      // Limitation de Sol dans les bornes [InfBound, SupBound] :
       if (Sol(i) <= InfBound(i))
         Sol(i) = InfBound(i);
       if (Sol(i) >= SupBound(i))
@@ -139,8 +111,6 @@ void math_NewtonFunctionSetRoot::Perform(math_FunctionSetWithDerivatives& F,
     }
   }
 }
-
-//=================================================================================================
 
 void math_NewtonFunctionSetRoot::Dump(Standard_OStream& o) const
 {

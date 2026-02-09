@@ -9,11 +9,7 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepAP203_RWCcDesignCertification::RWStepAP203_RWCcDesignCertification() = default;
-
-//=================================================================================================
 
 void RWStepAP203_RWCcDesignCertification::ReadStep(
   const occ::handle<StepData_StepReaderData>&         data,
@@ -21,11 +17,9 @@ void RWStepAP203_RWCcDesignCertification::ReadStep(
   occ::handle<Interface_Check>&                       ach,
   const occ::handle<StepAP203_CcDesignCertification>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "cc_design_certification"))
     return;
-
-  // Inherited fields of CertificationAssignment
 
   occ::handle<StepBasic_Certification> aCertificationAssignment_AssignedCertification;
   data->ReadEntity(num,
@@ -34,8 +28,6 @@ void RWStepAP203_RWCcDesignCertification::ReadStep(
                    ach,
                    STANDARD_TYPE(StepBasic_Certification),
                    aCertificationAssignment_AssignedCertification);
-
-  // Own fields of CcDesignCertification
 
   occ::handle<NCollection_HArray1<StepAP203_CertifiedItem>> aItems;
   int                                                       sub2 = 0;
@@ -52,22 +44,15 @@ void RWStepAP203_RWCcDesignCertification::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aCertificationAssignment_AssignedCertification, aItems);
 }
-
-//=================================================================================================
 
 void RWStepAP203_RWCcDesignCertification::WriteStep(
   StepData_StepWriter&                                SW,
   const occ::handle<StepAP203_CcDesignCertification>& ent) const
 {
 
-  // Inherited fields of CertificationAssignment
-
   SW.Send(ent->StepBasic_CertificationAssignment::AssignedCertification());
-
-  // Own fields of CcDesignCertification
 
   SW.OpenSub();
   for (int i1 = 1; i1 <= ent->Items()->Length(); i1++)
@@ -78,18 +63,12 @@ void RWStepAP203_RWCcDesignCertification::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepAP203_RWCcDesignCertification::Share(
   const occ::handle<StepAP203_CcDesignCertification>& ent,
   Interface_EntityIterator&                           iter) const
 {
 
-  // Inherited fields of CertificationAssignment
-
   iter.AddItem(ent->StepBasic_CertificationAssignment::AssignedCertification());
-
-  // Own fields of CcDesignCertification
 
   for (int i2 = 1; i2 <= ent->Items()->Length(); i2++)
   {

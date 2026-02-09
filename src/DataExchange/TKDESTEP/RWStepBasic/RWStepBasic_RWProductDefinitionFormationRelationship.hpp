@@ -11,28 +11,23 @@ class StepBasic_ProductDefinitionFormationRelationship;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write tool for ProductDefinitionFormationRelationship
 class RWStepBasic_RWProductDefinitionFormationRelationship
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepBasic_RWProductDefinitionFormationRelationship();
 
-  //! Reads ProductDefinitionFormationRelationship
   Standard_HIDDEN void ReadStep(
     const occ::handle<StepData_StepReaderData>&                          data,
     const int                                                            num,
     occ::handle<Interface_Check>&                                        ach,
     const occ::handle<StepBasic_ProductDefinitionFormationRelationship>& ent) const;
 
-  //! Writes ProductDefinitionFormationRelationship
   Standard_HIDDEN void WriteStep(
     StepData_StepWriter&                                                 SW,
     const occ::handle<StepBasic_ProductDefinitionFormationRelationship>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(
     const occ::handle<StepBasic_ProductDefinitionFormationRelationship>& ent,
     Interface_EntityIterator&                                            iter) const;

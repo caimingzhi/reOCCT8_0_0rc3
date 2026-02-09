@@ -1,4 +1,4 @@
-// Created on : Thu May 14 15:13:19 2020
+
 
 #include "RWStepVisual_RWSurfaceStyleRendering.hpp"
 #include <Interface_EntityIterator.hpp>
@@ -8,11 +8,7 @@
 #include <StepVisual_ShadingSurfaceMethod.hpp>
 #include <StepVisual_Colour.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWSurfaceStyleRendering::RWStepVisual_RWSurfaceStyleRendering() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWSurfaceStyleRendering::ReadStep(
   const occ::handle<StepData_StepReaderData>&          data,
@@ -20,11 +16,9 @@ void RWStepVisual_RWSurfaceStyleRendering::ReadStep(
   occ::handle<Interface_Check>&                        ach,
   const occ::handle<StepVisual_SurfaceStyleRendering>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "surface_style_rendering"))
     return;
-
-  // Own fields of SurfaceStyleRendering
 
   StepVisual_ShadingSurfaceMethod aRenderingMethod = StepVisual_ssmNormalShading;
   if (data->ParamType(num, 1) == Interface_ParamEnum)
@@ -47,18 +41,13 @@ void RWStepVisual_RWSurfaceStyleRendering::ReadStep(
   occ::handle<StepVisual_Colour> aSurfaceColour;
   data->ReadEntity(num, 2, "surface_colour", ach, STANDARD_TYPE(StepVisual_Colour), aSurfaceColour);
 
-  // Initialize entity
   ent->Init(aRenderingMethod, aSurfaceColour);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWSurfaceStyleRendering::WriteStep(
   StepData_StepWriter&                                 SW,
   const occ::handle<StepVisual_SurfaceStyleRendering>& ent) const
 {
-
-  // Own fields of SurfaceStyleRendering
 
   switch (ent->RenderingMethod())
   {
@@ -79,14 +68,10 @@ void RWStepVisual_RWSurfaceStyleRendering::WriteStep(
   SW.Send(ent->SurfaceColour());
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWSurfaceStyleRendering::Share(
   const occ::handle<StepVisual_SurfaceStyleRendering>& ent,
   Interface_EntityIterator&                            iter) const
 {
-
-  // Own fields of SurfaceStyleRendering
 
   iter.AddItem(ent->SurfaceColour());
 }

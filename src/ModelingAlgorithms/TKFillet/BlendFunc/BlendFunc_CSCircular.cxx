@@ -18,8 +18,6 @@
 
 #define Eps 1.e-15
 
-//=================================================================================================
-
 BlendFunc_CSCircular::BlendFunc_CSCircular(const occ::handle<Adaptor3d_Surface>& S,
                                            const occ::handle<Adaptor3d_Curve>&   C,
                                            const occ::handle<Adaptor3d_Curve>&   CGuide,
@@ -29,30 +27,24 @@ BlendFunc_CSCircular::BlendFunc_CSCircular(const occ::handle<Adaptor3d_Surface>&
       guide(CGuide),
       law(L),
       istangent(true),
-      // prmc, dprmc, istangent, ray, choix, normtg,
+
       maxang(RealFirst()),
       minang(RealLast()),
       mySShape(BlendFunc_Rational)
-// myTConv
+
 {
   law = L;
 }
-
-//=================================================================================================
 
 int BlendFunc_CSCircular::NbVariables() const
 {
   return 2;
 }
 
-//=================================================================================================
-
 int BlendFunc_CSCircular::NbEquations() const
 {
   return 2;
 }
-
-//=================================================================================================
 
 void BlendFunc_CSCircular::Set(const double Radius, const int Choix)
 {
@@ -69,14 +61,10 @@ void BlendFunc_CSCircular::Set(const double Radius, const int Choix)
   }
 }
 
-//=================================================================================================
-
 void BlendFunc_CSCircular::Set(const BlendFunc_SectionShape TypeSection)
 {
   mySShape = TypeSection;
 }
-
-//=================================================================================================
 
 void BlendFunc_CSCircular::Set(const double Param)
 {
@@ -88,22 +76,16 @@ void BlendFunc_CSCircular::Set(const double Param)
   nplan  = d1gui.Normalized();
 }
 
-//=================================================================================================
-
 void BlendFunc_CSCircular::Set(const double, const double)
 {
   throw Standard_NotImplemented("BlendFunc_CSCircular::Set");
 }
-
-//=================================================================================================
 
 void BlendFunc_CSCircular::GetTolerance(math_Vector& Tolerance, const double Tol) const
 {
   Tolerance(1) = surf->UResolution(Tol);
   Tolerance(2) = surf->VResolution(Tol);
 }
-
-//=================================================================================================
 
 void BlendFunc_CSCircular::GetBounds(math_Vector& InfBound, math_Vector& SupBound) const
 {
@@ -126,8 +108,6 @@ void BlendFunc_CSCircular::GetBounds(math_Vector& InfBound, math_Vector& SupBoun
   }
 }
 
-//=================================================================================================
-
 bool BlendFunc_CSCircular::IsSolution(const math_Vector& Sol, const double Tol)
 {
   math_Vector valsol(1, 2), secmember(1, 2);
@@ -141,8 +121,6 @@ bool BlendFunc_CSCircular::IsSolution(const math_Vector& Sol, const double Tol)
 
   if (std::abs(valsol(1)) <= Tol && std::abs(valsol(2)) <= Tol * Tol)
   {
-
-    // Calcul des tangentes
 
     pt2d = gp_Pnt2d(Sol(1), Sol(2));
 
@@ -192,7 +170,6 @@ bool BlendFunc_CSCircular::IsSolution(const math_Vector& Sol, const double Tol)
     {
       istangent = true;
     }
-    // mise a jour de maxang
 
     if (ray > 0.)
       ns.Reverse();
@@ -202,7 +179,7 @@ bool BlendFunc_CSCircular::IsSolution(const math_Vector& Sol, const double Tol)
     Sina = nplan.Dot(ns.Crossed(nc));
     if (choix % 2 != 0)
     {
-      Sina = -Sina; // nplan est change en -nplan
+      Sina = -Sina;
     }
 
     Angle = std::acos(Cosa);
@@ -225,8 +202,6 @@ bool BlendFunc_CSCircular::IsSolution(const math_Vector& Sol, const double Tol)
   istangent = true;
   return false;
 }
-
-//=================================================================================================
 
 bool BlendFunc_CSCircular::Value(const math_Vector& X, math_Vector& F)
 {
@@ -254,8 +229,6 @@ bool BlendFunc_CSCircular::Value(const math_Vector& X, math_Vector& F)
   return true;
 }
 
-//=================================================================================================
-
 bool BlendFunc_CSCircular::Derivatives(const math_Vector& X, math_Matrix& D)
 {
   gp_Vec d1u1, d1v1, d2u1, d2v1, d2uv1, d1c;
@@ -282,7 +255,6 @@ bool BlendFunc_CSCircular::Derivatives(const math_Vector& X, math_Matrix& D)
   nsov.SetLinearForm(nplan.Dot(ns) / norm, nplan, -1. / norm, ns);
   vref.SetLinearForm(ray, nsov, gp_Vec(ptc, pts));
 
-  // Derivee par rapport a u de Ps + ray*ns
   temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
   grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
   resul.SetLinearForm(-ray / norm * (grosterme * ndotns - nplan.Dot(temp)),
@@ -295,7 +267,6 @@ bool BlendFunc_CSCircular::Derivatives(const math_Vector& X, math_Matrix& D)
 
   D(2, 1) = 2. * (resul.Dot(vref));
 
-  // Derivee par rapport a v
   temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
   grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
   resul.SetLinearForm(-ray / norm * (grosterme * ndotns - nplan.Dot(temp)),
@@ -311,8 +282,6 @@ bool BlendFunc_CSCircular::Derivatives(const math_Vector& X, math_Matrix& D)
   pt2d = gp_Pnt2d(X(1), X(2));
   return true;
 }
-
-//=================================================================================================
 
 bool BlendFunc_CSCircular::Values(const math_Vector& X, math_Vector& F, math_Matrix& D)
 {
@@ -343,7 +312,6 @@ bool BlendFunc_CSCircular::Values(const math_Vector& X, math_Vector& F, math_Mat
   D(1, 1) = nplan.Dot(d1u1);
   D(1, 2) = nplan.Dot(d1v1);
 
-  // Derivee par rapport a u
   temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
   grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
   resul.SetLinearForm(-ray / norm * (grosterme * ndotns - nplan.Dot(temp)),
@@ -356,7 +324,6 @@ bool BlendFunc_CSCircular::Values(const math_Vector& X, math_Vector& F, math_Mat
 
   D(2, 1) = 2. * (resul.Dot(vref));
 
-  // Derivee par rapport a v
   temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
   grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
   resul.SetLinearForm(-ray / norm * (grosterme * ndotns - nplan.Dot(temp)),
@@ -373,42 +340,30 @@ bool BlendFunc_CSCircular::Values(const math_Vector& X, math_Vector& F, math_Mat
   return true;
 }
 
-//=================================================================================================
-
 const gp_Pnt& BlendFunc_CSCircular::PointOnS() const
 {
   return pts;
 }
-
-//=================================================================================================
 
 const gp_Pnt& BlendFunc_CSCircular::PointOnC() const
 {
   return ptc;
 }
 
-//=================================================================================================
-
 const gp_Pnt2d& BlendFunc_CSCircular::Pnt2d() const
 {
   return pt2d;
 }
-
-//=================================================================================================
 
 double BlendFunc_CSCircular::ParameterOnC() const
 {
   return prmc;
 }
 
-//=================================================================================================
-
 bool BlendFunc_CSCircular::IsTangencyPoint() const
 {
   return istangent;
 }
-
-//=================================================================================================
 
 const gp_Vec& BlendFunc_CSCircular::TangentOnS() const
 {
@@ -417,8 +372,6 @@ const gp_Vec& BlendFunc_CSCircular::TangentOnS() const
   return tgs;
 }
 
-//=================================================================================================
-
 const gp_Vec& BlendFunc_CSCircular::TangentOnC() const
 {
   if (istangent)
@@ -426,16 +379,12 @@ const gp_Vec& BlendFunc_CSCircular::TangentOnC() const
   return tgc;
 }
 
-//=================================================================================================
-
 const gp_Vec2d& BlendFunc_CSCircular::Tangent2d() const
 {
   if (istangent)
     throw Standard_DomainError("BlendFunc_CSCircular::Tangent2d");
   return tg2d;
 }
-
-//=================================================================================================
 
 void BlendFunc_CSCircular::Tangent(const double U, const double V, gp_Vec& TgS, gp_Vec& NmS) const
 {
@@ -453,8 +402,6 @@ void BlendFunc_CSCircular::Tangent(const double U, const double V, gp_Vec& TgS, 
     TgS.Reverse();
 }
 
-//=================================================================================================
-
 void BlendFunc_CSCircular::Section(const double Param,
                                    const double U,
                                    const double V,
@@ -464,7 +411,7 @@ void BlendFunc_CSCircular::Section(const double Param,
                                    gp_Circ&     C)
 {
   gp_Vec d1u1, d1v1;
-  gp_Vec ns; //,temp;
+  gp_Vec ns;
   double norm;
   gp_Pnt Center;
   gp_Pnt ptgui;
@@ -520,12 +467,10 @@ bool BlendFunc_CSCircular::Section(const Blend_Point&            P,
                                    D2Weigths);
 }
 
-//=================================================================================================
-
 bool BlendFunc_CSCircular::GetSection(const double Param,
                                       const double U,
                                       const double V,
-                                      const double /*W*/,
+                                      const double,
                                       NCollection_Array1<gp_Pnt>& tabP,
                                       NCollection_Array1<gp_Vec>& tabV)
 {
@@ -537,7 +482,7 @@ bool BlendFunc_CSCircular::GetSection(const double Param,
 
   int i, lowp = tabP.Lower(), lowv = tabV.Lower();
 
-  gp_Vec d1u1, d1v1, d2u1, d2v1, d2uv1, d1c, d2c; //,d1u2,d1v2;
+  gp_Vec d1u1, d1v1, d2u1, d2v1, d2uv1, d1c, d2c;
   gp_Vec ns, dnplan, dnw, dn2w, ncrn, dncrn, ns2;
   gp_Vec ncrossns, resul;
   gp_Vec resulu, resulv, temp;
@@ -563,8 +508,6 @@ bool BlendFunc_CSCircular::GetSection(const double Param,
   secmember(1) = dprmc * (nplan.Dot(d1c)) - dnplan.Dot(temp);
 
   ns2.SetLinearForm(ndotns / norm, nplan, -1. / norm, ns);
-
-  // Derivee de n1 par rapport a w (param sur ligne guide)
 
   grosterme = ncrossns.Dot(dnplan.Crossed(ns)) / norm / norm;
   dnw.SetLinearForm((dnplan.Dot(ns) - grosterme * ndotns) / norm,
@@ -592,7 +535,6 @@ bool BlendFunc_CSCircular::GetSection(const double Param,
     tgs.SetLinearForm(secmember(1), d1u1, secmember(2), d1v1);
     tgc = dprmc * d1c;
 
-    // Derivee de n1 par rapport a u1
     temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
     grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
     resulu.SetLinearForm(-(grosterme * ndotns - nplan.Dot(temp)) / norm,
@@ -602,7 +544,6 @@ bool BlendFunc_CSCircular::GetSection(const double Param,
                          -1. / norm,
                          temp);
 
-    // Derivee de n1 par rapport a v1
     temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
     grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
     resulv.SetLinearForm(-(grosterme * ndotns - nplan.Dot(temp)) / norm,
@@ -673,43 +614,30 @@ bool BlendFunc_CSCircular::GetSection(const double Param,
   return false;
 }
 
-//=================================================================================================
-
 bool BlendFunc_CSCircular::IsRational() const
 {
   return (mySShape == BlendFunc_Rational || mySShape == BlendFunc_QuasiAngular);
 }
-
-//=================================================================================================
 
 double BlendFunc_CSCircular::GetSectionSize() const
 {
   return maxang * std::abs(ray);
 }
 
-//=================================================================================================
-
 void BlendFunc_CSCircular::GetMinimalWeight(NCollection_Array1<double>& Weigths) const
 {
   BlendFunc::GetMinimalWeights(mySShape, myTConv, minang, maxang, Weigths);
-  // On suppose que cela ne depend pas du Rayon!
 }
-
-//=================================================================================================
 
 int BlendFunc_CSCircular::NbIntervals(const GeomAbs_Shape S) const
 {
   return curv->NbIntervals(BlendFunc::NextShape(S));
 }
 
-//=================================================================================================
-
 void BlendFunc_CSCircular::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const
 {
   curv->Intervals(T, BlendFunc::NextShape(S));
 }
-
-//=================================================================================================
 
 void BlendFunc_CSCircular::GetShape(int& NbPoles, int& NbKnots, int& Degree, int& NbPoles2d)
 {
@@ -717,10 +645,6 @@ void BlendFunc_CSCircular::GetShape(int& NbPoles, int& NbKnots, int& Degree, int
   BlendFunc::GetShape(mySShape, maxang, NbPoles, NbKnots, Degree, myTConv);
 }
 
-//=======================================================================
-// function : GetTolerance
-// purpose  : Determine les Tolerances a utiliser dans les approximations.
-//=======================================================================
 void BlendFunc_CSCircular::GetTolerance(const double BoundTol,
                                         const double SurfTol,
                                         const double AngleTol,
@@ -736,29 +660,23 @@ void BlendFunc_CSCircular::GetTolerance(const double BoundTol,
   Tol3d(low) = Tol3d(up) = std::min(Tol, BoundTol);
 }
 
-//=================================================================================================
-
 void BlendFunc_CSCircular::Knots(NCollection_Array1<double>& TKnots)
 {
   GeomFill::Knots(myTConv, TKnots);
 }
-
-//=================================================================================================
 
 void BlendFunc_CSCircular::Mults(NCollection_Array1<int>& TMults)
 {
   GeomFill::Mults(myTConv, TMults);
 }
 
-//=================================================================================================
-
 void BlendFunc_CSCircular::Section(const Blend_Point&            P,
                                    NCollection_Array1<gp_Pnt>&   Poles,
                                    NCollection_Array1<gp_Pnt2d>& Poles2d,
                                    NCollection_Array1<double>&   Weights)
 {
-  gp_Vec d1u1, d1v1; //,d1;
-  gp_Vec ns, ns2;    //,temp,np2;
+  gp_Vec d1u1, d1v1;
+  gp_Vec ns, ns2;
   gp_Pnt Center;
 
   double norm, u1, v1;
@@ -775,7 +693,6 @@ void BlendFunc_CSCircular::Section(const Blend_Point&            P,
 
   Poles2d(Poles2d.Lower()).SetCoord(u1, v1);
 
-  // Cas Linear
   if (mySShape == BlendFunc_Linear)
   {
     Poles(low)   = pts;
@@ -804,8 +721,6 @@ void BlendFunc_CSCircular::Section(const Blend_Point&            P,
   GeomFill::GetCircle(myTConv, ns, ns2, nplan, pts, ptc, std::abs(ray), Center, Poles, Weights);
 }
 
-//=================================================================================================
-
 bool BlendFunc_CSCircular::Section(const Blend_Point&            P,
                                    NCollection_Array1<gp_Pnt>&   Poles,
                                    NCollection_Array1<gp_Vec>&   DPoles,
@@ -815,7 +730,7 @@ bool BlendFunc_CSCircular::Section(const Blend_Point&            P,
                                    NCollection_Array1<double>&   DWeights)
 {
   gp_Vec d1u1, d1v1, d2u1, d2v1, d2uv1, d1, d2;
-  gp_Vec ns, ns2, dnplan, dnw, dn2w; //,np2,dnp2;
+  gp_Vec ns, ns2, dnplan, dnw, dn2w;
   gp_Vec ncrossns;
   gp_Vec resulu, resulv, temp, tgct, resul;
 
@@ -848,8 +763,6 @@ bool BlendFunc_CSCircular::Section(const Blend_Point&            P,
 
   secmember(1) = dprmc * (nplan.Dot(d1)) - dnplan.Dot(temp);
 
-  // Derivee de n1 par rapport a w
-
   grosterme = ncrossns.Dot(dnplan.Crossed(ns)) / norm / norm;
   dnw.SetLinearForm((dnplan.Dot(ns) - grosterme * ndotns) / norm,
                     nplan,
@@ -874,7 +787,6 @@ bool BlendFunc_CSCircular::Section(const Blend_Point&            P,
     tgs.SetLinearForm(secmember(1), d1u1, secmember(2), d1v1);
     tgc = dprmc * d1;
 
-    // Derivee de n1 par rapport a u1
     temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
     grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
     resulu.SetLinearForm(-(grosterme * ndotns - nplan.Dot(temp)) / norm,
@@ -884,7 +796,6 @@ bool BlendFunc_CSCircular::Section(const Blend_Point&            P,
                          -1. / norm,
                          temp);
 
-    // Derivee de n1 par rapport a v1
     temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
     grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
     resulv.SetLinearForm(-(grosterme * ndotns - nplan.Dot(temp)) / norm,
@@ -911,8 +822,6 @@ bool BlendFunc_CSCircular::Section(const Blend_Point&            P,
     istgt = true;
   }
 
-  // Les poles 2d
-
   Poles2d(Poles2d.Lower()).SetCoord(sol(1), sol(2));
   if (!istgt)
   {
@@ -935,7 +844,6 @@ bool BlendFunc_CSCircular::Section(const Blend_Point&            P,
     return (!istgt);
   }
 
-  // Cas du cercle
   Center.SetXYZ(pts.XYZ() + ray * ns.XYZ());
   if (!istgt)
   {

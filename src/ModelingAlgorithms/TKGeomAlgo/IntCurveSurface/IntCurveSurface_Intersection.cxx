@@ -6,26 +6,22 @@
 
 #define PARAMEQUAL(a, b) (std::abs((a) - (b)) < (1e-8))
 
-//================================================================================
 IntCurveSurface_Intersection::IntCurveSurface_Intersection()
     : done(false),
       myIsParallel(false)
 {
 }
 
-//================================================================================
 bool IntCurveSurface_Intersection::IsDone() const
 {
   return (done);
 }
 
-//================================================================================
 bool IntCurveSurface_Intersection::IsParallel() const
 {
   return (myIsParallel);
 }
 
-//================================================================================
 int IntCurveSurface_Intersection::NbPoints() const
 {
   if (!done)
@@ -35,7 +31,6 @@ int IntCurveSurface_Intersection::NbPoints() const
   return lpnt.Length();
 }
 
-//================================================================================
 int IntCurveSurface_Intersection::NbSegments() const
 {
   if (!done)
@@ -45,7 +40,6 @@ int IntCurveSurface_Intersection::NbSegments() const
   return lseg.Length();
 }
 
-//================================================================================
 const IntCurveSurface_IntersectionPoint& IntCurveSurface_Intersection::Point(const int N) const
 {
   if (!done)
@@ -55,7 +49,6 @@ const IntCurveSurface_IntersectionPoint& IntCurveSurface_Intersection::Point(con
   return lpnt.Value(N);
 }
 
-//================================================================================
 const IntCurveSurface_IntersectionSegment& IntCurveSurface_Intersection::Segment(const int N) const
 {
   if (!done)
@@ -65,7 +58,6 @@ const IntCurveSurface_IntersectionSegment& IntCurveSurface_Intersection::Segment
   return lseg.Value(N);
 }
 
-//================================================================================
 void IntCurveSurface_Intersection::SetValues(const IntCurveSurface_Intersection& Other)
 {
   if (Other.done)
@@ -91,11 +83,10 @@ void IntCurveSurface_Intersection::SetValues(const IntCurveSurface_Intersection&
   }
 }
 
-//================================================================================
 void IntCurveSurface_Intersection::Append(const IntCurveSurface_Intersection& Other,
-                                          //					  const double a,
+
                                           const double,
-                                          //					  const double b)
+
                                           const double)
 {
   int i, ni;
@@ -114,7 +105,6 @@ void IntCurveSurface_Intersection::Append(const IntCurveSurface_Intersection& Ot
   }
 }
 
-//================================================================================
 void IntCurveSurface_Intersection::Append(const IntCurveSurface_IntersectionPoint& OtherPoint)
 {
   int                               i, ni;
@@ -143,13 +133,11 @@ void IntCurveSurface_Intersection::Append(const IntCurveSurface_IntersectionPoin
   lpnt.Append(OtherPoint);
 }
 
-//================================================================================
 void IntCurveSurface_Intersection::Append(const IntCurveSurface_IntersectionSegment& OtherSegment)
 {
   lseg.Append(OtherSegment);
 }
 
-//================================================================================
 void IntCurveSurface_Intersection::ResetFields()
 {
   if (done)
@@ -161,7 +149,6 @@ void IntCurveSurface_Intersection::ResetFields()
   }
 }
 
-//================================================================================
 void IntCurveSurface_Intersection::Dump() const
 {
   if (done)

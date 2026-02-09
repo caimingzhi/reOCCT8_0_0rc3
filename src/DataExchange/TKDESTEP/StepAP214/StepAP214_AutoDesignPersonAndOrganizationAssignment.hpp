@@ -16,7 +16,6 @@ class StepAP214_AutoDesignPersonAndOrganizationAssignment
 {
 
 public:
-  //! Returns a AutoDesignPersonAndOrganizationAssignment
   Standard_EXPORT StepAP214_AutoDesignPersonAndOrganizationAssignment();
 
   Standard_EXPORT void Init(

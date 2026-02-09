@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_ListEditor.hpp>
 #include <Interface_InterfaceModel.hpp>
@@ -65,8 +54,6 @@ void IFSelect_ListEditor::ClearEdit()
   thetouc = 0;
 }
 
-//  ########    CHECK    ########
-
 static bool CheckValue(const occ::handle<TCollection_HAsciiString>& val,
                        const occ::handle<Interface_InterfaceModel>& modl,
                        const occ::handle<Interface_TypedValue>&     thedef)
@@ -85,8 +72,6 @@ static bool CheckValue(const occ::handle<TCollection_HAsciiString>& val,
   return true;
 }
 
-//  ########    EDITION    ########
-
 bool IFSelect_ListEditor::LoadEdited(
   const occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>>& list)
 {
@@ -96,7 +81,6 @@ bool IFSelect_ListEditor::LoadEdited(
   if (nb > themax)
     return false;
 
-  //   check values
   if (!thedef.IsNull())
   {
     for (i = 1; i <= nb; i++)
@@ -107,7 +91,6 @@ bool IFSelect_ListEditor::LoadEdited(
     }
   }
 
-  //  OK
   theedit = list;
   thestat = new NCollection_HSequence<int>();
   for (i = 1; i <= nb; i++)
@@ -124,11 +107,9 @@ bool IFSelect_ListEditor::SetValue(const int num, const occ::handle<TCollection_
   if (num < 1 || num > theedit->Length())
     return false;
 
-  //   check value
   if (!CheckValue(val, themodl, thedef))
     return false;
 
-  // OK
   theedit->SetValue(num, val);
   thestat->SetValue(num, 1);
   thetouc = 1;
@@ -175,8 +156,6 @@ bool IFSelect_ListEditor::Remove(const int num, const int howmany)
   thetouc = 3;
   return true;
 }
-
-//  ########    QUERIES    ########
 
 occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> IFSelect_ListEditor::
   OriginalValues() const

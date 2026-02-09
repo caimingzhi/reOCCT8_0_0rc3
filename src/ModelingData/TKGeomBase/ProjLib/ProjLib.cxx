@@ -29,8 +29,6 @@
 #include <ProjLib_ProjectedCurve.hpp>
 #include <Standard_NotImplemented.hpp>
 
-//=================================================================================================
-
 gp_Pnt2d ProjLib::Project(const gp_Pln& Pl, const gp_Pnt& P)
 {
   double U, V;
@@ -38,15 +36,11 @@ gp_Pnt2d ProjLib::Project(const gp_Pln& Pl, const gp_Pnt& P)
   return gp_Pnt2d(U, V);
 }
 
-//=================================================================================================
-
 gp_Lin2d ProjLib::Project(const gp_Pln& Pl, const gp_Lin& L)
 {
   ProjLib_Plane Proj(Pl, L);
   return Proj.Line();
 }
-
-//=================================================================================================
 
 gp_Circ2d ProjLib::Project(const gp_Pln& Pl, const gp_Circ& C)
 {
@@ -54,15 +48,11 @@ gp_Circ2d ProjLib::Project(const gp_Pln& Pl, const gp_Circ& C)
   return Proj.Circle();
 }
 
-//=================================================================================================
-
 gp_Elips2d ProjLib::Project(const gp_Pln& Pl, const gp_Elips& E)
 {
   ProjLib_Plane Proj(Pl, E);
   return Proj.Ellipse();
 }
-
-//=================================================================================================
 
 gp_Parab2d ProjLib::Project(const gp_Pln& Pl, const gp_Parab& P)
 {
@@ -70,15 +60,11 @@ gp_Parab2d ProjLib::Project(const gp_Pln& Pl, const gp_Parab& P)
   return Proj.Parabola();
 }
 
-//=================================================================================================
-
 gp_Hypr2d ProjLib::Project(const gp_Pln& Pl, const gp_Hypr& H)
 {
   ProjLib_Plane Proj(Pl, H);
   return Proj.Hyperbola();
 }
-
-//=================================================================================================
 
 gp_Pnt2d ProjLib::Project(const gp_Cylinder& Cy, const gp_Pnt& P)
 {
@@ -87,23 +73,17 @@ gp_Pnt2d ProjLib::Project(const gp_Cylinder& Cy, const gp_Pnt& P)
   return gp_Pnt2d(U, V);
 }
 
-//=================================================================================================
-
 gp_Lin2d ProjLib::Project(const gp_Cylinder& Cy, const gp_Lin& L)
 {
   ProjLib_Cylinder Proj(Cy, L);
   return Proj.Line();
 }
 
-//=================================================================================================
-
 gp_Lin2d ProjLib::Project(const gp_Cylinder& Cy, const gp_Circ& Ci)
 {
   ProjLib_Cylinder Proj(Cy, Ci);
   return Proj.Line();
 }
-
-//=================================================================================================
 
 gp_Pnt2d ProjLib::Project(const gp_Cone& Co, const gp_Pnt& P)
 {
@@ -112,23 +92,17 @@ gp_Pnt2d ProjLib::Project(const gp_Cone& Co, const gp_Pnt& P)
   return gp_Pnt2d(U, V);
 }
 
-//=================================================================================================
-
 gp_Lin2d ProjLib::Project(const gp_Cone& Co, const gp_Lin& L)
 {
   ProjLib_Cone Proj(Co, L);
   return Proj.Line();
 }
 
-//=================================================================================================
-
 gp_Lin2d ProjLib::Project(const gp_Cone& Co, const gp_Circ& Ci)
 {
   ProjLib_Cone Proj(Co, Ci);
   return Proj.Line();
 }
-
-//=================================================================================================
 
 gp_Pnt2d ProjLib::Project(const gp_Sphere& Sp, const gp_Pnt& P)
 {
@@ -137,15 +111,11 @@ gp_Pnt2d ProjLib::Project(const gp_Sphere& Sp, const gp_Pnt& P)
   return gp_Pnt2d(U, V);
 }
 
-//=================================================================================================
-
 gp_Lin2d ProjLib::Project(const gp_Sphere& Sp, const gp_Circ& Ci)
 {
   ProjLib_Sphere Proj(Sp, Ci);
   return Proj.Line();
 }
-
-//=================================================================================================
 
 gp_Pnt2d ProjLib::Project(const gp_Torus& To, const gp_Pnt& P)
 {
@@ -154,15 +124,11 @@ gp_Pnt2d ProjLib::Project(const gp_Torus& To, const gp_Pnt& P)
   return gp_Pnt2d(U, V);
 }
 
-//=================================================================================================
-
 gp_Lin2d ProjLib::Project(const gp_Torus& To, const gp_Circ& Ci)
 {
   ProjLib_Torus Proj(To, Ci);
   return Proj.Line();
 }
-
-//=================================================================================================
 
 void ProjLib::MakePCurveOfType(const ProjLib_ProjectedCurve& PC, occ::handle<Geom2d_Curve>& C2D)
 {
@@ -195,8 +161,6 @@ void ProjLib::MakePCurveOfType(const ProjLib_ProjectedCurve& PC, occ::handle<Geo
       break;
   }
 }
-
-//=================================================================================================
 
 bool ProjLib::IsAnaSurf(const occ::handle<Adaptor3d_Surface>& theAS)
 {

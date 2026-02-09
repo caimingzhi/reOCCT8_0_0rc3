@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_Dispatch.hpp>
 #include <IFSelect_Modifier.hpp>
@@ -73,9 +62,6 @@ void IFSelect_ShareOut::SetLastRun(const int lastrun)
   thelastrun = lastrun;
 }
 
-//  #######################################################################
-//  ####                DISPATCHES (FILE SENDING)                ####
-
 int IFSelect_ShareOut::NbDispatches() const
 {
   return thedisps.Length();
@@ -110,9 +96,6 @@ bool IFSelect_ShareOut::RemoveDispatch(const int rank)
   thedisps.Remove(rank);
   return true;
 }
-
-//  ##########################################################################
-//  ####                            MODIFIERS                             ####
 
 void IFSelect_ShareOut::AddModifier(const occ::handle<IFSelect_GeneralModifier>& modifier,
                                     const int                                    atnum)
@@ -215,8 +198,6 @@ bool IFSelect_ShareOut::RemoveModifier(const bool formodel, const int atnum)
   return true;
 }
 
-//    ChangeModifierRank amounts to a circular permutation :
-//    before is put in after, those that are between rotate
 bool IFSelect_ShareOut::ChangeModifierRank(const bool formodel, const int before, const int after)
 {
   int nb;
@@ -250,10 +231,6 @@ bool IFSelect_ShareOut::ChangeModifierRank(const bool formodel, const int before
   }
   return true;
 }
-
-//  #######################################################################
-//  ####                    FILE NAMING                    ####
-//  Note : thenbdefs applies as long as we don't change the main terms
 
 bool IFSelect_ShareOut::SetRootName(const int                                    num,
                                     const occ::handle<TCollection_HAsciiString>& name)
@@ -358,7 +335,7 @@ TCollection_AsciiString IFSelect_ShareOut::FileName(const int dnum,
     thenbdefs++;
     num    = thenbdefs;
     npac   = 0;
-    sufnum = true; // number on default names, from the 1st without 0
+    sufnum = true;
   }
 
   TCollection_AsciiString res;
@@ -367,15 +344,9 @@ TCollection_AsciiString IFSelect_ShareOut::FileName(const int dnum,
   if (!rot.IsNull())
     res.AssignCat(rot->ToCString());
 
-  //  Suffixe numerique
   if (sufnum)
-  { // otherwise, no numeric suffix
-    //  PacketSuffix name : _ followed by number <num>
-    //  If nbpack non-zero, then we have an upper bound and we can precede with zeros
-    //  Ex.: nbpack = 50 (so 2 digits), num = 3, this will give _03
-    //  idnum not used : this method can be redefined and use idnum ...
-    //  If nbpack = 0 or 1, num = 1 no suffix, otherwise suffix "_num" as is
-    //  MODIF of 3-NOV-1995 -> to avoid any confusion, num = 1 also gives _1
+  {
+
     int  nbch = 0;
     char format[30], suffixe[30];
     format[1] = ' ';

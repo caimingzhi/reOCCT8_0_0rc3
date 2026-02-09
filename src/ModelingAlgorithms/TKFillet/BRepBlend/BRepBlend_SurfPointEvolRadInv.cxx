@@ -3,8 +3,6 @@
 #include <Law_Function.hpp>
 #include <math_Matrix.hpp>
 
-//=================================================================================================
-
 BRepBlend_SurfPointEvolRadInv::BRepBlend_SurfPointEvolRadInv(
   const occ::handle<Adaptor3d_Surface>& S,
   const occ::handle<Adaptor3d_Curve>&   C,
@@ -14,8 +12,6 @@ BRepBlend_SurfPointEvolRadInv::BRepBlend_SurfPointEvolRadInv(
 {
   tevol = Evol;
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfPointEvolRadInv::Set(const int Choix)
 {
@@ -36,14 +32,10 @@ void BRepBlend_SurfPointEvolRadInv::Set(const int Choix)
   }
 }
 
-//=================================================================================================
-
 int BRepBlend_SurfPointEvolRadInv::NbEquations() const
 {
   return 3;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfPointEvolRadInv::Value(const math_Vector& X, math_Vector& F)
 {
@@ -68,8 +60,6 @@ bool BRepBlend_SurfPointEvolRadInv::Value(const math_Vector& X, math_Vector& F)
   F(3) = ref.SquareModulus() - ray * ray;
   return true;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfPointEvolRadInv::Derivatives(const math_Vector& X, math_Matrix& D)
 {
@@ -138,8 +128,6 @@ bool BRepBlend_SurfPointEvolRadInv::Derivatives(const math_Vector& X, math_Matri
 
   return true;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfPointEvolRadInv::Values(const math_Vector& X, math_Vector& F, math_Matrix& D)
 {
@@ -214,14 +202,10 @@ bool BRepBlend_SurfPointEvolRadInv::Values(const math_Vector& X, math_Vector& F,
   return true;
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfPointEvolRadInv::Set(const gp_Pnt& P)
 {
   point = P;
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfPointEvolRadInv::GetTolerance(math_Vector& Tolerance, const double Tol) const
 {
@@ -229,8 +213,6 @@ void BRepBlend_SurfPointEvolRadInv::GetTolerance(math_Vector& Tolerance, const d
   Tolerance(2) = surf->UResolution(Tol);
   Tolerance(3) = surf->VResolution(Tol);
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfPointEvolRadInv::GetBounds(math_Vector& InfBound, math_Vector& SupBound) const
 {
@@ -241,8 +223,6 @@ void BRepBlend_SurfPointEvolRadInv::GetBounds(math_Vector& InfBound, math_Vector
   InfBound(3) = surf->FirstVParameter();
   SupBound(3) = surf->LastVParameter();
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfPointEvolRadInv::IsSolution(const math_Vector& Sol, const double Tol)
 {

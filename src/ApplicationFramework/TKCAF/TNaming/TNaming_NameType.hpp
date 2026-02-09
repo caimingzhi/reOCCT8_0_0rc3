@@ -1,6 +1,5 @@
 #pragma once
 
-//! to store naming characteristcs
 enum TNaming_NameType
 {
   TNaming_UNKNOWN,

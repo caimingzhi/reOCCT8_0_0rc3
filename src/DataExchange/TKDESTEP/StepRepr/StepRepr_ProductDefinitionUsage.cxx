@@ -2,6 +2,4 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ProductDefinitionUsage, StepBasic_ProductDefinitionRelationship)
 
-//=================================================================================================
-
 StepRepr_ProductDefinitionUsage::StepRepr_ProductDefinitionUsage() = default;

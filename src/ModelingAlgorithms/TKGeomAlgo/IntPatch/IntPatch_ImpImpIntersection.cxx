@@ -1,16 +1,4 @@
-// Copyright (c) 1992-1999 Matra Datavision
-// Copyright (c) 1999-2024 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_HVertex.hpp>
@@ -122,7 +110,6 @@ static void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>&,
                          const double,
                          const bool theIsReqToKeepRLine);
 
-//-- le calcul de dist est completement faux ds la routine ci dessous a revoir (lbr le 18 nov 97)
 bool IntersectionWithAnArc(gp_Pnt&                               PSurf,
                            const occ::handle<IntPatch_ALine>&    alin,
                            double&                               para,
@@ -135,9 +122,9 @@ bool IntersectionWithAnArc(gp_Pnt&                               PSurf,
 {
   double dtheta, theta;
 #ifdef OCCT_DEBUG
-  // double u,v,A,B,C,cost,sint,sign;
+
 #endif
-  //-- recherche bete du point le plus proche de thearc->Value(...)
+
   dtheta    = (u1alin - u0alin) * 0.01;
   double du = 0.000000001;
   if (du >= dtheta)
@@ -160,7 +147,6 @@ bool IntersectionWithAnArc(gp_Pnt&                               PSurf,
 
   double bestpara = 0., besttheta = 0., bestdist = 0., distinit = 0.;
 
-  //-- Distance initiale
   {
     gp_Pnt pp0 = alin->Value(thetamin);
     double ua0, va0;
@@ -172,7 +158,7 @@ bool IntersectionWithAnArc(gp_Pnt&                               PSurf,
     distinit = PaPr.Magnitude();
   }
   theta = thetamin;
-  //-- recherche a partir de theta et theparameteronarc
+
   bool   cpasok = true;
   int    nbiter = 0;
   double drmax  = (thearc->LastParameter() - thearc->FirstParameter()) * 0.05;
@@ -183,8 +169,7 @@ bool IntersectionWithAnArc(gp_Pnt&                               PSurf,
   do
   {
     double ua0, va0, ua1, va1;
-    //-- alin->Curve().InternalUVValue(theta,ua0,va0,A,B,C,cost,sint,sign);
-    //-- alin->Curve().InternalUVValue(theta+du,ua1,va1,A,B,C,cost,sint,sign);
+
     gp_Pnt pp0 = alin->Value(theta);
     gp_Pnt pp1 = alin->Value(theta + du);
     QuadSurf.Parameters(pp0, ua0, va0);
@@ -244,8 +229,6 @@ bool IntersectionWithAnArc(gp_Pnt&                               PSurf,
         }
       }
     }
-    //--     double da = -PaPr.Dot(D1a);
-    //--     double dr = -PaPr.Dot(d2d);
 
     if (da < -damax)
       da = -damax;
@@ -263,7 +246,7 @@ bool IntersectionWithAnArc(gp_Pnt&                               PSurf,
       _theparameteronarc = theparameteronarc;
       thepointonarc      = alin->Value(para);
       cpasok             = false;
-      //--      printf("\nt:%d",nbiter);
+
       return (true);
     }
     else
@@ -295,14 +278,13 @@ bool IntersectionWithAnArc(gp_Pnt&                               PSurf,
     PSurf              = alin->Value(para);
     _theparameteronarc = bestpara;
     thepointonarc      = alin->Value(para);
-    //--     printf("\nT:%d",nbiter);
+
     return (true);
   }
-  //--   printf("\nF:%d",nbiter);
+
   return (false);
 }
 
-//-- ======================================================================
 static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
                     const occ::handle<Adaptor3d_Surface>& myHS2,
                     double&                               u1,
@@ -332,7 +314,7 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
     }
     default:
     {
-      //-- Le cas de biparametrees periodiques est gere en amont
+
       myHS1IsUPeriodic = myHS1IsVPeriodic = false;
       break;
     }
@@ -356,14 +338,14 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
     }
     default:
     {
-      //-- Le cas de biparametrees periodiques est gere en amont
+
       myHS2IsUPeriodic = myHS2IsVPeriodic = false;
       break;
     }
   }
   if (myHS1IsUPeriodic)
   {
-    lmf   = M_PI + M_PI; //-- myHS1->UPeriod();
+    lmf   = M_PI + M_PI;
     f     = myHS1->FirstUParameter();
     l     = myHS1->LastUParameter();
     fpls2 = 0.5 * (f + l);
@@ -378,7 +360,7 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
   }
   if (myHS1IsVPeriodic)
   {
-    lmf   = M_PI + M_PI; //-- myHS1->VPeriod();
+    lmf   = M_PI + M_PI;
     f     = myHS1->FirstVParameter();
     l     = myHS1->LastVParameter();
     fpls2 = 0.5 * (f + l);
@@ -390,12 +372,10 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
     {
       v1 -= lmf;
     }
-    //--    while(v1 < f) { v1+=lmf; }
-    //--    while(v1 > l) { v1-=lmf; }
   }
   if (myHS2IsUPeriodic)
   {
-    lmf   = M_PI + M_PI; //-- myHS2->UPeriod();
+    lmf   = M_PI + M_PI;
     f     = myHS2->FirstUParameter();
     l     = myHS2->LastUParameter();
     fpls2 = 0.5 * (f + l);
@@ -407,12 +387,10 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
     {
       u2 -= lmf;
     }
-    //-- while(u2 < f) { u2+=lmf; }
-    //-- while(u2 > l) { u2-=lmf; }
   }
   if (myHS2IsVPeriodic)
   {
-    lmf   = M_PI + M_PI; //-- myHS2->VPeriod();
+    lmf   = M_PI + M_PI;
     f     = myHS2->FirstVParameter();
     l     = myHS2->LastVParameter();
     fpls2 = 0.5 * (f + l);
@@ -424,12 +402,8 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
     {
       v2 -= lmf;
     }
-    //-- while(v2 < f) { v2+=lmf; }
-    //-- while(v2 > l) { v2-=lmf; }
   }
 }
-
-//=================================================================================================
 
 void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                            S1,
                      const occ::handle<Adaptor3d_Surface>&                            S2,
@@ -442,9 +416,7 @@ void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                      
                      const bool                                                       multpoint,
                      const double                                                     Tolarc)
 {
-  // Traitement des point (de listpnt) de depart. On les replace sur
-  // la ligne d intersection, en leur affectant la transition correcte sur
-  // cette ligne.
+
   int nbpnt = listpnt.Length();
   int nblin = slin.Length();
 
@@ -452,7 +424,7 @@ void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                      
   {
     return;
   }
-  //
+
   int    i, k;
   int    linenumber;
   double currentparameter, tolerance;
@@ -478,23 +450,22 @@ void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                      
   NCollection_Array1<int> UsedLine(1, nblin);
   NCollection_Array1<int> Done(1, nbpnt);
   for (i = 1; i <= nbpnt; i++)
-    Done(i) = 0; //-- Initialisation a la main
+    Done(i) = 0;
 
   for (i = 1; i <= nbpnt; i++)
   {
     if (Done(i) != 1)
     {
       currentpointonrst = listpnt.Value(i);
-      Psurf             = currentpointonrst.Value(); // Point dans l espace
+      Psurf             = currentpointonrst.Value();
       tolerance         = currentpointonrst.Tolerance();
 
-      // On recherche d abord si on a correspondance avec un "point multiple"
       UsedLine.Init(0);
 
       goon = true;
       if (multpoint)
       {
-        Normale          = QuadSurf.Normale(Psurf); // Normale a la surface au point
+        Normale          = QuadSurf.Normale(Psurf);
         currentarc       = currentpointonrst.Arc();
         currentparameter = currentpointonrst.Parameter();
         currentarc->D1(currentparameter, p2d, d2d);
@@ -521,16 +492,12 @@ void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                      
             continue;
           linenumber = indiceline;
 
-          //-- Attention , les points peuvent etre deplaces
-          //-- il faut reprendre le point original
           currentpointonrst = listpnt.Value(i);
           currentarc        = currentpointonrst.Arc();
           currentparameter  = currentpointonrst.Parameter();
-          Psurf             = currentpointonrst.Value(); // Point dans l espace
+          Psurf             = currentpointonrst.Value();
           tolerance         = currentpointonrst.Tolerance();
-          //--
 
-          //  Modified by skv - Thu Jan 15 15:57:15 2004 OCC4455 Begin
           if (!currentpointonrst.IsNew())
           {
             occ::handle<Adaptor3d_HVertex> aVtx    = currentpointonrst.Vertex();
@@ -541,14 +508,14 @@ void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                      
 
             gp_Vec aNorm1 = QuadSurf.Normale(Psurf);
             gp_Vec aNorm2 = OtherQuad.Normale(Psurf);
-            //
+
             if (aNorm1.Magnitude() > gp::Resolution() && aNorm2.Magnitude() > gp::Resolution())
             {
               if (aNorm1.IsParallel(aNorm2, aTolAng))
                 tolerance = std::sqrt(tolerance);
-            } //
+            }
           }
-          //  Modified by skv - Thu Jan 15 15:57:15 2004 OCC4455 End
+
           gp_Pnt pointonarc;
           Vtgint.SetCoord(0, 0, 0);
           double                   aVertTol = Tolarc;
@@ -568,9 +535,9 @@ void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                      
                                aVertTol);
           if (linefound)
           {
-            Normale    = QuadSurf.Normale(Psurf); // Normale a la surface au point
+            Normale    = QuadSurf.Normale(Psurf);
             currentarc = currentpointonrst.Arc();
-            //-- currentparameter = currentpointonrst.Parameter();
+
             currentarc->D1(currentparameter, p2d, d2d);
             QuadSurf.D1(p2d.X(), p2d.Y(), ptbid, d1u, d1v);
             Vtgrst.SetLinearForm(d2d.X(), d1u, d2d.Y(), d1v);
@@ -579,9 +546,7 @@ void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                      
             TheType                               = lin->ArcType();
 
             if (!OnFirst)
-            { // on cherche la correspondance entre point sur domaine
-              // de la premiere surface et point sur domaine de la
-              // deuxieme surface
+            {
 
               goon = PointOnSecondDom(listpnt,
                                       Domain,
@@ -596,9 +561,7 @@ void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                      
 
             if (goon)
             {
-              //-- Modification du 4 avril 97    tolerance->Tolarc
-              //-- on replace sur le vertex la tolerance d entree et
-              //-- non la tolerance qui a servi au FindLine
+
               solpnt.SetValue(Psurf, aVertTol, false);
 
               U1 = p2d.X();
@@ -623,7 +586,6 @@ void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                      
               }
               else
               {
-                //-- goon = false; ????
               }
 
               if (Normale.SquareMagnitude() < 1e-16)
@@ -672,7 +634,6 @@ void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                      
                         currentarc       = currentpointonrst.Arc();
                         currentparameter = currentpointonrst.Parameter();
 
-                        //		      currentarc->D1(currentparameter,ptbid,Vtgrst);
                         currentarc->D1(currentparameter, p2d, d2d);
                         Vtgrst.SetLinearForm(d2d.X(), d1u, d2d.Y(), d1v);
                         if (Normale.SquareMagnitude() < 1e-16)
@@ -703,8 +664,7 @@ void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                      
           }
           else
           {
-            Done(i) = 1; // il faudra tester si IsNew ou pas
-            // et traiter en consequence
+            Done(i) = 1;
           }
         }
       }
@@ -723,7 +683,6 @@ bool MultiplePoint(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBound
                    const bool                                                       OnFirst,
                    const double                                                     theToler)
 {
-  // Traitement des points "multiples".
 
   int            k, ii, jj, nbvtx;
   int            nblin = slin.Length();
@@ -791,7 +750,7 @@ bool MultiplePoint(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBound
           bool foo = SingleLine(Point, slinValueii, intpt.Tolerance(), Paraint, Vtgint);
           if (!foo)
           {
-            return false; // ne doit pas se produire
+            return false;
           }
 
           if (!currentpointonrst.IsNew())
@@ -810,7 +769,6 @@ bool MultiplePoint(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBound
           QuadSurf.D1(p2d.X(), p2d.Y(), ptbid, d1u, d1v);
           Vtgrst.SetLinearForm(d2d.X(), d1u, d2d.Y(), d1v);
 
-          //-- Si la normale est nulle (apex d un cone) On simule une transition UNKNOWN
           if (Normale.SquareMagnitude() < 1e-16)
           {
             Transline.SetValue(true, IntSurf_Undecided);
@@ -821,9 +779,6 @@ bool MultiplePoint(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBound
             IntSurf::MakeTransition(Vtgint, Vtgrst, Normale, Transline, Transarc);
           }
 
-          //-- Avant, on ne mettait pas ce point (17 nov 97)
-          //--printf("\n ImpImp_0  : Point(%g,%g,%g)  intpt(%g,%g,%g) \n",
-          //-- Point.X(),Point.Y(),Point.Z(),intpt.Value().X(),intpt.Value().Y(),intpt.Value().Z());
           intpt.SetValue(Point);
 
           intpt.SetArc(OnFirst, currentarc, currentparameter, Transline, Transarc);
@@ -883,11 +838,9 @@ bool MultiplePoint(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBound
               }
             }
           }
-          //--           jj = nbvtx +1;
         }
-        //--         else {
+
         jj = jj + 1;
-        //--        }
       }
       else
       {
@@ -913,9 +866,6 @@ bool PointOnSecondDom(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBo
                       NCollection_Array1<int>&                                         Done,
                       const int                                                        Index,
                       const double                                                     theToler)
-
-// Duplication des points sur domaine de l autre surface.
-// On sait que le vertex sous-jacent est PntRef
 
 {
   int            k, jj, nbvtx;
@@ -1043,7 +993,7 @@ bool PointOnSecondDom(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBo
             }
           }
         }
-        //-- jj = nbvtx + 1;
+
         jj++;
       }
       else
@@ -1084,10 +1034,6 @@ bool FindLine(gp_Pnt&                                                 Psurf,
   if ((QuadSurf1.Distance(Psurf) > Tol) || (QuadSurf2.Distance(Psurf) > Tol))
     return false;
 
-  // Traitement du point de depart ayant pour representation Psurf
-  // dans l espace. On recherche la ligne d intersection contenant ce point.
-  // On a en sortie la ligne, et le parametre et sa tangente du point sur
-  // la ligne d intersection.
   const double   aSqTol     = Tol * Tol;
   double         aSqDistMin = RealLast();
   double         aSqDist, para;
@@ -1189,16 +1135,13 @@ bool FindLine(gp_Pnt&                                                 Psurf,
       break;
       case IntPatch_Parabola:
       {
-        //-- Le calcul du parametre sur une parabole est mal fait ds ElCLib. Il ne tient pas compte
-        //-- de la meilleure facon de calculer (axe X ou axe Y). Bilan : Si la parabole est tres
-        //-- pointue (focal de l'ordre de 1e-2 et si le point est a un parametre grand, ca foire. )
-        //-- On ne peut pas modifier faciolement ds ElCLib car on ne passe pas la focale. ...
+
         const gp_Parab& Parab = occ::down_cast<IntPatch_GLine>(lin)->Parabola();
         para                  = ElCLib::Parameter(Parab, Psurf);
         if (para <= upper && para >= lower)
         {
           int amelioration = 0;
-          //-- cout<<"\n ****** \n";
+
           do
           {
             double parabis = para + 0.0000001;
@@ -1210,8 +1153,6 @@ bool FindLine(gp_Pnt&                                                 Psurf,
             const double distbis = Psurf.Distance(ptbis);
             const double aDist   = std::sqrt(aSqDist);
             const double ddist   = distbis - aDist;
-
-            //--cout<<" para: "<<para<<"    dist:"<<dist<<"   ddist:"<<ddist<<endl;
 
             if ((aSqDist < aSqTol) && (aSqDist < aSqDistMin))
             {
@@ -1260,8 +1201,6 @@ bool FindLine(gp_Pnt&                                                 Psurf,
         alin->FindParameter(Psurf, aLParams);
         if (!aLParams.IsEmpty())
         {
-          // All found distances are already in some internal tolerance
-          // set in alin->FindParameter(...) method.
 
           aSqDist = RealLast();
           for (NCollection_List<double>::Iterator anItr(aLParams); anItr.More(); anItr.Next())
@@ -1283,12 +1222,9 @@ bool FindLine(gp_Pnt&                                                 Psurf,
         }
         else
         {
-          //-- le point n a pas ete trouve par bete projection.
-          //-- on essaie l intersection avec la restriction en 2d
+
           double theparamonarc = theparameteronarc;
-          // #ifdef OCCT_DEBUG
-          //	  double anpara=para;
-          // #endif
+
           gp_Pnt CopiePsurf    = Psurf;
           bool   IntersectIsOk = IntersectionWithAnArc(CopiePsurf,
                                                      alin,
@@ -1315,10 +1251,10 @@ bool FindLine(gp_Pnt&                                                 Psurf,
       }
       break;
 
-      case IntPatch_Walking: // impossible . c est pour eviter les warnings
+      case IntPatch_Walking:
       {
       }
-      case IntPatch_Restriction: // impossible . c est pour eviter les warnings
+      case IntPatch_Restriction:
       {
       }
     }
@@ -1331,7 +1267,6 @@ bool FindLine(gp_Pnt&                                                 Psurf,
 
   typarc = slin.Value(theLineIdx)->ArcType();
 
-  // Computation of tangent vector
   switch (typarc)
   {
     case IntPatch_Lin:
@@ -1363,34 +1298,21 @@ bool FindLine(gp_Pnt&                                                 Psurf,
     {
       if (!occ::down_cast<IntPatch_ALine>(slin(theLineIdx))->D1(theLParams.Last(), pt, Vtgtint))
       {
-        // Previously (before the fix #29807) this code tried to process case
-        // when occ::handle<IntPatch_ALine>::D1(...) method returns FALSE and
-        // computed Vtgtint input argument value. Currently, any singularities
-        // must be processed by high-level algorithms (IntPatch_SpecialPoints class).
-        // Therefore this code has been deleted as deprecated.
 
         Vtgtint.SetCoord(0.0, 0.0, 0.0);
       }
     }
     break;
-    case IntPatch_Walking: // impossible . c est pour eviter les warnings
+    case IntPatch_Walking:
     {
     }
-    case IntPatch_Restriction: // impossible . c est pour eviter les warnings
+    case IntPatch_Restriction:
     {
     }
   }
   return true;
 }
 
-//=======================================================================
-// function : SingleLine
-// purpose  : Traitement du point de depart ayant pour representation Psurf
-//            dans l espace. On le replace sur la ligne d intersection; On a en sortie
-//            son parametre et sa tangente sur la ligne d intersection.
-//            La fonction renvoie False si le point projete est a une distance
-//            superieure a Tol du point a projeter.
-//=======================================================================
 bool SingleLine(const gp_Pnt&                     Psurf,
                 const occ::handle<IntPatch_Line>& lin,
                 const double                      Tol,
@@ -1438,27 +1360,21 @@ bool SingleLine(const gp_Pnt&                     Psurf,
         gp_Pnt aPtemp;
         if (!alin->D1(parproj, aPtemp, tgint))
         {
-          // Previously (before the fix #29807) this code tried to process case
-          // when occ::handle<IntPatch_ALine>::D1(...) method returns FALSE and
-          // computed Vtgtint input argument value. Currently, any singularities
-          // must be processed by high-level algorithms (IntPatch_SpecialPoints class).
-          // Therefore this code has been deleted as deprecated.
 
           tgint.SetCoord(0.0, 0.0, 0.0);
         }
       }
       else
       {
-        //-- cout << "---- Pb sur ligne analytique dans SingleLine" << endl;
-        //-- cout << "     Find Parameter"<<endl;
+
         return false;
       }
     }
     break;
-    case IntPatch_Walking: // impossible . c est pour eviter les warnings
+    case IntPatch_Walking:
     {
     }
-    case IntPatch_Restriction: // impossible . c est pour eviter les warnings
+    case IntPatch_Restriction:
     {
     }
   }
@@ -1490,7 +1406,7 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
   occ::handle<Adaptor2d_Curve2d> arcRef;
   IntPatch_Point                 ptvtx, newptvtx;
 
-  occ::handle<IntPatch_RLine> rline; //-- On fait rline = new ... par la suite
+  occ::handle<IntPatch_RLine> rline;
 
   IntPatch_TheSegmentOfTheSOnBounds   thesegsol;
   IntPatch_ThePathPointOfTheSOnBounds PStartf, PStartl;
@@ -1524,8 +1440,6 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
       rline->SetArcOnS2(arcRef);
     }
 
-    // Traitement des points debut/fin du segment solution.
-
     dofirst = false;
     dolast  = false;
     procf   = false;
@@ -1545,7 +1459,7 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
     }
 
     if (dofirst && dolast)
-    { // determination de la transition de la ligne
+    {
       arcRef->D1(0.5 * (paramf + paraml), p2d, d2d);
       if (OnFirst)
       {
@@ -1558,7 +1472,7 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
       tgline.SetLinearForm(d2d.X(), d1u, d2d.Y(), d1v);
 
       if (d1u.Magnitude() < 1e-7)
-      { //-- edge degenere ?
+      {
         EdgeDegenere = true;
         for (int edg = 0; edg <= 10; edg++)
         {
@@ -1684,7 +1598,6 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
               }
               newptvtx = ptvtx;
               newptvtx.SetParameter(paramf);
-              // Recalcul des  transitions si point sur restriction
 
               arcRef->D1(paramf, p2d, d2d);
               if (OnFirst)
@@ -1762,7 +1675,6 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
 
               newptvtx = ptvtx;
               newptvtx.SetParameter(paraml);
-              // Recalcul des  transitions si point sur restriction
 
               arcRef->D1(paraml, p2d, d2d);
               if (OnFirst)
@@ -1820,8 +1732,6 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
             }
           }
         }
-        // Si on a traite le pt debut et/ou fin, on ne doit pas recommencer si
-        // il (ils) correspond(ent) a un point multiple.
 
         if (procf)
         {
@@ -1833,8 +1743,6 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
         }
       }
     }
-    // Si on n a pas trouve le point debut et./ou fin sur une des lignes
-    // d intersection, il faut quand-meme le placer sur la restriction solution
 
     if (dofirst)
     {
@@ -1904,7 +1812,7 @@ static double SquareDistance(const occ::handle<IntPatch_GLine>& theGLine,
       theExtr.Perform(theP);
       if (!theExtr.IsDone() || !theExtr.NbExt())
       {
-        // Lines are not overlapped
+
         return aSQDist;
       }
 
@@ -1973,7 +1881,7 @@ static bool IsRLineGood(const IntSurf_Quadric&             Quad1,
 
     if (aP1.SquareDistance(aP2) < aSQTol)
     {
-      // RLine is degenerated
+
       return false;
     }
 
@@ -2010,17 +1918,12 @@ static bool IsRLineGood(const IntSurf_Quadric&             Quad1,
 }
 
 void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
-                  //		   const occ::handle<Adaptor3d_Surface>& Surf1,
-                  //		   const occ::handle<Adaptor3d_Surface>& Surf2,
+
                   const IntSurf_Quadric& Quad1,
                   const IntSurf_Quadric& Quad2,
                   const double           _TolArc,
                   const bool             theIsReqToKeepRLine)
 {
-  // On cherche a placer sur les restrictions solutions les points "multiples"
-  // des autres lignes d intersection
-  // Pas forcemment le plus efficace : on rique de projeter plusieurs fois
-  // le meme point sur la meme restriction...
 
   double TolArc = 100.0 * _TolArc;
   if (TolArc > 0.1)
@@ -2067,14 +1970,11 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
       for (j = 1; j <= Nblin; j++)
       {
         const occ::handle<IntPatch_Line>& slinj = slin(j);
-        Nbpt                                    = seq_Pnt3d.Length(); // important que ce soit ici
+        Nbpt                                    = seq_Pnt3d.Length();
         typ2                                    = slinj->ArcType();
         if (typ2 != IntPatch_Restriction)
         {
-          //-- arcref = Handle(IntPatch_RLine)::DownCast (slini)->Arc();
-          //-- OnFirst = Handle(IntPatch_RLine)::DownCast (slini)->IsOnFirstSurface();
 
-          //-- DES CHOSES A FAIRE ICI
           if (occ::down_cast<IntPatch_RLine>(slini)->IsArcOnS1())
           {
             OnFirst = true;
@@ -2091,7 +1991,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
           }
           else
           {
-            // cout << "Pas de param debut sur rst solution" << endl;
+
             paramf = RealFirst();
           }
           if (occ::down_cast<IntPatch_RLine>(slini)->HasLastPoint())
@@ -2100,7 +2000,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
           }
           else
           {
-            // cout << "Pas de param debut sur rst solution" << endl;
+
             paraml = RealLast();
           }
 
@@ -2143,8 +2043,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
             }
             if ((OnFirst && !Ptvtx.IsOnDomS1()) || (!OnFirst && !Ptvtx.IsOnDomS2()))
             {
-              // Si OnFirst && OnDomS1, c est qu on est a une extremite
-              // ca doit etre traite par Process Segment...
+
               project   = true;
               keeppoint = false;
               toproj    = Ptvtx.Value();
@@ -2152,7 +2051,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
               int jj;
               for (jj = 1; jj <= Nbpt; jj++)
               {
-                // for (int jj = 1; jj <= Nbpt; jj++) {
+
                 if (toproj.Distance(seq_Pnt3d(jj)) < _TolArc)
                 {
                   project = false;
@@ -2160,7 +2059,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
                 }
               }
               if (project)
-              { //-- il faut projeter pour trouver le point sur la rline.
+              {
                 if (OnFirst)
                 {
                   Ptvtx.ParametersOnS1(U, V);
@@ -2191,7 +2090,6 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
                     seq_Pnt3d.Append(toproj);
                     seq_Real.Append(paramproj);
 
-                    //-- verifier que si la restriction arcref est trouvee, elle porte ce vertex
                     for (int ri = 1; ri <= Nblin; ri++)
                     {
                       const occ::handle<IntPatch_Line>& slinri = slin(ri);
@@ -2202,7 +2100,6 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
                           if (arcref == occ::down_cast<IntPatch_RLine>(slinri)->ArcOnS1())
                           {
                             occ::down_cast<IntPatch_RLine>(slinri)->AddVertex(newptvtx);
-                            // printf("\n ImpImpIntersection_0.gxx CAS1 \n");
                           }
                         }
                         else if (!OnFirst && occ::down_cast<IntPatch_RLine>(slinri)->IsArcOnS2())
@@ -2210,12 +2107,10 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
                           if (arcref == occ::down_cast<IntPatch_RLine>(slinri)->ArcOnS2())
                           {
                             occ::down_cast<IntPatch_RLine>(slinri)->AddVertex(newptvtx);
-                            // printf("\n ImpImpIntersection_0.gxx CAS2 \n");
                           }
                         }
                       }
                     }
-                    // -- --------------------------------------------------
                   }
                 }
               }
@@ -2245,7 +2140,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
                   arcref->D1(newptvtx.ParameterOnLine(), p2d, d2d);
 
                   if (OnFirst)
-                  { // donc OnDomS2
+                  {
                     Quad1.D1(p2d.X(), p2d.Y(), valpt, d1u, d1v);
                     tgrest.SetLinearForm(d2d.X(), d1u, d2d.Y(), d1v);
 
@@ -2253,7 +2148,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
                     thearc->D1(Ptvtx.ParameterOnArc2(), p2d, d2d);
                     Quad2.D1(p2d.X(), p2d.Y(), valpt, d1u, d1v);
                     tgarc.SetLinearForm(d2d.X(), d1u, d2d.Y(), d1v);
-                    norm = d1u.Crossed(d1v); // Quad2.Normale(valpt);
+                    norm = d1u.Crossed(d1v);
                     if (norm.SquareMagnitude() < 1e-16)
                     {
                       TRest.SetValue(true, IntSurf_Undecided);
@@ -2266,7 +2161,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
                     newptvtx.SetArc(false, thearc, Ptvtx.ParameterOnArc2(), TRest, TArc);
                   }
                   else
-                  { // donc OnDomS1
+                  {
                     Quad2.D1(p2d.X(), p2d.Y(), valpt, d1u, d1v);
                     tgrest.SetLinearForm(d2d.X(), d1u, d2d.Y(), d1v);
 
@@ -2274,7 +2169,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
                     thearc->D1(Ptvtx.ParameterOnArc1(), p2d, d2d);
                     Quad1.D1(p2d.X(), p2d.Y(), valpt, d1u, d1v);
                     tgarc.SetLinearForm(d2d.X(), d1u, d2d.Y(), d1v);
-                    norm = d1u.Crossed(d1v); // Quad1.Normale(valpt);
+                    norm = d1u.Crossed(d1v);
                     if (norm.SquareMagnitude() < 1e-16)
                     {
                       TRest.SetValue(true, IntSurf_Undecided);
@@ -2286,13 +2181,12 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
                     }
                     newptvtx.SetArc(true, thearc, Ptvtx.ParameterOnArc1(), TRest, TArc);
                   }
-                } //-- if (Ptvtx.IsOnDomS1() || Ptvtx.IsOnDomS2())
+                }
 
                 occ::down_cast<IntPatch_RLine>(slini)->AddVertex(newptvtx);
-
-              } //-- if (keeppoint)
-            } //-- if ((OnFirst && !Ptvtx.IsOnDomS1())||(!OnFirst && !Ptvtx.IsOnDomS2()))
-          } //-- boucle sur les vertex
+              }
+            }
+          }
 
           if (!theIsReqToKeepRLine)
           {
@@ -2309,9 +2203,9 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
               break;
             }
           }
-        } //-- if (typ2 != IntPatch_Restriction)
-      } //-- for (j=1; j<=Nblin; j++)
-    } //-- if (typ1 == IntPatch_Restriction)
+        }
+      }
+    }
 
     if (HasToDeleteRLine)
     {
@@ -2320,7 +2214,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
       Nblin = slin.Length();
       continue;
     }
-  } //-- for (i=1; i<=Nblin; i++)
+  }
 }
 
 static bool IntPP(const IntSurf_Quadric&,
@@ -2341,9 +2235,9 @@ static bool IntPCy(const IntSurf_Quadric&,
 
 static bool IntPSp(const IntSurf_Quadric&,
                    const IntSurf_Quadric&,
-                   // modified by NIZNHY-PKV Tue Sep 20 08:59:56 2011t
+
                    const double,
-                   // modified by NIZNHY-PKV Tue Sep 20 08:59:52 2011t
+
                    const double,
                    const bool,
                    bool&,
@@ -2430,7 +2324,6 @@ static bool IntCoCo(const IntSurf_Quadric&,
                     NCollection_Sequence<occ::handle<IntPatch_Line>>&,
                     NCollection_Sequence<IntPatch_Point>&);
 
-// torus
 static bool IntPTo(const IntSurf_Quadric&,
                    const IntSurf_Quadric&,
                    const double,
@@ -2470,8 +2363,6 @@ static int SetQuad(const occ::handle<Adaptor3d_Surface>& theS,
                    GeomAbs_SurfaceType&                  theTS,
                    IntSurf_Quadric&                      theQuad);
 
-//=================================================================================================
-
 IntPatch_ImpImpIntersection::IntPatch_ImpImpIntersection()
     : myDone(IntStatus_Fail),
       empt(true),
@@ -2479,8 +2370,6 @@ IntPatch_ImpImpIntersection::IntPatch_ImpImpIntersection()
       oppo(false)
 {
 }
-
-//=================================================================================================
 
 IntPatch_ImpImpIntersection::IntPatch_ImpImpIntersection(const occ::handle<Adaptor3d_Surface>&   S1,
                                                          const occ::handle<Adaptor3d_TopolTool>& D1,
@@ -2492,8 +2381,6 @@ IntPatch_ImpImpIntersection::IntPatch_ImpImpIntersection(const occ::handle<Adapt
 {
   Perform(S1, D1, S2, D2, TolArc, TolTang, theIsReqToKeepRLine);
 }
-
-//=================================================================================================
 
 void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>&   S1,
                                           const occ::handle<Adaptor3d_TopolTool>& D1,
@@ -2519,55 +2406,54 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
   bool multpoint = false;
 
   bool nosolonS1 = false;
-  // indique s il y a des points sur restriction du carreau 1
+
   bool nosolonS2 = false;
-  // indique s il y a des points sur restriction du carreau 2
+
   int                                                       i, nbpt, nbseg;
   NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBounds>   edg1, edg2;
   NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBounds> pnt1, pnt2;
-  //
-  // On commence par intersecter les supports des surfaces
+
   IntSurf_Quadric      quad1, quad2;
   IntPatch_ArcFunction AFunc;
   const double         Tolang = 1.e-8;
   GeomAbs_SurfaceType  typs1, typs2;
   bool                 bEmpty = false;
-  //
+
   const int iT1 = SetQuad(S1, typs1, quad1);
   const int iT2 = SetQuad(S2, typs2, quad2);
-  //
+
   if (!iT1 || !iT2)
   {
     throw Standard_ConstructionError();
     return;
   }
-  //
+
   const bool bReverse = iT1 > iT2;
   const int  iTT      = iT1 * 10 + iT2;
-  //
+
   switch (iTT)
   {
     case 11:
-    { // Plane/Plane
+    {
       if (!IntPP(quad1, quad2, Tolang, TolTang, SameSurf, slin))
       {
         return;
       }
       break;
     }
-    //
+
     case 12:
     case 21:
-    { // Plane/Cylinder
+    {
       double VMin, VMax, H;
-      //
+
       const occ::handle<Adaptor3d_Surface>& aSCyl = bReverse ? S1 : S2;
       VMin                                        = aSCyl->FirstVParameter();
       VMax                                        = aSCyl->LastVParameter();
       H = (Precision::IsNegativeInfinite(VMin) || Precision::IsPositiveInfinite(VMax))
             ? 0
             : (VMax - VMin);
-      //
+
       if (!IntPCy(quad1, quad2, Tolang, TolTang, bReverse, empt, slin, H))
       {
         return;
@@ -2575,10 +2461,10 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       bEmpty = empt;
       break;
     }
-    //
+
     case 13:
     case 31:
-    { // Plane/Cone
+    {
       if (!IntPCo(quad1, quad2, Tolang, TolTang, bReverse, empt, multpoint, slin, spnt))
       {
         return;
@@ -2586,10 +2472,10 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       bEmpty = empt;
       break;
     }
-    //
+
     case 14:
     case 41:
-    { // Plane/Sphere
+    {
       if (!IntPSp(quad1, quad2, Tolang, TolTang, bReverse, empt, slin, spnt))
       {
         return;
@@ -2597,10 +2483,10 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       bEmpty = empt;
       break;
     }
-    //
+
     case 15:
     case 51:
-    { // Plane/Torus
+    {
       if (!IntPTo(quad1, quad2, TolTang, bReverse, empt, slin))
       {
         return;
@@ -2608,9 +2494,9 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       bEmpty = empt;
       break;
     }
-    //
+
     case 22:
-    { // Cylinder/Cylinder
+    {
       Bnd_Box2d aBox1, aBox2;
 
       const double aU1f = S1->FirstUParameter();
@@ -2631,9 +2517,6 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       aBox2.Add(gp_Pnt2d(aU2f, S2->FirstVParameter()));
       aBox2.Add(gp_Pnt2d(aU2l, S2->LastVParameter()));
 
-      // Resolution is too big if the cylinder radius is
-      // too small. Therefore, we shall bind its value above.
-      // Here, we use simple constant.
       const double a2DTol =
         std::min(1.0e-4, std::min(S1->UResolution(TolTang), S2->UResolution(TolTang)));
 
@@ -2651,17 +2534,17 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
         const occ::handle<IntPatch_WLine>& aWLine = occ::down_cast<IntPatch_WLine>(slin.Value(1));
 
         if (!aWLine.IsNull())
-        { // No geometric solution
+        {
           isPostProcessingRequired = false;
         }
       }
 
       break;
     }
-    //
+
     case 23:
     case 32:
-    { // Cylinder/Cone
+    {
       if (!IntCyCo(quad1, quad2, TolTang, bReverse, empt, multpoint, slin, spnt))
       {
         return;
@@ -2669,10 +2552,10 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       bEmpty = empt;
       break;
     }
-    //
+
     case 24:
     case 42:
-    { // Cylinder/Sphere
+    {
       if (!IntCySp(quad1, quad2, TolTang, bReverse, empt, multpoint, slin, spnt))
       {
         return;
@@ -2680,10 +2563,10 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       bEmpty = empt;
       break;
     }
-    //
+
     case 25:
     case 52:
-    { // Cylinder/Torus
+    {
       if (!IntCyTo(quad1, quad2, TolTang, bReverse, empt, slin))
       {
         return;
@@ -2691,9 +2574,9 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       bEmpty = empt;
       break;
     }
-    //
+
     case 33:
-    { // Cone/Cone
+    {
       if (!IntCoCo(quad1, quad2, TolTang, empt, SameSurf, multpoint, slin, spnt))
       {
         return;
@@ -2701,10 +2584,10 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       bEmpty = empt;
       break;
     }
-    //
+
     case 34:
     case 43:
-    { // Cone/Sphere
+    {
       if (!IntCoSp(quad1, quad2, TolTang, bReverse, empt, multpoint, slin, spnt))
       {
         return;
@@ -2712,19 +2595,19 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       bEmpty = empt;
       break;
     }
-    //
+
     case 35:
     case 53:
-    { // Cone/Torus
+    {
       if (!IntCoTo(quad1, quad2, TolTang, bReverse, empt, slin))
       {
         return;
       }
       break;
     }
-    //
+
     case 44:
-    { // Sphere/Sphere
+    {
       if (!IntSpSp(quad1, quad2, TolTang, empt, SameSurf, slin, spnt))
       {
         return;
@@ -2732,10 +2615,10 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       bEmpty = empt;
       break;
     }
-    //
+
     case 45:
     case 54:
-    { // Sphere/Torus
+    {
       if (!IntSpTo(quad1, quad2, TolTang, bReverse, empt, slin))
       {
         return;
@@ -2743,9 +2626,9 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       bEmpty = empt;
       break;
     }
-    //
+
     case 55:
-    { // Torus/Torus
+    {
       if (!IntToTo(quad1, quad2, TolTang, SameSurf, empt, slin))
       {
         return;
@@ -2753,14 +2636,14 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       bEmpty = empt;
       break;
     }
-    //
+
     default:
     {
       throw Standard_ConstructionError();
       break;
     }
   }
-  //
+
   if (bEmpty)
   {
     if (myDone == IntStatus_Fail)
@@ -2768,7 +2651,6 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
 
     return;
   }
-  //
 
   if (isPostProcessingRequired)
   {
@@ -2802,10 +2684,10 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       nosolonS1 = (nbpt == 0) && (nbseg == 0);
 
       if (nosolonS1 && all1)
-      { // cas de face sans restrictions
+      {
         all1 = false;
       }
-    } // if (!SameSurf) {
+    }
     else
     {
       nosolonS1 = true;
@@ -2844,18 +2726,18 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       nosolonS2 = (nbpt == 0) && (nbseg == 0);
 
       if (nosolonS2 && all2)
-      { // cas de face sans restrictions
+      {
         all2 = false;
       }
-    } // if (!SameSurf) {
+    }
     else
     {
       nosolonS2 = true;
     }
-    //
+
     if (SameSurf || (all1 && all2))
     {
-      // faces "paralleles" parfaites
+
       empt = false;
       tgte = true;
       slin.Clear();
@@ -2893,16 +2775,16 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
         default:
           break;
       }
-      //
+
       oppo   = quad1.Normale(Ptreference).Dot(quad2.Normale(Ptreference)) < 0.0;
       myDone = IntStatus_OK;
       return;
-    } // if (SameSurf || (all1 && all2)) {
+    }
 
     if (!nosolonS1 || !nosolonS2)
     {
       empt = false;
-      // C est la qu il faut commencer a bosser...
+
       PutPointsOnLine(S1, S2, pnt1, slin, true, D1, quad1, quad2, multpoint, TolArc);
 
       PutPointsOnLine(S1, S2, pnt2, slin, false, D2, quad2, quad1, multpoint, TolArc);
@@ -2919,10 +2801,10 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
 
       if (edg1.Length() != 0 || edg2.Length() != 0)
       {
-        //      ProcessRLine(slin,S1,S2,TolArc);
+
         ProcessRLine(slin, quad1, quad2, TolArc, theIsReqToKeepRLine);
       }
-    } // if (!nosolonS1 || !nosolonS2) {
+    }
     else
     {
       empt = ((slin.Length() == 0) && (spnt.Length() == 0));
@@ -2930,45 +2812,42 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
   }
 
   int nblin = slin.Length(), aNbPnt = spnt.Length();
-  //
-  // modified by NIZNHY-PKV Tue Sep 06 10:03:35 2011f
+
   if (aNbPnt)
   {
     NCollection_Sequence<IntPatch_Point> aSIP;
-    //
+
     for (i = 1; i <= aNbPnt; ++i)
     {
       double       aU1, aV1, aU2, aV2;
       gp_Pnt2d     aP2D;
       TopAbs_State aState1, aState2;
-      //
+
       const IntPatch_Point& aIP = spnt(i);
       aIP.Parameters(aU1, aV1, aU2, aV2);
-      //
+
       aP2D.SetCoord(aU1, aV1);
       aState1 = D1->Classify(aP2D, TolArc);
-      //
+
       aP2D.SetCoord(aU2, aV2);
       aState2 = D2->Classify(aP2D, TolArc);
-      //
+
       if (aState1 != TopAbs_OUT && aState2 != TopAbs_OUT)
       {
         aSIP.Append(aIP);
       }
     }
-    //
+
     spnt.Clear();
-    //
+
     aNbPnt = aSIP.Length();
     for (i = 1; i <= aNbPnt; ++i)
     {
       const IntPatch_Point& aIP = aSIP(i);
       spnt.Append(aIP);
     }
-    //
-  } //  if (aNbPnt) {
-  // modified by NIZNHY-PKV Tue Sep 06 10:18:20 2011t
-  //
+  }
+
   for (i = 1; i <= nblin; i++)
   {
     IntPatch_IType thetype = slin.Value(i)->ArcType();
@@ -2989,10 +2868,7 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       rlig->ComputeVertexParameters(TolArc);
     }
   }
-  //
-  //----------------------------------------------------------------
-  //-- On place 2 vertex sur les courbes de GLine qui n en
-  //-- contiennent pas.
+
   for (i = 1; i <= nblin; i++)
   {
     gp_Pnt         P;
@@ -3049,8 +2925,6 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
   myDone = IntStatus_OK;
 }
 
-//=================================================================================================
-
 int SetQuad(const occ::handle<Adaptor3d_Surface>& theS,
             GeomAbs_SurfaceType&                  theTS,
             IntSurf_Quadric&                      theQuad)
@@ -3082,7 +2956,7 @@ int SetQuad(const occ::handle<Adaptor3d_Surface>& theS,
     default:
       break;
   }
-  //
+
   return iRet;
 }
 
@@ -3092,13 +2966,6 @@ static void AdjustToSeam(const gp_Sphere& aQuad, gp_Circ& aCirc, const double aT
 static void AdjustToSeam(const gp_Cone& aQuad, gp_Circ& aCirc);
 static void AdjustToSeam(const gp_Torus& aQuad, gp_Circ& aCirc);
 
-// modified by NIZNHY-PKV Thu Sep 15 11:09:13 2011
-
-//=======================================================================
-// function : IntPP
-// purpose  :
-// Traitement du cas Plan/Plan
-//=======================================================================
 bool IntPP(const IntSurf_Quadric&                            Quad1,
            const IntSurf_Quadric&                            Quad2,
            const double                                      Tolang,
@@ -3120,11 +2987,11 @@ bool IntPP(const IntSurf_Quadric&                            Quad1,
   Same   = false;
   typint = inter.TypeInter();
   if (typint == IntAna_Same)
-  { // cas faces confondues
+  {
     Same = true;
   }
   else if (typint != IntAna_Empty)
-  { // on a une ligne
+  {
     gp_Lin linsol = inter.Line(1);
     double discri = linsol.Direction().DotCross(Quad2.Normale(linsol.Location()),
                                                 Quad1.Normale(linsol.Location()));
@@ -3145,11 +3012,6 @@ bool IntPP(const IntSurf_Quadric&                            Quad1,
   return true;
 }
 
-//=======================================================================
-// function : IntPCy
-// purpose  :
-// Traitement du cas Plan/Cylindre et reciproquement
-//=======================================================================
 bool IntPCy(const IntSurf_Quadric&                            Quad1,
             const IntSurf_Quadric&                            Quad2,
             const double                                      Tolang,
@@ -3199,7 +3061,7 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
       gp_Lin linsol = inter.Line(1);
       gp_Pnt orig(linsol.Location());
       if (NbSol == 1)
-      { // ligne de tangence
+      {
         gp_Vec TestCurvature(orig, Cy.Location());
         gp_Vec Normp, Normcyl;
         if (!Reversed)
@@ -3253,8 +3115,6 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
       }
       else
       {
-        // on a 2 droites. Il faut determiner les transitions
-        // de chacune.
 
         if (linsol.Direction().DotCross(Quad2.Normale(orig), Quad1.Normale(orig)) > 0.)
         {
@@ -3287,17 +3147,17 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
       }
     }
     break;
-      //
+
     case IntAna_Circle:
     {
       gp_Circ cirsol;
       gp_Pnt  ptref;
       gp_Vec  Tgt;
-      //
+
       cirsol = inter.Circle(1);
-      // modified by NIZNHY-PKV Thu Sep 15 11:30:03 2011f
+
       AdjustToSeam(Cy, cirsol);
-      // modified by NIZNHY-PKV Thu Sep 15 11:30:15 2011t
+
       ElCLib::D1(0., cirsol, ptref, Tgt);
 
       if (Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref)) > 0.0)
@@ -3314,7 +3174,7 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
       slin.Append(glig);
     }
     break;
-      //
+
     case IntAna_Ellipse:
     {
       gp_Elips elipsol = inter.Ellipse(1);
@@ -3336,25 +3196,20 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
       slin.Append(glig);
     }
     break;
-      //
+
     default:
     {
-      return false; // on ne doit pas passer ici
+      return false;
     }
   }
   return true;
 }
 
-//=======================================================================
-// function : IntPSp
-// purpose  :
-// Traitement du cas Plan/Sphere et reciproquement
-//=======================================================================
 bool IntPSp(const IntSurf_Quadric& Quad1,
             const IntSurf_Quadric& Quad2,
-            // modified by NIZNHY-PKV Tue Sep 20 08:59:36 2011f
+
             const double Tolang,
-            // modified by NIZNHY-PKV Tue Sep 20 08:59:39 2011t
+
             const double                                      TolTang,
             const bool                                        Reversed,
             bool&                                             Empty,
@@ -3396,7 +3251,7 @@ bool IntPSp(const IntSurf_Quadric& Quad1,
       Empty = true;
     }
     break;
-      //
+
     case IntAna_Point:
     {
       gp_Pnt psol = inter.Point(1);
@@ -3409,13 +3264,13 @@ bool IntPSp(const IntSurf_Quadric& Quad1,
       spnt.Append(ptsol);
     }
     break;
-      //
+
     case IntAna_Circle:
     {
       cirsol = inter.Circle(1);
-      // modified by NIZNHY-PKV Thu Sep 15 11:30:03 2011f
+
       AdjustToSeam(Sp, cirsol, Tolang);
-      // modified by NIZNHY-PKV Thu Sep 15 11:30:15 2011t
+
       gp_Pnt ptref;
       gp_Vec Tgt;
       ElCLib::D1(0., cirsol, ptref, Tgt);
@@ -3437,17 +3292,12 @@ bool IntPSp(const IntSurf_Quadric& Quad1,
 
     default:
     {
-      return false; // on ne doit pas passer ici
+      return false;
     }
   }
   return true;
 }
 
-//=======================================================================
-// function : IntPCo
-// purpose  :
-// Traitement du cas Plan/Cone et reciproquement
-//=======================================================================
 bool IntPCo(const IntSurf_Quadric&                            Quad1,
             const IntSurf_Quadric&                            Quad2,
             const double                                      Tolang,
@@ -3486,7 +3336,7 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
   {
     return false;
   }
-  //
+
   typint    = inter.TypeInter();
   int NbSol = inter.NbSolutions();
   Empty     = false;
@@ -3520,7 +3370,7 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
       Quad2.Parameters(apex, U2, V2);
 
       if (NbSol == 1)
-      { // ligne de tangence
+      {
         IntPatch_Point ptsol;
         ptsol.SetValue(apex, TolTang, false);
         ptsol.SetParameters(U1, V1, U2, V2);
@@ -3571,9 +3421,7 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
             situp_otherside = IntSurf_Outside;
           }
         }
-        //----------------------------------------------------------
-        //--              Apex ---> Cone.Direction
-        //--
+
         occ::handle<IntPatch_GLine> glig;
         if (!Reversed)
         {
@@ -3586,9 +3434,7 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
         glig->AddVertex(ptsol);
         glig->SetFirstPoint(1);
         slin.Append(glig);
-        //----------------------------------------------------------
-        //--   -Cone.Direction <------- Apex
-        //--
+
         linsol.SetDirection(linsol.Direction().Reversed());
         if (!Reversed)
         {
@@ -3604,11 +3450,7 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
       }
       else
       {
-        // on a 2 droites. Il faut determiner les transitions
-        // de chacune. On oriente chaque ligne dans le sens
-        // de l axe du cone. Les transitions de chaque ligne seront
-        // inverses l une de l autre => on ne fait le calcul que sur
-        // la premiere.
+
         if (linsol.Direction().DotCross(Quad2.Normale(ptbid), Quad1.Normale(ptbid)) > 0.)
         {
           trans1 = IntSurf_Out;
@@ -3621,7 +3463,7 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
         }
 
         Multpoint = true;
-        //------------------------------------------- Ligne 1 -------
+
         IntPatch_Point ptsol;
         ptsol.SetValue(apex, TolTang, false);
         ptsol.SetParameters(U1, V1, U2, V2);
@@ -3632,10 +3474,7 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
         glig->AddVertex(ptsol);
         glig->SetFirstPoint(1);
         slin.Append(glig);
-        //-----------------------------------------------------------
-        //-- Other Side : Les transitions restent les memes
-        //--    linsol -> -linsol   et Quad1(2).N -> -Quad1(2).N
-        //--
+
         linsol.SetDirection(linsol.Direction().Reversed());
         glig = new IntPatch_GLine(linsol, false, trans1, trans2);
         para = ElCLib::Parameter(linsol, apex);
@@ -3644,7 +3483,6 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
         glig->SetFirstPoint(1);
         slin.Append(glig);
 
-        //------------------------------------------- Ligne 2 -------
         linsol = inter.Line(2);
         if (linsol.Direction().Dot(Co.Axis().Direction()) < 0.)
         {
@@ -3669,10 +3507,7 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
         glig->AddVertex(ptsol);
         glig->SetFirstPoint(1);
         slin.Append(glig);
-        //-----------------------------------------------------------
-        //-- Other Side : Les transitions restent les memes
-        //--    linsol -> -linsol   et Quad1(2).N -> -Quad1(2).N
-        //--
+
         linsol.SetDirection(linsol.Direction().Reversed());
         glig = new IntPatch_GLine(linsol, false, trans1, trans2);
         para = ElCLib::Parameter(linsol, apex);
@@ -3687,9 +3522,9 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
     case IntAna_Circle:
     {
       gp_Circ cirsol = inter.Circle(1);
-      // modified by NIZNHY-PKV Thu Sep 15 11:34:04 2011f
+
       AdjustToSeam(Co, cirsol);
-      // modified by NIZNHY-PKV Thu Sep 15 11:36:08 2011t
+
       gp_Pnt ptref;
       gp_Vec Tgt;
       ElCLib::D1(0., cirsol, ptref, Tgt);
@@ -3797,8 +3632,6 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
   return true;
 }
 
-//=================================================================================================
-
 bool IntPTo(const IntSurf_Quadric&                            theQuad1,
             const IntSurf_Quadric&                            theQuad2,
             const double                                      theTolTang,
@@ -3808,32 +3641,32 @@ bool IntPTo(const IntSurf_Quadric&                            theQuad1,
 {
   const gp_Pln   aPln   = bReversed ? theQuad2.Plane() : theQuad1.Plane();
   const gp_Torus aTorus = bReversed ? theQuad1.Torus() : theQuad2.Torus();
-  //
+
   IntAna_QuadQuadGeo inter(aPln, aTorus, theTolTang);
   bool               bRet = inter.IsDone();
-  //
+
   if (!bRet)
   {
     return bRet;
   }
-  //
+
   IntAna_ResultType typint = inter.TypeInter();
   int               NbSol  = inter.NbSolutions();
   bEmpty                   = false;
-  //
+
   switch (typint)
   {
     case IntAna_Empty:
       bEmpty = true;
       break;
-    //
+
     case IntAna_Circle:
     {
       int               i;
       IntSurf_TypeTrans trans1, trans2;
       gp_Pnt            ptref;
       gp_Vec            Tgt;
-      //
+
       for (i = 1; i <= NbSol; ++i)
       {
         gp_Circ aC = inter.Circle(i);
@@ -3842,7 +3675,7 @@ bool IntPTo(const IntSurf_Quadric&                            theQuad1,
           AdjustToSeam(aTorus, aC);
         }
         ElCLib::D1(0., aC, ptref, Tgt);
-        //
+
         if (Tgt.DotCross(theQuad2.Normale(ptref), theQuad1.Normale(ptref)) > 0.0)
         {
           trans1 = IntSurf_Out;
@@ -3853,46 +3686,40 @@ bool IntPTo(const IntSurf_Quadric&                            theQuad1,
           trans1 = IntSurf_In;
           trans2 = IntSurf_Out;
         }
-        //
+
         occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(aC, false, trans1, trans2);
         theSeqLin.Append(glig);
       }
     }
     break;
-    //
+
     case IntAna_NoGeometricSolution:
     default:
       bRet = false;
       break;
   }
-  //
+
   return bRet;
 }
-
-//
-// modified by NIZNHY-PKV Thu Sep 15 10:53:39 2011f
-//=================================================================================================
 
 void AdjustToSeam(const gp_Cone& aQuad, gp_Circ& aCirc)
 {
   gp_Ax2 aAx2;
-  //
+
   const gp_Pnt& aPLoc = aCirc.Location();
   const gp_Ax3& aAx3  = aQuad.Position();
   SeamPosition(aPLoc, aAx3, aAx2);
   aCirc.SetPosition(aAx2);
 }
 
-//=================================================================================================
-
 void AdjustToSeam(const gp_Sphere& aQuad, gp_Circ& aCirc, const double aTolAng)
 {
   gp_Ax2 aAx2;
-  //
+
   const gp_Ax1& aAx1C = aCirc.Axis();
   const gp_Ax3& aAx3  = aQuad.Position();
   const gp_Ax1& aAx1Q = aAx3.Axis();
-  //
+
   const gp_Dir& aDirC = aAx1C.Direction();
   const gp_Dir& aDirQ = aAx1Q.Direction();
   if (aDirC.IsParallel(aDirQ, aTolAng))
@@ -3903,31 +3730,25 @@ void AdjustToSeam(const gp_Sphere& aQuad, gp_Circ& aCirc, const double aTolAng)
   }
 }
 
-//=================================================================================================
-
 void AdjustToSeam(const gp_Cylinder& aQuad, gp_Circ& aCirc)
 {
   gp_Ax2 aAx2;
-  //
+
   const gp_Pnt& aPLoc = aCirc.Location();
   const gp_Ax3& aAx3  = aQuad.Position();
   SeamPosition(aPLoc, aAx3, aAx2);
   aCirc.SetPosition(aAx2);
 }
-
-//=================================================================================================
 
 void AdjustToSeam(const gp_Torus& aQuad, gp_Circ& aCirc)
 {
   gp_Ax2 aAx2;
-  //
+
   const gp_Pnt& aPLoc = aCirc.Location();
   const gp_Ax3& aAx3  = aQuad.Position();
   SeamPosition(aPLoc, aAx3, aAx2);
   aCirc.SetPosition(aAx2);
 }
-
-//=================================================================================================
 
 void SeamPosition(const gp_Pnt& aPLoc, const gp_Ax3& aPos, gp_Ax2& aSeamPos)
 {
@@ -3937,16 +3758,13 @@ void SeamPosition(const gp_Pnt& aPLoc, const gp_Ax3& aPos, gp_Ax2& aSeamPos)
   aSeamPos = aAx2;
 }
 
-// modified by NIZNHY-PKV Thu Sep 15 10:53:41 2011t
-
-// If std::abs(a) <= aNulValue then it is considered that a = 0.
 static const double aNulValue = 1.0e-11;
 
 static void ShortCosForm(const double theCosFactor,
                          const double theSinFactor,
                          double&      theCoeff,
                          double&      theAngle);
-//
+
 static bool ExploreCurve(const gp_Cone&                  theCo,
                          IntAna_Curve&                   aC,
                          const double                    aTol,
@@ -3961,48 +3779,8 @@ static bool InscribePoint(const double theUfTarget,
 
 class ComputationMethods
 {
-  // Every cylinder can be represented by the following equation in parametric form:
-  //     S(U,V) = L + R*cos(U)*Xd+R*sin(U)*Yd+V*Zd,
-  // where location L, directions Xd, Yd and Zd have type gp_XYZ.
-
-  // Intersection points between two cylinders can be found from the following system:
-  //     S1(U1, V1) = S2(U2, V2)
-  // or
-  //     {X01 + R1*cos(U1)*Xx1 + R1*sin(U1)*Yx1 + V1*Zx1 = X02 + R2*cos(U2)*Xx2 + R2*sin(U2)*Yx2 +
-  //     V2*Zx2 {Y01 + R1*cos(U1)*Xy1 + R1*sin(U1)*Yy1 + V1*Zy1 = Y02 + R2*cos(U2)*Xy2 +
-  //     R2*sin(U2)*Yy2 + V2*Zy2   (1) {Z01 + R1*cos(U1)*Xz1 + R1*sin(U1)*Yz1 + V1*Zz1 = Z02 +
-  //     R2*cos(U2)*Xz2 + R2*sin(U2)*Yz2 + V2*Zz2
-
-  // The formula (1) can be rewritten as follows
-  //     {C11*V1+C21*V2=A11*cos(U1)+B11*sin(U1)+A21*cos(U2)+B21*sin(U2)+D1
-  //     {C12*V1+C22*V2=A12*cos(U1)+B12*sin(U1)+A22*cos(U2)+B22*sin(U2)+D2 (2)
-  //     {C13*V1+C23*V2=A13*cos(U1)+B13*sin(U1)+A23*cos(U2)+B23*sin(U2)+D3
-
-  // Hereafter we consider that in system
-  //     {C11*V1+C21*V2=A11*cos(U1)+B11*sin(U1)+A21*cos(U2)+B21*sin(U2)+D1 (3)
-  //     {C12*V1+C22*V2=A12*cos(U1)+B12*sin(U1)+A22*cos(U2)+B22*sin(U2)+D2
-  // variables V1 and V2 can be found unambiguously, i.e. determinant
-  //             |C11 C21|
-  //             |       | != 0
-  //             |C12 C22|
-  //
-  // In this case, variables V1 and V2 can be found as follows:
-  //     {V1 = K11*sin(U1)+K21*sin(U2)+L11*cos(U1)+L21*cos(U2)+M1 =
-  //     K1*cos(U1-FIV1)+L1*cos(U2-PSIV1)+M1      (4) {V2 =
-  //     K12*sin(U1)+K22*sin(U2)+L12*cos(U1)+L22*cos(U2)+M2 = K2*cos(U2-FIV2)+L2*cos(U2-PSIV2)+M2
-
-  // Having substituted result of (4) to the 3rd equation of (2), we will obtain equation
-  //     cos(U2-FI2) = B*cos(U1-FI1)+C. (5)
-
-  // I.e. when U1 is taken different given values (from domain), correspond U2 value can be computed
-  // from equation (5). After that, V1 and V2 can be computed from the system (4) (see
-  // CylCylComputeParameters(...) methods).
-
-  // It is important to remark that equation (5) (in general) has two solutions: U2=FI2 +/- f(U1).
-  // Therefore, we are getting here two intersection lines.
 
 public:
-  // Stores equations coefficients
   struct stCoeffsValue
   {
     stCoeffsValue(const gp_Cylinder&, const gp_Cylinder&);
@@ -4015,17 +3793,17 @@ public:
     math_Vector mVecC2;
     math_Vector mVecD;
 
-    double mK21; // sinU2
-    double mK11; // sinU1
-    double mL21; // cosU2
-    double mL11; // cosU1
-    double mM1;  // Free member
+    double mK21;
+    double mK11;
+    double mL21;
+    double mL11;
+    double mM1;
 
-    double mK22; // sinU2
-    double mK12; // sinU1
-    double mL22; // cosU2
-    double mL12; // cosU1
-    double mM2;  // Free member
+    double mK22;
+    double mK12;
+    double mL22;
+    double mL12;
+    double mM2;
 
     double mK1;
     double mL1;
@@ -4043,16 +3821,12 @@ public:
     double mFI2;
   };
 
-  //! Determines, if U2(U1) function is increasing.
   static bool CylCylMonotonicity(const double         theU1par,
                                  const int            theWLIndex,
                                  const stCoeffsValue& theCoeffs,
                                  const double         thePeriod,
                                  bool&                theIsIncreasing);
 
-  //! Computes U2 (U-parameter of the 2nd cylinder) and, if theDelta != 0,
-  //! estimates the tolerance of U2-computing (estimation result is
-  //! assigned to *theDelta value).
   static bool CylCylComputeParameters(const double         theU1par,
                                       const int            theWLIndex,
                                       const stCoeffsValue& theCoeffs,
@@ -4093,12 +3867,12 @@ ComputationMethods::stCoeffsValue::stCoeffsValue(const gp_Cylinder& theCyl1,
 
   double aDetV1V2 = 0.0;
 
-  const double aDelta1 = mVecC1(1) * mVecC2(2) - mVecC1(2) * mVecC2(1); // 1-2
-  const double aDelta2 = mVecC1(2) * mVecC2(3) - mVecC1(3) * mVecC2(2); // 2-3
-  const double aDelta3 = mVecC1(1) * mVecC2(3) - mVecC1(3) * mVecC2(1); // 1-3
-  const double anAbsD1 = std::abs(aDelta1);                             // 1-2
-  const double anAbsD2 = std::abs(aDelta2);                             // 2-3
-  const double anAbsD3 = std::abs(aDelta3);                             // 1-3
+  const double aDelta1 = mVecC1(1) * mVecC2(2) - mVecC1(2) * mVecC2(1);
+  const double aDelta2 = mVecC1(2) * mVecC2(3) - mVecC1(3) * mVecC2(2);
+  const double aDelta3 = mVecC1(1) * mVecC2(3) - mVecC1(3) * mVecC2(1);
+  const double anAbsD1 = std::abs(aDelta1);
+  const double anAbsD2 = std::abs(aDelta2);
+  const double anAbsD3 = std::abs(aDelta3);
 
   if (anAbsD1 >= anAbsD2)
   {
@@ -4127,12 +3901,6 @@ ComputationMethods::stCoeffsValue::stCoeffsValue(const gp_Cylinder& theCyl1,
     }
   }
 
-  // In point of fact, every determinant (aDelta1, aDelta2 and aDelta3) is
-  // cross-product between directions (i.e. sine of angle).
-  // If sine is too small then sine is (approx.) equal to angle itself.
-  // Therefore, in this case we should compare sine with angular tolerance.
-  // This constant is used for check if axes are parallel (see constructor
-  // AxeOperator::AxeOperator(...) in IntAna_QuadQuadGeo.cxx file).
   if (std::abs(aDetV1V2) < Precision::Angular())
   {
     throw Standard_Failure("Error. Exception in divide by zerro (IntCyCyTrim)!!!!");
@@ -4217,43 +3985,37 @@ ComputationMethods::stCoeffsValue::stCoeffsValue(const gp_Cylinder& theCyl1,
       break;
   }
 
-  //------- For V1 (begin)
-  // sinU2
   mK21 = (mVecC2(2) * mVecB2(1) - mVecC2(1) * mVecB2(2)) / aDetV1V2;
-  // sinU1
-  mK11 = (mVecC2(2) * mVecB1(1) - mVecC2(1) * mVecB1(2)) / aDetV1V2;
-  // cosU2
-  mL21 = (mVecC2(2) * mVecA2(1) - mVecC2(1) * mVecA2(2)) / aDetV1V2;
-  // cosU1
-  mL11 = (mVecC2(2) * mVecA1(1) - mVecC2(1) * mVecA1(2)) / aDetV1V2;
-  // Free member
-  mM1 = (mVecC2(2) * mVecD(1) - mVecC2(1) * mVecD(2)) / aDetV1V2;
-  //------- For V1 (end)
 
-  //------- For V2 (begin)
-  // sinU2
+  mK11 = (mVecC2(2) * mVecB1(1) - mVecC2(1) * mVecB1(2)) / aDetV1V2;
+
+  mL21 = (mVecC2(2) * mVecA2(1) - mVecC2(1) * mVecA2(2)) / aDetV1V2;
+
+  mL11 = (mVecC2(2) * mVecA1(1) - mVecC2(1) * mVecA1(2)) / aDetV1V2;
+
+  mM1 = (mVecC2(2) * mVecD(1) - mVecC2(1) * mVecD(2)) / aDetV1V2;
+
   mK22 = (mVecC1(1) * mVecB2(2) - mVecC1(2) * mVecB2(1)) / aDetV1V2;
-  // sinU1
+
   mK12 = (mVecC1(1) * mVecB1(2) - mVecC1(2) * mVecB1(1)) / aDetV1V2;
-  // cosU2
+
   mL22 = (mVecC1(1) * mVecA2(2) - mVecC1(2) * mVecA2(1)) / aDetV1V2;
-  // cosU1
+
   mL12 = (mVecC1(1) * mVecA1(2) - mVecC1(2) * mVecA1(1)) / aDetV1V2;
-  // Free member
+
   mM2 = (mVecC1(1) * mVecD(2) - mVecC1(2) * mVecD(1)) / aDetV1V2;
-  //------- For V1 (end)
 
   ShortCosForm(mL11, mK11, mK1, mFIV1);
   ShortCosForm(mL21, mK21, mL1, mPSIV1);
   ShortCosForm(mL12, mK12, mK2, mFIV2);
   ShortCosForm(mL22, mK22, mL2, mPSIV2);
 
-  const double aA1 = mVecC1(3) * mK21 + mVecC2(3) * mK22 - mVecB2(3), // sinU2
-    aA2            = mVecC1(3) * mL21 + mVecC2(3) * mL22 - mVecA2(3), // cosU2
-    aB1            = mVecB1(3) - mVecC1(3) * mK11 - mVecC2(3) * mK12, // sinU1
-    aB2            = mVecA1(3) - mVecC1(3) * mL11 - mVecC2(3) * mL12; // cosU1
+  const double aA1 = mVecC1(3) * mK21 + mVecC2(3) * mK22 - mVecB2(3),
+               aA2 = mVecC1(3) * mL21 + mVecC2(3) * mL22 - mVecA2(3),
+               aB1 = mVecB1(3) - mVecC1(3) * mK11 - mVecC2(3) * mK12,
+               aB2 = mVecA1(3) - mVecC1(3) * mL11 - mVecC2(3) * mL12;
 
-  mC = mVecD(3) - mVecC1(3) * mM1 - mVecC2(3) * mM2; // Free
+  mC = mVecD(3) - mVecC1(3) * mM1 - mVecC2(3) * mM2;
 
   double aA = 0.0;
 
@@ -4285,7 +4047,6 @@ public:
       myV2     = RealLast();
     }
 
-    // Equal to 0 for 1st surface non-zero for 2nd one.
     int mySurfID;
 
     double myU1;
@@ -4321,11 +4082,8 @@ public:
         myTol2D(theTol2D),
         myIsReverse(isTheReverse) {};
 
-  // Returns parameters of system solved while finding
-  // intersection line
   const ComputationMethods::stCoeffsValue& SICoeffs() const { return myCoeffs; }
 
-  // Returns quadric correspond to the index theIdx.
   const IntSurf_Quadric& GetQSurface(const int theIdx) const
   {
     if (theIdx <= 1)
@@ -4334,19 +4092,14 @@ public:
     return myQuad2;
   }
 
-  // Returns TRUE in case of reverting surfaces
   bool IsReversed() const { return myIsReverse; }
 
-  // Returns 2D-tolerance
   double Get2dTolerance() const { return myTol2D; }
 
-  // Returns 3D-tolerance
   double Get3dTolerance() const { return myTol3D; }
 
-  // Returns UV-bounds of 1st surface
   const Bnd_Box2d& UVS1() const { return myUVSurf1; }
 
-  // Returns UV-bounds of 2nd surface
   const Bnd_Box2d& UVS2() const { return myUVSurf2; }
 
   void AddBoundaryPoint(const occ::handle<IntPatch_WLine>& theWL,
@@ -4372,10 +4125,6 @@ public:
                           Bnd_Range&         theOutBoxS2) const;
 
 protected:
-  // Solves equation (2) (see declaration of ComputationMethods class) in case,
-  // when V1 or V2 (is set by theSBType argument) is known (corresponds to the boundary
-  // and equal to theVzad) but U1 is unknown. Computation is made by numeric methods and
-  // requires initial values (theVInit, theInitU2 and theInitMainVar).
   bool SearchOnVBounds(const SearchBoundType theSBType,
                        const double          theVzad,
                        const double          theVInit,
@@ -4412,11 +4161,6 @@ static void SeekAdditionalPoints(const IntSurf_Quadric&                   theQua
                                  const double                             thePeriodOfSurf2,
                                  const bool                               isTheReverse);
 
-//=======================================================================
-// function : MinMax
-// purpose  : Replaces theParMIN = MIN(theParMIN, theParMAX),
-//                    theParMAX = MAX(theParMIN, theParMAX).
-//=======================================================================
 static inline void MinMax(double& theParMIN, double& theParMAX)
 {
   if (theParMIN > theParMAX)
@@ -4427,11 +4171,6 @@ static inline void MinMax(double& theParMIN, double& theParMAX)
   }
 }
 
-//=======================================================================
-// function : ExtremaLineLine
-// purpose  : Computes extrema between the given lines. Returns parameters
-//          on correspond curve (see correspond method for Extrema_ExtElC class).
-//=======================================================================
 static inline void ExtremaLineLine(const gp_Ax1& theC1,
                                    const gp_Ax1& theC2,
                                    const double  theCosA,
@@ -4448,32 +4187,19 @@ static inline void ExtremaLineLine(const gp_Ax1& theC1,
   thePar2 = (theCosA * aD1L - aD2L) / theSqSinA;
 }
 
-//=======================================================================
-// function : VBoundaryPrecise
-// purpose  : By default, we shall consider, that V1 and V2 will be increased
-//            if U1 is increased. But if it is not, new V1set and/or V2set
-//            must be computed as [V1current - DeltaV1] (analogically
-//            for V2). This function processes this case.
-//=======================================================================
 static void VBoundaryPrecise(const math_Matrix& theMatr,
                              const double       theV1AfterDecrByDelta,
                              const double       theV2AfterDecrByDelta,
                              double&            theV1Set,
                              double&            theV2Set)
 {
-  // Now we are going to define if V1 (and V2) increases
-  //(or decreases) when U1 will increase.
+
   const int   aNbDim = 3;
   math_Matrix aSyst(1, aNbDim, 1, aNbDim);
 
   aSyst.SetCol(1, theMatr.Col(1));
   aSyst.SetCol(2, theMatr.Col(2));
   aSyst.SetCol(3, theMatr.Col(4));
-
-  // We have the system (see comment to StepComputing(...) function)
-  //     {a11*dV1 + a12*dV2 + a14*dU2 = -a13*dU1
-  //     {a21*dV1 + a22*dV2 + a24*dU2 = -a23*dU1
-  //     {a31*dV1 + a32*dV2 + a34*dU2 = -a33*dU1
 
   const double aDet = aSyst.Determinant();
 
@@ -4484,16 +4210,6 @@ static void VBoundaryPrecise(const math_Matrix& theMatr,
   aSyst.SetCol(2, theMatr.Col(3));
 
   const double aDet2 = aSyst.Determinant();
-
-  // Now,
-  //     dV1 = -dU1*aDet1/aDet
-  //     dV2 = -dU1*aDet2/aDet
-
-  // If U1 is increased then dU1 > 0.
-  // If (aDet1/aDet > 0) then dV1 < 0 and
-  // V1 will be decreased after increasing U1.
-
-  // We have analogical situation with V2-parameter.
 
   if (aDet * aDet1 > 0.0)
   {
@@ -4506,10 +4222,6 @@ static void VBoundaryPrecise(const math_Matrix& theMatr,
   }
 }
 
-//=======================================================================
-// function : DeltaU1Computing
-// purpose  : Computes new step for U1 parameter.
-//=======================================================================
 static inline bool DeltaU1Computing(const math_Matrix& theSyst,
                                     const math_Vector& theFree,
                                     double&            theDeltaU1Found)
@@ -4528,30 +4240,12 @@ static inline bool DeltaU1Computing(const math_Matrix& theSyst,
   return false;
 }
 
-//=======================================================================
-// function : StepComputing
-// purpose  :
-//
-// Attention!!!:
-//            theMatr must have 3*5-dimension strictly.
-//            For system
-//                {a11*V1+a12*V2+a13*dU1+a14*dU2=b1;
-//                {a21*V1+a22*V2+a23*dU1+a24*dU2=b2;
-//                {a31*V1+a32*V2+a33*dU1+a34*dU2=b3;
-//            theMatr must be following:
-//                (a11 a12 a13 a14 b1)
-//                (a21 a22 a23 a24 b2)
-//                (a31 a32 a33 a34 b3)
-//=======================================================================
 static bool StepComputing(const math_Matrix& theMatr,
-                                      const double theV1Cur,
-                                      const double theV2Cur,
-                                      const double theDeltaV1,
-                                      const double theDeltaV2,
-                                      double& theDeltaU1Found/*,
-                                      double& theDeltaU2Found,
-                                      double& theV1Found,
-                                      double& theV2Found*/)
+                          const double       theV1Cur,
+                          const double       theV2Cur,
+                          const double       theDeltaV1,
+                          const double       theDeltaV2,
+                          double&            theDeltaU1Found)
 {
 #ifdef INTPATCH_IMPIMPINTERSECTION_DEBUG
   bool flShow = false;
@@ -4579,20 +4273,16 @@ static bool StepComputing(const math_Matrix& theMatr,
   }
 #endif
 
-  bool isSuccess                         = false;
-  theDeltaU1Found /* = theDeltaU2Found*/ = RealLast();
-  // theV1Found = theV1set;
-  // theV2Found = theV2Set;
+  bool isSuccess  = false;
+  theDeltaU1Found = RealLast();
+
   const int aNbDim = 3;
 
   math_Matrix aSyst(1, aNbDim, 1, aNbDim);
   math_Vector aFree(1, aNbDim);
 
-  // By default, increasing V1(U1) and V2(U1) functions is
-  // considered
   double aV1Set = theV1Cur + theDeltaV1, aV2Set = theV2Cur + theDeltaV2;
 
-  // However, what is indeed?
   VBoundaryPrecise(theMatr, theV1Cur - theDeltaV1, theV2Cur - theDeltaV2, aV1Set, aV2Set);
 
   aSyst.SetCol(2, theMatr.Col(3));
@@ -4601,12 +4291,12 @@ static bool StepComputing(const math_Matrix& theMatr,
   for (int i = 0; i < 2; i++)
   {
     if (i == 0)
-    { // V1 is known
+    {
       aSyst.SetCol(1, theMatr.Col(2));
       aFree.Set(1, aNbDim, theMatr.Col(5) - aV1Set * theMatr.Col(1));
     }
     else
-    { // i==1 => V2 is known
+    {
       aSyst.SetCol(1, theMatr.Col(1));
       aFree.Set(1, aNbDim, theMatr.Col(5) - aV2Set * theMatr.Col(2));
     }
@@ -4629,8 +4319,6 @@ static bool StepComputing(const math_Matrix& theMatr,
     aSyst1.SetCol(1, aSyst.Col(2));
     aSyst1.SetCol(2, aSyst.Col(3));
 
-    // Now we have overdetermined system.
-
     const double aDet1   = theMatr(1, 3) * theMatr(2, 4) - theMatr(2, 3) * theMatr(1, 4);
     const double aDet2   = theMatr(1, 3) * theMatr(3, 4) - theMatr(3, 3) * theMatr(1, 4);
     const double aDet3   = theMatr(2, 3) * theMatr(3, 4) - theMatr(3, 3) * theMatr(2, 4);
@@ -4642,7 +4330,7 @@ static bool StepComputing(const math_Matrix& theMatr,
     {
       if (anAbsD1 >= anAbsD3)
       {
-        // Det1
+
         if (anAbsD1 <= aNulValue)
           return isSuccess;
 
@@ -4651,7 +4339,7 @@ static bool StepComputing(const math_Matrix& theMatr,
       }
       else
       {
-        // Det3
+
         if (anAbsD3 <= aNulValue)
           return isSuccess;
 
@@ -4663,7 +4351,7 @@ static bool StepComputing(const math_Matrix& theMatr,
     {
       if (anAbsD2 >= anAbsD3)
       {
-        // Det2
+
         if (anAbsD2 <= aNulValue)
           return isSuccess;
 
@@ -4672,7 +4360,7 @@ static bool StepComputing(const math_Matrix& theMatr,
       }
       else
       {
-        // Det3
+
         if (anAbsD3 <= aNulValue)
           return isSuccess;
 
@@ -4685,20 +4373,18 @@ static bool StepComputing(const math_Matrix& theMatr,
   return isSuccess;
 }
 
-//=================================================================================================
-
-void ProcessBounds(const occ::handle<IntPatch_ALine>&                      alig, //-- ligne courante
+void ProcessBounds(const occ::handle<IntPatch_ALine>&                      alig,
                    const NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
                    const IntSurf_Quadric&                                  Quad1,
                    const IntSurf_Quadric&                                  Quad2,
                    bool&                                                   procf,
-                   const gp_Pnt& ptf,   //-- Debut Ligne Courante
-                   const double  first, //-- Paramf
-                   bool&         procl,
-                   const gp_Pnt& ptl,  //-- Fin Ligne courante
-                   const double  last, //-- Paraml
-                   bool&         Multpoint,
-                   const double  Tol)
+                   const gp_Pnt&                                           ptf,
+                   const double                                            first,
+                   bool&                                                   procl,
+                   const gp_Pnt&                                           ptl,
+                   const double                                            last,
+                   bool&                                                   Multpoint,
+                   const double                                            Tol)
 {
   int            j, k;
   double         U1, V1, U2, V2;
@@ -4714,16 +4400,12 @@ void ProcessBounds(const occ::handle<IntPatch_ALine>&                      alig,
     j = 1;
   }
 
-  //-- On prend les lignes deja enregistrees
-
   while (j <= slin.Length())
   {
     if (slin.Value(j)->ArcType() == IntPatch_Analytic)
     {
       const occ::handle<IntPatch_ALine>& aligold = *((occ::handle<IntPatch_ALine>*)&slin.Value(j));
       k                                          = 1;
-
-      //-- On prend les vertex des lignes deja enregistrees
 
       while (k <= aligold->NbVertex())
       {
@@ -4736,7 +4418,7 @@ void ProcessBounds(const occ::handle<IntPatch_ALine>&                      alig,
             ptsol.SetTolerance(Tol);
             if (!ptsol.IsMultiple())
             {
-              //-- le point ptsol (de aligold) est declare multiple sur aligold
+
               Multpoint = true;
               ptsol.SetMultiple(true);
               aligold->Replace(k, ptsol);
@@ -4746,7 +4428,6 @@ void ProcessBounds(const occ::handle<IntPatch_ALine>&                      alig,
             alig->SetFirstPoint(alig->NbVertex());
             procf = true;
 
-            //-- On restore le point avec son parametre sur aligold
             ptsol = aligold->Vertex(k);
           }
         }
@@ -4766,7 +4447,6 @@ void ProcessBounds(const occ::handle<IntPatch_ALine>&                      alig,
             alig->SetLastPoint(alig->NbVertex());
             procl = true;
 
-            //-- On restore le point avec son parametre sur aligold
             ptsol = aligold->Vertex(k);
           }
         }
@@ -4800,8 +4480,8 @@ void ProcessBounds(const occ::handle<IntPatch_ALine>&                      alig,
     ptsol.SetParameter(first);
     if (ptf.Distance(ptl) <= Tol)
     {
-      ptsol.SetMultiple(true); // a voir
-      Multpoint = true;        // a voir de meme
+      ptsol.SetMultiple(true);
+      Multpoint = true;
       alig->AddVertex(ptsol);
       alig->SetFirstPoint(alig->NbVertex());
 
@@ -4844,11 +4524,6 @@ void ProcessBounds(const occ::handle<IntPatch_ALine>&                      alig,
   }
 }
 
-//=======================================================================
-// function : CyCyAnalyticalIntersect
-// purpose  : Checks if intersection curve is analytical (line, circle, ellipse)
-//            and returns these curves.
-//=======================================================================
 bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Quad1,
                              const IntSurf_Quadric&                            Quad2,
                              const IntAna_QuadQuadGeo&                         theInter,
@@ -4909,26 +4584,20 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
     {
       gp_Pnt ptref;
       if (NbSol == 1)
-      { // Cylinders are tangent to each other by line
+      {
         linsol = theInter.Line(1);
         ptref  = linsol.Location();
 
-        // Radius-vectors
         gp_Dir crb1(gp_Vec(ptref, Cy1.Location()));
         gp_Dir crb2(gp_Vec(ptref, Cy2.Location()));
 
-        // outer normal lines
         gp_Vec            norm1(Quad1.Normale(ptref));
         gp_Vec            norm2(Quad2.Normale(ptref));
         IntSurf_Situation situcyl1;
         IntSurf_Situation situcyl2;
 
         if (crb1.Dot(crb2) < 0.)
-        { // centre de courbures "opposes"
-          // ATTENTION!!!
-          //         Normal and Radius-vector of the 1st(!) cylinder
-          //         is used for judging what the situation of the 2nd(!)
-          //         cylinder is.
+        {
 
           if (norm1.Dot(crb1) > 0.)
           {
@@ -5003,7 +4672,6 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
           ptref      = linsol.Location();
           gp_Vec lsd = linsol.Direction();
 
-          // Theoretically, qwe = +/- 1.0.
           double qwe = lsd.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref));
           if (qwe > 0.00000001)
           {
@@ -5054,12 +4722,8 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
 
       pmult2.SetParameters(oU1, oV1, oU2, oV2);
 
-      // on traite la premiere ellipse
-
-      //-- Calcul de la Transition de la ligne
       ElCLib::D1(0., elipsol, ptref, Tgt);
 
-      // Theoretically, qwe = +/- |Tgt|.
       double qwe = Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref));
       if (qwe > 0.00000001)
       {
@@ -5076,44 +4740,38 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
         trans1 = trans2 = IntSurf_Undecided;
       }
 
-      //-- Transition calculee au point 0 -> Trans2 , Trans1
-      //-- car ici, on devarit calculer en PI
       occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(elipsol, false, trans2, trans1);
-      //
+
       {
         double         aU1, aV1, aU2, aV2;
         IntPatch_Point aIP;
         gp_Pnt         aP(ElCLib::Value(0., elipsol));
-        //
+
         aIP.SetValue(aP, Tol, false);
         aIP.SetMultiple(false);
-        //
+
         Quad1.Parameters(aP, aU1, aV1);
         Quad2.Parameters(aP, aU2, aV2);
 
         aIP.SetParameters(aU1, aV1, aU2, aV2);
-        //
+
         aIP.SetParameter(0.);
         glig->AddVertex(aIP);
         glig->SetFirstPoint(1);
-        //
+
         aIP.SetParameter(2. * M_PI);
         glig->AddVertex(aIP);
         glig->SetLastPoint(2);
       }
-      //
+
       pmult1.SetParameter(0.5 * M_PI);
       glig->AddVertex(pmult1);
-      //
+
       pmult2.SetParameter(1.5 * M_PI);
       glig->AddVertex(pmult2);
 
-      //
       slin.Append(glig);
 
-      //-- Transitions calculee au point 0    OK
-      //
-      // on traite la deuxieme ellipse
       elipsol = theInter.Ellipse(2);
 
       double param1              = ElCLib::Parameter(elipsol, pttang1);
@@ -5132,10 +4790,8 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
         parampourtransition = 0.0;
       }
 
-      //-- Calcul des transitions de ligne pour la premiere ligne
       ElCLib::D1(parampourtransition, elipsol, ptref, Tgt);
 
-      // Theoretically, qwe = +/- |Tgt|.
       qwe = Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref));
       if (qwe > 0.00000001)
       {
@@ -5152,35 +4808,33 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
         trans1 = trans2 = IntSurf_Undecided;
       }
 
-      //-- La transition a ete calculee sur un point de cette ligne
       glig = new IntPatch_GLine(elipsol, false, trans1, trans2);
-      //
+
       {
         double         aU1, aV1, aU2, aV2;
         IntPatch_Point aIP;
         gp_Pnt         aP(ElCLib::Value(0., elipsol));
-        //
+
         aIP.SetValue(aP, Tol, false);
         aIP.SetMultiple(false);
-        //
 
         Quad1.Parameters(aP, aU1, aV1);
         Quad2.Parameters(aP, aU2, aV2);
 
         aIP.SetParameters(aU1, aV1, aU2, aV2);
-        //
+
         aIP.SetParameter(0.);
         glig->AddVertex(aIP);
         glig->SetFirstPoint(1);
-        //
+
         aIP.SetParameter(2. * M_PI);
         glig->AddVertex(aIP);
         glig->SetLastPoint(2);
       }
-      //
+
       glig->AddVertex(pmult1);
       glig->AddVertex(pmult2);
-      //
+
       slin.Append(glig);
     }
     break;
@@ -5190,8 +4844,7 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
       throw Standard_Failure("IntCyCy(): Wrong intersection type!");
 
     case IntAna_Circle:
-      // Circle is useful when we will work with trimmed surfaces
-      // (two cylinders can be tangent by their basises, e.g. circle)
+
     case IntAna_NoGeometricSolution:
     default:
       return false;
@@ -5200,12 +4853,6 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
   return true;
 }
 
-//=======================================================================
-// function : ShortCosForm
-// purpose  : Represents theCosFactor*cosA+theSinFactor*sinA as
-//            theCoeff*cos(A-theAngle) if it is possibly (all angles are
-//            in radians).
-//=======================================================================
 static void ShortCosForm(const double theCosFactor,
                          const double theSinFactor,
                          double&      theCoeff,
@@ -5256,38 +4903,13 @@ static void ShortCosForm(const double theCosFactor,
   }
 }
 
-//=======================================================================
-// function : CylCylMonotonicity
-// purpose  : Determines, if U2(U1) function is increasing.
-//=======================================================================
 bool ComputationMethods::CylCylMonotonicity(const double         theU1par,
                                             const int            theWLIndex,
                                             const stCoeffsValue& theCoeffs,
                                             const double         thePeriod,
                                             bool&                theIsIncreasing)
 {
-  // U2(U1) = FI2 + (+/-)acos(B*cos(U1 - FI1) + C);
-  // Accordingly,
-  // Func. U2(X1) = FI2 + X1;
-  // Func. X1(X2) = anArccosFactor*X2;
-  // Func. X2(X3) = acos(X3);
-  // Func. X3(X4) = B*X4 + C;
-  // Func. X4(U1) = cos(U1 - FI1).
-  //
-  // Consequently,
-  // U2(X1) is always increasing.
-  // X1(X2) is increasing if anArccosFactor > 0.0 and
-  // is decreasing otherwise.
-  // X2(X3) is always decreasing.
-  // Therefore, U2(X3) is decreasing if anArccosFactor > 0.0 and
-  // is increasing otherwise.
-  // X3(X4) is increasing if B > 0 and is decreasing otherwise.
-  // X4(U1) is increasing if U1 - FI1 in [PI, 2*PI) and
-  // is decreasing U1 - FI1 in [0, PI) or if (U1 - FI1 == 2PI).
-  // After that, we can predict behaviour of U2(U1) function:
-  // if it is increasing or decreasing.
 
-  // For "+/-" sign. If isPlus == TRUE, "+" is chosen, otherwise, we choose "-".
   bool isPlus = false;
 
   switch (theWLIndex)
@@ -5299,7 +4921,7 @@ bool ComputationMethods::CylCylMonotonicity(const double         theU1par,
       isPlus = false;
       break;
     default:
-      // throw Standard_Failure("Error. Range Error!!!!");
+
       return false;
   }
 
@@ -5326,19 +4948,13 @@ bool ComputationMethods::CylCylMonotonicity(const double         theU1par,
   return true;
 }
 
-//=======================================================================
-// function : CylCylComputeParameters
-// purpose  : Computes U2 (U-parameter of the 2nd cylinder) and, if theDelta != 0,
-//            estimates the tolerance of U2-computing (estimation result is
-//            assigned to *theDelta value).
-//=======================================================================
 bool ComputationMethods::CylCylComputeParameters(const double         theU1par,
                                                  const int            theWLIndex,
                                                  const stCoeffsValue& theCoeffs,
                                                  double&              theU2,
                                                  double* const        theDelta)
 {
-  // This formula is got from some experience and can be changed.
+
   const double aTol0 = std::min(10.0 * Epsilon(1.0) * theCoeffs.mB, aNulValue);
   const double aTol  = 1.0 - aTol0;
 
@@ -5366,32 +4982,6 @@ bool ComputationMethods::CylCylComputeParameters(const double         theU1par,
   }
   else if (theDelta)
   {
-    // There is a case, when
-    //   const double aPar = 0.99999999999721167;
-    //   const double aFI2 = 2.3593296083566181e-006;
-
-    // Then
-    //   aPar - cos(aFI2) == -5.10703e-015 ==> cos(aFI2) == aPar.
-    // Theoretically, in this case
-    //   aFI2 == +/- acos(aPar).
-    // However,
-    //   acos(aPar) - aFI2 == 2.16362e-009.
-    // Error is quite big.
-
-    // This error should be estimated. Let use following way, which is based
-    // on expanding to Taylor series.
-
-    //  acos(p)-acos(p+x) = x/sqrt(1-p*p).
-
-    // If p == (1-d) (when p > 0) or p == (-1+d) (when p < 0) then
-    //   acos(p)-acos(p+x) = x/sqrt(d*(2-d)).
-
-    // Here always aTol0 <= d <= 1. std::max(x) is considered (!) to be equal to aTol0.
-    // In this case
-    //   8*aTol0 <= acos(p)-acos(p+x) <= sqrt(2/(2-aTol0)-1),
-    //                                               because 0 < aTol0 < 1.
-    // E.g. when aTol0 = 1.0e-11,
-    //    8.0e-11 <= acos(p)-acos(p+x) < 2.24e-6.
 
     const double aDelta = std::min(1.0 - anArg, 1.0 + anArg);
     Standard_DivideByZero_Raise_if((aDelta * aDelta < RealSmall()) || (aDelta >= 2.0),
@@ -5405,10 +4995,6 @@ bool ComputationMethods::CylCylComputeParameters(const double         theU1par,
   return true;
 }
 
-//=======================================================================
-// function : CylCylComputeParameters
-// purpose  : Computes V1 and V2 (V-parameters of the 1st and 2nd cylinder respectively).
-//=======================================================================
 bool ComputationMethods::CylCylComputeParameters(const double         theU1,
                                                  const double         theU2,
                                                  const stCoeffsValue& theCoeffs,
@@ -5424,11 +5010,6 @@ bool ComputationMethods::CylCylComputeParameters(const double         theU1,
   return true;
 }
 
-//=======================================================================
-// function : CylCylComputeParameters
-// purpose  : Computes U2 (U-parameter of the 2nd cylinder),
-//            V1 and V2 (V-parameters of the 1st and 2nd cylinder respectively).
-//=======================================================================
 bool ComputationMethods::CylCylComputeParameters(const double         theU1par,
                                                  const int            theWLIndex,
                                                  const stCoeffsValue& theCoeffs,
@@ -5445,8 +5026,6 @@ bool ComputationMethods::CylCylComputeParameters(const double         theU1par,
   return true;
 }
 
-//=================================================================================================
-
 bool WorkWithBoundaries::SearchOnVBounds(const SearchBoundType theSBType,
                                          const double          theVzad,
                                          const double          theVInit,
@@ -5455,15 +5034,12 @@ bool WorkWithBoundaries::SearchOnVBounds(const SearchBoundType theSBType,
                                          double&               theMainVariableValue) const
 {
   const int    aNbDim    = 3;
-  const double aMaxError = 4.0 * M_PI; // two periods
+  const double aMaxError = 4.0 * M_PI;
 
   theMainVariableValue      = theInitMainVar;
   const double aTol2        = 1.0e-18;
   double       aMainVarPrev = theInitMainVar, aU2Prev = theInitU2, anOtherVar = theVInit;
 
-  // Structure of aMatr:
-  //   C_{1}*U_{1} & C_{2}*U_{2} & C_{3}*V_{*},
-  // where C_{1}, C_{2} and C_{3} are math_Vector.
   math_Matrix aMatr(1, aNbDim, 1, aNbDim);
 
   double anError     = RealLast();
@@ -5532,7 +5108,6 @@ bool WorkWithBoundaries::SearchOnVBounds(const SearchBoundType theSBType,
     anError = aDelta * aDelta;
     aMainVarPrev += aDelta;
 
-    ///
     aDelta = aDetVar1 / aDetMainSyst - aU2Prev;
 
     if (std::abs(aDelta) > aMaxError)
@@ -5541,13 +5116,12 @@ bool WorkWithBoundaries::SearchOnVBounds(const SearchBoundType theSBType,
     anError += aDelta * aDelta;
     aU2Prev += aDelta;
 
-    ///
     aDelta = aDetVar2 / aDetMainSyst - anOtherVar;
     anError += aDelta * aDelta;
     anOtherVar += aDelta;
 
     if (anError > anErrorPrev)
-    { // Method diverges. Keep the best result
+    {
       const double aSinU1Last = sin(aMainVarPrev), aCosU1Last = cos(aMainVarPrev),
                    aSinU2Last = sin(aU2Prev), aCosU2Last = cos(aU2Prev);
       aMSum -= (myCoeffs.mVecA1 * aCosU1Last + myCoeffs.mVecB1 * aSinU1Last
@@ -5568,13 +5142,6 @@ bool WorkWithBoundaries::SearchOnVBounds(const SearchBoundType theSBType,
   return true;
 }
 
-//=======================================================================
-// function : InscribePoint
-// purpose  : If theFlForce==TRUE theUGiven will be changed forcefully
-//            even if theUGiven is already inscibed in the boundary
-//            (if it is possible; i.e. if new theUGiven is inscribed
-//            in the boundary, too).
-//=======================================================================
 bool InscribePoint(const double theUfTarget,
                    const double theUlTarget,
                    double&      theUGiven,
@@ -5588,12 +5155,7 @@ bool InscribePoint(const double theUfTarget,
   }
 
   if ((theUfTarget - theUGiven <= theTol2D) && (theUGiven - theUlTarget <= theTol2D))
-  { // it has already inscribed
-
-    /*
-             Utf    U      Utl
-              +     *       +
-    */
+  {
 
     if (theFlForce)
     {
@@ -5622,11 +5184,6 @@ bool InscribePoint(const double theUfTarget,
   return ((theUfTarget - theUGiven <= theTol2D) && (theUGiven - theUlTarget <= theTol2D));
 }
 
-//=======================================================================
-// function : InscribeInterval
-// purpose  : Shifts theRange in order to make at least one of its
-//            boundary in the range [theUfTarget, theUlTarget]
-//=======================================================================
 static bool InscribeInterval(const double theUfTarget,
                              const double theUlTarget,
                              Bnd_Range&   theRange,
@@ -5678,17 +5235,6 @@ static bool InscribeInterval(const double theUfTarget,
   return true;
 }
 
-//=======================================================================
-// function : ExcludeNearElements
-// purpose  : Checks if theArr contains two almost equal elements.
-//            If it is true then one of equal elements will be excluded
-//            (made infinite).
-//           Returns TRUE if at least one element of theArr has been changed.
-// ATTENTION!!!
-//           1. Every not infinite element of theArr is considered to be
-//            in [0, T] interval (where T is the period);
-//           2. theArr must be sorted in ascending order.
-//=======================================================================
 static bool ExcludeNearElements(double       theArr[],
                                 const int    theNOfMembers,
                                 const double theUSurf1f,
@@ -5700,8 +5246,6 @@ static bool ExcludeNearElements(double       theArr[],
   {
     double &anA = theArr[i], &anB = theArr[i - 1];
 
-    // Here, anA >= anB
-
     if (Precision::IsInfinite(anA))
       break;
 
@@ -5712,8 +5256,6 @@ static bool ExcludeNearElements(double       theArr[],
       else
         anA = anB;
 
-      // Make this element infinite an forget it
-      //(we will not use it in next iterations).
       anB     = Precision::Infinite();
       aRetVal = true;
     }
@@ -5722,15 +5264,6 @@ static bool ExcludeNearElements(double       theArr[],
   return aRetVal;
 }
 
-//=======================================================================
-// function : AddPointIntoWL
-// purpose  : Surf1 is a surface, whose U-par is variable.
-//           If theFlBefore == TRUE then we enable the U1-parameter
-//            of the added point to be less than U1-parameter of
-//           previously added point (in general U1-parameter is
-//           always increased; therefore, this situation is abnormal).
-//           If theOnlyCheck==TRUE then no point will be added to theLine.
-//=======================================================================
 static bool AddPointIntoWL(const IntSurf_Quadric&                   theQuad1,
                            const IntSurf_Quadric&                   theQuad2,
                            const ComputationMethods::stCoeffsValue& theCoeffs,
@@ -5754,15 +5287,12 @@ static bool AddPointIntoWL(const IntSurf_Quadric&                   theQuad1,
                            const bool                               theFlBefore  = false,
                            const bool                               theOnlyCheck = false)
 {
-  // Check if the point is in the domain or can be inscribed in the domain after adjusting.
 
   gp_Pnt aPt1(theQuad1.Value(thePntOnSurf1.X(), thePntOnSurf1.Y())),
     aPt2(theQuad2.Value(thePntOnSurf2.X(), thePntOnSurf2.Y()));
 
   double aU1par = thePntOnSurf1.X();
 
-  // aU1par always increases. Therefore, we must reduce its
-  // value in order to continue creation of WLine.
   if (!InscribePoint(theUfSurf1,
                      theUlSurf1,
                      aU1par,
@@ -5775,9 +5305,6 @@ static bool AddPointIntoWL(const IntSurf_Quadric&                   theQuad1,
       && (((aU1par + thePeriodOfSurf1 - theUlSurf1) <= theTol2D)
           || ((aU1par - thePeriodOfSurf1 - theUfSurf1) >= theTol2D)))
   {
-    // aU1par can be adjusted to both theUlSurf1 and theUfSurf1
-    // with equal possibilities. This code fragment allows choosing
-    // correct parameter from these two variants.
 
     double aU1 = 0.0, aV1 = 0.0;
     if (isTheReverse)
@@ -5808,7 +5335,6 @@ static bool AddPointIntoWL(const IntSurf_Quadric&                   theQuad1,
   if ((aV2par - theVlSurf2 > theTol2D) || (theVfSurf2 - aV2par > theTol2D))
     return false;
 
-  // Get intersection point and add it in the WL
   IntSurf_PntOn2S aPnt;
 
   if (isTheReverse)
@@ -5832,16 +5358,11 @@ static bool AddPointIntoWL(const IntSurf_Quadric&                   theQuad1,
 
     if (!theFlBefore && (aU1par <= aUl))
     {
-      // Parameter value must be increased if theFlBefore == FALSE.
 
       aU1par += thePeriodOfSurf1;
 
-      // The condition is as same as in
-      // InscribePoint(...) function
       if ((theUfSurf1 - aU1par > theTol2D) || (aU1par - theUlSurf1 > theTol2D))
       {
-        // New aU1par is out of target interval.
-        // Go back to old value.
 
         return false;
       }
@@ -5850,10 +5371,6 @@ static bool AddPointIntoWL(const IntSurf_Quadric&                   theQuad1,
     if (theOnlyCheck)
       return true;
 
-    // theTol2D is minimal step along parameter changed.
-    // Therefore, if we apply this minimal step two
-    // neighbour points will be always "same". Consequently,
-    // we should reduce tolerance for IsSame checking.
     const double aDTol = 1.0 - Epsilon(1.0);
     if (aPnt.IsSame(aPlast, theTol3D * aDTol, theTol2D * aDTol))
     {
@@ -5869,7 +5386,6 @@ static bool AddPointIntoWL(const IntSurf_Quadric&                   theQuad1,
   if (!isThePrecise)
     return true;
 
-  // Try to precise existing WLine
   aNbPnts = theLine->NbPoints();
   if (aNbPnts >= 3)
   {
@@ -5894,7 +5410,7 @@ static bool AddPointIntoWL(const IntSurf_Quadric&                   theQuad1,
 
     if ((1 < aDeltaStep) && (aDeltaStep < 2000))
     {
-      // Add new points in case of non-uniform distribution of existing points
+
       SeekAdditionalPoints(theQuad1,
                            theQuad2,
                            theLine,
@@ -5912,10 +5428,6 @@ static bool AddPointIntoWL(const IntSurf_Quadric&                   theQuad1,
   return true;
 }
 
-//=======================================================================
-// function : AddBoundaryPoint
-// purpose  : Find intersection point on V-boundary.
-//=======================================================================
 void WorkWithBoundaries::AddBoundaryPoint(const occ::handle<IntPatch_WLine>& theWL,
                                           const double                       theU1,
                                           const double                       theU1Min,
@@ -5929,10 +5441,8 @@ void WorkWithBoundaries::AddBoundaryPoint(const occ::handle<IntPatch_WLine>& the
                                           bool&                              isTheFound1,
                                           bool&                              isTheFound2) const
 {
-  double aUSurf1f = 0.0, // const
-    aUSurf1l = 0.0, aVSurf1f = 0.0, aVSurf1l = 0.0;
-  double aUSurf2f = 0.0, // const
-    aUSurf2l = 0.0, aVSurf2f = 0.0, aVSurf2l = 0.0;
+  double aUSurf1f = 0.0, aUSurf1l = 0.0, aVSurf1f = 0.0, aVSurf1l = 0.0;
+  double aUSurf2f = 0.0, aUSurf2l = 0.0, aVSurf2f = 0.0, aVSurf2l = 0.0;
 
   myUVSurf1.Get(aUSurf1f, aVSurf1f, aUSurf1l, aVSurf1l);
   myUVSurf2.Get(aUSurf2f, aVSurf2f, aUSurf2l, aVSurf2l);
@@ -5961,10 +5471,6 @@ void WorkWithBoundaries::AddBoundaryPoint(const occ::handle<IntPatch_WLine>& the
         continue;
       }
 
-      // Segment [aVf, aVl] intersects at least one V-boundary (first or last)
-      //  (in general, case is possible, when aVf > aVl).
-
-      // Precise intersection point
       const bool aRes = SearchOnVBounds(aTS,
                                         anArrVzad[anIndex],
                                         (anIDSurf == 0) ? theV2 : theV1,
@@ -5972,17 +5478,14 @@ void WorkWithBoundaries::AddBoundaryPoint(const occ::handle<IntPatch_WLine>& the
                                         theU1,
                                         aUVPoint[anIndex].myU1);
 
-      // aUVPoint[anIndex].myU1 is considered to be nearer to theU1 than
-      // to theU1+/-Period
       if (!aRes || (aUVPoint[anIndex].myU1 >= theU1) || (aUVPoint[anIndex].myU1 < theU1Min))
       {
-        // Intersection point is not found or out of the domain
+
         aUVPoint[anIndex].myU1 = RealLast();
         continue;
       }
       else
       {
-        // intersection point is found
 
         double &aU1 = aUVPoint[anIndex].myU1, &aU2 = aUVPoint[anIndex].myU2,
                &aV1 = aUVPoint[anIndex].myV1, &aV2 = aUVPoint[anIndex].myV2;
@@ -5992,26 +5495,23 @@ void WorkWithBoundaries::AddBoundaryPoint(const occ::handle<IntPatch_WLine>& the
 
         if (!ComputationMethods::CylCylComputeParameters(aU1, theWLIndex, myCoeffs, aU2, aV1, aV2))
         {
-          // Found point is wrong
+
           aU1 = RealLast();
           continue;
         }
 
-        // Point on true V-boundary.
         if (aTS == SearchV1)
           aV1 = anArrVzad[anIndex];
-        else // if(aTS[anIndex] == SearchV2)
+        else
           aV2 = anArrVzad[anIndex];
       }
     }
   }
 
-  // Sort with acceding U1-parameter.
   std::sort(aUVPoint, aUVPoint + aSize);
 
   isTheFound1 = isTheFound2 = false;
 
-  // Adding found points on boundary in the WLine.
   for (int i = 0; i < aSize; i++)
   {
     if (aUVPoint[i].myU1 == RealLast())
@@ -6053,13 +5553,6 @@ void WorkWithBoundaries::AddBoundaryPoint(const occ::handle<IntPatch_WLine>& the
   }
 }
 
-//=======================================================================
-// function : SeekAdditionalPoints
-// purpose  : Inserts additional intersection points between neighbor points.
-//            This action is bone with several iterations. During every iteration,
-//          new point is inserted in middle of every interval.
-//            The process will be finished if NbPoints >= theMinNbPoints.
-//=======================================================================
 static void SeekAdditionalPoints(const IntSurf_Quadric&                   theQuad1,
                                  const IntSurf_Quadric&                   theQuad2,
                                  const occ::handle<IntSurf_LineOn2S>&     theLine,
@@ -6105,11 +5598,11 @@ static void SeekAdditionalPoints(const IntSurf_Quadric&                   theQua
     aNbPointsPrev = aNbPoints;
     for (int fp = theStartPointOnLine, lp = 0; fp < aLastPointIndex; fp = lp + 1)
     {
-      double U1f = 0.0, V1f = 0.0; // first point in 1st suraface
-      double U1l = 0.0, V1l = 0.0; // last  point in 1st suraface
+      double U1f = 0.0, V1f = 0.0;
+      double U1l = 0.0, V1l = 0.0;
 
-      double U2f = 0.0, V2f = 0.0; // first point in 2nd suraface
-      double U2l = 0.0, V2l = 0.0; // last  point in 2nd suraface
+      double U2f = 0.0, V2f = 0.0;
+      double U2l = 0.0, V2l = 0.0;
 
       lp = fp + 1;
 
@@ -6132,7 +5625,7 @@ static void SeekAdditionalPoints(const IntSurf_Quadric&                   theQua
 
       if (std::abs(U1l - U1f) <= aMinDeltaParam)
       {
-        // Step is minimal. It is not necessary to divide it.
+
         continue;
       }
 
@@ -6185,44 +5678,27 @@ static void SeekAdditionalPoints(const IntSurf_Quadric&                   theQua
   } while (aNbPoints < theMinNbPoints && (aNbPoints != aNbPointsPrev));
 }
 
-//=======================================================================
-// function : BoundariesComputing
-// purpose  : Computes true domain of future intersection curve (allows
-//            avoiding excess iterations)
-//=======================================================================
 bool WorkWithBoundaries::BoundariesComputing(const ComputationMethods::stCoeffsValue& theCoeffs,
                                              const double                             thePeriod,
                                              Bnd_Range                                theURange[])
 {
-  // All comments to this method is related to the comment
-  // to ComputationMethods class
-
-  // So, we have the equation
-  //     cos(U2-FI2)=B*cos(U1-FI1)+C
-  // Evidently,
-  //     -1 <= B*cos(U1-FI1)+C <= 1
 
   if (theCoeffs.mB > 0.0)
   {
-    // -(1+C)/B <= cos(U1-FI1) <= (1-C)/B
 
     if (theCoeffs.mB + std::abs(theCoeffs.mC) < -1.0)
     {
-      //(1-C)/B < -1 or -(1+C)/B > 1  ==> No solution
 
       return false;
     }
     else if (theCoeffs.mB + std::abs(theCoeffs.mC) <= 1.0)
     {
-      //(1-C)/B >= 1 and -(1+C)/B <= -1 ==> U=[0;2*PI]+aFI1
+
       theURange[0].Add(theCoeffs.mFI1);
       theURange[0].Add(thePeriod + theCoeffs.mFI1);
     }
     else if ((1 + theCoeffs.mC <= theCoeffs.mB) && (theCoeffs.mB <= 1 - theCoeffs.mC))
     {
-      //(1-C)/B >= 1 and -(1+C)/B >= -1 ==>
-      //(U=[0;aDAngle]+aFI1) || (U=[2*PI-aDAngle;2*PI]+aFI1),
-      // where aDAngle = acos(-(myCoeffs.mC + 1) / myCoeffs.mB)
 
       double anArg = -(theCoeffs.mC + 1) / theCoeffs.mB;
       if (anArg > 1.0)
@@ -6238,8 +5714,6 @@ bool WorkWithBoundaries::BoundariesComputing(const ComputationMethods::stCoeffsV
     }
     else if ((1 - theCoeffs.mC <= theCoeffs.mB) && (theCoeffs.mB <= 1 + theCoeffs.mC))
     {
-      //(1-C)/B <= 1 and -(1+C)/B <= -1 ==> U=[aDAngle;2*PI-aDAngle]+aFI1
-      // where aDAngle = acos((1 - myCoeffs.mC) / myCoeffs.mB)
 
       double anArg = (1 - theCoeffs.mC) / theCoeffs.mB;
       if (anArg > 1.0)
@@ -6253,11 +5727,6 @@ bool WorkWithBoundaries::BoundariesComputing(const ComputationMethods::stCoeffsV
     }
     else if (theCoeffs.mB - std::abs(theCoeffs.mC) >= 1.0)
     {
-      //(1-C)/B <= 1 and -(1+C)/B >= -1 ==>
-      //(U=[aDAngle1;aDAngle2]+aFI1) ||
-      //(U=[2*PI-aDAngle2;2*PI-aDAngle1]+aFI1)
-      // where aDAngle1 = acos((1 - myCoeffs.mC) / myCoeffs.mB),
-      //      aDAngle2 = acos(-(myCoeffs.mC + 1) / myCoeffs.mB).
 
       double anArg1 = (1 - theCoeffs.mC) / theCoeffs.mB,
              anArg2 = -(theCoeffs.mC + 1) / theCoeffs.mB;
@@ -6272,8 +5741,7 @@ bool WorkWithBoundaries::BoundariesComputing(const ComputationMethods::stCoeffsV
         anArg2 = -1.0;
 
       const double aDAngle1 = acos(anArg1), aDAngle2 = acos(anArg2);
-      //(U=[aDAngle1;aDAngle2]+aFI1) ||
-      //(U=[2*PI-aDAngle2;2*PI-aDAngle1]+aFI1)
+
       theURange[0].Add(aDAngle1 + theCoeffs.mFI1);
       theURange[0].Add(aDAngle2 + theCoeffs.mFI1);
       theURange[1].Add(thePeriod - aDAngle2 + theCoeffs.mFI1);
@@ -6286,24 +5754,20 @@ bool WorkWithBoundaries::BoundariesComputing(const ComputationMethods::stCoeffsV
   }
   else if (theCoeffs.mB < 0.0)
   {
-    // (1-C)/B <= cos(U1-FI1) <= -(1+C)/B
 
     if (theCoeffs.mB + std::abs(theCoeffs.mC) > 1.0)
     {
-      // -(1+C)/B < -1 or (1-C)/B > 1 ==> No solutions
+
       return false;
     }
     else if (-theCoeffs.mB + std::abs(theCoeffs.mC) <= 1.0)
     {
-      //  -(1+C)/B >= 1 and (1-C)/B <= -1 ==> U=[0;2*PI]+aFI1
+
       theURange[0].Add(theCoeffs.mFI1);
       theURange[0].Add(thePeriod + theCoeffs.mFI1);
     }
     else if ((-theCoeffs.mC - 1 <= theCoeffs.mB) && (theCoeffs.mB <= theCoeffs.mC - 1))
     {
-      //  -(1+C)/B >= 1 and (1-C)/B >= -1 ==>
-      //(U=[0;aDAngle]+aFI1) || (U=[2*PI-aDAngle;2*PI]+aFI1),
-      // where aDAngle = acos((1 - myCoeffs.mC) / myCoeffs.mB)
 
       double anArg = (1 - theCoeffs.mC) / theCoeffs.mB;
       if (anArg > 1.0)
@@ -6319,8 +5783,6 @@ bool WorkWithBoundaries::BoundariesComputing(const ComputationMethods::stCoeffsV
     }
     else if ((theCoeffs.mC - 1 <= theCoeffs.mB) && (theCoeffs.mB <= -theCoeffs.mB - 1))
     {
-      //  -(1+C)/B <= 1 and (1-C)/B <= -1 ==> U=[aDAngle;2*PI-aDAngle]+aFI1,
-      // where aDAngle = acos(-(myCoeffs.mC + 1) / myCoeffs.mB).
 
       double anArg = -(theCoeffs.mC + 1) / theCoeffs.mB;
       if (anArg > 1.0)
@@ -6334,10 +5796,6 @@ bool WorkWithBoundaries::BoundariesComputing(const ComputationMethods::stCoeffsV
     }
     else if (-theCoeffs.mB - std::abs(theCoeffs.mC) >= 1.0)
     {
-      //  -(1+C)/B <= 1 and (1-C)/B >= -1 ==>
-      //(U=[aDAngle1;aDAngle2]+aFI1) || (U=[2*PI-aDAngle2;2*PI-aDAngle1]+aFI1),
-      // where aDAngle1 = acos(-(myCoeffs.mC + 1) / myCoeffs.mB),
-      //      aDAngle2 = acos((1 - myCoeffs.mC) / myCoeffs.mB)
 
       double anArg1 = -(theCoeffs.mC + 1) / theCoeffs.mB,
              anArg2 = (1 - theCoeffs.mC) / theCoeffs.mB;
@@ -6370,11 +5828,6 @@ bool WorkWithBoundaries::BoundariesComputing(const ComputationMethods::stCoeffsV
   return true;
 }
 
-//=======================================================================
-// function : CriticalPointsComputing
-// purpose  : theNbCritPointsMax contains true number of critical points.
-//            It must be initialized correctly before function calling
-//=======================================================================
 static void CriticalPointsComputing(const ComputationMethods::stCoeffsValue& theCoeffs,
                                     const double                             theUSurf1f,
                                     const double                             theUSurf1l,
@@ -6385,15 +5838,6 @@ static void CriticalPointsComputing(const ComputationMethods::stCoeffsValue& the
                                     int&                                     theNbCritPointsMax,
                                     double                                   theU1crit[])
 {
-  //[0...1] - in these points parameter U1 goes through
-  //          the seam-edge of the first cylinder.
-  //[2...3] - First and last U1 parameter.
-  //[4...5] - in these points parameter U2 goes through
-  //          the seam-edge of the second cylinder.
-  //[6...9] - in these points an intersection line goes through
-  //          U-boundaries of the second surface.
-  //[10...11] - Boundary of monotonicity interval of U2(U1) function
-  //            (see CylCylMonotonicity() function)
 
   theU1crit[0] = 0.0;
   theU1crit[1] = thePeriod;
@@ -6418,8 +5862,6 @@ static void CriticalPointsComputing(const ComputationMethods::stCoeffsValue& the
   double aSl = cos(theUSurf2l - theCoeffs.mFI2);
   MinMax(aSf, aSl);
 
-  // In accorance with pure mathematic, theU1crit[6] and [8]
-  // must be -Precision::Infinite() instead of used +Precision::Infinite()
   theU1crit[6] = std::abs((aSl - theCoeffs.mC) / theCoeffs.mB) < 1.0
                    ? -acos((aSl - theCoeffs.mC) / theCoeffs.mB) + theCoeffs.mFI1
                    : Precision::Infinite();
@@ -6436,9 +5878,6 @@ static void CriticalPointsComputing(const ComputationMethods::stCoeffsValue& the
   theU1crit[10] = theCoeffs.mFI1;
   theU1crit[11] = M_PI + theCoeffs.mFI1;
 
-  // preparative treatment of array. This array must have faled to contain negative
-  // infinity number
-
   for (int i = 0; i < theNbCritPointsMax; i++)
   {
     if (Precision::IsInfinite(theU1crit[i]))
@@ -6451,14 +5890,10 @@ static void CriticalPointsComputing(const ComputationMethods::stCoeffsValue& the
       theU1crit[i] += thePeriod;
   }
 
-  // Here all not infinite elements of theU1crit are in [0, thePeriod) range
-
   do
   {
     std::sort(theU1crit, theU1crit + theNbCritPointsMax);
   } while (ExcludeNearElements(theU1crit, theNbCritPointsMax, theUSurf1f, theUSurf1l, theTol2D));
-
-  // Here all not infinite elements in theU1crit are different and sorted.
 
   while (theNbCritPointsMax > 0)
   {
@@ -6469,36 +5904,22 @@ static void CriticalPointsComputing(const ComputationMethods::stCoeffsValue& the
       continue;
     }
 
-    // 1st not infinte element is found
-
     if (theNbCritPointsMax == 1)
       break;
 
-    // Here theNbCritPointsMax > 1
-
     double& anA = theU1crit[0];
 
-    // Compare 1st and last significant elements of theU1crit
-    // They may still differs by period.
-
     if (std::abs(anB - anA - thePeriod) < theTol2D)
-    { // E.g. anA == 2.0e-17, anB == (thePeriod-1.0e-18)
+    {
       anA = (anA + anB - thePeriod) / 2.0;
       anB = Precision::Infinite();
       theNbCritPointsMax--;
     }
 
-    // Out of "while(theNbCritPointsMax > 0)" cycle.
     break;
   }
-
-  // Attention! Here theU1crit may be unsorted.
 }
 
-//=======================================================================
-// function : BoundaryEstimation
-// purpose  : Rough estimation of the parameter range.
-//=======================================================================
 void WorkWithBoundaries::BoundaryEstimation(const gp_Cylinder& theCy1,
                                             const gp_Cylinder& theCy2,
                                             Bnd_Range&         theOutBoxS1,
@@ -6507,34 +5928,21 @@ void WorkWithBoundaries::BoundaryEstimation(const gp_Cylinder& theCy1,
   const gp_Dir &aD1 = theCy1.Axis().Direction(), &aD2 = theCy2.Axis().Direction();
   const double  aR1 = theCy1.Radius(), aR2 = theCy2.Radius();
 
-  // Let consider a parallelogram. Its edges are parallel to aD1 and aD2.
-  // Its altitudes are equal to 2*aR1 and 2*aR2 (diameters of the cylinders).
-  // In fact, this parallelogram is a projection of the cylinders to the plane
-  // created by the intersected axes aD1 and aD2 (if the axes are skewed then
-  // one axis can be translated by parallel shifting till intersection).
-
   const double aCosA   = aD1.Dot(aD2);
   const double aSqSinA = aD1.XYZ().CrossSquareMagnitude(aD2.XYZ());
 
-  // If sine is small then it can be compared with angle.
   if (aSqSinA < Precision::Angular() * Precision::Angular())
     return;
 
-  // Half of delta V. Delta V is a distance between
-  // projections of two opposite parallelogram vertices
-  //(joined by the maximal diagonal) to the cylinder axis.
   const double aSinA     = sqrt(aSqSinA);
   const double anAbsCosA = std::abs(aCosA);
   const double aHDV1 = (aR1 * anAbsCosA + aR2) / aSinA, aHDV2 = (aR2 * anAbsCosA + aR1) / aSinA;
 
 #ifdef INTPATCH_IMPIMPINTERSECTION_DEBUG
-  // The code in this block is created for test only.It is stupidly to create
-  // OCCT-test for the method, which will be changed possibly never.
+
   std::cout << "Reference values: aHDV1 = " << aHDV1 << "; aHDV2 = " << aHDV2 << std::endl;
 #endif
 
-  // V-parameters of intersection point of the axes (in case of skewed axes,
-  // see comment above).
   double aV01 = 0.0, aV02 = 0.0;
   ExtremaLineLine(theCy1.Axis(), theCy2.Axis(), aCosA, aSqSinA, aV01, aV02);
 
@@ -6555,14 +5963,12 @@ void WorkWithBoundaries::BoundaryEstimation(const gp_Cylinder& theCy1,
   theOutBoxS2.Common(Bnd_Range(aV1, aV2));
 }
 
-//=================================================================================================
-
 static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
   const gp_Cylinder&                                theCyl1,
   const gp_Cylinder&                                theCyl2,
   const WorkWithBoundaries&                         theBW,
   Bnd_Range                                         theRange[],
-  const int                                         theNbOfRanges /*=2*/,
+  const int                                         theNbOfRanges,
   bool&                                             isTheEmpty,
   NCollection_Sequence<occ::handle<IntPatch_Line>>& theSlin,
   NCollection_Sequence<IntPatch_Point>&             theSPnt)
@@ -6579,31 +5985,24 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
     return IntPatch_ImpImpIntersection::IntStatus_OK;
 
   {
-    // Quotation of the message from issue #26894 (author MSV):
-    //"We should return fail status from intersector if the result should be an
-    // infinite curve of non-analytical type... I propose to define the limit for the
-    // extent as the radius divided by 1e+2 and multiplied by 1e+7.
-    // Thus, taking into account the number of valuable digits (15), we provide reliable
-    // computations with an error not exceeding R/100."
+
     const double aF          = 1.0e+5;
     const double aMaxV1Range = aF * theCyl1.Radius(), aMaxV2Range = aF * theCyl2.Radius();
     if ((aRangeS1.Delta() > aMaxV1Range) || (aRangeS2.Delta() > aMaxV2Range))
       return IntPatch_ImpImpIntersection::IntStatus_InfiniteSectionCurve;
   }
-  //
+
   bool   isGoodIntersection = false;
   double anOptdu            = 0.;
   for (;;)
   {
-    // Checking parameters of cylinders in order to define "good intersection"
-    //"Good intersection" means that axes of cylinders are almost perpendicular and
-    //  one radius is much smaller than the other and small cylinder is "inside" big one.
+
     const double aToMuchCoeff = 3.;
-    const double aCritAngle   = M_PI / 18.; // 10 degree
+    const double aCritAngle   = M_PI / 18.;
     double       anR1         = theCyl1.Radius();
     double       anR2         = theCyl2.Radius();
     double       anRmin = 0., anRmax = 0.;
-    // Radius criterion
+
     if (anR1 > aToMuchCoeff * anR2)
     {
       anRmax = anR1;
@@ -6618,14 +6017,14 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
     {
       break;
     }
-    // Angle criterion
+
     const gp_Ax1& anAx1 = theCyl1.Axis();
     const gp_Ax1& anAx2 = theCyl2.Axis();
     if (!anAx1.IsNormal(anAx2, aCritAngle))
     {
       break;
     }
-    // Placement criterion
+
     gp_Lin anL1(anAx1), anL2(anAx2);
     double aDist = anL1.Distance(anL2);
     if (aDist > anRmax / 2.)
@@ -6634,8 +6033,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
     }
 
     isGoodIntersection = true;
-    // Estimation of "optimal" du
-    // Relative deflection, absolut deflection is Rmin*aDeflection
+
     double aDeflection = 0.001;
     int    aNbP        = 3;
     if (anRmin * aDeflection > 1.e-3)
@@ -6647,7 +6045,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
     anOptdu = 2. * M_PI_2 / (double)(aNbP - 1);
     break;
   }
-  //
+
   const ComputationMethods::stCoeffsValue& anEquationCoeffs = theBW.SICoeffs();
   const IntSurf_Quadric&                   aQuad1           = theBW.GetQSurface(1);
   const IntSurf_Quadric&                   aQuad2           = theBW.GetQSurface(2);
@@ -6676,10 +6074,6 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
                              ? (aUSurf1l - aUSurf1f) / IntToReal(aNbPoints)
                              : aUSurf1l - aUSurf1f;
 
-  // The main idea of the algorithm is to change U1-parameter
-  //(U-parameter of theCyl1) from aU1f to aU1l with some step
-  //(step is adaptive) and to obtain set of intersection points.
-
   for (int i = 0; i < theNbOfRanges; i++)
   {
     if (theRange[i].IsVoid())
@@ -6690,18 +6084,10 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
 
   if (theRange[0].Union(theRange[1]))
   {
-    // Works only if (theNbOfRanges == 2).
+
     theRange[1].SetVoid();
   }
 
-  // Critical points are the value of U1-parameter in the points
-  // where WL must be decomposed.
-
-  // When U1 goes through critical points its value is set up to this
-  // parameter forcefully and the intersection point is added in the line.
-  // After that, the WL is broken (next U1 value will be correspond to the new WL).
-
-  // See CriticalPointsComputing(...) function to get detail information about this array.
   const int aNbCritPointsMax           = 12;
   double    anU1crit[aNbCritPointsMax] = {Precision::Infinite(),
                                           Precision::Infinite(),
@@ -6716,11 +6102,6 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
                                           Precision::Infinite(),
                                           Precision::Infinite()};
 
-  // This list of critical points is not full because it does not contain any points
-  // which intersection line goes through V-bounds of cylinders in.
-  // They are computed by numerical methods on - line (during algorithm working).
-  // The moment is caught, when intersection line goes through V-bounds of any cylinder.
-
   int aNbCritPoints = aNbCritPointsMax;
   CriticalPointsComputing(anEquationCoeffs,
                           aUSurf1f,
@@ -6732,23 +6113,20 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
                           aNbCritPoints,
                           anU1crit);
 
-  // Getting Walking-line
-
   enum WLFStatus
   {
-    // No points have been added in WL
+
     WLFStatus_Absent = 0,
-    // WL contains at least one point
+
     WLFStatus_Exist = 1,
-    // WL has been finished in some critical point
-    // We should start new line
+
     WLFStatus_Broken = 2
   };
 
   const int aNbWLines = 2;
   for (int aCurInterval = 0; aCurInterval < theNbOfRanges; aCurInterval++)
   {
-    // Process every continuous region
+
     bool isAddedIntoWL[aNbWLines];
     for (int i = 0; i < aNbWLines; i++)
       isAddedIntoWL[i] = false;
@@ -6759,7 +6137,6 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
 
     const bool isDeltaPeriod = IsEqual(anUl - anUf, aPeriod);
 
-    // Inscribe and sort critical points
     for (int i = 0; i < aNbCritPoints; i++)
     {
       InscribePoint(anUf, anUl, anU1crit[i], 0.0, aPeriod, false);
@@ -6769,9 +6146,6 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
 
     while (anUf < anUl)
     {
-      // Change value of U-parameter on the 1st surface from anUf to anUl
-      //(anUf will be modified in the cycle body).
-      // Step is computed adaptively (see comments below).
 
       double    aU2[aNbWLines], aV1[aNbWLines], aV2[aNbWLines];
       WLFStatus aWLFindStatus[aNbWLines];
@@ -6795,8 +6169,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
 
       double aCriticalDelta[aNbCritPointsMax] = {0};
       for (int aCritPID = 0; aCritPID < aNbCritPoints; aCritPID++)
-      { // We are not interested in elements of aCriticalDelta array
-        // if their index is greater than or equal to aNbCritPoints
+      {
 
         aCriticalDelta[aCritPID] = anUf - anU1crit[aCritPID];
       }
@@ -6806,16 +6179,12 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
 
       while (anU1 <= anUl)
       {
-        // Change value of U-parameter on the 1st surface from anUf to anUl
-        //(anUf will be modified in the cycle body). However, this cycle
-        // can be broken if WL goes though some critical point.
-        // Step is computed adaptively (see comments below).
 
         for (int i = 0; i < aNbCritPoints; i++)
         {
           if ((anU1 - anU1crit[i]) * aCriticalDelta[i] < 0.0)
           {
-            // WL has gone through i-th critical point
+
             anU1 = anU1crit[i];
 
             for (int j = 0; j < aNbWLines; j++)
@@ -6837,13 +6206,6 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
 
             if (isDeltaPeriod)
             {
-              // if isAddedIntoWL[i] == TRUE WLine contains only one point
-              //(which was end point of previous WLine). If we will
-              // add point found on the current step WLine will contain only
-              // two points. At that both these points will be equal to the
-              // points found earlier. Therefore, new WLine will repeat
-              // already existing WLine. Consequently, it is necessary
-              // to forbid building new line in this case.
 
               isAddingWLEnabled[i] = (!isAddedIntoWL[i]);
             }
@@ -6852,7 +6214,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
               isAddingWLEnabled[i] =
                 ((aTol2D >= (anUexpect[i] - anU1)) || (aWLFindStatus[i] == WLFStatus_Absent));
             }
-          } // for(int i = 0; i < aNbWLines; i++)
+          }
         }
         else
         {
@@ -6860,7 +6222,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
           {
             isAddingWLEnabled[i] =
               ((aTol2D >= (anUexpect[i] - anU1)) || (aWLFindStatus[i] == WLFStatus_Absent));
-          } // for(int i = 0; i < aNbWLines; i++)
+          }
         }
 
         for (int i = 0; i < aNbWLines; i++)
@@ -6868,8 +6230,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
           const int aNbPntsWL = aWLine[i].IsNull() ? 0 : aWLine[i]->Curve()->NbPoints();
 
           if ((aWLFindStatus[i] == WLFStatus_Broken) || (aWLFindStatus[i] == WLFStatus_Absent))
-          { // Begin and end of WLine must be on boundary point
-            // or on seam-edge strictly (if it is possible).
+          {
 
             double aTol = aTol2D;
             ComputationMethods::CylCylComputeParameters(anU1, i, anEquationCoeffs, aU2[i], &aTol);
@@ -6893,14 +6254,11 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
           }
 
           if (aNbPntsWL == 0)
-          { // the line has not contained any points yet
+          {
             if (((aUSurf2f + aPeriod - aUSurf2l) <= 2.0 * aTol2D)
                 && ((std::abs(aU2[i] - aUSurf2f) < aTol2D)
                     || (std::abs(aU2[i] - aUSurf2l) < aTol2D)))
             {
-              // In this case aU2[i] can have two values: current aU2[i] or
-              // aU2[i]+aPeriod (aU2[i]-aPeriod). It is necessary to choose
-              // correct value.
 
               bool isIncreasing = true;
               ComputationMethods::CylCylMonotonicity(anU1 + aStepMin,
@@ -6909,11 +6267,6 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
                                                      aPeriod,
                                                      isIncreasing);
 
-              // If U2(U1) is increasing and U2 is considered to be equal aUSurf2l
-              // then after the next step (when U1 will be increased) U2 will be
-              // increased too. And we will go out of surface boundary.
-              // Therefore, If U2(U1) is increasing then U2 must be equal aUSurf2f.
-              // Analogically, if U2(U1) is decreasing.
               if (isIncreasing)
               {
                 aU2[i] = aUSurf2f;
@@ -6925,11 +6278,11 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
             }
           }
           else
-          { // aNbPntsWL > 0
+          {
             if (((aUSurf2l - aUSurf2f) >= aPeriod)
                 && ((std::abs(aU2[i] - aUSurf2f) < aTol2D)
                     || (std::abs(aU2[i] - aUSurf2l) < aTol2D)))
-            { // end of the line
+            {
               double aU2prev = 0.0, aV2prev = 0.0;
               if (isReversed)
                 aWLine[i]->Curve()->Value(aNbPntsWL).ParametersOnS1(aU2prev, aV2prev);
@@ -6957,11 +6310,10 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
             aV1Prev[i] = aV1[i];
             aV2Prev[i] = aV2[i];
           }
-        } // for(int i = 0; i < aNbWLines; i++)
+        }
 
         isFirst = false;
 
-        // Looking for points into WLine
         bool isBroken = false;
         for (int i = 0; i < aNbWLines; i++)
         {
@@ -7002,24 +6354,17 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
             }
           }
 
-          // True if the current point already in the domain
           const bool isInscribe =
             ((aUSurf2f - aU2[i]) <= aTol2D) && ((aU2[i] - aUSurf2l) <= aTol2D)
             && ((aVSurf1f - aV1[i]) <= aTol2D) && ((aV1[i] - aVSurf1l) <= aTol2D)
             && ((aVSurf2f - aV2[i]) <= aTol2D) && ((aV2[i] - aVSurf2l) <= aTol2D);
 
-          // isVIntersect == TRUE if intersection line intersects two (!)
-          // V-bounds of cylinder (1st or 2nd - no matter)
           const bool isVIntersect =
             (((aVSurf1f - aV1[i]) * (aVSurf1f - aV1Prev[i]) < RealSmall())
              && ((aVSurf1l - aV1[i]) * (aVSurf1l - aV1Prev[i]) < RealSmall()))
             || (((aVSurf2f - aV2[i]) * (aVSurf2f - aV2Prev[i]) < RealSmall())
                 && ((aVSurf2l - aV2[i]) * (aVSurf2l - aV2Prev[i]) < RealSmall()));
 
-          // isFound1 == TRUE if intersection line intersects V-bounds
-          //   (First or Last - no matter) of the 1st cylinder
-          // isFound2 == TRUE if intersection line intersects V-bounds
-          //   (First or Last - no matter) of the 2nd cylinder
           bool isFound1 = false, isFound2 = false;
           bool isForce = false;
 
@@ -7055,7 +6400,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
 
           if ((aWLFindStatus[i] == WLFStatus_Exist) && (isFound1 || isFound2) && !isPrevVBound)
           {
-            aWLFindStatus[i] = WLFStatus_Broken; // start a new line
+            aWLFindStatus[i] = WLFStatus_Broken;
           }
           else if (isInscribe)
           {
@@ -7118,7 +6463,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
                 }
               }
               else if (!isFound1 && !isFound2)
-              { // We do not add any point while doing this iteration
+              {
                 if (aWLFindStatus[i] == WLFStatus_Exist)
                 {
                   aWLFindStatus[i] = WLFStatus_Broken;
@@ -7127,7 +6472,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
             }
           }
           else
-          { // We do not add any point while doing this iteration
+          {
             if (aWLFindStatus[i] == WLFStatus_Exist)
             {
               aWLFindStatus[i] = WLFStatus_Broken;
@@ -7136,10 +6481,10 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
 
           if (aWLFindStatus[i] == WLFStatus_Broken)
             isBroken = true;
-        } // for(int i = 0; i < aNbWLines; i++)
+        }
 
         if (isBroken)
-        { // current lines are filled. Go to the next lines
+        {
           anUf = anU1;
 
           bool isAdded = true;
@@ -7224,11 +6569,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
 
           if (!isAdded)
           {
-            // Before breaking WL, we must complete it correctly
-            //(e.g. to prolong to the surface boundary).
-            // Therefore, we take the point last added in some WL
-            //(have maximal U1-parameter) and try to add it in
-            // the current WL.
+
             double anUmaxAdded = RealFirst();
 
             {
@@ -7249,8 +6590,8 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
               }
 
               if (!isChanged)
-              { // If anUmaxAdded were not changed in previous cycle then
-                // we would break existing WLines.
+              {
+
                 break;
               }
             }
@@ -7296,14 +6637,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
           break;
         }
 
-        // Step computing
-
         {
-          // Step of aU1-parameter is computed adaptively. The algorithm
-          // aims to provide given aDeltaV1 and aDeltaV2 values (if it is
-          // possible because the intersection line can go along V-isoline)
-          // in every iteration. It allows avoiding "flying" intersection
-          // points too far each from other (see issue #24915).
 
           const double aDeltaV1 = aRangeS1.Delta() / IntToReal(aNbPoints),
                        aDeltaV2 = aRangeS2.Delta() / IntToReal(aNbPoints);
@@ -7325,16 +6659,15 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
               aMinUexp = std::min(aMinUexp, anUexpect[i]);
               continue;
             }
-            //
+
             if (isGoodIntersection)
             {
-              // Use constant step
+
               anUexpect[i] += aStepMax;
               aMinUexp = std::min(aMinUexp, anUexpect[i]);
 
               continue;
             }
-            //
 
             double aStepTmp = aStepMax;
 
@@ -7350,25 +6683,9 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
                            + anEquationCoeffs.mVecA2 * aCosU2 + anEquationCoeffs.mVecB2 * aSinU2
                            + anEquationCoeffs.mVecD);
 
-            // The main idea is in solving of linearized system (2)
-            //(see description to ComputationMethods class) in order to find new U1-value
-            // to provide new value V1 or V2, which differs from current one by aDeltaV1 or
-            // aDeltaV2 respectively.
-
-            // While linearizing, following Taylor formulas are used:
-            //     cos(x0+dx) = cos(x0) - sin(x0)*dx
-            //     sin(x0+dx) = sin(x0) + cos(x0)*dx
-
-            // Consequently cos(U1), cos(U2), sin(U1) and sin(U2) in the system (2)
-            // must be substituted by corresponding values.
-
-            // ATTENTION!!!
-            // The solution is approximate. More over, all requirements to the
-            // linearization must be satisfied in order to obtain quality result.
-
             if (!StepComputing(aMatr, aV1[i], aV2[i], aDeltaV1, aDeltaV2, aStepTmp))
             {
-              // To avoid cycling-up
+
               anUexpect[i] += aStepMax;
               aMinUexp = std::min(aMinUexp, anUexpect[i]);
 
@@ -7399,7 +6716,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
             isAddedIntoWL[i] = false;
 
           if (anU1 == anUl)
-          { // strictly equal. Tolerance is considered above.
+          {
             anUexpect[i] = anUl;
           }
         }
@@ -7418,8 +6735,6 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
           aP.SetTolerance(aTol3D);
           aP.SetValue(aWLine[i]->Point(1).Value());
 
-          // Check whether the added point exists.
-          // It is enough to check the last point.
           if (theSPnt.IsEmpty()
               || !theSPnt.Last().PntOn2S().IsSame(aP.PntOn2S(), Precision::Confusion()))
           {
@@ -7440,20 +6755,10 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
           }
           else if (aWLine[i]->NbPnts() > 2)
           {
-            // Sometimes points of the WLine are distributed
-            // linearly and uniformly. However, such position
-            // of the points does not always describe the real intersection
-            // curve. I.e. real tangents at the ends of the intersection
-            // curve can significantly deviate from this "line" direction.
-            // Here we are processing this case by inserting additional points
-            // to the beginning/end of the WLine to make it more precise.
-            // See description to the issue #30082.
 
             const double aSqTol3D = aTol3D * aTol3D;
             for (int j = 0; j < 2; j++)
             {
-              // If j == 0 ==> add point at begin of WLine.
-              // If j == 1 ==> add point at end of WLine.
 
               for (;;)
               {
@@ -7462,10 +6767,6 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
                   break;
                 }
 
-                // Take 1st and 2nd point to compute the "line" direction.
-                // For our convenience, we make 2nd point be the ends of the WLine
-                // because it will be used for computation of the normals
-                // to the surfaces.
                 const int anIdx1 = j ? aWLine[i]->NbPnts() - 1 : 2;
                 const int anIdx2 = j ? aWLine[i]->NbPnts() : 1;
 
@@ -7479,29 +6780,22 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
                   break;
                 }
 
-                // Compute tangent in first/last point of the WLine.
-                // We do not take into account the flag "isReversed"
-                // because strict direction of the tangent is not
-                // important here (we are interested in the tangent
-                // line itself and nothing to fear if its direction
-                // is reversed).
                 const gp_Vec aN1 = aQuad1.Normale(aP2);
                 const gp_Vec aN2 = aQuad2.Normale(aP2);
                 const gp_Vec aTg(aN1.Crossed(aN2));
 
                 if (aTg.SquareMagnitude() < Precision::SquareConfusion())
                 {
-                  // Tangent zone
+
                   break;
                 }
 
-                // Check of the bending
                 double anAngle = aDir.Angle(aTg);
 
                 if (anAngle > M_PI_2)
                   anAngle -= M_PI;
 
-                if (std::abs(anAngle) > 0.25) // ~ 14deg.
+                if (std::abs(anAngle) > 0.25)
                 {
                   const int aNbPntsPrev = aWLine[i]->NbPnts();
                   SeekAdditionalPoints(aQuad1,
@@ -7518,16 +6812,16 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
 
                   if (aWLine[i]->NbPnts() == aNbPntsPrev)
                   {
-                    // No points have been added. ==> Exit from a loop.
+
                     break;
                   }
                 }
                 else
                 {
-                  // Good result has been achieved. ==> Exit from a loop.
+
                   break;
                 }
-              } // for (;;)
+              }
             }
           }
 
@@ -7563,8 +6857,6 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
     }
   }
 
-  // Delete the points in theSPnt, which
-  // lie at least in one of the line in theSlin.
   for (int aNbPnt = 1; aNbPnt <= theSPnt.Length(); aNbPnt++)
   {
     for (int aNbLin = 1; aNbLin <= theSlin.Length(); aNbLin++)
@@ -7584,19 +6876,8 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
     }
   }
 
-  // Try to add new points in the neighborhood of existing point
   for (int aNbPnt = 1; aNbPnt <= theSPnt.Length(); aNbPnt++)
   {
-    // Standard algorithm (implemented above) could not find any
-    // continuous curve in neighborhood of aPnt2S (e.g. because
-    // this curve is too small; see tests\bugs\modalg_5\bug25292_35 and _36).
-    // Here, we will try to find several new points nearer to aPnt2S.
-
-    // The algorithm below tries to find two points in every
-    // intervals [u1 - aStepMax, u1] and [u1, u1 + aStepMax]
-    // and every new point will be in maximal distance from
-    // u1. If these two points exist they will be joined
-    // by the intersection curve.
 
     const IntPatch_Point& aPnt2S = theSPnt.Value(aNbPnt);
 
@@ -7607,7 +6888,6 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
     occ::handle<IntPatch_WLine>   aWLine = new IntPatch_WLine(aL2S, false);
     aWLine->SetCreatingWayInfo(IntPatch_WLine::IntPatch_WLImpImp);
 
-    // Define the index of WLine, which lies the point aPnt2S in.
     int anIndex = 0;
 
     double anUf = 0.0, anUl = 0.0, aCurU2 = 0.0;
@@ -7627,7 +6907,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
     const double anUinf = anUf, anUsup = anUl, anUmid = 0.5 * (anUf + anUl);
 
     {
-      // Find the value of anIndex variable.
+
       double aDelta = RealLast();
       for (int i = 0; i < aNbWLines; i++)
       {
@@ -7645,16 +6925,6 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
       }
     }
 
-    // Bisection method is used in order to find every new point.
-    // I.e. if we need to find intersection point in the interval [anUinf, anUmid]
-    // we check the point anUC = 0.5*(anUinf+anUmid). If it is an intersection point
-    // we try to find another point in the interval [anUinf, anUC] (because we find the point in
-    // maximal distance from anUmid). If it is not then we try to find another point in the
-    // interval [anUC, anUmid]. Next iterations will be made analogically.
-    // When we find intersection point in the interval [anUmid, anUsup] we try to find
-    // another point in the interval [anUC, anUsup] if anUC is intersection point and
-    // in the interval [anUmid, anUC], otherwise.
-
     double anAddedPar[2] = {isReversed ? u2 : u1, isReversed ? u2 : u1};
 
     for (int aParID = 0; aParID < 2; aParID++)
@@ -7664,7 +6934,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
         anUf = anUinf;
         anUl = anUmid;
       }
-      else // if(aParID == 1)
+      else
       {
         anUf = anUmid;
         anUl = anUsup;
@@ -7734,7 +7004,6 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
       }
     }
 
-    // Fill aWLine by additional points
     if (anAddedPar[1] - anAddedPar[0] > aStepMin)
     {
       for (int aParID = 0; aParID < 2; aParID++)
@@ -7794,8 +7063,6 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
   return IntPatch_ImpImpIntersection::IntStatus_OK;
 }
 
-//=================================================================================================
-
 IntPatch_ImpImpIntersection::IntStatus IntCyCy(
   const IntSurf_Quadric&                            theQuad1,
   const IntSurf_Quadric&                            theQuad2,
@@ -7840,9 +7107,7 @@ IntPatch_ImpImpIntersection::IntStatus IntCyCy(
     }
   }
 
-  // Here, intersection line is not an analytical curve(line, circle, ellipsis etc.)
-
-  double aUSBou[2][2], aVSBou[2][2]; // const
+  double aUSBou[2][2], aVSBou[2][2];
 
   theUVSurf1.Get(aUSBou[0][0], aVSBou[0][0], aUSBou[0][1], aVSBou[0][1]);
   theUVSurf2.Get(aUSBou[1][0], aVSBou[1][0], aUSBou[1][1], aVSBou[1][1]);
@@ -7853,37 +7118,14 @@ IntPatch_ImpImpIntersection::IntStatus IntCyCy(
   const ComputationMethods::stCoeffsValue anEquationCoeffs1(aCyl1, aCyl2);
   const ComputationMethods::stCoeffsValue anEquationCoeffs2(aCyl2, aCyl1);
 
-  // Boundaries.
-  // Intersection result can include two non-connected regions
-  //(see WorkWithBoundaries::BoundariesComputing(...) method).
   const int aNbOfBoundaries = 2;
-  Bnd_Range anURange[2][aNbOfBoundaries]; // const
+  Bnd_Range anURange[2][aNbOfBoundaries];
 
   if (!WorkWithBoundaries::BoundariesComputing(anEquationCoeffs1, aPeriod, anURange[0]))
     return IntPatch_ImpImpIntersection::IntStatus_OK;
 
   if (!WorkWithBoundaries::BoundariesComputing(anEquationCoeffs2, aPeriod, anURange[1]))
     return IntPatch_ImpImpIntersection::IntStatus_OK;
-
-  // anURange[*] can be in different periodic regions in
-  // compare with First-Last surface. E.g. the surface
-  // is full cylinder [0, 2*PI] but anURange is [5, 7].
-  // Trivial common range computation returns [5, 2*PI] and
-  // its summary length is 2*PI-5 == 1.28... only. That is wrong.
-  // This problem can be solved by the following
-  // algorithm:
-  //  1. split anURange[*] by the surface boundary;
-  //  2. shift every new range in order to inscribe it
-  //       in [Ufirst, Ulast] of cylinder;
-  //  3. consider only common ranges between [Ufirst, Ulast]
-  //     and new ranges.
-  //
-  //  In above example, we obtain following:
-  //  1. two ranges: [5, 2*PI] and [2*PI, 7];
-  //  2. after shifting: [5, 2*PI] and [0, 7-2*PI];
-  //  3. Common ranges: ([5, 2*PI] and [0, 2*PI]) == [5, 2*PI],
-  //                    ([0, 7-2*PI] and [0, 2*PI]) == [0, 7-2*PI];
-  //  4. Their summary length is (2*PI-5)+(7-2*PI-0)==7-5==2 ==> GOOD.
 
   double                                aSumRange[2] = {0.0, 0.0};
   occ::handle<NCollection_IncAllocator> anAlloc      = new NCollection_IncAllocator;
@@ -7920,9 +7162,7 @@ IntPatch_ImpImpIntersection::IntStatus IntCyCy(
 
       if (!InscribeInterval(aUSBou[aCID][0], aUSBou[aCID][1], aCurrRange, theTol2D, aPeriod))
       {
-        // If aCurrRange does not have common block with
-        //[Ufirst, Ulast] of cylinder then we will try
-        // to inscribe [Ufirst, Ulast] in the boundaries of aCurrRange.
+
         double aF = 1.0, aL = 0.0;
         if (!aCurrRange.GetBounds(aF, aL))
           continue;
@@ -7948,16 +7188,6 @@ IntPatch_ImpImpIntersection::IntStatus IntCyCy(
     }
   }
 
-  // The bigger range the bigger number of points in Walking-line (WLine)
-  // we will be able to add and consequently we will obtain more
-  // precise intersection line.
-  // Every point of WLine is determined as function from U1-parameter,
-  // where U1 is U-parameter on 1st quadric.
-  // Therefore, we should use quadric with bigger range as 1st parameter
-  // in IntCyCy() function.
-  // On the other hand, there is no point in reversing in case of
-  // analytical intersection (when result is line, ellipse, point...).
-  // This result is independent of the arguments order.
   const bool isToReverse = (aSumRange[1] > aSumRange[0]);
 
   if (isToReverse)
@@ -8005,8 +7235,6 @@ IntPatch_ImpImpIntersection::IntStatus IntCyCy(
                            theSPnt);
   }
 }
-
-//=================================================================================================
 
 bool IntCySp(const IntSurf_Quadric&                            Quad1,
              const IntSurf_Quadric&                            Quad2,
@@ -8250,8 +7478,6 @@ bool IntCySp(const IntSurf_Quadric&                            Quad1,
           bool TempFalse1a = false;
           bool TempFalse2a = false;
 
-          //-- ptf et ptl : points debut et fin de alig
-
           ProcessBounds(alig,
                         slin,
                         Quad1,
@@ -8265,8 +7491,8 @@ bool IntCySp(const IntSurf_Quadric&                            Quad1,
                         Multpoint,
                         Tol);
           slin.Append(alig);
-        } //-- boucle sur les lignes
-      } //-- solution avec au moins une lihne
+        }
+      }
     }
     break;
 
@@ -8277,8 +7503,6 @@ bool IntCySp(const IntSurf_Quadric&                            Quad1,
   }
   return true;
 }
-
-//=================================================================================================
 
 bool IntCyCo(const IntSurf_Quadric&                            Quad1,
              const IntSurf_Quadric&                            Quad2,
@@ -8348,7 +7572,7 @@ bool IntCyCo(const IntSurf_Quadric&                            Quad1,
       gp_Pnt ptref;
       int    j;
       double qwe;
-      //
+
       for (j = 1; j <= 2; ++j)
       {
         cirsol = inter.Circle(j);
@@ -8403,32 +7627,29 @@ bool IntCyCo(const IntSurf_Quadric&                            Quad1,
 
         gp_Pnt ptvalid, ptf, ptl;
         gp_Vec tgvalid;
-        //
+
         double first, last, para;
         bool   tgfound, firstp, lastp, kept;
         int    kount;
-        //
-        //
-        // IntAna_Curve curvsol;
+
         IntAna_Curve                             aC;
         NCollection_List<IntAna_Curve>           aLC;
         NCollection_List<IntAna_Curve>::Iterator aIt;
 
-        //
         NbSol = anaint.NbCurve();
         for (i = 1; i <= NbSol; ++i)
         {
           kept = false;
-          // curvsol = anaint.Curve(i);
+
           aC = anaint.Curve(i);
           aLC.Clear();
           ExploreCurve(Co, aC, 10. * Tol, aLC);
-          //
+
           aIt.Initialize(aLC);
           for (; aIt.More(); aIt.Next())
           {
             IntAna_Curve& curvsol = aIt.ChangeValue();
-            //
+
             curvsol.Domain(first, last);
             firstp = !curvsol.IsFirstOpen();
             lastp  = !curvsol.IsLastOpen();
@@ -8480,7 +7701,6 @@ bool IntCyCo(const IntSurf_Quadric&                            Quad1,
               ptvalid = curvsol.Value(para);
               alig    = new IntPatch_ALine(curvsol, false);
               kept    = true;
-              //-- std::cout << "Transition indeterminee" << std::endl;
             }
             if (kept)
             {
@@ -8500,24 +7720,19 @@ bool IntCyCo(const IntSurf_Quadric&                            Quad1,
                             Tol);
               slin.Append(alig);
             }
-          } // for (; aIt.More(); aIt.Next())
-        } // for (i = 1; i <= NbSol; ++i)
+          }
+        }
       }
     }
     break;
 
     default:
       return false;
-
-  } // switch (typint)
+  }
 
   return true;
 }
 
-//=======================================================================
-// function : ExploreCurve
-// purpose  : Splits aC on several curves in the cone apex points.
-//=======================================================================
 bool ExploreCurve(const gp_Cone&                  theCo,
                   IntAna_Curve&                   theCrv,
                   const double                    theTol,
@@ -8530,7 +7745,7 @@ bool ExploreCurve(const gp_Cone&                  theCo,
   theCrv.Domain(aT1, aT2);
 
   theLC.Clear();
-  //
+
   NCollection_List<double> aLParams;
   theCrv.FindParameter(aPapx, aLParams);
   if (aLParams.IsEmpty())
@@ -8583,8 +7798,6 @@ bool ExploreCurve(const gp_Cone&                  theCo,
   return true;
 }
 
-//=================================================================================================
-
 bool IntCoCo(const IntSurf_Quadric&                            Quad1,
              const IntSurf_Quadric&                            Quad2,
              const double                                      Tol,
@@ -8599,16 +7812,16 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
   double            U1, V1, U2, V2;
   IntSurf_TypeTrans trans1, trans2;
   IntAna_ResultType typint;
-  //
+
   gp_Cone Co1(Quad1.Cone());
   gp_Cone Co2(Quad2.Cone());
-  //
+
   IntAna_QuadQuadGeo inter(Co1, Co2, Tol);
   if (!inter.IsDone())
   {
     return false;
   }
-  //
+
   typint = inter.TypeInter();
   NbSol  = inter.NbSolutions();
   Empty  = false;
@@ -8628,7 +7841,6 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-      // modified by NIZNHY-PKV Wed Nov 30 12:56:06 2005f
     case IntAna_Line:
     {
       double                      para, aDot;
@@ -8637,24 +7849,24 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
       gp_Vec                      NormC1, NormC2;
       IntPatch_Point              aPtsol;
       occ::handle<IntPatch_GLine> glig;
-      //
+
       aPApex1 = Co1.Apex();
       aPApex2 = Co2.Apex();
-      //
+
       if (NbSol == 1)
       {
         IntSurf_Situation situC1, situC2;
-        //
+
         linsol = inter.Line(1);
         para   = ElCLib::Parameter(linsol, aPApex1);
         ptbid  = ElCLib::Value(para + 5., linsol);
         Quad1.Parameters(aPApex1, U1, V1);
         Quad2.Parameters(aPApex1, U2, V2);
-        //
+
         aPtsol.SetValue(aPApex1, Tol, false);
         aPtsol.SetParameters(U1, V1, U2, V2);
         aPtsol.SetParameter(para);
-        //
+
         NormC1 = Quad1.Normale(ptbid);
         NormC2 = Quad2.Normale(ptbid);
         aDot   = NormC1.Dot(NormC2);
@@ -8668,27 +7880,26 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
           double aR1, aR2;
           gp_Lin aLAx1(aPApex1, Co1.Axis().Direction());
           gp_Lin aLAx2(aPApex2, Co2.Axis().Direction());
-          //
+
           aR1 = aLAx1.Distance(ptbid);
           aR2 = aLAx2.Distance(ptbid);
-          //
+
           situC1 = IntSurf_Inside;
           situC2 = IntSurf_Outside;
           if (aR1 > aR2)
-          {                          // Intersection line parametrizes from Apex1 to Apex2,
-                                     // clang-format off
-            situC1 = IntSurf_Outside; // So the distance between ptbid and aLAx1 is greater than the
-                                     // clang-format on
-            situC2 = IntSurf_Inside; // distance between ptbid and aLAx2 and in that case Cone2
-                                     // is inside Cone 1
+          {
+
+            situC1 = IntSurf_Outside;
+
+            situC2 = IntSurf_Inside;
           }
         }
-        // 1
+
         glig = new IntPatch_GLine(linsol, true, situC1, situC2);
         glig->AddVertex(aPtsol);
         glig->SetFirstPoint(1);
         slin.Append(glig);
-        // 2
+
         linsol.SetDirection(linsol.Direction().Reversed());
         para = ElCLib::Parameter(linsol, aPApex1);
         aPtsol.SetParameter(para);
@@ -8697,11 +7908,11 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
         glig->AddVertex(aPtsol);
         glig->SetFirstPoint(1);
         slin.Append(glig);
-      } // if (NbSol==1) {
-      //////////////////////
+      }
+
       else if (NbSol == 2)
       {
-        //
+
         for (i = 1; i <= 2; ++i)
         {
           linsol = inter.Line(i);
@@ -8709,7 +7920,7 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
           ptbid  = ElCLib::Value(para + 5., linsol);
           Quad1.Parameters(aPApex1, U1, V1);
           Quad2.Parameters(aPApex1, U2, V2);
-          //
+
           trans1 = IntSurf_In;
           trans2 = IntSurf_Out;
           if (linsol.Direction().DotCross(Quad2.Normale(ptbid), Quad1.Normale(ptbid)) > 0.)
@@ -8717,9 +7928,9 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
             trans1 = IntSurf_Out;
             trans2 = IntSurf_In;
           }
-          //
+
           Multpoint = true;
-          // 1,3
+
           aPtsol.SetValue(aPApex1, Tol, false);
           aPtsol.SetParameters(U1, V1, U2, V2);
           aPtsol.SetParameter(para);
@@ -8729,7 +7940,7 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
           glig->AddVertex(aPtsol);
           glig->SetFirstPoint(1);
           slin.Append(glig);
-          // 2,4
+
           linsol.SetDirection(linsol.Direction().Reversed());
           para = ElCLib::Parameter(linsol, aPApex1);
           aPtsol.SetParameter(para);
@@ -8737,12 +7948,10 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
           glig->AddVertex(aPtsol);
           glig->SetFirstPoint(1);
           slin.Append(glig);
-          //
-        } // for (i=1; i<=2; ++i)
-      } // else if (NbSol==2)
+        }
+      }
     }
     break;
-      // modified by NIZNHY-PKV Wed Nov 30 12:56:10 2005t
 
     case IntAna_Point:
     {
@@ -8997,7 +8206,7 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
             tgfound = curvsol.D1u(para, ptvalid, tgvalid);
             if (tgvalid.SquareMagnitude() < 1e-14)
             {
-              //-- on se trouve ds un cas ou les normales n'auront pas de sens
+
               tgfound = false;
             }
 
@@ -9032,7 +8241,6 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
             ptvalid = curvsol.Value(para);
             alig    = new IntPatch_ALine(curvsol, false);
             kept    = true;
-            //-- cout << "Transition indeterminee" << endl;
           }
           if (kept)
           {
@@ -9063,8 +8271,6 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     }
   }
 
-  // When two cones have common generatrix passing through apexes
-  // it is necessary to add it is solution
   if (inter.HasCommonGen())
   {
     double         para;
@@ -9072,7 +8278,7 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     gp_Pnt         aPApex1, aPApex2;
     aPApex1 = Co1.Apex();
     aPApex2 = Co2.Apex();
-    // common generatrix of cones
+
     gce_MakeLin                 aMkLin(aPApex1, aPApex2);
     const gp_Lin&               linsol = aMkLin.Value();
     occ::handle<IntPatch_GLine> glig =
@@ -9092,8 +8298,6 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
 
   return true;
 }
-
-//=================================================================================================
 
 bool IntCoSp(const IntSurf_Quadric&                            Quad1,
              const IntSurf_Quadric&                            Quad2,
@@ -9182,9 +8386,6 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
       for (i = 1; i <= NbSol; i++)
       {
         gp_Circ cirsol = inter.Circle(i);
-        //-- param = ElCLib::LineParameter(Co.Axis(),
-        //-- 			      cirsol.Location());
-        //-- if (param >= paramapex) {
 
         ElCLib::D1(0., cirsol, ptref, Tgt);
         double qwe = Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref));
@@ -9204,7 +8405,6 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
         }
         occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(cirsol, false, trans1, trans2);
         slin.Append(glig);
-        //-- }
       }
     }
     break;
@@ -9217,7 +8417,6 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
       double param;
       double paramapex = ElCLib::LineParameter(Co.Axis(), apex);
 
-      // le point est necessairement l apex
       Quad1.Parameters(apex, U1, V1);
       Quad2.Parameters(apex, U2, V2);
       IntPatch_Point ptsol;
@@ -9360,7 +8559,6 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
             para    = ElCLib::LineParameter(Co.Axis(), ptvalid);
             alig    = new IntPatch_ALine(curvsol, false);
             kept    = true;
-            //-- cout << "Transition indeterminee" << endl;
           }
           if (kept)
           {
@@ -9393,7 +8591,6 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
 
   return true;
 }
-//=================================================================================================
 
 bool IntSpSp(const IntSurf_Quadric&                            Quad1,
              const IntSurf_Quadric&                            Quad2,
@@ -9402,8 +8599,6 @@ bool IntSpSp(const IntSurf_Quadric&                            Quad1,
              bool&                                             Same,
              NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
              NCollection_Sequence<IntPatch_Point>&             spnt)
-
-// Traitement du cas Sphere/Sphere
 
 {
   IntSurf_TypeTrans trans1, trans2;
@@ -9477,7 +8672,7 @@ bool IntSpSp(const IntSurf_Quadric&                            Quad1,
 
     default:
     {
-      return false; // on ne doit pas passer ici
+      return false;
     }
   }
   return true;
@@ -9489,8 +8684,6 @@ static bool TreatResultTorus(const IntSurf_Quadric&                            t
                              bool&                                             bEmpty,
                              NCollection_Sequence<occ::handle<IntPatch_Line>>& theSeqLin);
 
-//=================================================================================================
-
 bool IntCyTo(const IntSurf_Quadric&                            theQuad1,
              const IntSurf_Quadric&                            theQuad2,
              const double                                      theTolTang,
@@ -9500,14 +8693,12 @@ bool IntCyTo(const IntSurf_Quadric&                            theQuad1,
 {
   const gp_Cylinder aCyl   = bReversed ? theQuad2.Cylinder() : theQuad1.Cylinder();
   const gp_Torus    aTorus = bReversed ? theQuad1.Torus() : theQuad2.Torus();
-  //
+
   IntAna_QuadQuadGeo anInt(aCyl, aTorus, theTolTang);
   bool               bRet = TreatResultTorus(theQuad1, theQuad2, anInt, bEmpty, theSeqLin);
-  //
+
   return bRet;
 }
-
-//=================================================================================================
 
 bool IntCoTo(const IntSurf_Quadric&                            theQuad1,
              const IntSurf_Quadric&                            theQuad2,
@@ -9518,14 +8709,12 @@ bool IntCoTo(const IntSurf_Quadric&                            theQuad1,
 {
   const gp_Cone  aCone  = bReversed ? theQuad2.Cone() : theQuad1.Cone();
   const gp_Torus aTorus = bReversed ? theQuad1.Torus() : theQuad2.Torus();
-  //
+
   IntAna_QuadQuadGeo anInt(aCone, aTorus, theTolTang);
   bool               bRet = TreatResultTorus(theQuad1, theQuad2, anInt, bEmpty, theSeqLin);
-  //
+
   return bRet;
 }
-
-//=================================================================================================
 
 bool IntSpTo(const IntSurf_Quadric&                            theQuad1,
              const IntSurf_Quadric&                            theQuad2,
@@ -9536,14 +8725,12 @@ bool IntSpTo(const IntSurf_Quadric&                            theQuad1,
 {
   const gp_Sphere aSphere = bReversed ? theQuad2.Sphere() : theQuad1.Sphere();
   const gp_Torus  aTorus  = bReversed ? theQuad1.Torus() : theQuad2.Torus();
-  //
+
   IntAna_QuadQuadGeo anInt(aSphere, aTorus, theTolTang);
   bool               bRet = TreatResultTorus(theQuad1, theQuad2, anInt, bEmpty, theSeqLin);
-  //
+
   return bRet;
 }
-
-//=================================================================================================
 
 bool IntToTo(const IntSurf_Quadric&                            theQuad1,
              const IntSurf_Quadric&                            theQuad2,
@@ -9554,7 +8741,7 @@ bool IntToTo(const IntSurf_Quadric&                            theQuad1,
 {
   const gp_Torus aTorus1 = theQuad1.Torus();
   const gp_Torus aTorus2 = theQuad2.Torus();
-  //
+
   IntAna_QuadQuadGeo anInt(aTorus1, aTorus2, theTolTang);
   bool               bRet = anInt.IsDone();
   if (bRet)
@@ -9569,11 +8756,9 @@ bool IntToTo(const IntSurf_Quadric&                            theQuad1,
       bRet = TreatResultTorus(theQuad1, theQuad2, anInt, bEmpty, theSeqLin);
     }
   }
-  //
+
   return bRet;
 }
-
-//=================================================================================================
 
 static bool TreatResultTorus(const IntSurf_Quadric&                            theQuad1,
                              const IntSurf_Quadric&                            theQuad2,
@@ -9582,29 +8767,29 @@ static bool TreatResultTorus(const IntSurf_Quadric&                            t
                              NCollection_Sequence<occ::handle<IntPatch_Line>>& theSeqLin)
 {
   bool bRet = anInt.IsDone();
-  //
+
   if (!bRet)
   {
     return bRet;
   }
-  //
+
   IntAna_ResultType typint = anInt.TypeInter();
   int               NbSol  = anInt.NbSolutions();
   bEmpty                   = false;
-  //
+
   switch (typint)
   {
     case IntAna_Empty:
       bEmpty = true;
       break;
-    //
+
     case IntAna_Circle:
     {
       int               i;
       IntSurf_TypeTrans trans1, trans2;
       gp_Vec            Tgt;
       gp_Pnt            ptref;
-      //
+
       for (i = 1; i <= NbSol; ++i)
       {
         gp_Circ aC = anInt.Circle(i);
@@ -9628,18 +8813,18 @@ static bool TreatResultTorus(const IntSurf_Quadric&                            t
         {
           trans1 = trans2 = IntSurf_Undecided;
         }
-        //
+
         occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(aC, false, trans1, trans2);
         theSeqLin.Append(glig);
       }
     }
     break;
-    //
+
     case IntAna_NoGeometricSolution:
     default:
       bRet = false;
       break;
   }
-  //
+
   return bRet;
 }

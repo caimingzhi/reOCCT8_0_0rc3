@@ -16,16 +16,11 @@ class Poly_Triangulation;
 class Poly_PolygonOnTriangulation;
 class Poly_Polygon3D;
 
-//! Describes the behaviour requested for a wireframe shape presentation.
 class StdPrs_ShapeTool
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Constructs the tool and initializes it using theShape and theAllVertices
-  //! (optional) arguments. By default, only isolated and internal vertices are considered,
-  //! however if theAllVertices argument is equal to True, all shape's vertices are taken into
-  //! account.
   Standard_EXPORT StdPrs_ShapeTool(const TopoDS_Shape& theShape, const bool theAllVertices = false);
 
   void InitFace() { myFaceExplorer.Init(myShape, TopAbs_FACE); }

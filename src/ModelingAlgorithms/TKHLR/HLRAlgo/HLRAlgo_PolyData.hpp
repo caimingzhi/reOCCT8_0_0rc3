@@ -15,14 +15,13 @@
 
 class HLRAlgo_EdgeStatus;
 
-//! Data structure of a set of Triangles.
 class HLRAlgo_PolyData : public Standard_Transient
 {
 
 public:
   struct FaceIndices
   {
-    //! The default constructor.
+
     FaceIndices()
         : Index(0),
           Min(0),
@@ -62,7 +61,6 @@ public:
 
   bool Hiding() const;
 
-  //! process hiding between <Pt1> and <Pt2>.
   Standard_EXPORT void HideByPolyData(const HLRAlgo_BiPoint::PointsT& thePoints,
                                       Triangle&                       theTriangle,
                                       HLRAlgo_BiPoint::IndicesT&      theIndices,
@@ -74,7 +72,6 @@ public:
   DEFINE_STANDARD_RTTIEXT(HLRAlgo_PolyData, Standard_Transient)
 
 private:
-  //! evident.
   void hideByOneTriangle(const HLRAlgo_BiPoint::PointsT& thePoints,
                          Triangle&                       theTriangle,
                          const bool                      Crossing,
@@ -94,42 +91,30 @@ private:
 #include <HLRAlgo_TriangleData.hpp>
 #include <HLRAlgo_PolyHidingData.hpp>
 
-//=================================================================================================
-
 inline void HLRAlgo_PolyData::FaceIndex(const int I)
 {
   myFaceIndices.Index = I;
 }
-
-//=================================================================================================
 
 inline int HLRAlgo_PolyData::FaceIndex() const
 {
   return myFaceIndices.Index;
 }
 
-//=================================================================================================
-
 inline NCollection_Array1<gp_XYZ>& HLRAlgo_PolyData::Nodes() const
 {
   return myHNodes->ChangeArray1();
 }
-
-//=================================================================================================
 
 inline NCollection_Array1<HLRAlgo_TriangleData>& HLRAlgo_PolyData::TData() const
 {
   return myHTData->ChangeArray1();
 }
 
-//=================================================================================================
-
 inline NCollection_Array1<HLRAlgo_PolyHidingData>& HLRAlgo_PolyData::PHDat() const
 {
   return myHPHDat->ChangeArray1();
 }
-
-//=================================================================================================
 
 inline bool HLRAlgo_PolyData::Hiding() const
 {

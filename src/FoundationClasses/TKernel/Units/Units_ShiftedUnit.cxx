@@ -9,8 +9,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Units_ShiftedUnit, Units_Unit)
 
-//=================================================================================================
-
 Units_ShiftedUnit::Units_ShiftedUnit(const char*                        aname,
                                      const char*                        asymbol,
                                      const double                       avalue,
@@ -21,15 +19,11 @@ Units_ShiftedUnit::Units_ShiftedUnit(const char*                        aname,
   themove = amove;
 }
 
-//=================================================================================================
-
 Units_ShiftedUnit::Units_ShiftedUnit(const char* aname, const char* asymbol)
     : Units_Unit(aname, asymbol),
       themove(0.0)
 {
 }
-
-//=================================================================================================
 
 Units_ShiftedUnit::Units_ShiftedUnit(const char* aname)
     : Units_Unit(aname),
@@ -37,21 +31,15 @@ Units_ShiftedUnit::Units_ShiftedUnit(const char* aname)
 {
 }
 
-//=================================================================================================
-
 void Units_ShiftedUnit::Move(const double amove)
 {
   themove = amove;
 }
 
-//=================================================================================================
-
 double Units_ShiftedUnit::Move() const
 {
   return themove;
 }
-
-//=================================================================================================
 
 occ::handle<Units_Token> Units_ShiftedUnit::Token() const
 {
@@ -63,17 +51,11 @@ occ::handle<Units_Token> Units_ShiftedUnit::Token() const
                                 Quantity()->Dimensions());
 }
 
-//=================================================================================================
-
-// void Units_ShiftedUnit::Dump(const int ashift,
-//			     const int alevel) const
 void Units_ShiftedUnit::Dump(const int, const int) const
 {
   int                     index;
   TCollection_AsciiString string;
 
-  //  int i;
-  //  for(i=0; i<ashift; i++)std::cout<<"  ";
   for (index = 1; index <= thesymbolssequence->Length(); index++)
   {
     string = thesymbolssequence->Value(index)->String();

@@ -10,7 +10,6 @@ class ShapeUpgrade_ClosedEdgeDivide : public ShapeUpgrade_EdgeDivide
 {
 
 public:
-  //! Empty constructor.
   Standard_EXPORT ShapeUpgrade_ClosedEdgeDivide();
 
   Standard_EXPORT bool Compute(const TopoDS_Edge& anEdge) override;

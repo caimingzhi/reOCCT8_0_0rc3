@@ -24,7 +24,7 @@
 static int  IndexOfSection = 0;
 extern bool Blend_GettraceDRAWSECT();
   #ifdef OCCT_DEBUG_BBPP_N_TRDERIV
-// for debug : visualisation of the section
+
 static bool BBPP(const double           param,
                  Blend_SurfRstFunction& Func,
                  const math_Vector&     sol,
@@ -116,12 +116,6 @@ static void Drawsect(const double param, Blend_SurfRstFunction& Func)
 }
 #endif
 
-//=======================================================================
-// function :  ArcToRecadre
-// purpose  : Find a suitable arc
-//           PrevIndex is used to reject an already tested arc
-//=======================================================================
-
 int BRepBlend_SurfRstLineBuilder::ArcToRecadre(const math_Vector& theSol,
                                                const int          PrevIndex,
                                                gp_Pnt2d&          lastpt2d,
@@ -168,8 +162,6 @@ int BRepBlend_SurfRstLineBuilder::ArcToRecadre(const math_Vector& theSol,
   return IndexSol;
 }
 
-//=================================================================================================
-
 BRepBlend_SurfRstLineBuilder::BRepBlend_SurfRstLineBuilder(
   const occ::handle<Adaptor3d_Surface>&   Surf1,
   const occ::handle<Adaptor3d_TopolTool>& Domain1,
@@ -197,8 +189,6 @@ BRepBlend_SurfRstLineBuilder::BRepBlend_SurfRstLineBuilder(
       decrochfin(false)
 {
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfRstLineBuilder::Perform(Blend_SurfRstFunction&  Func,
                                            Blend_FuncInv&          Finv,
@@ -276,11 +266,10 @@ void BRepBlend_SurfRstLineBuilder::Perform(Blend_SurfRstFunction&  Func,
     Drawsect(param, Func);
   }
 #endif
-  // Update the line.
+
   line->Append(previousP);
   double U, V;
   previousP.ParametersOnS(U, V);
-  //  W = previousP.ParameterOnC();
 
   BRepBlend_Extremity ptf1(previousP.PointOnS(), U, V, previousP.Parameter(), tolpoint3d);
   BRepBlend_Extremity ptf2(previousP.PointOnC(), U, V, previousP.Parameter(), tolpoint3d);
@@ -300,8 +289,6 @@ void BRepBlend_SurfRstLineBuilder::Perform(Blend_SurfRstFunction&  Func,
   InternalPerform(Func, Finv, FinvP, FinvC, Pmax);
   done = true;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfRstLineBuilder::PerformFirstSection(Blend_SurfRstFunction&  Func,
                                                        Blend_FuncInv&          Finv,
@@ -378,7 +365,7 @@ bool BRepBlend_SurfRstLineBuilder::PerformFirstSection(Blend_SurfRstFunction&  F
   if (recadp && recadrst)
   {
     if (sens * (wrst - wp) > tolgui)
-    { // first one leaves the domain
+    {
       wrst     = wp;
       U        = solinvp(2);
       V        = solinvp(3);
@@ -421,7 +408,7 @@ bool BRepBlend_SurfRstLineBuilder::PerformFirstSection(Blend_SurfRstFunction&  F
     }
     else if (sens * (ws - wrst) < 0)
     {
-      // ground on surf
+
       State = Blend_OnRst1;
       param = ws;
       Arc->Value(solinvs(3)).Coord(U, V);
@@ -431,7 +418,7 @@ bool BRepBlend_SurfRstLineBuilder::PerformFirstSection(Blend_SurfRstFunction&  F
     }
     else
     {
-      // ground on rst
+
       State  = Blend_OnRst2;
       param  = wrst;
       sol(1) = U;
@@ -442,7 +429,7 @@ bool BRepBlend_SurfRstLineBuilder::PerformFirstSection(Blend_SurfRstFunction&  F
   }
   else if (recads)
   {
-    // ground on surf
+
     State = Blend_OnRst1;
     param = ws;
     Arc->Value(solinvs(3)).Coord(U, V);
@@ -453,7 +440,7 @@ bool BRepBlend_SurfRstLineBuilder::PerformFirstSection(Blend_SurfRstFunction&  F
   }
   else if (recadrst)
   {
-    // ground on rst
+
     State  = Blend_OnRst2;
     param  = wrst;
     sol(1) = U;
@@ -466,8 +453,6 @@ bool BRepBlend_SurfRstLineBuilder::PerformFirstSection(Blend_SurfRstFunction&  F
   ParSol = sol;
   return true;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfRstLineBuilder::Complete(Blend_SurfRstFunction&  Func,
                                             Blend_FuncInv&          Finv,
@@ -501,8 +486,6 @@ bool BRepBlend_SurfRstLineBuilder::Complete(Blend_SurfRstFunction&  Func,
   return true;
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
                                                    Blend_FuncInv&          Finv,
                                                    Blend_SurfPointFuncInv& FinvP,
@@ -512,7 +495,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
   double stepw = pasmax;
   int    nbp   = line->NbPoints();
   if (nbp >= 2)
-  { // The last step is reproduced if it is not too small.
+  {
     if (sens < 0.)
     {
       stepw = (line->Point(2).Parameter() - line->Point(1).Parameter());
@@ -543,8 +526,6 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
   BRepBlend_Extremity            Extrst, Exts;
   occ::handle<Adaptor2d_Curve2d> Arc;
 
-  // IntSurf_Transition Tline,Tarc;
-
   Func.GetTolerance(tolerance, tolpoint3d);
   Func.GetBounds(infbound, supbound);
 
@@ -563,7 +544,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
   {
     bool bonpoint = true;
 #ifdef OCCT_DEBUG_BBPP_N_TRDERIV
-    // debdebdebdebdebdeb
+
     Func.Set(param);
     rsnld.Perform(Func, parinit, infbound, supbound);
     if (rsnld.IsDone())
@@ -586,7 +567,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
         }
       }
     }
-    // debdebdebdebdebdeb
+
 #endif
     Func.Set(param);
     rsnld.Perform(Func, parinit, infbound, supbound);
@@ -612,12 +593,12 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
       echecrecad                 = false;
       if (situons == TopAbs_OUT || situons == TopAbs_ON)
       {
-        // pb inverse rst/rst
+
         recads = Recadre(FinvC, solinvs, Arc, IsVtxs, Vtxs);
         if (recads)
         {
           ws = solinvs(1);
-          // It is necessary to reevaluate the deviation (BUC60360)
+
           gp_Vec t, n;
           Func.Set(ws);
           Arc->Value(solinvs(3)).Coord(U, V);
@@ -633,7 +614,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
       }
       if (situonc == TopAbs_OUT || situonc == TopAbs_ON)
       {
-        // pb inverse point/surf
+
         recadp = Recadre(FinvP, solinvp, IsVtxp, Vtxp);
         if (recadp)
         {
@@ -646,7 +627,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
       }
       if (decroch)
       {
-        // pb inverse rst/surf
+
         recadrst = Recadre(Func, Finv, solinvrst, IsVtxrst, Vtxrst);
         if (recadrst)
         {
@@ -665,7 +646,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
         if (recadp && recadrst)
         {
           if (sens * (wrst - wp) > tolgui)
-          { // first one leaves the domain
+          {
             wrst     = wp;
             U        = solinvp(2);
             V        = solinvp(3);
@@ -710,7 +691,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
           }
           else if (sens * (ws - wrst) < 0)
           {
-            // ground on surf
+
             decroch = false;
             State   = Blend_OnRst1;
             param   = ws;
@@ -721,7 +702,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
           }
           else
           {
-            // ground on rst
+
             State  = Blend_OnRst2;
             param  = wrst;
             sol(1) = U;
@@ -732,7 +713,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
         }
         else if (recads)
         {
-          // ground on surf
+
           State = Blend_OnRst1;
           param = ws;
           Arc->Value(solinvs(3)).Coord(U, V);
@@ -743,7 +724,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
         }
         else if (recadrst)
         {
-          // ground on rst
+
           State  = Blend_OnRst2;
           param  = wrst;
           sol(1) = U;
@@ -759,7 +740,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
       }
       else
       {
-        // Failed reframing. Leave with PointsConfondus
+
 #ifdef OCCT_DEBUG
         std::cout << "SurfRstLineBuilder : failed reframing" << std::endl;
 #endif
@@ -777,7 +758,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
           Drawsect(param, Func);
         }
 #endif
-        // Update the line.
+
         if (sens > 0.)
         {
           line->Append(previousP);
@@ -794,7 +775,6 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
           Arrive = true;
           Exts.SetValue(previousP.PointOnS(), sol(1), sol(2), previousP.Parameter(), tolpoint3d);
           MakeExtremity(Extrst, false, rst, sol(3), IsVtxrst, Vtxrst);
-          // Indicate end on Bound.
         }
         else
         {
@@ -821,7 +801,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
           Arrive = true;
           if (line->NbPoints() >= 2)
           {
-            // Indicate that one stops during the processing
+
 #ifdef OCCT_DEBUG
             std::cout << "SurfRstLineBuilder : No advancement in the processing" << std::endl;
 #endif
@@ -829,7 +809,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
         }
         else
         {
-          param = parprec + sens * stepw; // no risk to exceed Bound.
+          param = parprec + sens * stepw;
         }
       }
       break;
@@ -842,7 +822,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
           Drawsect(param, Func);
         }
 #endif
-        // Update the line.
+
         if (sens > 0.)
         {
           line->Append(previousP);
@@ -860,7 +840,6 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
           Arrive = true;
           Exts.SetValue(previousP.PointOnS(), sol(1), sol(2), previousP.Parameter(), tolpoint3d);
           MakeExtremity(Extrst, false, rst, sol(3), IsVtxrst, Vtxrst);
-          // Indicate end on Bound.
         }
         else
         {
@@ -941,7 +920,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
 
       case Blend_SamePoints:
       {
-        // Stop
+
 #ifdef OCCT_DEBUG
         std::cout << "SurfRstLineBuilder Points mixed in the processing" << std::endl;
 #endif
@@ -972,11 +951,6 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
     }
   }
 }
-
-//=======================================================================
-// function : Recadre
-// purpose  : Reframe section Surface / Restriction
-//=======================================================================
 
 bool BRepBlend_SurfRstLineBuilder::Recadre(Blend_SurfCurvFuncInv&          FinvC,
                                            math_Vector&                    Solinv,
@@ -1010,9 +984,7 @@ bool BRepBlend_SurfRstLineBuilder::Recadre(Blend_SurfCurvFuncInv&          FinvC
   FinvC.Set(Arc);
 
   math_Vector toler(1, 3), infb(1, 3), supb(1, 3);
-  // use reduced Tol argument value to pass testcase
-  // blend complex A6 with scale factor of model 0.1 (base scale = 1000)
-  // So, here we using 1.0e-5 rather than 1.0e-4 of tolerance of point in 3d
+
   FinvC.GetTolerance(toler, 0.1 * tolpoint3d);
   FinvC.GetBounds(infb, supb);
   Solinv(1) = param;
@@ -1030,20 +1002,18 @@ bool BRepBlend_SurfRstLineBuilder::Recadre(Blend_SurfCurvFuncInv&          FinvC
   }
   else
   {
-    // It is necessary to check the value of the function
+
     rsnld.Root(Solinv);
     recadre = FinvC.IsSolution(Solinv, tolpoint3d);
   }
 
-  // In case of fail, it is checked if another arc
-  // can be useful (case of output at the proximity of a vertex)
   if (!recadre)
   {
 
     IndexSol = ArcToRecadre(sol, IndexSol, lastpt2d, pt2d, pmin);
     if (IndexSol == 0)
     {
-      return false; // No other solution
+      return false;
     }
 
     domain1->Init();
@@ -1073,7 +1043,7 @@ bool BRepBlend_SurfRstLineBuilder::Recadre(Blend_SurfCurvFuncInv&          FinvC
     }
     else
     {
-      // It is necessary to check the value of the function
+
       aRsnld.Root(Solinv);
       recadre = FinvC.IsSolution(Solinv, tolpoint3d);
     }
@@ -1111,8 +1081,6 @@ bool BRepBlend_SurfRstLineBuilder::Recadre(Blend_SurfCurvFuncInv&          FinvC
   }
   return false;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfRstLineBuilder::Recadre(Blend_SurfRstFunction&          Func,
                                            Blend_FuncInv&                  Finv,
@@ -1168,8 +1136,6 @@ bool BRepBlend_SurfRstLineBuilder::Recadre(Blend_SurfRstFunction&          Func,
     {
       IsVtx = false;
     }
-    // The section is recalculated by direct resolution, otherwise
-    // incoherences between the parameter and the ground caused by yawn are returned.
 
     math_Vector infbound(1, 3), supbound(1, 3);
     math_Vector parinit(1, 3), tolerance(1, 3);
@@ -1193,14 +1159,12 @@ bool BRepBlend_SurfRstLineBuilder::Recadre(Blend_SurfRstFunction&          Func,
   return false;
 }
 
-//=================================================================================================
-
 bool BRepBlend_SurfRstLineBuilder::Recadre(Blend_SurfPointFuncInv&         FinvP,
                                            math_Vector&                    Solinv,
                                            bool&                           IsVtx,
                                            occ::handle<Adaptor3d_HVertex>& Vtx)
 {
-  // Le point.
+
   gp_Pnt2d p2drst;
   double   firstrst = rst->FirstParameter();
   double   lastrst  = rst->LastParameter();
@@ -1263,8 +1227,6 @@ bool BRepBlend_SurfRstLineBuilder::Recadre(Blend_SurfPointFuncInv&         FinvP
   return false;
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfRstLineBuilder::Transition(const bool                            OnFirst,
                                               const occ::handle<Adaptor2d_Curve2d>& Arc,
                                               const double                          Param,
@@ -1318,8 +1280,6 @@ void BRepBlend_SurfRstLineBuilder::Transition(const bool                        
 
   IntSurf::MakeTransition(tgline, tgrst, normale, TLine, TArc);
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfRstLineBuilder::MakeExtremity(BRepBlend_Extremity&                  Extrem,
                                                  const bool                            OnFirst,
@@ -1383,13 +1343,9 @@ void BRepBlend_SurfRstLineBuilder::MakeExtremity(BRepBlend_Extremity&           
   }
 }
 
-//=================================================================================================
-
 Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnSurf(const Blend_Point& CurPoint)
 {
-  // Controls 3d of Blend_CSWalking.
 
-  // rule by tests in U4 corresponds to 11.478 d
   const double CosRef3D = 0.98;
   double       Cosi = 0, Cosi2 = 0;
   bool         curpointistangent  = CurPoint.IsTangencyPoint();
@@ -1410,14 +1366,14 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnSurf(const Blend_Poi
   double Norme, prevNorme = 0.;
   gp_Vec Corde(prevP, Psurf);
   Norme = Corde.SquareMagnitude();
-  //  if(!curpointistangent) curNorme = Tgsurf.SquareMagnitude();
+
   if (!prevpointistangent)
     prevNorme = prevTg.SquareMagnitude();
 
   const double toler3d = 0.01 * tolpoint3d;
   if (Norme <= toler3d * toler3d)
   {
-    // it can be necessary to force same point
+
     return Blend_SamePoints;
   }
   if (!prevpointistangent)
@@ -1428,7 +1384,7 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnSurf(const Blend_Poi
     }
     Cosi = sens * Corde * prevTg;
     if (Cosi < 0.)
-    { // angle 3d>pi/2. --> return back
+    {
       return Blend_Backward;
     }
 
@@ -1441,7 +1397,7 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnSurf(const Blend_Poi
 
   if (!curpointistangent)
   {
-    // Check if it is necessary to control the sign of prevtg*Tgsurf
+
     Cosi  = sens * Corde * Tgsurf;
     Cosi2 = Cosi * Cosi / Tgsurf.SquareMagnitude() / Norme;
     if (Cosi2 < CosRef3D || Cosi < 0.)
@@ -1452,7 +1408,7 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnSurf(const Blend_Poi
 
   if (!curpointistangent && !prevpointistangent)
   {
-    // Estimation of the current arrow
+
     double FlecheCourante =
       (prevTg.Normalized().XYZ() - Tgsurf.Normalized().XYZ()).SquareModulus() * Norme / 64.;
 
@@ -1462,20 +1418,16 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnSurf(const Blend_Poi
     }
     if (FlecheCourante > fleche * fleche)
     {
-      // not too great :
+
       return Blend_StepTooLarge;
     }
   }
   return Blend_OK;
 }
 
-//=================================================================================================
-
 Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnRst(const Blend_Point& CurPoint)
 {
-  // Controls 3D of Blend_CSWalking.
 
-  // rule by tests in U4 corresponds to 11.478 d
   const double CosRef3D = 0.98;
   double       Cosi, Cosi2;
   bool         curpointistangent  = CurPoint.IsTangencyPoint();
@@ -1496,14 +1448,14 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnRst(const Blend_Poin
   double Norme, prevNorme = 0.;
   gp_Vec Corde(prevP, Psurf);
   Norme = Corde.SquareMagnitude();
-  //  if(!curpointistangent) curNorme = Tgsurf.SquareMagnitude();
+
   if (!prevpointistangent)
     prevNorme = prevTg.SquareMagnitude();
 
   const double toler3d = 0.01 * tolpoint3d;
   if (Norme <= toler3d * toler3d)
   {
-    // it can be necessary to force same point
+
     return Blend_SamePoints;
   }
   if (!prevpointistangent)
@@ -1514,7 +1466,7 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnRst(const Blend_Poin
     }
     Cosi = sens * Corde * prevTg;
     if (Cosi < 0.)
-    { // angle 3d>pi/2. --> return back
+    {
       return Blend_Backward;
     }
 
@@ -1527,7 +1479,7 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnRst(const Blend_Poin
 
   if (!curpointistangent)
   {
-    // Check if it is necessary to control the sign of prevtg*Tgsurf
+
     Cosi  = sens * Corde * Tgsurf;
     Cosi2 = Cosi * Cosi / Tgsurf.SquareMagnitude() / Norme;
     if (Cosi2 < CosRef3D || Cosi < 0.)
@@ -1538,7 +1490,7 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnRst(const Blend_Poin
 
   if (!curpointistangent && !prevpointistangent)
   {
-    // Estimation of the current arrow
+
     double FlecheCourante =
       (prevTg.Normalized().XYZ() - Tgsurf.Normalized().XYZ()).SquareModulus() * Norme / 64.;
 
@@ -1548,7 +1500,7 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnRst(const Blend_Poin
     }
     if (FlecheCourante > fleche * fleche)
     {
-      // not too great
+
       return Blend_StepTooLarge;
     }
   }
@@ -1561,8 +1513,6 @@ static IntSurf_TypeTrans ConvOrToTra(const TopAbs_Orientation O)
     return IntSurf_In;
   return IntSurf_Out;
 }
-
-//=================================================================================================
 
 Blend_Status BRepBlend_SurfRstLineBuilder::TestArret(Blend_SurfRstFunction& Func,
                                                      const bool             TestDeflection,
@@ -1695,8 +1645,6 @@ Blend_Status BRepBlend_SurfRstLineBuilder::TestArret(Blend_SurfRstFunction& Func
   return Blend_StepTooLarge;
 }
 
-//=================================================================================================
-
 bool BRepBlend_SurfRstLineBuilder::CheckInside(Blend_SurfRstFunction& Func,
                                                TopAbs_State&          SituOnC,
                                                TopAbs_State&          SituOnS,
@@ -1704,7 +1652,7 @@ bool BRepBlend_SurfRstLineBuilder::CheckInside(Blend_SurfRstFunction& Func,
 {
   math_Vector tolerance(1, 3);
   Func.GetTolerance(tolerance, tolpoint3d);
-  // face pcurve.
+
   double w = sol(3);
   if (w < rst->FirstParameter() - tolerance(3) || w > rst->LastParameter() + tolerance(3))
   {
@@ -1717,11 +1665,9 @@ bool BRepBlend_SurfRstLineBuilder::CheckInside(Blend_SurfRstFunction& Func,
   else
     SituOnC = TopAbs_ON;
 
-  // face surface
   gp_Pnt2d p2d(sol(1), sol(2));
   SituOnS = domain1->Classify(p2d, tolpoint2d, false);
 
-  // lost contact
   gp_Vec tgs, nors;
   Decroch = Func.Decroch(sol, tgs, nors);
 

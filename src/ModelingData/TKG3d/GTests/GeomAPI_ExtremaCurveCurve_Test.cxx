@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -22,10 +11,9 @@
 #include <Standard_Integer.hpp>
 #include <gp_XYZ.hpp>
 
-// Test OCC862: GeomAPI_ExtremaCurveCurve - Extrema between BSpline and line
 TEST(GeomAPI_ExtremaCurveCurve_Test, OCC862_ExtremaBSplineAndLine)
 {
-  // Define BSpline curve data (from Glob_Poles, Glob_Knots, Glob_Mults)
+
   const int    aNbPoles       = 195;
   const double aPoles[195][3] = {{60000, 31.937047503393231, 799.36226142892554},
                                  {60000.000000027772, 16.712487623992825, 799.97053069028755},
@@ -244,57 +232,49 @@ TEST(GeomAPI_ExtremaCurveCurve_Test, OCC862_ExtremaBSplineAndLine)
 
   const int aMults[17] = {15, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 15};
 
-  // Fill array of poles
   NCollection_Array1<gp_Pnt> aPolesArray(1, aNbPoles);
   for (int i = 0; i < aNbPoles; i++)
   {
     aPolesArray.SetValue(i + 1, gp_Pnt(aPoles[i][0], aPoles[i][1], aPoles[i][2]));
   }
 
-  // Fill array of knots
   NCollection_Array1<double> aKnotsArray(1, aNbKnots);
   for (int i = 0; i < aNbKnots; i++)
   {
     aKnotsArray.SetValue(i + 1, aKnots[i]);
   }
 
-  // Fill array of mults
   NCollection_Array1<int> aMultsArray(1, aNbKnots);
   for (int i = 0; i < aNbKnots; i++)
   {
     aMultsArray.SetValue(i + 1, aMults[i]);
   }
 
-  // Create B-Spline curve
   const int                      aDegree = 14;
   occ::handle<Geom_BSplineCurve> aC1 =
     new Geom_BSplineCurve(aPolesArray, aKnotsArray, aMultsArray, aDegree);
 
-  // Create trimmed line
   gp_XYZ                         aP1(60000, -7504.83, 6000);
   gp_XYZ                         aP2(60000, 7504.83, 6000);
   occ::handle<Geom_Line>         aLine = new Geom_Line(gp_Pnt(aP1), gp_Dir(aP2 - aP1));
   occ::handle<Geom_TrimmedCurve> aC2   = new Geom_TrimmedCurve(aLine, 0.0, (aP2 - aP1).Modulus());
 
-  // Try to find extrema
-  // IMPORTANT: it is not allowed to input infinite curves!
   GeomAPI_ExtremaCurveCurve anEx(aC1, aC2);
 
-  // Check if curves are parallel
   if (anEx.Extrema().IsParallel())
   {
-    // Parallel case - should have infinite number of extrema
+
     EXPECT_GT(anEx.LowerDistance(), 0.0) << "Parallel curves should have a distance";
   }
   else
   {
-    // Check if extrema were found
+
     const int aNbEx = anEx.NbExtrema();
     EXPECT_GT(aNbEx, 0) << "Extrema should be found between BSpline and line";
 
     if (aNbEx > 0)
     {
-      // Get minimal distance data
+
       gp_Pnt aPoint1, aPoint2;
       anEx.NearestPoints(aPoint1, aPoint2);
 
@@ -303,15 +283,12 @@ TEST(GeomAPI_ExtremaCurveCurve_Test, OCC862_ExtremaBSplineAndLine)
 
       const double aDistance = anEx.LowerDistance();
 
-      // Verify minimal distance is reasonable
       EXPECT_GE(aDistance, 0.0) << "Minimal distance should be non-negative";
 
-      // Verify parameters are within valid range [0, 1] for the curves
       EXPECT_GE(aU1, 0.0) << "Parameter U1 should be non-negative";
       EXPECT_LE(aU1, 1.0) << "Parameter U1 should not exceed 1.0";
       EXPECT_GE(aU2, 0.0) << "Parameter U2 should be non-negative";
 
-      // Verify nearest points are valid
       EXPECT_FALSE(aPoint1.IsEqual(gp_Pnt(0, 0, 0), 1e-10)
                    && aPoint2.IsEqual(gp_Pnt(0, 0, 0), 1e-10))
         << "Nearest points should not both be at origin";

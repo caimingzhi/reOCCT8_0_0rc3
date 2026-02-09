@@ -7,7 +7,6 @@
 class TopoDS_Wire;
 class GeomFill_LocationLaw;
 
-//! Build Location Law, with a Wire.
 class BRepFill_Edge3DLaw : public BRepFill_LocationLaw
 {
 

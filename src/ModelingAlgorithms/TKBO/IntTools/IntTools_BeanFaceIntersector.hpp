@@ -26,13 +26,6 @@ class IntTools_SurfaceRangeSample;
 class IntTools_CurveRangeLocalizeData;
 class IntTools_SurfaceRangeLocalizeData;
 
-//! The class BeanFaceIntersector computes ranges of parameters on
-//! the curve of a bean(part of edge) that bound the parts of bean which
-//! are on the surface of a face according to edge and face tolerances.
-//! Warning: The real boundaries of the face are not taken into account,
-//! Most of the result parts of the bean lays only inside the region of the surface,
-//! which includes the inside of the face. And the parts which are out of this region can be
-//! excluded from the result.
 class IntTools_BeanFaceIntersector
 {
 public:
@@ -40,25 +33,14 @@ public:
 
   Standard_EXPORT IntTools_BeanFaceIntersector();
 
-  //! Initializes the algorithm
-  //!
-  //! Warning:
-  //! The parts of the edge which are on
-  //! the surface of the face and belong to
-  //! the whole in the face (if there is)
-  //! is considered as result
   Standard_EXPORT IntTools_BeanFaceIntersector(const TopoDS_Edge& theEdge,
                                                const TopoDS_Face& theFace);
 
-  //! Initializes the algorithm
   Standard_EXPORT IntTools_BeanFaceIntersector(const BRepAdaptor_Curve&   theCurve,
                                                const BRepAdaptor_Surface& theSurface,
                                                const double               theBeanTolerance,
                                                const double               theFaceTolerance);
 
-  //! Initializes the algorithm
-  //! theUMinParameter, ... are used for
-  //! optimization purposes
   Standard_EXPORT IntTools_BeanFaceIntersector(const BRepAdaptor_Curve&   theCurve,
                                                const BRepAdaptor_Surface& theSurface,
                                                const double               theFirstParOnCurve,
@@ -70,24 +52,13 @@ public:
                                                const double               theBeanTolerance,
                                                const double               theFaceTolerance);
 
-  //! Initializes the algorithm
-  //!
-  //! Warning:
-  //! The parts of the edge which are on
-  //! the surface of the face and belong to
-  //! the whole in the face (if there is)
-  //! is considered as result
   Standard_EXPORT void Init(const TopoDS_Edge& theEdge, const TopoDS_Face& theFace);
 
-  //! Initializes the algorithm
   Standard_EXPORT void Init(const BRepAdaptor_Curve&   theCurve,
                             const BRepAdaptor_Surface& theSurface,
                             const double               theBeanTolerance,
                             const double               theFaceTolerance);
 
-  //! Initializes the algorithm
-  //! theUMinParameter, ... are used for
-  //! optimization purposes
   Standard_EXPORT void Init(const BRepAdaptor_Curve&   theCurve,
                             const BRepAdaptor_Surface& theSurface,
                             const double               theFirstParOnCurve,
@@ -99,33 +70,26 @@ public:
                             const double               theBeanTolerance,
                             const double               theFaceTolerance);
 
-  //! Sets the intersection context
   Standard_EXPORT void SetContext(const occ::handle<IntTools_Context>& theContext);
 
-  //! Gets the intersection context
   Standard_EXPORT const occ::handle<IntTools_Context>& Context() const;
 
-  //! Set restrictions for curve
   Standard_EXPORT void SetBeanParameters(const double theFirstParOnCurve,
                                          const double theLastParOnCurve);
 
-  //! Set restrictions for surface
   Standard_EXPORT void SetSurfaceParameters(const double theUMinParameter,
                                             const double theUMaxParameter,
                                             const double theVMinParameter,
                                             const double theVMaxParameter);
 
-  //! Launches the algorithm
   Standard_EXPORT void Perform();
 
-  //! Returns Done/NotDone state of the algorithm.
   bool IsDone() const { return myIsDone; }
 
   Standard_EXPORT const NCollection_Sequence<IntTools_Range>& Result() const;
 
   Standard_EXPORT void Result(NCollection_Sequence<IntTools_Range>& theResults) const;
 
-  //! Returns the minimal distance found between edge and face
   double MinimalSquareDistance() const { return myMinSqDistance; }
 
 private:
@@ -133,11 +97,6 @@ private:
 
   Standard_EXPORT void ComputeLinePlane();
 
-  //! Fast check on coincidence of the edge with face for the cases when both shapes are
-  //! based on analytic geometries. The method also computes if the intersection
-  //! between shapes is possible.
-  //! The method returns TRUE if the computation was successful and further computation is
-  //! unnecessary. Otherwise it returns FALSE and computation continues.
   Standard_EXPORT bool FastComputeAnalytic();
 
   Standard_EXPORT void ComputeUsingExtremum();

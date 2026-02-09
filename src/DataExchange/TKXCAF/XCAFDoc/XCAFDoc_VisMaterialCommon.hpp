@@ -16,21 +16,19 @@
 class Graphic3d_Aspects;
 class Graphic3d_MaterialAspect;
 
-//! Common (obsolete) material definition.
 struct XCAFDoc_VisMaterialCommon
 {
-  occ::handle<Image_Texture> DiffuseTexture; //!< image defining diffuse color
-  Quantity_Color             AmbientColor;   //!< ambient  color
-  Quantity_Color             DiffuseColor;   //!< diffuse  color
-  Quantity_Color             SpecularColor;  //!< specular color
-  Quantity_Color             EmissiveColor;  //!< emission color
-  float                      Shininess;      //!< shininess value
-                                             // clang-format off
-  float      Transparency;    //!< transparency value within [0, 1] range with 0 meaning opaque
-                                             // clang-format on
-  bool IsDefined;                            //!< defined flag; TRUE by default
+  occ::handle<Image_Texture> DiffuseTexture;
+  Quantity_Color             AmbientColor;
+  Quantity_Color             DiffuseColor;
+  Quantity_Color             SpecularColor;
+  Quantity_Color             EmissiveColor;
+  float                      Shininess;
 
-  //! Empty constructor.
+  float Transparency;
+
+  bool IsDefined;
+
   XCAFDoc_VisMaterialCommon()
       : AmbientColor(0.1, 0.1, 0.1, Quantity_TOC_RGB),
         DiffuseColor(0.8, 0.8, 0.8, Quantity_TOC_RGB),
@@ -42,7 +40,6 @@ struct XCAFDoc_VisMaterialCommon
   {
   }
 
-  //! Compare two materials.
   bool IsEqual(const XCAFDoc_VisMaterialCommon& theOther) const
   {
     if (&theOther == this)
@@ -64,7 +61,6 @@ struct XCAFDoc_VisMaterialCommon
            && theOther.Transparency == Transparency;
   }
 
-  //! Dumps the content of me into the stream
   void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const
   {
     OCCT_DUMP_CLASS_BEGIN(theOStream, XCAFDoc_VisMaterialCommon)

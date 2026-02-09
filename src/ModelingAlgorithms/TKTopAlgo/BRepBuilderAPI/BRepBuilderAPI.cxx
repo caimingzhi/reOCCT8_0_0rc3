@@ -9,28 +9,20 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_Map.hpp>
 
-//=================================================================================================
-
 void BRepBuilderAPI::Plane(const occ::handle<Geom_Plane>& P)
 {
   BRepLib::Plane(P);
 }
-
-//=================================================================================================
 
 const occ::handle<Geom_Plane>& BRepBuilderAPI::Plane()
 {
   return BRepLib::Plane();
 }
 
-//=================================================================================================
-
 void BRepBuilderAPI::Precision(const double P)
 {
   BRepLib::Precision(P);
 }
-
-//=================================================================================================
 
 double BRepBuilderAPI::Precision()
 {

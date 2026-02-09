@@ -1,23 +1,10 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GeomGridEval_Ellipse.hpp>
 
 #include <gp_Elips.hpp>
 
 #include <cmath>
-
-//==================================================================================================
 
 NCollection_Array1<gp_Pnt> GeomGridEval_Ellipse::EvaluateGrid(
   const NCollection_Array1<double>& theParams) const
@@ -53,7 +40,6 @@ NCollection_Array1<gp_Pnt> GeomGridEval_Ellipse::EvaluateGrid(
     const double cosU = std::cos(u);
     const double sinU = std::sin(u);
 
-    // P = Center + MajorR * cos(u) * XDir + MinorR * sin(u) * YDir
     aResult.SetValue(i - theParams.Lower() + 1,
                      gp_Pnt(aCX + aMajR * cosU * aXX + aMinR * sinU * aYX,
                             aCY + aMajR * cosU * aXY + aMinR * sinU * aYY,
@@ -61,8 +47,6 @@ NCollection_Array1<gp_Pnt> GeomGridEval_Ellipse::EvaluateGrid(
   }
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_Ellipse::EvaluateGridD1(
   const NCollection_Array1<double>& theParams) const
@@ -98,9 +82,6 @@ NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_Ellipse::EvaluateGridD1(
     const double cosU = std::cos(u);
     const double sinU = std::sin(u);
 
-    // P = Center + MajorR * cos(u) * XDir + MinorR * sin(u) * YDir
-    // D1 = -MajorR * sin(u) * XDir + MinorR * cos(u) * YDir
-
     aResult.ChangeValue(i - theParams.Lower()
                         + 1) = {gp_Pnt(aCX + aMajR * cosU * aXX + aMinR * sinU * aYX,
                                        aCY + aMajR * cosU * aXY + aMinR * sinU * aYY,
@@ -111,8 +92,6 @@ NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_Ellipse::EvaluateGridD1(
   }
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_Ellipse::EvaluateGridD2(
   const NCollection_Array1<double>& theParams) const
@@ -148,10 +127,6 @@ NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_Ellipse::EvaluateGridD2(
     const double cosU = std::cos(u);
     const double sinU = std::sin(u);
 
-    // P = Center + MajorR * cos(u) * XDir + MinorR * sin(u) * YDir
-    // D1 = -MajorR * sin(u) * XDir + MinorR * cos(u) * YDir
-    // D2 = -MajorR * cos(u) * XDir - MinorR * sin(u) * YDir = -(P - Center)
-
     aResult.ChangeValue(i - theParams.Lower()
                         + 1) = {gp_Pnt(aCX + aMajR * cosU * aXX + aMinR * sinU * aYX,
                                        aCY + aMajR * cosU * aXY + aMinR * sinU * aYY,
@@ -165,8 +140,6 @@ NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_Ellipse::EvaluateGridD2(
   }
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_Ellipse::EvaluateGridD3(
   const NCollection_Array1<double>& theParams) const
@@ -202,11 +175,6 @@ NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_Ellipse::EvaluateGridD3(
     const double cosU = std::cos(u);
     const double sinU = std::sin(u);
 
-    // P = Center + MajorR * cos(u) * XDir + MinorR * sin(u) * YDir
-    // D1 = -MajorR * sin(u) * XDir + MinorR * cos(u) * YDir
-    // D2 = -MajorR * cos(u) * XDir - MinorR * sin(u) * YDir
-    // D3 =  MajorR * sin(u) * XDir - MinorR * cos(u) * YDir = -D1
-
     aResult.ChangeValue(i - theParams.Lower()
                         + 1) = {gp_Pnt(aCX + aMajR * cosU * aXX + aMinR * sinU * aYX,
                                        aCY + aMajR * cosU * aXY + aMinR * sinU * aYY,
@@ -223,8 +191,6 @@ NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_Ellipse::EvaluateGridD3(
   }
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<gp_Vec> GeomGridEval_Ellipse::EvaluateGridDN(
   const NCollection_Array1<double>& theParams,
@@ -251,11 +217,6 @@ NCollection_Array1<gp_Vec> GeomGridEval_Ellipse::EvaluateGridDN(
   const double aYY = aYDir.Y();
   const double aYZ = aYDir.Z();
 
-  // Ellipse derivatives are cyclic with period 4:
-  // D1 = -MajR * sin(u) * X + MinR * cos(u) * Y  -> coefficients: (-sin, cos)
-  // D2 = -MajR * cos(u) * X - MinR * sin(u) * Y  -> coefficients: (-cos, -sin)
-  // D3 =  MajR * sin(u) * X - MinR * cos(u) * Y  -> coefficients: (sin, -cos)
-  // D4 =  MajR * cos(u) * X + MinR * sin(u) * Y  -> coefficients: (cos, sin) = D0
   const int aPhase = (theN - 1) % 4;
 
   for (int i = theParams.Lower(); i <= theParams.Upper(); ++i)
@@ -267,19 +228,19 @@ NCollection_Array1<gp_Vec> GeomGridEval_Ellipse::EvaluateGridDN(
     double aCoeffMajR, aCoeffMinR;
     switch (aPhase)
     {
-      case 0: // D1, D5, D9, ...
+      case 0:
         aCoeffMajR = -sinU;
         aCoeffMinR = cosU;
         break;
-      case 1: // D2, D6, D10, ...
+      case 1:
         aCoeffMajR = -cosU;
         aCoeffMinR = -sinU;
         break;
-      case 2: // D3, D7, D11, ...
+      case 2:
         aCoeffMajR = sinU;
         aCoeffMinR = -cosU;
         break;
-      default: // D4, D8, D12, ... (case 3)
+      default:
         aCoeffMajR = cosU;
         aCoeffMinR = sinU;
         break;

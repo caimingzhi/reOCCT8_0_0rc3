@@ -1,12 +1,5 @@
 #pragma once
 
-//! Thisd is a set of possible system types.
-//! 'Default' means SysType of machine operating this process.
-//! This can be used with the Path class.
-//! All UNIX-like are grouped under "UnixBSD" or "UnixSystemV".
-//! Such systems are Solaris, NexTOS ...
-//! A category of systems accept MSDOS-like path such as
-//! WindowsNT and OS2.
 enum OSD_SysType
 {
   OSD_Unknown,

@@ -10,7 +10,6 @@ class StepVisual_SurfaceStyleBoundary : public Standard_Transient
 {
 
 public:
-  //! Returns a SurfaceStyleBoundary
   Standard_EXPORT StepVisual_SurfaceStyleBoundary();
 
   Standard_EXPORT void Init(const occ::handle<StepVisual_CurveStyle>& aStyleOfBoundary);

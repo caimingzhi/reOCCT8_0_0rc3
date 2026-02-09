@@ -11,26 +11,21 @@ class StepFEA_FeaAxis2Placement3d;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write tool for FeaAxis2Placement3d
 class RWStepFEA_RWFeaAxis2Placement3d
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepFEA_RWFeaAxis2Placement3d();
 
-  //! Reads FeaAxis2Placement3d
   Standard_HIDDEN void ReadStep(const occ::handle<StepData_StepReaderData>&     data,
                                 const int                                       num,
                                 occ::handle<Interface_Check>&                   ach,
                                 const occ::handle<StepFEA_FeaAxis2Placement3d>& ent) const;
 
-  //! Writes FeaAxis2Placement3d
   Standard_HIDDEN void WriteStep(StepData_StepWriter&                            SW,
                                  const occ::handle<StepFEA_FeaAxis2Placement3d>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(const occ::handle<StepFEA_FeaAxis2Placement3d>& ent,
                              Interface_EntityIterator&                       iter) const;
 };

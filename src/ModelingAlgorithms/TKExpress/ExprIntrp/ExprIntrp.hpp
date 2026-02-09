@@ -8,9 +8,6 @@
 class ExprIntrp_Generator;
 class TCollection_AsciiString;
 
-//! Describes an interpreter for GeneralExpressions,
-//! GeneralFunctions, and GeneralRelations defined in
-//! package Expr.
 class ExprIntrp
 {
 public:

@@ -29,14 +29,11 @@ public:
 
   static GeomAbs_Shape Continuity(const Adaptor2d_Curve2d& theC) { return theC.Continuity(); }
 
-  //! If necessary, breaks the curve in intervals of continuity <S>.
-  //! And returns the number of intervals.
   static int NbIntervals(const Adaptor2d_Curve2d& theC, const GeomAbs_Shape theS)
   {
     return theC.NbIntervals(theS);
   }
 
-  //! Stores in <T> the parameters bounding the intervals of continuity <S>.
   static void Intervals(const Adaptor2d_Curve2d&    theC,
                         NCollection_Array1<double>& theT,
                         const GeomAbs_Shape         theS)
@@ -44,8 +41,6 @@ public:
     theC.Intervals(theT, theS);
   }
 
-  //! Returns the parameters bounding the intervals of subdivision of curve
-  //! according to Curvature deflection. Value of deflection is defined in method.
   Standard_EXPORT static occ::handle<NCollection_HArray1<double>> DeflCurvIntervals(
     const Adaptor2d_Curve2d& theC);
 
@@ -55,25 +50,21 @@ public:
 
   static double Period(const Adaptor2d_Curve2d& theC) { return theC.Period(); }
 
-  //! Computes the point of parameter U on the curve.
   static gp_Pnt2d Value(const Adaptor2d_Curve2d& theC, const double theU)
   {
     return theC.Value(theU);
   }
 
-  //! Computes the point of parameter U on the curve.
   static void D0(const Adaptor2d_Curve2d& theC, const double theU, gp_Pnt2d& theP)
   {
     theC.D0(theU, theP);
   }
 
-  //! Computes the point of parameter U on the curve with its first derivative.
   static void D1(const Adaptor2d_Curve2d& theC, const double theU, gp_Pnt2d& theP, gp_Vec2d& theV)
   {
     theC.D1(theU, theP, theV);
   }
 
-  //! Returns the point P of parameter U, the first and second derivatives V1 and V2.
   static void D2(const Adaptor2d_Curve2d& theC,
                  const double             theU,
                  gp_Pnt2d&                theP,
@@ -83,7 +74,6 @@ public:
     theC.D2(theU, theP, theV1, theV2);
   }
 
-  //! Returns the point P of parameter U, the first, the second and the third derivative.
   static void D3(const Adaptor2d_Curve2d& theC,
                  const double             theU,
                  gp_Pnt2d&                theP,
@@ -94,20 +84,16 @@ public:
     theC.D3(theU, theP, theV1, theV2, theV3);
   }
 
-  //! The returned vector gives the value of the derivative for the order of derivation N.
   static gp_Vec2d DN(const Adaptor2d_Curve2d& theC, const double theU, const int theN)
   {
     return theC.DN(theU, theN);
   }
 
-  //! Returns the parametric resolution corresponding to the real space resolution <R3d>.
   static double Resolution(const Adaptor2d_Curve2d& theC, const double theR3d)
   {
     return theC.Resolution(theR3d);
   }
 
-  //! Returns the type of the curve in the current interval:
-  //! Line, Circle, Ellipse, Hyperbola, Parabola, BezierCurve, BSplineCurve, OtherCurve.
   static GeomAbs_CurveType GetType(const Adaptor2d_Curve2d& theC) { return theC.GetType(); }
 
   static gp_Lin2d Line(const Adaptor2d_Curve2d& theC) { return theC.Line(); }

@@ -10,7 +10,6 @@ class StepVisual_SurfaceStyleSilhouette : public Standard_Transient
 {
 
 public:
-  //! Returns a SurfaceStyleSilhouette
   Standard_EXPORT StepVisual_SurfaceStyleSilhouette();
 
   Standard_EXPORT void Init(const occ::handle<StepVisual_CurveStyle>& aStyleOfSilhouette);

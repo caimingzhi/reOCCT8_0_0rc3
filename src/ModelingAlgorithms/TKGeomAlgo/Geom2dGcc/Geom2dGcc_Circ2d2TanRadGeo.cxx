@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Adaptor2d_OffsetCurve.hpp>
 #include <ElCLib.hpp>
@@ -34,29 +22,11 @@
 
 static const int aNbSolMAX = 16;
 
-// circulaire tant a une courbe et une droite ,de rayon donne
-//==============================================================
-
-//========================================================================
-// On initialise WellDone a false.                                       +
-// On recupere la courbe Cu2 et la droite L1.                            +
-// On sort en erreur dans les cas ou la construction est impossible.     +
-// On fait la parallele a Cu2 dans le bon sens.                          +
-// On fait la parallele a L1 dans le bon sens.                           +
-// On intersecte les paralleles ==> point de centre de la solution.      +
-// On cree la solution qu on ajoute aux solutions deja trouvees.         +
-// On remplit les champs.                                                +
-//========================================================================
-
 Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedLin& Qualified1,
                                                        const Geom2dGcc_QCurve&    Qualified2,
                                                        const double               Radius,
                                                        const double               Tolerance)
     :
-
-      //========================================================================
-      // initialisation des champs.                                            +
-      //========================================================================
 
       cirsol(1, aNbSolMAX),
       qualifier1(1, aNbSolMAX),
@@ -70,10 +40,6 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedLin
       pararg1(1, aNbSolMAX),
       pararg2(1, aNbSolMAX)
 {
-
-  //========================================================================
-  // Traitement.                                                           +
-  //========================================================================
 
   double                     Tol      = std::abs(Tolerance);
   double                     thefirst = -100000.;
@@ -111,7 +77,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedLin
   {
     if (Qualified1.IsEnclosed() && Qualified2.IsEnclosed())
     {
-      //   =======================================================
+
       nbrcote1 = 1;
       nbrcote2 = 1;
       cote1(1) = Radius;
@@ -119,7 +85,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedLin
     }
     else if (Qualified1.IsEnclosed() && Qualified2.IsOutside())
     {
-      //   ==========================================================
+
       nbrcote1 = 1;
       nbrcote2 = 1;
       cote1(1) = Radius;
@@ -127,7 +93,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedLin
     }
     else if (Qualified1.IsOutside() && Qualified2.IsEnclosed())
     {
-      //   ===========================================================
+
       nbrcote1 = 1;
       nbrcote2 = 1;
       cote1(1) = -Radius;
@@ -135,7 +101,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedLin
     }
     else if (Qualified1.IsOutside() && Qualified2.IsOutside())
     {
-      //   =========================================================
+
       nbrcote1 = 1;
       nbrcote2 = 1;
       cote1(1) = -Radius;
@@ -143,7 +109,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedLin
     }
     if (Qualified1.IsEnclosed() && Qualified2.IsUnqualified())
     {
-      //   =========================================================
+
       nbrcote1 = 1;
       nbrcote2 = 2;
       cote1(1) = Radius;
@@ -152,7 +118,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedLin
     }
     if (Qualified1.IsUnqualified() && Qualified2.IsEnclosed())
     {
-      //   =========================================================
+
       nbrcote1 = 2;
       nbrcote2 = 1;
       cote1(1) = Radius;
@@ -161,7 +127,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedLin
     }
     else if (Qualified1.IsOutside() && Qualified2.IsUnqualified())
     {
-      //   =============================================================
+
       nbrcote1 = 1;
       nbrcote2 = 2;
       cote1(1) = -Radius;
@@ -170,7 +136,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedLin
     }
     if (Qualified1.IsUnqualified() && Qualified2.IsOutside())
     {
-      //   ========================================================
+
       nbrcote1 = 2;
       nbrcote2 = 1;
       cote1(1) = Radius;
@@ -179,7 +145,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedLin
     }
     else if (Qualified1.IsUnqualified() && Qualified2.IsUnqualified())
     {
-      //   =================================================================
+
       nbrcote1 = 2;
       nbrcote2 = 2;
       cote1(1) = Radius;
@@ -191,12 +157,12 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedLin
     for (int jcote1 = 1; jcote1 <= nbrcote1; jcote1++)
     {
       gp_Pnt2d        Point(L1.Location().XY() + cote1(jcote1) * Dir.XY());
-      gp_Lin2d        Line(Point, L1.Direction()); // ligne avec deport.
+      gp_Lin2d        Line(Point, L1.Direction());
       IntRes2d_Domain D1;
       for (int jcote2 = 1; jcote2 <= nbrcote2 && NbrSol < aNbSolMAX; jcote2++)
       {
         occ::handle<Geom2dAdaptor_Curve> HCu2 = new Geom2dAdaptor_Curve(Cu2);
-        // Adaptor2d_OffsetCurve C2(HCu2,cote2(jcote2));
+
         Adaptor2d_OffsetCurve C2(HCu2, -cote2(jcote2));
         firstparam = std::max(C2.FirstParameter(), thefirst);
         lastparam  = std::min(C2.LastParameter(), thelast);
@@ -216,7 +182,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedLin
               NbrSol++;
               gp_Pnt2d Center(Intp.Point(i).Value());
               cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-              //             =======================================================
+
               gp_Dir2d dc1(origin1.XY() - Center.XY());
               qualifier2(NbrSol) = Qualified2.Qualifier();
               if (!Qualified1.IsUnqualified())
@@ -248,29 +214,11 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedLin
   }
 }
 
-// circulaire tant a une courbe et un cercle ,de rayon donne
-//=============================================================
-
-//========================================================================
-// On initialise WellDone a false.                                       +
-// On recupere la courbe Cu2 et le cercle C1.                            +
-// On sort en erreur dans les cas ou la construction est impossible.     +
-// On fait la parallele a Cu2 dans le bon sens.                          +
-// On fait la parallele a C1 dans le bon sens.                           +
-// On intersecte les paralleles ==> point de centre de la solution.      +
-// On cree la solution qu on ajoute aux solutions deja trouvees.         +
-// On remplit les champs.                                                +
-//========================================================================
-
 Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedCirc& Qualified1,
                                                        const Geom2dGcc_QCurve&     Qualified2,
                                                        const double                Radius,
                                                        const double                Tolerance)
     :
-
-      //========================================================================
-      // initialisation des champs.                                            +
-      //========================================================================
 
       cirsol(1, aNbSolMAX),
       qualifier1(1, aNbSolMAX),
@@ -284,10 +232,6 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedCir
       pararg1(1, aNbSolMAX),
       pararg2(1, aNbSolMAX)
 {
-
-  //========================================================================
-  // Traitement.                                                           +
-  //========================================================================
 
   double                     Tol      = std::abs(Tolerance);
   double                     thefirst = -100000.;
@@ -320,7 +264,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedCir
   {
     if (Qualified1.IsEnclosed() && Qualified2.IsEnclosed())
     {
-      //   =======================================================
+
       nbrcote1 = 1;
       nbrcote2 = 1;
       cote1(1) = Radius;
@@ -328,7 +272,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedCir
     }
     else if (Qualified1.IsEnclosed() && Qualified2.IsOutside())
     {
-      //   ==========================================================
+
       nbrcote1 = 1;
       nbrcote2 = 1;
       cote1(1) = Radius;
@@ -336,7 +280,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedCir
     }
     else if (Qualified1.IsOutside() && Qualified2.IsEnclosed())
     {
-      //   ===========================================================
+
       nbrcote1 = 1;
       nbrcote2 = 1;
       cote1(1) = -Radius;
@@ -344,7 +288,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedCir
     }
     else if (Qualified1.IsOutside() && Qualified2.IsOutside())
     {
-      //   =========================================================
+
       nbrcote1 = 1;
       nbrcote2 = 1;
       cote1(1) = -Radius;
@@ -352,7 +296,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedCir
     }
     if (Qualified1.IsEnclosed() && Qualified2.IsUnqualified())
     {
-      //   =========================================================
+
       nbrcote1 = 1;
       nbrcote2 = 2;
       cote1(1) = Radius;
@@ -361,7 +305,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedCir
     }
     if (Qualified1.IsUnqualified() && Qualified2.IsEnclosed())
     {
-      //   =========================================================
+
       nbrcote1 = 2;
       nbrcote2 = 1;
       cote1(1) = Radius;
@@ -370,7 +314,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedCir
     }
     else if (Qualified1.IsOutside() && Qualified2.IsUnqualified())
     {
-      //   =============================================================
+
       nbrcote1 = 1;
       nbrcote2 = 2;
       cote1(1) = -Radius;
@@ -379,7 +323,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedCir
     }
     if (Qualified1.IsUnqualified() && Qualified2.IsOutside())
     {
-      //   ========================================================
+
       nbrcote1 = 2;
       nbrcote2 = 1;
       cote1(1) = Radius;
@@ -388,7 +332,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedCir
     }
     else if (Qualified1.IsUnqualified() && Qualified2.IsUnqualified())
     {
-      //   =================================================================
+
       nbrcote1 = 2;
       nbrcote2 = 2;
       cote1(1) = Radius;
@@ -411,7 +355,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedCir
       for (int jcote2 = 1; jcote2 <= nbrcote2; jcote2++)
       {
         occ::handle<Geom2dAdaptor_Curve> HCu2 = new Geom2dAdaptor_Curve(Cu2);
-        // Adaptor2d_OffsetCurve C2(HCu2,cote2(jcote2));
+
         Adaptor2d_OffsetCurve C2(HCu2, -cote2(jcote2));
         firstparam = std::max(C2.FirstParameter(), thefirst);
         lastparam  = std::min(C2.LastParameter(), thelast);
@@ -431,7 +375,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedCir
               NbrSol++;
               gp_Pnt2d Center(Intp.Point(i).Value());
               cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-              //             =======================================================
+
 #ifdef OCCT_DEBUG
               gp_Dir2d dir1(Center.XY() - center1.XY());
 #else
@@ -473,29 +417,11 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const GccEnt_QualifiedCir
   }
 }
 
-// circulaire tant a une courbe et un point ,de rayon donne
-//============================================================
-
-//========================================================================
-// On initialise WellDone a false.                                       +
-// On recupere la courbe Cu1 et le point P2.                             +
-// On sort en erreur dans les cas ou la construction est impossible.     +
-// On fait la parallele a Cu1 dans le bon sens.                          +
-// On fait la parallele a P2 dans le bon sens.                           +
-// On intersecte les paralleles ==> point de centre de la solution.      +
-// On cree la solution qu on ajoute aux solutions deja trouvees.         +
-// On remplit les champs.                                                +
-//========================================================================
-
 Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Qualified1,
                                                        const gp_Pnt2d&         Point2,
                                                        const double            Radius,
                                                        const double            Tolerance)
     :
-
-      //========================================================================
-      // initialisation des champs.                                            +
-      //========================================================================
 
       cirsol(1, aNbSolMAX),
       qualifier1(1, aNbSolMAX),
@@ -509,10 +435,6 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
       pararg1(1, aNbSolMAX),
       pararg2(1, aNbSolMAX)
 {
-
-  //========================================================================
-  // Traitement.                                                           +
-  //========================================================================
 
   double                     Tol      = std::abs(Tolerance);
   double                     thefirst = -100000.;
@@ -539,19 +461,19 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
   {
     if (Qualified1.IsEnclosed())
     {
-      //    ===========================
+
       nbrcote1 = 1;
       cote1(1) = Radius;
     }
     else if (Qualified1.IsOutside())
     {
-      //   ===============================
+
       nbrcote1 = 1;
       cote1(1) = -Radius;
     }
     else if (Qualified1.IsUnqualified())
     {
-      //   ===================================
+
       nbrcote1 = 2;
       cote1(1) = Radius;
       cote1(2) = -Radius;
@@ -568,7 +490,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
     for (int jcote1 = 1; jcote1 <= nbrcote1 && NbrSol < aNbSolMAX; jcote1++)
     {
       occ::handle<Geom2dAdaptor_Curve> HCu1 = new Geom2dAdaptor_Curve(Cu1);
-      // Adaptor2d_OffsetCurve Cu2(HCu1,cote1(jcote1));
+
       Adaptor2d_OffsetCurve Cu2(HCu1, -cote1(jcote1));
       firstparam = std::max(Cu2.FirstParameter(), thefirst);
       lastparam  = std::min(Cu2.LastParameter(), thelast);
@@ -588,7 +510,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
             NbrSol++;
             gp_Pnt2d Center(Intp.Point(i).Value());
             cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-            //           =======================================================
+
             qualifier1(NbrSol) = Qualified1.Qualifier();
             qualifier2(NbrSol) = GccEnt_noqualifier;
             TheSame1(NbrSol)   = 0;
@@ -607,14 +529,6 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
   }
 }
 
-//=======================================================================
-// function : PrecRoot
-// purpose  : In case, when curves has tangent zones, intersection point
-//            found may be precised. This function uses precision algorithm
-//            of Extrema Curve-Curve method (dot product between every
-//            tangent vector and vector between points in two curves must
-//            be equal to zero).
-//=======================================================================
 static void PrecRoot(const Adaptor2d_OffsetCurve& theC1,
                      const Adaptor2d_OffsetCurve& theC2,
                      const double                 theU0,
@@ -622,39 +536,6 @@ static void PrecRoot(const Adaptor2d_OffsetCurve& theC1,
                      double&                      theUfinal,
                      double&                      theVfinal)
 {
-  /*
-  It is necessary for precision to solve the system
-
-      \left\{\begin{matrix}
-      (x_{1}(u)-x_{2}(v))*{x_{1}(u)}'+(y_{1}(u)-y_{2}(v))*{y_{1}(u)}'=0\\
-      (x_{1}(u)-x_{2}(v))*{x_{2}(v)}'+(y_{1}(u)-y_{2}(v))*{y_{2}(v)}'=0
-      \end{matrix}\right.
-
-  Precision of any 2*2-system (two equation and two variables)
-
-      \left\{\begin{matrix}
-      S_{1}(u,v)=0\\
-      S_{2}(u,v)=0
-      \end{matrix}\right.
-
-  by Newton method can be made as follows:
-
-      u=u_{0}-\left (\frac{\frac{\partial S_{2}}{\partial v}*S_{1}-
-        \frac{\partial S_{1}}{\partial v}*S_{2}}
-        {\frac{\partial S_{1}}{\partial u}*
-        \frac{\partial S_{2}}{\partial v}-
-        \frac{\partial S_{1}}{\partial v}*
-        \frac{\partial S_{2}}{\partial u}}  \right )_{u_{0},v_{0}}\\
-      v=v_{0}-\left (\frac{\frac{\partial S_{1}}{\partial u}*S_{2}-
-        \frac{\partial S_{2}}{\partial u}*S_{1}}
-        {\frac{\partial S_{1}}{\partial u}*
-        \frac{\partial S_{2}}{\partial v}-
-        \frac{\partial S_{1}}{\partial v}*
-        \frac{\partial S_{2}}{\partial u}}  \right )_{u_{0},v_{0}}
-      \end{matrix}\right.
-
-  where u_{0} and v_{0} are initial values or values computed on previous iteration.
-  */
 
   theUfinal = theU0;
   theVfinal = theV0;
@@ -677,9 +558,7 @@ static void PrecRoot(const Adaptor2d_OffsetCurve& theC1,
   const double aCrProd = std::abs(aD1u.Crossed(aD1v));
   if (aCrProd * aCrProd > 1.0e-6 * aD1u.SquareMagnitude() * aD1v.SquareMagnitude())
   {
-    // Curves are not tangent. Therefore, we consider that
-    // 2D-intersection algorithm have found good point which
-    // did not need in more precision.
+
     return;
   }
 
@@ -704,7 +583,7 @@ static void PrecRoot(const Adaptor2d_OffsetCurve& theC1,
     double aG2 = aD1v.Magnitude();
 
     if (IsEqual(aG1, 0.0) || IsEqual(aG2, 0.0))
-    { // Here we do not processing singular cases.
+    {
       break;
     }
 
@@ -767,28 +646,11 @@ static void PrecRoot(const Adaptor2d_OffsetCurve& theC1,
   } while (aNbIter <= aNbIterMax);
 }
 
-// circulaire tant a deux courbes ,de rayon donne
-//==================================================
-
-//========================================================================
-// On initialise WellDone a false.                                       +
-// On recupere les courbes Cu1 et Cu2.                                   +
-// On sort en erreur dans les cas ou la construction est impossible.     +
-// On fait la parallele a Cu1 dans le bon sens.                          +
-// On fait la parallele a Cu2 dans le bon sens.                          +
-// On intersecte les paralleles ==> point de centre de la solution.      +
-// On cree la solution qu on ajoute aux solutions deja trouvees.         +
-// On remplit les champs.                                                +
-//========================================================================
 Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Qualified1,
                                                        const Geom2dGcc_QCurve& Qualified2,
                                                        const double            Radius,
                                                        const double            Tolerance)
     :
-
-      //========================================================================
-      // initialisation des champs.                                            +
-      //========================================================================
 
       cirsol(1, aNbSolMAX),
       qualifier1(1, aNbSolMAX),
@@ -802,10 +664,6 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
       pararg1(1, aNbSolMAX),
       pararg2(1, aNbSolMAX)
 {
-
-  //========================================================================
-  // Traitement.                                                           +
-  //========================================================================
 
   double Tol = std::abs(Tolerance);
 #ifdef OCCT_DEBUG
@@ -837,7 +695,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
   {
     if (Qualified1.IsEnclosed() && Qualified2.IsEnclosed())
     {
-      //   =======================================================
+
       nbrcote1 = 1;
       nbrcote2 = 1;
       cote1(1) = Radius;
@@ -845,7 +703,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
     }
     else if (Qualified1.IsEnclosed() && Qualified2.IsOutside())
     {
-      //   ==========================================================
+
       nbrcote1 = 1;
       nbrcote2 = 1;
       cote1(1) = Radius;
@@ -853,7 +711,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
     }
     else if (Qualified1.IsOutside() && Qualified2.IsEnclosed())
     {
-      //   ===========================================================
+
       nbrcote1 = 1;
       nbrcote2 = 1;
       cote1(1) = -Radius;
@@ -861,7 +719,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
     }
     else if (Qualified1.IsOutside() && Qualified2.IsOutside())
     {
-      //   =========================================================
+
       nbrcote1 = 1;
       nbrcote2 = 1;
       cote1(1) = -Radius;
@@ -869,7 +727,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
     }
     if (Qualified1.IsEnclosed() && Qualified2.IsUnqualified())
     {
-      //   =========================================================
+
       nbrcote1 = 1;
       nbrcote2 = 2;
       cote1(1) = Radius;
@@ -878,7 +736,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
     }
     if (Qualified1.IsUnqualified() && Qualified2.IsEnclosed())
     {
-      //   =========================================================
+
       nbrcote1 = 2;
       nbrcote2 = 1;
       cote1(1) = Radius;
@@ -887,7 +745,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
     }
     else if (Qualified1.IsOutside() && Qualified2.IsUnqualified())
     {
-      //   =============================================================
+
       nbrcote1 = 1;
       nbrcote2 = 2;
       cote1(1) = -Radius;
@@ -896,7 +754,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
     }
     if (Qualified1.IsUnqualified() && Qualified2.IsOutside())
     {
-      //   ========================================================
+
       nbrcote1 = 2;
       nbrcote2 = 1;
       cote1(1) = Radius;
@@ -905,7 +763,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
     }
     else if (Qualified1.IsUnqualified() && Qualified2.IsUnqualified())
     {
-      //   =================================================================
+
       nbrcote1 = 2;
       nbrcote2 = 2;
       cote1(1) = Radius;
@@ -917,7 +775,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
     for (int jcote1 = 1; jcote1 <= nbrcote1; jcote1++)
     {
       occ::handle<Geom2dAdaptor_Curve> HCu1 = new Geom2dAdaptor_Curve(Cu1);
-      // Adaptor2d_OffsetCurve C1(HCu1,cote1(jcote1));
+
       Adaptor2d_OffsetCurve C1(HCu1, -cote1(jcote1));
 #ifdef OCCT_DEBUG
       double          firstparam = std::max(C1.FirstParameter(), thefirst);
@@ -932,7 +790,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
       for (int jcote2 = 1; jcote2 <= nbrcote2 && NbrSol < aNbSolMAX; jcote2++)
       {
         occ::handle<Geom2dAdaptor_Curve> HCu2 = new Geom2dAdaptor_Curve(Cu2);
-        // Adaptor2d_OffsetCurve C2(HCu2,cote2(jcote2));
+
         Adaptor2d_OffsetCurve C2(HCu2, -cote2(jcote2));
 #ifdef OCCT_DEBUG
         firstparam = std::max(C2.FirstParameter(), thefirst);
@@ -981,7 +839,7 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
               NbrSol++;
               gp_Pnt2d Center(C1.Value(aU0));
               cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-              //             =======================================================
+
               qualifier1(NbrSol) = Qualified1.Qualifier();
               qualifier1(NbrSol) = Qualified1.Qualifier();
               TheSame1(NbrSol)   = 0;
@@ -1001,8 +859,6 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
     }
   }
 }
-
-//=========================================================================
 
 bool Geom2dGcc_Circ2d2TanRadGeo::IsDone() const
 {

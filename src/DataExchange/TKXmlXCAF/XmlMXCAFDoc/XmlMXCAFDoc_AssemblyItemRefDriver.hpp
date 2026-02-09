@@ -11,7 +11,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class XmlObjMgt_Persistent;
 
-//! Attribute Driver.
 class XmlMXCAFDoc_AssemblyItemRefDriver : public XmlMDF_ADriver
 {
 public:

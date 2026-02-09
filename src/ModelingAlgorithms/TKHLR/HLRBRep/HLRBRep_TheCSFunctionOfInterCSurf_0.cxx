@@ -7,7 +7,6 @@
 #include <gp_Pnt.hpp>
 #include <HLRBRep_Surface.hpp>
 
-// Use typedef instead of #define for correct const semantics with pointers
 typedef HLRBRep_Surface* ThePSurface;
 #define ThePSurface_hxx <HLRBRep_Surface.hpp>
 #define ThePSurfaceTool HLRBRep_SurfaceTool

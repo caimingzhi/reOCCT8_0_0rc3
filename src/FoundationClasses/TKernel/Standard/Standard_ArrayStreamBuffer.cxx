@@ -1,19 +1,6 @@
-// Copyright (c) 2016 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_ArrayStreamBuffer.hpp>
-
-//=================================================================================================
 
 Standard_ArrayStreamBuffer::Standard_ArrayStreamBuffer(const char* theBegin, const size_t theSize)
     : myBegin(theBegin),
@@ -22,11 +9,7 @@ Standard_ArrayStreamBuffer::Standard_ArrayStreamBuffer(const char* theBegin, con
 {
 }
 
-//=================================================================================================
-
 Standard_ArrayStreamBuffer::~Standard_ArrayStreamBuffer() = default;
-
-//=================================================================================================
 
 void Standard_ArrayStreamBuffer::Init(const char* theBegin, const size_t theSize)
 {
@@ -34,8 +17,6 @@ void Standard_ArrayStreamBuffer::Init(const char* theBegin, const size_t theSize
   myEnd     = theBegin + theSize;
   myCurrent = theBegin;
 }
-
-//=================================================================================================
 
 Standard_ArrayStreamBuffer::int_type Standard_ArrayStreamBuffer::underflow()
 {
@@ -47,8 +28,6 @@ Standard_ArrayStreamBuffer::int_type Standard_ArrayStreamBuffer::underflow()
   return traits_type::to_int_type(*myCurrent);
 }
 
-//=================================================================================================
-
 Standard_ArrayStreamBuffer::int_type Standard_ArrayStreamBuffer::uflow()
 {
   if (myCurrent == myEnd)
@@ -58,8 +37,6 @@ Standard_ArrayStreamBuffer::int_type Standard_ArrayStreamBuffer::uflow()
 
   return traits_type::to_int_type(*myCurrent++);
 }
-
-//=================================================================================================
 
 Standard_ArrayStreamBuffer::int_type Standard_ArrayStreamBuffer::pbackfail(int_type ch)
 {
@@ -71,18 +48,13 @@ Standard_ArrayStreamBuffer::int_type Standard_ArrayStreamBuffer::pbackfail(int_t
   return traits_type::to_int_type(*--myCurrent);
 }
 
-//=================================================================================================
-
 std::streamsize Standard_ArrayStreamBuffer::showmanyc()
 {
   if (myCurrent > myEnd)
   {
-    // assert
   }
   return myEnd - myCurrent;
 }
-
-//=================================================================================================
 
 Standard_ArrayStreamBuffer::pos_type Standard_ArrayStreamBuffer::seekoff(
   off_type                theOff,
@@ -127,16 +99,12 @@ Standard_ArrayStreamBuffer::pos_type Standard_ArrayStreamBuffer::seekoff(
   return myCurrent - myBegin;
 }
 
-//=================================================================================================
-
 Standard_ArrayStreamBuffer::pos_type Standard_ArrayStreamBuffer::seekpos(
   pos_type                thePosition,
   std::ios_base::openmode theWhich)
 {
   return seekoff(off_type(thePosition), std::ios_base::beg, theWhich);
 }
-
-//=================================================================================================
 
 std::streamsize Standard_ArrayStreamBuffer::xsgetn(char* thePtr, std::streamsize theCount)
 {

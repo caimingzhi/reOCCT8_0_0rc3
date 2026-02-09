@@ -33,7 +33,6 @@ void DsgPrs_EqualRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>& 
   aPrims->AddVertex(SecondPoint);
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // Add presentation of arrows
   gp_Dir FirstDir  = gce_MakeDir(FirstCenter, FirstPoint),
          SecondDir = gce_MakeDir(SecondCenter, SecondPoint);
   DsgPrs::ComputeSymbol(aPresentation,
@@ -51,16 +50,15 @@ void DsgPrs_EqualRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>& 
                         SecondDir,
                         DsgPrs_AS_FIRSTPT_LASTAR);
 
-  // ota === begin ===
   gp_Pnt Middle((FirstCenter.XYZ() + SecondCenter.XYZ()) * 0.5), aTextPos;
   double SmallDist;
-  // Mark of constraint
+
   TCollection_ExtendedString aText("==");
 
   double Dist = FirstCenter.Distance(SecondCenter);
   if (Dist > Precision::Confusion())
   {
-    SmallDist = Dist * 0.05; // take 1/20 part of length;
+    SmallDist = Dist * 0.05;
     if (SmallDist <= Precision::Confusion())
       SmallDist = Dist;
     gp_Dir LineDir = gce_MakeDir(FirstCenter, SecondCenter);
@@ -68,24 +66,20 @@ void DsgPrs_EqualRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>& 
 
     gp_Vec OrtVec = gp_Vec(OrtDir) * SmallDist;
 
-    // Compute the text position
     aTextPos = Middle.Translated(OrtVec);
   }
   else
   {
     double Rad = std::max(FirstCenter.Distance(FirstPoint), SecondCenter.Distance(SecondPoint));
 
-    SmallDist = Rad * 0.05; // take 1/20 part of length;
+    SmallDist = Rad * 0.05;
     if (SmallDist <= Precision::Confusion())
       SmallDist = Rad;
 
     gp_Vec aVec(SmallDist, SmallDist, SmallDist);
 
-    // Compute the text position
     aTextPos = FirstCenter.Translated(aVec);
   }
 
-  // Draw the text
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, aTextPos);
-  // ota === end ===
 }

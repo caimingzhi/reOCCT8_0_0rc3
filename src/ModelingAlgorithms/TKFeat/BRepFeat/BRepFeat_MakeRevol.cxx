@@ -32,13 +32,12 @@
 extern bool BRepFeat_GettraceFEAT();
 #endif
 
-static void MajMap(const TopoDS_Shape&, // base
-                   const LocOpe_Revol&,
-                   NCollection_DataMap<TopoDS_Shape,
-                                       NCollection_List<TopoDS_Shape>,
-                                       TopTools_ShapeMapHasher>&, // myMap
-                   TopoDS_Shape&,                                 // myFShape
-                   TopoDS_Shape&);                                // myLShape
+static void MajMap(
+  const TopoDS_Shape&,
+  const LocOpe_Revol&,
+  NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&,
+  TopoDS_Shape&,
+  TopoDS_Shape&);
 
 static void VerifGluedFaces(
   const TopoDS_Face&                                                        theSkface,
@@ -49,8 +48,6 @@ static void VerifGluedFaces(
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& theMap);
 
 static bool ToFuse(const TopoDS_Face&, const TopoDS_Face&);
-
-//=================================================================================================
 
 void BRepFeat_MakeRevol::Init(const TopoDS_Shape& Sbase,
                               const TopoDS_Shape& Pbase,
@@ -93,10 +90,6 @@ void BRepFeat_MakeRevol::Init(const TopoDS_Shape& Sbase,
   myModify    = Modify;
   myJustGluer = false;
 
-  //-------------- ifv
-  //  mySkface.Nullify();
-  //-------------- ifv
-
   myShape.Nullify();
   myMap.Clear();
   myFShape.Nullify();
@@ -122,11 +115,6 @@ void BRepFeat_MakeRevol::Init(const TopoDS_Shape& Sbase,
   }
 #endif
 }
-
-//=======================================================================
-// function : Add
-// purpose  : add faces add edges of sliding
-//=======================================================================
 
 void BRepFeat_MakeRevol::Add(const TopoDS_Edge& E, const TopoDS_Face& F)
 {
@@ -179,8 +167,6 @@ void BRepFeat_MakeRevol::Add(const TopoDS_Edge& E, const TopoDS_Face& F)
   }
 }
 
-//=================================================================================================
-
 void BRepFeat_MakeRevol::Perform(const double Angle)
 {
 #ifdef OCCT_DEBUG
@@ -201,17 +187,7 @@ void BRepFeat_MakeRevol::Perform(const double Angle)
   TopExp_Explorer exp;
   if (RevolComp)
   {
-    /*
-    if (!mySkface.IsNull() || !mySlface.IsEmpty()) {
-    for (exp.Init(mySbase,TopAbs_FACE); exp.More(); exp.Next()) {
-    if (exp.Current().IsSame(mySkface)) {
-    angledec = M_PI/5; // pourquoi pas
-    if (myFuse) angledec = -angledec;
-    break;
-    }
-    }
-    }
-    */
+
     mySkface.Nullify();
   }
   if (angledec == 0.)
@@ -311,11 +287,6 @@ void BRepFeat_MakeRevol::Perform(const double Angle)
   }
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : feature till shape Until
-//=======================================================================
-
 void BRepFeat_MakeRevol::Perform(const TopoDS_Shape& Until)
 {
 #ifdef OCCT_DEBUG
@@ -349,8 +320,6 @@ void BRepFeat_MakeRevol::Perform(const TopoDS_Shape& Until)
   bool Trf = TransformShapeFU(1);
   ShapeUntilValid();
 
-  // Do systematically almost complete revolution
-  // BRepSweep_Revol theRevol(myPbase,myAxis,2.*M_PI-10.*Precision::Angular());
   LocOpe_Revol theRevol;
   if (!TourComplet)
   {
@@ -381,7 +350,6 @@ void BRepFeat_MakeRevol::Perform(const TopoDS_Shape& Until)
       return;
     }
     GluedFacesValid();
-    // VerifGluedFaces(mySkface, theBase, myBCurve, myCurves, theRevol, myGluedF);
 
     theRevol.Curves(myCurves);
     myBCurve = theRevol.BarycCurve();
@@ -444,11 +412,6 @@ void BRepFeat_MakeRevol::Perform(const TopoDS_Shape& Until)
     }
   }
 }
-
-//=======================================================================
-// function : Perform
-// purpose  : feature limited by two shapes
-//=======================================================================
 
 void BRepFeat_MakeRevol::Perform(const TopoDS_Shape& From, const TopoDS_Shape& Until)
 {
@@ -520,7 +483,6 @@ void BRepFeat_MakeRevol::Perform(const TopoDS_Shape& From, const TopoDS_Shape& U
     myGShape = VraiRevol;
     GeneratedShapeValid();
     GluedFacesValid();
-    //    VerifGluedFaces(mySkface, theBase, myBCurve, myCurves, theRevol, myGluedF);
 
     theRevol.Curves(myCurves);
     myBCurve = theRevol.BarycCurve();
@@ -558,7 +520,7 @@ void BRepFeat_MakeRevol::Perform(const TopoDS_Shape& From, const TopoDS_Shape& U
       pr1        = ElCLib::InPeriod(pr1, PrU - 2 * M_PI, PrU);
       double pr2 = ASI2.Point(1, ASI2.NbPoints(1)).Parameter();
       pr2        = ElCLib::InPeriod(pr2, PrU - 2 * M_PI, PrU);
-      // OrF = OrU;
+
       OrF   = TopAbs::Reverse(OrU);
       FFrom = ASI2.Point(1, 1).Face();
       PrF   = std::max(pr1, pr2);
@@ -619,11 +581,6 @@ void BRepFeat_MakeRevol::Perform(const TopoDS_Shape& From, const TopoDS_Shape& U
   }
 }
 
-//=======================================================================
-// function : PerformThruAll
-// purpose  : feature throughout the initial shape
-//=======================================================================
-
 void BRepFeat_MakeRevol::PerformThruAll()
 {
 #ifdef OCCT_DEBUG
@@ -633,11 +590,6 @@ void BRepFeat_MakeRevol::PerformThruAll()
 #endif
   Perform(2. * M_PI);
 }
-
-//=======================================================================
-// function : PerformUntilAngle
-// purpose  : feature till shape Until defined with the angle
-//=======================================================================
 
 void BRepFeat_MakeRevol::PerformUntilAngle(const TopoDS_Shape& Until, const double Angle)
 {
@@ -673,8 +625,6 @@ void BRepFeat_MakeRevol::PerformUntilAngle(const TopoDS_Shape& Until, const doub
   bool Trf = TransformShapeFU(1);
   ShapeUntilValid();
 
-  // Produce systematicallt an almost complete revolution
-  //  BRepSweep_Revol theRevol(myPbase,myAxis,2.*M_PI-10.*Precision::Angular());
   LocOpe_Revol theRevol;
   theRevol.Perform(myPbase, myAxis, Angle);
   TopoDS_Shape VraiRevol = theRevol.Shape();
@@ -697,7 +647,6 @@ void BRepFeat_MakeRevol::PerformUntilAngle(const TopoDS_Shape& Until, const doub
       return;
     }
     GluedFacesValid();
-    // VerifGluedFaces(mySkface, theBase, myBCurve, myCurves, theRevol, myGluedF);
 
     theRevol.Curves(myCurves);
     myBCurve = theRevol.BarycCurve();
@@ -761,31 +710,15 @@ void BRepFeat_MakeRevol::PerformUntilAngle(const TopoDS_Shape& Until, const doub
   }
 }
 
-//=======================================================================
-// function : Curves
-// purpose  : circles parallel to the generating edge of revolution
-//=======================================================================
-
 void BRepFeat_MakeRevol::Curves(NCollection_Sequence<occ::handle<Geom_Curve>>& scur)
 {
   scur = myCurves;
 }
 
-//=======================================================================
-// function : BarycCurve
-// purpose  : pass through the center of mass of the primitive
-//=======================================================================
-
 occ::handle<Geom_Curve> BRepFeat_MakeRevol::BarycCurve()
 {
   return myBCurve;
 }
-
-//=======================================================================
-// function : VerifGluedFaces
-// purpose  : Check intersection Tool/theSkface = thePbase
-//           if yes -> OK otherwise -> case without gluing
-//=======================================================================
 
 static void VerifGluedFaces(
   const TopoDS_Face&                                                        theSkface,
@@ -851,18 +784,13 @@ static void VerifGluedFaces(
   }
 }
 
-//=======================================================================
-// function : MajMap
-// purpose  : management of descendants
-//=======================================================================
-
 static void MajMap(
   const TopoDS_Shape& theB,
   const LocOpe_Revol& theP,
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
-                theMap,    // myMap
-  TopoDS_Shape& theFShape, // myFShape
-  TopoDS_Shape& theLShape) // myLShape
+                theMap,
+  TopoDS_Shape& theFShape,
+  TopoDS_Shape& theLShape)
 {
   TopExp_Explorer exp(theP.FirstShape(), TopAbs_WIRE);
   if (exp.More())
@@ -898,11 +826,6 @@ static void MajMap(
     }
   }
 }
-
-//=======================================================================
-// function : ToFuse
-// purpose  : two faces samedomaine or not
-//=======================================================================
 
 bool ToFuse(const TopoDS_Face& F1, const TopoDS_Face& F2)
 {
@@ -943,7 +866,7 @@ bool ToFuse(const TopoDS_Face& F1, const TopoDS_Face& F2)
   bool ValRet = false;
   if (typS1 == STANDARD_TYPE(Geom_Plane))
   {
-    S1 = BRep_Tool::Surface(F1); // to apply the location.
+    S1 = BRep_Tool::Surface(F1);
     S2 = BRep_Tool::Surface(F2);
     gp_Pln pl1(occ::down_cast<Geom_Plane>(S1)->Pln());
     gp_Pln pl2(occ::down_cast<Geom_Plane>(S2)->Pln());

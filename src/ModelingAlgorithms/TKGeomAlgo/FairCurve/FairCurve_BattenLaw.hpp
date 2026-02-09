@@ -8,31 +8,21 @@
 #include <math_Function.hpp>
 #include <Standard_Boolean.hpp>
 
-//! This class compute the Heigth of an batten
 class FairCurve_BattenLaw : public math_Function
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Constructor of linear batten with
-  //! Heigth  : the Heigth at the middle point
-  //! Slope   : the geometric slope of the batten
-  //! Sliding : Active Length of the batten without extension
   Standard_EXPORT FairCurve_BattenLaw(const double Heigth,
                                       const double Slope,
                                       const double Sliding);
 
-  //! Change the value of sliding
   void SetSliding(const double Sliding);
 
-  //! Change the value of Heigth at the middle point.
   void SetHeigth(const double Heigth);
 
-  //! Change the value of the geometric slope.
   void SetSlope(const double Slope);
 
-  //! computes the value of the heigth for the parameter T
-  //! on the neutral fibber
   bool Value(const double T, double& THeigth) override;
 
 private:

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Precision.hpp>
 #include <ShapeAnalysis.hpp>
@@ -33,8 +22,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_RemoveInternalWires, ShapeUpgrade_Tool)
 
-//=================================================================================================
-
 ShapeUpgrade_RemoveInternalWires::ShapeUpgrade_RemoveInternalWires()
 {
   myMinArea                                = 0.;
@@ -44,16 +31,12 @@ ShapeUpgrade_RemoveInternalWires::ShapeUpgrade_RemoveInternalWires()
   SetContext(aContext);
 }
 
-//=================================================================================================
-
 ShapeUpgrade_RemoveInternalWires::ShapeUpgrade_RemoveInternalWires(const TopoDS_Shape& theShape)
 {
   occ::handle<ShapeBuild_ReShape> aContext = new ShapeBuild_ReShape;
   SetContext(aContext);
   Init(theShape);
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_RemoveInternalWires::Init(const TopoDS_Shape& theShape)
 {
@@ -64,8 +47,6 @@ void ShapeUpgrade_RemoveInternalWires::Init(const TopoDS_Shape& theShape)
   myMinArea         = 0.;
   myRemoveFacesMode = true;
 }
-
-//=================================================================================================
 
 bool ShapeUpgrade_RemoveInternalWires::Perform()
 {
@@ -87,8 +68,6 @@ bool ShapeUpgrade_RemoveInternalWires::Perform()
   myResult = Context()->Apply(myShape);
   return Status(ShapeExtend_DONE);
 }
-
-//=================================================================================================
 
 bool ShapeUpgrade_RemoveInternalWires::Perform(
   const NCollection_Sequence<TopoDS_Shape>& theSeqShapes)
@@ -126,8 +105,6 @@ bool ShapeUpgrade_RemoveInternalWires::Perform(
   return Status(ShapeExtend_DONE);
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_RemoveInternalWires::removeSmallWire(const TopoDS_Shape& theFace,
                                                        const TopoDS_Shape& theWire)
 {
@@ -138,7 +115,7 @@ void ShapeUpgrade_RemoveInternalWires::removeSmallWire(const TopoDS_Shape& theFa
   {
     if (aIt.Value().ShapeType() != TopAbs_WIRE || aIt.Value().IsSame(anOutW))
       continue;
-    // occ::handle<ShapeExtend_WireData> asewd = new  ShapeExtend_WireData();
+
     TopoDS_Wire aW = TopoDS::Wire(aIt.Value());
     if (!theWire.IsNull() && !theWire.IsSame(aW))
       continue;
@@ -168,8 +145,6 @@ void ShapeUpgrade_RemoveInternalWires::removeSmallWire(const TopoDS_Shape& theFa
   }
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_RemoveInternalWires::removeSmallFaces()
 {
 
@@ -179,7 +154,7 @@ void ShapeUpgrade_RemoveInternalWires::removeSmallFaces()
     TopoDS_Shape                                                  aWire = myRemoveWires.Value(i);
     TopoDS_Iterator                                               aIte(aWire, false);
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aFaceCandidates;
-    // collecting all faces containing edges from removed wire
+
     for (; aIte.More(); aIte.Next())
     {
 
@@ -218,11 +193,6 @@ void ShapeUpgrade_RemoveInternalWires::removeSmallFaces()
       }
     }
 
-    // remove faces which have outer wire consist of only
-    // edges from removed wires and
-    // seam edges for faces based on conic surface or
-    // in the case of a few faces based on the same conic surface
-    // the edges belogining these faces.
     int k = 1;
     for (; k <= aFaceCandidates.Extent(); k++)
     {
@@ -262,8 +232,6 @@ void ShapeUpgrade_RemoveInternalWires::removeSmallFaces()
   if (myRemovedFaces.Length())
     myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_DONE2);
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_RemoveInternalWires::Clear()
 {

@@ -20,43 +20,29 @@ class BRepTools_Modification;
 class Geom_Curve;
 class Geom_Surface;
 
-//! Performs geometric modifications on a shape.
 class BRepTools_Modifier
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates an empty Modifier.
   Standard_EXPORT BRepTools_Modifier(bool theMutableInput = false);
 
-  //! Creates a modifier on the shape <S>.
   Standard_EXPORT BRepTools_Modifier(const TopoDS_Shape& S);
 
-  //! Creates a modifier on the shape <S>, and performs
-  //! the modifications described by <M>.
   Standard_EXPORT BRepTools_Modifier(const TopoDS_Shape&                        S,
                                      const occ::handle<BRepTools_Modification>& M);
 
-  //! Initializes the modifier with the shape <S>.
   Standard_EXPORT void Init(const TopoDS_Shape& S);
 
-  //! Performs the modifications described by <M>.
   Standard_EXPORT void Perform(const occ::handle<BRepTools_Modification>& M,
                                const Message_ProgressRange& theProgress = Message_ProgressRange());
 
-  //! Returns true if the modification has
-  //! been computed successfully.
   bool IsDone() const;
 
-  //! Returns the current mutable input state
   Standard_EXPORT bool IsMutableInput() const;
 
-  //! Sets the mutable input state
-  //! If true then the input (original) shape can be modified
-  //! during modification process
   Standard_EXPORT void SetMutableInput(bool theMutableInput);
 
-  //! Returns the modified shape corresponding to <S>.
   const TopoDS_Shape& ModifiedShape(const TopoDS_Shape& S) const;
 
 private:
@@ -118,8 +104,6 @@ private:
 
 #include <Standard_NoSuchObject.hpp>
 
-//=================================================================================================
-
 inline const TopoDS_Shape& BRepTools_Modifier::ModifiedShape(const TopoDS_Shape& S) const
 {
   if (!myMap.IsBound(S))
@@ -128,8 +112,6 @@ inline const TopoDS_Shape& BRepTools_Modifier::ModifiedShape(const TopoDS_Shape&
   }
   return myMap(S);
 }
-
-//=================================================================================================
 
 inline bool BRepTools_Modifier::IsDone() const
 {

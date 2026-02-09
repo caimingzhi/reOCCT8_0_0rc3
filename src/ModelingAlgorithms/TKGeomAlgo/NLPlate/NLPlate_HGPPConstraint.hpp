@@ -13,7 +13,6 @@ class Plate_D1;
 class Plate_D2;
 class Plate_D3;
 
-//! define a PinPoint geometric Constraint used to load a Non Linear Plate
 class NLPlate_HGPPConstraint : public Standard_Transient
 {
 

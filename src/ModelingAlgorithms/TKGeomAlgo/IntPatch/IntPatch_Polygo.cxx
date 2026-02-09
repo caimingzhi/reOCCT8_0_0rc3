@@ -1,13 +1,9 @@
 #include <IntPatch_Polygo.hpp>
 
-//=================================================================================================
-
 IntPatch_Polygo::IntPatch_Polygo(const double theError)
     : myError(theError)
 {
 }
-
-//=================================================================================================
 
 void IntPatch_Polygo::Dump() const
 {

@@ -5,14 +5,6 @@
 #include <NCollection_Array1.hpp>
 #include <math_FunctionSetRoot.hpp>
 
-//=================================================================================================
-// function : IsSingular
-// purpose  :    Returns TRUE if vectors theDU || theDV or if at least one
-//            of them has null-magnitude.
-//              theSqLinTol is square of linear tolerance.
-//              theAngTol is angular tolerance.
-//=================================================================================================
-
 static bool IsSingular(const gp_Vec& theDU,
                        const gp_Vec& theDV,
                        const double  theSqLinTol,
@@ -32,34 +24,11 @@ static bool IsSingular(const gp_Vec& theDU,
 
   aDV.Divide(sqrt(aSqMagnDV));
 
-  // Here aDU and aDV vectors have magnitude 1.0.
-
   if (aDU.Crossed(aDV).SquareMagnitude() < theAngTol * theAngTol)
     return true;
 
   return false;
 }
-
-//=================================================================================================
-// function : SingularProcessing
-// purpose  :    Computes 2D-representation (in UV-coordinates) of
-//            theTg3D vector on the surface in case when
-//            theDU.Crossed(theDV).Magnitude() == 0.0. Stores result in
-//            theTg2D variable.
-//              theDU and theDV are vectors of 1st derivative
-//            (with respect to U and V variables correspondingly).
-//              If theIsTo3DTgCompute == TRUE then theTg3D has not been
-//            defined yet (it should be computed).
-//              theLinTol is SQUARE of the tolerance.
-//
-// Algorithm:
-//              Condition
-//                  Tg=theDU*theTg2D.X()+theDV*theTg2D.Y()
-//            has to be satisfied strictly.
-//              More over, vector Tg has to be NORMALIZED
-//            (if theIsTo3DTgCompute == TRUE then new computed vector will
-//            always have magnitude 1.0).
-//=================================================================================================
 
 static bool SingularProcessing(const gp_Vec& theDU,
                                const gp_Vec& theDV,
@@ -69,35 +38,23 @@ static bool SingularProcessing(const gp_Vec& theDU,
                                gp_Vec&       theTg3D,
                                gp_Vec2d&     theTg2D)
 {
-  // Attention: @ \sin theAngTol \approx theAngTol @ (for cross-product)
 
-  // Really, vector theTg3D has to be normalized (if theIsTo3DTgCompute == FALSE).
   const double aSQTan = theTg3D.SquareMagnitude();
 
   const double aSqMagnDU = theDU.SquareMagnitude(), aSqMagnDV = theDV.SquareMagnitude();
 
-  // There are some reasons of singularity
-
-  // 1.
   if ((aSqMagnDU < theLinTol) && (aSqMagnDV < theLinTol))
   {
-    // For future, this case can be processed as same as in case of
-    // osculating surfaces (expanding in Taylor series). Here,
-    // we return only.
 
     return false;
   }
 
-  // 2.
   if (aSqMagnDU < theLinTol)
   {
-    // In this case, theTg3D vector will be parallel with theDV.
-    // Its true direction shall be precised later (the algorithm is
-    // based on array of Walking-points).
 
     if (theIsTo3DTgCompute)
     {
-      // theTg3D will be normalized. Its magnitude is
+
       const double aTgMagn = 1.0;
 
       const double aNorm = sqrt(aSqMagnDV);
@@ -106,22 +63,15 @@ static bool SingularProcessing(const gp_Vec& theDU,
     }
     else
     {
-      // theTg3D is already defined.
-      // Here we check only, if this tangent is parallel to theDV.
 
       if (theDV.Crossed(theTg3D).SquareMagnitude() < theAngTol * theAngTol * aSqMagnDV * aSQTan)
       {
-        // theTg3D is parallel to theDV
 
-        // Use sign "+" if theTg3D and theDV are codirectional
-        // and sign "-" if opposite
         const double aDP = theTg3D.Dot(theDV);
         theTg2D.SetCoord(0.0, std::copysign(sqrt(aSQTan / aSqMagnDV), aDP));
       }
       else
       {
-        // theTg3D is not parallel to theDV
-        // It is abnormal
 
         return false;
       }
@@ -130,16 +80,12 @@ static bool SingularProcessing(const gp_Vec& theDU,
     return true;
   }
 
-  // 3.
   if (aSqMagnDV < theLinTol)
   {
-    // In this case, theTg3D vector will be parallel with theDU.
-    // Its true direction shall be precised later (the algorithm is
-    // based on array of Walking-points).
 
     if (theIsTo3DTgCompute)
     {
-      // theTg3D will be normalized. Its magnitude is
+
       const double aTgMagn = 1.0;
 
       const double aNorm = sqrt(aSqMagnDU);
@@ -148,22 +94,15 @@ static bool SingularProcessing(const gp_Vec& theDU,
     }
     else
     {
-      // theTg3D is already defined.
-      // Here we check only, if this tangent is parallel to theDU.
 
       if (theDU.Crossed(theTg3D).SquareMagnitude() < theAngTol * theAngTol * aSqMagnDU * aSQTan)
       {
-        // theTg3D is parallel to theDU
 
-        // Use sign "+" if theTg3D and theDU are codirectional
-        // and sign "-" if opposite
         const double aDP = theTg3D.Dot(theDU);
         theTg2D.SetCoord(std::copysign(sqrt(aSQTan / aSqMagnDU), aDP), 0.0);
       }
       else
       {
-        // theTg3D is not parallel to theDU
-        // It is abnormal
 
         return false;
       }
@@ -172,16 +111,12 @@ static bool SingularProcessing(const gp_Vec& theDU,
     return true;
   }
 
-  // 4. If aSqMagnDU > 0.0 && aSqMagnDV > 0.0 but theDV || theDU.
-
   const double aLenU = sqrt(aSqMagnDU), aLenV = sqrt(aSqMagnDV);
 
-  // aLenSum > 0.0 definitely
   const double aLenSum = aLenU + aLenV;
 
   if (theDV.Dot(theDU) > 0.0)
   {
-    // Vectors theDV and theDU are codirectional.
 
     if (theIsTo3DTgCompute)
     {
@@ -190,13 +125,9 @@ static bool SingularProcessing(const gp_Vec& theDU,
     }
     else
     {
-      // theTg3D is already defined.
-      // Here we check only, if this tangent is parallel to theDU
-      //(and theDV together).
 
       if (theDU.Crossed(theTg3D).SquareMagnitude() < theAngTol * theAngTol * aSqMagnDU * aSQTan)
       {
-        // theTg3D is parallel to theDU
 
         const double aDP    = theTg3D.Dot(theDU);
         const double aLenTg = std::copysign(sqrt(aSQTan), aDP);
@@ -204,8 +135,6 @@ static bool SingularProcessing(const gp_Vec& theDU,
       }
       else
       {
-        // theTg3D is not parallel to theDU
-        // It is abnormal
 
         return false;
       }
@@ -213,26 +142,18 @@ static bool SingularProcessing(const gp_Vec& theDU,
   }
   else
   {
-    // Vectors theDV and theDU are opposite.
 
     if (theIsTo3DTgCompute)
     {
-      // Here we chose theDU as direction of theTg3D.
-      // True direction shall be precised later (the algorithm is
-      // based on array of Walking-points).
 
       theTg2D.SetCoord(1.0 / aLenSum, -1.0 / aLenSum);
       theTg3D = theDU * theTg2D.X() + theDV * theTg2D.Y();
     }
     else
     {
-      // theTg3D is already defined.
-      // Here we check only, if this tangent is parallel to theDU
-      //(and theDV together).
 
       if (theDU.Crossed(theTg3D).SquareMagnitude() < theAngTol * theAngTol * aSqMagnDU * aSQTan)
       {
-        // theTg3D is parallel to theDU
 
         const double aDP    = theTg3D.Dot(theDU);
         const double aLenTg = std::copysign(sqrt(aSQTan), aDP);
@@ -240,8 +161,6 @@ static bool SingularProcessing(const gp_Vec& theDU,
       }
       else
       {
-        // theTg3D is not parallel to theDU
-        // It is abnormal
 
         return false;
       }
@@ -250,23 +169,6 @@ static bool SingularProcessing(const gp_Vec& theDU,
 
   return true;
 }
-
-//=================================================================================================
-// function : NonSingularProcessing
-// purpose  :    Computes 2D-representation (in UV-coordinates) of
-//            theTg3D vector on the surface in case when
-//            theDU.Crossed(theDV).Magnitude() > 0.0. Stores result in
-//            theTg2D variable.
-//              theDU and theDV are vectors of 1st derivative
-//            (with respect to U and V variables correspondingly).
-//              theLinTol is SQUARE of the tolerance.
-//
-// Algorithm:
-//              Condition
-//                  Tg=theDU*theTg2D.X()+theDV*theTg2D.Y()
-//            has to be satisfied strictly.
-//              More over, vector Tg has always to be NORMALIZED.
-//=================================================================================================
 
 static bool NonSingularProcessing(const gp_Vec& theDU,
                                   const gp_Vec& theDV,
@@ -284,17 +186,6 @@ static bool NonSingularProcessing(const gp_Vec& theDU,
     return SingularProcessing(theDU, theDV, false, theLinTol, theAngTol, aTg, theTg2D);
   }
 
-  // If @\vec{T}=\vec{A}*U+\vec{B}*V@ then
-
-  //  \left\{\begin{matrix}
-  //  \vec{A} \times \vec{T} = (\vec{A} \times \vec{B})*V
-  //  \vec{B} \times \vec{T} = (\vec{B} \times \vec{A})*U
-  //  \end{matrix}\right.
-
-  // From here, values of U and V can be found very easily
-  //(if @\left \| \vec{A} \times \vec{B} \right \| > 0.0 @,
-  // else it is singular case).
-
   const gp_Vec aTgU(theTg3D.Crossed(theDU)), aTgV(theTg3D.Crossed(theDV));
   const double aDeltaU = aTgV.SquareMagnitude() / aSQMagn;
   const double aDeltaV = aTgU.SquareMagnitude() / aSQMagn;
@@ -304,8 +195,6 @@ static bool NonSingularProcessing(const gp_Vec& theDU,
 
   return true;
 }
-
-//=================================================================================================
 
 ApproxInt_ImpPrmSvSurfaces::ApproxInt_ImpPrmSvSurfaces(const TheISurface& ISurf,
                                                        const ThePSurface& PSurf)
@@ -319,8 +208,6 @@ ApproxInt_ImpPrmSvSurfaces::ApproxInt_ImpPrmSvSurfaces(const TheISurface& ISurf,
   SetUseSolver(true);
 }
 
-//=================================================================================================
-
 ApproxInt_ImpPrmSvSurfaces::ApproxInt_ImpPrmSvSurfaces(const ThePSurface& PSurf,
                                                        const TheISurface& ISurf)
     : MyIsTangent(false),
@@ -332,8 +219,6 @@ ApproxInt_ImpPrmSvSurfaces::ApproxInt_ImpPrmSvSurfaces(const ThePSurface& PSurf,
 {
   SetUseSolver(true);
 }
-
-//=================================================================================================
 
 void ApproxInt_ImpPrmSvSurfaces::Pnt(const double u1,
                                      const double v1,
@@ -351,8 +236,6 @@ void ApproxInt_ImpPrmSvSurfaces::Pnt(const double u1,
   this->Compute(tu1, tv1, tu2, tv2, aP, aT, aTS1, aTS2);
   P = MyPnt;
 }
-
-//=================================================================================================
 
 bool ApproxInt_ImpPrmSvSurfaces::Tangency(const double u1,
                                           const double v1,
@@ -372,8 +255,6 @@ bool ApproxInt_ImpPrmSvSurfaces::Tangency(const double u1,
   return (t);
 }
 
-//=================================================================================================
-
 bool ApproxInt_ImpPrmSvSurfaces::TangencyOnSurf1(const double u1,
                                                  const double v1,
                                                  const double u2,
@@ -391,8 +272,6 @@ bool ApproxInt_ImpPrmSvSurfaces::TangencyOnSurf1(const double u1,
   T            = MyTguv1;
   return (t);
 }
-
-//=================================================================================================
 
 bool ApproxInt_ImpPrmSvSurfaces::TangencyOnSurf2(const double u1,
                                                  const double v1,
@@ -412,12 +291,6 @@ bool ApproxInt_ImpPrmSvSurfaces::TangencyOnSurf2(const double u1,
   return (t);
 }
 
-//=================================================================================================
-// function : Compute
-// purpose  :    Computes point on curve, 3D and 2D-tangents of a curve and
-//            parameters on the surfaces.
-//=================================================================================================
-
 bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
                                          double&   v1,
                                          double&   u2,
@@ -432,7 +305,6 @@ bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
   gp_Vec2d&              aQuadTg = MyImplicitFirst ? Tguv1 : Tguv2;
   gp_Vec2d&              aPrmTg  = MyImplicitFirst ? Tguv2 : Tguv1;
 
-  // for square
   constexpr double aNullValue = Precision::Approximation() * Precision::Approximation(),
                    anAngTol   = Precision::Angular();
 
@@ -497,7 +369,7 @@ bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
 
   math_Vector X(1, 2);
   math_Vector BornInf(1, 2), BornSup(1, 2), Tolerance(1, 2);
-  //--- ThePSurfaceTool::GetResolution(aPSurf,Tolerance(1),Tolerance(2));
+
   Tolerance(1) = 1.0e-8;
   Tolerance(2) = 1.0e-8;
   double binfu, bsupu, binfv, bsupv;
@@ -575,14 +447,13 @@ bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
         ThePSurfaceTool::D1(aPSurf, X(1), X(2), P, aD1uPrm, aD1vPrm);
         aQSurf.D1(u1, v1, aP2, aD1uQuad, aD1vQuad);
 
-        // Middle-point of P-P2 segment
         P.BaryCenter(1.0, aP2, 1.0);
       }
       else
       {
         u1 = X(1) - TranslationU;
         v1 = X(2) - TranslationV;
-        // aQSurf.Parameters(P, u2, v2);
+
         if (aQSurf.TypeQuadric() != GeomAbs_Plane)
         {
           while (u2 - tu2 > M_PI)
@@ -599,13 +470,11 @@ bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
 
         aQSurf.D1(u2, v2, aP2, aD1uQuad, aD1vQuad);
 
-        // Middle-point of P-P2 segment
         P.BaryCenter(1.0, aP2, 1.0);
       }
 
       MyPnt = P;
 
-      // Normals to the surfaces
       gp_Vec aNormalPrm(aD1uPrm.Crossed(aD1vPrm)), aNormalImp(aQSurf.Normale(MyPnt));
 
       const double aSQMagnPrm = aNormalPrm.SquareMagnitude(),
@@ -630,7 +499,6 @@ bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
         aNormalPrm.Divide(sqrt(aSQMagnPrm));
       }
 
-      // Analogically for implicit surface
       if (aSQMagnImp < aNullValue)
       {
         isImpSingular = true;
@@ -657,7 +525,6 @@ bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
 
       if (isImpSingular && isPrmSingular)
       {
-        // All is OK. All abnormal cases were processed above.
 
         MyTguv1 = Tguv1;
         MyTguv2 = Tguv2;
@@ -667,13 +534,7 @@ bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
       }
       else if (!(isImpSingular || isPrmSingular))
       {
-        // Processing pure non-singular case
-        //(3D- and 2D-tangents are still not defined)
 
-        // Ask to pay attention to the fact that here
-        // aNormalImp and aNormalPrm are normalized.
-        // Therefore, @ \left \| \vec{Tg} \right \| = 0.0 @
-        // if and only if (aNormalImp || aNormalPrm).
         Tg = aNormalImp.Crossed(aNormalPrm);
       }
 
@@ -686,13 +547,11 @@ bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
         return false;
       }
 
-      // Normalize Tg vector
       Tg.Divide(sqrt(aSQMagnTg));
       MyTg = Tg;
 
       if (!isPrmSingular)
       {
-        // If isPrmSingular==TRUE then aPrmTg has already been computed.
 
         if (!NonSingularProcessing(aD1uPrm, aD1vPrm, Tg, aNullValue, anAngTol, aPrmTg))
         {
@@ -704,7 +563,6 @@ bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
 
       if (!isImpSingular)
       {
-        // If isImpSingular==TRUE then aQuadTg has already been computed.
 
         if (!NonSingularProcessing(aD1uQuad, aD1vQuad, Tg, aNullValue, anAngTol, aQuadTg))
         {
@@ -720,24 +578,13 @@ bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
       MyIsTangent = true;
 
 #ifdef OCCT_DEBUG
-      // cout << "+++++++++++++++++  ApproxInt_ImpPrmSvSurfaces::Compute(...)  ++++++++++" << endl;
-      // printf( "P2d_1(%+10.20f, %+10.20f); P2d_2(%+10.20f, %+10.20f)\n"
-      //         "P(%+10.20f, %+10.20f, %+10.20f);\n"
-      //         "Tg = {%+10.20f, %+10.20f, %+10.20f};\n"
-      //         "Tguv1 = {%+10.20f, %+10.20f};\n"
-      //         "Tguv2 = {%+10.20f, %+10.20f}\n",
-      //         u1, v1, u2, v2,
-      //         P.X(), P.Y(), P.Z(),
-      //         Tg.X(), Tg.Y(), Tg.Z(),
-      //         Tguv1.X(), Tguv1.Y(), Tguv2.X(), Tguv2.Y());
-      // cout << "-----------------------------------------------------------------------" << endl;
+
 #endif
 
       return true;
     }
     else
     {
-      //-- cout<<" ApproxInt_ImpImpSvSurfaces.gxx : Distance apres recadrage Trop Grande "<<endl;
 
       MyIsTangent       = false;
       MyHasBeenComputed = MyHasBeenComputedbis = false;
@@ -752,12 +599,6 @@ bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
   }
 }
 
-//=================================================================================================
-// function : SeekPoint
-// purpose  :    Computes point on curve and
-//            parameters on the surfaces.
-//=================================================================================================
-
 bool ApproxInt_ImpPrmSvSurfaces::SeekPoint(const double     u1,
                                            const double     v1,
                                            const double     u2,
@@ -769,7 +610,7 @@ bool ApproxInt_ImpPrmSvSurfaces::SeekPoint(const double     u1,
 
   math_Vector X(1, 2);
   math_Vector BornInf(1, 2), BornSup(1, 2), Tolerance(1, 2);
-  //--- ThePSurfaceTool::GetResolution(aPSurf,Tolerance(1),Tolerance(2));
+
   Tolerance(1) = 1.0e-8;
   Tolerance(2) = 1.0e-8;
   double binfu, bsupu, binfv, bsupv;
@@ -814,7 +655,7 @@ bool ApproxInt_ImpPrmSvSurfaces::SeekPoint(const double     u1,
       NewV2 = X(2) - TranslationV;
 
       aQSurf.Parameters(MyPnt, NewU1, NewV1);
-      // adjust U
+
       if (aQSurf.TypeQuadric() != GeomAbs_Plane)
       {
         double sign = (NewU1 > u1) ? -1 : 1;
@@ -828,7 +669,7 @@ bool ApproxInt_ImpPrmSvSurfaces::SeekPoint(const double     u1,
       NewV1 = X(2) - TranslationV;
 
       aQSurf.Parameters(MyPnt, NewU2, NewV2);
-      // adjust U
+
       if (aQSurf.TypeQuadric() != GeomAbs_Plane)
       {
         double sign = (NewU2 > u2) ? -1 : 1;
@@ -843,8 +684,6 @@ bool ApproxInt_ImpPrmSvSurfaces::SeekPoint(const double     u1,
   Point.SetValue(MyPnt, NewU1, NewV1, NewU2, NewV2);
   return true;
 }
-
-//=================================================================================================
 
 bool ApproxInt_ImpPrmSvSurfaces::FillInitialVectorOfSolution(const double u1,
                                                              const double v1,
@@ -980,10 +819,6 @@ bool ApproxInt_ImpPrmSvSurfaces::FillInitialVectorOfSolution(const double u1,
     X(2) = v1 + TranslationV;
   }
 
-  //=================================================================================================
-
-  // Make a small step from boundaries in order to avoid
-  // finding "outboundaried" solution (Rsnld -> NotDone).
   if (GetUseSolver())
   {
     double du = std::max(Precision::Confusion(),

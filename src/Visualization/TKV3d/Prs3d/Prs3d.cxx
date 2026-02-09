@@ -7,8 +7,6 @@
 #include <Poly_Triangulation.hpp>
 #include <Prs3d_LineAspect.hpp>
 
-//=================================================================================================
-
 void Prs3d::AddFreeEdges(NCollection_Sequence<gp_Pnt>&          theSegments,
                          const occ::handle<Poly_Triangulation>& thePolyTri,
                          const gp_Trsf&                         theLocation)
@@ -18,13 +16,11 @@ void Prs3d::AddFreeEdges(NCollection_Sequence<gp_Pnt>&          theSegments,
     return;
   }
 
-  // Build the connect tool.
   Poly_Connect aPolyConnect(thePolyTri);
   int          aNbTriangles = thePolyTri->NbTriangles();
   int          aT[3];
   int          aN[3];
 
-  // Count the free edges.
   int aNbFree = 0;
   for (int anI = 1; anI <= aNbTriangles; ++anI)
   {
@@ -61,7 +57,6 @@ void Prs3d::AddFreeEdges(NCollection_Sequence<gp_Pnt>&          theSegments,
     }
   }
 
-  // free edges
   int aFreeHalfNb = aFree.Length() / 2;
   for (int anI = 1; anI <= aFreeHalfNb; ++anI)
   {
@@ -71,8 +66,6 @@ void Prs3d::AddFreeEdges(NCollection_Sequence<gp_Pnt>&          theSegments,
     theSegments.Append(aPoint2);
   }
 }
-
-//=================================================================================================
 
 bool Prs3d::MatchSegment(const double  X,
                          const double  Y,
@@ -99,8 +92,6 @@ bool Prs3d::MatchSegment(const double  X,
          + std::abs(Z - Z1 - Lambda * DZ);
   return (dist < aDistance);
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_ArrayOfPrimitives> Prs3d::PrimitivesFromPolylines(
   const NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& thePoints)
@@ -138,8 +129,6 @@ occ::handle<Graphic3d_ArrayOfPrimitives> Prs3d::PrimitivesFromPolylines(
 
   return aSegments;
 }
-
-//=================================================================================================
 
 void Prs3d::AddPrimitivesGroup(
   const occ::handle<Prs3d_Presentation>&                        thePrs,

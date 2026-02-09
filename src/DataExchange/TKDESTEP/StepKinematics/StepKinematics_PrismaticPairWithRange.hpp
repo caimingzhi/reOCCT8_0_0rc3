@@ -7,14 +7,11 @@
 #include <StepRepr_RepresentationItem.hpp>
 #include <StepKinematics_KinematicJoint.hpp>
 
-//! Representation of STEP entity PrismaticPairWithRange
 class StepKinematics_PrismaticPairWithRange : public StepKinematics_PrismaticPair
 {
 public:
-  //! default constructor
   Standard_EXPORT StepKinematics_PrismaticPairWithRange();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
     const occ::handle<TCollection_HAsciiString>&      theItemDefinedTransformation_Name,
@@ -34,27 +31,24 @@ public:
     const bool                                        hasUpperLimitActualTranslation,
     const double                                      theUpperLimitActualTranslation);
 
-  //! Returns field LowerLimitActualTranslation
   Standard_EXPORT double LowerLimitActualTranslation() const;
-  //! Sets field LowerLimitActualTranslation
+
   Standard_EXPORT void SetLowerLimitActualTranslation(const double theLowerLimitActualTranslation);
-  //! Returns True if optional field LowerLimitActualTranslation is defined
+
   Standard_EXPORT bool HasLowerLimitActualTranslation() const;
 
-  //! Returns field UpperLimitActualTranslation
   Standard_EXPORT double UpperLimitActualTranslation() const;
-  //! Sets field UpperLimitActualTranslation
+
   Standard_EXPORT void SetUpperLimitActualTranslation(const double theUpperLimitActualTranslation);
-  //! Returns True if optional field UpperLimitActualTranslation is defined
+
   Standard_EXPORT bool HasUpperLimitActualTranslation() const;
 
   DEFINE_STANDARD_RTTIEXT(StepKinematics_PrismaticPairWithRange, StepKinematics_PrismaticPair)
 
 private:
-  double myLowerLimitActualTranslation; //!< optional
-  double myUpperLimitActualTranslation; //!< optional
-  // clang-format off
-  bool defLowerLimitActualTranslation; //!< flag "is LowerLimitActualTranslation defined"
-  bool defUpperLimitActualTranslation; //!< flag "is UpperLimitActualTranslation defined"
-  // clang-format on
+  double myLowerLimitActualTranslation;
+  double myUpperLimitActualTranslation;
+
+  bool defLowerLimitActualTranslation;
+  bool defUpperLimitActualTranslation;
 };

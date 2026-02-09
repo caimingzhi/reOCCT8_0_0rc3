@@ -11,19 +11,14 @@
 #include <Standard_ErrorHandler.hpp>
 #include <BRepMesh_Delaun.hpp>
 
-//! Extends base meshing algo in order to enable possibility
-//! of addition of free vertices into the mesh.
 template <class RangeSplitter, class BaseAlgo>
 class BRepMesh_NodeInsertionMeshAlgo : public BaseAlgo
 {
 public:
-  //! Constructor.
   BRepMesh_NodeInsertionMeshAlgo() = default;
 
-  //! Destructor.
   ~BRepMesh_NodeInsertionMeshAlgo() override = default;
 
-  //! Performs processing of the given face.
   void Perform(const IMeshData::IFaceHandle& theDFace,
                const IMeshTools_Parameters&  theParameters,
                const Message_ProgressRange&  theRange) override
@@ -41,7 +36,6 @@ public:
 protected:
   typedef NCollection_Shared<NCollection_Sequence<const gp_Pnt2d*>> SequenceOfPnt2d;
 
-  //! Performs initialization of data structure using existing model data.
   bool initDataStructure() override
   {
     occ::handle<NCollection_IncAllocator> aTmpAlloc = new NCollection_IncAllocator;
@@ -96,8 +90,6 @@ protected:
     return BaseAlgo::initDataStructure();
   }
 
-  //! Adds the given 2d point to mesh data structure.
-  //! Returns index of node in the structure.
   int addNodeToStructure(const gp_Pnt2d&                thePoint,
                          const int                      theLocation3d,
                          const BRepMesh_DegreeOfFreedom theMovability,
@@ -109,20 +101,16 @@ protected:
                                         isForceAdd);
   }
 
-  //! Returns 2d point associated to the given vertex.
   gp_Pnt2d getNodePoint2d(const BRepMesh_Vertex& theVertex) const override
   {
     return myRangeSplitter.Scale(theVertex.Coord(), false);
   }
 
-  //! Returns range splitter.
   const RangeSplitter& getRangeSplitter() const { return myRangeSplitter; }
 
-  //! Returns classifier.
   const occ::handle<BRepMesh_Classifier>& getClassifier() const { return myClassifier; }
 
 private:
-  //! Creates collection of points representing discrete wire.
   occ::handle<SequenceOfPnt2d> collectWirePoints(
     const IMeshData::IWireHandle&                theDWire,
     const occ::handle<NCollection_IncAllocator>& theAllocator)
@@ -137,8 +125,6 @@ private:
       int aPointIt, aEndIndex, aInc;
       if (aPCurve->IsForward())
       {
-        // For an infinite cylinder (for example)
-        // aPCurve->ParametersNb() == 0
 
         aEndIndex = aPCurve->ParametersNb() - 1;
         aPointIt  = (std::min)(0, aEndIndex);
@@ -146,16 +132,12 @@ private:
       }
       else
       {
-        // For an infinite cylinder (for example)
-        // aPCurve->ParametersNb() == 0
 
         aPointIt  = aPCurve->ParametersNb() - 1;
         aEndIndex = (std::min)(0, aPointIt);
         aInc      = -1;
       }
 
-      // For an infinite cylinder (for example)
-      // this cycle will not be executed.
       for (; aPointIt != aEndIndex; aPointIt += aInc)
       {
         const gp_Pnt2d& aPnt2d = aPCurve->GetPoint(aPointIt);
@@ -167,8 +149,6 @@ private:
     return aWirePoints;
   }
 
-  //! Iterates over internal vertices of a face and
-  //! creates corresponding nodes in data structure.
   void insertInternalVertices()
   {
     TopExp_Explorer aExplorer(this->getDFace()->GetFace(), TopAbs_VERTEX, TopAbs_EDGE);
@@ -184,7 +164,6 @@ private:
     }
   }
 
-  //! Inserts the given vertex into mesh.
   void insertInternalVertex(const TopoDS_Vertex& theVertex)
   {
     try
@@ -192,7 +171,7 @@ private:
       OCC_CATCH_SIGNALS
 
       gp_Pnt2d aPnt2d = BRep_Tool::Parameters(theVertex, this->getDFace()->GetFace());
-      // check UV values for internal vertices
+
       if (myClassifier->Perform(aPnt2d) != TopAbs_IN)
         return;
 
@@ -210,39 +189,29 @@ private:
 
 #include <BRepMesh_GeomTool.hpp>
 
-//! Extends base Delaunay meshing algo in order to enable possibility
-//! of addition of free vertices and internal nodes into the mesh.
 template <class RangeSplitter, class BaseAlgo>
 class BRepMesh_DelaunayNodeInsertionMeshAlgo
     : public BRepMesh_NodeInsertionMeshAlgo<RangeSplitter, BaseAlgo>
 {
 private:
-  // Typedef for OCCT RTTI
   typedef BRepMesh_NodeInsertionMeshAlgo<RangeSplitter, BaseAlgo> InsertionBaseClass;
 
 public:
-  //! Constructor.
   BRepMesh_DelaunayNodeInsertionMeshAlgo()
       : myIsPreProcessSurfaceNodes(false)
   {
   }
 
-  //! Destructor.
   ~BRepMesh_DelaunayNodeInsertionMeshAlgo() override = default;
 
-  //! Returns PreProcessSurfaceNodes flag.
   bool IsPreProcessSurfaceNodes() const { return myIsPreProcessSurfaceNodes; }
 
-  //! Sets PreProcessSurfaceNodes flag.
-  //! If TRUE, registers surface nodes before generation of base mesh.
-  //! If FALSE, inserts surface nodes after generation of base mesh.
   void SetPreProcessSurfaceNodes(const bool isPreProcessSurfaceNodes)
   {
     myIsPreProcessSurfaceNodes = isPreProcessSurfaceNodes;
   }
 
 protected:
-  //! Performs initialization of data structure using existing model data.
   bool initDataStructure() override
   {
     if (!InsertionBaseClass::initDataStructure())
@@ -261,7 +230,6 @@ protected:
     return true;
   }
 
-  //! Returns size of cell to be used by acceleration circles grid structure.
   std::pair<int, int> getCellsCount(const int theVerticesNb) override
   {
     return BRepMesh_GeomTool::CellsCount(this->getDFace()->GetSurface(),
@@ -270,17 +238,14 @@ protected:
                                          &this->getRangeSplitter());
   }
 
-  //! Performs processing of generated mesh. Generates surface nodes and inserts them into
-  //! structure.
   void postProcessMesh(BRepMesh_Delaun& theMesher, const Message_ProgressRange& theRange) override
   {
     if (!theRange.More())
     {
       return;
     }
-    // clang-format off
-    InsertionBaseClass::postProcessMesh (theMesher, Message_ProgressRange()); // shouldn't be range passed here?
-    // clang-format on
+
+    InsertionBaseClass::postProcessMesh(theMesher, Message_ProgressRange());
 
     if (!myIsPreProcessSurfaceNodes)
     {
@@ -291,7 +256,6 @@ protected:
     }
   }
 
-  //! Inserts nodes into mesh.
   bool insertNodes(const Handle(IMeshData::ListOfPnt2d)& theNodes,
                    BRepMesh_Delaun&                      theMesher,
                    const Message_ProgressRange&          theRange)
@@ -322,7 +286,6 @@ protected:
   }
 
 private:
-  //! Registers surface nodes in data structure.
   bool registerSurfaceNodes(const Handle(IMeshData::ListOfPnt2d)& theNodes)
   {
     if (theNodes.IsNull() || theNodes->IsEmpty())
@@ -352,19 +315,15 @@ private:
 #include <BRepMesh_GeomTool.hpp>
 #include <GeomLib.hpp>
 
-//! Extends node insertion Delaunay meshing algo in order to control
-//! deflection of generated triangles. Splits triangles failing the check.
 template <class RangeSplitter, class BaseAlgo>
 class BRepMesh_DelaunayDeflectionControlMeshAlgo
     : public BRepMesh_DelaunayNodeInsertionMeshAlgo<RangeSplitter, BaseAlgo>
 {
 private:
-  // Typedef for OCCT RTTI
   typedef BRepMesh_DelaunayNodeInsertionMeshAlgo<RangeSplitter, BaseAlgo>
     DelaunayInsertionBaseClass;
 
 public:
-  //! Constructor.
   BRepMesh_DelaunayDeflectionControlMeshAlgo()
       : myMaxSqDeflection(-1.),
         mySqMinSize(-1.),
@@ -373,16 +332,13 @@ public:
   {
   }
 
-  //! Destructor.
   ~BRepMesh_DelaunayDeflectionControlMeshAlgo() override = default;
 
 protected:
-  //! Performs processing of generated mesh. Generates surface nodes and inserts them into
-  //! structure.
   void postProcessMesh(BRepMesh_Delaun& theMesher, const Message_ProgressRange& theRange) override
   {
     Message_ProgressScope aPS(theRange, "Post process mesh", 2);
-    // Insert surface nodes.
+
     DelaunayInsertionBaseClass::postProcessMesh(theMesher, aPS.Next());
     if (!aPS.More())
     {
@@ -400,8 +356,6 @@ protected:
     }
   }
 
-  //! Checks deviation of a mesh from geometrical surface.
-  //! Inserts additional nodes in case of huge deviation.
   virtual void optimizeMesh(BRepMesh_Delaun& theMesher, const Message_ProgressRange& theRange)
   {
     occ::handle<NCollection_IncAllocator> aTmpAlloc =
@@ -423,7 +377,7 @@ protected:
       {
         return;
       }
-      // Reset stop condition
+
       myMaxSqDeflection  = -1.;
       myIsAllDegenerated = true;
       myControlNodes->Clear();
@@ -432,7 +386,7 @@ protected:
       {
         break;
       }
-      // Iterate on current triangles
+
       IMeshData::IteratorOfMapOfInteger aTriangleIt(this->getStructure()->ElementsOfDomain());
       for (; aTriangleIt.More(); aTriangleIt.Next())
       {
@@ -453,7 +407,6 @@ protected:
   }
 
 private:
-  //! Contains geometrical data related to node of triangle.
   struct TriangleNodeInfo
   {
     TriangleNodeInfo()
@@ -466,7 +419,6 @@ private:
     bool   isFrontierLink;
   };
 
-  //! Functor computing deflection of a point from surface.
   class NormalDeviation
   {
   public:
@@ -492,7 +444,6 @@ private:
     const gp_Vec& myNormal;
   };
 
-  //! Functor computing deflection of a point on triangle link from surface.
   class LineDeviation
   {
   public:
@@ -517,7 +468,6 @@ private:
     const gp_Pnt& myPnt2;
   };
 
-  //! Returns nodes info of the given triangle.
   void getTriangleInfo(const BRepMesh_Triangle& theTriangle,
                        const int (&theNodesIndices)[3],
                        TriangleNodeInfo (&theInfo)[3]) const
@@ -533,8 +483,6 @@ private:
     }
   }
 
-  // Check geometry of the given triangle. If triangle does not suit specified deflection, inserts
-  // new point.
   void splitTriangleGeometry(const BRepMesh_Triangle& theTriangle)
   {
     if (theTriangle.Movability() != BRepMesh_Deleted)
@@ -560,8 +508,6 @@ private:
     }
   }
 
-  //! Updates array of links vectors.
-  //! @return False on degenerative triangle.
   bool computeTriangleGeometry(const TriangleNodeInfo (&theNodesInfo)[3],
                                gp_Vec (&theLinks)[3],
                                gp_Vec& theNormal)
@@ -580,8 +526,6 @@ private:
     return false;
   }
 
-  //! Updates array of links vectors.
-  //! @return False on degenerative triangle.
   bool checkTriangleForDegenerativityAndGetLinks(const TriangleNodeInfo (&theNodesInfo)[3],
                                                  gp_Vec (&theLinks)[3])
   {
@@ -598,8 +542,6 @@ private:
     return true;
   }
 
-  //! Checks area of triangle in parametric space for degenerativity.
-  //! @return False on degenerative triangle.
   bool checkTriangleArea2d(const TriangleNodeInfo (&theNodesInfo)[3])
   {
     const gp_Vec2d aLink2d1(theNodesInfo[0].Point2d, theNodesInfo[1].Point2d);
@@ -609,8 +551,6 @@ private:
     return (std::abs(aLink2d1 ^ aLink2d2) > MinimalArea2d);
   }
 
-  //! Computes normal using two link vectors.
-  //! @return True on success, False in case of normal of null magnitude.
   bool computeNormal(const gp_Vec& theLink1, const gp_Vec& theLink2, gp_Vec& theNormal)
   {
     const gp_Vec aNormal(theLink1 ^ theLink2);
@@ -623,11 +563,9 @@ private:
     return false;
   }
 
-  //! Computes deflection of midpoints of triangles links.
-  //! @return True if point fits specified deflection.
   void splitLinks(const TriangleNodeInfo (&theNodesInfo)[3], const int (&theNodesIndices)[3])
   {
-    // Check deflection at triangle links
+
     for (int i = 0; i < 3; ++i)
     {
       if (theNodesInfo[i].isFrontierLink)
@@ -636,7 +574,7 @@ private:
       }
 
       const int j = (i + 1) % 3;
-      // Check if this link was already processed
+
       int aFirstVertex, aLastVertex;
       if (theNodesIndices[i] < theNodesIndices[j])
       {
@@ -667,8 +605,6 @@ private:
     }
   }
 
-  //! Checks that two links produced as the result of a split of
-  //! the given link by the middle point fit MinSize requirement.
   bool rejectSplitLinksForMinSize(const TriangleNodeInfo& theNodeInfo1,
                                   const TriangleNodeInfo& theNodeInfo2,
                                   const gp_XY&            theMidPoint)
@@ -678,11 +614,9 @@ private:
             || (theNodeInfo2.Point - aPnt.XYZ()).SquareModulus() < mySqMinSize);
   }
 
-  //! Checks the given point (located between the given nodes)
-  //! for specified angular deviation.
   bool checkLinkEndsForAngularDeviation(const TriangleNodeInfo& theNodeInfo1,
                                         const TriangleNodeInfo& theNodeInfo2,
-                                        const gp_XY& /*theMidPoint*/)
+                                        const gp_XY&)
   {
     gp_Dir                           aNorm1, aNorm2;
     const occ::handle<Geom_Surface>& aSurf = this->getDFace()->GetSurface()->Surface().Surface();
@@ -700,7 +634,6 @@ private:
     return true;
   }
 
-  //! Returns 3d point corresponding to the given one in 2d space.
   gp_Pnt getPoint3d(const gp_XY& thePnt2d)
   {
     gp_Pnt aPnt;
@@ -708,9 +641,6 @@ private:
     return aPnt;
   }
 
-  //! Computes deflection of the given point and caches it for
-  //! insertion in case if it overflows deflection.
-  //! @return True if point has been cached for insertion.
   template <class DeflectionFunctor>
   bool usePoint(const gp_XY& thePnt2d, const DeflectionFunctor& theDeflectionFunctor)
   {
@@ -726,8 +656,6 @@ private:
     return false;
   }
 
-  //! Checks the given point for specified linear deflection.
-  //! Updates value of total mesh defleciton.
   bool checkDeflectionOfPointAndUpdateCache(const gp_XY&  thePnt2d,
                                             const gp_Pnt& thePnt3d,
                                             const double  theSqDeflection)
@@ -747,10 +675,6 @@ private:
     return rejectByMinSize(thePnt2d, thePnt3d);
   }
 
-  //! Checks distance between the given node and nodes of triangles
-  //! shot by it for MinSize criteria.
-  //! This check is expected to roughly estimate and prevent
-  //! generation of triangles with sides smaller than MinSize.
   bool rejectByMinSize(const gp_XY& thePnt2d, const gp_Pnt& thePnt3d)
   {
     IMeshData::MapOfInteger   aUsedNodes;

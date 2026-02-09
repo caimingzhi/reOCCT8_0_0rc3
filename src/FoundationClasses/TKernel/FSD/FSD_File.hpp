@@ -1,19 +1,5 @@
 #pragma once
 
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <Standard_Macro.hpp>
 
 #include <iostream>
@@ -29,31 +15,19 @@ typedef std::fstream FSD_FStream;
 class TCollection_AsciiString;
 class TCollection_ExtendedString;
 
-//! A general driver which defines as a file, the
-//! physical container for data to be stored or retrieved.
 class FSD_File : public Storage_BaseDriver
 {
 public:
   DEFINE_STANDARD_RTTIEXT(FSD_File, Storage_BaseDriver)
 
 public:
-  //! Constructs a driver defining as a file, the physical
-  //! container for data to be stored or retrieved.
-  //! Use the function Open to give the name of the driven file.
   Standard_EXPORT FSD_File();
 
-  //! Assigns as aName the name of the file to be
-  //! driven by this driver. aMode precises if the file is
-  //! opened in read or write mode.
-  //! The function returns Storage_VSOk if the file
-  //! is opened correctly, or any other value of the
-  //! Storage_Error enumeration which specifies the problem encountered.
   Standard_EXPORT Storage_Error Open(const TCollection_AsciiString& aName,
                                      const Storage_OpenMode         aMode) override;
 
   Standard_EXPORT bool IsEnd() override;
 
-  //! return position in the file. Return -1 upon error.
   Standard_EXPORT Storage_Position Tell() override;
 
   Standard_EXPORT static Storage_Error IsGoodFileType(const TCollection_AsciiString& aName);
@@ -216,11 +190,6 @@ public:
 
   Standard_EXPORT Storage_BaseDriver& GetShortReal(float& aValue) override;
 
-  //! Closes the file driven by this driver. This file was
-  //! opened by the last call to the function Open.
-  //! The function returns Storage_VSOk if the
-  //! closure is correctly done, or any other value of
-  //! the Storage_Error enumeration which specifies the problem encountered.
   Standard_EXPORT Storage_Error Close() override;
 
   Standard_EXPORT void Destroy();
@@ -230,22 +199,16 @@ public:
   Standard_EXPORT static const char* MagicNumber();
 
 protected:
-  //! read from the current position to the end of line.
   Standard_EXPORT virtual void ReadLine(TCollection_AsciiString& buffer);
 
-  //! read from the current position to the next white space or end of line.
   Standard_EXPORT virtual void ReadWord(TCollection_AsciiString& buffer);
 
-  //! read extended chars (unicode) from the current position to the end of line.
   Standard_EXPORT virtual void ReadExtendedLine(TCollection_ExtendedString& buffer);
 
-  //! write from the current position to the end of line.
   Standard_EXPORT virtual void WriteExtendedLine(const TCollection_ExtendedString& buffer);
 
-  //! read <rsize> character from the current position.
   Standard_EXPORT virtual void ReadChar(TCollection_AsciiString& buffer, const size_t rsize);
 
-  //! read from the first none space character position to the end of line.
   Standard_EXPORT virtual void ReadString(TCollection_AsciiString& buffer);
 
   Standard_EXPORT virtual void FlushEndOfLine();

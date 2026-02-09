@@ -18,41 +18,28 @@
 
 #include <cstdio>
 
-// MGE 28/07/98
 IGESGeom_ToolCircularArc::IGESGeom_ToolCircularArc() = default;
 
 void IGESGeom_ToolCircularArc::ReadOwnParams(const occ::handle<IGESGeom_CircularArc>& ent,
-                                             const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                             const occ::handle<IGESData_IGESReaderData>&,
                                              IGESData_ParamReader& PR) const
 {
-  // MGE 28/07/98
-  // Building of messages
-  //=====================================
+
   Message_Msg Msg76("XSTEP_76");
   Message_Msg Msg77("XSTEP_77");
   Message_Msg Msg78("XSTEP_78");
-  //=====================================
 
   double aZT;
   gp_XY  aCenter, aStart, anEnd;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  // MGE 28/07/98
   if (!PR.ReadReal(PR.Current(), aZT))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg75("XSTEP_75");
     PR.SendFail(Msg75);
   }
-  PR.ReadXY(PR.CurrentList(1, 2), Msg76, aCenter); // szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadXY(PR.CurrentList(1, 2), Msg77, aStart);  // szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadXY(PR.CurrentList(1, 2), Msg78, anEnd);   // szv#4:S4163:12Mar99 `st=` not needed
-
-  /*
-    st = PR.ReadReal(PR.Current(), "Shift above z-plane", aZT);
-    st = PR.ReadXY(PR.CurrentList(1, 2), "Center Of Arc", aCenter);
-    st = PR.ReadXY(PR.CurrentList(1, 2), "Start Point Of Arc", aStart);
-    st = PR.ReadXY(PR.CurrentList(1, 2), "End Point Of Arc", anEnd);
-  */
+  PR.ReadXY(PR.CurrentList(1, 2), Msg76, aCenter);
+  PR.ReadXY(PR.CurrentList(1, 2), Msg77, aStart);
+  PR.ReadXY(PR.CurrentList(1, 2), Msg78, anEnd);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(aZT, aCenter, aStart, anEnd);
@@ -70,14 +57,14 @@ void IGESGeom_ToolCircularArc::WriteOwnParams(const occ::handle<IGESGeom_Circula
   IW.Send(ent->EndPoint().Y());
 }
 
-void IGESGeom_ToolCircularArc::OwnShared(const occ::handle<IGESGeom_CircularArc>& /* ent */,
-                                         Interface_EntityIterator& /* iter */) const
+void IGESGeom_ToolCircularArc::OwnShared(const occ::handle<IGESGeom_CircularArc>&,
+                                         Interface_EntityIterator&) const
 {
 }
 
 void IGESGeom_ToolCircularArc::OwnCopy(const occ::handle<IGESGeom_CircularArc>& another,
                                        const occ::handle<IGESGeom_CircularArc>& ent,
-                                       Interface_CopyTool& /* TC */) const
+                                       Interface_CopyTool&) const
 {
   ent->Init(another->ZPlane(),
             another->Center().XY(),
@@ -86,41 +73,25 @@ void IGESGeom_ToolCircularArc::OwnCopy(const occ::handle<IGESGeom_CircularArc>& 
 }
 
 IGESData_DirChecker IGESGeom_ToolCircularArc::DirChecker(
-  const occ::handle<IGESGeom_CircularArc>& /* ent */) const
+  const occ::handle<IGESGeom_CircularArc>&) const
 {
   IGESData_DirChecker DC(100, 0);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
 }
 
-void IGESGeom_ToolCircularArc::OwnCheck(const occ::handle<IGESGeom_CircularArc>& /*ent*/,
+void IGESGeom_ToolCircularArc::OwnCheck(const occ::handle<IGESGeom_CircularArc>&,
                                         const Interface_ShareTool&,
-                                        occ::handle<Interface_Check>& /*ach*/) const
+                                        occ::handle<Interface_Check>&) const
 {
-  /*
-    //double eps  = 1.E-04;    // Test tolerance ?? //szv#4:S4163:12Mar99 not needed
-
-    double Rad1 = std::sqrt(Square(ent->StartPoint().X() - ent->Center().X()) +
-                  Square(ent->StartPoint().Y() - ent->Center().Y()));
-    double Rad2 = std::sqrt(Square(ent->EndPoint().X()   - ent->Center().X()) +
-                  Square(ent->EndPoint().Y()   - ent->Center().Y()));
-
-    double ratio = std::abs(Rad1 - Rad2) / (Rad1+Rad2);
-    if (ratio > eps) {
-      char mess[80];
-      Sprintf(mess,"Radius at Start & End Points, relative gap over %f",
-          Interface_MSG::Intervalled (ratio));
-      ach.AddFail(mess,"Radius at Start & End Points, relative gap over %f");
-    }
-  */
 }
 
 void IGESGeom_ToolCircularArc::OwnDump(const occ::handle<IGESGeom_CircularArc>& ent,
-                                       const IGESData_IGESDumper& /* dumper */,
+                                       const IGESData_IGESDumper&,
                                        Standard_OStream& S,
                                        const int         level) const
 {

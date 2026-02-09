@@ -11,7 +11,6 @@ class StepAP214_AutoDesignActualDateAssignment;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AutoDesignActualDateAssignment
 class RWStepAP214_RWAutoDesignActualDateAssignment
 {
 public:

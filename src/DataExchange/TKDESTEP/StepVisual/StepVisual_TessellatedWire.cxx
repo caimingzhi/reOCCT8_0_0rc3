@@ -1,17 +1,13 @@
-// Created on : Thu Mar 24 18:30:12 2022
+
 
 #include <StepVisual_TessellatedWire.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_TessellatedWire, StepVisual_TessellatedItem)
 
-//=================================================================================================
-
 StepVisual_TessellatedWire::StepVisual_TessellatedWire()
 {
   myHasGeometricModelLink = false;
 }
-
-//=================================================================================================
 
 void StepVisual_TessellatedWire::Init(
   const occ::handle<TCollection_HAsciiString>& theRepresentationItem_Name,
@@ -34,23 +30,17 @@ void StepVisual_TessellatedWire::Init(
   }
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<StepVisual_TessellatedEdgeOrVertex>> StepVisual_TessellatedWire::
   Items() const
 {
   return myItems;
 }
 
-//=================================================================================================
-
 void StepVisual_TessellatedWire::SetItems(
   const occ::handle<NCollection_HArray1<StepVisual_TessellatedEdgeOrVertex>>& theItems)
 {
   myItems = theItems;
 }
-
-//=================================================================================================
 
 int StepVisual_TessellatedWire::NbItems() const
 {
@@ -61,30 +51,22 @@ int StepVisual_TessellatedWire::NbItems() const
   return myItems->Length();
 }
 
-//=================================================================================================
-
 const StepVisual_TessellatedEdgeOrVertex& StepVisual_TessellatedWire::ItemsValue(
   const int theNum) const
 {
   return myItems->Value(theNum);
 }
 
-//=================================================================================================
-
 StepVisual_PathOrCompositeCurve StepVisual_TessellatedWire::GeometricModelLink() const
 {
   return myGeometricModelLink;
 }
-
-//=================================================================================================
 
 void StepVisual_TessellatedWire::SetGeometricModelLink(
   const StepVisual_PathOrCompositeCurve& theGeometricModelLink)
 {
   myGeometricModelLink = theGeometricModelLink;
 }
-
-//=================================================================================================
 
 bool StepVisual_TessellatedWire::HasGeometricModelLink() const
 {

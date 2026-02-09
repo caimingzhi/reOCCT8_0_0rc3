@@ -12,8 +12,6 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_DataMap.hpp>
 
-//=================================================================================================
-
 ShapeFix_FreeBounds::ShapeFix_FreeBounds()
     : myShared(false),
       mySewToler(0.0),
@@ -22,8 +20,6 @@ ShapeFix_FreeBounds::ShapeFix_FreeBounds()
       mySplitOpen(false)
 {
 }
-
-//=================================================================================================
 
 ShapeFix_FreeBounds::ShapeFix_FreeBounds(const TopoDS_Shape& shape,
                                          const double        sewtoler,
@@ -40,8 +36,6 @@ ShapeFix_FreeBounds::ShapeFix_FreeBounds(const TopoDS_Shape& shape,
   Perform();
 }
 
-//=================================================================================================
-
 ShapeFix_FreeBounds::ShapeFix_FreeBounds(const TopoDS_Shape& shape,
                                          const double        closetoler,
                                          const bool          splitclosed,
@@ -55,8 +49,6 @@ ShapeFix_FreeBounds::ShapeFix_FreeBounds(const TopoDS_Shape& shape,
   myShape = shape;
   Perform();
 }
-
-//=================================================================================================
 
 bool ShapeFix_FreeBounds::Perform()
 {

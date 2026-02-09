@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <CDF_FWOSDriver.hpp>
 #include <CDM_MetaData.hpp>
@@ -27,9 +16,7 @@ IMPLEMENT_STANDARD_RTTIEXT(CDF_FWOSDriver, CDF_MetaDataDriver)
 
 #ifdef _MSC_VER
   #include <tchar.h>
-#endif // _MSC_VER
-
-//=================================================================================================
+#endif
 
 static void PutSlash(TCollection_ExtendedString& anXSTRING)
 {
@@ -37,10 +24,8 @@ static void PutSlash(TCollection_ExtendedString& anXSTRING)
   anXSTRING += "\\";
 #else
   anXSTRING += "/";
-#endif // _WIN32
+#endif
 }
-
-//=================================================================================================
 
 CDF_FWOSDriver::CDF_FWOSDriver(
   NCollection_DataMap<TCollection_ExtendedString, occ::handle<CDM_MetaData>>& theLookUpTable)
@@ -48,11 +33,9 @@ CDF_FWOSDriver::CDF_FWOSDriver(
 {
 }
 
-//=================================================================================================
-
 bool CDF_FWOSDriver::Find(const TCollection_ExtendedString& aFolder,
                           const TCollection_ExtendedString& aName,
-                          const TCollection_ExtendedString& /*aVersion*/)
+                          const TCollection_ExtendedString&)
 {
 
   OSD_Path      thePath = UTL::Path(aFolder);
@@ -69,11 +52,9 @@ bool CDF_FWOSDriver::Find(const TCollection_ExtendedString& aFolder,
   return false;
 }
 
-//=================================================================================================
-
 bool CDF_FWOSDriver::HasReadPermission(const TCollection_ExtendedString& aFolder,
                                        const TCollection_ExtendedString& aName,
-                                       const TCollection_ExtendedString& /*aVersion*/)
+                                       const TCollection_ExtendedString&)
 {
   OSD_SingleProtection theProtection =
     OSD_File(UTL::Path(Concatenate(aFolder, aName))).Protection().User();
@@ -95,17 +76,13 @@ bool CDF_FWOSDriver::HasReadPermission(const TCollection_ExtendedString& aFolder
   }
 }
 
-//=================================================================================================
-
 occ::handle<CDM_MetaData> CDF_FWOSDriver::MetaData(const TCollection_ExtendedString& aFolder,
                                                    const TCollection_ExtendedString& aName,
-                                                   const TCollection_ExtendedString& /*aVersion*/)
+                                                   const TCollection_ExtendedString&)
 {
   TCollection_ExtendedString p = Concatenate(aFolder, aName);
   return CDM_MetaData::LookUp(*myLookUpTable, aFolder, aName, p, p, UTL::IsReadOnly(p));
 }
-
-//=================================================================================================
 
 occ::handle<CDM_MetaData> CDF_FWOSDriver::CreateMetaData(
   const occ::handle<CDM_Document>&  aDocument,
@@ -119,8 +96,6 @@ occ::handle<CDM_MetaData> CDF_FWOSDriver::CreateMetaData(
                               UTL::IsReadOnly(aFileName));
 }
 
-//=================================================================================================
-
 TCollection_ExtendedString CDF_FWOSDriver::BuildFileName(const occ::handle<CDM_Document>& aDocument)
 {
 
@@ -130,8 +105,6 @@ TCollection_ExtendedString CDF_FWOSDriver::BuildFileName(const occ::handle<CDM_D
   return retstr;
 }
 
-//=================================================================================================
-
 bool CDF_FWOSDriver::FindFolder(const TCollection_ExtendedString& aFolder)
 {
 
@@ -139,8 +112,6 @@ bool CDF_FWOSDriver::FindFolder(const TCollection_ExtendedString& aFolder)
   OSD_Directory theDirectory(thePath);
   return theDirectory.Exists();
 }
-
-//=================================================================================================
 
 TCollection_ExtendedString CDF_FWOSDriver::Concatenate(const TCollection_ExtendedString& aFolder,
                                                        const TCollection_ExtendedString& aName)
@@ -150,8 +121,6 @@ TCollection_ExtendedString CDF_FWOSDriver::Concatenate(const TCollection_Extende
   ff += aName;
   return ff;
 }
-
-//=================================================================================================
 
 TCollection_ExtendedString CDF_FWOSDriver::DefaultFolder()
 {
@@ -183,8 +152,6 @@ TCollection_ExtendedString CDF_FWOSDriver::DefaultFolder()
   return theDefaultFolder;
 }
 
-//=================================================================================================
-
 TCollection_ExtendedString CDF_FWOSDriver::SetName(const occ::handle<CDM_Document>&  aDocument,
                                                    const TCollection_ExtendedString& aName)
 {
@@ -192,8 +159,7 @@ TCollection_ExtendedString CDF_FWOSDriver::SetName(const occ::handle<CDM_Documen
   TCollection_ExtendedString xn(aName), n(aName);
 
 #ifdef _WIN32
-  // windows is not case sensitive
-  // make the extension lower case
+
   for (int i = 1; i <= xn.Length(); i++)
   {
     char16_t echar = xn.Value(i);
@@ -207,8 +173,7 @@ TCollection_ExtendedString CDF_FWOSDriver::SetName(const occ::handle<CDM_Documen
   if (e.Length() > 0)
   {
 #ifdef _WIN32
-    // windows is not case sensitive
-    // make the extension lower case
+
     for (int i = 1; i <= xe.Length(); i++)
     {
       char16_t echar = xe.Value(i);

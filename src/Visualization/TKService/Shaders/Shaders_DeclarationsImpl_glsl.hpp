@@ -137,5 +137,3 @@ static const char Shaders_DeclarationsImpl_glsl[] =
   "float occTextureTrsf_RotationSin(void) { return occTexTrsf2d[1].x; }\n"
   "float occTextureTrsf_RotationCos(void) { return occTexTrsf2d[1].y; }\n"
   "//! @endfile DeclarationsImpl.glsl\n";
-
-// clang-format on

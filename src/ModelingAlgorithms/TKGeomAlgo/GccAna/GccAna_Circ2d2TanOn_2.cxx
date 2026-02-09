@@ -29,7 +29,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
       pararg2(1, 2),
       parcen3(1, 2)
 {
-  // initialisations
+
   TheSame1.Init(0);
   TheSame2.Init(0);
   WellDone = false;
@@ -45,7 +45,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
   gp_Dir2d dirx(gp_Dir2d::D::X);
   double   Tol = std::abs(Tolerance);
 
-  // calculation of bisectrices of L1 and L2
   gp_Lin2d          L1(Qualified1.Qualified());
   gp_Lin2d          L2(Qualified2.Qualified());
   gp_Pnt2d          originL1(L1.Location());
@@ -57,8 +56,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
 
     if (Bis.NbSolutions() == 1 || Bis.NbSolutions() == 2)
     {
-      // if 1 bisectrice, L1 and L2 are parallel
-      // if 2 bisectrices, L1 and L2 are intersected
 
       for (int k = 1; k <= Bis.NbSolutions(); k++)
       {
@@ -66,11 +63,10 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
         if (Intp.IsDone())
         {
           WellDone = true;
-          // for degenerated cases, no acceptable solution
-          // (OnLine and bisectrice strictly parallel or not)
+
           if (!Intp.IdenticalElements() && !Intp.ParallelElements() && !Intp.IsEmpty())
           {
-            // at maximum 1 point of intersection !
+
             for (int l = 1; l <= Intp.NbPoints(); l++)
             {
               gp_Pnt2d pt(Intp.Point(l).Value());
@@ -78,7 +74,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
               double   Radius = L1.Distance(pt);
               if (!L1.Contains(pt, Tol) && Radius < 1.0 / Tol && NbrSol < 2)
               {
-                // acceptable solution : the radius is correct
+
                 NbrSol++;
                 cirsol(NbrSol) = gp_Circ2d(axe, Radius);
               }
@@ -89,8 +85,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
     }
   }
 
-  // parce following the qualifiers NbrSol acceptable solutions
-
   for (int i = 1; i <= NbrSol; i++)
   {
 
@@ -98,7 +92,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
     double   Radius = cirsol(i).Radius();
     bool     ok     = false;
 
-    // solution Outside or Enclosed / L1
     gp_Dir2d dc1(originL1.XY() - pbid.XY());
     double   sign1 = dc1.Dot(gp_Dir2d(-L1.Direction().Y(), L1.Direction().X()));
     if (sign1 > 0.0)
@@ -106,7 +99,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
     else
       ok = (Qualified1.IsUnqualified() || Qualified1.IsEnclosed());
 
-    // solution Outside or Enclosed / L2
     gp_Dir2d dc2(originL2.XY() - pbid.XY());
     double   sign2 = dc2.Dot(gp_Dir2d(-L2.Direction().Y(), L2.Direction().X()));
     if (sign2 > 0.0)
@@ -116,7 +108,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
 
     if (ok)
     {
-      // solution to be preserved
+
       dc1          = gp_Dir2d(sign1 * gp_XY(-L1.Direction().Y(), L1.Direction().X()));
       pnttg1sol(i) = gp_Pnt2d(pbid.XY() + Radius * dc1.XY());
       if (sign1 > 0.0)
@@ -138,7 +130,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
     }
     else
     {
-      // solution to be rejected
+
       if (i == NbrSol)
         NbrSol--;
       else

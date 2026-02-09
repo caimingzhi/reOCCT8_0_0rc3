@@ -11,17 +11,13 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_DataSource, Standard_Transient)
 
-//=================================================================================================
-
 bool MeshVS_DataSource::Get3DGeom(
-  const int /*ID*/,
-  int& /*NbNodes*/,
-  occ::handle<NCollection_HArray1<NCollection_Sequence<int>>>& /*Data*/) const
+  const int,
+  int&,
+  occ::handle<NCollection_HArray1<NCollection_Sequence<int>>>&) const
 {
   return false;
 }
-
-//=================================================================================================
 
 bool MeshVS_DataSource::GetNormal(const int Id,
                                   const int Max,
@@ -71,18 +67,10 @@ bool MeshVS_DataSource::GetNormal(const int Id,
   return res;
 }
 
-//=================================================================================================
-
-bool MeshVS_DataSource::GetNodeNormal(const int /*ranknode*/,
-                                      const int /*Id*/,
-                                      double& /*nx*/,
-                                      double& /*ny*/,
-                                      double& /*nz*/) const
+bool MeshVS_DataSource::GetNodeNormal(const int, const int, double&, double&, double&) const
 {
   return false;
 }
-
-//=================================================================================================
 
 bool MeshVS_DataSource::GetNormalsByElement(const int                                 Id,
                                             const bool                                IsNodal,
@@ -108,7 +96,7 @@ bool MeshVS_DataSource::GetNormalsByElement(const int                           
   {
     if (!Get3DGeom(Id, NbNodes, aTopo))
       return res;
-    // calculate number of normals for faces of volume
+
     aNbNormals = aTopo->Upper() - aTopo->Lower() + 1;
   }
 
@@ -116,7 +104,7 @@ bool MeshVS_DataSource::GetNormalsByElement(const int                           
     new NCollection_HArray1<double>(1, 3 * aNbNormals);
 
   bool allNormals = (Type == MeshVS_ET_Face && IsNodal);
-  // Try returning nodal normals if possible
+
   for (int k = 1; k <= NbNodes && allNormals; k++)
     allNormals = GetNodeNormal(k,
                                Id,
@@ -124,12 +112,11 @@ bool MeshVS_DataSource::GetNormalsByElement(const int                           
                                aNormals->ChangeValue(3 * k - 1),
                                aNormals->ChangeValue(3 * k));
 
-  // Nodal normals not available or not needed
   if (!allNormals)
   {
     switch (Type)
     {
-      // Compute a face normal and duplicate it for all element`s nodes
+
       case MeshVS_ET_Face:
         res = GetNormal(Id,
                         MaxNodes,
@@ -147,7 +134,6 @@ bool MeshVS_DataSource::GetNormalsByElement(const int                           
         }
         break;
 
-      // Compute normals for each of volum`s faces - not for each node!
       case MeshVS_ET_Volume:
       {
         gp_Vec norm;
@@ -181,8 +167,8 @@ bool MeshVS_DataSource::GetNormalsByElement(const int                           
 
       default:
         return res;
-    } // switch ( Type )
-  } // if ( !allNormals )
+    }
+  }
 
   if (res || allNormals)
     Normals = aNormals;
@@ -190,87 +176,69 @@ bool MeshVS_DataSource::GetNormalsByElement(const int                           
   return (res || allNormals);
 }
 
-//=================================================================================================
+void MeshVS_DataSource::GetAllGroups(TColStd_PackedMapOfInteger&) const {}
 
-void MeshVS_DataSource::GetAllGroups(TColStd_PackedMapOfInteger& /*Ids*/) const {}
-
-//=================================================================================================
-
-bool MeshVS_DataSource::GetGroup(const int /*Id*/,
+bool MeshVS_DataSource::GetGroup(const int,
                                  MeshVS_EntityType& Type,
-                                 TColStd_PackedMapOfInteger& /*Ids*/) const
+                                 TColStd_PackedMapOfInteger&) const
 {
   Type = MeshVS_ET_NONE;
   return false;
 }
 
-//=================================================================================================
-
-void* MeshVS_DataSource::GetGroupAddr(const int /*ID*/) const
+void* MeshVS_DataSource::GetGroupAddr(const int) const
 {
   return nullptr;
 }
-
-//=================================================================================================
 
 bool MeshVS_DataSource::IsAdvancedSelectionEnabled() const
 {
   return false;
 }
 
-//=================================================================================================
-
-bool MeshVS_DataSource::GetDetectedEntities(const occ::handle<MeshVS_Mesh>& /*theMesh*/,
-                                            const double /*X*/,
-                                            const double /*Y*/,
-                                            const double /*aTol*/,
-                                            occ::handle<TColStd_HPackedMapOfInteger>& /*Nodes*/,
-                                            occ::handle<TColStd_HPackedMapOfInteger>& /*Elements*/,
-                                            double& /*DMin*/)
+bool MeshVS_DataSource::GetDetectedEntities(const occ::handle<MeshVS_Mesh>&,
+                                            const double,
+                                            const double,
+                                            const double,
+                                            occ::handle<TColStd_HPackedMapOfInteger>&,
+                                            occ::handle<TColStd_HPackedMapOfInteger>&,
+                                            double&)
 {
   return false;
 }
 
-//=================================================================================================
-
-bool MeshVS_DataSource::GetDetectedEntities(const occ::handle<MeshVS_Mesh>& /*theMesh*/,
-                                            const double /*XMin*/,
-                                            const double /*YMin*/,
-                                            const double /*XMax*/,
-                                            const double /*YMax*/,
-                                            const double /*aTol*/,
-                                            occ::handle<TColStd_HPackedMapOfInteger>& /*Nodes*/,
-                                            occ::handle<TColStd_HPackedMapOfInteger>& /*Elements*/)
+bool MeshVS_DataSource::GetDetectedEntities(const occ::handle<MeshVS_Mesh>&,
+                                            const double,
+                                            const double,
+                                            const double,
+                                            const double,
+                                            const double,
+                                            occ::handle<TColStd_HPackedMapOfInteger>&,
+                                            occ::handle<TColStd_HPackedMapOfInteger>&)
 {
   return false;
 }
 
-//=================================================================================================
-
-bool MeshVS_DataSource::GetDetectedEntities(const occ::handle<MeshVS_Mesh>& /*theMesh*/,
-                                            const NCollection_Array1<gp_Pnt2d>& /*Polyline*/,
-                                            const Bnd_Box2d& /*aBox*/,
-                                            const double /*aTol*/,
-                                            occ::handle<TColStd_HPackedMapOfInteger>& /*Nodes*/,
-                                            occ::handle<TColStd_HPackedMapOfInteger>& /*Elements*/)
+bool MeshVS_DataSource::GetDetectedEntities(const occ::handle<MeshVS_Mesh>&,
+                                            const NCollection_Array1<gp_Pnt2d>&,
+                                            const Bnd_Box2d&,
+                                            const double,
+                                            occ::handle<TColStd_HPackedMapOfInteger>&,
+                                            occ::handle<TColStd_HPackedMapOfInteger>&)
 {
   return false;
 }
 
-//=================================================================================================
-
-bool MeshVS_DataSource::GetDetectedEntities(const occ::handle<MeshVS_Mesh>& /*theMesh*/,
-                                            occ::handle<TColStd_HPackedMapOfInteger>& /*Nodes*/,
-                                            occ::handle<TColStd_HPackedMapOfInteger>& /*Elements*/)
+bool MeshVS_DataSource::GetDetectedEntities(const occ::handle<MeshVS_Mesh>&,
+                                            occ::handle<TColStd_HPackedMapOfInteger>&,
+                                            occ::handle<TColStd_HPackedMapOfInteger>&)
 {
   return false;
 }
-
-//=================================================================================================
 
 Bnd_Box MeshVS_DataSource::GetBoundingBox() const
 {
-  // Compute the 3D bounding box for mesh
+
   Bnd_Box                           aBox;
   const TColStd_PackedMapOfInteger& aNodes = GetAllNodes();
   if (aNodes.Extent())

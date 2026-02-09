@@ -8,7 +8,6 @@ enum
   MeshVS_DMF_Shading   = 0x0002,
   MeshVS_DMF_Shrink    = 0x0003,
   MeshVS_DMF_OCCMask   = (MeshVS_DMF_WireFrame | MeshVS_DMF_Shading | MeshVS_DMF_Shrink),
-  // the mask which helps pick out CasCade display mode
 
   MeshVS_DMF_VectorDataPrs         = 0x0004,
   MeshVS_DMF_NodalColorDataPrs     = 0x0008,

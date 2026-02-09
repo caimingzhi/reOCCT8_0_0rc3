@@ -18,11 +18,8 @@ void IGESSolid_ToolSolidInstance::ReadOwnParams(const occ::handle<IGESSolid_Soli
                                                 IGESData_ParamReader& PR) const
 {
   occ::handle<IGESData_IGESEntity> tempEntity;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  // clang-format off
-  PR.ReadEntity(IR, PR.Current(), "Solid Entity", tempEntity); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadEntity(IR, PR.Current(), "Solid Entity", tempEntity);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempEntity);
@@ -49,7 +46,7 @@ void IGESSolid_ToolSolidInstance::OwnCopy(const occ::handle<IGESSolid_SolidInsta
 }
 
 IGESData_DirChecker IGESSolid_ToolSolidInstance::DirChecker(
-  const occ::handle<IGESSolid_SolidInstance>& /*ent*/) const
+  const occ::handle<IGESSolid_SolidInstance>&) const
 {
   IGESData_DirChecker DC(430, 0, 1);
 
@@ -61,9 +58,9 @@ IGESData_DirChecker IGESSolid_ToolSolidInstance::DirChecker(
   return DC;
 }
 
-void IGESSolid_ToolSolidInstance::OwnCheck(const occ::handle<IGESSolid_SolidInstance>& /*ent*/,
+void IGESSolid_ToolSolidInstance::OwnCheck(const occ::handle<IGESSolid_SolidInstance>&,
                                            const Interface_ShareTool&,
-                                           occ::handle<Interface_Check>& /*ach*/) const
+                                           occ::handle<Interface_Check>&) const
 {
 }
 

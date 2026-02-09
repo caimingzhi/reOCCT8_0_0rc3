@@ -12,21 +12,6 @@
 
 #include <cmath>
 
-//! Template class for computing extremal distance function between a point and a curve.
-//! Searches for a parameter value u such that dist(P, C(u)) passes through an extremum.
-//! Inherits from math_FunctionWithDerivative and is used by math_FunctionRoot and
-//! math_FunctionRoots algorithms.
-//!
-//! If D1c and D2c are the first and second derivatives:
-//! F(u) = (C(u)-P).D1c(u) / ||D1c||
-//! DF(u) = ||D1c|| + (C(u)-P).D2c(u)/||D1c|| - F(u)*D2c.D1c/||D1c||^2
-//!
-//! @tparam TheCurve    Curve type (e.g., Adaptor3d_Curve, Adaptor2d_Curve2d)
-//! @tparam TheCurveTool Tool for curve operations
-//! @tparam ThePOnC     Point on curve type
-//! @tparam ThePoint    Point type (e.g., gp_Pnt, gp_Pnt2d)
-//! @tparam TheVector   Vector type (e.g., gp_Vec, gp_Vec2d)
-//! @tparam TheSeqPOnC  Sequence of points on curve type
 template <typename TheCurve,
           typename TheCurveTool,
           typename ThePOnC,
@@ -38,7 +23,6 @@ class Extrema_GFuncExtPC : public math_FunctionWithDerivative
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Default constructor.
   Extrema_GFuncExtPC()
       : myC(nullptr),
         myU(0.0),
@@ -53,9 +37,6 @@ public:
   {
   }
 
-  //! Constructor with point and curve initialization.
-  //! @param theP Point to compute distance from
-  //! @param theC Curve to compute distance to
   Extrema_GFuncExtPC(const ThePoint& theP, const TheCurve& theC)
       : myP(theP),
         myC(const_cast<TheCurve*>(&theC)),
@@ -83,8 +64,6 @@ public:
     }
   }
 
-  //! Sets the curve field.
-  //! @param theC Curve to set
   void Initialize(const TheCurve& theC)
   {
     myC     = const_cast<TheCurve*>(&theC);
@@ -111,8 +90,6 @@ public:
     }
   }
 
-  //! Sets the point field.
-  //! @param theP Point to set
   void SetPoint(const ThePoint& theP)
   {
     myP     = theP;
@@ -122,10 +99,6 @@ public:
     myIsMin.Clear();
   }
 
-  //! Calculation of F(u).
-  //! @param theU Parameter value
-  //! @param theF Output function value
-  //! @return True if computation succeeded
   bool Value(const double theU, double& theF) override
   {
     if (!myPinit || !myCinit)
@@ -147,7 +120,7 @@ public:
 
     if (myMaxDerivOrder != 0)
     {
-      if (Ndu <= myTol) // Singular case
+      if (Ndu <= myTol)
       {
         const double DivisionFactor = 1.e-3;
         double       du;
@@ -157,9 +130,8 @@ public:
           du = myUsupremum - myUinfium;
 
         const double aDelta = std::max(du * DivisionFactor, MinStep);
-        // Derivative is approximated by Taylor-series
 
-        int       n = 1; // Derivative order
+        int       n = 1;
         TheVector V;
         bool      IsDeriveFound;
 
@@ -193,7 +165,7 @@ public:
         }
         else
         {
-          // Derivative is approximated by three points
+
           ThePoint Ptemp;
           ThePoint P1, P2, P3;
           bool     IsParameterGrown;
@@ -226,7 +198,7 @@ public:
 
     if (Ndu <= MinTol)
     {
-      // Warning: 1st derivative is equal to zero!
+
       return false;
     }
 
@@ -235,10 +207,6 @@ public:
     return true;
   }
 
-  //! Calculation of F'(u).
-  //! @param theU Parameter value
-  //! @param theDF Output derivative value
-  //! @return True if computation succeeded
   bool Derivative(const double theU, double& theDF) override
   {
     if (!myPinit || !myCinit)
@@ -249,11 +217,6 @@ public:
     return Values(theU, F, theDF);
   }
 
-  //! Calculation of F(u) and F'(u).
-  //! @param theU Parameter value
-  //! @param theF Output function value
-  //! @param theDF Output derivative value
-  //! @return True if computation succeeded
   bool Values(const double theU, double& theF, double& theDF) override
   {
     if (!myPinit || !myCinit)
@@ -277,9 +240,9 @@ public:
     TheCurveTool::D2(*myC, myU, myPc, D1c, D2c);
 
     double Ndu = D1c.Magnitude();
-    if (Ndu <= myTol) // Singular case
+    if (Ndu <= myTol)
     {
-      // Derivative is approximated by three points
+
       const double DivisionFactor = 0.01;
       double       du;
       if ((myUsupremum >= RealLast()) || (myUinfium <= RealFirst()))
@@ -335,8 +298,6 @@ public:
     return true;
   }
 
-  //! Save the found extremum.
-  //! @return State number
   int GetStateNumber() override
   {
     if (!myPinit || !myCinit)
@@ -345,7 +306,6 @@ public:
     }
     mySqDist.Append(myPc.SquareDistance(myP));
 
-    // It is necessary to always compute myD1f.
     myD1Init = true;
     double FF, DD;
     Values(myU, FF, DD);
@@ -361,11 +321,8 @@ public:
     return 0;
   }
 
-  //! Return the number of found extrema.
   int NbExt() const { return mySqDist.Length(); }
 
-  //! Returns the Nth square distance.
-  //! @param theN Index of extremum
   double SquareDistance(const int theN) const
   {
     if (!myPinit || !myCinit)
@@ -375,8 +332,6 @@ public:
     return mySqDist.Value(theN);
   }
 
-  //! Shows if the Nth distance is a minimum.
-  //! @param theN Index of extremum
   bool IsMin(const int theN) const
   {
     if (!myPinit || !myCinit)
@@ -386,8 +341,6 @@ public:
     return (myIsMin.Value(theN) == 1);
   }
 
-  //! Returns the Nth extremum point.
-  //! @param theN Index of extremum
   const ThePOnC& Point(const int theN) const
   {
     if (!myPinit || !myCinit)
@@ -397,17 +350,12 @@ public:
     return myPoint.Value(theN);
   }
 
-  //! Determines boundaries of subinterval for root finding.
-  //! @param theUfirst First parameter bound
-  //! @param theUlast Last parameter bound
   void SubIntervalInitialize(const double theUfirst, const double theUlast)
   {
     myUinfium   = theUfirst;
     myUsupremum = theUlast;
   }
 
-  //! Computes a tolerance value. If 1st derivative of curve |D1| < Tol,
-  //! it is considered D1=0.
   double SearchOfTolerance()
   {
     const int    NPoint = 10;

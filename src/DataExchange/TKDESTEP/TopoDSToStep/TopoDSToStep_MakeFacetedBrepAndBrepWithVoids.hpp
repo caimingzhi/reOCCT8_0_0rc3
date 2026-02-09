@@ -12,11 +12,6 @@ class StepVisual_TessellatedItem;
 class TopoDS_Solid;
 class Transfer_FinderProcess;
 
-//! This class implements the mapping between classes
-//! Solid from TopoDS and FacetedBrepAndBrepWithVoids from
-//! StepShape. All the topology and geometry comprised
-//! into the shell or the solid are taken into account and
-//! translated.
 class TopoDSToStep_MakeFacetedBrepAndBrepWithVoids : public TopoDSToStep_Root
 {
 public:

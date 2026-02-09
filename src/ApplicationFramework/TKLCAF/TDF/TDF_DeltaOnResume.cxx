@@ -7,25 +7,19 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_DeltaOnResume, TDF_AttributeDelta)
 
-//=================================================================================================
-
 TDF_DeltaOnResume::TDF_DeltaOnResume(const occ::handle<TDF_Attribute>& anAtt)
     : TDF_AttributeDelta(anAtt)
 {
 }
 
-//=================================================================================================
-
 void TDF_DeltaOnResume::Apply()
 {
-  // Undo = Forget.
+
   Label().ForgetAttribute(Attribute());
 #ifdef OCCT_DEBUG
   std::cout << "Forget attribute" << std::endl;
 #endif
 }
-
-//=================================================================================================
 
 void TDF_DeltaOnResume::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

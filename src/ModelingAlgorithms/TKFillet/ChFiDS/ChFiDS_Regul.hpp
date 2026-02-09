@@ -6,7 +6,6 @@
 
 #include <Standard_Boolean.hpp>
 
-//! Storage of a curve and its 2 faces or surfaces of support.
 class ChFiDS_Regul
 {
 public:

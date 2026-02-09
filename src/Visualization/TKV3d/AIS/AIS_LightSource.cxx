@@ -19,15 +19,11 @@
 IMPLEMENT_STANDARD_RTTIEXT(AIS_LightSource, AIS_InteractiveObject)
 IMPLEMENT_STANDARD_RTTIEXT(AIS_LightSourceOwner, SelectMgr_EntityOwner)
 
-//=================================================================================================
-
 AIS_LightSourceOwner::AIS_LightSourceOwner(const occ::handle<AIS_LightSource>& theObject,
                                            int                                 thePriority)
     : SelectMgr_EntityOwner((const occ::handle<SelectMgr_SelectableObject>&)theObject, thePriority)
 {
 }
-
-//=================================================================================================
 
 bool AIS_LightSourceOwner::HandleMouseClick(const NCollection_Vec2<int>&,
                                             Aspect_VKeyMouse theKey,
@@ -44,8 +40,6 @@ bool AIS_LightSourceOwner::HandleMouseClick(const NCollection_Vec2<int>&,
   }
   return false;
 }
-
-//=================================================================================================
 
 void AIS_LightSourceOwner::HilightWithColor(const occ::handle<PrsMgr_PresentationManager>& thePM,
                                             const occ::handle<Prs3d_Drawer>&               theStyle,
@@ -132,8 +126,6 @@ void AIS_LightSourceOwner::HilightWithColor(const occ::handle<PrsMgr_Presentatio
   }
 }
 
-//=================================================================================================
-
 bool AIS_LightSourceOwner::IsForcedHilight() const
 {
   occ::handle<AIS_LightSource> aLightSource = occ::down_cast<AIS_LightSource>(mySelectable);
@@ -147,8 +139,6 @@ bool AIS_LightSourceOwner::IsForcedHilight() const
   }
   return false;
 }
-
-//=================================================================================================
 
 AIS_LightSource::AIS_LightSource(const occ::handle<Graphic3d_CLight>& theLight)
     : myLightSource(theLight),
@@ -217,8 +207,6 @@ AIS_LightSource::AIS_LightSource(const occ::handle<Graphic3d_CLight>& theLight)
   }
 }
 
-//=================================================================================================
-
 bool AIS_LightSource::ProcessDragging(const occ::handle<AIS_InteractiveContext>& theCtx,
                                       const occ::handle<V3d_View>&               theView,
                                       const occ::handle<SelectMgr_EntityOwner>&  theOwner,
@@ -279,8 +267,6 @@ bool AIS_LightSource::ProcessDragging(const occ::handle<AIS_InteractiveContext>&
   return false;
 }
 
-//=================================================================================================
-
 void AIS_LightSource::updateLightAspects()
 {
   const Quantity_Color aBaseColor = myLightSource->Color();
@@ -314,8 +300,6 @@ void AIS_LightSource::updateLightAspects()
   }
   SynchronizeAspects();
 }
-
-//=================================================================================================
 
 void AIS_LightSource::updateLightTransformPersistence()
 {
@@ -404,8 +388,6 @@ void AIS_LightSource::updateLightTransformPersistence()
   SetTransformPersistence(aTrsfPers);
 }
 
-//=================================================================================================
-
 void AIS_LightSource::updateLightLocalTransformation()
 {
   myLocalTransformation.Nullify();
@@ -455,8 +437,6 @@ void AIS_LightSource::updateLightLocalTransformation()
   UpdateTransformation();
 }
 
-//=================================================================================================
-
 void AIS_LightSource::setLocalTransformation(const occ::handle<TopLoc_Datum3D>& theTrsf)
 {
   const gp_Trsf aTrsf = !theTrsf.IsNull() ? theTrsf->Transformation() : gp_Trsf();
@@ -500,8 +480,6 @@ void AIS_LightSource::setLocalTransformation(const occ::handle<TopLoc_Datum3D>& 
   updateLightTransformPersistence();
 }
 
-//=================================================================================================
-
 void AIS_LightSource::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                               const occ::handle<Prs3d_Presentation>& thePrs,
                               const int                              theMode)
@@ -543,8 +521,6 @@ void AIS_LightSource::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     Prs3d_Text::Draw(thePrs->NewGroup(), myDrawer->TextAspect(), aName, gp::Origin());
   }
 }
-
-//=================================================================================================
 
 void AIS_LightSource::computeAmbient(const occ::handle<Prs3d_Presentation>& thePrs,
                                      const int                              theMode)
@@ -619,15 +595,12 @@ void AIS_LightSource::computeAmbient(const occ::handle<Prs3d_Presentation>& theP
   }
 }
 
-//=================================================================================================
-
 void AIS_LightSource::computeDirectional(const occ::handle<Prs3d_Presentation>& thePrs,
                                          const int                              theMode)
 {
   const double aDistance = mySize * 0.5;
   const double aStep     = aDistance * 0.5;
 
-  // light source direction is set to local transformation
   const gp_Dir aLightDir = -gp::DZ();
   const gp_XYZ aLightPos = -aStep * aLightDir.XYZ();
 
@@ -749,12 +722,10 @@ void AIS_LightSource::computeDirectional(const occ::handle<Prs3d_Presentation>& 
   }
 }
 
-//=================================================================================================
-
 void AIS_LightSource::computePositional(const occ::handle<Prs3d_Presentation>& thePrs,
                                         const int                              theMode)
 {
-  // light source position is set to local transformation
+
   const gp_XYZ aLightPos = gp::Origin().XYZ();
   const double aRadius = (myIsZoomable && myLightSource->HasRange()) ? myLightSource->Range() : 0.0;
   if (theMode == 0 && aRadius > 0.0 && myToDisplayRange)
@@ -775,11 +746,9 @@ void AIS_LightSource::computePositional(const occ::handle<Prs3d_Presentation>& t
   }
 }
 
-//=================================================================================================
-
 void AIS_LightSource::computeSpot(const occ::handle<Prs3d_Presentation>& thePrs, const int theMode)
 {
-  // light source position and direction are set to local transformation
+
   const gp_Dir aLightDir = -gp::DZ();
   const gp_XYZ aLightPos = gp::Origin().XYZ();
   const double aDistance =
@@ -830,8 +799,6 @@ void AIS_LightSource::computeSpot(const occ::handle<Prs3d_Presentation>& thePrs,
     aRangeGroup->AddPrimitiveArray(aSpotRangeArray);
   }
 }
-
-//=================================================================================================
 
 void AIS_LightSource::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSel,
                                        const int                               theMode)

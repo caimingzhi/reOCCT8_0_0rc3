@@ -52,12 +52,6 @@ static TCollection_AsciiString ColorsHint("The possible colors are: \n\
 static TCollection_AsciiString MarkersHint("The possible markers are: \n\
   square, diamond, x, plus, circle, circle_zoom");
 
-//=======================================================================
-// function : DrawTrSurf_CurveColor
-// purpose  : Sets new color for rendering of curves. Returns the
-//           previous one to keep possibility to restore the initial
-//           state
-//=======================================================================
 Standard_EXPORT Draw_Color DrawTrSurf_CurveColor(const Draw_Color theColor)
 {
   DrawTrSurf_Params& aParams    = DrawTrSurf::Parameters();
@@ -66,12 +60,6 @@ Standard_EXPORT Draw_Color DrawTrSurf_CurveColor(const Draw_Color theColor)
   return aLastColor;
 }
 
-//=======================================================================
-// function : DrawTrSurf_PointColor
-// purpose  : Sets new color for rendering of points. Returns the
-//           previous one to keep possibility to restore the initial
-//           state
-//=======================================================================
 Standard_EXPORT Draw_Color DrawTrSurf_PointColor(const Draw_Color theColor)
 {
   DrawTrSurf_Params& aParams    = DrawTrSurf::Parameters();
@@ -80,12 +68,6 @@ Standard_EXPORT Draw_Color DrawTrSurf_PointColor(const Draw_Color theColor)
   return aLastColor;
 }
 
-//=======================================================================
-// function : DrawTrSurf_PointMarker
-// purpose  : Sets new marker for rendering of points. Returns the
-//           previous one to keep possibility to restore the initial
-//           state
-//=======================================================================
 Standard_EXPORT Draw_MarkerShape DrawTrSurf_PointMarker(const Draw_MarkerShape theMarker)
 {
   DrawTrSurf_Params& aParams     = DrawTrSurf::Parameters();
@@ -94,15 +76,11 @@ Standard_EXPORT Draw_MarkerShape DrawTrSurf_PointMarker(const Draw_MarkerShape t
   return aLastMarker;
 }
 
-//=================================================================================================
-
 DrawTrSurf_Params& DrawTrSurf::Parameters()
 {
   static DrawTrSurf_Params aParams;
   return aParams;
 }
-
-//=================================================================================================
 
 static occ::handle<DrawTrSurf_Drawable> GetDrawable(const char*& Name)
 {
@@ -113,8 +91,6 @@ static occ::handle<DrawTrSurf_Drawable> GetDrawable(const char*& Name)
   return Dr;
 }
 
-//=================================================================================================
-
 static occ::handle<DrawTrSurf_Surface> GetSurface(const char*& Name)
 {
   occ::handle<Draw_Drawable3D>    D = Draw::Get(Name);
@@ -123,8 +99,6 @@ static occ::handle<DrawTrSurf_Surface> GetSurface(const char*& Name)
     Dr = occ::down_cast<DrawTrSurf_Surface>(D);
   return Dr;
 }
-
-//=================================================================================================
 
 static occ::handle<DrawTrSurf_BezierSurface> GetBezierSurface(const char*& Name)
 {
@@ -135,8 +109,6 @@ static occ::handle<DrawTrSurf_BezierSurface> GetBezierSurface(const char*& Name)
   return Dr;
 }
 
-//=================================================================================================
-
 static occ::handle<DrawTrSurf_BSplineSurface> GetBSplineSurface(const char*& Name)
 {
   occ::handle<Draw_Drawable3D>           D = Draw::Get(Name);
@@ -145,8 +117,6 @@ static occ::handle<DrawTrSurf_BSplineSurface> GetBSplineSurface(const char*& Nam
     Dr = occ::down_cast<DrawTrSurf_BSplineSurface>(D);
   return Dr;
 }
-
-//=================================================================================================
 
 static occ::handle<DrawTrSurf_BezierCurve> GetBezierCurve(const char*& Name)
 {
@@ -157,8 +127,6 @@ static occ::handle<DrawTrSurf_BezierCurve> GetBezierCurve(const char*& Name)
   return Dr;
 }
 
-//=================================================================================================
-
 static occ::handle<DrawTrSurf_BSplineCurve> GetBSplineCurve(const char*& Name)
 {
   occ::handle<Draw_Drawable3D>         D = Draw::Get(Name);
@@ -167,8 +135,6 @@ static occ::handle<DrawTrSurf_BSplineCurve> GetBSplineCurve(const char*& Name)
     Dr = occ::down_cast<DrawTrSurf_BSplineCurve>(D);
   return Dr;
 }
-
-//=================================================================================================
 
 static occ::handle<DrawTrSurf_BezierCurve2d> GetBezierCurve2d(const char*& Name)
 {
@@ -179,8 +145,6 @@ static occ::handle<DrawTrSurf_BezierCurve2d> GetBezierCurve2d(const char*& Name)
   return Dr;
 }
 
-//=================================================================================================
-
 static occ::handle<DrawTrSurf_BSplineCurve2d> GetBSplineCurve2d(const char*& Name)
 {
   occ::handle<Draw_Drawable3D>           D = Draw::Get(Name);
@@ -189,8 +153,6 @@ static occ::handle<DrawTrSurf_BSplineCurve2d> GetBSplineCurve2d(const char*& Nam
     Dr = occ::down_cast<DrawTrSurf_BSplineCurve2d>(D);
   return Dr;
 }
-
-//=================================================================================================
 
 static int nbiso(Draw_Interpretor& di, int n, const char** a)
 {
@@ -218,8 +180,6 @@ static int nbiso(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int drawpoles(Draw_Interpretor&, int n, const char** a)
 {
@@ -381,8 +341,6 @@ static int drawpoles(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int draw(Draw_Interpretor& di, int n, const char** a)
 {
   DrawTrSurf_Params& aParams = DrawTrSurf::Parameters();
@@ -441,8 +399,6 @@ static int draw(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int transform(Draw_Interpretor& di, int n, const char** a)
 {
@@ -532,8 +488,6 @@ static int transform(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int d2transform(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 4)
@@ -612,8 +566,6 @@ static int d2transform(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 void DrawTrSurf::Set(const char* theName, const gp_Pnt& thePoint)
 {
   DrawTrSurf_Params&            aParams = DrawTrSurf::Parameters();
@@ -622,8 +574,6 @@ void DrawTrSurf::Set(const char* theName, const gp_Pnt& thePoint)
   Draw::Set(theName, aDrawPoint);
 }
 
-//=================================================================================================
-
 void DrawTrSurf::Set(const char* theName, const gp_Pnt2d& thePoint)
 {
   DrawTrSurf_Params&            aParams = DrawTrSurf::Parameters();
@@ -631,8 +581,6 @@ void DrawTrSurf::Set(const char* theName, const gp_Pnt2d& thePoint)
     new DrawTrSurf_Point(thePoint, aParams.PntMarker, aParams.PntColor);
   Draw::Set(theName, aDrawPoint);
 }
-
-//=================================================================================================
 
 void DrawTrSurf::Set(const char*                       theName,
                      const occ::handle<Geom_Geometry>& theGeometry,
@@ -740,8 +688,6 @@ void DrawTrSurf::Set(const char*                       theName,
   Draw::Set(theName, aDrawable);
 }
 
-//=================================================================================================
-
 void DrawTrSurf::Set(const char*                      theName,
                      const occ::handle<Geom2d_Curve>& theCurve,
                      const bool                       isSenseMarker)
@@ -777,15 +723,11 @@ void DrawTrSurf::Set(const char*                      theName,
   Draw::Set(theName, aDrawable);
 }
 
-//=================================================================================================
-
 void DrawTrSurf::Set(const char* Name, const occ::handle<Poly_Triangulation>& T)
 {
   occ::handle<DrawTrSurf_Triangulation> D = new DrawTrSurf_Triangulation(T);
   Draw::Set(Name, D);
 }
-
-//=================================================================================================
 
 void DrawTrSurf::Set(const char* Name, const occ::handle<Poly_Polygon3D>& P)
 {
@@ -793,15 +735,11 @@ void DrawTrSurf::Set(const char* Name, const occ::handle<Poly_Polygon3D>& P)
   Draw::Set(Name, D);
 }
 
-//=================================================================================================
-
 void DrawTrSurf::Set(const char* Name, const occ::handle<Poly_Polygon2D>& P)
 {
   occ::handle<DrawTrSurf_Polygon2D> D = new DrawTrSurf_Polygon2D(P);
   Draw::Set(Name, D);
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Geometry> DrawTrSurf::Get(const char*& Name)
 {
@@ -818,8 +756,6 @@ occ::handle<Geom_Geometry> DrawTrSurf::Get(const char*& Name)
   return occ::handle<Geom_Geometry>();
 }
 
-//=================================================================================================
-
 bool DrawTrSurf::GetPoint(const char*& Name, gp_Pnt& P)
 {
   occ::handle<DrawTrSurf_Point> D = occ::down_cast<DrawTrSurf_Point>(Draw::Get(Name));
@@ -833,8 +769,6 @@ bool DrawTrSurf::GetPoint(const char*& Name, gp_Pnt& P)
     return true;
   }
 }
-
-//=================================================================================================
 
 bool DrawTrSurf::GetPoint2d(const char*& Name, gp_Pnt2d& P)
 {
@@ -850,8 +784,6 @@ bool DrawTrSurf::GetPoint2d(const char*& Name, gp_Pnt2d& P)
   }
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> DrawTrSurf::GetCurve(const char*& Name)
 {
   occ::handle<DrawTrSurf_Curve> D = occ::down_cast<DrawTrSurf_Curve>(Draw::Get(Name));
@@ -860,8 +792,6 @@ occ::handle<Geom_Curve> DrawTrSurf::GetCurve(const char*& Name)
   else
     return D->GetCurve();
 }
-
-//=================================================================================================
 
 occ::handle<Geom_BezierCurve> DrawTrSurf::GetBezierCurve(const char*& Name)
 {
@@ -872,8 +802,6 @@ occ::handle<Geom_BezierCurve> DrawTrSurf::GetBezierCurve(const char*& Name)
     return occ::down_cast<Geom_BezierCurve>(D->GetCurve());
 }
 
-//=================================================================================================
-
 occ::handle<Geom_BSplineCurve> DrawTrSurf::GetBSplineCurve(const char*& Name)
 {
   occ::handle<DrawTrSurf_BSplineCurve> D = occ::down_cast<DrawTrSurf_BSplineCurve>(Draw::Get(Name));
@@ -882,8 +810,6 @@ occ::handle<Geom_BSplineCurve> DrawTrSurf::GetBSplineCurve(const char*& Name)
   else
     return occ::down_cast<Geom_BSplineCurve>(D->GetCurve());
 }
-
-//=================================================================================================
 
 occ::handle<Geom2d_Curve> DrawTrSurf::GetCurve2d(const char*& Name)
 {
@@ -894,8 +820,6 @@ occ::handle<Geom2d_Curve> DrawTrSurf::GetCurve2d(const char*& Name)
     return D->GetCurve();
 }
 
-//=================================================================================================
-
 occ::handle<Geom2d_BezierCurve> DrawTrSurf::GetBezierCurve2d(const char*& Name)
 {
   occ::handle<DrawTrSurf_Curve2d> D = occ::down_cast<DrawTrSurf_Curve2d>(Draw::Get(Name));
@@ -904,8 +828,6 @@ occ::handle<Geom2d_BezierCurve> DrawTrSurf::GetBezierCurve2d(const char*& Name)
   else
     return occ::down_cast<Geom2d_BezierCurve>(D->GetCurve());
 }
-
-//=================================================================================================
 
 occ::handle<Geom2d_BSplineCurve> DrawTrSurf::GetBSplineCurve2d(const char*& Name)
 {
@@ -916,8 +838,6 @@ occ::handle<Geom2d_BSplineCurve> DrawTrSurf::GetBSplineCurve2d(const char*& Name
     return occ::down_cast<Geom2d_BSplineCurve>(D->GetCurve());
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Surface> DrawTrSurf::GetSurface(const char*& Name)
 {
   occ::handle<DrawTrSurf_Surface> D = occ::down_cast<DrawTrSurf_Surface>(Draw::Get(Name));
@@ -926,8 +846,6 @@ occ::handle<Geom_Surface> DrawTrSurf::GetSurface(const char*& Name)
   else
     return D->GetSurface();
 }
-
-//=================================================================================================
 
 occ::handle<Geom_BezierSurface> DrawTrSurf::GetBezierSurface(const char*& Name)
 {
@@ -939,8 +857,6 @@ occ::handle<Geom_BezierSurface> DrawTrSurf::GetBezierSurface(const char*& Name)
     return occ::down_cast<Geom_BezierSurface>(D->GetSurface());
 }
 
-//=================================================================================================
-
 occ::handle<Geom_BSplineSurface> DrawTrSurf::GetBSplineSurface(const char*& Name)
 {
   occ::handle<DrawTrSurf_BSplineSurface> D =
@@ -950,8 +866,6 @@ occ::handle<Geom_BSplineSurface> DrawTrSurf::GetBSplineSurface(const char*& Name
   else
     return occ::down_cast<Geom_BSplineSurface>(D->GetSurface());
 }
-
-//=================================================================================================
 
 occ::handle<Poly_Triangulation> DrawTrSurf::GetTriangulation(const char*& Name)
 {
@@ -963,8 +877,6 @@ occ::handle<Poly_Triangulation> DrawTrSurf::GetTriangulation(const char*& Name)
     return D->Triangulation();
 }
 
-//=================================================================================================
-
 occ::handle<Poly_Polygon3D> DrawTrSurf::GetPolygon3D(const char*& Name)
 {
   occ::handle<DrawTrSurf_Polygon3D> D = occ::down_cast<DrawTrSurf_Polygon3D>(Draw::Get(Name));
@@ -974,8 +886,6 @@ occ::handle<Poly_Polygon3D> DrawTrSurf::GetPolygon3D(const char*& Name)
     return D->Polygon3D();
 }
 
-//=================================================================================================
-
 occ::handle<Poly_Polygon2D> DrawTrSurf::GetPolygon2D(const char*& Name)
 {
   occ::handle<DrawTrSurf_Polygon2D> D = occ::down_cast<DrawTrSurf_Polygon2D>(Draw::Get(Name));
@@ -984,8 +894,6 @@ occ::handle<Poly_Polygon2D> DrawTrSurf::GetPolygon2D(const char*& Name)
   else
     return D->Polygon2D();
 }
-
-//=================================================================================================
 
 static void printColor(Draw_Interpretor& di, const Draw_Color& theColor)
 {
@@ -1039,8 +947,6 @@ static void printColor(Draw_Interpretor& di, const Draw_Color& theColor)
   }
 }
 
-//=================================================================================================
-
 static Draw_Color recognizeColor(const char* theColorStr, const Draw_Color& theDefaultColor)
 {
   Draw_Color aResult = theDefaultColor;
@@ -1079,8 +985,6 @@ static Draw_Color recognizeColor(const char* theColorStr, const Draw_Color& theD
   return aResult;
 }
 
-//=================================================================================================
-
 static int setcurvcolor(Draw_Interpretor& di, int n, const char** a)
 {
   Draw_Color col, savecol;
@@ -1099,8 +1003,6 @@ static int setcurvcolor(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int changecurvcolor(Draw_Interpretor&, int n, const char** a)
 {
@@ -1124,8 +1026,6 @@ static int changecurvcolor(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int setpointcolor(Draw_Interpretor& di, int n, const char** a)
 {
   Draw_Color col, savecol;
@@ -1144,8 +1044,6 @@ static int setpointcolor(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int changepointcolor(Draw_Interpretor&, int n, const char** a)
 {
@@ -1168,8 +1066,6 @@ static int changepointcolor(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static void printMarker(Draw_Interpretor& di, const Draw_MarkerShape& theMarker)
 {
@@ -1196,8 +1092,6 @@ static void printMarker(Draw_Interpretor& di, const Draw_MarkerShape& theMarker)
   }
 }
 
-//=================================================================================================
-
 static Draw_MarkerShape recognizeMarker(const char*             theMarkerStr,
                                         const Draw_MarkerShape& theDefaultMarker)
 {
@@ -1219,8 +1113,6 @@ static Draw_MarkerShape recognizeMarker(const char*             theMarkerStr,
   return aResult;
 }
 
-//=================================================================================================
-
 static int setpointmarker(Draw_Interpretor& di, int n, const char** a)
 {
   Draw_MarkerShape mark, savemark;
@@ -1239,8 +1131,6 @@ static int setpointmarker(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int changepointmarker(Draw_Interpretor&, int n, const char** a)
 {
@@ -1263,8 +1153,6 @@ static int changepointmarker(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static bool done = false;
 

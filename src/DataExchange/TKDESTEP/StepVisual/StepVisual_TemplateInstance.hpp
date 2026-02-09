@@ -9,7 +9,6 @@ class StepVisual_TemplateInstance : public StepRepr_MappedItem
 {
 
 public:
-  //! Returns a TemplateInstance
   Standard_EXPORT StepVisual_TemplateInstance();
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_TemplateInstance, StepRepr_MappedItem)

@@ -20,8 +20,6 @@
 
 #include <cstdio>
 
-//=================================================================================================
-
 GeomFill_SweepSectionGenerator::GeomFill_SweepSectionGenerator()
     : myRadius(0.0),
       myIsDone(false),
@@ -31,15 +29,11 @@ GeomFill_SweepSectionGenerator::GeomFill_SweepSectionGenerator()
 {
 }
 
-//=================================================================================================
-
 GeomFill_SweepSectionGenerator::GeomFill_SweepSectionGenerator(const occ::handle<Geom_Curve>& Path,
                                                                const double Radius)
 {
   Init(Path, Radius);
 }
-
-//=================================================================================================
 
 GeomFill_SweepSectionGenerator::GeomFill_SweepSectionGenerator(
   const occ::handle<Geom_Curve>& Path,
@@ -47,8 +41,6 @@ GeomFill_SweepSectionGenerator::GeomFill_SweepSectionGenerator(
 {
   Init(Path, FirstSect);
 }
-
-//=================================================================================================
 
 GeomFill_SweepSectionGenerator::GeomFill_SweepSectionGenerator(
   const occ::handle<Geom_Curve>& Path,
@@ -58,8 +50,6 @@ GeomFill_SweepSectionGenerator::GeomFill_SweepSectionGenerator(
   Init(Path, FirstSect, LastSect);
 }
 
-//=================================================================================================
-
 GeomFill_SweepSectionGenerator::GeomFill_SweepSectionGenerator(
   const occ::handle<Adaptor3d_Curve>& Path,
   const occ::handle<Adaptor3d_Curve>& Curve1,
@@ -68,8 +58,6 @@ GeomFill_SweepSectionGenerator::GeomFill_SweepSectionGenerator(
 {
   Init(Path, Curve1, Curve2, Radius);
 }
-
-//=================================================================================================
 
 void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path, const double Radius)
 {
@@ -94,8 +82,6 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path, c
     myPath = GeomConvert::CurveToBSplineCurve(Path);
   }
 }
-
-//=================================================================================================
 
 void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path,
                                           const occ::handle<Geom_Curve>& FirstSect)
@@ -127,14 +113,12 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path,
   }
   else
   {
-    // JAG
+
     myFirstSect = GeomConvert::CurveToBSplineCurve(FirstSect, Convert_QuasiAngular);
   }
   if (myFirstSect->IsPeriodic())
     myFirstSect->SetNotPeriodic();
 }
-
-//=================================================================================================
 
 void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path,
                                           const occ::handle<Geom_Curve>& FirstSect,
@@ -162,7 +146,6 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path,
     myPath = GeomConvert::CurveToBSplineCurve(Path);
   }
 
-  // JAG
   if (FirstSect->IsKind(STANDARD_TYPE(Geom_BSplineCurve)))
   {
     myFirstSect = occ::down_cast<Geom_BSplineCurve>(FirstSect->Copy());
@@ -185,8 +168,6 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path,
   if (myLastSect->IsPeriodic())
     myLastSect->SetNotPeriodic();
 
-  // JAG
-
   GeomFill_Profiler Profil;
   Profil.AddCurve(myFirstSect);
   Profil.AddCurve(myLastSect);
@@ -195,8 +176,6 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path,
   myFirstSect = occ::down_cast<Geom_BSplineCurve>(Profil.Curve(1));
   myLastSect  = occ::down_cast<Geom_BSplineCurve>(Profil.Curve(2));
 }
-
-//=================================================================================================
 
 void GeomFill_SweepSectionGenerator::Init(const occ::handle<Adaptor3d_Curve>& Path,
                                           const occ::handle<Adaptor3d_Curve>& Curve1,
@@ -214,13 +193,10 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Adaptor3d_Curve>& Pa
   myAdpLastSect              = Curve2;
 }
 
-//=================================================================================================
-
 void GeomFill_SweepSectionGenerator::Perform(const bool Polynomial)
 {
   myPolynomial = Polynomial;
 
-  // eval myNbSections.
   int NSpans = myPath->NbKnots() - 1;
 
   myNbSections = 21 * NSpans;
@@ -231,7 +207,7 @@ void GeomFill_SweepSectionGenerator::Perform(const bool Polynomial)
   double U2 = myPath->LastParameter();
 
   GCPnts_QuasiUniformDeflection Samp;
-  // Calcul de la longueur approximative de la courbe
+
   GeomAdaptor_Curve AdpPath(myPath);
   gp_Pnt            P1     = AdpPath.Value(U1);
   gp_Pnt            P2     = AdpPath.Value((U1 + U2) / 2.);
@@ -244,15 +220,9 @@ void GeomFill_SweepSectionGenerator::Perform(const bool Polynomial)
   {
     myNbSections = Samp.NbPoints();
   }
-  // the transformations are calculate on differents points of <myPath>
-  // corresponding to the path parameter uniformly reparted.
+
   double                     DeltaU = (U2 - U1) / (double)(myNbSections - 1);
   NCollection_Array1<double> Parameters(1, myNbSections);
-  //  Parameters(1) = U1;
-  //  for (int i = 2; i < myNbSections; i++) {
-  //    Parameters(i) = U1 + (i-1) * DeltaU;
-  //  }
-  //  Parameters(myNbSections) = U2;
 
   Parameters(1) = 0.;
   for (int i = 2; i < myNbSections; i++)
@@ -269,20 +239,9 @@ void GeomFill_SweepSectionGenerator::Perform(const bool Polynomial)
 
   if ((myType == 1) || (myType == 4))
   {
-    // We create a circle with radius <myRadius>. This axis is create with
-    // main direction <DRef> (first derivate vector of <myPath> on the first
-    // point <PRef> ). This circle is, after transform to BSpline curve,
-    // put in <myFirstSect>.
 
     gp_Ax2 CircleAxis(PRef, D1Ref);
-    /*
-        occ::handle<Geom_Circle> Circ = new Geom_Circle( CircleAxis, myRadius);
 
-        myFirstSect = GeomConvert::CurveToBSplineCurve(Circ);
-        // le cercle est segmente car AppBlend_AppSurf ne gere
-        // pas les courbes periodiques.
-        myFirstSect->Segment(0., 2.*M_PI);
-    */
     occ::handle<Geom_TrimmedCurve> Circ =
       new Geom_TrimmedCurve(new Geom_Circle(CircleAxis, myRadius), 0., 2. * M_PI);
 
@@ -301,13 +260,12 @@ void GeomFill_SweepSectionGenerator::Perform(const bool Polynomial)
 
       myPath->D1(U, P, D1);
 
-      // Eval the translation between the (i-1) section and the i-th.
       Trans.SetTranslation(PRef, P);
 
       gp_Trsf Rot;
       if (!D1Ref.IsParallel(D1, Precision::Angular()))
       {
-        // Eval the Rotation between (i-1) section and the i-th.
+
         Rot.SetRotation(gp_Ax1(P, gp_Dir(D1Ref ^ D1)), D1Ref.AngleWithRef(D1, D1Ref ^ D1));
       }
       else if (D1Ref.IsOpposite(D1, Precision::Angular()))
@@ -315,10 +273,8 @@ void GeomFill_SweepSectionGenerator::Perform(const bool Polynomial)
         std::cout << "Que fais-je ???? " << std::endl;
 #endif
 
-      // TR is the transformation between (i-1) section and the i-th.
       TR = Rot * Trans;
-      // cumulTR is the transformation between <myFirstSec> and
-      // the i-th section.
+
       cumulTR = TR * cumulTR;
 
       myTrsfs.Append(cumulTR);
@@ -339,21 +295,12 @@ void GeomFill_SweepSectionGenerator::Perform(const bool Polynomial)
   myIsDone = true;
 }
 
-//=================================================================================================
-
 void GeomFill_SweepSectionGenerator::GetShape(int& NbPoles,
                                               int& NbKnots,
                                               int& Degree,
                                               int& NbPoles2d) const
 {
-  /*
-   if ( myType == 1) {
-      NbPoles   = 7;
-      NbKnots   = 4;
-      Degree    = 2;
-    }
-    else {
-  */
+
   if (myType != 0)
   {
     NbPoles = myFirstSect->NbPoles();
@@ -361,7 +308,7 @@ void GeomFill_SweepSectionGenerator::GetShape(int& NbPoles,
     Degree  = myFirstSect->Degree();
   }
   else
-  { // myType == 0
+  {
     NbPoles = 7;
     NbKnots = 2;
     Degree  = 6;
@@ -369,18 +316,9 @@ void GeomFill_SweepSectionGenerator::GetShape(int& NbPoles,
   NbPoles2d = 0;
 }
 
-//=================================================================================================
-
 void GeomFill_SweepSectionGenerator::Knots(NCollection_Array1<double>& TKnots) const
 {
-  /*
-    if (myType == 1) {
-      double U = 2.*M_PI/3.;
-      for ( int i = 1; i <= 4; i++)
-        TKnots(i) = ( i-1) * U;
-    }
-    else {
-  */
+
   if (myType != 0)
   {
     myFirstSect->Knots(TKnots);
@@ -390,20 +328,11 @@ void GeomFill_SweepSectionGenerator::Knots(NCollection_Array1<double>& TKnots) c
     TKnots(1) = 0.;
     TKnots(2) = 1.;
   }
-  //  }
 }
-
-//=================================================================================================
 
 void GeomFill_SweepSectionGenerator::Mults(NCollection_Array1<int>& TMults) const
 {
-  /*
-    if ( myType == 1) {
-      TMults( 1) = TMults( 4) = 3;
-      TMults( 2) = TMults( 3) = 2;
-    }
-    else {
-  */
+
   if (myType != 0)
   {
     myFirstSect->Multiplicities(TMults);
@@ -412,30 +341,20 @@ void GeomFill_SweepSectionGenerator::Mults(NCollection_Array1<int>& TMults) cons
   {
     TMults(1) = TMults(2) = 7;
   }
-  //  }
 }
-
-//=================================================================================================
 
 bool GeomFill_SweepSectionGenerator::Section(const int                     P,
                                              NCollection_Array1<gp_Pnt>&   Poles,
                                              NCollection_Array1<gp_Vec>&   DPoles,
                                              NCollection_Array1<gp_Pnt2d>& Poles2d,
-                                             NCollection_Array1<gp_Vec2d>&, // DPoles2d,
+                                             NCollection_Array1<gp_Vec2d>&,
                                              NCollection_Array1<double>& Weigths,
                                              NCollection_Array1<double>& DWeigths) const
 {
   Section(P, Poles, Poles2d, Weigths);
 
-  // pour les tuyaux sur aretes pour l'instant on ne calcule pas les derivees
   if (myType == 0)
-    return false; // a voir pour mieux.
-
-  // calcul des derivees sur la surface
-  // on calcule les derivees en approximant le path au voisinage du point
-  // P(u) par le cercle osculateur au path .
-
-  // calcul du cercle osculateur.
+    return false;
 
   double U;
   if (P == 1)
@@ -465,7 +384,7 @@ bool GeomFill_SweepSectionGenerator::Section(const int                     P,
 
   if (c < Epsilon(1.))
   {
-    // null curvature : equivalent to a translation of the section
+
     for (int i = 1; i <= myFirstSect->NbPoles(); i++)
     {
       DPoles(i) = D1;
@@ -499,11 +418,9 @@ bool GeomFill_SweepSectionGenerator::Section(const int                     P,
   return true;
 }
 
-//=================================================================================================
-
 void GeomFill_SweepSectionGenerator::Section(const int                   P,
                                              NCollection_Array1<gp_Pnt>& Poles,
-                                             NCollection_Array1<gp_Pnt2d>&, // Poles2d,
+                                             NCollection_Array1<gp_Pnt2d>&,
                                              NCollection_Array1<double>& Weigths) const
 {
   if (myType != 0)
@@ -514,8 +431,6 @@ void GeomFill_SweepSectionGenerator::Section(const int                   P,
     if (P > 1)
     {
       cumulTR = myTrsfs(P - 1);
-      // <cumulTR> transform <myFirstSect> to the P ieme Section. In fact
-      // each points of the array <poles> will be transformed.
 
       if ((myType == 3) || (myType == 6))
       {
@@ -586,15 +501,7 @@ void GeomFill_SweepSectionGenerator::Section(const int                   P,
       Angle = ElCLib::CircleParameter(Axis, P2);
     }
 #ifdef OCCT_DEBUG
-/*
-    if (false) {
-      gp_Vec dummyD1 = myAdpPath->DN(U,1);
-      gp_Vec dummyTg = Axis.Direction();
-      double Cos = dummyD1.Dot(dummyTg);
-      if ( Cos > 0.) std::cout << "+" ;
-      else           std::cout << "-" ;
-    }
-*/
+
 #endif
     if (Angle < Precision::Angular())
     {
@@ -620,8 +527,6 @@ void GeomFill_SweepSectionGenerator::Section(const int                   P,
   }
 }
 
-//=================================================================================================
-
 const gp_Trsf& GeomFill_SweepSectionGenerator::Transformation(const int Index) const
 {
   if (Index > myTrsfs.Length())
@@ -629,8 +534,6 @@ const gp_Trsf& GeomFill_SweepSectionGenerator::Transformation(const int Index) c
 
   return myTrsfs(Index);
 }
-
-//=================================================================================================
 
 double GeomFill_SweepSectionGenerator::Parameter(const int P) const
 {

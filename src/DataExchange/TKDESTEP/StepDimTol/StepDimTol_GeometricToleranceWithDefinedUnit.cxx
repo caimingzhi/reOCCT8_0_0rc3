@@ -6,12 +6,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_GeometricToleranceWithDefinedUnit,
                            StepDimTol_GeometricTolerance)
 
-//=================================================================================================
-
 StepDimTol_GeometricToleranceWithDefinedUnit::StepDimTol_GeometricToleranceWithDefinedUnit() =
   default;
-
-//=================================================================================================
 
 void StepDimTol_GeometricToleranceWithDefinedUnit::Init(
   const occ::handle<TCollection_HAsciiString>&        theName,
@@ -26,8 +22,6 @@ void StepDimTol_GeometricToleranceWithDefinedUnit::Init(
                                       theTolerancedShapeAspect);
   myUnitSize = theUnitSize;
 }
-
-//=================================================================================================
 
 void StepDimTol_GeometricToleranceWithDefinedUnit::Init(
   const occ::handle<TCollection_HAsciiString>&        theName,

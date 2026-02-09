@@ -1,18 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// JCV 16/10/91
 
 #define No_Standard_OutOfRange
 
@@ -28,8 +14,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 #include <Standard_Integer.hpp>
-
-//=================================================================================================
 
 Convert_ConicToBSplineCurve::Convert_ConicToBSplineCurve(const int NbPoles,
                                                          const int NbKnots,
@@ -53,35 +37,25 @@ Convert_ConicToBSplineCurve::Convert_ConicToBSplineCurve(const int NbPoles,
   }
 }
 
-//=================================================================================================
-
 int Convert_ConicToBSplineCurve::Degree() const
 {
   return degree;
 }
-
-//=================================================================================================
 
 int Convert_ConicToBSplineCurve::NbPoles() const
 {
   return nbPoles;
 }
 
-//=================================================================================================
-
 int Convert_ConicToBSplineCurve::NbKnots() const
 {
   return nbKnots;
 }
 
-//=================================================================================================
-
 bool Convert_ConicToBSplineCurve::IsPeriodic() const
 {
   return isperiodic;
 }
-
-//=================================================================================================
 
 gp_Pnt2d Convert_ConicToBSplineCurve::Pole(const int Index) const
 {
@@ -90,16 +64,12 @@ gp_Pnt2d Convert_ConicToBSplineCurve::Pole(const int Index) const
   return poles->Value(Index);
 }
 
-//=================================================================================================
-
 double Convert_ConicToBSplineCurve::Weight(const int Index) const
 {
   if (Index < 1 || Index > nbPoles)
     throw Standard_OutOfRange(" ");
   return weights->Value(Index);
 }
-
-//=================================================================================================
 
 double Convert_ConicToBSplineCurve::Knot(const int Index) const
 {
@@ -108,33 +78,12 @@ double Convert_ConicToBSplineCurve::Knot(const int Index) const
   return knots->Value(Index);
 }
 
-//=================================================================================================
-
 int Convert_ConicToBSplineCurve::Multiplicity(const int Index) const
 {
   if (Index < 1 || Index > nbKnots)
     throw Standard_OutOfRange(" ");
   return mults->Value(Index);
 }
-
-//=======================================================================
-// function : CosAndSinRationalC1
-// purpose  : evaluates U(t) and V(t) such that
-//                      2      2
-//                     U   -  V
-//   cos (theta(t)) = ----------
-//                      2      2
-//                     U   +  V
-//
-
-//                      2 * U*V
-//   sin (theta(t)) = ----------
-//                      2      2
-//                     U   +  V
-//                                                    2     2
-//  such that the derivative at the domain bounds of U   + V   is 0.0e0
-//  with is helpful when having to make a C1 BSpline by merging two BSpline together
-//=======================================================================
 
 void CosAndSinRationalC1(double                              Parameter,
                          const int                           EvalDegree,
@@ -157,49 +106,23 @@ void CosAndSinRationalC1(double                              Parameter,
   Result[1] = a_point.Coord(2);
 }
 
-//=======================================================================
-// function : CosAndSinQuasiAngular
-// purpose  : evaluates U(t) and V(t) such that
-//                      2      2
-//                     U   -  V
-//   cos (theta(t)) = ----------
-//                      2      2
-//                     U   +  V
-//
-
-//                      2 * U*V
-//   sin (theta(t)) = ----------
-//                      2      2
-//                     U   +  V
-//=======================================================================
-
 void CosAndSinQuasiAngular(double                              Parameter,
                            const int                           EvalDegree,
                            const NCollection_Array1<gp_Pnt2d>& EvalPoles,
-                           //			    const NCollection_Array1<double>&    EvalKnots,
+
                            const NCollection_Array1<double>&,
-                           //			    const NCollection_Array1<int>& EvalMults,
+
                            const NCollection_Array1<int>*,
                            double Result[2])
 {
   double param, *coeff;
 
   coeff = (double*)&EvalPoles(EvalPoles.Lower());
-  //
-  //   rational_function_coeff represent a rational approximation
-  //   of U ---> cotan( PI * U /2) between [0 1]
-  //   rational_function_coeff[i][0] is the denominator
-  //   rational_function_coeff[i][1] is the numerator
-  //
+
   param = Parameter * 0.5e0;
   PLib::NoDerivativeEvalPolynomial(param, EvalDegree, 2, EvalDegree << 1, coeff[0], Result[0]);
 }
 
-//=======================================================================
-// function : function that build the Bspline Representation of
-// an algorithmic description of the function cos and sin
-// purpose  :
-//=======================================================================
 void AlgorithmicCosAndSin(int                                 Degree,
                           const NCollection_Array1<double>&   FlatKnots,
                           const int                           EvalDegree,
@@ -250,8 +173,6 @@ void AlgorithmicCosAndSin(int                                 Degree,
     Denominator(ii)  = poles_array(ii).Coord(3);
   }
 }
-
-//=================================================================================================
 
 void Convert_ConicToBSplineCurve::BuildCosAndSin(
   const Convert_ParameterisationType        Parameterisation,
@@ -397,27 +318,6 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
     switch (Parameterisation)
     {
       case Convert_QuasiAngular:
-        //
-        //    we code here in temp_poles(xx).Coord(1) the following function V(t)
-        //   and in temp_poles(xx).Coord(2) the function U(t)
-        //                     3
-        //       V(t) = t + c t
-        //                     2
-        //       U(t) = 1 + b t
-        //            1
-        //       c = ---  + b   = q_param
-        //            3
-        //                          3
-        //                     gamma
-        //            gamma +  ------  - tang gamma
-        //                      3
-        //       b =------------------------------    = p_param
-        //                 2
-        //            gamma  (tang gamma - gamma)
-        //
-        //     with gamma = alpha / 2
-        //
-        //
 
         alpha_2 = alpha * 0.5e0;
         p_param = -1.0e0 / (alpha_2 * alpha_2);
@@ -426,9 +326,7 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
         {
           if (alpha_2 < 1.0e-7)
           {
-            // Fixed degenerate case, when obtain 0 / 0 uncertainty.
-            // According to Taylor approximation:
-            // b (gamma) = -6.0 / 15.0 + o(gamma^2)
+
             p_param = -6.0 / 15.0;
           }
           else
@@ -507,7 +405,7 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
     }
   }
   else
-  { // Convert_Polynomial
+  {
 
     KnotsPtr->SetValue(1, 0.);
     KnotsPtr->SetValue(num_knots, 1.);
@@ -523,8 +421,6 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
   }
 }
 
-//=================================================================================================
-
 void Convert_ConicToBSplineCurve::BuildCosAndSin(
   const Convert_ParameterisationType        Parameterisation,
   occ::handle<NCollection_HArray1<double>>& CosNumeratorPtr,
@@ -535,7 +431,7 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
   occ::handle<NCollection_HArray1<int>>&    MultsPtr) const
 {
   double half_pi, param, first_param, last_param,
-    //  direct,
+
     inverse, value1, value2, value3;
 
   int ii, jj, index, num_poles, num_periodic_poles, temp_degree, pivot_index_problem,

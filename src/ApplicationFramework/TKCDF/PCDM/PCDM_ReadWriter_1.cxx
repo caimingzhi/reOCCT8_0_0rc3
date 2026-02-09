@@ -26,8 +26,6 @@ IMPLEMENT_STANDARD_RTTIEXT(PCDM_ReadWriter_1, PCDM_ReadWriter)
 #define MODIFICATION_COUNTER "MODIFICATION_COUNTER: "
 #define REFERENCE_COUNTER "REFERENCE_COUNTER: "
 
-//=================================================================================================
-
 PCDM_ReadWriter_1::PCDM_ReadWriter_1() = default;
 
 static int RemoveExtraSeparator(TCollection_AsciiString& aString)
@@ -37,7 +35,7 @@ static int RemoveExtraSeparator(TCollection_AsciiString& aString)
 
   len = aString.Length();
 #ifdef _WIN32
-  // Case of network path, such as \\MACHINE\dir
+
   for (i = j = 2; j <= len; i++, j++)
   {
 #else
@@ -113,7 +111,7 @@ static TCollection_AsciiString GetDirFromFile(const TCollection_ExtendedString& 
   TCollection_AsciiString theDirectory;
   int                     i = theCFile.SearchFromEnd("/");
 #ifdef _WIN32
-  //    if(i==-1) i=theCFile.SearchFromEnd("\\");
+
   if (theCFile.SearchFromEnd("\\") > i)
     i = theCFile.SearchFromEnd("\\");
 #endif
@@ -122,14 +120,10 @@ static TCollection_AsciiString GetDirFromFile(const TCollection_ExtendedString& 
   return theDirectory;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString PCDM_ReadWriter_1::Version() const
 {
   return "PCDM_ReadWriter_1";
 }
-
-//=================================================================================================
 
 void PCDM_ReadWriter_1::WriteReferenceCounter(const occ::handle<Storage_Data>& aData,
                                               const occ::handle<CDM_Document>& aDocument) const
@@ -138,8 +132,6 @@ void PCDM_ReadWriter_1::WriteReferenceCounter(const occ::handle<Storage_Data>& a
   ligne += aDocument->ReferenceCounter();
   aData->AddToUserInfo(ligne);
 }
-
-//=================================================================================================
 
 void PCDM_ReadWriter_1::WriteReferences(
   const occ::handle<Storage_Data>&  aData,
@@ -181,8 +173,6 @@ void PCDM_ReadWriter_1::WriteReferences(
   }
 }
 
-//=================================================================================================
-
 void PCDM_ReadWriter_1::WriteExtensions(const occ::handle<Storage_Data>& aData,
                                         const occ::handle<CDM_Document>& aDocument) const
 {
@@ -202,8 +192,6 @@ void PCDM_ReadWriter_1::WriteExtensions(const occ::handle<Storage_Data>& aData,
   }
 }
 
-//=================================================================================================
-
 void PCDM_ReadWriter_1::WriteVersion(const occ::handle<Storage_Data>& aData,
                                      const occ::handle<CDM_Document>& aDocument) const
 {
@@ -211,8 +199,6 @@ void PCDM_ReadWriter_1::WriteVersion(const occ::handle<Storage_Data>& aData,
   ligne += aDocument->Modifications();
   aData->AddToUserInfo(ligne);
 }
-
-//=================================================================================================
 
 int PCDM_ReadWriter_1::ReadReferenceCounter(
   const TCollection_ExtendedString&     aFileName,
@@ -269,8 +255,6 @@ int PCDM_ReadWriter_1::ReadReferenceCounter(
   return theReferencesCounter;
 }
 
-//=================================================================================================
-
 void PCDM_ReadWriter_1::ReadReferences(const TCollection_ExtendedString&     aFileName,
                                        NCollection_Sequence<PCDM_Reference>& theReferences,
                                        const occ::handle<Message_Messenger>& theMsgDriver) const
@@ -309,8 +293,7 @@ void PCDM_ReadWriter_1::ReadReferences(const TCollection_ExtendedString&     aFi
       }
       if (!theMsgDriver.IsNull())
       {
-        //      std::cout << "reference found; ReferenceIdentifier: " << theReferenceIdentifier <<
-        //      "; File:" << thePath << ", version:" << theDocumentVersion;
+
         TCollection_ExtendedString aMsg("Warning: ");
         aMsg = aMsg.Cat("reference found; ReferenceIdentifier:  ")
                  .Cat(theReferenceIdentifier)
@@ -327,8 +310,6 @@ void PCDM_ReadWriter_1::ReadReferences(const TCollection_ExtendedString&     aFi
   }
 }
 
-//=================================================================================================
-
 void PCDM_ReadWriter_1::ReadExtensions(
   const TCollection_ExtendedString&                 aFileName,
   NCollection_Sequence<TCollection_ExtendedString>& theExtensions,
@@ -337,8 +318,6 @@ void PCDM_ReadWriter_1::ReadExtensions(
 
   ReadUserInfo(aFileName, START_EXT, END_EXT, theExtensions, theMsgDriver);
 }
-
-//=================================================================================================
 
 void PCDM_ReadWriter_1::ReadUserInfo(const TCollection_ExtendedString&                 aFileName,
                                      const TCollection_AsciiString&                    Start,
@@ -378,8 +357,6 @@ void PCDM_ReadWriter_1::ReadUserInfo(const TCollection_ExtendedString&          
   }
   theFileDriver->Close();
 }
-
-//=================================================================================================
 
 int PCDM_ReadWriter_1::ReadDocumentVersion(const TCollection_ExtendedString&     aFileName,
                                            const occ::handle<Message_Messenger>& theMsgDriver) const

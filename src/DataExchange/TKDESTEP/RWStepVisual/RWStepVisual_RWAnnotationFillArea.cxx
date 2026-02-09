@@ -8,11 +8,7 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWAnnotationFillArea::RWStepVisual_RWAnnotationFillArea() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWAnnotationFillArea::ReadStep(
   const occ::handle<StepData_StepReaderData>&       data,
@@ -20,16 +16,13 @@ void RWStepVisual_RWAnnotationFillArea::ReadStep(
   occ::handle<Interface_Check>&                     ach,
   const occ::handle<StepVisual_AnnotationFillArea>& ent) const
 {
-  // Number of Parameter Control
+
   if (!data->CheckNbParams(num, 2, ach, "annotation_fill_area"))
     return;
-
-  // Inherited field : name
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // Own field : boundaries
   occ::handle<NCollection_HArray1<StepShape_GeometricSetSelect>> aElements;
   StepShape_GeometricSetSelect                                   aElementsItem;
   int                                                            nsub;
@@ -44,20 +37,16 @@ void RWStepVisual_RWAnnotationFillArea::ReadStep(
     }
   }
 
-  // Initialization of the read entity
   ent->Init(aName, aElements);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWAnnotationFillArea::WriteStep(
   StepData_StepWriter&                              SW,
   const occ::handle<StepVisual_AnnotationFillArea>& ent) const
 {
-  // Inherited field : name
+
   SW.Send(ent->Name());
 
-  // Own field : elements
   SW.OpenSub();
   for (int i = 1; i <= ent->NbElements(); i++)
   {
@@ -65,8 +54,6 @@ void RWStepVisual_RWAnnotationFillArea::WriteStep(
   }
   SW.CloseSub();
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWAnnotationFillArea::Share(const occ::handle<StepVisual_AnnotationFillArea>& ent,
                                               Interface_EntityIterator& iter) const

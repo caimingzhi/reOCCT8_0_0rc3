@@ -5,18 +5,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_GapTool, Standard_Transient)
 
-//=================================================================================================
-
 TopOpeBRepDS_GapTool::TopOpeBRepDS_GapTool() = default;
-
-//=================================================================================================
 
 TopOpeBRepDS_GapTool::TopOpeBRepDS_GapTool(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
 {
   Init(HDS);
 }
-
-//=================================================================================================
 
 static void StoreGToI(
   NCollection_DataMap<int, NCollection_List<occ::handle<TopOpeBRepDS_Interference>>>& GToI,
@@ -30,8 +24,6 @@ static void StoreGToI(
   }
   GToI(G).Append(I);
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_GapTool::Init(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
 {
@@ -66,8 +58,6 @@ void TopOpeBRepDS_GapTool::Init(const occ::handle<TopOpeBRepDS_HDataStructure>& 
   }
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_GapTool::Curve(const occ::handle<TopOpeBRepDS_Interference>& I,
                                  TopOpeBRepDS_Curve&                           C) const
 {
@@ -97,15 +87,11 @@ bool TopOpeBRepDS_GapTool::Curve(const occ::handle<TopOpeBRepDS_Interference>& I
   return false;
 }
 
-//=================================================================================================
-
 const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& TopOpeBRepDS_GapTool::Interferences(
   const int IP) const
 {
   return myGToI(IP);
 }
-
-//=================================================================================================
 
 const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& TopOpeBRepDS_GapTool::
   SameInterferences(const occ::handle<TopOpeBRepDS_Interference>& I) const
@@ -113,15 +99,11 @@ const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& TopOpeBRepDS_Gap
   return myGToI(I->Geometry());
 }
 
-//=================================================================================================
-
 NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& TopOpeBRepDS_GapTool::
   ChangeSameInterferences(const occ::handle<TopOpeBRepDS_Interference>& I)
 {
   return myGToI.ChangeFind(I->Geometry());
 }
-
-//=================================================================================================
 
 bool TopOpeBRepDS_GapTool::EdgeSupport(const occ::handle<TopOpeBRepDS_Interference>& I,
                                        TopoDS_Shape&                                 E) const
@@ -156,8 +138,6 @@ bool TopOpeBRepDS_GapTool::EdgeSupport(const occ::handle<TopOpeBRepDS_Interferen
   return false;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_GapTool::FacesSupport(const occ::handle<TopOpeBRepDS_Interference>& I,
                                         TopoDS_Shape&                                 F1,
                                         TopoDS_Shape&                                 F2) const
@@ -170,8 +150,6 @@ bool TopOpeBRepDS_GapTool::FacesSupport(const occ::handle<TopOpeBRepDS_Interfere
   }
   return false;
 }
-
-//=================================================================================================
 
 bool TopOpeBRepDS_GapTool::ParameterOnEdge(const occ::handle<TopOpeBRepDS_Interference>& I,
                                            const TopoDS_Shape&                           E,
@@ -207,8 +185,6 @@ bool TopOpeBRepDS_GapTool::ParameterOnEdge(const occ::handle<TopOpeBRepDS_Interf
   return false;
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_GapTool::SetParameterOnEdge(const occ::handle<TopOpeBRepDS_Interference>& I,
                                               const TopoDS_Shape&                           E,
                                               const double                                  U)
@@ -239,8 +215,6 @@ void TopOpeBRepDS_GapTool::SetParameterOnEdge(const occ::handle<TopOpeBRepDS_Int
     }
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_GapTool::SetPoint(const occ::handle<TopOpeBRepDS_Interference>& I, const int IP)
 {

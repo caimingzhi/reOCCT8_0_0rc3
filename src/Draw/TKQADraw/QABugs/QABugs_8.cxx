@@ -38,7 +38,7 @@ static int OCC162(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-static int OCC172(Draw_Interpretor& di, int /*argc*/, const char** argv)
+static int OCC172(Draw_Interpretor& di, int, const char** argv)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
   if (aContext.IsNull())
@@ -98,14 +98,11 @@ static int OCC204(Draw_Interpretor& di, int argc, const char** argv)
 
   aContext->UpdateCurrentViewer();
 
-  // printf("\n No of currents = %d", aContext->NbCurrents());
-
   aContext->InitSelected();
 
-  // int count = 1;
   while (aContext->MoreSelected())
   {
-    // printf("\n count is = %d",  count++);
+
     occ::handle<AIS_InteractiveObject> ais = aContext->SelectedInteractive();
     aContext->Remove(ais, UpdateViewer);
     aContext->InitSelected();

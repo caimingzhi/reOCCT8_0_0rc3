@@ -17,34 +17,6 @@ class Adaptor3d_HVertex;
 class IntSurf_Transition;
 class BRepBlend_Extremity;
 
-//! This class processes data resulting from
-//! Blend_CSWalking taking in consideration the Surface
-//! supporting the curve to detect the breakpoint.
-//!
-//! The criteria of distribution of points on the line are detailed
-//! because it is to be used in the calculatuon of values approached
-//! by an approximation of functions continued basing on
-//! Blend_SurfRstFunction.
-//!
-//! Thus this pseudo path necessitates 3 criteria of regrouping:
-//!
-//! 1) exit of the domain of the curve
-//!
-//! 2) exit of the domain of the surface
-//!
-//! 3) stall as there is a solution to the problem
-//! surf/surf within the domain of the surface
-//! of support of the restriction.
-//!
-//! Construction of a BRepBlend_Line between a surface and
-//! a pcurve on surface from an approached
-//! starting solution. The output entries of this builder
-//! are of the same nature as of the traditional walking
-//! but the requirements on the Line are not the same
-//! If the determination of validity range is always
-//! guaranteed, the criteria of correct repartition of sections
-//! before smoothing are not respected. The resulting Line
-//! is f(t) oriented.
 class BRepBlend_SurfRstLineBuilder
 {
 public:
@@ -181,14 +153,10 @@ private:
 
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 inline bool BRepBlend_SurfRstLineBuilder::IsDone() const
 {
   return done;
 }
-
-//=================================================================================================
 
 inline const occ::handle<BRepBlend_Line>& BRepBlend_SurfRstLineBuilder::Line() const
 {
@@ -199,14 +167,10 @@ inline const occ::handle<BRepBlend_Line>& BRepBlend_SurfRstLineBuilder::Line() c
   return line;
 }
 
-//=================================================================================================
-
 inline bool BRepBlend_SurfRstLineBuilder::DecrochStart() const
 {
   return decrochdeb;
 }
-
-//=================================================================================================
 
 inline bool BRepBlend_SurfRstLineBuilder::DecrochEnd() const
 {

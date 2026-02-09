@@ -21,14 +21,10 @@ public:
 
   Standard_EXPORT TopOpeBRepBuild_Area1dBuilder();
 
-  //! Creates a Area1dBuilder to find the areas of
-  //! the shapes described by <LS> using the classifier <LC>.
   Standard_EXPORT TopOpeBRepBuild_Area1dBuilder(TopOpeBRepBuild_PaveSet&        LS,
                                                 TopOpeBRepBuild_PaveClassifier& LC,
                                                 const bool                      ForceClass = false);
 
-  //! Sets a Area1dBuilder to find the areas of
-  //! the shapes described by <LS> using the classifier <LC>.
   Standard_EXPORT void InitAreaBuilder(TopOpeBRepBuild_LoopSet&        LS,
                                        TopOpeBRepBuild_LoopClassifier& LC,
                                        const bool                      ForceClass = false) override;

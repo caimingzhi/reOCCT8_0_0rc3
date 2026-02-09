@@ -96,10 +96,6 @@
 class AIS_InteractiveObject;
 #endif
 
-//==============================================================================
-//  VIEWER GLOBAL VARIABLES
-//==============================================================================
-
 Standard_IMPORT bool Draw_VirtualWindows;
 Standard_IMPORT bool Draw_Interprete(const char* theCommand);
 
@@ -129,7 +125,6 @@ EM_JS(char*, occJSNumberToPtr, (double thePtr), { return BigInt(thePtr); });
 EM_JS(char*, occJSNumberToPtr, (double thePtr), { return thePtr; });
   #endif
 
-//! Return DOM id of default WebGL canvas from Module.canvas.
 EM_JS(char*, occJSModuleCanvasId, (), {
   const aCanvasId = Module.canvas.id;
   const aNbBytes  = lengthBytesUTF8(aCanvasId) + 1;
@@ -138,7 +133,6 @@ EM_JS(char*, occJSModuleCanvasId, (), {
   return occJSNumberToPtr(aStrPtr);
 });
 
-//! Return DOM id of default WebGL canvas from Module.canvas.
 static TCollection_AsciiString getModuleCanvasId()
 {
   char*                   aRawId = occJSModuleCanvasId();
@@ -188,7 +182,6 @@ static struct
   Quantity_Color            GradientColor2;
   Aspect_GradientFillMethod FillMethod;
 
-  //! Sets the gradient filling for a background in a default viewer.
   void SetDefaultGradient()
   {
     for (ViewerTest_ViewerCommandsInteractiveContextMap::Iterator aCtxIter(ViewerTest_myContexts);
@@ -200,7 +193,6 @@ static struct
     }
   }
 
-  //! Sets the color used for filling a background in a default viewer.
   void SetDefaultColor()
   {
     for (ViewerTest_ViewerCommandsInteractiveContextMap::Iterator aCtxIter(ViewerTest_myContexts);
@@ -217,15 +209,9 @@ static struct
                                   Quantity_NOC_BLACK,
                                   Aspect_GradientFillMethod_None};
 
-//==============================================================================
-//  EVENT GLOBAL VARIABLES
-//==============================================================================
-
 #ifdef _WIN32
 static LRESULT WINAPI AdvViewerWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 #endif
-
-//=================================================================================================
 
 const occ::handle<WNT_WClass>& ViewerTest::WClass()
 {
@@ -244,10 +230,6 @@ const occ::handle<WNT_WClass>& ViewerTest::WClass()
   return theWClass;
 }
 
-//==============================================================================
-// function : CreateName
-// purpose  : Create numerical name for new object in theMap
-//==============================================================================
 template <typename ObjectType>
 TCollection_AsciiString CreateName(
   const NCollection_DoubleMap<TCollection_AsciiString, ObjectType>& theObjectMap,
@@ -261,7 +243,7 @@ TCollection_AsciiString CreateName(
   while (!isFound)
   {
     TCollection_AsciiString aStringKey = theDefaultString + TCollection_AsciiString(aNextKey);
-    // Look for objects with default names
+
     if (theObjectMap.IsBound1(aStringKey))
     {
       aNextKey++;
@@ -273,10 +255,6 @@ TCollection_AsciiString CreateName(
   return theDefaultString + TCollection_AsciiString(aNextKey);
 }
 
-//==============================================================================
-// structure : ViewerTest_Names
-// purpose   : Allow to operate with full view name: driverName/viewerName/viewName
-//==============================================================================
 struct ViewerTest_Names
 {
 private:
@@ -297,17 +275,12 @@ public:
 
   void SetViewName(const TCollection_AsciiString& theViewName) { myViewName = theViewName; }
 
-  //===========================================================================
-  // function : Constructor for ViewerTest_Names
-  // purpose  : Get view, viewer, driver names from custom string
-  //===========================================================================
-
   ViewerTest_Names(const TCollection_AsciiString& theInputString)
   {
     TCollection_AsciiString aName(theInputString);
     if (theInputString.IsEmpty())
     {
-      // Get current configuration
+
       if (ViewerTest_myDrivers.IsEmpty())
         myDriverName =
           CreateName<occ::handle<Graphic3d_GraphicDriver>>(ViewerTest_myDrivers,
@@ -333,7 +306,7 @@ public:
     }
     else
     {
-      // There is at least view name
+
       int aParserNumber = 0;
       for (int i = 0; i < 3; ++i)
       {
@@ -348,7 +321,7 @@ public:
       }
       if (aParserNumber == 0)
       {
-        // Only view name
+
         if (!ViewerTest::GetAISContext().IsNull())
         {
           myDriverName =
@@ -357,7 +330,7 @@ public:
         }
         else
         {
-          // There is no opened contexts here, need to create names for viewer and driver
+
           myDriverName =
             CreateName<occ::handle<Graphic3d_GraphicDriver>>(ViewerTest_myDrivers,
                                                              TCollection_AsciiString("Driver"));
@@ -370,13 +343,13 @@ public:
       }
       else if (aParserNumber == 1)
       {
-        // Here is viewerName/viewName
+
         if (!ViewerTest::GetAISContext().IsNull())
           myDriverName =
             ViewerTest_myDrivers.Find2(ViewerTest::GetAISContext()->CurrentViewer()->Driver());
         else
         {
-          // There is no opened contexts here, need to create name for driver
+
           myDriverName =
             CreateName<occ::handle<Graphic3d_GraphicDriver>>(ViewerTest_myDrivers,
                                                              TCollection_AsciiString("Driver"));
@@ -387,7 +360,7 @@ public:
       }
       else
       {
-        // Here is driverName/viewerName/viewName
+
         myDriverName = TCollection_AsciiString(aName);
 
         TCollection_AsciiString aViewerName(theInputString);
@@ -399,11 +372,6 @@ public:
     }
   }
 };
-
-//==============================================================================
-// function : FindContextByView
-// purpose  : Find AIS_InteractiveContext by View
-//==============================================================================
 
 occ::handle<AIS_InteractiveContext> FindContextByView(const occ::handle<V3d_View>& theView)
 {
@@ -418,11 +386,6 @@ occ::handle<AIS_InteractiveContext> FindContextByView(const occ::handle<V3d_View
   }
   return anAISContext;
 }
-
-//==============================================================================
-// function : IsWindowOverlapped
-// purpose  : Check if theWindow overlap another view
-//==============================================================================
 
 bool IsWindowOverlapped(const int                thePxLeft,
                         const int                thePxTop,
@@ -449,7 +412,6 @@ bool IsWindowOverlapped(const int                thePxLeft,
   return false;
 }
 
-// Workaround: to create and delete non-orthographic views outside ViewerTest
 void ViewerTest::RemoveViewName(const TCollection_AsciiString& theName)
 {
   ViewerTest_myViews.UnBind1(theName);
@@ -466,18 +428,9 @@ TCollection_AsciiString ViewerTest::GetCurrentViewName()
   return ViewerTest_myViews.Find2(ViewerTest::CurrentView());
 }
 
-//==============================================================================
-// function : ViewerInit
-// purpose  : Create the window viewer and initialize all the global variable
-//==============================================================================
-
 TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& theParams)
 {
-  // Default position and dimension of the viewer window.
-  // Note that left top corner is set to be sufficiently small to have
-  // window fit in the small screens (actual for remote desktops, see #23003).
-  // The position corresponds to the window's client area, thus some
-  // gap is added for window frame to be visible.
+
   NCollection_Vec2<double> aPxTopLeft(20, 40);
   NCollection_Vec2<double> aPxSize(409, 409);
   bool                     isDefViewSize  = true;
@@ -519,11 +472,10 @@ TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& the
                            + CreateName<occ::handle<V3d_View>>(ViewerTest_myViews, "View"));
   }
 
-  // Get graphic driver (create it or get from another view)
   const bool isNewDriver = !ViewerTest_myDrivers.IsBound1(aViewNames.GetDriverName());
   if (isNewDriver)
   {
-    // Get connection string
+
 #if defined(HAVE_XLIB)
     if (!theParams.DisplayName.IsEmpty())
     {
@@ -532,12 +484,7 @@ TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& the
     else
     {
       Aspect_XDisplay* aDispX = nullptr;
-      // create dedicated display connection instead of reusing Tk connection
-      // so that to proceed events independently through VProcessEvents()/ViewerMainLoop() callbacks
-      /*Draw_Interpretor& aCommands = Draw::GetInterpretor();
-      Tcl_Interp* aTclInterp = aCommands.Interp();
-      Tk_Window aMainWindow = Tk_MainWindow (aTclInterp);
-      aDispX = aMainWindow != NULL ? Tk_Display (aMainWindow) : NULL;*/
+
       SetDisplayConnection(new Aspect_DisplayConnection(aDispX));
     }
 #else
@@ -547,7 +494,7 @@ TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& the
     aGraphicDriver = aFactory->CreateDriver(GetDisplayConnection());
     if (isVirtual)
     {
-      // don't waste the time waiting for VSync when window is not displayed on the screen
+
       aGraphicDriver->SetVerticalSync(false);
     }
 
@@ -559,7 +506,6 @@ TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& the
     aGraphicDriver = ViewerTest_myDrivers.Find1(aViewNames.GetDriverName());
   }
 
-  // Get screen resolution
   NCollection_Vec2<int> aScreenSize;
 #if defined(_WIN32)
   RECT aWindowSize;
@@ -573,7 +519,7 @@ TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& the
 #elif defined(__APPLE__)
   GetCocoaScreenResolution(aScreenSize.x(), aScreenSize.y());
 #else
-  // not implemented
+
 #endif
 
   if (!theParams.ParentView.IsNull())
@@ -607,7 +553,6 @@ TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& the
     }
   }
 
-  // Dispose the window if input parameters are default
   if (!ViewerTest_myViews.IsEmpty() && theParams.ParentView.IsNull() && theParams.Offset.x() == 0
       && theParams.Offset.y() == 0)
   {
@@ -646,20 +591,17 @@ TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& the
     }
   }
 
-  // Get viewer name
   TCollection_AsciiString aTitle("3D View - ");
   aTitle = aTitle + aViewNames.GetViewName() + "(*)";
 
-  // Change name of current active window
   if (const occ::handle<V3d_View>& aCurrentView = ViewerTest::CurrentView())
   {
     aCurrentView->Window()->SetTitle(TCollection_AsciiString("3D View - ")
                                      + ViewerTest_myViews.Find2(aCurrentView));
   }
 
-  // Create viewer
   occ::handle<V3d_Viewer> a3DViewer;
-  // If it's the single view, we first look for empty context
+
   if (ViewerTest_myViews.IsEmpty() && !ViewerTest_myContexts.IsEmpty())
   {
     ViewerTest_ViewerCommandsInteractiveContextMap::Iterator anIter(ViewerTest_myContexts);
@@ -682,7 +624,6 @@ TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& the
                                           ViewerTest_DefaultBackground.FillMethod);
   }
 
-  // AIS context setup
   if (ViewerTest::GetAISContext().IsNull()
       || !(ViewerTest_myContexts.IsBound1(aViewNames.GetViewerName())))
   {
@@ -695,7 +636,6 @@ TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& the
     ViewerTest::ResetEventManager();
   }
 
-  // Create window
   if (!theParams.ParentView.IsNull())
   {
     VT_GetWindow() = occ::down_cast<ViewerTest_Window>(theParams.ParentView->Window());
@@ -727,9 +667,7 @@ TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& the
                                       (int)aPxSize.y());
     ViewerTest_SetCocoaEventManagerView(VT_GetWindow());
 #elif defined(__EMSCRIPTEN__)
-    // current EGL implementation in Emscripten supports only one global WebGL canvas returned by
-    // Module.canvas property; the code should be revised for handling multiple canvas elements
-    // (which is technically also possible)
+
     TCollection_AsciiString aCanvasId = getModuleCanvasId();
     if (!aCanvasId.IsEmpty())
     {
@@ -741,20 +679,17 @@ TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& the
     VT_GetWindow()->Size(aRealSize.x(), aRealSize.y());
     if (!isDefViewSize || (aRealSize.x() <= 0 && aRealSize.y() <= 0))
     {
-      // Wasm_Window wraps an existing HTML element without creating a new one.
-      // Keep size defined on a web page instead of defaulting to 409x409 (as in case of other
-      // platform), but resize canvas if vinit has been called with explicitly specified dimensions.
+
       VT_GetWindow()->SetSizeLogical(NCollection_Vec2<double>(aPxSize));
     }
 #else
-    // not implemented
+
     VT_GetWindow() = new Aspect_NeutralWindow();
     VT_GetWindow()->SetSize((int)aPxSize.x(), (int)aPxSize.y());
 #endif
     VT_GetWindow()->SetVirtual(isVirtual);
   }
 
-  // View setup
   occ::handle<V3d_View> aView;
   if (!theParams.ViewToClone.IsNull())
   {
@@ -783,11 +718,9 @@ TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& the
   ViewerTest::CurrentView(aView);
   ViewerTest_myViews.Bind(aViewNames.GetViewName(), aView);
 
-  // Setup for X11 or NT
   SetDisplayConnection(ViewerTest::CurrentView()->Viewer()->Driver()->GetDisplayConnection());
   ViewerTest_EventManager::SetupWindowCallbacks(VT_GetWindow());
 
-  // Set parameters for V3d_View and V3d_Viewer
   const occ::handle<V3d_View> aV3dView = ViewerTest::CurrentView();
   aV3dView->SetComputedMode(false);
 
@@ -811,7 +744,6 @@ TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& the
 
   VT_GetWindow()->Map();
 
-  // Set the handle of created view in the event manager
   ViewerTest::ResetEventManager();
 
   ViewerTest::CurrentView()->Redraw();
@@ -822,10 +754,6 @@ TCollection_AsciiString ViewerTest::ViewerInit(const ViewerTest_VinitParams& the
   return aViewNames.GetViewName();
 }
 
-//==============================================================================
-// function : RedrawAllViews
-// purpose  : Redraw all created views
-//==============================================================================
 void ViewerTest::RedrawAllViews()
 {
   ViewerTest_ViewerCommandsViewMap::Iterator aViewIt(ViewerTest_myViews);
@@ -835,8 +763,6 @@ void ViewerTest::RedrawAllViews()
     aView->Redraw();
   }
 }
-
-//=================================================================================================
 
 static int VDriver(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
 {
@@ -988,11 +914,6 @@ static int VDriver(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVe
   return 0;
 }
 
-//==============================================================================
-// function : Vinit
-// purpose  : Create the window viewer and initialize all the global variable
-//    Use Tcl_CreateFileHandler on UNIX to catch the X11 Viewer event
-//==============================================================================
 static int VInit(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
 {
   ViewerTest_VinitParams  aParams;
@@ -1111,7 +1032,7 @@ static int VInit(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
         aParams.ParentView = aParams.ParentView->ParentView();
       }
     }
-    // old syntax
+
     else if (ViewerTest::SplitParameter(anArg, aName, aValue))
     {
       aName.LowerCase();
@@ -1167,10 +1088,10 @@ static int VInit(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
                                                        "SetThreadDpiAwarenessContext");
       if (aDpiAware == 1)
       {
-        // DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2
+
         if (aSetDpiAware((void*)-4) == NULL)
         {
-          // DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE for older systems
+
           if (aSetDpiAware((void*)-3) == NULL)
           {
             Message::SendFail() << "Error: unable to enable DPI awareness";
@@ -1179,7 +1100,7 @@ static int VInit(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
       }
       else
       {
-        // DPI_AWARENESS_CONTEXT_UNAWARE
+
         if (aSetDpiAware((void*)-1) == NULL)
         {
           Message::SendFail() << "Error: unable to disable DPI awareness";
@@ -1220,7 +1141,6 @@ static int VInit(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
   return 0;
 }
 
-//! Parse HLR algo type.
 static bool parseHlrAlgoType(const char* theName, Prs3d_TypeOfHLR& theType)
 {
   TCollection_AsciiString aName(theName);
@@ -1239,11 +1159,6 @@ static bool parseHlrAlgoType(const char* theName, Prs3d_TypeOfHLR& theType)
   }
   return true;
 }
-
-//==============================================================================
-// function : VHLR
-// purpose  : hidden lines removal algorithm
-//==============================================================================
 
 static int VHLR(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1287,7 +1202,7 @@ static int VHLR(Draw_Interpretor& di, int argc, const char** argv)
       hasHlrOnArg = true;
       continue;
     }
-    // old syntax
+
     else if (!hasShowHiddenArg && Draw::ParseOnOff(argv[anArgIter], toShowHidden))
     {
       hasShowHiddenArg = true;
@@ -1339,7 +1254,6 @@ static int VHLR(Draw_Interpretor& di, int argc, const char** argv)
     }
   }
 
-  // redisplay shapes
   if (aView->ComputedMode() && isHLROn && toRecompute)
   {
     NCollection_List<occ::handle<AIS_InteractiveObject>> aListOfShapes;
@@ -1358,11 +1272,6 @@ static int VHLR(Draw_Interpretor& di, int argc, const char** argv)
   aView->SetComputedMode(isHLROn);
   return 0;
 }
-
-//==============================================================================
-// function : VHLRType
-// purpose  : change type of using HLR algorithm
-//==============================================================================
 
 static int VHLRType(Draw_Interpretor&, int argc, const char** argv)
 {
@@ -1391,7 +1300,7 @@ static int VHLRType(Draw_Interpretor&, int argc, const char** argv)
       ++anArgIter;
       continue;
     }
-    // old syntax
+
     else if (aTypeOfHLR == Prs3d_TOH_NotSet && parseHlrAlgoType(argv[anArgIter], aTypeOfHLR))
     {
       continue;
@@ -1453,10 +1362,6 @@ static int VHLRType(Draw_Interpretor&, int argc, const char** argv)
   return 0;
 }
 
-//==============================================================================
-// function : FindViewIdByWindowHandle
-// purpose  : Find theView Id in the map of views by window handle
-//==============================================================================
 #if defined(_WIN32) || defined(HAVE_XLIB)
 static TCollection_AsciiString FindViewIdByWindowHandle(Aspect_Drawable theWindowHandle)
 {
@@ -1471,7 +1376,6 @@ static TCollection_AsciiString FindViewIdByWindowHandle(Aspect_Drawable theWindo
 }
 #endif
 
-//! Make the view active
 void ActivateView(const TCollection_AsciiString& theViewName, bool theToUpdate = true)
 {
   if (const occ::handle<V3d_View>& aView = ViewerTest_myViews.Find1(theViewName))
@@ -1479,8 +1383,6 @@ void ActivateView(const TCollection_AsciiString& theViewName, bool theToUpdate =
     ViewerTest::ActivateView(aView, theToUpdate);
   }
 }
-
-//=================================================================================================
 
 void ViewerTest::ActivateView(const occ::handle<V3d_View>& theView, bool theToUpdate)
 {
@@ -1529,8 +1431,6 @@ void ViewerTest::ActivateView(const occ::handle<V3d_View>& theView, bool theToUp
   }
 }
 
-//=================================================================================================
-
 void ViewerTest::RemoveView(const occ::handle<V3d_View>& theView, const bool theToRemoveContext)
 {
   if (!ViewerTest_myViews.IsBound2(theView))
@@ -1542,10 +1442,6 @@ void ViewerTest::RemoveView(const occ::handle<V3d_View>& theView, const bool the
   RemoveView(aViewName, theToRemoveContext);
 }
 
-//==============================================================================
-// function : RemoveView
-// purpose  : Close and remove view from display, clear maps if necessary
-//==============================================================================
 void ViewerTest::RemoveView(const TCollection_AsciiString& theViewName, const bool isContextRemoved)
 {
   if (!ViewerTest_myViews.IsBound1(theViewName))
@@ -1567,7 +1463,6 @@ void ViewerTest::RemoveView(const TCollection_AsciiString& theViewName, const bo
     }
   }
 
-  // Activate another view if it's active now
   if (ViewerTest_myViews.Find1(theViewName) == ViewerTest::CurrentView())
   {
     if (ViewerTest_myViews.Extent() > 1)
@@ -1594,7 +1489,6 @@ void ViewerTest::RemoveView(const TCollection_AsciiString& theViewName, const bo
     }
   }
 
-  // Delete view, name will be removed too
   const TCollection_AsciiString aCopyString(theViewName);
   ViewerTest_myViews.UnBind1(theViewName);
   if (!aView->Window().IsNull())
@@ -1607,15 +1501,13 @@ void ViewerTest::RemoveView(const TCollection_AsciiString& theViewName, const bo
   XFlush((::Display*)GetDisplayConnection()->GetDisplayAspect());
 #endif
 
-  // Keep context opened only if the closed view is last to avoid
-  // unused empty contexts
   if (!aCurrentContext.IsNull())
   {
-    // Check if there are more defined views in the viewer
+
     if ((isContextRemoved || ViewerTest_myContexts.Size() != 1)
         && aCurrentContext->CurrentViewer()->DefinedViews().IsEmpty())
     {
-      // Remove driver if there is no viewers that use it
+
       bool isRemoveDriver = true;
       for (ViewerTest_ViewerCommandsInteractiveContextMap::Iterator anIter(ViewerTest_myContexts);
            anIter.More();
@@ -1652,12 +1544,7 @@ void ViewerTest::RemoveView(const TCollection_AsciiString& theViewName, const bo
   }
 }
 
-//==============================================================================
-// function : VClose
-// purpose  : Remove the view defined by its name
-//==============================================================================
-
-static int VClose(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** theArgVec)
+static int VClose(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
 {
   NCollection_List<TCollection_AsciiString> aViewList;
   if (theArgsNb > 1)
@@ -1690,7 +1577,7 @@ static int VClose(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** theAr
   }
   else
   {
-    // close active view
+
     if (ViewerTest::CurrentView().IsNull())
     {
       Message::SendFail("Error: no active view");
@@ -1708,11 +1595,6 @@ static int VClose(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** theAr
 
   return 0;
 }
-
-//==============================================================================
-// function : VActivate
-// purpose  : Activate the view defined by its ID
-//==============================================================================
 
 static int VActivate(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
 {
@@ -1765,7 +1647,6 @@ static int VActivate(Draw_Interpretor& theDi, int theArgsNb, const char** theArg
     return 1;
   }
 
-  // Check if this view exists in the viewer with the driver
   ViewerTest_Names aViewNames(aNameString);
   if (!ViewerTest_myViews.IsBound1(aViewNames.GetViewName()))
   {
@@ -1773,7 +1654,6 @@ static int VActivate(Draw_Interpretor& theDi, int theArgsNb, const char** theArg
     return 1;
   }
 
-  // Check if it is active already
   if (ViewerTest::CurrentView() == ViewerTest_myViews.Find1(aViewNames.GetViewName()))
   {
     theDi << theArgVec[0] << ": the view is active already\n";
@@ -1783,12 +1663,6 @@ static int VActivate(Draw_Interpretor& theDi, int theArgsNb, const char** theArg
   ActivateView(aViewNames.GetViewName(), toUpdate);
   return 0;
 }
-
-//==============================================================================
-// function : VViewList
-// purpose  : Print current list of views per viewer and graphic driver ID
-//           shared between viewers
-//==============================================================================
 
 static int VViewList(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
 {
@@ -1854,8 +1728,6 @@ static int VViewList(Draw_Interpretor& theDi, int theArgsNb, const char** theArg
   return 0;
 }
 
-//=================================================================================================
-
 void ViewerTest::GetMousePosition(int& theX, int& theY)
 {
   if (occ::handle<ViewerTest_EventManager> aViewCtrl = ViewerTest::CurrentEventManager())
@@ -1865,10 +1737,6 @@ void ViewerTest::GetMousePosition(int& theX, int& theY)
   }
 }
 
-//==============================================================================
-// function : VViewProj
-// purpose  : Switch view projection
-//==============================================================================
 static int VViewProj(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
   static bool                  isYup = false;
@@ -2155,12 +2023,6 @@ static int VViewProj(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
   return 0;
 }
 
-//==============================================================================
-// function : VHelp
-// purpose  : Dsiplay help on viewer Keyboead and mouse commands
-// Draw arg : No args
-//==============================================================================
-
 static int VHelp(Draw_Interpretor& di, int, const char**)
 {
   di << "=========================\n";
@@ -2220,7 +2082,7 @@ static LRESULT WINAPI AdvViewerWindowProc(HWND   theWinHandle,
   {
     case WM_CLOSE:
     {
-      // Delete view from map of views
+
       ViewerTest::RemoveView(FindViewIdByWindowHandle(theWinHandle));
       return 0;
     }
@@ -2229,7 +2091,7 @@ static LRESULT WINAPI AdvViewerWindowProc(HWND   theWinHandle,
       if (LOWORD(wParam) == WA_CLICKACTIVE || LOWORD(wParam) == WA_ACTIVE
           || ViewerTest::CurrentView().IsNull())
       {
-        // Activate inactive window
+
         if (VT_GetWindow().IsNull() || (HWND)VT_GetWindow()->HWindow() != theWinHandle)
         {
           ActivateView(FindViewIdByWindowHandle(theWinHandle));
@@ -2257,11 +2119,6 @@ static LRESULT WINAPI AdvViewerWindowProc(HWND   theWinHandle,
   return DefWindowProcW(theWinHandle, theMsg, wParam, lParam);
 }
 
-//==============================================================================
-// function : ViewerMainLoop
-// purpose  : Get a Event on the view and dispatch it
-//==============================================================================
-
 int ViewerMainLoop(int theNbArgs, const char** theArgVec)
 {
   occ::handle<ViewerTest_EventManager> aViewCtrl = ViewerTest::CurrentEventManager();
@@ -2278,7 +2135,7 @@ int ViewerMainLoop(int theNbArgs, const char** theArgVec)
   aMsg.wParam = 1;
   while (aViewCtrl->ToPickPoint())
   {
-    // Wait for a VT_ProcessButton1Press() to toggle pick to 1 or 0
+
     if (GetMessageW(&aMsg, NULL, 0, 0))
     {
       TranslateMessage(&aMsg);
@@ -2308,7 +2165,6 @@ int ViewerMainLoop(int theNbArgs, const char** theArgVec)
   Display* aDisplay = (Display*)GetDisplayConnection()->GetDisplayAspect();
   XNextEvent(aDisplay, &aReport);
 
-  // Handle event for the chosen display connection
   switch (aReport.type)
   {
     case ClientMessage:
@@ -2316,7 +2172,7 @@ int ViewerMainLoop(int theNbArgs, const char** theArgVec)
       if ((Atom)aReport.xclient.data.l[0]
           == GetDisplayConnection()->GetAtom(Aspect_XA_DELETE_WINDOW))
       {
-        // Close the window
+
         ViewerTest::RemoveView(FindViewIdByWindowHandle(aReport.xclient.window));
         return toPick ? 0 : 1;
       }
@@ -2324,7 +2180,7 @@ int ViewerMainLoop(int theNbArgs, const char** theArgVec)
     }
     case FocusIn:
     {
-      // Activate inactive view
+
       Window aWindow = !VT_GetWindow().IsNull() ? VT_GetWindow()->XWindow() : 0;
       if (aWindow != aReport.xfocus.window)
       {
@@ -2345,10 +2201,6 @@ int ViewerMainLoop(int theNbArgs, const char** theArgVec)
   return (!toPick || ViewerTest::CurrentEventManager()->ToPickPoint()) ? 1 : 0;
 }
 
-//==============================================================================
-// function : VProcessEvents
-// purpose  : manage the event in the Viewer window (see Tcl_CreateFileHandler())
-//==============================================================================
 static void VProcessEvents(ClientData theDispX, int)
 {
   Display*                              aDispX = (Display*)theDispX;
@@ -2371,7 +2223,6 @@ static void VProcessEvents(ClientData theDispX, int)
     return;
   }
 
-  // process new events in queue
   SetDisplayConnection(aDispConn);
   int aNbRemain = 0;
   for (int aNbEventsMax = XPending(aDispX), anEventIter(0);;)
@@ -2389,12 +2240,6 @@ static void VProcessEvents(ClientData theDispX, int)
     }
   }
 
-  // Listening X events through Tcl_CreateFileHandler() callback is fragile,
-  // it is possible that new events will arrive to queue before the end of this callback
-  // so that either this callback should go into an infinite loop (blocking processing of other
-  // events) or to keep unprocessed events till the next queue update (which can arrive not soon).
-  // Sending a dummy event in this case is a simple workaround (still, it is possible that new event
-  // will be queued in-between).
   if (aNbRemain != 0)
   {
     XEvent aDummyEvent;
@@ -2411,18 +2256,15 @@ static void VProcessEvents(ClientData theDispX, int)
   }
 }
 #elif !defined(__APPLE__)
-//=================================================================================================
 
 int ViewerMainLoop(int, const char**)
 {
-  // unused
+
   return 0;
 }
 #endif
 
-//=================================================================================================
-
-static int VFit(Draw_Interpretor& /*theDi*/, int theArgNb, const char** theArgv)
+static int VFit(Draw_Interpretor&, int theArgNb, const char** theArgv)
 {
   const occ::handle<V3d_View> aView = ViewerTest::CurrentView();
   if (aView.IsNull())
@@ -2459,11 +2301,6 @@ static int VFit(Draw_Interpretor& /*theDi*/, int theArgNb, const char** theArgv)
   return 0;
 }
 
-//=======================================================================
-// function : VFitArea
-// purpose  : Fit view to show area located between two points
-//         : given in world 2D or 3D coordinates.
-//=======================================================================
 static int VFitArea(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
   occ::handle<V3d_View> aView = ViewerTest::CurrentView();
@@ -2473,7 +2310,6 @@ static int VFitArea(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     return 1;
   }
 
-  // Parse arguments.
   gp_Pnt aWorldPnt1(0.0, 0.0, 0.0);
   gp_Pnt aWorldPnt2(0.0, 0.0, 0.0);
 
@@ -2500,12 +2336,10 @@ static int VFitArea(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     return 1;
   }
 
-  // Convert model coordinates to view space
   occ::handle<Graphic3d_Camera> aCamera   = aView->Camera();
   gp_Pnt                        aViewPnt1 = aCamera->ConvertWorld2View(aWorldPnt1);
   gp_Pnt                        aViewPnt2 = aCamera->ConvertWorld2View(aWorldPnt2);
 
-  // Determine fit area
   gp_Pnt2d aMinCorner(std::min(aViewPnt1.X(), aViewPnt2.X()),
                       std::min(aViewPnt1.Y(), aViewPnt2.Y()));
   gp_Pnt2d aMaxCorner(std::max(aViewPnt1.X(), aViewPnt2.X()),
@@ -2523,12 +2357,7 @@ static int VFitArea(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
   return 0;
 }
 
-//==============================================================================
-// function : VZFit
-// purpose  : ZFitall, no DRAW arguments
-// Draw arg : No args
-//==============================================================================
-static int VZFit(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** theArgVec)
+static int VZFit(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
 {
   const occ::handle<V3d_View>& aCurrentView = ViewerTest::CurrentView();
 
@@ -2557,8 +2386,6 @@ static int VZFit(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** theArg
 
   return 0;
 }
-
-//=================================================================================================
 
 static int VRepaint(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
@@ -2633,12 +2460,6 @@ static int VRepaint(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   return 0;
 }
 
-//==============================================================================
-// function : VClear
-// purpose  : Remove all the object from the viewer
-// Draw arg : No args
-//==============================================================================
-
 static int VClear(Draw_Interpretor&, int, const char**)
 {
   occ::handle<V3d_View> V = ViewerTest::CurrentView();
@@ -2646,8 +2467,6 @@ static int VClear(Draw_Interpretor&, int, const char**)
     ViewerTest::Clear();
   return 0;
 }
-
-//=================================================================================================
 
 static int VPick(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
@@ -2664,13 +2483,11 @@ static int VPick(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 
   while (ViewerMainLoop(theNbArgs, theArgVec))
   {
-    //
   }
 
   return 0;
 }
 
-//! Parse image fill method.
 static bool parseImageMode(const TCollection_AsciiString& theName, Aspect_FillMethod& theMode)
 {
   TCollection_AsciiString aName = theName;
@@ -2698,7 +2515,6 @@ static bool parseImageMode(const TCollection_AsciiString& theName, Aspect_FillMe
   return true;
 }
 
-//! Parse gradient fill method.
 static bool parseGradientMode(const TCollection_AsciiString& theName,
                               Aspect_GradientFillMethod&     theMode)
 {
@@ -2750,8 +2566,6 @@ static bool parseGradientMode(const TCollection_AsciiString& theName,
   }
   return true;
 }
-
-//=================================================================================================
 
 static int VBackground(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -3123,8 +2937,6 @@ static int VBackground(Draw_Interpretor& theDI, int theNbArgs, const char** theA
   return 0;
 }
 
-//=================================================================================================
-
 static int VScale(Draw_Interpretor& di, int argc, const char** argv)
 {
   occ::handle<V3d_View> V3dView = ViewerTest::CurrentView();
@@ -3140,9 +2952,7 @@ static int VScale(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
-static int VZBuffTrihedron(Draw_Interpretor& /*theDI*/, int theArgNb, const char** theArgVec)
+static int VZBuffTrihedron(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
   occ::handle<V3d_View> aView = ViewerTest::CurrentView();
   if (aView.IsNull())
@@ -3326,9 +3136,7 @@ static int VZBuffTrihedron(Draw_Interpretor& /*theDI*/, int theArgNb, const char
   return 0;
 }
 
-//=================================================================================================
-
-static int VRotate(Draw_Interpretor& /*theDi*/, int theArgNb, const char** theArgVec)
+static int VRotate(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
   occ::handle<V3d_View> aView = ViewerTest::CurrentView();
   if (aView.IsNull())
@@ -3406,11 +3214,6 @@ static int VRotate(Draw_Interpretor& /*theDi*/, int theArgNb, const char** theAr
   return 1;
 }
 
-//==============================================================================
-// function : VZoom
-// purpose  : View zoom in / out (relative to current zoom)
-//==============================================================================
-
 static int VZoom(Draw_Interpretor& di, int argc, const char** argv)
 {
   occ::handle<V3d_View> V3dView = ViewerTest::CurrentView();
@@ -3437,11 +3240,6 @@ static int VZoom(Draw_Interpretor& di, int argc, const char** argv)
   }
 }
 
-//==============================================================================
-// function : VPan
-// purpose  : View panning (in pixels)
-//==============================================================================
-
 static int VPan(Draw_Interpretor& di, int argc, const char** argv)
 {
   occ::handle<V3d_View> V3dView = ViewerTest::CurrentView();
@@ -3460,11 +3258,7 @@ static int VPan(Draw_Interpretor& di, int argc, const char** argv)
   }
 }
 
-//==============================================================================
-// function : VPlace
-// purpose  : Place the point (in pixels) at the center of the window
-//==============================================================================
-static int VPlace(Draw_Interpretor& /*theDi*/, int theArgNb, const char** theArgs)
+static int VPlace(Draw_Interpretor&, int theArgNb, const char** theArgs)
 {
   occ::handle<V3d_View> aView = ViewerTest::CurrentView();
   if (aView.IsNull())
@@ -3502,7 +3296,7 @@ static int VColorScale(Draw_Interpretor& theDI, int theArgNb, const char** theAr
   occ::handle<AIS_ColorScale> aColorScale;
   if (GetMapOfAIS().IsBound2(theArgVec[1]))
   {
-    // find existing object
+
     aColorScale = occ::down_cast<AIS_ColorScale>(GetMapOfAIS().Find2(theArgVec[1]));
     if (aColorScale.IsNull())
     {
@@ -4020,10 +3814,6 @@ static int VColorScale(Draw_Interpretor& theDI, int theArgNb, const char** theAr
   return 0;
 }
 
-//==============================================================================
-// function : VGraduatedTrihedron
-// purpose  : Displays or hides a graduated trihedron
-//==============================================================================
 static bool GetColor(const TCollection_AsciiString& theValue, Quantity_Color& theColor)
 {
   Quantity_NameOfColor    aColorName;
@@ -4037,7 +3827,7 @@ static bool GetColor(const TCollection_AsciiString& theValue, Quantity_Color& th
   return true;
 }
 
-static int VGraduatedTrihedron(Draw_Interpretor& /*theDi*/, int theArgNum, const char** theArgs)
+static int VGraduatedTrihedron(Draw_Interpretor&, int theArgNum, const char** theArgs)
 {
   if (theArgNum < 2)
   {
@@ -4071,7 +3861,6 @@ static int VGraduatedTrihedron(Draw_Interpretor& /*theDi*/, int theArgNum, const
     aMapOfArgs(aParseKey)->Append(anArg);
   }
 
-  // Check parameters
   for (NCollection_DataMap<TCollection_AsciiString,
                            occ::handle<NCollection_HSequence<TCollection_AsciiString>>>::Iterator
          aMapIt(aMapOfArgs);
@@ -4081,20 +3870,17 @@ static int VGraduatedTrihedron(Draw_Interpretor& /*theDi*/, int theArgNum, const
     const TCollection_AsciiString&                                     aKey   = aMapIt.Key();
     const occ::handle<NCollection_HSequence<TCollection_AsciiString>>& anArgs = aMapIt.Value();
 
-    // Bool key, without arguments
     if ((aKey.IsEqual("on") || aKey.IsEqual("off")) && anArgs->IsEmpty())
     {
       continue;
     }
 
-    // One argument
     if ((aKey.IsEqual("xname") || aKey.IsEqual("yname") || aKey.IsEqual("zname"))
         && anArgs->Length() == 1)
     {
       continue;
     }
 
-    // On/off arguments
     if ((aKey.IsEqual("xdrawname") || aKey.IsEqual("ydrawname") || aKey.IsEqual("zdrawname")
          || aKey.IsEqual("xdrawticks") || aKey.IsEqual("ydrawticks") || aKey.IsEqual("zdrawticks")
          || aKey.IsEqual("xdrawvalues") || aKey.IsEqual("ydrawvalues")
@@ -4105,7 +3891,6 @@ static int VGraduatedTrihedron(Draw_Interpretor& /*theDi*/, int theArgNum, const
       continue;
     }
 
-    // One string argument
     if ((aKey.IsEqual("xnamecolor") || aKey.IsEqual("ynamecolor") || aKey.IsEqual("znamecolor")
          || aKey.IsEqual("xcolor") || aKey.IsEqual("ycolor") || aKey.IsEqual("zcolor"))
         && anArgs->Length() == 1 && !anArgs->Value(1).IsIntegerValue()
@@ -4114,7 +3899,6 @@ static int VGraduatedTrihedron(Draw_Interpretor& /*theDi*/, int theArgNum, const
       continue;
     }
 
-    // One integer argument
     if ((aKey.IsEqual("xticks") || aKey.IsEqual("yticks") || aKey.IsEqual("zticks")
          || aKey.IsEqual("xticklength") || aKey.IsEqual("yticklength")
          || aKey.IsEqual("zticklength") || aKey.IsEqual("xnameoffset")
@@ -4126,14 +3910,12 @@ static int VGraduatedTrihedron(Draw_Interpretor& /*theDi*/, int theArgNum, const
       continue;
     }
 
-    // One real argument
     if (aKey.IsEqual("arrowlength") && anArgs->Length() == 1
         && (anArgs->Value(1).IsIntegerValue() || anArgs->Value(1).IsRealValue(true)))
     {
       continue;
     }
 
-    // Two string arguments
     if ((aKey.IsEqual("namefont") || aKey.IsEqual("valuesfont")) && anArgs->Length() == 1
         && !anArgs->Value(1).IsIntegerValue() && !anArgs->Value(1).IsRealValue(true))
     {
@@ -4160,14 +3942,13 @@ static int VGraduatedTrihedron(Draw_Interpretor& /*theDi*/, int theArgNum, const
   bool                         toDisplay = true;
   Quantity_Color               aColor;
   Graphic3d_GraduatedTrihedron aTrihedronData;
-  // Process parameters
+
   occ::handle<NCollection_HSequence<TCollection_AsciiString>> aValues;
   if (aMapOfArgs.Find("off", aValues))
   {
     toDisplay = false;
   }
 
-  // AXES NAMES
   if (aMapOfArgs.Find("xname", aValues))
   {
     aTrihedronData.ChangeXAxisAspect().SetName(aValues->Value(1));
@@ -4205,7 +3986,6 @@ static int VGraduatedTrihedron(Draw_Interpretor& /*theDi*/, int theArgNum, const
     aTrihedronData.ChangeZAxisAspect().SetNameOffset(aValues->Value(1).IntegerValue());
   }
 
-  // COLORS
   if (aMapOfArgs.Find("xnamecolor", aValues))
   {
     if (!GetColor(aValues->Value(1), aColor))
@@ -4261,7 +4041,6 @@ static int VGraduatedTrihedron(Draw_Interpretor& /*theDi*/, int theArgNum, const
     aTrihedronData.ChangeZAxisAspect().SetColor(aColor);
   }
 
-  // TICKMARKS
   if (aMapOfArgs.Find("xticks", aValues))
   {
     aTrihedronData.ChangeXAxisAspect().SetTickmarksNumber(aValues->Value(1).IntegerValue());
@@ -4299,7 +4078,6 @@ static int VGraduatedTrihedron(Draw_Interpretor& /*theDi*/, int theArgNum, const
     aTrihedronData.ChangeZAxisAspect().SetDrawTickmarks(aValues->Value(1).IsEqual("on"));
   }
 
-  // VALUES
   if (aMapOfArgs.Find("xdrawvalues", aValues))
   {
     aTrihedronData.ChangeXAxisAspect().SetDrawValues(aValues->Value(1).IsEqual("on"));
@@ -4325,13 +4103,11 @@ static int VGraduatedTrihedron(Draw_Interpretor& /*theDi*/, int theArgNum, const
     aTrihedronData.ChangeZAxisAspect().SetValuesOffset(aValues->Value(1).IntegerValue());
   }
 
-  // ARROWS
   if (aMapOfArgs.Find("arrowlength", aValues))
   {
     aTrihedronData.SetArrowsLength((float)aValues->Value(1).RealValue());
   }
 
-  // FONTS
   if (aMapOfArgs.Find("namefont", aValues))
   {
     aTrihedronData.SetNamesFont(aValues->Value(1));
@@ -4350,7 +4126,6 @@ static int VGraduatedTrihedron(Draw_Interpretor& /*theDi*/, int theArgNum, const
     aTrihedronData.SetDrawAxes(aValues->Value(1).IsEqual("on"));
   }
 
-  // The final step: display of erase trihedron
   if (toDisplay)
   {
     ViewerTest::CurrentView()->GraduatedTrihedronDisplay(aTrihedronData);
@@ -4365,8 +4140,6 @@ static int VGraduatedTrihedron(Draw_Interpretor& /*theDi*/, int theArgNum, const
 
   return 0;
 }
-
-//=================================================================================================
 
 static int VTile(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -4457,7 +4230,6 @@ static int VTile(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
   return 0;
 }
 
-//! Format ZLayer ID.
 inline const char* formZLayerId(const int theLayerId)
 {
   switch (theLayerId)
@@ -4478,7 +4250,6 @@ inline const char* formZLayerId(const int theLayerId)
   return "";
 }
 
-//! Print the ZLayer information.
 inline void printZLayerInfo(Draw_Interpretor& theDI, const Graphic3d_ZLayerSettings& theLayer)
 {
   if (!theLayer.Name().IsEmpty())
@@ -4504,10 +4275,6 @@ inline void printZLayerInfo(Draw_Interpretor& theDI, const Graphic3d_ZLayerSetti
   }
 }
 
-//==============================================================================
-// function : VZLayer
-// purpose  : Test z layer operations for v3d viewer
-//==============================================================================
 static int VZLayer(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
   occ::handle<AIS_InteractiveContext> aContextAIS = ViewerTest::GetAISContext();
@@ -4559,12 +4326,11 @@ static int VZLayer(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec
   Graphic3d_ZLayerId anOtherLayerId = Graphic3d_ZLayerId_UNKNOWN;
   for (; anArgIter < theArgNb; ++anArgIter)
   {
-    // perform operation
+
     TCollection_AsciiString anArg(theArgVec[anArgIter]);
     anArg.LowerCase();
     if (anUpdateTool.parseRedrawMode(anArg))
     {
-      //
     }
     else if (anArg == "-add" || anArg == "add")
     {
@@ -4624,7 +4390,6 @@ static int VZLayer(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec
         return 1;
       }
 
-      // move all object displayed in removing layer to default layer
       for (NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>,
                                  TCollection_AsciiString>::Iterator anObjIter(GetMapOfAIS());
            anObjIter.More();
@@ -4838,16 +4603,11 @@ static int VZLayer(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec
   return 0;
 }
 
-// The interactive presentation of 2d layer item
-// for "vlayerline" command it provides a presentation of
-// line with user-defined linewidth, linetype and transparency.
 class V3d_LineItem : public AIS_InteractiveObject
 {
 public:
-  // CASCADE RTTI
   DEFINE_STANDARD_RTTI_INLINE(V3d_LineItem, AIS_InteractiveObject)
 
-  // constructor
   Standard_EXPORT V3d_LineItem(double            X1,
                                double            Y1,
                                double            X2,
@@ -4869,7 +4629,6 @@ private:
   double            myWidth;
 };
 
-// default constructor for line item
 V3d_LineItem::V3d_LineItem(double            X1,
                            double            Y1,
                            double            X2,
@@ -4887,7 +4646,6 @@ V3d_LineItem::V3d_LineItem(double            X1,
   SetTransparency(1 - theTransp);
 }
 
-// render line
 void V3d_LineItem::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                            const occ::handle<Prs3d_Presentation>& thePresentation,
                            const int)
@@ -4906,14 +4664,9 @@ void V3d_LineItem::Compute(const occ::handle<PrsMgr_PresentationManager>&,
   aGroup->AddPrimitiveArray(aPrim);
 }
 
-//=============================================================================
-// function : VLayerLine
-// purpose  : Draws line in the v3d view layer with given attributes: linetype,
-//         : linewidth, transparency coefficient
-//============================================================================
 static int VLayerLine(Draw_Interpretor& di, int argc, const char** argv)
 {
-  // get the active view
+
   occ::handle<V3d_View> aView = ViewerTest::CurrentView();
   if (aView.IsNull())
   {
@@ -4936,7 +4689,7 @@ static int VLayerLine(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
-  // get the input params
+
   double X1 = Draw::Atof(argv[1]);
   double Y1 = Draw::Atof(argv[2]);
   double X2 = Draw::Atof(argv[3]);
@@ -4945,11 +4698,9 @@ static int VLayerLine(Draw_Interpretor& di, int argc, const char** argv)
   double aWidth        = 0.5;
   double aTransparency = 1.0;
 
-  // has width
   if (argc > 5)
     aWidth = Draw::Atof(argv[5]);
 
-  // select appropriate line type
   Aspect_TypeOfLine aLineType = Aspect_TOL_SOLID;
   if (argc > 6 && !ViewerTest::ParseLineType(argv[6], aLineType))
   {
@@ -4957,7 +4708,6 @@ static int VLayerLine(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  // has transparency
   if (argc > 7)
   {
     aTransparency = Draw::Atof(argv[7]);
@@ -4982,9 +4732,7 @@ static int VLayerLine(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
-static int VGrid(Draw_Interpretor& /*theDI*/, int theArgNb, const char** theArgVec)
+static int VGrid(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
   occ::handle<V3d_View>   aView   = ViewerTest::CurrentView();
   occ::handle<V3d_Viewer> aViewer = ViewerTest::GetViewerFromContext();
@@ -5224,8 +4972,6 @@ static int VGrid(Draw_Interpretor& /*theDI*/, int theArgNb, const char** theArgV
   return 0;
 }
 
-//=================================================================================================
-
 static int VPriviledgedPlane(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
   if (theArgNb != 1 && theArgNb != 7 && theArgNb != 10)
@@ -5235,7 +4981,6 @@ static int VPriviledgedPlane(Draw_Interpretor& theDI, int theArgNb, const char**
     return 1;
   }
 
-  // get the active viewer
   occ::handle<V3d_Viewer> aViewer = ViewerTest::GetViewerFromContext();
   if (aViewer.IsNull())
   {
@@ -5284,11 +5029,9 @@ static int VPriviledgedPlane(Draw_Interpretor& theDI, int theArgNb, const char**
   return 0;
 }
 
-//=================================================================================================
-
 static int VConvert(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
-  // get the active view
+
   occ::handle<V3d_View> aView = ViewerTest::CurrentView();
   if (aView.IsNull())
   {
@@ -5305,7 +5048,6 @@ static int VConvert(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     Grid
   } aMode = Model;
 
-  // access coordinate arguments
   NCollection_Sequence<double> aCoord;
   int                          anArgIdx = 1;
   for (; anArgIdx < 4 && anArgIdx < theArgNb; ++anArgIdx)
@@ -5318,7 +5060,6 @@ static int VConvert(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     aCoord.Append(anArg.RealValue());
   }
 
-  // non-numeric argument too early
   if (aCoord.IsEmpty())
   {
     Message::SendFail("Error: wrong number of arguments! See usage:");
@@ -5326,7 +5067,6 @@ static int VConvert(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     return 1;
   }
 
-  // collect all other arguments and options
   for (; anArgIdx < theArgNb; ++anArgIdx)
   {
     TCollection_AsciiString anArg(theArgVec[anArgIdx]);
@@ -5347,7 +5087,6 @@ static int VConvert(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     }
   }
 
-  // complete input checks
   if ((aCoord.Length() == 1 && theArgNb > 3) || (aCoord.Length() == 2 && theArgNb > 4)
       || (aCoord.Length() == 3 && theArgNb > 5))
   {
@@ -5359,7 +5098,6 @@ static int VConvert(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
   double aXYZ[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
   int    aXYp[2] = {0, 0};
 
-  // convert one-dimensional coordinate
   if (aCoord.Length() == 1)
   {
     switch (aMode)
@@ -5377,7 +5115,6 @@ static int VConvert(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     }
   }
 
-  // convert 2D coordinates from projection or view reference space
   if (aCoord.Length() == 2)
   {
     switch (aMode)
@@ -5422,7 +5159,6 @@ static int VConvert(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     }
   }
 
-  // convert 3D coordinates from view reference space
   else if (aCoord.Length() == 3)
   {
     switch (aMode)
@@ -5447,11 +5183,9 @@ static int VConvert(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
   return 0;
 }
 
-//=================================================================================================
-
 static int VFps(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
-  // get the active view
+
   occ::handle<V3d_View> aView = ViewerTest::CurrentView();
   if (aView.IsNull())
   {
@@ -5490,11 +5224,8 @@ static int VFps(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
     aFramesNb = 100;
   }
 
-  // the time is meaningless for first call
-  // due to async OpenGl rendering
   aView->Redraw();
 
-  // redraw view in loop to estimate average values
   OSD_Timer aTimer;
   aTimer.Start();
   int aFrameIter = 1;
@@ -5515,18 +5246,15 @@ static int VFps(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
   const double aFpsAver = double(aFrameIter) / aTime;
   const double aCpuAver = aCpu / double(aFrameIter);
 
-  // return statistics
   theDI << "FPS: " << aFpsAver << "\n"
         << "CPU: " << (1000.0 * aCpuAver) << " msec\n";
 
-  // compute additional statistics in ray-tracing mode
   const Graphic3d_RenderingParams& aParams = aView->RenderingParams();
   if (aParams.Method == Graphic3d_RM_RAYTRACING)
   {
     NCollection_Vec2<int> aWinSize(0, 0);
     aView->Window()->Size(aWinSize.x(), aWinSize.y());
 
-    // 1 shadow ray and 1 secondary ray pew each bounce
     const double aMRays =
       aWinSize.x() * aWinSize.y() * aFpsAver * aParams.RaytracingDepth * 2 / 1.0e6f;
     theDI << "MRays/sec (upper bound): " << aMRays << "\n";
@@ -5535,11 +5263,9 @@ static int VFps(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
   return 0;
 }
 
-//=================================================================================================
-
 static int VMemGpu(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
-  // get the context
+
   occ::handle<AIS_InteractiveContext> aContextAIS = ViewerTest::GetAISContext();
   if (aContextAIS.IsNull())
   {
@@ -5574,11 +5300,9 @@ static int VMemGpu(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec
   return 0;
 }
 
-//=================================================================================================
-
 static int VReadPixel(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
-  // get the active view
+
   occ::handle<V3d_View> aView = ViewerTest::CurrentView();
   if (aView.IsNull())
   {
@@ -5672,9 +5396,6 @@ static int VReadPixel(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     return 1;
   }
 
-  // redirect possible warning messages that could have been added by ToPixMap
-  // into the Tcl interpreter (via DefaultMessenger) to cout, so that they do not
-  // contaminate result of the command
   const char* aWarnLog = theDI.Result();
   if (aWarnLog != nullptr && aWarnLog[0] != '\0')
   {
@@ -5750,11 +5471,9 @@ static int VReadPixel(Draw_Interpretor& theDI, int theArgNb, const char** theArg
   return 0;
 }
 
-//! Auxiliary presentation for an image plane.
 class ViewerTest_ImagePrs : public AIS_InteractiveObject
 {
 public:
-  //! Main constructor.
   ViewerTest_ImagePrs(const occ::handle<Image_PixMap>& theImage,
                       const double                     theWidth,
                       const double                     theHeight,
@@ -5808,10 +5527,8 @@ public:
     }
   }
 
-  //! Returns TRUE for accepted display modes.
   bool AcceptDisplayMode(const int theMode) const override { return theMode == 0 || theMode == 1; }
 
-  //! Compute presentation.
   void Compute(const occ::handle<PrsMgr_PresentationManager>&,
                const occ::handle<Prs3d_Presentation>& thePrs,
                const int                              theMode) override
@@ -5841,7 +5558,6 @@ public:
     }
   }
 
-  //! Compute selection.
   void ComputeSelection(const occ::handle<SelectMgr_Selection>& theSel, const int theMode) override
   {
     if (theMode == 0)
@@ -5861,11 +5577,6 @@ private:
   double                                  myWidth;
   double                                  myHeight;
 };
-
-//==============================================================================
-// function : VDiffImage
-// purpose  : The draw-command compares two images.
-//==============================================================================
 
 static int VDiffImage(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -5989,7 +5700,6 @@ static int VDiffImage(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     return 1;
   }
 
-  // compare the images
   Image_Diff aComparer;
   int        aDiffColorsNb = -1;
   if (aComparer.Init(anImgRef, anImgNew, toBlackWhite == 1))
@@ -6000,7 +5710,6 @@ static int VDiffImage(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     theDI << aDiffColorsNb << "\n";
   }
 
-  // save image of difference
   occ::handle<Image_AlienPixMap> aDiff;
   if (aDiffColorsNb > 0 && (!aDiffImagePath.IsEmpty() || !aPrsNameDiff.IsEmpty()))
   {
@@ -6097,15 +5806,6 @@ static int VDiffImage(Draw_Interpretor& theDI, int theArgNb, const char** theArg
   return 0;
 }
 
-//=======================================================================
-// function : VSelect
-// purpose  : Emulates different types of selection by mouse:
-//           1) single click selection
-//           2) selection with rectangle having corners at pixel positions (x1,y1) and (x2,y2)
-//           3) selection with polygon having corners at
-//           pixel positions (x1,y1),...,(xn,yn)
-//           4) any of these selections with shift button pressed
-//=======================================================================
 static int VSelect(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
   const occ::handle<AIS_InteractiveContext>& aCtx = ViewerTest::GetAISContext();
@@ -6202,10 +5902,6 @@ static int VSelect(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
   return 0;
 }
 
-//=======================================================================
-// function : VSelectPriority
-// purpose  : Prints or sets the selection priority for an object
-//=======================================================================
 static int VSelectPriority(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
@@ -6276,10 +5972,6 @@ static int VSelectPriority(Draw_Interpretor& theDI, int theNbArgs, const char** 
   return 0;
 }
 
-//=======================================================================
-// function : VMoveTo
-// purpose  : Emulates cursor movement to defined pixel position
-//=======================================================================
 static int VMoveTo(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   const occ::handle<AIS_InteractiveContext>& aContext = ViewerTest::GetAISContext();
@@ -6356,8 +6048,6 @@ static int VMoveTo(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVe
   theDI << aTopPnt.X() << " " << aTopPnt.Y() << " " << aTopPnt.Z();
   return 0;
 }
-
-//=================================================================================================
 
 static int VSelectByAxis(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -6469,7 +6159,6 @@ static int VSelectByAxis(Draw_Interpretor& theDI, int theNbArgs, const char** th
     bool wasAuto = aContext->GetAutoActivateSelection();
     aContext->SetAutoActivateSelection(false);
 
-    // Display axis
     Quantity_Color                   anAxisColor = Quantity_NOC_GREEN;
     occ::handle<Geom_Axis2Placement> anAx2Axis =
       new Geom_Axis2Placement(gp_Ax2(anAxisLocation, anAxisDirection));
@@ -6477,7 +6166,6 @@ static int VSelectByAxis(Draw_Interpretor& theDI, int theNbArgs, const char** th
     anAISAxis->SetColor(anAxisColor);
     ViewerTest::Display(TCollection_AsciiString(aName) + "_axis", anAISAxis, false);
 
-    // Display axis start point
     occ::handle<AIS_Point> anAISStartPnt = new AIS_Point(new Geom_CartesianPoint(anAxisLocation));
     anAISStartPnt->SetMarker(Aspect_TOM_O);
     anAISStartPnt->SetColor(anAxisColor);
@@ -6489,7 +6177,6 @@ static int VSelectByAxis(Draw_Interpretor& theDI, int theNbArgs, const char** th
     {
       const gp_Pnt& aPoint = aPntIter.Value();
 
-      // Display normals in intersection points
       if (toShowNormal)
       {
         const NCollection_Vec3<float>& aNormal       = aNormals.Value(anIndex + 1);
@@ -6507,7 +6194,6 @@ static int VSelectByAxis(Draw_Interpretor& theDI, int theNbArgs, const char** th
         }
       }
 
-      // Display intersection points
       occ::handle<Geom_CartesianPoint> anIntersectPnt      = new Geom_CartesianPoint(aPoint);
       occ::handle<AIS_Point>           anAISIntersectPoint = new AIS_Point(anIntersectPnt);
       anAISIntersectPoint->SetMarker(Aspect_TOM_PLUS);
@@ -6532,16 +6218,14 @@ static int VSelectByAxis(Draw_Interpretor& theDI, int theNbArgs, const char** th
 
 namespace
 {
-  //! Global map storing all animations registered in ViewerTest.
+
   static NCollection_DataMap<TCollection_AsciiString, occ::handle<AIS_Animation>>
     ViewerTest_AnimationTimelineMap;
 
-  //! The animation calling the Draw Harness command.
   class ViewerTest_AnimationProc : public AIS_Animation
   {
     DEFINE_STANDARD_RTTI_INLINE(ViewerTest_AnimationProc, AIS_Animation)
   public:
-    //! Main constructor.
     ViewerTest_AnimationProc(const TCollection_AsciiString& theAnimationName,
                              Draw_Interpretor*              theDI,
                              const TCollection_AsciiString& theCommand)
@@ -6549,11 +6233,9 @@ namespace
           myDrawInter(theDI),
           myCommand(theCommand)
     {
-      //
     }
 
   protected:
-    //! Evaluate the command.
     void update(const AIS_AnimationProgress& theProgress) override
     {
       TCollection_AsciiString aCmd = myCommand;
@@ -6565,8 +6247,6 @@ namespace
       myDrawInter->Eval(aCmd.ToCString());
     }
 
-    //! Find the keyword in the command and replace it with value.
-    //! @return the position of the keyword to pass value
     void replace(TCollection_AsciiString&       theCmd,
                  const TCollection_AsciiString& theKey,
                  const TCollection_AsciiString& theVal)
@@ -6600,7 +6280,6 @@ namespace
     TCollection_AsciiString myCommand;
   };
 
-  //! Auxiliary animation holder.
   class ViewerTest_AnimationHolder : public AIS_AnimationCamera
   {
     DEFINE_STANDARD_RTTI_INLINE(ViewerTest_AnimationHolder, AIS_AnimationCamera)
@@ -6623,7 +6302,6 @@ namespace
       Add(theAnim);
     }
 
-    //! Start playback.
     void StartTimer(const double theStartPts,
                     const double thePlaySpeed,
                     const bool   theToUpdate,
@@ -6636,25 +6314,20 @@ namespace
       }
     }
 
-    //! Pause animation.
     void Pause() override
     {
       myState = AnimationState_Paused;
-      // default implementation would stop all children,
-      // but we want to keep wrapped animation paused
+
       myAnimations.First()->Pause();
       abortPlayback();
     }
 
-    //! Stop animation.
     void Stop() override
     {
       base_type::Stop();
       abortPlayback();
     }
 
-    //! Process one step of the animation according to the input time progress, including all
-    //! children.
     void updateWithChildren(const AIS_AnimationProgress& thePosition) override
     {
       occ::handle<V3d_View> aView = myView;
@@ -6679,7 +6352,6 @@ namespace
     }
   };
 
-  //! Replace the animation with the new one.
   static void replaceAnimation(const occ::handle<AIS_Animation>& theParentAnimation,
                                occ::handle<AIS_Animation>&       theAnimation,
                                const occ::handle<AIS_Animation>& theAnimationNew)
@@ -6697,7 +6369,6 @@ namespace
     theAnimation = theAnimationNew;
   }
 
-  //! Parse the point.
   static bool parseXYZ(const char** theArgVec, gp_XYZ& thePnt)
   {
     const TCollection_AsciiString anXYZ[3] = {theArgVec[0], theArgVec[1], theArgVec[2]};
@@ -6710,7 +6381,6 @@ namespace
     return true;
   }
 
-  //! Parse the quaternion.
   static bool parseQuaternion(const char** theArgVec, gp_Quaternion& theQRot)
   {
     const TCollection_AsciiString anXYZW[4] = {theArgVec[0],
@@ -6730,17 +6400,14 @@ namespace
     return true;
   }
 
-  //! Auxiliary class for flipping image upside-down.
   class ImageFlipper
   {
   public:
-    //! Empty constructor.
     ImageFlipper()
         : myTmp(NCollection_BaseAllocator::CommonBaseAllocator())
     {
     }
 
-    //! Perform flipping.
     bool FlipY(Image_PixMap& theImage)
     {
       if (theImage.IsEmpty() || theImage.SizeX() == 0 || theImage.SizeY() == 0)
@@ -6754,7 +6421,6 @@ namespace
         return false;
       }
 
-      // for odd height middle row should be left as is
       size_t aNbRowsHalf = theImage.SizeY() / 2;
       for (size_t aRowT = 0, aRowB = theImage.SizeY() - 1; aRowT < aNbRowsHalf; ++aRowT, --aRowB)
       {
@@ -6773,10 +6439,6 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-// function : VViewParams
-// purpose  : Gets or sets AIS View characteristics
-//=================================================================================================
 static int VViewParams(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
 {
   occ::handle<V3d_View> aView = ViewerTest::CurrentView();
@@ -6806,7 +6468,7 @@ static int VViewParams(Draw_Interpretor& theDi, int theArgsNb, const char** theA
   const NCollection_Mat4<double>& aProjMat    = aView->Camera()->ProjectionMatrix();
   if (theArgsNb == 1)
   {
-    // print all of the available view parameters
+
     char aText[4096];
     Sprintf(aText,
             "Scale:  %g\n"
@@ -7003,7 +6665,6 @@ static int VViewParams(Draw_Interpretor& theDi, int theArgsNb, const char** theA
     }
   }
 
-  // change view parameters in proper order
   if (toSetScale)
   {
     aView->SetScale(aViewScale);
@@ -7035,8 +6696,6 @@ static int VViewParams(Draw_Interpretor& theDi, int theArgsNb, const char** theA
 
   return 0;
 }
-
-//=================================================================================================
 
 static int V2DMode(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
 {
@@ -7073,7 +6732,6 @@ static int V2DMode(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
     }
     else if (Draw::ParseOnOff(theArgVec[anArgIt], is2dMode))
     {
-      //
     }
     else
     {
@@ -7085,8 +6743,6 @@ static int V2DMode(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
   aV3dView->SetView2DMode(is2dMode);
   return 0;
 }
-
-//=================================================================================================
 
 static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -7137,7 +6793,6 @@ static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     aSplitPos     = aNameArg.Search(aNameSplitter);
   }
 
-  // find existing or create a new animation by specified name within syntax "parent.child".
   occ::handle<AIS_Animation> aRootAnimation, aParentAnimation, anAnimation;
   for (; !aNameArg.IsEmpty();)
   {
@@ -7189,7 +6844,7 @@ static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArg
 
   if (anArgIter >= theArgNb)
   {
-    // just print the list of children
+
     for (NCollection_Sequence<occ::handle<AIS_Animation>>::Iterator anAnimIter(
            anAnimation->Children());
          anAnimIter.More();
@@ -7200,7 +6855,6 @@ static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     return 0;
   }
 
-  // animation parameters
   bool   toPlay             = false;
   double aPlaySpeed         = 1.0;
   double aPlayStartTime     = anAnimation->StartPts();
@@ -7210,7 +6864,6 @@ static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArg
   bool   isLockLoop         = false;
   bool   toPrintElapsedTime = false;
 
-  // video recording parameters
   TCollection_AsciiString aRecFile;
   Image_VideoParams       aRecParams;
 
@@ -7219,7 +6872,7 @@ static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArg
   {
     TCollection_AsciiString anArg(theArgVec[anArgIter]);
     anArg.LowerCase();
-    // general options
+
     if (anArg == "-reset" || anArg == "-clear")
     {
       anAnimation->Clear();
@@ -7235,7 +6888,7 @@ static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArg
         aParentAnimation->Remove(anAnimation);
       }
     }
-    // playback options
+
     else if (anArg == "-play")
     {
       toPlay = true;
@@ -7308,7 +6961,7 @@ static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     {
       toPauseOnClick = Draw::ParseOnOffNoIterator(theArgNb, theArgVec, anArgIter);
     }
-    // video recodring options
+
     else if (anArg == "-rec" || anArg == "-record")
     {
       if (++anArgIter >= theArgNb)
@@ -7402,7 +7055,7 @@ static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArg
 
       aRecParams.VideoCodecParams.Bind(aParamName, theArgVec[anArgIter]);
     }
-    // animation definition options
+
     else if (anArg == "-start" || anArg == "-starttime" || anArg == "-startpts")
     {
       if (++anArgIter >= theArgNb)
@@ -7701,7 +7354,6 @@ static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     return 0;
   }
 
-  // Start animation timeline and process frame updating.
   if (aRecParams.FpsNum <= 0 && !isLockLoop)
   {
     occ::handle<ViewerTest_AnimationHolder> aHolder =
@@ -7713,7 +7365,6 @@ static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     return 0;
   }
 
-  // Perform video recording
   const bool   wasImmediateUpdate = aView->SetImmediateUpdate(false);
   const double anUpperPts         = aPlayStartTime + aPlayDuration;
   anAnimation->StartTimer(aPlayStartTime, aPlaySpeed, true, aPlayDuration <= 0.0);
@@ -7741,7 +7392,6 @@ static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     aProgress = new Draw_ProgressIndicator(theDI, 1);
   }
 
-  // Manage frame-rated animation here
   double                aPts      = aPlayStartTime;
   int64_t               aNbFrames = 0;
   Message_ProgressScope aPS(Message_ProgressIndicator::Start(aProgress),
@@ -7810,10 +7460,6 @@ static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArg
   return 0;
 }
 
-//=======================================================================
-// function : VChangeSelected
-// purpose  : Adds the shape to selection or remove one from it
-//=======================================================================
 static int VChangeSelected(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 2)
@@ -7821,7 +7467,7 @@ static int VChangeSelected(Draw_Interpretor& di, int argc, const char** argv)
     di << "Usage : " << argv[0] << " shape \n";
     return 1;
   }
-  // get AIS_Shape:
+
   TCollection_AsciiString            aName(argv[1]);
   occ::handle<AIS_InteractiveObject> anAISObject;
   if (!GetMapOfAIS().Find2(aName, anAISObject) || anAISObject.IsNull())
@@ -7834,10 +7480,6 @@ static int VChangeSelected(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
-// function : VNbSelected
-// purpose  : Returns number of selected objects
-//=======================================================================
 static int VNbSelected(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 1)
@@ -7854,8 +7496,6 @@ static int VNbSelected(Draw_Interpretor& di, int argc, const char** argv)
   di << aContext->NbSelected() << "\n";
   return 0;
 }
-
-//=================================================================================================
 
 static int VSetViewSize(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -7881,8 +7521,6 @@ static int VSetViewSize(Draw_Interpretor& di, int argc, const char** argv)
   aView->SetSize(aSize);
   return 0;
 }
-
-//=================================================================================================
 
 static int VMoveView(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -7911,8 +7549,6 @@ static int VMoveView(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int VTranslateView(Draw_Interpretor& di, int argc, const char** argv)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
@@ -7939,8 +7575,6 @@ static int VTranslateView(Draw_Interpretor& di, int argc, const char** argv)
   aView->Translate(Dx, Dy, Dz, aStart);
   return 0;
 }
-
-//=================================================================================================
 
 static int VTurnView(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -7969,10 +7603,6 @@ static int VTurnView(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//==============================================================================
-// function : VTextureEnv
-// purpose  : ENables or disables environment mapping
-//==============================================================================
 class OCC_TextureEnv : public Graphic3d_TextureEnv
 {
 public:
@@ -8016,9 +7646,9 @@ void OCC_TextureEnv::SetTextureParameters(const bool                          th
   myParams->SetRotation(theAngle);
 }
 
-static int VTextureEnv(Draw_Interpretor& /*theDI*/, int theArgNb, const char** theArgVec)
+static int VTextureEnv(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
-  // get the active view
+
   occ::handle<V3d_View> aView = ViewerTest::CurrentView();
   if (aView.IsNull())
   {
@@ -8026,7 +7656,6 @@ static int VTextureEnv(Draw_Interpretor& /*theDI*/, int theArgNb, const char** t
     return 1;
   }
 
-  // Checking the input arguments
   bool anEnableFlag = false;
   bool isOk         = theArgNb >= 2;
   if (isOk)
@@ -8097,10 +7726,10 @@ static int VTextureEnv(Draw_Interpretor& /*theDI*/, int theArgNb, const char** t
     }
     aView->SetTextureEnv(aTexEnv);
   }
-  else // Disabling environment mapping
+  else
   {
     occ::handle<Graphic3d_TextureEnv> aTexture;
-    aView->SetTextureEnv(aTexture); // Passing null handle to clear the texture data
+    aView->SetTextureEnv(aTexture);
   }
 
   aView->Redraw();
@@ -8112,7 +7741,6 @@ namespace
   typedef NCollection_DataMap<TCollection_AsciiString, occ::handle<Graphic3d_ClipPlane>>
     MapOfPlanes;
 
-  //! Remove registered clipping plane from all views and objects.
   static void removePlane(MapOfPlanes& theRegPlanes, const TCollection_AsciiString& theName)
   {
     occ::handle<Graphic3d_ClipPlane> aClipPlane;
@@ -8143,11 +7771,9 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 static int VClipPlane(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
 {
-  // use short-cut for created clip planes map of created (or "registered by name") clip planes
+
   static MapOfPlanes aRegPlanes;
 
   if (theArgsNb < 2)
@@ -8168,7 +7794,6 @@ static int VClipPlane(Draw_Interpretor& theDi, int theArgsNb, const char** theAr
     return 1;
   }
 
-  // print maximum number of planes for current viewer
   if (aCommand == "-maxplanes" || aCommand == "maxplanes")
   {
     theDi << anActiveView->Viewer()->Driver()->InquirePlaneLimit()
@@ -8176,7 +7801,6 @@ static int VClipPlane(Draw_Interpretor& theDi, int theArgsNb, const char** theAr
     return 0;
   }
 
-  // create / delete plane instance
   if (aCommand == "-create" || aCommand == "create" || aCommand == "-delete" || aCommand == "delete"
       || aCommand == "-clone" || aCommand == "clone")
   {
@@ -8204,7 +7828,7 @@ static int VClipPlane(Draw_Interpretor& theDi, int theArgsNb, const char** theAr
         return 0;
       }
     }
-    else if (toClone) // toClone
+    else if (toClone)
     {
       if (!aRegPlanes.IsBound(aPlane))
       {
@@ -8254,7 +7878,6 @@ static int VClipPlane(Draw_Interpretor& theDi, int theArgsNb, const char** theAr
     return 0;
   }
 
-  // set / unset plane command
   if (aCommand == "set" || aCommand == "unset")
   {
     if (theArgsNb < 5)
@@ -8263,7 +7886,6 @@ static int VClipPlane(Draw_Interpretor& theDi, int theArgsNb, const char** theAr
       return 1;
     }
 
-    // redirect to new syntax
     NCollection_Array1<const char*> anArgVec(1, theArgsNb - 1);
     anArgVec.SetValue(1, theArgVec[0]);
     anArgVec.SetValue(2, theArgVec[2]);
@@ -8276,13 +7898,12 @@ static int VClipPlane(Draw_Interpretor& theDi, int theArgsNb, const char** theAr
     return VClipPlane(theDi, anArgVec.Length(), &anArgVec.ChangeFirst());
   }
 
-  // change plane command
   TCollection_AsciiString          aPlaneName;
   occ::handle<Graphic3d_ClipPlane> aClipPlane;
   int                              anArgIter = 0;
   if (aCommand == "-change" || aCommand == "change")
   {
-    // old syntax support
+
     if (theArgsNb < 3)
     {
       Message::SendFail("Syntax error: need more arguments");
@@ -8421,7 +8042,6 @@ static int VClipPlane(Draw_Interpretor& theDi, int theArgsNb, const char** theAr
       }
       else
       {
-        // just skip otherwise (old syntax)
       }
     }
     else if (aChangeArg == "-useobjectmaterial" || aChangeArg == "-useobjectmat"
@@ -8577,7 +8197,7 @@ static int VClipPlane(Draw_Interpretor& theDi, int theArgsNb, const char** theAr
       aClipPlane->CappingTexture()->GetParams()->SetScale(NCollection_Vec2<float>(aSx, aSy));
       anArgIter += 2;
     }
-    else if (aChangeArg == "-texorigin" || aChangeArg == "texorigin") // texture origin
+    else if (aChangeArg == "-texorigin" || aChangeArg == "texorigin")
     {
       if (aClipPlane->CappingTexture().IsNull())
       {
@@ -8597,7 +8217,7 @@ static int VClipPlane(Draw_Interpretor& theDi, int theArgsNb, const char** theAr
       aClipPlane->CappingTexture()->GetParams()->SetTranslation(NCollection_Vec2<float>(aTx, aTy));
       anArgIter += 2;
     }
-    else if (aChangeArg == "-texrotate" || aChangeArg == "texrotate") // texture rotation
+    else if (aChangeArg == "-texrotate" || aChangeArg == "texrotate")
     {
       if (aClipPlane->CappingTexture().IsNull())
       {
@@ -8646,7 +8266,7 @@ static int VClipPlane(Draw_Interpretor& theDi, int theArgsNb, const char** theAr
     }
     else if (aChangeArg == "-set" || aChangeArg == "-unset" || aChangeArg == "-setoverrideglobal")
     {
-      // set / unset plane command
+
       const bool toSet            = aChangeArg.StartsWith("-set");
       const bool toOverrideGlobal = aChangeArg == "-setoverrideglobal";
       int        anIt             = 1;
@@ -8695,7 +8315,7 @@ static int VClipPlane(Draw_Interpretor& theDi, int theArgsNb, const char** theAr
 
       if (anIt == 1)
       {
-        // apply to active view
+
         if (toSet)
         {
           anActiveView->AddClipPlane(aClipPlane);
@@ -8720,8 +8340,6 @@ static int VClipPlane(Draw_Interpretor& theDi, int theArgsNb, const char** theAr
   ViewerTest::RedrawAllViews();
   return 0;
 }
-
-//=================================================================================================
 
 static int VZRange(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
 {
@@ -8773,8 +8391,6 @@ static int VZRange(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVe
   return 0;
 }
 
-//=================================================================================================
-
 static int VAutoZFit(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
 {
   const occ::handle<V3d_View>& aCurrentView = ViewerTest::CurrentView();
@@ -8813,7 +8429,6 @@ static int VAutoZFit(Draw_Interpretor& theDi, int theArgsNb, const char** theArg
   return 0;
 }
 
-//! Auxiliary function to print projection type
 inline const char* projTypeName(Graphic3d_Camera::Projection theProjType)
 {
   switch (theProjType)
@@ -8831,8 +8446,6 @@ inline const char* projTypeName(Graphic3d_Camera::Projection theProjType)
   }
   return "UNKNOWN";
 }
-
-//=================================================================================================
 
 static int VCamera(Draw_Interpretor& theDI, int theArgsNb, const char** theArgVec)
 {
@@ -9092,7 +8705,7 @@ static int VCamera(Draw_Interpretor& theDI, int theArgsNb, const char** theArgVe
         }
         else if (anArgCase == "-fovx")
         {
-          aCamera->SetFOVy(Draw::Atof(anArgValue) / aCamera->Aspect()); ///
+          aCamera->SetFOVy(Draw::Atof(anArgValue) / aCamera->Aspect());
         }
         else
         {
@@ -9163,7 +8776,7 @@ static int VCamera(Draw_Interpretor& theDI, int theArgsNb, const char** theArgVe
     occ::handle<AIS_CameraFrustum> aCameraFrustum;
     if (GetMapOfAIS().IsBound2(aPrsName))
     {
-      // find existing object
+
       aCameraFrustum = occ::down_cast<AIS_CameraFrustum>(GetMapOfAIS().Find2(theArgVec[1]));
       if (aCameraFrustum.IsNull())
       {
@@ -9179,7 +8792,7 @@ static int VCamera(Draw_Interpretor& theDI, int theArgsNb, const char** theArgVe
     }
     else
     {
-      // not include displayed object of old camera frustum in the new one.
+
       ViewerTest::GetAISContext()->Erase(aCameraFrustum, false);
       aView->ZFitAll();
     }
@@ -9191,7 +8804,6 @@ static int VCamera(Draw_Interpretor& theDI, int theArgsNb, const char** theArgVe
   return 0;
 }
 
-//! Parse stereo output mode
 inline bool parseStereoMode(const char* theArg, Graphic3d_StereoMode& theMode)
 {
   TCollection_AsciiString aFlag(theArg);
@@ -9239,7 +8851,6 @@ inline bool parseStereoMode(const char* theArg, Graphic3d_StereoMode& theMode)
   return true;
 }
 
-//! Parse anaglyph filter
 inline bool parseAnaglyphFilter(const char* theArg, Graphic3d_RenderingParams::Anaglyph& theFilter)
 {
   TCollection_AsciiString aFlag(theArg);
@@ -9270,8 +8881,6 @@ inline bool parseAnaglyphFilter(const char* theArg, Graphic3d_RenderingParams::A
   }
   return true;
 }
-
-//=================================================================================================
 
 static int VStereo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -9447,7 +9056,7 @@ static int VStereo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec
       aMode                   = Graphic3d_StereoMode_Anaglyph;
       aParams->AnaglyphFilter = aFilter;
     }
-    else if (parseStereoMode(anArg, aMode)) // short syntax
+    else if (parseStereoMode(anArg, aMode))
     {
       if (aMode == Graphic3d_StereoMode_QuadBuffer)
       {
@@ -9489,13 +9098,11 @@ static int VStereo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec
   aCamera->SetProjectionType(Graphic3d_Camera::Projection_Stereo);
   if (aParams->StereoMode == Graphic3d_StereoMode_OpenVR)
   {
-    // initiate implicit continuous rendering
+
     ViewerTest::CurrentEventManager()->FlushViewEvents(ViewerTest::GetAISContext(), aView, true);
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int VDefaults(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
 {
@@ -9580,7 +9187,6 @@ static int VDefaults(Draw_Interpretor& theDi, int theArgsNb, const char** theArg
   return 0;
 }
 
-//! Parse light source type from string.
 static bool parseLightSourceType(const TCollection_AsciiString& theTypeName,
                                  Graphic3d_TypeOfLightSource&   theType)
 {
@@ -9609,7 +9215,6 @@ static bool parseLightSourceType(const TCollection_AsciiString& theTypeName,
   return true;
 }
 
-//! Find existing light by name or index.
 static occ::handle<V3d_Light> findLightSource(const TCollection_AsciiString& theName)
 {
   occ::handle<V3d_Light> aLight;
@@ -9642,8 +9247,6 @@ static occ::handle<V3d_Light> findLightSource(const TCollection_AsciiString& the
   return aLight;
 }
 
-//=================================================================================================
-
 static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
 {
   occ::handle<V3d_View>                      aView   = ViewerTest::CurrentView();
@@ -9657,7 +9260,7 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
 
   if (theArgsNb < 2)
   {
-    // print lights info
+
     int aLightId = 0;
     for (NCollection_List<occ::handle<Graphic3d_CLight>>::Iterator aLightIter(
            aView->ActiveLightIterator());
@@ -9868,7 +9471,7 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
       TCollection_AsciiString aLightName = aLightNew->Name();
       if (anArgIt + 1 < theArgsNb && theArgVec[anArgIt + 1][0] != '-')
       {
-        // old syntax
+
         aLightName = theArgVec[++anArgIt];
         if (aLightNew->Name() != aLightName)
         {
@@ -10159,7 +9762,6 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
     }
     else if (anArgCase == "-change" || anArgCase == "change")
     {
-      // just skip old syntax
     }
     else if (aLightNew.IsNull() && !anArgCase.StartsWith("-"))
     {
@@ -10200,7 +9802,6 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
     }
   }
 
-  // delete old light source
   if (!aLightOld.IsNull() && aLightOld != aLightNew)
   {
     NCollection_Sequence<int> aLayers;
@@ -10242,7 +9843,6 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
     aLightOld.Nullify();
   }
 
-  // add new light source
   if (!aLightNew.IsNull())
   {
     if (aLayer == Graphic3d_ZLayerId_UNKNOWN)
@@ -10275,7 +9875,6 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
     }
   }
 
-  // manage presentations
   struct LightPrsSort
   {
     bool operator()(const occ::handle<AIS_LightSource>& theLeft,
@@ -10289,7 +9888,7 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
   aCtx->DisplayedObjects(AIS_KindOfInteractive_LightSource, -1, aPrsList);
   if (!aPrsList.IsEmpty())
   {
-    // update light source presentations
+
     std::vector<occ::handle<AIS_LightSource>> aLightPrsVec;
     for (NCollection_List<occ::handle<AIS_InteractiveObject>>::Iterator aPrsIter(aPrsList);
          aPrsIter.More();
@@ -10302,7 +9901,6 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
       }
     }
 
-    // sort objects by id as AIS_InteractiveContext stores them in unordered map
     std::sort(aLightPrsVec.begin(), aLightPrsVec.end(), LightPrsSort());
 
     int aTopStack = 0;
@@ -10325,8 +9923,6 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int VPBREnvironment(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
 {
@@ -10364,7 +9960,6 @@ static int VPBREnvironment(Draw_Interpretor&, int theArgsNb, const char** theArg
   return 0;
 }
 
-//! Read Graphic3d_RenderingParams::PerfCounters flag.
 static bool parsePerfStatsFlag(const TCollection_AsciiString&           theValue,
                                bool&                                    theToReset,
                                Graphic3d_RenderingParams::PerfCounters& theFlagsRem,
@@ -10443,7 +10038,6 @@ static bool parsePerfStatsFlag(const TCollection_AsciiString&           theValue
   return true;
 }
 
-//! Read Graphic3d_RenderingParams::PerfCounters flags.
 static bool convertToPerfStatsFlags(const TCollection_AsciiString&           theValue,
                                     Graphic3d_RenderingParams::PerfCounters& theFlags)
 {
@@ -10480,11 +10074,6 @@ static bool convertToPerfStatsFlags(const TCollection_AsciiString&           the
     aValue = aValue.SubString(aSplitPos + 1, aValue.Length());
   }
 }
-
-//=======================================================================
-// function : VRenderParams
-// purpose  : Enables/disables rendering features
-//=======================================================================
 
 static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -11078,7 +10667,6 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
 
       const int aDepth = Draw::Atoi(theArgVec[anArgIter]);
 
-      // We allow RaytracingDepth be more than 10 in case of GI enabled
       if (aDepth < 1 || (aDepth > 10 && !aParams.IsGlobalIlluminationEnabled))
       {
         Message::SendFail() << "Syntax error: invalid ray-tracing depth " << aDepth
@@ -11758,7 +11346,6 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
     }
   }
 
-  // set current view parameters as defaults
   if (toSyncDefaults)
   {
     ViewerTest::GetViewerFromContext()->SetDefaultRenderingParams(aParams);
@@ -11776,8 +11363,6 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
   return 0;
 }
 
-//=================================================================================================
-
 inline TCollection_AsciiString searchInfo(
   const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
   const TCollection_AsciiString&                                                      theKey)
@@ -11794,8 +11379,6 @@ inline TCollection_AsciiString searchInfo(
   }
   return TCollection_AsciiString();
 }
-
-//=================================================================================================
 
 static int VStatProfiler(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -11905,7 +11488,7 @@ static int VStatProfiler(Draw_Interpretor& theDI, int theArgNb, const char** the
       else if (aFlag == "structs" || aFlag == "structures")
       {
         TCollection_AsciiString aRend = searchInfo(aDict, "Rendered structs");
-        if (aRend.IsEmpty()) // all structures rendered
+        if (aRend.IsEmpty())
         {
           aRend = searchInfo(aDict, "Structs");
         }
@@ -12006,8 +11589,6 @@ static int VStatProfiler(Draw_Interpretor& theDI, int theArgNb, const char** the
   return 0;
 }
 
-//=================================================================================================
-
 static int VXRotate(Draw_Interpretor& di, int argc, const char** argv)
 {
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
@@ -12026,7 +11607,6 @@ static int VXRotate(Draw_Interpretor& di, int argc, const char** argv)
   TCollection_AsciiString aName(argv[1]);
   double                  anAngle = Draw::Atof(argv[2]);
 
-  // find object
   NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>, TCollection_AsciiString>& aMap =
     GetMapOfAIS();
   occ::handle<AIS_InteractiveObject> anIObj;
@@ -12047,7 +11627,7 @@ static int VXRotate(Draw_Interpretor& di, int argc, const char** argv)
 
 namespace
 {
-  //! Structure for setting AIS_Manipulator::SetPart() property.
+
   struct ManipAxisModeOnOff
   {
     int                 Axis;
@@ -12071,8 +11651,6 @@ namespace
   };
 } // namespace
 
-//=================================================================================================
-
 static int VManipulator(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
 {
   occ::handle<V3d_View>   aCurrentView = ViewerTest::CurrentView();
@@ -12089,24 +11667,24 @@ static int VManipulator(Draw_Interpretor& theDi, int theArgsNb, const char** the
   NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>, TCollection_AsciiString>& aMapAIS =
     GetMapOfAIS();
   TCollection_AsciiString aName;
-  // parameters
+
   int toAutoActivate = -1, toFollowTranslation = -1, toFollowRotation = -1, toFollowDragging = -1,
       isZoomable = -1, isFlat = -1;
   double                                   aGap = -1.0, aSize = -1.0;
   NCollection_Sequence<ManipAxisModeOnOff> aParts;
   gp_XYZ aLocation(RealLast(), RealLast(), RealLast()), aVDir, anXDir;
-  //
+
   bool                               toDetach    = false;
   bool                               toAddObject = false;
   AIS_Manipulator::OptionsForAttach  anAttachOptions;
   occ::handle<AIS_InteractiveObject> anAttachObject;
   occ::handle<V3d_View>              aViewAffinity;
   ManipAjustPosition                 anAttachPos = ManipAjustPosition_Off;
-  //
+
   NCollection_Vec2<int> aMousePosFrom(IntegerLast(), IntegerLast());
   NCollection_Vec2<int> aMousePosTo(IntegerLast(), IntegerLast());
   int                   toStopMouseTransform = -1;
-  // explicit transformation
+
   gp_Trsf aTrsf;
   gp_XYZ  aTmpXYZ;
   double  aTmpReal = 0.0;
@@ -12124,7 +11702,7 @@ static int VManipulator(Draw_Interpretor& theDi, int theArgsNb, const char** the
       theDi.PrintHelp(theArgVec[0]);
       return 0;
     }
-    //
+
     else if (anArg == "-autoactivate" || anArg == "-noautoactivate")
     {
       toAutoActivate = Draw::ParseOnOffNoIterator(theArgsNb, theArgVec, anArgIter) ? 1 : 0;
@@ -12204,7 +11782,7 @@ static int VManipulator(Draw_Interpretor& theDi, int theArgsNb, const char** the
     {
       isFlat = Draw::ParseOnOffNoIterator(theArgsNb, theArgVec, anArgIter) ? 1 : 0;
     }
-    //
+
     else if (anArg == "-adjustposition" || anArg == "-noadjustposition")
     {
       anAttachPos = ManipAjustPosition_Center;
@@ -12244,7 +11822,7 @@ static int VManipulator(Draw_Interpretor& theDi, int theArgsNb, const char** the
     {
       anAttachOptions.SetEnableModes(Draw::ParseOnOffNoIterator(theArgsNb, theArgVec, anArgIter));
     }
-    //
+
     else if (anArg == "-starttransform" && anArgIter + 2 < theArgsNb
              && Draw::ParseInteger(theArgVec[anArgIter + 1], aMousePosFrom.x())
              && Draw::ParseInteger(theArgVec[anArgIter + 2], aMousePosFrom.y()))
@@ -12267,7 +11845,7 @@ static int VManipulator(Draw_Interpretor& theDi, int theArgsNb, const char** the
         toStopMouseTransform = 0;
       }
     }
-    //
+
     else if (anArg == "-move" && anArgIter + 3 < theArgsNb
              && parseXYZ(theArgVec + anArgIter + 1, aTmpXYZ))
     {
@@ -12288,7 +11866,7 @@ static int VManipulator(Draw_Interpretor& theDi, int theArgsNb, const char** the
       anArgIter += 7;
       aTrsf.SetRotation(gp_Ax1(gp_Pnt(aRotPnt), gp_Dir(aRotAxis)), aTmpReal);
     }
-    //
+
     else if (anArg == "-addobject")
     {
       toAddObject = true;
@@ -12327,7 +11905,7 @@ static int VManipulator(Draw_Interpretor& theDi, int theArgsNb, const char** the
       {
         aViewAffinity = ViewerTest::CurrentView();
       }
-      else // Check view name
+      else
       {
         ViewerTest_Names aViewNames(aViewString);
         if (!ViewerTest_myViews.IsBound1(aViewNames.GetViewName()))
@@ -12379,10 +11957,6 @@ static int VManipulator(Draw_Interpretor& theDi, int theArgsNb, const char** the
     aManipulator->SetModeActivationOnDetection(true);
     aMapAIS.Bind(aManipulator, aName);
   }
-
-  // -----------------------------------------
-  // change properties of manipulator instance
-  // -----------------------------------------
 
   if (toAutoActivate != -1)
   {
@@ -12444,20 +12018,12 @@ static int VManipulator(Draw_Interpretor& theDi, int theArgsNb, const char** the
     }
   }
 
-  // ----------------------------------
-  // detach existing manipulator object
-  // ----------------------------------
-
   if (toDetach)
   {
     aManipulator->Detach();
     aMapAIS.UnBind2(aName);
     ViewerTest::GetAISContext()->Remove(aManipulator, false);
   }
-
-  // ---------------------------------------------------
-  // attach, detach or access manipulator from an object
-  // ---------------------------------------------------
 
   if (!anAttachObject.IsNull())
   {
@@ -12548,10 +12114,6 @@ static int VManipulator(Draw_Interpretor& theDi, int theArgsNb, const char** the
     aManipulator->SetPosition(gp_Ax2(gp_Pnt(aLocation), gp_Dir(aVDir), gp_Dir(anXDir)));
   }
 
-  // --------------------------------------
-  // apply transformation using manipulator
-  // --------------------------------------
-
   if (aMousePosFrom.x() != IntegerLast())
   {
     aManipulator->StartTransform(aMousePosFrom.x(), aMousePosFrom.y(), ViewerTest::CurrentView());
@@ -12577,8 +12139,6 @@ static int VManipulator(Draw_Interpretor& theDi, int theArgsNb, const char** the
   return 0;
 }
 
-//=================================================================================================
-
 static int VSelectionProperties(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
 {
   const occ::handle<AIS_InteractiveContext>& aCtx = ViewerTest::GetAISContext();
@@ -12590,7 +12150,7 @@ static int VSelectionProperties(Draw_Interpretor& theDi, int theArgsNb, const ch
 
   if (TCollection_AsciiString(theArgVec[0]) == "vhighlightselected")
   {
-    // handle obsolete alias
+
     bool toEnable = true;
     if (theArgsNb < 2)
     {
@@ -12918,9 +12478,7 @@ static int VSelectionProperties(Draw_Interpretor& theDi, int theArgsNb, const ch
   return 0;
 }
 
-//=================================================================================================
-
-static int VDumpSelectionImage(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** theArgVec)
+static int VDumpSelectionImage(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
 {
   const occ::handle<AIS_InteractiveContext>& aContext = ViewerTest::GetAISContext();
   const occ::handle<V3d_View>&               aView    = ViewerTest::CurrentView();
@@ -13080,8 +12638,6 @@ static int VDumpSelectionImage(Draw_Interpretor& /*theDi*/, int theArgsNb, const
   return 0;
 }
 
-//=================================================================================================
-
 static int VViewCube(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
   const occ::handle<AIS_InteractiveContext>& aContext = ViewerTest::GetAISContext();
@@ -13107,7 +12663,6 @@ static int VViewCube(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
     anArg.LowerCase();
     if (anUpdateTool.parseRedrawMode(anArg))
     {
-      //
     }
     else if (aViewCube.IsNull())
     {
@@ -13327,7 +12882,6 @@ static int VViewCube(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
   return 0;
 }
 
-//! Parse color type argument.
 static bool parseColorType(const char* theString, Quantity_TypeOfColor& theType)
 {
   TCollection_AsciiString aType(theString);
@@ -13367,8 +12921,6 @@ static bool parseColorType(const char* theString, Quantity_TypeOfColor& theType)
   return true;
 }
 
-//=================================================================================================
-
 static int VColorConvert(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   Quantity_TypeOfColor aTypeFrom = Quantity_TOC_RGB, aTypeTo = Quantity_TOC_RGB;
@@ -13398,7 +12950,6 @@ static int VColorConvert(Draw_Interpretor& theDI, int theNbArgs, const char** th
     }
     else if (Quantity_Color::ColorFromName(theArgVec[anArgIter], aColor.ChangeRGB()))
     {
-      //
     }
     else if (anArgIter + 2 < theNbArgs && Draw::ParseReal(theArgVec[anArgIter + 0], anInput[0])
              && Draw::ParseReal(theArgVec[anArgIter + 1], anInput[1])
@@ -13440,7 +12991,6 @@ static int VColorConvert(Draw_Interpretor& theDI, int theNbArgs, const char** th
     double anOutput[3] = {};
     aColor.GetRGB().Values(anOutput[0], anOutput[1], anOutput[2], aTypeTo);
 
-    // print values with 6 decimal digits
     char aBuffer[1024];
     if (hasAlpha || aColor.Alpha() < 1.0f)
     {
@@ -13459,8 +13009,6 @@ static int VColorConvert(Draw_Interpretor& theDI, int theNbArgs, const char** th
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int VColorDiff(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -13485,9 +13033,7 @@ static int VColorDiff(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
   return 0;
 }
 
-//=================================================================================================
-
-static int VSelBvhBuild(Draw_Interpretor& /*theDI*/, int theNbArgs, const char** theArgVec)
+static int VSelBvhBuild(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
   const occ::handle<AIS_InteractiveContext> aCtx = ViewerTest::GetAISContext();
   if (aCtx.IsNull())
@@ -13559,8 +13105,6 @@ static int VSelBvhBuild(Draw_Interpretor& /*theDI*/, int theNbArgs, const char**
   return 0;
 }
 
-//=================================================================================================
-
 static int VChangeMouseGesture(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
 {
   occ::handle<V3d_View> aView = ViewerTest::CurrentView();
@@ -13622,8 +13166,6 @@ static int VChangeMouseGesture(Draw_Interpretor&, int theArgsNb, const char** th
   return 0;
 }
 
-//=================================================================================================
-
 static void ViewerTest_ExitProc(ClientData)
 {
   NCollection_List<TCollection_AsciiString> aViewList;
@@ -13642,8 +13184,6 @@ static void ViewerTest_ExitProc(ClientData)
   }
 }
 
-//=================================================================================================
-
 void ViewerTest::ViewerCommands(Draw_Interpretor& theCommands)
 {
   static bool TheIsInitialized = false;
@@ -13653,7 +13193,7 @@ void ViewerTest::ViewerCommands(Draw_Interpretor& theCommands)
   }
 
   TheIsInitialized = true;
-  // define destruction callback to destroy views in a well-defined order
+
   Tcl_CreateExitHandler(ViewerTest_ExitProc, nullptr);
 
   const char* aGroup    = "AIS Viewer";
@@ -13662,7 +13202,7 @@ void ViewerTest::ViewerCommands(Draw_Interpretor& theCommands)
     [&](const char* theName, Draw_Interpretor::CommandFunction theFunc, const char* theHelp)
   { theCommands.Add(theName, theHelp, aFileName, theFunc, aGroup); };
 
-  addCmd("vdriver", VDriver, /* [vdriver] */ R"(
+  addCmd("vdriver", VDriver, R"(
 vdriver [-list] [-default DriverName] [-load DriverName]
 Manages active graphic driver factory.
 Prints current active driver when called without arguments.
@@ -13670,9 +13210,9 @@ Makes specified driver active when ActiveName argument is specified.
  -list    print registered factories
  -default define which factory should be used by default (to be used by next vinit call)
  -load    try loading factory plugin and set it as default one
-)" /* [vdriver] */);
+)");
 
-  addCmd("vinit", VInit, /* [vinit] */ R"(
+  addCmd("vinit", VInit, R"(
 vinit [-name viewName] [-left leftPx] [-top topPx] [-width widthPx] [-height heightPx]
       [-exitOnClose] [-closeOnEscape] [-cloneActive] [-virtual {0|1}]=0 [-2d_mode {0|1}]=0
       [-display displayName] [-dpiAware {0|1}]=0
@@ -13695,32 +13235,32 @@ Display name will be used within creation of graphic driver, when specified.
  -2d_mode when on, view will not react on rotate scene events
  -dpiAware override dpi aware hint (Windows platform)
 Additional commands for operations with views: vclose, vactivate, vviewlist.
-)" /* [vinit] */);
+)");
 
-  addCmd("vclose", VClose, /* [vclose] */ R"(
+  addCmd("vclose", VClose, R"(
 vclose [view_id [keep_context=0|1]]
 or vclose ALL - to remove all created views
  - removes view(viewer window) defined by its view_id.
  - keep_context: by default 0; if 1 and the last view is deleted the current context is not removed.
-)" /* [vclose] */);
+)");
 
-  addCmd("vactivate", VActivate, /* [vactivate] */ R"(
+  addCmd("vactivate", VActivate, R"(
 vactivate view_id [-noUpdate]
 Activates view(viewer window) defined by its view_id.
-)" /* [vactivate] */);
+)");
 
-  addCmd("vviewlist", VViewList, /* [vviewlist] */ R"(
+  addCmd("vviewlist", VViewList, R"(
 vviewlist [format={tree, long}]=tree
 Prints current list of views per viewer and graphic_driver ID shared between viewers
  - format: format of result output, if tree the output is a tree view;
            otherwise it's a list of full view names.
-)" /* [vviewlist] */);
+)");
 
-  addCmd("vhelp", VHelp, /* [vhelp] */ R"(
+  addCmd("vhelp", VHelp, R"(
 vhelp : display help on the viewer commands and list of hotkeys.
-)" /* [vhelp] */);
+)");
 
-  addCmd("vviewproj", VViewProj, /* [vviewproj] */ R"(
+  addCmd("vviewproj", VViewProj, R"(
 vviewproj [top|bottom|left|right|front|back|axoLeft|axoRight]
           [+-X+-Y+-Z] [-Zup|-Yup] [-frame +-X+-Y]
 Setup view direction
@@ -13730,59 +13270,59 @@ Setup view direction
            '-X-Y+Z' will define left axonometric view.
  -frame    define camera Up and Right directions (regardless Up convention);
            for example '+X+Z' will show front of the model with Z-up.
-)" /* [vviewproj] */);
+)");
 
-  addCmd("vtop", VViewProj, /* [vtop] */ R"(
+  addCmd("vtop", VViewProj, R"(
 vtop or <T> : Display top view (+X+Y) in the 3D viewer window.
-)" /* [vtop] */);
+)");
 
-  addCmd("vbottom", VViewProj, /* [vbottom] */ R"(
+  addCmd("vbottom", VViewProj, R"(
 vbottom : Display bottom view (+X-Y) in the 3D viewer window.
-)" /* [vbottom] */);
+)");
 
-  addCmd("vleft", VViewProj, /* [vleft] */ R"(
+  addCmd("vleft", VViewProj, R"(
 vleft : Display left view (-Y+Z) in the 3D viewer window.
-)" /* [vleft] */);
+)");
 
-  addCmd("vright", VViewProj, /* [vright] */ R"(
+  addCmd("vright", VViewProj, R"(
 vright : Display right view (+Y+Z) in the 3D viewer window.
-)" /* [vright] */);
+)");
 
-  addCmd("vaxo", VViewProj, /* [vaxo] */ R"(
+  addCmd("vaxo", VViewProj, R"(
 vaxo or <A> : Display axonometric view (+X-Y+Z) in the 3D viewer window.
-)" /* [vaxo] */);
+)");
 
-  addCmd("vfront", VViewProj, /* [vfront] */ R"(
+  addCmd("vfront", VViewProj, R"(
 vfront : Display front view (+X+Z) in the 3D viewer window.
-)" /* [vfront] */);
+)");
 
-  addCmd("vback", VViewProj, /* [vfront] */ R"(
+  addCmd("vback", VViewProj, R"(
 vback : Display back view (-X+Z) in the 3D viewer window.
-)" /* [vback] */);
+)");
 
-  addCmd("vpick", VPick, /* [vpick] */ R"(
+  addCmd("vpick", VPick, R"(
 vpick X Y Z [shape subshape]
-)" /* [vpick] */);
+)");
 
-  addCmd("vfit", VFit, /* [vfit] */ R"(
+  addCmd("vfit", VFit, R"(
 vfit or <F> [-selected] [-noupdate]
 Fit all / selected. Objects in the view are visualized to occupy the maximum surface.
-)" /* [vfit] */);
+)");
 
-  addCmd("vfitarea", VFitArea, /* [vfitarea] */ R"(
+  addCmd("vfitarea", VFitArea, R"(
 vfitarea [x1 y1 x2 y2] [x1 y1 z1 x2 y2 z2]
 Fit view to show area located between two points
 given in world 2D or 3D coordinates.
-)" /* [vfitarea] */);
+)");
 
-  addCmd("vzfit", VZFit, /* [vzfit] */ R"(
+  addCmd("vzfit", VZFit, R"(
 vzfit [scale]
 Automatic depth panning.
 Matches Z near, Z far view volume planes to the displayed objects.
  - "scale" specifies factor to scale computed z range.
-)" /* [vzfit] */);
+)");
 
-  addCmd("vrepaint", VRepaint, /* [vrepaint] */ R"(
+  addCmd("vrepaint", VRepaint, R"(
 vrepaint [-immediate] [-continuous FPS]
 Force redraw of active View.
  -immediate  flag performs redraw of immediate layers only;
@@ -13790,13 +13330,13 @@ Force redraw of active View.
              0 means no continuous rendering,
             -1 means non-stop redraws,
             >0 specifies target framerate.
-)" /* [vrepaint] */);
+)");
 
-  addCmd("vclear", VClear, /* [vclear] */ R"(
+  addCmd("vclear", VClear, R"(
 vclear : Remove all the object from the viewer
-)" /* [vclear] */);
+)");
 
-  addCmd("vbackground", VBackground, /* [vbackground] */ R"(
+  addCmd("vbackground", VBackground, R"(
 vbackground [-color Color [-default]]
     [-gradient Color1 Color2 [-default]
     [-gradientMode {NONE|HORIZONTAL|VERTICAL|DIAG1|DIAG2|CORNER1|CORNER2|CORNER3|ELLIPTICAL}]=VERT]
@@ -13826,38 +13366,38 @@ Skydome background parameters (generated cubemap):
  -time         might be tweaked to slightly change appearance of clouds
  -fog          sets mist intensity (0.0 - no mist at all, 1.0 - high mist)
  -size         sets size in pixels of cubemap side
-)" /* [vbackground] */);
+)");
 
-  addCmd("vsetbg", VBackground, /* [vsetbg] */ R"(
+  addCmd("vsetbg", VBackground, R"(
 Alias for 'vbackground -imageFile ImageFile [-imageMode FillType]'.
-)" /* [vsetbg] */);
+)");
 
-  addCmd("vsetbgmode", VBackground, /* [vsetbgmode] */ R"(
+  addCmd("vsetbgmode", VBackground, R"(
 Alias for 'vbackground -imageMode FillType'.
-)" /* [vsetbgmode] */);
+)");
 
-  addCmd("vsetgradientbg", VBackground, /* [vsetgradientbg] */ R"(
+  addCmd("vsetgradientbg", VBackground, R"(
 Alias for 'vbackground -gradient Color1 Color2 -gradientMode FillMethod'.
-)" /* [vsetgradientbg] */);
+)");
 
-  addCmd("vsetgrbgmode", VBackground, /* [vsetgrbgmode] */ R"(
+  addCmd("vsetgrbgmode", VBackground, R"(
 Alias for 'vbackground -gradientMode FillMethod'.
-)" /* [vsetgrbgmode] */);
+)");
 
-  addCmd("vsetcolorbg", VBackground, /* [vsetcolorbg] */ R"(
+  addCmd("vsetcolorbg", VBackground, R"(
 Alias for 'vbackground -color Color'.
-)" /* [vsetcolorbg] */);
+)");
 
-  addCmd("vsetdefaultbg", VBackground, /* [vsetdefaultbg] */ R"(
+  addCmd("vsetdefaultbg", VBackground, R"(
 Alias for 'vbackground -default -gradient Color1 Color2 [-gradientMode FillMethod]'
   and for 'vbackground -default -color Color'.
-)" /* [vsetdefaultbg] */);
+)");
 
-  addCmd("vscale", VScale, /* [vscale] */ R"(
+  addCmd("vscale", VScale, R"(
 vscale X Y Z
-)" /* [vscale] */);
+)");
 
-  addCmd("vzbufftrihedron", VZBuffTrihedron, /* [vzbufftrihedron] */ R"(
+  addCmd("vzbufftrihedron", VZBuffTrihedron, R"(
 vzbufftrihedron [{-on|-off}=-on] [-type {wireframe|zbuffer}=zbuffer]
        [-position center|left_lower|left_upper|right_lower|right_upper]
        [-scale value=0.1] [-size value=0.8] [-arrowDiam value=0.05]
@@ -13865,24 +13405,24 @@ vzbufftrihedron [{-on|-off}=-on] [-type {wireframe|zbuffer}=zbuffer]
        [-nbfacets value=12] [-colorLabels color=WHITE]
        [-colorLabelX color] [-colorLabelY color] [-colorLabelZ color]
 Displays a trihedron.
-)" /* [vzbufftrihedron] */);
+)");
 
-  addCmd("vrotate", VRotate, /* [vrotate] */ R"(
+  addCmd("vrotate", VRotate, R"(
 vrotate [[-mouseStart X Y] [-mouseMove X Y]]|[AX AY AZ [X Y Z]]
  -mouseStart start rotation according to the mouse position;
  -mouseMove  continue rotation with angle computed
              from last and new mouse position.
-)" /* [vrotate] */);
+)");
 
-  addCmd("vzoom", VZoom, /* [vzoom] */ R"(
+  addCmd("vzoom", VZoom, R"(
 vzoom coef
-)" /* [vzoom] */);
+)");
 
-  addCmd("vpan", VPan, /* [vpan] */ R"(
+  addCmd("vpan", VPan, R"(
 vpan dx dy
-)" /* [vpan] */);
+)");
 
-  addCmd("vcolorscale", VColorScale, /* [vcolorscale] */ R"(
+  addCmd("vcolorscale", VColorScale, R"(
 vcolorscale name [-noupdate|-update] [-demo]
       [-range RangeMin=0 RangeMax=1 NbIntervals=10]
       [-font HeightFont=20]
@@ -13913,9 +13453,9 @@ vcolorscale name [-noupdate|-update] [-demo]
  -reversed   setup smooth color transition between intervals
  -smoothTransition swap colorscale direction
  -hueRange   set hue angles corresponding to minimum and maximum values
-)" /* [vcolorscale] */);
+)");
 
-  addCmd("vgraduatedtrihedron", VGraduatedTrihedron, /* [vgraduatedtrihedron] */ R"(
+  addCmd("vgraduatedtrihedron", VGraduatedTrihedron, R"(
 vgraduatedtrihedron : -on/-off [-xname Name] [-yname Name] [-zname Name] [-arrowlength Value]
     [-namefont Name] [-valuesfont Name]
     [-xdrawname on/off] [-ydrawname on/off] [-zdrawname on/off]
@@ -13940,18 +13480,18 @@ Display or erase graduated trihedron
  - xcolor, ycolor, zcolor - color of axis and values
  - xticks, yticks, xzicks - number of tickmark on axes. Default: 5
  - xticklength, yticklength, xzicklength - length of tickmark on axes. Default: 10
-)" /* [vgraduatedtrihedron] */);
+)");
 
-  addCmd("vtile", VTile, /* [vtile] */ R"(
+  addCmd("vtile", VTile, R"(
 vtile [-totalSize W H] [-lowerLeft X Y] [-upperLeft X Y] [-tileSize W H]
 Setup view to draw a tile (a part of virtual bigger viewport).
  -totalSize the size of virtual bigger viewport
  -tileSize  tile size (the view size will be used if omitted)
  -lowerLeft tile offset as lower left corner
  -upperLeft tile offset as upper left corner
-)" /* [vtile] */);
+)");
 
-  addCmd("vzlayer", VZLayer, /* [vzlayer] */ R"(
+  addCmd("vzlayer", VZLayer, R"(
 vzlayer [layerId]
         [-add|-delete|-get|-settings] [-insertBefore AnotherLayer] [-insertAfter AnotherLayer]
         [-origin X Y Z] [-cullDist Distance] [-cullSize Size]
@@ -13966,27 +13506,27 @@ ZLayer list management
  -settings print status of z layer settings
  -disable  disables given setting
  -enable   enables  given setting
-)" /* [vzlayer] */);
+)");
 
-  addCmd("vlayerline", VLayerLine, /* [vlayerline] */ R"(
+  addCmd("vlayerline", VLayerLine, R"(
 vlayerline x1 y1 x2 y2 [linewidth=0.5] [linetype=0] [transparency=1.0]
-)" /* [vlayerline] */);
+)");
 
-  addCmd("vgrid", VGrid, /* [vgrid] */ R"(
+  addCmd("vgrid", VGrid, R"(
 vgrid [off] [-type {rect|circ}] [-mode {line|point}] [-origin X Y] [-rotAngle Angle] [-zoffset DZ]
       [-step X Y] [-size DX DY]
       [-step StepRadius NbDivisions] [-radius Radius]
-)" /* [vgrid] */);
+)");
 
-  addCmd("vpriviledgedplane", VPriviledgedPlane, /* [vpriviledgedplane] */ R"(
+  addCmd("vpriviledgedplane", VPriviledgedPlane, R"(
 vpriviledgedplane [Ox Oy Oz Nx Ny Nz [Xx Xy Xz]]
 Sets or prints viewer's privileged plane geometry:
   Ox, Oy, Oz - plane origin;
   Nx, Ny, Nz - plane normal direction;
   Xx, Xy, Xz - plane x-reference axis direction.
-)" /* [vpriviledgedplane] */);
+)");
 
-  addCmd("vconvert", VConvert, /* [vconvert] */ R"(
+  addCmd("vconvert", VConvert, R"(
 vconvert v [Mode={window|view}]
 vconvert x y [Mode={window|view|grid|ray}]
 vconvert x y z [Mode={window|grid}]
@@ -13995,13 +13535,13 @@ Convert the given coordinates to window/view/model space:
  - view   - convert to view projection plane;
  - grid   - convert to model coordinates, given on grid;
  - ray    - convert projection ray to model coordinates.
-)" /* [vconvert] */);
+)");
 
-  addCmd("vfps", VFps, /* [vfps] */ R"(
+  addCmd("vfps", VFps, R"(
 vfps [framesNb=100] [-duration seconds] : estimate average frame rate for active view.
-)" /* [vfps] */);
+)");
 
-  addCmd("vstereo", VStereo, /* [vstereo] */ R"(
+  addCmd("vstereo", VStereo, R"(
 vstereo [0|1] [-mode Mode] [-reverse {0|1}]
         [-mirrorComposer] [-hmdfov2d AngleDegrees] [-unitFactor MetersFactor]
         [-anaglyph Filter] [-smoothInterlacing]
@@ -14020,28 +13560,28 @@ Control stereo output mode. Available modes for -mode:
   openVR           OpenVR (HMD), extra options:
     -mirrorComposer flag to mirror VR frame in the window (debug);
     -unitFactor     specifies meters scale factor for mapping VR input.
-)" /* [vstereo] */);
+)");
 
-  addCmd("vmemgpu", VMemGpu, /* [vmemgpu] */ R"(
+  addCmd("vmemgpu", VMemGpu, R"(
 vmemgpu [f]: print system-dependent GPU memory information if available;
 with f option returns free memory in bytes.
-)" /* [vmemgpu] */);
+)");
 
-  addCmd("vreadpixel", VReadPixel, /* [vreadpixel] */ R"(
+  addCmd("vreadpixel", VReadPixel, R"(
 vreadpixel xPixel yPixel [{rgb|rgba|sRGB|sRGBa|depth|hls|rgbf|rgbaf}=rgba] [-name|-hex]
 Read pixel value for active view.
-)" /* [vreadpixel] */);
+)");
 
-  addCmd("diffimage", VDiffImage, /* [diffimage] */ R"(
+  addCmd("diffimage", VDiffImage, R"(
 diffimage imageFile1 imageFile2 [diffImageFile]
           [-toleranceOfColor {0..1}=0] [-blackWhite {on|off}=off] [-borderFilter {on|off}=off]
           [-display viewName prsName1 prsName2 prsNameDiff] [-exitOnClose] [-closeOnEscape]
 Compare two images by content and generate difference image.
 When -exitOnClose is specified, closing the view will exit application.
 When -closeOnEscape is specified, view will be closed on pressing Escape.
-)" /* [diffimage] */);
+)");
 
-  addCmd("vselect", VSelect, /* [vselect] */ R"(
+  addCmd("vselect", VSelect, R"(
 vselect x1 y1 [x2 y2 [x3 y3 ... xn yn]] [-allowoverlap 0|1]
         [-replace|-replaceextra|-xor|-add|-remove]
 Emulate different types of selection:
@@ -14055,28 +13595,28 @@ Emulate different types of selection:
     Default behavior is to detect only full inclusion
     (partial inclusion - overlap - is not allowed by default).
  5) Selection scheme replace, replaceextra, xor, add or remove (replace by default).
-)" /* [vselect] */);
+)");
 
-  addCmd("vselectpriority", VSelectPriority, /* [vselectpriority] */ R"(
+  addCmd("vselectpriority", VSelectPriority, R"(
 vselectpriority name [value]
 Prints or sets the selection priority for an object.
-)" /* [vselectpriority] */);
+)");
 
-  addCmd("vmoveto", VMoveTo, /* [vmoveto] */ R"(
+  addCmd("vmoveto", VMoveTo, R"(
 vmoveto [x y] [-reset]
 Emulate cursor movement to pixel position (x,y).
  -reset resets current highlighting.
-)" /* [vmoveto] */);
+)");
 
-  addCmd("vselaxis", VSelectByAxis, /* [vselaxis] */ R"(
+  addCmd("vselaxis", VSelectByAxis, R"(
 vselaxis x y z dx dy dz [-onlyTop 0|1] [-display Name] [-showNormal 0|1]"
 Provides intersection by given axis and print result intersection points.
  -onlyTop       switches On/Off mode to find only top point or all;
  -display Name  displays intersecting axis and result intersection points for debug goals;
  -showNormal    adds displaying of normal in intersection point or not.
-)" /* [vselaxis] */);
+)");
 
-  addCmd("vviewparams", VViewParams, /* [vviewparams] */ R"(
+  addCmd("vviewparams", VViewParams, R"(
 vviewparams [-args] [-scale [s]]
             [-eye [x y z]] [-at [x y z]] [-up [x y z]]
             [-proj [x y z]] [-center x y] [-size sx]
@@ -14091,9 +13631,9 @@ current values when called without argument.
  -size [sx]    prints viewport projection width and height sizes
                or changes the size of its maximum dimension
  -args         prints vviewparams arguments for restoring current view
-)" /* [vviewparams] */);
+)");
 
-  addCmd("v2dmode", V2DMode, /* [v2dmode] */ R"(
+  addCmd("v2dmode", V2DMode, R"(
 v2dmode [-name viewName] [-mode {-on|-off}=-on]
   name - name of existing view, if not defined, the active view is changed;
   mode - switches On/Off rotation mode.
@@ -14101,13 +13641,13 @@ Set 2D mode of the active viewer manipulating. The following mouse and key actio
  - rotation of the view by 3rd mouse button with Ctrl active
  - set view projection using key buttons: A/D/T/B/L/R for AXO, Reset, Top, Bottom, Left, Right
 View camera position might be changed only by commands.
-)" /* [v2dmode] */);
+)");
 
-  addCmd("vanimation", VAnimation, /* [vanimation] */ R"(
+  addCmd("vanimation", VAnimation, R"(
 Alias for vanim
-)" /* [vanimation] */);
+)");
 
-  addCmd("vanim", VAnimation, /* [vanim] */ R"(
+  addCmd("vanim", VAnimation, R"(
 List existing animations:
   vanim
 
@@ -14175,17 +13715,17 @@ Video recording:
   -pix_fmt image pixel format (yuv420p, rgb24, etc.)
   -crf     constant rate factor (specific to codec)
   -preset  codec parameters preset (specific to codec)
-)" /* [vanim] */);
+)");
 
-  addCmd("vchangeselected", VChangeSelected, /* [vchangeselected] */ R"(
+  addCmd("vchangeselected", VChangeSelected, R"(
 vchangeselected shape : Add shape to selection or remove one from it.
-)" /* [vchangeselected] */);
+)");
 
-  addCmd("vnbselected", VNbSelected, /* [vnbselected] */ R"(
+  addCmd("vnbselected", VNbSelected, R"(
 vnbselected : Returns number of selected objects in the interactive context.
-)" /* [vnbselected] */);
+)");
 
-  addCmd("vcamera", VCamera, /* [vcamera] */ R"(
+  addCmd("vcamera", VCamera, R"(
 vcamera [PrsName] [-ortho] [-projtype]
         [-persp]
         [-fovy   [Angle]] [-distance [Distance]]
@@ -14220,37 +13760,37 @@ Stereoscopic camera:
  -iodType    distance type, absolute or relative;
  -zfocus     stereographic focus value;
  -zfocusType focus type, absolute or relative.
-)" /* [vcamera] */);
+)");
 
-  addCmd("vautozfit", VAutoZFit, /* [vautozfit] */ R"(
+  addCmd("vautozfit", VAutoZFit, R"(
 vautozfit [on={1|0}] [scale]
 Prints or changes parameters of automatic z-fit mode:
  "on" - turns automatic z-fit on or off;
  "scale" - specifies factor to scale computed z range.
-)" /* [vautozfit] */);
+)");
 
-  addCmd("vzrange", VZRange, /* [vzrange] */ R"(
+  addCmd("vzrange", VZRange, R"(
 vzrange [znear] [zfar]
 Applies provided znear/zfar to view or prints current values.
-)" /* [vzrange] */);
+)");
 
-  addCmd("vsetviewsize", VSetViewSize, /* [vsetviewsize] */ R"(
+  addCmd("vsetviewsize", VSetViewSize, R"(
 vsetviewsize size
-)" /* [vsetviewsize] */);
+)");
 
-  addCmd("vmoveview", VMoveView, /* [vmoveview] */ R"(
+  addCmd("vmoveview", VMoveView, R"(
 vmoveview Dx Dy Dz [Start = 1|0]
-)" /* [vmoveview] */);
+)");
 
-  addCmd("vtranslateview", VTranslateView, /* [vtranslateview] */ R"(
+  addCmd("vtranslateview", VTranslateView, R"(
 vtranslateview Dx Dy Dz [Start = 1|0)]
-)" /* [vtranslateview] */);
+)");
 
-  addCmd("vturnview", VTurnView, /* [vturnview] */ R"(
+  addCmd("vturnview", VTurnView, R"(
 vturnview Ax Ay Az [Start = 1|0]
-)" /* [vturnview] */);
+)");
 
-  addCmd("vtextureenv", VTextureEnv, /* [vtextureenv] */ R"(
+  addCmd("vtextureenv", VTextureEnv, R"(
 vtextureenv {on|off} {image_file}
             [{clamp|repeat} {decal|modulate} {nearest|bilinear|trilinear} ss st ts tt rot]
 Enables or disables environment mapping in the 3D view, loading the texture from the given standard
@@ -14258,26 +13798,26 @@ or user-defined file and optionally applying texture mapping parameters.
  ss, st - scale factors for s and t texture coordinates;
  ts, tt - translation for s and t texture coordinates;
  rot    - texture rotation angle in degrees.
-)" /* [vtextureenv] */);
+)");
 
-  addCmd("vhlr", VHLR, /* [vhlr] */ R"(
+  addCmd("vhlr", VHLR, R"(
 vhlr {on|off} [-showHidden={1|0}] [-algoType={algo|polyAlgo}] [-noupdate]
 Hidden Line Removal algorithm.
  -showHidden if set ON, hidden lines are drawn as dotted ones;
  -algoType   type of HLR algorithm:
             'algo' - exact HLR algorithm is applied;
             'polyAlgo' - polygonal HLR algorithm is applied.
-)" /* [vhlr] */);
+)");
 
-  addCmd("vhlrtype", VHLRType, /* [vhlrtype] */ R"(
+  addCmd("vhlrtype", VHLRType, R"(
 vhlrtype {algo|polyAlgo} [shape_1 ... shape_n] [-noupdate]
 Changes the type of HLR algorithm using for shapes:
  'algo' - exact HLR algorithm is applied;
  'polyAlgo' - polygonal HLR algorithm is applied.
 If shapes are not given - option is applied to all shapes in the view.
-)" /* [vhlrtype] */);
+)");
 
-  addCmd("vclipplane", VClipPlane, /* [vclipplane] */ R"(
+  addCmd("vclipplane", VClipPlane, R"(
 vclipplane planeName [{0|1}]
     [-equation1 A B C D]
     [-equation2 A B C D]
@@ -14312,14 +13852,14 @@ Capping options:
  -useObjMaterial {off|on|0|1} use material of clipped object;
  -useObjTexture  {off|on|0|1} use texture of clipped object;
  -useObjShader   {off|on|0|1} use shader program of object.
-)" /* [vclipplane] */);
+)");
 
-  addCmd("vdefaults", VDefaults, /* [vdefaults] */ R"(
+  addCmd("vdefaults", VDefaults, R"(
 vdefaults [-absDefl value] [-devCoeff value] [-angDefl value]
           [-autoTriang {off/on | 0/1}]
-)" /* [vdefaults] */);
+)");
 
-  addCmd("vlight", VLight, /* [vlight] */ R"(
+  addCmd("vlight", VLight, R"(
 vlight [lightName] [-noupdate]
        [-clear|-defaults] [-layer Id] [-local|-global] [-disable|-enable]
        [-type {ambient|directional|spotlight|positional}] [-name value]
@@ -14389,22 +13929,22 @@ Light presentation parameters:
 Examples:
  vlight redlight -type POSITIONAL -headlight 1 -pos 0 1 1 -color RED
  vlight redlight -delete
-)" /* [vlight] */);
+)");
 
-  addCmd("vpbrenv", VPBREnvironment, /* [vpbrenv] */ R"(
+  addCmd("vpbrenv", VPBREnvironment, R"(
 vpbrenv -clear|-generate
 Clears or generates PBR environment map of active view.
  -clear clears PBR environment (fills by white color);
  -generate generates PBR environment from current background cubemap.
-)" /* [vpbrenv] */);
+)");
 
-  addCmd("vraytrace", VRenderParams, /* [vraytrace] */ R"(
+  addCmd("vraytrace", VRenderParams, R"(
 vraytrace [0|1] : Turns on/off ray-tracing renderer.
  'vraytrace 0' alias for 'vrenderparams -raster'.
  'vraytrace 1' alias for 'vrenderparams -rayTrace'.
-)" /* [vraytrace] */);
+)");
 
-  addCmd("vrenderparams", VRenderParams, /* [vrenderparams] */ R"(
+  addCmd("vrenderparams", VRenderParams, R"(
 Manages rendering parameters, affecting visual appearance, quality and performance.
 Should be applied taking into account GPU hardware capabilities and performance.
 
@@ -14495,9 +14035,9 @@ vrenderparams [-issd {on|off}=off] [-rebuildGlsl on|off]
  -issd         Shows screen sampling distribution in ISS mode.
  -rebuildGlsl  Rebuild Ray-Tracing GLSL programs (for debugging).
  -brng         Enables/disables blocked RNG (fast coherent PT).
-)" /* [vrenderparams] */);
+)");
 
-  addCmd("vstatprofiler", VStatProfiler, /* [vstatprofiler] */ R"(
+  addCmd("vstatprofiler", VStatProfiler, R"(
 vstatprofiler [fps|cpu|allLayers|layers|allstructures|structures|groups
                 |allArrays|fillArrays|lineArrays|pointArrays|textArrays
                 |triangles|points|geomMem|textureMem|frameMem
@@ -14506,17 +14046,17 @@ vstatprofiler [fps|cpu|allLayers|layers|allstructures|structures|groups
               [-noredraw]
 Prints rendering statistics for specified counters or for all when unspecified.
 Set '-noredraw' flag to avoid additional redraw call and use already collected values.
-)" /* [vstatprofiler] */);
+)");
 
-  addCmd("vplace", VPlace, /* [vplace] */ R"(
+  addCmd("vplace", VPlace, R"(
 vplace dx dy : Places the point (in pixels) at the center of the window
-)" /* [vplace] */);
+)");
 
-  addCmd("vxrotate", VXRotate, /* [vxrotate] */ R"(
+  addCmd("vxrotate", VXRotate, R"(
 vxrotate
-)" /* [vxrotate] */);
+)");
 
-  addCmd("vmanipulator", VManipulator, /* [vmanipulator] */ R"(
+  addCmd("vmanipulator", VManipulator, R"(
 vmanipulator Name [-attach AISObject | -detach | ...]
 Tool to create and manage AIS manipulators.
 Options:
@@ -14545,9 +14085,9 @@ Options:
  '-size value'                     - set size of manipulator
  '-zoomable {0|1}'                 - set zoom persistence
  '-flat {0|1}'                     - set flat skin mode",
-)" /* [vmanipulator] */);
+)");
 
-  addCmd("vselprops", VSelectionProperties, /* [vselprops] */ R"(
+  addCmd("vselprops", VSelectionProperties, R"(
 vselprops [dynHighlight|localDynHighlight|selHighlight|localSelHighlight] [options]
 Customizes selection and dynamic highlight parameters for the whole interactive context:
  -autoActivate {0|1}     disables|enables default computation
@@ -14567,13 +14107,13 @@ Customizes selection and dynamic highlight parameters for the whole interactive 
  -transp    value        sets transparency coefficient for highlight
  -material  material     sets highlight material
  -print                  prints current state of all mentioned parameters
-)" /* [vselprops] */);
+)");
 
-  addCmd("vhighlightselected", VSelectionProperties, /* [vhighlightselected] */ R"(
+  addCmd("vhighlightselected", VSelectionProperties, R"(
 vhighlightselected [0|1] : alias for vselprops -highlightSelected.
-)" /* [vhighlightselected] */);
+)");
 
-  addCmd("vseldump", VDumpSelectionImage, /* [vseldump] */ R"(
+  addCmd("vseldump", VDumpSelectionImage, R"(
 vseldump file -type {depth|unnormDepth|object|owner|selMode|entity|entityType|surfNormal}=depth
          -pickedIndex Index=1
          [-xrPose base|head=base]
@@ -14586,9 +14126,9 @@ Generate an image based on detection results:
   entity      color of detected entity
   entityType  color of detected entity type
   surfNormal  normal direction values
-)" /* [vseldump] */);
+)");
 
-  addCmd("vviewcube", VViewCube, /* [vviewcube] */ R"(
+  addCmd("vviewcube", VViewCube, R"(
 vviewcube name
 Displays interactive view manipulation object. Options:
  -reset                   reset geometric and visual attributes
@@ -14624,32 +14164,32 @@ Displays interactive view manipulation object. Options:
  -fixedAnimation {0|1}    uninterruptible animation loop
  -duration Seconds        animation duration in seconds
  -orthoPers               force orthographic projection persistence.
-)" /* [vviewcube] */);
+)");
 
-  addCmd("vcolorconvert", VColorConvert, /* [vcolorconvert] */ R"(
+  addCmd("vcolorconvert", VColorConvert, R"(
 vcolorconvert [-from {sRGB|HLS|Lab|Lch|RGB}]=RGB [-to {sRGB|HLS|Lab|Lch|RGB|hex|name}]=RGB C1 C2 C2
 To convert color from specified color space to linear RGB:
   vcolorconvert -from {sRGB|HLS|Lab|Lch|RGB} C1 C2 C2
 To convert linear RGB color to specified color space:
   vcolorconvert -to {sRGB|HLS|Lab|Lch|RGB|hex|name} R G B
-)" /* [vcolorconvert] */);
+)");
 
-  addCmd("vcolordiff", VColorDiff, /* [vcolordiff] */ R"(
+  addCmd("vcolordiff", VColorDiff, R"(
 vcolordiff R1 G1 B1 R2 G2 B2 : returns CIEDE2000 color difference between two RGB colors.
-)" /* [vcolordiff] */);
+)");
 
-  addCmd("vselbvhbuild", VSelBvhBuild, /* [vselbvhbuild] */ R"(
+  addCmd("vselbvhbuild", VSelBvhBuild, R"(
 vselbvhbuild [{0|1}] [-nbThreads value] [-wait]
 Turns on/off prebuilding of BVH within background thread(s).
  -nbThreads   number of threads, 1 by default; if < 1 then used (NbLogicalProcessors - 1);
  -wait        waits for building all of BVH.
-)" /* [vselbvhbuild] */);
+)");
 
-  addCmd("vchangemousegesture", VChangeMouseGesture, /* [vchangemousegesture] */ R"(
+  addCmd("vchangemousegesture", VChangeMouseGesture, R"(
 vchangemousegesture -button  {none|left|middle|right}=left
                     -gesture {none|selectRectangle|selectLasso|zoom|zoomWindow|pan|rotateOrbit|rotateView|drag}=rotateOrbit
 Changes the gesture for the mouse button.
  -button  the mouse button;
  -gesture the new gesture for the button.
-)" /* [vchangemousegesture] */);
+)");
 }

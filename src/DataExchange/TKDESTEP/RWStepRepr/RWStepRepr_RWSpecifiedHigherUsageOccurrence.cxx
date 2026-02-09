@@ -5,12 +5,8 @@
 #include <StepRepr_NextAssemblyUsageOccurrence.hpp>
 #include <StepRepr_SpecifiedHigherUsageOccurrence.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWSpecifiedHigherUsageOccurrence::RWStepRepr_RWSpecifiedHigherUsageOccurrence() =
   default;
-
-//=================================================================================================
 
 void RWStepRepr_RWSpecifiedHigherUsageOccurrence::ReadStep(
   const occ::handle<StepData_StepReaderData>&                 data,
@@ -18,11 +14,9 @@ void RWStepRepr_RWSpecifiedHigherUsageOccurrence::ReadStep(
   occ::handle<Interface_Check>&                               ach,
   const occ::handle<StepRepr_SpecifiedHigherUsageOccurrence>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 8, ach, "specified_higher_usage_occurrence"))
     return;
-
-  // Inherited fields of ProductDefinitionRelationship
 
   occ::handle<TCollection_HAsciiString> aProductDefinitionRelationship_Id;
   data->ReadString(num,
@@ -67,8 +61,6 @@ void RWStepRepr_RWSpecifiedHigherUsageOccurrence::ReadStep(
                    ach,
                    aProductDefinitionRelationship_RelatedProductDefinition);
 
-  // Inherited fields of AssemblyComponentUsage
-
   occ::handle<TCollection_HAsciiString> aAssemblyComponentUsage_ReferenceDesignator;
   bool                                  hasAssemblyComponentUsage_ReferenceDesignator = true;
   if (data->IsParamDefined(num, 6))
@@ -83,8 +75,6 @@ void RWStepRepr_RWSpecifiedHigherUsageOccurrence::ReadStep(
   {
     hasAssemblyComponentUsage_ReferenceDesignator = false;
   }
-
-  // Own fields of SpecifiedHigherUsageOccurrence
 
   occ::handle<StepRepr_AssemblyComponentUsage> aUpperUsage;
   data->ReadEntity(num,
@@ -102,7 +92,6 @@ void RWStepRepr_RWSpecifiedHigherUsageOccurrence::ReadStep(
                    STANDARD_TYPE(StepRepr_NextAssemblyUsageOccurrence),
                    aNextUsage);
 
-  // Initialize entity
   ent->Init(aProductDefinitionRelationship_Id,
             aProductDefinitionRelationship_Name,
             hasProductDefinitionRelationship_Description,
@@ -115,14 +104,10 @@ void RWStepRepr_RWSpecifiedHigherUsageOccurrence::ReadStep(
             aNextUsage);
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWSpecifiedHigherUsageOccurrence::WriteStep(
   StepData_StepWriter&                                        SW,
   const occ::handle<StepRepr_SpecifiedHigherUsageOccurrence>& ent) const
 {
-
-  // Inherited fields of ProductDefinitionRelationship
 
   SW.Send(ent->StepBasic_ProductDefinitionRelationship::Id());
 
@@ -139,8 +124,6 @@ void RWStepRepr_RWSpecifiedHigherUsageOccurrence::WriteStep(
 
   SW.Send(ent->StepBasic_ProductDefinitionRelationship::RelatedProductDefinitionAP242().Value());
 
-  // Inherited fields of AssemblyComponentUsage
-
   if (ent->StepRepr_AssemblyComponentUsage::HasReferenceDesignator())
   {
     SW.Send(ent->StepRepr_AssemblyComponentUsage::ReferenceDesignator());
@@ -148,31 +131,21 @@ void RWStepRepr_RWSpecifiedHigherUsageOccurrence::WriteStep(
   else
     SW.SendUndef();
 
-  // Own fields of SpecifiedHigherUsageOccurrence
-
   SW.Send(ent->UpperUsage());
 
   SW.Send(ent->NextUsage());
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWSpecifiedHigherUsageOccurrence::Share(
   const occ::handle<StepRepr_SpecifiedHigherUsageOccurrence>& ent,
   Interface_EntityIterator&                                   iter) const
 {
 
-  // Inherited fields of ProductDefinitionRelationship
-
   iter.AddItem(
     ent->StepBasic_ProductDefinitionRelationship::RelatingProductDefinitionAP242().Value());
 
   iter.AddItem(
     ent->StepBasic_ProductDefinitionRelationship::RelatedProductDefinitionAP242().Value());
-
-  // Inherited fields of AssemblyComponentUsage
-
-  // Own fields of SpecifiedHigherUsageOccurrence
 
   iter.AddItem(ent->UpperUsage());
 

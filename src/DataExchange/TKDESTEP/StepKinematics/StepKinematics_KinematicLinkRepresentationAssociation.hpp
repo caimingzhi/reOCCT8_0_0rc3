@@ -6,12 +6,10 @@
 #include <TCollection_HAsciiString.hpp>
 #include <StepRepr_RepresentationOrRepresentationReference.hpp>
 
-//! Representation of STEP entity KinematicLinkRepresentationAssociation
 class StepKinematics_KinematicLinkRepresentationAssociation
     : public StepRepr_RepresentationRelationship
 {
 public:
-  //! default constructor
   Standard_EXPORT StepKinematics_KinematicLinkRepresentationAssociation();
 
   DEFINE_STANDARD_RTTIEXT(StepKinematics_KinematicLinkRepresentationAssociation,

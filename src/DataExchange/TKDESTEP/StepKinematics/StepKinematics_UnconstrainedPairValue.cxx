@@ -1,14 +1,10 @@
-// Created on : Sat May 02 12:41:16 2020
+
 
 #include <StepKinematics_UnconstrainedPairValue.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_UnconstrainedPairValue, StepKinematics_PairValue)
 
-//=================================================================================================
-
 StepKinematics_UnconstrainedPairValue::StepKinematics_UnconstrainedPairValue() = default;
-
-//=================================================================================================
 
 void StepKinematics_UnconstrainedPairValue::Init(
   const occ::handle<TCollection_HAsciiString>&     theRepresentationItem_Name,
@@ -20,15 +16,11 @@ void StepKinematics_UnconstrainedPairValue::Init(
   myActualPlacement = theActualPlacement;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_Axis2Placement3d> StepKinematics_UnconstrainedPairValue::ActualPlacement()
   const
 {
   return myActualPlacement;
 }
-
-//=================================================================================================
 
 void StepKinematics_UnconstrainedPairValue::SetActualPlacement(
   const occ::handle<StepGeom_Axis2Placement3d>& theActualPlacement)

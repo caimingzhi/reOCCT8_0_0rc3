@@ -1,20 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// JCV 30/08/90 Modif passage version C++ 2.0 sur Sun
-// JCV 1/10/90 Changement de nom du package vgeom -> gp
-// JCV 07/12/90 Modifs suite a l'introduction des classes XYZ et Mat dans gp
 
 #define No_Standard_OutOfRange
 
@@ -58,12 +42,10 @@ void gp_Vec::Mirror(const gp_Vec& theVec) noexcept
     const double  aOrigY        = coord.Y();
     const double  aOrigZ        = coord.Z();
 
-    // Normalize the mirror vector components
     const double aNormDirX = aMirrorVecXYZ.X() / aMagnitude;
     const double aNormDirY = aMirrorVecXYZ.Y() / aMagnitude;
     const double aNormDirZ = aMirrorVecXYZ.Z() / aMagnitude;
 
-    // Precompute common terms for 3D reflection matrix
     const double aCrossTermXY = 2.0 * aNormDirX * aNormDirY;
     const double aCrossTermXZ = 2.0 * aNormDirX * aNormDirZ;
     const double aCrossTermYZ = 2.0 * aNormDirY * aNormDirZ;
@@ -87,7 +69,6 @@ void gp_Vec::Mirror(const gp_Ax1& theAxis) noexcept
   const double  aDirY         = aDirectionXYZ.Y();
   const double  aDirZ         = aDirectionXYZ.Z();
 
-  // Precompute common terms for 3D reflection matrix
   const double aCrossTermXY = 2.0 * aDirX * aDirY;
   const double aCrossTermXZ = 2.0 * aDirX * aDirZ;
   const double aCrossTermYZ = 2.0 * aDirY * aDirZ;
@@ -156,8 +137,6 @@ gp_Vec gp_Vec::Mirrored(const gp_Ax2& theAxis) const noexcept
   aResult.Mirror(theAxis);
   return aResult;
 }
-
-//=================================================================================================
 
 void gp_Vec::DumpJson(Standard_OStream& theOStream, int) const
 {

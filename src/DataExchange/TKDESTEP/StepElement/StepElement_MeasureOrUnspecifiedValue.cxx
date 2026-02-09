@@ -7,19 +7,12 @@
 static const char* aCDM = "CONTEXT_DEPENDENT_MEASURE";
 static const char* anUV = "UNSPECIFIED_VALUE";
 
-//=================================================================================================
-
 StepElement_MeasureOrUnspecifiedValue::StepElement_MeasureOrUnspecifiedValue() = default;
 
-//=================================================================================================
-
-int StepElement_MeasureOrUnspecifiedValue::CaseNum(
-  const occ::handle<Standard_Transient>& /*ent*/) const
+int StepElement_MeasureOrUnspecifiedValue::CaseNum(const occ::handle<Standard_Transient>&) const
 {
   return 0;
 }
-
-//=================================================================================================
 
 int StepElement_MeasureOrUnspecifiedValue::CaseMem(
   const occ::handle<StepData_SelectMember>& ent) const
@@ -34,14 +27,10 @@ int StepElement_MeasureOrUnspecifiedValue::CaseMem(
     return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepData_SelectMember> StepElement_MeasureOrUnspecifiedValue::NewMember() const
 {
   return new StepElement_MeasureOrUnspecifiedValueMember;
 }
-
-//=================================================================================================
 
 void StepElement_MeasureOrUnspecifiedValue::SetContextDependentMeasure(const double val)
 {
@@ -54,8 +43,6 @@ void StepElement_MeasureOrUnspecifiedValue::SetContextDependentMeasure(const dou
   SelMem->SetName(name->ToCString());
   SelMem->SetReal(val);
 }
-
-//=================================================================================================
 
 double StepElement_MeasureOrUnspecifiedValue::ContextDependentMeasure() const
 {
@@ -73,8 +60,6 @@ double StepElement_MeasureOrUnspecifiedValue::ContextDependentMeasure() const
   return val;
 }
 
-//=================================================================================================
-
 void StepElement_MeasureOrUnspecifiedValue::SetUnspecifiedValue(
   const StepElement_UnspecifiedValue val)
 {
@@ -86,8 +71,6 @@ void StepElement_MeasureOrUnspecifiedValue::SetUnspecifiedValue(
   SelMem->SetName(name->ToCString());
   SelMem->SetEnum((int)val);
 }
-
-//=================================================================================================
 
 StepElement_UnspecifiedValue StepElement_MeasureOrUnspecifiedValue::UnspecifiedValue() const
 {

@@ -13,14 +13,10 @@
 #include <gp_Pnt2d.hpp>
 #include <Standard_Integer.hpp>
 
-//=================================================================================================
-
 BRepFill_ApproxSeewing::BRepFill_ApproxSeewing()
     : myIsDone(false)
 {
 }
-
-//=================================================================================================
 
 BRepFill_ApproxSeewing::BRepFill_ApproxSeewing(const BRepFill_MultiLine& ML)
     : myIsDone(false)
@@ -28,13 +24,10 @@ BRepFill_ApproxSeewing::BRepFill_ApproxSeewing(const BRepFill_MultiLine& ML)
   Perform(ML);
 }
 
-//=================================================================================================
-
 void BRepFill_ApproxSeewing::Perform(const BRepFill_MultiLine& ML)
 {
   myML = ML;
 
-  // evaluate the approximative length of the 3dCurve
   int    i;
   double Length   = 0.;
   double U1       = myML.FirstParameter();
@@ -42,7 +35,7 @@ void BRepFill_ApproxSeewing::Perform(const BRepFill_MultiLine& ML)
   int    NbPoints = 50;
   double Dist, dU = (U2 - U1) / (2 * NbPoints - 1);
 
-  NCollection_Array1<gp_Pnt2d> LP(1, 2 * NbPoints); // tableau Longueur <-> Param
+  NCollection_Array1<gp_Pnt2d> LP(1, 2 * NbPoints);
   gp_Pnt                       aPnt1, aPnt2;
   aPnt1 = myML.Value(U1);
 
@@ -54,9 +47,6 @@ void BRepFill_ApproxSeewing::Perform(const BRepFill_MultiLine& ML)
     LP(i + 1) = gp_Pnt2d(Length, U1 + (i * dU));
     aPnt1     = aPnt2;
   }
-
-  // On cherche a mettre NbPoints dans la curve.
-  // on met les points environ a Length/NbPoints.
 
   AppDef_MultiLine            MLS(NbPoints);
   AppDef_MultiPointConstraint MP(1, 2);
@@ -118,7 +108,6 @@ void BRepFill_ApproxSeewing::Perform(const BRepFill_MultiLine& ML)
   AppDef_Compute Fit(MLS);
 
   int NbCurves = Fit.NbMultiCurves();
-  //  int MaxDeg = 0;
 
   if (NbCurves == 0)
   {
@@ -147,7 +136,7 @@ void BRepFill_ApproxSeewing::Perform(const BRepFill_MultiLine& ML)
       P2(i)    = MPC.Point2d(3);
       Knots(i) = U;
     }
-    // eval the last point on Ul
+
     MPC             = MLS.Value(NbPoints);
     P(NbPoints)     = MPC.Point(1);
     P1(NbPoints)    = MPC.Point2d(2);
@@ -162,8 +151,6 @@ void BRepFill_ApproxSeewing::Perform(const BRepFill_MultiLine& ML)
 
     return;
   }
-
-  // Les approx sont a priori OK.
 
   const AppParCurves_MultiBSpCurve& MBSp    = Fit.SplineValue();
   int                               NbPoles = MBSp.NbPoles();
@@ -186,17 +173,10 @@ void BRepFill_ApproxSeewing::Perform(const BRepFill_MultiLine& ML)
   myIsDone = true;
 }
 
-//=================================================================================================
-
 bool BRepFill_ApproxSeewing::IsDone() const
 {
   return myIsDone;
 }
-
-//=======================================================================
-// function : occ::handle<Geom_Curve>&
-// purpose  :
-//=======================================================================
 
 const occ::handle<Geom_Curve>& BRepFill_ApproxSeewing::Curve() const
 {
@@ -204,21 +184,11 @@ const occ::handle<Geom_Curve>& BRepFill_ApproxSeewing::Curve() const
   return myCurve;
 }
 
-//=======================================================================
-// function : occ::handle<Geom2d_Curve>&
-// purpose  :
-//=======================================================================
-
 const occ::handle<Geom2d_Curve>& BRepFill_ApproxSeewing::CurveOnF1() const
 {
   StdFail_NotDone_Raise_if(!myIsDone, "BRepFill_ApproxSeewing::CurveOnF1");
   return myPCurve1;
 }
-
-//=======================================================================
-// function : occ::handle<Geom2d_Curve>&
-// purpose  :
-//=======================================================================
 
 const occ::handle<Geom2d_Curve>& BRepFill_ApproxSeewing::CurveOnF2() const
 {

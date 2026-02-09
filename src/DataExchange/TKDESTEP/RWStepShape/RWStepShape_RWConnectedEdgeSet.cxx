@@ -8,11 +8,7 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepShape_RWConnectedEdgeSet::RWStepShape_RWConnectedEdgeSet() = default;
-
-//=================================================================================================
 
 void RWStepShape_RWConnectedEdgeSet::ReadStep(
   const occ::handle<StepData_StepReaderData>&    data,
@@ -20,16 +16,12 @@ void RWStepShape_RWConnectedEdgeSet::ReadStep(
   occ::handle<Interface_Check>&                  ach,
   const occ::handle<StepShape_ConnectedEdgeSet>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "connected_edge_set"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   data->ReadString(num, 1, "representation_item.name", ach, aRepresentationItem_Name);
-
-  // Own fields of ConnectedEdgeSet
 
   occ::handle<NCollection_HArray1<occ::handle<StepShape_Edge>>> aCesEdges;
   int                                                           sub2 = 0;
@@ -46,22 +38,15 @@ void RWStepShape_RWConnectedEdgeSet::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aRepresentationItem_Name, aCesEdges);
 }
-
-//=================================================================================================
 
 void RWStepShape_RWConnectedEdgeSet::WriteStep(
   StepData_StepWriter&                           SW,
   const occ::handle<StepShape_ConnectedEdgeSet>& ent) const
 {
 
-  // Inherited fields of RepresentationItem
-
   SW.Send(ent->StepRepr_RepresentationItem::Name());
-
-  // Own fields of ConnectedEdgeSet
 
   SW.OpenSub();
   for (int i1 = 1; i1 <= ent->CesEdges()->Length(); i1++)
@@ -72,15 +57,9 @@ void RWStepShape_RWConnectedEdgeSet::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepShape_RWConnectedEdgeSet::Share(const occ::handle<StepShape_ConnectedEdgeSet>& ent,
                                            Interface_EntityIterator& iter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Own fields of ConnectedEdgeSet
 
   for (int i1 = 1; i1 <= ent->CesEdges()->Length(); i1++)
   {

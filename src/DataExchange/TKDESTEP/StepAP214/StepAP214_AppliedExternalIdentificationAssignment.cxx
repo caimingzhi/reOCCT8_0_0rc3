@@ -6,12 +6,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_AppliedExternalIdentificationAssignment,
                            StepBasic_ExternalIdentificationAssignment)
 
-//=================================================================================================
-
 StepAP214_AppliedExternalIdentificationAssignment::
   StepAP214_AppliedExternalIdentificationAssignment() = default;
-
-//=================================================================================================
 
 void StepAP214_AppliedExternalIdentificationAssignment::Init(
   const occ::handle<TCollection_HAsciiString>&     aIdentificationAssignment_AssignedId,
@@ -26,15 +22,11 @@ void StepAP214_AppliedExternalIdentificationAssignment::Init(
   theItems = aItems;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<StepAP214_ExternalIdentificationItem>>
   StepAP214_AppliedExternalIdentificationAssignment::Items() const
 {
   return theItems;
 }
-
-//=================================================================================================
 
 void StepAP214_AppliedExternalIdentificationAssignment::SetItems(
   const occ::handle<NCollection_HArray1<StepAP214_ExternalIdentificationItem>>& aItems)

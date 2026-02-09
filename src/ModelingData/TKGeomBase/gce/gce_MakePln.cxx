@@ -47,10 +47,6 @@ gce_MakePln::gce_MakePln(const double A, const double B, const double C, const d
   }
 }
 
-//=========================================================================
-//   Creation d un gp_pln passant par trois points.                       +
-//=========================================================================
-
 gce_MakePln::gce_MakePln(const gp_Pnt& P1, const gp_Pnt& P2, const gp_Pnt& P3)
 {
   gp_XYZ V1(P2.XYZ() - P1.XYZ());
@@ -69,10 +65,6 @@ gce_MakePln::gce_MakePln(const gp_Pnt& P1, const gp_Pnt& P2, const gp_Pnt& P3)
   }
 }
 
-//=========================================================================
-//   Creation d un gp_pln parallele a un autre pln a une distance donnee. +
-//=========================================================================
-
 gce_MakePln::gce_MakePln(const gp_Pln& Pl, const double Dist)
 {
   gp_Pnt Center(Pl.Location().XYZ() + Dist * gp_XYZ(Pl.Axis().Direction().XYZ()));
@@ -80,20 +72,11 @@ gce_MakePln::gce_MakePln(const gp_Pln& Pl, const double Dist)
   TheError = gce_Done;
 }
 
-//=========================================================================
-//   Creation d un gp_pln parallele a un autre pln passant par un point   +
-//   <Point1>.                                                            +
-//=========================================================================
-
 gce_MakePln::gce_MakePln(const gp_Pln& Pl, const gp_Pnt& Point)
 {
   ThePln   = gp_Pln(gp_Ax3(Point, Pl.Axis().Direction(), Pl.XAxis().Direction()));
   TheError = gce_Done;
 }
-
-//=========================================================================
-//  Creation d un gp_pln a partir d un Ax1 (Point + Normale).             +
-//=========================================================================
 
 gce_MakePln::gce_MakePln(const gp_Ax1& Axis)
 {
@@ -101,17 +84,6 @@ gce_MakePln::gce_MakePln(const gp_Ax1& Axis)
   TheError = gce_Done;
 }
 
-//=========================================================================
-//  Creation d un gp_pln par un tableau de points.                        +
-//=========================================================================
-
-/*gce_MakePln::gce_MakePln(const gp_Array1OfPnt& Pts     ,
-                   double   ErrMax  ,
-                   double   ErrMean )
-{
-  TheError = gce_ConfusedPoints;
-}
-*/
 const gp_Pln& gce_MakePln::Value() const
 {
   StdFail_NotDone_Raise_if(TheError != gce_Done, "gce_MakePln::Value() - no result");

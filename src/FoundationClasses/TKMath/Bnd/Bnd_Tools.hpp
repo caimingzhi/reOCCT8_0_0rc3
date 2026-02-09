@@ -4,11 +4,9 @@
 #include <Bnd_Box.hpp>
 #include <BVH_Box.hpp>
 
-//! Defines a set of static methods operating with bounding boxes
 class Bnd_Tools
 {
-public: //! @name Bnd_Box to BVH_Box conversion
-  //! Converts the given Bnd_Box2d to BVH_Box
+public:
   static BVH_Box<double, 2> Bnd2BVH(const Bnd_Box2d& theBox)
   {
     double aXMin, aYMin, aXMax, aYMax;
@@ -16,7 +14,6 @@ public: //! @name Bnd_Box to BVH_Box conversion
     return BVH_Box<double, 2>(BVH_Vec2d(aXMin, aYMin), BVH_Vec2d(aXMax, aYMax));
   }
 
-  //! Converts the given Bnd_Box to BVH_Box
   static BVH_Box<double, 3> Bnd2BVH(const Bnd_Box& theBox)
   {
     double aXMin, aYMin, aZMin, aXMax, aYMax, aZMax;

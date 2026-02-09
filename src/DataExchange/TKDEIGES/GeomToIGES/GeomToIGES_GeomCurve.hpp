@@ -19,20 +19,6 @@ class Geom_Line;
 class Geom_Parabola;
 class Geom_OffsetCurve;
 
-//! This class implements the transfer of the Curve Entity from Geom
-//! To IGES. These can be:
-//! Curve
-//! . BoundedCurve
-//! * BSplineCurve
-//! * BezierCurve
-//! * TrimmedCurve
-//! . Conic
-//! * Circle
-//! * Ellipse
-//! * Hyperbloa
-//! * Line
-//! * Parabola
-//! . OffsetCurve
 class GeomToIGES_GeomCurve : public GeomToIGES_GeomEntity
 {
 public:
@@ -40,13 +26,8 @@ public:
 
   Standard_EXPORT GeomToIGES_GeomCurve();
 
-  //! Creates a tool GeomCurve ready to run and sets its
-  //! fields as GE's.
   Standard_EXPORT GeomToIGES_GeomCurve(const GeomToIGES_GeomEntity& GE);
 
-  //! Transfer a GeometryEntity which answer True to the
-  //! member : BRepToIGES::IsGeomCurve(Geometry). If this
-  //! Entity could not be converted, this member returns a NullEntity.
   Standard_EXPORT occ::handle<IGESData_IGESEntity> TransferCurve(
     const occ::handle<Geom_Curve>& start,
     const double                   Udeb,

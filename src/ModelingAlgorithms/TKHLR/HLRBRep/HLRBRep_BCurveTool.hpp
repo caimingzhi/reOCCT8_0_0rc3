@@ -32,15 +32,8 @@ public:
 
   static GeomAbs_Shape Continuity(const BRepAdaptor_Curve& C);
 
-  //! Returns the number of intervals for continuity
-  //! <S>. May be one if Continuity(myclass) >= <S>
   static int NbIntervals(const BRepAdaptor_Curve& C, const GeomAbs_Shape S);
 
-  //! Stores in <T> the parameters bounding the intervals
-  //! of continuity <S>.
-  //!
-  //! The array must provide enough room to accommodate
-  //! for the parameters. i.e. T.Length() > NbIntervals()
   static void Intervals(const BRepAdaptor_Curve&    C,
                         NCollection_Array1<double>& T,
                         const GeomAbs_Shape         S);
@@ -51,28 +44,14 @@ public:
 
   static double Period(const BRepAdaptor_Curve& C);
 
-  //! Computes the point of parameter U on the curve.
   static gp_Pnt Value(const BRepAdaptor_Curve& C, const double U);
 
-  //! Computes the point of parameter U on the curve.
   static void D0(const BRepAdaptor_Curve& C, const double U, gp_Pnt& P);
 
-  //! Computes the point of parameter U on the curve with its
-  //! first derivative.
-  //! Raised if the continuity of the current interval
-  //! is not C1.
   static void D1(const BRepAdaptor_Curve& C, const double U, gp_Pnt& P, gp_Vec& V);
 
-  //! Returns the point P of parameter U, the first and second
-  //! derivatives V1 and V2.
-  //! Raised if the continuity of the current interval
-  //! is not C2.
   static void D2(const BRepAdaptor_Curve& C, const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2);
 
-  //! Returns the point P of parameter U, the first, the second
-  //! and the third derivative.
-  //! Raised if the continuity of the current interval
-  //! is not C3.
   static void D3(const BRepAdaptor_Curve& C,
                  const double             U,
                  gp_Pnt&                  P,
@@ -80,20 +59,10 @@ public:
                  gp_Vec&                  V2,
                  gp_Vec&                  V3);
 
-  //! The returned vector gives the value of the derivative for the
-  //! order of derivation N.
-  //! Raised if the continuity of the current interval
-  //! is not CN.
-  //! Raised if N < 1.
   static gp_Vec DN(const BRepAdaptor_Curve& C, const double U, const int N);
 
-  //! Returns the parametric resolution corresponding
-  //! to the real space resolution <R3d>.
   static double Resolution(const BRepAdaptor_Curve& C, const double R3d);
 
-  //! Returns the type of the curve in the current
-  //! interval: Line, Circle, Ellipse, Hyperbola,
-  //! Parabola, BezierCurve, BSplineCurve, OtherCurve.
   static GeomAbs_CurveType GetType(const BRepAdaptor_Curve& C);
 
   static gp_Lin Line(const BRepAdaptor_Curve& C);
@@ -139,35 +108,25 @@ public:
 #include <gp_Hypr.hpp>
 #include <BRepAdaptor_Curve.hpp>
 
-//=================================================================================================
-
 inline double HLRBRep_BCurveTool::FirstParameter(const BRepAdaptor_Curve& C)
 {
   return (C.FirstParameter());
 }
-
-//=================================================================================================
 
 inline double HLRBRep_BCurveTool::LastParameter(const BRepAdaptor_Curve& C)
 {
   return (C.LastParameter());
 }
 
-//=================================================================================================
-
 inline GeomAbs_Shape HLRBRep_BCurveTool::Continuity(const BRepAdaptor_Curve& C)
 {
   return (C.Continuity());
 }
 
-//=================================================================================================
-
 inline int HLRBRep_BCurveTool::NbIntervals(const BRepAdaptor_Curve& C, const GeomAbs_Shape Sh)
 {
   return (C.NbIntervals(Sh));
 }
-
-//=================================================================================================
 
 inline void HLRBRep_BCurveTool::Intervals(const BRepAdaptor_Curve&    C,
                                           NCollection_Array1<double>& Tab,
@@ -176,42 +135,30 @@ inline void HLRBRep_BCurveTool::Intervals(const BRepAdaptor_Curve&    C,
   C.Intervals(Tab, Sh);
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_BCurveTool::IsClosed(const BRepAdaptor_Curve& C)
 {
   return (C.IsClosed());
 }
-
-//=================================================================================================
 
 inline bool HLRBRep_BCurveTool::IsPeriodic(const BRepAdaptor_Curve& C)
 {
   return (C.IsPeriodic());
 }
 
-//=================================================================================================
-
 inline double HLRBRep_BCurveTool::Period(const BRepAdaptor_Curve& C)
 {
   return (C.Period());
 }
-
-//=================================================================================================
 
 inline gp_Pnt HLRBRep_BCurveTool::Value(const BRepAdaptor_Curve& C, const double U)
 {
   return (C.Value(U));
 }
 
-//=================================================================================================
-
 inline void HLRBRep_BCurveTool::D0(const BRepAdaptor_Curve& C, const double U, gp_Pnt& P)
 {
   C.D0(U, P);
 }
-
-//=================================================================================================
 
 inline void HLRBRep_BCurveTool::D1(const BRepAdaptor_Curve& C, const double U, gp_Pnt& P, gp_Vec& T)
 {
@@ -227,8 +174,6 @@ inline void HLRBRep_BCurveTool::D2(const BRepAdaptor_Curve& C,
   C.D2(U, P, T, N);
 }
 
-//=================================================================================================
-
 inline void HLRBRep_BCurveTool::D3(const BRepAdaptor_Curve& C,
                                    const double             U,
                                    gp_Pnt&                  P,
@@ -239,84 +184,60 @@ inline void HLRBRep_BCurveTool::D3(const BRepAdaptor_Curve& C,
   C.D3(U, P, V1, V2, V3);
 }
 
-//=================================================================================================
-
 inline gp_Vec HLRBRep_BCurveTool::DN(const BRepAdaptor_Curve& C, const double U, const int N)
 {
   return (C.DN(U, N));
 }
-
-//=================================================================================================
 
 inline double HLRBRep_BCurveTool::Resolution(const BRepAdaptor_Curve& C, const double R3d)
 {
   return (C.Resolution(R3d));
 }
 
-//=================================================================================================
-
 inline GeomAbs_CurveType HLRBRep_BCurveTool::GetType(const BRepAdaptor_Curve& C)
 {
   return (C.GetType());
 }
-
-//=================================================================================================
 
 inline gp_Lin HLRBRep_BCurveTool::Line(const BRepAdaptor_Curve& C)
 {
   return (C.Line());
 }
 
-//=================================================================================================
-
 inline gp_Circ HLRBRep_BCurveTool::Circle(const BRepAdaptor_Curve& C)
 {
   return (C.Circle());
 }
-
-//=================================================================================================
 
 inline gp_Elips HLRBRep_BCurveTool::Ellipse(const BRepAdaptor_Curve& C)
 {
   return (C.Ellipse());
 }
 
-//=================================================================================================
-
 inline gp_Parab HLRBRep_BCurveTool::Parabola(const BRepAdaptor_Curve& C)
 {
   return (C.Parabola());
 }
-
-//=================================================================================================
 
 inline gp_Hypr HLRBRep_BCurveTool::Hyperbola(const BRepAdaptor_Curve& C)
 {
   return (C.Hyperbola());
 }
 
-//=================================================================================================
-
 inline int HLRBRep_BCurveTool::Degree(const BRepAdaptor_Curve& C)
 {
   return (C.Degree());
 }
-
-//=================================================================================================
 
 inline bool HLRBRep_BCurveTool::IsRational(const BRepAdaptor_Curve& C)
 {
   return (C.IsRational());
 }
 
-//=================================================================================================
-
 inline int HLRBRep_BCurveTool::NbPoles(const BRepAdaptor_Curve& C)
 {
   return (C.NbPoles());
 }
-
-//=================================================================================================
 
 inline int HLRBRep_BCurveTool::NbKnots(const BRepAdaptor_Curve& C)
 {

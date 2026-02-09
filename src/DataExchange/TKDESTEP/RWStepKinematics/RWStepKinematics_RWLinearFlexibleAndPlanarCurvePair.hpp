@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_LinearFlexibleAndPlanarCurvePair;
 
-//! Read & Write tool for LinearFlexibleAndPlanarCurvePair
 class RWStepKinematics_RWLinearFlexibleAndPlanarCurvePair
 {
 public:

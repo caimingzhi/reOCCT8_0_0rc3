@@ -4,8 +4,6 @@
 
 #include <cstring>
 
-//=================================================================================================
-
 LDOM_SBuffer::LDOM_StringElem::LDOM_StringElem(
   const int                                     theLength,
   const occ::handle<NCollection_BaseAllocator>& theAlloc)
@@ -14,8 +12,6 @@ LDOM_SBuffer::LDOM_StringElem::LDOM_StringElem(
       next(nullptr)
 {
 }
-
-//=================================================================================================
 
 LDOM_SBuffer::LDOM_SBuffer(const int theMaxBuf)
     : myMaxBuf(theMaxBuf),
@@ -26,12 +22,7 @@ LDOM_SBuffer::LDOM_SBuffer(const int theMaxBuf)
   myCurString   = myFirstString;
 }
 
-//=================================================================================================
-
-// no destruction is required as IncAllocator is used
 LDOM_SBuffer::~LDOM_SBuffer() = default;
-
-//=================================================================================================
 
 void LDOM_SBuffer::Clear()
 {
@@ -40,8 +31,6 @@ void LDOM_SBuffer::Clear()
   myLength      = 0;
   myCurString   = myFirstString;
 }
-
-//=================================================================================================
 
 const char* LDOM_SBuffer::str() const
 {
@@ -60,10 +49,6 @@ const char* LDOM_SBuffer::str() const
   return aRetStr;
 }
 
-//=======================================================================
-// function : overflow()
-// purpose  : redefined virtual
-//=======================================================================
 int LDOM_SBuffer::overflow(int c)
 {
   char cc = (char)c;
@@ -71,20 +56,11 @@ int LDOM_SBuffer::overflow(int c)
   return c;
 }
 
-//=================================================================================================
-
 int LDOM_SBuffer::underflow()
 {
   return EOF;
 }
 
-// int LDOM_SBuffer::uflow()
-//{ return EOF; }
-
-//=======================================================================
-// function : xsputn()
-// purpose  : redefined virtual
-//=======================================================================
 std::streamsize LDOM_SBuffer::xsputn(const char* aStr, std::streamsize n)
 {
   Standard_ASSERT_RAISE(n < IntegerLast(),
@@ -103,9 +79,9 @@ std::streamsize LDOM_SBuffer::xsputn(const char* aStr, std::streamsize n)
     myCurString                = aNextElem;
     strncpy(myCurString->buf + myCurString->len, aStr, aLen);
   }
-  else // 0 < freeLen < n
+  else
   {
-    // copy string by parts
+
     strncpy(myCurString->buf + myCurString->len, aStr, freeLen);
     myCurString->len += freeLen;
     *(myCurString->buf + myCurString->len) = '\0';
@@ -122,11 +98,6 @@ std::streamsize LDOM_SBuffer::xsputn(const char* aStr, std::streamsize n)
   return n;
 }
 
-// streamsize LDOM_SBuffer::xsgetn(char* s, streamsize n)
-//{ return _IO_default_xsgetn(this, s, n); }
-
-//=================================================================================================
-
 LDOM_OSStream::LDOM_OSStream(const int theMaxBuf)
     : Standard_OStream(&myBuffer),
       myBuffer(theMaxBuf)
@@ -134,8 +105,4 @@ LDOM_OSStream::LDOM_OSStream(const int theMaxBuf)
   init(&myBuffer);
 }
 
-//=======================================================================
-// function : ~LDOM_OSStream()
-// purpose  : Destructor - for g++ vtable generation in *this* translation unit
-//=======================================================================
 LDOM_OSStream::~LDOM_OSStream() = default;

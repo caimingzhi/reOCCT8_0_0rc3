@@ -11,10 +11,6 @@ class gp_Lin2d;
 class Geom_Line;
 class Geom2d_Line;
 
-//! This class implements the mapping between classes
-//! Line from Geom and Lin from gp, and the class
-//! Line from StepGeom which describes a line from
-//! Prostep.
 class GeomToStep_MakeLine : public GeomToStep_Root
 {
 public:

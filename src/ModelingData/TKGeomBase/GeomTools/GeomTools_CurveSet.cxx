@@ -37,25 +37,17 @@
 #define TRIMMED 8
 #define OFFSET 9
 
-//=================================================================================================
-
 GeomTools_CurveSet::GeomTools_CurveSet() = default;
-
-//=================================================================================================
 
 void GeomTools_CurveSet::Clear()
 {
   myMap.Clear();
 }
 
-//=================================================================================================
-
 int GeomTools_CurveSet::Add(const occ::handle<Geom_Curve>& C)
 {
   return (C.IsNull()) ? 0 : myMap.Add(C);
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> GeomTools_CurveSet::Curve(const int I) const
 {
@@ -64,14 +56,10 @@ occ::handle<Geom_Curve> GeomTools_CurveSet::Curve(const int I) const
   return occ::down_cast<Geom_Curve>(myMap(I));
 }
 
-//=================================================================================================
-
 int GeomTools_CurveSet::Index(const occ::handle<Geom_Curve>& S) const
 {
   return S.IsNull() ? 0 : myMap.FindIndex(S);
 }
-
-//=================================================================================================
 
 static void Print(const gp_Pnt& P, Standard_OStream& OS, const bool compact)
 {
@@ -87,8 +75,6 @@ static void Print(const gp_Pnt& P, Standard_OStream& OS, const bool compact)
   OS << " ";
 }
 
-//=================================================================================================
-
 static void Print(const gp_Dir& D, Standard_OStream& OS, const bool compact)
 {
   OS << D.X();
@@ -102,8 +88,6 @@ static void Print(const gp_Dir& D, Standard_OStream& OS, const bool compact)
   OS << D.Z();
   OS << " ";
 }
-
-//=================================================================================================
 
 static void Print(const occ::handle<Geom_Line>& L, Standard_OStream& OS, const bool compact)
 {
@@ -123,8 +107,6 @@ static void Print(const occ::handle<Geom_Line>& L, Standard_OStream& OS, const b
     OS << "\n";
   OS << "\n";
 }
-
-//=================================================================================================
 
 static void Print(const occ::handle<Geom_Circle>& CC, Standard_OStream& OS, const bool compact)
 {
@@ -153,8 +135,6 @@ static void Print(const occ::handle<Geom_Circle>& CC, Standard_OStream& OS, cons
     OS << "\n";
   OS << "\n";
 }
-
-//=================================================================================================
 
 static void Print(const occ::handle<Geom_Ellipse>& E, Standard_OStream& OS, const bool compact)
 {
@@ -188,8 +168,6 @@ static void Print(const occ::handle<Geom_Ellipse>& E, Standard_OStream& OS, cons
   OS << "\n";
 }
 
-//=================================================================================================
-
 static void Print(const occ::handle<Geom_Parabola>& P, Standard_OStream& OS, const bool compact)
 {
   if (compact)
@@ -217,8 +195,6 @@ static void Print(const occ::handle<Geom_Parabola>& P, Standard_OStream& OS, con
     OS << "\n";
   OS << "\n";
 }
-
-//=================================================================================================
 
 static void Print(const occ::handle<Geom_Hyperbola>& H, Standard_OStream& OS, const bool compact)
 {
@@ -252,8 +228,6 @@ static void Print(const occ::handle<Geom_Hyperbola>& H, Standard_OStream& OS, co
   OS << "\n";
 }
 
-//=================================================================================================
-
 static void Print(const occ::handle<Geom_BezierCurve>& B, Standard_OStream& OS, const bool compact)
 {
   if (compact)
@@ -270,7 +244,6 @@ static void Print(const occ::handle<Geom_BezierCurve>& B, Standard_OStream& OS, 
       OS << " rational";
   }
 
-  // poles and weights
   int i, degree = B->Degree();
   if (!compact)
     OS << "\n  Degree :";
@@ -290,8 +263,6 @@ static void Print(const occ::handle<Geom_BezierCurve>& B, Standard_OStream& OS, 
   if (!compact)
     OS << "\n";
 }
-
-//=================================================================================================
 
 static void Print(const occ::handle<Geom_BSplineCurve>& B, Standard_OStream& OS, const bool compact)
 {
@@ -318,7 +289,6 @@ static void Print(const occ::handle<Geom_BSplineCurve>& B, Standard_OStream& OS,
       OS << " periodic";
   }
 
-  // poles and weights
   int i, degree, nbpoles, nbknots;
   degree  = B->Degree();
   nbpoles = B->NbPoles();
@@ -367,8 +337,6 @@ static void Print(const occ::handle<Geom_BSplineCurve>& B, Standard_OStream& OS,
     OS << "\n";
 }
 
-//=================================================================================================
-
 static void Print(const occ::handle<Geom_TrimmedCurve>& C, Standard_OStream& OS, const bool compact)
 {
   if (compact)
@@ -382,8 +350,6 @@ static void Print(const occ::handle<Geom_TrimmedCurve>& C, Standard_OStream& OS,
     OS << "Basis curve :\n";
   GeomTools_CurveSet::PrintCurve(C->BasisCurve(), OS, compact);
 }
-
-//=================================================================================================
 
 static void Print(const occ::handle<Geom_OffsetCurve>& C, Standard_OStream& OS, const bool compact)
 {
@@ -402,8 +368,6 @@ static void Print(const occ::handle<Geom_OffsetCurve>& C, Standard_OStream& OS, 
     OS << "Basis curve :\n";
   GeomTools_CurveSet::PrintCurve(C->BasisCurve(), OS, compact);
 }
-
-//=================================================================================================
 
 void GeomTools_CurveSet::PrintCurve(const occ::handle<Geom_Curve>& C,
                                     Standard_OStream&              OS,
@@ -450,14 +414,8 @@ void GeomTools_CurveSet::PrintCurve(const occ::handle<Geom_Curve>& C,
   else
   {
     GeomTools::GetUndefinedTypeHandler()->PrintCurve(C, OS, compact);
-    // if (!compact)
-    //   OS << "****** UNKNOWN CURVE TYPE ******\n";
-    // else
-    //   std::cout << "****** UNKNOWN CURVE TYPE ******" << std::endl;
   }
 }
-
-//=================================================================================================
 
 void GeomTools_CurveSet::Dump(Standard_OStream& OS) const
 {
@@ -473,8 +431,6 @@ void GeomTools_CurveSet::Dump(Standard_OStream& OS) const
   }
 }
 
-//=================================================================================================
-
 void GeomTools_CurveSet::Write(Standard_OStream& OS, const Message_ProgressRange& theProgress) const
 {
   std::streamsize prec = OS.precision(17);
@@ -489,8 +445,6 @@ void GeomTools_CurveSet::Write(Standard_OStream& OS, const Message_ProgressRange
   OS.precision(prec);
 }
 
-//=================================================================================================
-
 static Standard_IStream& operator>>(Standard_IStream& IS, gp_Pnt& P)
 {
   double X = 0., Y = 0., Z = 0.;
@@ -500,8 +454,6 @@ static Standard_IStream& operator>>(Standard_IStream& IS, gp_Pnt& P)
   P.SetCoord(X, Y, Z);
   return IS;
 }
-
-//=================================================================================================
 
 static Standard_IStream& operator>>(Standard_IStream& IS, gp_Dir& D)
 {
@@ -513,8 +465,6 @@ static Standard_IStream& operator>>(Standard_IStream& IS, gp_Dir& D)
   return IS;
 }
 
-//=================================================================================================
-
 static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_Line>& L)
 {
   gp_Pnt P(0., 0., 0.);
@@ -523,8 +473,6 @@ static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_Line>
   L = new Geom_Line(P, AX);
   return IS;
 }
-
-//=================================================================================================
 
 static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_Circle>& C)
 {
@@ -536,8 +484,6 @@ static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_Circl
   C = new Geom_Circle(gp_Ax2(P, A, AX), R);
   return IS;
 }
-
-//=================================================================================================
 
 static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_Ellipse>& E)
 {
@@ -551,8 +497,6 @@ static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_Ellip
   return IS;
 }
 
-//=================================================================================================
-
 static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_Parabola>& C)
 {
   gp_Pnt P(0., 0., 0.);
@@ -563,8 +507,6 @@ static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_Parab
   C = new Geom_Parabola(gp_Ax2(P, A, AX), R1);
   return IS;
 }
-
-//=================================================================================================
 
 static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_Hyperbola>& H)
 {
@@ -578,14 +520,11 @@ static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_Hyper
   return IS;
 }
 
-//=================================================================================================
-
 static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_BezierCurve>& B)
 {
   bool rational = false;
   IS >> rational;
 
-  // poles and weights
   int i = 0, degree = 0;
   IS >> degree;
 
@@ -607,15 +546,12 @@ static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_Bezie
   return IS;
 }
 
-//=================================================================================================
-
 static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_BSplineCurve>& B)
 {
 
   bool rational = false, periodic = false;
   IS >> rational >> periodic;
 
-  // poles and weights
   int i = 0, degree = 0, nbpoles = 0, nbknots = 0;
   IS >> degree >> nbpoles >> nbknots;
 
@@ -646,8 +582,6 @@ static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_BSpli
   return IS;
 }
 
-//=================================================================================================
-
 static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_TrimmedCurve>& C)
 {
   double p1 = 0., p2 = 0.;
@@ -657,8 +591,6 @@ static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_Trimm
   C                          = new Geom_TrimmedCurve(BC, p1, p2);
   return IS;
 }
-
-//=================================================================================================
 
 static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_OffsetCurve>& C)
 {
@@ -670,8 +602,6 @@ static Standard_IStream& operator>>(Standard_IStream& IS, occ::handle<Geom_Offse
   C                          = new Geom_OffsetCurve(BC, p, D);
   return IS;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> GeomTools_CurveSet::ReadCurve(Standard_IStream& IS)
 {
@@ -775,8 +705,6 @@ occ::handle<Geom_Curve> GeomTools_CurveSet::ReadCurve(Standard_IStream& IS)
   }
   return C;
 }
-
-//=================================================================================================
 
 void GeomTools_CurveSet::Read(Standard_IStream& IS, const Message_ProgressRange& theProgress)
 {

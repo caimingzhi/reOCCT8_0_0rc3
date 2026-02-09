@@ -11,7 +11,6 @@ class StepVisual_FillAreaStyle;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for FillAreaStyle
 class RWStepVisual_RWFillAreaStyle
 {
 public:

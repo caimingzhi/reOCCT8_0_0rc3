@@ -4,7 +4,6 @@
 #include <IntCurve_PConic.hpp>
 #include <IntCurve_PConicTool.hpp>
 
-//----------------------------------------------------------------------
 gp_Pnt2d IntCurve_PConicTool::Value(const IntCurve_PConic& PConic, const double X)
 {
   switch (PConic.TypeCurve())
@@ -22,12 +21,11 @@ gp_Pnt2d IntCurve_PConicTool::Value(const IntCurve_PConic& PConic, const double 
     case GeomAbs_Parabola:
       return (ElCLib::ParabolaValue(X, PConic.Axis2(), PConic.Param1()));
 
-    default: //-- case GeomAbs_Hyperbola:
+    default:
       return (ElCLib::HyperbolaValue(X, PConic.Axis2(), PConic.Param1(), PConic.Param2()));
   }
 }
 
-//----------------------------------------------------------------------
 void IntCurve_PConicTool::D1(const IntCurve_PConic& PConic,
                              const double           U,
                              gp_Pnt2d&              Pt,
@@ -61,7 +59,6 @@ void IntCurve_PConicTool::D1(const IntCurve_PConic& PConic,
   }
 }
 
-//----------------------------------------------------------------------
 void IntCurve_PConicTool::D2(const IntCurve_PConic& PConic,
                              const double           U,
                              gp_Pnt2d&              Pt,
@@ -107,8 +104,6 @@ int IntCurve_PConicTool::NbSamples(const IntCurve_PConic& PConic)
   return (PConic.Accuracy());
 }
 
-// int IntCurve_PConicTool::NbSamples(const IntCurve_PConic& PConic,const double
-// U0,const double U1) {
 int IntCurve_PConicTool::NbSamples(const IntCurve_PConic& PConic, const double, const double)
 {
   return (PConic.Accuracy());

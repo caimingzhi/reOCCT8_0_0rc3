@@ -11,7 +11,6 @@ class StepBasic_ProductDefinitionContext;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ProductDefinitionContext
 class RWStepBasic_RWProductDefinitionContext
 {
 public:

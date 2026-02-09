@@ -11,7 +11,6 @@ class StepGeom_Hyperbola;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for Hyperbola
 class RWStepGeom_RWHyperbola
 {
 public:

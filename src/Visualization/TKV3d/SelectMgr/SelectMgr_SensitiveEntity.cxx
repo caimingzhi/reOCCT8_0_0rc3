@@ -2,11 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_SensitiveEntity, Standard_Transient)
 
-//=======================================================================
-// function : SelectMgr_SensitiveEntity
-// purpose  : Creates new inactive for selection object with base entity
-//            theEntity
-//=======================================================================
 SelectMgr_SensitiveEntity::SelectMgr_SensitiveEntity(
   const occ::handle<Select3D_SensitiveEntity>& theEntity)
     : mySensitive(theEntity),
@@ -14,17 +9,11 @@ SelectMgr_SensitiveEntity::SelectMgr_SensitiveEntity(
 {
 }
 
-//=======================================================================
-// function : Clear
-// purpose  : Clears up all the resources and memory
-//=======================================================================
 void SelectMgr_SensitiveEntity::Clear()
 {
   mySensitive->Clear();
   mySensitive.Nullify();
 }
-
-//=================================================================================================
 
 void SelectMgr_SensitiveEntity::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

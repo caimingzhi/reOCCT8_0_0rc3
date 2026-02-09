@@ -5,12 +5,8 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_SpecifiedHigherUsageOccurrence, StepRepr_AssemblyComponentUsage)
 
-//=================================================================================================
-
 StepRepr_SpecifiedHigherUsageOccurrence::StepRepr_SpecifiedHigherUsageOccurrence() = default;
 
-//=================================================================================================
-
 void StepRepr_SpecifiedHigherUsageOccurrence::Init(
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Id,
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Name,
@@ -39,8 +35,6 @@ void StepRepr_SpecifiedHigherUsageOccurrence::Init(
   theNextUsage = aNextUsage;
 }
 
-//=================================================================================================
-
 void StepRepr_SpecifiedHigherUsageOccurrence::Init(
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Id,
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Name,
@@ -68,8 +62,6 @@ void StepRepr_SpecifiedHigherUsageOccurrence::Init(
 
   theNextUsage = aNextUsage;
 }
-
-//=================================================================================================
 
 occ::handle<StepRepr_AssemblyComponentUsage> StepRepr_SpecifiedHigherUsageOccurrence::UpperUsage()
   const
@@ -77,23 +69,17 @@ occ::handle<StepRepr_AssemblyComponentUsage> StepRepr_SpecifiedHigherUsageOccurr
   return theUpperUsage;
 }
 
-//=================================================================================================
-
 void StepRepr_SpecifiedHigherUsageOccurrence::SetUpperUsage(
   const occ::handle<StepRepr_AssemblyComponentUsage>& aUpperUsage)
 {
   theUpperUsage = aUpperUsage;
 }
 
-//=================================================================================================
-
 occ::handle<StepRepr_NextAssemblyUsageOccurrence> StepRepr_SpecifiedHigherUsageOccurrence::
   NextUsage() const
 {
   return theNextUsage;
 }
-
-//=================================================================================================
 
 void StepRepr_SpecifiedHigherUsageOccurrence::SetNextUsage(
   const occ::handle<StepRepr_NextAssemblyUsageOccurrence>& aNextUsage)

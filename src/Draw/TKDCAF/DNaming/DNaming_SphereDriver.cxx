@@ -29,26 +29,14 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DNaming_SphereDriver, TFunction_Driver)
 
-//=================================================================================================
-
 DNaming_SphereDriver::DNaming_SphereDriver() = default;
 
-//=======================================================================
-// function : Validate
-// purpose  : Validates labels of a function in <theLog>
-//=======================================================================
 void DNaming_SphereDriver::Validate(occ::handle<TFunction_Logbook>&) const {}
 
-//=======================================================================
-// function : MustExecute
-// purpose  : Analyses in <theLog> if the loaded function must be executed
-//=======================================================================
 bool DNaming_SphereDriver::MustExecute(const occ::handle<TFunction_Logbook>&) const
 {
   return true;
 }
-
-//=================================================================================================
 
 int DNaming_SphereDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
 {
@@ -71,7 +59,6 @@ int DNaming_SphereDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
 
   occ::handle<TNaming_NamedShape> aPrevSphere = DNaming::GetFunctionResult(aFunction);
 
-  // Save location
   TopLoc_Location aLocation;
   if (!aPrevSphere.IsNull() && !aPrevSphere->IsEmpty())
   {
@@ -109,9 +96,8 @@ int DNaming_SphereDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
     return -1;
   }
 
-  // Naming
   LoadNamingDS(RESPOSITION(aFunction), aMakeSphere);
-  // restore location
+
   if (!aLocation.IsIdentity())
     TNaming::Displace(RESPOSITION(aFunction), aLocation, true);
 
@@ -119,8 +105,6 @@ int DNaming_SphereDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
   aFunction->SetFailure(DONE);
   return 0;
 }
-
-//=================================================================================================
 
 void DNaming_SphereDriver::LoadNamingDS(const TDF_Label&        theResultLabel,
                                         BRepPrimAPI_MakeSphere& MS) const
@@ -136,7 +120,6 @@ void DNaming_SphereDriver::LoadNamingDS(const TDF_Label&        theResultLabel,
 
   BRepPrim_Sphere& S = MS.Sphere();
 
-  // Load faces of the Sph :
   if (S.HasBottom())
   {
     TopoDS_Face     BottomFace = S.BottomFace();
@@ -180,7 +163,7 @@ void DNaming_SphereDriver::LoadNamingDS(const TDF_Label&        theResultLabel,
     TopoDS_Iterator it(aLateralEdge);
     for (; it.More(); it.Next())
     {
-      // const TopoDS_Shape& aV = it.Value();
+
       TNaming_Builder aVBuilder(theResultLabel.NewChild());
       aVBuilder.Generated(it.Value());
     }

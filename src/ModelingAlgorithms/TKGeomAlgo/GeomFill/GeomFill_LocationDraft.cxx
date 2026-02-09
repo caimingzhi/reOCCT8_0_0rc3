@@ -26,23 +26,19 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_LocationDraft, GeomFill_LocationLaw)
 
-//=================================================================================================
-
 GeomFill_LocationDraft::GeomFill_LocationDraft(const gp_Dir& Direction, const double Angle)
 {
-  myDir = Direction; // direction de depouille
+  myDir = Direction;
 
-  myAngle = Angle; // angle de depouille (teta prime)
+  myAngle = Angle;
 
   mySurf.Nullify();
-  myLaw     = new (GeomFill_DraftTrihedron)(myDir, Angle); // triedre
-  myNbPts   = 41;                                          // nb de points utilises pour les calculs
+  myLaw     = new (GeomFill_DraftTrihedron)(myDir, Angle);
+  myNbPts   = 41;
   myPoles2d = new (NCollection_HArray1<gp_Pnt2d>)(1, 2 * myNbPts);
-  Intersec  = false; // intersection avec surface d'arret ?
+  Intersec  = false;
   WithTrans = false;
 }
-
-//=================================================================================================
 
 occ::handle<GeomFill_LocationLaw> GeomFill_LocationDraft::Copy() const
 {
@@ -57,26 +53,19 @@ occ::handle<GeomFill_LocationLaw> GeomFill_LocationDraft::Copy() const
   return copy;
 }
 
-//=================================================================================================
-
 void GeomFill_LocationDraft::SetTrsf(const gp_Mat& Transfo)
 {
   Trans = Transfo;
   gp_Mat Aux;
   Aux.SetIdentity();
   Aux -= Trans;
-  WithTrans = false; // Au cas ou Trans = I
+  WithTrans = false;
   for (int ii = 1; ii <= 3 && !WithTrans; ii++)
     for (int jj = 1; jj <= 3 && !WithTrans; jj++)
       if (std::abs(Aux.Value(ii, jj)) > 1.e-14)
         WithTrans = true;
 }
 
-//==================================================================
-// Function: SetCurve
-// Purpose : Calcul des poles sur la surfaces d'arret (intersection
-// entre la generatrice et la surface en myNbPts points de la section)
-//==================================================================
 bool GeomFill_LocationDraft::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
 {
   myCurve   = C;
@@ -87,15 +76,11 @@ bool GeomFill_LocationDraft::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
   return isOK;
 }
 
-//=================================================================================================
-
 void GeomFill_LocationDraft::SetStopSurf(const occ::handle<Adaptor3d_Surface>& Surf)
 {
   mySurf = Surf;
   Prepare();
 }
-
-//=================================================================================================
 
 void GeomFill_LocationDraft::SetAngle(const double Angle)
 {
@@ -104,10 +89,6 @@ void GeomFill_LocationDraft::SetAngle(const double Angle)
   Prepare();
 }
 
-//==================================================================
-// Function: Prepare
-// Purpose : Poses les jalon de l'intersection : depouille / Surface
-//==================================================================
 void GeomFill_LocationDraft::Prepare()
 {
   if (mySurf.IsNull())
@@ -135,47 +116,41 @@ void GeomFill_LocationDraft::Prepare()
     myCurve->D0(t, P);
     myLaw->D0(t, T, N, B);
 
-    // Generatrice
     D = std::cos(myAngle) * B + std::sin(myAngle) * N;
 
     L = new (Geom_Line)(P, D);
 
-    IntCurveSurface_HInter         Int; // intersection surface / generatrice
+    IntCurveSurface_HInter         Int;
     occ::handle<GeomAdaptor_Curve> AC = new (GeomAdaptor_Curve)(L);
-    Int.Perform(AC, mySurf); // calcul de l'intersection
+    Int.Perform(AC, mySurf);
 
-    if (Int.NbPoints() > 0) // il y a au moins 1 intersection
+    if (Int.NbPoints() > 0)
     {
-      P1 = Int.Point(1); // 1er  point d'intersection
+      P1 = Int.Point(1);
 
       for (jj = 2; jj <= Int.NbPoints(); jj++)
       {
         P2 = Int.Point(jj);
         if (P1.W() > P2.W())
-          P1 = P2; // point le plus proche
-      } // for_jj
+          P1 = P2;
+      }
 
-      gp_Pnt2d p(P1.W(), t);              // point de la courbe
-      gp_Pnt2d q(P1.U(), P1.V());         // point sur la surface
-      myPoles2d->SetValue(2 * ii - 1, p); // point de la courbe (indice impair)
-      myPoles2d->SetValue(2 * ii, q);     // point sur la surface (indice pair)
+      gp_Pnt2d p(P1.W(), t);
+      gp_Pnt2d q(P1.U(), P1.V());
+      myPoles2d->SetValue(2 * ii - 1, p);
+      myPoles2d->SetValue(2 * ii, q);
     }
     else
-    { // au moins un point ou il n'y a pas intersection
+    {
       Intersec = false;
     }
-
-  } // for_ii
+  }
 }
-
-//=================================================================================================
 
 const occ::handle<Adaptor3d_Curve>& GeomFill_LocationDraft::GetCurve() const
 {
   return myCurve;
 }
-
-//=================================================================================================
 
 bool GeomFill_LocationDraft::D0(const double Param, gp_Mat& M, gp_Vec& V)
 {
@@ -199,17 +174,13 @@ bool GeomFill_LocationDraft::D0(const double Param, gp_Mat& M, gp_Vec& V)
   return true;
 }
 
-//==================================================================
-// Function: D0
-// Purpose : calcul de l'intersection (C0) sur la surface
-//==================================================================
 bool GeomFill_LocationDraft::D0(const double                  Param,
                                 gp_Mat&                       M,
                                 gp_Vec&                       V,
                                 NCollection_Array1<gp_Pnt2d>& Poles2d)
 {
   bool Ok;
-  //  gp_Vec D,T,N,B,DT,DN,DB;
+
   gp_Vec D, T, N, B;
   gp_Pnt P;
 
@@ -227,8 +198,7 @@ bool GeomFill_LocationDraft::D0(const double                  Param,
 
   if (Intersec)
   {
-    // la generatrice intersecte la surface d'arret
-    // la generatrice
+
     D = std::cos(myAngle) * B + std::sin(myAngle) * N;
 
     occ::handle<Geom_Line>         L = new (Geom_Line)(P, D);
@@ -239,14 +209,12 @@ bool GeomFill_LocationDraft::D0(const double                  Param,
 
     int ii = 1;
 
-    // on recherche l'intervalle auquel appartient Param
     while (ii < 2 * myNbPts && myPoles2d->Value(ii).Coord(2) < Param)
       ii = ii + 2;
 
     if (ii < 2 * myNbPts && !IsEqual(myPoles2d->Value(ii).Coord(2), Param))
     {
 
-      // interpolation lineaire pour initialiser le germe de la recherche
       t1 = myPoles2d->Value(ii).Coord(2);
       t2 = myPoles2d->Value(ii - 2).Coord(2);
 
@@ -258,44 +226,38 @@ bool GeomFill_LocationDraft::D0(const double                  Param,
         myPoles2d->Value(ii - 1).Coord(1) * Paramt1 + myPoles2d->Value(ii + 1).Coord(1) * t2Param;
       V0 =
         myPoles2d->Value(ii - 1).Coord(2) * Paramt1 + myPoles2d->Value(ii + 1).Coord(2) * t2Param;
-    } // if
-    // on est sur un param ou les points ont deja ete calcules
+    }
+
     else if (ii < 2 * myNbPts && IsEqual(myPoles2d->Value(ii).Coord(2), Param))
     {
       W0 = myPoles2d->Value(ii).Coord(1);
       U0 = myPoles2d->Value(ii + 1).Coord(1);
       V0 = myPoles2d->Value(ii + 1).Coord(2);
-    } // else if
+    }
 
-    // recherche de la solution (pt d'intersection generatrice / surface)
-    // point initial
     math_Vector X(1, 3);
     X(1) = W0;
     X(2) = U0;
     X(3) = V0;
 
-    // tolerance sur X
     math_Vector XTol(1, 3);
     XTol.Init(0.00001);
 
-    // tolerance sur F
     double FTol = 0.0000001;
     int    Iter = 100;
 
-    // fonction dont il faut trouver la racine : G(W)-S(U,V)=0
     GeomFill_FunctionDraft E(mySurf, G);
 
-    // resolution
     math_NewtonFunctionSetRoot Result(E, XTol, FTol, Iter);
     Result.Perform(E, X);
 
     if (Result.IsDone())
     {
       math_Vector R(1, 3);
-      Result.Root(R); // solution
+      Result.Root(R);
 
-      gp_Pnt2d p(R(2), R(3));  // point sur la surface
-      gp_Pnt2d q(R(1), Param); // point de la courbe
+      gp_Pnt2d p(R(2), R(3));
+      gp_Pnt2d q(R(1), Param);
       Poles2d.SetValue(1, p);
       Poles2d.SetValue(2, q);
     }
@@ -303,16 +265,11 @@ bool GeomFill_LocationDraft::D0(const double                  Param,
     {
       return false;
     }
-  } // if_Intersec
+  }
 
-  // la generatrice n'intersecte pas la surface d'arret
   return true;
 }
 
-//==================================================================
-// Function: D1
-// Purpose : calcul de l'intersection (C1) sur la surface
-//==================================================================
 bool GeomFill_LocationDraft::D1(const double                  Param,
                                 gp_Mat&                       M,
                                 gp_Vec&                       V,
@@ -342,8 +299,8 @@ bool GeomFill_LocationDraft::D1(const double                  Param,
   }
 
   if (Intersec)
-  { // la generatrice intersecte la surface d'arret
-    // la generatrice
+  {
+
     D = std::cos(myAngle) * B + std::sin(myAngle) * N;
 
     occ::handle<Geom_Line>         L = new (Geom_Line)(P, D);
@@ -354,15 +311,12 @@ bool GeomFill_LocationDraft::D1(const double                  Param,
 
     int ii = 1;
 
-    // recherche de la solution (pt d'intersection  generatrice / surface)
-
-    // on recherche l'intervalle auquel appartient Param
     while (ii < 2 * myNbPts && myPoles2d->Value(ii).Coord(2) < Param)
       ii = ii + 2;
 
     if (ii < 2 * myNbPts && !IsEqual(myPoles2d->Value(ii).Coord(2), Param))
     {
-      // interpolation lineaire pour initialiser le germe de la recherche
+
       t1 = myPoles2d->Value(ii).Coord(2);
       t2 = myPoles2d->Value(ii - 2).Coord(2);
 
@@ -374,77 +328,65 @@ bool GeomFill_LocationDraft::D1(const double                  Param,
         myPoles2d->Value(ii - 1).Coord(1) * Paramt1 + myPoles2d->Value(ii + 1).Coord(1) * t2Param;
       V0 =
         myPoles2d->Value(ii - 1).Coord(2) * Paramt1 + myPoles2d->Value(ii + 1).Coord(2) * t2Param;
-    } // if
+    }
     else if (ii < 2 * myNbPts && IsEqual(myPoles2d->Value(ii).Coord(2), Param))
     {
       W0 = myPoles2d->Value(ii).Coord(1);
       U0 = myPoles2d->Value(ii + 1).Coord(1);
       V0 = myPoles2d->Value(ii + 1).Coord(2);
-    } // else if
+    }
 
-    // germe
     math_Vector X(1, 3);
     X(1) = W0;
     X(2) = U0;
     X(3) = V0;
 
-    // tolerance sur X
     math_Vector XTol(1, 3);
     XTol.Init(0.0001);
 
-    // tolerance sur F
     double FTol = 0.000001;
     int    Iter = 100;
 
-    // fonction dont il faut trouver la racine : G(W)-S(U,V)=0
     GeomFill_FunctionDraft E(mySurf, G);
 
-    // resolution
     math_NewtonFunctionSetRoot Result(E, XTol, FTol, Iter);
     Result.Perform(E, X);
 
     if (Result.IsDone())
     {
       math_Vector R(1, 3);
-      Result.Root(R); // solution
+      Result.Root(R);
 
-      gp_Pnt2d p(R(2), R(3));  // point sur la surface
-      gp_Pnt2d q(R(1), Param); // point de la courbe
+      gp_Pnt2d p(R(2), R(3));
+      gp_Pnt2d q(R(1), Param);
       Poles2d.SetValue(1, p);
       Poles2d.SetValue(2, q);
 
-      // derivee de la fonction par rapport a Param
       math_Vector DEDT(1, 3, 0);
-      E.DerivT(myTrimmed, Param, R(1), DN, myAngle, DEDT); // dE/dt => DEDT
+      E.DerivT(myTrimmed, Param, R(1), DN, myAngle, DEDT);
 
       math_Vector DSDT(1, 3, 0);
       math_Matrix DEDX(1, 3, 1, 3, 0);
-      E.Derivatives(R, DEDX); // dE/dx au point R => DEDX
+      E.Derivatives(R, DEDX);
 
-      // resolution du syst. lin. : DEDX*DSDT = -DEDT
       math_Gauss Ga(DEDX);
       if (Ga.IsDone())
       {
-        Ga.Solve(DEDT.Opposite(), DSDT); // resolution du syst. lin.
-        gp_Vec2d dp(DSDT(2), DSDT(3));   // surface
-        gp_Vec2d dq(DSDT(1), 1);         //  courbe
+        Ga.Solve(DEDT.Opposite(), DSDT);
+        gp_Vec2d dp(DSDT(2), DSDT(3));
+        gp_Vec2d dq(DSDT(1), 1);
         DPoles2d.SetValue(1, dp);
         DPoles2d.SetValue(2, dq);
-      } // if
-
-    } // if_Result
+      }
+    }
     else
-    { // la generatrice n'intersecte pas la surface d'arret
+    {
       return false;
     }
-  } // if_Intersec
+  }
   return true;
 }
 
-//==================================================================
-// Function: D2
-// Purpose : calcul de l'intersection (C2) sur la surface
-//==================================================================
 bool GeomFill_LocationDraft::D2(const double                  Param,
                                 gp_Mat&                       M,
                                 gp_Vec&                       V,
@@ -478,9 +420,8 @@ bool GeomFill_LocationDraft::D2(const double                  Param,
     D2M *= Trans;
   }
   if (Intersec)
-  { // la generatrice intersecte la surface d'arret
+  {
 
-    // la generatrice
     D = std::cos(myAngle) * B + std::sin(myAngle) * N;
 
     occ::handle<Geom_Line>         L = new (Geom_Line)(P, D);
@@ -491,14 +432,12 @@ bool GeomFill_LocationDraft::D2(const double                  Param,
 
     int ii = 1;
 
-    // on recherche l'intervalle auquel appartient Param
     while (ii < 2 * myNbPts && myPoles2d->Value(ii).Coord(2) < Param)
       ii = ii + 2;
 
     if (ii < 2 * myNbPts && !IsEqual(myPoles2d->Value(ii).Coord(2), Param))
     {
 
-      // interpolation lineaire pour initialiser le germe de la recherche
       t1 = myPoles2d->Value(ii).Coord(2);
       t2 = myPoles2d->Value(ii - 2).Coord(2);
 
@@ -510,116 +449,99 @@ bool GeomFill_LocationDraft::D2(const double                  Param,
         myPoles2d->Value(ii - 1).Coord(1) * Paramt1 + myPoles2d->Value(ii + 1).Coord(1) * t2Param;
       V0 =
         myPoles2d->Value(ii - 1).Coord(2) * Paramt1 + myPoles2d->Value(ii + 1).Coord(2) * t2Param;
-    } // if
+    }
     else if (ii < 2 * myNbPts && IsEqual(myPoles2d->Value(ii).Coord(2), Param))
     {
       W0 = myPoles2d->Value(ii).Coord(1);
       U0 = myPoles2d->Value(ii + 1).Coord(1);
       V0 = myPoles2d->Value(ii + 1).Coord(2);
-    } // else if
+    }
 
-    // recherche de la solution (pt d'intersection generatrice / surface)
-    // germe
     math_Vector X(1, 3);
     X(1) = W0;
     X(2) = U0;
     X(3) = V0;
 
-    // tolerance sur X
     math_Vector XTol(1, 3);
     XTol.Init(0.0001);
 
-    // tolerance sur F
     double FTol = 0.000001;
     int    Iter = 150;
 
-    // fonction dont il faut trouver la racine : G(W)-S(U,V)=0
     GeomFill_FunctionDraft E(mySurf, G);
 
-    // resolution
     math_NewtonFunctionSetRoot Result(E, XTol, FTol, Iter);
     Result.Perform(E, X);
 
     if (Result.IsDone())
     {
       math_Vector R(1, 3);
-      Result.Root(R); // solution
+      Result.Root(R);
 
-      // solution
-      gp_Pnt2d p(R(2), R(3));  // point sur la surface
-      gp_Pnt2d q(R(1), Param); // point de la courbe
+      gp_Pnt2d p(R(2), R(3));
+      gp_Pnt2d q(R(1), Param);
       Poles2d.SetValue(1, p);
       Poles2d.SetValue(2, q);
 
-      // premiere derivee de la fonction
       math_Vector DEDT(1, 3, 0);
-      E.DerivT(myTrimmed, Param, R(1), DN, myAngle, DEDT); // dE/dt => DEDT
+      E.DerivT(myTrimmed, Param, R(1), DN, myAngle, DEDT);
 
       math_Vector DSDT(1, 3, 0);
       math_Matrix DEDX(1, 3, 1, 3, 0);
-      E.Derivatives(R, DEDX); // dE/dx => DEDX
+      E.Derivatives(R, DEDX);
 
-      // resolution du syst. lin.
       math_Gauss Ga(DEDX);
       if (Ga.IsDone())
       {
         Ga.Solve(DEDT.Opposite(), DSDT);
-        gp_Vec2d dp(DSDT(2), DSDT(3)); // surface
-        gp_Vec2d dq(DSDT(1), 1);       //  courbe
+        gp_Vec2d dp(DSDT(2), DSDT(3));
+        gp_Vec2d dq(DSDT(1), 1);
         DPoles2d.SetValue(1, dp);
         DPoles2d.SetValue(2, dq);
-      } // if
+      }
 
-      // deuxieme derivee
       GeomFill_Tensor D2EDX2(3, 3, 3);
-      E.Deriv2X(R, D2EDX2); // d2E/dx2
+      E.Deriv2X(R, D2EDX2);
 
       math_Vector D2EDT2(1, 3, 0);
-      E.Deriv2T(myTrimmed, Param, R(1), D2N, myAngle, D2EDT2); // d2E/dt2
+      E.Deriv2T(myTrimmed, Param, R(1), D2N, myAngle, D2EDT2);
 
       math_Matrix D2EDTDX(1, 3, 1, 3, 0);
-      E.DerivTX(DN, myAngle, D2EDTDX); // d2E/dtdx
+      E.DerivTX(DN, myAngle, D2EDTDX);
 
-      math_Vector D2SDT2(1, 3, 0); // d2s/dt2
+      math_Vector D2SDT2(1, 3, 0);
       math_Matrix aT(1, 3, 1, 3, 0);
       D2EDX2.Multiply(DSDT, aT);
 
-      // resolution du syst. lin.
       math_Gauss Ga1(DEDX);
       if (Ga1.IsDone())
       {
         Ga1.Solve(-aT * DSDT - 2 * D2EDTDX * DSDT - D2EDT2, D2SDT2);
-        gp_Vec2d d2p(D2SDT2(2), D2SDT2(3)); // surface
-        gp_Vec2d d2q(D2SDT2(1), 0);         // courbe
+        gp_Vec2d d2p(D2SDT2(2), D2SDT2(3));
+        gp_Vec2d d2q(D2SDT2(1), 0);
         D2Poles2d.SetValue(1, d2p);
         D2Poles2d.SetValue(2, d2q);
-      } // if
+      }
       else
-      { // la generatrice n'intersecte pas la surface d'arret
+      {
         return false;
       }
-    } // if_Result
-  } // if_Intersec
+    }
+  }
 
   return true;
 }
-
-//=================================================================================================
 
 bool GeomFill_LocationDraft::HasFirstRestriction() const
 {
   return false;
 }
 
-//=================================================================================================
-
 bool GeomFill_LocationDraft::HasLastRestriction() const
 {
 
   return Intersec;
 }
-
-//=================================================================================================
 
 int GeomFill_LocationDraft::TraceNumber() const
 {
@@ -629,21 +551,15 @@ int GeomFill_LocationDraft::TraceNumber() const
     return 0;
 }
 
-//=================================================================================================
-
 int GeomFill_LocationDraft::NbIntervals(const GeomAbs_Shape S) const
 {
   return myLaw->NbIntervals(S);
 }
 
-//=================================================================================================
-
 void GeomFill_LocationDraft::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const
 {
   myLaw->Intervals(T, S);
 }
-
-//=================================================================================================
 
 void GeomFill_LocationDraft::SetInterval(const double First, const double Last)
 {
@@ -651,23 +567,17 @@ void GeomFill_LocationDraft::SetInterval(const double First, const double Last)
   myTrimmed = myCurve->Trim(First, Last, 0);
 }
 
-//=================================================================================================
-
 void GeomFill_LocationDraft::GetInterval(double& First, double& Last) const
 {
   First = myTrimmed->FirstParameter();
   Last  = myTrimmed->LastParameter();
 }
 
-//=================================================================================================
-
 void GeomFill_LocationDraft::GetDomain(double& First, double& Last) const
 {
   First = myCurve->FirstParameter();
   Last  = myCurve->LastParameter();
 }
-
-//=================================================================================================
 
 void GeomFill_LocationDraft::Resolution(const int    Index,
                                         const double Tol,
@@ -687,16 +597,10 @@ void GeomFill_LocationDraft::Resolution(const int    Index,
   }
 }
 
-//==================================================================
-// Function:GetMaximalNorm
-// Purpose :  On suppose les triedres normes => return 1
-//==================================================================
 double GeomFill_LocationDraft::GetMaximalNorm()
 {
   return 1.;
 }
-
-//=================================================================================================
 
 void GeomFill_LocationDraft::GetAverageLaw(gp_Mat& AM, gp_Vec& AV)
 {
@@ -718,15 +622,10 @@ void GeomFill_LocationDraft::GetAverageLaw(gp_Mat& AM, gp_Vec& AV)
   AV /= 11;
 }
 
-//=================================================================================================
-
-// bool GeomFill_LocationDraft::IsTranslation(double& Error) const
 bool GeomFill_LocationDraft::IsTranslation(double&) const
 {
   return myLaw->IsConstant();
 }
-
-//=================================================================================================
 
 bool GeomFill_LocationDraft::IsRotation(double& Error) const
 {
@@ -740,21 +639,15 @@ bool GeomFill_LocationDraft::IsRotation(double& Error) const
   return false;
 }
 
-//=================================================================================================
-
 void GeomFill_LocationDraft::Rotation(gp_Pnt& Centre) const
 {
   Centre = myCurve->Circle().Location();
 }
 
-//=================================================================================================
-
 bool GeomFill_LocationDraft::IsIntersec() const
 {
   return Intersec;
 }
-
-//=================================================================================================
 
 gp_Dir GeomFill_LocationDraft::Direction() const
 {

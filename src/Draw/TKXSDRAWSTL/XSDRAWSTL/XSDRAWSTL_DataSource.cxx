@@ -7,8 +7,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XSDRAWSTL_DataSource, MeshVS_DataSource)
 
-//=================================================================================================
-
 XSDRAWSTL_DataSource::XSDRAWSTL_DataSource(const occ::handle<Poly_Triangulation>& aMesh)
 {
   myMesh = aMesh;
@@ -70,8 +68,6 @@ XSDRAWSTL_DataSource::XSDRAWSTL_DataSource(const occ::handle<Poly_Triangulation>
   std::cout << "Construction is finished" << std::endl;
 }
 
-//=================================================================================================
-
 bool XSDRAWSTL_DataSource::GetGeom(const int                   ID,
                                    const bool                  IsElement,
                                    NCollection_Array1<double>& Coords,
@@ -114,8 +110,6 @@ bool XSDRAWSTL_DataSource::GetGeom(const int                   ID,
     return false;
 }
 
-//=================================================================================================
-
 bool XSDRAWSTL_DataSource::GetGeomType(const int,
                                        const bool         IsElement,
                                        MeshVS_EntityType& Type) const
@@ -132,18 +126,14 @@ bool XSDRAWSTL_DataSource::GetGeomType(const int,
   }
 }
 
-//=================================================================================================
-
 void* XSDRAWSTL_DataSource::GetAddr(const int, const bool) const
 {
   return nullptr;
 }
 
-//=================================================================================================
-
 bool XSDRAWSTL_DataSource::GetNodesByElement(const int                ID,
                                              NCollection_Array1<int>& theNodeIDs,
-                                             int& /*theNbNodes*/) const
+                                             int&) const
 {
   if (myMesh.IsNull())
     return false;
@@ -159,21 +149,15 @@ bool XSDRAWSTL_DataSource::GetNodesByElement(const int                ID,
   return false;
 }
 
-//=================================================================================================
-
 const TColStd_PackedMapOfInteger& XSDRAWSTL_DataSource::GetAllNodes() const
 {
   return myNodes;
 }
 
-//=================================================================================================
-
 const TColStd_PackedMapOfInteger& XSDRAWSTL_DataSource::GetAllElements() const
 {
   return myElements;
 }
-
-//=================================================================================================
 
 bool XSDRAWSTL_DataSource::GetNormal(const int Id,
                                      const int Max,

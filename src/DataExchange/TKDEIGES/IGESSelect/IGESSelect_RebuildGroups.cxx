@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_ContextModif.hpp>
 #include <IGESBasic_GroupWithoutBackP.hpp>
@@ -38,15 +27,10 @@ void IGESSelect_RebuildGroups::Performing(IFSelect_ContextModif&                
                                           const occ::handle<IGESData_IGESModel>& target,
                                           Interface_CopyTool&                    TC) const
 {
-  //  We rebuild the groups that can be
-  //  For each group of the original, we look at the transferred components
-  //   (possibly filtered by <ctx>)
-  //  Then, if there are more than one, we create a new group
+
   DeclareAndCast(IGESData_IGESModel, original, ctx.OriginalModel());
   int nbo = original->NbEntities();
 
-  //  Entities to consider for reconstruction
-  //  NB : Les groupes deja transferes ne sont bien sur pas reconstruits !
   NCollection_Array1<int> pris(0, nbo);
   pris.Init(0);
   for (ctx.Start(); ctx.More(); ctx.Next())
@@ -63,7 +47,7 @@ void IGESSelect_RebuildGroups::Performing(IFSelect_ContextModif&                
     occ::handle<Standard_Transient> newent;
     Interface_EntityIterator        newlist;
     if (TC.Search(ent, newent))
-      continue; // deja passe
+      continue;
     if (ent->IsKind(STANDARD_TYPE(IGESBasic_Group)))
     {
       DeclareAndCast(IGESBasic_Group, g, ent);
@@ -108,9 +92,9 @@ void IGESSelect_RebuildGroups::Performing(IFSelect_ContextModif&                
           newlist.GetOneItem(newent);
       }
     }
-    //  A present, reconstruire sil le faut
+
     if (newlist.NbEntities() <= 1)
-      continue; // 0 ou 1 : rien a refaire
+      continue;
     occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> tab =
       new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, newlist.NbEntities());
     int ng = 0;
@@ -126,8 +110,6 @@ void IGESSelect_RebuildGroups::Performing(IFSelect_ContextModif&                
         occ::handle<IGESBasic_Group> g = new IGESBasic_Group;
         g->Init(tab);
         target->AddEntity(g);
-
-        //  Q : faut-il transferer le nom silyena un ?
       }
       break;
       case 2:

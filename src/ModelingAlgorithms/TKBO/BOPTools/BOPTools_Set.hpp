@@ -19,7 +19,6 @@ public:
 
   Standard_EXPORT BOPTools_Set(const occ::handle<NCollection_BaseAllocator>& theAllocator);
 
-  //! Copy constructor.
   Standard_EXPORT BOPTools_Set(const BOPTools_Set& theOther);
 
   Standard_EXPORT BOPTools_Set& Assign(const BOPTools_Set& Other);

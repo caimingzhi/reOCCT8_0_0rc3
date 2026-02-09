@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Text2D, Draw_Drawable2D)
 
-//=================================================================================================
-
 Draw_Text2D::Draw_Text2D(const gp_Pnt2d& p, const char* T, const Draw_Color& col)
     : myPoint(p),
       myColor(col),
@@ -15,8 +13,6 @@ Draw_Text2D::Draw_Text2D(const gp_Pnt2d& p, const char* T, const Draw_Color& col
       mymoveY(0)
 {
 }
-
-//=================================================================================================
 
 Draw_Text2D::Draw_Text2D(const gp_Pnt2d&   p,
                          const char*       T,
@@ -31,14 +27,10 @@ Draw_Text2D::Draw_Text2D(const gp_Pnt2d&   p,
 {
 }
 
-//=================================================================================================
-
 void Draw_Text2D::SetPnt2d(const gp_Pnt2d& p)
 {
   myPoint = p;
 }
-
-//=================================================================================================
 
 void Draw_Text2D::DrawOn(Draw_Display& dis) const
 {

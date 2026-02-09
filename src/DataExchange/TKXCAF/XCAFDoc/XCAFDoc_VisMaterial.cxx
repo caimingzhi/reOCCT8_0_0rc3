@@ -1,15 +1,4 @@
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDoc_VisMaterial.hpp>
 
@@ -21,15 +10,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDoc_VisMaterial, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_VisMaterial::GetID()
 {
   static Standard_GUID THE_VIS_MAT_ID("EBB00255-03A0-4845-BD3B-A70EEDEEFA78");
   return THE_VIS_MAT_ID;
 }
-
-//=================================================================================================
 
 XCAFDoc_VisMaterial::XCAFDoc_VisMaterial()
     : myAlphaMode(Graphic3d_AlphaMode_BlendAuto),
@@ -40,23 +25,17 @@ XCAFDoc_VisMaterial::XCAFDoc_VisMaterial()
   myCommonMat.IsDefined = false;
 }
 
-//=================================================================================================
-
 void XCAFDoc_VisMaterial::SetPbrMaterial(const XCAFDoc_VisMaterialPBR& theMaterial)
 {
   Backup();
   myPbrMat = theMaterial;
 }
 
-//=================================================================================================
-
 void XCAFDoc_VisMaterial::SetCommonMaterial(const XCAFDoc_VisMaterialCommon& theMaterial)
 {
   Backup();
   myCommonMat = theMaterial;
 }
-
-//=================================================================================================
 
 void XCAFDoc_VisMaterial::SetAlphaMode(Graphic3d_AlphaMode theMode, float theCutOff)
 {
@@ -65,15 +44,11 @@ void XCAFDoc_VisMaterial::SetAlphaMode(Graphic3d_AlphaMode theMode, float theCut
   myAlphaCutOff = theCutOff;
 }
 
-//=================================================================================================
-
 void XCAFDoc_VisMaterial::SetFaceCulling(Graphic3d_TypeOfBackfacingModel theFaceCulling)
 {
   Backup();
   myFaceCulling = theFaceCulling;
 }
-
-//=================================================================================================
 
 void XCAFDoc_VisMaterial::Restore(const occ::handle<TDF_Attribute>& theWith)
 {
@@ -85,14 +60,10 @@ void XCAFDoc_VisMaterial::Restore(const occ::handle<TDF_Attribute>& theWith)
   myFaceCulling                = anOther->myFaceCulling;
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XCAFDoc_VisMaterial::NewEmpty() const
 {
   return new XCAFDoc_VisMaterial();
 }
-
-//=================================================================================================
 
 void XCAFDoc_VisMaterial::Paste(const occ::handle<TDF_Attribute>& theInto,
                                 const occ::handle<TDF_RelocationTable>&) const
@@ -105,8 +76,6 @@ void XCAFDoc_VisMaterial::Paste(const occ::handle<TDF_Attribute>& theInto,
   anOther->myAlphaCutOff = myAlphaCutOff;
   anOther->myFaceCulling = myFaceCulling;
 }
-
-//=================================================================================================
 
 Quantity_ColorRGBA XCAFDoc_VisMaterial::BaseColor() const
 {
@@ -121,8 +90,6 @@ Quantity_ColorRGBA XCAFDoc_VisMaterial::BaseColor() const
   return Quantity_ColorRGBA(Quantity_NOC_WHITE);
 }
 
-//=================================================================================================
-
 XCAFDoc_VisMaterialCommon XCAFDoc_VisMaterial::ConvertToCommonMaterial()
 {
   if (myCommonMat.IsDefined)
@@ -134,7 +101,6 @@ XCAFDoc_VisMaterialCommon XCAFDoc_VisMaterial::ConvertToCommonMaterial()
     return XCAFDoc_VisMaterialCommon();
   }
 
-  // convert metal-roughness into common
   XCAFDoc_VisMaterialCommon aComMat;
   aComMat.IsDefined      = true;
   aComMat.DiffuseTexture = myPbrMat.BaseColorTexture;
@@ -149,8 +115,6 @@ XCAFDoc_VisMaterialCommon XCAFDoc_VisMaterial::ConvertToCommonMaterial()
   }
   return aComMat;
 }
-
-//=================================================================================================
 
 XCAFDoc_VisMaterialPBR XCAFDoc_VisMaterial::ConvertToPbrMaterial()
 {
@@ -177,8 +141,6 @@ XCAFDoc_VisMaterialPBR XCAFDoc_VisMaterial::ConvertToPbrMaterial()
   return aPbrMat;
 }
 
-//=================================================================================================
-
 void XCAFDoc_VisMaterial::FillMaterialAspect(Graphic3d_MaterialAspect& theAspect) const
 {
   if (myCommonMat.IsDefined)
@@ -191,7 +153,6 @@ void XCAFDoc_VisMaterial::FillMaterialAspect(Graphic3d_MaterialAspect& theAspect
     theAspect.SetTransparency(myCommonMat.Transparency);
     theAspect.SetShininess(myCommonMat.Shininess);
 
-    // convert common into metal-roughness
     if (!myPbrMat.IsDefined)
     {
       Graphic3d_PBRMaterial aPbr;
@@ -211,7 +172,7 @@ void XCAFDoc_VisMaterial::FillMaterialAspect(Graphic3d_MaterialAspect& theAspect
   {
     if (!myCommonMat.IsDefined)
     {
-      // convert metal-roughness into common
+
       theAspect = Graphic3d_MaterialAspect(Graphic3d_NameOfMaterial_UserDefined);
       theAspect.SetDiffuseColor(myPbrMat.BaseColor.GetRGB());
       theAspect.SetAlpha(myPbrMat.BaseColor.Alpha());
@@ -220,7 +181,7 @@ void XCAFDoc_VisMaterial::FillMaterialAspect(Graphic3d_MaterialAspect& theAspect
       theAspect.SetShininess(1.0f - myPbrMat.Roughness);
       if (theAspect.Shininess() < 0.01f)
       {
-        // clamp too small shininess values causing visual artifacts on corner view angles
+
         theAspect.SetShininess(0.01f);
       }
       theAspect.SetEmissiveColor(
@@ -238,8 +199,6 @@ void XCAFDoc_VisMaterial::FillMaterialAspect(Graphic3d_MaterialAspect& theAspect
     theAspect.SetBSDF(Graphic3d_BSDF::CreateMetallicRoughness(aPbr));
   }
 }
-
-//=================================================================================================
 
 void XCAFDoc_VisMaterial::FillAspect(const occ::handle<Graphic3d_Aspects>& theAspect) const
 {
@@ -317,8 +276,6 @@ void XCAFDoc_VisMaterial::FillAspect(const occ::handle<Graphic3d_Aspects>& theAs
   theAspect->SetTextureSet(aTextureSet);
   theAspect->SetTextureMapOn(true);
 }
-
-//=================================================================================================
 
 void XCAFDoc_VisMaterial::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

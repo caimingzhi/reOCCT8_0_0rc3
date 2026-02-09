@@ -12,7 +12,6 @@ class StepAP242_IdAttribute;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for IdAttribute
 class RWStepAP242_RWIdAttribute
 {
 public:

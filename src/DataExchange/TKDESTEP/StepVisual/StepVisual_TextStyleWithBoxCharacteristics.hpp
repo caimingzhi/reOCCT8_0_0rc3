@@ -16,7 +16,6 @@ class StepVisual_TextStyleWithBoxCharacteristics : public StepVisual_TextStyle
 {
 
 public:
-  //! Returns a TextStyleWithBoxCharacteristics
   Standard_EXPORT StepVisual_TextStyleWithBoxCharacteristics();
 
   Standard_EXPORT void Init(

@@ -10,10 +10,6 @@
 #include <StepGeom_SurfaceOfRevolution.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d' une surface_of_revolution de prostep a partir d' une
-// SurfaceOfRevolution de Geom
-//=============================================================================
 GeomToStep_MakeSurfaceOfRevolution::GeomToStep_MakeSurfaceOfRevolution(
   const occ::handle<Geom_SurfaceOfRevolution>& S,
   const StepData_Factors&                      theLocalFactors)
@@ -32,10 +28,6 @@ GeomToStep_MakeSurfaceOfRevolution::GeomToStep_MakeSurfaceOfRevolution(
   theSurfaceOfRevolution = Surf;
   done                   = true;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_SurfaceOfRevolution>& GeomToStep_MakeSurfaceOfRevolution::Value() const
 {

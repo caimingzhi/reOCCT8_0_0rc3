@@ -1,6 +1,5 @@
 #pragma once
 
-//! Defines types of value of tolerane
 enum XCAFDimTolObjects_GeomToleranceTypeValue
 {
   XCAFDimTolObjects_GeomToleranceTypeValue_None,

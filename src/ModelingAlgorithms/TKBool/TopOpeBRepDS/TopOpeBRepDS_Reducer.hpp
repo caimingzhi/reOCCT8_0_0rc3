@@ -10,8 +10,6 @@
 #include <NCollection_DataMap.hpp>
 class TopOpeBRepDS_HDataStructure;
 
-//! reduce interferences of a data structure (HDS)
-//! used in topological operations.
 class TopOpeBRepDS_Reducer
 {
 public:

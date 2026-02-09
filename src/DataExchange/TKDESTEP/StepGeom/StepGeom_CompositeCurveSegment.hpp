@@ -11,7 +11,6 @@ class StepGeom_CompositeCurveSegment : public Standard_Transient
 {
 
 public:
-  //! Returns a CompositeCurveSegment
   Standard_EXPORT StepGeom_CompositeCurveSegment();
 
   Standard_EXPORT void Init(const StepGeom_TransitionCode      aTransition,

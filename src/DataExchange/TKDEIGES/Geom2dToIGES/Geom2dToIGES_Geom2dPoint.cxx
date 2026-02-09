@@ -4,26 +4,14 @@
 #include <gp_XYZ.hpp>
 #include <IGESGeom_Point.hpp>
 
-//=============================================================================
-// Geom2dToIGES_Geom2dPoint
-//=============================================================================
 Geom2dToIGES_Geom2dPoint::Geom2dToIGES_Geom2dPoint()
 
   = default;
-
-//=============================================================================
-// Geom2dToIGES_Geom2dPoint
-//=============================================================================
 
 Geom2dToIGES_Geom2dPoint::Geom2dToIGES_Geom2dPoint(const Geom2dToIGES_Geom2dEntity& G2dE)
     : Geom2dToIGES_Geom2dEntity(G2dE)
 {
 }
-
-//=============================================================================
-// Transfer of Point2d from Geom2d to IGES
-// Tranfer2dPoint
-//=============================================================================
 
 occ::handle<IGESGeom_Point> Geom2dToIGES_Geom2dPoint::Transfer2dPoint(
   const occ::handle<Geom2d_Point>& P)
@@ -41,11 +29,6 @@ occ::handle<IGESGeom_Point> Geom2dToIGES_Geom2dPoint::Transfer2dPoint(
   Piges->Init(gp_XYZ(X, Y, 0.), voidsubdef);
   return Piges;
 }
-
-//=============================================================================
-// Transfer of CartesianPoint from Geom2d to IGES
-// Tranfer2dPoint
-//=============================================================================
 
 occ::handle<IGESGeom_Point> Geom2dToIGES_Geom2dPoint::Transfer2dPoint(
   const occ::handle<Geom2d_CartesianPoint>& P)

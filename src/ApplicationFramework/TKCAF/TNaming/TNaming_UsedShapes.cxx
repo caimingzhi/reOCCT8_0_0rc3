@@ -16,26 +16,18 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TNaming_UsedShapes, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& TNaming_UsedShapes::GetID()
 {
   static Standard_GUID TNaming_UsedShapesID("c4ef4201-568f-11d1-8940-080009dc3333");
   return TNaming_UsedShapesID;
 }
 
-//=================================================================================================
-
 TNaming_UsedShapes::TNaming_UsedShapes() = default;
-
-//=================================================================================================
 
 void TNaming_UsedShapes::Destroy()
 {
   myMap.Clear();
 }
-
-//=================================================================================================
 
 occ::handle<TDF_Attribute> TNaming_UsedShapes::BackupCopy() const
 {
@@ -43,20 +35,12 @@ occ::handle<TDF_Attribute> TNaming_UsedShapes::BackupCopy() const
   return Att;
 }
 
-//=================================================================================================
-
 void TNaming_UsedShapes::BeforeRemoval()
 {
   Destroy();
 }
 
-//=======================================================================
-// function : AfterUndo
-// purpose  : After application of a TDF_Delta.
-//=======================================================================
-
-bool TNaming_UsedShapes::AfterUndo(const occ::handle<TDF_AttributeDelta>& anAttDelta,
-                                   const bool /*forceIt*/)
+bool TNaming_UsedShapes::AfterUndo(const occ::handle<TDF_AttributeDelta>& anAttDelta, const bool)
 {
   if (anAttDelta->IsKind(STANDARD_TYPE(TDF_DeltaOnAddition)))
   {
@@ -65,15 +49,11 @@ bool TNaming_UsedShapes::AfterUndo(const occ::handle<TDF_AttributeDelta>& anAttD
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<TDF_DeltaOnAddition> TNaming_UsedShapes::DeltaOnAddition() const
 {
   occ::handle<TDF_DeltaOnAddition> aDelta;
   return aDelta;
 }
-
-//=================================================================================================
 
 occ::handle<TDF_DeltaOnRemoval> TNaming_UsedShapes::DeltaOnRemoval() const
 {
@@ -81,25 +61,17 @@ occ::handle<TDF_DeltaOnRemoval> TNaming_UsedShapes::DeltaOnRemoval() const
   return aDelta;
 }
 
-//=================================================================================================
-
-void TNaming_UsedShapes::Restore(const occ::handle<TDF_Attribute>& /*anAttribute*/) {}
-
-//=================================================================================================
+void TNaming_UsedShapes::Restore(const occ::handle<TDF_Attribute>&) {}
 
 occ::handle<TDF_Attribute> TNaming_UsedShapes::NewEmpty() const
 {
   return new TNaming_UsedShapes();
 }
 
-//=================================================================================================
-
 void TNaming_UsedShapes::Paste(const occ::handle<TDF_Attribute>&,
                                const occ::handle<TDF_RelocationTable>&) const
 {
 }
-
-//=================================================================================================
 
 Standard_OStream& TNaming_UsedShapes::Dump(Standard_OStream& anOS) const
 {
@@ -126,11 +98,7 @@ Standard_OStream& TNaming_UsedShapes::Dump(Standard_OStream& anOS) const
   return anOS;
 }
 
-//=================================================================================================
-
 void TNaming_UsedShapes::References(const occ::handle<TDF_DataSet>&) const {}
-
-//=================================================================================================
 
 void TNaming_UsedShapes::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

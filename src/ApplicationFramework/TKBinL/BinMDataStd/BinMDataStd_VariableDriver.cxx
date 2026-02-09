@@ -8,22 +8,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_VariableDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_VariableDriver::BinMDataStd_VariableDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_VariableDriver::NewEmpty() const
 {
   return (new TDataStd_Variable());
 }
-
-//=================================================================================================
 
 bool BinMDataStd_VariableDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                        const occ::handle<TDF_Attribute>& theTarget,
@@ -43,8 +37,6 @@ bool BinMDataStd_VariableDriver::Paste(const BinObjMgt_Persistent&       theSour
 
   return true;
 }
-
-//=================================================================================================
 
 void BinMDataStd_VariableDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,

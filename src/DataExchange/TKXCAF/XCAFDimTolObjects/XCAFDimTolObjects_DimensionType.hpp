@@ -1,6 +1,5 @@
 #pragma once
 
-//! Defines types of dimension
 enum XCAFDimTolObjects_DimensionType
 {
   XCAFDimTolObjects_DimensionType_Location_None,

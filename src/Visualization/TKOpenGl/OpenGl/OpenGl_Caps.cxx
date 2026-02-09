@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_Caps, Standard_Transient)
 
-//=================================================================================================
-
 OpenGl_Caps::OpenGl_Caps()
     : sRGBDisable(false),
       compressedTexturesDisable(false),
@@ -32,7 +30,7 @@ OpenGl_Caps::OpenGl_Caps()
       glslDumpLevel(OpenGl_ShaderProgramDumpLevel_Off)
 {
 #if defined(__EMSCRIPTEN__)
-  buffersNoSwap = true; // swap has no effect in WebGL
+  buffersNoSwap = true;
 #endif
 #ifdef OCCT_DEBUG
   contextDebug     = true;
@@ -40,10 +38,6 @@ OpenGl_Caps::OpenGl_Caps()
 #endif
 }
 
-// =======================================================================
-// function : operator=
-// purpose  :
-// =======================================================================
 OpenGl_Caps& OpenGl_Caps::operator=(const OpenGl_Caps& theCopy)
 {
   sRGBDisable               = theCopy.sRGBDisable;
@@ -72,7 +66,5 @@ OpenGl_Caps& OpenGl_Caps::operator=(const OpenGl_Caps& theCopy)
   glslDumpLevel             = theCopy.glslDumpLevel;
   return *this;
 }
-
-//=================================================================================================
 
 OpenGl_Caps::~OpenGl_Caps() = default;

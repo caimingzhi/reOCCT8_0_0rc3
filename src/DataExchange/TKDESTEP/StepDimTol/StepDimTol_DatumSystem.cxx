@@ -6,11 +6,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_DatumSystem, StepRepr_ShapeAspect)
 
-//=================================================================================================
-
 StepDimTol_DatumSystem::StepDimTol_DatumSystem() = default;
-
-//=================================================================================================
 
 void StepDimTol_DatumSystem::Init(
   const occ::handle<TCollection_HAsciiString>&        theName,

@@ -17,8 +17,6 @@ enum StepVisual_MarkerType
   StepVisual_mtTriangle
 };
 
-//! Defines MarkerType as unique member of MarkerSelect
-//! Works with an EnumTool
 class StepVisual_MarkerMember : public StepData_SelectInt
 {
 

@@ -1,12 +1,11 @@
 #pragma once
 
-//! Predefined tracked devices.
 enum Aspect_XRTrackedDeviceRole
 {
-  Aspect_XRTrackedDeviceRole_Head,      //!< head
-  Aspect_XRTrackedDeviceRole_LeftHand,  //!< left hand
-  Aspect_XRTrackedDeviceRole_RightHand, //!< right hand
-  Aspect_XRTrackedDeviceRole_Other,     //!< other devices
+  Aspect_XRTrackedDeviceRole_Head,
+  Aspect_XRTrackedDeviceRole_LeftHand,
+  Aspect_XRTrackedDeviceRole_RightHand,
+  Aspect_XRTrackedDeviceRole_Other,
 };
 
 enum

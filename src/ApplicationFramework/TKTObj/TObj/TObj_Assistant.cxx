@@ -7,15 +7,11 @@
 #include <NCollection_IndexedMap.hpp>
 #include <Standard_Type.hpp>
 
-//=================================================================================================
-
 NCollection_Sequence<occ::handle<Standard_Transient>>& TObj_Assistant::getModels()
 {
   static NCollection_Sequence<occ::handle<Standard_Transient>> sModels;
   return sModels;
 }
-
-//=================================================================================================
 
 NCollection_IndexedMap<occ::handle<Standard_Transient>>& TObj_Assistant::getTypes()
 {
@@ -23,23 +19,17 @@ NCollection_IndexedMap<occ::handle<Standard_Transient>>& TObj_Assistant::getType
   return sTypes;
 }
 
-//=================================================================================================
-
 occ::handle<TObj_Model>& TObj_Assistant::getCurrentModel()
 {
   static occ::handle<TObj_Model> sCurrentModel;
   return sCurrentModel;
 }
 
-//=================================================================================================
-
 int& TObj_Assistant::getVersion()
 {
   static int sVersion = 0;
   return sVersion;
 }
-
-//=================================================================================================
 
 occ::handle<TObj_Model> TObj_Assistant::FindModel(const char* theName)
 {
@@ -58,21 +48,15 @@ occ::handle<TObj_Model> TObj_Assistant::FindModel(const char* theName)
   return aModel;
 }
 
-//=================================================================================================
-
 void TObj_Assistant::BindModel(const occ::handle<TObj_Model>& theModel)
 {
   getModels().Append(theModel);
 }
 
-//=================================================================================================
-
 void TObj_Assistant::ClearModelMap()
 {
   getModels().Clear();
 }
-
-//=================================================================================================
 
 occ::handle<Standard_Type> TObj_Assistant::FindType(const int theTypeIndex)
 {
@@ -82,8 +66,6 @@ occ::handle<Standard_Type> TObj_Assistant::FindType(const int theTypeIndex)
   return nullptr;
 }
 
-//=================================================================================================
-
 int TObj_Assistant::FindTypeIndex(const occ::handle<Standard_Type>& theType)
 {
   if (!getTypes().Contains(theType))
@@ -92,20 +74,13 @@ int TObj_Assistant::FindTypeIndex(const occ::handle<Standard_Type>& theType)
   return getTypes().FindIndex(theType);
 }
 
-//=================================================================================================
-
 class TObj_Assistant_UnknownType : public Standard_Transient
 {
 public:
   TObj_Assistant_UnknownType() = default;
-  // Empty constructor
 
-  // CASCADE RTTI
   DEFINE_STANDARD_RTTI_INLINE(TObj_Assistant_UnknownType, Standard_Transient)
 };
-
-// Define handle class for TObj_Assistant_UnknownType
-//=================================================================================================
 
 int TObj_Assistant::BindType(const occ::handle<Standard_Type>& theType)
 {
@@ -119,14 +94,10 @@ int TObj_Assistant::BindType(const occ::handle<Standard_Type>& theType)
   return getTypes().Add(theType);
 }
 
-//=================================================================================================
-
 void TObj_Assistant::ClearTypeMap()
 {
   getTypes().Clear();
 }
-
-//=================================================================================================
 
 void TObj_Assistant::SetCurrentModel(const occ::handle<TObj_Model>& theModel)
 {
@@ -134,21 +105,15 @@ void TObj_Assistant::SetCurrentModel(const occ::handle<TObj_Model>& theModel)
   getVersion()      = -1;
 }
 
-//=================================================================================================
-
 occ::handle<TObj_Model> TObj_Assistant::GetCurrentModel()
 {
   return getCurrentModel();
 }
 
-//=================================================================================================
-
 void TObj_Assistant::UnSetCurrentModel()
 {
   getCurrentModel().Nullify();
 }
-
-//=================================================================================================
 
 int TObj_Assistant::GetAppVersion()
 {

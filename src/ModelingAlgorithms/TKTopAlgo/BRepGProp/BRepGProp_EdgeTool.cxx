@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRepAdaptor_Curve.hpp>
 #include <BRepGProp_EdgeTool.hpp>
@@ -76,21 +64,19 @@ void BRepGProp_EdgeTool::D1(const BRepAdaptor_Curve& C, const double U, gp_Pnt& 
   C.D1(U, P, V1);
 }
 
-// modified by NIZHNY-MKK  Thu Jun  9 12:15:15 2005.BEGIN
 int BRepGProp_EdgeTool::NbIntervals(const BRepAdaptor_Curve& C, const GeomAbs_Shape S)
 {
-  // clang-format off
-  BRepAdaptor_Curve* pC = (BRepAdaptor_Curve*) &C; // at the moment actually NbIntervals() does not modify the 
-                                                   // object "C". So it is safe to do such a cast.
+
+  BRepAdaptor_Curve* pC = (BRepAdaptor_Curve*)&C;
+
   return pC->NbIntervals(S);
 }
 
-void BRepGProp_EdgeTool::Intervals(const BRepAdaptor_Curve& C,NCollection_Array1<double>& T,const GeomAbs_Shape S) 
+void BRepGProp_EdgeTool::Intervals(const BRepAdaptor_Curve&    C,
+                                   NCollection_Array1<double>& T,
+                                   const GeomAbs_Shape         S)
 {
-  BRepAdaptor_Curve* pC = (BRepAdaptor_Curve*) &C; // at the moment actually Intervals() does not modify the
-                                                   // object "C". So it is safe to do such a cast.
-  // clang-format on
+  BRepAdaptor_Curve* pC = (BRepAdaptor_Curve*)&C;
+
   pC->Intervals(T, S);
 }
-
-// modified by NIZHNY-MKK  Thu Jun  9 12:15:18 2005.END

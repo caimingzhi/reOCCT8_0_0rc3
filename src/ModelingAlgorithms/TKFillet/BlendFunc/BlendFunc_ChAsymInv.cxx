@@ -4,8 +4,6 @@
 #include <math_Matrix.hpp>
 #include <Precision.hpp>
 
-//=================================================================================================
-
 BlendFunc_ChAsymInv::BlendFunc_ChAsymInv(const occ::handle<Adaptor3d_Surface>& S1,
                                          const occ::handle<Adaptor3d_Surface>& S2,
                                          const occ::handle<Adaptor3d_Curve>&   C)
@@ -22,8 +20,6 @@ BlendFunc_ChAsymInv::BlendFunc_ChAsymInv(const occ::handle<Adaptor3d_Surface>& S
 {
 }
 
-//=================================================================================================
-
 void BlendFunc_ChAsymInv::Set(const double Dist1, const double Angle, const int Choix)
 {
   dist1 = std::abs(Dist1);
@@ -32,22 +28,16 @@ void BlendFunc_ChAsymInv::Set(const double Dist1, const double Angle, const int 
   choix = Choix;
 }
 
-//=================================================================================================
-
 int BlendFunc_ChAsymInv::NbEquations() const
 {
   return 4;
 }
-
-//=================================================================================================
 
 void BlendFunc_ChAsymInv::Set(const bool OnFirst, const occ::handle<Adaptor2d_Curve2d>& C)
 {
   first = OnFirst;
   csurf = C;
 }
-
-//=================================================================================================
 
 void BlendFunc_ChAsymInv::GetTolerance(math_Vector& Tolerance, const double Tol) const
 {
@@ -64,8 +54,6 @@ void BlendFunc_ChAsymInv::GetTolerance(math_Vector& Tolerance, const double Tol)
     Tolerance(4) = surf1->VResolution(Tol);
   }
 }
-
-//=================================================================================================
 
 void BlendFunc_ChAsymInv::GetBounds(math_Vector& InfBound, math_Vector& SupBound) const
 {
@@ -114,8 +102,6 @@ void BlendFunc_ChAsymInv::GetBounds(math_Vector& InfBound, math_Vector& SupBound
   }
 }
 
-//=================================================================================================
-
 bool BlendFunc_ChAsymInv::IsSolution(const math_Vector& Sol, const double Tol)
 {
   math_Vector valsol(1, 4);
@@ -143,7 +129,7 @@ bool BlendFunc_ChAsymInv::IsSolution(const math_Vector& Sol, const double Tol)
   tsurf1 = Nsurf1.Crossed(nplan);
 
   gp_Vec s1s2(pts1, pts2);
-  double PScaInv = 1. / tsurf1.Dot(s1s2), temp; // ,F4;
+  double PScaInv = 1. / tsurf1.Dot(s1s2), temp;
   double Nordu1 = d1u1.Magnitude(), Nordv1 = d1v1.Magnitude();
 
   temp = 2. * (Nordu1 + Nordv1) * s1s2.Magnitude() + 2. * Nordu1 * Nordv1;
@@ -154,8 +140,6 @@ bool BlendFunc_ChAsymInv::IsSolution(const math_Vector& Sol, const double Tol)
          && std::abs(valsol(3)) < 2. * dist1 * Tol
          && std::abs(valsol(4)) < Tol * (1. + tgang) * std::abs(PScaInv) * temp;
 }
-
-//=================================================================================================
 
 bool BlendFunc_ChAsymInv::ComputeValues(const math_Vector& X, const int DegF, const int DegL)
 {
@@ -324,16 +308,12 @@ bool BlendFunc_ChAsymInv::ComputeValues(const math_Vector& X, const int DegF, co
   return true;
 }
 
-//=================================================================================================
-
 bool BlendFunc_ChAsymInv::Value(const math_Vector& X, math_Vector& F)
 {
   const bool Error = ComputeValues(X, 0, 0);
   F                = FX;
   return Error;
 }
-
-//=================================================================================================
 
 bool BlendFunc_ChAsymInv::Derivatives(const math_Vector& X, math_Matrix& D)
 {
@@ -342,42 +322,10 @@ bool BlendFunc_ChAsymInv::Derivatives(const math_Vector& X, math_Matrix& D)
   return Error;
 }
 
-//=================================================================================================
-
 bool BlendFunc_ChAsymInv::Values(const math_Vector& X, math_Vector& F, math_Matrix& D)
 {
   const bool Error = ComputeValues(X, 0, 1);
   F                = FX;
   D                = DX;
   return Error;
-  /*  std::cout<<std::endl;
-    std::cout<<" test ChAsymInv"<<std::endl;
-    std::cout<<"calcul exact  <-->  approche"<<std::endl;
-
-    math_Vector X1(1,4);
-    math_Vector F1(1,4);
-    X1 = X; X1(1) += 1.e-10;
-    Value(X1,F1);
-    std::cout<<"D(1,1) : "<<D(1,1)<<" "<<(F1(1) - F(1)) * 1.e10<<std::endl;
-    std::cout<<"D(2,1) : "<<D(2,1)<<" "<<(F1(2) - F(2)) * 1.e10<<std::endl;
-    std::cout<<"D(3,1) : "<<D(3,1)<<" "<<(F1(3) - F(3)) * 1.e10<<std::endl;
-    std::cout<<"D(4,1) : "<<D(4,1)<<" "<<(F1(4) - F(4)) * 1.e10<<std::endl;
-    X1 = X; X1(2) += 1.e-10;
-    Value(X1,F1);
-    std::cout<<"D(1,2) : "<<D(1,2)<<" "<<(F1(1) - F(1)) * 1.e10<<std::endl;
-    std::cout<<"D(2,2) : "<<D(2,2)<<" "<<(F1(2) - F(2)) * 1.e10<<std::endl;
-    std::cout<<"D(3,2) : "<<D(3,2)<<" "<<(F1(3) - F(3)) * 1.e10<<std::endl;
-    std::cout<<"D(4,2) : "<<D(4,2)<<" "<<(F1(4) - F(4)) * 1.e10<<std::endl;
-    X1 = X; X1(3) += 1.e-10;
-    Value(X1,F1);
-    std::cout<<"D(1,3) : "<<D(1,3)<<" "<<(F1(1) - F(1)) * 1.e10<<std::endl;
-    std::cout<<"D(2,3) : "<<D(2,3)<<" "<<(F1(2) - F(2)) * 1.e10<<std::endl;
-    std::cout<<"D(3,3) : "<<D(3,3)<<" "<<(F1(3) - F(3)) * 1.e10<<std::endl;
-    std::cout<<"D(4,3) : "<<D(4,3)<<" "<<(F1(4) - F(4)) * 1.e10<<std::endl;
-    X1 = X; X1(4) += 1.e-10;
-    Value(X1,F1);
-    std::cout<<"D(1,4) : "<<D(1,4)<<" "<<(F1(1) - F(1)) * 1.e10<<std::endl;
-    std::cout<<"D(2,4) : "<<D(2,4)<<" "<<(F1(2) - F(2)) * 1.e10<<std::endl;
-    std::cout<<"D(3,4) : "<<D(3,4)<<" "<<(F1(3) - F(3)) * 1.e10<<std::endl;
-    std::cout<<"D(4,4) : "<<D(4,4)<<" "<<(F1(4) - F(4)) * 1.e10<<std::endl;*/
 }

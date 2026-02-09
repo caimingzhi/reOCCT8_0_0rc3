@@ -30,16 +30,11 @@
 
 static TopAbs_Orientation Orientation(const TopoDS_Shape&, const TopoDS_Shape&);
 
-//=================================================================================================
-
 LocOpe_Pipe::LocOpe_Pipe(const TopoDS_Wire& Spine, const TopoDS_Shape& Profile)
     : myPipe(Spine, Profile)
 {
 
   TopoDS_Shape Result = myPipe.Shape();
-
-  // On enleve les faces generees par les edges de connexite du profile,
-  // et on fusionne les plans si possible
 
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     theEFMap;
@@ -56,12 +51,10 @@ LocOpe_Pipe::LocOpe_Pipe(const TopoDS_Wire& Spine, const TopoDS_Shape& Profile)
     myMap.Bind(edgpr, Empty);
     if (theEFMap(i).Extent() >= 2)
     {
-      // on ne prend pas les faces generees
     }
     else
     {
-      NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>
-        MapFac; // on mappe les plans generes par cet edge
+      NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> MapFac;
       for (exp.Init(Spine, TopAbs_EDGE); exp.More(); exp.Next())
       {
         const TopoDS_Edge& edgsp  = TopoDS::Edge(exp.Current());
@@ -85,12 +78,9 @@ LocOpe_Pipe::LocOpe_Pipe(const TopoDS_Wire& Spine, const TopoDS_Shape& Profile)
         }
       }
 
-      // Chercher les composantes connexes sur cet ensemble de faces., avec meme
-      // support geometrique
-
       NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator itm(MapFac);
       if (MapFac.Extent() <= 1)
-      { // un seul plan. Rien a faire
+      {
         if (MapFac.Extent() == 1)
         {
           myMap(edgpr).Append(itm.Key());
@@ -127,13 +117,10 @@ LocOpe_Pipe::LocOpe_Pipe(const TopoDS_Wire& Spine, const TopoDS_Shape& Profile)
           }
         }
 
-        // FacFuse contient des faces de meme support. Il faut en faire
-        // des composantes connexes
-
         while (FacFuse.Extent() >= 2)
         {
           FaceRef = TopoDS::Face(FacFuse.First());
-          // Recuperer l'orientation
+
           TopAbs_Orientation orref = Orientation(FaceRef, Result);
           P                        = BRep_Tool::Surface(FaceRef);
           if (P->DynamicType() == STANDARD_TYPE(Geom_RectangularTrimmedSurface))
@@ -155,7 +142,7 @@ LocOpe_Pipe::LocOpe_Pipe(const TopoDS_Wire& Spine, const TopoDS_Shape& Profile)
           }
 
           MapFac.Remove(FaceRef);
-          FacFuse.RemoveFirst(); // on enleve FaceRef
+          FacFuse.RemoveFirst();
           bool FaceToFuse = false;
           bool MoreFound;
 
@@ -257,14 +244,10 @@ LocOpe_Pipe::LocOpe_Pipe(const TopoDS_Wire& Spine, const TopoDS_Shape& Profile)
   myRes = BS.Shape();
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& LocOpe_Pipe::Shape() const
 {
   return myRes;
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& LocOpe_Pipe::Shapes(const TopoDS_Shape& S)
 {
@@ -273,7 +256,7 @@ const NCollection_List<TopoDS_Shape>& LocOpe_Pipe::Shapes(const TopoDS_Shape& S)
   {
     throw Standard_DomainError();
   }
-  //  for (TopExp_Explorer exp(myPipe.Profile(),typS); exp.More(); exp.Next()) {
+
   TopExp_Explorer exp(myPipe.Profile(), typS);
   for (; exp.More(); exp.Next())
   {
@@ -302,12 +285,10 @@ const NCollection_List<TopoDS_Shape>& LocOpe_Pipe::Shapes(const TopoDS_Shape& S)
     }
     return myGShap;
   }
-  // TopAbs_EDGE
+
   const TopoDS_Edge& EProfile = TopoDS::Edge(S);
   return myMap(EProfile);
 }
-
-//=================================================================================================
 
 const NCollection_Sequence<occ::handle<Geom_Curve>>& LocOpe_Pipe::Curves(
   const NCollection_Sequence<gp_Pnt>& Spt)
@@ -318,7 +299,6 @@ const NCollection_Sequence<occ::handle<Geom_Curve>>& LocOpe_Pipe::Curves(
 
   int    i, j, k, Nbpnt = Spt.Length();
   double p1, p2;
-  //  gp_Pnt ptbid;
 
   for (i = 1; i <= Nbpnt; i++)
   {
@@ -412,11 +392,6 @@ const NCollection_Sequence<occ::handle<Geom_Curve>>& LocOpe_Pipe::Curves(
   return myCrvs;
 }
 
-//=======================================================================
-// function : Orientation
-// purpose  : static, not member
-//=======================================================================
-
 static TopAbs_Orientation Orientation(const TopoDS_Shape& Sub, const TopoDS_Shape& S)
 {
   TopExp_Explorer exp;
@@ -429,8 +404,6 @@ static TopAbs_Orientation Orientation(const TopoDS_Shape& Sub, const TopoDS_Shap
   }
   throw Standard_NoSuchObject();
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> LocOpe_Pipe::BarycCurve()
 {
@@ -448,7 +421,7 @@ occ::handle<Geom_Curve> LocOpe_Pipe::BarycCurve()
   bar.ChangeCoord().Divide(spt.Length());
 
   double p1, p2;
-  //  gp_Pnt ptbid;
+
   gp_Pnt P1 = bar;
 
   int                                           MaxDeg = 0;

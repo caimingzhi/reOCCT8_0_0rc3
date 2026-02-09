@@ -1,15 +1,4 @@
-// Copyright (c) 2017-2018 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDoc_Note.hpp>
 
@@ -35,18 +24,12 @@ enum ChildLab
   ChildLab_Presentation
 };
 
-//=================================================================================================
-
 bool XCAFDoc_Note::IsMine(const TDF_Label& theLabel)
 {
   return !Get(theLabel).IsNull();
 }
 
-//=================================================================================================
-
 XCAFDoc_Note::XCAFDoc_Note() = default;
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_Note> XCAFDoc_Note::Get(const TDF_Label& theLabel)
 {
@@ -60,8 +43,6 @@ occ::handle<XCAFDoc_Note> XCAFDoc_Note::Get(const TDF_Label& theLabel)
   return aNote;
 }
 
-//=================================================================================================
-
 void XCAFDoc_Note::Set(const TCollection_ExtendedString& theUserName,
                        const TCollection_ExtendedString& theTimeStamp)
 {
@@ -71,15 +52,11 @@ void XCAFDoc_Note::Set(const TCollection_ExtendedString& theUserName,
   myTimeStamp = theTimeStamp;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_Note::IsOrphan() const
 {
   occ::handle<XCAFDoc_GraphNode> aFather;
   return !Label().FindAttribute(XCAFDoc::NoteRefGUID(), aFather) || (aFather->NbChildren() == 0);
 }
-
-//=================================================================================================
 
 occ::handle<XCAFNoteObjects_NoteObject> XCAFDoc_Note::GetObject() const
 {
@@ -129,8 +106,6 @@ occ::handle<XCAFNoteObjects_NoteObject> XCAFDoc_Note::GetObject() const
   return anObj;
 }
 
-//=================================================================================================
-
 void XCAFDoc_Note::SetObject(const occ::handle<XCAFNoteObjects_NoteObject>& theObject)
 {
   Backup();
@@ -169,23 +144,17 @@ void XCAFDoc_Note::SetObject(const occ::handle<XCAFNoteObjects_NoteObject>& theO
   }
 }
 
-//=================================================================================================
-
 void XCAFDoc_Note::Restore(const occ::handle<TDF_Attribute>& theAttr)
 {
   myUserName  = occ::down_cast<XCAFDoc_Note>(theAttr)->myUserName;
   myTimeStamp = occ::down_cast<XCAFDoc_Note>(theAttr)->myTimeStamp;
 }
 
-//=================================================================================================
-
 void XCAFDoc_Note::Paste(const occ::handle<TDF_Attribute>& theAttrInto,
-                         const occ::handle<TDF_RelocationTable>& /*theRT*/) const
+                         const occ::handle<TDF_RelocationTable>&) const
 {
   occ::down_cast<XCAFDoc_Note>(theAttrInto)->Set(myUserName, myTimeStamp);
 }
-
-//=================================================================================================
 
 Standard_OStream& XCAFDoc_Note::Dump(Standard_OStream& theOS) const
 {
@@ -194,8 +163,6 @@ Standard_OStream& XCAFDoc_Note::Dump(Standard_OStream& theOS) const
         << (myTimeStamp.IsEmpty() ? myTimeStamp : "<unknown>");
   return theOS;
 }
-
-//=================================================================================================
 
 void XCAFDoc_Note::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

@@ -11,7 +11,6 @@ class StepShape_ShellBasedSurfaceModel;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ShellBasedSurfaceModel
 class RWStepShape_RWShellBasedSurfaceModel
 {
 public:

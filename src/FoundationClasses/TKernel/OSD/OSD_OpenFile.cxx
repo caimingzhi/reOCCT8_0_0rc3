@@ -1,15 +1,4 @@
-// Copyright (c) 2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #ifdef _WIN32
   #include <windows.h>
@@ -22,7 +11,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-//! Auxiliary function converting C++ ios open mode flags to C fopen() flags.
 static int OSD_OpenFile_iosMode2FileFlags(::std::ios_base::openmode theMode)
 {
   int aFlags = 0;
@@ -54,8 +42,6 @@ static int OSD_OpenFile_iosMode2FileFlags(::std::ios_base::openmode theMode)
   return aFlags;
 }
 
-//=================================================================================================
-
 int OSD_OpenFileDescriptor(const TCollection_ExtendedString& theName,
                            ::std::ios_base::openmode         theMode)
 {
@@ -70,20 +56,17 @@ int OSD_OpenFileDescriptor(const TCollection_ExtendedString& theName,
   }
 #else
   NCollection_UtfString<char> aString(theName.ToExtString());
-  // Mode 0600 is used when O_CREAT is set
-  // (owner read+write only, similar to Windows _S_IREAD | _S_IWRITE)
+
   aFileDesc = open(aString.ToCString(), aFlags, S_IRUSR | S_IWUSR);
 #endif
   return aFileDesc;
 }
 
-//=================================================================================================
-
 FILE* OSD_OpenFile(const char* theName, const char* theMode)
 {
   FILE* aFile = nullptr;
 #if defined(_WIN32)
-  // file name is treated as UTF-8 string and converted to UTF-16 one
+
   const TCollection_ExtendedString aFileNameW(theName, true);
   const TCollection_ExtendedString aFileModeW(theMode, true);
   aFile = ::_wfopen(aFileNameW.ToWideString(), aFileModeW.ToWideString());
@@ -93,8 +76,6 @@ FILE* OSD_OpenFile(const char* theName, const char* theMode)
   return aFile;
 }
 
-//=================================================================================================
-
 FILE* OSD_OpenFile(const TCollection_ExtendedString& theName, const char* theMode)
 {
   FILE* aFile = nullptr;
@@ -102,20 +83,18 @@ FILE* OSD_OpenFile(const TCollection_ExtendedString& theName, const char* theMod
   const TCollection_ExtendedString aFileModeW(theMode, true);
   aFile = ::_wfopen(theName.ToWideString(), aFileModeW.ToWideString());
 #else
-  // conversion in UTF-8 for linux
+
   NCollection_UtfString<char> aString(theName.ToExtString());
   aFile = ::fopen(aString.ToCString(), theMode);
 #endif
   return aFile;
 }
 
-//=================================================================================================
-
 std::time_t OSD_FileStatCTime(const char* theName)
 {
   std::time_t aTime = 0;
 #if defined(_WIN32)
-  // file name is treated as UTF-8 string and converted to UTF-16 one
+
   const TCollection_ExtendedString aFileNameW(theName, true);
   struct __stat64                  aStat;
   if (_wstat64(aFileNameW.ToWideString(), &aStat) == 0)

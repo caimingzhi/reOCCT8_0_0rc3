@@ -11,7 +11,6 @@ class StepRepr_MappedItem;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for MappedItem
 class RWStepRepr_RWMappedItem
 {
 public:

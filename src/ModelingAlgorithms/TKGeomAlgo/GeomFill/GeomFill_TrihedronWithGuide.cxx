@@ -9,8 +9,6 @@ occ::handle<Adaptor3d_Curve> GeomFill_TrihedronWithGuide::Guide() const
   return myGuide;
 }
 
-//=================================================================================================
-
 gp_Pnt GeomFill_TrihedronWithGuide::CurrentPointOnGuide() const
 {
   return myCurPointOnGuide;

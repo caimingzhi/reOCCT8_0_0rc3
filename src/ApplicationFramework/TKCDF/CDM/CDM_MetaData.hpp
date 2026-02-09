@@ -38,20 +38,12 @@ public:
 
   Standard_EXPORT occ::handle<CDM_Document> Document() const;
 
-  //! returns the folder in which the meta-data has to be created
-  //! or has to be found.
   Standard_EXPORT TCollection_ExtendedString Folder() const;
 
-  //! returns the name under which the meta-data has to be created
-  //! or has to be found.
   Standard_EXPORT TCollection_ExtendedString Name() const;
 
-  //! returns the version under which the meta-data has to be found.
-  //! Warning: raises NoSuchObject from Standard if no Version has been defined
   Standard_EXPORT TCollection_ExtendedString Version() const;
 
-  //! indicates that the version has to be taken into account when
-  //! searching the corresponding meta-data.
   Standard_EXPORT bool HasVersion() const;
 
   Standard_EXPORT TCollection_ExtendedString FileName() const;
@@ -69,14 +61,11 @@ public:
 
   Standard_EXPORT void UnsetIsReadOnly();
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
   friend class CDM_Reference;
   friend
-    //! associates database information to a document which
-    //! has been stored. The name of the document is now the
-    //! name which has beenused to store the data.
+
     Standard_EXPORT void
                               CDM_Document::SetMetaData(const occ::handle<CDM_MetaData>& aMetaData);
   friend Standard_EXPORT void CDM_Application::SetDocumentVersion(

@@ -14,65 +14,35 @@
 #include <Standard_Integer.hpp>
 class StepData_Field;
 
-//! A Free Form Entity allows to record any kind of STEP
-//! parameters, in any way of typing
-//! It is implemented with an array of fields
-//! A Complex entity can be defined, as a chain of FreeFormEntity
-//! (see Next and As)
 class StepData_FreeFormEntity : public Standard_Transient
 {
 
 public:
-  //! Creates a FreeFormEntity, with no field, no type
   Standard_EXPORT StepData_FreeFormEntity();
 
-  //! Sets the type of an entity
-  //! For a complex one, the type of this member
   Standard_EXPORT void SetStepType(const char* typenam);
 
-  //! Returns the recorded StepType
-  //! For a complex one, the type of this member
   Standard_EXPORT const char* StepType() const;
 
-  //! Sets a next member, in order to define or complete a Complex
-  //! entity
-  //! If <last> is True (D), this next will be set as last of list
-  //! Else, it is inserted just as next of <me>
-  //! If <next> is Null, Next is cleared
   Standard_EXPORT void SetNext(const occ::handle<StepData_FreeFormEntity>& next,
                                const bool                                  last = true);
 
-  //! Returns the next member of a Complex entity
-  //! (remark : the last member has none)
   Standard_EXPORT occ::handle<StepData_FreeFormEntity> Next() const;
 
-  //! Returns True if a FreeFormEntity is Complex (i.e. has Next)
   Standard_EXPORT bool IsComplex() const;
 
-  //! Returns the member of a FreeFormEntity of which the type name
-  //! is given (exact match, no sub-type)
   Standard_EXPORT occ::handle<StepData_FreeFormEntity> Typed(const char* typenam) const;
 
-  //! Returns the list of types (one type for a simple entity),
-  //! as is (non reordered)
   Standard_EXPORT occ::handle<NCollection_HSequence<TCollection_AsciiString>> TypeList() const;
 
-  //! Reorders a Complex entity if required, i.e. if member types
-  //! are not in alphabetic order
-  //! Returns False if nothing done (order was OK or simple entity),
-  //! True plus modified <ent> if <ent> has been reordered
   Standard_EXPORT static bool Reorder(occ::handle<StepData_FreeFormEntity>& ent);
 
-  //! Sets a count of Fields, from scratch
   Standard_EXPORT void SetNbFields(const int nb);
 
-  //! Returns the count of fields
   Standard_EXPORT int NbFields() const;
 
-  //! Returns a field from its rank, for read-only use
   Standard_EXPORT const StepData_Field& Field(const int num) const;
 
-  //! Returns a field from its rank, in order to modify it
   Standard_EXPORT StepData_Field& CField(const int num);
 
   DEFINE_STANDARD_RTTIEXT(StepData_FreeFormEntity, Standard_Transient)

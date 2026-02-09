@@ -5,12 +5,8 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWProductDefinitionFormationRelationship::
   RWStepBasic_RWProductDefinitionFormationRelationship() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWProductDefinitionFormationRelationship::ReadStep(
   const occ::handle<StepData_StepReaderData>&                          data,
@@ -18,11 +14,9 @@ void RWStepBasic_RWProductDefinitionFormationRelationship::ReadStep(
   occ::handle<Interface_Check>&                                        ach,
   const occ::handle<StepBasic_ProductDefinitionFormationRelationship>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 5, ach, "product_definition_formation_relationship"))
     return;
-
-  // Own fields of ProductDefinitionFormationRelationship
 
   occ::handle<TCollection_HAsciiString> aId;
   data->ReadString(num, 1, "id", ach, aId);
@@ -49,7 +43,6 @@ void RWStepBasic_RWProductDefinitionFormationRelationship::ReadStep(
                    STANDARD_TYPE(StepBasic_ProductDefinitionFormation),
                    aRelatedProductDefinitionFormation);
 
-  // Initialize entity
   ent->Init(aId,
             aName,
             aDescription,
@@ -57,14 +50,10 @@ void RWStepBasic_RWProductDefinitionFormationRelationship::ReadStep(
             aRelatedProductDefinitionFormation);
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWProductDefinitionFormationRelationship::WriteStep(
   StepData_StepWriter&                                                 SW,
   const occ::handle<StepBasic_ProductDefinitionFormationRelationship>& ent) const
 {
-
-  // Own fields of ProductDefinitionFormationRelationship
 
   SW.Send(ent->Id());
 
@@ -77,14 +66,10 @@ void RWStepBasic_RWProductDefinitionFormationRelationship::WriteStep(
   SW.Send(ent->RelatedProductDefinitionFormation());
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWProductDefinitionFormationRelationship::Share(
   const occ::handle<StepBasic_ProductDefinitionFormationRelationship>& ent,
   Interface_EntityIterator&                                            iter) const
 {
-
-  // Own fields of ProductDefinitionFormationRelationship
 
   iter.AddItem(ent->RelatingProductDefinitionFormation());
 

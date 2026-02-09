@@ -5,11 +5,9 @@
 #include <Geom2dHash_PointHasher.hpp>
 #include <Geom2dHash_DirectionHasher.hpp>
 
-//! OCCT-style hasher for Geom2d_Line (2D line).
-//! Used for geometry deduplication.
 struct Geom2dHash_LineHasher
 {
-  // Hashes the line by its location and direction.
+
   std::size_t operator()(const occ::handle<Geom2d_Line>& theLine) const noexcept
   {
     const Geom2dHash_PointHasher     aPointHasher;
@@ -20,7 +18,6 @@ struct Geom2dHash_LineHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two lines by their positions.
   bool operator()(const occ::handle<Geom2d_Line>& theLine1,
                   const occ::handle<Geom2d_Line>& theLine2) const noexcept
   {

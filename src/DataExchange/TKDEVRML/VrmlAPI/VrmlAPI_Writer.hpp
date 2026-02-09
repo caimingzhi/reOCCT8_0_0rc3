@@ -22,41 +22,21 @@ class Vrml_Material;
 class TopoDS_Shape;
 class TDocStd_Document;
 
-//! Creates and writes VRML files from Open
-//! CASCADE shapes. A VRML file can be written to
-//! an existing VRML file or to a new one.
 class VrmlAPI_Writer
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates a writer object with default parameters.
   Standard_EXPORT VrmlAPI_Writer();
 
-  //! Resets all parameters (representation, deflection)
-  //! to their default values..
   Standard_EXPORT void ResetToDefaults();
 
-  //! Returns drawer object
   Standard_EXPORT occ::handle<VrmlConverter_Drawer> Drawer() const;
 
-  //! Sets the deflection aDef of
-  //! the mesh algorithm which is used to compute the shaded
-  //! representation of the translated shape. The default
-  //! value is -1. When the deflection value is less than
-  //! 0, the deflection is calculated from the relative
-  //! size of the shaped.
   Standard_EXPORT void SetDeflection(const double aDef);
 
-  //! Sets the representation of the
-  //! shape aRep which is written to the VRML file. The three options are :
-  //! -      shaded
-  //! -      wireframe
-  //! -      both shaded and wireframe (default)
-  //! defined through the VrmlAPI_RepresentationOfShape enumeration.
   Standard_EXPORT void SetRepresentation(const VrmlAPI_RepresentationOfShape aRep);
 
-  //! Set transparency to given material
   Standard_EXPORT void SetTransparencyToMaterial(occ::handle<Vrml_Material>& aMaterial,
                                                  const double                aTransparency);
 
@@ -79,9 +59,6 @@ public:
     occ::handle<Vrml_Material>&                             aMaterial,
     const occ::handle<NCollection_HArray1<Quantity_Color>>& Color);
 
-  //! Returns the representation of the shape which is
-  //! written to the VRML file. Types of representation are set through the
-  //! VrmlAPI_RepresentationOfShape enumeration.
   Standard_EXPORT VrmlAPI_RepresentationOfShape GetRepresentation() const;
 
   Standard_EXPORT occ::handle<Vrml_Material> GetFrontMaterial() const;
@@ -100,37 +77,25 @@ public:
 
   Standard_EXPORT occ::handle<Vrml_Material> GetUnfreeBoundsMaterial() const;
 
-  //! Converts the shape aShape to
-  //! VRML format of the passed version and writes it to the file identified by aFile.
   Standard_EXPORT bool Write(const TopoDS_Shape& aShape,
                              const char*         aFile,
                              const int           aVersion = 2) const;
 
-  //! Converts the document to VRML format of the passed version
-  //! and writes it to the file identified by aFile.
   Standard_EXPORT bool WriteDoc(const occ::handle<TDocStd_Document>& theDoc,
                                 const char*                          theFile,
                                 const double                         theScale) const;
 
-  //! Converts the shape aShape to
-  //! VRML format of the passed version and writes it to the given stream.
   Standard_EXPORT bool Write(const TopoDS_Shape& aShape,
                              Standard_OStream&   theOStream,
                              const int           aVersion = 2) const;
 
-  //! Converts the document to VRML format of the passed version
-  //! and writes it to the given stream.
   Standard_EXPORT bool WriteDoc(const occ::handle<TDocStd_Document>& theDoc,
                                 Standard_OStream&                    theOStream,
                                 const double                         theScale) const;
 
 protected:
-  //! Converts the shape aShape to VRML format of version 1.0 and writes it
-  //! to the given stream using default parameters.
   Standard_EXPORT bool write_v1(const TopoDS_Shape& aShape, Standard_OStream& theOStream) const;
 
-  //! Converts the shape aShape to VRML format of version 2.0 and writes it
-  //! to the given stream using default parameters.
   Standard_EXPORT bool write_v2(const TopoDS_Shape& aShape, Standard_OStream& theOStream) const;
 
 private:

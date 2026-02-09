@@ -26,7 +26,7 @@ public:
                                 const int   Y,
                                 const int   W,
                                 const int   H);
-  // build a view on a given window
+
 #ifdef _WIN32
   Standard_EXPORT void MakeView(const int   id,
                                 const char* typ,
@@ -96,21 +96,16 @@ public:
   Standard_EXPORT void RemoveDrawable(const occ::handle<Draw_Drawable3D>& D);
   Standard_EXPORT Draw_Display MakeDisplay(const int id) const;
 
-  Standard_EXPORT void Select(int& id, // View, -1 if none
-                              int& X,  // Pick coordinates
-                              int& Y,
-                              int& Button, // Button pressed, 0 if none
-                              bool waitclick = true);
+  Standard_EXPORT void Select(int& id, int& X, int& Y, int& Button, bool waitclick = true);
 
-  Standard_EXPORT int Pick(const int                     id, // returns the index (or 0)
+  Standard_EXPORT int Pick(const int                     id,
                            const int                     X,
                            const int                     Y,
                            const int                     Prec,
                            occ::handle<Draw_Drawable3D>& D,
-                           const int First = 0) const; // search after this drawable
+                           const int                     First = 0) const;
 
   Standard_EXPORT void LastPick(gp_Pnt& P1, gp_Pnt& P2, double& Param);
-  // returns the extremities and parameter of the last picked segment
 
   Standard_EXPORT ~Draw_Viewer();
   Standard_EXPORT Draw_Viewer& operator<<(const occ::handle<Draw_Drawable3D>&);

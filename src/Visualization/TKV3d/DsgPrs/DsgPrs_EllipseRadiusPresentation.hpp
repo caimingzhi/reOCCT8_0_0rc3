@@ -17,8 +17,6 @@ class DsgPrs_EllipseRadiusPresentation
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! draws a Radius (Major or Minor)
-  //! representation for whole ellipse case
   Standard_EXPORT static void Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                   const occ::handle<Prs3d_Drawer>&       aDrawer,
                                   const double                           theval,
@@ -29,8 +27,6 @@ public:
                                   const bool                             IsMaxRadius,
                                   const DsgPrs_ArrowSide                 ArrowSide);
 
-  //! draws a Radius (Major or Minor) representation
-  //! for arc of an ellipse case
   Standard_EXPORT static void Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                   const occ::handle<Prs3d_Drawer>&       aDrawer,
                                   const double                           theval,
@@ -44,8 +40,6 @@ public:
                                   const bool                             IsMaxRadius,
                                   const DsgPrs_ArrowSide                 ArrowSide);
 
-  //! draws a Radius (Major or Minor) representation
-  //! for arc of an offset curve from ellipse
   Standard_EXPORT static void Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                   const occ::handle<Prs3d_Drawer>&       aDrawer,
                                   const double                           theval,

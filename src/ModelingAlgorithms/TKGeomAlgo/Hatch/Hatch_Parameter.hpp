@@ -5,11 +5,6 @@
 
 #include <Standard_Integer.hpp>
 
-//! Stores an intersection on a line represented by :
-//!
-//! * A Real parameter.
-//!
-//! * A flag True when the parameter starts an interval.
 class Hatch_Parameter
 {
 public:

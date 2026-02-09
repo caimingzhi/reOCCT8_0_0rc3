@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveGroup, Select3D_SensitiveSet)
 
-//=================================================================================================
-
 Select3D_SensitiveGroup::Select3D_SensitiveGroup(
   const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
   const bool                                theIsMustMatchAll)
@@ -13,8 +11,6 @@ Select3D_SensitiveGroup::Select3D_SensitiveGroup(
       myCenter(0.0, 0.0, 0.0)
 {
 }
-
-//=================================================================================================
 
 Select3D_SensitiveGroup::Select3D_SensitiveGroup(
   const occ::handle<SelectMgr_EntityOwner>&                    theOwnerId,
@@ -47,10 +43,6 @@ Select3D_SensitiveGroup::Select3D_SensitiveGroup(
   MarkDirty();
 }
 
-//=======================================================================
-// function : Add
-// purpose  : No control of entities inside
-//=======================================================================
 void Select3D_SensitiveGroup::Add(
   NCollection_Sequence<occ::handle<Select3D_SensitiveEntity>>& theEntities)
 {
@@ -80,8 +72,6 @@ void Select3D_SensitiveGroup::Add(
   myCenter = (myCenter.XYZ() + aCent.XYZ()).Multiplied(0.5);
 }
 
-//=================================================================================================
-
 void Select3D_SensitiveGroup::Add(const occ::handle<Select3D_SensitiveEntity>& theSensitive)
 {
   const int aPrevExtent = myEntities.Extent();
@@ -98,8 +88,6 @@ void Select3D_SensitiveGroup::Add(const occ::handle<Select3D_SensitiveEntity>& t
     myCenter.ChangeCoord().Multiply(0.5);
   }
 }
-
-//=================================================================================================
 
 void Select3D_SensitiveGroup::Remove(const occ::handle<Select3D_SensitiveEntity>& theSensitive)
 {
@@ -121,14 +109,10 @@ void Select3D_SensitiveGroup::Remove(const occ::handle<Select3D_SensitiveEntity>
   myCenter.ChangeCoord().Divide(static_cast<double>(myEntities.Extent()));
 }
 
-//=================================================================================================
-
 bool Select3D_SensitiveGroup::IsIn(const occ::handle<Select3D_SensitiveEntity>& theSensitive) const
 {
   return myEntities.Contains(theSensitive);
 }
-
-//=================================================================================================
 
 void Select3D_SensitiveGroup::Clear()
 {
@@ -138,16 +122,10 @@ void Select3D_SensitiveGroup::Clear()
   myBVHPrimIndexes.Clear();
 }
 
-//=======================================================================
-// function : NbSubElements
-// purpose  : Returns the amount of sub-entities
-//=======================================================================
 int Select3D_SensitiveGroup::NbSubElements() const
 {
   return myEntities.Size();
 }
-
-//=================================================================================================
 
 occ::handle<Select3D_SensitiveEntity> Select3D_SensitiveGroup::GetConnected()
 {
@@ -164,8 +142,6 @@ occ::handle<Select3D_SensitiveEntity> Select3D_SensitiveGroup::GetConnected()
   aNewEntity->Add(aConnectedEnt);
   return aNewEntity;
 }
-
-//=================================================================================================
 
 bool Select3D_SensitiveGroup::Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                       SelectBasics_PickResult&             thePickResult)
@@ -212,8 +188,6 @@ bool Select3D_SensitiveGroup::Matches(SelectBasics_SelectingVolumeManager& theMg
   return true;
 }
 
-//=================================================================================================
-
 void Select3D_SensitiveGroup::Set(const occ::handle<SelectMgr_EntityOwner>& theOwnerId)
 {
   Select3D_SensitiveEntity::Set(theOwnerId);
@@ -226,18 +200,11 @@ void Select3D_SensitiveGroup::Set(const occ::handle<SelectMgr_EntityOwner>& theO
   }
 }
 
-//=======================================================================
-// function : BoundingBox
-// purpose  : Returns bounding box of the group. If location
-//            transformation is set, it will be applied
-//=======================================================================
 Select3D_BndBox3d Select3D_SensitiveGroup::BoundingBox()
 {
   if (myBndBox.IsValid())
     return myBndBox;
 
-  // do not apply the transformation because sensitives AABBs
-  // are already transformed
   for (NCollection_IndexedMap<occ::handle<Select3D_SensitiveEntity>>::Iterator anEntityIter(
          myEntities);
        anEntityIter.More();
@@ -249,31 +216,17 @@ Select3D_BndBox3d Select3D_SensitiveGroup::BoundingBox()
   return myBndBox;
 }
 
-//=======================================================================
-// function : CenterOfGeometry
-// purpose  : Returns center of group. If location transformation
-//            is set, it will be applied
-//=======================================================================
 gp_Pnt Select3D_SensitiveGroup::CenterOfGeometry() const
 {
   return myCenter;
 }
 
-//=======================================================================
-// function : Box
-// purpose  : Returns bounding box of sensitive entity with index theIdx
-//=======================================================================
 Select3D_BndBox3d Select3D_SensitiveGroup::Box(const int theIdx) const
 {
   const int anElemIdx = myBVHPrimIndexes.Value(theIdx);
   return myEntities.FindKey(anElemIdx)->BoundingBox();
 }
 
-//=======================================================================
-// function : Center
-// purpose  : Returns geometry center of sensitive entity with index
-//            theIdx in the vector along the given axis theAxis
-//=======================================================================
 double Select3D_SensitiveGroup::Center(const int theIdx, const int theAxis) const
 {
   const int    anElemIdx = myBVHPrimIndexes.Value(theIdx);
@@ -281,10 +234,6 @@ double Select3D_SensitiveGroup::Center(const int theIdx, const int theAxis) cons
   return theAxis == 0 ? aCenter.X() : (theAxis == 1 ? aCenter.Y() : aCenter.Z());
 }
 
-//=======================================================================
-// function : Swap
-// purpose  : Swaps items with indexes theIdx1 and theIdx2 in the vector
-//=======================================================================
 void Select3D_SensitiveGroup::Swap(const int theIdx1, const int theIdx2)
 {
   const int anEntIdx1 = myBVHPrimIndexes.Value(theIdx1);
@@ -294,20 +243,11 @@ void Select3D_SensitiveGroup::Swap(const int theIdx1, const int theIdx2)
   myBVHPrimIndexes.ChangeValue(theIdx2) = anEntIdx1;
 }
 
-//=======================================================================
-// function : Size
-// purpose  : Returns the length of vector of sensitive entities
-//=======================================================================
 int Select3D_SensitiveGroup::Size() const
 {
   return myBVHPrimIndexes.Size();
 }
 
-// =======================================================================
-// function : overlapsElement
-// purpose  : Checks whether the entity with index theIdx overlaps the
-//            current selecting volume
-// =======================================================================
 bool Select3D_SensitiveGroup::overlapsElement(SelectBasics_PickResult&             thePickResult,
                                               SelectBasics_SelectingVolumeManager& theMgr,
                                               int                                  theElemIdx,
@@ -317,8 +257,6 @@ bool Select3D_SensitiveGroup::overlapsElement(SelectBasics_PickResult&          
   return myEntities.FindKey(aSensitiveIdx)->Matches(theMgr, thePickResult);
 }
 
-//=================================================================================================
-
 bool Select3D_SensitiveGroup::elementIsInside(SelectBasics_SelectingVolumeManager& theMgr,
                                               int                                  theElemIdx,
                                               bool                                 theIsFullInside)
@@ -327,17 +265,10 @@ bool Select3D_SensitiveGroup::elementIsInside(SelectBasics_SelectingVolumeManage
   return overlapsElement(aDummy, theMgr, theElemIdx, theIsFullInside);
 }
 
-// =======================================================================
-// function : distanceToCOG
-// purpose  : Calculates distance from the 3d projection of used-picked
-//            screen point to center of the geometry
-// =======================================================================
 double Select3D_SensitiveGroup::distanceToCOG(SelectBasics_SelectingVolumeManager& theMgr)
 {
   return theMgr.DistToGeometryCenter(CenterOfGeometry());
 }
-
-//=================================================================================================
 
 void Select3D_SensitiveGroup::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

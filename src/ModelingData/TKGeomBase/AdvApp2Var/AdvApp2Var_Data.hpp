@@ -3,19 +3,16 @@
 #include <Standard_Macro.hpp>
 #include <AdvApp2Var_Data_f2c.hpp>
 
-//
 struct mdnombr_1_
 {
   doublereal pi, deuxpi, pisur2, pis180, c180pi, zero, one, a180, a360, a90;
 };
 
-//
 struct minombr_1_
 {
   integer nbr[1001];
 };
 
-//
 struct maovpar_1_
 {
   doublereal r8und, r8ovr, x4und, x4ovr;
@@ -24,58 +21,47 @@ struct maovpar_1_
   shortint   i2ovr, i2ovn;
 };
 
-//
 struct maovpch_1_
 {
   char cnmmac[16], frmr4[8], frmr8[8], cdcode[8];
 };
 
-//
 struct mlgdrtl_1_
 {
-  doublereal rootab[930], // was [465][2]
-    hiltab[930],          // was [465][2]
-    hi0tab[31];
+  doublereal rootab[930], hiltab[930], hi0tab[31];
 };
 
-//
 struct mmjcobi_1_
 {
-  doublereal plgcan[3968]; // was [496][2][4]
-  doublereal canjac[3968]; // was [496][2][4]
+  doublereal plgcan[3968];
+  doublereal canjac[3968];
 };
 
-//
 struct mmcmcnp_1_
 {
-  doublereal cnp[3721]; // was [61][61] ;
+  doublereal cnp[3721];
 };
 
-//
 struct mmapgss_1_
 {
   doublereal gslxjs[5017], gsl0js[52];
 };
 
-//
 struct mmapgs0_1_
 {
   doublereal gslxj0[4761], gsl0j0[49];
 };
 
-//
 struct mmapgs1_1_
 {
   doublereal gslxj1[4505], gsl0j1[46];
 };
 
-//
 struct mmapgs2_1_
 {
   doublereal gslxj2[4249], gsl0j2[43];
 };
 
-////
 class AdvApp2Var_Data
 {
 public:
@@ -92,7 +78,6 @@ public:
   Standard_EXPORT static mmapgs2_1_& Getmmapgs2();
 };
 
-//
 #define mdnombr_ AdvApp2Var_Data::Getmdnombr()
 #define minombr_ AdvApp2Var_Data::Getminombr()
 #define maovpar_ AdvApp2Var_Data::Getmaovpar()
@@ -104,4 +89,3 @@ public:
 #define mmapgs0_ AdvApp2Var_Data::Getmmapgs0()
 #define mmapgs1_ AdvApp2Var_Data::Getmmapgs1()
 #define mmapgs2_ AdvApp2Var_Data::Getmmapgs2()
-//

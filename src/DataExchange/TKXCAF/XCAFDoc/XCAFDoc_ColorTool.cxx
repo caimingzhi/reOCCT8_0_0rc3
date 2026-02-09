@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDoc_ColorTool.hpp>
 
@@ -32,28 +21,20 @@ IMPLEMENT_DERIVED_ATTRIBUTE_WITH_TYPE(XCAFDoc_ColorTool, TDataStd_GenericEmpty, 
 
 static bool XCAFDoc_ColorTool_AutoNaming = true;
 
-//=================================================================================================
-
 void XCAFDoc_ColorTool::SetAutoNaming(bool theIsAutoNaming)
 {
   XCAFDoc_ColorTool_AutoNaming = theIsAutoNaming;
 }
-
-//=================================================================================================
 
 bool XCAFDoc_ColorTool::AutoNaming()
 {
   return XCAFDoc_ColorTool_AutoNaming;
 }
 
-//=================================================================================================
-
 TDF_Label XCAFDoc_ColorTool::BaseLabel() const
 {
   return Label();
 }
-
-//=================================================================================================
 
 const occ::handle<XCAFDoc_ShapeTool>& XCAFDoc_ColorTool::ShapeTool()
 {
@@ -62,15 +43,11 @@ const occ::handle<XCAFDoc_ShapeTool>& XCAFDoc_ColorTool::ShapeTool()
   return myShapeTool;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::IsColor(const TDF_Label& lab) const
 {
   Quantity_Color C;
   return GetColor(lab, C);
 }
-
-//=================================================================================================
 
 bool XCAFDoc_ColorTool::GetColor(const TDF_Label& lab, Quantity_Color& col)
 {
@@ -80,8 +57,6 @@ bool XCAFDoc_ColorTool::GetColor(const TDF_Label& lab, Quantity_Color& col)
     col = aCol.GetRGB();
   return isDone;
 }
-
-//=================================================================================================
 
 bool XCAFDoc_ColorTool::GetColor(const TDF_Label& lab, Quantity_ColorRGBA& col)
 {
@@ -94,16 +69,12 @@ bool XCAFDoc_ColorTool::GetColor(const TDF_Label& lab, Quantity_ColorRGBA& col)
   return true;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::FindColor(const Quantity_Color& col, TDF_Label& lab) const
 {
   Quantity_ColorRGBA aCol;
   aCol.SetRGB(col);
   return FindColor(aCol, lab);
 }
-
-//=================================================================================================
 
 bool XCAFDoc_ColorTool::FindColor(const Quantity_ColorRGBA& col, TDF_Label& lab) const
 {
@@ -123,16 +94,12 @@ bool XCAFDoc_ColorTool::FindColor(const Quantity_ColorRGBA& col, TDF_Label& lab)
   return false;
 }
 
-//=================================================================================================
-
 TDF_Label XCAFDoc_ColorTool::FindColor(const Quantity_ColorRGBA& col) const
 {
   TDF_Label L;
   FindColor(col, L);
   return L;
 }
-
-//=================================================================================================
 
 TDF_Label XCAFDoc_ColorTool::FindColor(const Quantity_Color& col) const
 {
@@ -141,16 +108,12 @@ TDF_Label XCAFDoc_ColorTool::FindColor(const Quantity_Color& col) const
   return L;
 }
 
-//=================================================================================================
-
 TDF_Label XCAFDoc_ColorTool::AddColor(const Quantity_Color& col) const
 {
   Quantity_ColorRGBA aCol;
   aCol.SetRGB(col);
   return AddColor(aCol);
 }
-
-//=================================================================================================
 
 TDF_Label XCAFDoc_ColorTool::AddColor(const Quantity_ColorRGBA& theColor) const
 {
@@ -160,14 +123,13 @@ TDF_Label XCAFDoc_ColorTool::AddColor(const Quantity_ColorRGBA& theColor) const
     return aLab;
   }
 
-  // create a new color entry
   TDF_TagSource aTag;
   aLab = TDF_TagSource::NewChild(Label());
   XCAFDoc_Color::Set(aLab, theColor);
 
   if (XCAFDoc_ColorTool_AutoNaming)
   {
-    // set name according to color value
+
     const TCollection_AsciiString aName =
       TCollection_AsciiString(Quantity_Color::StringName(theColor.GetRGB().Name())) + " ("
       + Quantity_ColorRGBA::ColorToHex(theColor) + ")";
@@ -177,14 +139,10 @@ TDF_Label XCAFDoc_ColorTool::AddColor(const Quantity_ColorRGBA& theColor) const
   return aLab;
 }
 
-//=================================================================================================
-
 void XCAFDoc_ColorTool::RemoveColor(const TDF_Label& lab) const
 {
   lab.ForgetAllAttributes(true);
 }
-
-//=================================================================================================
 
 void XCAFDoc_ColorTool::GetColors(NCollection_Sequence<TDF_Label>& Labels) const
 {
@@ -199,21 +157,17 @@ void XCAFDoc_ColorTool::GetColors(NCollection_Sequence<TDF_Label>& Labels) const
   }
 }
 
-//=================================================================================================
-
 void XCAFDoc_ColorTool::SetColor(const TDF_Label&        L,
                                  const TDF_Label&        colorL,
                                  const XCAFDoc_ColorType type) const
 {
-  // set reference
+
   occ::handle<TDataStd_TreeNode> refNode, mainNode;
   mainNode = TDataStd_TreeNode::Set(colorL, XCAFDoc::ColorRefGUID(type));
   refNode  = TDataStd_TreeNode::Set(L, XCAFDoc::ColorRefGUID(type));
-  refNode->Remove(); // abv: fix against bug in TreeNode::Append()
+  refNode->Remove();
   mainNode->Prepend(refNode);
 }
-
-//=================================================================================================
 
 void XCAFDoc_ColorTool::SetColor(const TDF_Label&        L,
                                  const Quantity_Color&   Color,
@@ -223,8 +177,6 @@ void XCAFDoc_ColorTool::SetColor(const TDF_Label&        L,
   SetColor(L, colorL, type);
 }
 
-//=================================================================================================
-
 void XCAFDoc_ColorTool::SetColor(const TDF_Label&          L,
                                  const Quantity_ColorRGBA& Color,
                                  const XCAFDoc_ColorType   type) const
@@ -233,22 +185,16 @@ void XCAFDoc_ColorTool::SetColor(const TDF_Label&          L,
   SetColor(L, colorL, type);
 }
 
-//=================================================================================================
-
 void XCAFDoc_ColorTool::UnSetColor(const TDF_Label& L, const XCAFDoc_ColorType type) const
 {
   L.ForgetAttribute(XCAFDoc::ColorRefGUID(type));
 }
-
-//=================================================================================================
 
 bool XCAFDoc_ColorTool::IsSet(const TDF_Label& L, const XCAFDoc_ColorType type) const
 {
   occ::handle<TDataStd_TreeNode> Node;
   return L.FindAttribute(XCAFDoc::ColorRefGUID(type), Node) && Node->HasFather();
 }
-
-//=================================================================================================
 
 bool XCAFDoc_ColorTool::GetColor(const TDF_Label&        L,
                                  const XCAFDoc_ColorType type,
@@ -261,8 +207,6 @@ bool XCAFDoc_ColorTool::GetColor(const TDF_Label&        L,
   return true;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::GetColor(const TDF_Label&        L,
                                  const XCAFDoc_ColorType type,
                                  Quantity_Color&         color)
@@ -273,8 +217,6 @@ bool XCAFDoc_ColorTool::GetColor(const TDF_Label&        L,
   return GetColor(colorL, color);
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::GetColor(const TDF_Label&        L,
                                  const XCAFDoc_ColorType type,
                                  Quantity_ColorRGBA&     color)
@@ -284,8 +226,6 @@ bool XCAFDoc_ColorTool::GetColor(const TDF_Label&        L,
     return false;
   return GetColor(colorL, color);
 }
-
-//=================================================================================================
 
 bool XCAFDoc_ColorTool::SetColor(const TopoDS_Shape&     S,
                                  const TDF_Label&        colorL,
@@ -298,8 +238,6 @@ bool XCAFDoc_ColorTool::SetColor(const TopoDS_Shape&     S,
   return true;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::SetColor(const TopoDS_Shape&     S,
                                  const Quantity_Color&   Color,
                                  const XCAFDoc_ColorType type)
@@ -308,8 +246,6 @@ bool XCAFDoc_ColorTool::SetColor(const TopoDS_Shape&     S,
   return SetColor(S, colorL, type);
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::SetColor(const TopoDS_Shape&       S,
                                  const Quantity_ColorRGBA& Color,
                                  const XCAFDoc_ColorType   type)
@@ -317,8 +253,6 @@ bool XCAFDoc_ColorTool::SetColor(const TopoDS_Shape&       S,
   TDF_Label colorL = AddColor(Color);
   return SetColor(S, colorL, type);
 }
-
-//=================================================================================================
 
 bool XCAFDoc_ColorTool::UnSetColor(const TopoDS_Shape& S, const XCAFDoc_ColorType type)
 {
@@ -329,8 +263,6 @@ bool XCAFDoc_ColorTool::UnSetColor(const TopoDS_Shape& S, const XCAFDoc_ColorTyp
   return true;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::IsSet(const TopoDS_Shape& S, const XCAFDoc_ColorType type)
 {
   TDF_Label L;
@@ -338,8 +270,6 @@ bool XCAFDoc_ColorTool::IsSet(const TopoDS_Shape& S, const XCAFDoc_ColorType typ
     return false;
   return IsSet(L, type);
 }
-
-//=================================================================================================
 
 bool XCAFDoc_ColorTool::GetColor(const TopoDS_Shape&     S,
                                  const XCAFDoc_ColorType type,
@@ -351,8 +281,6 @@ bool XCAFDoc_ColorTool::GetColor(const TopoDS_Shape&     S,
   return GetColor(L, type, colorL);
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::GetColor(const TopoDS_Shape&     S,
                                  const XCAFDoc_ColorType type,
                                  Quantity_Color&         color)
@@ -362,8 +290,6 @@ bool XCAFDoc_ColorTool::GetColor(const TopoDS_Shape&     S,
     return false;
   return GetColor(colorL, color);
 }
-
-//=================================================================================================
 
 bool XCAFDoc_ColorTool::GetColor(const TopoDS_Shape&     S,
                                  const XCAFDoc_ColorType type,
@@ -375,15 +301,11 @@ bool XCAFDoc_ColorTool::GetColor(const TopoDS_Shape&     S,
   return GetColor(colorL, color);
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_ColorTool::GetID()
 {
   static Standard_GUID ColorTblID("efd212ed-6dfd-11d4-b9c8-0060b0ee281b");
   return ColorTblID;
 }
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_ColorTool> XCAFDoc_ColorTool::Set(const TDF_Label& L)
 {
@@ -397,27 +319,18 @@ occ::handle<XCAFDoc_ColorTool> XCAFDoc_ColorTool::Set(const TDF_Label& L)
   return A;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_ColorTool::ID() const
 {
   return GetID();
 }
 
-//=================================================================================================
-
 XCAFDoc_ColorTool::XCAFDoc_ColorTool() = default;
-
-// PTV 23.01.2003 add visibility flag for objects (CAX-IF TRJ11)
-//=================================================================================================
 
 bool XCAFDoc_ColorTool::IsVisible(const TDF_Label& L)
 {
   occ::handle<TDataStd_UAttribute> aUAttr;
   return (!L.FindAttribute(XCAFDoc::InvisibleGUID(), aUAttr));
 }
-
-//=================================================================================================
 
 void XCAFDoc_ColorTool::SetVisibility(const TDF_Label& L, const bool isvisible)
 {
@@ -433,15 +346,11 @@ void XCAFDoc_ColorTool::SetVisibility(const TDF_Label& L, const bool isvisible)
     L.ForgetAttribute(XCAFDoc::InvisibleGUID());
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::IsColorByLayer(const TDF_Label& L) const
 {
   occ::handle<TDataStd_UAttribute> aUAttr;
   return L.FindAttribute(XCAFDoc::ColorByLayerGUID(), aUAttr);
 }
-
-//=================================================================================================
 
 void XCAFDoc_ColorTool::SetColorByLayer(const TDF_Label& L, const bool isColorByLayer)
 {
@@ -457,8 +366,6 @@ void XCAFDoc_ColorTool::SetColorByLayer(const TDF_Label& L, const bool isColorBy
     L.ForgetAttribute(XCAFDoc::ColorByLayerGUID());
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::SetInstanceColor(const TopoDS_Shape&     theShape,
                                          const XCAFDoc_ColorType type,
                                          const Quantity_Color&   color,
@@ -469,24 +376,22 @@ bool XCAFDoc_ColorTool::SetInstanceColor(const TopoDS_Shape&     theShape,
   return SetInstanceColor(theShape, type, aCol, IsCreateSHUO);
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::SetInstanceColor(const TopoDS_Shape&       theShape,
                                          const XCAFDoc_ColorType   type,
                                          const Quantity_ColorRGBA& color,
                                          const bool                IsCreateSHUO)
 {
-  // find shuo label structure
+
   NCollection_Sequence<TDF_Label> aLabels;
   if (!ShapeTool()->FindComponent(theShape, aLabels))
     return false;
   occ::handle<XCAFDoc_GraphNode> aSHUO;
-  // set the SHUO structure for this component if it is not exist
+
   if (!ShapeTool()->FindSHUO(aLabels, aSHUO))
   {
     if (aLabels.Length() == 1)
     {
-      // set color directly for component as NAUO
+
       SetColor(aLabels.Value(1), color, type);
       return true;
     }
@@ -500,8 +405,6 @@ bool XCAFDoc_ColorTool::SetInstanceColor(const TopoDS_Shape&       theShape,
   return true;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::GetInstanceColor(const TopoDS_Shape&     theShape,
                                          const XCAFDoc_ColorType type,
                                          Quantity_Color&         color)
@@ -513,24 +416,22 @@ bool XCAFDoc_ColorTool::GetInstanceColor(const TopoDS_Shape&     theShape,
   return isDone;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::GetInstanceColor(const TopoDS_Shape&     theShape,
                                          const XCAFDoc_ColorType type,
                                          Quantity_ColorRGBA&     color)
 {
-  // find shuo label structure
+
   NCollection_Sequence<TDF_Label> aLabels;
   if (!ShapeTool()->FindComponent(theShape, aLabels))
     return false;
   occ::handle<XCAFDoc_GraphNode> aSHUO;
-  // get shuo from document by label structure
+
   TDF_Label aCompLab = aLabels.Value(aLabels.Length());
   while (aLabels.Length() > 1)
   {
     if (!ShapeTool()->FindSHUO(aLabels, aSHUO))
     {
-      // try to find other shuo
+
       aLabels.Remove(aLabels.Length());
       continue;
     }
@@ -540,63 +441,58 @@ bool XCAFDoc_ColorTool::GetInstanceColor(const TopoDS_Shape&     theShape,
       if (GetColor(aSHUOLabel, type, color))
         return true;
       else
-        // try to find other shuo
+
         aLabels.Remove(aLabels.Length());
     }
   }
-  // attempt to get color exactly of component
+
   if (GetColor(aCompLab, type, color))
     return true;
 
-  // attempt to get color of solid
   TopLoc_Location aLoc;
   TopoDS_Shape    S0 = theShape;
   S0.Location(aLoc);
   TDF_Label aRefLab = ShapeTool()->FindShape(S0);
   if (!aRefLab.IsNull())
     return GetColor(aRefLab, type, color);
-  // no color assigned
+
   return false;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::IsInstanceVisible(const TopoDS_Shape& theShape)
 {
-  // check visibility status of top-level solid, cause it is have highest priority
+
   TopLoc_Location NullLoc;
   TopoDS_Shape    S0 = theShape;
   S0.Location(NullLoc);
   TDF_Label aRefL = ShapeTool()->FindShape(S0);
   if (!aRefL.IsNull() && !IsVisible(aRefL))
     return false;
-  // find shuo label structure
+
   NCollection_Sequence<TDF_Label> aLabels;
   if (!ShapeTool()->FindComponent(theShape, aLabels))
     return true;
   TDF_Label aCompLab = aLabels.Value(aLabels.Length());
-  // visibility status of component withouts SHUO.
+
   if (!IsVisible(aCompLab))
     return false;
-  // check by SHUO structure
+
   NCollection_Sequence<TDF_Label> aCurLabels;
   aCurLabels.Append(aCompLab);
   int i = aLabels.Length() - 1;
-  //   while (aCurLabels.Length() < aLabels.Length()) {
+
   while (i >= 1)
   {
     aCurLabels.Prepend(aLabels.Value(i--));
-    // get shuo from document by label structure
+
     occ::handle<XCAFDoc_GraphNode> aSHUO;
     if (!ShapeTool()->FindSHUO(aCurLabels, aSHUO))
       continue;
     if (!IsVisible(aSHUO->Label()))
       return false;
   }
-  return true; // visible, cause cannot find invisibility status
+  return true;
 }
-
-//=================================================================================================
 
 static void ReverseTreeNodes(occ::handle<TDataStd_TreeNode>& mainNode)
 {
@@ -620,8 +516,6 @@ static void ReverseTreeNodes(occ::handle<TDataStd_TreeNode>& mainNode)
   }
 }
 
-//=================================================================================================
-
 bool XCAFDoc_ColorTool::ReverseChainsOfTreeNodes()
 {
   TDF_ChildIDIterator it(Label(), XCAFDoc_Color::GetID());
@@ -644,8 +538,6 @@ bool XCAFDoc_ColorTool::ReverseChainsOfTreeNodes()
   }
   return true;
 }
-
-//=================================================================================================
 
 void XCAFDoc_ColorTool::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

@@ -36,8 +36,6 @@ const occ::handle<Standard_Transient>& BinTObjDrivers::Factory(const Standard_GU
   return BinLDrivers::Factory(aGUID);
 }
 
-//=================================================================================================
-
 void BinTObjDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
 {
   theApp->DefineFormat("TObjBin",
@@ -46,8 +44,6 @@ void BinTObjDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp
                        new BinTObjDrivers_DocumentRetrievalDriver,
                        new BinTObjDrivers_DocumentStorageDriver);
 }
-
-//=================================================================================================
 
 void BinTObjDrivers::AddDrivers(const occ::handle<BinMDF_ADriverTable>& aDriverTable,
                                 const occ::handle<Message_Messenger>&   aMsgDrv)

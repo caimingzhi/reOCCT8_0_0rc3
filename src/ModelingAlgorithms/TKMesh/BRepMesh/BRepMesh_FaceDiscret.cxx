@@ -7,19 +7,14 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_FaceDiscret, IMeshTools_ModelAlgo)
 
-//=================================================================================================
-
 BRepMesh_FaceDiscret::BRepMesh_FaceDiscret(
   const occ::handle<IMeshTools_MeshAlgoFactory>& theAlgoFactory)
     : myAlgoFactory(theAlgoFactory)
 {
 }
 
-//=================================================================================================
-
 BRepMesh_FaceDiscret::~BRepMesh_FaceDiscret() = default;
 
-//! Auxiliary functor for parallel processing of Faces.
 class BRepMesh_FaceDiscret::FaceListFunctor
 {
 public:
@@ -50,8 +45,6 @@ private:
   std::vector<Message_ProgressRange> myRanges;
 };
 
-//=================================================================================================
-
 bool BRepMesh_FaceDiscret::performInternal(const occ::handle<IMeshData_Model>& theModel,
                                            const IMeshTools_Parameters&        theParameters,
                                            const Message_ProgressRange&        theRange)
@@ -73,11 +66,9 @@ bool BRepMesh_FaceDiscret::performInternal(const occ::handle<IMeshData_Model>& t
     return false;
   }
 
-  myModel.Nullify(); // Do not hold link to model.
+  myModel.Nullify();
   return true;
 }
-
-//=================================================================================================
 
 void BRepMesh_FaceDiscret::process(const int                    theFaceIndex,
                                    const Message_ProgressRange& theRange) const

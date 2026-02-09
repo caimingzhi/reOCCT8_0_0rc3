@@ -10,7 +10,6 @@
 class HLRBRep_PolyAlgo;
 class Draw_Display;
 
-//! Used to display the results.
 class HLRTest_DrawablePolyEdgeTool : public Draw_Drawable3D
 {
 
@@ -60,63 +59,45 @@ inline void HLRTest_DrawablePolyEdgeTool::Show()
   myHideMode = false;
 }
 
-//=================================================================================================
-
 inline void HLRTest_DrawablePolyEdgeTool::Hide()
 {
   myHideMode = true;
 }
-
-//=================================================================================================
 
 inline void HLRTest_DrawablePolyEdgeTool::DisplayRg1Line(const bool B)
 {
   myDispRg1 = B;
 }
 
-//=================================================================================================
-
 inline bool HLRTest_DrawablePolyEdgeTool::DisplayRg1Line() const
 {
   return myDispRg1;
 }
-
-//=================================================================================================
 
 inline void HLRTest_DrawablePolyEdgeTool::DisplayRgNLine(const bool B)
 {
   myDispRgN = B;
 }
 
-//=================================================================================================
-
 inline bool HLRTest_DrawablePolyEdgeTool::DisplayRgNLine() const
 {
   return myDispRgN;
 }
-
-//=================================================================================================
 
 inline void HLRTest_DrawablePolyEdgeTool::DisplayHidden(const bool B)
 {
   myDispHid = B;
 }
 
-//=================================================================================================
-
 inline bool HLRTest_DrawablePolyEdgeTool::DisplayHidden() const
 {
   return myDispHid;
 }
 
-//=================================================================================================
-
 inline void HLRTest_DrawablePolyEdgeTool::Debug(const bool B)
 {
   myDebug = B;
 }
-
-//=================================================================================================
 
 inline bool HLRTest_DrawablePolyEdgeTool::Debug() const
 {

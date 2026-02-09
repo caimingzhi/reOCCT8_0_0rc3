@@ -44,10 +44,6 @@ static char Draw_fontsize[FONTLENGTH]        = "150";
 static char Draw_fontnamedefault[FONTLENGTH] = "Helvetica";
 static char Draw_fontsizedefault[FONTLENGTH] = "150";
 
-// *******************************************************************
-// Graphic commands
-// *******************************************************************
-
 static int ViewId(const char* a)
 {
   int id = Draw::Atoi(a);
@@ -74,12 +70,9 @@ static void SetTitle(const int id)
   }
 }
 
-//=================================================================================================
-
 static int zoom(Draw_Interpretor&, int n, const char** a)
 {
-  // one argument -> All Views
-  // two argument -> First is the view
+
   bool z2d = !strcasecmp(a[0], "2dzoom");
   if (n == 2)
   {
@@ -112,8 +105,6 @@ static int zoom(Draw_Interpretor&, int n, const char** a)
   else
     return 1;
 }
-
-//=================================================================================================
 
 static int wzoom(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -232,8 +223,6 @@ static int wzoom(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int wclick(Draw_Interpretor& di, int, const char**)
 {
   int id1, X1, Y1, b;
@@ -242,8 +231,6 @@ static int wclick(Draw_Interpretor& di, int, const char**)
   dout.Select(id1, X1, Y1, b);
   return 0;
 }
-
-//=================================================================================================
 
 static int view(Draw_Interpretor& di, int n, const char** a)
 {
@@ -262,7 +249,7 @@ static int view(Draw_Interpretor& di, int n, const char** a)
     int Y = 0;
     int W = 500;
     int H = 500;
-    // if view exist, get old values
+
     if (dout.HasView(id))
       dout.GetPosSize(id, X, Y, W, H);
     if (n >= 4)
@@ -285,7 +272,7 @@ static int view(Draw_Interpretor& di, int n, const char** a)
   }
   else if (n == 4)
   {
-    // create a view on a given window
+
     int id = Draw::Atoi(a[1]);
     if ((id < 0) || (id >= MAXVIEW))
     {
@@ -305,8 +292,6 @@ static int view(Draw_Interpretor& di, int n, const char** a)
   else
     return 1;
 }
-
-//=================================================================================================
 
 static int delview(Draw_Interpretor&, int n, const char** a)
 {
@@ -328,8 +313,6 @@ static int delview(Draw_Interpretor&, int n, const char** a)
     return 1;
 }
 
-//=================================================================================================
-
 static int fit(Draw_Interpretor&, int n, const char** a)
 {
   bool f2d = !strcasecmp(a[0], "2dfit");
@@ -343,7 +326,7 @@ static int fit(Draw_Interpretor&, int n, const char** a)
       {
         if ((f2d && !dout.Is3D(id)) || (!f2d && dout.Is3D(id)))
         {
-          //	  dout.FitView(id,frame);
+
           dout.FitView(id, (int)frame);
           if (dout.Zoom(id) < zoom)
             zoom = dout.Zoom(id);
@@ -369,7 +352,7 @@ static int fit(Draw_Interpretor&, int n, const char** a)
     int id = ViewId(a[1]);
     if (id < 0)
       return 1;
-    //    dout.FitView(id,frame);
+
     dout.FitView(id, (int)frame);
     dout.RepaintView(id);
     SetTitle(id);
@@ -378,8 +361,6 @@ static int fit(Draw_Interpretor&, int n, const char** a)
   else
     return 1;
 }
-
-//=================================================================================================
 
 static int focal(Draw_Interpretor&, int n, const char** a)
 {
@@ -409,8 +390,6 @@ static int focal(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int setfocal(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 1)
@@ -434,9 +413,6 @@ static int setfocal(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
-// static int magnify(Draw_Interpretor& di, int n, const char** a)
 static int magnify(Draw_Interpretor&, int n, const char** a)
 {
   int start = 0;
@@ -448,14 +424,14 @@ static int magnify(Draw_Interpretor&, int n, const char** a)
       return 1;
     start = end = anid;
   }
-  bool        v2d = (a[0][0] == '2'); // 2dmu, 2dmd
+  bool        v2d = (a[0][0] == '2');
   const char* com = a[0];
   if (v2d)
     com += 2;
   double dz = 1.;
-  if (!strcasecmp(com, "mu")) // mu, 2dmu
+  if (!strcasecmp(com, "mu"))
     dz = stepmagnify;
-  else // md, 2dmd
+  else
     dz = 1 / stepmagnify;
 
   for (int id = start; id <= end; id++)
@@ -477,8 +453,6 @@ Standard_EXPORT int Draw_magnify(Draw_Interpretor& di, int n, const char** a)
 {
   return magnify(di, n, a);
 }
-
-//=================================================================================================
 
 static int rotate(Draw_Interpretor&, int n, const char** a)
 {
@@ -526,8 +500,6 @@ static int rotate(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int panning(Draw_Interpretor&, int n, const char** a)
 {
   int start = 0;
@@ -543,18 +515,18 @@ static int panning(Draw_Interpretor&, int n, const char** a)
   int DY = 0;
   int X, Y, W, H;
 
-  bool        v2d = (a[0][0] == '2'); // pu2d, pd2d, pr2d, pl2d
+  bool        v2d = (a[0][0] == '2');
   const char* com = a[0];
   if (v2d)
     com += 2;
 
-  if (!strcasecmp(com, "pu")) // pu , 2dpu
+  if (!strcasecmp(com, "pu"))
     DY = 1;
-  if (!strcasecmp(com, "pd")) // pd , 2dpd
+  if (!strcasecmp(com, "pd"))
     DY = -1;
-  if (!strcasecmp(com, "pl")) // pl , 2dpl
+  if (!strcasecmp(com, "pl"))
     DX = -1;
-  if (!strcasecmp(com, "pr")) // pr , 2dpr
+  if (!strcasecmp(com, "pr"))
     DX = 1;
 
   for (int id = start; id <= end; id++)
@@ -564,7 +536,7 @@ static int panning(Draw_Interpretor&, int n, const char** a)
       if ((v2d && !dout.Is3D(id)) || (!v2d && dout.Is3D(id)))
       {
         dout.GetPosSize(id, X, Y, W, H);
-        //	dout.PanView(id,W * DX * steppan, H * DY * steppan);
+
         dout.PanView(id, (int)(W * DX * steppan), (int)(H * DY * steppan));
         dout.RepaintView(id);
       }
@@ -572,8 +544,6 @@ static int panning(Draw_Interpretor&, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int ptv(Draw_Interpretor&, int n, const char** a)
 {
@@ -608,13 +578,11 @@ static int ptv(Draw_Interpretor&, int n, const char** a)
     T1.SetTranslationPart(gp_Vec(-X, -Y, -Z));
     gp_Trsf aLocalTrsf(T * T1);
     dout.SetTrsf(id, aLocalTrsf);
-    //    dout.SetTrsf(id,T*T1);
+
     dout.RepaintView(id);
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int dptv(Draw_Interpretor&, int n, const char** a)
 {
@@ -653,8 +621,6 @@ static int dptv(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int color(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
@@ -669,24 +635,8 @@ static int color(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : hardcopy
-// purpose  : hardcopy                  --> hardcopy of view 1
-//                                                  in file a4.ps
-//                                                  in format a4
-//           hardcopy name view        --> hardcopy of view <view>
-//                                                  in file <name>
-//                                                  in format a4
-//           hardcopy name view format --> hardcopy of view <view>
-//                                                  in file <name>
-//                                                  in format <a4,a3,a2,a1,a0>
-//=======================================================================
-
 static int hardcopy(Draw_Interpretor&, int n, const char** a)
 {
-  // Inch = 25.40001969 mm.
-  // 28.4 pixels / mm.
-  // format par default papier a4 210 297 mm avec marge de 3 mm.
 
   double rap = 28.4;
   double cad = 3;
@@ -725,10 +675,6 @@ static int hardcopy(Draw_Interpretor&, int n, const char** a)
         }
         else if (!strcmp(a[3], "a4"))
         {
-          // Do nothing
-          // cad == cad;
-          // dx  == dx;
-          // dy  == dy;
         }
         else if (!strcmp(a[3], "a3"))
         {
@@ -777,10 +723,6 @@ static int hardcopy(Draw_Interpretor&, int n, const char** a)
     pxmax     = (int)(pxmin + kx * (vxmax - vxmin));
     pymax     = (int)(pymin + ky * (vymax - vymin));
 
-    // si on veut choisir l'orientation : 90 rotate
-
-    // ecriture du header
-
     os << "%!PS-Adobe-3.0 EPSF-3.0\n";
     os << "%%BoundingBox: " << pxmin << " " << pymin << " " << pxmax << " " << pymax << "\n";
     os << "%%Pages: 1\n";
@@ -792,16 +734,12 @@ static int hardcopy(Draw_Interpretor&, int n, const char** a)
     os << "/l {lineto} bind def\n";
     os << ".1 .1 scale\n";
 
-    // draw the frame
-
     os << "3 setlinewidth\n0 setgray\nnewpath\n";
     os << pxmin << " " << pymin << " m\n";
     os << pxmax << " " << pymin << " l\n";
     os << pxmax << " " << pymax << " l\n";
     os << pxmin << " " << pymax << " l\n";
     os << "closepath\nstroke\n";
-
-    // frame the view
 
     os << "newpath\n";
     os << pxmin << " " << pymin << " m\n";
@@ -836,9 +774,7 @@ static int dfont(Draw_Interpretor& di, int n, const char** a)
   }
   di << Draw_fontname << " " << Draw_fontsize << "\n";
   return 0;
-} // dfont
-
-//=================================================================================================
+}
 
 static int hcolor(Draw_Interpretor& di, int n, const char** a)
 {
@@ -858,8 +794,6 @@ static int hcolor(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 extern void Draw_RepaintNowIfNecessary();
 
 static int xwd(Draw_Interpretor&, int n, const char** a)
@@ -867,7 +801,6 @@ static int xwd(Draw_Interpretor&, int n, const char** a)
   if (n < 2)
     return 1;
 
-  // enforce repaint if necessary
   Draw_RepaintNowIfNecessary();
 
   int         id   = 1;
@@ -882,11 +815,6 @@ static int xwd(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=======================================================================
-// function : grid
-// purpose  : Creation/Suppression d'une grille.
-//=======================================================================
 
 static int grid(Draw_Interpretor&, int NbArg, const char** Arg)
 {
@@ -932,15 +860,11 @@ static int grid(Draw_Interpretor&, int NbArg, const char** Arg)
   return 0;
 }
 
-//=================================================================================================
-
 static int dflush(Draw_Interpretor&, int, const char**)
 {
   dout.Flush();
   return 0;
 }
-
-//=================================================================================================
 
 static int dtext(Draw_Interpretor& di, int n, const char** a)
 {

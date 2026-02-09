@@ -4,68 +4,21 @@
 #include <Standard_Type.hpp>
 #include <memory>
 
-//! @brief Simple tool for code parallelization.
-//!
-//! OSD_Parallel class provides simple interface for parallel processing of
-//! tasks that can be formulated in terms of "for" or "foreach" loops.
-//!
-//! To use this tool it is necessary to:
-//! - organize the data to be processed in a collection accessible by
-//!   iteration (usually array or vector);
-//! - implement a functor class providing operator () accepting iterator
-//!   (or index in array) that does the job;
-//! - call either For() or ForEach() providing begin and end iterators and
-//!   a functor object.
-//!
-//! Iterators should satisfy requirements of STL forward iterator.
-//! Functor
-//!
-//! @code
-//! class Functor
-//! {
-//! public:
-//!   void operator() ([processing instance]) const
-//!   {
-//!     //...
-//!   }
-//! };
-//! @endcode
-//!
-//! The operator () should be implemented in a thread-safe way so that
-//! the same functor object can process different data items in parallel threads.
-//!
-//! Iteration by index (For) is expected to be more efficient than using iterators
-//! (ForEach).
-//!
-//! Implementation uses TBB if OCCT is built with support of TBB; otherwise it
-//! uses ad-hoc parallelization tool. In general, if TBB is available, it is
-//! more efficient to use it directly instead of using OSD_Parallel.
-
 class OSD_Parallel
 {
 private:
-  //! Interface class defining API for polymorphic wrappers over iterators.
-  //! Intended to add polymorphic behaviour to For and ForEach functionality
-  //! for arbitrary objects and eliminate dependency on template parameters.
   class IteratorInterface
   {
   public:
     virtual ~IteratorInterface() = default;
 
-    //! Returns true if iterators wrapped by this and theOther are equal
     virtual bool IsEqual(const IteratorInterface& theOther) const = 0;
 
-    //! Increments wrapped iterator
     virtual void Increment() = 0;
 
-    //! Returns new instance of the wrapper containing copy
-    //! of the wrapped iterator.
     virtual IteratorInterface* Clone() const = 0;
   };
 
-  //! Implementation of polymorphic iterator wrapper suitable for basic
-  //! types as well as for std iterators.
-  //! Wraps instance of actual iterator type Type.
   template <class Type>
   class IteratorWrapper : public IteratorInterface
   {
@@ -93,20 +46,10 @@ private:
   };
 
 protected:
-  // Note: UniversalIterator and FunctorInterface are made protected to be
-  // accessible from specialization using threads (non-TBB).
-
-  //! Fixed-type iterator, implementing STL forward iterator interface, used for
-  //! iteration over objects subject to parallel processing.
-  //! It stores pointer to instance of polymorphic iterator inheriting from
-  //! IteratorInterface, which contains actual type-specific iterator.
   class UniversalIterator
-  // Note that TBB requires that value_type of iterator be copyable,
-  // thus we use its own type for that
+
   {
   public:
-    // Since C++20 inheritance from std::iterator is deprecated, so define predefined types
-    // manually:
     using iterator_category = std::forward_iterator_tag;
     using value_type        = IteratorInterface*;
     using difference_type   = ptrdiff_t;
@@ -162,9 +105,6 @@ protected:
     std::unique_ptr<IteratorInterface> myPtr;
   };
 
-  //! Interface class representing functor object.
-  //! Intended to add polymorphic behaviour to For and ForEach functionality
-  //! enabling execution of arbitrary function in parallel mode.
   class FunctorInterface
   {
   public:
@@ -172,7 +112,6 @@ protected:
 
     virtual void operator()(IteratorInterface* theIterator) const = 0;
 
-    // type cast to actual iterator
     template <typename Iterator>
     static const Iterator& DownCast(IteratorInterface* theIterator)
     {
@@ -181,7 +120,6 @@ protected:
   };
 
 private:
-  //! Wrapper for functors manipulating on std iterators.
   template <class Iterator, class Functor>
   class FunctorWrapperIter : public FunctorInterface
   {
@@ -203,7 +141,6 @@ private:
     const Functor& myFunctor;
   };
 
-  //! Wrapper for functors manipulating on integer index.
   template <class Functor>
   class FunctorWrapperInt : public FunctorInterface
   {
@@ -225,7 +162,6 @@ private:
     const Functor& myFunctor;
   };
 
-  //! Wrapper redirecting functor taking element index to functor taking also thread index.
   template <class Functor>
   class FunctorWrapperForThreadPool
   {
@@ -248,53 +184,23 @@ private:
   };
 
 private:
-  //! Simple primitive for parallelization of "foreach" loops, e.g.:
-  //! @code
-  //!   for (std::iterator anIter = theBegin; anIter != theEnd; ++anIter) {}
-  //! @endcode
-  //! Implementation of framework-dependent functionality should be provided by
-  //! forEach_impl function defined in opencascade::parallel namespace.
-  //! @param theBegin   the first index (inclusive)
-  //! @param theEnd     the last  index (exclusive)
-  //! @param theFunctor functor providing an interface "void operator(InputIterator theIter){}"
-  //!                   performing task for the specified iterator position
-  //! @param theNbItems number of items passed by iterator, -1 if unknown
   Standard_EXPORT static void forEachOcct(UniversalIterator&      theBegin,
                                           UniversalIterator&      theEnd,
                                           const FunctorInterface& theFunctor,
                                           int                     theNbItems);
 
-  //! Same as forEachOcct() but can be implemented using external threads library.
   Standard_EXPORT static void forEachExternal(UniversalIterator&      theBegin,
                                               UniversalIterator&      theEnd,
                                               const FunctorInterface& theFunctor,
                                               int                     theNbItems);
 
-public: //! @name public methods
-  //! Returns TRUE if OCCT threads should be used instead of auxiliary threads library;
-  //! default value is FALSE if alternative library has been enabled while OCCT building and TRUE
-  //! otherwise.
+public:
   Standard_EXPORT static bool ToUseOcctThreads();
 
-  //! Sets if OCCT threads should be used instead of auxiliary threads library.
-  //! Has no effect if OCCT has been built with no auxiliary threads library.
   Standard_EXPORT static void SetUseOcctThreads(bool theToUseOcct);
 
-  //! Returns number of logical processors.
   Standard_EXPORT static int NbLogicalProcessors();
 
-  //! Simple primitive for parallelization of "foreach" loops, equivalent to:
-  //! @code
-  //!   for (auto anIter = theBegin; anIter != theEnd; ++anIter) {
-  //!     theFunctor(*anIter);
-  //!   }
-  //! @endcode
-  //! @param theBegin   the first index (inclusive)
-  //! @param theEnd     the last  index (exclusive)
-  //! @param theFunctor functor providing an interface "void operator(InputIterator theIter){}"
-  //!                   performing task for specified iterator position
-  //! @param isForceSingleThreadExecution if true, then no threads will be created
-  //! @param theNbItems number of items passed by iterator, -1 if unknown
   template <typename InputIterator, typename Functor>
   static void ForEach(InputIterator  theBegin,
                       InputIterator  theEnd,
@@ -323,17 +229,6 @@ public: //! @name public methods
     }
   }
 
-  //! Simple primitive for parallelization of "for" loops, equivalent to:
-  //! @code
-  //!   for (int anIter = theBegin; anIter != theEnd; ++anIter) {
-  //!     theFunctor(anIter);
-  //!   }
-  //! @endcode
-  //! @param theBegin   the first index (inclusive)
-  //! @param theEnd     the last  index (exclusive)
-  //! @param theFunctor functor providing an interface "void operator(int theIndex){}"
-  //!                   performing task for specified index
-  //! @param isForceSingleThreadExecution if true, then no threads will be created
   template <typename Functor>
   static void For(const int      theBegin,
                   const int      theEnd,

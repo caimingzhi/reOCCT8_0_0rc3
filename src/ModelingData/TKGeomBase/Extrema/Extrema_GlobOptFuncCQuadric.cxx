@@ -1,15 +1,4 @@
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement
+
 
 #include <Extrema_GlobOptFuncCQuadric.hpp>
 
@@ -17,12 +6,10 @@
 #include <ElSLib.hpp>
 #include <ElCLib.hpp>
 
-//=================================================================================================
-
 void Extrema_GlobOptFuncCQuadric::value(double ct, double& F)
 {
   double u, v;
-  //
+
   gp_Pnt aCP = myC->Value(ct);
   switch (mySType)
   {
@@ -45,7 +32,7 @@ void Extrema_GlobOptFuncCQuadric::value(double ct, double& F)
       F = Precision::Infinite();
       return;
   }
-  //
+
   if (mySType != GeomAbs_Plane)
   {
     if (myUl > 2. * M_PI + Precision::PConfusion())
@@ -74,16 +61,12 @@ void Extrema_GlobOptFuncCQuadric::value(double ct, double& F)
   }
 }
 
-//=================================================================================================
-
 bool Extrema_GlobOptFuncCQuadric::checkInputData(const math_Vector& X, double& ct)
 {
   ct = X(X.Lower());
 
   return ct >= myTf && ct <= myTl;
 }
-
-//=================================================================================================
 
 Extrema_GlobOptFuncCQuadric::Extrema_GlobOptFuncCQuadric(const Adaptor3d_Curve*   C,
                                                          const Adaptor3d_Surface* S)
@@ -96,16 +79,12 @@ Extrema_GlobOptFuncCQuadric::Extrema_GlobOptFuncCQuadric(const Adaptor3d_Curve* 
   LoadQuad(S, anUf, anUl, aVf, aVl);
 }
 
-//=================================================================================================
-
 Extrema_GlobOptFuncCQuadric::Extrema_GlobOptFuncCQuadric(const Adaptor3d_Curve* C)
     : myC(C)
 {
   myTf = myC->FirstParameter();
   myTl = myC->LastParameter();
 }
-
-//=================================================================================================
 
 Extrema_GlobOptFuncCQuadric::Extrema_GlobOptFuncCQuadric(const Adaptor3d_Curve* C,
                                                          const double           theTf,
@@ -115,8 +94,6 @@ Extrema_GlobOptFuncCQuadric::Extrema_GlobOptFuncCQuadric(const Adaptor3d_Curve* 
       myTl(theTl)
 {
 }
-
-//=================================================================================================
 
 void Extrema_GlobOptFuncCQuadric::LoadQuad(const Adaptor3d_Surface* S,
                                            const double             theUf,
@@ -129,7 +106,7 @@ void Extrema_GlobOptFuncCQuadric::LoadQuad(const Adaptor3d_Surface* S,
   myUl = theUl;
   myVf = theVf;
   myVl = theVl;
-  //
+
   if (myS->IsUPeriodic())
   {
     constexpr double aTMax = 2. * M_PI + Precision::PConfusion();
@@ -181,14 +158,10 @@ void Extrema_GlobOptFuncCQuadric::LoadQuad(const Adaptor3d_Surface* S,
   }
 }
 
-//=================================================================================================
-
 int Extrema_GlobOptFuncCQuadric::NbVariables() const
 {
   return 1;
 }
-
-//=================================================================================================
 
 bool Extrema_GlobOptFuncCQuadric::Value(const math_Vector& X, double& F)
 {
@@ -200,15 +173,11 @@ bool Extrema_GlobOptFuncCQuadric::Value(const math_Vector& X, double& F)
   return !Precision::IsInfinite(F);
 }
 
-//=================================================================================================
-
 void Extrema_GlobOptFuncCQuadric::QuadricParameters(const math_Vector& theCT,
                                                     math_Vector&       theUV) const
 {
   double u, v;
-  //
-  // Arrays of extremity points parameters correspond to array of corner
-  // points  myPTrim[]
+
   double uext[4] = {myUf, myUl, myUl, myUf};
   double vext[4] = {myVf, myVf, myVl, myVl};
   gp_Pnt aCP     = myC->Value(theCT(1));
@@ -234,7 +203,7 @@ void Extrema_GlobOptFuncCQuadric::QuadricParameters(const math_Vector& theCT,
       theUV(2) = myUl;
       return;
   }
-  //
+
   if (mySType != GeomAbs_Plane)
   {
     if (myUl > 2. * M_PI + Precision::PConfusion())

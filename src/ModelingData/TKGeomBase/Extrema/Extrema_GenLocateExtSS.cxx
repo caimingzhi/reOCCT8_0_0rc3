@@ -7,15 +7,11 @@
 #include <math_Vector.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 Extrema_GenLocateExtSS::Extrema_GenLocateExtSS()
     : myDone(false),
       mySqDist(RealLast())
 {
 }
-
-//=================================================================================================
 
 Extrema_GenLocateExtSS::Extrema_GenLocateExtSS(const Adaptor3d_Surface& S1,
                                                const Adaptor3d_Surface& S2,
@@ -28,8 +24,6 @@ Extrema_GenLocateExtSS::Extrema_GenLocateExtSS(const Adaptor3d_Surface& S1,
 {
   Perform(S1, S2, U1, V1, U2, V2, Tol1, Tol2);
 }
-
-//=================================================================================================
 
 void Extrema_GenLocateExtSS::Perform(const Adaptor3d_Surface& S1,
                                      const Adaptor3d_Surface& S2,
@@ -87,14 +81,10 @@ void Extrema_GenLocateExtSS::Perform(const Adaptor3d_Surface& S1,
   myDone   = true;
 }
 
-//=================================================================================================
-
 bool Extrema_GenLocateExtSS::IsDone() const
 {
   return myDone;
 }
-
-//=================================================================================================
 
 double Extrema_GenLocateExtSS::SquareDistance() const
 {
@@ -105,8 +95,6 @@ double Extrema_GenLocateExtSS::SquareDistance() const
   return mySqDist;
 }
 
-//=================================================================================================
-
 const Extrema_POnSurf& Extrema_GenLocateExtSS::PointOnS1() const
 {
   if (!IsDone())
@@ -115,8 +103,6 @@ const Extrema_POnSurf& Extrema_GenLocateExtSS::PointOnS1() const
   }
   return myPoint1;
 }
-
-//=================================================================================================
 
 const Extrema_POnSurf& Extrema_GenLocateExtSS::PointOnS2() const
 {

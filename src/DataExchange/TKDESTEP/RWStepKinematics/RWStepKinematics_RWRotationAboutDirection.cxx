@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:14 2020
+
 
 #include "RWStepKinematics_RWRotationAboutDirection.hpp"
 
@@ -10,11 +10,7 @@
 #include <StepGeom_Direction.hpp>
 #include <Standard_Real.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWRotationAboutDirection::RWStepKinematics_RWRotationAboutDirection() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWRotationAboutDirection::ReadStep(
   const occ::handle<StepData_StepReaderData>&               theData,
@@ -22,16 +18,12 @@ void RWStepKinematics_RWRotationAboutDirection::ReadStep(
   occ::handle<Interface_Check>&                             theArch,
   const occ::handle<StepKinematics_RotationAboutDirection>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 3, theArch, "rotation_about_direction"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
-
-  // Own fields of RotationAboutDirection
 
   occ::handle<StepGeom_Direction> aDirectionOfAxis;
   theData->ReadEntity(theNum,
@@ -44,38 +36,25 @@ void RWStepKinematics_RWRotationAboutDirection::ReadStep(
   double aRotationAngle;
   theData->ReadReal(theNum, 3, "rotation_angle", theArch, aRotationAngle);
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name, aDirectionOfAxis, aRotationAngle);
 }
-
-//=================================================================================================
 
 void RWStepKinematics_RWRotationAboutDirection::WriteStep(
   StepData_StepWriter&                                      theSW,
   const occ::handle<StepKinematics_RotationAboutDirection>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Own fields of RotationAboutDirection
 
   theSW.Send(theEnt->DirectionOfAxis());
 
   theSW.Send(theEnt->RotationAngle());
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWRotationAboutDirection::Share(
   const occ::handle<StepKinematics_RotationAboutDirection>& theEnt,
   Interface_EntityIterator&                                 iter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Own fields of RotationAboutDirection
 
   iter.AddItem(theEnt->DirectionOfAxis());
 }

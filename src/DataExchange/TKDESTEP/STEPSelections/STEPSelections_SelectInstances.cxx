@@ -117,7 +117,7 @@ static void AddInstances(const occ::handle<Standard_Transient>& start,
         DeclareAndCast(StepShape_ShapeDefinitionRepresentation, SDR, subs.Value());
         AddInstances(SDR, graph, explored);
       }
-    //???
+
     return;
   }
 

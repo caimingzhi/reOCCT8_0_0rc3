@@ -8,11 +8,9 @@
 class StepRepr_RepresentationItem;
 class StepKinematics_ActuatedKinematicPair;
 
-//! Representation of STEP entity ActuatedKinPairAndOrderKinPair
 class StepKinematics_ActuatedKinPairAndOrderKinPair : public StepKinematics_KinematicPair
 {
 public:
-  //! default constructor
   Standard_EXPORT StepKinematics_ActuatedKinPairAndOrderKinPair();
 
   Standard_EXPORT void Init(

@@ -22,15 +22,11 @@ namespace
                                                               "MemHeapUsage"};
 }
 
-//=================================================================================================
-
 const occ::handle<Message_Messenger>& Message::DefaultMessenger()
 {
   static occ::handle<Message_Messenger> aMessenger = new Message_Messenger;
   return aMessenger;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString Message::FillTime(const int hour, const int minute, const double second)
 {
@@ -44,8 +40,6 @@ TCollection_AsciiString Message::FillTime(const int hour, const int minute, cons
   return TCollection_AsciiString(t);
 }
 
-//=================================================================================================
-
 const occ::handle<Message_Report>& Message::DefaultReport(const bool theToCreate)
 {
   static occ::handle<Message_Report> MyReport;
@@ -56,14 +50,10 @@ const occ::handle<Message_Report>& Message::DefaultReport(const bool theToCreate
   return MyReport;
 }
 
-//=================================================================================================
-
 const char* Message::MetricToString(const Message_MetricType theType)
 {
   return Message_Table_PrintMetricTypeEnum[theType];
 }
-
-//=================================================================================================
 
 bool Message::MetricFromString(const char* theString, Message_MetricType& theGravity)
 {
@@ -79,8 +69,6 @@ bool Message::MetricFromString(const char* theString, Message_MetricType& theGra
   }
   return false;
 }
-
-//=================================================================================================
 
 bool Message::ToOSDMetric(const Message_MetricType theMetric, OSD_MemInfo::Counter& theMemInfo)
 {
@@ -112,8 +100,6 @@ bool Message::ToOSDMetric(const Message_MetricType theMetric, OSD_MemInfo::Count
   }
   return true;
 }
-
-//=================================================================================================
 
 bool Message::ToMessageMetric(const OSD_MemInfo::Counter theMemInfo, Message_MetricType& theMetric)
 {

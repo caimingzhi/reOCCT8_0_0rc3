@@ -6,12 +6,8 @@
 #include <StepRepr_MaterialPropertyRepresentation.hpp>
 #include <StepRepr_Representation.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWMaterialPropertyRepresentation::RWStepRepr_RWMaterialPropertyRepresentation() =
   default;
-
-//=================================================================================================
 
 void RWStepRepr_RWMaterialPropertyRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&                 data,
@@ -19,11 +15,9 @@ void RWStepRepr_RWMaterialPropertyRepresentation::ReadStep(
   occ::handle<Interface_Check>&                               ach,
   const occ::handle<StepRepr_MaterialPropertyRepresentation>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "material_property_representation"))
     return;
-
-  // Inherited fields of PropertyDefinitionRepresentation
 
   StepRepr_RepresentedDefinition aPropertyDefinitionRepresentation_Definition;
   data->ReadEntity(num,
@@ -40,8 +34,6 @@ void RWStepRepr_RWMaterialPropertyRepresentation::ReadStep(
                    STANDARD_TYPE(StepRepr_Representation),
                    aPropertyDefinitionRepresentation_UsedRepresentation);
 
-  // Own fields of MaterialPropertyRepresentation
-
   occ::handle<StepRepr_DataEnvironment> aDependentEnvironment;
   data->ReadEntity(num,
                    3,
@@ -50,44 +42,31 @@ void RWStepRepr_RWMaterialPropertyRepresentation::ReadStep(
                    STANDARD_TYPE(StepRepr_DataEnvironment),
                    aDependentEnvironment);
 
-  // Initialize entity
   ent->Init(aPropertyDefinitionRepresentation_Definition,
             aPropertyDefinitionRepresentation_UsedRepresentation,
             aDependentEnvironment);
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWMaterialPropertyRepresentation::WriteStep(
   StepData_StepWriter&                                        SW,
   const occ::handle<StepRepr_MaterialPropertyRepresentation>& ent) const
 {
 
-  // Inherited fields of PropertyDefinitionRepresentation
-
   SW.Send(ent->StepRepr_PropertyDefinitionRepresentation::Definition().Value());
 
   SW.Send(ent->StepRepr_PropertyDefinitionRepresentation::UsedRepresentation());
 
-  // Own fields of MaterialPropertyRepresentation
-
   SW.Send(ent->DependentEnvironment());
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWMaterialPropertyRepresentation::Share(
   const occ::handle<StepRepr_MaterialPropertyRepresentation>& ent,
   Interface_EntityIterator&                                   iter) const
 {
 
-  // Inherited fields of PropertyDefinitionRepresentation
-
   iter.AddItem(ent->StepRepr_PropertyDefinitionRepresentation::Definition().Value());
 
   iter.AddItem(ent->StepRepr_PropertyDefinitionRepresentation::UsedRepresentation());
-
-  // Own fields of MaterialPropertyRepresentation
 
   iter.AddItem(ent->DependentEnvironment());
 }

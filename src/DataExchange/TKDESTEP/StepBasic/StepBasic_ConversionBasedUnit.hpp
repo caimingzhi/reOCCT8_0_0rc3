@@ -12,7 +12,6 @@ class StepBasic_ConversionBasedUnit : public StepBasic_NamedUnit
 {
 
 public:
-  //! Returns a ConversionBasedUnit
   Standard_EXPORT StepBasic_ConversionBasedUnit();
 
   Standard_EXPORT void Init(const occ::handle<StepBasic_DimensionalExponents>& aDimensions,

@@ -1,15 +1,4 @@
-// Copyright (c) 2017-2018 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDoc_NoteBinData.hpp>
 
@@ -19,15 +8,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDoc_NoteBinData, XCAFDoc_Note)
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_NoteBinData::GetID()
 {
   static Standard_GUID s_ID("E9055501-F0FC-4864-BE4B-284FDA7DDEAC");
   return s_ID;
 }
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_NoteBinData> XCAFDoc_NoteBinData::Get(const TDF_Label& theLabel)
 {
@@ -35,8 +20,6 @@ occ::handle<XCAFDoc_NoteBinData> XCAFDoc_NoteBinData::Get(const TDF_Label& theLa
   theLabel.FindAttribute(XCAFDoc_NoteBinData::GetID(), aThis);
   return aThis;
 }
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_NoteBinData> XCAFDoc_NoteBinData::Set(
   const TDF_Label&                  theLabel,
@@ -59,8 +42,6 @@ occ::handle<XCAFDoc_NoteBinData> XCAFDoc_NoteBinData::Set(
   return aNoteBinData;
 }
 
-//=================================================================================================
-
 occ::handle<XCAFDoc_NoteBinData> XCAFDoc_NoteBinData::Set(
   const TDF_Label&                                 theLabel,
   const TCollection_ExtendedString&                theUserName,
@@ -80,11 +61,7 @@ occ::handle<XCAFDoc_NoteBinData> XCAFDoc_NoteBinData::Set(
   return aNoteBinData;
 }
 
-//=================================================================================================
-
 XCAFDoc_NoteBinData::XCAFDoc_NoteBinData() = default;
-
-//=================================================================================================
 
 bool XCAFDoc_NoteBinData::Set(const TCollection_ExtendedString& theTitle,
                               const TCollection_AsciiString&    theMIMEtype,
@@ -110,8 +87,6 @@ bool XCAFDoc_NoteBinData::Set(const TCollection_ExtendedString& theTitle,
   return true;
 }
 
-//=================================================================================================
-
 void XCAFDoc_NoteBinData::Set(const TCollection_ExtendedString&                theTitle,
                               const TCollection_AsciiString&                   theMIMEtype,
                               const occ::handle<NCollection_HArray1<uint8_t>>& theData)
@@ -123,21 +98,15 @@ void XCAFDoc_NoteBinData::Set(const TCollection_ExtendedString&                t
   myMIMEtype = theMIMEtype;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_NoteBinData::ID() const
 {
   return GetID();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XCAFDoc_NoteBinData::NewEmpty() const
 {
   return new XCAFDoc_NoteBinData();
 }
-
-//=================================================================================================
 
 void XCAFDoc_NoteBinData::Restore(const occ::handle<TDF_Attribute>& theAttr)
 {
@@ -152,8 +121,6 @@ void XCAFDoc_NoteBinData::Restore(const occ::handle<TDF_Attribute>& theAttr)
   }
 }
 
-//=================================================================================================
-
 void XCAFDoc_NoteBinData::Paste(const occ::handle<TDF_Attribute>&       theAttrInto,
                                 const occ::handle<TDF_RelocationTable>& theRT) const
 {
@@ -163,8 +130,6 @@ void XCAFDoc_NoteBinData::Paste(const occ::handle<TDF_Attribute>&       theAttrI
   if (!aMine.IsNull())
     aMine->Set(myTitle, myMIMEtype, myData);
 }
-
-//=================================================================================================
 
 Standard_OStream& XCAFDoc_NoteBinData::Dump(Standard_OStream& theOS) const
 {

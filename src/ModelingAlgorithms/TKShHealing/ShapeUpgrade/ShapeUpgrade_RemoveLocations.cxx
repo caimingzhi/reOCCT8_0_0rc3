@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRep_Builder.hpp>
 #include <BRep_TEdge.hpp>
@@ -34,15 +23,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_RemoveLocations, Standard_Transient)
 
-// #include <ShapeUpgrade_DataMapOfShapeListOfTransient.hxx>
-//=================================================================================================
-
 ShapeUpgrade_RemoveLocations::ShapeUpgrade_RemoveLocations()
 {
   myLevelRemoving = TopAbs_SHAPE;
 }
-
-//=================================================================================================
 
 bool ShapeUpgrade_RemoveLocations::Remove(const TopoDS_Shape& theShape)
 {
@@ -56,8 +40,6 @@ bool ShapeUpgrade_RemoveLocations::Remove(const TopoDS_Shape& theShape)
 
   return isDone;
 }
-
-//=================================================================================================
 
 static bool RebuildShape(const TopoDS_Face& theFace, TopoDS_Face& theNewFace)
 {
@@ -74,8 +56,6 @@ static bool RebuildShape(const TopoDS_Face& theFace, TopoDS_Face& theNewFace)
   }
   return isRebuild;
 }
-
-//=================================================================================================
 
 static bool RebuildShape(const TopoDS_Edge& theEdge,
                          TopoDS_Edge&       theNewEdge,
@@ -145,8 +125,6 @@ static bool RebuildShape(const TopoDS_Edge& theEdge,
   return isRebuild;
 }
 
-//=================================================================================================
-
 static bool RebuildShape(const TopoDS_Vertex& theVertex, TopoDS_Vertex& theNewVertex)
 {
   BRep_Builder aB;
@@ -156,8 +134,6 @@ static bool RebuildShape(const TopoDS_Vertex& theVertex, TopoDS_Vertex& theNewVe
   aB.UpdateVertex(theNewVertex, p1, BRep_Tool::Tolerance(theVertex));
   return true;
 }
-
-//=================================================================================================
 
 bool ShapeUpgrade_RemoveLocations::MakeNewShape(const TopoDS_Shape& theShape,
                                                 const TopoDS_Shape& theAncShape,
@@ -206,7 +182,6 @@ bool ShapeUpgrade_RemoveLocations::MakeNewShape(const TopoDS_Shape& theShape,
       && (!aShape.Location().IsIdentity() || shtype == TopAbs_EDGE || shtype == TopAbs_FACE))
   {
 
-    // Rebuild geometry for shape with location.
     if (shtype == TopAbs_FACE)
     {
       TopoDS_Face anewFace;
@@ -247,14 +222,12 @@ bool ShapeUpgrade_RemoveLocations::MakeNewShape(const TopoDS_Shape& theShape,
   }
   isDone = aRebuild;
 
-  // Removing location from sub-shapes in dependence of LevelRemoving and re-building shape.
-
   if (!isBound)
   {
     if (!aRebuild)
     {
       aNewShape = theShape.EmptyCopied();
-      // it is safe to simply copy Closed flag since this operation does not change topology
+
       aNewShape.Closed(theShape.Closed());
     }
     TopLoc_Location oldLoc, nullloc;

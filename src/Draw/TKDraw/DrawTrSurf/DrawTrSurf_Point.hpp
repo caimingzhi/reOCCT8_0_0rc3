@@ -6,7 +6,6 @@
 #include <Draw_Drawable3D.hpp>
 #include <Draw_Interpretor.hpp>
 
-//! A drawable point.
 class DrawTrSurf_Point : public Draw_Drawable3D
 {
   DEFINE_STANDARD_RTTIEXT(DrawTrSurf_Point, Draw_Drawable3D)
@@ -22,7 +21,6 @@ public:
 
   Standard_EXPORT void DrawOn(Draw_Display& dis) const override;
 
-  //! Is a 3D object. (Default True).
   Standard_EXPORT bool Is3D() const override;
 
   gp_Pnt Point() const { return myPoint; }
@@ -41,16 +39,12 @@ public:
 
   Draw_MarkerShape Shape() const { return myShape; }
 
-  //! For variable copy.
   Standard_EXPORT occ::handle<Draw_Drawable3D> Copy() const override;
 
-  //! For variable dump.
   Standard_EXPORT void Dump(Standard_OStream& S) const override;
 
-  //! Save drawable into stream.
   Standard_EXPORT void Save(Standard_OStream& theStream) const override;
 
-  //! For variable whatis command.
   Standard_EXPORT void Whatis(Draw_Interpretor& I) const override;
 
 private:

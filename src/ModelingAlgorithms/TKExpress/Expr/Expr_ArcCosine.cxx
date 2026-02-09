@@ -65,14 +65,12 @@ occ::handle<Expr_GeneralExpression> Expr_ArcCosine::Derivative(
   occ::handle<Expr_GeneralExpression> derop = op->Derivative(X);
 
   occ::handle<Expr_Square> sq = new Expr_Square(Expr::CopyShare(op));
-  // 1 - X2
+
   occ::handle<Expr_Difference> thedif = 1.0 - sq->ShallowSimplified();
 
   occ::handle<Expr_SquareRoot> theroot = new Expr_SquareRoot(thedif->ShallowSimplified());
-  // 1/ sqrt(1-X2)
-  occ::handle<Expr_UnaryMinus> theder = -(1.0 / theroot->ShallowSimplified());
 
-  // ArcCosine'(F(X)) = -1/sqrt(1-F(X)2) * F'(X)
+  occ::handle<Expr_UnaryMinus> theder = -(1.0 / theroot->ShallowSimplified());
 
   occ::handle<Expr_Product> result = theder->ShallowSimplified() * derop;
 

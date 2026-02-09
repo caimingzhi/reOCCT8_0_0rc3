@@ -31,7 +31,6 @@
 #define LINE3D_GUID Standard_GUID("12e9455e-6dbc-11d4-b9c8-0060b0ee281b")
 #define WIRE_GUID Standard_GUID("12e9455f-6dbc-11d4-b9c8-0060b0ee281b")
 
-// Function structure definitions
 #define FUNCTION_ARGUMENTS_LABEL 1
 #define FUNCTION_RESULT_LABEL 2
 #define POSITION(Function, theA)                                                                   \

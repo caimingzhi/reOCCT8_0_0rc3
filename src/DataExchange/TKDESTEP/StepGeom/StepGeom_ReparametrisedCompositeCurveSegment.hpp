@@ -11,7 +11,6 @@ class StepGeom_ReparametrisedCompositeCurveSegment : public StepGeom_CompositeCu
 {
 
 public:
-  //! Returns a ReparametrisedCompositeCurveSegment
   Standard_EXPORT StepGeom_ReparametrisedCompositeCurveSegment();
 
   Standard_EXPORT void Init(const StepGeom_TransitionCode      aTransition,

@@ -1,14 +1,10 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_PointOnSurfacePairValue.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_PointOnSurfacePairValue, StepKinematics_PairValue)
 
-//=================================================================================================
-
 StepKinematics_PointOnSurfacePairValue::StepKinematics_PointOnSurfacePairValue() = default;
-
-//=================================================================================================
 
 void StepKinematics_PointOnSurfacePairValue::Init(
   const occ::handle<TCollection_HAsciiString>&     theRepresentationItem_Name,
@@ -23,15 +19,11 @@ void StepKinematics_PointOnSurfacePairValue::Init(
   myInputOrientation = theInputOrientation;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_PointOnSurface> StepKinematics_PointOnSurfacePairValue::ActualPointOnSurface()
   const
 {
   return myActualPointOnSurface;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnSurfacePairValue::SetActualPointOnSurface(
   const occ::handle<StepGeom_PointOnSurface>& theActualPointOnSurface)
@@ -39,14 +31,10 @@ void StepKinematics_PointOnSurfacePairValue::SetActualPointOnSurface(
   myActualPointOnSurface = theActualPointOnSurface;
 }
 
-//=================================================================================================
-
 StepKinematics_SpatialRotation StepKinematics_PointOnSurfacePairValue::InputOrientation() const
 {
   return myInputOrientation;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnSurfacePairValue::SetInputOrientation(
   const StepKinematics_SpatialRotation& theInputOrientation)

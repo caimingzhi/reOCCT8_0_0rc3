@@ -11,18 +11,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_ReferenceArray, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_ReferenceArray::GetID()
 {
   static Standard_GUID TDataStd_ReferenceArrayID("7EE745A6-BB50-446c-BB0B-C195B23AB5CA");
   return TDataStd_ReferenceArrayID;
 }
 
-//=======================================================================
-// function : SetAttr
-// purpose  : Implements Set functionality
-//=======================================================================
 static occ::handle<TDataStd_ReferenceArray> SetAttr(const TDF_Label&     label,
                                                     const int            lower,
                                                     const int            upper,
@@ -43,14 +37,10 @@ static occ::handle<TDataStd_ReferenceArray> SetAttr(const TDF_Label&     label,
   return A;
 }
 
-//=================================================================================================
-
 TDataStd_ReferenceArray::TDataStd_ReferenceArray()
     : myID(GetID())
 {
 }
-
-//=================================================================================================
 
 void TDataStd_ReferenceArray::Init(const int lower, const int upper)
 {
@@ -59,8 +49,6 @@ void TDataStd_ReferenceArray::Init(const int lower, const int upper)
   myArray = new NCollection_HArray1<TDF_Label>(lower, upper);
 }
 
-//=================================================================================================
-
 occ::handle<TDataStd_ReferenceArray> TDataStd_ReferenceArray::Set(const TDF_Label& label,
                                                                   const int        lower,
                                                                   const int        upper)
@@ -68,10 +56,6 @@ occ::handle<TDataStd_ReferenceArray> TDataStd_ReferenceArray::Set(const TDF_Labe
   return SetAttr(label, lower, upper, GetID());
 }
 
-//=======================================================================
-// function : Set
-// purpose  : Set user defined attribute with specific ID
-//=======================================================================
 occ::handle<TDataStd_ReferenceArray> TDataStd_ReferenceArray::Set(const TDF_Label&     label,
                                                                   const Standard_GUID& theGuid,
                                                                   const int            lower,
@@ -79,8 +63,6 @@ occ::handle<TDataStd_ReferenceArray> TDataStd_ReferenceArray::Set(const TDF_Labe
 {
   return SetAttr(label, lower, upper, theGuid);
 }
-
-//=================================================================================================
 
 void TDataStd_ReferenceArray::SetValue(const int index, const TDF_Label& value)
 {
@@ -93,14 +75,10 @@ void TDataStd_ReferenceArray::SetValue(const int index, const TDF_Label& value)
   myArray->SetValue(index, value);
 }
 
-//=================================================================================================
-
 TDF_Label TDataStd_ReferenceArray::Value(const int index) const
 {
   return myArray->Value(index);
 }
-
-//=================================================================================================
 
 int TDataStd_ReferenceArray::Lower() const
 {
@@ -109,16 +87,12 @@ int TDataStd_ReferenceArray::Lower() const
   return myArray->Lower();
 }
 
-//=================================================================================================
-
 int TDataStd_ReferenceArray::Upper() const
 {
   if (myArray.IsNull())
     return -1;
   return myArray->Upper();
 }
-
-//=================================================================================================
 
 int TDataStd_ReferenceArray::Length() const
 {
@@ -127,20 +101,16 @@ int TDataStd_ReferenceArray::Length() const
   return myArray->Length();
 }
 
-//=================================================================================================
-
 const occ::handle<NCollection_HArray1<TDF_Label>>& TDataStd_ReferenceArray::InternalArray() const
 {
   return myArray;
 }
 
-//=================================================================================================
-
 void TDataStd_ReferenceArray::SetInternalArray(
   const occ::handle<NCollection_HArray1<TDF_Label>>& values,
   const bool)
 {
-  //  myArray = values;
+
   int  aLower    = values->Lower();
   int  anUpper   = values->Upper();
   bool aDimEqual = false;
@@ -176,14 +146,10 @@ void TDataStd_ReferenceArray::SetInternalArray(
     myArray->SetValue(i, values->Value(i));
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_ReferenceArray::ID() const
 {
   return myID;
 }
-
-//=================================================================================================
 
 void TDataStd_ReferenceArray::SetID(const Standard_GUID& theGuid)
 {
@@ -193,22 +159,16 @@ void TDataStd_ReferenceArray::SetID(const Standard_GUID& theGuid)
   myID = theGuid;
 }
 
-//=================================================================================================
-
 void TDataStd_ReferenceArray::SetID()
 {
   Backup();
   myID = GetID();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDataStd_ReferenceArray::NewEmpty() const
 {
   return new TDataStd_ReferenceArray();
 }
-
-//=================================================================================================
 
 void TDataStd_ReferenceArray::Restore(const occ::handle<TDF_Attribute>& With)
 {
@@ -229,8 +189,6 @@ void TDataStd_ReferenceArray::Restore(const occ::handle<TDF_Attribute>& With)
     myArray.Nullify();
   }
 }
-
-//=================================================================================================
 
 void TDataStd_ReferenceArray::Paste(const occ::handle<TDF_Attribute>&       Into,
                                     const occ::handle<TDF_RelocationTable>& RT) const
@@ -258,10 +216,6 @@ void TDataStd_ReferenceArray::Paste(const occ::handle<TDF_Attribute>&       Into
   anArray->SetID(myID);
 }
 
-//=======================================================================
-// function : References
-// purpose  : Adds the referenced attributes or labels.
-//=======================================================================
 void TDataStd_ReferenceArray::References(const occ::handle<TDF_DataSet>& aDataSet) const
 {
   if (!Label().IsImported() && !myArray.IsNull())
@@ -276,8 +230,6 @@ void TDataStd_ReferenceArray::References(const occ::handle<TDF_DataSet>& aDataSe
   }
 }
 
-//=================================================================================================
-
 Standard_OStream& TDataStd_ReferenceArray::Dump(Standard_OStream& anOS) const
 {
   anOS << "\nReferenceArray: ";
@@ -286,8 +238,6 @@ Standard_OStream& TDataStd_ReferenceArray::Dump(Standard_OStream& anOS) const
   anOS << sguid << std::endl;
   return anOS;
 }
-
-//=================================================================================================
 
 void TDataStd_ReferenceArray::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

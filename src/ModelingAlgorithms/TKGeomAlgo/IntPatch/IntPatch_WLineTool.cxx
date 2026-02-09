@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IntPatch_WLineTool.hpp>
 
@@ -22,12 +11,8 @@
 #include <NCollection_IncAllocator.hpp>
 #include <TopAbs_State.hpp>
 
-// It is pure empirical value.
 const double IntPatch_WLineTool::myMaxConcatAngle = M_PI / 6;
 
-// Bit-mask is used for information about
-// the operation made in
-// IntPatch_WLineTool::ExtendTwoWLines(...) method.
 enum
 {
   IntPatchWT_EnAll         = 0x00,
@@ -45,13 +30,6 @@ enum IntPatchWT_WLsConnectionType
   IntPatchWT_ReqExtend
 };
 
-//=======================================================================
-// function : MinMax
-// purpose  : Replaces theParMIN = MIN(theParMIN, theParMAX),
-//                    theParMAX = MAX(theParMIN, theParMAX).
-//
-//           Static subfunction in IsSeamOrBound.
-//=======================================================================
 static inline void MinMax(double& theParMIN, double& theParMAX)
 {
   if (theParMIN > theParMAX)
@@ -62,17 +40,10 @@ static inline void MinMax(double& theParMIN, double& theParMAX)
   }
 }
 
-//=========================================================================
-// function : FillPointsHash
-// purpose  : Fill points hash by input data.
-//            Static subfunction in ComputePurgedWLine.
-//=========================================================================
 static void FillPointsHash(const occ::handle<IntPatch_WLine>& theWLine,
                            NCollection_Array1<int>&           thePointsHash)
 {
-  // 1 - Delete point.
-  // 0 - Store point.
-  // -1 - Vertex point (not delete).
+
   int i, v;
 
   for (i = 1; i <= theWLine->NbPnts(); i++)
@@ -86,11 +57,6 @@ static void FillPointsHash(const occ::handle<IntPatch_WLine>& theWLine,
   }
 }
 
-//=========================================================================
-// function : MakeNewWLine
-// purpose  : Makes new walking line according to the points hash
-//            Static subfunction in ComputePurgedWLine and DeleteOuter.
-//=========================================================================
 static occ::handle<IntPatch_WLine> MakeNewWLine(const occ::handle<IntPatch_WLine>& theWLine,
                                                 NCollection_Array1<int>&           thePointsHash,
                                                 const bool                         theIsOuter)
@@ -106,7 +72,6 @@ static occ::handle<IntPatch_WLine> MakeNewWLine(const occ::handle<IntPatch_WLine
   {
     if (thePointsHash(i) == 0)
     {
-      // Point has to be added
 
       const gp_Pnt aP          = theWLine->Point(i).Value();
       const double aSqDistPrev = aPPrev.SquareDistance(aPOld);
@@ -117,10 +82,7 @@ static occ::handle<IntPatch_WLine> MakeNewWLine(const occ::handle<IntPatch_WLine
       if (theIsOuter || (aRatio < gp::Resolution()) || ((1.0 < aRatio) && (aRatio < 81.0))
           || (i - anIndexPrev <= 1) || (i - anIdxOld <= 1))
       {
-        // difference in distances is satisfactory
-        // (1/9 < aSqDist/aSqDistPrev < 9)
 
-        // Store this point.
         aPurgedLineOn2S->Add(theWLine->Point(i));
         anOldLineIdx++;
         aPOld       = aPPrev;
@@ -130,8 +92,6 @@ static occ::handle<IntPatch_WLine> MakeNewWLine(const occ::handle<IntPatch_WLine
       }
       else if (aSqDist >= aSqDistPrev * 9.0)
       {
-        // current segment is much more longer
-        // (aSqDist/aSqDistPrev >= 9)
 
         i                = (i + anIndexPrev) / 2;
         thePointsHash(i) = 0;
@@ -139,16 +99,13 @@ static occ::handle<IntPatch_WLine> MakeNewWLine(const occ::handle<IntPatch_WLine
       }
       else
       {
-        // previous segment is much more longer
-        //(aSqDist/aSqDistPrev <= 1/9)
 
         if (anIndexPrev - anIdxOld > 1)
         {
-          // Delete aPPrev from WL
+
           aPurgedLineOn2S->RemovePoint(aPurgedLineOn2S->NbPoints());
           anOldLineIdx--;
 
-          // Insert point between aPOld and aPPrev
           i                = (anIdxOld + anIndexPrev) / 2;
           thePointsHash(i) = 0;
 
@@ -161,13 +118,12 @@ static occ::handle<IntPatch_WLine> MakeNewWLine(const occ::handle<IntPatch_WLine
           anIdxOld = anIndexPrev;
         }
 
-        // Next iterations will start from this inserted point.
         i--;
       }
     }
     else if (thePointsHash(i) == -1)
     {
-      // Add vertex.
+
       IntPatch_Point aVertex = theWLine->Vertex(aVertexIdx++);
       aVertex.SetParameter(anOldLineIdx++);
       aLocalWLine->AddVertex(aVertex);
@@ -175,19 +131,11 @@ static occ::handle<IntPatch_WLine> MakeNewWLine(const occ::handle<IntPatch_WLine
       aPPrev = aPOld = theWLine->Point(i).Value();
       anIndexPrev = anIdxOld = i;
     }
-
-    // Other points will be rejected by purger.
   }
 
   return aLocalWLine;
 }
 
-//=========================================================================
-// function : MovePoint
-// purpose  : Move point into surface param space. No interpolation used
-//            because walking algorithm should care for closeness to the param space.
-//            Static subfunction in ComputePurgedWLine.
-//=========================================================================
 static void MovePoint(const occ::handle<Adaptor3d_Surface>& theS1, double& U1, double& V1)
 {
   if (U1 < theS1->FirstUParameter())
@@ -203,11 +151,6 @@ static void MovePoint(const occ::handle<Adaptor3d_Surface>& theS1, double& U1, d
     V1 = theS1->LastVParameter();
 }
 
-//=========================================================================
-// function : DeleteOuterPoints
-// purpose  : Check and delete out of bounds points on walking line.
-//            Static subfunction in ComputePurgedWLine.
-//=========================================================================
 static occ::handle<IntPatch_WLine> DeleteOuterPoints(
   const occ::handle<IntPatch_WLine>&      theWLine,
   const occ::handle<Adaptor3d_Surface>&   theS1,
@@ -226,8 +169,6 @@ static occ::handle<IntPatch_WLine> DeleteOuterPoints(
   gp_Pnt2d aPntOnF1, aPntOnF2;
   double   aX1, aY1, aX2, aY2;
 
-  // Iterate over points in walking line and delete which are out of bounds.
-  // Forward.
   bool isAllDeleted  = true;
   bool aChangedFirst = false;
   int  aFirstGeomIdx = 1;
@@ -251,7 +192,7 @@ static occ::handle<IntPatch_WLine> DeleteOuterPoints(
 
       aFirstGeomIdx = std::max(i - 1, 1);
       if (aDelOuterPointsHash(i) == -1)
-        aFirstGeomIdx = i; // Use data what lies in (i) point / vertex.
+        aFirstGeomIdx = i;
 
       aDelOuterPointsHash(i) = -1;
       break;
@@ -260,12 +201,10 @@ static occ::handle<IntPatch_WLine> DeleteOuterPoints(
 
   if (isAllDeleted)
   {
-    // ALL points are out of bounds:
-    // case boolean bcut_complex F5 and similar.
+
     return theWLine;
   }
 
-  // Backward.
   bool aChangedLast = false;
   int  aLastGeomIdx = theWLine->NbPnts();
   for (i = theWLine->NbPnts(); i >= 1; i--)
@@ -280,13 +219,13 @@ static occ::handle<IntPatch_WLine> DeleteOuterPoints(
     if (aState1 == TopAbs_OUT || aState2 == TopAbs_OUT)
     {
       aDelOuterPointsHash(i) = 1;
-      aChangedLast           = true; // Move vertex to first good point
+      aChangedLast           = true;
     }
     else
     {
       aLastGeomIdx = std::min(i + 1, theWLine->NbPnts());
       if (aDelOuterPointsHash(i) == -1)
-        aLastGeomIdx = i; // Use data what lies in (i) point / vertex.
+        aLastGeomIdx = i;
 
       aDelOuterPointsHash(i) = -1;
       break;
@@ -295,16 +234,15 @@ static occ::handle<IntPatch_WLine> DeleteOuterPoints(
 
   if (!aChangedFirst && !aChangedLast)
   {
-    // Nothing is done, return input.
+
     return theWLine;
   }
 
-  // Build new line and modify geometry of necessary vertices.
   occ::handle<IntPatch_WLine> aLocalWLine = MakeNewWLine(theWLine, aDelOuterPointsHash, true);
 
   if (aChangedFirst)
   {
-    // Vertex geometry.
+
     IntPatch_Point aVertex = aLocalWLine->Vertex(1);
     aVertex.SetValue(theWLine->Point(aFirstGeomIdx).Value());
     double aU1, aU2, aV1, aV2;
@@ -313,13 +251,13 @@ static occ::handle<IntPatch_WLine> DeleteOuterPoints(
     MovePoint(theS2, aU2, aV2);
     aVertex.SetParameters(aU1, aV1, aU2, aV2);
     aLocalWLine->Replace(1, aVertex);
-    // Change point in walking line.
+
     aLocalWLine->SetPoint(1, aVertex);
   }
 
   if (aChangedLast)
   {
-    // Vertex geometry.
+
     IntPatch_Point aVertex = aLocalWLine->Vertex(aLocalWLine->NbVertex());
     aVertex.SetValue(theWLine->Point(aLastGeomIdx).Value());
     double aU1, aU2, aV1, aV2;
@@ -328,18 +266,13 @@ static occ::handle<IntPatch_WLine> DeleteOuterPoints(
     MovePoint(theS2, aU2, aV2);
     aVertex.SetParameters(aU1, aV1, aU2, aV2);
     aLocalWLine->Replace(aLocalWLine->NbVertex(), aVertex);
-    // Change point in walking line.
+
     aLocalWLine->SetPoint(aLocalWLine->NbPnts(), aVertex);
   }
 
   return aLocalWLine;
 }
 
-//=========================================================================
-// function : IsInsideIn2d
-// purpose  : Check if aNextPnt lies inside of tube build on aBasePnt and aBaseVec.
-//            In 2d space. Static subfunction in DeleteByTube.
-//=========================================================================
 static bool IsInsideIn2d(const gp_Pnt2d& aBasePnt,
                          const gp_Vec2d& aBaseVec,
                          const gp_Pnt2d& aNextPnt,
@@ -347,18 +280,12 @@ static bool IsInsideIn2d(const gp_Pnt2d& aBasePnt,
 {
   gp_Vec2d aVec2d(aBasePnt, aNextPnt);
 
-  // d*d = (basevec^(nextpnt-basepnt))**2 / basevec**2
   double aCross      = aVec2d.Crossed(aBaseVec);
   double aSquareDist = aCross * aCross / aBaseVec.SquareMagnitude();
 
   return (aSquareDist <= aSquareMaxDist);
 }
 
-//=========================================================================
-// function : IsInsideIn3d
-// purpose  : Check if aNextPnt lies inside of tube build on aBasePnt and aBaseVec.
-//            In 3d space. Static subfunction in DeleteByTube.
-//=========================================================================
 static bool IsInsideIn3d(const gp_Pnt& aBasePnt,
                          const gp_Vec& aBaseVec,
                          const gp_Pnt& aNextPnt,
@@ -366,7 +293,6 @@ static bool IsInsideIn3d(const gp_Pnt& aBasePnt,
 {
   gp_Vec aVec(aBasePnt, aNextPnt);
 
-  // d*d = (basevec^(nextpnt-basepnt))**2 / basevec**2
   double aSquareDist = aVec.CrossSquareMagnitude(aBaseVec) / aBaseVec.SquareMagnitude();
 
   return (aSquareDist <= aSquareMaxDist);
@@ -375,11 +301,6 @@ static bool IsInsideIn3d(const gp_Pnt& aBasePnt,
 static const int aMinNbBadDistr  = 15;
 static const int aNbSingleBezier = 30;
 
-//=========================================================================
-// function : IsSurfPlaneLike
-// purpose  : Define is surface plane like or not.
-//            Static subfunction in DeleteByTube.
-//=========================================================================
 static bool IsSurfPlaneLike(const occ::handle<Adaptor3d_Surface>& theS)
 {
   if (theS->GetType() == GeomAbs_Plane)
@@ -398,19 +319,11 @@ static bool IsSurfPlaneLike(const occ::handle<Adaptor3d_Surface>& theS)
   return false;
 }
 
-//=========================================================================
-// function : DeleteByTube
-// purpose  : Check and delete points using tube criteria.
-//            Static subfunction in ComputePurgedWLine.
-//=========================================================================
-
 static occ::handle<IntPatch_WLine> DeleteByTube(const occ::handle<IntPatch_WLine>&    theWLine,
                                                 const occ::handle<Adaptor3d_Surface>& theS1,
                                                 const occ::handle<Adaptor3d_Surface>& theS2)
 {
-  // III: Check points for tube criteria:
-  // Workaround to handle case of small amount points after purge.
-  // Test "boolean boptuc_complex B5" and similar.
+
   int aNbPnt = 0, i;
 
   if (theWLine->NbPnts() <= 2)
@@ -419,7 +332,6 @@ static occ::handle<IntPatch_WLine> DeleteByTube(const occ::handle<IntPatch_WLine
   NCollection_Array1<int> aNewPointsHash(1, theWLine->NbPnts());
   FillPointsHash(theWLine, aNewPointsHash);
 
-  // Initial computations.
   double UonS1[3], VonS1[3], UonS2[3], VonS2[3];
   theWLine->Point(1).ParametersOnS1(UonS1[0], VonS1[0]);
   theWLine->Point(2).ParametersOnS1(UonS1[1], VonS1[1]);
@@ -434,7 +346,6 @@ static occ::handle<IntPatch_WLine> DeleteByTube(const occ::handle<IntPatch_WLine
   gp_Vec   aBase3dVec(theWLine->Point(1).Value(), theWLine->Point(2).Value());
   double   aPrevStep = aBase3dVec.SquareMagnitude();
 
-  // Choose base tolerance and scale it to pipe algorithm.
   constexpr double aBaseTolerance = Precision::Approximation();
   double           aResS1Tol =
     std::min(theS1->UResolution(aBaseTolerance), theS1->VResolution(aBaseTolerance));
@@ -461,12 +372,7 @@ static occ::handle<IntPatch_WLine> DeleteByTube(const occ::handle<IntPatch_WLine
         && IsInsideIn2d(aBase2dPnt2, aBase2dVec2, aPnt2dOnS2, aTol2)
         && IsInsideIn3d(aBase3dPnt, aBase3dVec, aPnt3d, aTol3d))
     {
-      // Handle possible uneven parametrization on one of 2d subspaces.
-      // Delete point only when expected lengths are close to each other (aLimitCoeff).
-      // Example:
-      // c2d1 - line
-      // c3d - line
-      // c2d2 - geometrically line, but have uneven parametrization -> c2d2 is bspline.
+
       gp_XY aPntOnS1[2] = {gp_XY(UonS1[1] - UonS1[0], VonS1[1] - VonS1[0]),
                            gp_XY(UonS1[2] - UonS1[1], VonS1[2] - VonS1[1])};
       gp_XY aPntOnS2[2] = {gp_XY(UonS2[1] - UonS2[0], VonS2[1] - VonS2[0]),
@@ -475,12 +381,9 @@ static occ::handle<IntPatch_WLine> DeleteByTube(const occ::handle<IntPatch_WLine
       double aStepOnS1 = aPntOnS1[0].SquareModulus() / aPntOnS1[1].SquareModulus();
       double aStepOnS2 = aPntOnS2[0].SquareModulus() / aPntOnS2[1].SquareModulus();
 
-      // Check very rare case when wline fluctuates nearly one point and some of them may be equal.
-      // Middle point will be deleted when such situation occurs.
-      // bugs moddata_2 bug469.
       if (std::min(aStepOnS1, aStepOnS2) >= aLimitCoeff * std::max(aStepOnS1, aStepOnS2))
       {
-        // Set hash flag to "Delete" state.
+
         double aCurrStep = aBase3dPnt.SquareDistance(aPnt3d);
         double aSqrRatio = 0.;
         if (!isPlanePlane)
@@ -496,7 +399,6 @@ static occ::handle<IntPatch_WLine> DeleteByTube(const occ::handle<IntPatch_WLine
           isDeleteState = true;
           aNewPointsHash.SetValue(i - 1, 1);
 
-          // Change middle point.
           UonS1[1] = UonS1[2];
           UonS2[1] = UonS2[2];
           VonS1[1] = VonS1[2];
@@ -507,7 +409,7 @@ static occ::handle<IntPatch_WLine> DeleteByTube(const occ::handle<IntPatch_WLine
 
     if (!isDeleteState)
     {
-      // Compute new pipe parameters.
+
       UonS1[0] = UonS1[1];
       VonS1[0] = VonS1[1];
       UonS2[0] = UonS2[1];
@@ -531,22 +433,18 @@ static occ::handle<IntPatch_WLine> DeleteByTube(const occ::handle<IntPatch_WLine
     }
   }
 
-  // Workaround to handle case of small amount of points after purge.
-  // Test "boolean boptuc_complex B5" and similar.
-  // This is possible since there are at least two points.
   if (aNewPointsHash(1) == -1 && aNewPointsHash(2) == -1 && aNbPnt <= 3)
   {
-    // Delete first.
+
     aNewPointsHash(1) = 1;
   }
   if (aNewPointsHash(theWLine->NbPnts() - 1) == -1 && aNewPointsHash(theWLine->NbPnts()) == -1
       && aNbPnt <= 3)
   {
-    // Delete last.
+
     aNewPointsHash(theWLine->NbPnts()) = 1;
   }
 
-  // Purgre when too small amount of points left.
   if (aNbPnt <= 2)
   {
     for (i = aNewPointsHash.Lower(); i <= aNewPointsHash.Upper(); i++)
@@ -558,17 +456,12 @@ static occ::handle<IntPatch_WLine> DeleteByTube(const occ::handle<IntPatch_WLine
     }
   }
 
-  // Handle possible bad distribution of points,
-  // which are will converted into one single bezier curve (less than 30 points).
-  // Make distribution more even:
-  // max step will be nearly to 0.1 of param distance.
   if (aNbPnt + 2 > aMinNbBadDistr && aNbPnt + 2 < aNbSingleBezier)
   {
     for (int anIdx = 1; anIdx <= 8; anIdx++)
     {
       int aHashIdx = int(anIdx * theWLine->NbPnts() / 9);
 
-      // Vertex must be stored as VERTEX (HASH = -1)
       if (aNewPointsHash(aHashIdx) != -1)
         aNewPointsHash(aHashIdx) = 0;
     }
@@ -577,23 +470,6 @@ static occ::handle<IntPatch_WLine> DeleteByTube(const occ::handle<IntPatch_WLine
   return MakeNewWLine(theWLine, aNewPointsHash, false);
 }
 
-//=======================================================================
-// function : IsSeamOrBound
-// purpose  : Returns TRUE if segment [thePtf, thePtl] intersects "seam-edge"
-//            (if it exist) or surface boundaries and both thePtf and thePtl do
-//            not match "seam-edge" or boundaries.
-//           Point thePtmid lies in this segment (in both 3D and 2D-space).
-//           If thePtmid match "seam-edge" or boundaries strictly
-//            (without any tolerance) then the function will return TRUE.
-//            See comments in function body for detail information.
-//
-//          Arrays theArrPeriods, theFBound and theLBound must be filled
-//            as follows:
-//          [0] - U-parameter of 1st surface;
-//          [1] - V-parameter of 1st surface;
-//          [2] - U-parameter of 2nd surface;
-//          [3] - V-parameter of 2nd surface.
-//=======================================================================
 static bool IsSeamOrBound(const IntSurf_PntOn2S& thePtf,
                           const IntSurf_PntOn2S& thePtl,
                           const IntSurf_PntOn2S& thePtmid,
@@ -624,35 +500,20 @@ static bool IsSeamOrBound(const IntSurf_PntOn2S& thePtf,
   {
     if (theArrPeriods[i] == 0.0)
     {
-      // Strictly equal
+
       continue;
     }
 
     const double aDelta = std::abs(aParL[i] - aParF[i]);
     if (2.0 * aDelta > theArrPeriods[i])
     {
-      // Most likely, seam is intersected.
+
       return true;
     }
 
     if (aBndR[i].IsIntersected(0.0, theArrPeriods[i]) == 1)
       return true;
   }
-
-  // The segment [thePtf, thePtl] does not intersect the boundaries and
-  // the seam-edge of the surfaces.
-  // Nevertheless, following situation is possible:
-
-  //              seam or
-  //               bound
-  //                 |
-  //    thePtf  *    |
-  //                 |
-  //                 * thePtmid
-  //      thePtl  *  |
-  //                 |
-
-  // This case must be processed, too.
 
   double aMPar[4] = {0.0, 0.0, 0.0, 0.0};
   thePtmid.Parameters(aMPar[0], aMPar[1], aMPar[2], aMPar[3]);
@@ -673,13 +534,6 @@ static bool IsSeamOrBound(const IntSurf_PntOn2S& thePtf,
   return false;
 }
 
-//=======================================================================
-// function : IsIntersectionPoint
-// purpose  : Returns True if thePmid is intersection point
-//            between theS1 and theS2 with given tolerance.
-//           In this case, parameters of thePmid on every quadric
-//            will be recomputed and returned.
-//=======================================================================
 static bool IsIntersectionPoint(const gp_Pnt&                         thePmid,
                                 const occ::handle<Adaptor3d_Surface>& theS1,
                                 const occ::handle<Adaptor3d_Surface>& theS2,
@@ -752,10 +606,6 @@ static bool IsIntersectionPoint(const gp_Pnt&                         thePmid,
   return (aP1.SquareDistance(aP2) <= theTol * theTol);
 }
 
-//=======================================================================
-// function : ExtendFirst
-// purpose  : Adds thePOn2S to the begin of theWline
-//=======================================================================
 static void ExtendFirst(const occ::handle<IntPatch_WLine>& theWline,
                         const IntSurf_PntOn2S&             theAddedPt)
 {
@@ -796,10 +646,6 @@ static void ExtendFirst(const occ::handle<IntPatch_WLine>& theWline,
   }
 }
 
-//=======================================================================
-// function : ExtendLast
-// purpose  : Adds thePOn2S to the end of theWline
-//=======================================================================
 static void ExtendLast(const occ::handle<IntPatch_WLine>& theWline,
                        const IntSurf_PntOn2S&             theAddedPt)
 {
@@ -828,11 +674,6 @@ static void ExtendLast(const occ::handle<IntPatch_WLine>& theWline,
   }
 }
 
-//=========================================================================
-// function: IsOutOfDomain
-// purpose : Checks, if 2D-representation of thePOn2S is in surfaces domain,
-//            defined by bounding-boxes theBoxS1 and theBoxS2
-//=========================================================================
 static bool IsOutOfDomain(const Bnd_Box2d&       theBoxS1,
                           const Bnd_Box2d&       theBoxS2,
                           const IntSurf_PntOn2S& thePOn2S,
@@ -855,11 +696,6 @@ static bool IsOutOfDomain(const Bnd_Box2d&       theBoxS1,
   return (theBoxS1.IsOut(gp_Pnt2d(aU1, aV1)) || theBoxS2.IsOut(gp_Pnt2d(aU2, aV2)));
 }
 
-//=======================================================================
-// function : CheckArgumentsToExtend
-// purpose  : Check if extending is possible
-//            (see IntPatch_WLineTool::ExtendTwoWLines)
-//=======================================================================
 static IntPatchWT_WLsConnectionType CheckArgumentsToExtend(
   const occ::handle<Adaptor3d_Surface>& theS1,
   const occ::handle<Adaptor3d_Surface>& theS2,
@@ -898,7 +734,6 @@ static IntPatchWT_WLsConnectionType CheckArgumentsToExtend(
 
   double aNewPar[4] = {0.0, 0.0, 0.0, 0.0};
 
-  // Left-bottom corner
   double aParLBC[4] = {0.0, 0.0, 0.0, 0.0};
   theBoxS1.Get(aParLBC[0], aParLBC[1], aNewPar[0], aNewPar[0]);
   theBoxS2.Get(aParLBC[2], aParLBC[3], aNewPar[0], aNewPar[0]);
@@ -926,7 +761,7 @@ static IntPatchWT_WLsConnectionType CheckArgumentsToExtend(
   {
     if (theArrPeriods[i] == 0.0)
     {
-      // Strictly equal
+
       continue;
     }
 
@@ -936,25 +771,11 @@ static IntPatchWT_WLsConnectionType CheckArgumentsToExtend(
 
     if (aR1.IsIntersected(aParLBC[i], theArrPeriods[i]))
     {
-      // Check, if we intersect surface boundary when we will extend Wline1 or Wline2
-      // to theNewPoint
+
       MinMax(aParWL1[i], aParWL2[i]);
       if (aNewPar[i] > aParWL2[i])
       {
-        // Source situation:
-        //
-        //---*---------------*------------*-----
-        //  aParWL1[i]   aParWL2[i]    aNewPar[i]
-        //
-        // After possible adjusting:
-        //
-        //---*---------------*------------*-----
-        //  aParWL1[i]   aNewPar[i]    aParWL2[i]
-        //
-        // Now we will be able to extend every WLine to
-        // aNewPar[i] to make them close to each other.
-        // However, it is necessary to add check if we
-        // intersect boundary.
+
         const double aPar =
           aParWL1[i] + theArrPeriods[i] * std::ceil((aNewPar[i] - aParWL1[i]) / theArrPeriods[i]);
         aParWL1[i] = aParWL2[i];
@@ -962,16 +783,6 @@ static IntPatchWT_WLsConnectionType CheckArgumentsToExtend(
       }
       else if (aNewPar[i] < aParWL1[i])
       {
-        // See comments to main "if".
-        // Source situation:
-        //
-        //---*---------------*------------*-----
-        //  aNewPar[i]    aParWL1[i]   aParWL2[i]
-        //
-        // After possible adjusting:
-        //
-        //---*---------------*------------*-----
-        //  aParWL1[i]   aNewPar[i]    aParWL2[i]
 
         const double aPar =
           aParWL2[i] - theArrPeriods[i] * std::ceil((aParWL2[i] - aNewPar[i]) / theArrPeriods[i]);
@@ -1011,11 +822,6 @@ static IntPatchWT_WLsConnectionType CheckArgumentsToExtend(
   return IntPatchWT_ReqExtend;
 }
 
-//=======================================================================
-// function : CheckArgumentsToJoin
-// purpose  : Check if joining is possible
-//            (see IntPatch_WLineTool::JoinWLines(...))
-//=======================================================================
 bool CheckArgumentsToJoin(const occ::handle<Adaptor3d_Surface>& theS1,
                           const occ::handle<Adaptor3d_Surface>& theS2,
                           const IntSurf_PntOn2S&                thePnt,
@@ -1035,21 +841,6 @@ bool CheckArgumentsToJoin(const occ::handle<Adaptor3d_Surface>& theS1,
     return false;
   }
 
-  // Curvature radius cannot be computed.
-  // Check smoothness of polygon.
-
-  //                  theP2
-  //                    *
-  //                    |
-  //                    |
-  //       *            o         *
-  //      theP1         O       theP3
-
-  // Joining is enabled if two conditions are satisfied together:
-  //   1. Angle (theP1, theP2, theP3) is quite big;
-  //   2. Modulus of perpendicular (O->theP2) to the segment (theP1->theP3)
-  //   is less than 0.01*<modulus of this segment>.
-
   const gp_Vec aV12f(theP1, theP2), aV12l(theP2, theP3);
 
   if (aV12f.Angle(aV12l) > IntPatch_WLineTool::myMaxConcatAngle)
@@ -1061,11 +852,6 @@ bool CheckArgumentsToJoin(const occ::handle<Adaptor3d_Surface>& theS1,
   return (aV12f.CrossSquareMagnitude(aV13) < 1.0e-4 * aSq13 * aSq13);
 }
 
-//=======================================================================
-// function : ExtendTwoWLFirstFirst
-// purpose  : Performs extending theWLine1 and theWLine2 through their
-//            respecting start point.
-//=======================================================================
 static void ExtendTwoWLFirstFirst(const occ::handle<Adaptor3d_Surface>& theS1,
                                   const occ::handle<Adaptor3d_Surface>& theS2,
                                   const occ::handle<IntPatch_WLine>&    theWLine1,
@@ -1142,11 +928,6 @@ static void ExtendTwoWLFirstFirst(const occ::handle<Adaptor3d_Surface>& theS1,
   theHasBeenJoined = true;
 }
 
-//=======================================================================
-// function : ExtendTwoWLFirstLast
-// purpose  : Performs extending theWLine1 through its start point and theWLine2
-//            through its end point.
-//=======================================================================
 static void ExtendTwoWLFirstLast(const occ::handle<Adaptor3d_Surface>& theS1,
                                  const occ::handle<Adaptor3d_Surface>& theS2,
                                  const occ::handle<IntPatch_WLine>&    theWLine1,
@@ -1221,11 +1002,6 @@ static void ExtendTwoWLFirstLast(const occ::handle<Adaptor3d_Surface>& theS1,
   theHasBeenJoined = true;
 }
 
-//=======================================================================
-// function : ExtendTwoWLLastFirst
-// purpose  : Performs extending theWLine1 through its end point and theWLine2
-//            through its start point.
-//=======================================================================
 static void ExtendTwoWLLastFirst(const occ::handle<Adaptor3d_Surface>& theS1,
                                  const occ::handle<Adaptor3d_Surface>& theS2,
                                  const occ::handle<IntPatch_WLine>&    theWLine1,
@@ -1297,8 +1073,6 @@ static void ExtendTwoWLLastFirst(const occ::handle<Adaptor3d_Surface>& theS1,
   theHasBeenJoined = true;
 }
 
-//=================================================================================================
-
 static void ExtendTwoWLLastLast(const occ::handle<Adaptor3d_Surface>& theS1,
                                 const occ::handle<Adaptor3d_Surface>& theS2,
                                 const occ::handle<IntPatch_WLine>&    theWLine1,
@@ -1368,8 +1142,6 @@ static void ExtendTwoWLLastLast(const occ::handle<Adaptor3d_Surface>& theS1,
   theHasBeenJoined = true;
 }
 
-//=================================================================================================
-
 occ::handle<IntPatch_WLine> IntPatch_WLineTool::ComputePurgedWLine(
   const occ::handle<IntPatch_WLine>&      theWLine,
   const occ::handle<Adaptor3d_Surface>&   theS1,
@@ -1400,7 +1172,6 @@ occ::handle<IntPatch_WLine> IntPatch_WLineTool::ComputePurgedWLine(
   for (v = 1; v <= nbvtx; v++)
     aLocalWLine->AddVertex(theWLine->Vertex(v));
 
-  // I: Delete equal points
   for (i = 1; i <= aLineOn2S->NbPoints(); i++)
   {
     int aStartIndex = i + 1;
@@ -1467,10 +1238,6 @@ occ::handle<IntPatch_WLine> IntPatch_WLineTool::ComputePurgedWLine(
       return aResult;
   }
 
-  // Avoid purge in case of C0 continuity:
-  // Intersection approximator may produce invalid curve after purge, example:
-  // bugs modalg_5 bug24731.
-  // Do not run purger when base number of points is too small.
   if (theS1->UContinuity() == GeomAbs_C0 || theS1->VContinuity() == GeomAbs_C0
       || theS2->UContinuity() == GeomAbs_C0 || theS2->VContinuity() == GeomAbs_C0
       || nb < aNbSingleBezier)
@@ -1478,10 +1245,8 @@ occ::handle<IntPatch_WLine> IntPatch_WLineTool::ComputePurgedWLine(
     return aLocalWLine;
   }
 
-  // II: Delete out of borders points.
   aLocalWLine = DeleteOuterPoints(aLocalWLine, theS1, theS2, theDom1, theDom2);
 
-  // III: Delete points by tube criteria.
   occ::handle<IntPatch_WLine> aLocalWLineTube = DeleteByTube(aLocalWLine, theS1, theS2);
 
   if (aLocalWLineTube->NbPnts() > 1)
@@ -1490,8 +1255,6 @@ occ::handle<IntPatch_WLine> IntPatch_WLineTool::ComputePurgedWLine(
   }
   return aResult;
 }
-
-//=================================================================================================
 
 void IntPatch_WLineTool::JoinWLines(NCollection_Sequence<occ::handle<IntPatch_Line>>& theSlin,
                                     NCollection_Sequence<IntPatch_Point>&             theSPnt,
@@ -1502,7 +1265,6 @@ void IntPatch_WLineTool::JoinWLines(NCollection_Sequence<occ::handle<IntPatch_Li
   if (theSlin.Length() == 0)
     return;
 
-  // For two cylindrical surfaces only
   const double aMinRad = 1.0e-3 * std::min(theS1->Cylinder().Radius(), theS2->Cylinder().Radius());
 
   const double anArrPeriods[4] = {theS1->IsUPeriodic() ? theS1->UPeriod() : 0.0,
@@ -1526,7 +1288,7 @@ void IntPatch_WLineTool::JoinWLines(NCollection_Sequence<occ::handle<IntPatch_Li
     occ::handle<IntPatch_WLine> aWLine1(occ::down_cast<IntPatch_WLine>(theSlin.Value(aN1)));
 
     if (aWLine1.IsNull())
-    { // We must have failed to join not-point-lines
+    {
       continue;
     }
 
@@ -1657,7 +1419,7 @@ void IntPatch_WLineTool::JoinWLines(NCollection_Sequence<occ::handle<IntPatch_Li
 
       if (isFM)
       {
-        // First-First-connection
+
         for (int aNPt = 1; aNPt <= aNbPntsWL2; aNPt++)
         {
           const IntSurf_PntOn2S& aPt = aWLine2->Point(aNPt);
@@ -1666,7 +1428,7 @@ void IntPatch_WLineTool::JoinWLines(NCollection_Sequence<occ::handle<IntPatch_Li
       }
       else
       {
-        // First-Last-connection
+
         for (int aNPt = aNbPntsWL2; aNPt >= 1; aNPt--)
         {
           const IntSurf_PntOn2S& aPt = aWLine2->Point(aNPt);
@@ -1674,7 +1436,7 @@ void IntPatch_WLineTool::JoinWLines(NCollection_Sequence<occ::handle<IntPatch_Li
         }
       }
     }
-    else // if (isLastConnected)
+    else
     {
       const double aSqDistF = aPntLWL1.Value().SquareDistance(aPntFWL2.Value());
       const double aSqDistL = aPntLWL1.Value().SquareDistance(aPntLWL2.Value());
@@ -1698,7 +1460,7 @@ void IntPatch_WLineTool::JoinWLines(NCollection_Sequence<occ::handle<IntPatch_Li
 
       if (isFM)
       {
-        // Last-First connection
+
         for (int aNPt = 1; aNPt <= aNbPntsWL2; aNPt++)
         {
           const IntSurf_PntOn2S& aPt = aWLine2->Point(aNPt);
@@ -1707,7 +1469,7 @@ void IntPatch_WLineTool::JoinWLines(NCollection_Sequence<occ::handle<IntPatch_Li
       }
       else
       {
-        // Last-Last connection
+
         for (int aNPt = aNbPntsWL2; aNPt >= 1; aNPt--)
         {
           const IntSurf_PntOn2S& aPt = aWLine2->Point(aNPt);
@@ -1722,10 +1484,6 @@ void IntPatch_WLineTool::JoinWLines(NCollection_Sequence<occ::handle<IntPatch_Li
   }
 }
 
-//=======================================================================
-// function : IsNeedSkipWL
-// purpose  : Detect is WLine need to skip.
-//=======================================================================
 static bool IsNeedSkipWL(const occ::handle<IntPatch_WLine>& theWL,
                          const Bnd_Box2d&                   theBoxS1,
                          const Bnd_Box2d&                   theBoxS2,
@@ -1753,11 +1511,6 @@ static bool IsNeedSkipWL(const occ::handle<IntPatch_WLine>& theWL,
   return false;
 }
 
-//=======================================================================
-// function : ExtendTwoWLines
-// purpose  : Performs extending theWLine1 and theWLine2 through their
-//            respecting end point.
-//=======================================================================
 void IntPatch_WLineTool::ExtendTwoWLines(NCollection_Sequence<occ::handle<IntPatch_Line>>& theSlin,
                                          const occ::handle<Adaptor3d_Surface>&             theS1,
                                          const occ::handle<Adaptor3d_Surface>&             theS2,
@@ -1786,7 +1539,7 @@ void IntPatch_WLineTool::ExtendTwoWLines(NCollection_Sequence<occ::handle<IntPat
     occ::handle<IntPatch_WLine> aWLine1(occ::down_cast<IntPatch_WLine>(theSlin.Value(aNumOfLine1)));
 
     if (aWLine1.IsNull())
-    { // We must have failed to join not-point-lines
+    {
       continue;
     }
 
@@ -1809,14 +1562,8 @@ void IntPatch_WLineTool::ExtendTwoWLines(NCollection_Sequence<occ::handle<IntPat
       continue;
     }
 
-    // Enable/Disable of some check. Bit-mask is used for it.
-    // E.g. if 1st point of aWLine1 matches with
-    // 1st point of aWLine2 then we do not need in check
-    // 1st point of aWLine1 and last point of aWLine2 etc.
     unsigned int aCheckResult = IntPatchWT_EnAll;
 
-    // If aWLine1 is already connected with another Wline then
-    // there is no point in extending.
     for (int aNumOfLine2 = aNumOfLine1 + 1; aNumOfLine2 <= theSlin.Length(); aNumOfLine2++)
     {
       occ::handle<IntPatch_WLine> aWLine2(
@@ -1922,7 +1669,7 @@ void IntPatch_WLineTool::ExtendTwoWLines(NCollection_Sequence<occ::handle<IntPat
       }
 
       if (!(aCheckResult & IntPatchWT_DisFirstFirst))
-      { // First/First
+      {
         aVec1.SetXYZ(aPntFp1WL1.Value().XYZ() - aPntFWL1.Value().XYZ());
         aVec2.SetXYZ(aPntFWL2.Value().XYZ() - aPntFp1WL2.Value().XYZ());
         aVec3.SetXYZ(aPntFWL1.Value().XYZ() - aPntFWL2.Value().XYZ());
@@ -1945,7 +1692,7 @@ void IntPatch_WLineTool::ExtendTwoWLines(NCollection_Sequence<occ::handle<IntPat
       }
 
       if (!(aCheckResult & IntPatchWT_DisFirstLast))
-      { // First/Last
+      {
         aVec1.SetXYZ(aPntFp1WL1.Value().XYZ() - aPntFWL1.Value().XYZ());
         aVec2.SetXYZ(aPntLWL2.Value().XYZ() - aPntLm1WL2.Value().XYZ());
         aVec3.SetXYZ(aPntFWL1.Value().XYZ() - aPntLWL2.Value().XYZ());
@@ -1968,7 +1715,7 @@ void IntPatch_WLineTool::ExtendTwoWLines(NCollection_Sequence<occ::handle<IntPat
       }
 
       if (!(aCheckResult & IntPatchWT_DisLastFirst))
-      { // Last/First
+      {
         aVec1.SetXYZ(aPntLWL1.Value().XYZ() - aPntLm1WL1.Value().XYZ());
         aVec2.SetXYZ(aPntFp1WL2.Value().XYZ() - aPntFWL2.Value().XYZ());
         aVec3.SetXYZ(aPntFWL2.Value().XYZ() - aPntLWL1.Value().XYZ());
@@ -1991,7 +1738,7 @@ void IntPatch_WLineTool::ExtendTwoWLines(NCollection_Sequence<occ::handle<IntPat
       }
 
       if (!(aCheckResult & IntPatchWT_DisLastLast))
-      { // Last/Last
+      {
         aVec1.SetXYZ(aPntLWL1.Value().XYZ() - aPntLm1WL1.Value().XYZ());
         aVec2.SetXYZ(aPntLm1WL2.Value().XYZ() - aPntLWL2.Value().XYZ());
         aVec3.SetXYZ(aPntLWL2.Value().XYZ() - aPntLWL1.Value().XYZ());

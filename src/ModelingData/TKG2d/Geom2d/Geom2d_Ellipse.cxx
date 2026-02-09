@@ -22,16 +22,12 @@ typedef gp_Vec2d  Vec2d;
 typedef gp_Trsf2d Trsf2d;
 typedef gp_XY     XY;
 
-//=================================================================================================
-
 occ::handle<Geom2d_Geometry> Geom2d_Ellipse::Copy() const
 {
   occ::handle<Geom2d_Ellipse> E;
   E = new Geom2d_Ellipse(pos, majorRadius, minorRadius);
   return E;
 }
-
-//=================================================================================================
 
 Geom2d_Ellipse::Geom2d_Ellipse(const gp_Elips2d& E)
 {
@@ -40,8 +36,6 @@ Geom2d_Ellipse::Geom2d_Ellipse(const gp_Elips2d& E)
   minorRadius = E.MinorRadius();
   pos         = E.Axis();
 }
-
-//=================================================================================================
 
 Geom2d_Ellipse::Geom2d_Ellipse(const Ax2d&  MajorAxis,
                                const double MajorRadius,
@@ -58,8 +52,6 @@ Geom2d_Ellipse::Geom2d_Ellipse(const Ax2d&  MajorAxis,
   pos = gp_Ax22d(MajorAxis, Sense);
 }
 
-//=================================================================================================
-
 Geom2d_Ellipse::Geom2d_Ellipse(const gp_Ax22d& Axis,
                                const double    MajorRadius,
                                const double    MinorRadius)
@@ -73,16 +65,12 @@ Geom2d_Ellipse::Geom2d_Ellipse(const gp_Ax22d& Axis,
   pos = Axis;
 }
 
-//=================================================================================================
-
 void Geom2d_Ellipse::SetElips2d(const gp_Elips2d& E)
 {
   majorRadius = E.MajorRadius();
   minorRadius = E.MinorRadius();
   pos         = E.Axis();
 }
-
-//=================================================================================================
 
 void Geom2d_Ellipse::SetMajorRadius(const double MajorRadius)
 {
@@ -91,8 +79,6 @@ void Geom2d_Ellipse::SetMajorRadius(const double MajorRadius)
   else
     majorRadius = MajorRadius;
 }
-
-//=================================================================================================
 
 void Geom2d_Ellipse::SetMinorRadius(const double MinorRadius)
 {
@@ -106,21 +92,15 @@ void Geom2d_Ellipse::SetMinorRadius(const double MinorRadius)
   }
 }
 
-//=================================================================================================
-
 gp_Elips2d Geom2d_Ellipse::Elips2d() const
 {
   return gp_Elips2d(pos, majorRadius, minorRadius);
 }
 
-//=================================================================================================
-
 double Geom2d_Ellipse::ReversedParameter(const double U) const
 {
   return (2. * M_PI - U);
 }
-
-//=================================================================================================
 
 Ax2d Geom2d_Ellipse::Directrix1() const
 {
@@ -128,15 +108,11 @@ Ax2d Geom2d_Ellipse::Directrix1() const
   return Ev.Directrix1();
 }
 
-//=================================================================================================
-
 Ax2d Geom2d_Ellipse::Directrix2() const
 {
   gp_Elips2d Ev(pos, majorRadius, minorRadius);
   return Ev.Directrix2();
 }
-
-//=================================================================================================
 
 double Geom2d_Ellipse::Eccentricity() const
 {
@@ -150,14 +126,10 @@ double Geom2d_Ellipse::Eccentricity() const
   }
 }
 
-//=================================================================================================
-
 double Geom2d_Ellipse::Focal() const
 {
   return 2.0 * std::sqrt(majorRadius * majorRadius - minorRadius * minorRadius);
 }
-
-//=================================================================================================
 
 Pnt2d Geom2d_Ellipse::Focus1() const
 {
@@ -166,8 +138,6 @@ Pnt2d Geom2d_Ellipse::Focus1() const
                pos.Location().Y() + C * pos.XDirection().Y());
 }
 
-//=================================================================================================
-
 Pnt2d Geom2d_Ellipse::Focus2() const
 {
   double C = std::sqrt(majorRadius * majorRadius - minorRadius * minorRadius);
@@ -175,21 +145,15 @@ Pnt2d Geom2d_Ellipse::Focus2() const
                pos.Location().Y() - C * pos.XDirection().Y());
 }
 
-//=================================================================================================
-
 double Geom2d_Ellipse::MajorRadius() const
 {
   return majorRadius;
 }
 
-//=================================================================================================
-
 double Geom2d_Ellipse::MinorRadius() const
 {
   return minorRadius;
 }
-
-//=================================================================================================
 
 double Geom2d_Ellipse::Parameter() const
 {
@@ -199,63 +163,45 @@ double Geom2d_Ellipse::Parameter() const
     return (minorRadius * minorRadius) / majorRadius;
 }
 
-//=================================================================================================
-
 double Geom2d_Ellipse::FirstParameter() const
 {
   return 0.0;
 }
-
-//=================================================================================================
 
 double Geom2d_Ellipse::LastParameter() const
 {
   return 2.0 * M_PI;
 }
 
-//=================================================================================================
-
 bool Geom2d_Ellipse::IsClosed() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool Geom2d_Ellipse::IsPeriodic() const
 {
   return true;
 }
 
-//=================================================================================================
-
 void Geom2d_Ellipse::D0(const double U, Pnt2d& P) const
 {
   P = ElCLib::EllipseValue(U, pos, majorRadius, minorRadius);
 }
-
-//=================================================================================================
 
 void Geom2d_Ellipse::D1(const double U, Pnt2d& P, Vec2d& V1) const
 {
   ElCLib::EllipseD1(U, pos, majorRadius, minorRadius, P, V1);
 }
 
-//=================================================================================================
-
 void Geom2d_Ellipse::D2(const double U, Pnt2d& P, Vec2d& V1, Vec2d& V2) const
 {
   ElCLib::EllipseD2(U, pos, majorRadius, minorRadius, P, V1, V2);
 }
 
-//=================================================================================================
-
 void Geom2d_Ellipse::D3(const double U, Pnt2d& P, Vec2d& V1, Vec2d& V2, Vec2d& V3) const
 {
   ElCLib::EllipseD3(U, pos, majorRadius, minorRadius, P, V1, V2, V3);
 }
-
-//=================================================================================================
 
 Vec2d Geom2d_Ellipse::DN(const double U, const int N) const
 {
@@ -263,16 +209,12 @@ Vec2d Geom2d_Ellipse::DN(const double U, const int N) const
   return ElCLib::EllipseDN(U, pos, majorRadius, minorRadius, N);
 }
 
-//=================================================================================================
-
 void Geom2d_Ellipse::Transform(const Trsf2d& T)
 {
   majorRadius = majorRadius * std::abs(T.ScaleFactor());
   minorRadius = minorRadius * std::abs(T.ScaleFactor());
   pos.Transform(T);
 }
-
-//=================================================================================================
 
 void Geom2d_Ellipse::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

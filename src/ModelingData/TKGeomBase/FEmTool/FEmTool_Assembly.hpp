@@ -16,7 +16,6 @@
 class FEmTool_ProfileMatrix;
 class math_Matrix;
 
-//! Assemble and solve system from (one dimensional) Finite Elements
 class FEmTool_Assembly
 {
 public:
@@ -26,26 +25,19 @@ public:
     const NCollection_Array2<int>&                                                 Dependence,
     const occ::handle<NCollection_HArray2<occ::handle<NCollection_HArray1<int>>>>& Table);
 
-  //! Nullify all Matrix's Coefficient
   Standard_EXPORT void NullifyMatrix();
 
-  //! Add an elementary Matrix in the assembly Matrix
-  //! if Dependence(Dimension1,Dimension2) is False
   Standard_EXPORT void AddMatrix(const int          Element,
                                  const int          Dimension1,
                                  const int          Dimension2,
                                  const math_Matrix& Mat);
 
-  //! Nullify all Coordinate of assembly Vector (second member)
   Standard_EXPORT void NullifyVector();
 
-  //! Add an elementary Vector in the assembly Vector (second member)
   Standard_EXPORT void AddVector(const int Element, const int Dimension, const math_Vector& Vec);
 
-  //! Delete all Constraints.
   Standard_EXPORT void ResetConstraint();
 
-  //! Nullify all Constraints.
   Standard_EXPORT void NullifyConstraint();
 
   Standard_EXPORT void AddConstraint(const int          IndexofConstraint,
@@ -54,8 +46,6 @@ public:
                                      const math_Vector& LinearForm,
                                      const double       Value);
 
-  //! Solve the assembly system
-  //! Returns false if the computation failed.
   Standard_EXPORT bool Solve();
 
   Standard_EXPORT void Solution(math_Vector& Solution) const;

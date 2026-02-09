@@ -1,14 +1,10 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_LowOrderKinematicPairValue.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_LowOrderKinematicPairValue, StepKinematics_PairValue)
 
-//=================================================================================================
-
 StepKinematics_LowOrderKinematicPairValue::StepKinematics_LowOrderKinematicPairValue() = default;
-
-//=================================================================================================
 
 void StepKinematics_LowOrderKinematicPairValue::Init(
   const occ::handle<TCollection_HAsciiString>&     theRepresentationItem_Name,
@@ -35,14 +31,10 @@ void StepKinematics_LowOrderKinematicPairValue::Init(
   myActualRotationZ = theActualRotationZ;
 }
 
-//=================================================================================================
-
 double StepKinematics_LowOrderKinematicPairValue::ActualTranslationX() const
 {
   return myActualTranslationX;
 }
-
-//=================================================================================================
 
 void StepKinematics_LowOrderKinematicPairValue::SetActualTranslationX(
   const double theActualTranslationX)
@@ -50,14 +42,10 @@ void StepKinematics_LowOrderKinematicPairValue::SetActualTranslationX(
   myActualTranslationX = theActualTranslationX;
 }
 
-//=================================================================================================
-
 double StepKinematics_LowOrderKinematicPairValue::ActualTranslationY() const
 {
   return myActualTranslationY;
 }
-
-//=================================================================================================
 
 void StepKinematics_LowOrderKinematicPairValue::SetActualTranslationY(
   const double theActualTranslationY)
@@ -65,14 +53,10 @@ void StepKinematics_LowOrderKinematicPairValue::SetActualTranslationY(
   myActualTranslationY = theActualTranslationY;
 }
 
-//=================================================================================================
-
 double StepKinematics_LowOrderKinematicPairValue::ActualTranslationZ() const
 {
   return myActualTranslationZ;
 }
-
-//=================================================================================================
 
 void StepKinematics_LowOrderKinematicPairValue::SetActualTranslationZ(
   const double theActualTranslationZ)
@@ -80,42 +64,30 @@ void StepKinematics_LowOrderKinematicPairValue::SetActualTranslationZ(
   myActualTranslationZ = theActualTranslationZ;
 }
 
-//=================================================================================================
-
 double StepKinematics_LowOrderKinematicPairValue::ActualRotationX() const
 {
   return myActualRotationX;
 }
-
-//=================================================================================================
 
 void StepKinematics_LowOrderKinematicPairValue::SetActualRotationX(const double theActualRotationX)
 {
   myActualRotationX = theActualRotationX;
 }
 
-//=================================================================================================
-
 double StepKinematics_LowOrderKinematicPairValue::ActualRotationY() const
 {
   return myActualRotationY;
 }
-
-//=================================================================================================
 
 void StepKinematics_LowOrderKinematicPairValue::SetActualRotationY(const double theActualRotationY)
 {
   myActualRotationY = theActualRotationY;
 }
 
-//=================================================================================================
-
 double StepKinematics_LowOrderKinematicPairValue::ActualRotationZ() const
 {
   return myActualRotationZ;
 }
-
-//=================================================================================================
 
 void StepKinematics_LowOrderKinematicPairValue::SetActualRotationZ(const double theActualRotationZ)
 {

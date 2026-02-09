@@ -10,7 +10,6 @@ class DrawTrSurf_BezierSurface : public DrawTrSurf_Surface
   DEFINE_STANDARD_RTTIEXT(DrawTrSurf_BezierSurface, DrawTrSurf_Surface)
   Draw_Drawable3D_FACTORY
 public:
-  //! creates a drawable Bezier curve from a Bezier curve of package Geom.
   Standard_EXPORT DrawTrSurf_BezierSurface(const occ::handle<Geom_BezierSurface>& S);
 
   Standard_EXPORT DrawTrSurf_BezierSurface(const occ::handle<Geom_BezierSurface>& S,
@@ -41,7 +40,6 @@ public:
 
   Draw_Color PolesColor() const { return polesLook; }
 
-  //! For variable copy.
   Standard_EXPORT occ::handle<Draw_Drawable3D> Copy() const override;
 
 private:

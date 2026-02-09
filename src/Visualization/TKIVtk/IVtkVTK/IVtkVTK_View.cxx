@@ -1,6 +1,5 @@
 #include <IVtkVTK_View.hpp>
 
-// prevent disabling some MSVC warning messages by VTK headers
 #ifdef _MSC_VER
   #pragma warning(push)
 #endif
@@ -15,10 +14,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IVtkVTK_View, IVtk_IView)
 
-// Initialization of VTK object factories.
-// Since VTK 6 the factory methods require "auto-initialization" depending on
-// what modules are enabled at VTK configure time.
-// Some defines are needed in order to make the factories work properly.
 #ifdef VTK_OPENGL2_BACKEND
 VTK_MODULE_INIT(vtkRenderingOpenGL2)
 #else
@@ -26,56 +21,38 @@ VTK_MODULE_INIT(vtkRenderingOpenGL)
 #endif
 VTK_MODULE_INIT(vtkInteractionStyle)
 
-// Handle implementation
-
-//=================================================================================================
-
 IVtkVTK_View::IVtkVTK_View(vtkRenderer* theRenderer)
     : myRenderer(theRenderer)
 {
 }
 
-//=================================================================================================
-
 IVtkVTK_View::~IVtkVTK_View() = default;
-
-//=================================================================================================
 
 bool IVtkVTK_View::IsPerspective() const
 {
   return !myRenderer->GetActiveCamera()->GetParallelProjection();
 }
 
-//=================================================================================================
-
 double IVtkVTK_View::GetDistance() const
 {
   return myRenderer->GetActiveCamera()->GetDistance();
 }
-
-//=================================================================================================
 
 void IVtkVTK_View::GetEyePosition(double& theX, double& theY, double& theZ) const
 {
   myRenderer->GetActiveCamera()->GetPosition(theX, theY, theZ);
 }
 
-//=================================================================================================
-
 void IVtkVTK_View::GetPosition(double& theX, double& theY, double& theZ) const
 {
   myRenderer->GetActiveCamera()->GetFocalPoint(theX, theY, theZ);
 }
-
-//=================================================================================================
 
 void IVtkVTK_View::GetViewUp(double& theDx, double& theDy, double& theDz) const
 {
   myRenderer->GetActiveCamera()->OrthogonalizeViewUp();
   myRenderer->GetActiveCamera()->GetViewUp(theDx, theDy, theDz);
 }
-
-//=================================================================================================
 
 void IVtkVTK_View::GetDirectionOfProjection(double& theDx, double& theDy, double& theDz) const
 {
@@ -84,8 +61,6 @@ void IVtkVTK_View::GetDirectionOfProjection(double& theDx, double& theDy, double
   theDy = -theDy;
   theDz = -theDz;
 }
-
-//=================================================================================================
 
 void IVtkVTK_View::GetScale(double& theX, double& theY, double& theZ) const
 {
@@ -96,35 +71,25 @@ void IVtkVTK_View::GetScale(double& theX, double& theY, double& theZ) const
   theZ = aScale[2];
 }
 
-//=================================================================================================
-
 double IVtkVTK_View::GetParallelScale() const
 {
   return myRenderer->GetActiveCamera()->GetParallelScale();
 }
-
-//=================================================================================================
 
 double IVtkVTK_View::GetViewAngle() const
 {
   return myRenderer->GetActiveCamera()->GetViewAngle();
 }
 
-//=================================================================================================
-
 double IVtkVTK_View::GetAspectRatio() const
 {
   return myRenderer->GetTiledAspectRatio();
 }
 
-//=================================================================================================
-
 void IVtkVTK_View::GetClippingRange(double& theZNear, double& theZFar) const
 {
   myRenderer->GetActiveCamera()->GetClippingRange(theZNear, theZFar);
 }
-
-//=================================================================================================
 
 void IVtkVTK_View::GetViewCenter(double& theX, double& theY) const
 {
@@ -133,16 +98,14 @@ void IVtkVTK_View::GetViewCenter(double& theX, double& theY) const
   theY            = aCenter[1];
 }
 
-//=================================================================================================
-
 bool IVtkVTK_View::DisplayToWorld(const gp_XY& theDisplayPnt, gp_XYZ& theWorldPnt) const
 {
-  // Convert the selection point into world coordinates.
+
   myRenderer->SetDisplayPoint(theDisplayPnt.X(), theDisplayPnt.Y(), 0.0);
   myRenderer->DisplayToWorld();
 
   double* const aCoords = myRenderer->GetWorldPoint();
-  if (aCoords[3] == 0.0) // Point at infinity in homogeneous coordinates
+  if (aCoords[3] == 0.0)
   {
     return false;
   }
@@ -152,16 +115,12 @@ bool IVtkVTK_View::DisplayToWorld(const gp_XY& theDisplayPnt, gp_XYZ& theWorldPn
   return true;
 }
 
-//=================================================================================================
-
 void IVtkVTK_View::GetWindowSize(int& theX, int& theY) const
 {
   int* aSize = myRenderer->GetRenderWindow()->GetSize();
   theX       = aSize[0];
   theY       = aSize[1];
 }
-
-//=================================================================================================
 
 void IVtkVTK_View::GetCamera(NCollection_Mat4<double>& theProj,
                              NCollection_Mat4<double>& theOrient,
@@ -184,8 +143,6 @@ void IVtkVTK_View::GetCamera(NCollection_Mat4<double>& theProj,
 
   theOrient.InitIdentity();
 }
-
-//=================================================================================================
 
 void IVtkVTK_View::GetViewport(double& theX,
                                double& theY,

@@ -2,37 +2,10 @@
 
 #include <Graphic3d_ArrayOfPrimitives.hpp>
 
-//! Contains triangles strip array definition.
 class Graphic3d_ArrayOfTriangleStrips : public Graphic3d_ArrayOfPrimitives
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ArrayOfTriangleStrips, Graphic3d_ArrayOfPrimitives)
 public:
-  //! Creates an array of triangle strips (Graphic3d_TOPA_TRIANGLESTRIPS), a polygon can be filled
-  //! as: 1) Creating a single strip defined with his vertexes, i.e:
-  //! @code
-  //!   myArray = Graphic3d_ArrayOfTriangleStrips (7);
-  //!   myArray->AddVertex (x1, y1, z1);
-  //!   ....
-  //!   myArray->AddVertex (x7, y7, z7);
-  //! @endcode
-  //! 2) Creating separate strips defined with a predefined number of strips and the number of
-  //! vertex per strip, i.e:
-  //! @code
-  //!   myArray = Graphic3d_ArrayOfTriangleStrips (8, 2);
-  //!   myArray->AddBound (4);
-  //!   myArray->AddVertex (x1, y1, z1);
-  //!   ....
-  //!   myArray->AddVertex (x4, y4, z4);
-  //!   myArray->AddBound (4);
-  //!   myArray->AddVertex (x5, y5, z5);
-  //!   ....
-  //!   myArray->AddVertex (x8, y8, z8);
-  //! @endcode
-  //! @param theMaxVertexs defines the maximum allowed vertex number in the array
-  //! @param theMaxStrips  defines the maximum allowed strip  number in the array;
-  //!                      the number of triangle really drawn is: VertexNumber() - 2 * std::min(1,
-  //!                      BoundNumber())
-  //! @param theArrayFlags array flags
   Graphic3d_ArrayOfTriangleStrips(int                  theMaxVertexs,
                                   int                  theMaxStrips,
                                   Graphic3d_ArrayFlags theArrayFlags)
@@ -44,21 +17,6 @@ public:
   {
   }
 
-  //! Creates an array of triangle strips (Graphic3d_TOPA_TRIANGLESTRIPS).
-  //! @param theMaxVertexs defines the maximum allowed vertex number in the array
-  //! @param theMaxStrips  defines the maximum allowed strip  number in the array;
-  //!                      the number of triangle really drawn is: VertexNumber() - 2 * std::min(1,
-  //!                      BoundNumber())
-  //! @param theHasVNormals when TRUE, AddVertex(Point,Normal), AddVertex(Point,Normal,Color) or
-  //! AddVertex(Point,Normal,Texel) should be used to specify vertex normal;
-  //!                       vertex normals should be specified coherent to triangle orientation
-  //!                       (defined by order of vertexes within triangle) for proper rendering
-  //! @param theHasVColors  when TRUE, AddVertex(Point,Color) or AddVertex(Point,Normal,Color)
-  //! should be used to specify vertex color
-  //! @param theHasBColors  when TRUE, AddBound(number,Color) should be used to specify sub-group
-  //! color
-  //! @param theHasVTexels  when TRUE, AddVertex(Point,Texel) or AddVertex(Point,Normal,Texel)
-  //! should be used to specify vertex UV coordinates
   Graphic3d_ArrayOfTriangleStrips(int  theMaxVertexs,
                                   int  theMaxStrips   = 0,
                                   bool theHasVNormals = false,

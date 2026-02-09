@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -39,14 +28,13 @@ namespace
 
 TEST(GeomGridEval_EllipseTest, BasicEvaluation)
 {
-  // Ellipse in XY plane, Major=3, Minor=2, center at origin
+
   occ::handle<Geom_Ellipse> anEllipse =
     new Geom_Ellipse(gp_Ax2(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 3.0, 2.0);
 
   GeomGridEval_Ellipse anEval(anEllipse);
   EXPECT_FALSE(anEval.Geometry().IsNull());
 
-  // Test at 0, PI/2, PI, 3PI/2, 2PI
   NCollection_Array1<double> aParams(1, 5);
   aParams.SetValue(1, 0.0);
   aParams.SetValue(2, M_PI / 2);
@@ -56,23 +44,18 @@ TEST(GeomGridEval_EllipseTest, BasicEvaluation)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // u=0: (3, 0, 0)
   EXPECT_NEAR(aGrid.Value(1).X(), 3.0, THE_TOLERANCE);
   EXPECT_NEAR(aGrid.Value(1).Y(), 0.0, THE_TOLERANCE);
 
-  // u=PI/2: (0, 2, 0)
   EXPECT_NEAR(aGrid.Value(2).X(), 0.0, THE_TOLERANCE);
   EXPECT_NEAR(aGrid.Value(2).Y(), 2.0, THE_TOLERANCE);
 
-  // u=PI: (-3, 0, 0)
   EXPECT_NEAR(aGrid.Value(3).X(), -3.0, THE_TOLERANCE);
   EXPECT_NEAR(aGrid.Value(3).Y(), 0.0, THE_TOLERANCE);
 
-  // u=3PI/2: (0, -2, 0)
   EXPECT_NEAR(aGrid.Value(4).X(), 0.0, THE_TOLERANCE);
   EXPECT_NEAR(aGrid.Value(4).Y(), -2.0, THE_TOLERANCE);
 
-  // u=2PI: back to (3, 0, 0)
   EXPECT_NEAR(aGrid.Value(5).X(), 3.0, THE_TOLERANCE);
   EXPECT_NEAR(aGrid.Value(5).Y(), 0.0, THE_TOLERANCE);
 }

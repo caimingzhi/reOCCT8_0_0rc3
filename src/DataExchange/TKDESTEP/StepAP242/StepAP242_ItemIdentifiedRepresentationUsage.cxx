@@ -7,12 +7,8 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP242_ItemIdentifiedRepresentationUsage, Standard_Transient)
 
-//=================================================================================================
-
 StepAP242_ItemIdentifiedRepresentationUsage::StepAP242_ItemIdentifiedRepresentationUsage() =
   default;
-
-//=================================================================================================
 
 void StepAP242_ItemIdentifiedRepresentationUsage::Init(
   const occ::handle<TCollection_HAsciiString>&                 theName,
@@ -22,7 +18,7 @@ void StepAP242_ItemIdentifiedRepresentationUsage::Init(
   const occ::handle<NCollection_HArray1<occ::handle<StepRepr_RepresentationItem>>>&
     theIdentifiedItem)
 {
-  // --- classe own fields ---
+
   name               = theName;
   description        = theDescription;
   definition         = theDefinition;

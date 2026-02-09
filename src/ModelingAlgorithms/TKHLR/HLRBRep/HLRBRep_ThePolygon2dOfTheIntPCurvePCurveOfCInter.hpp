@@ -21,17 +21,11 @@ class HLRBRep_ThePolygon2dOfTheIntPCurvePCurveOfCInter : public Intf_Polygon2d
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Compute a polygon on the domain of the curve.
   Standard_EXPORT HLRBRep_ThePolygon2dOfTheIntPCurvePCurveOfCInter(const HLRBRep_CurvePtr& Curve,
                                                                    const int               NbPnt,
                                                                    const IntRes2d_Domain&  Domain,
                                                                    const double            Tol);
 
-  //! The current polygon is modified if most
-  //! of the points of the polygon are
-  //! outside the box <OtherBox>. In this
-  //! situation, bounds are computed to build
-  //! a polygon inside or near the OtherBox.
   Standard_EXPORT void ComputeWithBox(const HLRBRep_CurvePtr& Curve, const Bnd_Box2d& OtherBox);
 
   double DeflectionOverEstimation() const override;
@@ -40,29 +34,20 @@ public:
 
   void Closed(const bool clos);
 
-  //! Returns True if the polyline is closed.
   bool Closed() const override { return ClosedPolygon; }
 
-  //! Give the number of Segments in the polyline.
   int NbSegments() const override;
 
-  //! Returns the points of the segment <Index> in the Polygon.
   Standard_EXPORT void Segment(const int theIndex,
                                gp_Pnt2d& theBegin,
                                gp_Pnt2d& theEnd) const override;
 
-  //! Returns the parameter (On the curve)
-  //! of the first point of the Polygon
   double InfParameter() const;
 
-  //! Returns the parameter (On the curve)
-  //! of the last point of the Polygon
   double SupParameter() const;
 
   Standard_EXPORT bool AutoIntersectionIsPossible() const;
 
-  //! Give an approximation of the parameter on the curve
-  //! according to the discretization of the Curve.
   Standard_EXPORT double ApproxParamOnCurve(const int Index, const double ParamOnLine) const;
 
   int CalculRegion(const double x,

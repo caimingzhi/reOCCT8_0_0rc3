@@ -9,18 +9,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRBRep_Algo, HLRBRep_InternalAlgo)
 
-//=================================================================================================
-
 HLRBRep_Algo::HLRBRep_Algo() = default;
-
-//=================================================================================================
 
 HLRBRep_Algo::HLRBRep_Algo(const occ::handle<HLRBRep_Algo>& A)
     : HLRBRep_InternalAlgo(A)
 {
 }
-
-//=================================================================================================
 
 void HLRBRep_Algo::Add(const TopoDS_Shape&                    S,
                        const occ::handle<Standard_Transient>& SData,
@@ -29,14 +23,10 @@ void HLRBRep_Algo::Add(const TopoDS_Shape&                    S,
   Load(new HLRTopoBRep_OutLiner(S), SData, nbIso);
 }
 
-//=================================================================================================
-
 void HLRBRep_Algo::Add(const TopoDS_Shape& S, const int nbIso)
 {
   Load(new HLRTopoBRep_OutLiner(S), nbIso);
 }
-
-//=================================================================================================
 
 int HLRBRep_Algo::Index(const TopoDS_Shape& S)
 {
@@ -52,8 +42,6 @@ int HLRBRep_Algo::Index(const TopoDS_Shape& S)
 
   return 0;
 }
-
-//=================================================================================================
 
 void HLRBRep_Algo::OutLinedShapeNullify()
 {

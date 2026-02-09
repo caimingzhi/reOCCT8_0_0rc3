@@ -12,11 +12,8 @@
 #include <Standard_Transient.hpp>
 #include <TDocStd_Application.hpp>
 
-// #include <BinMNaming.hpp>
 static Standard_GUID BinLStorageDriver("13a56835-8269-11d5-aab2-0050044b1af1");
 static Standard_GUID BinLRetrievalDriver("13a56836-8269-11d5-aab2-0050044b1af1");
-
-//=================================================================================================
 
 const occ::handle<Standard_Transient>& BinLDrivers::Factory(const Standard_GUID& theGUID)
 {
@@ -41,8 +38,6 @@ const occ::handle<Standard_Transient>& BinLDrivers::Factory(const Standard_GUID&
   throw Standard_Failure("BinLDrivers : unknown GUID");
 }
 
-//=================================================================================================
-
 void BinLDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
 {
   theApp->DefineFormat("BinLOcaf",
@@ -51,8 +46,6 @@ void BinLDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
                        new BinLDrivers_DocumentRetrievalDriver,
                        new BinLDrivers_DocumentStorageDriver);
 }
-
-//=================================================================================================
 
 occ::handle<BinMDF_ADriverTable> BinLDrivers::AttributeDrivers(
   const occ::handle<Message_Messenger>& aMsgDrv)

@@ -12,20 +12,12 @@
 #include <NCollection_Sequence.hpp>
 #include <Standard_Integer.hpp>
 
-//=================================================================================================
-
 MAT2d_MiniPath::MAT2d_MiniPath()
     : theDirection(1.0),
       indStart(0)
 {
 }
 
-//============================================================================
-// function : Perform
-// purpose  : Calcul du chemin reliant les differents elements de <aFigure>.
-//           le chemin part de la ligne <IndStart>.
-//           <Sense> = True les lignes sont orientes dans le sens trigo.
-//============================================================================
 void MAT2d_MiniPath::Perform(
   const NCollection_Sequence<NCollection_Sequence<occ::handle<Geom2d_Geometry>>>& Figure,
   const int                                                                       IndStart,
@@ -41,10 +33,6 @@ void MAT2d_MiniPath::Perform(
   if (Sense)
     theDirection = -1.;
 
-  //----------------------------------------------------------------------
-  // Calcul des connexions qui realisent le minimum de distance entre les
-  // differents elements de la figure.
-  //----------------------------------------------------------------------
   for (i = 1; i < NbLines; i++)
   {
     for (j = i + 1; j <= NbLines; j++)
@@ -59,10 +47,6 @@ void MAT2d_MiniPath::Perform(
   double                    DistS1S2;
   int                       IndiceLine1, IndiceLine2;
   int                       ISuiv = 0, MinOnSet1 = 0, MinOnSet2 = 0;
-  //---------------------------------------------------------------------------
-  // - 0 Set1 est initialise avec la ligne de depart.
-  //     Set2 contient toutes les autres.
-  //---------------------------------------------------------------------------
 
   Set1.Append(IndStart);
 
@@ -73,14 +57,6 @@ void MAT2d_MiniPath::Perform(
       Set2.Append(i);
     }
   }
-
-  //---------------------------------------------------------------------------
-  // - 1 Recherche de la connexion C la plus courte entre Set1 et Set2.
-  // - 2 La ligne de Set2 realisant le minimum de distance est inseree dans
-  //     Set1 et supprime dans Set2.
-  // - 3 Insertion de la connexion dans l ensemble des connexions.
-  // - 4 Si Set2 est non vide retour en 1.
-  //---------------------------------------------------------------------------
 
   while (!Set2.IsEmpty())
   {
@@ -105,21 +81,9 @@ void MAT2d_MiniPath::Perform(
     Append(Connexion(MinOnSet1, MinOnSet2));
   }
 
-  //----------------------------------------------------------------
-  // Construction du chemin en parcourant l ensemble des connexions.
-  //----------------------------------------------------------------
   RunOnConnexions();
 }
 
-//============================================================================
-// function : Append
-// purpose  : Insertion d une nouvelle connexion dans le chemin.
-//
-//           Les connexions et les lignes constituent un arbre dont
-//           - les noeuds sont les lignes.
-//           - les connexions sont les branches.
-//
-//============================================================================
 void MAT2d_MiniPath::Append(const occ::handle<MAT2d_Connexion>& C)
 {
   occ::handle<MAT2d_Connexion> CC;
@@ -146,11 +110,7 @@ void MAT2d_MiniPath::Append(const occ::handle<MAT2d_Connexion>& C)
       break;
     }
   }
-  //----------------------------------------------------------------------
-  // Insertion de <C> avant <IAfter>.
-  // Si <IAfter> = 0 => Pas de connexions apres <C> => <C> est la
-  // derniere.
-  //----------------------------------------------------------------------
+
   if (IndexAfter == 0)
   {
     Seq.Append(C);
@@ -163,51 +123,31 @@ void MAT2d_MiniPath::Append(const occ::handle<MAT2d_Connexion>& C)
   return;
 }
 
-//============================================================================
-// function : Path
-// purpose  : Retour de la sequence de connexions definissant le chemin.
-//============================================================================
 const NCollection_Sequence<occ::handle<MAT2d_Connexion>>& MAT2d_MiniPath::Path() const
 {
   return thePath;
 }
-
-//=================================================================================================
 
 bool MAT2d_MiniPath::IsConnexionsFrom(const int i) const
 {
   return (theConnexions.IsBound(i));
 }
 
-//============================================================================
-// function : Connexions
-// purpose  : Retour de la sequence de connexions issue de la ligne <i>.
-//============================================================================
 NCollection_Sequence<occ::handle<MAT2d_Connexion>>& MAT2d_MiniPath::ConnexionsFrom(const int i)
 {
   return theConnexions.ChangeFind(i);
 }
-
-//=================================================================================================
 
 bool MAT2d_MiniPath::IsRoot(const int ILine) const
 {
   return (ILine == indStart);
 }
 
-//============================================================================
-// function : Father
-// purpose  : Retour de la premiere connexion qui arrive sur la ligne i
-//============================================================================
 occ::handle<MAT2d_Connexion> MAT2d_MiniPath::Father(const int ILine)
 {
   return theFather.ChangeFind(ILine);
 }
 
-//============================================================================
-// function : RunOnConnexions
-// purpose  : Construction de <thePath> en parcourant <theConnexions>.
-//============================================================================
 void MAT2d_MiniPath::RunOnConnexions()
 {
   int                                                       i;
@@ -224,8 +164,6 @@ void MAT2d_MiniPath::RunOnConnexions()
     thePath.Append(C->Reverse());
   }
 }
-
-//=================================================================================================
 
 void MAT2d_MiniPath::ExploSons(NCollection_Sequence<occ::handle<MAT2d_Connexion>>& CResult,
                                const occ::handle<MAT2d_Connexion>&                 CRef)
@@ -267,11 +205,6 @@ void MAT2d_MiniPath::ExploSons(NCollection_Sequence<occ::handle<MAT2d_Connexion>
   }
 }
 
-//============================================================================
-// function : MinimumL1L2
-// purpose  : Calcul de la connexion realisant le minimum de distance entre les
-//           lignes d indice <IL1> et <IL2> dans <Figure>.
-//============================================================================
 occ::handle<MAT2d_Connexion> MAT2d_MiniPath::MinimumL1L2(
   const NCollection_Sequence<NCollection_Sequence<occ::handle<Geom2d_Geometry>>>& Figure,
   const int                                                                       IL1,
@@ -290,10 +223,6 @@ occ::handle<MAT2d_Connexion> MAT2d_MiniPath::MinimumL1L2(
   L2 = Figure.Value(IL2);
 
   DistL1L2_2 = RealLast();
-
-  //---------------------------------------------------------------------------
-  // Calcul des extremas de distances entre les composants de L1 et de L2.
-  //---------------------------------------------------------------------------
 
   for (IC1 = 1; IC1 <= L1.Length(); IC1++)
   {

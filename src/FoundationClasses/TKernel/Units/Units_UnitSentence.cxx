@@ -9,8 +9,6 @@
 #include <NCollection_Sequence.hpp>
 #include <NCollection_HSequence.hpp>
 
-//=================================================================================================
-
 Units_UnitSentence::Units_UnitSentence(const char* astring)
     : Units_Sentence(Units::LexiconUnits(), astring)
 {
@@ -18,8 +16,6 @@ Units_UnitSentence::Units_UnitSentence(const char* astring)
   SetConstants();
   SetUnits(Units::DictionaryOfUnits()->Sequence());
 }
-
-//=================================================================================================
 
 Units_UnitSentence::Units_UnitSentence(
   const char*                                                            astring,
@@ -30,8 +26,6 @@ Units_UnitSentence::Units_UnitSentence(
   SetConstants();
   SetUnits(aquantitiessequence);
 }
-
-//=================================================================================================
 
 void Units_UnitSentence::Analyse()
 {
@@ -48,18 +42,6 @@ void Units_UnitSentence::Analyse()
   occ::handle<NCollection_HSequence<occ::handle<Units_Token>>> sequence = Sequence();
 
   currenttoken = sequence->Value(1);
-
-  // std::cout<<std::endl;
-  // for(int ind=1; ind<=sequence->Length(); ind++) {
-  //   occ::handle<Units_Token> tok = sequence->Value(ind);
-  //   std::cout<<tok->Word()<<" ";
-  // }
-  // std::cout<<std::endl;
-  // for(ind=1; ind<=sequence->Length(); ind++) {
-  //   occ::handle<Units_Token> tok = sequence->Value(ind);
-  //   std::cout<<tok->Mean()<<" ";
-  // }
-  // std::cout<<std::endl;
 
   for (index = 2; index <= sequence->Length(); index++)
   {
@@ -154,8 +136,6 @@ void Units_UnitSentence::Analyse()
     index++;
   }
 }
-
-//=================================================================================================
 
 void Units_UnitSentence::SetUnits(
   const occ::handle<NCollection_HSequence<occ::handle<Units_Quantity>>>& aquantitiessequence)

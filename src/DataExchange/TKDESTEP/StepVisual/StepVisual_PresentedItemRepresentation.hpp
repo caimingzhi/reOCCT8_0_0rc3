@@ -7,7 +7,6 @@
 #include <Standard_Transient.hpp>
 class StepVisual_PresentedItem;
 
-//! Added from StepVisual Rev2 to Rev4
 class StepVisual_PresentedItemRepresentation : public Standard_Transient
 {
 

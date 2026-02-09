@@ -3,45 +3,34 @@
 #include <Standard_Assert.hpp>
 #include <iterator>
 
-//! Helper class that allows to use NCollection iterators as STL iterators.
-//! NCollection iterator can be extended to STL iterator of any category by
-//! adding necessary methods: STL forward iterator requires IsEqual method,
-//! STL bidirectional iterator requires Previous method, and STL random access
-//! iterator requires Offset and Differ methods. See NCollection_Vector as
-//! example of declaring custom STL iterators.
 template <class Category, class BaseIndexedMap, class ItemType, bool IsConstant>
 class NCollection_IndexedIterator
 {
 public:
-  // Since C++20 inheritance from std::iterator is deprecated, so define predefined types manually:
   using iterator_category = Category;
   using value_type        = ItemType;
   using difference_type   = ptrdiff_t;
   using pointer           = typename std::conditional<IsConstant, const ItemType*, ItemType*>::type;
   using reference         = typename std::conditional<IsConstant, const ItemType&, ItemType&>::type;
 
-  //! Default constructor
   NCollection_IndexedIterator() noexcept
       : myIndex(0),
         myIndexedMap(nullptr)
   {
   }
 
-  //! Constructor from NCollection_Indexed*Map
   NCollection_IndexedIterator(const BaseIndexedMap& theMap) noexcept
       : myIndex(0),
         myIndexedMap((&const_cast<BaseIndexedMap&>(theMap)))
   {
   }
 
-  //! Constructor from NCollection_Indexed*Map
   NCollection_IndexedIterator(const size_t theIndex, const BaseIndexedMap& theMap) noexcept
       : myIndex(theIndex),
         myIndexedMap(&const_cast<BaseIndexedMap&>(theMap))
   {
   }
 
-  //! Cast from non-const variant to const one
   NCollection_IndexedIterator(
     const NCollection_IndexedIterator<Category, BaseIndexedMap, ItemType, false>& theOther) noexcept
       : myIndex(theOther.myIndex),
@@ -49,7 +38,6 @@ public:
   {
   }
 
-  //! Assignment of non-const iterator to const one
   NCollection_IndexedIterator& operator=(
     const NCollection_IndexedIterator<Category, BaseIndexedMap, ItemType, false>& theOther) noexcept
   {
@@ -58,10 +46,7 @@ public:
     return *this;
   }
 
-protected: //! @name methods related to forward STL iterator
-  // Note: Here we use SFINAE (Substitution failure is not an error) to choose
-  // an appropriate method based on template arguments (at instantiation time).
-
+protected:
   template <bool Condition>
   typename std::enable_if<!Condition, ItemType&>::type Reference() const
   {
@@ -74,8 +59,7 @@ protected: //! @name methods related to forward STL iterator
     return myIndexedMap->at(myIndex);
   }
 
-public: //! @name methods related to forward STL iterator
-  //! Test for equality
+public:
   bool operator==(const NCollection_IndexedIterator& theOther) const noexcept
   {
     return myIndexedMap == theOther.myIndexedMap && myIndex == theOther.myIndex;
@@ -97,32 +81,27 @@ public: //! @name methods related to forward STL iterator
     return myIndexedMap != theOther.myIndexedMap || myIndex != theOther.myIndex;
   }
 
-  //! Test for inequality
   bool operator!=(const NCollection_IndexedIterator& theOther) const noexcept
   {
     return !(*this == theOther);
   }
 
-  //! Get reference to current item
   typename NCollection_IndexedIterator::reference operator*() const
   {
     return Reference<IsConstant>();
   }
 
-  //! Dereferencing operator
   typename NCollection_IndexedIterator::pointer operator->() const
   {
     return &Reference<IsConstant>();
   }
 
-  //! Prefix increment
   NCollection_IndexedIterator& operator++() noexcept
   {
     myIndex++;
     return *this;
   }
 
-  //! Postfix increment
   NCollection_IndexedIterator operator++(int) noexcept
   {
     const NCollection_IndexedIterator theOld(*this);
@@ -130,8 +109,7 @@ public: //! @name methods related to forward STL iterator
     return theOld;
   }
 
-public: //! @name methods related to bidirectional STL iterator
-  //! Prefix decrement
+public:
   NCollection_IndexedIterator& operator--() noexcept
   {
     Standard_STATIC_ASSERT(
@@ -141,7 +119,6 @@ public: //! @name methods related to bidirectional STL iterator
     return *this;
   }
 
-  //! Postfix decrement
   NCollection_IndexedIterator operator--(int) noexcept
   {
     NCollection_IndexedIterator theOld(*this);
@@ -149,8 +126,7 @@ public: //! @name methods related to bidirectional STL iterator
     return theOld;
   }
 
-public: //! @name methods related to random access STL iterator
-  //! Move forward
+public:
   NCollection_IndexedIterator& operator+=(
     typename NCollection_IndexedIterator::difference_type theOffset) noexcept
   {
@@ -160,7 +136,6 @@ public: //! @name methods related to random access STL iterator
     return *this;
   }
 
-  //! Addition
   NCollection_IndexedIterator operator+(
     typename NCollection_IndexedIterator::difference_type theOffset) const noexcept
   {
@@ -168,14 +143,12 @@ public: //! @name methods related to random access STL iterator
     return aTemp += theOffset;
   }
 
-  //! Move backward
   NCollection_IndexedIterator& operator-=(
     typename NCollection_IndexedIterator::difference_type theOffset) noexcept
   {
     return *this += -theOffset;
   }
 
-  //! Decrease
   NCollection_IndexedIterator operator-(
     typename NCollection_IndexedIterator::difference_type theOffset) const noexcept
   {
@@ -183,7 +156,6 @@ public: //! @name methods related to random access STL iterator
     return aTemp += -theOffset;
   }
 
-  //! Difference
   typename NCollection_IndexedIterator::difference_type operator-(
     const NCollection_IndexedIterator& theOther) const noexcept
   {
@@ -192,32 +164,27 @@ public: //! @name methods related to random access STL iterator
     return myIndex - theOther.myIndex;
   }
 
-  //! Get item at offset from current
   typename NCollection_IndexedIterator::reference operator[](
     typename NCollection_IndexedIterator::difference_type theOffset) const
   {
     return *(*this + theOffset);
   }
 
-  //! Comparison
   bool operator<(const NCollection_IndexedIterator& theOther) const noexcept
   {
     return (*this - theOther) < 0;
   }
 
-  //! Comparison
   bool operator>(const NCollection_IndexedIterator& theOther) const noexcept
   {
     return theOther < *this;
   }
 
-  //! Comparison
   bool operator<=(const NCollection_IndexedIterator& theOther) const noexcept
   {
     return !(theOther < *this);
   }
 
-  //! Comparison
   bool operator>=(const NCollection_IndexedIterator& theOther) const noexcept
   {
     return !(*this < theOther);
@@ -226,7 +193,6 @@ public: //! @name methods related to random access STL iterator
   friend class NCollection_IndexedIterator<Category, BaseIndexedMap, ItemType, !IsConstant>;
 
 private:
-  //! NCollection iterator
   size_t          myIndex;
   BaseIndexedMap* myIndexedMap;
 };

@@ -22,14 +22,10 @@
 #include <TopoDS_Wire.hpp>
 #include <Transfer_TransientProcess.hpp>
 
-//=================================================================================================
-
 StepToTopoDS_TranslateCompositeCurve::StepToTopoDS_TranslateCompositeCurve()
     : myInfiniteSegment(false)
 {
 }
-
-//=================================================================================================
 
 StepToTopoDS_TranslateCompositeCurve::StepToTopoDS_TranslateCompositeCurve(
   const occ::handle<StepGeom_CompositeCurve>&   CC,
@@ -38,8 +34,6 @@ StepToTopoDS_TranslateCompositeCurve::StepToTopoDS_TranslateCompositeCurve(
 {
   Init(CC, TP, theLocalFactors);
 }
-
-//=================================================================================================
 
 StepToTopoDS_TranslateCompositeCurve::StepToTopoDS_TranslateCompositeCurve(
   const occ::handle<StepGeom_CompositeCurve>&   CC,
@@ -51,8 +45,6 @@ StepToTopoDS_TranslateCompositeCurve::StepToTopoDS_TranslateCompositeCurve(
   Init(CC, TP, S, Surf, theLocalFactors);
 }
 
-//=================================================================================================
-
 bool StepToTopoDS_TranslateCompositeCurve::Init(const occ::handle<StepGeom_CompositeCurve>&   CC,
                                                 const occ::handle<Transfer_TransientProcess>& TP,
                                                 const StepData_Factors& theLocalFactors)
@@ -61,8 +53,6 @@ bool StepToTopoDS_TranslateCompositeCurve::Init(const occ::handle<StepGeom_Compo
   occ::handle<Geom_Surface>     Surf;
   return Init(CC, TP, S, Surf, theLocalFactors);
 }
-
-//=================================================================================================
 
 bool StepToTopoDS_TranslateCompositeCurve::Init(const occ::handle<StepGeom_CompositeCurve>&   CC,
                                                 const occ::handle<Transfer_TransientProcess>& TP,
@@ -105,11 +95,10 @@ bool StepToTopoDS_TranslateCompositeCurve::Init(const occ::handle<StepGeom_Compo
     }
     isClosed = (ccs->Transition() != StepGeom_tcDiscontinuous);
 
-    // if segment is itself a composite_curve, translate recursively
     if (crv->IsKind(STANDARD_TYPE(StepGeom_CompositeCurve)))
     {
       if (crv == CC)
-      { // cyclic reference protection
+      {
         TP->AddFail(ccs, "Cyclic reference; segment dropped");
         continue;
       }
@@ -132,9 +121,6 @@ bool StepToTopoDS_TranslateCompositeCurve::Init(const occ::handle<StepGeom_Compo
       continue;
     }
 
-    // ordinary segment
-
-    // detect pcurve and 3d curve
     occ::handle<StepGeom_Pcurve> pcurve = occ::down_cast<StepGeom_Pcurve>(crv);
     if (pcurve.IsNull())
     {
@@ -143,7 +129,7 @@ bool StepToTopoDS_TranslateCompositeCurve::Init(const occ::handle<StepGeom_Compo
       {
         crv = sc->Curve3d();
         if (SurfMode)
-        { // find proper pcurve
+        {
           for (int j = 1; j <= sc->NbAssociatedGeometry(); j++)
           {
             StepGeom_PcurveOrSurface     PCorS = sc->AssociatedGeometryValue(j);
@@ -164,10 +150,8 @@ bool StepToTopoDS_TranslateCompositeCurve::Init(const occ::handle<StepGeom_Compo
       crv.Nullify();
     }
 
-    // prepare edge
     TopoDS_Edge edge;
 
-    // translate 3d curve, if present
     if (!crv.IsNull())
     {
       try
@@ -200,7 +184,6 @@ bool StepToTopoDS_TranslateCompositeCurve::Init(const occ::handle<StepGeom_Compo
       }
     }
 
-    // translate pcurve, if available
     if (!pcurve.IsNull())
     {
       try
@@ -262,13 +245,12 @@ bool StepToTopoDS_TranslateCompositeCurve::Init(const occ::handle<StepGeom_Compo
     return false;
   }
 
-  // connect wire; all other fixes are left for caller
   double                     preci = Precision();
   occ::handle<ShapeFix_Wire> sfw   = new ShapeFix_Wire;
   sfw->Load(sbwd);
   sfw->SetPrecision(preci);
   sfw->ClosedWireMode() = isClosed;
-  sfw->FixReorder(); //: o3 abv 17 Feb 99: r0301_db.stp #57082
+  sfw->FixReorder();
   if (sfw->StatusReorder(ShapeExtend_DONE))
   {
     TP->AddWarning(CC, "Segments were disordered; fixed");
@@ -283,8 +265,6 @@ bool StepToTopoDS_TranslateCompositeCurve::Init(const occ::handle<StepGeom_Compo
   done   = (sbwd->NbEdges() > 0);
   return true;
 }
-
-//=================================================================================================
 
 const TopoDS_Wire& StepToTopoDS_TranslateCompositeCurve::Value() const
 {

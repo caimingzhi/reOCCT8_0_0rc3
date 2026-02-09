@@ -3,8 +3,6 @@
 #include <StepShape_TopologicalRepresentationItem.hpp>
 #include <TopoDSToStep_Tool.hpp>
 
-//=================================================================================================
-
 TopoDSToStep_Tool::TopoDSToStep_Tool(const occ::handle<StepData_StepModel>& theModel)
     : myFacetedContext(false),
       myLowestTol(0.),
@@ -12,8 +10,6 @@ TopoDSToStep_Tool::TopoDSToStep_Tool(const occ::handle<StepData_StepModel>& theM
 {
   myPCurveMode = theModel->InternalParameters.WriteSurfaceCurMode;
 }
-
-//=================================================================================================
 
 TopoDSToStep_Tool::TopoDSToStep_Tool(
   const NCollection_DataMap<TopoDS_Shape, occ::handle<Standard_Transient>, TopTools_ShapeMapHasher>&
@@ -26,8 +22,6 @@ TopoDSToStep_Tool::TopoDSToStep_Tool(
   Init(M, FacetedContext, theSurfCurveMode);
 }
 
-//=================================================================================================
-
 void TopoDSToStep_Tool::Init(
   const NCollection_DataMap<TopoDS_Shape, occ::handle<Standard_Transient>, TopTools_ShapeMapHasher>&
              M,
@@ -39,14 +33,10 @@ void TopoDSToStep_Tool::Init(
   myPCurveMode     = theSurfCurveMode;
 }
 
-//=================================================================================================
-
 bool TopoDSToStep_Tool::IsBound(const TopoDS_Shape& S)
 {
   return myDataMap.IsBound(S);
 }
-
-//=================================================================================================
 
 void TopoDSToStep_Tool::Bind(const TopoDS_Shape&                                         S,
                              const occ::handle<StepShape_TopologicalRepresentationItem>& T)
@@ -54,21 +44,15 @@ void TopoDSToStep_Tool::Bind(const TopoDS_Shape&                                
   myDataMap.Bind(S, T);
 }
 
-//=================================================================================================
-
 occ::handle<StepShape_TopologicalRepresentationItem> TopoDSToStep_Tool::Find(const TopoDS_Shape& S)
 {
   return occ::down_cast<StepShape_TopologicalRepresentationItem>(myDataMap.Find(S));
 }
 
-//=================================================================================================
-
 bool TopoDSToStep_Tool::Faceted() const
 {
   return myFacetedContext;
 }
-
-//=================================================================================================
 
 void TopoDSToStep_Tool::SetCurrentShell(const TopoDS_Shell& S)
 {
@@ -95,14 +79,10 @@ void TopoDSToStep_Tool::SetCurrentShell(const TopoDS_Shell& S)
   myCurrentShell = S;
 }
 
-//=================================================================================================
-
 const TopoDS_Shell& TopoDSToStep_Tool::CurrentShell() const
 {
   return myCurrentShell;
 }
-
-//=================================================================================================
 
 void TopoDSToStep_Tool::SetCurrentFace(const TopoDS_Face& F)
 {
@@ -132,14 +112,10 @@ void TopoDSToStep_Tool::SetCurrentFace(const TopoDS_Face& F)
   myCurrentFace = F;
 }
 
-//=================================================================================================
-
 const TopoDS_Face& TopoDSToStep_Tool::CurrentFace() const
 {
   return myCurrentFace;
 }
-
-//=================================================================================================
 
 void TopoDSToStep_Tool::SetCurrentWire(const TopoDS_Wire& W)
 {
@@ -166,14 +142,10 @@ void TopoDSToStep_Tool::SetCurrentWire(const TopoDS_Wire& W)
   myCurrentWire = W;
 }
 
-//=================================================================================================
-
 const TopoDS_Wire& TopoDSToStep_Tool::CurrentWire() const
 {
   return myCurrentWire;
 }
-
-//=================================================================================================
 
 void TopoDSToStep_Tool::SetCurrentEdge(const TopoDS_Edge& E)
 {
@@ -203,14 +175,10 @@ void TopoDSToStep_Tool::SetCurrentEdge(const TopoDS_Edge& E)
   myCurrentEdge = E;
 }
 
-//=================================================================================================
-
 const TopoDS_Edge& TopoDSToStep_Tool::CurrentEdge() const
 {
   return myCurrentEdge;
 }
-
-//=================================================================================================
 
 void TopoDSToStep_Tool::SetCurrentVertex(const TopoDS_Vertex& V)
 {
@@ -220,43 +188,31 @@ void TopoDSToStep_Tool::SetCurrentVertex(const TopoDS_Vertex& V)
   myCurrentVertex = V;
 }
 
-//=================================================================================================
-
 const TopoDS_Vertex& TopoDSToStep_Tool::CurrentVertex() const
 {
   return myCurrentVertex;
 }
-
-//=================================================================================================
 
 double TopoDSToStep_Tool::Lowest3DTolerance() const
 {
   return myLowestTol;
 }
 
-//=================================================================================================
-
 void TopoDSToStep_Tool::SetSurfaceReversed(const bool B)
 {
   myReversedSurface = B;
 }
-
-//=================================================================================================
 
 bool TopoDSToStep_Tool::SurfaceReversed() const
 {
   return myReversedSurface;
 }
 
-//=================================================================================================
-
 const NCollection_DataMap<TopoDS_Shape, occ::handle<Standard_Transient>, TopTools_ShapeMapHasher>&
   TopoDSToStep_Tool::Map() const
 {
   return myDataMap;
 }
-
-//=================================================================================================
 
 int TopoDSToStep_Tool::PCurveMode() const
 {

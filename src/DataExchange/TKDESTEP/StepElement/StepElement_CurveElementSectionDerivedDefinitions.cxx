@@ -5,12 +5,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepElement_CurveElementSectionDerivedDefinitions,
                            StepElement_CurveElementSectionDefinition)
 
-//=================================================================================================
-
 StepElement_CurveElementSectionDerivedDefinitions::
   StepElement_CurveElementSectionDerivedDefinitions() = default;
-
-//=================================================================================================
 
 void StepElement_CurveElementSectionDerivedDefinitions::Init(
   const occ::handle<TCollection_HAsciiString>& aCurveElementSectionDefinition_Description,
@@ -53,14 +49,10 @@ void StepElement_CurveElementSectionDerivedDefinitions::Init(
   thePolarMoment = aPolarMoment;
 }
 
-//=================================================================================================
-
 double StepElement_CurveElementSectionDerivedDefinitions::CrossSectionalArea() const
 {
   return theCrossSectionalArea;
 }
-
-//=================================================================================================
 
 void StepElement_CurveElementSectionDerivedDefinitions::SetCrossSectionalArea(
   const double aCrossSectionalArea)
@@ -68,15 +60,11 @@ void StepElement_CurveElementSectionDerivedDefinitions::SetCrossSectionalArea(
   theCrossSectionalArea = aCrossSectionalArea;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<StepElement_MeasureOrUnspecifiedValue>>
   StepElement_CurveElementSectionDerivedDefinitions::ShearArea() const
 {
   return theShearArea;
 }
-
-//=================================================================================================
 
 void StepElement_CurveElementSectionDerivedDefinitions::SetShearArea(
   const occ::handle<NCollection_HArray1<StepElement_MeasureOrUnspecifiedValue>>& aShearArea)
@@ -84,15 +72,11 @@ void StepElement_CurveElementSectionDerivedDefinitions::SetShearArea(
   theShearArea = aShearArea;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<double>> StepElement_CurveElementSectionDerivedDefinitions::
   SecondMomentOfArea() const
 {
   return theSecondMomentOfArea;
 }
-
-//=================================================================================================
 
 void StepElement_CurveElementSectionDerivedDefinitions::SetSecondMomentOfArea(
   const occ::handle<NCollection_HArray1<double>>& aSecondMomentOfArea)
@@ -100,14 +84,10 @@ void StepElement_CurveElementSectionDerivedDefinitions::SetSecondMomentOfArea(
   theSecondMomentOfArea = aSecondMomentOfArea;
 }
 
-//=================================================================================================
-
 double StepElement_CurveElementSectionDerivedDefinitions::TorsionalConstant() const
 {
   return theTorsionalConstant;
 }
-
-//=================================================================================================
 
 void StepElement_CurveElementSectionDerivedDefinitions::SetTorsionalConstant(
   const double aTorsionalConstant)
@@ -115,15 +95,11 @@ void StepElement_CurveElementSectionDerivedDefinitions::SetTorsionalConstant(
   theTorsionalConstant = aTorsionalConstant;
 }
 
-//=================================================================================================
-
 StepElement_MeasureOrUnspecifiedValue StepElement_CurveElementSectionDerivedDefinitions::
   WarpingConstant() const
 {
   return theWarpingConstant;
 }
-
-//=================================================================================================
 
 void StepElement_CurveElementSectionDerivedDefinitions::SetWarpingConstant(
   const StepElement_MeasureOrUnspecifiedValue& aWarpingConstant)
@@ -131,15 +107,11 @@ void StepElement_CurveElementSectionDerivedDefinitions::SetWarpingConstant(
   theWarpingConstant = aWarpingConstant;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<StepElement_MeasureOrUnspecifiedValue>>
   StepElement_CurveElementSectionDerivedDefinitions::LocationOfCentroid() const
 {
   return theLocationOfCentroid;
 }
-
-//=================================================================================================
 
 void StepElement_CurveElementSectionDerivedDefinitions::SetLocationOfCentroid(
   const occ::handle<NCollection_HArray1<StepElement_MeasureOrUnspecifiedValue>>&
@@ -148,15 +120,11 @@ void StepElement_CurveElementSectionDerivedDefinitions::SetLocationOfCentroid(
   theLocationOfCentroid = aLocationOfCentroid;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<StepElement_MeasureOrUnspecifiedValue>>
   StepElement_CurveElementSectionDerivedDefinitions::LocationOfShearCentre() const
 {
   return theLocationOfShearCentre;
 }
-
-//=================================================================================================
 
 void StepElement_CurveElementSectionDerivedDefinitions::SetLocationOfShearCentre(
   const occ::handle<NCollection_HArray1<StepElement_MeasureOrUnspecifiedValue>>&
@@ -165,15 +133,11 @@ void StepElement_CurveElementSectionDerivedDefinitions::SetLocationOfShearCentre
   theLocationOfShearCentre = aLocationOfShearCentre;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<StepElement_MeasureOrUnspecifiedValue>>
   StepElement_CurveElementSectionDerivedDefinitions::LocationOfNonStructuralMass() const
 {
   return theLocationOfNonStructuralMass;
 }
-
-//=================================================================================================
 
 void StepElement_CurveElementSectionDerivedDefinitions::SetLocationOfNonStructuralMass(
   const occ::handle<NCollection_HArray1<StepElement_MeasureOrUnspecifiedValue>>&
@@ -182,15 +146,11 @@ void StepElement_CurveElementSectionDerivedDefinitions::SetLocationOfNonStructur
   theLocationOfNonStructuralMass = aLocationOfNonStructuralMass;
 }
 
-//=================================================================================================
-
 StepElement_MeasureOrUnspecifiedValue StepElement_CurveElementSectionDerivedDefinitions::
   NonStructuralMass() const
 {
   return theNonStructuralMass;
 }
-
-//=================================================================================================
 
 void StepElement_CurveElementSectionDerivedDefinitions::SetNonStructuralMass(
   const StepElement_MeasureOrUnspecifiedValue& aNonStructuralMass)
@@ -198,15 +158,11 @@ void StepElement_CurveElementSectionDerivedDefinitions::SetNonStructuralMass(
   theNonStructuralMass = aNonStructuralMass;
 }
 
-//=================================================================================================
-
 StepElement_MeasureOrUnspecifiedValue StepElement_CurveElementSectionDerivedDefinitions::
   PolarMoment() const
 {
   return thePolarMoment;
 }
-
-//=================================================================================================
 
 void StepElement_CurveElementSectionDerivedDefinitions::SetPolarMoment(
   const StepElement_MeasureOrUnspecifiedValue& aPolarMoment)

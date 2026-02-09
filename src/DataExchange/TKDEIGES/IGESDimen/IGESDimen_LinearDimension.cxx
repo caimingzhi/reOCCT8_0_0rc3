@@ -21,7 +21,6 @@ void IGESDimen_LinearDimension::Init(const occ::handle<IGESDimen_GeneralNote>& a
   theFirstWitness  = aWitness;
   theSecondWitness = anotherWitness;
   InitTypeAndForm(216, FormNumber());
-  //  FormNumber : Nature of the Dimension 0-1-2
 }
 
 void IGESDimen_LinearDimension::SetFormNumber(const int fm)

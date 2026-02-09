@@ -6,11 +6,7 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 StepDimTol_DatumOrCommonDatum::StepDimTol_DatumOrCommonDatum() = default;
-
-//=================================================================================================
 
 int StepDimTol_DatumOrCommonDatum::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {

@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OSD_FileNode.hpp>
 
@@ -19,10 +7,6 @@
 #include <Standard_ProgramError.hpp>
 
 #ifndef _WIN32
-
-//----------------------------------------------------------------------------
-//------------------- Linux Sources of OSD_FileNode --------------------------
-//----------------------------------------------------------------------------
 
   #include <OSD_OSDError.hpp>
   #include <OSD_Path.hpp>
@@ -35,28 +19,20 @@
   #include <cstdlib>
   #include <sys/stat.h>
   #include <unistd.h>
-// For "system"
+
 const OSD_WhoAmI Iam = OSD_WFileNode;
 
-// Create a file/directory object
-
 OSD_FileNode::OSD_FileNode() = default;
-
-// Create and initialize a file/directory object
 
 OSD_FileNode::OSD_FileNode(const OSD_Path& Name)
 {
   SetPath(Name);
 }
 
-// Get values of object
-
 void OSD_FileNode::Path(OSD_Path& Name) const
 {
   Name = myPath;
 }
-
-// Set values of object
 
 void OSD_FileNode::SetPath(const OSD_Path& Name)
 {
@@ -64,16 +40,9 @@ void OSD_FileNode::SetPath(const OSD_Path& Name)
   myPath = Name;
 }
 
-// Test if specified file/directory exists
-
 bool OSD_FileNode::Exists()
 {
   int status;
-
-  // if (myPath.Name().Length()==0)  A directory can have a null name field (ex: root)
-  //  throw OSD_OSDError("OSD_FileNode::Exists : no name was given"); (LD)
-
-  // if (Failed()) Perror();
 
   TCollection_AsciiString aBuffer;
   myPath.SystemName(aBuffer);
@@ -85,15 +54,8 @@ bool OSD_FileNode::Exists()
     return (false);
 }
 
-// Physically remove a file/directory
-
 void OSD_FileNode::Remove()
 {
-
-  // if (myPath.Name().Length()==0) A directory can have a null name field (ex: root)
-  //  throw OSD_OSDError("OSD_FileNode::Remove : no name was given"); (LD)
-
-  // if (Failed()) Perror();
 
   TCollection_AsciiString aBuffer;
   myPath.SystemName(aBuffer);
@@ -114,7 +76,6 @@ void OSD_FileNode::Remove()
 
   if (S_ISDIR(stat_buf.st_mode))
   {
-    // DIRECTORY
 
     if (rmdir(aBuffer.ToCString()))
     {
@@ -134,19 +95,12 @@ void OSD_FileNode::Remove()
   return;
 }
 
-// Move a file/directory to another path
-
 void OSD_FileNode::Move(const OSD_Path& NewPath)
 {
   int                     status;
   TCollection_AsciiString thisPath;
 
-  // if (myPath.Name().Length()==0)
-  //  throw OSD_OSDError("OSD_FileNode::Move : no name was given");
-
-  // if (Failed()) Perror();
-
-  NewPath.SystemName(thisPath); // Get internal path name
+  NewPath.SystemName(thisPath);
   TCollection_AsciiString aBuffer;
   myPath.SystemName(aBuffer);
   status = rename(aBuffer.ToCString(), thisPath.ToCString());
@@ -155,7 +109,6 @@ void OSD_FileNode::Move(const OSD_Path& NewPath)
     myError.SetValue(errno, Iam, "Move");
 }
 
-// Copy a file to another path and name
 int static copy_file(const char* src, const char* trg)
 {
   int err = 0;
@@ -179,7 +132,7 @@ int static copy_file(const char* src, const char* trg)
   {
     if (write(fdo, buf, n) != n)
     {
-      // writing error
+
       if (!errno)
       {
         errno = ENOSPC;
@@ -203,23 +156,17 @@ void OSD_FileNode::Copy(const OSD_Path& ToPath)
   int                     status;
   TCollection_AsciiString second_name;
 
-  // if (myPath.Name().Length()==0)   Copy .login would raise !!
-  //  throw OSD_OSDError("OSD_FileNode::Copy : no name was given");
-  // if (Failed()) Perror();
-
   ToPath.SystemName(second_name);
 
   TCollection_AsciiString aBuffer;
   myPath.SystemName(aBuffer);
   status = copy_file(aBuffer.ToCString(), second_name.ToCString());
   if (status != 0)
-    myError.SetValue(-1, Iam, "Copy failed"); // (LD)
+    myError.SetValue(-1, Iam, "Copy failed");
   #ifdef OCCT_DEBUG
   printf("Status %d : errno # %d\n", status, errno);
   #endif
 }
-
-// Get protections of a file/directory
 
 OSD_Protection OSD_FileNode::Protection()
 {
@@ -227,11 +174,6 @@ OSD_Protection OSD_FileNode::Protection()
   struct stat    myStat;
   int            status;
   int            s, u, g, w;
-
-  // if (myPath.Name().Length()==0)
-  //  throw OSD_OSDError("OSD_FileNode::Protection : no name was given");
-
-  // if (Failed()) Perror();
 
   TCollection_AsciiString aBuffer;
   myPath.SystemName(aBuffer);
@@ -271,16 +213,9 @@ OSD_Protection OSD_FileNode::Protection()
   return (thisProt);
 }
 
-// Set protections of a file/directory
-
 void OSD_FileNode::SetProtection(const OSD_Protection& Prot)
 {
   int status;
-
-  //  if (myPath.Name().Length()==0)
-  //  throw OSD_OSDError("OSD_FileNode::SetProtection : no name was given");
-
-  // if (Failed()) Perror();
 
   TCollection_AsciiString aBuffer;
   myPath.SystemName(aBuffer);
@@ -289,21 +224,12 @@ void OSD_FileNode::SetProtection(const OSD_Protection& Prot)
     myError.SetValue(errno, Iam, "SetProtection");
 }
 
-// return the date of last access of file/directory
-
 Quantity_Date OSD_FileNode::CreationMoment()
 {
 
   Quantity_Date result;
   struct tm*    decode;
   struct stat   buffer;
-
-  // if (myPath.Name().Length()==0)
-  //  throw OSD_OSDError("OSD_FileNode::CreationMoment : no name was given");
-
-  // if (Failed()) Perror();
-
-  /* Get File Information */
 
   TCollection_AsciiString aBuffer;
   myPath.SystemName(aBuffer);
@@ -325,21 +251,12 @@ Quantity_Date OSD_FileNode::CreationMoment()
   return (result);
 }
 
-// return Last access of file/directory
-
 Quantity_Date OSD_FileNode::AccessMoment()
 {
 
   Quantity_Date result;
   struct tm*    decode;
   struct stat   buffer;
-
-  // if (myPath.Name().Length()==0)
-  //  throw OSD_OSDError("OSD_FileNode::AccessMoment : no name was given");
-
-  // if (Failed()) Perror();
-
-  /* Get File Information */
 
   TCollection_AsciiString aBuffer;
   myPath.SystemName(aBuffer);
@@ -381,11 +298,7 @@ int OSD_FileNode::Error() const
   return (myError.Error());
 }
 
-#else /* _WIN32 */
-
-//----------------------------------------------------------------------------
-//-------------------  WNT Sources of OSD_FileNode ---------------------------
-//----------------------------------------------------------------------------
+#else
 
   #ifdef NONLS
     #undef NONLS
@@ -398,7 +311,7 @@ int OSD_FileNode::Error() const
 
   #ifndef _INC_TCHAR
     #include <tchar.h>
-  #endif // _INC_TCHAR
+  #endif
 
   #include <strsafe.h>
 
@@ -406,7 +319,7 @@ int OSD_FileNode::Error() const
   #define RAISE(arg) throw Standard_ProgramError((arg))
 
   #ifndef OCCT_UWP
-// None of the existing security APIs are supported in a UWP applications
+
 PSECURITY_DESCRIPTOR __fastcall _osd_wnt_protection_to_sd(const OSD_Protection&,
                                                           BOOL,
                                                           const wchar_t*);
@@ -419,36 +332,24 @@ void _osd_wnt_set_error(OSD_Error&, int, ...);
 static BOOL __fastcall _get_file_time(const wchar_t*, LPSYSTEMTIME, BOOL);
 static void __fastcall _test_raise(TCollection_AsciiString, const char*);
 
-//=================================================================================================
-
 OSD_FileNode::OSD_FileNode() {}
-
-//=================================================================================================
 
 OSD_FileNode::OSD_FileNode(const OSD_Path& Name)
 {
   myPath = Name;
-} // end constructor ( 2 )
-
-//=================================================================================================
+}
 
 void OSD_FileNode::Path(OSD_Path& Name) const
 {
 
   Name = myPath;
-
-} // end OSD_FileNode :: Path
-
-//=================================================================================================
+}
 
 void OSD_FileNode::SetPath(const OSD_Path& Name)
 {
 
   myPath = Name;
-
-} // end OSD_FileNode :: SetPath
-
-//=================================================================================================
+}
 
 bool OSD_FileNode::Exists()
 {
@@ -463,7 +364,6 @@ bool OSD_FileNode::Exists()
     return false;
   TEST_RAISE("Exists");
 
-  // make wide character string from UTF-8
   TCollection_ExtendedString fNameW(fName);
 
   WIN32_FILE_ATTRIBUTE_DATA aFileInfo;
@@ -481,10 +381,7 @@ bool OSD_FileNode::Exists()
   }
 
   return retVal;
-
-} // end OSD_FileNode :: Exists
-
-//=================================================================================================
+}
 
 void OSD_FileNode::Remove()
 {
@@ -507,20 +404,14 @@ void OSD_FileNode::Remove()
 
     case FLAG_DIRECTORY:
 
-      // LD : Suppression de l'appel a DeleteDirectory pour
-      //      ne pas detruire un repertoire no vide.
-
       if (!RemoveDirectoryW(fNameW.ToWideString()))
         _osd_wnt_set_error(myError, OSD_WFileNode, fNameW.ToWideString());
       break;
 
     default:
       RAISE("OSD_FileNode :: Remove (): invalid file type - neither file nor directory");
-  } // end switch
-
-} // end OSD_FileNode :: Remove
-
-//=================================================================================================
+  }
+}
 
 void OSD_FileNode::Move(const OSD_Path& NewPath)
 {
@@ -555,11 +446,8 @@ void OSD_FileNode::Move(const OSD_Path& NewPath)
 
     default:
       RAISE("OSD_FileNode :: Move (): invalid file type - neither file nor directory");
-  } // end switch
-
-} // end OSD_FileNode :: Move
-
-//=================================================================================================
+  }
+}
 
 void OSD_FileNode::Copy(const OSD_Path& ToPath)
 {
@@ -596,15 +484,10 @@ void OSD_FileNode::Copy(const OSD_Path& ToPath)
 
     default:
       RAISE("OSD_FileNode :: Copy (): invalid file type - neither file nor directory");
+  }
+}
 
-  } // end switch
-
-} // end OSD_FileNode :: Copy
-
-  // None of the existing security APIs are supported in a UWP applications
   #ifndef OCCT_UWP
-
-//=================================================================================================
 
 OSD_Protection OSD_FileNode::Protection()
 {
@@ -633,10 +516,7 @@ OSD_Protection OSD_FileNode::Protection()
     FreeFileSecurity(pSD);
 
   return retVal;
-
-} // end OSD_FileNode :: Protection
-
-//=================================================================================================
+}
 
 void OSD_FileNode::SetProtection(const OSD_Protection& Prot)
 {
@@ -660,14 +540,11 @@ void OSD_FileNode::SetProtection(const OSD_Protection& Prot)
   if (pSD != NULL)
 
     FreeSD(pSD);
+}
 
-} // end OSD_FileNode :: SetProtection
-
-  #else /* UWP stub */
+  #else
 
     #include <io.h>
-
-//=================================================================================================
 
 OSD_Protection OSD_FileNode::Protection()
 {
@@ -684,19 +561,13 @@ OSD_Protection OSD_FileNode::Protection()
   else if (_waccess_s(fNameW.ToWideString(), 4))
     aProt = OSD_R;
 
-  // assume full access for system and none for everybody
   OSD_Protection retVal(OSD_RWXD, aProt, aProt, OSD_None);
   return retVal;
-} // end OSD_FileNode :: Protection
+}
 
-//=================================================================================================
-
-void OSD_FileNode::SetProtection(const OSD_Protection& /*Prot*/) {
-} // end OSD_FileNode :: SetProtection
+void OSD_FileNode::SetProtection(const OSD_Protection&) {}
 
   #endif
-
-//=================================================================================================
 
 Quantity_Date OSD_FileNode::AccessMoment()
 {
@@ -715,7 +586,7 @@ Quantity_Date OSD_FileNode::AccessMoment()
   {
     SYSTEMTIME* aSysTime = &stAccessMoment;
     BOOL aFlag = SystemTimeToTzSpecificLocalTime(NULL, &stAccessSystemMoment, &stAccessMoment);
-    if (aFlag == 0) // AGV: test for success (e.g., unsupported on Win95/98)
+    if (aFlag == 0)
       aSysTime = &stAccessSystemMoment;
     retVal.SetValues(aSysTime->wMonth,
                      aSysTime->wDay,
@@ -731,10 +602,7 @@ Quantity_Date OSD_FileNode::AccessMoment()
   }
 
   return retVal;
-
-} // end OSD_FileNode :: AccessMoment
-
-//=================================================================================================
+}
 
 Quantity_Date OSD_FileNode::CreationMoment()
 {
@@ -753,7 +621,7 @@ Quantity_Date OSD_FileNode::CreationMoment()
   {
     SYSTEMTIME* aSysTime = &stCreationMoment;
     BOOL aFlag = SystemTimeToTzSpecificLocalTime(NULL, &stCreationSystemMoment, &stCreationMoment);
-    if (aFlag == 0) // AGV: test for success (e.g., unsupported on Win95/98)
+    if (aFlag == 0)
       aSysTime = &stCreationSystemMoment;
     retVal.SetValues(aSysTime->wMonth,
                      aSysTime->wDay,
@@ -769,44 +637,31 @@ Quantity_Date OSD_FileNode::CreationMoment()
   }
 
   return retVal;
-
-} // end OSD_FileNode :: CreationMoment
-
-//=================================================================================================
+}
 
 bool OSD_FileNode::Failed() const
 {
 
   return myError.Failed();
-
-} // end OSD_FileNode :: Failed
-
-//=================================================================================================
+}
 
 void OSD_FileNode::Reset()
 {
 
   myError.Reset();
-
-} // end OSD_FileNode :: Reset
-
-//=================================================================================================
+}
 
 void OSD_FileNode::Perror()
 {
 
   myError.Perror();
-
-} // end OSD_FileNode :: Perror
-
-//=================================================================================================
+}
 
 int OSD_FileNode::Error() const
 {
 
   return myError.Error();
-
-} // end OSD_FileNode :: Error
+}
 
 void _osd_wnt_set_error(OSD_Error& err, int who, ...)
 {
@@ -832,19 +687,17 @@ void _osd_wnt_set_error(OSD_Error& err, int who, ...)
     StringCchPrintfW(buffer, _countof(buffer), L"error code %d", (int)errCode);
 
     SetLastError(errCode);
-
-  } // end if
+  }
 
   char aBufferA[2048];
   WideCharToMultiByte(CP_UTF8, 0, buffer, -1, aBufferA, sizeof(aBufferA), NULL, NULL);
   err.SetValue(errCode, who, aBufferA);
 
   va_end(arg_ptr);
-
-} // end _set_error
+}
 
   #if defined(__CYGWIN32__) || defined(__MINGW32__)
-    #ifdef __try /* is defined on MinGw as either "try" or "if (true)" */
+    #ifdef __try
       #undef __try
     #endif
     #define __try
@@ -885,8 +738,7 @@ static BOOL __fastcall _get_file_time(const wchar_t* fName, LPSYSTEMTIME lpSysTi
       __leave;
 
     retVal = TRUE;
-
-  } // end __try
+  }
 
   __finally
   {
@@ -894,12 +746,10 @@ static BOOL __fastcall _get_file_time(const wchar_t* fName, LPSYSTEMTIME lpSysTi
     if (hFile != INVALID_HANDLE_VALUE)
 
       CloseHandle(hFile);
-
-  } // end __finally
+  }
 
   return retVal;
-
-} // end _get_file_time
+}
 
   #if defined(__CYGWIN32__) || defined(__MINGW32__)
     #undef __try
@@ -916,8 +766,7 @@ static void __fastcall _test_raise(TCollection_AsciiString fName, const char* st
     buff += " (): wrong access";
 
     throw Standard_ProgramError(buff.ToCString());
-  } // end if
+  }
+}
 
-} // end _test_raise
-
-#endif /* _WIN32 */
+#endif

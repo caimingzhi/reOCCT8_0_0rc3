@@ -11,7 +11,6 @@ class StepShape_FaceOuterBound;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for FaceOuterBound
 class RWStepShape_RWFaceOuterBound
 {
 public:

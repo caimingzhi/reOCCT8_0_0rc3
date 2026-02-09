@@ -7,33 +7,26 @@
 
 class SelectMgr_ViewerSelector;
 
-//! Abstract class for filling pixel with color.
-//! This is internal tool for SelectMgr_ViewerSelector::ToPixMap().
 class SelectMgr_SelectionImageFiller : public Standard_Transient
 {
 public:
-  //! Create filler of specified type.
   static occ::handle<SelectMgr_SelectionImageFiller> CreateFiller(
     Image_PixMap&                  thePixMap,
     SelectMgr_ViewerSelector*      theSelector,
     StdSelect_TypeOfSelectionImage theType);
 
 public:
-  //! Main constructor.
   SelectMgr_SelectionImageFiller(Image_PixMap& thePixMap, SelectMgr_ViewerSelector* theSelector)
       : myImage(&thePixMap),
         myMainSel(theSelector)
   {
   }
 
-  //! Fill pixel at specified position.
   virtual void Fill(const int theCol, const int theRow, const int thePicked) = 0;
 
-  //! Flush results into final image.
   virtual void Flush() {}
 
 protected:
-  //! Find the new unique random color.
   void randomPastelColor(Quantity_Color& theColor)
   {
     for (;;)
@@ -46,7 +39,6 @@ protected:
     }
   }
 
-  //! Fills the given color as random.
   void nextRandomPastelColor(Quantity_Color& theColor)
   {
     theColor = Quantity_Color(double(myBullardGenerator.NextInt() % 256) / 255.0,

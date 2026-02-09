@@ -11,8 +11,6 @@ class TopoDS_Face;
 class TopoDS_Edge;
 class Adaptor3d_Curve;
 
-//! This package provides tools to check the validity
-//! of the BRep.
 class BRepCheck
 {
 public:
@@ -28,9 +26,7 @@ public:
                                                TopoDS_Edge&       E1,
                                                TopoDS_Edge&       E2);
 
-  //! Returns the resolution on the 3d curve
   Standard_EXPORT static double PrecCurve(const Adaptor3d_Curve& aAC3D);
 
-  //! Returns the resolution on the surface
   Standard_EXPORT static double PrecSurface(const occ::handle<Adaptor3d_Surface>& aAHSurf);
 };

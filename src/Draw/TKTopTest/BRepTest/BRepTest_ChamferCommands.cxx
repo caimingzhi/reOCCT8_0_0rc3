@@ -11,14 +11,6 @@
 
 #include <Precision.hpp>
 
-//===============================================================================
-// function : chamf_throat_with_penetration
-// purpose  : command to construct chamfers with constant throat with penetration
-//            on several edges
-//            Here the chamfer is propagated on tangential edges to the
-//            required edge
-//===============================================================================
-
 static int chamf_throat_with_penetration(Draw_Interpretor& di, int narg, const char** a)
 {
   if (narg < 7)
@@ -43,8 +35,7 @@ static int chamf_throat_with_penetration(Draw_Interpretor& di, int narg, const c
     E = TopoDS::Edge(aLocalEdge);
     TopoDS_Shape aLocalFace(DBRep::Get(a[i + 1], TopAbs_FACE));
     F = TopoDS::Face(aLocalFace);
-    //      E = TopoDS::Edge(DBRep::Get(a[i], TopAbs_EDGE));
-    //      F = TopoDS::Face(DBRep::Get(a[i + 1], TopAbs_FACE));
+
     if (!E.IsNull() && !F.IsNull() && (aMCh.Contour(E) == 0))
     {
       offset = Draw::Atof(a[i + 2]);
@@ -56,10 +47,9 @@ static int chamf_throat_with_penetration(Draw_Interpretor& di, int narg, const c
     i += NbArg;
   }
 
-  // compute the chamfer and display the result
   if (aMCh.NbContours() == 0)
   {
-    // std::cout<<"No suitable edges to chamfer"<<std::endl;
+
     di << "No suitable edges to chamfer\n";
     return 1;
   }
@@ -73,18 +63,11 @@ static int chamf_throat_with_penetration(Draw_Interpretor& di, int narg, const c
   }
   else
   {
-    // std::cout<<"compute of chamfer failed"<<std::endl;
+
     di << "compute of chamfer failed\n";
     return 1;
   }
 }
-
-//===============================================================================
-// function : chamf_throat
-// purpose  : command to construct chamfers with constant throat on several edges
-//            Here the chamfer is propagated on tangential edges to the
-//            required edge
-//===============================================================================
 
 static int chamf_throat(Draw_Interpretor& di, int narg, const char** a)
 {
@@ -116,10 +99,9 @@ static int chamf_throat(Draw_Interpretor& di, int narg, const char** a)
     i += 2;
   }
 
-  // compute the chamfer and display the result
   if (aMCh.NbContours() == 0)
   {
-    // std::cout<<"No suitable edges to chamfer"<<std::endl;
+
     di << "No suitable edges to chamfer\n";
     return 1;
   }
@@ -133,22 +115,15 @@ static int chamf_throat(Draw_Interpretor& di, int narg, const char** a)
   }
   else
   {
-    // std::cout<<"compute of chamfer failed"<<std::endl;
+
     di << "compute of chamfer failed\n";
     return 1;
   }
 }
 
-//=========================================================================
-// function : chamfer
-// purpose  : command to construct chamfers on several edges
-//            Here the chamfer is propagated on tangential edges to the
-//            required edge
-//=========================================================================
-
 static int chamfer(Draw_Interpretor& di, int narg, const char** a)
 {
-  // check the argument number of the command
+
   if (narg == 1)
   {
     di << " help for chamf : \n";
@@ -184,7 +159,7 @@ static int chamfer(Draw_Interpretor& di, int narg, const char** a)
       TopoDS_Shape aLocalFace(DBRep::Get(a[i + 1], TopAbs_FACE));
       if (aLocalFace.IsNull())
       {
-        // symmetric chamfer (one distance)
+
         d1 = atof(a[i + 1]);
         if (aMCh.Contour(E) == 0 && d1 > Precision::Confusion())
           aMCh.Add(d1, E);
@@ -198,7 +173,7 @@ static int chamfer(Draw_Interpretor& di, int narg, const char** a)
         {
           if (!strcasecmp(a[i + 2], "A") && i + 4 < narg)
           {
-            // chamfer with distance and angle
+
             d1    = Draw::Atof(a[i + 3]);
             angle = Draw::Atof(a[i + 4]);
             angle *= M_PI / 180.;
@@ -209,7 +184,7 @@ static int chamfer(Draw_Interpretor& di, int narg, const char** a)
           }
           else
           {
-            // chamfer with two distances
+
             d1 = Draw::Atof(a[i + 2]);
             d2 = Draw::Atof(a[i + 3]);
             if (aMCh.Contour(E) == 0 && d1 > Precision::Confusion() && d2 > Precision::Confusion())
@@ -220,10 +195,9 @@ static int chamfer(Draw_Interpretor& di, int narg, const char** a)
       }
     }
 
-    // compute the chamfer and display the result
     if (aMCh.NbContours() == 0)
     {
-      // std::cout<<"No suitable edges to chamfer"<<std::endl;
+
       di << "No suitable edges to chamfer\n";
       return 1;
     }
@@ -237,7 +211,7 @@ static int chamfer(Draw_Interpretor& di, int narg, const char** a)
     }
     else
     {
-      // std::cout<<"compute of chamfer failed"<<std::endl;
+
       di << "compute of chamfer failed\n";
       return 1;
     }
@@ -245,8 +219,6 @@ static int chamfer(Draw_Interpretor& di, int narg, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 void BRepTest::ChamferCommands(Draw_Interpretor& theCommands)
 {
@@ -258,10 +230,6 @@ void BRepTest::ChamferCommands(Draw_Interpretor& theCommands)
   DBRep::BasicCommands(theCommands);
 
   const char* g = "TOPOLOGY Fillet construction commands";
-
-  //  theCommands.Add("chamf",
-  //		  "chamf newname shape edge1 face1 dist1_1 dist1_2 edge2 face2 dist2_1 dist2_2 ...
-  //",__FILE__,chamfer,g);
 
   theCommands.Add("chamf", "for help call chamf without arguments", __FILE__, chamfer, g);
 

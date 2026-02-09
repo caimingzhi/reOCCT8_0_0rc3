@@ -6,12 +6,8 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWExternalIdentificationAssignment::RWStepBasic_RWExternalIdentificationAssignment() =
   default;
-
-//=================================================================================================
 
 void RWStepBasic_RWExternalIdentificationAssignment::ReadStep(
   const occ::handle<StepData_StepReaderData>&                    data,
@@ -19,11 +15,9 @@ void RWStepBasic_RWExternalIdentificationAssignment::ReadStep(
   occ::handle<Interface_Check>&                                  ach,
   const occ::handle<StepBasic_ExternalIdentificationAssignment>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "external_identification_assignment"))
     return;
-
-  // Inherited fields of IdentificationAssignment
 
   occ::handle<TCollection_HAsciiString> aIdentificationAssignment_AssignedId;
   data->ReadString(num,
@@ -40,45 +34,30 @@ void RWStepBasic_RWExternalIdentificationAssignment::ReadStep(
                    STANDARD_TYPE(StepBasic_IdentificationRole),
                    aIdentificationAssignment_Role);
 
-  // Own fields of ExternalIdentificationAssignment
-
   occ::handle<StepBasic_ExternalSource> aSource;
   data->ReadEntity(num, 3, "source", ach, STANDARD_TYPE(StepBasic_ExternalSource), aSource);
 
-  // Initialize entity
   ent->Init(aIdentificationAssignment_AssignedId, aIdentificationAssignment_Role, aSource);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWExternalIdentificationAssignment::WriteStep(
   StepData_StepWriter&                                           SW,
   const occ::handle<StepBasic_ExternalIdentificationAssignment>& ent) const
 {
 
-  // Inherited fields of IdentificationAssignment
-
   SW.Send(ent->StepBasic_IdentificationAssignment::AssignedId());
 
   SW.Send(ent->StepBasic_IdentificationAssignment::Role());
 
-  // Own fields of ExternalIdentificationAssignment
-
   SW.Send(ent->Source());
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWExternalIdentificationAssignment::Share(
   const occ::handle<StepBasic_ExternalIdentificationAssignment>& ent,
   Interface_EntityIterator&                                      iter) const
 {
 
-  // Inherited fields of IdentificationAssignment
-
   iter.AddItem(ent->StepBasic_IdentificationAssignment::Role());
-
-  // Own fields of ExternalIdentificationAssignment
 
   iter.AddItem(ent->Source());
 }

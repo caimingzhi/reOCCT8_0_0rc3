@@ -1,8 +1,6 @@
 #include <IGESCAFControl.hpp>
 #include <Quantity_Color.hpp>
 
-//=================================================================================================
-
 Quantity_Color IGESCAFControl::DecodeColor(const int color)
 {
   switch (color)
@@ -26,8 +24,6 @@ Quantity_Color IGESCAFControl::DecodeColor(const int color)
       return Quantity_Color(Quantity_NOC_WHITE);
   }
 }
-
-//=================================================================================================
 
 int IGESCAFControl::EncodeColor(const Quantity_Color& col)
 {

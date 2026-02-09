@@ -5,8 +5,6 @@
 #include <NCollection_Array1.hpp>
 #include <Prs3d_ToolQuadric.hpp>
 
-//=================================================================================================
-
 Prs3d_ToolCylinder::Prs3d_ToolCylinder(const double theBottomRad,
                                        const double theTopRad,
                                        const double theHeight,
@@ -20,8 +18,6 @@ Prs3d_ToolCylinder::Prs3d_ToolCylinder(const double theBottomRad,
   mySlicesNb = theNbSlices;
 }
 
-//=================================================================================================
-
 gp_Pnt Prs3d_ToolCylinder::Vertex(const double theU, const double theV) const
 {
   const double aU      = theU * M_PI * 2.0;
@@ -29,15 +25,11 @@ gp_Pnt Prs3d_ToolCylinder::Vertex(const double theU, const double theV) const
   return gp_Pnt(std::cos(aU) * aRadius, std::sin(aU) * aRadius, theV * myHeight);
 }
 
-//=================================================================================================
-
 gp_Dir Prs3d_ToolCylinder::Normal(const double theU, const double) const
 {
   const double aU = theU * M_PI * 2.0;
   return gp_Dir(std::cos(aU) * myHeight, std::sin(aU) * myHeight, myBottomRadius - myTopRadius);
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_ArrayOfTriangles> Prs3d_ToolCylinder::Create(const double   theBottomRad,
                                                                    const double   theTopRad,

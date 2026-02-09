@@ -10,7 +10,6 @@
 #include <TCollection_HAsciiString.hpp>
 #include <XCAFView_ProjectionType.hpp>
 
-//! Access object for saved view
 class XCAFView_Object : public Standard_Transient
 {
 
@@ -139,7 +138,6 @@ private:
   bool                                  myBackPlaneClipping;
   double                                myBackPlaneDistance;
   bool                                  myViewVolumeSidesClipping;
-  // clang-format off
-  occ::handle<NCollection_HArray1<gp_Pnt>> myGDTPoints; // Point for each GDT to describe position of GDT frame in View.
-  // clang-format on
+
+  occ::handle<NCollection_HArray1<gp_Pnt>> myGDTPoints;
 };

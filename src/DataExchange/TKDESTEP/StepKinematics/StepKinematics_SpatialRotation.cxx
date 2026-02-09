@@ -1,15 +1,11 @@
-// Created on : Sat May 02 12:41:14 2020
+
 
 #include <StepKinematics_SpatialRotation.hpp>
 #include <StepKinematics_RotationAboutDirection.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 StepKinematics_SpatialRotation::StepKinematics_SpatialRotation() = default;
-
-//=================================================================================================
 
 int StepKinematics_SpatialRotation::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -22,15 +18,11 @@ int StepKinematics_SpatialRotation::CaseNum(const occ::handle<Standard_Transient
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepKinematics_RotationAboutDirection> StepKinematics_SpatialRotation::
   RotationAboutDirection() const
 {
   return occ::down_cast<StepKinematics_RotationAboutDirection>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<double>> StepKinematics_SpatialRotation::YprRotation() const
 {

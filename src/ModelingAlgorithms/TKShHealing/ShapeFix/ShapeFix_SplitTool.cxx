@@ -22,11 +22,7 @@
 #include <TopoDS_Vertex.hpp>
 #include <TopoDS_Wire.hpp>
 
-//=================================================================================================
-
 ShapeFix_SplitTool::ShapeFix_SplitTool() = default;
-
-//=================================================================================================
 
 bool ShapeFix_SplitTool::SplitEdge(const TopoDS_Edge&   edge,
                                    const double         param,
@@ -43,7 +39,7 @@ bool ShapeFix_SplitTool::SplitEdge(const TopoDS_Edge&   edge,
   sae.PCurve(edge, face, c2d, a, b, true);
   if (std::abs(a - param) < tol2d || std::abs(b - param) < tol2d)
     return false;
-  // check distance between edge and new vertex
+
   gp_Pnt          P1;
   TopLoc_Location L;
   if (BRep_Tool::SameParameter(edge))
@@ -67,7 +63,7 @@ bool ShapeFix_SplitTool::SplitEdge(const TopoDS_Edge&   edge,
   gp_Pnt P2 = BRep_Tool::Pnt(vert);
   if (P1.Distance(P2) > tol3d)
   {
-    // return false;
+
     BRep_Builder B;
     B.UpdateVertex(vert, P1.Distance(P2));
   }
@@ -94,20 +90,19 @@ bool ShapeFix_SplitTool::SplitEdge(const TopoDS_Edge&   edge,
   BRep_Builder               B;
   TopoDS_Edge                wE = edge;
   wE.Orientation(TopAbs_FORWARD);
-  TopoDS_Shape aTmpShape = vert.Oriented(TopAbs_REVERSED); // for porting
+  TopoDS_Shape aTmpShape = vert.Oriented(TopAbs_REVERSED);
   newE1 = sbe.CopyReplaceVertices(wE, sae.FirstVertex(wE), TopoDS::Vertex(aTmpShape));
   sbe.CopyPCurves(newE1, wE);
   transferParameters->TransferRange(newE1, first, param, true);
   B.SameRange(newE1, false);
   sfe->FixSameParameter(newE1);
-  // B.SameParameter(newE1,false);
+
   aTmpShape = vert.Oriented(TopAbs_FORWARD);
   newE2     = sbe.CopyReplaceVertices(wE, TopoDS::Vertex(aTmpShape), sae.LastVertex(wE));
   sbe.CopyPCurves(newE2, wE);
   transferParameters->TransferRange(newE2, param, last, true);
   B.SameRange(newE2, false);
   sfe->FixSameParameter(newE2);
-  // B.SameParameter(newE2,false);
 
   newE1.Orientation(orient);
   newE2.Orientation(orient);
@@ -120,8 +115,6 @@ bool ShapeFix_SplitTool::SplitEdge(const TopoDS_Edge&   edge,
 
   return true;
 }
-
-//=================================================================================================
 
 bool ShapeFix_SplitTool::SplitEdge(const TopoDS_Edge&   edge,
                                    const double         param1,
@@ -136,7 +129,7 @@ bool ShapeFix_SplitTool::SplitEdge(const TopoDS_Edge&   edge,
   double param = (param1 + param2) / 2;
   if (SplitEdge(edge, param, vert, face, newE1, newE2, tol3d, tol2d))
   {
-    // cut new edges by param1 and param2
+
     bool                      IsCutLine;
     occ::handle<Geom2d_Curve> Crv1, Crv2;
     double                    fp1, lp1, fp2, lp2;
@@ -178,8 +171,6 @@ bool ShapeFix_SplitTool::SplitEdge(const TopoDS_Edge&   edge,
   return false;
 }
 
-//=================================================================================================
-
 bool ShapeFix_SplitTool::CutEdge(const TopoDS_Edge& edge,
                                  const double       pend,
                                  const double       cut,
@@ -195,7 +186,6 @@ bool ShapeFix_SplitTool::CutEdge(const TopoDS_Edge& edge,
   if (aRange < 10. * Precision::PConfusion())
     return false;
 
-  // case pcurve is trimm of line
   if (!BRep_Tool::SameParameter(edge))
   {
     ShapeAnalysis_Edge        sae;
@@ -211,7 +201,7 @@ bool ShapeFix_SplitTool::CutEdge(const TopoDS_Edge& edge,
           BRep_Builder B;
           B.Range(edge, std::min(pend, cut), std::max(pend, cut));
           if (std::abs(pend - lp) < Precision::PConfusion())
-          { // cut from the beginning
+          {
             double cut3d = (cut - fp) * (b - a) / (lp - fp);
             if (cut3d <= Precision::PConfusion())
               return false;
@@ -219,7 +209,7 @@ bool ShapeFix_SplitTool::CutEdge(const TopoDS_Edge& edge,
             iscutline = true;
           }
           else if (std::abs(pend - fp) < Precision::PConfusion())
-          { // cut from the end
+          {
             double cut3d = (lp - cut) * (b - a) / (lp - fp);
             if (cut3d <= Precision::PConfusion())
               return false;
@@ -232,7 +222,6 @@ bool ShapeFix_SplitTool::CutEdge(const TopoDS_Edge& edge,
     return true;
   }
 
-  // det-study on 03/12/01 checking the old and new ranges
   if (std::abs(std::abs(a - b) - aRange) < Precision::PConfusion())
     return false;
   if (aRange < 10. * Precision::PConfusion())
@@ -265,8 +254,6 @@ bool ShapeFix_SplitTool::CutEdge(const TopoDS_Edge& edge,
 
   return true;
 }
-
-//=================================================================================================
 
 bool ShapeFix_SplitTool::SplitEdge(const TopoDS_Edge&                     edge,
                                    const double                           fp,

@@ -5,11 +5,9 @@
 #include <Geom2dHash_AxisPlacement.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom2d_Circle (2D circle).
-//! Used for geometry deduplication.
 struct Geom2dHash_CircleHasher
 {
-  // Hashes the circle by its position and radius.
+
   std::size_t operator()(const occ::handle<Geom2d_Circle>& theCircle) const noexcept
   {
     constexpr double aTolerance = 1e-12;
@@ -22,7 +20,6 @@ struct Geom2dHash_CircleHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two circles by their positions and radii.
   bool operator()(const occ::handle<Geom2d_Circle>& theCircle1,
                   const occ::handle<Geom2d_Circle>& theCircle2) const noexcept
   {

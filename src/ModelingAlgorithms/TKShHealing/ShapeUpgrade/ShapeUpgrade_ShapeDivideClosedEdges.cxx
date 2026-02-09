@@ -5,17 +5,13 @@
 #include <ShapeUpgrade_WireDivide.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 ShapeUpgrade_ShapeDivideClosedEdges::ShapeUpgrade_ShapeDivideClosedEdges(const TopoDS_Shape& S)
     : ShapeUpgrade_ShapeDivide(S)
 {
   SetNbSplitPoints(1);
 }
 
-//=================================================================================================
-
-void ShapeUpgrade_ShapeDivideClosedEdges::SetNbSplitPoints(const int /*num*/)
+void ShapeUpgrade_ShapeDivideClosedEdges::SetNbSplitPoints(const int)
 {
   occ::handle<ShapeUpgrade_ClosedEdgeDivide> tool  = new ShapeUpgrade_ClosedEdgeDivide;
   occ::handle<ShapeUpgrade_WireDivide>       wtool = new ShapeUpgrade_WireDivide;

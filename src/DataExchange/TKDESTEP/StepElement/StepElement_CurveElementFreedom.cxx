@@ -7,18 +7,12 @@
 static const char* anEnum = "ENUMERATED_CURVE_ELEMENT_FREEDOM";
 static const char* anApp  = "APPLICATION_DEFINED_DEGREE_OF_FREEDOM";
 
-//=================================================================================================
-
 StepElement_CurveElementFreedom::StepElement_CurveElementFreedom() = default;
 
-//=================================================================================================
-
-int StepElement_CurveElementFreedom::CaseNum(const occ::handle<Standard_Transient>& /*ent*/) const
+int StepElement_CurveElementFreedom::CaseNum(const occ::handle<Standard_Transient>&) const
 {
   return 0;
 }
-
-//=================================================================================================
 
 int StepElement_CurveElementFreedom::CaseMem(const occ::handle<StepData_SelectMember>& ent) const
 {
@@ -32,14 +26,10 @@ int StepElement_CurveElementFreedom::CaseMem(const occ::handle<StepData_SelectMe
     return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepData_SelectMember> StepElement_CurveElementFreedom::NewMember() const
 {
   return new StepElement_CurveElementFreedomMember;
 }
-
-//=================================================================================================
 
 void StepElement_CurveElementFreedom::SetEnumeratedCurveElementFreedom(
   const StepElement_EnumeratedCurveElementFreedom val)
@@ -53,8 +43,6 @@ void StepElement_CurveElementFreedom::SetEnumeratedCurveElementFreedom(
   SelMem->SetName(name->ToCString());
   SelMem->SetEnum((int)val);
 }
-
-//=================================================================================================
 
 StepElement_EnumeratedCurveElementFreedom StepElement_CurveElementFreedom::
   EnumeratedCurveElementFreedom() const
@@ -104,8 +92,6 @@ StepElement_EnumeratedCurveElementFreedom StepElement_CurveElementFreedom::
   return val;
 }
 
-//=================================================================================================
-
 void StepElement_CurveElementFreedom::SetApplicationDefinedDegreeOfFreedom(
   const occ::handle<TCollection_HAsciiString>& val)
 {
@@ -118,8 +104,6 @@ void StepElement_CurveElementFreedom::SetApplicationDefinedDegreeOfFreedom(
   SelMem->SetName(name->ToCString());
   SelMem->SetString(val->ToCString());
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> StepElement_CurveElementFreedom::
   ApplicationDefinedDegreeOfFreedom() const

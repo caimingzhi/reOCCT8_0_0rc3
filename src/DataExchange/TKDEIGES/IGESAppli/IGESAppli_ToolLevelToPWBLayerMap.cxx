@@ -21,10 +21,10 @@ IGESAppli_ToolLevelToPWBLayerMap::IGESAppli_ToolLevelToPWBLayerMap() = default;
 
 void IGESAppli_ToolLevelToPWBLayerMap::ReadOwnParams(
   const occ::handle<IGESAppli_LevelToPWBLayerMap>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /* IR */,
+  const occ::handle<IGESData_IGESReaderData>&,
   IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   int                                   num, i;
   int                                   tempNbPropertyValues;
   occ::handle<NCollection_HArray1<int>> tempExchangeFileLevelNumber;
@@ -32,7 +32,7 @@ void IGESAppli_ToolLevelToPWBLayerMap::ReadOwnParams(
   occ::handle<NCollection_HArray1<int>>                                   tempPhysicalLayerNumber;
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>>
     tempExchangeFileLevelIdent;
-  // szv#4:S4163:12Mar99 `st=` not needed
+
   PR.ReadInteger(PR.Current(), "Number of property values", tempNbPropertyValues);
   if (!PR.ReadInteger(PR.Current(), "Number of definitions", num))
     num = 0;
@@ -52,7 +52,7 @@ void IGESAppli_ToolLevelToPWBLayerMap::ReadOwnParams(
     for (i = 1; i <= num; i++)
     {
       int tempEFLN;
-      // szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadInteger(PR.Current(), "Exchange File Level Number", tempEFLN))
         tempExchangeFileLevelNumber->SetValue(i, tempEFLN);
       occ::handle<TCollection_HAsciiString> tempNL;
@@ -89,16 +89,15 @@ void IGESAppli_ToolLevelToPWBLayerMap::WriteOwnParams(
   }
 }
 
-void IGESAppli_ToolLevelToPWBLayerMap::OwnShared(
-  const occ::handle<IGESAppli_LevelToPWBLayerMap>& /* ent */,
-  Interface_EntityIterator& /* iter */) const
+void IGESAppli_ToolLevelToPWBLayerMap::OwnShared(const occ::handle<IGESAppli_LevelToPWBLayerMap>&,
+                                                 Interface_EntityIterator&) const
 {
 }
 
 void IGESAppli_ToolLevelToPWBLayerMap::OwnCopy(
   const occ::handle<IGESAppli_LevelToPWBLayerMap>& another,
   const occ::handle<IGESAppli_LevelToPWBLayerMap>& ent,
-  Interface_CopyTool& /* TC */) const
+  Interface_CopyTool&) const
 {
   int                                   tempNbPropertyValues = another->NbPropertyValues();
   int                                   num                  = another->NbLevelToLayerDefs();
@@ -128,7 +127,7 @@ void IGESAppli_ToolLevelToPWBLayerMap::OwnCopy(
 }
 
 IGESData_DirChecker IGESAppli_ToolLevelToPWBLayerMap::DirChecker(
-  const occ::handle<IGESAppli_LevelToPWBLayerMap>& /* ent */) const
+  const occ::handle<IGESAppli_LevelToPWBLayerMap>&) const
 {
   IGESData_DirChecker DC(406, 24);
   DC.Structure(IGESData_DefVoid);
@@ -142,15 +141,14 @@ IGESData_DirChecker IGESAppli_ToolLevelToPWBLayerMap::DirChecker(
   return DC;
 }
 
-void IGESAppli_ToolLevelToPWBLayerMap::OwnCheck(
-  const occ::handle<IGESAppli_LevelToPWBLayerMap>& /* ent */,
-  const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /* ach */) const
+void IGESAppli_ToolLevelToPWBLayerMap::OwnCheck(const occ::handle<IGESAppli_LevelToPWBLayerMap>&,
+                                                const Interface_ShareTool&,
+                                                occ::handle<Interface_Check>&) const
 {
 }
 
 void IGESAppli_ToolLevelToPWBLayerMap::OwnDump(const occ::handle<IGESAppli_LevelToPWBLayerMap>& ent,
-                                               const IGESData_IGESDumper& /* dumper */,
+                                               const IGESData_IGESDumper&,
                                                Standard_OStream& S,
                                                const int         level) const
 {

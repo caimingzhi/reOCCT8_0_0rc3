@@ -19,17 +19,15 @@ static int baddcompound(Draw_Interpretor&, int, const char**);
 static int baddctools(Draw_Interpretor&, int, const char**);
 static int bclear(Draw_Interpretor&, int, const char**);
 
-//=================================================================================================
-
 void BOPTest::ObjCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
   if (done)
     return;
   done = true;
-  // Chapter's name
+
   const char* g = "BOPTest commands";
-  // Commands
+
   theCommands.Add(
     "baddobjects",
     "Adds objects for Boolean/GF/Split/Cells operations.\n"
@@ -99,8 +97,6 @@ void BOPTest::ObjCommands(Draw_Interpretor& theCommands)
     g);
 }
 
-//=================================================================================================
-
 int baddcompound(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
@@ -108,12 +104,12 @@ int baddcompound(Draw_Interpretor& di, int n, const char** a)
     di.PrintHelp(a[0]);
     return 1;
   }
-  //
+
   TopoDS_Iterator aIt;
   TopoDS_Shape    aS;
-  //
+
   aS = DBRep::Get(a[1]);
-  //
+
   NCollection_List<TopoDS_Shape>& aLS = BOPTest_Objects::Shapes();
   aIt.Initialize(aS);
   for (; aIt.More(); aIt.Next())
@@ -121,11 +117,9 @@ int baddcompound(Draw_Interpretor& di, int n, const char** a)
     const TopoDS_Shape& aSx = aIt.Value();
     aLS.Append(aSx);
   }
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 int baddctools(Draw_Interpretor& di, int n, const char** a)
 {
@@ -134,12 +128,12 @@ int baddctools(Draw_Interpretor& di, int n, const char** a)
     di.PrintHelp(a[0]);
     return 1;
   }
-  //
+
   TopoDS_Iterator aIt;
   TopoDS_Shape    aS;
-  //
+
   aS = DBRep::Get(a[1]);
-  //
+
   NCollection_List<TopoDS_Shape>& aLT = BOPTest_Objects::Tools();
   aIt.Initialize(aS);
   for (; aIt.More(); aIt.Next())
@@ -147,12 +141,9 @@ int baddctools(Draw_Interpretor& di, int n, const char** a)
     const TopoDS_Shape& aSx = aIt.Value();
     aLT.Append(aSx);
   }
-  //
+
   return 0;
 }
-
-//
-//=================================================================================================
 
 int baddobjects(Draw_Interpretor& di, int n, const char** a)
 {
@@ -161,21 +152,19 @@ int baddobjects(Draw_Interpretor& di, int n, const char** a)
     di.PrintHelp(a[0]);
     return 1;
   }
-  //
+
   int          i;
   TopoDS_Shape aS;
-  //
+
   NCollection_List<TopoDS_Shape>& aLS = BOPTest_Objects::Shapes();
   for (i = 1; i < n; ++i)
   {
     aS = DBRep::Get(a[i]);
     aLS.Append(aS);
   }
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 int bclearobjects(Draw_Interpretor& di, int n, const char** a)
 {
@@ -186,11 +175,9 @@ int bclearobjects(Draw_Interpretor& di, int n, const char** a)
   }
   NCollection_List<TopoDS_Shape>& aLS = BOPTest_Objects::Shapes();
   aLS.Clear();
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 int baddtools(Draw_Interpretor& di, int n, const char** a)
 {
@@ -199,21 +186,19 @@ int baddtools(Draw_Interpretor& di, int n, const char** a)
     di.PrintHelp(a[0]);
     return 1;
   }
-  //
+
   int          i;
   TopoDS_Shape aS;
-  //
+
   NCollection_List<TopoDS_Shape>& aLS = BOPTest_Objects::Tools();
   for (i = 1; i < n; ++i)
   {
     aS = DBRep::Get(a[i]);
     aLS.Append(aS);
   }
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 int bcleartools(Draw_Interpretor& di, int n, const char** a)
 {
@@ -224,11 +209,9 @@ int bcleartools(Draw_Interpretor& di, int n, const char** a)
   }
   NCollection_List<TopoDS_Shape>& aLS = BOPTest_Objects::Tools();
   aLS.Clear();
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 int bclear(Draw_Interpretor& di, int n, const char** a)
 {
@@ -237,7 +220,7 @@ int bclear(Draw_Interpretor& di, int n, const char** a)
     di.PrintHelp(a[0]);
     return 1;
   }
-  //
+
   BOPTest_Objects::Clear();
   return 0;
 }

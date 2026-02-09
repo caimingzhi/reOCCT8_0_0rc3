@@ -15,8 +15,6 @@
 #include <GeomAdaptor_Curve.hpp>
 #include <GeomAdaptor_Surface.hpp>
 
-//=================================================================================================
-
 double ChFiKPart_InPeriod(const double U, const double UFirst, const double ULast, const double Eps)
 {
   double u = U, period = ULast - UFirst;
@@ -28,12 +26,6 @@ double ChFiKPart_InPeriod(const double U, const double UFirst, const double ULas
     u = UFirst;
   return u;
 }
-
-//=======================================================================
-// function : PCurve
-// purpose  : Calculate a straight line in form of BSpline to guarantee
-//           the parameters.
-//=======================================================================
 
 occ::handle<Geom2d_BSplineCurve> ChFiKPart_PCurve(const gp_Pnt2d& UV1,
                                                   const gp_Pnt2d& UV2,
@@ -51,12 +43,6 @@ occ::handle<Geom2d_BSplineCurve> ChFiKPart_PCurve(const gp_Pnt2d& UV1,
   occ::handle<Geom2d_BSplineCurve> Pcurv = new Geom2d_BSplineCurve(p, k, m, 1);
   return Pcurv;
 }
-
-//=======================================================================
-// function : ProjPC
-// purpose  : For spherical corners the contours which of are not
-//           isos the circle is projected.
-//=======================================================================
 
 void ChFiKPart_ProjPC(const GeomAdaptor_Curve&   Cg,
                       const GeomAdaptor_Surface& Sg,
@@ -125,20 +111,10 @@ void ChFiKPart_ProjPC(const GeomAdaptor_Curve&   Cg,
   }
 }
 
-//=======================================================================
-// function : IndexCurveInDS
-// purpose  : Place a Curve in the DS and return its index.
-//=======================================================================
-
 int ChFiKPart_IndexCurveInDS(const occ::handle<Geom_Curve>& C, TopOpeBRepDS_DataStructure& DStr)
 {
   return DStr.AddCurve(TopOpeBRepDS_Curve(C, 0.));
 }
-
-//=======================================================================
-// function : IndexSurfaceInDS
-// purpose  : Place a Surface in the DS and return its index.
-//=======================================================================
 
 int ChFiKPart_IndexSurfaceInDS(const occ::handle<Geom_Surface>& S, TopOpeBRepDS_DataStructure& DStr)
 {

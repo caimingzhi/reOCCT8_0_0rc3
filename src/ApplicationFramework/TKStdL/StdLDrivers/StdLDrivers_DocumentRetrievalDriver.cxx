@@ -1,15 +1,4 @@
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <StdLDrivers_DocumentRetrievalDriver.hpp>
 #include <StdLDrivers.hpp>
@@ -36,40 +25,29 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StdLDrivers_DocumentRetrievalDriver, PCDM_RetrievalDriver)
 
-//=======================================================================
-// function : Read
-// purpose  : Retrieve the content of a file into a new document
-//=======================================================================
 void StdLDrivers_DocumentRetrievalDriver::Read(const TCollection_ExtendedString& theFileName,
                                                const occ::handle<CDM_Document>&  theNewDocument,
                                                const occ::handle<CDM_Application>&,
                                                const occ::handle<PCDM_ReaderFilter>&,
-                                               const Message_ProgressRange& /*theRange*/)
+                                               const Message_ProgressRange&)
 {
-  // Read header data and persistent document
+
   Storage_HeaderData                aHeaderData;
   occ::handle<StdObjMgt_Persistent> aPDocument = read(theFileName, aHeaderData);
   if (aPDocument.IsNull())
     return;
 
-  // Import transient document from the persistent one
   aPDocument->ImportDocument(occ::down_cast<TDocStd_Document>(theNewDocument));
 
-  // Copy comments from the header data
   theNewDocument->SetComments(aHeaderData.Comments());
 }
 
-//=======================================================================
-// function : read
-// purpose  : Read persistent document from a file
-//=======================================================================
 occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
   const TCollection_ExtendedString& theFileName,
   Storage_HeaderData&               theHeaderData)
 {
   int i;
 
-  // Create a driver appropriate for the given file
   occ::handle<Storage_BaseDriver> aFileDriver;
   if (PCDM::FileDriverType(TCollection_AsciiString(theFileName), aFileDriver) == PCDM_TOFD_Unknown)
   {
@@ -77,7 +55,6 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
     return nullptr;
   }
 
-  // Try to open the file
   try
   {
     OCC_CATCH_SIGNALS
@@ -93,16 +70,13 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
     throw Standard_Failure(aMsg.str().c_str());
   }
 
-  // Read header section
   if (!theHeaderData.Read(aFileDriver))
     raiseOnStorageError(theHeaderData.ErrorStatus());
 
-  // Read type section
   Storage_TypeData aTypeData;
   if (!aTypeData.Read(aFileDriver))
     raiseOnStorageError(aTypeData.ErrorStatus());
 
-  // Read root section
   Storage_RootData aRootData;
   if (!aRootData.Read(aFileDriver))
     raiseOnStorageError(aRootData.ErrorStatus());
@@ -116,7 +90,6 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
     throw Standard_Failure(aMsg.str().c_str());
   }
 
-  // Select instantiators for the used types
   NCollection_Array1<StdObjMgt_Persistent::Instantiator> anInstantiators(1,
                                                                          aTypeData.NumberOfTypes());
   {
@@ -170,7 +143,6 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
     }
   }
 
-  // Read and parse reference section
   StdObjMgt_ReadData aReadData(aFileDriver, theHeaderData.NumberOfObjects());
 
   raiseOnStorageError(aFileDriver->BeginReadRefSection());
@@ -198,7 +170,6 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
 
   raiseOnStorageError(aFileDriver->EndReadRefSection());
 
-  // Read and parse data section
   raiseOnStorageError(aFileDriver->BeginReadDataSection());
 
   for (i = 1; i <= theHeaderData.NumberOfObjects(); i++)
@@ -228,29 +199,20 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
 
   raiseOnStorageError(aFileDriver->EndReadDataSection());
 
-  // Get persistent document from the root object
   return aReadData.PersistentObject(aRootData.Roots()->First()->Reference());
 }
 
-//=================================================================================================
-
-void StdLDrivers_DocumentRetrievalDriver::Read(
-  Standard_IStream& /*theIStream*/,
-  const occ::handle<Storage_Data>& /*theStorageData*/,
-  const occ::handle<CDM_Document>& /*theDoc*/,
-  const occ::handle<CDM_Application>& /*theApplication*/,
-  const occ::handle<PCDM_ReaderFilter>& /*theFilter*/,
-  const Message_ProgressRange& /*theRange*/)
+void StdLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&,
+                                               const occ::handle<Storage_Data>&,
+                                               const occ::handle<CDM_Document>&,
+                                               const occ::handle<CDM_Application>&,
+                                               const occ::handle<PCDM_ReaderFilter>&,
+                                               const Message_ProgressRange&)
 {
   throw Standard_NotImplemented(
     "Reading from stream is not supported by StdLDrivers_DocumentRetrievalDriver");
 }
 
-//=======================================================================
-// function : raiseOnStorageError
-// purpose  : Update the reader status and raise an exception
-//           appropriate for the given storage error
-//=======================================================================
 void StdLDrivers_DocumentRetrievalDriver::raiseOnStorageError(Storage_Error theError)
 {
   Standard_SStream aMsg;
@@ -298,8 +260,6 @@ void StdLDrivers_DocumentRetrievalDriver::raiseOnStorageError(Storage_Error theE
       throw Standard_Failure(aMsg.str().c_str());
   }
 }
-
-//=================================================================================================
 
 void StdLDrivers_DocumentRetrievalDriver::bindTypes(StdObjMgt_MapOfInstantiators& theMap)
 {

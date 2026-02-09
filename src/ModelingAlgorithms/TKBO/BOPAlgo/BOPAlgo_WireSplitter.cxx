@@ -9,15 +9,11 @@
 #include <TopoDS_Wire.hpp>
 #include <NCollection_List.hpp>
 
-//=================================================================================================
-
 BOPAlgo_WireSplitter::BOPAlgo_WireSplitter()
     : myWES(nullptr),
       myLCB(myAllocator)
 {
 }
-
-//=================================================================================================
 
 BOPAlgo_WireSplitter::BOPAlgo_WireSplitter(
   const occ::handle<NCollection_BaseAllocator>& theAllocator)
@@ -27,39 +23,27 @@ BOPAlgo_WireSplitter::BOPAlgo_WireSplitter(
 {
 }
 
-//=================================================================================================
-
 BOPAlgo_WireSplitter::~BOPAlgo_WireSplitter() = default;
-
-//=================================================================================================
 
 void BOPAlgo_WireSplitter::SetWES(const BOPAlgo_WireEdgeSet& theWES)
 {
   myWES = (BOPAlgo_WireEdgeSet*)&theWES;
 }
 
-//=================================================================================================
-
 BOPAlgo_WireEdgeSet& BOPAlgo_WireSplitter::WES()
 {
   return *myWES;
 }
-
-//=================================================================================================
 
 void BOPAlgo_WireSplitter::SetContext(const occ::handle<IntTools_Context>& theContext)
 {
   myContext = theContext;
 }
 
-//=================================================================================================
-
 const occ::handle<IntTools_Context>& BOPAlgo_WireSplitter::Context()
 {
   return myContext;
 }
-
-//=================================================================================================
 
 void BOPAlgo_WireSplitter::CheckData()
 {
@@ -70,25 +54,22 @@ void BOPAlgo_WireSplitter::CheckData()
   }
 }
 
-//=================================================================================================
-
 void BOPAlgo_WireSplitter::Perform(const Message_ProgressRange& theRange)
 {
   GetReport()->Clear();
   Message_ProgressScope aPS(theRange, "Building wires", 1);
-  //
+
   CheckData();
   if (HasErrors())
   {
     return;
   }
-  //
-  // create a context
+
   if (myContext.IsNull())
   {
     myContext = new IntTools_Context;
   }
-  //
+
   BOPTools_AlgoTools::MakeConnexityBlocks(myWES->StartElements(),
                                           TopAbs_VERTEX,
                                           TopAbs_EDGE,
@@ -101,7 +82,6 @@ void BOPAlgo_WireSplitter::Perform(const Message_ProgressRange& theRange)
   MakeWires(aPS.Next());
 }
 
-/////////////////////////////////////////////////////////////////////////
 class BOPAlgo_WS_ConnexityBlock
 {
 public:
@@ -118,10 +98,8 @@ public:
 
   void SetContext(const occ::handle<IntTools_Context>& aContext) { myContext = aContext; }
 
-  //
   const occ::handle<IntTools_Context>& Context() const { return myContext; }
 
-  //
   void SetProgressRange(const Message_ProgressRange& theRange) { myRange = theRange; }
 
   void Perform()
@@ -143,8 +121,6 @@ protected:
 
 typedef NCollection_Vector<BOPAlgo_WS_ConnexityBlock> BOPAlgo_VectorOfConnexityBlock;
 
-//=================================================================================================
-
 void BOPAlgo_WireSplitter::MakeWires(const Message_ProgressRange& theRange)
 {
   bool                                                bIsRegular;
@@ -153,11 +129,11 @@ void BOPAlgo_WireSplitter::MakeWires(const Message_ProgressRange& theRange)
   NCollection_List<BOPTools_ConnexityBlock>::Iterator aItCB;
   NCollection_List<TopoDS_Shape>::Iterator            aIt;
   BOPAlgo_VectorOfConnexityBlock                      aVCB;
-  //
+
   Message_ProgressScope aPSOuter(theRange, nullptr, 1);
-  //
+
   const TopoDS_Face& aF = myWES->Face();
-  //
+
   aItCB.Initialize(myLCB);
   for (; aItCB.More(); aItCB.Next())
   {
@@ -187,9 +163,9 @@ void BOPAlgo_WireSplitter::MakeWires(const Message_ProgressRange& theRange)
   {
     aVCB.ChangeValue(iW).SetProgressRange(aPSParallel.Next());
   }
-  //===================================================
+
   BOPTools_Parallel::Perform(myRunParallel, aVCB, myContext);
-  //===================================================
+
   for (k = 0; k < aNbVCB; ++k)
   {
     const BOPAlgo_WS_ConnexityBlock&      aCB = aVCB(k);

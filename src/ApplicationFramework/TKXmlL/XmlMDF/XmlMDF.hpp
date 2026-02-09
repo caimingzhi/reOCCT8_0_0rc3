@@ -17,29 +17,11 @@ class XmlMDF_ADriverTable;
 class TDF_Label;
 class Message_Messenger;
 
-//! This package provides classes and methods to
-//! translate a transient DF into a persistent one and
-//! vice versa.
-//!
-//! Driver
-//!
-//! A driver is a tool used to translate a transient
-//! attribute into a persistent one and vice versa.
-//!
-//! Driver Table
-//!
-//! A driver table is an object building links between
-//! object types and object drivers. In the
-//! translation process, a driver table is asked to
-//! give a translation driver for each current object
-//! to be translated.
 class XmlMDF
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Translates a transient <aSource> into a persistent
-  //! <aTarget>.
   Standard_EXPORT static void FromTo(
     const occ::handle<TDF_Data>&            aSource,
     XmlObjMgt_Element&                      aTarget,
@@ -47,9 +29,6 @@ public:
     const occ::handle<XmlMDF_ADriverTable>& aDrivers,
     const Message_ProgressRange&            theRange = Message_ProgressRange());
 
-  //! Translates a persistent <aSource> into a transient
-  //! <aTarget>.
-  //! Returns True if completed successfully (False on error)
   Standard_EXPORT static bool FromTo(
     const XmlObjMgt_Element&                aSource,
     occ::handle<TDF_Data>&                  aTarget,
@@ -57,7 +36,6 @@ public:
     const occ::handle<XmlMDF_ADriverTable>& aDrivers,
     const Message_ProgressRange&            theRange = Message_ProgressRange());
 
-  //! Adds the attribute storage drivers to <aDriverSeq>.
   Standard_EXPORT static void AddDrivers(const occ::handle<XmlMDF_ADriverTable>& aDriverTable,
                                          const occ::handle<Message_Messenger>&   theMessageDriver);
 

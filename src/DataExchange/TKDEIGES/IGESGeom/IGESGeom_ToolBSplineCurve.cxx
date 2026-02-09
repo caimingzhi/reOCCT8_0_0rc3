@@ -16,26 +16,18 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-// MGE 29/07/98
-//=================================================================================================
-
 IGESGeom_ToolBSplineCurve::IGESGeom_ToolBSplineCurve() = default;
 
-//=================================================================================================
-
 void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSplineCurve>& ent,
-                                              const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                              const occ::handle<IGESData_IGESReaderData>&,
                                               IGESData_ParamReader& PR) const
 {
-  // MGE 29/07/98
-  // Building of messages
-  //========================================
+
   Message_Msg Msg99("XSTEP_99");
   Message_Msg Msg100("XSTEP_100");
   Message_Msg Msg101("XSTEP_101");
   Message_Msg Msg102("XSTEP_102");
   Message_Msg Msg103("XSTEP_103");
-  //========================================
 
   int                                      anIndex, aDegree;
   bool                                     aPlanar, aClosed, aPolynomial, aPeriodic;
@@ -45,22 +37,6 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
   occ::handle<NCollection_HArray1<double>> allWeights;
   occ::handle<NCollection_HArray1<gp_XYZ>> allPoles;
 
-  // bool st; //szv#4:S4163:12Mar99 moved down
-
-  // st = PR.ReadInteger(PR.Current(), Msg97, anIndex); //szv#4:S4163:12Mar99 moved in if
-  // st = PR.ReadInteger(PR.Current(), "Upper Index Of Sum", anIndex);
-
-  // szv#4:S4163:12Mar99 optimized
-  /*if (st && anIndex >= 0) {
-    allPoles   = new NCollection_HArray1<gp_XYZ>(0, anIndex);
-    // allWeights = new NCollection_HArray1<double>(1, anIndex+1);  done by ReadReals
-  }
-
-  if (st && anIndex < 0)
-  {
-    PR.SendFail(Msg97);
-    anIndex = 0;
-  }*/
   if (PR.ReadInteger(PR.Current(), anIndex))
   {
     if (anIndex < 0)
@@ -72,7 +48,6 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
     else
     {
       allPoles = new NCollection_HArray1<gp_XYZ>(0, anIndex);
-      // allWeights = new NCollection_HArray1<double>(1, anIndex+1);  done by ReadReals
     }
   }
   else
@@ -81,48 +56,32 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
     PR.SendFail(Msg97);
   }
 
-  // st = PR.ReadInteger(PR.Current(), Msg98, aDegree); //szv#4:S4163:12Mar99 moved in if
-  //  if (st && ! allWeights.IsNull() )   done by ReadReals
-  //    allKnots = new NCollection_HArray1<double>(-aDegree, anIndex+1);
   if (!PR.ReadInteger(PR.Current(), aDegree))
   {
-    aDegree = 0; // szv#4:S4163:12Mar99 `st=` not needed
+    aDegree = 0;
     Message_Msg Msg98("XSTEP_98");
     PR.SendFail(Msg98);
   }
-  // szv#4:S4163:12Mar99 `st=` not needed
+
   PR.ReadBoolean(PR.Current(), Msg99, aPlanar);
   PR.ReadBoolean(PR.Current(), Msg100, aClosed);
   PR.ReadBoolean(PR.Current(), Msg101, aPolynomial);
   PR.ReadBoolean(PR.Current(), Msg102, aPeriodic);
 
-  // st = PR.ReadBoolean(PR.Current(), "Planar/Non Planar Flag", aPlanar);
-  // st = PR.ReadBoolean(PR.Current(), "Open/Closed Flag", aClosed);
-  // st = PR.ReadBoolean(PR.Current(), "Rational/Polynomial Flag", aPolynomial);
-  // st = PR.ReadBoolean(PR.Current(), "NonPeriodic/Periodic Flag", aPeriodic);
-
   int nbKnots = anIndex + aDegree + 2;
-  // Reading all the knot sequences
 
-  // clang-format off
-  PR.ReadReals(PR.CurrentList(nbKnots), Msg103 , allKnots, -aDegree); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReals(PR.CurrentList(nbKnots), Msg103, allKnots, -aDegree);
 
-//st = PR.ReadReals
-//  (PR.CurrentList(nbKnots), "Knot sequence values", allKnots, -aDegree);
-
-  if (! allPoles.IsNull() )
-    {
-      Message_Msg Msg104("XSTEP_104");
-      Message_Msg Msg105("XSTEP_105");
-      PR.ReadReals(PR.CurrentList(anIndex+1), Msg104, allWeights,0); //szv#4:S4163:12Mar99 `st=` not needed
-      //st = PR.ReadReals(PR.CurrentList(anIndex+1), "Weights", allWeights,0);
-    // clang-format on
+  if (!allPoles.IsNull())
+  {
+    Message_Msg Msg104("XSTEP_104");
+    Message_Msg Msg105("XSTEP_105");
+    PR.ReadReals(PR.CurrentList(anIndex + 1), Msg104, allWeights, 0);
 
     for (int I = 0; I <= anIndex; I++)
     {
       gp_XYZ tempPole;
-      // st = PR.ReadXYZ(PR.CurrentList(1, 3), Msg105, tempPole); //szv#4:S4163:12Mar99 moved down
-      // st = PR.ReadXYZ(PR.CurrentList(1, 3), "Control Points", tempPole);
+
       if (PR.ReadXYZ(PR.CurrentList(1, 3), Msg105, tempPole))
         allPoles->SetValue(I, tempPole);
     }
@@ -132,16 +91,13 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
   {
     Message_Msg Msg106("XSTEP_106");
     PR.SendFail(Msg106);
-  } // szv#4:S4163:12Mar99 `st=` not needed
+  }
   if (!PR.ReadReal(PR.Current(), aUmax))
   {
     Message_Msg Msg107("XSTEP_107");
     PR.SendFail(Msg107);
-  } // szv#4:S4163:12Mar99 `st=` not needed
-  /*
-    st = PR.ReadReal(PR.Current(), "Starting Parameter Value", aUmin);
-    st = PR.ReadReal(PR.Current(), "Ending Parameter Value", aUmax);
-  */
+  }
+
   bool st = false;
   if (PR.DefinedElseSkip())
   {
@@ -152,7 +108,7 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
       PR.SendFail(Msg108);
     }
   }
-  // st = PR.ReadReal(PR.Current(), "Unit Normal X", normX);
+
   else
     normX = 0.;
   if (PR.DefinedElseSkip())
@@ -164,7 +120,7 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
       PR.SendFail(Msg108);
     }
   }
-  // st = PR.ReadReal(PR.Current(), "Unit Normal Y", normY);
+
   else
     normY = 0.;
   if (PR.DefinedElseSkip())
@@ -176,7 +132,7 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
       PR.SendFail(Msg108);
     }
   }
-  // st = PR.ReadReal(PR.Current(), "Unit Normal Z", normZ);
+
   else
     normZ = 0.;
   if (st)
@@ -196,8 +152,6 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
             aUmax,
             aNorm);
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolBSplineCurve::WriteOwnParams(const occ::handle<IGESGeom_BSplineCurve>& ent,
                                                IGESData_IGESWriter&                      IW) const
@@ -236,18 +190,14 @@ void IGESGeom_ToolBSplineCurve::WriteOwnParams(const occ::handle<IGESGeom_BSplin
   IW.Send(ent->Normal().Z());
 }
 
-//=================================================================================================
-
-void IGESGeom_ToolBSplineCurve::OwnShared(const occ::handle<IGESGeom_BSplineCurve>& /* ent */,
-                                          Interface_EntityIterator& /* iter */) const
+void IGESGeom_ToolBSplineCurve::OwnShared(const occ::handle<IGESGeom_BSplineCurve>&,
+                                          Interface_EntityIterator&) const
 {
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolBSplineCurve::OwnCopy(const occ::handle<IGESGeom_BSplineCurve>& another,
                                         const occ::handle<IGESGeom_BSplineCurve>& ent,
-                                        Interface_CopyTool& /* TC */) const
+                                        Interface_CopyTool&) const
 {
   int                                      I;
   int                                      low, up;
@@ -302,56 +252,30 @@ void IGESGeom_ToolBSplineCurve::OwnCopy(const occ::handle<IGESGeom_BSplineCurve>
             aNorm);
 }
 
-//=================================================================================================
-
 IGESData_DirChecker IGESGeom_ToolBSplineCurve::DirChecker(
-  const occ::handle<IGESGeom_BSplineCurve>& /* ent */) const
+  const occ::handle<IGESGeom_BSplineCurve>&) const
 {
   IGESData_DirChecker DC(126, 0, 5);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolBSplineCurve::OwnCheck(const occ::handle<IGESGeom_BSplineCurve>& ent,
                                          const Interface_ShareTool&,
                                          occ::handle<Interface_Check>& ach) const
 {
-  // MGE 29/07/98
-  // Building of messages
-  //========================================
-  // Message_Msg Msg104("XSTEP_104");
-  // Message_Msg Msg109("XSTEP_109");
-  //========================================
 
-  double eps = 1.E-04; // Test tolerance ??
-                       //  double norm = ent->Normal().SquareModulus();
-
-  // modified by rln 17/12/97 check of flag PROP2 according to IGES Standard
-  // It is possible to compare V(0) and V(1) only if StartingParameter = FirstKnot
-  // and EndingParameter = LastKnot (else we must build real geometrical curve)
-  // The fail is replaced with warning because it is not a serious problem
-  // if (ent->UMin() == ent->Knot(-ent->Degree()        ) &&
-  //   ent->UMax() == ent->Knot( ent->UpperIndex() + 1)   ) {
-  //   double udif = ent->UMax() - ent->UMin();
-  //   if (udif < 0) udif = -udif;
-  //     double udif = ent->Pole(0).SquareDistance (ent->Pole(ent->UpperIndex()));
-  //    if (udif <  eps * eps && !ent->IsClosed())
-  //      ach.AddWarning("V(0) == V(1) for an Open Curve (PROP2 = 0)");
-  //    if (udif >= eps * eps &&  ent->IsClosed())
-  //      ach.AddWarning("V(0) != V(1) for a Closed Curve (PROP2 = 1)");
-  // }
+  double eps = 1.E-04;
 
   int  lower = 0;
   int  upper = ent->UpperIndex();
   bool Flag  = true;
 
-  int I; // svv Jan 11 2000 : porting on DEC
+  int I;
   for (I = 0; ((I < upper) && (Flag)); I++)
     Flag &= (ent->Weight(I) > 0);
 
@@ -366,17 +290,11 @@ void IGESGeom_ToolBSplineCurve::OwnCheck(const occ::handle<IGESGeom_BSplineCurve
 
   for (I = lower; ((I < upper) && (Flag)); I++)
     Flag &= (ent->Weight(I) == tempVal);
-  /*
-    if (Flag && !ent->IsPolynomial(true))
-      ach.AddWarning("All weights equal & PROP3 != 1 (Curve Not Polynomial)");
-    if (!Flag && ent->IsPolynomial(true))
-      ach.AddWarning("All weights not equal & PROP3 != 0 (Curve Not Rational)");
-  */
 
   if (ent->IsPlanar())
   {
     gp_XYZ aNorm  = ent->Normal();
-    double epsn   = eps * 10.; // Tolerance ?? ici large
+    double epsn   = eps * 10.;
     double normod = aNorm.SquareModulus();
     if (normod < epsn)
     {
@@ -386,10 +304,8 @@ void IGESGeom_ToolBSplineCurve::OwnCheck(const occ::handle<IGESGeom_BSplineCurve
   }
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolBSplineCurve::OwnDump(const occ::handle<IGESGeom_BSplineCurve>& ent,
-                                        const IGESData_IGESDumper& /* dumper */,
+                                        const IGESData_IGESDumper&,
                                         Standard_OStream& S,
                                         const int         level) const
 {
@@ -398,7 +314,7 @@ void IGESGeom_ToolBSplineCurve::OwnDump(const occ::handle<IGESGeom_BSplineCurve>
     << "Sum UpperIndex : " << upind << "   Degree : " << ent->Degree() << "  "
     << (ent->IsPlanar() ? "Planar" : "NonPlanar") << "\n"
     << (ent->IsClosed() ? "Closed" : "Open") << "  "
-    << (ent->IsPeriodic() ? "Periodic" : "NonPeriodic") << "  " // #54 rln 24.12.98 CCI60005
+    << (ent->IsPeriodic() ? "Periodic" : "NonPeriodic") << "  "
     << (ent->IsPolynomial(true) ? "Polynomial" : "Rational") << "\nKnots : ";
   IGESData_DumpVals(S, level, -ent->Degree(), upind + 1, ent->Knot);
   S << "\nWeights : ";

@@ -2,7 +2,6 @@
 
 #include <Select3D_SensitiveSegment.hpp>
 
-//! This class provides custom sensitive face, which will be selected if it center is in rectangle.
 class MeshVS_SensitiveSegment : public Select3D_SensitiveSegment
 {
 public:

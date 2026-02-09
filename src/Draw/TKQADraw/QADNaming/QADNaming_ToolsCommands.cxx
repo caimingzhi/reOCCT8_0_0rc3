@@ -11,12 +11,6 @@
 #include <TopExp_Explorer.hpp>
 #include <NCollection_Map.hpp>
 
-//=======================================================================
-// function : QADNaming_CheckHasSame
-// purpose  : CheckIsSame  Shape1 Shape2
-//           - for test ShapeCopy mechanism
-//=======================================================================
-
 static int QADNaming_CheckHasSame(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb < 4)
@@ -76,12 +70,6 @@ static int QADNaming_CheckHasSame(Draw_Interpretor& di, int nb, const char** arg
   return 0;
 }
 
-//=======================================================================
-// function : QADNaming_TCopyShape
-// purpose  : CopyShape  Shape1 [Shape2 ...]
-//           - for test ShapeCopy mechanism
-//=======================================================================
-
 static int QADNaming_TCopyShape(Draw_Interpretor& di, int nb, const char** arg)
 {
   TNaming_Translator TR;
@@ -101,7 +89,6 @@ static int QADNaming_TCopyShape(Draw_Interpretor& di, int nb, const char** arg)
       BRepTools::Read(S, arg[i], aBuilder);
     }
 
-    // Add to Map
     if (S.IsNull())
       return (1);
     else
@@ -109,14 +96,12 @@ static int QADNaming_TCopyShape(Draw_Interpretor& di, int nb, const char** arg)
       aDMapOfShapeOfName.Bind(S, name);
       TR.Add(S);
     }
-  } // for ...
+  }
 
-  // PERFORM
   TR.Perform();
 
   if (TR.IsDone())
   {
-    //    std::cout << "QADNaming_CopyShape:: Copy is Done " << std::endl;
 
     NCollection_DataMap<TopoDS_Shape, TCollection_AsciiString, TopTools_ShapeMapHasher>::Iterator
       itrn(aDMapOfShapeOfName);
@@ -132,8 +117,6 @@ static int QADNaming_TCopyShape(Draw_Interpretor& di, int nb, const char** arg)
   di << "QADNaming_CopyShape : Error\n";
   return 1;
 }
-
-//=================================================================================================
 
 void QADNaming::ToolsCommands(Draw_Interpretor& theCommands)
 {

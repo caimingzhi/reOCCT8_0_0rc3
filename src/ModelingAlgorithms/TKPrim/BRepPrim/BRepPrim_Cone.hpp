@@ -9,63 +9,34 @@ class gp_Ax2;
 class gp_Pnt;
 class TopoDS_Face;
 
-//! Implement the cone primitive.
 class BRepPrim_Cone : public BRepPrim_Revolution
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! the STEP definition
-  //! Angle = semi-angle of the cone
-  //! Position : the coordinate system
-  //! Height : height of the cone.
-  //! Radius : radius of truncated face at z = 0
-  //!
-  //! The apex is on z < 0
-  //!
-  //! Errors : Height < Resolution
-  //! Angle < Resolution / Height
-  //! Angle > PI/2 - Resolution / Height
   Standard_EXPORT BRepPrim_Cone(const double  Angle,
                                 const gp_Ax2& Position,
                                 const double  Height,
                                 const double  Radius = 0);
 
-  //! infinite cone at origin on Z negative
   Standard_EXPORT BRepPrim_Cone(const double Angle);
 
-  //! infinite cone at Apex on Z negative
   Standard_EXPORT BRepPrim_Cone(const double Angle, const gp_Pnt& Apex);
 
-  //! infinite cone with Axes
   Standard_EXPORT BRepPrim_Cone(const double Angle, const gp_Ax2& Axes);
 
-  //! create a Cone at origin on Z axis, of height H,
-  //! radius R1 at Z = 0, R2 at Z = H, X is the origin
-  //! of angles. If R1 or R2 is 0 there is an apex.
-  //! Otherwise, it is a truncated cone.
-  //!
-  //! Error  : R1 and R2 < Resolution
-  //! R1 or R2 negative
-  //! std::abs(R1-R2) < Resolution
-  //! H < Resolution
-  //! H negative
   Standard_EXPORT BRepPrim_Cone(const double R1, const double R2, const double H);
 
-  //! same as above but at a given point
   Standard_EXPORT BRepPrim_Cone(const gp_Pnt& Center,
                                 const double  R1,
                                 const double  R2,
                                 const double  H);
 
-  //! same as above with given axes system.
   Standard_EXPORT BRepPrim_Cone(const gp_Ax2& Axes,
                                 const double  R1,
                                 const double  R2,
                                 const double  H);
 
-  //! The surface normal should be directed towards the
-  //! outside.
   Standard_EXPORT TopoDS_Face MakeEmptyLateralFace() const override;
 
 private:

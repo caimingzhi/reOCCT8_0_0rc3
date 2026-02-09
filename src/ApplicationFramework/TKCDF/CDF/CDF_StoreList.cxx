@@ -106,9 +106,7 @@ PCDM_StoreStatus CDF_StoreList::Store(occ::handle<CDM_MetaData>&   aMetaData,
           }
           else
           {
-            // Reset the store-status.
-            // It has sense in multi-threaded access to the storage driver - this way we reset the
-            // status for each call.
+
             aDocumentStorageDriver->SetStoreStatus(PCDM_SS_OK);
 
             if (!theMetaDataDriver->FindFolder(theDocument->RequestedFolder()))

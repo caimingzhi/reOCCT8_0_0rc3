@@ -5,11 +5,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_CameraModelD3MultiClipping, StepVisual_CameraModelD3)
 
-//=================================================================================================
-
 StepVisual_CameraModelD3MultiClipping::StepVisual_CameraModelD3MultiClipping() = default;
-
-//=================================================================================================
 
 void StepVisual_CameraModelD3MultiClipping::Init(
   const occ::handle<TCollection_HAsciiString>&  theName,
@@ -18,8 +14,8 @@ void StepVisual_CameraModelD3MultiClipping::Init(
   const occ::handle<NCollection_HArray1<StepVisual_CameraModelD3MultiClippingInterectionSelect>>&
     theShapeClipping)
 {
-  // Own field
+
   myShapeClipping = theShapeClipping;
-  // Inherited fields
+
   StepVisual_CameraModelD3::Init(theName, theViewReferenceSystem, thePerspectiveOfVolume);
 }

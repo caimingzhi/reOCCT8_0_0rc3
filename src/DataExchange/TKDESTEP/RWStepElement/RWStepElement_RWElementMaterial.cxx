@@ -8,11 +8,7 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepElement_RWElementMaterial::RWStepElement_RWElementMaterial() = default;
-
-//=================================================================================================
 
 void RWStepElement_RWElementMaterial::ReadStep(
   const occ::handle<StepData_StepReaderData>&     data,
@@ -20,11 +16,9 @@ void RWStepElement_RWElementMaterial::ReadStep(
   occ::handle<Interface_Check>&                   ach,
   const occ::handle<StepElement_ElementMaterial>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "element_material"))
     return;
-
-  // Own fields of ElementMaterial
 
   occ::handle<TCollection_HAsciiString> aMaterialId;
   data->ReadString(num, 1, "material_id", ach, aMaterialId);
@@ -54,18 +48,13 @@ void RWStepElement_RWElementMaterial::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aMaterialId, aDescription, aProperties);
 }
-
-//=================================================================================================
 
 void RWStepElement_RWElementMaterial::WriteStep(
   StepData_StepWriter&                            SW,
   const occ::handle<StepElement_ElementMaterial>& ent) const
 {
-
-  // Own fields of ElementMaterial
 
   SW.Send(ent->MaterialId());
 
@@ -80,13 +69,9 @@ void RWStepElement_RWElementMaterial::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepElement_RWElementMaterial::Share(const occ::handle<StepElement_ElementMaterial>& ent,
                                             Interface_EntityIterator& iter) const
 {
-
-  // Own fields of ElementMaterial
 
   for (int i1 = 1; i1 <= ent->Properties()->Length(); i1++)
   {

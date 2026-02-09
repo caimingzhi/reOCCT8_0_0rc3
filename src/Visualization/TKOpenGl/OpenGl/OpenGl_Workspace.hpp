@@ -12,19 +12,14 @@ class OpenGl_View;
 class OpenGl_Window;
 class Image_PixMap;
 
-//! Rendering workspace.
-//! Provides methods to render primitives and maintain GL state.
 class OpenGl_Workspace : public Standard_Transient
 {
 public:
-  //! Constructor of rendering workspace.
   Standard_EXPORT OpenGl_Workspace(OpenGl_View*                      theView,
                                    const occ::handle<OpenGl_Window>& theWindow);
 
-  //! Destructor
   ~OpenGl_Workspace() override = default;
 
-  //! Activate rendering context.
   Standard_EXPORT bool Activate();
 
   OpenGl_View* View() const { return myView; }
@@ -44,8 +39,6 @@ public:
 
   Standard_EXPORT int Height() const;
 
-  //! Setup Z-buffer usage flag (without affecting GL state!).
-  //! Returns previously set flag.
   bool SetUseZBuffer(const bool theToUse)
   {
     const bool wasUsed = myUseZBuffer;
@@ -53,25 +46,15 @@ public:
     return wasUsed;
   }
 
-  //! @return true if usage of Z buffer is enabled.
   bool& UseZBuffer() { return myUseZBuffer; }
 
-  //! @return true if depth writing is enabled.
   bool& UseDepthWrite() { return myUseDepthWrite; }
 
-  //! Configure default polygon offset parameters.
-  //! Return previous settings.
   Standard_EXPORT Graphic3d_PolygonOffset
     SetDefaultPolygonOffset(const Graphic3d_PolygonOffset& theOffset);
 
-  //// RELATED TO STATUS ////
-
-  //! Return true if active group might activate face culling (e.g. primitives are closed).
   bool ToAllowFaceCulling() const { return myToAllowFaceCulling; }
 
-  //! Allow or disallow face culling.
-  //! This call does NOT affect current state of back face culling;
-  //! ApplyAspectFace() should be called to update state.
   bool SetAllowFaceCulling(bool theToAllow)
   {
     const bool wasAllowed = myToAllowFaceCulling;
@@ -79,56 +62,46 @@ public:
     return wasAllowed;
   }
 
-  //! Return true if following structures should apply highlight color.
   bool ToHighlight() const { return !myHighlightStyle.IsNull(); }
 
-  //! Return highlight style.
   const occ::handle<Graphic3d_PresentationAttributes>& HighlightStyle() const
   {
     return myHighlightStyle;
   }
 
-  //! Set highlight style.
   void SetHighlightStyle(const occ::handle<Graphic3d_PresentationAttributes>& theStyle)
   {
     myHighlightStyle = theStyle;
   }
 
-  //! Return edge color taking into account highlight flag.
   const NCollection_Vec4<float>& EdgeColor() const
   {
     return !myHighlightStyle.IsNull() ? myHighlightStyle->ColorRGBA()
                                       : myAspectsSet->Aspect()->EdgeColorRGBA();
   }
 
-  //! Return Interior color taking into account highlight flag.
   const NCollection_Vec4<float>& InteriorColor() const
   {
     return !myHighlightStyle.IsNull() ? myHighlightStyle->ColorRGBA()
                                       : myAspectsSet->Aspect()->InteriorColorRGBA();
   }
 
-  //! Return text color taking into account highlight flag.
   const NCollection_Vec4<float>& TextColor() const
   {
     return !myHighlightStyle.IsNull() ? myHighlightStyle->ColorRGBA()
                                       : myAspectsSet->Aspect()->ColorRGBA();
   }
 
-  //! Return text Subtitle color taking into account highlight flag.
   const NCollection_Vec4<float>& TextSubtitleColor() const
   {
     return !myHighlightStyle.IsNull() ? myHighlightStyle->ColorRGBA()
                                       : myAspectsSet->Aspect()->ColorSubTitleRGBA();
   }
 
-  //! Currently set aspects (can differ from applied).
   const OpenGl_Aspects* Aspects() const { return myAspectsSet; }
 
-  //! Assign new aspects (will be applied within ApplyAspects()).
   Standard_EXPORT const OpenGl_Aspects* SetAspects(const OpenGl_Aspects* theAspect);
 
-  //! Return TextureSet from set Aspects or Environment texture.
   const occ::handle<OpenGl_TextureSet>& TextureSet() const
   {
     const occ::handle<OpenGl_TextureSet>& aTextureSet =
@@ -137,56 +110,34 @@ public:
                                                                            : myEnvironmentTexture;
   }
 
-  //! Apply aspects.
-  //! @param theToBindTextures flag to bind texture set defined by applied aspect
-  //! @return aspect set by SetAspects()
   Standard_EXPORT const OpenGl_Aspects* ApplyAspects(bool theToBindTextures = true);
 
-  //! Clear the applied aspect state to default values.
   void ResetAppliedAspect();
 
-  //! Get rendering filter.
-  //! @sa ShouldRender()
   int RenderFilter() const { return myRenderFilter; }
 
-  //! Set filter for restricting rendering of particular elements.
-  //! @sa ShouldRender()
   void SetRenderFilter(int theFilter) { myRenderFilter = theFilter; }
 
-  //! Checks whether the element can be rendered or not.
-  //! @param[in] theElement  the element to check
-  //! @param[in] theGroup    the group containing the element
-  //! @return True if element can be rendered
   bool ShouldRender(const OpenGl_Element* theElement, const OpenGl_Group* theGroup);
 
-  //! Return the number of skipped transparent elements within active OpenGl_RenderFilter_OpaqueOnly
-  //! filter.
-  //! @sa OpenGl_LayerList::Render()
   int NbSkippedTransparentElements() { return myNbSkippedTranspElems; }
 
-  //! Reset skipped transparent elements counter.
-  //! @sa OpenGl_LayerList::Render()
   void ResetSkippedCounter() { myNbSkippedTranspElems = 0; }
 
-  //! Returns face aspect for none culling mode.
   const OpenGl_Aspects& NoneCulling() const { return myNoneCulling; }
 
-  //! Returns face aspect for front face culling mode.
   const OpenGl_Aspects& FrontCulling() const { return myFrontCulling; }
 
-  //! Sets a new environment texture.
   void SetEnvironmentTexture(const occ::handle<OpenGl_TextureSet>& theTexture)
   {
     myEnvironmentTexture = theTexture;
   }
 
-  //! Returns environment texture.
   const occ::handle<OpenGl_TextureSet>& EnvironmentTexture() const { return myEnvironmentTexture; }
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
-protected: //! @name protected fields
+protected:
   OpenGl_View*                myView;
   occ::handle<OpenGl_Window>  myWindow;
   occ::handle<OpenGl_Context> myGlContext;
@@ -195,11 +146,9 @@ protected: //! @name protected fields
   OpenGl_Aspects              myNoneCulling;
   OpenGl_Aspects              myFrontCulling;
 
-protected:           //! @name fields related to status
-                     // clang-format off
-  int myNbSkippedTranspElems; //!< counter of skipped transparent elements for OpenGl_LayerList two rendering passes method
-  int myRenderFilter;         //!< active filter for skipping rendering of elements by some criteria (multiple render passes)
-                     // clang-format on
+protected:
+  int myNbSkippedTranspElems;
+  int myRenderFilter;
 
   OpenGl_Aspects                 myDefaultAspects;
   const OpenGl_Aspects*          myAspectsSet;
@@ -207,14 +156,14 @@ protected:           //! @name fields related to status
 
   occ::handle<Graphic3d_PresentationAttributes> myAspectFaceAppliedWithHL;
 
-  bool                                          myToAllowFaceCulling; //!< allow back face culling
-  occ::handle<Graphic3d_PresentationAttributes> myHighlightStyle;     //!< active highlight style
+  bool                                          myToAllowFaceCulling;
+  occ::handle<Graphic3d_PresentationAttributes> myHighlightStyle;
 
-  OpenGl_Aspects myAspectFaceHl; //!< Hiddenline aspect
+  OpenGl_Aspects myAspectFaceHl;
 
   occ::handle<OpenGl_TextureSet> myEnvironmentTexture;
 
-public: //! @name type definition
+public:
   DEFINE_STANDARD_RTTIEXT(OpenGl_Workspace, Standard_Transient)
   DEFINE_STANDARD_ALLOC
 };

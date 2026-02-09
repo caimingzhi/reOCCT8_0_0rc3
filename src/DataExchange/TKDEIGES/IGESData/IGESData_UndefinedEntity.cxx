@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IGESData_ColorEntity.hpp>
 #include <IGESData_IGESReaderData.hpp>
@@ -30,59 +19,40 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESData_UndefinedEntity, IGESData_IGESEntity)
 
-// MGE 23/07/98
-//=================================================================================================
-
 IGESData_UndefinedEntity::IGESData_UndefinedEntity()
 {
   thecont = new Interface_UndefinedContent;
 }
-
-//=================================================================================================
 
 occ::handle<Interface_UndefinedContent> IGESData_UndefinedEntity::UndefinedContent() const
 {
   return thecont;
 }
 
-//=================================================================================================
-
 occ::handle<Interface_UndefinedContent> IGESData_UndefinedEntity::ChangeableContent()
 {
   return thecont;
 }
-
-//=================================================================================================
 
 void IGESData_UndefinedEntity::SetNewContent(const occ::handle<Interface_UndefinedContent>& cont)
 {
   thecont = cont;
 }
 
-//  ....           (Re)definitions specifiques a UndefinedEntity           ....
-
-//=================================================================================================
-
 bool IGESData_UndefinedEntity::IsOKDirPart() const
 {
   return (thedstat == 0);
 }
-
-//=================================================================================================
 
 int IGESData_UndefinedEntity::DirStatus() const
 {
   return thedstat;
 }
 
-//=================================================================================================
-
 void IGESData_UndefinedEntity::SetOKDirPart()
 {
   thedstat = 0;
 }
-
-//=================================================================================================
 
 IGESData_DefType IGESData_UndefinedEntity::DefLineFont() const
 {
@@ -95,8 +65,6 @@ IGESData_DefType IGESData_UndefinedEntity::DefLineFont() const
     return IGESData_ErrorRef;
 }
 
-//=================================================================================================
-
 IGESData_DefList IGESData_UndefinedEntity::DefLevel() const
 {
   int st = ((thedstat / 16) & 3);
@@ -107,8 +75,6 @@ IGESData_DefList IGESData_UndefinedEntity::DefLevel() const
   else
     return IGESData_ErrorSeveral;
 }
-
-//=================================================================================================
 
 IGESData_DefList IGESData_UndefinedEntity::DefView() const
 {
@@ -121,8 +87,6 @@ IGESData_DefList IGESData_UndefinedEntity::DefView() const
     return IGESData_ErrorSeveral;
 }
 
-//=================================================================================================
-
 IGESData_DefType IGESData_UndefinedEntity::DefColor() const
 {
   int st = ((thedstat / 256) & 3);
@@ -134,8 +98,6 @@ IGESData_DefType IGESData_UndefinedEntity::DefColor() const
     return IGESData_ErrorRef;
 }
 
-//=================================================================================================
-
 bool IGESData_UndefinedEntity::HasSubScriptNumber() const
 {
   int st = ((thedstat / 1024) & 1);
@@ -145,29 +107,14 @@ bool IGESData_UndefinedEntity::HasSubScriptNumber() const
     return false;
 }
 
-//   ReadDir verifies the data, if there are errors notes them (status),
-//   generates a new DirPart without these errors, and calls base ReadDir
-
-//=================================================================================================
-
 bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData>& IR,
                                        IGESData_DirPart&                           DP,
                                        occ::handle<Interface_Check>&               ach)
 {
-  // MGE 23/07/98
-  // =====================================
-  // Message_Msg Msg60 ("XSTEP_60");
-  // Message_Msg Msg61 ("XSTEP_61");
-  // Message_Msg Msg62 ("XSTEP_62");
-  // Message_Msg Msg63 ("XSTEP_63");
-  // Message_Msg Msg64 ("XSTEP_64");
-  // Message_Msg Msg70 ("XSTEP_70");
-  // Message_Msg Msg72 ("XSTEP_72");
-  // =====================================
 
   int  v[17];
   char res1[9], res2[9], lab[9], subs[9];
-  int  max = 2 * IR->NbRecords(); // max value for DSectNum
+  int  max = 2 * IR->NbRecords();
   thedstat = 0;
 
   occ::handle<IGESData_IGESEntity> anent;
@@ -203,7 +150,7 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
     if (!anent->IsKind(STANDARD_TYPE(IGESData_LineFontEntity)))
       iapb = true;
   }
-  // Sending of message : Line Font Pattern field is incorrect.
+
   if (iapb)
   {
     Message_Msg Msg60("XSTEP_60");
@@ -222,7 +169,6 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
       iapb = true;
   }
 
-  // Sending of message : Level field is incorrect.
   if (iapb)
   {
     Message_Msg Msg61("XSTEP_61");
@@ -241,7 +187,6 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
       iapb = true;
   }
 
-  // Sending of message : View field is incorrect.
   if (iapb)
   {
     Message_Msg Msg62("XSTEP_62");
@@ -260,7 +205,6 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
       iapb = true;
   }
 
-  // Sending of message : Transformation Matrix field is incorrect
   if (iapb)
   {
     Message_Msg Msg63("XSTEP_63");
@@ -279,7 +223,6 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
       iapb = true;
   }
 
-  // Sending of message : Label Display Entity  field is incorrect.
   if (iapb)
   {
     Message_Msg Msg64("XSTEP_64");
@@ -301,7 +244,6 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
     }
   }
 
-  // Sending of message : Color Number field is incorrect.
   if (iapb)
   {
     Message_Msg Msg70("XSTEP_70");
@@ -311,16 +253,15 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
   }
 
   iapb = false;
-  int i; // svv Jan11 2000 : porting on DEC
+  int i;
   for (i = 0; i < 8; i++)
   {
     if (subs[i] == '\0')
-      break; // end of line
+      break;
     if (subs[i] != ' ' && (subs[i] < 48 || subs[i] > 57))
       iapb = true;
   }
 
-  // Sending of message : Entity Subscript Number field is incorrect.
   if (iapb)
   {
     Message_Msg Msg72("XSTEP_72");
@@ -330,7 +271,6 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
       subs[i] = ' ';
   }
 
-  //  ...  End of this analysis : if necessary we rebuild DP  ...
   if (thedstat == 0)
     return true;
   else
@@ -360,11 +300,7 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
   }
 }
 
-//   Undifferentiated parameters : assocs and props ignored
-
-//=================================================================================================
-
-void IGESData_UndefinedEntity::ReadOwnParams(const occ::handle<IGESData_IGESReaderData>& /*IR*/,
+void IGESData_UndefinedEntity::ReadOwnParams(const occ::handle<IGESData_IGESReaderData>&,
                                              IGESData_ParamReader& PR)
 {
   int nb = PR.NbParams();
@@ -373,18 +309,11 @@ void IGESData_UndefinedEntity::ReadOwnParams(const occ::handle<IGESData_IGESRead
   for (int i = 1; i <= nb; i++)
   {
     Interface_ParamType ptyp = PR.ParamType(i);
-    /*    if (PR.IsParamEntity(i)) {
-          thecont->AddEntity (ptyp,PR.ParamEntity(IR,i));
-        }
-        else thecont->AddLiteral (ptyp,new TCollection_HAsciiString(PR.ParamValue(i)));
-    */
-    //  We are ALWAYS in literal mode, it's much clearer !
+
     thecont->AddLiteral(ptyp, new TCollection_HAsciiString(PR.ParamValue(i)));
   }
   PR.SetCurrentNumber(nb + 1);
 }
-
-//=================================================================================================
 
 void IGESData_UndefinedEntity::WriteOwnParams(IGESData_IGESWriter& IW) const
 {

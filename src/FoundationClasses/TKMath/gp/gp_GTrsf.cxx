@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #define No_Standard_OutOfRange
 
@@ -99,7 +87,7 @@ void gp_GTrsf::Power(const int N)
     {
       int    Npower  = std::abs(N) - 1;
       gp_XYZ Temploc = loc;
-      //      double Tempscale = scale;
+
       gp_Mat Tempmatrix(matrix);
       for (;;)
       {
@@ -149,10 +137,8 @@ void gp_GTrsf::PreMultiply(const gp_GTrsf& T)
 
 void gp_GTrsf::SetForm()
 {
-  double tol = 1.e-12; // Precision::Angular();
-  //
-  // don t trust the initial values !
-  //
+  double tol = 1.e-12;
+
   gp_Mat M(matrix);
   double s = M.Determinant();
 
@@ -165,8 +151,6 @@ void gp_GTrsf::SetForm()
     s = -std::pow(-s, 1. / 3.);
   M.Divide(s);
 
-  // check if the matrix is an uniform matrix
-  // the transposition should be the invert.
   gp_Mat TM(M);
   TM.Transpose();
   TM.Multiply(M);
@@ -184,8 +168,6 @@ void gp_GTrsf::SetForm()
         return;
       }
 }
-
-//=================================================================================================
 
 void gp_GTrsf::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

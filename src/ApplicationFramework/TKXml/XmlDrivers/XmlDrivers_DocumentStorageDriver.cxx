@@ -10,15 +10,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlDrivers_DocumentStorageDriver, XmlLDrivers_DocumentStorageDriver)
 
-//=================================================================================================
-
 XmlDrivers_DocumentStorageDriver::XmlDrivers_DocumentStorageDriver(
   const TCollection_ExtendedString& theCopyright)
     : XmlLDrivers_DocumentStorageDriver(theCopyright)
 {
 }
-
-//=================================================================================================
 
 occ::handle<XmlMDF_ADriverTable> XmlDrivers_DocumentStorageDriver::AttributeDrivers(
   const occ::handle<Message_Messenger>& theMessageDriver)
@@ -26,10 +22,6 @@ occ::handle<XmlMDF_ADriverTable> XmlDrivers_DocumentStorageDriver::AttributeDriv
   return XmlDrivers::AttributeDrivers(theMessageDriver);
 }
 
-//=======================================================================
-// function : WriteShapeSection
-// purpose  : Implements WriteShapeSection
-//=======================================================================
 bool XmlDrivers_DocumentStorageDriver::WriteShapeSection(
   XmlObjMgt_Element&           theElement,
   const TDocStd_FormatVersion  theStorageFormatVersion,

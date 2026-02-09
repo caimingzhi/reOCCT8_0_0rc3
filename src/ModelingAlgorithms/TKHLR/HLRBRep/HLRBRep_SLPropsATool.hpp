@@ -14,12 +14,8 @@ class HLRBRep_SLPropsATool
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Computes the point <P> of parameter <U> and <V>
-  //! on the Surface <A>.
   static void Value(const HLRBRep_SurfacePtr A, const double U, const double V, gp_Pnt& P);
 
-  //! Computes the point <P> and first derivative <D1*>
-  //! of parameter <U> and <V> on the Surface <A>.
   static void D1(const HLRBRep_SurfacePtr A,
                  const double             U,
                  const double             V,
@@ -27,9 +23,6 @@ public:
                  gp_Vec&                  D1U,
                  gp_Vec&                  D1V);
 
-  //! Computes the point <P>, the first derivative <D1*>
-  //! and second derivative <D2*> of parameter <U> and
-  //! <V> on the Surface <A>.
   static void D2(const HLRBRep_SurfacePtr A,
                  const double             U,
                  const double             V,
@@ -46,21 +39,14 @@ public:
                    const int                Nu,
                    const int                Nv);
 
-  //! returns the order of continuity of the Surface <A>.
-  //! returns 1 : first derivative only is computable
-  //! returns 2 : first and second derivative only are
-  //! computable.
   static int Continuity(const HLRBRep_SurfacePtr A);
 
-  //! returns the bounds of the Surface.
   static void Bounds(const HLRBRep_SurfacePtr A, double& U1, double& V1, double& U2, double& V2);
 };
 
 #include <HLRBRep_Surface.hpp>
 #include <GeomAbs_Shape.hpp>
 #include <gp_Pnt.hpp>
-
-//=================================================================================================
 
 inline void HLRBRep_SLPropsATool::Value(const HLRBRep_SurfacePtr A,
                                         const double             U,
@@ -69,8 +55,6 @@ inline void HLRBRep_SLPropsATool::Value(const HLRBRep_SurfacePtr A,
 {
   P = ((HLRBRep_Surface*)A)->Value(U, V);
 }
-
-//=================================================================================================
 
 inline void HLRBRep_SLPropsATool::D1(const HLRBRep_SurfacePtr A,
                                      const double             U,
@@ -81,8 +65,6 @@ inline void HLRBRep_SLPropsATool::D1(const HLRBRep_SurfacePtr A,
 {
   ((HLRBRep_Surface*)A)->D1(U, V, P, D1U, D1V);
 }
-
-//=================================================================================================
 
 inline void HLRBRep_SLPropsATool::D2(const HLRBRep_SurfacePtr A,
                                      const double             U,
@@ -97,8 +79,6 @@ inline void HLRBRep_SLPropsATool::D2(const HLRBRep_SurfacePtr A,
   ((HLRBRep_Surface*)A)->D2(U, V, P, D1U, D1V, D2U, D2V, DUV);
 }
 
-//=================================================================================================
-
 inline gp_Vec HLRBRep_SLPropsATool::DN(const HLRBRep_SurfacePtr A,
                                        const double             U,
                                        const double             V,
@@ -108,14 +88,10 @@ inline gp_Vec HLRBRep_SLPropsATool::DN(const HLRBRep_SurfacePtr A,
   return ((HLRBRep_Surface*)A)->DN(U, V, Nu, Nv);
 }
 
-//=================================================================================================
-
 inline int HLRBRep_SLPropsATool::Continuity(const HLRBRep_SurfacePtr)
 {
   return 2;
-} // et boum ! cky le 27 - 04 - 1993
-
-//=================================================================================================
+}
 
 inline void HLRBRep_SLPropsATool::Bounds(const HLRBRep_SurfacePtr,
                                          double& U1,

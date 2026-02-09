@@ -1,14 +1,10 @@
-// Created on : Thu Mar 24 18:30:12 2022
+
 
 #include <StepVisual_EdgeOrCurve.hpp>
 #include <StepGeom_Curve.hpp>
 #include <StepShape_Edge.hpp>
 
-//=================================================================================================
-
 StepVisual_EdgeOrCurve::StepVisual_EdgeOrCurve() = default;
-
-//=================================================================================================
 
 int StepVisual_EdgeOrCurve::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -21,14 +17,10 @@ int StepVisual_EdgeOrCurve::CaseNum(const occ::handle<Standard_Transient>& ent) 
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_Curve> StepVisual_EdgeOrCurve::Curve() const
 {
   return occ::down_cast<StepGeom_Curve>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepShape_Edge> StepVisual_EdgeOrCurve::Edge() const
 {

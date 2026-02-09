@@ -11,7 +11,6 @@ class StepRepr_ItemDefinedTransformation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ItemDefinedTransformation
 class RWStepRepr_RWItemDefinedTransformation
 {
 public:

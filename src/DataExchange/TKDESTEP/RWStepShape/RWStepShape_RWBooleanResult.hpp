@@ -11,7 +11,6 @@ class StepShape_BooleanResult;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for BooleanResult
 class RWStepShape_RWBooleanResult
 {
 public:

@@ -1,21 +1,8 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <HelixGeom_BuilderApproxCurve.hpp>
 #include <Geom_Curve.hpp>
 #include <NCollection_Sequence.hpp>
-
-//=================================================================================================
 
 HelixGeom_BuilderApproxCurve::HelixGeom_BuilderApproxCurve()
     : myErrorStatus(0),
@@ -28,11 +15,7 @@ HelixGeom_BuilderApproxCurve::HelixGeom_BuilderApproxCurve()
 {
 }
 
-//=================================================================================================
-
 HelixGeom_BuilderApproxCurve::~HelixGeom_BuilderApproxCurve() = default;
-
-//=================================================================================================
 
 void HelixGeom_BuilderApproxCurve::SetApproxParameters(const GeomAbs_Shape aCont,
                                                        const int           aMaxDegree,
@@ -43,8 +26,6 @@ void HelixGeom_BuilderApproxCurve::SetApproxParameters(const GeomAbs_Shape aCont
   myMaxSeg    = aMaxSeg;
 }
 
-//=================================================================================================
-
 void HelixGeom_BuilderApproxCurve::ApproxParameters(GeomAbs_Shape& aCont,
                                                     int&           aMaxDegree,
                                                     int&           aMaxSeg) const
@@ -54,42 +35,30 @@ void HelixGeom_BuilderApproxCurve::ApproxParameters(GeomAbs_Shape& aCont,
   aMaxSeg    = myMaxSeg;
 }
 
-//=================================================================================================
-
 void HelixGeom_BuilderApproxCurve::SetTolerance(const double aTolerance)
 {
   myTolerance = aTolerance;
 }
-
-//=================================================================================================
 
 double HelixGeom_BuilderApproxCurve::Tolerance() const
 {
   return myTolerance;
 }
 
-//=================================================================================================
-
 double HelixGeom_BuilderApproxCurve::ToleranceReached() const
 {
   return myTolReached;
 }
-
-//=================================================================================================
 
 const NCollection_Sequence<occ::handle<Geom_Curve>>& HelixGeom_BuilderApproxCurve::Curves() const
 {
   return myCurves;
 }
 
-//=================================================================================================
-
 int HelixGeom_BuilderApproxCurve::ErrorStatus() const
 {
   return myErrorStatus;
 }
-
-//=================================================================================================
 
 int HelixGeom_BuilderApproxCurve::WarningStatus() const
 {

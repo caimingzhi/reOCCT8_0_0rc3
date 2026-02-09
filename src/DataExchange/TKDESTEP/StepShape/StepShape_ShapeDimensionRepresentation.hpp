@@ -7,21 +7,17 @@
 #include <NCollection_HArray1.hpp>
 #include <StepShape_ShapeRepresentation.hpp>
 
-//! Representation of STEP entity ShapeDimensionRepresentation
 class StepShape_ShapeDimensionRepresentation : public StepShape_ShapeRepresentation
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT StepShape_ShapeDimensionRepresentation();
 
-  //! Initialize all fields AP214
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>&                                      theName,
     const occ::handle<NCollection_HArray1<occ::handle<StepRepr_RepresentationItem>>>& theItems,
     const occ::handle<StepRepr_RepresentationContext>& theContextOfItems);
 
-  //! Initialize all fields AP242
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>&                                        theName,
     const occ::handle<NCollection_HArray1<StepShape_ShapeDimensionRepresentationItem>>& theItems,

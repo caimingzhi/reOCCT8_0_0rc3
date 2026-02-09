@@ -24,17 +24,6 @@
   #define M_SQRT2 1.41421356237309504880168872420969808
 #endif
 
-//! Template class for computing extremal distances between two curves.
-//! The function F(u,v)=distance(C1(u),C2(v)) has an extremum when gradient(f)=0.
-//! The algorithm uses Evtushenko's global optimization solver.
-//!
-//! @tparam TheCurve1 Type of the first curve (e.g., Adaptor3d_Curve)
-//! @tparam TheCurveTool1 Tool class for the first curve
-//! @tparam TheCurve2 Type of the second curve
-//! @tparam TheCurveTool2 Tool class for the second curve
-//! @tparam ThePOnC Point on curve type (e.g., Extrema_POnCurv)
-//! @tparam ThePoint Point type (e.g., gp_Pnt)
-//! @tparam TheExtPC Point-to-curve extremum class (e.g., Extrema_ExtPC)
 template <typename TheCurve1,
           typename TheCurveTool1,
           typename TheCurve2,
@@ -47,13 +36,10 @@ class Extrema_GGenExtCC
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Default constructor.
   Extrema_GGenExtCC();
 
-  //! Constructor with two curves.
   Extrema_GGenExtCC(const TheCurve1& theC1, const TheCurve2& theC2);
 
-  //! Constructor with two curves and parameter bounds.
   Extrema_GGenExtCC(const TheCurve1& theC1,
                     const TheCurve2& theC2,
                     const double     theUinf,
@@ -61,7 +47,6 @@ public:
                     const double     theVinf,
                     const double     theVsup);
 
-  //! Sets parameters for computation.
   void SetParams(const TheCurve1& theC1,
                  const TheCurve2& theC2,
                  const double     theUinf,
@@ -69,31 +54,22 @@ public:
                  const double     theVinf,
                  const double     theVsup);
 
-  //! Sets the tolerance.
   void SetTolerance(const double theTol);
 
-  //! Set flag for single extrema computation.
   void SetSingleSolutionFlag(const bool theFlag);
 
-  //! Get flag for single extrema computation.
   bool GetSingleSolutionFlag() const;
 
-  //! Performs calculations.
   void Perform();
 
-  //! Returns True if the distances are found.
   bool IsDone() const;
 
-  //! Returns state of myParallel flag.
   bool IsParallel() const;
 
-  //! Returns the number of extremum distances.
   int NbExt() const;
 
-  //! Returns the value of the Nth square extremum distance.
   double SquareDistance(const int theN = 1) const;
 
-  //! Returns the points of the Nth extremum distance.
   void Points(const int theN, ThePOnC& theP1, ThePOnC& theP2) const;
 
 private:
@@ -108,13 +84,9 @@ private:
   bool                         myDone;
 };
 
-//==================================================================================================
-// Static helper functions
-//==================================================================================================
-
 namespace
 {
-  // Comparator, used in std::sort.
+
   inline bool Extrema_GGenExtCC_comp(const gp_XY& theA, const gp_XY& theB)
   {
     if (theA.X() < theB.X())
@@ -236,12 +208,6 @@ namespace
   }
 } // namespace
 
-//==================================================================================================
-// Implementation
-//==================================================================================================
-
-//==================================================================================================
-
 template <typename TheCurve1,
           typename TheCurveTool1,
           typename TheCurve2,
@@ -260,8 +226,6 @@ Extrema_GGenExtCC<TheCurve1, TheCurveTool1, TheCurve2, TheCurveTool2, ThePOnC, T
 {
   myC[0] = myC[1] = nullptr;
 }
-
-//==================================================================================================
 
 template <typename TheCurve1,
           typename TheCurveTool1,
@@ -286,8 +250,6 @@ Extrema_GGenExtCC<TheCurve1, TheCurveTool1, TheCurve2, TheCurveTool2, ThePOnC, T
   myUppBorder(1) = theC1.LastParameter();
   myUppBorder(2) = theC2.LastParameter();
 }
-
-//==================================================================================================
 
 template <typename TheCurve1,
           typename TheCurveTool1,
@@ -318,8 +280,6 @@ Extrema_GGenExtCC<TheCurve1, TheCurveTool1, TheCurve2, TheCurveTool2, ThePOnC, T
   myUppBorder(2) = theVsup;
 }
 
-//==================================================================================================
-
 template <typename TheCurve1,
           typename TheCurveTool1,
           typename TheCurve2,
@@ -348,8 +308,6 @@ void Extrema_GGenExtCC<TheCurve1,
   myUppBorder(2) = theVsup;
 }
 
-//==================================================================================================
-
 template <typename TheCurve1,
           typename TheCurveTool1,
           typename TheCurve2,
@@ -367,8 +325,6 @@ void Extrema_GGenExtCC<TheCurve1,
 {
   myCurveMinTol = theTol;
 }
-
-//==================================================================================================
 
 template <typename TheCurve1,
           typename TheCurveTool1,
@@ -388,8 +344,6 @@ void Extrema_GGenExtCC<TheCurve1,
   myIsFindSingleSolution = theFlag;
 }
 
-//==================================================================================================
-
 template <typename TheCurve1,
           typename TheCurveTool1,
           typename TheCurve2,
@@ -407,8 +361,6 @@ bool Extrema_GGenExtCC<TheCurve1,
 {
   return myIsFindSingleSolution;
 }
-
-//==================================================================================================
 
 template <typename TheCurve1,
           typename TheCurveTool1,
@@ -774,8 +726,6 @@ void Extrema_GGenExtCC<TheCurve1,
   }
 }
 
-//==================================================================================================
-
 template <typename TheCurve1,
           typename TheCurveTool1,
           typename TheCurve2,
@@ -793,8 +743,6 @@ bool Extrema_GGenExtCC<TheCurve1,
 {
   return myDone;
 }
-
-//==================================================================================================
 
 template <typename TheCurve1,
           typename TheCurveTool1,
@@ -816,8 +764,6 @@ bool Extrema_GGenExtCC<TheCurve1,
   return myParallel;
 }
 
-//==================================================================================================
-
 template <typename TheCurve1,
           typename TheCurveTool1,
           typename TheCurve2,
@@ -837,8 +783,6 @@ int Extrema_GGenExtCC<TheCurve1,
     throw StdFail_NotDone();
   return myPoints1.Length();
 }
-
-//==================================================================================================
 
 template <typename TheCurve1,
           typename TheCurveTool1,
@@ -863,8 +807,6 @@ double Extrema_GGenExtCC<TheCurve1,
   return TheCurveTool1::Value(*((TheCurve1*)myC[0]), myPoints1(theN))
     .SquareDistance(TheCurveTool2::Value(*((TheCurve2*)myC[1]), myPoints2(theN)));
 }
-
-//==================================================================================================
 
 template <typename TheCurve1,
           typename TheCurveTool1,

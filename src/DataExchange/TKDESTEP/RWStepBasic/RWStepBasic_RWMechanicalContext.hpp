@@ -11,7 +11,6 @@ class StepBasic_MechanicalContext;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for MechanicalContext
 class RWStepBasic_RWMechanicalContext
 {
 public:

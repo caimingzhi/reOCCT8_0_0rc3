@@ -10,7 +10,6 @@
 #include <gp_Pnt2d.hpp>
 #include <TopoDS_Shape.hpp>
 
-//! Contains the colors of a shape.
 class HLRBRep_BiPnt2D
 {
 public:
@@ -100,41 +99,11 @@ private:
 class HLRBRep_PolyAlgo;
 class TopoDS_Shape;
 
-//! A framework for filtering the computation
-//! results of an HLRBRep_Algo algorithm by extraction.
-//! From the results calculated by the algorithm on
-//! a shape, a filter returns the type of edge you
-//! want to identify. You can choose any of the following types of output:
-//! -   visible sharp edges
-//! -   hidden sharp edges
-//! -   visible smooth edges
-//! -   hidden smooth edges
-//! -   visible sewn edges
-//! -   hidden sewn edges
-//! -   visible outline edges
-//! -   hidden outline edges.
-//! -   visible isoparameters and
-//! -   hidden isoparameters.
-//! Sharp edges present a C0 continuity (non G1).
-//! Smooth edges present a G1 continuity (non G2).
-//! Sewn edges present a C2 continuity.
-//! The result is composed of 2D edges in the
-//! projection plane of the view which the
-//! algorithm has worked with. These 2D edges
-//! are not included in the data structure of the visualized shape.
-//! In order to obtain a complete image, you must
-//! combine the shapes given by each of the chosen filters.
-//! The construction of the shape does not call a
-//! new computation of the algorithm, but only
-//! reads its internal results.
 class HLRBRep_PolyHLRToShape
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Constructs a framework for filtering the results
-  //! of the HLRBRep_Algo algorithm, A.
-  //! Use the extraction filters to obtain the results you want for A.
   Standard_EXPORT HLRBRep_PolyHLRToShape();
 
   Standard_EXPORT void Update(const occ::handle<HLRBRep_PolyAlgo>& A);
@@ -147,19 +116,16 @@ public:
 
   TopoDS_Shape VCompound(const TopoDS_Shape& S);
 
-  //! Sets the extraction filter for visible smooth edges.
   TopoDS_Shape Rg1LineVCompound();
 
   TopoDS_Shape Rg1LineVCompound(const TopoDS_Shape& S);
 
-  //! Sets the extraction filter for visible sewn edges.
   TopoDS_Shape RgNLineVCompound();
 
   TopoDS_Shape RgNLineVCompound(const TopoDS_Shape& S);
 
   TopoDS_Shape OutLineVCompound();
 
-  //! Sets the extraction filter for visible outlines.
   TopoDS_Shape OutLineVCompound(const TopoDS_Shape& S);
 
   TopoDS_Shape HCompound();
@@ -168,19 +134,14 @@ public:
 
   TopoDS_Shape Rg1LineHCompound();
 
-  //! Sets the extraction filter for hidden smooth edges.
   TopoDS_Shape Rg1LineHCompound(const TopoDS_Shape& S);
 
   TopoDS_Shape RgNLineHCompound();
 
-  //! Sets the extraction filter for hidden sewn edges.
   TopoDS_Shape RgNLineHCompound(const TopoDS_Shape& S);
 
   TopoDS_Shape OutLineHCompound();
 
-  //! Sets the extraction filter for hidden outlines.
-  //! Hidden outlines occur, for instance, in tori. In
-  //! this case, the inner outlines of the torus seen on its side are hidden.
   TopoDS_Shape OutLineHCompound(const TopoDS_Shape& S);
 
 private:
@@ -196,126 +157,90 @@ private:
 
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 inline void HLRBRep_PolyHLRToShape::Show()
 {
   myHideMode = false;
 }
-
-//=================================================================================================
 
 inline void HLRBRep_PolyHLRToShape::Hide()
 {
   myHideMode = true;
 }
 
-//=================================================================================================
-
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::VCompound()
 {
   return InternalCompound(4, true, TopoDS_Shape());
 }
-
-//=================================================================================================
 
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::VCompound(const TopoDS_Shape& S)
 {
   return InternalCompound(4, true, S);
 }
 
-//=================================================================================================
-
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::Rg1LineVCompound()
 {
   return InternalCompound(2, true, TopoDS_Shape());
 }
-
-//=================================================================================================
 
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::Rg1LineVCompound(const TopoDS_Shape& S)
 {
   return InternalCompound(2, true, S);
 }
 
-//=================================================================================================
-
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::RgNLineVCompound()
 {
   return InternalCompound(3, true, TopoDS_Shape());
 }
-
-//=================================================================================================
 
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::RgNLineVCompound(const TopoDS_Shape& S)
 {
   return InternalCompound(3, true, S);
 }
 
-//=================================================================================================
-
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::OutLineVCompound()
 {
   return InternalCompound(1, true, TopoDS_Shape());
 }
-
-//=================================================================================================
 
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::OutLineVCompound(const TopoDS_Shape& S)
 {
   return InternalCompound(1, true, S);
 }
 
-//=================================================================================================
-
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::HCompound()
 {
   return InternalCompound(4, false, TopoDS_Shape());
 }
-
-//=================================================================================================
 
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::HCompound(const TopoDS_Shape& S)
 {
   return InternalCompound(4, false, S);
 }
 
-//=================================================================================================
-
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::Rg1LineHCompound()
 {
   return InternalCompound(2, false, TopoDS_Shape());
 }
-
-//=================================================================================================
 
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::Rg1LineHCompound(const TopoDS_Shape& S)
 {
   return InternalCompound(2, false, S);
 }
 
-//=================================================================================================
-
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::RgNLineHCompound()
 {
   return InternalCompound(3, false, TopoDS_Shape());
 }
-
-//=================================================================================================
 
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::RgNLineHCompound(const TopoDS_Shape& S)
 {
   return InternalCompound(3, false, S);
 }
 
-//=================================================================================================
-
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::OutLineHCompound()
 {
   return InternalCompound(1, false, TopoDS_Shape());
 }
-
-//=================================================================================================
 
 inline TopoDS_Shape HLRBRep_PolyHLRToShape::OutLineHCompound(const TopoDS_Shape& S)
 {

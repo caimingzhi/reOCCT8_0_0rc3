@@ -9,14 +9,9 @@
   #include "Draw_WNTMainWindow.hpp"
   #include "Draw_WNTRessource.hpp"
 
-bool        Draw_Interprete(const char* command); // Implemented in Draw.cxx
+bool        Draw_Interprete(const char* command);
 extern bool Draw_IsConsoleSubsystem;
 
-/*--------------------------------------------------------*\
-|  CLIENT WINDOW PROCEDURE
-|
-|
-\*--------------------------------------------------------*/
 LRESULT APIENTRY WndProc(HWND hWndFrame, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
   switch (wMsg)
@@ -48,31 +43,20 @@ LRESULT APIENTRY WndProc(HWND hWndFrame, UINT wMsg, WPARAM wParam, LPARAM lParam
   return DefFrameProcW(hWndFrame, hWndClient, wMsg, wParam, lParam);
 }
 
-/*--------------------------------------------------------------------------*\
-|  CLIENT CREATE PROCEDURE
-|     Handler for message WM_CREATE. Creation of control window MDI
-|
-\*--------------------------------------------------------------------------*/
 BOOL CreateProc(HWND hWndFrame)
 {
   HWND hWnd = CreateMDIClientWindow(hWndFrame);
   if (hWnd != NULL)
   {
-    // Save hWnd in the main window in extra memory in 0
+
     SetWindowLongPtrW(hWndFrame, CLIENTWND, (LONG_PTR)hWnd);
   }
   return (TRUE);
 }
 
-/*--------------------------------------------------------------------------*\
-|  COMMAND PROCEDURE
-|  		Handler for message WM_COMMAND
-|     It is used when Draw_IsConsoleSubsystem = false
-|     i.e. in non-console mode (see Draw_main() in Draw_Main.cxx).
-\*--------------------------------------------------------------------------*/
-LRESULT APIENTRY CmdProc(HWND hWndFrame, UINT wMsg, WPARAM /*wParam*/, LPARAM /*lParam*/)
+LRESULT APIENTRY CmdProc(HWND hWndFrame, UINT wMsg, WPARAM, LPARAM)
 {
-  // Handle on window MDI
+
   HWND hWndClient = (HWND)GetWindowLongPtrW(hWndFrame, CLIENTWND);
   switch (wMsg)
   {
@@ -119,11 +103,6 @@ LRESULT APIENTRY CmdProc(HWND hWndFrame, UINT wMsg, WPARAM /*wParam*/, LPARAM /*
   return 0;
 }
 
-/*--------------------------------------------------------------------------*\
-|  CLIENT DESTROY PROCEDURE
-|     Handler for message WM_DESTROY.
-|
-\*--------------------------------------------------------------------------*/
 VOID DestroyProc(HWND hWnd)
 {
   HINSTANCE hInst = (HINSTANCE)GetWindowLongPtrW(hWnd, GWLP_HINSTANCE);

@@ -13,44 +13,19 @@ namespace MathOpt
 {
   using namespace MathUtils;
 
-  //! Configuration for Newton minimization with Hessian.
   struct NewtonConfig : Config
   {
-    double Regularization = 1.0e-8; //!< Diagonal regularization for non-positive definite Hessian
-    bool   UseLineSearch  = true;   //!< Whether to use line search (recommended)
+    double Regularization = 1.0e-8;
+    bool   UseLineSearch  = true;
 
-    //! Default constructor.
     NewtonConfig() = default;
 
-    //! Constructor with tolerance.
     explicit NewtonConfig(double theTolerance, int theMaxIter = 100)
         : Config(theTolerance, theMaxIter)
     {
     }
   };
 
-  //! Newton's method for N-dimensional minimization using Hessian.
-  //!
-  //! Fastest convergence near minimum (quadratic) but requires Hessian computation.
-  //! Uses line search for global convergence and Hessian regularization
-  //! when the Hessian is not positive definite.
-  //!
-  //! Algorithm:
-  //! 1. Compute gradient g and Hessian H at current point
-  //! 2. If H is not positive definite, regularize: H = H + lambda*I
-  //! 3. Solve H * p = -g for search direction p
-  //! 4. Perform line search along p
-  //! 5. Update x = x + alpha * p
-  //! 6. Repeat until convergence
-  //!
-  //! @tparam Function type with:
-  //!   - Value(const math_Vector&, double&) for function value
-  //!   - Gradient(const math_Vector&, math_Vector&) for gradient
-  //!   - Hessian(const math_Vector&, math_Matrix&) for Hessian
-  //! @param theFunc function object with value, gradient, and Hessian
-  //! @param theStartingPoint initial guess
-  //! @param theConfig solver configuration
-  //! @return result containing minimum location and value
   template <typename Function>
   VectorResult Newton(Function&           theFunc,
                       const math_Vector&  theStartingPoint,
@@ -61,7 +36,6 @@ namespace MathOpt
     const int aLower = theStartingPoint.Lower();
     const int aUpper = theStartingPoint.Upper();
 
-    // Current point
     math_Vector aX(aLower, aUpper);
     aX = theStartingPoint;
 
@@ -72,7 +46,6 @@ namespace MathOpt
       return aResult;
     }
 
-    // Gradient at current point
     math_Vector aGrad(aLower, aUpper);
     if (!theFunc.Gradient(aX, aGrad))
     {
@@ -80,7 +53,6 @@ namespace MathOpt
       return aResult;
     }
 
-    // Check if already at minimum
     double aGradNorm = 0.0;
     for (int i = aLower; i <= aUpper; ++i)
     {
@@ -97,7 +69,6 @@ namespace MathOpt
       return aResult;
     }
 
-    // Working vectors and matrices
     math_Vector aDir(aLower, aUpper);
     math_Vector aXNew(aLower, aUpper);
     math_Vector aGradNew(aLower, aUpper);
@@ -108,7 +79,6 @@ namespace MathOpt
     {
       aResult.NbIterations = anIter + 1;
 
-      // Compute Hessian
       if (!theFunc.Hessian(aX, aHessian))
       {
         aResult.Status   = Status::NumericalError;
@@ -117,18 +87,16 @@ namespace MathOpt
         return aResult;
       }
 
-      // Prepare negative gradient
       for (int i = aLower; i <= aUpper; ++i)
       {
         aNegGrad(i) = -aGrad(i);
       }
 
-      // Try to solve H * p = -g
       auto aLinResult = MathLin::Solve(aHessian, aNegGrad);
 
       if (!aLinResult.IsDone())
       {
-        // Hessian is singular or not positive definite, add regularization
+
         double aLambda = theConfig.Regularization;
         bool   aSolved = false;
 
@@ -153,7 +121,7 @@ namespace MathOpt
 
         if (!aSolved)
         {
-          // Fall back to steepest descent
+
           for (int i = aLower; i <= aUpper; ++i)
           {
             aDir(i) = -aGrad(i);
@@ -164,7 +132,6 @@ namespace MathOpt
 
       aDir = *aLinResult.Solution;
 
-      // Check if direction is descent
       {
         double aDirDeriv = 0.0;
         for (int i = aLower; i <= aUpper; ++i)
@@ -174,7 +141,7 @@ namespace MathOpt
 
         if (aDirDeriv >= 0.0)
         {
-          // Not a descent direction, use steepest descent
+
           for (int i = aLower; i <= aUpper; ++i)
           {
             aDir(i) = -aGrad(i);
@@ -185,13 +152,13 @@ namespace MathOpt
     perform_line_search:
       if (theConfig.UseLineSearch)
       {
-        // Line search
+
         MathUtils::LineSearchResult aLineResult =
           MathUtils::ArmijoBacktrack(theFunc, aX, aDir, aGrad, aFx, 1.0, 1.0e-4, 0.5, 50);
 
         if (!aLineResult.IsValid)
         {
-          // Line search failed, try steepest descent
+
           for (int i = aLower; i <= aUpper; ++i)
           {
             aDir(i) = -aGrad(i);
@@ -209,7 +176,6 @@ namespace MathOpt
           }
         }
 
-        // Compute new point
         for (int i = aLower; i <= aUpper; ++i)
         {
           aXNew(i) = aX(i) + aLineResult.Alpha * aDir(i);
@@ -218,7 +184,7 @@ namespace MathOpt
       }
       else
       {
-        // Full Newton step (no line search)
+
         for (int i = aLower; i <= aUpper; ++i)
         {
           aXNew(i) = aX(i) + aDir(i);
@@ -232,14 +198,12 @@ namespace MathOpt
         }
       }
 
-      // Check X convergence
       double aMaxDiff = 0.0;
       for (int i = aLower; i <= aUpper; ++i)
       {
         aMaxDiff = std::max(aMaxDiff, std::abs(aXNew(i) - aX(i)));
       }
 
-      // Evaluate gradient at new point
       if (!theFunc.Gradient(aXNew, aGradNew))
       {
         aResult.Status   = Status::NumericalError;
@@ -248,7 +212,6 @@ namespace MathOpt
         return aResult;
       }
 
-      // Check gradient convergence
       aGradNorm = 0.0;
       for (int i = aLower; i <= aUpper; ++i)
       {
@@ -274,12 +237,10 @@ namespace MathOpt
         return aResult;
       }
 
-      // Update for next iteration
       aX    = aXNew;
       aGrad = aGradNew;
     }
 
-    // Maximum iterations reached
     aResult.Status   = Status::MaxIterations;
     aResult.Solution = aX;
     aResult.Value    = aFx;
@@ -287,15 +248,6 @@ namespace MathOpt
     return aResult;
   }
 
-  //! Modified Newton's method with automatic Hessian regularization.
-  //! Adds diagonal elements to ensure positive definiteness using
-  //! an adaptive regularization strategy.
-  //!
-  //! @tparam Function type with Value, Gradient, and Hessian methods
-  //! @param theFunc function object
-  //! @param theStartingPoint initial guess
-  //! @param theConfig solver configuration
-  //! @return result containing minimum location and value
   template <typename Function>
   VectorResult NewtonModified(Function&           theFunc,
                               const math_Vector&  theStartingPoint,
@@ -304,25 +256,13 @@ namespace MathOpt
     return Newton(theFunc, theStartingPoint, theConfig);
   }
 
-  //! Newton's method with numerical Hessian.
-  //! Computes Hessian using finite differences when analytical Hessian
-  //! is not available.
-  //!
-  //! @tparam Function type with:
-  //!   - Value(const math_Vector&, double&) for function value
-  //!   - Gradient(const math_Vector&, math_Vector&) for gradient
-  //! @param theFunc function object
-  //! @param theStartingPoint initial guess
-  //! @param theHessStep step size for numerical Hessian
-  //! @param theConfig solver configuration
-  //! @return result containing minimum location and value
   template <typename Function>
   VectorResult NewtonNumericalHessian(Function&           theFunc,
                                       const math_Vector&  theStartingPoint,
                                       double              theHessStep = 1.0e-6,
                                       const NewtonConfig& theConfig   = NewtonConfig())
   {
-    // Wrapper that adds numerical Hessian
+
     class FuncWithHessian
     {
     public:
@@ -354,16 +294,6 @@ namespace MathOpt
     return Newton(aWrapper, theStartingPoint, theConfig);
   }
 
-  //! Newton's method with fully numerical derivatives.
-  //! Computes both gradient and Hessian using finite differences.
-  //!
-  //! @tparam Function type with Value(const math_Vector&, double&) method only
-  //! @param theFunc function object
-  //! @param theStartingPoint initial guess
-  //! @param theGradStep step size for numerical gradient
-  //! @param theHessStep step size for numerical Hessian
-  //! @param theConfig solver configuration
-  //! @return result containing minimum location and value
   template <typename Function>
   VectorResult NewtonNumerical(Function&           theFunc,
                                const math_Vector&  theStartingPoint,
@@ -371,7 +301,7 @@ namespace MathOpt
                                double              theHessStep = 1.0e-6,
                                const NewtonConfig& theConfig   = NewtonConfig())
   {
-    // Wrapper that adds numerical gradient and Hessian
+
     class FuncWithDerivatives
     {
     public:
@@ -392,7 +322,7 @@ namespace MathOpt
 
       bool Hessian(const math_Vector& theX, math_Matrix& theHess)
       {
-        // Compute Hessian from finite differences of gradient
+
         const int aLower = theX.Lower();
         const int aUpper = theX.Upper();
 
@@ -426,7 +356,6 @@ namespace MathOpt
           }
         }
 
-        // Symmetrize
         for (int i = aLower; i <= aUpper; ++i)
         {
           for (int j = i + 1; j <= aUpper; ++j)
@@ -450,18 +379,6 @@ namespace MathOpt
     return Newton(aWrapper, theStartingPoint, theConfig);
   }
 
-  //! Newton's method with bound constraints.
-  //!
-  //! Minimizes f(x) subject to theLowerBounds <= x <= theUpperBounds.
-  //! Uses projected gradient approach similar to BFGSBounded.
-  //!
-  //! @tparam Function type with Value, Gradient, and Hessian methods
-  //! @param theFunc function object
-  //! @param theStartingPoint initial guess
-  //! @param theLowerBounds lower bounds for each variable
-  //! @param theUpperBounds upper bounds for each variable
-  //! @param theConfig solver configuration
-  //! @return result containing minimum location and value
   template <typename Function>
   VectorResult NewtonBounded(Function&           theFunc,
                              const math_Vector&  theStartingPoint,
@@ -475,14 +392,12 @@ namespace MathOpt
     const int aUpper = theStartingPoint.Upper();
     const int aN     = aUpper - aLower + 1;
 
-    // Check dimensions
     if (theLowerBounds.Length() != aN || theUpperBounds.Length() != aN)
     {
       aResult.Status = Status::InvalidInput;
       return aResult;
     }
 
-    // Lambda to clamp a point to bounds
     auto ClampToBounds = [&](math_Vector& theX)
     {
       for (int i = aLower; i <= aUpper; ++i)
@@ -499,7 +414,6 @@ namespace MathOpt
       }
     };
 
-    // Lambda to project gradient (zero components at active bounds)
     auto ProjectGradient = [&](const math_Vector& theX, math_Vector& theGrad)
     {
       for (int i = aLower; i <= aUpper; ++i)
@@ -518,7 +432,6 @@ namespace MathOpt
       }
     };
 
-    // Lambda to compute max step to boundary
     auto ComputeAlphaMax = [&](const math_Vector& theX, const math_Vector& theDir) -> double
     {
       double aAlphaMax = 1.0;
@@ -539,7 +452,6 @@ namespace MathOpt
       return std::max(aAlphaMax, MathUtils::THE_EPSILON);
     };
 
-    // Current point
     math_Vector aX(aLower, aUpper);
     aX = theStartingPoint;
     ClampToBounds(aX);
@@ -551,7 +463,6 @@ namespace MathOpt
       return aResult;
     }
 
-    // Gradient at current point
     math_Vector aGrad(aLower, aUpper);
     if (!theFunc.Gradient(aX, aGrad))
     {
@@ -560,7 +471,6 @@ namespace MathOpt
     }
     ProjectGradient(aX, aGrad);
 
-    // Check if already at minimum
     double aGradNorm = 0.0;
     for (int i = aLower; i <= aUpper; ++i)
     {
@@ -577,7 +487,6 @@ namespace MathOpt
       return aResult;
     }
 
-    // Working vectors and matrices
     math_Vector aDir(aLower, aUpper);
     math_Vector aXNew(aLower, aUpper);
     math_Vector aGradNew(aLower, aUpper);
@@ -588,7 +497,6 @@ namespace MathOpt
     {
       aResult.NbIterations = anIter + 1;
 
-      // Compute Hessian
       if (!theFunc.Hessian(aX, aHessian))
       {
         aResult.Status   = Status::NumericalError;
@@ -597,18 +505,16 @@ namespace MathOpt
         return aResult;
       }
 
-      // Prepare negative gradient
       for (int i = aLower; i <= aUpper; ++i)
       {
         aNegGrad(i) = -aGrad(i);
       }
 
-      // Try to solve H * p = -g
       auto aLinResult = MathLin::Solve(aHessian, aNegGrad);
 
       if (!aLinResult.IsDone())
       {
-        // Add regularization
+
         double aLambda = theConfig.Regularization;
         bool   aSolved = false;
 
@@ -633,7 +539,7 @@ namespace MathOpt
 
         if (!aSolved)
         {
-          // Fall back to steepest descent
+
           for (int i = aLower; i <= aUpper; ++i)
           {
             aDir(i) = -aGrad(i);
@@ -644,7 +550,6 @@ namespace MathOpt
 
       aDir = *aLinResult.Solution;
 
-      // Check if direction is descent
       {
         double aDirDeriv = 0.0;
         for (int i = aLower; i <= aUpper; ++i)
@@ -671,7 +576,7 @@ namespace MathOpt
 
         if (!aLineResult.IsValid)
         {
-          // Try steepest descent
+
           for (int i = aLower; i <= aUpper; ++i)
           {
             aDir(i) = -aGrad(i);
@@ -719,14 +624,12 @@ namespace MathOpt
         }
       }
 
-      // Check X convergence
       double aMaxDiff = 0.0;
       for (int i = aLower; i <= aUpper; ++i)
       {
         aMaxDiff = std::max(aMaxDiff, std::abs(aXNew(i) - aX(i)));
       }
 
-      // Evaluate gradient at new point
       if (!theFunc.Gradient(aXNew, aGradNew))
       {
         aResult.Status   = Status::NumericalError;
@@ -736,7 +639,6 @@ namespace MathOpt
       }
       ProjectGradient(aXNew, aGradNew);
 
-      // Check gradient convergence
       aGradNorm = 0.0;
       for (int i = aLower; i <= aUpper; ++i)
       {

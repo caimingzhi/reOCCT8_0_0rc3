@@ -60,24 +60,17 @@ int GeomFill_LocationLaw::TraceNumber() const
   return 0;
 }
 
-//=================================================================================================
-
 GeomFill_PipeError GeomFill_LocationLaw::ErrorStatus() const
 {
   return GeomFill_PipeOk;
 }
 
-// void GeomFill_LocationLaw::Resolution(const int Index,const double
-// Tol,double& TolU,double& TolV) const
 void GeomFill_LocationLaw::Resolution(const int, const double, double&, double&) const
 {
   throw Standard_NotImplemented("GeomFill_LocationLaw::Resolution");
 }
 
-void GeomFill_LocationLaw::SetTolerance(const double, const double)
-{
-  // Ne fait rien !!
-}
+void GeomFill_LocationLaw::SetTolerance(const double, const double) {}
 
 bool GeomFill_LocationLaw::IsTranslation(double&) const
 {

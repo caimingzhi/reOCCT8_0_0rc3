@@ -19,19 +19,18 @@
 IGESSolid_ToolEllipsoid::IGESSolid_ToolEllipsoid() = default;
 
 void IGESSolid_ToolEllipsoid::ReadOwnParams(const occ::handle<IGESSolid_Ellipsoid>& ent,
-                                            const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                            const occ::handle<IGESData_IGESReaderData>&,
                                             IGESData_ParamReader& PR) const
 {
   gp_XYZ tempSize, tempCenter, tempXAxis, tempZAxis;
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   double tempreal;
 
-  PR.ReadXYZ(PR.CurrentList(1, 3), "Size", tempSize); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadXYZ(PR.CurrentList(1, 3), "Size", tempSize);
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Center Point (X)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Center Point (X)", tempreal))
       tempCenter.SetX(tempreal);
   }
@@ -40,8 +39,7 @@ void IGESSolid_ToolEllipsoid::ReadOwnParams(const occ::handle<IGESSolid_Ellipsoi
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Center Point (Y)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Center Point (Y)", tempreal))
       tempCenter.SetY(tempreal);
   }
@@ -50,8 +48,7 @@ void IGESSolid_ToolEllipsoid::ReadOwnParams(const occ::handle<IGESSolid_Ellipsoi
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Center Point (Z)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Center Point (Z)", tempreal))
       tempCenter.SetZ(tempreal);
   }
@@ -60,8 +57,7 @@ void IGESSolid_ToolEllipsoid::ReadOwnParams(const occ::handle<IGESSolid_Ellipsoi
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local X axis (I)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local X axis (I)", tempreal))
       tempXAxis.SetX(tempreal);
   }
@@ -70,8 +66,7 @@ void IGESSolid_ToolEllipsoid::ReadOwnParams(const occ::handle<IGESSolid_Ellipsoi
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local X axis (J)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local X axis (J)", tempreal))
       tempXAxis.SetY(tempreal);
   }
@@ -80,8 +75,7 @@ void IGESSolid_ToolEllipsoid::ReadOwnParams(const occ::handle<IGESSolid_Ellipsoi
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local X axis (K)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local X axis (K)", tempreal))
       tempXAxis.SetZ(tempreal);
   }
@@ -90,8 +84,7 @@ void IGESSolid_ToolEllipsoid::ReadOwnParams(const occ::handle<IGESSolid_Ellipsoi
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local Z axis (I)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local Z axis (I)", tempreal))
       tempZAxis.SetX(tempreal);
   }
@@ -100,8 +93,7 @@ void IGESSolid_ToolEllipsoid::ReadOwnParams(const occ::handle<IGESSolid_Ellipsoi
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local Z axis (J)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local Z axis (J)", tempreal))
       tempZAxis.SetY(tempreal);
   }
@@ -110,8 +102,7 @@ void IGESSolid_ToolEllipsoid::ReadOwnParams(const occ::handle<IGESSolid_Ellipsoi
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local Z axis (K)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local Z axis (K)", tempreal))
       tempZAxis.SetZ(tempreal);
   }
@@ -144,14 +135,14 @@ void IGESSolid_ToolEllipsoid::WriteOwnParams(const occ::handle<IGESSolid_Ellipso
   IW.Send(ent->ZAxis().Z());
 }
 
-void IGESSolid_ToolEllipsoid::OwnShared(const occ::handle<IGESSolid_Ellipsoid>& /* ent */,
-                                        Interface_EntityIterator& /* iter */) const
+void IGESSolid_ToolEllipsoid::OwnShared(const occ::handle<IGESSolid_Ellipsoid>&,
+                                        Interface_EntityIterator&) const
 {
 }
 
 void IGESSolid_ToolEllipsoid::OwnCopy(const occ::handle<IGESSolid_Ellipsoid>& another,
                                       const occ::handle<IGESSolid_Ellipsoid>& ent,
-                                      Interface_CopyTool& /* TC */) const
+                                      Interface_CopyTool&) const
 {
   ent->Init(another->Size(),
             another->Center().XYZ(),
@@ -160,7 +151,7 @@ void IGESSolid_ToolEllipsoid::OwnCopy(const occ::handle<IGESSolid_Ellipsoid>& an
 }
 
 IGESData_DirChecker IGESSolid_ToolEllipsoid::DirChecker(
-  const occ::handle<IGESSolid_Ellipsoid>& /* ent */) const
+  const occ::handle<IGESSolid_Ellipsoid>&) const
 {
   IGESData_DirChecker DC(168, 0);
   DC.Structure(IGESData_DefVoid);
@@ -186,7 +177,7 @@ void IGESSolid_ToolEllipsoid::OwnCheck(const occ::handle<IGESSolid_Ellipsoid>& e
 }
 
 void IGESSolid_ToolEllipsoid::OwnDump(const occ::handle<IGESSolid_Ellipsoid>& ent,
-                                      const IGESData_IGESDumper& /* dumper */,
+                                      const IGESData_IGESDumper&,
                                       Standard_OStream& S,
                                       const int         level) const
 {

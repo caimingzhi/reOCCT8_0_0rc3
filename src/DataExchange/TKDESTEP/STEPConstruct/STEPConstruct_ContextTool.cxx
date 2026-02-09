@@ -20,14 +20,7 @@
 
 #include <cstdio>
 
-// #include <StepBasic_ProductDefinitionContext.hpp>
-//: i3
-//: j4
-//=================================================================================================
-
 STEPConstruct_ContextTool::STEPConstruct_ContextTool() = default;
-
-//=================================================================================================
 
 STEPConstruct_ContextTool::STEPConstruct_ContextTool(
   const occ::handle<StepData_StepModel>& aStepModel)
@@ -35,11 +28,9 @@ STEPConstruct_ContextTool::STEPConstruct_ContextTool(
   SetModel(aStepModel);
 }
 
-//=================================================================================================
-
 void STEPConstruct_ContextTool::SetModel(const occ::handle<StepData_StepModel>& aStepModel)
 {
-  theAPD.Nullify(); // thePRPC.Nullify();
+  theAPD.Nullify();
   mySchema      = aStepModel->InternalParameters.WriteSchema;
   myProductName = aStepModel->InternalParameters.WriteProductName;
   int i, nb = aStepModel->NbEntities();
@@ -51,27 +42,18 @@ void STEPConstruct_ContextTool::SetModel(const occ::handle<StepData_StepModel>& 
       if (theAPD.IsNull())
         theAPD = GetCasted(StepBasic_ApplicationProtocolDefinition, ent);
     }
-    // if (ent->IsKind(STANDARD_TYPE(StepBasic_ProductRelatedProductCategory))) {
-    //   if (thePRPC.IsNull()) thePRPC = GetCasted(StepBasic_ProductRelatedProductCategory, ent);
-    // }
   }
 }
-
-//=================================================================================================
 
 void STEPConstruct_ContextTool::SetGlobalFactor(const StepData_Factors& theGlobalFactor)
 {
   myGlobalFactor = theGlobalFactor;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ApplicationProtocolDefinition> STEPConstruct_ContextTool::GetAPD()
 {
   return theAPD;
 }
-
-//=================================================================================================
 
 void STEPConstruct_ContextTool::AddAPD(const bool enforce)
 {
@@ -80,7 +62,7 @@ void STEPConstruct_ContextTool::AddAPD(const bool enforce)
     theAPD = new StepBasic_ApplicationProtocolDefinition;
 
   switch (mySchema)
-  { // j4
+  {
     default:
     case 1:
       theAPD->SetApplicationProtocolYear(1997);
@@ -119,7 +101,7 @@ void STEPConstruct_ContextTool::AddAPD(const bool enforce)
     theAPD->SetApplication(new StepBasic_ApplicationContext);
   occ::handle<TCollection_HAsciiString> appl;
   switch (mySchema)
-  { // j4
+  {
     default:
     case 1:
     case 2:
@@ -134,10 +116,7 @@ void STEPConstruct_ContextTool::AddAPD(const bool enforce)
       break;
   }
   theAPD->Application()->SetApplication(appl);
-  //  if (noapd || enforce) aStepModel->AddWithRefs (theAPD);
 }
-
-//=================================================================================================
 
 bool STEPConstruct_ContextTool::IsAP203() const
 {
@@ -151,8 +130,6 @@ bool STEPConstruct_ContextTool::IsAP203() const
   return sch == "config_control_design";
 }
 
-//=================================================================================================
-
 bool STEPConstruct_ContextTool::IsAP214() const
 {
   if (theAPD.IsNull())
@@ -164,8 +141,6 @@ bool STEPConstruct_ContextTool::IsAP214() const
   sch.LowerCase();
   return sch == "automotive_design";
 }
-
-//=================================================================================================
 
 bool STEPConstruct_ContextTool::IsAP242() const
 {
@@ -179,22 +154,12 @@ bool STEPConstruct_ContextTool::IsAP242() const
   return sch == "ap242_managed_model_based_3d_engineering";
 }
 
-// ================================================================
-// Data Section : Basic Product Information (level S1)
-//                   * Get methods
-//                   * Set methods
-// ================================================================
-
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> STEPConstruct_ContextTool::GetACstatus()
 {
   if (GetAPD().IsNull())
     return new TCollection_HAsciiString("");
   return GetAPD()->Status();
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> STEPConstruct_ContextTool::GetACschemaName()
 {
@@ -203,24 +168,10 @@ occ::handle<TCollection_HAsciiString> STEPConstruct_ContextTool::GetACschemaName
   return GetAPD()->ApplicationInterpretedModelSchemaName();
 }
 
-//=================================================================================================
-
 int STEPConstruct_ContextTool::GetACyear()
 {
   return (GetAPD().IsNull() ? 1998 : GetAPD()->ApplicationProtocolYear());
 }
-
-/*
-//=================================================================================================
-
-occ::handle<TCollection_HAsciiString>  STEPConstruct_ContextTool::GetACapplication()
-{
-  return GetPDC()->Formation()->OfProduct()->FrameOfReferenceValue(1)
-    ->FrameOfReference()->Application();
-}
-*/
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> STEPConstruct_ContextTool::GetACname()
 {
@@ -231,16 +182,12 @@ occ::handle<TCollection_HAsciiString> STEPConstruct_ContextTool::GetACname()
   return GetAPD()->Application()->Application();
 }
 
-//=================================================================================================
-
 void STEPConstruct_ContextTool::SetACstatus(const occ::handle<TCollection_HAsciiString>& status)
 {
   if (GetAPD().IsNull())
     return;
   GetAPD()->SetStatus(status);
 }
-
-//=================================================================================================
 
 void STEPConstruct_ContextTool::SetACschemaName(
   const occ::handle<TCollection_HAsciiString>& schemaName)
@@ -250,16 +197,12 @@ void STEPConstruct_ContextTool::SetACschemaName(
   GetAPD()->SetApplicationInterpretedModelSchemaName(schemaName);
 }
 
-//=================================================================================================
-
 void STEPConstruct_ContextTool::SetACyear(const int year)
 {
   if (GetAPD().IsNull())
     return;
   GetAPD()->SetApplicationProtocolYear(year);
 }
-
-//=================================================================================================
 
 void STEPConstruct_ContextTool::SetACname(const occ::handle<TCollection_HAsciiString>& name)
 {
@@ -269,8 +212,6 @@ void STEPConstruct_ContextTool::SetACname(const occ::handle<TCollection_HAsciiSt
     GetAPD()->SetApplication(new StepBasic_ApplicationContext);
   GetAPD()->Application()->SetApplication(name);
 }
-
-//=================================================================================================
 
 occ::handle<StepGeom_Axis2Placement3d> STEPConstruct_ContextTool::GetDefaultAxis()
 {
@@ -282,36 +223,26 @@ occ::handle<StepGeom_Axis2Placement3d> STEPConstruct_ContextTool::GetDefaultAxis
   return myAxis;
 }
 
-//=================================================================================================
-
 STEPConstruct_AP203Context& STEPConstruct_ContextTool::AP203Context()
 {
   return theAP203;
 }
-
-//=================================================================================================
 
 int STEPConstruct_ContextTool::Level() const
 {
   return myLevel.Length();
 }
 
-//=================================================================================================
-
 void STEPConstruct_ContextTool::NextLevel()
 {
   myLevel.Append(1);
 }
-
-//=================================================================================================
 
 void STEPConstruct_ContextTool::PrevLevel()
 {
   if (myLevel.Length() > 0)
     myLevel.Remove(myLevel.Length());
 }
-
-//=================================================================================================
 
 void STEPConstruct_ContextTool::SetLevel(const int lev)
 {
@@ -327,14 +258,10 @@ void STEPConstruct_ContextTool::SetLevel(const int lev)
   }
 }
 
-//=================================================================================================
-
 int STEPConstruct_ContextTool::Index() const
 {
   return (myLevel.Length() > 0 ? myLevel.Last() : 0);
 }
-
-//=================================================================================================
 
 void STEPConstruct_ContextTool::NextIndex()
 {
@@ -342,23 +269,17 @@ void STEPConstruct_ContextTool::NextIndex()
     myLevel.SetValue(myLevel.Length(), myLevel.Last() + 1);
 }
 
-//=================================================================================================
-
 void STEPConstruct_ContextTool::PrevIndex()
 {
   if (myLevel.Length() > 0)
     myLevel.SetValue(myLevel.Length(), myLevel.Last() - 1);
 }
 
-//=================================================================================================
-
 void STEPConstruct_ContextTool::SetIndex(const int ind)
 {
   if (myLevel.Length() > 0)
     myLevel.SetValue(myLevel.Length(), ind);
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> STEPConstruct_ContextTool::GetProductName() const
 {
@@ -379,8 +300,6 @@ occ::handle<TCollection_HAsciiString> STEPConstruct_ContextTool::GetProductName(
   return PdtName;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> STEPConstruct_ContextTool::
   GetRootsForPart(const STEPConstruct_Part& SDRTool)
 {
@@ -388,12 +307,10 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> STEPConstruc
     new NCollection_HSequence<occ::handle<Standard_Transient>>;
 
   seq->Append(SDRTool.SDRValue());
-  //  seq->Append ( GetAPD() );
 
   if (!SDRTool.PRPC().IsNull())
     seq->Append(SDRTool.PRPC());
 
-  // for AP203, add required product management data
   if (mySchema == 3)
   {
     theAP203.Init(SDRTool);
@@ -413,8 +330,6 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> STEPConstruc
   return seq;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> STEPConstruct_ContextTool::
   GetRootsForAssemblyLink(const STEPConstruct_Assembly& assembly)
 {
@@ -423,7 +338,6 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> STEPConstruc
 
   seq->Append(assembly.ItemValue());
 
-  // for AP203, write required product management data
   if (mySchema == 3)
   {
     theAP203.Init(assembly.GetNAUO());

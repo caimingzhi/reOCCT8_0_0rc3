@@ -1,11 +1,5 @@
 #ifdef _WIN32
 
-  /******************************************************************************/
-  /* File:      OSD_WNT.cxx                                                     */
-  /* Purpose:   Security management routines ( more convenient than WIN32       */
-  /*            ones ) and other convrnient functions.                          */
-  /******************************************************************************/
-  /***/
   #include <OSD_WNT.hpp>
 
   #include <strsafe.h>
@@ -14,33 +8,30 @@
 
   #include <Standard_Macro.hpp>
 
-  /***/
   #ifndef OCCT_UWP
 static void Init(void);
 
-/***/
 class Init_OSD_WNT
-{ // provides initialization
+{
 
 public:
   Init_OSD_WNT() { Init(); }
-
-}; // end Init_OSD_WNT
+};
 
 static Init_OSD_WNT initOsdWnt;
   #endif
-/***/
+
 static BOOL   fInit = FALSE;
 static PSID*  predefinedSIDs;
 static HANDLE hHeap;
-/***/
+
 static MOVE_DIR_PROC     _move_dir_proc;
 static COPY_DIR_PROC     _copy_dir_proc;
 static RESPONSE_DIR_PROC _response_dir_proc;
-  /***/
+
   #define PREDEFINED_SIDs_COUNT 9
   #define UNIVERSAL_PREDEFINED_SIDs_COUNT 5
-  /***/
+
   #define SID_INTERACTIVE 0
   #define SID_NETWORK 1
   #define SID_LOCAL 2
@@ -50,16 +41,9 @@ static RESPONSE_DIR_PROC _response_dir_proc;
   #define SID_ADMIN 6
   #define SID_WORLD 7
   #define SID_NULL 8
-  /***/
+
   #ifndef OCCT_UWP
-// None of the existing security APIs are supported in a UWP applications
-/******************************************************************************/
-/* Function : AllocSD                                                       */
-/* Purpose  : Allocates and initializes security identifier                 */
-/* Returns  : Pointer to allocated SID on success, NULL otherwise           */
-/* Warning  : Allocated SID must be deallocated by 'FreeSD' function        */
-/******************************************************************************/
-/***/
+
 PSECURITY_DESCRIPTOR AllocSD(void)
 {
 
@@ -71,20 +55,11 @@ PSECURITY_DESCRIPTOR AllocSD(void)
 
     HeapFree(hHeap, 0, (PVOID)retVal);
     retVal = NULL;
-
-  } /* end if */
+  }
 
   return retVal;
+}
 
-} /* end AllocSD */
-
-/***/
-/******************************************************************************/
-/* Function : FreeSD                                                        */
-/* Purpose  : Deallocates security identifier which was allocated by the    */
-/*            'AllocSD' function                                            */
-/******************************************************************************/
-/***/
 void FreeSD(PSECURITY_DESCRIPTOR pSD)
 {
 
@@ -97,18 +72,7 @@ void FreeSD(PSECURITY_DESCRIPTOR pSD)
     HeapFree(hHeap, 0, (PVOID)pACL);
 
   HeapFree(hHeap, 0, (PVOID)pSD);
-
-} /* end FreeSD */
-
-  /***/
-  /******************************************************************************/
-  /* Function : GetTokenInformationEx                                         */
-  /* Purpose  : Allocates and fills out access token                          */
-  /* Returns  : Pointer to the access token on success, NULL otherwise        */
-  /* Warning  : Allocated access token  must be deallocated by                */
-  /*            'FreeTokenInformation' function                               */
-  /******************************************************************************/
-  /***/
+}
 
     #if defined(__CYGWIN32__) || defined(__MINGW32__)
       #define __try
@@ -144,14 +108,12 @@ LPVOID GetTokenInformationEx(HANDLE hToken, TOKEN_INFORMATION_CLASS tic)
         if ((buffer = HeapAlloc(hHeap, 0, dwSizeNeeded)) == NULL)
 
           __leave;
-
-      } /* end if */
+      }
 
     } while (errVal != ERROR_SUCCESS);
 
     fOK = TRUE;
-
-  } /* end __try */
+  }
 
   __finally
   {
@@ -161,18 +123,15 @@ LPVOID GetTokenInformationEx(HANDLE hToken, TOKEN_INFORMATION_CLASS tic)
 
       HeapFree(hHeap, 0, buffer);
       buffer = NULL;
-
-    } /* end if */
-
-  } /* end __finally */
+    }
+  }
 
     #ifdef VAC
-leave:; // added for VisualAge
+leave:;
     #endif
 
   return buffer;
-
-} /* end GetTokenInformationEx */
+}
 
     #if defined(__CYGWIN32__) || defined(__MINGW32__)
       #undef __try
@@ -180,30 +139,12 @@ leave:; // added for VisualAge
       #undef __leave
     #endif
 
-/***/
-/******************************************************************************/
-/* Function : FreeTokenInformation                                          */
-/* Purpose  : Deallocates access token which was allocated by the           */
-/*            'GetTokenInformationEx' function                              */
-/******************************************************************************/
-/***/
 void FreeTokenInformation(LPVOID lpvTkInfo)
 {
 
   HeapFree(hHeap, 0, lpvTkInfo);
+}
 
-} /* end FreeTokenInformation */
-
-/***/
-/******************************************************************************/
-/* Function : Init                                                          */
-/* Purpose  : Allocates and initializes predefined security identifiers     */
-/* Warning  : Generates 'STATUS_NO_MEMORY' software exception if there are  */
-/*            insufficient of memory. This exception can be caught by using */
-/*            software exception handling ( SEH ) mechanism                 */
-/*            ( __try / __except )                                          */
-/******************************************************************************/
-/***/
 static void Init(void)
 {
 
@@ -329,18 +270,9 @@ static void Init(void)
                              &predefinedSIDs[SID_NULL]);
 
     fInit = TRUE;
+  }
+}
 
-  } /* end if */
-
-} /* end init */
-
-/***/
-/******************************************************************************/
-/* Function : PredefinedSid                                                 */
-/* Purpose  : Checks whether specified SID predefined or not                */
-/* Returns  : TRUE if specified SID is predefined, FALSE otherwise          */
-/******************************************************************************/
-/***/
 BOOL PredefinedSid(PSID pSID)
 {
 
@@ -353,16 +285,8 @@ BOOL PredefinedSid(PSID pSID)
       return TRUE;
 
   return FALSE;
+}
 
-} /* end PredefinedSid */
-
-/***/
-/******************************************************************************/
-/* Function : NtPredefinedSid                                               */
-/* Purpose  : Checks whether specified SID universal or not                 */
-/* Returns  : TRUE if specified SID is NOT universal, FALSE otherwise       */
-/******************************************************************************/
-/***/
 BOOL NtPredefinedSid(PSID pSID)
 {
 
@@ -387,145 +311,64 @@ BOOL NtPredefinedSid(PSID pSID)
     if (*pdwTestSA == SECURITY_LOGON_IDS_RID)
 
       return TRUE;
-
-  } /* end if */
+  }
 
   return FALSE;
+}
 
-} /* end NtPredefinedSid */
-
-/***/
-/******************************************************************************/
-/* Function : AdminSid                                                      */
-/* Purpose  : Returns SID of the administrative user account                */
-/******************************************************************************/
-/***/
 PSID AdminSid(void)
 {
 
   return predefinedSIDs[SID_ADMIN];
+}
 
-} /* end AdminSid */
-
-/***/
-/******************************************************************************/
-/* Function : WorldSid                                                      */
-/* Purpose  : Returns SID of group that includes all users                  */
-/******************************************************************************/
-/***/
 PSID WorldSid(void)
 {
 
   return predefinedSIDs[SID_WORLD];
+}
 
-} /* end WorldSid */
-
-/***/
-/******************************************************************************/
-/* Function : InteractiveSid                                                */
-/* Purpose  : Returns SID of group that includes all users logged on for    */
-/*            interactive operation                                         */
-/******************************************************************************/
-/***/
 PSID InteractiveSid(void)
 {
 
   return predefinedSIDs[SID_INTERACTIVE];
+}
 
-} /* end InteractiveSID */
-
-/***/
-/******************************************************************************/
-/* Function : NetworkSid                                                    */
-/* Purpose  : Returns SID of group that includes all users logged on across */
-/*            a network                                                     */
-/******************************************************************************/
-/***/
 PSID NetworkSid(void)
 {
 
   return predefinedSIDs[SID_NETWORK];
+}
 
-} /* end NetworkSid */
-
-/***/
-/******************************************************************************/
-/* Function : LocalSid                                                      */
-/* Purpose  : Returns SID of group that includes all users logged on locally*/
-/******************************************************************************/
-/***/
 PSID LocalSid(void)
 {
 
   return predefinedSIDs[SID_LOCAL];
+}
 
-} /* end LocalSid */
-
-/***/
-/******************************************************************************/
-/* Function : DialupSid                                                     */
-/* Purpose  : Returns SID of group that includes all users logged on to     */
-/*            terminals using a dialup modem                                */
-/******************************************************************************/
-/***/
 PSID DialupSid(void)
 {
 
   return predefinedSIDs[SID_DIALUP];
+}
 
-} /* end DialupSid */
-
-/***/
-/******************************************************************************/
-/* Function : BatchSid                                                      */
-/* Purpose  : Returns SID of group that includes all users logged on using  */
-/*            a batch queue facility                                        */
-/******************************************************************************/
-/***/
 PSID BatchSid(void)
 {
 
   return predefinedSIDs[SID_BATCH];
+}
 
-} /* end BatchSid */
-
-/***/
-/******************************************************************************/
-/* Function : CreatorOwnerSid                                               */
-/* Purpose  : Returns SID of 'CREATOR OWNER' special group                  */
-/******************************************************************************/
-/***/
 PSID CreatorOwnerSid(void)
 {
 
   return predefinedSIDs[SID_CREATOR_OWNER];
+}
 
-} /* end CreatorOwnerSid */
-
-/***/
-/******************************************************************************/
-/* Function : NullSid                                                       */
-/* Purpose  : Returns null SID                                              */
-/******************************************************************************/
-/***/
 PSID NullSid(void)
 {
 
   return predefinedSIDs[SID_NULL];
-
-} /* end NullSid */
-
-  /***/
-  /******************************************************************************/
-  /* Function : GetFileSecurityEx                                             */
-  /* Purpose  : Allocates a security descriptor and fills it out by security  */
-  /*            information which belongs to the specified file               */
-  /* Returns  : Pointer to the allocated security descriptor on success       */
-  /*            NULL otherwise                                                */
-  /* Warning  : Allocated security descriptor must be deallocated by          */
-  /*            'FreeFileSecurity' function                                   */
-  /******************************************************************************/
-  /***/
+}
 
     #if defined(__CYGWIN32__) || defined(__MINGW32__)
       #define __try
@@ -559,14 +402,12 @@ PSECURITY_DESCRIPTOR GetFileSecurityEx(LPCWSTR fileName, SECURITY_INFORMATION si
 
         if ((retVal = (PSECURITY_DESCRIPTOR)HeapAlloc(hHeap, 0, dwSizeNeeded)) == NULL)
           __leave;
-
-      } /* end if */
+      }
 
     } while (errVal != ERROR_SUCCESS);
 
     fOK = TRUE;
-
-  } /* end __try */
+  }
 
   __finally
   {
@@ -576,18 +417,15 @@ PSECURITY_DESCRIPTOR GetFileSecurityEx(LPCWSTR fileName, SECURITY_INFORMATION si
 
       HeapFree(hHeap, 0, retVal);
       retVal = NULL;
-
-    } /* end if */
-
-  } /* end __finally */
+    }
+  }
 
     #ifdef VAC
-leave:; // added for VisualAge
+leave:;
     #endif
 
   return retVal;
-
-} /* end GetFileSecurityEx */
+}
 
     #if defined(__CYGWIN32__) || defined(__MINGW32__)
       #undef __try
@@ -595,28 +433,12 @@ leave:; // added for VisualAge
       #undef __leave
     #endif
 
-/***/
-/******************************************************************************/
-/* Function : FreeFileSecurity                                              */
-/* Purpose  : Deallocates security descriptor which was allocated by the    */
-/*            'GetFileSecurityEx' function                                  */
-/******************************************************************************/
-/***/
 void FreeFileSecurity(PSECURITY_DESCRIPTOR pSD)
 {
 
   HeapFree(hHeap, 0, (LPVOID)pSD);
+}
 
-} /* end FreeFileSecurity */
-
-/******************************************************************************/
-/* Function : CreateAcl                                                     */
-/* Purpose  : Allocates and initializes access-control list                 */
-/* Returns  : Pointer to the allocated and initialized ACL on success,      */
-/*            NULL otherwise                                                */
-/* Warning  : Allocated ACL must be deallocated by 'FreeAcl' function       */
-/******************************************************************************/
-/***/
 PACL CreateAcl(DWORD dwAclSize)
 {
 
@@ -629,30 +451,14 @@ PACL CreateAcl(DWORD dwAclSize)
     InitializeAcl(retVal, dwAclSize, ACL_REVISION);
 
   return retVal;
+}
 
-} /* end CreateAcl */
-
-/***/
-/******************************************************************************/
-/* Function : FreeAcl                                                       */
-/* Purpose  : Deallocates access-control list which was allocated by the    */
-/*            'CreateAcl' function                                          */
-/******************************************************************************/
-/***/
 void FreeAcl(PACL pACL)
 {
 
   HeapFree(hHeap, 0, (PVOID)pACL);
+}
 
-} /* end FreeAcl */
-
-/******************************************************************************/
-/* Function : AllocAccessAllowedAce                                         */
-/* Purpose  : Allocates and initializes access-control entry                */
-/* Returns  : Pointer to the ACE on success, NULL othrwise                  */
-/* Warning  : Allocated ACE must be deallocated by the 'FreeAce' function   */
-/******************************************************************************/
-/***/
 PVOID AllocAccessAllowedAce(DWORD dwMask, BYTE flags, PSID pSID)
 {
 
@@ -673,37 +479,20 @@ PVOID AllocAccessAllowedAce(DWORD dwMask, BYTE flags, PSID pSID)
     retVal->dwMask = dwMask;
 
     CopySid(GetLengthSid(pSID), &retVal->pSID, pSID);
-
-  } /* end if */
+  }
 
   return retVal;
+}
 
-} /* end AllocAccessAllowedAce */
-
-/***/
-/******************************************************************************/
-/* Function : FreeAce                                                       */
-/* Purpose  : Deallocates an ACE which was allocated by the                 */
-/*            'AllocAccessAllowedAce ' function                             */
-/******************************************************************************/
-/***/
 void FreeAce(PVOID pACE)
 {
 
   HeapFree(hHeap, 0, pACE);
-
-} /* end FreeAce */
+}
   #endif
   #define WILD_CARD L"/*.*"
   #define WILD_CARD_LEN (sizeof(WILD_CARD))
 
-/***/
-/******************************************************************************/
-/* Function : MoveDirectory                                                 */
-/* Purpose  : Moves specified directory tree to the new location            */
-/* Returns  : TRUE on success, FALSE otherwise                              */
-/******************************************************************************/
-/***/
 static BOOL MoveDirectory(const wchar_t* oldDir, const wchar_t* newDir, DWORD& theRecurseLevel)
 {
   wchar_t* driveSrc = NULL;
@@ -931,13 +720,6 @@ BOOL MoveDirectory(const wchar_t* oldDir, const wchar_t* newDir)
   return MoveDirectory(oldDir, newDir, aRecurseLevel);
 }
 
-/***/
-/******************************************************************************/
-/* Function : CopyDirectory                                                 */
-/* Purpose  : Copies specified directory tree to the new location           */
-/* Returns  : TRUE on success, FALSE otherwise                              */
-/******************************************************************************/
-/***/
 BOOL CopyDirectory(const wchar_t* dirSrc, const wchar_t* dirDst)
 {
   WIN32_FIND_DATAW* pFD          = NULL;
@@ -1067,59 +849,24 @@ BOOL CopyDirectory(const wchar_t* dirSrc, const wchar_t* dirDst)
   }
 
   return retVal;
-} /* end CopyDirectory */
+}
 
-/***/
-/******************************************************************************/
-/* Function : SetMoveDirectoryProc                                          */
-/* Purpose  : Sets callback procedure which is calling by the               */
-/*            'MoveDirectory' after moving of each item in the              */
-/*            directory. To unregister this callback function supply NULL   */
-/*            pointer                                                       */
-/******************************************************************************/
-/***/
 void SetMoveDirectoryProc(MOVE_DIR_PROC proc)
 {
 
   _move_dir_proc = proc;
+}
 
-} /* end SetMoveDirectoryProc */
-
-/***/
-/******************************************************************************/
-/* Function : SetCopyDirectoryProc                                          */
-/* Purpose  : Sets callback procedure which is calling by the               */
-/*            'CopyDirectory' after copying of each item in the             */
-/*            directory. To unregister this callback function supply NULL   */
-/*            pointer                                                       */
-/******************************************************************************/
-/***/
 void SetCopyDirectoryProc(COPY_DIR_PROC proc)
 {
 
   _copy_dir_proc = proc;
+}
 
-} /* end SetCopyDirectoryProc */
-
-/***/
-/******************************************************************************/
-/* Function : SetResponseDirectoryProc                                      */
-/* Purpose  : Sets callback procedure which is calling by the               */
-/*            directory processing function if an error was occur.          */
-/*            The return value of that callback procedure determines        */
-/*            behaviour of directory processing functions in case of error. */
-/*            To unregister this callback function supply NULL pointer      */
-/******************************************************************************/
-/***/
 void SetResponseDirectoryProc(RESPONSE_DIR_PROC proc)
 {
 
   _response_dir_proc = proc;
+}
 
-} /* end SetResponseDirectoryProc */
-
-/***/
-/******************************************************************************/
-/******************************************************************************/
-/******************************************************************************/
 #endif

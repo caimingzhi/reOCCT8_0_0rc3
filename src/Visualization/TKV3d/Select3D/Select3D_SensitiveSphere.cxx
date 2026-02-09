@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveSphere, Select3D_SensitiveEntity)
 
-//=================================================================================================
-
 Select3D_SensitiveSphere::Select3D_SensitiveSphere(
   const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
   const gp_Pnt&                             theCenter,
@@ -14,8 +12,6 @@ Select3D_SensitiveSphere::Select3D_SensitiveSphere(
       myRadius(theRadius)
 {
 }
-
-//=================================================================================================
 
 bool Select3D_SensitiveSphere::Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                        SelectBasics_PickResult&             thePickResult)
@@ -42,16 +38,12 @@ bool Select3D_SensitiveSphere::Matches(SelectBasics_SelectingVolumeManager& theM
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<Select3D_SensitiveEntity> Select3D_SensitiveSphere::GetConnected()
 {
   occ::handle<Select3D_SensitiveEntity> aNewEntity =
     new Select3D_SensitiveSphere(myOwnerId, myCenter, myRadius);
   return aNewEntity;
 }
-
-//=================================================================================================
 
 Select3D_BndBox3d Select3D_SensitiveSphere::BoundingBox()
 {

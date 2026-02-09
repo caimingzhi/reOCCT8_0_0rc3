@@ -11,7 +11,6 @@ class StepRepr_MappedItem : public StepRepr_RepresentationItem
 {
 
 public:
-  //! Returns a MappedItem
   Standard_EXPORT StepRepr_MappedItem();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&    aName,

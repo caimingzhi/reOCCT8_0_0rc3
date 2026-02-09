@@ -11,7 +11,6 @@ class StepGeom_QuasiUniformCurveAndRationalBSplineCurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for QuasiUniformCurveAndRationalBSplineCurve
 class RWStepGeom_RWQuasiUniformCurveAndRationalBSplineCurve
 {
 public:

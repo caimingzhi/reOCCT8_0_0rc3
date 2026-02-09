@@ -59,8 +59,6 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
   AppParCurves_ConstraintCouple mycouple;
   AppParCurves_Constraint FC = AppParCurves_NoConstraint, LC = AppParCurves_NoConstraint, Cons;
 
-  // Boucle de calcul du nombre de points de passage afin de dimensionner
-  // les matrices.
   IncPass = 0;
   IncTan  = 0;
   IncCurv = 0;
@@ -75,17 +73,17 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
       LC = Cons;
     if (Cons >= 1)
     {
-      IncPass++; // IncPass = nbre de points de passage.
+      IncPass++;
       IPas(IncPass) = myindex;
     }
     if (Cons >= 2)
     {
-      IncTan++; // IncTan= nbre de points de tangence.
+      IncTan++;
       ITan(IncTan) = myindex;
     }
     if (Cons == 3)
     {
-      IncCurv++; // IncCurv = nbre de pts de courbure.
+      IncCurv++;
       ICurv(IncCurv) = myindex;
     }
   }
@@ -105,15 +103,12 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
     mynb2d = 1;
   CCol = nb3d * 3 + nb2d * 2;
 
-  // Declaration et initialisation des matrices et vecteurs de contraintes:
   math_Matrix             ContInit(1, IncPass, 1, Npol);
   math_Vector             Start(1, CCol * Npol);
   NCollection_Array2<int> Ibont(1, NbCu, 1, IncTan);
 
-  // Remplissage de Cont pour les points de passage:
-  // =================================================
   for (i = 1; i <= IncPass; i++)
-  { // Cette partie ne depend que de Bernstein
+  {
     Npt = IPas(i);
     for (j = 1; j <= Npol; j++)
     {
@@ -124,10 +119,6 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
   {
     Cont.Set(IncPass * (i - 1) + 1, IncPass * i, Npol * (i - 1) + 1, Npol * i, ContInit);
   }
-
-  // recuperation des vecteurs de depart pour Uzawa. Ce vecteur represente les
-  // poles de SCurv.
-  // Remplissage de secont et resolution.
 
   NCollection_Array1<gp_Vec>   tabV(1, mynb3d);
   NCollection_Array1<gp_Vec2d> tabV2d(1, mynb2d);
@@ -144,7 +135,7 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
       for (i = 1; i <= IncTan; i++)
       {
         Npt = ITan(i);
-        // choix du maximum de tangence pour exprimer la colinearite:
+
         ToolLine::Tangency(SSP, Npt, tabV);
         V = tabV(k);
         V.Coord(T1, T2, T3);
@@ -196,7 +187,6 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
         Inc3 = Inc3 + 2;
       }
 
-      // Remplissage du second membre:
       for (i = 1; i <= IncPass; i++)
       {
         ToolLine::Value(SSP, IPas(i), tabP);
@@ -207,7 +197,6 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
       }
       IncSec = IncSec + 3 * IncPass;
 
-      // Vecteur de depart:
       for (j = 1; j <= Npol; j++)
       {
         Poi                       = SCurv.Value(j).Point(k);
@@ -243,7 +232,6 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
         Inc3 = Inc3 + 1;
       }
 
-      // Remplissage du second membre:
       for (i = 1; i <= IncPass; i++)
       {
         ToolLine::Value(SSP, IPas(i), tabP2d);
@@ -253,7 +241,6 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
       }
       IncSec = IncSec + 2 * IncPass;
 
-      // Remplissage du vecteur de depart:
       for (j = 1; j <= Npol; j++)
       {
         Poi2d                    = SCurv.Value(j).Point2d(k);
@@ -264,9 +251,6 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
     }
   }
 
-  // Equations exprimant le meme rapport de tangence sur chaque courbe:
-  // On prend les coordonnees les plus significatives.
-
   --Inc3;
   for (i = 1; i <= IncTan; ++i)
   {
@@ -275,11 +259,11 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
     for (k = 1; k <= NbCu - 1; ++k)
     {
       ++Inc3;
-      // Initialize first relation variable (T1)
+
       int addIndex_1 = 0, aVal = Ibont(k, i);
       switch (aVal)
       {
-        case 1: // T1 ~ T1x
+        case 1:
         {
           if (k <= nb3d)
           {
@@ -298,7 +282,7 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
           addIndex_1 = 0;
           break;
         }
-        case 2: // T1 ~ T1y
+        case 2:
         {
           if (k <= nb3d)
           {
@@ -316,7 +300,7 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
           addIndex_1 = Npol;
           break;
         }
-        case 3: // T1 ~ T1z
+        case 3:
         {
           ToolLine::Tangency(SSP, Npt, tabV);
           V          = tabV(k);
@@ -326,11 +310,11 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
           break;
         }
       }
-      // Initialize second relation variable (T2)
+
       int addIndex_2 = 0, aNextVal = Ibont(k + 1, i);
       switch (aNextVal)
       {
-        case 1: // T2 ~ T2x
+        case 1:
         {
           if ((k + 1) <= nb3d)
           {
@@ -347,7 +331,7 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
           addIndex_2 = 0;
           break;
         }
-        case 2: // T2 ~ T2y
+        case 2:
         {
           if ((k + 1) <= nb3d)
           {
@@ -364,7 +348,7 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
           addIndex_2 = Npol;
           break;
         }
-        case 3: // T2 ~ T2z
+        case 3:
         {
           ToolLine::Tangency(SSP, Npt, tabV);
           V          = tabV(k + 1);
@@ -374,7 +358,6 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
         }
       }
 
-      // Relations between T1 and T2:
       for (j = 1; j <= Npol; j++)
       {
         Daij                                     = DerivativeBern(Npt, j);
@@ -384,53 +367,6 @@ AppParCurves_ResolConstraint::AppParCurves_ResolConstraint(
       IncCol += IP;
     }
   }
-
-  // Equations concernant la courbure:
-
-  /*  Inc3 = Inc3 +1;
-    IncCol = 0;
-    for (k = 1; k <= NbCu; k++) {
-      for (i = 1; i <= IncCurv; i++) {
-        Npt = ICurv(i);
-        AppDef_MultiPointConstraint MP = SSP.Value(Npt);
-        DDA = SecondDerivativeBern(Parameters(Npt));
-        if (SSP.Value(1).Dimension(k) == 3) {
-      C1 = MP.Curv(k).X();
-      C2 = MP.Curv(k).Y();
-      C3 = MP.Curv(k).Z();
-      for (j = 1; j <= Npol; j++) {
-        Daij = DerivativeBern(Npt, j);
-        D2Aij = DDA(j);
-        Cont(Inc3, j + IncCol) = D2Aij;
-        Cont(Inc3, j + Npol2 + IncCol) = -C2*Daij;
-        Cont(Inc3, j + Npol + IncCol) = C3*Daij;
-
-        Cont(Inc3+1, j + Npol + IncCol) = D2Aij;
-        Cont(Inc3+1, j +IncCol) = -C3*Daij;
-        Cont(Inc3+1, j + Npol2 + IncCol) = C1*Daij;
-
-        Cont(Inc3+2, j + Npol2+IncCol) = D2Aij;
-        Cont(Inc3+2, j + Npol+IncCol) = -C1*Daij;
-        Cont(Inc3+2, j + IncCol) = C2*Daij;
-      }
-      Inc3 = Inc3 + 3;
-        }
-        else {        // Dimension 2:
-      C1 = MP.Curv2d(k).X();
-      C2 = MP.Curv2d(k).Y();
-      for (j = 1; j <= Npol; j++) {
-        Daij = DerivativeBern(Npt, j);
-        D2Aij = DDA(j);
-        Cont(Inc3, j + IncCol) = D2Aij*C1;
-        Cont(Inc3+1, j + Npol + IncCol) = D2Aij*C2;
-      }
-      Inc3 = Inc3 + 2;
-        }
-      }
-    }
-
-  */
-  // Resolution par Uzawa:
 
   math_Uzawa UzaResol(Cont, Secont, Start, Tolerance);
   if (!(UzaResol.IsDone()))
@@ -493,8 +429,7 @@ int AppParCurves_ResolConstraint::NbConstraints(
   const int,
   const occ::handle<NCollection_HArray1<AppParCurves_ConstraintCouple>>& TheConstraints) const
 {
-  // Boucle de calcul du nombre de points de passage afin de dimensionner
-  // les matrices.
+
   int                     aIncPass, aIncTan, aIncCurv, aCCol;
   int                     i;
   AppParCurves_Constraint Cons;
@@ -508,15 +443,15 @@ int AppParCurves_ResolConstraint::NbConstraints(
     Cons = (TheConstraints->Value(i)).Constraint();
     if (Cons >= 1)
     {
-      aIncPass++; // IncPass = nbre de points de passage.
+      aIncPass++;
     }
     if (Cons >= 2)
     {
-      aIncTan++; // IncTan= nbre de points de tangence.
+      aIncTan++;
     }
     if (Cons == 3)
     {
-      aIncCurv++; // IncCurv = nbre de pts de courbure.
+      aIncCurv++;
     }
   }
   int nb3d = ToolLine::NbP3d(SSP);
@@ -567,7 +502,7 @@ const math_Matrix& AppParCurves_ResolConstraint::ConstraintDerivative(const Mult
   gp_Vec                  V;
   gp_Vec2d                V2d;
   double                  T1, T2, T3, Tmax, DDaij;
-  //  int FirstP = IPas(1);
+
   nb3d       = ToolLine::NbP3d(SSP);
   nb2d       = ToolLine::NbP2d(SSP);
   int mynb3d = nb3d, mynb2d = nb2d;
@@ -586,8 +521,6 @@ const math_Matrix& AppParCurves_ResolConstraint::ConstraintDerivative(const Mult
     for (j = 1; j <= DeCont.ColNumber(); j++)
       DeCont(i, j) = 0.0;
 
-  //  Remplissage de DK pour les points de passages:
-
   for (i = 1; i <= IncPass; i++)
   {
     Npt = IPas(i);
@@ -599,8 +532,6 @@ const math_Matrix& AppParCurves_ResolConstraint::ConstraintDerivative(const Mult
     DeCont.Set(IncPass * (i - 1) + 1, IncPass * i, Npol * (i - 1) + 1, Npol * i, DeCInit);
   }
 
-  // Pour les points de tangence:
-
   Inc3   = CCol * IncPass + 1;
   IncCol = 0;
 
@@ -611,8 +542,7 @@ const math_Matrix& AppParCurves_ResolConstraint::ConstraintDerivative(const Mult
       for (i = 1; i <= IncTan; i++)
       {
         Npt = ITan(i);
-        //	MultiPoint MPoint = ToolLine::Value(SSP, Npt);
-        // choix du maximum de tangence pour exprimer la colinearite:
+
         ToolLine::Tangency(SSP, Npt, tabV);
         V = tabV(k);
         V.Coord(T1, T2, T3);
@@ -693,16 +623,13 @@ const math_Matrix& AppParCurves_ResolConstraint::ConstraintDerivative(const Mult
     }
   }
 
-  // Equations exprimant le meme rapport de tangence sur chaque courbe:
-  // On prend les coordonnees les plus significatives.
-
   Inc3 = Inc3 - 1;
   for (i = 1; i <= IncTan; i++)
   {
     IncCol = 0;
     Npt    = ITan(i);
     AppParCurves::SecondDerivativeBernstein(Parameters(Npt), DDA);
-    //    MultiPoint MP = ToolLine::Value(SSP, Npt);
+
     for (k = 1; k <= NbCu - 1; k++)
     {
       Inc3 = Inc3 + 1;
@@ -723,7 +650,7 @@ const math_Matrix& AppParCurves_ResolConstraint::ConstraintDerivative(const Mult
           IP  = 2 * Npol;
         }
         if (Ibont(k + 1, i) == 1)
-        { // Relations entre T1x et T2x:
+        {
           if ((k + 1) <= nb3d)
           {
             ToolLine::Tangency(SSP, Npt, tabV);
@@ -745,7 +672,7 @@ const math_Matrix& AppParCurves_ResolConstraint::ConstraintDerivative(const Mult
           IncCol = IncCol + IP;
         }
         else if (Ibont(k + 1, i) == 2)
-        { // Relations entre T1x et T2y:
+        {
           if ((k + 1) <= nb3d)
           {
             ToolLine::Tangency(SSP, Npt, tabV);
@@ -767,7 +694,7 @@ const math_Matrix& AppParCurves_ResolConstraint::ConstraintDerivative(const Mult
           IncCol = IncCol + IP;
         }
         else if (Ibont(k + 1, i) == 3)
-        { // Relations entre T1x et T2z:
+        {
           ToolLine::Tangency(SSP, Npt, tabV);
           V  = tabV(k + 1);
           T2 = V.Z();
@@ -797,7 +724,7 @@ const math_Matrix& AppParCurves_ResolConstraint::ConstraintDerivative(const Mult
           IP  = 2 * Npol;
         }
         if (Ibont(k + 1, i) == 1)
-        { // Relations entre T1y et T2x:
+        {
           if ((k + 1) <= nb3d)
           {
             ToolLine::Tangency(SSP, Npt, tabV);
@@ -819,7 +746,7 @@ const math_Matrix& AppParCurves_ResolConstraint::ConstraintDerivative(const Mult
           IncCol = IncCol + IP;
         }
         else if (Ibont(k + 1, i) == 2)
-        { // Relations entre T1y et T2y:
+        {
           if ((k + 1) <= nb3d)
           {
             ToolLine::Tangency(SSP, Npt, tabV);
@@ -841,7 +768,7 @@ const math_Matrix& AppParCurves_ResolConstraint::ConstraintDerivative(const Mult
           IncCol = IncCol + IP;
         }
         else if (Ibont(k + 1, i) == 3)
-        { // Relations entre T1y et T2z:
+        {
           ToolLine::Tangency(SSP, Npt, tabV);
           V  = tabV(k + 1);
           T2 = V.Z();
@@ -862,7 +789,7 @@ const math_Matrix& AppParCurves_ResolConstraint::ConstraintDerivative(const Mult
         T1 = V.Z();
         IP = 3 * Npol;
         if (Ibont(k + 1, i) == 1)
-        { // Relations entre T1z et T2x:
+        {
           if ((k + 1) <= nb3d)
           {
             ToolLine::Tangency(SSP, Npt, tabV);
@@ -885,7 +812,7 @@ const math_Matrix& AppParCurves_ResolConstraint::ConstraintDerivative(const Mult
         }
 
         else if (Ibont(k + 1, i) == 2)
-        { // Relations entre T1z et T2y:
+        {
           if ((k + 1) <= nb3d)
           {
             ToolLine::Tangency(SSP, Npt, tabV);
@@ -908,7 +835,7 @@ const math_Matrix& AppParCurves_ResolConstraint::ConstraintDerivative(const Mult
         }
 
         else if (Ibont(k + 1, i) == 3)
-        { // Relations entre T1z et T2z:
+        {
           ToolLine::Tangency(SSP, Npt, tabV);
           V  = tabV(k + 1);
           T2 = V.Z();

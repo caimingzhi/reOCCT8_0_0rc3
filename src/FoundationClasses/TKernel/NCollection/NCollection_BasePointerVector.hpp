@@ -5,46 +5,29 @@
 #include <NCollection_Allocator.hpp>
 #include <NCollection_DefineAlloc.hpp>
 
-//! Simplified class for vector of pointers of void.
-//! Offers basic functionality to scalable inserts,
-//! resizes and erasing last.
-//!
-//! Control of processing values of pointers out-of-scope
-//! and should be controlled externally.
-//! Especially, copy operation should post-process elements of pointers to make deep copy.
 class NCollection_BasePointerVector
 {
 public:
-  //! Memory allocation
   DEFINE_STANDARD_ALLOC
   DEFINE_NCOLLECTION_ALLOC
 
 public:
-  //! Default constructor
   NCollection_BasePointerVector() noexcept = default;
 
-  //! Copy data from another vector
   Standard_EXPORT NCollection_BasePointerVector(const NCollection_BasePointerVector& theOther);
 
-  //! Move data from another vector
   Standard_EXPORT NCollection_BasePointerVector(NCollection_BasePointerVector&& theOther) noexcept;
 
-  //! Destroy container
   ~NCollection_BasePointerVector() { clear(); }
 
-  //! Checks for an empty status
   bool IsEmpty() const noexcept { return mySize == 0; }
 
-  //! Gets used size
   size_t Size() const noexcept { return mySize; }
 
-  //! Gets available capacity
   size_t Capacity() const noexcept { return myCapacity; }
 
-  //! Erases last element, decrements size.
   void RemoveLast() noexcept { mySize--; }
 
-  //! Resets the size
   void Clear(const bool theReleaseMemory = false)
   {
     if (theReleaseMemory)
@@ -53,37 +36,27 @@ public:
   }
 
 public:
-  //! Gets array, can be null
   void** GetArray() const noexcept { return myArray; }
 
-  //! Gets value by index, no access validation
   void* Value(const size_t theInd) const noexcept { return myArray[theInd]; }
 
 public:
-  //! Inserts new element at the end, increase size,
-  //! if capacity is not enough, call resize.
   Standard_EXPORT void Append(const void* thePnt);
 
-  //! Updates value of existed element,
-  //! If index more then size, increase size of container,
-  //! in this case capacity can be updated.
   Standard_EXPORT void SetValue(const size_t theInd, const void* thePnt);
 
-  //! Copy vector
   Standard_EXPORT NCollection_BasePointerVector& operator=(
     const NCollection_BasePointerVector& theOther);
 
-  //! Move vector
   Standard_EXPORT NCollection_BasePointerVector& operator=(
     NCollection_BasePointerVector&& theOther) noexcept;
 
 private:
-  //! Deallocate array
   Standard_EXPORT void clear();
 
 private:
-  size_t                       mySize     = 0;       //!< Used length of vector
-  size_t                       myCapacity = 0;       //!< Allocated vector size
-  void**                       myArray    = nullptr; //! Array of pointers
+  size_t                       mySize     = 0;
+  size_t                       myCapacity = 0;
+  void**                       myArray    = nullptr;
   NCollection_Allocator<void*> myAllocator;
 };

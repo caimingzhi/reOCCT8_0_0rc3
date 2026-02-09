@@ -16,7 +16,6 @@ class StepGeom_CompositeCurve : public StepGeom_BoundedCurve
 {
 
 public:
-  //! Returns a CompositeCurve
   Standard_EXPORT StepGeom_CompositeCurve();
 
   Standard_EXPORT void Init(

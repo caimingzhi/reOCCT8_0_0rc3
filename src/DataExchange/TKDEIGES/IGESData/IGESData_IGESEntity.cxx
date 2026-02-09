@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gp_GTrsf.hpp>
 #include <IGESData_ColorEntity.hpp>
@@ -48,8 +37,6 @@ namespace
   static const int IGESShiftHier   = 12;
 } // namespace
 
-//=================================================================================================
-
 IGESData_IGESEntity::IGESData_IGESEntity()
     : theType(0),
       theForm(0),
@@ -62,11 +49,9 @@ IGESData_IGESEntity::IGESData_IGESEntity()
   theRes1[0] = theRes2[0] = '\0';
 }
 
-//=================================================================================================
-
 void IGESData_IGESEntity::Clear()
 {
-  //  Handle and DefSwitch
+
   theStructure.Nullify();
   theDefLineFont.SetVoid();
   theLineFont.Nullify();
@@ -80,17 +65,13 @@ void IGESData_IGESEntity::Clear()
   theSubScriptN = 0;
   theShortLabel.Nullify();
 
-  //  Autres Valeurs, Listes
   theType = theForm = 0;
   theStatusNum = theLWeightNum = 0;
   theLWeightVal                = 0.;
-  //  theRes1[0]    = theRes2[0]    = '\0';
+
   theProps.Clear();
   theAssocs.Clear();
 }
-
-//  #########################################################################
-//  ....                Definition IGES : Directory Entry                ....
 
 IGESData_IGESType IGESData_IGESEntity::IGESType() const
 {
@@ -222,9 +203,6 @@ occ::handle<IGESData_LabelDisplayEntity> IGESData_IGESEntity::LabelDisplay() con
   return GetCasted(IGESData_LabelDisplayEntity, theLabDisplay);
 }
 
-// Status : an Integer for BlankStatus,SubordinateStatus,UseFlag,HierarchySt.
-// Division : 4 bits each (BlankStatus on the right, etc)
-
 int IGESData_IGESEntity::BlankStatus() const
 {
   return (theStatusNum & IGESStatusField);
@@ -270,16 +248,14 @@ occ::handle<IGESData_ColorEntity> IGESData_IGESEntity::Color() const
   return GetCasted(IGESData_ColorEntity, theColor);
 }
 
-//=================================================================================================
-
 bool IGESData_IGESEntity::CResValues(const char* res1, const char* res2) const
 {
   bool                res = false;
   Standard_PCharacter pres1, pres2;
-  //
+
   pres1 = (Standard_PCharacter)res1;
   pres2 = (Standard_PCharacter)res2;
-  //
+
   for (int i = 0; i < 8; i++)
   {
     pres1[i] = theRes1[i];
@@ -291,7 +267,7 @@ bool IGESData_IGESEntity::CResValues(const char* res1, const char* res2) const
   }
   pres1[8] = '\0';
   pres2[8] = '\0';
-  //
+
   return res;
 }
 
@@ -308,7 +284,7 @@ occ::handle<TCollection_HAsciiString> IGESData_IGESEntity::ShortLabel() const
 bool IGESData_IGESEntity::HasSubScriptNumber() const
 {
   return (theSubScriptN >= 0);
-} // =0 nul mais defini, <0 absent
+}
 
 int IGESData_IGESEntity::SubScriptNumber() const
 {
@@ -316,8 +292,6 @@ int IGESData_IGESEntity::SubScriptNumber() const
     return 0;
   return theSubScriptN;
 }
-
-//  ....                (Re)Initialisation du Directory                 ....
 
 void IGESData_IGESEntity::InitTypeAndForm(const int typenum, const int formnum)
 {
@@ -404,11 +378,6 @@ void IGESData_IGESEntity::InitMisc(const occ::handle<IGESData_IGESEntity>&      
   theLWeightNum = weightnum;
 }
 
-//  ....                  Notions derivees importantes                  ....
-
-//  SingleParent : ici on ne traite que l Associativity SingleParent
-//  Pour considerer le partage implicite, il faut remonter au Modele ...
-
 bool IGESData_IGESEntity::HasOneParent() const
 {
   return (NbTypedProperties(STANDARD_TYPE(IGESData_SingleParentEntity)) == 1);
@@ -429,11 +398,9 @@ occ::handle<IGESData_IGESEntity> IGESData_IGESEntity::UniqueParent() const
 
 gp_GTrsf IGESData_IGESEntity::Location() const
 {
-  // szv#4:S4163:12Mar99 unreachcble eliminated
-  // if (!HasTransf()) return gp_GTrsf();    // Identite
-  // else return Transf()->Value();          // c-a-d Compoound
+
   if (!HasTransf())
-    return gp_GTrsf(); // Identite
+    return gp_GTrsf();
   occ::handle<IGESData_TransfEntity> trsf = Transf();
   return (trsf.IsNull()) ? gp_GTrsf() : trsf->Value();
 }
@@ -441,9 +408,9 @@ gp_GTrsf IGESData_IGESEntity::Location() const
 gp_GTrsf IGESData_IGESEntity::VectorLocation() const
 {
   if (!HasTransf())
-    return gp_GTrsf();               // Identite
-                                     //    Take Location and cancel TranslationPart
-  gp_GTrsf loca = Transf()->Value(); // c-a-d Compoound
+    return gp_GTrsf();
+
+  gp_GTrsf loca = Transf()->Value();
   loca.SetTranslationPart(gp_XYZ(0., 0., 0.));
   return loca;
 }
@@ -467,8 +434,8 @@ bool IGESData_IGESEntity::HasName() const
 
 occ::handle<TCollection_HAsciiString> IGESData_IGESEntity::NameValue() const
 {
-  occ::handle<TCollection_HAsciiString> nom; // au depart vide
-  //   Question : concatene-t-on le SubScript ?  Oui, forme label(subscript)
+  occ::handle<TCollection_HAsciiString> nom;
+
   int nbname = NbTypedProperties(STANDARD_TYPE(IGESData_NameEntity));
   if (nbname == 0)
   {
@@ -488,8 +455,6 @@ occ::handle<TCollection_HAsciiString> IGESData_IGESEntity::NameValue() const
 
   return nom;
 }
-
-//  ....            Listes d'infos Optionnelles (Assocs,Props)            ....
 
 bool IGESData_IGESEntity::ArePresentAssociativities() const
 {
@@ -609,8 +574,6 @@ void IGESData_IGESEntity::ClearProperties()
 {
   theProps.Clear();
 }
-
-// ....                     Actions liees au Transfert                     ....
 
 void IGESData_IGESEntity::SetLineWeight(const double defw, const double maxw, const int gradw)
 {

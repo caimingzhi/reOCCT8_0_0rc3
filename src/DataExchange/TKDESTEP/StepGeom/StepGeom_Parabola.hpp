@@ -11,7 +11,6 @@ class StepGeom_Parabola : public StepGeom_Conic
 {
 
 public:
-  //! Returns a Parabola
   Standard_EXPORT StepGeom_Parabola();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

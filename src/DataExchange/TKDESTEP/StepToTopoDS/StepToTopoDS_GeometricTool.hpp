@@ -12,8 +12,6 @@ class StepShape_Edge;
 class StepShape_EdgeLoop;
 class Geom_Curve;
 
-//! This class contains some algorithmic services
-//! specific to the mapping STEP to CAS.CADE
 class StepToTopoDS_GeometricTool
 {
 public:

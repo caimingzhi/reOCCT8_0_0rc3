@@ -5,9 +5,7 @@
 #include <BRepBuilderAPI_MakeVertex.hpp>
 #include <BRepBuilderAPI_MakeWire.hpp>
 
-//=================================================================================================
-
-void BRepPreviewAPI_MakeBox::Build(const Message_ProgressRange& /*theRange*/)
+void BRepPreviewAPI_MakeBox::Build(const Message_ProgressRange&)
 {
   gp_Pnt anLocation = myWedge.Axes().Location();
 
@@ -22,15 +20,15 @@ void BRepPreviewAPI_MakeBox::Build(const Message_ProgressRange& /*theRange*/)
 
   int aPreviewType = (int)aThinOnX + (int)aThinOnY + (int)aThinOnZ;
 
-  if (aPreviewType == 3) // thin box in all directions is a point
+  if (aPreviewType == 3)
   {
     makeVertex(aFirstPoint);
   }
-  else if (aPreviewType == 2) // thin box in two directions is a point
+  else if (aPreviewType == 2)
   {
     makeEdge(aFirstPoint, aSecondPoint);
   }
-  // thin box in only one direction is a rectangular face
+
   else if (aPreviewType == 1)
   {
     gp_Pnt aPnt1, aPnt2, aPnt3, aPnt4;
@@ -65,25 +63,18 @@ void BRepPreviewAPI_MakeBox::Build(const Message_ProgressRange& /*theRange*/)
     return;
   }
 
-  // box is a valid shape
   Solid();
 }
-
-//=================================================================================================
 
 void BRepPreviewAPI_MakeBox::makeVertex(const gp_Pnt& thePoint)
 {
   myShape = BRepBuilderAPI_MakeVertex(thePoint);
 }
 
-//=================================================================================================
-
 void BRepPreviewAPI_MakeBox::makeEdge(const gp_Pnt& thePoint1, const gp_Pnt& thePoint2)
 {
   myShape = BRepBuilderAPI_MakeEdge(thePoint1, thePoint2);
 }
-
-//=================================================================================================
 
 void BRepPreviewAPI_MakeBox::makeRectangle(const gp_Pnt& thePnt1,
                                            const gp_Pnt& thePnt2,

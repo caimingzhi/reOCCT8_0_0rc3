@@ -10,7 +10,6 @@ class Interface_Check;
 class StepVisual_DraughtingPreDefinedColour;
 class StepData_StepWriter;
 
-//! Read & Write Module for DraughtingPreDefinedColour
 class RWStepVisual_RWDraughtingPreDefinedColour
 {
 public:

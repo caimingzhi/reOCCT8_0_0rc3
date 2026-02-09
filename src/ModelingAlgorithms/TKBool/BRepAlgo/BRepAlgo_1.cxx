@@ -18,15 +18,11 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_Map.hpp>
 
-//=================================================================================================
-
 bool BRepAlgo::IsValid(const TopoDS_Shape& S)
 {
   BRepCheck_Analyzer ana(S);
   return ana.IsValid();
 }
-
-//=================================================================================================
 
 bool BRepAlgo::IsValid(const NCollection_List<TopoDS_Shape>& theArgs,
                        const TopoDS_Shape&                   theResult,
@@ -88,7 +84,6 @@ bool BRepAlgo::IsValid(const NCollection_List<TopoDS_Shape>& theArgs,
       if (!ana.IsValid())
       {
 
-        // Check if the problem is not just BRepCheck_InvalidSameParameterFlag
         NCollection_List<BRepCheck_Status>::Iterator itl;
         BRepCheck_Status                             sta;
         for (tEx.Init(toCheck, TopAbs_FACE); tEx.More(); tEx.Next())
@@ -98,7 +93,7 @@ bool BRepAlgo::IsValid(const NCollection_List<TopoDS_Shape>& theArgs,
             for (itl.Initialize(ana.Result(tEx.Current())->Status()); itl.More(); itl.Next())
             {
               sta = itl.Value();
-              // If a face is incorrect
+
               if (sta != BRepCheck_NoError)
               {
                 NCollection_List<BRepCheck_Status>::Iterator ilt;
@@ -114,8 +109,7 @@ bool BRepAlgo::IsValid(const NCollection_List<TopoDS_Shape>& theArgs,
                       for (ilt.Initialize(res->StatusOnShape()); ilt.More(); ilt.Next())
                       {
                         sta = ilt.Value();
-                        // If an edge is BRepCheck_InvalidSameParameterFlag or
-                        // BRepCheck_InvalidSameRangeFlag, it is forced
+
                         if (sta == BRepCheck_InvalidSameParameterFlag
                             || sta == BRepCheck_InvalidSameRangeFlag)
                         {
@@ -134,8 +128,7 @@ bool BRepAlgo::IsValid(const NCollection_List<TopoDS_Shape>& theArgs,
             }
           }
         }
-        // Remake control (there can be a problem of another type orb the one that cannot be
-        // corrected
+
         ana.Init(toCheck, true);
         if (!ana.IsValid())
           return false;
@@ -164,18 +157,9 @@ bool BRepAlgo::IsValid(const NCollection_List<TopoDS_Shape>& theArgs,
   return true;
 }
 
-//=================================================================================================
-
 bool BRepAlgo::IsTopologicallyValid(const TopoDS_Shape& S)
 {
-  //
 
-  // if (getenv("DONT_SWITCH_IS_VALID") != NULL) {
-  //   return true ;
-  // }
-  // else {
   BRepCheck_Analyzer ana(S, false);
   return ana.IsValid();
-
-  // }
 }

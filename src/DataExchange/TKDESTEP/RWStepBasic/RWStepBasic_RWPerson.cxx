@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include "RWStepBasic_RWPerson.hpp"
@@ -25,24 +14,18 @@ void RWStepBasic_RWPerson::ReadStep(const occ::handle<StepData_StepReaderData>& 
                                     const occ::handle<StepBasic_Person>&        ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 6, ach, "person"))
     return;
 
-  // --- own field : id ---
-
   occ::handle<TCollection_HAsciiString> aId;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
-  data->ReadString(num, 1, "id", ach, aId);
 
-  // --- own field : lastName ---
+  data->ReadString(num, 1, "id", ach, aId);
 
   occ::handle<TCollection_HAsciiString> aLastName;
   bool                                  hasAlastName = true;
   if (data->IsParamDefined(num, 2))
   {
-    // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
     data->ReadString(num, 2, "last_name", ach, aLastName);
   }
   else
@@ -51,13 +34,11 @@ void RWStepBasic_RWPerson::ReadStep(const occ::handle<StepData_StepReaderData>& 
     aLastName.Nullify();
   }
 
-  // --- own field : firstName ---
-
   occ::handle<TCollection_HAsciiString> aFirstName;
   bool                                  hasAfirstName = true;
   if (data->IsParamDefined(num, 3))
   {
-    // szv#4:S4163:12Mar99 `bool stat3 =` not needed
+
     data->ReadString(num, 3, "first_name", ach, aFirstName);
   }
   else
@@ -65,8 +46,6 @@ void RWStepBasic_RWPerson::ReadStep(const occ::handle<StepData_StepReaderData>& 
     hasAfirstName = false;
     aFirstName.Nullify();
   }
-
-  // --- own field : middleNames ---
 
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> aMiddleNames;
   bool                                                                    hasAmiddleNames = true;
@@ -80,7 +59,7 @@ void RWStepBasic_RWPerson::ReadStep(const occ::handle<StepData_StepReaderData>& 
       aMiddleNames = new NCollection_HArray1<occ::handle<TCollection_HAsciiString>>(1, nb4);
       for (int i4 = 1; i4 <= nb4; i4++)
       {
-        // szv#4:S4163:12Mar99 `bool stat4 =` not needed
+
         if (data->ReadString(nsub4, i4, "middle_names", ach, aMiddleNamesItem))
           aMiddleNames->SetValue(i4, aMiddleNamesItem);
       }
@@ -91,8 +70,6 @@ void RWStepBasic_RWPerson::ReadStep(const occ::handle<StepData_StepReaderData>& 
     hasAmiddleNames = false;
     aMiddleNames.Nullify();
   }
-
-  // --- own field : prefixTitles ---
 
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> aPrefixTitles;
   bool                                                                    hasAprefixTitles = true;
@@ -106,7 +83,7 @@ void RWStepBasic_RWPerson::ReadStep(const occ::handle<StepData_StepReaderData>& 
       aPrefixTitles = new NCollection_HArray1<occ::handle<TCollection_HAsciiString>>(1, nb5);
       for (int i5 = 1; i5 <= nb5; i5++)
       {
-        // szv#4:S4163:12Mar99 `bool stat5 =` not needed
+
         if (data->ReadString(nsub5, i5, "prefix_titles", ach, aPrefixTitlesItem))
           aPrefixTitles->SetValue(i5, aPrefixTitlesItem);
       }
@@ -117,8 +94,6 @@ void RWStepBasic_RWPerson::ReadStep(const occ::handle<StepData_StepReaderData>& 
     hasAprefixTitles = false;
     aPrefixTitles.Nullify();
   }
-
-  // --- own field : suffixTitles ---
 
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> aSuffixTitles;
   bool                                                                    hasAsuffixTitles = true;
@@ -132,7 +107,7 @@ void RWStepBasic_RWPerson::ReadStep(const occ::handle<StepData_StepReaderData>& 
       aSuffixTitles = new NCollection_HArray1<occ::handle<TCollection_HAsciiString>>(1, nb6);
       for (int i6 = 1; i6 <= nb6; i6++)
       {
-        // szv#4:S4163:12Mar99 `bool stat6 =` not needed
+
         if (data->ReadString(nsub6, i6, "suffix_titles", ach, aSuffixTitlesItem))
           aSuffixTitles->SetValue(i6, aSuffixTitlesItem);
       }
@@ -143,8 +118,6 @@ void RWStepBasic_RWPerson::ReadStep(const occ::handle<StepData_StepReaderData>& 
     hasAsuffixTitles = false;
     aSuffixTitles.Nullify();
   }
-
-  //--- Initialisation of the read entity ---
 
   ent->Init(aId,
             hasAlastName,
@@ -163,11 +136,7 @@ void RWStepBasic_RWPerson::WriteStep(StepData_StepWriter&                 SW,
                                      const occ::handle<StepBasic_Person>& ent) const
 {
 
-  // --- own field : id ---
-
   SW.Send(ent->Id());
-
-  // --- own field : lastName ---
 
   bool hasAlastName = ent->HasLastName();
   if (hasAlastName)
@@ -179,8 +148,6 @@ void RWStepBasic_RWPerson::WriteStep(StepData_StepWriter&                 SW,
     SW.SendUndef();
   }
 
-  // --- own field : firstName ---
-
   bool hasAfirstName = ent->HasFirstName();
   if (hasAfirstName)
   {
@@ -190,8 +157,6 @@ void RWStepBasic_RWPerson::WriteStep(StepData_StepWriter&                 SW,
   {
     SW.SendUndef();
   }
-
-  // --- own field : middleNames ---
 
   bool hasAmiddleNames = ent->HasMiddleNames();
   if (hasAmiddleNames)
@@ -208,8 +173,6 @@ void RWStepBasic_RWPerson::WriteStep(StepData_StepWriter&                 SW,
     SW.SendUndef();
   }
 
-  // --- own field : prefixTitles ---
-
   bool hasAprefixTitles = ent->HasPrefixTitles();
   if (hasAprefixTitles)
   {
@@ -224,8 +187,6 @@ void RWStepBasic_RWPerson::WriteStep(StepData_StepWriter&                 SW,
   {
     SW.SendUndef();
   }
-
-  // --- own field : suffixTitles ---
 
   bool hasAsuffixTitles = ent->HasSuffixTitles();
   if (hasAsuffixTitles)

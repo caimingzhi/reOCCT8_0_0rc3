@@ -9,27 +9,11 @@
 class gp_Pnt;
 class TopoDS_Wire;
 
-//! Class to build polygonal wires.
-//!
-//! A polygonal wire may be build from
-//!
-//! - 2,4,3 points.
-//!
-//! - 2,3,4 vertices.
-//!
-//! - any number of points.
-//!
-//! - any number of vertices.
-//!
-//! When a point or vertex is added to the polygon if
-//! it is identic to the previous point no edge is
-//! built. The method added can be used to test it.
 class BRepLib_MakePolygon : public BRepLib_MakeShape
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates an empty MakePolygon.
   Standard_EXPORT BRepLib_MakePolygon();
 
   Standard_EXPORT BRepLib_MakePolygon(const gp_Pnt& P1, const gp_Pnt& P2);
@@ -62,8 +46,6 @@ public:
 
   Standard_EXPORT void Add(const TopoDS_Vertex& V);
 
-  //! Returns True if the last vertex or point was
-  //! successfully added.
   Standard_EXPORT bool Added() const;
 
   Standard_EXPORT void Close();
@@ -72,7 +54,6 @@ public:
 
   Standard_EXPORT const TopoDS_Vertex& LastVertex() const;
 
-  //! Returns the last edge added to the polygon.
   Standard_EXPORT const TopoDS_Edge& Edge() const;
   Standard_EXPORT                    operator TopoDS_Edge() const;
 

@@ -7,14 +7,6 @@
 
 const static int MAXSEGM = 1000;
 
-//=======================================================================
-// function : Approx_ComputeCLine
-// purpose  : The MultiLine <Line> will be approximated until tolerances
-//           will be reached.
-//           The approximation will be done from degreemin to degreemax
-//           with a cutting if the corresponding boolean is True.
-//=======================================================================
-
 Approx_ComputeCLine::Approx_ComputeCLine(const MultiLine&              Line,
                                          const int                     degreemin,
                                          const int                     degreemax,
@@ -41,11 +33,6 @@ Approx_ComputeCLine::Approx_ComputeCLine(const MultiLine&              Line,
   Perform(Line);
 }
 
-//=======================================================================
-// function : Approx_ComputeCLine
-// purpose  : Initializes the fields of the algorithm.
-//=======================================================================
-
 Approx_ComputeCLine::Approx_ComputeCLine(const int                     degreemin,
                                          const int                     degreemax,
                                          const double                  Tolerance3d,
@@ -69,11 +56,6 @@ Approx_ComputeCLine::Approx_ComputeCLine(const int                     degreemin
   currenttol3d   = 0.0;
   currenttol2d   = 0.0;
 }
-
-//=======================================================================
-// function : Perform
-// purpose  : runs the algorithm after having initialized the fields.
-//=======================================================================
 
 void Approx_ComputeCLine::Perform(const MultiLine& Line)
 {
@@ -113,19 +95,17 @@ void Approx_ComputeCLine::Perform(const MultiLine& Line)
   else
   {
 
-    // previous decision to be taken if we get worse with next cut (eap)
     AppParCurves_MultiCurve KeptMultiCurve;
     double                  KeptUfirst = 0., KeptUlast = 0., KeptT3d = RealLast(), KeptT2d = 0.;
 
     while (!Finish)
     {
 
-      // Gestion du decoupage de la multiline pour approximer:
       if (!begin)
       {
         if (Ok)
         {
-          // Calcul de la partie a approximer.
+
           myfirstU = mylastU;
           mylastU  = ULast;
           aNbCut   = 0;
@@ -143,7 +123,7 @@ void Approx_ComputeCLine::Perform(const MultiLine& Line)
         }
         else
         {
-          // keep best decision
+
           if ((thetol3d + thetol2d) < (KeptT3d + KeptT2d))
           {
             KeptMultiCurve = TheMultiCurve;
@@ -154,20 +134,17 @@ void Approx_ComputeCLine::Perform(const MultiLine& Line)
             aNbImp++;
           }
 
-          // cut an interval
           mylastU = (myfirstU + mylastU) / 2;
           aNbCut++;
         }
       }
 
-      // Calcul des parametres sur ce nouvel intervalle.
       Ok = Compute(Line, myfirstU, mylastU, thetol3d, thetol2d);
       if (Ok)
       {
         aMaxSegments++;
       }
 
-      // cout << myfirstU << " - " << mylastU << "  tol : " << thetol3d << " " << thetol2d << endl;
       bool aStopCutting = false;
       if (myHangChecking && aNbCut >= aNbComp)
       {
@@ -178,12 +155,12 @@ void Approx_ComputeCLine::Perform(const MultiLine& Line)
         aNbCut = 0;
         aNbImp = 0;
       }
-      // is new decision better?
+
       if (!Ok
           && (std::abs(myfirstU - mylastU) <= TolU || aMaxSegments >= aMaxSegments1
               || aStopCutting))
       {
-        Ok = true; // stop interval cutting, approx the rest part
+        Ok = true;
 
         if ((thetol3d + thetol2d) < (KeptT3d + KeptT2d))
         {
@@ -196,7 +173,7 @@ void Approx_ComputeCLine::Perform(const MultiLine& Line)
 
         mylastU = KeptUlast;
 
-        tolreached = false; // helas
+        tolreached = false;
         myMultiCurves.Append(KeptMultiCurve);
         aMaxSegments++;
         Tolers3d.Append(KeptT3d);
@@ -206,35 +183,19 @@ void Approx_ComputeCLine::Perform(const MultiLine& Line)
       }
 
       begin = false;
-    } // while (!Finish)
+    }
   }
 }
-
-//=======================================================================
-// function : NbMultiCurves
-// purpose  : Returns the number of MultiCurve doing the approximation
-//           of the MultiLine.
-//=======================================================================
 
 int Approx_ComputeCLine::NbMultiCurves() const
 {
   return myMultiCurves.Length();
 }
 
-//=======================================================================
-// function : Value
-// purpose  : returns the approximation MultiCurve of range <Index>.
-//=======================================================================
-
 AppParCurves_MultiCurve Approx_ComputeCLine::Value(const int Index) const
 {
   return myMultiCurves.Value(Index);
 }
-
-//=======================================================================
-// function : Compute
-// purpose  : is internally used by the algorithms.
-//=======================================================================
 
 bool Approx_ComputeCLine::Compute(const MultiLine& Line,
                                   const double     Ufirst,
@@ -246,7 +207,7 @@ bool Approx_ComputeCLine::Compute(const MultiLine& Line,
   const int    NbPointsMax = 24;
   const double aMinRatio   = 0.05;
   const int    aMaxDeg     = 8;
-  //
+
   int    deg, NbPoints;
   bool   mydone;
   double Fv;
@@ -276,7 +237,7 @@ bool Approx_ComputeCLine::Compute(const MultiLine& Line,
         {
           if (deg == mydegremin)
           {
-            // Stockage de la multicurve approximee.
+
             tolreached = true;
             myMultiCurves.Append(LSquare.Value());
             myfirstparam.Append(Ufirst);
@@ -293,7 +254,7 @@ bool Approx_ComputeCLine::Compute(const MultiLine& Line,
         }
         else if (aPrevIsOk)
         {
-          // Stockage de la multicurve approximee.
+
           tolreached = true;
           TheTol3d   = aPrevTol3d;
           TheTol2d   = aPrevTol2d;
@@ -307,7 +268,7 @@ bool Approx_ComputeCLine::Compute(const MultiLine& Line,
       }
       else if (aPrevIsOk)
       {
-        // Stockage de la multicurve approximee.
+
         tolreached = true;
         TheTol3d   = aPrevTol3d;
         TheTol2d   = aPrevTol2d;
@@ -342,7 +303,7 @@ bool Approx_ComputeCLine::Compute(const MultiLine& Line,
         LSquare.Error(Fv, TheTol3d, TheTol2d);
         if (TheTol3d <= mytol3d && TheTol2d <= mytol2d)
         {
-          // Stockage de la multicurve approximee.
+
           tolreached = true;
           myMultiCurves.Append(LSquare.Value());
           myfirstparam.Append(Ufirst);
@@ -363,22 +324,11 @@ bool Approx_ComputeCLine::Compute(const MultiLine& Line,
   return false;
 }
 
-//=======================================================================
-// function : Parameters
-// purpose  : returns the first and last parameters of the
-//           <Index> MultiCurve.
-//=======================================================================
-
 void Approx_ComputeCLine::Parameters(const int Index, double& firstpar, double& lastpar) const
 {
   firstpar = myfirstparam.Value(Index);
   lastpar  = mylastparam.Value(Index);
 }
-
-//=======================================================================
-// function : SetDegrees
-// purpose  : changes the degrees of the approximation.
-//=======================================================================
 
 void Approx_ComputeCLine::SetDegrees(const int degreemin, const int degreemax)
 {
@@ -386,21 +336,11 @@ void Approx_ComputeCLine::SetDegrees(const int degreemin, const int degreemax)
   mydegremax = degreemax;
 }
 
-//=======================================================================
-// function : SetTolerances
-// purpose  : Changes the tolerances of the approximation.
-//=======================================================================
-
 void Approx_ComputeCLine::SetTolerances(const double Tolerance3d, const double Tolerance2d)
 {
   mytol3d = Tolerance3d;
   mytol2d = Tolerance2d;
 }
-
-//=======================================================================
-// function : SetConstraints
-// purpose  : Changes the constraints of the approximation.
-//=======================================================================
 
 void Approx_ComputeCLine::SetConstraints(const AppParCurves_Constraint FirstC,
                                          const AppParCurves_Constraint LastC)
@@ -409,56 +349,30 @@ void Approx_ComputeCLine::SetConstraints(const AppParCurves_Constraint FirstC,
   mylastC  = LastC;
 }
 
-//=======================================================================
-// function : SetMaxSegments
-// purpose  : Changes the max number of segments, which is allowed for cutting.
-//=======================================================================
-
 void Approx_ComputeCLine::SetMaxSegments(const int theMaxSegments)
 {
   myMaxSegments = theMaxSegments;
 }
-
-//=================================================================================================
 
 void Approx_ComputeCLine::SetInvOrder(const bool theInvOrder)
 {
   myInvOrder = theInvOrder;
 }
 
-//=================================================================================================
-
 void Approx_ComputeCLine::SetHangChecking(const bool theHangChecking)
 {
   myHangChecking = theHangChecking;
 }
-
-//=======================================================================
-// function : IsAllApproximated
-// purpose  : returns False if at a moment of the approximation,
-//           the status NoApproximation has been sent by the user
-//           when more points were needed.
-//=======================================================================
 
 bool Approx_ComputeCLine::IsAllApproximated() const
 {
   return alldone;
 }
 
-//=======================================================================
-// function : IsToleranceReached
-// purpose  : returns False if the status NoPointsAdded has been sent.
-//=======================================================================
-
 bool Approx_ComputeCLine::IsToleranceReached() const
 {
   return tolreached;
 }
-
-//=======================================================================
-// function : Error
-// purpose  : returns the tolerances 2d and 3d of the <Index> MultiCurve.
-//=======================================================================
 
 void Approx_ComputeCLine::Error(const int Index, double& tol3d, double& tol2d) const
 {

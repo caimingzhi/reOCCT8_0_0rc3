@@ -1,15 +1,4 @@
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ShapePersistent_Geom_Surface.hpp>
 #include <StdLPersistent_HArray1.hpp>
@@ -109,18 +98,12 @@ occ::handle<Geom_Surface> ShapePersistent_Geom_Surface::pOffset::Import() const
   return new Geom_OffsetSurface(myBasisSurface->Import(), myOffsetValue);
 }
 
-//=======================================================================
-// Elementary
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::Surface, gp_Ax3>::PName() const
 {
   return "PGeom_ElementarySurface";
 }
 
-//=======================================================================
-// Plane
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::instance<
   ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::Surface, gp_Ax3>,
@@ -159,9 +142,6 @@ Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   return aPS;
 }
 
-//=======================================================================
-// Conical
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::instance<
   ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::Surface, gp_Ax3>,
@@ -200,9 +180,6 @@ Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   return aPS;
 }
 
-//=======================================================================
-// Cylindrical
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::instance<
   ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::Surface, gp_Ax3>,
@@ -242,9 +219,6 @@ Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   return aPS;
 }
 
-//=======================================================================
-// Spherical
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::instance<
   ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::Surface, gp_Ax3>,
@@ -283,9 +257,6 @@ Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   return aPS;
 }
 
-//=======================================================================
-// Toroidal
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::instance<
   ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::Surface, gp_Ax3>,
@@ -324,9 +295,6 @@ Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   return aPS;
 }
 
-//=======================================================================
-// LinearExtrusion
-//=======================================================================
 Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   const occ::handle<Geom_SurfaceOfLinearExtrusion>&                                        theSurf,
   NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>& theMap)
@@ -349,9 +317,6 @@ Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   return aPS;
 }
 
-//=======================================================================
-// Revolution
-//=======================================================================
 Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   const occ::handle<Geom_SurfaceOfRevolution>&                                             theSurf,
   NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>& theMap)
@@ -375,9 +340,6 @@ Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   return aPS;
 }
 
-//=======================================================================
-//
-//=======================================================================
 Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   const occ::handle<Geom_BezierSurface>&                                                   theSurf,
   NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>& theMap)
@@ -408,9 +370,6 @@ Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   return aPS;
 }
 
-//=======================================================================
-// BSpline
-//=======================================================================
 Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   const occ::handle<Geom_BSplineSurface>&                                                  theSurf,
   NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>& theMap)
@@ -454,9 +413,6 @@ Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   return aPS;
 }
 
-//=======================================================================
-// RectangularTrimmed
-//=======================================================================
 Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   const occ::handle<Geom_RectangularTrimmedSurface>&                                       theSurf,
   NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>& theMap)
@@ -479,9 +435,6 @@ Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   return aPS;
 }
 
-//=======================================================================
-// Offset
-//=======================================================================
 Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom_Surface::Translate(
   const occ::handle<Geom_OffsetSurface>&                                                   theSurf,
   NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>& theMap)

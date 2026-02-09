@@ -11,10 +11,6 @@ class gp_Circ;
 class Geom_Circle;
 class Geom2d_Circle;
 
-//! This class implements the mapping between classes
-//! Circle from Geom, and Circ from gp, and the class
-//! Circle from StepGeom which describes a circle from
-//! Prostep.
 class GeomToStep_MakeCircle : public GeomToStep_Root
 {
 public:

@@ -266,5 +266,3 @@ static const char SHMessage_SHAPE_us[] =
   ".SweptToElementary.NewSurface.MSG0\n"
   "Swept Face converted to elementary\n"
   "!\n";
-
-// clang-format on

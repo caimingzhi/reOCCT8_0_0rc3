@@ -10,13 +10,11 @@
 class BinMDF_ADriverTable;
 class Message_Messenger;
 
-//! Storage and Retrieval drivers for modelling attributes.
 class BinMDataStd
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Adds the attribute drivers to <theDriverTable>.
   Standard_EXPORT static void AddDrivers(const occ::handle<BinMDF_ADriverTable>& theDriverTable,
                                          const occ::handle<Message_Messenger>&   aMsgDrv);
 
@@ -27,7 +25,7 @@ public:
   {
     bool ok = true;
     if (aDocFormatVersion >= TDocStd_FormatVersion_VERSION_10)
-    { // process user defined guid
+    {
       const int&    aPos = theSource.Position();
       Standard_GUID aGuid;
       ok = theSource >> aGuid;

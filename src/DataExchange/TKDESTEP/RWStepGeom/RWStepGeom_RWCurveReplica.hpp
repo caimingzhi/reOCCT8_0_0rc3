@@ -11,7 +11,6 @@ class StepGeom_CurveReplica;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for CurveReplica
 class RWStepGeom_RWCurveReplica
 {
 public:

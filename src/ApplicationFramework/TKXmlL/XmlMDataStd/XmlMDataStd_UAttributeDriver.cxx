@@ -8,22 +8,16 @@
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_UAttributeDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(GuidString, "guid")
 
-//=================================================================================================
-
 XmlMDataStd_UAttributeDriver::XmlMDataStd_UAttributeDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataStd_UAttributeDriver::NewEmpty() const
 {
   return (new TDataStd_UAttribute());
 }
-
-//=================================================================================================
 
 bool XmlMDataStd_UAttributeDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                          const occ::handle<TDF_Attribute>& theTarget,
@@ -41,15 +35,12 @@ bool XmlMDataStd_UAttributeDriver::Paste(const XmlObjMgt_Persistent&       theSo
   return true;
 }
 
-//=================================================================================================
-
 void XmlMDataStd_UAttributeDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                          XmlObjMgt_Persistent&             theTarget,
                                          XmlObjMgt_SRelocationTable&) const
 {
   occ::handle<TDataStd_UAttribute> aName = occ::down_cast<TDataStd_UAttribute>(theSource);
 
-  // convert GUID into attribute value
   char                aGuidStr[40];
   Standard_PCharacter pGuidStr;
   pGuidStr = aGuidStr;

@@ -29,8 +29,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_MidPointRelation, PrsDim_Relation)
 
-//=================================================================================================
-
 PrsDim_MidPointRelation::PrsDim_MidPointRelation(const TopoDS_Shape&            aMidPointTool,
                                                  const TopoDS_Shape&            FirstShape,
                                                  const TopoDS_Shape&            SecondShape,
@@ -42,8 +40,6 @@ PrsDim_MidPointRelation::PrsDim_MidPointRelation(const TopoDS_Shape&            
   SetPlane(aPlane);
   myPosition = aPlane->Pln().Location();
 }
-
-//=================================================================================================
 
 void PrsDim_MidPointRelation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                       const occ::handle<Prs3d_Presentation>& aprs,
@@ -109,8 +105,6 @@ void PrsDim_MidPointRelation::Compute(const occ::handle<PrsMgr_PresentationManag
   }
 }
 
-//=================================================================================================
-
 void PrsDim_MidPointRelation::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSel,
                                                const int)
 {
@@ -119,21 +113,20 @@ void PrsDim_MidPointRelation::ComputeSelection(const occ::handle<SelectMgr_Selec
 
   if (!myMidPoint.IsEqual(myFAttach, Precision::Confusion()))
   {
-    // segment from mid point to the first geometry
+
     seg = new Select3D_SensitiveSegment(own, myFAttach, myMidPoint);
     aSel->Add(seg);
-    // segment from mid point to the second geometry
+
     seg = new Select3D_SensitiveSegment(own, mySAttach, myMidPoint);
     aSel->Add(seg);
   }
   if (!myMidPoint.IsEqual(myPosition, Precision::Confusion()))
   {
-    // segment from mid point to the text position
+
     seg = new Select3D_SensitiveSegment(own, myMidPoint, myPosition);
     aSel->Add(seg);
   }
 
-  // center of the symmetry - circle around the MidPoint
   gp_Ax2 ax = myPlane->Pln().Position().Ax2();
   ax.SetLocation(myMidPoint);
   double                               rad = myFAttach.Distance(myMidPoint) / 20.0;
@@ -147,21 +140,20 @@ void PrsDim_MidPointRelation::ComputeSelection(const occ::handle<SelectMgr_Selec
   bool                    isInfinite, isOnPlane;
   occ::handle<Geom_Curve> extCurv;
 
-  // segment on first curve
   if (myFShape.ShapeType() == TopAbs_EDGE)
   {
     TopoDS_Edge E = TopoDS::Edge(myFShape);
     if (!PrsDim::ComputeGeometry(E, curv, firstp, lastp, extCurv, isInfinite, isOnPlane, myPlane))
       return;
-    if (curv->IsInstance(STANDARD_TYPE(Geom_Line))) // case of line
+    if (curv->IsInstance(STANDARD_TYPE(Geom_Line)))
     {
-      // segment on line
+
       seg = new Select3D_SensitiveSegment(own, myFirstPnt1, myFirstPnt2);
       aSel->Add(seg);
     }
-    else if (curv->IsInstance(STANDARD_TYPE(Geom_Circle))) // case of circle
+    else if (curv->IsInstance(STANDARD_TYPE(Geom_Circle)))
     {
-      // segment on circle
+
       occ::handle<Geom_Circle> thecirc = occ::down_cast<Geom_Circle>(curv);
       double                   udeb    = ElCLib::Parameter(thecirc->Circ(), myFirstPnt1);
       double                   ufin    = ElCLib::Parameter(thecirc->Circ(), myFirstPnt2);
@@ -170,9 +162,9 @@ void PrsDim_MidPointRelation::ComputeSelection(const occ::handle<SelectMgr_Selec
       scurv = new Select3D_SensitiveCurve(own, thecu);
       aSel->Add(scurv);
     }
-    else if (curv->IsInstance(STANDARD_TYPE(Geom_Ellipse))) // case of ellipse
+    else if (curv->IsInstance(STANDARD_TYPE(Geom_Ellipse)))
     {
-      // segment on ellipse
+
       occ::handle<Geom_Ellipse> theEll = occ::down_cast<Geom_Ellipse>(curv);
       double                    udeb   = ElCLib::Parameter(theEll->Elips(), myFirstPnt1);
       double                    ufin   = ElCLib::Parameter(theEll->Elips(), myFirstPnt2);
@@ -183,21 +175,20 @@ void PrsDim_MidPointRelation::ComputeSelection(const occ::handle<SelectMgr_Selec
     }
   }
 
-  // segment on second curve
   if (mySShape.ShapeType() == TopAbs_EDGE)
   {
     TopoDS_Edge E = TopoDS::Edge(mySShape);
     if (!PrsDim::ComputeGeometry(E, curv, firstp, lastp, extCurv, isInfinite, isOnPlane, myPlane))
       return;
-    if (curv->IsInstance(STANDARD_TYPE(Geom_Line))) // case of line
+    if (curv->IsInstance(STANDARD_TYPE(Geom_Line)))
     {
-      // segment on line
+
       seg = new Select3D_SensitiveSegment(own, mySecondPnt1, mySecondPnt2);
       aSel->Add(seg);
     }
-    else if (curv->IsInstance(STANDARD_TYPE(Geom_Circle))) // case of circle
+    else if (curv->IsInstance(STANDARD_TYPE(Geom_Circle)))
     {
-      // segment on circle
+
       occ::handle<Geom_Circle> thecirc = occ::down_cast<Geom_Circle>(curv);
       double                   udeb    = ElCLib::Parameter(thecirc->Circ(), mySecondPnt1);
       double                   ufin    = ElCLib::Parameter(thecirc->Circ(), mySecondPnt2);
@@ -206,9 +197,9 @@ void PrsDim_MidPointRelation::ComputeSelection(const occ::handle<SelectMgr_Selec
       scurv = new Select3D_SensitiveCurve(own, thecu);
       aSel->Add(scurv);
     }
-    else if (curv->IsInstance(STANDARD_TYPE(Geom_Ellipse))) // case of ellipse
+    else if (curv->IsInstance(STANDARD_TYPE(Geom_Ellipse)))
     {
-      // segment on ellipse
+
       occ::handle<Geom_Ellipse> theEll = occ::down_cast<Geom_Ellipse>(curv);
       double                    udeb   = ElCLib::Parameter(theEll->Elips(), mySecondPnt1);
       double                    ufin   = ElCLib::Parameter(theEll->Elips(), mySecondPnt2);
@@ -220,14 +211,9 @@ void PrsDim_MidPointRelation::ComputeSelection(const occ::handle<SelectMgr_Selec
   }
 }
 
-//=================================================================================================
-
-void PrsDim_MidPointRelation::ComputeFaceFromPnt(const occ::handle<Prs3d_Presentation>&,
-                                                 const bool /*first*/)
+void PrsDim_MidPointRelation::ComputeFaceFromPnt(const occ::handle<Prs3d_Presentation>&, const bool)
 {
 }
-
-//=================================================================================================
 
 void PrsDim_MidPointRelation::ComputeEdgeFromPnt(const occ::handle<Prs3d_Presentation>& aprs,
                                                  const bool                             first)
@@ -332,12 +318,9 @@ void PrsDim_MidPointRelation::ComputeEdgeFromPnt(const occ::handle<Prs3d_Present
   else
     return;
 
-  // projection on myPlane
   if (!isOnPlane)
     ComputeProjEdgePresentation(aprs, E, geom, ptat1, ptat2);
 }
-
-//=================================================================================================
 
 void PrsDim_MidPointRelation::ComputeVertexFromPnt(const occ::handle<Prs3d_Presentation>& aprs,
                                                    const bool                             first)
@@ -362,8 +345,6 @@ void PrsDim_MidPointRelation::ComputeVertexFromPnt(const occ::handle<Prs3d_Prese
       ComputeProjVertexPresentation(aprs, V, mySAttach);
   }
 }
-
-//=================================================================================================
 
 void PrsDim_MidPointRelation::ComputePointsOnLine(const gp_Lin& aLin, const bool first)
 {
@@ -393,8 +374,6 @@ void PrsDim_MidPointRelation::ComputePointsOnLine(const gp_Lin& aLin, const bool
     mySecondPnt2 = aPnt2;
   }
 }
-
-//=================================================================================================
 
 void PrsDim_MidPointRelation::ComputePointsOnLine(const gp_Pnt& pnt1,
                                                   const gp_Pnt& pnt2,
@@ -461,8 +440,6 @@ void PrsDim_MidPointRelation::ComputePointsOnLine(const gp_Pnt& pnt1,
   }
 }
 
-//=================================================================================================
-
 void PrsDim_MidPointRelation::ComputePointsOnCirc(const gp_Circ& aCirc,
                                                   const gp_Pnt&  pnt1,
                                                   const gp_Pnt&  pnt2,
@@ -470,8 +447,6 @@ void PrsDim_MidPointRelation::ComputePointsOnCirc(const gp_Circ& aCirc,
 {
   gp_Pnt curpos = myMidPoint;
 
-  // Case of confusion between the current position and the center
-  // of the circle -> we move the current position
   constexpr double confusion(Precision::Confusion());
   gp_Pnt           aCenter = aCirc.Location();
   if (aCenter.Distance(curpos) <= confusion)
@@ -489,7 +464,7 @@ void PrsDim_MidPointRelation::ComputePointsOnCirc(const gp_Circ& aCirc,
   double pFPnt;
   double pSPnt;
 
-  if (pnt1.IsEqual(pnt2, confusion)) // full circle
+  if (pnt1.IsEqual(pnt2, confusion))
   {
     pFPnt = pcurpos - rad;
     pSPnt = pcurpos + rad;
@@ -511,11 +486,11 @@ void PrsDim_MidPointRelation::ComputePointsOnCirc(const gp_Circ& aCirc,
     double pmiddleout = pSAttachM / 2.0 + M_PI;
 
     double pcurpos1 = pcurpos;
-    // define where curpos lays
+
     if (pcurpos1 < pFAttach)
     {
       pcurpos1 = pcurpos1 + 2 * M_PI - pFAttach;
-      if (pcurpos1 > pSAttachM) // out
+      if (pcurpos1 > pSAttachM)
       {
         segm = std::min(rad, deltap * 0.75);
         if (pcurpos1 > pmiddleout)
@@ -531,7 +506,7 @@ void PrsDim_MidPointRelation::ComputePointsOnCirc(const gp_Circ& aCirc,
           pSPnt   = pSAttach;
         }
       }
-      else // on arc
+      else
       {
         double dp1 = pcurpos1 - pFAttach;
         double dp2 = pSAttachM - pcurpos1;
@@ -543,7 +518,7 @@ void PrsDim_MidPointRelation::ComputePointsOnCirc(const gp_Circ& aCirc,
         pSPnt = pcurpos + segm;
       }
     }
-    else if (pcurpos1 > (pFAttach + deltap)) // out
+    else if (pcurpos1 > (pFAttach + deltap))
     {
       pcurpos1 -= pFAttach;
       segm = std::min(rad, deltap * 0.75);
@@ -560,7 +535,7 @@ void PrsDim_MidPointRelation::ComputePointsOnCirc(const gp_Circ& aCirc,
         pSPnt   = pSAttach;
       }
     }
-    else // on arc
+    else
     {
       double dp1 = pcurpos1 - pFAttach;
       double dp2 = pSAttach - pcurpos1;
@@ -587,8 +562,6 @@ void PrsDim_MidPointRelation::ComputePointsOnCirc(const gp_Circ& aCirc,
   }
 }
 
-//=================================================================================================
-
 void PrsDim_MidPointRelation::ComputePointsOnElips(const gp_Elips& anEll,
                                                    const gp_Pnt&   pnt1,
                                                    const gp_Pnt&   pnt2,
@@ -596,8 +569,6 @@ void PrsDim_MidPointRelation::ComputePointsOnElips(const gp_Elips& anEll,
 {
   gp_Pnt curpos = myMidPoint;
 
-  // Case of confusion between the current position and the center
-  // of the circle -> we move the current position
   constexpr double confusion(Precision::Confusion());
   gp_Pnt           aCenter = anEll.Location();
   if (aCenter.Distance(curpos) <= confusion)
@@ -615,7 +586,7 @@ void PrsDim_MidPointRelation::ComputePointsOnElips(const gp_Elips& anEll,
   double pFPnt;
   double pSPnt;
 
-  if (pnt1.IsEqual(pnt2, confusion)) // full circle
+  if (pnt1.IsEqual(pnt2, confusion))
   {
     pFPnt = pcurpos - rad;
     pSPnt = pcurpos + rad;
@@ -637,11 +608,11 @@ void PrsDim_MidPointRelation::ComputePointsOnElips(const gp_Elips& anEll,
     double pmiddleout = pSAttachM / 2.0 + M_PI;
 
     double pcurpos1 = pcurpos;
-    // define where curpos lays
+
     if (pcurpos1 < pFAttach)
     {
       pcurpos1 = pcurpos1 + 2 * M_PI - pFAttach;
-      if (pcurpos1 > pSAttachM) // out
+      if (pcurpos1 > pSAttachM)
       {
         segm = std::min(rad, deltap * 0.75);
         if (pcurpos1 > pmiddleout)
@@ -657,7 +628,7 @@ void PrsDim_MidPointRelation::ComputePointsOnElips(const gp_Elips& anEll,
           pSPnt   = pSAttach;
         }
       }
-      else // on arc
+      else
       {
         double dp1 = pcurpos1 - pFAttach;
         double dp2 = pSAttachM - pcurpos1;
@@ -669,7 +640,7 @@ void PrsDim_MidPointRelation::ComputePointsOnElips(const gp_Elips& anEll,
         pSPnt = pcurpos + segm;
       }
     }
-    else if (pcurpos1 > (pFAttach + deltap)) // out
+    else if (pcurpos1 > (pFAttach + deltap))
     {
       pcurpos1 -= pFAttach;
       segm = std::min(rad, deltap * 0.75);
@@ -686,7 +657,7 @@ void PrsDim_MidPointRelation::ComputePointsOnElips(const gp_Elips& anEll,
         pSPnt   = pSAttach;
       }
     }
-    else // on arc
+    else
     {
       double dp1 = pcurpos1 - pFAttach;
       double dp2 = pSAttach - pcurpos1;

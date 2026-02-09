@@ -10,7 +10,6 @@ class Geom_Curve;
 class TopOpeBRepDS_Interference;
 class Geom2d_Curve;
 
-//! A Geom curve and a tolerance.
 class TopOpeBRepDS_Curve
 {
 public:
@@ -26,10 +25,8 @@ public:
                                    const double                   T,
                                    const bool                     IsWalk);
 
-  //! Update the tolerance
   Standard_EXPORT void Tolerance(const double tol);
 
-  //! define the interferences face/curve.
   Standard_EXPORT void SetSCI(const occ::handle<TopOpeBRepDS_Interference>& I1,
                               const occ::handle<TopOpeBRepDS_Interference>& I2);
 

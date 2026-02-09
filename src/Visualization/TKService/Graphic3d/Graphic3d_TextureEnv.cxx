@@ -17,8 +17,6 @@ static const char* NameOfTextureEnv_to_FileName[] = {"env_clouds.rgb",
                                                      "env_lines.rgb",
                                                      "env_road.rgb"};
 
-//=================================================================================================
-
 Graphic3d_TextureEnv::Graphic3d_TextureEnv(const TCollection_AsciiString& theFileName)
     : Graphic3d_TextureRoot(theFileName, Graphic3d_TypeOfTexture_2D),
       myName(Graphic3d_NOT_ENV_UNKNOWN)
@@ -29,8 +27,6 @@ Graphic3d_TextureEnv::Graphic3d_TextureEnv(const TCollection_AsciiString& theFil
                        NCollection_Vec4<float>(1.0f, 0.0f, 0.0f, 0.0f),
                        NCollection_Vec4<float>(0.0f, 1.0f, 0.0f, 0.0f));
 }
-
-//=================================================================================================
 
 Graphic3d_TextureEnv::Graphic3d_TextureEnv(const Graphic3d_NameOfTextureEnv theNOT)
     : Graphic3d_TextureRoot(NameOfTextureEnv_to_FileName[theNOT], Graphic3d_TypeOfTexture_2D),
@@ -46,8 +42,6 @@ Graphic3d_TextureEnv::Graphic3d_TextureEnv(const Graphic3d_NameOfTextureEnv theN
                        NCollection_Vec4<float>(0.0f, 1.0f, 0.0f, 0.0f));
 }
 
-//=================================================================================================
-
 Graphic3d_TextureEnv::Graphic3d_TextureEnv(const occ::handle<Image_PixMap>& thePixMap)
     : Graphic3d_TextureRoot(thePixMap, Graphic3d_TypeOfTexture_2D),
       myName(Graphic3d_NOT_ENV_UNKNOWN)
@@ -59,21 +53,15 @@ Graphic3d_TextureEnv::Graphic3d_TextureEnv(const occ::handle<Image_PixMap>& theP
                        NCollection_Vec4<float>(0.0f, 1.0f, 0.0f, 0.0f));
 }
 
-//=================================================================================================
-
 Graphic3d_NameOfTextureEnv Graphic3d_TextureEnv::Name() const
 {
   return myName;
 }
 
-//=================================================================================================
-
 int Graphic3d_TextureEnv::NumberOfTextures()
 {
   return sizeof(NameOfTextureEnv_to_FileName) / sizeof(char*);
 }
-
-//=================================================================================================
 
 TCollection_AsciiString Graphic3d_TextureEnv::TextureName(const int theRank)
 {

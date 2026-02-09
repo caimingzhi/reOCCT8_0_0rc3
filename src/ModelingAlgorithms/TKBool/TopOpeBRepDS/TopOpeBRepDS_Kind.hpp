@@ -1,6 +1,5 @@
 #pragma once
 
-//! different types of objects in DataStructure
 enum TopOpeBRepDS_Kind
 {
   TopOpeBRepDS_POINT,

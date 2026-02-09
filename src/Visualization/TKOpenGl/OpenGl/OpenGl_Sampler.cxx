@@ -7,8 +7,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_Sampler, OpenGl_Resource)
 
-//=================================================================================================
-
 OpenGl_Sampler::OpenGl_Sampler(const occ::handle<Graphic3d_TextureParams>& theParams)
     : myParams(theParams),
       mySamplerRevision(0),
@@ -21,14 +19,10 @@ OpenGl_Sampler::OpenGl_Sampler(const occ::handle<Graphic3d_TextureParams>& thePa
   }
 }
 
-//=================================================================================================
-
 OpenGl_Sampler::~OpenGl_Sampler()
 {
   Release(nullptr);
 }
-
-//=================================================================================================
 
 void OpenGl_Sampler::Release(OpenGl_Context* theCtx)
 {
@@ -39,7 +33,6 @@ void OpenGl_Sampler::Release(OpenGl_Context* theCtx)
     return;
   }
 
-  // application can not handle this case by exception - this is bug in code
   Standard_ASSERT_RETURN(
     theCtx != nullptr,
     "OpenGl_Sampler destroyed without GL context! Possible GPU memory leakage...",
@@ -52,8 +45,6 @@ void OpenGl_Sampler::Release(OpenGl_Context* theCtx)
 
   mySamplerID = NO_SAMPLER;
 }
-
-//=================================================================================================
 
 bool OpenGl_Sampler::Create(const occ::handle<OpenGl_Context>& theCtx)
 {
@@ -69,8 +60,6 @@ bool OpenGl_Sampler::Create(const occ::handle<OpenGl_Context>& theCtx)
   theCtx->arbSamplerObject->glGenSamplers(1, &mySamplerID);
   return true;
 }
-
-//=================================================================================================
 
 bool OpenGl_Sampler::Init(const occ::handle<OpenGl_Context>& theCtx,
                           const OpenGl_Texture&              theTexture)
@@ -102,10 +91,6 @@ bool OpenGl_Sampler::Init(const occ::handle<OpenGl_Context>& theCtx,
   return true;
 }
 
-// =======================================================================
-// function : Bind
-// purpose  : Binds sampler object to the given texture unit
-// =======================================================================
 void OpenGl_Sampler::Bind(const occ::handle<OpenGl_Context>& theCtx,
                           const Graphic3d_TextureUnit        theUnit)
 {
@@ -115,10 +100,6 @@ void OpenGl_Sampler::Bind(const occ::handle<OpenGl_Context>& theCtx,
   }
 }
 
-// =======================================================================
-// function : Unbind
-// purpose  : Unbinds sampler object from the given texture unit
-// =======================================================================
 void OpenGl_Sampler::Unbind(const occ::handle<OpenGl_Context>& theCtx,
                             const Graphic3d_TextureUnit        theUnit)
 {
@@ -127,8 +108,6 @@ void OpenGl_Sampler::Unbind(const occ::handle<OpenGl_Context>& theCtx,
     theCtx->arbSamplerObject->glBindSampler(theUnit, NO_SAMPLER);
   }
 }
-
-//=================================================================================================
 
 void OpenGl_Sampler::setParameter(const occ::handle<OpenGl_Context>& theCtx,
                                   OpenGl_Sampler*                    theSampler,
@@ -146,8 +125,6 @@ void OpenGl_Sampler::setParameter(const occ::handle<OpenGl_Context>& theCtx,
   }
 }
 
-//=================================================================================================
-
 void OpenGl_Sampler::SetParameters(const occ::handle<Graphic3d_TextureParams>& theParams)
 {
   if (myParams != theParams)
@@ -156,8 +133,6 @@ void OpenGl_Sampler::SetParameters(const occ::handle<Graphic3d_TextureParams>& t
     mySamplerRevision = myParams->SamplerRevision() - 1;
   }
 }
-
-//=================================================================================================
 
 void OpenGl_Sampler::applySamplerParams(const occ::handle<OpenGl_Context>&          theCtx,
                                         const occ::handle<Graphic3d_TextureParams>& theParams,
@@ -170,7 +145,6 @@ void OpenGl_Sampler::applySamplerParams(const occ::handle<OpenGl_Context>&      
     theSampler->mySamplerRevision = theParams->SamplerRevision();
   }
 
-  // setup texture filtering
   const GLenum aFilter = (theParams->Filter() == Graphic3d_TOTF_NEAREST) ? GL_NEAREST : GL_LINEAR;
   GLenum       aFilterMin = aFilter;
   if (theMaxMipLevels > 0)
@@ -189,7 +163,6 @@ void OpenGl_Sampler::applySamplerParams(const occ::handle<OpenGl_Context>&      
   setParameter(theCtx, theSampler, theTarget, GL_TEXTURE_MIN_FILTER, aFilterMin);
   setParameter(theCtx, theSampler, theTarget, GL_TEXTURE_MAG_FILTER, aFilter);
 
-  // setup texture wrapping
   const GLenum aWrapMode = theParams->IsRepeat() ? GL_REPEAT : theCtx->TextureWrapClamp();
   setParameter(theCtx, theSampler, theTarget, GL_TEXTURE_WRAP_S, aWrapMode);
   if (theTarget == GL_TEXTURE_1D)
@@ -209,7 +182,7 @@ void OpenGl_Sampler::applySamplerParams(const occ::handle<OpenGl_Context>&      
 
   if (theCtx->extAnis)
   {
-    // setup degree of anisotropy filter
+
     const GLint aMaxDegree = theCtx->MaxDegreeOfAnisotropy();
     GLint       aDegree;
     switch (theParams->AnisoFilter())
@@ -248,8 +221,6 @@ void OpenGl_Sampler::applySamplerParams(const occ::handle<OpenGl_Context>&      
   }
 }
 
-//=================================================================================================
-
 void OpenGl_Sampler::applyGlobalTextureParams(const occ::handle<OpenGl_Context>& theCtx,
                                               const OpenGl_Texture&              theTexture,
                                               const occ::handle<Graphic3d_TextureParams>& theParams)
@@ -259,7 +230,7 @@ void OpenGl_Sampler::applyGlobalTextureParams(const occ::handle<OpenGl_Context>&
     return;
   }
 
-  GLint anEnvMode = GL_MODULATE; // lighting mode
+  GLint anEnvMode = GL_MODULATE;
   if (!theParams->IsModulate())
   {
     anEnvMode = GL_DECAL;
@@ -269,7 +240,6 @@ void OpenGl_Sampler::applyGlobalTextureParams(const occ::handle<OpenGl_Context>&
     }
   }
 
-  // setup generation of texture coordinates
   switch (theParams->GenMode())
   {
     case Graphic3d_TOTM_OBJECT:
@@ -324,7 +294,6 @@ void OpenGl_Sampler::applyGlobalTextureParams(const occ::handle<OpenGl_Context>&
       break;
   }
 
-  // setup lighting
   theCtx->core11ffp->glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, anEnvMode);
 
   switch (theTexture.GetTarget())
@@ -356,8 +325,6 @@ void OpenGl_Sampler::applyGlobalTextureParams(const occ::handle<OpenGl_Context>&
   }
 }
 
-//=================================================================================================
-
 void OpenGl_Sampler::resetGlobalTextureParams(const occ::handle<OpenGl_Context>& theCtx,
                                               const OpenGl_Texture&              theTexture,
                                               const occ::handle<Graphic3d_TextureParams>& theParams)
@@ -367,7 +334,6 @@ void OpenGl_Sampler::resetGlobalTextureParams(const occ::handle<OpenGl_Context>&
     return;
   }
 
-  // reset texture matrix because some code may expect it is identity
   GLint aMatrixMode = GL_TEXTURE;
   theCtx->core11fwd->glGetIntegerv(GL_MATRIX_MODE, &aMatrixMode);
   theCtx->core11ffp->glMatrixMode(GL_TEXTURE);

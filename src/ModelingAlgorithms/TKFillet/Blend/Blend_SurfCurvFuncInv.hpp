@@ -9,61 +9,26 @@
 #include <math_Vector.hpp>
 class math_Matrix;
 
-//! Deferred class for a function used to compute a
-//! blending surface between a surface and a curve, using
-//! a guide line. This function is used to find a
-//! solution on a done restriction of the surface.
-//!
-//! The vector <X> used in Value, Values and Derivatives
-//! methods has to be the vector of the parametric
-//! coordinates wguide, wcurv, wrst where wguide is the
-//! parameter on the guide line, wcurv is the parameter on
-//! the curve, wrst is the parameter on the restriction on
-//! the surface.
 class Blend_SurfCurvFuncInv : public math_FunctionSetWithDerivatives
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Returns 3.
   Standard_EXPORT int NbVariables() const override;
 
-  //! returns the number of equations of the function.
   Standard_EXPORT int NbEquations() const override = 0;
 
-  //! computes the values <F> of the Functions for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Value(const math_Vector& X, math_Vector& F) override = 0;
 
-  //! returns the values <D> of the derivatives for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Derivatives(const math_Vector& X, math_Matrix& D) override = 0;
 
-  //! returns the values <F> of the functions and the derivatives
-  //! <D> for the variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Values(const math_Vector& X, math_Vector& F, math_Matrix& D) override = 0;
 
-  //! Set the Point on which a solution has to be found.
   Standard_EXPORT virtual void Set(const occ::handle<Adaptor2d_Curve2d>& Rst) = 0;
 
-  //! Returns in the vector Tolerance the parametric tolerance
-  //! for each of the 3 variables;
-  //! Tol is the tolerance used in 3d space.
   Standard_EXPORT virtual void GetTolerance(math_Vector& Tolerance, const double Tol) const = 0;
 
-  //! Returns in the vector InfBound the lowest values allowed
-  //! for each of the 3 variables.
-  //! Returns in the vector SupBound the greatest values allowed
-  //! for each of the 3 variables.
   Standard_EXPORT virtual void GetBounds(math_Vector& InfBound, math_Vector& SupBound) const = 0;
 
-  //! Returns true if Sol is a zero of the function.
-  //! Tol is the tolerance used in 3d space.
   Standard_EXPORT virtual bool IsSolution(const math_Vector& Sol, const double Tol) = 0;
 };

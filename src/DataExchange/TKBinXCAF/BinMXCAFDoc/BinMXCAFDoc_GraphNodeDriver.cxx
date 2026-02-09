@@ -7,22 +7,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_GraphNodeDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMXCAFDoc_GraphNodeDriver::BinMXCAFDoc_GraphNodeDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_GraphNode)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMXCAFDoc_GraphNodeDriver::NewEmpty() const
 {
   return new XCAFDoc_GraphNode();
 }
-
-//=================================================================================================
 
 bool BinMXCAFDoc_GraphNodeDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                         const occ::handle<TDF_Attribute>& theTarget,
@@ -31,7 +25,6 @@ bool BinMXCAFDoc_GraphNodeDriver::Paste(const BinObjMgt_Persistent&       theSou
   occ::handle<XCAFDoc_GraphNode> aT = occ::down_cast<XCAFDoc_GraphNode>(theTarget);
   int                            anID;
 
-  // Read Fathers
   if (!(theSource >> anID))
     return false;
   while (anID != -1)
@@ -52,7 +45,6 @@ bool BinMXCAFDoc_GraphNodeDriver::Paste(const BinObjMgt_Persistent&       theSou
       return false;
   }
 
-  // Read Children
   if (!(theSource >> anID))
     return false;
   while (anID != -1)
@@ -73,7 +65,6 @@ bool BinMXCAFDoc_GraphNodeDriver::Paste(const BinObjMgt_Persistent&       theSou
       return false;
   }
 
-  // Graph id
   Standard_GUID aGUID;
   if (!(theSource >> aGUID))
     return false;
@@ -81,8 +72,6 @@ bool BinMXCAFDoc_GraphNodeDriver::Paste(const BinObjMgt_Persistent&       theSou
 
   return true;
 }
-
-//=================================================================================================
 
 void BinMXCAFDoc_GraphNodeDriver::Paste(
   const occ::handle<TDF_Attribute>&                        theSource,
@@ -92,7 +81,6 @@ void BinMXCAFDoc_GraphNodeDriver::Paste(
   occ::handle<XCAFDoc_GraphNode> aS = occ::down_cast<XCAFDoc_GraphNode>(theSource);
   int                            i, aNb, anID;
 
-  // Write fathers
   aNb = aS->NbFathers();
   for (i = 1; i <= aNb; i++)
   {
@@ -102,7 +90,6 @@ void BinMXCAFDoc_GraphNodeDriver::Paste(
   }
   theTarget.PutInteger(-1);
 
-  // Write children
   aNb = aS->NbChildren();
   for (i = 1; i <= aNb; i++)
   {
@@ -112,6 +99,5 @@ void BinMXCAFDoc_GraphNodeDriver::Paste(
   }
   theTarget.PutInteger(-1);
 
-  // Graph id
   theTarget << aS->ID();
 }

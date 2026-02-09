@@ -6,8 +6,6 @@
 
 #include <gp_Ax2.hpp>
 
-//=================================================================================================
-
 OpenGl_Flipper::OpenGl_Flipper(const gp_Ax2& theReferenceSystem)
     : myReferenceOrigin((float)theReferenceSystem.Location().X(),
                         (float)theReferenceSystem.Location().Y(),
@@ -29,22 +27,17 @@ OpenGl_Flipper::OpenGl_Flipper(const gp_Ax2& theReferenceSystem)
 {
 }
 
-//=================================================================================================
-
 void OpenGl_Flipper::Release(OpenGl_Context*) {}
-
-//=================================================================================================
 
 void OpenGl_Flipper::Render(const occ::handle<OpenGl_Workspace>& theWorkspace) const
 {
-  // Check if rendering is to be in immediate mode
+
   const occ::handle<OpenGl_Context>& aContext = theWorkspace->GetGlContext();
   if (!myIsEnabled)
   {
-    // restore matrix state
+
     aContext->ModelWorldState.Pop();
 
-    // Apply since we probably in the middle of something.
     aContext->ApplyModelWorldMatrix();
     return;
   }
@@ -72,23 +65,22 @@ void OpenGl_Flipper::Render(const occ::handle<OpenGl_Workspace>& theWorkspace) c
   bool isReversedY = aDirY.xyz().Dot(NCollection_Vec3<float>::DY()) < 0.0f;
   bool isReversedZ = aDirZ.xyz().Dot(NCollection_Vec3<float>::DZ()) < 0.0f;
 
-  // compute flipping (rotational transform)
   NCollection_Mat4<float> aTransform;
   if ((isReversedX || isReversedY) && !isReversedZ)
   {
-    // invert by Z axis: left, up vectors mirrored
+
     aTransform.SetColumn(0, -aTransform.GetColumn(0).xyz());
     aTransform.SetColumn(1, -aTransform.GetColumn(1).xyz());
   }
   else if (isReversedY && isReversedZ)
   {
-    // rotate by X axis: up, forward vectors mirrored
+
     aTransform.SetColumn(1, -aTransform.GetColumn(1).xyz());
     aTransform.SetColumn(2, -aTransform.GetColumn(2).xyz());
   }
   else if (isReversedZ)
   {
-    // rotate by Y axis: left, forward vectors mirrored
+
     aTransform.SetColumn(0, -aTransform.GetColumn(0).xyz());
     aTransform.SetColumn(2, -aTransform.GetColumn(2).xyz());
   }
@@ -97,7 +89,6 @@ void OpenGl_Flipper::Render(const occ::handle<OpenGl_Workspace>& theWorkspace) c
     return;
   }
 
-  // do rotation in origin around reference system "forward" direction
   NCollection_Mat4<float> aRefAxes;
   NCollection_Mat4<float> aRefInv;
   aRefAxes.SetColumn(0, myReferenceX.xyz());
@@ -108,15 +99,11 @@ void OpenGl_Flipper::Render(const occ::handle<OpenGl_Workspace>& theWorkspace) c
 
   aTransform = aRefAxes * aTransform * aRefInv;
 
-  // transform model-view matrix
   aModelWorldMatrix = aModelWorldMatrix * aTransform;
 
-  // load transformed model-view matrix
   aContext->ModelWorldState.SetCurrent(aModelWorldMatrix);
   aContext->ApplyModelWorldMatrix();
 }
-
-//=================================================================================================
 
 void OpenGl_Flipper::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

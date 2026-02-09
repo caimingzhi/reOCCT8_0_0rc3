@@ -14,14 +14,10 @@
 #include <gp_Pnt2d.hpp>
 #include <Standard_Integer.hpp>
 
-//=================================================================================================
-
 Geom2dAPI_PointsToBSpline::Geom2dAPI_PointsToBSpline()
 {
   myIsDone = false;
 }
-
-//=================================================================================================
 
 Geom2dAPI_PointsToBSpline::Geom2dAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt2d>& Points,
                                                      const int                           DegMin,
@@ -31,8 +27,6 @@ Geom2dAPI_PointsToBSpline::Geom2dAPI_PointsToBSpline(const NCollection_Array1<gp
 {
   Init(Points, DegMin, DegMax, Continuity, Tol2D);
 }
-
-//=================================================================================================
 
 Geom2dAPI_PointsToBSpline::Geom2dAPI_PointsToBSpline(const NCollection_Array1<double>& YValues,
                                                      const double                      X0,
@@ -45,8 +39,6 @@ Geom2dAPI_PointsToBSpline::Geom2dAPI_PointsToBSpline(const NCollection_Array1<do
   Init(YValues, X0, DX, DegMin, DegMax, Continuity, Tol2D);
 }
 
-//=================================================================================================
-
 Geom2dAPI_PointsToBSpline::Geom2dAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt2d>& Points,
                                                      const Approx_ParametrizationType    ParType,
                                                      const int                           DegMin,
@@ -58,8 +50,6 @@ Geom2dAPI_PointsToBSpline::Geom2dAPI_PointsToBSpline(const NCollection_Array1<gp
   Init(Points, ParType, DegMin, DegMax, Continuity, Tol2D);
 }
 
-//=================================================================================================
-
 Geom2dAPI_PointsToBSpline::Geom2dAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt2d>& Points,
                                                      const NCollection_Array1<double>&   Params,
                                                      const int                           DegMin,
@@ -70,8 +60,6 @@ Geom2dAPI_PointsToBSpline::Geom2dAPI_PointsToBSpline(const NCollection_Array1<gp
   myIsDone = false;
   Init(Points, Params, DegMin, DegMax, Continuity, Tol2D);
 }
-
-//=================================================================================================
 
 Geom2dAPI_PointsToBSpline::Geom2dAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt2d>& Points,
                                                      const double                        W1,
@@ -85,8 +73,6 @@ Geom2dAPI_PointsToBSpline::Geom2dAPI_PointsToBSpline(const NCollection_Array1<gp
   Init(Points, W1, W2, W3, DegMax, Continuity, Tol2D);
 }
 
-//=================================================================================================
-
 void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt2d>& Points,
                                      const Approx_ParametrizationType    ParType,
                                      const int                           DegMin,
@@ -94,7 +80,7 @@ void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt2d>& Points,
                                      const GeomAbs_Shape                 Continuity,
                                      const double                        Tol2D)
 {
-  double Tol3D = 0.; // dummy argument for BSplineCompute.
+  double Tol3D = 0.;
 
   int  nbit       = 2;
   bool UseSquares = false;
@@ -136,8 +122,6 @@ void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt2d>& Points,
   myIsDone = true;
 }
 
-//=================================================================================================
-
 void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<double>& YValues,
                                      const double                      X0,
                                      const double                      DX,
@@ -146,9 +130,8 @@ void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<double>& YValues,
                                      const GeomAbs_Shape               Continuity,
                                      const double                      Tol2D)
 {
-  // first approximate the Y values (with dummy 0 as X values)
 
-  double                       Tol3D = 0.; // dummy argument for BSplineCompute.
+  double                       Tol3D = 0.;
   NCollection_Array1<gp_Pnt2d> Points(YValues.Lower(), YValues.Upper());
   math_Vector                  Param(YValues.Lower(), YValues.Upper());
   double                       length = DX * (YValues.Upper() - YValues.Lower());
@@ -194,10 +177,8 @@ void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<double>& YValues,
 
   TheCurve.Curve(1, Poles);
 
-  // compute X values for the poles
   NCollection_Array1<double> XPoles(1, Poles.Upper());
 
-  // start with a line
   NCollection_Array1<double> TempPoles(1, 2);
   NCollection_Array1<double> TempKnots(1, 2);
   NCollection_Array1<int>    TempMults(1, 2);
@@ -207,7 +188,6 @@ void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<double>& YValues,
   TempKnots(1) = 0.;
   TempKnots(2) = 1.;
 
-  // increase the Degree
   NCollection_Array1<double> NewTempPoles(1, Degree + 1);
   NCollection_Array1<double> NewTempKnots(1, 2);
   NCollection_Array1<int>    NewTempMults(1, 2);
@@ -222,7 +202,6 @@ void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<double>& YValues,
                            NewTempKnots,
                            NewTempMults);
 
-  // insert the Knots
   BSplCLib::InsertKnots(Degree,
                         false,
                         1,
@@ -236,13 +215,11 @@ void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<double>& YValues,
                         Mults,
                         Epsilon(1));
 
-  // scale the knots
   for (i = 1; i <= nk; i++)
   {
     Knots(i) = X0 + length * Knots(i);
   }
 
-  // set the Poles
   for (i = 1; i <= Poles.Upper(); i++)
   {
     Poles(i).SetX(XPoles(i));
@@ -251,8 +228,6 @@ void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<double>& YValues,
   myCurve  = new Geom2d_BSplineCurve(Poles, Knots, Mults, Degree);
   myIsDone = true;
 }
-
-//=================================================================================================
 
 void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt2d>& Points,
                                      const int                           DegMin,
@@ -264,8 +239,6 @@ void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt2d>& Points,
   Init(Points, Approx_ChordLength, DegMin, DegMax, Continuity, Tol2D);
 }
 
-//=================================================================================================
-
 void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt2d>& Points,
                                      const NCollection_Array1<double>&   Params,
                                      const int                           DegMin,
@@ -276,7 +249,7 @@ void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt2d>& Points,
   if (Params.Length() != Points.Length())
     throw Standard_OutOfRange("Geom2dAPI_PointsToBSpline::Init() - invalid input");
 
-  double      Tol3D = 0.; // dummy argument for BSplineCompute.
+  double      Tol3D = 0.;
   int         Nbp   = Params.Length();
   math_Vector theParams(1, Nbp);
   theParams(1)   = 0.;
@@ -327,8 +300,6 @@ void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt2d>& Points,
   myIsDone = true;
 }
 
-//=================================================================================================
-
 void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt2d>& Points,
                                      const double                        W1,
                                      const double                        W2,
@@ -342,8 +313,6 @@ void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt2d>& Points,
   int nbit = 2;
   if (Tol2D <= 1.e-3)
     nbit = 0;
-
-  // Variational algo
 
   AppDef_MultiLine multL(NbPoint);
   for (i = 1; i <= NbPoint; ++i)
@@ -365,10 +334,8 @@ void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt2d>& Points,
 
   AppDef_Variational Variation(multL, 1, NbPoint, TABofCC);
 
-  //===================================
   int  theMaxSegments = 1000;
   bool theWithMinMax  = false;
-  //===================================
 
   Variation.SetMaxDegree(DegMax);
   Variation.SetContinuity(Continuity);
@@ -416,11 +383,6 @@ void Geom2dAPI_PointsToBSpline::Init(const NCollection_Array1<gp_Pnt2d>& Points,
   myIsDone = true;
 }
 
-//=======================================================================
-// function : occ::handle<Geom2d_BSplineCurve>&
-// purpose  :
-//=======================================================================
-
 const occ::handle<Geom2d_BSplineCurve>& Geom2dAPI_PointsToBSpline::Curve() const
 {
   if (!myIsDone)
@@ -428,14 +390,10 @@ const occ::handle<Geom2d_BSplineCurve>& Geom2dAPI_PointsToBSpline::Curve() const
   return myCurve;
 }
 
-//=================================================================================================
-
 Geom2dAPI_PointsToBSpline::operator occ::handle<Geom2d_BSplineCurve>() const
 {
   return myCurve;
 }
-
-//=================================================================================================
 
 bool Geom2dAPI_PointsToBSpline::IsDone() const
 {

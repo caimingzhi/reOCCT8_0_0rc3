@@ -46,13 +46,11 @@ public:
                          NCollection_Array1<double>& theT,
                          const GeomAbs_Shape         theSh);
 
-  //! If <theFirst> >= <theLast>
   static occ::handle<Adaptor3d_Surface> UTrim(const HLRBRep_Surface* theSurf,
                                               const double           theFirst,
                                               const double           theLast,
                                               const double           theTol);
 
-  //! If <theFirst> >= <theLast>
   static occ::handle<Adaptor3d_Surface> VTrim(const HLRBRep_Surface* theSurf,
                                               const double           theFirst,
                                               const double           theLast,

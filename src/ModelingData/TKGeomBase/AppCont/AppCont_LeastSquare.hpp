@@ -31,7 +31,6 @@ public:
   Standard_EXPORT bool IsDone() const;
 
 private:
-  //! Fix border point evaluation.
   void FixSingleBorderPoint(const AppCont_Function&       theSSP,
                             const double                  theU,
                             const double                  theU0,

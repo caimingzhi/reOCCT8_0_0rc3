@@ -40,8 +40,6 @@
 #include <NCollection_Sequence.hpp>
 #include <NCollection_HSequence.hpp>
 
-//=================================================================================================
-
 occ::handle<Geom_BSplineCurve> ShapeConstruct::ConvertCurveToBSpline(
   const occ::handle<Geom_Curve>& C3D,
   const double                   First,
@@ -60,9 +58,8 @@ occ::handle<Geom_BSplineCurve> ShapeConstruct::ConvertCurveToBSpline(
     if (C3D->IsKind(STANDARD_TYPE(Geom_Conic)))
       MaxDeg = std::min(MaxDeg, 6);
 
-    // clang-format off
-    occ::handle<Geom_Curve> tcurve = new Geom_TrimmedCurve(C3D,First,Last); //protection against parabols ets
-    // clang-format on
+    occ::handle<Geom_Curve> tcurve = new Geom_TrimmedCurve(C3D, First, Last);
+
     try
     {
       OCC_CATCH_SIGNALS
@@ -86,8 +83,6 @@ occ::handle<Geom_BSplineCurve> ShapeConstruct::ConvertCurveToBSpline(
   return aBSpline;
 }
 
-//=================================================================================================
-
 occ::handle<Geom2d_BSplineCurve> ShapeConstruct::ConvertCurveToBSpline(
   const occ::handle<Geom2d_Curve>& C2D,
   const double                     First,
@@ -100,9 +95,9 @@ occ::handle<Geom2d_BSplineCurve> ShapeConstruct::ConvertCurveToBSpline(
   occ::handle<Geom2d_BSplineCurve> aBSpline2d;
   if (C2D->IsKind(STANDARD_TYPE(Geom2d_Conic)))
   {
-    // clang-format off
-    occ::handle<Geom2d_Curve> tcurve = new Geom2d_TrimmedCurve(C2D,First,Last); //protection against parabols ets
-    // clang-format on
+
+    occ::handle<Geom2d_Curve> tcurve = new Geom2d_TrimmedCurve(C2D, First, Last);
+
     Geom2dConvert_ApproxCurve approx(tcurve, Tol2d, Continuity, MaxSegments, MaxDegree);
     if (approx.HasResult())
       aBSpline2d = approx.Curve();
@@ -118,13 +113,6 @@ occ::handle<Geom2d_BSplineCurve> ShapeConstruct::ConvertCurveToBSpline(
 
   return aBSpline2d;
 }
-
-//=================================================================================================
-
-// Note: this method has the same purpose as GeomConvert::SurfaceToBSplineSurface(),
-// but treats more correctly offset surfaces and takes parameters such as UV limits
-// and degree as arguments instead of deducing them from the surface.
-// Eventually it may be merged back to GeomConvert.
 
 occ::handle<Geom_BSplineSurface> ShapeConstruct::ConvertSurfaceToBSpline(
   const occ::handle<Geom_Surface>& surf,
@@ -147,7 +135,6 @@ occ::handle<Geom_BSplineSurface> ShapeConstruct::ConvertSurfaceToBSpline(
     S = RTS->BasisSurface();
   }
 
-  // use GeomConvert for direct conversion of analytic surfaces
   if (S->IsKind(STANDARD_TYPE(Geom_ElementarySurface)))
   {
     occ::handle<Geom_RectangularTrimmedSurface> aRTS =
@@ -160,7 +147,6 @@ occ::handle<Geom_BSplineSurface> ShapeConstruct::ConvertSurfaceToBSpline(
     occ::handle<Geom_SurfaceOfLinearExtrusion> extr =
       occ::down_cast<Geom_SurfaceOfLinearExtrusion>(S);
     occ::handle<Geom_Curve> basis = extr->BasisCurve();
-    // gp_Dir direction = extr->Direction(); // direction not used (skl)
 
     GeomAbs_Shape                  cnt = (Continuity > GeomAbs_C2 ? GeomAbs_C2 : Continuity);
     occ::handle<Geom_BSplineCurve> bspl =
@@ -281,8 +267,6 @@ occ::handle<Geom_BSplineSurface> ShapeConstruct::ConvertSurfaceToBSpline(
   return errSpl;
 }
 
-//=================================================================================================
-
 bool ShapeConstruct::JoinPCurves(const occ::handle<NCollection_HSequence<TopoDS_Shape>>& edges,
                                  const TopoDS_Face&                                      theFace,
                                  TopoDS_Edge&                                            theEdge)
@@ -293,7 +277,7 @@ bool ShapeConstruct::JoinPCurves(const occ::handle<NCollection_HSequence<TopoDS_
   try
   {
     OCC_CATCH_SIGNALS
-    // check if current face is plane.
+
     occ::handle<Geom_Surface> aGeomSurf = BRep_Tool::Surface(theFace);
     while (aGeomSurf->IsKind(STANDARD_TYPE(Geom_RectangularTrimmedSurface)))
     {
@@ -307,7 +291,7 @@ bool ShapeConstruct::JoinPCurves(const occ::handle<NCollection_HSequence<TopoDS_
     occ::handle<Geom2d_Curve> aCrvRes1, aCrvRes2;
     TopAbs_Orientation        resOrient;
     double                    newf = 0., newl = 0.;
-    // iterates on edges
+
     int i = 1;
     for (; i <= edges->Length(); i++)
     {
@@ -315,9 +299,9 @@ bool ShapeConstruct::JoinPCurves(const occ::handle<NCollection_HSequence<TopoDS_
       if (i == 1)
         IsEdgeSeam = sae.IsSeam(Edge, theFace);
       else if (IsEdgeSeam && (!sae.IsSeam(Edge, theFace)))
-        break; // different cases
+        break;
       else if (!IsEdgeSeam && (sae.IsSeam(Edge, theFace)))
-        break; // different cases
+        break;
 
       resOrient = TopAbs_FORWARD;
       occ::handle<Geom2d_Curve> c2d, c2d2;
@@ -410,8 +394,6 @@ bool ShapeConstruct::JoinPCurves(const occ::handle<NCollection_HSequence<TopoDS_
   return false;
 }
 
-//=================================================================================================
-
 template <class HCurve>
 static inline HCurve GetCurveCopy(const HCurve&             curve,
                                   double&                   first,
@@ -452,7 +434,6 @@ static inline void GetReversedParameters(const HPoint& p11,
 {
   isRev1 = false;
   isRev2 = false;
-  // gka protection against crossing seem on second face
 
   double d11 = p11.Distance(p21);
   double d21 = p12.Distance(p21);
@@ -471,8 +452,6 @@ static inline void GetReversedParameters(const HPoint& p11,
     isRev2 = true;
   }
 }
-
-//=================================================================================================
 
 bool ShapeConstruct::JoinCurves(const occ::handle<Geom_Curve>& ac3d1,
                                 const occ::handle<Geom_Curve>& ac3d2,
@@ -497,8 +476,6 @@ bool ShapeConstruct::JoinCurves(const occ::handle<Geom_Curve>& ac3d1,
     scc.ConvertToBSpline(c3d1, first1, last1, Precision::Confusion());
   occ::handle<Geom_BSplineCurve> bsplc2 =
     scc.ConvertToBSpline(c3d2, first2, last2, Precision::Confusion());
-  //  newf = first1;
-  //  newl = last1 + last2 - first2;
 
   if (bsplc1.IsNull() || bsplc2.IsNull())
     return false;
@@ -506,7 +483,6 @@ bool ShapeConstruct::JoinCurves(const occ::handle<Geom_Curve>& ac3d1,
   SegmentCurve(bsplc1, first1, last1);
   SegmentCurve(bsplc2, first2, last2);
 
-  // regression on file 866026_M-f276-f311.brep bug OCC482
   gp_Pnt pp11 = bsplc1->Pole(1);
   gp_Pnt pp12 = bsplc1->Pole(bsplc1->NbPoles());
 
@@ -531,8 +507,6 @@ bool ShapeConstruct::JoinCurves(const occ::handle<Geom_Curve>& ac3d1,
   c3dOut = connect3d.BSplineCurve();
   return true;
 }
-
-//=================================================================================================
 
 bool ShapeConstruct::JoinCurves(const occ::handle<Geom2d_Curve>& aC2d1,
                                 const occ::handle<Geom2d_Curve>& aC2d2,
@@ -563,7 +537,7 @@ bool ShapeConstruct::JoinCurves(const occ::handle<Geom2d_Curve>& aC2d1,
 
   SegmentCurve(bsplc12d, first1, last1);
   SegmentCurve(bsplc22d, first2, last2);
-  // gka protection against crossing seem on second face
+
   gp_Pnt2d pp112d = bsplc12d->Pole(1).XY();
   gp_Pnt2d pp122d = bsplc12d->Pole(bsplc12d->NbPoles()).XY();
 
@@ -572,9 +546,6 @@ bool ShapeConstruct::JoinCurves(const occ::handle<Geom2d_Curve>& aC2d1,
 
   GetReversedParameters(pp112d, pp122d, pp212d, pp222d, isRev1, isRev2);
 
-  // regression on file 866026_M-f276-f311.brep bug OCC482
-  // if(isRev1 || isRev2)
-  //   return newedge1;
   if (isRev1)
   {
     bsplc12d->Reverse();
@@ -582,8 +553,6 @@ bool ShapeConstruct::JoinCurves(const occ::handle<Geom2d_Curve>& aC2d1,
   if (isRev2)
     bsplc22d->Reverse();
 
-  //---------------------------------------------------------
-  // protection against invalid topology Housing(sam1296.brep(face 707) - bugmergeedges4.brep)
   if (isError)
   {
     gp_Pnt2d pp1 = bsplc12d->Value(bsplc12d->FirstParameter());
@@ -595,15 +564,11 @@ bool ShapeConstruct::JoinCurves(const occ::handle<Geom2d_Curve>& aC2d1,
     if ((pp1.Distance(bsplc22d->Pole(1)) < leng) && !isCircle)
       return false;
   }
-  //-------------------------------------------------------
+
   gp_Pnt2d pmid1 = 0.5 * (bsplc12d->Pole(bsplc12d->NbPoles()).XY() + bsplc22d->Pole(1).XY());
   bsplc12d->SetPole(bsplc12d->NbPoles(), pmid1);
   bsplc22d->SetPole(1, pmid1);
 
-  // abv 01 Sep 99: Geom2dConvert ALWAYS performs reparametrisation of the
-  // second curve before merging; this is quite not suitable
-  // Use 3d tool instead
-  //      Geom2dConvert_CompCurveToBSplineCurve connect2d(bsplc12d);
   gp_Pnt                         vPnt(0, 0, 0);
   gp_Vec                         vDir(0, 0, 1);
   gp_Pln                         vPln(vPnt, vDir);

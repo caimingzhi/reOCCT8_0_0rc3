@@ -9,7 +9,6 @@ class StepBasic_LengthUnit : public StepBasic_NamedUnit
 {
 
 public:
-  //! Returns a LengthUnit
   Standard_EXPORT StepBasic_LengthUnit();
 
   DEFINE_STANDARD_RTTIEXT(StepBasic_LengthUnit, StepBasic_NamedUnit)

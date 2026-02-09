@@ -1,15 +1,4 @@
-// Copyright (c) 2011-2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Graphic3d_Layer.hpp>
 
@@ -17,8 +6,6 @@
 #include <Graphic3d_CullingTool.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Layer, Standard_Transient)
-
-//=================================================================================================
 
 Graphic3d_Layer::Graphic3d_Layer(Graphic3d_ZLayerId                theId,
                                  const occ::handle<BVH_Builder3d>& theBuilder)
@@ -32,11 +19,7 @@ Graphic3d_Layer::Graphic3d_Layer(Graphic3d_ZLayerId                theId,
   myIsBoundingBoxNeedsReset[0] = myIsBoundingBoxNeedsReset[1] = true;
 }
 
-//=================================================================================================
-
 Graphic3d_Layer::~Graphic3d_Layer() = default;
-
-//=================================================================================================
 
 void Graphic3d_Layer::Add(const Graphic3d_CStructure* theStruct,
                           Graphic3d_DisplayPriority   thePriority,
@@ -71,8 +54,6 @@ void Graphic3d_Layer::Add(const Graphic3d_CStructure* theStruct,
   }
   ++myNbStructures;
 }
-
-//=================================================================================================
 
 bool Graphic3d_Layer::Remove(const Graphic3d_CStructure* theStruct,
                              Graphic3d_DisplayPriority&  thePriority,
@@ -130,24 +111,20 @@ bool Graphic3d_Layer::Remove(const Graphic3d_CStructure* theStruct,
   return false;
 }
 
-//=================================================================================================
-
 void Graphic3d_Layer::InvalidateBVHData()
 {
   myIsBVHPrimitivesNeedsReset = true;
 }
 
-//! Calculate a finite bounding box of infinite object as its middle point.
 inline Graphic3d_BndBox3d centerOfinfiniteBndBox(const Graphic3d_BndBox3d& theBndBox)
 {
-  // bounding borders of infinite line has been calculated as own point in center of this line
+
   const NCollection_Vec3<double> aDiagVec = theBndBox.CornerMax() - theBndBox.CornerMin();
   return aDiagVec.SquareModulus() >= 500000.0 * 500000.0
            ? Graphic3d_BndBox3d((theBndBox.CornerMin() + theBndBox.CornerMax()) * 0.5)
            : Graphic3d_BndBox3d();
 }
 
-//! Return true if at least one vertex coordinate out of float range.
 inline bool isInfiniteBndBox(const Graphic3d_BndBox3d& theBndBox)
 {
   return std::abs(theBndBox.CornerMax().x()) >= ShortRealLast()
@@ -158,18 +135,15 @@ inline bool isInfiniteBndBox(const Graphic3d_BndBox3d& theBndBox)
          || std::abs(theBndBox.CornerMin().z()) >= ShortRealLast();
 }
 
-//! Extend bounding box with another box.
 static void addBox3dToBndBox(Bnd_Box& theResBox, const Graphic3d_BndBox3d& theBox)
 {
-  // skip too big boxes to prevent float overflow at camera parameters calculation
+
   if (theBox.IsValid() && !isInfiniteBndBox(theBox))
   {
     theResBox.Add(gp_Pnt(theBox.CornerMin().x(), theBox.CornerMin().y(), theBox.CornerMin().z()));
     theResBox.Add(gp_Pnt(theBox.CornerMax().x(), theBox.CornerMax().y(), theBox.CornerMax().z()));
   }
 }
-
-//=================================================================================================
 
 Bnd_Box Graphic3d_Layer::BoundingBox(int                                  theViewId,
                                      const occ::handle<Graphic3d_Camera>& theCamera,
@@ -184,7 +158,7 @@ Bnd_Box Graphic3d_Layer::BoundingBox(int                                  theVie
   const NCollection_Mat4<double>& aWorldViewMat  = theCamera->OrientationMatrix();
   if (myIsBoundingBoxNeedsReset[aBoxId])
   {
-    // Recompute layer bounding box
+
     myBoundingBox[aBoxId].SetVoid();
 
     for (int aPriorIter = Graphic3d_DisplayPriority_Bottom;
@@ -202,9 +176,6 @@ Bnd_Box Graphic3d_Layer::BoundingBox(int                                  theVie
           continue;
         }
 
-        // "FitAll" operation ignores object with transform persistence parameter
-        // but adds transform persistence point in a bounding box of layer (only zoom pers.
-        // objects).
         if (!aStructure->TransformPersistence().IsNull())
         {
           if (!theToIncludeAuxiliary && aStructure->TransformPersistence()->IsZoomOrRotate())
@@ -213,8 +184,7 @@ Bnd_Box Graphic3d_Layer::BoundingBox(int                                  theVie
             myBoundingBox[aBoxId].Add(anAnchor);
             continue;
           }
-          // Panning and 2d persistence apply changes to projection or/and its translation
-          // components. It makes them incompatible with z-fitting algorithm. Ignored by now.
+
           else if (!theToIncludeAuxiliary || aStructure->TransformPersistence()->IsTrihedronOr2d())
           {
             continue;
@@ -223,7 +193,7 @@ Bnd_Box Graphic3d_Layer::BoundingBox(int                                  theVie
 
         if (!theToIncludeAuxiliary && aStructure->HasGroupTransformPersistence())
         {
-          // add per-group transform-persistence point in a bounding box
+
           for (NCollection_Sequence<occ::handle<Graphic3d_Group>>::Iterator aGroupIter(
                  aStructure->Groups());
                aGroupIter.More();
@@ -247,7 +217,7 @@ Bnd_Box Graphic3d_Layer::BoundingBox(int                                  theVie
 
         if (aStructure->IsInfinite && !theToIncludeAuxiliary)
         {
-          // include center of infinite object
+
           aBox = centerOfinfiniteBndBox(aBox);
         }
 
@@ -273,8 +243,6 @@ Bnd_Box Graphic3d_Layer::BoundingBox(int                                  theVie
     return aResBox;
   }
 
-  // add transformation-persistent objects which depend on camera position (and thus can not be
-  // cached) for operations like Z-fit
   for (NCollection_IndexedMap<const Graphic3d_CStructure*>::Iterator aStructIter(
          myAlwaysRenderedMap);
        aStructIter.More();
@@ -286,7 +254,6 @@ Bnd_Box Graphic3d_Layer::BoundingBox(int                                  theVie
       continue;
     }
 
-    // handle per-group transformation persistence specifically
     if (aStructure->HasGroupTransformPersistence())
     {
       for (NCollection_Sequence<occ::handle<Graphic3d_Group>>::Iterator aGroupIter(
@@ -328,8 +295,6 @@ Bnd_Box Graphic3d_Layer::BoundingBox(int                                  theVie
 
   return aResBox;
 }
-
-//=================================================================================================
 
 double Graphic3d_Layer::considerZoomPersistenceObjects(
   int                                  theViewId,
@@ -398,12 +363,10 @@ double Graphic3d_Layer::considerZoomPersistenceObjects(
         aConvertedMaxY = std::max(aConvertedMaxY, aConvertedPoints[anIdx].Y());
       }
 
-      const bool isBigObject =
-        (std::abs(aConvertedMaxX - aConvertedMinX)
-         > 2.0) // width  of zoom pers. object greater than width  of window
-                // clang-format off
-                                         || (std::abs (aConvertedMaxY - aConvertedMinY) > 2.0); // height of zoom pers. object greater than height of window
-                // clang-format on
+      const bool isBigObject = (std::abs(aConvertedMaxX - aConvertedMinX) > 2.0)
+
+                               || (std::abs(aConvertedMaxY - aConvertedMinY) > 2.0);
+
       const bool isAlreadyInScreen = (aConvertedMinX > -1.0 && aConvertedMinX < 1.0)
                                      && (aConvertedMaxX > -1.0 && aConvertedMaxX < 1.0)
                                      && (aConvertedMinY > -1.0 && aConvertedMinY < 1.0)
@@ -466,8 +429,6 @@ double Graphic3d_Layer::considerZoomPersistenceObjects(
   return (aMaxCoef > 0.0) ? aMaxCoef : 1.0;
 }
 
-//=================================================================================================
-
 void Graphic3d_Layer::updateBVH() const
 {
   if (!myIsBVHPrimitivesNeedsReset)
@@ -508,7 +469,7 @@ void Graphic3d_Layer::updateBVH() const
 
 namespace
 {
-  //! This structure describes the node in BVH
+
   struct NodeInStack
   {
     NodeInStack(int theId = 0, bool theIsFullInside = false)
@@ -517,12 +478,10 @@ namespace
     {
     }
 
-    int  Id;           //!< node identifier
-    bool IsFullInside; //!< if the node is completely inside
+    int  Id;
+    bool IsFullInside;
   };
 } // namespace
-
-//=================================================================================================
 
 void Graphic3d_Layer::UpdateCulling(
   int                                             theViewId,
@@ -597,7 +556,7 @@ void Graphic3d_Layer::UpdateCulling(
     }
 
     const bool  toCheckFullInside = true;
-    NodeInStack aNode(0, toCheckFullInside); // a root node
+    NodeInStack aNode(0, toCheckFullInside);
     if (theSelector.IsCulled(aCullCtx,
                              aBVHTree->MinPoint(0),
                              aBVHTree->MaxPoint(0),
@@ -617,7 +576,7 @@ void Graphic3d_Layer::UpdateCulling(
         bool        isLeftChildIn = true, isRightChildIn = true;
         if (aNode.IsFullInside)
         {
-          // small size should be always checked
+
           isLeftChildIn  = !theSelector.IsTooSmall(aCullCtx,
                                                   aBVHTree->MinPoint(aLeft.Id),
                                                   aBVHTree->MaxPoint(aLeft.Id));
@@ -693,11 +652,9 @@ void Graphic3d_Layer::UpdateCulling(
   }
 }
 
-//=================================================================================================
-
 bool Graphic3d_Layer::Append(const Graphic3d_Layer& theOther)
 {
-  // add all structures to destination priority list
+
   for (int aPriorityIter = Graphic3d_DisplayPriority_Bottom;
        aPriorityIter <= Graphic3d_DisplayPriority_Topmost;
        ++aPriorityIter)
@@ -714,8 +671,6 @@ bool Graphic3d_Layer::Append(const Graphic3d_Layer& theOther)
 
   return true;
 }
-
-//=================================================================================================
 
 void Graphic3d_Layer::SetLayerSettings(const Graphic3d_ZLayerSettings& theSettings)
 {
@@ -741,8 +696,6 @@ void Graphic3d_Layer::SetLayerSettings(const Graphic3d_ZLayerSettings& theSettin
     }
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_Layer::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

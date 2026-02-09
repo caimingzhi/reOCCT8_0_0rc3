@@ -11,7 +11,6 @@ class StepShape_BoxDomain;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for BoxDomain
 class RWStepShape_RWBoxDomain
 {
 public:

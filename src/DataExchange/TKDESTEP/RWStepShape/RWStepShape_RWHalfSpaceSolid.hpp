@@ -11,7 +11,6 @@ class StepShape_HalfSpaceSolid;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for HalfSpaceSolid
 class RWStepShape_RWHalfSpaceSolid
 {
 public:

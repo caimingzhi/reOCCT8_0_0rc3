@@ -30,8 +30,6 @@ static void t3dto2d(double& a, double& b, const gp_Vec& A, const gp_Vec& B, cons
   b           = (AC * BB - AB * BC) / deno;
 }
 
-//=================================================================================================
-
 BRepBlend_SurfRstConstRad::BRepBlend_SurfRstConstRad(const occ::handle<Adaptor3d_Surface>& Surf,
                                                      const occ::handle<Adaptor3d_Surface>& SurfRst,
                                                      const occ::handle<Adaptor2d_Curve2d>& Rst,
@@ -55,21 +53,15 @@ BRepBlend_SurfRstConstRad::BRepBlend_SurfRstConstRad(const occ::handle<Adaptor3d
 {
 }
 
-//=================================================================================================
-
 int BRepBlend_SurfRstConstRad::NbVariables() const
 {
   return 3;
 }
 
-//=================================================================================================
-
 int BRepBlend_SurfRstConstRad::NbEquations() const
 {
   return 3;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfRstConstRad::Value(const math_Vector& X, math_Vector& F)
 {
@@ -90,8 +82,6 @@ bool BRepBlend_SurfRstConstRad::Value(const math_Vector& X, math_Vector& F)
   F(3) = (vref.SquareMagnitude() - 1) * ray * ray;
   return true;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfRstConstRad::Derivatives(const math_Vector& X, math_Matrix& D)
 {
@@ -120,7 +110,6 @@ bool BRepBlend_SurfRstConstRad::Derivatives(const math_Vector& X, math_Matrix& D
   vref.Divide(norm);
   vref.SetLinearForm(ray, vref, gp_Vec(ptrst, pts));
 
-  // Derivative by u1
   temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
   grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
   resul.SetLinearForm(-ray / norm * (grosterme * ndotns - nplan.Dot(temp)),
@@ -134,7 +123,6 @@ bool BRepBlend_SurfRstConstRad::Derivatives(const math_Vector& X, math_Matrix& D
   D(3, 1) = resul.Dot(vref);
   D(3, 1) = D(3, 1) * 2.;
 
-  // Derivative by v1
   temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
   grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
   resul.SetLinearForm(-ray / norm * (grosterme * ndotns - nplan.Dot(temp)),
@@ -153,8 +141,6 @@ bool BRepBlend_SurfRstConstRad::Derivatives(const math_Vector& X, math_Matrix& D
 
   return true;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfRstConstRad::Values(const math_Vector& X, math_Vector& F, math_Matrix& D)
 {
@@ -188,10 +174,9 @@ bool BRepBlend_SurfRstConstRad::Values(const math_Vector& X, math_Vector& F, mat
   vref.SetLinearForm(ray, vref, gp_Vec(ptrst, pts));
 
   temp = vref / ray;
-  //  F(3) = vref.SquareMagnitude() - ray*ray;
-  F(3) = (temp.SquareMagnitude() - 1) * ray * ray; // more stable numerically
 
-  // Derivative by u1
+  F(3) = (temp.SquareMagnitude() - 1) * ray * ray;
+
   temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
   grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
   resul.SetLinearForm(-ray / norm * (grosterme * ndotns - nplan.Dot(temp)),
@@ -205,7 +190,6 @@ bool BRepBlend_SurfRstConstRad::Values(const math_Vector& X, math_Vector& F, mat
   D(3, 1) = resul.Dot(vref);
   D(3, 1) = D(3, 1) * 2.;
 
-  // Derivative by v1
   temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
   grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
   resul.SetLinearForm(-ray / norm * (grosterme * ndotns - nplan.Dot(temp)),
@@ -225,16 +209,12 @@ bool BRepBlend_SurfRstConstRad::Values(const math_Vector& X, math_Vector& F, mat
   return true;
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfRstConstRad::Set(const occ::handle<Adaptor3d_Surface>& SurfRef,
                                     const occ::handle<Adaptor2d_Curve2d>& RstRef)
 {
   surfref = SurfRef;
   rstref  = RstRef;
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfRstConstRad::Set(const double Param)
 {
@@ -249,14 +229,10 @@ void BRepBlend_SurfRstConstRad::Set(const double Param)
   theD = theD * (-1.);
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfRstConstRad::Set(const double First, const double Last)
 {
   tguide = guide->Trim(First, Last, 1.e-12);
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfRstConstRad::GetTolerance(math_Vector& Tolerance, const double Tol) const
 {
@@ -264,8 +240,6 @@ void BRepBlend_SurfRstConstRad::GetTolerance(math_Vector& Tolerance, const doubl
   Tolerance(2) = surf->VResolution(Tol);
   Tolerance(3) = cons.Resolution(Tol);
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfRstConstRad::GetBounds(math_Vector& InfBound, math_Vector& SupBound) const
 {
@@ -290,8 +264,6 @@ void BRepBlend_SurfRstConstRad::GetBounds(math_Vector& InfBound, math_Vector& Su
   }
 }
 
-//=================================================================================================
-
 bool BRepBlend_SurfRstConstRad::IsSolution(const math_Vector& Sol, const double Tol)
 
 {
@@ -307,8 +279,6 @@ bool BRepBlend_SurfRstConstRad::IsSolution(const math_Vector& Sol, const double 
   if (std::abs(valsol(1)) <= Tol && std::abs(valsol(2)) <= Tol
       && std::abs(valsol(3)) <= 2 * Tol * std::abs(ray))
   {
-
-    // Calculation of tangents
 
     pt2ds   = gp_Pnt2d(Sol(1), Sol(2));
     prmrst  = Sol(3);
@@ -371,7 +341,6 @@ bool BRepBlend_SurfRstConstRad::IsSolution(const math_Vector& Sol, const double 
       tg2drst.SetCoord(a, b);
     }
 
-    // update of maxang
     if (ray > 0.)
       ns.Reverse();
     ns2 = -resul.Normalized();
@@ -380,7 +349,7 @@ bool BRepBlend_SurfRstConstRad::IsSolution(const math_Vector& Sol, const double 
     Sina = nplan.Dot(ns.Crossed(ns2));
     if (choix % 2 != 0)
     {
-      Sina = -Sina; // nplan is changed to -nplan
+      Sina = -Sina;
     }
 
     Angle = std::acos(Cosa);
@@ -405,56 +374,40 @@ bool BRepBlend_SurfRstConstRad::IsSolution(const math_Vector& Sol, const double 
   return false;
 }
 
-//=================================================================================================
-
 double BRepBlend_SurfRstConstRad::GetMinimalDistance() const
 {
   return distmin;
 }
-
-//=================================================================================================
 
 const gp_Pnt& BRepBlend_SurfRstConstRad::PointOnS() const
 {
   return pts;
 }
 
-//=================================================================================================
-
 const gp_Pnt& BRepBlend_SurfRstConstRad::PointOnRst() const
 {
   return ptrst;
 }
-
-//=================================================================================================
 
 const gp_Pnt2d& BRepBlend_SurfRstConstRad::Pnt2dOnS() const
 {
   return pt2ds;
 }
 
-//=================================================================================================
-
 const gp_Pnt2d& BRepBlend_SurfRstConstRad::Pnt2dOnRst() const
 {
   return pt2drst;
 }
-
-//=================================================================================================
 
 double BRepBlend_SurfRstConstRad::ParameterOnRst() const
 {
   return prmrst;
 }
 
-//=================================================================================================
-
 bool BRepBlend_SurfRstConstRad::IsTangencyPoint() const
 {
   return istangent;
 }
-
-//=================================================================================================
 
 const gp_Vec& BRepBlend_SurfRstConstRad::TangentOnS() const
 {
@@ -465,8 +418,6 @@ const gp_Vec& BRepBlend_SurfRstConstRad::TangentOnS() const
   return tgs;
 }
 
-//=================================================================================================
-
 const gp_Vec2d& BRepBlend_SurfRstConstRad::Tangent2dOnS() const
 {
   if (istangent)
@@ -475,8 +426,6 @@ const gp_Vec2d& BRepBlend_SurfRstConstRad::Tangent2dOnS() const
   }
   return tg2ds;
 }
-
-//=================================================================================================
 
 const gp_Vec& BRepBlend_SurfRstConstRad::TangentOnRst() const
 {
@@ -487,8 +436,6 @@ const gp_Vec& BRepBlend_SurfRstConstRad::TangentOnRst() const
   return tgrst;
 }
 
-//=================================================================================================
-
 const gp_Vec2d& BRepBlend_SurfRstConstRad::Tangent2dOnRst() const
 {
   if (istangent)
@@ -497,8 +444,6 @@ const gp_Vec2d& BRepBlend_SurfRstConstRad::Tangent2dOnRst() const
   }
   return tg2drst;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfRstConstRad::Decroch(const math_Vector& Sol, gp_Vec& NS, gp_Vec& TgS) const
 {
@@ -542,15 +487,13 @@ bool BRepBlend_SurfRstConstRad::Decroch(const math_Vector& Sol, gp_Vec& NS, gp_V
   NT *= TgRst.Magnitude();
   if (std::abs(NT) < 1.e-7)
   {
-    return false; // Singularity or Incoherence.
+    return false;
   }
   dot = NRstInPlane.Dot(TgRst);
   dot /= NT;
 
   return (dot < 1.e-10);
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfRstConstRad::Set(const double Radius, const int Choix)
 {
@@ -571,14 +514,10 @@ void BRepBlend_SurfRstConstRad::Set(const double Radius, const int Choix)
   }
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfRstConstRad::Set(const BlendFunc_SectionShape TypeSection)
 {
   mySShape = TypeSection;
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfRstConstRad::Section(const double Param,
                                         const double U,
@@ -617,10 +556,9 @@ void BRepBlend_SurfRstConstRad::Section(const double Param,
   }
 
   C.SetPosition(gp_Ax2(Center, np, ns));
-  Pdeb = 0; // ElCLib::Parameter(C,pts);
+  Pdeb = 0;
   Pfin = ElCLib::Parameter(C, ptrst);
 
-  // Test negative and almost null angles : Special case
   if (Pfin > 1.5 * M_PI)
   {
     np.Reverse();
@@ -631,36 +569,25 @@ void BRepBlend_SurfRstConstRad::Section(const double Param,
     Pfin += Precision::PConfusion();
 }
 
-//=================================================================================================
-
 bool BRepBlend_SurfRstConstRad::IsRational() const
 {
   return (mySShape == BlendFunc_Rational || mySShape == BlendFunc_QuasiAngular);
 }
-
-//=================================================================================================
 
 double BRepBlend_SurfRstConstRad::GetSectionSize() const
 {
   return maxang * std::abs(ray);
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfRstConstRad::GetMinimalWeight(NCollection_Array1<double>& Weights) const
 {
   BlendFunc::GetMinimalWeights(mySShape, myTConv, minang, maxang, Weights);
-  // It is supposed that it does not depend on the Radius!
 }
-
-//=================================================================================================
 
 int BRepBlend_SurfRstConstRad::NbIntervals(const GeomAbs_Shape S) const
 {
   return guide->NbIntervals(BlendFunc::NextShape(S));
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfRstConstRad::Intervals(NCollection_Array1<double>& T,
                                           const GeomAbs_Shape         S) const
@@ -668,18 +595,11 @@ void BRepBlend_SurfRstConstRad::Intervals(NCollection_Array1<double>& T,
   guide->Intervals(T, BlendFunc::NextShape(S));
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfRstConstRad::GetShape(int& NbPoles, int& NbKnots, int& Degree, int& NbPoles2d)
 {
   NbPoles2d = 2;
   BlendFunc::GetShape(mySShape, maxang, NbPoles, NbKnots, Degree, myTConv);
 }
-
-//=======================================================================
-// function : GetTolerance
-// purpose  : Find Tolerance to be used in approximations.
-//=======================================================================
 
 void BRepBlend_SurfRstConstRad::GetTolerance(const double BoundTol,
                                              const double SurfTol,
@@ -696,29 +616,23 @@ void BRepBlend_SurfRstConstRad::GetTolerance(const double BoundTol,
   Tol3d(low) = Tol3d(up) = std::min(Tol, BoundTol);
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfRstConstRad::Knots(NCollection_Array1<double>& TKnots)
 {
   GeomFill::Knots(myTConv, TKnots);
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfRstConstRad::Mults(NCollection_Array1<int>& TMults)
 {
   GeomFill::Mults(myTConv, TMults);
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfRstConstRad::Section(const Blend_Point&            P,
                                         NCollection_Array1<gp_Pnt>&   Poles,
                                         NCollection_Array1<gp_Pnt2d>& Poles2d,
                                         NCollection_Array1<double>&   Weights)
 {
-  gp_Vec d1u1, d1v1; //,,d1;
-  gp_Vec ns, ns2;    //,temp,np2;
+  gp_Vec d1u1, d1v1;
+  gp_Vec ns, ns2;
   gp_Pnt Center;
 
   double norm, u1, v1, w;
@@ -731,7 +645,7 @@ void BRepBlend_SurfRstConstRad::Section(const Blend_Point&            P,
   nplan = d1gui.Normalized();
 
   P.ParametersOnS(u1, v1);
-  w             = P.ParameterOnC(); // jlr : point on curve not on surface
+  w             = P.ParameterOnC();
   gp_Pnt2d pt2d = rst->Value(w);
 
   surf->D1(u1, v1, pts, d1u1, d1v1);
@@ -741,7 +655,6 @@ void BRepBlend_SurfRstConstRad::Section(const Blend_Point&            P,
   Poles2d(Poles2d.Lower()).SetCoord(u1, v1);
   Poles2d(Poles2d.Upper()).SetCoord(pt2d.X(), pt2d.Y());
 
-  // Linear Case
   if (mySShape == BlendFunc_Linear)
   {
     Poles(low)   = pts;
@@ -769,8 +682,6 @@ void BRepBlend_SurfRstConstRad::Section(const Blend_Point&            P,
   GeomFill::GetCircle(myTConv, ns, ns2, nplan, pts, ptrst, std::abs(ray), Center, Poles, Weights);
 }
 
-//=================================================================================================
-
 bool BRepBlend_SurfRstConstRad::Section(const Blend_Point&            P,
                                         NCollection_Array1<gp_Pnt>&   Poles,
                                         NCollection_Array1<gp_Vec>&   DPoles,
@@ -781,7 +692,7 @@ bool BRepBlend_SurfRstConstRad::Section(const Blend_Point&            P,
 {
 
   gp_Vec d1u1, d1v1, d2u1, d2v1, d2uv1, d1;
-  gp_Vec ns, ns2, dnplan, dnw, dn2w; //,np2,dnp2;
+  gp_Vec ns, ns2, dnplan, dnw, dn2w;
   gp_Vec ncrossns;
   gp_Vec resulu, resulv, temp, tgct, resul;
   gp_Vec d1urst, d1vrst;
@@ -823,13 +734,11 @@ bool BRepBlend_SurfRstConstRad::Section(const Blend_Point&            P,
   norm     = ncrossns.Magnitude();
   if (norm < Eps)
   {
-    norm = 1; // Not enough, but it is not necessary to stop
+    norm = 1;
 #ifdef OCCT_DEBUG
     std::cout << " SurfRstConstRad : Singular Surface " << std::endl;
 #endif
   }
-
-  // Derivative of n1 corresponding to w
 
   grosterme = ncrossns.Dot(dnplan.Crossed(ns)) / norm / norm;
   dnw.SetLinearForm((dnplan.Dot(ns) - grosterme * ndotns) / norm,
@@ -870,7 +779,6 @@ bool BRepBlend_SurfRstConstRad::Section(const Blend_Point&            P,
     tgs.SetLinearForm(secmember(1), d1u1, secmember(2), d1v1);
     tgrst = secmember(3) * d1;
 
-    // Derivative of n1 corresponding to u1
     temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
     grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
     resulu.SetLinearForm(-(grosterme * ndotns - nplan.Dot(temp)) / norm,
@@ -880,7 +788,6 @@ bool BRepBlend_SurfRstConstRad::Section(const Blend_Point&            P,
                          -1. / norm,
                          temp);
 
-    // Derivative of n1 corresponding to v1
     temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
     grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
     resulv.SetLinearForm(-(grosterme * ndotns - nplan.Dot(temp)) / norm,
@@ -905,8 +812,6 @@ bool BRepBlend_SurfRstConstRad::Section(const Blend_Point&            P,
     ns2 = -resul.Normalized();
   }
 
-  // Tops 2D
-
   Poles2d(Poles2d.Lower()).SetCoord(sol(1), sol(2));
   Poles2d(Poles2d.Upper()).SetCoord(pt2drst.X(), pt2drst.Y());
   if (!istgt)
@@ -918,7 +823,6 @@ bool BRepBlend_SurfRstConstRad::Section(const Blend_Point&            P,
     DPoles2d(Poles2d.Upper()).SetCoord(a, b);
   }
 
-  // Linear Case
   if (mySShape == BlendFunc_Linear)
   {
     Poles(low)   = pts;
@@ -935,7 +839,6 @@ bool BRepBlend_SurfRstConstRad::Section(const Blend_Point&            P,
     return (!istgt);
   }
 
-  // Case of the circle
   Center.SetXYZ(pts.XYZ() + ray * ns.XYZ());
   if (!istgt)
   {
@@ -983,8 +886,6 @@ bool BRepBlend_SurfRstConstRad::Section(const Blend_Point&            P,
     return false;
   }
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfRstConstRad::Section(const Blend_Point&,
                                         NCollection_Array1<gp_Pnt>&,

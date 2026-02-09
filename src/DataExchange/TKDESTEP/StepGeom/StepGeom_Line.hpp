@@ -12,7 +12,6 @@ class StepGeom_Line : public StepGeom_Curve
 {
 
 public:
-  //! Returns a Line
   Standard_EXPORT StepGeom_Line();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

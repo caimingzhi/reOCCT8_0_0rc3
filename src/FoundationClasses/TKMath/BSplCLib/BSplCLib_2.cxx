@@ -19,12 +19,7 @@
 
 #include "BSplCLib_CurveComputation.hpp"
 
-// Use 1D specialization of the template data container
 using BSplCLib_DataContainer = BSplCLib_DataContainer_T<1>;
-
-// methods for 1 dimensional BSplines
-
-//=================================================================================================
 
 void BSplCLib::BuildEval(const int                         Degree,
                          const int                         Index,
@@ -64,8 +59,6 @@ void BSplCLib::BuildEval(const int                         Degree,
   }
 }
 
-//=================================================================================================
-
 static void PrepareEval(double&                           u,
                         int&                              index,
                         int&                              dim,
@@ -78,17 +71,15 @@ static void PrepareEval(double&                           u,
                         const NCollection_Array1<int>*    Mults,
                         BSplCLib_DataContainer&           dc)
 {
-  // Set the Index
+
   BSplCLib::LocateParameter(Degree, Knots, Mults, u, Periodic, index, u);
 
-  // make the knots
   BSplCLib::BuildKnots(Degree, index, Periodic, Knots, Mults, *dc.knots);
   if (Mults == nullptr)
     index -= Knots.Lower() + Degree;
   else
     index = BSplCLib::PoleIndex(Degree, index, Periodic, *Mults);
 
-  // check truly rational
   rational = (Weights != nullptr);
   if (rational)
   {
@@ -96,7 +87,6 @@ static void PrepareEval(double&                           u,
     rational   = BSplCLib::IsRational(*Weights, WLower, WLower + Degree);
   }
 
-  // make the poles
   if (rational)
   {
     dim = 2;
@@ -108,8 +98,6 @@ static void PrepareEval(double&                           u,
     BSplCLib::BuildEval(Degree, index, Poles, BSplCLib::NoWeights(), *dc.poles);
   }
 }
-
-//=================================================================================================
 
 void BSplCLib::D0(const double                      U,
                   const int                         Index,
@@ -133,8 +121,6 @@ void BSplCLib::D0(const double                      U,
   else
     P = dc.poles[0];
 }
-
-//=================================================================================================
 
 void BSplCLib::D1(const double                      U,
                   const int                         Index,
@@ -163,8 +149,6 @@ void BSplCLib::D1(const double                      U,
   P = result[0];
   V = result[1];
 }
-
-//=================================================================================================
 
 void BSplCLib::D2(const double                      U,
                   const int                         Index,
@@ -198,8 +182,6 @@ void BSplCLib::D2(const double                      U,
   else
     V2 = result[2];
 }
-
-//=================================================================================================
 
 void BSplCLib::D3(const double                      U,
                   const int                         Index,
@@ -239,8 +221,6 @@ void BSplCLib::D3(const double                      U,
     V3 = result[3];
 }
 
-//=================================================================================================
-
 void BSplCLib::DN(const double                      U,
                   const int                         N,
                   const int                         Index,
@@ -273,8 +253,6 @@ void BSplCLib::DN(const double                      U,
       VN = dc.poles[N];
   }
 }
-
-//=================================================================================================
 
 int BSplCLib::BuildBSpMatrix(const NCollection_Array1<double>& Parameters,
                              const NCollection_Array1<int>&    ContactOrderArray,
@@ -331,8 +309,6 @@ int BSplCLib::BuildBSpMatrix(const NCollection_Array1<double>& Parameters,
   return 0;
 }
 
-//=================================================================================================
-
 int BSplCLib::FactorBandedMatrix(math_Matrix& Matrix,
                                  const int    UpperBandWidth,
                                  const int    LowerBandWidth,
@@ -369,8 +345,6 @@ int BSplCLib::FactorBandedMatrix(math_Matrix& Matrix,
   return 0;
 }
 
-//=================================================================================================
-
 int BSplCLib::EvalBsplineBasis(const int                         DerivativeRequest,
                                const int                         Order,
                                const NCollection_Array1<double>& FlatKnots,
@@ -379,28 +353,7 @@ int BSplCLib::EvalBsplineBasis(const int                         DerivativeReque
                                math_Matrix&                      BsplineBasis,
                                bool                              isPeriodic)
 {
-  // the matrix must have at least DerivativeRequest + 1
-  //   row and Order columns
-  // the result are stored in the following way in
-  // the Bspline matrix
-  // Let i be the FirstNonZeroBsplineIndex and
-  // t be the parameter value, k the order of the
-  // knot vector, r the DerivativeRequest :
-  //
-  //   B (t)   B (t)                     B (t)
-  //    i       i+1                       i+k-1
-  //
-  //    (1)     (1)                       (1)
-  //   B (t)   B (t)                     B (t)
-  //    i       i+1                       i+k-1
-  //
-  //
-  //
-  //
-  //    (r)     (r)                       (r)
-  //   B (t)   B (t)                     B (t)
-  //    i       i+1                       i+k-1
-  //
+
   FirstNonZeroBsplineIndex = 0;
   int aLocalRequest        = DerivativeRequest;
   if (DerivativeRequest >= Order)
@@ -497,8 +450,6 @@ int BSplCLib::EvalBsplineBasis(const int                         DerivativeReque
   return 0;
 }
 
-//=================================================================================================
-
 void BSplCLib::MovePointAndTangent(const double                      U,
                                    const int                         ArrayDimension,
                                    double&                           Delta,
@@ -534,20 +485,14 @@ void BSplCLib::MovePointAndTangent(const double                      U,
   num_knots         = FlatKnots.Length();
   num_poles         = num_knots - order;
   conditions        = StartingCondition + EndingCondition + 4;
-  //
-  // check validity of input data
-  //
+
   if (StartingCondition >= -1 && StartingCondition <= Degree && EndingCondition >= -1
       && EndingCondition <= Degree && conditions <= num_poles)
   {
-    //
-    // check the parameter is within bounds
-    //
+
     start_index = FlatKnots.Lower() + Degree;
     end_index   = FlatKnots.Upper() - Degree;
-    //
-    //  check if there is enough room to move the poles
-    //
+
     conditions = 1;
     if (StartingCondition == -1)
     {
@@ -568,9 +513,7 @@ void BSplCLib::MovePointAndTangent(const double                      U,
 
     if (conditions)
     {
-      //
-      // build 2 auxiliary functions
-      //
+
       NCollection_Array1<double> schoenberg_points(1, num_poles);
       NCollection_Array1<double> first_function(1, num_poles);
       NCollection_Array1<double> second_function(1, num_poles);
@@ -692,9 +635,6 @@ void BSplCLib::MovePointAndTangent(const double                      U,
         }
       }
 
-      //
-      //  compute the point and derivatives of both functions
-      //
       double results[2][2], weights_results[2][2];
       int    extrap_mode[2], derivative_request = 1, dimension = 1;
       bool   periodic_flag = false;
@@ -703,9 +643,7 @@ void BSplCLib::MovePointAndTangent(const double                      U,
       extrap_mode[1] = Degree;
       if (Weights != nullptr)
       {
-        //
-        // evaluate in homogenised form
-        //
+
         Eval(U,
              periodic_flag,
              derivative_request,
@@ -729,9 +667,6 @@ void BSplCLib::MovePointAndTangent(const double                      U,
              weights_array[0],
              results[1][0],
              weights_results[1][0]);
-        //
-        //  compute the rational derivatives values
-        //
 
         for (ii = 0; ii < 2; ii++)
         {
@@ -755,7 +690,7 @@ void BSplCLib::MovePointAndTangent(const double                      U,
         }
       }
       a_matrix.Invert();
-      // Use math_Vector for stack allocation (ArrayDimension is typically 2-4)
+
       math_Vector the_a_vector(0, ArrayDimension - 1);
       math_Vector the_b_vector(0, ArrayDimension - 1);
 
@@ -790,8 +725,6 @@ void BSplCLib::MovePointAndTangent(const double                      U,
     ErrorStatus = 2;
   }
 }
-
-//=================================================================================================
 
 void BSplCLib::FunctionMultiply(const BSplCLib_EvaluatorFunction& FunctionPtr,
                                 const int                         BSplineDegree,
@@ -868,8 +801,6 @@ void BSplCLib::FunctionMultiply(const BSplCLib_EvaluatorFunction& FunctionPtr,
   }
 }
 
-//=================================================================================================
-
 void BSplCLib::FunctionReparameterise(const BSplCLib_EvaluatorFunction& FunctionPtr,
                                       const int                         BSplineDegree,
                                       const NCollection_Array1<double>& BSplineFlatKnots,
@@ -931,8 +862,6 @@ void BSplCLib::FunctionReparameterise(const BSplCLib_EvaluatorFunction& Function
   }
 }
 
-//=================================================================================================
-
 void BSplCLib::FunctionMultiply(const BSplCLib_EvaluatorFunction& FunctionPtr,
                                 const int                         BSplineDegree,
                                 const NCollection_Array1<double>& BSplineFlatKnots,
@@ -962,8 +891,6 @@ void BSplCLib::FunctionMultiply(const BSplCLib_EvaluatorFunction& FunctionPtr,
                              theStatus);
 }
 
-//=================================================================================================
-
 void BSplCLib::FunctionReparameterise(const BSplCLib_EvaluatorFunction& FunctionPtr,
                                       const int                         BSplineDegree,
                                       const NCollection_Array1<double>& BSplineFlatKnots,
@@ -992,8 +919,6 @@ void BSplCLib::FunctionReparameterise(const BSplCLib_EvaluatorFunction& Function
                                    array_of_new_poles[0],
                                    theStatus);
 }
-
-//=================================================================================================
 
 void BSplCLib::MergeBSplineKnots(const double                              Tolerance,
                                  const double                              StartValue,

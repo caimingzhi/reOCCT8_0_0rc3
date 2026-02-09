@@ -42,41 +42,6 @@ static int OCC281bug(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
   Aspect_TypeOfMarker AspectTypeOfMarker((Aspect_TypeOfMarker)TypeOfMarker);
-  /*
-        enumeration TypeOfMarker is     TOM_POINT,
-                                        TOM_PLUS,
-                                        TOM_STAR,
-                                        TOM_O,
-                                        TOM_X,
-                                        TOM_O_POINT,
-                                        TOM_O_PLUS,
-                                        TOM_O_STAR,
-                                        TOM_O_X,
-                                        TOM_BALL,
-                                        TOM_RING1,
-                                        TOM_RING2,
-                                        TOM_RING3,
-                                        TOM_USERDEFINED
-        end TypeOfMarker;
-        ---Purpose: Definition of types of markers
-        --
-        --          TOM_POINT   point   .
-        --          TOM_PLUS    plus    +
-        --          TOM_STAR    star    *
-        --          TOM_O       circle  O
-        --          TOM_X       cross   x
-        --          TOM_O_POINT a point in a circle
-        --          TOM_O_PLUS  a plus in a circle
-        --          TOM_O_STAR  a star in a circle
-        --          TOM_O_X     a cross in a circle
-        --          TOM_BALL    a ball with 1 color and different saturations
-        --          TOM_RING1   a large ring
-        --          TOM_RING2   a medium ring
-        --          TOM_RING3   a small ring
-        --          TOM_USERDEFINED     defined by Users
-        --
-        ---Category: Enumerations
-  */
 
   occ::handle<V3d_Viewer> aViewer = ViewerTest::GetViewerFromContext();
   occ::handle<V3d_View>   aView   = ViewerTest::CurrentView();

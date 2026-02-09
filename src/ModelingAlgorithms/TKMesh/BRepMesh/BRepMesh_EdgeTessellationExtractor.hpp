@@ -17,15 +17,12 @@ class gp_Pnt;
 class TopoDS_Edge;
 class TopoDS_Face;
 
-//! Auxiliary class provides correct parameters
-//! on curve regarding SameParameter flag.
 template <class ParametersCollection>
 class BRepMesh_EdgeParameterProvider : public Standard_Transient
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Constructor. Initializes empty provider.
   BRepMesh_EdgeParameterProvider()
       : myIsSameParam(false),
         myFirstParam(0.0),
@@ -36,10 +33,6 @@ public:
   {
   }
 
-  //! Constructor.
-  //! @param theEdge edge which parameters should be processed.
-  //! @param theFace face the parametric values are defined for.
-  //! @param theParameters parameters corresponded to discretization points.
   BRepMesh_EdgeParameterProvider(const IMeshData::IEdgeHandle& theEdge,
                                  const TopAbs_Orientation      theOrientation,
                                  const IMeshData::IFaceHandle& theFace,
@@ -48,7 +41,6 @@ public:
     Init(theEdge, theOrientation, theFace, theParameters);
   }
 
-  //! Initialized provider by the given data.
   void Init(const IMeshData::IEdgeHandle& theEdge,
             const TopAbs_Orientation      theOrientation,
             const IMeshData::IFaceHandle& theFace,
@@ -58,7 +50,6 @@ public:
     myIsSameParam = theEdge->GetSameParam();
     myScale       = 1.;
 
-    // Extract actual parametric values
     const TopoDS_Edge aEdge = TopoDS::Edge(theEdge->GetEdge().Oriented(theOrientation));
 
     myCurveAdaptor.Initialize(aEdge, theFace->GetFace());
@@ -72,11 +63,9 @@ public:
 
     myFoundParam = myCurParam = myFirstParam;
 
-    // Extract parameters stored in polygon
     myOldFirstParam            = myParameters->Value(myParameters->Lower());
     const double aOldLastParam = myParameters->Value(myParameters->Upper());
 
-    // Calculate scale factor between actual and stored parameters
     if ((myOldFirstParam != myFirstParam || aOldLastParam != aLastParam)
         && myOldFirstParam != aOldLastParam)
     {
@@ -89,10 +78,6 @@ public:
                            Precision::PConfusion());
   }
 
-  //! Returns parameter according to SameParameter flag of the edge.
-  //! If SameParameter is TRUE returns value from parameters w/o changes,
-  //! elsewhere scales initial parameter and tries to determine resulting
-  //! value using projection of the corresponded 3D point on PCurve.
   double Parameter(const int theIndex, const gp_Pnt& thePoint3d) const
   {
     if (myIsSameParam)
@@ -100,7 +85,6 @@ public:
       return myParameters->Value(theIndex);
     }
 
-    // Use scaled
     const double aParam = myParameters->Value(theIndex);
 
     const double aPrevParam = myCurParam;
@@ -116,9 +100,7 @@ public:
       if ((aPrevFoundParam < myFoundParam && aPrevFoundParam < aFoundParam)
           || (aPrevFoundParam > myFoundParam && aPrevFoundParam > aFoundParam))
       {
-        // Rude protection against case when amplified parameter goes before
-        // previous one due to period or other reason occurred in projector.
-        // Using parameter returned by projector as is can produce self-intersections.
+
         myFoundParam = aFoundParam;
       }
     }
@@ -126,7 +108,6 @@ public:
     return myFoundParam;
   }
 
-  //! Returns pcurve used to compute parameters.
   const occ::handle<Adaptor2d_Curve2d>& GetPCurve() const
   {
     return myCurveAdaptor.CurveOnSurface().GetCurve();
@@ -153,26 +134,16 @@ private:
 #include <NCollection_Array1.hpp>
 #include <TopLoc_Location.hpp>
 
-//! Auxiliary class implements functionality retrieving tessellated
-//! representation of an edge stored in polygon.
 class BRepMesh_EdgeTessellationExtractor : public IMeshTools_CurveTessellator
 {
 public:
-  //! Constructor.
   Standard_EXPORT BRepMesh_EdgeTessellationExtractor(const IMeshData::IEdgeHandle& theEdge,
                                                      const IMeshData::IFaceHandle& theFace);
 
-  //! Destructor.
   Standard_EXPORT ~BRepMesh_EdgeTessellationExtractor() override;
 
-  //! Returns number of tessellation points.
   Standard_EXPORT int PointsNb() const override;
 
-  //! Returns parameters of solution with the given index.
-  //! @param theIndex index of tessellation point.
-  //! @param theParameter parameters on PCurve corresponded to the solution.
-  //! @param thePoint tessellation point.
-  //! @return True in case of valid result, false elewhere.
   Standard_EXPORT bool Value(const int theIndex,
                              gp_Pnt&   thePoint,
                              double&   theParameter) const override;

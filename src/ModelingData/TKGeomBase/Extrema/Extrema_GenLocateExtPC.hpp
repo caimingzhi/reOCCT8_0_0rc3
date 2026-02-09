@@ -8,15 +8,6 @@
 
 #include <cmath>
 
-//! Template class for local extremum search between a point and a curve.
-//! Searches for a local extremum of distance between a point and a curve
-//! near an initial parameter value.
-//!
-//! @tparam TheCurve   Curve type (e.g., Adaptor3d_Curve, Adaptor2d_Curve2d, void*)
-//! @tparam TheTool    Tool for curve operations (e.g., Extrema_CurveTool, Extrema_Curve2dTool)
-//! @tparam ThePOnC    Point on curve type (e.g., Extrema_POnCurv, Extrema_POnCurv2d)
-//! @tparam ThePnt     Point type (e.g., gp_Pnt, gp_Pnt2d)
-//! @tparam ThePCLocF  Function type for root finding
 template <typename TheCurve,
           typename TheTool,
           typename ThePOnC,
@@ -27,7 +18,6 @@ class Extrema_GenLocateExtPC
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Default constructor.
   Extrema_GenLocateExtPC()
       : myDone(false),
         mytolU(0.0),
@@ -36,14 +26,6 @@ public:
   {
   }
 
-  //! Calculates the distance with a close point.
-  //! The close point is defined by the parameter value U0.
-  //! The function F(u)=distance(P,C(u)) has an extremum
-  //! when g(u)=dF/du=0. The algorithm searches a zero
-  //! near the close point.
-  //! TolU is used to decide to stop the iterations.
-  //! At the nth iteration, the criteria is:
-  //! abs(Un - Un-1) < TolU.
   Extrema_GenLocateExtPC(const ThePnt&   theP,
                          const TheCurve& theC,
                          const double    theU0,
@@ -53,15 +35,6 @@ public:
     Perform(theP, theU0);
   }
 
-  //! Calculates the distance with a close point.
-  //! The close point is defined by the parameter value U0.
-  //! The function F(u)=distance(P,C(u)) has an extremum
-  //! when g(u)=dF/du=0. The algorithm searches a zero
-  //! near the close point.
-  //! Zeros are searched between Umin and Usup.
-  //! TolU is used to decide to stop the iterations.
-  //! At the nth iteration, the criteria is:
-  //! abs(Un - Un-1) < TolU.
   Extrema_GenLocateExtPC(const ThePnt&   theP,
                          const TheCurve& theC,
                          const double    theU0,
@@ -73,7 +46,6 @@ public:
     Perform(theP, theU0);
   }
 
-  //! Sets the fields of the algorithm.
   void Initialize(const TheCurve& theC,
                   const double    theUmin,
                   const double    theUsup,
@@ -86,8 +58,6 @@ public:
     mytolU = theTolU;
   }
 
-  //! The algorithm is done with the point P.
-  //! An exception is raised if the fields have not been initialized.
   void Perform(const ThePnt& theP, const double theU0)
   {
     myF.SetPoint(theP);
@@ -108,10 +78,8 @@ public:
     }
   }
 
-  //! Returns True if the distance is found.
   bool IsDone() const { return myDone; }
 
-  //! Returns the value of the extremum square distance.
   double SquareDistance() const
   {
     if (!IsDone())
@@ -121,7 +89,6 @@ public:
     return myF.SquareDistance(1);
   }
 
-  //! Returns True if the extremum distance is a minimum.
   bool IsMin() const
   {
     if (!IsDone())
@@ -131,7 +98,6 @@ public:
     return myF.IsMin(1);
   }
 
-  //! Returns the point of the extremum distance.
   const ThePOnC& Point() const
   {
     if (!IsDone())

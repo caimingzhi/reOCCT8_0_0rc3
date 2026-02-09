@@ -1,11 +1,6 @@
 #include <Poly_CoherentTriangle.hpp>
 #include <Standard_ProgramError.hpp>
 
-//=======================================================================
-// function : Poly_CoherentTriangle()
-// purpose  : Empty Constructor
-//=======================================================================
-
 Poly_CoherentTriangle::Poly_CoherentTriangle()
     : myNConnections(0)
 {
@@ -23,8 +18,6 @@ Poly_CoherentTriangle::Poly_CoherentTriangle()
   mypLink[2]            = nullptr;
 }
 
-//=================================================================================================
-
 Poly_CoherentTriangle::Poly_CoherentTriangle(const int iNode0, const int iNode1, const int iNode2)
     : myNConnections(0)
 {
@@ -41,8 +34,6 @@ Poly_CoherentTriangle::Poly_CoherentTriangle(const int iNode0, const int iNode1,
   mypLink[1]            = nullptr;
   mypLink[2]            = nullptr;
 }
-
-//=================================================================================================
 
 bool Poly_CoherentTriangle::SetConnection(const int iConn, Poly_CoherentTriangle& theTr)
 {
@@ -96,8 +87,6 @@ bool Poly_CoherentTriangle::SetConnection(const int iConn, Poly_CoherentTriangle
   }
   return aResult;
 }
-
-//=================================================================================================
 
 bool Poly_CoherentTriangle::SetConnection(Poly_CoherentTriangle& theTr)
 {
@@ -225,8 +214,6 @@ bool Poly_CoherentTriangle::SetConnection(Poly_CoherentTriangle& theTr)
   return aResult;
 }
 
-//=================================================================================================
-
 void Poly_CoherentTriangle::RemoveConnection(const int iConn)
 {
   Poly_CoherentTriangle* pConnectedTri = const_cast<Poly_CoherentTriangle*>(mypConnected[iConn]);
@@ -252,8 +239,6 @@ void Poly_CoherentTriangle::RemoveConnection(const int iConn)
   }
 }
 
-//=================================================================================================
-
 bool Poly_CoherentTriangle::RemoveConnection(Poly_CoherentTriangle& theTri)
 {
   const int iConn = FindConnection(theTri);
@@ -261,8 +246,6 @@ bool Poly_CoherentTriangle::RemoveConnection(Poly_CoherentTriangle& theTri)
     RemoveConnection(iConn);
   return (iConn >= 0);
 }
-
-//=================================================================================================
 
 int Poly_CoherentTriangle::FindConnection(const Poly_CoherentTriangle& theTri) const
 {

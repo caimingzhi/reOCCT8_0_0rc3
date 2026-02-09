@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IGESData_IGESReaderData.hpp>
 #include <IGESData_IGESWriter.hpp>
@@ -47,9 +36,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDraw_ReadWriteModule, IGESData_ReadWriteModule)
 
-//  Each Module is attached to a Protocol : it must interpret Case Numbers
-//  (arguments <CN> of various methods) in accordance to values returned by
-//  the method TypeNumber from this Protocol
 IGESDraw_ReadWriteModule::IGESDraw_ReadWriteModule() = default;
 
 int IGESDraw_ReadWriteModule::CaseIGES(const int typenum, const int formnum) const
@@ -78,7 +64,7 @@ int IGESDraw_ReadWriteModule::CaseIGES(const int typenum, const int formnum) con
       }
       break;
     case 404:
-      return formnum + 3; // 0->3  1->4
+      return formnum + 3;
     case 410:
       if (formnum == 0)
         return 12;

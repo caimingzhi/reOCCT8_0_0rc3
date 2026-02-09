@@ -8,12 +8,10 @@
 #include <Standard_DomainError.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 static void UnifyByInsertingAllKnots(NCollection_Sequence<occ::handle<Geom_Curve>>& theCurves,
                                      const double                                   PTol)
 {
-  // inserting in the first curve the knot-vector of all the others.
+
   occ::handle<Geom_BSplineCurve> C = occ::down_cast<Geom_BSplineCurve>(theCurves(1));
 
   int i;
@@ -38,7 +36,6 @@ static void UnifyByInsertingAllKnots(NCollection_Sequence<occ::handle<Geom_Curve
     Ci->InsertKnots(NewKnots, NewMults, PTol, false);
   }
 
-  // essai : tentative mise des poids sur chaque section a une moyenne 1
   for (i = 1; i <= theCurves.Length(); i++)
   {
     occ::handle<Geom_BSplineCurve> Ci = occ::down_cast<Geom_BSplineCurve>(theCurves(i));
@@ -58,10 +55,7 @@ static void UnifyByInsertingAllKnots(NCollection_Sequence<occ::handle<Geom_Curve
       }
     }
   }
-  // fin de l essai
 }
-
-//=================================================================================================
 
 static void UnifyBySettingMiddleKnots(NCollection_Sequence<occ::handle<Geom_Curve>>& theCurves)
 {
@@ -73,7 +67,6 @@ static void UnifyBySettingMiddleKnots(NCollection_Sequence<occ::handle<Geom_Curv
   double ULast   = C->Knot(C->LastUKnotIndex());
   double UFirst  = C->Knot(C->FirstUKnotIndex());
 
-  // Set middle values of knots
   NCollection_Array1<double> NewKnots(1, NbKnots);
   NewKnots(1)       = UFirst;
   NewKnots(NbKnots) = ULast;
@@ -96,24 +89,18 @@ static void UnifyBySettingMiddleKnots(NCollection_Sequence<occ::handle<Geom_Curv
   }
 }
 
-//=================================================================================================
-
 GeomFill_Profiler::GeomFill_Profiler()
 {
   myIsDone     = false;
   myIsPeriodic = true;
 }
 
-//=======================================================================
-
 GeomFill_Profiler::~GeomFill_Profiler() = default;
-
-//=================================================================================================
 
 void GeomFill_Profiler::AddCurve(const occ::handle<Geom_Curve>& Curve)
 {
   occ::handle<Geom_Curve> C;
-  //// modified by jgv, 19.01.05 for OCC7354 ////
+
   occ::handle<Geom_Curve> theCurve = Curve;
   if (theCurve->IsInstance(STANDARD_TYPE(Geom_TrimmedCurve)))
     theCurve = occ::down_cast<Geom_TrimmedCurve>(theCurve)->BasisCurve();
@@ -125,15 +112,6 @@ void GeomFill_Profiler::AddCurve(const occ::handle<Geom_Curve>& Curve)
   }
   if (C.IsNull())
     C = GeomConvert::CurveToBSplineCurve(Curve);
-  /*
-  if ( Curve->IsKind(STANDARD_TYPE(Geom_BSplineCurve))) {
-    C = occ::down_cast<Geom_Curve>(Curve->Copy());
-  }
-  else {
-    C = GeomConvert::CurveToBSplineCurve(Curve,Convert_QuasiAngular);
-  }
-  */
-  ///////////////////////////////////////////////
 
   mySequence.Append(C);
 
@@ -141,12 +119,10 @@ void GeomFill_Profiler::AddCurve(const occ::handle<Geom_Curve>& Curve)
     myIsPeriodic = false;
 }
 
-//=================================================================================================
-
 void GeomFill_Profiler::Perform(const double PTol)
 {
   int i;
-  //  int myDegree = 0, myNbPoles = 0;
+
   int                            myDegree = 0;
   occ::handle<Geom_BSplineCurve> C;
   double                         U1, U2, UFirst = 0, ULast = 0;
@@ -155,10 +131,6 @@ void GeomFill_Profiler::Perform(const double PTol)
   for (i = 1; i <= mySequence.Length(); i++)
   {
     C = occ::down_cast<Geom_BSplineCurve>(mySequence(i));
-
-    // si non periodique, il faut deperiodiser toutes les courbes
-    // on les segmente ensuite pour assurer K(1) et K(n) de multiplicite
-    // degre + 1
 
     U2 = C->Knot(C->LastUKnotIndex());
     U1 = C->Knot(C->FirstUKnotIndex());
@@ -169,10 +141,8 @@ void GeomFill_Profiler::Perform(const double PTol)
       C->Segment(U1, U2);
     }
 
-    // evaluate the max degree
     myDegree = std::max(myDegree, C->Degree());
 
-    // Calcul de Max ( Ufin - Udeb) sur l ensemble des courbes.
     if ((U2 - U1) > EcartMax)
     {
       EcartMax = U2 - U1;
@@ -181,8 +151,6 @@ void GeomFill_Profiler::Perform(const double PTol)
     }
   }
 
-  // increase the degree of the curves to my degree
-  // reparametrize them in the range U1, U2.
   for (i = 1; i <= mySequence.Length(); i++)
   {
     C = occ::down_cast<Geom_BSplineCurve>(mySequence(i));
@@ -218,8 +186,6 @@ void GeomFill_Profiler::Perform(const double PTol)
   myIsDone = true;
 }
 
-//=================================================================================================
-
 int GeomFill_Profiler::Degree() const
 {
   if (!myIsDone)
@@ -229,8 +195,6 @@ int GeomFill_Profiler::Degree() const
   return C->Degree();
 }
 
-//=================================================================================================
-
 int GeomFill_Profiler::NbPoles() const
 {
   if (!myIsDone)
@@ -239,8 +203,6 @@ int GeomFill_Profiler::NbPoles() const
   occ::handle<Geom_BSplineCurve> C = occ::down_cast<Geom_BSplineCurve>(mySequence(1));
   return C->NbPoles();
 }
-
-//=================================================================================================
 
 void GeomFill_Profiler::Poles(const int Index, NCollection_Array1<gp_Pnt>& Poles) const
 {
@@ -256,8 +218,6 @@ void GeomFill_Profiler::Poles(const int Index, NCollection_Array1<gp_Pnt>& Poles
   C->Poles(Poles);
 }
 
-//=================================================================================================
-
 void GeomFill_Profiler::Weights(const int Index, NCollection_Array1<double>& Weights) const
 {
   if (!myIsDone)
@@ -272,8 +232,6 @@ void GeomFill_Profiler::Weights(const int Index, NCollection_Array1<double>& Wei
   C->Weights(Weights);
 }
 
-//=================================================================================================
-
 int GeomFill_Profiler::NbKnots() const
 {
   if (!myIsDone)
@@ -283,8 +241,6 @@ int GeomFill_Profiler::NbKnots() const
 
   return C->NbKnots();
 }
-
-//=================================================================================================
 
 void GeomFill_Profiler::KnotsAndMults(NCollection_Array1<double>& Knots,
                                       NCollection_Array1<int>&    Mults) const

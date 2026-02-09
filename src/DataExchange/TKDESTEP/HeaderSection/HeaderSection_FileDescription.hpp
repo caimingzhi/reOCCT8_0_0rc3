@@ -13,7 +13,6 @@ class HeaderSection_FileDescription : public Standard_Transient
 {
 
 public:
-  //! Returns a FileDescription
   Standard_EXPORT HeaderSection_FileDescription();
 
   Standard_EXPORT void Init(

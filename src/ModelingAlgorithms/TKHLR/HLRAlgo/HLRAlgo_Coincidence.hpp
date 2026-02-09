@@ -6,18 +6,6 @@
 #include <Standard_Integer.hpp>
 #include <TopAbs_State.hpp>
 
-//! The Coincidence class is used in an Interference to
-//! store information on the "hiding" edge.
-//!
-//! 2D Data: The tangent and the curvature of the
-//! projection of the edge at the intersection point.
-//! This is necesserary when the intersection is at
-//! the extremity of the edge.
-//!
-//! 3D Data: The state of the edge near the
-//! intersection with the face (before and after).
-//! This is necessary when the intersection is "ON"
-//! the face.
 class HLRAlgo_Coincidence
 {
 public:

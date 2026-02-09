@@ -1,15 +1,4 @@
-// Copyright (c) 2023 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XSDRAWSTEP.hpp>
 
@@ -58,8 +47,6 @@ namespace
     NCollection_DataMap<TCollection_AsciiString, occ::handle<STEPCAFControl_ExternFile>>;
 }
 
-//=================================================================================================
-
 static int stepread(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs < 3)
@@ -68,7 +55,6 @@ static int stepread(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
     return 1;
   }
 
-  // Progress indicator
   occ::handle<Draw_ProgressIndicator> progress = new Draw_ProgressIndicator(theDI, 1);
   Message_ProgressScope               aPSRoot(progress->Start(), "Reading", 100);
 
@@ -118,7 +104,7 @@ static int stepread(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   else if (XSDRAW::Session()->NbStartingEntities() > 0)
     readstat = IFSelect_RetDone;
 
-  aPSRoot.Next(20); // On average loading takes 20%
+  aPSRoot.Next(20);
   if (aPSRoot.UserBreak())
     return 1;
 
@@ -137,7 +123,6 @@ static int stepread(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   sr.SetShapeFixParameters(std::move(aProcessingData.first));
   sr.SetShapeProcessFlags(aProcessingData.second);
 
-  //   nom = "." -> fichier deja lu
   int i, num, nbs, modepri = 1;
   if (fromtcl)
     modepri = 4;
@@ -211,21 +196,16 @@ static int stepread(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
     }
     else if (modepri == 4)
     {
-      //      char snm[100];  int answer = 1;
+
       occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> list;
 
-      //  Selection, nommee ou via tcl. tcl : raccourcis admis
-      //   * donne xst-transferrable-roots
       if (fromtcl)
       {
-        modepri = 0; // d ioffice une seule passe
+        modepri = 0;
         if (theArgVec[k][0] == '*' && theArgVec[k][1] == '\0')
         {
           theDI << "Transferrable Roots : ";
           list = XSDRAW::Session()->GiveList("xst-transferrable-roots");
-          // list = new NCollection_HSequence<occ::handle<Standard_Transient>>;
-          // for(int j=1; j<=num; j++)
-          //   list->Append(sr.RootForTransfer(j));
         }
         else
         {
@@ -289,8 +269,6 @@ static int stepread(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   return 0;
 }
 
-//=================================================================================================
-
 static int testreadstep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs < 3)
@@ -312,7 +290,7 @@ static int testreadstep(Draw_Interpretor& theDI, int theNbArgs, const char** the
     aFileNames[anInd - 1] = theArgVec[anInd];
   }
   STEPControl_Controller::Init();
-  XSAlgo_ShapeProcessor::PrepareForTransfer(); // update unit info
+  XSAlgo_ShapeProcessor::PrepareForTransfer();
   IFSelect_ReturnStatus aReadStat;
   DESTEP_Parameters     aParameters;
   aParameters.InitFromStatic();
@@ -367,8 +345,6 @@ static int testreadstep(Draw_Interpretor& theDI, int theNbArgs, const char** the
   return 0;
 }
 
-//=================================================================================================
-
 static int steptrans(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs < 5)
@@ -405,8 +381,6 @@ static int steptrans(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
     theDI << "No transformation computed\n";
   return 0;
 }
-
-//=================================================================================================
 
 static int stepwrite(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -483,7 +457,6 @@ static int stepwrite(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
   aPSRoot.SetName("Writing");
   progress->Show(aPSRoot);
 
-  //   Que s est-il passe
   stepmodel   = sw.Model();
   int nbapres = (stepmodel.IsNull() ? 0 : stepmodel->NbEntities());
   if (nbavant > 0)
@@ -521,8 +494,6 @@ static int stepwrite(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
   XSDRAW::CollectActiveWorkSessions(aWS, nomfic, XSDRAW::WorkSessionList());
   return 0;
 }
-
-//=================================================================================================
 
 static int testwrite(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -597,9 +568,7 @@ static int testwrite(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
   return 0;
 }
 
-//=================================================================================================
-
-static int countexpected(Draw_Interpretor& theDI, int /*theNbArgs*/, const char** /*theArgVec*/)
+static int countexpected(Draw_Interpretor& theDI, int, const char**)
 {
   occ::handle<XSControl_WorkSession> WS    = XSDRAW::Session();
   const Interface_Graph&             graph = WS->Graph();
@@ -628,9 +597,7 @@ static int countexpected(Draw_Interpretor& theDI, int /*theNbArgs*/, const char*
   return 1;
 }
 
-//=================================================================================================
-
-static int dumpassembly(Draw_Interpretor& /*theDI*/, int /*theNbArgs*/, const char** /*theArgVec*/)
+static int dumpassembly(Draw_Interpretor&, int, const char**)
 {
   occ::handle<XSControl_WorkSession> WS    = XSDRAW::Session();
   const Interface_Graph&             graph = WS->Graph();
@@ -639,8 +606,6 @@ static int dumpassembly(Draw_Interpretor& /*theDI*/, int /*theNbArgs*/, const ch
   exp.Dump(std::cout);
   return 0;
 }
-
-//=================================================================================================
 
 static int stepfileunits(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -682,10 +647,6 @@ static int stepfileunits(Draw_Interpretor& theDI, int theNbArgs, const char** th
   return 0;
 }
 
-//=======================================================================
-// function : ReadStep
-// purpose  : Read STEP file to DECAF document
-//=======================================================================
 static int ReadStep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   DeclareAndCast(STEPControl_Controller, aController, XSDRAW::Controller());
@@ -855,10 +816,6 @@ static int ReadStep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   return 0;
 }
 
-//=======================================================================
-// function : WriteStep
-// purpose  : Write DECAF document to STEP
-//=======================================================================
 static int WriteStep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   DeclareAndCast(STEPControl_Controller, aController, XSDRAW::Controller());
@@ -1091,15 +1048,13 @@ static int WriteStep(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
 
 namespace
 {
-  // Singleton to ensure DESTEP plugin is registered only once
+
   void DESTEPSingleton()
   {
     static DE_PluginHolder<DESTEP_ConfigurationNode> aHolder;
     (void)aHolder;
   }
 } // namespace
-
-//=================================================================================================
 
 void XSDRAWSTEP::Factory(Draw_Interpretor& theDI)
 {
@@ -1111,10 +1066,9 @@ void XSDRAWSTEP::Factory(Draw_Interpretor& theDI)
   STEPCAFControl_Controller::Init();
   aIsActivated = true;
 
-  //! Ensure DESTEP plugin is registered
   DESTEPSingleton();
 
-  const char* aGroup = "DE: STEP"; // Step transfer file commands
+  const char* aGroup = "DE: STEP";
   theDI.Add("stepwrite", "stepwrite mode[0-4 afsmw] shape", __FILE__, stepwrite, aGroup);
   theDI.Add("testwritestep",
             "testwritestep [file_1.stp ... file_n.stp] shape [-stream]",
@@ -1157,9 +1111,7 @@ void XSDRAWSTEP::Factory(Draw_Interpretor& theDI)
     WriteStep,
     aGroup);
 
-  // Load XSDRAW session for pilot activation
   XSDRAW::LoadDraw(theDI);
 }
 
-// Declare entry point PLUGINFACTORY
 DPLUGIN(XSDRAWSTEP)

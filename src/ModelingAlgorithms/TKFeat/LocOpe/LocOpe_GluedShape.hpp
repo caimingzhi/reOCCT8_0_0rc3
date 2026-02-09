@@ -26,16 +26,10 @@ public:
 
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& GeneratingEdges() override;
 
-  //! Returns the edge created by the vertex <V>. If
-  //! none, must return a null shape.
   Standard_EXPORT TopoDS_Edge Generated(const TopoDS_Vertex& V) override;
 
-  //! Returns the face created by the edge <E>. If none,
-  //! must return a null shape.
   Standard_EXPORT TopoDS_Face Generated(const TopoDS_Edge& E) override;
 
-  //! Returns the list of correctly oriented generated
-  //! faces.
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& OrientedFaces() override;
 
   DEFINE_STANDARD_RTTIEXT(LocOpe_GluedShape, LocOpe_GeneratedShape)

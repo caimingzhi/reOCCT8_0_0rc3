@@ -13,7 +13,6 @@ class StepVisual_CurveStyle : public Standard_Transient
 {
 
 public:
-  //! Returns a CurveStyle
   Standard_EXPORT StepVisual_CurveStyle();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

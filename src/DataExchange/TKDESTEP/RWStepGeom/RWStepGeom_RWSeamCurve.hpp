@@ -11,7 +11,6 @@ class StepGeom_SeamCurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SeamCurve
 class RWStepGeom_RWSeamCurve
 {
 public:

@@ -1,6 +1,5 @@
 #pragma once
 
-//! Defines modifirs
 enum XCAFDimTolObjects_DatumSingleModif
 {
   XCAFDimTolObjects_DatumSingleModif_AnyCrossSection,

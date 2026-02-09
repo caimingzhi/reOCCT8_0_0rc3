@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_TessellatedVertex;
 
-//! Read & Write tool for TessellatedVertex
 class RWStepVisual_RWTessellatedVertex
 {
 

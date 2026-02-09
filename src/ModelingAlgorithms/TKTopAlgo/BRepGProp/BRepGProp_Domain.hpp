@@ -9,33 +9,23 @@
 class TopoDS_Face;
 class TopoDS_Edge;
 
-//! Arc iterator. Returns only Forward and Reversed edges from
-//! the face in an undigested order.
 class BRepGProp_Domain
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor.
   BRepGProp_Domain();
 
-  //! Constructor. Initializes the domain with the face.
   BRepGProp_Domain(const TopoDS_Face& F);
 
-  //! Initializes the domain with the face.
   void Init(const TopoDS_Face& F);
 
-  //! Returns True if there is another arc of curve in the list.
   bool More();
 
-  //! Initializes the exploration with the face already set.
   void Init();
 
-  //! Returns the current edge.
   const TopoDS_Edge& Value();
 
-  //! Sets the index of the arc iterator to the next arc of
-  //! curve.
   Standard_EXPORT void Next();
 
 private:
@@ -45,54 +35,27 @@ private:
 #include <TopoDS.hpp>
 #include <TopoDS_Face.hpp>
 
-//=================================================================================================
-
 inline BRepGProp_Domain::BRepGProp_Domain() = default;
-
-//=======================================================================
-// function : BRepGProp_Domain
-// purpose  : Constructor. Initializes the domain with the face.
-//=======================================================================
 
 inline BRepGProp_Domain::BRepGProp_Domain(const TopoDS_Face& F)
     : myExplorer(F.Oriented(TopAbs_FORWARD), TopAbs_EDGE)
 {
 }
 
-//=======================================================================
-// function : Init
-// purpose  : Initializes the domain with the face.
-//=======================================================================
-
 inline void BRepGProp_Domain::Init(const TopoDS_Face& F)
 {
   myExplorer.Init(F.Oriented(TopAbs_FORWARD), TopAbs_EDGE);
 }
-
-//=======================================================================
-// function : More
-// purpose  : Returns True if there is another arc of curve in the list.
-//=======================================================================
 
 inline bool BRepGProp_Domain::More()
 {
   return myExplorer.More();
 }
 
-//=======================================================================
-// function : Init
-// purpose  : Initializes the exploration with the face already set.
-//=======================================================================
-
 inline void BRepGProp_Domain::Init()
 {
   myExplorer.ReInit();
 }
-
-//=======================================================================
-// function : Value
-// purpose  : Returns the current edge.
-//=======================================================================
 
 inline const TopoDS_Edge& BRepGProp_Domain::Value()
 {

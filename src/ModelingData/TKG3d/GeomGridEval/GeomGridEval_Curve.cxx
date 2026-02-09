@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GeomGridEval_Curve.hpp>
 
@@ -27,9 +16,6 @@
 namespace
 {
 
-  //! Extracts basis curve from potentially nested TrimmedCurve wrappers.
-  //! @param theCurve input curve (may be TrimmedCurve or any other)
-  //! @return the underlying basis curve, or theCurve if not a TrimmedCurve
   occ::handle<Geom_Curve> ExtractBasisCurve(const occ::handle<Geom_Curve>& theCurve)
   {
     occ::handle<Geom_Curve> aResult = theCurve;
@@ -42,8 +28,6 @@ namespace
 
 } // namespace
 
-//==================================================================================================
-
 void GeomGridEval_Curve::Initialize(const Adaptor3d_Curve& theCurve)
 {
   if (theCurve.IsKind(STANDARD_TYPE(GeomAdaptor_Curve)))
@@ -52,13 +36,9 @@ void GeomGridEval_Curve::Initialize(const Adaptor3d_Curve& theCurve)
     return;
   }
 
-  // For non-GeomAdaptor or when Geom_Curve is not available,
-  // use reference for the evaluator
   myCurveType = theCurve.GetType();
   myEvaluator.emplace<GeomGridEval_OtherCurve>(theCurve);
 }
-
-//==================================================================================================
 
 void GeomGridEval_Curve::Initialize(const occ::handle<Geom_Curve>& theCurve)
 {
@@ -69,7 +49,6 @@ void GeomGridEval_Curve::Initialize(const occ::handle<Geom_Curve>& theCurve)
     return;
   }
 
-  // Extract basis curve from potentially nested TrimmedCurve wrappers
   occ::handle<Geom_Curve> aBasisCurve = ExtractBasisCurve(theCurve);
 
   if (auto aLine = occ::down_cast<Geom_Line>(aBasisCurve))
@@ -114,21 +93,16 @@ void GeomGridEval_Curve::Initialize(const occ::handle<Geom_Curve>& theCurve)
   }
   else
   {
-    // Unknown curve type - set uninitialized
-    // All known Geom_Curve types are handled above
+
     myEvaluator.emplace<std::monostate>();
     myCurveType = GeomAbs_OtherCurve;
   }
 }
 
-//==================================================================================================
-
 bool GeomGridEval_Curve::IsInitialized() const
 {
   return !std::holds_alternative<std::monostate>(myEvaluator);
 }
-
-//==================================================================================================
 
 NCollection_Array1<gp_Pnt> GeomGridEval_Curve::EvaluateGrid(
   const NCollection_Array1<double>& theParams) const
@@ -149,8 +123,6 @@ NCollection_Array1<gp_Pnt> GeomGridEval_Curve::EvaluateGrid(
     myEvaluator);
 }
 
-//==================================================================================================
-
 NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_Curve::EvaluateGridD1(
   const NCollection_Array1<double>& theParams) const
 {
@@ -169,8 +141,6 @@ NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_Curve::EvaluateGridD1(
     },
     myEvaluator);
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_Curve::EvaluateGridD2(
   const NCollection_Array1<double>& theParams) const
@@ -191,8 +161,6 @@ NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_Curve::EvaluateGridD2(
     myEvaluator);
 }
 
-//==================================================================================================
-
 NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_Curve::EvaluateGridD3(
   const NCollection_Array1<double>& theParams) const
 {
@@ -211,8 +179,6 @@ NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_Curve::EvaluateGridD3(
     },
     myEvaluator);
 }
-
-//==================================================================================================
 
 NCollection_Array1<gp_Vec> GeomGridEval_Curve::EvaluateGridDN(
   const NCollection_Array1<double>& theParams,

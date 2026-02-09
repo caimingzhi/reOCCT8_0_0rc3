@@ -8,7 +8,6 @@
 #include <Plate_PinpointConstraint.hpp>
 #include <NCollection_Sequence.hpp>
 
-//! define m PinPointConstraint driven by m unknown
 class Plate_SampledCurveConstraint
 {
 public:

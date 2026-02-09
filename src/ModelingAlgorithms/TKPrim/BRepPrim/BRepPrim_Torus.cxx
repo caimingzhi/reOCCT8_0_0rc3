@@ -10,8 +10,6 @@
 #include <Precision.hpp>
 #include <TopoDS_Face.hpp>
 
-//=================================================================================================
-
 BRepPrim_Torus::BRepPrim_Torus(const gp_Ax2& Position, const double Major, const double Minor)
     : BRepPrim_Revolution(Position, 0, 2 * M_PI),
       myMajor(Major),
@@ -19,8 +17,6 @@ BRepPrim_Torus::BRepPrim_Torus(const gp_Ax2& Position, const double Major, const
 {
   SetMeridian();
 }
-
-//=================================================================================================
 
 BRepPrim_Torus::BRepPrim_Torus(const double Major, const double Minor)
     : BRepPrim_Revolution(gp::XOY(), 0, 2 * M_PI),
@@ -30,8 +26,6 @@ BRepPrim_Torus::BRepPrim_Torus(const double Major, const double Minor)
   SetMeridian();
 }
 
-//=================================================================================================
-
 BRepPrim_Torus::BRepPrim_Torus(const gp_Pnt& Center, const double Major, const double Minor)
     : BRepPrim_Revolution(gp_Ax2(Center, gp_Dir(gp_Dir::D::Z), gp_Dir(gp_Dir::D::X)), 0, 2 * M_PI),
       myMajor(Major),
@@ -40,8 +34,6 @@ BRepPrim_Torus::BRepPrim_Torus(const gp_Pnt& Center, const double Major, const d
   SetMeridian();
 }
 
-//=================================================================================================
-
 TopoDS_Face BRepPrim_Torus::MakeEmptyLateralFace() const
 {
   occ::handle<Geom_ToroidalSurface> T = new Geom_ToroidalSurface(Axes(), myMajor, myMinor);
@@ -49,8 +41,6 @@ TopoDS_Face BRepPrim_Torus::MakeEmptyLateralFace() const
   myBuilder.Builder().MakeFace(F, T, Precision::Confusion());
   return F;
 }
-
-//=================================================================================================
 
 void BRepPrim_Torus::SetMeridian()
 {

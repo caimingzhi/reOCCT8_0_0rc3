@@ -1,21 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//=========================================================================
-//   CREATION of a STRAIGHT LINE TANGENT to a CIRCLE or PASSING by a POINT +
-//                and MAKING ANGLE A with a STRAIGHT LINE.                   +
-//=========================================================================
 
 #include <ElCLib.hpp>
 #include <GccAna_Lin2dTanObl.hpp>
@@ -31,14 +14,6 @@
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   Creation of a straight line passing by a point : ThePoint                +
-//                         making an angle     : TheAngle                +
-//                         with straight line  : TheLine.                +
-//   Subject the straight line (ThePoint,TheLine.Location()) to a rotation +
-//   by angle TheAngle ==> D1.                                            +
-//   create straight line passing through ThePoint of direction D1.              +
-//=========================================================================
 GccAna_Lin2dTanObl::GccAna_Lin2dTanObl(const gp_Pnt2d& ThePoint,
                                        const gp_Lin2d& TheLine,
                                        const double    TheAngle)
@@ -54,13 +29,12 @@ GccAna_Lin2dTanObl::GccAna_Lin2dTanObl(const gp_Pnt2d& ThePoint,
 
   double Cosa = TheLine.Direction().X();
   double Sina = TheLine.Direction().Y();
-  linsol(1) =
-    gp_Lin2d(ThePoint,
-             // ==============================
-             gp_Dir2d(Cosa * std::cos(TheAngle) - Sina * std::sin(TheAngle),
-                      //                      ===============================================
-                      Sina * std::cos(TheAngle) + std::sin(TheAngle) * Cosa));
-  //                               =======================================
+  linsol(1)   = gp_Lin2d(ThePoint,
+
+                       gp_Dir2d(Cosa * std::cos(TheAngle) - Sina * std::sin(TheAngle),
+
+                                Sina * std::cos(TheAngle) + std::sin(TheAngle) * Cosa));
+
   qualifier1(1) = GccEnt_noqualifier;
   pnttg1sol(1)  = ThePoint;
   IntAna2d_AnaIntersection Intp(linsol(1), TheLine);
@@ -87,15 +61,6 @@ GccAna_Lin2dTanObl::GccAna_Lin2dTanObl(const gp_Pnt2d& ThePoint,
   }
 }
 
-//=========================================================================
-//   Creation of a straight line tangent to a circle  : Qualified1 (C1)         +
-//                         making angle           : TheAngle                +
-//                         with a straight line   : TheLine.                +
-//   Subject the straight line  (C1.Location,TheLine.Location()) to a       +
-//   rotation by angle TheAngle or -TheAngle ==> D1.                       +
-//   create the straight line passing by C1 of direction D1.                    +
-//=========================================================================
-
 GccAna_Lin2dTanObl::GccAna_Lin2dTanObl(const GccEnt_QualifiedCirc& Qualified1,
                                        const gp_Lin2d&             TheLine,
                                        const double                TheAngle)
@@ -121,7 +86,7 @@ GccAna_Lin2dTanObl::GccAna_Lin2dTanObl(const GccEnt_QualifiedCirc& Qualified1,
   double Sina = TheLine.Direction().Y();
   if (Qualified1.IsEnclosed())
   {
-    // ============================
+
     throw GccEnt_BadQualifier();
   }
   else
@@ -130,12 +95,12 @@ GccAna_Lin2dTanObl::GccAna_Lin2dTanObl(const GccEnt_QualifiedCirc& Qualified1,
     double    R1 = C1.Radius();
     if (Qualified1.IsEnclosing())
     {
-      //   =============================
+
       gp_XY xy(std::cos(TheAngle) * Cosa - std::sin(TheAngle) * Sina,
                std::cos(TheAngle) * Sina + std::sin(TheAngle) * Cosa);
       pnttg1sol(1) = gp_Pnt2d(C1.Location().XY() + R1 * gp_XY(xy.Y(), -xy.X()));
       linsol(1)    = gp_Lin2d(pnttg1sol(1), gp_Dir2d(xy));
-      //     ===============================================
+
       qualifier1(1) = Qualified1.Qualifier();
       IntAna2d_AnaIntersection Intp(linsol(1), TheLine);
       NbrSol   = 1;
@@ -153,12 +118,12 @@ GccAna_Lin2dTanObl::GccAna_Lin2dTanObl(const GccEnt_QualifiedCirc& Qualified1,
     }
     else if (Qualified1.IsOutside())
     {
-      //   ================================
+
       gp_XY xy(std::cos(TheAngle) * Cosa - std::sin(TheAngle) * Sina,
                std::cos(TheAngle) * Sina + std::sin(TheAngle) * Cosa);
       pnttg1sol(1) = gp_Pnt2d(C1.Location().XY() + R1 * gp_XY(-xy.Y(), xy.X()));
       linsol(1)    = gp_Lin2d(pnttg1sol(1), gp_Dir2d(xy));
-      //     ===============================================
+
       qualifier1(1) = Qualified1.Qualifier();
       IntAna2d_AnaIntersection Intp(linsol(1), TheLine);
       WellDone = true;
@@ -176,12 +141,12 @@ GccAna_Lin2dTanObl::GccAna_Lin2dTanObl(const GccEnt_QualifiedCirc& Qualified1,
     }
     else if (Qualified1.IsUnqualified())
     {
-      //   ====================================
+
       gp_XY xy(std::cos(TheAngle) * Cosa - std::sin(TheAngle) * Sina,
                std::cos(TheAngle) * Sina + std::sin(TheAngle) * Cosa);
       pnttg1sol(1) = gp_Pnt2d(C1.Location().XY() + R1 * gp_XY(xy.Y(), -xy.X()));
       linsol(1)    = gp_Lin2d(pnttg1sol(1), gp_Dir2d(xy));
-      //     ===============================================
+
       qualifier1(1) = GccEnt_enclosing;
       IntAna2d_AnaIntersection Intp(linsol(1), TheLine);
       WellDone = true;
@@ -198,7 +163,7 @@ GccAna_Lin2dTanObl::GccAna_Lin2dTanObl(const GccEnt_QualifiedCirc& Qualified1,
       }
       pnttg1sol(2) = gp_Pnt2d(C1.Location().XY() + R1 * gp_XY(-xy.Y(), xy.X()));
       linsol(2)    = gp_Lin2d(pnttg1sol(2), gp_Dir2d(xy));
-      //     ===============================================
+
       qualifier1(2) = GccEnt_outside;
       Intp          = IntAna2d_AnaIntersection(linsol(1), TheLine);
       NbrSol++;

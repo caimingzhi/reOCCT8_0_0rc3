@@ -20,24 +20,20 @@ IGESSolid_ToolRightAngularWedge::IGESSolid_ToolRightAngularWedge() = default;
 
 void IGESSolid_ToolRightAngularWedge::ReadOwnParams(
   const occ::handle<IGESSolid_RightAngularWedge>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /* IR */,
+  const occ::handle<IGESData_IGESReaderData>&,
   IGESData_ParamReader& PR) const
 {
   gp_XYZ tempSize, tempCorner, tempXAxis, tempZAxis;
   double lowX;
   double tempreal;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  // clang-format off
-  PR.ReadXYZ(PR.CurrentList(1, 3), "Size of RightAngularWedge", tempSize); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadXYZ(PR.CurrentList(1, 3), "Size of RightAngularWedge", tempSize);
 
-  PR.ReadReal(PR.Current(), "Small X length", lowX); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Small X length", lowX);
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Corner Point (X)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Corner Point (X)", tempreal))
       tempCorner.SetX(tempreal);
   }
@@ -46,8 +42,7 @@ void IGESSolid_ToolRightAngularWedge::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Corner Point (Y)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Corner Point (Y)", tempreal))
       tempCorner.SetY(tempreal);
   }
@@ -56,8 +51,7 @@ void IGESSolid_ToolRightAngularWedge::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Corner Point (Z)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Corner Point (Z)", tempreal))
       tempCorner.SetZ(tempreal);
   }
@@ -66,8 +60,7 @@ void IGESSolid_ToolRightAngularWedge::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local X axis (I)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local X axis (I)", tempreal))
       tempXAxis.SetX(tempreal);
   }
@@ -76,8 +69,7 @@ void IGESSolid_ToolRightAngularWedge::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local X axis (J)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local X axis (J)", tempreal))
       tempXAxis.SetY(tempreal);
   }
@@ -86,8 +78,7 @@ void IGESSolid_ToolRightAngularWedge::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local X axis (K)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local X axis (K)", tempreal))
       tempXAxis.SetZ(tempreal);
   }
@@ -96,8 +87,7 @@ void IGESSolid_ToolRightAngularWedge::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local Z axis (I)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local Z axis (I)", tempreal))
       tempZAxis.SetX(tempreal);
   }
@@ -106,8 +96,7 @@ void IGESSolid_ToolRightAngularWedge::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local Z axis (J)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local Z axis (J)", tempreal))
       tempZAxis.SetY(tempreal);
   }
@@ -116,8 +105,7 @@ void IGESSolid_ToolRightAngularWedge::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Local Z axis (K)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Local Z axis (K)", tempreal))
       tempZAxis.SetZ(tempreal);
   }
@@ -152,16 +140,15 @@ void IGESSolid_ToolRightAngularWedge::WriteOwnParams(
   IW.Send(ent->ZAxis().Z());
 }
 
-void IGESSolid_ToolRightAngularWedge::OwnShared(
-  const occ::handle<IGESSolid_RightAngularWedge>& /* ent */,
-  Interface_EntityIterator& /* iter */) const
+void IGESSolid_ToolRightAngularWedge::OwnShared(const occ::handle<IGESSolid_RightAngularWedge>&,
+                                                Interface_EntityIterator&) const
 {
 }
 
 void IGESSolid_ToolRightAngularWedge::OwnCopy(
   const occ::handle<IGESSolid_RightAngularWedge>& another,
   const occ::handle<IGESSolid_RightAngularWedge>& ent,
-  Interface_CopyTool& /* TC */) const
+  Interface_CopyTool&) const
 {
   ent->Init(another->Size(),
             another->XSmallLength(),
@@ -171,7 +158,7 @@ void IGESSolid_ToolRightAngularWedge::OwnCopy(
 }
 
 IGESData_DirChecker IGESSolid_ToolRightAngularWedge::DirChecker(
-  const occ::handle<IGESSolid_RightAngularWedge>& /* ent */) const
+  const occ::handle<IGESSolid_RightAngularWedge>&) const
 {
   IGESData_DirChecker DC(152, 0);
   DC.Structure(IGESData_DefVoid);
@@ -200,7 +187,7 @@ void IGESSolid_ToolRightAngularWedge::OwnCheck(const occ::handle<IGESSolid_Right
 }
 
 void IGESSolid_ToolRightAngularWedge::OwnDump(const occ::handle<IGESSolid_RightAngularWedge>& ent,
-                                              const IGESData_IGESDumper& /* dumper */,
+                                              const IGESData_IGESDumper&,
                                               Standard_OStream& S,
                                               const int         level) const
 {

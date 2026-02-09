@@ -1,21 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//: S4134 abv 10.03.99: working methods moved from package TopoDSToGBWire
-//: j1 modified by abv 22 Oct 98: CSR BUC60401
-// - unused parts of code dropped
-// - fixed trimming of circles and ellipses (radians used instead of degrees)
-// szv#4 S4163
 
 #include <Adaptor3d_CurveOnSurface.hpp>
 #include <BRep_Tool.hpp>
@@ -52,15 +35,11 @@
 #include <TopoDSToStep_WireframeBuilder.hpp>
 #include <Transfer_FinderProcess.hpp>
 
-//=================================================================================================
-
 TopoDSToStep_WireframeBuilder::TopoDSToStep_WireframeBuilder()
     : myError(TopoDSToStep_BuilderOther)
 {
   done = false;
 }
-
-//=================================================================================================
 
 TopoDSToStep_WireframeBuilder::TopoDSToStep_WireframeBuilder(
   const TopoDS_Shape&     aShape,
@@ -72,7 +51,7 @@ TopoDSToStep_WireframeBuilder::TopoDSToStep_WireframeBuilder(
 }
 
 void TopoDSToStep_WireframeBuilder::Init(const TopoDS_Shape& aShape,
-                                         TopoDSToStep_Tool& /* T */,
+                                         TopoDSToStep_Tool&,
                                          const StepData_Factors& theLocalFactors)
 {
   occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> itemList =
@@ -83,14 +62,10 @@ void TopoDSToStep_WireframeBuilder::Init(const TopoDS_Shape& aShape,
   myResult = itemList;
 }
 
-//=================================================================================================
-
 TopoDSToStep_BuilderError TopoDSToStep_WireframeBuilder::Error() const
 {
   return myError;
 }
-
-//=================================================================================================
 
 const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>&
   TopoDSToStep_WireframeBuilder::Value() const
@@ -98,9 +73,6 @@ const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>&
   StdFail_NotDone_Raise_if(!done, "TopoDSToStep_WireframeBuilder::Value() - no result");
   return myResult;
 }
-
-// ============================================================================
-//: S4134: abv 10 Mar 99: the methods below moved from package TopoDSToGBWire
 
 #define Nbpt 23
 
@@ -150,11 +122,10 @@ bool TopoDSToStep_WireframeBuilder::GetTrimmedCurveFromEdge(
 #endif
     return false;
   }
-  // szv#4:S4163:12Mar99 SGI warns
+
   TopoDS_Shape aSh    = theEdge.Oriented(TopAbs_FORWARD);
   TopoDS_Edge  anEdge = TopoDS::Edge(aSh);
 
-  // resulting curve
   occ::handle<StepGeom_Curve> aSGC;
   if (const occ::handle<Standard_Transient>* aTransient = theMap.Seek(anEdge))
   {
@@ -181,14 +152,14 @@ bool TopoDSToStep_WireframeBuilder::GetTrimmedCurveFromEdge(
     if (aVertex.Orientation() == TopAbs_FORWARD)
     {
       aVFirst = aVertex;
-      // 1.point for trimming
+
       GeomToStep_MakeCartesianPoint aGTSMCP(aGpP, theLocalFactors.LengthFactor());
       aSGCP1 = aGTSMCP.Value();
     }
     if (aVertex.Orientation() == TopAbs_REVERSED)
     {
       aVLast = aVertex;
-      // 2.point for trimming
+
       GeomToStep_MakeCartesianPoint aGTSMCP(aGpP, theLocalFactors.LengthFactor());
       aSGCP2 = aGTSMCP.Value();
     }
@@ -210,7 +181,6 @@ bool TopoDSToStep_WireframeBuilder::GetTrimmedCurveFromEdge(
     }
     const occ::handle<StepGeom_Curve>& aPMSC = aGTSMC.Value();
 
-    // trim the curve
     double aTrim1 = aCA.FirstParameter();
     double aTrim2 = aCA.LastParameter();
 
@@ -237,22 +207,10 @@ bool TopoDSToStep_WireframeBuilder::GetTrimmedCurveFromEdge(
       aSGCP2 = aGTSMCP.Value();
     }
 
-    /* //:j1 abv 22 Oct 98: radians are used in the produced STEP file (at least by default)
-       if(C->IsKind(STANDARD_TYPE(Geom_Circle)) ||
-           C->IsKind(STANDARD_TYPE(Geom_Ellipse))) {
-          double fact = 180. / M_PI;
-          trim1 = trim1 * fact;
-          trim2 = trim2 * fact;
-        }
-    */
     aSGC = MakeTrimmedCurve(aPMSC, aSGCP1, aSGCP2, aTrim1, aTrim2, true);
   }
   else
   {
-
-    // -------------------------
-    // a 3D Curve is constructed
-    // -------------------------
 
     bool aIPlan = false;
     if (!theFace.IsNull())
@@ -266,8 +224,6 @@ bool TopoDSToStep_WireframeBuilder::GetTrimmedCurveFromEdge(
       }
     }
 
-    // to be modified : cf and cl are the topological trimming parameter
-    // these are computed after ! (U1 and U2) -> cf and cl instead
     if (aIPlan)
     {
       gp_Pnt aPnt1 = aCA.Value(aCA.FirstParameter()), aPnt2 = aCA.Value(aCA.LastParameter());
@@ -331,9 +287,8 @@ bool TopoDSToStep_WireframeBuilder::GetTrimmedCurveFromFace(
   TopoDS_Shape    curShape;
   TopoDS_Edge     curEdge;
   TopExp_Explorer exp;
-  // clang-format off
-  bool result = false; //szv#4:S4163:12Mar99 `done` hid one from this, initialisation needed
-  // clang-format on
+
+  bool result = false;
 
   for (exp.Init(aFace, TopAbs_EDGE); exp.More(); exp.Next())
   {
@@ -352,11 +307,9 @@ bool TopoDSToStep_WireframeBuilder::GetTrimmedCurveFromShape(
   const StepData_Factors&                                              theLocalFactors) const
 {
   TopoDS_Iterator It;
-  // clang-format off
-  bool result = false; //szv#4:S4163:12Mar99 `done` hid one from this, initialisation needed
-  // clang-format on
 
-  // szv#4:S4163:12Mar99 optimized
+  bool result = false;
+
   switch (aShape.ShapeType())
   {
     case TopAbs_EDGE:
@@ -401,7 +354,6 @@ bool TopoDSToStep_WireframeBuilder::GetTrimmedCurveFromShape(
         if (!result)
         {
           std::cout << "ERROR extracting trimmedCurve from Face" << std::endl;
-          // BRepTools::Dump(curFace,std::cout);  std::cout<<std::endl;
         }
 #endif
       }
@@ -425,15 +377,7 @@ bool TopoDSToStep_WireframeBuilder::GetTrimmedCurveFromShape(
       It.Initialize(aShape);
       for (; It.More(); It.Next())
       {
-        /*	  if  ((It.Value().ShapeType() == TopAbs_SHELL) ||
-                   (It.Value().ShapeType() == TopAbs_COMPOUND)) {
-                result = GetTrimmedCurveFromShape(It.Value(), aMap, aCurveList);
-                break;
-              }
-              else if (It.Value().ShapeType() == TopAbs_FACE) {
-                result = GetTrimmedCurveFromFace(TopoDS::Face(It.Value()), aMap, aCurveList);
-                break;
-              } */
+
         if (GetTrimmedCurveFromShape(It.Value(), aMap, aCurveList, theLocalFactors))
           result = true;
       }

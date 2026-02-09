@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_AppliedModifiers.hpp>
 #include <IFSelect_ContextWrite.hpp>
@@ -21,8 +10,6 @@
 #include <Interface_Protocol.hpp>
 #include <Standard_NoSuchObject.hpp>
 #include <Standard_Transient.hpp>
-
-//=================================================================================================
 
 IFSelect_ContextWrite::IFSelect_ContextWrite(const occ::handle<Interface_InterfaceModel>&  model,
                                              const occ::handle<Interface_Protocol>&        proto,
@@ -37,8 +24,6 @@ IFSelect_ContextWrite::IFSelect_ContextWrite(const occ::handle<Interface_Interfa
       thecurr(0)
 {
 }
-
-//=================================================================================================
 
 IFSelect_ContextWrite::IFSelect_ContextWrite(const occ::handle<Interface_HGraph>&          hgraph,
                                              const occ::handle<Interface_Protocol>&        proto,
@@ -55,35 +40,25 @@ IFSelect_ContextWrite::IFSelect_ContextWrite(const occ::handle<Interface_HGraph>
 {
 }
 
-//=================================================================================================
-
 occ::handle<Interface_InterfaceModel> IFSelect_ContextWrite::Model() const
 {
   return themodel;
 }
-
-//=================================================================================================
 
 occ::handle<Interface_Protocol> IFSelect_ContextWrite::Protocol() const
 {
   return theproto;
 }
 
-//=================================================================================================
-
 const char* IFSelect_ContextWrite::FileName() const
 {
   return thefile.ToCString();
 }
 
-//=================================================================================================
-
 occ::handle<IFSelect_AppliedModifiers> IFSelect_ContextWrite::AppliedModifiers() const
 {
   return theapply;
 }
-
-//=================================================================================================
 
 const Interface_Graph& IFSelect_ContextWrite::Graph()
 {
@@ -91,8 +66,6 @@ const Interface_Graph& IFSelect_ContextWrite::Graph()
     thehgraf = new Interface_HGraph(themodel, theproto);
   return thehgraf->Graph();
 }
-
-//=================================================================================================
 
 int IFSelect_ContextWrite::NbModifiers() const
 {
@@ -111,56 +84,40 @@ bool IFSelect_ContextWrite::SetModifier(const int numod)
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<IFSelect_GeneralModifier> IFSelect_ContextWrite::FileModifier() const
 {
   return themodif;
 }
-
-//=================================================================================================
 
 bool IFSelect_ContextWrite::IsForNone() const
 {
   return (thenbent == 0);
 }
 
-//=================================================================================================
-
 bool IFSelect_ContextWrite::IsForAll() const
 {
   return theapply->IsForAll();
 }
-
-//=================================================================================================
 
 int IFSelect_ContextWrite::NbEntities() const
 {
   return thenbent;
 }
 
-//=================================================================================================
-
 void IFSelect_ContextWrite::Start()
 {
   thecurr = 1;
 }
-
-//=================================================================================================
 
 bool IFSelect_ContextWrite::More() const
 {
   return (thecurr <= thenbent);
 }
 
-//=================================================================================================
-
 void IFSelect_ContextWrite::Next()
 {
   thecurr++;
 }
-
-//=================================================================================================
 
 occ::handle<Standard_Transient> IFSelect_ContextWrite::Value() const
 {
@@ -170,8 +127,6 @@ occ::handle<Standard_Transient> IFSelect_ContextWrite::Value() const
   return themodel->Value(num);
 }
 
-//=================================================================================================
-
 void IFSelect_ContextWrite::AddCheck(const occ::handle<Interface_Check>& check)
 {
   if (check->NbFails() + check->NbWarnings() == 0)
@@ -179,11 +134,9 @@ void IFSelect_ContextWrite::AddCheck(const occ::handle<Interface_Check>& check)
   const occ::handle<Standard_Transient>& ent = check->Entity();
   int                                    num = themodel->Number(ent);
   if (num == 0 && !ent.IsNull())
-    num = -1; // force enregistrement
+    num = -1;
   thecheck.Add(check, num);
 }
-
-//=================================================================================================
 
 void IFSelect_ContextWrite::AddWarning(const occ::handle<Standard_Transient>& start,
                                        const char*                            mess,
@@ -192,16 +145,12 @@ void IFSelect_ContextWrite::AddWarning(const occ::handle<Standard_Transient>& st
   thecheck.CCheck(themodel->Number(start))->AddWarning(mess, orig);
 }
 
-//=================================================================================================
-
 void IFSelect_ContextWrite::AddFail(const occ::handle<Standard_Transient>& start,
                                     const char*                            mess,
                                     const char*                            orig)
 {
   thecheck.CCheck(themodel->Number(start))->AddFail(mess, orig);
 }
-
-//=================================================================================================
 
 occ::handle<Interface_Check> IFSelect_ContextWrite::CCheck(const int num)
 {
@@ -211,20 +160,16 @@ occ::handle<Interface_Check> IFSelect_ContextWrite::CCheck(const int num)
   return ach;
 }
 
-//=================================================================================================
-
 occ::handle<Interface_Check> IFSelect_ContextWrite::CCheck(
   const occ::handle<Standard_Transient>& ent)
 {
   int num = themodel->Number(ent);
   if (num == 0)
-    num = -1; // force l enregistrement
+    num = -1;
   occ::handle<Interface_Check> ach = thecheck.CCheck(num);
   ach->SetEntity(ent);
   return ach;
 }
-
-//=================================================================================================
 
 Interface_CheckIterator IFSelect_ContextWrite::CheckList() const
 {

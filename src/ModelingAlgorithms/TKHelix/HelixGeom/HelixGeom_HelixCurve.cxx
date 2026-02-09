@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <HelixGeom_HelixCurve.hpp>
 
@@ -25,8 +14,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(HelixGeom_HelixCurve, Adaptor3d_Curve)
 
-//=================================================================================================
-
 HelixGeom_HelixCurve::HelixGeom_HelixCurve()
 {
   myFirst       = 0.;
@@ -35,20 +22,16 @@ HelixGeom_HelixCurve::HelixGeom_HelixCurve()
   myRStart      = 1.;
   myTaperAngle  = 0.;
   myIsClockWise = true;
-  // Calculate derived parameters
+
   myC1       = myPitch / myLast;
   myTgBeta   = 0.;
   myTolAngle = 1.e-4;
 }
 
-//=================================================================================================
-
 void HelixGeom_HelixCurve::Load()
 {
   Load(myFirst, myLast, myPitch, myRStart, myTaperAngle, myIsClockWise);
 }
-
-//=================================================================================================
 
 void HelixGeom_HelixCurve::Load(const double aT1,
                                 const double aT2,
@@ -59,17 +42,17 @@ void HelixGeom_HelixCurve::Load(const double aT1,
 {
   char   buf[] = {"HelixGeom_HelixCurve::Load"};
   double aTwoPI, aHalfPI;
-  // Define angular constants
+
   aTwoPI  = 2. * M_PI;
   aHalfPI = 0.5 * M_PI;
-  // Store parameter values
+
   myFirst       = aT1;
   myLast        = aT2;
   myPitch       = aPitch;
   myRStart      = aRStart;
   myTaperAngle  = aTaperAngle;
   myIsClockWise = aIsCW;
-  // Validate input parameters
+
   if (aT1 >= aT2)
   {
     throw Standard_ConstructionError(buf);
@@ -86,7 +69,7 @@ void HelixGeom_HelixCurve::Load(const double aT1,
   {
     throw Standard_ConstructionError(buf);
   }
-  // Calculate helix coefficient
+
   myC1 = myPitch / aTwoPI;
   if (fabs(myTaperAngle) > myTolAngle)
   {
@@ -94,35 +77,25 @@ void HelixGeom_HelixCurve::Load(const double aT1,
   }
 }
 
-//=================================================================================================
-
 double HelixGeom_HelixCurve::FirstParameter() const
 {
   return myFirst;
 }
-
-//=================================================================================================
 
 double HelixGeom_HelixCurve::LastParameter() const
 {
   return myLast;
 }
 
-//=================================================================================================
-
 GeomAbs_Shape HelixGeom_HelixCurve::Continuity() const
 {
   return GeomAbs_CN;
 }
 
-//=================================================================================================
-
 int HelixGeom_HelixCurve::NbIntervals(const GeomAbs_Shape) const
 {
   return 1;
 }
-
-//=================================================================================================
 
 void HelixGeom_HelixCurve::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape) const
 {
@@ -130,44 +103,34 @@ void HelixGeom_HelixCurve::Intervals(NCollection_Array1<double>& T, const GeomAb
   T(2) = myLast;
 }
 
-//=================================================================================================
-
 double HelixGeom_HelixCurve::Resolution(const double) const
 {
   throw Standard_NotImplemented("HelixGeom_HelixCurve::Resolution");
 }
-
-//=================================================================================================
 
 bool HelixGeom_HelixCurve::IsClosed() const
 {
   throw Standard_NotImplemented("HelixGeom_HelixCurve::IsClosed");
 }
 
-//=================================================================================================
-
 bool HelixGeom_HelixCurve::IsPeriodic() const
 {
   throw Standard_NotImplemented("HelixGeom_HelixCurve::IsPeriodic");
 }
-
-//=================================================================================================
 
 double HelixGeom_HelixCurve::Period() const
 {
   throw Standard_DomainError("HelixGeom_HelixCurve::Period");
 }
 
-//=================================================================================================
-
 gp_Pnt HelixGeom_HelixCurve::Value(const double aT) const
 {
   double aST, aCT, aX, aY, aZ, a1;
-  // Calculate trigonometric values and radius
+
   aCT = cos(aT);
   aST = sin(aT);
   a1  = myRStart + myC1 * myTgBeta * aT;
-  // Calculate Cartesian coordinates
+
   aX = a1 * aCT;
   aY = a1 * aST;
   if (!myIsClockWise)
@@ -178,24 +141,20 @@ gp_Pnt HelixGeom_HelixCurve::Value(const double aT) const
   return gp_Pnt(aX, aY, aZ);
 }
 
-//=================================================================================================
-
 void HelixGeom_HelixCurve::D0(const double aT, gp_Pnt& aP) const
 {
   aP = Value(aT);
 }
 
-//=================================================================================================
-
 void HelixGeom_HelixCurve::D1(const double aT, gp_Pnt& aP, gp_Vec& aV1) const
 {
   double aST, aCT, aX, aY, aZ, a1, a2;
-  // Calculate point and first derivative
+
   aCT = cos(aT);
   aST = sin(aT);
-  // Calculate radius at parameter t
+
   a1 = myRStart + myC1 * myTgBeta * aT;
-  // Calculate point coordinates
+
   aX = a1 * aCT;
   aY = a1 * aST;
   if (!myIsClockWise)
@@ -204,10 +163,10 @@ void HelixGeom_HelixCurve::D1(const double aT, gp_Pnt& aP, gp_Vec& aV1) const
   }
   aZ = myC1 * aT;
   aP.SetCoord(aX, aY, aZ);
-  // Calculate first derivative coefficients
+
   a1 = myC1 * myTgBeta;
   a2 = myRStart + a1 * aT;
-  // Calculate first derivative components
+
   aX = a1 * aCT - a2 * aST;
   aY = a1 * aST + a2 * aCT;
   if (!myIsClockWise)
@@ -218,17 +177,15 @@ void HelixGeom_HelixCurve::D1(const double aT, gp_Pnt& aP, gp_Vec& aV1) const
   aV1.SetCoord(aX, aY, aZ);
 }
 
-//=================================================================================================
-
 void HelixGeom_HelixCurve::D2(const double aT, gp_Pnt& aP, gp_Vec& aV1, gp_Vec& aV2) const
 {
   double aST, aCT, aX, aY, aZ, a1, a2;
-  // Calculate point, first and second derivatives
+
   aCT = cos(aT);
   aST = sin(aT);
-  // Calculate radius at parameter t
+
   a1 = myRStart + myC1 * myTgBeta * aT;
-  // Calculate point coordinates
+
   aX = a1 * aCT;
   aY = a1 * aST;
   if (!myIsClockWise)
@@ -237,10 +194,10 @@ void HelixGeom_HelixCurve::D2(const double aT, gp_Pnt& aP, gp_Vec& aV1, gp_Vec& 
   }
   aZ = myC1 * aT;
   aP.SetCoord(aX, aY, aZ);
-  // Calculate first derivative coefficients
+
   a1 = myC1 * myTgBeta;
   a2 = myRStart + a1 * aT;
-  // Calculate first derivative components
+
   aX = a1 * aCT - a2 * aST;
   aY = a1 * aST + a2 * aCT;
   if (!myIsClockWise)
@@ -249,7 +206,7 @@ void HelixGeom_HelixCurve::D2(const double aT, gp_Pnt& aP, gp_Vec& aV1, gp_Vec& 
   }
   aZ = myC1;
   aV1.SetCoord(aX, aY, aZ);
-  // Calculate second derivative
+
   a1 = 2. * a1;
   aX = -a2 * aCT - a1 * aST;
   aY = -a2 * aST - a1 * aCT;
@@ -261,13 +218,11 @@ void HelixGeom_HelixCurve::D2(const double aT, gp_Pnt& aP, gp_Vec& aV1, gp_Vec& 
   aV2.SetCoord(aX, aY, aZ);
 }
 
-//=================================================================================================
-
 gp_Vec HelixGeom_HelixCurve::DN(const double aT, const int aN) const
 {
   gp_Pnt aP;
   gp_Vec aV1, aV2;
-  // Compute derivative based on order
+
   switch (aN)
   {
     case 1:

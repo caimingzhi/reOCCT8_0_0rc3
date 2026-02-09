@@ -14,13 +14,6 @@
 #include <TCollection_AsciiString.hpp>
 #include <OSD_File.hpp>
 
-//=======================================================================
-// function : DFBrowse
-// purpose  :
-//  arg 1  : DF name
-// [arg 2] : Browser name
-//=======================================================================
-
 static int DFBrowse(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
@@ -41,7 +34,6 @@ static int DFBrowse(Draw_Interpretor& di, int n, const char** a)
   name += ((n == 3) ? a[2] : a[1]);
   Draw::Set(name.ToCString(), NewDDFBrowser);
 
-  // Load Tcl Script
   TCollection_AsciiString aTclScript(getenv("CSF_DrawPluginDefaults"));
   aTclScript.AssignCat("/dftree.tcl");
   OSD_File aTclScriptFile(aTclScript);
@@ -58,19 +50,11 @@ static int DFBrowse(Draw_Interpretor& di, int n, const char** a)
                         << "Check environment variable CSF_DrawPluginDefaults";
   }
 
-  // Call command dftree defined in dftree.tcl
   TCollection_AsciiString aCommand = "dftree ";
   aCommand.AssignCat(name);
   di.Eval(aCommand.ToCString());
   return 0;
 }
-
-//=======================================================================
-// function : DFOpenLabel
-// purpose  :
-//  arg 1  : Browser name
-// [arg 2] : Label name
-//=======================================================================
 
 static int DFOpenLabel(Draw_Interpretor& di, int n, const char** a)
 {
@@ -92,13 +76,6 @@ static int DFOpenLabel(Draw_Interpretor& di, int n, const char** a)
   di << list.ToCString();
   return 0;
 }
-
-//=======================================================================
-// function : DFOpenAttributeList
-// purpose  :
-//  arg 1  : Browser name
-//  arg 2  : Label name
-//=======================================================================
 
 static int DFOpenAttributeList(Draw_Interpretor& di, int n, const char** a)
 {
@@ -123,13 +100,6 @@ static int DFOpenAttributeList(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : DFOpenAttribute
-// purpose  :
-//  arg 1  : Browser name
-//  arg 2  : Attribute index
-//=======================================================================
-
 static int DFOpenAttribute(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
@@ -147,10 +117,6 @@ static int DFOpenAttribute(Draw_Interpretor& di, int n, const char** a)
   di << list.ToCString();
   return 0;
 }
-
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-//=================================================================================================
 
 void DDF::BrowserCommands(Draw_Interpretor& theCommands)
 {

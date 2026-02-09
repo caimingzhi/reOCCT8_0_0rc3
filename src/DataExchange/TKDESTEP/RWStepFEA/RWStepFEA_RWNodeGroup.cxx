@@ -7,30 +7,22 @@
 #include <StepFEA_NodeGroup.hpp>
 #include <StepFEA_NodeRepresentation.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWNodeGroup::RWStepFEA_RWNodeGroup() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWNodeGroup::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                      const int                                   num,
                                      occ::handle<Interface_Check>&               ach,
                                      const occ::handle<StepFEA_NodeGroup>&       ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "node_group"))
     return;
-
-  // Inherited fields of Group
 
   occ::handle<TCollection_HAsciiString> aGroup_Name;
   data->ReadString(num, 1, "group.name", ach, aGroup_Name);
 
   occ::handle<TCollection_HAsciiString> aGroup_Description;
   data->ReadString(num, 2, "group.description", ach, aGroup_Description);
-
-  // Inherited fields of FeaGroup
 
   occ::handle<StepFEA_FeaModel> aFeaGroup_ModelRef;
   data->ReadEntity(num,
@@ -39,8 +31,6 @@ void RWStepFEA_RWNodeGroup::ReadStep(const occ::handle<StepData_StepReaderData>&
                    ach,
                    STANDARD_TYPE(StepFEA_FeaModel),
                    aFeaGroup_ModelRef);
-
-  // Own fields of NodeGroup
 
   occ::handle<NCollection_HArray1<occ::handle<StepFEA_NodeRepresentation>>> aNodes;
   int                                                                       sub4 = 0;
@@ -62,27 +52,18 @@ void RWStepFEA_RWNodeGroup::ReadStep(const occ::handle<StepData_StepReaderData>&
     }
   }
 
-  // Initialize entity
   ent->Init(aGroup_Name, aGroup_Description, aFeaGroup_ModelRef, aNodes);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWNodeGroup::WriteStep(StepData_StepWriter&                  SW,
                                       const occ::handle<StepFEA_NodeGroup>& ent) const
 {
 
-  // Inherited fields of Group
-
   SW.Send(ent->StepBasic_Group::Name());
 
   SW.Send(ent->StepBasic_Group::Description());
 
-  // Inherited fields of FeaGroup
-
   SW.Send(ent->StepFEA_FeaGroup::ModelRef());
-
-  // Own fields of NodeGroup
 
   SW.OpenSub();
   for (int i3 = 1; i3 <= ent->Nodes()->Length(); i3++)
@@ -93,19 +74,11 @@ void RWStepFEA_RWNodeGroup::WriteStep(StepData_StepWriter&                  SW,
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWNodeGroup::Share(const occ::handle<StepFEA_NodeGroup>& ent,
                                   Interface_EntityIterator&             iter) const
 {
 
-  // Inherited fields of Group
-
-  // Inherited fields of FeaGroup
-
   iter.AddItem(ent->StepFEA_FeaGroup::ModelRef());
-
-  // Own fields of NodeGroup
 
   for (int i2 = 1; i2 <= ent->Nodes()->Length(); i2++)
   {

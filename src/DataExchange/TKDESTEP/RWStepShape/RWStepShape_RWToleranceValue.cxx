@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include "RWStepShape_RWToleranceValue.hpp"
@@ -27,22 +16,16 @@ void RWStepShape_RWToleranceValue::ReadStep(const occ::handle<StepData_StepReade
                                             occ::handle<Interface_Check>&                ach,
                                             const occ::handle<StepShape_ToleranceValue>& ent) const
 {
-  // --- Number of Parameter Control ---
 
   if (!data->CheckNbParams(num, 2, ach, "tolerance_value"))
     return;
 
-  // --- own field : lower_bound ---
-
   occ::handle<Standard_Transient> aLowerBound;
   data->ReadEntity(num, 1, "lower_bound", ach, STANDARD_TYPE(Standard_Transient), aLowerBound);
-
-  // --- own field : upper_bound ---
 
   occ::handle<Standard_Transient> anUpperBound;
   data->ReadEntity(num, 2, "upper_bound", ach, STANDARD_TYPE(Standard_Transient), anUpperBound);
 
-  //--- Initialisation of the read entity ---
   if (!aLowerBound.IsNull() && !anUpperBound.IsNull())
     ach->ClearFails();
   ent->Init(aLowerBound, anUpperBound);

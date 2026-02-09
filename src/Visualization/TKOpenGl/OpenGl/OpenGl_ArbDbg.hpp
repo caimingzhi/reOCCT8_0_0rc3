@@ -2,7 +2,6 @@
 
 #include <OpenGl_GlFunctions.hpp>
 
-//! Debug context routines
 struct OpenGl_ArbDbg : protected OpenGl_GlFunctions
 {
   using OpenGl_GlFunctions::glDebugMessageCallback;

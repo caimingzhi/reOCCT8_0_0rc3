@@ -5,11 +5,7 @@
 #include <StepVisual_AnnotationTextOccurrence.hpp>
 #include <StepVisual_TessellatedAnnotationOccurrence.hpp>
 
-//=================================================================================================
-
 StepVisual_DraughtingCalloutElement::StepVisual_DraughtingCalloutElement() = default;
-
-//=================================================================================================
 
 int StepVisual_DraughtingCalloutElement::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {

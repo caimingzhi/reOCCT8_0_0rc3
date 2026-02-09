@@ -10,7 +10,6 @@ class StepBasic_SiUnitAndAreaUnit : public StepBasic_SiUnit
 {
 
 public:
-  //! Returns a SiUnitAndAreaUnit
   Standard_EXPORT StepBasic_SiUnitAndAreaUnit();
 
   Standard_EXPORT void SetAreaUnit(const occ::handle<StepBasic_AreaUnit>& anAreaUnit);

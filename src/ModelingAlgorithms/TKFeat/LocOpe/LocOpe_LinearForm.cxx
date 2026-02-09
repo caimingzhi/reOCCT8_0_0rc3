@@ -18,8 +18,6 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_IndexedDataMap.hpp>
 
-//=================================================================================================
-
 void LocOpe_LinearForm::Perform(const TopoDS_Shape& Base,
                                 const gp_Vec&       V,
                                 const gp_Pnt&       Pnt1,
@@ -36,14 +34,11 @@ void LocOpe_LinearForm::Perform(const TopoDS_Shape& Base,
   myBase = Base;
   myVec  = V;
 
-  // myEdge = E;
   myPnt1 = Pnt1;
   myPnt2 = Pnt2;
 
   IntPerf();
 }
-
-//=================================================================================================
 
 void LocOpe_LinearForm::Perform(const TopoDS_Shape& Base,
                                 const gp_Vec&       V,
@@ -63,14 +58,11 @@ void LocOpe_LinearForm::Perform(const TopoDS_Shape& Base,
   myBase = Base;
   myVec  = V;
 
-  // myEdge = E;
   myPnt1 = Pnt1;
   myPnt2 = Pnt2;
 
   IntPerf();
 }
-
-//=================================================================================================
 
 void LocOpe_LinearForm::IntPerf()
 {
@@ -114,7 +106,7 @@ void LocOpe_LinearForm::IntPerf()
 
   else
   {
-    // Cas base != FACE
+
     NCollection_IndexedDataMap<TopoDS_Shape,
                                NCollection_List<TopoDS_Shape>,
                                TopTools_ShapeMapHasher>
@@ -143,7 +135,7 @@ void LocOpe_LinearForm::IntPerf()
     }
     if (toremove)
     {
-      // Rajouter les faces de FirstShape et LastShape
+
       for (exp.Init(myFirstShape, TopAbs_FACE); exp.More(); exp.Next())
       {
         lfaces.Append(exp.Current());
@@ -178,7 +170,7 @@ void LocOpe_LinearForm::IntPerf()
 
   if (myIsTrans)
   {
-    // m-a-j des descendants
+
     TopExp_Explorer anExp;
     for (anExp.Init(myBase, TopAbs_EDGE); anExp.More(); anExp.Next())
     {
@@ -195,8 +187,6 @@ void LocOpe_LinearForm::IntPerf()
   myDone = true;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& LocOpe_LinearForm::Shape() const
 {
   if (!myDone)
@@ -206,21 +196,15 @@ const TopoDS_Shape& LocOpe_LinearForm::Shape() const
   return myRes;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& LocOpe_LinearForm::FirstShape() const
 {
   return myFirstShape;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& LocOpe_LinearForm::LastShape() const
 {
   return myLastShape;
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& LocOpe_LinearForm::Shapes(const TopoDS_Shape& S) const
 {

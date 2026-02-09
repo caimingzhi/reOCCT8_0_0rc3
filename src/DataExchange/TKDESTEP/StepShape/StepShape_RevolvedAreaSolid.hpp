@@ -12,7 +12,6 @@ class StepShape_RevolvedAreaSolid : public StepShape_SweptAreaSolid
 {
 
 public:
-  //! Returns a RevolvedAreaSolid
   Standard_EXPORT StepShape_RevolvedAreaSolid();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&     aName,

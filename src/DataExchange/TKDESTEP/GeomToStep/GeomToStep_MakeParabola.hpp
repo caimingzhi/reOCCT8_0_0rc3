@@ -9,9 +9,6 @@ class StepGeom_Parabola;
 class Geom2d_Parabola;
 class Geom_Parabola;
 
-//! This class implements the mapping between the class
-//! Parabola from Geom and the class Parabola from
-//! StepGeom which describes a Parabola from ProSTEP
 class GeomToStep_MakeParabola : public GeomToStep_Root
 {
 public:

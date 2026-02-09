@@ -18,8 +18,6 @@ static void BuildPath(
   int&                            aBreakFlag,
   NCollection_List<TopoDS_Shape>& myResList);
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Tools2d::Path(const TopoDS_Wire&              aWire,
                                    NCollection_List<TopoDS_Shape>& aResList)
 {
@@ -42,12 +40,10 @@ void TopOpeBRepBuild_Tools2d::Path(const TopoDS_Wire&              aWire,
   myVertex  = myVertex0;
 
   BuildPath(myVertex0, myEdge, myVertex, aNbEdges, M, anEdgesCount, aBreakFlag, myResList);
-  //
+
   aResList.Clear();
   aResList = myResList;
 }
-
-//=================================================================================================
 
 void BuildPath(
   const TopoDS_Vertex& myVertex0,
@@ -67,7 +63,7 @@ void BuildPath(
     return;
 
   TopOpeBRepBuild_VertexInfo& aVInfo = M.ChangeFromKey(myInputVertex);
-  //
+
   aVInfo.SetCurrentIn(myInputEdge);
   aVInfo.Prepare(myResList);
   aNbCases = aVInfo.NbCases();
@@ -81,7 +77,7 @@ void BuildPath(
 
     aFoundOut = aVInfo.FoundOut();
     if (!aFoundOut)
-    { // FondOut=0 TUPICK
+    {
       aBreakFlag = 2;
       return;
     }
@@ -89,7 +85,7 @@ void BuildPath(
     else
     {
       if (stopFlag)
-      { // if previous path was wrong
+      {
         aVInfo.RemovePassed();
         myResList.RemoveFirst();
         stopFlag = 0;
@@ -109,33 +105,31 @@ void BuildPath(
       }
 
       BuildPath(myVertex0, myEdge, myVertex, aNbEdges, M, anEdgesCount, aBreakFlag, myResList);
-      ////
+
       if (aBreakFlag == 1)
       {
         return;
       }
 
       if (aBreakFlag == 2)
-      { // Come back
+      {
         if (j == aNbCases)
         {
           aVInfo.RemovePassed();
           myResList.RemoveFirst();
           anEdgesCount--;
-          ////
+
           return;
         }
         else
         {
           stopFlag   = 1;
-          aBreakFlag = 0; // Next j if possible
+          aBreakFlag = 0;
         }
-      } // end of if (aBreakFlag==2)
-    } // end of else .i.e. aFoundOut#0
-  } // end of for (j=1; j<=aNbCases; j++)
+      }
+    }
+  }
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Tools2d::MakeMapOfShapeVertexInfo(
   const TopoDS_Wire& aWire,
@@ -180,8 +174,6 @@ void TopOpeBRepBuild_Tools2d::MakeMapOfShapeVertexInfo(
     }
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Tools2d::DumpMapOfShapeVertexInfo(
   const NCollection_IndexedDataMap<TopoDS_Shape,

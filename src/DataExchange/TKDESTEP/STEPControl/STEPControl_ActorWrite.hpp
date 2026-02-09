@@ -18,8 +18,6 @@ class StepGeom_GeometricRepresentationItem;
 class TopoDS_Shape;
 class StepShape_NonManifoldSurfaceShapeRepresentation;
 
-//! This class performs the transfer of a Shape from TopoDS
-//! to AP203 or AP214 (CD2 or DIS)
 class STEPControl_ActorWrite : public Transfer_ActorOfFinderProcess
 {
 
@@ -69,35 +67,20 @@ public:
 
   Standard_EXPORT void SetTolerance(const double Tol);
 
-  //! Customizable method to check whether shape S should
-  //! be written as assembly or not
-  //! Default implementation uses flag GroupMode and analyses
-  //! the shape itself
-  //! NOTE: this method can modify shape
   Standard_EXPORT virtual bool IsAssembly(const occ::handle<StepData_StepModel>& theModel,
                                           TopoDS_Shape&                          S) const;
 
   DEFINE_STANDARD_RTTIEXT(STEPControl_ActorWrite, Transfer_ActorOfFinderProcess)
 
 private:
-  //! Non-manifold shapes are stored in NMSSR group
-  //! (NON_MANIFOLD_SURFACE_SHAPE_REPRESENTATION).
-  //! Use this method to get the corresponding NMSSR (or
-  //! to create a new one if doesn't exist yet)
-  //! (ssv; 13.11.2010)
   Standard_EXPORT occ::handle<StepShape_NonManifoldSurfaceShapeRepresentation> getNMSSRForGroup(
     const occ::handle<NCollection_HSequence<TopoDS_Shape>>& shapeGroup,
     const occ::handle<Transfer_FinderProcess>&              FP,
     bool&                                                   isNMSSRCreated) const;
 
-  //! bind already written shared faces to STEP entity for non-manifold
   Standard_EXPORT void mergeInfoForNM(const occ::handle<Transfer_FinderProcess>& theFP,
                                       const occ::handle<Standard_Transient>&     theInfo) const;
 
-  //! Gets sequence of vertices of all compounds level by recursive
-  //! @param[in] theShape shape to iterate, checked for compound type and sub shapes vertex type
-  //! @param[out] theVertices sequence of found vertices via recursively iterate of shape
-  //! @return TRUE if one or more vertex was found and all shapes were compound or vertex
   bool separateShapeToSoloVertex(const TopoDS_Shape&                 theShape,
                                  NCollection_Sequence<TopoDS_Shape>& theVertices);
 

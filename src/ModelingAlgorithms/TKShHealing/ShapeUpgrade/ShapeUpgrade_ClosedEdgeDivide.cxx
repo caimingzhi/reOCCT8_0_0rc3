@@ -16,13 +16,9 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_ClosedEdgeDivide, ShapeUpgrade_EdgeDivide)
 
-//=================================================================================================
-
 ShapeUpgrade_ClosedEdgeDivide::ShapeUpgrade_ClosedEdgeDivide()
 
   = default;
-
-//=================================================================================================
 
 bool ShapeUpgrade_ClosedEdgeDivide::Compute(const TopoDS_Edge& anEdge)
 {
@@ -42,7 +38,7 @@ bool ShapeUpgrade_ClosedEdgeDivide::Compute(const TopoDS_Edge& anEdge)
     double                    f2d = 0., l2d = 0.;
     occ::handle<Geom2d_Curve> pcurve1;
     if (!myFace.IsNull())
-    { // process free edges
+    {
       sae.PCurve(anEdge, myFace, pcurve1, f2d, l2d, false);
     }
     myHasCurve2d = !pcurve1.IsNull();

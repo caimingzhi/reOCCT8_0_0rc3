@@ -28,8 +28,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_EllipseRadiusDimension, PrsDim_Relation)
 
-//=================================================================================================
-
 PrsDim_EllipseRadiusDimension::PrsDim_EllipseRadiusDimension(
   const TopoDS_Shape&               aShape,
   const TCollection_ExtendedString& aText)
@@ -37,10 +35,7 @@ PrsDim_EllipseRadiusDimension::PrsDim_EllipseRadiusDimension(
 {
   myFShape = aShape;
   myText   = aText;
-  //  ComputeGeometry( );
 }
-
-//=================================================================================================
 
 void PrsDim_EllipseRadiusDimension::ComputeGeometry()
 {
@@ -49,7 +44,7 @@ void PrsDim_EllipseRadiusDimension::ComputeGeometry()
   {
     case TopAbs_FACE:
     {
-      // compute one face case
+
       ComputeFaceGeometry();
       break;
     }
@@ -71,8 +66,6 @@ void PrsDim_EllipseRadiusDimension::ComputeGeometry()
     myLastPar += 2 * M_PI;
 }
 
-//=================================================================================================
-
 void PrsDim_EllipseRadiusDimension::ComputeFaceGeometry()
 {
 
@@ -88,11 +81,6 @@ void PrsDim_EllipseRadiusDimension::ComputeFaceGeometry()
     ComputeCylFaceGeometry(aSurfType, aBasisSurf, Offset);
 }
 
-//=======================================================================
-// function : ComputeCylFaceGeometry
-// purpose  : defines Ellipse and plane of dimension
-//=======================================================================
-
 void PrsDim_EllipseRadiusDimension::ComputeCylFaceGeometry(
   const PrsDim_KindOfSurface       aSurfType,
   const occ::handle<Geom_Surface>& aBasisSurf,
@@ -106,7 +94,7 @@ void PrsDim_EllipseRadiusDimension::ComputeCylFaceGeometry(
   double vMid = (vFirst + vLast) * 0.5;
   gp_Pln aPlane;
   gp_Ax1 Axis;
-  //  double Param;
+
   if (aSurfType == PrsDim_KOS_Extrusion)
   {
     Axis.SetDirection((occ::down_cast<Geom_SurfaceOfLinearExtrusion>(aBasisSurf))->Direction());
@@ -121,7 +109,7 @@ void PrsDim_EllipseRadiusDimension::ComputeCylFaceGeometry(
     aCurve = aBasisSurf->VIso(vMid);
     if (aCurve->DynamicType() == STANDARD_TYPE(Geom_Ellipse))
     {
-      myEllipse = occ::down_cast<Geom_Ellipse>(aCurve)->Elips(); // gp_Elips
+      myEllipse = occ::down_cast<Geom_Ellipse>(aCurve)->Elips();
       myIsAnArc = false;
     }
     else if (aCurve->DynamicType() == STANDARD_TYPE(Geom_TrimmedCurve))
@@ -133,7 +121,7 @@ void PrsDim_EllipseRadiusDimension::ComputeCylFaceGeometry(
       myIsAnArc                             = true;
       if (aCurve->DynamicType() == STANDARD_TYPE(Geom_Ellipse))
       {
-        myEllipse = occ::down_cast<Geom_Ellipse>(aCurve)->Elips(); // gp_Elips
+        myEllipse = occ::down_cast<Geom_Ellipse>(aCurve)->Elips();
       }
     }
     else
@@ -141,8 +129,6 @@ void PrsDim_EllipseRadiusDimension::ComputeCylFaceGeometry(
       throw Standard_ConstructionError("PrsDim:: Not expected type of surface");
       return;
     }
-
-    // Offset
 
     if (surf1.GetType() == GeomAbs_OffsetSurface)
     {
@@ -159,7 +145,7 @@ void PrsDim_EllipseRadiusDimension::ComputeCylFaceGeometry(
       myOffset       = Offset;
       myIsOffset     = true;
       gp_Elips elips = myEllipse;
-      double   Val   = Offset + elips.MajorRadius(); // simulation
+      double   Val   = Offset + elips.MajorRadius();
       myEllipse.SetMajorRadius(Val);
       Val = Offset + elips.MinorRadius();
       myEllipse.SetMinorRadius(Val);
@@ -168,8 +154,6 @@ void PrsDim_EllipseRadiusDimension::ComputeCylFaceGeometry(
       myIsOffset = false;
   }
 }
-
-//=================================================================================================
 
 void PrsDim_EllipseRadiusDimension::ComputePlanarFaceGeometry()
 {
@@ -214,8 +198,6 @@ void PrsDim_EllipseRadiusDimension::ComputePlanarFaceGeometry()
   BRepAdaptor_Surface surfAlgo(TopoDS::Face(myFShape));
   myPlane = new Geom_Plane(surfAlgo.Plane());
 }
-
-//=================================================================================================
 
 void PrsDim_EllipseRadiusDimension::ComputeEdgeGeometry()
 {

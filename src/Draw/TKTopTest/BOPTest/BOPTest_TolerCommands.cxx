@@ -28,7 +28,7 @@
 #include <NCollection_Map.hpp>
 
 #include <cstdio>
-//
+
 static void ProcessVertex(const TopoDS_Vertex&,
                           const NCollection_List<TopoDS_Shape>&,
                           const NCollection_List<TopoDS_Shape>&);
@@ -41,12 +41,10 @@ static void ReduceFaceTolerance(const TopoDS_Shape&);
 static void ReduceEdgeTolerance(const TopoDS_Shape&, const double);
 
 static void PreparePCurves(const TopoDS_Shape&, Draw_Interpretor& di);
-//
+
 static int breducetolerance(Draw_Interpretor&, int, const char**);
 static int btolx(Draw_Interpretor&, int, const char**);
 static int bopaddpcs(Draw_Interpretor&, int, const char**);
-
-//=================================================================================================
 
 void BOPTest::TolerCommands(Draw_Interpretor& theCommands)
 {
@@ -55,15 +53,13 @@ void BOPTest::TolerCommands(Draw_Interpretor& theCommands)
     return;
 
   done = true;
-  // Chapter's name
+
   const char* g = "BOPTest commands";
-  //
+
   theCommands.Add("breducetolerance", "use breducetolerance Shape", __FILE__, breducetolerance, g);
   theCommands.Add("btolx", "use btolx Shape [minTol=1.e-7]", __FILE__, btolx, g);
   theCommands.Add("bopaddpcs", "Use >bopaddpcs Shape", __FILE__, bopaddpcs, g);
 }
-
-//=================================================================================================
 
 int btolx(Draw_Interpretor& di, int n, const char** a)
 {
@@ -80,37 +76,32 @@ int btolx(Draw_Interpretor& di, int n, const char** a)
     di << " Null shape is not allowed\n";
     return 1;
   }
-  //
+
   double aTolEMin = 1.e-7;
   if (n == 3)
   {
     aTolEMin = Draw::Atof(a[2]);
   }
-  //
-  // Edge Tolerances
+
   ReduceEdgeTolerance(aS, aTolEMin);
-  //
-  // Face Tolerances
+
   ReduceFaceTolerance(aS);
-  //
-  // Vertex Tolerances
+
   ReduceVertexTolerance(aS);
-  //
+
   BRepLib::SameParameter(aS, 1.e-7, true);
-  //
+
   DBRep::Set(a[1], aS);
   return 0;
 }
-
-//=================================================================================================
 
 void ReduceEdgeTolerance(const TopoDS_Shape& aS, const double aTolTreshold)
 {
   int                                                           i, aNbE;
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aEMap;
-  //
+
   TopExp::MapShapes(aS, TopAbs_EDGE, aEMap);
-  //
+
   aNbE = aEMap.Extent();
   for (i = 1; i <= aNbE; i++)
   {
@@ -120,16 +111,14 @@ void ReduceEdgeTolerance(const TopoDS_Shape& aS, const double aTolTreshold)
   }
 }
 
-//=================================================================================================
-
 void ReduceFaceTolerance(const TopoDS_Shape& aS)
 {
   int                                                           i, j, aNbF, aNbE;
   double                                                        aTolE, aTolx, aTolEMin;
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aFMap, aEMap;
-  //
+
   aTolEMin = 1.e-7;
-  //
+
   TopExp::MapShapes(aS, TopAbs_FACE, aFMap);
   aNbF = aFMap.Extent();
   for (i = 1; i <= aNbF; i++)
@@ -137,7 +126,7 @@ void ReduceFaceTolerance(const TopoDS_Shape& aS)
     aTolx                        = 1.e6;
     const TopoDS_Face&       aF  = TopoDS::Face(aFMap(i));
     occ::handle<BRep_TFace>& aTF = *((occ::handle<BRep_TFace>*)&aF.TShape());
-    //
+
     TopExp::MapShapes(aF, TopAbs_EDGE, aEMap);
     aNbE = aEMap.Extent();
     for (j = 1; j <= aNbE; ++j)
@@ -153,8 +142,6 @@ void ReduceFaceTolerance(const TopoDS_Shape& aS)
     aTF->Tolerance(aTolE);
   }
 }
-
-//=================================================================================================
 
 void ReduceVertexTolerance(const TopoDS_Shape& aS)
 {
@@ -176,8 +163,6 @@ void ReduceVertexTolerance(const TopoDS_Shape& aS)
   }
 }
 
-//=================================================================================================
-
 void ProcessEdge(const TopoDS_Edge& aE, const double aTolTreshold)
 {
   int      i, aNb = 23;
@@ -185,37 +170,34 @@ void ProcessEdge(const TopoDS_Edge& aE, const double aTolTreshold)
   gp_Pnt   aPC3D, aP3D;
   gp_Pnt2d aPC2D;
 
-  // NCollection_List<TopoDS_Shape>::Iterator anIt;// Wng in Gcc 3.0
   NCollection_List<occ::handle<BRep_CurveRepresentation>>::Iterator itcr;
-  //
+
   occ::handle<Geom_Curve> aC3D = BRep_Tool::Curve(aE, aT1, aT2);
   if (aC3D.IsNull())
   {
     return;
   }
-  //
+
   dT = (aT2 - aT1) / aNb;
-  //
+
   occ::handle<BRep_TEdge>& TE   = *((occ::handle<BRep_TEdge>*)&aE.TShape());
   const TopLoc_Location&   Eloc = aE.Location();
-  //
+
   aTolMax2                                                            = -1.e6;
   const NCollection_List<occ::handle<BRep_CurveRepresentation>>& aLCR = TE->Curves();
-  //
+
   itcr.Initialize(aLCR);
   for (; itcr.More(); itcr.Next())
   {
     const occ::handle<BRep_CurveRepresentation>& cr  = itcr.Value();
     const TopLoc_Location&                       loc = cr->Location();
-    TopLoc_Location                              L   = (Eloc * loc); //.Predivided(aV.Location());
-    //
-    // 3D-Curve
+    TopLoc_Location                              L   = (Eloc * loc);
+
     if (cr->IsCurve3D())
     {
       continue;
     }
-    //
-    // 2D-Curve
+
     else if (cr->IsCurveOnSurface())
     {
       const occ::handle<Geom2d_Curve>& aC2D = cr->PCurve();
@@ -223,10 +205,9 @@ void ProcessEdge(const TopoDS_Edge& aE, const double aTolTreshold)
       {
         continue;
       }
-      // Surface
+
       const occ::handle<Geom_Surface>& aS = cr->Surface();
-      //
-      // 2D-point treatment
+
       for (i = 0; i <= aNb; ++i)
       {
         aT = aT1 + i * dT;
@@ -244,28 +225,21 @@ void ProcessEdge(const TopoDS_Edge& aE, const double aTolTreshold)
           aTolMax2 = aD2;
         }
       }
-    } // if (cr->IsCurveOnSurface())
-  } // for (; itcr.More(); itcr.Next())
+    }
+  }
 
-  // #########################################################
-  //
   if (aTolMax2 < 0.)
   {
     return;
   }
-  //
-  //
-  aTolMax2 = sqrt(aTolMax2);
 
-  // printf(" aTolMax=%15.10lf, aTolWas=%15.10lf\n", aTolMax2, aTolE);
+  aTolMax2 = sqrt(aTolMax2);
 
   double aTolSet;
   aTolSet = (aTolMax2 > aTolTreshold) ? aTolMax2 : aTolTreshold;
 
   TE->Tolerance(aTolSet);
 }
-
-//=================================================================================================
 
 void ProcessVertex(const TopoDS_Vertex&                  aV,
                    const NCollection_List<TopoDS_Shape>& aLE,
@@ -280,37 +254,37 @@ void ProcessVertex(const TopoDS_Vertex&                  aV,
   TopExp_Explorer                          aVExp;
 
   NCollection_List<occ::handle<BRep_CurveRepresentation>>::Iterator itcr;
-  //
+
   aTolMax2 = -1.e6;
-  //
+
   occ::handle<BRep_TVertex>& TV    = *((occ::handle<BRep_TVertex>*)&aV.TShape());
   const gp_Pnt&              aPV3D = TV->Pnt();
   aTol                             = BRep_Tool::Tolerance(aV);
-  //
+
   anIt.Initialize(aLE);
   for (; anIt.More(); anIt.Next())
   {
     const TopoDS_Edge& aE = TopoDS::Edge(anIt.Value());
-    //
+
     occ::handle<BRep_TEdge>& TE   = *((occ::handle<BRep_TEdge>*)&aE.TShape());
     const TopLoc_Location&   Eloc = aE.Location();
-    //
+
     aVExp.Init(aE, TopAbs_VERTEX);
     for (; aVExp.More(); aVExp.Next())
     {
       const TopoDS_Vertex& aVx = TopoDS::Vertex(aVExp.Current());
-      //
+
       if (!aVx.IsSame(aV))
       {
         continue;
       }
-      //
+
       anOrV = aVx.Orientation();
       if (anOrV != TopAbs_FORWARD && anOrV != TopAbs_REVERSED)
       {
         continue;
       }
-      //
+
       const NCollection_List<occ::handle<BRep_CurveRepresentation>>& aLCR = TE->Curves();
       itcr.Initialize(aLCR);
       for (; itcr.More(); itcr.Next())
@@ -318,17 +292,16 @@ void ProcessVertex(const TopoDS_Vertex&                  aV,
         const occ::handle<BRep_CurveRepresentation>& cr  = itcr.Value();
         const TopLoc_Location&                       loc = cr->Location();
         TopLoc_Location                              L   = (Eloc * loc).Predivided(aV.Location());
-        //
-        // 3D-Curve
+
         if (cr->IsCurve3D())
         {
           const occ::handle<Geom_Curve>& aC3D = cr->Curve3D();
-          //
+
           if (aC3D.IsNull())
           {
             continue;
           }
-          // 3D-point treatment
+
           aParam = BRep_Tool::Parameter(aVx, aE);
           aPC3D  = aC3D->Value(aParam);
           aPC3D.Transform(L.Transformation());
@@ -337,10 +310,8 @@ void ProcessVertex(const TopoDS_Vertex&                  aV,
           {
             aTolMax2 = aD2;
           }
-          //
-        } // if (cr->IsCurve3D())
-        //
-        // 2D-Curve
+        }
+
         else if (cr->IsCurveOnSurface())
         {
           const occ::handle<Geom2d_Curve>& aC2D = cr->PCurve();
@@ -348,10 +319,9 @@ void ProcessVertex(const TopoDS_Vertex&                  aV,
           {
             continue;
           }
-          // Surface
+
           const occ::handle<Geom_Surface>& aS = cr->Surface();
-          //
-          // 2D-point treatment
+
           aParam = BRep_Tool::Parameter(aVx, aE, aS, L);
           aPC2D  = aC2D->Value(aParam);
           aS->D0(aPC2D.X(), aPC2D.Y(), aPC3D);
@@ -361,25 +331,22 @@ void ProcessVertex(const TopoDS_Vertex&                  aV,
           {
             aTolMax2 = aD2;
           }
-        } // if (cr->IsCurveOnSurface())
+        }
+      }
+    }
+  }
 
-      } // for (; itcr.More(); itcr.Next())
-    } // for (; aVExp.More(); aVExp.Next())
-  } // for (; anIt.More(); anIt.Next())
-  // #########################################################
-  //
-  //  Reducing
   if (aTolMax2 < 0.)
   {
     return;
   }
-  //
+
   aTolMax2 = sqrt(aTolMax2);
   if (aTolMax2 > aTol)
   {
     return;
   }
-  //
+
   anIt.Initialize(aLE);
   for (; anIt.More(); anIt.Next())
   {
@@ -391,7 +358,7 @@ void ProcessVertex(const TopoDS_Vertex&                  aV,
       aTolMax2 = aTolE;
     }
   }
-  //
+
   anIt.Initialize(aLF);
   for (; anIt.More(); anIt.Next())
   {
@@ -403,17 +370,14 @@ void ProcessVertex(const TopoDS_Vertex&                  aV,
       aTolMax2 = aTolE;
     }
   }
-  //
+
   if (aTolMax2 > aTol)
   {
     return;
   }
-  //
-  // Update Tolerance
+
   TV->Tolerance(aTolMax2);
 }
-
-//=================================================================================================
 
 int breducetolerance(Draw_Interpretor& di, int n, const char** a)
 {
@@ -436,15 +400,6 @@ int breducetolerance(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//
-//=======================================================================
-// function : bopaddpcs
-// purpose  : Some Edges do not contain P-Curves on Faces to which
-//           they belong to.
-//           These faces usually based on Geom_Plane surface.
-//           To prevent sophisticated treatment the Command "bopaddpcs:
-//           adds P-Curves for the edges .
-//=======================================================================
 int bopaddpcs(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
@@ -460,14 +415,12 @@ int bopaddpcs(Draw_Interpretor& di, int n, const char** a)
     di << " Null shape is not allowed \n";
     return 1;
   }
-  //
+
   PreparePCurves(aS, di);
-  //
+
   DBRep::Set(a[1], aS);
   return 0;
 }
-
-//=================================================================================================
 
 void PreparePCurves(const TopoDS_Shape& aShape, Draw_Interpretor& di)
 {
@@ -479,33 +432,32 @@ void PreparePCurves(const TopoDS_Shape& aShape, Draw_Interpretor& di)
   occ::handle<Geom_Curve>   aC3D;
   occ::handle<Geom2d_Curve> aC2D;
   BRep_Builder              aBB;
-  //
+
   TopExp::MapShapesAndAncestors(aShape, TopAbs_EDGE, TopAbs_FACE, aEFMap);
-  //
+
   aNbE = aEFMap.Extent();
   for (i = 1; i <= aNbE; ++i)
   {
     const TopoDS_Edge& aE = TopoDS::Edge(aEFMap.FindKey(i));
-    //
+
     if (BRep_Tool::Degenerated(aE))
     {
       continue;
     }
-    //
+
     aC3D = BRep_Tool::Curve(aE, aT1, aT2);
     if (aC3D.IsNull())
     {
       continue;
     }
     aTolE = BRep_Tool::Tolerance(aE);
-    //
+
     const NCollection_List<TopoDS_Shape>&    aLF = aEFMap(i);
     NCollection_List<TopoDS_Shape>::Iterator aFIt(aLF);
     for (; aFIt.More(); aFIt.Next())
     {
       const TopoDS_Face& aF = TopoDS::Face(aFIt.Value());
-      //
-      // Map of surfaces on which the edge lays .
+
       NCollection_IndexedMap<occ::handle<Standard_Transient>> aSCRMap;
       occ::handle<BRep_TEdge>& TE = *((occ::handle<BRep_TEdge>*)&aE.TShape());
       const NCollection_List<occ::handle<BRep_CurveRepresentation>>&    aLCR = TE->Curves();
@@ -514,19 +466,18 @@ void PreparePCurves(const TopoDS_Shape& aShape, Draw_Interpretor& di)
       for (; itcr.More(); itcr.Next())
       {
         const occ::handle<BRep_CurveRepresentation>& cr = itcr.Value();
-        //
+
         if (cr->IsCurveOnSurface())
         {
           const occ::handle<Geom_Surface>& aSCR = cr->Surface();
           aSCRMap.Add(aSCR);
         }
-        //
       }
-      //
+
       const occ::handle<Geom_Surface>& aS = BRep_Tool::Surface(aF, aLoc);
       if (!aSCRMap.Contains(aS))
       {
-        // try to obtain 2D curve
+
         aC2D = BRep_Tool::CurveOnSurface(aE, aS, aLoc, aT1, aT2);
         if (aC2D.IsNull())
         {

@@ -52,7 +52,6 @@ void IGESGeom_BSplineCurve::Init(const int                                      
   theUmax      = aUmax;
   theNorm      = aNorm;
   InitTypeAndForm(126, FormNumber());
-  // FormNumber  precises the shape  0-5
 }
 
 void IGESGeom_BSplineCurve::SetFormNumber(const int form)

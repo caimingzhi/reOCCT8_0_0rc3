@@ -9,25 +9,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_ByteArrayDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_ByteArrayDriver::BinMDataStd_ByteArrayDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_ByteArray)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_ByteArrayDriver::NewEmpty() const
 {
   return new TDataStd_ByteArray();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool BinMDataStd_ByteArrayDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                         const occ::handle<TDF_Attribute>& theTarget,
                                         BinObjMgt_RRelocationTable&       theRelocTable) const
@@ -68,10 +60,6 @@ bool BinMDataStd_ByteArrayDriver::Paste(const BinObjMgt_Persistent&       theSou
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void BinMDataStd_ByteArrayDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
   BinObjMgt_Persistent&             theTarget,
@@ -95,7 +83,6 @@ void BinMDataStd_ByteArrayDriver::Paste(
   theTarget.PutByteArray(aPtr, bytes->Length());
   theTarget << (uint8_t)(anAtt->GetDelta() ? 1 : 0);
 
-  // process user defined guid
   if (anAtt->ID() != TDataStd_ByteArray::GetID())
     theTarget << anAtt->ID();
 }

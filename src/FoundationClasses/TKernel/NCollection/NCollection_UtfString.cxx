@@ -5,14 +5,11 @@
 #include <NCollection_UtfString.hpp>
 
 #if !defined(__ANDROID__)
-//=================================================================================================
 
 NCollection_UtfStringTool::~NCollection_UtfStringTool()
 {
   delete[] myWideBuffer;
 }
-
-//=================================================================================================
 
 wchar_t* NCollection_UtfStringTool::FromLocale(const char* theString)
 {
@@ -23,7 +20,7 @@ wchar_t* NCollection_UtfStringTool::FromLocale(const char* theString)
   }
 
   #if defined(_WIN32)
-  // use WinAPI
+
   int aWideSize = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, theString, -1, NULL, 0);
   if (aWideSize <= 0)
   {
@@ -34,8 +31,7 @@ wchar_t* NCollection_UtfStringTool::FromLocale(const char* theString)
   MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, theString, -1, myWideBuffer, aWideSize);
   myWideBuffer[aWideSize] = L'\0';
   #else
-  // this is size in bytes but should probably be enough to store string in wide chars
-  // notice that these functions are sensitive to locale set by application!
+
   int aMbLen = mblen(theString, MB_CUR_MAX);
   if (aMbLen <= 0)
   {
@@ -48,8 +44,6 @@ wchar_t* NCollection_UtfStringTool::FromLocale(const char* theString)
   #endif
   return myWideBuffer;
 }
-
-//=================================================================================================
 
 bool NCollection_UtfStringTool::ToLocale(const wchar_t* theWideString,
                                          char*          theBuffer,

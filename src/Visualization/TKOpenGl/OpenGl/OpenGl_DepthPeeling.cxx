@@ -6,8 +6,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_DepthPeeling, OpenGl_NamedResource)
 
-//=================================================================================================
-
 OpenGl_DepthPeeling::OpenGl_DepthPeeling()
     : OpenGl_NamedResource("depth_peeling")
 {
@@ -18,14 +16,10 @@ OpenGl_DepthPeeling::OpenGl_DepthPeeling()
   myBlendBackFboOit          = new OpenGl_FrameBuffer(myResourceId + ":fbo_blend");
 }
 
-//=================================================================================================
-
 OpenGl_DepthPeeling::~OpenGl_DepthPeeling()
 {
   Release(nullptr);
 }
-
-//=================================================================================================
 
 void OpenGl_DepthPeeling::Release(OpenGl_Context* theCtx)
 {
@@ -36,16 +30,12 @@ void OpenGl_DepthPeeling::Release(OpenGl_Context* theCtx)
   myBlendBackFboOit->Release(theCtx);
 }
 
-//=================================================================================================
-
 size_t OpenGl_DepthPeeling::EstimatedDataSize() const
 {
   return myDepthPeelFbosOit[0]->EstimatedDataSize() + myDepthPeelFbosOit[1]->EstimatedDataSize()
          + myFrontBackColorFbosOit[0]->EstimatedDataSize()
          + myFrontBackColorFbosOit[1]->EstimatedDataSize() + myBlendBackFboOit->EstimatedDataSize();
 }
-
-//=================================================================================================
 
 void OpenGl_DepthPeeling::AttachDepthTexture(
   const occ::handle<OpenGl_Context>& theCtx,
@@ -65,8 +55,6 @@ void OpenGl_DepthPeeling::AttachDepthTexture(
     }
   }
 }
-
-//=================================================================================================
 
 void OpenGl_DepthPeeling::DetachDepthTexture(const occ::handle<OpenGl_Context>& theCtx)
 {

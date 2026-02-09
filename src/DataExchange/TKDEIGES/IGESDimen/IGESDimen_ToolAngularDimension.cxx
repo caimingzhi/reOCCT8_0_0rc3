@@ -26,7 +26,6 @@ void IGESDimen_ToolAngularDimension::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&    IR,
   IGESData_ParamReader&                          PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   occ::handle<IGESDimen_GeneralNote> note;
   occ::handle<IGESDimen_WitnessLine> firstWitness;
@@ -40,33 +39,38 @@ void IGESDimen_ToolAngularDimension::ReadOwnParams(
                 PR.Current(),
                 "General Note Entity",
                 STANDARD_TYPE(IGESDimen_GeneralNote),
-                note); // szv#4:S4163:12Mar99 `st=` not needed
+                note);
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "First Witness Entity",
-                // clang-format off
-		 STANDARD_TYPE(IGESDimen_WitnessLine), firstWitness, true); //szv#4:S4163:12Mar99 `st=` not needed
 
-  PR.ReadEntity (IR,PR.Current(),"Second Witness Entity",
-		 STANDARD_TYPE(IGESDimen_WitnessLine), secondWitness, true); //szv#4:S4163:12Mar99 `st=` not needed
+                STANDARD_TYPE(IGESDimen_WitnessLine),
+                firstWitness,
+                true);
 
-  PR.ReadXY(PR.CurrentList(1, 2), "Vertex Point Co-ords", vertex); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR,
+                PR.Current(),
+                "Second Witness Entity",
+                STANDARD_TYPE(IGESDimen_WitnessLine),
+                secondWitness,
+                true);
 
-  PR.ReadReal(PR.Current(), "Radius of Leader arcs", radius); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadXY(PR.CurrentList(1, 2), "Vertex Point Co-ords", vertex);
+
+  PR.ReadReal(PR.Current(), "Radius of Leader arcs", radius);
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "First Leader Entity",
                 STANDARD_TYPE(IGESDimen_LeaderArrow),
-                firstLeader); // szv#4:S4163:12Mar99 `st=` not needed
+                firstLeader);
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "Second Leader Entity",
                 STANDARD_TYPE(IGESDimen_LeaderArrow),
-                secondLeader); // szv#4:S4163:12Mar99 `st=` not needed
+                secondLeader);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(note, firstWitness, secondWitness, vertex, radius, firstLeader, secondLeader);
@@ -114,7 +118,7 @@ void IGESDimen_ToolAngularDimension::OwnCopy(const occ::handle<IGESDimen_Angular
 }
 
 IGESData_DirChecker IGESDimen_ToolAngularDimension::DirChecker(
-  const occ::handle<IGESDimen_AngularDimension>& /* ent */) const
+  const occ::handle<IGESDimen_AngularDimension>&) const
 {
   IGESData_DirChecker DC(202, 0);
   DC.Structure(IGESData_DefVoid);
@@ -125,10 +129,9 @@ IGESData_DirChecker IGESDimen_ToolAngularDimension::DirChecker(
   return DC;
 }
 
-void IGESDimen_ToolAngularDimension::OwnCheck(
-  const occ::handle<IGESDimen_AngularDimension>& /* ent */,
-  const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /* ach */) const
+void IGESDimen_ToolAngularDimension::OwnCheck(const occ::handle<IGESDimen_AngularDimension>&,
+                                              const Interface_ShareTool&,
+                                              occ::handle<Interface_Check>&) const
 {
 }
 

@@ -28,7 +28,7 @@ void IGESAppli_ToolNodalDisplAndRot::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&    IR,
   IGESData_ParamReader&                          PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   int                                                                  nbcases = 0;
   int                                                                  nbnodes = 0;
   occ::handle<NCollection_HArray1<occ::handle<IGESDimen_GeneralNote>>> tempNotes;
@@ -44,7 +44,7 @@ void IGESAppli_ToolNodalDisplAndRot::ReadOwnParams(
     for (int i = 1; i <= nbcases; i++)
     {
       occ::handle<IGESDimen_GeneralNote> anentity;
-      // szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "General Note",
@@ -53,7 +53,7 @@ void IGESAppli_ToolNodalDisplAndRot::ReadOwnParams(
         tempNotes->SetValue(i, anentity);
     }
   }
-  // szv#4:S4163:12Mar99 moved in if
+
   if (PR.ReadInteger(PR.Current(), "No. of nodes", nbnodes))
   {
     tempNodeIdentifiers = new NCollection_HArray1<int>(1, nbnodes);
@@ -77,7 +77,7 @@ void IGESAppli_ToolNodalDisplAndRot::ReadOwnParams(
       occ::handle<NCollection_HArray1<gp_XYZ>> tempArray;
       if (tempFlag)
       {
-        // tempFlag indicates if nbcases has been properly read
+
         tempArray1 = new NCollection_HArray1<gp_XYZ>(1, nbcases);
         tempArray  = new NCollection_HArray1<gp_XYZ>(1, nbcases);
         for (int k = 1; k <= nbcases; k++)
@@ -183,19 +183,18 @@ void IGESAppli_ToolNodalDisplAndRot::OwnCopy(const occ::handle<IGESAppli_NodalDi
 }
 
 IGESData_DirChecker IGESAppli_ToolNodalDisplAndRot::DirChecker(
-  const occ::handle<IGESAppli_NodalDisplAndRot>& /* ent */) const
+  const occ::handle<IGESAppli_NodalDisplAndRot>&) const
 {
-  IGESData_DirChecker DC(138, 0); // Form no = 0 & Type = 138
+  IGESData_DirChecker DC(138, 0);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.HierarchyStatusIgnored();
   return DC;
 }
 
-void IGESAppli_ToolNodalDisplAndRot::OwnCheck(
-  const occ::handle<IGESAppli_NodalDisplAndRot>& /* ent */,
-  const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /* ach */) const
+void IGESAppli_ToolNodalDisplAndRot::OwnCheck(const occ::handle<IGESAppli_NodalDisplAndRot>&,
+                                              const Interface_ShareTool&,
+                                              occ::handle<Interface_Check>&) const
 {
 }
 
@@ -214,7 +213,6 @@ void IGESAppli_ToolNodalDisplAndRot::OwnDump(const occ::handle<IGESAppli_NodalDi
   IGESData_DumpEntities(S, dumper, level, 1, nbcases, ent->Note);
   S << "\n";
 
-  //  gp_GTrsf loca;  // true location n.u.
   switch (level)
   {
     case 4:
@@ -223,10 +221,9 @@ void IGESAppli_ToolNodalDisplAndRot::OwnDump(const occ::handle<IGESAppli_NodalDi
       S << "NodeIdentifiers : ";
       IGESData_DumpVals(S, -level, 1, nbnodes, ent->NodeIdentifier);
       S << "Translation Parameters : ";
-      //  ?? Possibly JAGGED ??
-      //      IGESData_DumpListXYZL(S,-level,1,nbcases,ent->TranslationParameter,loca);
+
       S << "Rotational Parameters : ";
-      //      IGESData_DumpListXYZL(S,-level,1,nbcases,ent->RotationalParameter,loca);
+
       S << "  TO BE DONE" << std::endl;
       break;
     case 5:
@@ -242,7 +239,7 @@ void IGESAppli_ToolNodalDisplAndRot::OwnDump(const occ::handle<IGESAppli_NodalDi
       S << "Node Identifiers :\n";
       S << "Translation Parameters :\n";
       S << "Rotational Parameters : Count = " << nbcases;
-      //     IGESData_DumpListXYZL(S,-level,1,nbcases,ent->RotationalParameter,loca);
+
       S << "\n";
       for (int j = 1; j <= nbnodes; j++)
       {

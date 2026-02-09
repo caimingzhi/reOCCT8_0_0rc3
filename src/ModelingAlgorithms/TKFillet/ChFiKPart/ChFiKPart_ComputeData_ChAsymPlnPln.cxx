@@ -21,19 +21,6 @@
 #include <Precision.hpp>
 #include <TopOpeBRepDS_DataStructure.hpp>
 
-//=======================================================================
-// function : MakeChAsym
-// Purpose  : Compute the chamfer in the particular case plane/plane.
-//           Compute the SurfData <Data> of the chamfer on the <Spine>
-//           between the plane <Pl1> and the plane <Pl2>, with distances
-//           <Dis> and Angle on <Pl1> .
-//           <First> is the parameter of the start point on the <Spine>
-//           <Or1> and <Or2> are the orientations of the plane <Pl1> and
-//           <Pl2>, and <Of1> the orientation of the face build on the
-//           plane <Pl1>.
-// Out      : True if the chamfer has been computed
-//           False else
-//=======================================================================
 bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
                           const occ::handle<ChFiDS_SurfData>& Data,
                           const gp_Pln&                       Pl1,
@@ -48,9 +35,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
                           const bool                          DisOnP1)
 {
 
-  // Creation of the plane which carry the chamfer
-
-  // compute the normals to the planes Pl1 and Pl2
   gp_Ax3 Pos1 = Pl1.Position();
   gp_Dir D1   = Pos1.XDirection().Crossed(Pos1.YDirection());
   if (Or1 == TopAbs_REVERSED)
@@ -65,7 +49,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
     D2.Reverse();
   }
 
-  // compute the intersection line of Pl1 and Pl2
   IntAna_QuadQuadGeo LInt(Pl1, Pl2, Precision::Angular(), Precision::Confusion());
 
   gp_Pnt P;
@@ -103,31 +86,27 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
     dis1 = Dis / (cosP + sinP / std::tan(Angle));
     dis2 = Dis;
   }
-  // Compute a point on the plane Pl1 and on the chamfer
+
   gp_Pnt P1(P.X() + dis1 * VecTransl1.X(),
             P.Y() + dis1 * VecTransl1.Y(),
             P.Z() + dis1 * VecTransl1.Z());
 
-  // Point on the plane Pl2 and on the chamfer
   gp_Pnt P2(P.X() + dis2 * VecTransl2.X(),
             P.Y() + dis2 * VecTransl2.Y(),
             P.Z() + dis2 * VecTransl2.Z());
 
-  // the middle point of P1 P2 is the origin of the chamfer
   gp_Pnt Po((P1.X() + P2.X()) / 2., (P1.Y() + P2.Y()) / 2., (P1.Z() + P2.Z()) / 2.);
 
-  // compute a second point on the plane Pl2
   gp_Pnt Pp = ElCLib::Value(Fint + 10., LInt.Line(1));
   gp_Pnt P22(Pp.X() + dis2 * VecTransl2.X(),
              Pp.Y() + dis2 * VecTransl2.Y(),
              Pp.Z() + dis2 * VecTransl2.Z());
 
-  // Compute the normal vector <AxisPlan> to the chamfer's plane
   gp_Dir V1(P2.X() - P1.X(), P2.Y() - P1.Y(), P2.Z() - P1.Z());
   gp_Dir V2(P22.X() - P1.X(), P22.Y() - P1.Y(), P22.Z() - P1.Z());
   gp_Dir AxisPlan = V1.Crossed(V2);
 
-  gp_Dir xdir = LinAx1; // u axis
+  gp_Dir xdir = LinAx1;
   gp_Ax3 PlanAx3(Po, AxisPlan, xdir);
   if (PlanAx3.YDirection().Dot(D2) >= 0.)
     PlanAx3.YReverse();
@@ -135,8 +114,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
   occ::handle<Geom_Plane> gpl = new Geom_Plane(PlanAx3);
   Data->ChangeSurf(ChFiKPart_IndexSurfaceInDS(gpl, DStr));
 
-  // About the orientation of the chamfer plane
-  // Compute the normal to the face 1
   gp_Dir norpl    = Pos1.XDirection().Crossed(Pos1.YDirection());
   gp_Dir norface1 = norpl;
   if (Of1 == TopAbs_REVERSED)
@@ -144,7 +121,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
     norface1.Reverse();
   }
 
-  // Compute the orientation of the chamfer plane
   gp_Dir norplch = gpl->Pln().Position().XDirection().Crossed(gpl->Pln().Position().YDirection());
 
   gp_Dir DirCh12(gp_Vec(P1, P2));
@@ -157,9 +133,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
   else
     Data->ChangeOrientation() = TopAbs_FORWARD;
 
-  // Loading of the FaceInterferences with pcurves & 3d curves.
-
-  // case face 1
   gp_Lin                 linPln(P1, xdir);
   occ::handle<Geom_Line> GLinPln1 = new Geom_Line(linPln);
 
@@ -189,8 +162,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
                                                  trans,
                                                  GLin2dPln1,
                                                  GLin2dPlnCh1);
-
-  // case face 2
 
   linPln.SetLocation(P2);
   occ::handle<Geom_Line> GLinPln2 = new Geom_Line(linPln);

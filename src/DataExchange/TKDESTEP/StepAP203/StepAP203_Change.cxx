@@ -3,11 +3,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP203_Change, StepBasic_ActionAssignment)
 
-//=================================================================================================
-
 StepAP203_Change::StepAP203_Change() = default;
-
-//=================================================================================================
 
 void StepAP203_Change::Init(const occ::handle<StepBasic_Action>& aActionAssignment_AssignedAction,
                             const occ::handle<NCollection_HArray1<StepAP203_WorkItem>>& aItems)
@@ -17,14 +13,10 @@ void StepAP203_Change::Init(const occ::handle<StepBasic_Action>& aActionAssignme
   theItems = aItems;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<StepAP203_WorkItem>> StepAP203_Change::Items() const
 {
   return theItems;
 }
-
-//=================================================================================================
 
 void StepAP203_Change::SetItems(const occ::handle<NCollection_HArray1<StepAP203_WorkItem>>& aItems)
 {

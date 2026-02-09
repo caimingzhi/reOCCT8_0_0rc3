@@ -27,7 +27,6 @@ Geom2dGcc_Lin2d2TanIter::Geom2dGcc_Lin2d2TanIter(const GccEnt_QualifiedCirc& Qua
   pararg1 = 0.;
   par2sol = 0.0;
   pararg2 = 0.0;
-  // double Tol = std::abs(Tolang);
 
   WellDone   = false;
   qualifier1 = GccEnt_noqualifier;
@@ -50,13 +49,12 @@ Geom2dGcc_Lin2d2TanIter::Geom2dGcc_Lin2d2TanIter(const GccEnt_QualifiedCirc& Qua
   if (sol.IsDone())
   {
     double Usol = sol.Root();
-    //     gp_Pnt2d Origine,Pt;
-    //  Modified by Sergey KHROMOV - Thu Apr  5 17:39:47 2001 Begin
+
     double Norm;
     func.Value(Usol, Norm);
     if (std::abs(Norm) < Tolang)
     {
-      //  Modified by Sergey KHROMOV - Thu Apr  5 17:39:48 2001 End
+
       gp_Pnt2d Origine;
       gp_Vec2d Vect1;
       gp_Vec2d Vect2;
@@ -98,7 +96,7 @@ Geom2dGcc_Lin2d2TanIter::Geom2dGcc_Lin2d2TanIter(const GccEnt_QualifiedCirc& Qua
               pnttg1sol = gp_Pnt2d(C1.Location().XY() + normal);
             }
           }
-          // 	 if (gp_Vec2d(direc.XY()).Angle(gp_Vec2d(pnttg1sol,Origine)) <= Tol) {
+
           pnttg2sol  = Origine;
           linsol     = gp_Lin2d(pnttg1sol, direc);
           WellDone   = true;
@@ -155,12 +153,12 @@ Geom2dGcc_Lin2d2TanIter::Geom2dGcc_Lin2d2TanIter(const Geom2dGcc_QCurve& Qualifi
   if (Root.IsDone())
   {
     Root.Root(Ufirst);
-    //  Modified by Sergey KHROMOV - Thu Apr  5 17:45:00 2001 Begin
+
     math_Vector Norm(1, 2);
     Func.Value(Ufirst, Norm);
     if (std::abs(Norm(1)) < Tolang && std::abs(Norm(2)) < Tolang)
     {
-      //  Modified by Sergey KHROMOV - Thu Apr  5 17:45:01 2001 End
+
       gp_Pnt2d point1, point2;
       gp_Vec2d Vect11, Vect12, Vect21, Vect22;
       Geom2dGcc_CurveTool::D2(Cu1, Ufirst(1), point1, Vect11, Vect12);
@@ -227,12 +225,12 @@ Geom2dGcc_Lin2d2TanIter::Geom2dGcc_Lin2d2TanIter(const Geom2dGcc_QCurve& Qualifi
   if (sol.IsDone())
   {
     double Usol = sol.Root();
-    //  Modified by Sergey KHROMOV - Thu Apr  5 17:45:17 2001 Begin
+
     double Norm;
     func.Value(Usol, Norm);
     if (std::abs(Norm) < Tolang)
     {
-      //  Modified by Sergey KHROMOV - Thu Apr  5 17:45:19 2001 End
+
       gp_Pnt2d Origine;
       gp_Vec2d Vect1;
       gp_Vec2d Vect2;

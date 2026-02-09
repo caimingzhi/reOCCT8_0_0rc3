@@ -5,24 +5,15 @@
 
 class LDOM_CharacterData;
 
-//  Class LDOM_BasicText
-//
-
 class LDOM_BasicText : public LDOM_BasicNode
 {
 public:
-  // ---------- PUBLIC METHODS ----------
-
   LDOM_BasicText()
       : LDOM_BasicNode(LDOM_Node::UNKNOWN)
   {
   }
 
-  //    Empty constructor
-
   LDOM_BasicText& operator=(const LDOM_NullPtr* aNull);
-
-  //    Nullify
 
   const LDOMBasicString& GetData() const { return myValue; }
 
@@ -32,7 +23,6 @@ public:
   }
 
 private:
-  // ---------- PRIVATE METHODS ----------
   friend class LDOM_Node;
   friend class LDOMParser;
   friend class LDOM_Document;
@@ -44,17 +34,12 @@ private:
   {
   }
 
-  // Constructor
-
   LDOM_BasicText(const LDOM_CharacterData& aText);
 
   static LDOM_BasicText& Create(const LDOM_Node::NodeType           aType,
                                 const LDOMBasicString&              aData,
                                 const occ::handle<LDOM_MemManager>& aDoc);
-  // Creation
 
 private:
-  // ---------- PRIVATE FIELDS ----------
-
   LDOMBasicString myValue;
 };

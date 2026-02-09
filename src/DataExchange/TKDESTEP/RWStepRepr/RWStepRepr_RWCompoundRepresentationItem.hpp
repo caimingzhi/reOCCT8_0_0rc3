@@ -11,7 +11,6 @@ class StepRepr_CompoundRepresentationItem;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for CompoundRepresentationItem
 class RWStepRepr_RWCompoundRepresentationItem
 {
 public:
@@ -27,7 +26,6 @@ public:
   Standard_HIDDEN void WriteStep(StepData_StepWriter&                                    SW,
                                  const occ::handle<StepRepr_CompoundRepresentationItem>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(const occ::handle<StepRepr_CompoundRepresentationItem>& ent,
                              Interface_EntityIterator&                               iter) const;
 };

@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #ifndef OCCT_DEBUG
   #define No_Standard_OutOfRange
@@ -25,8 +13,6 @@
 #include <Standard_ConstructionError.hpp>
 #include <Standard_OutOfRange.hpp>
 
-//=================================================================================================
-
 gp_Mat2d::gp_Mat2d(const gp_XY& theCol1, const gp_XY& theCol2)
 {
   myMat[0][0] = theCol1.X();
@@ -34,8 +20,6 @@ gp_Mat2d::gp_Mat2d(const gp_XY& theCol1, const gp_XY& theCol2)
   myMat[0][1] = theCol2.X();
   myMat[1][1] = theCol2.Y();
 }
-
-//=================================================================================================
 
 void gp_Mat2d::SetCol(const int theCol, const gp_XY& theValue)
 {
@@ -52,8 +36,6 @@ void gp_Mat2d::SetCol(const int theCol, const gp_XY& theValue)
   }
 }
 
-//=================================================================================================
-
 void gp_Mat2d::SetCols(const gp_XY& theCol1, const gp_XY& theCol2)
 {
   myMat[0][0] = theCol1.X();
@@ -61,8 +43,6 @@ void gp_Mat2d::SetCols(const gp_XY& theCol1, const gp_XY& theCol2)
   myMat[0][1] = theCol2.X();
   myMat[1][1] = theCol2.Y();
 }
-
-//=================================================================================================
 
 void gp_Mat2d::SetRow(const int theRow, const gp_XY& theValue)
 {
@@ -79,8 +59,6 @@ void gp_Mat2d::SetRow(const int theRow, const gp_XY& theValue)
   }
 }
 
-//=================================================================================================
-
 void gp_Mat2d::SetRows(const gp_XY& theRow1, const gp_XY& theRow2)
 {
   myMat[0][0] = theRow1.X();
@@ -88,8 +66,6 @@ void gp_Mat2d::SetRows(const gp_XY& theRow1, const gp_XY& theRow2)
   myMat[1][0] = theRow2.X();
   myMat[1][1] = theRow2.Y();
 }
-
-//=================================================================================================
 
 gp_XY gp_Mat2d::Column(const int theCol) const
 {
@@ -101,14 +77,10 @@ gp_XY gp_Mat2d::Column(const int theCol) const
   return gp_XY(myMat[0][1], myMat[1][1]);
 }
 
-//=================================================================================================
-
 gp_XY gp_Mat2d::Diagonal() const
 {
   return gp_XY(myMat[0][0], myMat[1][1]);
 }
-
-//=================================================================================================
 
 gp_XY gp_Mat2d::Row(const int theRow) const
 {
@@ -119,8 +91,6 @@ gp_XY gp_Mat2d::Row(const int theRow) const
   }
   return gp_XY(myMat[1][0], myMat[1][1]);
 }
-
-//=================================================================================================
 
 void gp_Mat2d::Invert()
 {
@@ -138,8 +108,6 @@ void gp_Mat2d::Invert()
   myMat[0][1] = aNewMat[0][1] * aDet;
   myMat[1][1] = aNewMat[1][1] * aDet;
 }
-
-//=================================================================================================
 
 void gp_Mat2d::Power(const int theN)
 {

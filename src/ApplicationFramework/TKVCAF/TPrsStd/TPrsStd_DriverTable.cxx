@@ -19,14 +19,12 @@ IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_DriverTable, Standard_Transient)
 
 static occ::handle<TPrsStd_DriverTable> drivertable;
 
-//=================================================================================================
-
 occ::handle<TPrsStd_DriverTable> TPrsStd_DriverTable::Get()
 {
   if (drivertable.IsNull())
   {
     drivertable = new TPrsStd_DriverTable;
-    // it must be never destroyed, even this library is unloaded
+
     new occ::handle<TPrsStd_DriverTable>(drivertable);
 #ifdef OCCT_DEBUG
     std::cout << "The new TPrsStd_DriverTable was created" << std::endl;
@@ -35,17 +33,10 @@ occ::handle<TPrsStd_DriverTable> TPrsStd_DriverTable::Get()
   return drivertable;
 }
 
-//=================================================================================================
-
 TPrsStd_DriverTable::TPrsStd_DriverTable()
 {
   InitStandardDrivers();
 }
-
-//=======================================================================
-// function : InitStandardDrivers
-// purpose  : Adds standard drivers to the DriverTable
-//=======================================================================
 
 void TPrsStd_DriverTable::InitStandardDrivers()
 {
@@ -67,21 +58,11 @@ void TPrsStd_DriverTable::InitStandardDrivers()
   myDrivers.Bind(TDataXtd_Point::GetID(), pointdrv);
 }
 
-//=======================================================================
-// function : AddDriver
-// purpose  : Adds a driver to the DriverTable
-//=======================================================================
-
 bool TPrsStd_DriverTable::AddDriver(const Standard_GUID&               guid,
                                     const occ::handle<TPrsStd_Driver>& driver)
 {
   return myDrivers.Bind(guid, driver);
 }
-
-//=======================================================================
-// function : FindDriver
-// purpose  : Returns the driver if find
-//=======================================================================
 
 bool TPrsStd_DriverTable::FindDriver(const Standard_GUID&         guid,
                                      occ::handle<TPrsStd_Driver>& driver) const
@@ -94,17 +75,10 @@ bool TPrsStd_DriverTable::FindDriver(const Standard_GUID&         guid,
   return false;
 }
 
-//=======================================================================
-// function : RemoveDriver
-// purpose  : Removes a driver from the DriverTable
-//=======================================================================
-
 bool TPrsStd_DriverTable::RemoveDriver(const Standard_GUID& guid)
 {
   return myDrivers.UnBind(guid);
 }
-
-//=================================================================================================
 
 void TPrsStd_DriverTable::Clear()
 {

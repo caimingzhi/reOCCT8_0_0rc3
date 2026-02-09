@@ -26,25 +26,12 @@ public:
                                        const occ::handle<Adaptor3d_Curve>&   C,
                                        const occ::handle<Adaptor3d_Curve>&   CGuide);
 
-  //! returns the number of equations of the function (3).
   Standard_EXPORT int NbEquations() const override;
 
-  //! computes the values <F> of the Functions for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Value(const math_Vector& X, math_Vector& F) override;
 
-  //! returns the values <D> of the derivatives for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Derivatives(const math_Vector& X, math_Matrix& D) override;
 
-  //! returns the values <F> of the functions and the derivatives
-  //! <D> for the variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Values(const math_Vector& X, math_Vector& F, math_Matrix& D) override;
 
   Standard_EXPORT void Set(const double Param) override;
@@ -61,10 +48,8 @@ public:
 
   Standard_EXPORT const gp_Pnt& PointOnC() const override;
 
-  //! Returns U,V coordinates of the point on the surface.
   Standard_EXPORT const gp_Pnt2d& Pnt2d() const override;
 
-  //! Returns parameter of the point on the curve.
   Standard_EXPORT double ParameterOnC() const override;
 
   Standard_EXPORT bool IsTangencyPoint() const override;
@@ -75,10 +60,6 @@ public:
 
   Standard_EXPORT const gp_Vec& TangentOnC() const override;
 
-  //! Returns the tangent vector at the section,
-  //! at the beginning and the end of the section, and
-  //! returns the normal (of the surface) at
-  //! these points.
   Standard_EXPORT void Tangent(const double U,
                                const double V,
                                gp_Vec&      TgS,
@@ -86,8 +67,6 @@ public:
 
   Standard_EXPORT void Set(const double Radius, const int Choix);
 
-  //! Sets the type of section generation for the
-  //! approximations.
   Standard_EXPORT void Set(const BlendFunc_SectionShape TypeSection);
 
   Standard_EXPORT void Section(const double Param,
@@ -98,9 +77,6 @@ public:
                                double&      Pfin,
                                gp_Circ&     C);
 
-  //! Used for the first and last section
-  //! The method returns true if the derivatives
-  //! are computed, otherwise it returns false.
   Standard_EXPORT bool Section(const Blend_Point&            P,
                                NCollection_Array1<gp_Pnt>&   Poles,
                                NCollection_Array1<gp_Vec>&   DPoles,
@@ -119,36 +95,19 @@ public:
                                   NCollection_Array1<gp_Pnt>& tabP,
                                   NCollection_Array1<gp_Vec>& tabV);
 
-  //! Returns if the section is rational
   Standard_EXPORT bool IsRational() const override;
 
-  //! Returns the length of the maximum section
   Standard_EXPORT double GetSectionSize() const override;
 
-  //! Compute the minimal value of weight for each poles
-  //! of all sections.
   Standard_EXPORT void GetMinimalWeight(NCollection_Array1<double>& Weigths) const override;
 
-  //! Returns the number of intervals for continuity
-  //! <S>. May be one if Continuity(me) >= <S>
   Standard_EXPORT int NbIntervals(const GeomAbs_Shape S) const override;
 
-  //! Stores in <T> the parameters bounding the intervals
-  //! of continuity <S>.
-  //! The array must provide enough room to accommodate
-  //! for the parameters. i.e. T.Length() > NbIntervals()
-  //! raises
-  //! OutOfRange from Standard
   Standard_EXPORT void Intervals(NCollection_Array1<double>& T,
                                  const GeomAbs_Shape         S) const override;
 
   Standard_EXPORT void GetShape(int& NbPoles, int& NbKnots, int& Degree, int& NbPoles2d) override;
 
-  //! Returns the tolerance to reach in approximation
-  //! to respect
-  //! BoundTol error at the Boundary
-  //! AngleTol tangent error at the Boundary
-  //! SurfTol error inside the surface.
   Standard_EXPORT void GetTolerance(const double BoundTol,
                                     const double SurfTol,
                                     const double AngleTol,
@@ -159,7 +118,6 @@ public:
 
   Standard_EXPORT void Mults(NCollection_Array1<int>& TMults) override;
 
-  //! Used for the first and last section
   Standard_EXPORT bool Section(const Blend_Point&            P,
                                NCollection_Array1<gp_Pnt>&   Poles,
                                NCollection_Array1<gp_Vec>&   DPoles,

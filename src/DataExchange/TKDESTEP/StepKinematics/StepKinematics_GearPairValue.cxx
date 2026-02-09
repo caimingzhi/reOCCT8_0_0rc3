@@ -1,14 +1,10 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_GearPairValue.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_GearPairValue, StepKinematics_PairValue)
 
-//=================================================================================================
-
 StepKinematics_GearPairValue::StepKinematics_GearPairValue() = default;
-
-//=================================================================================================
 
 void StepKinematics_GearPairValue::Init(
   const occ::handle<TCollection_HAsciiString>&     theRepresentationItem_Name,
@@ -20,14 +16,10 @@ void StepKinematics_GearPairValue::Init(
   myActualRotation1 = theActualRotation1;
 }
 
-//=================================================================================================
-
 double StepKinematics_GearPairValue::ActualRotation1() const
 {
   return myActualRotation1;
 }
-
-//=================================================================================================
 
 void StepKinematics_GearPairValue::SetActualRotation1(const double theActualRotation1)
 {

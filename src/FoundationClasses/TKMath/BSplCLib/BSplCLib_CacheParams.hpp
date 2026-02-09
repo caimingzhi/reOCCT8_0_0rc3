@@ -5,27 +5,20 @@
 #include <algorithm>
 #include <cmath>
 
-//! Simple structure containing parameters describing parameterization
-//! of a B-spline curve or a surface in one direction (U or V),
-//! and data of the current span for its caching
 struct BSplCLib_CacheParams
 {
-  const int    Degree;         ///< degree of Bezier/B-spline
-  const bool   IsPeriodic;     ///< true of the B-spline is periodic
-  const double FirstParameter; ///< first valid parameter
-  const double LastParameter;  ///< last valid parameter
+  const int    Degree;
+  const bool   IsPeriodic;
+  const double FirstParameter;
+  const double LastParameter;
 
-  const int SpanIndexMin; ///< minimal index of span
-  const int SpanIndexMax; ///< maximal index of span
+  const int SpanIndexMin;
+  const int SpanIndexMax;
 
-  double SpanStart;  ///< parameter for the frst point of the span
-  double SpanLength; ///< length of the span
-  int    SpanIndex;  ///< index of the span
+  double SpanStart;
+  double SpanLength;
+  int    SpanIndex;
 
-  //! Constructor, prepares data structures for caching.
-  //! \param theDegree     degree of the B-spline (or Bezier)
-  //! \param thePeriodic   identify whether the B-spline is periodic
-  //! \param theFlatKnots  knots of Bezier / B-spline parameterization
   BSplCLib_CacheParams(int                               theDegree,
                        bool                              thePeriodic,
                        const NCollection_Array1<double>& theFlatKnots)
@@ -41,8 +34,6 @@ struct BSplCLib_CacheParams
   {
   }
 
-  //! Normalizes the parameter for periodic B-splines
-  //! \param theParameter the value to be normalized into the knots array
   double PeriodicNormalization(double theParameter) const noexcept
   {
     if (IsPeriodic)
@@ -62,8 +53,6 @@ struct BSplCLib_CacheParams
     return theParameter;
   }
 
-  //! Verifies validity of the cache using flat parameter of the point
-  //! \param theParameter parameter of the point placed in the span
   bool IsCacheValid(double theParameter) const noexcept
   {
     const double aNewParam = PeriodicNormalization(theParameter);
@@ -77,16 +66,11 @@ struct BSplCLib_CacheParams
     if (SpanIndex == SpanIndexMax)
       return true;
 
-    // from BSplCLib::LocateParameter() check hitting of the next knot
-    // within double floating point precision
     const double anEps        = Epsilon((std::min)(std::fabs(LastParameter), std::fabs(aNewParam)));
     const double aDeltaToNext = std::fabs(aDelta - SpanLength);
-    return aDeltaToNext > anEps; // next knot should be used instead
+    return aDeltaToNext > anEps;
   }
 
-  //! Computes span for the specified parameter
-  //! \param theParameter parameter of the point placed in the span
-  //! \param theFlatKnots  knots of Bezier / B-spline parameterization
   void LocateParameter(double& theParameter, const NCollection_Array1<double>& theFlatKnots)
   {
     SpanIndex = 0;
@@ -101,7 +85,6 @@ struct BSplCLib_CacheParams
     SpanLength = theFlatKnots.Value(SpanIndex + 1) - SpanStart;
   }
 
-  // copying is prohibited
   BSplCLib_CacheParams(const BSplCLib_CacheParams&)            = delete;
   BSplCLib_CacheParams& operator=(const BSplCLib_CacheParams&) = delete;
 };

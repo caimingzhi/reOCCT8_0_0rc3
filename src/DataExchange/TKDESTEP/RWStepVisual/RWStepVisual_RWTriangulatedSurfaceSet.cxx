@@ -1,15 +1,4 @@
-// Copyright (c) Open CASCADE 2023
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include "RWStepVisual_RWTriangulatedSurfaceSet.hpp"
 
@@ -26,11 +15,7 @@
 #include <NCollection_HArray1.hpp>
 #include <Standard_Real.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWTriangulatedSurfaceSet::RWStepVisual_RWTriangulatedSurfaceSet() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWTriangulatedSurfaceSet::ReadStep(
   const occ::handle<StepData_StepReaderData>&           theData,
@@ -38,17 +23,15 @@ void RWStepVisual_RWTriangulatedSurfaceSet::ReadStep(
   occ::handle<Interface_Check>&                         theCheck,
   const occ::handle<StepVisual_TriangulatedSurfaceSet>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 6, theCheck, "triangulated_surface_set"))
   {
     return;
   }
 
-  // Inherited fields of RepresentationItem
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theCheck, aRepresentationItem_Name);
 
-  // Inherited fields of TessellatedSurfaceSet
   occ::handle<StepVisual_CoordinatesList> aTessellatedSurfaceSet_Coordinates;
   theData->ReadEntity(theNum,
                       2,
@@ -91,7 +74,6 @@ void RWStepVisual_RWTriangulatedSurfaceSet::ReadStep(
     }
   }
 
-  // Own fields of TriangulatedSurfaceSet
   occ::handle<NCollection_HArray1<int>> aPnindex;
   int                                   aPnSub5 = 0;
   if (theData->ReadSubList(theNum, 5, "pnindex", theCheck, aPnSub5))
@@ -130,7 +112,6 @@ void RWStepVisual_RWTriangulatedSurfaceSet::ReadStep(
     }
   }
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aTessellatedSurfaceSet_Coordinates,
                aTessellatedSurfaceSet_Pnmax,
@@ -139,16 +120,13 @@ void RWStepVisual_RWTriangulatedSurfaceSet::ReadStep(
                aTriangles);
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWTriangulatedSurfaceSet::WriteStep(
   StepData_StepWriter&                                  theSW,
   const occ::handle<StepVisual_TriangulatedSurfaceSet>& theEnt) const
 {
-  // Own fields of RepresentationItem
+
   theSW.Send(theEnt->Name());
 
-  // Own fields of TessellatedSurfaceSet
   theSW.Send(theEnt->Coordinates());
   theSW.Send(theEnt->Pnmax());
 
@@ -166,7 +144,6 @@ void RWStepVisual_RWTriangulatedSurfaceSet::WriteStep(
   }
   theSW.CloseSub();
 
-  // Own fields of TriangulatedSurfaceSet
   theSW.OpenSub();
   NCollection_HArray1<int>::Iterator aPnIndexIt(theEnt->Pnindex()->Array1());
   for (; aPnIndexIt.More(); aPnIndexIt.Next())
@@ -191,12 +168,10 @@ void RWStepVisual_RWTriangulatedSurfaceSet::WriteStep(
   theSW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWTriangulatedSurfaceSet::Share(
   const occ::handle<StepVisual_TriangulatedSurfaceSet>& theEnt,
   Interface_EntityIterator&                             theIter) const
 {
-  // Inherited fields of TessellatedSurfaceSet
+
   theIter.AddItem(theEnt->StepVisual_TessellatedSurfaceSet::Coordinates());
 }

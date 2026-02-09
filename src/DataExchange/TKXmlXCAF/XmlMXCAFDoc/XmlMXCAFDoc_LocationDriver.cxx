@@ -18,8 +18,6 @@ IMPLEMENT_DOMSTRING(PowerString, "power")
 IMPLEMENT_DOMSTRING(TrsfString, "trsf")
 IMPLEMENT_DOMSTRING(LocIdString, "locId")
 
-//=================================================================================================
-
 XmlMXCAFDoc_LocationDriver::XmlMXCAFDoc_LocationDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "Location"),
@@ -27,14 +25,10 @@ XmlMXCAFDoc_LocationDriver::XmlMXCAFDoc_LocationDriver(
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMXCAFDoc_LocationDriver::NewEmpty() const
 {
   return (new XCAFDoc_Location());
 }
-
-//=================================================================================================
 
 bool XmlMXCAFDoc_LocationDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                        const occ::handle<TDF_Attribute>& theTarget,
@@ -49,8 +43,6 @@ bool XmlMXCAFDoc_LocationDriver::Paste(const XmlObjMgt_Persistent&       theSour
   return true;
 }
 
-//=================================================================================================
-
 void XmlMXCAFDoc_LocationDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                        XmlObjMgt_Persistent&             theTarget,
                                        XmlObjMgt_SRelocationTable&       theRelocTable) const
@@ -60,10 +52,6 @@ void XmlMXCAFDoc_LocationDriver::Paste(const occ::handle<TDF_Attribute>& theSour
   Translate(aS->Get(), anElem, theRelocTable);
 }
 
-//=======================================================================
-// function : Translate
-// purpose  : .. from Transient to Persistent
-//=======================================================================
 void XmlMXCAFDoc_LocationDriver::Translate(const TopLoc_Location&      theLoc,
                                            XmlObjMgt_Element&          theParent,
                                            XmlObjMgt_SRelocationTable& theMap) const
@@ -73,7 +61,6 @@ void XmlMXCAFDoc_LocationDriver::Translate(const TopLoc_Location&      theLoc,
     return;
   }
 
-  // The location is not identity
   if (myLocations == nullptr)
   {
 #ifdef OCCT_DEBUG
@@ -82,7 +69,6 @@ void XmlMXCAFDoc_LocationDriver::Translate(const TopLoc_Location&      theLoc,
     return;
   }
 
-  //  Create Location element
   XmlObjMgt_Document aDoc     = theParent.getOwnerDocument();
   XmlObjMgt_Element  aLocElem = aDoc.createElement(::LocationString());
 
@@ -91,25 +77,9 @@ void XmlMXCAFDoc_LocationDriver::Translate(const TopLoc_Location&      theLoc,
   aLocElem.setAttribute(::LocIdString(), anId);
   theParent.appendChild(aLocElem);
 
-  // In earlier version of this driver a datums from location stored in
-  // the relocation table, but now it's not necessary
-  // (try to uncomment it if some problems appear)
-  /*
-  occ::handle<TopLoc_Datum3D> aDatum = theLoc.FirstDatum();
-
-  if(!theMap.Contains(aDatum)) {
-    theMap.Add(aDatum);
-  }
-  */
-
-  //  Add next Location from the list
   Translate(theLoc.NextLocation(), aLocElem, theMap);
 }
 
-//=======================================================================
-// function : Translate
-// purpose  : .. from Persistent to Transient
-//=======================================================================
 bool XmlMXCAFDoc_LocationDriver::Translate(const XmlObjMgt_Element&    theParent,
                                            TopLoc_Location&            theLoc,
                                            XmlObjMgt_RRelocationTable& theMap) const
@@ -129,7 +99,7 @@ bool XmlMXCAFDoc_LocationDriver::Translate(const XmlObjMgt_Element&    theParent
 
   if (aFileVer >= TDocStd_FormatVersion_VERSION_6)
   {
-    //  Get Location ID
+
     int anId;
     aLocElem.getAttribute(::LocIdString()).GetInteger(anId);
 
@@ -139,10 +109,9 @@ bool XmlMXCAFDoc_LocationDriver::Translate(const XmlObjMgt_Element&    theParent
   }
   else
   {
-    //  Get Power
+
     aLocElem.getAttribute(::PowerString()).GetInteger(aPower);
 
-    //  get datum
     XmlObjMgt_Persistent aPD(aLocElem, ::DatumString());
     if (aPD.Id() <= 0)
     {
@@ -162,11 +131,9 @@ bool XmlMXCAFDoc_LocationDriver::Translate(const XmlObjMgt_Element&    theParent
     }
   }
 
-  //  Get Next Location
   TopLoc_Location aNextLoc;
   Translate(aLocElem, aNextLoc, theMap);
 
-  //  Calculate the result
   theLoc = aNextLoc * TopLoc_Location(aDatum).Powered(aPower);
   return true;
 }

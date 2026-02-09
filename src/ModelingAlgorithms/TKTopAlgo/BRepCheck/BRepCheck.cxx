@@ -14,8 +14,6 @@
 #include <GeomAbs_SurfaceType.hpp>
 #include <gp_Elips.hpp>
 
-//=================================================================================================
-
 void BRepCheck::Add(NCollection_List<BRepCheck_Status>& lst, const BRepCheck_Status stat)
 {
   NCollection_List<BRepCheck_Status>::Iterator it(lst);
@@ -37,8 +35,6 @@ void BRepCheck::Add(NCollection_List<BRepCheck_Status>& lst, const BRepCheck_Sta
   lst.Append(stat);
 }
 
-//=================================================================================================
-
 bool BRepCheck::SelfIntersection(const TopoDS_Wire& W,
                                  const TopoDS_Face& myFace,
                                  TopoDS_Edge&       RetE1,
@@ -49,17 +45,15 @@ bool BRepCheck::SelfIntersection(const TopoDS_Wire& W,
   return (stat == BRepCheck_SelfIntersectingWire);
 }
 
-//=================================================================================================
-
 double BRepCheck::PrecCurve(const Adaptor3d_Curve& aAC3D)
 {
   double aXEmax = RealEpsilon();
-  //
+
   GeomAbs_CurveType aCT = aAC3D.GetType();
   if (aCT == GeomAbs_Ellipse)
   {
     double aX[5];
-    //
+
     gp_Elips aEL3D = aAC3D.Ellipse();
     aEL3D.Location().Coord(aX[0], aX[1], aX[2]);
     aX[3]  = aEL3D.MajorRadius();
@@ -77,23 +71,21 @@ double BRepCheck::PrecCurve(const Adaptor3d_Curve& aAC3D)
         aXEmax = aXE;
       }
     }
-  } // if (aCT=GeomAbs_Ellipse) {
-  //
+  }
+
   return aXEmax;
 }
-
-//=================================================================================================
 
 double BRepCheck::PrecSurface(const occ::handle<Adaptor3d_Surface>& aAHSurf)
 {
   double aXEmax = RealEpsilon();
-  //
+
   GeomAbs_SurfaceType aST = aAHSurf->GetType();
   if (aST == GeomAbs_Cone)
   {
     gp_Cone aCone = aAHSurf->Cone();
     double  aX[4];
-    //
+
     aCone.Location().Coord(aX[0], aX[1], aX[2]);
     aX[3]  = aCone.RefRadius();
     aXEmax = -1.;
@@ -109,11 +101,9 @@ double BRepCheck::PrecSurface(const occ::handle<Adaptor3d_Surface>& aAHSurf)
         aXEmax = aXE;
       }
     }
-  } // if (aST==GeomAbs_Cone) {
+  }
   return aXEmax;
 }
-
-//=================================================================================================
 
 void BRepCheck::Print(const BRepCheck_Status stat, Standard_OStream& OS)
 {

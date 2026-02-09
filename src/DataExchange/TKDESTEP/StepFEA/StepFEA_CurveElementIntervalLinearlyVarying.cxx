@@ -6,12 +6,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_CurveElementIntervalLinearlyVarying,
                            StepFEA_CurveElementInterval)
 
-//=================================================================================================
-
 StepFEA_CurveElementIntervalLinearlyVarying::StepFEA_CurveElementIntervalLinearlyVarying() =
   default;
-
-//=================================================================================================
 
 void StepFEA_CurveElementIntervalLinearlyVarying::Init(
   const occ::handle<StepFEA_CurveElementLocation>& aCurveElementInterval_FinishPosition,
@@ -25,15 +21,11 @@ void StepFEA_CurveElementIntervalLinearlyVarying::Init(
   theSections = aSections;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<occ::handle<StepElement_CurveElementSectionDefinition>>>
   StepFEA_CurveElementIntervalLinearlyVarying::Sections() const
 {
   return theSections;
 }
-
-//=================================================================================================
 
 void StepFEA_CurveElementIntervalLinearlyVarying::SetSections(
   const occ::handle<NCollection_HArray1<occ::handle<StepElement_CurveElementSectionDefinition>>>&

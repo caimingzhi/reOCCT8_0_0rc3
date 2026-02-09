@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_TrihedronOwner, SelectMgr_EntityOwner)
 
-//=================================================================================================
-
 AIS_TrihedronOwner::AIS_TrihedronOwner(const occ::handle<SelectMgr_SelectableObject>& theSelObject,
                                        const Prs3d_DatumParts                         thePart,
                                        const int                                      thePriority)
@@ -12,16 +10,12 @@ AIS_TrihedronOwner::AIS_TrihedronOwner(const occ::handle<SelectMgr_SelectableObj
 {
 }
 
-//=================================================================================================
-
 void AIS_TrihedronOwner::HilightWithColor(const occ::handle<PrsMgr_PresentationManager>& thePM,
                                           const occ::handle<Prs3d_Drawer>&               theStyle,
-                                          const int /*theMode*/)
+                                          const int)
 {
   Selectable()->HilightOwnerWithColor(thePM, theStyle, this);
 }
-
-//=================================================================================================
 
 bool AIS_TrihedronOwner::IsHilighted(const occ::handle<PrsMgr_PresentationManager>& thePM,
                                      const int                                      theMode) const
@@ -33,8 +27,6 @@ bool AIS_TrihedronOwner::IsHilighted(const occ::handle<PrsMgr_PresentationManage
 
   return thePM->IsHighlighted(Selectable(), theMode);
 }
-
-//=================================================================================================
 
 void AIS_TrihedronOwner::Unhilight(const occ::handle<PrsMgr_PresentationManager>& thePM,
                                    const int                                      theMode)

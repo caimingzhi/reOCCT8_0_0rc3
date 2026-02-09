@@ -1,15 +1,4 @@
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <SelectMgr_SelectionImageFiller.hpp>
 
@@ -17,14 +6,14 @@
 
 namespace
 {
-  //! Help class for filling pixel with random color.
+
   class GeneratedEntityColorFiller : public SelectMgr_SelectionImageFiller
   {
   public:
     GeneratedEntityColorFiller(Image_PixMap& thePixMap, SelectMgr_ViewerSelector* theSelector)
         : SelectMgr_SelectionImageFiller(thePixMap, theSelector)
     {
-      // generate per-entity colors in the order as they have been activated
+
       for (SelectMgr_SelectableObjectSet::Iterator anObjIter(theSelector->SelectableObjects());
            anObjIter.More();
            anObjIter.Next())
@@ -72,14 +61,13 @@ namespace
     NCollection_DataMap<occ::handle<Select3D_SensitiveEntity>, Quantity_Color> myMapEntityColors;
   };
 
-  //! Help class for filling pixel with random color.
   class GeneratedEntityTypeColorFiller : public SelectMgr_SelectionImageFiller
   {
   public:
     GeneratedEntityTypeColorFiller(Image_PixMap& thePixMap, SelectMgr_ViewerSelector* theSelector)
         : SelectMgr_SelectionImageFiller(thePixMap, theSelector)
     {
-      // generate per-entity colors in the order as they have been activated
+
       for (SelectMgr_SelectableObjectSet::Iterator anObjIter(theSelector->SelectableObjects());
            anObjIter.More();
            anObjIter.Next())
@@ -127,7 +115,6 @@ namespace
     NCollection_DataMap<occ::handle<Standard_Type>, Quantity_Color> myMapEntityColors;
   };
 
-  //! Help class for filling pixel with normalized depth of ray.
   class NormalizedDepthFiller : public SelectMgr_SelectionImageFiller
   {
   public:
@@ -142,7 +129,6 @@ namespace
       myUnnormImage.InitZero(Image_Format_GrayF, thePixMap.SizeX(), thePixMap.SizeY());
     }
 
-    //! Accumulate the data.
     void Fill(const int theCol, const int theRow, const int thePicked) override
     {
       if (myUnnormImage.IsEmpty())
@@ -162,7 +148,6 @@ namespace
       myDepthMax                                       = std::max(myDepthMax, aSortCriterion.Depth);
     }
 
-    //! Normalize the depth values.
     void Flush() override
     {
       float aFrom  = 0.0f;
@@ -208,7 +193,6 @@ namespace
     bool         myToInverse;
   };
 
-  //! Help class for filling pixel with unnormalized depth of ray.
   class UnnormalizedDepthFiller : public SelectMgr_SelectionImageFiller
   {
   public:
@@ -234,14 +218,13 @@ namespace
     }
   };
 
-  //! Help class for filling pixel with color of detected object.
   class GeneratedOwnerColorFiller : public SelectMgr_SelectionImageFiller
   {
   public:
     GeneratedOwnerColorFiller(Image_PixMap& thePixMap, SelectMgr_ViewerSelector* theSelector)
         : SelectMgr_SelectionImageFiller(thePixMap, theSelector)
     {
-      // generate per-owner colors in the order as they have been activated
+
       for (SelectMgr_SelectableObjectSet::Iterator anObjIter(theSelector->SelectableObjects());
            anObjIter.More();
            anObjIter.Next())
@@ -289,29 +272,27 @@ namespace
     NCollection_DataMap<occ::handle<SelectMgr_EntityOwner>, Quantity_Color> myMapOwnerColors;
   };
 
-  //! Help class for filling pixel with random color for each selection mode.
   class GeneratedSelModeColorFiller : public SelectMgr_SelectionImageFiller
   {
   public:
     GeneratedSelModeColorFiller(Image_PixMap& thePixMap, SelectMgr_ViewerSelector* theSelector)
         : SelectMgr_SelectionImageFiller(thePixMap, theSelector)
     {
-      // generate standard modes in proper order, consider custom objects would use similar scheme
-      // clang-format off
-      myMapSelectionModeColors.Bind (     0, Quantity_NOC_WHITE);          // default (entire object selection)
-      // clang-format on
-      myMapSelectionModeColors.Bind(1, Quantity_NOC_YELLOW);              // TopAbs_VERTEX
-      myMapSelectionModeColors.Bind(2, Quantity_NOC_GREEN);               // TopAbs_EDGE
-      myMapSelectionModeColors.Bind(3, Quantity_NOC_RED);                 // TopAbs_WIRE
-      myMapSelectionModeColors.Bind(4, Quantity_NOC_BLUE1);               // TopAbs_FACE
-      myMapSelectionModeColors.Bind(5, Quantity_NOC_CYAN1);               // TopAbs_SHELL
-      myMapSelectionModeColors.Bind(6, Quantity_NOC_PURPLE);              // TopAbs_SOLID
-      myMapSelectionModeColors.Bind(7, Quantity_NOC_MAGENTA1);            // TopAbs_COMPSOLID
-      myMapSelectionModeColors.Bind(8, Quantity_NOC_BROWN);               // TopAbs_COMPOUND
-      myMapSelectionModeColors.Bind(0x0010, Quantity_NOC_PINK);           // MeshVS_SMF_Volume
-      myMapSelectionModeColors.Bind(0x001E, Quantity_NOC_LIMEGREEN);      // MeshVS_SMF_Element
-      myMapSelectionModeColors.Bind(0x001F, Quantity_NOC_DARKOLIVEGREEN); // MeshVS_SMF_All
-      myMapSelectionModeColors.Bind(0x0100, Quantity_NOC_GOLD);           // MeshVS_SMF_Group
+
+      myMapSelectionModeColors.Bind(0, Quantity_NOC_WHITE);
+
+      myMapSelectionModeColors.Bind(1, Quantity_NOC_YELLOW);
+      myMapSelectionModeColors.Bind(2, Quantity_NOC_GREEN);
+      myMapSelectionModeColors.Bind(3, Quantity_NOC_RED);
+      myMapSelectionModeColors.Bind(4, Quantity_NOC_BLUE1);
+      myMapSelectionModeColors.Bind(5, Quantity_NOC_CYAN1);
+      myMapSelectionModeColors.Bind(6, Quantity_NOC_PURPLE);
+      myMapSelectionModeColors.Bind(7, Quantity_NOC_MAGENTA1);
+      myMapSelectionModeColors.Bind(8, Quantity_NOC_BROWN);
+      myMapSelectionModeColors.Bind(0x0010, Quantity_NOC_PINK);
+      myMapSelectionModeColors.Bind(0x001E, Quantity_NOC_LIMEGREEN);
+      myMapSelectionModeColors.Bind(0x001F, Quantity_NOC_DARKOLIVEGREEN);
+      myMapSelectionModeColors.Bind(0x0100, Quantity_NOC_GOLD);
     }
 
     void Fill(const int theCol, const int theRow, const int thePicked) override
@@ -365,7 +346,6 @@ namespace
     NCollection_DataMap<int, Quantity_Color> myMapSelectionModeColors;
   };
 
-  //! Help class for filling pixel with color of detected shape.
   class DetectedObjectColorFiller : public SelectMgr_SelectionImageFiller
   {
   public:
@@ -387,7 +367,6 @@ namespace
     }
   };
 
-  //! Help class for filling pixel with normal direction value.
   class SurfaceNormalFiller : public SelectMgr_SelectionImageFiller
   {
   public:
@@ -424,8 +403,6 @@ namespace
     }
   };
 } // namespace
-
-//=================================================================================================
 
 occ::handle<SelectMgr_SelectionImageFiller> SelectMgr_SelectionImageFiller::CreateFiller(
   Image_PixMap&                  thePixMap,

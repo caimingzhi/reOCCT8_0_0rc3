@@ -8,8 +8,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataXtd_Position, TDF_Attribute)
 
-//=================================================================================================
-
 void TDataXtd_Position::Set(const TDF_Label& aLabel, const gp_Pnt& aPos)
 {
   occ::handle<TDataXtd_Position> pos;
@@ -20,8 +18,6 @@ void TDataXtd_Position::Set(const TDF_Label& aLabel, const gp_Pnt& aPos)
   }
   pos->SetPosition(aPos);
 }
-
-//=================================================================================================
 
 occ::handle<TDataXtd_Position> TDataXtd_Position::Set(const TDF_Label& L)
 {
@@ -34,8 +30,6 @@ occ::handle<TDataXtd_Position> TDataXtd_Position::Set(const TDF_Label& L)
   return POS;
 }
 
-//=================================================================================================
-
 bool TDataXtd_Position::Get(const TDF_Label& aLabel, gp_Pnt& aPos)
 {
   occ::handle<TDataXtd_Position> pos;
@@ -47,33 +41,25 @@ bool TDataXtd_Position::Get(const TDF_Label& aLabel, gp_Pnt& aPos)
   return false;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataXtd_Position::GetID()
 {
   static Standard_GUID TDataXtd_Position_guid("55553252-ce0c-11d1-b5d8-00a0c9064368");
   return TDataXtd_Position_guid;
 }
 
-//=================================================================================================
-
 TDataXtd_Position::TDataXtd_Position()
     : myPosition(gp_Pnt(0., 0., 0.))
 {
 }
-
-//=================================================================================================
 
 const gp_Pnt& TDataXtd_Position::GetPosition() const
 {
   return myPosition;
 }
 
-//=================================================================================================
-
 void TDataXtd_Position::SetPosition(const gp_Pnt& aPos)
 {
-  // OCC2932 correction
+
   if (myPosition.X() == aPos.X() && myPosition.Y() == aPos.Y() && myPosition.Z() == aPos.Z())
     return;
 
@@ -81,28 +67,20 @@ void TDataXtd_Position::SetPosition(const gp_Pnt& aPos)
   myPosition = aPos;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataXtd_Position::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 void TDataXtd_Position::Restore(const occ::handle<TDF_Attribute>& anAttribute)
 {
   myPosition = occ::down_cast<TDataXtd_Position>(anAttribute)->GetPosition();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDataXtd_Position::NewEmpty() const
 {
   return new TDataXtd_Position;
 }
-
-//=================================================================================================
 
 void TDataXtd_Position::Paste(const occ::handle<TDF_Attribute>& intoAttribute,
                               const occ::handle<TDF_RelocationTable>&) const

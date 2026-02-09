@@ -11,7 +11,6 @@ class StepRepr_ConstructiveGeometryRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ConstructiveGeometryRepresentation
 class RWStepRepr_RWConstructiveGeometryRepresentation
 {
 public:

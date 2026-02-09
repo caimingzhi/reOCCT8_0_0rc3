@@ -7,8 +7,6 @@
 #include <Transfer_Binder.hpp>
 #include <Transfer_ActorOfProcessForTransient.hpp>
 
-//=================================================================================================
-
 Transfer_IteratorOfProcessForTransient::Transfer_IteratorOfProcessForTransient(
   const bool withstarts)
 
@@ -16,8 +14,6 @@ Transfer_IteratorOfProcessForTransient::Transfer_IteratorOfProcessForTransient(
   if (withstarts)
     thestarts = new NCollection_HSequence<occ::handle<Standard_Transient>>();
 }
-
-//=================================================================================================
 
 void Transfer_IteratorOfProcessForTransient::Add(const occ::handle<Transfer_Binder>& binder)
 {
@@ -27,8 +23,6 @@ void Transfer_IteratorOfProcessForTransient::Add(const occ::handle<Transfer_Bind
   AddItem(binder);
 }
 
-//=================================================================================================
-
 void Transfer_IteratorOfProcessForTransient::Add(const occ::handle<Transfer_Binder>&    binder,
                                                  const occ::handle<Standard_Transient>& start)
 {
@@ -36,8 +30,6 @@ void Transfer_IteratorOfProcessForTransient::Add(const occ::handle<Transfer_Bind
   if (!thestarts.IsNull())
     thestarts->Append(start);
 }
-
-//=================================================================================================
 
 void Transfer_IteratorOfProcessForTransient::Filter(
   const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& list,
@@ -57,7 +49,6 @@ void Transfer_IteratorOfProcessForTransient::Filter(
     SelectItem(j, !keep);
   }
 
-  //  Comparison
   nb = list->Length();
   for (i = 1; i <= nb; i++)
   {
@@ -67,14 +58,10 @@ void Transfer_IteratorOfProcessForTransient::Filter(
   }
 }
 
-//=================================================================================================
-
 bool Transfer_IteratorOfProcessForTransient::HasStarting() const
 {
   return (!thestarts.IsNull());
 }
-
-//=================================================================================================
 
 const occ::handle<Standard_Transient>& Transfer_IteratorOfProcessForTransient::Starting() const
 {

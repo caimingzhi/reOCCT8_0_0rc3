@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #ifdef _WIN32
   #include <windows.h>
@@ -154,7 +142,7 @@ static OSD_SingleProtection OSD_File_getProtectionDir(DWORD theMask)
     case 0:
       return OSD_None;
     default:
-      // remote directories (on Samba server) have flags like for files
+
       return OSD_File_getProtection(theMask);
   }
 }
@@ -245,7 +233,7 @@ struct OSD_File_WntKey
   const wchar_t* keyPath;
 };
 
-  #endif /* ! OCCT_UWP */
+  #endif
 
 int __fastcall _get_file_type(const char* theFileName, HANDLE theFileHandle)
 {
@@ -273,7 +261,6 @@ int __fastcall _get_file_type(const char* theFileName, HANDLE theFileHandle)
   return 0;
 }
 
-//! Returns number of bytes in the string (including end \n, but excluding \r);
 static int OSD_File_getLine(char* theBuffer, DWORD theBuffSize, LONG& theSeekPos)
 {
   theBuffer[theBuffSize] = 0;
@@ -281,21 +268,21 @@ static int OSD_File_getLine(char* theBuffer, DWORD theBuffSize, LONG& theSeekPos
   {
     if (*aCharIter == '\n')
     {
-      ++aCharIter; // jump newline char
+      ++aCharIter;
       *aCharIter = '\0';
       theSeekPos = LONG(aCharIter - theBuffer - theBuffSize);
       return int(aCharIter - theBuffer);
     }
     else if (aCharIter[0] == '\r' && aCharIter[1] == '\n')
     {
-      *(aCharIter++) = '\n'; // Substitute carriage return by newline
+      *(aCharIter++) = '\n';
       *aCharIter     = 0;
       theSeekPos     = LONG(aCharIter + 1 - theBuffer - theBuffSize);
       return int(aCharIter - theBuffer);
     }
     else if (aCharIter[0] == '\r' && aCharIter[1] == '\0')
     {
-      *aCharIter = '\n'; // Substitute carriage return by newline
+      *aCharIter = '\n';
       return -1;
     }
     ++aCharIter;
@@ -399,8 +386,6 @@ const OSD_WhoAmI Iam = OSD_WFile;
   #define NEWLINE '\10';
 #endif
 
-//=================================================================================================
-
 OSD_File::OSD_File()
     :
 #ifdef _WIN32
@@ -415,8 +400,6 @@ OSD_File::OSD_File()
       ImperativeFlag(false)
 {
 }
-
-//=================================================================================================
 
 OSD_File::OSD_File(const OSD_Path& theName)
     : OSD_FileNode(theName),
@@ -433,8 +416,6 @@ OSD_File::OSD_File(const OSD_Path& theName)
 {
 }
 
-//=================================================================================================
-
 OSD_File::~OSD_File()
 {
   if (IsOpen())
@@ -446,8 +427,6 @@ OSD_File::~OSD_File()
     Close();
   }
 }
-
-//=================================================================================================
 
 void OSD_File::Build(const OSD_OpenMode theMode, const OSD_Protection& theProtect)
 {
@@ -520,8 +499,6 @@ void OSD_File::Build(const OSD_OpenMode theMode, const OSD_Protection& theProtec
 #endif
 }
 
-//=================================================================================================
-
 void OSD_File::Append(const OSD_OpenMode theMode, const OSD_Protection& theProtect)
 {
   if (OSD_File::KindOfFile() == OSD_DIRECTORY)
@@ -591,7 +568,7 @@ void OSD_File::Append(const OSD_OpenMode theMode, const OSD_Protection& theProte
 
   if (!Exists())
   {
-    // if file doesn't exist, creates it
+
     anOpenMode |= O_CREAT;
   }
 
@@ -607,8 +584,6 @@ void OSD_File::Append(const OSD_OpenMode theMode, const OSD_Protection& theProte
   }
 #endif
 }
-
-//=================================================================================================
 
 void OSD_File::Open(const OSD_OpenMode theMode, const OSD_Protection& theProtect)
 {
@@ -677,8 +652,6 @@ void OSD_File::Open(const OSD_OpenMode theMode, const OSD_Protection& theProtect
 #endif
 }
 
-//=================================================================================================
-
 void OSD_File::BuildTemporary()
 {
 #ifdef _WIN32
@@ -729,7 +702,7 @@ void OSD_File::BuildTemporary()
       break;
   }
   #else
-  // Windows Registry not supported by UWP
+
   {
     wchar_t aTmpBuffer[MAX_PATH];
     fOK         = GetTempPathW(_countof(aTmpBuffer), aTmpBuffer) != 0;
@@ -751,7 +724,7 @@ void OSD_File::BuildTemporary()
   SetPath(OSD_Path(TCollection_AsciiString(aTmpPathW)));
   Build(OSD_ReadWrite, OSD_Protection());
 
-#else /* _WIN32 */
+#else
 
   if (IsOpen())
   {
@@ -759,10 +732,10 @@ void OSD_File::BuildTemporary()
   }
   #if defined(vax) || defined(__vms) || defined(VAXVMS)
   FILE* fic     = tmpfile();
-  int   dummy   = open("dummy", O_RDWR | O_CREAT); // open a dummy file
-  myFileChannel = dummy - 1;                       // this is file channel of "fic" +1
-  close(dummy);                                    // close dummy file
-  unlink("dummy");                                 // removes dummy file
+  int   dummy   = open("dummy", O_RDWR | O_CREAT);
+  myFileChannel = dummy - 1;
+  close(dummy);
+  unlink("dummy");
   #else
   char aTmpName[] = "/tmp/CSFXXXXXX";
   myFileChannel   = mkstemp(aTmpName);
@@ -775,8 +748,6 @@ void OSD_File::BuildTemporary()
 
 #endif
 }
-
-//=================================================================================================
 
 void OSD_File::Read(TCollection_AsciiString& theBuffer, const int theNbBytes)
 {
@@ -828,8 +799,6 @@ void OSD_File::Read(TCollection_AsciiString& theBuffer, const int theNbBytes)
   }
 }
 
-//=================================================================================================
-
 void OSD_File::ReadLine(TCollection_AsciiString& theBuffer,
                         const int                theNbBytes,
                         int&                     theNbBytesRead)
@@ -863,9 +832,7 @@ void OSD_File::ReadLine(TCollection_AsciiString& theBuffer,
   DWORD aNbBytesRead = 0;
   LONG  aSeekPos     = 0;
   char  aPeekChar    = '\0';
-  // +----> leave space for end-of-string
-  // |       plus <CR><LF> sequence
-  // |
+
   NCollection_Array1<char> aBuffer(0, theNbBytes + 2);
   if (myIO & FLAG_FILE)
   {
@@ -883,20 +850,20 @@ void OSD_File::ReadLine(TCollection_AsciiString& theBuffer,
     }
     else
     {
-      myIO &= ~FLAG_EOF; // if the file increased since last read (LD)
+      myIO &= ~FLAG_EOF;
       theNbBytesRead = OSD_File_getLine(&aBuffer.ChangeFirst(), aNbBytesRead, aSeekPos);
-      if (theNbBytesRead == -1) // last character in the buffer is <CR> -
-      {                         // peek next character to see if it is a <LF>
+      if (theNbBytesRead == -1)
+      {
         DWORD dwDummy = 0;
         if (!ReadFile(myFileHandle, &aPeekChar, 1, &dwDummy, NULL))
         {
           _osd_wnt_set_error(myError, OSD_WFile);
         }
-        else if (dwDummy != 0) // end-of-file reached?
+        else if (dwDummy != 0)
         {
-          if (aPeekChar != '\n') // if we did not get a <CR><LF> sequence
+          if (aPeekChar != '\n')
           {
-            // adjust file position
+
             LARGE_INTEGER aDistanceToMove;
             aDistanceToMove.QuadPart = -1;
             SetFilePointerEx(myFileHandle, aDistanceToMove, NULL, FILE_CURRENT);
@@ -931,7 +898,7 @@ void OSD_File::ReadLine(TCollection_AsciiString& theBuffer,
       theBuffer.Clear();
       theNbBytesRead = 0;
     }
-    else if (aNbBytesRead == 0) // connection closed - set end-of-file flag
+    else if (aNbBytesRead == 0)
     {
       theBuffer.Clear();
       theNbBytesRead = 0;
@@ -940,10 +907,10 @@ void OSD_File::ReadLine(TCollection_AsciiString& theBuffer,
     else
     {
       theNbBytesRead = OSD_File_getLine(&aBuffer.ChangeFirst(), aNbBytesRead, aSeekPos);
-      if (theNbBytesRead == -1) // last character in the buffer is <CR> - peek next character to see
-                                // if it is a <LF>
+      if (theNbBytesRead == -1)
+
       {
-        theNbBytesRead = aNbBytesRead; // (LD) always fits this case
+        theNbBytesRead = aNbBytesRead;
 
         const DWORD dwDummy =
           OSD_File_getBuffer(myFileHandle, &aPeekChar, 1, TRUE, myIO & FLAG_SOCKET);
@@ -951,11 +918,11 @@ void OSD_File::ReadLine(TCollection_AsciiString& theBuffer,
         {
           _osd_wnt_set_error(myError, OSD_WFile);
         }
-        else if (dwDummy != 0) // connection closed?
+        else if (dwDummy != 0)
         {
-          if (aPeekChar == '\n') // we got a <CR><LF> sequence
+          if (aPeekChar == '\n')
           {
-            ++aNbBytesRead; // (LD) we have to jump <LF>
+            ++aNbBytesRead;
           }
         }
         else
@@ -968,9 +935,8 @@ void OSD_File::ReadLine(TCollection_AsciiString& theBuffer,
         aNbBytesRead = aNbBytesRead + aSeekPos;
       }
 
-      // do not rewrite data in aBuffer
       NCollection_Array1<char> aBuffer2(0, theNbBytes + 2);
-      // remove pending input
+
       OSD_File_getBuffer(myFileHandle,
                          &aBuffer2.ChangeFirst(),
                          aNbBytesRead,
@@ -1012,8 +978,6 @@ void OSD_File::ReadLine(TCollection_AsciiString& theBuffer,
   }
 #endif
 }
-
-//=================================================================================================
 
 OSD_KindFile OSD_File::KindOfFile() const
 {
@@ -1064,8 +1028,6 @@ OSD_KindFile OSD_File::KindOfFile() const
   return OSD_UNKNOWN;
 #endif
 }
-
-//=================================================================================================
 
 void OSD_File::Read(void* const theBuffer, const int theNbBytes, int& theNbReadBytes)
 {
@@ -1133,8 +1095,6 @@ void OSD_File::Read(void* const theBuffer, const int theNbBytes, int& theNbReadB
 #endif
 }
 
-//=================================================================================================
-
 void OSD_File::Write(void* const theBuffer, const int theNbBytes)
 {
   if (!IsOpen())
@@ -1177,8 +1137,6 @@ void OSD_File::Write(void* const theBuffer, const int theNbBytes)
   }
 #endif
 }
-
-//=================================================================================================
 
 void OSD_File::Seek(const int theOffset, const OSD_FromWhere theWhence)
 {
@@ -1244,8 +1202,6 @@ void OSD_File::Seek(const int theOffset, const OSD_FromWhere theWhence)
 #endif
 }
 
-//=================================================================================================
-
 void OSD_File::Close()
 {
   if (!IsOpen())
@@ -1260,7 +1216,7 @@ void OSD_File::Close()
   CloseHandle(myFileHandle);
   myFileHandle = INVALID_HANDLE_VALUE;
 #else
-  // note: it probably should be single call to fclose()...
+
   if (close(myFileChannel) == -1)
   {
     myError.SetValue(errno, Iam, "Close");
@@ -1274,8 +1230,6 @@ void OSD_File::Close()
 #endif
   myIO = 0;
 }
-
-//=================================================================================================
 
 bool OSD_File::IsAtEnd()
 {
@@ -1291,30 +1245,14 @@ bool OSD_File::IsAtEnd()
 #endif
 }
 
-//=================================================================================================
-
-/*void OSD_File::Link (const TCollection_AsciiString& theToFile)
-{
-  if (!IsOpen())
-  {
-    throw Standard_ProgramError ("OSD_File::Link(): file is not open");
-  }
-
-  TCollection_AsciiString aFilePath;
-  myPath.SystemName (aFilePath);
-  link (aFilePath.ToCString(), theToFile.ToCString());
-}*/
-
 #if defined(__CYGWIN32__) || defined(__MINGW32__)
-  #ifdef __try /* is defined on MinGw as either "try" or "if (true)" */
+  #ifdef __try
     #undef __try
   #endif
   #define __try
   #define __finally
   #define __leave return
 #endif
-
-//=================================================================================================
 
 void OSD_File::SetLock(const OSD_LockType theLock)
 {
@@ -1399,7 +1337,6 @@ void OSD_File::SetLock(const OSD_LockType theLock)
       break;
     case OSD_NoLock:
       return;
-      // default: myError.SetValue (EINVAL, Iam, "SetLock");
   }
 
   const int aStatus = fcntl(myFileChannel, F_SETLKW, &aLockKey);
@@ -1421,7 +1358,7 @@ void OSD_File::SetLock(const OSD_LockType theLock)
     chmod(aFilePath.ToCString(), aStatBuf.st_mode | S_ISGID);
     ImperativeFlag = true;
   }
-#else /* BSD */
+#else
   int aLock = 0;
   switch (theLock)
   {
@@ -1454,8 +1391,6 @@ void OSD_File::SetLock(const OSD_LockType theLock)
   #undef __finally
   #undef __leave
 #endif
-
-//=================================================================================================
 
 void OSD_File::UnLock()
 {
@@ -1530,8 +1465,6 @@ void OSD_File::UnLock()
 #endif
 }
 
-//=================================================================================================
-
 size_t OSD_File::Size()
 {
 #ifdef _WIN32
@@ -1575,8 +1508,6 @@ size_t OSD_File::Size()
 #endif
 }
 
-//=================================================================================================
-
 bool OSD_File::IsOpen() const
 {
 #ifdef _WIN32
@@ -1585,8 +1516,6 @@ bool OSD_File::IsOpen() const
   return myFileChannel != -1;
 #endif
 }
-
-//=================================================================================================
 
 bool OSD_File::IsReadable()
 {
@@ -1606,8 +1535,6 @@ bool OSD_File::IsReadable()
 #endif
 }
 
-//=================================================================================================
-
 bool OSD_File::IsWriteable()
 {
   TCollection_AsciiString aFileName;
@@ -1626,8 +1553,6 @@ bool OSD_File::IsWriteable()
 #endif
 }
 
-//=================================================================================================
-
 bool OSD_File::IsExecutable()
 {
 #ifdef _WIN32
@@ -1639,8 +1564,6 @@ bool OSD_File::IsExecutable()
 #endif
 }
 
-//=================================================================================================
-
 void OSD_File::Rewind()
 {
 #ifdef _WIN32
@@ -1651,8 +1574,6 @@ void OSD_File::Rewind()
   rewind((FILE*)myFILE);
 #endif
 }
-
-//=================================================================================================
 
 bool OSD_File::ReadLastLine(TCollection_AsciiString& theLine,
                             const int                theDelay,
@@ -1677,15 +1598,12 @@ bool OSD_File::ReadLastLine(TCollection_AsciiString& theLine,
   return false;
 }
 
-//=================================================================================================
-
 bool OSD_File::Edit()
 {
   std::cout << "Function OSD_File::Edit() not yet implemented.\n";
   return false;
 }
 
-// None of the existing security APIs are supported in a UWP applications
 #ifdef _WIN32
   #ifndef OCCT_UWP
 
@@ -1758,9 +1676,9 @@ PSECURITY_DESCRIPTOR __fastcall _osd_wnt_protection_to_sd(const OSD_Protection& 
     DWORD dwAccessWorld = OSD_File_getAccessMask(theProtection.World());
 
     DWORD dwAccessAdminDir = OSD_File_getDirAccessMask(theProtection.System());
-    // DWORD dwAccessGroupDir = OSD_File_getDirAccessMask (theProtection.Group());
+
     DWORD dwAccessOwnerDir = OSD_File_getDirAccessMask(theProtection.User());
-    // DWORD dwAccessWorldDir = OSD_File_getDirAccessMask (theProtection.World());
+
     if (dwAccessGroup != 0)
     {
       for (int aGroupIter = 0; aGroupIter < (int)pTkGroups->GroupCount; ++aGroupIter)
@@ -1862,7 +1780,7 @@ PSECURITY_DESCRIPTOR __fastcall _osd_wnt_protection_to_sd(const OSD_Protection& 
       __leave;
     }
     fOK = TRUE;
-  } // end __try
+  }
 
   __finally
   {
@@ -1969,13 +1887,13 @@ BOOL __fastcall _osd_wnt_sd_to_protection(PSECURITY_DESCRIPTOR pSD,
                             aGetProtFunc(dwAccessGroup),
                             aGetProtFunc(dwAccessWorld));
     retVal = TRUE;
-  } // end __try
+  }
   __finally
   {
   }
 
   return retVal;
-} // end _osd_wnt_sd_to_protection
+}
 
     #if defined(__CYGWIN32__) || defined(__MINGW32__)
       #undef __try
@@ -1984,4 +1902,4 @@ BOOL __fastcall _osd_wnt_sd_to_protection(PSECURITY_DESCRIPTOR pSD,
     #endif
 
   #endif
-#endif /* _WIN32 */
+#endif

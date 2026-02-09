@@ -3,19 +3,12 @@
 #include <Geom2dLProp_FuncCurExt.hpp>
 #include <gp_Pnt2d.hpp>
 
-//=================================================================================================
-
 Geom2dLProp_FuncCurExt::Geom2dLProp_FuncCurExt(const occ::handle<Geom2d_Curve>& C, const double Tol)
     : theCurve(C)
 {
   epsX = Tol;
 }
 
-//=============================================================================
-// function : Value
-// purpose : KC = (V1^V2.Z) / ||V1||^3  avec V1 tangente etV2 derivee seconde.
-//           F  = d KC/ dU.
-//=============================================================================
 bool Geom2dLProp_FuncCurExt::Value(const double X, double& F)
 {
   gp_Pnt2d P1;
@@ -39,15 +32,11 @@ bool Geom2dLProp_FuncCurExt::Value(const double X, double& F)
   return true;
 }
 
-//=================================================================================================
-
 bool Geom2dLProp_FuncCurExt::Derivative(const double X, double& D)
 {
   double F;
   return Values(X, F, D);
 }
-
-//=================================================================================================
 
 bool Geom2dLProp_FuncCurExt::Values(const double X, double& F, double& D)
 {
@@ -66,11 +55,6 @@ bool Geom2dLProp_FuncCurExt::Values(const double X, double& F, double& D)
   return true;
 }
 
-//=============================================================================
-// function : IsMinKC
-// purpose : Teste si le parametere coorespond a un minimum du rayon de courbure
-//           par comparaison avec un point voisin.
-//=============================================================================
 bool Geom2dLProp_FuncCurExt::IsMinKC(const double X) const
 {
   gp_Pnt2d P1;

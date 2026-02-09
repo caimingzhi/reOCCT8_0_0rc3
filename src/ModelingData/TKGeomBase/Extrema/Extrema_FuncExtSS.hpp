@@ -12,8 +12,6 @@ class Adaptor3d_Surface;
 class math_Matrix;
 class Extrema_POnSurf;
 
-//! Function to find extrema of the
-//! distance between two surfaces.
 class Extrema_FuncExtSS : public math_FunctionSetWithDerivatives
 {
 public:
@@ -23,35 +21,26 @@ public:
 
   Standard_EXPORT Extrema_FuncExtSS(const Adaptor3d_Surface& S1, const Adaptor3d_Surface& S2);
 
-  //! sets the field mysurf of the function.
   Standard_EXPORT void Initialize(const Adaptor3d_Surface& S1, const Adaptor3d_Surface& S2);
 
   Standard_EXPORT int NbVariables() const override;
 
   Standard_EXPORT int NbEquations() const override;
 
-  //! Calculate Fi(U,V).
   Standard_EXPORT bool Value(const math_Vector& UV, math_Vector& F) override;
 
-  //! Calculate Fi'(U,V).
   Standard_EXPORT bool Derivatives(const math_Vector& UV, math_Matrix& DF) override;
 
-  //! Calculate Fi(U,V) and Fi'(U,V).
   Standard_EXPORT bool Values(const math_Vector& UV, math_Vector& F, math_Matrix& DF) override;
 
-  //! Save the found extremum.
   Standard_EXPORT int GetStateNumber() override;
 
-  //! Return the number of found extrema.
   Standard_EXPORT int NbExt() const;
 
-  //! Return the value of the Nth distance.
   Standard_EXPORT double SquareDistance(const int N) const;
 
-  //! Return the Nth extremum on S1.
   Standard_EXPORT const Extrema_POnSurf& PointOnS1(const int N) const;
 
-  //! Renvoie le Nieme extremum sur S2.
   Standard_EXPORT const Extrema_POnSurf& PointOnS2(const int N) const;
 
 private:

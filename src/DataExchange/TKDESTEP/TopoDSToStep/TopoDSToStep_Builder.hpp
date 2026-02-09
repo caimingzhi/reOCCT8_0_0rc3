@@ -15,8 +15,6 @@ class TopoDS_Shape;
 class TopoDSToStep_Tool;
 class Transfer_FinderProcess;
 
-//! This builder Class provides services to build
-//! a ProSTEP Shape model from a Cas.Cad BRep.
 class TopoDSToStep_Builder : public TopoDSToStep_Root
 {
 public:

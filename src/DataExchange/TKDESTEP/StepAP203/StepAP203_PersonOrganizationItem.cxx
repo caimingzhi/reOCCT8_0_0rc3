@@ -11,11 +11,7 @@
 #include <StepBasic_SecurityClassification.hpp>
 #include <StepRepr_ConfigurationItem.hpp>
 
-//=================================================================================================
-
 StepAP203_PersonOrganizationItem::StepAP203_PersonOrganizationItem() = default;
-
-//=================================================================================================
 
 int StepAP203_PersonOrganizationItem::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -44,49 +40,35 @@ int StepAP203_PersonOrganizationItem::CaseNum(const occ::handle<Standard_Transie
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepAP203_Change> StepAP203_PersonOrganizationItem::Change() const
 {
   return occ::down_cast<StepAP203_Change>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepAP203_StartWork> StepAP203_PersonOrganizationItem::StartWork() const
 {
   return occ::down_cast<StepAP203_StartWork>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepAP203_ChangeRequest> StepAP203_PersonOrganizationItem::ChangeRequest() const
 {
   return occ::down_cast<StepAP203_ChangeRequest>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepAP203_StartRequest> StepAP203_PersonOrganizationItem::StartRequest() const
 {
   return occ::down_cast<StepAP203_StartRequest>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepRepr_ConfigurationItem> StepAP203_PersonOrganizationItem::ConfigurationItem() const
 {
   return occ::down_cast<StepRepr_ConfigurationItem>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_Product> StepAP203_PersonOrganizationItem::Product() const
 {
   return occ::down_cast<StepBasic_Product>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_ProductDefinitionFormation> StepAP203_PersonOrganizationItem::
   ProductDefinitionFormation() const
@@ -94,21 +76,15 @@ occ::handle<StepBasic_ProductDefinitionFormation> StepAP203_PersonOrganizationIt
   return occ::down_cast<StepBasic_ProductDefinitionFormation>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ProductDefinition> StepAP203_PersonOrganizationItem::ProductDefinition() const
 {
   return occ::down_cast<StepBasic_ProductDefinition>(Value());
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_Contract> StepAP203_PersonOrganizationItem::Contract() const
 {
   return occ::down_cast<StepBasic_Contract>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_SecurityClassification> StepAP203_PersonOrganizationItem::
   SecurityClassification() const

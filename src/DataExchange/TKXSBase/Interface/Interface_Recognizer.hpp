@@ -1,23 +1,9 @@
 #include <Standard_NoSuchObject.hpp>
 
-//  WARNING: TransRecognizer has exactly the same code ...
-//  But produces a Transient instead of a Persistent
-
-// Principle: from a starting object (key), a Recognizer attempts to associate a
-// result. The Recognizer class provides the general mechanism managing this
-// Each particular class (once the instantiation is defined) must provide
-// a specific Eval method, which performs the correspondence
-// Eval considers the object by all appropriate means, and in case of success,
-// calls SetOK(result) then exits (return)
-// in case of failure, following the return from Eval, Recognizer knows that SetOK was not
-// called
-
 Interface_Recognizer::Interface_Recognizer()
 {
   hasnext = false;
 }
-
-// thekey.Nullify();  useless, done by the constructor ...
 
 bool Interface_Recognizer::Evaluate(const TheKey& akey, occ::handle<TheResul>& res)
 {

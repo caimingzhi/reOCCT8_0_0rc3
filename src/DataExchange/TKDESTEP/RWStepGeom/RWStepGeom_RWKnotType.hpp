@@ -11,9 +11,6 @@ namespace RWStepGeom_RWKnotType
   static constexpr char ktPiecewiseBezierKnots[] = (".PIECEWISE_BEZIER_KNOTS.");
   static constexpr char ktUnspecified[]          = (".UNSPECIFIED.");
 
-  //! Convert StepGeom_KnotType to string
-  //! @param theSourceEnum The StepGeom_KnotType value to convert
-  //! @return The corresponding string representation or nullptr if not found
   inline const char* ConvertToString(const StepGeom_KnotType theSourceEnum)
   {
     switch (theSourceEnum)
@@ -30,10 +27,6 @@ namespace RWStepGeom_RWKnotType
     return nullptr;
   }
 
-  //! Convert string to StepGeom_KnotType
-  //! @param theKnotTypeString The string to convert
-  //! @param theResultEnum The corresponding StepGeom_KnotType value
-  //! @return true if the conversion was successful, false otherwise
   inline bool ConvertToEnum(const char* theKnotTypeString, StepGeom_KnotType& theResultEnum)
   {
     if (IsEqual(theKnotTypeString, ktUniformKnots))

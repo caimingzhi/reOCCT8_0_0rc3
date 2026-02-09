@@ -10,12 +10,8 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWGeometricToleranceWithModifiers::RWStepDimTol_RWGeometricToleranceWithModifiers() =
   default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWGeometricToleranceWithModifiers::ReadStep(
   const occ::handle<StepData_StepReaderData>&                    data,
@@ -23,11 +19,9 @@ void RWStepDimTol_RWGeometricToleranceWithModifiers::ReadStep(
   occ::handle<Interface_Check>&                                  ach,
   const occ::handle<StepDimTol_GeometricToleranceWithModifiers>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 5, ach, "geometric_tolerance_with_modifiers"))
     return;
-
-  // inherited fields from GeometricTolerance
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "geometric_tolerance.name", ach, aName);
@@ -50,7 +44,6 @@ void RWStepDimTol_RWGeometricToleranceWithModifiers::ReadStep(
                    ach,
                    aTolerancedShapeAspect);
 
-  // own fields of GeometricToleranceWithModifiers
   occ::handle<NCollection_HArray1<StepDimTol_GeometricToleranceModifier>> aModifiers;
   int                                                                     sub5 = 0;
   if (data->ReadSubList(num, 5, "modifiers", ach, sub5))
@@ -103,18 +96,13 @@ void RWStepDimTol_RWGeometricToleranceWithModifiers::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aName, aDescription, aMagnitude, aTolerancedShapeAspect, aModifiers);
 }
-
-//=================================================================================================
 
 void RWStepDimTol_RWGeometricToleranceWithModifiers::WriteStep(
   StepData_StepWriter&                                           SW,
   const occ::handle<StepDimTol_GeometricToleranceWithModifiers>& ent) const
 {
-
-  // inherited fields from GeometricTolerance
 
   SW.Send(ent->Name());
 
@@ -123,8 +111,6 @@ void RWStepDimTol_RWGeometricToleranceWithModifiers::WriteStep(
   SW.Send(ent->Magnitude());
 
   SW.Send(ent->TolerancedShapeAspect().Value());
-
-  // own fields of GeometricToleranceWithModifiers
 
   SW.OpenSub();
   for (int i = 1; i <= ent->NbModifiers(); i++)
@@ -181,14 +167,10 @@ void RWStepDimTol_RWGeometricToleranceWithModifiers::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWGeometricToleranceWithModifiers::Share(
   const occ::handle<StepDimTol_GeometricToleranceWithModifiers>& ent,
   Interface_EntityIterator&                                      iter) const
 {
-
-  // inherited fields from GeometricTolerance
 
   iter.AddItem(ent->Magnitude());
 

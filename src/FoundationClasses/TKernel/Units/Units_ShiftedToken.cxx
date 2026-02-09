@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Units_ShiftedToken, Units_Token)
 
-//=================================================================================================
-
 Units_ShiftedToken::Units_ShiftedToken(const char*                          aword,
                                        const char*                          amean,
                                        const double                         avalue,
@@ -17,8 +15,6 @@ Units_ShiftedToken::Units_ShiftedToken(const char*                          awor
   themove = amove;
 }
 
-//=================================================================================================
-
 occ::handle<Units_Token> Units_ShiftedToken::Creates() const
 {
   TCollection_AsciiString word = Word();
@@ -26,28 +22,20 @@ occ::handle<Units_Token> Units_ShiftedToken::Creates() const
   return new Units_ShiftedToken(word.ToCString(), mean.ToCString(), Value(), Move(), Dimensions());
 }
 
-//=================================================================================================
-
 double Units_ShiftedToken::Move() const
 {
   return themove;
 }
-
-//=================================================================================================
 
 double Units_ShiftedToken::Multiplied(const double avalue) const
 {
   return (avalue + themove) * Value();
 }
 
-//=================================================================================================
-
 double Units_ShiftedToken::Divided(const double avalue) const
 {
   return (avalue / Value()) - themove;
 }
-
-//=================================================================================================
 
 void Units_ShiftedToken::Dump(const int ashift, const int alevel) const
 {

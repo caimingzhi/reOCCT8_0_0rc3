@@ -133,5 +133,3 @@ static const char Shaders_RaytraceRender_fs[] =
   "\n"
   "#endif // PATH_TRACING\n"
   "}\n";
-
-// clang-format on

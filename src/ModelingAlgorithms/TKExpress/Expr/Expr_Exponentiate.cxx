@@ -31,12 +31,12 @@ occ::handle<Expr_GeneralExpression> Expr_Exponentiate::ShallowSimplified() const
     double                         myvals = myNVs->GetValue();
     if (myvals == 0.0)
     {
-      // case X ** 0
+
       return new Expr_NumericValue(1.0);
     }
     if (myvals == 1.0)
     {
-      // case X ** 1
+
       return myfirst;
     }
     if (myfirst->IsKind(STANDARD_TYPE(Expr_NumericValue)))
@@ -95,9 +95,6 @@ occ::handle<Expr_GeneralExpression> Expr_Exponentiate::Derivative(
     return new Expr_NumericValue(0.0);
   }
 
-  // Derivate of h(X) ** g(X) is :
-  // h(X) * (g(X) ** (h(X)-1)) * g'(X) +
-  // (g(X) ** h(X)) * Log(g(X)) * h'(X)
   occ::handle<Expr_GeneralExpression> myfirst  = FirstOperand();
   occ::handle<Expr_GeneralExpression> mysecond = SecondOperand();
 
@@ -105,25 +102,25 @@ occ::handle<Expr_GeneralExpression> Expr_Exponentiate::Derivative(
   occ::handle<Expr_GeneralExpression> mysder = mysecond->Derivative(X);
 
   NCollection_Sequence<occ::handle<Expr_GeneralExpression>> prod1;
-  prod1.Append(Expr::CopyShare(mysecond)); // h(X)
+  prod1.Append(Expr::CopyShare(mysecond));
 
-  occ::handle<Expr_Difference>   difh1 = Expr::CopyShare(mysecond) - 1.0; // h(X)-1
+  occ::handle<Expr_Difference>   difh1 = Expr::CopyShare(mysecond) - 1.0;
   occ::handle<Expr_Exponentiate> exp1 =
     new Expr_Exponentiate(Expr::CopyShare(myfirst), difh1->ShallowSimplified());
-  prod1.Append(exp1->ShallowSimplified()); // g(X) ** (h(X)-1)
+  prod1.Append(exp1->ShallowSimplified());
 
-  prod1.Append(myfder); // g'(X)
+  prod1.Append(myfder);
 
   occ::handle<Expr_Product> firstmember = new Expr_Product(prod1);
 
   NCollection_Sequence<occ::handle<Expr_GeneralExpression>> prod2;
   occ::handle<Expr_Exponentiate>                            exp2 =
     new Expr_Exponentiate(Expr::CopyShare(myfirst), Expr::CopyShare(mysecond));
-  prod2.Append(exp2->ShallowSimplified()); // g(X) ** h(X)
+  prod2.Append(exp2->ShallowSimplified());
 
   occ::handle<Expr_LogOfe> log = new Expr_LogOfe(Expr::CopyShare(myfirst));
-  prod2.Append(log->ShallowSimplified()); // Log(g(X))
-  prod2.Append(mysder);                   // h'(X)
+  prod2.Append(log->ShallowSimplified());
+  prod2.Append(mysder);
 
   occ::handle<Expr_Product> secondmember = new Expr_Product(prod2);
 

@@ -300,5 +300,3 @@ static const char Shaders_Declarations_glsl[] =
   "uniform THE_PREC_ENUM int  occClipPlaneCount;   //!< Total number of clip planes\n"
   "#endif\n"
   "//! @endfile Declarations.glsl\n";
-
-// clang-format on

@@ -7,21 +7,15 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_BadEdgeFilter, SelectMgr_Filter)
 
-//=================================================================================================
-
 AIS_BadEdgeFilter::AIS_BadEdgeFilter()
 {
   myContour = 0;
 }
 
-//=================================================================================================
-
 bool AIS_BadEdgeFilter::ActsOn(const TopAbs_ShapeEnum aType) const
 {
   return (aType == TopAbs_EDGE);
 }
-
-//=================================================================================================
 
 bool AIS_BadEdgeFilter::IsOk(const occ::handle<SelectMgr_EntityOwner>& EO) const
 {
@@ -46,8 +40,6 @@ bool AIS_BadEdgeFilter::IsOk(const occ::handle<SelectMgr_EntityOwner>& EO) const
   return true;
 }
 
-//=================================================================================================
-
 void AIS_BadEdgeFilter::AddEdge(const TopoDS_Edge& anEdge, const int Index)
 {
   if (myBadEdges.IsBound(Index))
@@ -62,14 +54,10 @@ void AIS_BadEdgeFilter::AddEdge(const TopoDS_Edge& anEdge, const int Index)
   }
 }
 
-//=================================================================================================
-
 void AIS_BadEdgeFilter::RemoveEdges(const int Index)
 {
   myBadEdges.UnBind(Index);
 }
-
-//=================================================================================================
 
 void AIS_BadEdgeFilter::SetContour(const int Index)
 {

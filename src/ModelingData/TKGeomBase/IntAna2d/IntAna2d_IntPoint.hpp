@@ -7,51 +7,33 @@
 #include <gp_Pnt2d.hpp>
 #include <Standard_Boolean.hpp>
 
-//! Geometrical intersection between two 2d elements.
 class IntAna2d_IntPoint
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Create an intersection point between 2 parametric 2d lines.
-  //! X,Y are the coordinate of the point. U1 is the parameter
-  //! on the first element, U2 the parameter on the second one.
   Standard_EXPORT IntAna2d_IntPoint(const double X,
                                     const double Y,
                                     const double U1,
                                     const double U2);
 
-  //! Create an intersection point between a parametric 2d line,
-  //! and a line given by an implicit equation (ImplicitCurve).
-  //! X,Y are the coordinate of the point. U1 is the parameter
-  //! on the parametric element.
-  //! Empty constructor. It's necessary to use one of
-  //! the SetValue method after this one.
   Standard_EXPORT IntAna2d_IntPoint(const double X, const double Y, const double U1);
 
   Standard_EXPORT IntAna2d_IntPoint();
 
-  //! Set the values for a "non-implicit" point.
   Standard_EXPORT virtual void SetValue(const double X,
                                         const double Y,
                                         const double U1,
                                         const double U2);
 
-  //! Set the values for an "implicit" point.
   Standard_EXPORT virtual void SetValue(const double X, const double Y, const double U1);
 
-  //! Returns the geometric point.
   const gp_Pnt2d& Value() const;
 
-  //! Returns True if the second curve is implicit.
   bool SecondIsImplicit() const;
 
-  //! Returns the parameter on the first element.
   double ParamOnFirst() const;
 
-  //! Returns the parameter on the second element.
-  //! If the second element is an implicit curve, an exception
-  //! is raised.
   double ParamOnSecond() const;
 
 private:

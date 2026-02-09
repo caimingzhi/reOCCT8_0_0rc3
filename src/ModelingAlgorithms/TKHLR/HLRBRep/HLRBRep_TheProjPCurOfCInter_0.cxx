@@ -29,14 +29,14 @@ double HLRBRep_TheProjPCurOfCInter::FindParameter(const HLRBRep_CurvePtr& C,
 
   if (!Loc.IsDone())
   {
-    //-- cout<<"\n Erreur dans LocateExtPC "<<endl;
+
     theparam = defaultparam;
   }
   else
   {
     if (!Loc.IsMin())
     {
-      //-- cout<<"\n Erreur dans LocateExtPC (Maximum trouve) "<<endl;
+
       theparam = defaultparam;
     }
     else

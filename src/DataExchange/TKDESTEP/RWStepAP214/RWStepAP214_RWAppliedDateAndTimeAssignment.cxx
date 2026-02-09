@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// create  s4134 from CC2 to DIS
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -34,12 +21,8 @@ void RWStepAP214_RWAppliedDateAndTimeAssignment::ReadStep(
   const occ::handle<StepAP214_AppliedDateAndTimeAssignment>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 3, ach, "applied_date_and_time_assignment"))
     return;
-
-  // --- inherited field : assignedDateAndTime ---
 
   occ::handle<StepBasic_DateAndTime> aAssignedDateAndTime;
   data->ReadEntity(num,
@@ -49,12 +32,8 @@ void RWStepAP214_RWAppliedDateAndTimeAssignment::ReadStep(
                    STANDARD_TYPE(StepBasic_DateAndTime),
                    aAssignedDateAndTime);
 
-  // --- inherited field : role ---
-
   occ::handle<StepBasic_DateTimeRole> aRole;
   data->ReadEntity(num, 2, "role", ach, STANDARD_TYPE(StepBasic_DateTimeRole), aRole);
-
-  // --- own field : items ---
 
   occ::handle<NCollection_HArray1<StepAP214_DateAndTimeItem>> aItems;
   StepAP214_DateAndTimeItem                                   aItemsItem;
@@ -71,8 +50,6 @@ void RWStepAP214_RWAppliedDateAndTimeAssignment::ReadStep(
     }
   }
 
-  //--- Initialisation of the read entity ---
-
   ent->Init(aAssignedDateAndTime, aRole, aItems);
 }
 
@@ -81,15 +58,9 @@ void RWStepAP214_RWAppliedDateAndTimeAssignment::WriteStep(
   const occ::handle<StepAP214_AppliedDateAndTimeAssignment>& ent) const
 {
 
-  // --- inherited field assignedDateAndTime ---
-
   SW.Send(ent->AssignedDateAndTime());
 
-  // --- inherited field role ---
-
   SW.Send(ent->Role());
-
-  // --- own field : items ---
 
   SW.OpenSub();
   for (int i3 = 1; i3 <= ent->NbItems(); i3++)

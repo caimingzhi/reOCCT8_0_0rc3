@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_OutOfRange.hpp>
 #include <Standard_Transient.hpp>
@@ -19,10 +8,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_MultipleBinder, Transfer_Binder)
 
-// Multiple Result
-// Possibility to define a Multiple Result : several objects resulting
-//  from a Transfer, without being able to distinguish them
-//  N.B. : For now, all Transients (may evolve)
 Transfer_MultipleBinder::Transfer_MultipleBinder() = default;
 
 bool Transfer_MultipleBinder::IsMultiple() const
@@ -41,8 +26,6 @@ const char* Transfer_MultipleBinder::ResultTypeName() const
 {
   return "(list)";
 }
-
-//  ....        Multiple Result Management        ....
 
 void Transfer_MultipleBinder::AddResult(const occ::handle<Standard_Transient>& res)
 {

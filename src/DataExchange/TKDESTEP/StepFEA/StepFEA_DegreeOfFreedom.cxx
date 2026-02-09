@@ -4,18 +4,12 @@
 #include <StepFEA_DegreeOfFreedomMember.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=================================================================================================
-
 StepFEA_DegreeOfFreedom::StepFEA_DegreeOfFreedom() = default;
 
-//=================================================================================================
-
-int StepFEA_DegreeOfFreedom::CaseNum(const occ::handle<Standard_Transient>& /*ent*/) const
+int StepFEA_DegreeOfFreedom::CaseNum(const occ::handle<Standard_Transient>&) const
 {
   return 0;
 }
-
-//=================================================================================================
 
 int StepFEA_DegreeOfFreedom::CaseMem(const occ::handle<StepData_SelectMember>& ent) const
 {
@@ -29,14 +23,10 @@ int StepFEA_DegreeOfFreedom::CaseMem(const occ::handle<StepData_SelectMember>& e
     return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepData_SelectMember> StepFEA_DegreeOfFreedom::NewMember() const
 {
   return new StepFEA_DegreeOfFreedomMember;
 }
-
-//=================================================================================================
 
 void StepFEA_DegreeOfFreedom::SetEnumeratedDegreeOfFreedom(
   const StepFEA_EnumeratedDegreeOfFreedom val)
@@ -50,8 +40,6 @@ void StepFEA_DegreeOfFreedom::SetEnumeratedDegreeOfFreedom(
   SelMem->SetName(name->ToCString());
   SelMem->SetEnum((int)val);
 }
-
-//=================================================================================================
 
 StepFEA_EnumeratedDegreeOfFreedom StepFEA_DegreeOfFreedom::EnumeratedDegreeOfFreedom() const
 {
@@ -72,21 +60,13 @@ StepFEA_EnumeratedDegreeOfFreedom StepFEA_DegreeOfFreedom::EnumeratedDegreeOfFre
     case 1:
       val = StepFEA_XTranslation;
       break;
-      //  case 2 : val = StepElement_YTranslation; break;
-      //  case 3 : val = StepElement_ZTranslation; break;
-      //  case 4 : val = StepElement_XRotation; break;
-      //  case 5 : val = StepElement_YRotation; break;
-      //  case 6 : val = StepElement_ZRotation; break;
-      //  case 7 : val = StepElement_Warp; break;
-      //  case 8 : val = StepElement_None; break;
+
     default:
       return StepFEA_XTranslation;
       break;
   }
   return val;
 }
-
-//=================================================================================================
 
 void StepFEA_DegreeOfFreedom::SetApplicationDefinedDegreeOfFreedom(
   const occ::handle<TCollection_HAsciiString>& val)
@@ -100,8 +80,6 @@ void StepFEA_DegreeOfFreedom::SetApplicationDefinedDegreeOfFreedom(
   SelMem->SetName(name->ToCString());
   SelMem->SetString(val->ToCString());
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> StepFEA_DegreeOfFreedom::ApplicationDefinedDegreeOfFreedom()
   const

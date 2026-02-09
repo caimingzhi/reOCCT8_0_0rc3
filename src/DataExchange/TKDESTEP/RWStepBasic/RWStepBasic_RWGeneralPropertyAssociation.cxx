@@ -1,15 +1,4 @@
-// Copyright (c) 2024 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include "RWStepBasic_RWGeneralPropertyAssociation.hpp"
@@ -19,11 +8,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepRepr_PropertyDefinition.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWGeneralPropertyAssociation::RWStepBasic_RWGeneralPropertyAssociation() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWGeneralPropertyAssociation::ReadStep(
   const occ::handle<StepData_StepReaderData>&              theData,
@@ -31,7 +16,7 @@ void RWStepBasic_RWGeneralPropertyAssociation::ReadStep(
   occ::handle<Interface_Check>&                            theAch,
   const occ::handle<StepBasic_GeneralPropertyAssociation>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 4, theAch, "general_property_association"))
     return;
 
@@ -57,11 +42,8 @@ void RWStepBasic_RWGeneralPropertyAssociation::ReadStep(
                       STANDARD_TYPE(StepRepr_PropertyDefinition),
                       aPropertyDefinition);
 
-  // Initialize entity
   theEnt->Init(aName, aDescription, aGeneralProperty, aPropertyDefinition);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWGeneralPropertyAssociation::WriteStep(
   StepData_StepWriter&                                     theSW,
@@ -75,8 +57,6 @@ void RWStepBasic_RWGeneralPropertyAssociation::WriteStep(
 
   theSW.Send(theEnt->PropertyDefinition());
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWGeneralPropertyAssociation::Share(
   const occ::handle<StepBasic_GeneralPropertyAssociation>& theEnt,

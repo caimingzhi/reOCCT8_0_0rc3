@@ -14,7 +14,6 @@ class StepVisual_FillAreaStyle : public Standard_Transient
 {
 
 public:
-  //! Returns a FillAreaStyle
   Standard_EXPORT StepVisual_FillAreaStyle();
 
   Standard_EXPORT void Init(

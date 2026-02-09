@@ -8,12 +8,8 @@
 #include <NCollection_HArray1.hpp>
 #include <StepRepr_Representation.hpp>
 
-//=================================================================================================
-
 RWStepAP242_RWDraughtingModelItemAssociation::RWStepAP242_RWDraughtingModelItemAssociation() =
   default;
-
-//=================================================================================================
 
 void RWStepAP242_RWDraughtingModelItemAssociation::ReadStep(
   const occ::handle<StepData_StepReaderData>&                  data,
@@ -21,11 +17,10 @@ void RWStepAP242_RWDraughtingModelItemAssociation::ReadStep(
   occ::handle<Interface_Check>&                                ach,
   const occ::handle<StepAP242_DraughtingModelItemAssociation>& ent) const
 {
-  // Number of Parameter Control
+
   if (!data->CheckNbParams(num, 5, ach, "geometric_item_specific_usage"))
     return;
 
-  // Inherited fields of ItemIdentifiedRepresentationUsage
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "item_identified_representation_usage.name", ach, aName);
 
@@ -81,17 +76,14 @@ void RWStepAP242_RWDraughtingModelItemAssociation::ReadStep(
     }
   }
 
-  // Initialisation of the read entity
   ent->Init(aName, aDescription, aDefinition, aRepresentation, anItems);
 }
-
-//=================================================================================================
 
 void RWStepAP242_RWDraughtingModelItemAssociation::WriteStep(
   StepData_StepWriter&                                         SW,
   const occ::handle<StepAP242_DraughtingModelItemAssociation>& ent) const
 {
-  // Inherited fields of ItemIdentifiedRepresentationUsage
+
   SW.Send(ent->Name());
 
   SW.Send(ent->Description());
@@ -113,13 +105,10 @@ void RWStepAP242_RWDraughtingModelItemAssociation::WriteStep(
   }
 }
 
-//=================================================================================================
-
 void RWStepAP242_RWDraughtingModelItemAssociation::Share(
   const occ::handle<StepAP242_DraughtingModelItemAssociation>& ent,
   Interface_EntityIterator&                                    iter) const
 {
-  // Inherited fields of ItemIdentifiedRepresentationUsage
 
   iter.AddItem(ent->Definition().Value());
   int i, nb = ent->NbIdentifiedItem();

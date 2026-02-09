@@ -6,11 +6,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepDimTol_ParallelismTolerance.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWParallelismTolerance::RWStepDimTol_RWParallelismTolerance() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWParallelismTolerance::ReadStep(
   const occ::handle<StepData_StepReaderData>&         data,
@@ -18,11 +14,9 @@ void RWStepDimTol_RWParallelismTolerance::ReadStep(
   occ::handle<Interface_Check>&                       ach,
   const occ::handle<StepDimTol_ParallelismTolerance>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 5, ach, "parallelism_tolerance"))
     return;
-
-  // Inherited fields of GeometricTolerance
 
   occ::handle<TCollection_HAsciiString> aGeometricTolerance_Name;
   data->ReadString(num, 1, "geometric_tolerance.name", ach, aGeometricTolerance_Name);
@@ -45,8 +39,6 @@ void RWStepDimTol_RWParallelismTolerance::ReadStep(
                    ach,
                    aGeometricTolerance_TolerancedShapeAspect);
 
-  // Inherited fields of GeometricToleranceWithDatumReference
-
   occ::handle<NCollection_HArray1<StepDimTol_DatumSystemOrReference>>
       aGeometricToleranceWithDatumReference_DatumSystem;
   int sub5 = 0;
@@ -64,7 +56,6 @@ void RWStepDimTol_RWParallelismTolerance::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aGeometricTolerance_Name,
             aGeometricTolerance_Description,
             aGeometricTolerance_Magnitude,
@@ -72,14 +63,10 @@ void RWStepDimTol_RWParallelismTolerance::ReadStep(
             aGeometricToleranceWithDatumReference_DatumSystem);
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWParallelismTolerance::WriteStep(
   StepData_StepWriter&                                SW,
   const occ::handle<StepDimTol_ParallelismTolerance>& ent) const
 {
-
-  // Inherited fields of GeometricTolerance
 
   SW.Send(ent->StepDimTol_GeometricTolerance::Name());
 
@@ -88,8 +75,6 @@ void RWStepDimTol_RWParallelismTolerance::WriteStep(
   SW.Send(ent->StepDimTol_GeometricTolerance::Magnitude());
 
   SW.Send(ent->StepDimTol_GeometricTolerance::TolerancedShapeAspect().Value());
-
-  // Inherited fields of GeometricToleranceWithDatumReference
 
   SW.OpenSub();
   for (int i4 = 1;
@@ -103,20 +88,14 @@ void RWStepDimTol_RWParallelismTolerance::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWParallelismTolerance::Share(
   const occ::handle<StepDimTol_ParallelismTolerance>& ent,
   Interface_EntityIterator&                           iter) const
 {
 
-  // Inherited fields of GeometricTolerance
-
   iter.AddItem(ent->StepDimTol_GeometricTolerance::Magnitude());
 
   iter.AddItem(ent->StepDimTol_GeometricTolerance::TolerancedShapeAspect().Value());
-
-  // Inherited fields of GeometricToleranceWithDatumReference
 
   for (int i3 = 1;
        i3 <= ent->StepDimTol_GeometricToleranceWithDatumReference::DatumSystemAP242()->Length();

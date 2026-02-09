@@ -44,8 +44,6 @@ Standard_IMPORT int    uparam_count;
 Standard_IMPORT double t_uparam;
 #endif
 
-//=================================================================================================
-
 class Approx_CurvilinearParameter_EvalCurv : public AdvApprox_EvaluatorFunction
 {
 public:
@@ -62,7 +60,7 @@ public:
                 double  StartEnd[2],
                 double* Parameter,
                 int*    DerivativeRequest,
-                double* Result, // [Dimension]
+                double* Result,
                 int*    ErrorCode) override;
 
 private:
@@ -82,12 +80,11 @@ void Approx_CurvilinearParameter_EvalCurv::Evaluate(int*    Dimension,
   NCollection_Array1<double> Res(0, 2);
   int                        i;
 
-  // Dimension is incorrect
   if (*Dimension != 3)
   {
     *ErrorCode = 1;
   }
-  // Parameter is incorrect
+
   if (S < StartEnd[0] || S > StartEnd[1])
   {
     *ErrorCode = 2;
@@ -123,7 +120,6 @@ Approx_CurvilinearParameter::Approx_CurvilinearParameter(const occ::handle<Adapt
   InitChron(chr_total);
 #endif
   myCase = 1;
-  // Initialisation of input parameters of AdvApprox
 
   int                                      Num1DSS = 0, Num2DSS = 0, Num3DSS = 1;
   occ::handle<NCollection_HArray1<double>> OneDTolNul, TwoDTolNul;
@@ -197,8 +193,6 @@ Approx_CurvilinearParameter::Approx_CurvilinearParameter(const occ::handle<Adapt
 #endif
 }
 
-//=================================================================================================
-
 class Approx_CurvilinearParameter_EvalCurvOnSurf : public AdvApprox_EvaluatorFunction
 {
 public:
@@ -215,7 +209,7 @@ public:
                 double  StartEnd[2],
                 double* Parameter,
                 int*    DerivativeRequest,
-                double* Result, // [Dimension]
+                double* Result,
                 int*    ErrorCode) override;
 
 private:
@@ -235,12 +229,11 @@ void Approx_CurvilinearParameter_EvalCurvOnSurf::Evaluate(int*    Dimension,
   NCollection_Array1<double> Res(0, 4);
   int                        i;
 
-  // Dimension is incorrect
   if (*Dimension != 5)
   {
     *ErrorCode = 1;
   }
-  // Parameter is incorrect
+
   if (S < StartEnd[0] || S > StartEnd[1])
   {
     *ErrorCode = 2;
@@ -275,8 +268,6 @@ Approx_CurvilinearParameter::Approx_CurvilinearParameter(const occ::handle<Adapt
   InitChron(chr_total);
 #endif
   myCase = 2;
-
-  // Initialisation of input parameters of AdvApprox
 
   int Num1DSS = 2, Num2DSS = 0, Num3DSS = 1, i;
 
@@ -372,8 +363,6 @@ Approx_CurvilinearParameter::Approx_CurvilinearParameter(const occ::handle<Adapt
 #endif
 }
 
-//=================================================================================================
-
 class Approx_CurvilinearParameter_EvalCurvOn2Surf : public AdvApprox_EvaluatorFunction
 {
 public:
@@ -390,7 +379,7 @@ public:
                 double  StartEnd[2],
                 double* Parameter,
                 int*    DerivativeRequest,
-                double* Result, // [Dimension]
+                double* Result,
                 int*    ErrorCode) override;
 
 private:
@@ -410,24 +399,16 @@ void Approx_CurvilinearParameter_EvalCurvOn2Surf::Evaluate(int*    Dimension,
   NCollection_Array1<double> Res(0, 6);
   int                        i;
 
-  // Dimension is incorrect
   if (*Dimension != 7)
   {
     *ErrorCode = 1;
   }
-  // Parameter is incorrect
+
   if (S < StartEnd[0] || S > StartEnd[1])
   {
     *ErrorCode = 2;
   }
 
-  /*  if(StartEnd[0] != StartEndSav[0] || StartEnd[1]!= StartEndSav[1])
-      {
-        fonct->Trim(StartEnd[0],StartEnd[1], Precision::Confusion());
-        StartEndSav[0]=StartEnd[0];
-        StartEndSav[1]=StartEnd[1];
-      }
-  */
   if (!fonct->EvalCase3(S, *Order, Res))
   {
     *ErrorCode = 3;
@@ -455,8 +436,6 @@ Approx_CurvilinearParameter::Approx_CurvilinearParameter(
   InitChron(chr_total);
 #endif
   myCase = 3;
-
-  // Initialisation of input parameters of AdvApprox
 
   int                                      Num1DSS = 4, Num2DSS = 0, Num3DSS = 1;
   occ::handle<NCollection_HArray1<double>> OneDTol = new NCollection_HArray1<double>(1, Num1DSS);
@@ -561,74 +540,45 @@ Approx_CurvilinearParameter::Approx_CurvilinearParameter(
 #endif
 }
 
-//=================================================================================================
-
 bool Approx_CurvilinearParameter::IsDone() const
 {
   return myDone;
 }
-
-//=================================================================================================
 
 bool Approx_CurvilinearParameter::HasResult() const
 {
   return myHasResult;
 }
 
-//=================================================================================================
-
 occ::handle<Geom_BSplineCurve> Approx_CurvilinearParameter::Curve3d() const
 {
   return myCurve3d;
 }
-
-//=================================================================================================
 
 double Approx_CurvilinearParameter::MaxError3d() const
 {
   return myMaxError3d;
 }
 
-//=================================================================================================
-// function : Curve2d1
-// purpose  : returns the BsplineCurve representing the reparametrized 2D curve on the
-//           first surface (case of a curve on one or two surfaces)
-//=================================================================================================
-
 occ::handle<Geom2d_BSplineCurve> Approx_CurvilinearParameter::Curve2d1() const
 {
   return myCurve2d1;
 }
-
-//=================================================================================================
 
 double Approx_CurvilinearParameter::MaxError2d1() const
 {
   return myMaxError2d1;
 }
 
-//=================================================================================================
-// function : Curve2d2
-// purpose  : returns the BsplineCurve representing the reparametrized 2D curve on the
-//           second surface (case of a curve on two surfaces)
-//=================================================================================================
-
 occ::handle<Geom2d_BSplineCurve> Approx_CurvilinearParameter::Curve2d2() const
 {
   return myCurve2d2;
 }
 
-//=================================================================================================
-
 double Approx_CurvilinearParameter::MaxError2d2() const
 {
   return myMaxError2d2;
 }
-
-//=================================================================================================
-// function : Dump
-// purpose  : print the maximum errors(s)
-//=================================================================================================
 
 void Approx_CurvilinearParameter::Dump(Standard_OStream& o) const
 {
@@ -640,8 +590,6 @@ void Approx_CurvilinearParameter::Dump(Standard_OStream& o) const
   o << "myMaxError3d = " << myMaxError3d << std::endl;
 }
 
-//=================================================================================================
-
 void Approx_CurvilinearParameter::ToleranceComputation(const occ::handle<Adaptor2d_Curve2d>& C2D,
                                                        const occ::handle<Adaptor3d_Surface>& S,
                                                        const int    MaxNumber,
@@ -650,7 +598,7 @@ void Approx_CurvilinearParameter::ToleranceComputation(const occ::handle<Adaptor
                                                        double&      TolW)
 {
   double FirstU = C2D->FirstParameter(), LastU = C2D->LastParameter();
-  //  double parU, Max_dS_dv=1.,Max_dS_dw=1.;
+
   double   Max_dS_dv = 1., Max_dS_dw = 1.;
   gp_Pnt   P;
   gp_Pnt2d pntVW;

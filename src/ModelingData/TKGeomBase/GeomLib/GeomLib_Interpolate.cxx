@@ -7,8 +7,6 @@
 #include <gp_Vec.hpp>
 #include <Standard_Integer.hpp>
 
-//=================================================================================================
-
 GeomLib_Interpolate::GeomLib_Interpolate(const int                         Degree,
                                          const int                         NumPoints,
                                          const NCollection_Array1<gp_Pnt>& PointsArray,
@@ -100,8 +98,6 @@ GeomLib_Interpolate::GeomLib_Interpolate(const int                         Degre
     }
   }
 }
-
-//=================================================================================================
 
 occ::handle<Geom_BSplineCurve> GeomLib_Interpolate::Curve() const
 {

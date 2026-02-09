@@ -3,11 +3,7 @@
 #include <StepGeom_DegeneratePcurve.hpp>
 #include <StepGeom_SurfaceBoundary.hpp>
 
-//=================================================================================================
-
 StepGeom_SurfaceBoundary::StepGeom_SurfaceBoundary() = default;
-
-//=================================================================================================
 
 int StepGeom_SurfaceBoundary::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -20,14 +16,10 @@ int StepGeom_SurfaceBoundary::CaseNum(const occ::handle<Standard_Transient>& ent
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_BoundaryCurve> StepGeom_SurfaceBoundary::BoundaryCurve() const
 {
   return occ::down_cast<StepGeom_BoundaryCurve>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepGeom_DegeneratePcurve> StepGeom_SurfaceBoundary::DegeneratePcurve() const
 {

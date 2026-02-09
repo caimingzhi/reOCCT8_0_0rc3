@@ -12,24 +12,15 @@
 #include <TopOpeBRep_VPointInterClassifier.hpp>
 #include <TopOpeBRepTool_ShapeTool.hpp>
 
-// modified by NIZHNY-MKK  Fri Jun 16 15:04:09 2000.BEGIN
-// modified by NIZHNY-MKK  Fri Jun 16 15:04:09 2000.END
-// modified by NIZHNY-MKK  Mon Jun 19 11:47:48 2000.BEGIN
 static TopAbs_State SlowClassifyOnBoundary(const gp_Pnt&             thePointToClassify,
                                            const gp_Pnt2d&           thePoint2dToClassify,
                                            BRepClass_FaceClassifier& theSlowClassifier,
                                            const TopoDS_Face&        theFace);
 
-// modified by NIZHNY-MKK  Mon Jun 19 11:47:51 2000.END
-
-//=================================================================================================
-
 TopOpeBRep_VPointInterClassifier::TopOpeBRep_VPointInterClassifier()
     : myState(TopAbs_UNKNOWN)
 {
 }
-
-//=================================================================================================
 
 TopAbs_State TopOpeBRep_VPointInterClassifier::VPointPosition(const TopoDS_Shape&     F,
                                                               TopOpeBRep_VPointInter& VP,
@@ -87,8 +78,6 @@ TopAbs_State TopOpeBRep_VPointInterClassifier::VPointPosition(const TopoDS_Shape
   myState                = statefast;
   VP.State(myState, FaceClassifyIndex);
 
-  // AssumeINON = True <=> on considere que tout VP rendu par les
-  // intersections est sur une frontiere de la face FF (ON)ou dans la face FF (IN)
   int VPSI = VP.ShapeIndex();
   if (AssumeINON && FaceClassifyIndex == VPSI)
   {
@@ -96,11 +85,11 @@ TopAbs_State TopOpeBRep_VPointInterClassifier::VPointPosition(const TopoDS_Shape
     myState = mySlowFaceClassifier.State();
     if (myState == TopAbs_ON)
     {
-      // modified by NIZHNY-MKK  Mon Jun 19 11:45:36 2000.BEGIN
+
       myState = SlowClassifyOnBoundary(VP.Value(), p2d, mySlowFaceClassifier, FF);
       if (myState == TopAbs_ON)
       {
-        // modified by NIZHNY-MKK  Mon Jun 19 11:45:36 2000.END
+
         VP.EdgeON(mySlowFaceClassifier.Edge().Edge(),
                   mySlowFaceClassifier.EdgeParameter(),
                   FaceClassifyIndex);
@@ -109,10 +98,8 @@ TopAbs_State TopOpeBRep_VPointInterClassifier::VPointPosition(const TopoDS_Shape
     else if (myState == TopAbs_OUT)
     {
       myState = TopAbs_IN;
-      // ou biwn myState = TopAbs_OUT ce qui va entrainer VP.UnKeep()
-      // si on privilegie le classifieur / donnees d'intersection.
     }
-  } // (AssumeINON && FaceClassifyIndex == VPSI)
+  }
 
   else if (!AssumeINON)
   {
@@ -122,11 +109,11 @@ TopAbs_State TopOpeBRep_VPointInterClassifier::VPointPosition(const TopoDS_Shape
       myState = mySlowFaceClassifier.State();
       if (myState == TopAbs_ON)
       {
-        // modified by NIZHNY-MKK  Mon Jun 19 11:45:36 2000.BEGIN
+
         myState = SlowClassifyOnBoundary(VP.Value(), p2d, mySlowFaceClassifier, FF);
         if (myState == TopAbs_ON)
         {
-          // modified by NIZHNY-MKK  Mon Jun 19 11:45:36 2000.END
+
           VP.EdgeON(mySlowFaceClassifier.Edge().Edge(),
                     mySlowFaceClassifier.EdgeParameter(),
                     FaceClassifyIndex);
@@ -137,18 +124,16 @@ TopAbs_State TopOpeBRep_VPointInterClassifier::VPointPosition(const TopoDS_Shape
 
   else if (FaceClassifyIndex != VPSI)
   {
-    // AssumeINON = True
-    // modified by NIZNHY-PKV Mon Feb  5 19:04:01 2001 f
+
     if (statefast == TopAbs_ON || statefast == TopAbs_OUT)
     {
-      // if (statefast == TopAbs_ON) {
+
       mySlowFaceClassifier.Perform(FF, p2d, Tol);
       myState = mySlowFaceClassifier.State();
 
       if (myState == TopAbs_ON || myState == TopAbs_OUT)
       {
-        // if  (myState == TopAbs_ON) {
-        // modified by NIZNHY-PKV Mon Feb  5 19:04:49 2001 t
+
         myState = SlowClassifyOnBoundary(VP.Value(), p2d, mySlowFaceClassifier, FF);
         if (myState == TopAbs_ON)
         {
@@ -164,8 +149,6 @@ TopAbs_State TopOpeBRep_VPointInterClassifier::VPointPosition(const TopoDS_Shape
   return myState;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRep_VPointInterClassifier::Edge() const
 {
   if (myState == TopAbs_ON)
@@ -179,8 +162,6 @@ const TopoDS_Shape& TopOpeBRep_VPointInterClassifier::Edge() const
   }
 }
 
-//=================================================================================================
-
 double TopOpeBRep_VPointInterClassifier::EdgeParameter() const
 {
   if (myState == TopAbs_ON)
@@ -189,11 +170,6 @@ double TopOpeBRep_VPointInterClassifier::EdgeParameter() const
     return 0;
 }
 
-// modified by NIZHNY-MKK  Mon Jun 19 11:47:23 2000.BEGIN
-//=======================================================================
-// static function : SlowClassifyOnBoundary
-// purpose  :
-//=======================================================================
 static TopAbs_State SlowClassifyOnBoundary(const gp_Pnt&             thePointToClassify,
                                            const gp_Pnt2d&           thePoint2dToClassify,
                                            BRepClass_FaceClassifier& theSlowClassifier,
@@ -257,9 +233,7 @@ static TopAbs_State SlowClassifyOnBoundary(const gp_Pnt&             thePointToC
         return TopAbs_OUT;
       }
     }
-  } // end if(!anEdgeCurve.IsNull())
+  }
 
   return TopAbs_ON;
 }
-
-// modified by NIZHNY-MKK  Mon Jun 19 11:47:26 2000.END

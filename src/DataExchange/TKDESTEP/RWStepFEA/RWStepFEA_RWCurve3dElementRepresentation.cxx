@@ -14,11 +14,7 @@
 #include <StepRepr_RepresentationItem.hpp>
 #include <StepRepr_RepresentationContext.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWCurve3dElementRepresentation::RWStepFEA_RWCurve3dElementRepresentation() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWCurve3dElementRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&              data,
@@ -26,11 +22,9 @@ void RWStepFEA_RWCurve3dElementRepresentation::ReadStep(
   occ::handle<Interface_Check>&                            ach,
   const occ::handle<StepFEA_Curve3dElementRepresentation>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 8, ach, "curve3d_element_representation"))
     return;
-
-  // Inherited fields of Representation
 
   occ::handle<TCollection_HAsciiString> aRepresentation_Name;
   data->ReadString(num, 1, "representation.name", ach, aRepresentation_Name);
@@ -64,8 +58,6 @@ void RWStepFEA_RWCurve3dElementRepresentation::ReadStep(
                    STANDARD_TYPE(StepRepr_RepresentationContext),
                    aRepresentation_ContextOfItems);
 
-  // Inherited fields of ElementRepresentation
-
   occ::handle<NCollection_HArray1<occ::handle<StepFEA_NodeRepresentation>>>
       aElementRepresentation_NodeList;
   int sub4 = 0;
@@ -88,8 +80,6 @@ void RWStepFEA_RWCurve3dElementRepresentation::ReadStep(
     }
   }
 
-  // Own fields of Curve3dElementRepresentation
-
   occ::handle<StepFEA_FeaModel3d> aModelRef;
   data->ReadEntity(num, 5, "model_ref", ach, STANDARD_TYPE(StepFEA_FeaModel3d), aModelRef);
 
@@ -108,7 +98,6 @@ void RWStepFEA_RWCurve3dElementRepresentation::ReadStep(
   occ::handle<StepElement_ElementMaterial> aMaterial;
   data->ReadEntity(num, 8, "material", ach, STANDARD_TYPE(StepElement_ElementMaterial), aMaterial);
 
-  // Initialize entity
   ent->Init(aRepresentation_Name,
             aRepresentation_Items,
             aRepresentation_ContextOfItems,
@@ -119,14 +108,10 @@ void RWStepFEA_RWCurve3dElementRepresentation::ReadStep(
             aMaterial);
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWCurve3dElementRepresentation::WriteStep(
   StepData_StepWriter&                                     SW,
   const occ::handle<StepFEA_Curve3dElementRepresentation>& ent) const
 {
-
-  // Inherited fields of Representation
 
   SW.Send(ent->StepRepr_Representation::Name());
 
@@ -141,8 +126,6 @@ void RWStepFEA_RWCurve3dElementRepresentation::WriteStep(
 
   SW.Send(ent->StepRepr_Representation::ContextOfItems());
 
-  // Inherited fields of ElementRepresentation
-
   SW.OpenSub();
   for (int i3 = 1; i3 <= ent->StepFEA_ElementRepresentation::NodeList()->Length(); i3++)
   {
@@ -151,8 +134,6 @@ void RWStepFEA_RWCurve3dElementRepresentation::WriteStep(
     SW.Send(Var0);
   }
   SW.CloseSub();
-
-  // Own fields of Curve3dElementRepresentation
 
   SW.Send(ent->ModelRef());
 
@@ -163,14 +144,10 @@ void RWStepFEA_RWCurve3dElementRepresentation::WriteStep(
   SW.Send(ent->Material());
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWCurve3dElementRepresentation::Share(
   const occ::handle<StepFEA_Curve3dElementRepresentation>& ent,
   Interface_EntityIterator&                                iter) const
 {
-
-  // Inherited fields of Representation
 
   for (int i1 = 1; i1 <= ent->StepRepr_Representation::NbItems(); i1++)
   {
@@ -181,16 +158,12 @@ void RWStepFEA_RWCurve3dElementRepresentation::Share(
 
   iter.AddItem(ent->StepRepr_Representation::ContextOfItems());
 
-  // Inherited fields of ElementRepresentation
-
   for (int i3 = 1; i3 <= ent->StepFEA_ElementRepresentation::NodeList()->Length(); i3++)
   {
     occ::handle<StepFEA_NodeRepresentation> Var0 =
       ent->StepFEA_ElementRepresentation::NodeList()->Value(i3);
     iter.AddItem(Var0);
   }
-
-  // Own fields of Curve3dElementRepresentation
 
   iter.AddItem(ent->ModelRef());
 

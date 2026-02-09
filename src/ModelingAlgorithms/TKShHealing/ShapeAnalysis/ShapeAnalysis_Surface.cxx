@@ -1,33 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// 06.01.99 pdn private method SurfaceNewton PRO17015: fix against hang in Extrema
-// 11.01.99 pdn PRO10109 4517: protect against wrong result
-//%12 pdn 11.02.99 PRO9234 project degenerated
-// 03.03.99 rln S4135: new algorithms for IsClosed (accepts precision), Degenerated (stores
-// precision)
-//: p7 abv 10.03.99 PRO18206: adding new method IsDegenerated()
-//: p8 abv 11.03.99 PRO7226 #489490: improving ProjectDegenerated() for degenerated edges
-//: q1 pdn, abv 15.03.99 PRO7226 #525030: adding maxpreci in NextValueOfUV()
-//: q2 abv 16.03.99: PRO7226 #412920: applying Newton algorithm before UVFromIso()
-//: q6 abv 19.03.99: ie_soapbox-B.stp #390760: improving projecting point on surface
-// #77 rln 15.03.99: S4135: returning singularity which has minimum gap between singular point and
-// input 3D point
-//: r3 abv 30.03.99: (by smh) S4163: protect against unexpected signals
-//: #4 smh 07.04.99: S4163 Zero divide.
-// #4  szv           S4163: optimizations
-//: r9 abv 09.04.99: id_turbine-C.stp #3865: check degenerated 2d point by recomputing to 3d instead
-//: of Resolution s5 abv 22.04.99  Adding debug printouts in catch {} blocks
 
 #include <Adaptor3d_Curve.hpp>
 #include <Adaptor3d_IsoCurve.hpp>
@@ -92,13 +63,9 @@ namespace
   }
 } // namespace
 
-// S4135
-// S4135
-//=================================================================================================
-
 ShapeAnalysis_Surface::ShapeAnalysis_Surface(const occ::handle<Geom_Surface>& S)
     : mySurf(S),
-      myExtOK(false), //: 30
+      myExtOK(false),
       myNbDeg(-1),
       myIsos(false),
       myIsoBoxes(false),
@@ -108,7 +75,7 @@ ShapeAnalysis_Surface::ShapeAnalysis_Surface(const occ::handle<Geom_Surface>& S)
       myUCloseVal(-1),
       myVCloseVal(-1)
 {
-  // Bug 33895: Prevent crash when surface is null
+
   if (mySurf.IsNull())
   {
     Message::SendWarning("ShapeAnalysis_Surface: Cannot create with null surface");
@@ -119,20 +86,18 @@ ShapeAnalysis_Surface::ShapeAnalysis_Surface(const occ::handle<Geom_Surface>& S)
   myAdSur = new GeomAdaptor_Surface(mySurf);
 }
 
-//=================================================================================================
-
 void ShapeAnalysis_Surface::Init(const occ::handle<Geom_Surface>& theSurface)
 {
   if (mySurf == theSurface)
     return;
-  // Bug 33895: Prevent crash when surface is null
+
   if (theSurface.IsNull())
   {
     Message::SendWarning("ShapeAnalysis_Surface: Cannot initialize with null surface");
     assert(!theSurface.IsNull());
     return;
   }
-  myExtOK     = false; //: 30
+  myExtOK     = false;
   mySurf      = theSurface;
   myNbDeg     = -1;
   myUCloseVal = myVCloseVal = -1;
@@ -147,13 +112,11 @@ void ShapeAnalysis_Surface::Init(const occ::handle<Geom_Surface>& theSurface)
   myIsoVL.Nullify();
 }
 
-//=================================================================================================
-
 void ShapeAnalysis_Surface::Init(const occ::handle<ShapeAnalysis_Surface>& other)
 {
   Init(other->Surface());
   myAdSur = other->TrueAdaptor3d();
-  myNbDeg = other->myNbDeg; // rln S4135 direct transmission (to avoid computation in <other>)
+  myNbDeg = other->myNbDeg;
   for (int i = 0; i < myNbDeg; i++)
   {
     other->Singularity(i + 1,
@@ -167,30 +130,25 @@ void ShapeAnalysis_Surface::Init(const occ::handle<ShapeAnalysis_Surface>& other
   }
 }
 
-//=================================================================================================
-
 const occ::handle<GeomAdaptor_Surface>& ShapeAnalysis_Surface::Adaptor3d()
 {
   return myAdSur;
 }
 
-//=================================================================================================
-
 void ShapeAnalysis_Surface::ComputeSingularities()
 {
-  // rln S4135
+
   if (myNbDeg >= 0)
     return;
-  //: 51 abv 22 Dec 97: allow forcing:  if (myNbDeg >= 0) return;
-  // CKY 27-FEV-98 : en appel direct on peut forcer. En appel interne on optimise
+
   if (mySurf.IsNull())
     return;
 
   double su1, sv1, su2, sv2;
-  //  mySurf->Bounds(su1, su2, sv1, sv2);
-  Bounds(su1, su2, sv1, sv2); // modified by rln on 12/11/97 mySurf-> is deleted
 
-  myNbDeg = 0; //: r3
+  Bounds(su1, su2, sv1, sv2);
+
+  myNbDeg = 0;
 
   if (mySurf->IsKind(STANDARD_TYPE(Geom_ConicalSurface)))
   {
@@ -210,7 +168,7 @@ void ShapeAnalysis_Surface::ComputeSingularities()
     occ::handle<Geom_ToroidalSurface> toroidS = occ::down_cast<Geom_ToroidalSurface>(mySurf);
     double                            minorR  = toroidS->MinorRadius();
     double                            majorR  = toroidS->MajorRadius();
-    // szv#4:S4163:12Mar99 warning - possible div by zero
+
     double Ang = std::acos(std::min(1., majorR / minorR));
     myPreci[0] = myPreci[1] = std::max(0., majorR - minorR);
     myP3d[0]                = mySurf->Value(0., M_PI - Ang);
@@ -227,7 +185,7 @@ void ShapeAnalysis_Surface::ComputeSingularities()
   else if (mySurf->IsKind(STANDARD_TYPE(Geom_SphericalSurface)))
   {
     myPreci[0] = myPreci[1] = 0;
-    myP3d[0]                = mySurf->Value(su1, sv2); // Northern pole is first
+    myP3d[0]                = mySurf->Value(su1, sv2);
     myP3d[1]                = mySurf->Value(su1, sv1);
     myFirstP2d[0].SetCoord(su2, sv2);
     myLastP2d[0].SetCoord(su1, sv2);
@@ -239,11 +197,10 @@ void ShapeAnalysis_Surface::ComputeSingularities()
     myNbDeg                     = 2;
   }
   else if ((mySurf->IsKind(STANDARD_TYPE(Geom_BoundedSurface)))
-           || (mySurf->IsKind(STANDARD_TYPE(Geom_SurfaceOfRevolution))) || //: b2 abv 18 Feb 98
-           (mySurf->IsKind(STANDARD_TYPE(Geom_OffsetSurface))))
-  { // rln S4135
+           || (mySurf->IsKind(STANDARD_TYPE(Geom_SurfaceOfRevolution)))
+           || (mySurf->IsKind(STANDARD_TYPE(Geom_OffsetSurface))))
+  {
 
-    // rln S4135 //:r3
     myP3d[0] = myAdSur->Value(su1, 0.5 * (sv1 + sv2));
     myFirstP2d[0].SetCoord(su1, sv2);
     myLastP2d[0].SetCoord(su1, sv1);
@@ -287,14 +244,10 @@ void ShapeAnalysis_Surface::ComputeSingularities()
   SortSingularities();
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_Surface::HasSingularities(const double preci)
 {
   return NbSingularities(preci) > 0;
 }
-
-//=================================================================================================
 
 int ShapeAnalysis_Surface::NbSingularities(const double preci)
 {
@@ -307,8 +260,6 @@ int ShapeAnalysis_Surface::NbSingularities(const double preci)
   return Nb;
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_Surface::Singularity(const int num,
                                         double&   preci,
                                         gp_Pnt&   P3d,
@@ -318,7 +269,7 @@ bool ShapeAnalysis_Surface::Singularity(const int num,
                                         double&   lastpar,
                                         bool&     uisodeg)
 {
-  //  ATTENTION, les champs sont des tableaux C, n0s partent de 0. num part de 1
+
   if (myNbDeg < 0)
     ComputeSingularities();
   if (num < 1 || num > myNbDeg)
@@ -333,8 +284,6 @@ bool ShapeAnalysis_Surface::Singularity(const int num,
   return true;
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_Surface::IsDegenerated(const gp_Pnt& P3d, const double preci)
 {
   if (myNbDeg < 0)
@@ -342,14 +291,12 @@ bool ShapeAnalysis_Surface::IsDegenerated(const gp_Pnt& P3d, const double preci)
   for (int i = 0; i < myNbDeg && myPreci[i] <= preci; i++)
   {
     myGap = myP3d[i].Distance(P3d);
-    // rln S4135
+
     if (myGap <= preci)
       return true;
   }
   return false;
 }
-
-//=================================================================================================
 
 bool ShapeAnalysis_Surface::DegeneratedValues(const gp_Pnt& P3d,
                                               const double  preci,
@@ -357,18 +304,17 @@ bool ShapeAnalysis_Surface::DegeneratedValues(const gp_Pnt& P3d,
                                               gp_Pnt2d&     lastP2d,
                                               double&       firstPar,
                                               double&       lastPar,
-                                              const bool /*forward*/)
+                                              const bool)
 {
   if (myNbDeg < 0)
     ComputeSingularities();
-  // #77 rln S4135: returning singularity which has minimum gap between singular point and input 3D
-  // point
+
   int    indMin = -1;
   double gapMin = RealLast();
   for (int i = 0; i < myNbDeg && myPreci[i] <= preci; i++)
   {
     myGap = myP3d[i].Distance(P3d);
-    // rln S4135
+
     if (myGap <= preci)
       if (gapMin > myGap)
       {
@@ -388,8 +334,6 @@ bool ShapeAnalysis_Surface::DegeneratedValues(const gp_Pnt& P3d,
   return false;
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_Surface::ProjectDegenerated(const gp_Pnt&   P3d,
                                                const double    preci,
                                                const gp_Pnt2d& neighbour,
@@ -397,9 +341,7 @@ bool ShapeAnalysis_Surface::ProjectDegenerated(const gp_Pnt&   P3d,
 {
   if (myNbDeg < 0)
     ComputeSingularities();
-  // added by rln on 03/12/97
-  //: c1 abv 23 Feb 98: preci (3d) -> Resolution (2d)
-  // #77 rln S4135
+
   int    indMin = -1;
   double gapMin = RealLast();
   for (int i = 0; i < myNbDeg && myPreci[i] <= preci; i++)
@@ -407,7 +349,7 @@ bool ShapeAnalysis_Surface::ProjectDegenerated(const gp_Pnt&   P3d,
     double gap2 = myP3d[i].SquareDistance(P3d);
     if (gap2 > preci * preci)
       gap2 = std::min(gap2, myP3d[i].SquareDistance(Value(result)));
-    // rln S4135
+
     if (gap2 <= preci * preci && gapMin > gap2)
     {
       gapMin = gap2;
@@ -424,9 +366,6 @@ bool ShapeAnalysis_Surface::ProjectDegenerated(const gp_Pnt&   P3d,
   return true;
 }
 
-// pdn %12 11.02.99 PRO9234 entity 15402
-//=================================================================================================
-
 bool ShapeAnalysis_Surface::ProjectDegenerated(const int                           nbrPnt,
                                                const NCollection_Sequence<gp_Pnt>& points,
                                                NCollection_Sequence<gp_Pnt2d>&     pnt2d,
@@ -437,7 +376,7 @@ bool ShapeAnalysis_Surface::ProjectDegenerated(const int                        
     ComputeSingularities();
 
   int step = (direct ? 1 : -1);
-  // #77 rln S4135
+
   int    indMin = -1;
   double gapMin = RealLast(), prec2 = preci * preci;
   int    j = (direct ? 1 : nbrPnt);
@@ -458,7 +397,7 @@ bool ShapeAnalysis_Surface::ProjectDegenerated(const int                        
   myGap = std::sqrt(gapMin);
   gp_Pnt2d pk;
 
-  int k; // svv Jan11 2000 : porting on DEC
+  int k;
   for (k = j + step; k <= nbrPnt && k >= 1; k += step)
   {
     pk        = pnt2d(k);
@@ -467,14 +406,13 @@ bool ShapeAnalysis_Surface::ProjectDegenerated(const int                        
       break;
   }
 
-  //: p8 abv 11 Mar 99: PRO7226 #489490: if whole pcurve is degenerate, distribute evenly
   if (k < 1 || k > nbrPnt)
   {
     double x1 = (myUIsoDeg[indMin] ? pnt2d(1).Y() : pnt2d(1).X());
     double x2 = (myUIsoDeg[indMin] ? pnt2d(nbrPnt).Y() : pnt2d(nbrPnt).X());
     for (j = 1; j <= nbrPnt; j++)
     {
-      // szv#4:S4163:12Mar99 warning - possible div by zero
+
       double x = (x1 * (nbrPnt - j) + x2 * (j - 1)) / (nbrPnt - 1);
       if (!myUIsoDeg[indMin])
         pnt2d(j).SetX(x);
@@ -493,8 +431,6 @@ bool ShapeAnalysis_Surface::ProjectDegenerated(const int                        
   }
   return true;
 }
-
-//=================================================================================================
 
 bool ShapeAnalysis_Surface::IsDegenerated(const gp_Pnt2d& p2d1,
                                           const gp_Pnt2d& p2d2,
@@ -520,8 +456,6 @@ bool ShapeAnalysis_Surface::IsDegenerated(const gp_Pnt2d& p2d1,
   return du * du + dv * dv > max3d * max3d;
 }
 
-//=================================================================================================
-
 static occ::handle<Geom_Curve> ComputeIso(const occ::handle<Geom_Surface>& surf,
                                           const bool                       utype,
                                           const double                     par)
@@ -538,7 +472,7 @@ static occ::handle<Geom_Curve> ComputeIso(const occ::handle<Geom_Surface>& surf,
   catch (Standard_Failure const& anException)
   {
 #ifdef OCCT_DEBUG
-    //: s5
+
     std::cout << "\nWarning: ShapeAnalysis_Surface, ComputeIso(): Exception in UVIso(): ";
     anException.Print(std::cout);
     std::cout << std::endl;
@@ -548,8 +482,6 @@ static occ::handle<Geom_Curve> ComputeIso(const occ::handle<Geom_Surface>& surf,
   }
   return iso;
 }
-
-//=================================================================================================
 
 void ShapeAnalysis_Surface::ComputeBoundIsos()
 {
@@ -561,8 +493,6 @@ void ShapeAnalysis_Surface::ComputeBoundIsos()
   myIsoVF = ComputeIso(mySurf, false, myVF);
   myIsoVL = ComputeIso(mySurf, false, myVL);
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> ShapeAnalysis_Surface::UIso(const double U)
 {
@@ -579,8 +509,6 @@ occ::handle<Geom_Curve> ShapeAnalysis_Surface::UIso(const double U)
   return ComputeIso(mySurf, true, U);
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> ShapeAnalysis_Surface::VIso(const double V)
 {
   if (V == myVF)
@@ -596,21 +524,19 @@ occ::handle<Geom_Curve> ShapeAnalysis_Surface::VIso(const double V)
   return ComputeIso(mySurf, false, V);
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_Surface::IsUClosed(const double preci)
 {
   double prec      = std::max(preci, Precision::Confusion());
   double anUmidVal = -1.;
   if (myUCloseVal < 0)
   {
-    //    Faut calculer : calculs minimaux
+
     double uf, ul, vf, vl;
-    Bounds(uf, ul, vf, vl); // modified by rln on 12/11/97 mySurf-> is deleted
-    // mySurf->Bounds (uf,ul,vf,vl);
+    Bounds(uf, ul, vf, vl);
+
     RestrictBounds(uf, ul, vf, vl);
-    myUDelt = std::abs(ul - uf) / 20; // modified by rln 11/11/97 instead of 10
-                                      // because of the example when 10 was not enough
+    myUDelt = std::abs(ul - uf) / 20;
+
     if (mySurf->IsUClosed())
     {
       myUCloseVal = 0.;
@@ -619,8 +545,6 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
       return true;
     }
 
-    // Calculs adaptes
-    // #67 rln S4135
     GeomAdaptor_Surface& SurfAdapt = *Adaptor3d();
     GeomAbs_SurfaceType  surftype  = SurfAdapt.GetType();
     if (mySurf->IsKind(STANDARD_TYPE(Geom_RectangularTrimmedSurface)))
@@ -636,14 +560,14 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
         break;
       }
       case GeomAbs_SurfaceOfExtrusion:
-      { //: c8 abv 03 Mar 98: UKI60094 #753: process
-        //: Geom_SurfaceOfLinearExtrusion
+      {
+
         occ::handle<Geom_SurfaceOfLinearExtrusion> extr =
           occ::down_cast<Geom_SurfaceOfLinearExtrusion>(mySurf);
         occ::handle<Geom_Curve> crv = extr->BasisCurve();
         double                  f   = crv->FirstParameter();
         double                  l   = crv->LastParameter();
-        //: r3 abv (smh) 30 Mar 99: protect against unexpected signals
+
         if (!Precision::IsInfinite(f) && !Precision::IsInfinite(l))
         {
           gp_Pnt p1   = crv->Value(f);
@@ -669,15 +593,14 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
           myUDelt     = 0;
         }
         else if (nbup < 3)
-        { // modified by rln on 12/11/97
+        {
           myUCloseVal = RealLast();
         }
         else if (bs->IsURational() ||
-                 // #6 rln 20/02/98 ProSTEP ug_exhaust-A.stp entity #18360 (Uclosed BSpline,
-                 // but multiplicity of boundary knots != degree + 1)
-                 bs->UMultiplicity(1) != bs->UDegree() + 1 || // #6 //:h4: #6 moved
-                 bs->UMultiplicity(bs->NbUKnots()) != bs->UDegree() + 1)
-        { // #6 //:h4
+
+                 bs->UMultiplicity(1) != bs->UDegree() + 1
+                 || bs->UMultiplicity(bs->NbUKnots()) != bs->UDegree() + 1)
+        {
           int    nbvk = bs->NbVKnots();
           double v    = bs->VKnot(1);
           gp_Pnt p1   = SurfAdapt.Value(uf, v);
@@ -704,7 +627,7 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
             }
           }
           distmin = std::sqrt(distmin);
-          myUDelt = std::min(myUDelt, 0.5 * SurfAdapt.UResolution(distmin)); // #4 smh
+          myUDelt = std::min(myUDelt, 0.5 * SurfAdapt.UResolution(distmin));
         }
         else
         {
@@ -726,7 +649,7 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
             }
           }
           distmin = std::sqrt(distmin);
-          myUDelt = std::min(myUDelt, 0.5 * SurfAdapt.UResolution(distmin)); // #4 smh
+          myUDelt = std::min(myUDelt, 0.5 * SurfAdapt.UResolution(distmin));
         }
         break;
       }
@@ -759,14 +682,14 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
             }
           }
           distmin = std::sqrt(distmin);
-          myUDelt = std::min(myUDelt, 0.5 * SurfAdapt.UResolution(distmin)); // #4 smh
+          myUDelt = std::min(myUDelt, 0.5 * SurfAdapt.UResolution(distmin));
         }
         break;
       }
       default:
-      { // Geom_RectangularTrimmedSurface and Geom_OffsetSurface
+      {
         double distmin  = RealLast();
-        int    nbpoints = 101; // can be revised
+        int    nbpoints = 101;
         gp_Pnt p1       = SurfAdapt.Value(uf, vf);
         gp_Pnt p2       = SurfAdapt.Value(ul, vf);
         myUCloseVal     = p1.SquareDistance(p2);
@@ -791,10 +714,10 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
           }
         }
         distmin = std::sqrt(distmin);
-        myUDelt = std::min(myUDelt, 0.5 * SurfAdapt.UResolution(distmin)); // #4 smh
+        myUDelt = std::min(myUDelt, 0.5 * SurfAdapt.UResolution(distmin));
         break;
       }
-    } // switch
+    }
     myGap       = sqrt(myUCloseVal);
     myUCloseVal = myGap;
   }
@@ -808,21 +731,19 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
   return (myUCloseVal <= prec);
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_Surface::IsVClosed(const double preci)
 {
   double prec     = std::max(preci, Precision::Confusion());
   double aVmidVal = -1.;
   if (myVCloseVal < 0)
   {
-    //    Faut calculer : calculs minimaux
+
     double uf, ul, vf, vl;
-    Bounds(uf, ul, vf, vl); // modified by rln on 12/11/97 mySurf-> is deleted
-                            //     mySurf->Bounds (uf,ul,vf,vl);
+    Bounds(uf, ul, vf, vl);
+
     RestrictBounds(uf, ul, vf, vl);
-    myVDelt = std::abs(vl - vf) / 20; // 2; rln S4135
-                                      // because of the example when 10 was not enough
+    myVDelt = std::abs(vl - vf) / 20;
+
     if (mySurf->IsVClosed())
     {
       myVCloseVal = 0.;
@@ -831,8 +752,6 @@ bool ShapeAnalysis_Surface::IsVClosed(const double preci)
       return true;
     }
 
-    //    Calculs adaptes
-    // #67 rln S4135
     GeomAdaptor_Surface& SurfAdapt = *Adaptor3d();
     GeomAbs_SurfaceType  surftype  = SurfAdapt.GetType();
     if (mySurf->IsKind(STANDARD_TYPE(Geom_RectangularTrimmedSurface)))
@@ -872,12 +791,12 @@ bool ShapeAnalysis_Surface::IsVClosed(const double preci)
           myVDelt     = 0;
         }
         else if (nbvp < 3)
-        { // modified by rln on 12/11/97
+        {
           myVCloseVal = RealLast();
         }
-        else if (bs->IsVRational() || bs->VMultiplicity(1) != bs->VDegree() + 1 || // #6 //:h4
-                 bs->VMultiplicity(bs->NbVKnots()) != bs->VDegree() + 1)
-        { // #6 //:h4
+        else if (bs->IsVRational() || bs->VMultiplicity(1) != bs->VDegree() + 1
+                 || bs->VMultiplicity(bs->NbVKnots()) != bs->VDegree() + 1)
+        {
           int    nbuk = bs->NbUKnots();
           double u    = bs->UKnot(1);
           gp_Pnt p1   = SurfAdapt.Value(u, vf);
@@ -904,7 +823,7 @@ bool ShapeAnalysis_Surface::IsVClosed(const double preci)
             }
           }
           distmin = std::sqrt(distmin);
-          myVDelt = std::min(myVDelt, 0.5 * SurfAdapt.VResolution(distmin)); // #4 smh
+          myVDelt = std::min(myVDelt, 0.5 * SurfAdapt.VResolution(distmin));
         }
         else
         {
@@ -926,7 +845,7 @@ bool ShapeAnalysis_Surface::IsVClosed(const double preci)
             }
           }
           distmin = std::sqrt(distmin);
-          myVDelt = std::min(myVDelt, 0.5 * SurfAdapt.VResolution(distmin)); // #4 smh
+          myVDelt = std::min(myVDelt, 0.5 * SurfAdapt.VResolution(distmin));
         }
         break;
       }
@@ -959,14 +878,14 @@ bool ShapeAnalysis_Surface::IsVClosed(const double preci)
             }
           }
           distmin = std::sqrt(distmin);
-          myVDelt = std::min(myVDelt, 0.5 * SurfAdapt.VResolution(distmin)); // #4 smh
+          myVDelt = std::min(myVDelt, 0.5 * SurfAdapt.VResolution(distmin));
         }
         break;
       }
       default:
-      { // Geom_RectangularTrimmedSurface and Geom_OffsetSurface
+      {
         double distmin  = RealLast();
-        int    nbpoints = 101; // can be revised
+        int    nbpoints = 101;
         gp_Pnt p1       = SurfAdapt.Value(uf, vf);
         gp_Pnt p2       = SurfAdapt.Value(uf, vl);
         gp_Pnt pm       = SurfAdapt.Value(uf, (vf + vl) / 2);
@@ -991,10 +910,10 @@ bool ShapeAnalysis_Surface::IsVClosed(const double preci)
           }
         }
         distmin = std::sqrt(distmin);
-        myVDelt = std::min(myVDelt, 0.5 * SurfAdapt.VResolution(distmin)); // #4 smh
+        myVDelt = std::min(myVDelt, 0.5 * SurfAdapt.VResolution(distmin));
         break;
       }
-    } // switch
+    }
     myGap       = std::sqrt(myVCloseVal);
     myVCloseVal = myGap;
   }
@@ -1008,10 +927,6 @@ bool ShapeAnalysis_Surface::IsVClosed(const double preci)
   return (myVCloseVal <= prec);
 }
 
-//=======================================================================
-// function : SurfaceNewton
-// purpose  : Newton algo (S4030)
-//=======================================================================
 int ShapeAnalysis_Surface::SurfaceNewton(const gp_Pnt2d& p2dPrev,
                                          const gp_Pnt&   P3D,
                                          const double    preci,
@@ -1025,34 +940,30 @@ int ShapeAnalysis_Surface::SurfaceNewton(const gp_Pnt2d& p2dPrev,
   double UF = uf - du, UL = ul + du;
   double VF = vf - dv, VL = vl + dv;
 
-  // int fail = 0;
   constexpr double Tol  = Precision::Confusion();
-  constexpr double Tol2 = Tol * Tol; //, rs2p=1e10;
+  constexpr double Tol2 = Tol * Tol;
   double           U = p2dPrev.X(), V = p2dPrev.Y();
-  gp_Vec           rsfirst = P3D.XYZ() - Value(U, V).XYZ(); // pdn
+  gp_Vec           rsfirst = P3D.XYZ() - Value(U, V).XYZ();
   for (int i = 0; i < 25; i++)
   {
     gp_Vec ru, rv, ruu, rvv, ruv;
     gp_Pnt pnt;
     SurfAdapt.D2(U, V, pnt, ru, rv, ruu, rvv, ruv);
 
-    // normal
     double ru2 = ru * ru, rv2 = rv * rv;
     gp_Vec n    = ru ^ rv;
     double nrm2 = n.SquareMagnitude();
     if (nrm2 < 1e-10 || Precision::IsPositiveInfinite(nrm2))
-      break; // n == 0, use standard
+      break;
 
-    // descriminant
     gp_Vec rs   = P3D.XYZ() - Value(U, V).XYZ();
     double rSuu = (rs * ruu);
     double rSvv = (rs * rvv);
     double rSuv = (rs * ruv);
     double D = -nrm2 + rv2 * rSuu + ru2 * rSvv - 2 * rSuv * (ru * rv) + rSuv * rSuv - rSuu * rSvv;
     if (fabs(D) < 1e-10)
-      break; // bad case; use standard
+      break;
 
-    // compute step
     double fract = 1. / D;
     du           = (rs * ((n ^ rv) + ru * rSvv - rv * rSuv)) * fract;
     dv           = (rs * ((ru ^ n) + rv * rSuu - ru * rSuv)) * fract;
@@ -1060,19 +971,11 @@ int ShapeAnalysis_Surface::SurfaceNewton(const gp_Pnt2d& p2dPrev,
     V += dv;
     if (U < UF || U > UL || V < VF || V > VL)
       break;
-    // check that iterations do not diverge
-    // pdn    double rs2 = rs.SquareMagnitude();
-    //    if ( rs2 > 4.*rs2p ) break;
-    //    rs2p = rs2;
 
-    // test the step by uv and deviation from the solution
     double aResolution = std::max(1e-12, (U + V) * 10e-16);
     if (fabs(du) + fabs(dv) > aResolution)
-      continue; // Precision::PConfusion()  continue;
+      continue;
 
-    // if ( U < UF || U > UL || V < VF || V > VL ) break;
-
-    // pdn PRO10109 4517: protect against wrong result
     double rs2 = rs.SquareMagnitude();
     if (rs2 > rsfirst.SquareMagnitude())
       break;
@@ -1081,23 +984,13 @@ int ShapeAnalysis_Surface::SurfaceNewton(const gp_Pnt2d& p2dPrev,
     if (rs2 - rsn * rsn / nrm2 > Tol2)
       break;
 
-    //  if ( rs2 > 100 * preci * preci ) { fail = 6; break; }
-
-    // OK, return the result
-    //	std::cout << "Newton: solution found in " << i+1 << " iterations" << std::endl;
     sol.SetCoord(U, V);
 
-    return (nrm2 < 0.01 * ru2 * rv2 ? 2 : 1); //: q6
+    return (nrm2 < 0.01 * ru2 * rv2 ? 2 : 1);
   }
-  //      std::cout << "Newton: failed after " << i+1 << " iterations (fail " << fail << " )" <<
-  //      std::endl;
+
   return false;
 }
-
-//=======================================================================
-// function : NextValueOfUV
-// purpose  : optimizing projection by Newton algo (S4030)
-//=======================================================================
 
 gp_Pnt2d ShapeAnalysis_Surface::NextValueOfUV(const gp_Pnt2d& p2dPrev,
                                               const gp_Pnt&   P3D,
@@ -1120,7 +1013,6 @@ gp_Pnt2d ShapeAnalysis_Surface::NextValueOfUV(const gp_Pnt2d& p2dPrev,
       {
         occ::handle<Geom_BSplineSurface> aBSpline = SurfAdapt.BSpline();
 
-        // Check near to knot position ~ near to C0 points on U isoline.
         if (SurfAdapt.UContinuity() == GeomAbs_C0)
         {
           int aMinIndex = aBSpline->FirstUKnotIndex();
@@ -1133,7 +1025,6 @@ gp_Pnt2d ShapeAnalysis_Surface::NextValueOfUV(const gp_Pnt2d& p2dPrev,
           }
         }
 
-        // Check near to knot position ~ near to C0 points on U isoline.
         if (SurfAdapt.VContinuity() == GeomAbs_C0)
         {
           int aMinIndex = aBSpline->FirstVKnotIndex();
@@ -1152,12 +1043,11 @@ gp_Pnt2d ShapeAnalysis_Surface::NextValueOfUV(const gp_Pnt2d& p2dPrev,
       if (res != 0)
       {
         double gap = P3D.Distance(Value(sol));
-        if (res == 2 || //: q6 abv 19 Mar 99: protect against strange attractors
-            (maxpreci > 0. && gap - maxpreci > Precision::Confusion()))
-        { //: q1: check with maxpreci
+        if (res == 2 || (maxpreci > 0. && gap - maxpreci > Precision::Confusion()))
+        {
           double U = sol.X(), V = sol.Y();
           myGap = UVFromIso(P3D, preci, U, V);
-          //	  gp_Pnt2d p = ValueOfUV ( P3D, preci );
+
           if (gap >= myGap)
             return gp_Pnt2d(U, V);
         }
@@ -1172,22 +1062,20 @@ gp_Pnt2d ShapeAnalysis_Surface::NextValueOfUV(const gp_Pnt2d& p2dPrev,
   return ValueOfUV(P3D, preci);
 }
 
-//=================================================================================================
-
 gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
 {
   GeomAdaptor_Surface& SurfAdapt = *Adaptor3d();
   double               S = 0., T = 0.;
-  myGap         = -1.;  // devra etre calcule
-  bool computed = true; // a priori
+  myGap         = -1.;
+  bool computed = true;
 
   double uf, ul, vf, vl;
-  Bounds(uf, ul, vf, vl); // modified by rln on 12/11/97 mySurf-> is deleted
+  Bounds(uf, ul, vf, vl);
 
-  { //: c9 abv 3 Mar 98: UKI60107-1 #350: to prevent 'catch' from catching exception raising below
-    //: it
+  {
+
     try
-    { // ajout CKY 30-DEC-1997 (cf ProStep TR6 r_89-ug)
+    {
       OCC_CATCH_SIGNALS
       GeomAbs_SurfaceType surftype = SurfAdapt.GetType();
       switch (surftype)
@@ -1232,15 +1120,15 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
         case GeomAbs_BSplineSurface:
         case GeomAbs_SurfaceOfExtrusion:
         case GeomAbs_SurfaceOfRevolution:
-        case GeomAbs_OffsetSurface: //: d0 abv 3 Mar 98: UKI60107-1 #350
+        case GeomAbs_OffsetSurface:
         {
           S = (uf + ul) / 2;
-          T = (vf + vl) / 2; // yaura aumoins qqchose
-                             // pdn to fix hangs PRO17015
+          T = (vf + vl) / 2;
+
           if ((surftype == GeomAbs_SurfaceOfExtrusion) && Precision::IsInfinite(uf)
               && Precision::IsInfinite(ul))
           {
-            // conic case
+
             gp_Pnt2d prev(S, T);
             gp_Pnt2d solution;
             if (SurfaceNewton(prev, P3D, preci, solution) != 0)
@@ -1259,23 +1147,18 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
 
           RestrictBounds(uf, ul, vf, vl);
 
-          //: 30 by abv 2.12.97: speed optimization
-          // code is taken from GeomAPI_ProjectPointOnSurf
           if (!myExtOK)
           {
-            //      double du = std::abs(ul-uf)/100;  double dv = std::abs(vl-vf)/100;
-            //      if (IsUClosed()) du = 0;  if (IsVClosed()) dv = 0;
-            //  Forcer appel a IsU-VClosed
+
             if (myUCloseVal < 0)
               IsUClosed();
             if (myVCloseVal < 0)
               IsVClosed();
             double du = 0., dv = 0.;
-            // extension of the surface range is limited to non-offset surfaces as the latter
-            // can throw exception (e.g. Geom_UndefinedValue) when computing value - see id23943
+
             if (!mySurf->IsKind(STANDARD_TYPE(Geom_OffsetSurface)))
             {
-              // modified by rln during fixing CSR # BUC60035 entity #D231
+
               du = std::min(myUDelt, SurfAdapt.UResolution(preci));
               dv = std::min(myVDelt, SurfAdapt.VResolution(preci));
             }
@@ -1301,29 +1184,20 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
               }
             }
             myExtPS.Point(indMin).Parameter(S, T);
-            // PTV 26.06.2002 WORKAROUND protect OCC486. Remove after fix bug.
-            // file CEA_cuve-V5.igs Entityes 244, 259, 847, 925
-            // if project point3D on SurfaceOfRevolution Extreme recompute 2d point, but
-            // returns an old distance from 3d to solution :-(
+
             gp_Pnt aCheckPnt = SurfAdapt.Value(S, T);
             dist2Min         = P3D.SquareDistance(aCheckPnt);
-            // end of WORKAROUND
-            double disSurf = sqrt(dist2Min); //, disCurv =1.e10;
 
-            // Test de projection merdeuse sur les bords :
-            double UU = S, VV = T,
-                   DistMinOnIso =
-                     RealLast(); // myGap;
-                                 //	ForgetNewton(P3D, mySurf, preci, UU, VV, DistMinOnIso);
+            double disSurf = sqrt(dist2Min);
 
-            // test added by rln on 08/12/97
-            //	DistMinOnIso = UVFromIso (P3D, preci, UU, VV);
-            bool possLockal = false; //: study S4030 (optimizing)
+            double UU = S, VV = T, DistMinOnIso = RealLast();
+
+            bool possLockal = false;
             if (disSurf > preci)
             {
               gp_Pnt2d pp(UU, VV);
               if (SurfaceNewton(pp, P3D, preci, pp) != 0)
-              { //: q2 abv 16 Mar 99: PRO7226 #412920
+              {
                 double dist = P3D.Distance(Value(pp));
                 if (dist < disSurf)
                 {
@@ -1357,7 +1231,7 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
 
             if (disSurf > DistMinOnIso)
             {
-              // On prend les parametres UU et VV;
+
               S     = UU;
               T     = VV;
               myGap = DistMinOnIso;
@@ -1366,16 +1240,6 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
             {
               myGap = disSurf;
             }
-
-            // On essaie Intersection Droite Passant par P3D / Surface
-            //	if ((myGap > preci)&&(!possLockal) ) {
-            //	  double SS, TT;
-            //	  disCurv = FindUV(P3D, mySurf, S, T, SS, TT);
-            //	  if (disCurv < preci || disCurv < myGap) {
-            //	    S = SS;
-            //	    T = TT;
-            //	  }
-            //	}
           }
           else
           {
@@ -1383,23 +1247,13 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
             std::cout << "Warning: ShapeAnalysis_Surface::ValueOfUV(): Extrema failed, doing Newton"
                       << std::endl;
 #endif
-            // on essai sur les bords
-            double UU = S,
-                   VV = T; //, DistMinOnIso;
-                           //	ForgetNewton(P3D, mySurf, preci, UU, VV, DistMinOnIso);
+
+            double UU = S, VV = T;
+
             myGap = UVFromIso(P3D, preci, UU, VV);
-            //	if (DistMinOnIso > preci) {
-            //	  double SS, TT;
-            //	  double disCurv = FindUV(P3D, mySurf, UU, VV, SS, TT);
-            //	  if (disCurv < preci) {
-            //	    S = SS;
-            //	    T = TT;
-            //	  }
-            //	}
-            //	else {
+
             S = UU;
             T = VV;
-            //	}
           }
         }
         break;
@@ -1408,18 +1262,12 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
           computed = false;
           break;
       }
-
-    } // end Try ValueOfUV (CKY 30-DEC-1997)
+    }
 
     catch (Standard_Failure const& anException)
     {
 #ifdef OCCT_DEBUG
-      //   Pas de raison mais qui sait. Mieux vaut retourner un truc faux que stopper
-      //   L ideal serait d avoir un status ... mais qui va l interroger ?
-      //   Avec ce status, on saurait que ce point est a sauter et voila tout
-      //   En attendant, on met une valeur "pas idiote" mais surement fausse ...
-      // szv#4:S4163:12Mar99 optimized
-      //: s5
+
       std::cout << "\nWarning: ShapeAnalysis_Surface::ValueOfUV(): Exception: ";
       anException.Print(std::cout);
       std::cout << std::endl;
@@ -1428,10 +1276,8 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
       S = (Precision::IsInfinite(uf)) ? 0 : (uf + ul) / 2.;
       T = (Precision::IsInfinite(vf)) ? 0 : (vf + vl) / 2.;
     }
-  } //: c9
-    // szv#4:S4163:12Mar99 waste raise
-    // if (!computed) throw Standard_NoSuchObject("PCurveLib_ProjectPointOnSurf::ValueOfUV untreated
-    // surface type");
+  }
+
   if (computed)
   {
     if (myGap <= 0)
@@ -1446,44 +1292,34 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
   return gp_Pnt2d(S, T);
 }
 
-//=================================================================================================
-
 double ShapeAnalysis_Surface::UVFromIso(const gp_Pnt& P3d, const double preci, double& U, double& V)
 {
-  //  Projection qui considere les isos ... comme suit :
-  //  Les 4 bords, plus les isos en U et en V
-  //  En effet, souvent, un des deux est bon ...
+
   double theMin = RealLast();
 
   gp_Pnt pntres;
   double Cf, Cl, UU, VV;
 
-  //  Initialisation des recherches : point deja trouve (?)
   UU            = U;
   VV            = V;
   gp_Pnt depart = myAdSur->Value(U, V);
   theMin        = depart.Distance(P3d);
 
   if (theMin < preci / 10)
-    return theMin; // c etait deja OK
+    return theMin;
   ComputeBoxes();
   if (myIsoUF.IsNull() || myIsoUL.IsNull() || myIsoVF.IsNull() || myIsoVL.IsNull())
   {
-    // no isolines
-    // no more precise computation
+
     return theMin;
   }
   try
-  { // RAJOUT
+  {
     OCC_CATCH_SIGNALS
-    // pdn Create BndBox containing point;
+
     Bnd_Box aPBox;
     aPBox.Set(P3d);
 
-    // std::cout<<"Adaptor3d()->Surface().GetType() =
-    // "<<Adaptor3d()->Surface().GetType()<<std::endl;
-
-    // modified by rln on 04/12/97 in order to use these variables later
     bool                    UV  = true;
     double                  par = 0., other = 0., dist = 0.;
     occ::handle<Geom_Curve> iso;
@@ -1491,7 +1327,7 @@ double ShapeAnalysis_Surface::UVFromIso(const gp_Pnt& P3d, const double preci, d
     for (int num = 0; num < 6; num++)
     {
 
-      UV = (num < 3); // 0-1-2 : iso-U  3-4-5 : iso-V
+      UV = (num < 3);
       if (!(Adaptor3d()->GetType() == GeomAbs_OffsetSurface))
       {
         const Bnd_Box* anIsoBox = nullptr;
@@ -1529,7 +1365,6 @@ double ShapeAnalysis_Surface::UVFromIso(const gp_Pnt& P3d, const double preci, d
             break;
         }
 
-        //    On y va la-dessus
         if (!Precision::IsInfinite(par) && !iso.IsNull())
         {
           if (anIsoBox && anIsoBox->Distance(aPBox) > theMin)
@@ -1543,10 +1378,9 @@ double ShapeAnalysis_Surface::UVFromIso(const gp_Pnt& P3d, const double preci, d
           if (dist < theMin)
           {
             theMin = dist;
-            //: q6	if (UV) VV = other;  else UU = other;
-            //  Selon une isoU, on calcule le meilleur V; et lycee de Versailles
+
             UU = (UV ? par : other);
-            VV = (UV ? other : par); //: q6: uncommented
+            VV = (UV ? other : par);
           }
         }
       }
@@ -1603,12 +1437,11 @@ double ShapeAnalysis_Surface::UVFromIso(const gp_Pnt& P3d, const double preci, d
         {
           theMin = dist;
           UU     = (UV ? par : other);
-          VV     = (UV ? other : par); //: q6: uncommented
+          VV     = (UV ? other : par);
         }
       }
     }
 
-    // added by rln on 04/12/97 iterational process
     double PrevU = U, PrevV = V;
     int    MaxIters = 5, Iters = 0;
     if (!(Adaptor3d()->GetType() == GeomAbs_OffsetSurface))
@@ -1731,23 +1564,20 @@ double ShapeAnalysis_Surface::UVFromIso(const gp_Pnt& P3d, const double preci, d
 
     U = UU;
     V = VV;
-
-  } // fin try RAJOUT
+  }
   catch (Standard_Failure const& anException)
   {
 #ifdef OCCT_DEBUG
-    //: s5
+
     std::cout << "\nWarning: ShapeAnalysis_Curve::UVFromIso(): Exception: ";
     anException.Print(std::cout);
     std::cout << std::endl;
 #endif
     (void)anException;
-    theMin = RealLast(); // theMin de depart
+    theMin = RealLast();
   }
   return theMin;
 }
-
-//=================================================================================================
 
 void ShapeAnalysis_Surface::SortSingularities()
 {
@@ -1786,8 +1616,6 @@ void ShapeAnalysis_Surface::SortSingularities()
     }
   }
 }
-
-//=================================================================================================
 
 void ShapeAnalysis_Surface::SetDomain(const double U1,
                                       const double U2,

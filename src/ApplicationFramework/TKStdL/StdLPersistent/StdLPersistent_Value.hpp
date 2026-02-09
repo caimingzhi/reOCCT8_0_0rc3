@@ -17,7 +17,6 @@ class StdLPersistent_Value
   class integer : public StdObjMgt_Attribute<AttribClass>::SingleInt
   {
   public:
-    //! Import transient attribute from the persistent data.
     Standard_EXPORT void ImportAttribute() override;
   };
 
@@ -25,7 +24,6 @@ class StdLPersistent_Value
   class string : public StdObjMgt_Attribute<AttribClass>::SingleRef
   {
   public:
-    //! Import transient attribute from the persistent data.
     Standard_EXPORT void ImportAttribute() override;
   };
 
@@ -51,7 +49,6 @@ public:
   class UAttribute : public string<TDataStd_UAttribute>
   {
   public:
-    //! Create an empty transient attribute
     Standard_EXPORT occ::handle<TDF_Attribute> CreateAttribute() override;
 
     const char* PName() const override { return "PDataStd_UAttribute"; }
@@ -60,7 +57,6 @@ public:
   class Integer : public integer<TDataStd_Integer>
   {
   public:
-    //! Create an empty transient attribute
     Standard_EXPORT occ::handle<TDF_Attribute> CreateAttribute() override;
 
     const char* PName() const override { return "PDataStd_Integer"; }
@@ -69,7 +65,6 @@ public:
   class Name : public string<TDataStd_Name>
   {
   public:
-    //! Create an empty transient attribute
     Standard_EXPORT occ::handle<TDF_Attribute> CreateAttribute() override;
 
     const char* PName() const override { return "PDataStd_Name"; }
@@ -78,7 +73,6 @@ public:
   class AsciiString : public string<TDataStd_AsciiString, StdLPersistent_HString::Ascii>
   {
   public:
-    //! Create an empty transient attribute
     Standard_EXPORT occ::handle<TDF_Attribute> CreateAttribute() override;
 
     const char* PName() const override { return "PDataStd_AsciiString"; }

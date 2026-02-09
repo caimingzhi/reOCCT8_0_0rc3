@@ -3,6 +3,4 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_DraughtingModel, StepRepr_Representation)
 
-//=================================================================================================
-
 StepVisual_DraughtingModel::StepVisual_DraughtingModel() = default;

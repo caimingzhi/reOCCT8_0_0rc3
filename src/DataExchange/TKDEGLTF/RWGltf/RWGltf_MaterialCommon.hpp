@@ -3,15 +3,14 @@
 #include <Image_Texture.hpp>
 #include <Quantity_ColorRGBA.hpp>
 
-//! glTF 1.0 format common (obsolete) material definition.
 class RWGltf_MaterialCommon : public Standard_Transient
 {
 public:
-  occ::handle<Image_Texture> AmbientTexture;  //!< image defining ambient color
-  occ::handle<Image_Texture> DiffuseTexture;  //!< image defining diffuse color
-  occ::handle<Image_Texture> SpecularTexture; //!< image defining specular color
-  TCollection_AsciiString    Id;              //!< material identifier
-  TCollection_AsciiString    Name;            //!< material name
+  occ::handle<Image_Texture> AmbientTexture;
+  occ::handle<Image_Texture> DiffuseTexture;
+  occ::handle<Image_Texture> SpecularTexture;
+  TCollection_AsciiString    Id;
+  TCollection_AsciiString    Name;
   Quantity_Color             AmbientColor;
   Quantity_Color             DiffuseColor;
   Quantity_Color             SpecularColor;

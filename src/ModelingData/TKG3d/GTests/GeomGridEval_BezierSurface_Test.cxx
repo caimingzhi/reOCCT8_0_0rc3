@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -39,7 +28,7 @@ namespace
 
 TEST(GeomGridEval_BezierSurfaceTest, BasicEvaluation)
 {
-  // Simple Bezier surface 2x2 (planar)
+
   NCollection_Array2<gp_Pnt> aPoles(1, 2, 1, 2);
   aPoles.SetValue(1, 1, gp_Pnt(0, 0, 0));
   aPoles.SetValue(2, 1, gp_Pnt(1, 0, 0));
@@ -57,7 +46,6 @@ TEST(GeomGridEval_BezierSurfaceTest, BasicEvaluation)
   EXPECT_EQ(aGrid.RowLength(), 3);
   EXPECT_EQ(aGrid.ColLength(), 3);
 
-  // Verify points
   for (int i = 1; i <= 3; ++i)
   {
     for (int j = 1; j <= 3; ++j)
@@ -70,19 +58,19 @@ TEST(GeomGridEval_BezierSurfaceTest, BasicEvaluation)
 
 TEST(GeomGridEval_BezierSurfaceTest, RationalEvaluation)
 {
-  // Rational Bezier surface
+
   NCollection_Array2<gp_Pnt> aPoles(1, 2, 1, 2);
   NCollection_Array2<double> aWeights(1, 2, 1, 2);
 
   aPoles.SetValue(1, 1, gp_Pnt(0, 0, 0));
   aPoles.SetValue(2, 1, gp_Pnt(1, 0, 0));
   aPoles.SetValue(1, 2, gp_Pnt(0, 1, 0));
-  aPoles.SetValue(2, 2, gp_Pnt(1, 1, 1)); // Elevated corner
+  aPoles.SetValue(2, 2, gp_Pnt(1, 1, 1));
 
   aWeights.SetValue(1, 1, 1.0);
   aWeights.SetValue(2, 1, 1.0);
   aWeights.SetValue(1, 2, 1.0);
-  aWeights.SetValue(2, 2, 2.0); // Higher weight
+  aWeights.SetValue(2, 2, 2.0);
 
   occ::handle<Geom_BezierSurface> aBezier = new Geom_BezierSurface(aPoles, aWeights);
   GeomGridEval_BezierSurface      anEval(aBezier);
@@ -300,7 +288,7 @@ TEST(GeomGridEval_BezierSurfaceTest, DerivativeDN_U1V1)
 
 TEST(GeomGridEval_BezierSurfaceTest, DerivativeDN_BeyondDegree)
 {
-  // Biquadratic Bezier (degree 2 in both directions)
+
   NCollection_Array2<gp_Pnt> aPoles(1, 3, 1, 3);
   for (int i = 1; i <= 3; ++i)
     for (int j = 1; j <= 3; ++j)
@@ -311,7 +299,6 @@ TEST(GeomGridEval_BezierSurfaceTest, DerivativeDN_BeyondDegree)
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 1.0, 5);
 
-  // 3rd derivative in U direction (beyond degree 2) should be zero
   NCollection_Array2<gp_Vec> aGrid = anEval.EvaluateGridDN(aParams, aParams, 3, 0);
 
   for (int i = 1; i <= 5; ++i)
@@ -325,7 +312,7 @@ TEST(GeomGridEval_BezierSurfaceTest, DerivativeDN_BeyondDegree)
 
 TEST(GeomGridEval_BezierSurfaceTest, DerivativeDN_RationalSurface)
 {
-  // Rational Bezier surface
+
   NCollection_Array2<gp_Pnt> aPoles(1, 2, 1, 2);
   NCollection_Array2<double> aWeights(1, 2, 1, 2);
 
@@ -344,7 +331,6 @@ TEST(GeomGridEval_BezierSurfaceTest, DerivativeDN_RationalSurface)
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 1.0, 5);
 
-  // Test DN(1,0), DN(0,1), and DN(1,1)
   for (int aNU = 0; aNU <= 1; ++aNU)
   {
     for (int aNV = 0; aNV <= 1; ++aNV)
@@ -368,7 +354,7 @@ TEST(GeomGridEval_BezierSurfaceTest, DerivativeDN_RationalSurface)
 
 TEST(GeomGridEval_BezierSurfaceTest, IsolineU_CompareToGeomD0)
 {
-  // Create a non-planar Bezier surface
+
   NCollection_Array2<gp_Pnt> aPoles(1, 3, 1, 3);
   for (int i = 1; i <= 3; ++i)
   {
@@ -381,18 +367,15 @@ TEST(GeomGridEval_BezierSurfaceTest, IsolineU_CompareToGeomD0)
   occ::handle<Geom_BezierSurface> aBezier = new Geom_BezierSurface(aPoles);
   GeomGridEval_BezierSurface      anEval(aBezier);
 
-  // U-isoline: 1 U param, multiple V params (triggers isoline path)
   NCollection_Array1<double> aUParams(1, 1);
   aUParams.SetValue(1, 0.5);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 1.0, 10);
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Note: RowLength() = V count (columns), ColLength() = U count (rows)
   EXPECT_EQ(aGrid.RowLength(), 10);
   EXPECT_EQ(aGrid.ColLength(), 1);
 
-  // Compare against Geom_Surface::D0
   for (int j = 1; j <= 10; ++j)
   {
     gp_Pnt aExpected;
@@ -403,7 +386,7 @@ TEST(GeomGridEval_BezierSurfaceTest, IsolineU_CompareToGeomD0)
 
 TEST(GeomGridEval_BezierSurfaceTest, IsolineV_CompareToGeomD0)
 {
-  // Create a non-planar Bezier surface
+
   NCollection_Array2<gp_Pnt> aPoles(1, 3, 1, 3);
   for (int i = 1; i <= 3; ++i)
   {
@@ -416,18 +399,15 @@ TEST(GeomGridEval_BezierSurfaceTest, IsolineV_CompareToGeomD0)
   occ::handle<Geom_BezierSurface> aBezier = new Geom_BezierSurface(aPoles);
   GeomGridEval_BezierSurface      anEval(aBezier);
 
-  // V-isoline: multiple U params, 1 V param (triggers isoline path)
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 1.0, 10);
   NCollection_Array1<double> aVParams(1, 1);
   aVParams.SetValue(1, 0.7);
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Note: RowLength() = V count (columns), ColLength() = U count (rows)
   EXPECT_EQ(aGrid.RowLength(), 1);
   EXPECT_EQ(aGrid.ColLength(), 10);
 
-  // Compare against Geom_Surface::D0
   for (int i = 1; i <= 10; ++i)
   {
     gp_Pnt aExpected;
@@ -438,7 +418,7 @@ TEST(GeomGridEval_BezierSurfaceTest, IsolineV_CompareToGeomD0)
 
 TEST(GeomGridEval_BezierSurfaceTest, IsolineRational_CompareToGeomD0)
 {
-  // Rational Bezier surface
+
   NCollection_Array2<gp_Pnt> aPoles(1, 3, 1, 3);
   NCollection_Array2<double> aWeights(1, 3, 1, 3);
 
@@ -454,7 +434,6 @@ TEST(GeomGridEval_BezierSurfaceTest, IsolineRational_CompareToGeomD0)
   occ::handle<Geom_BezierSurface> aBezier = new Geom_BezierSurface(aPoles, aWeights);
   GeomGridEval_BezierSurface      anEval(aBezier);
 
-  // U-isoline on rational surface
   NCollection_Array1<double> aUParams(1, 1);
   aUParams.SetValue(1, 0.3);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 1.0, 15);

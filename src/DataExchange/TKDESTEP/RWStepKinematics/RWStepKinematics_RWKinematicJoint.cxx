@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include "RWStepKinematics_RWKinematicJoint.hpp"
 
@@ -9,11 +9,7 @@
 #include <TCollection_HAsciiString.hpp>
 #include <StepShape_Vertex.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWKinematicJoint::RWStepKinematics_RWKinematicJoint() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWKinematicJoint::ReadStep(
   const occ::handle<StepData_StepReaderData>&       theData,
@@ -21,16 +17,12 @@ void RWStepKinematics_RWKinematicJoint::ReadStep(
   occ::handle<Interface_Check>&                     theArch,
   const occ::handle<StepKinematics_KinematicJoint>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 3, theArch, "kinematic_joint"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
-
-  // Inherited fields of Edge
 
   occ::handle<StepShape_Vertex> aEdge_EdgeStart;
   theData->ReadEntity(theNum,
@@ -48,38 +40,25 @@ void RWStepKinematics_RWKinematicJoint::ReadStep(
                       STANDARD_TYPE(StepShape_Vertex),
                       aEdge_EdgeEnd);
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name, aEdge_EdgeStart, aEdge_EdgeEnd);
 }
-
-//=================================================================================================
 
 void RWStepKinematics_RWKinematicJoint::WriteStep(
   StepData_StepWriter&                              theSW,
   const occ::handle<StepKinematics_KinematicJoint>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Own fields of Edge
 
   theSW.Send(theEnt->EdgeStart());
 
   theSW.Send(theEnt->EdgeEnd());
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWKinematicJoint::Share(
   const occ::handle<StepKinematics_KinematicJoint>& theEnt,
   Interface_EntityIterator&                         iter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of Edge
 
   iter.AddItem(theEnt->StepShape_Edge::EdgeStart());
 

@@ -1,19 +1,5 @@
 #pragma once
 
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <stdio.h>
 
 typedef FILE* FSD_BStream;
@@ -33,12 +19,9 @@ class TCollection_AsciiString;
 class TCollection_ExtendedString;
 class Storage_HeaderData;
 
-// Macro that tells if bytes must be reversed when read/write
-// data to/from a binary file. It is needed to provide binary file compatibility
-// between little and big endian platforms.
 #ifndef OCCT_BINARY_FILE_DO_INVERSE
   #if defined(SOLARIS) || defined(IRIX)
-    // Do inverse on big endian platform
+
     #define OCCT_BINARY_FILE_DO_INVERSE 1
   #else
     #define OCCT_BINARY_FILE_DO_INVERSE 0
@@ -58,7 +41,6 @@ public:
 
   Standard_EXPORT bool IsEnd() override;
 
-  //! return position in the file. Return -1 upon error.
   Standard_EXPORT Storage_Position Tell() override;
 
   Standard_EXPORT static Storage_Error IsGoodFileType(const TCollection_AsciiString& aName);
@@ -283,30 +265,23 @@ public:
   ~FSD_BinaryFile() override { Destroy(); }
 
 public:
-  //!@name Own methods
-
-  /// Inverse bytes in integer value
   static int InverseInt(const int theValue)
   {
     return (0 | ((theValue & 0x000000ff) << 24) | ((theValue & 0x0000ff00) << 8)
             | ((theValue & 0x00ff0000) >> 8) | ((theValue >> 24) & 0x000000ff));
   }
 
-  /// Inverse bytes in extended character value
   static char16_t InverseExtChar(const char16_t theValue)
   {
     return (0 | ((theValue & 0x00ff) << 8) | ((theValue & 0xff00) >> 8));
   }
 
-  /// Inverse bytes in real value
   Standard_EXPORT static double InverseReal(const double theValue);
 
-  /// Inverse bytes in short real value
   Standard_EXPORT static float InverseShortReal(const float theValue);
 
-  /// Inverse bytes in size value
   Standard_EXPORT static size_t InverseSize(const size_t theValue);
-  /// Inverse bytes in 64bit unsigned int value
+
   Standard_EXPORT static uint64_t InverseUint64(const uint64_t theValue);
 
   Standard_EXPORT static void ReadHeader(Standard_IStream& theIStream,
@@ -328,27 +303,20 @@ public:
   Standard_EXPORT static const char* MagicNumber();
 
 protected:
-  //! read <rsize> character from the current position.
   Standard_EXPORT void ReadChar(TCollection_AsciiString& buffer, const size_t rsize);
 
-  //! read string from the current position.
   Standard_EXPORT void ReadString(TCollection_AsciiString& buffer);
 
-  //! write string at the current position.
   Standard_EXPORT void WriteString(const TCollection_AsciiString& buffer);
 
-  //! write string at the current position.
   Standard_EXPORT static int WriteString(Standard_OStream&              theOStream,
                                          const TCollection_AsciiString& theString,
                                          const bool                     theOnlyCount = false);
 
-  //! read string from the current position.
   Standard_EXPORT void ReadExtendedString(TCollection_ExtendedString& buffer);
 
-  //! write string at the current position.
   Standard_EXPORT void WriteExtendedString(const TCollection_ExtendedString& buffer);
 
-  //! write string at the current position.
   Standard_EXPORT static int WriteExtendedString(Standard_OStream&                 theOStream,
                                                  const TCollection_ExtendedString& theString,
                                                  const bool theOnlyCount = false);

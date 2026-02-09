@@ -2,19 +2,18 @@
 #include <AdvApp2Var_Context.hpp>
 #include <Standard_ConstructionError.hpp>
 
-// Calculation of parameters
 static bool lesparam(const int iordre, const int ncflim, const int icodeo, int& nbpnts, int& ndgjac)
 {
-  // jacobi degree
-  ndgjac = ncflim; // it always keeps a reserve coefficient
+
+  ndgjac = ncflim;
   if (icodeo < 0)
     return false;
   if (icodeo > 0)
   {
-    ndgjac += (9 - (iordre + 1)); // iordre rescales the frequences upwards
+    ndgjac += (9 - (iordre + 1));
     ndgjac += (icodeo - 1) * 10;
   }
-  // ---> Min Number of required points.
+
   if (ndgjac < 8)
   {
     nbpnts = 8;
@@ -23,12 +22,12 @@ static bool lesparam(const int iordre, const int ncflim, const int icodeo, int& 
   {
     nbpnts = 10;
   }
-  //  else if (ndgjac < 15) { nbpnt = 15; } Bug Uneven number
+
   else if (ndgjac < 20)
   {
     nbpnts = 20;
   }
-  //  else if (ndgjac < 25) { nbpnt = 25; } Bug Uneven number
+
   else if (ndgjac < 30)
   {
     nbpnts = 30;
@@ -41,7 +40,7 @@ static bool lesparam(const int iordre, const int ncflim, const int icodeo, int& 
   {
     nbpnts = 50;
   }
-  //  else if (*ndgjac < 61) { nbpnt = 61;} Bug Uneven number
+
   else
   {
     nbpnts = 50;
@@ -50,7 +49,6 @@ static bool lesparam(const int iordre, const int ncflim, const int icodeo, int& 
 #endif
   }
 
-  // If constraints are on borders, this adds 2 points
   if (iordre > -1)
   {
     nbpnts += 2;
@@ -58,8 +56,6 @@ static bool lesparam(const int iordre, const int ncflim, const int icodeo, int& 
 
   return true;
 }
-
-//=================================================================================================
 
 AdvApp2Var_Context::AdvApp2Var_Context()
     : myFav(0),
@@ -76,8 +72,6 @@ AdvApp2Var_Context::AdvApp2Var_Context()
       myJDegV(0)
 {
 }
-
-//=================================================================================================
 
 AdvApp2Var_Context::AdvApp2Var_Context(const int                                       ifav,
                                        const int                                       iu,
@@ -106,7 +100,6 @@ AdvApp2Var_Context::AdvApp2Var_Context(const int                                
   int ErrorCode = 0, NbPntU = 0, JDegU = 0, NbPntV = 0, JDegV = 0;
   int ncfl;
 
-  // myNbURoot,myJDegU
   ncfl = nlimu;
   if (ncfl < 2 * iu + 2)
     ncfl = 2 * iu + 2;
@@ -119,18 +112,16 @@ AdvApp2Var_Context::AdvApp2Var_Context(const int                                
   if (iu > -1)
     NbPntU = myNbURoot - 2;
 
-  // myJMaxU
   int                                      i, j, size = JDegU - 2 * iu - 1;
   occ::handle<NCollection_HArray1<double>> JMaxU = new NCollection_HArray1<double>(1, size);
   double* JU_array                               = (double*)&JMaxU->ChangeArray1()(JMaxU->Lower());
   AdvApp2Var_ApproxF2var::mma2jmx_(&JDegU, (integer*)&iu, JU_array);
   myJMaxU = JMaxU;
 
-  // myNbVRoot,myJDegV
   ncfl = nlimv;
   if (ncfl < 2 * iv + 2)
     ncfl = 2 * iv + 2;
-  // Ma1nbp(&iv,&ncfl,&iprec,&NbPntV,&JDegV,&ErrorCode);
+
   if (!lesparam(iv, ncfl, iprecis, NbPntV, JDegV))
   {
     throw Standard_ConstructionError("AdvApp2Var_Context");
@@ -140,14 +131,12 @@ AdvApp2Var_Context::AdvApp2Var_Context(const int                                
   if (iv > -1)
     NbPntV = myNbVRoot - 2;
 
-  // myJMaxV
   size                                           = JDegV - 2 * iv - 1;
   occ::handle<NCollection_HArray1<double>> JMaxV = new NCollection_HArray1<double>(1, size);
   double* JV_array                               = (double*)&JMaxV->ChangeArray1()(JMaxV->Lower());
   AdvApp2Var_ApproxF2var::mma2jmx_(&JDegV, (integer*)&iv, JV_array);
   myJMaxV = JMaxV;
 
-  // myURoots, myVRoots
   occ::handle<NCollection_HArray1<double>> URoots = new NCollection_HArray1<double>(1, myNbURoot);
   double* U_array = (double*)&URoots->ChangeArray1()(URoots->Lower());
   occ::handle<NCollection_HArray1<double>> VRoots = new NCollection_HArray1<double>(1, myNbVRoot);
@@ -156,7 +145,6 @@ AdvApp2Var_Context::AdvApp2Var_Context(const int                                
   myURoots = URoots;
   myVRoots = VRoots;
 
-  // myUGauss
   size                                            = (NbPntU / 2 + 1) * (myJDegU - 2 * iu - 1);
   occ::handle<NCollection_HArray1<double>> UGauss = new NCollection_HArray1<double>(1, size);
   double* UG_array = (double*)&UGauss->ChangeArray1()(UGauss->Lower());
@@ -167,7 +155,6 @@ AdvApp2Var_Context::AdvApp2Var_Context(const int                                
   }
   myUGauss = UGauss;
 
-  // myVGauss
   size                                            = (NbPntV / 2 + 1) * (myJDegV - 2 * iv - 1);
   occ::handle<NCollection_HArray1<double>> VGauss = new NCollection_HArray1<double>(1, size);
   double* VG_array = (double*)&VGauss->ChangeArray1()(VGauss->Lower());
@@ -178,7 +165,6 @@ AdvApp2Var_Context::AdvApp2Var_Context(const int                                
   }
   myVGauss = VGauss;
 
-  // myInternalTol, myFrontierTol, myCuttingTol
   int                                      nbss = nb1Dss + nb2Dss + nb3Dss;
   occ::handle<NCollection_HArray1<double>> ITol = new NCollection_HArray1<double>(1, nbss);
   for (i = 1; i <= nb1Dss; i++)
@@ -250,174 +236,90 @@ AdvApp2Var_Context::AdvApp2Var_Context(const int                                
   myCuttingTol  = CTol;
 }
 
-//=================================================================================================
-
 int AdvApp2Var_Context::TotalDimension() const
 {
   return myNb1DSS + 2 * myNb2DSS + 3 * myNb3DSS;
 }
-
-//=================================================================================================
 
 int AdvApp2Var_Context::TotalNumberSSP() const
 {
   return myNb1DSS + myNb2DSS + myNb3DSS;
 }
 
-//============================================================================
-// function : FavorIso
-// purpose  : return 1 for IsoU, 2 for IsoV, 2 by default
-//============================================================================
-
 int AdvApp2Var_Context::FavorIso() const
 {
   return myFav;
 }
-
-//============================================================================
-// function : UOrder
-// purpose  : return the order of continuity requested in U
-//============================================================================
 
 int AdvApp2Var_Context::UOrder() const
 {
   return myOrdU;
 }
 
-//============================================================================
-// function : VOrder
-// purpose  : return the order of continuity requested in V
-//============================================================================
-
 int AdvApp2Var_Context::VOrder() const
 {
   return myOrdV;
 }
-
-//============================================================================
-// function : ULimit
-// purpose  : return the max number of coeff. in U of the polynomial approx.
-//============================================================================
 
 int AdvApp2Var_Context::ULimit() const
 {
   return myLimU;
 }
 
-//============================================================================
-// function : VLimit
-// purpose  : return the max number of coeff. in V of the polynomial approx.
-//============================================================================
-
 int AdvApp2Var_Context::VLimit() const
 {
   return myLimV;
 }
-
-//============================================================================
-// function : UJacDeg
-// purpose  : return the max degree of the Jacobi functions for U parameter
-//============================================================================
 
 int AdvApp2Var_Context::UJacDeg() const
 {
   return myJDegU;
 }
 
-//============================================================================
-// function : VJacDeg
-// purpose  : return the max degree of the Jacobi functions for V parameter
-//============================================================================
-
 int AdvApp2Var_Context::VJacDeg() const
 {
   return myJDegV;
 }
-
-//============================================================================
-// function : UJacMax
-// purpose  : return the max value of the Jacobi functions for U parameter
-//============================================================================
 
 occ::handle<NCollection_HArray1<double>> AdvApp2Var_Context::UJacMax() const
 {
   return myJMaxU;
 }
 
-//============================================================================
-// function : VJacMax
-// purpose  : return the max value of the Jacobi functions for V parameter
-//============================================================================
-
 occ::handle<NCollection_HArray1<double>> AdvApp2Var_Context::VJacMax() const
 {
   return myJMaxV;
 }
-
-//============================================================================
-// function : URoots
-// purpose  : return Legendre roots for U parameter
-//============================================================================
 
 occ::handle<NCollection_HArray1<double>> AdvApp2Var_Context::URoots() const
 {
   return myURoots;
 }
 
-//============================================================================
-// function : VRoots
-// purpose  : return Legendre roots for V parameter
-//============================================================================
-
 occ::handle<NCollection_HArray1<double>> AdvApp2Var_Context::VRoots() const
 {
   return myVRoots;
 }
-
-//============================================================================
-// function : UGauss
-// purpose  : return Gauss roots for U parameter
-//============================================================================
 
 occ::handle<NCollection_HArray1<double>> AdvApp2Var_Context::UGauss() const
 {
   return myUGauss;
 }
 
-//============================================================================
-// function : VGauss
-// purpose  : return Gauss roots for V parameter
-//============================================================================
-
 occ::handle<NCollection_HArray1<double>> AdvApp2Var_Context::VGauss() const
 {
   return myVGauss;
 }
-
-//============================================================================
-// function : IToler
-// purpose  : return tolerances for the approximation of patches
-//============================================================================
 
 occ::handle<NCollection_HArray1<double>> AdvApp2Var_Context::IToler() const
 {
   return myInternalTol;
 }
 
-//============================================================================
-// function : FToler
-// purpose  : return tolerances for the approximation of frontiers
-//============================================================================
-
 occ::handle<NCollection_HArray2<double>> AdvApp2Var_Context::FToler() const
 {
   return myFrontierTol;
 }
-
-//============================================================================
-// function : CToler
-// purpose  : return tolerances for the approximation of cutting lines
-//============================================================================
 
 occ::handle<NCollection_HArray2<double>> AdvApp2Var_Context::CToler() const
 {

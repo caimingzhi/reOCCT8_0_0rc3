@@ -5,11 +5,7 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWGroupRelationship::RWStepBasic_RWGroupRelationship() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWGroupRelationship::ReadStep(
   const occ::handle<StepData_StepReaderData>&     data,
@@ -17,11 +13,9 @@ void RWStepBasic_RWGroupRelationship::ReadStep(
   occ::handle<Interface_Check>&                   ach,
   const occ::handle<StepBasic_GroupRelationship>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "group_relationship"))
     return;
-
-  // Own fields of GroupRelationship
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -43,18 +37,13 @@ void RWStepBasic_RWGroupRelationship::ReadStep(
   occ::handle<StepBasic_Group> aRelatedGroup;
   data->ReadEntity(num, 4, "related_group", ach, STANDARD_TYPE(StepBasic_Group), aRelatedGroup);
 
-  // Initialize entity
   ent->Init(aName, hasDescription, aDescription, aRelatingGroup, aRelatedGroup);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWGroupRelationship::WriteStep(
   StepData_StepWriter&                            SW,
   const occ::handle<StepBasic_GroupRelationship>& ent) const
 {
-
-  // Own fields of GroupRelationship
 
   SW.Send(ent->Name());
 
@@ -70,13 +59,9 @@ void RWStepBasic_RWGroupRelationship::WriteStep(
   SW.Send(ent->RelatedGroup());
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWGroupRelationship::Share(const occ::handle<StepBasic_GroupRelationship>& ent,
                                             Interface_EntityIterator& iter) const
 {
-
-  // Own fields of GroupRelationship
 
   iter.AddItem(ent->RelatingGroup());
 

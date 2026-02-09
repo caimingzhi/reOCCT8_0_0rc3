@@ -15,7 +15,6 @@ class StepShape_Face : public StepShape_TopologicalRepresentationItem
 {
 
 public:
-  //! Returns a Face
   Standard_EXPORT StepShape_Face();
 
   Standard_EXPORT void Init(

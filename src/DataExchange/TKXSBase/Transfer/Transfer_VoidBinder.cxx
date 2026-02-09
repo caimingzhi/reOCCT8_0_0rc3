@@ -5,9 +5,6 @@ IMPLEMENT_STANDARD_RTTIEXT(Transfer_VoidBinder, Transfer_Binder)
 
 Transfer_VoidBinder::Transfer_VoidBinder() = default;
 
-//    bool  Transfer_VoidBinder::IsMultiple () const
-//      { return false;  }
-
 occ::handle<Standard_Type> Transfer_VoidBinder::ResultType() const
 {
   return DynamicType();

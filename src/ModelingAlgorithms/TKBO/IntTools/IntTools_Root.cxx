@@ -1,7 +1,5 @@
 #include <IntTools_Root.hpp>
 
-//=================================================================================================
-
 IntTools_Root::IntTools_Root()
     : myRoot(0.),
       myType(-1),
@@ -14,8 +12,6 @@ IntTools_Root::IntTools_Root()
       myf2(0.)
 {
 }
-
-//=================================================================================================
 
 IntTools_Root::IntTools_Root(const double aRoot, const int aType)
     : myLayerHeight(0.),
@@ -30,42 +26,30 @@ IntTools_Root::IntTools_Root(const double aRoot, const int aType)
   myType = aType;
 }
 
-//=================================================================================================
-
 void IntTools_Root::SetRoot(const double aRoot)
 {
   myRoot = aRoot;
 }
-
-//=================================================================================================
 
 void IntTools_Root::SetType(const int aType)
 {
   myType = aType;
 }
 
-//=================================================================================================
-
 void IntTools_Root::SetStateBefore(const TopAbs_State aState)
 {
   myStateBefore = aState;
 }
-
-//=================================================================================================
 
 void IntTools_Root::SetStateAfter(const TopAbs_State aState)
 {
   myStateAfter = aState;
 }
 
-//=================================================================================================
-
 void IntTools_Root::SetLayerHeight(const double aHeight)
 {
   myLayerHeight = aHeight;
 }
-
-//=================================================================================================
 
 void IntTools_Root::SetInterval(const double t1, const double t2, const double f1, const double f2)
 {
@@ -75,8 +59,6 @@ void IntTools_Root::SetInterval(const double t1, const double t2, const double f
   myf2 = f2;
 }
 
-//=================================================================================================
-
 void IntTools_Root::Interval(double& t1, double& t2, double& f1, double& f2) const
 {
   t1 = myt1;
@@ -85,42 +67,30 @@ void IntTools_Root::Interval(double& t1, double& t2, double& f1, double& f2) con
   f2 = myf2;
 }
 
-//=================================================================================================
-
 double IntTools_Root::Root() const
 {
   return myRoot;
 }
-
-//=================================================================================================
 
 int IntTools_Root::Type() const
 {
   return myType;
 }
 
-//=================================================================================================
-
 TopAbs_State IntTools_Root::StateBefore() const
 {
   return myStateBefore;
 }
-
-//=================================================================================================
 
 TopAbs_State IntTools_Root::StateAfter() const
 {
   return myStateAfter;
 }
 
-//=================================================================================================
-
 double IntTools_Root::LayerHeight() const
 {
   return myLayerHeight;
 }
-
-//=================================================================================================
 
 bool IntTools_Root::IsValid() const
 {

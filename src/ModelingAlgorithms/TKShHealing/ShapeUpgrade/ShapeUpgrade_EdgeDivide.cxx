@@ -9,16 +9,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_EdgeDivide, ShapeUpgrade_Tool)
 
-//=================================================================================================
-
 ShapeUpgrade_EdgeDivide::ShapeUpgrade_EdgeDivide()
 
 {
   mySplitCurve3dTool = new ShapeUpgrade_SplitCurve3d;
   mySplitCurve2dTool = new ShapeUpgrade_SplitCurve2d;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_EdgeDivide::Clear()
 {
@@ -27,8 +23,6 @@ void ShapeUpgrade_EdgeDivide::Clear()
   myHasCurve3d = false;
   myHasCurve2d = false;
 }
-
-//=================================================================================================
 
 bool ShapeUpgrade_EdgeDivide::Compute(const TopoDS_Edge& anEdge)
 {
@@ -46,12 +40,10 @@ bool ShapeUpgrade_EdgeDivide::Compute(const TopoDS_Edge& anEdge)
     myKnots3d = theSplit3dTool->SplitValues();
   }
 
-  // on pcurve(s): all knots
-  // assume that if seam-edge, its pcurve1 and pcurve2 has the same split knots !!!
   double                    f2d = 0., l2d = 0.;
   occ::handle<Geom2d_Curve> pcurve1;
   if (!myFace.IsNull())
-  { // process free edges
+  {
     ShapeAnalysis_Edge sae;
     sae.PCurve(anEdge, myFace, pcurve1, f2d, l2d, false);
   }
@@ -68,23 +60,17 @@ bool ShapeUpgrade_EdgeDivide::Compute(const TopoDS_Edge& anEdge)
   return theSplit3dTool->Status(ShapeExtend_DONE) || theSplit2dTool->Status(ShapeExtend_DONE);
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_EdgeDivide::SetSplitCurve2dTool(
   const occ::handle<ShapeUpgrade_SplitCurve2d>& splitCurve2dTool)
 {
   mySplitCurve2dTool = splitCurve2dTool;
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_EdgeDivide::SetSplitCurve3dTool(
   const occ::handle<ShapeUpgrade_SplitCurve3d>& splitCurve3dTool)
 {
   mySplitCurve3dTool = splitCurve3dTool;
 }
-
-//=================================================================================================
 
 occ::handle<ShapeUpgrade_SplitCurve2d> ShapeUpgrade_EdgeDivide::GetSplitCurve2dTool() const
 {

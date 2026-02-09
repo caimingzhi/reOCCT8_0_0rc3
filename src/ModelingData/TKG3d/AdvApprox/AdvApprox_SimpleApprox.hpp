@@ -14,11 +14,6 @@
 #include <Standard_OStream.hpp>
 #include <PLib_JacobiPolynomial.hpp>
 
-//! Approximate a function on an interval [First,Last]
-//! The result is a simple polynomial whose degree is as low as
-//! possible to satisfy the required tolerance and the
-//! maximum degree. The maximum error and the average error
-//! resulting from approximating the function by the polynomial are computed
 class AdvApprox_SimpleApprox
 {
 public:
@@ -32,12 +27,6 @@ public:
                                          const PLib_JacobiPolynomial&       JacobiBase,
                                          const AdvApprox_EvaluatorFunction& Func);
 
-  //! Constructs approximator tool.
-  //!
-  //! Warning:
-  //! the Func should be valid reference to object of type
-  //! inherited from class EvaluatorFunction from Approx
-  //! with life time longer than that of the approximator tool;
   Standard_EXPORT void Perform(const NCollection_Array1<int>&    LocalDimension,
                                const NCollection_Array1<double>& LocalTolerancesArray,
                                const double                      First,
@@ -48,13 +37,10 @@ public:
 
   Standard_EXPORT int Degree() const;
 
-  //! returns the coefficients in the Jacobi Base
   Standard_EXPORT occ::handle<NCollection_HArray1<double>> Coefficients() const;
 
-  //! returns the constraints at First
   Standard_EXPORT occ::handle<NCollection_HArray2<double>> FirstConstr() const;
 
-  //! returns the constraints at Last
   Standard_EXPORT occ::handle<NCollection_HArray2<double>> LastConstr() const;
 
   Standard_EXPORT occ::handle<NCollection_HArray1<double>> SomTab() const;
@@ -65,7 +51,6 @@ public:
 
   Standard_EXPORT double AverageError(const int Index) const;
 
-  //! display information on approximation
   Standard_EXPORT void Dump(Standard_OStream& o) const;
 
 private:

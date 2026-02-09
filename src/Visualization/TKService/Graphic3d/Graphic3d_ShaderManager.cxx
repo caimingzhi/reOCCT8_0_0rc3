@@ -1,15 +1,4 @@
-// Copyright (c) 2013-2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Graphic3d_ShaderManager.hpp>
 
@@ -40,11 +29,9 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_ShaderManager, Standard_Transient)
 
 namespace
 {
-  //! Number specifying maximum number of light sources to prepare a GLSL program with unrolled
-  //! loop.
+
   const int THE_NB_UNROLLED_LIGHTS_MAX = 32;
 
-  //! Compute the size of array storing holding light sources definition.
   static int roundUpMaxLightSources(int theNbLights)
   {
     int aMaxLimit = THE_NB_UNROLLED_LIGHTS_MAX;
@@ -56,7 +43,6 @@ namespace
 
 #define EOL "\n"
 
-  //! Compute TexCoord value in Vertex Shader
   const char THE_VARY_TexCoord_Trsf[] =
     EOL "  float aRotSin = occTextureTrsf_RotationSin();" EOL
         "  float aRotCos = occTextureTrsf_RotationCos();" EOL
@@ -65,40 +51,25 @@ namespace
         "  aTex2 = (aTex2 + occTextureTrsf_Translation()) * occTextureTrsf_Scale();" EOL
         "  TexCoord = vec4(aTex2, occTexCoord.zw);";
 
-//! Auxiliary function to flip gl_PointCoord vertically
 #define THE_VEC2_glPointCoord "vec2 (gl_PointCoord.x, 1.0 - gl_PointCoord.y)"
 
-  //! Auxiliary function to transform normal from model to view coordinate system.
   const char THE_FUNC_transformNormal_view[] =
     EOL "vec3 transformNormal (in vec3 theNormal)" EOL "{" EOL
         "  vec4 aResult = occWorldViewMatrixInverseTranspose" EOL
         "               * occModelWorldMatrixInverseTranspose" EOL
         "               * vec4 (theNormal, 0.0);" EOL "  return normalize (aResult.xyz);" EOL "}";
 
-  //! The same function as THE_FUNC_transformNormal but is used in PBR pipeline.
-  //! The normals are expected to be in world coordinate system in PBR pipeline.
   const char THE_FUNC_transformNormal_world[] =
     EOL "vec3 transformNormal (in vec3 theNormal)" EOL "{" EOL
         "  vec4 aResult = occModelWorldMatrixInverseTranspose" EOL
         "               * vec4 (theNormal, 0.0);" EOL "  return normalize (aResult.xyz);" EOL "}";
 
-  //! Global shader variable for color definition with lighting enabled.
-  const char THE_FUNC_lightDef[] = EOL "vec3 Ambient;" //!< Ambient  contribution of light sources
-    EOL "vec3 Diffuse;"                                //!< Diffuse  contribution of light sources
-    EOL "vec3 Specular;";                              //!< Specular contribution of light sources
+  const char THE_FUNC_lightDef[] = EOL "vec3 Ambient;" EOL "vec3 Diffuse;" EOL "vec3 Specular;";
 
-  //! Global shader variable for color definition with lighting enabled.
   const char THE_FUNC_PBR_lightDef[] =
-    EOL "vec3  DirectLighting;"      //!< Accumulator of direct lighting from light sources
-    EOL "vec4  BaseColor;"           //!< Base color (albedo) of material for PBR
-    EOL "float Metallic;"            //!< Metallic coefficient of material
-    EOL "float NormalizedRoughness;" //!< Normalized roughness coefficient of material
-    EOL "float Roughness;"           //!< Roughness coefficient of material
-    EOL "vec3  Emission;"            //!< Light intensity emitted by material
-    EOL "float IOR;";                //!< Material's index of refraction
+    EOL "vec3  DirectLighting;" EOL "vec4  BaseColor;" EOL "float Metallic;" EOL
+        "float NormalizedRoughness;" EOL "float Roughness;" EOL "vec3  Emission;" EOL "float IOR;";
 
-  //! The same as Shaders_PhongDirectionalLight_glsl but for the light with zero index
-  //! (avoids limitations on some mobile devices).
   const char THE_FUNC_directionalLightFirst[] =
     EOL "void directionalLightFirst (in vec3 theNormal," EOL
         "                            in vec3 theView," EOL
@@ -114,8 +85,6 @@ namespace
         "  Diffuse  += occLight_Diffuse(0)  * aNdotL * theShadow;" EOL
         "  Specular += occLight_Specular(0) * aSpecl * theShadow;" EOL "}";
 
-  //! Returns the real cubemap fetching direction considering sides orientation, memory layout and
-  //! vertical flip.
   const char THE_FUNC_cubemap_vector_transform[] =
     EOL "vec3 cubemapVectorTransform (in vec3 theVector," EOL
         "                             in int  theYCoeff," EOL
@@ -123,15 +92,12 @@ namespace
         "  theVector = theVector.yzx;" EOL "  theVector.y *= float(theYCoeff);" EOL
         "  theVector.z *= float(theZCoeff);" EOL "  return theVector;" EOL "}";
 
-  //! Process clipping planes in Fragment Shader.
-  //! Should be added at the beginning of the main() function.
   const char THE_FRAG_CLIP_PLANES_N[] =
     EOL "  for (int aPlaneIter = 0; aPlaneIter < occClipPlaneCount; ++aPlaneIter)" EOL "  {" EOL
         "    vec4 aClipEquation = occClipPlaneEquations[aPlaneIter];" EOL
         "    if (dot (aClipEquation.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation.w < "
         "0.0)" EOL "    {" EOL "      discard;" EOL "    }" EOL "  }";
 
-  //! Process chains of clipping planes in Fragment Shader.
   const char THE_FRAG_CLIP_CHAINS_N[] =
     EOL "  for (int aPlaneIter = 0; aPlaneIter < occClipPlaneCount;)" EOL "  {" EOL
         "    vec4 aClipEquation = occClipPlaneEquations[aPlaneIter];" EOL
@@ -140,13 +106,11 @@ namespace
         "        discard;" EOL "      }" EOL "      aPlaneIter += 1;" EOL "    }" EOL "    else" EOL
         "    {" EOL "      aPlaneIter += occClipPlaneChains[aPlaneIter];" EOL "    }" EOL "  }";
 
-  //! Process 1 clipping plane in Fragment Shader.
   const char THE_FRAG_CLIP_PLANES_1[] =
     EOL "  vec4 aClipEquation0 = occClipPlaneEquations[0];" EOL
         "  if (dot (aClipEquation0.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation0.w < "
         "0.0)" EOL "  {" EOL "    discard;" EOL "  }";
 
-  //! Process 2 clipping planes in Fragment Shader.
   const char THE_FRAG_CLIP_PLANES_2[] =
     EOL "  vec4 aClipEquation0 = occClipPlaneEquations[0];" EOL
         "  vec4 aClipEquation1 = occClipPlaneEquations[1];" EOL
@@ -155,7 +119,6 @@ namespace
         "   || dot (aClipEquation1.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation1.w < "
         "0.0)" EOL "  {" EOL "    discard;" EOL "  }";
 
-  //! Process a chain of 2 clipping planes in Fragment Shader (3/4 section).
   const char THE_FRAG_CLIP_CHAINS_2[] =
     EOL "  vec4 aClipEquation0 = occClipPlaneEquations[0];" EOL
         "  vec4 aClipEquation1 = occClipPlaneEquations[1];" EOL
@@ -164,34 +127,27 @@ namespace
         "   && dot (aClipEquation1.xyz, PositionWorld.xyz / PositionWorld.w) + aClipEquation1.w < "
         "0.0)" EOL "  {" EOL "    discard;" EOL "  }";
 
-  //! Modify color for Wireframe presentation.
   const char THE_FRAG_WIREFRAME_COLOR[] =
     EOL "vec4 getFinalColor(void)" EOL "{" EOL
         "  float aDistance = min (min (EdgeDistance[0], EdgeDistance[1]), EdgeDistance[2]);" EOL
         "  bool isHollow = occWireframeColor.a < 0.0;" EOL
         "  float aMixVal = smoothstep (occLineWidth - occLineFeather * 0.5, occLineWidth + "
         "occLineFeather * 0.5, aDistance);" EOL "  vec4 aMixColor = isHollow" EOL
-        "                 ? vec4 (getColor().rgb, 1.0 - aMixVal)" // edges only (of interior color)
-    EOL "                 : mix (occWireframeColor, getColor(), aMixVal);" // interior + edges
-    EOL "  return aMixColor;" EOL "}";
+        "                 ? vec4 (getColor().rgb, 1.0 - aMixVal)" EOL
+        "                 : mix (occWireframeColor, getColor(), aMixVal);" EOL
+        "  return aMixColor;" EOL "}";
 
-  //! Compute gl_Position vertex shader output.
   const char THE_VERT_gl_Position[] = EOL
     "  gl_Position = occProjectionMatrix * occWorldViewMatrix * occModelWorldMatrix * occVertex;";
 
-  //! Displace gl_Position alongside vertex normal for outline rendering.
-  //! This code adds silhouette only for smooth surfaces of closed primitive, and produces visual
-  //! artifacts on sharp edges.
   const char THE_VERT_gl_Position_OUTLINE[] =
     EOL "  float anOutlineDisp = occOrthoScale > 0.0 ? occOrthoScale : gl_Position.w;" EOL
         "  vec4  anOutlinePos  = occVertex + vec4 (occNormal * (occSilhouetteThickness * "
         "anOutlineDisp), "
         "0.0);" EOL "  gl_Position = occProjectionMatrix * occWorldViewMatrix * "
-                    "occModelWorldMatrix * anOutlinePos;";
+        "occModelWorldMatrix * anOutlinePos;";
 
 } // namespace
-
-//=================================================================================================
 
 TCollection_AsciiString Graphic3d_ShaderManager::genLightKey(
   const occ::handle<Graphic3d_LightSet>& theLights,
@@ -207,11 +163,9 @@ TCollection_AsciiString Graphic3d_ShaderManager::genLightKey(
   return TCollection_AsciiString("l_") + theLights->KeyEnabledShort() + aMaxLimit;
 }
 
-//=================================================================================================
-
 Graphic3d_ShaderManager::Graphic3d_ShaderManager(Aspect_GraphicsLibrary theGapi)
     : myGapi(theGapi),
-      // desktop defines a dedicated API for point size, with gl_PointSize added later to GLSL
+
       myHasFlatShading(true),
       myToReverseDFdxSign(false),
       mySetPointSize(myGapi == Aspect_GraphicsLibrary_OpenGLES),
@@ -222,11 +176,7 @@ Graphic3d_ShaderManager::Graphic3d_ShaderManager(Aspect_GraphicsLibrary theGapi)
   memset(myGlslExtensions, 0, sizeof(myGlslExtensions));
 }
 
-//=================================================================================================
-
 Graphic3d_ShaderManager::~Graphic3d_ShaderManager() = default;
-
-//=================================================================================================
 
 bool Graphic3d_ShaderManager::hasGlslBitwiseOps() const
 {
@@ -244,8 +194,6 @@ bool Graphic3d_ShaderManager::hasGlslBitwiseOps() const
   }
   return false;
 }
-
-//=================================================================================================
 
 int Graphic3d_ShaderManager::defaultGlslVersion(
   const occ::handle<Graphic3d_ShaderProgram>& theProgram,
@@ -267,10 +215,10 @@ int Graphic3d_ShaderManager::defaultGlslVersion(
       }
       else
       {
-        // TangentSpaceNormal() function uses mat2x3 type
+
         const bool toUseMat2x3 =
           (theBits & Graphic3d_ShaderFlags_HasTextures) == Graphic3d_ShaderFlags_TextureNormal;
-        // gl_PointCoord has been added since GLSL 1.2
+
         const bool toUsePointCoord = (theBits & Graphic3d_ShaderFlags_PointSprite) != 0;
         if (toUseMat2x3 || toUsePointCoord)
         {
@@ -287,8 +235,7 @@ int Graphic3d_ShaderManager::defaultGlslVersion(
           }
           else if (myGlslExtensions[Graphic3d_GlslExtension_GL_EXT_gpu_shader4])
           {
-            // GL_EXT_gpu_shader4 defines GLSL type "unsigned int", while core GLSL specs define
-            // type "uint"
+
             theProgram->SetHeader("#extension GL_EXT_gpu_shader4 : enable\n"
                                   "#define uint unsigned int");
           }
@@ -302,13 +249,11 @@ int Graphic3d_ShaderManager::defaultGlslVersion(
 #if defined(__EMSCRIPTEN__)
       if (IsGapiGreaterEqual(3, 0))
       {
-        // consider this is browser responsibility to provide working WebGL 2.0 implementation
-        // and black-list broken drivers (there is no OpenGL ES greater than 3.0)
+
         theProgram->SetHeader("#version 300 es");
       }
 #endif
-      // prefer "100 es" on OpenGL ES 3.0- devices (save the features unavailable before "300 es")
-      // and    "300 es" on OpenGL ES 3.1+ devices
+
       if (IsGapiGreaterEqual(3, 1))
       {
         if ((theBits & Graphic3d_ShaderFlags_NeedsGeomShader) != 0)
@@ -374,14 +319,11 @@ int Graphic3d_ShaderManager::defaultGlslVersion(
     }
   }
 
-  // should fit Graphic3d_ShaderFlags_NB
   char aBitsStr[64];
   Sprintf(aBitsStr, "%04x", aBits);
   theProgram->SetId(TCollection_AsciiString("occt_") + theName + aBitsStr);
   return aBits;
 }
-
-//=================================================================================================
 
 void Graphic3d_ShaderManager::defaultOitGlslVersion(
   const occ::handle<Graphic3d_ShaderProgram>& theProgram,
@@ -418,7 +360,7 @@ void Graphic3d_ShaderManager::defaultOitGlslVersion(
         }
         else if (IsGapiGreaterEqual(3, 0))
         {
-          theProgram->SetHeader("#version 300 es"); // with GL_OES_sample_variables extension
+          theProgram->SetHeader("#version 300 es");
         }
       }
       else
@@ -433,8 +375,6 @@ void Graphic3d_ShaderManager::defaultOitGlslVersion(
   }
   theProgram->SetId(TCollection_AsciiString("occt_") + theName + (theMsaa ? "_msaa" : ""));
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramFont() const
 {
@@ -475,8 +415,6 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramFont(
                                                                      aStageInOuts));
   return aProgramSrc;
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramFboBlit(
   int  theNbSamples,
@@ -552,7 +490,7 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramFboBl
     {
       if (IsGapiGreaterEqual(3, 1))
       {
-        // required for MSAA sampler
+
         aProgramSrc->SetHeader("#version 310 es");
       }
       else if (IsGapiGreaterEqual(3, 0))
@@ -566,7 +504,7 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramFboBl
       }
       else
       {
-        // there is no way to draw into depth buffer
+
         aSrcFrag = EOL "void main()" EOL "{" EOL
                        "  occSetFragColor (occTexture2D (uColorSampler, TexCoord));" EOL "}";
       }
@@ -598,8 +536,6 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramFboBl
                                                                      aStageInOuts));
   return aProgramSrc;
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramOitCompositing(
   const bool theMsaa) const
@@ -656,8 +592,6 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramOitCo
   return aProgramSrc;
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramOitDepthPeelingBlend(
   bool theMsaa) const
 {
@@ -690,8 +624,6 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramOitDe
                                                                      aStageInOuts));
   return aProgramSrc;
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramOitDepthPeelingFlush(
   bool theMsaa) const
@@ -735,8 +667,6 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramOitDe
   return aProgramSrc;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString Graphic3d_ShaderManager::pointSpriteAlphaSrc(int theBits) const
 {
   const bool isAlpha =
@@ -747,8 +677,6 @@ TCollection_AsciiString Graphic3d_ShaderManager::pointSpriteAlphaSrc(int theBits
            : EOL "float getAlpha(void) { return "
                  "occTexture2D(occSamplerPointSprite, " THE_VEC2_glPointCoord ").a; }";
 }
-
-//=================================================================================================
 
 TCollection_AsciiString Graphic3d_ShaderManager::pointSpriteShadingSrc(
   const TCollection_AsciiString& theBaseColorSrc,
@@ -774,7 +702,6 @@ TCollection_AsciiString Graphic3d_ShaderManager::pointSpriteShadingSrc(
   return aSrcFragGetColor;
 }
 
-//! Prepare GLSL source for geometry shader according to parameters.
 static TCollection_AsciiString prepareGeomMainSrc(
   Graphic3d_ShaderObject::ShaderVariableList& theUnifoms,
   Graphic3d_ShaderObject::ShaderVariableList& theStageInOuts,
@@ -822,16 +749,16 @@ static TCollection_AsciiString prepareGeomMainSrc(
             "  float aQuadArea = abs (aSideB.x * aSideC.y - aSideB.y * aSideC.x);" EOL
             "  vec3 aLenABC    = vec3 (length (aSideA), length (aSideB), length (aSideC));" EOL
             "  vec3 aHeightABC = vec3 (aQuadArea) / aLenABC;"
-      // clang-format off
-      EOL"  aHeightABC = max (aHeightABC, vec3 (10.0 * occLineWidth));" // avoid shrunk presentation disappearing at distance
-      // clang-format on
+
+      EOL "  aHeightABC = max (aHeightABC, vec3 (10.0 * occLineWidth));"
+
       EOL "  float aQuadModeHeightC = occIsQuadMode ? occLineWidth + 1.0 : 0.0;";
   }
 
   for (int aVertIter = 0; aVertIter < 3; ++aVertIter)
   {
     const TCollection_AsciiString aVertIndex(aVertIter);
-    // pass variables from Vertex shader to Fragment shader through Geometry shader
+
     for (Graphic3d_ShaderObject::ShaderVariableList::Iterator aVarListIter(theStageInOuts);
          aVarListIter.More();
          aVarListIter.Next())
@@ -841,7 +768,7 @@ static TCollection_AsciiString prepareGeomMainSrc(
         const TCollection_AsciiString aVarName = aVarListIter.Value().Name.Token(" ", 2);
         if (aVarName.Value(aVarName.Length()) == ']')
         {
-          // copy the whole array
+
           const TCollection_AsciiString aVarName2 = aVarName.Token("[", 1);
           aSrcMainGeom += TCollection_AsciiString() + EOL "  geomOut." + aVarName2 + " = geomIn["
                           + aVertIndex + "]." + aVarName2 + ";";
@@ -876,8 +803,6 @@ static TCollection_AsciiString prepareGeomMainSrc(
 
   return aSrcMainGeom;
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramUnlit(
   int  theBits,
@@ -1127,8 +1052,6 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramUnlit
   return aProgramSrc;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString Graphic3d_ShaderManager::stdComputeLighting(
   int&                                   theNbLights,
   const occ::handle<Graphic3d_LightSet>& theLights,
@@ -1155,7 +1078,7 @@ TCollection_AsciiString Graphic3d_ShaderManager::stdComputeLighting(
         {
           case Graphic3d_TypeOfLightSource_Ambient:
           {
-            break; // skip ambient
+            break;
           }
           case Graphic3d_TypeOfLightSource_Directional:
           {
@@ -1255,7 +1178,7 @@ TCollection_AsciiString Graphic3d_ShaderManager::stdComputeLighting(
     if (theLights->NbEnabledLightsOfType(Graphic3d_TypeOfLightSource_Directional) == 1
         && theNbLights == 1 && !theIsPBR && theNbShadowMaps == 0)
     {
-      // use the version with hard-coded first index
+
       aLightsLoop = EOL "    directionalLightFirst(theNormal, theView, theIsFront, 1.0);";
       aLightsFunc += THE_FUNC_directionalLightFirst;
     }
@@ -1349,8 +1272,6 @@ TCollection_AsciiString Graphic3d_ShaderManager::stdComputeLighting(
            "  return vec4 (aColor, mix(1.0, BaseColor.a, aRefractionCoeff.x));" EOL "}";
   }
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramGouraud(
   const occ::handle<Graphic3d_LightSet>& theLights,
@@ -1516,8 +1437,6 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramGoura
   return aProgramSrc;
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramPhong(
   const occ::handle<Graphic3d_LightSet>& theLights,
   const int                              theBits,
@@ -1543,7 +1462,7 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramPhong
   }
 
   occ::handle<Graphic3d_ShaderProgram> aProgramSrc = new Graphic3d_ShaderProgram();
-  aProgramSrc->SetPBR(theIsPBR); // should be set before defaultGlslVersion()
+  aProgramSrc->SetPBR(theIsPBR);
 
   TCollection_AsciiString aSrcVert, aSrcVertExtraFunc, aSrcVertExtraMain;
   TCollection_AsciiString aSrcFrag, aSrcFragGetVertColor, aSrcFragExtraMain;
@@ -1677,7 +1596,7 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramPhong
         && myHasFlatShading)
     {
       aSrcFrag += Shaders_TangentSpaceNormal_glsl;
-      // apply normal map texture
+
       aSrcFragExtraMain += EOL
         "#if defined(THE_HAS_TEXTURE_NORMAL)" EOL "  vec2 aTexCoord = TexCoord.st / TexCoord.w;" EOL
         "  vec4 aMapNormalValue = occTextureNormal(aTexCoord);" EOL
@@ -1777,8 +1696,6 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramPhong
                                                                      aNbGeomInputVerts));
   return aProgramSrc;
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramStereo(
   Graphic3d_StereoMode theStereoMode) const
@@ -1922,8 +1839,6 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramStere
   return aProgramSrc;
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramBoundBox() const
 {
   occ::handle<Graphic3d_ShaderProgram> aProgramSrc = new Graphic3d_ShaderProgram();
@@ -1960,14 +1875,12 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramBound
   return aProgramSrc;
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getPBREnvBakingProgram(
   int theIndex) const
 {
   Standard_ASSERT_RAISE(theIndex >= 0 && theIndex <= 2, "");
   occ::handle<Graphic3d_ShaderProgram> aProgramSrc = new Graphic3d_ShaderProgram();
-  aProgramSrc->SetPBR(true); // should be set before defaultGlslVersion()
+  aProgramSrc->SetPBR(true);
 
   Graphic3d_ShaderObject::ShaderVariableList aUniforms, aStageInOuts;
 
@@ -1980,7 +1893,6 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getPBREnvBakingPro
                                         : "\n#define THE_TO_BAKE_SPECULAR\n")
     + (theIndex == 2 ? "\n#define THE_TO_PACK_FLOAT\n" : "") + Shaders_PBREnvBaking_fs;
 
-  // constant array definition requires OpenGL 2.1+ or OpenGL ES 3.0+
   switch (myGapi)
   {
     case Aspect_GraphicsLibrary_OpenGL:
@@ -2027,8 +1939,6 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getPBREnvBakingPro
   return aProgramSrc;
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getBgCubeMapProgram() const
 {
   occ::handle<Graphic3d_ShaderProgram> aProgSrc = new Graphic3d_ShaderProgram();
@@ -2047,14 +1957,13 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getBgCubeMapProgra
     + EOL "void main()" EOL "{" EOL
           "  ViewDirection = cubemapVectorTransform (occVertex.xyz, uYCoeff, uZCoeff);" EOL
           "  vec4 aPos = occProjectionMatrix * occWorldViewMatrix * vec4(occVertex.xyz, 1.0);"
-    // setting Z to W ensures that final Z will be 1.0 after perspective division, (w/w=1))
-    // which allows rendering skybox after everything else with depth test enabled (GL_LEQUAL)
+
     EOL "  gl_Position = aPos.xyww;" EOL "}";
 
   TCollection_AsciiString aDepthClamp;
   if (myToEmulateDepthClamp)
   {
-    // workaround Z clamping issues on some GPUs
+
     aDepthClamp = EOL "  gl_FragDepth = clamp (gl_FragDepth, 0.0, 1.0);";
     if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
     {
@@ -2096,8 +2005,6 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getBgCubeMapProgra
   return aProgSrc;
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getBgSkydomeProgram() const
 {
   occ::handle<Graphic3d_ShaderProgram> aProgSrc = new Graphic3d_ShaderProgram();
@@ -2136,8 +2043,6 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getBgSkydomeProgra
 
   return aProgSrc;
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getColoredQuadProgram() const
 {

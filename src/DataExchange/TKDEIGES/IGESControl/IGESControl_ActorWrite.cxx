@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRepToIGESBRep_Entity.hpp>
 #include <Geom_Surface.hpp>
@@ -32,14 +21,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESControl_ActorWrite, Transfer_ActorOfFinderProcess)
 
-//=============================================================================
-
 IGESControl_ActorWrite::IGESControl_ActorWrite()
 {
   ModeTrans() = 0;
 }
-
-//=============================================================================
 
 bool IGESControl_ActorWrite::Recognize(const occ::handle<Transfer_Finder>& start)
 {
@@ -57,8 +42,6 @@ bool IGESControl_ActorWrite::Recognize(const occ::handle<Transfer_Finder>& start
   }
   return false;
 }
-
-//=============================================================================
 
 occ::handle<Transfer_Binder> IGESControl_ActorWrite::Transfer(
   const occ::handle<Transfer_Finder>&        start,
@@ -108,10 +91,6 @@ occ::handle<Transfer_Binder> IGESControl_ActorWrite::Transfer(
     DeclareAndCast(Geom_Curve, Curve, geom);
     DeclareAndCast(Geom_Surface, Surf, geom);
 
-    //  We recognize: Curve and Surface from Geom
-    //   what about Point; Geom2d ?
-
-    //  GeomToIGES_GeomPoint GP;
     GeomToIGES_GeomCurve GC;
     GC.SetModel(modl);
     GeomToIGES_GeomSurface GS;

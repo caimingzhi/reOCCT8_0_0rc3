@@ -1,10 +1,5 @@
 #include <NCollection_BaseList.hpp>
 
-//=======================================================================
-// function : PClear
-// purpose  : Deletes all nodes from the list
-//=======================================================================
-
 void NCollection_BaseList::PClear(NCollection_DelListNode fDel)
 {
   NCollection_ListNode* pCur  = myFirst;
@@ -19,11 +14,6 @@ void NCollection_BaseList::PClear(NCollection_DelListNode fDel)
   myFirst = myLast = nullptr;
 }
 
-//=======================================================================
-// function : PAppend
-// purpose  : Appends one item at the end
-//=======================================================================
-
 void NCollection_BaseList::PAppend(NCollection_ListNode* theNode) noexcept
 {
   if (myLength)
@@ -34,11 +24,6 @@ void NCollection_BaseList::PAppend(NCollection_ListNode* theNode) noexcept
   myLast          = theNode;
   myLength++;
 }
-
-//=======================================================================
-// function : PAppend
-// purpose  : Appends another list at the end
-//=======================================================================
 
 void NCollection_BaseList::PAppend(NCollection_BaseList& theOther) noexcept
 {
@@ -56,11 +41,6 @@ void NCollection_BaseList::PAppend(NCollection_BaseList& theOther) noexcept
   theOther.myLength = 0;
 }
 
-//=======================================================================
-// function : PPrepend
-// purpose  : Prepends one item at the beginning
-//=======================================================================
-
 void NCollection_BaseList::PPrepend(NCollection_ListNode* theNode) noexcept
 {
   theNode->Next() = myFirst;
@@ -69,8 +49,6 @@ void NCollection_BaseList::PPrepend(NCollection_ListNode* theNode) noexcept
     myLast = myFirst;
   myLength++;
 }
-
-//=================================================================================================
 
 void NCollection_BaseList::PPrepend(NCollection_BaseList& theOther) noexcept
 {
@@ -88,8 +66,6 @@ void NCollection_BaseList::PPrepend(NCollection_BaseList& theOther) noexcept
   theOther.myLength = 0;
 }
 
-//=================================================================================================
-
 void NCollection_BaseList::PRemoveFirst(NCollection_DelListNode fDel)
 {
   Standard_NoSuchObject_Raise_if(IsEmpty(), "NCollection_BaseList::PRemoveFirst");
@@ -100,8 +76,6 @@ void NCollection_BaseList::PRemoveFirst(NCollection_DelListNode fDel)
   if (myLength == 0)
     myLast = nullptr;
 }
-
-//=================================================================================================
 
 void NCollection_BaseList::PRemove(Iterator& theIter, NCollection_DelListNode fDel)
 {
@@ -123,8 +97,6 @@ void NCollection_BaseList::PRemove(Iterator& theIter, NCollection_DelListNode fD
   }
 }
 
-//=================================================================================================
-
 void NCollection_BaseList::PInsertBefore(NCollection_ListNode* theNode, Iterator& theIter)
 {
   Standard_NoSuchObject_Raise_if(!theIter.More(), "NCollection_BaseList::PInsertBefore");
@@ -141,8 +113,6 @@ void NCollection_BaseList::PInsertBefore(NCollection_ListNode* theNode, Iterator
     myLength++;
   }
 }
-
-//=================================================================================================
 
 void NCollection_BaseList::PInsertBefore(NCollection_BaseList& theOther, Iterator& theIter)
 {
@@ -163,8 +133,6 @@ void NCollection_BaseList::PInsertBefore(NCollection_BaseList& theOther, Iterato
   }
 }
 
-//=================================================================================================
-
 void NCollection_BaseList::PInsertAfter(NCollection_ListNode* theNode, Iterator& theIter)
 {
   Standard_NoSuchObject_Raise_if(!theIter.More(), "NCollection_BaseList::PInsertAfter");
@@ -179,8 +147,6 @@ void NCollection_BaseList::PInsertAfter(NCollection_ListNode* theNode, Iterator&
     myLength++;
   }
 }
-
-//=================================================================================================
 
 void NCollection_BaseList::PInsertAfter(NCollection_BaseList& theOther, Iterator& theIter)
 {
@@ -198,8 +164,6 @@ void NCollection_BaseList::PInsertAfter(NCollection_BaseList& theOther, Iterator
     theOther.myLength                  = 0;
   }
 }
-
-//=================================================================================================
 
 void NCollection_BaseList::PReverse() noexcept
 {

@@ -12,7 +12,6 @@ class StepShape_FaceBound : public StepShape_TopologicalRepresentationItem
 {
 
 public:
-  //! Returns a FaceBound
   Standard_EXPORT StepShape_FaceBound();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

@@ -24,7 +24,6 @@
 
 #include <mutex>
 
-//! Functor for multi-threaded execution.
 class BRepCheck_ParallelAnalyzer
 {
 public:
@@ -34,7 +33,6 @@ public:
       : myArray(theArray),
         myMap(theMap)
   {
-    //
   }
 
   void operator()(const int theVectorIndex) const
@@ -51,12 +49,7 @@ public:
       {
         case TopAbs_VERTEX:
         {
-          // modified by NIZHNY-MKK  Wed May 19 16:56:16 2004.BEGIN
-          // There is no need to check anything.
-          //       if (aShape.IsSame(S)) {
-          //  myMap(S)->Blind();
-          //       }
-          // modified by NIZHNY-MKK  Wed May 19 16:56:23 2004.END
+
           break;
         }
         case TopAbs_EDGE:
@@ -254,7 +247,7 @@ public:
             {
               if (orientofwires)
               {
-                aFaceRes->OrientationOfWires(true); // on enregistre
+                aFaceRes->OrientationOfWires(true);
               }
               else
               {
@@ -335,8 +328,6 @@ private:
   const NCollection_IndexedDataMap<TopoDS_Shape, occ::handle<BRepCheck_Result>>& myMap;
 };
 
-//=================================================================================================
-
 void BRepCheck_Analyzer::Init(const TopoDS_Shape& theShape, const bool B)
 {
   if (theShape.IsNull())
@@ -349,8 +340,6 @@ void BRepCheck_Analyzer::Init(const TopoDS_Shape& theShape, const bool B)
   Put(theShape, B);
   Perform();
 }
-
-//=================================================================================================
 
 void BRepCheck_Analyzer::Put(const TopoDS_Shape& theShape, const bool B)
 {
@@ -399,11 +388,9 @@ void BRepCheck_Analyzer::Put(const TopoDS_Shape& theShape, const bool B)
 
   for (TopoDS_Iterator theIterator(theShape); theIterator.More(); theIterator.Next())
   {
-    Put(theIterator.Value(), B); // performs minimum on each shape
+    Put(theIterator.Value(), B);
   }
 }
-
-//=================================================================================================
 
 void BRepCheck_Analyzer::Perform()
 {
@@ -441,8 +428,6 @@ void BRepCheck_Analyzer::Perform()
   OSD_Parallel::For(0, aArrayOfArray.Size(), aParallelAnalyzer, !myIsParallel);
 }
 
-//=================================================================================================
-
 bool BRepCheck_Analyzer::IsValid(const TopoDS_Shape& S) const
 {
   if (!myMap.FindFromKey(S).IsNull())
@@ -450,7 +435,7 @@ bool BRepCheck_Analyzer::IsValid(const TopoDS_Shape& S) const
     NCollection_List<BRepCheck_Status>::Iterator itl;
     itl.Initialize(myMap.FindFromKey(S)->Status());
     if (itl.Value() != BRepCheck_NoError)
-    { // a voir
+    {
       return false;
     }
   }
@@ -469,7 +454,7 @@ bool BRepCheck_Analyzer::IsValid(const TopoDS_Shape& S) const
     {
       return ValidSub(S, TopAbs_VERTEX);
     }
-      //    break;
+
     case TopAbs_FACE:
     {
       bool valid = ValidSub(S, TopAbs_WIRE);
@@ -478,13 +463,11 @@ bool BRepCheck_Analyzer::IsValid(const TopoDS_Shape& S) const
       return valid;
     }
 
-      //    break;
     case TopAbs_SHELL:
-      //    return ValidSub(S,TopAbs_FACE);
+
       break;
     case TopAbs_SOLID:
-      //    return ValidSub(S,TopAbs_EDGE);
-      //    break;
+
       return ValidSub(S, TopAbs_SHELL);
       break;
     default:
@@ -494,15 +477,13 @@ bool BRepCheck_Analyzer::IsValid(const TopoDS_Shape& S) const
   return true;
 }
 
-//=================================================================================================
-
 bool BRepCheck_Analyzer::ValidSub(const TopoDS_Shape& S, const TopAbs_ShapeEnum SubType) const
 {
   NCollection_List<BRepCheck_Status>::Iterator itl;
   TopExp_Explorer                              exp;
   for (exp.Init(S, SubType); exp.More(); exp.Next())
   {
-    //  for (TopExp_Explorer exp(S,SubType);exp.More(); exp.Next()) {
+
     const occ::handle<BRepCheck_Result>& RV = myMap.FindFromKey(exp.Current());
     for (RV->InitContextIterator(); RV->MoreShapeInContext(); RV->NextShapeInContext())
     {

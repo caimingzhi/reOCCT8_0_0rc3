@@ -11,7 +11,6 @@ class StepShape_RightAngularWedge;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for RightAngularWedge
 class RWStepShape_RWRightAngularWedge
 {
 public:

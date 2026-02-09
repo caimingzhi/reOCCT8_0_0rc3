@@ -37,56 +37,38 @@ private:
   occ::handle<MAT_Edge>                  theitem;
 };
 
-//=================================================================================================
-// Inline implementations
-//=================================================================================================
-
 inline MAT_TListNodeOfListOfEdge::MAT_TListNodeOfListOfEdge() = default;
-
-//=================================================================================================
 
 inline MAT_TListNodeOfListOfEdge::MAT_TListNodeOfListOfEdge(const occ::handle<MAT_Edge>& anitem)
 {
   theitem = anitem;
 }
 
-//=================================================================================================
-
 inline occ::handle<MAT_Edge> MAT_TListNodeOfListOfEdge::GetItem() const
 {
   return theitem;
 }
-
-//=================================================================================================
 
 inline occ::handle<MAT_TListNodeOfListOfEdge> MAT_TListNodeOfListOfEdge::Next() const
 {
   return thenext;
 }
 
-//=================================================================================================
-
 inline occ::handle<MAT_TListNodeOfListOfEdge> MAT_TListNodeOfListOfEdge::Previous() const
 {
   return theprevious;
 }
-
-//=================================================================================================
 
 inline void MAT_TListNodeOfListOfEdge::SetItem(const occ::handle<MAT_Edge>& anitem)
 {
   theitem = anitem;
 }
 
-//=================================================================================================
-
 inline void MAT_TListNodeOfListOfEdge::Next(
   const occ::handle<MAT_TListNodeOfListOfEdge>& atlistnode)
 {
   thenext = atlistnode;
 }
-
-//=================================================================================================
 
 inline void MAT_TListNodeOfListOfEdge::Previous(
   const occ::handle<MAT_TListNodeOfListOfEdge>& atlistnode)

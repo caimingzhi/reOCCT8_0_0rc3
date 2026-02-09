@@ -26,8 +26,6 @@ bool TopOpeBRepBuild_FUN_aresamegeom(const TopoDS_Shape& S1, const TopoDS_Shape&
 #define M_INTERNAL(st) (st == TopAbs_INTERNAL)
 #define M_EXTERNAL(st) (st == TopAbs_EXTERNAL)
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::GFillFacesWESK(const NCollection_List<TopoDS_Shape>& LS1,
                                              const NCollection_List<TopoDS_Shape>& LS2,
                                              const TopOpeBRepBuild_GTopo&          G1,
@@ -96,36 +94,14 @@ void TopOpeBRepBuild_Builder::GFillFacesWESK(const NCollection_List<TopoDS_Shape
     if (!tomerge)
       continue;
 
-    // lors de l'insertion des composantes (edges splitees) de S dans le WES :
-    // - faces de meme orientation geometrique :
-    //     la grille indique l'orientation des composantes
-    // - faces d'orientation geometrique != :
-    //     les aretes de S sont exprimees dans une surface
-    //     d'orientation opposee a la surface de la face de reference.
-    //     Leur orientation dans la face resultat (reference) est le contraire
-    //     de la grille.
-    //  Modified by Sergey KHROMOV - Sat Apr 27 14:40:35 2002 Begin
-    //     const TopoDS_Shape& Fref = WES.Face();
-    //     const TopoDS_Shape& F = S;
-    //     bool samegeom = ::TopOpeBRepBuild_FUN_aresamegeom(Fref,F);
-    //     bool r = gistoreverse1;
-    //     if ( !samegeom ) { r = !r; G.SetReverse(r); }
-
-    //     bool rev = false;
-    //  Modified by Sergey KHROMOV - Sat Apr 27 14:40:36 2002 End
     TopAbs_Orientation  oS   = BDS.Shape(iS).Orientation();
     TopOpeBRepDS_Config conf = BDS.SameDomainOri(S);
     bool                b1   = (conf == TopOpeBRepDS_DIFFORIENTED && (oS == oref));
     bool                b2   = (conf == TopOpeBRepDS_SAMEORIENTED && (oS != oref));
     bool                b    = b1 || b2;
-    //  Modified by Sergey KHROMOV - Sat Apr 27 14:40:01 2002 Begin
-    //     if (b) {
-    //       rev = true;
-    //       G.SetReverse(rev);
-    //     }
+
     if (b)
       G.SetReverse(!gistoreverse1);
-    //  Modified by Sergey KHROMOV - Sat Apr 27 14:40:03 2002 End
 
     if (Kfill == 1)
     {
@@ -149,9 +125,8 @@ void TopOpeBRepBuild_Builder::GFillFacesWESK(const NCollection_List<TopoDS_Shape
     }
     else
     {
-      // error
     }
-  } // it(LS1)
+  }
 
   G             = G1.CopyPermuted();
   gistoreverse1 = G.IsToReverse1();
@@ -184,28 +159,14 @@ void TopOpeBRepBuild_Builder::GFillFacesWESK(const NCollection_List<TopoDS_Shape
     if (!tomerge)
       continue;
 
-    //  Modified by Sergey KHROMOV - Sat Apr 27 14:38:33 2002 Begin
-    //     const TopoDS_Shape& Fref = WES.Face();
-    //     const TopoDS_Shape& F = S;
-    //     bool samegeom = ::TopOpeBRepBuild_FUN_aresamegeom(Fref,F);
-    //     bool r = gistoreverse1;
-    //     if ( !samegeom ) { r = !r; G.SetReverse(r); }
-
-    //     bool rev = false;
-    //  Modified by Sergey KHROMOV - Sat Apr 27 14:38:30 2002 End
     TopAbs_Orientation  oS   = BDS.Shape(iS).Orientation();
     TopOpeBRepDS_Config conf = BDS.SameDomainOri(S);
     bool                b1   = (conf == TopOpeBRepDS_DIFFORIENTED && (oS == oref));
     bool                b2   = (conf == TopOpeBRepDS_SAMEORIENTED && (oS != oref));
     bool                b    = b1 || b2;
-    //  Modified by Sergey KHROMOV - Sat Apr 27 14:39:04 2002 Begin
-    //     if (b) {
-    //       rev = true;
-    //       G.SetReverse(rev);
-    //     }
+
     if (b)
       G.SetReverse(!gistoreverse1);
-    //  Modified by Sergey KHROMOV - Sat Apr 27 14:39:08 2002 End
 
     if (Kfill == 1)
     {
@@ -226,7 +187,5 @@ void TopOpeBRepBuild_Builder::GFillFacesWESK(const NCollection_List<TopoDS_Shape
     else
     {
     }
-
-  } // it(LS2)
-
-} // GFillFacesWESK
+  }
+}

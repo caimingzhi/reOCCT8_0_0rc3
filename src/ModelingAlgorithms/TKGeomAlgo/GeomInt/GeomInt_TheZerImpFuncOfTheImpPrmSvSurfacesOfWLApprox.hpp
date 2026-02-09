@@ -43,8 +43,6 @@ public:
 
   double Root() const;
 
-  //! Returns the value Tol so that if std::abs(Func.Root())<Tol
-  //! the function is considered null.
   double Tolerance() const;
 
   const gp_Pnt& Point() const;

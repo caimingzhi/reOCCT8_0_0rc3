@@ -34,8 +34,6 @@ enum StepDimTol_SimpleDatumReferenceModifier
   StepDimTol_SDRMTranslation
 };
 
-//! Defines SimpleDatumReferenceModifier as unique member of DatumReferenceModifier
-//! Works with an EnumTool
 class StepDimTol_SimpleDatumReferenceModifierMember : public StepData_SelectInt
 {
 
@@ -46,7 +44,7 @@ public:
 
   const char* Name() const override { return "SIMPLE_DATUM_REFERENCE_MODIFIER"; }
 
-  bool SetName(const char* /*theName*/) override { return true; }
+  bool SetName(const char*) override { return true; }
 
   int Kind() const override { return 4; }
 

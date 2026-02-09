@@ -7,14 +7,10 @@
 #include <TFunction_Iterator.hpp>
 #include <TFunction_Scope.hpp>
 
-//=================================================================================================
-
 TFunction_Iterator::TFunction_Iterator()
     : myUsageOfExecutionStatus(false)
 {
 }
-
-//=================================================================================================
 
 TFunction_Iterator::TFunction_Iterator(const TDF_Label& Access)
     : myUsageOfExecutionStatus(false)
@@ -22,20 +18,13 @@ TFunction_Iterator::TFunction_Iterator(const TDF_Label& Access)
   Init(Access);
 }
 
-//=======================================================================
-// function : Init
-// purpose  : Initializes the Iterator.
-//=======================================================================
-
 void TFunction_Iterator::Init(const TDF_Label& Access)
 {
   myCurrent.Clear();
   myPassedFunctions.Clear();
 
-  // Get the scope of functions
   myScope = TFunction_Scope::Set(Access);
 
-  // Find the roots
   NCollection_DoubleMap<int, TDF_Label>::Iterator itrm(myScope->GetFunctions());
   for (; itrm.More(); itrm.Next())
   {
@@ -45,46 +34,28 @@ void TFunction_Iterator::Init(const TDF_Label& Access)
     occ::handle<TFunction_GraphNode> graphNode = iFunction.GetGraphNode();
     TFunction_ExecutionStatus        status    = graphNode->GetStatus();
 
-    // Check whether the function is a root function
     if (!graphNode->GetPrevious().IsEmpty())
       continue;
 
-    // In execution mode we consider only "not executed" functions.
     if (myUsageOfExecutionStatus && status != TFunction_ES_NotExecuted)
       continue;
 
     myCurrent.Append(L);
 
-    // Register already passed functions
     if (!myUsageOfExecutionStatus)
       myPassedFunctions.Add(L);
   }
 }
-
-//=======================================================================
-// function : SetUsageOfExecutionStatus
-// purpose  : Defines usage of execution status
-//=======================================================================
 
 void TFunction_Iterator::SetUsageOfExecutionStatus(const bool usage)
 {
   myUsageOfExecutionStatus = usage;
 }
 
-//=======================================================================
-// function : GetUsageOfExecutionStatus
-// purpose  : Returns usage of execution status
-//=======================================================================
-
 bool TFunction_Iterator::GetUsageOfExecutionStatus() const
 {
   return myUsageOfExecutionStatus;
 }
-
-//=======================================================================
-// function : GetMaxNbThreads
-// purpose  : Defines the maximum number of threads
-//=======================================================================
 
 int TFunction_Iterator::GetMaxNbThreads() const
 {
@@ -92,14 +63,12 @@ int TFunction_Iterator::GetMaxNbThreads() const
   TFunction_Iterator fIterator;
   fIterator.myUsageOfExecutionStatus = false;
 
-  // Start iteration from current functions
   NCollection_List<TDF_Label>::Iterator itrl(myCurrent);
   for (; itrl.More(); itrl.Next())
   {
     fIterator.myCurrent.Append(itrl.Value());
   }
 
-  // Check number of semultenious current functions
   while (!fIterator.Current().IsEmpty())
   {
     const NCollection_List<TDF_Label>& current = fIterator.Current();
@@ -111,20 +80,10 @@ int TFunction_Iterator::GetMaxNbThreads() const
   return nb_threads;
 }
 
-//=======================================================================
-// function : Current
-// purpose  : Returns the current list of functions
-//=======================================================================
-
 const NCollection_List<TDF_Label>& TFunction_Iterator::Current() const
 {
   return myCurrent;
 }
-
-//=======================================================================
-// function : More
-// purpose  : Returns true if the iteration is ended
-//=======================================================================
 
 bool TFunction_Iterator::More() const
 {
@@ -142,11 +101,6 @@ bool TFunction_Iterator::More() const
   return !myCurrent.IsEmpty();
 }
 
-//=======================================================================
-// function : Next
-// purpose  : Switches the iterator to the next functions
-//=======================================================================
-
 void TFunction_Iterator::Next()
 {
   NCollection_Map<TDF_Label>            next_current;
@@ -160,7 +114,6 @@ void TFunction_Iterator::Next()
     const NCollection_Map<int>&      next      = graphNode->GetNext();
     TFunction_ExecutionStatus        status    = graphNode->GetStatus();
 
-    // Consider the execution status
     if (myUsageOfExecutionStatus)
     {
       if (status == TFunction_ES_NotExecuted || status == TFunction_ES_Executing)
@@ -172,11 +125,8 @@ void TFunction_Iterator::Next()
       {
         continue;
       }
-
-      // if "succeeded", we consider the next functions... see below.
     }
 
-    // Add next functions
     NCollection_Map<int>::Iterator itrm(next);
     for (; itrm.More(); itrm.Next())
     {
@@ -185,10 +135,7 @@ void TFunction_Iterator::Next()
 
       if (myUsageOfExecutionStatus)
       {
-        // A previous function is "succeeded", check status of next functions and
-        // all other previous functions of the next functions.
 
-        // Check status, it should be "not executed"
         TFunction_IFunction              iNextFunction(Lnext);
         occ::handle<TFunction_GraphNode> nextGraphNode = iNextFunction.GetGraphNode();
         TFunction_ExecutionStatus        next_status   = nextGraphNode->GetStatus();
@@ -197,7 +144,6 @@ void TFunction_Iterator::Next()
           continue;
         }
 
-        // Check all previous functions: all of them should be "succeeded"
         bool                           is_prev_succeeded = true;
         const NCollection_Map<int>&    prevOfNext        = nextGraphNode->GetPrevious();
         NCollection_Map<int>::Iterator itrp(prevOfNext);
@@ -220,13 +166,11 @@ void TFunction_Iterator::Next()
         }
       }
 
-      // Ignore already passed functions (for the mode of ignoring the execution status).
       if (!myUsageOfExecutionStatus && myPassedFunctions.Contains(Lnext))
         continue;
 
       next_current.Add(Lnext);
 
-      // Register already passed functions
       if (!myUsageOfExecutionStatus)
         myPassedFunctions.Add(Lnext);
     }
@@ -240,21 +184,11 @@ void TFunction_Iterator::Next()
   }
 }
 
-//=======================================================================
-// function : GetStatus
-// purpose  : Returns the execution status of the function
-//=======================================================================
-
 TFunction_ExecutionStatus TFunction_Iterator::GetStatus(const TDF_Label& func) const
 {
   TFunction_IFunction iFunction(func);
   return iFunction.GetGraphNode()->GetStatus();
 }
-
-//=======================================================================
-// function : SetStatus
-// purpose  : Defines an execution status for a function
-//=======================================================================
 
 void TFunction_Iterator::SetStatus(const TDF_Label&                func,
                                    const TFunction_ExecutionStatus status) const
@@ -263,8 +197,6 @@ void TFunction_Iterator::SetStatus(const TDF_Label&                func,
   iFunction.GetGraphNode()->SetStatus(status);
 }
 
-//=================================================================================================
-
 Standard_OStream& TFunction_Iterator::Dump(Standard_OStream& anOS) const
 {
   anOS << "Functions:" << std::endl;
@@ -272,8 +204,6 @@ Standard_OStream& TFunction_Iterator::Dump(Standard_OStream& anOS) const
   if (myCurrent.IsEmpty())
     return anOS;
 
-  // Memorize the status of each function
-  // in order to recover it after iteration.
   NCollection_DataMap<TDF_Label, int>             saved_status;
   occ::handle<TFunction_Scope>                    scope = TFunction_Scope::Set(myCurrent.First());
   NCollection_DoubleMap<int, TDF_Label>::Iterator itrd(scope->GetFunctions());
@@ -321,7 +251,6 @@ Standard_OStream& TFunction_Iterator::Dump(Standard_OStream& anOS) const
     anOS << std::endl;
   }
 
-  // Recover the status of functions
   NCollection_DataMap<TDF_Label, int>::Iterator itrm(saved_status);
   for (; itrm.More(); itrm.Next())
   {

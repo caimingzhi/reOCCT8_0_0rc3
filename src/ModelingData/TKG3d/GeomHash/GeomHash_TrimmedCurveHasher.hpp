@@ -5,11 +5,9 @@
 #include <GeomHash_CurveHasher.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom_TrimmedCurve (3D trimmed curve).
-//! Used for geometry deduplication.
 struct GeomHash_TrimmedCurveHasher
 {
-  // Hashes the trimmed curve by its parameters and basis curve.
+
   std::size_t operator()(const occ::handle<Geom_TrimmedCurve>& theCurve) const noexcept
   {
     constexpr double aTolerance = 1e-12;
@@ -23,7 +21,6 @@ struct GeomHash_TrimmedCurveHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two trimmed curves.
   bool operator()(const occ::handle<Geom_TrimmedCurve>& theCurve1,
                   const occ::handle<Geom_TrimmedCurve>& theCurve2) const noexcept
   {

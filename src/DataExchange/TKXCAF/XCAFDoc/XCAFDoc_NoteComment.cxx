@@ -1,15 +1,4 @@
-// Copyright (c) 2017-2018 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDoc_NoteComment.hpp>
 
@@ -18,15 +7,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDoc_NoteComment, XCAFDoc_Note)
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_NoteComment::GetID()
 {
   static Standard_GUID s_ID("FDEA4C52-0F54-484c-B590-579E18F7B5D4");
   return s_ID;
 }
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_NoteComment> XCAFDoc_NoteComment::Get(const TDF_Label& theLabel)
 {
@@ -34,8 +19,6 @@ occ::handle<XCAFDoc_NoteComment> XCAFDoc_NoteComment::Get(const TDF_Label& theLa
   theLabel.FindAttribute(XCAFDoc_NoteComment::GetID(), aThis);
   return aThis;
 }
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_NoteComment> XCAFDoc_NoteComment::Set(
   const TDF_Label&                  theLabel,
@@ -54,11 +37,7 @@ occ::handle<XCAFDoc_NoteComment> XCAFDoc_NoteComment::Set(
   return aNoteComment;
 }
 
-//=================================================================================================
-
 XCAFDoc_NoteComment::XCAFDoc_NoteComment() = default;
-
-//=================================================================================================
 
 void XCAFDoc_NoteComment::Set(const TCollection_ExtendedString& theComment)
 {
@@ -67,21 +46,15 @@ void XCAFDoc_NoteComment::Set(const TCollection_ExtendedString& theComment)
   myComment = theComment;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_NoteComment::ID() const
 {
   return GetID();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XCAFDoc_NoteComment::NewEmpty() const
 {
   return new XCAFDoc_NoteComment();
 }
-
-//=================================================================================================
 
 void XCAFDoc_NoteComment::Restore(const occ::handle<TDF_Attribute>& theAttr)
 {
@@ -92,8 +65,6 @@ void XCAFDoc_NoteComment::Restore(const occ::handle<TDF_Attribute>& theAttr)
     myComment = aMine->myComment;
 }
 
-//=================================================================================================
-
 void XCAFDoc_NoteComment::Paste(const occ::handle<TDF_Attribute>&       theAttrInto,
                                 const occ::handle<TDF_RelocationTable>& theRT) const
 {
@@ -103,8 +74,6 @@ void XCAFDoc_NoteComment::Paste(const occ::handle<TDF_Attribute>&       theAttrI
   if (!aMine.IsNull())
     aMine->Set(myComment);
 }
-
-//=================================================================================================
 
 Standard_OStream& XCAFDoc_NoteComment::Dump(Standard_OStream& theOS) const
 {

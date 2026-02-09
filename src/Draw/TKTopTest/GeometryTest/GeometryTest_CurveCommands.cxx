@@ -13,7 +13,6 @@
 #include <GeomAPI_IntCS.hpp>
 #include <GeomAPI_IntSS.hpp>
 
-// #include <GeomLProp.hpp>
 #include <GeomProjLib.hpp>
 #include <BSplCLib.hpp>
 
@@ -69,7 +68,6 @@
 #include <Geom_BSplineSurface.hpp>
 #include <DrawTrSurf_BSplineSurface.hpp>
 
-// epa test
 #include <BRepBuilderAPI_MakeEdge.hpp>
 #include <AIS_Shape.hpp>
 #include <TopoDS.hpp>
@@ -82,8 +80,6 @@
 #ifdef _WIN32
 Standard_IMPORT Draw_Viewer dout;
 #endif
-
-//=================================================================================================
 
 static int polelaw(Draw_Interpretor&, int n, const char** a)
 {
@@ -137,14 +133,11 @@ static int polelaw(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int to2d(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 3)
     return 1;
 
-  // get the curve
   occ::handle<Geom_Curve> C = DrawTrSurf::GetCurve(a[2]);
   if (C.IsNull())
     return 1;
@@ -166,8 +159,6 @@ static int to2d(Draw_Interpretor&, int n, const char** a)
   DrawTrSurf::Set(a[1], r);
   return 0;
 }
-
-//=================================================================================================
 
 static int to3d(Draw_Interpretor&, int n, const char** a)
 {
@@ -196,8 +187,6 @@ static int to3d(Draw_Interpretor&, int n, const char** a)
   DrawTrSurf::Set(a[1], r);
   return 0;
 }
-
-//=================================================================================================
 
 static int gproject(Draw_Interpretor& di, int n, const char** a)
 {
@@ -335,8 +324,6 @@ static int gproject(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int project(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 1)
@@ -407,7 +394,7 @@ static int project(Draw_Interpretor& di, int n, const char** a)
     DrawTrSurf::Set(a[1], G2d);
   }
   if (Verif)
-  { // verify the projection on n points
+  {
     if (NbPoints <= 0)
     {
       di << " n must be positive\n";
@@ -437,8 +424,6 @@ static int project(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 int projonplane(Draw_Interpretor& di, int n, const char** a)
 {
@@ -481,8 +466,6 @@ int projonplane(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static void solution(const occ::handle<GccInt_Bisec>& Bis, const char* name, const int i)
 {
   char solname[200];
@@ -490,7 +473,7 @@ static void solution(const occ::handle<GccInt_Bisec>& Bis, const char* name, con
     Sprintf(solname, "%s", name);
   else
     Sprintf(solname, "%s_%d", name, i);
-  const char* temp = solname; // pour portage WNT
+  const char* temp = solname;
 
   switch (Bis->ArcType())
   {
@@ -545,7 +528,7 @@ static int bisec(Draw_Interpretor& di, int n, const char** a)
           for (i = 1; i <= NbSol; i++)
           {
             Sprintf(solname, "%s_%d", a[1], i);
-            const char* temp = solname; // pour portage WNT
+            const char* temp = solname;
             DrawTrSurf::Set(temp, new Geom2d_Line(Bis.ThisSolution(i)));
           }
         }
@@ -582,7 +565,7 @@ static int bisec(Draw_Interpretor& di, int n, const char** a)
                                   occ::down_cast<Geom2d_Line>(C2)->Lin2d());
         if (Bis.IsDone())
         {
-          //	  char solname[200];
+
           NbSol = Bis.NbSolutions();
           if (NbSol >= 2)
             Compt = 1;
@@ -604,7 +587,7 @@ static int bisec(Draw_Interpretor& di, int n, const char** a)
                                occ::down_cast<Geom2d_Circle>(C2)->Circ2d());
         if (Bis.IsDone())
         {
-          //	  char solname[200];
+
           NbSol = Bis.NbSolutions();
           if (NbSol >= 2)
             Compt = 1;
@@ -746,8 +729,6 @@ static int bisec(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int movelaw(Draw_Interpretor& di, int n, const char** a)
 {
   int    ii, condition = 0, error_status;
@@ -804,7 +785,6 @@ static int movelaw(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-// Static method computing deviation of curve and polyline
 #include <math_PSO.hpp>
 #include <math_PSOParticlesPool.hpp>
 #include <math_MultipleVarFunction.hpp>
@@ -824,7 +804,6 @@ static void ComputeDeviation(const Adaptor3d_Curve&                theCurve,
   theUlMax = 0.;
   theImax  = 0;
 
-  // take knots
   int                        nbp = thePnts->NbKnots();
   NCollection_Array1<double> aKnots(1, nbp);
   thePnts->Knots(aKnots);
@@ -849,20 +828,20 @@ double CompLocalDev(const Adaptor3d_Curve& theCurve, const double u1, const doub
   math_Vector aLowBorder(1, 1);
   math_Vector aUppBorder(1, 1);
   math_Vector aSteps(1, 1);
-  //
+
   aLowBorder(1) = u1;
   aUppBorder(1) = u2;
-  // clang-format off
-  aSteps(1) =(aUppBorder(1) - aLowBorder(1)) * 0.01; // Run PSO on even distribution with 100 points.
-  //
-  GCPnts_DistFunction aFunc1(theCurve,  u1, u2);
-  //
-  double aValue;
-  math_Vector aT(1,1);
+
+  aSteps(1) = (aUppBorder(1) - aLowBorder(1)) * 0.01;
+
+  GCPnts_DistFunction aFunc1(theCurve, u1, u2);
+
+  double                aValue;
+  math_Vector           aT(1, 1);
   GCPnts_DistFunctionMV aFunc(aFunc1);
 
-  math_PSO aFinder(&aFunc, aLowBorder, aUppBorder, aSteps); // Choose 32 best points from 100 above.
-  // clang-format on
+  math_PSO aFinder(&aFunc, aLowBorder, aUppBorder, aSteps);
+
   aFinder.Perform(aSteps, aValue, aT);
   double d = 0.;
 
@@ -899,9 +878,7 @@ double CompLocalDev(const Adaptor3d_Curve& theCurve, const double u1, const doub
   return std::sqrt(d);
 }
 
-//=================================================================================================
-
-static int crvpoints(Draw_Interpretor& di, int /*n*/, const char** a)
+static int crvpoints(Draw_Interpretor& di, int, const char** a)
 {
   int    i, nbp;
   double defl;
@@ -910,7 +887,7 @@ static int crvpoints(Draw_Interpretor& di, int /*n*/, const char** a)
   occ::handle<Geom_Curve>      C = DrawTrSurf::GetCurve(a[2]);
   if (C.IsNull())
   {
-    // try getting a wire
+
     TopoDS_Wire aWire = TopoDS::Wire(DBRep::Get(a[2], TopAbs_WIRE));
     if (aWire.IsNull())
     {
@@ -965,14 +942,11 @@ static int crvpoints(Draw_Interpretor& di, int /*n*/, const char** a)
   double dmax = 0., ufmax = 0., ulmax = 0.;
   int    imax = 0;
 
-  // check deviation
   ComputeDeviation(*aHCurve, aPnts, dmax, ufmax, ulmax, imax);
   di << "Max defl: " << dmax << " " << ufmax << " " << ulmax << " " << imax << "\n";
 
   return 0;
 }
-
-//=================================================================================================
 
 static int crvtpoints(Draw_Interpretor& di, int n, const char** a)
 {
@@ -983,7 +957,7 @@ static int crvtpoints(Draw_Interpretor& di, int n, const char** a)
   occ::handle<Geom_Curve>      C = DrawTrSurf::GetCurve(a[2]);
   if (C.IsNull())
   {
-    // try getting a wire
+
     TopoDS_Wire aWire = TopoDS::Wire(DBRep::Get(a[2], TopAbs_WIRE));
     if (aWire.IsNull())
     {
@@ -1037,30 +1011,17 @@ static int crvtpoints(Draw_Interpretor& di, int n, const char** a)
   double dmax = 0., ufmax = 0., ulmax = 0.;
   int    imax = 0;
 
-  // check deviation
   ComputeDeviation(*aHCurve, aPnts, dmax, ufmax, ulmax, imax);
-  //
+
   di << "Max defl: " << dmax << " " << ufmax << " " << ulmax << " " << imax << "\n";
 
   return 0;
 }
 
-//=======================================================================
-// function : uniformAbscissa
-// purpose  : epa test (TATA-06-002 (Problem with GCPnts_UniformAbscissa class)
-//=======================================================================
 static int uniformAbscissa(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 3)
     return 1;
-
-  /*occ::handle<Geom_BSplineCurve> ellip;
-  ellip = DrawTrSurf::GetBSplineCurve(a[1]);
-  if (ellip.IsNull())
-  {
-    di << " BSpline is NULL  \n";
-    return 1;
-  }*/
 
   occ::handle<Geom_Curve> ellip;
   ellip = DrawTrSurf::GetCurve(a[1]);
@@ -1074,8 +1035,6 @@ static int uniformAbscissa(Draw_Interpretor& di, int n, const char** a)
   nocp = Draw::Atoi(a[2]);
   if (nocp < 2)
     return 1;
-
-  // test nbPoints for Geom_Ellipse
 
   try
   {
@@ -1108,10 +1067,6 @@ static int uniformAbscissa(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : EllipsUniformAbscissa
-// purpose  : epa test (TATA-06-002 (Problem with GCPnts_UniformAbscissa class)
-//=======================================================================
 static int EllipsUniformAbscissa(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 4)
@@ -1127,7 +1082,6 @@ static int EllipsUniformAbscissa(Draw_Interpretor& di, int n, const char** a)
   if (nocp < 2)
     return 1;
 
-  // test nbPoints for Geom_Ellipse
   occ::handle<Geom_Ellipse> ellip;
 
   try
@@ -1183,8 +1137,6 @@ static int EllipsUniformAbscissa(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int discrCurve(Draw_Interpretor& di, int theArgNb, const char** theArgVec)
 {
@@ -1283,9 +1235,7 @@ static int discrCurve(Draw_Interpretor& di, int theArgNb, const char** theArgVec
   return 0;
 }
 
-//=================================================================================================
-
-static int mypoints(Draw_Interpretor& di, int /*n*/, const char** a)
+static int mypoints(Draw_Interpretor& di, int, const char** a)
 {
   int    i, nbp;
   double defl;
@@ -1309,7 +1259,6 @@ static int mypoints(Draw_Interpretor& di, int /*n*/, const char** a)
   int    j, k, nbi;
   double t1, t2, dt;
 
-  // Filling of sample parameters
   nbi = aBS->Degree();
   k   = 0;
   t1  = aBS->Knot(ui1);
@@ -1418,9 +1367,7 @@ static int mypoints(Draw_Interpretor& di, int /*n*/, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
-static int surfpoints(Draw_Interpretor& /*di*/, int /*n*/, const char** a)
+static int surfpoints(Draw_Interpretor&, int, const char** a)
 {
   int    i;
   double defl;
@@ -1478,14 +1425,11 @@ static int surfpoints(Draw_Interpretor& /*di*/, int /*n*/, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int intersection(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 4)
     return 1;
 
-  //
   occ::handle<Geom_Curve>   GC1;
   occ::handle<Geom_Surface> GS1 = DrawTrSurf::GetSurface(a[2]);
   if (GS1.IsNull())
@@ -1495,29 +1439,24 @@ static int intersection(Draw_Interpretor& di, int n, const char** a)
       return 1;
   }
 
-  //
   occ::handle<Geom_Surface> GS2 = DrawTrSurf::GetSurface(a[3]);
   if (GS2.IsNull())
     return 1;
 
-  //
   double tol = Precision::Confusion();
   if (n == 5 || n == 9 || n == 13 || n == 17)
     tol = Draw::Atof(a[n - 1]);
 
-  //
   occ::handle<Geom_Curve> Result;
   gp_Pnt                  Point;
 
-  //
   if (GC1.IsNull())
   {
     GeomInt_IntSS Inters;
-    //
-    // Surface Surface
+
     if (n <= 5)
     {
-      // General case
+
       Inters.Perform(GS1, GS2, tol, true);
     }
     else if (n == 8 || n == 9 || n == 12 || n == 13 || n == 16 || n == 17)
@@ -1527,20 +1466,19 @@ static int intersection(Draw_Interpretor& di, int n, const char** a)
       double                           UVsta[4];
       occ::handle<GeomAdaptor_Surface> AS1, AS2;
 
-      //
-      if (n <= 9) // user starting point
+      if (n <= 9)
       {
         useBnd = false;
         ista1  = 4;
         ista2  = 7;
       }
-      else if (n <= 13) // user bounding
+      else if (n <= 13)
       {
         useStart = false;
         ibnd1    = 4;
         ibnd2    = 11;
       }
-      else // both user starting point and bounding
+      else
       {
         ista1 = 4;
         ista2 = 7;
@@ -1566,7 +1504,6 @@ static int intersection(Draw_Interpretor& di, int n, const char** a)
         AS2 = new GeomAdaptor_Surface(GS2, UVbnd[4], UVbnd[5], UVbnd[6], UVbnd[7]);
       }
 
-      //
       if (useStart && !useBnd)
       {
         Inters.Perform(GS1, GS2, tol, UVsta[0], UVsta[1], UVsta[2], UVsta[3]);
@@ -1579,14 +1516,13 @@ static int intersection(Draw_Interpretor& di, int n, const char** a)
       {
         Inters.Perform(AS1, AS2, tol, UVsta[0], UVsta[1], UVsta[2], UVsta[3]);
       }
-    } // else if (n == 8 || n == 9 || n == 12 || n == 13 || n == 16 || n == 17)
+    }
     else
     {
       di << "incorrect number of arguments\n";
       return 1;
     }
 
-    //
     if (!Inters.IsDone())
     {
       di << "No intersections found!\n";
@@ -1594,11 +1530,9 @@ static int intersection(Draw_Interpretor& di, int n, const char** a)
       return 1;
     }
 
-    //
     char buf[1024];
     int  i, aNbLines, aNbPoints;
 
-    //
     aNbLines = Inters.NbLines();
     if (aNbLines >= 2)
     {
@@ -1619,7 +1553,6 @@ static int intersection(Draw_Interpretor& di, int n, const char** a)
       DrawTrSurf::Set(a[1], Result);
     }
 
-    //
     aNbPoints = Inters.NbPoints();
     for (i = 1; i <= aNbPoints; ++i)
     {
@@ -1629,13 +1562,12 @@ static int intersection(Draw_Interpretor& di, int n, const char** a)
       const char* temp = buf;
       DrawTrSurf::Set(temp, Point);
     }
-  } // if (GC1.IsNull())
+  }
   else
   {
-    // Curve Surface
+
     GeomAPI_IntCS Inters(GC1, GS2);
 
-    //
     if (!Inters.IsDone())
     {
       di << "No intersections found!\n";
@@ -1660,7 +1592,7 @@ static int intersection(Draw_Interpretor& di, int n, const char** a)
         Sprintf(newname, "%s_%d", a[1], Compt);
         di << newname << " ";
         Result           = Inters.Segment(i);
-        const char* temp = newname; // pour portage WNT
+        const char* temp = newname;
         DrawTrSurf::Set(temp, Result);
       }
 
@@ -1669,12 +1601,12 @@ static int intersection(Draw_Interpretor& di, int n, const char** a)
 
       const int imax = nblines + nbpoints;
 
-      for (/*i = 1*/; i <= imax; i++, Compt++)
+      for (; i <= imax; i++, Compt++)
       {
         Sprintf(newname, "%s_%d", a[1], i);
         di << newname << " ";
         Point            = Inters.Point(i);
-        const char* temp = newname; // pour portage WNT
+        const char* temp = newname;
         DrawTrSurf::Set(temp, Point);
       }
     }
@@ -1698,10 +1630,6 @@ static int intersection(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : GetCurveContinuity
-// purpose  : Returns the continuity of the given curve
-//=======================================================================
 static int GetCurveContinuity(Draw_Interpretor& theDI, int theNArg, const char** theArgv)
 {
   if (theNArg != 2)
@@ -1710,13 +1638,7 @@ static int GetCurveContinuity(Draw_Interpretor& theDI, int theNArg, const char**
     return 1;
   }
 
-  char aContName[7][3] = {"C0",  // 0
-                          "G1",  // 1
-                          "C1",  // 2
-                          "G2",  // 3
-                          "C2",  // 4
-                          "C3",  // 5
-                          "CN"}; // 6
+  char aContName[7][3] = {"C0", "G1", "C1", "G2", "C2", "C3", "CN"};
 
   occ::handle<Geom2d_Curve> GC2d;
   occ::handle<Geom_Curve>   GC3d = DrawTrSurf::GetCurve(theArgv[1]);
@@ -1740,8 +1662,6 @@ static int GetCurveContinuity(Draw_Interpretor& theDI, int theNArg, const char**
 
   return 0;
 }
-
-//=================================================================================================
 
 void GeometryTest::CurveCommands(Draw_Interpretor& theCommands)
 {

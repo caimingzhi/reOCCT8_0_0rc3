@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDimTolObjects_Tool.hpp>
 #include <TDF_ChildIterator.hpp>
@@ -30,14 +19,10 @@ class XCAFDimTolObjects_GeomToleranceObject;
 class XCAFDimTolObjects_DimensionObject;
 class XCAFDimTolObjects_DatumObject;
 
-//=================================================================================================
-
 XCAFDimTolObjects_Tool::XCAFDimTolObjects_Tool(const occ::handle<TDocStd_Document>& theDoc)
 {
   myDimTolTool = XCAFDoc_DocumentTool::DimTolTool(theDoc->Main());
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_Tool::GetDimensions(
   NCollection_Sequence<occ::handle<XCAFDimTolObjects_DimensionObject>>& theDimensionObjectSequence)
@@ -55,8 +40,6 @@ void XCAFDimTolObjects_Tool::GetDimensions(
     }
   }
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_Tool::GetGeomTolerances(
   NCollection_Sequence<occ::handle<XCAFDimTolObjects_GeomToleranceObject>>&
@@ -91,8 +74,6 @@ void XCAFDimTolObjects_Tool::GetGeomTolerances(
   }
 }
 
-//=================================================================================================
-
 bool XCAFDimTolObjects_Tool::GetRefDimensions(
   const TopoDS_Shape&                                                   theShape,
   NCollection_Sequence<occ::handle<XCAFDimTolObjects_DimensionObject>>& theDimensionObjectSequence)
@@ -117,8 +98,6 @@ bool XCAFDimTolObjects_Tool::GetRefDimensions(
   }
   return false;
 }
-
-//=================================================================================================
 
 bool XCAFDimTolObjects_Tool::GetRefGeomTolerances(
   const TopoDS_Shape& theShape,
@@ -162,8 +141,6 @@ bool XCAFDimTolObjects_Tool::GetRefGeomTolerances(
   }
   return false;
 }
-
-//=================================================================================================
 
 bool XCAFDimTolObjects_Tool::GetRefDatum(
   const TopoDS_Shape&                         theShape,

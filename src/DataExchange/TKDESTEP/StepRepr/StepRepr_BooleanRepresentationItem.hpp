@@ -9,7 +9,6 @@ class TCollection_HAsciiString;
 class StepRepr_BooleanRepresentationItem : public StepRepr_RepresentationItem
 {
 public:
-  //! Returns a BooleanRepresentationItem
   Standard_EXPORT StepRepr_BooleanRepresentationItem();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& theName,

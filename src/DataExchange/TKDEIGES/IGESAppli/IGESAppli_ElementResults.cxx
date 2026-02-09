@@ -24,10 +24,9 @@ void IGESAppli_ElementResults::Init(
   const occ::handle<NCollection_HArray1<int>>&                                  allDataLayerFlags,
   const occ::handle<NCollection_HArray1<int>>&                                  allnbResDataLocs,
   const occ::handle<IGESBasic_HArray1OfHArray1OfInteger>&                       allResDataLocs,
-  const occ::handle<IGESBasic_HArray1OfHArray1OfReal>& allResults) // UNFINISHED
+  const occ::handle<IGESBasic_HArray1OfHArray1OfReal>&                          allResults)
 {
-  // raises exception if sizes are not consistent, (lower = 1 too)
-  // but how to check is not clear ??
+
   int num = allElementIdents->Length();
   if (allElementIdents->Lower() != 1 || allFiniteElems->Lower() != 1
       || allFiniteElems->Upper() != num || allTopTypes->Lower() != 1 || allTopTypes->Upper() != num
@@ -60,7 +59,6 @@ void IGESAppli_ElementResults::Init(
   theResultDataLocs       = allResDataLocs;
   theResultData           = allResults;
   InitTypeAndForm(148, FormNumber());
-  // FormNumber -> Type of the Results
 }
 
 void IGESAppli_ElementResults::SetFormNumber(const int form)
@@ -129,8 +127,6 @@ int IGESAppli_ElementResults::NbResultDataLocs(const int Index) const
 {
   return theNbResultDataLocs->Value(Index);
 }
-
-//  ?? VERIFIER
 
 int IGESAppli_ElementResults::ResultDataLoc(const int NElem, const int NLoc) const
 {

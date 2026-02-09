@@ -11,8 +11,6 @@ float Graphic3d_Vertex::Distance(const Graphic3d_Vertex& AOther) const
                    + (Z() - AOther.Z()) * (Z() - AOther.Z()));
 }
 
-//=================================================================================================
-
 void Graphic3d_Vertex::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {
   gp_XYZ aCoord(xyz[0], xyz[1], xyz[2]);

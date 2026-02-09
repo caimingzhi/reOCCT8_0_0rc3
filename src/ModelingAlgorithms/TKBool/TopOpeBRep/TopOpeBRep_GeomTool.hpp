@@ -11,14 +11,11 @@ class TopOpeBRepDS_Curve;
 class Geom2d_Curve;
 class Geom_Curve;
 
-//! Provide services needed by the DSFiller
 class TopOpeBRep_GeomTool
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Make the DS curve <C> and the pcurves <PC1,PC2> from
-  //! intersection line <L> lying on shapes <S1,S2>. <min,max> = <L> bounds
   Standard_EXPORT static void MakeCurves(const double                min,
                                          const double                max,
                                          const TopOpeBRep_LineInter& L,

@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -46,7 +35,6 @@ namespace
 {
   const double THE_TOLERANCE = 1e-10;
 
-  //! Helper function to create uniform parameters
   NCollection_Array1<double> CreateUniformParams(double theFirst, double theLast, int theNbPoints)
   {
     NCollection_Array1<double> aParams(1, theNbPoints);
@@ -58,14 +46,13 @@ namespace
     return aParams;
   }
 
-  //! Helper function to create a simple B-spline surface (bilinear patch)
   occ::handle<Geom_BSplineSurface> CreateSimpleBSplineSurface()
   {
     NCollection_Array2<gp_Pnt> aPoles(1, 2, 1, 2);
     aPoles.SetValue(1, 1, gp_Pnt(0, 0, 0));
     aPoles.SetValue(2, 1, gp_Pnt(1, 0, 0));
     aPoles.SetValue(1, 2, gp_Pnt(0, 1, 0));
-    aPoles.SetValue(2, 2, gp_Pnt(1, 1, 1)); // Non-planar corner
+    aPoles.SetValue(2, 2, gp_Pnt(1, 1, 1));
 
     NCollection_Array1<double> aUKnots(1, 2);
     NCollection_Array1<double> aVKnots(1, 2);
@@ -85,13 +72,9 @@ namespace
   }
 } // namespace
 
-//==================================================================================================
-// Tests for GeomGridEval_Plane
-//==================================================================================================
-
 TEST(GeomGridEval_PlaneTest, BasicEvaluation)
 {
-  // XY plane at origin
+
   occ::handle<Geom_Plane> aPlane = new Geom_Plane(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
 
   GeomGridEval_Plane anEval(aPlane);
@@ -104,7 +87,6 @@ TEST(GeomGridEval_PlaneTest, BasicEvaluation)
   EXPECT_EQ(aGrid.RowLength(), 4);
   EXPECT_EQ(aGrid.ColLength(), 6);
 
-  // Verify that all points are in Z=0 plane
   for (int iU = 1; iU <= 6; ++iU)
   {
     for (int iV = 1; iV <= 4; ++iV)
@@ -119,7 +101,7 @@ TEST(GeomGridEval_PlaneTest, BasicEvaluation)
 
 TEST(GeomGridEval_PlaneTest, NonOriginPlane)
 {
-  // Plane at (1, 2, 3) with normal (0, 0, 1)
+
   occ::handle<Geom_Plane> aPlane = new Geom_Plane(gp_Pnt(1, 2, 3), gp_Dir(0, 0, 1));
 
   GeomGridEval_Plane anEval(aPlane);
@@ -129,7 +111,6 @@ TEST(GeomGridEval_PlaneTest, NonOriginPlane)
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // All points should be at Z=3
   for (int iU = 1; iU <= 3; ++iU)
   {
     for (int iV = 1; iV <= 3; ++iV)
@@ -138,30 +119,24 @@ TEST(GeomGridEval_PlaneTest, NonOriginPlane)
     }
   }
 
-  // Center point (u=0, v=0) should be at (1, 2, 3)
   EXPECT_NEAR(aGrid.Value(2, 2).X(), 1.0, THE_TOLERANCE);
   EXPECT_NEAR(aGrid.Value(2, 2).Y(), 2.0, THE_TOLERANCE);
 }
 
-//==================================================================================================
-// Tests for GeomGridEval_Sphere
-//==================================================================================================
-
 TEST(GeomGridEval_SphereTest, BasicEvaluation)
 {
-  // Unit sphere at origin
+
   occ::handle<Geom_SphericalSurface> aSphere =
     new Geom_SphericalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 1.0);
 
   GeomGridEval_Sphere anEval(aSphere);
   EXPECT_FALSE(anEval.Geometry().IsNull());
 
-  NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 9);       // Longitude
-  NCollection_Array1<double> aVParams = CreateUniformParams(-M_PI / 2, M_PI / 2, 5); // Latitude
+  NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 9);
+  NCollection_Array1<double> aVParams = CreateUniformParams(-M_PI / 2, M_PI / 2, 5);
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // All points should be at distance 1 from origin
   for (int iU = 1; iU <= 9; ++iU)
   {
     for (int iV = 1; iV <= 5; ++iV)
@@ -171,7 +146,6 @@ TEST(GeomGridEval_SphereTest, BasicEvaluation)
     }
   }
 
-  // North pole (v = PI/2) should be at (0, 0, 1)
   for (int iU = 1; iU <= 9; ++iU)
   {
     EXPECT_NEAR(aGrid.Value(iU, 5).X(), 0.0, THE_TOLERANCE);
@@ -179,7 +153,6 @@ TEST(GeomGridEval_SphereTest, BasicEvaluation)
     EXPECT_NEAR(aGrid.Value(iU, 5).Z(), 1.0, THE_TOLERANCE);
   }
 
-  // South pole (v = -PI/2) should be at (0, 0, -1)
   for (int iU = 1; iU <= 9; ++iU)
   {
     EXPECT_NEAR(aGrid.Value(iU, 1).X(), 0.0, THE_TOLERANCE);
@@ -190,7 +163,7 @@ TEST(GeomGridEval_SphereTest, BasicEvaluation)
 
 TEST(GeomGridEval_SphereTest, NonUnitSphere)
 {
-  // Sphere with radius 3 at center (1, 2, 3)
+
   occ::handle<Geom_SphericalSurface> aSphere =
     new Geom_SphericalSurface(gp_Ax3(gp_Pnt(1, 2, 3), gp_Dir(0, 0, 1)), 3.0);
 
@@ -201,7 +174,6 @@ TEST(GeomGridEval_SphereTest, NonUnitSphere)
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // All points should be at distance 3 from center
   const gp_Pnt aCenter(1, 2, 3);
   for (int iU = 1; iU <= 17; ++iU)
   {
@@ -213,13 +185,9 @@ TEST(GeomGridEval_SphereTest, NonUnitSphere)
   }
 }
 
-//==================================================================================================
-// Tests for GeomGridEval_OtherSurface (fallback)
-//==================================================================================================
-
 TEST(GeomGridEval_OtherSurfaceTest, CylinderFallback)
 {
-  // Cylinder is not directly supported, should use fallback
+
   occ::handle<Geom_CylindricalSurface> aCyl =
     new Geom_CylindricalSurface(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 2.0);
   GeomAdaptor_Surface anAdaptor(aCyl);
@@ -231,7 +199,6 @@ TEST(GeomGridEval_OtherSurfaceTest, CylinderFallback)
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Verify against direct evaluation
   for (int iU = 1; iU <= 9; ++iU)
   {
     for (int iV = 1; iV <= 6; ++iV)
@@ -241,10 +208,6 @@ TEST(GeomGridEval_OtherSurfaceTest, CylinderFallback)
     }
   }
 }
-
-//==================================================================================================
-// Tests for GeomGridEval_Surface (unified dispatcher)
-//==================================================================================================
 
 TEST(GeomGridEval_SurfaceTest, PlaneDispatch)
 {
@@ -261,7 +224,6 @@ TEST(GeomGridEval_SurfaceTest, PlaneDispatch)
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Verify against direct evaluation
   for (int iU = 1; iU <= 11; ++iU)
   {
     for (int iV = 1; iV <= 7; ++iV)
@@ -288,7 +250,6 @@ TEST(GeomGridEval_SurfaceTest, SphereDispatch)
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Verify against direct evaluation
   for (int iU = 1; iU <= 13; ++iU)
   {
     for (int iV = 1; iV <= 7; ++iV)
@@ -314,7 +275,6 @@ TEST(GeomGridEval_SurfaceTest, BSplineDispatch)
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Verify against direct evaluation
   for (int iU = 1; iU <= 11; ++iU)
   {
     for (int iV = 1; iV <= 11; ++iV)
@@ -370,7 +330,6 @@ TEST(GeomGridEval_SurfaceTest, CylinderDispatch)
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Verify against direct evaluation
   for (int iU = 1; iU <= 9; ++iU)
   {
     for (int iV = 1; iV <= 6; ++iV)
@@ -397,7 +356,6 @@ TEST(GeomGridEval_SurfaceTest, TorusDispatch)
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Verify against direct evaluation
   for (int iU = 1; iU <= 9; ++iU)
   {
     for (int iV = 1; iV <= 9; ++iV)
@@ -424,7 +382,6 @@ TEST(GeomGridEval_SurfaceTest, ConeDispatch)
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Verify against direct evaluation
   for (int iU = 1; iU <= 9; ++iU)
   {
     for (int iV = 1; iV <= 6; ++iV)
@@ -437,11 +394,9 @@ TEST(GeomGridEval_SurfaceTest, ConeDispatch)
 
 TEST(GeomGridEval_SurfaceTest, SurfaceOfRevolutionFallbackDispatch)
 {
-  // Surface of Revolution is not optimized, should use fallback
-  occ::handle<Geom_Line> aLine =
-    new Geom_Line(gp_Pnt(1, 0, 0), gp_Dir(0, 0, 1)); // Line at x=1 parallel to Z
-  occ::handle<Geom_SurfaceOfRevolution> aRevSurf =
-    new Geom_SurfaceOfRevolution(aLine, gp::OZ()); // Revolving around Z -> Cylinder-like
+
+  occ::handle<Geom_Line>                aLine    = new Geom_Line(gp_Pnt(1, 0, 0), gp_Dir(0, 0, 1));
+  occ::handle<Geom_SurfaceOfRevolution> aRevSurf = new Geom_SurfaceOfRevolution(aLine, gp::OZ());
 
   GeomAdaptor_Surface anAdaptor(aRevSurf);
 
@@ -455,7 +410,6 @@ TEST(GeomGridEval_SurfaceTest, SurfaceOfRevolutionFallbackDispatch)
 
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
 
-  // Verify against direct evaluation
   for (int iU = 1; iU <= 9; ++iU)
   {
     for (int iV = 1; iV <= 6; ++iV)
@@ -470,7 +424,6 @@ TEST(GeomGridEval_SurfaceTest, DirectHandleInit)
 {
   occ::handle<Geom_Plane> aPlane = new Geom_Plane(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
 
-  // Initialize directly from occ::handle<Geom_Surface>
   GeomGridEval_Surface anEval;
   anEval.Initialize(aPlane);
 
@@ -483,7 +436,6 @@ TEST(GeomGridEval_SurfaceTest, DirectHandleInit)
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aUParams, aVParams);
   EXPECT_FALSE(aGrid.IsEmpty());
 
-  // Verify value
   EXPECT_NEAR(aGrid.Value(1, 1).Z(), 0.0, THE_TOLERANCE);
 }
 
@@ -508,19 +460,14 @@ TEST(GeomGridEval_SurfaceTest, EmptyParams)
   anEval.Initialize(anAdaptor);
   EXPECT_TRUE(anEval.IsInitialized());
 
-  // EvaluateGrid with empty params should return empty
   NCollection_Array1<double> aEmptyParams;
   NCollection_Array2<gp_Pnt> aGrid = anEval.EvaluateGrid(aEmptyParams, aEmptyParams);
   EXPECT_TRUE(aGrid.IsEmpty());
 }
 
-//==================================================================================================
-// Tests for Surface Derivative Evaluation (D1, D2)
-//==================================================================================================
-
 TEST(GeomGridEval_PlaneTest, DerivativeD1)
 {
-  // XY plane at origin
+
   occ::handle<Geom_Plane> aPlane = new Geom_Plane(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   GeomGridEval_Plane      anEval(aPlane);
 
@@ -529,7 +476,6 @@ TEST(GeomGridEval_PlaneTest, DerivativeD1)
 
   NCollection_Array2<GeomGridEval::SurfD1> aGrid = anEval.EvaluateGridD1(aUParams, aVParams);
 
-  // For a plane, D1U and D1V are constant (the X and Y directions of the plane)
   gp_Pnt aPnt;
   gp_Vec aD1URef, aD1VRef;
   aPlane->D1(0.0, 0.0, aPnt, aD1URef, aD1VRef);
@@ -554,7 +500,6 @@ TEST(GeomGridEval_PlaneTest, DerivativeD2)
 
   NCollection_Array2<GeomGridEval::SurfD2> aGrid = anEval.EvaluateGridD2(aUParams, aVParams);
 
-  // For a plane, all second derivatives are zero
   for (int iU = 1; iU <= 6; ++iU)
   {
     for (int iV = 1; iV <= 4; ++iV)
@@ -577,7 +522,6 @@ TEST(GeomGridEval_SphereTest, DerivativeD1)
 
   NCollection_Array2<GeomGridEval::SurfD1> aGrid = anEval.EvaluateGridD1(aUParams, aVParams);
 
-  // Verify D1 against direct evaluation
   for (int iU = 1; iU <= 9; ++iU)
   {
     for (int iV = 1; iV <= 5; ++iV)
@@ -603,7 +547,6 @@ TEST(GeomGridEval_SphereTest, DerivativeD2)
 
   NCollection_Array2<GeomGridEval::SurfD2> aGrid = anEval.EvaluateGridD2(aUParams, aVParams);
 
-  // Verify D2 against direct evaluation
   for (int iU = 1; iU <= 9; ++iU)
   {
     for (int iV = 1; iV <= 5; ++iV)
@@ -635,7 +578,6 @@ TEST(GeomGridEval_SurfaceTest, UnifiedDerivativeD1)
 
   NCollection_Array2<GeomGridEval::SurfD1> aGrid = anEval.EvaluateGridD1(aUParams, aVParams);
 
-  // Verify against direct evaluation
   for (int iU = 1; iU <= 9; ++iU)
   {
     for (int iV = 1; iV <= 5; ++iV)
@@ -663,7 +605,6 @@ TEST(GeomGridEval_SurfaceTest, UnifiedDerivativeD2)
 
   NCollection_Array2<GeomGridEval::SurfD2> aGrid = anEval.EvaluateGridD2(aUParams, aVParams);
 
-  // Verify against direct evaluation
   for (int iU = 1; iU <= 5; ++iU)
   {
     for (int iV = 1; iV <= 5; ++iV)
@@ -681,10 +622,6 @@ TEST(GeomGridEval_SurfaceTest, UnifiedDerivativeD2)
   }
 }
 
-//==================================================================================================
-// Tests for Surface Third Derivative Evaluation (D3)
-//==================================================================================================
-
 TEST(GeomGridEval_PlaneTest, DerivativeD3)
 {
   occ::handle<Geom_Plane> aPlane = new Geom_Plane(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
@@ -695,7 +632,6 @@ TEST(GeomGridEval_PlaneTest, DerivativeD3)
 
   NCollection_Array2<GeomGridEval::SurfD3> aGrid = anEval.EvaluateGridD3(aUParams, aVParams);
 
-  // For a plane, all derivatives >= 2 are zero
   for (int iU = 1; iU <= 6; ++iU)
   {
     for (int iV = 1; iV <= 4; ++iV)
@@ -718,12 +654,10 @@ TEST(GeomGridEval_SphereTest, DerivativeD3)
   GeomGridEval_Sphere anEval(aSphere);
 
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 9);
-  NCollection_Array1<double> aVParams =
-    CreateUniformParams(-M_PI / 2 + 0.1, M_PI / 2 - 0.1, 5); // Avoid poles
+  NCollection_Array1<double> aVParams = CreateUniformParams(-M_PI / 2 + 0.1, M_PI / 2 - 0.1, 5);
 
   NCollection_Array2<GeomGridEval::SurfD3> aGrid = anEval.EvaluateGridD3(aUParams, aVParams);
 
-  // Verify D3 against direct evaluation using GeomAdaptor
   GeomAdaptor_Surface anAdaptor(aSphere);
   for (int iU = 1; iU <= 9; ++iU)
   {

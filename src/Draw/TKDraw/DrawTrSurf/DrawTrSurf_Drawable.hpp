@@ -7,23 +7,14 @@ class Adaptor2d_Curve2d;
 class Adaptor3d_Curve;
 class Adaptor3d_IsoCurve;
 
-//! this class adds to the Drawable3D methods to
-//! display Curves and Curves on Surface.
-//!
-//! The discretisation, number of points on a Curve,
-//! is stored in this class.
 class DrawTrSurf_Drawable : public Draw_Drawable3D
 {
   DEFINE_STANDARD_RTTIEXT(DrawTrSurf_Drawable, Draw_Drawable3D)
 public:
-  //! Draw a polygon of the curve on the Display
   Standard_EXPORT void DrawCurve2dOn(Adaptor2d_Curve2d& C, Draw_Display& D) const;
 
-  //! Draw a polygon of the curve on the Display
   Standard_EXPORT void DrawCurveOn(Adaptor3d_Curve& C, Draw_Display& D) const;
 
-  //! Load C with the specified iso and Draw a polygon
-  //! of the curve on the Display
   Standard_EXPORT void DrawIsoCurveOn(Adaptor3d_IsoCurve&   C,
                                       const GeomAbs_IsoType T,
                                       const double          P,
@@ -31,8 +22,6 @@ public:
                                       const double          L,
                                       Draw_Display&         D) const;
 
-  //! this is defined only to tell C++ not to complain
-  //! about inheriting a pure virtual method.
   Standard_EXPORT void DrawOn(Draw_Display& dis) const override = 0;
 
   void SetDiscretisation(const int theDiscret) { myDiscret = theDiscret; }
@@ -48,7 +37,6 @@ public:
   int GetDrawMode() const { return myDrawMode; }
 
 protected:
-  //! set the number of points on a curve at creation.
   Standard_EXPORT DrawTrSurf_Drawable(const int    discret,
                                       const double deflection = 0.01,
                                       const int    DrawMode   = 0);

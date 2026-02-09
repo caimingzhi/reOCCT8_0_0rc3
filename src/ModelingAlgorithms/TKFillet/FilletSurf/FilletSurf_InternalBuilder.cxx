@@ -1,16 +1,4 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <FilletSurf_InternalBuilder.hpp>
 
@@ -105,7 +93,7 @@ static bool IntPlanEdge(occ::handle<BRepAdaptor_Curve>& Ed,
   gp_Pnt pdeb = Ed->Value(f);
   gp_Pnt pfin = Ed->Value(l);
   double u, v;
-  // check if the extremities are not solution
+
   ElSLib::Parameters(P, pdeb, u, v);
   gp_Pnt projdeb  = ElSLib::Value(u, v, P);
   double dprojdeb = pdeb.Distance(projdeb);
@@ -150,8 +138,6 @@ static bool ComputeEdgeParameter(const occ::handle<ChFiDS_Spine>& Spine,
   return IntPlanEdge(ed, pln, ped, tol3d);
 }
 
-//=================================================================================================
-
 FilletSurf_InternalBuilder::FilletSurf_InternalBuilder(const TopoDS_Shape&      S,
                                                        const ChFi3d_FilletShape FShape,
                                                        const double             Ta,
@@ -162,18 +148,6 @@ FilletSurf_InternalBuilder::FilletSurf_InternalBuilder(const TopoDS_Shape&      
   SetParams(Ta, Tapp3d, Tapp2d, Tapp3d, Tapp2d, 1.e-3);
   SetContinuity(GeomAbs_C2, Ta);
 }
-
-//=======================================================================
-// function : Add
-// purpose  : creation of spine on a set of edges
-//
-//  0 : no problem
-//  1 : empty list
-//  2 : non g1 edges
-//  3 : non G1 adjacent faces
-//  4 : edge is not on the shape
-//  5 : edge is not alive
-//=======================================================================
 
 int FilletSurf_InternalBuilder::Add(const NCollection_List<TopoDS_Shape>& E, const double R)
 {
@@ -187,7 +161,7 @@ int FilletSurf_InternalBuilder::Add(const NCollection_List<TopoDS_Shape>& E, con
       return 4;
     if (!myEFMap.Contains(cured))
       return 4;
-    // check if the edge is a fracture edge
+
     TopoDS_Face ff1, ff2;
     for (It.Initialize(myEFMap(cured)); It.More(); It.Next())
     {
@@ -217,10 +191,6 @@ int FilletSurf_InternalBuilder::Add(const NCollection_List<TopoDS_Shape>& E, con
   occ::handle<ChFiDS_Stripe> st       = myListStripe.First();
   occ::handle<ChFiDS_Spine>& sp       = st->ChangeSpine();
   bool                       periodic = sp->IsPeriodic();
-
-  // It is checked if edges of list E are in the contour,
-  // the edges that arenot in the list are removed from the contour,
-  // it is checked that the remainder is monoblock.
 
   for (It.Initialize(E); It.More(); It.Next())
   {
@@ -276,7 +246,6 @@ int FilletSurf_InternalBuilder::Add(const NCollection_List<TopoDS_Shape>& E, con
     sp = newsp;
   }
 
-  // ElSpine is immediately constructed
   occ::handle<ChFiDS_ElSpine> hels = new ChFiDS_ElSpine();
   gp_Vec                      TFirst, TLast;
   gp_Pnt                      PFirst, PLast;
@@ -292,11 +261,8 @@ int FilletSurf_InternalBuilder::Add(const NCollection_List<TopoDS_Shape>& E, con
   return 0;
 }
 
-//=================================================================================================
-
 void FilletSurf_InternalBuilder::Perform()
 {
-  // PerformSetOfSurfOnElSpine is enough.
 
   occ::handle<ChFiDS_Stripe>                                        Stripe = myListStripe.First();
   occ::handle<NCollection_HSequence<occ::handle<ChFiDS_SurfData>>>& HData =
@@ -311,8 +277,6 @@ void FilletSurf_InternalBuilder::Perform()
   Stripe->Choix(RefChoix);
   PerformSetOfKGen(Stripe, false);
 }
-
-//=================================================================================================
 
 bool FilletSurf_InternalBuilder::PerformSurf(
   NCollection_Sequence<occ::handle<ChFiDS_SurfData>>& SeqData,
@@ -345,7 +309,6 @@ bool FilletSurf_InternalBuilder::PerformSurf(
   TopAbs_Orientation          Or = S1->Face().Orientation();
   if (!fsp->IsConstant())
     throw Standard_ConstructionError("PerformSurf : no variable radiuses");
-  // bool maybesingular; //pour scinder les Surfdata singulieres
 
   occ::handle<ChFiDS_ElSpine> EmptyGuide;
 
@@ -425,7 +388,7 @@ bool FilletSurf_InternalBuilder::PerformSurf(
   done = CompleteData(Data, Func, lin, S1, S2, Or, false, false, false, false);
   if (!done)
     throw Standard_Failure("PerformSurf : Failed approximation!");
-  //  maybesingular = (Func.GetMinimalDistance()<=100*tolapp3d);
+
   bool ok = false;
   if (!Forward)
   {
@@ -466,8 +429,6 @@ bool FilletSurf_InternalBuilder::PerformSurf(
   Data->FirstSpineParam(First);
   Data->LastSpineParam(Last);
 
-  //  if (maybesingular) SplitSurf(SeqData, lin);
-  //  Necessite de trimer resultats : A faire
   return true;
 }
 
@@ -569,20 +530,10 @@ bool FilletSurf_InternalBuilder::Done() const
   return done;
 }
 
-//=======================================================================
-// function : NbSurface
-// purpose  :  gives the number of NUBS surfaces  of the Fillet
-//=======================================================================
-
 int FilletSurf_InternalBuilder::NbSurface() const
 {
   return myListStripe.First()->SetOfSurfData()->Length();
 }
-
-//=======================================================================
-// function : SurfaceFillet
-// purpose  : gives the NUBS surface of index Index
-//=======================================================================
 
 const occ::handle<Geom_Surface>& FilletSurf_InternalBuilder::SurfaceFillet(const int Index) const
 {
@@ -591,11 +542,6 @@ const occ::handle<Geom_Surface>& FilletSurf_InternalBuilder::SurfaceFillet(const
   return myDS->Surface(isurf).Surface();
 }
 
-//=======================================================================
-// function : TolApp3d
-// purpose  :  gives the 3d tolerance reached during approximation
-//=======================================================================
-
 double FilletSurf_InternalBuilder::TolApp3d(const int Index) const
 {
   int isurf = myListStripe.First()->SetOfSurfData()->Value(Index)->Surf();
@@ -603,10 +549,6 @@ double FilletSurf_InternalBuilder::TolApp3d(const int Index) const
   return myDS->Surface(isurf).Tolerance();
 }
 
-//=======================================================================
-// function : SupportFace1
-// purpose  : gives the first support  face relative to SurfaceFillet(Index)
-//=======================================================================
 const TopoDS_Face& FilletSurf_InternalBuilder::SupportFace1(const int Index) const
 {
   int isurf = myListStripe.First()->SetOfSurfData()->Value(Index)->IndexOfS1();
@@ -614,10 +556,6 @@ const TopoDS_Face& FilletSurf_InternalBuilder::SupportFace1(const int Index) con
   return TopoDS::Face(myDS->Shape(isurf));
 }
 
-//=======================================================================
-// function : SupportFace2
-// purpose  : gives the second support face relative to SurfaceFillet(Index)
-//=======================================================================
 const TopoDS_Face& FilletSurf_InternalBuilder::SupportFace2(const int Index) const
 {
   int isurf = myListStripe.First()->SetOfSurfData()->Value(Index)->IndexOfS2();
@@ -625,21 +563,11 @@ const TopoDS_Face& FilletSurf_InternalBuilder::SupportFace2(const int Index) con
   return TopoDS::Face(myDS->Shape(isurf));
 }
 
-//===============================================================================
-// function : CurveOnSup1
-// purpose  :  gives  the 3d curve  of SurfaceFillet(Index)  on SupportFace1(Index)
-//===============================================================================
-
 const occ::handle<Geom_Curve>& FilletSurf_InternalBuilder::CurveOnFace1(const int Index) const
 {
   int icurv = myListStripe.First()->SetOfSurfData()->Value(Index)->InterferenceOnS1().LineIndex();
   return myDS->Curve(icurv).Curve();
 }
-
-//=======================================================================
-// function : CurveOnSup2
-// purpose  : gives the 3d  curve of  SurfaceFillet(Index) on SupportFace2(Index
-//=======================================================================
 
 const occ::handle<Geom_Curve>& FilletSurf_InternalBuilder::CurveOnFace2(const int Index) const
 {
@@ -647,47 +575,25 @@ const occ::handle<Geom_Curve>& FilletSurf_InternalBuilder::CurveOnFace2(const in
   return myDS->Curve(icurv).Curve();
 }
 
-//=======================================================================
-// function : PCurveOnFace1
-// purpose  : gives the  PCurve associated to CurvOnSup1(Index)  on the support face
-//=======================================================================
 const occ::handle<Geom2d_Curve>& FilletSurf_InternalBuilder::PCurveOnFace1(const int Index) const
 {
   return myListStripe.First()->SetOfSurfData()->Value(Index)->InterferenceOnS1().PCurveOnFace();
 }
-
-//=======================================================================
-// function : PCurveOnFillet1
-// purpose  : gives the PCurve associated to CurveOnFace1(Index) on the Fillet
-//=======================================================================
 
 const occ::handle<Geom2d_Curve>& FilletSurf_InternalBuilder::PCurve1OnFillet(const int Index) const
 {
   return myListStripe.First()->SetOfSurfData()->Value(Index)->InterferenceOnS1().PCurveOnSurf();
 }
 
-//=======================================================================
-// function : PCurveOnFace2
-// purpose  : gives the  PCurve associated to CurvOnSup2(Index)  on the support face
-//=======================================================================
 const occ::handle<Geom2d_Curve>& FilletSurf_InternalBuilder::PCurveOnFace2(const int Index) const
 {
   return myListStripe.First()->SetOfSurfData()->Value(Index)->InterferenceOnS2().PCurveOnFace();
 }
 
-//=======================================================================
-// function : PCurveOnFillet2
-// purpose  : gives the PCurve associated to CurveOnFace2(Index) on the Fillet
-//=======================================================================
 const occ::handle<Geom2d_Curve>& FilletSurf_InternalBuilder::PCurve2OnFillet(const int Index) const
 {
   return myListStripe.First()->SetOfSurfData()->Value(Index)->InterferenceOnS2().PCurveOnSurf();
 }
-
-//=======================================================================
-// function : FirstParameter
-// purpose  : gives the parameter of the fillet  on the first edge
-//=======================================================================
 
 double FilletSurf_InternalBuilder::FirstParameter() const
 {
@@ -704,10 +610,6 @@ double FilletSurf_InternalBuilder::FirstParameter() const
   return 0.0;
 }
 
-//=======================================================================
-// function : LastParameter
-// purpose  :  gives the parameter of the fillet  on the last edge
-//=======================================================================
 double FilletSurf_InternalBuilder::LastParameter() const
 {
   const occ::handle<ChFiDS_Stripe>&   st  = myListStripe.First();
@@ -722,17 +624,6 @@ double FilletSurf_InternalBuilder::LastParameter() const
     return ep;
   return 0.0;
 }
-
-//=======================================================================
-// function : StatusStartSection
-// purpose  :  returns:
-//       twoExtremityonEdge: each extremity of  start section of the Fillet is
-//                        on the edge of  the corresponding support face.
-//       OneExtremityOnEdge:  only one  of  the extremities of  start  section  of the  Fillet
-//                           is on the  edge of the corresponding support face.
-//       NoExtremityOnEdge:  any extremity of  start  section  of the fillet is  on
-//                           the edge  of   the  corresponding support face.
-//=======================================================================
 
 FilletSurf_StatusType FilletSurf_InternalBuilder::StartSectionStatus() const
 {
@@ -754,16 +645,6 @@ FilletSurf_StatusType FilletSurf_InternalBuilder::StartSectionStatus() const
   }
 }
 
-//=======================================================================
-// function : StatusEndSection()
-// purpose  :  returns:
-//            twoExtremityonEdge: each extremity of  end section of the Fillet is
-//                                on the edge of  the corresponding support face.
-//            OneExtremityOnEdge: only one  of  the extremities of  end section  of the  Fillet
-//                                is on the  edge of the corresponding support face.
-//            NoExtremityOnEdge:  any extremity of   end  section  of the fillet is  on
-//                                the edge  of   the  corresponding support face.
-//=======================================================================
 FilletSurf_StatusType FilletSurf_InternalBuilder::EndSectionStatus() const
 {
   bool isonedge1 =
@@ -785,13 +666,9 @@ FilletSurf_StatusType FilletSurf_InternalBuilder::EndSectionStatus() const
   }
 }
 
-//=======================================================================
-// function : Simulate
-// purpose  : computes only the sections used in the computation of the fillet
-//=======================================================================
 void FilletSurf_InternalBuilder::Simulate()
 {
-  // ChFi3d_FilBuilder::Simulate(1);
+
   occ::handle<ChFiDS_Stripe>                                        Stripe = myListStripe.First();
   occ::handle<NCollection_HSequence<occ::handle<ChFiDS_SurfData>>>& HData =
     Stripe->ChangeSetOfSurfData();
@@ -806,21 +683,11 @@ void FilletSurf_InternalBuilder::Simulate()
   PerformSetOfKGen(Stripe, true);
 }
 
-//=======================================================================
-// function : NbSection
-// purpose  :  gives the number of sections relative to SurfaceFillet(IndexSurf)
-//=======================================================================
 int FilletSurf_InternalBuilder::NbSection(const int IndexSurf) const
 {
   return Sect(1, IndexSurf)->Length();
 }
 
-//=======================================================================
-// function : Section
-// purpose  : gives the   arc of circle corresponding    to section number
-//           IndexSec  of  SurfaceFillet(IndexSurf)  (The   basis curve  of the
-//           trimmed curve is a Geom_Circle)
-//=======================================================================
 void FilletSurf_InternalBuilder::Section(const int                       IndexSurf,
                                          const int                       IndexSec,
                                          occ::handle<Geom_TrimmedCurve>& Circ) const

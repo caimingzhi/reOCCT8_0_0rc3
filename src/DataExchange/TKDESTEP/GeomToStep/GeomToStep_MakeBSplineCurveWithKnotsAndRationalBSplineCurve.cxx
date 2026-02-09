@@ -15,10 +15,6 @@
 #include <TCollection_HAsciiString.hpp>
 #include <Standard_Integer.hpp>
 
-//=============================================================================
-// Creation d' une bspline_curve_with_knots_and_rational_bspline_curve de
-// prostep a partir d' une BSplineCurve de Geom
-//=============================================================================
 GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve::
   GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve(
     const occ::handle<Geom_BSplineCurve>& BS,
@@ -28,11 +24,6 @@ GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve::
 #include "GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve_gen.hpp"
 #undef Array1OfPnt_gen
 }
-
-//=============================================================================
-// Creation d' une bspline_curve_with_knots_and_rational_bspline_curve de
-// prostep a partir d' une BSplineCurve de Geom2d
-//=============================================================================
 
 GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve::
   GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve(
@@ -44,10 +35,6 @@ GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve::
 #include "GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve_gen.hpp"
 #undef Array1OfPnt_gen
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve>&
   GeomToStep_MakeBSplineCurveWithKnotsAndRationalBSplineCurve::Value() const

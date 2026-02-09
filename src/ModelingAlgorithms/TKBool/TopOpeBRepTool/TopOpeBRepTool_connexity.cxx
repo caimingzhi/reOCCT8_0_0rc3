@@ -27,14 +27,10 @@
 #define EXTERNAL (4)
 #define CLOSING (5)
 
-//=================================================================================================
-
 TopOpeBRepTool_connexity::TopOpeBRepTool_connexity()
     : theItems(1, 5)
 {
 }
-
-//=================================================================================================
 
 TopOpeBRepTool_connexity::TopOpeBRepTool_connexity(const TopoDS_Shape& Key)
     : theKey(Key),
@@ -42,31 +38,15 @@ TopOpeBRepTool_connexity::TopOpeBRepTool_connexity(const TopoDS_Shape& Key)
 {
 }
 
-//=================================================================================================
-
 void TopOpeBRepTool_connexity::SetKey(const TopoDS_Shape& Key)
 {
   theKey = Key;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRepTool_connexity::Key() const
 {
   return theKey;
 }
-
-/*static int FUN_toI(const TopAbs_Orientation& O)
-{
-  int Index = 0;
-  if      (O == TopAbs_FORWARD)  Index = 1;
-  else if (O == TopAbs_REVERSED) Index = 2;
-  else if (O == TopAbs_INTERNAL) Index = 3;
-  else if (O == TopAbs_EXTERNAL) Index = 0;
-  return Index;
-}*/
-
-//=================================================================================================
 
 int TopOpeBRepTool_connexity::Item(const int OriKey, NCollection_List<TopoDS_Shape>& Item) const
 {
@@ -74,8 +54,6 @@ int TopOpeBRepTool_connexity::Item(const int OriKey, NCollection_List<TopoDS_Sha
   Item = theItems(OriKey);
   return (Item.Extent());
 }
-
-//=================================================================================================
 
 int TopOpeBRepTool_connexity::AllItems(NCollection_List<TopoDS_Shape>& Item) const
 {
@@ -88,8 +66,6 @@ int TopOpeBRepTool_connexity::AllItems(NCollection_List<TopoDS_Shape>& Item) con
   }
   return Item.Extent();
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_connexity::AddItem(const int OriKey, const NCollection_List<TopoDS_Shape>& Item)
 {
@@ -104,8 +80,6 @@ void TopOpeBRepTool_connexity::AddItem(const int OriKey, const TopoDS_Shape& Ite
   copy.Append(Item);
   theItems(OriKey).Append(copy);
 }
-
-//=================================================================================================
 
 bool TopOpeBRepTool_connexity::RemoveItem(const int OriKey, const TopoDS_Shape& Item)
 {
@@ -124,8 +98,6 @@ bool TopOpeBRepTool_connexity::RemoveItem(const int OriKey, const TopoDS_Shape& 
   return false;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepTool_connexity::RemoveItem(const TopoDS_Shape& Item)
 {
   bool removed = false;
@@ -138,27 +110,20 @@ bool TopOpeBRepTool_connexity::RemoveItem(const TopoDS_Shape& Item)
   return removed;
 }
 
-//=================================================================================================
-
 NCollection_List<TopoDS_Shape>& TopOpeBRepTool_connexity::ChangeItem(const int OriKey)
 {
   return theItems.ChangeValue(OriKey);
 }
 
-//=================================================================================================
-
 bool TopOpeBRepTool_connexity::IsMultiple() const
 {
   NCollection_List<TopoDS_Shape> lfound;
   int                            nkeyitem = Item(FORWARD, lfound);
-  //  nkeyRitem += Item(INTERNAL,lfound); NOT VALID
-  // if key is vertex : key appears F in closing E, only one time
+
   nkeyitem += Item(CLOSING, lfound);
   bool multiple = (nkeyitem > 1);
   return multiple;
 }
-
-//=================================================================================================
 
 bool TopOpeBRepTool_connexity::IsFaulty() const
 {
@@ -169,13 +134,10 @@ bool TopOpeBRepTool_connexity::IsFaulty() const
   return faulty;
 }
 
-//=================================================================================================
-
 int TopOpeBRepTool_connexity::IsInternal(NCollection_List<TopoDS_Shape>& Item) const
 {
   Item.Clear();
 
-  // all subshapes of INTERNAL(EXTERNAL) are oriented INTERNAL(EXTERNAL)
   NCollection_List<TopoDS_Shape> lINT;
   lINT.Assign(theItems.Value(INTERNAL));
   NCollection_List<TopoDS_Shape>::Iterator it1(lINT);

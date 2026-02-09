@@ -20,7 +20,7 @@ IMPLEMENT_STANDARD_RTTIEXT(PCDM_StorageDriver, PCDM_Writer)
 
 void PCDM_StorageDriver::Write(const occ::handle<CDM_Document>&  aDocument,
                                const TCollection_ExtendedString& aFileName,
-                               const Message_ProgressRange& /*theRange*/)
+                               const Message_ProgressRange&)
 {
   occ::handle<Storage_Schema> theSchema = new Storage_Schema;
 
@@ -69,7 +69,6 @@ void PCDM_StorageDriver::Write(const occ::handle<CDM_Document>&  aDocument,
   PCDM_ReadWriter::Writer()->WriteExtensions(theData, aDocument);
   PCDM_ReadWriter::Writer()->WriteVersion(theData, aDocument);
 
-  // add document comments
   NCollection_Sequence<TCollection_ExtendedString> aComments;
   aDocument->Comments(aComments);
   int aLen = aComments.Length();
@@ -87,15 +86,12 @@ void PCDM_StorageDriver::Write(const occ::handle<CDM_Document>&  aDocument,
     throw PCDM_DriverError(theData->ErrorStatusExtension().ToCString());
 }
 
-//=================================================================================================
-
-void PCDM_StorageDriver::Write(const occ::handle<CDM_Document>& /*aDocument*/,
-                               Standard_OStream& /*theOStream*/,
-                               const Message_ProgressRange& /*theRange*/)
+void PCDM_StorageDriver::Write(const occ::handle<CDM_Document>&,
+                               Standard_OStream&,
+                               const Message_ProgressRange&)
 {
 }
 
-// occ::handle<PCDM_Document> PCDM_StorageDriver::Make(const occ::handle<CDM_Document>& aDocument) {
 occ::handle<PCDM_Document> PCDM_StorageDriver::Make(const occ::handle<CDM_Document>&)
 {
   occ::handle<PCDM_Document> voidDocument;
@@ -110,42 +106,30 @@ void PCDM_StorageDriver::Make(const occ::handle<CDM_Document>&                  
   Documents.Append(Make(aDocument));
 }
 
-//=================================================================================================
-
 void PCDM_StorageDriver::SetFormat(const TCollection_ExtendedString& aformat)
 {
   myFormat = aformat;
 }
-
-//=================================================================================================
 
 TCollection_ExtendedString PCDM_StorageDriver::GetFormat() const
 {
   return myFormat;
 }
 
-//=================================================================================================
-
 bool PCDM_StorageDriver::IsError() const
 {
   return myIsError;
 }
-
-//=================================================================================================
 
 void PCDM_StorageDriver::SetIsError(const bool theIsError)
 {
   myIsError = theIsError;
 }
 
-//=================================================================================================
-
 PCDM_StoreStatus PCDM_StorageDriver::GetStoreStatus() const
 {
   return myStoreStatus;
 }
-
-//=================================================================================================
 
 void PCDM_StorageDriver::SetStoreStatus(const PCDM_StoreStatus theStoreStatus)
 {

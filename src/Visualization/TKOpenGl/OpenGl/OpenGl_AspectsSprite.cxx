@@ -1,15 +1,4 @@
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OpenGl_AspectsSprite.hpp>
 
@@ -21,8 +10,6 @@
 #include <Graphic3d_MarkerImage.hpp>
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
-
-//=================================================================================================
 
 void OpenGl_AspectsSprite::Release(OpenGl_Context* theCtx)
 {
@@ -43,7 +30,7 @@ void OpenGl_AspectsSprite::Release(OpenGl_Context* theCtx)
     {
       {
         const TCollection_AsciiString aSpriteKey = mySprite->ResourceId();
-        mySprite.Nullify(); // we need nullify all handles before ReleaseResource() call
+        mySprite.Nullify();
         theCtx->ReleaseResource(aSpriteKey, true);
       }
       if (!mySpriteA.IsNull())
@@ -58,16 +45,12 @@ void OpenGl_AspectsSprite::Release(OpenGl_Context* theCtx)
   mySpriteA.Nullify();
 }
 
-//=================================================================================================
-
 bool OpenGl_AspectsSprite::HasPointSprite(const occ::handle<OpenGl_Context>&    theCtx,
                                           const occ::handle<Graphic3d_Aspects>& theAspects)
 {
   const occ::handle<OpenGl_PointSprite>& aSprite = Sprite(theCtx, theAspects, false);
   return !aSprite.IsNull() && !aSprite->IsDisplayList();
 }
-
-//=================================================================================================
 
 bool OpenGl_AspectsSprite::IsDisplayListSprite(const occ::handle<OpenGl_Context>&    theCtx,
                                                const occ::handle<Graphic3d_Aspects>& theAspects)
@@ -81,11 +64,9 @@ bool OpenGl_AspectsSprite::IsDisplayListSprite(const occ::handle<OpenGl_Context>
   return !aSprite.IsNull() && aSprite->IsDisplayList();
 }
 
-//=================================================================================================
-
 void OpenGl_AspectsSprite::UpdateRediness(const occ::handle<Graphic3d_Aspects>& theAspect)
 {
-  // update sprite resource bindings
+
   TCollection_AsciiString aSpriteKeyNew, aSpriteAKeyNew;
   spriteKeys(theAspect->MarkerImage(),
              theAspect->MarkerType(),
@@ -105,8 +86,6 @@ void OpenGl_AspectsSprite::UpdateRediness(const occ::handle<Graphic3d_Aspects>& 
   }
 }
 
-//=================================================================================================
-
 const occ::handle<OpenGl_PointSprite>& OpenGl_AspectsSprite::Sprite(
   const occ::handle<OpenGl_Context>&    theCtx,
   const occ::handle<Graphic3d_Aspects>& theAspects,
@@ -125,8 +104,6 @@ const occ::handle<OpenGl_PointSprite>& OpenGl_AspectsSprite::Sprite(
   return theIsAlphaSprite && !mySpriteA.IsNull() && mySpriteA->IsValid() ? mySpriteA : mySprite;
 }
 
-//=================================================================================================
-
 void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCtx,
                                  const occ::handle<Graphic3d_MarkerImage>& theMarkerImage,
                                  Aspect_TypeOfMarker                       theType,
@@ -134,7 +111,7 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
                                  const NCollection_Vec4<float>&            theColor,
                                  float&                                    theMarkerSize)
 {
-  // generate key for shared resource
+
   TCollection_AsciiString aNewKey, aNewKeyA;
   spriteKeys(theMarkerImage, theType, theScale, theColor, aNewKey, aNewKeyA);
 
@@ -143,7 +120,6 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
   const TCollection_AsciiString& aSpriteAKeyOld =
     !mySpriteA.IsNull() ? mySpriteA->ResourceId() : TCollection_AsciiString::EmptyString();
 
-  // release old shared resources
   const bool aNewResource = aNewKey.IsEmpty() || aSpriteKeyOld != aNewKey;
   if (aNewResource)
   {
@@ -157,7 +133,7 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
       else
       {
         const TCollection_AsciiString anOldKey = mySprite->ResourceId();
-        mySprite.Nullify(); // we need nullify all handles before ReleaseResource() call
+        mySprite.Nullify();
         theCtx->ReleaseResource(anOldKey, true);
       }
     }
@@ -174,7 +150,7 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
       else
       {
         const TCollection_AsciiString anOldKey = mySpriteA->ResourceId();
-        mySpriteA.Nullify(); // we need nullify all handles before ReleaseResource() call
+        mySpriteA.Nullify();
         theCtx->ReleaseResource(anOldKey, true);
       }
     }
@@ -192,7 +168,7 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
   if (theType == Aspect_TOM_POINT || theType == Aspect_TOM_EMPTY
       || (theType == Aspect_TOM_USERDEFINED && theMarkerImage.IsNull()))
   {
-    // nothing to do - just simple point
+
     return;
   }
 
@@ -200,9 +176,9 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
   occ::handle<OpenGl_PointSprite>& aSpriteA = mySpriteA;
   if (!aNewKey.IsEmpty())
   {
-    // clang-format off
-    theCtx->GetResource<occ::handle<OpenGl_PointSprite>> (aNewKeyA, aSpriteA); // alpha sprite could be shared
-    // clang-format on
+
+    theCtx->GetResource<occ::handle<OpenGl_PointSprite>>(aNewKeyA, aSpriteA);
+
     theCtx->GetResource<occ::handle<OpenGl_PointSprite>>(aNewKey, aSprite);
   }
 
@@ -210,7 +186,7 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
   const bool hadAlreadyAlpha = !aSpriteA.IsNull();
   if (hadAlreadyRGBA && hadAlreadyAlpha)
   {
-    // reuse shared resource
+
     if (!aSprite->IsDisplayList())
     {
       theMarkerSize = float(std::max(aSprite->SizeX(), aSprite->SizeY()));
@@ -250,7 +226,7 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
   if (theCtx->core20fwd != nullptr
       && (!theCtx->caps->pntSpritesDisable || theCtx->core11ffp == nullptr))
   {
-    // Creating texture resource for using it with point sprites
+
     occ::handle<Image_PixMap> anImage = aNewMarkerImage->GetImage();
     theMarkerSize                     = std::max((float)anImage->Width(), (float)anImage->Height());
 
@@ -270,7 +246,7 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
   }
   else if (theCtx->core11ffp != nullptr)
   {
-    // Creating list with bitmap for using it in compatibility mode
+
     GLuint aBitmapList = theCtx->core11ffp->glGenLists(1);
     aSprite->SetDisplayList(theCtx, aBitmapList);
 
@@ -298,9 +274,10 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
 
       theCtx->core11ffp->glNewList(aBitmapList, GL_COMPILE);
       const int aWidth = (int)anImage->Width(), aHeight = (int)anImage->Height();
-      // clang-format off
-      theCtx->core11ffp->glBitmap (0, 0, 0, 0, GLfloat(-0.5f * aWidth), GLfloat(-0.5f * aHeight), nullptr); // make offsets that will be added to the current raster position
-      // clang-format on
+
+      theCtx->core11ffp
+        ->glBitmap(0, 0, 0, 0, GLfloat(-0.5f * aWidth), GLfloat(-0.5f * aHeight), nullptr);
+
       theCtx->core11ffp->glDrawPixels(GLsizei(anImage->Width()),
                                       GLsizei(anImage->Height()),
                                       aFormat.PixelFormat(),
@@ -337,8 +314,6 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
   }
 }
 
-//=================================================================================================
-
 void OpenGl_AspectsSprite::spriteKeys(const occ::handle<Graphic3d_MarkerImage>& theMarkerImage,
                                       Aspect_TypeOfMarker                       theType,
                                       float                                     theScale,
@@ -346,7 +321,7 @@ void OpenGl_AspectsSprite::spriteKeys(const occ::handle<Graphic3d_MarkerImage>& 
                                       TCollection_AsciiString&                  theKey,
                                       TCollection_AsciiString&                  theKeyA)
 {
-  // generate key for shared resource
+
   if (theType == Aspect_TOM_USERDEFINED)
   {
     if (!theMarkerImage.IsNull())
@@ -357,7 +332,7 @@ void OpenGl_AspectsSprite::spriteKeys(const occ::handle<Graphic3d_MarkerImage>& 
   }
   else if (theType != Aspect_TOM_POINT && theType != Aspect_TOM_EMPTY)
   {
-    // predefined markers are defined with 0.5 step
+
     const int aScale = int(theScale * 10.0f + 0.5f);
     theKey           = TCollection_AsciiString("OpenGl_AspectMarker") + theType + "_" + aScale;
     theKeyA          = theKey + "A";

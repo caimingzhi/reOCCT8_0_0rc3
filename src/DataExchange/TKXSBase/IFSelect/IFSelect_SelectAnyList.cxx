@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_IntParam.hpp>
 #include <IFSelect_SelectAnyList.hpp>
@@ -23,7 +12,6 @@
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_SelectAnyList, IFSelect_SelectDeduct)
 
-// ....    List definition: "deferred" methods NbItems & FillResult
 void IFSelect_SelectAnyList::SetRange(const occ::handle<IFSelect_IntParam>& rankfrom,
                                       const occ::handle<IFSelect_IntParam>& rankto)
 {
@@ -82,11 +70,10 @@ int IFSelect_SelectAnyList::UpperValue() const
   return theupper->Value();
 }
 
-//  Take the sub-entities from lower to upper (included)
 Interface_EntityIterator IFSelect_SelectAnyList::RootResult(const Interface_Graph& G) const
 {
   Interface_EntityIterator input = InputResult(G);
-  KeepInputEntity(input); // selon type voulu
+  KeepInputEntity(input);
   if (input.NbEntities() > 1)
     throw Interface_InterfaceError("SelectAnyList : more than ONE Entity in input");
   if (input.NbEntities() == 0)

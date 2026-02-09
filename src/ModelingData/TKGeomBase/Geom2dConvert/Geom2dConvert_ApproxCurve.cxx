@@ -12,10 +12,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=======================================================================
-// class : Geom2dConvert_ApproxCurve_Eval
-// purpose: evaluator class for approximation
-//=======================================================================
 class Geom2dConvert_ApproxCurve_Eval : public AdvApprox_EvaluatorFunction
 {
 public:
@@ -32,7 +28,7 @@ public:
                 double  StartEnd[2],
                 double* Parameter,
                 int*    DerivativeRequest,
-                double* Result, // [Dimension]
+                double* Result,
                 int*    ErrorCode) override;
 
 private:
@@ -42,20 +38,19 @@ private:
 
 void Geom2dConvert_ApproxCurve_Eval::Evaluate(int*    Dimension,
                                               double  StartEnd[2],
-                                              double* Param,  // Parameter at which evaluation
-                                              int*    Order,  // Derivative Request
-                                              double* Result, // [Dimension]
+                                              double* Param,
+                                              int*    Order,
+                                              double* Result,
                                               int*    ErrorCode)
 {
   *ErrorCode = 0;
   double par = *Param;
 
-  // Dimension is incorrect
   if (*Dimension != 2)
   {
     *ErrorCode = 1;
   }
-  // Parameter is incorrect
+
   if (par < StartEnd[0] || par > StartEnd[1])
   {
     *ErrorCode = 2;
@@ -119,7 +114,6 @@ void Geom2dConvert_ApproxCurve::Approximate(const occ::handle<Adaptor2d_Curve2d>
                                             const int                             theMaxSegments,
                                             const int                             theMaxDegree)
 {
-  // Initialisation of input parameters of AdvApprox
 
   int                                      Num1DSS = 0, Num2DSS = 1, Num3DSS = 0;
   occ::handle<NCollection_HArray1<double>> OneDTolNul, ThreeDTolNul;

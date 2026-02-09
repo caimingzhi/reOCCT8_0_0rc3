@@ -15,7 +15,6 @@ class StepShape_EdgeLoop : public StepShape_Loop
 {
 
 public:
-  //! Returns a EdgeLoop
   Standard_EXPORT StepShape_EdgeLoop();
 
   Standard_EXPORT void Init(

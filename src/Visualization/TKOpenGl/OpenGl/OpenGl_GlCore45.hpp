@@ -2,13 +2,12 @@
 
 #include <OpenGl_GlCore44.hpp>
 
-//! OpenGL 4.5 definition.
 struct OpenGl_GlCore45 : public OpenGl_GlCore44
 {
 private:
   typedef OpenGl_GlCore44 theBaseClass_t;
 
-public: //! @name OpenGL 4.5 additives to 4.4
+public:
   using theBaseClass_t::glBindTextureUnit;
   using theBaseClass_t::glBlitNamedFramebuffer;
   using theBaseClass_t::glCheckNamedFramebufferStatus;

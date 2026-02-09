@@ -1,23 +1,10 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GeomGridEval_Sphere.hpp>
 
 #include <gp_Sphere.hpp>
 
 #include <cmath>
-
-//==================================================================================================
 
 GeomGridEval_Sphere::Data GeomGridEval_Sphere::extractData() const
 {
@@ -42,15 +29,11 @@ GeomGridEval_Sphere::Data GeomGridEval_Sphere::extractData() const
           aSph.Radius()};
 }
 
-//==================================================================================================
-
 GeomGridEval_Sphere::UContext GeomGridEval_Sphere::computeUContext(const Data& theData, double theU)
 {
   const double cosU = std::cos(theU);
   const double sinU = std::sin(theU);
 
-  // DirU = cosU*XDir + sinU*YDir (horizontal direction at angle U)
-  // dDirU = -sinU*XDir + cosU*YDir (derivative of DirU w.r.t. U)
   return {cosU,
           sinU,
           cosU * theData.XX + sinU * theData.YX,
@@ -61,14 +44,11 @@ GeomGridEval_Sphere::UContext GeomGridEval_Sphere::computeUContext(const Data& t
           -sinU * theData.XZ + cosU * theData.YZ};
 }
 
-//==================================================================================================
-
 gp_Pnt GeomGridEval_Sphere::computeD0(const Data& theData, const UContext& theUCtx, double theV)
 {
   const double cosV = std::cos(theV);
   const double sinV = std::sin(theV);
 
-  // P = Center + R * (cosV * DirU + sinV * ZDir)
   const double RcosV = theData.Radius * cosV;
   const double RsinV = theData.Radius * sinV;
 
@@ -76,8 +56,6 @@ gp_Pnt GeomGridEval_Sphere::computeD0(const Data& theData, const UContext& theUC
                 theData.CY + RcosV * theUCtx.dirUY + RsinV * theData.ZY,
                 theData.CZ + RcosV * theUCtx.dirUZ + RsinV * theData.ZZ);
 }
-
-//==================================================================================================
 
 GeomGridEval::SurfD1 GeomGridEval_Sphere::computeD1(const Data&     theData,
                                                     const UContext& theUCtx,
@@ -89,8 +67,6 @@ GeomGridEval::SurfD1 GeomGridEval_Sphere::computeD1(const Data&     theData,
   const double RcosV = theData.Radius * cosV;
   const double RsinV = theData.Radius * sinV;
 
-  // D1U = R * cosV * dDirU
-  // D1V = R * (-sinV * DirU + cosV * ZDir)
   return {gp_Pnt(theData.CX + RcosV * theUCtx.dirUX + RsinV * theData.ZX,
                  theData.CY + RcosV * theUCtx.dirUY + RsinV * theData.ZY,
                  theData.CZ + RcosV * theUCtx.dirUZ + RsinV * theData.ZZ),
@@ -99,8 +75,6 @@ GeomGridEval::SurfD1 GeomGridEval_Sphere::computeD1(const Data&     theData,
                  -RsinV * theUCtx.dirUY + RcosV * theData.ZY,
                  -RsinV * theUCtx.dirUZ + RcosV * theData.ZZ)};
 }
-
-//==================================================================================================
 
 GeomGridEval::SurfD2 GeomGridEval_Sphere::computeD2(const Data&     theData,
                                                     const UContext& theUCtx,
@@ -112,9 +86,6 @@ GeomGridEval::SurfD2 GeomGridEval_Sphere::computeD2(const Data&     theData,
   const double RcosV = theData.Radius * cosV;
   const double RsinV = theData.Radius * sinV;
 
-  // D2U = R * cosV * (-DirU) = -R * cosV * DirU
-  // D2V = R * (-cosV * DirU - sinV * ZDir) = -(P - Center) = -relP
-  // D2UV = d/dV(D1U) = d/dV(R * cosV * dDirU) = -R * sinV * dDirU
   return {gp_Pnt(theData.CX + RcosV * theUCtx.dirUX + RsinV * theData.ZX,
                  theData.CY + RcosV * theUCtx.dirUY + RsinV * theData.ZY,
                  theData.CZ + RcosV * theUCtx.dirUZ + RsinV * theData.ZZ),
@@ -129,8 +100,6 @@ GeomGridEval::SurfD2 GeomGridEval_Sphere::computeD2(const Data&     theData,
           gp_Vec(-RsinV * theUCtx.dDirUX, -RsinV * theUCtx.dDirUY, -RsinV * theUCtx.dDirUZ)};
 }
 
-//==================================================================================================
-
 GeomGridEval::SurfD3 GeomGridEval_Sphere::computeD3(const Data&     theData,
                                                     const UContext& theUCtx,
                                                     double          theV)
@@ -141,10 +110,6 @@ GeomGridEval::SurfD3 GeomGridEval_Sphere::computeD3(const Data&     theData,
   const double RcosV = theData.Radius * cosV;
   const double RsinV = theData.Radius * sinV;
 
-  // D3U = R * cosV * dDirU = D1U
-  // D3V = R * (sinV * DirU - cosV * ZDir) = -D1V
-  // D3UUV = d/dV(D2U) = d/dV(-R * cosV * DirU) = R * sinV * DirU
-  // D3UVV = d/dV(D2UV) = d/dV(-R * sinV * dDirU) = -R * cosV * dDirU
   return {gp_Pnt(theData.CX + RcosV * theUCtx.dirUX + RsinV * theData.ZX,
                  theData.CY + RcosV * theUCtx.dirUY + RsinV * theData.ZY,
                  theData.CZ + RcosV * theUCtx.dirUZ + RsinV * theData.ZZ),
@@ -165,8 +130,6 @@ GeomGridEval::SurfD3 GeomGridEval_Sphere::computeD3(const Data&     theData,
           gp_Vec(-RcosV * theUCtx.dDirUX, -RcosV * theUCtx.dDirUY, -RcosV * theUCtx.dDirUZ)};
 }
 
-//==================================================================================================
-
 gp_Vec GeomGridEval_Sphere::computeDN(const Data&     theData,
                                       const UContext& theUCtx,
                                       double          theV,
@@ -176,15 +139,9 @@ gp_Vec GeomGridEval_Sphere::computeDN(const Data&     theData,
   const double cosV = std::cos(theV);
   const double sinV = std::sin(theV);
 
-  // Cyclic phases for U and V (period 4)
   const int aPhaseU = theNU % 4;
   const int aPhaseV = theNV % 4;
 
-  // U-phase coefficients: d^n/du^n of cosU and sinU
-  // n=0: cosU, sinU -> DirU
-  // n=1: -sinU, cosU -> dDirU
-  // n=2: -cosU, -sinU -> -DirU
-  // n=3: sinU, -cosU -> -dDirU
   double dirX, dirY, dirZ;
   switch (aPhaseU)
   {
@@ -215,7 +172,6 @@ gp_Vec GeomGridEval_Sphere::computeDN(const Data&     theData,
       break;
   }
 
-  // V-phase coefficients for XY term (cosV) and Z term (sinV)
   double aCoeffVXY, aCoeffVZ;
   switch (aPhaseV)
   {
@@ -241,7 +197,6 @@ gp_Vec GeomGridEval_Sphere::computeDN(const Data&     theData,
       break;
   }
 
-  // Z contribution only if NU == 0 (no U derivative on Z term)
   double aZTermX = 0.0, aZTermY = 0.0, aZTermZ = 0.0;
   if (theNU == 0)
   {
@@ -254,8 +209,6 @@ gp_Vec GeomGridEval_Sphere::computeDN(const Data&     theData,
                 theData.Radius * (aCoeffVXY * dirY + aZTermY),
                 theData.Radius * (aCoeffVXY * dirZ + aZTermZ));
 }
-
-//==================================================================================================
 
 NCollection_Array2<gp_Pnt> GeomGridEval_Sphere::EvaluateGrid(
   const NCollection_Array1<double>& theUParams,
@@ -287,8 +240,6 @@ NCollection_Array2<gp_Pnt> GeomGridEval_Sphere::EvaluateGrid(
   return aResult;
 }
 
-//==================================================================================================
-
 NCollection_Array2<GeomGridEval::SurfD1> GeomGridEval_Sphere::EvaluateGridD1(
   const NCollection_Array1<double>& theUParams,
   const NCollection_Array1<double>& theVParams) const
@@ -318,8 +269,6 @@ NCollection_Array2<GeomGridEval::SurfD1> GeomGridEval_Sphere::EvaluateGridD1(
 
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array2<GeomGridEval::SurfD2> GeomGridEval_Sphere::EvaluateGridD2(
   const NCollection_Array1<double>& theUParams,
@@ -351,8 +300,6 @@ NCollection_Array2<GeomGridEval::SurfD2> GeomGridEval_Sphere::EvaluateGridD2(
   return aResult;
 }
 
-//==================================================================================================
-
 NCollection_Array2<GeomGridEval::SurfD3> GeomGridEval_Sphere::EvaluateGridD3(
   const NCollection_Array1<double>& theUParams,
   const NCollection_Array1<double>& theVParams) const
@@ -382,8 +329,6 @@ NCollection_Array2<GeomGridEval::SurfD3> GeomGridEval_Sphere::EvaluateGridD3(
 
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array2<gp_Vec> GeomGridEval_Sphere::EvaluateGridDN(
   const NCollection_Array1<double>& theUParams,
@@ -418,8 +363,6 @@ NCollection_Array2<gp_Vec> GeomGridEval_Sphere::EvaluateGridDN(
   return aResult;
 }
 
-//==================================================================================================
-
 NCollection_Array1<gp_Pnt> GeomGridEval_Sphere::EvaluatePoints(
   const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
 {
@@ -441,8 +384,6 @@ NCollection_Array1<gp_Pnt> GeomGridEval_Sphere::EvaluatePoints(
 
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::SurfD1> GeomGridEval_Sphere::EvaluatePointsD1(
   const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
@@ -466,8 +407,6 @@ NCollection_Array1<GeomGridEval::SurfD1> GeomGridEval_Sphere::EvaluatePointsD1(
   return aResult;
 }
 
-//==================================================================================================
-
 NCollection_Array1<GeomGridEval::SurfD2> GeomGridEval_Sphere::EvaluatePointsD2(
   const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
 {
@@ -490,8 +429,6 @@ NCollection_Array1<GeomGridEval::SurfD2> GeomGridEval_Sphere::EvaluatePointsD2(
   return aResult;
 }
 
-//==================================================================================================
-
 NCollection_Array1<GeomGridEval::SurfD3> GeomGridEval_Sphere::EvaluatePointsD3(
   const NCollection_Array1<gp_Pnt2d>& theUVPairs) const
 {
@@ -513,8 +450,6 @@ NCollection_Array1<GeomGridEval::SurfD3> GeomGridEval_Sphere::EvaluatePointsD3(
 
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<gp_Vec> GeomGridEval_Sphere::EvaluatePointsDN(
   const NCollection_Array1<gp_Pnt2d>& theUVPairs,

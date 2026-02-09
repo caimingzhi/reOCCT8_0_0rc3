@@ -9,8 +9,6 @@
 #include <TopoDS_Edge.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const TopoDS_Vertex& V1,
                                                      const TopoDS_Vertex& V2)
     : myMakeEdge2d(V1, V2)
@@ -22,8 +20,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const TopoDS_Vertex& V1,
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Pnt2d& P1, const gp_Pnt2d& P2)
     : myMakeEdge2d(P1, P2)
 {
@@ -34,8 +30,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Pnt2d& P1, const g
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Lin2d& L)
     : myMakeEdge2d(L)
 {
@@ -45,8 +39,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Lin2d& L)
     myShape = myMakeEdge2d.Shape();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Lin2d& L,
                                                      const double    p1,
@@ -60,8 +52,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Lin2d& L,
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Lin2d& L,
                                                      const gp_Pnt2d& P1,
                                                      const gp_Pnt2d& P2)
@@ -73,8 +63,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Lin2d& L,
     myShape = myMakeEdge2d.Shape();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Lin2d&      L,
                                                      const TopoDS_Vertex& V1,
@@ -88,8 +76,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Lin2d&      L,
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Circ2d& C)
     : myMakeEdge2d(C)
 {
@@ -99,8 +85,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Circ2d& C)
     myShape = myMakeEdge2d.Shape();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Circ2d& C,
                                                      const double     p1,
@@ -114,8 +98,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Circ2d& C,
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Circ2d& C,
                                                      const gp_Pnt2d&  P1,
                                                      const gp_Pnt2d&  P2)
@@ -127,8 +109,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Circ2d& C,
     myShape = myMakeEdge2d.Shape();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Circ2d&     C,
                                                      const TopoDS_Vertex& V1,
@@ -142,8 +122,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Circ2d&     C,
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Elips2d& E)
     : myMakeEdge2d(E)
 {
@@ -153,8 +131,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Elips2d& E)
     myShape = myMakeEdge2d.Shape();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Elips2d& E,
                                                      const double      p1,
@@ -168,8 +144,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Elips2d& E,
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Elips2d& E,
                                                      const gp_Pnt2d&   P1,
                                                      const gp_Pnt2d&   P2)
@@ -181,8 +155,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Elips2d& E,
     myShape = myMakeEdge2d.Shape();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Elips2d&    E,
                                                      const TopoDS_Vertex& V1,
@@ -196,8 +168,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Elips2d&    E,
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Hypr2d& H)
     : myMakeEdge2d(H)
 {
@@ -207,8 +177,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Hypr2d& H)
     myShape = myMakeEdge2d.Shape();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Hypr2d& H,
                                                      const double     p1,
@@ -222,8 +190,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Hypr2d& H,
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Hypr2d& H,
                                                      const gp_Pnt2d&  P1,
                                                      const gp_Pnt2d&  P2)
@@ -235,8 +201,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Hypr2d& H,
     myShape = myMakeEdge2d.Shape();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Hypr2d&     H,
                                                      const TopoDS_Vertex& V1,
@@ -250,8 +214,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Hypr2d&     H,
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Parab2d& P)
     : myMakeEdge2d(P)
 {
@@ -261,8 +223,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Parab2d& P)
     myShape = myMakeEdge2d.Shape();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Parab2d& P,
                                                      const double      p1,
@@ -276,8 +236,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Parab2d& P,
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Parab2d& P,
                                                      const gp_Pnt2d&   P1,
                                                      const gp_Pnt2d&   P2)
@@ -289,8 +247,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Parab2d& P,
     myShape = myMakeEdge2d.Shape();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Parab2d&    P,
                                                      const TopoDS_Vertex& V1,
@@ -304,8 +260,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const gp_Parab2d&    P,
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const occ::handle<Geom2d_Curve>& L)
     : myMakeEdge2d(L)
 {
@@ -315,8 +269,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const occ::handle<Geom2d_Cu
     myShape = myMakeEdge2d.Shape();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const occ::handle<Geom2d_Curve>& L,
                                                      const double                     p1,
@@ -330,8 +282,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const occ::handle<Geom2d_Cu
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const occ::handle<Geom2d_Curve>& L,
                                                      const gp_Pnt2d&                  P1,
                                                      const gp_Pnt2d&                  P2)
@@ -344,8 +294,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const occ::handle<Geom2d_Cu
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const occ::handle<Geom2d_Curve>& L,
                                                      const TopoDS_Vertex&             V1,
                                                      const TopoDS_Vertex&             V2)
@@ -357,8 +305,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const occ::handle<Geom2d_Cu
     myShape = myMakeEdge2d.Shape();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const occ::handle<Geom2d_Curve>& L,
                                                      const gp_Pnt2d&                  P1,
@@ -374,8 +320,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const occ::handle<Geom2d_Cu
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const occ::handle<Geom2d_Curve>& L,
                                                      const TopoDS_Vertex&             V1,
                                                      const TopoDS_Vertex&             V2,
@@ -390,8 +334,6 @@ BRepBuilderAPI_MakeEdge2d::BRepBuilderAPI_MakeEdge2d(const occ::handle<Geom2d_Cu
   }
 }
 
-//=================================================================================================
-
 void BRepBuilderAPI_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& C)
 {
   myMakeEdge2d.Init(C);
@@ -401,8 +343,6 @@ void BRepBuilderAPI_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& C)
     myShape = myMakeEdge2d.Shape();
   }
 }
-
-//=================================================================================================
 
 void BRepBuilderAPI_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& C,
                                      const double                     p1,
@@ -416,8 +356,6 @@ void BRepBuilderAPI_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& C,
   }
 }
 
-//=================================================================================================
-
 void BRepBuilderAPI_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& C,
                                      const gp_Pnt2d&                  P1,
                                      const gp_Pnt2d&                  P2)
@@ -430,8 +368,6 @@ void BRepBuilderAPI_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& C,
   }
 }
 
-//=================================================================================================
-
 void BRepBuilderAPI_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& C,
                                      const TopoDS_Vertex&             V1,
                                      const TopoDS_Vertex&             V2)
@@ -443,8 +379,6 @@ void BRepBuilderAPI_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& C,
     myShape = myMakeEdge2d.Shape();
   }
 }
-
-//=================================================================================================
 
 void BRepBuilderAPI_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& C,
                                      const gp_Pnt2d&                  P1,
@@ -460,8 +394,6 @@ void BRepBuilderAPI_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& C,
   }
 }
 
-//=================================================================================================
-
 void BRepBuilderAPI_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& CC,
                                      const TopoDS_Vertex&             VV1,
                                      const TopoDS_Vertex&             VV2,
@@ -476,14 +408,10 @@ void BRepBuilderAPI_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& CC,
   }
 }
 
-//=================================================================================================
-
 bool BRepBuilderAPI_MakeEdge2d::IsDone() const
 {
   return myMakeEdge2d.IsDone();
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_EdgeError BRepBuilderAPI_MakeEdge2d::Error() const
 {
@@ -512,32 +440,23 @@ BRepBuilderAPI_EdgeError BRepBuilderAPI_MakeEdge2d::Error() const
       return BRepBuilderAPI_LineThroughIdenticPoints;
   }
 
-  // portage WNT
   return BRepBuilderAPI_EdgeDone;
 }
-
-//=================================================================================================
 
 const TopoDS_Edge& BRepBuilderAPI_MakeEdge2d::Edge()
 {
   return myMakeEdge2d.Edge();
 }
 
-//=================================================================================================
-
 const TopoDS_Vertex& BRepBuilderAPI_MakeEdge2d::Vertex1() const
 {
   return myMakeEdge2d.Vertex1();
 }
 
-//=================================================================================================
-
 const TopoDS_Vertex& BRepBuilderAPI_MakeEdge2d::Vertex2() const
 {
   return myMakeEdge2d.Vertex2();
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeEdge2d::operator TopoDS_Edge()
 {

@@ -11,7 +11,6 @@ class StepGeom_SurfaceCurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SurfaceCurve
 class RWStepGeom_RWSurfaceCurve
 {
 public:

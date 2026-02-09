@@ -44,15 +44,11 @@ typedef gp_Trsf                  Trsf;
 typedef gp_Vec                   Vec;
 typedef gp_XYZ                   XYZ;
 
-//=================================================================================================
-
 occ::handle<Geom_Geometry> Geom_SurfaceOfRevolution::Copy() const
 {
 
   return new Geom_SurfaceOfRevolution(basisCurve, Axis());
 }
-
-//=================================================================================================
 
 Geom_SurfaceOfRevolution::Geom_SurfaceOfRevolution(const occ::handle<Geom_Curve>& C, const Ax1& A1)
     : loc(A1.Location())
@@ -61,14 +57,10 @@ Geom_SurfaceOfRevolution::Geom_SurfaceOfRevolution(const occ::handle<Geom_Curve>
   SetBasisCurve(C);
 }
 
-//=================================================================================================
-
 void Geom_SurfaceOfRevolution::UReverse()
 {
   direction.Reverse();
 }
-
-//=================================================================================================
 
 double Geom_SurfaceOfRevolution::UReversedParameter(const double U) const
 {
@@ -76,15 +68,11 @@ double Geom_SurfaceOfRevolution::UReversedParameter(const double U) const
   return (2. * M_PI - U);
 }
 
-//=================================================================================================
-
 void Geom_SurfaceOfRevolution::VReverse()
 {
 
   basisCurve->Reverse();
 }
-
-//=================================================================================================
 
 double Geom_SurfaceOfRevolution::VReversedParameter(const double V) const
 {
@@ -92,15 +80,11 @@ double Geom_SurfaceOfRevolution::VReversedParameter(const double V) const
   return basisCurve->ReversedParameter(V);
 }
 
-//=================================================================================================
-
 const gp_Pnt& Geom_SurfaceOfRevolution::Location() const
 {
 
   return loc;
 }
-
-//=================================================================================================
 
 bool Geom_SurfaceOfRevolution::IsUPeriodic() const
 {
@@ -108,23 +92,17 @@ bool Geom_SurfaceOfRevolution::IsUPeriodic() const
   return true;
 }
 
-//=================================================================================================
-
 bool Geom_SurfaceOfRevolution::IsCNu(const int) const
 {
 
   return true;
 }
 
-//=================================================================================================
-
 Ax1 Geom_SurfaceOfRevolution::Axis() const
 {
 
   return Ax1(loc, direction);
 }
-
-//=================================================================================================
 
 bool Geom_SurfaceOfRevolution::IsCNv(const int N) const
 {
@@ -133,22 +111,16 @@ bool Geom_SurfaceOfRevolution::IsCNv(const int N) const
   return basisCurve->IsCN(N);
 }
 
-//=================================================================================================
-
 bool Geom_SurfaceOfRevolution::IsUClosed() const
 {
 
   return true;
 }
 
-//=================================================================================================
-
 bool Geom_SurfaceOfRevolution::IsVClosed() const
 {
   return basisCurve->IsClosed();
 }
-
-//=================================================================================================
 
 bool Geom_SurfaceOfRevolution::IsVPeriodic() const
 {
@@ -156,22 +128,16 @@ bool Geom_SurfaceOfRevolution::IsVPeriodic() const
   return basisCurve->IsPeriodic();
 }
 
-//=================================================================================================
-
 void Geom_SurfaceOfRevolution::SetAxis(const Ax1& A1)
 {
   direction = A1.Direction();
   loc       = A1.Location();
 }
 
-//=================================================================================================
-
 void Geom_SurfaceOfRevolution::SetDirection(const Dir& V)
 {
   direction = V;
 }
-
-//=================================================================================================
 
 void Geom_SurfaceOfRevolution::SetBasisCurve(const occ::handle<Geom_Curve>& C)
 {
@@ -179,14 +145,10 @@ void Geom_SurfaceOfRevolution::SetBasisCurve(const occ::handle<Geom_Curve>& C)
   smooth     = C->Continuity();
 }
 
-//=================================================================================================
-
 void Geom_SurfaceOfRevolution::SetLocation(const Pnt& P)
 {
   loc = P;
 }
-
-//=================================================================================================
 
 void Geom_SurfaceOfRevolution::Bounds(double& U1, double& U2, double& V1, double& V2) const
 {
@@ -197,21 +159,15 @@ void Geom_SurfaceOfRevolution::Bounds(double& U1, double& U2, double& V1, double
   V2 = basisCurve->LastParameter();
 }
 
-//=================================================================================================
-
 void Geom_SurfaceOfRevolution::D0(const double U, const double V, Pnt& P) const
 {
   Geom_RevolutionUtils::D0(U, V, *basisCurve, gp_Ax1(loc, direction), P);
 }
 
-//=================================================================================================
-
 void Geom_SurfaceOfRevolution::D1(const double U, const double V, Pnt& P, Vec& D1U, Vec& D1V) const
 {
   Geom_RevolutionUtils::D1(U, V, *basisCurve, gp_Ax1(loc, direction), P, D1U, D1V);
 }
-
-//=================================================================================================
 
 void Geom_SurfaceOfRevolution::D2(const double U,
                                   const double V,
@@ -224,8 +180,6 @@ void Geom_SurfaceOfRevolution::D2(const double U,
 {
   Geom_RevolutionUtils::D2(U, V, *basisCurve, gp_Ax1(loc, direction), P, D1U, D1V, D2U, D2V, D2UV);
 }
-
-//=================================================================================================
 
 void Geom_SurfaceOfRevolution::D3(const double U,
                                   const double V,
@@ -256,23 +210,17 @@ void Geom_SurfaceOfRevolution::D3(const double U,
                            D3UVV);
 }
 
-//=================================================================================================
-
 Vec Geom_SurfaceOfRevolution::DN(const double U, const double V, const int Nu, const int Nv) const
 {
   Standard_RangeError_Raise_if(Nu + Nv < 1 || Nu < 0 || Nv < 0, " ");
   return Geom_RevolutionUtils::DN(U, V, *basisCurve, gp_Ax1(loc, direction), Nu, Nv);
 }
 
-//=================================================================================================
-
 Ax2 Geom_SurfaceOfRevolution::ReferencePlane() const
 {
 
   throw Standard_NotImplemented();
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> Geom_SurfaceOfRevolution::UIso(const double U) const
 {
@@ -282,8 +230,6 @@ occ::handle<Geom_Curve> Geom_SurfaceOfRevolution::UIso(const double U) const
   C->Rotate(RotAxis, U);
   return C;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> Geom_SurfaceOfRevolution::VIso(const double V) const
 {
@@ -315,8 +261,6 @@ occ::handle<Geom_Curve> Geom_SurfaceOfRevolution::VIso(const double V) const
   return Circ;
 }
 
-//=================================================================================================
-
 void Geom_SurfaceOfRevolution::Transform(const Trsf& T)
 {
   loc.Transform(T);
@@ -326,14 +270,10 @@ void Geom_SurfaceOfRevolution::Transform(const Trsf& T)
     UReverse();
 }
 
-//=================================================================================================
-
 void Geom_SurfaceOfRevolution::TransformParameters(double&, double& V, const gp_Trsf& T) const
 {
   V = basisCurve->TransformedParameter(V, T);
 }
-
-//=================================================================================================
 
 gp_GTrsf2d Geom_SurfaceOfRevolution::ParametricTransformation(const gp_Trsf& T) const
 {
@@ -342,8 +282,6 @@ gp_GTrsf2d Geom_SurfaceOfRevolution::ParametricTransformation(const gp_Trsf& T) 
   T2.SetAffinity(Axis, basisCurve->ParametricTransformation(T));
   return T2;
 }
-
-//=================================================================================================
 
 void Geom_SurfaceOfRevolution::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

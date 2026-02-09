@@ -12,7 +12,6 @@ class StepVisual_OverRidingStyledItem : public StepVisual_StyledItem
 {
 
 public:
-  //! Returns a OverRidingStyledItem
   Standard_EXPORT StepVisual_OverRidingStyledItem();
 
   Standard_EXPORT void Init(

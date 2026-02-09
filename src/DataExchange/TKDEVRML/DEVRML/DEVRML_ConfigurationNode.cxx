@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DEVRML_ConfigurationNode.hpp>
 
@@ -28,13 +17,9 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 DEVRML_ConfigurationNode::DEVRML_ConfigurationNode()
 
   = default;
-
-//=================================================================================================
 
 DEVRML_ConfigurationNode::DEVRML_ConfigurationNode(
   const occ::handle<DEVRML_ConfigurationNode>& theNode)
@@ -42,8 +27,6 @@ DEVRML_ConfigurationNode::DEVRML_ConfigurationNode(
 {
   InternalParameters = theNode->InternalParameters;
 }
-
-//=================================================================================================
 
 bool DEVRML_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& theResource)
 {
@@ -75,8 +58,6 @@ bool DEVRML_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& 
 
   return true;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString DEVRML_ConfigurationNode::Save() const
 {
@@ -139,56 +120,40 @@ TCollection_AsciiString DEVRML_ConfigurationNode::Save() const
   return aResult;
 }
 
-//=================================================================================================
-
 occ::handle<DE_ConfigurationNode> DEVRML_ConfigurationNode::Copy() const
 {
   return new DEVRML_ConfigurationNode(*this);
 }
-
-//=================================================================================================
 
 occ::handle<DE_Provider> DEVRML_ConfigurationNode::BuildProvider()
 {
   return new DEVRML_Provider(this);
 }
 
-//=================================================================================================
-
 bool DEVRML_ConfigurationNode::IsImportSupported() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool DEVRML_ConfigurationNode::IsExportSupported() const
 {
   return true;
 }
 
-//=================================================================================================
-
 bool DEVRML_ConfigurationNode::IsStreamSupported() const
 {
   return true;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString DEVRML_ConfigurationNode::GetFormat() const
 {
   return TCollection_AsciiString("VRML");
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DEVRML_ConfigurationNode::GetVendor() const
 {
   return TCollection_AsciiString("OCC");
 }
-
-//=================================================================================================
 
 NCollection_List<TCollection_AsciiString> DEVRML_ConfigurationNode::GetExtensions() const
 {

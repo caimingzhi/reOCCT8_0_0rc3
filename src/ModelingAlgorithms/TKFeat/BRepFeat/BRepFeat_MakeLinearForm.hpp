@@ -19,36 +19,13 @@ class TopoDS_Edge;
 class TopoDS_Face;
 class gp_Pnt;
 
-//! Builds a rib or a groove along a developable, planar surface.
-//! The semantics of mechanical features is built around
-//! giving thickness to a contour. This thickness can either
-//! be symmetrical - on one side of the contour - or
-//! dissymmetrical - on both sides. As in the semantics of
-//! form features, the thickness is defined by construction of
-//! shapes in specific contexts.
-//! The development contexts differ, however, in case of
-//! mechanical features. Here they include extrusion:
-//! -   to a limiting face of the basis shape
-//! -   to or from a limiting plane
-//! -   to a height.
 class BRepFeat_MakeLinearForm : public BRepFeat_RibSlot
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! initializes the linear form class
   BRepFeat_MakeLinearForm();
 
-  //! contour W, a shape Sbase and a
-  //! plane P are initialized to serve as the basic
-  //! elements in the construction of the rib or groove.
-  //! Direction and Direction1 give The vectors for
-  //! defining the direction(s) in which thickness will be built up.
-  //! Fuse offers a choice between:
-  //! -   removing matter with a Boolean cut using the
-  //! setting 0 in case of the groove
-  //! -   adding matter with Boolean fusion using the
-  //! setting 1 in case of the rib.
   BRepFeat_MakeLinearForm(const TopoDS_Shape&            Sbase,
                           const TopoDS_Wire&             W,
                           const occ::handle<Geom_Plane>& P,
@@ -57,17 +34,6 @@ public:
                           const int                      Fuse,
                           const bool                     Modify);
 
-  //! Initializes this construction algorithm.
-  //! A contour W, a shape Sbase and a plane P are
-  //! initialized to serve as the basic elements in the
-  //! construction of the rib or groove. The vectors for
-  //! defining the direction(s) in which thickness will be built
-  //! up are given by Direction and Direction1.
-  //! Fuse offers a choice between:
-  //! -   removing matter with a Boolean cut using the setting
-  //! 0 in case of the groove
-  //! -   adding matter with Boolean fusion using the setting 1
-  //! in case of the rib.
   Standard_EXPORT void Init(const TopoDS_Shape&            Sbase,
                             const TopoDS_Wire&             W,
                             const occ::handle<Geom_Plane>& P,
@@ -76,24 +42,10 @@ public:
                             const int                      Fuse,
                             const bool                     Modify);
 
-  //! Indicates that the edge <E> will slide on the face
-  //! <OnFace>.
-  //! Raises ConstructionError if the face does not belong to the
-  //! basis shape, or the edge to the prismed shape.
   Standard_EXPORT void Add(const TopoDS_Edge& E, const TopoDS_Face& OnFace);
 
-  //! Performs a prism from the wire to the plane along the
-  //! basis shape Sbase. Reconstructs the feature topologically.
   Standard_EXPORT void Perform();
 
-  //! Limits construction of the linear form feature by using
-  //! one of the following three semantics:
-  //! -   from a limiting plane
-  //! -   to a limiting plane
-  //! -   from one limiting plane to another.
-  //! The setting is provided by a flag, flag, which can be set
-  //! to from and/or until. The third semantic possibility above
-  //! is selected by showing both from and until at the same time.
   Standard_EXPORT void TransformShapeFU(const int flag);
 
   Standard_EXPORT bool Propagate(NCollection_List<TopoDS_Shape>& L,
@@ -119,8 +71,6 @@ inline BRepFeat_MakeLinearForm::BRepFeat_MakeLinearForm()
       myTol(0.0)
 {
 }
-
-//=================================================================================================
 
 inline BRepFeat_MakeLinearForm::BRepFeat_MakeLinearForm(const TopoDS_Shape&            Sbase,
                                                         const TopoDS_Wire&             W,

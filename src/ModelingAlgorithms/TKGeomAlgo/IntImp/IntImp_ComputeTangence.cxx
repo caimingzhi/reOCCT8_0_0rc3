@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IntImp_ComputeTangence.hpp>
 #include <IntImp_ConstIsoparametric.hpp>
@@ -29,47 +17,17 @@ IntImp_ConstIsoparametric ChoixRef(int theIndex)
                                "ChoixRef() in " __FILE__) return staticChoixRef[theIndex];
 }
 
-//=================================================================================================
-
 bool IntImp_ComputeTangence(const gp_Vec              DPuv[],
                             const double              EpsUV[],
                             double                    Tgduv[],
                             IntImp_ConstIsoparametric TabIso[])
-//                 arguments d entree:
-// DPuv [0] =derivee en u sur caro 1
-// DPuv [1] =derivee en v sur caro 1
-// DPuv [2] =derivee en u sur caro 2
-// DPuv [3] =derivee en v sur caro 2
-// EpsUV[0] tolerance en u sur caro1
-// EpsUV[1] tolerance en v sur caro1
-// EpsUV[2] tolerance en u sur caro2
-// EpsUV[3] tolerance en v sur caro2
-//                 arguments de sortie:
-// Tgduv[0] composante sup dp/du de caro1 de la tangente a l intersection
-// Tgduv[1] composante sup dp/dv de caro1 de la tangente a l intersection
-// Tgduv[2] composante sup dp/du de caro2 de la tangente a l intersection
-// Tgduv[3] composante sup dp/dv de caro2 de la tangente a l intersection
-// TabIso[0...3] meilleure iso range par ordre decroissant candidate
-//               a l intersection
-//         algorithme
-// calculer la tangente a l 'intersection ;en utilisant la propriete suivante
-// du produit scalaire a^(b^c)=b(ac)-c(ab) on obtient les composantes de la
-// tangente a l intersection dans les 2 plans tangents (t=n1^n2 ou n1 normale
-// au premier carreau n2 au 2ieme)
-// on s assurera que les plans tangents des 2 carreaux ne sont pas //
-// les composantes de l intersection dans les plans tangents permettent de
-// determiner l  angle entre les isoparametriques d un carreau avec le carreau
-// reciproque
-// on triera par ordre croissant les cosinus :le plus petit cosinus determine le
-// meilleure angle donc la meilleure iso a choisir pour trouver
-// l intersection
 
 {
   double NormDuv[4], aM2, aTol2;
   int    i;
-  //
+
   aTol2 = 1.e-32;
-  //
+
   for (i = 0; i < 4; ++i)
   {
     NormDuv[i] = DPuv[i].SquareMagnitude();
@@ -78,37 +36,34 @@ bool IntImp_ComputeTangence(const gp_Vec              DPuv[],
       return true;
     }
   }
-  //
-  //-------------------------------------------------
+
   gp_Vec N1 = DPuv[0];
   N1.Cross(DPuv[1]);
-  //
-  // modified by NIZNHY-PKV Tue Nov 01 08:37:32 2011f
+
   aM2 = N1.SquareMagnitude();
   if (aM2 < aTol2)
   {
     return true;
   }
-  // modified by NIZNHY-PKV Tue Nov 01 08:37:34 2011t
+
   N1.Normalize();
-  //-------------------------------------------------
+
   gp_Vec N2 = DPuv[2];
   N2.Cross(DPuv[3]);
-  // modified by NIZNHY-PKV Tue Nov 01 08:37:32 2011f
+
   aM2 = N2.SquareMagnitude();
   if (aM2 < aTol2)
   {
     return true;
   }
-  // modified by NIZNHY-PKV Tue Nov 01 08:37:34 2011t
+
   N2.Normalize();
-  //
-  // modified by NIZNHY-PKV Tue Nov 01 08:31:25 2011f
+
   for (i = 0; i < 4; ++i)
   {
     NormDuv[i] = sqrt(NormDuv[i]);
   }
-  // modified by NIZNHY-PKV Tue Nov 01 08:31:29 2011t
+
   Tgduv[0] = -DPuv[1].Dot(N2);
   Tgduv[1] = DPuv[0].Dot(N2);
   Tgduv[2] = DPuv[3].Dot(N1);
@@ -130,12 +85,11 @@ bool IntImp_ComputeTangence(const gp_Vec              DPuv[],
 
   if (!tangent)
   {
-    NormDuv[0] = std::abs(Tgduv[1]) / NormDuv[0]; // iso u sur caro1
-    NormDuv[1] = std::abs(Tgduv[0]) / NormDuv[1]; // iso v sur caro1
-    NormDuv[2] = std::abs(Tgduv[3]) / NormDuv[2]; // iso u sur caro2
-    NormDuv[3] = std::abs(Tgduv[2]) / NormDuv[3]; // iso v sur caro2
+    NormDuv[0] = std::abs(Tgduv[1]) / NormDuv[0];
+    NormDuv[1] = std::abs(Tgduv[0]) / NormDuv[1];
+    NormDuv[2] = std::abs(Tgduv[3]) / NormDuv[2];
+    NormDuv[3] = std::abs(Tgduv[2]) / NormDuv[3];
 
-    //-- Tri sur NormDuv  ( en para. avec ChoixRef )
     bool                      triOk = false;
     double                    t;
     IntImp_ConstIsoparametric ti;

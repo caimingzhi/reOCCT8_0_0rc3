@@ -11,7 +11,6 @@ class StepBasic_ProductDefinitionFormation : public Standard_Transient
 {
 
 public:
-  //! Returns a ProductDefinitionFormation
   Standard_EXPORT StepBasic_ProductDefinitionFormation();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aId,

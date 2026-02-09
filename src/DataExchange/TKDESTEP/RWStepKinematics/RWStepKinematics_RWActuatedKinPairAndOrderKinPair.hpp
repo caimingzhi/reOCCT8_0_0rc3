@@ -11,7 +11,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_ActuatedKinPairAndOrderKinPair;
 
-//! Read & Write Module for GeoTolAndGeoTolWthMod
 class RWStepKinematics_RWActuatedKinPairAndOrderKinPair
 {
 public:

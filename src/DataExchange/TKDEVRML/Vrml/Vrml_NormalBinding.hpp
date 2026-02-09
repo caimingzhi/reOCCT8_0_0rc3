@@ -7,14 +7,6 @@
 #include <Vrml_MaterialBindingAndNormalBinding.hpp>
 #include <Standard_OStream.hpp>
 
-//! defines a NormalBinding node of VRML specifying properties of geometry
-//! and its appearance.
-//! This node specifies how the current normals are bound to shapes that follow in the scene
-//! graph. Each shape node may interpret bindings differently.
-//! The bindings for faces and vertices are meaningful only for shapes that are made from
-//! faces and vertices. Similarly, the indexed bindings are only used by the shapes that allow
-//! indexing. For bindings that require multiple normals, be sure to have at least as many
-//! normals defined as are necessary; otherwise, errors will occur.
 class Vrml_NormalBinding
 {
 public:

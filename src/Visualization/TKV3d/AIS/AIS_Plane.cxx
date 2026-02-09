@@ -32,8 +32,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Plane, AIS_InteractiveObject)
 
-//=================================================================================================
-
 AIS_Plane::AIS_Plane(const occ::handle<Geom_Plane>& aComponent, const bool aCurrentMode)
     : myComponent(aComponent),
       myCenter(gp_Pnt(0., 0., 0.)),
@@ -45,8 +43,6 @@ AIS_Plane::AIS_Plane(const occ::handle<Geom_Plane>& aComponent, const bool aCurr
 {
   InitDrawerAttributes();
 }
-
-//=================================================================================================
 
 AIS_Plane::AIS_Plane(const occ::handle<Geom_Plane>& aComponent,
                      const gp_Pnt&                  aCenter,
@@ -61,8 +57,6 @@ AIS_Plane::AIS_Plane(const occ::handle<Geom_Plane>& aComponent,
 {
   InitDrawerAttributes();
 }
-
-//=================================================================================================
 
 AIS_Plane::AIS_Plane(const occ::handle<Geom_Plane>& aComponent,
                      const gp_Pnt&                  aCenter,
@@ -82,10 +76,6 @@ AIS_Plane::AIS_Plane(const occ::handle<Geom_Plane>& aComponent,
   InitDrawerAttributes();
 }
 
-//=======================================================================
-// function : AIS_Plane
-// purpose  : XYPlane, XZPlane, YZPlane
-//=======================================================================
 AIS_Plane::AIS_Plane(const occ::handle<Geom_Axis2Placement>& aComponent,
                      const AIS_TypeOfPlane                   aPlaneType,
                      const bool                              aCurrentMode)
@@ -100,26 +90,20 @@ AIS_Plane::AIS_Plane(const occ::handle<Geom_Axis2Placement>& aComponent,
   ComputeFields();
 }
 
-//=================================================================================================
-
 void AIS_Plane::SetComponent(const occ::handle<Geom_Plane>& aComponent)
 {
   myComponent   = aComponent;
   myTypeOfPlane = AIS_TOPL_Unknown;
   myIsXYZPlane  = false;
-  // myCenter = gp_Pnt(0.,0.,0.);
+
   myAutomaticPosition = true;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Axis2Placement> AIS_Plane::Axis2Placement()
 {
   occ::handle<Geom_Axis2Placement> Bid;
   return IsXYZPlane() ? myAx2 : Bid;
 }
-
-//=================================================================================================
 
 void AIS_Plane::SetAxis2Placement(const occ::handle<Geom_Axis2Placement>& aComponent,
                                   const AIS_TypeOfPlane                   aPlaneType)
@@ -130,8 +114,6 @@ void AIS_Plane::SetAxis2Placement(const occ::handle<Geom_Axis2Placement>& aCompo
   myAutomaticPosition = true;
   ComputeFields();
 }
-
-//=================================================================================================
 
 bool AIS_Plane::PlaneAttributes(occ::handle<Geom_Plane>& aComponent,
                                 gp_Pnt&                  aCenter,
@@ -150,8 +132,6 @@ bool AIS_Plane::PlaneAttributes(occ::handle<Geom_Plane>& aComponent,
   return aStatus;
 }
 
-//=================================================================================================
-
 void AIS_Plane::SetPlaneAttributes(const occ::handle<Geom_Plane>& aComponent,
                                    const gp_Pnt&                  aCenter,
                                    const gp_Pnt&                  aPmin,
@@ -165,8 +145,6 @@ void AIS_Plane::SetPlaneAttributes(const occ::handle<Geom_Plane>& aComponent,
   myTypeOfPlane       = AIS_TOPL_Unknown;
   myIsXYZPlane        = false;
 }
-
-//=================================================================================================
 
 void AIS_Plane::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                         const occ::handle<Prs3d_Presentation>& thePrs,
@@ -229,10 +207,7 @@ void AIS_Plane::Compute(const occ::handle<PrsMgr_PresentationManager>&,
   }
 }
 
-//=================================================================================================
-
-void AIS_Plane::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection,
-                                 const int /*theMode*/)
+void AIS_Plane::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection, const int)
 {
   theSelection->Clear();
   occ::handle<SelectMgr_EntityOwner> aSensitiveOwner = new SelectMgr_EntityOwner(this, 10);
@@ -240,7 +215,7 @@ void AIS_Plane::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSele
 
   if (!myIsXYZPlane)
   {
-    // plane representing rectangle
+
     double                  aLengthX = myDrawer->PlaneAspect()->PlaneXLength() / 2.0;
     double                  aLengthY = myDrawer->PlaneAspect()->PlaneYLength() / 2.0;
     occ::handle<Geom_Plane> aPlane =
@@ -260,7 +235,7 @@ void AIS_Plane::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSele
   }
   else
   {
-    // plane representing triangle
+
     NCollection_Array1<gp_Pnt> aTrianglePoints(1, 3);
     aTrianglePoints.ChangeValue(1) = myCenter;
     aTrianglePoints.ChangeValue(2) = myPmin;
@@ -283,8 +258,6 @@ void AIS_Plane::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSele
   theSelection->Add(aSensitive);
 }
 
-//=================================================================================================
-
 void AIS_Plane::SetSize(const double aLength)
 {
   SetSize(aLength, aLength);
@@ -292,8 +265,6 @@ void AIS_Plane::SetSize(const double aLength)
 
 void AIS_Plane::SetSize(const double aXLength, const double aYLength)
 {
-  // if the plane already has a proper color or size,
-  // there is already a specific PlaneAspect and DatumAspect
 
   occ::handle<Prs3d_PlaneAspect> PA;
   occ::handle<Prs3d_DatumAspect> DA;
@@ -327,10 +298,6 @@ void AIS_Plane::SetSize(const double aXLength, const double aYLength)
   UpdateSelection();
 }
 
-//=======================================================================
-// function : UnsetSize
-// purpose  : If there is a color, the size is restaured from the drawer of the context...
-//=======================================================================
 void AIS_Plane::UnsetSize()
 {
 
@@ -360,16 +327,12 @@ void AIS_Plane::UnsetSize()
   UpdateSelection();
 }
 
-//=================================================================================================
-
 bool AIS_Plane::Size(double& X, double& Y) const
 {
   X = myDrawer->PlaneAspect()->PlaneXLength();
   Y = myDrawer->PlaneAspect()->PlaneYLength();
   return std::abs(X - Y) <= Precision::Confusion();
 }
-
-//=================================================================================================
 
 void AIS_Plane::SetMinimumSize(const double theValue)
 {
@@ -384,26 +347,19 @@ void AIS_Plane::SetMinimumSize(const double theValue)
     new Graphic3d_TransformPersScaledAbove(std::min(aX, anY) / theValue, myCenter));
 }
 
-//=================================================================================================
-
 void AIS_Plane::UnsetMinimumSize()
 {
   SetTransformPersistence(nullptr);
 }
-
-//=================================================================================================
 
 bool AIS_Plane::HasMinimumSize() const
 {
   return !occ::down_cast<Graphic3d_TransformPersScaledAbove>(TransformPersistence()).IsNull();
 }
 
-//=================================================================================================
-
 void AIS_Plane::SetColor(const Quantity_Color& aCol)
 {
-  // if the plane already has its proper size, there is an already created planeaspect
-  //  bool yenadeja = hasOwnColor || myHasOwnSize;
+
   occ::handle<Prs3d_PlaneAspect> PA;
   occ::handle<Prs3d_DatumAspect> DA;
 
@@ -438,8 +394,6 @@ void AIS_Plane::SetColor(const Quantity_Color& aCol)
   myDrawer->SetColor(aCol);
 }
 
-//=================================================================================================
-
 void AIS_Plane::UnsetColor()
 {
   if (!hasOwnColor)
@@ -463,8 +417,6 @@ void AIS_Plane::UnsetColor()
 
   hasOwnColor = false;
 }
-
-//=================================================================================================
 
 void AIS_Plane::ComputeFrame()
 {
@@ -494,8 +446,6 @@ void AIS_Plane::ComputeFrame()
   }
 }
 
-//=================================================================================================
-
 void AIS_Plane::ComputeFields()
 {
   if (myIsXYZPlane)
@@ -516,7 +466,6 @@ void AIS_Plane::ComputeFields()
     double DS1 = DA->AxisLength(Prs3d_DatumParts_XAxis);
     double DS2 = DA->AxisLength(Prs3d_DatumParts_YAxis);
     double DS3 = DA->AxisLength(Prs3d_DatumParts_ZAxis);
-    //    gp_Pnt aPt2,aPt3;
 
     switch (myTypeOfPlane)
     {
@@ -564,8 +513,6 @@ void AIS_Plane::ComputeFields()
   }
 }
 
-//=================================================================================================
-
 void AIS_Plane::InitDrawerAttributes()
 {
   occ::handle<Prs3d_ShadingAspect> shasp = new Prs3d_ShadingAspect();
@@ -579,14 +526,10 @@ void AIS_Plane::InitDrawerAttributes()
   asf->SetBackMaterial(asp);
 }
 
-//=================================================================================================
-
 bool AIS_Plane::AcceptDisplayMode(const int aMode) const
 {
   return aMode == 0;
 }
-
-//=================================================================================================
 
 void AIS_Plane::SetContext(const occ::handle<AIS_InteractiveContext>& Ctx)
 {

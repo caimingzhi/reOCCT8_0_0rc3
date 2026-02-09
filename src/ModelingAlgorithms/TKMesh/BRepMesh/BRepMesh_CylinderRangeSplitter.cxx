@@ -3,8 +3,6 @@
 #include <GCPnts_TangentialDeflection.hpp>
 #include <IMeshTools_Parameters.hpp>
 
-//=================================================================================================
-
 void BRepMesh_CylinderRangeSplitter::Reset(const IMeshData::IFaceHandle& theDFace,
                                            const IMeshTools_Parameters&  theParameters)
 {
@@ -17,10 +15,8 @@ void BRepMesh_CylinderRangeSplitter::Reset(const IMeshData::IFaceHandle& theDFac
                                                      theParameters.MinSize);
 }
 
-//=================================================================================================
-
 Handle(IMeshData::ListOfPnt2d) BRepMesh_CylinderRangeSplitter::GenerateSurfaceNodes(
-  const IMeshTools_Parameters& /*theParameters*/) const
+  const IMeshTools_Parameters&) const
 {
   const std::pair<double, double>& aRangeU = GetRangeU();
   const std::pair<double, double>& aRangeV = GetRangeV();
@@ -34,18 +30,8 @@ Handle(IMeshData::ListOfPnt2d) BRepMesh_CylinderRangeSplitter::GenerateSurfaceNo
   const double aArcLen = su * aRadius;
   if (aArcLen > GetDFace()->GetDeflection())
   {
-    // Calculate parameters for iteration in U direction
-    nbU = (int)(su / myDu);
 
-    /*
-    // Calculate parameters for iteration in V direction
-    const double aDv = nbU*sv / aArcLen;
-    // Protection against overflow during casting to int in case
-    // of long cylinder with small radius.
-    nbV = aDv > static_cast<double> (IntegerLast()) ?
-      0 : (int) (aDv);
-    nbV = std::min(nbV, 100 * nbU);
-    */
+    nbU = (int)(su / myDu);
   }
 
   const double Du = su / (nbU + 1);
@@ -68,10 +54,7 @@ Handle(IMeshData::ListOfPnt2d) BRepMesh_CylinderRangeSplitter::GenerateSurfaceNo
   return aNodes;
 }
 
-//=================================================================================================
-
-void BRepMesh_CylinderRangeSplitter::computeDelta(const double /*theLengthU*/,
-                                                  const double theLengthV)
+void BRepMesh_CylinderRangeSplitter::computeDelta(const double, const double theLengthV)
 {
   const std::pair<double, double>& aRangeV = GetRangeV();
   myDelta.first  = myDu / std::max(theLengthV, aRangeV.second - aRangeV.first);

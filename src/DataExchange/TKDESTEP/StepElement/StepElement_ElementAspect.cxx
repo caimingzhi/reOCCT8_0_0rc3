@@ -4,18 +4,12 @@
 #include <StepElement_ElementAspectMember.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=================================================================================================
-
 StepElement_ElementAspect::StepElement_ElementAspect() = default;
 
-//=================================================================================================
-
-int StepElement_ElementAspect::CaseNum(const occ::handle<Standard_Transient>& /*ent*/) const
+int StepElement_ElementAspect::CaseNum(const occ::handle<Standard_Transient>&) const
 {
   return 0;
 }
-
-//=================================================================================================
 
 int StepElement_ElementAspect::CaseMem(const occ::handle<StepData_SelectMember>& ent) const
 {
@@ -45,14 +39,10 @@ int StepElement_ElementAspect::CaseMem(const occ::handle<StepData_SelectMember>&
     return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepData_SelectMember> StepElement_ElementAspect::NewMember() const
 {
   return new StepElement_ElementAspectMember;
 }
-
-//=================================================================================================
 
 void StepElement_ElementAspect::SetElementVolume(const StepElement_ElementVolume val)
 {
@@ -64,8 +54,6 @@ void StepElement_ElementAspect::SetElementVolume(const StepElement_ElementVolume
   SelMem->SetName(name->ToCString());
   SelMem->SetEnum((int)val);
 }
-
-//=================================================================================================
 
 StepElement_ElementVolume StepElement_ElementAspect::ElementVolume() const
 {
@@ -92,8 +80,6 @@ StepElement_ElementVolume StepElement_ElementAspect::ElementVolume() const
   return val;
 }
 
-//=================================================================================================
-
 void StepElement_ElementAspect::SetVolume3dFace(const int val)
 {
   occ::handle<StepElement_ElementAspectMember> SelMem =
@@ -104,8 +90,6 @@ void StepElement_ElementAspect::SetVolume3dFace(const int val)
   SelMem->SetName(name->ToCString());
   SelMem->SetInteger(val);
 }
-
-//=================================================================================================
 
 int StepElement_ElementAspect::Volume3dFace() const
 {
@@ -122,8 +106,6 @@ int StepElement_ElementAspect::Volume3dFace() const
   return val;
 }
 
-//=================================================================================================
-
 void StepElement_ElementAspect::SetVolume2dFace(const int val)
 {
   occ::handle<StepElement_ElementAspectMember> SelMem =
@@ -134,8 +116,6 @@ void StepElement_ElementAspect::SetVolume2dFace(const int val)
   SelMem->SetName(name->ToCString());
   SelMem->SetInteger(val);
 }
-
-//=================================================================================================
 
 int StepElement_ElementAspect::Volume2dFace() const
 {
@@ -152,8 +132,6 @@ int StepElement_ElementAspect::Volume2dFace() const
   return val;
 }
 
-//=================================================================================================
-
 void StepElement_ElementAspect::SetVolume3dEdge(const int val)
 {
   occ::handle<StepElement_ElementAspectMember> SelMem =
@@ -164,8 +142,6 @@ void StepElement_ElementAspect::SetVolume3dEdge(const int val)
   SelMem->SetName(name->ToCString());
   SelMem->SetInteger(val);
 }
-
-//=================================================================================================
 
 int StepElement_ElementAspect::Volume3dEdge() const
 {
@@ -182,8 +158,6 @@ int StepElement_ElementAspect::Volume3dEdge() const
   return val;
 }
 
-//=================================================================================================
-
 void StepElement_ElementAspect::SetVolume2dEdge(const int val)
 {
   occ::handle<StepElement_ElementAspectMember> SelMem =
@@ -194,8 +168,6 @@ void StepElement_ElementAspect::SetVolume2dEdge(const int val)
   SelMem->SetName(name->ToCString());
   SelMem->SetInteger(val);
 }
-
-//=================================================================================================
 
 int StepElement_ElementAspect::Volume2dEdge() const
 {
@@ -212,8 +184,6 @@ int StepElement_ElementAspect::Volume2dEdge() const
   return val;
 }
 
-//=================================================================================================
-
 void StepElement_ElementAspect::SetSurface3dFace(const int val)
 {
   occ::handle<StepElement_ElementAspectMember> SelMem =
@@ -224,8 +194,6 @@ void StepElement_ElementAspect::SetSurface3dFace(const int val)
   SelMem->SetName(name->ToCString());
   SelMem->SetInteger(val);
 }
-
-//=================================================================================================
 
 int StepElement_ElementAspect::Surface3dFace() const
 {
@@ -242,8 +210,6 @@ int StepElement_ElementAspect::Surface3dFace() const
   return val;
 }
 
-//=================================================================================================
-
 void StepElement_ElementAspect::SetSurface2dFace(const int val)
 {
   occ::handle<StepElement_ElementAspectMember> SelMem =
@@ -254,8 +220,6 @@ void StepElement_ElementAspect::SetSurface2dFace(const int val)
   SelMem->SetName(name->ToCString());
   SelMem->SetInteger(val);
 }
-
-//=================================================================================================
 
 int StepElement_ElementAspect::Surface2dFace() const
 {
@@ -272,8 +236,6 @@ int StepElement_ElementAspect::Surface2dFace() const
   return val;
 }
 
-//=================================================================================================
-
 void StepElement_ElementAspect::SetSurface3dEdge(const int val)
 {
   occ::handle<StepElement_ElementAspectMember> SelMem =
@@ -284,8 +246,6 @@ void StepElement_ElementAspect::SetSurface3dEdge(const int val)
   SelMem->SetName(name->ToCString());
   SelMem->SetInteger(val);
 }
-
-//=================================================================================================
 
 int StepElement_ElementAspect::Surface3dEdge() const
 {
@@ -302,8 +262,6 @@ int StepElement_ElementAspect::Surface3dEdge() const
   return val;
 }
 
-//=================================================================================================
-
 void StepElement_ElementAspect::SetSurface2dEdge(const int val)
 {
   occ::handle<StepElement_ElementAspectMember> SelMem =
@@ -314,8 +272,6 @@ void StepElement_ElementAspect::SetSurface2dEdge(const int val)
   SelMem->SetName(name->ToCString());
   SelMem->SetInteger(val);
 }
-
-//=================================================================================================
 
 int StepElement_ElementAspect::Surface2dEdge() const
 {
@@ -332,8 +288,6 @@ int StepElement_ElementAspect::Surface2dEdge() const
   return val;
 }
 
-//=================================================================================================
-
 void StepElement_ElementAspect::SetCurveEdge(const StepElement_CurveEdge val)
 {
   occ::handle<StepElement_ElementAspectMember> SelMem =
@@ -344,8 +298,6 @@ void StepElement_ElementAspect::SetCurveEdge(const StepElement_CurveEdge val)
   SelMem->SetName(name->ToCString());
   SelMem->SetEnum((int)val);
 }
-
-//=================================================================================================
 
 StepElement_CurveEdge StepElement_ElementAspect::CurveEdge() const
 {

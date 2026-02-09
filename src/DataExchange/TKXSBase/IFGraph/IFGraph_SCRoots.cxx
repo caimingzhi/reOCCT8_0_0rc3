@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFGraph_ExternalSources.hpp>
 #include <IFGraph_SCRoots.hpp>
@@ -17,7 +6,6 @@
 #include <Interface_Graph.hpp>
 #include <Standard_Transient.hpp>
 
-// #include <Interface_GraphContent.hpp>
 IFGraph_SCRoots::IFGraph_SCRoots(const Interface_Graph& agraph, const bool whole)
     : IFGraph_StrongComponants(agraph, whole)
 {
@@ -28,16 +16,11 @@ IFGraph_SCRoots::IFGraph_SCRoots(IFGraph_StrongComponants& subparts)
 {
 }
 
-// Root StrongComponants of a given set
-// We don't consider the possible remainder (it's another problem)
-// We start from the fact that StrongComponants gives Components in the order of
-// dependence, the first depending on nothing (the others, we don't know ...)
-
 void IFGraph_SCRoots::Evaluate()
 {
   IFGraph_StrongComponants complist(Model(), false);
   complist.GetFromIter(Loaded());
-  //  Interface_Graph G(Model());
+
   Interface_Graph G(thegraph);
 #ifdef OCCT_DEBUG
   std::cout << " SCRoots:" << std::endl;
@@ -52,7 +35,7 @@ void IFGraph_SCRoots::Evaluate()
               << std::endl;
 #endif
     if (!G.IsPresent(num))
-    { //  register for following
+    {
       G.GetFromEntity(ent, true);
       Interface_EntityIterator list = complist.Entities();
       AddPart();
@@ -60,15 +43,3 @@ void IFGraph_SCRoots::Evaluate()
     }
   }
 }
-
-/*     what follows, it was something else: the SC that have no ExternalSource
-    Interface_EntityIterator list = complist.Entities();
-    IFGraph_ExternalSources  eval (Model());
-    eval.GetFromIter(list);
-    if (eval.IsEmpty()) {
-      AddPart();
-      GetFromIter(list);
-    }
-  }
-}
-*/

@@ -3,11 +3,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ProductDefinitionReference, Standard_Transient)
 
-//=================================================================================================
-
 StepBasic_ProductDefinitionReference::StepBasic_ProductDefinitionReference() = default;
-
-//=================================================================================================
 
 void StepBasic_ProductDefinitionReference::Init(
   const occ::handle<StepBasic_ExternalSource>& theSource,
@@ -23,8 +19,6 @@ void StepBasic_ProductDefinitionReference::Init(
   myIdOwningOrganizationName     = theIdOwningOrganizationName;
   hasIdOwningOrganizationName    = (!theIdOwningOrganizationName.IsNull());
 }
-
-//=================================================================================================
 
 void StepBasic_ProductDefinitionReference::Init(
   const occ::handle<StepBasic_ExternalSource>& theSource,

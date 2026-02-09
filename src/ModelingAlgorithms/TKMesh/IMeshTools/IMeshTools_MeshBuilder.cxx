@@ -4,22 +4,14 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IMeshTools_MeshBuilder, Message_Algorithm)
 
-//=================================================================================================
-
 IMeshTools_MeshBuilder::IMeshTools_MeshBuilder() = default;
-
-//=================================================================================================
 
 IMeshTools_MeshBuilder::IMeshTools_MeshBuilder(const occ::handle<IMeshTools_Context>& theContext)
     : myContext(theContext)
 {
 }
 
-//=================================================================================================
-
 IMeshTools_MeshBuilder::~IMeshTools_MeshBuilder() = default;
-
-//=================================================================================================
 
 void IMeshTools_MeshBuilder::Perform(const Message_ProgressRange& theRange)
 {
@@ -89,7 +81,7 @@ void IMeshTools_MeshBuilder::Perform(const Message_ProgressRange& theRange)
     }
     else
     {
-      // Is null shape or another problem?
+
       SetStatus(aModelBuilder->GetStatus().IsSet(Message_Fail1) ? Message_Warn1 : Message_Fail2);
     }
   }

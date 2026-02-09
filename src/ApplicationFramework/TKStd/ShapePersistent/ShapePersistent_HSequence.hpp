@@ -21,20 +21,16 @@ class ShapePersistent_HSequence
     typedef typename SequenceClass::value_type ItemType;
 
   public:
-    //! Read persistent data from a file.
     Standard_EXPORT void Read(StdObjMgt_ReadData& theReadData) override;
 
-    //! Write persistent data to a file.
     Standard_EXPORT void Write(StdObjMgt_WriteData& theWriteData) const override;
 
-    //! Gets persistent objects
     void PChildren(SequenceOfPersistent& theChildren) const override
     {
       theChildren.Append(this->myPreviuos);
       theChildren.Append(this->myNext);
     }
 
-    //! Returns persistent type name
     const char* PName() const override
     {
       throw Standard_NotImplemented("ShapePersistent_HSequence::node::PName - not implemented");
@@ -59,32 +55,26 @@ class ShapePersistent_HSequence
     typedef node<SequenceClass> Node;
 
   public:
-    //! Empty constructor.
     instance()
         : mySize(0)
     {
     }
 
-    //! Read persistent data from a file.
     Standard_EXPORT void Read(StdObjMgt_ReadData& theReadData) override;
 
-    //! Write persistent data to a file.
     Standard_EXPORT void Write(StdObjMgt_WriteData& theWriteData) const override;
 
-    //! Gets persistent objects
     void PChildren(SequenceOfPersistent& theChildren) const override
     {
       theChildren.Append(this->myFirst);
       theChildren.Append(this->myLast);
     }
 
-    //! Returns persistent type name
     const char* PName() const override
     {
       throw Standard_NotImplemented("ShapePersistent_HSequence::instance::PName - not implemented");
     }
 
-    //! Import transient object from the persistent data.
     Standard_EXPORT occ::handle<SequenceClass> Import() const;
 
   private:
@@ -100,36 +90,24 @@ public:
   typedef instance<NCollection_HSequence<gp_Vec>> Vec;
 };
 
-//=======================================================================
-// XYZ
-//=======================================================================
 template <>
 const char* ShapePersistent_HSequence::instance<NCollection_HSequence<gp_XYZ>>::PName() const;
 
 template <>
 const char* ShapePersistent_HSequence::node<NCollection_HSequence<gp_XYZ>>::PName() const;
 
-//=======================================================================
-// Pnt
-//=======================================================================
 template <>
 const char* ShapePersistent_HSequence::instance<NCollection_HSequence<gp_Pnt>>::PName() const;
 
 template <>
 const char* ShapePersistent_HSequence::node<NCollection_HSequence<gp_Pnt>>::PName() const;
 
-//=======================================================================
-// Dir
-//=======================================================================
 template <>
 const char* ShapePersistent_HSequence::instance<NCollection_HSequence<gp_Dir>>::PName() const;
 
 template <>
 const char* ShapePersistent_HSequence::node<NCollection_HSequence<gp_Dir>>::PName() const;
 
-//=======================================================================
-// Vec
-//=======================================================================
 template <>
 const char* ShapePersistent_HSequence::instance<NCollection_HSequence<gp_Vec>>::PName() const;
 

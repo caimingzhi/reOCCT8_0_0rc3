@@ -11,26 +11,21 @@ class StepShape_AngularSize;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write tool for AngularSize
 class RWStepShape_RWAngularSize
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepShape_RWAngularSize();
 
-  //! Reads AngularSize
   Standard_HIDDEN void ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                 const int                                   num,
                                 occ::handle<Interface_Check>&               ach,
                                 const occ::handle<StepShape_AngularSize>&   ent) const;
 
-  //! Writes AngularSize
   Standard_HIDDEN void WriteStep(StepData_StepWriter&                      SW,
                                  const occ::handle<StepShape_AngularSize>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(const occ::handle<StepShape_AngularSize>& ent,
                              Interface_EntityIterator&                 iter) const;
 };

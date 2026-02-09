@@ -9,29 +9,20 @@
 #include <Transfer_SimpleBinderOfTransient.hpp>
 #include <NCollection_IndexedDataMap.hpp>
 
-//=================================================================================================
-
 Transfer_ActorOfProcessForTransient::Transfer_ActorOfProcessForTransient() = default;
 
-//=================================================================================================
-
-bool Transfer_ActorOfProcessForTransient::Recognize(
-  const occ::handle<Standard_Transient>& /*start*/)
+bool Transfer_ActorOfProcessForTransient::Recognize(const occ::handle<Standard_Transient>&)
 {
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_Binder> Transfer_ActorOfProcessForTransient::Transferring(
-  const occ::handle<Standard_Transient>& /*start*/,
-  const occ::handle<Transfer_ProcessForTransient>& /*TP*/,
-  const Message_ProgressRange& /*theProgress*/)
+  const occ::handle<Standard_Transient>&,
+  const occ::handle<Transfer_ProcessForTransient>&,
+  const Message_ProgressRange&)
 {
   return NullResult();
 }
-
-//=================================================================================================
 
 occ::handle<Transfer_SimpleBinderOfTransient> Transfer_ActorOfProcessForTransient::TransientResult(
   const occ::handle<Standard_Transient>& res) const
@@ -44,15 +35,11 @@ occ::handle<Transfer_SimpleBinderOfTransient> Transfer_ActorOfProcessForTransien
   return binder;
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_Binder> Transfer_ActorOfProcessForTransient::NullResult() const
 {
   occ::handle<Transfer_Binder> binder;
   return binder;
 }
-
-//=================================================================================================
 
 void Transfer_ActorOfProcessForTransient::SetNext(
   const occ::handle<Transfer_ActorOfProcessForTransient>& next)
@@ -70,21 +57,15 @@ void Transfer_ActorOfProcessForTransient::SetNext(
     thenext->SetNext(next);
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_ActorOfProcessForTransient> Transfer_ActorOfProcessForTransient::Next() const
 {
   return thenext;
 }
 
-//=================================================================================================
-
 void Transfer_ActorOfProcessForTransient::SetLast(const bool mode)
 {
   thelast = mode;
 }
-
-//=================================================================================================
 
 bool Transfer_ActorOfProcessForTransient::IsLast() const
 {

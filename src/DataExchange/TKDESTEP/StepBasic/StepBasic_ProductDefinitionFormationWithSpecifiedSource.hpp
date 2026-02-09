@@ -13,7 +13,6 @@ class StepBasic_ProductDefinitionFormationWithSpecifiedSource
 {
 
 public:
-  //! Returns a ProductDefinitionFormationWithSpecifiedSource
   Standard_EXPORT StepBasic_ProductDefinitionFormationWithSpecifiedSource();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aId,

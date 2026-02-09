@@ -15,12 +15,11 @@
 
 IGESDimen_ToolDimensionUnits::IGESDimen_ToolDimensionUnits() = default;
 
-void IGESDimen_ToolDimensionUnits::ReadOwnParams(
-  const occ::handle<IGESDimen_DimensionUnits>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /* IR */,
-  IGESData_ParamReader& PR) const
+void IGESDimen_ToolDimensionUnits::ReadOwnParams(const occ::handle<IGESDimen_DimensionUnits>& ent,
+                                                 const occ::handle<IGESData_IGESReaderData>&,
+                                                 IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   int                                   tempNbProps;
   int                                   tempSecondDimenPos;
   int                                   tempUnitsIndic;
@@ -30,23 +29,22 @@ void IGESDimen_ToolDimensionUnits::ReadOwnParams(
   occ::handle<TCollection_HAsciiString> tempFormatString;
 
   if (PR.DefinedElseSkip())
-    // clang-format off
-    PR.ReadInteger(PR.Current(), "Number of Properties", tempNbProps); //szv#4:S4163:12Mar99 `st=` not needed
+
+    PR.ReadInteger(PR.Current(), "Number of Properties", tempNbProps);
   else
     tempNbProps = 6;
 
-  PR.ReadInteger(PR.Current(), "Secondary Dimension Position",
-		 tempSecondDimenPos); //szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadInteger(PR.Current(), "Units Indicator", tempUnitsIndic); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "Secondary Dimension Position", tempSecondDimenPos);
+  PR.ReadInteger(PR.Current(), "Units Indicator", tempUnitsIndic);
   if (PR.DefinedElseSkip())
-    PR.ReadInteger(PR.Current(), "Character Set", tempCharSet); //szv#4:S4163:12Mar99 `st=` not needed
+    PR.ReadInteger(PR.Current(), "Character Set", tempCharSet);
   else
     tempCharSet = 1;
 
-  PR.ReadText(PR.Current(), "Format String", tempFormatString); //szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadInteger(PR.Current(), "Fraction Flag", tempFracFlag); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
-  PR.ReadInteger(PR.Current(), "Precision", tempPrecision); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadText(PR.Current(), "Format String", tempFormatString);
+  PR.ReadInteger(PR.Current(), "Fraction Flag", tempFracFlag);
+
+  PR.ReadInteger(PR.Current(), "Precision", tempPrecision);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempNbProps,
@@ -70,14 +68,14 @@ void IGESDimen_ToolDimensionUnits::WriteOwnParams(const occ::handle<IGESDimen_Di
   IW.Send(ent->PrecisionOrDenominator());
 }
 
-void IGESDimen_ToolDimensionUnits::OwnShared(const occ::handle<IGESDimen_DimensionUnits>& /* ent */,
-                                             Interface_EntityIterator& /* iter */) const
+void IGESDimen_ToolDimensionUnits::OwnShared(const occ::handle<IGESDimen_DimensionUnits>&,
+                                             Interface_EntityIterator&) const
 {
 }
 
 void IGESDimen_ToolDimensionUnits::OwnCopy(const occ::handle<IGESDimen_DimensionUnits>& another,
                                            const occ::handle<IGESDimen_DimensionUnits>& ent,
-                                           Interface_CopyTool& /* TC */) const
+                                           Interface_CopyTool&) const
 {
   int                                   tempNbProps        = another->NbPropertyValues();
   int                                   tempSecondDimenPos = another->SecondaryDimenPosition();
@@ -108,11 +106,11 @@ bool IGESDimen_ToolDimensionUnits::OwnCorrect(
               ent->FormatString(),
               ent->FractionFlag(),
               ent->PrecisionOrDenominator());
-  return res; // nbpropertyvalues = 6
+  return res;
 }
 
 IGESData_DirChecker IGESDimen_ToolDimensionUnits::DirChecker(
-  const occ::handle<IGESDimen_DimensionUnits>& /* ent */) const
+  const occ::handle<IGESDimen_DimensionUnits>&) const
 {
   IGESData_DirChecker DC(406, 28);
   DC.Structure(IGESData_DefVoid);
@@ -142,9 +140,9 @@ void IGESDimen_ToolDimensionUnits::OwnCheck(const occ::handle<IGESDimen_Dimensio
 }
 
 void IGESDimen_ToolDimensionUnits::OwnDump(const occ::handle<IGESDimen_DimensionUnits>& ent,
-                                           const IGESData_IGESDumper& /* dumper */,
+                                           const IGESData_IGESDumper&,
                                            Standard_OStream& S,
-                                           const int /* level */) const
+                                           const int) const
 {
   S << "IGESDimen_DimensionUnits\n"
     << "Number of property values : " << ent->NbPropertyValues() << "\n"

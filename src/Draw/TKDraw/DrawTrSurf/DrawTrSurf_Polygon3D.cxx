@@ -8,15 +8,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_Polygon3D, Draw_Drawable3D)
 
-//=================================================================================================
-
 DrawTrSurf_Polygon3D::DrawTrSurf_Polygon3D(const occ::handle<Poly_Polygon3D>& P)
     : myPolygon3D(P),
       myNodes(false)
 {
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Polygon3D::DrawOn(Draw_Display& dis) const
 {
@@ -37,21 +33,15 @@ void DrawTrSurf_Polygon3D::DrawOn(Draw_Display& dis) const
   }
 }
 
-//=================================================================================================
-
 occ::handle<Draw_Drawable3D> DrawTrSurf_Polygon3D::Copy() const
 {
   return new DrawTrSurf_Polygon3D(myPolygon3D);
 }
 
-//=================================================================================================
-
 void DrawTrSurf_Polygon3D::Dump(Standard_OStream& S) const
 {
   Poly::Dump(myPolygon3D, S);
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Polygon3D::Save(Standard_OStream& theStream) const
 {
@@ -72,14 +62,10 @@ void DrawTrSurf_Polygon3D::Save(Standard_OStream& theStream) const
 #endif
 }
 
-//=================================================================================================
-
 occ::handle<Draw_Drawable3D> DrawTrSurf_Polygon3D::Restore(Standard_IStream& theStream)
 {
   return new DrawTrSurf_Polygon3D(Poly::ReadPolygon3D(theStream));
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Polygon3D::Whatis(Draw_Interpretor& I) const
 {

@@ -9,7 +9,6 @@ class StepVisual_MechanicalDesignGeometricPresentationArea : public StepVisual_P
 {
 
 public:
-  //! Returns a MechanicalDesignGeometricPresentationArea
   Standard_EXPORT StepVisual_MechanicalDesignGeometricPresentationArea();
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_MechanicalDesignGeometricPresentationArea,

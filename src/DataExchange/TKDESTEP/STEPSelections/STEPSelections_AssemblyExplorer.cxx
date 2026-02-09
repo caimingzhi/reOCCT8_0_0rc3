@@ -168,7 +168,7 @@ static void PrintSubAssembly(Standard_OStream&                                  
                              const occ::handle<Interface_InterfaceModel>&         Model,
                              int                                                  level)
 {
-  // for ( int j=0; j < level; j++ ) os << "\t";
+
   os << "SDR: " << Model->StringLabel(cmp->GetSDR())->ToCString() << "\t";
 
   os << "Product: " << GetProductName(cmp->GetSDR()) << std::endl;

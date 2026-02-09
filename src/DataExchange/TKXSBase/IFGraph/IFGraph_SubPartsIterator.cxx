@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFGraph_SubPartsIterator.hpp>
 #include <Interface_Graph.hpp>
@@ -22,9 +11,6 @@
 #include <Standard_Integer.hpp>
 #include <NCollection_Array1.hpp>
 
-// SubPartsIterator allows grouping entities into several sub-parts
-// To each sub-part is attached a Status : the 1st has 1, the 2nd has 2, etc...
-// (consequence, the sub-parts are necessarily disjoint)
 IFGraph_SubPartsIterator::IFGraph_SubPartsIterator(const Interface_Graph& agraph, const bool whole)
     : thegraph(agraph)
 {
@@ -52,7 +38,7 @@ IFGraph_SubPartsIterator::IFGraph_SubPartsIterator(IFGraph_SubPartsIterator& oth
       if (thegraph.Status(i) == thepart)
         nbent++;
     }
-    theparts->Append(nbent); // empty count
+    theparts->Append(nbent);
   }
   thepart = 0;
   thecurr = 1;
@@ -62,8 +48,7 @@ void IFGraph_SubPartsIterator::GetParts(IFGraph_SubPartsIterator& other)
 {
   if (Model() != other.Model())
     throw Interface_InterfaceError("SubPartsIterator : GetParts");
-  //  We ADD the Parts from other, without losing our own
-  //  (same principle as the constructor above)
+
   int nb  = thegraph.Size();
   thepart = theparts->Length();
   for (other.Start(); other.More(); other.Next())
@@ -76,7 +61,7 @@ void IFGraph_SubPartsIterator::GetParts(IFGraph_SubPartsIterator& other)
       if (thegraph.Status(i) == thepart)
         nbent++;
     }
-    theparts->Append(nbent); // empty count
+    theparts->Append(nbent);
   }
 }
 
@@ -84,8 +69,6 @@ const Interface_Graph& IFGraph_SubPartsIterator::Graph() const
 {
   return thegraph;
 }
-
-//  ....            Internal Management (filling, etc...)            .... //
 
 occ::handle<Interface_InterfaceModel> IFGraph_SubPartsIterator::Model() const
 {
@@ -139,14 +122,12 @@ void IFGraph_SubPartsIterator::Reset()
   thecurr = 0;
 }
 
-//  ....              Result (Evaluation, Iterations)              .... //
-
-void IFGraph_SubPartsIterator::Evaluate() {} // by default, does nothing; redefined by subclasses
+void IFGraph_SubPartsIterator::Evaluate() {}
 
 Interface_GraphContent IFGraph_SubPartsIterator::Loaded() const
 {
   Interface_EntityIterator iter;
-  //  int nb = thegraph.Size();
+
   return Interface_GraphContent(thegraph, 0);
 }
 
@@ -186,7 +167,7 @@ int IFGraph_SubPartsIterator::EntityPartNum(const occ::handle<Standard_Transient
 void IFGraph_SubPartsIterator::Start()
 {
   Evaluate();
-  //  Evaluate the sizes of the Parts contents
+
   int nb  = thegraph.Size();
   int nbp = theparts->Length();
   if (thepart > nbp)
@@ -195,9 +176,8 @@ void IFGraph_SubPartsIterator::Start()
   {
     thecurr = 1;
     return;
-  } // Iteration stops immediately
+  }
 
-  //  - Perform counts (via arrays for performance)
   NCollection_Array1<int> partcounts(1, nbp);
   partcounts.Init(0);
   NCollection_Array1<int> partfirsts(1, nbp);
@@ -214,7 +194,7 @@ void IFGraph_SubPartsIterator::Start()
     if (nbent == 0)
       partfirsts.SetValue(nump, i);
   }
-  //  - Format them (i.e. in sequences)
+
   theparts->Clear();
   thefirsts->Clear();
   int lastp = 0;
@@ -228,7 +208,7 @@ void IFGraph_SubPartsIterator::Start()
   }
   if (lastp < nbp)
     theparts->Remove(lastp + 1, nbp);
-  //  Finally, prepare to iterate
+
   thecurr = 1;
 }
 
@@ -245,7 +225,7 @@ void IFGraph_SubPartsIterator::Next()
   if (thecurr > theparts->Length())
     return;
   if (theparts->Value(thecurr) == 0)
-    Next(); // skip empty parts
+    Next();
 }
 
 bool IFGraph_SubPartsIterator::IsSingle() const
@@ -275,7 +255,7 @@ Interface_EntityIterator IFGraph_SubPartsIterator::Entities() const
   if (nument == 0)
     return iter;
   if (theparts->Value(thecurr) == 1)
-    nb = nument; // obvious: 1 single Entity
+    nb = nument;
   for (int i = nument; i <= nb; i++)
   {
     if (thegraph.Status(i) == thecurr && thegraph.IsPresent(i))
@@ -283,7 +263,5 @@ Interface_EntityIterator IFGraph_SubPartsIterator::Entities() const
   }
   return iter;
 }
-
-//=================================================================================================
 
 IFGraph_SubPartsIterator::~IFGraph_SubPartsIterator() = default;

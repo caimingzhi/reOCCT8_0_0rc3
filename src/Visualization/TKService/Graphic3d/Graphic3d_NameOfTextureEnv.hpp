@@ -1,6 +1,5 @@
 #pragma once
 
-//! Types of standard textures.
 enum Graphic3d_NameOfTextureEnv
 {
   Graphic3d_NOT_ENV_CLOUDS,

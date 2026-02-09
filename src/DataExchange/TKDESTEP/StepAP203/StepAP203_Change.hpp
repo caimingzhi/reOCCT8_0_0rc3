@@ -8,22 +8,17 @@
 #include <StepBasic_ActionAssignment.hpp>
 class StepBasic_Action;
 
-//! Representation of STEP entity Change
 class StepAP203_Change : public StepBasic_ActionAssignment
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT StepAP203_Change();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(const occ::handle<StepBasic_Action>& aActionAssignment_AssignedAction,
                             const occ::handle<NCollection_HArray1<StepAP203_WorkItem>>& aItems);
 
-  //! Returns field Items
   Standard_EXPORT occ::handle<NCollection_HArray1<StepAP203_WorkItem>> Items() const;
 
-  //! Set field Items
   Standard_EXPORT void SetItems(const occ::handle<NCollection_HArray1<StepAP203_WorkItem>>& Items);
 
   DEFINE_STANDARD_RTTIEXT(StepAP203_Change, StepBasic_ActionAssignment)

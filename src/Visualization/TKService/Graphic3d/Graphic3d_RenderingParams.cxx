@@ -2,8 +2,6 @@
 
 #include <Standard_Dump.hpp>
 
-//=================================================================================================
-
 void Graphic3d_RenderingParams::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {
   OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, Method)

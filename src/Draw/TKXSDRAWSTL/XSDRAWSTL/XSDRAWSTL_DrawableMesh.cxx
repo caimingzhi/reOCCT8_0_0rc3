@@ -5,18 +5,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XSDRAWSTL_DrawableMesh, Draw_Drawable3D)
 
-//=================================================================================================
-
 XSDRAWSTL_DrawableMesh::XSDRAWSTL_DrawableMesh(const occ::handle<MeshVS_Mesh>& aMesh)
 {
   myMesh = aMesh;
 }
 
-//=================================================================================================
-
-void XSDRAWSTL_DrawableMesh::DrawOn(Draw_Display& /*d*/) const {}
-
-//=================================================================================================
+void XSDRAWSTL_DrawableMesh::DrawOn(Draw_Display&) const {}
 
 occ::handle<MeshVS_Mesh> XSDRAWSTL_DrawableMesh::GetMesh() const
 {

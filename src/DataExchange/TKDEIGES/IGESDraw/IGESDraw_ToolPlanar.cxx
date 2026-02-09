@@ -27,19 +27,16 @@ void IGESDraw_ToolPlanar::ReadOwnParams(const occ::handle<IGESDraw_Planar>&     
   occ::handle<IGESGeom_TransformationMatrix>                         transformationMatrix;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> entities;
 
-  // Reading nbMatrices(Integer)
   st = PR.ReadInteger(PR.Current(), "No. of Transformation matrices", nbMatrices);
   if (nbMatrices != 1)
     PR.AddFail("No. of Transformation matrices != 1");
 
-  // Reading nbval(Integer)
   st = PR.ReadInteger(PR.Current(), "No. of Entities in this plane", nbval);
   if (!st)
-    nbval = 0; // szv#4:S4163:12Mar99 was bug: `nbval == 0`
+    nbval = 0;
   if (nbval <= 0)
     PR.AddFail("No. of Entities in this plane : Not Positive");
 
-  // Reading transformationMatrix(Instance of TransformationMatrix or Null)
   st = PR.ReadEntity(IR,
                      PR.Current(),
                      "Instance of TransformationMatrix",
@@ -49,18 +46,6 @@ void IGESDraw_ToolPlanar::ReadOwnParams(const occ::handle<IGESDraw_Planar>&     
 
   if (nbval > 0)
     st = PR.ReadEnts(IR, PR.CurrentList(nbval), "Planar Entities", entities);
-  /*
-      {
-        entities = new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, nbval);
-        // Reading entities(HArray1OfIGESEntity)
-        occ::handle<IGESData_IGESEntity> tempEntity;
-        for (int i = 1; i <= nbval; i++)
-      {
-            st = PR.ReadEntity(IR, PR.Current(), "Plane entity", tempEntity);
-        if (st) entities->SetValue(i, tempEntity);
-      }
-      }
-  */
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(nbMatrices, transformationMatrix, entities);
@@ -116,7 +101,7 @@ bool IGESDraw_ToolPlanar::OwnCorrect(const occ::handle<IGESDraw_Planar>& ent) co
 {
   if (ent->NbMatrices() == 1)
     return false;
-  //  Forcer NbMNatrices a 1 -> Reconstruire
+
   int                                                                nb = ent->NbEntities();
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> ents =
     new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, nb);
@@ -126,8 +111,7 @@ bool IGESDraw_ToolPlanar::OwnCorrect(const occ::handle<IGESDraw_Planar>& ent) co
   return true;
 }
 
-IGESData_DirChecker IGESDraw_ToolPlanar::DirChecker(
-  const occ::handle<IGESDraw_Planar>& /*ent*/) const
+IGESData_DirChecker IGESDraw_ToolPlanar::DirChecker(const occ::handle<IGESDraw_Planar>&) const
 {
   IGESData_DirChecker DC(402, 16);
   DC.Structure(IGESData_DefVoid);

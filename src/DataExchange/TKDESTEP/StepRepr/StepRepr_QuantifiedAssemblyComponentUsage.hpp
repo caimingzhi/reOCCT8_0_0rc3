@@ -7,15 +7,12 @@
 class TCollection_HAsciiString;
 class StepBasic_ProductDefinition;
 
-//! Representation of STEP entity QuantifiedAssemblyComponentUsage
 class StepRepr_QuantifiedAssemblyComponentUsage : public StepRepr_AssemblyComponentUsage
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT StepRepr_QuantifiedAssemblyComponentUsage();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Id,
     const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Name,
@@ -29,7 +26,6 @@ public:
     const occ::handle<TCollection_HAsciiString>& aAssemblyComponentUsage_ReferenceDesignator,
     const occ::handle<Standard_Transient>&       aQuantity);
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Id,
     const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Name,
@@ -43,10 +39,8 @@ public:
     const occ::handle<TCollection_HAsciiString>& aAssemblyComponentUsage_ReferenceDesignator,
     const occ::handle<Standard_Transient>&       aQuantity);
 
-  //! Returns field Quantity
   Standard_EXPORT occ::handle<Standard_Transient> Quantity() const;
 
-  //! Set field Quantity
   Standard_EXPORT void SetQuantity(const occ::handle<Standard_Transient>& Quantity);
 
   DEFINE_STANDARD_RTTIEXT(StepRepr_QuantifiedAssemblyComponentUsage,

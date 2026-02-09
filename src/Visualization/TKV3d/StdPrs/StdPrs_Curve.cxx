@@ -14,8 +14,6 @@
 #include <StdPrs_Curve.hpp>
 #include <NCollection_Sequence.hpp>
 
-//=================================================================================================
-
 static void FindLimits(const Adaptor3d_Curve& aCurve,
                        const double           aLimit,
                        double&                First,
@@ -63,8 +61,6 @@ static void FindLimits(const Adaptor3d_Curve& aCurve,
     }
   }
 }
-
-//=================================================================================================
 
 static void DrawCurve(const Adaptor3d_Curve&              aCurve,
                       const occ::handle<Graphic3d_Group>& aGroup,
@@ -121,8 +117,6 @@ static void DrawCurve(const Adaptor3d_Curve&              aCurve,
     }
   }
 }
-
-//=================================================================================================
 
 static bool MatchCurve(const double           X,
                        const double           Y,
@@ -193,8 +187,6 @@ static bool MatchCurve(const double           X,
   return false;
 }
 
-//=================================================================================================
-
 void StdPrs_Curve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                        const Adaptor3d_Curve&                 aCurve,
                        const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -222,8 +214,6 @@ void StdPrs_Curve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
   }
 }
 
-//=================================================================================================
-
 void StdPrs_Curve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                        const Adaptor3d_Curve&                 aCurve,
                        const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -237,8 +227,6 @@ void StdPrs_Curve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
   DrawCurve(aCurve, aPresentation->CurrentGroup(), NbPoints, V1, V2, Points, drawCurve);
 }
 
-//=================================================================================================
-
 void StdPrs_Curve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                        const Adaptor3d_Curve&                 aCurve,
                        const double                           U1,
@@ -249,8 +237,6 @@ void StdPrs_Curve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
 {
   DrawCurve(aCurve, aPresentation->CurrentGroup(), NbPoints, U1, U2, Points, drawCurve);
 }
-
-//=================================================================================================
 
 void StdPrs_Curve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                        const Adaptor3d_Curve&                 aCurve,
@@ -286,8 +272,6 @@ void StdPrs_Curve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
   }
 }
 
-//=================================================================================================
-
 bool StdPrs_Curve::Match(const double                     X,
                          const double                     Y,
                          const double                     Z,
@@ -310,8 +294,6 @@ bool StdPrs_Curve::Match(const double                     X,
                     V2);
 }
 
-//=================================================================================================
-
 bool StdPrs_Curve::Match(const double           X,
                          const double           Y,
                          const double           Z,
@@ -326,8 +308,6 @@ bool StdPrs_Curve::Match(const double           X,
 
   return MatchCurve(X, Y, Z, aDistance, aCurve, aDeflection, NbPoints, V1, V2);
 }
-
-//=================================================================================================
 
 bool StdPrs_Curve::Match(const double                     X,
                          const double                     Y,
@@ -356,8 +336,6 @@ bool StdPrs_Curve::Match(const double                     X,
                     V1,
                     V2);
 }
-
-//=================================================================================================
 
 bool StdPrs_Curve::Match(const double           X,
                          const double           Y,

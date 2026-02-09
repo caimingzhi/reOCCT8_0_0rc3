@@ -11,7 +11,6 @@ class StepVisual_CameraModelD3MultiClippingIntersection;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for CameraModelD3MultiClippingIntersection
 class RWStepVisual_RWCameraModelD3MultiClippingIntersection
 {
 public:

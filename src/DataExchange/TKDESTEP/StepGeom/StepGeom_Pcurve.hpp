@@ -12,7 +12,6 @@ class StepGeom_Pcurve : public StepGeom_Curve
 {
 
 public:
-  //! Returns a Pcurve
   Standard_EXPORT StepGeom_Pcurve();
 
   Standard_EXPORT void Init(

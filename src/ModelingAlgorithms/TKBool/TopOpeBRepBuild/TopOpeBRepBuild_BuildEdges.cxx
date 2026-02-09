@@ -17,8 +17,6 @@
 extern bool TopOpeBRepBuild_GettraceCU();
 #endif
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::BuildEdges(const int                                       iC,
                                          const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
 {
@@ -79,8 +77,6 @@ void TopOpeBRepBuild_Builder::BuildEdges(const int                              
   }
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::BuildEdges(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
 {
   TopOpeBRepDS_DataStructure& BDS = HDS->ChangeDS();
@@ -124,7 +120,7 @@ void TopOpeBRepBuild_Builder::BuildEdges(const occ::handle<TopOpeBRepDS_HDataStr
   for (cex.Init(BDS); cex.More(); cex.Next())
   {
 #ifdef OCCT_DEBUG
-//    const TopOpeBRepDS_Curve& C = cex.Curve();
+
 #endif
     int                                                                ic = cex.Index();
     NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it(

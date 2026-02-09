@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include "RWStepShape_RWVertexLoop.hpp"
@@ -26,24 +15,16 @@ void RWStepShape_RWVertexLoop::ReadStep(const occ::handle<StepData_StepReaderDat
                                         const occ::handle<StepShape_VertexLoop>&    ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 2, ach, "vertex_loop"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- own field : loopVertex ---
-
   occ::handle<StepShape_Vertex> aLoopVertex;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
-  data->ReadEntity(num, 2, "loop_vertex", ach, STANDARD_TYPE(StepShape_Vertex), aLoopVertex);
 
-  //--- Initialisation of the read entity ---
+  data->ReadEntity(num, 2, "loop_vertex", ach, STANDARD_TYPE(StepShape_Vertex), aLoopVertex);
 
   ent->Init(aName, aLoopVertex);
 }
@@ -52,11 +33,7 @@ void RWStepShape_RWVertexLoop::WriteStep(StepData_StepWriter&                   
                                          const occ::handle<StepShape_VertexLoop>& ent) const
 {
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
-
-  // --- own field : loopVertex ---
 
   SW.Send(ent->LoopVertex());
 }

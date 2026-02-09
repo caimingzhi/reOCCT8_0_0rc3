@@ -159,5 +159,3 @@ static const char Shaders_Display_fs[] =
   "\n"
   "#endif\n"
   "}\n";
-
-// clang-format on

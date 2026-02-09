@@ -11,8 +11,6 @@ class HLRBRep_Data;
 class gp_Dir;
 class HLRAlgo_Interference;
 
-//! Implements the methods required to instantiates
-//! the EdgeInterferenceList from HLRAlgo.
 class HLRBRep_EdgeInterferenceTool
 {
 public:
@@ -36,9 +34,6 @@ public:
 
   bool IsPeriodic() const;
 
-  //! Returns local geometric description of the Edge at
-  //! parameter <Para>. See method Reset of class
-  //! EdgeFaceTransition from TopCnx for other arguments.
   Standard_EXPORT void EdgeGeometry(const double Param,
                                     gp_Dir&      Tgt,
                                     gp_Dir&      Nrm,
@@ -46,19 +41,11 @@ public:
 
   double ParameterOfInterference(const HLRAlgo_Interference& I) const;
 
-  //! True if the two interferences are on the same
-  //! geometric locus.
   Standard_EXPORT bool SameInterferences(const HLRAlgo_Interference& I1,
                                          const HLRAlgo_Interference& I2) const;
 
-  //! True if the Interference and the current Vertex
-  //! are on the same geometric locus.
   Standard_EXPORT bool SameVertexAndInterference(const HLRAlgo_Interference& I) const;
 
-  //! Returns the geometry of the boundary at the
-  //! interference <I>. See the AddInterference method
-  //! of the class EdgeFaceTransition from TopCnx for
-  //! the other arguments.
   Standard_EXPORT void InterferenceBoundaryGeometry(const HLRAlgo_Interference& I,
                                                     gp_Dir&                     Tang,
                                                     gp_Dir&                     Norm,
@@ -72,35 +59,25 @@ private:
 
 #include <HLRAlgo_Interference.hpp>
 
-//=================================================================================================
-
 inline void HLRBRep_EdgeInterferenceTool::InitVertices()
 {
   cur = 0;
 }
-
-//=================================================================================================
 
 inline bool HLRBRep_EdgeInterferenceTool::MoreVertices() const
 {
   return cur < 2;
 }
 
-//=================================================================================================
-
 inline void HLRBRep_EdgeInterferenceTool::NextVertex()
 {
   cur++;
 }
 
-//=================================================================================================
-
 inline const HLRAlgo_Intersection& HLRBRep_EdgeInterferenceTool::CurrentVertex() const
 {
   return inter[cur];
 }
-
-//=================================================================================================
 
 inline TopAbs_Orientation HLRBRep_EdgeInterferenceTool::CurrentOrientation() const
 {
@@ -110,21 +87,15 @@ inline TopAbs_Orientation HLRBRep_EdgeInterferenceTool::CurrentOrientation() con
     return TopAbs_REVERSED;
 }
 
-//=================================================================================================
-
 inline double HLRBRep_EdgeInterferenceTool::CurrentParameter() const
 {
   return inter[cur].Parameter();
 }
 
-//=================================================================================================
-
 inline bool HLRBRep_EdgeInterferenceTool::IsPeriodic() const
 {
   return false;
 }
-
-//=================================================================================================
 
 inline double HLRBRep_EdgeInterferenceTool::ParameterOfInterference(
   const HLRAlgo_Interference& I) const

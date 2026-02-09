@@ -6,15 +6,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepCheck_Result, Standard_Transient)
 
-//=================================================================================================
-
 BRepCheck_Result::BRepCheck_Result()
     : myMin(false),
       myBlind(false)
 {
 }
-
-//=================================================================================================
 
 void BRepCheck_Result::Init(const TopoDS_Shape& S)
 {
@@ -24,8 +20,6 @@ void BRepCheck_Result::Init(const TopoDS_Shape& S)
   myMap.Clear();
   Minimum();
 }
-
-//=================================================================================================
 
 void BRepCheck_Result::SetFailStatus(const TopoDS_Shape& S)
 {
@@ -41,19 +35,15 @@ void BRepCheck_Result::SetFailStatus(const TopoDS_Shape& S)
   BRepCheck::Add(*aList, BRepCheck_CheckFail);
 }
 
-//=================================================================================================
-
 void BRepCheck_Result::InitContextIterator()
 {
   myIter.Initialize(myMap);
-  // At least 1 element : the Shape itself
+
   if (myIter.Key().IsSame(myShape))
   {
     myIter.Next();
   }
 }
-
-//=================================================================================================
 
 void BRepCheck_Result::NextShapeInContext()
 {
@@ -63,8 +53,6 @@ void BRepCheck_Result::NextShapeInContext()
     myIter.Next();
   }
 }
-
-//=================================================================================================
 
 void BRepCheck_Result::SetParallel(bool theIsParallel)
 {

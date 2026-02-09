@@ -27,15 +27,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataXtd_Geometry, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& TDataXtd_Geometry::GetID()
 {
   static Standard_GUID TDataXtd_GeometryID("2a96b604-ec8b-11d0-bee7-080009dc3333");
   return TDataXtd_GeometryID;
 }
-
-//=================================================================================================
 
 occ::handle<TDataXtd_Geometry> TDataXtd_Geometry::Set(const TDF_Label& L)
 {
@@ -43,13 +39,11 @@ occ::handle<TDataXtd_Geometry> TDataXtd_Geometry::Set(const TDF_Label& L)
   if (!L.FindAttribute(TDataXtd_Geometry::GetID(), A))
   {
     A = new TDataXtd_Geometry();
-    //    A->SetType(TDataXtd_ANY_GEOM);
+
     L.AddAttribute(A);
   }
   return A;
 }
-
-//=================================================================================================
 
 bool TDataXtd_Geometry::Point(const TDF_Label& L, gp_Pnt& G)
 {
@@ -60,8 +54,6 @@ bool TDataXtd_Geometry::Point(const TDF_Label& L, gp_Pnt& G)
   }
   return false;
 }
-
-//=================================================================================================
 
 bool TDataXtd_Geometry::Point(const occ::handle<TNaming_NamedShape>& NS, gp_Pnt& G)
 {
@@ -77,8 +69,6 @@ bool TDataXtd_Geometry::Point(const occ::handle<TNaming_NamedShape>& NS, gp_Pnt&
   return false;
 }
 
-//=================================================================================================
-
 bool TDataXtd_Geometry::Axis(const TDF_Label& L, gp_Ax1& G)
 {
   occ::handle<TNaming_NamedShape> NS;
@@ -88,8 +78,6 @@ bool TDataXtd_Geometry::Axis(const TDF_Label& L, gp_Ax1& G)
   }
   return false;
 }
-
-//=================================================================================================
 
 bool TDataXtd_Geometry::Axis(const occ::handle<TNaming_NamedShape>& NS, gp_Ax1& G)
 {
@@ -102,8 +90,6 @@ bool TDataXtd_Geometry::Axis(const occ::handle<TNaming_NamedShape>& NS, gp_Ax1& 
   return false;
 }
 
-//=================================================================================================
-
 bool TDataXtd_Geometry::Line(const TDF_Label& L, gp_Lin& G)
 {
   occ::handle<TNaming_NamedShape> NS;
@@ -114,8 +100,6 @@ bool TDataXtd_Geometry::Line(const TDF_Label& L, gp_Lin& G)
   return false;
 }
 
-//=================================================================================================
-
 bool TDataXtd_Geometry::Line(const occ::handle<TNaming_NamedShape>& NS, gp_Lin& G)
 {
   const TopoDS_Shape& shape = TNaming_Tool::GetShape(NS);
@@ -125,7 +109,7 @@ bool TDataXtd_Geometry::Line(const occ::handle<TNaming_NamedShape>& NS, gp_Lin& 
   {
     const TopoDS_Edge& edge = TopoDS::Edge(shape);
     double             first, last;
-    // TopLoc_Location loc;
+
     occ::handle<Geom_Curve> curve = BRep_Tool::Curve(edge, first, last);
     if (!curve.IsNull())
     {
@@ -142,8 +126,6 @@ bool TDataXtd_Geometry::Line(const occ::handle<TNaming_NamedShape>& NS, gp_Lin& 
   return false;
 }
 
-//=================================================================================================
-
 bool TDataXtd_Geometry::Circle(const TDF_Label& L, gp_Circ& G)
 {
   occ::handle<TNaming_NamedShape> NS;
@@ -154,8 +136,6 @@ bool TDataXtd_Geometry::Circle(const TDF_Label& L, gp_Circ& G)
   return false;
 }
 
-//=================================================================================================
-
 bool TDataXtd_Geometry::Circle(const occ::handle<TNaming_NamedShape>& NS, gp_Circ& G)
 {
   const TopoDS_Shape& shape = TNaming_Tool::GetShape(NS);
@@ -165,7 +145,7 @@ bool TDataXtd_Geometry::Circle(const occ::handle<TNaming_NamedShape>& NS, gp_Cir
   {
     const TopoDS_Edge& edge = TopoDS::Edge(shape);
     double             first, last;
-    // TopLoc_Location loc;
+
     occ::handle<Geom_Curve> curve = BRep_Tool::Curve(edge, first, last);
     if (!curve.IsNull())
     {
@@ -182,8 +162,6 @@ bool TDataXtd_Geometry::Circle(const occ::handle<TNaming_NamedShape>& NS, gp_Cir
   return false;
 }
 
-//=================================================================================================
-
 bool TDataXtd_Geometry::Ellipse(const TDF_Label& L, gp_Elips& G)
 {
   occ::handle<TNaming_NamedShape> NS;
@@ -193,8 +171,6 @@ bool TDataXtd_Geometry::Ellipse(const TDF_Label& L, gp_Elips& G)
   }
   return false;
 }
-
-//=================================================================================================
 
 bool TDataXtd_Geometry::Ellipse(const occ::handle<TNaming_NamedShape>& NS, gp_Elips& G)
 {
@@ -221,8 +197,6 @@ bool TDataXtd_Geometry::Ellipse(const occ::handle<TNaming_NamedShape>& NS, gp_El
   return false;
 }
 
-//=================================================================================================
-
 bool TDataXtd_Geometry::Plane(const TDF_Label& L, gp_Pln& G)
 {
   occ::handle<TNaming_NamedShape> NS;
@@ -232,8 +206,6 @@ bool TDataXtd_Geometry::Plane(const TDF_Label& L, gp_Pln& G)
   }
   return false;
 }
-
-//=================================================================================================
 
 bool TDataXtd_Geometry::Plane(const occ::handle<TNaming_NamedShape>& NS, gp_Pln& G)
 {
@@ -259,8 +231,6 @@ bool TDataXtd_Geometry::Plane(const occ::handle<TNaming_NamedShape>& NS, gp_Pln&
   return false;
 }
 
-//=================================================================================================
-
 bool TDataXtd_Geometry::Cylinder(const TDF_Label& L, gp_Cylinder& G)
 {
   occ::handle<TNaming_NamedShape> NS;
@@ -270,8 +240,6 @@ bool TDataXtd_Geometry::Cylinder(const TDF_Label& L, gp_Cylinder& G)
   }
   return false;
 }
-
-//=================================================================================================
 
 bool TDataXtd_Geometry::Cylinder(const occ::handle<TNaming_NamedShape>& NS, gp_Cylinder& G)
 {
@@ -297,8 +265,6 @@ bool TDataXtd_Geometry::Cylinder(const occ::handle<TNaming_NamedShape>& NS, gp_C
   return false;
 }
 
-//=================================================================================================
-
 TDataXtd_GeometryEnum TDataXtd_Geometry::Type(const TDF_Label& L)
 {
   occ::handle<TNaming_NamedShape> NS;
@@ -308,8 +274,6 @@ TDataXtd_GeometryEnum TDataXtd_Geometry::Type(const TDF_Label& L)
   }
   return TDataXtd_ANY_GEOM;
 }
-
-//=================================================================================================
 
 TDataXtd_GeometryEnum TDataXtd_Geometry::Type(const occ::handle<TNaming_NamedShape>& NS)
 {
@@ -326,7 +290,7 @@ TDataXtd_GeometryEnum TDataXtd_Geometry::Type(const occ::handle<TNaming_NamedSha
     {
       const TopoDS_Edge& edge = TopoDS::Edge(shape);
       double             first, last;
-      // TopLoc_Location loc;
+
       occ::handle<Geom_Curve> curve = BRep_Tool::Curve(edge, first, last);
       if (!curve.IsNull())
       {
@@ -388,25 +352,19 @@ TDataXtd_GeometryEnum TDataXtd_Geometry::Type(const occ::handle<TNaming_NamedSha
   return type;
 }
 
-//=================================================================================================
-
 TDataXtd_Geometry::TDataXtd_Geometry()
     : myType(TDataXtd_ANY_GEOM)
 {
 }
-
-//=================================================================================================
 
 TDataXtd_GeometryEnum TDataXtd_Geometry::GetType() const
 {
   return myType;
 }
 
-//=================================================================================================
-
 void TDataXtd_Geometry::SetType(const TDataXtd_GeometryEnum G)
 {
-  // OCC2932 correction
+
   if (myType == G)
     return;
 
@@ -414,36 +372,26 @@ void TDataXtd_Geometry::SetType(const TDataXtd_GeometryEnum G)
   myType = G;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataXtd_Geometry::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 occ::handle<TDF_Attribute> TDataXtd_Geometry::NewEmpty() const
 {
   return new TDataXtd_Geometry();
 }
 
-//=================================================================================================
-
 void TDataXtd_Geometry::Restore(const occ::handle<TDF_Attribute>& With)
 {
   myType = occ::down_cast<TDataXtd_Geometry>(With)->GetType();
 }
-
-//=================================================================================================
 
 void TDataXtd_Geometry::Paste(const occ::handle<TDF_Attribute>& Into,
                               const occ::handle<TDF_RelocationTable>&) const
 {
   occ::down_cast<TDataXtd_Geometry>(Into)->SetType(myType);
 }
-
-//=================================================================================================
 
 Standard_OStream& TDataXtd_Geometry::Dump(Standard_OStream& anOS) const
 {

@@ -16,15 +16,11 @@
 
 IMPLEMENT_DERIVED_ATTRIBUTE(TDataXtd_Plane, TDataStd_GenericEmpty)
 
-//=================================================================================================
-
 const Standard_GUID& TDataXtd_Plane::GetID()
 {
   static Standard_GUID TDataXtd_PlaneID("2a96b60c-ec8b-11d0-bee7-080009dc3333");
   return TDataXtd_PlaneID;
 }
-
-//=================================================================================================
 
 occ::handle<TDataXtd_Plane> TDataXtd_Plane::Set(const TDF_Label& L)
 {
@@ -36,8 +32,6 @@ occ::handle<TDataXtd_Plane> TDataXtd_Plane::Set(const TDF_Label& L)
   }
   return A;
 }
-
-//=================================================================================================
 
 occ::handle<TDataXtd_Plane> TDataXtd_Plane::Set(const TDF_Label& L, const gp_Pln& P)
 {
@@ -73,18 +67,12 @@ occ::handle<TDataXtd_Plane> TDataXtd_Plane::Set(const TDF_Label& L, const gp_Pln
   return A;
 }
 
-//=================================================================================================
-
 TDataXtd_Plane::TDataXtd_Plane() = default;
-
-//=================================================================================================
 
 const Standard_GUID& TDataXtd_Plane::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 Standard_OStream& TDataXtd_Plane::Dump(Standard_OStream& anOS) const
 {

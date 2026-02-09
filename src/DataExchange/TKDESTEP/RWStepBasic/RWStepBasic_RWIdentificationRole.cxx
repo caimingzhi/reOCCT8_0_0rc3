@@ -4,11 +4,7 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWIdentificationRole::RWStepBasic_RWIdentificationRole() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWIdentificationRole::ReadStep(
   const occ::handle<StepData_StepReaderData>&      data,
@@ -16,11 +12,9 @@ void RWStepBasic_RWIdentificationRole::ReadStep(
   occ::handle<Interface_Check>&                    ach,
   const occ::handle<StepBasic_IdentificationRole>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "identification_role"))
     return;
-
-  // Own fields of IdentificationRole
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -36,18 +30,13 @@ void RWStepBasic_RWIdentificationRole::ReadStep(
     hasDescription = false;
   }
 
-  // Initialize entity
   ent->Init(aName, hasDescription, aDescription);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWIdentificationRole::WriteStep(
   StepData_StepWriter&                             SW,
   const occ::handle<StepBasic_IdentificationRole>& ent) const
 {
-
-  // Own fields of IdentificationRole
 
   SW.Send(ent->Name());
 
@@ -59,10 +48,7 @@ void RWStepBasic_RWIdentificationRole::WriteStep(
     SW.SendUndef();
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWIdentificationRole::Share(const occ::handle<StepBasic_IdentificationRole>&,
                                              Interface_EntityIterator&) const
 {
-  // Own fields of IdentificationRole
 }

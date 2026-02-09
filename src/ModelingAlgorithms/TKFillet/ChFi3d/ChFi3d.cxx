@@ -17,10 +17,6 @@
 
 static void Correct2dPoint(const TopoDS_Face& theF, gp_Pnt2d& theP2d);
 
-//
-
-//=================================================================================================
-
 ChFiDS_TypeOfConcavity ChFi3d::DefineConnectType(const TopoDS_Edge& E,
                                                  const TopoDS_Face& F1,
                                                  const TopoDS_Face& F2,
@@ -29,10 +25,10 @@ ChFiDS_TypeOfConcavity ChFi3d::DefineConnectType(const TopoDS_Edge& E,
 {
   const occ::handle<Geom_Surface>& S1 = BRep_Tool::Surface(F1);
   const occ::handle<Geom_Surface>& S2 = BRep_Tool::Surface(F2);
-  //
+
   double                    f, l;
   occ::handle<Geom2d_Curve> C1 = BRep_Tool::CurveOnSurface(E, F1, f, l);
-  // For the case of seam edge
+
   TopoDS_Edge EE = E;
   if (F1.IsSame(F2))
     EE.Reverse();
@@ -43,7 +39,7 @@ ChFiDS_TypeOfConcavity ChFi3d::DefineConnectType(const TopoDS_Edge& E,
   BRepAdaptor_Curve C(E);
   f = C.FirstParameter();
   l = C.LastParameter();
-  //
+
   double ParOnC = 0.5 * (f + l);
   gp_Vec T1     = C.DN(ParOnC, 1);
   if (T1.SquareMagnitude() <= gp::Resolution())
@@ -69,7 +65,7 @@ ChFiDS_TypeOfConcavity ChFi3d::DefineConnectType(const TopoDS_Edge& E,
 
   if (CorrectPoint)
     Correct2dPoint(F1, P);
-  //
+
   S1->D1(P.X(), P.Y(), P3, D1U, D1V);
   gp_Vec DN1(D1U ^ D1V);
   if (F1.Orientation() == TopAbs_REVERSED)
@@ -90,15 +86,15 @@ ChFiDS_TypeOfConcavity ChFi3d::DefineConnectType(const TopoDS_Edge& E,
   double NormProVec = ProVec.Magnitude();
   if (NormProVec < SinTol)
   {
-    // plane
+
     if (DN1.Dot(DN2) > 0)
     {
-      // Tangent
+
       return ChFiDS_Tangential;
     }
     else
     {
-      // Mixed not finished!
+
 #ifdef OCCT_DEBUG
       std::cout << " faces locally mixed" << std::endl;
 #endif
@@ -112,18 +108,16 @@ ChFiDS_TypeOfConcavity ChFi3d::DefineConnectType(const TopoDS_Edge& E,
     double Prod = T1.Dot(ProVec);
     if (Prod > 0.)
     {
-      //
+
       return ChFiDS_Convex;
     }
     else
     {
-      // reenters
+
       return ChFiDS_Concave;
     }
   }
 }
-
-//=================================================================================================
 
 bool ChFi3d::IsTangentFaces(const TopoDS_Edge&  theEdge,
                             const TopoDS_Face&  theFace1,
@@ -143,7 +137,7 @@ bool ChFi3d::IsTangentFaces(const TopoDS_Edge&  theEdge,
   if (!theFace1.IsSame(theFace2) && BRep_Tool::IsClosed(theEdge, theFace1)
       && BRep_Tool::IsClosed(theEdge, theFace2))
   {
-    // Find the edge in the face 1: this edge will have correct orientation
+
     TopoDS_Edge anEdgeInFace1;
     TopoDS_Face aFace1 = theFace1;
     aFace1.Orientation(TopAbs_FORWARD);
@@ -168,9 +162,9 @@ bool ChFi3d::IsTangentFaces(const TopoDS_Edge&  theEdge,
   }
   else
   {
-    // Obtaining of pcurves of edge on two faces.
+
     aC2d1 = BRep_Tool::CurveOnSurface(theEdge, theFace1, aFirst, aLast);
-    // For the case of seam edge
+
     TopoDS_Edge EE = theEdge;
     if (theFace1.IsSame(theFace2))
       EE.Reverse();
@@ -180,14 +174,12 @@ bool ChFi3d::IsTangentFaces(const TopoDS_Edge&  theEdge,
   if (aC2d1.IsNull() || aC2d2.IsNull())
     return false;
 
-  // Obtaining of two surfaces from adjacent faces.
   occ::handle<Geom_Surface> aSurf1 = BRep_Tool::Surface(theFace1);
   occ::handle<Geom_Surface> aSurf2 = BRep_Tool::Surface(theFace2);
 
   if (aSurf1.IsNull() || aSurf2.IsNull())
     return false;
 
-  // Computation of the number of samples on the edge.
   BRepAdaptor_Surface                   aBAS1(theFace1);
   BRepAdaptor_Surface                   aBAS2(theFace2);
   occ::handle<BRepAdaptor_Surface>      aBAHS1      = new BRepAdaptor_Surface(aBAS1);
@@ -198,7 +190,6 @@ bool ChFi3d::IsTangentFaces(const TopoDS_Edge&  theEdge,
   int                                   aNbSamples2 = aTool2->NbSamples();
   int                                   aNbSamples  = std::max(aNbSamples1, aNbSamples2);
 
-  // Computation of the continuity.
   double aPar;
   double aDelta = (aLast - aFirst) / (aNbSamples - 1);
   int    i, nbNotDone = 0;
@@ -231,7 +222,6 @@ bool ChFi3d::IsTangentFaces(const TopoDS_Edge&  theEdge,
   if (nbNotDone == aNbSamples)
     return false;
 
-  // Compare normals of tangent faces in the middle point
   double   MidPar = (aFirst + aLast) / 2.;
   gp_Pnt2d uv1    = aC2d1->Value(MidPar);
   gp_Pnt2d uv2    = aC2d2->Value(MidPar);
@@ -242,11 +232,6 @@ bool ChFi3d::IsTangentFaces(const TopoDS_Edge&  theEdge,
   return dot >= 0.;
 }
 
-//=======================================================================
-// function : ConcaveSide
-// purpose  : calculate the concave face at the neighborhood of the border of
-//           2 faces.
-//=======================================================================
 int ChFi3d::ConcaveSide(const BRepAdaptor_Surface& S1,
                         const BRepAdaptor_Surface& S2,
                         const TopoDS_Edge&         E,
@@ -265,8 +250,6 @@ int ChFi3d::ConcaveSide(const BRepAdaptor_Surface& S1,
   gp_Vec             tgE, tgE1, tgE2, ns1, ns2, dint1, dint2;
   const TopoDS_Face& F1 = S1.Face();
   const TopoDS_Face& F2 = S2.Face();
-  // F1.Orientation(TopAbs_FORWARD);
-  // F2.Orientation(TopAbs_FORWARD);
 
   CE.D1(par, pt, tgE);
   tgE.Normalize();
@@ -352,10 +335,10 @@ int ChFi3d::ConcaveSide(const BRepAdaptor_Surface& S1,
   }
   else
   {
-    // the faces are locally tangent - this is fake!
+
     if (dint1.Dot(dint2) < 0.)
     {
-      // This is a forgotten regularity
+
       gp_Vec DDU, DDV, DDUV;
       S1.D2(p2d1.X(), p2d1.Y(), pt1, DU1, DV1, DDU, DDV, DDUV);
       DU1 += (DU1 * dint1 < 0) ? -DDU : DDU;
@@ -395,17 +378,16 @@ int ChFi3d::ConcaveSide(const BRepAdaptor_Surface& S1,
 #ifdef OCCT_DEBUG
         std::cout << "ConcaveSide : no concave face" << std::endl;
 #endif
-        // This 10 shows that the face at end is in the extension of one of two base faces
+
         return 10;
       }
     }
     else
     {
-      // here it turns back, the points are taken in faces
-      // neither too close nor too far as much as possible.
+
       double u, v;
 #ifdef OCCT_DEBUG
-//      double deport = 1000*BRep_Tool::Tolerance(E);
+
 #endif
       ChFi3d_Coefficient(dint1, DU1, DV1, u, v);
       p2d1.SetX(p2d1.X() + u);
@@ -451,8 +433,6 @@ int ChFi3d::ConcaveSide(const BRepAdaptor_Surface& S1,
     ChoixConge++;
   return ChoixConge;
 }
-
-//=================================================================================================
 
 int ChFi3d::NextSide(TopAbs_Orientation&      Or1,
                      TopAbs_Orientation&      Or2,
@@ -507,8 +487,6 @@ int ChFi3d::NextSide(TopAbs_Orientation&      Or1,
   return ChoixConge;
 }
 
-//=================================================================================================
-
 void ChFi3d::NextSide(TopAbs_Orientation&      Or,
                       const TopAbs_Orientation OrSave,
                       const TopAbs_Orientation OrFace)
@@ -522,8 +500,6 @@ void ChFi3d::NextSide(TopAbs_Orientation&      Or,
     Or = TopAbs::Reverse(OrSave);
   }
 }
-
-//=================================================================================================
 
 bool ChFi3d::SameSide(const TopAbs_Orientation Or,
                       const TopAbs_Orientation OrSave1,
@@ -551,8 +527,6 @@ bool ChFi3d::SameSide(const TopAbs_Orientation Or,
   return (o1 == o2);
 }
 
-//=================================================================================================
-
 void Correct2dPoint(const TopoDS_Face& theF, gp_Pnt2d& theP2d)
 {
   BRepAdaptor_Surface aBAS(theF, false);
@@ -560,11 +534,11 @@ void Correct2dPoint(const TopoDS_Face& theF, gp_Pnt2d& theP2d)
   {
     return;
   }
-  //
+
   const double coeff = 0.01;
   double       eps;
   double       u1, u2, v1, v2;
-  //
+
   aBAS.Initialize(theF, true);
   u1 = aBAS.FirstUParameter();
   u2 = aBAS.LastUParameter();

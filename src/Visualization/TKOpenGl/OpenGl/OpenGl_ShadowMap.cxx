@@ -1,15 +1,4 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OpenGl_ShadowMap.hpp>
 
@@ -20,8 +9,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_ShadowMap, OpenGl_NamedResource)
 
-//=================================================================================================
-
 OpenGl_ShadowMap::OpenGl_ShadowMap()
     : OpenGl_NamedResource("shadow_map"),
       myShadowMapFbo(new OpenGl_FrameBuffer(myResourceId + ":fbo")),
@@ -30,55 +17,43 @@ OpenGl_ShadowMap::OpenGl_ShadowMap()
 {
 }
 
-//=================================================================================================
-
 void OpenGl_ShadowMap::Release(OpenGl_Context* theCtx)
 {
   myShadowMapFbo->Release(theCtx);
 }
-
-//=================================================================================================
 
 OpenGl_ShadowMap::~OpenGl_ShadowMap()
 {
   Release(nullptr);
 }
 
-//=================================================================================================
-
 size_t OpenGl_ShadowMap::EstimatedDataSize() const
 {
   return myShadowMapFbo->EstimatedDataSize();
 }
-
-//=================================================================================================
 
 bool OpenGl_ShadowMap::IsValid() const
 {
   return myShadowMapFbo->IsValid();
 }
 
-//=================================================================================================
-
 const occ::handle<OpenGl_Texture>& OpenGl_ShadowMap::Texture() const
 {
   return myShadowMapFbo->DepthStencilTexture();
 }
 
-//=================================================================================================
-
 bool OpenGl_ShadowMap::UpdateCamera(const Graphic3d_CView& theView, const gp_XYZ* theOrigin)
 {
-  // clang-format off
-  const Bnd_Box aMinMaxBox  = theOrigin == nullptr ? theView.MinMaxValues (false) : Bnd_Box(); // applicative min max boundaries
-  // clang-format on
+
+  const Bnd_Box aMinMaxBox = theOrigin == nullptr ? theView.MinMaxValues(false) : Bnd_Box();
+
   const Bnd_Box aGraphicBox = aMinMaxBox;
 
   switch (myShadowLight->Type())
   {
     case Graphic3d_TypeOfLightSource_Ambient:
     {
-      return false; // not applicable
+      return false;
     }
     case Graphic3d_TypeOfLightSource_Directional:
     {
@@ -109,15 +84,11 @@ bool OpenGl_ShadowMap::UpdateCamera(const Graphic3d_CView& theView, const gp_XYZ
                               : gp::DX());
       myShadowCamera->OrthogonalizeUp();
 
-      // Fitting entire scene to the light might produce a shadow map of too low resolution.
-      // More reliable approach would be putting a center to a current eye position and limiting
-      // maximum range, so that shadow range will be limited to some reasonable distance from
-      // current eye.
       if (myShadowCamera->FitMinMax(aMinMaxBox, 10.0 * Precision::Confusion(), false))
       {
-        // clang-format off
-        myShadowCamera->SetScale (std::max (myShadowCamera->ViewDimensions().X() * 1.1, myShadowCamera->ViewDimensions().Y() * 1.1)); // add margin
-        // clang-format on
+
+        myShadowCamera->SetScale(std::max(myShadowCamera->ViewDimensions().X() * 1.1,
+                                          myShadowCamera->ViewDimensions().Y() * 1.1));
       }
       myShadowCamera->ZFitAll(1.0, aMinMaxBox, aGraphicBox);
       myLightMatrix = myShadowCamera->ProjectionMatrixF() * myShadowCamera->OrientationMatrixF();
@@ -125,8 +96,8 @@ bool OpenGl_ShadowMap::UpdateCamera(const Graphic3d_CView& theView, const gp_XYZ
     }
     case Graphic3d_TypeOfLightSource_Positional:
     {
-      // render into cubemap shadowmap texture
-      return false; // not implemented
+
+      return false;
     }
     case Graphic3d_TypeOfLightSource_Spot:
     {
@@ -173,8 +144,6 @@ bool OpenGl_ShadowMap::UpdateCamera(const Graphic3d_CView& theView, const gp_XYZ
   return false;
 }
 
-//=================================================================================================
-
 void OpenGl_ShadowMapArray::Release(OpenGl_Context* theCtx)
 {
   for (int anIter = Lower(); anIter <= Upper(); ++anIter)
@@ -185,8 +154,6 @@ void OpenGl_ShadowMapArray::Release(OpenGl_Context* theCtx)
     }
   }
 }
-
-//=================================================================================================
 
 size_t OpenGl_ShadowMapArray::EstimatedDataSize() const
 {

@@ -5,11 +5,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_NodeRepresentation, StepRepr_Representation)
 
-//=================================================================================================
-
 StepFEA_NodeRepresentation::StepFEA_NodeRepresentation() = default;
-
-//=================================================================================================
 
 void StepFEA_NodeRepresentation::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentation_Name,
@@ -25,14 +21,10 @@ void StepFEA_NodeRepresentation::Init(
   theModelRef = aModelRef;
 }
 
-//=================================================================================================
-
 occ::handle<StepFEA_FeaModel> StepFEA_NodeRepresentation::ModelRef() const
 {
   return theModelRef;
 }
-
-//=================================================================================================
 
 void StepFEA_NodeRepresentation::SetModelRef(const occ::handle<StepFEA_FeaModel>& aModelRef)
 {

@@ -15,25 +15,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_IntPackedMapDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_IntPackedMapDriver::BinMDataStd_IntPackedMapDriver(
   const occ::handle<Message_Messenger>& theMessageDriver)
     : BinMDF_ADriver(theMessageDriver, STANDARD_TYPE(TDataStd_IntPackedMap)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_IntPackedMapDriver::NewEmpty() const
 {
   return new TDataStd_IntPackedMap;
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 
 bool BinMDataStd_IntPackedMapDriver::Paste(const BinObjMgt_Persistent&       Source,
                                            const occ::handle<TDF_Attribute>& Target,
@@ -85,15 +76,10 @@ bool BinMDataStd_IntPackedMapDriver::Paste(const BinObjMgt_Persistent&       Sou
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
-
 void BinMDataStd_IntPackedMapDriver::Paste(
   const occ::handle<TDF_Attribute>& Source,
   BinObjMgt_Persistent&             Target,
-  NCollection_IndexedMap<occ::handle<Standard_Transient>>& /*RelocTable*/) const
+  NCollection_IndexedMap<occ::handle<Standard_Transient>>&) const
 {
   occ::handle<TDataStd_IntPackedMap> anAtt = occ::down_cast<TDataStd_IntPackedMap>(Source);
   if (anAtt.IsNull())

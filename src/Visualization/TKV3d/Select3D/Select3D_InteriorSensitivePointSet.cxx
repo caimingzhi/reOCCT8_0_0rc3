@@ -7,7 +7,6 @@ IMPLEMENT_STANDARD_RTTIEXT(Select3D_InteriorSensitivePointSet, Select3D_Sensitiv
 namespace
 {
 
-  // Internal class for creation of planar polygons
   class Select3D_Plane
   {
   public:
@@ -47,13 +46,8 @@ namespace
     bool                     myIsInitialized;
   };
 
-} // anonymous namespace
+} // namespace
 
-// =======================================================================
-// function : Select3D_InteriorSensitivePointSet
-// purpose  : Splits the given point set thePoints onto planar convex
-//            polygons
-// =======================================================================
 Select3D_InteriorSensitivePointSet::Select3D_InteriorSensitivePointSet(
   const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
   const NCollection_Array1<gp_Pnt>&         thePoints)
@@ -103,7 +97,7 @@ Select3D_InteriorSensitivePointSet::Select3D_InteriorSensitivePointSet(
       double        anAngle = aVec1.Dot(aVec2);
       if (!aPlane.Contains(thePoints.Value(aPntIter)) || anAngle > Precision::Confusion())
       {
-        // subtract 1 due to indexation from zero in sub-polygons
+
         int                                      anUpperBound = aPntIter - aStartIdx - 1;
         occ::handle<NCollection_HArray1<gp_Pnt>> aPointsArray =
           new NCollection_HArray1<gp_Pnt>(0, anUpperBound);
@@ -147,11 +141,6 @@ Select3D_InteriorSensitivePointSet::Select3D_InteriorSensitivePointSet(
   }
 }
 
-// =======================================================================
-// function : GetPoints
-// purpose  : Initializes the given array theHArrayOfPnt by 3d
-//            coordinates of vertices of the whole point set
-// =======================================================================
 void Select3D_InteriorSensitivePointSet::GetPoints(
   occ::handle<NCollection_HArray1<gp_Pnt>>& theHArrayOfPnt)
 {
@@ -181,31 +170,17 @@ void Select3D_InteriorSensitivePointSet::GetPoints(
   }
 }
 
-//=======================================================================
-// function : Size
-// purpose  : Returns the length of vector of planar convex polygons
-//=======================================================================
 int Select3D_InteriorSensitivePointSet::Size() const
 {
   return myPlanarPolygons.Length();
 }
 
-//=======================================================================
-// function : Box
-// purpose  : Returns bounding box of planar convex polygon with index
-//            theIdx
-//=======================================================================
 Select3D_BndBox3d Select3D_InteriorSensitivePointSet::Box(const int theIdx) const
 {
   int aPolygIdx = myPolygonsIdxs->Value(theIdx);
   return myPlanarPolygons.Value(aPolygIdx)->BoundingBox();
 }
 
-//=======================================================================
-// function : Center
-// purpose  : Returns geometry center of planar convex polygon with index
-//            theIdx in the vector along the given axis theAxis
-//=======================================================================
 double Select3D_InteriorSensitivePointSet::Center(const int theIdx, const int theAxis) const
 {
   const int    aPolygIdx = myPolygonsIdxs->Value(theIdx);
@@ -213,10 +188,6 @@ double Select3D_InteriorSensitivePointSet::Center(const int theIdx, const int th
   return aCOG.Coord(theAxis - 1);
 }
 
-//=======================================================================
-// function : Swap
-// purpose  : Swaps items with indexes theIdx1 and theIdx2 in the vector
-//=======================================================================
 void Select3D_InteriorSensitivePointSet::Swap(const int theIdx1, const int theIdx2)
 {
   int aPolygIdx1 = myPolygonsIdxs->Value(theIdx1);
@@ -225,8 +196,6 @@ void Select3D_InteriorSensitivePointSet::Swap(const int theIdx1, const int theId
   myPolygonsIdxs->ChangeValue(theIdx1) = aPolygIdx2;
   myPolygonsIdxs->ChangeValue(theIdx2) = aPolygIdx1;
 }
-
-//=================================================================================================
 
 bool Select3D_InteriorSensitivePointSet::overlapsElement(
   SelectBasics_PickResult&             thePickResult,
@@ -241,8 +210,6 @@ bool Select3D_InteriorSensitivePointSet::overlapsElement(
   return theMgr.OverlapsPolygon(aPoints->Array1(), Select3D_TOS_INTERIOR, thePickResult);
 }
 
-//=================================================================================================
-
 bool Select3D_InteriorSensitivePointSet::elementIsInside(
   SelectBasics_SelectingVolumeManager& theMgr,
   int                                  theElemIdx,
@@ -252,47 +219,26 @@ bool Select3D_InteriorSensitivePointSet::elementIsInside(
   return overlapsElement(aDummy, theMgr, theElemIdx, theIsFullInside);
 }
 
-// =======================================================================
-// function : distanceToCOG
-// purpose  : Calculates distance from the 3d projection of used-picked
-//            screen point to center of the geometry
-// =======================================================================
 double Select3D_InteriorSensitivePointSet::distanceToCOG(
   SelectBasics_SelectingVolumeManager& theMgr)
 {
   return theMgr.DistToGeometryCenter(myCOG);
 }
 
-//=======================================================================
-// function : BoundingBox
-// purpose  : Returns bounding box of the point set. If location
-//            transformation is set, it will be applied
-//=======================================================================
 Select3D_BndBox3d Select3D_InteriorSensitivePointSet::BoundingBox()
 {
   return myBndBox;
 }
 
-//=======================================================================
-// function : CenterOfGeometry
-// purpose  : Returns center of the point set. If location transformation
-//            is set, it will be applied
-//=======================================================================
 gp_Pnt Select3D_InteriorSensitivePointSet::CenterOfGeometry() const
 {
   return myCOG;
 }
 
-//=======================================================================
-// function : NbSubElements
-// purpose  : Returns the amount of points in set
-//=======================================================================
 int Select3D_InteriorSensitivePointSet::NbSubElements() const
 {
   return myPlanarPolygons.Length();
 }
-
-//=================================================================================================
 
 void Select3D_InteriorSensitivePointSet::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

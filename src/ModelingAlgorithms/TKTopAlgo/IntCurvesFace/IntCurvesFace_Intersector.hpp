@@ -28,91 +28,45 @@ class IntCurvesFace_Intersector : public Standard_Transient
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Load a Face.
-  //!
-  //! The Tolerance <Tol> is used to determine if the
-  //! first point of the segment is near the face. In
-  //! that case, the parameter of the intersection point
-  //! on the line can be a negative value (greater than -Tol).
-  //! If aRestr = true UV bounding box of face is used to restrict
-  //! it's underlined surface,
-  //! otherwise surface is not restricted.
-  //! If UseBToler = false then the 2d-point of intersection is classified with null-tolerance
-  //! (relative to face);
-  //! otherwise it's using maximum between input tolerance(aTol) and tolerances of face bounds
-  //! (edges).
   Standard_EXPORT IntCurvesFace_Intersector(const TopoDS_Face& F,
                                             const double       aTol,
                                             const bool         aRestr    = true,
                                             const bool         UseBToler = true);
 
-  //! Perform the intersection between the
-  //! segment L and the loaded face.
-  //!
-  //! PInf is the smallest parameter on the line
-  //! PSup is the highest parameter on the line
-  //!
-  //! For an infinite line PInf and PSup can be
-  //! +/- RealLast.
   Standard_EXPORT void Perform(const gp_Lin& L, const double PInf, const double PSup);
 
-  //! same method for a HCurve from Adaptor3d.
-  //! PInf an PSup can also be - and + INF.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Curve>& HCu,
                                const double                        PInf,
                                const double                        PSup);
 
-  //! Return the surface type
   Standard_EXPORT GeomAbs_SurfaceType SurfaceType() const;
 
-  //! True is returned when the intersection have been computed.
   bool IsDone() const;
 
   int NbPnt() const;
 
-  //! Returns the U parameter of the ith intersection point
-  //! on the surface.
   double UParameter(const int I) const;
 
-  //! Returns the V parameter of the ith intersection point
-  //! on the surface.
   double VParameter(const int I) const;
 
-  //! Returns the parameter of the ith intersection point
-  //! on the line.
   double WParameter(const int I) const;
 
-  //! Returns the geometric point of the ith intersection
-  //! between the line and the surface.
   const gp_Pnt& Pnt(const int I) const;
 
-  //! Returns the ith transition of the line on the surface.
   IntCurveSurface_TransitionOnCurve Transition(const int I) const;
 
-  //! Returns the ith state of the point on the face.
-  //! The values can be either TopAbs_IN
-  //! ( the point is in the face)
-  //! or TopAbs_ON
-  //! ( the point is on a boundary of the face).
   TopAbs_State State(const int I) const;
 
-  //! Returns true if curve is parallel or belongs face surface
-  //! This case is recognized only for some pairs
-  //! of analytical curves and surfaces (plane - line, ...)
   bool IsParallel() const;
 
-  //! Returns the significant face used to determine
-  //! the intersection.
   const TopoDS_Face& Face() const;
 
   Standard_EXPORT TopAbs_State ClassifyUVPoint(const gp_Pnt2d& Puv) const;
 
   Standard_EXPORT Bnd_Box Bounding() const;
 
-  //! Sets the boundary tolerance flag
   Standard_EXPORT void SetUseBoundToler(bool UseBToler);
 
-  //! Returns the boundary tolerance flag
   Standard_EXPORT bool GetUseBoundToler() const;
 
   Standard_EXPORT ~IntCurvesFace_Intersector() override;
@@ -134,69 +88,52 @@ private:
   std::unique_ptr<IntCurveSurface_ThePolyhedronOfHInter>  myPolyhedron;
   std::unique_ptr<Bnd_BoundSortBox>                       myBndBounding;
   bool                                                    myUseBoundTol;
-  bool myIsParallel; // Curve is "parallel" face surface
-                     // This case is recognized only for some pairs
-                     // of analytical curves and surfaces (plane - line, ...)
+  bool                                                    myIsParallel;
 };
 
 #include <IntCurveSurface_IntersectionPoint.hpp>
 #include <TopAbs_State.hpp>
 
-//============================================================================
 inline bool IntCurvesFace_Intersector::IsDone() const
 {
   return (done);
 }
 
-//============================================================================
 inline int IntCurvesFace_Intersector::NbPnt() const
 {
   return (nbpnt);
 }
 
-//============================================================================
 inline const gp_Pnt& IntCurvesFace_Intersector::Pnt(const int i) const
 {
   return (SeqPnt.Value(i).Pnt());
 }
 
-//============================================================================
 inline double IntCurvesFace_Intersector::UParameter(const int i) const
 {
   return (SeqPnt.Value(i).U());
 }
 
-//============================================================================
 inline double IntCurvesFace_Intersector::VParameter(const int i) const
 {
   return (SeqPnt.Value(i).V());
 }
 
-//============================================================================
 inline double IntCurvesFace_Intersector::WParameter(const int i) const
 {
   return (SeqPnt.Value(i).W());
 }
 
-//============================================================================
 inline IntCurveSurface_TransitionOnCurve IntCurvesFace_Intersector::Transition(const int i) const
 {
   return (SeqPnt.Value(i).Transition());
 }
 
-//============================================================================
-//  Modified by skv - Wed Sep  3 15:34:18 2003 OCC578 Begin
-//  //inline TopAbs_State IntCurvesFace_Intersector::State(const int i) const {
-// inline TopAbs_State IntCurvesFace_Intersector::State(const int ) const {
-//   return(TopAbs_IN);
-// }
 inline TopAbs_State IntCurvesFace_Intersector::State(const int i) const
 {
   return (mySeqState.Value(i) == 0) ? TopAbs_IN : TopAbs_ON;
 }
 
-//  Modified by skv - Wed Sep  3 15:34:20 2003 OCC578 End
-//============================================================================
 inline bool IntCurvesFace_Intersector::IsParallel() const
 {
   return myIsParallel;
@@ -206,5 +143,3 @@ inline const TopoDS_Face& IntCurvesFace_Intersector::Face() const
 {
   return (face);
 }
-
-//============================================================================

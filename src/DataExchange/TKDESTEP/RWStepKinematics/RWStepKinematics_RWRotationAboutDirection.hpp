@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_RotationAboutDirection;
 
-//! Read & Write tool for RotationAboutDirection
 class RWStepKinematics_RWRotationAboutDirection
 {
 public:

@@ -2,82 +2,59 @@
 
 #include <BVH_BoxSet.hpp>
 
-//! Implements easy to use interfaces for adding the elements into
-//! BVH tree and its following construction.
-//! To make it more effective it is better to set the number of elements
-//! that are going to be added into BVH tree.
-//! It uses the indirect indexing for accessing the elements and their boxes
-//! which allows using heavy data types as elements with better efficiency
-//! during BVH construction and just a bit slower selection time.
-//! Due to better BVH tree construction time the class will be more efficient
-//! than BVH_BoxSet on the operations where just a few selections from
-//! the tree required.
-//!
-//! \tparam NumType Numeric data type
-//! \tparam Dimension Vector dimension
-//! \tparam DataType Type of elements on which the boxes are built
 template <class NumType, int Dimension, class DataType = int>
 class BVH_IndexedBoxSet : public BVH_BoxSet<NumType, Dimension, DataType>
 {
-public: //! @name Constructors
-  //! Empty constructor for use the default BVH_Builder
+public:
   BVH_IndexedBoxSet()
       : BVH_BoxSet<NumType, Dimension, DataType>()
   {
   }
 
-  //! Constructor for usage the custom BVH builder
   BVH_IndexedBoxSet(const opencascade::handle<BVH_Builder<NumType, Dimension>>& theBuilder)
       : BVH_BoxSet<NumType, Dimension, DataType>(theBuilder)
   {
   }
 
-public: //! @name Setting expected size of the BVH
-  //! Sets the expected size of BVH tree
+public:
   void SetSize(const size_t theSize) override
   {
     myIndices.reserve(theSize);
     BVH_BoxSet<NumType, Dimension, DataType>::SetSize(theSize);
   }
 
-public: //! @name Adding elements in BVH
-  //! Adds the element into BVH
+public:
   void Add(const DataType& theElement, const BVH_Box<NumType, Dimension>& theBox) override
   {
     myIndices.push_back(static_cast<int>(myIndices.size()));
     BVH_BoxSet<NumType, Dimension, DataType>::Add(theElement, theBox);
   }
 
-public: //! @name Clearing the elements and boxes
-  //! Clears the vectors of elements and boxes
+public:
   void Clear() override
   {
     myIndices.clear();
     BVH_BoxSet<NumType, Dimension, DataType>::Clear();
   }
 
-public: //! @name Necessary overrides for BVH construction
-  //! Make inherited method Box() visible to avoid CLang warning
+public:
   using BVH_BoxSet<NumType, Dimension, DataType>::Box;
 
-  //! Returns the bounding box with the given index.
   BVH_Box<NumType, Dimension> Box(const int theIndex) const override
   {
     return this->myBoxes[myIndices[theIndex]];
   }
 
-  //! Swaps indices of two specified boxes.
   void Swap(const int theIndex1, const int theIndex2) override
   {
     std::swap(myIndices[theIndex1], myIndices[theIndex2]);
   }
 
-  //! Returns the Element with the index theIndex.
   DataType Element(const int theIndex) const override
   {
     return this->myElements[myIndices[theIndex]];
   }
 
-protected: //! @name Fields
+protected:
   std::vector<int> myIndices;
 };

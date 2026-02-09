@@ -7,18 +7,6 @@
 #include <NCollection_DataMap.hpp>
 
 #include <StdObject_gp_Curves.hpp>
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
 #include <StdObject_gp_Axes.hpp>
 
@@ -133,14 +121,12 @@ public:
   class Geometry : public StdObjMgt_Persistent
   {
   public:
-    //! Read persistent data from a file.
     Standard_EXPORT void Read(StdObjMgt_ReadData& theReadData) override;
-    //! Write persistent data to a file.
+
     Standard_EXPORT void Write(StdObjMgt_WriteData& theWriteData) const override;
-    //! Gets persistent objects
+
     Standard_EXPORT void PChildren(SequenceOfPersistent& theChildren) const override;
 
-    //! Returns persistent type name
     const char* PName() const override { return "PGeom_Geometry"; }
   };
 
@@ -148,16 +134,14 @@ protected:
   template <class Transient>
   struct geometryBase : public DelayedBase<Geometry, Transient>
   {
-    //! Write persistent data to a file.
+
     void Write(StdObjMgt_WriteData&) const override
     {
       throw Standard_NotImplemented("ShapePersistent_Geom::geometryBase::Write - not implemented");
     }
 
-    //! Gets persistent child objects
     void PChildren(StdObjMgt_Persistent::SequenceOfPersistent&) const override {}
 
-    //! Returns persistent type name
     const char* PName() const override
     {
       throw Standard_NotImplemented("ShapePersistent_Geom::geometryBase::PName - not implemented");
@@ -168,19 +152,15 @@ protected:
   class subBase : public Base
   {
   public:
-    //! Read persistent data from a file.
     void Read(StdObjMgt_ReadData& theReadData) override { PData().Read(theReadData); }
 
-    //! Write persistent data to a file.
     void Write(StdObjMgt_WriteData& theWriteData) const override { PData().Write(theWriteData); }
 
-    //! Gets persistent child objects
     void PChildren(StdObjMgt_Persistent::SequenceOfPersistent&) const override
     {
       throw Standard_NotImplemented("ShapePersistent_Geom::subBase::PChildren - not implemented");
     }
 
-    //! Returns persistent type name
     const char* PName() const override
     {
       throw Standard_NotImplemented("ShapePersistent_Geom::subBase::PName - not implemented");
@@ -191,16 +171,12 @@ protected:
   struct subBase_gp : public Base
   {
   public:
-    //! Read persistent data from a file.
     void Read(StdObjMgt_ReadData&) override {}
 
-    //! Write persistent data to a file.
     void Write(StdObjMgt_WriteData&) const override {}
 
-    //! Gets persistent child objects
     void PChildren(StdObjMgt_Persistent::SequenceOfPersistent&) const override {}
 
-    //! Returns persistent type name
     const char* PName() const override
     {
       throw Standard_NotImplemented("ShapePersistent_Geom::subBase_gp::PName - not implemented");
@@ -210,7 +186,7 @@ protected:
   template <class Base>
   struct subBase_empty : Base
   {
-    //! Returns persistent type name
+
     const char* PName() const override
     {
       throw Standard_NotImplemented("ShapePersistent_Geom::subBase_empty::PName - not implemented");
@@ -221,7 +197,6 @@ protected:
   class instance : public Base
   {
   public:
-    //! Read persistent data from a file.
     void Read(StdObjMgt_ReadData& theReadData) override
     {
       Data aData;
@@ -229,16 +204,13 @@ protected:
       this->myTransient = new Target(aData);
     }
 
-    //! Gets persistent child objects
     void PChildren(StdObjMgt_Persistent::SequenceOfPersistent&) const override {}
 
-    //! Write persistent data to a file.
     void Write(StdObjMgt_WriteData&) const override
     {
       throw Standard_NotImplemented("ShapePersistent_Geom::instance::Write - not implemented");
     }
 
-    //! Returns persistent type name
     const char* PName() const override
     {
       throw Standard_NotImplemented("ShapePersistent_Geom::instance::PName - not implemented");
@@ -266,31 +238,22 @@ public:
   typedef geometryBase<Geom_Surface> Surface;
 
 public:
-  //! Create a persistent object for a curve
   Standard_EXPORT static occ::handle<Curve> Translate(
     const occ::handle<Geom_Curve>& theCurve,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a curve
+
   Standard_EXPORT static occ::handle<Surface> Translate(
     const occ::handle<Geom_Surface>& theSurf,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
 };
 
-//=======================================================================
-// Point
-//=======================================================================
-
 template <>
 inline const char* ShapePersistent_Geom::subBase_empty<ShapePersistent_Geom::basic>::PName() const
 {
   return "PGeom_Point";
 }
-
-//=======================================================================
-// CartesianPoint
-//=======================================================================
 
 template <>
 inline const char* ShapePersistent_Geom::
@@ -308,20 +271,12 @@ inline void ShapePersistent_Geom::instance<ShapePersistent_Geom::Point,
   theWriteData << aMyGeom->Pnt();
 }
 
-//=======================================================================
-// Vector
-//=======================================================================
-
 template <>
 inline const char* ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::basic, gp_Vec>::PName()
   const
 {
   return "PGeom_Vector";
 }
-
-//=======================================================================
-// Direction
-//=======================================================================
 
 template <>
 inline const char* ShapePersistent_Geom::
@@ -338,10 +293,6 @@ inline void ShapePersistent_Geom::instance<ShapePersistent_Geom::Direction,
   occ::handle<Geom_Direction> aMyGeom = occ::down_cast<Geom_Direction>(myTransient);
   theWriteData << aMyGeom->Dir();
 }
-
-//=======================================================================
-// VectorWithMagnitude
-//=======================================================================
 
 template <>
 inline const char* ShapePersistent_Geom::instance<ShapePersistent_Geom::VectorWithMagnitude,
@@ -361,20 +312,12 @@ inline void ShapePersistent_Geom::instance<ShapePersistent_Geom::VectorWithMagni
   theWriteData << aMyGeom->Vec();
 }
 
-//=======================================================================
-// AxisPlacement
-//=======================================================================
-
 template <>
 inline const char* ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::basic, gp_Ax1>::PName()
   const
 {
   return "PGeom_AxisPlacement";
 }
-
-//=======================================================================
-// Axis1Placement
-//=======================================================================
 
 template <>
 inline const char* ShapePersistent_Geom::
@@ -391,10 +334,6 @@ inline void ShapePersistent_Geom::instance<ShapePersistent_Geom::Axis1Placement,
   occ::handle<Geom_Axis1Placement> aMyGeom = occ::down_cast<Geom_Axis1Placement>(myTransient);
   write(theWriteData, aMyGeom->Ax1());
 }
-
-//=======================================================================
-// Axis2Placement
-//=======================================================================
 
 template <>
 inline const char* ShapePersistent_Geom::instance<ShapePersistent_Geom::AxisPlacement,
@@ -427,10 +366,6 @@ inline void ShapePersistent_Geom::instance<ShapePersistent_Geom::AxisPlacement,
   write(theWriteData, anAxis) << anXDirection;
 }
 
-//=======================================================================
-// Transformation
-//=======================================================================
-
 template <>
 inline const char* ShapePersistent_Geom::
   instance<ShapePersistent_Geom::Transformation, Geom_Transformation, gp_Trsf>::PName() const
@@ -446,29 +381,17 @@ inline void ShapePersistent_Geom::instance<ShapePersistent_Geom::Transformation,
   theWriteData << myTransient->Trsf();
 }
 
-//=======================================================================
-// Geometry
-//=======================================================================
-
 template <>
 inline const char* ShapePersistent_Geom::geometryBase<Geom_Geometry>::PName() const
 {
   return "PGeom_Geometry";
 }
 
-//=======================================================================
-// Curve
-//=======================================================================
-
 template <>
 inline const char* ShapePersistent_Geom::geometryBase<Geom_Curve>::PName() const
 {
   return "PGeom_Curve";
 }
-
-//=======================================================================
-// Surface
-//=======================================================================
 
 template <>
 inline const char* ShapePersistent_Geom::geometryBase<Geom_Surface>::PName() const

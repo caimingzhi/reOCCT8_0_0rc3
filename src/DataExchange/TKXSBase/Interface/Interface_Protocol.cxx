@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_Graph.hpp>
@@ -20,37 +9,26 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Interface_Protocol, Standard_Transient)
 
-//  Management of active Protocol: very simple, a static variable
 static occ::handle<Interface_Protocol>& theactive()
 {
   static occ::handle<Interface_Protocol> theact;
   return theact;
 }
 
-//=================================================================================================
-
 occ::handle<Interface_Protocol> Interface_Protocol::Active()
 {
   return theactive();
 }
-
-//=================================================================================================
 
 void Interface_Protocol::SetActive(const occ::handle<Interface_Protocol>& aprotocol)
 {
   theactive() = aprotocol;
 }
 
-//=================================================================================================
-
 void Interface_Protocol::ClearActive()
 {
   theactive().Nullify();
 }
-
-//  ===   Typing (formulas provided by default)
-
-//=================================================================================================
 
 int Interface_Protocol::CaseNumber(const occ::handle<Standard_Transient>& obj) const
 {
@@ -59,34 +37,25 @@ int Interface_Protocol::CaseNumber(const occ::handle<Standard_Transient>& obj) c
   return TypeNumber(Type(obj));
 }
 
-//=================================================================================================
-
-bool Interface_Protocol::IsDynamicType(const occ::handle<Standard_Transient>& /*obj*/) const
+bool Interface_Protocol::IsDynamicType(const occ::handle<Standard_Transient>&) const
 {
   return true;
 }
 
-//=================================================================================================
-
-int Interface_Protocol::NbTypes(const occ::handle<Standard_Transient>& /*obj*/) const
+int Interface_Protocol::NbTypes(const occ::handle<Standard_Transient>&) const
 {
   return 1;
 }
 
-//=================================================================================================
-
 occ::handle<Standard_Type> Interface_Protocol::Type(const occ::handle<Standard_Transient>& obj,
-                                                    const int /*nt*/) const
+                                                    const int) const
 {
   if (obj.IsNull())
     return STANDARD_TYPE(Standard_Transient);
   return obj->DynamicType();
 }
 
-//=================================================================================================
-
-bool Interface_Protocol::GlobalCheck(const Interface_Graph& /*graph*/,
-                                     occ::handle<Interface_Check>& /*ach*/) const
+bool Interface_Protocol::GlobalCheck(const Interface_Graph&, occ::handle<Interface_Check>&) const
 {
   return true;
 }

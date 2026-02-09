@@ -9,7 +9,6 @@
 #include <HLRBRep_CurveTool.hpp>
 #include <Standard_TypeDef.hpp>
 
-//! Type alias for 2D curve extremum function using HLRBRep_CurveTool.
 using HLRBRep_PCLocFOfTheLocateExtPCOfTheProjPCurOfCInter =
   Extrema_GFuncExtPC<HLRBRep_CurvePtr,
                      HLRBRep_CurveTool,

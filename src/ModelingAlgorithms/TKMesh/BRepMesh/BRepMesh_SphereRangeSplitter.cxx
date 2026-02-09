@@ -1,12 +1,10 @@
 #include <BRepMesh_SphereRangeSplitter.hpp>
 #include <GCPnts_TangentialDeflection.hpp>
 
-//=================================================================================================
-
 Handle(IMeshData::ListOfPnt2d) BRepMesh_SphereRangeSplitter::GenerateSurfaceNodes(
   const IMeshTools_Parameters& theParameters) const
 {
-  // Calculate parameters for iteration in V direction
+
   double aStep =
     0.7
     * GCPnts_TangentialDeflection::ArcAngularStep(GetDFace()->GetSurface()->Sphere().Radius(),

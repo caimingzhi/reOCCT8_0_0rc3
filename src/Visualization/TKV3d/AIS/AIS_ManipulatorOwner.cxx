@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_ManipulatorOwner, SelectMgr_EntityOwner)
 
-//=================================================================================================
-
 AIS_ManipulatorOwner::AIS_ManipulatorOwner(
   const occ::handle<SelectMgr_SelectableObject>& theSelObject,
   const int                                      theIndex,
@@ -14,8 +12,6 @@ AIS_ManipulatorOwner::AIS_ManipulatorOwner(
       myMode(theMode)
 {
 }
-
-//=================================================================================================
 
 void AIS_ManipulatorOwner::HilightWithColor(const occ::handle<PrsMgr_PresentationManager>& thePM,
                                             const occ::handle<Prs3d_Drawer>&               theStyle,
@@ -30,10 +26,8 @@ void AIS_ManipulatorOwner::HilightWithColor(const occ::handle<PrsMgr_Presentatio
   Selectable()->HilightOwnerWithColor(thePM, theStyle, this);
 }
 
-//=================================================================================================
-
 bool AIS_ManipulatorOwner::IsHilighted(const occ::handle<PrsMgr_PresentationManager>& thePM,
-                                       const int /*theMode*/) const
+                                       const int) const
 {
   if (!HasSelectable())
   {
@@ -43,10 +37,8 @@ bool AIS_ManipulatorOwner::IsHilighted(const occ::handle<PrsMgr_PresentationMana
   return thePM->IsHighlighted(Selectable(), myMode);
 }
 
-//=================================================================================================
-
 void AIS_ManipulatorOwner::Unhilight(const occ::handle<PrsMgr_PresentationManager>& thePM,
-                                     const int /*theMode*/)
+                                     const int)
 {
   if (!HasSelectable())
   {

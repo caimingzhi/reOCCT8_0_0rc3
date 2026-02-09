@@ -1,15 +1,4 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <SelectMgr_AxisIntersector.hpp>
 
@@ -18,15 +7,9 @@
 #include <SelectBasics_PickResult.hpp>
 #include <SelectMgr_ViewClipRange.hpp>
 
-//=================================================================================================
-
 SelectMgr_AxisIntersector::SelectMgr_AxisIntersector() = default;
 
-//=================================================================================================
-
 SelectMgr_AxisIntersector::~SelectMgr_AxisIntersector() = default;
-
-//=================================================================================================
 
 void SelectMgr_AxisIntersector::Init(const gp_Ax1& theAxis)
 {
@@ -34,15 +17,9 @@ void SelectMgr_AxisIntersector::Init(const gp_Ax1& theAxis)
   myAxis          = theAxis;
 }
 
-//=================================================================================================
-
 void SelectMgr_AxisIntersector::Build() {}
 
-//=================================================================================================
-
 void SelectMgr_AxisIntersector::SetCamera(const occ::handle<Graphic3d_Camera>&) {}
-
-//=================================================================================================
 
 occ::handle<SelectMgr_BaseIntersector> SelectMgr_AxisIntersector::ScaleAndTransform(
   const int                                    theScaleFactor,
@@ -73,11 +50,6 @@ occ::handle<SelectMgr_BaseIntersector> SelectMgr_AxisIntersector::ScaleAndTransf
   return aRes;
 }
 
-//=======================================================================
-// function : CopyWithBuilder
-// purpose  : Returns a copy of the frustum using the given frustum builder configuration.
-//            Returned frustum should be re-constructed before being used.
-//=======================================================================
 occ::handle<SelectMgr_BaseIntersector> SelectMgr_AxisIntersector::CopyWithBuilder(
   const occ::handle<SelectMgr_FrustumBuilder>& theBuilder) const
 {
@@ -92,8 +64,6 @@ occ::handle<SelectMgr_BaseIntersector> SelectMgr_AxisIntersector::CopyWithBuilde
 
   return aRes;
 }
-
-//=================================================================================================
 
 bool SelectMgr_AxisIntersector::hasIntersection(const NCollection_Vec3<double>& theBoxMin,
                                                 const NCollection_Vec3<double>& theBoxMax,
@@ -111,14 +81,11 @@ bool SelectMgr_AxisIntersector::hasIntersection(const NCollection_Vec3<double>& 
                                                   theTimeLeave);
 }
 
-//=================================================================================================
-
 bool SelectMgr_AxisIntersector::hasIntersection(const gp_Pnt& thePnt, double& theDepth) const
 {
   const gp_Pnt& anAxisLoc = myAxis.Location();
   const gp_Dir& anAxisDir = myAxis.Direction();
 
-  // Check that vectors are co-directed (thePnt lies on this axis)
   gp_Dir aDirToPnt(thePnt.XYZ() - anAxisLoc.XYZ());
   if (!anAxisDir.IsEqual(aDirToPnt, Precision::Angular()))
   {
@@ -127,8 +94,6 @@ bool SelectMgr_AxisIntersector::hasIntersection(const gp_Pnt& thePnt, double& th
   theDepth = anAxisLoc.Distance(thePnt);
   return true;
 }
-
-//=================================================================================================
 
 bool SelectMgr_AxisIntersector::raySegmentDistance(const gp_Pnt&            theSegPnt1,
                                                    const gp_Pnt&            theSegPnt2,
@@ -142,7 +107,7 @@ bool SelectMgr_AxisIntersector::raySegmentDistance(const gp_Pnt&            theS
   const double anUVNormVecMod = anUVNormVec.Modulus();
   if (anUVNormVecMod <= Precision::Confusion())
   {
-    // Lines have no intersection
+
     thePickResult.Invalidate();
     return false;
   }
@@ -151,7 +116,7 @@ bool SelectMgr_AxisIntersector::raySegmentDistance(const gp_Pnt&            theS
   const double anUWNormVecMod = anUWNormVec.Modulus();
   if (anUWNormVecMod <= Precision::Confusion())
   {
-    // Lines have no intersection
+
     thePickResult.Invalidate();
     return false;
   }
@@ -159,7 +124,7 @@ bool SelectMgr_AxisIntersector::raySegmentDistance(const gp_Pnt&            theS
   const double aParam = anUWNormVec.Dot(anUVNormVec) / anUVNormVec.SquareModulus();
   if (aParam < 0.0)
   {
-    // Intersection is out of axis start point
+
     thePickResult.Invalidate();
     return false;
   }
@@ -168,7 +133,7 @@ bool SelectMgr_AxisIntersector::raySegmentDistance(const gp_Pnt&            theS
   if ((anIntersectPnt - theSegPnt1.XYZ()).Modulus() + (anIntersectPnt - theSegPnt2.XYZ()).Modulus()
       > anU.Modulus() + Precision::Confusion())
   {
-    // Intersection point doesn't lie on the segment
+
     thePickResult.Invalidate();
     return false;
   }
@@ -177,8 +142,6 @@ bool SelectMgr_AxisIntersector::raySegmentDistance(const gp_Pnt&            theS
   thePickResult.SetPickedPoint(anIntersectPnt);
   return true;
 }
-
-//=================================================================================================
 
 bool SelectMgr_AxisIntersector::rayPlaneIntersection(const gp_Vec&            thePlane,
                                                      const gp_Pnt&            thePntOnPlane,
@@ -208,8 +171,6 @@ bool SelectMgr_AxisIntersector::rayPlaneIntersection(const gp_Vec&            th
   return true;
 }
 
-//=================================================================================================
-
 bool SelectMgr_AxisIntersector::OverlapsBox(const NCollection_Vec3<double>& theBoxMin,
                                             const NCollection_Vec3<double>& theBoxMax,
                                             bool*                           theInside) const
@@ -230,8 +191,6 @@ bool SelectMgr_AxisIntersector::OverlapsBox(const NCollection_Vec3<double>& theB
   }
   return true;
 }
-
-//=================================================================================================
 
 bool SelectMgr_AxisIntersector::OverlapsBox(const NCollection_Vec3<double>& theBoxMin,
                                             const NCollection_Vec3<double>& theBoxMax,
@@ -262,8 +221,6 @@ bool SelectMgr_AxisIntersector::OverlapsBox(const NCollection_Vec3<double>& theB
   return true;
 }
 
-//=================================================================================================
-
 bool SelectMgr_AxisIntersector::OverlapsPoint(const gp_Pnt&                  thePnt,
                                               const SelectMgr_ViewClipRange& theClipRange,
                                               SelectBasics_PickResult&       thePickResult) const
@@ -284,8 +241,6 @@ bool SelectMgr_AxisIntersector::OverlapsPoint(const gp_Pnt&                  the
   return !theClipRange.IsClipped(thePickResult.Depth());
 }
 
-//=================================================================================================
-
 bool SelectMgr_AxisIntersector::OverlapsPoint(const gp_Pnt& thePnt) const
 {
   Standard_ASSERT_RAISE(mySelectionType == SelectMgr_SelectionType_Point,
@@ -295,8 +250,6 @@ bool SelectMgr_AxisIntersector::OverlapsPoint(const gp_Pnt& thePnt) const
   double aDepth = 0.0;
   return hasIntersection(thePnt, aDepth);
 }
-
-//=================================================================================================
 
 bool SelectMgr_AxisIntersector::OverlapsSegment(const gp_Pnt&                  thePnt1,
                                                 const gp_Pnt&                  thePnt2,
@@ -314,8 +267,6 @@ bool SelectMgr_AxisIntersector::OverlapsSegment(const gp_Pnt&                  t
 
   return !theClipRange.IsClipped(thePickResult.Depth());
 }
-
-//=================================================================================================
 
 bool SelectMgr_AxisIntersector::OverlapsPolygon(const NCollection_Array1<gp_Pnt>& theArrayOfPnts,
                                                 Select3D_TypeOfSensitivity        theSensType,
@@ -360,7 +311,7 @@ bool SelectMgr_AxisIntersector::OverlapsPolygon(const NCollection_Array1<gp_Pnt>
     gp_Vec        aPolyNorm = aVec2.Crossed(aVec1);
     if (aPolyNorm.Magnitude() <= Precision::Confusion())
     {
-      // treat degenerated polygon as point
+
       return OverlapsPoint(theArrayOfPnts.First(), theClipRange, thePickResult);
     }
     else if (!rayPlaneIntersection(aPolyNorm, theArrayOfPnts.First(), thePickResult))
@@ -371,8 +322,6 @@ bool SelectMgr_AxisIntersector::OverlapsPolygon(const NCollection_Array1<gp_Pnt>
 
   return !theClipRange.IsClipped(thePickResult.Depth());
 }
-
-//=================================================================================================
 
 bool SelectMgr_AxisIntersector::OverlapsTriangle(const gp_Pnt&                  thePnt1,
                                                  const gp_Pnt&                  thePnt2,
@@ -400,7 +349,7 @@ bool SelectMgr_AxisIntersector::OverlapsTriangle(const gp_Pnt&                  
     aTriangleNormal          = aTrEdges[2].Crossed(aTrEdges[0]);
     if (aTriangleNormal.SquareMagnitude() < gp::Resolution())
     {
-      // consider degenerated triangle as point or segment
+
       return aTrEdges[0].SquareModulus() > gp::Resolution()
                ? OverlapsSegment(thePnt1, thePnt2, theClipRange, thePickResult)
                : (aTrEdges[1].SquareModulus() > gp::Resolution()
@@ -412,7 +361,7 @@ bool SelectMgr_AxisIntersector::OverlapsTriangle(const gp_Pnt&                  
     const double anAlpha  = aTriangleNormal.XYZ().Dot(myAxis.Direction().XYZ());
     if (std::abs(anAlpha) < gp::Resolution())
     {
-      // handle the case when triangle normal and selecting frustum direction are orthogonal
+
       SelectBasics_PickResult aPickResult;
       thePickResult.Invalidate();
       for (int anEdgeIter = 0; anEdgeIter < 3; ++anEdgeIter)
@@ -428,7 +377,6 @@ bool SelectMgr_AxisIntersector::OverlapsTriangle(const gp_Pnt&                  
       return thePickResult.IsValid() && !theClipRange.IsClipped(thePickResult.Depth());
     }
 
-    // check if intersection point belongs to triangle's interior part
     const gp_XYZ anEdge = (thePnt1.XYZ() - myAxis.Location().XYZ()) * (1.0 / anAlpha);
 
     const double aTime = aTriangleNormal.Dot(anEdge);
@@ -475,8 +423,6 @@ bool SelectMgr_AxisIntersector::OverlapsTriangle(const gp_Pnt&                  
   return thePickResult.IsValid() && !theClipRange.IsClipped(thePickResult.Depth());
 }
 
-//=================================================================================================
-
 bool SelectMgr_AxisIntersector::OverlapsSphere(const gp_Pnt& theCenter,
                                                const double  theRadius,
                                                bool*         theInside) const
@@ -501,8 +447,6 @@ bool SelectMgr_AxisIntersector::OverlapsSphere(const gp_Pnt& theCenter,
   }
   return true;
 }
-
-//=================================================================================================
 
 bool SelectMgr_AxisIntersector::OverlapsSphere(const gp_Pnt&                  theCenter,
                                                const double                   theRadius,
@@ -538,8 +482,6 @@ bool SelectMgr_AxisIntersector::OverlapsSphere(const gp_Pnt&                  th
   thePickResult.SetSurfaceNormal(aNormal);
   return true;
 }
-
-//=================================================================================================
 
 bool SelectMgr_AxisIntersector::OverlapsCylinder(const double                   theBottomRad,
                                                  const double                   theTopRad,
@@ -595,8 +537,6 @@ bool SelectMgr_AxisIntersector::OverlapsCylinder(const double                   
   return true;
 }
 
-//=================================================================================================
-
 bool SelectMgr_AxisIntersector::OverlapsCylinder(const double   theBottomRad,
                                                  const double   theTopRad,
                                                  const double   theHeight,
@@ -628,8 +568,6 @@ bool SelectMgr_AxisIntersector::OverlapsCylinder(const double   theBottomRad,
   }
   return true;
 }
-
-//=================================================================================================
 
 bool SelectMgr_AxisIntersector::OverlapsCircle(const double                   theRadius,
                                                const gp_Trsf&                 theTrsf,
@@ -671,8 +609,6 @@ bool SelectMgr_AxisIntersector::OverlapsCircle(const double                   th
   return true;
 }
 
-//=================================================================================================
-
 bool SelectMgr_AxisIntersector::OverlapsCircle(const double   theRadius,
                                                const gp_Trsf& theTrsf,
                                                const bool     theIsFilled,
@@ -696,8 +632,6 @@ bool SelectMgr_AxisIntersector::OverlapsCircle(const double   theRadius,
   return true;
 }
 
-//=================================================================================================
-
 const gp_Pnt& SelectMgr_AxisIntersector::GetNearPnt() const
 {
   Standard_ASSERT_RAISE(mySelectionType == SelectMgr_SelectionType_Point,
@@ -706,8 +640,6 @@ const gp_Pnt& SelectMgr_AxisIntersector::GetNearPnt() const
 
   return myAxis.Location();
 }
-
-//=================================================================================================
 
 const gp_Pnt& SelectMgr_AxisIntersector::GetFarPnt() const
 {
@@ -719,8 +651,6 @@ const gp_Pnt& SelectMgr_AxisIntersector::GetFarPnt() const
   return anInfPnt;
 }
 
-//=================================================================================================
-
 const gp_Dir& SelectMgr_AxisIntersector::GetViewRayDirection() const
 {
   Standard_ASSERT_RAISE(mySelectionType == SelectMgr_SelectionType_Point,
@@ -729,8 +659,6 @@ const gp_Dir& SelectMgr_AxisIntersector::GetViewRayDirection() const
 
   return myAxis.Direction();
 }
-
-//=================================================================================================
 
 double SelectMgr_AxisIntersector::DistToGeometryCenter(const gp_Pnt& theCOG) const
 {
@@ -741,8 +669,6 @@ double SelectMgr_AxisIntersector::DistToGeometryCenter(const gp_Pnt& theCOG) con
   return theCOG.Distance(myAxis.Location());
 }
 
-//=================================================================================================
-
 gp_Pnt SelectMgr_AxisIntersector::DetectedPoint(const double theDepth) const
 {
   Standard_ASSERT_RAISE(mySelectionType == SelectMgr_SelectionType_Point,
@@ -751,8 +677,6 @@ gp_Pnt SelectMgr_AxisIntersector::DetectedPoint(const double theDepth) const
 
   return myAxis.Location().XYZ() + myAxis.Direction().XYZ() * theDepth;
 }
-
-//=================================================================================================
 
 void SelectMgr_AxisIntersector::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

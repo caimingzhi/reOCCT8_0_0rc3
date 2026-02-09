@@ -13,28 +13,16 @@
 #include <gp_Vec2d.hpp>
 #include <GeomAbs_Shape.hpp>
 
-//! Circular Blend Function to approximate by
-//! SweepApproximation from Approx
 class GeomFill_CircularBlendFunc : public Approx_SweepFunction
 {
 
 public:
-  //! Create a Blend with a constant radius with 2
-  //! guide-line. <FShape> sets the type of fillet
-  //! surface. The default value is Convert_TgtThetaOver2
-  //! (classical nurbs representation of circles).
-  //! ChFi3d_QuasiAngular corresponds to a nurbs
-  //! representation of circles which parameterisation
-  //! matches the circle one. ChFi3d_Polynomial
-  //! corresponds to a polynomial representation of
-  //! circles.
   Standard_EXPORT GeomFill_CircularBlendFunc(const occ::handle<Adaptor3d_Curve>& Path,
                                              const occ::handle<Adaptor3d_Curve>& Curve1,
                                              const occ::handle<Adaptor3d_Curve>& Curve2,
                                              const double                        Radius,
                                              const bool Polynomial = false);
 
-  //! compute the section for v = param
   Standard_EXPORT bool D0(const double                  Param,
                           const double                  First,
                           const double                  Last,
@@ -42,8 +30,6 @@ public:
                           NCollection_Array1<gp_Pnt2d>& Poles2d,
                           NCollection_Array1<double>&   Weigths) override;
 
-  //! compute the first derivative in v direction of the
-  //! section for v = param
   Standard_EXPORT bool D1(const double                  Param,
                           const double                  First,
                           const double                  Last,
@@ -54,8 +40,6 @@ public:
                           NCollection_Array1<double>&   Weigths,
                           NCollection_Array1<double>&   DWeigths) override;
 
-  //! compute the second derivative in v direction of the
-  //! section for v = param
   Standard_EXPORT bool D2(const double                  Param,
                           const double                  First,
                           const double                  Last,
@@ -69,66 +53,34 @@ public:
                           NCollection_Array1<double>&   DWeigths,
                           NCollection_Array1<double>&   D2Weigths) override;
 
-  //! get the number of 2d curves to approximate.
   Standard_EXPORT int Nb2dCurves() const override;
 
-  //! get the format of an section
   Standard_EXPORT void SectionShape(int& NbPoles, int& NbKnots, int& Degree) const override;
 
-  //! get the Knots of the section
   Standard_EXPORT void Knots(NCollection_Array1<double>& TKnots) const override;
 
-  //! get the Multplicities of the section
   Standard_EXPORT void Mults(NCollection_Array1<int>& TMults) const override;
 
-  //! Returns if the section is rational or not
   Standard_EXPORT bool IsRational() const override;
 
-  //! Returns the number of intervals for continuity
-  //! <S>. May be one if Continuity(me) >= <S>
   Standard_EXPORT int NbIntervals(const GeomAbs_Shape S) const override;
 
-  //! Stores in <T> the parameters bounding the intervals
-  //! of continuity <S>.
-  //!
-  //! The array must provide enough room to accommodate
-  //! for the parameters. i.e. T.Length() > NbIntervals()
   Standard_EXPORT void Intervals(NCollection_Array1<double>& T,
                                  const GeomAbs_Shape         S) const override;
 
-  //! Sets the bounds of the parametric interval on
-  //! the fonction
-  //! This determines the derivatives in these values if the
-  //! function is not Cn.
   Standard_EXPORT void SetInterval(const double First, const double Last) override;
 
-  //! Returns the tolerance to reach in approximation
-  //! to respect
-  //! BoundTol error at the Boundary
-  //! AngleTol tangent error at the Boundary (in radian)
-  //! SurfTol error inside the surface.
   Standard_EXPORT void GetTolerance(const double                BoundTol,
                                     const double                SurfTol,
                                     const double                AngleTol,
                                     NCollection_Array1<double>& Tol3d) const override;
 
-  //! Is useful, if (me) has to be run numerical
-  //! algorithm to perform D0, D1 or D2
   Standard_EXPORT void SetTolerance(const double Tol3d, const double Tol2d) override;
 
-  //! Get the barycentre of Surface. A very poor
-  //! estimation is sufficient. This information is useful
-  //! to perform well conditioned rational approximation.
   Standard_EXPORT gp_Pnt BarycentreOfSurf() const override;
 
-  //! Returns the length of the maximum section. This
-  //! information is useful to perform well conditioned rational
-  //! approximation.
   Standard_EXPORT double MaximalSection() const override;
 
-  //! Compute the minimal value of weight for each poles
-  //! of all sections. This information is useful to
-  //! perform well conditioned rational approximation.
   Standard_EXPORT void GetMinimalWeight(NCollection_Array1<double>& Weigths) const override;
 
   DEFINE_STANDARD_RTTIEXT(GeomFill_CircularBlendFunc, Approx_SweepFunction)

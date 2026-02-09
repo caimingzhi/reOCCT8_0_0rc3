@@ -9,7 +9,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class XmlObjMgt_Persistent;
 
-//! Attribute Driver.
 class XmlMDataXtd_PositionDriver : public XmlMDF_ADriver
 {
 

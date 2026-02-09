@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_OrdinalDate;
 class StepData_StepWriter;
 
-//! Read & Write Module for OrdinalDate
 class RWStepBasic_RWOrdinalDate
 {
 public:

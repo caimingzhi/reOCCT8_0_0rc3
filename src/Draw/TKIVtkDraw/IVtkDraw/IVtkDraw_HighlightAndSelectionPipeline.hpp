@@ -5,7 +5,6 @@
 #include <Standard_Transient.hpp>
 #include <TopoDS_Shape.hpp>
 
-// prevent disabling some MSVC warning messages by VTK headers
 #include <Standard_WarningsDisable.hpp>
 #include <vtkActor.h>
 #include <vtkPolyData.h>
@@ -26,14 +25,13 @@ public:
   DEFINE_STANDARD_RTTIEXT(IVtkDraw_HighlightAndSelectionPipeline, Standard_Transient)
 
 public:
-  //! Filters comprising the pipeline.
   enum FilterId
   {
-    Filter_DM_Shape = 1, //!< Display Mode filter for shape.
-    Filter_DM_Hili,      //!< Display Mode filter for highlighting.
-    Filter_DM_Sel,       //!< Display Mode filter for selection.
-    Filter_SUB_Hili,     //!< Sub-shapes filter for highlighting.
-    Filter_SUB_Sel       //!< Sub-shapes filter for selection.
+    Filter_DM_Shape = 1,
+    Filter_DM_Hili,
+    Filter_DM_Sel,
+    Filter_SUB_Hili,
+    Filter_SUB_Sel
   };
 
 public:
@@ -64,34 +62,24 @@ public:
   void SharedVerticesSelectionOff();
 
 private:
-  //! Auxiliary map of internal filters by their correspondent IDs.
   typedef NCollection_DataMap<FilterId, vtkSmartPointer<vtkAlgorithm>> FilterMap;
 
 private:
-  //! Actor.
   vtkSmartPointer<vtkActor> myActor;
 
-  //! Polygonal mapper.
   vtkSmartPointer<vtkPolyDataMapper> myMapper;
 
-  //! Actor for highlighting.
   vtkSmartPointer<vtkActor> myHiliActor;
 
-  //! Polygonal mapper for highlighting.
   vtkSmartPointer<vtkPolyDataMapper> myHiliMapper;
 
-  //! Actor for selection.
   vtkSmartPointer<vtkActor> mySelActor;
 
-  //! Polygonal mapper for selection.
   vtkSmartPointer<vtkPolyDataMapper> mySelMapper;
 
-  //! Map of involved VTK filters.
   FilterMap myFilterMap;
 };
 
-//! Mapping between OCCT topological shape IDs and their correspondent
-//! visualization pipelines.
 typedef NCollection_Shared<
   NCollection_DataMap<IVtk_IdType, occ::handle<IVtkDraw_HighlightAndSelectionPipeline>>>
   ShapePipelineMap;

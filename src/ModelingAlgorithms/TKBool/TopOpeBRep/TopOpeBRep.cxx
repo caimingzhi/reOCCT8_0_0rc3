@@ -1,7 +1,5 @@
 #include <TopOpeBRep.hpp>
 
-//=================================================================================================
-
 Standard_OStream& TopOpeBRep::Print(const TopOpeBRep_TypeLineCurve t, Standard_OStream& OS)
 {
   switch (t)

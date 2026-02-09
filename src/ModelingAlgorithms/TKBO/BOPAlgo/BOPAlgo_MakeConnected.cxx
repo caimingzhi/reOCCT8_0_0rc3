@@ -10,13 +10,9 @@
 
 #include <TopExp_Explorer.hpp>
 
-//=======================================================================
-// function : Perform
-// purpose  : Makes the shapes connected
-//=======================================================================
 void BOPAlgo_MakeConnected::Perform()
 {
-  // Check the input data
+
   CheckData();
   if (HasErrors())
     return;
@@ -24,36 +20,27 @@ void BOPAlgo_MakeConnected::Perform()
   if (myHistory.IsNull())
     myHistory = new BRepTools_History;
 
-  // Glue the arguments
   MakeConnected();
   if (HasErrors())
     return;
 
-  // Perform material associations for the faces
   AssociateMaterials();
   if (HasErrors())
     return;
 }
 
-//=======================================================================
-// function : CheckData
-// purpose  : Check the validity of input data
-//=======================================================================
 void BOPAlgo_MakeConnected::CheckData()
 {
-  // Check the number of arguments
+
   if (myArguments.IsEmpty())
   {
-    // Not enough arguments
+
     AddError(new BOPAlgo_AlertTooFewArguments());
     return;
   }
 
-  // Check that all shapes in arguments are of the same type
-
-  // Extract the shapes from the compound arguments
   NCollection_List<TopoDS_Shape> aLA;
-  // Fence map
+
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMFence;
 
   NCollection_List<TopoDS_Shape>::Iterator itLA(myArguments);
@@ -62,43 +49,38 @@ void BOPAlgo_MakeConnected::CheckData()
 
   if (aLA.IsEmpty())
   {
-    // It seems that all argument shapes are empty compounds
+
     AddError(new BOPAlgo_AlertTooFewArguments());
     return;
   }
 
-  // Check dimensions of the extracted non-compound shapes
   itLA.Initialize(aLA);
   int iDim = BOPTools_AlgoTools::Dimension(itLA.Value());
   for (itLA.Next(); itLA.More(); itLA.Next())
   {
     if (iDim != BOPTools_AlgoTools::Dimension(itLA.Value()))
     {
-      // The arguments are of different type
+
       AddError(new BOPAlgo_AlertMultiDimensionalArguments());
       return;
     }
   }
 }
 
-//=======================================================================
-// function : MakeConnected
-// purpose  : Glues the argument shapes
-//=======================================================================
 void BOPAlgo_MakeConnected::MakeConnected()
 {
-  // Initialize the history
+
   if (myGlueHistory.IsNull())
     myGlueHistory = new BRepTools_History;
 
   if (myArguments.Extent() == 1)
   {
-    // No need to glue the single shape
+
     myShape = myArguments.First();
   }
   else
   {
-    // Glue the shapes
+
     BOPAlgo_Builder aGluer;
     aGluer.SetArguments(myArguments);
     aGluer.SetGlue(BOPAlgo_GlueShift);
@@ -107,7 +89,7 @@ void BOPAlgo_MakeConnected::MakeConnected()
     aGluer.Perform();
     if (aGluer.HasErrors())
     {
-      // Unable to glue the shapes
+
       TopoDS_Compound aCW;
       BRep_Builder().MakeCompound(aCW);
       for (NCollection_List<TopoDS_Shape>::Iterator it(myArguments); it.More(); it.Next())
@@ -116,27 +98,20 @@ void BOPAlgo_MakeConnected::MakeConnected()
       return;
     }
     myShape = aGluer.Shape();
-    // Save the gluing history
+
     myGlueHistory->Merge(aGluer.Arguments(), aGluer);
     myHistory->Merge(myGlueHistory);
   }
 
-  // Keep the glued shape
   myGlued = myShape;
 
-  // Fill the map of origins
   FillOrigins();
 }
 
-//=======================================================================
-// function : FillOrigins
-// purpose  : Fills the map of origins
-//=======================================================================
 void BOPAlgo_MakeConnected::FillOrigins()
 {
   myOrigins.Clear();
 
-  // Map the history shapes of the arguments
   if (myAllInputsMap.IsEmpty())
   {
     NCollection_List<TopoDS_Shape>::Iterator itLA(myArguments);
@@ -151,7 +126,6 @@ void BOPAlgo_MakeConnected::FillOrigins()
     if (!BRepTools_History::IsSupportedType(aS))
       continue;
 
-    // Get Modified & Generated shapes
     for (int j = 0; j < 2; ++j)
     {
       const NCollection_List<TopoDS_Shape>& aLH =
@@ -170,15 +144,10 @@ void BOPAlgo_MakeConnected::FillOrigins()
   }
 }
 
-//=======================================================================
-// function : AssociateMaterials
-// purpose  : Associates the materials for the border elements
-//=======================================================================
 void BOPAlgo_MakeConnected::AssociateMaterials()
 {
   myMaterials.Clear();
 
-  // Extract all non-compound shapes from the result
   NCollection_List<TopoDS_Shape>                         aLShapes;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMFence;
   BOPTools_AlgoTools::TreatCompound(myShape, aLShapes, &aMFence);
@@ -186,7 +155,6 @@ void BOPAlgo_MakeConnected::AssociateMaterials()
   if (aLShapes.IsEmpty())
     return;
 
-  // Define the element type and the material type
   TopAbs_ShapeEnum       anElemType;
   const TopAbs_ShapeEnum aMaterialType = aLShapes.First().ShapeType();
   if (aMaterialType == TopAbs_SOLID || aMaterialType == TopAbs_COMPSOLID)
@@ -217,37 +185,25 @@ void BOPAlgo_MakeConnected::AssociateMaterials()
   }
 }
 
-//=======================================================================
-// function : Update
-// purpose  : Updates the history, material associations and origins map
-//           after periodicity operations
-//=======================================================================
 void BOPAlgo_MakeConnected::Update()
 {
-  // Update history
+
   myHistory->Clear();
   if (!myGlueHistory.IsNull())
     myHistory->Merge(myGlueHistory);
   if (!myPeriodicityMaker.History().IsNull())
     myHistory->Merge(myPeriodicityMaker.History());
 
-  // Fill the map of origins
   FillOrigins();
 
-  // Update the material associations after making the shape periodic
   AssociateMaterials();
 }
 
-//=======================================================================
-// function : MakePeriodic
-// purpose  : Makes the shape periodic according to the given parameters
-//=======================================================================
 void BOPAlgo_MakeConnected::MakePeriodic(const BOPAlgo_MakePeriodic::PeriodicityParams& theParams)
 {
   if (HasErrors())
     return;
 
-  // Make the shape periodic
   myPeriodicityMaker.Clear();
   myPeriodicityMaker.SetShape(myGlued);
   myPeriodicityMaker.SetPeriodicityParameters(theParams);
@@ -255,22 +211,16 @@ void BOPAlgo_MakeConnected::MakePeriodic(const BOPAlgo_MakePeriodic::Periodicity
   myPeriodicityMaker.Perform();
   if (myPeriodicityMaker.HasErrors())
   {
-    // Add warning informing the user that periodicity with
-    // given parameters is not possible
+
     AddWarning(new BOPAlgo_AlertUnableToMakePeriodic(myShape));
     return;
   }
 
   myShape = myPeriodicityMaker.Shape();
 
-  // Update history, materials, origins
   Update();
 }
 
-//=======================================================================
-// function : RepeatShape
-// purpose  : Repeats the shape in the given direction given number of times
-//=======================================================================
 void BOPAlgo_MakeConnected::RepeatShape(const int theDirectionID, const int theTimes)
 {
   if (HasErrors())
@@ -278,23 +228,16 @@ void BOPAlgo_MakeConnected::RepeatShape(const int theDirectionID, const int theT
 
   if (myPeriodicityMaker.Shape().IsNull() || myPeriodicityMaker.HasErrors())
   {
-    // The shape has not been made periodic yet
+
     AddWarning(new BOPAlgo_AlertShapeIsNotPeriodic(myShape));
     return;
   }
 
-  // Repeat the shape
   myShape = myPeriodicityMaker.RepeatShape(theDirectionID, theTimes);
 
-  // Update history, materials, origins
   Update();
 }
 
-//=======================================================================
-// function : ClearRepetitions
-// purpose  : Clears the repetitions performed on the periodic shape
-//           keeping the shape periodic
-//=======================================================================
 void BOPAlgo_MakeConnected::ClearRepetitions()
 {
   if (HasErrors())
@@ -302,15 +245,13 @@ void BOPAlgo_MakeConnected::ClearRepetitions()
 
   if (myPeriodicityMaker.Shape().IsNull() || myPeriodicityMaker.HasErrors())
   {
-    // The shape has not been made periodic yet
+
     AddWarning(new BOPAlgo_AlertShapeIsNotPeriodic(myShape));
     return;
   }
 
-  // Clear repetitions
   myPeriodicityMaker.ClearRepetitions();
   myShape = myPeriodicityMaker.Shape();
 
-  // Update history, materials, origins
   Update();
 }

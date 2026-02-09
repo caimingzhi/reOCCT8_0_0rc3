@@ -25,8 +25,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_Chamf2dDimension, PrsDim_Relation)
 
-//=================================================================================================
-
 PrsDim_Chamf2dDimension::PrsDim_Chamf2dDimension(const TopoDS_Shape&               aFShape,
                                                  const occ::handle<Geom_Plane>&    aPlane,
                                                  const double                      aVal,
@@ -42,8 +40,6 @@ PrsDim_Chamf2dDimension::PrsDim_Chamf2dDimension(const TopoDS_Shape&            
 
   myArrowSize = myVal / 100.;
 }
-
-//=================================================================================================
 
 PrsDim_Chamf2dDimension::PrsDim_Chamf2dDimension(const TopoDS_Shape&               aFShape,
                                                  const occ::handle<Geom_Plane>&    aPlane,
@@ -64,8 +60,6 @@ PrsDim_Chamf2dDimension::PrsDim_Chamf2dDimension(const TopoDS_Shape&            
   myAutomaticPosition = false;
 }
 
-//=================================================================================================
-
 void PrsDim_Chamf2dDimension::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                       const occ::handle<Prs3d_Presentation>& aPresentation,
                                       const int)
@@ -81,34 +75,6 @@ void PrsDim_Chamf2dDimension::Compute(const occ::handle<PrsMgr_PresentationManag
   gp_Dir                 norm1 = myPlane->Pln().Axis().Direction();
   myDir                        = norm1.Crossed(dir1);
 
-  //-------------------------------------------------
-  // compute a direction orthogonal to the chamfer edge
-  // and directed towards the exterior of the contour
-  //-------------------------------------------------
-
-  // retrieve an edge adjacent to the chamfer edge
-  /*TopoDS_Edge nextedge = TopoDS::Edge(mySShape);
-
-  gp_Pnt pfirstnext,plastnext;
-  occ::handle<Geom_Line> glinnext;
-  if (!PrsDim::ComputeGeometry(nextedge,glinnext,pfirstnext,plastnext) )
-    return;
-
-  gp_Vec v1(pfirst,plast);
-  gp_Vec v2;
-  if (pfirst.IsEqual(plastnext, Precision::Confusion()))
-    v2.SetXYZ(pfirstnext.XYZ() - pfirst.XYZ());
-  else
-    v2.SetXYZ(plastnext.XYZ() - pfirst.XYZ());
-  gp_Vec crossvec = v1.Crossed(v2);
-
-  myDir = dimserv.GetDirection().Crossed(glin->Position().Direction());
-  if (crossvec.Dot(dimserv.GetDirection()) > 0 )
-    myDir.Reverse();*/     //       myDir   => donne a la creation
-
-  //--------------------------------------------
-  // Calcul du point de positionnement du texte
-  //--------------------------------------------
   gp_Pnt curpos;
   if (myAutomaticPosition)
   {
@@ -129,8 +95,6 @@ void PrsDim_Chamf2dDimension::Compute(const occ::handle<PrsMgr_PresentationManag
     occ::handle<Geom_Line> dimLin    = new Geom_Line(myPntAttach, myDir);
     double                 parcurpos = ElCLib::Parameter(dimLin->Lin(), myPosition);
     curpos                           = ElCLib::Value(parcurpos, dimLin->Lin());
-    // static double minlength = 0.005;
-    // taille minimale de la dimension
 
     if (curpos.Distance(myPntAttach) < 5.)
     {
@@ -143,11 +107,6 @@ void PrsDim_Chamf2dDimension::Compute(const occ::handle<PrsMgr_PresentationManag
 
   occ::handle<Prs3d_DimensionAspect> la  = myDrawer->DimensionAspect();
   occ::handle<Prs3d_ArrowAspect>     arr = la->ArrowAspect();
-
-  //-------------------------------------------------
-  // Calcul de la boite englobante du component pour
-  // determiner la taille de la fleche
-  //-------------------------------------------------
 
   if (!myArrowSizeIsDefined)
   {
@@ -162,7 +121,6 @@ void PrsDim_Chamf2dDimension::Compute(const occ::handle<PrsMgr_PresentationManag
   }
   arr->SetLength(myArrowSize);
 
-  // Calcul de la presentation
   DsgPrs_Chamf2dPresentation::Add(aPresentation,
                                   myDrawer,
                                   myPntAttach,
@@ -170,8 +128,6 @@ void PrsDim_Chamf2dDimension::Compute(const occ::handle<PrsMgr_PresentationManag
                                   myText,
                                   mySymbolPrs);
 }
-
-//=================================================================================================
 
 void PrsDim_Chamf2dDimension::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSelection,
                                                const int)
@@ -181,7 +137,6 @@ void PrsDim_Chamf2dDimension::ComputeSelection(const occ::handle<SelectMgr_Selec
     new Select3D_SensitiveSegment(own, myPntAttach, myPosition);
   aSelection->Add(seg);
 
-  // Text
   double                             size(std::min(myVal / 100. + 1.e-6, myArrowSize + 1.e-6));
   occ::handle<Select3D_SensitiveBox> box = new Select3D_SensitiveBox(own,
                                                                      myPosition.X(),

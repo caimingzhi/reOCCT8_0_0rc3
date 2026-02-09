@@ -13,11 +13,11 @@ IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_DelabellaBaseMeshAlgo, BRepMesh_CustomBaseMe
 
 namespace
 {
-  //! Redirect algorithm messages to OCCT messenger.
+
   static int logDelabella2Occ(void* theStream, const char* theFormat, ...)
   {
     (void)theStream;
-    char aBuffer[1024]; // should be more than enough for Delabella messages
+    char aBuffer[1024];
 
     va_list anArgList;
     va_start(anArgList, theFormat);
@@ -29,28 +29,22 @@ namespace
     {
       case int('E'):
         aGravity = Message_Fail;
-        break; // [ERR]
+        break;
       case int('W'):
         aGravity = Message_Trace;
-        break; // [WRN]
+        break;
       case int('N'):
         aGravity = Message_Trace;
-        break; // [NFO]
+        break;
     }
     Message::Send(aBuffer, aGravity);
     return 0;
   }
 } // namespace
 
-//=================================================================================================
-
 BRepMesh_DelabellaBaseMeshAlgo::BRepMesh_DelabellaBaseMeshAlgo() = default;
 
-//=================================================================================================
-
 BRepMesh_DelabellaBaseMeshAlgo::~BRepMesh_DelabellaBaseMeshAlgo() = default;
-
-//=================================================================================================
 
 void BRepMesh_DelabellaBaseMeshAlgo::buildBaseTriangulation()
 {
@@ -103,7 +97,7 @@ void BRepMesh_DelabellaBaseMeshAlgo::buildBaseTriangulation()
   }
 
   IDelaBella* aTriangulator = IDelaBella::Create();
-  if (aTriangulator == nullptr) // should never happen
+  if (aTriangulator == nullptr)
   {
     throw Standard_ProgramError("BRepMesh_DelabellaBaseMeshAlgo::buildBaseTriangulation: unable "
                                 "creating a triangulation algorithm");

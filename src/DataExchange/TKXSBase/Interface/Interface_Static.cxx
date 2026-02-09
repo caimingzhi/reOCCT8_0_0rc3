@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Static.hpp>
 
@@ -22,15 +11,6 @@
 IMPLEMENT_STANDARD_RTTIEXT(Interface_Static, Interface_TypedValue)
 
 static char defmess[31];
-
-//  Satisfies functions offered as standard ...
-
-// svv #2
-// static bool StaticPath(const occ::handle<TCollection_HAsciiString>& val)
-//{
-//   OSD_Path apath;
-//   return apath.IsValid (TCollection_AsciiString(val->ToCString()));
-// }
 
 Interface_Static::Interface_Static(const char*               family,
                                    const char*               name,
@@ -76,7 +56,7 @@ Interface_Static::Interface_Static(const char*                          family,
       int  e0, e1, i;
       other->EnumDef(e0, e1, match);
       StartEnum(e0, match);
-      //      if (e1 >= e0) theenums = new NCollection_HArray1<TCollection_AsciiString>(e0,e1);
+
       for (i = e0; i <= e1; i++)
         AddEnum(other->EnumVal(i));
     }
@@ -92,8 +72,6 @@ Interface_Static::Interface_Static(const char*                          family,
     SetCStringValue(other->CStringValue());
 }
 
-//  ##   Print   ##
-
 void Interface_Static::PrintStatic(Standard_OStream& S) const
 {
   S << "--- Static Value : " << Name() << "  Family:" << Family();
@@ -105,8 +83,6 @@ void Interface_Static::PrintStatic(Standard_OStream& S) const
   if (thesatisf)
     S << " -- Specific Function for Satisfies : " << thesatisn.ToCString() << std::endl;
 }
-
-//  #########    COMPLEMENTS    ##########
 
 const char* Interface_Static::Family() const
 {
@@ -123,8 +99,6 @@ void Interface_Static::SetWild(const occ::handle<Interface_Static>& wild)
   thewild = wild;
 }
 
-//  #########   UPDATE    ##########
-
 void Interface_Static::SetUptodate()
 {
   theupdate = true;
@@ -134,9 +108,6 @@ bool Interface_Static::UpdatedStatus() const
 {
   return theupdate;
 }
-
-//  #######################################################################
-//  #########    STATICS DICTIONARY (static on Static)    ##########
 
 bool Interface_Static::Init(const char*               family,
                             const char*               name,
@@ -194,14 +165,12 @@ bool Interface_Static::Init(const char* family, const char* name, const char typ
       occ::handle<Interface_Static> unstat = Interface_Static::Static(name);
       if (unstat.IsNull())
         return false;
-      //    Editions : init gives a small edition text, in 2 terms "cmd var" :
-      //  imin <ival>  imax <ival>  rmin <rval>  rmax <rval>  unit <def>
-      //  enum <from>  ematch <from>  eval <cval>
+
       int i, iblc = 0;
       for (i = 0; init[i] != '\0'; i++)
         if (init[i] == ' ')
           iblc = i + 1;
-      //  Recognition of the sub-case and routing
+
       if (init[0] == 'i' && init[2] == 'i')
         unstat->SetIntegerLimit(false, atoi(&init[iblc]));
       else if (init[0] == 'i' && init[2] == 'a')
@@ -230,7 +199,7 @@ bool Interface_Static::Init(const char* family, const char* name, const char typ
   if (type != 'p')
     return true;
   occ::handle<Interface_Static> stat = Interface_Static::Static(name);
-  // NT  stat->SetSatisfies (StaticPath,"Path");
+
   if (!stat->Satisfies(stat->HStringValue()))
     stat->SetCStringValue("");
   return true;
@@ -336,8 +305,6 @@ int Interface_Static::IDef(const char* name, const char* part)
   return 0;
 }
 
-//  ##########  CURRENT VALUE  ###########
-
 bool Interface_Static::IsSet(const char* name, const bool proper)
 {
   occ::handle<Interface_Static> item = Interface_Static::Static(name);
@@ -416,8 +383,6 @@ bool Interface_Static::SetRVal(const char* name, const double val)
   return item->SetRealValue(val);
 }
 
-//    UPDATE
-
 bool Interface_Static::Update(const char* name)
 {
   occ::handle<Interface_Static> item = Interface_Static::Static(name);
@@ -439,7 +404,7 @@ occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> Interf
   const int   mode,
   const char* criter)
 {
-  int modup = (mode / 100); // 0 any, 1 non-update, 2 update
+  int                                                                       modup = (mode / 100);
   occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> list =
     new NCollection_HSequence<occ::handle<TCollection_HAsciiString>>();
   NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transient>>::Iterator iter(
@@ -462,7 +427,7 @@ occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> Interf
       ok = true;
     }
     else
-    { // all ... except family with $
+    {
       if (item->Family()[0] == '$')
         continue;
     }
@@ -477,10 +442,6 @@ occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> Interf
   return list;
 }
 
-//=======================================================================
-// function : FillMap
-// purpose  : Fills given string-to-string map with all static data
-//=======================================================================
 void Interface_Static::FillMap(
   NCollection_DataMap<TCollection_AsciiString, TCollection_AsciiString>& theMap)
 {

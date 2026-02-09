@@ -11,7 +11,6 @@ class StepShape_GeometricallyBoundedWireframeShapeRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for GeometricallyBoundedWireframeShapeRepresentation
 class RWStepShape_RWGeometricallyBoundedWireframeShapeRepresentation
 {
 public:

@@ -5,15 +5,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_Tool, Standard_Transient)
 
-//=================================================================================================
-
 ShapeUpgrade_Tool::ShapeUpgrade_Tool()
 {
   myPrecision = myMinTol = Precision::Confusion();
-  myMaxTol               = 1; // Precision::Infinite() ?? pdn
+  myMaxTol               = 1;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_Tool::Set(const occ::handle<ShapeUpgrade_Tool>& tool)
 {

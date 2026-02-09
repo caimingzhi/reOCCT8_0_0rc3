@@ -21,8 +21,6 @@
 #include <IntRes2d_Transition.hpp>
 #include <StdFail_UndefinedDerivative.hpp>
 
-// #define PERF
-
 #ifdef PERF
 static int NbIntersCS             = 0;
 static int NbIntersCSVides        = 0;
@@ -36,8 +34,6 @@ static int NbIntersNPoints        = 0;
 static int NbIntersNSegments      = 0;
 static int NbIntersPointEtSegment = 0;
 #endif
-
-//=================================================================================================
 
 HLRBRep_Intersector::HLRBRep_Intersector()
     : myTypePerform(0),
@@ -66,12 +62,9 @@ HLRBRep_Intersector::HLRBRep_Intersector()
       NbIntersCSVides                                    = 0;
 #endif
 
-  // Set minimal number of samples in case of HLR polygonal intersector.
   const int aMinNbHLRSamples = 4;
   myIntersector.SetMinNbSamples(aMinNbHLRSamples);
 }
-
-//=================================================================================================
 
 void HLRBRep_Intersector::Perform(HLRBRep_EdgeData* theEdge1,
                                   const double      theDa1,
@@ -85,7 +78,7 @@ void HLRBRep_Intersector::Perform(HLRBRep_EdgeData* theEdge1,
 
   myTypePerform = 1;
 
-  gp_Pnt2d pa, pb; //,pa1,pb1;
+  gp_Pnt2d pa, pb;
   double   a, b, d, tol;
   float    ta, tb;
 
@@ -101,31 +94,21 @@ void HLRBRep_Intersector::Perform(HLRBRep_EdgeData* theEdge1,
   b = myC1->Parameter2d(b);
   IntRes2d_Domain D1(pa, a, (double)ta, pb, b, (double)tb);
 
-  // modified by jgv, 18.04.2016 for OCC27341
-  // tol = (double)(((HLRBRep_EdgeData*) A1)->Tolerance());
   tol = Precision::Confusion();
-  //////////////////////////////////////////
 
   myIntersector.Perform(myC1, D1, tol, tol);
 }
 
-//=================================================================================================
-
-void HLRBRep_Intersector::Perform(const int /*theNA*/,
+void HLRBRep_Intersector::Perform(const int,
                                   HLRBRep_EdgeData* theEdge1,
                                   const double      theDa1,
                                   const double      theDb1,
-                                  const int /*theNB*/,
+                                  const int,
                                   HLRBRep_EdgeData* theEdge2,
                                   const double      theDa2,
                                   const double      theDb2,
                                   const bool        theEnBout)
 {
-
-  //  if(theEnBout) {
-  //    myTypePerform=43;
-  //    return;
-  //  }
 
   HLRBRep_Curve* myC1 = theEdge1->Curve();
   HLRBRep_Curve* myC2 = theEdge2->Curve();
@@ -137,12 +120,9 @@ void HLRBRep_Intersector::Perform(const int /*theNA*/,
   double   a1, b1, a2, b2, d, dd, tol, tol1, tol2;
   float    ta, tb;
 
-  // modified by jgv, 18.04.2016 for OCC27341
-  // tol1 = theEdge1->Tolerance();
-  // tol2 = theEdge2->Tolerance();
   tol1 = Precision::Confusion();
   tol2 = Precision::Confusion();
-  //////////////////////////////////////////
+
   if (tol1 > tol2)
     tol = tol1;
   else
@@ -156,7 +136,7 @@ void HLRBRep_Intersector::Perform(const int /*theNA*/,
   do
   {
     aPasBon = false;
-    theEdge1->Status().Bounds(a1, ta, b1, tb); //--   -> Parametres 3d
+    theEdge1->Status().Bounds(a1, ta, b1, tb);
     double mtol = tol;
     if (mtol < ta)
       mtol = ta;
@@ -170,7 +150,7 @@ void HLRBRep_Intersector::Perform(const int /*theNA*/,
 
     if (theDa1 != 0)
     {
-      //-- a = a + d * theDa1;
+
       myC1->D1(a1, pa1, va1);
       double qwe = va1.Magnitude();
       if (qwe > 1e-12)
@@ -195,7 +175,7 @@ void HLRBRep_Intersector::Perform(const int /*theNA*/,
 
     if (theDb1 != 0)
     {
-      //-- b = b - d * theDb1;
+
       myC1->D1(b1, pb1, vb1);
       double qwe = vb1.Magnitude();
       if (qwe > 1e-12)
@@ -217,12 +197,6 @@ void HLRBRep_Intersector::Perform(const int /*theNA*/,
         aDecalageb1 = -1;
       }
     }
-
-    //    if(theEnBout) {  //-- ************************************************************
-    //      double d=b1-a1;
-    //      a1+=d*0.45;
-    //      b1-=d*0.45;
-    //    }
 
     myC1->D0(a1, pa1);
     myC1->D0(b1, pb1);
@@ -253,7 +227,7 @@ void HLRBRep_Intersector::Perform(const int /*theNA*/,
 
     if (theDa2 != 0)
     {
-      //-- a = a + d * theDa2;
+
       myC2->D1(a2, pa2, va2);
       double qwe = va2.Magnitude();
       if (qwe > 1e-12)
@@ -278,7 +252,7 @@ void HLRBRep_Intersector::Perform(const int /*theNA*/,
 
     if (theDb2 != 0)
     {
-      //-- b = b - d * theDb2;
+
       myC2->D1(b2, pb2, vb2);
       double qwe = vb2.Magnitude();
       if (qwe > 1e-12)
@@ -300,12 +274,6 @@ void HLRBRep_Intersector::Perform(const int /*theNA*/,
         aDecalageb2 = -1;
       }
     }
-
-    //    if(theEnBout) { //-- ************************************************************
-    //      double d=b2-a2;
-    //      a2+=d*0.45;
-    //      b2-=d*0.45;
-    //    }
 
     myC2->D0(a2, pa2);
     myC2->D0(b2, pb2);
@@ -333,7 +301,7 @@ void HLRBRep_Intersector::Perform(const int /*theNA*/,
       double b1b2 = (theDb1 || theDb2) ? pb1.Distance(pb2) : RealLast();
 
       int    cote    = 1;
-      double mindist = a1a2; //-- cas 1
+      double mindist = a1a2;
       if (mindist > a1b2)
       {
         mindist = a1b2;
@@ -349,10 +317,6 @@ void HLRBRep_Intersector::Perform(const int /*theNA*/,
         mindist = b1b2;
         cote    = 4;
       }
-
-      //--printf("\n----- Edge %3d  %3d   [%7.5g  %7.5g] [%7.5g  %7.5g] Mindist:%8.5g
-      // 1000*Tol:%8.5g\n",
-      //--     nA,nB,decalagea1,decalageb1,decalagea2,decalageb2,mindist,1000.0*tol);
 
       if (mindist < tol * 1000)
       {
@@ -438,8 +402,6 @@ void HLRBRep_Intersector::Perform(const int /*theNA*/,
 #endif
 }
 
-//=================================================================================================
-
 void HLRBRep_Intersector::SimulateOnePoint(HLRBRep_EdgeData* theEdge1,
                                            const double      theU,
                                            HLRBRep_EdgeData* theEdge2,
@@ -467,8 +429,6 @@ void HLRBRep_Intersector::SimulateOnePoint(HLRBRep_EdgeData* theEdge1,
   mySinglePoint.SetValues(P13, theU, theV, Tr1, Tr2, false);
 }
 
-//=================================================================================================
-
 void HLRBRep_Intersector::Load(HLRBRep_Surface* theSurface)
 {
   mySurface = theSurface;
@@ -478,8 +438,6 @@ void HLRBRep_Intersector::Load(HLRBRep_Surface* theSurface)
     myPolyhedron = nullptr;
   }
 }
-
-//=================================================================================================
 
 void HLRBRep_Intersector::Perform(const gp_Lin& L, const double P)
 {
@@ -508,9 +466,9 @@ void HLRBRep_Intersector::Perform(const gp_Lin& L, const double P)
         nbsv         = HLRBRep_SurfaceTool::NbSamplesV(mySurface, v1, v2);
         myPolyhedron = new HLRBRep_ThePolyhedronOfInterCSurf(mySurface, nbsu, nbsv, u1, v1, u2, v2);
       }
-      double x0, y0, z0, x1, y1, z1, pmin, pmax; //,pp;
+      double x0, y0, z0, x1, y1, z1, pmin, pmax;
       myPolyhedron->Bounding().Get(x0, y0, z0, x1, y1, z1);
-      //-- On va rejeter tous les points de parametres > P
+
       double p;
       p    = ElCLib::Parameter(L, gp_Pnt(x0, y0, z0));
       pmin = pmax = p;
@@ -559,7 +517,7 @@ void HLRBRep_Intersector::Perform(const gp_Lin& L, const double P)
       {
         pmin = pmax + 1;
         pmax = pmax + 2;
-      } //-- on va rejeter avec les boites
+      }
       else
       {
         if (pmax > P)
@@ -583,8 +541,6 @@ void HLRBRep_Intersector::Perform(const gp_Lin& L, const double P)
 #endif
 }
 
-//=================================================================================================
-
 bool HLRBRep_Intersector::IsDone() const
 {
   if (myTypePerform == 1)
@@ -594,8 +550,6 @@ bool HLRBRep_Intersector::IsDone() const
   else
     return (true);
 }
-
-//=================================================================================================
 
 int HLRBRep_Intersector::NbPoints() const
 {
@@ -610,8 +564,6 @@ int HLRBRep_Intersector::NbPoints() const
     return (1);
 }
 
-//=================================================================================================
-
 const IntRes2d_IntersectionPoint& HLRBRep_Intersector::Point(const int N) const
 {
   if (myTypePerform == 0)
@@ -620,14 +572,10 @@ const IntRes2d_IntersectionPoint& HLRBRep_Intersector::Point(const int N) const
     return myIntersector.Point(N);
 }
 
-//=================================================================================================
-
 const IntCurveSurface_IntersectionPoint& HLRBRep_Intersector::CSPoint(const int N) const
 {
   return myCSIntersector.Point(N);
 }
-
-//=================================================================================================
 
 int HLRBRep_Intersector::NbSegments() const
 {
@@ -639,132 +587,18 @@ int HLRBRep_Intersector::NbSegments() const
     return (0);
 }
 
-//=================================================================================================
-
 const IntRes2d_IntersectionSegment& HLRBRep_Intersector::Segment(const int N) const
 {
   return myIntersector.Segment(N);
 }
-
-//=================================================================================================
 
 const IntCurveSurface_IntersectionSegment& HLRBRep_Intersector::CSSegment(const int N) const
 {
   return myCSIntersector.Segment(N);
 }
 
-//=================================================================================================
-
 void HLRBRep_Intersector::Destroy()
 {
   if (myPolyhedron != nullptr)
     delete myPolyhedron;
 }
-
-/* ********************************************************************************
-
-   sauvegarde de l etat du 23 janvier 98
-
-void  HLRBRep_Intersector::Perform (const int nA,
-                    void* const A1,
-                    const double da1,
-                    const double db1,
-                    const int nB,
-                    void* const A2,
-                    const double da2,
-                    const double db2,
-                    const bool EnBout)
-{
-  void* myC1 = ((HLRBRep_EdgeData*) A1)->Curve();
-  void* myC2 = ((HLRBRep_EdgeData*) A2)->Curve();
-
-  myTypePerform = 1;
-
-  gp_Pnt2d pa,pb;
-  double a,b,d,tol,tol1,tol2;
-  float ta,tb;
-
-  tol1 = (double)(((HLRBRep_EdgeData*) A1)->Tolerance());
-  tol2 = (double)(((HLRBRep_EdgeData*) A2)->Tolerance());
-  if (tol1 > tol2) tol = tol1;
-  else             tol = tol2;
-
-  ((HLRBRep_EdgeData*) A1)->Status().Bounds(a,ta,b,tb); //--   -> Parametres 3d
-  double mtol = tol;
-  if(mtol<ta) mtol=ta;
-  if(mtol<tb) mtol=tb;
-  d = b - a;
-  if (da1 != 0) a = a + d * da1;
-  if (db1 != 0) b = b - d * db1;
-  ((HLRBRep_Curve*)myC1)->D0(a,pa);
-  ((HLRBRep_Curve*)myC1)->D0(b,pb);
-
-  a = ((HLRBRep_Curve*)myC1)->Parameter2d(a);
-  b = ((HLRBRep_Curve*)myC1)->Parameter2d(b);
-
-  if(EnBout) {
-    ta=tb=0;
-  }
-
-  if(ta>tol) ta=tol;
-  if(tb>tol) tb=tol;
-
-  IntRes2d_Domain D1(pa,a,(double)ta,pb,b,(double)tb);
-
-  ((HLRBRep_EdgeData*) A2)->Status().Bounds(a,ta,b,tb);
-  mtol = tol;
-  if(mtol<ta) mtol=ta;
-  if(mtol<tb) mtol=tb;
-
-  d = b - a;
-  if (da2 != 0) a = a + d * da2;
-  if (db2 != 0) b = b - d * db2;
-  ((HLRBRep_Curve*)myC2)->D0(a,pa);
-  ((HLRBRep_Curve*)myC2)->D0(b,pb);
-
-  a = ((HLRBRep_Curve*)myC2)->Parameter2d(a);
-  b = ((HLRBRep_Curve*)myC2)->Parameter2d(b);
-
-  if(EnBout) {
-    ta=tb=0;
-  }
-
-  if(ta>tol) ta=tol;
-  if(tb>tol) tb=tol;
-
- IntRes2d_Domain D2(pa,a,(double)ta,pb,b,(double)tb);
-
-  myIntersector.Perform(myC1,D1,myC2,D2,tol,tol);
-
-#ifdef PERF
-  NbInters++;
-  if(myIntersector.NbPoints()==1) {
-    if(myIntersector.NbSegments()==0) {
-      NbInters1Point++;
-    }
-    else {
-      NbIntersPointEtSegment++;
-    }
-  }
-  else if(myIntersector.NbPoints()==0) {
-    if(myIntersector.NbSegments()==0) {
-      NbIntersVides++;
-    }
-    else if(myIntersector.NbSegments()==1) {
-      NbInters1Segment++;
-    }
-    else {
-      NbIntersNSegments++;
-    }
-  }
-  else {
-    if(myIntersector.NbSegments()==0) {
-      NbIntersNPoints++;
-    }
-    else {
-      NbIntersPointEtSegment++;
-    }
-  }
-#endif
-}
-******************************************************************************** */

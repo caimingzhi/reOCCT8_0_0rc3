@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <AIS_Triangulation.hpp>
 
@@ -36,8 +25,6 @@ AIS_Triangulation::AIS_Triangulation(const occ::handle<Poly_Triangulation>& Tria
   myFlagColor     = 0;
 }
 
-//=================================================================================================
-
 void AIS_Triangulation::SetTransparency(const double theValue)
 {
   if (!myDrawer->HasOwnShadingAspect())
@@ -49,14 +36,11 @@ void AIS_Triangulation::SetTransparency(const double theValue)
     }
   }
 
-  // override transparency
   myDrawer->ShadingAspect()->SetTransparency(theValue, myCurrentFacingModel);
   myDrawer->SetTransparency((float)theValue);
 
   updatePresentation();
 }
-
-//=================================================================================================
 
 void AIS_Triangulation::UnsetTransparency()
 {
@@ -73,8 +57,6 @@ void AIS_Triangulation::UnsetTransparency()
   updatePresentation();
 }
 
-//=================================================================================================
-
 void AIS_Triangulation::updatePresentation()
 {
   if (HasVertexColors())
@@ -83,7 +65,7 @@ void AIS_Triangulation::updatePresentation()
   }
   else
   {
-    // modify shading presentation without re-computation
+
     const NCollection_Sequence<occ::handle<PrsMgr_Presentation>>& aPrsList = Presentations();
     occ::handle<Graphic3d_AspectFillArea3d> anAreaAsp = myDrawer->ShadingAspect()->Aspect();
     for (NCollection_Sequence<occ::handle<PrsMgr_Presentation>>::Iterator aPrsIter(aPrsList);
@@ -106,8 +88,6 @@ void AIS_Triangulation::updatePresentation()
     }
   }
 }
-
-//=================================================================================================
 
 void AIS_Triangulation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                 const occ::handle<Prs3d_Presentation>& thePrs,
@@ -141,7 +121,7 @@ void AIS_Triangulation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
         anArray->SetVertexNormal(aNodeIter, aNormal.x(), aNormal.y(), aNormal.z());
       }
     }
-    else // !hasVColors
+    else
     {
       for (int aNodeIter = 1; aNodeIter <= myTriangulation->NbNodes(); ++aNodeIter)
       {
@@ -151,7 +131,7 @@ void AIS_Triangulation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
       }
     }
   }
-  else // !hasVNormals
+  else
   {
     if (hasVColors)
     {
@@ -162,7 +142,7 @@ void AIS_Triangulation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                            attenuateColor(colors[aNodeIter], anAmbient));
       }
     }
-    else // !hasVColors
+    else
     {
       for (int aNodeIter = 1; aNodeIter <= myTriangulation->NbNodes(); ++aNodeIter)
       {
@@ -183,59 +163,34 @@ void AIS_Triangulation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
   aGroup->AddPrimitiveArray(anArray);
 }
 
-//=================================================================================================
+void AIS_Triangulation::ComputeSelection(const occ::handle<SelectMgr_Selection>&, const int) {}
 
-void AIS_Triangulation::ComputeSelection(const occ::handle<SelectMgr_Selection>& /*aSelection*/,
-                                         const int /*aMode*/)
-{
-}
-
-//=======================================================================
-// function : SetColor
-// purpose  : Set the color for each node.
-//           Each 32-bit color is Alpha << 24 + Blue << 16 + Green << 8 + Red
-//           Order of color components is essential for further usage by OpenGL
-//=======================================================================
 void AIS_Triangulation::SetColors(const occ::handle<NCollection_HArray1<int>>& aColor)
 {
   myFlagColor = 1;
   myColor     = aColor;
 }
 
-//=======================================================================
-// function : GetColor
-// purpose  : Get the color for each node.
-//           Each 32-bit color is Alpha << 24 + Blue << 16 + Green << 8 + Red
-//           Order of color components is essential for further usage by OpenGL
-//=======================================================================
-
 occ::handle<NCollection_HArray1<int>> AIS_Triangulation::GetColors() const
 {
   return myColor;
 }
-
-//=================================================================================================
 
 void AIS_Triangulation::SetTriangulation(const occ::handle<Poly_Triangulation>& aTriangulation)
 {
   myTriangulation = aTriangulation;
 }
 
-//=================================================================================================
-
 occ::handle<Poly_Triangulation> AIS_Triangulation::GetTriangulation() const
 {
   return myTriangulation;
 }
-
-//=================================================================================================
 
 NCollection_Vec4<uint8_t> AIS_Triangulation::attenuateColor(const int    theColor,
                                                             const double theComposition)
 {
   const uint8_t* anRgbx = reinterpret_cast<const uint8_t*>(&theColor);
 
-  // If IsTranparent() is false alpha value will be ignored anyway.
   uint8_t anAlpha =
     IsTransparent()
       ? static_cast<uint8_t>(

@@ -8,28 +8,21 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDF_ADriverTable, Standard_Transient)
 
-//=================================================================================================
-
 XmlMDF_ADriverTable::XmlMDF_ADriverTable() = default;
-
-//=================================================================================================
 
 void XmlMDF_ADriverTable::AddDriver(const occ::handle<XmlMDF_ADriver>& anHDriver)
 {
   const occ::handle<Standard_Type>& type = anHDriver->SourceType();
 
-  // to make possible for applications to redefine standard attribute drivers
   myMap.UnBind(type);
 
   myMap.Bind(type, anHDriver);
 }
 
-//=================================================================================================
-
 void XmlMDF_ADriverTable::AddDerivedDriver(const occ::handle<TDF_Attribute>& theInstance)
 {
   const occ::handle<Standard_Type>& anInstanceType = theInstance->DynamicType();
-  if (!myMap.IsBound(anInstanceType)) // no direct driver, use a derived one
+  if (!myMap.IsBound(anInstanceType))
   {
     for (occ::handle<Standard_Type> aType = anInstanceType->Parent(); !aType.IsNull();
          aType                            = aType->Parent())
@@ -44,8 +37,6 @@ void XmlMDF_ADriverTable::AddDerivedDriver(const occ::handle<TDF_Attribute>& the
   }
 }
 
-//=================================================================================================
-
 const occ::handle<Standard_Type>& XmlMDF_ADriverTable::AddDerivedDriver(const char* theDerivedType)
 {
   if (occ::handle<TDF_Attribute> anInstance = TDF_DerivedAttribute::Attribute(theDerivedType))
@@ -57,12 +48,10 @@ const occ::handle<Standard_Type>& XmlMDF_ADriverTable::AddDerivedDriver(const ch
   return aNullType;
 }
 
-//=================================================================================================
-
 bool XmlMDF_ADriverTable::GetDriver(const occ::handle<Standard_Type>& aType,
                                     occ::handle<XmlMDF_ADriver>&      anHDriver)
 {
-  if (!myMap.IsBound(aType)) // try to assign driver for derived type
+  if (!myMap.IsBound(aType))
   {
     AddDerivedDriver(aType->Name());
   }
@@ -74,12 +63,10 @@ bool XmlMDF_ADriverTable::GetDriver(const occ::handle<Standard_Type>& aType,
   return false;
 }
 
-//=================================================================================================
-
 void XmlMDF_ADriverTable::CreateDrvMap(
   NCollection_DataMap<TCollection_AsciiString, occ::handle<XmlMDF_ADriver>>& theDriverMap)
 {
-  // add derived drivers not yet registered in the map
+
   NCollection_List<occ::handle<TDF_Attribute>> aDerived;
   TDF_DerivedAttribute::Attributes(aDerived);
   for (NCollection_List<occ::handle<TDF_Attribute>>::Iterator aDerIter(aDerived); aDerIter.More();
@@ -91,7 +78,6 @@ void XmlMDF_ADriverTable::CreateDrvMap(
     }
   }
 
-  // put everything to the map
   for (NCollection_DataMap<occ::handle<Standard_Type>, occ::handle<XmlMDF_ADriver>>::Iterator
          anIter(myMap);
        anIter.More();

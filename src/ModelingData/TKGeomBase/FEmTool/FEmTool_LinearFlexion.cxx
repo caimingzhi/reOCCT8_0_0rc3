@@ -17,8 +17,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(FEmTool_LinearFlexion, FEmTool_ElementaryCriterion)
 
-//=================================================================================================
-
 FEmTool_LinearFlexion::FEmTool_LinearFlexion(const int           WorkDegree,
                                              const GeomAbs_Shape ConstraintOrder)
     : RefMatrix(0, WorkDegree, 0, WorkDegree)
@@ -30,7 +28,7 @@ FEmTool_LinearFlexion::FEmTool_LinearFlexion(const int           WorkDegree,
 
   if (myOrder != Order)
   {
-    // Calculating RefMatrix
+
     if (WorkDegree > WDeg)
       throw Standard_ConstructionError("Degree too high");
     Order                                = myOrder;
@@ -57,8 +55,6 @@ FEmTool_LinearFlexion::FEmTool_LinearFlexion(const int           WorkDegree,
   }
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray2<int>> FEmTool_LinearFlexion::DependenceTable() const
 {
   if (myCoeff.IsNull())
@@ -75,8 +71,6 @@ occ::handle<NCollection_HArray2<int>> FEmTool_LinearFlexion::DependenceTable() c
 
   return DepTab;
 }
-
-//=================================================================================================
 
 double FEmTool_LinearFlexion::Value()
 {
@@ -122,8 +116,6 @@ double FEmTool_LinearFlexion::Value()
   return cteh3 * J;
 }
 
-//=================================================================================================
-
 void FEmTool_LinearFlexion::Hessian(const int Dimension1, const int Dimension2, math_Matrix& H)
 {
 
@@ -148,7 +140,7 @@ void FEmTool_LinearFlexion::Hessian(const int Dimension1, const int Dimension2, 
   {
     k1    = (i <= myOrder) ? i : i - myOrder - 1;
     mfact = std::pow(coeff, k1) * cteh3;
-    // Hermite*Hermite part of matrix
+
     for (j = i; j <= degH; j++)
     {
       k2      = (j <= myOrder) ? j : j - myOrder - 1;
@@ -156,14 +148,13 @@ void FEmTool_LinearFlexion::Hessian(const int Dimension1, const int Dimension2, 
       if (i != j)
         H(j, i) = H(i, j);
     }
-    // Hermite*Jacobi part of matrix
+
     for (j = degH + 1; j <= deg; j++)
     {
       H(i, j) = H(j, i) = mfact * RefMatrix(i, j);
     }
   }
 
-  // Jacoby*Jacobi part of matrix
   for (i = degH + 1; i <= deg; i++)
   {
     for (j = i; j <= deg; j++)
@@ -174,8 +165,6 @@ void FEmTool_LinearFlexion::Hessian(const int Dimension1, const int Dimension2, 
     }
   }
 }
-
-//=================================================================================================
 
 void FEmTool_LinearFlexion::Gradient(const int Dimension, math_Vector& G)
 {

@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_TXYZ, TDF_Attribute)
 
-//=================================================================================================
-
 TObj_TXYZ::TObj_TXYZ() = default;
-
-//=================================================================================================
 
 const Standard_GUID& TObj_TXYZ::GetID()
 {
@@ -16,14 +12,10 @@ const Standard_GUID& TObj_TXYZ::GetID()
   return theGUID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TObj_TXYZ::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 occ::handle<TObj_TXYZ> TObj_TXYZ::Set(const TDF_Label& theLabel, const gp_XYZ& theXYZ)
 {
@@ -37,29 +29,21 @@ occ::handle<TObj_TXYZ> TObj_TXYZ::Set(const TDF_Label& theLabel, const gp_XYZ& t
   return A;
 }
 
-//=================================================================================================
-
 void TObj_TXYZ::Set(const gp_XYZ& theXYZ)
 {
   Backup();
   myXYZ = theXYZ;
 }
 
-//=================================================================================================
-
 gp_XYZ TObj_TXYZ::Get() const
 {
   return myXYZ;
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TObj_TXYZ::NewEmpty() const
 {
   return new TObj_TXYZ();
 }
-
-//=================================================================================================
 
 void TObj_TXYZ::Restore(const occ::handle<TDF_Attribute>& theWith)
 {
@@ -67,16 +51,12 @@ void TObj_TXYZ::Restore(const occ::handle<TDF_Attribute>& theWith)
   myXYZ                    = R->Get();
 }
 
-//=================================================================================================
-
 void TObj_TXYZ::Paste(const occ::handle<TDF_Attribute>& theInto,
-                      const occ::handle<TDF_RelocationTable>& /* RT */) const
+                      const occ::handle<TDF_RelocationTable>&) const
 {
   occ::handle<TObj_TXYZ> R = occ::down_cast<TObj_TXYZ>(theInto);
   R->Set(myXYZ);
 }
-
-//=================================================================================================
 
 Standard_OStream& TObj_TXYZ::Dump(Standard_OStream& theOS) const
 {

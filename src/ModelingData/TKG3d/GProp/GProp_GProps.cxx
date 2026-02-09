@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gp_Ax1.hpp>
 #include <gp_Mat.hpp>
@@ -78,17 +66,16 @@ void GProp_GProps::Add(const GProp_GProps& Item, const double Density)
     {
       g.SetCoord(0., 0., 0.);
     }
-    // We have to compute the inertia of the Item at the location point
-    // of the system using the Huyghens theorem
+
     gp_Mat HMat;
     gp_Mat ItemInertia = Item.inertia;
     if (Item.g.XYZ().Modulus() > gp::Resolution())
     {
-      // Computes the inertia of Item at its dim centre
+
       GProp::HOperator(Itemg, Item.loc, Item.dim, HMat);
       ItemInertia = ItemInertia - HMat;
     }
-    // Computes the inertia of Item at the location point of the system
+
     GProp::HOperator(Itemg, loc, Item.dim, HMat);
     ItemInertia = ItemInertia + HMat;
     inertia     = inertia + ItemInertia * Density;
@@ -123,11 +110,6 @@ void GProp_GProps::StaticMoments(double& Ix, double& Iy, double& Iz) const
 
 double GProp_GProps::MomentOfInertia(const gp_Ax1& A) const
 {
-  // Moment of inertia / axis A
-  // 1] computes the math_Matrix of inertia / A.location()
-  // 2] applies this math_Matrix to A.Direction()
-  // 3] then computes the scalar product between this vector and
-  //    A.Direction()
 
   if (loc.Distance(A.Location()) <= gp::Resolution())
   {
@@ -170,9 +152,7 @@ GProp_PrincipalProps GProp_GProps::PrincipalProperties() const
   gp_Vec Vxx(DiagMat(1, 1), DiagMat(2, 1), DiagMat(3, 1));
   gp_Vec Vyy(DiagMat(1, 2), DiagMat(2, 2), DiagMat(3, 2));
   gp_Vec Vzz(DiagMat(1, 3), DiagMat(2, 3), DiagMat(3, 3));
-  //
-  // protection contre dim == 0.0e0 au cas ou on aurait rentre qu'un point
-  //
+
   double Rxx = 0.0e0;
   double Ryy = 0.0e0;
   double Rzz = 0.0e0;

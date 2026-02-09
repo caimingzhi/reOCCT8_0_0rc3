@@ -17,7 +17,6 @@ class PCDM_ReferenceIterator : public Standard_Transient
 {
 
 public:
-  //! Warning! The constructor does not initialization.
   Standard_EXPORT PCDM_ReferenceIterator(const occ::handle<Message_Messenger>& theMessageDriver);
 
   Standard_EXPORT void LoadReferences(const occ::handle<CDM_Document>&    aDocument,
@@ -40,7 +39,6 @@ private:
 
   Standard_EXPORT virtual int ReferenceIdentifier() const;
 
-  //! returns the version of the document in the reference
   Standard_EXPORT virtual int DocumentVersion() const;
 
 private:

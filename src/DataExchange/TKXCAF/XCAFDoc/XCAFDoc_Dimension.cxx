@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDoc_Dimension.hpp>
 
@@ -59,21 +48,14 @@ enum ChildLab
   ChildLab_End
 };
 
-//=================================================================================================
-
 XCAFDoc_Dimension::XCAFDoc_Dimension() = default;
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc_Dimension::GetID()
 {
   static Standard_GUID DGTID("58ed092c-44de-11d8-8776-001083004c77");
-  // static Standard_GUID ID("efd212e9-6dfd-11d4-b9c8-0060b0ee281b");
-  return DGTID;
-  // return ID;
-}
 
-//=================================================================================================
+  return DGTID;
+}
 
 occ::handle<XCAFDoc_Dimension> XCAFDoc_Dimension::Set(const TDF_Label& theLabel)
 {
@@ -86,8 +68,6 @@ occ::handle<XCAFDoc_Dimension> XCAFDoc_Dimension::Set(const TDF_Label& theLabel)
   return A;
 }
 
-//=================================================================================================
-
 static void setString(const TDF_Label&                             theLabel,
                       const occ::handle<TCollection_HAsciiString>& theStr)
 {
@@ -97,8 +77,6 @@ static void setString(const TDF_Label&                             theLabel,
   TCollection_ExtendedString aStr(theStr->String());
   TDataStd_Name::Set(theLabel, aStr);
 }
-
-//=================================================================================================
 
 static void setRealArrayXYZ(const TDF_Label& theLabel, const gp_XYZ& theArr)
 {
@@ -110,8 +88,6 @@ static void setRealArrayXYZ(const TDF_Label& theLabel, const gp_XYZ& theArr)
   if (!anArrayAttr.IsNull())
     anArrayAttr->ChangeArray(anArr);
 }
-
-//=================================================================================================
 
 static occ::handle<TCollection_HAsciiString> getString(const TDF_Label& theLabel)
 {
@@ -126,8 +102,6 @@ static occ::handle<TCollection_HAsciiString> getString(const TDF_Label& theLabel
   return aStr;
 }
 
-//=================================================================================================
-
 static bool getRealArrayXYZ(const TDF_Label& theLabel, gp_XYZ& theXYZ)
 {
   occ::handle<TDataStd_RealArray> anArrayAttr;
@@ -141,8 +115,6 @@ static bool getRealArrayXYZ(const TDF_Label& theLabel, gp_XYZ& theXYZ)
   }
   return false;
 }
-
-//=================================================================================================
 
 void XCAFDoc_Dimension::SetObject(const occ::handle<XCAFDimTolObjects_DimensionObject>& theObject)
 {
@@ -232,13 +204,13 @@ void XCAFDoc_Dimension::SetObject(const occ::handle<XCAFDimTolObjects_DimensionO
 
   if (theObject->HasPoint())
   {
-    // put point
+
     setRealArrayXYZ(Label().FindChild(ChildLab_Pnt1), theObject->GetPoint().XYZ());
     setString(Label().FindChild(ChildLab_Pnt1), theObject->GetConnectionName());
 
     if (!theObject->IsPointConnection())
     {
-      // put additional info about axis
+
       gp_Ax2 anAxis1 = theObject->GetConnectionAxis();
 
       occ::handle<NCollection_HArray1<double>> aAxisArr = new NCollection_HArray1<double>(1, 6);
@@ -261,7 +233,7 @@ void XCAFDoc_Dimension::SetObject(const occ::handle<XCAFDimTolObjects_DimensionO
 
     if (!theObject->IsPointConnection2())
     {
-      // put additional info about axis
+
       gp_Ax2 anAxis2 = theObject->GetConnectionAxis2();
 
       occ::handle<NCollection_HArray1<double>> aAxisArr = new NCollection_HArray1<double>(1, 6);
@@ -327,8 +299,6 @@ void XCAFDoc_Dimension::SetObject(const occ::handle<XCAFDimTolObjects_DimensionO
       aDescriptionNames->ChangeArray(aDescrNameArr);
   }
 }
-
-//=================================================================================================
 
 occ::handle<XCAFDimTolObjects_DimensionObject> XCAFDoc_Dimension::GetObject() const
 {
@@ -493,14 +463,10 @@ occ::handle<XCAFDimTolObjects_DimensionObject> XCAFDoc_Dimension::GetObject() co
   return anObj;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_Dimension::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 void XCAFDoc_Dimension::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

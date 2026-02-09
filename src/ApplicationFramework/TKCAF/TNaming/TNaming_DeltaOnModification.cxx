@@ -8,8 +8,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TNaming_DeltaOnModification, TDF_DeltaOnModification)
 
-//=================================================================================================
-
 TNaming_DeltaOnModification::TNaming_DeltaOnModification(const occ::handle<TNaming_NamedShape>& NS)
     : TDF_DeltaOnModification(NS)
 {
@@ -54,8 +52,6 @@ TNaming_DeltaOnModification::TNaming_DeltaOnModification(const occ::handle<TNami
   }
 }
 
-//=================================================================================================
-
 static void LoadNamedShape(TNaming_Builder&    B,
                            TNaming_Evolution   Evol,
                            const TopoDS_Shape& OS,
@@ -68,7 +64,7 @@ static void LoadNamedShape(TNaming_Builder&    B,
       B.Generated(NS);
       break;
     }
-    case TNaming_REPLACE: // for compatibility
+    case TNaming_REPLACE:
     case TNaming_GENERATED:
     {
       B.Generated(OS, NS);
@@ -92,18 +88,14 @@ static void LoadNamedShape(TNaming_Builder&    B,
   }
 }
 
-//=================================================================================================
-
 void TNaming_DeltaOnModification::Apply()
 {
 
   occ::handle<TDF_Attribute>      TDFAttribute = Attribute();
   occ::handle<TNaming_NamedShape> NS           = occ::down_cast<TNaming_NamedShape>(TDFAttribute);
 
-  // If there is no attribute, reinsert the previous. Otherwise a new one
-  // is created automatically, and all referencing the previous are incorrect! FID 24/12/97
   occ::handle<TDF_Attribute> dummyAtt;
-  // if (!Ins.Find(NS->ID(),dummyAtt)) Ins.Add(NS);
+
   if (!Label().FindAttribute(NS->ID(), dummyAtt))
   {
 
@@ -114,7 +106,7 @@ void TNaming_DeltaOnModification::Apply()
     return;
   else if (myOld.IsNull())
   {
-    // TNaming_Builder B(Ins);
+
     TNaming_Builder B(Label());
     TopoDS_Shape    Old;
     for (int i = 1; i <= myNew->Upper(); i++)
@@ -124,7 +116,7 @@ void TNaming_DeltaOnModification::Apply()
   }
   else if (myNew.IsNull())
   {
-    // TNaming_Builder B(Ins);
+
     TNaming_Builder B(Label());
     TopoDS_Shape    New;
     for (int i = 1; i <= myOld->Upper(); i++)
@@ -134,7 +126,7 @@ void TNaming_DeltaOnModification::Apply()
   }
   else
   {
-    // TNaming_Builder B(Ins);
+
     TNaming_Builder B(Label());
     for (int i = 1; i <= myOld->Upper(); i++)
     {

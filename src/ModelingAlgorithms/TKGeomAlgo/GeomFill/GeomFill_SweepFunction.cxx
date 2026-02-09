@@ -15,8 +15,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_SweepFunction, Approx_SweepFunction)
 
-//=================================================================================================
-
 GeomFill_SweepFunction::GeomFill_SweepFunction(const occ::handle<GeomFill_SectionLaw>&  Section,
                                                const occ::handle<GeomFill_LocationLaw>& Location,
                                                const double FirstParameter,
@@ -29,8 +27,6 @@ GeomFill_SweepFunction::GeomFill_SweepFunction(const occ::handle<GeomFill_Sectio
   myfOnS  = FirstParameterOnS;
   myRatio = RatioParameterOnS;
 }
-
-//=================================================================================================
 
 bool GeomFill_SweepFunction::D0(const double Param,
                                 const double,
@@ -59,8 +55,6 @@ bool GeomFill_SweepFunction::D0(const double Param,
   }
   return true;
 }
-
-//=================================================================================================
 
 bool GeomFill_SweepFunction::D1(const double Param,
                                 const double,
@@ -101,8 +95,6 @@ bool GeomFill_SweepFunction::D1(const double Param,
   }
   return true;
 }
-
-//=================================================================================================
 
 bool GeomFill_SweepFunction::D2(const double Param,
                                 const double,
@@ -157,42 +149,30 @@ bool GeomFill_SweepFunction::D2(const double Param,
   return true;
 }
 
-//=================================================================================================
-
 int GeomFill_SweepFunction::Nb2dCurves() const
 {
   return myLoc->Nb2dCurves();
 }
-
-//=================================================================================================
 
 void GeomFill_SweepFunction::SectionShape(int& NbPoles, int& NbKnots, int& Degree) const
 {
   mySec->SectionShape(NbPoles, NbKnots, Degree);
 }
 
-//=================================================================================================
-
 void GeomFill_SweepFunction::Knots(NCollection_Array1<double>& TKnots) const
 {
   mySec->Knots(TKnots);
 }
-
-//=================================================================================================
 
 void GeomFill_SweepFunction::Mults(NCollection_Array1<int>& TMults) const
 {
   mySec->Mults(TMults);
 }
 
-//=================================================================================================
-
 bool GeomFill_SweepFunction::IsRational() const
 {
   return mySec->IsRational();
 }
-
-//=================================================================================================
 
 int GeomFill_SweepFunction::NbIntervals(const GeomAbs_Shape S) const
 {
@@ -225,8 +205,6 @@ int GeomFill_SweepFunction::NbIntervals(const GeomAbs_Shape S) const
   GeomLib::FuseIntervals(IntS, IntL, Inter, Precision::PConfusion() * 0.99);
   return Inter.Length() - 1;
 }
-
-//=================================================================================================
 
 void GeomFill_SweepFunction::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const
 {
@@ -269,8 +247,6 @@ void GeomFill_SweepFunction::Intervals(NCollection_Array1<double>& T, const Geom
     T(ii) = Inter(ii);
 }
 
-//=================================================================================================
-
 void GeomFill_SweepFunction::SetInterval(const double First, const double Last)
 {
   double uf, ul;
@@ -280,8 +256,6 @@ void GeomFill_SweepFunction::SetInterval(const double First, const double Last)
   mySec->SetInterval(uf, ul);
 }
 
-//=================================================================================================
-
 void GeomFill_SweepFunction::GetTolerance(const double                BoundTol,
                                           const double                SurfTol,
                                           const double                AngleTol,
@@ -289,8 +263,6 @@ void GeomFill_SweepFunction::GetTolerance(const double                BoundTol,
 {
   mySec->GetTolerance(BoundTol, SurfTol, AngleTol, Tol3d);
 }
-
-//=================================================================================================
 
 void GeomFill_SweepFunction::Resolution(const int    Index,
                                         const double Tol,
@@ -300,15 +272,11 @@ void GeomFill_SweepFunction::Resolution(const int    Index,
   myLoc->Resolution(Index, Tol, TolU, TolV);
 }
 
-//=================================================================================================
-
 void GeomFill_SweepFunction::SetTolerance(const double Tol3d, const double Tol2d)
 {
   mySec->SetTolerance(Tol3d, Tol2d);
   myLoc->SetTolerance(Tol3d, Tol2d);
 }
-
-//=================================================================================================
 
 gp_Pnt GeomFill_SweepFunction::BarycentreOfSurf() const
 {
@@ -324,16 +292,12 @@ gp_Pnt GeomFill_SweepFunction::BarycentreOfSurf() const
   return Bary;
 }
 
-//=================================================================================================
-
 double GeomFill_SweepFunction::MaximalSection() const
 {
   double L = mySec->MaximalSection();
   L *= myLoc->GetMaximalNorm();
   return L;
 }
-
-//=================================================================================================
 
 void GeomFill_SweepFunction::GetMinimalWeight(NCollection_Array1<double>& Weigths) const
 {

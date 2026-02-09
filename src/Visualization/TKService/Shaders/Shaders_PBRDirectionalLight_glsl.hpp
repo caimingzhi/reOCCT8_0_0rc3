@@ -19,5 +19,3 @@ static const char Shaders_PBRDirectionalLight_glsl[] =
   "                                        occLight_Specular (theId),\n"
   "                                        occLight_Intensity(theId)) * theShadow;\n"
   "}\n";
-
-// clang-format on

@@ -1,22 +1,9 @@
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <TDataStd_GenericExtString.hpp>
 #include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_GenericExtString, TDF_Attribute)
-
-//=================================================================================================
 
 void TDataStd_GenericExtString::Set(const TCollection_ExtendedString& S)
 {
@@ -27,14 +14,10 @@ void TDataStd_GenericExtString::Set(const TCollection_ExtendedString& S)
   myString = S;
 }
 
-//=================================================================================================
-
 const TCollection_ExtendedString& TDataStd_GenericExtString::Get() const
 {
   return myString;
 }
-
-//=================================================================================================
 
 void TDataStd_GenericExtString::SetID(const Standard_GUID& theGuid)
 {
@@ -45,14 +28,10 @@ void TDataStd_GenericExtString::SetID(const Standard_GUID& theGuid)
   myID = theGuid;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_GenericExtString::ID() const
 {
   return myID;
 }
-
-//=================================================================================================
 
 void TDataStd_GenericExtString::Restore(const occ::handle<TDF_Attribute>& with)
 {
@@ -61,17 +40,13 @@ void TDataStd_GenericExtString::Restore(const occ::handle<TDF_Attribute>& with)
   myID                                         = anAtt->ID();
 }
 
-//=================================================================================================
-
 void TDataStd_GenericExtString::Paste(const occ::handle<TDF_Attribute>& into,
-                                      const occ::handle<TDF_RelocationTable>& /* RT*/) const
+                                      const occ::handle<TDF_RelocationTable>&) const
 {
   occ::handle<TDataStd_GenericExtString> anAtt = occ::down_cast<TDataStd_GenericExtString>(into);
   anAtt->Set(myString);
   anAtt->SetID(myID);
 }
-
-//=================================================================================================
 
 void TDataStd_GenericExtString::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

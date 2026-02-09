@@ -11,7 +11,6 @@ class StepVisual_CompositeTextWithExtent;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for CompositeTextWithExtent
 class RWStepVisual_RWCompositeTextWithExtent
 {
 public:

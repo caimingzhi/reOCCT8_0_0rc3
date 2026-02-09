@@ -30,24 +30,18 @@
   #include <NCollection_Map.hpp>
 #endif
 
-//=======================================================================
-// function : ShapeFix_FaceConnect
-//=======================================================================
-
 ShapeFix_FaceConnect::ShapeFix_FaceConnect() = default;
-
-//=================================================================================================
 
 bool ShapeFix_FaceConnect::Add(const TopoDS_Face& aFirst, const TopoDS_Face& aSecond)
 {
   if (!aFirst.IsNull() && !aSecond.IsNull())
   {
-    // Process first face
+
     if (myConnected.IsBound(aFirst))
     {
-      // Find list for the first face
+
       NCollection_List<TopoDS_Shape>& theFirstList = myConnected(aFirst);
-      // Append second face to the first list
+
       NCollection_List<TopoDS_Shape>::Iterator theIter;
       for (theIter.Initialize(theFirstList); theIter.More(); theIter.Next())
         if (theIter.Value().IsSame(aSecond))
@@ -56,23 +50,22 @@ bool ShapeFix_FaceConnect::Add(const TopoDS_Face& aFirst, const TopoDS_Face& aSe
     }
     else
     {
-      // Append second face to the first list
+
       NCollection_List<TopoDS_Shape> theNewFirstList;
       theNewFirstList.Append(aSecond);
       myConnected.Bind(aFirst, theNewFirstList);
     }
 
-    // Process second face if not same
     if (!aFirst.IsSame(aSecond))
     {
       if (myConnected.IsBound(aSecond))
       {
-        // No need to iterate on faces - append first
+
         myConnected(aSecond).Append(aFirst);
       }
       else
       {
-        // Append first face to the second list
+
         NCollection_List<TopoDS_Shape> theNewSecondList;
         theNewSecondList.Append(aFirst);
         myConnected.Bind(aSecond, theNewSecondList);
@@ -85,21 +78,12 @@ bool ShapeFix_FaceConnect::Add(const TopoDS_Face& aFirst, const TopoDS_Face& aSe
   return false;
 }
 
-//=================================================================================================
-
 TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
                                          const double        sewtoler,
                                          const double        fixtoler)
 {
   TopoDS_Shell result = shell;
 
-  /***************************************************************
-  / INITIAL PREPARATIONS
-  / Fill map of original free edges,
-  / fill maps of resulting free and shared edges
-  ***************************************************************/
-
-  // Clear maps of free and shared edges
   myOriFreeEdges.Clear();
   myResFreeEdges.Clear();
   myResSharEdges.Clear();
@@ -107,7 +91,6 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> theFreeEdges;
   TopoDS_Shape                                                             theEdge, theFace;
 
-  // Fill map of free edges / faces
   for (TopoDS_Iterator itf(result); itf.More(); itf.Next())
   {
     theFace = itf.Value();
@@ -121,31 +104,30 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
     }
   }
 
-  // Fill maps of original and resulting edges
   for (NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator theFEIter(
          theFreeEdges);
        theFEIter.More();
        theFEIter.Next())
   {
-    // Get pair (face / free edge)
+
     theEdge = theFEIter.Key(), theFace = theFEIter.Value();
-    // Process faces with bad connectivities only
+
     if (myConnected.IsBound(theFace) && !BRep_Tool::Degenerated(TopoDS::Edge(theEdge)))
     {
-      // Add to the map of original free edges
+
       if (myOriFreeEdges.IsBound(theFace))
       {
-        // Append free edge to the existing list
+
         myOriFreeEdges(theFace).Append(theEdge);
       }
       else
       {
-        // Append free edge to the new list
+
         NCollection_List<TopoDS_Shape> theNewList;
         theNewList.Append(theEdge);
         myOriFreeEdges.Bind(theFace, theNewList);
       }
-      // Add to the maps of intermediate free and resulting edges
+
       if (!myResFreeEdges.IsBound(theEdge))
       {
         NCollection_List<TopoDS_Shape> theFree, theShared;
@@ -156,13 +138,10 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
     }
   }
 
-  // Clear the temporary map of free edges
   theFreeEdges.Clear();
 
 #ifdef OCCT_DEBUG
-  //-------------------------------
-  // szv debug - preparation results
-  //-------------------------------
+
   if (!myOriFreeEdges.IsEmpty())
   {
     std::cout << std::endl << "FACE CONNECT PREPARATION RESULTS:" << std::endl;
@@ -180,18 +159,12 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
     std::cout << "TOTAL: " << facenum << " faces containing " << freenum << " free edges"
               << std::endl;
   }
-  //-------------------------------
-#endif
 
-  /***************************************************************
-  / APPLY SEWING ON CONNECTED FACES
-  / Change maps of original free edges and resulting shared edges
-  ***************************************************************/
+#endif
 
   if (!myOriFreeEdges.IsEmpty())
   {
 
-    // Allocate array of faces to be sewed
     TopoDS_Shape                     theFirstFace, theSecondFace;
     NCollection_Array1<TopoDS_Shape> theFacesToSew(1, 2);
     int                              theNumOfFacesToSew = 0;
@@ -211,34 +184,30 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
          theConnectedIter.More();
          theConnectedIter.Next())
     {
-      // Process first face only if it is in the map of faces / free edges
+
       theFirstFace = theConnectedIter.Key();
       if (myOriFreeEdges.IsBound(theFirstFace))
       {
 
-        // Place first face into the array
         theFacesToSew.SetValue(1, theFirstFace);
         theNumOfFacesToSew = 1;
-        // Create the list of processed faces
+
         NCollection_List<TopoDS_Shape> theProcessedList;
 
-        // Explore the list of connected faces
         const NCollection_List<TopoDS_Shape>&    theConnectedList = theConnectedIter.Value();
         NCollection_List<TopoDS_Shape>::Iterator theConnectedListIter;
         for (theConnectedListIter.Initialize(theConnectedList); theConnectedListIter.More();
              theConnectedListIter.Next())
         {
-          // Process second face only if it is in the map of faces / free edges
+
           theSecondFace = theConnectedListIter.Value();
           if (myOriFreeEdges.IsBound(theSecondFace))
           {
 
-            // Place second face into the array
             theFacesToSew.SetValue(2, theSecondFace);
-            // Add second face to the list of processed faces
+
             theProcessedList.Append(theSecondFace);
 
-            // Skip the pair if already processed
             skip_pair = false;
             if (theProcessed.IsBound(theSecondFace))
             {
@@ -253,7 +222,6 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
             if (!skip_pair)
             {
 
-              // Process second face for the pair of different faces only
               if (theFirstFace.IsSame(theSecondFace))
               {
 #ifdef OCCT_DEBUG
@@ -268,14 +236,13 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
                                     theSewerWires;
               BRepBuilderAPI_Sewing theSewer(sewtoler);
 
-              // Prepare set of faces containing free edges
               int i = 1;
               for (i = 1; i <= theNumOfFacesToSew; i++)
               {
-                // Prepare empty face to fill with free edges
+
                 TopoDS_Shape theFaceToSew = theFacesToSew(i);
                 theAuxF                   = theFaceToSew.EmptyCopied();
-                // Fill empty face with free edges
+
                 for (theOriginalIter.Initialize(myOriFreeEdges(theFaceToSew));
                      theOriginalIter.More();
                      theOriginalIter.Next())
@@ -284,7 +251,7 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
                        theResultsIter.More();
                        theResultsIter.Next())
                   {
-                    // Bind free edge to wire to find results later
+
                     theAuxE = theResultsIter.Value();
                     TopoDS_Wire theAuxW;
                     theBuilder.MakeWire(theAuxW);
@@ -294,11 +261,10 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
                     theSewer.Add(theAuxW);
                   }
                 }
-                // Add constructed face to sewer
+
                 theSewer.Add(theAuxF);
               }
 
-              // Perform sewing on the list of free edges
               bool sewing_ok = true;
               {
                 try
@@ -320,33 +286,32 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
                 NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>
                   theResultEdges;
 
-                // Find modified edges for the faces
                 for (i = 1; i <= theNumOfFacesToSew; i++)
                 {
                   for (theOriginalIter.Initialize(myOriFreeEdges(theFacesToSew(i)));
                        theOriginalIter.More();
                        theOriginalIter.Next())
                   {
-                    // Get original free edge
+
                     theOrigE                                       = theOriginalIter.Value();
                     NCollection_List<TopoDS_Shape>& theOldFreeList = myResFreeEdges(theOrigE);
                     theResultsIter.Initialize(theOldFreeList);
                     while (theResultsIter.More())
                     {
                       theAuxE = theSewerWires(theResultsIter.Value());
-                      // Process modified edges
+
                       if (theSewer.IsModified(theAuxE))
                       {
-                        // Fill map of result edges
+
                         for (TopExp_Explorer expe(theSewer.Modified(theAuxE), TopAbs_EDGE);
                              expe.More();
                              expe.Next())
                         {
                           theAuxE = expe.Current();
-                          // Check edge for being shared
+
                           if (theResultEdges.IsBound(theAuxE))
                           {
-                            // Edge was shared - move in results list
+
                             myResSharEdges(theResultEdges(theAuxE)).Append(theAuxE);
                             myResSharEdges(theOrigE).Append(theAuxE);
                             theResultEdges.UnBind(theAuxE);
@@ -354,7 +319,7 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
                           else
                             theResultEdges.Bind(theAuxE, theOrigE);
                         }
-                        // Remove modified free edge from the list
+
                         theOldFreeList.Remove(theResultsIter);
                       }
                       else
@@ -363,7 +328,6 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
                   }
                 }
 
-                // Put free edges back to the lists of results
                 for (NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>::
                        Iterator theResIter(theResultEdges);
                      theResIter.More();
@@ -377,18 +341,14 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
           }
         }
 
-        // Bind the list of processed faces to the processed face
         theProcessed.Bind(theFirstFace, theProcessedList);
       }
     }
 
-    // Clear the temporary map of processed faces
     theProcessed.Clear();
 
 #ifdef OCCT_DEBUG
-    //-------------------------------
-    // szv debug - sewing results
-    //-------------------------------
+
     std::cout << std::endl << "FACE CONNECT SEWING RESULTS:" << std::endl;
     std::cout << "----------------------------" << std::endl;
     std::cout << "Sewing tolerance was set to " << sewtoler << std::endl;
@@ -407,12 +367,8 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
       }
     }
     std::cout << "TOTAL: " << totfree << " free, " << totshared << " shared edges" << std::endl;
-    //-------------------------------
-#endif
 
-    /***************************************************************
-    / PERFORM EDGES REPLACEMENT
-    ***************************************************************/
+#endif
 
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> theRepEdges;
     NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
@@ -421,7 +377,6 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
     NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
       theNewVertices;
 
-    // Replace old edges by resulting ones
     TopoDS_Wire   theNewW;
     TopoDS_Vertex theOldV1, theOldV2, theNewV1, theNewV2, theNewV;
     gp_Pnt        theOldP1, theOldP2;
@@ -432,31 +387,29 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
          theOEIter.More();
          theOEIter.Next())
     {
-      // Iterate on original free edges
+
       for (theOriginalIter.Initialize(theOEIter.Value()); theOriginalIter.More();
            theOriginalIter.Next())
       {
         TopoDS_Edge theOldE = TopoDS::Edge(theOriginalIter.Value());
 
-        // Prepare empty wire to add new edges for reshape
         theBuilder.MakeWire(theNewW);
 
-        // Explore new edges and vertices
         bool emptywire = true;
         for (int i = 1; i <= 2; i++)
         {
-          // Select list of free or shared edges
+
           if (i == 1)
             theResultsIter.Initialize(myResFreeEdges(theOldE));
           else
             theResultsIter.Initialize(myResSharEdges(theOldE));
-          // Iterate on new edges
+
           for (; theResultsIter.More(); theResultsIter.Next())
           {
             theAuxE = theResultsIter.Value();
             if (!theAuxE.IsSame(theOldE))
             {
-              // Add new edge to the wire
+
               theBuilder.Add(theNewW, theAuxE);
               emptywire = false;
             }
@@ -466,12 +419,10 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
         if (!emptywire)
         {
 
-          // Get vertices on old and new edges
           TopExp::Vertices(theOldE, theOldV1, theOldV2);
           theOldP1 = BRep_Tool::Pnt(theOldV1);
           theOldP2 = BRep_Tool::Pnt(theOldV2);
 
-          // Process vertices for replacing
           dist1 = -1.;
           dist2 = -1.;
           for (TopExp_Explorer expv(theNewW, TopAbs_VERTEX); expv.More(); expv.Next())
@@ -492,7 +443,6 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
             }
           }
 
-          // Place results in map for replacing
           if (!theOldV1.IsSame(theNewV1))
           {
             if (theRepVertices.IsBound(theOldV1))
@@ -540,7 +490,6 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
             }
           }
 
-          // Bind edge to replace
           theRepEdges.Bind(theOldE, theNewW);
         }
       }
@@ -551,16 +500,14 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
 
       occ::handle<ShapeBuild_ReShape> theReShape = new ShapeBuild_ReShape;
 
-      // Replace edges
       for (NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator
              theREIter(theRepEdges);
            theREIter.More();
            theREIter.Next())
       {
-        theReShape->Replace(theREIter.Key() /*.Oriented(TopAbs_FORWARD)*/,
-                            theREIter.Value() /*.Oriented(TopAbs_FORWARD)*/);
+        theReShape->Replace(theREIter.Key(), theREIter.Value());
       }
-      // smh#8
+
       TopoDS_Shape tmpReShape = theReShape->Apply(result);
       result                  = TopoDS::Shell(tmpReShape);
       if (theReShape->Status(ShapeExtend_OK))
@@ -586,14 +533,12 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
         occ::handle<Geom2d_Curve>         c2d;
         occ::handle<ShapeExtend_WireData> sewd;
 
-        // Perform necessary fixes on subshapes
-        // smh#8
         TopoDS_Shape emptyCopiedShell = result.EmptyCopied();
         TopoDS_Shell theShell         = TopoDS::Shell(emptyCopiedShell);
         for (TopoDS_Iterator itf1(result); itf1.More(); itf1.Next())
         {
           TopoDS_Face newface = TopoDS::Face(itf1.Value());
-          // smh#8
+
           TopoDS_Shape emptyCopiedFace = newface.EmptyCopied();
           TopoDS_Face  EmpFace         = TopoDS::Face(emptyCopiedFace);
           for (TopoDS_Iterator itw(newface); itw.More(); itw.Next())
@@ -607,7 +552,6 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
             for (int i = 1; i <= sewd->NbEdges(); i++)
             {
 
-              // smh#8
               TopoDS_Shape tmpFace = EmpFace.Oriented(TopAbs_FORWARD);
               if (!SAE.PCurve(sewd->Edge(i), TopoDS::Face(tmpFace), c2d, f, l))
                 continue;
@@ -628,9 +572,8 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
             theWire = SFW->Wire();
             theBuilder.Add(EmpFace, theWire);
           }
-          // #ifdef AIX  CKY : applies to all platforms
+
           SFF->Init(EmpFace);
-          //	  SFF->Init(TopoDS::Face(EmpFace));
 
           NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
             MapWires;
@@ -645,7 +588,6 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
         if (!theRepVertices.IsEmpty())
         {
 
-          // Prepare vertices to replace
           TopoDS_Shape theOld, theNew, theRep, theAux;
           for (NCollection_DataMap<TopoDS_Shape,
                                    NCollection_List<TopoDS_Shape>,
@@ -653,21 +595,21 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
                theRV1Iter.More();
                theRV1Iter.Next())
           {
-            // Get the old vertex, create empty list of replaced vertices
+
             theOld = theRV1Iter.Key();
             NCollection_List<TopoDS_Shape> theNewList;
-            // Explore the list of new vertices
+
             NCollection_List<TopoDS_Shape>::Iterator theN1Iter;
             for (theN1Iter.Initialize(theRV1Iter.Value()); theN1Iter.More(); theN1Iter.Next())
             {
               theNew = theN1Iter.Value();
               if (theOldVertices.IsBound(theNew))
               {
-                // Vertex has a replacing vertex in the map
+
                 theRep = theOldVertices(theNew);
                 if (!theRep.IsSame(theOld))
                 {
-                  // Vertex is not in current list
+
                   theOldVertices.Bind(theRep, theOld);
                   theNewList.Append(theRep);
                   NCollection_List<TopoDS_Shape>::Iterator theN3Iter;
@@ -690,7 +632,6 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
             theNewVertices.Bind(theOld, theNewList);
           }
 
-          // Update vertices positions and tolerances
           TopoDS_Vertex theNewVert, theOldVert;
           for (NCollection_DataMap<TopoDS_Shape,
                                    NCollection_List<TopoDS_Shape>,
@@ -699,7 +640,7 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
                theRV2Iter.Next())
           {
             theNewVert = TopoDS::Vertex(theRV2Iter.Key());
-            // Calculate the vertex position
+
             gp_Pnt theLBound, theRBound, thePosition;
             theLBound = theRBound = BRep_Tool::Pnt(theNewVert);
             NCollection_List<TopoDS_Shape>::Iterator theN2Iter;
@@ -724,7 +665,7 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
             }
             thePosition         = gp_Pnt((theLBound.XYZ() + theRBound.XYZ()) / 2.);
             double theTolerance = 0., curtoler;
-            // Calculate the vertex tolerance
+
             for (theN2Iter.Initialize(theRV2Iter.Value()); theN2Iter.More(); theN2Iter.Next())
             {
               theOldVert = TopoDS::Vertex(theN2Iter.Value());
@@ -740,7 +681,6 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
             theBuilder.UpdateVertex(theNewVert, thePosition, theTolerance);
           }
 
-          // Replace vertices
           theReShape->Clear();
           for (NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator
                  theNVIter(theOldVertices);
@@ -748,7 +688,7 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
                theNVIter.Next())
             theReShape->Replace(theNVIter.Key().Oriented(TopAbs_FORWARD),
                                 theNVIter.Value().Oriented(TopAbs_FORWARD));
-          // smh#8
+
           TopoDS_Shape tmpshape = theReShape->Apply(result);
           result                = TopoDS::Shell(tmpshape);
 
@@ -762,9 +702,7 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
         }
 
 #ifdef OCCT_DEBUG
-        //-------------------------------
-        // szv debug - reshape results
-        //-------------------------------
+
         std::cout << std::endl << "FACE CONNECT REPLACEMENT RESULTS:" << std::endl;
         std::cout << "---------------------------------" << std::endl;
         NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> theTmpMap;
@@ -798,7 +736,7 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
         std::cout << "TOTAL: " << toteold << " edges, " << totvold << " vertices replaced by "
                   << totenew << " edges, " << totvnew << " vertices" << std::endl
                   << std::endl;
-        //-------------------------------
+
 #endif
       }
     }
@@ -806,8 +744,6 @@ TopoDS_Shell ShapeFix_FaceConnect::Build(const TopoDS_Shell& shell,
 
   return result;
 }
-
-//=================================================================================================
 
 void ShapeFix_FaceConnect::Clear()
 {

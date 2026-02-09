@@ -11,7 +11,6 @@ class StepVisual_FillAreaStyleColour : public Standard_Transient
 {
 
 public:
-  //! Returns a FillAreaStyleColour
   Standard_EXPORT StepVisual_FillAreaStyleColour();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

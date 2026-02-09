@@ -11,53 +11,24 @@
 #include <OSD_OpenFile.hpp>
 #include <RWMesh_CoordinateSystemConverter.hpp>
 #include <RWObj_Material.hpp>
-// Author: Kirill Gavrilov
-// Copyright (c) 2015-2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
 #include <TCollection_AsciiString.hpp>
 
-//! Sub-mesh definition for OBJ reader.
 struct RWObj_SubMesh
 {
-  TCollection_AsciiString Object;      //!< name of active object
-  TCollection_AsciiString Group;       //!< name of active group
-  TCollection_AsciiString SmoothGroup; //!< name of active smoothing group
-  TCollection_AsciiString Material;    //!< name of active material
+  TCollection_AsciiString Object;
+  TCollection_AsciiString Group;
+  TCollection_AsciiString SmoothGroup;
+  TCollection_AsciiString Material;
 };
 
-// Author: Kirill Gavrilov
-// Copyright (c) 2017-2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//! Reason for creating a new group within OBJ reader.
 enum RWObj_SubMeshReason
 {
-  RWObj_SubMeshReason_NewObject,   //!< new object, should occur only ones in valid OBJ file (at the
-                                   //!< very beginning)
-  RWObj_SubMeshReason_NewGroup,    //!< new group (g item)
-  RWObj_SubMeshReason_NewMaterial, //!< new material (usemtl item)
-  RWObj_SubMeshReason_NewSmoothGroup //!< new smoothing group (s item)
+  RWObj_SubMeshReason_NewObject,
+
+  RWObj_SubMeshReason_NewGroup,
+  RWObj_SubMeshReason_NewMaterial,
+  RWObj_SubMeshReason_NewSmoothGroup
 };
 
 #include <RWObj_Tools.hpp>
@@ -65,22 +36,12 @@ enum RWObj_SubMeshReason
 
 #include <vector>
 
-//! An abstract class implementing procedure to read OBJ file.
-//!
-//! This class is not bound to particular data structure
-//! and can be used to read the file directly into arbitrary data model.
-//! To use it, create descendant class and implement interface methods.
-//!
-//! Call method Read() to read the file.
 class RWObj_Reader : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(RWObj_Reader, Standard_Transient)
 public:
-  //! Empty constructor.
   Standard_EXPORT RWObj_Reader();
 
-  //! Open stream and pass it to Read method
-  //! Returns true if success, false on error.
   bool Read(const TCollection_AsciiString& theFile, const Message_ProgressRange& theProgress)
   {
     std::ifstream aStream;
@@ -88,9 +49,6 @@ public:
     return Read(aStream, theFile, theProgress);
   }
 
-  //! Reads data from OBJ file.
-  //! Unicode paths can be given in UTF-8 encoding.
-  //! Returns true if success, false on error or user break.
   bool Read(std::istream&                  theStream,
             const TCollection_AsciiString& theFile,
             const Message_ProgressRange&   theProgress)
@@ -98,11 +56,6 @@ public:
     return read(theStream, theFile, theProgress, false);
   }
 
-  //! Open stream and pass it to Probe method.
-  //! @param theFile     path to the file
-  //! @param theProgress progress indicator
-  //! @return TRUE if success, FALSE on error or user break.
-  //! @sa FileComments(), ExternalFiles(), NbProbeNodes(), NbProbeElems().
   bool Probe(const TCollection_AsciiString& theFile, const Message_ProgressRange& theProgress)
   {
     std::ifstream aStream;
@@ -110,14 +63,6 @@ public:
     return Probe(aStream, theFile, theProgress);
   }
 
-  //! Probe data from OBJ file (comments, external references) without actually reading mesh data.
-  //! Although mesh data will not be collected, the full file content will be parsed, due to OBJ
-  //! format limitations.
-  //! @param theStream   input stream
-  //! @param theFile     path to the file
-  //! @param theProgress progress indicator
-  //! @return TRUE if success, FALSE on error or user break.
-  //! @sa FileComments(), ExternalFiles(), NbProbeNodes(), NbProbeElems().
   bool Probe(std::istream&                  theStream,
              const TCollection_AsciiString& theFile,
              const Message_ProgressRange&   theProgress)
@@ -125,98 +70,55 @@ public:
     return read(theStream, theFile, theProgress, true);
   }
 
-  //! Returns file comments (lines starting with # at the beginning of file).
   const TCollection_AsciiString& FileComments() const { return myFileComments; }
 
-  //! Return the list of external file references.
   const NCollection_IndexedMap<TCollection_AsciiString>& ExternalFiles() const
   {
     return myExternalFiles;
   }
 
-  //! Number of probed nodes.
   int NbProbeNodes() const { return myNbProbeNodes; }
 
-  //!< number of probed polygon elements (of unknown size).
   int NbProbeElems() const { return myNbProbeElems; }
 
-  //! Returns memory limit in bytes; -1 (no limit) by default.
   size_t MemoryLimit() const { return myMemLimitBytes; }
 
-  //! Specify memory limit in bytes, so that import will be aborted
-  //! by specified limit before memory allocation error occurs.
   void SetMemoryLimit(size_t theMemLimit) { myMemLimitBytes = theMemLimit; }
 
-  //! Return transformation from one coordinate system to another; no transformation by default.
   const RWMesh_CoordinateSystemConverter& Transformation() const { return myCSTrsf; }
 
-  //! Setup transformation from one coordinate system to another.
-  //! OBJ file might be exported following various coordinate system conventions,
-  //! so that it might be useful automatically transform data during file reading.
   void SetTransformation(const RWMesh_CoordinateSystemConverter& theCSConverter)
   {
     myCSTrsf = theCSConverter;
   }
 
-  //! Return single precision flag for reading vertex data (coordinates); FALSE by default.
   bool IsSinglePrecision() const { return myObjVerts.IsSinglePrecision(); }
 
-  //! Setup single/double precision flag for reading vertex data (coordinates).
   void SetSinglePrecision(bool theIsSinglePrecision)
   {
     myObjVerts.SetSinglePrecision(theIsSinglePrecision);
   }
 
 protected:
-  //! Reads data from OBJ file.
-  //! Unicode paths can be given in UTF-8 encoding.
-  //! Returns true if success, false on error or user break.
   Standard_EXPORT bool read(std::istream&                  theStream,
                             const TCollection_AsciiString& theFile,
                             const Message_ProgressRange&   theProgress,
                             const bool                     theToProbe);
 
-  //! @name interface methods which should be implemented by sub-class
 protected:
-  //! Add new sub-mesh.
-  //! Basically, this method will be called multiple times for the same group with different reason,
-  //! so that implementation should decide if previously allocated sub-mesh should be used or new
-  //! one to be allocated. Sub-mesh command can be skipped if previous sub-mesh is empty, or if the
-  //! reason is out of interest for particular reader (e.g. if materials are ignored, reader may
-  //! ignore RWObj_SubMeshReason_NewMaterial reason).
-  //! @param theMesh   mesh definition
-  //! @param theReason reason to create new sub-mesh
-  //! @return TRUE if new sub-mesh should be started since this point
   virtual bool addMesh(const RWObj_SubMesh& theMesh, const RWObj_SubMeshReason theReason) = 0;
 
-  //! Retrieve sub-mesh node position, added by addNode().
   virtual gp_Pnt getNode(int theIndex) const = 0;
 
-  //! Callback function to be implemented in descendant.
-  //! Should create new node with specified coordinates in the target model, and return its ID as
-  //! integer.
   virtual int addNode(const gp_Pnt& thePnt) = 0;
 
-  //! Callback function to be implemented in descendant.
-  //! Should set normal coordinates for specified node.
-  //! @param theIndex node ID as returned by addNode()
-  //! @param theNorm  normal vector
   virtual void setNodeNormal(const int theIndex, const NCollection_Vec3<float>& theNorm) = 0;
 
-  //! Callback function to be implemented in descendant.
-  //! Should set texture coordinates for specified node.
-  //! @param theIndex node ID as returned by addNode()
-  //! @param theUV    UV texture coordinates
   virtual void setNodeUV(const int theIndex, const NCollection_Vec2<float>& theUV) = 0;
 
-  //! Callback function to be implemented in descendant.
-  //! Should create new element (triangle or quad if 4th index is != -1) built on specified nodes in
-  //! the target model.
   virtual void addElement(int theN1, int theN2, int theN3, int theN4) = 0;
 
-  //! @name implementation details
 private:
-  //! Handle "v X Y Z".
   void pushVertex(const char* theXYZ)
   {
     char*  aNext = nullptr;
@@ -228,7 +130,6 @@ private:
     myObjVerts.Append(anXYZ);
   }
 
-  //! Handle "vn NX NY NZ".
   void pushNormal(const char* theXYZ)
   {
     char*                   aNext = nullptr;
@@ -240,7 +141,6 @@ private:
     myObjNorms.Append(aNorm);
   }
 
-  //! Handle "vt U V".
   void pushTexel(const char* theUV)
   {
     char*                   aNext = nullptr;
@@ -253,51 +153,29 @@ private:
     myObjVertsUV.Append(anUV);
   }
 
-  //! Handle "f indices".
   void pushIndices(const char* thePos);
 
-  //! Compute the center of planar polygon.
-  //! @param theIndices polygon indices
-  //! @return center of polygon
   gp_XYZ polygonCenter(const NCollection_Array1<int>& theIndices);
 
-  //! Compute the normal to planar polygon.
-  //! The logic is similar to ShapeAnalysis_Curve::IsPlanar().
-  //! @param theIndices polygon indices
-  //! @return polygon normal
   gp_XYZ polygonNormal(const NCollection_Array1<int>& theIndices);
 
-  //! Create triangle fan from specified polygon.
-  //! @param theIndices polygon nodes
-  //! @return number of added triangles
   int triangulatePolygonFan(const NCollection_Array1<int>& theIndices);
 
-  //! Triangulate specified polygon.
-  //! @param theIndices polygon nodes
-  //! @return number of added triangles
   int triangulatePolygon(const NCollection_Array1<int>& theIndices);
 
-  //! Handle "o ObjectName".
   void pushObject(const char* theObjectName);
 
-  //! Handle "g GroupName".
   void pushGroup(const char* theGroupName);
 
-  //! Handle "s SmoothGroupIndex".
   void pushSmoothGroup(const char* theSmoothGroupIndex);
 
-  //! Handle "usemtl MaterialName".
   void pushMaterial(const char* theMaterialName);
 
-  //! Handle "mtllib FileName".
   void readMaterialLib(const char* theFileName);
 
-  //! Check memory limits.
-  //! @return FALSE on out of memory
   bool checkMemory();
 
 protected:
-  //! Hasher for 3 ordered integers.
   struct ObjVec3iHasher
   {
     std::size_t operator()(const NCollection_Vec3<int>& theKey) const noexcept
@@ -312,20 +190,16 @@ protected:
     }
   };
 
-  //! Auxiliary structure holding vertex data either with single or double floating point precision.
   class VectorOfVertices
   {
   public:
-    //! Empty constructor.
     VectorOfVertices()
         : myIsSinglePrecision(false)
     {
     }
 
-    //! Return single precision flag; FALSE by default.
     bool IsSinglePrecision() const { return myIsSinglePrecision; }
 
-    //! Setup single/double precision flag.
     void SetSinglePrecision(bool theIsSinglePrecision)
     {
       myIsSinglePrecision = theIsSinglePrecision;
@@ -333,7 +207,6 @@ protected:
       myVec3Vec.Nullify();
     }
 
-    //! Reset and (re)allocate buffer.
     void Reset()
     {
       if (myIsSinglePrecision)
@@ -346,13 +219,10 @@ protected:
       }
     }
 
-    //! Return vector lower index.
     int Lower() const { return 0; }
 
-    //! Return vector upper index.
     int Upper() const { return myIsSinglePrecision ? myVec3Vec->Upper() : myPntVec->Upper(); }
 
-    //! Return point with the given index.
     gp_Pnt Value(int theIndex) const
     {
       if (myIsSinglePrecision)
@@ -366,7 +236,6 @@ protected:
       }
     }
 
-    //! Append new point.
     void Append(const gp_Pnt& thePnt)
     {
       if (myIsSinglePrecision)
@@ -387,33 +256,25 @@ protected:
   };
 
 protected:
-  NCollection_IndexedMap<TCollection_AsciiString>
-                                   myExternalFiles; //!< list of external file references
-  TCollection_AsciiString          myFileComments;  //!< file header comments
-  TCollection_AsciiString          myFolder;        //!< folder containing the OBJ file
-  RWMesh_CoordinateSystemConverter myCSTrsf;        //!< coordinate system flipper
-  size_t                           myMemLimitBytes; //!< memory limit in bytes
-  size_t                           myMemEstim;      //!< estimated memory occupation in bytes
-                                                    // clang-format off
-  int                   myNbLines;       //!< number of parsed lines (e.g. current line)
-  int                   myNbProbeNodes;  //!< number of probed nodes
-  int                   myNbProbeElems;  //!< number of probed elements
-  int                   myNbElemsBig;    //!< number of big elements (polygons with 5+ nodes)
-  bool                   myToAbort;       //!< flag indicating abort state (e.g. syntax error)
-                                                    // clang-format on
+  NCollection_IndexedMap<TCollection_AsciiString> myExternalFiles;
+  TCollection_AsciiString                         myFileComments;
+  TCollection_AsciiString                         myFolder;
+  RWMesh_CoordinateSystemConverter                myCSTrsf;
+  size_t                                          myMemLimitBytes;
+  size_t                                          myMemEstim;
 
-  // Each node in the Element specifies independent indices of Vertex position, Texture coordinates
-  // and Normal. This scheme does not match natural definition of Primitive Array where each unique
-  // set of nodal properties defines Vertex (thus node at the same location but with different
-  // normal should be duplicated). The following code converts OBJ definition of nodal properties to
-  // Primitive Array definition.
-  VectorOfVertices                            myObjVerts;   //!< temporary vector of vertices
-  NCollection_Vector<NCollection_Vec2<float>> myObjVertsUV; //!< temporary vector of UV parameters
-  NCollection_Vector<NCollection_Vec3<float>> myObjNorms;   //!< temporary vector of normals
+  int  myNbLines;
+  int  myNbProbeNodes;
+  int  myNbProbeElems;
+  int  myNbElemsBig;
+  bool myToAbort;
+
+  VectorOfVertices                                                myObjVerts;
+  NCollection_Vector<NCollection_Vec2<float>>                     myObjVertsUV;
+  NCollection_Vector<NCollection_Vec3<float>>                     myObjNorms;
   NCollection_DataMap<NCollection_Vec3<int>, int, ObjVec3iHasher> myPackedIndices;
-  NCollection_DataMap<TCollection_AsciiString, RWObj_Material>
-    myMaterials; //!< map of known materials
+  NCollection_DataMap<TCollection_AsciiString, RWObj_Material>    myMaterials;
 
-  RWObj_SubMesh    myActiveSubMesh; //!< active sub-mesh definition
-  std::vector<int> myCurrElem;      //!< indices for the current element
+  RWObj_SubMesh    myActiveSubMesh;
+  std::vector<int> myCurrElem;
 };

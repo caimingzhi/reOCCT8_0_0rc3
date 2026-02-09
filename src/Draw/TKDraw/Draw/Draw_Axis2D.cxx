@@ -10,16 +10,12 @@ IMPLEMENT_STANDARD_RTTIEXT(Draw_Axis2D, Draw_Drawable2D)
 
 extern bool Draw_Bounds;
 
-//=================================================================================================
-
 Draw_Axis2D::Draw_Axis2D(const Draw_Color& col, const int Size)
     : myAxes(gp_Pnt2d(0, 0), gp_Dir2d(gp_Dir2d::D::X)),
       myColor(col),
       mySize(Size)
 {
 }
-
-//=================================================================================================
 
 Draw_Axis2D::Draw_Axis2D(const gp_Pnt2d& p, const Draw_Color& col, const int Size)
     : myAxes(p, gp_Dir2d(gp_Dir2d::D::X)),
@@ -28,16 +24,12 @@ Draw_Axis2D::Draw_Axis2D(const gp_Pnt2d& p, const Draw_Color& col, const int Siz
 {
 }
 
-//=================================================================================================
-
 Draw_Axis2D::Draw_Axis2D(const gp_Ax22d& a, const Draw_Color& col, const int Size)
     : myAxes(a),
       myColor(col),
       mySize(Size)
 {
 }
-
-//=================================================================================================
 
 void Draw_Axis2D::DrawOn(Draw_Display& dis) const
 {

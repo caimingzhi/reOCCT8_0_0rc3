@@ -7,7 +7,6 @@
 #include <gp_Pnt.hpp>
 class TopoDS_Shape;
 
-//! A Geom point and a tolerance.
 class TopOpeBRepDS_Point
 {
 public:

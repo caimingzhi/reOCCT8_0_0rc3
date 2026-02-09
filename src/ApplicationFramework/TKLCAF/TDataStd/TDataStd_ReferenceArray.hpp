@@ -13,54 +13,37 @@
 class TDF_RelocationTable;
 class TDF_DataSet;
 
-//! Contains an array of references to the labels.
 class TDataStd_ReferenceArray : public TDF_Attribute
 {
 
 public:
-  //! Static methods
-  //! ==============
-  //! Returns the ID of the array of references (labels) attribute.
   Standard_EXPORT static const Standard_GUID& GetID();
 
-  //! Finds or creates an array of reference values (labels) attribute.
   Standard_EXPORT static occ::handle<TDataStd_ReferenceArray> Set(const TDF_Label& label,
                                                                   const int        lower,
                                                                   const int        upper);
 
-  //! Finds or creates an array of reference values (labels) attribute with explicit user defined
-  //! <guid>.
   Standard_EXPORT static occ::handle<TDataStd_ReferenceArray> Set(const TDF_Label&     label,
                                                                   const Standard_GUID& theGuid,
                                                                   const int            lower,
                                                                   const int            upper);
 
-  //! Initialize the inner array with bounds from <lower> to <upper>
   Standard_EXPORT void Init(const int lower, const int upper);
 
-  //! Sets the <Index>th element of the array to <Value>
-  //! OutOfRange exception is raised if <Index> doesn't respect Lower and Upper bounds of the
-  //! internal array.
   Standard_EXPORT void SetValue(const int index, const TDF_Label& value);
 
-  //! Sets the explicit GUID (user defined) for the attribute.
   Standard_EXPORT void SetID(const Standard_GUID& theGuid) override;
 
-  //! Sets default GUID for the attribute.
   Standard_EXPORT void SetID() override;
 
-  //! Returns the value of the <Index>th element of the array.
   Standard_EXPORT TDF_Label Value(const int Index) const;
 
   TDF_Label operator()(const int Index) const { return Value(Index); }
 
-  //! Returns the lower boundary of the array.
   Standard_EXPORT int Lower() const;
 
-  //! Returns the upper boundary of the array.
   Standard_EXPORT int Upper() const;
 
-  //! Returns the number of elements in the array.
   Standard_EXPORT int Length() const;
 
   Standard_EXPORT const occ::handle<NCollection_HArray1<TDF_Label>>& InternalArray() const;
@@ -83,7 +66,6 @@ public:
 
   Standard_EXPORT Standard_OStream& Dump(Standard_OStream& anOS) const override;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(TDataStd_ReferenceArray, TDF_Attribute)

@@ -17,12 +17,10 @@
 #include <TopoDS_Shape.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//=================================================================================================
-
 void BOPTools_AlgoTools::UpdateVertex(const TopoDS_Vertex& aVF, const TopoDS_Vertex& aNewVertex)
 {
   double aTolVF, aTolNewVertex, aDist, aNewTol;
-  //
+
   gp_Pnt aPVF        = BRep_Tool::Pnt(aVF);
   gp_Pnt aPNewVertex = BRep_Tool::Pnt(aNewVertex);
   aTolVF             = BRep_Tool::Tolerance(aVF);
@@ -37,8 +35,6 @@ void BOPTools_AlgoTools::UpdateVertex(const TopoDS_Vertex& aVF, const TopoDS_Ver
     BB.UpdateVertex(aVF, aNewTol + BOPTools_AlgoTools::DTolerance());
   }
 }
-
-//=================================================================================================
 
 void BOPTools_AlgoTools::UpdateVertex(const TopoDS_Edge&   aE,
                                       const double         aT,
@@ -60,9 +56,6 @@ void BOPTools_AlgoTools::UpdateVertex(const TopoDS_Edge&   aE,
   }
 }
 
-//
-//=================================================================================================
-
 void BOPTools_AlgoTools::UpdateVertex(const IntTools_Curve& aC,
                                       const double          aT,
                                       const TopoDS_Vertex&  aV)
@@ -83,8 +76,6 @@ void BOPTools_AlgoTools::UpdateVertex(const IntTools_Curve& aC,
   }
 }
 
-//=================================================================================================
-
 void BOPTools_AlgoTools::MakeSectEdge(const IntTools_Curve& aIC,
                                       const TopoDS_Vertex&  aV1,
                                       const double          aP1,
@@ -97,15 +88,12 @@ void BOPTools_AlgoTools::MakeSectEdge(const IntTools_Curve& aIC,
   BRepBuilderAPI_MakeEdge aMakeEdge(aC, aV1, aV2, aP1, aP2);
 
   const TopoDS_Edge& aE = TopoDS::Edge(aMakeEdge.Shape());
-  //
-  // Range must be as it was !
+
   BRep_Builder aBB;
   aBB.Range(aE, aP1, aP2);
-  //
+
   aNewEdge = aE;
 }
-
-//=================================================================================================
 
 TopoDS_Edge BOPTools_AlgoTools::CopyEdge(const TopoDS_Edge& theEdge)
 {
@@ -117,8 +105,6 @@ TopoDS_Edge BOPTools_AlgoTools::CopyEdge(const TopoDS_Edge& theEdge)
   return aNewEdge;
 }
 
-//=================================================================================================
-
 void BOPTools_AlgoTools::MakeSplitEdge(const TopoDS_Edge&   aE,
                                        const TopoDS_Vertex& aV1,
                                        const double         aP1,
@@ -128,7 +114,7 @@ void BOPTools_AlgoTools::MakeSplitEdge(const TopoDS_Edge&   aE,
 {
   TopoDS_Edge E = TopoDS::Edge(aE.Oriented(TopAbs_FORWARD));
   E.EmptyCopy();
-  //
+
   BRep_Builder BB;
   if (!aV1.IsNull())
   {
@@ -166,8 +152,6 @@ void BOPTools_AlgoTools::MakeSplitEdge(const TopoDS_Edge&   aE,
   aNewEdge.Orientation(aE.Orientation());
 }
 
-//=================================================================================================
-
 void BOPTools_AlgoTools::MakeNewVertex(const TopoDS_Vertex& aV1,
                                        const TopoDS_Vertex& aV2,
                                        TopoDS_Vertex&       aNewVertex)
@@ -193,8 +177,6 @@ void BOPTools_AlgoTools::MakeNewVertex(const TopoDS_Vertex& aV1,
   aBB.MakeVertex(aNewVertex, aNewPnt, aMaxTol);
 }
 
-//=================================================================================================
-
 void BOPTools_AlgoTools::MakeNewVertex(const gp_Pnt&  aP,
                                        const double   aTol,
                                        TopoDS_Vertex& aNewVertex)
@@ -202,8 +184,6 @@ void BOPTools_AlgoTools::MakeNewVertex(const gp_Pnt&  aP,
   BRep_Builder aBB;
   aBB.MakeVertex(aNewVertex, aP, aTol);
 }
-
-//=================================================================================================
 
 void BOPTools_AlgoTools::MakeNewVertex(const TopoDS_Edge& aE1,
                                        const double       aParm1,
@@ -233,8 +213,6 @@ void BOPTools_AlgoTools::MakeNewVertex(const TopoDS_Edge& aE1,
   aBB.MakeVertex(aNewVertex, aNewPnt, aMaxTol);
 }
 
-//=================================================================================================
-
 void BOPTools_AlgoTools::MakeNewVertex(const TopoDS_Edge& aE1,
                                        const double       aParm1,
                                        const TopoDS_Face& aF1,
@@ -247,14 +225,12 @@ void BOPTools_AlgoTools::MakeNewVertex(const TopoDS_Edge& aE1,
 
   aTol1 = BRep_Tool::Tolerance(aE1);
   aTol2 = BRep_Tool::Tolerance(aF1);
-  //
+
   aMaxTol = aTol1 + aTol2 + BOPTools_AlgoTools::DTolerance();
-  //
+
   BRep_Builder aBB;
   aBB.MakeVertex(aNewVertex, aPnt, aMaxTol);
 }
-
-//=================================================================================================
 
 void BOPTools_AlgoTools::PointOnEdge(const TopoDS_Edge& aE, const double aParm, gp_Pnt& aPnt)
 {
@@ -262,8 +238,6 @@ void BOPTools_AlgoTools::PointOnEdge(const TopoDS_Edge& aE, const double aParm, 
   occ::handle<Geom_Curve> C1 = BRep_Tool::Curve(aE, f, l);
   C1->D0(aParm, aPnt);
 }
-
-//=================================================================================================
 
 void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE1,
                                       const TopoDS_Edge&    aE2,
@@ -276,27 +250,27 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE1,
   GeomAbs_CurveType aCT;
   gp_Pnt            aP;
   gp_Vec            aDer;
-  //
+
   aNewSR = aSR;
-  //
+
   aBC.Initialize(aE1);
   aCT = aBC.GetType();
   if (aCT == GeomAbs_Line)
   {
     return;
   }
-  //
+
   dT  = Precision::PConfusion();
   aTF = aSR.First();
   aTL = aSR.Last();
-  //
+
   aTolE1 = BRep_Tool::Tolerance(aE1);
   aTolE2 = BRep_Tool::Tolerance(aE2);
-  //
+
   for (i = 0; i < 2; ++i)
   {
     aRes = 2. * (aTolE1 + aTolE2);
-    //
+
     if (aCT == GeomAbs_BezierCurve || aCT == GeomAbs_BSplineCurve || aCT == GeomAbs_OffsetCurve
         || aCT == GeomAbs_OtherCurve)
     {
@@ -309,7 +283,7 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE1,
       {
         aBC.D1(aTL, aP, aDer);
       }
-      //
+
       double aMgn = aDer.Magnitude();
 
       if (aMgn > 1.e-12)
@@ -320,12 +294,12 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE1,
       {
         aRes = aBC.Resolution(aRes);
       }
-    } // if (aCT==GeomAbs_BezierCurve||...
+    }
     else
     {
       aRes = aBC.Resolution(aRes);
     }
-    //
+
     if (!i)
     {
       aNewSR.SetFirst(aTF + aRes);
@@ -334,16 +308,13 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE1,
     {
       aNewSR.SetLast(aTL - aRes);
     }
-    //
+
     if ((aNewSR.Last() - aNewSR.First()) < dT)
     {
       aNewSR = aSR;
     }
-    // aNewSR=((aNewSR.Last()-aNewSR.First()) < dT) ? aSR : aNewSR;
   }
 }
-
-//=================================================================================================
 
 void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE,
                                       const TopoDS_Face&    aF,
@@ -356,18 +327,18 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE,
   GeomAbs_CurveType aCT;
   gp_Pnt            aP;
   gp_Vec            aDer;
-  //
+
   aNewSR = aSR;
-  //
+
   dT  = Precision::PConfusion();
   aTF = aSR.First();
   aTL = aSR.Last();
-  //
+
   aBC.Initialize(aE);
   aCT = aBC.GetType();
-  //
+
   aTolF = BRep_Tool::Tolerance(aF);
-  //
+
   for (i = 0; i < 2; ++i)
   {
     aRes = aTolF;
@@ -384,7 +355,7 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE,
       {
         aBC.D1(aTL, aP, aDer);
       }
-      //
+
       double aMgn = aDer.Magnitude();
 
       if (aMgn > 1.e-12)
@@ -395,12 +366,12 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE,
       {
         aRes = aBC.Resolution(aRes);
       }
-    } // if (aCT==GeomAbs_BezierCurve||...
+    }
     else
     {
       aRes = aBC.Resolution(aRes);
     }
-    //
+
     if (!i)
     {
       aNewSR.SetFirst(aTF + aRes);
@@ -409,7 +380,7 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE,
     {
       aNewSR.SetLast(aTL - aRes);
     }
-    //
+
     if ((aNewSR.Last() - aNewSR.First()) < dT)
     {
       aNewSR = aSR;
@@ -420,10 +391,6 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE,
 namespace
 {
 
-  //=======================================================================
-  // function : dimension
-  // purpose  : returns dimension of elementary shape
-  //=======================================================================
   static int dimension(const TopoDS_Shape& theS)
   {
     switch (theS.ShapeType())
@@ -446,8 +413,6 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 void BOPTools_AlgoTools::Dimensions(const TopoDS_Shape& theS, int& theDMin, int& theDMax)
 {
   theDMin = theDMax = dimension(theS);
@@ -459,7 +424,7 @@ void BOPTools_AlgoTools::Dimensions(const TopoDS_Shape& theS, int& theDMin, int&
   TreatCompound(theS, aLS, &aMFence);
   if (aLS.IsEmpty())
   {
-    // empty shape
+
     theDMin = theDMax = -1;
     return;
   }
@@ -476,16 +441,12 @@ void BOPTools_AlgoTools::Dimensions(const TopoDS_Shape& theS, int& theDMin, int&
   }
 }
 
-//=================================================================================================
-
 int BOPTools_AlgoTools::Dimension(const TopoDS_Shape& theS)
 {
   int aDMin, aDMax;
   Dimensions(theS, aDMin, aDMax);
   return (aDMin == aDMax) ? aDMin : -1;
 }
-
-//=================================================================================================
 
 void BOPTools_AlgoTools::TreatCompound(
   const TopoDS_Shape&                                     theS,

@@ -23,7 +23,6 @@ void IGESDimen_ToolGeneralLabel::ReadOwnParams(const occ::handle<IGESDimen_Gener
                                                const occ::handle<IGESData_IGESReaderData>& IR,
                                                IGESData_ParamReader&                       PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
 
   occ::handle<IGESDimen_GeneralNote>                                   note;
   int                                                                  nbval;
@@ -33,7 +32,7 @@ void IGESDimen_ToolGeneralLabel::ReadOwnParams(const occ::handle<IGESDimen_Gener
                 PR.Current(),
                 "General Note Entity",
                 STANDARD_TYPE(IGESDimen_GeneralNote),
-                note); // szv#4:S4163:12Mar99 `st=` not needed
+                note);
 
   bool st = PR.ReadInteger(PR.Current(), "Number of Leaders", nbval);
   if (st && nbval > 0)
@@ -45,8 +44,7 @@ void IGESDimen_ToolGeneralLabel::ReadOwnParams(const occ::handle<IGESDimen_Gener
     for (int i = 1; i <= nbval; i++)
     {
       occ::handle<IGESDimen_LeaderArrow> anentity;
-      // st = PR.ReadEntity(IR, PR.Current(), "Leaders",
-      // STANDARD_TYPE(IGESDimen_LeaderArrow), anentity); //szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "Leaders",
@@ -96,7 +94,7 @@ void IGESDimen_ToolGeneralLabel::OwnCopy(const occ::handle<IGESDimen_GeneralLabe
 }
 
 IGESData_DirChecker IGESDimen_ToolGeneralLabel::DirChecker(
-  const occ::handle<IGESDimen_GeneralLabel>& /* ent */) const
+  const occ::handle<IGESDimen_GeneralLabel>&) const
 {
   IGESData_DirChecker DC(210, 0);
   DC.Structure(IGESData_DefVoid);
@@ -107,9 +105,9 @@ IGESData_DirChecker IGESDimen_ToolGeneralLabel::DirChecker(
   return DC;
 }
 
-void IGESDimen_ToolGeneralLabel::OwnCheck(const occ::handle<IGESDimen_GeneralLabel>& /* ent */,
+void IGESDimen_ToolGeneralLabel::OwnCheck(const occ::handle<IGESDimen_GeneralLabel>&,
                                           const Interface_ShareTool&,
-                                          occ::handle<Interface_Check>& /* ach */) const
+                                          occ::handle<Interface_Check>&) const
 {
 }
 

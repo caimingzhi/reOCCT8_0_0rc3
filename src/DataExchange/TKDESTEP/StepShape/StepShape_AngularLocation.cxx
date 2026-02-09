@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_AngularLocation, StepShape_DimensionalLocation)
 
-//=================================================================================================
-
 StepShape_AngularLocation::StepShape_AngularLocation() = default;
-
-//=================================================================================================
 
 void StepShape_AngularLocation::Init(
   const occ::handle<TCollection_HAsciiString>& aShapeAspectRelationship_Name,
@@ -27,14 +23,10 @@ void StepShape_AngularLocation::Init(
   theAngleSelection = aAngleSelection;
 }
 
-//=================================================================================================
-
 StepShape_AngleRelator StepShape_AngularLocation::AngleSelection() const
 {
   return theAngleSelection;
 }
-
-//=================================================================================================
 
 void StepShape_AngularLocation::SetAngleSelection(const StepShape_AngleRelator aAngleSelection)
 {

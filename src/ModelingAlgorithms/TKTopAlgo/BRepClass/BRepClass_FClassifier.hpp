@@ -19,41 +19,24 @@ class BRepClass_FClassifier
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor, undefined algorithm.
   Standard_EXPORT BRepClass_FClassifier();
 
-  //! Creates an algorithm to classify the Point P with
-  //! Tolerance <T> on the face described by <F>.
   Standard_EXPORT BRepClass_FClassifier(BRepClass_FaceExplorer& F,
                                         const gp_Pnt2d&         P,
                                         const double            Tol);
 
-  //! Classify the Point P with Tolerance <T> on the
-  //! face described by <F>.
   Standard_EXPORT void Perform(BRepClass_FaceExplorer& F, const gp_Pnt2d& P, const double Tol);
 
-  //! Returns the result of the classification.
   Standard_EXPORT TopAbs_State State() const;
 
-  //! Returns True when the state was computed by a
-  //! rejection. The state is OUT.
   bool Rejected() const;
 
-  //! Returns True if the face contains no wire. The
-  //! state is IN.
   bool NoWires() const;
 
-  //! Returns the Edge used to determine the
-  //! classification. When the State is ON this is the
-  //! Edge containing the point.
   Standard_EXPORT const BRepClass_Edge& Edge() const;
 
-  //! Returns the parameter on Edge() used to determine the
-  //! classification.
   Standard_EXPORT double EdgeParameter() const;
 
-  //! Returns the position of the point on the edge
-  //! returned by Edge.
   IntRes2d_Position Position() const;
 
 protected:

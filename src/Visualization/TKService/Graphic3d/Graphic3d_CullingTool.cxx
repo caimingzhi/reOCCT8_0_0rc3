@@ -4,8 +4,6 @@
 
 #include <limits>
 
-//=================================================================================================
-
 Graphic3d_CullingTool::Graphic3d_CullingTool()
     : myClipVerts(0, Graphic3d_Camera::FrustumVerticesNB),
       myIsProjectionParallel(true),
@@ -13,8 +11,6 @@ Graphic3d_CullingTool::Graphic3d_CullingTool()
       myPixelSize(1.0)
 {
 }
-
-//=================================================================================================
 
 void Graphic3d_CullingTool::SetViewVolume(const occ::handle<Graphic3d_Camera>& theCamera,
                                           const NCollection_Mat4<double>&      theModelWorld)
@@ -41,24 +37,15 @@ void Graphic3d_CullingTool::SetViewVolume(const occ::handle<Graphic3d_Camera>& t
     myCamEye = (aModelInv * NCollection_Vec4<double>(myCamEye, 1.0)).xyz();
     myCamDir = (aModelInv * NCollection_Vec4<double>(myCamDir, 0.0)).xyz();
   }
-  myCamScale = theCamera->IsOrthographic()
-                 ? theCamera->Scale()
-                 : 2.0
-                     * std::tan(theCamera->FOVy() * M_PI
-                                / 360.0); // same as theCamera->Scale()/theCamera->Distance()
+  myCamScale = theCamera->IsOrthographic() ? theCamera->Scale()
+                                           : 2.0 * std::tan(theCamera->FOVy() * M_PI / 360.0);
 
-  // Compute frustum points
   theCamera->FrustumPoints(myClipVerts, theModelWorld);
 
-  // Compute frustum planes
-  // Vertices go in order:
-  // 0, 2, 1
   const int aLookup1[] = {0, 1, 0};
   const int aLookup2[] = {0, 0, 1};
   int       aShifts[]  = {0, 0, 0};
 
-  // Planes go in order:
-  // LEFT, RIGHT, BOTTOM, TOP, NEAR, FAR
   for (int aFaceIdx = 0; aFaceIdx < 3; ++aFaceIdx)
   {
     for (int i = 0; i < 2; ++i)
@@ -83,8 +70,6 @@ void Graphic3d_CullingTool::SetViewVolume(const occ::handle<Graphic3d_Camera>& t
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_CullingTool::SetViewportSize(int    theViewportWidth,
                                             int    theViewportHeight,
                                             double theResolutionRatio)
@@ -94,8 +79,6 @@ void Graphic3d_CullingTool::SetViewportSize(int    theViewportWidth,
   myPixelSize =
     std::max(theResolutionRatio / myViewportHeight, theResolutionRatio / myViewportWidth);
 }
-
-//=================================================================================================
 
 double Graphic3d_CullingTool::SignedPlanePointDistance(const NCollection_Vec4<double>& theNormal,
                                                        const NCollection_Vec4<double>& thePnt)
@@ -114,8 +97,6 @@ double Graphic3d_CullingTool::SignedPlanePointDistance(const NCollection_Vec4<do
   return aD + (anA * thePnt.x() + aB * thePnt.y() + aC * thePnt.z());
 }
 
-//=================================================================================================
-
 void Graphic3d_CullingTool::SetCullingDistance(CullingContext& theCtx, double theDistance) const
 {
   theCtx.DistCull = -1.0;
@@ -124,8 +105,6 @@ void Graphic3d_CullingTool::SetCullingDistance(CullingContext& theCtx, double th
     theCtx.DistCull = theDistance > 0.0 && !Precision::IsInfinite(theDistance) ? theDistance : -1.0;
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_CullingTool::SetCullingSize(CullingContext& theCtx, double theSize) const
 {
@@ -138,11 +117,9 @@ void Graphic3d_CullingTool::SetCullingSize(CullingContext& theCtx, double theSiz
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_CullingTool::CacheClipPtsProjections()
 {
-  // project frustum onto its own normals
+
   const int anIncFactor = myIsProjectionParallel ? 2 : 1;
   for (int aPlaneIter = 0; aPlaneIter < PlanesNB - 1; aPlaneIter += anIncFactor)
   {
@@ -158,7 +135,6 @@ void Graphic3d_CullingTool::CacheClipPtsProjections()
     myMinClipProjectionPts[aPlaneIter] = aMinProj;
   }
 
-  // project frustum onto main axes
   NCollection_Vec3<double> anAxes[] = {NCollection_Vec3<double>(1.0, 0.0, 0.0),
                                        NCollection_Vec3<double>(0.0, 1.0, 0.0),
                                        NCollection_Vec3<double>(0.0, 0.0, 1.0)};

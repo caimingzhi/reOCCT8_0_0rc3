@@ -16,8 +16,6 @@
 #include <TopoDS_Edge.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 void LocOpe_FindEdges::Set(const TopoDS_Shape& FFrom, const TopoDS_Shape& FTo)
 {
   myFFrom = FFrom;
@@ -71,7 +69,7 @@ void LocOpe_FindEdges::Set(const TopoDS_Shape& FFrom, const TopoDS_Shape& FTo)
       {
         continue;
       }
-      // On a presomption de confusion
+
       double Tol = Precision::Confusion();
       if (Tt == STANDARD_TYPE(Geom_Line))
       {
@@ -104,7 +102,6 @@ void LocOpe_FindEdges::Set(const TopoDS_Shape& FFrom, const TopoDS_Shape& FTo)
         if (std::abs(cif.Radius() - cit.Radius()) <= Tol
             && cif.Location().SquareDistance(cit.Location()) <= Tol * Tol)
         {
-          // Point debut, calage dans periode, et detection meme sens
 
           gp_Pnt p1, p2;
           gp_Vec tgf, tgt;
@@ -120,7 +117,7 @@ void LocOpe_FindEdges::Set(const TopoDS_Shape& FFrom, const TopoDS_Shape& FTo)
 
           double prm2 = ElCLib::Parameter(cit, p2);
           if (tgt.Dot(tgf) > 0.)
-          { // meme sens
+          {
             while (prm2 <= prm1)
             {
               prm2 += 2. * M_PI;
@@ -146,14 +143,10 @@ void LocOpe_FindEdges::Set(const TopoDS_Shape& FFrom, const TopoDS_Shape& FTo)
           }
           else
           {
-            // Cas non traite : on est a cheval
+
 #ifdef OCCT_DEBUG
             std::cout << " cas a cheval." << std::endl;
 #endif
-
-            //	    myLFrom.Append(edgf);
-            //	    myLTo.Append(edgt);
-            //	    break;
           }
         }
       }
@@ -166,7 +159,6 @@ void LocOpe_FindEdges::Set(const TopoDS_Shape& FFrom, const TopoDS_Shape& FTo)
             && std::abs(cif.MinorRadius() - cit.MinorRadius()) <= Tol
             && cif.Location().SquareDistance(cit.Location()) <= Tol * Tol)
         {
-          // Point debut, calage dans periode, et detection meme sens
 
           gp_Pnt p1, p2;
           gp_Vec tgf, tgt;
@@ -179,7 +171,7 @@ void LocOpe_FindEdges::Set(const TopoDS_Shape& FFrom, const TopoDS_Shape& FTo)
 
           double prm2 = ElCLib::Parameter(cit, p2);
           if (tgt.Dot(tgf) > 0.)
-          { // meme sens
+          {
             while (prm2 <= prm1)
             {
               prm2 += 2. * M_PI;
@@ -205,12 +197,10 @@ void LocOpe_FindEdges::Set(const TopoDS_Shape& FFrom, const TopoDS_Shape& FTo)
           }
           else
           {
-            // Cas non traite : on est a cheval
+
 #ifdef OCCT_DEBUG
             std::cout << " cas a cheval." << std::endl;
 #endif
-            //	    myLFrom.Append(edgf);
-            //	    myLTo.Append(edgt);
           }
         }
       }

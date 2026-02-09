@@ -13,46 +13,25 @@ enum PrsDim_TypeOfDist
 
 class Geom_Plane;
 
-//! A framework to display equivalent distances between
-//! shapes and a given plane.
-//! The distance is the length of a projection from the
-//! shape to the plane.
-//! These distances are used to compare shapes by this vector alone.
 class PrsDim_EqualDistanceRelation : public PrsDim_Relation
 {
   DEFINE_STANDARD_RTTIEXT(PrsDim_EqualDistanceRelation, PrsDim_Relation)
 public:
-  //! Constructs a framework to display equivalent
-  //! distances between the shapes aShape1, aShape2,
-  //! aShape3, aShape4 and the plane aPlane.
-  //! The distance is the length of a projection from the
-  //! shape to the plane.
   Standard_EXPORT PrsDim_EqualDistanceRelation(const TopoDS_Shape&            aShape1,
                                                const TopoDS_Shape&            aShape2,
                                                const TopoDS_Shape&            aShape3,
                                                const TopoDS_Shape&            aShape4,
                                                const occ::handle<Geom_Plane>& aPlane);
 
-  //! Sets the shape aShape to be used as the shape
-  //! aShape3 in the framework created at construction time.
   void SetShape3(const TopoDS_Shape& aShape) { myShape3 = aShape; }
 
-  //! Returns the shape aShape3 from the framework
-  //! created at construction time.
   const TopoDS_Shape& Shape3() const { return myShape3; }
 
-  //! Sets the shape aShape to be used as the shape
-  //! aShape4 in the framework created at construction time.
   void SetShape4(const TopoDS_Shape& aShape) { myShape4 = aShape; }
 
-  //! Returns the shape aShape4 from the framework
-  //! created at construction time.
   const TopoDS_Shape& Shape4() const { return myShape4; }
 
 public:
-  //! Computes the location of an intreval between
-  //! between two edges. FirstAttach , SecondAttach
-  //! are the returned extreme points of the interval.
   Standard_EXPORT static void ComputeTwoEdgesLength(
     const occ::handle<Prs3d_Presentation>& aPresentation,
     const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -70,8 +49,6 @@ public:
     gp_Pnt&                                SecondExtreme,
     DsgPrs_ArrowSide&                      SymbolPrs);
 
-  //! Computes the interval position between two vertexs. FirstAttach,
-  //! SecondAttach are the returned extreme points of the interval.
   Standard_EXPORT static void ComputeTwoVerticesLength(
     const occ::handle<Prs3d_Presentation>& aPresentation,
     const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -90,8 +67,6 @@ public:
     gp_Pnt&                                SecondExtreme,
     DsgPrs_ArrowSide&                      SymbolPrs);
 
-  //! Compute the interval location between a vertex and an edge. Edge may be
-  //! a line or a circle.
   Standard_EXPORT static void ComputeOneEdgeOneVertexLength(
     const occ::handle<Prs3d_Presentation>& aPresentation,
     const occ::handle<Prs3d_Drawer>&       aDrawer,

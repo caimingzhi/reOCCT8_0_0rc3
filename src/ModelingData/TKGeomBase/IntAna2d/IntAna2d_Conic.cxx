@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gp_Circ2d.hpp>
 #include <gp_Elips2d.hpp>
@@ -60,14 +48,9 @@ void IntAna2d_Conic::NewCoefficients(double&        A,
                                      double&        F,
                                      const gp_Ax2d& Dir1) const
 {
-  double t11, t12, t13; // x = t11 X + t12 Y + t13
-  double t21, t22, t23; // y = t21 X + t22 Y + t23
+  double t11, t12, t13;
+  double t21, t22, t23;
   double A1, B1, C1, D1, E1, F1;
-
-  //      P0(x,y)=A x x + B y y + ... + F =0  (x,y "absolute" coordinates)
-  // and  P1(X(x,y),Y(x,y))=P0(x,y)
-  // with P1(X,Y)= A1 X X + B1 Y Y + 2 C1 X Y + 2 D1 X + 2 E1 Y + F1
-  //             = A  x x + B  y y + 2 C  x y + 2 D  x + 2 E  y + f
 
   Dir1.Direction().Coord(t11, t21);
   Dir1.Location().Coord(t13, t23);

@@ -11,7 +11,6 @@ class StepBasic_PersonAndOrganization : public Standard_Transient
 {
 
 public:
-  //! Returns a PersonAndOrganization
   Standard_EXPORT StepBasic_PersonAndOrganization();
 
   Standard_EXPORT void Init(const occ::handle<StepBasic_Person>&       aThePerson,

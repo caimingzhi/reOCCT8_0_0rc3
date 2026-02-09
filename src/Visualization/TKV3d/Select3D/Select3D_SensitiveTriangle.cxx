@@ -4,8 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveTriangle, Select3D_SensitiveEntity)
 
-//=================================================================================================
-
 Select3D_SensitiveTriangle::Select3D_SensitiveTriangle(
   const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
   const gp_Pnt&                             thePnt0,
@@ -21,11 +19,6 @@ Select3D_SensitiveTriangle::Select3D_SensitiveTriangle(
   myCentroid  = (thePnt0.XYZ() + thePnt1.XYZ() + thePnt2.XYZ()) * (1.0 / 3.0);
 }
 
-//==================================================
-// Function: Matches
-// Purpose : Checks whether the triangle overlaps
-//           current selecting volume
-//==================================================
 bool Select3D_SensitiveTriangle::Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                          SelectBasics_PickResult&             thePickResult)
 {
@@ -49,23 +42,15 @@ bool Select3D_SensitiveTriangle::Matches(SelectBasics_SelectingVolumeManager& th
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<Select3D_SensitiveEntity> Select3D_SensitiveTriangle::GetConnected()
 {
-  // Create a copy of this
+
   occ::handle<Select3D_SensitiveEntity> aNewEntity =
     new Select3D_SensitiveTriangle(myOwnerId, myPoints[0], myPoints[1], myPoints[2], mySensType);
 
   return aNewEntity;
 }
 
-//==================================================
-// Function: BoundingBox
-// Purpose : Returns bounding box of the triangle.
-//           If location transformation is set, it
-//           will be applied
-//==================================================
 Select3D_BndBox3d Select3D_SensitiveTriangle::BoundingBox()
 {
   const NCollection_Vec3<double> aMinPnt =
@@ -78,8 +63,6 @@ Select3D_BndBox3d Select3D_SensitiveTriangle::BoundingBox()
                              std::max(myPoints[0].Z(), std::max(myPoints[1].Z(), myPoints[2].Z())));
   return Select3D_BndBox3d(aMinPnt, aMaxPnt);
 }
-
-//=================================================================================================
 
 void Select3D_SensitiveTriangle::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

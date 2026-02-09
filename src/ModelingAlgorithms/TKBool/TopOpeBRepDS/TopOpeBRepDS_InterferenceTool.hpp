@@ -32,7 +32,6 @@ public:
     const int                      GI,
     const double                   P);
 
-  //! duplicate I in a new interference with Complement() transition.
   Standard_EXPORT static occ::handle<TopOpeBRepDS_Interference> DuplicateCurvePointInterference(
     const occ::handle<TopOpeBRepDS_Interference>& I);
 

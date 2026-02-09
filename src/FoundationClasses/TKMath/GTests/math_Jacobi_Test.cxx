@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <math_Jacobi.hpp>
 #include <math_Matrix.hpp>
@@ -29,11 +18,11 @@
 namespace
 {
 
-} // anonymous namespace
+}
 
 TEST(MathJacobiTest, IdentityMatrix)
 {
-  // Test with identity matrix - all eigenvalues should be 1
+
   math_Matrix aMatrix(1, 3, 1, 3);
   aMatrix(1, 1) = 1.0;
   aMatrix(1, 2) = 0.0;
@@ -52,12 +41,10 @@ TEST(MathJacobiTest, IdentityMatrix)
   const math_Vector& aValues = aJacobi.Values();
   EXPECT_EQ(aValues.Length(), 3) << "Should have 3 eigenvalues";
 
-  // All eigenvalues should be 1
   EXPECT_NEAR(aValues(1), 1.0, 1.0e-10) << "First eigenvalue should be 1";
   EXPECT_NEAR(aValues(2), 1.0, 1.0e-10) << "Second eigenvalue should be 1";
   EXPECT_NEAR(aValues(3), 1.0, 1.0e-10) << "Third eigenvalue should be 1";
 
-  // Test individual value access
   EXPECT_NEAR(aJacobi.Value(1), 1.0, 1.0e-10) << "Value(1) should be 1";
   EXPECT_NEAR(aJacobi.Value(2), 1.0, 1.0e-10) << "Value(2) should be 1";
   EXPECT_NEAR(aJacobi.Value(3), 1.0, 1.0e-10) << "Value(3) should be 1";
@@ -65,7 +52,7 @@ TEST(MathJacobiTest, IdentityMatrix)
 
 TEST(MathJacobiTest, DiagonalMatrix)
 {
-  // Test with diagonal matrix - eigenvalues should be diagonal elements
+
   math_Matrix aMatrix(1, 3, 1, 3);
   aMatrix(1, 1) = 5.0;
   aMatrix(1, 2) = 0.0;
@@ -83,7 +70,6 @@ TEST(MathJacobiTest, DiagonalMatrix)
 
   const math_Vector& aValues = aJacobi.Values();
 
-  // Eigenvalues might be in different order, so collect them
   double aEigenvals[3];
   aEigenvals[0] = aValues(1);
   aEigenvals[1] = aValues(2);
@@ -98,7 +84,7 @@ TEST(MathJacobiTest, DiagonalMatrix)
 
 TEST(MathJacobiTest, SimpleSymmetricMatrix)
 {
-  // Test with simple 2x2 symmetric matrix
+
   math_Matrix aMatrix(1, 2, 1, 2);
   aMatrix(1, 1) = 3.0;
   aMatrix(1, 2) = 1.0;
@@ -111,7 +97,6 @@ TEST(MathJacobiTest, SimpleSymmetricMatrix)
 
   const math_Vector& aValues = aJacobi.Values();
 
-  // For this matrix, eigenvalues are 2 and 4
   double aEigenvals[2];
   aEigenvals[0] = aValues(1);
   aEigenvals[1] = aValues(2);
@@ -123,7 +108,7 @@ TEST(MathJacobiTest, SimpleSymmetricMatrix)
 
 TEST(MathJacobiTest, EigenvectorVerification)
 {
-  // Test eigenvector computation and verification
+
   math_Matrix aMatrix(1, 2, 1, 2);
   aMatrix(1, 1) = 4.0;
   aMatrix(1, 2) = 2.0;
@@ -134,7 +119,6 @@ TEST(MathJacobiTest, EigenvectorVerification)
 
   EXPECT_TRUE(aJacobi.IsDone()) << "Jacobi should succeed";
 
-  // Verify A * v = lambda * v for each eigenpair
   for (int i = 1; i <= 2; i++)
   {
     math_Vector aV(1, 2);
@@ -142,17 +126,14 @@ TEST(MathJacobiTest, EigenvectorVerification)
 
     double aLambda = aJacobi.Value(i);
 
-    // Compute A * v
     math_Vector aAv(1, 2);
     aAv(1) = aMatrix(1, 1) * aV(1) + aMatrix(1, 2) * aV(2);
     aAv(2) = aMatrix(2, 1) * aV(1) + aMatrix(2, 2) * aV(2);
 
-    // Compute lambda * v
     math_Vector aLambdaV(1, 2);
     aLambdaV(1) = aLambda * aV(1);
     aLambdaV(2) = aLambda * aV(2);
 
-    // Check A*v = lambda*v
     EXPECT_NEAR(aAv(1), aLambdaV(1), 1.0e-10) << "Eigenvector equation should hold for component 1";
     EXPECT_NEAR(aAv(2), aLambdaV(2), 1.0e-10) << "Eigenvector equation should hold for component 2";
   }
@@ -160,9 +141,9 @@ TEST(MathJacobiTest, EigenvectorVerification)
 
 TEST(MathJacobiTest, LargerSymmetricMatrix)
 {
-  // Test with larger 4x4 symmetric matrix
+
   math_Matrix aMatrix(1, 4, 1, 4);
-  // Create a symmetric positive definite matrix
+
   aMatrix(1, 1) = 4.0;
   aMatrix(1, 2) = 1.0;
   aMatrix(1, 3) = 0.5;
@@ -187,13 +168,11 @@ TEST(MathJacobiTest, LargerSymmetricMatrix)
   const math_Vector& aValues = aJacobi.Values();
   EXPECT_EQ(aValues.Length(), 4) << "Should have 4 eigenvalues";
 
-  // All eigenvalues should be real and positive (positive definite matrix)
   for (int i = 1; i <= 4; i++)
   {
     EXPECT_GT(aJacobi.Value(i), 0.0) << "Eigenvalue " << i << " should be positive";
   }
 
-  // Verify trace preservation (sum of eigenvalues = sum of diagonal elements)
   double aTraceOriginal    = aMatrix(1, 1) + aMatrix(2, 2) + aMatrix(3, 3) + aMatrix(4, 4);
   double aTraceEigenvalues = aValues(1) + aValues(2) + aValues(3) + aValues(4);
 
@@ -203,7 +182,7 @@ TEST(MathJacobiTest, LargerSymmetricMatrix)
 
 TEST(MathJacobiTest, SingleElementMatrix)
 {
-  // Test with 1x1 matrix
+
   math_Matrix aMatrix(1, 1, 1, 1);
   aMatrix(1, 1) = 42.0;
 
@@ -222,8 +201,8 @@ TEST(MathJacobiTest, SingleElementMatrix)
 
 TEST(MathJacobiTest, SquareMatrixRequirement)
 {
-  // Test square matrix requirement for Jacobi eigenvalue decomposition
-  math_Matrix aNonSquareMatrix(1, 2, 1, 3); // 2x3 matrix
+
+  math_Matrix aNonSquareMatrix(1, 2, 1, 3);
   aNonSquareMatrix(1, 1) = 1.0;
   aNonSquareMatrix(1, 2) = 2.0;
   aNonSquareMatrix(1, 3) = 3.0;
@@ -231,12 +210,9 @@ TEST(MathJacobiTest, SquareMatrixRequirement)
   aNonSquareMatrix(2, 2) = 5.0;
   aNonSquareMatrix(2, 3) = 6.0;
 
-  // Verify matrix is indeed non-square
   EXPECT_NE(aNonSquareMatrix.RowNumber(), aNonSquareMatrix.ColNumber())
     << "Matrix should be non-square for this test";
 
-  // Jacobi eigenvalue decomposition requires square matrices
-  // Test with a proper square matrix instead
   math_Matrix aSquareMatrix(1, 2, 1, 2);
   aSquareMatrix(1, 1) = 1.0;
   aSquareMatrix(1, 2) = 0.5;
@@ -249,8 +225,7 @@ TEST(MathJacobiTest, SquareMatrixRequirement)
 
 TEST(MathJacobiTest, NotDoneExceptions)
 {
-  // Create a scenario where Jacobi might fail (though it usually succeeds)
-  // Test exception handling for accessing results before computation
+
   math_Matrix aMatrix(1, 2, 1, 2);
   aMatrix(1, 1) = 1.0;
   aMatrix(1, 2) = 0.0;
@@ -261,7 +236,7 @@ TEST(MathJacobiTest, NotDoneExceptions)
 
   if (!aJacobi.IsDone())
   {
-    // Only test exceptions if computation actually failed
+
     EXPECT_THROW(aJacobi.Values(), StdFail_NotDone) << "Should throw NotDone for Values()";
     EXPECT_THROW(aJacobi.Value(1), StdFail_NotDone) << "Should throw NotDone for Value()";
     EXPECT_THROW(aJacobi.Vectors(), StdFail_NotDone) << "Should throw NotDone for Vectors()";
@@ -273,7 +248,7 @@ TEST(MathJacobiTest, NotDoneExceptions)
 
 TEST(MathJacobiTest, OrthogonalityOfEigenvectors)
 {
-  // Test orthogonality of eigenvectors for symmetric matrix
+
   math_Matrix aMatrix(1, 3, 1, 3);
   aMatrix(1, 1) = 6.0;
   aMatrix(1, 2) = 2.0;
@@ -289,20 +264,17 @@ TEST(MathJacobiTest, OrthogonalityOfEigenvectors)
 
   EXPECT_TRUE(aJacobi.IsDone()) << "Jacobi should succeed";
 
-  // Get eigenvectors
   math_Vector aV1(1, 3), aV2(1, 3), aV3(1, 3);
   aJacobi.Vector(1, aV1);
   aJacobi.Vector(2, aV2);
   aJacobi.Vector(3, aV3);
 
-  // Check orthogonality (dot products should be zero for different eigenvalues)
   double aDot12 = aV1(1) * aV2(1) + aV1(2) * aV2(2) + aV1(3) * aV2(3);
   double aDot13 = aV1(1) * aV3(1) + aV1(2) * aV3(2) + aV1(3) * aV3(3);
   double aDot23 = aV2(1) * aV3(1) + aV2(2) * aV3(2) + aV2(3) * aV3(3);
 
   const math_Vector& aValues = aJacobi.Values();
 
-  // Only check orthogonality for distinct eigenvalues
   if (abs(aValues(1) - aValues(2)) > 1.0e-10)
   {
     EXPECT_NEAR(aDot12, 0.0, 1.0e-10) << "Eigenvectors 1 and 2 should be orthogonal";
@@ -319,7 +291,7 @@ TEST(MathJacobiTest, OrthogonalityOfEigenvectors)
 
 TEST(MathJacobiTest, NormalizationOfEigenvectors)
 {
-  // Test that eigenvectors are normalized
+
   math_Matrix aMatrix(1, 3, 1, 3);
   aMatrix(1, 1) = 2.0;
   aMatrix(1, 2) = 1.0;
@@ -335,7 +307,6 @@ TEST(MathJacobiTest, NormalizationOfEigenvectors)
 
   EXPECT_TRUE(aJacobi.IsDone()) << "Jacobi should succeed";
 
-  // Check that each eigenvector has unit norm
   for (int i = 1; i <= 3; i++)
   {
     math_Vector aV(1, 3);
@@ -348,7 +319,7 @@ TEST(MathJacobiTest, NormalizationOfEigenvectors)
 
 TEST(MathJacobiTest, CustomBounds)
 {
-  // Test with custom matrix bounds
+
   math_Matrix aMatrix(2, 3, 2, 3);
   aMatrix(2, 2) = 5.0;
   aMatrix(2, 3) = 1.0;
@@ -362,7 +333,6 @@ TEST(MathJacobiTest, CustomBounds)
   const math_Vector& aValues = aJacobi.Values();
   EXPECT_EQ(aValues.Length(), 2) << "Should have 2 eigenvalues for 2x2 matrix";
 
-  // Both eigenvalues should be positive
   EXPECT_GT(aValues(1), 0.0) << "First eigenvalue should be positive";
   EXPECT_GT(aValues(2), 0.0) << "Second eigenvalue should be positive";
 }

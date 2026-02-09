@@ -9,9 +9,6 @@ namespace RWStepShape_RWBooleanOperator
   static constexpr char boIntersection[] = ".INTERSECTION.";
   static constexpr char boUnion[]        = ".UNION.";
 
-  //! Convert StepShape_BooleanOperator to string
-  //! @param theSourceEnum The StepShape_BooleanOperator value to convert
-  //! @return The corresponding string representation or nullptr if not found
   inline const char* ConvertToString(const StepShape_BooleanOperator theSourceEnum)
   {
     switch (theSourceEnum)
@@ -26,10 +23,6 @@ namespace RWStepShape_RWBooleanOperator
     return nullptr;
   }
 
-  //! Convert string to StepShape_BooleanOperator
-  //! @param theOperatorStr The string to convert
-  //! @param theResultEnum The corresponding StepShape_BooleanOperator value
-  //! @return true if the conversion was successful, false otherwise
   inline bool ConvertToEnum(const char* theOperatorStr, StepShape_BooleanOperator& theResultEnum)
   {
     if (IsEqual(theOperatorStr, boDifference))

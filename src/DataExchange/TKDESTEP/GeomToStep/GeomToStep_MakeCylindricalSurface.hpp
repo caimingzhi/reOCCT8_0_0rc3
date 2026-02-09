@@ -8,10 +8,6 @@
 class StepGeom_CylindricalSurface;
 class Geom_CylindricalSurface;
 
-//! This class implements the mapping between class
-//! CylindricalSurface from Geom and the class
-//! CylindricalSurface from StepGeom which describes a
-//! cylindrical_surface from Prostep
 class GeomToStep_MakeCylindricalSurface : public GeomToStep_Root
 {
 public:

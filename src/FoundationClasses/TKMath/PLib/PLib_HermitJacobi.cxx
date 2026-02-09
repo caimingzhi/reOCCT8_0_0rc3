@@ -7,16 +7,11 @@
 
 namespace
 {
-  // W coefficients for C0 continuity (NivConstr = 0, DegreeH = 1)
-  // W(t) = (1 - t^2)
+
   constexpr double WCoeff_C0[3] = {1.0, 0.0, -1.0};
 
-  // W coefficients for C1 continuity (NivConstr = 1, DegreeH = 3)
-  // W(t) = (1 - t^2)^2 = 1 - 2t^2 + t^4
   constexpr double WCoeff_C1[5] = {1.0, 0.0, -2.0, 0.0, 1.0};
 
-  // W coefficients for C2 continuity (NivConstr = 2, DegreeH = 5)
-  // W(t) = (1 - t^2)^3 = 1 - 3t^2 + 3t^4 - t^6
   constexpr double WCoeff_C2[7] = {1.0, 0.0, -3.0, 0.0, 3.0, 0.0, -1.0};
 
   inline const double& GetWCoefficients(const int theNivConstr)
@@ -30,7 +25,7 @@ namespace
       case 2:
         return WCoeff_C2[0];
       default:
-        return WCoeff_C0[0]; // Fallback, should never happen
+        return WCoeff_C0[0];
     }
   }
 
@@ -78,19 +73,15 @@ namespace
       case 2:
         return GetHermiteMatrix_C2();
       default:
-        return GetHermiteMatrix_C0(); // Fallback, should never happen
+        return GetHermiteMatrix_C0();
     }
   }
 } // namespace
-
-//=================================================================================================
 
 PLib_HermitJacobi::PLib_HermitJacobi(const int WorkDegree, const GeomAbs_Shape ConstraintOrder)
     : myJacobi(WorkDegree, ConstraintOrder)
 {
 }
-
-//=================================================================================================
 
 double PLib_HermitJacobi::MaxError(const int Dimension,
                                    double&   HermJacCoeff,
@@ -98,8 +89,6 @@ double PLib_HermitJacobi::MaxError(const int Dimension,
 {
   return myJacobi.MaxError(Dimension, HermJacCoeff, NewDegree);
 }
-
-//=================================================================================================
 
 void PLib_HermitJacobi::ReduceDegree(const int    Dimension,
                                      const int    MaxDegree,
@@ -111,16 +100,12 @@ void PLib_HermitJacobi::ReduceDegree(const int    Dimension,
   myJacobi.ReduceDegree(Dimension, MaxDegree, Tol, HermJacCoeff, NewDegree, MaxError);
 }
 
-//=================================================================================================
-
 double PLib_HermitJacobi::AverageError(const int Dimension,
                                        double&   HermJacCoeff,
                                        const int NewDegree) const
 {
   return myJacobi.AverageError(Dimension, HermJacCoeff, NewDegree);
 }
-
-//=================================================================================================
 
 void PLib_HermitJacobi::ToCoefficients(const int                         Dimension,
                                        const int                         Degree,
@@ -170,11 +155,6 @@ void PLib_HermitJacobi::ToCoefficients(const int                         Dimensi
   }
 }
 
-//=======================================================================
-// function : D0123
-// purpose  : common part of D0,D1,D2,D3 (FORTRAN subroutine MPOBAS)
-//=======================================================================
-
 void PLib_HermitJacobi::D0123(const int                   NDeriv,
                               const double                U,
                               NCollection_Array1<double>& BasisValue,
@@ -202,7 +182,6 @@ void PLib_HermitJacobi::D0123(const int                   NDeriv,
   NCollection_Array1<double> WValues(wvalues[0], 0, NDeriv);
   WValues.Init(0.);
 
-  // Evaluation des polynomes d'hermite
   math_Matrix HermitValues(0, aDegreeH, 0, NDeriv, 0.);
   if (NDeriv == 0)
     for (i = 0; i <= aDegreeH; i++)
@@ -220,7 +199,6 @@ void PLib_HermitJacobi::D0123(const int                   NDeriv,
       PLib::EvalPolynomial(U, NDeriv, aDegreeH, 1, aHermiteMatrix(i + 1, 1), HermitValues(i, 0));
     }
 
-  // Evaluation des polynomes de Jaccobi
   if (aJacDegree >= 0)
   {
 
@@ -251,7 +229,6 @@ void PLib_HermitJacobi::D0123(const int                   NDeriv,
       }
     }
 
-    // Evaluation de W(t)
     const double& aWCoeff = GetWCoefficients(aNivConstr);
     if (NDeriv == 0)
       PLib::NoDerivativeEvalPolynomial(U, aDegreeH + 1, 1, aDegreeH + 1, aWCoeff, WValues(0));
@@ -259,7 +236,6 @@ void PLib_HermitJacobi::D0123(const int                   NDeriv,
       PLib::EvalPolynomial(U, NDeriv, aDegreeH + 1, 1, aWCoeff, WValues(0));
   }
 
-  // Evaluation a l'ordre 0
   for (i = 0; i <= aDegreeH; i++)
   {
     BasisValue(ibeg0 + i) = HermitValues(i, 0);
@@ -270,7 +246,6 @@ void PLib_HermitJacobi::D0123(const int                   NDeriv,
     BasisValue(ibeg0 + i) = W0 * jac0[j];
   }
 
-  // Evaluation a l'ordre 1
   if (NDeriv >= 1)
   {
     double W1 = WValues(1);
@@ -282,7 +257,7 @@ void PLib_HermitJacobi::D0123(const int                   NDeriv,
     {
       BasisD1(ibeg1 + i) = W0 * jac1[j] + W1 * jac0[j];
     }
-    // Evaluation a l'ordre 2
+
     if (NDeriv >= 2)
     {
       double W2 = WValues(2);
@@ -295,7 +270,6 @@ void PLib_HermitJacobi::D0123(const int                   NDeriv,
         BasisD2(ibeg2 + i) = W0 * jac2[j] + 2 * W1 * jac1[j] + W2 * jac0[j];
       }
 
-      // Evaluation a l'ordre 3
       if (NDeriv == 3)
       {
         double W3 = WValues(3);
@@ -312,14 +286,10 @@ void PLib_HermitJacobi::D0123(const int                   NDeriv,
   }
 }
 
-//=================================================================================================
-
 void PLib_HermitJacobi::D0(const double U, NCollection_Array1<double>& BasisValue) const
 {
   D0123(0, U, BasisValue, BasisValue, BasisValue, BasisValue);
 }
-
-//=================================================================================================
 
 void PLib_HermitJacobi::D1(const double                U,
                            NCollection_Array1<double>& BasisValue,
@@ -328,8 +298,6 @@ void PLib_HermitJacobi::D1(const double                U,
   D0123(1, U, BasisValue, BasisD1, BasisD1, BasisD1);
 }
 
-//=================================================================================================
-
 void PLib_HermitJacobi::D2(const double                U,
                            NCollection_Array1<double>& BasisValue,
                            NCollection_Array1<double>& BasisD1,
@@ -337,8 +305,6 @@ void PLib_HermitJacobi::D2(const double                U,
 {
   D0123(2, U, BasisValue, BasisD1, BasisD2, BasisD2);
 }
-
-//=================================================================================================
 
 void PLib_HermitJacobi::D3(const double                U,
                            NCollection_Array1<double>& BasisValue,

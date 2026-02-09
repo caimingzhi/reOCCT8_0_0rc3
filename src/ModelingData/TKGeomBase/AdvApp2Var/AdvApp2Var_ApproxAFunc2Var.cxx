@@ -26,8 +26,6 @@
 #include <Geom_BezierSurface.hpp>
 #include <Geom_BSplineSurface.hpp>
 
-//=================================================================================================
-
 AdvApp2Var_ApproxAFunc2Var::AdvApp2Var_ApproxAFunc2Var(
   const int                                       Num1DSS,
   const int                                       Num2DSS,
@@ -83,8 +81,6 @@ AdvApp2Var_ApproxAFunc2Var::AdvApp2Var_ApproxAFunc2Var(
   Perform(UChoice, VChoice, Func);
   ConvertBS();
 }
-
-//=================================================================================================
 
 AdvApp2Var_ApproxAFunc2Var::AdvApp2Var_ApproxAFunc2Var(
   const int                                       Num1DSS,
@@ -142,11 +138,6 @@ AdvApp2Var_ApproxAFunc2Var::AdvApp2Var_ApproxAFunc2Var(
   Perform(UChoice, VChoice, Func, Crit);
   ConvertBS();
 }
-
-//=======================================================================
-// function : Init
-// purpose  : Initialisation of the approximation
-//=======================================================================
 
 void AdvApp2Var_ApproxAFunc2Var::Init()
 {
@@ -216,11 +207,6 @@ void AdvApp2Var_ApproxAFunc2Var::Init()
   myConditions = Conditions;
   InitGrid(1);
 }
-
-//=======================================================================
-// function : InitGrid
-// purpose  : Initialisation of the approximation with regular cuttings
-//=======================================================================
 
 void AdvApp2Var_ApproxAFunc2Var::InitGrid(const int NbInt)
 {
@@ -303,7 +289,6 @@ void AdvApp2Var_ApproxAFunc2Var::InitGrid(const int NbInt)
 
   AdvApp2Var_Framework Constraints(Bag, UStrip, VStrip);
 
-  // regular cutting if NbInt>1
   double deltu = (myLastParInU - myFirstParInU) / NbInt,
          deltv = (myLastParInV - myFirstParInV) / NbInt;
   for (iint = 1; iint <= NbInt - 1; iint++)
@@ -317,11 +302,6 @@ void AdvApp2Var_ApproxAFunc2Var::InitGrid(const int NbInt)
   myConstraints = Constraints;
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Computation of the approximation
-//=======================================================================
-
 void AdvApp2Var_ApproxAFunc2Var::Perform(const AdvApprox_Cutting&            UChoice,
                                          const AdvApprox_Cutting&            VChoice,
                                          const AdvApp2Var_EvaluatorFunc2Var& Func)
@@ -330,11 +310,6 @@ void AdvApp2Var_ApproxAFunc2Var::Perform(const AdvApprox_Cutting&            UCh
   myHasResult = myDone = true;
   Compute3DErrors();
 }
-
-//=======================================================================
-// function : Perform
-// purpose  : Computation of the approximation
-//=======================================================================
 
 void AdvApp2Var_ApproxAFunc2Var::Perform(const AdvApprox_Cutting&            UChoice,
                                          const AdvApprox_Cutting&            VChoice,
@@ -346,11 +321,6 @@ void AdvApp2Var_ApproxAFunc2Var::Perform(const AdvApprox_Cutting&            UCh
   Compute3DErrors();
   ComputeCritError();
 }
-
-//=======================================================================
-// function : ComputePatches
-// purpose  : Computation of the polynomial approximations
-//=======================================================================
 
 void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&            UChoice,
                                                 const AdvApprox_Cutting&            VChoice,
@@ -364,10 +334,8 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
   while (myResult.FirstNotApprox(FirstNA))
   {
 
-    // complete the set of constraints
     ComputeConstraints(UChoice, VChoice, Func);
 
-    // discretization of constraints relative to the square
     myResult(FirstNA).Discretise(myConditions, myConstraints, Func);
     if (!myResult(FirstNA).IsDiscretised())
     {
@@ -375,8 +343,6 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
       throw Standard_ConstructionError("AdvApp2Var_ApproxAFunc2Var : Surface Discretisation Error");
     }
 
-    // calculate the number and the type of authorized cuts
-    // depending on the max number of squares and the validity of next cuts.
     NbU     = myResult.NbPatchInU();
     NbV     = myResult.NbPatchInV();
     NbPatch = NbU * NbV;
@@ -407,7 +373,6 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
         NumDec = 5;
     }
 
-    // approximation of the square
     myResult(FirstNA).MakeApprox(myConditions, myConstraints, NumDec);
 
     if (!myResult(FirstNA).IsApproximated())
@@ -415,7 +380,7 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
       switch (myResult(FirstNA).CutSense())
       {
         case 0:
-          //	It is not possible to cut : the result is preserved
+
           if (myResult(FirstNA).HasResult())
           {
             myResult(FirstNA).OverwriteApprox();
@@ -428,17 +393,17 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
           }
           break;
         case 1:
-          //      It is necessary to cut in U
+
           myResult.UpdateInU(Udec);
           myConstraints.UpdateInU(Udec);
           break;
         case 2:
-          //      It is necessary to cut in V
+
           myResult.UpdateInV(Vdec);
           myConstraints.UpdateInV(Vdec);
           break;
         case 3:
-          //      It is necessary to cut in U and V
+
           myResult.UpdateInU(Udec);
           myConstraints.UpdateInU(Udec);
           myResult.UpdateInV(Vdec);
@@ -453,11 +418,6 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
   }
 }
 
-//=======================================================================
-// function : ComputePatches
-// purpose  : Computation of the polynomial approximations
-//=======================================================================
-
 void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&            UChoice,
                                                 const AdvApprox_Cutting&            VChoice,
                                                 const AdvApp2Var_EvaluatorFunc2Var& Func,
@@ -471,14 +431,12 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
   while (myResult.FirstNotApprox(FirstNA))
   {
 
-    // complete the set of constraints
     ComputeConstraints(UChoice, VChoice, Func, Crit);
     if (decision > 0)
     {
       m1 = 0.;
     }
 
-    // discretize the constraints relative to the square
     myResult(FirstNA).Discretise(myConditions, myConstraints, Func);
     if (!myResult(FirstNA).IsDiscretised())
     {
@@ -486,8 +444,6 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
       throw Standard_ConstructionError("AdvApp2Var_ApproxAFunc2Var : Surface Discretisation Error");
     }
 
-    // calculate the number and type of authorized cuts
-    // depending on the max number of squares and the validity of next cuts
     NbU     = myResult.NbPatchInU();
     NbV     = myResult.NbPatchInV();
     NbPatch = NbU * NbV;
@@ -519,7 +475,6 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
         NumDec = 5;
     }
 
-    // approximation of the square
     if (CritAbs)
     {
       myResult(FirstNA).MakeApprox(myConditions, myConstraints, 0);
@@ -531,7 +486,6 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
     if (NumDec >= 3)
       NumDec = NumDec - 2;
 
-    // evaluation of the criterion on the square
     if (myResult(FirstNA).HasResult())
     {
       Crit.Value(myResult(FirstNA), myConditions);
@@ -539,10 +493,10 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
       if (m1 < CritValue)
         m1 = CritValue;
     }
-    // is it necessary to cut ?
+
     decision     = myResult(FirstNA).CutSense(Crit, NumDec);
     bool Regular = (Crit.Repartition() == AdvApp2Var_Regular);
-    //    bool Regular = true;
+
     if (Regular && decision > 0)
     {
       NbInt++;
@@ -553,7 +507,7 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
       switch (decision)
       {
         case 0:
-          //	Impossible to cut : the result is preserved
+
           if (myResult(FirstNA).HasResult())
           {
             myResult(FirstNA).OverwriteApprox();
@@ -566,17 +520,17 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
           }
           break;
         case 1:
-          //      It is necessary to cut in U
+
           myResult.UpdateInU(Udec);
           myConstraints.UpdateInU(Udec);
           break;
         case 2:
-          //      It is necessary to cut in V
+
           myResult.UpdateInV(Vdec);
           myConstraints.UpdateInV(Vdec);
           break;
         case 3:
-          //      It is necessary to cut in U and V
+
           myResult.UpdateInU(Udec);
           myConstraints.UpdateInU(Udec);
           myResult.UpdateInV(Vdec);
@@ -590,11 +544,6 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
     }
   }
 }
-
-//=======================================================================
-// function : ComputeConstraints without Criterion
-// purpose  : Approximation of the constraints
-//=======================================================================
 
 void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&            UChoice,
                                                     const AdvApprox_Cutting&            VChoice,
@@ -610,13 +559,12 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
        !anIso.IsNull();
        anIso = myConstraints.FirstNotApprox(ind1, ind2))
   {
-    // approximation of iso and calculation of constraints at extremities
+
     const int indN1 = myConstraints.FirstNode(anIso->Type(), ind1, ind2);
     N1              = *myConstraints.Node(indN1);
     const int indN2 = myConstraints.LastNode(anIso->Type(), ind1, ind2);
     N2              = *myConstraints.Node(indN2);
 
-    // note that old code attempted to make copy of anIso here (but copy was incomplete)
     anIso->MakeApprox(myConditions,
                       myFirstParInU,
                       myLastParInU,
@@ -627,14 +575,14 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
                       N2);
     if (anIso->IsApproximated())
     {
-      // iso is approached at the required tolerance
+
       myConstraints.ChangeIso(ind1, ind2, anIso);
       *myConstraints.Node(indN1) = N1;
       *myConstraints.Node(indN2) = N2;
     }
     else
     {
-      // Approximation is not satisfactory
+
       NbU = myResult.NbPatchInU();
       NbV = myResult.NbPatchInV();
       if (anIso->Type() == GeomAbs_IsoV)
@@ -650,7 +598,7 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
 
       if (NbPatch <= myMaxPatches && more)
       {
-        // It is possible to cut iso
+
         if (anIso->Type() == GeomAbs_IsoV)
         {
           myResult.UpdateInU(dec);
@@ -664,7 +612,7 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
       }
       else
       {
-        // It is not possible to cut : the result is preserved
+
         if (anIso->HasResult())
         {
           anIso->OverwriteApprox();
@@ -682,11 +630,6 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
     }
   }
 }
-
-//=======================================================================
-// function : ComputeConstraints with Criterion
-// purpose  : Approximation of the constraints
-//=======================================================================
 
 void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&            UChoice,
                                                     const AdvApprox_Cutting&            VChoice,
@@ -704,13 +647,12 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
        !anIso.IsNull();
        anIso = myConstraints.FirstNotApprox(ind1, ind2))
   {
-    // approximation of the iso and calculation of constraints at the extremities
+
     indN1 = myConstraints.FirstNode(anIso->Type(), ind1, ind2);
     N1    = *myConstraints.Node(indN1);
     indN2 = myConstraints.LastNode(anIso->Type(), ind1, ind2);
     N2    = *myConstraints.Node(indN2);
 
-    // note that old code attempted to make copy of anIso here (but copy was incomplete)
     anIso->MakeApprox(myConditions,
                       myFirstParInU,
                       myLastParInU,
@@ -722,14 +664,14 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
 
     if (anIso->IsApproximated())
     {
-      // iso is approached at the required tolerance
+
       myConstraints.ChangeIso(ind1, ind2, anIso);
       *myConstraints.Node(indN1) = N1;
       *myConstraints.Node(indN2) = N2;
     }
     else
     {
-      // Approximation is not satisfactory
+
       NbU = myResult.NbPatchInU();
       NbV = myResult.NbPatchInV();
       if (anIso->Type() == GeomAbs_IsoV)
@@ -743,12 +685,11 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
         more    = VChoice.Value(anIso->T0(), anIso->T1(), dec);
       }
 
-      // To force Overwrite if the criterion is Absolute
       more = more && (CritRel);
 
       if (NbPatch <= myMaxPatches && more)
       {
-        // It is possible to cut iso
+
         if (anIso->Type() == GeomAbs_IsoV)
         {
           myResult.UpdateInU(dec);
@@ -762,7 +703,7 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
       }
       else
       {
-        // It is not possible to cut: the result is preserved
+
         if (anIso->HasResult())
         {
           anIso->OverwriteApprox();
@@ -780,11 +721,6 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
     }
   }
 }
-
-//=======================================================================
-// function : Compute3DErrors
-// purpose  : Computation of the 3D errors
-//=======================================================================
 
 void AdvApp2Var_ApproxAFunc2Var::Compute3DErrors()
 {
@@ -834,11 +770,6 @@ void AdvApp2Var_ApproxAFunc2Var::Compute3DErrors()
   }
 }
 
-//=======================================================================
-// function : ComputeCritError
-// purpose  : Computation of the max value of the Criterion
-//=======================================================================
-
 void AdvApp2Var_ApproxAFunc2Var::ComputeCritError()
 {
 
@@ -858,21 +789,15 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeCritError()
   }
 }
 
-//=======================================================================
-// function : ConvertBS
-// purpose  : Conversion of the approximation in BSpline Surface
-//=======================================================================
-
 void AdvApp2Var_ApproxAFunc2Var::ConvertBS()
 {
-  // Homogeneization of degrees
+
   int iu = myConditions.UOrder(), iv = myConditions.VOrder();
   int ncfu = myConditions.ULimit(), ncfv = myConditions.VLimit();
   myResult.SameDegree(iu, iv, ncfu, ncfv);
   myDegreeInU = ncfu - 1;
   myDegreeInV = ncfv - 1;
 
-  // Calculate resulting surfaces
   mySurfaces = new (NCollection_HArray1<occ::handle<Geom_Surface>>)(1, myNumSubSpaces[2]);
 
   int                        j;
@@ -888,7 +813,6 @@ void AdvApp2Var_ApproxAFunc2Var::ConvertBS()
     VKnots.SetValue(j, myResult.VParameter(j));
   }
 
-  // Prepare data for conversion grid of polynoms --> poles
   occ::handle<NCollection_HArray1<double>> Uint1 = new (NCollection_HArray1<double>)(1, 2);
   Uint1->SetValue(1, -1);
   Uint1->SetValue(2, 1);
@@ -920,7 +844,6 @@ void AdvApp2Var_ApproxAFunc2Var::ConvertBS()
   for (SSP = 1; SSP <= myNumSubSpaces[2]; SSP++)
   {
 
-    // Creation of the grid of polynoms
     int n = 0, icf = 1, ieq;
     for (j = 1; j <= myResult.NbPatchInV(); j++)
     {
@@ -937,7 +860,6 @@ void AdvApp2Var_ApproxAFunc2Var::ConvertBS()
       }
     }
 
-    // Conversion into poles
     Convert_GridPolynomialToPoles CvP(myResult.NbPatchInU(),
                                       myResult.NbPatchInV(),
                                       iu,
@@ -955,7 +877,6 @@ void AdvApp2Var_ApproxAFunc2Var::ConvertBS()
       myDone = false;
     }
 
-    // Conversion into BSpline
     mySurfaces->ChangeValue(SSP) = new (Geom_BSplineSurface)(CvP.Poles()->Array2(),
                                                              CvP.UKnots()->Array1(),
                                                              CvP.VKnots()->Array1(),
@@ -965,8 +886,6 @@ void AdvApp2Var_ApproxAFunc2Var::ConvertBS()
                                                              CvP.VDegree());
   }
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<double>> AdvApp2Var_ApproxAFunc2Var::MaxError(
   const int Dimension) const
@@ -992,8 +911,6 @@ occ::handle<NCollection_HArray1<double>> AdvApp2Var_ApproxAFunc2Var::MaxError(
   return EPtr;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<double>> AdvApp2Var_ApproxAFunc2Var::AverageError(
   const int Dimension) const
 {
@@ -1017,8 +934,6 @@ occ::handle<NCollection_HArray1<double>> AdvApp2Var_ApproxAFunc2Var::AverageErro
   }
   return EPtr;
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<double>> AdvApp2Var_ApproxAFunc2Var::UFrontError(
   const int Dimension) const
@@ -1044,8 +959,6 @@ occ::handle<NCollection_HArray1<double>> AdvApp2Var_ApproxAFunc2Var::UFrontError
   return EPtr;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<double>> AdvApp2Var_ApproxAFunc2Var::VFrontError(
   const int Dimension) const
 {
@@ -1070,8 +983,6 @@ occ::handle<NCollection_HArray1<double>> AdvApp2Var_ApproxAFunc2Var::VFrontError
   return EPtr;
 }
 
-//=================================================================================================
-
 double AdvApp2Var_ApproxAFunc2Var::MaxError(const int Dimension, const int SSPIndex) const
 {
   if (Dimension != 3 || SSPIndex != 1)
@@ -1081,8 +992,6 @@ double AdvApp2Var_ApproxAFunc2Var::MaxError(const int Dimension, const int SSPIn
   occ::handle<NCollection_HArray1<double>> EPtr = MaxError(Dimension);
   return EPtr->Value(SSPIndex);
 }
-
-//=================================================================================================
 
 double AdvApp2Var_ApproxAFunc2Var::AverageError(const int Dimension, const int SSPIndex) const
 {
@@ -1094,8 +1003,6 @@ double AdvApp2Var_ApproxAFunc2Var::AverageError(const int Dimension, const int S
   return EPtr->Value(SSPIndex);
 }
 
-//=================================================================================================
-
 double AdvApp2Var_ApproxAFunc2Var::UFrontError(const int Dimension, const int SSPIndex) const
 {
   if (Dimension != 3 || SSPIndex != 1)
@@ -1105,8 +1012,6 @@ double AdvApp2Var_ApproxAFunc2Var::UFrontError(const int Dimension, const int SS
   occ::handle<NCollection_HArray1<double>> EPtr = UFrontError(Dimension);
   return EPtr->Value(SSPIndex);
 }
-
-//=================================================================================================
 
 double AdvApp2Var_ApproxAFunc2Var::VFrontError(const int Dimension, const int SSPIndex) const
 {
@@ -1118,8 +1023,6 @@ double AdvApp2Var_ApproxAFunc2Var::VFrontError(const int Dimension, const int SS
   return EPtr->Value(SSPIndex);
 }
 
-//=================================================================================================
-
 double AdvApp2Var_ApproxAFunc2Var::CritError(const int Dimension, const int SSPIndex) const
 {
   if (Dimension != 3 || SSPIndex != 1)
@@ -1128,8 +1031,6 @@ double AdvApp2Var_ApproxAFunc2Var::CritError(const int Dimension, const int SSPI
   }
   return myCriterionError;
 }
-
-//=================================================================================================
 
 void AdvApp2Var_ApproxAFunc2Var::Dump(Standard_OStream& o) const
 {

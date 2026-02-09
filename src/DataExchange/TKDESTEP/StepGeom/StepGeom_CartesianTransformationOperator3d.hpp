@@ -12,7 +12,6 @@ class StepGeom_CartesianTransformationOperator3d : public StepGeom_CartesianTran
 {
 
 public:
-  //! Returns a CartesianTransformationOperator3d
   Standard_EXPORT StepGeom_CartesianTransformationOperator3d();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

@@ -7,7 +7,6 @@
 class gp_Pnt;
 class Draw_Display;
 
-//! Dimension between planes and cylinder
 class DrawDim_Dimension : public Draw_Drawable3D
 {
 

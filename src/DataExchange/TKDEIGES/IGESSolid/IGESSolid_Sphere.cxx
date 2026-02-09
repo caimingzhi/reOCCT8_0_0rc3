@@ -11,7 +11,7 @@ IGESSolid_Sphere::IGESSolid_Sphere() = default;
 void IGESSolid_Sphere::Init(const double aRadius, const gp_XYZ& aCenter)
 {
   theRadius = aRadius;
-  theCenter = aCenter; // default (0,0,0)
+  theCenter = aCenter;
   InitTypeAndForm(158, 0);
 }
 

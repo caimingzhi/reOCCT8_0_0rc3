@@ -2,7 +2,7 @@
 
 IntPatch_PrmPrmIntersection_T3Bits::IntPatch_PrmPrmIntersection_T3Bits(const int size)
 {
-  //-- ex: size=4  -> 4**3 = 64 bits -> 2 mots 32bits
+
   int nb = (size * size * size) >> 5;
   Isize  = nb;
   p      = new int[nb];
@@ -21,10 +21,7 @@ IntPatch_PrmPrmIntersection_T3Bits::~IntPatch_PrmPrmIntersection_T3Bits()
   }
 }
 
-void IntPatch_PrmPrmIntersection_T3Bits::ResetAnd()
-{
-  // ind = 0;
-}
+void IntPatch_PrmPrmIntersection_T3Bits::ResetAnd() {}
 
 int IntPatch_PrmPrmIntersection_T3Bits::And(IntPatch_PrmPrmIntersection_T3Bits& Oth, int& indice)
 {

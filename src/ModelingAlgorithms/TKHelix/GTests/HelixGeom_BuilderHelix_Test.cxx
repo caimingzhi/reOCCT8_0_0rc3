@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -53,7 +42,6 @@ TEST_F(HelixGeom_BuilderHelix_Test, MultipleCoils)
   aBuilder.SetPosition(aPosition);
   aBuilder.SetTolerance(myTolerance);
 
-  // 3 full turns
   aBuilder.SetCurveParameters(0.0, 6.0 * M_PI, 10.0, 5.0, 0.0, true);
 
   aBuilder.Perform();
@@ -61,7 +49,7 @@ TEST_F(HelixGeom_BuilderHelix_Test, MultipleCoils)
   EXPECT_EQ(aBuilder.ErrorStatus(), 0);
 
   const NCollection_Sequence<occ::handle<Geom_Curve>>& aCurves = aBuilder.Curves();
-  EXPECT_EQ(aCurves.Length(), 3); // Should split into 3 coils
+  EXPECT_EQ(aCurves.Length(), 3);
 }
 
 TEST_F(HelixGeom_BuilderHelix_Test, PositionGetterSetter)
@@ -82,13 +70,11 @@ TEST_F(HelixGeom_BuilderHelix_Test, ParameterManagement)
 {
   HelixGeom_BuilderHelix aBuilder;
 
-  // Set curve parameters
   double aT1 = 1.0, aT2 = 7.0, aPitch = 15.0, aRStart = 4.0, aTaperAngle = 0.2;
   bool   aIsClockwise = false;
 
   aBuilder.SetCurveParameters(aT1, aT2, aPitch, aRStart, aTaperAngle, aIsClockwise);
 
-  // Get parameters back
   double aT1_out, aT2_out, aPitch_out, aRStart_out, aTaperAngle_out;
   bool   aIsClockwise_out;
 

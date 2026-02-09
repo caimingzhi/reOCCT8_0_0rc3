@@ -13,12 +13,6 @@ class TDataStd_UAttribute : public TDF_Attribute
 {
 
 public:
-  //! api class methods
-  //! =============
-  //! Find, or create, a UAttribute attribute with <LocalID> as Local GUID.
-  //! The UAttribute attribute is returned.
-  //! UAttribute methods
-  //! ============
   Standard_EXPORT static occ::handle<TDataStd_UAttribute> Set(const TDF_Label&     label,
                                                               const Standard_GUID& LocalID);
 
@@ -39,7 +33,6 @@ public:
 
   Standard_EXPORT Standard_OStream& Dump(Standard_OStream& anOS) const override;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(TDataStd_UAttribute, TDF_Attribute)

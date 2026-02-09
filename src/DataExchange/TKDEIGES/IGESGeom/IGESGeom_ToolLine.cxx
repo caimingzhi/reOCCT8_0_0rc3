@@ -15,30 +15,21 @@
 #include <Message_Msg.hpp>
 #include <Standard_DomainError.hpp>
 
-// MGE 29/07/98
 IGESGeom_ToolLine::IGESGeom_ToolLine() = default;
 
 void IGESGeom_ToolLine::ReadOwnParams(const occ::handle<IGESGeom_Line>& ent,
-                                      const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                      const occ::handle<IGESData_IGESReaderData>&,
                                       IGESData_ParamReader& PR) const
 {
-  // MGE 29/07/98
-  // Building of messages
-  //====================================
+
   Message_Msg Msg89("XSTEP_89");
   Message_Msg Msg90("XSTEP_90");
-  //====================================
 
   gp_XYZ aStart, anEnd;
 
-  // bool st; //szv#4:S4163:12Mar99 not needed
+  PR.ReadXYZ(PR.CurrentList(1, 3), Msg89, aStart);
+  PR.ReadXYZ(PR.CurrentList(1, 3), Msg90, anEnd);
 
-  PR.ReadXYZ(PR.CurrentList(1, 3), Msg89, aStart); // szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadXYZ(PR.CurrentList(1, 3), Msg90, anEnd);  // szv#4:S4163:12Mar99 `st=` not needed
-
-  /* st = PR.ReadXYZ(PR.CurrentList(1, 3), "Starting Point", aStart);
-     st = PR.ReadXYZ(PR.CurrentList(1, 3), "End Point", anEnd);
-  */
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(aStart, anEnd);
 }
@@ -54,37 +45,37 @@ void IGESGeom_ToolLine::WriteOwnParams(const occ::handle<IGESGeom_Line>& ent,
   IW.Send(ent->EndPoint().Z());
 }
 
-void IGESGeom_ToolLine::OwnShared(const occ::handle<IGESGeom_Line>& /* ent */,
-                                  Interface_EntityIterator& /* iter */) const
+void IGESGeom_ToolLine::OwnShared(const occ::handle<IGESGeom_Line>&,
+                                  Interface_EntityIterator&) const
 {
 }
 
 void IGESGeom_ToolLine::OwnCopy(const occ::handle<IGESGeom_Line>& another,
                                 const occ::handle<IGESGeom_Line>& ent,
-                                Interface_CopyTool& /* TC */) const
+                                Interface_CopyTool&) const
 {
   ent->Init(another->StartPoint().XYZ(), another->EndPoint().XYZ());
 }
 
-IGESData_DirChecker IGESGeom_ToolLine::DirChecker(const occ::handle<IGESGeom_Line>& /* ent */) const
+IGESData_DirChecker IGESGeom_ToolLine::DirChecker(const occ::handle<IGESGeom_Line>&) const
 {
   IGESData_DirChecker DC(110, 0, 2);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
 }
 
-void IGESGeom_ToolLine::OwnCheck(const occ::handle<IGESGeom_Line>& /* ent */,
+void IGESGeom_ToolLine::OwnCheck(const occ::handle<IGESGeom_Line>&,
                                  const Interface_ShareTool&,
-                                 occ::handle<Interface_Check>& /* ach */) const
+                                 occ::handle<Interface_Check>&) const
 {
 }
 
 void IGESGeom_ToolLine::OwnDump(const occ::handle<IGESGeom_Line>& ent,
-                                const IGESData_IGESDumper& /* dumper */,
+                                const IGESData_IGESDumper&,
                                 Standard_OStream& S,
                                 const int         level) const
 {

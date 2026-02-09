@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include <Interface_IntVal.hpp>
@@ -17,17 +6,7 @@
 #include <Standard_NoSuchObject.hpp>
 #include <Standard_Transient.hpp>
 
-//  Iterator for for writing, or while with Next at the end :
-//  for (create iterator; iter.More(); iter.Next()) { val = iter.Value(); ... }
-// .... Initial definitions : in particular those required for
-//      graph tools (construction with graph, with a vertex)
-Interface_EntityIterator::Interface_EntityIterator()
-{
-  //  thecurr = new Interface_IntVal;
-  //  thecurr->CValue() = 0;
-  //  thelist = new NCollection_HSequence<occ::handle<Standard_Transient>>();  // empty constructor
-  //  thelist sera construit au premier Add (quelquefois, il nyena pas)
-}
+Interface_EntityIterator::Interface_EntityIterator() {}
 
 Interface_EntityIterator::Interface_EntityIterator(
   const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& list)
@@ -73,11 +52,6 @@ void Interface_EntityIterator::Reset()
   thelist           = new NCollection_HSequence<occ::handle<Standard_Transient>>();
 }
 
-// .... Pre-iteration sorting functionalities ....
-
-//  "Dumb" way : remove terms that don't fit : slow !
-//  Better to make another sequence alongside
-
 void Interface_EntityIterator::SelectType(const occ::handle<Standard_Type>& atype, const bool keep)
 {
   if (thelist.IsNull())
@@ -92,8 +66,6 @@ void Interface_EntityIterator::SelectType(const occ::handle<Standard_Type>& atyp
   }
   thelist = nlist;
 }
-
-//  ....  Iteration proprement dite  ....
 
 int Interface_EntityIterator::NbEntities() const
 {
@@ -137,14 +109,14 @@ void Interface_EntityIterator::Start() const
 {
   if (!thecurr.IsNull())
     thecurr->CValue() = 1;
-} // can be redefined ...
+}
 
 bool Interface_EntityIterator::More() const
 {
   if (thecurr.IsNull())
     return false;
   if (thecurr->Value() == 0)
-    Start(); // iteration preparation
+    Start();
   if (thelist.IsNull())
     return false;
   return (thecurr->Value() <= thelist->Length());
@@ -153,11 +125,11 @@ bool Interface_EntityIterator::More() const
 void Interface_EntityIterator::Next() const
 {
   thecurr->CValue()++;
-} // Next ne verifie rien : soin laisse a Value
+}
 
 const occ::handle<Standard_Transient>& Interface_EntityIterator::Value() const
 {
-  //  NbEntity not const (we don't know how it is implemented after all)
+
   if (thelist.IsNull())
     throw Standard_NoSuchObject("Interface_EntityIterator");
   if (thecurr->Value() < 1 || thecurr->Value() > thelist->Length())
@@ -171,14 +143,14 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> Interface_En
   if (!thecurr.IsNull() && thecurr->Value() == 0)
     Start();
   if (thelist.IsNull())
-    return new NCollection_HSequence<occ::handle<Standard_Transient>>(); // empty
+    return new NCollection_HSequence<occ::handle<Standard_Transient>>();
   return thelist;
 }
 
 void Interface_EntityIterator::Destroy()
 {
   thecurr.Nullify();
-} // becomes empty again !
+}
 
 Interface_EntityIterator::~Interface_EntityIterator()
 {

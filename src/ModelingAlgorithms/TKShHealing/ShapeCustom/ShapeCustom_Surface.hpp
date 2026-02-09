@@ -8,10 +8,6 @@
 #include <Standard_Boolean.hpp>
 class Geom_Surface;
 
-//! Converts a surface to the analytical form with given
-//! precision. Conversion is done only the surface is bspline
-//! of bezier and this can be approximated by some analytical
-//! surface with that precision.
 class ShapeCustom_Surface
 {
 public:
@@ -23,29 +19,11 @@ public:
 
   Standard_EXPORT void Init(const occ::handle<Geom_Surface>& S);
 
-  //! Returns maximal deviation of converted surface from the original
-  //! one computed by last call to ConvertToAnalytical
   double Gap() const;
 
-  //! Tries to convert the Surface to an Analytic form
-  //! Returns the result
-  //! Works only if the Surface is BSpline or Bezier.
-  //! Else, or in case of failure, returns a Null Handle
-  //!
-  //! If <substitute> is True, the new surface replaces the actual
-  //! one in <me>
-  //!
-  //! It works by analysing the case which can apply, creating the
-  //! corresponding analytic surface, then checking coincidence
-  //! Warning: Parameter laws are not kept, hence PCurves should be redone
   Standard_EXPORT occ::handle<Geom_Surface> ConvertToAnalytical(const double tol,
                                                                 const bool   substitute);
 
-  //! Tries to convert the Surface to the Periodic form
-  //! Returns the resulting surface
-  //! Works only if the Surface is BSpline and is closed with
-  //! Precision::Confusion()
-  //! Else, or in case of failure, returns a Null Handle
   Standard_EXPORT occ::handle<Geom_Surface> ConvertToPeriodic(const bool   substitute,
                                                               const double preci = -1);
 

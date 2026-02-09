@@ -11,7 +11,6 @@ namespace
 {
   bool myGlobalRunParallel = false;
 
-// Initialize textual messages for errors and warnings defined in BOPAlgo
 #include "BOPAlgo_BOPAlgo_msg.hpp"
   bool BOPAlgo_InitMessages = false;
 
@@ -28,8 +27,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 BOPAlgo_Options::BOPAlgo_Options()
     : myAllocator(NCollection_BaseAllocator::CommonBaseAllocator()),
       myReport(new Message_Report),
@@ -39,8 +36,6 @@ BOPAlgo_Options::BOPAlgo_Options()
 {
   BOPAlgo_LoadMessages();
 }
-
-//=================================================================================================
 
 BOPAlgo_Options::BOPAlgo_Options(const occ::handle<NCollection_BaseAllocator>& theAllocator)
     : myAllocator(theAllocator),
@@ -52,39 +47,27 @@ BOPAlgo_Options::BOPAlgo_Options(const occ::handle<NCollection_BaseAllocator>& t
   BOPAlgo_LoadMessages();
 }
 
-//=================================================================================================
-
 BOPAlgo_Options::~BOPAlgo_Options() = default;
-
-//=================================================================================================
 
 void BOPAlgo_Options::DumpErrors(Standard_OStream& theOS) const
 {
   myReport->Dump(theOS, Message_Fail);
 }
 
-//=================================================================================================
-
 void BOPAlgo_Options::DumpWarnings(Standard_OStream& theOS) const
 {
   myReport->Dump(theOS, Message_Warning);
 }
-
-//=================================================================================================
 
 void BOPAlgo_Options::SetParallelMode(bool theNewMode)
 {
   myGlobalRunParallel = theNewMode;
 }
 
-//=================================================================================================
-
 bool BOPAlgo_Options::GetParallelMode()
 {
   return myGlobalRunParallel;
 }
-
-//=================================================================================================
 
 void BOPAlgo_Options::SetFuzzyValue(const double theFuzz)
 {

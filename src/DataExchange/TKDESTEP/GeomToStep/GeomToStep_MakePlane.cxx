@@ -7,9 +7,6 @@
 #include <StepGeom_Plane.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d' un plane de prostep a partir d' un Pln de gp
-//=============================================================================
 GeomToStep_MakePlane::GeomToStep_MakePlane(const gp_Pln& P, const StepData_Factors& theLocalFactors)
 {
   occ::handle<StepGeom_Plane>            Plan = new StepGeom_Plane;
@@ -23,10 +20,6 @@ GeomToStep_MakePlane::GeomToStep_MakePlane(const gp_Pln& P, const StepData_Facto
   thePlane = Plan;
   done     = true;
 }
-
-//=============================================================================
-// Creation d' un plane de prostep a partir d' un Plane de Geom
-//=============================================================================
 
 GeomToStep_MakePlane::GeomToStep_MakePlane(const occ::handle<Geom_Plane>& Gpln,
                                            const StepData_Factors&        theLocalFactors)
@@ -45,10 +38,6 @@ GeomToStep_MakePlane::GeomToStep_MakePlane(const occ::handle<Geom_Plane>& Gpln,
   thePlane = Plan;
   done     = true;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_Plane>& GeomToStep_MakePlane::Value() const
 {

@@ -9,11 +9,6 @@
 class StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface;
 class Geom_BSplineSurface;
 
-//! This class implements the mapping between class
-//! BSplineSurface from Geom and the class
-//! BSplineSurfaceWithKnotsAndRationalBSplineSurface from
-//! StepGeom which describes a
-//! rational_bspline_Surface_with_knots from Prostep
 class GeomToStep_MakeBSplineSurfaceWithKnotsAndRationalBSplineSurface : public GeomToStep_Root
 {
 public:

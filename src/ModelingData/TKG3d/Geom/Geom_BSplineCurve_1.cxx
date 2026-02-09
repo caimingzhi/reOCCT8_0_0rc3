@@ -16,8 +16,6 @@
 #define FKNOTS (flatknots->Array1())
 #define FMULTS (BSplCLib::NoMults())
 
-//=================================================================================================
-
 bool Geom_BSplineCurve::IsCN(const int N) const
 {
   Standard_RangeError_Raise_if(N < 0, "Geom_BSplineCurve::IsCN");
@@ -46,8 +44,6 @@ bool Geom_BSplineCurve::IsCN(const int N) const
       return false;
   }
 }
-
-//=================================================================================================
 
 bool Geom_BSplineCurve::IsG1(const double theTf, const double theTl, const double theAngTol) const
 {
@@ -93,13 +89,9 @@ bool Geom_BSplineCurve::IsG1(const double theTf, const double theTl, const doubl
   if (((aFirstParam - theTf) * (theTl - aFirstParam) < 0.0)
       && ((aLastParam - theTf) * (theTl - aLastParam) < 0.0))
   {
-    // Range [theTf, theTl] does not intersect curve boundaries
+
     return true;
   }
-
-  // Curve is closed or periodic and range [theTf, theTl]
-  // intersect curve boundary. Therefore, it is necessary to
-  // check if curve is smooth in its first and last point.
 
   gp_Pnt aP;
   gp_Vec aV1, aV2;
@@ -117,36 +109,26 @@ bool Geom_BSplineCurve::IsG1(const double theTf, const double theTl, const doubl
   return true;
 }
 
-//=================================================================================================
-
 bool Geom_BSplineCurve::IsClosed() const
-//-- { return (StartPoint().Distance (EndPoint())) <= gp::Resolution (); }
+
 {
   return (StartPoint().SquareDistance(EndPoint())) <= 1e-16;
 }
-
-//=================================================================================================
 
 bool Geom_BSplineCurve::IsPeriodic() const
 {
   return periodic;
 }
 
-//=================================================================================================
-
 GeomAbs_Shape Geom_BSplineCurve::Continuity() const
 {
   return smooth;
 }
 
-//=================================================================================================
-
 int Geom_BSplineCurve::Degree() const
 {
   return deg;
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::D0(const double U, gp_Pnt& P) const
 {
@@ -167,8 +149,6 @@ void Geom_BSplineCurve::D0(const double U, gp_Pnt& P) const
                &mults->Array1(),
                P);
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::D1(const double U, gp_Pnt& P, gp_Vec& V1) const
 {
@@ -191,8 +171,6 @@ void Geom_BSplineCurve::D1(const double U, gp_Pnt& P, gp_Vec& V1) const
                V1);
 }
 
-//=================================================================================================
-
 void Geom_BSplineCurve::D2(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2) const
 {
   int    aSpanIndex = 0;
@@ -214,8 +192,6 @@ void Geom_BSplineCurve::D2(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2) co
                V1,
                V2);
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::D3(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2, gp_Vec& V3) const
 {
@@ -240,8 +216,6 @@ void Geom_BSplineCurve::D3(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2, gp
                V3);
 }
 
-//=================================================================================================
-
 gp_Vec Geom_BSplineCurve::DN(const double U, const int N) const
 {
   gp_Vec V;
@@ -258,8 +232,6 @@ gp_Vec Geom_BSplineCurve::DN(const double U, const int N) const
   return V;
 }
 
-//=================================================================================================
-
 gp_Pnt Geom_BSplineCurve::EndPoint() const
 {
   if (mults->Value(knots->Upper()) == deg + 1)
@@ -267,8 +239,6 @@ gp_Pnt Geom_BSplineCurve::EndPoint() const
   else
     return Value(LastParameter());
 }
-
-//=================================================================================================
 
 int Geom_BSplineCurve::FirstUKnotIndex() const
 {
@@ -278,14 +248,10 @@ int Geom_BSplineCurve::FirstUKnotIndex() const
     return BSplCLib::FirstUKnotIndex(deg, mults->Array1());
 }
 
-//=================================================================================================
-
 double Geom_BSplineCurve::FirstParameter() const
 {
   return flatknots->Value(deg + 1);
 }
-
-//=================================================================================================
 
 double Geom_BSplineCurve::Knot(const int Index) const
 {
@@ -293,14 +259,10 @@ double Geom_BSplineCurve::Knot(const int Index) const
   return knots->Value(Index);
 }
 
-//=================================================================================================
-
 GeomAbs_BSplKnotDistribution Geom_BSplineCurve::KnotDistribution() const
 {
   return knotSet;
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::Knots(NCollection_Array1<double>& K) const
 {
@@ -315,8 +277,6 @@ const NCollection_Array1<double>& Geom_BSplineCurve::Knots() const
   return knots->Array1();
 }
 
-//=================================================================================================
-
 void Geom_BSplineCurve::KnotSequence(NCollection_Array1<double>& K) const
 {
   Standard_DomainError_Raise_if(K.Lower() < flatknots->Lower() || K.Upper() > flatknots->Upper(),
@@ -330,8 +290,6 @@ const NCollection_Array1<double>& Geom_BSplineCurve::KnotSequence() const
   return flatknots->Array1();
 }
 
-//=================================================================================================
-
 int Geom_BSplineCurve::LastUKnotIndex() const
 {
   if (periodic)
@@ -340,14 +298,10 @@ int Geom_BSplineCurve::LastUKnotIndex() const
     return BSplCLib::LastUKnotIndex(deg, mults->Array1());
 }
 
-//=================================================================================================
-
 double Geom_BSplineCurve::LastParameter() const
 {
   return flatknots->Value(flatknots->Upper() - deg);
 }
-
-//=================================================================================================
 
 gp_Pnt Geom_BSplineCurve::LocalValue(const double U, const int FromK1, const int ToK2) const
 {
@@ -355,8 +309,6 @@ gp_Pnt Geom_BSplineCurve::LocalValue(const double U, const int FromK1, const int
   LocalD0(U, FromK1, ToK2, P);
   return P;
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::LocalD0(const double U, const int FromK1, const int ToK2, gp_Pnt& P) const
 {
@@ -376,8 +328,6 @@ void Geom_BSplineCurve::LocalD0(const double U, const int FromK1, const int ToK2
                FMULTS,
                P);
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::LocalD1(const double U,
                                 const int    FromK1,
@@ -402,8 +352,6 @@ void Geom_BSplineCurve::LocalD1(const double U,
                P,
                V1);
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::LocalD2(const double U,
                                 const int    FromK1,
@@ -430,8 +378,6 @@ void Geom_BSplineCurve::LocalD2(const double U,
                V1,
                V2);
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::LocalD3(const double U,
                                 const int    FromK1,
@@ -461,8 +407,6 @@ void Geom_BSplineCurve::LocalD3(const double U,
                V3);
 }
 
-//=================================================================================================
-
 gp_Vec Geom_BSplineCurve::LocalDN(const double U,
                                   const int    FromK1,
                                   const int    ToK2,
@@ -489,16 +433,12 @@ gp_Vec Geom_BSplineCurve::LocalDN(const double U,
   return V;
 }
 
-//=================================================================================================
-
 int Geom_BSplineCurve::Multiplicity(const int Index) const
 {
   Standard_OutOfRange_Raise_if(Index < 1 || Index > mults->Length(),
                                "Geom_BSplineCurve::Multiplicity");
   return mults->Value(Index);
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::Multiplicities(NCollection_Array1<int>& M) const
 {
@@ -512,29 +452,21 @@ const NCollection_Array1<int>& Geom_BSplineCurve::Multiplicities() const
   return mults->Array1();
 }
 
-//=================================================================================================
-
 int Geom_BSplineCurve::NbKnots() const
 {
   return knots->Length();
 }
-
-//=================================================================================================
 
 int Geom_BSplineCurve::NbPoles() const
 {
   return poles->Length();
 }
 
-//=================================================================================================
-
 const gp_Pnt& Geom_BSplineCurve::Pole(const int Index) const
 {
   Standard_OutOfRange_Raise_if(Index < 1 || Index > poles->Length(), "Geom_BSplineCurve::Pole");
   return poles->Value(Index);
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::Poles(NCollection_Array1<gp_Pnt>& P) const
 {
@@ -547,8 +479,6 @@ const NCollection_Array1<gp_Pnt>& Geom_BSplineCurve::Poles() const
   return poles->Array1();
 }
 
-//=================================================================================================
-
 gp_Pnt Geom_BSplineCurve::StartPoint() const
 {
   if (mults->Value(1) == deg + 1)
@@ -556,8 +486,6 @@ gp_Pnt Geom_BSplineCurve::StartPoint() const
   else
     return Value(FirstParameter());
 }
-
-//=================================================================================================
 
 double Geom_BSplineCurve::Weight(const int Index) const
 {
@@ -567,8 +495,6 @@ double Geom_BSplineCurve::Weight(const int Index) const
   else
     return 1.;
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::Weights(NCollection_Array1<double>& W) const
 {
@@ -591,14 +517,10 @@ const NCollection_Array1<double>* Geom_BSplineCurve::Weights() const
   return BSplCLib::NoWeights();
 }
 
-//=================================================================================================
-
 bool Geom_BSplineCurve::IsRational() const
 {
   return !weights.IsNull();
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::Transform(const gp_Trsf& T)
 {
@@ -607,13 +529,6 @@ void Geom_BSplineCurve::Transform(const gp_Trsf& T)
     CPoles(I).Transform(T);
   maxderivinvok = false;
 }
-
-//=======================================================================
-// function : LocateU
-// purpose  :
-// pmn : 30/01/97 mise en conformite avec le cdl, lorsque U est un noeud
-// (PRO6988)
-//=======================================================================
 
 void Geom_BSplineCurve::LocateU(const double U,
                                 const double ParametricTolerance,
@@ -629,7 +544,7 @@ void Geom_BSplineCurve::LocateU(const double U,
     TheKnots = knots;
   const NCollection_Array1<double>& CKnots = TheKnots->Array1();
 
-  PeriodicNormalization(NewU); // Attention a la periode
+  PeriodicNormalization(NewU);
 
   double UFirst               = CKnots(1);
   double ULast                = CKnots(CKnots.Length());
@@ -671,8 +586,6 @@ void Geom_BSplineCurve::LocateU(const double U,
     }
   }
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::Resolution(const double Tolerance3D, double& UTolerance)
 {
@@ -717,8 +630,6 @@ void Geom_BSplineCurve::Resolution(const double Tolerance3D, double& UTolerance)
   }
   UTolerance = Tolerance3D * maxderivinv;
 }
-
-//=================================================================================================
 
 bool Geom_BSplineCurve::IsEqual(const occ::handle<Geom_BSplineCurve>& theOther,
                                 const double                          thePreci) const

@@ -3,47 +3,31 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_RelocationTable, Standard_Transient)
 
-//=================================================================================================
-
 TDF_RelocationTable::TDF_RelocationTable(const bool selfRelocate)
     : mySelfRelocate(selfRelocate),
       myAfterRelocate(false)
 {
 }
 
-//=================================================================================================
-
 void TDF_RelocationTable::SelfRelocate(const bool selfRelocate)
 {
   mySelfRelocate = selfRelocate;
 }
-
-//=================================================================================================
 
 bool TDF_RelocationTable::SelfRelocate() const
 {
   return mySelfRelocate;
 }
 
-//=================================================================================================
-
 void TDF_RelocationTable::AfterRelocate(const bool afterRelocate)
 {
   myAfterRelocate = afterRelocate;
 }
 
-//=================================================================================================
-
 bool TDF_RelocationTable::AfterRelocate() const
 {
   return myAfterRelocate;
 }
-
-//=======================================================================
-// function : SetRelocation
-// purpose  : Sets the relocation value of <aSourceLabel>
-//           to <aTargetLabel>.
-//=======================================================================
 
 void TDF_RelocationTable::SetRelocation(const TDF_Label& aSourceLabel,
                                         const TDF_Label& aTargetLabel)
@@ -51,12 +35,6 @@ void TDF_RelocationTable::SetRelocation(const TDF_Label& aSourceLabel,
   if (!myLabelTable.IsBound(aSourceLabel))
     myLabelTable.Bind(aSourceLabel, aTargetLabel);
 }
-
-//=======================================================================
-// function : HasRelocation
-// purpose  : Finds the relocation value of <aSourceLabel>
-//           and returns it into <aTargetLabel>.
-//=======================================================================
 
 bool TDF_RelocationTable::HasRelocation(const TDF_Label& aSourceLabel,
                                         TDF_Label&       aTargetLabel) const
@@ -75,24 +53,12 @@ bool TDF_RelocationTable::HasRelocation(const TDF_Label& aSourceLabel,
   return false;
 }
 
-//=======================================================================
-// function : SetRelocation
-// purpose  : Sets the relocation value of <aSourceAttribute>
-//           to <aTargetAttribute>.
-//=======================================================================
-
 void TDF_RelocationTable::SetRelocation(const occ::handle<TDF_Attribute>& aSourceAttribute,
                                         const occ::handle<TDF_Attribute>& aTargetAttribute)
 {
   if (!myAttributeTable.IsBound(aSourceAttribute))
     myAttributeTable.Bind(aSourceAttribute, aTargetAttribute);
 }
-
-//=======================================================================
-// function : HasRelocation
-// purpose  : Finds the relocation value of <aSourceAttribute>
-//           and returns it into <aTargetAttribute>.
-//=======================================================================
 
 bool TDF_RelocationTable::HasRelocation(const occ::handle<TDF_Attribute>& aSourceAttribute,
                                         occ::handle<TDF_Attribute>&       aTargetAttribute) const
@@ -111,12 +77,6 @@ bool TDF_RelocationTable::HasRelocation(const occ::handle<TDF_Attribute>& aSourc
   return false;
 }
 
-//=======================================================================
-// function : SetTransientRelocation
-// purpose  : Sets the relocation value of <aSourceTransient>
-//           to <aTargetTransient>.
-//=======================================================================
-
 void TDF_RelocationTable::SetTransientRelocation(
   const occ::handle<Standard_Transient>& aSourceTransient,
   const occ::handle<Standard_Transient>& aTargetTransient)
@@ -124,12 +84,6 @@ void TDF_RelocationTable::SetTransientRelocation(
   if (!myTransientTable.Contains(aSourceTransient))
     myTransientTable.Add(aSourceTransient, aTargetTransient);
 }
-
-//=======================================================================
-// function : HasTransientRelocation
-// purpose  : Finds the relocation value of <aSourceTransient>
-//           and returns it into <aTargetTransient>.
-//=======================================================================
 
 bool TDF_RelocationTable::HasTransientRelocation(
   const occ::handle<Standard_Transient>& aSourceTransient,
@@ -149,11 +103,6 @@ bool TDF_RelocationTable::HasTransientRelocation(
   return false;
 }
 
-//=======================================================================
-// function : Clear
-// purpose  : Clears the relocation dictionary.
-//=======================================================================
-
 void TDF_RelocationTable::Clear()
 {
   myLabelTable.Clear();
@@ -161,16 +110,12 @@ void TDF_RelocationTable::Clear()
   myTransientTable.Clear();
 }
 
-//=================================================================================================
-
 void TDF_RelocationTable::TargetLabelMap(NCollection_Map<TDF_Label>& aLabelMap) const
 {
   for (NCollection_DataMap<TDF_Label, TDF_Label>::Iterator itr(myLabelTable); itr.More();
        itr.Next())
     aLabelMap.Add(itr.Value());
 }
-
-//=================================================================================================
 
 void TDF_RelocationTable::TargetAttributeMap(
   NCollection_Map<occ::handle<TDF_Attribute>>& anAttributeMap) const
@@ -182,14 +127,10 @@ void TDF_RelocationTable::TargetAttributeMap(
     anAttributeMap.Add(itr.Value());
 }
 
-//=================================================================================================
-
 NCollection_DataMap<TDF_Label, TDF_Label>& TDF_RelocationTable::LabelTable()
 {
   return myLabelTable;
 }
-
-//=================================================================================================
 
 NCollection_DataMap<occ::handle<TDF_Attribute>, occ::handle<TDF_Attribute>>& TDF_RelocationTable::
   AttributeTable()
@@ -197,15 +138,11 @@ NCollection_DataMap<occ::handle<TDF_Attribute>, occ::handle<TDF_Attribute>>& TDF
   return myAttributeTable;
 }
 
-//=================================================================================================
-
 NCollection_IndexedDataMap<occ::handle<Standard_Transient>, occ::handle<Standard_Transient>>&
   TDF_RelocationTable::TransientTable()
 {
   return myTransientTable;
 }
-
-//=================================================================================================
 
 Standard_OStream& TDF_RelocationTable::Dump(const bool        dumpLabels,
                                             const bool        dumpAttributes,

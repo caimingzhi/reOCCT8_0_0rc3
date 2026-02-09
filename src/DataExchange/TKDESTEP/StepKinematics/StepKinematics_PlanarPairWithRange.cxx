@@ -1,10 +1,8 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_PlanarPairWithRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_PlanarPairWithRange, StepKinematics_PlanarPair)
-
-//=================================================================================================
 
 StepKinematics_PlanarPairWithRange::StepKinematics_PlanarPairWithRange()
 {
@@ -15,8 +13,6 @@ StepKinematics_PlanarPairWithRange::StepKinematics_PlanarPairWithRange()
   defLowerLimitActualTranslationY = false;
   defUpperLimitActualTranslationY = false;
 }
-
-//=================================================================================================
 
 void StepKinematics_PlanarPairWithRange::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -108,14 +104,10 @@ void StepKinematics_PlanarPairWithRange::Init(
     myUpperLimitActualTranslationY = 0;
 }
 
-//=================================================================================================
-
 double StepKinematics_PlanarPairWithRange::LowerLimitActualRotation() const
 {
   return myLowerLimitActualRotation;
 }
-
-//=================================================================================================
 
 void StepKinematics_PlanarPairWithRange::SetLowerLimitActualRotation(
   const double theLowerLimitActualRotation)
@@ -123,21 +115,15 @@ void StepKinematics_PlanarPairWithRange::SetLowerLimitActualRotation(
   myLowerLimitActualRotation = theLowerLimitActualRotation;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PlanarPairWithRange::HasLowerLimitActualRotation() const
 {
   return defLowerLimitActualRotation;
 }
 
-//=================================================================================================
-
 double StepKinematics_PlanarPairWithRange::UpperLimitActualRotation() const
 {
   return myUpperLimitActualRotation;
 }
-
-//=================================================================================================
 
 void StepKinematics_PlanarPairWithRange::SetUpperLimitActualRotation(
   const double theUpperLimitActualRotation)
@@ -145,21 +131,15 @@ void StepKinematics_PlanarPairWithRange::SetUpperLimitActualRotation(
   myUpperLimitActualRotation = theUpperLimitActualRotation;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PlanarPairWithRange::HasUpperLimitActualRotation() const
 {
   return defUpperLimitActualRotation;
 }
 
-//=================================================================================================
-
 double StepKinematics_PlanarPairWithRange::LowerLimitActualTranslationX() const
 {
   return myLowerLimitActualTranslationX;
 }
-
-//=================================================================================================
 
 void StepKinematics_PlanarPairWithRange::SetLowerLimitActualTranslationX(
   const double theLowerLimitActualTranslationX)
@@ -167,21 +147,15 @@ void StepKinematics_PlanarPairWithRange::SetLowerLimitActualTranslationX(
   myLowerLimitActualTranslationX = theLowerLimitActualTranslationX;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PlanarPairWithRange::HasLowerLimitActualTranslationX() const
 {
   return defLowerLimitActualTranslationX;
 }
 
-//=================================================================================================
-
 double StepKinematics_PlanarPairWithRange::UpperLimitActualTranslationX() const
 {
   return myUpperLimitActualTranslationX;
 }
-
-//=================================================================================================
 
 void StepKinematics_PlanarPairWithRange::SetUpperLimitActualTranslationX(
   const double theUpperLimitActualTranslationX)
@@ -189,21 +163,15 @@ void StepKinematics_PlanarPairWithRange::SetUpperLimitActualTranslationX(
   myUpperLimitActualTranslationX = theUpperLimitActualTranslationX;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PlanarPairWithRange::HasUpperLimitActualTranslationX() const
 {
   return defUpperLimitActualTranslationX;
 }
 
-//=================================================================================================
-
 double StepKinematics_PlanarPairWithRange::LowerLimitActualTranslationY() const
 {
   return myLowerLimitActualTranslationY;
 }
-
-//=================================================================================================
 
 void StepKinematics_PlanarPairWithRange::SetLowerLimitActualTranslationY(
   const double theLowerLimitActualTranslationY)
@@ -211,29 +179,21 @@ void StepKinematics_PlanarPairWithRange::SetLowerLimitActualTranslationY(
   myLowerLimitActualTranslationY = theLowerLimitActualTranslationY;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PlanarPairWithRange::HasLowerLimitActualTranslationY() const
 {
   return defLowerLimitActualTranslationY;
 }
-
-//=================================================================================================
 
 double StepKinematics_PlanarPairWithRange::UpperLimitActualTranslationY() const
 {
   return myUpperLimitActualTranslationY;
 }
 
-//=================================================================================================
-
 void StepKinematics_PlanarPairWithRange::SetUpperLimitActualTranslationY(
   const double theUpperLimitActualTranslationY)
 {
   myUpperLimitActualTranslationY = theUpperLimitActualTranslationY;
 }
-
-//=================================================================================================
 
 bool StepKinematics_PlanarPairWithRange::HasUpperLimitActualTranslationY() const
 {

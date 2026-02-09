@@ -7,8 +7,6 @@
 extern bool TopOpeBRepBuild_GettraceCHK();
 #endif
 
-//=================================================================================================
-
 TopOpeBRepBuild_ShellFaceSet::TopOpeBRepBuild_ShellFaceSet()
     : TopOpeBRepBuild_ShapeSet(TopAbs_EDGE)
 {
@@ -17,15 +15,13 @@ TopOpeBRepBuild_ShellFaceSet::TopOpeBRepBuild_ShellFaceSet()
 #endif
 }
 
-//=================================================================================================
-
 TopOpeBRepBuild_ShellFaceSet::TopOpeBRepBuild_ShellFaceSet
 #ifdef OCCT_DEBUG
   (const TopoDS_Shape& S, void* const A)
-    : // DEB
+    :
 #else
   (const TopoDS_Shape& S, void* const)
-    : // DEB
+    :
 #endif
       TopOpeBRepBuild_ShapeSet(TopAbs_EDGE)
 {
@@ -58,35 +54,25 @@ TopOpeBRepBuild_ShellFaceSet::TopOpeBRepBuild_ShellFaceSet
 #endif
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_ShellFaceSet::AddShape(const TopoDS_Shape& S)
 {
   TopOpeBRepBuild_ShapeSet::AddShape(S);
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_ShellFaceSet::AddStartElement(const TopoDS_Shape& S)
 {
   TopOpeBRepBuild_ShapeSet::ProcessAddStartElement(S);
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_ShellFaceSet::AddElement(const TopoDS_Shape& S)
 {
   TopOpeBRepBuild_ShapeSet::AddElement(S);
 }
 
-//=================================================================================================
-
 const TopoDS_Solid& TopOpeBRepBuild_ShellFaceSet::Solid() const
 {
   return mySolid;
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_ShellFaceSet::DumpSS()
 {
@@ -94,8 +80,6 @@ void TopOpeBRepBuild_ShellFaceSet::DumpSS()
   TopOpeBRepBuild_ShapeSet::DumpSS();
 #endif
 }
-
-//=================================================================================================
 
 TCollection_AsciiString TopOpeBRepBuild_ShellFaceSet::SName(const TopoDS_Shape&,
                                                             const TCollection_AsciiString& sb,
@@ -105,8 +89,6 @@ TCollection_AsciiString TopOpeBRepBuild_ShellFaceSet::SName(const TopoDS_Shape&,
   return str;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString TopOpeBRepBuild_ShellFaceSet::SNameori(const TopoDS_Shape&,
                                                                const TCollection_AsciiString& sb,
                                                                const TCollection_AsciiString&) const
@@ -114,8 +96,6 @@ TCollection_AsciiString TopOpeBRepBuild_ShellFaceSet::SNameori(const TopoDS_Shap
   TCollection_AsciiString str = sb;
   return str;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString TopOpeBRepBuild_ShellFaceSet::SName(const NCollection_List<TopoDS_Shape>&,
                                                             const TCollection_AsciiString&,
@@ -125,12 +105,10 @@ TCollection_AsciiString TopOpeBRepBuild_ShellFaceSet::SName(const NCollection_Li
   return str;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString TopOpeBRepBuild_ShellFaceSet::SNameori(
-  const NCollection_List<TopoDS_Shape>& /*L*/,
-  const TCollection_AsciiString& /*sb*/,
-  const TCollection_AsciiString& /*sa*/) const
+  const NCollection_List<TopoDS_Shape>&,
+  const TCollection_AsciiString&,
+  const TCollection_AsciiString&) const
 {
   TCollection_AsciiString str;
   return str;

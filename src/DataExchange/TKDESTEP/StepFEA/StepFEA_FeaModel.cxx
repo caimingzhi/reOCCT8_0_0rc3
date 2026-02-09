@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaModel, StepRepr_Representation)
 
-//=================================================================================================
-
 StepFEA_FeaModel::StepFEA_FeaModel() = default;
-
-//=================================================================================================
 
 void StepFEA_FeaModel::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentation_Name,
@@ -33,14 +29,10 @@ void StepFEA_FeaModel::Init(
   theAnalysisType = aAnalysisType;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepFEA_FeaModel::CreatingSoftware() const
 {
   return theCreatingSoftware;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaModel::SetCreatingSoftware(
   const occ::handle<TCollection_HAsciiString>& aCreatingSoftware)
@@ -48,15 +40,11 @@ void StepFEA_FeaModel::SetCreatingSoftware(
   theCreatingSoftware = aCreatingSoftware;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<TCollection_AsciiString>> StepFEA_FeaModel::IntendedAnalysisCode()
   const
 {
   return theIntendedAnalysisCode;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaModel::SetIntendedAnalysisCode(
   const occ::handle<NCollection_HArray1<TCollection_AsciiString>>& aIntendedAnalysisCode)
@@ -64,28 +52,20 @@ void StepFEA_FeaModel::SetIntendedAnalysisCode(
   theIntendedAnalysisCode = aIntendedAnalysisCode;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepFEA_FeaModel::Description() const
 {
   return theDescription;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaModel::SetDescription(const occ::handle<TCollection_HAsciiString>& aDescription)
 {
   theDescription = aDescription;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepFEA_FeaModel::AnalysisType() const
 {
   return theAnalysisType;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaModel::SetAnalysisType(const occ::handle<TCollection_HAsciiString>& aAnalysisType)
 {

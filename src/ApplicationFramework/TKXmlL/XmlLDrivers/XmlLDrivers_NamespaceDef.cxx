@@ -1,10 +1,6 @@
 #include <XmlLDrivers_NamespaceDef.hpp>
 
-//=================================================================================================
-
 XmlLDrivers_NamespaceDef::XmlLDrivers_NamespaceDef() = default;
-
-//=================================================================================================
 
 XmlLDrivers_NamespaceDef::XmlLDrivers_NamespaceDef(const TCollection_AsciiString& thePrefix,
                                                    const TCollection_AsciiString& theURI)
@@ -13,14 +9,10 @@ XmlLDrivers_NamespaceDef::XmlLDrivers_NamespaceDef(const TCollection_AsciiString
 {
 }
 
-//=================================================================================================
-
 const TCollection_AsciiString& XmlLDrivers_NamespaceDef::Prefix() const
 {
   return myPrefix;
 }
-
-//=================================================================================================
 
 const TCollection_AsciiString& XmlLDrivers_NamespaceDef::URI() const
 {

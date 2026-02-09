@@ -8,46 +8,34 @@
 class TCollection_HAsciiString;
 class StepBasic_Document;
 
-//! Representation of STEP entity DocumentProductAssociation
 class StepBasic_DocumentProductAssociation : public Standard_Transient
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT StepBasic_DocumentProductAssociation();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&    aName,
                             const bool                                      hasDescription,
                             const occ::handle<TCollection_HAsciiString>&    aDescription,
                             const occ::handle<StepBasic_Document>&          aRelatingDocument,
                             const StepBasic_ProductOrFormationOrDefinition& aRelatedProduct);
 
-  //! Returns field Name
   Standard_EXPORT occ::handle<TCollection_HAsciiString> Name() const;
 
-  //! Set field Name
   Standard_EXPORT void SetName(const occ::handle<TCollection_HAsciiString>& Name);
 
-  //! Returns field Description
   Standard_EXPORT occ::handle<TCollection_HAsciiString> Description() const;
 
-  //! Set field Description
   Standard_EXPORT void SetDescription(const occ::handle<TCollection_HAsciiString>& Description);
 
-  //! Returns True if optional field Description is defined
   Standard_EXPORT bool HasDescription() const;
 
-  //! Returns field RelatingDocument
   Standard_EXPORT occ::handle<StepBasic_Document> RelatingDocument() const;
 
-  //! Set field RelatingDocument
   Standard_EXPORT void SetRelatingDocument(const occ::handle<StepBasic_Document>& RelatingDocument);
 
-  //! Returns field RelatedProduct
   Standard_EXPORT StepBasic_ProductOrFormationOrDefinition RelatedProduct() const;
 
-  //! Set field RelatedProduct
   Standard_EXPORT void SetRelatedProduct(
     const StepBasic_ProductOrFormationOrDefinition& RelatedProduct);
 

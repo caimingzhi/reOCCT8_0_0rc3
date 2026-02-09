@@ -32,8 +32,6 @@
     #include <mach/mach.h>
   #endif
 
-//=================================================================================================
-
 void OSD_Chronometer::GetProcessCPU(double& theUserSeconds, double& theSystemSeconds)
 {
   #if defined(__linux__) || defined(__FreeBSD__) || defined(__ANDROID__) || defined(__QNX__)       \
@@ -49,8 +47,6 @@ void OSD_Chronometer::GetProcessCPU(double& theUserSeconds, double& theSystemSec
   theUserSeconds   = (double)aCurrentTMS.tms_utime / aCLK_TCK;
   theSystemSeconds = (double)aCurrentTMS.tms_stime / aCLK_TCK;
 }
-
-//=================================================================================================
 
 void OSD_Chronometer::GetThreadCPU(double& theUserSeconds, double& theSystemSeconds)
 {
@@ -71,14 +67,14 @@ void OSD_Chronometer::GetThreadCPU(double& theUserSeconds, double& theSystemSeco
   }
   #elif (defined(_POSIX_TIMERS) && defined(_POSIX_THREAD_CPUTIME)) || defined(__ANDROID__)         \
     || defined(__QNX__)
-  // on Linux, only user times are available for threads via clock_gettime()
+
   struct timespec t;
   if (!clock_gettime(CLOCK_THREAD_CPUTIME_ID, &t))
   {
     theUserSeconds = t.tv_sec + 0.000000001 * t.tv_nsec;
   }
   #elif defined(SOLARIS)
-  // on Solaris, both user and system times are available as LWP times
+
   struct rusage rut;
   if (!getrusage(RUSAGE_LWP, &rut))
   {
@@ -94,11 +90,6 @@ void OSD_Chronometer::GetThreadCPU(double& theUserSeconds, double& theSystemSeco
 
   #include <windows.h>
 
-//=======================================================================
-// function : EncodeFILETIME
-// purpose  : Encode time defined by FILETIME structure
-//           (100s nanoseconds since January 1, 1601) to 64-bit integer
-//=======================================================================
 static inline __int64 EncodeFILETIME(PFILETIME pFt)
 {
   __int64 qw;
@@ -109,8 +100,6 @@ static inline __int64 EncodeFILETIME(PFILETIME pFt)
 
   return qw;
 }
-
-//=================================================================================================
 
 void OSD_Chronometer::GetProcessCPU(double& theUserSeconds, double& theSystemSeconds)
 {
@@ -125,8 +114,6 @@ void OSD_Chronometer::GetProcessCPU(double& theUserSeconds, double& theSystemSec
   #endif
 }
 
-//=================================================================================================
-
 void OSD_Chronometer::GetThreadCPU(double& theUserSeconds, double& theSystemSeconds)
 {
   #ifndef OCCT_UWP
@@ -140,9 +127,7 @@ void OSD_Chronometer::GetThreadCPU(double& theUserSeconds, double& theSystemSeco
   #endif
 }
 
-#endif /* _WIN32 */
-
-//=================================================================================================
+#endif
 
 OSD_Chronometer::OSD_Chronometer(bool theThisThreadOnly)
     : myStartCpuUser(0.0),
@@ -154,11 +139,7 @@ OSD_Chronometer::OSD_Chronometer(bool theThisThreadOnly)
 {
 }
 
-//=================================================================================================
-
 OSD_Chronometer::~OSD_Chronometer() = default;
-
-//=================================================================================================
 
 void OSD_Chronometer::SetThisThreadOnly(bool theIsThreadOnly)
 {
@@ -169,8 +150,6 @@ void OSD_Chronometer::SetThisThreadOnly(bool theIsThreadOnly)
   myIsThreadOnly = theIsThreadOnly;
 }
 
-//=================================================================================================
-
 void OSD_Chronometer::Reset()
 {
   myIsStopped    = true;
@@ -178,15 +157,11 @@ void OSD_Chronometer::Reset()
   myCumulCpuUser = myCumulCpuSys = 0.;
 }
 
-//=================================================================================================
-
 void OSD_Chronometer::Restart()
 {
   Reset();
   Start();
 }
-
-//=================================================================================================
 
 void OSD_Chronometer::Stop()
 {
@@ -205,8 +180,6 @@ void OSD_Chronometer::Stop()
   }
 }
 
-//=================================================================================================
-
 void OSD_Chronometer::Start()
 {
   if (myIsStopped)
@@ -220,14 +193,10 @@ void OSD_Chronometer::Start()
   }
 }
 
-//=================================================================================================
-
 void OSD_Chronometer::Show() const
 {
   Show(std::cout);
 }
-
-//=================================================================================================
 
 void OSD_Chronometer::Show(Standard_OStream& theOStream) const
 {
@@ -238,8 +207,6 @@ void OSD_Chronometer::Show(Standard_OStream& theOStream) const
   theOStream << "CPU system time: " << aCumulSysSec << " seconds\n";
   theOStream.precision(prec);
 }
-
-//=================================================================================================
 
 void OSD_Chronometer::Show(double& theUserSec, double& theSystemSec) const
 {

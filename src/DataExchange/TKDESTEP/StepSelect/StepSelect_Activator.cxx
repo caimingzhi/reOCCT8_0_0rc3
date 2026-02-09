@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_SessionPilot.hpp>
 #include <IFSelect_WorkSession.hpp>
@@ -34,12 +23,6 @@ StepSelect_Activator::StepSelect_Activator()
   }
 
   THE_StepSelect_Activator_initActivator = 1;
-  //  Add ( 0,"load");
-  //  Add ( 0,"loadstep");    // homonyme
-  //  Add ( 1,"entity");
-  //  Add ( 2,"liststep");
-
-  //  AddSet (10,"steptype");
 
   Add(1, "stepschema");
   AddSet(40, "floatformat");
@@ -51,13 +34,12 @@ IFSelect_ReturnStatus StepSelect_Activator::Do(const int                        
   int         argc = pilot->NbWords();
   const char* arg1 = pilot->Word(1).ToCString();
   const char* arg2 = pilot->Word(2).ToCString();
-  //  const char* arg3 = pilot->Word(3).ToCString();
 
   switch (number)
   {
 
     case 1:
-    { //        ****    StepSchema
+    {
       if (argc < 2)
       {
         std::cout << "Identify an entity" << std::endl;
@@ -89,14 +71,14 @@ IFSelect_ReturnStatus StepSelect_Activator::Do(const int                        
         std::cout << "Entity " << arg2 << " : Late Binding" << std::endl;
         std::cout << "Complex Type" << std::endl;
       }
-      //       reste Early Binding
+
       std::cout << "Entity " << arg2 << " : Early Binding" << std::endl;
       std::cout << "CDL Type : " << ent->DynamicType()->Name() << std::endl;
       return IFSelect_RetVoid;
     }
 
     case 40:
-    { //        ****    FloatFormat
+    {
       char prem = ' ';
       if (argc < 2)
         prem = '?';

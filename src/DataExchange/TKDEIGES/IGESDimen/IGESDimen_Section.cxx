@@ -20,7 +20,6 @@ void IGESDimen_Section::Init(const int                                      data
   theZDisplacement = aDisp;
   theDataPoints    = dataPoints;
   InitTypeAndForm(106, FormNumber());
-  //  FormNumber  precises the type of Hatches  (31-38)
 }
 
 void IGESDimen_Section::SetFormNumber(const int form)

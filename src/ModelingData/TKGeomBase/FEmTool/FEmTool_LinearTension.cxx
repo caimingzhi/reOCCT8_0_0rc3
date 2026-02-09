@@ -29,7 +29,7 @@ FEmTool_LinearTension::FEmTool_LinearTension(const int           WorkDegree,
 
   if (myOrder != Order)
   {
-    // Calculating RefMatrix
+
     if (WorkDegree > WDeg)
       throw Standard_ConstructionError("Degree too high");
     Order                                = myOrder;
@@ -145,7 +145,7 @@ void FEmTool_LinearTension::Hessian(const int Dimension1, const int Dimension2, 
   {
     k1    = (i <= myOrder) ? i : i - myOrder - 1;
     mfact = std::pow(coeff, k1) * cteh3;
-    // Hermite*Hermite part of matrix
+
     j1 = j0 + i;
     for (j = i; j <= degH; j++)
     {
@@ -155,7 +155,7 @@ void FEmTool_LinearTension::Hessian(const int Dimension1, const int Dimension2, 
         H(j1, i1) = H(i1, j1);
       j1++;
     }
-    // Hermite*Jacobi part of matrix
+
     j1 = j0 + degH + 1;
     for (j = degH + 1; j <= deg; j++)
     {
@@ -166,7 +166,6 @@ void FEmTool_LinearTension::Hessian(const int Dimension1, const int Dimension2, 
     i1++;
   }
 
-  // Jacoby*Jacobi part of matrix
   i1 = i0 + degH + 1;
   for (i = degH + 1; i <= deg; i++)
   {

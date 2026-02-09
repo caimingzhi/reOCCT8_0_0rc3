@@ -54,5 +54,3 @@ static const char Shaders_LightShadow_glsl[] =
   "  return 1.0 - aShadow;\n"
   "#endif\n"
   "}\n";
-
-// clang-format on

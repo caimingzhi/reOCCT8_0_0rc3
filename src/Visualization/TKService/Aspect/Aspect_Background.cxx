@@ -2,13 +2,6 @@
 #include <Quantity_Color.hpp>
 #include <Standard_Dump.hpp>
 
-//-Aliases
-//-Global data definitions
-//	-- la couleur associee au fond d'ecran
-//	MyColor	:	Color;
-//-Constructors
-//-Destructors
-//-Methods, in order
 Aspect_Background::Aspect_Background()
 {
 
@@ -34,8 +27,6 @@ Quantity_Color Aspect_Background::Color() const
 
   return (MyColor);
 }
-
-//=================================================================================================
 
 void Aspect_Background::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

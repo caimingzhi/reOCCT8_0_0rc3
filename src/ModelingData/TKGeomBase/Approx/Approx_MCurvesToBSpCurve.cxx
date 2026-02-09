@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <AppParCurves_MultiPoint.hpp>
 #include <Approx_MCurvesToBSpCurve.hpp>
@@ -132,7 +120,6 @@ void Approx_MCurvesToBSpCurve::Perform(const NCollection_Sequence<AppParCurves_M
       conv2d.Perform();
     }
 
-    // Recuperation:
     if (nb3d != 0)
     {
       nbpolesspl = conv.NbPoles();
@@ -190,9 +177,9 @@ void Approx_MCurvesToBSpCurve::Perform(const NCollection_Sequence<AppParCurves_M
       CU      = TheSeq.Value(i);
       mydegre = CU.Degree();
       if (TheMults(i + 1) == deg)
-        last = deg + 1; // Continuite C0
+        last = deg + 1;
       else
-        last = deg; // Continuite C1
+        last = deg;
       if (i == nbcu)
       {
         last = deg + 1;

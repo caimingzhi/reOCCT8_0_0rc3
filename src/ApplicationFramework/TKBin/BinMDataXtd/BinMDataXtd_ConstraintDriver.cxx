@@ -9,25 +9,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataXtd_ConstraintDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataXtd_ConstraintDriver::BinMDataXtd_ConstraintDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataXtd_ConstraintDriver::NewEmpty() const
 {
   return (new TDataXtd_Constraint());
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 
 bool BinMDataXtd_ConstraintDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                          const occ::handle<TDF_Attribute>& theTarget,
@@ -37,7 +28,6 @@ bool BinMDataXtd_ConstraintDriver::Paste(const BinObjMgt_Persistent&       theSo
 
   int aNb;
 
-  // value
   if (!(theSource >> aNb))
     return false;
   if (aNb > 0)
@@ -53,7 +43,6 @@ bool BinMDataXtd_ConstraintDriver::Paste(const BinObjMgt_Persistent&       theSo
     aC->SetValue(aTValue);
   }
 
-  // geometries
   int NbGeom;
   if (!(theSource >> NbGeom))
     return false;
@@ -76,7 +65,6 @@ bool BinMDataXtd_ConstraintDriver::Paste(const BinObjMgt_Persistent&       theSo
     }
   }
 
-  // plane
   if (!(theSource >> aNb))
     return false;
   if (aNb > 0)
@@ -92,13 +80,11 @@ bool BinMDataXtd_ConstraintDriver::Paste(const BinObjMgt_Persistent&       theSo
     aC->SetPlane(aTPlane);
   }
 
-  // constraint type
   int aType;
   if (!(theSource >> aType))
     return false;
   aC->SetType((TDataXtd_ConstraintEnum)aType);
 
-  // flags
   int flags;
   if (!(theSource >> flags))
     return false;
@@ -109,10 +95,6 @@ bool BinMDataXtd_ConstraintDriver::Paste(const BinObjMgt_Persistent&       theSo
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void BinMDataXtd_ConstraintDriver::Paste(
   const occ::handle<TDF_Attribute>&                        theSource,
   BinObjMgt_Persistent&                                    theTarget,
@@ -122,15 +104,13 @@ void BinMDataXtd_ConstraintDriver::Paste(
 
   int aNb;
 
-  // value
   occ::handle<TDataStd_Real> aValue = aC->GetValue();
   if (!aValue.IsNull())
-    aNb = theRelocTable.Add(aValue); // create and/or get index
+    aNb = theRelocTable.Add(aValue);
   else
     aNb = -1;
   theTarget << aNb;
 
-  // geometries
   int NbGeom = aC->NbGeometries();
   theTarget << NbGeom;
   int iG;
@@ -144,7 +124,6 @@ void BinMDataXtd_ConstraintDriver::Paste(
     theTarget << aNb;
   }
 
-  // plane
   occ::handle<TNaming_NamedShape> aTPlane = aC->GetPlane();
   if (!aTPlane.IsNull())
     aNb = theRelocTable.Add(aTPlane);
@@ -152,10 +131,8 @@ void BinMDataXtd_ConstraintDriver::Paste(
     aNb = -1;
   theTarget << aNb;
 
-  // constraint type
   theTarget << (int)aC->GetType();
 
-  // flags
   int flags = 0;
   if (aC->Verified())
     flags |= 1;

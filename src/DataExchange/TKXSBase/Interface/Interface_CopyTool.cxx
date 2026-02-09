@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_CopyControl.hpp>
 #include <Interface_CopyMap.hpp>
@@ -24,17 +13,6 @@
 #include <Standard_Transient.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-// Remember that a richer version of CopyTool exists: it is
-// TransferDispatch (package Transfer). This class offers much more
-// possibilities (parameterization of actions, Mapping management ...)
-// But the principle (transfer in 2 passes) remains the same, namely:
-// Pass 1 normal: the entities to transfer are designated, they involve
-// their true sub-references
-// Pass 2: once all transfers are done, the "Imply" relations are
-// set, for the designated entities AND WHICH HAVE ALSO BEEN TRANSFERRED, the
-// relation is continued (no new Share)
-//  #####################################################################
-//  ....                        CONSTRUCTORS                        ....
 Interface_CopyTool::Interface_CopyTool(const occ::handle<Interface_InterfaceModel>& amodel,
                                        const Interface_GeneralLib&                  lib)
     : thelib(lib),
@@ -91,9 +69,6 @@ occ::handle<Interface_CopyControl> Interface_CopyTool::Control() const
   return themap;
 }
 
-//  #####################################################################
-//  ....                    Individual Actions                    ....
-
 void Interface_CopyTool::Clear()
 {
   themap->Clear();
@@ -119,7 +94,7 @@ bool Interface_CopyTool::NewVoid(const occ::handle<Standard_Transient>& entfrom,
     res = themdu->NewVoid(theCN, entto);
   if (!res)
     res = themdu->NewCopiedCase(theCN, entfrom, entto, *this);
-  //  if (!res) entto = entfrom->ShallowCopy();   sorry, nothing more possible
+
   return res;
 }
 
@@ -141,7 +116,7 @@ bool Interface_CopyTool::Copy(const occ::handle<Standard_Transient>& entfrom,
   }
   if (!res)
   {
-    //  Built-in :
+
     if (entfrom.IsNull())
       return res;
     if (entfrom->DynamicType() == STANDARD_TYPE(TCollection_HAsciiString))
@@ -152,16 +127,11 @@ bool Interface_CopyTool::Copy(const occ::handle<Standard_Transient>& entfrom,
     }
     return res;
   }
-  //  Create the empty Entity (NewVoid), the Copy remains to be done
+
   res = NewVoid(entfrom, entto);
   if (mapped)
-    themap->Bind(entfrom, entto); // Map before continuing ...
+    themap->Bind(entfrom, entto);
 
-  //  Now, perform the Copy (depending on case; if ShallowCopy is not enough:
-  //  it is <themdu> who decides)
-
-  //    An Entity in Error is not copied (no sense and it's risky ...)
-  //    However, it is "Copied Empty (NewVoid)" so referenceable
   if (!errstat)
     themdu->CopyCase(theCN, entfrom, entto, *this);
   return res;
@@ -176,26 +146,20 @@ void Interface_CopyTool::Implied(const occ::handle<Standard_Transient>& entfrom,
     module->RenewImpliedCase(CN, entfrom, entto, *this);
 }
 
-//  ....                Feeding the Map                ....
-
 occ::handle<Standard_Transient> Interface_CopyTool::Transferred(
   const occ::handle<Standard_Transient>& ent)
 {
   occ::handle<Standard_Transient> res;
   if (ent.IsNull())
-    return res; // Copy of a Null : very simple ...
+    return res;
   int nument = themod->Number(ent);
 
-  //  <nument> == 0 -> May be a non-shared sub-part ...
-  //  We accept but we protect against a loop
   if (nument == 0 && thelev > 100)
     throw Interface_InterfaceError(
       "CopyTool : Transferred, Entity is not contained in Starting Model");
   if (!themap->Search(ent, res))
-  { // already transferred ? if not, do it
+  {
 
-    //  We perform the Copy (finally, we try)
-    //  In case of failure, nothing is recorded
     if (!Copy(ent, res, (nument != 0), themod->IsRedefinedContent(nument)))
       return res;
 
@@ -207,8 +171,7 @@ occ::handle<Standard_Transient> Interface_CopyTool::Transferred(
       rep = themod->ReportEntity(nument);
     if (!rep.IsNull())
     {
-      //  WARNING WARNING, if ReportEntity : Also copy Content and remake a
-      //  ReportEntity with the initial terms
+
       if (rep->IsUnknown())
         therep->Bind(ent, new Interface_ReportEntity(res));
       else
@@ -227,7 +190,7 @@ occ::handle<Standard_Transient> Interface_CopyTool::Transferred(
         therep->Bind(ent, repto);
       }
     }
-    //    Manage the nesting level (0 = root of transfer)
+
     thelev--;
   }
   if (thelev == 0 && nument > 0)
@@ -248,9 +211,6 @@ bool Interface_CopyTool::Search(const occ::handle<Standard_Transient>& ent,
 {
   return themap->Search(ent, res);
 }
-
-//  ##    ##    ##    ##    ##    ##    ##    ##    ##    ##    ##    ##    ##
-//                              LastFlag
 
 void Interface_CopyTool::ClearLastFlags()
 {
@@ -274,9 +234,6 @@ int Interface_CopyTool::LastCopiedAfter(const int                        numfrom
   return 0;
 }
 
-//  #########################################################################
-//  ....                        General Actions                        ....
-
 void Interface_CopyTool::TransferEntity(const occ::handle<Standard_Transient>& ent)
 {
   occ::handle<Standard_Transient> res = Transferred(ent);
@@ -285,13 +242,8 @@ void Interface_CopyTool::TransferEntity(const occ::handle<Standard_Transient>& e
 void Interface_CopyTool::RenewImpliedRefs()
 {
   if (theimp)
-    return; // already done
+    return;
   theimp = true;
-
-  //  Transfer Pass 2 : recovery of non "Share" relations (but "Imply")
-  //  i.e. concerning entities that may or may not have been transferred
-  //  (And that the 1st pass did not copy but left as Null)
-  //  N.B. : we should forbid commanding new transfers ...
 
   int nb = themod->NbEntities();
   for (int i = 1; i <= nb; i++)
@@ -299,8 +251,8 @@ void Interface_CopyTool::RenewImpliedRefs()
     occ::handle<Standard_Transient> ent = themod->Value(i);
     occ::handle<Standard_Transient> res;
     if (!themap->Search(ent, res))
-      continue; // entity not transferred
-                //    Renewal of "Imply" references.  Warning, do not copy if not loaded
+      continue;
+
     occ::handle<Standard_Transient> aRep;
     if (!therep->Search(ent, aRep))
     {
@@ -317,16 +269,13 @@ void Interface_CopyTool::RenewImpliedRefs()
 
 void Interface_CopyTool::FillModel(const occ::handle<Interface_InterfaceModel>& bmodel)
 {
-  //  Preparatory work concerning the models
-  //  We start : this involves the Header
+
   bmodel->Clear();
   bmodel->GetFromAnother(themod);
 
-  //  Transfer Pass 1 : We take the Entities previously copied
   Interface_EntityIterator list = CompleteResult(true);
   bmodel->GetFromTransfer(list);
 
-  //  Transfer Pass 2 : recovery of non "Share" relations (but "Imply")
   RenewImpliedRefs();
 }
 
@@ -372,7 +321,5 @@ Interface_EntityIterator Interface_CopyTool::RootResult(const bool withreports) 
   }
   return iter;
 }
-
-//=================================================================================================
 
 Interface_CopyTool::~Interface_CopyTool() = default;

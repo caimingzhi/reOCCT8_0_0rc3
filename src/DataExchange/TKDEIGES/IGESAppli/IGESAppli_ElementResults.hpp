@@ -13,30 +13,12 @@ class IGESBasic_HArray1OfHArray1OfInteger;
 class IGESBasic_HArray1OfHArray1OfReal;
 class IGESAppli_FiniteElement;
 
-//! defines ElementResults, Type <148>
-//! in package IGESAppli
-//! Used to find the results of FEM analysis
 class IGESAppli_ElementResults : public IGESData_IGESEntity
 {
 
 public:
   Standard_EXPORT IGESAppli_ElementResults();
 
-  //! This method is used to set the fields of the class
-  //! ElementResults
-  //! - aNote             : GeneralNote Entity describing analysis
-  //! - aSubCase          : Analysis Subcase number
-  //! - aTime             : Analysis time value
-  //! - nbResults         : Number of result values per FEM
-  //! - aResRepFlag       : Results Reporting Flag
-  //! - allElementIdents  : FEM element number for elements
-  //! - allFiniteElems    : FEM element
-  //! - allTopTypes       : Element Topology Types
-  //! - nbLayers          : Number of layers per result data location
-  //! - allDataLayerFlags : Data Layer Flags
-  //! - allnbResDataLocs  : Number of result data report locations
-  //! - allResDataLocs    : Result Data Report Locations
-  //! - allResults        : List of Result data values of FEM analysis
   Standard_EXPORT void Init(
     const occ::handle<IGESDimen_GeneralNote>&                                     aNote,
     const int                                                                     aSubCase,
@@ -52,81 +34,48 @@ public:
     const occ::handle<IGESBasic_HArray1OfHArray1OfInteger>&                       allResDataLocs,
     const occ::handle<IGESBasic_HArray1OfHArray1OfReal>&                          allResults);
 
-  //! Changes the FormNumber (which indicates Type of Result)
-  //! Error if not in range [0-34]
   Standard_EXPORT void SetFormNumber(const int form);
 
-  //! returns General Note Entity describing analysis case
   Standard_EXPORT occ::handle<IGESDimen_GeneralNote> Note() const;
 
-  //! returns analysis Subcase number
   Standard_EXPORT int SubCaseNumber() const;
 
-  //! returns analysis time value
   Standard_EXPORT double Time() const;
 
-  //! returns number of result values per FEM
   Standard_EXPORT int NbResultValues() const;
 
-  //! returns Results Reporting Flag
   Standard_EXPORT int ResultReportFlag() const;
 
-  //! returns number of FEM elements
   Standard_EXPORT int NbElements() const;
 
-  //! returns FEM element number for elements
   Standard_EXPORT int ElementIdentifier(const int Index) const;
 
-  //! returns FEM element
   Standard_EXPORT occ::handle<IGESAppli_FiniteElement> Element(const int Index) const;
 
-  //! returns element Topology Types
   Standard_EXPORT int ElementTopologyType(const int Index) const;
 
-  //! returns number of layers per result data location
   Standard_EXPORT int NbLayers(const int Index) const;
 
-  //! returns Data Layer Flags
   Standard_EXPORT int DataLayerFlag(const int Index) const;
 
-  //! returns number of result data report locations
   Standard_EXPORT int NbResultDataLocs(const int Index) const;
 
-  //! returns Result Data Report Locations
-  //! UNFINISHED
   Standard_EXPORT int ResultDataLoc(const int NElem, const int NLoc) const;
 
-  //! returns total number of results
   Standard_EXPORT int NbResults(const int Index) const;
 
-  //! returns Result data value for an Element, given its
-  //! order between 1 and <NbResults(NElem)> (direct access)
-  //! For a more comprehensive access, see below
   Standard_EXPORT double ResultData(const int NElem, const int num) const;
 
-  //! Computes, for a given Element <NElem>, the rank of a
-  //! individual Result Data, given <NVal>,<NLay>,<NLoc>
   Standard_EXPORT int ResultRank(const int NElem,
                                  const int NVal,
                                  const int NLay,
                                  const int NLoc) const;
 
-  //! returns Result data values of FEM analysis, according this
-  //! definition :
-  //! - <NElem> : n0 of the Element to be considered
-  //! - <NVal> : n0 of the Value between 1 and NbResultValues
-  //! - <NLay> : n0 of the Layer for this Element
-  //! - <NLoc> : n0 of the Data Location for this Element
-  //! This gives for each Element, the corresponding rank
-  //! computed by ResultRank, in which the leftmost subscript
-  //! changes most rapidly
   Standard_EXPORT double ResultData(const int NElem,
                                     const int NVal,
                                     const int NLay,
                                     const int NLoc) const;
 
-  //! Returns in once the entire list of data for an Element,
-  //! addressed as by ResultRank (See above)
   Standard_EXPORT occ::handle<NCollection_HArray1<double>> ResultList(const int NElem) const;
 
   DEFINE_STANDARD_RTTIEXT(IGESAppli_ElementResults, IGESData_IGESEntity)

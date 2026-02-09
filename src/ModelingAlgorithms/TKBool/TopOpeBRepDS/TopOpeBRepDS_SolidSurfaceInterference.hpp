@@ -8,7 +8,6 @@
 #include <Standard_OStream.hpp>
 class TopOpeBRepDS_Transition;
 
-//! Interference
 class TopOpeBRepDS_SolidSurfaceInterference : public TopOpeBRepDS_Interference
 {
 

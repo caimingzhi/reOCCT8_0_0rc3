@@ -284,20 +284,19 @@ bool Geom2dGcc_FunctionTanCuCuOnCu::Value(const math_Vector& X, math_Vector& Fva
   gp_Pnt2d Point1, Point2, Point3;
   gp_Vec2d Tan1, Tan2, Tan3, D21, D22, D23;
   InitDerivative(X, Point1, Point2, Point3, Tan1, Tan2, Tan3, D21, D22, D23);
-  // pipj (normes) et PiPj (non Normes).
+
   gp_Vec2d P1P2(Point1, Point2);
   gp_Vec2d P2P3(Point2, Point3);
   gp_Vec2d P3P1(Point3, Point1);
   gp_Vec2d p1p2, p2p3, p3p1;
-  //  if (FirstRad < 1.) {FirstRad = 1.; }
+
   p1p2 = P1P2 / FirstRad;
   p2p3 = P2P3 / FirstRad;
   p3p1 = P3P1 / FirstRad;
-  // norme des Tani.
+
   double nnor1 = Tan1.Magnitude();
   double nnor2 = Tan2.Magnitude();
-  // Fonctions Fui.
-  // ==============
+
   Fval(1) = (P3P1.Dot(P3P1) - X(4) * X(4)) / (FirstRad * FirstRad);
   Fval(2) = (P2P3.Dot(P2P3) - X(4) * X(4)) / (FirstRad * FirstRad);
   Fval(3) = P3P1.Dot(Tan1) / (nnor1 * FirstRad);
@@ -311,20 +310,19 @@ bool Geom2dGcc_FunctionTanCuCuOnCu::Derivatives(const math_Vector& X, math_Matri
   gp_Vec2d Tan1, Tan2, Tan3;
   gp_Vec2d D21, D22, D23;
   InitDerivative(X, Point1, Point2, Point3, Tan1, Tan2, Tan3, D21, D22, D23);
-  // pipj (normes) et PiPj (non Normes).
+
   gp_Vec2d P1P2(Point1, Point2);
   gp_Vec2d P2P3(Point2, Point3);
   gp_Vec2d P3P1(Point3, Point1);
   gp_Vec2d p1p2, p2p3, p3p1;
-  //  if (FirstRad < 1.) {FirstRad = 1.; }
+
   p1p2 = P1P2 / FirstRad;
   p2p3 = P2P3 / FirstRad;
   p3p1 = P3P1 / FirstRad;
-  // normales au courbes normees Nori et non nromees nori et norme des nori.
+
   double nnor1 = Tan1.Magnitude();
   double nnor2 = Tan2.Magnitude();
-  // Derivees dFui/uj  1 <= ui <= 3 , 1 <= uj <= 3
-  // =============================================
+
   Deriv(1, 1) = 2. * Tan1.Dot(P3P1) / (FirstRad * FirstRad);
   Deriv(1, 2) = 0.;
   Deriv(1, 3) = -2. * Tan3.Dot(P3P1) / (FirstRad * FirstRad);
@@ -357,26 +355,24 @@ bool Geom2dGcc_FunctionTanCuCuOnCu::Values(const math_Vector& X,
   gp_Vec2d Tan1, Tan2, Tan3;
   gp_Vec2d D21, D22, D23;
   InitDerivative(X, Point1, Point2, Point3, Tan1, Tan2, Tan3, D21, D22, D23);
-  // pipj (normes) et PiPj (non Normes).
+
   gp_Vec2d P1P2(Point1, Point2);
   gp_Vec2d P2P3(Point2, Point3);
   gp_Vec2d P3P1(Point3, Point1);
   gp_Vec2d p1p2, p2p3, p3p1;
-  //  if (FirstRad < 1.) {FirstRad = 1.; }
+
   p1p2 = P1P2 / FirstRad;
   p2p3 = P2P3 / FirstRad;
   p3p1 = P3P1 / FirstRad;
-  // normales au courbes normees Nori et non nromees nori et norme des nori.
+
   double nnor1 = Tan1.Magnitude();
   double nnor2 = Tan2.Magnitude();
-  // Fonctions Fui.
-  // ==============
+
   Fval(1) = (P3P1.Dot(P3P1) - X(4) * X(4)) / (FirstRad * FirstRad);
   Fval(2) = (P2P3.Dot(P2P3) - X(4) * X(4)) / (FirstRad * FirstRad);
   Fval(3) = P3P1.Dot(Tan1) / (nnor1 * FirstRad);
   Fval(4) = P2P3.Dot(Tan2) / (nnor2 * FirstRad);
-  // Derivees dFui/uj  1 <= ui <= 3 , 1 <= uj <= 3
-  // =============================================
+
   Deriv(1, 1) = 2. * Tan1.Dot(P3P1) / (FirstRad * FirstRad);
   Deriv(1, 2) = 0.;
   Deriv(1, 3) = -2. * Tan3.Dot(P3P1) / (FirstRad * FirstRad);

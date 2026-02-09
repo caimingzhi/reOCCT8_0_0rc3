@@ -18,17 +18,10 @@ public:
 
   Standard_EXPORT virtual bool IsExtendAtEnd() const = 0;
 
-  //! If necessary, breaks the curve in intervals of
-  //! continuity <C1>. And returns the number of
-  //! intervals.
   Standard_EXPORT virtual int NbIntervals() const = 0;
 
-  //! Returns the first parameter of the current
-  //! interval.
   Standard_EXPORT virtual double IntervalFirst(const int Index) const = 0;
 
-  //! Returns the last parameter of the current
-  //! interval.
   Standard_EXPORT virtual double IntervalLast(const int Index) const = 0;
 
   DEFINE_STANDARD_RTTIEXT(Bisector_Curve, Geom2d_Curve)

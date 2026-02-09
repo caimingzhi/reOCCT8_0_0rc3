@@ -10,7 +10,6 @@ class StepRepr_FunctionallyDefinedTransformation : public Standard_Transient
 {
 
 public:
-  //! Returns a FunctionallyDefinedTransformation
   Standard_EXPORT StepRepr_FunctionallyDefinedTransformation();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

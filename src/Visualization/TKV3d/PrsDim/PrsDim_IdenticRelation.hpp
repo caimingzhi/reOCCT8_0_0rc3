@@ -16,17 +16,10 @@ class TopoDS_Wire;
 class TopoDS_Vertex;
 class gp_Dir;
 
-//! Constructs a constraint by a relation of identity
-//! between two or more datums figuring in shape
-//! Interactive Objects.
 class PrsDim_IdenticRelation : public PrsDim_Relation
 {
   DEFINE_STANDARD_RTTIEXT(PrsDim_IdenticRelation, PrsDim_Relation)
 public:
-  //! Initializes the relation of identity between the two
-  //! entities, FirstShape and SecondShape. The plane
-  //! aPlane is initialized in case a visual reference is
-  //! needed to show identity.
   Standard_EXPORT PrsDim_IdenticRelation(const TopoDS_Shape&            FirstShape,
                                          const TopoDS_Shape&            SecondShape,
                                          const occ::handle<Geom_Plane>& aPlane);
@@ -39,7 +32,6 @@ public:
 
   void ClearUsers() { myUsers.Clear(); }
 
-  //! Returns true if the interactive object is movable.
   bool IsMovable() const override { return true; }
 
 private:
@@ -74,19 +66,13 @@ private:
     const gp_Pnt&                          Pnt1On2,
     const gp_Pnt&                          Pnt2On2);
 
-  //! Computes the presentation of the identic constraint
-  //! between 2 arcs in the case of automatic presentation
   Standard_EXPORT void ComputeAutoArcPresentation(const occ::handle<Geom_Circle>& aCircle,
                                                   const gp_Pnt&                   firstp,
                                                   const gp_Pnt&                   lastp,
                                                   const bool                      isstatic = false);
 
-  //! Computes the presentation of the identic constraint
-  //! between 2 circles in the case of non automatic presentation
   Standard_EXPORT void ComputeNotAutoCircPresentation(const occ::handle<Geom_Circle>& aCircle);
 
-  //! Computes the presentation of the identic constraint
-  //! between 2 arcs in the case of non automatic presentation
   Standard_EXPORT void ComputeNotAutoArcPresentation(const occ::handle<Geom_Circle>& aCircle,
                                                      const gp_Pnt&                   pntfirst,
                                                      const gp_Pnt&                   pntlast);
@@ -98,19 +84,13 @@ private:
                                                       const gp_Pnt& Pnt1On2,
                                                       const gp_Pnt& Pnt2On2);
 
-  //! Computes the presentation of the identic constraint
-  //! between 2 arcs in the case of automatic presentation
   Standard_EXPORT void ComputeAutoArcPresentation(const occ::handle<Geom_Ellipse>& theEll,
                                                   const gp_Pnt&                    firstp,
                                                   const gp_Pnt&                    lastp,
                                                   const bool isstatic = false);
 
-  //! Computes the presentation of the identic constraint
-  //! between 2 ellipses in the case of non automatic presentation
   Standard_EXPORT void ComputeNotAutoElipsPresentation(const occ::handle<Geom_Ellipse>& theEll);
 
-  //! Computes the presentation of the identic constraint
-  //! between 2 arcs in the case of non automatic presentation
   Standard_EXPORT void ComputeNotAutoArcPresentation(const occ::handle<Geom_Ellipse>& theEll,
                                                      const gp_Pnt&                    pntfirst,
                                                      const gp_Pnt&                    pntlast);

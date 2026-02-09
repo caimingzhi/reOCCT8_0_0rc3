@@ -8,13 +8,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StdSelect_FaceFilter, SelectMgr_Filter)
 
-/*#include <.hxx>
-#include <.hxx>
-#include <.hxx>
-#include <.hxx>
-#include <.hxx>
-#include <.hxx>
-*/
 StdSelect_FaceFilter::StdSelect_FaceFilter(const StdSelect_TypeOfFace aTypeOfFace)
     : mytype(aTypeOfFace)
 {
@@ -24,8 +17,6 @@ void StdSelect_FaceFilter::SetType(const StdSelect_TypeOfFace aTypeOfFace)
 {
   mytype = aTypeOfFace;
 }
-
-//=================================================================================================
 
 StdSelect_TypeOfFace StdSelect_FaceFilter::Type() const
 {
@@ -73,7 +64,7 @@ bool StdSelect_FaceFilter::IsOk(const occ::handle<SelectMgr_EntityOwner>& EO) co
               || surf.GetType() == GeomAbs_Torus || surf.GetType() == GeomAbs_Sphere
               || surf.GetType() == GeomAbs_SurfaceOfRevolution);
     }
-    case StdSelect_Cone: // waiting for the free cdl, it is used for Cone
+    case StdSelect_Cone:
     {
       BRepAdaptor_Surface surf(TopoDS::Face(anobj));
       return (surf.GetType() == GeomAbs_Cone);

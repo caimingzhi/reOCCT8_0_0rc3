@@ -28,8 +28,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_PerpendicularRelation, PrsDim_Relation)
 
-//=================================================================================================
-
 PrsDim_PerpendicularRelation::PrsDim_PerpendicularRelation(const TopoDS_Shape&            aFShape,
                                                            const TopoDS_Shape&            aSShape,
                                                            const occ::handle<Geom_Plane>& aPlane)
@@ -40,8 +38,6 @@ PrsDim_PerpendicularRelation::PrsDim_PerpendicularRelation(const TopoDS_Shape&  
   myPlane  = aPlane;
 }
 
-//=================================================================================================
-
 PrsDim_PerpendicularRelation::PrsDim_PerpendicularRelation(const TopoDS_Shape& aFShape,
                                                            const TopoDS_Shape& aSShape)
 
@@ -49,8 +45,6 @@ PrsDim_PerpendicularRelation::PrsDim_PerpendicularRelation(const TopoDS_Shape& a
   myFShape = aFShape;
   mySShape = aSShape;
 }
-
-//=================================================================================================
 
 void PrsDim_PerpendicularRelation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                            const occ::handle<Prs3d_Presentation>& aPresentation,
@@ -62,13 +56,13 @@ void PrsDim_PerpendicularRelation::Compute(const occ::handle<PrsMgr_Presentation
     {
       case TopAbs_FACE:
       {
-        // perpendicular case between two faces
+
         ComputeTwoFacesPerpendicular(aPresentation);
       }
       break;
       case TopAbs_EDGE:
       {
-        // perpendicular case between two edges
+
         ComputeTwoEdgesPerpendicular(aPresentation);
       }
       break;
@@ -76,10 +70,7 @@ void PrsDim_PerpendicularRelation::Compute(const occ::handle<PrsMgr_Presentation
         break;
     }
   }
-  // Case not handled - Edge/Face
 }
-
-//=================================================================================================
 
 void PrsDim_PerpendicularRelation::ComputeSelection(
   const occ::handle<SelectMgr_Selection>& aSelection,
@@ -124,19 +115,15 @@ void PrsDim_PerpendicularRelation::ComputeSelection(
   }
 }
 
-//=================================================================================================
-
 void PrsDim_PerpendicularRelation::ComputeTwoFacesPerpendicular(
-  const occ::handle<Prs3d_Presentation>& /*aPresentation*/)
+  const occ::handle<Prs3d_Presentation>&)
 {
 }
-
-//=================================================================================================
 
 void PrsDim_PerpendicularRelation::ComputeTwoEdgesPerpendicular(
   const occ::handle<Prs3d_Presentation>& aPresentation)
 {
-  // 3d lines
+
   occ::handle<Geom_Curve> geom1, geom2;
   gp_Pnt                  pint3d, p1, p2, pAx1, pAx2, ptat11, ptat12, ptat21, ptat22;
   bool                    isInfinite1, isInfinite2;
@@ -163,7 +150,7 @@ void PrsDim_PerpendicularRelation::ComputeTwoEdgesPerpendicular(
   if (geom1->IsInstance(STANDARD_TYPE(Geom_Ellipse)))
   {
     occ::handle<Geom_Ellipse> geom_el(occ::down_cast<Geom_Ellipse>(geom1));
-    // construct lines through focuses
+
     gp_Ax1 elAx = geom_el->XAxis();
     gp_Lin ll(elAx);
     geom_lin1       = new Geom_Line(ll);
@@ -183,7 +170,7 @@ void PrsDim_PerpendicularRelation::ComputeTwoEdgesPerpendicular(
   if (geom2->IsInstance(STANDARD_TYPE(Geom_Ellipse)))
   {
     occ::handle<Geom_Ellipse> geom_el(occ::down_cast<Geom_Ellipse>(geom2));
-    // construct lines through focuses
+
     gp_Ax1 elAx = geom_el->XAxis();
     gp_Lin ll(elAx);
     geom_lin2       = new Geom_Line(ll);
@@ -200,11 +187,9 @@ void PrsDim_PerpendicularRelation::ComputeTwoEdgesPerpendicular(
   else
     return;
 
-  // current face
   BRepBuilderAPI_MakeFace makeface(myPlane->Pln());
   BRepAdaptor_Surface     adp(makeface.Face());
 
-  // 2d lines => projection of 3d on current plane
   occ::handle<Geom2d_Curve> aGeom2dCurve = GeomAPI::To2d(geom_lin1, myPlane->Pln());
   occ::handle<Geom2d_Line>  lin1_2d      = occ::down_cast<Geom2d_Line>(aGeom2dCurve);
   aGeom2dCurve                           = GeomAPI::To2d(geom_lin2, myPlane->Pln());
@@ -219,8 +204,8 @@ void PrsDim_PerpendicularRelation::ComputeTwoEdgesPerpendicular(
   pint3d = adp.Value(pint.X(), pint.Y());
 
   myPosition = pint3d;
-  // search for attachment points
-  double par1, par2, curpar, pmin, pmax; //,dist,sign;
+
+  double par1, par2, curpar, pmin, pmax;
   double length(0.);
 
   if (isInfinite1 && isInfinite2)

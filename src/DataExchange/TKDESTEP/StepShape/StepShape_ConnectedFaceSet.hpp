@@ -15,7 +15,6 @@ class StepShape_ConnectedFaceSet : public StepShape_TopologicalRepresentationIte
 {
 
 public:
-  //! Returns a ConnectedFaceSet
   Standard_EXPORT StepShape_ConnectedFaceSet();
 
   Standard_EXPORT void Init(

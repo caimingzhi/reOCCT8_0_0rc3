@@ -16,7 +16,6 @@ class StepGeom_CartesianPoint : public StepGeom_Point
 {
 
 public:
-  //! Returns a CartesianPoint
   Standard_EXPORT StepGeom_CartesianPoint();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&    theName,

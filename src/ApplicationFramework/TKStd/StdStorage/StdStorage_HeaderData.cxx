@@ -1,15 +1,4 @@
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_ErrorHandler.hpp>
 #include <StdStorage_HeaderData.hpp>
@@ -29,7 +18,7 @@ StdStorage_HeaderData::StdStorage_HeaderData()
 
 bool StdStorage_HeaderData::Read(const occ::handle<Storage_BaseDriver>& theDriver)
 {
-  // Check driver open mode
+
   if (theDriver->OpenMode() != Storage_VSRead && theDriver->OpenMode() != Storage_VSReadWrite)
   {
     myErrorStatus    = Storage_VSModeError;
@@ -37,7 +26,6 @@ bool StdStorage_HeaderData::Read(const occ::handle<Storage_BaseDriver>& theDrive
     return false;
   }
 
-  // Read info section
   myErrorStatus = theDriver->BeginReadInfoSection();
   if (myErrorStatus != Storage_VSOk)
   {
@@ -78,7 +66,6 @@ bool StdStorage_HeaderData::Read(const occ::handle<Storage_BaseDriver>& theDrive
     return false;
   }
 
-  // Read comment section
   myErrorStatus = theDriver->BeginReadCommentSection();
   if (myErrorStatus != Storage_VSOk)
   {
@@ -116,7 +103,7 @@ bool StdStorage_HeaderData::Read(const occ::handle<Storage_BaseDriver>& theDrive
 
 bool StdStorage_HeaderData::Write(const occ::handle<Storage_BaseDriver>& theDriver)
 {
-  // Check driver open mode
+
   if (theDriver->OpenMode() != Storage_VSWrite && theDriver->OpenMode() != Storage_VSReadWrite)
   {
     myErrorStatus    = Storage_VSModeError;
@@ -124,7 +111,6 @@ bool StdStorage_HeaderData::Write(const occ::handle<Storage_BaseDriver>& theDriv
     return false;
   }
 
-  // Write info section
   myErrorStatus = theDriver->BeginWriteInfoSection();
   if (myErrorStatus != Storage_VSOk)
   {
@@ -165,7 +151,6 @@ bool StdStorage_HeaderData::Write(const occ::handle<Storage_BaseDriver>& theDriv
     return false;
   }
 
-  // Write comment section
   myErrorStatus = theDriver->BeginWriteCommentSection();
   if (myErrorStatus != Storage_VSOk)
   {

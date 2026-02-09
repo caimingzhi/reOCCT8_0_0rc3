@@ -2,8 +2,6 @@
 
 #include <Standard_RangeError.hpp>
 
-//=================================================================================================
-
 Aspect_SkydomeBackground::Aspect_SkydomeBackground()
     : mySunDirection(0.0f, 1.0f, 0.0f),
       myCloudiness(0.2f),
@@ -12,8 +10,6 @@ Aspect_SkydomeBackground::Aspect_SkydomeBackground()
       mySize(512)
 {
 }
-
-//=================================================================================================
 
 Aspect_SkydomeBackground::Aspect_SkydomeBackground(const gp_Dir& theSunDirection,
                                                    float         theCloudiness,
@@ -37,11 +33,7 @@ Aspect_SkydomeBackground::Aspect_SkydomeBackground(const gp_Dir& theSunDirection
     "Aspect_SkydomeBackground::Aspect_SkydomeBackground() theSize must be > 0");
 }
 
-//=================================================================================================
-
 Aspect_SkydomeBackground::~Aspect_SkydomeBackground() = default;
-
-//=================================================================================================
 
 void Aspect_SkydomeBackground::SetCloudiness(float theCloudiness)
 {
@@ -51,8 +43,6 @@ void Aspect_SkydomeBackground::SetCloudiness(float theCloudiness)
   myCloudiness = theCloudiness;
 }
 
-//=================================================================================================
-
 void Aspect_SkydomeBackground::SetFogginess(float theFogginess)
 {
   Standard_RangeError_Raise_if(theFogginess < 0,
@@ -60,16 +50,12 @@ void Aspect_SkydomeBackground::SetFogginess(float theFogginess)
   myFogginess = theFogginess;
 }
 
-//=================================================================================================
-
 void Aspect_SkydomeBackground::SetSize(int theSize)
 {
   Standard_RangeError_Raise_if(theSize <= 0,
                                "Aspect_SkydomeBackground::SetSize() theSize must be > 0");
   mySize = theSize;
 }
-
-//=================================================================================================
 
 void Aspect_SkydomeBackground::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

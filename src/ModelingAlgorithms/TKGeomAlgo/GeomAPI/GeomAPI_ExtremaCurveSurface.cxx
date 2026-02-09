@@ -9,23 +9,17 @@
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 GeomAPI_ExtremaCurveSurface::GeomAPI_ExtremaCurveSurface()
     : myIsDone(false),
       myIndex(0)
 {
 }
 
-//=================================================================================================
-
 GeomAPI_ExtremaCurveSurface::GeomAPI_ExtremaCurveSurface(const occ::handle<Geom_Curve>&   Curve,
                                                          const occ::handle<Geom_Surface>& Surface)
 {
   Init(Curve, Surface);
 }
-
-//=================================================================================================
 
 GeomAPI_ExtremaCurveSurface::GeomAPI_ExtremaCurveSurface(const occ::handle<Geom_Curve>&   Curve,
                                                          const occ::handle<Geom_Surface>& Surface,
@@ -38,8 +32,6 @@ GeomAPI_ExtremaCurveSurface::GeomAPI_ExtremaCurveSurface(const occ::handle<Geom_
 {
   Init(Curve, Surface, Wmin, Wmax, Umin, Umax, Vmin, Vmax);
 }
-
-//=================================================================================================
 
 void GeomAPI_ExtremaCurveSurface::Init(const occ::handle<Geom_Curve>&   Curve,
                                        const occ::handle<Geom_Surface>& Surface)
@@ -55,8 +47,6 @@ void GeomAPI_ExtremaCurveSurface::Init(const occ::handle<Geom_Curve>&   Curve,
   if (myIsDone)
   {
 
-    // evaluate the lower distance and its index;
-
     double Dist2, Dist2Min = myExtCS.SquareDistance(1);
     myIndex = 1;
 
@@ -71,8 +61,6 @@ void GeomAPI_ExtremaCurveSurface::Init(const occ::handle<Geom_Curve>&   Curve,
     }
   }
 }
-
-//=================================================================================================
 
 void GeomAPI_ExtremaCurveSurface::Init(const occ::handle<Geom_Curve>&   Curve,
                                        const occ::handle<Geom_Surface>& Surface,
@@ -94,8 +82,6 @@ void GeomAPI_ExtremaCurveSurface::Init(const occ::handle<Geom_Curve>&   Curve,
   if (myIsDone)
   {
 
-    // evaluate the lower distance and its index;
-
     double Dist2, Dist2Min = myExtCS.SquareDistance(1);
     myIndex = 1;
 
@@ -111,8 +97,6 @@ void GeomAPI_ExtremaCurveSurface::Init(const occ::handle<Geom_Curve>&   Curve,
   }
 }
 
-//=================================================================================================
-
 int GeomAPI_ExtremaCurveSurface::NbExtrema() const
 {
   if (myIsDone)
@@ -120,8 +104,6 @@ int GeomAPI_ExtremaCurveSurface::NbExtrema() const
   else
     return 0;
 }
-
-//=================================================================================================
 
 void GeomAPI_ExtremaCurveSurface::Points(const int Index, gp_Pnt& P1, gp_Pnt& P2) const
 {
@@ -136,8 +118,6 @@ void GeomAPI_ExtremaCurveSurface::Points(const int Index, gp_Pnt& P1, gp_Pnt& P2
   P2 = PS.Value();
 }
 
-//=================================================================================================
-
 void GeomAPI_ExtremaCurveSurface::Parameters(const int Index, double& W, double& U, double& V) const
 {
   Standard_OutOfRange_Raise_if(Index < 1 || Index > NbExtrema(),
@@ -151,8 +131,6 @@ void GeomAPI_ExtremaCurveSurface::Parameters(const int Index, double& W, double&
   PS.Parameter(U, V);
 }
 
-//=================================================================================================
-
 double GeomAPI_ExtremaCurveSurface::Distance(const int Index) const
 {
   Standard_OutOfRange_Raise_if(Index < 1 || Index > NbExtrema(),
@@ -161,16 +139,12 @@ double GeomAPI_ExtremaCurveSurface::Distance(const int Index) const
   return sqrt(myExtCS.SquareDistance(Index));
 }
 
-//=================================================================================================
-
 void GeomAPI_ExtremaCurveSurface::NearestPoints(gp_Pnt& PC, gp_Pnt& PS) const
 {
   StdFail_NotDone_Raise_if(!myIsDone, "GeomAPI_ExtremaCurveSurface::NearestPoints");
 
   Points(myIndex, PC, PS);
 }
-
-//=================================================================================================
 
 void GeomAPI_ExtremaCurveSurface::LowerDistanceParameters(double& W, double& U, double& V) const
 {
@@ -179,8 +153,6 @@ void GeomAPI_ExtremaCurveSurface::LowerDistanceParameters(double& W, double& U, 
   Parameters(myIndex, W, U, V);
 }
 
-//=================================================================================================
-
 double GeomAPI_ExtremaCurveSurface::LowerDistance() const
 {
   StdFail_NotDone_Raise_if(!myIsDone, "GeomAPI_ExtremaCurveSurface::LowerDistance");
@@ -188,14 +160,10 @@ double GeomAPI_ExtremaCurveSurface::LowerDistance() const
   return sqrt(myExtCS.SquareDistance(myIndex));
 }
 
-//=================================================================================================
-
 GeomAPI_ExtremaCurveSurface::operator int() const
 {
   return NbExtrema();
 }
-
-//=================================================================================================
 
 GeomAPI_ExtremaCurveSurface::operator double() const
 {

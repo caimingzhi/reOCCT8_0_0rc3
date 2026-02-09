@@ -24,14 +24,10 @@ public:
 
   TNaming_IteratorOnShapesSet(const TNaming_ShapesSet& S);
 
-  //! Initialize the iteration
   void Init(const TNaming_ShapesSet& S);
 
-  //! Returns True if there is a current Item in
-  //! the iteration.
   bool More() const;
 
-  //! Move to the next Item
   void Next();
 
   const TopoDS_Shape& Value() const;
@@ -42,39 +38,27 @@ private:
 
 #include <TNaming_ShapesSet.hpp>
 
-//=================================================================================================
-
 inline TNaming_IteratorOnShapesSet::TNaming_IteratorOnShapesSet() = default;
-
-//=================================================================================================
 
 inline TNaming_IteratorOnShapesSet::TNaming_IteratorOnShapesSet(const TNaming_ShapesSet& S)
 {
   Init(S);
 }
 
-//=================================================================================================
-
 inline void TNaming_IteratorOnShapesSet::Init(const TNaming_ShapesSet& S)
 {
   myIt.Initialize(S.Map());
 }
-
-//=================================================================================================
 
 inline bool TNaming_IteratorOnShapesSet::More() const
 {
   return (myIt.More());
 }
 
-//=================================================================================================
-
 inline void TNaming_IteratorOnShapesSet::Next()
 {
   myIt.Next();
 }
-
-//=================================================================================================
 
 inline const TopoDS_Shape& TNaming_IteratorOnShapesSet::Value() const
 {

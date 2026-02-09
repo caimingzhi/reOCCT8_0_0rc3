@@ -18,8 +18,6 @@ class Transfer_FinderProcess;
 class TopoDS_Edge;
 class TopoDS_Face;
 
-//! This builder Class provides services to build
-//! a ProSTEP Wireframemodel from a Cas.Cad BRep.
 class TopoDSToStep_WireframeBuilder : public TopoDSToStep_Root
 {
 public:
@@ -41,8 +39,6 @@ public:
   Standard_EXPORT const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& Value()
     const;
 
-  //! Extraction of Trimmed Curves from TopoDS_Edge for the
-  //! Creation of a GeometricallyBoundedWireframeRepresentation
   Standard_EXPORT bool GetTrimmedCurveFromEdge(
     const TopoDS_Edge&                                                                           E,
     const TopoDS_Face&                                                                           F,
@@ -50,16 +46,12 @@ public:
     occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>&                         L,
     const StepData_Factors& theLocalFactors = StepData_Factors()) const;
 
-  //! Extraction of Trimmed Curves from TopoDS_Face for the
-  //! Creation of a GeometricallyBoundedWireframeRepresentation
   Standard_EXPORT bool GetTrimmedCurveFromFace(
     const TopoDS_Face&                                                                           F,
     NCollection_DataMap<TopoDS_Shape, occ::handle<Standard_Transient>, TopTools_ShapeMapHasher>& M,
     occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>&                         L,
     const StepData_Factors& theLocalFactors = StepData_Factors()) const;
 
-  //! Extraction of Trimmed Curves from any TopoDS_Shape for the
-  //! Creation of a GeometricallyBoundedWireframeRepresentation
   Standard_EXPORT bool GetTrimmedCurveFromShape(
     const TopoDS_Shape&                                                                          S,
     NCollection_DataMap<TopoDS_Shape, occ::handle<Standard_Transient>, TopTools_ShapeMapHasher>& M,

@@ -5,7 +5,6 @@
 
 #include <StepRepr_ShapeAspect.hpp>
 
-//! Added for Dimensional Tolerances
 class StepRepr_CompositeShapeAspect : public StepRepr_ShapeAspect
 {
 

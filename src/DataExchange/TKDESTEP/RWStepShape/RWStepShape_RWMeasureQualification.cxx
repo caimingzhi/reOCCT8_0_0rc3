@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -30,27 +19,17 @@ void RWStepShape_RWMeasureQualification::ReadStep(
   const occ::handle<StepShape_MeasureQualification>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 4, ach, "measure_qualification"))
     return;
-
-  // --- own field : name ---
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- own field : description ---
-
   occ::handle<TCollection_HAsciiString> aDescr;
   data->ReadString(num, 2, "description", ach, aDescr);
 
-  // --- own field : qualified_measure ---
-
   occ::handle<Standard_Transient> aQM;
   data->ReadEntity(num, 3, "qualified_measure", ach, STANDARD_TYPE(Standard_Transient), aQM);
-
-  // --- own field : qualifiers ---
 
   occ::handle<NCollection_HArray1<StepShape_ValueQualifier>> quals;
   int                                                        nsub4;
@@ -65,8 +44,6 @@ void RWStepShape_RWMeasureQualification::ReadStep(
         quals->SetValue(i4, VQ);
     }
   }
-
-  //--- Initialisation of the read entity ---
 
   ent->Init(aName, aDescr, aQM, quals);
 }

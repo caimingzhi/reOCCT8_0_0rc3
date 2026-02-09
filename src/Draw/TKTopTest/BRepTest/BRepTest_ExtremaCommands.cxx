@@ -17,8 +17,6 @@
 
 #include <cstdio>
 
-//=================================================================================================
-
 static int distance(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
@@ -35,7 +33,7 @@ static int distance(Draw_Interpretor& di, int n, const char** a)
   double D;
   if (!BRepExtrema_Poly::Distance(S1, S2, P1, P2, D))
     return 1;
-  // std::cout << " distance : " << D << std::endl;
+
   di << " distance : " << D << "\n";
   TopoDS_Edge E = BRepLib_MakeEdge(P1, P2);
   DBRep::Set("distance", E);
@@ -87,7 +85,7 @@ static int distmini(Draw_Interpretor& di, int n, const char** a)
   if (dst.IsDone())
   {
 #ifdef OCCT_DEBUG
-    // dst.Dump(std::cout);
+
     di << "*** Dump of \"BRepExtrema_DistShapeShape\" in DEBUG mode (begin) *****\n";
     Standard_SStream aSStream;
     dst.Dump(aSStream);
@@ -146,8 +144,6 @@ static int distmini(Draw_Interpretor& di, int n, const char** a)
     di << "problem: no distance is found\n";
   return 0;
 }
-
-//=================================================================================================
 
 static int ShapeProximity(Draw_Interpretor& theDI, int theNbArgs, const char** theArgs)
 {
@@ -235,7 +231,6 @@ static int ShapeProximity(Draw_Interpretor& theDI, int theNbArgs, const char** t
     aTimer.Start();
   }
 
-  // Perform shape proximity test
   aTool.Perform();
 
   if (aProfile)
@@ -262,14 +257,12 @@ static int ShapeProximity(Draw_Interpretor& theDI, int theNbArgs, const char** t
   {
     theDI << "Proximity value: " << aTool.Proximity() << "\n";
 
-    // proximity points
     TopoDS_Vertex aProxVtx1 = BRepLib_MakeVertex(aTool.ProximityPoint1());
     TopoDS_Vertex aProxVtx2 = BRepLib_MakeVertex(aTool.ProximityPoint2());
 
     DBRep::Set("ProxPnt1", aProxVtx1);
     DBRep::Set("ProxPnt2", aProxVtx2);
 
-    // proximity points' status
     TCollection_AsciiString ProxPntStatus1;
     TCollection_AsciiString ProxPntStatus2;
 
@@ -347,8 +340,6 @@ static int ShapeProximity(Draw_Interpretor& theDI, int theNbArgs, const char** t
   return 0;
 }
 
-//=================================================================================================
-
 static int ShapeSelfIntersection(Draw_Interpretor& theDI, int theNbArgs, const char** theArgs)
 {
   if (theNbArgs < 2 || theNbArgs > 5)
@@ -418,7 +409,6 @@ static int ShapeSelfIntersection(Draw_Interpretor& theDI, int theNbArgs, const c
     aTimer.Start();
   }
 
-  // Perform shape self-intersection test
   aTool.Perform();
 
   if (!aTool.IsDone())
@@ -436,7 +426,6 @@ static int ShapeSelfIntersection(Draw_Interpretor& theDI, int theNbArgs, const c
     theDI << "Executing self-intersection test: " << aWorkTime << "\n";
   }
 
-  // Extract output faces
   TopoDS_Builder  aCompBuilder;
   TopoDS_Compound aFaceCompound;
 
@@ -460,8 +449,6 @@ static int ShapeSelfIntersection(Draw_Interpretor& theDI, int theNbArgs, const c
 
   return 0;
 }
-
-//=================================================================================================
 
 void BRepTest::ExtremaCommands(Draw_Interpretor& theCommands)
 {

@@ -11,8 +11,6 @@
 class gp_Pnt;
 class gp_Vec;
 
-//! To convert circular section in QuasiAngular Bezier
-//! form
 class GeomFill_QuasiAngularConvertor
 {
 public:
@@ -20,7 +18,6 @@ public:
 
   Standard_EXPORT GeomFill_QuasiAngularConvertor();
 
-  //! say if <me> is Initialized
   Standard_EXPORT bool Initialized() const;
 
   Standard_EXPORT void Init();

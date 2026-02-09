@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_PairRepresentationRelationship;
 
-//! Read & Write tool for PairRepresentationRelationship
 class RWStepKinematics_RWPairRepresentationRelationship
 {
 public:

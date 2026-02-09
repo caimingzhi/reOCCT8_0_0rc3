@@ -7,14 +7,8 @@ class TDataXtd_Placement : public TDataStd_GenericEmpty
 {
 
 public:
-  //! class methods
-  //! =============
   Standard_EXPORT static const Standard_GUID& GetID();
 
-  //! Find, or create, a Placement attribute.
-  //! Placement attribute is returned.
-  //! Placement methods
-  //! =================
   Standard_EXPORT static occ::handle<TDataXtd_Placement> Set(const TDF_Label& label);
 
   Standard_EXPORT TDataXtd_Placement();

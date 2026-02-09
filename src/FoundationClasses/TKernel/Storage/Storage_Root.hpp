@@ -8,19 +8,6 @@
 #include <Standard_Transient.hpp>
 class Standard_Persistent;
 
-//! A root object extracted from a Storage_Data object.
-//! A Storage_Root encapsulates a persistent
-//! object which is a root of a Storage_Data object.
-//! It contains additional information: the name and
-//! the data type of the persistent object.
-//! When retrieving a Storage_Data object from a
-//! container (for example, a file) you access its
-//! roots with the function Roots which returns a
-//! sequence of root objects. The provided functions
-//! allow you to request information about each root of the sequence.
-//! You do not create explicit roots: when inserting
-//! data in a Storage_Data object, you just provide
-//! the persistent object and optionally its name to the function AddRoot.
 class Storage_Root : public Standard_Transient
 {
 
@@ -36,28 +23,12 @@ public:
 
   Standard_EXPORT void SetName(const TCollection_AsciiString& theName);
 
-  //! Returns the name of this root object.
-  //! The name may have been given explicitly when
-  //! the root was inserted into the Storage_Data
-  //! object. If not, the name is a reference number
-  //! which was assigned automatically by the driver
-  //! when writing the set of data into the container.
-  //! When naming the roots, it is easier to retrieve
-  //! objects by significant references rather than by
-  //! references without any semantic values.
-  //! Warning
-  //! The returned string will be empty if you call this
-  //! function before having named this root object,
-  //! either explicitly, or when writing the set of data
-  //! into the container.
   Standard_EXPORT TCollection_AsciiString Name() const;
 
   Standard_EXPORT void SetObject(const occ::handle<Standard_Persistent>& anObject);
 
-  //! Returns the persistent object encapsulated by this root.
   Standard_EXPORT occ::handle<Standard_Persistent> Object() const;
 
-  //! Returns the name of this root type.
   Standard_EXPORT TCollection_AsciiString Type() const;
 
   Standard_EXPORT void SetReference(const int aRef);

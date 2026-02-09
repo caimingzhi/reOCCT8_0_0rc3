@@ -10,49 +10,17 @@
 #include <TopoDS_Shape.hpp>
 #include <TopTools_ShapeMapHasher.hpp>
 
-// #define MDTV_DEB_IDF
 #ifdef OCCT_DEBUG_IDF
   #include <TCollection_AsciiString.hpp>
   #include <TDF_Tool.hpp>
   #include <BRepTools.hpp>
 
-// unreferenced function, commented
-/*static void ModDbgTools_Write(const TopoDS_Shape& shape,
-              const char* filename)
-{
-  std::ofstream save;
-  save.open(filename);
-  save << "DBRep_DrawableShape" << std::endl << std::endl;
-  if(!shape.IsNull()) BRepTools::Write(shape, save);
-  save.close();
-}
-
-static void ModDbgTools_WriteCurrentShape(const occ::handle<TNaming_NamedShape> & NS)
-{
-  TCollection_AsciiString entry;
-  TDF_Tool::Entry(NS->Label(), entry);
-  if (!NS.IsNull())
-    {
-      TopoDS_Shape Sh = TNaming_Tool::CurrentShape (NS);
-      if(!Sh.IsNull()) {
-    TCollection_AsciiString Entry = entry.Cat("_Cur.brep");
-    ModDbgTools_Write(Sh, Entry.ToCString());
-      }
-      else
-    std::cout << "ModDbgTools::Write>>> TopoDS_Shape IS NULL on Entry = "<< entry << std::endl;
-    }
-  else
-    std::cout << "ModDbgTools::Write>>>  CurrentShape of TNaming_NamedShape IS NULL on Entry = "<<
-entry << std::endl;
-}*/
 #endif
-
-//=================================================================================================
 
 TNaming_Identifier::TNaming_Identifier(const TDF_Label&    LabAcces,
                                        const TopoDS_Shape& S,
                                        const TopoDS_Shape& Context,
-                                       const bool /*OneOnly*/)
+                                       const bool)
     : myTDFAcces(LabAcces),
       myShape(S),
       myDone(false),
@@ -61,12 +29,10 @@ TNaming_Identifier::TNaming_Identifier(const TDF_Label&    LabAcces,
   Init(Context);
 }
 
-//=================================================================================================
-
 TNaming_Identifier::TNaming_Identifier(const TDF_Label&                       LabAcces,
                                        const TopoDS_Shape&                    S,
                                        const occ::handle<TNaming_NamedShape>& ContextNS,
-                                       const bool /*OneOnly*/)
+                                       const bool)
     : myTDFAcces(LabAcces),
       myShape(S),
       myDone(false),
@@ -75,8 +41,6 @@ TNaming_Identifier::TNaming_Identifier(const TDF_Label&                       La
   const TopoDS_Shape& aContext = TNaming_Tool::GetShape(ContextNS);
   Init(aContext);
 }
-
-//=================================================================================================
 
 void TNaming_Identifier::Init(const TopoDS_Shape& Context)
 {
@@ -98,9 +62,7 @@ void TNaming_Identifier::Init(const TopoDS_Shape& Context)
   TDF_Tool::Entry(NS->Label(), entry);
   std::cout << "Identifier:: (S) Label = " << entry << std::endl;
 #endif
-  //-------------------------------------
-  // S est New dans un NamedShape
-  //-------------------------------------
+
   TNaming_Evolution Evol = NS->Evolution();
   if (Evol == TNaming_PRIMITIVE)
   {
@@ -116,53 +78,37 @@ void TNaming_Identifier::Init(const TopoDS_Shape& Context)
   }
 }
 
-//=================================================================================================
-
 TNaming_NameType TNaming_Identifier::Type() const
 {
   return myType;
 }
-
-//=================================================================================================
 
 bool TNaming_Identifier::IsDone() const
 {
   return myDone;
 }
 
-//=================================================================================================
-
 bool TNaming_Identifier::IsFeature()
 {
   return myIsFeature;
 }
-
-//=================================================================================================
 
 occ::handle<TNaming_NamedShape> TNaming_Identifier::Feature() const
 {
   return myPrimitiveArgs.First();
 }
 
-//=================================================================================================
-
 void TNaming_Identifier::InitArgs() {}
-
-//=================================================================================================
 
 bool TNaming_Identifier::MoreArgs() const
 {
   return (!myPrimitiveArgs.IsEmpty() || !myShapeArgs.IsEmpty());
 }
 
-//=================================================================================================
-
 bool TNaming_Identifier::ArgIsFeature() const
 {
   return (!myPrimitiveArgs.IsEmpty());
 }
-
-//=================================================================================================
 
 void TNaming_Identifier::NextArg()
 {
@@ -172,39 +118,29 @@ void TNaming_Identifier::NextArg()
     myShapeArgs.RemoveFirst();
 }
 
-//=================================================================================================
-
 occ::handle<TNaming_NamedShape> TNaming_Identifier::FeatureArg()
 {
   return myPrimitiveArgs.First();
 }
-
-//=================================================================================================
 
 TopoDS_Shape TNaming_Identifier::ShapeArg()
 {
   return myShapeArgs.First();
 }
 
-//=================================================================================================
-
 TopoDS_Shape TNaming_Identifier::ShapeContext() const
 {
   const TopoDS_Shape&             S = myShapeArgs.First();
   TopoDS_Shape                    SC;
   occ::handle<TNaming_NamedShape> NS = TNaming_Tool::NamedShape(S, myTDFAcces);
-  TNaming_Localizer::FindShapeContext(NS, S, SC); // szy ==> added par. S
+  TNaming_Localizer::FindShapeContext(NS, S, SC);
   return SC;
 }
-
-//=================================================================================================
 
 occ::handle<TNaming_NamedShape> TNaming_Identifier::NamedShapeOfGeneration() const
 {
   return myNSContext;
 }
-
-//=================================================================================================
 
 void TNaming_Identifier::AncestorIdentification(TNaming_Localizer&  Localizer,
                                                 const TopoDS_Shape& Context)
@@ -230,8 +166,6 @@ void TNaming_Identifier::AncestorIdentification(TNaming_Localizer&  Localizer,
   myDone = true;
 }
 
-//=================================================================================================
-
 bool IsImported(const occ::handle<TNaming_NamedShape>& NS)
 {
   TDF_Label Lab    = NS->Label();
@@ -249,15 +183,13 @@ bool IsImported(const occ::handle<TNaming_NamedShape>& NS)
   return it.More();
 }
 
-//=================================================================================================
-
-void TNaming_Identifier::PrimitiveIdentification(TNaming_Localizer& /*L*/,
+void TNaming_Identifier::PrimitiveIdentification(TNaming_Localizer&,
                                                  const occ::handle<TNaming_NamedShape>& NS)
 {
   myPrimitiveArgs.Append(NS);
   myIsFeature = true;
   myType      = TNaming_MODIFUNTIL;
-  // Reconnaissance Shape Mort.
+
   if (IsImported(NS))
   {
     myType      = TNaming_CONSTSHAPE;
@@ -266,16 +198,10 @@ void TNaming_Identifier::PrimitiveIdentification(TNaming_Localizer& /*L*/,
   myDone = true;
 }
 
-//=======================================================================
-// function : GeneratedIdentification
-// purpose  : Finds generators of identifying shape <myShape> and keeps
-//         : them in <myShapeArgs>
-//=======================================================================
-
-void TNaming_Identifier::GeneratedIdentification(TNaming_Localizer& /*Localizer*/,
+void TNaming_Identifier::GeneratedIdentification(TNaming_Localizer&,
                                                  const occ::handle<TNaming_NamedShape>& NS)
 {
-  //  TopoDS_Shape Gen; //szy 16.10.03
+
   NCollection_List<TopoDS_Shape> aListOfGenerators;
   TNaming_Localizer::FindGenerator(NS, myShape, aListOfGenerators);
   myShapeArgs.Append(aListOfGenerators);
@@ -283,8 +209,6 @@ void TNaming_Identifier::GeneratedIdentification(TNaming_Localizer& /*Localizer*
   myType      = TNaming_GENERATION;
   myDone      = true;
 }
-
-//=================================================================================================
 
 void TNaming_Identifier::Identification(TNaming_Localizer&                     Localizer,
                                         const occ::handle<TNaming_NamedShape>& NS)
@@ -312,7 +236,7 @@ void TNaming_Identifier::Identification(TNaming_Localizer&                     L
   {
     myType      = TNaming_MODIFUNTIL;
     myIsFeature = true;
-    // Reconnaissance Shape Mort.
+
     if (IsImported(myPrimitiveArgs.First()))
     {
       myType      = TNaming_CONSTSHAPE;

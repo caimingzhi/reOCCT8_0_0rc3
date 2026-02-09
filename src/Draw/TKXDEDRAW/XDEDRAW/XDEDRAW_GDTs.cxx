@@ -715,7 +715,6 @@ static int setDatum(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  // check datum position number
   occ::handle<XCAFDoc_Datum> aDatumAttr;
   if (!aLabel.FindAttribute(XCAFDoc_Datum::GetID(), aDatumAttr))
   {
@@ -3065,7 +3064,7 @@ static int addGDTPosition(Draw_Interpretor& di, int argc, const char** argv)
   gp_Dir aNormal(Draw::Atof(argv[6]), Draw::Atof(argv[7]), Draw::Atof(argv[8]));
   gp_Dir aDir(Draw::Atof(argv[9]), Draw::Atof(argv[10]), Draw::Atof(argv[11]));
   gp_Ax2 aPlane(aPoint, aNormal, aDir);
-  // Dimension
+
   occ::handle<XCAFDoc_Dimension> aDimension;
   if (aLabel.FindAttribute(XCAFDoc_Dimension::GetID(), aDimension))
   {
@@ -3074,7 +3073,7 @@ static int addGDTPosition(Draw_Interpretor& di, int argc, const char** argv)
     anObj->SetPointTextAttach(aPoint);
     aDimension->SetObject(anObj);
   }
-  // Geometric Tolerance
+
   occ::handle<XCAFDoc_GeomTolerance> aGeomTolerance;
   if (aLabel.FindAttribute(XCAFDoc_GeomTolerance::GetID(), aGeomTolerance))
   {
@@ -3083,7 +3082,7 @@ static int addGDTPosition(Draw_Interpretor& di, int argc, const char** argv)
     anObj->SetPointTextAttach(aPoint);
     aGeomTolerance->SetObject(anObj);
   }
-  // Datum
+
   occ::handle<XCAFDoc_Datum> aDatum;
   if (aLabel.FindAttribute(XCAFDoc_Datum::GetID(), aDatum))
   {
@@ -3119,7 +3118,7 @@ static int getGDTPosition(Draw_Interpretor& di, int argc, const char** argv)
   }
   gp_Pnt aPoint;
   gp_Dir aNormal, aDir;
-  // Dimension
+
   occ::handle<XCAFDoc_Dimension> aDimension;
   if (aLabel.FindAttribute(XCAFDoc_Dimension::GetID(), aDimension))
   {
@@ -3128,7 +3127,7 @@ static int getGDTPosition(Draw_Interpretor& di, int argc, const char** argv)
     aNormal                                              = anObj->GetPlane().Direction();
     aDir                                                 = anObj->GetPlane().XDirection();
   }
-  // Geometric Tolerance
+
   occ::handle<XCAFDoc_GeomTolerance> aGeomTolerance;
   if (aLabel.FindAttribute(XCAFDoc_GeomTolerance::GetID(), aGeomTolerance))
   {
@@ -3137,7 +3136,7 @@ static int getGDTPosition(Draw_Interpretor& di, int argc, const char** argv)
     aNormal                                                  = anObj->GetPlane().Direction();
     aDir                                                     = anObj->GetPlane().XDirection();
   }
-  // Datum
+
   occ::handle<XCAFDoc_Datum> aDatum;
   if (aLabel.FindAttribute(XCAFDoc_Datum::GetID(), aDatum))
   {
@@ -3178,7 +3177,7 @@ static int addGDTPresentation(Draw_Interpretor& di, int argc, const char** argv)
 
   TopoDS_Shape                          aPresentation = DBRep::Get(argv[3]);
   occ::handle<TCollection_HAsciiString> aName         = new TCollection_HAsciiString(argv[4]);
-  // Dimension
+
   occ::handle<XCAFDoc_Dimension> aDimension;
   if (aLabel.FindAttribute(XCAFDoc_Dimension::GetID(), aDimension))
   {
@@ -3186,7 +3185,7 @@ static int addGDTPresentation(Draw_Interpretor& di, int argc, const char** argv)
     anObj->SetPresentation(aPresentation, aName);
     aDimension->SetObject(anObj);
   }
-  // Geometric Tolerance
+
   occ::handle<XCAFDoc_GeomTolerance> aGeomTolerance;
   if (aLabel.FindAttribute(XCAFDoc_GeomTolerance::GetID(), aGeomTolerance))
   {
@@ -3194,7 +3193,7 @@ static int addGDTPresentation(Draw_Interpretor& di, int argc, const char** argv)
     anObj->SetPresentation(aPresentation, aName);
     aGeomTolerance->SetObject(anObj);
   }
-  // Datum
+
   occ::handle<XCAFDoc_Datum> aDatum;
   if (aLabel.FindAttribute(XCAFDoc_Datum::GetID(), aDatum))
   {
@@ -3228,21 +3227,21 @@ static int getGDTPresentation(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
   TopoDS_Shape aPresentation;
-  // Dimension
+
   occ::handle<XCAFDoc_Dimension> aDimension;
   if (aLabel.FindAttribute(XCAFDoc_Dimension::GetID(), aDimension))
   {
     occ::handle<XCAFDimTolObjects_DimensionObject> anObj = aDimension->GetObject();
     aPresentation                                        = anObj->GetPresentation();
   }
-  // Geometric Tolerance
+
   occ::handle<XCAFDoc_GeomTolerance> aGeomTolerance;
   if (aLabel.FindAttribute(XCAFDoc_GeomTolerance::GetID(), aGeomTolerance))
   {
     occ::handle<XCAFDimTolObjects_GeomToleranceObject> anObj = aGeomTolerance->GetObject();
     aPresentation                                            = anObj->GetPresentation();
   }
-  // Datum
+
   occ::handle<XCAFDoc_Datum> aDatum;
   if (aLabel.FindAttribute(XCAFDoc_Datum::GetID(), aDatum))
   {
@@ -3286,7 +3285,6 @@ static int addGDTAffectedPlane(Draw_Interpretor& di, int argc, const char** argv
   }
   int aType = Draw::Atoi(argv[4]);
 
-  // Geometric Tolerance
   occ::handle<XCAFDoc_GeomTolerance> aGeomTolerance;
   if (!aLabel.FindAttribute(XCAFDoc_GeomTolerance::GetID(), aGeomTolerance))
   {
@@ -3323,7 +3321,6 @@ static int getGDTAffectedPlane(Draw_Interpretor& di, int argc, const char** argv
     return 1;
   }
 
-  // Geometric Tolerance
   occ::handle<XCAFDoc_GeomTolerance> aGeomTolerance;
   occ::handle<Geom_Plane>            aPlane;
   if (aLabel.FindAttribute(XCAFDoc_GeomTolerance::GetID(), aGeomTolerance))
@@ -3369,21 +3366,21 @@ static int getGDTSemanticName(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
   occ::handle<TCollection_HAsciiString> aSemanticName;
-  // Dimension
+
   occ::handle<XCAFDoc_Dimension> aDimension;
   if (aLabel.FindAttribute(XCAFDoc_Dimension::GetID(), aDimension))
   {
     occ::handle<XCAFDimTolObjects_DimensionObject> anObj = aDimension->GetObject();
     aSemanticName                                        = anObj->GetSemanticName();
   }
-  // Geometric Tolerance
+
   occ::handle<XCAFDoc_GeomTolerance> aGeomTolerance;
   if (aLabel.FindAttribute(XCAFDoc_GeomTolerance::GetID(), aGeomTolerance))
   {
     occ::handle<XCAFDimTolObjects_GeomToleranceObject> anObj = aGeomTolerance->GetObject();
     aSemanticName                                            = anObj->GetSemanticName();
   }
-  // Datum
+
   occ::handle<XCAFDoc_Datum> aDatum;
   if (aLabel.FindAttribute(XCAFDoc_Datum::GetID(), aDatum))
   {
@@ -3420,7 +3417,7 @@ static int setGDTSemanticName(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
   occ::handle<TCollection_HAsciiString> aSemanticName = new TCollection_HAsciiString(argv[3]);
-  // Dimension
+
   occ::handle<XCAFDoc_Dimension> aDimension;
   if (aLabel.FindAttribute(XCAFDoc_Dimension::GetID(), aDimension))
   {
@@ -3428,7 +3425,7 @@ static int setGDTSemanticName(Draw_Interpretor& di, int argc, const char** argv)
     anObj->SetSemanticName(aSemanticName);
     aDimension->SetObject(anObj);
   }
-  // Geometric Tolerance
+
   occ::handle<XCAFDoc_GeomTolerance> aGeomTolerance;
   if (aLabel.FindAttribute(XCAFDoc_GeomTolerance::GetID(), aGeomTolerance))
   {
@@ -3436,7 +3433,7 @@ static int setGDTSemanticName(Draw_Interpretor& di, int argc, const char** argv)
     anObj->SetSemanticName(aSemanticName);
     aGeomTolerance->SetObject(anObj);
   }
-  // Datum
+
   occ::handle<XCAFDoc_Datum> aDatum;
   if (aLabel.FindAttribute(XCAFDoc_Datum::GetID(), aDatum))
   {
@@ -3446,8 +3443,6 @@ static int setGDTSemanticName(Draw_Interpretor& di, int argc, const char** argv)
   }
   return 0;
 }
-
-//=================================================================================================
 
 void XDEDRAW_GDTs::InitCommands(Draw_Interpretor& di)
 {

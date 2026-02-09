@@ -6,15 +6,6 @@
 
 #include <Standard_Boolean.hpp>
 
-//! Root class for all commands in BRepBuilderAPI.
-//!
-//! Provides :
-//!
-//! * Managements of the notDone flag.
-//!
-//! * Catching of exceptions (not implemented).
-//!
-//! * Logging (not implemented).
 class BRepBuilderAPI_Command
 {
 public:
@@ -24,17 +15,13 @@ public:
 
   Standard_EXPORT virtual bool IsDone() const;
 
-  //! Raises NotDone if done is false.
   Standard_EXPORT void Check() const;
 
 protected:
-  //! Set done to False.
   Standard_EXPORT BRepBuilderAPI_Command();
 
-  //! Set done to true.
   Standard_EXPORT void Done();
 
-  //! Set done to false.
   Standard_EXPORT void NotDone();
 
 private:

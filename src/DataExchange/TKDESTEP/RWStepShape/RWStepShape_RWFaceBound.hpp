@@ -12,8 +12,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class Interface_ShareTool;
 
-//! Read & Write Module for FaceBound
-//! Check added by CKY , 7-OCT-1996
 class RWStepShape_RWFaceBound
 {
 public:

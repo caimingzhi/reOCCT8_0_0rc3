@@ -11,10 +11,6 @@ class gp_Dir2d;
 class Geom_Direction;
 class Geom2d_Direction;
 
-//! This class implements the mapping between classes
-//! Direction from Geom, Geom2d and Dir, Dir2d from gp, and the
-//! class Direction from StepGeom which describes a direction
-//! from Prostep.
 class GeomToStep_MakeDirection : public GeomToStep_Root
 {
 public:

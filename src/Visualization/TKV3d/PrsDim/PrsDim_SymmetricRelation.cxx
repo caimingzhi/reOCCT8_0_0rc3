@@ -27,8 +27,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_SymmetricRelation, PrsDim_Relation)
 
-//=================================================================================================
-
 PrsDim_SymmetricRelation::PrsDim_SymmetricRelation(const TopoDS_Shape&            aSymmTool,
                                                    const TopoDS_Shape&            FirstShape,
                                                    const TopoDS_Shape&            SecondShape,
@@ -41,8 +39,6 @@ PrsDim_SymmetricRelation::PrsDim_SymmetricRelation(const TopoDS_Shape&          
   myPosition = aPlane->Pln().Location();
 }
 
-//=================================================================================================
-
 void PrsDim_SymmetricRelation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                        const occ::handle<Prs3d_Presentation>& aprs,
                                        const int)
@@ -51,19 +47,19 @@ void PrsDim_SymmetricRelation::Compute(const occ::handle<PrsMgr_PresentationMana
   {
     case TopAbs_FACE:
     {
-      // symmetry case between two faces
+
       ComputeTwoFacesSymmetric(aprs);
     }
     break;
     case TopAbs_EDGE:
     {
-      // symmetry case between two edges
+
       ComputeTwoEdgesSymmetric(aprs);
     }
     break;
     case TopAbs_VERTEX:
     {
-      // symmetry case between two vertices
+
       ComputeTwoVerticesSymmetric(aprs);
     }
     break;
@@ -100,8 +96,6 @@ void PrsDim_SymmetricRelation::Compute(const occ::handle<PrsMgr_PresentationMana
   }
 }
 
-//=================================================================================================
-
 void PrsDim_SymmetricRelation::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSel,
                                                 const int)
 {
@@ -131,7 +125,7 @@ void PrsDim_SymmetricRelation::ComputeSelection(const occ::handle<SelectMgr_Sele
 
     if (cu1.GetType() == GeomAbs_Line)
     {
-      //      gp_Lin L1 (myFAttach,myFDirAttach);
+
       gp_Pnt PjAttachPnt1 = ElCLib::Value(ElCLib::Parameter(laxis, myFAttach), laxis);
       gp_Pnt PjOffSetPnt  = ElCLib::Value(ElCLib::Parameter(laxis, myPosition), laxis);
       double h =
@@ -198,13 +192,11 @@ void PrsDim_SymmetricRelation::ComputeSelection(const occ::handle<SelectMgr_Sele
       }
     }
 
-    //=======================Pour les arcs======================
     if (cu1.GetType() == GeomAbs_Circle)
     {
       occ::handle<Geom_Curve>  aGeomCurve = BRep_Tool::Curve(TopoDS::Edge(myFShape), F, L);
       occ::handle<Geom_Circle> geom_circ1 = occ::down_cast<Geom_Circle>(aGeomCurve);
-      //    occ::handle<Geom_Circle> geom_circ1 = (const occ::handle<Geom_Circle>&)
-      //    BRep_Tool::Curve(TopoDS::Edge(myFShape),F,L);
+
       gp_Circ circ1(geom_circ1->Circ());
       gp_Pnt  OffsetPnt(myPosition.X(), myPosition.Y(), myPosition.Z());
       gp_Pnt  Center1         = circ1.Location();
@@ -268,7 +260,7 @@ void PrsDim_SymmetricRelation::ComputeSelection(const occ::handle<SelectMgr_Sele
       }
     }
   }
-  //=======================Pour les points======================
+
   else
   {
     if (myFAttach.IsEqual(mySAttach, Precision::Confusion()))
@@ -336,11 +328,7 @@ void PrsDim_SymmetricRelation::ComputeSelection(const occ::handle<SelectMgr_Sele
   }
 }
 
-//=================================================================================================
-
 void PrsDim_SymmetricRelation::ComputeTwoFacesSymmetric(const occ::handle<Prs3d_Presentation>&) {}
-
-//=================================================================================================
 
 void PrsDim_SymmetricRelation::ComputeTwoEdgesSymmetric(const occ::handle<Prs3d_Presentation>& aprs)
 {
@@ -350,7 +338,7 @@ void PrsDim_SymmetricRelation::ComputeTwoEdgesSymmetric(const occ::handle<Prs3d_
   BRepAdaptor_Curve cu2(TopoDS::Edge(mySShape));
   if (cu2.GetType() != GeomAbs_Line && cu2.GetType() != GeomAbs_Circle)
     return;
-  //  gp_Pnt pint3d,ptat11,ptat12,ptat21,ptat22;
+
   gp_Pnt                  ptat11, ptat12, ptat21, ptat22;
   occ::handle<Geom_Curve> geom1, geom2;
   bool                    isInfinite1, isInfinite2;
@@ -403,23 +391,11 @@ void PrsDim_SymmetricRelation::ComputeTwoEdgesSymmetric(const occ::handle<Prs3d_
     circ = c;
   }
 
-  // search for attachment points
   gp_Pnt ProjOffset = ElCLib::Value(ElCLib::Parameter(laxis, myPosition), laxis);
 
-  /*//----------------------------------------------------
-    //Quand on fait la symetrie de 2 edges consecutifs:
-    //
-    //              :<-- Axe
-    //              :
-    //             /:\
-    // Edge n --->/ : \
-    //           /  :  \<-- Edge n+1
-    //              :
-    //----------------------------------------------------
-  */
   bool idem = false;
   if (isInfinite1 && isInfinite2)
-  { // geom1 et geom2 sont des lignes
+  {
     const gp_Lin& line2 = occ::down_cast<Geom_Line>(geom2)->Lin();
     if (myAutomaticPosition)
     {
@@ -473,13 +449,13 @@ void PrsDim_SymmetricRelation::ComputeTwoEdgesSymmetric(const occ::handle<Prs3d_
     }
   }
   else if (isInfinite1)
-  { // geom1 et geom2 sont des lignes
+  {
     mySAttach           = ptat21;
     const gp_Lin& line1 = occ::down_cast<Geom_Line>(geom1)->Lin();
     myFAttach           = ElCLib::Value(ElCLib::Parameter(line1, mySAttach), line1);
   }
   else if (isInfinite2)
-  { // geom1 et geom2 sont des lignes
+  {
     myFAttach           = ptat11;
     const gp_Lin& line2 = occ::down_cast<Geom_Line>(geom2)->Lin();
     mySAttach           = ElCLib::Value(ElCLib::Parameter(line2, myFAttach), line2);
@@ -487,11 +463,7 @@ void PrsDim_SymmetricRelation::ComputeTwoEdgesSymmetric(const occ::handle<Prs3d_
 
   if (!myArrowSizeIsDefined)
     myArrowSize = myFAttach.Distance(mySAttach) / 50.;
-  //----------------------------------------------------
 
-  //----------------------------------------------------
-  // Si myFAttach <> mySAttach et PjFAttach = myFAttach
-  //----------------------------------------------------
   gp_Pnt PjFAttach = ElCLib::Value(ElCLib::Parameter(laxis, myFAttach), laxis);
 
   if (PjFAttach.IsEqual(myFAttach, Precision::Confusion()))
@@ -506,13 +478,9 @@ void PrsDim_SymmetricRelation::ComputeTwoEdgesSymmetric(const occ::handle<Prs3d_
     PjFAttach = ElCLib::Value(ElCLib::Parameter(laxis, myFAttach), laxis);
   }
 
-  //----------------------------------------------------
-  //  gp_Pnt curpos;
-
   if (myAutomaticPosition)
   {
-    // gp_Pnt PjFAttach = ElCLib::Value(ElCLib::Parameter(laxis,myFAttach),laxis);
-    //  offset pour eviter confusion Edge et Dimension
+
     gp_Vec offset(myAxisDirAttach);
     offset = offset * myArrowSize * (-5);
     gp_Vec Vt(myFAttach, PjFAttach);
@@ -570,8 +538,6 @@ void PrsDim_SymmetricRelation::ComputeTwoEdgesSymmetric(const occ::handle<Prs3d_
   }
 }
 
-//=================================================================================================
-
 void PrsDim_SymmetricRelation::ComputeTwoVerticesSymmetric(
   const occ::handle<Prs3d_Presentation>& aprs)
 {
@@ -611,12 +577,10 @@ void PrsDim_SymmetricRelation::ComputeTwoVerticesSymmetric(
   gp_Lin                 laxis(geom_line->Lin());
   myAxisDirAttach = laxis.Direction();
 
-  // search for attachment points
-  //  gp_Pnt curpos;
   if (myAutomaticPosition)
   {
     gp_Pnt PjFAttach = ElCLib::Value(ElCLib::Parameter(laxis, myFAttach), laxis);
-    // offset to avoid confusion between Edge and Dimension
+
     gp_Vec offset(myAxisDirAttach);
     offset = offset * myArrowSize * (-5);
     gp_Vec Vt(myFAttach, PjFAttach);

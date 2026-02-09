@@ -5,12 +5,8 @@
 #include <StepRepr_ShapeAspect.hpp>
 #include <StepRepr_ShapeAspectDerivingRelationship.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWShapeAspectDerivingRelationship::RWStepRepr_RWShapeAspectDerivingRelationship() =
   default;
-
-//=================================================================================================
 
 void RWStepRepr_RWShapeAspectDerivingRelationship::ReadStep(
   const occ::handle<StepData_StepReaderData>&                  data,
@@ -18,11 +14,9 @@ void RWStepRepr_RWShapeAspectDerivingRelationship::ReadStep(
   occ::handle<Interface_Check>&                                ach,
   const occ::handle<StepRepr_ShapeAspectDerivingRelationship>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "shape_aspect_deriving_relationship"))
     return;
-
-  // Inherited fields of ShapeAspectRelationship
 
   occ::handle<TCollection_HAsciiString> aShapeAspectRelationship_Name;
   data->ReadString(num, 1, "shape_aspect_relationship.name", ach, aShapeAspectRelationship_Name);
@@ -58,7 +52,6 @@ void RWStepRepr_RWShapeAspectDerivingRelationship::ReadStep(
                    STANDARD_TYPE(StepRepr_ShapeAspect),
                    aShapeAspectRelationship_RelatedShapeAspect);
 
-  // Initialize entity
   ent->Init(aShapeAspectRelationship_Name,
             hasShapeAspectRelationship_Description,
             aShapeAspectRelationship_Description,
@@ -66,14 +59,10 @@ void RWStepRepr_RWShapeAspectDerivingRelationship::ReadStep(
             aShapeAspectRelationship_RelatedShapeAspect);
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWShapeAspectDerivingRelationship::WriteStep(
   StepData_StepWriter&                                         SW,
   const occ::handle<StepRepr_ShapeAspectDerivingRelationship>& ent) const
 {
-
-  // Inherited fields of ShapeAspectRelationship
 
   SW.Send(ent->StepRepr_ShapeAspectRelationship::Name());
 
@@ -89,14 +78,10 @@ void RWStepRepr_RWShapeAspectDerivingRelationship::WriteStep(
   SW.Send(ent->StepRepr_ShapeAspectRelationship::RelatedShapeAspect());
 }
 
-//=================================================================================================
-
 void RWStepRepr_RWShapeAspectDerivingRelationship::Share(
   const occ::handle<StepRepr_ShapeAspectDerivingRelationship>& ent,
   Interface_EntityIterator&                                    iter) const
 {
-
-  // Inherited fields of ShapeAspectRelationship
 
   iter.AddItem(ent->StepRepr_ShapeAspectRelationship::RelatingShapeAspect());
 

@@ -6,7 +6,6 @@
 #include <Standard_Transient.hpp>
 class StepBasic_NamedUnit;
 
-//! Added from StepBasic Rev2 to Rev4
 class StepBasic_DerivedUnitElement : public Standard_Transient
 {
 

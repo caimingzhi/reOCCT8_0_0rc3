@@ -10,10 +10,6 @@
 #include <Select3D_SensitiveEntity.hpp>
 #include <Select3D_BndBox3d.hpp>
 
-//! This class is used to detect selection of a polyhedron. The main
-//! principle of detection algorithm is to search for overlap with
-//! each polyhedron's face separately, treating them as planar convex
-//! polygons.
 class MeshVS_SensitivePolyhedron : public Select3D_SensitiveEntity
 {
 public:
@@ -27,7 +23,6 @@ public:
   Standard_EXPORT bool Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                SelectBasics_PickResult&             thePickResult) override;
 
-  //! Returns the amount of nodes of polyhedron
   Standard_EXPORT int NbSubElements() const override;
 
   Standard_EXPORT Select3D_BndBox3d BoundingBox() override;

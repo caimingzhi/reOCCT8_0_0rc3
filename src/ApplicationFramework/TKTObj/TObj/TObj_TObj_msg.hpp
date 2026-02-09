@@ -84,5 +84,3 @@ static const char TObj_TObj_msg[] =
   "\n"
   ".TObj_M_NoWriteAccess\n"
   "  Cannot write the file %s, check permissions\n";
-
-// clang-format on

@@ -2,13 +2,12 @@
 
 #include <OpenGl_GlCore20.hpp>
 
-//! OpenGL 2.1 core based on 2.0 version.
 struct OpenGl_GlCore21 : public OpenGl_GlCore20
 {
 private:
   typedef OpenGl_GlCore20 theBaseClass_t;
 
-public: //! @name OpenGL 2.1 additives to 2.0
+public:
 #if !defined(GL_ES_VERSION_2_0)
 
   using theBaseClass_t::glUniformMatrix2x3fv;
@@ -21,16 +20,12 @@ public: //! @name OpenGL 2.1 additives to 2.0
 #endif
 };
 
-//! OpenGL 3.0 core.
-//! This is first version with deprecation model introduced
-//! - a lot of functionality regarding to fixed pipeline were marked deprecated.
-//! Notice that nothing were actually removed in this version (unless Forward context loaded)!
 struct OpenGl_GlCore30 : public OpenGl_GlCore21
 {
 private:
   typedef OpenGl_GlCore21 theBaseClass_t;
 
-public: //! @name GL_ARB_framebuffer_object (added to OpenGL 3.0 core)
+public:
   using theBaseClass_t::glBindFramebuffer;
   using theBaseClass_t::glBindRenderbuffer;
   using theBaseClass_t::glBlitFramebuffer;
@@ -54,19 +49,19 @@ public: //! @name GL_ARB_framebuffer_object (added to OpenGL 3.0 core)
   using theBaseClass_t::glFramebufferTexture3D;
 #endif
 
-public: //! @name GL_ARB_vertex_array_object (added to OpenGL 3.0 core)
+public:
   using theBaseClass_t::glBindVertexArray;
   using theBaseClass_t::glDeleteVertexArrays;
   using theBaseClass_t::glGenVertexArrays;
   using theBaseClass_t::glIsVertexArray;
 
-public: //! @name GL_ARB_map_buffer_range (added to OpenGL 3.0 core)
+public:
 #ifndef __EMSCRIPTEN__
   using theBaseClass_t::glFlushMappedBufferRange;
   using theBaseClass_t::glMapBufferRange;
 #endif
 
-public: //! @name OpenGL 3.0 additives to 2.1
+public:
   using theBaseClass_t::glBeginTransformFeedback;
   using theBaseClass_t::glBindBufferBase;
   using theBaseClass_t::glBindBufferRange;
@@ -99,7 +94,7 @@ public: //! @name OpenGL 3.0 additives to 2.1
   using theBaseClass_t::glVertexAttribIPointer;
 
 #if !defined(GL_ES_VERSION_2_0)
-  // the following have been added only in OpenGL ES 3.2
+
   using theBaseClass_t::glColorMaski;
   using theBaseClass_t::glDisablei;
   using theBaseClass_t::glEnablei;
@@ -112,7 +107,7 @@ public: //! @name OpenGL 3.0 additives to 2.1
 #endif
 
 #if !defined(GL_ES_VERSION_2_0)
-  // the following are defined only on desktop OpenGL
+
   using theBaseClass_t::glBeginConditionalRender;
   using theBaseClass_t::glBindFragDataLocation;
   using theBaseClass_t::glClampColor;
@@ -136,7 +131,7 @@ public: //! @name OpenGL 3.0 additives to 2.1
 #endif
 
 #if defined(GL_ES_VERSION_2_0)
-  // the following functions from OpenGL 1.5 have been added only in OpenGL ES 3.0
+
   using theBaseClass_t::glBeginQuery;
   using theBaseClass_t::glDeleteQueries;
   using theBaseClass_t::glEndQuery;

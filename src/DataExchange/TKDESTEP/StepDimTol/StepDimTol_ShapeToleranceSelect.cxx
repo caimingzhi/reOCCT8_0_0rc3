@@ -3,11 +3,7 @@
 #include <StepDimTol_ShapeToleranceSelect.hpp>
 #include <StepShape_PlusMinusTolerance.hpp>
 
-//=================================================================================================
-
 StepDimTol_ShapeToleranceSelect::StepDimTol_ShapeToleranceSelect() = default;
-
-//=================================================================================================
 
 int StepDimTol_ShapeToleranceSelect::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -20,15 +16,11 @@ int StepDimTol_ShapeToleranceSelect::CaseNum(const occ::handle<Standard_Transien
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepDimTol_GeometricTolerance> StepDimTol_ShapeToleranceSelect::GeometricTolerance()
   const
 {
   return occ::down_cast<StepDimTol_GeometricTolerance>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepShape_PlusMinusTolerance> StepDimTol_ShapeToleranceSelect::PlusMinusTolerance()
   const

@@ -15,23 +15,6 @@
 #include <IntAna2d_IntPoint.hpp>
 #include <Precision.hpp>
 
-//=========================================================================
-//   Creation of a circle Tangent to : 1 straight line L1.                +
-//                        Passing by : 1 point Point2.                    +
-//                        Centered on  : 1 straight line OnLine.                  +
-//   with a Tolerance of precision  : Tolerance.                        +
-//                                                                        +
-//  We start by making difference with various boundary cases that will be +
-//  processed separately.                                            +
-//  For the general case:                                                  +
-//  ====================                                                  +
-//  We calculate bissectrices to L1 and Point2 that give us       +
-//  all possible locations of centers of all circles        +
-//  tangent to L1 and passing through Point2.                                  +
-//  We intersect these bissectrices with straight line OnLine which gives us +
-//  the points among which we'll choose the solutions.   +
-//  The choices are made basing on Qualifieurs of L1.        +
-//=========================================================================
 GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
                                          const gp_Pnt2d&            Point2,
                                          const gp_Lin2d&            OnLine,
@@ -66,14 +49,10 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
   gp_Dir2d dirL1(L1.Direction());
   gp_Dir2d normal(-dirL1.Y(), dirL1.X());
 
-  //=========================================================================
-  //   Processing of boundary cases.                                          +
-  //=========================================================================
-
   if (dirL1.IsEqual(OnLine.Direction(), Precision::Confusion())
       && OnLine.Distance(originL1) < Precision::Confusion())
   {
-    // POP : l2s 2 straight line are identic : no Sol
+
     NbrSol = 0;
     return;
   }
@@ -105,7 +84,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
     {
       NbrSol++;
       cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(pinterm, dirx), dp2l);
-      //    ======================================================
+
       qualifier2(NbrSol) = GccEnt_noqualifier;
       gp_Dir2d dc2(originL1.XY() - pinterm.XY());
       if (!Qualified1.IsUnqualified())
@@ -134,10 +113,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
     }
   }
 
-  //=========================================================================
-  //   General case.                                                        +
-  //=========================================================================
-
   GccAna_LinPnt2dBisec Bis(L1, Point2);
   if (Bis.IsDone())
   {
@@ -160,7 +135,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
         {
           gp_Pnt2d Center(Intp.Point(j).Value());
           double   Radius = L1.Distance(Center);
-          //	  int nbsol = 1;
+
           bool ok = false;
           if (Qualified1.IsEnclosed())
           {
@@ -188,7 +163,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
           {
             NbrSol++;
             cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-            //          =======================================================
+
             qualifier2(NbrSol) = GccEnt_noqualifier;
             gp_Dir2d dc2(originL1.XY() - Center.XY());
             if (!Qualified1.IsUnqualified())

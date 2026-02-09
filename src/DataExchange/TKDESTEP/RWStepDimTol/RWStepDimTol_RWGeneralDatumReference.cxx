@@ -10,11 +10,7 @@
 #include <StepRepr_ProductDefinitionShape.hpp>
 #include <StepDimTol_DatumReferenceModifierWithValue.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWGeneralDatumReference::RWStepDimTol_RWGeneralDatumReference() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWGeneralDatumReference::ReadStep(
   const occ::handle<StepData_StepReaderData>&          data,
@@ -22,11 +18,9 @@ void RWStepDimTol_RWGeneralDatumReference::ReadStep(
   occ::handle<Interface_Check>&                        ach,
   const occ::handle<StepDimTol_GeneralDatumReference>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 6, ach, "general_datum_reference"))
     return;
-
-  // Inherited fields of ShapeAspect
 
   occ::handle<TCollection_HAsciiString> aShapeAspect_Name;
   data->ReadString(num, 1, "shape_aspect.name", ach, aShapeAspect_Name);
@@ -51,8 +45,6 @@ void RWStepDimTol_RWGeneralDatumReference::ReadStep(
                     "shape_aspect.product_definitional",
                     ach,
                     aShapeAspect_ProductDefinitional);
-
-  // Own fields of GeneralDatumReference
 
   StepDimTol_DatumOrCommonDatum aBase;
   occ::handle<StepDimTol_Datum> aDatum;
@@ -137,7 +129,6 @@ void RWStepDimTol_RWGeneralDatumReference::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aShapeAspect_Name,
             aShapeAspect_Description,
             aShapeAspect_OfShape,
@@ -147,14 +138,10 @@ void RWStepDimTol_RWGeneralDatumReference::ReadStep(
             aModifiers);
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWGeneralDatumReference::WriteStep(
   StepData_StepWriter&                                 SW,
   const occ::handle<StepDimTol_GeneralDatumReference>& ent) const
 {
-
-  // Inherited fields of ShapeAspect
 
   SW.Send(ent->Name());
 
@@ -164,7 +151,6 @@ void RWStepDimTol_RWGeneralDatumReference::WriteStep(
 
   SW.SendLogical(ent->ProductDefinitional());
 
-  // Own fields of GeneralDatumReference
   int aBaseType = ent->Base().CaseNum(ent->Base().Value());
   if (aBaseType == 1)
   {
@@ -207,18 +193,13 @@ void RWStepDimTol_RWGeneralDatumReference::WriteStep(
   }
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWGeneralDatumReference::Share(
   const occ::handle<StepDimTol_GeneralDatumReference>& ent,
   Interface_EntityIterator&                            iter) const
 {
 
-  // Inherited fields of ShapeAspect
-
   iter.AddItem(ent->OfShape());
 
-  // Own fields of GeneralDatumReference
   int aBaseType = ent->Base().CaseNum(ent->Base().Value());
   if (aBaseType == 1)
   {

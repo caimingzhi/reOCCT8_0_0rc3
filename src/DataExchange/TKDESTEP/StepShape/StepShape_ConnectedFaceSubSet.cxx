@@ -3,11 +3,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_ConnectedFaceSubSet, StepShape_ConnectedFaceSet)
 
-//=================================================================================================
-
 StepShape_ConnectedFaceSubSet::StepShape_ConnectedFaceSubSet() = default;
-
-//=================================================================================================
 
 void StepShape_ConnectedFaceSubSet::Init(
   const occ::handle<TCollection_HAsciiString>&                         aRepresentationItem_Name,
@@ -19,14 +15,10 @@ void StepShape_ConnectedFaceSubSet::Init(
   theParentFaceSet = aParentFaceSet;
 }
 
-//=================================================================================================
-
 occ::handle<StepShape_ConnectedFaceSet> StepShape_ConnectedFaceSubSet::ParentFaceSet() const
 {
   return theParentFaceSet;
 }
-
-//=================================================================================================
 
 void StepShape_ConnectedFaceSubSet::SetParentFaceSet(
   const occ::handle<StepShape_ConnectedFaceSet>& aParentFaceSet)

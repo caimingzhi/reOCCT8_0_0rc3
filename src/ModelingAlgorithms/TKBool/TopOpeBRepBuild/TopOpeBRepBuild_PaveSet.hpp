@@ -12,19 +12,15 @@ class TopoDS_Shape;
 class TopOpeBRepBuild_Pave;
 class TopOpeBRepBuild_Loop;
 
-//! class providing an exploration of a set of vertices to build edges.
-//! It is similar to LoopSet from TopOpeBRepBuild where Loop is Pave.
 class TopOpeBRepBuild_PaveSet : public TopOpeBRepBuild_LoopSet
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Create a Pave set on edge <E>. It contains <E> vertices.
   Standard_EXPORT TopOpeBRepBuild_PaveSet(const TopoDS_Shape& E);
 
   Standard_EXPORT void RemovePV(const bool B);
 
-  //! Add <PV> in the Pave set.
   Standard_EXPORT void Append(const occ::handle<TopOpeBRepBuild_Pave>& PV);
 
   Standard_EXPORT void InitLoop() override;

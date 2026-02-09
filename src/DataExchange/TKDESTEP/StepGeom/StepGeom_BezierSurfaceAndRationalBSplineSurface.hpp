@@ -18,7 +18,6 @@ class StepGeom_BezierSurfaceAndRationalBSplineSurface : public StepGeom_BSplineS
 {
 
 public:
-  //! Returns a BezierSurfaceAndRationalBSplineSurface
   Standard_EXPORT StepGeom_BezierSurfaceAndRationalBSplineSurface();
 
   Standard_EXPORT void Init(

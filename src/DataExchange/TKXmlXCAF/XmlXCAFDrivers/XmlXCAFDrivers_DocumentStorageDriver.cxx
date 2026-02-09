@@ -8,8 +8,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlXCAFDrivers_DocumentStorageDriver, XmlDrivers_DocumentStorageDriver)
 
-//=================================================================================================
-
 XmlXCAFDrivers_DocumentStorageDriver::XmlXCAFDrivers_DocumentStorageDriver(
   const TCollection_ExtendedString& theCopyright)
     : XmlDrivers_DocumentStorageDriver(theCopyright)
@@ -17,15 +15,12 @@ XmlXCAFDrivers_DocumentStorageDriver::XmlXCAFDrivers_DocumentStorageDriver(
   AddNamespace("xcaf", "http://www.opencascade.org/OCAF/XML/XCAF");
 }
 
-//=================================================================================================
-
 occ::handle<XmlMDF_ADriverTable> XmlXCAFDrivers_DocumentStorageDriver::AttributeDrivers(
   const occ::handle<Message_Messenger>& theMsgDrv)
 {
-  // Standard drivers
+
   occ::handle<XmlMDF_ADriverTable> aTable = XmlDrivers::AttributeDrivers(theMsgDrv);
 
-  // Native drivers
   XmlMXCAFDoc::AddDrivers(aTable, theMsgDrv);
 
   return aTable;

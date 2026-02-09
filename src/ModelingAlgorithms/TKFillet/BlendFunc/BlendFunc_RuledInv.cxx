@@ -222,8 +222,6 @@ bool BlendFunc_RuledInv::Derivatives(const math_Vector& X, math_Matrix& D)
   gp_Vec resul1, resul2, temp;
   double grosterme;
 
-  // Derivee de nor1 par rapport a u1
-
   temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
   grosterme = ncrossns1.Dot(nplan.Crossed(temp)) / norm1 / norm1;
   resul1.SetLinearForm(-(grosterme * ndotns1 - nplan.Dot(temp)) / norm1,
@@ -232,8 +230,6 @@ bool BlendFunc_RuledInv::Derivatives(const math_Vector& X, math_Matrix& D)
                        ns1,
                        -1. / norm1,
                        temp);
-
-  // Derivee par rapport a v1
 
   temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
   grosterme = ncrossns1.Dot(nplan.Crossed(temp)) / norm1 / norm1;
@@ -255,7 +251,6 @@ bool BlendFunc_RuledInv::Derivatives(const math_Vector& X, math_Matrix& D)
     D(3, 4) = -(d1v1.Dot(nor1)) + p1p2.Dot(resul2);
   }
 
-  // Derivee de nor2 par rapport a u2
   temp      = d2u2.Crossed(d1v2).Added(d1u2.Crossed(d2uv2));
   grosterme = ncrossns2.Dot(nplan.Crossed(temp)) / norm2 / norm2;
   resul1.SetLinearForm(-(grosterme * ndotns2 - nplan.Dot(temp)) / norm2,
@@ -265,7 +260,6 @@ bool BlendFunc_RuledInv::Derivatives(const math_Vector& X, math_Matrix& D)
                        -1. / norm2,
                        temp);
 
-  // Derivee par rapport a v2
   temp      = d2uv2.Crossed(d1v2).Added(d1u2.Crossed(d2v2));
   grosterme = ncrossns2.Dot(nplan.Crossed(temp)) / norm2 / norm2;
   resul2.SetLinearForm(-(grosterme * ndotns2 - nplan.Dot(temp)) / norm2,
@@ -285,8 +279,6 @@ bool BlendFunc_RuledInv::Derivatives(const math_Vector& X, math_Matrix& D)
     resul1.SetLinearForm(v2d.X(), resul1, v2d.Y(), resul2);
     D(4, 1) = p1p2.Dot(resul1) + dpdt.Dot(nor2);
   }
-
-  // derivee par rapport a w (parametre sur ligne guide)
 
   grosterme = ncrossns1.Dot(dnplan.Crossed(ns1)) / norm1 / norm1;
   resul1.SetLinearForm(-(grosterme * ndotns1 - dnplan.Dot(ns1)) / norm1,
@@ -403,8 +395,6 @@ bool BlendFunc_RuledInv::Values(const math_Vector& X, math_Vector& F, math_Matri
   gp_Vec resul1, resul2, temp;
   double grosterme;
 
-  // Derivee de nor1 par rapport a u1
-
   temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
   grosterme = ncrossns1.Dot(nplan.Crossed(temp)) / norm1 / norm1;
   resul1.SetLinearForm(-(grosterme * ndotns1 - nplan.Dot(temp)) / norm1,
@@ -413,8 +403,6 @@ bool BlendFunc_RuledInv::Values(const math_Vector& X, math_Vector& F, math_Matri
                        ns1,
                        -1. / norm1,
                        temp);
-
-  // Derivee par rapport a v1
 
   temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
   grosterme = ncrossns1.Dot(nplan.Crossed(temp)) / norm1 / norm1;
@@ -436,7 +424,6 @@ bool BlendFunc_RuledInv::Values(const math_Vector& X, math_Vector& F, math_Matri
     D(3, 4) = -(d1v1.Dot(nor1)) + p1p2.Dot(resul2);
   }
 
-  // Derivee de nor2 par rapport a u2
   temp      = d2u2.Crossed(d1v2).Added(d1u2.Crossed(d2uv2));
   grosterme = ncrossns2.Dot(nplan.Crossed(temp)) / norm2 / norm2;
   resul1.SetLinearForm(-(grosterme * ndotns2 - nplan.Dot(temp)) / norm2,
@@ -446,7 +433,6 @@ bool BlendFunc_RuledInv::Values(const math_Vector& X, math_Vector& F, math_Matri
                        -1. / norm2,
                        temp);
 
-  // Derivee par rapport a v2
   temp      = d2uv2.Crossed(d1v2).Added(d1u2.Crossed(d2v2));
   grosterme = ncrossns2.Dot(nplan.Crossed(temp)) / norm2 / norm2;
   resul2.SetLinearForm(-(grosterme * ndotns2 - nplan.Dot(temp)) / norm2,
@@ -466,8 +452,6 @@ bool BlendFunc_RuledInv::Values(const math_Vector& X, math_Vector& F, math_Matri
     resul1.SetLinearForm(v2d.X(), resul1, v2d.Y(), resul2);
     D(4, 1) = p1p2.Dot(resul1) + dpdt.Dot(nor2);
   }
-
-  // derivee par rapport a w (parametre sur ligne guide)
 
   grosterme = ncrossns1.Dot(dnplan.Crossed(ns1)) / norm1 / norm1;
   resul1.SetLinearForm(-(grosterme * ndotns1 - dnplan.Dot(ns1)) / norm1,

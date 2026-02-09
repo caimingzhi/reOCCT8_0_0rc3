@@ -1,6 +1,5 @@
 #pragma once
 
-//! Defines the type of position for color scale labels
 enum Aspect_TypeOfColorScalePosition
 {
   Aspect_TOCSP_NONE,

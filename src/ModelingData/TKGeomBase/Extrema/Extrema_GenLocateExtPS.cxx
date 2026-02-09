@@ -12,7 +12,7 @@
 
 static void CorrectTol(const double theU0, const double theV0, math_Vector& theTol)
 {
-  // Correct tolerance for large values of UV parameters
+
   constexpr double aTolRef  = Precision::PConfusion();
   double           anEpsRef = Epsilon(1.);
   double           epsu     = Epsilon(theU0);
@@ -41,8 +41,6 @@ static void CorrectTol(const double theU0, const double theV0, math_Vector& theT
     theTol(2) = std::max(theTol(2), tol);
   }
 }
-
-//=================================================================================================
 
 bool Extrema_GenLocateExtPS::IsMinDist(const gp_Pnt&            theP,
                                        const Adaptor3d_Surface& theS,
@@ -84,8 +82,6 @@ bool Extrema_GenLocateExtPS::IsMinDist(const gp_Pnt&            theP,
   return true;
 }
 
-//=================================================================================================
-
 Extrema_GenLocateExtPS::Extrema_GenLocateExtPS(const Adaptor3d_Surface& theS,
                                                const double             theTolU,
                                                const double             theTolV)
@@ -97,8 +93,6 @@ Extrema_GenLocateExtPS::Extrema_GenLocateExtPS(const Adaptor3d_Surface& theS,
 {
 }
 
-//=================================================================================================
-
 void Extrema_GenLocateExtPS::Perform(const gp_Pnt& theP,
                                      const double  theU0,
                                      const double  theV0,
@@ -106,18 +100,14 @@ void Extrema_GenLocateExtPS::Perform(const gp_Pnt& theP,
 {
   myDone = false;
 
-  // Prepare initial data structures.
   math_Vector aTol(1, 2), aStart(1, 2), aBoundInf(1, 2), aBoundSup(1, 2);
 
-  // Tolerance.
   aTol(1) = myTolU;
   aTol(2) = myTolV;
 
-  // Initial solution approximation.
   aStart(1) = theU0;
   aStart(2) = theV0;
 
-  // Borders.
   aBoundInf(1) = mySurf.FirstUParameter();
   aBoundInf(2) = mySurf.FirstVParameter();
   aBoundSup(1) = mySurf.LastUParameter();
@@ -125,7 +115,7 @@ void Extrema_GenLocateExtPS::Perform(const gp_Pnt& theP,
 
   if (isDistanceCriteria)
   {
-    // Distance criteria.
+
     double      aRelTol = 1.e-8;
     math_Vector aResPnt(1, 2);
 
@@ -136,7 +126,7 @@ void Extrema_GenLocateExtPS::Perform(const gp_Pnt& theP,
 
     if (!aSolver.IsDone())
     {
-      // Try another method
+
       math_FRPR aSolver1(F, aRelTol);
       aSolver1.Perform(F, aStart);
       if (!aSolver1.IsDone())
@@ -155,7 +145,7 @@ void Extrema_GenLocateExtPS::Perform(const gp_Pnt& theP,
   }
   else
   {
-    // Normal projection criteria.
+
     Extrema_FuncPSNorm F(theP, mySurf);
 
     if (mySurf.GetType() == GeomAbs_BSplineSurface)
@@ -202,14 +192,10 @@ void Extrema_GenLocateExtPS::Perform(const gp_Pnt& theP,
   }
 }
 
-//=================================================================================================
-
 bool Extrema_GenLocateExtPS::IsDone() const
 {
   return myDone;
 }
-
-//=================================================================================================
 
 double Extrema_GenLocateExtPS::SquareDistance() const
 {
@@ -219,8 +205,6 @@ double Extrema_GenLocateExtPS::SquareDistance() const
   }
   return mySqDist;
 }
-
-//=================================================================================================
 
 const Extrema_POnSurf& Extrema_GenLocateExtPS::Point() const
 {

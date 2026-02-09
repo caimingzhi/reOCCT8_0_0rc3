@@ -11,7 +11,6 @@ class StepGeom_RectangularTrimmedSurface;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for RectangularTrimmedSurface
 class RWStepGeom_RWRectangularTrimmedSurface
 {
 public:

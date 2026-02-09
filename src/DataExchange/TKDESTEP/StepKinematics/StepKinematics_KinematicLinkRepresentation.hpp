@@ -9,14 +9,11 @@
 #include <StepRepr_RepresentationContext.hpp>
 #include <StepKinematics_KinematicLink.hpp>
 
-//! Representation of STEP entity KinematicLinkRepresentation
 class StepKinematics_KinematicLinkRepresentation : public StepRepr_Representation
 {
 public:
-  //! default constructor
   Standard_EXPORT StepKinematics_KinematicLinkRepresentation();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>& theRepresentation_Name,
     const occ::handle<NCollection_HArray1<occ::handle<StepRepr_RepresentationItem>>>&
@@ -24,9 +21,8 @@ public:
     const occ::handle<StepRepr_RepresentationContext>& theRepresentation_ContextOfItems,
     const occ::handle<StepKinematics_KinematicLink>&   theRepresentedLink);
 
-  //! Returns field RepresentedLink
   Standard_EXPORT occ::handle<StepKinematics_KinematicLink> RepresentedLink() const;
-  //! Sets field RepresentedLink
+
   Standard_EXPORT void SetRepresentedLink(
     const occ::handle<StepKinematics_KinematicLink>& theRepresentedLink);
 

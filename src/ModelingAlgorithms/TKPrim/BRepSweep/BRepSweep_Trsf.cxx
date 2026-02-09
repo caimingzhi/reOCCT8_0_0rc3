@@ -72,13 +72,11 @@ bool BRepSweep_Trsf::Process(const TopoDS_Shape& aGenS, const Sweep_NumShape& aD
   }
 }
 
-//=================================================================================================
-
 void BRepSweep_Trsf::SetContinuity(const TopoDS_Shape& aGenS, const Sweep_NumShape& aDirS)
 {
   constexpr double tl = Precision::Confusion();
-  // angular etant un peu severe pour les contours sketches.
-  double        ta = 0.00175; // environ 0.1 degre
+
+  double        ta = 0.00175;
   GeomAbs_Shape cont;
   BRep_Builder  B = myBuilder.Builder();
   if (aGenS.ShapeType() == TopAbs_EDGE)
@@ -92,8 +90,8 @@ void BRepSweep_Trsf::SetContinuity(const TopoDS_Shape& aGenS, const Sweep_NumSha
       TopExp::Vertices(E, d, f);
       if (d.IsSame(f))
       {
-        //	tol3d = std::max(tl,BRep_Tool::Tolerance(d));
-        const double tol3d = std::max(tl, 2. * BRep_Tool::Tolerance(d)); // IFV 24.05.00 buc60684
+
+        const double tol3d = std::max(tl, 2. * BRep_Tool::Tolerance(d));
         e.Initialize(E);
         ud   = BRep_Tool::Parameter(d, TopoDS::Edge(aGenS));
         uf   = BRep_Tool::Parameter(f, TopoDS::Edge(aGenS));
@@ -157,9 +155,8 @@ void BRepSweep_Trsf::SetContinuity(const TopoDS_Shape& aGenS, const Sweep_NumSha
           {
             u1 = BRep_Tool::Parameter(V, E1);
             u2 = BRep_Tool::Parameter(V, E2);
-            //	    tol3d = std::max(tl,BRep_Tool::Tolerance(V));
-            const double tol3d =
-              std::max(tl, 2. * BRep_Tool::Tolerance(V)); // IFV 24.05.00 buc60684
+
+            const double tol3d = std::max(tl, 2. * BRep_Tool::Tolerance(V));
             e1.Initialize(E1);
             e2.Initialize(E2);
             cont = BRepLProp::Continuity(e1, e2, u1, u2, tol3d, ta);

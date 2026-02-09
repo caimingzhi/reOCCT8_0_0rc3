@@ -15,25 +15,17 @@ IMPLEMENT_DOMSTRING(LastIndexString, "last")
 IMPLEMENT_DOMSTRING(ExtString, "string")
 IMPLEMENT_DOMSTRING(AttributeIDString, "extstrlistattguid")
 
-//=================================================================================================
-
 XmlMDataStd_ExtStringListDriver::XmlMDataStd_ExtStringListDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataStd_ExtStringListDriver::NewEmpty() const
 {
   return new TDataStd_ExtStringList();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDataStd_ExtStringListDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                             const occ::handle<TDF_Attribute>& theTarget,
                                             XmlObjMgt_RRelocationTable&) const
@@ -41,7 +33,6 @@ bool XmlMDataStd_ExtStringListDriver::Paste(const XmlObjMgt_Persistent&       th
   int                      aFirstInd, aLastInd;
   const XmlObjMgt_Element& anElement = theSource;
 
-  // Read the FirstIndex; if the attribute is absent initialize to 1
   XmlObjMgt_DOMString aFirstIndex = anElement.getAttribute(::FirstIndexString());
   if (aFirstIndex == nullptr)
     aFirstInd = 1;
@@ -55,7 +46,6 @@ bool XmlMDataStd_ExtStringListDriver::Paste(const XmlObjMgt_Persistent&       th
     return false;
   }
 
-  // Read the LastIndex; the attribute should present
   if (!anElement.getAttribute(::LastIndexString()).GetInteger(aLastInd))
   {
     TCollection_ExtendedString aMessageString =
@@ -68,13 +58,13 @@ bool XmlMDataStd_ExtStringListDriver::Paste(const XmlObjMgt_Persistent&       th
 
   const occ::handle<TDataStd_ExtStringList> anExtStringList =
     occ::down_cast<TDataStd_ExtStringList>(theTarget);
-  // attribute id
+
   Standard_GUID       aGUID;
   XmlObjMgt_DOMString aGUIDStr = anElement.getAttribute(::AttributeIDString());
   if (aGUIDStr.Type() == XmlObjMgt_DOMString::LDOM_NULL)
-    aGUID = TDataStd_ExtStringList::GetID(); // default case
+    aGUID = TDataStd_ExtStringList::GetID();
   else
-    aGUID = Standard_GUID(static_cast<const char*>(aGUIDStr.GetString())); // user defined case
+    aGUID = Standard_GUID(static_cast<const char*>(aGUIDStr.GetString()));
 
   anExtStringList->SetID(aGUID);
 
@@ -105,10 +95,6 @@ bool XmlMDataStd_ExtStringListDriver::Paste(const XmlObjMgt_Persistent&       th
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMDataStd_ExtStringListDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                             XmlObjMgt_Persistent&             theTarget,
                                             XmlObjMgt_SRelocationTable&) const
@@ -133,7 +119,7 @@ void XmlMDataStd_ExtStringListDriver::Paste(const occ::handle<TDF_Attribute>& th
 
   if (anExtStringList->ID() != TDataStd_ExtStringList::GetID())
   {
-    // convert GUID
+
     char                aGuidStr[Standard_GUID_SIZE_ALLOC];
     Standard_PCharacter pGuidStr = aGuidStr;
     anExtStringList->ID().ToCString(pGuidStr);

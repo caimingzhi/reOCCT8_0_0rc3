@@ -39,5 +39,5 @@ int IGESSolid_BooleanTree::Operation(const int Index) const
   if (theOperands->Value(Index).IsNull())
     return theOperations->Value(Index);
   else
-    return 0; // It is not an operation. (operations can be : 1-2-3)
+    return 0;
 }

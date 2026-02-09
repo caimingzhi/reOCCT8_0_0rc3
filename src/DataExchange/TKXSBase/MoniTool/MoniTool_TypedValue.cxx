@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <MoniTool_TypedValue.hpp>
 
@@ -24,8 +13,6 @@
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(MoniTool_TypedValue, Standard_Transient)
 
-// Not Used :
-// static  char defmess[30];
 static NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transient>> thelibtv;
 static NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transient>> astats;
 
@@ -43,12 +30,12 @@ static NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transie
     tv = new MoniTool_TypedValue("Transient", MoniTool_ValueIdent);
     thelibtv.Bind("Transient", tv);
     tv = new MoniTool_TypedValue("Boolean", MoniTool_ValueEnum);
-    tv->AddDef("enum 0"); //    = 0 False  ,  > 0 True
+    tv->AddDef("enum 0");
     tv->AddDef("eval False");
     tv->AddDef("eval True");
     thelibtv.Bind("Boolean", tv);
     tv = new MoniTool_TypedValue("Logical", MoniTool_ValueEnum);
-    tv->AddDef("enum -1"); //    < 0 False  ,  = 0 Unk  ,  > 0 True
+    tv->AddDef("enum -1");
     tv->AddDef("eval False");
     tv->AddDef("eval Unknown");
     tv->AddDef("eval True");
@@ -56,16 +43,6 @@ static NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transie
   }
   return thelibtv;
 }
-
-//  Fonctions Satisfies offertes en standard ...
-/* Not Used
-
-static bool StaticPath(const occ::handle<TCollection_HAsciiString>& val)
-{
-  OSD_Path apath;
-  return apath.IsValid (TCollection_AsciiString(val->ToCString()));
-}
-*/
 
 MoniTool_TypedValue::MoniTool_TypedValue(const char*              name,
                                          const MoniTool_ValueType type,
@@ -137,7 +114,7 @@ MoniTool_TypedValue::MoniTool_TypedValue(const occ::handle<MoniTool_TypedValue>&
       theenums->SetValue(startcase, other->EnumVal(startcase));
     }
   }
-  //  dupliquer theeadds
+
   if (!eadds.IsEmpty())
   {
     NCollection_DataMap<TCollection_AsciiString, int>::Iterator itad(eadds);
@@ -145,7 +122,6 @@ MoniTool_TypedValue::MoniTool_TypedValue(const occ::handle<MoniTool_TypedValue>&
       theeadds.Bind(itad.Key(), itad.Value());
   }
 
-  //  we duplicate the string
   if (!thehval.IsNull())
     thehval = new TCollection_HAsciiString(other->CStringValue());
 }
@@ -282,8 +258,6 @@ void MoniTool_TypedValue::SetDefinition(const char* deftext)
   thedef.AssignCat(deftext);
 }
 
-//  ##   Print   ##
-
 void MoniTool_TypedValue::Print(Standard_OStream& S) const
 {
   S << "--- Typed Value : " << Name();
@@ -323,35 +297,33 @@ void MoniTool_TypedValue::PrintValue(Standard_OStream& S) const
     S << "(not set)";
 }
 
-//  #########    COMPLEMENTS    ##########
-
 bool MoniTool_TypedValue::AddDef(const char* init)
 {
-  //    Editions : init gives a small edition text, in 2 terms "cmd var" :
+
   int i, iblc = 0;
   for (i = 0; init[i] != '\0'; i++)
     if (init[i] == ' ')
       iblc = i + 1;
   if (iblc == 0)
     return false;
-  //  Recognition of sub-case and routing
-  if (init[0] == 'i' && init[2] == 'i') // imin ival
+
+  if (init[0] == 'i' && init[2] == 'i')
     SetIntegerLimit(false, atoi(&init[iblc]));
-  else if (init[0] == 'i' && init[2] == 'a') // imax ival
+  else if (init[0] == 'i' && init[2] == 'a')
     SetIntegerLimit(true, atoi(&init[iblc]));
-  else if (init[0] == 'r' && init[2] == 'i') // rmin rval
+  else if (init[0] == 'r' && init[2] == 'i')
     SetRealLimit(false, Atof(&init[iblc]));
-  else if (init[0] == 'r' && init[2] == 'a') // rmax rval
+  else if (init[0] == 'r' && init[2] == 'a')
     SetRealLimit(true, Atof(&init[iblc]));
-  else if (init[0] == 'u') // unit name
+  else if (init[0] == 'u')
     SetUnitDef(&init[iblc]);
-  else if (init[0] == 'e' && init[1] == 'm') // ematch istart
+  else if (init[0] == 'e' && init[1] == 'm')
     StartEnum(atoi(&init[iblc]), true);
-  else if (init[0] == 'e' && init[1] == 'n') // enum istart
+  else if (init[0] == 'e' && init[1] == 'n')
     StartEnum(atoi(&init[iblc]), false);
-  else if (init[0] == 'e' && init[1] == 'v') // eval text
+  else if (init[0] == 'e' && init[1] == 'v')
     AddEnum(&init[iblc]);
-  else if (init[0] == 't' && init[1] == 'm') // tmax length
+  else if (init[0] == 't' && init[1] == 'm')
     SetMaxLength(atoi(&init[iblc]));
 
   else
@@ -459,8 +431,6 @@ const char* MoniTool_TypedValue::UnitDef() const
 {
   return theunidef.ToCString();
 }
-
-//  ******  the enums  ******
 
 void MoniTool_TypedValue::StartEnum(const int start, const bool match)
 {
@@ -585,10 +555,8 @@ void MoniTool_TypedValue::AddEnumValue(const char* val, const int num)
   {
     theenums->SetValue(num, TCollection_AsciiString(val));
   }
-  //    We ALSO put in the dictionary
-  //  else {
+
   theeadds.Bind(val, num);
-  //  }
 }
 
 bool MoniTool_TypedValue::EnumDef(int& startcase, int& endcase, bool& match) const
@@ -614,25 +582,22 @@ int MoniTool_TypedValue::EnumCase(const char* val) const
 {
   if (thetype != MoniTool_ValueEnum)
     return (theintlow - 1);
-  int i; // svv Jan 10 2000 : porting on DEC
+  int i;
   for (i = theintlow; i <= theintup; i++)
     if (theenums->Value(i).IsEqual(val))
       return i;
-  //  cas additionnel ?
+
   if (!theeadds.IsEmpty())
   {
     if (theeadds.Find(val, i))
       return i;
   }
-  //  entier possible
-  // gka S4054
+
   for (i = 0; val[i] != '\0'; i++)
     if (val[i] != ' ' && val[i] != '-' && (val[i] < '0' || val[i] > '9'))
       return (theintlow - 1);
   return atoi(val);
 }
-
-//  ******  object/entity  ******
 
 void MoniTool_TypedValue::SetObjectType(const occ::handle<Standard_Type>& typ)
 {
@@ -647,8 +612,6 @@ occ::handle<Standard_Type> MoniTool_TypedValue::ObjectType() const
     return theotyp;
   return STANDARD_TYPE(Standard_Transient);
 }
-
-//  ******   Specific Interpret/Satisfy   ******
 
 void MoniTool_TypedValue::SetInterpret(const MoniTool_ValueInterpret func)
 {
@@ -676,8 +639,6 @@ const char* MoniTool_TypedValue::SatisfiesName() const
 {
   return thesatisn.ToCString();
 }
-
-//  ###########    STATIC VALUE    ############
 
 bool MoniTool_TypedValue::IsSetValue() const
 {
@@ -713,13 +674,13 @@ occ::handle<TCollection_HAsciiString> MoniTool_TypedValue::Interpret(
     return theinterp(this, hval, native);
   if (thetype == MoniTool_ValueEnum)
   {
-    //  We accept both forms : Enum preferably, otherwise Integer
+
     int  startcase, endcase;
     bool match;
     EnumDef(startcase, endcase, match);
     int encas = EnumCase(hval->ToCString());
     if (encas < startcase)
-      return hval; // loupe
+      return hval;
     if (native)
       inter = new TCollection_HAsciiString(EnumVal(encas));
     else
@@ -769,20 +730,15 @@ bool MoniTool_TypedValue::Satisfies(const occ::handle<TCollection_HAsciiString>&
     }
     case MoniTool_ValueEnum:
     {
-      //  We accept both forms : Enum preferably, otherwise Integer
-      int  startcase, endcase; // unused ival;
+
+      int  startcase, endcase;
       bool match;
       EnumDef(startcase, endcase, match);
       if (!match)
         return true;
       if (EnumCase(val->ToCString()) >= startcase)
         return true;
-      //  Here, we accept an integer in the range
-      ////      if (val->IsIntegerValue()) ival = atoi (val->ToCString());
 
-      // PTV 16.09.2000 The if is comment, cause this check is never been done (You can see the
-      // logic)
-      //      if (ival >= startcase && ival <= endcase) return true;
       return false;
     }
     case MoniTool_ValueText:
@@ -847,7 +803,7 @@ bool MoniTool_TypedValue::SetHStringValue(const occ::handle<TCollection_HAsciiSt
     theival = atoi(hval->ToCString());
   else if (thetype == MoniTool_ValueEnum)
     theival = EnumCase(hval->ToCString());
-  //  else return true;
+
   return true;
 }
 
@@ -929,15 +885,13 @@ const char* MoniTool_TypedValue::ObjectTypeName() const
   return theoval->DynamicType()->Name();
 }
 
-//    ########        LIBRARY        ########
-
 bool MoniTool_TypedValue::AddLib(const occ::handle<MoniTool_TypedValue>& tv, const char* defin)
 {
   if (tv.IsNull())
     return false;
   if (defin[0] != '\0')
     tv->SetDefinition(defin);
-  //  else if (tv->Definition() == '\0') return false;
+
   libtv().Bind(tv->Name(), tv);
   return true;
 }

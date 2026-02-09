@@ -49,7 +49,7 @@
 #include <TDF_Label.hpp>
 #include <TDataStd_Expression.hpp>
 
-static int BUC60897(Draw_Interpretor& di, int /*argc*/, const char** /*argv*/)
+static int BUC60897(Draw_Interpretor& di, int, const char**)
 {
   char abuf[16];
 
@@ -168,7 +168,7 @@ static int BUC60852(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-static int BUC60854(Draw_Interpretor& /*di*/, int argc, const char** argv)
+static int BUC60854(Draw_Interpretor&, int argc, const char** argv)
 {
   int newnarg;
   if (argc < 3)
@@ -387,7 +387,7 @@ static int BUC60944(Draw_Interpretor& di, int argc, const char** argv)
   else
     di << "Faulty : The conversion is incorrect : " << out.ToCString() << "\n";
   di << out.ToCString() << "\n";
-  //  std::cout << aPath->Trek() << " !" << std::endl;
+
   return 0;
 }
 
@@ -432,12 +432,6 @@ bool BuildWiresWithReshape(const occ::handle<ShapeBuild_ReShape>& theReshape,
   }
 
   aWire = aWireData->Wire();
-
-  //   if (aWire.Closed())
-  //   {
-  //     theListOfWires.Append(aWire);
-  //     return true;
-  //   }
 
   int           i;
   BRep_Builder  aBuilder;
@@ -596,7 +590,7 @@ static int BUC60924(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-static int BUC60920(Draw_Interpretor& di, int /*argc*/, const char** argv)
+static int BUC60920(Draw_Interpretor& di, int, const char** argv)
 {
 
   occ::handle<AIS_InteractiveContext> myAISContext = ViewerTest::GetAISContext();
@@ -623,17 +617,11 @@ static int BUC60920(Draw_Interpretor& di, int /*argc*/, const char** argv)
 
   double Xv, Yv;
   myV3dView->Project(20, 20, 0, Xv, Yv);
-  //  std::cout<<Xv<<"\t"<<Yv<<std::endl;
 
   int Xp, Yp;
   myV3dView->Convert(Xv, Yv, Xp, Yp);
-  //  std::cout<<Xp<<"\t"<<Yp<<std::endl;
 
   myAISContext->MoveTo(Xp, Yp, myV3dView, true);
-
-  //   if (myAISContext->IsHilighted(anAISShape))
-  //              std::cout << "has hilighted shape : OK"   << std::endl;
-  //   else       std::cout << "has hilighted shape : bugged - Faulty "   << std::endl;
 
   return 0;
 }
@@ -759,8 +747,6 @@ static int OCC984(Draw_Interpretor& di, int argc, const char** argv)
   LDOMParser    aParser;
   LDOM_Document myDOM;
 
-  // char  *File = new char [100];
-  // Sprintf(File,"%s",argv[1]);
   const char* File = (argv[1]);
 
   if (!aParser.parse(File))
@@ -775,92 +761,6 @@ static int OCC984(Draw_Interpretor& di, int argc, const char** argv)
 
   return 0;
 }
-
-// #include <math.h>
-//  See QAOCC.cxx OCC6143
-// static int OCC1723 (Draw_Interpretor& /*di*/, int argc, const char **
-// argv)
-//{
-//   if( argc != 1)
-//   {
-//     std::cout << "Usage : " << argv[0] << std::endl;
-//     return 1;
-//   }
-//
-//   bool isBad = false, isCaught;
-//
-//   // Case 1
-//   isCaught = false;
-//   {
-//     try {
-//       OCC_CATCH_SIGNALS
-//       int a = 1;
-//       int b = 0;
-//       int c = a / b;
-//     }
-//     catch ( Standard_Failure ) {
-//       isCaught = true;
-//       std::cout << "OCC1723 Case 1 : OK" << std::endl;
-//     }
-//   }
-//   isBad = isBad || !isCaught;
-//
-//   // Case 2
-//   isCaught = false;
-//   {
-//     try {
-//       OCC_CATCH_SIGNALS
-//       double d = -1.0;
-//       double e = sqrt(d);
-//     }
-//     catch ( Standard_Failure ) {
-//       isCaught = true;
-//       std::cout << "OCC1723 Case 2 : OK" << std::endl;
-//     }
-//   }
-//   isBad = isBad || !isCaught;
-//
-//   // Case 3
-//   isCaught = false;
-//   {
-//     try {
-//       OCC_CATCH_SIGNALS
-//       double f = 1.0e-200;
-//       double g = 1.0e-200;
-//       double h = f * g;
-//     }
-//     catch ( Standard_Failure ) {
-//       isCaught = true;
-//       std::cout << "OCC1723 Case 3 : OK" << std::endl;
-//     }
-//   }
-//   // MSV: underflow is not caught
-//   //isBad = isBad || !isCaught;
-//
-//   // Case 4
-//   isCaught = false;
-//   {
-//     try {
-//       OCC_CATCH_SIGNALS
-//       double i = 1.0e+200;
-//       double j = 1.0e+200;
-//       double k = i * j;
-//     }
-//     catch ( Standard_Failure ) {
-//       isCaught = true;
-//       std::cout << "OCC1723 Case 4 : OK" << std::endl;
-//     }
-//   }
-//   isBad = isBad || !isCaught;
-//
-//   if (isBad) {
-//     std::cout << "OCC1723 : Error" << std::endl;
-//   } else {
-//     std::cout << "OCC1723 : OK" << std::endl;
-//   }
-//
-//   return 0;
-// }
 
 #include <clocale>
 
@@ -902,7 +802,6 @@ static int OCC1919_real(Draw_Interpretor& di, int argc, const char** argv)
     TDF_Label L;
     DDF::AddLabel(DF, argv[2], L);
 
-    // TDataStd_Real::Set(L,Draw::Atof(arg[3]));
     TCollection_AsciiString AsciiStringReal(argv[3]);
     if (!AsciiStringReal.IsRealValue())
       return 1;
@@ -933,8 +832,8 @@ static int OCC2932_SetIDUAttribute(Draw_Interpretor& di, int argc, const char** 
     di << "No label for entry " << argv[2] << "\n";
     return 0;
   }
-  Standard_GUID old_guid(argv[3]); //"00000000-0000-0000-2222-000000000000");
-  Standard_GUID new_guid(argv[4]); //"00000000-0000-0000-2222-000000000001");
+  Standard_GUID old_guid(argv[3]);
+  Standard_GUID new_guid(argv[4]);
 
   occ::handle<TDataStd_UAttribute> UA;
   if (!label.FindAttribute(old_guid, UA))
@@ -1062,8 +961,6 @@ void QABugs::Commands_14(Draw_Interpretor& theCommands)
   theCommands.Add("BUC60920", "BUC60920", __FILE__, BUC60920, group);
   theCommands.Add("OCC983", "OCC983 file", __FILE__, OCC983, group);
   theCommands.Add("OCC984", "OCC984 file", __FILE__, OCC984, group);
-
-  //  theCommands.Add ("OCC1723", "OCC1723", __FILE__, OCC1723, group);
 
   theCommands.Add("OCC1919_get", "OCC1919_get", __FILE__, OCC1919_get, group);
 

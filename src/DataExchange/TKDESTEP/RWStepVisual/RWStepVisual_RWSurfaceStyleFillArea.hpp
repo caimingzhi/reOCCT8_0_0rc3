@@ -11,7 +11,6 @@ class StepVisual_SurfaceStyleFillArea;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SurfaceStyleFillArea
 class RWStepVisual_RWSurfaceStyleFillArea
 {
 public:

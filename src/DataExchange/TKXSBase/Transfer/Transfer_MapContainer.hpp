@@ -12,12 +12,10 @@ class Transfer_MapContainer : public Standard_Transient
 public:
   Standard_EXPORT Transfer_MapContainer();
 
-  //! Set map already translated geometry objects.
   Standard_EXPORT void SetMapObjects(
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<Standard_Transient>>&
       theMapObjects);
 
-  //! Get map already translated geometry objects.
   Standard_EXPORT NCollection_DataMap<occ::handle<Standard_Transient>,
                                       occ::handle<Standard_Transient>>&
                   GetMapObjects();

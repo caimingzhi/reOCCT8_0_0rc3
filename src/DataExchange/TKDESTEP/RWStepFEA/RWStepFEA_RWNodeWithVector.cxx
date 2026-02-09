@@ -10,22 +10,16 @@
 #include <NCollection_HArray1.hpp>
 #include <StepRepr_RepresentationContext.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWNodeWithVector::RWStepFEA_RWNodeWithVector() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWNodeWithVector::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                           const int                                   num,
                                           occ::handle<Interface_Check>&               ach,
                                           const occ::handle<StepFEA_NodeWithVector>&  ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "node_with_vector"))
     return;
-
-  // Inherited fields of Representation
 
   occ::handle<TCollection_HAsciiString> aRepresentation_Name;
   data->ReadString(num, 1, "representation.name", ach, aRepresentation_Name);
@@ -59,8 +53,6 @@ void RWStepFEA_RWNodeWithVector::ReadStep(const occ::handle<StepData_StepReaderD
                    STANDARD_TYPE(StepRepr_RepresentationContext),
                    aRepresentation_ContextOfItems);
 
-  // Inherited fields of NodeRepresentation
-
   occ::handle<StepFEA_FeaModel> aNodeRepresentation_ModelRef;
   data->ReadEntity(num,
                    4,
@@ -69,20 +61,15 @@ void RWStepFEA_RWNodeWithVector::ReadStep(const occ::handle<StepData_StepReaderD
                    STANDARD_TYPE(StepFEA_FeaModel),
                    aNodeRepresentation_ModelRef);
 
-  // Initialize entity
   ent->Init(aRepresentation_Name,
             aRepresentation_Items,
             aRepresentation_ContextOfItems,
             aNodeRepresentation_ModelRef);
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWNodeWithVector::WriteStep(StepData_StepWriter&                       SW,
                                            const occ::handle<StepFEA_NodeWithVector>& ent) const
 {
-
-  // Inherited fields of Representation
 
   SW.Send(ent->StepRepr_Representation::Name());
 
@@ -97,18 +84,12 @@ void RWStepFEA_RWNodeWithVector::WriteStep(StepData_StepWriter&                 
 
   SW.Send(ent->StepRepr_Representation::ContextOfItems());
 
-  // Inherited fields of NodeRepresentation
-
   SW.Send(ent->StepFEA_NodeRepresentation::ModelRef());
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWNodeWithVector::Share(const occ::handle<StepFEA_NodeWithVector>& ent,
                                        Interface_EntityIterator&                  iter) const
 {
-
-  // Inherited fields of Representation
 
   for (int i1 = 1; i1 <= ent->StepRepr_Representation::NbItems(); i1++)
   {
@@ -118,8 +99,6 @@ void RWStepFEA_RWNodeWithVector::Share(const occ::handle<StepFEA_NodeWithVector>
   }
 
   iter.AddItem(ent->StepRepr_Representation::ContextOfItems());
-
-  // Inherited fields of NodeRepresentation
 
   iter.AddItem(ent->StepFEA_NodeRepresentation::ModelRef());
 }

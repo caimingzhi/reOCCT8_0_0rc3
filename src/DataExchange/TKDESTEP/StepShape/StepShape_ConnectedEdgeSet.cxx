@@ -3,11 +3,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_ConnectedEdgeSet, StepShape_TopologicalRepresentationItem)
 
-//=================================================================================================
-
 StepShape_ConnectedEdgeSet::StepShape_ConnectedEdgeSet() = default;
-
-//=================================================================================================
 
 void StepShape_ConnectedEdgeSet::Init(
   const occ::handle<TCollection_HAsciiString>&                         aRepresentationItem_Name,
@@ -18,15 +14,11 @@ void StepShape_ConnectedEdgeSet::Init(
   theCesEdges = aCesEdges;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<occ::handle<StepShape_Edge>>> StepShape_ConnectedEdgeSet::CesEdges()
   const
 {
   return theCesEdges;
 }
-
-//=================================================================================================
 
 void StepShape_ConnectedEdgeSet::SetCesEdges(
   const occ::handle<NCollection_HArray1<occ::handle<StepShape_Edge>>>& aCesEdges)

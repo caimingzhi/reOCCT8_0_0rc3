@@ -26,39 +26,36 @@ void IGESGeom_ToolFlash::ReadOwnParams(const occ::handle<IGESGeom_Flash>&       
   gp_XY                            aPoint;
   double                           aDim1, aDim2, aRotation;
   occ::handle<IGESData_IGESEntity> aReference;
-  int                              fn = ent->FormNumber(); // for default cases
+  int                              fn = ent->FormNumber();
 
-  // bool st; //szv#4:S4163:12Mar99 not needed
-  aDim1 = aDim2 = aRotation = 0.; // default values
+  aDim1 = aDim2 = aRotation = 0.;
 
-  // Reading reference of flash
-  // clang-format off
-  PR.ReadXY(PR.CurrentList(1, 2), "Reference of Flash", aPoint); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadXY(PR.CurrentList(1, 2), "Reference of Flash", aPoint);
 
-  // Reading first flash sizing parameter
   if (PR.DefinedElseSkip())
-    PR.ReadReal(PR.Current(), "First Flash sizing parameter", aDim1); //szv#4:S4163:12Mar99 `st=` not needed
-  else if (fn > 0) PR.AddFail("Fist Flash sizing parameter : undefined");
+    PR.ReadReal(PR.Current(), "First Flash sizing parameter", aDim1);
+  else if (fn > 0)
+    PR.AddFail("Fist Flash sizing parameter : undefined");
 
-  // Reading second flash sizing parameter
   if (PR.DefinedElseSkip())
-    PR.ReadReal(PR.Current(), "Second Flash sizing parameter", aDim2); //szv#4:S4163:12Mar99 `st=` not needed
-  else {
-    if (fn > 1) PR.AddFail("Second Flash sizing parameter : not defined");
+    PR.ReadReal(PR.Current(), "Second Flash sizing parameter", aDim2);
+  else
+  {
+    if (fn > 1)
+      PR.AddFail("Second Flash sizing parameter : not defined");
   }
 
-  // Reading rotation of flash about reference point
   if (PR.DefinedElseSkip())
-    PR.ReadReal(PR.Current(), "Rotation about ref. point", aRotation); //szv#4:S4163:12Mar99 `st=` not needed
-  else {
-    if (fn == 2 || fn == 4) PR.AddFail("Rotation about ref. point : not defined");
+    PR.ReadReal(PR.Current(), "Rotation about ref. point", aRotation);
+  else
+  {
+    if (fn == 2 || fn == 4)
+      PR.AddFail("Rotation about ref. point : not defined");
   }
 
-  if ( PR.IsParamEntity(PR.CurrentNumber()) )
-    // Reading the referenced entity
-    PR.ReadEntity(IR, PR.Current(), "Referenced entity", aReference); //szv#4:S4163:12Mar99 `st=` not needed
-  // "else" not necessary as this is the last field
-  // clang-format on
+  if (PR.IsParamEntity(PR.CurrentNumber()))
+
+    PR.ReadEntity(IR, PR.Current(), "Referenced entity", aReference);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(aPoint, aDim1, aDim2, aRotation, aReference);
@@ -102,7 +99,7 @@ bool IGESGeom_ToolFlash::OwnCorrect(const occ::handle<IGESGeom_Flash>& ent) cons
   if (res0)
   {
     occ::handle<IGESData_LineFontEntity> nulfont;
-    ent->InitLineFont(nulfont, 1); // ranklinefont force a 1
+    ent->InitLineFont(nulfont, 1);
   }
   bool                             res1 = false;
   occ::handle<IGESData_IGESEntity> ref  = ent->ReferenceEntity();
@@ -134,13 +131,12 @@ bool IGESGeom_ToolFlash::OwnCorrect(const occ::handle<IGESGeom_Flash>& ent) cons
   return (res0 || res1);
 }
 
-IGESData_DirChecker IGESGeom_ToolFlash::DirChecker(
-  const occ::handle<IGESGeom_Flash>& /* ent */) const
+IGESData_DirChecker IGESGeom_ToolFlash::DirChecker(const occ::handle<IGESGeom_Flash>&) const
 {
   IGESData_DirChecker DC(125, 0, 4);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefValue);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
   DC.HierarchyStatusRequired(0);
   return DC;

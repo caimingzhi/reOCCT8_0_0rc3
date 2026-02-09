@@ -14,7 +14,6 @@ class StepAP214_AppliedApprovalAssignment : public StepBasic_ApprovalAssignment
 {
 
 public:
-  //! Returns a AppliedApprovalAssignment
   Standard_EXPORT StepAP214_AppliedApprovalAssignment();
 
   Standard_EXPORT void Init(const occ::handle<StepBasic_Approval>& aAssignedApproval,

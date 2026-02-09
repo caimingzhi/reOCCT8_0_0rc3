@@ -1,6 +1,5 @@
 #pragma once
 
-//! Nature of the reflection of a material.
 enum Graphic3d_TypeOfReflection
 {
   Graphic3d_TOR_AMBIENT = 0,

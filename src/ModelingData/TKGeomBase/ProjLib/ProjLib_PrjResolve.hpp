@@ -17,10 +17,6 @@ public:
                                      const Adaptor3d_Surface& S,
                                      const int                Fix);
 
-  //! Calculates the ort from C(t) to S with a close point.
-  //! The close point is defined by the parameter values U0 and V0.
-  //! The function F(u,v)=distance(S(u,v),C(t)) has an extremum when gradient(F)=0.
-  //! The algorithm searches a zero near the close point.
   Standard_EXPORT void Perform(const double    t,
                                const double    U,
                                const double    V,
@@ -30,10 +26,8 @@ public:
                                const double    FTol         = -1,
                                const bool      StrictInside = false);
 
-  //! Returns True if the distance is found.
   Standard_EXPORT bool IsDone() const;
 
-  //! Returns the point of the extremum distance.
   Standard_EXPORT gp_Pnt2d Solution() const;
 
 private:

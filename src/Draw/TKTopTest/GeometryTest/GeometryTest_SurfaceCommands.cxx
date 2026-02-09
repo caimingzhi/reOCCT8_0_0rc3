@@ -31,8 +31,6 @@
 Standard_IMPORT Draw_Viewer dout;
 #endif
 
-//=================================================================================================
-
 static int sweep(Draw_Interpretor& di, int n, const char** a)
 {
   GeomFill_Trihedron Option = GeomFill_IsCorrectedFrenet;
@@ -131,8 +129,6 @@ static int sweep(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int tuyau(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 4)
@@ -160,7 +156,7 @@ static int tuyau(Draw_Interpretor& di, int n, const char** a)
   {
     if (narg == 4)
     {
-      // tuyau a rayon constant.
+
       Pipe.Init(path, Draw::Atof(a[isect]));
     }
     else
@@ -170,14 +166,14 @@ static int tuyau(Draw_Interpretor& di, int n, const char** a)
   {
     if (narg == 4)
     {
-      // tuyau a section constante.
+
       Pipe.Init(path, firstS, GeomFill_IsCorrectedFrenet);
     }
     else
     {
       if (narg == 5 && !Option_NS)
       {
-        // tuyau a section evolutive
+
         occ::handle<Geom_Curve> lastS = DrawTrSurf::GetCurve(a[isect + 1]);
         Cont                          = GeomAbs_C2;
         Pipe.Init(path, firstS, lastS);
@@ -198,7 +194,7 @@ static int tuyau(Draw_Interpretor& di, int n, const char** a)
           DrawTrSurf::Set(a[1], aSurface);
           return 0;
         }
-        // tuyau a N sections, N>=2
+
         NCollection_Sequence<occ::handle<Geom_Curve>> Seq;
         Seq.Clear();
         Seq.Append(firstS);
@@ -228,8 +224,6 @@ static int tuyau(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int ruled(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 4)
@@ -255,8 +249,6 @@ static int ruled(Draw_Interpretor& di, int n, const char** a)
   DrawTrSurf::Set(a[1], S);
   return 0;
 }
-
-//=================================================================================================
 
 static int appsurf(Draw_Interpretor& di, int n, const char** a)
 {
@@ -303,7 +295,7 @@ static int appsurf(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-static int fillcurves(Draw_Interpretor& /*di*/, int n, const char** a)
+static int fillcurves(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 6)
     return 1;
@@ -338,10 +330,6 @@ static int fillcurves(Draw_Interpretor& /*di*/, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : GetSurfaceContinuity
-// purpose  : Returns the continuity of the given surface
-//=======================================================================
 static int GetSurfaceContinuity(Draw_Interpretor& theDI, int theNArg, const char** theArgv)
 {
   if (theNArg != 2)
@@ -357,20 +345,12 @@ static int GetSurfaceContinuity(Draw_Interpretor& theDI, int theNArg, const char
     return 1;
   }
 
-  char aContName[7][3] = {"C0",  // 0
-                          "G1",  // 1
-                          "C1",  // 2
-                          "G2",  // 3
-                          "C2",  // 4
-                          "C3",  // 5
-                          "CN"}; // 6
+  char aContName[7][3] = {"C0", "G1", "C1", "G2", "C2", "C3", "CN"};
 
   theDI << theArgv[1] << " has " << aContName[GS1->Continuity()] << " continuity.\n";
 
   return 0;
 }
-
-//=================================================================================================
 
 void GeometryTest::SurfaceCommands(Draw_Interpretor& theCommands)
 {

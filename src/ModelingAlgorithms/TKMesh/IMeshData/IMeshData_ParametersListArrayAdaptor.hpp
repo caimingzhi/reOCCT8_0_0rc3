@@ -2,28 +2,21 @@
 
 #include <Standard_Transient.hpp>
 
-//! Auxiliary tool representing adaptor interface for child classes of
-//! IMeshData_ParametersList to be used in tools working on NCollection_Array structure.
 template <class ParametersListPtrType>
 class IMeshData_ParametersListArrayAdaptor : public Standard_Transient
 {
 public:
-  //! Constructor. Initializes tool by the given parameters.
   IMeshData_ParametersListArrayAdaptor(const ParametersListPtrType& theParameters)
       : myParameters(theParameters)
   {
   }
 
-  //! Destructor.
   ~IMeshData_ParametersListArrayAdaptor() override = default;
 
-  //! Returns lower index in parameters array.
   int Lower() const { return 0; }
 
-  //! Returns upper index in parameters array.
   int Upper() const { return myParameters->ParametersNb() - 1; }
 
-  //! Returns value of the given index.
   double Value(const int theIndex) const { return myParameters->GetParameter(theIndex); }
 
 private:

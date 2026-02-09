@@ -1,7 +1,5 @@
 #define _POLYGONES_
 
-// if define _POLYGONES_ ColorPrsBuilder use ArrayOfPolygons for drawing faces
-
 #include <Graphic3d_ArrayOfPolygons.hpp>
 #include <Graphic3d_ArrayOfPrimitives.hpp>
 #include <Graphic3d_ArrayOfSegments.hpp>
@@ -34,10 +32,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_NodalColorPrsBuilder, MeshVS_PrsBuilder)
 
-/*
-  Class       : MeshVS_ImageTexture2D
-  Description : Texture for nodal presentation
-*/
 class MeshVS_ImageTexture2D : public Graphic3d_Texture2D
 {
 public:
@@ -52,14 +46,9 @@ public:
   DEFINE_STANDARD_RTTI_INLINE(MeshVS_ImageTexture2D, Graphic3d_Texture2D)
 };
 
-//================================================================
-// Function : getNearestPow2
-// Purpose  : Returns the nearest power of two greater than the
-//            argument value
-//================================================================
 static inline int getNearestPow2(int theValue)
 {
-  // Precaution against overflow
+
   constexpr int aHalfMax = IntegerLast() >> 1;
   int           aRes     = 1;
   if (theValue > aHalfMax)
@@ -68,14 +57,6 @@ static inline int getNearestPow2(int theValue)
     aRes <<= 1;
   return aRes;
 }
-
-/*
-  Class       : MeshVS_NodalColorPrsBuilder
-  Description : This class provides methods to create presentation of
-                nodes with assigned color (See hxx for more description )
-*/
-
-//=================================================================================================
 
 MeshVS_NodalColorPrsBuilder::MeshVS_NodalColorPrsBuilder(const occ::handle<MeshVS_Mesh>& Parent,
                                                          const MeshVS_DisplayModeFlags&  Flags,
@@ -88,8 +69,6 @@ MeshVS_NodalColorPrsBuilder::MeshVS_NodalColorPrsBuilder(const occ::handle<MeshV
 {
   SetExcluding(true);
 }
-
-//=================================================================================================
 
 void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
                                         const TColStd_PackedMapOfInteger&      IDs,
@@ -118,7 +97,6 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
       || (!myUseTexture && !myNodeColorMap.Extent()))
     return;
 
-  // subtract the hidden elements and ids to exclude (to minimize allocated memory)
   TColStd_PackedMapOfInteger anIDs;
   anIDs.Assign(IDs);
   occ::handle<TColStd_HPackedMapOfInteger> aHiddenElems = myParentMesh->GetHiddenElems();
@@ -130,9 +108,8 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
   aDrawer->GetBoolean(MeshVS_DA_ColorReflection, IsReflect);
   aDrawer->GetBoolean(MeshVS_DA_SmoothShading, IsMeshSmoothShading);
 
-  // Following parameter are used for texture presentation only
-  int nbColors        = 0; // Number of colors from color map
-  int nbTextureColors = 0; // Number of colors in texture (it will be pow of 2)
+  int nbColors        = 0;
+  int nbTextureColors = 0;
   if (myUseTexture)
   {
     nbColors        = myTextureColorMap.Length();
@@ -141,7 +118,6 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
 
   int aSize = anIDs.Extent();
 
-  // Calculate maximum possible number of vertices and bounds
   occ::handle<NCollection_HArray1<NCollection_Sequence<int>>> aTopo;
   int                                     PolygonVerticesFor3D = 0, PolygonBoundsFor3D = 0;
   TColStd_MapIteratorOfPackedMapOfInteger it(anIDs);
@@ -157,9 +133,6 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
                                                PolygonBoundsFor3D);
   }
 
-  // Draw faces with nodal color
-  // OCC20644 Use "plastic" material as it is "non-physic" and so it is easier to get the required
-  // colors
   Graphic3d_MaterialAspect aMaterial[2] = {Graphic3d_NameOfMaterial_Plastified,
                                            Graphic3d_NameOfMaterial_Plastified};
   for (int i = 0; i < 2; ++i)
@@ -173,22 +146,12 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
     }
     else
     {
-      // OCC20644 Using the material with reflection properties same as in
-      // ElementalColorPrsBuilder, to get the same colors.
-      // Additionally, ambient and diffuse coefficients are used below to scale incoming colors,
-      // to simulate TelUpdateMaterial() function from OpenGl_attri.c.
-      // This is mandatory, as these "scaled" colors are then passed directly to OpenGL
-      // as ambient and diffuse colors of the current material using glColorMaterial().
-      // In ElementalColorPrsBuilder we do not need to do scale the colors, as this
-      // is done by TelUpdateMaterial().
-      // 0.5 is used to have the colors in 3D maximally similar to those in the color scale.
-      // This is possible when the sum of all coefficient is equal to 1.
+
       aMaterial[i].SetAmbientColor(Quantity_Color(NCollection_Vec3<float>(0.5f)));
       aMaterial[i].SetDiffuseColor(Quantity_Color(NCollection_Vec3<float>(0.5f)));
     }
   }
 
-  // Create array of polygons for interior presentation of faces and volumes
   occ::handle<Graphic3d_ArrayOfPolygons> aCPolyArr =
     new Graphic3d_ArrayOfPolygons(aMaxFaceNodes * aSize + PolygonVerticesFor3D,
                                   aSize + PolygonBoundsFor3D,
@@ -201,7 +164,6 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
   int aNbFacePrimitives = 0;
   int aNbVolmPrimitives = 0;
   int aNbEdgePrimitives = 0;
-  // int aNbLinkPrimitives = 0;
 
   for (it.Reset(); it.More(); it.Next())
   {
@@ -218,28 +180,21 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
         {
           const NCollection_Sequence<int>& aFaceNodes = aTopo->Value(aFaceIdx);
 
-          aNbEdgePrimitives += aFaceNodes.Length();     // add edge segments
-          aNbVolmPrimitives += aFaceNodes.Length() - 2; // add volumetric cell triangles
+          aNbEdgePrimitives += aFaceNodes.Length();
+          aNbVolmPrimitives += aFaceNodes.Length() - 2;
         }
       }
     }
     else if (aType == MeshVS_ET_Link)
     {
-      // aNbLinkPrimitives += aNbNodes - 1; // add link segments
     }
     else if (aType == MeshVS_ET_Face)
     {
-      aNbEdgePrimitives += aNbNodes;     // add edge segments
-      aNbFacePrimitives += aNbNodes - 2; // add face triangles
+      aNbEdgePrimitives += aNbNodes;
+      aNbFacePrimitives += aNbNodes - 2;
     }
   }
 
-  // Here we do not use indices arrays because they are not effective for some mesh
-  // drawing modes: shrinking mode (displaces the vertices inside the polygon), 3D
-  // cell rendering (normal interpolation is not always applicable - flat shading),
-  // elemental coloring (color interpolation is impossible)
-
-  // Create array of polygons for interior presentation of faces and volumes
   occ::handle<Graphic3d_ArrayOfTriangles> aFaceTriangles =
     new Graphic3d_ArrayOfTriangles((aNbFacePrimitives + aNbVolmPrimitives) * 3,
                                    0,
@@ -247,14 +202,12 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
                                    !myUseTexture,
                                    myUseTexture);
 
-  // Create array of polylines for presentation of edges
   occ::handle<Graphic3d_ArrayOfSegments> anEdgeSegments =
     new Graphic3d_ArrayOfSegments(aNbEdgePrimitives * 2);
 
   double aMin = gp::Resolution() * gp::Resolution();
   gp_Dir aDefNorm(gp_Dir::D::Z);
 
-  // Prepare for scaling the incoming colors
   const double anColorRatio = 1.0;
 
   for (it.Reset(); it.More(); it.Next())
@@ -286,7 +239,6 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
       if (!isValid)
         continue;
 
-      // Preparing normal(s) to show reflections if requested
       occ::handle<NCollection_HArray1<double>> aNormals;
 
       bool hasNormals =
@@ -295,11 +247,11 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
 
       if (aType == MeshVS_ET_Face)
       {
-        // clang-format off
-        for (int aNodeIdx = 0; aNodeIdx < NbNodes - 2; ++aNodeIdx) // triangulate polygon
-        // clang-format on
+
+        for (int aNodeIdx = 0; aNodeIdx < NbNodes - 2; ++aNodeIdx)
+
         {
-          for (int aSubIdx = 0; aSubIdx < 3; ++aSubIdx) // generate sub-triangle
+          for (int aSubIdx = 0; aSubIdx < 3; ++aSubIdx)
           {
             gp_XYZ aPnt(aCoords(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 1),
                         aCoords(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 2),
@@ -324,11 +276,6 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
               const double aTexCoord =
                 myTextureCoords(aNodes(aSubIdx == 0 ? 1 : (aNodeIdx + aSubIdx + 1)));
 
-              // Transform texture coordinate in accordance with number of colors specified
-              // by upper level and real size of OpenGL texture. The OpenGL texture has border
-              // colors interpolated with the colors from the color map, that's why we need to
-              // shrink texture coordinates around the middle point to exclude areas where the
-              // map colors are interpolated with the borders color
               aFaceTriangles->AddVertex(
                 aPnt,
                 aNorm,
@@ -356,7 +303,7 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
           }
         }
 
-        for (int aNodeIdx = 0; aNodeIdx < NbNodes; ++aNodeIdx) // border segmentation
+        for (int aNodeIdx = 0; aNodeIdx < NbNodes; ++aNodeIdx)
         {
           const int aNextIdx = (aNodeIdx + 1) % NbNodes;
 
@@ -369,7 +316,6 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
                                     aCoords(3 * aNextIdx + 3));
         }
 
-        // if IsExcludingOn then presentation must not be built by other builders
         if (IsExcludingOn())
         {
           IDsToExclude.Add(aKey);
@@ -398,17 +344,14 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
                      nbTextureColors,
                      anColorRatio);
 
-        // if IsExcludingOn then presentation must not be built by other builders
         if (IsExcludingOn())
           IDsToExclude.Add(aKey);
       }
     }
-  } // for ( ...
+  }
 
   occ::handle<Graphic3d_AspectFillArea3d> anAsp;
 
-  //  Aspect_InteriorStyle  aStyle;
-  //  int      aStyleInt;
   Aspect_TypeOfLine anEdgeType  = Aspect_TOL_SOLID;
   double            anEdgeWidth = 1.0;
   Quantity_Color    anInteriorColor;
@@ -449,8 +392,6 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
   }
   else
   {
-    //    if ( aDrawer->GetInteger ( MeshVS_DA_InteriorStyle, aStyleInt ) )
-    //      aStyle = (Aspect_InteriorStyle)aStyleInt;
 
     anAsp = new Graphic3d_AspectFillArea3d(Aspect_IS_SOLID,
                                            Quantity_NOC_WHITE,
@@ -474,8 +415,7 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
   aGroup1->SetClosed(toSupressBackFaces);
 
   aGroup1->SetPrimitivesAspect(anAsp);
-  aGroup1->AddPrimitiveArray(aFaceTriangles /*aCPolyArr*/);
-  // aGroup1->AddPrimitiveArray( aCPolyArr );
+  aGroup1->AddPrimitiveArray(aFaceTriangles);
 
   if (aShowEdges)
   {
@@ -488,8 +428,6 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
     aGroup2->AddPrimitiveArray(anEdgeSegments);
   }
 }
-
-//=================================================================================================
 
 void MeshVS_NodalColorPrsBuilder::AddVolumePrs(
   const occ::handle<NCollection_HArray1<NCollection_Sequence<int>>>& theTopo,
@@ -541,11 +479,10 @@ void MeshVS_NodalColorPrsBuilder::AddVolumePrs(
         }
       }
 
-      // clang-format off
-      for (int aNodeIdx = 0; aNodeIdx < aFaceNodes.Length() - 2; ++aNodeIdx) // triangulate polygon
-      // clang-format on
+      for (int aNodeIdx = 0; aNodeIdx < aFaceNodes.Length() - 2; ++aNodeIdx)
+
       {
-        for (int aSubIdx = 0; aSubIdx < 3; ++aSubIdx) // generate sub-triangle
+        for (int aSubIdx = 0; aSubIdx < 3; ++aSubIdx)
         {
           gp_Pnt aPnt(aPolyNodes.Value(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 1),
                       aPolyNodes.Value(3 * (aSubIdx == 0 ? 0 : (aNodeIdx + aSubIdx)) + 2),
@@ -587,7 +524,7 @@ void MeshVS_NodalColorPrsBuilder::AddVolumePrs(
   }
   else
   {
-    // Find all pairs of nodes (edges) to draw (will be drawn only once)
+
     NCollection_Map<MeshVS_NodePair, MeshVS_SymmetricPairHasher> aEdgeMap;
 
     for (int aFaceIdx = theTopo->Lower(), topoup = theTopo->Upper(); aFaceIdx <= topoup; ++aFaceIdx)
@@ -603,7 +540,6 @@ void MeshVS_NodalColorPrsBuilder::AddVolumePrs(
       }
     }
 
-    // Draw edges
     for (NCollection_Map<MeshVS_NodePair, MeshVS_SymmetricPairHasher>::Iterator anIt(aEdgeMap);
          anIt.More();
          anIt.Next())
@@ -621,29 +557,21 @@ void MeshVS_NodalColorPrsBuilder::AddVolumePrs(
   }
 }
 
-//=================================================================================================
-
 void MeshVS_NodalColorPrsBuilder::SetColors(
   const NCollection_DataMap<int, Quantity_Color>& theColorMap)
 {
   myNodeColorMap = theColorMap;
 }
 
-//=================================================================================================
-
 const NCollection_DataMap<int, Quantity_Color>& MeshVS_NodalColorPrsBuilder::GetColors() const
 {
   return myNodeColorMap;
 }
 
-//=================================================================================================
-
 bool MeshVS_NodalColorPrsBuilder::HasColors() const
 {
   return (myNodeColorMap.Extent() > 0);
 }
-
-//=================================================================================================
 
 bool MeshVS_NodalColorPrsBuilder::GetColor(const int ID, Quantity_Color& theColor) const
 {
@@ -652,8 +580,6 @@ bool MeshVS_NodalColorPrsBuilder::GetColor(const int ID, Quantity_Color& theColo
     theColor = myNodeColorMap.Find(ID);
   return aRes;
 }
-
-//=================================================================================================
 
 void MeshVS_NodalColorPrsBuilder::SetColor(const int theID, const Quantity_Color& theCol)
 {
@@ -664,10 +590,6 @@ void MeshVS_NodalColorPrsBuilder::SetColor(const int theID, const Quantity_Color
     myNodeColorMap.Bind(theID, theCol);
 }
 
-//================================================================
-// Function : UseTexture
-// Purpose  : Specify whether texture must be used to build presentation
-//================================================================
 void MeshVS_NodalColorPrsBuilder::UseTexture(const bool theToUse)
 {
   myUseTexture = theToUse;
@@ -677,98 +599,51 @@ void MeshVS_NodalColorPrsBuilder::UseTexture(const bool theToUse)
     myTextureColorMap.Clear();
 }
 
-//================================================================
-// Function : IsUseTexture
-// Purpose  : Verify whether texture is used to build presentation
-//================================================================
 bool MeshVS_NodalColorPrsBuilder::IsUseTexture() const
 {
   return myUseTexture;
 }
 
-//================================================================
-// Function : SetColorMap
-// Purpose  : Set colors to be used for texrture presentation.
-//            Generate texture in accordance with given parameters
-//================================================================
 void MeshVS_NodalColorPrsBuilder::SetColorMap(const NCollection_Sequence<Quantity_Color>& theColors)
 {
   myTextureColorMap = theColors;
 }
 
-//================================================================
-// Function : GetColorMap
-// Purpose  : Return colors used for texrture presentation
-//================================================================
 const NCollection_Sequence<Quantity_Color>& MeshVS_NodalColorPrsBuilder::GetColorMap() const
 {
   return myTextureColorMap;
 }
 
-//================================================================
-// Function : SetInvalidColor
-// Purpose  : Set color representing invalid texture coordinate
-//            (laying outside range [0, 1])
-//================================================================
 void MeshVS_NodalColorPrsBuilder::SetInvalidColor(const Quantity_Color& theInvalidColor)
 {
   myInvalidColor = theInvalidColor;
 }
 
-//================================================================
-// Function : GetInvalidColor
-// Purpose  : Return color representing invalid texture coordinate
-//            (laying outside range [0, 1])
-//================================================================
 Quantity_Color MeshVS_NodalColorPrsBuilder::GetInvalidColor() const
 {
   return myInvalidColor;
 }
 
-//================================================================
-// Function : SetTextureCoords
-// Purpose  : Specify correspondence between node IDs and texture
-//            coordinates (range [0, 1])
-//================================================================
 void MeshVS_NodalColorPrsBuilder::SetTextureCoords(const NCollection_DataMap<int, double>& theMap)
 {
   myTextureCoords = theMap;
 }
 
-//================================================================
-// Function : GetTextureCoords
-// Purpose  : Get correspondence between node IDs and texture
-//            coordinates (range [0, 1])
-//================================================================
 const NCollection_DataMap<int, double>& MeshVS_NodalColorPrsBuilder::GetTextureCoords() const
 {
   return myTextureCoords;
 }
 
-//================================================================
-// Function : SetTextureCoord
-// Purpose  : Specify correspondence between node ID and texture
-//            coordinate (range [0, 1])
-//================================================================
 void MeshVS_NodalColorPrsBuilder::SetTextureCoord(const int theID, const double theCoord)
 {
   myTextureCoords.Bind(theID, theCoord);
 }
 
-//================================================================
-// Function : GetTextureCoord
-// Purpose  : Return correspondence between node IDs and texture
-//            coordinate (range [0, 1])
-//================================================================
 double MeshVS_NodalColorPrsBuilder::GetTextureCoord(const int theID)
 {
   return myTextureCoords.IsBound(theID) ? myTextureCoords(theID) : -1;
 }
 
-//================================================================
-// Function : CreateTexture
-// Purpose  : Create texture in accordance with myTextureColorMap
-//================================================================
 occ::handle<Graphic3d_Texture2D> MeshVS_NodalColorPrsBuilder::CreateTexture() const
 {
   const int aColorsNb = myTextureColorMap.Length();
@@ -777,7 +652,6 @@ occ::handle<Graphic3d_Texture2D> MeshVS_NodalColorPrsBuilder::CreateTexture() co
     return nullptr;
   }
 
-  // create and fill image with colors
   occ::handle<Image_PixMap> anImage = new Image_PixMap();
   if (!anImage->InitTrash(Image_Format_RGBA, size_t(getNearestPow2(aColorsNb)), 2))
   {
@@ -795,14 +669,12 @@ occ::handle<Graphic3d_Texture2D> MeshVS_NodalColorPrsBuilder::CreateTexture() co
     aColor.a()                      = 0xFF;
   }
 
-  // fill padding bytes
   const Quantity_Color& aLastColorSrc = myTextureColorMap.Last();
   const Image_ColorRGBA aLastColor    = {{static_cast<uint8_t>(255.0 * aLastColorSrc.Red()),
                                           static_cast<uint8_t>(255.0 * aLastColorSrc.Green()),
                                           static_cast<uint8_t>(255.0 * aLastColorSrc.Blue()),
                                           0xFF}};
 
-  // fill second row
   for (size_t aCol = (size_t)aColorsNb; aCol < anImage->SizeX(); ++aCol)
   {
     anImage->ChangeValue<Image_ColorRGBA>(0, aCol) = aLastColor;
@@ -817,6 +689,5 @@ occ::handle<Graphic3d_Texture2D> MeshVS_NodalColorPrsBuilder::CreateTexture() co
     anImage->ChangeValue<Image_ColorRGBA>(1, aCol) = anInvalidColor;
   }
 
-  // create texture
   return new MeshVS_ImageTexture2D(anImage);
 }

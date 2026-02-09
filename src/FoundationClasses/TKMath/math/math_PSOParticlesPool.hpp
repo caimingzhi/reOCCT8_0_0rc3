@@ -2,13 +2,10 @@
 
 #include <NCollection_Array1.hpp>
 
-//! Describes particle pool for using in PSO algorithm.
-//! Indexes:
-//! 0 <= aDimidx <= myDimensionCount - 1
 struct PSO_Particle
 {
-  double* Position; // Data for pointers allocated within PSOParticlesPool instance.
-  double* Velocity; // Not need to delete it manually.
+  double* Position;
+  double* Velocity;
   double* BestPosition;
   double  Distance;
   double  BestDistance;
@@ -22,12 +19,9 @@ struct PSO_Particle
     BestPosition = nullptr;
   }
 
-  //! Compares the particles according to their distances.
   bool operator<(const PSO_Particle& thePnt) const { return Distance < thePnt.Distance; }
 };
 
-// Indexes:
-// 1 <= aParticleIdx <= myParticlesCount
 class math_PSOParticlesPool
 {
 public:
@@ -43,7 +37,7 @@ public:
 
 private:
   NCollection_Array1<PSO_Particle> myParticlesPool;
-  NCollection_Array1<double>       myMemory; // Stores particles vector data.
+  NCollection_Array1<double>       myMemory;
   int                              myParticlesCount;
   int                              myDimensionCount;
 };

@@ -1,18 +1,14 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_PrismaticPairWithRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_PrismaticPairWithRange, StepKinematics_PrismaticPair)
-
-//=================================================================================================
 
 StepKinematics_PrismaticPairWithRange::StepKinematics_PrismaticPairWithRange()
 {
   defLowerLimitActualTranslation = false;
   defUpperLimitActualTranslation = false;
 }
-
-//=================================================================================================
 
 void StepKinematics_PrismaticPairWithRange::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -64,14 +60,10 @@ void StepKinematics_PrismaticPairWithRange::Init(
     myUpperLimitActualTranslation = 0;
 }
 
-//=================================================================================================
-
 double StepKinematics_PrismaticPairWithRange::LowerLimitActualTranslation() const
 {
   return myLowerLimitActualTranslation;
 }
-
-//=================================================================================================
 
 void StepKinematics_PrismaticPairWithRange::SetLowerLimitActualTranslation(
   const double theLowerLimitActualTranslation)
@@ -79,29 +71,21 @@ void StepKinematics_PrismaticPairWithRange::SetLowerLimitActualTranslation(
   myLowerLimitActualTranslation = theLowerLimitActualTranslation;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PrismaticPairWithRange::HasLowerLimitActualTranslation() const
 {
   return defLowerLimitActualTranslation;
 }
-
-//=================================================================================================
 
 double StepKinematics_PrismaticPairWithRange::UpperLimitActualTranslation() const
 {
   return myUpperLimitActualTranslation;
 }
 
-//=================================================================================================
-
 void StepKinematics_PrismaticPairWithRange::SetUpperLimitActualTranslation(
   const double theUpperLimitActualTranslation)
 {
   myUpperLimitActualTranslation = theUpperLimitActualTranslation;
 }
-
-//=================================================================================================
 
 bool StepKinematics_PrismaticPairWithRange::HasUpperLimitActualTranslation() const
 {

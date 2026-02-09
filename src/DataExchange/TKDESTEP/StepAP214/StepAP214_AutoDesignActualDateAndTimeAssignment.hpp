@@ -15,7 +15,6 @@ class StepAP214_AutoDesignActualDateAndTimeAssignment : public StepBasic_DateAnd
 {
 
 public:
-  //! Returns a AutoDesignActualDateAndTimeAssignment
   Standard_EXPORT StepAP214_AutoDesignActualDateAndTimeAssignment();
 
   Standard_EXPORT void Init(

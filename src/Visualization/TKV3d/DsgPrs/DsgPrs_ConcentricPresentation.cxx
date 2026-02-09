@@ -19,7 +19,6 @@ void DsgPrs_ConcentricPresentation::Add(const occ::handle<Prs3d_Presentation>& a
 {
   occ::handle<Prs3d_DimensionAspect> LA = aDrawer->DimensionAspect();
 
-  // Creation et discretisation du plus gros cercle
   gp_Circ      Circ(gp_Ax2(aCenter, aNorm), aRadius);
   const int    nbp   = 50;
   const double dteta = (2. * M_PI) / nbp;
@@ -37,7 +36,6 @@ void DsgPrs_ConcentricPresentation::Add(const occ::handle<Prs3d_Presentation>& a
     aPrims->AddVertex(ElCLib::Value(ucur, Circ));
   aPrims->AddVertex(pt1);
 
-  // Creation et discretisation du plus petit cercle
   Circ.SetRadius(0.5 * aRadius);
   pt1 = ElCLib::Value(0., Circ);
   aPrims->AddBound(nbp + 1);
@@ -47,8 +45,6 @@ void DsgPrs_ConcentricPresentation::Add(const occ::handle<Prs3d_Presentation>& a
     aPrims->AddVertex(ElCLib::Value(ucur, Circ));
   aPrims->AddVertex(pt1);
 
-  // Creation de la croix
-  // 1er segment
   gp_Dir vecnorm(aPoint.XYZ() - aCenter.XYZ());
   gp_Vec vec(vecnorm);
   vec.Multiply(aRadius);
@@ -59,7 +55,6 @@ void DsgPrs_ConcentricPresentation::Add(const occ::handle<Prs3d_Presentation>& a
   aPrims->AddVertex(p1);
   aPrims->AddVertex(p2);
 
-  // 2ieme segment
   vec.Cross(aNorm);
   vecnorm.SetCoord(vec.X(), vec.Y(), vec.Z());
   vec.SetXYZ(vecnorm.XYZ());

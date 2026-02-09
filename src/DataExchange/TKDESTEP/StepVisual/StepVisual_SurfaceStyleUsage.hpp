@@ -11,7 +11,6 @@ class StepVisual_SurfaceStyleUsage : public Standard_Transient
 {
 
 public:
-  //! Returns a SurfaceStyleUsage
   Standard_EXPORT StepVisual_SurfaceStyleUsage();
 
   Standard_EXPORT void Init(const StepVisual_SurfaceSide                    aSide,

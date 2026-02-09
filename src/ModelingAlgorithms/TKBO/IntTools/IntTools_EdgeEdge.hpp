@@ -13,23 +13,17 @@
 class Geom_Curve;
 class Bnd_Box;
 
-//! The class provides Edge/Edge intersection algorithm
-//! based on the intersection between edges bounding boxes.
 class IntTools_EdgeEdge
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   IntTools_EdgeEdge();
 
-  //! Destructor
   ~IntTools_EdgeEdge();
 
-  //! Constructor
   IntTools_EdgeEdge(const TopoDS_Edge& theEdge1, const TopoDS_Edge& theEdge2);
 
-  //! Constructor
   IntTools_EdgeEdge(const TopoDS_Edge& theEdge1,
                     const double       aT11,
                     const double       aT12,
@@ -37,67 +31,47 @@ public:
                     const double       aT21,
                     const double       aT22);
 
-  //! Sets the first edge
   void SetEdge1(const TopoDS_Edge& theEdge);
 
-  //! Sets the first edge and its range
   void SetEdge1(const TopoDS_Edge& theEdge, const double aT1, const double aT2);
 
-  //! Sets the range for the first edge
   void SetRange1(const IntTools_Range& theRange1);
 
-  //! Sets the range for the first edge
   void SetRange1(const double aT1, const double aT2);
 
-  //! Sets the second edge
   void SetEdge2(const TopoDS_Edge& theEdge);
 
-  //! Sets the first edge and its range
   void SetEdge2(const TopoDS_Edge& theEdge, const double aT1, const double aT2);
 
-  //! Sets the range for the second edge
   void SetRange2(const IntTools_Range& theRange);
 
-  //! Sets the range for the second edge
   void SetRange2(const double aT1, const double aT2);
 
-  //! Sets the Fuzzy value
   void SetFuzzyValue(const double theFuzz);
 
-  //! Performs the intersection between edges
   Standard_EXPORT void Perform();
 
-  //! Returns TRUE if common part(s) is(are) found
   bool IsDone() const;
 
-  //! Returns Fuzzy value
   double FuzzyValue() const;
 
-  //! Returns common parts
   const NCollection_Sequence<IntTools_CommonPrt>& CommonParts() const;
 
-  //! Sets the flag myQuickCoincidenceCheck
   void UseQuickCoincidenceCheck(const bool bFlag) { myQuickCoincidenceCheck = bFlag; }
 
-  //! Returns the flag myQuickCoincidenceCheck
   bool IsCoincidenceCheckedQuickly() { return myQuickCoincidenceCheck; }
 
 protected:
-  //! Checks the data
   void CheckData();
 
-  //! Prepares the data
   Standard_EXPORT void Prepare();
 
-  //! Computes Line/Line intersection.
   Standard_EXPORT void ComputeLineLine();
 
-  //! Intermediate function
   Standard_EXPORT void FindSolutions(NCollection_Sequence<IntTools_Range>& theRanges1,
                                      NCollection_Sequence<IntTools_Range>& theRanges2,
                                      bool&                                 bSplit2);
 
-  //! Looking for the exact intersection ranges
   Standard_EXPORT void FindSolutions(const IntTools_Range&                 theR1,
                                      const Bnd_Box&                        theBox1,
                                      const IntTools_Range&                 theR2,
@@ -105,12 +79,10 @@ protected:
                                      NCollection_Sequence<IntTools_Range>& theRanges1,
                                      NCollection_Sequence<IntTools_Range>& theRanges2);
 
-  //! Merges found solutions
   Standard_EXPORT void MergeSolutions(const NCollection_Sequence<IntTools_Range>& theRanges1,
                                       const NCollection_Sequence<IntTools_Range>& theRanges2,
                                       const bool                                  bSplit2);
 
-  //! Looking for the range of the edge which is in the box
   Standard_EXPORT static bool FindParameters(const BRepAdaptor_Curve& theBAC,
                                              const double             aT1,
                                              const double             aT2,
@@ -122,7 +94,6 @@ protected:
                                              double&                  aTB1,
                                              double&                  aTB2);
 
-  //! Checks if edges coincide on the ranges
   Standard_EXPORT int CheckCoincidence(const double aT11,
                                        const double aT12,
                                        const double aT21,
@@ -130,14 +101,12 @@ protected:
                                        const double theCriteria,
                                        const double theCurveRes1);
 
-  //! Adds common part of the given type to myCommonParts
   Standard_EXPORT void AddSolution(const double           aT11,
                                    const double           aT12,
                                    const double           aT21,
                                    const double           aT22,
                                    const TopAbs_ShapeEnum theType);
 
-  //! Looking for the minimal distance between edges on the ranges
   Standard_EXPORT void FindBestSolution(const double aT11,
                                         const double aT12,
                                         const double aT21,
@@ -145,14 +114,11 @@ protected:
                                         double&      aT1,
                                         double&      aT2);
 
-  //! Checks is there an intersection between edges on the given ranges
-  //! (for nearly conicident edges)
   Standard_EXPORT bool IsIntersection(const double aT11,
                                       const double aT12,
                                       const double aT21,
                                       const double aT22);
 
-  //! Checks if the edges are coincident really.
   Standard_EXPORT bool IsCoincident();
 
   TopoDS_Edge                              myEdge1;
@@ -177,19 +143,11 @@ protected:
   int                                      myErrorStatus;
   NCollection_Sequence<IntTools_CommonPrt> myCommonParts;
 
-  //! Allows avoiding use Edge-Edge intersection
-  //! algorithm (i.e. speeding up the Boolean algorithm)
-  //! if the edges are coincided really.
-  //! If it is not evidently set of this flag should
-  //! be avoided (otherwise, the performance of
-  //! Boolean algorithm will be slower).
   bool myQuickCoincidenceCheck;
 };
 
 #include <Precision.hpp>
 #include <BRep_Tool.hpp>
-
-//=================================================================================================
 
 inline IntTools_EdgeEdge::IntTools_EdgeEdge()
     : myTol1(0.),
@@ -209,8 +167,6 @@ inline IntTools_EdgeEdge::IntTools_EdgeEdge()
       myQuickCoincidenceCheck(false)
 {
 }
-
-//=================================================================================================
 
 inline IntTools_EdgeEdge::IntTools_EdgeEdge(const TopoDS_Edge& theEdge1,
                                             const TopoDS_Edge& theEdge2)
@@ -233,8 +189,6 @@ inline IntTools_EdgeEdge::IntTools_EdgeEdge(const TopoDS_Edge& theEdge1,
       myQuickCoincidenceCheck(false)
 {
 }
-
-//=================================================================================================
 
 inline IntTools_EdgeEdge::IntTools_EdgeEdge(const TopoDS_Edge& theEdge1,
                                             const double       aT11,
@@ -262,33 +216,23 @@ inline IntTools_EdgeEdge::IntTools_EdgeEdge(const TopoDS_Edge& theEdge1,
 {
 }
 
-//=================================================================================================
-
 inline IntTools_EdgeEdge::~IntTools_EdgeEdge() = default;
-
-//=================================================================================================
 
 inline void IntTools_EdgeEdge::SetEdge1(const TopoDS_Edge& theEdge)
 {
   myEdge1 = theEdge;
 }
 
-//=================================================================================================
-
 inline void IntTools_EdgeEdge::SetRange1(const IntTools_Range& theRange)
 {
   myRange1 = theRange;
 }
-
-//=================================================================================================
 
 inline void IntTools_EdgeEdge::SetRange1(const double aT1, const double aT2)
 {
   myRange1.SetFirst(aT1);
   myRange1.SetLast(aT2);
 }
-
-//=================================================================================================
 
 inline void IntTools_EdgeEdge::SetEdge1(const TopoDS_Edge& theEdge,
                                         const double       aT1,
@@ -298,29 +242,21 @@ inline void IntTools_EdgeEdge::SetEdge1(const TopoDS_Edge& theEdge,
   SetRange1(aT1, aT2);
 }
 
-//=================================================================================================
-
 inline void IntTools_EdgeEdge::SetEdge2(const TopoDS_Edge& theEdge)
 {
   myEdge2 = theEdge;
 }
-
-//=================================================================================================
 
 inline void IntTools_EdgeEdge::SetRange2(const IntTools_Range& theRange)
 {
   myRange2 = theRange;
 }
 
-//=================================================================================================
-
 inline void IntTools_EdgeEdge::SetRange2(const double aT1, const double aT2)
 {
   myRange2.SetFirst(aT1);
   myRange2.SetLast(aT2);
 }
-
-//=================================================================================================
 
 inline void IntTools_EdgeEdge::SetEdge2(const TopoDS_Edge& theEdge,
                                         const double       aT1,
@@ -330,35 +266,25 @@ inline void IntTools_EdgeEdge::SetEdge2(const TopoDS_Edge& theEdge,
   SetRange2(aT1, aT2);
 }
 
-//=================================================================================================
-
 inline void IntTools_EdgeEdge::SetFuzzyValue(const double theFuzz)
 {
   myFuzzyValue = std::max(theFuzz, Precision::Confusion());
 }
-
-//=================================================================================================
 
 inline double IntTools_EdgeEdge::FuzzyValue() const
 {
   return myFuzzyValue;
 }
 
-//=================================================================================================
-
 inline const NCollection_Sequence<IntTools_CommonPrt>& IntTools_EdgeEdge::CommonParts() const
 {
   return myCommonParts;
 }
 
-//=================================================================================================
-
 inline bool IntTools_EdgeEdge::IsDone() const
 {
   return (myErrorStatus == 0);
 }
-
-//=================================================================================================
 
 inline void IntTools_EdgeEdge::CheckData()
 {
@@ -367,13 +293,13 @@ inline void IntTools_EdgeEdge::CheckData()
     myErrorStatus = 1;
     return;
   }
-  //
+
   if (BRep_Tool::Degenerated(myEdge1) || BRep_Tool::Degenerated(myEdge2))
   {
     myErrorStatus = 2;
     return;
   }
-  //
+
   if (!BRep_Tool::IsGeometric(myEdge1) || !BRep_Tool::IsGeometric(myEdge2))
   {
     myErrorStatus = 3;

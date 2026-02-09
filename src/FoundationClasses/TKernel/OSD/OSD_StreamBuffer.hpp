@@ -3,12 +3,10 @@
 #include <memory>
 #include <string>
 
-//! A file stream implementation initialized from std::shared_ptr<std::streambuf>.
 template <typename T>
 class OSD_StreamBuffer : public T
 {
 public:
-  //! Main constructor.
   OSD_StreamBuffer(const std::string& theUrl, const std::shared_ptr<std::streambuf>& theBuffer)
       : T(theBuffer.get()),
         myUrl(theUrl),
@@ -16,7 +14,6 @@ public:
   {
   }
 
-  //! Return an opened URL.
   const std::string& Url() const { return myUrl; }
 
 protected:

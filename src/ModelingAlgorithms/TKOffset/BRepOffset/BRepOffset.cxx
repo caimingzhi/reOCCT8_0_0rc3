@@ -23,8 +23,6 @@
 #include <TopoDS_Face.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//=================================================================================================
-
 occ::handle<Geom_Surface> BRepOffset::Surface(const occ::handle<Geom_Surface>& Surface,
                                               const double                     Offset,
                                               BRepOffset_Status&               theStatus,
@@ -123,7 +121,7 @@ occ::handle<Geom_Surface> BRepOffset::Surface(const occ::handle<Geom_Surface>& S
     double                            MinorRadius = S->MinorRadius();
     gp_Ax3                            Axis        = S->Position();
     if (MinorRadius < MajorRadius)
-    { // A FINIR
+    {
       if (Axis.Direct())
         MinorRadius += Offset;
       else
@@ -173,23 +171,19 @@ occ::handle<Geom_Surface> BRepOffset::Surface(const occ::handle<Geom_Surface>& S
   return Result;
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Surface> BRepOffset::CollapseSingularities(
   const occ::handle<Geom_Surface>& theSurface,
   const TopoDS_Face&               theFace,
   double                           thePrecision)
 {
-  // check surface type to see if it can be processed
+
   occ::handle<Standard_Type> aType = theSurface->DynamicType();
   if (aType != STANDARD_TYPE(Geom_BSplineSurface))
   {
-    // for the moment, only bspline surfaces are treated;
-    // in the future, bezier surfaces and surfaces of revolution can be also handled
+
     return theSurface;
   }
 
-  // find singularities (vertices of degenerated edges)
   NCollection_List<gp_Pnt> aDegenPnt;
   NCollection_List<double> aDegenTol;
   for (TopExp_Explorer anExp(theFace, TopAbs_EDGE); anExp.More(); anExp.Next())
@@ -210,7 +204,6 @@ occ::handle<Geom_Surface> BRepOffset::CollapseSingularities(
     aDegenTol.Append(BRep_Tool::Tolerance(aV1));
   }
 
-  // iterate by sides of the surface
   if (aType == STANDARD_TYPE(Geom_BSplineSurface))
   {
     occ::handle<Geom_BSplineSurface>  aBSpline = occ::down_cast<Geom_BSplineSurface>(theSurface);
@@ -218,7 +211,6 @@ occ::handle<Geom_Surface> BRepOffset::CollapseSingularities(
 
     occ::handle<Geom_BSplineSurface> aCopy;
 
-    // iterate by sides: {U=0; V=0; U=1; V=1}
     int RowStart[4] = {aPoles.LowerRow(), aPoles.LowerRow(), aPoles.UpperRow(), aPoles.LowerRow()};
     int ColStart[4] = {aPoles.LowerCol(), aPoles.LowerCol(), aPoles.LowerCol(), aPoles.UpperCol()};
     int RowStep[4]  = {0, 1, 0, 1};
@@ -229,7 +221,7 @@ occ::handle<Geom_Surface> BRepOffset::CollapseSingularities(
                        aPoles.ColLength()};
     for (int iSide = 0; iSide < 4; iSide++)
     {
-      // compute center of gravity of side poles
+
       gp_XYZ aSum;
       for (int iPole = 0; iPole < NbSteps[iSide]; iPole++)
       {
@@ -239,12 +231,11 @@ occ::handle<Geom_Surface> BRepOffset::CollapseSingularities(
       }
       gp_Pnt aCenter(aSum / NbSteps[iSide]);
 
-      // determine if all poles of the side fit into:
-      bool isCollapsed = true; // aCenter precisely (with gp::Resolution())
-      bool isSingular  = true; // aCenter with thePrecision
-                               // clang-format off
-      NCollection_LocalArray<bool,4> isDegenerated (aDegenPnt.Extent()); // degenerated vertex
-                                                                       // clang-format on
+      bool isCollapsed = true;
+      bool isSingular  = true;
+
+      NCollection_LocalArray<bool, 4> isDegenerated(aDegenPnt.Extent());
+
       for (size_t iDegen = 0; iDegen < isDegenerated.Size(); ++iDegen)
         isDegenerated[iDegen] = true;
       for (int iPole = 0; iPole < NbSteps[iSide]; iPole++)
@@ -252,14 +243,12 @@ occ::handle<Geom_Surface> BRepOffset::CollapseSingularities(
         const gp_Pnt& aPole = aPoles(RowStart[iSide] + iPole * RowStep[iSide],
                                      ColStart[iSide] + iPole * ColStep[iSide]);
 
-        // distance from CG
         double aDistCG = aCenter.Distance(aPole);
         if (aDistCG > gp::Resolution())
           isCollapsed = false;
         if (aDistCG > thePrecision)
           isSingular = false;
 
-        // distances from degenerated points
         NCollection_List<gp_Pnt>::Iterator aDegPntIt(aDegenPnt);
         NCollection_List<double>::Iterator aDegTolIt(aDegenTol);
         for (size_t iDegen = 0; iDegen < isDegenerated.Size();
@@ -273,11 +262,9 @@ occ::handle<Geom_Surface> BRepOffset::CollapseSingularities(
       }
       if (isCollapsed)
       {
-        continue; // already Ok, nothing to be done
+        continue;
       }
 
-      // decide to collapse the side: either if it is singular with thePrecision,
-      // or if it fits into one (and only one) degenerated point
       if (!isSingular)
       {
         int                                aNbFit = 0;
@@ -287,8 +274,7 @@ occ::handle<Geom_Surface> BRepOffset::CollapseSingularities(
         {
           if (isDegenerated[iDegen])
           {
-            // remove degenerated point as soon as it fits at least one side, to prevent total
-            // collapse
+
             aDegenPnt.Remove(aDegPntIt);
             aDegenTol.Remove(aDegTolIt);
             aNbFit++;
@@ -300,12 +286,9 @@ occ::handle<Geom_Surface> BRepOffset::CollapseSingularities(
           }
         }
 
-        // if side fits more than one degenerated vertex, do not collapse it
-        // to be on the safe side
         isSingular = (aNbFit == 1);
       }
 
-      // do collapse
       if (isSingular)
       {
         if (aCopy.IsNull())

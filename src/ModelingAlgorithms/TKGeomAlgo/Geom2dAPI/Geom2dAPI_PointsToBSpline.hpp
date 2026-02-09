@@ -11,56 +11,19 @@
 #include <Approx_ParametrizationType.hpp>
 class Geom2d_BSplineCurve;
 
-//! This class is used to approximate a BsplineCurve
-//! passing through an array of points, with a given
-//! Continuity.
-//! Describes functions for building a 2D BSpline
-//! curve which approximates a set of points.
-//! A PointsToBSpline object provides a framework for:
-//! -   defining the data of the BSpline curve to be built,
-//! -   implementing the approximation algorithm, and
-//! -   consulting the results
 class Geom2dAPI_PointsToBSpline
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Constructs an empty approximation algorithm.
-  //! Use an Init function to define and build the BSpline curve.
   Standard_EXPORT Geom2dAPI_PointsToBSpline();
 
-  //! Approximate a BSpline Curve passing through an
-  //! array of Point. The resulting BSpline will have
-  //! the following properties:
-  //! 1- his degree will be in the range [Degmin,Degmax]
-  //! 2- his continuity will be at least <Continuity>
-  //! 3- the distance from the point <Points> to the
-  //! BSpline will be lower to Tol2D
   Standard_EXPORT Geom2dAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt2d>& Points,
                                             const int                           DegMin = 3,
                                             const int                           DegMax = 8,
                                             const GeomAbs_Shape Continuity             = GeomAbs_C2,
                                             const double        Tol2D                  = 1.0e-6);
 
-  //! Approximate a BSpline Curve passing through an
-  //! array of Point. Of coordinates :
-  //!
-  //! X = X0 + DX * (i-YValues.Lower())
-  //! Y = YValues(i)
-  //!
-  //! With i in the range YValues.Lower(), YValues.Upper()
-  //!
-  //! The BSpline will be parametrized from t = X0 to
-  //! X0 + DX * (YValues.Upper() - YValues.Lower())
-  //!
-  //! And will satisfy X(t) = t
-  //!
-  //! The resulting BSpline will have
-  //! the following properties:
-  //! 1- his degree will be in the range [Degmin,Degmax]
-  //! 2- his continuity will be at least <Continuity>
-  //! 3- the distance from the point <Points> to the
-  //! BSpline will be lower to Tol2D
   Standard_EXPORT Geom2dAPI_PointsToBSpline(const NCollection_Array1<double>& YValues,
                                             const double                      X0,
                                             const double                      DX,
@@ -69,13 +32,6 @@ public:
                                             const GeomAbs_Shape Continuity           = GeomAbs_C2,
                                             const double        Tol2D                = 1.0e-6);
 
-  //! Approximate a BSpline Curve passing through an
-  //! array of Point. The resulting BSpline will have
-  //! the following properties:
-  //! 1- his degree will be in the range [Degmin,Degmax]
-  //! 2- his continuity will be at least <Continuity>
-  //! 3- the distance from the point <Points> to the
-  //! BSpline will be lower to Tol2D
   Standard_EXPORT Geom2dAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt2d>& Points,
                                             const Approx_ParametrizationType    ParType,
                                             const int                           DegMin = 3,
@@ -83,15 +39,6 @@ public:
                                             const GeomAbs_Shape Continuity             = GeomAbs_C2,
                                             const double        Tol2D                  = 1.0e-3);
 
-  //! Approximate a BSpline Curve passing through an
-  //! array of Point, which parameters are given by the
-  //! array <Parameters>.
-  //! The resulting BSpline will have the following
-  //! properties:
-  //! 1- his degree will be in the range [Degmin,Degmax]
-  //! 2- his continuity will be at least <Continuity>
-  //! 3- the distance from the point <Points> to the
-  //! BSpline will be lower to Tol2D
   Standard_EXPORT Geom2dAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt2d>& Points,
                                             const NCollection_Array1<double>&   Parameters,
                                             const int                           DegMin = 3,
@@ -99,10 +46,6 @@ public:
                                             const GeomAbs_Shape Continuity             = GeomAbs_C2,
                                             const double        Tol2D                  = 1.0e-3);
 
-  //! Approximate a BSpline Curve passing through an
-  //! array of Point using variational smoothing algorithm,
-  //! which tries to minimize additional criterium:
-  //! Weight1*CurveLength + Weight2*Curvature + Weight3*Torsion
   Standard_EXPORT Geom2dAPI_PointsToBSpline(const NCollection_Array1<gp_Pnt2d>& Points,
                                             const double                        Weight1,
                                             const double                        Weight2,
@@ -111,38 +54,12 @@ public:
                                             const GeomAbs_Shape Continuity             = GeomAbs_C2,
                                             const double        Tol3D                  = 1.0e-3);
 
-  //! Approximate a BSpline Curve passing through an
-  //! array of Point. The resulting BSpline will have
-  //! the following properties:
-  //! 1- his degree will be in the range [Degmin,Degmax]
-  //! 2- his continuity will be at least <Continuity>
-  //! 3- the distance from the point <Points> to the
-  //! BSpline will be lower to Tol2D
   Standard_EXPORT void Init(const NCollection_Array1<gp_Pnt2d>& Points,
                             const int                           DegMin     = 3,
                             const int                           DegMax     = 8,
                             const GeomAbs_Shape                 Continuity = GeomAbs_C2,
                             const double                        Tol2D      = 1.0e-6);
 
-  //! Approximate a BSpline Curve passing through an
-  //! array of Point. Of coordinates :
-  //!
-  //! X = X0 + DX * (i-YValues.Lower())
-  //! Y = YValues(i)
-  //!
-  //! With i in the range YValues.Lower(), YValues.Upper()
-  //!
-  //! The BSpline will be parametrized from t = X0 to
-  //! X0 + DX * (YValues.Upper() - YValues.Lower())
-  //!
-  //! And will satisfy X(t) = t
-  //!
-  //! The resulting BSpline will have
-  //! the following properties:
-  //! 1- his degree will be in the range [Degmin,Degmax]
-  //! 2- his continuity will be at least <Continuity>
-  //! 3- the distance from the point <Points> to the
-  //! BSpline will be lower to Tol2D
   Standard_EXPORT void Init(const NCollection_Array1<double>& YValues,
                             const double                      X0,
                             const double                      DX,
@@ -151,13 +68,6 @@ public:
                             const GeomAbs_Shape               Continuity = GeomAbs_C2,
                             const double                      Tol2D      = 1.0e-6);
 
-  //! Approximate a BSpline Curve passing through an
-  //! array of Point. The resulting BSpline will have
-  //! the following properties:
-  //! 1- his degree will be in the range [Degmin,Degmax]
-  //! 2- his continuity will be at least <Continuity>
-  //! 3- the distance from the point <Points> to the
-  //! BSpline will be lower to Tol2D
   Standard_EXPORT void Init(const NCollection_Array1<gp_Pnt2d>& Points,
                             const Approx_ParametrizationType    ParType,
                             const int                           DegMin     = 3,
@@ -165,15 +75,6 @@ public:
                             const GeomAbs_Shape                 Continuity = GeomAbs_C2,
                             const double                        Tol2D      = 1.0e-3);
 
-  //! Approximate a BSpline Curve passing through an
-  //! array of Point, which parameters are given by the
-  //! array <Parameters>.
-  //! The resulting BSpline will have the following
-  //! properties:
-  //! 1- his degree will be in the range [Degmin,Degmax]
-  //! 2- his continuity will be at least <Continuity>
-  //! 3- the distance from the point <Points> to the
-  //! BSpline will be lower to Tol2D
   Standard_EXPORT void Init(const NCollection_Array1<gp_Pnt2d>& Points,
                             const NCollection_Array1<double>&   Parameters,
                             const int                           DegMin     = 3,
@@ -181,10 +82,6 @@ public:
                             const GeomAbs_Shape                 Continuity = GeomAbs_C2,
                             const double                        Tol2D      = 1.0e-3);
 
-  //! Approximate a BSpline Curve passing through an
-  //! array of Point using variational smoothing algorithm,
-  //! which tries to minimize additional criterium:
-  //! Weight1*CurveLength + Weight2*Curvature + Weight3*Torsion
   Standard_EXPORT void Init(const NCollection_Array1<gp_Pnt2d>& Points,
                             const double                        Weight1,
                             const double                        Weight2,
@@ -193,7 +90,6 @@ public:
                             const GeomAbs_Shape                 Continuity = GeomAbs_C2,
                             const double                        Tol2D      = 1.0e-3);
 
-  //! Returns the approximate BSpline Curve
   Standard_EXPORT const occ::handle<Geom2d_BSplineCurve>& Curve() const;
   Standard_EXPORT operator occ::handle<Geom2d_BSplineCurve>() const;
 

@@ -19,13 +19,12 @@
 #define MDSdmiodmoiloi                                                                             \
   NCollection_DataMap<int, NCollection_List<occ::handle<TopOpeBRepDS_Interference>>>::Iterator
 
-//------------------------------------------------------
 Standard_EXPORT void FDS_repvg2(const TopOpeBRepDS_DataStructure&                         BDS,
                                 const int                                                 EIX,
                                 const TopOpeBRepDS_Kind                                   GT,
                                 NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI,
                                 NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& RLI)
-//------------------------------------------------------
+
 {
   const TopoDS_Edge& E    = TopoDS::Edge(BDS.Shape(EIX));
   bool               isEd = BRep_Tool::Degenerated(E);
@@ -62,8 +61,6 @@ Standard_EXPORT void FDS_repvg2(const TopOpeBRepDS_DataStructure&               
       continue;
     }
 
-    // xpu121198 : raise in PRO16303, if G1 is a vertex same domain, make sure
-    // rk(G1)= rk(E1)
     int rkG1 = BDS.AncestorRank(G1);
     int rkS1 = BDS.AncestorRank(S1);
     if (isvertex && (rkG1 != rkS1))
@@ -74,7 +71,7 @@ Standard_EXPORT void FDS_repvg2(const TopOpeBRepDS_DataStructure&               
       {
         it1.Next();
         continue;
-      } //!!NYIRAISE
+      }
       G1 = BDS.Shape(oovG);
     }
 
@@ -157,7 +154,7 @@ Standard_EXPORT void FDS_repvg2(const TopOpeBRepDS_DataStructure&               
         }
 
         LI.Remove(it2);
-      } // !isComplex && memeS
+      }
 
       if (!isComplex && !memeS)
       {
@@ -167,7 +164,7 @@ Standard_EXPORT void FDS_repvg2(const TopOpeBRepDS_DataStructure&               
           EITool.Add(E, PDS, I1);
         else if (isvertex)
           EITool.Add(E1, VDS, I1);
-      } // !isComplex && !memeS
+      }
 
       if (isComplex && !memeS)
       {
@@ -176,14 +173,13 @@ Standard_EXPORT void FDS_repvg2(const TopOpeBRepDS_DataStructure&               
         else if (isvertex)
           EITool.Add(E2, VDS, I2);
         LI.Remove(it2);
-      } // (isComplex && !memeS)
+      }
 
       if (isComplex && memeS)
       {
         it2.Next();
-      } // (isComplex && memeS)
-
-    } // it2
+      }
+    }
 
     if (!isComplex && memeS)
     {
@@ -203,23 +199,19 @@ Standard_EXPORT void FDS_repvg2(const TopOpeBRepDS_DataStructure&               
     {
       it1.Next();
     }
+  }
+}
 
-  } // it1
-
-} // FDS_repvg2
-
-//------------------------------------------------------
 Standard_EXPORT void FDS_repvg(const TopOpeBRepDS_DataStructure&                         BDS,
                                const int                                                 EIX,
                                const TopOpeBRepDS_Kind                                   GT,
                                NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LOI,
                                NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& RLOI)
-//------------------------------------------------------
+
 {
   TopOpeBRepDS_TKI tki;
   tki.FillOnGeometry(LOI);
 
-  // xpu211098 : cto904F6 (e10,FTRA1=f14,FTRA2=f17)
   MDSdmoiloi                                                         mapITRASHA;
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it(LOI);
   while (it.More())
@@ -252,14 +244,4 @@ Standard_EXPORT void FDS_repvg(const TopOpeBRepDS_DataStructure&                
     LOI.Append(loi);
     RLOI.Append(rloi);
   }
-
-  /*LOI.Clear();
-  for (tki.Init(); tki.More(); tki.Next()) {
-    TopOpeBRepDS_Kind K; int G; tki.Value(K,G);
-    NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi = tki.ChangeValue(K,G);
-  NCollection_List<occ::handle<TopOpeBRepDS_Interference>> Rloi; int nloi = loi.Extent(); if (nloi
-  == 0) continue; else if (nloi == 1) LOI.Append(loi); else { FDS_repvg2(BDS,EIX,GT,loi,Rloi);
-  LOI.Append(loi); RLOI.Append(Rloi);
-    }
-  }*/
 }

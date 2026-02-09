@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -30,25 +19,17 @@ void RWStepGeom_RWGeometricRepresentationContextAndGlobalUnitAssignedContext::Re
 
   int num = num0;
 
-  // --- Instance of plex component GeometricRepresentationContext ---
-
   if (!data->CheckNbParams(num, 1, ach, "geometric_representation_context"))
     return;
 
-  // --- field : coordinateSpaceDimension ---
-
   int aCoordinateSpaceDimension;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadInteger(num, 1, "coordinate_space_dimension", ach, aCoordinateSpaceDimension);
 
   num = data->NextForComplex(num);
 
-  // --- Instance of plex component GlobalUnitAssignedContext ---
-
   if (!data->CheckNbParams(num, 1, ach, "global_unit_assigned_context"))
     return;
-
-  // --- field : units ---
 
   occ::handle<NCollection_HArray1<occ::handle<StepBasic_NamedUnit>>> aUnits;
   occ::handle<StepBasic_NamedUnit>                                   anent2;
@@ -59,7 +40,7 @@ void RWStepGeom_RWGeometricRepresentationContextAndGlobalUnitAssignedContext::Re
     aUnits  = new NCollection_HArray1<occ::handle<StepBasic_NamedUnit>>(1, nb2);
     for (int i2 = 1; i2 <= nb2; i2++)
     {
-      // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
       if (data->ReadEntity(nsub2, i2, "unit", ach, STANDARD_TYPE(StepBasic_NamedUnit), anent2))
         aUnits->SetValue(i2, anent2);
     }
@@ -67,22 +48,16 @@ void RWStepGeom_RWGeometricRepresentationContextAndGlobalUnitAssignedContext::Re
 
   num = data->NextForComplex(num);
 
-  // --- Instance of common supertype RepresentationContext ---
-
   if (!data->CheckNbParams(num, 2, ach, "representation_context"))
     return;
-  // --- field : contextIdentifier ---
 
   occ::handle<TCollection_HAsciiString> aContextIdentifier;
-  // szv#4:S4163:12Mar99 `bool stat3 =` not needed
+
   data->ReadString(num, 1, "context_identifier", ach, aContextIdentifier);
-  // --- field : contextType ---
 
   occ::handle<TCollection_HAsciiString> aContextType;
-  // szv#4:S4163:12Mar99 `bool stat4 =` not needed
-  data->ReadString(num, 2, "context_type", ach, aContextType);
 
-  //--- Initialisation of the red entity ---
+  data->ReadString(num, 2, "context_type", ach, aContextType);
 
   ent->Init(aContextIdentifier, aContextType, aCoordinateSpaceDimension, aUnits);
 }
@@ -92,17 +67,11 @@ void RWStepGeom_RWGeometricRepresentationContextAndGlobalUnitAssignedContext::Wr
   const occ::handle<StepGeom_GeometricRepresentationContextAndGlobalUnitAssignedContext>& ent) const
 {
 
-  // --- Instance of plex component GeometricRepresentationContext ---
-
   SW.StartEntity("GEOMETRIC_REPRESENTATION_CONTEXT");
-  // --- field : coordinateSpaceDimension ---
 
   SW.Send(ent->CoordinateSpaceDimension());
 
-  // --- Instance of plex component GlobalUnitAssignedContext ---
-
   SW.StartEntity("GLOBAL_UNIT_ASSIGNED_CONTEXT");
-  // --- field : units ---
 
   SW.OpenSub();
   for (int i2 = 1; i2 <= ent->NbUnits(); i2++)
@@ -111,13 +80,9 @@ void RWStepGeom_RWGeometricRepresentationContextAndGlobalUnitAssignedContext::Wr
   }
   SW.CloseSub();
 
-  // --- Instance of common supertype RepresentationContext ---
-
   SW.StartEntity("REPRESENTATION_CONTEXT");
-  // --- field : contextIdentifier ---
 
   SW.Send(ent->ContextIdentifier());
-  // --- field : contextType ---
 
   SW.Send(ent->ContextType());
 }

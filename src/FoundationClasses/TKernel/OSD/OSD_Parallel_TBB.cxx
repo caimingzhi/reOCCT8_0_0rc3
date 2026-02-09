@@ -13,8 +13,6 @@ Standard_DISABLE_DEPRECATION_WARNINGS
   #endif
   Standard_ENABLE_DEPRECATION_WARNINGS
 
-  //=================================================================================================
-
   void
   OSD_Parallel::forEachExternal(UniversalIterator&      theBegin,
                                 UniversalIterator&      theEnd,
@@ -22,8 +20,7 @@ Standard_DISABLE_DEPRECATION_WARNINGS
                                 int                     theNbItems)
 {
   #if TBB_VERSION_MAJOR >= 2021
-  // task_scheduler_init is removed,
-  // exceptions are captured without proxy tbb::captured_exception object
+
   (void)theNbItems;
   tbb::parallel_for_each(theBegin, theEnd, theFunctor);
   #else
@@ -41,4 +38,4 @@ Standard_DISABLE_DEPRECATION_WARNINGS
   #endif
 }
 
-#endif /* HAVE_TBB */
+#endif

@@ -12,11 +12,6 @@ class StepVisual_TessellatedItem;
 class TopoDS_Solid;
 class Transfer_FinderProcess;
 
-//! This class implements the mapping between classes
-//! Solid from TopoDS and BrepWithVoids from
-//! StepShape. All the topology and geometry comprised
-//! into the shell or the solid are taken into account and
-//! translated.
 class TopoDSToStep_MakeBrepWithVoids : public TopoDSToStep_Root
 {
 public:

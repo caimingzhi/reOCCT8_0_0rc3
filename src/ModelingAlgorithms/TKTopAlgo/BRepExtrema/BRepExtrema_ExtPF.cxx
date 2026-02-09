@@ -7,8 +7,6 @@
 #include <BRepAdaptor_Surface.hpp>
 #include <Precision.hpp>
 
-//=================================================================================================
-
 BRepExtrema_ExtPF::BRepExtrema_ExtPF(const TopoDS_Vertex&  TheVertex,
                                      const TopoDS_Face&    TheFace,
                                      const Extrema_ExtFlag TheFlag,
@@ -18,18 +16,15 @@ BRepExtrema_ExtPF::BRepExtrema_ExtPF(const TopoDS_Vertex&  TheVertex,
   Perform(TheVertex, TheFace);
 }
 
-//=================================================================================================
-
 void BRepExtrema_ExtPF::Initialize(const TopoDS_Face&    TheFace,
                                    const Extrema_ExtFlag TheFlag,
                                    const Extrema_ExtAlgo TheAlgo)
 {
-  // cette surface doit etre en champ. Extrema ne fait
-  // pas de copie et prend seulement un pointeur dessus.
+
   mySurf.Initialize(TheFace, false);
 
   if (mySurf.GetType() == GeomAbs_OtherSurface)
-    return; // protect against non-geometric type (e.g. triangulation)
+    return;
 
   double Tol = std::min(BRep_Tool::Tolerance(TheFace), Precision::Confusion());
   double aTolU, aTolV;
@@ -42,8 +37,6 @@ void BRepExtrema_ExtPF::Initialize(const TopoDS_Face&    TheFace,
   myExtPS.Initialize(mySurf, U1, U2, V1, V2, aTolU, aTolV);
 }
 
-//=================================================================================================
-
 void BRepExtrema_ExtPF::Perform(const TopoDS_Vertex& TheVertex, const TopoDS_Face& TheFace)
 {
   mySqDist.Clear();
@@ -51,11 +44,10 @@ void BRepExtrema_ExtPF::Perform(const TopoDS_Vertex& TheVertex, const TopoDS_Fac
 
   const gp_Pnt P = BRep_Tool::Pnt(TheVertex);
   if (mySurf.GetType() == GeomAbs_OtherSurface)
-    return; // protect against non-geometric type (e.g. triangulation)
+    return;
 
   myExtPS.Perform(P);
 
-  // Exploration of points and classification
   if (myExtPS.IsDone())
   {
     BRepClass_FaceClassifier classifier;

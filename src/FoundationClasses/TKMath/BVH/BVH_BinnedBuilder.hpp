@@ -10,45 +10,34 @@
 
 #include <limits>
 
-//! Stores parameters of single bin (slice of AABB).
 template <class T, int N>
 struct BVH_Bin
 {
-  //! Creates new node bin.
+
   BVH_Bin()
       : Count(0)
   {
   }
 
-  int           Count; //!< Number of primitives in the bin
-  BVH_Box<T, N> Box;   //!< AABB of primitives in the bin
+  int           Count;
+  BVH_Box<T, N> Box;
 };
 
-//! Performs construction of BVH tree using binned SAH algorithm. Number
-//! of bins controls BVH quality in cost of construction time (greater -
-//! better). For optimal results, use 32 - 48 bins. However, reasonable
-//! performance is provided even for 4 - 8 bins (it is only 10-20% lower
-//! in comparison with optimal settings). Note that multiple threads can
-//! be used only with thread safe BVH primitive sets.
 template <class T, int N, int Bins = BVH_Constants_NbBinsOptimal>
 class BVH_BinnedBuilder : public BVH_QueueBuilder<T, N>
 {
 public:
-  //! Type of the array of bins of BVH tree node.
   typedef BVH_Bin<T, N> BVH_BinVector[Bins];
 
-  //! Describes split plane candidate.
   struct BVH_SplitPlane
   {
     BVH_Bin<T, N> LftVoxel;
     BVH_Bin<T, N> RghVoxel;
   };
 
-  //! Type of the array of split plane candidates.
   typedef BVH_SplitPlane BVH_SplitPlanes[Bins + 1];
 
 public:
-  //! Creates binned SAH BVH builder.
   BVH_BinnedBuilder(const int  theLeafNodeSize = BVH_Constants_LeafNodeSizeDefault,
                     const int  theMaxTreeDepth = BVH_Constants_MaxTreeDepth,
                     const bool theDoMainSplits = false,
@@ -56,19 +45,15 @@ public:
       : BVH_QueueBuilder<T, N>(theLeafNodeSize, theMaxTreeDepth, theNumOfThreads),
         myUseMainAxis(theDoMainSplits)
   {
-    //
   }
 
-  //! Releases resources of binned SAH BVH builder.
   ~BVH_BinnedBuilder() override = default;
 
 protected:
-  //! Performs splitting of the given BVH node.
   typename BVH_QueueBuilder<T, N>::BVH_ChildNodes buildNode(BVH_Set<T, N>*  theSet,
                                                             BVH_Tree<T, N>* theBVH,
                                                             const int       theNode) const override;
 
-  //! Arranges node primitives into bins.
   virtual void getSubVolumes(BVH_Set<T, N>*  theSet,
                              BVH_Tree<T, N>* theBVH,
                              const int       theNode,
@@ -76,12 +61,8 @@ protected:
                              const int       theAxis) const;
 
 private:
-  // clang-format off
-  bool myUseMainAxis; //!< Defines whether to search for the best split or use the widest axis
-  // clang-format on
+  bool myUseMainAxis;
 };
-
-//=================================================================================================
 
 template <class T, int N, int Bins>
 void BVH_BinnedBuilder<T, N, Bins>::getSubVolumes(BVH_Set<T, N>*  theSet,
@@ -185,8 +166,6 @@ namespace BVH
   };
 } // namespace BVH
 
-//=================================================================================================
-
 template <class T, int N, int Bins>
 typename BVH_QueueBuilder<T, N>::BVH_ChildNodes BVH_BinnedBuilder<T, N, Bins>::buildNode(
   BVH_Set<T, N>*  theSet,
@@ -198,15 +177,13 @@ typename BVH_QueueBuilder<T, N>::BVH_ChildNodes BVH_BinnedBuilder<T, N, Bins>::b
   const int aNodeNbPrimitives = theBVH->NbPrimitives(theNode);
   if (aNodeNbPrimitives <= BVH_Builder<T, N>::myLeafNodeSize)
   {
-    // clang-format off
-    return typename BVH_QueueBuilder<T, N>::BVH_ChildNodes(); // node does not require partitioning
-    // clang-format on
+
+    return typename BVH_QueueBuilder<T, N>::BVH_ChildNodes();
   }
 
   const BVH_Box<T, N> anAABB(theBVH->MinPoint(theNode), theBVH->MaxPoint(theNode));
   const typename BVH_Box<T, N>::BVH_VecNt aSize = anAABB.Size();
 
-  // Parameters for storing best split
   int aMinSplitAxis   = -1;
   int aMinSplitIndex  = 0;
   int aMinSplitNumLft = 0;
@@ -218,7 +195,6 @@ typename BVH_QueueBuilder<T, N>::BVH_ChildNodes BVH_BinnedBuilder<T, N, Bins>::b
   double    aMinSplitCost = std::numeric_limits<double>::max();
   const int aMainAxis     = BVH::BVH_AxisSelector<T, N>::MainAxis(aSize);
 
-  // Find best split
   for (int anAxis = myUseMainAxis ? aMainAxis : 0;
        anAxis <= (myUseMainAxis ? aMainAxis : (std::min)(N - 1, 2));
        ++anAxis)
@@ -246,11 +222,10 @@ typename BVH_QueueBuilder<T, N>::BVH_ChildNodes BVH_BinnedBuilder<T, N, Bins>::b
       aSplitPlanes[aRghSplit].RghVoxel.Box.Combine(aBinVector[aRghSplit + 0].Box);
     }
 
-    // Choose the best split (with minimum SAH cost)
     const double aParentArea = static_cast<double>(anAABB.Area());
     for (int aSplit = 1; aSplit < Bins; ++aSplit)
     {
-      // SAH evaluation with proper normalization by parent surface area
+
       const double aLftArea = static_cast<double>(aSplitPlanes[aSplit].LftVoxel.Box.Area());
       const double aRghArea = static_cast<double>(aSplitPlanes[aSplit].RghVoxel.Box.Area());
       double       aCost    = (aLftArea / aParentArea) * aSplitPlanes[aSplit].LftVoxel.Count
@@ -271,8 +246,7 @@ typename BVH_QueueBuilder<T, N>::BVH_ChildNodes BVH_BinnedBuilder<T, N, Bins>::b
 
   theBVH->SetInner(theNode);
   int aMiddle = -1;
-  if (aMinSplitNumLft == 0 || aMinSplitNumRgh == 0
-      || aMinSplitAxis == -1) // case of objects with the same center
+  if (aMinSplitNumLft == 0 || aMinSplitNumRgh == 0 || aMinSplitAxis == -1)
   {
     aMinSplitBoxLft.Clear();
     aMinSplitBoxRgh.Clear();

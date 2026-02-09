@@ -41,14 +41,8 @@ static void FusionneIntervalles(const NCollection_Array1<double>& I1,
 {
   int    ind1 = 1, ind2 = 1;
   double Epspar = Precision::PConfusion() * 0.99;
-  // supposed that the positioning works with PConfusion()/2
-  double v1, v2;
-  // Initialisations : IND1 and IND2 point the 1st element
-  // of each of 2 tables to be processed. INDS points at the last
-  // created element of TABSOR
 
-  //--- TABSOR is filled by parsing TABLE1 and TABLE2 simultaneously ---
-  //------------------ and removing multiple occurrences ------------
+  double v1, v2;
 
   while ((ind1 <= I1.Upper()) && (ind2 <= I2.Upper()))
   {
@@ -56,20 +50,20 @@ static void FusionneIntervalles(const NCollection_Array1<double>& I1,
     v2 = I2(ind2);
     if (std::abs(v1 - v2) <= Epspar)
     {
-      // elements of I1 and I2 fit here
+
       Seq.Append((v1 + v2) / 2);
       ind1++;
       ind2++;
     }
     else if (v1 < v2)
     {
-      // element of I1 fits here.
+
       Seq.Append(v1);
       ind1++;
     }
     else
     {
-      // element of TABLE2 fits here.
+
       Seq.Append(v2);
       ind2++;
     }
@@ -77,7 +71,6 @@ static void FusionneIntervalles(const NCollection_Array1<double>& I1,
 
   if (ind1 > I1.Upper())
   {
-    //----- Here I1 is exhausted, completed using the end of TABLE2 -------
 
     for (; ind2 <= I2.Upper(); ind2++)
     {
@@ -87,7 +80,6 @@ static void FusionneIntervalles(const NCollection_Array1<double>& I1,
 
   if (ind2 > I2.Upper())
   {
-    //----- Here I2 is exhausted, completed using the end of I1 -------
 
     for (; ind1 <= I1.Upper(); ind1++)
     {
@@ -95,8 +87,6 @@ static void FusionneIntervalles(const NCollection_Array1<double>& I1,
     }
   }
 }
-
-//=================================================================================================
 
 BRepBlend_RstRstEvolRad::BRepBlend_RstRstEvolRad(const occ::handle<Adaptor3d_Surface>& Surf1,
                                                  const occ::handle<Adaptor2d_Curve2d>& Rst1,
@@ -122,21 +112,15 @@ BRepBlend_RstRstEvolRad::BRepBlend_RstRstEvolRad(const occ::handle<Adaptor3d_Sur
   fevol = Evol;
 }
 
-//=================================================================================================
-
 int BRepBlend_RstRstEvolRad::NbVariables() const
 {
   return 2;
 }
 
-//=================================================================================================
-
 int BRepBlend_RstRstEvolRad::NbEquations() const
 {
   return 2;
 }
-
-//=================================================================================================
 
 bool BRepBlend_RstRstEvolRad::Value(const math_Vector& X, math_Vector& F)
 {
@@ -148,8 +132,6 @@ bool BRepBlend_RstRstEvolRad::Value(const math_Vector& X, math_Vector& F)
 
   return true;
 }
-
-//=================================================================================================
 
 bool BRepBlend_RstRstEvolRad::Derivatives(const math_Vector& X, math_Matrix& D)
 {
@@ -167,8 +149,6 @@ bool BRepBlend_RstRstEvolRad::Derivatives(const math_Vector& X, math_Matrix& D)
   return true;
 }
 
-//=================================================================================================
-
 bool BRepBlend_RstRstEvolRad::Values(const math_Vector& X, math_Vector& F, math_Matrix& D)
 {
   Value(X, F);
@@ -176,8 +156,6 @@ bool BRepBlend_RstRstEvolRad::Values(const math_Vector& X, math_Vector& F, math_
 
   return true;
 }
-
-//=================================================================================================
 
 void BRepBlend_RstRstEvolRad::Set(const occ::handle<Adaptor3d_Surface>& SurfRef1,
                                   const occ::handle<Adaptor2d_Curve2d>& RstRef1,
@@ -190,8 +168,6 @@ void BRepBlend_RstRstEvolRad::Set(const occ::handle<Adaptor3d_Surface>& SurfRef1
   rstref2  = RstRef2;
 }
 
-//=================================================================================================
-
 void BRepBlend_RstRstEvolRad::Set(const double Param)
 {
   d1gui = gp_Vec(0., 0., 0.);
@@ -203,11 +179,9 @@ void BRepBlend_RstRstEvolRad::Set(const double Param)
   gp_XYZ ptguiXYZ(ptgui.XYZ());
   theD = nplanXYZ.Dot(ptguiXYZ);
   theD = theD * (-1.);
-  //  theD   = - (nplan.XYZ().Dot(ptgui.XYZ()));
+
   tevol->D1(Param, ray, dray);
 }
-
-//=================================================================================================
 
 void BRepBlend_RstRstEvolRad::Set(const double First, const double Last)
 {
@@ -215,15 +189,11 @@ void BRepBlend_RstRstEvolRad::Set(const double First, const double Last)
   tevol  = fevol->Trim(First, Last, 1.e-12);
 }
 
-//=================================================================================================
-
 void BRepBlend_RstRstEvolRad::GetTolerance(math_Vector& Tolerance, const double Tol) const
 {
   Tolerance(1) = cons1.Resolution(Tol);
   Tolerance(2) = cons2.Resolution(Tol);
 }
-
-//=================================================================================================
 
 void BRepBlend_RstRstEvolRad::GetBounds(math_Vector& InfBound, math_Vector& SupBound) const
 {
@@ -232,8 +202,6 @@ void BRepBlend_RstRstEvolRad::GetBounds(math_Vector& InfBound, math_Vector& SupB
   SupBound(1) = cons1.LastParameter();
   SupBound(2) = cons2.LastParameter();
 }
-
-//=================================================================================================
 
 bool BRepBlend_RstRstEvolRad::IsSolution(const math_Vector& Sol, const double Tol)
 
@@ -251,7 +219,6 @@ bool BRepBlend_RstRstEvolRad::IsSolution(const math_Vector& Sol, const double To
   if (std::abs(valsol(1)) <= Tol && std::abs(valsol(2)) <= Tol)
   {
 
-    // Calculation of tangents
     prmrst1  = Sol(1);
     pt2drst1 = rst1->Value(prmrst1);
     prmrst2  = Sol(2);
@@ -322,7 +289,7 @@ bool BRepBlend_RstRstEvolRad::IsSolution(const math_Vector& Sol, const double To
 
     if (choix % 2 != 0)
     {
-      Sina = -Sina; // nplan is changed into -nplan
+      Sina = -Sina;
     }
 
     Angle = std::acos(Cosa);
@@ -347,63 +314,45 @@ bool BRepBlend_RstRstEvolRad::IsSolution(const math_Vector& Sol, const double To
   return false;
 }
 
-//=================================================================================================
-
 double BRepBlend_RstRstEvolRad::GetMinimalDistance() const
 {
   return distmin;
 }
-
-//=================================================================================================
 
 const gp_Pnt& BRepBlend_RstRstEvolRad::PointOnRst1() const
 {
   return ptrst1;
 }
 
-//=================================================================================================
-
 const gp_Pnt& BRepBlend_RstRstEvolRad::PointOnRst2() const
 {
   return ptrst2;
 }
-
-//=================================================================================================
 
 const gp_Pnt2d& BRepBlend_RstRstEvolRad::Pnt2dOnRst1() const
 {
   return pt2drst1;
 }
 
-//=================================================================================================
-
 const gp_Pnt2d& BRepBlend_RstRstEvolRad::Pnt2dOnRst2() const
 {
   return pt2drst2;
 }
-
-//=================================================================================================
 
 double BRepBlend_RstRstEvolRad::ParameterOnRst1() const
 {
   return prmrst1;
 }
 
-//=================================================================================================
-
 double BRepBlend_RstRstEvolRad::ParameterOnRst2() const
 {
   return prmrst2;
 }
 
-//=================================================================================================
-
 bool BRepBlend_RstRstEvolRad::IsTangencyPoint() const
 {
   return istangent;
 }
-
-//=================================================================================================
 
 const gp_Vec& BRepBlend_RstRstEvolRad::TangentOnRst1() const
 {
@@ -414,8 +363,6 @@ const gp_Vec& BRepBlend_RstRstEvolRad::TangentOnRst1() const
   return tgrst1;
 }
 
-//=================================================================================================
-
 const gp_Vec2d& BRepBlend_RstRstEvolRad::Tangent2dOnRst1() const
 {
   if (istangent)
@@ -424,8 +371,6 @@ const gp_Vec2d& BRepBlend_RstRstEvolRad::Tangent2dOnRst1() const
   }
   return tg2drst1;
 }
-
-//=================================================================================================
 
 const gp_Vec& BRepBlend_RstRstEvolRad::TangentOnRst2() const
 {
@@ -436,8 +381,6 @@ const gp_Vec& BRepBlend_RstRstEvolRad::TangentOnRst2() const
   return tgrst2;
 }
 
-//=================================================================================================
-
 const gp_Vec2d& BRepBlend_RstRstEvolRad::Tangent2dOnRst2() const
 {
   if (istangent)
@@ -446,8 +389,6 @@ const gp_Vec2d& BRepBlend_RstRstEvolRad::Tangent2dOnRst2() const
   }
   return tg2drst2;
 }
-
-//=================================================================================================
 
 Blend_DecrochStatus BRepBlend_RstRstEvolRad::Decroch(const math_Vector& Sol,
                                                      gp_Vec&            NRst1,
@@ -463,11 +404,11 @@ Blend_DecrochStatus BRepBlend_RstRstEvolRad::Decroch(const math_Vector& Sol,
 
   rstref1->Value(Sol(1)).Coord(u, v);
   surfref1->D1(u, v, PtTmp1, d1u, d1v);
-  // Normal to the reference surface 1
+
   NRst1 = d1u.Crossed(d1v);
   rstref2->Value(Sol(2)).Coord(u, v);
   surfref2->D1(u, v, PtTmp2, d1u, d1v);
-  // Normal to the reference surface 2
+
   NRst2 = d1u.Crossed(d1v);
 
   CenterCircleRst1Rst2(PtTmp1, PtTmp2, nplan, Center, NotUsed);
@@ -500,7 +441,6 @@ Blend_DecrochStatus BRepBlend_RstRstEvolRad::Decroch(const math_Vector& Sol,
     TgRst2.Reverse();
   }
 
-  // Vectors are returned
   if (NRst1InPlane.Dot(TgRst1) > -1.e-10)
   {
     if (NRst2InPlane.Dot(TgRst2) < 1.e-10)
@@ -525,24 +465,16 @@ Blend_DecrochStatus BRepBlend_RstRstEvolRad::Decroch(const math_Vector& Sol,
   }
 }
 
-//=================================================================================================
-
 void BRepBlend_RstRstEvolRad::Set(const int Choix)
 {
   choix = Choix;
 }
-
-//=================================================================================================
 
 void BRepBlend_RstRstEvolRad::Set(const BlendFunc_SectionShape TypeSection)
 {
   mySShape = TypeSection;
 }
 
-//=======================================================================
-// function : CenterCircleRst1Rst2
-// purpose  : Calculate the center of circle passing by two points of restrictions
-//=======================================================================
 bool BRepBlend_RstRstEvolRad::CenterCircleRst1Rst2(const gp_Pnt& PtRst1,
                                                    const gp_Pnt& PtRst2,
                                                    const gp_Vec& np,
@@ -551,11 +483,10 @@ bool BRepBlend_RstRstEvolRad::CenterCircleRst1Rst2(const gp_Pnt& PtRst1,
 {
 
   gp_Vec rst1rst2(PtRst1, PtRst2);
-  gp_Vec vdmedNor; //,NRst1;  vdmedNor  vector director of the perpendicular bisector
+  gp_Vec vdmedNor;
   double norm2;
-  double Dist; // distance between the middle of PtRst1,PtRst2 and Center
+  double Dist;
 
-  // Calculate the center of the circle
   VdMed = rst1rst2.Crossed(np);
   norm2 = rst1rst2.SquareMagnitude();
   Dist  = ray * ray - 0.25 * norm2;
@@ -581,8 +512,6 @@ bool BRepBlend_RstRstEvolRad::CenterCircleRst1Rst2(const gp_Pnt& PtRst1,
 
   return true;
 }
-
-//=================================================================================================
 
 void BRepBlend_RstRstEvolRad::Section(const double Param,
                                       const double U,
@@ -611,10 +540,9 @@ void BRepBlend_RstRstEvolRad::Section(const double Param,
   }
 
   C.SetPosition(gp_Ax2(Center, np, ns));
-  Pdeb = 0; // ElCLib::Parameter(C, pts);
+  Pdeb = 0;
   Pfin = ElCLib::Parameter(C, ptrst2);
 
-  // Test negative and quasi null angles: Special case
   if (Pfin > 1.5 * M_PI)
   {
     np.Reverse();
@@ -625,29 +553,20 @@ void BRepBlend_RstRstEvolRad::Section(const double Param,
     Pfin += Precision::PConfusion();
 }
 
-//=================================================================================================
-
 bool BRepBlend_RstRstEvolRad::IsRational() const
 {
   return (mySShape == BlendFunc_Rational || mySShape == BlendFunc_QuasiAngular);
 }
-
-//=================================================================================================
 
 double BRepBlend_RstRstEvolRad::GetSectionSize() const
 {
   return maxang * std::abs(ray);
 }
 
-//=================================================================================================
-
 void BRepBlend_RstRstEvolRad::GetMinimalWeight(NCollection_Array1<double>& Weights) const
 {
   BlendFunc::GetMinimalWeights(mySShape, myTConv, minang, maxang, Weights);
-  // It is supposed that it does not depend on the Radius!
 }
-
-//=================================================================================================
 
 int BRepBlend_RstRstEvolRad::NbIntervals(const GeomAbs_Shape S) const
 {
@@ -669,8 +588,6 @@ int BRepBlend_RstRstEvolRad::NbIntervals(const GeomAbs_Shape S) const
   FusionneIntervalles(IntC, IntL, Inter);
   return Inter.Length() - 1;
 }
-
-//=================================================================================================
 
 void BRepBlend_RstRstEvolRad::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const
 {
@@ -698,18 +615,11 @@ void BRepBlend_RstRstEvolRad::Intervals(NCollection_Array1<double>& T, const Geo
   }
 }
 
-//=================================================================================================
-
 void BRepBlend_RstRstEvolRad::GetShape(int& NbPoles, int& NbKnots, int& Degree, int& NbPoles2d)
 {
   NbPoles2d = 2;
   BlendFunc::GetShape(mySShape, maxang, NbPoles, NbKnots, Degree, myTConv);
 }
-
-//=======================================================================
-// function : GetTolerance
-// purpose  : Determine the Tolerance to be used in approximations.
-//=======================================================================
 
 void BRepBlend_RstRstEvolRad::GetTolerance(const double BoundTol,
                                            const double SurfTol,
@@ -726,21 +636,15 @@ void BRepBlend_RstRstEvolRad::GetTolerance(const double BoundTol,
   Tol3d(low) = Tol3d(up) = std::min(Tol, BoundTol);
 }
 
-//=================================================================================================
-
 void BRepBlend_RstRstEvolRad::Knots(NCollection_Array1<double>& TKnots)
 {
   GeomFill::Knots(myTConv, TKnots);
 }
 
-//=================================================================================================
-
 void BRepBlend_RstRstEvolRad::Mults(NCollection_Array1<int>& TMults)
 {
   GeomFill::Mults(myTConv, TMults);
 }
-
-//=================================================================================================
 
 void BRepBlend_RstRstEvolRad::Section(const Blend_Point&            P,
                                       NCollection_Array1<gp_Pnt>&   Poles,
@@ -772,7 +676,6 @@ void BRepBlend_RstRstEvolRad::Section(const Blend_Point&            P,
   Poles2d(Poles2d.Lower()).SetCoord(pt2d1.X(), pt2d1.Y());
   Poles2d(Poles2d.Upper()).SetCoord(pt2d2.X(), pt2d2.Y());
 
-  // Linear Case
   if (mySShape == BlendFunc_Linear)
   {
     Poles(low)   = ptrst1;
@@ -782,10 +685,8 @@ void BRepBlend_RstRstEvolRad::Section(const Blend_Point&            P,
     return;
   }
 
-  // Calculate the center of the circle
   CenterCircleRst1Rst2(ptrst1, ptrst2, nplan, Center, NotUsed);
 
-  // normals to the section with points
   n1 = gp_Vec(Center, ptrst1).Normalized();
   n2 = gp_Vec(Center, ptrst2).Normalized();
 
@@ -806,8 +707,6 @@ void BRepBlend_RstRstEvolRad::Section(const Blend_Point&            P,
                       Weights);
 }
 
-//=================================================================================================
-
 bool BRepBlend_RstRstEvolRad::Section(const Blend_Point&            P,
                                       NCollection_Array1<gp_Pnt>&   Poles,
                                       NCollection_Array1<gp_Vec>&   DPoles,
@@ -818,7 +717,7 @@ bool BRepBlend_RstRstEvolRad::Section(const Blend_Point&            P,
 {
 
   gp_Vec d11, d21;
-  gp_Vec dnplan, d1n1, d1n2; //,np2, dnp2;
+  gp_Vec dnplan, d1n1, d1n2;
   gp_Vec temp, tgct;
   gp_Vec d1urst, d1vrst;
   gp_Pnt Center, NotUsed;
@@ -890,8 +789,7 @@ bool BRepBlend_RstRstEvolRad::Section(const Blend_Point&            P,
 
   if (!istgt)
   {
-    // secmember contains derivatives of parameters on curves
-    // corresponding to t
+
     tgrst1 = secmember(1) * d11;
     tgrst2 = secmember(2) * d21;
 
@@ -906,7 +804,7 @@ bool BRepBlend_RstRstEvolRad::Section(const Blend_Point&            P,
     {
       gp_Vec d1P1P2CrosNp, dmed;
       d1P1P2CrosNp = d1rst1rst2.Crossed(nplan) + rst1rst2.Crossed(dnplan);
-      // derivative of the bisector
+
       dmed = d1P1P2CrosNp - med.Dot(d1P1P2CrosNp) * med;
       dmed /= normmed;
       Dist = sqrt(Dist);
@@ -919,30 +817,25 @@ bool BRepBlend_RstRstEvolRad::Section(const Blend_Point&            P,
         dmed.Reverse();
       }
 
-      // derivative of the coefficient Dist is located in dmed
       dmed.SetLinearForm(Dist, dmed, d1Dist, med);
       d1rst1rst2 *= 0.5;
-      // derivative of the Normal to the curve in P1
+
       d1n1 = -(d1rst1rst2 + dmed + Invdray * n1) / ray;
 
-      // derivative of the Normal to the curve in P2
       d1n2 = (d1rst1rst2 - dmed - Invdray * n2) / ray;
     }
     else
     {
       d1rst1rst2 *= 0.5;
-      // Normal to the curve in P1
+
       d1n1 = -(d1rst1rst2 + Invdray * n1) / ray;
 
-      // Normal to the curve in P2
       d1n2 = (d1rst1rst2 - Invdray * n2) / ray;
     }
   }
 
   n1.Normalize();
   n2.Normalize();
-
-  // Tops 2D
 
   Poles2d(Poles2d.Lower()).SetCoord(pt2drst1.X(), pt2drst1.Y());
   Poles2d(Poles2d.Upper()).SetCoord(pt2drst2.X(), pt2drst2.Y());
@@ -958,7 +851,6 @@ bool BRepBlend_RstRstEvolRad::Section(const Blend_Point&            P,
     DPoles2d(Poles2d.Upper()).SetCoord(a, b);
   }
 
-  // Linear Case
   if (mySShape == BlendFunc_Linear)
   {
     Poles(low)   = ptrst1;
@@ -975,8 +867,6 @@ bool BRepBlend_RstRstEvolRad::Section(const Blend_Point&            P,
     return (!istgt);
   }
 
-  // Case of the circle
-  // tangent to the center of the circle
   if (!istgt)
   {
     tgct.SetLinearForm(-ray, d1n1, -dray, n1, tgrst1);
@@ -1025,8 +915,6 @@ bool BRepBlend_RstRstEvolRad::Section(const Blend_Point&            P,
     return false;
   }
 }
-
-//=================================================================================================
 
 bool BRepBlend_RstRstEvolRad::Section(const Blend_Point&,
                                       NCollection_Array1<gp_Pnt>&,

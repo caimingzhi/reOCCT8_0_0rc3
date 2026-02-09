@@ -14,8 +14,6 @@ class IntCurveSurface_IntersectionPoint;
 class IntRes2d_IntersectionSegment;
 class IntCurveSurface_IntersectionSegment;
 
-//! The Intersector computes 2D intersections of the projections of 3D curves.
-//! It can also computes the intersection of a 3D line and a surface.
 class HLRBRep_Intersector
 {
 public:
@@ -23,14 +21,10 @@ public:
 
   Standard_EXPORT HLRBRep_Intersector();
 
-  //! Performs the auto intersection of an edge.
-  //! The edge domain is cut at start with da1*(b-a) and at end with db1*(b-a).
   Standard_EXPORT void Perform(HLRBRep_EdgeData* theEdge1,
                                const double      theDa1,
                                const double      theDb1);
 
-  //! Performs the intersection between the two edges.
-  //! The edges domains are cut at start with da*(b-a) and at end with db*(b-a).
   Standard_EXPORT void Perform(const int         theNA,
                                HLRBRep_EdgeData* theEdge1,
                                const double      theDa1,
@@ -41,8 +35,6 @@ public:
                                const double      theDb2,
                                const bool        theNoBound);
 
-  //! Create a single IntersectionPoint (U on theEdge1) (V on theEdge2)
-  //! The point is middle on both curves.
   Standard_EXPORT void SimulateOnePoint(HLRBRep_EdgeData* theEdge1,
                                         const double      theU,
                                         HLRBRep_EdgeData* theEdge2,

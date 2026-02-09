@@ -7,25 +7,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataXtd_PositionDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataXtd_PositionDriver::BinMDataXtd_PositionDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataXtd_Position)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataXtd_PositionDriver::NewEmpty() const
 {
   return new TDataXtd_Position();
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 
 bool BinMDataXtd_PositionDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                        const occ::handle<TDF_Attribute>& theTarget,
@@ -53,11 +44,6 @@ bool BinMDataXtd_PositionDriver::Paste(const BinObjMgt_Persistent&       theSour
 
   return ok;
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 
 void BinMDataXtd_PositionDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,

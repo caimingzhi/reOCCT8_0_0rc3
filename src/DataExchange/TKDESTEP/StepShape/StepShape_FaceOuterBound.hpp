@@ -9,7 +9,6 @@ class StepShape_FaceOuterBound : public StepShape_FaceBound
 {
 
 public:
-  //! Returns a FaceOuterBound
   Standard_EXPORT StepShape_FaceOuterBound();
 
   DEFINE_STANDARD_RTTIEXT(StepShape_FaceOuterBound, StepShape_FaceBound)

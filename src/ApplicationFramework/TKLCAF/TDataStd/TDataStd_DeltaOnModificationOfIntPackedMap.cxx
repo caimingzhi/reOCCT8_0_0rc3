@@ -11,8 +11,6 @@ IMPLEMENT_STANDARD_RTTIEXT(TDataStd_DeltaOnModificationOfIntPackedMap, TDF_Delta
   #define MAXUP 1000
 #endif
 
-//=================================================================================================
-
 TDataStd_DeltaOnModificationOfIntPackedMap::TDataStd_DeltaOnModificationOfIntPackedMap(
   const occ::handle<TDataStd_IntPackedMap>& OldAtt)
     : TDF_DeltaOnModification(OldAtt)
@@ -61,8 +59,6 @@ TDataStd_DeltaOnModificationOfIntPackedMap::TDataStd_DeltaOnModificationOfIntPac
     }
   }
 }
-
-//=================================================================================================
 
 void TDataStd_DeltaOnModificationOfIntPackedMap::Apply()
 {

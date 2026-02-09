@@ -1,19 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//: n5 abv 15 Feb 99: S4132: added complex type bounded_curve + surface_curve
-//: j4 gka 11 Mar 99 S4134 :  added new types for DIS
-//    gka 09.04.99: S4136: new name of parameter write.step.schema
 
 #include <StepAP214_Protocol.hpp>
 
@@ -31,14 +16,7 @@ static const char* schemaAP242DIS =
 
 #include <StepShape_AdvancedBrepShapeRepresentation.hpp>
 #include <StepShape_AdvancedFace.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_AnnotationCurveOccurrence.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_AnnotationFillArea.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_AnnotationFillAreaOccurrence.hpp>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_AnnotationSubfigureOccurrence.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_AnnotationSymbol.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_AnnotationSymbolOccurrence.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_AnnotationText.hpp>
 #include <StepVisual_AnnotationTextOccurrence.hpp>
 
@@ -60,7 +38,7 @@ static const char* schemaAP242DIS =
 #include <StepAP214_AutoDesignPersonAndOrganizationAssignment.hpp>
 #include <StepAP214_AutoDesignPresentedItem.hpp>
 #include <StepAP214_AutoDesignSecurityClassificationAssignment.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepAP214_AutoDesignViewArea.hxx>
+
 #include <StepGeom_Axis1Placement.hpp>
 #include <StepGeom_Axis2Placement2d.hpp>
 #include <StepGeom_BSplineCurveWithKnots.hpp>
@@ -85,10 +63,7 @@ static const char* schemaAP242DIS =
 #include <StepVisual_Colour.hpp>
 #include <StepVisual_ColourRgb.hpp>
 #include <StepVisual_ColourSpecification.hpp>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_CompositeTextWithAssociatedCurves.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_CompositeTextWithBlankingBox.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_CompositeTextWithExtent.hpp>
 
 #include <StepGeom_Conic.hpp>
@@ -97,7 +72,7 @@ static const char* schemaAP242DIS =
 #include <StepVisual_ContextDependentInvisibility.hpp>
 #include <StepVisual_ContextDependentOverRidingStyledItem.hpp>
 #include <StepBasic_CoordinatedUniversalTimeOffset.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepShape_CsgRepresentation.hxx>
+
 #include <StepShape_CsgShapeRepresentation.hpp>
 #include <StepShape_CsgSolid.hpp>
 #include <StepGeom_Curve.hpp>
@@ -111,22 +86,17 @@ static const char* schemaAP242DIS =
 #include <StepBasic_DateAndTime.hpp>
 #include <StepBasic_DateRole.hpp>
 #include <StepBasic_DateTimeRole.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_DefinedSymbol.hxx>
+
 #include <StepGeom_DegenerateToroidalSurface.hpp>
 #include <StepRepr_DescriptiveRepresentationItem.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_DimensionCurve.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_DimensionCurveTerminator.hxx>
+
 #include <StepBasic_DimensionalExponents.hpp>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_DraughtingAnnotationOccurrence.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_DraughtingCallout.hpp>
+
 #include <StepVisual_DraughtingPreDefinedColour.hpp>
 #include <StepVisual_DraughtingPreDefinedCurveFont.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_DraughtingSubfigureRepresentation.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_DraughtingSymbolRepresentation.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_DraughtingTextLiteralWithDelineation.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_DrawingDefinition.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_DrawingRevision.hxx>
+
 #include <StepShape_EdgeCurve.hpp>
 #include <StepShape_EdgeLoop.hpp>
 #include <StepGeom_ElementarySurface.hpp>
@@ -134,15 +104,14 @@ static const char* schemaAP242DIS =
 #include <StepGeom_EvaluatedDegeneratePcurve.hpp>
 #include <StepBasic_ExternalSource.hpp>
 #include <StepVisual_ExternallyDefinedCurveFont.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_ExternallyDefinedHatchStyle.hxx>
+
 #include <StepBasic_ExternallyDefinedItem.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_ExternallyDefinedSymbol.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_ExternallyDefinedTextFont.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_ExternallyDefinedTileStyle.hxx>
+
 #include <StepShape_ExtrudedAreaSolid.hpp>
 #include <StepShape_Face.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepShape_FaceBasedSurfaceModel.hpp>
+
 #include <StepShape_FaceBound.hpp>
 #include <StepShape_FaceOuterBound.hpp>
 #include <StepShape_FaceSurface.hpp>
@@ -150,9 +119,7 @@ static const char* schemaAP242DIS =
 #include <StepShape_FacetedBrepShapeRepresentation.hpp>
 #include <StepVisual_FillAreaStyle.hpp>
 #include <StepVisual_FillAreaStyleColour.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_FillAreaStyleHatching.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_FillAreaStyleTileSymbolWithStyle.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_FillAreaStyleTiles.hxx>
+
 #include <StepRepr_FunctionallyDefinedTransformation.hpp>
 #include <StepGeom_GeometricRepresentationContext.hpp>
 #include <StepGeom_GeometricRepresentationItem.hpp>
@@ -177,12 +144,12 @@ static const char* schemaAP242DIS =
 #include <StepBasic_MeasureWithUnit.hpp>
 #include <StepVisual_MechanicalDesignGeometricPresentationArea.hpp>
 #include <StepVisual_MechanicalDesignGeometricPresentationRepresentation.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_MechanicalDesignPresentationArea.hxx>
+
 #include <StepBasic_NamedUnit.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepShape_NonManifoldSurfaceShapeRepresentation.hpp>
+
 #include <StepGeom_OffsetCurve3d.hpp>
 #include <StepGeom_OffsetSurface.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepAP214_OneDirectionRepeatFactor.hxx>
+
 #include <StepBasic_OrdinalDate.hpp>
 #include <StepBasic_OrganizationRole.hpp>
 #include <StepBasic_OrganizationalAddress.hpp>
@@ -213,8 +180,7 @@ static const char* schemaAP242DIS =
 #include <StepVisual_PreDefinedColour.hpp>
 #include <StepVisual_PreDefinedCurveFont.hpp>
 #include <StepVisual_PreDefinedItem.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_PreDefinedSymbol.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_PreDefinedTextFont.hpp>
 
 #include <StepVisual_PresentationArea.hpp>
@@ -226,7 +192,7 @@ static const char* schemaAP242DIS =
 #include <StepVisual_PresentationStyleByContext.hpp>
 #include <StepVisual_PresentationView.hpp>
 #include <StepBasic_MechanicalContext.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_ProductDataRepresentationView.hxx>
+
 #include <StepBasic_ProductDefinitionFormationWithSpecifiedSource.hpp>
 #include <StepRepr_ProductDefinitionShape.hpp>
 #include <StepBasic_ProductType.hpp>
@@ -278,29 +244,20 @@ static const char* schemaAP242DIS =
 #include <StepVisual_SurfaceStyleUsage.hpp>
 #include <StepShape_SweptAreaSolid.hpp>
 #include <StepGeom_SweptSurface.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_SymbolColour.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_SymbolRepresentation.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_SymbolRepresentationMap.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_SymbolStyle.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_SymbolTarget.hxx>
+
 #include <StepVisual_Template.hpp>
 #include <StepVisual_TemplateInstance.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_TerminatorSymbol.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_TextLiteral.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_TextLiteralWithAssociatedCurves.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_TextLiteralWithBlankingBox.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_TextLiteralWithDelineation.hxx>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_TextLiteralWithExtent.hxx>
-// Removed from CC1-Rev2 to CC1-Rev4, re-added CC2-Rev4 :
+
 #include <StepVisual_TextStyleForDefinedFont.hpp>
 #include <StepVisual_TextStyleWithBoxCharacteristics.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepVisual_TextStyleWithMirror.hxx>
+
 #include <StepShape_TopologicalRepresentationItem.hpp>
 #include <StepGeom_ToroidalSurface.hpp>
 #include <StepShape_Torus.hpp>
 #include <StepShape_TransitionalShapeRepresentation.hpp>
-// Removed from CC1-Rev2 to Rev4 : <StepAP214_TwoDirectionRepeatFactor.hxx>
+
 #include <StepBasic_UncertaintyMeasureWithUnit.hpp>
 #include <StepGeom_UniformCurve.hpp>
 #include <StepGeom_UniformSurface.hpp>
@@ -325,7 +282,6 @@ static const char* schemaAP242DIS =
 #include <StepGeom_GeometricRepresentationContextAndGlobalUnitAssignedContext.hpp>
 #include <StepShape_LoopAndPath.hpp>
 
-// Added by FMA (for Rev4)
 #include <StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx.hpp>
 #include <StepGeom_GeometricRepresentationContextAndParametricRepresentationContext.hpp>
 #include <StepBasic_ConversionBasedUnitAndSolidAngleUnit.hpp>
@@ -333,10 +289,8 @@ static const char* schemaAP242DIS =
 #include <StepBasic_SiUnitAndSolidAngleUnit.hpp>
 #include <StepShape_FacetedBrepAndBrepWithVoids.hpp>
 
-// Added by CKY (OCT-1996 for CC1-Rev4)
 #include <StepBasic_DesignContext.hpp>
 
-// Added from CC1-Rev2 to Rev4 (MAR-1997)
 #include <StepBasic_TimeMeasureWithUnit.hpp>
 #include <StepBasic_RatioUnit.hpp>
 #include <StepBasic_TimeUnit.hpp>
@@ -352,8 +306,6 @@ static const char* schemaAP242DIS =
 #include <StepBasic_DerivedUnitElement.hpp>
 #include <StepVisual_PresentedItemRepresentation.hpp>
 #include <StepVisual_PresentationLayerUsage.hpp>
-
-//  Added by CKY (JUL-1998) for AP214 CC1 -> CC2
 
 #include <StepAP214_AutoDesignDocumentReference.hpp>
 #include <StepBasic_DigitalDocument.hpp>
@@ -377,13 +329,11 @@ static const char* schemaAP242DIS =
 
 #include <StepShape_ContextDependentShapeRepresentation.hpp>
 
-// Added by CKY (Resources)
 #include <HeaderSection.hpp>
 
 #include <Standard_Transient.hpp>
 #include <Standard_Integer.hpp>
 #include <NCollection_DataMap.hpp>
-// Added from CC2 to DIS March 1999 j4
 
 #include <StepAP214_AppliedDateAndTimeAssignment.hpp>
 #include <StepAP214_AppliedDateAssignment.hpp>
@@ -395,7 +345,6 @@ static const char* schemaAP242DIS =
 #include <StepAP214_AppliedSecurityClassificationAssignment.hpp>
 #include <StepAP214_AppliedDocumentReference.hpp>
 
-// Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
 #include <StepRepr_MeasureRepresentationItem.hpp>
 #include <StepBasic_DocumentFile.hpp>
 #include <StepShape_ExtrudedFaceSolid.hpp>
@@ -408,7 +357,6 @@ static const char* schemaAP242DIS =
 #include <StepBasic_ConversionBasedUnitAndAreaUnit.hpp>
 #include <StepBasic_ConversionBasedUnitAndVolumeUnit.hpp>
 
-// Added by ABV 10.11.99 for AP203
 #include <StepBasic_Action.hpp>
 #include <StepBasic_ActionMethod.hpp>
 #include <StepAP203_CcDesignApproval.hpp>
@@ -436,9 +384,6 @@ static const char* schemaAP242DIS =
 #include <StepBasic_ProductCategoryRelationship.hpp>
 #include <StepBasic_ActionRequestSolution.hpp>
 
-// Added by ABV 13.01.00 for CAX-IF TRJ3
-
-// Added by ABV 18.04.00 for CAX-IF TRJ4 (dimensions)
 #include <StepShape_AngularLocation.hpp>
 #include <StepShape_AngularSize.hpp>
 #include <StepShape_DimensionalCharacteristicRepresentation.hpp>
@@ -448,7 +393,6 @@ static const char* schemaAP242DIS =
 #include <StepShape_DimensionalSizeWithPath.hpp>
 #include <StepShape_ShapeDimensionRepresentation.hpp>
 
-// Added by ABV 10.05.00 for CAX-IF TRJ4 (external references)
 #include <StepBasic_DocumentRepresentationType.hpp>
 #include <StepBasic_ObjectRole.hpp>
 #include <StepBasic_RoleAssociation.hpp>
@@ -460,7 +404,6 @@ static const char* schemaAP242DIS =
 #include <StepAP214_AppliedExternalIdentificationAssignment.hpp>
 #include <StepShape_DefinitionalRepresentationAndShapeRepresentation.hpp>
 
-// Added by CKY , 25 APR 2001 for Dimensional Tolerances (CAX-IF TRJ7)
 #include <StepRepr_Extension.hpp>
 #include <StepShape_DirectedDimensionalLocation.hpp>
 #include <StepShape_LimitsAndFits.hpp>
@@ -474,7 +417,6 @@ static const char* schemaAP242DIS =
 #include <StepRepr_ValueRange.hpp>
 #include <StepRepr_ShapeAspectDerivingRelationship.hpp>
 
-// Added by ABV 28.12.01 for CAX-IF TRJ9 (edge_based_wireframe_model)
 #include <StepShape_CompoundShapeRepresentation.hpp>
 #include <StepShape_ConnectedFaceShapeRepresentation.hpp>
 #include <StepShape_EdgeBasedWireframeModel.hpp>
@@ -487,7 +429,6 @@ static const char* schemaAP242DIS =
 #include <StepShape_SeamEdge.hpp>
 #include <StepShape_ConnectedFaceSubSet.hpp>
 
-// AP209 types
 #include <StepBasic_EulerAngles.hpp>
 #include <StepBasic_MassUnit.hpp>
 #include <StepBasic_ThermodynamicTemperatureUnit.hpp>
@@ -562,15 +503,12 @@ static const char* schemaAP242DIS =
 #include <StepFEA_AlignedSurface3dElementCoordinateSystem.hpp>
 #include <StepFEA_ConstantSurface3dElementCoordinateSystem.hpp>
 
-// 23.01.2003
 #include <StepFEA_CurveElementIntervalLinearlyVarying.hpp>
 #include <StepFEA_FeaCurveSectionGeometricRelationship.hpp>
 #include <StepFEA_FeaSurfaceSectionGeometricRelationship.hpp>
 
-// added PTV TRJ11 8.02.2003
 #include <StepBasic_DocumentProductEquivalence.hpp>
 
-// TR12J 4.06.2003 G&DT entities
 #include <StepShape_ShapeRepresentationWithParameters.hpp>
 #include <StepDimTol_AngularityTolerance.hpp>
 #include <StepDimTol_ConcentricityTolerance.hpp>
@@ -600,12 +538,10 @@ static const char* schemaAP242DIS =
 #include <StepRepr_ReprItemAndLengthMeasureWithUnit.hpp>
 #include <StepDimTol_GeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol.hpp>
 
-// added by skl 10.02.2004 for TRJ13
 #include <StepBasic_ConversionBasedUnitAndMassUnit.hpp>
 #include <StepBasic_MassMeasureWithUnit.hpp>
 #include <StepBasic_CharacterizedObject.hpp>
 
-// Added by ika for GD&T AP242
 #include <StepRepr_Apex.hpp>
 #include <StepRepr_CentreOfSymmetry.hpp>
 #include <StepRepr_GeometricAlignment.hpp>
@@ -670,7 +606,6 @@ static const char* schemaAP242DIS =
 #include <StepVisual_CameraModelD3MultiClippingUnion.hpp>
 #include <StepVisual_AnnotationCurveOccurrenceAndGeomReprItem.hpp>
 
-// Added for kinematics implementation
 #include <StepRepr_RepresentationReference.hpp>
 #include <StepGeom_SuParameters.hpp>
 #include <StepKinematics_RotationAboutDirection.hpp>
@@ -760,8 +695,6 @@ static const char* schemaAP242DIS =
 static int                                                       THE_StepAP214_Protocol_init = 0;
 static NCollection_DataMap<occ::handle<Standard_Transient>, int> types(819);
 
-//=================================================================================================
-
 StepAP214_Protocol::StepAP214_Protocol()
 {
   if (THE_StepAP214_Protocol_init)
@@ -777,9 +710,7 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepVisual_AnnotationFillArea), 5);
   types.Bind(STANDARD_TYPE(StepVisual_AnnotationFillAreaOccurrence), 6);
   types.Bind(STANDARD_TYPE(StepVisual_AnnotationOccurrence), 7);
-  //  types.Bind (STANDARD_TYPE(StepVisual_AnnotationSubfigureOccurrence), 8);
-  //  types.Bind (STANDARD_TYPE(StepVisual_AnnotationSymbol), 9);
-  //  types.Bind (STANDARD_TYPE(StepVisual_AnnotationSymbolOccurrence), 10);
+
   types.Bind(STANDARD_TYPE(StepVisual_AnnotationText), 11);
   types.Bind(STANDARD_TYPE(StepVisual_AnnotationTextOccurrence), 12);
   types.Bind(STANDARD_TYPE(StepBasic_ApplicationContext), 13);
@@ -802,7 +733,7 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepAP214_AutoDesignPersonAndOrganizationAssignment), 31);
   types.Bind(STANDARD_TYPE(StepAP214_AutoDesignPresentedItem), 32);
   types.Bind(STANDARD_TYPE(StepAP214_AutoDesignSecurityClassificationAssignment), 33);
-  //  types.Bind (STANDARD_TYPE(StepAP214_AutoDesignViewArea), 34);
+
   types.Bind(STANDARD_TYPE(StepGeom_Axis1Placement), 35);
   types.Bind(STANDARD_TYPE(StepGeom_Axis2Placement2d), 36);
   types.Bind(STANDARD_TYPE(StepGeom_Axis2Placement3d), 37);
@@ -839,8 +770,7 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepGeom_CompositeCurveOnSurface), 68);
   types.Bind(STANDARD_TYPE(StepGeom_CompositeCurveSegment), 69);
   types.Bind(STANDARD_TYPE(StepVisual_CompositeText), 70);
-  //  types.Bind (STANDARD_TYPE(StepVisual_CompositeTextWithAssociatedCurves), 71);
-  //  types.Bind (STANDARD_TYPE(StepVisual_CompositeTextWithBlankingBox), 72);
+
   types.Bind(STANDARD_TYPE(StepVisual_CompositeTextWithExtent), 73);
   types.Bind(STANDARD_TYPE(StepGeom_Conic), 74);
   types.Bind(STANDARD_TYPE(StepGeom_ConicalSurface), 75);
@@ -849,7 +779,7 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepVisual_ContextDependentOverRidingStyledItem), 78);
   types.Bind(STANDARD_TYPE(StepBasic_ConversionBasedUnit), 79);
   types.Bind(STANDARD_TYPE(StepBasic_CoordinatedUniversalTimeOffset), 80);
-  //  types.Bind (STANDARD_TYPE(StepShape_CsgRepresentation), 81);
+
   types.Bind(STANDARD_TYPE(StepShape_CsgShapeRepresentation), 82);
   types.Bind(STANDARD_TYPE(StepShape_CsgSolid), 83);
   types.Bind(STANDARD_TYPE(StepGeom_Curve), 84);
@@ -863,24 +793,19 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepBasic_DateAndTime), 92);
   types.Bind(STANDARD_TYPE(StepBasic_DateRole), 95);
   types.Bind(STANDARD_TYPE(StepBasic_DateTimeRole), 96);
-  //  types.Bind (STANDARD_TYPE(StepVisual_DefinedSymbol), 97);
+
   types.Bind(STANDARD_TYPE(StepRepr_DefinitionalRepresentation), 98);
   types.Bind(STANDARD_TYPE(StepGeom_DegeneratePcurve), 99);
   types.Bind(STANDARD_TYPE(StepGeom_DegenerateToroidalSurface), 100);
   types.Bind(STANDARD_TYPE(StepRepr_DescriptiveRepresentationItem), 101);
-  //  types.Bind (STANDARD_TYPE(StepVisual_DimensionCurve), 102);
-  //  types.Bind (STANDARD_TYPE(StepVisual_DimensionCurveTerminator), 103);
+
   types.Bind(STANDARD_TYPE(StepBasic_DimensionalExponents), 104);
   types.Bind(STANDARD_TYPE(StepGeom_Direction), 105);
   types.Bind(STANDARD_TYPE(StepVisual_DraughtingAnnotationOccurrence), 106);
   types.Bind(STANDARD_TYPE(StepVisual_DraughtingCallout), 107);
   types.Bind(STANDARD_TYPE(StepVisual_DraughtingPreDefinedColour), 108);
   types.Bind(STANDARD_TYPE(StepVisual_DraughtingPreDefinedCurveFont), 109);
-  //  types.Bind (STANDARD_TYPE(StepVisual_DraughtingSubfigureRepresentation), 110);
-  //  types.Bind (STANDARD_TYPE(StepVisual_DraughtingSymbolRepresentation), 111);
-  //  types.Bind (STANDARD_TYPE(StepVisual_DraughtingTextLiteralWithDelineation), 112);
-  //  types.Bind (STANDARD_TYPE(StepVisual_DrawingDefinition), 113);
-  //  types.Bind (STANDARD_TYPE(StepVisual_DrawingRevision), 114);
+
   types.Bind(STANDARD_TYPE(StepShape_Edge), 115);
   types.Bind(STANDARD_TYPE(StepShape_EdgeCurve), 116);
   types.Bind(STANDARD_TYPE(StepShape_EdgeLoop), 117);
@@ -889,14 +814,14 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepGeom_EvaluatedDegeneratePcurve), 120);
   types.Bind(STANDARD_TYPE(StepBasic_ExternalSource), 121);
   types.Bind(STANDARD_TYPE(StepVisual_ExternallyDefinedCurveFont), 122);
-  //  types.Bind (STANDARD_TYPE(StepVisual_ExternallyDefinedHatchStyle), 123);
+
   types.Bind(STANDARD_TYPE(StepBasic_ExternallyDefinedItem), 124);
-  //  types.Bind (STANDARD_TYPE(StepVisual_ExternallyDefinedSymbol), 125);
+
   types.Bind(STANDARD_TYPE(StepVisual_ExternallyDefinedTextFont), 126);
-  //  types.Bind (STANDARD_TYPE(StepVisual_ExternallyDefinedTileStyle), 127);
+
   types.Bind(STANDARD_TYPE(StepShape_ExtrudedAreaSolid), 128);
   types.Bind(STANDARD_TYPE(StepShape_Face), 129);
-  //  types.Bind (STANDARD_TYPE(StepShape_FaceBasedSurfaceModel), 130);
+
   types.Bind(STANDARD_TYPE(StepShape_FaceBound), 131);
   types.Bind(STANDARD_TYPE(StepShape_FaceOuterBound), 132);
   types.Bind(STANDARD_TYPE(StepShape_FaceSurface), 133);
@@ -904,9 +829,7 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepShape_FacetedBrepShapeRepresentation), 135);
   types.Bind(STANDARD_TYPE(StepVisual_FillAreaStyle), 136);
   types.Bind(STANDARD_TYPE(StepVisual_FillAreaStyleColour), 137);
-  //  types.Bind (STANDARD_TYPE(StepVisual_FillAreaStyleHatching), 138);
-  //  types.Bind (STANDARD_TYPE(StepVisual_FillAreaStyleTileSymbolWithStyle), 139);
-  //  types.Bind (STANDARD_TYPE(StepVisual_FillAreaStyleTiles), 140);
+
   types.Bind(STANDARD_TYPE(StepRepr_FunctionallyDefinedTransformation), 141);
   types.Bind(STANDARD_TYPE(StepShape_GeometricCurveSet), 142);
   types.Bind(STANDARD_TYPE(StepGeom_GeometricRepresentationContext), 143);
@@ -933,12 +856,12 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepBasic_MeasureWithUnit), 165);
   types.Bind(STANDARD_TYPE(StepVisual_MechanicalDesignGeometricPresentationArea), 166);
   types.Bind(STANDARD_TYPE(StepVisual_MechanicalDesignGeometricPresentationRepresentation), 167);
-  //  types.Bind (STANDARD_TYPE(StepVisual_MechanicalDesignPresentationArea), 168);
+
   types.Bind(STANDARD_TYPE(StepBasic_NamedUnit), 169);
-  //  types.Bind (STANDARD_TYPE(StepShape_NonManifoldSurfaceShapeRepresentation), 170);
+
   types.Bind(STANDARD_TYPE(StepGeom_OffsetCurve3d), 171);
   types.Bind(STANDARD_TYPE(StepGeom_OffsetSurface), 172);
-  //  types.Bind (STANDARD_TYPE(StepAP214_OneDirectionRepeatFactor), 173);
+
   types.Bind(STANDARD_TYPE(StepShape_OpenShell), 174);
   types.Bind(STANDARD_TYPE(StepBasic_OrdinalDate), 175);
   types.Bind(STANDARD_TYPE(StepBasic_Organization), 176);
@@ -975,7 +898,7 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepVisual_PreDefinedColour), 209);
   types.Bind(STANDARD_TYPE(StepVisual_PreDefinedCurveFont), 210);
   types.Bind(STANDARD_TYPE(StepVisual_PreDefinedItem), 211);
-  //  types.Bind (STANDARD_TYPE(StepVisual_PreDefinedSymbol), 212);
+
   types.Bind(STANDARD_TYPE(StepVisual_PreDefinedTextFont), 213);
   types.Bind(STANDARD_TYPE(StepVisual_PresentationArea), 214);
   types.Bind(STANDARD_TYPE(StepVisual_PresentationLayerAssignment), 215);
@@ -988,7 +911,7 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepBasic_Product), 223);
   types.Bind(STANDARD_TYPE(StepBasic_ProductCategory), 224);
   types.Bind(STANDARD_TYPE(StepBasic_ProductContext), 225);
-  //  types.Bind (STANDARD_TYPE(StepVisual_ProductDataRepresentationView), 226);
+
   types.Bind(STANDARD_TYPE(StepBasic_ProductDefinition), 227);
   types.Bind(STANDARD_TYPE(StepBasic_ProductDefinitionContext), 228);
   types.Bind(STANDARD_TYPE(StepBasic_ProductDefinitionFormation), 229);
@@ -1048,29 +971,22 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepVisual_SurfaceStyleUsage), 284);
   types.Bind(STANDARD_TYPE(StepShape_SweptAreaSolid), 285);
   types.Bind(STANDARD_TYPE(StepGeom_SweptSurface), 286);
-  //  types.Bind (STANDARD_TYPE(StepVisual_SymbolColour), 287);
-  //  types.Bind (STANDARD_TYPE(StepVisual_SymbolRepresentation), 288);
-  //  types.Bind (STANDARD_TYPE(StepVisual_SymbolRepresentationMap), 289);
-  //  types.Bind (STANDARD_TYPE(StepVisual_SymbolStyle), 290);
-  //  types.Bind (STANDARD_TYPE(StepVisual_SymbolTarget), 291);
+
   types.Bind(STANDARD_TYPE(StepVisual_Template), 292);
   types.Bind(STANDARD_TYPE(StepVisual_TemplateInstance), 293);
-  //  types.Bind (STANDARD_TYPE(StepVisual_TerminatorSymbol), 294);
+
   types.Bind(STANDARD_TYPE(StepVisual_TextLiteral), 295);
-  //  types.Bind (STANDARD_TYPE(StepVisual_TextLiteralWithAssociatedCurves), 296);
-  //  types.Bind (STANDARD_TYPE(StepVisual_TextLiteralWithBlankingBox), 297);
-  //  types.Bind (STANDARD_TYPE(StepVisual_TextLiteralWithDelineation), 298);
-  //  types.Bind (STANDARD_TYPE(StepVisual_TextLiteralWithExtent), 299);
+
   types.Bind(STANDARD_TYPE(StepVisual_TextStyle), 300);
   types.Bind(STANDARD_TYPE(StepVisual_TextStyleForDefinedFont), 301);
   types.Bind(STANDARD_TYPE(StepVisual_TextStyleWithBoxCharacteristics), 302);
-  //  types.Bind (STANDARD_TYPE(StepVisual_TextStyleWithMirror), 303);
+
   types.Bind(STANDARD_TYPE(StepShape_TopologicalRepresentationItem), 304);
   types.Bind(STANDARD_TYPE(StepGeom_ToroidalSurface), 305);
   types.Bind(STANDARD_TYPE(StepShape_Torus), 306);
   types.Bind(STANDARD_TYPE(StepShape_TransitionalShapeRepresentation), 307);
   types.Bind(STANDARD_TYPE(StepGeom_TrimmedCurve), 308);
-  //  types.Bind (STANDARD_TYPE(StepAP214_TwoDirectionRepeatFactor), 309);
+
   types.Bind(STANDARD_TYPE(StepBasic_UncertaintyMeasureWithUnit), 310);
   types.Bind(STANDARD_TYPE(StepGeom_UniformCurve), 311);
   types.Bind(STANDARD_TYPE(StepGeom_UniformSurface), 312);
@@ -1095,7 +1011,7 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepGeom_GeometricRepresentationContextAndGlobalUnitAssignedContext),
              331);
   types.Bind(STANDARD_TYPE(StepShape_LoopAndPath), 332);
-  // Added by FMA
+
   types.Bind(STANDARD_TYPE(StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx), 333);
   types.Bind(STANDARD_TYPE(StepBasic_ConversionBasedUnitAndSolidAngleUnit), 334);
   types.Bind(STANDARD_TYPE(StepBasic_SiUnitAndSolidAngleUnit), 335);
@@ -1107,7 +1023,6 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepBasic_MechanicalContext), 339);
   types.Bind(STANDARD_TYPE(StepBasic_DesignContext), 340);
 
-  // full Rev4
   types.Bind(STANDARD_TYPE(StepBasic_TimeMeasureWithUnit), 341);
   types.Bind(STANDARD_TYPE(StepBasic_RatioUnit), 342);
   types.Bind(STANDARD_TYPE(StepBasic_TimeUnit), 343);
@@ -1125,9 +1040,8 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepRepr_ItemDefinedTransformation), 354);
   types.Bind(STANDARD_TYPE(StepVisual_PresentedItemRepresentation), 355);
   types.Bind(STANDARD_TYPE(StepVisual_PresentationLayerUsage), 356);
-  types.Bind(STANDARD_TYPE(StepGeom_SurfaceCurveAndBoundedCurve), 358); //: n5
+  types.Bind(STANDARD_TYPE(StepGeom_SurfaceCurveAndBoundedCurve), 358);
 
-  //  AP214 : CC1 -> CC2
   types.Bind(STANDARD_TYPE(StepAP214_AutoDesignDocumentReference), 366);
   types.Bind(STANDARD_TYPE(StepBasic_Document), 367);
   types.Bind(STANDARD_TYPE(StepBasic_DigitalDocument), 368);
@@ -1157,8 +1071,6 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepRepr_MaterialDesignation), 390);
   types.Bind(STANDARD_TYPE(StepShape_ContextDependentShapeRepresentation), 391);
 
-  // Added from CD to DIS   :j4
-
   types.Bind(STANDARD_TYPE(StepAP214_AppliedDateAndTimeAssignment), 392);
   types.Bind(STANDARD_TYPE(StepAP214_AppliedDateAssignment), 393);
   types.Bind(STANDARD_TYPE(StepAP214_AppliedApprovalAssignment), 394);
@@ -1175,7 +1087,6 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepShape_RevolvedFaceSolid), 404);
   types.Bind(STANDARD_TYPE(StepShape_SweptFaceSolid), 405);
 
-  // Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
   types.Bind(STANDARD_TYPE(StepRepr_MeasureRepresentationItem), 406);
   types.Bind(STANDARD_TYPE(StepBasic_AreaUnit), 407);
   types.Bind(STANDARD_TYPE(StepBasic_VolumeUnit), 408);
@@ -1184,7 +1095,6 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepBasic_ConversionBasedUnitAndAreaUnit), 411);
   types.Bind(STANDARD_TYPE(StepBasic_ConversionBasedUnitAndVolumeUnit), 412);
 
-  // Added by ABV 10.11.99 for AP203
   types.Bind(STANDARD_TYPE(StepBasic_Action), 413);
   types.Bind(STANDARD_TYPE(StepBasic_ActionAssignment), 414);
   types.Bind(STANDARD_TYPE(StepBasic_ActionMethod), 415);
@@ -1215,7 +1125,6 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepBasic_ActionRequestSolution), 440);
   types.Bind(STANDARD_TYPE(StepVisual_DraughtingModel), 441);
 
-  // Added by ABV 18.04.00 for CAX-IF TRJ4 (dimensional tolerances)
   types.Bind(STANDARD_TYPE(StepShape_AngularLocation), 442);
   types.Bind(STANDARD_TYPE(StepShape_AngularSize), 443);
   types.Bind(STANDARD_TYPE(StepShape_DimensionalCharacteristicRepresentation), 444);
@@ -1225,7 +1134,6 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepShape_DimensionalSizeWithPath), 448);
   types.Bind(STANDARD_TYPE(StepShape_ShapeDimensionRepresentation), 449);
 
-  // Added by ABV 10.05.00 for CAX-IF TRJ4 (external references)
   types.Bind(STANDARD_TYPE(StepBasic_DocumentRepresentationType), 450);
   types.Bind(STANDARD_TYPE(StepBasic_ObjectRole), 451);
   types.Bind(STANDARD_TYPE(StepBasic_RoleAssociation), 452);
@@ -1240,10 +1148,8 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepAP214_ExternallyDefinedGeneralProperty), 461);
   types.Bind(STANDARD_TYPE(StepAP214_AppliedExternalIdentificationAssignment), 462);
 
-  // abv 11.07.00: CAX-IF TRJ4: k1_geo-ac.stp
   types.Bind(STANDARD_TYPE(StepShape_DefinitionalRepresentationAndShapeRepresentation), 463);
 
-  // CKY 25 APR 2001 : CAX-IF TR7J , dimensional tolerances (contd)
   types.Bind(STANDARD_TYPE(StepRepr_CompositeShapeAspect), 470);
   types.Bind(STANDARD_TYPE(StepRepr_DerivedShapeAspect), 471);
   types.Bind(STANDARD_TYPE(StepRepr_Extension), 472);
@@ -1260,7 +1166,6 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepRepr_ValueRange), 483);
   types.Bind(STANDARD_TYPE(StepRepr_ShapeAspectDerivingRelationship), 484);
 
-  // abv 11.07.00: CAX-IF TRJ8: edge_based_wireframe
   types.Bind(STANDARD_TYPE(StepShape_CompoundShapeRepresentation), 485);
   types.Bind(STANDARD_TYPE(StepShape_ConnectedEdgeSet), 486);
   types.Bind(STANDARD_TYPE(StepShape_ConnectedFaceShapeRepresentation), 487);
@@ -1269,14 +1174,12 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepShape_FaceBasedSurfaceModel), 490);
   types.Bind(STANDARD_TYPE(StepShape_NonManifoldSurfaceShapeRepresentation), 491);
 
-  // gka 08.01.02 TRJ9 IS->DIS
   types.Bind(STANDARD_TYPE(StepGeom_OrientedSurface), 492);
   types.Bind(STANDARD_TYPE(StepShape_Subface), 493);
   types.Bind(STANDARD_TYPE(StepShape_Subedge), 494);
   types.Bind(STANDARD_TYPE(StepShape_SeamEdge), 495);
   types.Bind(STANDARD_TYPE(StepShape_ConnectedFaceSubSet), 496);
 
-  // AP209 types
   types.Bind(STANDARD_TYPE(StepBasic_EulerAngles), 500);
   types.Bind(STANDARD_TYPE(StepBasic_MassUnit), 501);
   types.Bind(STANDARD_TYPE(StepBasic_ThermodynamicTemperatureUnit), 502);
@@ -1300,7 +1203,7 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepFEA_Curve3dElementProperty), 520);
   types.Bind(STANDARD_TYPE(StepFEA_Curve3dElementRepresentation), 521);
   types.Bind(STANDARD_TYPE(StepFEA_Node), 522);
-  //  types.Bind (STANDARD_TYPE(StepFEA_CurveElementEndCoordinateSystem),523);
+
   types.Bind(STANDARD_TYPE(StepFEA_CurveElementEndOffset), 524);
   types.Bind(STANDARD_TYPE(StepFEA_CurveElementEndRelease), 525);
   types.Bind(STANDARD_TYPE(StepFEA_CurveElementInterval), 526);
@@ -1338,9 +1241,7 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepFEA_ParametricCurve3dElementCoordinateSystem), 558);
   types.Bind(STANDARD_TYPE(StepFEA_ParametricSurface3dElementCoordinateSystem), 559);
   types.Bind(STANDARD_TYPE(StepFEA_Surface3dElementRepresentation), 560);
-  //  types.Bind (STANDARD_TYPE(StepFEA_SymmetricTensor22d),561);
-  //  types.Bind (STANDARD_TYPE(StepFEA_SymmetricTensor42d),562);
-  //  types.Bind (STANDARD_TYPE(StepFEA_SymmetricTensor43d),563);
+
   types.Bind(STANDARD_TYPE(StepFEA_Volume3dElementRepresentation), 564);
   types.Bind(STANDARD_TYPE(StepRepr_DataEnvironment), 565);
   types.Bind(STANDARD_TYPE(StepRepr_MaterialPropertyRepresentation), 566);
@@ -1362,11 +1263,9 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepFEA_FeaCurveSectionGeometricRelationship), 582);
   types.Bind(STANDARD_TYPE(StepFEA_FeaSurfaceSectionGeometricRelationship), 583);
 
-  // PTV 28.01.2003 TRJ11 AP214 external references
   types.Bind(STANDARD_TYPE(StepBasic_DocumentProductAssociation), 600);
   types.Bind(STANDARD_TYPE(StepBasic_DocumentProductEquivalence), 601);
 
-  // TR12J 4.06.2003 G&DT entities
   types.Bind(STANDARD_TYPE(StepDimTol_CylindricityTolerance), 609);
   types.Bind(STANDARD_TYPE(StepShape_ShapeRepresentationWithParameters), 610);
   types.Bind(STANDARD_TYPE(StepDimTol_AngularityTolerance), 611);
@@ -1399,11 +1298,9 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepRepr_ReprItemAndLengthMeasureWithUnit), 635);
   types.Bind(STANDARD_TYPE(StepDimTol_GeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol), 636);
 
-  // added by skl 10.02.2004 for TRJ13
   types.Bind(STANDARD_TYPE(StepBasic_ConversionBasedUnitAndMassUnit), 650);
   types.Bind(STANDARD_TYPE(StepBasic_MassMeasureWithUnit), 651);
 
-  // Added by ika for GD&T AP242
   types.Bind(STANDARD_TYPE(StepRepr_Apex), 660);
   types.Bind(STANDARD_TYPE(StepRepr_CentreOfSymmetry), 661);
   types.Bind(STANDARD_TYPE(StepRepr_GeometricAlignment), 662);
@@ -1451,7 +1348,7 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepVisual_AnnotationPlane), 704);
   types.Bind(STANDARD_TYPE(StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol), 705);
   types.Bind(STANDARD_TYPE(StepDimTol_GeoTolAndGeoTolWthMaxTol), 706);
-  // AP242 tesselated
+
   types.Bind(STANDARD_TYPE(StepVisual_TessellatedAnnotationOccurrence), 707);
   types.Bind(STANDARD_TYPE(StepVisual_TessellatedItem), 708);
   types.Bind(STANDARD_TYPE(StepVisual_TessellatedGeometricSet), 709);
@@ -1470,7 +1367,6 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepVisual_SurfaceStyleRendering), 722);
   types.Bind(STANDARD_TYPE(StepVisual_SurfaceStyleRenderingWithProperties), 723);
 
-  // Added for kinematics implementation
   types.Bind(STANDARD_TYPE(StepRepr_RepresentationContextReference), 724);
   types.Bind(STANDARD_TYPE(StepRepr_RepresentationReference), 725);
   types.Bind(STANDARD_TYPE(StepGeom_SuParameters), 726);
@@ -1575,8 +1471,6 @@ StepAP214_Protocol::StepAP214_Protocol()
   types.Bind(STANDARD_TYPE(StepVisual_SurfaceStyleReflectanceAmbientDiffuseSpecular), 826);
 }
 
-//=================================================================================================
-
 int StepAP214_Protocol::TypeNumber(const occ::handle<Standard_Type>& atype) const
 {
   if (types.IsBound(atype))
@@ -1584,8 +1478,6 @@ int StepAP214_Protocol::TypeNumber(const occ::handle<Standard_Type>& atype) cons
   else
     return 0;
 }
-
-//=================================================================================================
 
 const char* StepAP214_Protocol::SchemaName(
   const occ::handle<Interface_InterfaceModel>& theModel) const
@@ -1610,16 +1502,12 @@ const char* StepAP214_Protocol::SchemaName(
   }
 }
 
-//=================================================================================================
-
 int StepAP214_Protocol::NbResources() const
 {
   return 1;
 }
 
-//=================================================================================================
-
-occ::handle<Interface_Protocol> StepAP214_Protocol::Resource(const int /*num*/) const
+occ::handle<Interface_Protocol> StepAP214_Protocol::Resource(const int) const
 {
   return HeaderSection::Protocol();
 }

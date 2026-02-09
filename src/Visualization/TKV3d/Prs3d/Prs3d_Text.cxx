@@ -7,8 +7,6 @@
 #include <Prs3d_TextAspect.hpp>
 #include <TCollection_ExtendedString.hpp>
 
-//=================================================================================================
-
 occ::handle<Graphic3d_Text> Prs3d_Text::Draw(const occ::handle<Graphic3d_Group>&  theGroup,
                                              const occ::handle<Prs3d_TextAspect>& theAspect,
                                              const TCollection_ExtendedString&    theText,
@@ -24,8 +22,6 @@ occ::handle<Graphic3d_Text> Prs3d_Text::Draw(const occ::handle<Graphic3d_Group>&
   theGroup->AddText(aText);
   return aText;
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_Text> Prs3d_Text::Draw(const occ::handle<Graphic3d_Group>&  theGroup,
                                              const occ::handle<Prs3d_TextAspect>& theAspect,

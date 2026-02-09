@@ -14,15 +14,11 @@
 
 #include <TDF_Tool.hpp>
 
-//=================================================================================================
-
 TDF_Transaction::TDF_Transaction(const TCollection_AsciiString& aName)
     : myName(aName),
       myUntilTransaction(0)
 {
 }
-
-//=================================================================================================
 
 TDF_Transaction::TDF_Transaction(const occ::handle<TDF_Data>&   aDF,
                                  const TCollection_AsciiString& aName)
@@ -32,11 +28,6 @@ TDF_Transaction::TDF_Transaction(const occ::handle<TDF_Data>&   aDF,
 {
 }
 
-//=======================================================================
-// function : Initialize
-// purpose  : Initializes a transaction ready to be opened.
-//=======================================================================
-
 void TDF_Transaction::Initialize(const occ::handle<TDF_Data>& aDF)
 {
   if (IsOpen())
@@ -44,8 +35,6 @@ void TDF_Transaction::Initialize(const occ::handle<TDF_Data>& aDF)
   myDF               = aDF;
   myUntilTransaction = 0;
 }
-
-//=================================================================================================
 
 int TDF_Transaction::Open()
 {
@@ -58,8 +47,6 @@ int TDF_Transaction::Open()
     throw Standard_NullObject("Null TDF_Data.");
   return myUntilTransaction = myDF->OpenTransaction();
 }
-
-//=================================================================================================
 
 occ::handle<TDF_Delta> TDF_Transaction::Commit(const bool withDelta)
 {
@@ -92,8 +79,6 @@ occ::handle<TDF_Delta> TDF_Transaction::Commit(const bool withDelta)
   return delta;
 }
 
-//=================================================================================================
-
 void TDF_Transaction::Abort()
 {
   if (IsOpen())
@@ -114,8 +99,6 @@ void TDF_Transaction::Abort()
 #endif
   }
 }
-
-//=================================================================================================
 
 void TDF_Transaction::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

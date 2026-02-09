@@ -5,12 +5,9 @@
 #include <Geom2dHash_PointHasher.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom2d_BSplineCurve (2D B-spline curve).
-//! Used for geometry deduplication.
-//! Hashes only metadata (degree, pole count, knot count, rationality) for efficiency.
 struct Geom2dHash_BSplineCurveHasher
 {
-  // Hashes the B-spline curve metadata only.
+
   std::size_t operator()(const occ::handle<Geom2d_BSplineCurve>& theCurve) const noexcept
   {
     const std::size_t aHashes[4] = {opencascade::hash(theCurve->Degree()),
@@ -20,25 +17,21 @@ struct Geom2dHash_BSplineCurveHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two B-spline curves by full geometric data.
   bool operator()(const occ::handle<Geom2d_BSplineCurve>& theCurve1,
                   const occ::handle<Geom2d_BSplineCurve>& theCurve2) const noexcept
   {
     constexpr double aTolerance = 1e-12;
 
-    // Compare degrees
     if (theCurve1->Degree() != theCurve2->Degree())
     {
       return false;
     }
 
-    // Compare knot counts
     if (theCurve1->NbKnots() != theCurve2->NbKnots())
     {
       return false;
     }
 
-    // Compare knots and multiplicities
     for (int i = 1; i <= theCurve1->NbKnots(); ++i)
     {
       if (std::abs(theCurve1->Knot(i) - theCurve2->Knot(i)) > aTolerance
@@ -48,7 +41,6 @@ struct Geom2dHash_BSplineCurveHasher
       }
     }
 
-    // Compare rationality
     if (theCurve1->IsRational() != theCurve2->IsRational())
     {
       return false;
@@ -56,7 +48,6 @@ struct Geom2dHash_BSplineCurveHasher
 
     const Geom2dHash_PointHasher aPointHasher;
 
-    // Compare poles
     for (int i = 1; i <= theCurve1->NbPoles(); ++i)
     {
       if (!aPointHasher(theCurve1->Pole(i), theCurve2->Pole(i)))
@@ -65,7 +56,6 @@ struct Geom2dHash_BSplineCurveHasher
       }
     }
 
-    // Compare weights if rational
     if (theCurve1->IsRational())
     {
       for (int i = 1; i <= theCurve1->NbPoles(); ++i)

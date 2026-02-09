@@ -9,8 +9,6 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_IndexedDataMap.hpp>
 
-//=================================================================================================
-
 bool ChFi2d::CommonVertex(const TopoDS_Edge& E1, const TopoDS_Edge& E2, TopoDS_Vertex& V)
 {
   TopoDS_Vertex firstVertex1, lastVertex1, firstVertex2, lastVertex2;
@@ -28,9 +26,7 @@ bool ChFi2d::CommonVertex(const TopoDS_Edge& E1, const TopoDS_Edge& E2, TopoDS_V
     return true;
   }
   return false;
-} // CommonVertex
-
-//=================================================================================================
+}
 
 ChFi2d_ConstructionError ChFi2d::FindConnectedEdges(const TopoDS_Face&   F,
                                                     const TopoDS_Vertex& V,
@@ -48,21 +44,21 @@ ChFi2d_ConstructionError ChFi2d::FindConnectedEdges(const TopoDS_Face&   F,
     {
       E1 = TopoDS::Edge(iterator.Value());
       iterator.Next();
-    } // if ...
+    }
     else
       return ChFi2d_ConnexionError;
     if (iterator.More())
     {
       E2 = TopoDS::Edge(iterator.Value());
       iterator.Next();
-    } // if ...
+    }
     else
       return ChFi2d_ConnexionError;
 
     if (iterator.More())
       return ChFi2d_ConnexionError;
-  } // if (isFind)
+  }
   else
     return ChFi2d_ConnexionError;
   return ChFi2d_IsDone;
-} // FindConnectedEdges
+}

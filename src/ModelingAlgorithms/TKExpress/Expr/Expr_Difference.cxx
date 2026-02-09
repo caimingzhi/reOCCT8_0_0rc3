@@ -27,50 +27,50 @@ occ::handle<Expr_GeneralExpression> Expr_Difference::ShallowSimplified() const
   bool nvsecond = mysecond->IsKind(STANDARD_TYPE(Expr_NumericValue));
   if (nvfirst && nvsecond)
   {
-    // case num1 - num2
+
     occ::handle<Expr_NumericValue> myNVfirst  = occ::down_cast<Expr_NumericValue>(myfirst);
     occ::handle<Expr_NumericValue> myNVsecond = occ::down_cast<Expr_NumericValue>(mysecond);
     return new Expr_NumericValue(myNVfirst->GetValue() - myNVsecond->GetValue());
   }
   if (nvfirst && !nvsecond)
   {
-    // case num1 - X2
+
     occ::handle<Expr_NumericValue> myNVfirst = occ::down_cast<Expr_NumericValue>(myfirst);
     if (myNVfirst->GetValue() == 0.0)
     {
-      // case 0 - X2
+
       return -mysecond;
     }
   }
   if (!nvfirst && nvsecond)
   {
-    // case X1 - num2
+
     occ::handle<Expr_NumericValue> myNVsecond = occ::down_cast<Expr_NumericValue>(mysecond);
     if (myNVsecond->GetValue() == 0.0)
     {
-      // case X1 - 0
+
       return myfirst;
     }
   }
-  // Treat UnaryMinus case
+
   bool unfirst  = myfirst->IsKind(STANDARD_TYPE(Expr_UnaryMinus));
   bool unsecond = mysecond->IsKind(STANDARD_TYPE(Expr_UnaryMinus));
   if (unfirst && unsecond)
   {
-    // case (-ssX1) - (-ssX2) = ssX2 - ssX1
+
     occ::handle<Expr_GeneralExpression> ssop1 = myfirst->SubExpression(1);
     occ::handle<Expr_GeneralExpression> ssop2 = mysecond->SubExpression(1);
     return ssop2 - ssop1;
   }
   if (unfirst && !unsecond)
   {
-    // case (-ssX1) - X2 = -( ssX1 + X2)
+
     occ::handle<Expr_GeneralExpression> ssop1 = myfirst->SubExpression(1);
     return -(ssop1 + mysecond);
   }
   if (!unfirst && unsecond)
   {
-    // case X1 - (-ssX2) = X1 + ssX2
+
     occ::handle<Expr_GeneralExpression> ssop2 = mysecond->SubExpression(1);
     return myfirst + ssop2;
   }

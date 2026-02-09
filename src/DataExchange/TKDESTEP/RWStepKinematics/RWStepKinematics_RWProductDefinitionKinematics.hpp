@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_ProductDefinitionKinematics;
 
-//! Read & Write tool for ProductDefinitionKinematics
 class RWStepKinematics_RWProductDefinitionKinematics
 {
 public:

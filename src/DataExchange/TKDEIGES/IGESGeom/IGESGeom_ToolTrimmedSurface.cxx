@@ -14,23 +14,13 @@
 #include <Interface_ShareTool.hpp>
 #include <Message_Msg.hpp>
 
-// MGE 31/07/98
-//=================================================================================================
-
 IGESGeom_ToolTrimmedSurface::IGESGeom_ToolTrimmedSurface() = default;
-
-//=================================================================================================
 
 void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_TrimmedSurface>& ent,
                                                 const occ::handle<IGESData_IGESReaderData>& IR,
                                                 IGESData_ParamReader& PR) const
 {
-  // MGE 31/07/98
-  // Building of messages
-  //========================================
-  //========================================
 
-  // bool st; //szv#4:S4163:12Mar99 not needed
   int                                                                    aFlag;
   int                                                                    count;
   occ::handle<IGESData_IGESEntity>                                       aSurface;
@@ -38,7 +28,6 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
   occ::handle<NCollection_HArray1<occ::handle<IGESGeom_CurveOnSurface>>> anInner;
   IGESData_Status                                                        aStatus;
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, aSurface))
   {
     Message_Msg Msg169("XSTEP_169");
@@ -68,13 +57,7 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
     Message_Msg Msg170("XSTEP_170");
     PR.SendFail(Msg170);
   }
-  // st = PR.ReadInteger(PR.Current(), Msg171, count); //szv#4:S4163:12Mar99 moved in if
 
-  /*
-    st = PR.ReadEntity(IR, PR.Current(), "Surface to be trimmed", aSurface);
-    st = PR.ReadInteger(PR.Current(), "Outer boundary type", aFlag);
-    st = PR.ReadInteger(PR.Current(), "Number of inner boundary closed curves", count);
-  */
   if (PR.ReadInteger(PR.Current(), count))
   {
     if (count < 0)
@@ -126,21 +109,15 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
       {
       }
     }
-  } // szv#4:S4163:12Mar99 `st=` not needed
-  /*  st = PR.ReadEntity(IR, PR.Current(), "Outer boundary curve",
-               STANDARD_TYPE(IGESGeom_CurveOnSurface), anOuter,true);
-  */
+  }
+
   if (!anInner.IsNull())
   {
     int I;
     for (I = 1; I <= count; I++)
     {
       occ::handle<IGESGeom_CurveOnSurface> tempEnt;
-      // st = PR.ReadEntity(IR, PR.Current(), Msg173,
-      // STANDARD_TYPE(IGESGeom_CurveOnSurface), tempEnt); //szv#4:S4163:12Mar99 moved in if
-      /*      st = PR.ReadEntity(IR, PR.Current(), "Inner boundary curves",
-                   STANDARD_TYPE(IGESGeom_CurveOnSurface), tempEnt);
-      */
+
       if (PR.ReadEntity(IR, PR.Current(), aStatus, STANDARD_TYPE(IGESGeom_CurveOnSurface), tempEnt))
         anInner->SetValue(I, tempEnt);
       else
@@ -181,8 +158,6 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
   ent->Init(aSurface, aFlag, anOuter, anInner);
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolTrimmedSurface::WriteOwnParams(const occ::handle<IGESGeom_TrimmedSurface>& ent,
                                                  IGESData_IGESWriter& IW) const
 {
@@ -200,8 +175,6 @@ void IGESGeom_ToolTrimmedSurface::WriteOwnParams(const occ::handle<IGESGeom_Trim
     IW.Send(ent->InnerContour(I));
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolTrimmedSurface::OwnShared(const occ::handle<IGESGeom_TrimmedSurface>& ent,
                                             Interface_EntityIterator&                   iter) const
 {
@@ -212,8 +185,6 @@ void IGESGeom_ToolTrimmedSurface::OwnShared(const occ::handle<IGESGeom_TrimmedSu
   for (I = 1; I <= up; I++)
     iter.GetOneItem(ent->InnerContour(I));
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolTrimmedSurface::OwnCopy(const occ::handle<IGESGeom_TrimmedSurface>& another,
                                           const occ::handle<IGESGeom_TrimmedSurface>& ent,
@@ -240,15 +211,13 @@ void IGESGeom_ToolTrimmedSurface::OwnCopy(const occ::handle<IGESGeom_TrimmedSurf
   ent->Init(aSurface, aFlag, anOuter, anInner);
 }
 
-//=================================================================================================
-
 IGESData_DirChecker IGESGeom_ToolTrimmedSurface::DirChecker(
-  const occ::handle<IGESGeom_TrimmedSurface>& /* ent */) const
+  const occ::handle<IGESGeom_TrimmedSurface>&) const
 {
   IGESData_DirChecker DC(144, 0);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
   DC.UseFlagRequired(0);
   DC.HierarchyStatusIgnored();
@@ -256,17 +225,10 @@ IGESData_DirChecker IGESGeom_ToolTrimmedSurface::DirChecker(
   return DC;
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolTrimmedSurface::OwnCheck(const occ::handle<IGESGeom_TrimmedSurface>& ent,
                                            const Interface_ShareTool&,
                                            occ::handle<Interface_Check>& ach) const
 {
-  // MGE 31/07/98
-  // Building of messages
-  //========================================
-  // Message_Msg Msg172("XSTEP_172");
-  //========================================
 
   if (ent->OuterBoundaryType() != 0 && ent->OuterBoundaryType() != 1)
   {
@@ -274,8 +236,6 @@ void IGESGeom_ToolTrimmedSurface::OwnCheck(const occ::handle<IGESGeom_TrimmedSur
     ach->SendFail(Msg172);
   }
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolTrimmedSurface::OwnDump(const occ::handle<IGESGeom_TrimmedSurface>& ent,
                                           const IGESData_IGESDumper&                  dumper,

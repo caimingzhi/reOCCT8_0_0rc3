@@ -15,10 +15,6 @@
 #include <StdStorage_TypeData.hpp>
 #include <ShapePersistent_TopoDS.hpp>
 
-//==========================================================
-// ErrorMessage
-//==========================================================
-
 static void DDocStd_StorageErrorMessage(Draw_Interpretor& theDI, const Storage_Error theStatus)
 {
   switch (theStatus)
@@ -67,10 +63,6 @@ static void DDocStd_StorageErrorMessage(Draw_Interpretor& theDI, const Storage_E
       break;
   }
 }
-
-//=======================================================================
-// function : DDocStd_ShapeSchema_Write
-//=======================================================================
 
 static int DDocStd_fsdwrite(Draw_Interpretor& theDI, int theArgNb, const char** theArgs)
 {
@@ -175,10 +167,6 @@ static int DDocStd_fsdwrite(Draw_Interpretor& theDI, int theArgNb, const char** 
   return 0;
 }
 
-//=======================================================================
-// function : DDocStd_ShapeSchema_Read
-//=======================================================================
-
 static int DDocStd_fsdread(Draw_Interpretor& theDI, int theArgNb, const char** theArgs)
 {
   if (theArgNb < 3)
@@ -221,7 +209,7 @@ static int DDocStd_fsdread(Draw_Interpretor& theDI, int theArgNb, const char** t
       {
         Handle(ShapePersistent_TopoDS::HShape) aHShape =
           Handle(ShapePersistent_TopoDS::HShape)::DownCast(aPObject);
-        if (aHShape) // shapes are expected
+        if (aHShape)
         {
           TopoDS_Shape aShape = aHShape->Import();
           if (rflag)
@@ -266,11 +254,6 @@ static int DDocStd_fsdread(Draw_Interpretor& theDI, int theArgNb, const char** t
   }
   return 0;
 }
-
-//=======================================================================
-// function : ShapeSchemaCommands
-// purpose  : registers shape schema related commands in Draw interpreter
-//=======================================================================
 
 void DDocStd::ShapeSchemaCommands(Draw_Interpretor& theCommands)
 {

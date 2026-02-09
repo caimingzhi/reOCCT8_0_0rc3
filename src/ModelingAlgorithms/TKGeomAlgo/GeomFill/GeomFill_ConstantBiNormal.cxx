@@ -11,10 +11,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_ConstantBiNormal, GeomFill_TrihedronLaw)
 
-//=======================================================================
-// function : FDeriv
-// purpose  : computes (F/|F|)'
-//=======================================================================
 static gp_Vec FDeriv(const gp_Vec& F, const gp_Vec& DF)
 {
   double Norma  = F.Magnitude();
@@ -22,10 +18,6 @@ static gp_Vec FDeriv(const gp_Vec& F, const gp_Vec& DF)
   return Result;
 }
 
-//=======================================================================
-// function : DDeriv
-// purpose  : computes (F/|F|)''
-//=======================================================================
 static gp_Vec DDeriv(const gp_Vec& F, const gp_Vec& DF, const gp_Vec& D2F)
 {
   double Norma = F.Magnitude();
@@ -67,8 +59,6 @@ bool GeomFill_ConstantBiNormal::D0(const double Param,
                                    gp_Vec&      Normal,
                                    gp_Vec&      BiNormal)
 {
-  // if BN^T != 0 then N = (BN^T).Normalized ; T = N^BN
-  // else T = (N^BN).Normalized ; N = BN^T
 
   frenet->D0(Param, Tangent, Normal, BiNormal);
   BiNormal = BN;
@@ -82,11 +72,7 @@ bool GeomFill_ConstantBiNormal::D0(const double Param,
     Tangent = Normal.Crossed(BiNormal).Normalized();
     Normal  = BiNormal.Crossed(Tangent);
   }
-  /*for Test
-    gp_Vec DTangent, D2Tangent, DNormal, D2Normal, DBiNormal, D2BiNormal;
-    D2(Param, Tangent, DTangent, D2Tangent,
-       Normal, DNormal, D2Normal, BiNormal, DBiNormal, D2BiNormal);
-  */
+
   return true;
 }
 
@@ -122,22 +108,7 @@ bool GeomFill_ConstantBiNormal::D1(const double Param,
     Normal  = BiNormal.Crossed(Tangent);
     DNormal = BiNormal.Crossed(DTangent);
   }
-  /*test
-    double h = 1.e-10;
-    gp_Vec cTangent, cNormal, cBiNormal, Tangent_, Normal_, BiNormal_;
-    D0(Param, cTangent, cNormal, cBiNormal);
-    D0(Param + h, Tangent_, Normal_, BiNormal_);
-    cTangent = (Tangent_ - cTangent)/h;
-    cNormal = (Normal_ - cNormal)/h;
-    cBiNormal = (BiNormal_ - cBiNormal)/h;
-    std::cout<<"DTangent = ("<<DTangent.X()<<", "<<DTangent.Y()<<", "<<DTangent.Z()<<")"<<std::endl;
-    std::cout<<"CTangent = ("<<cTangent.X()<<", "<<cTangent.Y()<<", "<<cTangent.Z()<<")"<<std::endl;
-    std::cout<<"DNormal = ("<<DNormal.X()<<", "<<DNormal.Y()<<", "<<DNormal.Z()<<")"<<std::endl;
-    std::cout<<"CNormal = ("<<cNormal.X()<<", "<<cNormal.Y()<<", "<<cNormal.Z()<<")"<<std::endl;
-    std::cout<<"DBiNormal = ("<<DBiNormal.X()<<", "<<DBiNormal.Y()<<",
-    "<<DBiNormal.Z()<<")"<<std::endl; std::cout<<"CBiNormal = ("<<cBiNormal.X()<<",
-    "<<cBiNormal.Y()<<", "<<cBiNormal.Z()<<")"<<std::endl;
-  */
+
   return true;
 }
 
@@ -192,17 +163,7 @@ bool GeomFill_ConstantBiNormal::D2(const double Param,
     DNormal  = BiNormal.Crossed(DTangent);
     D2Normal = BiNormal.Crossed(D2Tangent);
   }
-  /*  std::cout<<"Param = "<<Param<<std::endl;
-    std::cout<<"Tangent = ("<<Tangent.X()<<", "<<Tangent.Y()<<", "<<Tangent.Z()<<")"<<std::endl;
-    std::cout<<"DTangent = ("<<DTangent.X()<<", "<<DTangent.Y()<<", "<<DTangent.Z()<<")"<<std::endl;
-    std::cout<<"D2Tangent = ("<<D2Tangent.X()<<", "<<D2Tangent.Y()<<",
-    "<<D2Tangent.Z()<<")"<<std::endl;
 
-    std::cout<<"BiNormal = ("<<BiNormal.X()<<", "<<BiNormal.Y()<<", "<<BiNormal.Z()<<")"<<std::endl;
-    std::cout<<"DBiNormal = ("<<DBiNormal.X()<<", "<<DBiNormal.Y()<<",
-    "<<DBiNormal.Z()<<")"<<std::endl; std::cout<<"D2BiNormal = ("<<D2BiNormal.X()<<",
-    "<<D2BiNormal.Y()<<", "<<D2BiNormal.Z()<<")"<<std::endl;
-  */
   return true;
 }
 
@@ -266,16 +227,15 @@ bool GeomFill_ConstantBiNormal::IsOnlyBy3dCurve() const
       break;
     }
     case GeomAbs_Line:
-    { // La normale du plan de la courbe est il perpendiculaire a la BiNormale ?
+    {
       gp_Vec V;
       V.SetXYZ(myCurve->Line().Direction().XYZ());
       return V.IsNormal(BN, Precision::Angular());
     }
     default:
-      return false; // pas de risques
+      return false;
   }
 
-  // La normale du plan de la courbe est il // a la BiNormale ?
   gp_Vec V;
   V.SetXYZ(TheAxe.Direction().XYZ());
   return V.IsParallel(BN, Precision::Angular());

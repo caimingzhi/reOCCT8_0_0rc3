@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRepGProp_Domain.hpp>
 #include <BRepGProp_Face.hpp>
@@ -19,14 +7,10 @@
 #include <gp_Pln.hpp>
 #include <gp_Pnt.hpp>
 
-//=================================================================================================
-
 BRepGProp_Vinert::BRepGProp_Vinert()
     : myEpsilon(0.0)
 {
 }
-
-//=================================================================================================
 
 BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face& theSurface,
                                    const gp_Pnt&   theLocation,
@@ -35,8 +19,6 @@ BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face& theSurface,
   SetLocation(theLocation);
   Perform(theSurface, theEps);
 }
-
-//=================================================================================================
 
 BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face&   theSurface,
                                    BRepGProp_Domain& theDomain,
@@ -47,8 +29,6 @@ BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face&   theSurface,
   Perform(theSurface, theDomain, theEps);
 }
 
-//=================================================================================================
-
 BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face&   theSurface,
                                    BRepGProp_Domain& theDomain,
                                    const gp_Pnt&     theLocation)
@@ -57,15 +37,11 @@ BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face&   theSurface,
   Perform(theSurface, theDomain);
 }
 
-//=================================================================================================
-
 BRepGProp_Vinert::BRepGProp_Vinert(const BRepGProp_Face& theSurface, const gp_Pnt& theLocation)
 {
   SetLocation(theLocation);
   Perform(theSurface);
 }
-
-//=================================================================================================
 
 BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face& theSurface,
                                    const gp_Pnt&   theOrigin,
@@ -75,8 +51,6 @@ BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face& theSurface,
   SetLocation(theLocation);
   Perform(theSurface, theOrigin, theEps);
 }
-
-//=================================================================================================
 
 BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face&   theSurface,
                                    BRepGProp_Domain& theDomain,
@@ -88,8 +62,6 @@ BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face&   theSurface,
   Perform(theSurface, theDomain, theOrigin, theEps);
 }
 
-//=================================================================================================
-
 BRepGProp_Vinert::BRepGProp_Vinert(const BRepGProp_Face& theSurface,
                                    const gp_Pnt&         theOrigin,
                                    const gp_Pnt&         theLocation)
@@ -97,8 +69,6 @@ BRepGProp_Vinert::BRepGProp_Vinert(const BRepGProp_Face& theSurface,
   SetLocation(theLocation);
   Perform(theSurface, theOrigin);
 }
-
-//=================================================================================================
 
 BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face&   theSurface,
                                    BRepGProp_Domain& theDomain,
@@ -109,8 +79,6 @@ BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face&   theSurface,
   Perform(theSurface, theDomain, theOrigin);
 }
 
-//=================================================================================================
-
 BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face& theSurface,
                                    const gp_Pln&   thePlane,
                                    const gp_Pnt&   theLocation,
@@ -119,8 +87,6 @@ BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face& theSurface,
   SetLocation(theLocation);
   Perform(theSurface, thePlane, theEps);
 }
-
-//=================================================================================================
 
 BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face&   theSurface,
                                    BRepGProp_Domain& theDomain,
@@ -132,8 +98,6 @@ BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face&   theSurface,
   Perform(theSurface, theDomain, thePlane, theEps);
 }
 
-//=================================================================================================
-
 BRepGProp_Vinert::BRepGProp_Vinert(const BRepGProp_Face& theSurface,
                                    const gp_Pln&         thePlane,
                                    const gp_Pnt&         theLocation)
@@ -141,8 +105,6 @@ BRepGProp_Vinert::BRepGProp_Vinert(const BRepGProp_Face& theSurface,
   SetLocation(theLocation);
   Perform(theSurface, thePlane);
 }
-
-//=================================================================================================
 
 BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face&   theSurface,
                                    BRepGProp_Domain& theDomain,
@@ -153,22 +115,16 @@ BRepGProp_Vinert::BRepGProp_Vinert(BRepGProp_Face&   theSurface,
   Perform(theSurface, theDomain, thePlane);
 }
 
-//=================================================================================================
-
 void BRepGProp_Vinert::SetLocation(const gp_Pnt& theLocation)
 {
   loc = theLocation;
 }
-
-//=================================================================================================
 
 double BRepGProp_Vinert::Perform(BRepGProp_Face& theSurface, const double theEps)
 {
   BRepGProp_Domain anEmptyDomain;
   return Perform(theSurface, anEmptyDomain, theEps);
 }
-
-//=================================================================================================
 
 double BRepGProp_Vinert::Perform(BRepGProp_Face&   theSurface,
                                  BRepGProp_Domain& theDomain,
@@ -181,8 +137,6 @@ double BRepGProp_Vinert::Perform(BRepGProp_Face&   theSurface,
            aGauss.Compute(theSurface, theDomain, loc, theEps, aCoeff, true, dim, g, inertia);
 }
 
-//=================================================================================================
-
 void BRepGProp_Vinert::Perform(const BRepGProp_Face& theSurface)
 {
   const double    aCoeff[] = {0.0, 0.0, 0.0};
@@ -191,8 +145,6 @@ void BRepGProp_Vinert::Perform(const BRepGProp_Face& theSurface)
   myEpsilon = 1.0;
   aGauss.Compute(theSurface, loc, aCoeff, true, dim, g, inertia);
 }
-
-//=================================================================================================
 
 void BRepGProp_Vinert::Perform(BRepGProp_Face& theSurface, BRepGProp_Domain& theDomain)
 {
@@ -203,8 +155,6 @@ void BRepGProp_Vinert::Perform(BRepGProp_Face& theSurface, BRepGProp_Domain& the
   aGauss.Compute(theSurface, theDomain, loc, aCoeff, true, dim, g, inertia);
 }
 
-//=================================================================================================
-
 double BRepGProp_Vinert::Perform(BRepGProp_Face& theSurface,
                                  const gp_Pnt&   theOrigin,
                                  const double    theEps)
@@ -212,8 +162,6 @@ double BRepGProp_Vinert::Perform(BRepGProp_Face& theSurface,
   BRepGProp_Domain anEmptyDomain;
   return Perform(theSurface, anEmptyDomain, theOrigin, theEps);
 }
-
-//=================================================================================================
 
 double BRepGProp_Vinert::Perform(BRepGProp_Face&   theSurface,
                                  BRepGProp_Domain& theDomain,
@@ -230,8 +178,6 @@ double BRepGProp_Vinert::Perform(BRepGProp_Face&   theSurface,
            aGauss.Compute(theSurface, theDomain, loc, theEps, aCoeff, true, dim, g, inertia);
 }
 
-//=================================================================================================
-
 void BRepGProp_Vinert::Perform(const BRepGProp_Face& theSurface, const gp_Pnt& theOrigin)
 {
   BRepGProp_Gauss aGauss(BRepGProp_Gauss::Vinert);
@@ -242,8 +188,6 @@ void BRepGProp_Vinert::Perform(const BRepGProp_Face& theSurface, const gp_Pnt& t
   myEpsilon = 1.0;
   aGauss.Compute(theSurface, loc, aCoeff, true, dim, g, inertia);
 }
-
-//=================================================================================================
 
 void BRepGProp_Vinert::Perform(BRepGProp_Face&   theSurface,
                                BRepGProp_Domain& theDomain,
@@ -258,8 +202,6 @@ void BRepGProp_Vinert::Perform(BRepGProp_Face&   theSurface,
   aGauss.Compute(theSurface, theDomain, loc, aCoeff, true, dim, g, inertia);
 }
 
-//=================================================================================================
-
 double BRepGProp_Vinert::Perform(BRepGProp_Face& theSurface,
                                  const gp_Pln&   thePlane,
                                  const double    theEps)
@@ -267,8 +209,6 @@ double BRepGProp_Vinert::Perform(BRepGProp_Face& theSurface,
   BRepGProp_Domain anEmptyDomain;
   return Perform(theSurface, anEmptyDomain, thePlane, theEps);
 }
-
-//=================================================================================================
 
 double BRepGProp_Vinert::Perform(BRepGProp_Face&   theSurface,
                                  BRepGProp_Domain& theDomain,
@@ -285,8 +225,6 @@ double BRepGProp_Vinert::Perform(BRepGProp_Face&   theSurface,
            aGauss.Compute(theSurface, theDomain, loc, theEps, aCoeff, false, dim, g, inertia);
 }
 
-//=================================================================================================
-
 void BRepGProp_Vinert::Perform(const BRepGProp_Face& theSurface, const gp_Pln& thePlane)
 {
   BRepGProp_Gauss aGauss(BRepGProp_Gauss::Vinert);
@@ -299,8 +237,6 @@ void BRepGProp_Vinert::Perform(const BRepGProp_Face& theSurface, const gp_Pln& t
   myEpsilon = 1.0;
   aGauss.Compute(theSurface, loc, aCoeff, false, dim, g, inertia);
 }
-
-//=================================================================================================
 
 void BRepGProp_Vinert::Perform(BRepGProp_Face&   theSurface,
                                BRepGProp_Domain& theDomain,
@@ -316,8 +252,6 @@ void BRepGProp_Vinert::Perform(BRepGProp_Face&   theSurface,
   myEpsilon = 1.0;
   aGauss.Compute(theSurface, theDomain, loc, aCoeff, false, dim, g, inertia);
 }
-
-//=================================================================================================
 
 double BRepGProp_Vinert::GetEpsilon()
 {

@@ -11,8 +11,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomPlate_Surface, Geom_Surface)
 
-//=================================================================================================
-
 GeomPlate_Surface::GeomPlate_Surface(const occ::handle<Geom_Surface>& Surfinit,
                                      const Plate_Plate&               Surfinter)
     : mySurfinter(Surfinter),
@@ -24,50 +22,26 @@ GeomPlate_Surface::GeomPlate_Surface(const occ::handle<Geom_Surface>& Surfinit,
 {
 }
 
-//=================================================================================================
-
-void GeomPlate_Surface::UReverse()
-{
-  // throw Standard_Failure("UReverse");
-}
-
-//=================================================================================================
+void GeomPlate_Surface::UReverse() {}
 
 double GeomPlate_Surface::UReversedParameter(const double U) const
-{ // throw Standard_Failure("UReversedParameter");
+{
   return (-U);
 }
 
-//=================================================================================================
-
-void GeomPlate_Surface::VReverse()
-{ // throw Standard_Failure("VReverse");
-}
-
-//=================================================================================================
+void GeomPlate_Surface::VReverse() {}
 
 double GeomPlate_Surface::VReversedParameter(const double V) const
-{ // throw Standard_Failure("VReversedParameter");
+{
   return (-V);
 }
 
-//=================================================================================================
+void GeomPlate_Surface::TransformParameters(double&, double&, const gp_Trsf&) const {}
 
-// void GeomPlate_Surface::TransformParameters(double& U, double& V, const gp_Trsf& T)
-// const
-void GeomPlate_Surface::TransformParameters(double&, double&, const gp_Trsf&) const
-{ // throw Standard_Failure("TransformParameters");
-}
-
-//=================================================================================================
-
-// gp_GTrsf2d GeomPlate_Surface::ParametricTransformation(const gp_Trsf& T) const
 gp_GTrsf2d GeomPlate_Surface::ParametricTransformation(const gp_Trsf&) const
-{ // throw Standard_Failure("ParametricTransformation");
+{
   return gp_GTrsf2d();
 }
-
-//=================================================================================================
 
 void GeomPlate_Surface::Bounds(double& U1, double& U2, double& V1, double& V2) const
 {
@@ -82,105 +56,75 @@ void GeomPlate_Surface::Bounds(double& U1, double& U2, double& V1, double& V2) c
   }
 }
 
-//=================================================================================================
-
 bool GeomPlate_Surface::IsUClosed() const
-{ // throw Standard_Failure("IsUClosed(");
-  // return 1;
+{
+
   return false;
 }
-
-//=================================================================================================
 
 bool GeomPlate_Surface::IsVClosed() const
-{ // throw Standard_Failure("IsVClosed(");
-  // return 1;
+{
+
   return false;
 }
-
-//=================================================================================================
 
 bool GeomPlate_Surface::IsUPeriodic() const
 {
   return false;
 }
 
-//=================================================================================================
-
 double GeomPlate_Surface::UPeriod() const
 {
   return false;
 }
-
-//=================================================================================================
 
 bool GeomPlate_Surface::IsVPeriodic() const
 {
   return false;
 }
 
-//=================================================================================================
-
 double GeomPlate_Surface::VPeriod() const
 {
   return false;
 }
 
-//=================================================================================================
-
-// occ::handle<Geom_Curve> GeomPlate_Surface::UIso(const double U) const
 occ::handle<Geom_Curve> GeomPlate_Surface::UIso(const double) const
-{ // throw Standard_Failure("UIso");
+{
   return occ::handle<Geom_Curve>();
 }
 
-//=================================================================================================
-
-// occ::handle<Geom_Curve> GeomPlate_Surface::VIso(const double V) const
 occ::handle<Geom_Curve> GeomPlate_Surface::VIso(const double) const
-{ // throw Standard_Failure("VIso");
+{
   return occ::handle<Geom_Curve>();
 }
-
-//=================================================================================================
 
 GeomAbs_Shape GeomPlate_Surface::Continuity() const
-{ // throw Standard_Failure("Continuity()");
+{
   return GeomAbs_Shape();
 }
 
-//=================================================================================================
-
-// bool GeomPlate_Surface::IsCNu(const int N) const
 bool GeomPlate_Surface::IsCNu(const int) const
 {
   throw Standard_Failure("IsCNu");
 }
 
-//=================================================================================================
-
-// bool GeomPlate_Surface::IsCNv(const int N) const
 bool GeomPlate_Surface::IsCNv(const int) const
 {
   throw Standard_Failure("IsCNv");
 }
-
-//=================================================================================================
 
 void GeomPlate_Surface::D0(const double U, const double V, gp_Pnt& P) const
 {
   gp_XY  P1(U, V);
   gp_Pnt P2;
   mySurfinit->D0(U, V, P2);
-  gp_XYZ P3; //=mySurfinter.Evaluate(P1);
+  gp_XYZ P3;
   P3 = mySurfinter.Evaluate(P1);
   for (int i = 1; i <= 3; i++)
   {
     P.SetCoord(i, P3.Coord(i) + P2.Coord(i));
   }
 }
-
-//=================================================================================================
 
 void GeomPlate_Surface::D1(const double U,
                            const double V,
@@ -201,8 +145,6 @@ void GeomPlate_Surface::D1(const double U,
     D1V.SetCoord(i, V1V.Coord(i) + V2V.Coord(i));
   }
 }
-
-//=================================================================================================
 
 void GeomPlate_Surface::D2(const double U,
                            const double V,
@@ -230,11 +172,6 @@ void GeomPlate_Surface::D2(const double U,
   }
 }
 
-//=================================================================================================
-
-// void GeomPlate_Surface::D3(const double U, const double V, gp_Pnt& P, gp_Vec& D1U,
-// gp_Vec& D1V, gp_Vec& D2U, gp_Vec& D2V, gp_Vec& D2UV, gp_Vec& D3U, gp_Vec& D3V, gp_Vec& D3UUV,
-// gp_Vec& D3UVV) const
 void GeomPlate_Surface::D3(const double,
                            const double,
                            gp_Pnt&,
@@ -251,16 +188,10 @@ void GeomPlate_Surface::D3(const double,
   throw Standard_Failure("D3");
 }
 
-//=================================================================================================
-
-// gp_Vec GeomPlate_Surface::DN(const double U, const double V, const int
-// Nu, const int Nv) const
 gp_Vec GeomPlate_Surface::DN(const double, const double, const int, const int) const
 {
   throw Standard_Failure("DN");
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Geometry> GeomPlate_Surface::Copy() const
 {
@@ -268,22 +199,13 @@ occ::handle<Geom_Geometry> GeomPlate_Surface::Copy() const
   return GPS;
 }
 
-//=================================================================================================
-
-// void GeomPlate_Surface::Transform(const gp_Trsf& T)
-void GeomPlate_Surface::Transform(const gp_Trsf&)
-{ // throw Standard_Failure("Transform");
-}
-
-//=================================================================================================
+void GeomPlate_Surface::Transform(const gp_Trsf&) {}
 
 occ::handle<Geom_Surface> GeomPlate_Surface::CallSurfinit() const
 
 {
   return mySurfinit;
 }
-
-//=================================================================================================
 
 void GeomPlate_Surface::SetBounds(const double Umin,
                                   const double Umax,
@@ -300,14 +222,10 @@ void GeomPlate_Surface::SetBounds(const double Umin,
   myVmax = Vmax;
 }
 
-//=================================================================================================
-
 void GeomPlate_Surface::RealBounds(double& U1, double& U2, double& V1, double& V2) const
 {
   mySurfinter.UVBox(U1, U2, V1, V2);
 }
-
-//=================================================================================================
 
 void GeomPlate_Surface::Constraints(NCollection_Sequence<gp_XY>& Seq) const
 {

@@ -11,7 +11,6 @@ class StepShape_PolyLoop;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for PolyLoop
 class RWStepShape_RWPolyLoop
 {
 public:

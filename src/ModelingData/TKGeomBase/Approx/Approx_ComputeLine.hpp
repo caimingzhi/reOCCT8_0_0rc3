@@ -95,7 +95,7 @@ static void DUMP(const AppParCurves_MultiCurve& C)
   #ifdef DRAW
       char* Temp = solname;
       DrawTrSurf::Set(Temp, BSp);
-  //      DrawTrSurf::Set(solname, BSp);
+
   #endif
     }
     else
@@ -106,7 +106,7 @@ static void DUMP(const AppParCurves_MultiCurve& C)
   #ifdef DRAW
       char* Temp = solname;
       DrawTrSurf::Set(Temp, BSp2d);
-  //      DrawTrSurf::Set(solname, BSp2d);
+
   #endif
     }
   }
@@ -126,9 +126,9 @@ static bool CheckMultiCurve(const AppParCurves_MultiCurve& theMultiCurve,
   const int nbp3d = LineTool::NbP3d(theLine);
   const int nbp2d = LineTool::NbP2d(theLine);
 
-  const double coeff = 4.; // 2*2
+  const double coeff = 4.;
 
-  if (nbp3d > 1) // only simple cases are analysed
+  if (nbp3d > 1)
     return true;
 
   const double     MinScalProd = -0.9;
@@ -152,7 +152,7 @@ static bool CheckMultiCurve(const AppParCurves_MultiCurve& theMultiCurve,
   int   nbbc = 1;
   int   indc = 1;
 #endif
-  if (theMultiCurve.Dimension(1) == 3 /*myNbP3d == 1*/)
+  if (theMultiCurve.Dimension(1) == 3)
   {
     NCollection_Array1<gp_Pnt> aPoles(1, theMultiCurve.NbPoles());
     theMultiCurve.Curve(1, aPoles);
@@ -174,7 +174,7 @@ static bool CheckMultiCurve(const AppParCurves_MultiCurve& theMultiCurve,
       }
     }
     gp_Pnt MidPnt = aPoles(indp - 1);
-    // for (int k = 3; k <= aPoles.Upper(); k++)
+
     while (indp <= aPoles.Upper())
     {
       SecondVec      = gp_Vec(MidPnt, aPoles(indp));
@@ -199,7 +199,7 @@ static bool CheckMultiCurve(const AppParCurves_MultiCurve& theMultiCurve,
       MidPnt   = aPoles(indp);
       indp++;
     }
-    // Check: may be it is a real loop
+
     if (LoopFound)
     {
 #ifdef DRAW
@@ -243,7 +243,7 @@ static bool CheckMultiCurve(const AppParCurves_MultiCurve& theMultiCurve,
     }
     if (LoopFound)
     {
-      // search <indbad>
+
       double MaxSqDist = 0.;
       double MinSqDist = RealLast();
       for (int k = theIndfirst + 1; k <= theIndlast; k++)
@@ -283,8 +283,8 @@ static bool CheckMultiCurve(const AppParCurves_MultiCurve& theMultiCurve,
           }
         }
     }
-  } // if (myNbP3d == 1)
-  else // 2d case
+  }
+  else
   {
     NCollection_Array1<gp_Pnt2d> aPoles2d(1, theMultiCurve.NbPoles());
     theMultiCurve.Curve(1, aPoles2d);
@@ -328,7 +328,7 @@ static bool CheckMultiCurve(const AppParCurves_MultiCurve& theMultiCurve,
       FirstVec = SecondVec;
       MidPnt   = aPoles2d(k);
     }
-    // Check: may be it is a real loop
+
     if (LoopFound)
     {
 #ifdef DRAW
@@ -372,7 +372,7 @@ static bool CheckMultiCurve(const AppParCurves_MultiCurve& theMultiCurve,
     }
     if (LoopFound)
     {
-      // search <indbad>
+
       for (int indcur = 1; indcur <= NbCur; indcur++)
       {
         double MaxSqDist = 0.;
@@ -399,7 +399,6 @@ static bool CheckMultiCurve(const AppParCurves_MultiCurve& theMultiCurve,
     }
   }
 
-  // Define <indbad>
   for (int i = 1; i <= 3; i++)
     if (indbads[i] != 0)
     {
@@ -464,7 +463,6 @@ void Approx_ComputeLine::FirstTangencyVector(const MultiLine& Line,
   else
   {
 
-    // recherche d un vecteur tangent par construction d une parabole:
     AppParCurves_Constraint firstC, lastC;
     firstC = lastC      = AppParCurves_PassPoint;
     int         nbpoles = 3;
@@ -547,7 +545,6 @@ void Approx_ComputeLine::LastTangencyVector(const MultiLine& Line,
   else
   {
 
-    // recherche d un vecteur tangent par construction d une parabole:
     AppParCurves_Constraint firstC, lastC;
     firstC = lastC      = AppParCurves_PassPoint;
     int         nbpoles = 3;
@@ -585,8 +582,6 @@ double Approx_ComputeLine::SearchFirstLambda(const MultiLine&   Line,
                                              const math_Vector& V,
                                              const int          index) const
 {
-
-  // dq/dw = lambda* V = (p2-p1)/(u2-u1)
 
   int      nbP2d, nbP3d;
   gp_Pnt   P1, P2;
@@ -645,7 +640,6 @@ double Approx_ComputeLine::SearchLastLambda(const MultiLine&   Line,
                                             const math_Vector& V,
                                             const int          index) const
 {
-  // dq/dw = lambda* V = (p2-p1)/(u2-u1)
 
   int      nbP2d, nbP3d;
   gp_Pnt   P1, P2;
@@ -836,8 +830,7 @@ void Approx_ComputeLine::Perform(const MultiLine& Line)
   bool          Finish = false, begin = true, Ok = false, GoUp = false, Interpol;
   double        thetol3d, thetol2d;
   Approx_Status MyStatus;
-  //  gp_Vec V13d, V23d;
-  //  gp_Vec2d V2d;
+
   Thefirstpt    = LineTool::FirstPoint(Line);
   Thelastpt     = LineTool::LastPoint(Line);
   int myfirstpt = Thefirstpt;
@@ -876,7 +869,7 @@ void Approx_ComputeLine::Perform(const MultiLine& Line)
     if (isOtherLine0Made)
     {
       myIsClear = true;
-      //++myMultiLineNb;
+
       Perform(anOtherLine0);
       alldone = true;
     }
@@ -904,14 +897,14 @@ void Approx_ComputeLine::Perform(const MultiLine& Line)
     while (!Finish)
     {
       oldlastpt = mylastpt;
-      // Gestion du decoupage de la multiline pour approximer:
+
       if (!begin)
       {
         if (!GoUp)
         {
           if (Ok)
           {
-            // Calcul de la partie a approximer.
+
             myfirstpt = mylastpt;
             mylastpt  = Thelastpt;
             if (myfirstpt == Thelastpt)
@@ -944,20 +937,16 @@ void Approx_ComputeLine::Perform(const MultiLine& Line)
         GoUp = false;
       }
 
-      // Verification du nombre de points restants par rapport au degre
-      // demande.
-      // ==============================================================
       nbp      = mylastpt - myfirstpt + 1;
       MyStatus = LineTool::WhatStatus(Line, myfirstpt, mylastpt);
       if (nbp <= mydegremax + 5)
       {
-        // Rajout necessaire de points si possible.
-        // ========================================
+
         GoUp = false;
         Ok   = true;
         if (MyStatus == Approx_PointsAdded)
         {
-          // Appel recursif du decoupage:
+
           GoUp = true;
 
           MultiLine anOtherLine1 = LineTool::MakeMLBetween(Line, myfirstpt, mylastpt, nbp - 1);
@@ -965,13 +954,12 @@ void Approx_ComputeLine::Perform(const MultiLine& Line)
           int nbpdsotherligne =
             LineTool::FirstPoint(anOtherLine1) - LineTool::LastPoint(anOtherLine1);
 
-          //-- Si MakeML a echoue   on retourne une ligne vide
           if ((nbpdsotherligne == 0) || myMultiLineNb >= 3)
           {
-            //-- cout<<" ** ApproxComputeLine MakeML Echec ** LBR lbr "<<endl;
+
             if (myfirstpt == mylastpt)
-              break; // Pour etre sur de ne pas
-            // planter la station !!
+              break;
+
             myCouple1.SetIndex(myfirstpt);
             myCouple2.SetIndex(mylastpt);
             myConstraints->SetValue(1, myCouple1);
@@ -994,7 +982,7 @@ void Approx_ComputeLine::Perform(const MultiLine& Line)
             if (isOtherLine2Made)
             {
               myIsClear = true;
-              //++myMultiLineNb;
+
               Par = SavePar;
               Perform(anOtherLine2);
               Ok = true;
@@ -1023,7 +1011,7 @@ void Approx_ComputeLine::Perform(const MultiLine& Line)
               if (isOtherLine2Made)
               {
                 myIsClear = true;
-                //++myMultiLineNb;
+
                 Perform(anOtherLine2);
                 Ok = true;
               }
@@ -1068,7 +1056,7 @@ void Approx_ComputeLine::Perform(const MultiLine& Line)
               if (isOtherLine3Made)
               {
                 myIsClear = true;
-                //++myMultiLineNb;
+
                 Perform(anOtherLine3);
                 myfirstpt = mylastpt;
                 mylastpt  = Thelastpt;
@@ -1103,8 +1091,7 @@ void Approx_ComputeLine::Perform(const MultiLine& Line)
 
         if (MyStatus == Approx_NoPointsAdded && !begin)
         {
-          // On rend la meilleure approximation obtenue precedemment.
-          // ========================================================
+
           GoUp       = true;
           tolreached = false;
           if (TheMultiCurve.NbCurves() == 0)
@@ -1134,9 +1121,7 @@ void Approx_ComputeLine::Perform(const MultiLine& Line)
 
         else if (MyStatus == Approx_NoApproximation)
         {
-          // On ne fait pas d approximation entre myfirstpt et mylastpt.
-          // ===========================================================
-          // On stocke pour pouvoir en informer l utilisateur.
+
           GoUp      = true;
           myfirstpt = mylastpt;
           mylastpt  = Thelastpt;
@@ -1152,15 +1137,12 @@ void Approx_ComputeLine::Perform(const MultiLine& Line)
       if (!GoUp)
       {
         if (myfirstpt == mylastpt)
-          break; // Pour etre sur de ne pas
-                 // planter la station !!
+          break;
+
         myCouple1.SetIndex(myfirstpt);
         myCouple2.SetIndex(mylastpt);
         myConstraints->SetValue(1, myCouple1);
         myConstraints->SetValue(2, myCouple2);
-
-        // Calcul des parametres sur ce nouvel intervalle.
-        // On recupere les parametres initiaux lors du decoupage.
 
         math_Vector Param(myfirstpt, mylastpt);
         if (begin)
@@ -1291,7 +1273,7 @@ void Approx_ComputeLine::Parameters(const MultiLine& Line,
         TheParameters(i) = TheParameters(i - 1) + dist;
       }
       else
-      { // Par == Approx_Centripetal
+      {
         TheParameters(i) = TheParameters(i - 1) + std::sqrt(dist);
       }
     }
@@ -1365,7 +1347,7 @@ bool Approx_ComputeLine::Compute(const MultiLine& Line,
       if (uu2 <= uu1)
       {
         restau = true;
-        //	cout << "restau = true" << endl;
+
         break;
       }
       uu1 = uu2;
@@ -1381,7 +1363,7 @@ bool Approx_ComputeLine::Compute(const MultiLine& Line,
     {
       if (TheTol3d <= mytol3d && TheTol2d <= mytol2d)
       {
-        // Stockage de la multicurve approximee.
+
         tolreached = true;
 #ifdef OCCT_DEBUG
         if (mydebug)
@@ -1394,8 +1376,7 @@ bool Approx_ComputeLine::Compute(const MultiLine& Line,
         else
         {
           myMultiCurves.Append(mySCU);
-          // Stockage des parametres de la partie de MultiLine approximee:
-          // A ameliorer !! (bq trop de recopies)
+
           occ::handle<NCollection_HArray1<double>> ThePar =
             new NCollection_HArray1<double>(Para.Lower(), Para.Upper());
           for (i = Para.Lower(); i <= Para.Upper(); i++)
@@ -1479,8 +1460,7 @@ bool Approx_ComputeLine::ComputeCurve(const MultiLine& Line, const int firstpt, 
   }
   if (nbp == 2)
   {
-    // S il n y a que 2 points, on verifie quand meme que les tangentes sont
-    // alignees.
+
 #ifdef OCCT_DEBUG
     Parallel = true;
 #endif
@@ -1609,7 +1589,7 @@ bool Approx_ComputeLine::ComputeCurve(const MultiLine& Line, const int firstpt, 
       }
     }
     mydone = true;
-    // Stockage de la multicurve approximee.
+
     tolreached = true;
 #ifdef OCCT_DEBUG
     if (mydebug)
@@ -1628,7 +1608,6 @@ bool Approx_ComputeLine::ComputeCurve(const MultiLine& Line, const int firstpt, 
     return mydone;
   }
 
-  // avec les tangentes.
   deg = nbp + 1;
   AppParCurves_MultiCurve mySCU(deg + 1);
   AppParCurves_Constraint Cons = AppParCurves_TangencyPoint;
@@ -1654,7 +1633,6 @@ bool Approx_ComputeLine::ComputeCurve(const MultiLine& Line, const int firstpt, 
     double Fv, TheTol3d, TheTol2d;
     LSQ.Error(Fv, TheTol3d, TheTol2d);
 
-    // Stockage de la multicurve approximee.
     tolreached = true;
 #ifdef OCCT_DEBUG
     if (mydebug)

@@ -15,7 +15,7 @@ STEPSelections_SelectFaces::STEPSelections_SelectFaces()
 {
 }
 
-bool STEPSelections_SelectFaces::Explore(const int /*level*/,
+bool STEPSelections_SelectFaces::Explore(const int,
                                          const occ::handle<Standard_Transient>& start,
                                          const Interface_Graph&                 G,
                                          Interface_EntityIterator&              explored) const

@@ -11,6 +11,5 @@ class HeaderSection
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! creates a Protocol
   Standard_EXPORT static occ::handle<HeaderSection_Protocol> Protocol();
 };

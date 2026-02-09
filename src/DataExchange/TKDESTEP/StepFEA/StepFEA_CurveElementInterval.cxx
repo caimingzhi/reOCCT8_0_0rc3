@@ -5,11 +5,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_CurveElementInterval, Standard_Transient)
 
-//=================================================================================================
-
 StepFEA_CurveElementInterval::StepFEA_CurveElementInterval() = default;
-
-//=================================================================================================
 
 void StepFEA_CurveElementInterval::Init(
   const occ::handle<StepFEA_CurveElementLocation>& aFinishPosition,
@@ -21,14 +17,10 @@ void StepFEA_CurveElementInterval::Init(
   theEuAngles = aEuAngles;
 }
 
-//=================================================================================================
-
 occ::handle<StepFEA_CurveElementLocation> StepFEA_CurveElementInterval::FinishPosition() const
 {
   return theFinishPosition;
 }
-
-//=================================================================================================
 
 void StepFEA_CurveElementInterval::SetFinishPosition(
   const occ::handle<StepFEA_CurveElementLocation>& aFinishPosition)
@@ -36,14 +28,10 @@ void StepFEA_CurveElementInterval::SetFinishPosition(
   theFinishPosition = aFinishPosition;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_EulerAngles> StepFEA_CurveElementInterval::EuAngles() const
 {
   return theEuAngles;
 }
-
-//=================================================================================================
 
 void StepFEA_CurveElementInterval::SetEuAngles(const occ::handle<StepBasic_EulerAngles>& aEuAngles)
 {

@@ -18,7 +18,6 @@ public:
 
   Standard_EXPORT virtual double Parameter(const occ::handle<Adaptor2d_Curve2d>& C);
 
-  //! Parametric resolution (2d).
   Standard_EXPORT virtual double Resolution(const occ::handle<Adaptor2d_Curve2d>& C);
 
   Standard_EXPORT virtual TopAbs_Orientation Orientation();

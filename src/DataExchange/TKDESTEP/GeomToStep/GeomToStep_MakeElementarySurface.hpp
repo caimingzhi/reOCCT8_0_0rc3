@@ -9,11 +9,6 @@
 class StepGeom_ElementarySurface;
 class Geom_ElementarySurface;
 
-//! This class implements the mapping between classes
-//! ElementarySurface from Geom and the class ElementarySurface
-//! from StepGeom which describes a ElementarySurface from
-//! prostep. As ElementarySurface is an abstract Surface this
-//! class is an access to the sub-class required.
 class GeomToStep_MakeElementarySurface : public GeomToStep_Root
 {
 public:

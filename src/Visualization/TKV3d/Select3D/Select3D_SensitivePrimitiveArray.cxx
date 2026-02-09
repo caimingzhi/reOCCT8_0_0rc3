@@ -9,19 +9,16 @@ IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitivePrimitiveArray, Select3D_SensitiveS
 namespace
 {
 
-  //! Auxiliary converter.
   static inline gp_Pnt vecToPnt(const NCollection_Vec3<float>& theVec)
   {
     return gp_Pnt(theVec.x(), theVec.y(), theVec.z());
   }
 
-  //! Auxiliary converter.
   static inline gp_Pnt vecToPnt(const NCollection_Vec2<float>& theVec)
   {
     return gp_Pnt(theVec.x(), theVec.y(), 0.0);
   }
 
-  //! Auxiliary function to find shared node between two triangles.
   static inline bool hasSharedNode(const int* theTri1, const int* theTri2)
   {
     return theTri1[0] == theTri2[0] || theTri1[1] == theTri2[0] || theTri1[2] == theTri2[0]
@@ -29,7 +26,6 @@ namespace
            || theTri1[0] == theTri2[2] || theTri1[1] == theTri2[2] || theTri1[2] == theTri2[2];
   }
 
-  //! Fill in the triangle nodes indices.
   static inline void getTriIndices(const occ::handle<Graphic3d_IndexBuffer>& theIndices,
                                    const int                                 theIndexOffset,
                                    int*                                      theNodes)
@@ -50,7 +46,6 @@ namespace
 
 } // namespace
 
-//! Functor for initializing groups in parallel threads.
 struct Select3D_SensitivePrimitiveArray::Select3D_SensitivePrimitiveArray_InitFunctor
 {
   Select3D_SensitivePrimitiveArray_InitFunctor(Select3D_SensitivePrimitiveArray& thePrimArray,
@@ -137,7 +132,6 @@ private:
   mutable std::atomic<int>          myNbFailures;
 };
 
-//! Functor for computing BVH in parallel threads.
 struct Select3D_SensitivePrimitiveArray::Select3D_SensitivePrimitiveArray_BVHFunctor
 {
   Select3D_SensitivePrimitiveArray_BVHFunctor(
@@ -155,8 +149,6 @@ private:
 private:
   NCollection_Array1<occ::handle<Select3D_SensitivePrimitiveArray>>& myGroups;
 };
-
-//=================================================================================================
 
 Select3D_SensitivePrimitiveArray::Select3D_SensitivePrimitiveArray(
   const occ::handle<SelectMgr_EntityOwner>& theOwnerId)
@@ -183,8 +175,6 @@ Select3D_SensitivePrimitiveArray::Select3D_SensitivePrimitiveArray(
 {
 }
 
-//=================================================================================================
-
 void Select3D_SensitivePrimitiveArray::SetDetectElementMap(bool theToDetect)
 {
   if (!theToDetect)
@@ -203,8 +193,6 @@ void Select3D_SensitivePrimitiveArray::SetDetectElementMap(bool theToDetect)
   }
 }
 
-//=================================================================================================
-
 void Select3D_SensitivePrimitiveArray::SetDetectNodeMap(bool theToDetect)
 {
   if (!theToDetect)
@@ -222,8 +210,6 @@ void Select3D_SensitivePrimitiveArray::SetDetectNodeMap(bool theToDetect)
     myDetectedNodeMap->ChangeMap().Clear();
   }
 }
-
-//=================================================================================================
 
 bool Select3D_SensitivePrimitiveArray::InitTriangulation(
   const occ::handle<Graphic3d_Buffer>&      theVerts,
@@ -387,8 +373,6 @@ bool Select3D_SensitivePrimitiveArray::InitTriangulation(
   }
   return true;
 }
-
-//=================================================================================================
 
 bool Select3D_SensitivePrimitiveArray::InitPoints(
   const occ::handle<Graphic3d_Buffer>&      theVerts,
@@ -564,8 +548,6 @@ bool Select3D_SensitivePrimitiveArray::InitPoints(
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<Select3D_SensitiveEntity> Select3D_SensitivePrimitiveArray::GetConnected()
 {
   occ::handle<Select3D_SensitivePrimitiveArray> aNewEntity =
@@ -600,8 +582,6 @@ occ::handle<Select3D_SensitiveEntity> Select3D_SensitivePrimitiveArray::GetConne
   return aNewEntity;
 }
 
-//=================================================================================================
-
 void Select3D_SensitivePrimitiveArray::Set(const occ::handle<SelectMgr_EntityOwner>& theOwnerId)
 {
   base_type::Set(theOwnerId);
@@ -614,8 +594,6 @@ void Select3D_SensitivePrimitiveArray::Set(const occ::handle<SelectMgr_EntityOwn
     }
   }
 }
-
-//=================================================================================================
 
 void Select3D_SensitivePrimitiveArray::BVH()
 {
@@ -647,14 +625,10 @@ void Select3D_SensitivePrimitiveArray::BVH()
   }
 }
 
-//=================================================================================================
-
 int Select3D_SensitivePrimitiveArray::Size() const
 {
   return myBvhIndices.NbElements;
 }
-
-//=================================================================================================
 
 Select3D_BndBox3d Select3D_SensitivePrimitiveArray::Box(const int theIdx) const
 {
@@ -731,8 +705,6 @@ Select3D_BndBox3d Select3D_SensitivePrimitiveArray::Box(const int theIdx) const
   return aBox;
 }
 
-//=================================================================================================
-
 double Select3D_SensitivePrimitiveArray::Center(const int theIdx, const int theAxis) const
 {
   if (!myGroups.IsNull())
@@ -746,8 +718,6 @@ double Select3D_SensitivePrimitiveArray::Center(const int theIdx, const int theA
   NCollection_Vec3<double> aCenter = (aBox.CornerMin() + aBox.CornerMax()) * 0.5;
   return theAxis == 0 ? aCenter.x() : (theAxis == 1 ? aCenter.y() : aCenter.z());
 }
-
-//=================================================================================================
 
 void Select3D_SensitivePrimitiveArray::Swap(const int theIdx1, const int theIdx2)
 {
@@ -767,8 +737,6 @@ void Select3D_SensitivePrimitiveArray::Swap(const int theIdx1, const int theIdx2
   }
 }
 
-//=================================================================================================
-
 Select3D_BndBox3d Select3D_SensitivePrimitiveArray::BoundingBox()
 {
   if (!myBndBox.IsValid())
@@ -777,8 +745,6 @@ Select3D_BndBox3d Select3D_SensitivePrimitiveArray::BoundingBox()
   }
   return applyTransformation();
 }
-
-//=================================================================================================
 
 void Select3D_SensitivePrimitiveArray::computeBoundingBox()
 {
@@ -817,8 +783,6 @@ void Select3D_SensitivePrimitiveArray::computeBoundingBox()
   }
 }
 
-//=================================================================================================
-
 Select3D_BndBox3d Select3D_SensitivePrimitiveArray::applyTransformation()
 {
   if (!HasInitLocation())
@@ -843,8 +807,6 @@ Select3D_BndBox3d Select3D_SensitivePrimitiveArray::applyTransformation()
   }
   return aBndBox;
 }
-
-//=================================================================================================
 
 bool Select3D_SensitivePrimitiveArray::Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                                SelectBasics_PickResult&             thePickResult)
@@ -919,8 +881,6 @@ bool Select3D_SensitivePrimitiveArray::Matches(SelectBasics_SelectingVolumeManag
   thePickResult.SetDistToGeomCenter(theMgr.DistToGeometryCenter(CenterOfGeometry()));
   return true;
 }
-
-//=================================================================================================
 
 bool Select3D_SensitivePrimitiveArray::overlapsElement(SelectBasics_PickResult& thePickResult,
                                                        SelectBasics_SelectingVolumeManager& theMgr,
@@ -1078,14 +1038,10 @@ bool Select3D_SensitivePrimitiveArray::overlapsElement(SelectBasics_PickResult& 
   return aResult;
 }
 
-//=================================================================================================
-
 double Select3D_SensitivePrimitiveArray::distanceToCOG(SelectBasics_SelectingVolumeManager& theMgr)
 {
   return theMgr.DistToGeometryCenter(myCDG3D);
 }
-
-//=================================================================================================
 
 bool Select3D_SensitivePrimitiveArray::elementIsInside(SelectBasics_SelectingVolumeManager& theMgr,
                                                        int  theElemIdx,
@@ -1187,8 +1143,6 @@ bool Select3D_SensitivePrimitiveArray::elementIsInside(SelectBasics_SelectingVol
     }
   }
 }
-
-//=================================================================================================
 
 void Select3D_SensitivePrimitiveArray::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

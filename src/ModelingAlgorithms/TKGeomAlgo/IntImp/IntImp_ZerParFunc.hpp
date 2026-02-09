@@ -18,15 +18,15 @@ IntImp_ZerParFunc::IntImp_ZerParFunc(const ThePSurface& S1, const ThePSurface& S
   surf1 = (void*)(&S1);
   surf2 = (void*)(&S2);
 
-  ua0 = ThePSurfaceTool::FirstUParameter(SURF1); //-- ThePSurfaceTool::UIntervalFirst(surf1);
-  va0 = ThePSurfaceTool::FirstVParameter(SURF1); //-- ThePSurfaceTool::VIntervalFirst(surf1);
-  ua1 = ThePSurfaceTool::LastUParameter(SURF1);  //-- ThePSurfaceTool::UIntervalLast(surf1);
-  va1 = ThePSurfaceTool::LastVParameter(SURF1);  //-- ThePSurfaceTool::VIntervalLast(surf1);
+  ua0 = ThePSurfaceTool::FirstUParameter(SURF1);
+  va0 = ThePSurfaceTool::FirstVParameter(SURF1);
+  ua1 = ThePSurfaceTool::LastUParameter(SURF1);
+  va1 = ThePSurfaceTool::LastVParameter(SURF1);
 
-  ub0 = ThePSurfaceTool::FirstUParameter(SURF2); //-- ThePSurfaceTool::UIntervalFirst(SURF2);
-  vb0 = ThePSurfaceTool::FirstVParameter(SURF2); //-- ThePSurfaceTool::VIntervalFirst(surf2);
-  ub1 = ThePSurfaceTool::LastUParameter(SURF2);  //-- ThePSurfaceTool::UIntervalLast(surf2);
-  vb1 = ThePSurfaceTool::LastVParameter(SURF2);  //-- ThePSurfaceTool::VIntervalLast(surf2);
+  ub0 = ThePSurfaceTool::FirstUParameter(SURF2);
+  vb0 = ThePSurfaceTool::FirstVParameter(SURF2);
+  ub1 = ThePSurfaceTool::LastUParameter(SURF2);
+  vb1 = ThePSurfaceTool::LastVParameter(SURF2);
 
   ures1 = ThePSurfaceTool::UResolution(SURF1, Precision::Confusion());
   vres1 = ThePSurfaceTool::VResolution(SURF1, Precision::Confusion());

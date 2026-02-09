@@ -22,8 +22,6 @@ class TopOpeBRep_Point2d;
 class TopOpeBRepDS_Transition;
 class TopOpeBRepDS_Interference;
 
-//! Fills a TopOpeBRepDS_DataStructure with Edge/Edge
-//! intersection data described by TopOpeBRep_EdgesIntersector.
 class TopOpeBRep_EdgesFiller
 {
 public:

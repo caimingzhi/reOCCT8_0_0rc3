@@ -9,7 +9,6 @@ class StepVisual_CurveStyleFontPattern : public Standard_Transient
 {
 
 public:
-  //! Returns a CurveStyleFontPattern
   Standard_EXPORT StepVisual_CurveStyleFontPattern();
 
   Standard_EXPORT void Init(const double aVisibleSegmentLength,

@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include "RWStepKinematics_RWPairRepresentationRelationship.hpp"
 
@@ -12,12 +12,8 @@
 #include <StepRepr_RepresentationOrRepresentationReference.hpp>
 #include <StepRepr_Transformation.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWPairRepresentationRelationship::
   RWStepKinematics_RWPairRepresentationRelationship() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWPairRepresentationRelationship::ReadStep(
   const occ::handle<StepData_StepReaderData>&                       theData,
@@ -25,16 +21,12 @@ void RWStepKinematics_RWPairRepresentationRelationship::ReadStep(
   occ::handle<Interface_Check>&                                     theArch,
   const occ::handle<StepKinematics_PairRepresentationRelationship>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 6, theArch, "pair_representation_relationship"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
-
-  // Inherited fields of RepresentationRelationship
 
   occ::handle<TCollection_HAsciiString> aRepresentationRelationship_Name;
   theData->ReadString(theNum,
@@ -73,8 +65,6 @@ void RWStepKinematics_RWPairRepresentationRelationship::ReadStep(
                       theArch,
                       aRepresentationRelationship_Rep2);
 
-  // Inherited fields of RepresentationRelationshipWithTransformation
-
   StepRepr_Transformation aRepresentationRelationshipWithTransformation_TransformationOperator;
   theData->ReadEntity(theNum,
                       6,
@@ -82,7 +72,6 @@ void RWStepKinematics_RWPairRepresentationRelationship::ReadStep(
                       theArch,
                       aRepresentationRelationshipWithTransformation_TransformationOperator);
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aRepresentationRelationship_Name,
                hasRepresentationRelationship_Description,
@@ -92,18 +81,12 @@ void RWStepKinematics_RWPairRepresentationRelationship::ReadStep(
                aRepresentationRelationshipWithTransformation_TransformationOperator);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWPairRepresentationRelationship::WriteStep(
   StepData_StepWriter&                                              theSW,
   const occ::handle<StepKinematics_PairRepresentationRelationship>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Own fields of RepresentationRelationship
 
   theSW.Send(theEnt->Name());
 
@@ -116,28 +99,18 @@ void RWStepKinematics_RWPairRepresentationRelationship::WriteStep(
 
   theSW.Send(theEnt->RepresentationRelationshipWithTransformation()->Rep2());
 
-  // Inherited fields of RepresentationRelationshipWithTransformation
-
   theSW.Send(
     theEnt->RepresentationRelationshipWithTransformation()->TransformationOperator().Value());
 }
-
-//=================================================================================================
 
 void RWStepKinematics_RWPairRepresentationRelationship::Share(
   const occ::handle<StepKinematics_PairRepresentationRelationship>& theEnt,
   Interface_EntityIterator&                                         iter) const
 {
 
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of RepresentationRelationship
-
   iter.AddItem(theEnt->RepresentationRelationshipWithTransformation()->Rep1());
 
   iter.AddItem(theEnt->RepresentationRelationshipWithTransformation()->Rep2());
-
-  // Inherited fields of RepresentationRelationshipWithTransformation
 
   iter.AddItem(
     theEnt->RepresentationRelationshipWithTransformation()->TransformationOperator().Value());

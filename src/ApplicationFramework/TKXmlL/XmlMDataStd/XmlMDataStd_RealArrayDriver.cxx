@@ -17,25 +17,17 @@ IMPLEMENT_DOMSTRING(LastIndexString, "last")
 IMPLEMENT_DOMSTRING(IsDeltaOn, "delta")
 IMPLEMENT_DOMSTRING(AttributeIDString, "realarrattguid")
 
-//=================================================================================================
-
 XmlMDataStd_RealArrayDriver::XmlMDataStd_RealArrayDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataStd_RealArrayDriver::NewEmpty() const
 {
   return (new TDataStd_RealArray());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDataStd_RealArrayDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                         const occ::handle<TDF_Attribute>& theTarget,
                                         XmlObjMgt_RRelocationTable&       theRelocTable) const
@@ -44,18 +36,16 @@ bool XmlMDataStd_RealArrayDriver::Paste(const XmlObjMgt_Persistent&       theSou
   occ::handle<TDataStd_RealArray> aRealArray = occ::down_cast<TDataStd_RealArray>(theTarget);
   const XmlObjMgt_Element&        anElement  = theSource;
 
-  // attribute id
   Standard_GUID       aGUID;
   XmlObjMgt_DOMString aGUIDStr = anElement.getAttribute(::AttributeIDString());
   if (aGUIDStr.Type() == XmlObjMgt_DOMString::LDOM_NULL)
-    aGUID = TDataStd_RealArray::GetID(); // default case
+    aGUID = TDataStd_RealArray::GetID();
   else
-    aGUID = Standard_GUID(static_cast<const char*>(aGUIDStr.GetString())); // user defined case
+    aGUID = Standard_GUID(static_cast<const char*>(aGUIDStr.GetString()));
   aRealArray->SetID(aGUID);
 
   int aFirstInd, aLastInd, ind;
 
-  // Read the FirstIndex; if the attribute is absent initialize to 1
   XmlObjMgt_DOMString aFirstIndex = anElement.getAttribute(::FirstIndexString());
   if (aFirstIndex == nullptr)
     aFirstInd = 1;
@@ -69,7 +59,6 @@ bool XmlMDataStd_RealArrayDriver::Paste(const XmlObjMgt_Persistent&       theSou
     return false;
   }
 
-  // Read LastIndex; the attribute should be present
   if (!anElement.getAttribute(::LastIndexString()).GetInteger(aLastInd))
   {
     TCollection_ExtendedString aMessageString =
@@ -82,7 +71,6 @@ bool XmlMDataStd_RealArrayDriver::Paste(const XmlObjMgt_Persistent&       theSou
 
   aRealArray->Init(aFirstInd, aLastInd);
 
-  // Check the type of LDOMString
   const XmlObjMgt_DOMString& aString = XmlObjMgt::GetStringValue(anElement);
   if (aString.Type() == LDOMBasicString::LDOM_Integer)
   {
@@ -115,10 +103,10 @@ bool XmlMDataStd_RealArrayDriver::Paste(const XmlObjMgt_Persistent&       theSou
                                      " for RealArray attribute as \"")
           + aValueStr + "\"";
         myMessageDriver->Send(aMessageString, Message_Warning);
-        // skip the first space, if exists
+
         while (*aValueStr != 0 && IsSpace(*aValueStr))
           ++aValueStr;
-        // skip to the next space separator
+
         while (*aValueStr != 0 && !IsSpace(*aValueStr))
           ++aValueStr;
       }
@@ -148,10 +136,6 @@ bool XmlMDataStd_RealArrayDriver::Paste(const XmlObjMgt_Persistent&       theSou
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMDataStd_RealArrayDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                         XmlObjMgt_Persistent&             theTarget,
                                         XmlObjMgt_SRelocationTable&) const
@@ -166,8 +150,6 @@ void XmlMDataStd_RealArrayDriver::Paste(const occ::handle<TDF_Attribute>& theSou
   theTarget.Element().setAttribute(::LastIndexString(), anU);
   theTarget.Element().setAttribute(::IsDeltaOn(), aRealArray->GetDelta() ? 1 : 0);
 
-  // Allocation of 25 chars for each double value including the space:
-  // An example: -3.1512678732195273e+020
   int                          iChar = 0;
   NCollection_LocalArray<char> str;
   if (realArray.Length())
@@ -179,15 +161,12 @@ void XmlMDataStd_RealArrayDriver::Paste(const occ::handle<TDF_Attribute>& theSou
     }
     catch (Standard_OutOfMemory const&)
     {
-      // If allocation of big space for the string of double array values failed,
-      // try to calculate the necessary space more accurate and allocate it.
-      // It may take some time... therefore it was not done initially and
-      // an attempt to use a simple 25 chars for a double value was used.
+
       char buf[25];
       int  i(aL), nbChars(0);
       while (i <= anU)
       {
-        nbChars += Sprintf(buf, "%.17g ", realArray.Value(i++)) + 1 /*a space*/;
+        nbChars += Sprintf(buf, "%.17g ", realArray.Value(i++)) + 1;
       }
       if (nbChars)
         str.Allocate(nbChars);
@@ -203,7 +182,6 @@ void XmlMDataStd_RealArrayDriver::Paste(const occ::handle<TDF_Attribute>& theSou
     ++i;
   }
 
-  // No occurrence of '&', '<' and other irregular XML characters
   if (realArray.Length())
   {
     str[iChar - 1] = '\0';
@@ -211,7 +189,7 @@ void XmlMDataStd_RealArrayDriver::Paste(const occ::handle<TDF_Attribute>& theSou
   }
   if (aRealArray->ID() != TDataStd_RealArray::GetID())
   {
-    // convert GUID
+
     char                aGuidStr[Standard_GUID_SIZE_ALLOC];
     Standard_PCharacter pGuidStr = aGuidStr;
     aRealArray->ID().ToCString(pGuidStr);

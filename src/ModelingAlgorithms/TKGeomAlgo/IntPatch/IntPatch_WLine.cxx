@@ -180,33 +180,6 @@ double IntPatch_WLine::V2Period() const
   return (v2period);
 }
 
-//------------------------------------------------------------------------
-//--  En Entree : Une ligne de cheminement     +    Une Liste de Vetex
-//--
-//--   LineOn2S   :       1------2-------3-------4-----5---- ----nbp
-//--
-//--   Vertex     :   a     b c          d    e      f
-//--
-//--
-//--  En Sortie
-//--
-//--                  1--2-3-4--5--------6----7--8--9--10--------
-//--
-//--  avec   a de parametre 1
-//--         b              3
-//--
-//--   etc ...
-//--
-//--
-//-- !!!!!!!!!!!!!!! On considere que deux vertex ne peuvent pas etre
-//-- !!!!!!!!!!!!!!!  a une distance inferieure a Tol
-//------------------------------------------------------------------------
-//--
-//-- On Teste si la LineOn2S contient des points confondus.
-//-- Dans ce cas, on remove ces points.
-//--
-//------------------------------------------------------------------------
-
 bool SameVtxRst(const IntPatch_Point& vtx1, const IntPatch_Point& vtx2)
 {
   if (vtx1.IsOnDomS1())
@@ -306,20 +279,13 @@ inline bool CompareVerticesOnS2(const IntPatch_Point& vtx1, const IntPatch_Point
 
 void IntPatch_WLine::ComputeVertexParameters(const double RTol)
 {
-  // MSV Oct 15, 2001: use tolerance of vertex instead of RTol where
-  //                   it is possible
 
   int    i, j, k, nbvtx, nbponline;
   int    indicevertexonline;
   double indicevertex;
 
   bool APointDeleted = false;
-  //----------------------------------------------------------
-  //--     F i l t r e   s u r   r e s t r i c t i o n s   --
-  //----------------------------------------------------------
-  //-- deux vertex sur la meme restriction et seulement
-  //-- sur celle ci ne doivent pas avoir le meme parametre
-  //--
+
   double Tol = RTol;
   nbvtx      = NbVertex();
 
@@ -339,11 +305,6 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
   std::cout << "\n----------------------------------------------------------" << std::endl;
 #endif
 
-  //-- ----------------------------------------------------------------------
-  //-- Traitement des aretes de couture : On duplique les points situes
-  //-- sur des restrictions differentes
-  //--
-  //-- Phase Creation de nouveaux points sur S1
   bool encoreunefois;
   do
   {
@@ -363,11 +324,10 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
             double toli   = VTXi.Tolerance();
             double tolj   = VTXj.Tolerance();
             double maxtol = std::max(toli, tolj);
-            // MSV Oct 30, 2001: compare in 2D space also;
-            //                   increase tolerances
+
             if (d < maxtol || CompareVerticesOnS1(VTXi, VTXj) || CompareVerticesOnS2(VTXi, VTXj))
             {
-              //-- Creation Vtx (REF:S1(i)  S2(j))    (On Garde S1(i))
+
               double newtoli = std::max(toli, tolj + d * 1.01);
               double newtolj = std::max(tolj, toli + d * 1.01);
               bool   acreer  = false;
@@ -415,8 +375,7 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
                   encoreunefois = false;
                 }
               }
-              //-- -----------------------------------------------------
-              //-- Creation Vtx (REF:S2(i)  S1(j))    (On Garde S2(i))
+
               acreer = false;
               if (VTXi.IsOnDomS2())
               {
@@ -469,8 +428,6 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
     }
   } while (encoreunefois);
 
-  //-- ----------------------------------------------------------------------
-
   do
   {
     APointDeleted = false;
@@ -478,7 +435,7 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
     {
       const IntPatch_Point& VTXi = svtx.Value(i);
       if (VTXi.Tolerance() > Tol)
-        Tol = VTXi.Tolerance(); //-- 9 oct 97
+        Tol = VTXi.Tolerance();
       if ((VTXi.IsOnDomS1()) && (!VTXi.IsOnDomS2()))
       {
         for (j = 1; (j <= nbvtx) && (!APointDeleted); j++)
@@ -558,8 +515,6 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
   nbvtx     = NbVertex();
   nbponline = NbPnts();
 
-  //----------------------------------------------------
-  //-- On trie les Vertex
   bool SortIsOK;
   do
   {
@@ -574,8 +529,6 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
     }
   } while (!SortIsOK);
 
-  //----------------------------------------------------
-  //-- On detecte les points confondus dans la LineOn2S
   constexpr double dmini = Precision::SquareConfusion();
   for (i = 2; (i <= nbponline) && (nbponline > 2); i++)
   {
@@ -586,9 +539,7 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
     {
       curv->RemovePoint(i);
       nbponline--;
-      //----------------------------------------------
-      //-- On recadre les Vertex si besoin
-      //--
+
       for (j = 1; j <= nbvtx; j++)
       {
         indicevertex = svtx.Value(j).ParameterOnLine();
@@ -597,12 +548,11 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
           svtx.ChangeValue(j).SetParameter(indicevertex - 1.0);
         }
       }
-      // modified by NIZNHY-PKV Mon Feb 11 09:28:02 2002 f
+
       i--;
-      // modified by NIZNHY-PKV Mon Feb 11 09:28:04 2002 t
     }
   }
-  //----------------------------------------------------
+
   for (i = 1; i <= nbvtx; i++)
   {
     const gp_Pnt& P    = svtx.Value(i).Value();
@@ -610,28 +560,17 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
 
     indicevertex       = svtx.Value(i).ParameterOnLine();
     indicevertexonline = (int)indicevertex;
-    //--------------------------------------------------
-    //-- On Compare le vertex avec les points de la ligne
-    //-- d indice   indicevertexOnLine-1
-    //--            indicevertexOnLine
-    //--            indicevertexOnLine+1
-    //--------------------------------------------------
+
     if (indicevertexonline < 1)
     {
       if (CompareVertexAndPoint(P, curv->Value(1).Value(), vTol))
       {
-        //-------------------------------------------------------
-        //-- On remplace le point cheminement(1) par vertex(i)
-        //-- et   vertex(i) prend pour parametre 1
-        //-------------------------------------------------------
 
         IntSurf_PntOn2S POn2S = svtx.Value(i).PntOn2S();
         RecadreMemePeriode(POn2S, curv->Value(1), U1Period(), V1Period(), U2Period(), V2Period());
         if (myCreationWay == IntPatch_WLImpImp)
         {
-          // Adjust first point of curve to corresponding vertex the following way:
-          // set 3D point as the point of the vertex and 2D points as the points of the point on
-          // curve.
+
           curv->SetPoint(1, POn2S.Value());
           double mu1, mv1, mu2, mv2;
           curv->Value(1).Parameters(mu1, mv1, mu2, mv2);
@@ -643,20 +582,15 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
           curv->Value(1, POn2S);
         }
 
-        //--curv->Value(1,svtx.Value(i).PntOn2S());
         svtx.ChangeValue(i).SetParameter(1.0);
       }
       else
       {
-        //-------------------------------------------------------
-        //-- On insere le point de cheminement Vertex(i)
-        //-- On recadre les parametres des autres vertex
-        //-------------------------------------------------------
+
         IntSurf_PntOn2S POn2S = svtx.Value(i).PntOn2S();
         RecadreMemePeriode(POn2S, curv->Value(1), U1Period(), V1Period(), U2Period(), V2Period());
         curv->InsertBefore(1, POn2S);
 
-        //-- curv->InsertBefore(1,svtx.Value(i).PntOn2S());
         svtx.ChangeValue(i).SetParameter(1.0);
         nbponline++;
         for (j = 1; j <= nbvtx; j++)
@@ -671,17 +605,12 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
           }
         }
       }
-    } //--- fin : if(indicevertexonline<1)
+    }
     else
     {
-      //---------------------------------------------------------
-      //-- vertex(i)   ==   cheminement (indicevertexonline-1)
-      //-- vertex(i)   ==   cheminement (indicevertexonline)
-      //-- vertex(i)   ==   cheminement (indicevertexonline+1)
-      //---------------------------------------------------------
+
       bool Substitution = false;
-      //-- for(k=indicevertexonline+1; !Substitution && k>=indicevertexonline-1;k--) {   avant le 9
-      // oct 97
+
       double mu1, mv1, mu2, mv2;
       curv->Value(indicevertexonline).Parameters(mu1, mv1, mu2, mv2);
 
@@ -691,10 +620,7 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
         {
           if (CompareVertexAndPoint(P, curv->Value(k).Value(), vTol))
           {
-            //-------------------------------------------------------
-            //-- On remplace le point cheminement(k)
-            //-- par vertex(i)  et vertex(i) prend pour parametre k
-            //-------------------------------------------------------
+
             IntSurf_PntOn2S POn2S = svtx.Value(i).PntOn2S();
             RecadreMemePeriode(POn2S,
                                curv->Value(k),
@@ -705,9 +631,7 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
 
             if (myCreationWay == IntPatch_WLImpImp)
             {
-              // Adjust a point of curve to corresponding vertex the following way:
-              // set 3D point as the point of the vertex and 2D points as the points
-              // of the point on curve with index <indicevertexonline>
+
               curv->SetPoint(k, POn2S.Value());
               curv->SetUV(k, true, mu1, mv1);
               curv->SetUV(k, false, mu2, mv2);
@@ -724,7 +648,6 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
         }
       }
 
-      // Remove duplicating points
       if (Substitution)
       {
         int ind_point;
@@ -736,9 +659,7 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
           {
             curv->RemovePoint(ind_point);
             nbponline--;
-            //----------------------------------------------
-            //-- On recadre les Vertex si besoin
-            //--
+
             for (j = 1; j <= nbvtx; j++)
             {
               indicevertex = svtx.Value(j).ParameterOnLine();
@@ -747,24 +668,15 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
                 svtx.ChangeValue(j).SetParameter(indicevertex - 1.0);
               }
             }
-            // modified by NIZNHY-PKV Mon Feb 11 09:28:02 2002 f
+
             ind_point--;
-            // modified by NIZNHY-PKV Mon Feb 11 09:28:04 2002 t
           }
         }
       }
 
-      //--static int deb6nov98=1;    Ne resout rien (a part partiellement BUC60409)
-      //--if(deb6nov98) {
-      //--Substitution=true;
-      //-- }
-
       if (!Substitution)
       {
-        //-------------------------------------------------------
-        //-- On insere le point de cheminement Vertex(i)
-        //-- On recadre les parametres des autres vertex
-        //-------------------------------------------------------
+
         IntSurf_PntOn2S POn2S = svtx.Value(i).PntOn2S();
         if (indicevertexonline >= nbponline)
         {
@@ -786,7 +698,7 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
                              V2Period());
           curv->InsertBefore(indicevertexonline + 1, POn2S);
         }
-        //-- curv->InsertBefore(indicevertexonline+1,svtx.Value(i).PntOn2S());
+
         svtx.ChangeValue(i).SetParameter(indicevertexonline + 1);
         nbponline++;
         for (j = 1; j <= nbvtx; j++)
@@ -800,10 +712,9 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
             }
           }
         }
-      } //-- Substitution
-    } //-- indicevertexonline>=1
-
-  } //-- boucle i sur vertex
+      }
+    }
+  }
 
   do
   {
@@ -822,27 +733,27 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
           if (VTXM1.ParameterOnLine() == VTX.ParameterOnLine())
           {
             if (VTXM1.IsOnDomS1() && VTX.IsOnDomS1())
-            { //-- OnS1    OnS1
+            {
               if (VTXM1.ArcOnS1() == VTX.ArcOnS1())
-              { //-- OnS1 == OnS1
+              {
                 if (VTXM1.IsOnDomS2())
-                { //-- OnS1 == OnS1  OnS2
+                {
                   if (!VTX.IsOnDomS2())
-                  { //-- OnS1 == OnS1  OnS2 PasOnS2
+                  {
                     kill = true;
                   }
                   else
                   {
                     if (VTXM1.ArcOnS2() == VTX.ArcOnS2())
-                    { //-- OnS1 == OnS1  OnS2 == OnS2
+                    {
                       kill = true;
                     }
                   }
                 }
                 else
-                { //-- OnS1 == OnS1  PasOnS2
+                {
                   if (VTX.IsOnDomS2())
-                  { //-- OnS1 == OnS1  PasOnS2  OnS2
+                  {
                     killm1 = true;
                   }
                 }
@@ -852,27 +763,27 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
             if (!(kill || killm1))
             {
               if (VTXM1.IsOnDomS2() && VTX.IsOnDomS2())
-              { //-- OnS2    OnS2
+              {
                 if (VTXM1.ArcOnS2() == VTX.ArcOnS2())
-                { //-- OnS2 == OnS2
+                {
                   if (VTXM1.IsOnDomS1())
-                  { //-- OnS2 == OnS2  OnS1
+                  {
                     if (!VTX.IsOnDomS1())
-                    { //-- OnS2 == OnS2  OnS1 PasOnS1
+                    {
                       kill = true;
                     }
                     else
                     {
                       if (VTXM1.ArcOnS1() == VTX.ArcOnS1())
-                      { //-- OnS2 == OnS2  OnS1 == OnS1
+                      {
                         kill = true;
                       }
                     }
                   }
                   else
-                  { //-- OnS2 == OnS2  PasOnS1
+                  {
                     if (VTX.IsOnDomS1())
-                    { //-- OnS2 == OnS2  PasOnS1  OnS1
+                    {
                       killm1 = true;
                     }
                   }
@@ -924,12 +835,6 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
       }
     }
   } while (!SortIsOK);
-  //-- ----------------------------------------------------------------------------
-  //-- On ajoute les vertex de debut et de fin de ligne s il ne sont pas presents.
-  //--
-  //-- Existe t il un vertex de debut de ligne, de fin .
-  //--
-  //-- Si Besoin : il faudra dedoubler les points de debut et de fin sur les periodiques ??????
 
   bool bFirst = false;
   bool bLast  = false;
@@ -957,9 +862,8 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
     for (i = 1; (!vtxfound) && (i <= nbvtx); i++)
     {
       const IntPatch_Point& V = svtx.Value(i);
-      // jgv: to avoid loops
-      // double vTol = V.Tolerance();
-      if (CompareVertexAndPoint(V.Value(), curv->Value(1).Value(), Precision::Confusion() /*vTol*/))
+
+      if (CompareVertexAndPoint(V.Value(), curv->Value(1).Value(), Precision::Confusion()))
       {
         vtx = V;
         vtx.SetParameters(pu1, pv1, pu2, pv2);
@@ -986,11 +890,8 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
     for (i = 1; (!vtxfound) && (i <= nbvtx); i++)
     {
       const IntPatch_Point& V = svtx.Value(i);
-      // jgv: to avoid loops
-      // double vTol = V.Tolerance();
-      if (CompareVertexAndPoint(V.Value(),
-                                curv->Value(nbponline).Value(),
-                                Precision::Confusion() /*vTol*/))
+
+      if (CompareVertexAndPoint(V.Value(), curv->Value(nbponline).Value(), Precision::Confusion()))
       {
         vtx = V;
         vtx.SetParameters(pu1, pv1, pu2, pv2);
@@ -1009,20 +910,6 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
     indl = nbvtx;
   }
 
-  //--------------------------------------------------------------
-  //-- ** Detection de points trouves sur une meme restriction
-  //--    avec la meme transition et avec des params on line
-  //--    voisins.
-  //-- ** Dans ce cas (-> donnerait un baillemenmt) on supprime
-  //--    le point 'intermediaire'.
-  //-- ** (exemple Vtx(1)  .....  Vtx(204) Vtx(205))
-  //--    on supprime le Vtx(204)
-  //-- ** (exemple Vtx(1) Vtx(2)  .....  Vtx(205))
-  //--    on supprime le Vtx(2)
-  //-- ** (exemple Vtx(1)  ...  Vtx(100) Vtx(101) ... Vtx(205))
-  //--    on supprime le Vtx(100)  (Vtx(100)et101 sur m restr)
-
-  //--------------------------------------------------------------
   nbvtx = NbVertex();
   do
   {
@@ -1073,8 +960,6 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
       }
     }
   }
-
-  //-- meme traitement sur les restrictions du second shape
 
   while (APointDeleted);
   nbvtx = NbVertex();
@@ -1127,22 +1012,6 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
       }
     }
   } while (APointDeleted);
-  //--------------------------------------------------------------
-
-  //--------------------------------------------------------------
-  //-- dans le cas de lignes periodiques du type :
-  //--    Un point sur restriction R1 de param p1  -> P3d1   Vtx1
-  //--    Un point sur restriction R2 de param p2  -> P3d1   Vtx2
-  //--
-  //--    Un point sur restriction R1 de param p1  -> P3d1   Vtx3
-  //--    pas de point sur R2
-  //--
-  //-- On doit dans ce cas creer un nouveau Vtx4 = Vtx3 sur la
-  //-- restriction R2
-  //--
-  //-- Ce cas se produit qd on a corrige un baillement avec le filtre
-  //-- precedent
-  //--
 
   nbvtx = NbVertex();
   do
@@ -1157,8 +1026,6 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
       }
     }
   } while (!SortIsOK);
-
-  //-- Dump();
 
 #if DEBUGV
   std::cout << "\n----------- apres ComputeVertexParameters -------------" << std::endl;

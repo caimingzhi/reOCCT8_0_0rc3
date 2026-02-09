@@ -1,15 +1,4 @@
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <AIS_XRTrackedDevice.hpp>
 
@@ -23,11 +12,9 @@
 #include <Select3D_SensitivePrimitiveArray.hpp>
 #include <SelectMgr_EntityOwner.hpp>
 
-//! Texture holder.
 class AIS_XRTrackedDevice::XRTexture : public Graphic3d_Texture2D
 {
 public:
-  //! Constructor.
   XRTexture(const occ::handle<Image_Texture>& theImageSource,
             const Graphic3d_TextureUnit       theUnit = Graphic3d_TextureUnit_BaseColor)
       : Graphic3d_Texture2D(""),
@@ -42,7 +29,6 @@ public:
       theUnit == Graphic3d_TextureUnit_BaseColor || theUnit == Graphic3d_TextureUnit_Emissive;
   }
 
-  //! Image reader.
   occ::handle<Image_PixMap> GetImage(
     const occ::handle<Image_SupportedFormats>& theSupported) override
   {
@@ -54,8 +40,6 @@ protected:
 };
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_XRTrackedDevice, AIS_InteractiveObject)
-
-//=================================================================================================
 
 AIS_XRTrackedDevice::AIS_XRTrackedDevice(const occ::handle<Graphic3d_ArrayOfTriangles>& theTris,
                                          const occ::handle<Image_Texture>&              theTexture)
@@ -76,8 +60,6 @@ AIS_XRTrackedDevice::AIS_XRTrackedDevice(const occ::handle<Graphic3d_ArrayOfTria
   }
 }
 
-//=================================================================================================
-
 AIS_XRTrackedDevice::AIS_XRTrackedDevice()
     : myLaserColor(Quantity_NOC_BLUE),
       myLaserLength(0.0f),
@@ -86,8 +68,6 @@ AIS_XRTrackedDevice::AIS_XRTrackedDevice()
       myToShowAxes(true)
 {
 }
-
-//=================================================================================================
 
 void AIS_XRTrackedDevice::SetLaserColor(const Quantity_Color& theColor)
 {
@@ -98,8 +78,6 @@ void AIS_XRTrackedDevice::SetLaserColor(const Quantity_Color& theColor)
   }
 }
 
-//=================================================================================================
-
 void AIS_XRTrackedDevice::SetLaserLength(float theLength)
 {
   if (myLaserLength != theLength)
@@ -108,8 +86,6 @@ void AIS_XRTrackedDevice::SetLaserLength(float theLength)
     computeLaserRay();
   }
 }
-
-//=================================================================================================
 
 void AIS_XRTrackedDevice::computeLaserRay()
 {
@@ -132,10 +108,8 @@ void AIS_XRTrackedDevice::computeLaserRay()
   aLines->AddVertex(gp_Pnt(0.0, 0.0, 0.0), myLaserColor);
   aLines->AddVertex(gp_Pnt(0.0, 0.0, -myLaserLength), myLaserColor);
   myRayGroup->SetGroupPrimitivesAspect(myDrawer->LineAspect()->Aspect());
-  myRayGroup->AddPrimitiveArray(aLines, false); // do not extend camera frustum by ray
+  myRayGroup->AddPrimitiveArray(aLines, false);
 }
-
-//=================================================================================================
 
 void AIS_XRTrackedDevice::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                   const occ::handle<Prs3d_Presentation>& thePrs,
@@ -172,8 +146,6 @@ void AIS_XRTrackedDevice::Compute(const occ::handle<PrsMgr_PresentationManager>&
   myRayGroup = thePrs->NewGroup();
   computeLaserRay();
 }
-
-//=================================================================================================
 
 void AIS_XRTrackedDevice::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSel,
                                            const int                               theMode)

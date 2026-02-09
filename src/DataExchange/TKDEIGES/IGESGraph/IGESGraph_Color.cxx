@@ -6,13 +6,11 @@ IMPLEMENT_STANDARD_RTTIEXT(IGESGraph_Color, IGESData_ColorEntity)
 
 namespace
 {
-  // Precomputed sqrt(3)
+
   constexpr double SQRT_3 = 1.7320508075688772935;
-} // namespace
+}
 
 IGESGraph_Color::IGESGraph_Color() = default;
-
-// This class inherits from IGESData_ColorEntity
 
 void IGESGraph_Color::Init(const double                                 red,
                            const double                                 green,

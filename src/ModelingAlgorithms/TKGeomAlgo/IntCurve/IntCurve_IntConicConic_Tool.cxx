@@ -3,10 +3,6 @@
 
 #define TOLERANCE_ANGULAIRE 0.00000001
 
-//======================================================================
-//===         R e s s o u r c e s        G e n e r a l e s           ===
-//======================================================================
-
 void Determine_Transition_LC(const IntRes2d_Position Pos1,
                              gp_Vec2d&               Tan1,
                              const gp_Vec2d&         Norm1,
@@ -22,13 +18,13 @@ void Determine_Transition_LC(const IntRes2d_Position Pos1,
   double norm = Tan1.Magnitude() * Tan2.Magnitude();
 
   if (std::abs(sgn) <= TOLERANCE_ANGULAIRE * norm)
-  { // Transition TOUCH #########
+  {
     bool opos = (Tan1.Dot(Tan2)) < 0;
 
     gp_Vec2d Norm;
-    //  Modified by Sergey KHROMOV - Thu Nov  2 17:57:15 2000 Begin
+
     Tan1.Normalize();
-    //  Modified by Sergey KHROMOV - Thu Nov  2 17:57:16 2000 End
+
     Norm.SetCoord(-Tan1.Y(), Tan1.X());
 
     double Val1 = Norm.Dot(Norm1);
@@ -52,7 +48,7 @@ void Determine_Transition_LC(const IntRes2d_Position Pos1,
       }
     }
     else
-    { // Val1 > Val2
+    {
       T2.SetValue(true, Pos2, IntRes2d_Outside, opos);
       if (opos)
       {
@@ -76,7 +72,6 @@ void Determine_Transition_LC(const IntRes2d_Position Pos1,
   }
 }
 
-//----------------------------------------------------------------------
 double NormalizeOnCircleDomain(const double _Param, const IntRes2d_Domain& TheDomain)
 {
   double Param = _Param;
@@ -91,7 +86,6 @@ double NormalizeOnCircleDomain(const double _Param, const IntRes2d_Domain& TheDo
   return (Param);
 }
 
-//----------------------------------------------------------------------
 PeriodicInterval PeriodicInterval::FirstIntersection(PeriodicInterval& PInter)
 {
   double a, b;
@@ -135,7 +129,6 @@ PeriodicInterval PeriodicInterval::FirstIntersection(PeriodicInterval& PInter)
   return (PeriodicInterval(a, b));
 }
 
-//----------------------------------------------------------------------
 PeriodicInterval PeriodicInterval::SecondIntersection(PeriodicInterval& PInter)
 {
   double a, b;
@@ -166,7 +159,6 @@ PeriodicInterval PeriodicInterval::SecondIntersection(PeriodicInterval& PInter)
   return (PeriodicInterval(a, b));
 }
 
-//----------------------------------------------------------------------
 Interval::Interval()
     : Binf(0.),
       Bsup(0.),

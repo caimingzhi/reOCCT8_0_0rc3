@@ -18,7 +18,6 @@ class StepGeom_QuasiUniformCurveAndRationalBSplineCurve : public StepGeom_BSplin
 {
 
 public:
-  //! Returns a QuasiUniformCurveAndRationalBSplineCurve
   Standard_EXPORT StepGeom_QuasiUniformCurveAndRationalBSplineCurve();
 
   Standard_EXPORT void Init(

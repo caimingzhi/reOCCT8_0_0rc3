@@ -14,16 +14,6 @@ enum Vrml_SeparatorRenderCulling
 #include <Standard_Boolean.hpp>
 #include <Standard_OStream.hpp>
 
-//! defines a Separator node of VRML specifying group properties.
-//! This group node performs a push (save) of the traversal state before traversing its children
-//! and a pop (restore) after traversing them. This isolates the separator's children from the
-//! rest of the scene graph. A separator can include lights, cameras, coordinates, normals,
-//! bindings, and all other properties.
-//! Separators can also perform render culling. Render culling skips over traversal of the
-//! separator's children if they are not going to be rendered, based on the comparison of the
-//! separator's bounding box with the current view volume. Culling is controlled by the
-//! renderCulling field. These are set to AUTO by default, allowing the implementation to
-//! decide whether or not to cull.
 class Vrml_Separator
 {
 public:

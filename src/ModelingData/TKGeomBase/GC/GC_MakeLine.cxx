@@ -7,9 +7,6 @@
 #include <gp_Pnt.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   Constructions of 3d geometrical elements from Geom.
-//=========================================================================
 GC_MakeLine::GC_MakeLine(const gp_Pnt& P, const gp_Dir& V)
 {
   TheError = gce_Done;

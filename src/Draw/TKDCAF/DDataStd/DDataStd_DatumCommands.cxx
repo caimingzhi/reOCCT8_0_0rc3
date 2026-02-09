@@ -26,11 +26,6 @@
 
 #include <DDataStd_DrawPresentation.hpp>
 
-//=======================================================================
-// function : DDataStd_SetPoint
-// purpose  : SetPoint (DF, entry, [drawpoint])
-//=======================================================================
-
 static int DDataStd_SetPoint(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb < 3)
@@ -61,11 +56,6 @@ static int DDataStd_SetPoint(Draw_Interpretor& di, int nb, const char** arg)
   return 0;
 }
 
-//=======================================================================
-// function : DDataStd_SetAxis
-// purpose  : SetAxis (DF, entry, drawline])
-//=======================================================================
-
 static int DDataStd_SetAxis(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb < 3)
@@ -92,11 +82,6 @@ static int DDataStd_SetAxis(Draw_Interpretor& di, int nb, const char** arg)
   DDataStd_DrawPresentation::Display(L);
   return 0;
 }
-
-//=======================================================================
-// function : DDataStd_SetPlane
-// purpose  : SetPlane (DF, entry, [drawplane])
-//=======================================================================
 
 static int DDataStd_SetPlane(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -125,11 +110,6 @@ static int DDataStd_SetPlane(Draw_Interpretor& di, int nb, const char** arg)
   return 0;
 }
 
-//=======================================================================
-// function : DDataStd_GetPoint
-// purpose  : GetPoint (DF, entry, [drawname])
-//=======================================================================
-
 static int DDataStd_GetPoint(Draw_Interpretor&, int nb, const char** arg)
 {
   if (nb < 3)
@@ -151,11 +131,6 @@ static int DDataStd_GetPoint(Draw_Interpretor&, int nb, const char** arg)
   }
   return 1;
 }
-
-//=======================================================================
-// function : DDataStd_GetAxis
-// purpose  : GetAxis (DF, entry, [drawname])
-//=======================================================================
 
 static int DDataStd_GetAxis(Draw_Interpretor&, int nb, const char** arg)
 {
@@ -180,11 +155,6 @@ static int DDataStd_GetAxis(Draw_Interpretor&, int nb, const char** arg)
   return 1;
 }
 
-//=======================================================================
-// function : DDataStd_GetPlane
-// purpose  : GetPlane (DF, entry, [drawname])
-//=======================================================================
-
 static int DDataStd_GetPlane(Draw_Interpretor&, int nb, const char** arg)
 {
   if (nb < 3)
@@ -208,10 +178,6 @@ static int DDataStd_GetPlane(Draw_Interpretor&, int nb, const char** arg)
   return 1;
 }
 
-//=======================================================================
-// function : DDataStd_SetGeometry
-// purpose  : SetGeometry (DF, entry, [type], [shape])
-//=======================================================================
 static int DDataStd_SetGeometry(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb < 3)
@@ -227,7 +193,7 @@ static int DDataStd_SetGeometry(Draw_Interpretor& di, int nb, const char** arg)
 
   if (nb == 5)
   {
-    // set NS attribute
+
     TopoDS_Shape s = DBRep::Get(arg[4]);
     if (s.IsNull())
     {
@@ -238,10 +204,8 @@ static int DDataStd_SetGeometry(Draw_Interpretor& di, int nb, const char** arg)
     SI.Generated(s);
   }
 
-  // set geometry attribute
   occ::handle<TDataXtd_Geometry> aGA = TDataXtd_Geometry::Set(L);
 
-  // set type
   TDataXtd_GeometryEnum aType;
   if (nb > 3)
   {
@@ -275,14 +239,9 @@ static int DDataStd_SetGeometry(Draw_Interpretor& di, int nb, const char** arg)
   }
   aGA->SetType(aType);
 
-  //  DDataStd_DrawPresentation::Display (L);
   return 0;
 }
 
-//=======================================================================
-// function : DDataStd_GetGeometryType
-// purpose  : GetGeometryType (DF, entry)
-//=======================================================================
 static int DDataStd_GetGeometryType(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb != 3)
@@ -296,7 +255,6 @@ static int DDataStd_GetGeometryType(Draw_Interpretor& di, int nb, const char** a
   if (!DDF::FindLabel(DF, arg[2], L))
     DDF::AddLabel(DF, arg[2], L);
 
-  // get geometry attribute
   occ::handle<TDataXtd_Geometry> aGA;
   if (!L.FindAttribute(TDataXtd_Geometry::GetID(), aGA))
   {
@@ -304,7 +262,6 @@ static int DDataStd_GetGeometryType(Draw_Interpretor& di, int nb, const char** a
     return 1;
   }
 
-  // get type
   TDataXtd_GeometryEnum aType = aGA->GetType();
   switch (aType)
   {
@@ -342,8 +299,6 @@ static int DDataStd_GetGeometryType(Draw_Interpretor& di, int nb, const char** a
   return 0;
 }
 
-//=================================================================================================
-
 void DDataStd::DatumCommands(Draw_Interpretor& theCommands)
 
 {
@@ -358,10 +313,6 @@ void DDataStd::DatumCommands(Draw_Interpretor& theCommands)
   theCommands.Add("SetAxis", "SetAxis (DF, entry, [drawline])", __FILE__, DDataStd_SetAxis, g);
 
   theCommands.Add("SetPlane", "SetPlane (DF, entry, [drawplane])", __FILE__, DDataStd_SetPlane, g);
-
-  //  theCommands.Add ("SetMove",
-  //                  "SetMove (DF, entry, Shape | [x, y, z, [dx, dy, dz, angle]])",
-  //         __FILE__, DDataStd_SetMove, g);
 
   theCommands.Add("GetPoint", "GetPoint (DF, entry, [drawname])", __FILE__, DDataStd_GetPoint, g);
 

@@ -11,9 +11,6 @@ class TopoDS_Vertex;
 class TopoDSToStep_Tool;
 class Transfer_FinderProcess;
 
-//! This class implements the mapping between classes
-//! Vertex from TopoDS and TopologicalRepresentationItem from
-//! StepShape.
 class TopoDSToStep_MakeStepVertex : public TopoDSToStep_Root
 {
 public:

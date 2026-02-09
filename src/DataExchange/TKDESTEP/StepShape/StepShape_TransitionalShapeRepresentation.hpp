@@ -9,7 +9,6 @@ class StepShape_TransitionalShapeRepresentation : public StepShape_ShapeRepresen
 {
 
 public:
-  //! Returns a TransitionalShapeRepresentation
   Standard_EXPORT StepShape_TransitionalShapeRepresentation();
 
   DEFINE_STANDARD_RTTIEXT(StepShape_TransitionalShapeRepresentation, StepShape_ShapeRepresentation)

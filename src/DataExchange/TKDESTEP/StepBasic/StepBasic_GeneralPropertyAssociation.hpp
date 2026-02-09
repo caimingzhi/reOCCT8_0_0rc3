@@ -9,43 +9,32 @@ class TCollection_HAsciiString;
 class StepBasic_GeneralProperty;
 class StepRepr_PropertyDefinition;
 
-//! Representation of STEP entity GeneralPropertyAssociation
 class StepBasic_GeneralPropertyAssociation : public Standard_Transient
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT StepBasic_GeneralPropertyAssociation();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&    aName,
                             const occ::handle<TCollection_HAsciiString>&    aDescription,
                             const occ::handle<StepBasic_GeneralProperty>&   aGeneralProperty,
                             const occ::handle<StepRepr_PropertyDefinition>& aPropertyDefinition);
 
-  //! Returns field Name
   Standard_EXPORT occ::handle<TCollection_HAsciiString> Name() const;
 
-  //! Set field Name
   Standard_EXPORT void SetName(const occ::handle<TCollection_HAsciiString>& Name);
 
-  //! Returns field Description
   Standard_EXPORT occ::handle<TCollection_HAsciiString> Description() const;
 
-  //! Set field Description
   Standard_EXPORT void SetDescription(const occ::handle<TCollection_HAsciiString>& Description);
 
-  //! Returns field GeneralProperty
   Standard_EXPORT occ::handle<StepBasic_GeneralProperty> GeneralProperty() const;
 
-  //! Set field GeneralProperty
   Standard_EXPORT void SetGeneralProperty(
     const occ::handle<StepBasic_GeneralProperty>& GeneralProperty);
 
-  //! Returns field PropertyDefinition
   Standard_EXPORT occ::handle<StepRepr_PropertyDefinition> PropertyDefinition() const;
 
-  //! Set field PropertyDefinition
   Standard_EXPORT void SetPropertyDefinition(
     const occ::handle<StepRepr_PropertyDefinition>& PropertyDefinition);
 

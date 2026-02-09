@@ -1,19 +1,12 @@
 #include <LDOM_CharacterData.hpp>
 #include <LDOM_BasicText.hpp>
 
-//=================================================================================================
-
 LDOM_CharacterData::LDOM_CharacterData(const LDOM_BasicText&               aText,
                                        const occ::handle<LDOM_MemManager>& aDoc)
     : LDOM_Node(aText, aDoc),
       myLength(-1)
 {
 }
-
-//=======================================================================
-// function : operator =
-// purpose  : Nullify
-//=======================================================================
 
 LDOM_CharacterData& LDOM_CharacterData::operator=(const LDOM_NullPtr* theNull)
 {
@@ -22,14 +15,7 @@ LDOM_CharacterData& LDOM_CharacterData::operator=(const LDOM_NullPtr* theNull)
   return *this;
 }
 
-//=======================================================================
-// function : operator =
-// purpose  : Assignment
-//=======================================================================
-
 LDOM_CharacterData& LDOM_CharacterData::operator=(const LDOM_CharacterData& theOther) = default;
-
-//=================================================================================================
 
 void LDOM_CharacterData::setData(const LDOMString& theValue)
 {
@@ -37,8 +23,6 @@ void LDOM_CharacterData::setData(const LDOMString& theValue)
   aText.SetData(theValue, myDocument);
   myLength = -1;
 }
-
-//=================================================================================================
 
 int LDOM_CharacterData::getLength() const
 {

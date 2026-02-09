@@ -12,9 +12,6 @@ class gp_Elips;
 class gp_Hypr;
 class gp_Parab;
 
-//! It calculates all the distances between a point
-//! and an elementary curve.
-//! These distances can be minimum or maximum.
 class Extrema_ExtPElC
 {
 public:
@@ -22,8 +19,6 @@ public:
 
   Standard_EXPORT Extrema_ExtPElC();
 
-  //! Calculates the extremum distance between the
-  //! point P and the segment [Uinf,Usup] of the line C.
   Standard_EXPORT Extrema_ExtPElC(const gp_Pnt& P,
                                   const gp_Lin& C,
                                   const double  Tol,
@@ -36,17 +31,6 @@ public:
                                const double  Uinf,
                                const double  Usup);
 
-  //! Calculates the 2 extremum distances between the
-  //! point P and the segment [Uinf,Usup] of the circle C.
-  //! Tol is used to determine
-  //! if P is on the axis of the circle or
-  //! if an extremum is on an endpoint of the segment.
-  //! If P is on the axis of the circle,
-  //! there are infinite solution then IsDone(me)=False.
-  //! The conditions on the Uinf and Usup are:
-  //! 0. <= Uinf <= 2.*PI and Usup > Uinf.
-  //! If Usup > Uinf + 2.*PI, then only the solutions in
-  //! the range [Uinf,Uinf+2.*PI[ are computed.
   Standard_EXPORT Extrema_ExtPElC(const gp_Pnt&  P,
                                   const gp_Circ& C,
                                   const double   Tol,
@@ -59,18 +43,6 @@ public:
                                const double   Uinf,
                                const double   Usup);
 
-  //! Calculates the 4 extremum distances between the
-  //! point P and the segment [Uinf,Usup] of the ellipse C.
-  //! Tol is used to determine
-  //! if the point is on the axis of the ellipse and
-  //! if the major radius is equal to the minor radius or
-  //! if an extremum is on an endpoint of the segment.
-  //! If P is on the axis of the ellipse,
-  //! there are infinite solution then IsDone(me)=False.
-  //! The conditions on the Uinf and Usup are:
-  //! 0. <= Uinf <= 2.*PI and Usup > Uinf.
-  //! If Usup > Uinf + 2.*PI, then only the solutions in
-  //! the range [Uinf,Uinf+2.*PI[ are computed.
   Standard_EXPORT Extrema_ExtPElC(const gp_Pnt&   P,
                                   const gp_Elips& C,
                                   const double    Tol,
@@ -83,12 +55,6 @@ public:
                                const double    Uinf,
                                const double    Usup);
 
-  //! Calculates the extremum distances between the
-  //! point P and the segment [Uinf,Usup] of the hyperbola
-  //! C.
-  //! Tol is used to determine if two solutions u and v
-  //! are identical; the condition is:
-  //! dist(C(u),C(v)) < Tol.
   Standard_EXPORT Extrema_ExtPElC(const gp_Pnt&  P,
                                   const gp_Hypr& C,
                                   const double   Tol,
@@ -101,12 +67,6 @@ public:
                                const double   Uinf,
                                const double   Usup);
 
-  //! Calculates the 4 extremum distances between the
-  //! point P and the segment [Uinf,Usup] of the parabola
-  //! C.
-  //! Tol is used to determine if two solutions u and v
-  //! are identical; the condition is:
-  //! dist(C(u),C(v)) < Tol.
   Standard_EXPORT Extrema_ExtPElC(const gp_Pnt&   P,
                                   const gp_Parab& C,
                                   const double    Tol,
@@ -119,20 +79,14 @@ public:
                                const double    Uinf,
                                const double    Usup);
 
-  //! True if the distances are found.
   Standard_EXPORT bool IsDone() const;
 
-  //! Returns the number of extremum distances.
   Standard_EXPORT int NbExt() const;
 
-  //! Returns the value of the Nth extremum square distance.
   Standard_EXPORT double SquareDistance(const int N) const;
 
-  //! Returns True if the Nth extremum distance is a
-  //! minimum.
   Standard_EXPORT bool IsMin(const int N) const;
 
-  //! Returns the point of the Nth extremum distance.
   Standard_EXPORT const Extrema_POnCurv& Point(const int N) const;
 
 private:

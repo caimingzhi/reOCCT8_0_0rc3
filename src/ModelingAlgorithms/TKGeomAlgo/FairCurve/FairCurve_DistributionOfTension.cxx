@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// 30-01-1996 : PMN Version originale
 
 #ifndef OCCT_DEBUG
   #define No_Standard_RangeError
@@ -41,7 +28,7 @@ FairCurve_DistributionOfTension::FairCurve_DistributionOfTension(
   if (Uniform)
   {
     MyLaw.Value(0.5, MyHeight);
-  } // it used in MVC to avoid Parametrization Problemes
+  }
   else
   {
     MyHeight = 0;
@@ -55,14 +42,8 @@ bool FairCurve_DistributionOfTension::Value(const math_Vector& TParam, math_Vect
   gp_XY CPrim(0., 0.);
   int   LastGradientIndex, FirstNonZero, LastZero;
 
-  // (0.0) initialisations generales
   FTension.Init(0.0);
-  math_Matrix Base(1,
-                   3,
-                   1,
-                   MyBSplOrder); // On shouhaite utiliser la derive premieres
-                                 // Dans EvalBsplineBasis C' <=> DerivOrder = 2
-                                 // et il faut ajouter 1 rang dans la matrice Base => 3 rang
+  math_Matrix Base(1, 3, 1, MyBSplOrder);
 
   ier = BSplCLib::EvalBsplineBasis(1,
                                    MyBSplOrder,
@@ -75,20 +56,18 @@ bool FairCurve_DistributionOfTension::Value(const math_Vector& TParam, math_Vect
   LastZero     = FirstNonZero - 1;
   FirstNonZero = 2 * LastZero + 1;
 
-  // (0.1) evaluation de CPrim
   for (ii = 1; ii <= MyBSplOrder; ii++)
   {
     CPrim += Base(2, ii) * MyPoles->Value(ii + LastZero).Coord();
   }
 
-  // (1) Evaluation de la tension locale --------------------------------
   double NormeCPrim = CPrim.Modulus();
   double Hauteur, Difference;
 
   if (MyHeight > 0)
   {
     Hauteur = MyHeight;
-  } // it used in MVC to avoid Parametrization Problemes
+  }
   else
   {
     Ok = MyLaw.Value(TParam(TParam.Lower()), Hauteur);
@@ -101,7 +80,7 @@ bool FairCurve_DistributionOfTension::Value(const math_Vector& TParam, math_Vect
 
   if (MyDerivativeOrder >= 1)
   {
-    // (2) Evaluation du gradient de la tension locale ----------------------
+
     math_Vector GradDifference(1, 2 * MyBSplOrder + MyNbValAux);
     double      Xaux, Yaux, Facteur;
 
@@ -136,8 +115,6 @@ bool FairCurve_DistributionOfTension::Value(const math_Vector& TParam, math_Vect
     if (MyDerivativeOrder >= 2)
     {
 
-      // (3) Evaluation du Hessien de la tension locale ----------------------
-
       double FacteurX  = Difference * (1 - pow(Xaux, 2)) / NormeCPrim;
       double FacteurY  = Difference * (1 - pow(Yaux, 2)) / NormeCPrim;
       double FacteurXY = -Difference * Xaux * Yaux / NormeCPrim;
@@ -158,36 +135,27 @@ bool FairCurve_DistributionOfTension::Value(const math_Vector& TParam, math_Vect
         {
           Produit = Base(2, ii / 2) * Base(2, jj / 2);
 
-          FTension(k1) = Facteur
-                         * (GradDifference(ii - 1) * GradDifference(jj - 1)
-                            + FacteurX * Produit); // derivation en XiXj
+          FTension(k1) =
+            Facteur * (GradDifference(ii - 1) * GradDifference(jj - 1) + FacteurX * Produit);
           k1++;
-          FTension(k1) = Facteur
-                         * (GradDifference(ii) * GradDifference(jj - 1)
-                            + FacteurXY * Produit); // derivation en YiXj
+          FTension(k1) =
+            Facteur * (GradDifference(ii) * GradDifference(jj - 1) + FacteurXY * Produit);
           k1++;
-          FTension(k2) = Facteur
-                         * (GradDifference(ii - 1) * GradDifference(jj)
-                            + FacteurXY * Produit); // derivation en XiYj
-          k2++;
           FTension(k2) =
-            Facteur
-            * (GradDifference(ii) * GradDifference(jj) + FacteurY * Produit); // derivation en YiYj
+            Facteur * (GradDifference(ii - 1) * GradDifference(jj) + FacteurXY * Produit);
+          k2++;
+          FTension(k2) = Facteur * (GradDifference(ii) * GradDifference(jj) + FacteurY * Produit);
           k2++;
         }
-        // case where jj = ii: triangular fill
+
         Produit = pow(Base(2, ii / 2), 2);
 
-        FTension(k1) = Facteur
-                       * (GradDifference(ii - 1) * GradDifference(ii - 1)
-                          + FacteurX * Produit); // derivation en XiXi
-        FTension(k2) = Facteur
-                       * (GradDifference(ii) * GradDifference(ii - 1)
-                          + FacteurXY * Produit); // derivation en XiYi
-        k2++;
+        FTension(k1) =
+          Facteur * (GradDifference(ii - 1) * GradDifference(ii - 1) + FacteurX * Produit);
         FTension(k2) =
-          Facteur
-          * (GradDifference(ii) * GradDifference(ii) + FacteurY * Produit); // derivation en YiYi
+          Facteur * (GradDifference(ii) * GradDifference(ii - 1) + FacteurXY * Produit);
+        k2++;
+        FTension(k2) = Facteur * (GradDifference(ii) * GradDifference(ii) + FacteurY * Produit);
       }
       if (MyNbValAux == 1)
       {
@@ -209,6 +177,5 @@ bool FairCurve_DistributionOfTension::Value(const math_Vector& TParam, math_Vect
     }
   }
 
-  // sortie standard
   return Ok;
 }

@@ -37,14 +37,14 @@ static bool IsTangentDefined(LProp_SLProps& SProp,
           V[0] = SProp.D2U();
           V[1] = SProp.D2V();
           break;
-      } // switch(Order)
+      }
 
       if (V[Derivative].SquareMagnitude() > Tol)
       {
         theStatus = LProp_Defined;
         return true;
       }
-    } // if(cn >= Order)
+    }
     else
     {
       theStatus = LProp_Undefined;
@@ -62,7 +62,7 @@ LProp_SLProps::LProp_SLProps(const Surface& S,
                              const double   Resolution)
     : mySurf(S),
       myDerOrder(N),
-      myCN(4), // (Tool::Continuity(S)),
+      myCN(4),
       myLinTol(Resolution)
 {
   Standard_OutOfRange_Raise_if(N < 0 || N > 2, "LProp_SLProps::LProp_SLProps()");
@@ -75,7 +75,7 @@ LProp_SLProps::LProp_SLProps(const Surface& S, const int N, const double Resolut
       myU(RealLast()),
       myV(RealLast()),
       myDerOrder(N),
-      myCN(4), // (Tool::Continuity(S))
+      myCN(4),
       myLinTol(Resolution),
       myUTangentStatus(LProp_Undecided),
       myVTangentStatus(LProp_Undecided),
@@ -102,7 +102,7 @@ LProp_SLProps::LProp_SLProps(const int N, const double Resolution)
 void LProp_SLProps::SetSurface(const Surface& S)
 {
   mySurf = S;
-  myCN   = 4; // =Tool::Continuity(S);
+  myCN   = 4;
 }
 
 void LProp_SLProps::SetParameters(const double U, const double V)
@@ -195,8 +195,6 @@ bool LProp_SLProps::IsTangentUDefined()
   else if (myUTangentStatus >= LProp_Defined)
     return true;
 
-  // uTangentStatus == Lprop_Undecided
-  // we have to calculate the first non null U derivative
   return IsTangentDefined(*this,
                           myCN,
                           myLinTol,
@@ -256,8 +254,6 @@ bool LProp_SLProps::IsTangentVDefined()
   else if (myVTangentStatus >= LProp_Defined)
     return true;
 
-  // vTangentStatus == Lprop_Undecided
-  // we have to calculate the first non null V derivative
   return IsTangentDefined(*this,
                           myCN,
                           myLinTol,
@@ -318,8 +314,6 @@ bool LProp_SLProps::IsNormalDefined()
   else if (myNormalStatus >= LProp_Defined)
     return true;
 
-  // status = UnDecided
-  // first try the standard computation of the normal.
   CSLib_DerivativeStatus aStatus = CSLib_Done;
   CSLib::Normal(myD1u, myD1v, myLinTol, aStatus, myNormal);
   if (aStatus == CSLib_Done)
@@ -327,8 +321,6 @@ bool LProp_SLProps::IsNormalDefined()
     myNormalStatus = LProp_Computed;
     return true;
   }
-
-  // else solve the degenerated case only if continuity >= 2
 
   myNormalStatus = LProp_Undefined;
   return false;
@@ -357,23 +349,17 @@ bool LProp_SLProps::IsCurvatureDefined()
     return false;
   }
 
-  // status = UnDecided
   if (!IsNormalDefined())
   {
     myCurvatureStatus = LProp_Undefined;
     return false;
   }
 
-  // to avoid a crash in the case of a pointed patch
-  // in fact we should be able to compute the curvatures
-  // see
   if (!IsTangentUDefined() || !IsTangentVDefined())
   {
     myCurvatureStatus = LProp_Undefined;
     return false;
   }
-
-  // here we compute the curvature features of the surface
 
   gp_Vec Norm(myNormal);
 
@@ -393,14 +379,14 @@ bool LProp_SLProps::IsCurvatureDefined()
   double C = F * N - G * M;
 
   double MaxABC = std::max(std::max(std::abs(A), std::abs(B)), std::abs(C));
-  if (MaxABC < RealEpsilon()) // ombilic
+  if (MaxABC < RealEpsilon())
   {
     myMinCurv         = N / G;
     myMaxCurv         = myMinCurv;
     myDirMinCurv      = gp_Dir(myD1u);
     myDirMaxCurv      = gp_Dir(myD1u.Crossed(Norm));
-    myMeanCurv        = myMinCurv;             // (Cmin + Cmax) / 2.
-    myGausCurv        = myMinCurv * myMinCurv; // (Cmin * Cmax)
+    myMeanCurv        = myMinCurv;
+    myGausCurv        = myMinCurv * myMinCurv;
     myCurvatureStatus = LProp_Computed;
     return true;
   }
@@ -471,8 +457,7 @@ bool LProp_SLProps::IsCurvatureDefined()
     myDirMaxCurv = gp_Dir(VectCurv1);
   }
 
-  myMeanCurv = ((N * E) - (2. * M * F) + (L * G)) // voir Farin p.282
-               / (2. * ((E * G) - (F * F)));
+  myMeanCurv        = ((N * E) - (2. * M * F) + (L * G)) / (2. * ((E * G) - (F * F)));
   myGausCurv        = ((L * N) - (M * M)) / ((E * G) - (F * F));
   myCurvatureStatus = LProp_Computed;
   return true;

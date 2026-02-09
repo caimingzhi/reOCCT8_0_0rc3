@@ -7,18 +7,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepAdaptor_Surface, GeomAdaptor_TransformedSurface)
 
-//=================================================================================================
-
 BRepAdaptor_Surface::BRepAdaptor_Surface() = default;
-
-//=================================================================================================
 
 BRepAdaptor_Surface::BRepAdaptor_Surface(const TopoDS_Face& F, const bool R)
 {
   Initialize(F, R);
 }
-
-//=================================================================================================
 
 occ::handle<Adaptor3d_Surface> BRepAdaptor_Surface::ShallowCopy() const
 {
@@ -33,8 +27,6 @@ occ::handle<Adaptor3d_Surface> BRepAdaptor_Surface::ShallowCopy() const
 
   return aCopy;
 }
-
-//=================================================================================================
 
 void BRepAdaptor_Surface::Initialize(const TopoDS_Face& F, const bool Restriction)
 {
@@ -60,14 +52,10 @@ void BRepAdaptor_Surface::Initialize(const TopoDS_Face& F, const bool Restrictio
   myTrsf = L.Transformation();
 }
 
-//=================================================================================================
-
 const TopoDS_Face& BRepAdaptor_Surface::Face() const
 {
   return myFace;
 }
-
-//=================================================================================================
 
 double BRepAdaptor_Surface::Tolerance() const
 {

@@ -9,11 +9,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlDrivers_DocumentRetrievalDriver, XmlLDrivers_DocumentRetrievalDriver)
 
-//=================================================================================================
-
 XmlDrivers_DocumentRetrievalDriver::XmlDrivers_DocumentRetrievalDriver() = default;
-
-//=================================================================================================
 
 occ::handle<XmlMDF_ADriverTable> XmlDrivers_DocumentRetrievalDriver::AttributeDrivers(
   const occ::handle<Message_Messenger>& theMessageDriver)
@@ -21,10 +17,6 @@ occ::handle<XmlMDF_ADriverTable> XmlDrivers_DocumentRetrievalDriver::AttributeDr
   return XmlDrivers::AttributeDrivers(theMessageDriver);
 }
 
-//=======================================================================
-// function : ReadShapeSection
-// purpose  : Implementation of ReadShapeSection
-//=======================================================================
 occ::handle<XmlMDF_ADriver> XmlDrivers_DocumentRetrievalDriver::ReadShapeSection(
   const XmlObjMgt_Element&              theElement,
   const occ::handle<Message_Messenger>& theMsgDriver,
@@ -42,10 +34,6 @@ occ::handle<XmlMDF_ADriver> XmlDrivers_DocumentRetrievalDriver::ReadShapeSection
   return aDriver;
 }
 
-//=======================================================================
-// function : ShapeSetCleaning
-// purpose  : definition of ShapeSetCleaning
-//=======================================================================
 void XmlDrivers_DocumentRetrievalDriver::ShapeSetCleaning(
   const occ::handle<XmlMDF_ADriver>& theDriver)
 {

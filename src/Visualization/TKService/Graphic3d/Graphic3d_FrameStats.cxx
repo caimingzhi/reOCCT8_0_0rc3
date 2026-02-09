@@ -1,15 +1,4 @@
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Graphic3d_FrameStats.hpp>
 
@@ -19,7 +8,7 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_FrameStats, Standard_Transient)
 
 namespace
 {
-  //! Format counter.
+
   static std::ostream& formatCounter(std::ostream& theStream,
                                      int           theWidth,
                                      const char*   thePrefix,
@@ -61,7 +50,6 @@ namespace
     return theStream;
   }
 
-  //! Format a pair of counters.
   static std::ostream& formatCounterPair(std::ostream& theStream,
                                          int           theWidth,
                                          const char*   thePrefix,
@@ -78,7 +66,6 @@ namespace
     return theStream;
   }
 
-  //! Format memory counter.
   static std::ostream& formatBytes(std::ostream& theStream,
                                    int           theWidth,
                                    const char*   thePrefix,
@@ -124,7 +111,6 @@ namespace
     constexpr double THE_SECOND_IN_MINUTE  = 1.0 / THE_SECONDS_IN_MINUTE;
   } // namespace
 
-  //! Format time.
   static std::ostream& formatTime(std::ostream& theStream,
                                   int           theWidth,
                                   const char*   thePrefix,
@@ -174,7 +160,6 @@ namespace
     return theStream;
   }
 
-  //! Add key-value pair to the dictionary.
   static void addInfo(
     NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
     const TCollection_AsciiString&                                                theKey,
@@ -184,7 +169,6 @@ namespace
     theDict.ChangeFromIndex(theDict.Add(theKey, aValue)) = aValue;
   }
 
-  //! Add key-value pair to the dictionary.
   static void addInfo(
     NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
     const TCollection_AsciiString&                                                theKey,
@@ -195,7 +179,6 @@ namespace
     addInfo(theDict, theKey, aTmp);
   }
 
-  //! Add key-value pair to the dictionary.
   static void addInfo(
     NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
     const TCollection_AsciiString&                                                theKey,
@@ -206,7 +189,6 @@ namespace
     addInfo(theDict, theKey, aTmp);
   }
 
-  //! Format time.
   static void addTimeInfo(
     NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
     const TCollection_AsciiString&                                                theKey,
@@ -244,8 +226,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 Graphic3d_FrameStats::Graphic3d_FrameStats()
     : myFpsTimer(true),
       myFrameStartTime(0.0),
@@ -258,20 +238,16 @@ Graphic3d_FrameStats::Graphic3d_FrameStats()
 {
 }
 
-//=================================================================================================
-
 Graphic3d_FrameStats::~Graphic3d_FrameStats() = default;
-
-//=================================================================================================
 
 TCollection_AsciiString Graphic3d_FrameStats::FormatStats(
   Graphic3d_RenderingParams::PerfCounters theFlags) const
 {
   const int         aValWidth = 5;
   std::stringstream aBuf;
-  // clang-format off
-  const bool isCompact = theFlags == Graphic3d_RenderingParams::PerfCounters_FrameRate; // only FPS is displayed
-  // clang-format on
+
+  const bool isCompact = theFlags == Graphic3d_RenderingParams::PerfCounters_FrameRate;
+
   const Graphic3d_FrameStatsData& aStats = LastDataFrame();
   if (myIsLongLineFormat && (theFlags & Graphic3d_RenderingParams::PerfCounters_FrameRate) != 0
       && (theFlags & Graphic3d_RenderingParams::PerfCounters_CPU) != 0)
@@ -555,8 +531,6 @@ TCollection_AsciiString Graphic3d_FrameStats::FormatStats(
   return TCollection_AsciiString(aBuf.str().c_str());
 }
 
-//=================================================================================================
-
 void Graphic3d_FrameStats::FormatStats(
   NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
   Graphic3d_RenderingParams::PerfCounters                                       theFlags) const
@@ -672,8 +646,6 @@ void Graphic3d_FrameStats::FormatStats(
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_FrameStats::FrameStart(const occ::handle<Graphic3d_CView>& theView,
                                       bool                                theIsImmediateOnly)
 {
@@ -694,10 +666,6 @@ void Graphic3d_FrameStats::FrameStart(const occ::handle<Graphic3d_CView>& theVie
     myLastFrameIndex = myCounters.Upper();
   }
 
-  // reset values at the end of frame (after data has been flushed),
-  // so that application can put some counters (like picking time) before FrameStart().
-  // myCountersTmp.Reset();
-
   myFrameStartTime = myFpsTimer.ElapsedTime();
   if (!myFpsTimer.IsStarted())
   {
@@ -706,8 +674,6 @@ void Graphic3d_FrameStats::FrameStart(const occ::handle<Graphic3d_CView>& theVie
     myFpsFrameCount = 0;
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_FrameStats::FrameEnd(const occ::handle<Graphic3d_CView>& theView,
                                     bool                                theIsImmediateOnly)
@@ -737,7 +703,7 @@ void Graphic3d_FrameStats::FrameEnd(const occ::handle<Graphic3d_CView>& theView,
   const Graphic3d_FrameStatsData& aPrevFrame = myCounters.Value(myLastFrameIndex);
   if (aTime > gp::Resolution())
   {
-    // update FPS
+
     myFpsTimer.Stop();
     const double aCpuSec                                  = myFpsTimer.UserTimeCPU();
     myCountersTmp[Graphic3d_FrameStatsTimer_ElapsedFrame] = aTime;
@@ -766,7 +732,6 @@ void Graphic3d_FrameStats::FrameEnd(const occ::handle<Graphic3d_CView>& theView,
     myFpsFrameCount = 0;
   }
 
-  // update structure counters
   if (theView.IsNull())
   {
     myCounters.SetValue(myLastFrameIndex, myCountersTmp);
@@ -782,7 +747,7 @@ void Graphic3d_FrameStats::FrameEnd(const occ::handle<Graphic3d_CView>& theView,
   }
   if (theIsImmediateOnly)
   {
-    // copy rendered counters collected for immediate layers
+
     const int anImmShift =
       Graphic3d_FrameStatsCounter_IMMEDIATE_LOWER - Graphic3d_FrameStatsCounter_RENDERED_LOWER;
     Standard_STATIC_ASSERT(
@@ -798,7 +763,6 @@ void Graphic3d_FrameStats::FrameEnd(const occ::handle<Graphic3d_CView>& theView,
         myCountersTmp.CounterValue((Graphic3d_FrameStatsCounter)aCntIter);
     }
 
-    // copy main rendered counters from previous non-immediate frame
     for (int aCntIter = Graphic3d_FrameStatsCounter_RENDERED_LOWER;
          aCntIter <= Graphic3d_FrameStatsCounter_RENDERED_UPPER;
          ++aCntIter)

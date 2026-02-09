@@ -32,45 +32,21 @@ public:
                                 const gp_XYZ& Dir,
                                 const gp_XYZ& XDir);
 
-  //! returns the number of variables of the function.
   Standard_EXPORT int NbVariables() const override;
 
-  //! returns the number of equations of the function.
   Standard_EXPORT int NbEquations() const override;
 
-  //! computes the values <F> of the Functions for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Value(const math_Vector& X, math_Vector& F) override;
 
-  //! returns the values <D> of the derivatives for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Derivatives(const math_Vector& X, math_Matrix& D) override;
 
-  //! returns the values <F> of the functions and the derivatives
-  //! <D> for the variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Values(const math_Vector& X, math_Vector& F, math_Matrix& D) override;
 
-  //! returns the values <F> of the T derivatives for
-  //! the parameter Param .
   Standard_EXPORT bool DerivT(const math_Vector& X,
                               const gp_XYZ&      DCentre,
                               const gp_XYZ&      DDir,
                               math_Vector&       DFDT);
 
-  //! returns the values <F> of the T2 derivatives for
-  //! the parameter Param .
-  //! returns the values <D> of the TX derivatives for
-  //! the parameter Param .
-  //! returns Boolean is static;
-  //! returns the values <T> of the X2 derivatives for
-  //! the parameter Param .
-  //! returns Boolean is static;
   Standard_EXPORT bool Deriv2T(const gp_XYZ& DCentre,
                                const gp_XYZ& DDir,
                                math_Vector&  DFDT,

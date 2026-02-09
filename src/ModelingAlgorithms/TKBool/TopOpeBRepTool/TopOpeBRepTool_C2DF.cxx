@@ -16,11 +16,7 @@
 #include <TopoDS_Vertex.hpp>
 #include <TCollection_AsciiString.hpp>
 
-//=================================================================================================
-
 TopOpeBRepTool_C2DF::TopOpeBRepTool_C2DF() = default;
-
-//=================================================================================================
 
 TopOpeBRepTool_C2DF::TopOpeBRepTool_C2DF(const occ::handle<Geom2d_Curve>& PC,
                                          const double                     f2d,
@@ -35,8 +31,6 @@ TopOpeBRepTool_C2DF::TopOpeBRepTool_C2DF(const occ::handle<Geom2d_Curve>& PC,
   myFace = F;
 }
 
-//=================================================================================================
-
 void TopOpeBRepTool_C2DF::SetPC(const occ::handle<Geom2d_Curve>& PC,
                                 const double                     f2d,
                                 const double                     l2d,
@@ -48,14 +42,10 @@ void TopOpeBRepTool_C2DF::SetPC(const occ::handle<Geom2d_Curve>& PC,
   mytol = tol;
 }
 
-//=================================================================================================
-
 void TopOpeBRepTool_C2DF::SetFace(const TopoDS_Face& F)
 {
   myFace = F;
 }
-
-//=================================================================================================
 
 const occ::handle<Geom2d_Curve>& TopOpeBRepTool_C2DF::PC(double& f2d,
                                                          double& l2d,
@@ -67,22 +57,16 @@ const occ::handle<Geom2d_Curve>& TopOpeBRepTool_C2DF::PC(double& f2d,
   return myPC;
 }
 
-//=================================================================================================
-
 const TopoDS_Face& TopOpeBRepTool_C2DF::Face() const
 {
   return myFace;
 }
-
-//=================================================================================================
 
 bool TopOpeBRepTool_C2DF::IsPC(const occ::handle<Geom2d_Curve>& PC) const
 {
   bool b = (PC == myPC);
   return b;
 }
-
-//=================================================================================================
 
 bool TopOpeBRepTool_C2DF::IsFace(const TopoDS_Face& F) const
 {

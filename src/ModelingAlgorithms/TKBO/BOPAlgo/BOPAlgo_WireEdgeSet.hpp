@@ -43,8 +43,6 @@ protected:
 
 inline BOPAlgo_WireEdgeSet::BOPAlgo_WireEdgeSet() = default;
 
-//=================================================================================================
-
 inline BOPAlgo_WireEdgeSet::BOPAlgo_WireEdgeSet(
   const occ::handle<NCollection_BaseAllocator>& theAllocator)
     : myStartShapes(theAllocator),
@@ -52,13 +50,7 @@ inline BOPAlgo_WireEdgeSet::BOPAlgo_WireEdgeSet(
 {
 }
 
-//=======================================================================
-// function : ~
-// purpose  :
-//=======================================================================
 inline BOPAlgo_WireEdgeSet::~BOPAlgo_WireEdgeSet() = default;
-
-//=================================================================================================
 
 inline void BOPAlgo_WireEdgeSet::Clear()
 {
@@ -66,42 +58,30 @@ inline void BOPAlgo_WireEdgeSet::Clear()
   myShapes.Clear();
 }
 
-//=================================================================================================
-
 inline void BOPAlgo_WireEdgeSet::SetFace(const TopoDS_Face& aF)
 {
   myFace = aF;
 }
-
-//=================================================================================================
 
 inline const TopoDS_Face& BOPAlgo_WireEdgeSet::Face() const
 {
   return myFace;
 }
 
-//=================================================================================================
-
 inline void BOPAlgo_WireEdgeSet::AddStartElement(const TopoDS_Shape& aE)
 {
   myStartShapes.Append(aE);
 }
-
-//=================================================================================================
 
 inline const NCollection_List<TopoDS_Shape>& BOPAlgo_WireEdgeSet::StartElements() const
 {
   return myStartShapes;
 }
 
-//=================================================================================================
-
 inline void BOPAlgo_WireEdgeSet::AddShape(const TopoDS_Shape& aW)
 {
   myShapes.Append(aW);
 }
-
-//=================================================================================================
 
 inline const NCollection_List<TopoDS_Shape>& BOPAlgo_WireEdgeSet::Shapes() const
 {

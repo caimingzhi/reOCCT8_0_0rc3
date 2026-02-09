@@ -35,8 +35,6 @@ void GeomLProp_SurfaceTool::D2(const occ::handle<Geom_Surface>& S,
   S->D2(U, V, P, D1U, D1V, D2U, D2V, DUV);
 }
 
-//=================================================================================================
-
 gp_Vec GeomLProp_SurfaceTool::DN(const occ::handle<Geom_Surface>& S,
                                  const double                     U,
                                  const double                     V,

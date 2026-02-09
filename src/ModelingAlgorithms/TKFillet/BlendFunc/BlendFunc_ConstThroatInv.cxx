@@ -3,8 +3,6 @@
 #include <BlendFunc_ConstThroatInv.hpp>
 #include <math_Matrix.hpp>
 
-//=================================================================================================
-
 BlendFunc_ConstThroatInv::BlendFunc_ConstThroatInv(const occ::handle<Adaptor3d_Surface>& S1,
                                                    const occ::handle<Adaptor3d_Surface>& S2,
                                                    const occ::handle<Adaptor3d_Curve>&   C)
@@ -18,11 +16,8 @@ BlendFunc_ConstThroatInv::BlendFunc_ConstThroatInv(const occ::handle<Adaptor3d_S
 {
 }
 
-//=================================================================================================
-
 void BlendFunc_ConstThroatInv::Set(const double theThroat, const double, const int Choix)
 {
-  // double dis1,dis2;
 
   Throat = theThroat;
 
@@ -63,8 +58,6 @@ void BlendFunc_ConstThroatInv::Set(const double theThroat, const double, const i
   }
 }
 
-//=================================================================================================
-
 bool BlendFunc_ConstThroatInv::IsSolution(const math_Vector& Sol, const double Tol)
 {
   math_Vector valsol(1, 4);
@@ -73,8 +66,6 @@ bool BlendFunc_ConstThroatInv::IsSolution(const math_Vector& Sol, const double T
   return std::abs(valsol(1)) <= Tol && std::abs(valsol(2)) <= Tol
          && std::abs(valsol(3)) <= Tol * Tol && std::abs(valsol(4)) <= Tol * Tol;
 }
-
-//=================================================================================================
 
 bool BlendFunc_ConstThroatInv::Value(const math_Vector& X, math_Vector& F)
 {
@@ -124,21 +115,17 @@ bool BlendFunc_ConstThroatInv::Value(const math_Vector& X, math_Vector& F)
   return true;
 }
 
-//=================================================================================================
-
 bool BlendFunc_ConstThroatInv::Derivatives(const math_Vector& X, math_Matrix& D)
 {
-  // int i, j;
+
   gp_Pnt2d p2d;
-  gp_Vec2d v2d; //, df1, df2;
-  // gp_Pnt pts, ptgui;
-  gp_Vec      dnplan, temp, temp1, temp2, tempmid; //, d1u, d1v, nplan;
-  math_Vector XX(1, 4);                            // x1(1,2), x2(1,2);
-  // math_Matrix d1(1,2,1,2), d2(1,2,1,2);
+  gp_Vec2d v2d;
+
+  gp_Vec      dnplan, temp, temp1, temp2, tempmid;
+  math_Vector XX(1, 4);
 
   csurf->D1(X(1), p2d, v2d);
-  // corde1.SetParam(X(2));
-  // corde2.SetParam(X(2));
+
   param = X(2);
   curv->D2(param, ptgui, d1gui, d2gui);
   normtg = d1gui.Magnitude();
@@ -151,8 +138,6 @@ bool BlendFunc_ConstThroatInv::Derivatives(const math_Vector& X, math_Matrix& D)
   temp2.SetXYZ(pts2.XYZ() - ptgui.XYZ());
   tempmid.SetXYZ((pts1.XYZ() + pts2.XYZ()) / 2 - ptgui.XYZ());
 
-  // x1(1) = p2d.X(); x1(2) = p2d.Y();
-  // x2(1) = X(3); x2(2) = X(4);
   if (first)
   {
     XX(1) = p2d.X();
@@ -173,9 +158,7 @@ bool BlendFunc_ConstThroatInv::Derivatives(const math_Vector& X, math_Matrix& D)
 
   if (first)
   {
-    // p2d = pts est sur surf1
-    // ptgui = corde1.PointOnGuide();
-    // nplan = corde1.NPlan();
+
     temp.SetLinearForm(v2d.X(), d1u1, v2d.Y(), d1v1);
 
     D(1, 1) = nplan.Dot(temp);
@@ -191,14 +174,10 @@ bool BlendFunc_ConstThroatInv::Derivatives(const math_Vector& X, math_Matrix& D)
     D(3, 4) = gp_Vec((pts1.XYZ() + pts2.XYZ()) / 2 - ptgui.XYZ()).Dot(d1v2);
     D(4, 3) = -2. * gp_Vec(ptgui, pts2).Dot(d1u2);
     D(4, 4) = -2. * gp_Vec(ptgui, pts2).Dot(d1v2);
-
-    // surf1->D1(x1(1),x1(2),pts,d1u,d1v);
   }
   else
   {
-    //  p2d = pts est sur surf2
-    // ptgui = corde2.PointOnGuide();
-    // nplan = corde2.NPlan();
+
     temp.SetLinearForm(v2d.X(), d1u2, v2d.Y(), d1v2);
 
     D(1, 1) = 0.;
@@ -214,8 +193,6 @@ bool BlendFunc_ConstThroatInv::Derivatives(const math_Vector& X, math_Matrix& D)
     D(3, 4) = gp_Vec((pts1.XYZ() + pts2.XYZ()) / 2 - ptgui.XYZ()).Dot(d1v1);
     D(4, 3) = 2. * gp_Vec(ptgui, pts1).Dot(d1u1);
     D(4, 4) = 2. * gp_Vec(ptgui, pts1).Dot(d1v1);
-
-    // surf2->D1(x1(1),x1(2),pts,d1u,d1v);
   }
 
   D(1, 2) = dnplan.Dot(temp1) - nplan.Dot(d1gui);

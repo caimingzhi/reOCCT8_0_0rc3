@@ -15,14 +15,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Message_Algorithm, Standard_Transient)
 
-//=================================================================================================
-
 Message_Algorithm::Message_Algorithm()
 {
   myMessenger = Message::DefaultMessenger();
 }
-
-//=================================================================================================
 
 void Message_Algorithm::SetMessenger(const occ::handle<Message_Messenger>& theMsgr)
 {
@@ -32,26 +28,20 @@ void Message_Algorithm::SetMessenger(const occ::handle<Message_Messenger>& theMs
     myMessenger = theMsgr;
 }
 
-//=================================================================================================
-
 void Message_Algorithm::SetStatus(const Message_Status& theStat)
 {
   myStatus.Set(theStat);
 }
 
-//=================================================================================================
-
 void Message_Algorithm::SetStatus(const Message_Status& theStat, const int theInt)
 {
-  // Set status flag
+
   SetStatus(theStat);
 
-  // Find index of bit corresponding to that flag
   int aFlagIndex = Message_ExecStatus::StatusIndex(theStat);
   if (!aFlagIndex)
     return;
 
-  // Create map of integer parameters for a given flag, if not yet done
   if (myReportIntegers.IsNull())
     myReportIntegers =
       new NCollection_HArray1<occ::handle<Standard_Transient>>(Message_ExecStatus::FirstStatus,
@@ -60,27 +50,22 @@ void Message_Algorithm::SetStatus(const Message_Status& theStat, const int theIn
   if (aData.IsNull())
     aData = new TColStd_HPackedMapOfInteger;
 
-  // add integer parameter for the status
   occ::down_cast<TColStd_HPackedMapOfInteger>(aData)->ChangeMap().Add(theInt);
 }
-
-//=================================================================================================
 
 void Message_Algorithm::SetStatus(const Message_Status&                           theStat,
                                   const occ::handle<TCollection_HExtendedString>& theStr,
                                   const bool                                      noRepetitions)
 {
-  // Set status flag
+
   SetStatus(theStat);
   if (theStr.IsNull())
     return;
 
-  // Find index of bit corresponding to that flag
   int aFlagIndex = Message_ExecStatus::StatusIndex(theStat);
   if (!aFlagIndex)
     return;
 
-  // Create sequence of string parameters for a given flag, if not yet done
   if (myReportStrings.IsNull())
     myReportStrings =
       new NCollection_HArray1<occ::handle<Standard_Transient>>(Message_ExecStatus::FirstStatus,
@@ -89,14 +74,13 @@ void Message_Algorithm::SetStatus(const Message_Status&                         
   if (aData.IsNull())
     aData = new NCollection_HSequence<occ::handle<TCollection_HExtendedString>>;
 
-  // Add string parameter
   occ::handle<NCollection_HSequence<occ::handle<TCollection_HExtendedString>>> aReportSeq =
     occ::down_cast<NCollection_HSequence<occ::handle<TCollection_HExtendedString>>>(aData);
   if (aReportSeq.IsNull())
     return;
   if (noRepetitions)
   {
-    // if the provided string has been already registered, just do nothing
+
     for (int i = 1; i <= aReportSeq->Length(); i++)
       if (aReportSeq->Value(i)->String().IsEqual(theStr->String()))
         return;
@@ -105,21 +89,17 @@ void Message_Algorithm::SetStatus(const Message_Status&                         
   aReportSeq->Append(theStr);
 }
 
-//=================================================================================================
-
 void Message_Algorithm::SetStatus(const Message_Status& theStat, const Message_Msg& theMsg)
 {
-  // Set status flag
+
   SetStatus(theStat);
 
-  // Find index of bit corresponding to that flag
   int aFlagIndex = Message_ExecStatus::StatusIndex(theStat);
   if (aFlagIndex == 0)
   {
     return;
   }
 
-  // Create sequence of messages for a given flag, if not yet done
   if (myReportMessages.IsNull())
   {
     myReportMessages =
@@ -130,8 +110,6 @@ void Message_Algorithm::SetStatus(const Message_Status& theStat, const Message_M
   myReportMessages->ChangeValue(aFlagIndex) = new Message_Msg(theMsg);
 }
 
-//=================================================================================================
-
 void Message_Algorithm::ClearStatus()
 {
   myStatus.Clear();
@@ -139,8 +117,6 @@ void Message_Algorithm::ClearStatus()
   myReportStrings.Nullify();
   myReportMessages.Nullify();
 }
-
-//=================================================================================================
 
 void Message_Algorithm::SendStatusMessages(const Message_ExecStatus& theStatus,
                                            const Message_Gravity     theTraceLevel,
@@ -152,7 +128,6 @@ void Message_Algorithm::SendStatusMessages(const Message_ExecStatus& theStatus,
     return;
   }
 
-  // Iterate on all set flags in the specified range
   for (int i = Message_ExecStatus::FirstStatus; i <= Message_ExecStatus::LastStatus; i++)
   {
     Message_Status stat = Message_ExecStatus::StatusByIndex(i);
@@ -166,12 +141,11 @@ void Message_Algorithm::SendStatusMessages(const Message_ExecStatus& theStatus,
       aMsgCustom = myReportMessages->Value(i);
     if (!aMsgCustom.IsNull())
     {
-      // print custom message
+
       aMsgr->Send(*aMsgCustom, theTraceLevel);
       continue;
     }
 
-    // construct message suffix
     TCollection_AsciiString aSuffix;
     switch (Message_ExecStatus::TypeOfStatus(stat))
     {
@@ -192,7 +166,6 @@ void Message_Algorithm::SendStatusMessages(const Message_ExecStatus& theStatus,
     }
     aSuffix.AssignCat(Message_ExecStatus::LocalStatusIndex(stat));
 
-    // find message, prefixed by class type name, iterating by base classes if necessary
     TCollection_AsciiString aMsgName;
     for (occ::handle<Standard_Type> aType = DynamicType(); !aType.IsNull(); aType = aType->Parent())
     {
@@ -202,11 +175,8 @@ void Message_Algorithm::SendStatusMessages(const Message_ExecStatus& theStatus,
         break;
     }
 
-    // create a message
     Message_Msg aMsg(aMsgName);
 
-    // if additional parameters are defined for a given status flag,
-    // try to feed them into the message
     if (!myReportIntegers.IsNull())
     {
       occ::handle<TColStd_HPackedMapOfInteger> aMapErrors =
@@ -227,12 +197,9 @@ void Message_Algorithm::SendStatusMessages(const Message_ExecStatus& theStatus,
       }
     }
 
-    // output the message
     aMsgr->Send(aMsg, theTraceLevel);
   }
 }
-
-//=================================================================================================
 
 void Message_Algorithm::SendMessages(const Message_Gravity theTraceLevel,
                                      const int             theMaxCount) const
@@ -244,19 +211,15 @@ void Message_Algorithm::SendMessages(const Message_Gravity theTraceLevel,
   SendStatusMessages(aStat, theTraceLevel, theMaxCount);
 }
 
-//=================================================================================================
-
 void Message_Algorithm::AddStatus(const occ::handle<Message_Algorithm>& theOtherAlgo)
 {
   AddStatus(theOtherAlgo->GetStatus(), theOtherAlgo);
 }
 
-//=================================================================================================
-
 void Message_Algorithm::AddStatus(const Message_ExecStatus&             theAllowedStatus,
                                   const occ::handle<Message_Algorithm>& theOtherAlgo)
 {
-  // Iterate on all set flags in the specified range
+
   const Message_ExecStatus& aStatusOfAlgo = theOtherAlgo->GetStatus();
   for (int i = Message_ExecStatus::FirstStatus; i <= Message_ExecStatus::LastStatus; i++)
   {
@@ -266,13 +229,10 @@ void Message_Algorithm::AddStatus(const Message_ExecStatus&             theAllow
 
     SetStatus(stat);
 
-    // if additional parameters are defined for a given status flag,
-    // move them to <this> algorithm
-    // a) numbers
     occ::handle<TColStd_HPackedMapOfInteger> aNumsOther = theOtherAlgo->GetMessageNumbers(stat);
     if (!aNumsOther.IsNull())
     {
-      // Create sequence of integer parameters for a given flag, if not yet done
+
       if (myReportIntegers.IsNull())
         myReportIntegers =
           new NCollection_HArray1<occ::handle<Standard_Transient>>(Message_ExecStatus::FirstStatus,
@@ -281,10 +241,9 @@ void Message_Algorithm::AddStatus(const Message_ExecStatus&             theAllow
       if (aData.IsNull())
         aData = new TColStd_HPackedMapOfInteger;
 
-      // add integer parameter for the status
       occ::down_cast<TColStd_HPackedMapOfInteger>(aData)->ChangeMap().Unite(aNumsOther->Map());
     }
-    // b) strings
+
     occ::handle<NCollection_HSequence<occ::handle<TCollection_HExtendedString>>> aStrsOther =
       theOtherAlgo->GetMessageStrings(stat);
     if (!aStrsOther.IsNull())
@@ -295,15 +254,12 @@ void Message_Algorithm::AddStatus(const Message_ExecStatus&             theAllow
   }
 }
 
-//=================================================================================================
-
 occ::handle<TColStd_HPackedMapOfInteger> Message_Algorithm::GetMessageNumbers(
   const Message_Status& theStatus) const
 {
   if (myReportIntegers.IsNull())
     return nullptr;
 
-  // Find index of bit corresponding to that flag
   int aFlagIndex = Message_ExecStatus::StatusIndex(theStatus);
   if (!aFlagIndex)
     return nullptr;
@@ -311,15 +267,12 @@ occ::handle<TColStd_HPackedMapOfInteger> Message_Algorithm::GetMessageNumbers(
   return occ::down_cast<TColStd_HPackedMapOfInteger>(myReportIntegers->Value(aFlagIndex));
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<occ::handle<TCollection_HExtendedString>>> Message_Algorithm::
   GetMessageStrings(const Message_Status& theStatus) const
 {
   if (myReportStrings.IsNull())
     return nullptr;
 
-  // Find index of bit corresponding to that flag
   int aFlagIndex = Message_ExecStatus::StatusIndex(theStatus);
   if (!aFlagIndex)
     return nullptr;
@@ -327,8 +280,6 @@ occ::handle<NCollection_HSequence<occ::handle<TCollection_HExtendedString>>> Mes
   return occ::down_cast<NCollection_HSequence<occ::handle<TCollection_HExtendedString>>>(
     myReportStrings->Value(aFlagIndex));
 }
-
-//=================================================================================================
 
 TCollection_ExtendedString Message_Algorithm::PrepareReport(
   const occ::handle<TColStd_HPackedMapOfInteger>& theMapError,
@@ -352,8 +303,6 @@ TCollection_ExtendedString Message_Algorithm::PrepareReport(
   }
   return aNewReport;
 }
-
-//=================================================================================================
 
 TCollection_ExtendedString Message_Algorithm::PrepareReport(
   const NCollection_Sequence<occ::handle<TCollection_HExtendedString>>& theReportSeq,

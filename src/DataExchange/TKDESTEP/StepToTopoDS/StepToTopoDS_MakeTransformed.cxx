@@ -1,19 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//: n7 abv 16.02.99: treatment of CARTESIAN_TRSF_OP_3D placed to StepGeom_MkTransformed3d
-// sln 23.10.2001. CTS23496: Verifying on error creation of directions is added
-// (StepToTopoDS_MakeTransformed::Compute(...) function)
 
 #include <Geom_Axis2Placement.hpp>
 #include <Geom_CartesianPoint.hpp>
@@ -33,22 +18,16 @@
 #include <Transfer_TransientProcess.hpp>
 #include <TransferBRep_ShapeBinder.hpp>
 
-//  + pour CartesianOperator3d
-//=================================================================================================
-
 StepToTopoDS_MakeTransformed::StepToTopoDS_MakeTransformed() = default;
-
-//=================================================================================================
 
 bool StepToTopoDS_MakeTransformed::Compute(const occ::handle<StepGeom_Axis2Placement3d>& Origin,
                                            const occ::handle<StepGeom_Axis2Placement3d>& Target,
                                            const StepData_Factors& theLocalFactors)
 {
-  theTrsf = gp_Trsf(); // reinit
+  theTrsf = gp_Trsf();
   if (Origin.IsNull() || Target.IsNull())
     return false;
 
-  // sln 23.10.2001 : If the directions have not been created do nothing.
   occ::handle<Geom_Axis2Placement> theOrig =
     StepToGeom::MakeAxis2Placement(Origin, theLocalFactors);
   if (theOrig.IsNull())
@@ -61,12 +40,9 @@ bool StepToTopoDS_MakeTransformed::Compute(const occ::handle<StepGeom_Axis2Place
   const gp_Ax3 ax3Orig(theOrig->Ax2());
   const gp_Ax3 ax3Targ(theTarg->Ax2());
 
-  //  ne pas se tromper de sens !
   theTrsf.SetTransformation(ax3Targ, ax3Orig);
   return true;
 }
-
-//=================================================================================================
 
 bool StepToTopoDS_MakeTransformed::Compute(
   const occ::handle<StepGeom_CartesianTransformationOperator3d>& Operator,
@@ -75,14 +51,10 @@ bool StepToTopoDS_MakeTransformed::Compute(
   return StepToGeom::MakeTransformation3d(Operator, theTrsf, theLocalFactors);
 }
 
-//=================================================================================================
-
 const gp_Trsf& StepToTopoDS_MakeTransformed::Transformation() const
 {
   return theTrsf;
 }
-
-//=================================================================================================
 
 bool StepToTopoDS_MakeTransformed::Transform(TopoDS_Shape& shape) const
 {
@@ -93,8 +65,6 @@ bool StepToTopoDS_MakeTransformed::Transform(TopoDS_Shape& shape) const
   return true;
 }
 
-//=================================================================================================
-
 TopoDS_Shape StepToTopoDS_MakeTransformed::TranslateMappedItem(
   const occ::handle<StepRepr_MappedItem>&       mapit,
   const occ::handle<Transfer_TransientProcess>& TP,
@@ -102,10 +72,6 @@ TopoDS_Shape StepToTopoDS_MakeTransformed::TranslateMappedItem(
   const Message_ProgressRange&                  theProgress)
 {
   TopoDS_Shape theResult;
-
-  //  Positionnement : 2 formules
-  //  1/ Ax2 dans Source et comme Target  : passage de Source a Target
-  //  2/ CartesianOperator3d comme Target : on applique
 
   occ::handle<StepGeom_Axis2Placement3d> Origin =
     occ::down_cast<StepGeom_Axis2Placement3d>(mapit->MappingSource()->MappingOrigin());
@@ -124,7 +90,6 @@ TopoDS_Shape StepToTopoDS_MakeTransformed::TranslateMappedItem(
   if (!ok)
     TP->AddWarning(mapit, "Mapped Item, case not recognized, location ignored");
 
-  //  La Shape, et la mise en position
   occ::handle<StepRepr_Representation> maprep = mapit->MappingSource()->MappedRepresentation();
   occ::handle<Transfer_Binder>         binder = TP->Find(maprep);
   if (binder.IsNull())

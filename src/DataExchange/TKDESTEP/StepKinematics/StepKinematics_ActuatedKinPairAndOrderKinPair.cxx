@@ -6,12 +6,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_ActuatedKinPairAndOrderKinPair,
                            StepKinematics_KinematicPair)
 
-//=================================================================================================
-
 StepKinematics_ActuatedKinPairAndOrderKinPair::StepKinematics_ActuatedKinPairAndOrderKinPair() =
   default;
-
-//=================================================================================================
 
 void StepKinematics_ActuatedKinPairAndOrderKinPair::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,

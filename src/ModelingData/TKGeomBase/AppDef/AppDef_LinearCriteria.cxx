@@ -24,8 +24,6 @@ static int order(const PLib_HermitJacobi& B)
   return B.NivConstr();
 }
 
-//=================================================================================================
-
 AppDef_LinearCriteria::AppDef_LinearCriteria(const AppDef_MultiLine& SSP,
                                              const int               FirstPoint,
                                              const int               LastPoint)
@@ -43,16 +41,12 @@ AppDef_LinearCriteria::AppDef_LinearCriteria(const AppDef_MultiLine& SSP,
   myPntWeight.Init(1.);
 }
 
-//=================================================================================================
-
 void AppDef_LinearCriteria::SetParameters(
   const occ::handle<NCollection_HArray1<double>>& Parameters)
 {
   myParameters = Parameters;
-  myE          = 0; // Cache become invalid.
+  myE          = 0;
 }
-
-//=================================================================================================
 
 void AppDef_LinearCriteria::SetCurve(const occ::handle<FEmTool_Curve>& C)
 {
@@ -139,14 +133,10 @@ void AppDef_LinearCriteria::SetCurve(const occ::handle<FEmTool_Curve>& C)
   }
 }
 
-//=================================================================================================
-
 void AppDef_LinearCriteria::GetCurve(occ::handle<FEmTool_Curve>& C) const
 {
   C = myCurve;
 }
-
-//=================================================================================================
 
 void AppDef_LinearCriteria::SetEstimation(const double E1, const double E2, const double E3)
 {
@@ -160,16 +150,12 @@ double& AppDef_LinearCriteria::EstLength()
   return myLength;
 }
 
-//=================================================================================================
-
 void AppDef_LinearCriteria::GetEstimation(double& E1, double& E2, double& E3) const
 {
   E1 = myEstimation[0];
   E2 = myEstimation[1];
   E3 = myEstimation[2];
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray2<occ::handle<NCollection_HArray1<int>>>> AppDef_LinearCriteria::
   AssemblyTable() const
@@ -187,8 +173,6 @@ occ::handle<NCollection_HArray2<occ::handle<NCollection_HArray1<int>>>> AppDef_L
 
   int i, el = 1, dim = 1, NbGlobVar = 0, gi0;
 
-  // For dim = 1
-  // For first element (el = 1)
   GlobIndex = new NCollection_HArray1<int>(0, MxDeg);
 
   for (i = 0; i < nc1; i++)
@@ -210,7 +194,6 @@ occ::handle<NCollection_HArray2<occ::handle<NCollection_HArray1<int>>>> AppDef_L
   gi0 = NbGlobVar - nc1 + 1;
   AssTable->SetValue(dim, el, GlobIndex);
 
-  // For rest elements
   for (el = 2; el <= NbElm; el++)
   {
     GlobIndex = new NCollection_HArray1<int>(0, MxDeg);
@@ -232,7 +215,6 @@ occ::handle<NCollection_HArray2<occ::handle<NCollection_HArray1<int>>>> AppDef_L
     AssTable->SetValue(dim, el, GlobIndex);
   }
 
-  // For other dimensions
   gi0 = NbGlobVar;
   for (dim = 2; dim <= NbDim; dim++)
   {
@@ -250,8 +232,6 @@ occ::handle<NCollection_HArray2<occ::handle<NCollection_HArray1<int>>>> AppDef_L
   return AssTable;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray2<int>> AppDef_LinearCriteria::DependenceTable() const
 {
   if (myCurve.IsNull())
@@ -266,8 +246,6 @@ occ::handle<NCollection_HArray2<int>> AppDef_LinearCriteria::DependenceTable() c
 
   return DepTab;
 }
-
-//=================================================================================================
 
 int AppDef_LinearCriteria::QualityValues(const double J1min,
                                          const double J2min,
@@ -316,8 +294,6 @@ int AppDef_LinearCriteria::QualityValues(const double J1min,
     J3 = J3 + myCriteria[2]->Value();
   }
 
-  // Calculation of ICDANA - see MOTEST.f
-  //  double JEsMin[3] = {.01, .001, .001}; // from MOTLIS.f
   double JEsMin[3];
   JEsMin[0] = J1min;
   JEsMin[1] = J2min;
@@ -328,9 +304,6 @@ int AppDef_LinearCriteria::QualityValues(const double J1min,
   ValCri[2] = J3;
 
   int ICDANA = 0;
-
-  //   (2) Test l'amelioration des estimations
-  //       (critere sureleve => Non minimisation )
 
   for (i = 0; i <= 2; i++)
   {
@@ -344,8 +317,6 @@ int AppDef_LinearCriteria::QualityValues(const double J1min,
     }
   }
 
-  //  (3) Mise a jours des Estimation
-  //     (critere sous-estimer => mauvais conditionement)
   if (ValCri[0] > myEstimation[0] * 2)
   {
     myEstimation[0] += ValCri[0] * .1;
@@ -407,8 +378,6 @@ int AppDef_LinearCriteria::QualityValues(const double J1min,
   return ICDANA;
 }
 
-//=================================================================================================
-
 void AppDef_LinearCriteria::ErrorValues(double& MaxError,
                                         double& QuadraticError,
                                         double& AverageError)
@@ -469,8 +438,6 @@ void AppDef_LinearCriteria::ErrorValues(double& MaxError,
   }
 }
 
-//=================================================================================================
-
 void AppDef_LinearCriteria::Hessian(const int    Element,
                                     const int    Dimension1,
                                     const int    Dimension2,
@@ -482,10 +449,9 @@ void AppDef_LinearCriteria::Hessian(const int    Element,
   if (DependenceTable()->Value(Dimension1, Dimension2) == 0)
     throw Standard_DomainError("AppDef_LinearCriteria::Hessian");
 
-  int // NbDim = myCurve->Dimension(),
-    MxDeg = myCurve->Base().WorkDegree(),
-    //                   Deg   = myCurve->Degree(Element),
-    Order = order(myCurve->Base());
+  int MxDeg = myCurve->Base().WorkDegree(),
+
+      Order = order(myCurve->Base());
 
   math_Matrix AuxH(0, H.RowNumber() - 1, 0, H.ColNumber() - 1, 0.);
 
@@ -497,8 +463,6 @@ void AppDef_LinearCriteria::Hessian(const int    Element,
 
   int icrit;
 
-  // Quality criterion part of Hessian
-
   H.Init(0);
 
   for (icrit = 0; icrit <= 2; icrit++)
@@ -508,8 +472,6 @@ void AppDef_LinearCriteria::Hessian(const int    Element,
     H += (myQualityWeight * myPercent[icrit] / myEstimation[icrit]) * AuxH;
   }
 
-  // Least square part of Hessian
-
   AuxH.Init(0.);
 
   double coeff = (ULast - UFirst) / 2., curcoeff, poid;
@@ -518,36 +480,31 @@ void AppDef_LinearCriteria::Hessian(const int    Element,
   int k1, k2, i, j, i0 = H.LowerRow(), j0 = H.LowerCol(), i1, j1,
                     di = myPntWeight.Lower() - myParameters->Lower();
 
-  // BuilCache
   if (myE != Element)
     BuildCache(Element);
 
-  // Compute the least square Hessian
   for (ii = 1, ipnt = IF; ipnt <= IL; ipnt++, ii += (MxDeg + 1))
   {
     poid             = myPntWeight(di + ipnt) * 2.;
     const double* BV = &myCache->Value(ii);
 
-    // Hermite*Hermite part of matrix
     for (i = 0; i <= degH; i++)
     {
       k1       = (i <= Order) ? i : i - Order - 1;
       curcoeff = std::pow(coeff, k1) * poid * BV[i];
 
-      // Hermite*Hermite part of matrix
       for (j = i; j <= degH; j++)
       {
         k2 = (j <= Order) ? j : j - Order - 1;
         AuxH(i, j) += curcoeff * std::pow(coeff, k2) * BV[j];
       }
-      // Hermite*Jacobi part of matrix
+
       for (j = degH + 1; j <= MxDeg; j++)
       {
         AuxH(i, j) += curcoeff * BV[j];
       }
     }
 
-    // Jacoby*Jacobi part of matrix
     for (i = degH + 1; i <= MxDeg; i++)
     {
       curcoeff = BV[i] * poid;
@@ -571,8 +528,6 @@ void AppDef_LinearCriteria::Hessian(const int    Element,
     i1++;
   }
 }
-
-//=================================================================================================
 
 void AppDef_LinearCriteria::Gradient(const int Element, const int Dimension, math_Vector& G)
 {
@@ -617,8 +572,7 @@ void AppDef_LinearCriteria::Gradient(const int Element, const int Dimension, mat
   ULast        = Knots(Element + 1);
   double coeff = (ULast - UFirst) / 2;
 
-  int // Deg   = myCurve->Degree(Element),
-    Order = order(myCurve->Base());
+  int Order = order(myCurve->Base());
 
   const PLib_HermitJacobi& myBase = myCurve->Base();
   int                      MxDeg  = myBase.WorkDegree();
@@ -666,8 +620,6 @@ void AppDef_LinearCriteria::Gradient(const int Element, const int Dimension, mat
   }
 }
 
-//=================================================================================================
-
 void AppDef_LinearCriteria::InputVector(
   const math_Vector&                                                             X,
   const occ::handle<NCollection_HArray2<occ::handle<NCollection_HArray1<int>>>>& AssTable)
@@ -694,8 +646,6 @@ void AppDef_LinearCriteria::InputVector(
   }
 }
 
-//=================================================================================================
-
 void AppDef_LinearCriteria::SetWeight(const double QuadraticWeight,
                                       const double QualityWeight,
                                       const double percentJ1,
@@ -716,8 +666,6 @@ void AppDef_LinearCriteria::SetWeight(const double QuadraticWeight,
   myPercent[2] = percentJ3 / Total;
 }
 
-//=================================================================================================
-
 void AppDef_LinearCriteria::GetWeight(double& QuadraticWeight, double& QualityWeight) const
 {
 
@@ -725,14 +673,10 @@ void AppDef_LinearCriteria::GetWeight(double& QuadraticWeight, double& QualityWe
   QualityWeight   = myQualityWeight;
 }
 
-//=================================================================================================
-
 void AppDef_LinearCriteria::SetWeight(const NCollection_Array1<double>& Weight)
 {
   myPntWeight = Weight;
 }
-
-//=================================================================================================
 
 void AppDef_LinearCriteria::BuildCache(const int Element)
 {
@@ -773,7 +717,7 @@ void AppDef_LinearCriteria::BuildCache(const int Element)
     }
   }
   else
-  { // no points in the interval.
+  {
     IF = IL;
     IL--;
   }

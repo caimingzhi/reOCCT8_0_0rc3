@@ -9,11 +9,7 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepAP203_RWCcDesignContract::RWStepAP203_RWCcDesignContract() = default;
-
-//=================================================================================================
 
 void RWStepAP203_RWCcDesignContract::ReadStep(
   const occ::handle<StepData_StepReaderData>&    data,
@@ -21,11 +17,9 @@ void RWStepAP203_RWCcDesignContract::ReadStep(
   occ::handle<Interface_Check>&                  ach,
   const occ::handle<StepAP203_CcDesignContract>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "cc_design_contract"))
     return;
-
-  // Inherited fields of ContractAssignment
 
   occ::handle<StepBasic_Contract> aContractAssignment_AssignedContract;
   data->ReadEntity(num,
@@ -34,8 +28,6 @@ void RWStepAP203_RWCcDesignContract::ReadStep(
                    ach,
                    STANDARD_TYPE(StepBasic_Contract),
                    aContractAssignment_AssignedContract);
-
-  // Own fields of CcDesignContract
 
   occ::handle<NCollection_HArray1<StepAP203_ContractedItem>> aItems;
   int                                                        sub2 = 0;
@@ -52,22 +44,15 @@ void RWStepAP203_RWCcDesignContract::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aContractAssignment_AssignedContract, aItems);
 }
-
-//=================================================================================================
 
 void RWStepAP203_RWCcDesignContract::WriteStep(
   StepData_StepWriter&                           SW,
   const occ::handle<StepAP203_CcDesignContract>& ent) const
 {
 
-  // Inherited fields of ContractAssignment
-
   SW.Send(ent->StepBasic_ContractAssignment::AssignedContract());
-
-  // Own fields of CcDesignContract
 
   SW.OpenSub();
   for (int i1 = 1; i1 <= ent->Items()->Length(); i1++)
@@ -78,17 +63,11 @@ void RWStepAP203_RWCcDesignContract::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepAP203_RWCcDesignContract::Share(const occ::handle<StepAP203_CcDesignContract>& ent,
                                            Interface_EntityIterator& iter) const
 {
 
-  // Inherited fields of ContractAssignment
-
   iter.AddItem(ent->StepBasic_ContractAssignment::AssignedContract());
-
-  // Own fields of CcDesignContract
 
   for (int i2 = 1; i2 <= ent->Items()->Length(); i2++)
   {

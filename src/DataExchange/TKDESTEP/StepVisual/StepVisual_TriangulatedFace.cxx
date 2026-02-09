@@ -1,16 +1,12 @@
-// Created on : Thu Mar 24 18:30:12 2022
+
 
 #include <StepVisual_TriangulatedFace.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_TriangulatedFace, StepVisual_TessellatedFace)
 
-//=================================================================================================
-
 StepVisual_TriangulatedFace::StepVisual_TriangulatedFace()
 
   = default;
-
-//=================================================================================================
 
 void StepVisual_TriangulatedFace::Init(
   const occ::handle<TCollection_HAsciiString>&    theRepresentationItem_Name,
@@ -34,22 +30,16 @@ void StepVisual_TriangulatedFace::Init(
   myTriangles = theTriangles;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<int>> StepVisual_TriangulatedFace::Pnindex() const
 {
   return myPnindex;
 }
-
-//=================================================================================================
 
 void StepVisual_TriangulatedFace::SetPnindex(
   const occ::handle<NCollection_HArray1<int>>& thePnindex)
 {
   myPnindex = thePnindex;
 }
-
-//=================================================================================================
 
 int StepVisual_TriangulatedFace::NbPnindex() const
 {
@@ -60,21 +50,15 @@ int StepVisual_TriangulatedFace::NbPnindex() const
   return myPnindex->Length();
 }
 
-//=================================================================================================
-
 int StepVisual_TriangulatedFace::PnindexValue(const int theNum) const
 {
   return myPnindex->Value(theNum);
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray2<int>> StepVisual_TriangulatedFace::Triangles() const
 {
   return myTriangles;
 }
-
-//=================================================================================================
 
 int StepVisual_TriangulatedFace::NbTriangles() const
 {
@@ -84,8 +68,6 @@ int StepVisual_TriangulatedFace::NbTriangles() const
   }
   return myTriangles->ColLength();
 }
-
-//=================================================================================================
 
 void StepVisual_TriangulatedFace::SetTriangles(
   const occ::handle<NCollection_HArray2<int>>& theTriangles)

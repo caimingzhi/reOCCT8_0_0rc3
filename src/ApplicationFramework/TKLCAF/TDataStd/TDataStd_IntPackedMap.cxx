@@ -14,15 +14,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_IntPackedMap, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_IntPackedMap::GetID()
 {
   static Standard_GUID theGUID("7031faff-161e-44df-8239-7c264a81f5a1");
   return theGUID;
 }
-
-//=================================================================================================
 
 occ::handle<TDataStd_IntPackedMap> TDataStd_IntPackedMap::Set(const TDF_Label& theLabel,
                                                               const bool       isDelta)
@@ -38,15 +34,11 @@ occ::handle<TDataStd_IntPackedMap> TDataStd_IntPackedMap::Set(const TDF_Label& t
   return anAtt;
 }
 
-//=================================================================================================
-
 TDataStd_IntPackedMap::TDataStd_IntPackedMap()
     : myIsDelta(false)
 {
   myMap = new TColStd_HPackedMapOfInteger();
 }
-
-//=================================================================================================
 
 bool TDataStd_IntPackedMap::ChangeMap(const occ::handle<TColStd_HPackedMapOfInteger>& theMap)
 {
@@ -64,8 +56,6 @@ bool TDataStd_IntPackedMap::ChangeMap(const occ::handle<TColStd_HPackedMapOfInte
   return false;
 }
 
-//=================================================================================================
-
 bool TDataStd_IntPackedMap::ChangeMap(const TColStd_PackedMapOfInteger& theMap)
 {
   if (!myMap->Map().IsEqual(theMap))
@@ -76,8 +66,6 @@ bool TDataStd_IntPackedMap::ChangeMap(const TColStd_PackedMapOfInteger& theMap)
   }
   return false;
 }
-
-//=================================================================================================
 
 bool TDataStd_IntPackedMap::Clear()
 {
@@ -90,14 +78,10 @@ bool TDataStd_IntPackedMap::Clear()
   return false;
 }
 
-//=================================================================================================
-
 bool TDataStd_IntPackedMap::Contains(const int theKey) const
 {
   return myMap->Map().Contains(theKey);
 }
-
-//=================================================================================================
 
 bool TDataStd_IntPackedMap::Add(const int theKey)
 {
@@ -110,8 +94,6 @@ bool TDataStd_IntPackedMap::Add(const int theKey)
   return aResult;
 }
 
-//=================================================================================================
-
 bool TDataStd_IntPackedMap::Remove(const int theKey)
 {
   bool aResult = myMap->Map().Contains(theKey);
@@ -123,14 +105,10 @@ bool TDataStd_IntPackedMap::Remove(const int theKey)
   return aResult;
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDataStd_IntPackedMap::NewEmpty() const
 {
   return new TDataStd_IntPackedMap;
 }
-
-//=================================================================================================
 
 void TDataStd_IntPackedMap::Restore(const occ::handle<TDF_Attribute>& theWith)
 {
@@ -145,8 +123,6 @@ void TDataStd_IntPackedMap::Restore(const occ::handle<TDF_Attribute>& theWith)
   }
 }
 
-//=================================================================================================
-
 void TDataStd_IntPackedMap::Paste(const occ::handle<TDF_Attribute>& theInto,
                                   const occ::handle<TDF_RelocationTable>&) const
 {
@@ -158,14 +134,10 @@ void TDataStd_IntPackedMap::Paste(const occ::handle<TDF_Attribute>& theInto,
   }
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_IntPackedMap::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 Standard_OStream& TDataStd_IntPackedMap::Dump(Standard_OStream& theOS) const
 {
@@ -176,8 +148,6 @@ Standard_OStream& TDataStd_IntPackedMap::Dump(Standard_OStream& theOS) const
   return anOS;
 }
 
-//=================================================================================================
-
 occ::handle<TDF_DeltaOnModification> TDataStd_IntPackedMap::DeltaOnModification(
   const occ::handle<TDF_Attribute>& OldAttribute) const
 {
@@ -187,8 +157,6 @@ occ::handle<TDF_DeltaOnModification> TDataStd_IntPackedMap::DeltaOnModification(
   else
     return new TDF_DefaultDeltaOnModification(OldAttribute);
 }
-
-//=================================================================================================
 
 void TDataStd_IntPackedMap::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

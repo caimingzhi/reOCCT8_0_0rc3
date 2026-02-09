@@ -5,8 +5,6 @@
 
 #include <StepRepr_DefinitionalRepresentation.hpp>
 
-//! Implements complex type
-//! (DEFINITIONAL_REPRESENTATION,REPRESENTATION,SHAPE_REPRESENTATION)
 class StepShape_DefinitionalRepresentationAndShapeRepresentation
     : public StepRepr_DefinitionalRepresentation
 {

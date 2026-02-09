@@ -10,31 +10,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinTObjDrivers_ModelDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinTObjDrivers_ModelDriver::BinTObjDrivers_ModelDriver(
   const occ::handle<Message_Messenger>& theMessageDriver)
     : BinMDF_ADriver(theMessageDriver, nullptr)
 {
 }
 
-//=======================================================================
-// function : NewEmpty
-// purpose  : Creates a new attribute
-//=======================================================================
-
 occ::handle<TDF_Attribute> BinTObjDrivers_ModelDriver::NewEmpty() const
 {
   return new TObj_TModel;
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : Translate the contents of <theSource> and put it
-//           into <theTarget>.
-//           Set CurrentModel of TObj_Assistant into theTarget TObj_TModel
-//           if its GUID and GUID stored in theSource are same
-//=======================================================================
 
 bool BinTObjDrivers_ModelDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                        const occ::handle<TDF_Attribute>& theTarget,
@@ -60,13 +45,6 @@ bool BinTObjDrivers_ModelDriver::Paste(const BinObjMgt_Persistent&       theSour
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : Translate the contents of <theSource> and put it
-//           into <theTarget>.
-//           a Model is stored as its GUID
-//=======================================================================
-
 void BinTObjDrivers_ModelDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
   BinObjMgt_Persistent&             theTarget,
@@ -76,7 +54,7 @@ void BinTObjDrivers_ModelDriver::Paste(
   occ::handle<TObj_Model>  aModel  = aTModel->Model();
   if (!aModel.IsNull())
   {
-    // Store model GUID.
+
     Standard_GUID aGUID = aModel->GetGUID();
     theTarget << aGUID;
   }

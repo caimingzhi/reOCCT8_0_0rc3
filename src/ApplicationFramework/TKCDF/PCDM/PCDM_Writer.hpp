@@ -18,7 +18,6 @@ public:
     const TCollection_ExtendedString& aFileName,
     const Message_ProgressRange&      theRange = Message_ProgressRange()) = 0;
 
-  //! Write <theDocument> to theOStream
   Standard_EXPORT virtual void Write(
     const occ::handle<CDM_Document>& theDocument,
     Standard_OStream&                theOStream,

@@ -89,8 +89,6 @@ bool BlendFunc_Ruled::IsSolution(const math_Vector& Sol, const double Tol)
       && std::abs(valsol(4)) <= Tol)
   {
 
-    // Calcul des tangentes
-
     surf1->D1(Sol(1), Sol(2), pts1, d1u1, d1v1);
     surf2->D1(Sol(3), Sol(4), pts2, d1u2, d1v2);
     dnplan.SetLinearForm(1. / normtg, d2gui, -1. / normtg * (nplan.Dot(d2gui)), nplan);
@@ -103,7 +101,6 @@ bool BlendFunc_Ruled::IsSolution(const math_Vector& Sol, const double Tol)
     ndotns   = nplan.Dot(ns);
     norm     = ncrossns.Magnitude();
 
-    // Derivee de nor1 par rapport au parametre sur la ligne guide
     grosterme = ncrossns.Dot(dnplan.Crossed(ns)) / norm / norm;
     temp.SetLinearForm((dnplan.Dot(ns) - grosterme * ndotns) / norm,
                        nplan,
@@ -119,7 +116,6 @@ bool BlendFunc_Ruled::IsSolution(const math_Vector& Sol, const double Tol)
     ndotns   = nplan.Dot(ns);
     norm     = ncrossns.Magnitude();
 
-    // Derivee de nor2 par rapport au parametre sur la ligne guide
     grosterme = ncrossns.Dot(dnplan.Crossed(ns)) / norm / norm;
     temp.SetLinearForm((dnplan.Dot(ns) - grosterme * ndotns) / norm,
                        nplan,
@@ -151,8 +147,6 @@ bool BlendFunc_Ruled::IsSolution(const math_Vector& Sol, const double Tol)
   istangent = true;
   return false;
 }
-
-//=================================================================================================
 
 double BlendFunc_Ruled::GetMinimalDistance() const
 {
@@ -221,7 +215,6 @@ bool BlendFunc_Ruled::Derivatives(const math_Vector& X, math_Matrix& D)
 
   p1p2 = gp_Vec(pts1, pts2);
 
-  // Derivee de nor1 par rapport a u1
   temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
   grosterme = ncrossns1.Dot(nplan.Crossed(temp)) / norm1 / norm1;
   resul.SetLinearForm(-(grosterme * ndotns1 - nplan.Dot(temp)) / norm1,
@@ -233,7 +226,6 @@ bool BlendFunc_Ruled::Derivatives(const math_Vector& X, math_Matrix& D)
 
   D(3, 1) = -(d1u1.Dot(nor1)) + p1p2.Dot(resul);
 
-  // Derivee par rapport a v1
   temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
   grosterme = ncrossns1.Dot(nplan.Crossed(temp)) / norm1 / norm1;
   resul.SetLinearForm(-(grosterme * ndotns1 - nplan.Dot(temp)) / norm1,
@@ -251,7 +243,6 @@ bool BlendFunc_Ruled::Derivatives(const math_Vector& X, math_Matrix& D)
   D(4, 1) = -(d1u1.Dot(nor2));
   D(4, 2) = -(d1v1.Dot(nor2));
 
-  // Derivee de nor2 par rapport a u2
   temp      = d2u2.Crossed(d1v2).Added(d1u2.Crossed(d2uv2));
   grosterme = ncrossns2.Dot(nplan.Crossed(temp)) / norm2 / norm2;
   resul.SetLinearForm(-(grosterme * ndotns2 - nplan.Dot(temp)) / norm2,
@@ -263,7 +254,6 @@ bool BlendFunc_Ruled::Derivatives(const math_Vector& X, math_Matrix& D)
 
   D(4, 3) = d1u2.Dot(nor2) + p1p2.Dot(resul);
 
-  // Derivee par rapport a v2
   temp      = d2uv2.Crossed(d1v2).Added(d1u2.Crossed(d2v2));
   grosterme = ncrossns2.Dot(nplan.Crossed(temp)) / norm2 / norm2;
   resul.SetLinearForm(-(grosterme * ndotns2 - nplan.Dot(temp)) / norm2,
@@ -320,7 +310,6 @@ bool BlendFunc_Ruled::Values(const math_Vector& X, math_Vector& F, math_Matrix& 
   D(2, 3) = nplan.Dot(d1u2);
   D(2, 4) = nplan.Dot(d1v2);
 
-  // Derivee de nor1 par rapport a u1
   temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
   grosterme = ncrossns1.Dot(nplan.Crossed(temp)) / norm1 / norm1;
   resul.SetLinearForm(-(grosterme * ndotns1 - nplan.Dot(temp)) / norm1,
@@ -332,7 +321,6 @@ bool BlendFunc_Ruled::Values(const math_Vector& X, math_Vector& F, math_Matrix& 
 
   D(3, 1) = -(d1u1.Dot(nor1)) + p1p2.Dot(resul);
 
-  // Derivee par rapport a v1
   temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
   grosterme = ncrossns1.Dot(nplan.Crossed(temp)) / norm1 / norm1;
   resul.SetLinearForm(-(grosterme * ndotns1 - nplan.Dot(temp)) / norm1,
@@ -350,7 +338,6 @@ bool BlendFunc_Ruled::Values(const math_Vector& X, math_Vector& F, math_Matrix& 
   D(4, 1) = -(d1u1.Dot(nor2));
   D(4, 2) = -(d1v1.Dot(nor2));
 
-  // Derivee de nor2 par rapport a u2
   temp      = d2u2.Crossed(d1v2).Added(d1u2.Crossed(d2uv2));
   grosterme = ncrossns2.Dot(nplan.Crossed(temp)) / norm2 / norm2;
   resul.SetLinearForm(-(grosterme * ndotns2 - nplan.Dot(temp)) / norm2,
@@ -362,7 +349,6 @@ bool BlendFunc_Ruled::Values(const math_Vector& X, math_Vector& F, math_Matrix& 
 
   D(4, 3) = d1u2.Dot(nor2) + p1p2.Dot(resul);
 
-  // Derivee par rapport a v2
   temp      = d2uv2.Crossed(d1v2).Added(d1u2.Crossed(d2v2));
   grosterme = ncrossns2.Dot(nplan.Crossed(temp)) / norm2 / norm2;
   resul.SetLinearForm(-(grosterme * ndotns2 - nplan.Dot(temp)) / norm2,
@@ -489,7 +475,6 @@ bool BlendFunc_Ruled::GetSection(const double                Param,
   ndotns   = nplan.Dot(ns);
   norm     = ncrossns.Magnitude();
 
-  // Derivee de nor1 par rapport au parametre sur la ligne guide
   grosterme = ncrossns.Dot(dnplan.Crossed(ns)) / norm / norm;
   temp.SetLinearForm((dnplan.Dot(ns) - grosterme * ndotns) / norm,
                      nplan,
@@ -505,7 +490,6 @@ bool BlendFunc_Ruled::GetSection(const double                Param,
   ndotns   = nplan.Dot(ns);
   norm     = ncrossns.Magnitude();
 
-  // Derivee de nor2 par rapport au parametre sur la ligne guide
   grosterme = ncrossns.Dot(dnplan.Crossed(ns)) / norm / norm;
   temp.SetLinearForm((dnplan.Dot(ns) - grosterme * ndotns) / norm,
                      nplan,
@@ -543,42 +527,30 @@ bool BlendFunc_Ruled::GetSection(const double                Param,
   return false;
 }
 
-//=================================================================================================
-
 bool BlendFunc_Ruled::IsRational() const
 {
   return false;
 }
-
-//=================================================================================================
 
 double BlendFunc_Ruled::GetSectionSize() const
 {
   throw Standard_NotImplemented("BlendFunc_Ruled::GetSectionSize()");
 }
 
-//=================================================================================================
-
 void BlendFunc_Ruled::GetMinimalWeight(NCollection_Array1<double>& Weigths) const
 {
   Weigths.Init(1);
 }
-
-//=================================================================================================
 
 int BlendFunc_Ruled::NbIntervals(const GeomAbs_Shape S) const
 {
   return curv->NbIntervals(BlendFunc::NextShape(S));
 }
 
-//=================================================================================================
-
 void BlendFunc_Ruled::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const
 {
   curv->Intervals(T, BlendFunc::NextShape(S));
 }
-
-//=================================================================================================
 
 void BlendFunc_Ruled::GetShape(int& NbPoles, int& NbKnots, int& Degree, int& NbPoles2d)
 {
@@ -588,10 +560,6 @@ void BlendFunc_Ruled::GetShape(int& NbPoles, int& NbKnots, int& Degree, int& NbP
   NbPoles2d = 2;
 }
 
-//=======================================================================
-// function : GetTolerance
-// purpose  : Determine les Tolerance a utiliser dans les approximations.
-//=======================================================================
 void BlendFunc_Ruled::GetTolerance(const double BoundTol,
                                    const double,
                                    const double,
@@ -612,16 +580,16 @@ void BlendFunc_Ruled::Mults(NCollection_Array1<int>& TMults)
   TMults(TMults.Lower()) = TMults(TMults.Upper()) = 2;
 }
 
-bool BlendFunc_Ruled::Section(const Blend_Point& /*P*/,
-                              NCollection_Array1<gp_Pnt>& /*Poles*/,
-                              NCollection_Array1<gp_Vec>& /*DPoles*/,
-                              NCollection_Array1<gp_Vec>& /*D2Poles*/,
-                              NCollection_Array1<gp_Pnt2d>& /*Poles2d*/,
-                              NCollection_Array1<gp_Vec2d>& /*DPoles2d*/,
-                              NCollection_Array1<gp_Vec2d>& /*D2Poles2d*/,
-                              NCollection_Array1<double>& /*Weights*/,
-                              NCollection_Array1<double>& /*DWeights*/,
-                              NCollection_Array1<double>& /*D2Weights*/)
+bool BlendFunc_Ruled::Section(const Blend_Point&,
+                              NCollection_Array1<gp_Pnt>&,
+                              NCollection_Array1<gp_Vec>&,
+                              NCollection_Array1<gp_Vec>&,
+                              NCollection_Array1<gp_Pnt2d>&,
+                              NCollection_Array1<gp_Vec2d>&,
+                              NCollection_Array1<gp_Vec2d>&,
+                              NCollection_Array1<double>&,
+                              NCollection_Array1<double>&,
+                              NCollection_Array1<double>&)
 {
   return false;
 }

@@ -19,7 +19,6 @@ void IGESDimen_CenterLine::Init(const int                                      a
   theZDisplacement = aZdisp;
   theDataPoints    = dataPnts;
   InitTypeAndForm(106, FormNumber());
-  // FormNumber :  20:points, 21:centres cercles
 }
 
 void IGESDimen_CenterLine::SetCrossHair(const bool mode)

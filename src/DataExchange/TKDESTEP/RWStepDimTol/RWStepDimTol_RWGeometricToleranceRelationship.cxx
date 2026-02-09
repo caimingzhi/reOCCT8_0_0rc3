@@ -5,12 +5,8 @@
 #include <StepDimTol_GeometricTolerance.hpp>
 #include <StepDimTol_GeometricToleranceRelationship.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWGeometricToleranceRelationship::RWStepDimTol_RWGeometricToleranceRelationship() =
   default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWGeometricToleranceRelationship::ReadStep(
   const occ::handle<StepData_StepReaderData>&                   data,
@@ -18,11 +14,9 @@ void RWStepDimTol_RWGeometricToleranceRelationship::ReadStep(
   occ::handle<Interface_Check>&                                 ach,
   const occ::handle<StepDimTol_GeometricToleranceRelationship>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "geometric_tolerance_relationship"))
     return;
-
-  // Own fields of GeometricToleranceRelationship
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
@@ -46,18 +40,13 @@ void RWStepDimTol_RWGeometricToleranceRelationship::ReadStep(
                    STANDARD_TYPE(StepDimTol_GeometricTolerance),
                    aRelatedGeometricTolerance);
 
-  // Initialize entity
   ent->Init(aName, aDescription, aRelatingGeometricTolerance, aRelatedGeometricTolerance);
 }
-
-//=================================================================================================
 
 void RWStepDimTol_RWGeometricToleranceRelationship::WriteStep(
   StepData_StepWriter&                                          SW,
   const occ::handle<StepDimTol_GeometricToleranceRelationship>& ent) const
 {
-
-  // Own fields of GeometricToleranceRelationship
 
   SW.Send(ent->Name());
 
@@ -68,14 +57,10 @@ void RWStepDimTol_RWGeometricToleranceRelationship::WriteStep(
   SW.Send(ent->RelatedGeometricTolerance());
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWGeometricToleranceRelationship::Share(
   const occ::handle<StepDimTol_GeometricToleranceRelationship>& ent,
   Interface_EntityIterator&                                     iter) const
 {
-
-  // Own fields of GeometricToleranceRelationship
 
   iter.AddItem(ent->RelatingGeometricTolerance());
 

@@ -7,11 +7,7 @@
 #include <StepRepr_RepresentationContext.hpp>
 #include <StepRepr_RepresentationItem.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWCharacterizedRepresentation::RWStepRepr_RWCharacterizedRepresentation() = default;
-
-//=================================================================================================
 
 void RWStepRepr_RWCharacterizedRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&              data,
@@ -19,19 +15,16 @@ void RWStepRepr_RWCharacterizedRepresentation::ReadStep(
   occ::handle<Interface_Check>&                            ach,
   const occ::handle<StepRepr_CharacterizedRepresentation>& ent) const
 {
-  // Number of Parameter Control
+
   if (!data->CheckNbParams(num, 4, ach, "characterized_representation"))
     return;
 
-  // name
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // description
   occ::handle<TCollection_HAsciiString> aDescription;
   data->ReadString(num, 2, "description", ach, aDescription);
 
-  // items
   occ::handle<NCollection_HArray1<occ::handle<StepRepr_RepresentationItem>>> anItems;
   occ::handle<StepRepr_RepresentationItem>                                   anItem;
   int                                                                        nsub;
@@ -51,7 +44,6 @@ void RWStepRepr_RWCharacterizedRepresentation::ReadStep(
     }
   }
 
-  // context_of_items
   occ::handle<StepRepr_RepresentationContext> aContextOfItems;
   data->ReadEntity(num,
                    4,
@@ -60,26 +52,21 @@ void RWStepRepr_RWCharacterizedRepresentation::ReadStep(
                    STANDARD_TYPE(StepRepr_RepresentationContext),
                    aContextOfItems);
 
-  // Initialization of the read entity
   ent->Init(aName, aDescription, anItems, aContextOfItems);
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWCharacterizedRepresentation::WriteStep(
   StepData_StepWriter&                                     SW,
   const occ::handle<StepRepr_CharacterizedRepresentation>& ent) const
 {
-  // name
+
   SW.Send(ent->Name());
 
-  // description
   if (!ent->Description().IsNull())
     SW.Send(ent->Description());
   else
     SW.SendUndef();
 
-  // items
   SW.OpenSub();
   for (int i = 1; i <= ent->NbItems(); i++)
   {
@@ -87,11 +74,8 @@ void RWStepRepr_RWCharacterizedRepresentation::WriteStep(
   }
   SW.CloseSub();
 
-  // context_of_items
   SW.Send(ent->ContextOfItems());
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWCharacterizedRepresentation::Share(
   const occ::handle<StepRepr_CharacterizedRepresentation>& ent,

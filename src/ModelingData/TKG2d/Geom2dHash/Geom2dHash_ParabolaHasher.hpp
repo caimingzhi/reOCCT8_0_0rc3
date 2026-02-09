@@ -5,11 +5,9 @@
 #include <Geom2dHash_AxisPlacement.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom2d_Parabola (2D parabola).
-//! Used for geometry deduplication.
 struct Geom2dHash_ParabolaHasher
 {
-  // Hashes the parabola by its position and focal length.
+
   std::size_t operator()(const occ::handle<Geom2d_Parabola>& theParabola) const noexcept
   {
     constexpr double aTolerance = 1e-12;
@@ -22,7 +20,6 @@ struct Geom2dHash_ParabolaHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two parabolas by their positions and focal lengths.
   bool operator()(const occ::handle<Geom2d_Parabola>& theParabola1,
                   const occ::handle<Geom2d_Parabola>& theParabola2) const noexcept
   {

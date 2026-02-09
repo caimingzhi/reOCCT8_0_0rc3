@@ -16,8 +16,6 @@ typedef gp_Ax2         Ax2;
 typedef gp_Pnt         Pnt;
 typedef gp_Trsf        Trsf;
 
-//=================================================================================================
-
 occ::handle<Geom_Geometry> Geom_Direction::Copy() const
 {
 
@@ -25,8 +23,6 @@ occ::handle<Geom_Geometry> Geom_Direction::Copy() const
   D = new Direction(gpVec);
   return D;
 }
-
-//=================================================================================================
 
 Geom_Direction::Geom_Direction(const double X, const double Y, const double Z)
 {

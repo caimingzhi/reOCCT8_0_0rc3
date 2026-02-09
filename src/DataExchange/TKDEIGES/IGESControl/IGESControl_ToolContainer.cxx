@@ -5,13 +5,9 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESControl_ToolContainer, IGESToBRep_ToolContainer)
 
-//=================================================================================================
-
 IGESControl_ToolContainer::IGESControl_ToolContainer()
 
   = default;
-
-//=================================================================================================
 
 occ::handle<IGESToBRep_IGESBoundary> IGESControl_ToolContainer::IGESBoundary() const
 {

@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// szv#4 S4163
 
 #include <BRep_Builder.hpp>
 #include <BRep_Tool.hpp>
@@ -23,14 +10,10 @@
 #include <TopoDS_Iterator.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 ShapeAnalysis_Shell::ShapeAnalysis_Shell()
     : myConex(false)
 {
 }
-
-//=================================================================================================
 
 void ShapeAnalysis_Shell::Clear()
 {
@@ -40,30 +23,22 @@ void ShapeAnalysis_Shell::Clear()
   myConex = false;
 }
 
-//=================================================================================================
-
 void ShapeAnalysis_Shell::LoadShells(const TopoDS_Shape& shape)
 {
   if (shape.IsNull())
     return;
 
   if (shape.ShapeType() == TopAbs_SHELL)
-    myShells.Add(shape); // szv#4:S4163:12Mar99 i =
+    myShells.Add(shape);
   else
   {
     for (TopExp_Explorer exs(shape, TopAbs_SHELL); exs.More(); exs.Next())
     {
       const TopoDS_Shape& sh = exs.Current();
-      myShells.Add(sh); // szv#4:S4163:12Mar99 i =
+      myShells.Add(sh);
     }
   }
 }
-
-//  CheckOrientedShells : alimente BadEdges et FreeEdges
-//  BadEdges : edges presentes plus d une fois dans une meme orientation
-//  FreeEdges : edges presentes une seule fois
-//  On utilise pour cela une fonction auxiliaire : CheckEdges
-//    Qui alimente 2 maps auxiliaires : les edges directes et les inverses
 
 static bool CheckEdges(const TopoDS_Shape&                                            shape,
                        NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& bads,
@@ -89,7 +64,7 @@ static bool CheckEdges(const TopoDS_Shape&                                      
 
     if (shape.Orientation() == TopAbs_FORWARD)
     {
-      // szv#4:S4163:12Mar99 optimized
+
       if (dirs.FindIndex(shape) == 0)
         dirs.Add(shape);
       else
@@ -100,7 +75,7 @@ static bool CheckEdges(const TopoDS_Shape&                                      
     }
     if (shape.Orientation() == TopAbs_REVERSED)
     {
-      // szv#4:S4163:12Mar99 optimized
+
       if (revs.FindIndex(shape) == 0)
         revs.Add(shape);
       else
@@ -113,14 +88,11 @@ static bool CheckEdges(const TopoDS_Shape&                                      
     {
       if (ints.FindIndex(shape) == 0)
         ints.Add(shape);
-      // else { bads.Add (shape); res = true; }
     }
   }
 
   return res;
 }
-
-//=================================================================================================
 
 bool ShapeAnalysis_Shell::CheckOrientedShells(const TopoDS_Shape& shape,
                                               const bool          alsofree,
@@ -135,20 +107,17 @@ bool ShapeAnalysis_Shell::CheckOrientedShells(const TopoDS_Shape& shape,
   for (TopExp_Explorer exs(shape, TopAbs_SHELL); exs.More(); exs.Next())
   {
     const TopoDS_Shape& sh = exs.Current();
-    // szv#4:S4163:12Mar99 optimized
+
     if (CheckEdges(sh, myBad, dirs, revs, ints))
       if (myShells.Add(sh))
         res = true;
   }
 
-  //  Resteraient a faire les FreeEdges
   if (!alsofree)
     return res;
 
-  //  Free Edges. Ce sont les edges d une map pas dans l autre
-  //  et lycee de Versailles  (les maps dirs et revs)
   int nb = dirs.Extent();
-  int i; // svv Jan11 2000 : porting on DEC
+  int i;
   for (i = 1; i <= nb; i++)
   {
     const TopoDS_Shape& sh = dirs.FindKey(i);
@@ -209,8 +178,6 @@ bool ShapeAnalysis_Shell::CheckOrientedShells(const TopoDS_Shape& shape,
   return res;
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_Shell::IsLoaded(const TopoDS_Shape& shape) const
 {
   if (shape.IsNull())
@@ -218,28 +185,20 @@ bool ShapeAnalysis_Shell::IsLoaded(const TopoDS_Shape& shape) const
   return myShells.Contains(shape);
 }
 
-//=================================================================================================
-
 int ShapeAnalysis_Shell::NbLoaded() const
 {
   return myShells.Extent();
 }
-
-//=================================================================================================
 
 TopoDS_Shape ShapeAnalysis_Shell::Loaded(const int num) const
 {
   return myShells.FindKey(num);
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_Shell::HasBadEdges() const
 {
   return (myBad.Extent() > 0);
 }
-
-//=================================================================================================
 
 TopoDS_Compound ShapeAnalysis_Shell::BadEdges() const
 {
@@ -252,14 +211,10 @@ TopoDS_Compound ShapeAnalysis_Shell::BadEdges() const
   return C;
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_Shell::HasFreeEdges() const
 {
   return (myFree.Extent() > 0);
 }
-
-//=================================================================================================
 
 TopoDS_Compound ShapeAnalysis_Shell::FreeEdges() const
 {
@@ -271,8 +226,6 @@ TopoDS_Compound ShapeAnalysis_Shell::FreeEdges() const
     B.Add(C, myFree.FindKey(i));
   return C;
 }
-
-//=================================================================================================
 
 bool ShapeAnalysis_Shell::HasConnectedEdges() const
 {

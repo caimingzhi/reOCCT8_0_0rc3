@@ -132,20 +132,19 @@ void AppParCurves_BSpGradient::Perform(
   const int                                                              NbIterations)
 {
 
-  //  bool grad = true;
   int    i, j, k, i2, l;
   double UF, DU, Fval = 0.0, FU, DFU;
   int    nbP3d   = ToolLine::NbP3d(SSP);
   int    nbP2d   = ToolLine::NbP2d(SSP);
   int    mynbP3d = nbP3d, mynbP2d = nbP2d;
   int    nbP = nbP3d + nbP2d;
-  //  gp_Pnt Pt, P1, P2;
+
   gp_Pnt Pt;
-  //  gp_Pnt2d Pt2d, P12d, P22d;
+
   gp_Pnt2d Pt2d;
-  //  gp_Vec V1, V2, MyV;
+
   gp_Vec V1, MyV;
-  //  gp_Vec2d V12d, V22d, MyV2d;
+
   gp_Vec2d V12d, MyV2d;
   Done = false;
 
@@ -157,11 +156,6 @@ void AppParCurves_BSpGradient::Perform(
   NCollection_Array1<gp_Pnt2d> TabP2d(1, mynbP2d);
   NCollection_Array1<gp_Vec>   TabV(1, mynbP3d);
   NCollection_Array1<gp_Vec2d> TabV2d(1, mynbP2d);
-
-  // Calcul de la fonction F= somme(||C(ui)-Ptli||2):
-  // Appel a une fonction heritant de MultipleVarFunctionWithGradient
-  // pour calculer F et grad_F.
-  // ================================================================
 
   int nbpoles = -Deg - 1;
   for (i = Mults.Lower(); i <= Mults.Upper(); i++)
@@ -213,8 +207,6 @@ void AppParCurves_BSpGradient::Perform(
   if (MError3d > Tol3d || MError2d > Tol2d)
   {
 
-    // Stockage des Poles des courbes pour projeter:
-    // ============================================
     i2 = 0;
     for (k = 1; k <= nbP3d; k++)
     {
@@ -231,10 +223,6 @@ void AppParCurves_BSpGradient::Perform(
         ThePoles2d(j + i2) = TabPole2d(j);
       i2 += nbpoles;
     }
-
-    //  Une iteration rapide de projection est faite par la methode de
-    //  Rogers & Fog 89, methode equivalente a Hoschek 88 qui ne necessite pas
-    //  le calcul de D2.
 
     const math_Matrix&        A     = MyF.FunctionMatrix();
     const math_Matrix&        DA    = MyF.DerivativeFunctionMatrix();
@@ -331,8 +319,7 @@ void AppParCurves_BSpGradient::Perform(
   }
   else if (NbIterations != 0)
   {
-    // NbIterations de gradient conjugue:
-    // =================================
+
     double                        Eps = 1.e-07;
     AppParCurves_BSpGradient_BFGS FResol(MyF, Parameters, Tol3d, Tol2d, Eps, NbIterations);
   }
@@ -343,7 +330,7 @@ void AppParCurves_BSpGradient::Perform(
   for (j = FirstPoint; j <= LastPoint; j++)
   {
     Parameters(j) = MyF.NewParameters()(j);
-    // Recherche des erreurs maxi et moyenne a un index donne:
+
     for (k = 1; k <= nbP; k++)
     {
       ParError(j) = std::max(ParError(j), MyF.Error(j, k));

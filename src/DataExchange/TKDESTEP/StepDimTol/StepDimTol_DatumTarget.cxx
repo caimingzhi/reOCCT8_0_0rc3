@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_DatumTarget, StepRepr_ShapeAspect)
 
-//=================================================================================================
-
 StepDimTol_DatumTarget::StepDimTol_DatumTarget() = default;
-
-//=================================================================================================
 
 void StepDimTol_DatumTarget::Init(
   const occ::handle<TCollection_HAsciiString>&        theShapeAspect_Name,
@@ -24,14 +20,10 @@ void StepDimTol_DatumTarget::Init(
   myTargetId = theTargetId;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> StepDimTol_DatumTarget::TargetId() const
 {
   return myTargetId;
 }
-
-//=================================================================================================
 
 void StepDimTol_DatumTarget::SetTargetId(const occ::handle<TCollection_HAsciiString>& theTargetId)
 {

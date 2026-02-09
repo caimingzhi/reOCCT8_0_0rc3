@@ -16,10 +16,8 @@ class StdLPersistent_HArray2
   class base : public StdObjMgt_Persistent
   {
   public:
-    //! Read persistent data from a file.
     Standard_EXPORT void Read(StdObjMgt_ReadData& theReadData) override;
 
-    //! Read persistent data from a file.
     Standard_EXPORT void Write(StdObjMgt_WriteData& theWriteData) const override;
 
   protected:
@@ -46,7 +44,6 @@ protected:
     typedef occ::handle<ArrayClass> ArrayHandle;
 
   public:
-    //! Get the array.
     const occ::handle<ArrayClass>& Array() const { return myArray; }
 
   protected:

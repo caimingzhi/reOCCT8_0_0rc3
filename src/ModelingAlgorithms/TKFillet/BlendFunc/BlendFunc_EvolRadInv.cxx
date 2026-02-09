@@ -333,8 +333,6 @@ bool BlendFunc_EvolRadInv::Values(const math_Vector& X, math_Vector& F, math_Mat
   F(3) = resul1.Y();
   F(4) = resul1.Z();
 
-  // Derivee par rapport a u1
-
   temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
   grosterme = ncrossns1.Dot(nplan.Crossed(temp)) / norm1 / norm1;
   resul1.SetLinearForm(-sg1 * ray / norm1 * (grosterme * ndotns1 - nplan.Dot(temp)),
@@ -344,8 +342,6 @@ bool BlendFunc_EvolRadInv::Values(const math_Vector& X, math_Vector& F, math_Mat
                        -sg1 * ray / norm1,
                        temp,
                        d1u1);
-
-  // Derivee par rapport a v1
 
   temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
   grosterme = ncrossns1.Dot(nplan.Crossed(temp)) / norm1 / norm1;
@@ -373,8 +369,6 @@ bool BlendFunc_EvolRadInv::Values(const math_Vector& X, math_Vector& F, math_Mat
     D(3, 4) = resul2.Y();
     D(4, 4) = resul2.Z();
   }
-
-  // derivee par rapport a w (parametre sur ligne guide)
 
   grosterme = ncrossns1.Dot(dnplan.Crossed(ns1)) / norm1 / norm1;
   resul1.SetLinearForm(-sg1 / norm1 * (grosterme * ndotns1 - dnplan.Dot(ns1)),
@@ -407,7 +401,6 @@ bool BlendFunc_EvolRadInv::Values(const math_Vector& X, math_Vector& F, math_Mat
   D(3, 2) += dray * temp.Y();
   D(4, 2) += dray * temp.Z();
 
-  // Derivee par rapport a u2
   temp      = d2u2.Crossed(d1v2).Added(d1u2.Crossed(d2uv2));
   grosterme = ncrossns2.Dot(nplan.Crossed(temp)) / norm2 / norm2;
   resul1.SetLinearForm(sg2 * ray / norm2 * (grosterme * ndotns2 - nplan.Dot(temp)),
@@ -418,7 +411,6 @@ bool BlendFunc_EvolRadInv::Values(const math_Vector& X, math_Vector& F, math_Mat
                        temp);
   resul1.Subtract(d1u2);
 
-  // Derivee par rapport a v2
   temp      = d2uv2.Crossed(d1v2).Added(d1u2.Crossed(d2v2));
   grosterme = ncrossns2.Dot(nplan.Crossed(temp)) / norm2 / norm2;
   resul2.SetLinearForm(sg2 * ray / norm2 * (grosterme * ndotns2 - nplan.Dot(temp)),

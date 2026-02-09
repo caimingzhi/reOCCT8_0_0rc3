@@ -23,8 +23,7 @@ IGESBasic_Group::IGESBasic_Group(const int nb)
 void IGESBasic_Group::Init(
   const occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>& allEntities)
 {
-  // ptv and rln September 14, 2000 BUC60743
-  // Protection against empty groups
+
   if (!allEntities.IsNull() && (allEntities->Lower() != 1))
     throw Standard_DimensionMismatch("IGESBasic_Group : Init");
   theEntities = allEntities;

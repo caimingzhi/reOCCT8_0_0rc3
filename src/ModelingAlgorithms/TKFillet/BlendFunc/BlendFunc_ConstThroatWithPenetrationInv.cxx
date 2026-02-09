@@ -3,8 +3,6 @@
 #include <BlendFunc_ConstThroatWithPenetrationInv.hpp>
 #include <math_Matrix.hpp>
 
-//=================================================================================================
-
 BlendFunc_ConstThroatWithPenetrationInv::BlendFunc_ConstThroatWithPenetrationInv(
   const occ::handle<Adaptor3d_Surface>& S1,
   const occ::handle<Adaptor3d_Surface>& S2,
@@ -12,8 +10,6 @@ BlendFunc_ConstThroatWithPenetrationInv::BlendFunc_ConstThroatWithPenetrationInv
     : BlendFunc_ConstThroatInv(S1, S2, C)
 {
 }
-
-//=================================================================================================
 
 bool BlendFunc_ConstThroatWithPenetrationInv::IsSolution(const math_Vector& Sol, const double Tol)
 {
@@ -23,8 +19,6 @@ bool BlendFunc_ConstThroatWithPenetrationInv::IsSolution(const math_Vector& Sol,
   return std::abs(valsol(1)) <= Tol && std::abs(valsol(2)) <= Tol
          && std::abs(valsol(3)) <= Tol * Tol && std::abs(valsol(4)) <= Tol;
 }
-
-//=================================================================================================
 
 bool BlendFunc_ConstThroatWithPenetrationInv::Value(const math_Vector& X, math_Vector& F)
 {
@@ -72,21 +66,17 @@ bool BlendFunc_ConstThroatWithPenetrationInv::Value(const math_Vector& X, math_V
   return true;
 }
 
-//=================================================================================================
-
 bool BlendFunc_ConstThroatWithPenetrationInv::Derivatives(const math_Vector& X, math_Matrix& D)
 {
-  // int i, j;
+
   gp_Pnt2d p2d;
-  gp_Vec2d v2d; //, df1, df2;
-  // gp_Pnt pts, ptgui;
-  gp_Vec      dnplan, temp, temp1, temp2, temp3; //, d1u, d1v, nplan;
-  math_Vector XX(1, 4);                          // x1(1,2), x2(1,2);
-  // math_Matrix d1(1,2,1,2), d2(1,2,1,2);
+  gp_Vec2d v2d;
+
+  gp_Vec      dnplan, temp, temp1, temp2, temp3;
+  math_Vector XX(1, 4);
 
   csurf->D1(X(1), p2d, v2d);
-  // corde1.SetParam(X(2));
-  // corde2.SetParam(X(2));
+
   param = X(2);
   curv->D2(param, ptgui, d1gui, d2gui);
   normtg = d1gui.Magnitude();
@@ -99,8 +89,6 @@ bool BlendFunc_ConstThroatWithPenetrationInv::Derivatives(const math_Vector& X, 
   temp2.SetXYZ(pts2.XYZ() - ptgui.XYZ());
   temp3.SetXYZ(pts2.XYZ() - pts1.XYZ());
 
-  // x1(1) = p2d.X(); x1(2) = p2d.Y();
-  // x2(1) = X(3); x2(2) = X(4);
   if (first)
   {
     XX(1) = p2d.X();
@@ -121,16 +109,14 @@ bool BlendFunc_ConstThroatWithPenetrationInv::Derivatives(const math_Vector& X, 
 
   if (first)
   {
-    // p2d = pts est sur surf1
-    // ptgui = corde1.PointOnGuide();
-    // nplan = corde1.NPlan();
+
     temp.SetLinearForm(v2d.X(), d1u1, v2d.Y(), d1v1);
 
     D(1, 1) = nplan.Dot(temp);
     D(2, 1) = 0.;
-    // D(3,1) = 2*gp_Vec(ptgui,pts1).Dot(temp);
+
     D(3, 1) = 2 * temp1.Dot(temp);
-    // D(4,1) = temp.Dot(gp_Vec(pts1,pts2)) - temp.Dot(gp_Vec(ptgui,pts1));
+
     D(4, 1) = temp.Dot(temp3) - temp.Dot(temp1);
 
     D(1, 3) = 0.;
@@ -139,46 +125,40 @@ bool BlendFunc_ConstThroatWithPenetrationInv::Derivatives(const math_Vector& X, 
     D(2, 4) = nplan.Dot(d1v2);
     D(3, 3) = 0.;
     D(3, 4) = 0.;
-    // D(4,3) = gp_Vec(ptgui,pts1).Dot(d1u2);
-    D(4, 3) = temp1.Dot(d1u2);
-    // D(4,4) = gp_Vec(ptgui,pts1).Dot(d1v2);
-    D(4, 4) = temp1.Dot(d1v2);
 
-    // surf1->D1(x1(1),x1(2),pts,d1u,d1v);
+    D(4, 3) = temp1.Dot(d1u2);
+
+    D(4, 4) = temp1.Dot(d1v2);
   }
   else
   {
-    //  p2d = pts est sur surf2
-    // ptgui = corde2.PointOnGuide();
-    // nplan = corde2.NPlan();
+
     temp.SetLinearForm(v2d.X(), d1u2, v2d.Y(), d1v2);
 
     D(1, 1) = 0.;
     D(2, 1) = nplan.Dot(temp);
     D(3, 1) = 0.;
-    // D(4,1) = gp_Vec(ptgui,pts1).Dot(temp);
+
     D(4, 1) = temp1.Dot(temp);
 
     D(1, 3) = nplan.Dot(d1u1);
     D(1, 4) = nplan.Dot(d1v1);
     D(2, 3) = 0.;
     D(2, 4) = 0.;
-    // D(3,3) = 2.*gp_Vec(ptgui,pts1).Dot(d1u1);
+
     D(3, 3) = 2. * temp1.Dot(d1u1);
-    // D(3,4) = 2.*gp_Vec(ptgui,pts1).Dot(d1v1);
+
     D(3, 4) = 2. * temp1.Dot(d1v1);
-    // D(4,3) = d1u1.Dot(gp_Vec(pts1,pts2)) - d1u1.Dot(gp_Vec(ptgui,pts1));
+
     D(4, 3) = d1u1.Dot(temp3) - d1u1.Dot(temp1);
     D(4, 4) = d1v1.Dot(temp3) - d1v1.Dot(temp1);
-
-    // surf2->D1(x1(1),x1(2),pts,d1u,d1v);
   }
 
   D(1, 2) = dnplan.Dot(temp1) - nplan.Dot(d1gui);
   D(2, 2) = dnplan.Dot(temp2) - nplan.Dot(d1gui);
-  // D(3,2) = -2.*gp_Vec(ptgui,pts1).Dot(d1gui);
+
   D(3, 2) = -2. * d1gui.Dot(temp1);
-  // D(4,2) = -(gp_Vec(pts1,pts2).Dot(d1gui));
+
   D(4, 2) = -d1gui.Dot(temp3);
 
   return true;

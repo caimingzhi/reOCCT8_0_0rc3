@@ -14,8 +14,6 @@ IMPLEMENT_DOMSTRING(XCoordString, "x")
 IMPLEMENT_DOMSTRING(YCoordString, "y")
 IMPLEMENT_DOMSTRING(ZCoordString, "z")
 
-//=================================================================================================
-
 XmlMNaming_Shape1::XmlMNaming_Shape1(XmlObjMgt_Document& theDoc)
     : myTShapeID(0),
       myLocID(0),
@@ -23,8 +21,6 @@ XmlMNaming_Shape1::XmlMNaming_Shape1(XmlObjMgt_Document& theDoc)
 {
   myElement = theDoc.createElement(XmlObjMgt_DOMString("shape"));
 }
-
-//=================================================================================================
 
 XmlMNaming_Shape1::XmlMNaming_Shape1(const XmlObjMgt_Element& theEl)
     : myElement(theEl),
@@ -62,42 +58,30 @@ XmlMNaming_Shape1::XmlMNaming_Shape1(const XmlObjMgt_Element& theEl)
   }
 }
 
-//=================================================================================================
-
 const XmlObjMgt_Element& XmlMNaming_Shape1::Element() const
 {
   return myElement;
 }
-
-//=================================================================================================
 
 XmlObjMgt_Element& XmlMNaming_Shape1::Element()
 {
   return myElement;
 }
 
-//=================================================================================================
-
 int XmlMNaming_Shape1::TShapeId() const
 {
   return myTShapeID;
 }
-
-//=================================================================================================
 
 int XmlMNaming_Shape1::LocId() const
 {
   return myLocID;
 }
 
-//=================================================================================================
-
 TopAbs_Orientation XmlMNaming_Shape1::Orientation() const
 {
   return myOrientation;
 }
-
-//=================================================================================================
 
 void XmlMNaming_Shape1::SetShape(const int                theID,
                                  const int                theLocID,
@@ -131,8 +115,6 @@ void XmlMNaming_Shape1::SetShape(const int                theID,
   if (theLocID > 0)
     Element().setAttribute(::LocationString(), theLocID);
 }
-
-//=================================================================================================
 
 void XmlMNaming_Shape1::SetVertex(const TopoDS_Shape& theVertex)
 {

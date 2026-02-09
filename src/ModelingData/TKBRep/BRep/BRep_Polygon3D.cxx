@@ -7,44 +7,32 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_Polygon3D, BRep_CurveRepresentation)
 
-//=================================================================================================
-
 BRep_Polygon3D::BRep_Polygon3D(const occ::handle<Poly_Polygon3D>& P, const TopLoc_Location& L)
     : BRep_CurveRepresentation(L),
       myPolygon3D(P)
 {
 }
 
-//=================================================================================================
-
 bool BRep_Polygon3D::IsPolygon3D() const
 {
   return true;
 }
-
-//=================================================================================================
 
 const occ::handle<Poly_Polygon3D>& BRep_Polygon3D::Polygon3D() const
 {
   return myPolygon3D;
 }
 
-//=================================================================================================
-
 void BRep_Polygon3D::Polygon3D(const occ::handle<Poly_Polygon3D>& P)
 {
   myPolygon3D = P;
 }
-
-//=================================================================================================
 
 occ::handle<BRep_CurveRepresentation> BRep_Polygon3D::Copy() const
 {
   occ::handle<BRep_Polygon3D> P = new BRep_Polygon3D(myPolygon3D, Location());
   return P;
 }
-
-//=================================================================================================
 
 void BRep_Polygon3D::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

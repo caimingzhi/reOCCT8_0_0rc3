@@ -37,13 +37,7 @@ private:
   occ::handle<MAT_Bisector>                  theitem;
 };
 
-//=================================================================================================
-// Inline implementations
-//=================================================================================================
-
 inline MAT_TListNodeOfListOfBisector::MAT_TListNodeOfListOfBisector() = default;
-
-//=================================================================================================
 
 inline MAT_TListNodeOfListOfBisector::MAT_TListNodeOfListOfBisector(
   const occ::handle<MAT_Bisector>& anitem)
@@ -51,43 +45,31 @@ inline MAT_TListNodeOfListOfBisector::MAT_TListNodeOfListOfBisector(
   theitem = anitem;
 }
 
-//=================================================================================================
-
 inline occ::handle<MAT_Bisector> MAT_TListNodeOfListOfBisector::GetItem() const
 {
   return theitem;
 }
-
-//=================================================================================================
 
 inline occ::handle<MAT_TListNodeOfListOfBisector> MAT_TListNodeOfListOfBisector::Next() const
 {
   return thenext;
 }
 
-//=================================================================================================
-
 inline occ::handle<MAT_TListNodeOfListOfBisector> MAT_TListNodeOfListOfBisector::Previous() const
 {
   return theprevious;
 }
-
-//=================================================================================================
 
 inline void MAT_TListNodeOfListOfBisector::SetItem(const occ::handle<MAT_Bisector>& anitem)
 {
   theitem = anitem;
 }
 
-//=================================================================================================
-
 inline void MAT_TListNodeOfListOfBisector::Next(
   const occ::handle<MAT_TListNodeOfListOfBisector>& atlistnode)
 {
   thenext = atlistnode;
 }
-
-//=================================================================================================
 
 inline void MAT_TListNodeOfListOfBisector::Previous(
   const occ::handle<MAT_TListNodeOfListOfBisector>& atlistnode)

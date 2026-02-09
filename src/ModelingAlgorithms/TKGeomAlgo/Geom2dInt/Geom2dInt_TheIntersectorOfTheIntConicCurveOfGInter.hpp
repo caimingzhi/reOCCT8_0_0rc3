@@ -19,14 +19,8 @@ class Geom2dInt_TheIntersectorOfTheIntConicCurveOfGInter : public IntRes2d_Inter
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor.
   Standard_EXPORT Geom2dInt_TheIntersectorOfTheIntConicCurveOfGInter();
 
-  //! Intersection between an implicit curve and
-  //! a parametrised curve.
-  //! The exception ConstructionError is raised if the domain
-  //! of the parametrised curve does not verify HasFirstPoint
-  //! and HasLastPoint return True.
   Standard_EXPORT Geom2dInt_TheIntersectorOfTheIntConicCurveOfGInter(
     const IntCurve_IConicTool& ITool,
     const IntRes2d_Domain&     Dom1,
@@ -35,11 +29,6 @@ public:
     const double               TolConf,
     const double               Tol);
 
-  //! Intersection between an implicit curve and
-  //! a parametrised curve.
-  //! The exception ConstructionError is raised if the domain
-  //! of the parametrised curve does not verify HasFirstPoint
-  //! and HasLastPoint return True.
   Standard_EXPORT void Perform(const IntCurve_IConicTool& ITool,
                                const IntRes2d_Domain&     Dom1,
                                const Adaptor2d_Curve2d&   PCurve,

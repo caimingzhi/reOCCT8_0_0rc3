@@ -8,8 +8,6 @@
 #include <TopOpeBRepDS_Explorer.hpp>
 #include <TopOpeBRepDS_HDataStructure.hpp>
 
-//=================================================================================================
-
 TopOpeBRepDS_Explorer::TopOpeBRepDS_Explorer()
     : myT(TopAbs_SHAPE),
       myI(1),
@@ -19,16 +17,12 @@ TopOpeBRepDS_Explorer::TopOpeBRepDS_Explorer()
 {
 }
 
-//=================================================================================================
-
 TopOpeBRepDS_Explorer::TopOpeBRepDS_Explorer(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
                                              const TopAbs_ShapeEnum                          T,
                                              const bool                                      FK)
 {
   Init(HDS, T, FK);
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_Explorer::Init(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
                                  const TopAbs_ShapeEnum                          T,
@@ -47,14 +41,10 @@ void TopOpeBRepDS_Explorer::Init(const occ::handle<TopOpeBRepDS_HDataStructure>&
   Find();
 }
 
-//=================================================================================================
-
 TopAbs_ShapeEnum TopOpeBRepDS_Explorer::Type() const
 {
   return myT;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_Explorer::Find()
 {
@@ -78,14 +68,10 @@ void TopOpeBRepDS_Explorer::Find()
   myB = found;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_Explorer::More() const
 {
   return myB;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_Explorer::Next()
 {
@@ -94,23 +80,17 @@ void TopOpeBRepDS_Explorer::Next()
   Find();
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRepDS_Explorer::Current() const
 {
   Standard_NoSuchObject_Raise_if(!More(), "TopOpeBRepDS_Explorer::Current");
   return myHDS->Shape(myI);
 }
 
-//=================================================================================================
-
 int TopOpeBRepDS_Explorer::Index() const
 {
   Standard_NoSuchObject_Raise_if(!More(), "TopOpeBRepDS_Explorer::Index");
   return myI;
 }
-
-//=================================================================================================
 
 const TopoDS_Face& TopOpeBRepDS_Explorer::Face() const
 {
@@ -120,8 +100,6 @@ const TopoDS_Face& TopOpeBRepDS_Explorer::Face() const
   return f;
 }
 
-//=================================================================================================
-
 const TopoDS_Edge& TopOpeBRepDS_Explorer::Edge() const
 {
   Standard_NoSuchObject_Raise_if(!More(), "TopOpeBRepDS_Explorer::Edge");
@@ -129,8 +107,6 @@ const TopoDS_Edge& TopOpeBRepDS_Explorer::Edge() const
   const TopoDS_Edge&  e = TopoDS::Edge(s);
   return e;
 }
-
-//=================================================================================================
 
 const TopoDS_Vertex& TopOpeBRepDS_Explorer::Vertex() const
 {

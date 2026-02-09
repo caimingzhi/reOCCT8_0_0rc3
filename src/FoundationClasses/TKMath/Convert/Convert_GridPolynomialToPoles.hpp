@@ -11,23 +11,11 @@
 #include <NCollection_Array2.hpp>
 #include <NCollection_HArray2.hpp>
 
-//! Convert a grid of Polynomial Surfaces
-//! that are have continuity CM to an
-//! Bspline Surface that has continuity
-//! CM
 class Convert_GridPolynomialToPoles
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! To only one polynomial Surface.
-  //! The Length of <PolynomialUIntervals> and <PolynomialVIntervals>
-  //! have to be 2.
-  //! This values defined the parametric domain of the Polynomial Equation.
-  //!
-  //! Coefficients:
-  //! The <Coefficients> have to be formatted than an "C array"
-  //! [MaxUDegree+1] [MaxVDegree+1] [3]
   Standard_EXPORT Convert_GridPolynomialToPoles(
     const int                                       MaxUDegree,
     const int                                       MaxVDegree,
@@ -36,20 +24,6 @@ public:
     const occ::handle<NCollection_HArray1<double>>& PolynomialUIntervals,
     const occ::handle<NCollection_HArray1<double>>& PolynomialVIntervals);
 
-  //! To one grid of polynomial Surface.
-  //! Warning!
-  //! Continuity in each parametric direction can be at MOST the
-  //! maximum degree of the polynomial functions.
-  //!
-  //! <TrueUIntervals>, <TrueVIntervals> :
-  //! this is the true parameterisation for the composite surface
-  //!
-  //! Coefficients:
-  //! The Coefficients have to be formatted than an "C array"
-  //! [NbVSurfaces] [NBUSurfaces] [MaxUDegree+1] [MaxVDegree+1] [3]
-  //! raises DomainError if <NumCoeffPerSurface> is not a
-  //! [1, NbVSurfaces*NbUSurfaces, 1,2] array.
-  //! if <Coefficients> is not a
   Standard_EXPORT Convert_GridPolynomialToPoles(
     const int                                       NbUSurfaces,
     const int                                       NBVSurfaces,
@@ -79,7 +53,6 @@ public:
 
   Standard_EXPORT int NbVPoles() const;
 
-  //! returns the poles of the BSpline Surface
   Standard_EXPORT const occ::handle<NCollection_HArray2<gp_Pnt>>& Poles() const;
 
   Standard_EXPORT int UDegree() const;
@@ -90,16 +63,12 @@ public:
 
   Standard_EXPORT int NbVKnots() const;
 
-  //! Knots in the U direction
   Standard_EXPORT const occ::handle<NCollection_HArray1<double>>& UKnots() const;
 
-  //! Knots in the V direction
   Standard_EXPORT const occ::handle<NCollection_HArray1<double>>& VKnots() const;
 
-  //! Multiplicities of the knots in the U direction
   Standard_EXPORT const occ::handle<NCollection_HArray1<int>>& UMultiplicities() const;
 
-  //! Multiplicities of the knots in the V direction
   Standard_EXPORT const occ::handle<NCollection_HArray1<int>>& VMultiplicities() const;
 
   Standard_EXPORT bool IsDone() const;

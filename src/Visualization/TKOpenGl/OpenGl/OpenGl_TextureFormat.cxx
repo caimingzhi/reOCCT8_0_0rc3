@@ -1,28 +1,15 @@
-// Copyright (c) 2017-2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OpenGl_TextureFormat.hpp>
 
 #include <Image_SupportedFormats.hpp>
 #include <OpenGl_Context.hpp>
 
-//=================================================================================================
-
 TCollection_AsciiString OpenGl_TextureFormat::FormatFormat(GLint theInternalFormat)
 {
   switch (theInternalFormat)
   {
-    // RED variations (GL_RED, OpenGL 3.0+)
+
     case GL_RED:
       return "GL_RED";
     case GL_R8:
@@ -30,14 +17,14 @@ TCollection_AsciiString OpenGl_TextureFormat::FormatFormat(GLint theInternalForm
     case 0x822A:
       return "GL_R16";
     case GL_R16F:
-      return "GL_R16F"; // half-float
+      return "GL_R16F";
     case GL_R32F:
-      return "GL_R32F"; // float
+      return "GL_R32F";
     case GL_R32I:
       return "GL_R32I";
     case GL_RED_INTEGER:
       return "GL_RED_INTEGER";
-    //
+
     case GL_RG:
       return "GL_RG";
     case GL_RG8:
@@ -52,7 +39,7 @@ TCollection_AsciiString OpenGl_TextureFormat::FormatFormat(GLint theInternalForm
       return "GL_RG32I";
     case GL_RG_INTEGER:
       return "GL_RG_INTEGER";
-    // RGB variations
+
     case GL_RGB:
       return "GL_RGB";
     case 0x804F:
@@ -72,12 +59,12 @@ TCollection_AsciiString OpenGl_TextureFormat::FormatFormat(GLint theInternalForm
     case 0x8054:
       return "GL_RGB16";
     case GL_RGB16F:
-      return "GL_RGB16F"; // half-float
+      return "GL_RGB16F";
     case GL_RGB32F:
-      return "GL_RGB32F"; // float
+      return "GL_RGB32F";
     case GL_RGB32I:
       return "GL_RGB32I";
-    // RGBA variations
+
     case GL_RGBA:
       return "GL_RGBA";
     case GL_RGBA8:
@@ -93,17 +80,17 @@ TCollection_AsciiString OpenGl_TextureFormat::FormatFormat(GLint theInternalForm
     case 0x805B:
       return "GL_RGBA16";
     case GL_RGBA16F:
-      return "GL_RGBA16F"; // half-float
+      return "GL_RGBA16F";
     case GL_RGBA32F:
-      return "GL_RGBA32F"; // float
+      return "GL_RGBA32F";
     case GL_RGBA32I:
       return "GL_RGBA32I";
-    //
+
     case 0x80E0:
       return "GL_BGR";
     case GL_BGRA_EXT:
       return "GL_BGRA";
-    // ALPHA variations (deprecated)
+
     case GL_ALPHA:
       return "GL_ALPHA";
     case 0x803C:
@@ -116,7 +103,7 @@ TCollection_AsciiString OpenGl_TextureFormat::FormatFormat(GLint theInternalForm
       return "GL_LUMINANCE16";
     case GL_LUMINANCE_ALPHA:
       return "GL_LUMINANCE_ALPHA";
-    //
+
     case GL_DEPTH_COMPONENT:
       return "GL_DEPTH_COMPONENT";
     case GL_DEPTH_COMPONENT16:
@@ -131,7 +118,7 @@ TCollection_AsciiString OpenGl_TextureFormat::FormatFormat(GLint theInternalForm
       return "GL_DEPTH24_STENCIL8";
     case GL_DEPTH32F_STENCIL8:
       return "GL_DEPTH32F_STENCIL8";
-    //
+
     case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
       return "GL_COMPRESSED_RGB_S3TC_DXT1_EXT";
     case GL_COMPRESSED_SRGB_S3TC_DXT1_EXT:
@@ -151,8 +138,6 @@ TCollection_AsciiString OpenGl_TextureFormat::FormatFormat(GLint theInternalForm
   }
   return OpenGl_Context::FormatGlEnumHex(theInternalFormat);
 }
-
-//=================================================================================================
 
 TCollection_AsciiString OpenGl_TextureFormat::FormatDataType(GLint theDataType)
 {
@@ -181,8 +166,6 @@ TCollection_AsciiString OpenGl_TextureFormat::FormatDataType(GLint theDataType)
   }
   return OpenGl_Context::FormatGlEnumHex(theDataType);
 }
-
-//=================================================================================================
 
 OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_Context>& theCtx,
                                                       Image_Format                       theFormat,
@@ -257,7 +240,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       }
       aFormat.SetNbComponents(4);
       aFormat.SetInternalFormat(theCtx->arbTexFloat ? GL_RGBA32F : GL_RGBA8);
-      aFormat.SetPixelFormat(GL_BGRA_EXT); // equals to GL_BGRA
+      aFormat.SetPixelFormat(GL_BGRA_EXT);
       aFormat.SetDataType(GL_FLOAT);
       return aFormat;
     }
@@ -278,7 +261,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
 
       aFormat.SetNbComponents(3);
       aFormat.SetInternalFormat(theCtx->arbTexFloat ? GL_RGB32F : GL_RGB8);
-      aFormat.SetPixelFormat(GL_BGR); // equals to GL_BGR_EXT
+      aFormat.SetPixelFormat(GL_BGR);
       aFormat.SetDataType(GL_FLOAT);
       return aFormat;
     }
@@ -357,7 +340,6 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       {
         if (theIsColorMap && theCtx->ToRenderSRGB())
         {
-          // GL_SRGB8_ALPHA8 with texture swizzling would be better
         }
         if (!theCtx->extBgra)
         {
@@ -366,7 +348,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
         aFormat.SetNbComponents(4);
         aFormat.SetInternalFormat(GL_BGRA_EXT);
       }
-      aFormat.SetPixelFormat(GL_BGRA_EXT); // equals to GL_BGRA
+      aFormat.SetPixelFormat(GL_BGRA_EXT);
       aFormat.SetDataType(GL_UNSIGNED_BYTE);
       return aFormat;
     }
@@ -374,7 +356,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
     {
       if (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
       {
-        // ask driver to convert data to RGB8 to save memory
+
         aFormat.SetNbComponents(3);
         aFormat.SetInternalFormat(GL_RGB8);
         aFormat.SetPixelFormat(GL_RGBA);
@@ -386,7 +368,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       }
       else
       {
-        // conversion is not supported
+
         aFormat.SetNbComponents(4);
         aFormat.SetInternalFormat(GL_RGBA8);
         aFormat.SetPixelFormat(GL_RGBA);
@@ -421,7 +403,6 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       {
         if (theIsColorMap && theCtx->ToRenderSRGB())
         {
-          // GL_SRGB8_ALPHA8 with texture swizzling would be better
         }
         if (!theCtx->extBgra)
         {
@@ -430,7 +411,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
         aFormat.SetNbComponents(4);
         aFormat.SetInternalFormat(GL_BGRA_EXT);
       }
-      aFormat.SetPixelFormat(GL_BGRA_EXT); // equals to GL_BGRA
+      aFormat.SetPixelFormat(GL_BGRA_EXT);
       aFormat.SetDataType(GL_UNSIGNED_BYTE);
       return aFormat;
     }
@@ -464,7 +445,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       }
       aFormat.SetNbComponents(3);
       aFormat.SetInternalFormat(GL_RGB8);
-      aFormat.SetPixelFormat(GL_BGR); // equals to GL_BGR_EXT
+      aFormat.SetPixelFormat(GL_BGR);
       aFormat.SetDataType(GL_UNSIGNED_BYTE);
       if (theIsColorMap && theCtx->ToRenderSRGB())
       {
@@ -535,8 +516,6 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
   }
   return OpenGl_TextureFormat();
 }
-
-//=================================================================================================
 
 OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
   const occ::handle<OpenGl_Context>& theCtx,
@@ -639,7 +618,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
         }
         else
         {
-          aFormat.SetInternalFormat(GL_RGBA8); // fallback format
+          aFormat.SetInternalFormat(GL_RGBA8);
         }
       }
       return aFormat;
@@ -666,7 +645,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
         }
         else
         {
-          aFormat.SetInternalFormat(GL_RGB8); // fallback format
+          aFormat.SetInternalFormat(GL_RGB8);
         }
       }
       return aFormat;
@@ -680,7 +659,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       aFormat.SetImageFormat(Image_Format_RGBA);
       return aFormat;
     }
-    // integer types
+
     case GL_R32I:
     {
       aFormat.SetNbComponents(1);
@@ -697,7 +676,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       aFormat.SetDataType(GL_INT);
       return aFormat;
     }
-    // depth formats
+
     case GL_DEPTH24_STENCIL8:
     {
       aFormat.SetNbComponents(2);
@@ -741,8 +720,6 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
   }
   return aFormat;
 }
-
-//=================================================================================================
 
 OpenGl_TextureFormat OpenGl_TextureFormat::FindCompressedFormat(
   const occ::handle<OpenGl_Context>& theCtx,

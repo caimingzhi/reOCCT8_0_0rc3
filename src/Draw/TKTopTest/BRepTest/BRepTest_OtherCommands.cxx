@@ -46,7 +46,7 @@ static TopoDS_Face NextFaceForPrism(const TopoDS_Shape& shape,
                                     const TopoDS_Shape& basis,
                                     const gp_Ax1&       ax1);
 static void        PrintState(Draw_Interpretor& aDI, const TopAbs_State& aState);
-//
+
 static int emptyshape(Draw_Interpretor&, int, const char**);
 static int subshape(Draw_Interpretor&, int, const char**);
 static int brepintcs(Draw_Interpretor&, int, const char**);
@@ -54,8 +54,6 @@ static int MakeBoss(Draw_Interpretor&, int, const char**);
 static int MakeShell(Draw_Interpretor&, int, const char**);
 static int xbounds(Draw_Interpretor&, int, const char**);
 static int xclassify(Draw_Interpretor&, int, const char**);
-
-//=================================================================================================
 
 void BRepTest::OtherCommands(Draw_Interpretor& theCommands)
 {
@@ -91,10 +89,6 @@ void BRepTest::OtherCommands(Draw_Interpretor& theCommands)
   theCommands.Add("xclassify", "use xclassify Solid [Tolerance=1.e-7]", __FILE__, xclassify, g);
 }
 
-//=======================================================================
-// function : emptyshape
-// purpose  : shape : shape name V/E/W/F/SH/SO/CS/C
-//=======================================================================
 int emptyshape(Draw_Interpretor&, int n, const char** a)
 {
   if (n <= 1)
@@ -168,8 +162,6 @@ int emptyshape(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int subshape(Draw_Interpretor& di, int n, const char** a)
 {
   if (n <= 2)
@@ -205,7 +197,7 @@ int subshape(Draw_Interpretor& di, int n, const char** a)
   }
   else
   {
-    // explode a type
+
     TopAbs_ShapeEnum typ;
     switch (a[2][0])
     {
@@ -272,8 +264,6 @@ int subshape(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int brepintcs(Draw_Interpretor& di, int n, const char** a)
 {
   if (n <= 2)
@@ -327,7 +317,7 @@ int brepintcs(Draw_Interpretor& di, int n, const char** a)
       nbpi++;
       di << "Point " << nbpi << " : " << curp.X() << " " << curp.Y() << " " << curp.Z() << "\n";
       char  name[64];
-      char* temp = name; // pour portage WNT
+      char* temp = name;
       Sprintf(temp, "%s_%d", "brics", nbpi);
       DrawTrSurf::Set(temp, curp);
     }
@@ -350,7 +340,7 @@ int brepintcs(Draw_Interpretor& di, int n, const char** a)
           aB.Add(aComp, aV);
           di << "Point " << nbpi << " : " << curp.X() << " " << curp.Y() << " " << curp.Z() << "\n";
           char  name[64];
-          char* temp = name; // pour portage WNT
+          char* temp = name;
           Sprintf(temp, "%s_%d", "brics", nbpi);
           DrawTrSurf::Set(temp, curp);
         }
@@ -361,11 +351,9 @@ int brepintcs(Draw_Interpretor& di, int n, const char** a)
     di << "Points of intersections are not found\n";
   if (indshape < n - 1)
     DBRep::Set(a[n - 1], aComp);
-  // POP pour NT
+
   return 0;
 }
-
-//=================================================================================================
 
 int MakeBoss(Draw_Interpretor&, int, const char** a)
 {
@@ -395,8 +383,6 @@ int MakeBoss(Draw_Interpretor&, int, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int MakeShell(Draw_Interpretor& theDI, int, const char** a)
 {
 
@@ -405,7 +391,6 @@ int MakeShell(Draw_Interpretor& theDI, int, const char** a)
   TopExp_Explorer                Exp(aShape, TopAbs_FACE);
   TopoDS_Shape                   InputShape(DBRep::Get(a[2]));
   TopoDS_Face                    F = TopoDS::Face(InputShape);
-  //  TopoDS_Face F = TopoDS::Face(DBRep::Get( a[2] ));
 
   double Off = -Draw::Atof(a[3]);
 
@@ -419,13 +404,11 @@ int MakeShell(Draw_Interpretor& theDI, int, const char** a)
 
   if (Offset.IsDone())
   {
-    //    SaveShape::Save(Offset.Shape(), "ss");
+
     DBRep::Set(a[1], Offset.Shape());
   }
   return 0;
 }
-
-//=================================================================================================
 
 int xbounds(Draw_Interpretor& di, int n, const char** a)
 {
@@ -434,12 +417,11 @@ int xbounds(Draw_Interpretor& di, int n, const char** a)
     di << "Usage : " << a[0] << " face\n";
     return 0;
   }
-  //
 
   double       aUMin, aUMax, aVMin, aVMax;
   TopoDS_Shape aS;
   TopoDS_Face  aF;
-  //
+
   aS = DBRep::Get(a[1]);
   if (aS.IsNull())
   {
@@ -451,27 +433,25 @@ int xbounds(Draw_Interpretor& di, int n, const char** a)
     di << " shape" << a[1] << " must be a face\n";
     return 0;
   }
-  //
+
   aF = *((TopoDS_Face*)&aS);
-  //
+
   BRepTools::UVBounds(aF, aUMin, aUMax, aVMin, aVMax);
-  //
+
   TCollection_AsciiString aStr;
   TCollection_AsciiString sUMin(aUMin);
   TCollection_AsciiString sUMax(aUMax);
   TCollection_AsciiString sVMin(aVMin);
   TCollection_AsciiString sVMax(aVMax);
-  //
+
   aStr = aStr + sUMin + "\n";
   aStr = aStr + sUMax + "\n";
   aStr = aStr + sVMin + "\n";
   aStr = aStr + sVMax + "\n";
   di << aStr.ToCString();
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 int xclassify(Draw_Interpretor& aDI, int n, const char** a)
 {
@@ -493,26 +473,24 @@ int xclassify(Draw_Interpretor& aDI, int n, const char** a)
     aDI << " Shape type must be SOLID\n";
     return 0;
   }
-  //
+
   double       aTol   = 1.e-7;
   TopAbs_State aState = TopAbs_UNKNOWN;
-  //
+
   aTol = 1.e-7;
   if (n == 3)
   {
     aTol = Draw::Atof(a[2]);
   }
-  //
+
   BRepClass3d_SolidClassifier aSC(aS);
   aSC.PerformInfinitePoint(aTol);
 
   aState = aSC.State();
   PrintState(aDI, aState);
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 void PrintState(Draw_Interpretor& aDI, const TopAbs_State& aState)
 {
@@ -535,11 +513,6 @@ void PrintState(Draw_Interpretor& aDI, const TopAbs_State& aState)
   }
 }
 
-//=======================================================================
-// function : NextFaceForPrism
-// purpose  : Search a face from <shape> which intersects with a line of
-//           direction <ax1> and location a point of <basis>.
-//=======================================================================
 TopoDS_Face NextFaceForPrism(const TopoDS_Shape& shape,
                              const TopoDS_Shape& basis,
                              const gp_Ax1&       ax1)
@@ -552,7 +525,7 @@ TopoDS_Face NextFaceForPrism(const TopoDS_Shape& shape,
   for (int i = 1; i <= seqPnts.Length(); i++)
   {
     const gp_Pnt& pt = seqPnts(i);
-    // find a axis through a face
+
     gp_Dir dir = ax1.Direction();
     gp_Ax1 ax1b(pt, dir);
 
@@ -577,11 +550,6 @@ TopoDS_Face NextFaceForPrism(const TopoDS_Shape& shape,
   return nextFace;
 }
 
-//=======================================================================
-// function : SampleEdges
-// purpose  : Sampling of <theShape>.
-// design   : Collect the vertices and points on the edges
-//=======================================================================
 void SampleEdges(const TopoDS_Shape& theShape, NCollection_Sequence<gp_Pnt>& theSeq)
 {
 
@@ -590,7 +558,6 @@ void SampleEdges(const TopoDS_Shape& theShape, NCollection_Sequence<gp_Pnt>& the
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> theMap;
   TopExp_Explorer                                        exp;
 
-  // Adds all vertices/pnt
   for (exp.Init(theShape, TopAbs_VERTEX); exp.More(); exp.Next())
   {
     if (theMap.Add(exp.Current()))
@@ -599,7 +566,6 @@ void SampleEdges(const TopoDS_Shape& theShape, NCollection_Sequence<gp_Pnt>& the
     }
   }
 
-  // Computes points on edge, but does not take the extremities into account
   int                     NECHANT = 5;
   occ::handle<Geom_Curve> C;
   double                  f, l, prm;

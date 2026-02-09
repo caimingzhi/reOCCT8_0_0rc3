@@ -11,7 +11,6 @@
 #include <NCollection_HArray2.hpp>
 #include <math_Vector.hpp>
 
-//! Criterium of LinearTension To Hermit-Jacobi elements
 class FEmTool_LinearTension : public FEmTool_ElementaryCriterion
 {
 

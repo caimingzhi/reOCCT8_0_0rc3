@@ -17,25 +17,22 @@
 
 IGESDimen_ToolBasicDimension::IGESDimen_ToolBasicDimension() = default;
 
-void IGESDimen_ToolBasicDimension::ReadOwnParams(
-  const occ::handle<IGESDimen_BasicDimension>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /* IR */,
-  IGESData_ParamReader& PR) const
+void IGESDimen_ToolBasicDimension::ReadOwnParams(const occ::handle<IGESDimen_BasicDimension>& ent,
+                                                 const occ::handle<IGESData_IGESReaderData>&,
+                                                 IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   int   nbPropVal;
   gp_XY templl;
   gp_XY templr;
   gp_XY tempur;
   gp_XY tempul;
 
-  // clang-format off
-  PR.ReadInteger(PR.Current(),"Number of Property Values",nbPropVal); //szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadXY(PR.CurrentList(1, 2),"Lower Left Corner", templl); //szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadXY(PR.CurrentList(1, 2),"Lower Right Corner", templr); //szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadXY(PR.CurrentList(1, 2),"Upper Right Corner", tempur); //szv#4:S4163:12Mar99 `st=` not needed
-  PR.ReadXY(PR.CurrentList(1, 2),"Upper Left Corner", tempul); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadInteger(PR.Current(), "Number of Property Values", nbPropVal);
+  PR.ReadXY(PR.CurrentList(1, 2), "Lower Left Corner", templl);
+  PR.ReadXY(PR.CurrentList(1, 2), "Lower Right Corner", templr);
+  PR.ReadXY(PR.CurrentList(1, 2), "Upper Right Corner", tempur);
+  PR.ReadXY(PR.CurrentList(1, 2), "Upper Left Corner", tempul);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(nbPropVal, templl, templr, tempur, tempul);
@@ -55,14 +52,14 @@ void IGESDimen_ToolBasicDimension::WriteOwnParams(const occ::handle<IGESDimen_Ba
   IW.Send(ent->UpperLeft().Y());
 }
 
-void IGESDimen_ToolBasicDimension::OwnShared(const occ::handle<IGESDimen_BasicDimension>& /* ent */,
-                                             Interface_EntityIterator& /* iter */) const
+void IGESDimen_ToolBasicDimension::OwnShared(const occ::handle<IGESDimen_BasicDimension>&,
+                                             Interface_EntityIterator&) const
 {
 }
 
 void IGESDimen_ToolBasicDimension::OwnCopy(const occ::handle<IGESDimen_BasicDimension>& another,
                                            const occ::handle<IGESDimen_BasicDimension>& ent,
-                                           Interface_CopyTool& /* TC */) const
+                                           Interface_CopyTool&) const
 {
   ent->Init(8,
             another->LowerLeft().XY(),
@@ -80,14 +77,14 @@ bool IGESDimen_ToolBasicDimension::OwnCorrect(
               ent->LowerLeft().XY(),
               ent->LowerRight().XY(),
               ent->UpperRight().XY(),
-              ent->UpperLeft().XY()); // nbpropertyvalues = 8
+              ent->UpperLeft().XY());
   return res;
 }
 
 IGESData_DirChecker IGESDimen_ToolBasicDimension::DirChecker(
-  const occ::handle<IGESDimen_BasicDimension>& /* ent */) const
+  const occ::handle<IGESDimen_BasicDimension>&) const
 {
-  IGESData_DirChecker DC(406, 31); // Type = 406, Form = 31
+  IGESData_DirChecker DC(406, 31);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
@@ -106,9 +103,9 @@ void IGESDimen_ToolBasicDimension::OwnCheck(const occ::handle<IGESDimen_BasicDim
 }
 
 void IGESDimen_ToolBasicDimension::OwnDump(const occ::handle<IGESDimen_BasicDimension>& ent,
-                                           const IGESData_IGESDumper& /* dumper */,
+                                           const IGESData_IGESDumper&,
                                            Standard_OStream& S,
-                                           const int /* level */) const
+                                           const int) const
 {
   S << "IGESDimen_BasicDimension\n"
     << "Number of Property Values : " << ent->NbPropertyValues() << "\n\n"

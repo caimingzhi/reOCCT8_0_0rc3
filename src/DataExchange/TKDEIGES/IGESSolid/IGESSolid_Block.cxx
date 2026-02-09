@@ -14,9 +14,9 @@ void IGESSolid_Block::Init(const gp_XYZ& aSize,
                            const gp_XYZ& aZAxis)
 {
   theSize   = aSize;
-  theCorner = aCorner; // default (0,0,0)
-  theXAxis  = aXAxis;  // default (1,0,0)
-  theZAxis  = aZAxis;  // default (0,0,1)
+  theCorner = aCorner;
+  theXAxis  = aXAxis;
+  theZAxis  = aZAxis;
   InitTypeAndForm(150, 0);
 }
 
@@ -78,7 +78,7 @@ gp_Dir IGESSolid_Block::TransformedXAxis() const
 
 gp_Dir IGESSolid_Block::YAxis() const
 {
-  return gp_Dir(theXAxis ^ theZAxis); // ^ overloaded
+  return gp_Dir(theXAxis ^ theZAxis);
 }
 
 gp_Dir IGESSolid_Block::TransformedYAxis() const

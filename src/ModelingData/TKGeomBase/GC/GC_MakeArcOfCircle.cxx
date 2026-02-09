@@ -11,39 +11,25 @@
 #include <gp_Vec.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 GC_MakeArcOfCircle::GC_MakeArcOfCircle(const gp_Pnt& P1, const gp_Pnt& P2, const gp_Pnt& P3)
 {
   bool sense;
-  //
+
   gce_MakeCirc Cir(P1, P2, P3);
   TheError = Cir.Status();
   if (TheError == gce_Done)
   {
-    double  Alpha1, Alpha3; //,Alpha2
+    double  Alpha1, Alpha3;
     gp_Circ C(Cir.Value());
-    // modified by NIZNHY-PKV Thu Mar  3 10:53:02 2005f
-    // Alpha1 is always =0.
-    // Alpha1 = ElCLib::Parameter(C,P1);
-    // Alpha2 = ElCLib::Parameter(C,P2);
-    // Alpha3 = ElCLib::Parameter(C,P3);
-    //
-    // if (Alpha2 >= Alpha1 && Alpha2 <= Alpha3) sense = true;
-    // else if (Alpha1 <= Alpha3 && Alpha2 >= Alpha3 ) sense = true;
-    // else sense = false;
-    //
+
     Alpha1 = 0.;
     Alpha3 = ElCLib::Parameter(C, P3);
     sense  = true;
-    // modified by NIZNHY-PKV Thu Mar  3 10:53:04 2005t
 
     occ::handle<Geom_Circle> Circ = new Geom_Circle(C);
     TheArc                        = new Geom_TrimmedCurve(Circ, Alpha1, Alpha3, sense);
   }
 }
-
-//=================================================================================================
 
 GC_MakeArcOfCircle::GC_MakeArcOfCircle(const gp_Pnt& P1, const gp_Vec& V, const gp_Pnt& P2)
 {
@@ -103,8 +89,6 @@ GC_MakeArcOfCircle::GC_MakeArcOfCircle(const gp_Pnt& P1, const gp_Vec& V, const 
   }
 }
 
-//=================================================================================================
-
 GC_MakeArcOfCircle::GC_MakeArcOfCircle(const gp_Circ& Circ,
                                        const gp_Pnt&  P1,
                                        const gp_Pnt&  P2,
@@ -117,8 +101,6 @@ GC_MakeArcOfCircle::GC_MakeArcOfCircle(const gp_Circ& Circ,
   TheError                        = gce_Done;
 }
 
-//=================================================================================================
-
 GC_MakeArcOfCircle::GC_MakeArcOfCircle(const gp_Circ& Circ,
                                        const gp_Pnt&  P,
                                        const double   Alpha,
@@ -130,8 +112,6 @@ GC_MakeArcOfCircle::GC_MakeArcOfCircle(const gp_Circ& Circ,
   TheError                            = gce_Done;
 }
 
-//=================================================================================================
-
 GC_MakeArcOfCircle::GC_MakeArcOfCircle(const gp_Circ& Circ,
                                        const double   Alpha1,
                                        const double   Alpha2,
@@ -141,8 +121,6 @@ GC_MakeArcOfCircle::GC_MakeArcOfCircle(const gp_Circ& Circ,
   TheArc                     = new Geom_TrimmedCurve(C, Alpha1, Alpha2, Sense);
   TheError                   = gce_Done;
 }
-
-//=================================================================================================
 
 const occ::handle<Geom_TrimmedCurve>& GC_MakeArcOfCircle::Value() const
 {

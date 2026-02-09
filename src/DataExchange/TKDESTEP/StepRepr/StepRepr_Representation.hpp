@@ -16,7 +16,6 @@ class StepRepr_Representation : public Standard_Transient
 {
 
 public:
-  //! Returns a Representation
   Standard_EXPORT StepRepr_Representation();
 
   Standard_EXPORT void Init(

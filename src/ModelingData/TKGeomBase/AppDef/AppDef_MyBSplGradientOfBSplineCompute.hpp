@@ -25,12 +25,6 @@ class AppDef_MyBSplGradientOfBSplineCompute
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Tries to minimize the sum (square(||Qui - Bi*Pi||))
-  //! where Pui describe the approximating BSpline curves'Poles
-  //! and Qi the MultiLine points with a parameter ui.
-  //! In this algorithm, the parameters ui are the unknowns.
-  //! The tolerance required on this sum is given by Tol.
-  //! The desired degree of the resulting curve is Deg.
   Standard_EXPORT AppDef_MyBSplGradientOfBSplineCompute(
     const AppDef_MultiLine&                                                SSP,
     const int                                                              FirstPoint,
@@ -44,12 +38,6 @@ public:
     const double                                                           Tol2d,
     const int                                                              NbIterations = 1);
 
-  //! Tries to minimize the sum (square(||Qui - Bi*Pi||))
-  //! where Pui describe the approximating BSpline curves'Poles
-  //! and Qi the MultiLine points with a parameter ui.
-  //! In this algorithm, the parameters ui are the unknowns.
-  //! The tolerance required on this sum is given by Tol.
-  //! The desired degree of the resulting curve is Deg.
   Standard_EXPORT AppDef_MyBSplGradientOfBSplineCompute(
     const AppDef_MultiLine&                                                SSP,
     const int                                                              FirstPoint,
@@ -65,29 +53,16 @@ public:
     const double                                                           lambda1,
     const double                                                           lambda2);
 
-  //! returns True if all has been correctly done.
   Standard_EXPORT bool IsDone() const;
 
-  //! returns all the BSpline curves approximating the
-  //! MultiLine SSP after minimization of the parameter.
   Standard_EXPORT AppParCurves_MultiBSpCurve Value() const;
 
-  //! returns the difference between the old and the new
-  //! approximation.
-  //! An exception is raised if NotDone.
-  //! An exception is raised if Index<1 or Index>NbParameters.
   Standard_EXPORT double Error(const int Index) const;
 
-  //! returns the maximum difference between the old and the
-  //! new approximation.
   Standard_EXPORT double MaxError3d() const;
 
-  //! returns the maximum difference between the old and the
-  //! new approximation.
   Standard_EXPORT double MaxError2d() const;
 
-  //! returns the average error between the old and the
-  //! new approximation.
   Standard_EXPORT double AverageError() const;
 
 protected:

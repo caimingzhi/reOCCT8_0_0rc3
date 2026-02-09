@@ -9,12 +9,10 @@
 #include <Standard_OStream.hpp>
 class TopOpeBRepDS_Transition;
 
-//! ShapeShapeInterference
 class TopOpeBRepDS_FaceEdgeInterference : public TopOpeBRepDS_ShapeShapeInterference
 {
 
 public:
-  //! Create an interference of EDGE <G> on FACE <S>.
   Standard_EXPORT TopOpeBRepDS_FaceEdgeInterference(const TopOpeBRepDS_Transition& T,
                                                     const int                      S,
                                                     const int                      G,

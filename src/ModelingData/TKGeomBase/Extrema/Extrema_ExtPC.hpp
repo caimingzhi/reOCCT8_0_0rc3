@@ -15,7 +15,6 @@
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 
-//! Type alias for 3D point-curve extremum function.
 using Extrema_PCFOfEPCOfExtPC = Extrema_GFuncExtPC<Adaptor3d_Curve,
                                                    Extrema_CurveTool,
                                                    Extrema_POnCurv,
@@ -26,7 +25,6 @@ using Extrema_PCFOfEPCOfExtPC = Extrema_GFuncExtPC<Adaptor3d_Curve,
 #include <Extrema_POnCurv.hpp>
 #include <gp_Pnt.hpp>
 
-//! Type alias for 3D curve extremum point search using Extrema_CurveTool.
 using Extrema_EPCOfExtPC = Extrema_GGenExtPC<Adaptor3d_Curve,
                                              Extrema_CurveTool,
                                              Extrema_POnCurv,
@@ -40,7 +38,6 @@ using Extrema_EPCOfExtPC = Extrema_GGenExtPC<Adaptor3d_Curve,
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 
-//! Type alias for 3D point-to-curve extremum computation.
 using Extrema_ExtPC = Extrema_GGExtPC<Adaptor3d_Curve,
                                       Extrema_CurveTool,
                                       Extrema_ExtPElC,

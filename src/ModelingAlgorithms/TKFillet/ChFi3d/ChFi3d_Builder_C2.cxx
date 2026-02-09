@@ -82,13 +82,6 @@ static void Reduce(const double& p1, const double& p2, occ::handle<GeomAdaptor_C
   }
 }
 
-//=======================================================================
-// function : PerformTwoCornerbyInter
-// purpose  : Performs PerformTwoCorner by intersection.
-//           In case of Biseau for all cases the
-//           path is used; 3D curve and 2 pcurves are approximated.
-//=======================================================================
-
 bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
 
 {
@@ -96,11 +89,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
   const TopoDS_Vertex&        Vtx  = myVDataMap.FindKey(Index);
   TopOpeBRepDS_DataStructure& DStr = myDS->ChangeDS();
 
-  // Information on fillets is extracted
-  //------------------------------------------------------
-
-  // the first
-  //----------
   NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator It;
   It.Initialize(myVDataMap(Index));
   occ::handle<ChFiDS_Stripe>& Corner1 = It.ChangeValue();
@@ -110,8 +98,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
     Corner1->ChangeSetOfSurfData()->ChangeSequence();
   occ::handle<ChFiDS_SurfData>& Fd1 = SeqFil1.ChangeValue(IFd1);
 
-  // the second
-  //----------
   It.Next();
   occ::handle<ChFiDS_Stripe>& Corner2 = It.ChangeValue();
   int                         Sens2;
@@ -128,11 +114,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
   NCollection_Sequence<occ::handle<ChFiDS_SurfData>>& SeqFil2 =
     Corner2->ChangeSetOfSurfData()->ChangeSequence();
   occ::handle<ChFiDS_SurfData>& Fd2 = SeqFil2.ChangeValue(IFd2);
-
-  // The concavities are analysed in case of different concavities,
-  // preview an evolutionary connection of type ThreeCorner of R to 0.
-  // Otherwise the opposite face
-  // and the eventual intersection of 2 pcurves on this face are found.
 
   bool        isfirst1 = (Sens1 == 1);
   bool        isfirst2 = (Sens2 == 1);
@@ -166,8 +147,7 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
   }
   if (!OkinterCC)
   {
-    // The intersection of pcurves is calculated without restricting them by
-    // common points.
+
     OkinterCC = ChFi3d_IsInFront(DStr,
                                  Corner1,
                                  Corner2,
@@ -205,9 +185,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
   }
   int IFaArc1 = 3 - IFaCo1, IFaArc2 = 3 - IFaCo2;
 
-  // It is checked if the fillets have a commonpoint on a common arc.
-  // This edge is the pivot of the bevel or of the kneecap.
-
   ChFiDS_CommonPoint& CP1 = Fd1->ChangeVertex(isfirst1, IFaArc1);
   ChFiDS_CommonPoint& CP2 = Fd2->ChangeVertex(isfirst2, IFaArc2);
 
@@ -221,7 +198,7 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
   }
   if (!CP1.Arc().IsSame(CP2.Arc()))
   {
-    // look like OnSame + OnDiff case (eap, Arp 9 2002, occ266)
+
 #ifdef OCCT_DEBUG
     std::cout << "PerformTwoCornerbyInter(): fillets are not on the same arc" << std::endl;
 #endif
@@ -290,7 +267,7 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
 
   if (sameparam)
   {
-    // Side common face, calculation of Pardeb.
+
     ChFi3d_ComputesIntPC(Fd1->Interference(IFaCo1),
                          Fd2->Interference(IFaCo2),
                          HS1,
@@ -306,7 +283,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
     Pardeb(4)    = UV.Y();
     gp_Pnt PFaCo = HS1->Value(Pardeb(1), Pardeb(2));
 
-    // Side arc, calculation of Parfin.
     double UIntArc1 = Fd1->Interference(IFaArc1).Parameter(isfirst1);
     double UIntArc2 = Fd2->Interference(IFaArc2).Parameter(isfirst2);
 
@@ -365,7 +341,7 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
       done = false;
       return done;
     }
-    // CornerData are updated with results of the intersection.
+
     double              WFirst = Gc->FirstParameter();
     double              WLast  = Gc->LastParameter();
     int                 Ipoin1;
@@ -377,7 +353,7 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
     ChFiDS_CommonPoint& cparc2  = Fd2->ChangeVertex(isfirst2, IFaArc2);
     double              tolparc = std::max(cparc1.Tolerance(), cparc2.Tolerance());
     int                 ICurv   = DStr.AddCurve(TopOpeBRepDS_Curve(Gc, tolreached));
-    // Corner1
+
     Corner1->SetParameters(isfirst1, WFirst, WLast);
     Corner1->SetCurve(ICurv, isfirst1);
     Corner1->ChangePCurve(isfirst1) = PGc1;
@@ -391,7 +367,7 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
     Corner1->SetIndexPoint(Ipoin1, isfirst1, 1);
     Ipoin2 = ChFi3d_IndexPointInDS(Fd1->Vertex(isfirst1, 2), DStr);
     Corner1->SetIndexPoint(Ipoin2, isfirst1, 2);
-    // Corner2
+
     Corner2->SetParameters(isfirst2, WFirst, WLast);
     Corner2->SetCurve(ICurv, isfirst2);
     Corner2->ChangePCurve(isfirst2) = PGc2;
@@ -402,7 +378,7 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
       Corner2->SetOrientation(TopAbs_REVERSED, isfirst2);
     Corner2->SetIndexPoint(Corner1->IndexPoint(isfirst1, IFaCo1), isfirst2, IFaCo2);
     Corner2->SetIndexPoint(Corner1->IndexPoint(isfirst1, IFaArc1), isfirst2, IFaArc2);
-    // The tolerances of points are updated.
+
     Bnd_Box bco, barc;
     if (IFaCo1 == 1)
       ChFi3d_EnlargeBox(DStr, Corner1, Fd1, bco, barc, isfirst1);
@@ -419,12 +395,7 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
   }
   else
   {
-    // It is necessary to identify the border surface,
-    // find the end point of the intersection Surf/Surf
-    // by the intersection of the tangency line of the small
-    // on the opposing face with the surface of the big,
-    // and finally intersect the big with the face at end
-    // between this point and the point on arc.
+
     bool            parcrois = false;
     TopExp_Explorer Expl;
     for (Expl.Init(pivot.Oriented(TopAbs_FORWARD), TopAbs_VERTEX); Expl.More(); Expl.Next())
@@ -476,11 +447,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
       isfirstSma = isfirst2;
     }
 
-    // Intersection of the big with the small :
-    //------------------------------------
-
-    // Pardeb (parameters of point PFaCo)
-    // the intersection is checked
     ChFi3d_ComputesIntPC(SmaFD->Interference(IFaCoSma),
                          BigFD->Interference(IFaCoBig),
                          SmaHS,
@@ -496,7 +462,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
     Pardeb(2)    = UVi.Y();
     gp_Pnt PFaCo = SmaHS->Value(UVi.X(), UVi.Y());
 
-    // Parfin (parameters of point PMil)
     const ChFiDS_FaceInterference& FiArcSma = SmaFD->Interference(IFaArcSma);
     occ::handle<Geom_Curve>        ctg      = DStr.Curve(FiArcSma.LineIndex()).Curve();
     occ::handle<GeomAdaptor_Curve> Hctg     = new GeomAdaptor_Curve();
@@ -555,7 +520,7 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
       done = false;
       return done;
     }
-    // SmaCD is updated, for it this is all.
+
     double              WFirst = Gc->FirstParameter();
     double              WLast  = Gc->LastParameter();
     int                 IpointCo, IpointMil, IpointArc;
@@ -584,7 +549,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
     if (IFaCoSma == 2)
       SmaCD->SetOrientation(TopAbs_REVERSED, isfirstSma);
 
-    // For BigCD the first results are met in the DS.
     BigCD->SetIndexPoint(IpointCo, isfirstBig, IFaCoBig);
     BigFD->ChangeVertex(isfirstBig, IFaCoBig) = psmaco;
     BigFD->ChangeInterference(IFaCoBig).SetParameter(UIntPCBig, isfirstBig);
@@ -597,7 +561,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
     Interfp = ChFi3d_FilPointInDS(TopAbs_REVERSED, ICurv, IpointMil, WLast);
     Li.Append(Interfp);
 
-    // the transition of curves of intersection on the Big
     TopAbs_Orientation tra     = BigFD->InterferenceOnS1().Transition();
     TopAbs_Orientation ofac    = DStr.Shape(BigFD->IndexOfS1()).Orientation();
     TopAbs_Orientation ofil    = BigFD->Orientation();
@@ -613,7 +576,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
     Interfc = ChFi3d_FilCurveInDS(ICurv, ISurf, PGc2, tracurv);
     DStr.ChangeSurfaceInterferences(ISurf).Append(Interfc);
 
-    // The tolerances of points are updated (beginning).
     Bnd_Box bco, bmil, barc;
     if (IFaCoSma == 1)
       ChFi3d_EnlargeBox(DStr, SmaCD, SmaFD, bco, bmil, isfirstSma);
@@ -621,12 +583,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
       ChFi3d_EnlargeBox(DStr, SmaCD, SmaFD, bmil, bco, isfirstSma);
     ChFi3d_EnlargeBox(BigHS, PGc2, WFirst, WLast, bco, bmil);
 
-    // Intersection of the big with the face at end :
-    // -------------------------------------------
-
-    // Pardeb (parameters of PMil)
-    // The intersection curve surface is tried again, now with representation
-    // pcurve on face of the curve to be sure.
     TopoDS_Face                      F       = TopoDS::Face(DStr.Shape(SmaFD->Index(IFaArcSma)));
     occ::handle<BRepAdaptor_Surface> HF      = new BRepAdaptor_Surface(F);
     double                           fsma    = FiArcSma.FirstParameter();
@@ -659,7 +615,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
     Pardeb(2)      = UVi.Y();
     gp_Pnt2d ppff1 = UVi;
 
-    // Parfin (parameters of the point cpend)
     double ptg                = BigFD->Interference(IFaArcBig).Parameter(isfirstBig);
     UVi                       = BigFD->Interference(IFaArcBig).PCurveOnSurf()->Value(ptg);
     Parfin(3)                 = UVi.X();
@@ -674,12 +629,9 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
     Parfin(2)      = UVi.Y();
     gp_Pnt2d ppff2 = UVi;
 
-    // Intersection.
     double uu1, uu2, vv1, vv2;
     ChFi3d_Boite(ppff1, ppff2, uu1, uu2, vv1, vv2);
-    // for the case when two chamfers are on two edges OnSame,
-    // it is necessary to extend the surface carrying F, or at least
-    // not to limit it.
+
     ChFi3d_BoundFac(*HF, uu1, uu2, vv1, vv2, true);
 
     if (!ChFi3d_ComputeCurves(HF,
@@ -700,7 +652,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
       return done;
     }
 
-    // End of update of the BigCD and the DS.
     WFirst = Gc->FirstParameter();
     WLast  = Gc->LastParameter();
     ICurv  = DStr.AddCurve(TopOpeBRepDS_Curve(Gc, tolreached));
@@ -718,7 +669,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
     DStr.ChangeSurfaceInterferences(ISurf).Append(Interfc);
     BigCD->InDS(isfirstBig);
 
-    // Finally the information on faces is placed in the DS.
     int IShape = DStr.AddShape(F);
     if (SmaFD->Surf() == BigFD->Surf())
     {
@@ -739,7 +689,6 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
     Interfc = ChFi3d_FilCurveInDS(ICurv, IShape, PGc1, tracurv);
     DStr.ChangeShapeInterferences(IShape).Append(Interfc);
 
-    // The tolerances of points are updated (end).
     occ::handle<ChFiDS_Stripe> bidst;
     if (IFaCoBig == 1)
       ChFi3d_EnlargeBox(DStr, bidst, BigFD, bco, barc, isfirstBig);
@@ -760,15 +709,10 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
   return done;
 }
 
-//=======================================================================
-// function : UpdateTolesp
-// purpose  : Update tolesp field to fit it to range of parameter of spine curve
-//=======================================================================
-
 void ChFi3d_Builder::UpdateTolesp()
 {
   NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator itel;
-  // tolesp = Precision::Infinite();
+
   for (itel.Initialize(myListStripe); itel.More(); itel.Next())
   {
     occ::handle<ChFiDS_Stripe>& curStripe             = itel.ChangeValue();

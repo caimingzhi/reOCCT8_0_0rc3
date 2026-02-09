@@ -6,9 +6,6 @@
 
 #include <Standard_Real.hpp>
 
-//! defines SFRotation type of VRML field types.
-//! The 4 values represent an axis of rotation followed by amount of
-//! right-handed rotation about the that axis, in radians.
 class Vrml_SFRotation
 {
 public:

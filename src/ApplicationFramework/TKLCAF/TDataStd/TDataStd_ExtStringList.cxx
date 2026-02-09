@@ -11,18 +11,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_ExtStringList, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_ExtStringList::GetID()
 {
   static Standard_GUID TDataStd_ExtStringListID("D13FBE0A-E084-4912-A99D-7713C59C0AC4");
   return TDataStd_ExtStringListID;
 }
 
-//=======================================================================
-// function : SetAttr
-// purpose  : Implements Set functionality
-//=======================================================================
 static occ::handle<TDataStd_ExtStringList> SetAttr(const TDF_Label&     label,
                                                    const Standard_GUID& theGuid)
 {
@@ -36,45 +30,31 @@ static occ::handle<TDataStd_ExtStringList> SetAttr(const TDF_Label&     label,
   return A;
 }
 
-//=================================================================================================
-
 TDataStd_ExtStringList::TDataStd_ExtStringList()
     : myID(GetID())
 {
 }
-
-//=================================================================================================
 
 occ::handle<TDataStd_ExtStringList> TDataStd_ExtStringList::Set(const TDF_Label& label)
 {
   return SetAttr(label, GetID());
 }
 
-//=======================================================================
-// function : Set
-// purpose  : Set user defined attribute with specific ID
-//=======================================================================
 occ::handle<TDataStd_ExtStringList> TDataStd_ExtStringList::Set(const TDF_Label&     label,
                                                                 const Standard_GUID& theGuid)
 {
   return SetAttr(label, theGuid);
 }
 
-//=================================================================================================
-
 bool TDataStd_ExtStringList::IsEmpty() const
 {
   return myList.IsEmpty();
 }
 
-//=================================================================================================
-
 int TDataStd_ExtStringList::Extent() const
 {
   return myList.Extent();
 }
-
-//=================================================================================================
 
 void TDataStd_ExtStringList::Prepend(const TCollection_ExtendedString& value)
 {
@@ -82,15 +62,11 @@ void TDataStd_ExtStringList::Prepend(const TCollection_ExtendedString& value)
   myList.Prepend(value);
 }
 
-//=================================================================================================
-
 void TDataStd_ExtStringList::Append(const TCollection_ExtendedString& value)
 {
   Backup();
   myList.Append(value);
 }
-
-//=================================================================================================
 
 bool TDataStd_ExtStringList::InsertBefore(const TCollection_ExtendedString& value,
                                           const TCollection_ExtendedString& before_value)
@@ -108,10 +84,6 @@ bool TDataStd_ExtStringList::InsertBefore(const TCollection_ExtendedString& valu
   return false;
 }
 
-//=======================================================================
-// function : InsertBefore
-// purpose  : Inserts the <value> before the <index> position.
-//=======================================================================
 bool TDataStd_ExtStringList::InsertBefore(const int                         index,
                                           const TCollection_ExtendedString& before_value)
 {
@@ -131,8 +103,6 @@ bool TDataStd_ExtStringList::InsertBefore(const int                         inde
   return found;
 }
 
-//=================================================================================================
-
 bool TDataStd_ExtStringList::InsertAfter(const TCollection_ExtendedString& value,
                                          const TCollection_ExtendedString& after_value)
 {
@@ -149,10 +119,6 @@ bool TDataStd_ExtStringList::InsertAfter(const TCollection_ExtendedString& value
   return false;
 }
 
-//=======================================================================
-// function : InsertAfter
-// purpose  : Inserts the <value> after the <index> position.
-//=======================================================================
 bool TDataStd_ExtStringList::InsertAfter(const int                         index,
                                          const TCollection_ExtendedString& after_value)
 {
@@ -172,8 +138,6 @@ bool TDataStd_ExtStringList::InsertAfter(const int                         index
   return found;
 }
 
-//=================================================================================================
-
 bool TDataStd_ExtStringList::Remove(const TCollection_ExtendedString& value)
 {
   NCollection_List<TCollection_ExtendedString>::Iterator itr(myList);
@@ -189,10 +153,6 @@ bool TDataStd_ExtStringList::Remove(const TCollection_ExtendedString& value)
   return false;
 }
 
-//=======================================================================
-// function : Remove
-// purpose  : Removes a value at <index> position.
-//=======================================================================
 bool TDataStd_ExtStringList::Remove(const int index)
 {
   int                                                    i(1);
@@ -211,43 +171,31 @@ bool TDataStd_ExtStringList::Remove(const int index)
   return found;
 }
 
-//=================================================================================================
-
 void TDataStd_ExtStringList::Clear()
 {
   Backup();
   myList.Clear();
 }
 
-//=================================================================================================
-
 const TCollection_ExtendedString& TDataStd_ExtStringList::First() const
 {
   return myList.First();
 }
-
-//=================================================================================================
 
 const TCollection_ExtendedString& TDataStd_ExtStringList::Last() const
 {
   return myList.Last();
 }
 
-//=================================================================================================
-
 const NCollection_List<TCollection_ExtendedString>& TDataStd_ExtStringList::List() const
 {
   return myList;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_ExtStringList::ID() const
 {
   return myID;
 }
-
-//=================================================================================================
 
 void TDataStd_ExtStringList::SetID(const Standard_GUID& theGuid)
 {
@@ -257,22 +205,16 @@ void TDataStd_ExtStringList::SetID(const Standard_GUID& theGuid)
   myID = theGuid;
 }
 
-//=================================================================================================
-
 void TDataStd_ExtStringList::SetID()
 {
   Backup();
   myID = GetID();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDataStd_ExtStringList::NewEmpty() const
 {
   return new TDataStd_ExtStringList();
 }
-
-//=================================================================================================
 
 void TDataStd_ExtStringList::Restore(const occ::handle<TDF_Attribute>& With)
 {
@@ -285,8 +227,6 @@ void TDataStd_ExtStringList::Restore(const occ::handle<TDF_Attribute>& With)
   }
   myID = aList->ID();
 }
-
-//=================================================================================================
 
 void TDataStd_ExtStringList::Paste(const occ::handle<TDF_Attribute>& Into,
                                    const occ::handle<TDF_RelocationTable>&) const
@@ -301,8 +241,6 @@ void TDataStd_ExtStringList::Paste(const occ::handle<TDF_Attribute>& Into,
   aList->SetID(myID);
 }
 
-//=================================================================================================
-
 Standard_OStream& TDataStd_ExtStringList::Dump(Standard_OStream& anOS) const
 {
   anOS << "\nExtStringList: ";
@@ -312,8 +250,6 @@ Standard_OStream& TDataStd_ExtStringList::Dump(Standard_OStream& anOS) const
   anOS << std::endl;
   return anOS;
 }
-
-//=================================================================================================
 
 void TDataStd_ExtStringList::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

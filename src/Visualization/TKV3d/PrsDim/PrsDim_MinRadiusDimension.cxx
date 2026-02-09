@@ -29,8 +29,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_MinRadiusDimension, PrsDim_EllipseRadiusDimension)
 
-//=================================================================================================
-
 PrsDim_MinRadiusDimension::PrsDim_MinRadiusDimension(const TopoDS_Shape&               aShape,
                                                      const double                      aVal,
                                                      const TCollection_ExtendedString& aText)
@@ -41,8 +39,6 @@ PrsDim_MinRadiusDimension::PrsDim_MinRadiusDimension(const TopoDS_Shape&        
   myAutomaticPosition = true;
   myArrowSize         = myVal / 100.;
 }
-
-//=================================================================================================
 
 PrsDim_MinRadiusDimension::PrsDim_MinRadiusDimension(const TopoDS_Shape&               aShape,
                                                      const double                      aVal,
@@ -59,28 +55,23 @@ PrsDim_MinRadiusDimension::PrsDim_MinRadiusDimension(const TopoDS_Shape&        
   SetArrowSize(anArrowSize);
 }
 
-//=================================================================================================
-
 void PrsDim_MinRadiusDimension::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                         const occ::handle<Prs3d_Presentation>& aPresentation,
                                         const int)
 {
-  //  if( myAutomaticPosition )
-  //{ //ota : recompute ellipse always
+
   ComputeGeometry();
   myEllipse.SetMinorRadius(myVal);
   gp_Vec v1(myEllipse.YAxis().Direction());
   v1 *= myVal;
   myApexP = myEllipse.Location().Translated(v1);
   myApexN = myEllipse.Location().Translated(-v1);
-  //   }
+
   if (myIsAnArc)
     ComputeArcOfEllipse(aPresentation);
   else
     ComputeEllipse(aPresentation);
 }
-
-//=================================================================================================
 
 void PrsDim_MinRadiusDimension::ComputeEllipse(const occ::handle<Prs3d_Presentation>& aPresentation)
 {
@@ -88,14 +79,13 @@ void PrsDim_MinRadiusDimension::ComputeEllipse(const occ::handle<Prs3d_Presentat
   occ::handle<Prs3d_DimensionAspect> la  = myDrawer->DimensionAspect();
   occ::handle<Prs3d_ArrowAspect>     arr = la->ArrowAspect();
 
-  // size
   if (!myArrowSizeIsDefined)
   {
     myArrowSize = std::min(myArrowSize, myVal / 5.);
   }
   arr->SetLength(myArrowSize);
 
-  double U; //,V;
+  double U;
   gp_Pnt curPos, Center;
   Center = myEllipse.Location();
   if (myAutomaticPosition)
@@ -109,7 +99,7 @@ void PrsDim_MinRadiusDimension::ComputeEllipse(const occ::handle<Prs3d_Presentat
         PrsDim::TranslatePointToBound(myPosition, gp_Dir(gp_Vec(Center, myPosition)), myBndBox);
     curPos = myPosition;
   }
-  else //! AutomaticPosition
+  else
   {
     curPos = myPosition;
     gp_Lin L1(myEllipse.YAxis());
@@ -122,7 +112,6 @@ void PrsDim_MinRadiusDimension::ComputeEllipse(const occ::handle<Prs3d_Presentat
     myPosition = curPos;
   }
 
-  // Presenatation
   DsgPrs_EllipseRadiusPresentation::Add(aPresentation,
                                         myDrawer,
                                         myVal,
@@ -134,8 +123,6 @@ void PrsDim_MinRadiusDimension::ComputeEllipse(const occ::handle<Prs3d_Presentat
                                         mySymbolPrs);
 }
 
-//=================================================================================================
-
 void PrsDim_MinRadiusDimension::ComputeArcOfEllipse(
   const occ::handle<Prs3d_Presentation>& aPresentation)
 {
@@ -143,7 +130,6 @@ void PrsDim_MinRadiusDimension::ComputeArcOfEllipse(
   occ::handle<Prs3d_DimensionAspect> la  = myDrawer->DimensionAspect();
   occ::handle<Prs3d_ArrowAspect>     arr = la->ArrowAspect();
 
-  // size
   if (!myArrowSizeIsDefined)
   {
     myArrowSize = std::min(myArrowSize, myVal / 5.);
@@ -165,7 +151,7 @@ void PrsDim_MinRadiusDimension::ComputeArcOfEllipse(
         PrsDim::TranslatePointToBound(myPosition, gp_Dir(gp_Vec(Center, myPosition)), myBndBox);
     curPos = myPosition;
   }
-  else //! AutomaticPosition
+  else
   {
     curPos = myPosition;
     gp_Lin L1(myEllipse.YAxis());
@@ -218,17 +204,15 @@ void PrsDim_MinRadiusDimension::ComputeArcOfEllipse(
                                           mySymbolPrs);
 }
 
-//=================================================================================================
-
 void PrsDim_MinRadiusDimension::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSelection,
-                                                 const int /*aMode*/)
+                                                 const int)
 {
 
   gp_Pnt center          = myEllipse.Location();
   gp_Pnt AttachmentPoint = myPosition;
   double dist            = center.Distance(AttachmentPoint);
   double aRadius         = myVal;
-  // double inside  = false;
+
   gp_Pnt pt1;
   if (dist > aRadius)
     pt1 = AttachmentPoint;
@@ -238,7 +222,6 @@ void PrsDim_MinRadiusDimension::ComputeSelection(const occ::handle<SelectMgr_Sel
   occ::handle<Select3D_SensitiveSegment> seg = new Select3D_SensitiveSegment(own, center, pt1);
   aSelection->Add(seg);
 
-  // Text
   double                             size(std::min(myVal / 100. + 1.e-6, myArrowSize + 1.e-6));
   occ::handle<Select3D_SensitiveBox> box = new Select3D_SensitiveBox(own,
                                                                      AttachmentPoint.X(),
@@ -249,7 +232,6 @@ void PrsDim_MinRadiusDimension::ComputeSelection(const occ::handle<SelectMgr_Sel
                                                                      AttachmentPoint.Z() + size);
   aSelection->Add(box);
 
-  // Arc of Ellipse
   if (myIsAnArc)
   {
 

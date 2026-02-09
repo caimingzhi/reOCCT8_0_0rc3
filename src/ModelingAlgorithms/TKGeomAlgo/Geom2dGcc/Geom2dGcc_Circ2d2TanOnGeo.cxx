@@ -217,7 +217,7 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
               {
                 NbrSol++;
                 cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius(k));
-                //              ==========================================================
+
                 double distcc1 = Center.Distance(center1);
                 double distcc2 = Center.Distance(center2);
                 if (!Qualified1.IsUnqualified())
@@ -287,17 +287,6 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
     }
   }
 }
-
-//=========================================================================
-//   Creation d un cercle tangent a un Cercle C1 et a une Droite L2.      +
-//                        centre sur une courbe OnCurv.                   +
-//  Nous calculons les bissectrices a C1 et L2 qui nous donnent           +
-//  l ensemble des lieux possibles des centres de tous les cercles        +
-//  tangents a C1 et L2.                                                  +
-//  Nous intersectons ces bissectrices avec la courbe OnCurv ce qui nous  +
-//  donne les points parmis lesquels nous allons choisir les solutions.   +
-//  Les choix s effectuent a partir des Qualifieurs qualifiant C1 et L2.  +
-//=========================================================================
 
 Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc& Qualified1,
                                                      const GccEnt_QualifiedLin&  Qualified2,
@@ -392,7 +381,7 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
           {
             gp_Pnt2d Center(Intp.Point(j).Value());
             double   dist1 = Center.Distance(center1);
-            //	    int nbsol = 1;
+
             bool ok = false;
             if (Qualified1.IsEnclosed())
             {
@@ -441,7 +430,7 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
             {
               NbrSol++;
               cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-              //            =======================================================
+
 #ifdef OCCT_DEBUG
               gp_Dir2d aDC1(center1.XY() - Center.XY());
 #endif
@@ -503,17 +492,6 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
     }
   }
 }
-
-//=========================================================================
-//   Creation d un cercle tant a deux Droites L1 et L2.                   +
-//                        centre sur une courbe OnCurv.                   +
-//  Nous calculons les bissectrices a L1 et L2 qui nous donnent           +
-//  l ensemble des lieux possibles des centres de tous les cercles        +
-//  tants a L1 et L2.                                                     +
-//  Nous intersectons ces bissectrices avec la courbe OnCurv ce qui nous  +
-//  donne les points parmis lesquels nous allons choisir les solutions.   +
-//  Les choix s effectuent a partir des Qualifieurs qualifiant L1 et L2.  +
-//=========================================================================
 
 Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedLin& Qualified1,
                                                      const GccEnt_QualifiedLin& Qualified2,
@@ -582,7 +560,7 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedLin& 
             gp_Pnt2d Center(Intp.Point(j).Value());
             double   dist1 = L1.Distance(Center);
             double   dist2 = L2.Distance(Center);
-            //	    int nbsol = 1;
+
             bool ok = false;
             if (Qualified1.IsEnclosed())
             {
@@ -636,7 +614,7 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedLin& 
             {
               NbrSol++;
               cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-              //            =======================================================
+
               gp_Dir2d dc1(origin1.XY() - Center.XY());
               gp_Dir2d dc2(origin2.XY() - Center.XY());
               if (!Qualified1.IsUnqualified())
@@ -685,17 +663,6 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedLin& 
     }
   }
 }
-
-//=========================================================================
-//   Creation d un cercle tant a un Cercle C1, passant par un point P2    +
-//                        centre sur une courbe OnCurv.                   +
-//  Nous calculons les bissectrices a C1 et Point2 qui nous donnent       +
-//  l ensemble des lieux possibles des centres de tous les cercles        +
-//  tants a C1 et Point2.                                                 +
-//  Nous intersectons ces bissectrices avec la courbe OnCurv ce qui nous  +
-//  donne les points parmis lesquels nous allons choisir les solutions.   +
-//  Les choix s effectuent a partir des Qualifieurs qualifiant C1.        +
-//=========================================================================
 
 Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc& Qualified1,
                                                      const gp_Pnt2d&             Point2,
@@ -811,7 +778,7 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
             gp_Pnt2d Center(Intp.Point(j).Value());
             Radius       = Center.Distance(Point2);
             double dist1 = center1.Distance(Center);
-            //	    int nbsol = 1;
+
             bool ok = false;
             if (Qualified1.IsEnclosed())
             {
@@ -839,7 +806,7 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
             {
               NbrSol++;
               cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-              //            =======================================================
+
               double distcc1 = Center.Distance(center1);
               if (!Qualified1.IsUnqualified())
               {
@@ -885,17 +852,6 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedCirc&
     }
   }
 }
-
-//=========================================================================
-//   Creation d un cercle tant a une ligne L1, passant par un point P2    +
-//                        centre sur une courbe OnCurv.                   +
-//  Nous calculons les bissectrices a L1 et Point2 qui nous donnent       +
-//  l ensemble des lieux possibles des centres de tous les cercles        +
-//  tants a L1 et passant par Point2.                                     +
-//  Nous intersectons ces bissectrices avec la courbe OnCurv ce qui nous  +
-//  donne les points parmis lesquels nous allons choisir les solutions.   +
-//  Les choix s effectuent a partir des Qualifieurs qualifiant L1.        +
-//=========================================================================
 
 Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedLin& Qualified1,
                                                      const gp_Pnt2d&            Point2,
@@ -980,7 +936,7 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedLin& 
         {
           gp_Pnt2d Center(Intp.Point(j).Value());
           double   Radius = L1.Distance(Center);
-          //	  int nbsol = 1;
+
           bool ok = false;
           if (Qualified1.IsEnclosed())
           {
@@ -1008,7 +964,7 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedLin& 
           {
             NbrSol++;
             cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-            //          =======================================================
+
             qualifier2(NbrSol) = GccEnt_noqualifier;
             gp_Dir2d dc2(origin1.XY() - Center.XY());
             if (!Qualified1.IsUnqualified())
@@ -1043,16 +999,6 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const GccEnt_QualifiedLin& 
     }
   }
 }
-
-//=========================================================================
-//   Creation d un cercle passant par deux point Point1 et Point2         +
-//                        centre sur une courbe OnCurv.                   +
-//  Nous calculons les bissectrices a Point1 et Point2 qui nous donnent   +
-//  l ensemble des lieux possibles des centres de tous les cercles        +
-//  passant par Point1 et Point2.                                         +
-//  Nous intersectons ces bissectrices avec la courbe OnCurv ce qui nous  +
-//  donne les points parmis lesquels nous allons choisir les solutions.   +
-//=========================================================================
 
 Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const gp_Pnt2d&            Point1,
                                                      const gp_Pnt2d&            Point2,
@@ -1111,7 +1057,7 @@ Geom2dGcc_Circ2d2TanOnGeo::Geom2dGcc_Circ2d2TanOnGeo(const gp_Pnt2d&            
             double   Radius = Point2.Distance(Center);
             NbrSol++;
             cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-            //           =======================================================
+
             qualifier1(NbrSol) = GccEnt_noqualifier;
             qualifier2(NbrSol) = GccEnt_noqualifier;
             TheSame1(NbrSol)   = 0;

@@ -8,8 +8,6 @@
 #include <ChFiDS_SurfData.hpp>
 #include <TopOpeBRepBuild_HBuilder.hpp>
 
-//=================================================================================================
-
 void ChFi3d_Builder::SimulSurf(occ::handle<ChFiDS_SurfData>&,
                                const occ::handle<ChFiDS_ElSpine>&,
                                const occ::handle<ChFiDS_Spine>&,
@@ -38,8 +36,6 @@ void ChFi3d_Builder::SimulSurf(occ::handle<ChFiDS_SurfData>&,
   throw Standard_Failure("SimulSurf Not Implemented");
 }
 
-//=================================================================================================
-
 void ChFi3d_Builder::SimulSurf(occ::handle<ChFiDS_SurfData>&,
                                const occ::handle<ChFiDS_ElSpine>&,
                                const occ::handle<ChFiDS_Spine>&,
@@ -67,8 +63,6 @@ void ChFi3d_Builder::SimulSurf(occ::handle<ChFiDS_SurfData>&,
 {
   throw Standard_Failure("SimulSurf Not Implemented");
 }
-
-//=================================================================================================
 
 void ChFi3d_Builder::SimulSurf(occ::handle<ChFiDS_SurfData>&,
                                const occ::handle<ChFiDS_ElSpine>&,
@@ -103,8 +97,6 @@ void ChFi3d_Builder::SimulSurf(occ::handle<ChFiDS_SurfData>&,
 {
   throw Standard_Failure("SimulSurf Not Implemented");
 }
-
-//=================================================================================================
 
 void ChFi3d_Builder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfData>>&,
                                  const occ::handle<ChFiDS_ElSpine>&,
@@ -135,8 +127,6 @@ void ChFi3d_Builder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfDat
   throw Standard_Failure("PerformSurf Not Implemented");
 }
 
-//=================================================================================================
-
 void ChFi3d_Builder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfData>>&,
                                  const occ::handle<ChFiDS_ElSpine>&,
                                  const occ::handle<ChFiDS_Spine>&,
@@ -165,8 +155,6 @@ void ChFi3d_Builder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfDat
 {
   throw Standard_Failure("PerformSurf Not Implemented");
 }
-
-//=================================================================================================
 
 void ChFi3d_Builder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfData>>&,
                                  const occ::handle<ChFiDS_ElSpine>&,

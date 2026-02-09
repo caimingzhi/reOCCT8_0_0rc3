@@ -14,16 +14,13 @@
 
 IGESBasic_ToolExternalRefName::IGESBasic_ToolExternalRefName() = default;
 
-void IGESBasic_ToolExternalRefName::ReadOwnParams(
-  const occ::handle<IGESBasic_ExternalRefName>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /* IR */,
-  IGESData_ParamReader& PR) const
+void IGESBasic_ToolExternalRefName::ReadOwnParams(const occ::handle<IGESBasic_ExternalRefName>& ent,
+                                                  const occ::handle<IGESData_IGESReaderData>&,
+                                                  IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   occ::handle<TCollection_HAsciiString> tempExtRefEntitySymbName;
-  PR.ReadText(PR.Current(),
-              "External Reference Symbolic Name",
-              tempExtRefEntitySymbName); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadText(PR.Current(), "External Reference Symbolic Name", tempExtRefEntitySymbName);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempExtRefEntitySymbName);
@@ -36,15 +33,14 @@ void IGESBasic_ToolExternalRefName::WriteOwnParams(
   IW.Send(ent->ReferenceName());
 }
 
-void IGESBasic_ToolExternalRefName::OwnShared(
-  const occ::handle<IGESBasic_ExternalRefName>& /* ent */,
-  Interface_EntityIterator& /* iter */) const
+void IGESBasic_ToolExternalRefName::OwnShared(const occ::handle<IGESBasic_ExternalRefName>&,
+                                              Interface_EntityIterator&) const
 {
 }
 
 void IGESBasic_ToolExternalRefName::OwnCopy(const occ::handle<IGESBasic_ExternalRefName>& another,
                                             const occ::handle<IGESBasic_ExternalRefName>& ent,
-                                            Interface_CopyTool& /* TC */) const
+                                            Interface_CopyTool&) const
 {
   occ::handle<TCollection_HAsciiString> tempRefName =
     new TCollection_HAsciiString(another->ReferenceName());
@@ -52,7 +48,7 @@ void IGESBasic_ToolExternalRefName::OwnCopy(const occ::handle<IGESBasic_External
 }
 
 IGESData_DirChecker IGESBasic_ToolExternalRefName::DirChecker(
-  const occ::handle<IGESBasic_ExternalRefName>& /* ent */) const
+  const occ::handle<IGESBasic_ExternalRefName>&) const
 {
   IGESData_DirChecker DC(416, 3);
   DC.Structure(IGESData_DefVoid);
@@ -65,17 +61,16 @@ IGESData_DirChecker IGESBasic_ToolExternalRefName::DirChecker(
   return DC;
 }
 
-void IGESBasic_ToolExternalRefName::OwnCheck(
-  const occ::handle<IGESBasic_ExternalRefName>& /* ent */,
-  const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /* ach */) const
+void IGESBasic_ToolExternalRefName::OwnCheck(const occ::handle<IGESBasic_ExternalRefName>&,
+                                             const Interface_ShareTool&,
+                                             occ::handle<Interface_Check>&) const
 {
 }
 
 void IGESBasic_ToolExternalRefName::OwnDump(const occ::handle<IGESBasic_ExternalRefName>& ent,
-                                            const IGESData_IGESDumper& /* dumper */,
+                                            const IGESData_IGESDumper&,
                                             Standard_OStream& S,
-                                            const int /* level */) const
+                                            const int) const
 {
   S << "IGESBasic_ExternalRefName\n"
     << "External Reference Symbolic Name : ";

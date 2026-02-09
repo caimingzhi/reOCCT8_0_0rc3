@@ -13,7 +13,6 @@ class StepGeom_Axis2Placement3d : public StepGeom_Placement
 {
 
 public:
-  //! Returns a Axis2Placement3d
   Standard_EXPORT StepGeom_Axis2Placement3d();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

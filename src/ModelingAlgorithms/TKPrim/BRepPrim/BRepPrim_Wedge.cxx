@@ -1,8 +1,6 @@
 #include <BRepPrim_Wedge.hpp>
 #include <gp_Ax2.hpp>
 
-//=================================================================================================
-
 BRepPrim_Wedge::BRepPrim_Wedge(const gp_Ax2& Axes,
                                const double  dx,
                                const double  dy,
@@ -10,8 +8,6 @@ BRepPrim_Wedge::BRepPrim_Wedge(const gp_Ax2& Axes,
     : BRepPrim_GWedge(BRepPrim_Builder(), Axes, dx, dy, dz)
 {
 }
-
-//=================================================================================================
 
 BRepPrim_Wedge::BRepPrim_Wedge(const gp_Ax2& Axes,
                                const double  dx,
@@ -21,8 +17,6 @@ BRepPrim_Wedge::BRepPrim_Wedge(const gp_Ax2& Axes,
     : BRepPrim_GWedge(BRepPrim_Builder(), Axes, dx, dy, dz, ltx)
 {
 }
-
-//=================================================================================================
 
 BRepPrim_Wedge::BRepPrim_Wedge(const gp_Ax2& Axes,
                                const double  xmin,

@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <AppParCurves_MultiPoint.hpp>
 #include <gp_Pnt.hpp>
@@ -173,9 +161,9 @@ void AppParCurves_MultiPoint::Dump(Standard_OStream& o) const
     {
       o << "3D-Point #" << i << std::endl;
 
-      o << " Pole x = " << (tabPoint->Value(i) /*->Point(j)*/).X() << std::endl;
-      o << " Pole y = " << (tabPoint->Value(i) /*->Point(j)*/).Y() << std::endl;
-      o << " Pole z = " << (tabPoint->Value(i) /*->Point(j)*/).Z() << std::endl;
+      o << " Pole x = " << (tabPoint->Value(i)).X() << std::endl;
+      o << " Pole y = " << (tabPoint->Value(i)).Y() << std::endl;
+      o << " Pole z = " << (tabPoint->Value(i)).Z() << std::endl;
     }
   }
 
@@ -185,8 +173,8 @@ void AppParCurves_MultiPoint::Dump(Standard_OStream& o) const
     {
       o << "2D-Point #" << i << std::endl;
 
-      o << " Pole x = " << (tabPoint2d->Value(i) /*->Point2d(j)*/).X() << std::endl;
-      o << " Pole y = " << (tabPoint2d->Value(i) /*->Point2d(j)*/).Y() << std::endl;
+      o << " Pole x = " << (tabPoint2d->Value(i)).X() << std::endl;
+      o << " Pole y = " << (tabPoint2d->Value(i)).Y() << std::endl;
     }
   }
 }

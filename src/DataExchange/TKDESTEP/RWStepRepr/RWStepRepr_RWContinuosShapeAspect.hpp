@@ -12,26 +12,21 @@ class StepRepr_ContinuosShapeAspect;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write tool for ContinuosShapeAspect
 class RWStepRepr_RWContinuosShapeAspect
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepRepr_RWContinuosShapeAspect();
 
-  //! Reads ContinuosShapeAspect
   Standard_HIDDEN void ReadStep(const occ::handle<StepData_StepReaderData>&       data,
                                 const int                                         num,
                                 occ::handle<Interface_Check>&                     ach,
                                 const occ::handle<StepRepr_ContinuosShapeAspect>& ent) const;
 
-  //! Writes ContinuosShapeAspect
   Standard_HIDDEN void WriteStep(StepData_StepWriter&                              SW,
                                  const occ::handle<StepRepr_ContinuosShapeAspect>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(const occ::handle<StepRepr_ContinuosShapeAspect>& ent,
                              Interface_EntityIterator&                         iter) const;
 };

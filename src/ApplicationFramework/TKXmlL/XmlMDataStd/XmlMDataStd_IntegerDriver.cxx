@@ -9,25 +9,17 @@
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_IntegerDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(AttributeIDString, "intattguid")
 
-//=================================================================================================
-
 XmlMDataStd_IntegerDriver::XmlMDataStd_IntegerDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataStd_IntegerDriver::NewEmpty() const
 {
   return (new TDataStd_Integer());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDataStd_IntegerDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                       const occ::handle<TDF_Attribute>& theTarget,
                                       XmlObjMgt_RRelocationTable&) const
@@ -46,22 +38,17 @@ bool XmlMDataStd_IntegerDriver::Paste(const XmlObjMgt_Persistent&       theSourc
   occ::handle<TDataStd_Integer> anInt = occ::down_cast<TDataStd_Integer>(theTarget);
   anInt->Set(aValue);
 
-  // attribute id
   const XmlObjMgt_Element& anElement = theSource;
   XmlObjMgt_DOMString      aGUIDStr  = anElement.getAttribute(::AttributeIDString());
   if (aGUIDStr.Type() != XmlObjMgt_DOMString::LDOM_NULL)
   {
-    const Standard_GUID aGUID(aGUIDStr.GetString()); // user defined case
+    const Standard_GUID aGUID(aGUIDStr.GetString());
     occ::down_cast<TDataStd_Integer>(theTarget)->SetID(aGUID);
   }
 
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMDataStd_IntegerDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                       XmlObjMgt_Persistent&             theTarget,
                                       XmlObjMgt_SRelocationTable&) const
@@ -70,7 +57,7 @@ void XmlMDataStd_IntegerDriver::Paste(const occ::handle<TDF_Attribute>& theSourc
   XmlObjMgt::SetStringValue(theTarget, anInt->Get());
   if (anInt->ID() != TDataStd_Integer::GetID())
   {
-    // convert GUID
+
     char                aGuidStr[Standard_GUID_SIZE_ALLOC];
     Standard_PCharacter pGuidStr = aGuidStr;
     anInt->ID().ToCString(pGuidStr);

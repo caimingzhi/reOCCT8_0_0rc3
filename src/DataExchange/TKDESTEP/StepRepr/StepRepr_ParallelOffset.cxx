@@ -4,8 +4,6 @@ IMPLEMENT_STANDARD_RTTIEXT(StepRepr_ParallelOffset, StepRepr_DerivedShapeAspect)
 
 StepRepr_ParallelOffset::StepRepr_ParallelOffset() = default;
 
-//=================================================================================================
-
 void StepRepr_ParallelOffset::Init(
   const occ::handle<TCollection_HAsciiString>&        theShapeAspect_Name,
   const occ::handle<TCollection_HAsciiString>&        theShapeAspect_Description,

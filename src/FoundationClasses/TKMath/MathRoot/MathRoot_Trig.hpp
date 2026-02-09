@@ -13,7 +13,6 @@ namespace MathRoot
 {
   using namespace MathUtils;
 
-  //! Result for trigonometric equation solver.
   struct TrigResult
   {
     MathUtils::Status     Status        = MathUtils::Status::NotConverged;
@@ -26,24 +25,6 @@ namespace MathRoot
     explicit operator bool() const { return IsDone(); }
   };
 
-  //! Solve trigonometric equation: a*cos^2(x) + 2*b*cos(x)*sin(x) + c*cos(x) + d*sin(x) + e = 0.
-  //!
-  //! Uses half-angle substitution t = tan(x/2) to convert to polynomial:
-  //! - cos(x) = (1-t^2)/(1+t^2)
-  //! - sin(x) = 2t/(1+t^2)
-  //!
-  //! Resulting polynomial is of degree 4, 3, or 2 depending on coefficients.
-  //! Roots are filtered to lie within [theInfBound, theSupBound].
-  //!
-  //! @param theA coefficient of cos^2(x)
-  //! @param theB coefficient of cos(x)*sin(x) (equation uses 2*b)
-  //! @param theC coefficient of cos(x)
-  //! @param theD coefficient of sin(x)
-  //! @param theE constant term
-  //! @param theInfBound lower bound for roots (default 0)
-  //! @param theSupBound upper bound for roots (default 2*PI)
-  //! @param theEps tolerance for coefficient comparison
-  //! @return TrigResult containing roots in specified interval
   inline TrigResult Trigonometric(double theA,
                                   double theB,
                                   double theC,
@@ -56,7 +37,6 @@ namespace MathRoot
     TrigResult aResult;
     aResult.Status = MathUtils::Status::OK;
 
-    // Compute working interval
     double aMyBorneInf, aDelta, aMod;
     if (theInfBound <= std::numeric_limits<double>::lowest() / 2.0
         && theSupBound >= std::numeric_limits<double>::max() / 2.0)
@@ -92,7 +72,6 @@ namespace MathRoot
     size_t                aNZer      = 0;
     const double          aDelta_Eps = std::numeric_limits<double>::epsilon() * std::abs(aDelta);
 
-    // Case: A = B = 0 (degree <= 2 in cos/sin)
     if (std::abs(theA) <= theEps && std::abs(theB) <= theEps)
     {
       if (std::abs(theC) <= theEps)
@@ -112,7 +91,7 @@ namespace MathRoot
         }
         else
         {
-          // d*sin(x) + e = 0  =>  sin(x) = -e/d
+
           double aVal = -theE / theD;
           if (std::abs(aVal) > 1.0)
           {
@@ -124,7 +103,6 @@ namespace MathRoot
           aZer[1] = THE_PI - aZer[0];
           aNZer   = 2;
 
-          // Adjust to positive range
           for (size_t i = 0; i < aNZer; ++i)
           {
             if (aZer[i] <= -theEps)
@@ -143,7 +121,7 @@ namespace MathRoot
       }
       else if (std::abs(theD) <= theEps)
       {
-        // c*cos(x) + e = 0  =>  cos(x) = -e/c
+
         double aVal = -theE / theC;
         if (std::abs(aVal) > 1.0)
         {
@@ -152,25 +130,23 @@ namespace MathRoot
         }
 
         double aPrincipal = std::acos(aVal);
-        aZer[0]           = aPrincipal;  // acos gives [0, PI]
-        aZer[1]           = -aPrincipal; // Negative angle
+        aZer[0]           = aPrincipal;
+        aZer[1]           = -aPrincipal;
         aNZer             = 2;
 
-        // For each solution, find the representative in or near the given bounds
         for (size_t i = 0; i < aNZer; ++i)
         {
           double aAngle = aZer[i];
-          // Shift angle to be near the lower bound
-          double aK = std::floor((theInfBound - aAngle) / THE_2PI);
-          aAngle += (aK + 1) * THE_2PI; // Start from a value >= theInfBound - 2*PI
 
-          // Check both this value and the next period
+          double aK = std::floor((theInfBound - aAngle) / THE_2PI);
+          aAngle += (aK + 1) * THE_2PI;
+
           for (int aPeriod = 0; aPeriod < 2; ++aPeriod)
           {
             double aTestAngle = aAngle + aPeriod * THE_2PI;
             if (aTestAngle >= theInfBound - aDelta_Eps && aTestAngle <= theSupBound + aDelta_Eps)
             {
-              // Avoid duplicates
+
               bool aDup = false;
               for (int k = 0; k < aResult.NbRoots; ++k)
               {
@@ -191,8 +167,7 @@ namespace MathRoot
       }
       else
       {
-        // c*cos(x) + d*sin(x) + e = 0
-        // Using t = tan(x/2): (e-c)*t^2 + 2d*t + (e+c) = 0
+
         double aAA = theE - theC;
         double aBB = 2.0 * theD;
         double aCC = theE + theC;
@@ -218,12 +193,12 @@ namespace MathRoot
     }
     else
     {
-      // Special case: A = E = 0
+
       if (std::abs(theA) <= theEps && std::abs(theE) <= theEps)
       {
         if (std::abs(theC) <= theEps)
         {
-          // 2*B*sin*cos + D*sin = 0  =>  sin(x)*(2*B*cos(x) + D) = 0
+
           aZer[0] = 0.0;
           aZer[1] = THE_PI;
           aNZer   = 2;
@@ -267,7 +242,7 @@ namespace MathRoot
         }
         if (std::abs(theD) <= theEps)
         {
-          // 2*B*sin*cos + C*cos = 0  =>  cos(x)*(2*B*sin(x) + C) = 0
+
           aZer[0] = THE_PI / 2.0;
           aZer[1] = THE_PI * 3.0 / 2.0;
           aNZer   = 2;
@@ -311,9 +286,6 @@ namespace MathRoot
         }
       }
 
-      // General case: degree 4 polynomial
-      // t = tan(x/2), then:
-      // ko[0]*t^4 + ko[1]*t^3 + ko[2]*t^2 + ko[3]*t + ko[4] = 0
       double ko0 = theA - theC + theE;
       double ko1 = 2.0 * theD - 4.0 * theB;
       double ko2 = 2.0 * theE - 2.0 * theA;
@@ -340,11 +312,9 @@ namespace MathRoot
         aZer[i] = aPoly.Roots[i];
       }
 
-      // Sort roots
       std::sort(aZer.begin(), aZer.begin() + aNZer);
     }
 
-    // Convert t values to angles and filter by bounds
     for (size_t i = 0; i < aNZer; ++i)
     {
       double aTeta = 2.0 * std::atan(aZer[i]);
@@ -361,7 +331,7 @@ namespace MathRoot
       double aX = aTeta - aMyBorneInf;
       if (aX >= -aDelta_Eps && aX <= aDelta + aDelta_Eps)
       {
-        // Newton refinement with Halley's method fallback for double roots
+
         auto aRefineRoot = [&](double theX) -> double
         {
           constexpr int    THE_MAX_ITER = 20;
@@ -379,7 +349,6 @@ namespace MathRoot
             double aDF =
               -2.0 * theA * aCS + 2.0 * theB * (aCos2 - aSin2) - theC * aSin + theD * aCos;
 
-            // Check if already converged
             if (std::abs(aF) < 1.0e-15)
             {
               break;
@@ -388,25 +357,23 @@ namespace MathRoot
             double aDelta;
             if (std::abs(aDF) < 1.0e-10 * (std::abs(aF) + 1.0))
             {
-              // Near double root: use Halley's method for better convergence
-              // F'' = -2*a*(cos^2-sin^2) - 4*b*cos*sin - c*cos - d*sin
+
               double aD2F =
                 -2.0 * theA * (aCos2 - aSin2) - 4.0 * theB * aCS - theC * aCos - theD * aSin;
               double aDenom = 2.0 * aDF * aDF - aF * aD2F;
               if (std::abs(aDenom) < 1.0e-30)
               {
-                // Can't improve further
+
                 break;
               }
               aDelta = 2.0 * aF * aDF / aDenom;
             }
             else
             {
-              // Standard Newton step
+
               aDelta = aF / aDF;
             }
 
-            // Limit step size to avoid overshooting
             constexpr double THE_MAX_STEP = 0.5;
             if (std::abs(aDelta) > THE_MAX_STEP)
             {
@@ -425,7 +392,6 @@ namespace MathRoot
 
         double aTetaRefined = aRefineRoot(aTeta);
 
-        // Check if Newton didn't diverge too far
         double aDeltaNewton = std::abs(aTetaRefined - aTeta);
         double aSupmInfs100 = (theSupBound - theInfBound) * 0.01;
         if (aDeltaNewton <= aSupmInfs100)
@@ -433,7 +399,6 @@ namespace MathRoot
           aTeta = aTetaRefined;
         }
 
-        // Insert in sorted order, avoiding duplicates
         bool aFound = false;
         for (int k = 0; k < aResult.NbRoots; ++k)
         {
@@ -446,7 +411,7 @@ namespace MathRoot
 
         if (!aFound && aResult.NbRoots < 4)
         {
-          // Insert sorted
+
           int aPos = aResult.NbRoots;
           for (int k = 0; k < aResult.NbRoots; ++k)
           {
@@ -466,7 +431,6 @@ namespace MathRoot
       }
     }
 
-    // Special case: check if PI is a root (when A - C + E = 0)
     if (aResult.NbRoots < 4 && std::abs(theA - theC + theE) <= theEps)
     {
       double aTeta = THE_PI + std::trunc(aMod) * THE_2PI;
@@ -506,13 +470,6 @@ namespace MathRoot
     return aResult;
   }
 
-  //! Solve linear trigonometric equation: d*sin(x) + e = 0.
-  //!
-  //! @param theD coefficient of sin(x)
-  //! @param theE constant term
-  //! @param theInfBound lower bound for roots
-  //! @param theSupBound upper bound for roots
-  //! @return TrigResult containing roots
   inline TrigResult TrigonometricLinear(double theD,
                                         double theE,
                                         double theInfBound = 0.0,
@@ -521,14 +478,6 @@ namespace MathRoot
     return Trigonometric(0.0, 0.0, 0.0, theD, theE, theInfBound, theSupBound);
   }
 
-  //! Solve trigonometric equation: c*cos(x) + d*sin(x) + e = 0.
-  //!
-  //! @param theC coefficient of cos(x)
-  //! @param theD coefficient of sin(x)
-  //! @param theE constant term
-  //! @param theInfBound lower bound for roots
-  //! @param theSupBound upper bound for roots
-  //! @return TrigResult containing roots
   inline TrigResult TrigonometricCDE(double theC,
                                      double theD,
                                      double theE,

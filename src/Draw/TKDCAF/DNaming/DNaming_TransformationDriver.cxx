@@ -40,7 +40,6 @@ IMPLEMENT_STANDARD_RTTIEXT(DNaming_TransformationDriver, TFunction_Driver)
 #define EDGES_TAG 2
 #define VERTEX_TAG 3
 
-// #define MDTV_DEB_TRSF
 #ifdef OCCT_DEBUG_TRSF
   #include <TCollection_AsciiString.hpp>
   #include <BRepTools.hpp>
@@ -53,29 +52,16 @@ void PrintE(const TDF_Label& label)
   std::cout << "LabelEntry = " << entry << std::endl;
 }
 #endif
-//=================================================================================================
 
 DNaming_TransformationDriver::DNaming_TransformationDriver() = default;
 
-//=======================================================================
-// function : Validate
-// purpose  : Validates labels of a function in <log>.
-//=======================================================================
 void DNaming_TransformationDriver::Validate(occ::handle<TFunction_Logbook>&) const {}
 
-//=======================================================================
-// function : MustExecute
-// purpose  : Analyse in <log> if the loaded function must be executed
-//=======================================================================
 bool DNaming_TransformationDriver::MustExecute(const occ::handle<TFunction_Logbook>&) const
 {
   return true;
 }
 
-//=======================================================================
-// function : Execute
-// purpose  : Execute the function and push in <log> the impacted labels
-//=======================================================================
 int DNaming_TransformationDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
 {
   occ::handle<TFunction_Function> aFunction;
@@ -97,7 +83,7 @@ int DNaming_TransformationDriver::Execute(occ::handle<TFunction_Logbook>& theLog
     aFunction->SetFailure(WRONG_CONTEXT);
     return -1;
   }
-  //
+
   gp_Trsf              aTransformation;
   const Standard_GUID& aGUID = aFunction->GetDriverGUID();
 
@@ -163,9 +149,7 @@ int DNaming_TransformationDriver::Execute(occ::handle<TFunction_Logbook>& theLog
     aFunction->SetFailure(WRONG_ARGUMENT);
     return -1;
   }
-  //
 
-  // Naming
   LoadNamingDS(RESPOSITION(aFunction), aContextNS, aTransformation);
 
   theLog->SetValid(RESPOSITION(aFunction), true);
@@ -173,7 +157,6 @@ int DNaming_TransformationDriver::Execute(occ::handle<TFunction_Logbook>& theLog
   return 0;
 }
 
-//=================================================================================
 static void BuildMap(const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& SMap,
                      BRepBuilderAPI_Transform&                                     Transformer,
                      NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& M)
@@ -189,7 +172,6 @@ static void BuildMap(const NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher
   }
 }
 
-//=================================================================================
 static void CollectShapes(const TopoDS_Shape&                                              SSh,
                           TopoDS_Compound&                                                 C,
                           NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>&          SMap,
@@ -355,8 +337,6 @@ static void CollectShapes(const TopoDS_Shape&                                   
         if (SMap.Add(SSh))
         {
           aB.Add(C, SSh);
-          //	if(isPrimitive)
-          //	  TagMap.Bind(SSh, aNS->Label().Tag());
         }
     }
     break;
@@ -364,8 +344,6 @@ static void CollectShapes(const TopoDS_Shape&                                   
       break;
   }
 }
-
-//=================================================================================================
 
 void DNaming_TransformationDriver::LoadNamingDS(const TDF_Label& theResultLabel,
                                                 const occ::handle<TNaming_NamedShape>& theSourceNS,
@@ -397,17 +375,15 @@ void DNaming_TransformationDriver::LoadNamingDS(const TDF_Label& theResultLabel,
   aB.MakeCompound(aCompShape);
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>          aSMap;
   NCollection_DataMap<TopoDS_Shape, int, TopTools_ShapeMapHasher> aTagMap;
-  // Collect  shapes
+
   if (aSMap.Add(aSrcShape))
     aB.Add(aCompShape, aSrcShape);
   CollectShapes(aSrcShape, aCompShape, aSMap, aSrcLabel, aTagMap, isPrimitive);
 
-  // Transform
   BRepBuilderAPI_Transform aTransformer(aCompShape, theTrsf, false);
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> aTMap;
   BuildMap(aSMap, aTransformer, aTMap);
 
-  // Load
   TopoDS_Shape aNewSh;
   if (aTMap.IsBound(aSrcShape))
     aNewSh = aTMap(aSrcShape);

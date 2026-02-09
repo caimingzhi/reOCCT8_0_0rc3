@@ -8,8 +8,6 @@
 
 #define Eps 1.e-15
 
-//=================================================================================================
-
 BlendFunc_ConstThroat::BlendFunc_ConstThroat(const occ::handle<Adaptor3d_Surface>& S1,
                                              const occ::handle<Adaptor3d_Surface>& S2,
                                              const occ::handle<Adaptor3d_Curve>&   C)
@@ -22,15 +20,11 @@ BlendFunc_ConstThroat::BlendFunc_ConstThroat(const occ::handle<Adaptor3d_Surface
 {
 }
 
-//=================================================================================================
-
 void BlendFunc_ConstThroat::Set(const double aThroat, const double, const int Choix)
 {
   Throat = aThroat;
   choix  = Choix;
 }
-
-//=================================================================================================
 
 void BlendFunc_ConstThroat::Set(const double Param)
 {
@@ -40,8 +34,6 @@ void BlendFunc_ConstThroat::Set(const double Param)
   nplan  = d1gui.Normalized();
   theD   = -(nplan.XYZ().Dot(ptgui.XYZ()));
 }
-
-//=================================================================================================
 
 bool BlendFunc_ConstThroat::IsSolution(const math_Vector& Sol, const double Tol)
 {
@@ -94,8 +86,6 @@ bool BlendFunc_ConstThroat::IsSolution(const math_Vector& Sol, const double Tol)
   return false;
 }
 
-//=================================================================================================
-
 bool BlendFunc_ConstThroat::Value(const math_Vector& X, math_Vector& F)
 {
   surf1->D0(X(1), X(2), pts1);
@@ -116,8 +106,6 @@ bool BlendFunc_ConstThroat::Value(const math_Vector& X, math_Vector& F)
 
   return true;
 }
-
-//=================================================================================================
 
 bool BlendFunc_ConstThroat::Derivatives(const math_Vector& X, math_Matrix& D)
 {
@@ -144,28 +132,20 @@ bool BlendFunc_ConstThroat::Derivatives(const math_Vector& X, math_Matrix& D)
   return true;
 }
 
-//=================================================================================================
-
 const gp_Pnt& BlendFunc_ConstThroat::PointOnS1() const
 {
   return pts1;
 }
-
-//=================================================================================================
 
 const gp_Pnt& BlendFunc_ConstThroat::PointOnS2() const
 {
   return pts2;
 }
 
-//=================================================================================================
-
 bool BlendFunc_ConstThroat::IsTangencyPoint() const
 {
   return istangent;
 }
-
-//=================================================================================================
 
 const gp_Vec& BlendFunc_ConstThroat::TangentOnS1() const
 {
@@ -174,16 +154,12 @@ const gp_Vec& BlendFunc_ConstThroat::TangentOnS1() const
   return tg1;
 }
 
-//=================================================================================================
-
 const gp_Vec& BlendFunc_ConstThroat::TangentOnS2() const
 {
   if (istangent)
     throw Standard_DomainError("BlendFunc_ConstThroat::TangentOnS2");
   return tg2;
 }
-
-//=================================================================================================
 
 const gp_Vec2d& BlendFunc_ConstThroat::Tangent2dOnS1() const
 {
@@ -192,16 +168,12 @@ const gp_Vec2d& BlendFunc_ConstThroat::Tangent2dOnS1() const
   return tg12d;
 }
 
-//=================================================================================================
-
 const gp_Vec2d& BlendFunc_ConstThroat::Tangent2dOnS2() const
 {
   if (istangent)
     throw Standard_DomainError("BlendFunc_ConstThroat::Tangent2dOnS2");
   return tg22d;
 }
-
-//=================================================================================================
 
 void BlendFunc_ConstThroat::Tangent(const double U1,
                                     const double V1,
@@ -241,8 +213,6 @@ void BlendFunc_ConstThroat::Tangent(const double U1,
   if (revL)
     TgL.Reverse();
 }
-
-//=================================================================================================
 
 double BlendFunc_ConstThroat::GetSectionSize() const
 {

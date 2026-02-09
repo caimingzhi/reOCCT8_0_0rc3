@@ -5,16 +5,11 @@
 #include <gp_XY.hpp>
 #include <NCollection_CellFilter.hpp>
 
-//! Auxiliary class to find circles shot by the given point.
 class BRepMesh_CircleInspector : public NCollection_CellFilter_InspectorXY
 {
 public:
   typedef int Target;
 
-  //! Constructor.
-  //! @param theTolerance tolerance to be used for identification of shot circles.
-  //! @param theReservedSize size to be reserved for vector of circles.
-  //! @param theAllocator memory allocator to be used by internal collections.
   BRepMesh_CircleInspector(const double                                 theTolerance,
                            const int                                    theReservedSize,
                            const occ::handle<NCollection_IncAllocator>& theAllocator)
@@ -24,36 +19,23 @@ public:
   {
   }
 
-  //! Adds the circle to vector of circles at the given position.
-  //! @param theIndex position of circle in the vector.
-  //! @param theCircle circle to be added.
   void Bind(const int theIndex, const BRepMesh_Circle& theCircle)
   {
     myCircles.SetValue(theIndex, theCircle);
   }
 
-  //! Resutns vector of registered circles.
   const IMeshData::VectorOfCircle& Circles() const { return myCircles; }
 
-  //! Returns circle with the given index.
-  //! @param theIndex index of circle.
-  //! @return circle with the given index.
   BRepMesh_Circle& Circle(const int theIndex) { return myCircles(theIndex); }
 
-  //! Set reference point to be checked.
-  //! @param thePoint bullet point.
   void SetPoint(const gp_XY& thePoint)
   {
     myResIndices.Clear();
     myPoint = thePoint;
   }
 
-  //! Returns list of circles shot by the reference point.
   IMeshData::ListOfInteger& GetShotCircles() { return myResIndices; }
 
-  //! Performs inspection of a circle with the given index.
-  //! @param theTargetIndex index of a circle to be checked.
-  //! @return status of the check.
   NCollection_CellFilter_Action Inspect(const int theTargetIndex)
   {
     BRepMesh_Circle& aCircle = myCircles(theTargetIndex);
@@ -66,30 +48,12 @@ public:
     const double aDX = myPoint.ChangeCoord(1) - aLoc.ChangeCoord(1);
     const double aDY = myPoint.ChangeCoord(2) - aLoc.ChangeCoord(2);
 
-    // This check is wrong. It is better to use
-    //
-    //   const double aR = aRadius + aToler;
-    //   if ((aDX * aDX + aDY * aDY) <= aR * aR)
-    //   {
-    //     ...
-    //   }
-
-    // where aToler = sqrt(mySqTolerance). Taking into account the fact
-    // that the input parameter of the class (see constructor) is linear
-    //(not quadratic) tolerance there is no point in square root computation.
-    // Simply, we do not need to compute square of the input tolerance and to
-    // assign it to mySqTolerance. The input linear tolerance is needed to be used.
-
-    // However, this change leads to hangs the test case "perf mesh bug27119".
-    // So, this correction is better to be implemented in the future.
-
     if ((aDX * aDX + aDY * aDY) - (aRadius * aRadius) <= mySqTolerance)
       myResIndices.Append(theTargetIndex);
 
     return CellFilter_Keep;
   }
 
-  //! Checks indices for equality.
   static bool IsEqual(const int theIndex, const int theTargetIndex)
   {
     return (theIndex == theTargetIndex);

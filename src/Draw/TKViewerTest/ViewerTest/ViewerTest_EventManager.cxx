@@ -12,7 +12,7 @@
 #include <ViewerTest.hpp>
 
 #if defined(_WIN32)
-//
+
 #elif defined(HAVE_XLIB)
   #include <Xw_Window.hpp>
   #include <X11/Xlib.h>
@@ -21,8 +21,6 @@
   #include <Wasm_Window.hpp>
   #include <emscripten.h>
   #include <emscripten/html5.h>
-
-//=================================================================================================
 
 void ViewerTest_EventManager::onWasmRedrawView(void*)
 {
@@ -45,8 +43,6 @@ Standard_IMPORT bool Draw_Interprete(const char* theCommand);
 
 IMPLEMENT_STANDARD_RTTIEXT(ViewerTest_EventManager, Standard_Transient)
 
-//=================================================================================================
-
 const occ::handle<AIS_AnimationCamera>& ViewerTest_EventManager::GlobalViewAnimation()
 {
   static occ::handle<AIS_AnimationCamera> THE_CAMERA_ANIM =
@@ -54,8 +50,6 @@ const occ::handle<AIS_AnimationCamera>& ViewerTest_EventManager::GlobalViewAnima
   THE_CAMERA_ANIM->SetOwnDuration(0.5);
   return THE_CAMERA_ANIM;
 }
-
-//=================================================================================================
 
 ViewerTest_EventManager::ViewerTest_EventManager(const occ::handle<V3d_View>&               theView,
                                                  const occ::handle<AIS_InteractiveContext>& theCtx)
@@ -110,12 +104,7 @@ ViewerTest_EventManager::ViewerTest_EventManager(const occ::handle<V3d_View>&   
                    (unsigned int)Aspect_VKey_Up | (unsigned int)Aspect_VKeyFlags_SHIFT);
   addActionHotKeys(Aspect_VKey_NavSlideDown,
                    (unsigned int)Aspect_VKey_Down | (unsigned int)Aspect_VKeyFlags_SHIFT);
-
-  // window could be actually not yet set to the View
-  // SetupWindowCallbacks (theView->Window());
 }
-
-//=================================================================================================
 
 ViewerTest_EventManager::~ViewerTest_EventManager()
 {
@@ -125,8 +114,6 @@ ViewerTest_EventManager::~ViewerTest_EventManager()
     myViewAnimation->SetView(occ::handle<V3d_View>());
   }
 }
-
-//=================================================================================================
 
 bool ViewerTest_EventManager::UpdateMouseClick(const NCollection_Vec2<int>& thePoint,
                                                Aspect_VKeyMouse             theButton,
@@ -141,8 +128,6 @@ bool ViewerTest_EventManager::UpdateMouseClick(const NCollection_Vec2<int>& theP
   return AIS_ViewController::UpdateMouseClick(thePoint, theButton, theModifiers, theIsDoubleClick);
 }
 
-//=================================================================================================
-
 bool ViewerTest_EventManager::UpdateMouseScroll(const Aspect_ScrollDelta& theDelta)
 {
   if (!myView.IsNull() && (myView->IsSubview() || !myView->Subviews().IsEmpty()))
@@ -151,7 +136,7 @@ bool ViewerTest_EventManager::UpdateMouseScroll(const Aspect_ScrollDelta& theDel
     occ::handle<V3d_View> aPickedView = aParent->PickSubview(theDelta.Point);
     if (!aPickedView.IsNull() && aPickedView != myView)
     {
-      // switch input focus to another subview
+
       OnSubviewChanged(myCtx, myView, aPickedView);
       return true;
     }
@@ -159,8 +144,6 @@ bool ViewerTest_EventManager::UpdateMouseScroll(const Aspect_ScrollDelta& theDel
 
   return AIS_ViewController::UpdateMouseScroll(theDelta);
 }
-
-//=================================================================================================
 
 bool ViewerTest_EventManager::UpdateMouseButtons(const NCollection_Vec2<int>& thePoint,
                                                  Aspect_VKeyMouse             theButtons,
@@ -175,7 +158,7 @@ bool ViewerTest_EventManager::UpdateMouseButtons(const NCollection_Vec2<int>& th
     occ::handle<V3d_View> aPickedView = aParent->PickSubview(thePoint);
     if (!aPickedView.IsNull() && aPickedView != myView)
     {
-      // switch input focus to another subview
+
       OnSubviewChanged(myCtx, myView, aPickedView);
     }
   }
@@ -198,8 +181,6 @@ bool ViewerTest_EventManager::UpdateMouseButtons(const NCollection_Vec2<int>& th
   return AIS_ViewController::UpdateMouseButtons(thePoint, theButtons, theModifiers, theIsEmulated);
 }
 
-//=================================================================================================
-
 void ViewerTest_EventManager::ProcessExpose()
 {
   if (!myView.IsNull())
@@ -208,16 +189,11 @@ void ViewerTest_EventManager::ProcessExpose()
   }
 }
 
-//=================================================================================================
-
 void ViewerTest_EventManager::handleViewRedraw(const occ::handle<AIS_InteractiveContext>& theCtx,
                                                const occ::handle<V3d_View>&               theView)
 {
   AIS_ViewController::handleViewRedraw(theCtx, theView);
 
-  // On non-Windows platforms Aspect_Window::InvalidateContent() from rendering thread does not work
-  // as expected as in Tcl event loop the new message might go to sleep with new event remaining in
-  // queue. As a workaround - use dedicated background thread to ping Tcl event loop.
   if (myToAskNextFrame)
   {
     ViewerTest_ContinuousRedrawer& aRedrawer = ViewerTest_ContinuousRedrawer::Instance();
@@ -229,7 +205,6 @@ void ViewerTest_EventManager::handleViewRedraw(const occ::handle<AIS_Interactive
 #endif
     }
 
-    // ask more frames
     if (++myNbUpdateRequests == 1)
     {
 #if defined(__EMSCRIPTEN__)
@@ -247,8 +222,6 @@ void ViewerTest_EventManager::handleViewRedraw(const occ::handle<AIS_Interactive
   }
 }
 
-//=================================================================================================
-
 void ViewerTest_EventManager::ProcessConfigure(bool theIsResized)
 {
   if (myView.IsNull())
@@ -257,7 +230,7 @@ void ViewerTest_EventManager::ProcessConfigure(bool theIsResized)
   }
 
   if (!theIsResized
-      // track window moves to reverse stereo pair
+
       && myView->RenderingParams().StereoMode != Graphic3d_StereoMode_RowInterlaced
       && myView->RenderingParams().StereoMode != Graphic3d_StereoMode_ColumnInterlaced
       && myView->RenderingParams().StereoMode != Graphic3d_StereoMode_ChessBoard)
@@ -279,16 +252,12 @@ void ViewerTest_EventManager::ProcessConfigure(bool theIsResized)
   FlushViewEvents(myCtx, myView, true);
 }
 
-//=================================================================================================
-
 void ViewerTest_EventManager::OnSubviewChanged(const occ::handle<AIS_InteractiveContext>&,
                                                const occ::handle<V3d_View>&,
                                                const occ::handle<V3d_View>& theNewView)
 {
   ViewerTest::ActivateView(theNewView, false);
 }
-
-//=================================================================================================
 
 void ViewerTest_EventManager::ProcessInput()
 {
@@ -298,22 +267,16 @@ void ViewerTest_EventManager::ProcessInput()
   }
 
 #if defined(__EMSCRIPTEN__)
-  // Queue onWasmRedrawView() callback to redraw canvas after all user input is flushed by browser.
-  // Redrawing viewer on every single message would be a pointless waste of resources,
-  // as user will see only the last drawn frame due to WebGL implementation details.
-  // -1 in emscripten_async_call() redirects to requestAnimationFrame();
-  // requestPostAnimationFrame() is a better under development alternative.
+
   if (++myNbUpdateRequests == 1)
   {
     emscripten_async_call(onWasmRedrawView, this, -1);
   }
 #else
-  // handle synchronously
+
   ProcessExpose();
 #endif
 }
-
-//=================================================================================================
 
 bool ViewerTest_EventManager::navigationKeyModifierSwitch(unsigned int theModifOld,
                                                           unsigned int theModifNew,
@@ -348,8 +311,6 @@ bool ViewerTest_EventManager::navigationKeyModifierSwitch(unsigned int theModifO
   return hasActions;
 }
 
-//=================================================================================================
-
 void ViewerTest_EventManager::KeyDown(Aspect_VKey theKey, double theTime, double thePressure)
 {
   const unsigned int aModifOld = myKeys.Modifiers();
@@ -358,7 +319,6 @@ void ViewerTest_EventManager::KeyDown(Aspect_VKey theKey, double theTime, double
   const unsigned int aModifNew = myKeys.Modifiers();
   if (aModifNew != aModifOld && navigationKeyModifierSwitch(aModifOld, aModifNew, theTime))
   {
-    // modifier key just pressed
   }
 
   Aspect_VKey anAction = Aspect_VKey_UNKNOWN;
@@ -367,8 +327,6 @@ void ViewerTest_EventManager::KeyDown(Aspect_VKey theKey, double theTime, double
     AIS_ViewController::KeyDown(anAction, theTime, thePressure);
   }
 }
-
-//=================================================================================================
 
 void ViewerTest_EventManager::KeyUp(Aspect_VKey theKey, double theTime)
 {
@@ -385,13 +343,10 @@ void ViewerTest_EventManager::KeyUp(Aspect_VKey theKey, double theTime)
   const unsigned int aModifNew = myKeys.Modifiers();
   if (aModifNew != aModifOld && navigationKeyModifierSwitch(aModifOld, aModifNew, theTime))
   {
-    // modifier key released
   }
 
   ProcessKeyPress(theKey | aModifNew);
 }
-
-//=================================================================================================
 
 void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
 {
@@ -402,7 +357,7 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
 
   switch (theKey)
   {
-    case Aspect_VKey_Backspace: // AXO
+    case Aspect_VKey_Backspace:
     {
       if (!ViewerTest_V3dView::IsCurrentViewIn2DMode())
       {
@@ -422,14 +377,14 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
       }
       break;
     }
-    case Aspect_VKey_H: // HLR
+    case Aspect_VKey_H:
     {
       std::cout << "HLR\n";
       myView->SetComputedMode(!myView->ComputedMode());
       myView->Redraw();
       break;
     }
-    case Aspect_VKey_P: // Type of HLR
+    case Aspect_VKey_P:
     {
       myCtx->DefaultDrawer()->SetTypeOfHLR(myCtx->DefaultDrawer()->TypeOfHLR() == Prs3d_TOH_Algo
                                              ? Prs3d_TOH_PolyAlgo
@@ -495,7 +450,7 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
       }
       break;
     }
-    case Aspect_VKey_U: // Unset display mode
+    case Aspect_VKey_U:
     {
       std::cout << "reset display mode to defaults\n";
       if (myCtx->NbSelected() == 0)
@@ -594,7 +549,7 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
     case Aspect_VKey_NavSpeedDecrease:
     case Aspect_VKey_NavSpeedIncrease:
     {
-      // handle slide speed
+
       float aNewSpeed = theKey == Aspect_VKey_NavSpeedDecrease ? myWalkSpeedRelative * 0.5f
                                                                : myWalkSpeedRelative * 2.0f;
       if (aNewSpeed >= 0.00001f && aNewSpeed <= 10.0f)
@@ -640,7 +595,7 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
 }
 
 #if defined(__EMSCRIPTEN__)
-//! Handle browser window resize event.
+
 static EM_BOOL onResizeCallback(int theEventType, const EmscriptenUiEvent* theEvent, void*)
 {
   occ::handle<ViewerTest_EventManager> aViewCtrl = ViewerTest::CurrentEventManager();
@@ -653,18 +608,14 @@ static EM_BOOL onResizeCallback(int theEventType, const EmscriptenUiEvent* theEv
   return EM_FALSE;
 }
 
-//! Update canvas bounding rectangle.
 EM_JS(void, occJSUpdateBoundingClientRect, (), {
   Module._myCanvasRect = Module.canvas.getBoundingClientRect();
 });
 
-//! Get canvas bounding top.
 EM_JS(int, occJSGetBoundingClientTop, (), { return Math.round(Module._myCanvasRect.top); });
 
-//! Get canvas bounding left.
 EM_JS(int, occJSGetBoundingClientLeft, (), { return Math.round(Module._myCanvasRect.left); });
 
-//! Handle mouse input event.
 static EM_BOOL onWasmMouseCallback(int theEventType, const EmscriptenMouseEvent* theEvent, void*)
 {
   occ::handle<ViewerTest_EventManager> aViewCtrl = ViewerTest::CurrentEventManager();
@@ -674,8 +625,7 @@ static EM_BOOL onWasmMouseCallback(int theEventType, const EmscriptenMouseEvent*
       occ::down_cast<Wasm_Window>(ViewerTest::CurrentView()->Window());
     if (theEventType == EMSCRIPTEN_EVENT_MOUSEMOVE || theEventType == EMSCRIPTEN_EVENT_MOUSEUP)
     {
-      // these events are bound to EMSCRIPTEN_EVENT_TARGET_WINDOW, and coordinates should be
-      // converted
+
       occJSUpdateBoundingClientRect();
       EmscriptenMouseEvent anEvent = *theEvent;
       anEvent.targetX -= occJSGetBoundingClientLeft();
@@ -689,7 +639,6 @@ static EM_BOOL onWasmMouseCallback(int theEventType, const EmscriptenMouseEvent*
   return EM_FALSE;
 }
 
-//! Handle mouse wheel event.
 static EM_BOOL onWasmWheelCallback(int theEventType, const EmscriptenWheelEvent* theEvent, void*)
 {
   occ::handle<ViewerTest_EventManager> aViewCtrl = ViewerTest::CurrentEventManager();
@@ -702,7 +651,6 @@ static EM_BOOL onWasmWheelCallback(int theEventType, const EmscriptenWheelEvent*
   return EM_FALSE;
 }
 
-//! Handle touch input event.
 static EM_BOOL onWasmTouchCallback(int theEventType, const EmscriptenTouchEvent* theEvent, void*)
 {
   occ::handle<ViewerTest_EventManager> aViewCtrl = ViewerTest::CurrentEventManager();
@@ -715,7 +663,6 @@ static EM_BOOL onWasmTouchCallback(int theEventType, const EmscriptenTouchEvent*
   return EM_FALSE;
 }
 
-//! Handle keyboard input event.
 static EM_BOOL onWasmKeyCallback(int theEventType, const EmscriptenKeyboardEvent* theEvent, void*)
 {
   occ::handle<ViewerTest_EventManager> aViewCtrl = ViewerTest::CurrentEventManager();
@@ -729,7 +676,6 @@ static EM_BOOL onWasmKeyCallback(int theEventType, const EmscriptenKeyboardEvent
   return EM_FALSE;
 }
 
-//! Handle focus change event.
 static EM_BOOL onWasmFocusCallback(int theEventType, const EmscriptenFocusEvent* theEvent, void*)
 {
   occ::handle<ViewerTest_EventManager> aViewCtrl = ViewerTest::CurrentEventManager();
@@ -743,19 +689,16 @@ static EM_BOOL onWasmFocusCallback(int theEventType, const EmscriptenFocusEvent*
 }
 #endif
 
-//=================================================================================================
-
 void ViewerTest_EventManager::SetupWindowCallbacks(const occ::handle<Aspect_Window>& theWin)
 {
 #ifdef _WIN32
   (void)theWin;
 #elif defined(HAVE_XLIB)
-  // X11
+
   Window   anXWin     = (Window)theWin->NativeHandle();
   Display* anXDisplay = (Display*)theWin->DisplayConnection()->GetDisplayAspect();
   XSynchronize(anXDisplay, 1);
 
-  // X11 : For keyboard on SUN
   XWMHints aWmHints;
   memset(&aWmHints, 0, sizeof(aWmHints));
   aWmHints.flags = InputHint;
@@ -781,24 +724,15 @@ void ViewerTest_EventManager::SetupWindowCallbacks(const occ::handle<Aspect_Wind
 
   const char*   aTargetId    = aWindow->CanvasId().ToCString();
   const EM_BOOL toUseCapture = EM_TRUE;
-  void*         anOpaque     = NULL; // this; // unused
+  void*         anOpaque     = NULL;
 
-  // make sure to clear previously set listeners (e.g. created by another ViewerTest_EventManager
-  // instance)
   emscripten_html5_remove_all_event_listeners();
 
-  // resize event implemented only for a window by browsers,
-  // so that if web application changes canvas size by other means it should use another way to tell
-  // OCCT about resize
   emscripten_set_resize_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW,
                                  anOpaque,
                                  toUseCapture,
                                  onResizeCallback);
 
-  // bind these events to window to track mouse movements outside of canvas
-  // emscripten_set_mouseup_callback    (aTargetId, anOpaque, toUseCapture, onWasmMouseCallback);
-  // emscripten_set_mousemove_callback  (aTargetId, anOpaque, toUseCapture, onWasmMouseCallback);
-  // emscripten_set_mouseleave_callback (aTargetId, anOpaque, toUseCapture, onWasmMouseCallback);
   emscripten_set_mouseup_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW,
                                   anOpaque,
                                   toUseCapture,
@@ -819,11 +753,9 @@ void ViewerTest_EventManager::SetupWindowCallbacks(const occ::handle<Aspect_Wind
   emscripten_set_touchmove_callback(aTargetId, anOpaque, toUseCapture, onWasmTouchCallback);
   emscripten_set_touchcancel_callback(aTargetId, anOpaque, toUseCapture, onWasmTouchCallback);
 
-  // keyboard input requires a focusable element or EMSCRIPTEN_EVENT_TARGET_WINDOW
   emscripten_set_keydown_callback(aTargetId, anOpaque, toUseCapture, onWasmKeyCallback);
   emscripten_set_keyup_callback(aTargetId, anOpaque, toUseCapture, onWasmKeyCallback);
-  // emscripten_set_focus_callback    (aTargetId, anOpaque, toUseCapture, onWasmFocusCallback);
-  // emscripten_set_focusin_callback  (aTargetId, anOpaque, toUseCapture, onWasmFocusCallback);
+
   emscripten_set_focusout_callback(aTargetId, anOpaque, toUseCapture, onWasmFocusCallback);
 #else
   (void)theWin;

@@ -7,8 +7,6 @@
 #include <Standard_Integer.hpp>
 class gp_XY;
 
-//! define a PinPoint G0 Constraint used to load a Non Linear
-//! Plate
 class NLPlate_HPG0Constraint : public NLPlate_HGPPConstraint
 {
 

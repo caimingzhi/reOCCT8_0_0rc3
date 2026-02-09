@@ -1,4 +1,4 @@
-// Created on : Thu Mar 24 18:30:11 2022
+
 
 #include "RWStepVisual_RWCubicBezierTriangulatedFace.hpp"
 #include <StepVisual_CubicBezierTriangulatedFace.hpp>
@@ -15,11 +15,7 @@
 #include <Standard_Real.hpp>
 #include <StepVisual_FaceOrSurface.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWCubicBezierTriangulatedFace::RWStepVisual_RWCubicBezierTriangulatedFace() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWCubicBezierTriangulatedFace::ReadStep(
   const occ::handle<StepData_StepReaderData>&                theData,
@@ -27,18 +23,14 @@ void RWStepVisual_RWCubicBezierTriangulatedFace::ReadStep(
   occ::handle<Interface_Check>&                              theCheck,
   const occ::handle<StepVisual_CubicBezierTriangulatedFace>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 6, theCheck, "cubic_bezier_triangulated_face"))
   {
     return;
   }
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theCheck, aRepresentationItem_Name);
-
-  // Inherited fields of TessellatedFace
 
   occ::handle<StepVisual_CoordinatesList> aTessellatedFace_Coordinates;
   theData->ReadEntity(theNum,
@@ -90,8 +82,6 @@ void RWStepVisual_RWCubicBezierTriangulatedFace::ReadStep(
     aTessellatedFace_GeometricLink   = StepVisual_FaceOrSurface();
   }
 
-  // Own fields of CubicBezierTriangulatedFace
-
   occ::handle<NCollection_HArray2<int>> aCtriangles;
   int                                   sub6 = 0;
   if (theData->ReadSubList(theNum, 6, "ctriangles", theCheck, sub6))
@@ -115,7 +105,6 @@ void RWStepVisual_RWCubicBezierTriangulatedFace::ReadStep(
     }
   }
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aTessellatedFace_Coordinates,
                aTessellatedFace_Pnmax,
@@ -125,18 +114,12 @@ void RWStepVisual_RWCubicBezierTriangulatedFace::ReadStep(
                aCtriangles);
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWCubicBezierTriangulatedFace::WriteStep(
   StepData_StepWriter&                                       theSW,
   const occ::handle<StepVisual_CubicBezierTriangulatedFace>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Own fields of TessellatedFace
 
   theSW.Send(theEnt->Coordinates());
 
@@ -165,8 +148,6 @@ void RWStepVisual_RWCubicBezierTriangulatedFace::WriteStep(
     theSW.SendUndef();
   }
 
-  // Own fields of CubicBezierTriangulatedFace
-
   theSW.OpenSub();
   for (int i5 = 1; i5 <= theEnt->Ctriangles()->RowLength(); i5++)
   {
@@ -182,16 +163,10 @@ void RWStepVisual_RWCubicBezierTriangulatedFace::WriteStep(
   theSW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWCubicBezierTriangulatedFace::Share(
   const occ::handle<StepVisual_CubicBezierTriangulatedFace>& theEnt,
   Interface_EntityIterator&                                  theIter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of TessellatedFace
 
   theIter.AddItem(theEnt->StepVisual_TessellatedFace::Coordinates());
 
@@ -199,6 +174,4 @@ void RWStepVisual_RWCubicBezierTriangulatedFace::Share(
   {
     theIter.AddItem(theEnt->StepVisual_TessellatedFace::GeometricLink().Value());
   }
-
-  // Own fields of CubicBezierTriangulatedFace
 }

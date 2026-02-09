@@ -27,8 +27,6 @@
 #include <Transfer_FinderProcess.hpp>
 #include <TransferBRep_ShapeMapper.hpp>
 
-//=================================================================================================
-
 TopoDSToStep_MakeStepWire::TopoDSToStep_MakeStepWire()
     : myError(TopoDSToStep_WireOther)
 {
@@ -44,16 +42,12 @@ TopoDSToStep_MakeStepWire::TopoDSToStep_MakeStepWire(const TopoDS_Wire&         
   Init(W, T, FP, theLocalFactors);
 }
 
-//=================================================================================================
-
 void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         aWire,
                                      TopoDSToStep_Tool&                         aTool,
                                      const occ::handle<Transfer_FinderProcess>& FP,
                                      const StepData_Factors&                    theLocalFactors)
 {
-  // ----------------------------------------------------------------
-  // The Wire is given in its relative orientation (i.e. in the face)
-  // ----------------------------------------------------------------
+
   aTool.SetCurrentWire(aWire);
 
   if (aTool.IsBound(aWire))
@@ -75,9 +69,6 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
 
   NCollection_Sequence<occ::handle<Standard_Transient>> mySeq;
 
-  // --------
-  // Polyloop
-  // --------
   if (aTool.Faceted())
   {
     occ::handle<StepShape_VertexPoint>                   VertexPoint;
@@ -143,9 +134,7 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
       return;
     }
   }
-  // --------
-  // EdgeLoop
-  // --------
+
   else
   {
     occ::handle<StepShape_TopologicalRepresentationItem> Gpms;
@@ -156,16 +145,10 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
     const TopoDS_Wire          ForwardWire = TopoDS::Wire(aWire.Oriented(TopAbs_FORWARD));
     occ::handle<ShapeFix_Wire> STW =
       new ShapeFix_Wire(ForwardWire, aTool.CurrentFace(), Precision::Confusion());
-    // for toroidal like surfaces we need to use both (3d and 2d) mode to correctly reorder the
-    // edges
+
     STW->FixReorder(true);
     occ::handle<ShapeExtend_WireData> anExtWire = STW->WireData();
 
-    //: abv 04.05.00: CAX-IF TRJ4: writing complete sphere with single vertex_loop
-    // check that whole wire is one seam (perhaps made of several seam edges)
-    // pdn remove degenerated pcurves
-
-    // collect not degenerated edges
     occ::handle<ShapeExtend_WireData> anExtWire2 = new ShapeExtend_WireData;
     for (int ie = 1; ie <= anExtWire->NbEdges(); ie++)
     {
@@ -175,12 +158,12 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
         anExtWire2->Add(anEdge);
       }
     }
-    // check for seam edges
+
     int nb = anExtWire2->NbEdges();
     if (nb % 2 == 0)
     {
       int ie;
-      // check if two adjacent edges are the same
+
       for (ie = 1; ie < nb; ie++)
       {
         if (anExtWire2->Edge(ie).IsSame(anExtWire2->Edge(ie + 1)))
@@ -188,10 +171,10 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
           break;
         }
       }
-      // if found seam edges
+
       if (ie < nb)
       {
-        // make the first edge from pair last
+
         anExtWire2->SetLast(ie);
         for (ie = nb / 2 + 1; ie <= nb; ie++)
         {
@@ -202,7 +185,7 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
         }
         if (ie > nb)
         {
-          // make vertex_loop
+
           ShapeAnalysis_Edge                    sae;
           TopoDS_Vertex                         V = sae.FirstVertex(anExtWire2->Edge(1));
           TopoDSToStep_MakeStepVertex           mkV(V, aTool, FP, theLocalFactors);
@@ -221,9 +204,7 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
     for (int nEdge = 1; nEdge <= anExtWire->NbEdges(); nEdge++)
     {
       const TopoDS_Edge anEdge = anExtWire->Edge(nEdge);
-      // ---------------------------------
-      // --- Is the edge Degenerated ? ---
-      // ---------------------------------
+
       double                    cf, cl;
       occ::handle<Geom2d_Curve> theC2d =
         BRep_Tool::CurveOnSurface(anEdge, aTool.CurrentFace(), cf, cl);
@@ -282,15 +263,11 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
   }
 }
 
-//=================================================================================================
-
 const occ::handle<StepShape_TopologicalRepresentationItem>& TopoDSToStep_MakeStepWire::Value() const
 {
   StdFail_NotDone_Raise_if(!done, "TopoDSToStep_MakeStepWire::Value() - no result");
   return myResult;
 }
-
-//=================================================================================================
 
 TopoDSToStep_MakeWireError TopoDSToStep_MakeStepWire::Error() const
 {

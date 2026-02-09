@@ -7,7 +7,6 @@
 class XmlMDF_ADriverTable;
 class Message_Messenger;
 
-//! retrieval driver of a XS document
 class XmlXCAFDrivers_DocumentRetrievalDriver : public XmlDrivers_DocumentRetrievalDriver
 {
 

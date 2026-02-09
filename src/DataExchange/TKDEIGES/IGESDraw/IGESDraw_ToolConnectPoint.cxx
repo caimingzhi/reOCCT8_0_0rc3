@@ -24,7 +24,6 @@ void IGESDraw_ToolConnectPoint::ReadOwnParams(const occ::handle<IGESDraw_Connect
                                               const occ::handle<IGESData_IGESReaderData>& IR,
                                               IGESData_ParamReader&                       PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   gp_XYZ                                     tempPoint;
   int                                        tempTypeFlag, tempFunctionFlag;
@@ -34,59 +33,44 @@ void IGESDraw_ToolConnectPoint::ReadOwnParams(const occ::handle<IGESDraw_Connect
   occ::handle<IGESGraph_TextDisplayTemplate> tempFunctionTemplate;
   occ::handle<IGESGraph_TextDisplayTemplate> tempIdentifierTemplate;
 
-  // clang-format off
-  PR.ReadXYZ(PR.CurrentList(1, 3), "Connect Point Coordinate", tempPoint); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadXYZ(PR.CurrentList(1, 3), "Connect Point Coordinate", tempPoint);
 
-  PR.ReadEntity(IR, PR.Current(), "Display Symbol Geometry Entity",
-		tempDisplaySymbol,true); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR, PR.Current(), "Display Symbol Geometry Entity", tempDisplaySymbol, true);
 
-  PR.ReadInteger(PR.Current(), "Type Flag", tempTypeFlag); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "Type Flag", tempTypeFlag);
 
-  PR.ReadInteger(PR.Current(), "Function Flag", tempFunctionFlag); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadInteger(PR.Current(), "Function Flag", tempFunctionFlag);
 
-  PR.ReadText(PR.Current(),
-              "Function Identifier",
-              tempFunctionIdentifier); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadText(PR.Current(), "Function Identifier", tempFunctionIdentifier);
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "Text Display Identifier Template",
                 STANDARD_TYPE(IGESGraph_TextDisplayTemplate),
                 tempIdentifierTemplate,
-                true); // szv#4:S4163:12Mar99 `st=` not needed
+                true);
 
-  PR.ReadText(PR.Current(),
-              "Connect Point Function Name",
-              tempFunctionName); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadText(PR.Current(), "Connect Point Function Name", tempFunctionName);
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "Text Display Function Template",
                 STANDARD_TYPE(IGESGraph_TextDisplayTemplate),
                 tempFunctionTemplate,
-                true); // szv#4:S4163:12Mar99 `st=` not needed
+                true);
 
-  PR.ReadInteger(PR.Current(),
-                 "Unique Connect Point Identifier",
-                 tempPointIdentifier); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "Unique Connect Point Identifier", tempPointIdentifier);
 
-  PR.ReadInteger(PR.Current(),
-                 "Connect Point Function Code",
-                 tempFunctionCode); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "Connect Point Function Code", tempFunctionCode);
 
   if (PR.DefinedElseSkip())
-    // clang-format off
-    PR.ReadInteger(PR.Current(), "Swap Flag", tempSwapFlag); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
-  else
-    tempSwapFlag = 0; // default
 
-  PR.ReadEntity(IR,
-                PR.Current(),
-                "Owner Network Subfigure Entity",
-                tempOwnerSubfigure,
-                true); // szv#4:S4163:12Mar99 `st=` not needed
+    PR.ReadInteger(PR.Current(), "Swap Flag", tempSwapFlag);
+
+  else
+    tempSwapFlag = 0;
+
+  PR.ReadEntity(IR, PR.Current(), "Owner Network Subfigure Entity", tempOwnerSubfigure, true);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempPoint,
@@ -184,8 +168,7 @@ IGESData_DirChecker IGESDraw_ToolConnectPoint::DirChecker(
   }
   else
   {
-    // Note : If ent->DisplaySymbol() is NULL Handle; ignore Line Font, Weight
-    //        and Hierarchy Status
+
     DC.LineFont(IGESData_DefVoid);
     DC.LineWeight(IGESData_DefVoid);
     DC.HierarchyStatusIgnored();
@@ -212,7 +195,6 @@ void IGESDraw_ToolConnectPoint::OwnCheck(const occ::handle<IGESDraw_ConnectPoint
       || ((ent->FunctionCode() > 99) && (ent->FunctionCode() < 5001)))
     ach->AddFail("FunctionCode has Invalid value");
 
-  // if ((ent->SwapFlag() < 0) || (ent->SwapFlag() > 1)) //szv#4:S4163:12Mar99 SGI warns
   if ((ent->SwapFlag() != 0) && (ent->SwapFlag() != 1))
     ach->AddFail("SwapFlag has Invalid value");
 }

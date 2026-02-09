@@ -10,7 +10,6 @@ class Interface_Check;
 class StepVisual_PresentationSet;
 class StepData_StepWriter;
 
-//! Read & Write Module for PresentationSet
 class RWStepVisual_RWPresentationSet
 {
 public:

@@ -11,22 +11,13 @@ class IntPatch_Polyhedron;
 class IntPatch_PrmPrmIntersection_T3Bits;
 class IntSurf_LineOn2S;
 
-//! Implementation of the Intersection between two bi-parametrised surfaces.
-//!
-//! To avoid multiple constructions of the approximated
-//! polyhedron of the surfaces, the algorithm can be
-//! called with the two surfaces and their associated polyhedron.
 class IntPatch_PrmPrmIntersection
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty Constructor
   Standard_EXPORT IntPatch_PrmPrmIntersection();
 
-  //! Performs the intersection between <Caro1> and
-  //! <Caro2>. Associated Polyhedrons <Polyhedron1>
-  //! and <Polyhedron2> are given.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Surface>&   Caro1,
                                const IntPatch_Polyhedron&              Polyhedron1,
                                const occ::handle<Adaptor3d_TopolTool>& Domain1,
@@ -46,9 +37,6 @@ public:
                                const double                            Deflection,
                                const double                            Increment);
 
-  //! Performs the intersection between <Caro1> and
-  //! <Caro2>. The method computes the polyhedron on
-  //! each surface.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Surface>&   Caro1,
                                const occ::handle<Adaptor3d_TopolTool>& Domain1,
                                const occ::handle<Adaptor3d_Surface>&   Caro2,
@@ -59,9 +47,6 @@ public:
                                const double                            Increment,
                                const bool                              ClearFlag = true);
 
-  //! Performs the intersection between <Caro1> and
-  //! <Caro2>. The method computes the polyhedron on
-  //! each surface.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Surface>&   Caro1,
                                const occ::handle<Adaptor3d_TopolTool>& Domain1,
                                const occ::handle<Adaptor3d_Surface>&   Caro2,
@@ -72,9 +57,6 @@ public:
                                const double                            Increment,
                                NCollection_List<IntSurf_PntOn2S>&      ListOfPnts);
 
-  //! Performs the intersection between <Caro1> and
-  //! <Caro2>. The method computes the polyhedron on
-  //! each surface.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Surface>&   Caro1,
                                const occ::handle<Adaptor3d_TopolTool>& Domain1,
                                const occ::handle<Adaptor3d_Surface>&   Caro2,
@@ -88,9 +70,6 @@ public:
                                const double                            Deflection,
                                const double                            Increment);
 
-  //! Performs the intersection between <Caro1> and
-  //! <Caro2>. The method computes the polyhedron on
-  //! each surface.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Surface>&   Caro1,
                                const occ::handle<Adaptor3d_TopolTool>& Domain1,
                                const double                            TolTangency,
@@ -98,12 +77,6 @@ public:
                                const double                            Deflection,
                                const double                            Increment);
 
-  //! Performs the intersection between <Caro1> and
-  //! <Caro2>.
-  //!
-  //! The polyhedron which approximates <Caro2>,
-  //! <Polyhedron2> is given. The other one is
-  //! computed.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Surface>&   Caro1,
                                const occ::handle<Adaptor3d_TopolTool>& Domain1,
                                const occ::handle<Adaptor3d_Surface>&   Caro2,
@@ -114,12 +87,6 @@ public:
                                const double                            Deflection,
                                const double                            Increment);
 
-  //! Performs the intersection between <Caro1> and
-  //! <Caro2>.
-  //!
-  //! The polyhedron which approximates <Caro1>,
-  //! <Polyhedron1> is given. The other one is
-  //! computed.
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Surface>&   Caro1,
                                const IntPatch_Polyhedron&              Polyhedron1,
                                const occ::handle<Adaptor3d_TopolTool>& Domain1,
@@ -130,31 +97,14 @@ public:
                                const double                            Deflection,
                                const double                            Increment);
 
-  //! Returns true if the calculus was successful.
   bool IsDone() const;
 
-  //! Returns true if the is no intersection.
   bool IsEmpty() const;
 
-  //! Returns the number of intersection lines.
   int NbLines() const;
 
-  //! Returns the line of range Index.
-  //! An exception is raised if Index<=0 or Index>NbLine.
   const occ::handle<IntPatch_Line>& Line(const int Index) const;
 
-  //! Computes about <NbPoints> Intersection Points on
-  //! the Line <IndexLine> between the Points of Index
-  //! <LowPoint> and <HighPoint>.
-  //!
-  //! All the points of the line of index <IndexLine>
-  //! with an index between <LowPoint> and <HighPoint>
-  //! are in the returned line. New Points are inserted
-  //! between existing points if those points are not
-  //! too closed.
-  //!
-  //! An exception is raised if Index<=0 or Index>NbLine.
-  //! or if IsDone returns False
   Standard_EXPORT occ::handle<IntPatch_Line> NewLine(const occ::handle<Adaptor3d_Surface>& Caro1,
                                                      const occ::handle<Adaptor3d_Surface>& Caro2,
                                                      const int IndexLine,
@@ -218,20 +168,6 @@ private:
   NCollection_Sequence<occ::handle<IntPatch_Line>> SLin;
 };
 
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
 #include <StdFail_NotDone.hpp>
 #include <IntPatch_Line.hpp>
 
@@ -240,7 +176,6 @@ private:
 #define _BASE 128
 #define _BASEM1 127
 
-//======================================================================
 inline int IntPatch_PrmPrmIntersection::NbLines() const
 {
   if (!done)
@@ -248,7 +183,6 @@ inline int IntPatch_PrmPrmIntersection::NbLines() const
   return (SLin.Length());
 }
 
-//======================================================================
 inline const occ::handle<IntPatch_Line>& IntPatch_PrmPrmIntersection::Line(const int n) const
 {
   if (!done)
@@ -256,7 +190,6 @@ inline const occ::handle<IntPatch_Line>& IntPatch_PrmPrmIntersection::Line(const
   return (SLin.Value(n));
 }
 
-//======================================================================
 inline bool IntPatch_PrmPrmIntersection::IsEmpty() const
 {
   if (!done)
@@ -264,7 +197,6 @@ inline bool IntPatch_PrmPrmIntersection::IsEmpty() const
   return (empt);
 }
 
-//======================================================================
 inline bool IntPatch_PrmPrmIntersection::IsDone() const
 {
   return (done);

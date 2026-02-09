@@ -6,7 +6,6 @@
 
 #include <Standard_Boolean.hpp>
 
-//! Iterator on the elements of a block.
 class TopOpeBRepBuild_BlockIterator
 {
 public:
@@ -37,29 +36,21 @@ inline void TopOpeBRepBuild_BlockIterator::Initialize()
   myValue = myLower;
 }
 
-//=================================================================================================
-
 inline bool TopOpeBRepBuild_BlockIterator::More() const
 {
   bool b = (myValue <= myUpper);
   return b;
 }
 
-//=================================================================================================
-
 inline void TopOpeBRepBuild_BlockIterator::Next()
 {
   myValue++;
 }
 
-//=================================================================================================
-
 inline int TopOpeBRepBuild_BlockIterator::Value() const
 {
   return myValue;
 }
-
-//=================================================================================================
 
 inline int TopOpeBRepBuild_BlockIterator::Extent() const
 {

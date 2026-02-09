@@ -1,22 +1,8 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// #ifndef OCCT_DEBUG
+
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
-// #endif
 
 #include <cmath>
 
@@ -58,7 +44,7 @@ namespace
 #define IC 150889
 
 static void EigenSort(math_Vector& d, math_Matrix& v)
-{ // descending order
+{
 
   int    k, i, j;
   double p;
@@ -230,8 +216,7 @@ int LU_Decompose(math_Matrix&                 a,
       for (k = 1; k < j; k++)
         sum -= a(i, k) * a(k, j);
       a(i, j) = sum;
-      // Note that comparison is made so as to have imax updated even if argument is NAN, Inf or
-      // IND, see #25559
+
       if ((dum = vv(i) * fabs(sum)) < big)
       {
         continue;
@@ -676,8 +661,7 @@ int DACTCL_Decompose(math_Vector& a, const math_IntegerVector& indx, const doubl
       ie = j - 1;
       k  = jr + 2;
       id = indx(is - 1);
-      // Reduction des coefficients non diagonaux:
-      // =========================================
+
       for (i = is; i <= ie; i++)
       {
         ir = id;
@@ -704,8 +688,7 @@ int DACTCL_Decompose(math_Vector& a, const math_IntegerVector& indx, const doubl
 
     if (diag)
     {
-      // Reduction des coefficients diagonaux:
-      // =====================================
+
       ir = jr + 1;
       ie = jd - 1;
       k  = j - jd;
@@ -745,8 +728,6 @@ int DACTCL_Solve(const math_Vector&        a,
     jh = jd - jr;
     is = j - jh + 2;
 
-    // Reduction du second membre:
-    // ===========================
     dot   = 0.0;
     idot1 = jr;
     idot2 = is - 2;
@@ -760,8 +741,6 @@ int DACTCL_Solve(const math_Vector&        a,
     jr = jd;
   }
 
-  // Division par les pivots diagonaux:
-  // ==================================
   for (i = 1; i <= Neq; i++)
   {
     id = indx(i);
@@ -773,8 +752,6 @@ int DACTCL_Solve(const math_Vector&        a,
     b(i) = b(i) / a(id);
   }
 
-  // Substitution arriere:
-  // =====================
   jd = indx(Neq);
   for (j = Neq - 1; j > 0; j--)
   {

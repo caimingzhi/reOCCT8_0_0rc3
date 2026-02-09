@@ -2,9 +2,6 @@
 #include <gp_Pnt.hpp>
 #include <gp_Trsf.hpp>
 
-//=========================================================================
-//   Creation d un homothetie de gp de centre Point et de rapport Scale.  +
-//=========================================================================
 gce_MakeScale::gce_MakeScale(const gp_Pnt& Point, const double Scale)
 {
   TheScale.SetScale(Point, Scale);

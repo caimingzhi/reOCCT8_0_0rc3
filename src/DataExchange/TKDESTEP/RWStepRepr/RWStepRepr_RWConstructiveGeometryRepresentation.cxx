@@ -7,12 +7,8 @@
 #include <StepRepr_RepresentationItem.hpp>
 #include <StepRepr_ConstructiveGeometryRepresentation.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWConstructiveGeometryRepresentation::RWStepRepr_RWConstructiveGeometryRepresentation() =
   default;
-
-//=================================================================================================
 
 void RWStepRepr_RWConstructiveGeometryRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&                     data,
@@ -20,15 +16,13 @@ void RWStepRepr_RWConstructiveGeometryRepresentation::ReadStep(
   occ::handle<Interface_Check>&                                   ach,
   const occ::handle<StepRepr_ConstructiveGeometryRepresentation>& ent) const
 {
-  // Number of Parameter Control
+
   if (!data->CheckNbParams(num, 3, ach, "constructive_geometry_representation"))
     return;
 
-  // Inherited field : name
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // Inherited field : items
   occ::handle<NCollection_HArray1<occ::handle<StepRepr_RepresentationItem>>> aItems;
   occ::handle<StepRepr_RepresentationItem>                                   anEnt;
   int                                                                        nsub;
@@ -48,7 +42,6 @@ void RWStepRepr_RWConstructiveGeometryRepresentation::ReadStep(
     }
   }
 
-  // Inherited field : context_of_items
   occ::handle<StepRepr_RepresentationContext> aContextOfItems;
   data->ReadEntity(num,
                    3,
@@ -57,20 +50,16 @@ void RWStepRepr_RWConstructiveGeometryRepresentation::ReadStep(
                    STANDARD_TYPE(StepRepr_RepresentationContext),
                    aContextOfItems);
 
-  // Initialisation of the read entity
   ent->Init(aName, aItems, aContextOfItems);
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWConstructiveGeometryRepresentation::WriteStep(
   StepData_StepWriter&                                            SW,
   const occ::handle<StepRepr_ConstructiveGeometryRepresentation>& ent) const
 {
-  // Inherited field : name
+
   SW.Send(ent->Name());
 
-  // Inherited field : items
   SW.OpenSub();
   for (int i = 1; i <= ent->NbItems(); i++)
   {
@@ -78,11 +67,8 @@ void RWStepRepr_RWConstructiveGeometryRepresentation::WriteStep(
   }
   SW.CloseSub();
 
-  // Inherited field : context_of_items
   SW.Send(ent->ContextOfItems());
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWConstructiveGeometryRepresentation::Share(
   const occ::handle<StepRepr_ConstructiveGeometryRepresentation>& ent,

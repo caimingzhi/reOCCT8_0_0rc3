@@ -4,12 +4,10 @@
 #include <BVH_QuickSorter.hpp>
 #include <NCollection_Array1.hpp>
 
-//! Performs building of BVH tree using sweep plane SAH algorithm.
 template <class T, int N>
 class BVH_SweepPlaneBuilder : public BVH_QueueBuilder<T, N>
 {
 public:
-  //! Creates sweep plane SAH BVH builder.
   BVH_SweepPlaneBuilder(const int theLeafNodeSize = BVH_Constants_LeafNodeSizeDefault,
                         const int theMaxTreeDepth = BVH_Constants_MaxTreeDepth,
                         const int theNumOfThreads = 1)
@@ -17,11 +15,9 @@ public:
   {
   }
 
-  //! Releases resources of sweep plane SAH BVH builder.
   ~BVH_SweepPlaneBuilder() override = default;
 
 protected:
-  //! Performs splitting of the given BVH node.
   typename BVH_QueueBuilder<T, N>::BVH_ChildNodes buildNode(BVH_Set<T, N>*  theSet,
                                                             BVH_Tree<T, N>* theBVH,
                                                             const int       theNode) const override
@@ -31,12 +27,10 @@ protected:
     const int aNodeNbPrimitives = theBVH->NbPrimitives(theNode);
     if (aNodeNbPrimitives <= BVH_Builder<T, N>::myLeafNodeSize)
     {
-      // clang-format off
-      return typename BVH_QueueBuilder<T, N>::BVH_ChildNodes(); // node does not require partitioning
-      // clang-format on
+
+      return typename BVH_QueueBuilder<T, N>::BVH_ChildNodes();
     }
 
-    // Parameters for storing best split
     int aMinSplitAxis  = -1;
     int aMinSplitIndex = 0;
 
@@ -44,7 +38,6 @@ protected:
     NCollection_Array1<double> aRghSet(1, aNodeNbPrimitives - 1);
     double                     aMinSplitCost = std::numeric_limits<double>::max();
 
-    // Find best split
     for (int anAxis = 0; anAxis < (N < 4 ? N : 3); ++anAxis)
     {
       const T aNodeSize = BVH::VecComp<T, N>::Get(theBVH->MaxPoint(theNode), anAxis)
@@ -58,26 +51,22 @@ protected:
       BVH_Box<T, N> aLftBox;
       BVH_Box<T, N> aRghBox;
 
-      // Sweep from left
       for (int anIndex = 1; anIndex < aNodeNbPrimitives; ++anIndex)
       {
         aLftBox.Combine(theSet->Box(anIndex + aNodeBegPrimitive - 1));
         aLftSet(anIndex) = static_cast<double>(aLftBox.Area());
       }
 
-      // Sweep from right
       for (int anIndex = 1; anIndex < aNodeNbPrimitives; ++anIndex)
       {
         aRghBox.Combine(theSet->Box(aNodeEndPrimitive - anIndex + 1));
         aRghSet(anIndex) = static_cast<double>(aRghBox.Area());
       }
 
-      // Find best split using simplified SAH
       for (int aNbLft = 1, aNbRgh = aNodeNbPrimitives - 1; aNbLft < aNodeNbPrimitives;
            ++aNbLft, --aNbRgh)
       {
-        double aCost = (aLftSet(aNbLft) /* / aNodeArea */) * aNbLft
-                       + (aRghSet(aNbRgh) /* / aNodeArea */) * aNbRgh;
+        double aCost = (aLftSet(aNbLft))*aNbLft + (aRghSet(aNbRgh))*aNbRgh;
         if (aCost < aMinSplitCost)
         {
           aMinSplitCost  = aCost;
@@ -89,7 +78,7 @@ protected:
 
     if (aMinSplitAxis == -1)
     {
-      return typename BVH_QueueBuilder<T, N>::BVH_ChildNodes(); // failed to find split axis
+      return typename BVH_QueueBuilder<T, N>::BVH_ChildNodes();
     }
 
     theBVH->SetInner(theNode);
@@ -101,7 +90,6 @@ protected:
     BVH_Box<T, N> aMinSplitBoxLft;
     BVH_Box<T, N> aMinSplitBoxRgh;
 
-    // Compute bounding boxes for selected split plane
     for (int anIndex = aNodeBegPrimitive; anIndex < aMinSplitIndex + aNodeBegPrimitive; ++anIndex)
     {
       aMinSplitBoxLft.Combine(theSet->Box(anIndex));

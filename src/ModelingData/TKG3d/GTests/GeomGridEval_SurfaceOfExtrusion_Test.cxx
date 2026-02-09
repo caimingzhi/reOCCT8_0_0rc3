@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -47,10 +36,9 @@ namespace
 
 TEST(GeomGridEval_SurfaceOfExtrusionTest, BasicEvaluation)
 {
-  // Create a line along X axis
+
   occ::handle<Geom_Line> aLine = new Geom_Line(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(1.0, 0.0, 0.0));
 
-  // Extrude along Z axis -> Creates a plane
   gp_Dir                                     aDirection(0, 0, 1);
   occ::handle<Geom_SurfaceOfLinearExtrusion> anExtSurf =
     new Geom_SurfaceOfLinearExtrusion(aLine, aDirection);
@@ -69,7 +57,6 @@ TEST(GeomGridEval_SurfaceOfExtrusionTest, BasicEvaluation)
       gp_Pnt aExpected = anExtSurf->Value(aUParams.Value(i), aVParams.Value(j));
       EXPECT_NEAR(aGrid.Value(i, j).Distance(aExpected), 0.0, THE_TOLERANCE);
 
-      // Verify: S(u,v) = C(u) + v * Dir = (u, 0, 0) + v * (0, 0, 1) = (u, 0, v)
       EXPECT_NEAR(aGrid.Value(i, j).X(), aUParams.Value(i), THE_TOLERANCE);
       EXPECT_NEAR(aGrid.Value(i, j).Y(), 0.0, THE_TOLERANCE);
       EXPECT_NEAR(aGrid.Value(i, j).Z(), aVParams.Value(j), THE_TOLERANCE);
@@ -79,11 +66,10 @@ TEST(GeomGridEval_SurfaceOfExtrusionTest, BasicEvaluation)
 
 TEST(GeomGridEval_SurfaceOfExtrusionTest, CircleBasisCurve)
 {
-  // Create a circle in XY plane with center at origin and radius 5
+
   gp_Ax2                   aCircleAx(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(0, 0, 1), gp_Dir(1, 0, 0));
   occ::handle<Geom_Circle> aCircle = new Geom_Circle(aCircleAx, 5.0);
 
-  // Extrude along Z axis -> Creates a cylinder
   gp_Dir                                     aDirection(0, 0, 1);
   occ::handle<Geom_SurfaceOfLinearExtrusion> anExtSurf =
     new Geom_SurfaceOfLinearExtrusion(aCircle, aDirection);
@@ -102,12 +88,10 @@ TEST(GeomGridEval_SurfaceOfExtrusionTest, CircleBasisCurve)
       gp_Pnt aExpected = anExtSurf->Value(aUParams.Value(i), aVParams.Value(j));
       EXPECT_NEAR(aGrid.Value(i, j).Distance(aExpected), 0.0, THE_TOLERANCE);
 
-      // Check cylindrical radius
       double aRadius = std::sqrt(aGrid.Value(i, j).X() * aGrid.Value(i, j).X()
                                  + aGrid.Value(i, j).Y() * aGrid.Value(i, j).Y());
       EXPECT_NEAR(aRadius, 5.0, THE_TOLERANCE);
 
-      // Check Z coordinate equals V parameter
       EXPECT_NEAR(aGrid.Value(i, j).Z(), aVParams.Value(j), THE_TOLERANCE);
     }
   }
@@ -140,7 +124,6 @@ TEST(GeomGridEval_SurfaceOfExtrusionTest, DerivativeD1)
       EXPECT_NEAR((aData.D1U - aD1U).Magnitude(), 0.0, THE_TOLERANCE);
       EXPECT_NEAR((aData.D1V - aD1V).Magnitude(), 0.0, THE_TOLERANCE);
 
-      // D1V should be the extrusion direction
       EXPECT_NEAR(aData.D1V.X(), 0.0, THE_TOLERANCE);
       EXPECT_NEAR(aData.D1V.Y(), 0.0, THE_TOLERANCE);
       EXPECT_NEAR(aData.D1V.Z(), 1.0, THE_TOLERANCE);
@@ -150,7 +133,7 @@ TEST(GeomGridEval_SurfaceOfExtrusionTest, DerivativeD1)
 
 TEST(GeomGridEval_SurfaceOfExtrusionTest, DerivativeD2)
 {
-  // Use circle for non-trivial D2U
+
   gp_Ax2                   aCircleAx(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(0, 0, 1), gp_Dir(1, 0, 0));
   occ::handle<Geom_Circle> aCircle = new Geom_Circle(aCircleAx, 5.0);
   gp_Dir                   aDirection(0, 0, 1);
@@ -180,7 +163,6 @@ TEST(GeomGridEval_SurfaceOfExtrusionTest, DerivativeD2)
       EXPECT_NEAR((aData.D2V - aD2V).Magnitude(), 0.0, THE_TOLERANCE);
       EXPECT_NEAR((aData.D2UV - aD2UV).Magnitude(), 0.0, THE_TOLERANCE);
 
-      // D2V and D2UV should be zero for extrusion surface
       EXPECT_NEAR(aData.D2V.Magnitude(), 0.0, THE_TOLERANCE);
       EXPECT_NEAR(aData.D2UV.Magnitude(), 0.0, THE_TOLERANCE);
     }
@@ -189,7 +171,7 @@ TEST(GeomGridEval_SurfaceOfExtrusionTest, DerivativeD2)
 
 TEST(GeomGridEval_SurfaceOfExtrusionTest, DerivativeD3)
 {
-  // Use circle for non-trivial D3U
+
   gp_Ax2                   aCircleAx(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(0, 0, 1), gp_Dir(1, 0, 0));
   occ::handle<Geom_Circle> aCircle = new Geom_Circle(aCircleAx, 5.0);
   gp_Dir                   aDirection(0, 0, 1);
@@ -229,7 +211,6 @@ TEST(GeomGridEval_SurfaceOfExtrusionTest, DerivativeD3)
       EXPECT_NEAR((aData.D3UUV - aD3UUV).Magnitude(), 0.0, THE_TOLERANCE);
       EXPECT_NEAR((aData.D3UVV - aD3UVV).Magnitude(), 0.0, THE_TOLERANCE);
 
-      // D3V, D3UUV, D3UVV should all be zero for extrusion surface
       EXPECT_NEAR(aData.D3V.Magnitude(), 0.0, THE_TOLERANCE);
       EXPECT_NEAR(aData.D3UUV.Magnitude(), 0.0, THE_TOLERANCE);
       EXPECT_NEAR(aData.D3UVV.Magnitude(), 0.0, THE_TOLERANCE);
@@ -244,7 +225,6 @@ TEST(GeomGridEval_SurfaceOfExtrusionTest, UnifiedDispatch)
   occ::handle<Geom_SurfaceOfLinearExtrusion> anExtSurf =
     new Geom_SurfaceOfLinearExtrusion(aLine, aDirection);
 
-  // Test dispatch via unified evaluator
   GeomGridEval_Surface anEval;
   anEval.Initialize(anExtSurf);
 
@@ -273,7 +253,6 @@ TEST(GeomGridEval_SurfaceOfExtrusionTest, AdaptorDispatch)
   occ::handle<Geom_SurfaceOfLinearExtrusion> anExtSurf =
     new Geom_SurfaceOfLinearExtrusion(aLine, aDirection);
 
-  // Test dispatch via adaptor
   GeomAdaptor_Surface  anAdaptor(anExtSurf);
   GeomGridEval_Surface anEval;
   anEval.Initialize(anAdaptor);
@@ -298,11 +277,10 @@ TEST(GeomGridEval_SurfaceOfExtrusionTest, AdaptorDispatch)
 
 TEST(GeomGridEval_SurfaceOfExtrusionTest, NonAxisAlignedDirection)
 {
-  // Create a circle and extrude along a diagonal direction
+
   gp_Ax2                   aCircleAx(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(0, 0, 1), gp_Dir(1, 0, 0));
   occ::handle<Geom_Circle> aCircle = new Geom_Circle(aCircleAx, 3.0);
 
-  // Extrude along (1, 1, 1) direction
   gp_Dir                                     aDirection(1, 1, 1);
   occ::handle<Geom_SurfaceOfLinearExtrusion> anExtSurf =
     new Geom_SurfaceOfLinearExtrusion(aCircle, aDirection);

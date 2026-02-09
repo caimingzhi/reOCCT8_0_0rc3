@@ -6,7 +6,6 @@
 
 #include <Draw_Interpretor.hpp>
 
-//! Contains commands to work with GDTs
 class XDEDRAW_Views
 {
 public:

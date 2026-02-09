@@ -10,41 +10,23 @@
 #include <Standard_Real.hpp>
 class TCollection_HAsciiString;
 
-//! defines IGES UnitsData Entity, Type <316> Form <0>
-//! in package IGESDefs
-//! This class stores data about a model's fundamental units.
 class IGESDefs_UnitsData : public IGESData_IGESEntity
 {
 
 public:
   Standard_EXPORT IGESDefs_UnitsData();
 
-  //! This method is used to set the fields of the class
-  //! UnitsData
-  //! - unitTypes  : Types of the units being defined
-  //! - unitValues : Unit Values of the units
-  //! - unitScales : Multiplicative Scale Factors
-  //! raises exception if lengths of unitTypes, unitValues and
-  //! unitScale are not same
   Standard_EXPORT void Init(
     const occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>>& unitTypes,
     const occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>>& unitValues,
     const occ::handle<NCollection_HArray1<double>>&                                unitScales);
 
-  //! returns the Number of units defined by this entity
   Standard_EXPORT int NbUnits() const;
 
-  //! returns the Type of the UnitNum'th unit being defined
-  //! raises exception if UnitNum <= 0 or UnitNum > NbUnits()
   Standard_EXPORT occ::handle<TCollection_HAsciiString> UnitType(const int UnitNum) const;
 
-  //! returns the Units of the UnitNum'th unit being defined
-  //! raises exception if UnitNum <= 0 or UnitNum > NbUnits()
   Standard_EXPORT occ::handle<TCollection_HAsciiString> UnitValue(const int UnitNum) const;
 
-  //! returns the multiplicative scale factor to be applied to the
-  //! UnitNum'th unit being defined
-  //! raises exception if UnitNum <= 0 or UnitNum > NbUnits()
   Standard_EXPORT double ScaleFactor(const int UnitNum) const;
 
   DEFINE_STANDARD_RTTIEXT(IGESDefs_UnitsData, IGESData_IGESEntity)

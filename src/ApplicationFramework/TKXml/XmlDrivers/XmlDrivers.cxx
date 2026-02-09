@@ -16,8 +16,6 @@
 static Standard_GUID XmlStorageDriver("03a56820-8269-11d5-aab2-0050044b1af1");
 static Standard_GUID XmlRetrievalDriver("03a56822-8269-11d5-aab2-0050044b1af1");
 
-//=================================================================================================
-
 const occ::handle<Standard_Transient>& XmlDrivers::Factory(const Standard_GUID& theGUID)
 {
   if (theGUID == XmlStorageDriver)
@@ -25,8 +23,8 @@ const occ::handle<Standard_Transient>& XmlDrivers::Factory(const Standard_GUID& 
 #ifdef OCCT_DEBUG
     std::cout << "XmlDrivers : Storage Plugin" << std::endl;
 #endif
-    static occ::handle<Standard_Transient> model_sd = new XmlDrivers_DocumentStorageDriver(
-      "Copyright: Open Cascade, 2001-2002"); // default copyright
+    static occ::handle<Standard_Transient> model_sd =
+      new XmlDrivers_DocumentStorageDriver("Copyright: Open Cascade, 2001-2002");
     return model_sd;
   }
 
@@ -42,8 +40,6 @@ const occ::handle<Standard_Transient>& XmlDrivers::Factory(const Standard_GUID& 
   throw Standard_Failure("XmlDrivers : unknown GUID");
 }
 
-//=================================================================================================
-
 void XmlDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
 {
   theApp->DefineFormat("XmlOcaf",
@@ -53,22 +49,19 @@ void XmlDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
                        new XmlDrivers_DocumentStorageDriver("Copyright: Open Cascade, 2001-2002"));
 }
 
-//=================================================================================================
-
 occ::handle<XmlMDF_ADriverTable> XmlDrivers::AttributeDrivers(
   const occ::handle<Message_Messenger>& theMessageDriver)
 {
   occ::handle<XmlMDF_ADriverTable> aTable = new XmlMDF_ADriverTable();
-  //
+
   XmlMDF ::AddDrivers(aTable, theMessageDriver);
   XmlMDataStd ::AddDrivers(aTable, theMessageDriver);
   XmlMDataXtd ::AddDrivers(aTable, theMessageDriver);
   XmlMNaming ::AddDrivers(aTable, theMessageDriver);
   XmlMFunction ::AddDrivers(aTable, theMessageDriver);
   XmlMDocStd ::AddDrivers(aTable, theMessageDriver);
-  //
+
   return aTable;
 }
 
-// Declare entry point PLUGINFACTORY
 PLUGIN(XmlDrivers)

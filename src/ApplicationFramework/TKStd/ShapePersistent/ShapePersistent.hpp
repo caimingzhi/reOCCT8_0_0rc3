@@ -7,6 +7,5 @@ class StdObjMgt_MapOfInstantiators;
 class ShapePersistent
 {
 public:
-  //! Register types.
   Standard_EXPORT static void BindTypes(StdObjMgt_MapOfInstantiators& theMap);
 };

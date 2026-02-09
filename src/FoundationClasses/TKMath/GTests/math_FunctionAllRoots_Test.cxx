@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 #include <math_FunctionAllRoots.hpp>
@@ -20,7 +9,7 @@
 
 namespace
 {
-  // Test function with multiple roots: f(x) = x^3 - 6x^2 + 11x - 6 = (x-1)(x-2)(x-3)
+
   class CubicFunction : public math_FunctionWithDerivative
   {
   public:
@@ -44,7 +33,6 @@ namespace
     }
   };
 
-  // Sine function with multiple roots
   class SineFunction : public math_FunctionWithDerivative
   {
   public:
@@ -68,7 +56,6 @@ namespace
     }
   };
 
-  // Function with a null interval: f(x) = 0 for x in [2, 4]
   class NullIntervalFunction : public math_FunctionWithDerivative
   {
   public:
@@ -113,7 +100,6 @@ namespace
     }
   };
 
-  // Function with one root: f(x) = (x-1.5)^2 - 0.25 = (x-1)(x-2)
   class QuadraticFunction : public math_FunctionWithDerivative
   {
   public:
@@ -137,7 +123,6 @@ namespace
     }
   };
 
-  // Constant zero function
   class ZeroFunction : public math_FunctionWithDerivative
   {
   public:
@@ -170,7 +155,6 @@ TEST(math_FunctionAllRoots, CubicFunctionBasic)
 
   EXPECT_TRUE(solver.IsDone());
 
-  // Should find the three roots at x = 1, 2, 3
   EXPECT_GE(solver.NbPoints(), 2);
 
   if (solver.NbPoints() >= 2)
@@ -178,7 +162,6 @@ TEST(math_FunctionAllRoots, CubicFunctionBasic)
     double root1 = solver.GetPoint(1);
     double root2 = solver.GetPoint(2);
 
-    // Check if we found roots near 1, 2, or 3
     EXPECT_TRUE(fabs(root1 - 1.0) < 1.0e-4 || fabs(root1 - 2.0) < 1.0e-4
                 || fabs(root1 - 3.0) < 1.0e-4);
     EXPECT_TRUE(fabs(root2 - 1.0) < 1.0e-4 || fabs(root2 - 2.0) < 1.0e-4
@@ -194,13 +177,12 @@ TEST(math_FunctionAllRoots, SineFunctionRoots)
 
   EXPECT_TRUE(solver.IsDone());
 
-  // Should find roots near 0, PI, 2*PI within the range
   EXPECT_GE(solver.NbPoints(), 2);
 
   if (solver.NbPoints() >= 1)
   {
     double root1 = solver.GetPoint(1);
-    // Check if we found a root near 0 or PI
+
     EXPECT_TRUE(fabs(root1) < 1.0e-4 || fabs(root1 - M_PI) < 1.0e-4
                 || fabs(root1 - 2 * M_PI) < 1.0e-4);
   }
@@ -214,7 +196,6 @@ TEST(math_FunctionAllRoots, NullIntervalFunction)
 
   EXPECT_TRUE(solver.IsDone());
 
-  // Should find a null interval from x = 2 to x = 4
   EXPECT_GE(solver.NbIntervals(), 1);
 
   if (solver.NbIntervals() >= 1)
@@ -234,7 +215,6 @@ TEST(math_FunctionAllRoots, QuadraticTwoRoots)
 
   EXPECT_TRUE(solver.IsDone());
 
-  // Should find roots at x = 1 and x = 2
   EXPECT_GE(solver.NbPoints(), 1);
 
   if (solver.NbPoints() >= 1)
@@ -252,7 +232,6 @@ TEST(math_FunctionAllRoots, ZeroFunction)
 
   EXPECT_TRUE(solver.IsDone());
 
-  // Should find the entire interval as null
   EXPECT_GE(solver.NbIntervals(), 1);
 
   if (solver.NbIntervals() >= 1)
@@ -314,7 +293,7 @@ TEST(math_FunctionAllRoots, SmallSampleSize)
   math_FunctionAllRoots solver(func, sample, 1.0e-4, 1.0e-4, 1.0e-6);
 
   EXPECT_TRUE(solver.IsDone());
-  // With small sample, might miss some roots
+
   EXPECT_GE(solver.NbPoints(), 0);
 }
 
@@ -345,7 +324,7 @@ TEST(math_FunctionAllRoots, NarrowRange)
   math_FunctionAllRoots solver(func, sample, 1.0e-6, 1.0e-6, 1.0e-8);
 
   EXPECT_TRUE(solver.IsDone());
-  // Should find roots at x = 1 and x = 2 within this range
+
   EXPECT_GE(solver.NbPoints(), 1);
 }
 
@@ -356,7 +335,7 @@ TEST(math_FunctionAllRoots, WideRange)
   math_FunctionAllRoots solver(func, sample, 1.0e-6, 1.0e-6, 1.0e-8);
 
   EXPECT_TRUE(solver.IsDone());
-  // Should find multiple roots in this wide range
+
   EXPECT_GE(solver.NbPoints(), 5);
 }
 
@@ -367,7 +346,7 @@ TEST(math_FunctionAllRoots, EmptyRange)
   math_FunctionAllRoots solver(func, sample, 1.0e-6, 1.0e-6, 1.0e-8);
 
   EXPECT_TRUE(solver.IsDone());
-  // No roots expected in this range for cubic function
+
   EXPECT_EQ(solver.NbPoints(), 0);
   EXPECT_EQ(solver.NbIntervals(), 0);
 }
@@ -394,7 +373,6 @@ TEST(math_FunctionAllRoots, MultiplePrecisionLevels)
 {
   CubicFunction func;
 
-  // Test with different precision levels
   std::vector<double> tolerances = {1.0e-4, 1.0e-6, 1.0e-8};
 
   for (double tol : tolerances)

@@ -10,19 +10,13 @@
 
 class TopoDS_Shape;
 
-//! Provides the root interface for the API algorithms
-
 class BRepAlgoAPI_Algo : public BRepBuilderAPI_MakeShape, protected BOPAlgo_Options
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Returns a shape built by the shape construction algorithm.
-  //! Does not check if the shape is built.
   Standard_EXPORT const TopoDS_Shape& Shape() override;
 
-  // Provide access to methods of protected base class BOPAlgo_Options
-  // (inherited as protected to avoid problems with SWIG wrapper)
   using BOPAlgo_Options::Clear;
   using BOPAlgo_Options::ClearWarnings;
   using BOPAlgo_Options::DumpErrors;
@@ -39,12 +33,9 @@ public:
   using BOPAlgo_Options::SetUseOBB;
 
 protected:
-  //! Empty constructor
   Standard_EXPORT BRepAlgoAPI_Algo();
 
-  //! Destructor
   Standard_EXPORT ~BRepAlgoAPI_Algo() override;
 
-  //! Empty constructor
   Standard_EXPORT BRepAlgoAPI_Algo(const occ::handle<NCollection_BaseAllocator>& theAllocator);
 };

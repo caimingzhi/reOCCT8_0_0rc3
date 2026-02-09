@@ -18,9 +18,6 @@
 #include <Transfer_FinderProcess.hpp>
 #include <TransferBRep_ShapeMapper.hpp>
 
-//=============================================================================
-// Create a FacetedBrep of StepShape from a Shell of TopoDS
-//=============================================================================
 TopoDSToStep_MakeFacetedBrep::TopoDSToStep_MakeFacetedBrep(
   const TopoDS_Shell&                        aShell,
   const occ::handle<Transfer_FinderProcess>& FP,
@@ -68,11 +65,6 @@ TopoDSToStep_MakeFacetedBrep::TopoDSToStep_MakeFacetedBrep(
   }
 }
 
-//=============================================================================
-// Create a FacetedBrep of StepShape from a Solid of TopoDS containing
-// only one closed shell
-//=============================================================================
-
 TopoDSToStep_MakeFacetedBrep::TopoDSToStep_MakeFacetedBrep(
   const TopoDS_Solid&                        aSolid,
   const occ::handle<Transfer_FinderProcess>& FP,
@@ -81,7 +73,6 @@ TopoDSToStep_MakeFacetedBrep::TopoDSToStep_MakeFacetedBrep(
 {
   done = false;
 
-  // Looking for the Outer Shell
   TopoDS_Shell aOuterShell = BRepClass3d::OuterShell(aSolid);
 
   if (!aOuterShell.IsNull())
@@ -155,20 +146,11 @@ TopoDSToStep_MakeFacetedBrep::TopoDSToStep_MakeFacetedBrep(
   }
 }
 
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
-
 const occ::handle<StepShape_FacetedBrep>& TopoDSToStep_MakeFacetedBrep::Value() const
 {
   StdFail_NotDone_Raise_if(!done, "TopoDSToStep_MakeFacetedBrep::Value() - no result");
   return theFacetedBrep;
 }
-
-// ============================================================================
-// Method  : TopoDSToStep_MakeFacetedBrep::TessellatedValue
-// Purpose : Returns TessellatedItem as the optional result
-// ============================================================================
 
 const occ::handle<StepVisual_TessellatedItem>& TopoDSToStep_MakeFacetedBrep::TessellatedValue()
   const

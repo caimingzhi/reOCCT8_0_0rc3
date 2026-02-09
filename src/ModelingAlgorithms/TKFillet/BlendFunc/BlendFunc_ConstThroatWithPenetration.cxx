@@ -8,8 +8,6 @@
 
 #define Eps 1.e-15
 
-//=================================================================================================
-
 BlendFunc_ConstThroatWithPenetration::BlendFunc_ConstThroatWithPenetration(
   const occ::handle<Adaptor3d_Surface>& S1,
   const occ::handle<Adaptor3d_Surface>& S2,
@@ -17,8 +15,6 @@ BlendFunc_ConstThroatWithPenetration::BlendFunc_ConstThroatWithPenetration(
     : BlendFunc_ConstThroat(S1, S2, C)
 {
 }
-
-//=================================================================================================
 
 bool BlendFunc_ConstThroatWithPenetration::IsSolution(const math_Vector& Sol, const double Tol)
 {
@@ -71,8 +67,6 @@ bool BlendFunc_ConstThroatWithPenetration::IsSolution(const math_Vector& Sol, co
   return false;
 }
 
-//=================================================================================================
-
 bool BlendFunc_ConstThroatWithPenetration::Value(const math_Vector& X, math_Vector& F)
 {
   surf1->D0(X(1), X(2), pts1);
@@ -91,8 +85,6 @@ bool BlendFunc_ConstThroatWithPenetration::Value(const math_Vector& X, math_Vect
 
   return true;
 }
-
-//=================================================================================================
 
 bool BlendFunc_ConstThroatWithPenetration::Derivatives(const math_Vector& X, math_Matrix& D)
 {
@@ -119,16 +111,12 @@ bool BlendFunc_ConstThroatWithPenetration::Derivatives(const math_Vector& X, mat
   return true;
 }
 
-//=================================================================================================
-
 const gp_Vec& BlendFunc_ConstThroatWithPenetration::TangentOnS1() const
 {
   if (istangent)
     throw Standard_DomainError("BlendFunc_ConstThroatWithPenetration::TangentOnS1");
   return tg1;
 }
-
-//=================================================================================================
 
 const gp_Vec& BlendFunc_ConstThroatWithPenetration::TangentOnS2() const
 {
@@ -137,8 +125,6 @@ const gp_Vec& BlendFunc_ConstThroatWithPenetration::TangentOnS2() const
   return tg2;
 }
 
-//=================================================================================================
-
 const gp_Vec2d& BlendFunc_ConstThroatWithPenetration::Tangent2dOnS1() const
 {
   if (istangent)
@@ -146,16 +132,12 @@ const gp_Vec2d& BlendFunc_ConstThroatWithPenetration::Tangent2dOnS1() const
   return tg12d;
 }
 
-//=================================================================================================
-
 const gp_Vec2d& BlendFunc_ConstThroatWithPenetration::Tangent2dOnS2() const
 {
   if (istangent)
     throw Standard_DomainError("BlendFunc_ConstThroatWithPenetration::Tangent2dOnS2");
   return tg22d;
 }
-
-//=================================================================================================
 
 double BlendFunc_ConstThroatWithPenetration::GetSectionSize() const
 {

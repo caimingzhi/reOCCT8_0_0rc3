@@ -9,19 +9,13 @@
 
 namespace
 {
-  //! Class implementing tools for parallel processing
-  //! using threads (when TBB is not available);
-  //! it is derived from OSD_Parallel to get access to
-  //! Iterator and FunctorInterface nested types.
+
   class OSD_Parallel_Threads : public OSD_ThreadPool, public OSD_Parallel
   {
   public:
-    //! Auxiliary class which ensures exclusive
-    //! access to iterators of processed data pool.
     class Range
     {
-    public: //! @name public methods
-      //! Constructor
+    public:
       Range(const OSD_Parallel::UniversalIterator& theBegin,
             const OSD_Parallel::UniversalIterator& theEnd)
           : myBegin(theBegin),
@@ -30,49 +24,38 @@ namespace
       {
       }
 
-      //! Returns const link on the first element.
       inline const OSD_Parallel::UniversalIterator& Begin() const { return myBegin; }
 
-      //! Returns const link on the last element.
       inline const OSD_Parallel::UniversalIterator& End() const { return myEnd; }
 
-      //! Returns first non processed element or end.
-      //! Thread-safe method.
       inline OSD_Parallel::UniversalIterator It() const
       {
         std::lock_guard<std::mutex> aMutex(myMutex);
         return (myIt != myEnd) ? myIt++ : myEnd;
       }
 
-    private: //! @name private methods
-      //! Empty copy constructor
+    private:
       Range(const Range& theCopy) = delete;
 
-      //! Empty copy operator.
       Range& operator=(const Range& theCopy) = delete;
 
-    private:                                          //! @name private fields
-      const OSD_Parallel::UniversalIterator& myBegin; //!< First element of range.
-      const OSD_Parallel::UniversalIterator& myEnd;   //!< Last element of range.
-                                                      // clang-format off
-      mutable OSD_Parallel::UniversalIterator   myIt;    //!< First non processed element of range.
-      mutable std::mutex                        myMutex; //!< Access controller for the first non processed element.
-                                                      // clang-format on
+    private:
+      const OSD_Parallel::UniversalIterator& myBegin;
+      const OSD_Parallel::UniversalIterator& myEnd;
+
+      mutable OSD_Parallel::UniversalIterator myIt;
+      mutable std::mutex                      myMutex;
     };
 
-    //! Auxiliary wrapper class for thread function.
     class Task : public JobInterface
     {
-    public: //! @name public methods
-      //! Constructor.
+    public:
       Task(const OSD_Parallel::FunctorInterface& thePerformer, Range& theRange)
           : myPerformer(thePerformer),
             myRange(theRange)
       {
       }
 
-      //! Method is executed in the context of thread,
-      //! so this method defines the main calculations.
       void Perform(int) override
       {
         for (OSD_Parallel::UniversalIterator anIter = myRange.It(); anIter != myRange.End();
@@ -82,29 +65,24 @@ namespace
         }
       }
 
-    private: //! @name private methods
-      //! Empty copy constructor.
+    private:
       Task(const Task& theCopy) = delete;
 
-      //! Empty copy operator.
       Task& operator=(const Task& theCopy) = delete;
 
-    private:                               //! @name private fields
-      const FunctorInterface& myPerformer; //!< Link on functor
-      const Range&            myRange;     //!< Link on processed data block
+    private:
+      const FunctorInterface& myPerformer;
+      const Range&            myRange;
     };
 
-    //! Launcher specialization.
     class UniversalLauncher : public Launcher
     {
     public:
-      //! Constructor.
       UniversalLauncher(OSD_ThreadPool& thePool, int theMaxThreads = -1)
           : Launcher(thePool, theMaxThreads)
       {
       }
 
-      //! Primitive for parallelization of "for" loops.
       void Perform(OSD_Parallel::UniversalIterator&      theBegin,
                    OSD_Parallel::UniversalIterator&      theEnd,
                    const OSD_Parallel::FunctorInterface& theFunctor)
@@ -116,8 +94,6 @@ namespace
     };
   };
 } // namespace
-
-//=================================================================================================
 
 void OSD_Parallel::forEachOcct(UniversalIterator&      theBegin,
                                UniversalIterator&      theEnd,
@@ -131,9 +107,7 @@ void OSD_Parallel::forEachOcct(UniversalIterator&      theBegin,
   aLauncher.Perform(theBegin, theEnd, theFunctor);
 }
 
-// Version of parallel executor used when TBB is not available
 #ifndef HAVE_TBB
-//=================================================================================================
 
 void OSD_Parallel::forEachExternal(UniversalIterator&      theBegin,
                                    UniversalIterator&      theEnd,
@@ -143,4 +117,4 @@ void OSD_Parallel::forEachExternal(UniversalIterator&      theBegin,
   forEachOcct(theBegin, theEnd, theFunctor, theNbItems);
 }
 
-#endif /* ! HAVE_TBB */
+#endif

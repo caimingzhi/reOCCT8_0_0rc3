@@ -9,11 +9,6 @@
 class StepGeom_RectangularTrimmedSurface;
 class Geom_RectangularTrimmedSurface;
 
-//! This class implements the mapping between class
-//! RectangularTrimmedSurface from Geom and the class
-//! RectangularTrimmedSurface from
-//! StepGeom which describes a
-//! rectangular_trimmed_surface from ISO-IS 10303-42
 class GeomToStep_MakeRectangularTrimmedSurface : public GeomToStep_Root
 {
 public:

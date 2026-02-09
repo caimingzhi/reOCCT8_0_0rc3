@@ -77,8 +77,6 @@ double IntCurve_ProjectOnPConicTool::FindParameter(const IntCurve_PConic& ThePCo
                                                    const double)
 {
 
-  // std::cout<<"\n\n---- Dans ProjectOnPConicTool::FindParameter  Point : "<<P.X()<<","<<P.Y();
-
   double Param = 0;
 
   switch (ThePConic.TypeCurve())

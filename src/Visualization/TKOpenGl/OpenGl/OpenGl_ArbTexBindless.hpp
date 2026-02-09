@@ -2,10 +2,6 @@
 
 #include <OpenGl_GlFunctions.hpp>
 
-//! Provides bindless textures.
-//! This extension allows OpenGL applications to access texture objects in
-//! shaders without first binding each texture to one of a limited number of
-//! texture image units.
 struct OpenGl_ArbTexBindless : protected OpenGl_GlFunctions
 {
 #if !defined(GL_ES_VERSION_2_0)

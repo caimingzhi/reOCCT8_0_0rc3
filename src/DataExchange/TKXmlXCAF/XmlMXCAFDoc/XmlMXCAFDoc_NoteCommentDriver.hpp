@@ -2,7 +2,6 @@
 
 #include <XmlMXCAFDoc_NoteDriver.hpp>
 
-//! Attribute Driver.
 class XmlMXCAFDoc_NoteCommentDriver : public XmlMXCAFDoc_NoteDriver
 {
 public:

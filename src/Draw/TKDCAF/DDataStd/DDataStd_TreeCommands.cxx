@@ -13,10 +13,6 @@
 
 #include <cstdio>
 
-//=======================================================================
-// TreeNode : SetNode
-// purpose  : SetNode (DOC Entry [ID])
-//=======================================================================
 static int DDataStd_SetNode(Draw_Interpretor& di, int n, const char** a)
 {
   occ::handle<TDF_Data> DF;
@@ -46,11 +42,6 @@ static int DDataStd_SetNode(Draw_Interpretor& di, int n, const char** a)
   di << "DDataStd_SetNode : Error\n";
   return 1;
 }
-
-//=======================================================================
-// TreeNode : AppendNode
-// purpose  : AppendNode (DOC FatherEntry childEntry [fatherID])
-//=======================================================================
 
 static int DDataStd_AppendNode(Draw_Interpretor& di, int n, const char** a)
 {
@@ -97,11 +88,6 @@ static int DDataStd_AppendNode(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=======================================================================
-// TreeNode : PrependNode
-// purpose  : PrependNode (DOC FatherEntry childEntry [fatherID])
-//=======================================================================
-
 static int DDataStd_PrependNode(Draw_Interpretor& di, int n, const char** a)
 {
   if (n >= 4)
@@ -147,11 +133,6 @@ static int DDataStd_PrependNode(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=======================================================================
-// TreeNode : RootNode
-// purpose  : RootNode (DOC TreeNodeEntry [ID])
-//=======================================================================
-
 static int DDataStd_RootNode(Draw_Interpretor& di, int n, const char** a)
 {
   if (n >= 3)
@@ -184,11 +165,6 @@ static int DDataStd_RootNode(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=======================================================================
-// TreeNode : InsertNodeBefore
-// purpose  : InsertNodeBefore (DOC TreeNodeEntry TreeNodeWhichHasToBeBefore [ID])
-//=======================================================================
-
 static int DDataStd_InsertNodeBefore(Draw_Interpretor& di, int n, const char** a)
 {
   if (n >= 4)
@@ -214,7 +190,6 @@ static int DDataStd_InsertNodeBefore(Draw_Interpretor& di, int n, const char** a
 
     if (!DDF::Find(DF, a[2], ID, current))
       return 1;
-    //     if (!DDF::Find(DF,a[3],ID,TN)) return 1;
 
     TDF_Label L;
     if (!DDF::FindLabel(DF, a[3], L))
@@ -227,11 +202,6 @@ static int DDataStd_InsertNodeBefore(Draw_Interpretor& di, int n, const char** a
   di << "DDataStd_InsertBefore : Error\n";
   return 1;
 }
-
-//=======================================================================
-// TreeNode : InsertNodeAfter
-// purpose  : InsertNodeAfter (DOC TreeNodeEntry TreeNodeWhichHasToBeAfter [ID])
-//=======================================================================
 
 static int DDataStd_InsertNodeAfter(Draw_Interpretor& di, int n, const char** a)
 {
@@ -258,7 +228,7 @@ static int DDataStd_InsertNodeAfter(Draw_Interpretor& di, int n, const char** a)
 
     if (!DDF::Find(DF, a[2], ID, current))
       return 1;
-    // if (!DDF::Find(DF,a[3],TDataStd_TreeNode::GetDefaultTreeID(),TN)) return 1;
+
     TDF_Label L;
     if (!DDF::FindLabel(DF, a[3], L))
       return 1;
@@ -270,11 +240,6 @@ static int DDataStd_InsertNodeAfter(Draw_Interpretor& di, int n, const char** a)
   di << "DDataStd_InsertNodeAfter : Error\n";
   return 1;
 }
-
-//=======================================================================
-// TreeNode : DetachNode
-// purpose  : DetachNode (DOC TreeNodeEntry [ID])
-//=======================================================================
 
 static int DDataStd_DetachNode(Draw_Interpretor& di, int n, const char** a)
 {
@@ -309,14 +274,6 @@ static int DDataStd_DetachNode(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=======================================================================
-// function : TreeBrowse
-// purpose  :
-//  arg 1  : DF name
-//  arg 2  : Entry
-// [arg 3] : Browser name
-//=======================================================================
-
 static int DDataStd_TreeBrowse(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
@@ -342,13 +299,6 @@ static int DDataStd_TreeBrowse(Draw_Interpretor& di, int n, const char** a)
   di.Eval(inst1.ToCString());
   return 0;
 }
-
-//=======================================================================
-// function : OpenNode
-// purpose  :
-//  arg 1  : Browser name
-// [arg 2] : Label entry
-//=======================================================================
 
 static int DDataStd_OpenNode(Draw_Interpretor& di, int n, const char** a)
 {
@@ -380,11 +330,6 @@ static int DDataStd_OpenNode(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// TreeNode : ChildNodeIterate
-// purpose  : ChildNodeIterate Doc TreeNode AllLevels [ID]
-//=======================================================================
-
 static int DDataStd_ChildNodeIterate(Draw_Interpretor& di, int n, const char** a)
 {
   if (n >= 4)
@@ -411,7 +356,7 @@ static int DDataStd_ChildNodeIterate(Draw_Interpretor& di, int n, const char** a
 
     if (!DDF::Find(DF, a[2], ID, TN))
       return 1;
-    // di<<"TDataStd_ChildNodeIterator: \n";
+
     TDataStd_ChildNodeIterator itr(TN, AllLevels);
     for (; itr.More(); itr.Next())
     {
@@ -419,9 +364,6 @@ static int DDataStd_ChildNodeIterate(Draw_Interpretor& di, int n, const char** a
       TCollection_AsciiString entry;
       TDF_Tool::Entry(Value->Label(), entry);
       di << entry << "\n";
-      // di<<entry;
-      // if(itr.More()==true)
-      // di<<" ";
     }
     di << "\n";
     return 0;
@@ -431,11 +373,6 @@ static int DDataStd_ChildNodeIterate(Draw_Interpretor& di, int n, const char** a
 }
 
 static TDataStd_ChildNodeIterator cni;
-
-//=======================================================================
-// TreeNode : InitChildNodeIterator
-// purpose  : InitChildNodeIterator Doc TreeNode AllLevels [ID]
-//=======================================================================
 
 static int DDataStd_InitChildNodeIterator(Draw_Interpretor& di, int n, const char** a)
 {
@@ -470,9 +407,7 @@ static int DDataStd_InitChildNodeIterator(Draw_Interpretor& di, int n, const cha
   return 1;
 }
 
-//=================================================================================================
-
-static int DDataStd_ChildNodeMore(Draw_Interpretor& di, int /*n*/, const char** /*a*/)
+static int DDataStd_ChildNodeMore(Draw_Interpretor& di, int, const char**)
 {
   if (cni.More())
   {
@@ -485,33 +420,25 @@ static int DDataStd_ChildNodeMore(Draw_Interpretor& di, int /*n*/, const char** 
   return 0;
 }
 
-//=================================================================================================
-
-static int DDataStd_ChildNodeNext(Draw_Interpretor& /*di*/, int /*n*/, const char** /*a*/)
+static int DDataStd_ChildNodeNext(Draw_Interpretor&, int, const char**)
 {
   cni.Next();
   return 0;
 }
 
-//=================================================================================================
-
-static int DDataStd_ChildNodeNextBrother(Draw_Interpretor& /*di*/, int /*n*/, const char** /*a*/)
+static int DDataStd_ChildNodeNextBrother(Draw_Interpretor&, int, const char**)
 {
   cni.NextBrother();
   return 0;
 }
 
-//=================================================================================================
-
-static int DDataStd_ChildNodeValue(Draw_Interpretor& di, int /*n*/, const char** /*a*/)
+static int DDataStd_ChildNodeValue(Draw_Interpretor& di, int, const char**)
 {
   TCollection_AsciiString entry;
   TDF_Tool::Entry(cni.Value()->Label(), entry);
   di << entry << "\n";
   return 0;
 }
-
-//=================================================================================================
 
 void DDataStd::TreeCommands(Draw_Interpretor& theCommands)
 {
@@ -522,11 +449,7 @@ void DDataStd::TreeCommands(Draw_Interpretor& theCommands)
 
   const char* g = "DData : Standard Attribute Commands";
 
-  // SET
-
   theCommands.Add("SetNode", "SetNode (DOC Entry [GUID])", __FILE__, DDataStd_SetNode, g);
-
-  // EDIT
 
   theCommands.Add("AppendNode",
                   "AppendNode (DOC FatherEntry childEntry [fatherGUID])",
@@ -564,8 +487,6 @@ void DDataStd::TreeCommands(Draw_Interpretor& theCommands)
                   DDataStd_RootNode,
                   g);
 
-  // TREE BROWSER
-
   theCommands.Add("TreeBrowse",
                   "TreeBrowse dfname entry [browsername]",
                   __FILE__,
@@ -578,8 +499,6 @@ void DDataStd::TreeCommands(Draw_Interpretor& theCommands)
                   __FILE__,
                   DDataStd_OpenNode,
                   g);
-
-  // TREE ITERATOR
 
   theCommands.Add("ChildNodeIterate",
                   "ChildNodeIterate Doc TreeNode AllLevels [GUID]",

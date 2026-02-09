@@ -293,72 +293,65 @@ public:
   typedef Delayed<Surface, pOffset> Offset;
 
 public:
-  //! Create a persistent object for a plane
   Standard_EXPORT static occ::handle<Surface> Translate(
     const occ::handle<Geom_Plane>& theSurf,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a cylinder
+
   Standard_EXPORT static occ::handle<Surface> Translate(
     const occ::handle<Geom_CylindricalSurface>& theSurf,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a cone
+
   Standard_EXPORT static occ::handle<Surface> Translate(
     const occ::handle<Geom_ConicalSurface>& theSurf,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a sphere
+
   Standard_EXPORT static occ::handle<Surface> Translate(
     const occ::handle<Geom_SphericalSurface>& theSurf,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a torus
+
   Standard_EXPORT static occ::handle<Surface> Translate(
     const occ::handle<Geom_ToroidalSurface>& theSurf,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a surface of linear extrusion
+
   Standard_EXPORT static occ::handle<Surface> Translate(
     const occ::handle<Geom_SurfaceOfLinearExtrusion>& theSurf,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a surface of evolution
+
   Standard_EXPORT static occ::handle<Surface> Translate(
     const occ::handle<Geom_SurfaceOfRevolution>& theSurf,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a Bezier surface
+
   Standard_EXPORT static occ::handle<Surface> Translate(
     const occ::handle<Geom_BezierSurface>& theSurf,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a BSpline surface
+
   Standard_EXPORT static occ::handle<Surface> Translate(
     const occ::handle<Geom_BSplineSurface>& theSurf,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a rectangylar trimmed surface
+
   Standard_EXPORT static occ::handle<Surface> Translate(
     const occ::handle<Geom_RectangularTrimmedSurface>& theSurf,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for an offset surface
+
   Standard_EXPORT static occ::handle<Surface> Translate(
     const occ::handle<Geom_OffsetSurface>& theSurf,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
 };
 
-//=======================================================================
-// Elementary
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::Surface, gp_Ax3>::PName() const;
 
-//=======================================================================
-// Plane
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::instance<
   ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::Surface, gp_Ax3>,
@@ -371,9 +364,6 @@ void ShapePersistent_Geom::instance<
   Geom_Plane,
   gp_Ax3>::Write(StdObjMgt_WriteData& theWriteData) const;
 
-//=======================================================================
-// Conical
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::instance<
   ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::Surface, gp_Ax3>,
@@ -386,9 +376,6 @@ void ShapePersistent_Geom::instance<
   Geom_ConicalSurface,
   gp_Cone>::Write(StdObjMgt_WriteData& theWriteData) const;
 
-//=======================================================================
-// Cylindrical
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::instance<
   ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::Surface, gp_Ax3>,
@@ -401,9 +388,6 @@ void ShapePersistent_Geom::instance<
   Geom_CylindricalSurface,
   gp_Cylinder>::Write(StdObjMgt_WriteData& theWriteData) const;
 
-//=======================================================================
-// Spherical
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::instance<
   ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::Surface, gp_Ax3>,
@@ -416,9 +400,6 @@ void ShapePersistent_Geom::instance<
   Geom_SphericalSurface,
   gp_Sphere>::Write(StdObjMgt_WriteData& theWriteData) const;
 
-//=======================================================================
-// Toroidal
-//=======================================================================
 template <>
 const char* ShapePersistent_Geom::instance<
   ShapePersistent_Geom::subBase_gp<ShapePersistent_Geom::Surface, gp_Ax3>,

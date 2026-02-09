@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include "Geom_OsculatingSurface.hpp"
 
@@ -27,15 +16,11 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 Geom_OsculatingSurface::Geom_OsculatingSurface()
     : myTol(0.0),
       myAlong{false, false, false, false}
 {
 }
-
-//=================================================================================================
 
 Geom_OsculatingSurface::Geom_OsculatingSurface(const occ::handle<Geom_Surface>& theBS,
                                                double                           theTol)
@@ -44,13 +29,9 @@ Geom_OsculatingSurface::Geom_OsculatingSurface(const occ::handle<Geom_Surface>& 
   Init(theBS, theTol);
 }
 
-//=================================================================================================
-
 Geom_OsculatingSurface::Geom_OsculatingSurface(const Geom_OsculatingSurface& theOther)
 
   = default;
-
-//=================================================================================================
 
 Geom_OsculatingSurface::Geom_OsculatingSurface(Geom_OsculatingSurface&& theOther) noexcept
     : myBasisSurf(std::move(theOther.myBasisSurf)),
@@ -63,8 +44,6 @@ Geom_OsculatingSurface::Geom_OsculatingSurface(Geom_OsculatingSurface&& theOther
   theOther.myTol = 0.0;
   theOther.myAlong.fill(false);
 }
-
-//=================================================================================================
 
 Geom_OsculatingSurface& Geom_OsculatingSurface::operator=(const Geom_OsculatingSurface& theOther)
 {
@@ -79,8 +58,6 @@ Geom_OsculatingSurface& Geom_OsculatingSurface::operator=(const Geom_OsculatingS
   }
   return *this;
 }
-
-//=================================================================================================
 
 Geom_OsculatingSurface& Geom_OsculatingSurface::operator=(
   Geom_OsculatingSurface&& theOther) noexcept
@@ -100,13 +77,11 @@ Geom_OsculatingSurface& Geom_OsculatingSurface::operator=(
   return *this;
 }
 
-//=================================================================================================
-
 void Geom_OsculatingSurface::Init(const occ::handle<Geom_Surface>& theBS, double theTol)
 {
   clearOsculFlags();
   myTol            = theTol;
-  double TolMin    = 0.; // consider all singularities below Tol, not just above 1.e-12
+  double TolMin    = 0.;
   bool   OsculSurf = true;
   myBasisSurf      = occ::down_cast<Geom_Surface>(theBS->Copy());
   myOsculSurf1.Clear();
@@ -364,8 +339,6 @@ void Geom_OsculatingSurface::Init(const occ::handle<Geom_Surface>& theBS, double
     clearOsculFlags();
 }
 
-//=================================================================================================
-
 bool Geom_OsculatingSurface::UOsculatingSurface(double                            theU,
                                                 double                            theV,
                                                 bool&                             theT,
@@ -396,7 +369,7 @@ bool Geom_OsculatingSurface::UOsculatingSurface(double                          
       if (NU >= NbUK)
         NU = NbUK - 1;
       if (NbVK == 2 && NV == 1)
-        // Need to find the closest end
+
         if (VKnots(NbVK) - theV > theV - VKnots(1))
           isToSkipSecond = true;
     }
@@ -414,9 +387,7 @@ bool Geom_OsculatingSurface::UOsculatingSurface(double                          
     }
     if (myAlong[1] && (NV == NbVK - 1) && !isToSkipSecond)
     {
-      // theT means that derivative vector of osculating surface is opposite
-      // to the original. This happens when (v-t)^k is negative, i.e.
-      // difference between degrees (k) is odd and t is the last parameter
+
       if (myKdeg.Value(NU) % 2)
         theT = true;
       theL  = myOsculSurf2.Value(NU);
@@ -425,8 +396,6 @@ bool Geom_OsculatingSurface::UOsculatingSurface(double                          
   }
   return along;
 }
-
-//=================================================================================================
 
 bool Geom_OsculatingSurface::VOsculatingSurface(double                            theU,
                                                 double                            theV,
@@ -458,7 +427,7 @@ bool Geom_OsculatingSurface::VOsculatingSurface(double                          
       if (NV >= NbVK)
         NV = NbVK - 1;
       if (NbUK == 2 && NU == 1)
-        // Need to find the closest end
+
         if (UKnots(NbUK) - theU > theU - UKnots(1))
           isToSkipSecond = true;
     }
@@ -485,8 +454,6 @@ bool Geom_OsculatingSurface::VOsculatingSurface(double                          
   return along;
 }
 
-//=================================================================================================
-
 bool Geom_OsculatingSurface::buildOsculatingSurface(double theParam,
                                                     int    theSUKnot,
                                                     int    theSVKnot,
@@ -499,7 +466,6 @@ bool Geom_OsculatingSurface::buildOsculatingSurface(double theParam,
   std::cout << "======================================" << std::endl << std::endl;
 #endif
 
-  // for cache
   int    MinDegree, MaxDegree;
   double udeg, vdeg;
   udeg = theBS->UDegree();
@@ -517,9 +483,7 @@ bool Geom_OsculatingSurface::buildOsculatingSurface(double theParam,
     MaxDegree = (int)std::max(udeg, vdeg);
 
     NCollection_Array2<gp_Pnt> cachepoles(1, MaxDegree + 1, 1, MinDegree + 1);
-    // end for cache
 
-    // for polynomial grid
     int MaxUDegree, MaxVDegree;
     int UContinuity, VContinuity;
 
@@ -562,16 +526,14 @@ bool Geom_OsculatingSurface::buildOsculatingSurface(double theParam,
     NumCoeffPerSurface->ChangeValue(1, 1) = OscUNumCoeff;
     NumCoeffPerSurface->ChangeValue(1, 2) = OscVNumCoeff;
     int nbc = NumCoeffPerSurface->Value(1, 1) * NumCoeffPerSurface->Value(1, 2) * 3;
-    //
+
     if (nbc == 0)
     {
       return false;
     }
-    //
-    occ::handle<NCollection_HArray1<double>> Coefficients = new NCollection_HArray1<double>(1, nbc);
-    //    end for polynomial grid
 
-    //    building the cache
+    occ::handle<NCollection_HArray1<double>> Coefficients = new NCollection_HArray1<double>(1, nbc);
+
     int                        ULocalIndex, VLocalIndex;
     double                     ucacheparameter, vcacheparameter, uspanlength, vspanlength;
     NCollection_Array2<gp_Pnt> NewPoles(1, theBS->NbUPoles(), 1, theBS->NbVPoles());
@@ -605,9 +567,6 @@ bool Geom_OsculatingSurface::buildOsculatingSurface(double theParam,
     vcacheparameter = theBS->VKnot(theSVKnot);
     vspanlength     = theBS->VKnot(theSVKnot + 1) - theBS->VKnot(theSVKnot);
     uspanlength     = theBS->UKnot(theSUKnot + 1) - theBS->UKnot(theSUKnot);
-
-    // On se ramene toujours a un parametrage tel que localement ce soit l'iso
-    // u=0 ou v=0 qui soit degeneree
 
     bool IsVNegative = theParam > vcacheparameter + vspanlength / 2;
     bool IsUNegative = theParam > ucacheparameter + uspanlength / 2;
@@ -725,8 +684,6 @@ bool Geom_OsculatingSurface::buildOsculatingSurface(double theParam,
   return OsculSurf;
 }
 
-//=================================================================================================
-
 bool Geom_OsculatingSurface::isQPunctual(const occ::handle<Geom_Surface>& theS,
                                          double                           theParam,
                                          GeomAbs_IsoType                  theIT,
@@ -772,8 +729,6 @@ bool Geom_OsculatingSurface::isQPunctual(const occ::handle<Geom_Surface>& theS,
   }
   return Along;
 }
-
-//=================================================================================================
 
 void Geom_OsculatingSurface::clearOsculFlags()
 {

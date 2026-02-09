@@ -8,7 +8,6 @@ class StepShape_GeometricCurveSet : public StepShape_GeometricSet
 {
 
 public:
-  //! Returns a GeometricCurveSet
   Standard_EXPORT StepShape_GeometricCurveSet();
 
   DEFINE_STANDARD_RTTIEXT(StepShape_GeometricCurveSet, StepShape_GeometricSet)

@@ -7,9 +7,6 @@
 #include <TopOpeBRepBuild_BlockIterator.hpp>
 #include <Standard_Transient.hpp>
 
-//! a Loop is an existing shape (Shell,Wire) or a set
-//! of shapes (Faces,Edges) which are connex.
-//! a set of connex shape is represented by a BlockIterator
 class TopOpeBRepBuild_Loop : public Standard_Transient
 {
 

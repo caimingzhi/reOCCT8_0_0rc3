@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_LinearFlexibleAndPinionPair;
 
-//! Read & Write tool for LinearFlexibleAndPinionPair
 class RWStepKinematics_RWLinearFlexibleAndPinionPair
 {
 public:

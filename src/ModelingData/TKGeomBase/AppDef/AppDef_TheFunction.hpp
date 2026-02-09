@@ -24,8 +24,6 @@ class AppDef_TheFunction : public math_MultipleVarFunctionWithGradient
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! initializes the fields of the function. The approximating
-  //! curve has the desired degree Deg.
   Standard_EXPORT AppDef_TheFunction(
     const AppDef_MultiLine&                                                SSP,
     const int                                                              FirstPoint,
@@ -34,41 +32,22 @@ public:
     const math_Vector&                                                     Parameters,
     const int                                                              Deg);
 
-  //! returns the number of variables of the function. It
-  //! corresponds to the number of MultiPoints.
   Standard_EXPORT int NbVariables() const override;
 
-  //! this method computes the new approximation of the
-  //! MultiLine
-  //! SSP and calculates F = sum (||Pui - Bi*Pi||2) for each
-  //! point of the MultiLine.
   Standard_EXPORT bool Value(const math_Vector& X, double& F) override;
 
-  //! returns the gradient G of the sum above for the
-  //! parameters Xi.
   Standard_EXPORT bool Gradient(const math_Vector& X, math_Vector& G) override;
 
-  //! returns the value F=sum(||Pui - Bi*Pi||)2.
-  //! returns the value G = grad(F) for the parameters Xi.
   Standard_EXPORT bool Values(const math_Vector& X, double& F, math_Vector& G) override;
 
-  //! returns the new parameters of the MultiLine.
   Standard_EXPORT const math_Vector& NewParameters() const;
 
-  //! returns the MultiCurve approximating the set after
-  //! computing the value F or Grad(F).
   Standard_EXPORT const AppParCurves_MultiCurve& CurveValue();
 
-  //! returns the distance between the MultiPoint of range
-  //! IPoint and the curve CurveIndex.
   Standard_EXPORT double Error(const int IPoint, const int CurveIndex) const;
 
-  //! returns the maximum distance between the points
-  //! and the MultiCurve.
   Standard_EXPORT double MaxError3d() const;
 
-  //! returns the maximum distance between the points
-  //! and the MultiCurve.
   Standard_EXPORT double MaxError2d() const;
 
   Standard_EXPORT AppParCurves_Constraint FirstConstraint(
@@ -80,8 +59,6 @@ public:
     const int                                                              LastPoint) const;
 
 protected:
-  //! this method is used each time Value or Gradient is
-  //! needed.
   Standard_EXPORT void Perform(const math_Vector& X);
 
 private:

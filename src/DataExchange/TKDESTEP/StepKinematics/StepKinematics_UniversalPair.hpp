@@ -7,14 +7,11 @@
 #include <StepRepr_RepresentationItem.hpp>
 #include <StepKinematics_KinematicJoint.hpp>
 
-//! Representation of STEP entity UniversalPair
 class StepKinematics_UniversalPair : public StepKinematics_LowOrderKinematicPair
 {
 public:
-  //! default constructor
   Standard_EXPORT StepKinematics_UniversalPair();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
     const occ::handle<TCollection_HAsciiString>&      theItemDefinedTransformation_Name,
@@ -32,16 +29,15 @@ public:
     const bool                                        hasInputSkewAngle,
     const double                                      theInputSkewAngle);
 
-  //! Returns field InputSkewAngle
   Standard_EXPORT double InputSkewAngle() const;
-  //! Sets field InputSkewAngle
+
   Standard_EXPORT void SetInputSkewAngle(const double theInputSkewAngle);
-  //! Returns True if optional field InputSkewAngle is defined
+
   Standard_EXPORT bool HasInputSkewAngle() const;
 
   DEFINE_STANDARD_RTTIEXT(StepKinematics_UniversalPair, StepKinematics_LowOrderKinematicPair)
 
 private:
-  double myInputSkewAngle;  //!< optional
-  bool   defInputSkewAngle; //!< flag "is InputSkewAngle defined"
+  double myInputSkewAngle;
+  bool   defInputSkewAngle;
 };

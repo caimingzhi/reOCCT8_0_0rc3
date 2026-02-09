@@ -21,8 +21,6 @@
 extern OSD_Chronometer FFaceTimer1, FFaceTimer2, FFaceTimer3, FFaceTimer4;
 #endif
 
-//=================================================================================================
-
 static void FindLimits(const Adaptor3d_Curve& aCurve,
                        const double           aLimit,
                        double&                First,
@@ -71,8 +69,6 @@ static void FindLimits(const Adaptor3d_Curve& aCurve,
   }
 }
 
-//=================================================================================================
-
 void StdPrs_WFDeflectionRestrictedFace::Add(
   const occ::handle<Prs3d_Presentation>&                        aPresentation,
   const occ::handle<BRepAdaptor_Surface>&                       aFace,
@@ -97,13 +93,11 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
 
   const double aLimit = aDrawer->MaximalParameterValue();
 
-  // compute bounds of the restriction
   double UMin = std::max(UF, -aLimit);
   double UMax = std::min(UL, aLimit);
   double VMin = std::max(VF, -aLimit);
   double VMax = std::min(VL, aLimit);
 
-  // update min max for the hatcher.
   gp_Pnt2d P1, P2;
   double   U1, U2;
   gp_Pnt   dummypnt;
@@ -145,13 +139,13 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
 
             if (anOrient == TopAbs_FORWARD)
             {
-              // isobuild.Trim (P1, P2);
+
               tabP.Append(P1);
               tabP.Append(P2);
             }
             else
             {
-              // isobuild.Trim (P2, P1);
+
               tabP.Append(P2);
               tabP.Append(P1);
             }
@@ -169,9 +163,7 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
     {
       U1 = TheRCurve->FirstParameter();
       U2 = TheRCurve->LastParameter();
-      // MSV 17.08.06 OCC13144: U2 occurred less than U1,
-      // to overcome it ensure that distance U2-U1 is not greater than aLimit*2,
-      // if greater then choose an origin and use aLimit to define U1 and U2 anew
+
       double aOrigin = 0.;
       if (!Precision::IsNegativeInfinite(U1) || !Precision::IsPositiveInfinite(U2))
       {
@@ -204,13 +196,13 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
 
       if (anOrient == TopAbs_FORWARD)
       {
-        // isobuild.Trim (P1, P2);
+
         tabP.Append(P1);
         tabP.Append(P2);
       }
       else
       {
-        // isobuild.Trim (P2, P1);
+
         tabP.Append(P2);
         tabP.Append(P1);
       }
@@ -222,12 +214,10 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
   FFaceTimer2.Start();
 #endif
 
-  // Compute the hatching tolerance.
   aHatchingTol *= 0.1;
   aHatchingTol = std::max(Precision::Confusion(), aHatchingTol);
   aHatchingTol = std::min(1.e-5, aHatchingTol);
 
-  // load the isos
   Hatch_Hatcher isobuild(aHatchingTol, ToolRst.IsOriented());
   bool          isUClosed = aFace->IsUClosed();
   bool          isVClosed = aFace->IsVClosed();
@@ -246,7 +236,7 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
   {
     if (NBUiso > 0)
     {
-      isUClosed = false; // En attendant un hatcher de course.
+      isUClosed = false;
       double du = isUClosed ? (UMax - UMin) / NBUiso : (UMax - UMin) / (1 + NBUiso);
       for (int i = 1; i <= NBUiso; i++)
       {
@@ -282,8 +272,6 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
   FFaceTimer3.Stop();
   FFaceTimer4.Start();
 #endif
-
-  // draw the isos
 
   Adaptor3d_IsoCurve anIso;
   anIso.Load(aFace);
@@ -370,8 +358,6 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
 #endif
 }
 
-//=================================================================================================
-
 bool StdPrs_WFDeflectionRestrictedFace::Match(const double                            X,
                                               const double                            Y,
                                               const double                            Z,
@@ -388,7 +374,6 @@ bool StdPrs_WFDeflectionRestrictedFace::Match(const double                      
   StdPrs_ToolRFace ToolRst(aFace);
   const double     aLimit = aDrawer->MaximalParameterValue();
 
-  // compute bounds of the restriction
   double UMin, UMax, VMin, VMax;
   double u, v, step;
   int    i, nbPoints = 10;
@@ -416,7 +401,6 @@ bool StdPrs_WFDeflectionRestrictedFace::Match(const double                      
     }
   }
 
-  // load the isos
   Hatch_Hatcher isobuild(1.e-5, ToolRst.IsOriented());
   bool          UClosed = aFace->IsUClosed();
   bool          VClosed = aFace->IsVClosed();
@@ -437,7 +421,7 @@ bool StdPrs_WFDeflectionRestrictedFace::Match(const double                      
   {
     if (NBUiso > 0)
     {
-      UClosed   = false; // En attendant un hatcher de course.
+      UClosed   = false;
       double du = UClosed ? (UMax - UMin) / NBUiso : (UMax - UMin) / (1 + NBUiso);
       for (i = 1; i <= NBUiso; i++)
       {
@@ -458,7 +442,6 @@ bool StdPrs_WFDeflectionRestrictedFace::Match(const double                      
     }
   }
 
-  // trim the isos
   gp_Pnt2d P1, P2;
   gp_Pnt   dummypnt;
   for (ToolRst.Init(); ToolRst.More(); ToolRst.Next())
@@ -493,8 +476,6 @@ bool StdPrs_WFDeflectionRestrictedFace::Match(const double                      
 #endif
   }
 
-  // draw the isos
-
   Adaptor3d_IsoCurve anIso;
   anIso.Load(aFace);
   int    NumberOfLines = isobuild.NbLines();
@@ -523,8 +504,6 @@ bool StdPrs_WFDeflectionRestrictedFace::Match(const double                      
   return false;
 }
 
-//=================================================================================================
-
 void StdPrs_WFDeflectionRestrictedFace::Add(const occ::handle<Prs3d_Presentation>&  aPresentation,
                                             const occ::handle<BRepAdaptor_Surface>& aFace,
                                             const occ::handle<Prs3d_Drawer>&        aDrawer)
@@ -540,8 +519,6 @@ void StdPrs_WFDeflectionRestrictedFace::Add(const occ::handle<Prs3d_Presentation
                                          aDrawer,
                                          Curves);
 }
-
-//=================================================================================================
 
 void StdPrs_WFDeflectionRestrictedFace::AddUIso(
   const occ::handle<Prs3d_Presentation>&  aPresentation,
@@ -560,8 +537,6 @@ void StdPrs_WFDeflectionRestrictedFace::AddUIso(
                                          Curves);
 }
 
-//=================================================================================================
-
 void StdPrs_WFDeflectionRestrictedFace::AddVIso(
   const occ::handle<Prs3d_Presentation>&  aPresentation,
   const occ::handle<BRepAdaptor_Surface>& aFace,
@@ -578,8 +553,6 @@ void StdPrs_WFDeflectionRestrictedFace::AddVIso(
                                          aDrawer,
                                          Curves);
 }
-
-//=================================================================================================
 
 bool StdPrs_WFDeflectionRestrictedFace::Match(const double                            X,
                                               const double                            Y,
@@ -601,8 +574,6 @@ bool StdPrs_WFDeflectionRestrictedFace::Match(const double                      
                                                   aDrawer->VIsoAspect()->Number());
 }
 
-//=================================================================================================
-
 bool StdPrs_WFDeflectionRestrictedFace::MatchUIso(const double                            X,
                                                   const double                            Y,
                                                   const double                            Z,
@@ -622,8 +593,6 @@ bool StdPrs_WFDeflectionRestrictedFace::MatchUIso(const double                  
                                                   aDrawer->UIsoAspect()->Number(),
                                                   aDrawer->VIsoAspect()->Number());
 }
-
-//=================================================================================================
 
 bool StdPrs_WFDeflectionRestrictedFace::MatchVIso(const double                            X,
                                                   const double                            Y,

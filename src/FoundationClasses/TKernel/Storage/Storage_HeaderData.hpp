@@ -19,51 +19,34 @@ public:
 
   Standard_EXPORT bool Read(const occ::handle<Storage_BaseDriver>& theDriver);
 
-  //! return the creation date
   Standard_EXPORT TCollection_AsciiString CreationDate() const;
 
-  //! return the Storage package version
   Standard_EXPORT TCollection_AsciiString StorageVersion() const;
 
-  //! get the version of the schema
   Standard_EXPORT TCollection_AsciiString SchemaVersion() const;
 
-  //! get the schema's name
   Standard_EXPORT TCollection_AsciiString SchemaName() const;
 
-  //! set the version of the application
   Standard_EXPORT void SetApplicationVersion(const TCollection_AsciiString& aVersion);
 
-  //! get the version of the application
   Standard_EXPORT TCollection_AsciiString ApplicationVersion() const;
 
-  //! set the name of the application
   Standard_EXPORT void SetApplicationName(const TCollection_ExtendedString& aName);
 
-  //! get the name of the application
   Standard_EXPORT TCollection_ExtendedString ApplicationName() const;
 
-  //! set the data type
   Standard_EXPORT void SetDataType(const TCollection_ExtendedString& aType);
 
-  //! returns data type
   Standard_EXPORT TCollection_ExtendedString DataType() const;
 
-  //! add <theUserInfo> to the user information
   Standard_EXPORT void AddToUserInfo(const TCollection_AsciiString& theUserInfo);
 
-  //! return the user information
   Standard_EXPORT const NCollection_Sequence<TCollection_AsciiString>& UserInfo() const;
 
-  //! add <theUserInfo> to the user information
   Standard_EXPORT void AddToComments(const TCollection_ExtendedString& aComment);
 
-  //! return the user information
   Standard_EXPORT const NCollection_Sequence<TCollection_ExtendedString>& Comments() const;
 
-  //! the number of persistent objects
-  //! Return:
-  //! the number of persistent objects readed
   Standard_EXPORT int NumberOfObjects() const;
 
   Standard_EXPORT Storage_Error ErrorStatus() const;

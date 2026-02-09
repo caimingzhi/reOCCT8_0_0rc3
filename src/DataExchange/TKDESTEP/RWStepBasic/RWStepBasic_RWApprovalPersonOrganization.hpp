@@ -11,7 +11,6 @@ class StepBasic_ApprovalPersonOrganization;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ApprovalPersonOrganization
 class RWStepBasic_RWApprovalPersonOrganization
 {
 public:

@@ -8,12 +8,11 @@
 #include <TCollection_AsciiString.hpp>
 
 #ifdef _WIN32
-  #include <malloc.h> // for alloca()
+  #include <malloc.h>
 #endif
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_ShaderObject, OpenGl_Resource)
 
-//! Puts line numbers to the output of GLSL program source code.
 static TCollection_AsciiString putLineNumbers(const TCollection_AsciiString& theSource)
 {
   std::stringstream aStream;
@@ -32,7 +31,6 @@ static TCollection_AsciiString putLineNumbers(const TCollection_AsciiString& the
   return aResultSource;
 }
 
-//! Return GLSL shader stage title.
 static TCollection_AsciiString getShaderTypeString(GLenum theType)
 {
   switch (theType)
@@ -53,26 +51,16 @@ static TCollection_AsciiString getShaderTypeString(GLenum theType)
   return "Shader";
 }
 
-// =======================================================================
-// function : OpenGl_ShaderObject
-// purpose  : Creates uninitialized shader object
-// =======================================================================
 OpenGl_ShaderObject::OpenGl_ShaderObject(GLenum theType)
     : myType(theType),
       myShaderID(NO_SHADER)
 {
 }
 
-// =======================================================================
-// function : ~OpenGl_ShaderObject
-// purpose  : Releases resources of shader object
-// =======================================================================
 OpenGl_ShaderObject::~OpenGl_ShaderObject()
 {
   Release(nullptr);
 }
-
-//=================================================================================================
 
 bool OpenGl_ShaderObject::LoadAndCompile(const occ::handle<OpenGl_Context>& theCtx,
                                          const TCollection_AsciiString&     theId,
@@ -145,8 +133,6 @@ bool OpenGl_ShaderObject::LoadAndCompile(const occ::handle<OpenGl_Context>& theC
   return true;
 }
 
-//=================================================================================================
-
 void OpenGl_ShaderObject::DumpSourceCode(const occ::handle<OpenGl_Context>& theCtx,
                                          const TCollection_AsciiString&     theId,
                                          const TCollection_AsciiString&     theSource) const
@@ -158,10 +144,6 @@ void OpenGl_ShaderObject::DumpSourceCode(const occ::handle<OpenGl_Context>& theC
                       getShaderTypeString(myType) + " [" + theId + "] source code:\n" + theSource);
 }
 
-// =======================================================================
-// function : LoadSource
-// purpose  : Loads shader source code
-// =======================================================================
 bool OpenGl_ShaderObject::LoadSource(const occ::handle<OpenGl_Context>& theCtx,
                                      const TCollection_AsciiString&     theSource)
 {
@@ -175,10 +157,6 @@ bool OpenGl_ShaderObject::LoadSource(const occ::handle<OpenGl_Context>& theCtx,
   return true;
 }
 
-// =======================================================================
-// function : Compile
-// purpose  : Compiles the shader object
-// =======================================================================
 bool OpenGl_ShaderObject::Compile(const occ::handle<OpenGl_Context>& theCtx)
 {
   if (myShaderID == NO_SHADER)
@@ -186,19 +164,13 @@ bool OpenGl_ShaderObject::Compile(const occ::handle<OpenGl_Context>& theCtx)
     return false;
   }
 
-  // Try to compile shader
   theCtx->core20fwd->glCompileShader(myShaderID);
 
-  // Check compile status
   GLint aStatus = GL_FALSE;
   theCtx->core20fwd->glGetShaderiv(myShaderID, GL_COMPILE_STATUS, &aStatus);
   return aStatus != GL_FALSE;
 }
 
-// =======================================================================
-// function : FetchInfoLog
-// purpose  : Fetches information log of the last compile operation
-// =======================================================================
 bool OpenGl_ShaderObject::FetchInfoLog(const occ::handle<OpenGl_Context>& theCtx,
                                        TCollection_AsciiString&           theLog)
 {
@@ -207,7 +179,6 @@ bool OpenGl_ShaderObject::FetchInfoLog(const occ::handle<OpenGl_Context>& theCtx
     return false;
   }
 
-  // Load information log of the compiler
   GLint aLength = 0;
   theCtx->core20fwd->glGetShaderiv(myShaderID, GL_INFO_LOG_LENGTH, &aLength);
   if (aLength > 0)
@@ -221,10 +192,6 @@ bool OpenGl_ShaderObject::FetchInfoLog(const occ::handle<OpenGl_Context>& theCtx
   return true;
 }
 
-// =======================================================================
-// function : Create
-// purpose  : Creates new empty shader object of specified type
-// =======================================================================
 bool OpenGl_ShaderObject::Create(const occ::handle<OpenGl_Context>& theCtx)
 {
   if (myShaderID == NO_SHADER && theCtx->core20fwd != nullptr)
@@ -235,10 +202,6 @@ bool OpenGl_ShaderObject::Create(const occ::handle<OpenGl_Context>& theCtx)
   return myShaderID != NO_SHADER;
 }
 
-// =======================================================================
-// function : Release
-// purpose  : Destroys shader object
-// =======================================================================
 void OpenGl_ShaderObject::Release(OpenGl_Context* theCtx)
 {
   if (myShaderID == NO_SHADER)
@@ -258,7 +221,6 @@ void OpenGl_ShaderObject::Release(OpenGl_Context* theCtx)
   myShaderID = NO_SHADER;
 }
 
-//! Return GLSL shader stage file extension.
 static const char* getShaderExtension(GLenum theType)
 {
   switch (theType)
@@ -279,7 +241,6 @@ static const char* getShaderExtension(GLenum theType)
   return ".glsl";
 }
 
-//! Expand substring with additional tail.
 static void insertSubString(TCollection_AsciiString&       theString,
                             const char&                    thePattern,
                             const TCollection_AsciiString& theSubstitution)
@@ -296,7 +257,6 @@ static void insertSubString(TCollection_AsciiString&       theString,
   }
 }
 
-//! Dump GLSL shader source code into file.
 static bool dumpShaderSource(const TCollection_AsciiString& theFileName,
                              const TCollection_AsciiString& theSource,
                              bool                           theToBeautify)
@@ -326,7 +286,6 @@ static bool dumpShaderSource(const TCollection_AsciiString& theFileName,
   return true;
 }
 
-//! Read GLSL shader source code from file dump.
 static bool restoreShaderSource(TCollection_AsciiString&       theSource,
                                 const TCollection_AsciiString& theFileName)
 {
@@ -349,8 +308,6 @@ static bool restoreShaderSource(TCollection_AsciiString&       theSource,
   Message::SendWarning(TCollection_AsciiString("Restored shader dump from '") + theFileName + "'");
   return true;
 }
-
-//=================================================================================================
 
 bool OpenGl_ShaderObject::updateDebugDump(const occ::handle<OpenGl_Context>& theCtx,
                                           const TCollection_AsciiString&     theProgramId,

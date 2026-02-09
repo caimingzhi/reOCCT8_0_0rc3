@@ -19,32 +19,15 @@ class IGESGeom_SplineCurve;
 class Geom_Transformation;
 class IGESGeom_TransformationMatrix;
 
-//! Provides methods to transfer basic geometric curves entities
-//! from IGES to CASCADE.
-//! These can be:
-//! * Circular arc
-//! * Conic arc
-//! * Spline curve
-//! * BSpline curve
-//! * Line
-//! * Copious data
-//! * Point
-//! * Transformation matrix
 class IGESToBRep_BasicCurve : public IGESToBRep_CurveAndSurface
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates a tool BasicCurve ready to run, with
-  //! epsilons set to 1.E-04, TheModeTopo to True, the
-  //! optimization of the continuity to False.
   Standard_EXPORT IGESToBRep_BasicCurve();
 
-  //! Creates a tool BasicCurve ready to run and sets its
-  //! fields as CS's.
   Standard_EXPORT IGESToBRep_BasicCurve(const IGESToBRep_CurveAndSurface& CS);
 
-  //! Creates a tool BasicCurve ready to run.
   Standard_EXPORT IGESToBRep_BasicCurve(const double eps,
                                         const double epsGeom,
                                         const double epsCoeff,
@@ -52,17 +35,9 @@ public:
                                         const bool   modeapprox,
                                         const bool   optimized);
 
-  //! Transfer a IGESEntity which answer True to the
-  //! member : IGESToBRep::IsBasicCurve(IGESEntity). If this
-  //! Entity could not be converted, this member returns a NullEntity.
   Standard_EXPORT occ::handle<Geom_Curve> TransferBasicCurve(
     const occ::handle<IGESData_IGESEntity>& start);
 
-  //! Transfert a IGESEntity which answer True to the
-  //! member : IGESToBRep::IsBasicCurve(IGESEntity).
-  //! The IGESEntity must be a curve UV and its associed TRSF must
-  //! be planar. If this Entity could not be converted, this member
-  //! returns a NullEntity.
   Standard_EXPORT occ::handle<Geom2d_Curve> Transfer2dBasicCurve(
     const occ::handle<IGESData_IGESEntity>& start);
 

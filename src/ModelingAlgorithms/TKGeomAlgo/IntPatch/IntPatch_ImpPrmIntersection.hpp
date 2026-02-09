@@ -9,9 +9,6 @@
 
 class Adaptor3d_TopolTool;
 
-//! Implementation of the intersection between a natural
-//! quadric patch : Plane, Cone, Cylinder or Sphere and
-//! a bi-parametrised surface.
 class IntPatch_ImpPrmIntersection
 {
 public:
@@ -28,7 +25,6 @@ public:
                                               const double                            Fleche,
                                               const double                            Pas);
 
-  //! to search for solution from the given point
   Standard_EXPORT void SetStartPoint(const double U, const double V);
 
   Standard_EXPORT void Perform(const occ::handle<Adaptor3d_Surface>&   Surf1,
@@ -40,24 +36,16 @@ public:
                                const double                            Fleche,
                                const double                            Pas);
 
-  //! Returns true if the calculus was successful.
   bool IsDone() const;
 
-  //! Returns true if the is no intersection.
   bool IsEmpty() const;
 
-  //! Returns the number of "single" points.
   int NbPnts() const;
 
-  //! Returns the point of range Index.
-  //! An exception is raised if Index<=0 or Index>NbPnt.
   const IntPatch_Point& Point(const int Index) const;
 
-  //! Returns the number of intersection lines.
   int NbLines() const;
 
-  //! Returns the line of range Index.
-  //! An exception is raised if Index<=0 or Index>NbLine.
   const occ::handle<IntPatch_Line>& Line(const int Index) const;
 
 private:

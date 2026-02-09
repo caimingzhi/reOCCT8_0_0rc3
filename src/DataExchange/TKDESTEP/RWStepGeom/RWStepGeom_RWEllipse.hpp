@@ -12,8 +12,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class Interface_ShareTool;
 
-//! Read & Write Module for Ellipse
-//! Check added by CKY , 7-OCT-1996
 class RWStepGeom_RWEllipse
 {
 public:

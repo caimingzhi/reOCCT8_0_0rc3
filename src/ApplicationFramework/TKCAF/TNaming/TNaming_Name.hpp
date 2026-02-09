@@ -16,7 +16,6 @@
 class TNaming_NamedShape;
 class TDF_RelocationTable;
 
-//! store the arguments of Naming.
 class TNaming_Name
 {
 public:
@@ -60,7 +59,6 @@ public:
 
   Standard_EXPORT void Paste(TNaming_Name& into, const occ::handle<TDF_RelocationTable>& RT) const;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
 private:

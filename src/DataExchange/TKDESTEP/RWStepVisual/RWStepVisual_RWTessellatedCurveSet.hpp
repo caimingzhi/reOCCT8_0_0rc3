@@ -8,11 +8,10 @@
 #include <StepVisual_TessellatedCurveSet.hpp>
 class StepData_StepReaderData;
 class Interface_Check;
-// class StepVisual_TessellatedCurveSet;
+
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AnnotationOccurrence
 class RWStepVisual_RWTessellatedCurveSet
 {
 public:

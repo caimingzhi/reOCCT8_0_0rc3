@@ -15,19 +15,12 @@ class StepVisual_CameraModelD3MultiClippingUnionSelect : public StepData_SelectT
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Returns a CameraModelD3MultiClippingUnionSelect select type
   Standard_EXPORT StepVisual_CameraModelD3MultiClippingUnionSelect();
 
-  //! Recognizes a IdAttributeSelect Kind Entity that is :
-  //! 1 -> Plane
-  //! 2 -> CameraModelD3MultiClippingIntersection
-  //! 0 else
   Standard_EXPORT int CaseNum(const occ::handle<Standard_Transient>& ent) const override;
 
-  //! returns Value as a Plane (Null if another type)
   Standard_EXPORT occ::handle<StepGeom_Plane> Plane() const;
 
-  //! returns Value as a CameraModelD3MultiClippingIntersection (Null if another type)
   Standard_EXPORT occ::handle<StepVisual_CameraModelD3MultiClippingIntersection>
                   CameraModelD3MultiClippingIntersection() const;
 };

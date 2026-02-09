@@ -76,7 +76,7 @@ Geom2dGcc_Circ2d2TanOnIter::Geom2dGcc_Circ2d2TanOnIter(const GccEnt_QualifiedLin
   if (Root.IsDone())
   {
     Root.Root(Ufirst);
-    //     gp_Vec2d Tan1,Tan2,Nor1,Nor2;
+
     gp_Vec2d Tan1, Tan2;
     ElCLib::D1(Ufirst(1), L1, point1, Tan1);
     Geom2dGcc_CurveTool::D1(Cu2, Ufirst(2), point2, Tan2);
@@ -399,7 +399,7 @@ Geom2dGcc_Circ2d2TanOnIter::Geom2dGcc_Circ2d2TanOnIter(const GccEnt_QualifiedCir
   if (Root.IsDone())
   {
     Root.Root(Ufirst);
-    //     gp_Vec2d Tan1,Tan2,Nor1,Nor2;
+
     gp_Vec2d Tan1, Tan2, Nor2;
     ElCLib::D2(Ufirst(1), C1, point1, Tan1, Nor2);
     Geom2dGcc_CurveTool::D1(Cu2, Ufirst(2), point2, Tan2);
@@ -515,7 +515,7 @@ Geom2dGcc_Circ2d2TanOnIter::Geom2dGcc_Circ2d2TanOnIter(const GccEnt_QualifiedCir
   if (Root.IsDone())
   {
     Root.Root(Ufirst);
-    //     gp_Vec2d Tan1,Tan2,Nor1;
+
     gp_Vec2d Tan1, Tan2;
     ElCLib::D1(Ufirst(1), C1, point1, Tan1);
     Geom2dGcc_CurveTool::D1(Cu2, Ufirst(2), point2, Tan2);
@@ -739,7 +739,7 @@ Geom2dGcc_Circ2d2TanOnIter::Geom2dGcc_Circ2d2TanOnIter(const Geom2dGcc_QCurve& Q
   if (Root.IsDone())
   {
     Root.Root(Ufirst);
-    //     gp_Vec2d Tan1,Tan2,Nor1;
+
     gp_Vec2d Tan1, Tan2;
     Geom2dGcc_CurveTool::D1(Cu1, Ufirst(1), point1, Tan1);
     Geom2dGcc_CurveTool::D1(Cu2, Ufirst(2), point2, Tan2);
@@ -1276,7 +1276,7 @@ Geom2dGcc_Circ2d2TanOnIter::Geom2dGcc_Circ2d2TanOnIter(const Geom2dGcc_QCurve&  
   if (Root.IsDone())
   {
     Root.Root(Ufirst);
-    //    gp_Vec2d Tan1,Tan2,Tan3;
+
     gp_Vec2d Tan1, Tan3;
     Geom2dGcc_CurveTool::D1(Cu1, Ufirst(1), point1, Tan1);
     Geom2dGcc_CurveTool::D1(OnCurv, Ufirst(3), point3, Tan3);

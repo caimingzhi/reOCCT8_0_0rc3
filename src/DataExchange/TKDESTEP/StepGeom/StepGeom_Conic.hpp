@@ -10,7 +10,6 @@ class StepGeom_Conic : public StepGeom_Curve
 {
 
 public:
-  //! Returns a Conic
   Standard_EXPORT StepGeom_Conic();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

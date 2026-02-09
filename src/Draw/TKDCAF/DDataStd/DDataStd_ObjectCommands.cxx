@@ -8,16 +8,11 @@
 #include <TDF_Label.hpp>
 #include <TDataStd_Directory.hpp>
 
-// LES ATTRIBUTES
-
 #include <TDataStd_NoteBook.hpp>
 #include <TDataXtd_Shape.hpp>
 
 #include <DBRep.hpp>
 
-//=======================================================================
-// function : NewDirectory (DF, entry )
-//=======================================================================
 static int DDataStd_NewDirectory(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb != 3)
@@ -34,9 +29,6 @@ static int DDataStd_NewDirectory(Draw_Interpretor& di, int nb, const char** arg)
   return 0;
 }
 
-//=======================================================================
-// function : AddDirectory (DF, entry )
-//=======================================================================
 static int DDataStd_AddDirectory(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb != 3)
@@ -59,16 +51,13 @@ static int DDataStd_AddDirectory(Draw_Interpretor& di, int nb, const char** arg)
     occ::handle<TDataStd_Directory> Dir = TDataStd_Directory::AddDirectory(A);
     TCollection_AsciiString         entry;
     TDF_Tool::Entry(Dir->Label(), entry);
-    di << entry.ToCString() << " "; // return a label to draw
+    di << entry.ToCString() << " ";
     return 0;
   }
   di << "No Object Attribute on label" << "\n";
   return 1;
 }
 
-//=======================================================================
-// function : MakeObjectLabel (DF, entry )
-//=======================================================================
 static int DDataStd_MakeObjectLabel(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb != 3)
@@ -90,17 +79,12 @@ static int DDataStd_MakeObjectLabel(Draw_Interpretor& di, int nb, const char** a
   {
     TCollection_AsciiString entry;
     TDF_Tool::Entry(TDataStd_Directory::MakeObjectLabel(A), entry);
-    di << entry.ToCString() << " "; // return a label to draw
+    di << entry.ToCString() << " ";
     return 0;
   }
   di << "No Object Attribute on label" << "\n";
   return 1;
 }
-
-//=======================================================================
-// function : DDataStd_NewNoteBook
-// purpose  : NewNoteBook (DF, entry)
-//=======================================================================
 
 static int DDataStd_NewNoteBook(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -118,12 +102,9 @@ static int DDataStd_NewNoteBook(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=======================================================================
-// function : NewShape (DF, entry,  [in_shape] )
-//=======================================================================
 static int DDataStd_NewShape(Draw_Interpretor& di, int nb, const char** arg)
 {
-  // di << "nb = " <<nb   << "\n";
+
   if (nb < 3)
   {
     di << "Too few arguments" << "\n";
@@ -149,9 +130,6 @@ static int DDataStd_NewShape(Draw_Interpretor& di, int nb, const char** arg)
   return 0;
 }
 
-//=======================================================================
-// function : GetShape2 (DF, entry, out_shape )
-//=======================================================================
 static int DDataStd_GetShape2(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb < 4)
@@ -172,8 +150,6 @@ static int DDataStd_GetShape2(Draw_Interpretor& di, int nb, const char** arg)
 
   return 0;
 }
-
-//=================================================================================================
 
 void DDataStd::ObjectCommands(Draw_Interpretor& theCommands)
 {

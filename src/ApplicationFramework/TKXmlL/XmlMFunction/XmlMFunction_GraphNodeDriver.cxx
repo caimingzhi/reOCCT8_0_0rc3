@@ -10,25 +10,17 @@ IMPLEMENT_DOMSTRING(LastPreviousIndex, "lastprev")
 IMPLEMENT_DOMSTRING(LastNextIndex, "lastnext")
 IMPLEMENT_DOMSTRING(ExecutionStatus, "exec")
 
-//=================================================================================================
-
 XmlMFunction_GraphNodeDriver::XmlMFunction_GraphNodeDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMFunction_GraphNodeDriver::NewEmpty() const
 {
   return (new TFunction_GraphNode());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMFunction_GraphNodeDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                          const occ::handle<TDF_Attribute>& theTarget,
                                          XmlObjMgt_RRelocationTable&) const
@@ -38,15 +30,8 @@ bool XmlMFunction_GraphNodeDriver::Paste(const XmlObjMgt_Persistent&       theSo
   int                      aFirstIndPrev, aLastIndPrev, aFirstIndNext, aLastIndNext, aValue, ind;
   const XmlObjMgt_Element& anElement = theSource;
 
-  // Previous
-  // ========
+  aFirstIndPrev = 1;
 
-  // Read the FirstIndex; if the attribute is absent initialize to 1
-  // clang-format off
-  aFirstIndPrev = 1; // It is absent :-) because I didn't wrote it on the stage of writing the file.
-  // clang-format on
-
-  // Read the LastIndex; the attribute should present
   if (!anElement.getAttribute(::LastPreviousIndex()).GetInteger(aLastIndPrev))
   {
     TCollection_ExtendedString aMessageString =
@@ -89,15 +74,8 @@ bool XmlMFunction_GraphNodeDriver::Paste(const XmlObjMgt_Persistent&       theSo
     }
   }
 
-  // Next
-  // ====
+  aFirstIndNext = aLastIndPrev + 1;
 
-  // Read the FirstIndex; if the attribute is absent initialize to 1
-  // clang-format off
-  aFirstIndNext = aLastIndPrev + 1; // It is absent :-) because I didn't wrote it on the stage of writing the file.
-  // clang-format on
-
-  // Read the LastIndex; the attribute should present
   if (!anElement.getAttribute(::LastNextIndex()).GetInteger(aLastIndNext))
   {
     TCollection_ExtendedString aMessageString =
@@ -127,7 +105,6 @@ bool XmlMFunction_GraphNodeDriver::Paste(const XmlObjMgt_Persistent&       theSo
     G->AddNext(aValue);
   }
 
-  // Execution status
   int exec = 0;
   if (!anElement.getAttribute(::ExecutionStatus()).GetInteger(exec))
   {
@@ -142,18 +119,11 @@ bool XmlMFunction_GraphNodeDriver::Paste(const XmlObjMgt_Persistent&       theSo
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMFunction_GraphNodeDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                          XmlObjMgt_Persistent&             theTarget,
                                          XmlObjMgt_SRelocationTable&) const
 {
   occ::handle<TFunction_GraphNode> G = occ::down_cast<TFunction_GraphNode>(theSource);
-
-  // Previous
-  // ========
 
   theTarget.Element().setAttribute(::LastPreviousIndex(), G->GetPrevious().Extent());
 
@@ -166,12 +136,7 @@ void XmlMFunction_GraphNodeDriver::Paste(const occ::handle<TDF_Attribute>& theSo
     aValueStr += ' ';
   }
 
-  // add more spaces between "previous" and "next" ids to make them easily
-  // recognizable for human
   aValueStr += "   ";
-
-  // Next
-  // ====
 
   theTarget.Element().setAttribute(::LastNextIndex(), G->GetNext().Extent());
 
@@ -185,6 +150,5 @@ void XmlMFunction_GraphNodeDriver::Paste(const occ::handle<TDF_Attribute>& theSo
 
   XmlObjMgt::SetStringValue(theTarget, aValueStr.ToCString(), true);
 
-  // Execution status
   theTarget.Element().setAttribute(::ExecutionStatus(), (int)G->GetStatus());
 }

@@ -11,7 +11,6 @@ class StepDimTol_GeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ReprItemAndLengthMeasureWithUni
 class RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol
 {
 public:

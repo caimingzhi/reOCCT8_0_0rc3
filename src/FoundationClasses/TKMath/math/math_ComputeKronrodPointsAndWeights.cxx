@@ -21,7 +21,6 @@ math_ComputeKronrodPointsAndWeights::math_ComputeKronrodPointsAndWeights(const i
     NCollection_Array1<double> aDiag(1, a2NP1);
     NCollection_Array1<double> aSubDiag(1, a2NP1);
 
-    // Initialize symmetric tridiagonal matrix.
     int n         = Number;
     int aKronrodN = 2 * Number + 1;
     int a3KN2p1   = std::min(3 * (Number + 1) / 2 + 1, aKronrodN);
@@ -44,10 +43,6 @@ math_ComputeKronrodPointsAndWeights::math_ComputeKronrodPointsAndWeights(const i
       aSubDiag(i) = 0.;
     }
 
-    // Algorithm calculates weights and points symmetrically and uses -1 index
-    // by design. Memory corruption is avoided by moving pointer `s` to the
-    // next element and saving original pointer into `ss` for the proper memory
-    // releasing. Similarly, `t` and `tt` are addressed.
     int     aNd2 = Number / 2;
     double* s    = new double[aNd2 + 2];
     double* t    = new double[aNd2 + 2];
@@ -60,7 +55,6 @@ math_ComputeKronrodPointsAndWeights::math_ComputeKronrodPointsAndWeights(const i
       t[i] = 0.;
     }
 
-    // Generation of Jacobi-Kronrod matrix.
     double* aa = new double[a2NP1 + 1];
     double* bb = new double[a2NP1 + 1];
     for (i = 1; i <= a2NP1; i++)
@@ -77,7 +71,6 @@ math_ComputeKronrodPointsAndWeights::math_ComputeKronrodPointsAndWeights(const i
     double* a = aa + 1;
     double* b = bb + 1;
 
-    // Eastward phase.
     t[0] = b[Number + 1];
 
     for (m = 0; m <= n - 2; m++)
@@ -99,7 +92,6 @@ math_ComputeKronrodPointsAndWeights::math_ComputeKronrodPointsAndWeights(const i
     for (j = aNd2; j >= 0; j--)
       s[j] = s[j - 1];
 
-    // Southward phase.
     for (m = n - 1; m <= 2 * n - 3; m++)
     {
       u = 0;
@@ -128,7 +120,6 @@ math_ComputeKronrodPointsAndWeights::math_ComputeKronrodPointsAndWeights(const i
       s      = ptrtmp;
     }
 
-    // Termination phase.
     a[2 * Number] = a[n - 1] - b[2 * Number] * s[0] / t[0];
 
     delete[] ss;
@@ -144,7 +135,6 @@ math_ComputeKronrodPointsAndWeights::math_ComputeKronrodPointsAndWeights(const i
     for (i = 1; i <= a2NP1; i++)
       aSubDiag(i) = std::sqrt(aSubDiag(i));
 
-    // Compute eigen values.
     math_EigenValuesSearcher EVsearch(aDiag, aSubDiag);
 
     if (EVsearch.IsDone())

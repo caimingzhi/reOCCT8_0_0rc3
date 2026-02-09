@@ -3,15 +3,14 @@
 #include <Quantity_Color.hpp>
 #include <TCollection_AsciiString.hpp>
 
-//! Material definition for OBJ file format.
 struct RWObj_Material
 {
-  TCollection_AsciiString Name;        //!< material name (identifier) as defined in MTL file
-                                       // clang-format off
-  TCollection_AsciiString DiffuseTexture;  //!< path to the texture image file defining diffuse color
-  TCollection_AsciiString SpecularTexture; //!< path to the texture image file defining specular color
-                                       // clang-format on
-  TCollection_AsciiString BumpTexture; //!< path to the texture image file defining normal map
+  TCollection_AsciiString Name;
+
+  TCollection_AsciiString DiffuseTexture;
+  TCollection_AsciiString SpecularTexture;
+
+  TCollection_AsciiString BumpTexture;
   Quantity_Color          AmbientColor;
   Quantity_Color          DiffuseColor;
   Quantity_Color          SpecularColor;

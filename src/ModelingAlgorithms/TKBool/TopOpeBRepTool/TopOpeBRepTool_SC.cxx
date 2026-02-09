@@ -6,7 +6,6 @@
 #include <TopOpeBRepTool_PShapeClassifier.hpp>
 #include <TopOpeBRepTool_SC.hpp>
 
-// ----------------------------------------------------------------------
 static TopOpeBRepTool_PShapeClassifier TopOpeBRepTool_PSC = nullptr;
 
 Standard_EXPORT TopOpeBRepTool_ShapeClassifier& FSC_GetPSC()
@@ -16,7 +15,6 @@ Standard_EXPORT TopOpeBRepTool_ShapeClassifier& FSC_GetPSC()
   return *TopOpeBRepTool_PSC;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT TopOpeBRepTool_ShapeClassifier& FSC_GetPSC(const TopoDS_Shape& S)
 {
   if (TopOpeBRepTool_PSC == nullptr)
@@ -25,12 +23,11 @@ Standard_EXPORT TopOpeBRepTool_ShapeClassifier& FSC_GetPSC(const TopoDS_Shape& S
   return *TopOpeBRepTool_PSC;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT TopAbs_State FSC_StatePonFace(const gp_Pnt&                   P,
                                               const TopoDS_Shape&             F,
                                               TopOpeBRepTool_ShapeClassifier& PSC)
 {
-  // Projects <P> on the surface and classifies it in the face <F>
+
   occ::handle<Geom_Surface> S = BRep_Tool::Surface(TopoDS::Face(F));
 
   gp_Pnt2d UV;
@@ -46,7 +43,6 @@ Standard_EXPORT TopAbs_State FSC_StatePonFace(const gp_Pnt&                   P,
   return state;
 }
 
-// ----------------------------------------------------------------------
 Standard_EXPORT TopAbs_State FSC_StateEonFace(const TopoDS_Shape&             E,
                                               const double                    t,
                                               const TopoDS_Shape&             F,

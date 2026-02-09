@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #define No_Standard_OutOfRange
 
@@ -136,9 +125,7 @@ static gp_Vec SetLinearForm(const gp_Vec2d& DW,
   return V3;
 }
 
-//=======================================================================
-static void CompareBounds(gp_Pnt2d& P1,
-                          gp_Pnt2d& P2) // SVV
+static void CompareBounds(gp_Pnt2d& P1, gp_Pnt2d& P2)
 {
   double Lx = P1.X(), Ly = P1.Y();
   double Rx = P2.X(), Ry = P2.Y();
@@ -155,11 +142,9 @@ static void CompareBounds(gp_Pnt2d& P1,
   }
 }
 
-//=================================================================================================
-
 static void Hunt(const NCollection_Array1<double>& Arr, const double Coord, int& Iloc)
-{ // Warning: Hunt is used to find number of knot which equals coordinate component,
-  //        when coordinate component definitely equals a knot only.
+{
+
   constexpr double Tol = Precision::PConfusion() / 10;
   int              i   = 1;
   while ((i <= Arr.Upper()) && (std::abs(Coord - Arr(i)) > Tol))
@@ -172,8 +157,6 @@ static void Hunt(const NCollection_Array1<double>& Arr, const double Coord, int&
   else if (std::abs(Coord - Arr(i)) > Tol)
     throw Standard_NotImplemented("Adaptor3d_CurveOnSurface:Hunt");
 }
-
-//=================================================================================================
 
 static void ReverseParam(const double In1, const double In2, double& Out1, double& Out2)
 {
@@ -190,8 +173,6 @@ static void ReverseParam(const double In1, const double In2, double& Out1, doubl
   }
 }
 
-//=================================================================================================
-
 static void ReverseParam(const int In1, const int In2, int& Out1, int& Out2)
 {
   if (In1 > In2)
@@ -205,8 +186,6 @@ static void ReverseParam(const int In1, const int In2, int& Out1, int& Out2)
     Out2 = In2;
   }
 }
-
-//=================================================================================================
 
 static void FindBounds(const NCollection_Array1<double>& Arr,
                        const double                      Coord,
@@ -265,8 +244,6 @@ static void FindBounds(const NCollection_Array1<double>& Arr,
     }
   }
 }
-
-//=================================================================================================
 
 static void Locate1Coord(const int                             Index,
                          const gp_Pnt2d&                       UV,
@@ -361,13 +338,12 @@ static void Locate1Coord(const int                             Index,
       }
     }
   }
-  else //*********if Coord != Knot
+  else
   {
     i = Lo;
     while (i < Up)
     {
-      // if((f=BSplC->Knot(i))<Comp1 && (l=BSplC->Knot(i+1))>Comp1) break;
-      // skl 28.03.2002 for OCC233
+
       f = BSplC->Knot(i);
       l = BSplC->Knot(i + 1);
       if (f < Comp1 && l > Comp1)
@@ -437,8 +413,6 @@ static void Locate1Coord(const int                             Index,
   }
 }
 
-//=================================================================================================
-
 static void Locate1Coord(const int                               Index,
                          const gp_Pnt2d&                         UV,
                          const gp_Vec2d&                         DUV,
@@ -496,13 +470,13 @@ static void Locate1Coord(const int                               Index,
     if (Index == 1)
     {
       NCollection_Array1<double> Arr1(1, BSplS->NbUKnots());
-      BSplS->UKnots(Arr1); //   Up1=Arr1.Upper(); Down1=Arr1.Lower();
+      BSplS->UKnots(Arr1);
       FindBounds(Arr1, cur, DUV.X(), Bnd1, Bnd2, DIsNull);
     }
     else if (Index == 2)
     {
       NCollection_Array1<double> Arr2(1, BSplS->NbVKnots());
-      BSplS->VKnots(Arr2); //   Up2=Arr2.Upper(); Down2=Arr2.Lower();
+      BSplS->VKnots(Arr2);
       FindBounds(Arr2, cur, DUV.Y(), Bnd1, Bnd2, DIsNull);
     }
 
@@ -522,7 +496,7 @@ static void Locate1Coord(const int                               Index,
       }
     }
   }
-  else //*********if Coord != Knot
+  else
   {
     if ((Index == 1) && (Comp1 < BSplS->UKnot(Down)))
     {
@@ -650,11 +624,6 @@ static void Locate1Coord(const int                               Index,
   }
 }
 
-//=======================================================================
-// function :Locate2Coord
-// purpose  : along non-BSpline curve
-//=======================================================================
-
 static void Locate2Coord(const int       Index,
                          const gp_Pnt2d& UV,
                          const gp_Vec2d& DUV,
@@ -762,8 +731,6 @@ static void Locate2Coord(const int       Index,
   }
 }
 
-//=================================================================================================
-
 static void Locate2Coord(const int                               Index,
                          const gp_Pnt2d&                         UV,
                          const gp_Vec2d&                         DUV,
@@ -795,7 +762,7 @@ static void Locate2Coord(const int                               Index,
     Hunt(Arr, Comp, N);
     if (N >= NUp)
     {
-      // limit case: Hunt() caught upper knot. Take the last span.
+
       N = NUp - 1;
     }
     if (Index == 1)
@@ -827,7 +794,7 @@ static void Locate2Coord(const int                               Index,
     Hunt(Arr, Comp, N);
     if (N <= NLo)
     {
-      // limit case: Hunt() caught lower knot. Take the first span.
+
       N = NLo + 1;
     }
     if (Index == 1)
@@ -856,15 +823,11 @@ static void Locate2Coord(const int                               Index,
   }
 }
 
-//=================================================================================================
-
 Adaptor3d_CurveOnSurface::Adaptor3d_CurveOnSurface()
     : myType(GeomAbs_OtherCurve),
       myIntCont(GeomAbs_CN)
 {
 }
-
-//=================================================================================================
 
 Adaptor3d_CurveOnSurface::Adaptor3d_CurveOnSurface(const occ::handle<Adaptor3d_Surface>& S)
     : myType(GeomAbs_OtherCurve),
@@ -872,8 +835,6 @@ Adaptor3d_CurveOnSurface::Adaptor3d_CurveOnSurface(const occ::handle<Adaptor3d_S
 {
   Load(S);
 }
-
-//=================================================================================================
 
 Adaptor3d_CurveOnSurface::Adaptor3d_CurveOnSurface(const occ::handle<Adaptor2d_Curve2d>& C,
                                                    const occ::handle<Adaptor3d_Surface>& S)
@@ -883,8 +844,6 @@ Adaptor3d_CurveOnSurface::Adaptor3d_CurveOnSurface(const occ::handle<Adaptor2d_C
   Load(S);
   Load(C);
 }
-
-//=================================================================================================
 
 occ::handle<Adaptor3d_Curve> Adaptor3d_CurveOnSurface::ShallowCopy() const
 {
@@ -915,16 +874,12 @@ occ::handle<Adaptor3d_Curve> Adaptor3d_CurveOnSurface::ShallowCopy() const
   return aCopy;
 }
 
-//=================================================================================================
-
 void Adaptor3d_CurveOnSurface::Load(const occ::handle<Adaptor3d_Surface>& S)
 {
   mySurface = S;
   if (!myCurve.IsNull())
     EvalKPart();
 }
-
-//=================================================================================================
 
 void Adaptor3d_CurveOnSurface::Load(const occ::handle<Adaptor2d_Curve2d>& C)
 {
@@ -949,8 +904,6 @@ void Adaptor3d_CurveOnSurface::Load(const occ::handle<Adaptor2d_Curve2d>& C)
   }
 }
 
-//=================================================================================================
-
 void Adaptor3d_CurveOnSurface::Load(const occ::handle<Adaptor2d_Curve2d>& C,
                                     const occ::handle<Adaptor3d_Surface>& S)
 {
@@ -958,21 +911,15 @@ void Adaptor3d_CurveOnSurface::Load(const occ::handle<Adaptor2d_Curve2d>& C,
   Load(S);
 }
 
-//=================================================================================================
-
 double Adaptor3d_CurveOnSurface::FirstParameter() const
 {
   return myCurve->FirstParameter();
 }
 
-//=================================================================================================
-
 double Adaptor3d_CurveOnSurface::LastParameter() const
 {
   return myCurve->LastParameter();
 }
-
-//=================================================================================================
 
 GeomAbs_Shape Adaptor3d_CurveOnSurface::Continuity() const
 {
@@ -987,8 +934,6 @@ GeomAbs_Shape Adaptor3d_CurveOnSurface::Continuity() const
   return ContC;
 }
 
-// Auxiliary: adds roots of equation to sorted sequence of parameters
-// along curve, keeping it sorted and avoiding repetitions (within tolerance Tol)
 static void AddIntervals(const occ::handle<NCollection_HSequence<double>>& theParameters,
                          const math_FunctionRoots&                         theRoots,
                          double                                            theTol)
@@ -1000,8 +945,7 @@ static void AddIntervals(const occ::handle<NCollection_HSequence<double>>& thePa
   for (int i = 1; i <= nsol; i++)
   {
     double param = theRoots.Value(i);
-    if (param - theParameters->Value(1)
-        < theTol) // skip param if equal to or less than theParameters(1)
+    if (param - theParameters->Value(1) < theTol)
       continue;
     for (int j = 2; j <= theParameters->Length(); ++j)
     {
@@ -1011,13 +955,11 @@ static void AddIntervals(const occ::handle<NCollection_HSequence<double>>& thePa
         theParameters->InsertBefore(j, param);
         break;
       }
-      else if (aDelta >= -theTol) // param == theParameters(j) within Tol
+      else if (aDelta >= -theTol)
         break;
     }
   }
 }
-
-//=================================================================================================
 
 int Adaptor3d_CurveOnSurface::NbIntervals(const GeomAbs_Shape S) const
 {
@@ -1029,7 +971,6 @@ int Adaptor3d_CurveOnSurface::NbIntervals(const GeomAbs_Shape S) const
   nv = mySurface->NbVIntervals(S);
   nc = myCurve->NbIntervals(S);
 
-  // Allocate the memory for arrays TabU, TabV, TabC only once using the buffer TabBuf.
   NCollection_Array1<double> TabBuf(1, nu + nv + nc + 3);
   NCollection_Array1<double> TabU(TabBuf(1), 1, nu + 1);
   NCollection_Array1<double> TabV(TabBuf(nu + 2), 1, nv + 1);
@@ -1044,9 +985,6 @@ int Adaptor3d_CurveOnSurface::NbIntervals(const GeomAbs_Shape S) const
 
   constexpr double Tol = Precision::PConfusion() / 10;
 
-  // sorted sequence of parameters defining continuity intervals;
-  // started with own intervals of curve and completed by
-  // additional points coming from surface discontinuities
   occ::handle<NCollection_HSequence<double>> aIntervals = new NCollection_HSequence<double>;
   for (int i = 1; i <= nc + 1; i++)
   {
@@ -1076,9 +1014,6 @@ int Adaptor3d_CurveOnSurface::NbIntervals(const GeomAbs_Shape S) const
     }
   }
 
-  // for case intervals==1 and first point == last point SequenceOfReal
-  // contains only one value, therefore it is necessary to add second
-  // value into aIntervals which will be equal first value.
   if (aIntervals->Length() == 1)
     aIntervals->Append(aIntervals->Value(1));
 
@@ -1086,8 +1021,6 @@ int Adaptor3d_CurveOnSurface::NbIntervals(const GeomAbs_Shape S) const
   const_cast<Adaptor3d_CurveOnSurface*>(this)->myIntCont   = S;
   return myIntervals->Length() - 1;
 }
-
-//=================================================================================================
 
 void Adaptor3d_CurveOnSurface::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const
 {
@@ -1101,8 +1034,6 @@ void Adaptor3d_CurveOnSurface::Intervals(NCollection_Array1<double>& T, const Ge
   }
 }
 
-//=================================================================================================
-
 occ::handle<Adaptor3d_Curve> Adaptor3d_CurveOnSurface::Trim(const double First,
                                                             const double Last,
                                                             const double Tol) const
@@ -1113,14 +1044,10 @@ occ::handle<Adaptor3d_Curve> Adaptor3d_CurveOnSurface::Trim(const double First,
   return HCS;
 }
 
-//=================================================================================================
-
 bool Adaptor3d_CurveOnSurface::IsClosed() const
 {
   return myCurve->IsClosed();
 }
-
-//=================================================================================================
 
 bool Adaptor3d_CurveOnSurface::IsPeriodic() const
 {
@@ -1130,8 +1057,6 @@ bool Adaptor3d_CurveOnSurface::IsPeriodic() const
   return myCurve->IsPeriodic();
 }
 
-//=================================================================================================
-
 double Adaptor3d_CurveOnSurface::Period() const
 {
   if (myType == GeomAbs_Circle || myType == GeomAbs_Ellipse)
@@ -1139,8 +1064,6 @@ double Adaptor3d_CurveOnSurface::Period() const
 
   return myCurve->Period();
 }
-
-//=================================================================================================
 
 gp_Pnt Adaptor3d_CurveOnSurface::Value(const double U) const
 {
@@ -1160,8 +1083,6 @@ gp_Pnt Adaptor3d_CurveOnSurface::Value(const double U) const
   return P;
 }
 
-//=================================================================================================
-
 void Adaptor3d_CurveOnSurface::D0(const double U, gp_Pnt& P) const
 {
   gp_Pnt2d Puv;
@@ -1176,8 +1097,6 @@ void Adaptor3d_CurveOnSurface::D0(const double U, gp_Pnt& P) const
     mySurface->D0(Puv.X(), Puv.Y(), P);
   }
 }
-
-//=================================================================================================
 
 void Adaptor3d_CurveOnSurface::D1(const double U, gp_Pnt& P, gp_Vec& V) const
 {
@@ -1212,8 +1131,6 @@ void Adaptor3d_CurveOnSurface::D1(const double U, gp_Pnt& P, gp_Vec& V) const
     V.SetLinearForm(Duv.X(), D1U, Duv.Y(), D1V);
   }
 }
-
-//=================================================================================================
 
 void Adaptor3d_CurveOnSurface::D2(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2) const
 {
@@ -1260,8 +1177,6 @@ void Adaptor3d_CurveOnSurface::D2(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec&
     V2.SetLinearForm(DW.X() * DW.X(), D2U, DW.Y() * DW.Y(), D2V, V2);
   }
 }
-
-//=================================================================================================
 
 void Adaptor3d_CurveOnSurface::D3(const double U,
                                   gp_Pnt&      P,
@@ -1319,8 +1234,6 @@ void Adaptor3d_CurveOnSurface::D3(const double U,
   }
 }
 
-//=================================================================================================
-
 gp_Vec Adaptor3d_CurveOnSurface::DN(const double U, const int N) const
 {
   gp_Pnt P;
@@ -1343,8 +1256,6 @@ gp_Vec Adaptor3d_CurveOnSurface::DN(const double U, const int N) const
   return V;
 }
 
-//=================================================================================================
-
 double Adaptor3d_CurveOnSurface::Resolution(const double R3d) const
 {
   double ru, rv;
@@ -1353,14 +1264,10 @@ double Adaptor3d_CurveOnSurface::Resolution(const double R3d) const
   return myCurve->Resolution(std::min(ru, rv));
 }
 
-//=================================================================================================
-
 GeomAbs_CurveType Adaptor3d_CurveOnSurface::GetType() const
 {
   return myType;
 }
-
-//=================================================================================================
 
 gp_Lin Adaptor3d_CurveOnSurface::Line() const
 {
@@ -1369,8 +1276,6 @@ gp_Lin Adaptor3d_CurveOnSurface::Line() const
     "Adaptor3d_CurveOnSurface::Line(): curve is not a line") return myLin;
 }
 
-//=================================================================================================
-
 gp_Circ Adaptor3d_CurveOnSurface::Circle() const
 {
   Standard_NoSuchObject_Raise_if(
@@ -1378,21 +1283,15 @@ gp_Circ Adaptor3d_CurveOnSurface::Circle() const
     "Adaptor3d_CurveOnSurface::Line(): curve is not a circle") return myCirc;
 }
 
-//=================================================================================================
-
 gp_Elips Adaptor3d_CurveOnSurface::Ellipse() const
 {
   return to3d(mySurface->Plane(), myCurve->Ellipse());
 }
 
-//=================================================================================================
-
 gp_Hypr Adaptor3d_CurveOnSurface::Hyperbola() const
 {
   return to3d(mySurface->Plane(), myCurve->Hyperbola());
 }
-
-//=================================================================================================
 
 gp_Parab Adaptor3d_CurveOnSurface::Parabola() const
 {
@@ -1402,28 +1301,19 @@ gp_Parab Adaptor3d_CurveOnSurface::Parabola() const
 int Adaptor3d_CurveOnSurface::Degree() const
 {
 
-  // on a parametric surface should multiply
-  // return TheCurve2dTool::Degree(myCurve);
-
   return myCurve->Degree();
 }
-
-//=================================================================================================
 
 bool Adaptor3d_CurveOnSurface::IsRational() const
 {
   return (myCurve->IsRational() || mySurface->IsURational() || mySurface->IsVRational());
 }
 
-//=================================================================================================
-
 int Adaptor3d_CurveOnSurface::NbPoles() const
 {
-  // on a parametric surface should multiply
+
   return myCurve->NbPoles();
 }
-
-//=================================================================================================
 
 int Adaptor3d_CurveOnSurface::NbKnots() const
 {
@@ -1434,8 +1324,6 @@ int Adaptor3d_CurveOnSurface::NbKnots() const
     throw Standard_NoSuchObject();
   }
 }
-
-//=================================================================================================
 
 occ::handle<Geom_BezierCurve> Adaptor3d_CurveOnSurface::Bezier() const
 {
@@ -1466,8 +1354,6 @@ occ::handle<Geom_BezierCurve> Adaptor3d_CurveOnSurface::Bezier() const
   }
   return Bez;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_BSplineCurve> Adaptor3d_CurveOnSurface::BSpline() const
 {
@@ -1505,35 +1391,25 @@ occ::handle<Geom_BSplineCurve> Adaptor3d_CurveOnSurface::BSpline() const
   return Bsp;
 }
 
-//=================================================================================================
-
 const occ::handle<Adaptor2d_Curve2d>& Adaptor3d_CurveOnSurface::GetCurve() const
 {
   return myCurve;
 }
-
-//=================================================================================================
 
 const occ::handle<Adaptor3d_Surface>& Adaptor3d_CurveOnSurface::GetSurface() const
 {
   return mySurface;
 }
 
-//=================================================================================================
-
 occ::handle<Adaptor2d_Curve2d>& Adaptor3d_CurveOnSurface::ChangeCurve()
 {
   return myCurve;
 }
 
-//=================================================================================================
-
 occ::handle<Adaptor3d_Surface>& Adaptor3d_CurveOnSurface::ChangeSurface()
 {
   return mySurface;
 }
-
-//=================================================================================================
 
 void Adaptor3d_CurveOnSurface::EvalKPart()
 {
@@ -1565,7 +1441,7 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
     {
       gp_Dir2d D = myCurve->Line().Direction();
       if (D.IsParallel(gp::DX2d(), Precision::Angular()))
-      { // Iso V.
+      {
         if (STy == GeomAbs_Sphere)
         {
           gp_Pnt2d P = myCurve->Line().Location();
@@ -1639,22 +1515,20 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
         }
       }
       else if (D.IsParallel(gp::DY2d(), Precision::Angular()))
-      { // Iso U.
+      {
         if (STy == GeomAbs_Sphere)
         {
           myType         = GeomAbs_Circle;
           gp_Sphere Sph  = mySurface->Sphere();
           gp_Pnt2d  P    = myCurve->Line().Location();
           gp_Ax3    Axis = Sph.Position();
-          // calcul de l'iso 0.
+
           myCirc = ElSLib::SphereUIso(Axis, Sph.Radius(), 0.);
 
-          // mise a sameparameter (rotation du cercle - decalage du Y)
           gp_Dir DRev = Axis.XDirection().Crossed(Axis.Direction());
           gp_Ax1 AxeRev(Axis.Location(), DRev);
           myCirc.Rotate(AxeRev, P.Y());
 
-          // transformation en iso U ( = P.X())
           DRev   = Axis.XDirection().Crossed(Axis.YDirection());
           AxeRev = gp_Ax1(Axis.Location(), DRev);
           myCirc.Rotate(AxeRev, P.X());
@@ -1711,8 +1585,6 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
   }
 }
 
-//=================================================================================================
-
 void Adaptor3d_CurveOnSurface::EvalFirstLastSurf()
 {
   double           FirstPar, LastPar;
@@ -1751,7 +1623,7 @@ void Adaptor3d_CurveOnSurface::EvalFirstLastSurf()
   if (Ok)
   {
 
-    CompareBounds(LeftBot, RightTop); // SVV
+    CompareBounds(LeftBot, RightTop);
 
     myFirstSurf = mySurface->UTrim(LeftBot.X(), RightTop.X(), Tol);
     myFirstSurf = myFirstSurf->VTrim(LeftBot.Y(), RightTop.Y(), Tol);
@@ -1764,7 +1636,7 @@ void Adaptor3d_CurveOnSurface::EvalFirstLastSurf()
   LastPar = myCurve->LastParameter();
   Ok      = true;
   myCurve->D1(LastPar, UV, DUV);
-  DUV.Reverse(); // We want the other part
+  DUV.Reverse();
 
   if (DUV.Magnitude() <= Tol)
     Ok = false;
@@ -1793,7 +1665,7 @@ void Adaptor3d_CurveOnSurface::EvalFirstLastSurf()
   if (Ok)
   {
 
-    CompareBounds(LeftBot, RightTop); // SVV
+    CompareBounds(LeftBot, RightTop);
 
     myLastSurf = mySurface->UTrim(LeftBot.X(), RightTop.X(), Tol);
     myLastSurf = myLastSurf->VTrim(LeftBot.Y(), RightTop.Y(), Tol);
@@ -1803,8 +1675,6 @@ void Adaptor3d_CurveOnSurface::EvalFirstLastSurf()
     myLastSurf = mySurface;
   }
 }
-
-//=================================================================================================
 
 bool Adaptor3d_CurveOnSurface::LocatePart_RevExt(const gp_Pnt2d&                       UV,
                                                  const gp_Vec2d&                       DUV,
@@ -1842,8 +1712,6 @@ bool Adaptor3d_CurveOnSurface::LocatePart_RevExt(const gp_Pnt2d&                
   return false;
 }
 
-//=================================================================================================
-
 bool Adaptor3d_CurveOnSurface::LocatePart_Offset(const gp_Pnt2d&                       UV,
                                                  const gp_Vec2d&                       DUV,
                                                  const occ::handle<Adaptor3d_Surface>& S,
@@ -1871,8 +1739,6 @@ bool Adaptor3d_CurveOnSurface::LocatePart_Offset(const gp_Pnt2d&                
   }
   return Ok;
 }
-
-//=================================================================================================
 
 void Adaptor3d_CurveOnSurface::LocatePart(const gp_Pnt2d&                       UV,
                                           const gp_Vec2d&                       DUV,

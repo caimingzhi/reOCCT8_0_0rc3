@@ -10,11 +10,7 @@
 #include <StepRepr_RepresentationItem.hpp>
 #include <StepRepr_RepresentationContext.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWElementRepresentation::RWStepFEA_RWElementRepresentation() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWElementRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&       data,
@@ -22,11 +18,9 @@ void RWStepFEA_RWElementRepresentation::ReadStep(
   occ::handle<Interface_Check>&                     ach,
   const occ::handle<StepFEA_ElementRepresentation>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "element_representation"))
     return;
-
-  // Inherited fields of Representation
 
   occ::handle<TCollection_HAsciiString> aRepresentation_Name;
   data->ReadString(num, 1, "representation.name", ach, aRepresentation_Name);
@@ -60,8 +54,6 @@ void RWStepFEA_RWElementRepresentation::ReadStep(
                    STANDARD_TYPE(StepRepr_RepresentationContext),
                    aRepresentation_ContextOfItems);
 
-  // Own fields of ElementRepresentation
-
   occ::handle<NCollection_HArray1<occ::handle<StepFEA_NodeRepresentation>>> aNodeList;
   int                                                                       sub4 = 0;
   if (data->ReadSubList(num, 4, "node_list", ach, sub4))
@@ -82,18 +74,13 @@ void RWStepFEA_RWElementRepresentation::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aRepresentation_Name, aRepresentation_Items, aRepresentation_ContextOfItems, aNodeList);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWElementRepresentation::WriteStep(
   StepData_StepWriter&                              SW,
   const occ::handle<StepFEA_ElementRepresentation>& ent) const
 {
-
-  // Inherited fields of Representation
 
   SW.Send(ent->StepRepr_Representation::Name());
 
@@ -108,8 +95,6 @@ void RWStepFEA_RWElementRepresentation::WriteStep(
 
   SW.Send(ent->StepRepr_Representation::ContextOfItems());
 
-  // Own fields of ElementRepresentation
-
   SW.OpenSub();
   for (int i3 = 1; i3 <= ent->NodeList()->Length(); i3++)
   {
@@ -119,13 +104,9 @@ void RWStepFEA_RWElementRepresentation::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWElementRepresentation::Share(const occ::handle<StepFEA_ElementRepresentation>& ent,
                                               Interface_EntityIterator& iter) const
 {
-
-  // Inherited fields of Representation
 
   for (int i1 = 1; i1 <= ent->StepRepr_Representation::NbItems(); i1++)
   {
@@ -135,8 +116,6 @@ void RWStepFEA_RWElementRepresentation::Share(const occ::handle<StepFEA_ElementR
   }
 
   iter.AddItem(ent->StepRepr_Representation::ContextOfItems());
-
-  // Own fields of ElementRepresentation
 
   for (int i3 = 1; i3 <= ent->NodeList()->Length(); i3++)
   {

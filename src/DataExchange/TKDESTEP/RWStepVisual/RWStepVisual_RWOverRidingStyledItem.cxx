@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -29,18 +18,12 @@ void RWStepVisual_RWOverRidingStyledItem::ReadStep(
   const occ::handle<StepVisual_OverRidingStyledItem>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 4, ach, "over_riding_styled_item"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
-  data->ReadString(num, 1, "name", ach, aName);
 
-  // --- inherited field : styles ---
+  data->ReadString(num, 1, "name", ach, aName);
 
   occ::handle<NCollection_HArray1<occ::handle<StepVisual_PresentationStyleAssignment>>> aStyles;
   occ::handle<StepVisual_PresentationStyleAssignment>                                   anent2;
@@ -51,7 +34,7 @@ void RWStepVisual_RWOverRidingStyledItem::ReadStep(
     aStyles = new NCollection_HArray1<occ::handle<StepVisual_PresentationStyleAssignment>>(1, nb2);
     for (int i2 = 1; i2 <= nb2; i2++)
     {
-      // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
       if (data->ReadEntity(nsub2,
                            i2,
                            "presentation_style_assignment",
@@ -62,23 +45,17 @@ void RWStepVisual_RWOverRidingStyledItem::ReadStep(
     }
   }
 
-  // --- inherited field : item ---
-
   occ::handle<Standard_Transient> aItem;
   data->ReadEntity(num, 3, "item", ach, STANDARD_TYPE(Standard_Transient), aItem);
 
-  // --- own field : overRiddenStyle ---
-
   occ::handle<StepVisual_StyledItem> aOverRiddenStyle;
-  // szv#4:S4163:12Mar99 `bool stat4 =` not needed
+
   data->ReadEntity(num,
                    4,
                    "over_ridden_style",
                    ach,
                    STANDARD_TYPE(StepVisual_StyledItem),
                    aOverRiddenStyle);
-
-  //--- Initialisation of the read entity ---
 
   ent->Init(aName, aStyles, aItem, aOverRiddenStyle);
 }
@@ -88,11 +65,7 @@ void RWStepVisual_RWOverRidingStyledItem::WriteStep(
   const occ::handle<StepVisual_OverRidingStyledItem>& ent) const
 {
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
-
-  // --- inherited field styles ---
 
   SW.OpenSub();
   for (int i2 = 1; i2 <= ent->NbStyles(); i2++)
@@ -101,11 +74,7 @@ void RWStepVisual_RWOverRidingStyledItem::WriteStep(
   }
   SW.CloseSub();
 
-  // --- inherited field item ---
-
   SW.Send(ent->Item());
-
-  // --- own field : overRiddenStyle ---
 
   SW.Send(ent->OverRiddenStyle());
 }

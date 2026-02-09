@@ -49,8 +49,6 @@ static bool InDomain(const double fpar, const double lpar, const double para)
   return false;
 }
 
-//=================================================================================================
-
 PrsDim_FixRelation::PrsDim_FixRelation(const TopoDS_Shape&            aShape,
                                        const occ::handle<Geom_Plane>& aPlane,
                                        const TopoDS_Wire&             aWire)
@@ -61,8 +59,6 @@ PrsDim_FixRelation::PrsDim_FixRelation(const TopoDS_Shape&            aShape,
   myAutomaticPosition = true;
   myArrowSize         = 5.;
 }
-
-//=================================================================================================
 
 PrsDim_FixRelation::PrsDim_FixRelation(const TopoDS_Shape&            aShape,
                                        const occ::handle<Geom_Plane>& aPlane,
@@ -78,11 +74,6 @@ PrsDim_FixRelation::PrsDim_FixRelation(const TopoDS_Shape&            aShape,
   myAutomaticPosition = false;
 }
 
-//=======================================================================
-// function : Constructor
-// purpose  : edge (line or circle) Fix Relation
-//=======================================================================
-
 PrsDim_FixRelation::PrsDim_FixRelation(const TopoDS_Shape&            aShape,
                                        const occ::handle<Geom_Plane>& aPlane)
 {
@@ -91,11 +82,6 @@ PrsDim_FixRelation::PrsDim_FixRelation(const TopoDS_Shape&            aShape,
   myAutomaticPosition = true;
   myArrowSize         = 5.;
 }
-
-//=======================================================================
-// function : Constructor
-// purpose  : edge (line or circle) Fix Relation
-//=======================================================================
 
 PrsDim_FixRelation::PrsDim_FixRelation(const TopoDS_Shape&            aShape,
                                        const occ::handle<Geom_Plane>& aPlane,
@@ -109,14 +95,11 @@ PrsDim_FixRelation::PrsDim_FixRelation(const TopoDS_Shape&            aShape,
   myAutomaticPosition = false;
 }
 
-//=================================================================================================
-
 void PrsDim_FixRelation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                  const occ::handle<Prs3d_Presentation>& aPresentation,
                                  const int)
 {
-  // Calculate position of the symbol and
-  // point of attach of the segment on the shape
+
   gp_Pnt curpos;
   if (myFShape.ShapeType() == TopAbs_VERTEX)
     ComputeVertex(TopoDS::Vertex(myFShape), curpos);
@@ -125,29 +108,21 @@ void PrsDim_FixRelation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
 
   const gp_Dir& nor = myPlane->Axis().Direction();
 
-  // calculate presentation
-  // definition of the symbol size
   if (!myArrowSizeIsDefined)
     myArrowSize = 5.;
 
-  // creation of the presentation
   DsgPrs_FixPresentation::Add(aPresentation, myDrawer, myPntAttach, curpos, nor, myArrowSize);
 }
-
-//=================================================================================================
 
 void PrsDim_FixRelation::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSelection,
                                           const int)
 {
   occ::handle<SelectMgr_EntityOwner> own = new SelectMgr_EntityOwner(this, 7);
 
-  // creation of segment sensible for the linked segment
-  // of the shape fixed to symbol 'Fix'
   occ::handle<Select3D_SensitiveSegment> seg;
   seg = new Select3D_SensitiveSegment(own, myPntAttach, myPosition);
   aSelection->Add(seg);
 
-  // Creation of the sensible zone of symbol 'Fix'
   gp_Dir norm = myPlane->Axis().Direction();
 
   gp_Vec dirac(myPntAttach, myPosition);
@@ -184,13 +159,7 @@ void PrsDim_FixRelation::ComputeSelection(const occ::handle<SelectMgr_Selection>
   seg = new Select3D_SensitiveSegment(own, PF, PL);
 }
 
-//=======================================================================
-// function : ComputeVertex
-// purpose  : computes myPntAttach and the position of the presentation
-//           when you fix a vertex
-//=======================================================================
-
-void PrsDim_FixRelation::ComputeVertex(const TopoDS_Vertex& /*FixVertex*/, gp_Pnt& curpos)
+void PrsDim_FixRelation::ComputeVertex(const TopoDS_Vertex&, gp_Pnt& curpos)
 {
   myPntAttach = BRep_Tool::Pnt(TopoDS::Vertex(myFShape));
   curpos      = myPosition;
@@ -205,8 +174,6 @@ void PrsDim_FixRelation::ComputeVertex(const TopoDS_Vertex& /*FixVertex*/, gp_Pn
   }
 }
 
-//=================================================================================================
-
 gp_Pnt PrsDim_FixRelation::ComputePosition(const occ::handle<Geom_Curve>& curv1,
                                            const occ::handle<Geom_Curve>& curv2,
                                            const gp_Pnt&                  firstp1,
@@ -214,9 +181,7 @@ gp_Pnt PrsDim_FixRelation::ComputePosition(const occ::handle<Geom_Curve>& curv1,
                                            const gp_Pnt&                  firstp2,
                                            const gp_Pnt&                  lastp2) const
 {
-  //---------------------------------------------------------
-  // calculate the point of attach
-  //---------------------------------------------------------
+
   gp_Pnt curpos;
 
   if (curv1->IsInstance(STANDARD_TYPE(Geom_Circle))
@@ -258,21 +223,11 @@ gp_Pnt PrsDim_FixRelation::ComputePosition(const occ::handle<Geom_Curve>& curv1,
   return curpos;
 }
 
-//=======================================================================
-// function : ComputePosition
-// purpose  : Computes the position of the "fix dimension" when the
-//           fixed object is a vertex which is set at the intersection
-//           of two curves.
-//           The "dimension" is in the "middle" of the two edges.
-//=======================================================================
-
 gp_Pnt PrsDim_FixRelation::ComputePosition(const occ::handle<Geom_Curve>& curv,
                                            const gp_Pnt&                  firstp,
                                            const gp_Pnt&                  lastp) const
 {
-  //---------------------------------------------------------
-  // calculate the point of attach
-  //---------------------------------------------------------
+
   gp_Pnt curpos;
 
   if (curv->IsKind(STANDARD_TYPE(Geom_Circle)))
@@ -282,12 +237,11 @@ gp_Pnt PrsDim_FixRelation::ComputePosition(const occ::handle<Geom_Curve>& curv,
     gp_Dir                   dir(gcirc->Location().XYZ() + myPntAttach.XYZ());
     gp_Vec                   transvec = gp_Vec(dir) * myArrowSize;
     curpos                            = myPntAttach.Translated(transvec);
-
-  } // if (curv->IsKind(STANDARD_TYPE(Geom_Circle))
+  }
 
   else
   {
-    //    gp_Pln pln(Component()->WorkingPlane()->Plane()->GetValue()->Pln());
+
     gp_Pln pln(myPlane->Pln());
     gp_Dir NormPln = pln.Axis().Direction();
     gp_Vec vec(firstp, lastp);
@@ -302,12 +256,6 @@ gp_Pnt PrsDim_FixRelation::ComputePosition(const occ::handle<Geom_Curve>& curv,
   return curpos;
 }
 
-//=======================================================================
-// function : ComputeEdge
-// purpose  : computes myPntAttach and the position of the presentation
-//           when you fix an edge
-//=======================================================================
-
 void PrsDim_FixRelation::ComputeEdge(const TopoDS_Edge& FixEdge, gp_Pnt& curpos)
 {
   occ::handle<Geom_Curve> curEdge;
@@ -315,10 +263,6 @@ void PrsDim_FixRelation::ComputeEdge(const TopoDS_Edge& FixEdge, gp_Pnt& curpos)
   if (!PrsDim::ComputeGeometry(FixEdge, curEdge, ptbeg, ptend))
     return;
 
-  //---------------------------------------------------------
-  // compute the positioning point for the 'fix' symbol
-  //---------------------------------------------------------
-  //--> In case of a straight line
   if (curEdge->IsKind(STANDARD_TYPE(Geom_Line)))
   {
     gp_Lin glin = occ::down_cast<Geom_Line>(curEdge)->Lin();
@@ -327,7 +271,6 @@ void PrsDim_FixRelation::ComputeEdge(const TopoDS_Edge& FixEdge, gp_Pnt& curpos)
     ComputeLinePosition(glin, curpos, pfirst, plast);
   }
 
-  //--> In case of a circle
   else if (curEdge->IsKind(STANDARD_TYPE(Geom_Circle)))
   {
     gp_Circ           gcirc = occ::down_cast<Geom_Circle>(curEdge)->Circ();
@@ -342,13 +285,6 @@ void PrsDim_FixRelation::ComputeEdge(const TopoDS_Edge& FixEdge, gp_Pnt& curpos)
     return;
 }
 
-//=======================================================================
-// function : ComputeLinePosition
-// purpose  : compute the values of myPntAttach and the position <pos> of
-//           the symbol when the fixed edge has a geometric support equal
-//           to a line.
-//=======================================================================
-
 void PrsDim_FixRelation::ComputeLinePosition(const gp_Lin& glin,
                                              gp_Pnt&       pos,
                                              double&       pfirst,
@@ -356,7 +292,7 @@ void PrsDim_FixRelation::ComputeLinePosition(const gp_Lin& glin,
 {
   if (myAutomaticPosition)
   {
-    // point of attach is chosen as middle of the segment
+
     myPntAttach = ElCLib::Value((pfirst + plast) / 2, glin);
 
     gp_Dir norm = myPlane->Axis().Direction();
@@ -364,21 +300,16 @@ void PrsDim_FixRelation::ComputeLinePosition(const gp_Lin& glin,
     norm.Cross(glin.Position().Direction());
     pos                 = myPntAttach.Translated(gp_Vec(norm) * myArrowSize);
     myAutomaticPosition = true;
-  } // if (myAutomaticPosition)
+  }
 
   else
   {
     pos             = myPosition;
     double linparam = ElCLib::Parameter(glin, pos);
 
-    // case if the projection of position is located between 2 vertices
-    // de l'edge
     if ((linparam >= pfirst) && (linparam <= plast))
       myPntAttach = ElCLib::Value(linparam, glin);
 
-    // case if the projection of Position is outside of the limits
-    // of the edge : the point closest to the projection is chosen
-    // as the attach point
     else
     {
       double pOnLin;
@@ -398,19 +329,12 @@ void PrsDim_FixRelation::ComputeLinePosition(const gp_Lin& glin,
   myPosition = pos;
 }
 
-//=======================================================================
-// function : ComputeCirclePosition
-// purpose  : compute the values of myPntAttach and the position <pos> of
-//           the symbol when the fixed edge has a geometric support equal
-//           to a circle.
-//=======================================================================
-
 void PrsDim_FixRelation::ComputeCirclePosition(const gp_Circ& gcirc,
                                                gp_Pnt&        pos,
                                                double&        pfirst,
                                                double&        plast)
 {
-  // readjust parametres on the circle
+
   if (plast > 2 * M_PI)
   {
     double nbtours = std::floor(plast / (2 * M_PI));
@@ -420,8 +344,6 @@ void PrsDim_FixRelation::ComputeCirclePosition(const gp_Circ& gcirc,
 
   if (myAutomaticPosition)
   {
-    // the point attach is the "middle" of the segment (relatively
-    // to the parametres of start and end vertices of the edge
 
     double circparam = (pfirst + plast) / 2.;
 
@@ -441,13 +363,11 @@ void PrsDim_FixRelation::ComputeCirclePosition(const gp_Circ& gcirc,
     pos                 = myPntAttach.Translated(transvec);
     myPosition          = pos;
     myAutomaticPosition = true;
-  } // if (myAutomaticPosition)
+  }
 
   else
   {
-    // case if the projection of myPosition is outside of 2
-    // vertices of the edge. In this case the parameter is readjusted
-    // in the valid part of the circle
+
     pos = myPosition;
 
     double circparam = ElCLib::Parameter(gcirc, pos);
@@ -463,8 +383,6 @@ void PrsDim_FixRelation::ComputeCirclePosition(const gp_Circ& gcirc,
     myPntAttach = ElCLib::Value(circparam, gcirc);
   }
 }
-
-//=================================================================================================
 
 bool PrsDim_FixRelation::ConnectedEdges(const TopoDS_Wire&   WIRE,
                                         const TopoDS_Vertex& V,

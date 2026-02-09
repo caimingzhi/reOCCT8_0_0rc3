@@ -1,6 +1,5 @@
 #pragma once
 
-//! Enumeration defining a part of datum aspect, see Prs3d_Datum.
 enum Prs3d_DatumParts
 {
   Prs3d_DatumParts_Origin = 0,
@@ -15,7 +14,6 @@ enum Prs3d_DatumParts
   Prs3d_DatumParts_XOZAxis,
   Prs3d_DatumParts_None,
 
-  // old aliases
   Prs3d_DP_Origin  = Prs3d_DatumParts_Origin,
   Prs3d_DP_XAxis   = Prs3d_DatumParts_XAxis,
   Prs3d_DP_YAxis   = Prs3d_DatumParts_YAxis,

@@ -17,14 +17,12 @@ IGESAppli_ToolReferenceDesignator::IGESAppli_ToolReferenceDesignator() = default
 
 void IGESAppli_ToolReferenceDesignator::ReadOwnParams(
   const occ::handle<IGESAppli_ReferenceDesignator>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /* IR */,
+  const occ::handle<IGESData_IGESReaderData>&,
   IGESData_ParamReader& PR) const
 {
   int                                   tempNbPropertyValues;
   occ::handle<TCollection_HAsciiString> tempReferenceDesignator;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadInteger(PR.Current(), "Number of property values", tempNbPropertyValues);
   PR.ReadText(PR.Current(), "ReferenceDesignator", tempReferenceDesignator);
 
@@ -40,16 +38,15 @@ void IGESAppli_ToolReferenceDesignator::WriteOwnParams(
   IW.Send(ent->RefDesignatorText());
 }
 
-void IGESAppli_ToolReferenceDesignator::OwnShared(
-  const occ::handle<IGESAppli_ReferenceDesignator>& /* ent */,
-  Interface_EntityIterator& /* iter */) const
+void IGESAppli_ToolReferenceDesignator::OwnShared(const occ::handle<IGESAppli_ReferenceDesignator>&,
+                                                  Interface_EntityIterator&) const
 {
 }
 
 void IGESAppli_ToolReferenceDesignator::OwnCopy(
   const occ::handle<IGESAppli_ReferenceDesignator>& another,
   const occ::handle<IGESAppli_ReferenceDesignator>& ent,
-  Interface_CopyTool& /* TC */) const
+  Interface_CopyTool&) const
 {
   int                                   aNbPropertyValues;
   occ::handle<TCollection_HAsciiString> aReferenceDesignator =
@@ -64,21 +61,21 @@ bool IGESAppli_ToolReferenceDesignator::OwnCorrect(
   bool res = (ent->NbPropertyValues() != 1);
   if (res)
     ent->Init(1, ent->RefDesignatorText());
-  //         nbpropertyvalues=1
+
   if (ent->SubordinateStatus() != 0)
   {
     occ::handle<IGESData_LevelListEntity> nulevel;
     ent->InitLevel(nulevel, 0);
     res = true;
   }
-  return res; // + RAZ level according to subordinate
+  return res;
 }
 
 IGESData_DirChecker IGESAppli_ToolReferenceDesignator::DirChecker(
-  const occ::handle<IGESAppli_ReferenceDesignator>& /* ent */) const
+  const occ::handle<IGESAppli_ReferenceDesignator>&) const
 {
-  // UNFINISHED
-  IGESData_DirChecker DC(406, 7); // Form no = 7 & Type = 406
+
+  IGESData_DirChecker DC(406, 7);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
@@ -93,20 +90,18 @@ void IGESAppli_ToolReferenceDesignator::OwnCheck(
   occ::handle<Interface_Check>& ach) const
 {
   if (ent->SubordinateStatus() != 0)
-    // the level is ignored if this property is subordinate
+
     if (ent->DefLevel() != IGESData_DefOne && ent->DefLevel() != IGESData_DefSeveral)
       ach->AddFail("Level type: Not value/reference");
   if (ent->NbPropertyValues() != 1)
     ach->AddFail("Number of Property Values != 1");
-  // UNFINISHED
-  // the level is ignored if this property is subordinate -- queried
 }
 
 void IGESAppli_ToolReferenceDesignator::OwnDump(
   const occ::handle<IGESAppli_ReferenceDesignator>& ent,
-  const IGESData_IGESDumper& /* dumper */,
+  const IGESData_IGESDumper&,
   Standard_OStream& S,
-  const int /* level */) const
+  const int) const
 {
   S << "IGESAppli_ReferenceDesignator\n";
   S << "Number of Property Values : " << ent->NbPropertyValues() << "\n";

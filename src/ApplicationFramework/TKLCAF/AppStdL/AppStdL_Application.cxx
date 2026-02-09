@@ -3,15 +3,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AppStdL_Application, TDocStd_Application)
 
-//=================================================================================================
-
 const char* AppStdL_Application::ResourcesName()
 {
   const char* aRes = "StandardLite";
   return aRes;
 }
-
-//=================================================================================================
 
 void AppStdL_Application::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

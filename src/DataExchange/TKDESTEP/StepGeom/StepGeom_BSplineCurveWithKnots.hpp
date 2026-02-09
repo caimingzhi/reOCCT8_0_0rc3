@@ -18,7 +18,6 @@ class StepGeom_BSplineCurveWithKnots : public StepGeom_BSplineCurve
 {
 
 public:
-  //! Returns a BSplineCurveWithKnots
   Standard_EXPORT StepGeom_BSplineCurveWithKnots();
 
   Standard_EXPORT void Init(

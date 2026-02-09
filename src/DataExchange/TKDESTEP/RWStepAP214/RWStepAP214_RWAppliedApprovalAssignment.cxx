@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -31,12 +20,8 @@ void RWStepAP214_RWAppliedApprovalAssignment::ReadStep(
   const occ::handle<StepAP214_AppliedApprovalAssignment>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 2, ach, "applied_approval_assignment"))
     return;
-
-  // --- inherited field : assignedApproval ---
 
   occ::handle<StepBasic_Approval> aAssignedApproval;
   data->ReadEntity(num,
@@ -45,8 +30,6 @@ void RWStepAP214_RWAppliedApprovalAssignment::ReadStep(
                    ach,
                    STANDARD_TYPE(StepBasic_Approval),
                    aAssignedApproval);
-
-  // --- own field : items ---
 
   occ::handle<NCollection_HArray1<StepAP214_ApprovalItem>> aItems;
   StepAP214_ApprovalItem                                   aItemsItem;
@@ -63,8 +46,6 @@ void RWStepAP214_RWAppliedApprovalAssignment::ReadStep(
     }
   }
 
-  //--- Initialisation of the read entity ---
-
   ent->Init(aAssignedApproval, aItems);
 }
 
@@ -73,11 +54,7 @@ void RWStepAP214_RWAppliedApprovalAssignment::WriteStep(
   const occ::handle<StepAP214_AppliedApprovalAssignment>& ent) const
 {
 
-  // --- inherited field assignedApproval ---
-
   SW.Send(ent->AssignedApproval());
-
-  // --- own field : items ---
 
   SW.OpenSub();
   for (int i2 = 1; i2 <= ent->NbItems(); i2++)

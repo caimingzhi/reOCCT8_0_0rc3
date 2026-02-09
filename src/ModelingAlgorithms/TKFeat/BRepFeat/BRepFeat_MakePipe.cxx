@@ -20,15 +20,12 @@
 extern bool BRepFeat_GettraceFEAT();
 #endif
 
-static void MajMap(const TopoDS_Shape&, // base
-                   LocOpe_Pipe&,
-                   NCollection_DataMap<TopoDS_Shape,
-                                       NCollection_List<TopoDS_Shape>,
-                                       TopTools_ShapeMapHasher>&, // myMap
-                   TopoDS_Shape&,                                 // myFShape
-                   TopoDS_Shape&);                                // myLShape
-
-//=================================================================================================
+static void MajMap(
+  const TopoDS_Shape&,
+  LocOpe_Pipe&,
+  NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&,
+  TopoDS_Shape&,
+  TopoDS_Shape&);
 
 void BRepFeat_MakePipe::Init(const TopoDS_Shape& Sbase,
                              const TopoDS_Shape& Pbase,
@@ -70,10 +67,6 @@ void BRepFeat_MakePipe::Init(const TopoDS_Shape& Sbase,
   myModify    = Modify;
   myJustGluer = false;
 
-  //-------------- ifv
-  // mySkface.Nullify();
-  //-------------- ifv
-
   myShape.Nullify();
   myMap.Clear();
   myFShape.Nullify();
@@ -99,8 +92,6 @@ void BRepFeat_MakePipe::Init(const TopoDS_Shape& Sbase,
   }
 #endif
 }
-
-//=================================================================================================
 
 void BRepFeat_MakePipe::Add(const TopoDS_Edge& E, const TopoDS_Face& F)
 {
@@ -152,8 +143,6 @@ void BRepFeat_MakePipe::Add(const TopoDS_Edge& E, const TopoDS_Face& F)
     mySlface(F).Append(E);
   }
 }
-
-//=================================================================================================
 
 void BRepFeat_MakePipe::Perform()
 {
@@ -211,8 +200,6 @@ void BRepFeat_MakePipe::Perform()
   }
 }
 
-//=================================================================================================
-
 void BRepFeat_MakePipe::Perform(const TopoDS_Shape& Until)
 {
 #ifdef OCCT_DEBUG
@@ -252,11 +239,6 @@ void BRepFeat_MakePipe::Perform(const TopoDS_Shape& Until)
   myBCurve = thePipe.BarycCurve();
   GlobalPerform();
 }
-
-//=======================================================================
-// function : Perform
-// purpose  : between From and Until
-//=======================================================================
 
 void BRepFeat_MakePipe::Perform(const TopoDS_Shape& From, const TopoDS_Shape& Until)
 {
@@ -307,7 +289,6 @@ void BRepFeat_MakePipe::Perform(const TopoDS_Shape& From, const TopoDS_Shape& Un
   myGShape = VraiTuyau;
   GeneratedShapeValid();
 
-  //	mySbase, myPbase, mySlface, thePipe, myGluedF);
   GluedFacesValid();
 
   myFShape = thePipe.FirstShape();
@@ -318,38 +299,23 @@ void BRepFeat_MakePipe::Perform(const TopoDS_Shape& From, const TopoDS_Shape& Un
   GlobalPerform();
 }
 
-//=======================================================================
-// function : Curves
-// purpose  : curves parallel to the generating wire of the pipe
-//=======================================================================
-
 void BRepFeat_MakePipe::Curves(NCollection_Sequence<occ::handle<Geom_Curve>>& scur)
 {
   scur = myCurves;
 }
-
-//=======================================================================
-// function : BarycCurve
-// purpose  : pass through the center of mass
-//=======================================================================
 
 occ::handle<Geom_Curve> BRepFeat_MakePipe::BarycCurve()
 {
   return myBCurve;
 }
 
-//=======================================================================
-// function : MajMap
-// purpose  : management of descendants
-//=======================================================================
-
 static void MajMap(
   const TopoDS_Shape& theB,
   LocOpe_Pipe&        theP,
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
-                theMap,    // myMap
-  TopoDS_Shape& theFShape, // myFShape
-  TopoDS_Shape& theLShape) // myLShape
+                theMap,
+  TopoDS_Shape& theFShape,
+  TopoDS_Shape& theLShape)
 {
   TopExp_Explorer exp(theP.FirstShape(), TopAbs_WIRE);
   if (exp.More())

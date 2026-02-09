@@ -14,10 +14,6 @@ IMPLEMENT_STANDARD_RTTIEXT(Message_PrinterOStream, Message_Printer)
   #include <strings.h>
 #endif
 
-//=======================================================================
-// function : Constructor
-// purpose  : Empty constructor, defaulting to cerr
-//=======================================================================
 Message_PrinterOStream::Message_PrinterOStream(const Message_Gravity theTraceLevel)
     : myStream(&std::cout),
       myIsFile(false),
@@ -26,11 +22,6 @@ Message_PrinterOStream::Message_PrinterOStream(const Message_Gravity theTraceLev
   myTraceLevel = theTraceLevel;
 }
 
-//=======================================================================
-// function : Constructor
-// purpose  : Opening a file as an std::ostream
-//           for specific file names standard streams are created
-//=======================================================================
 Message_PrinterOStream::Message_PrinterOStream(const char*           theFileName,
                                                const bool            theToAppend,
                                                const Message_Gravity theTraceLevel)
@@ -75,8 +66,6 @@ Message_PrinterOStream::Message_PrinterOStream(const char*           theFileName
   }
 }
 
-//=================================================================================================
-
 void Message_PrinterOStream::Close()
 {
   if (!myStream)
@@ -93,8 +82,6 @@ void Message_PrinterOStream::Close()
     myIsFile = false;
   }
 }
-
-//=================================================================================================
 
 void Message_PrinterOStream::send(const TCollection_AsciiString& theString,
                                   const Message_Gravity          theGravity) const
@@ -146,14 +133,12 @@ void Message_PrinterOStream::send(const TCollection_AsciiString& theString,
   (*aStream) << std::endl;
 }
 
-//=================================================================================================
-
 void Message_PrinterOStream::SetConsoleTextColor(Standard_OStream*    theOStream,
                                                  Message_ConsoleColor theTextColor,
                                                  bool                 theIsIntenseText)
 {
 #ifdef _WIN32
-  // there is no difference between STD_OUTPUT_HANDLE/STD_ERROR_HANDLE for std::cout/std::cerr
+
   (void)theOStream;
   if (HANDLE anStdOut = GetStdHandle(STD_OUTPUT_HANDLE))
   {
@@ -192,8 +177,7 @@ void Message_PrinterOStream::SetConsoleTextColor(Standard_OStream*    theOStream
     SetConsoleTextAttribute(anStdOut, aFlags);
   }
 #elif defined(__EMSCRIPTEN__)
-  // Terminal capabilities are undefined on this platform.
-  // std::cout could be redirected to HTML page, into terminal or somewhere else.
+
   (void)theOStream;
   (void)theTextColor;
   (void)theIsIntenseText;

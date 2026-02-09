@@ -7,7 +7,6 @@
 class HLRAlgo_EdgeStatus;
 class HLRAlgo_PolyShellData;
 
-//! to remove Hidden lines on Triangulations.
 class HLRAlgo_PolyAlgo : public Standard_Transient
 {
 
@@ -25,7 +24,6 @@ public:
 
   Standard_EXPORT void Clear();
 
-  //! Prepare all the data to process the algo.
   Standard_EXPORT void Update();
 
   void InitHide()
@@ -38,7 +36,6 @@ public:
 
   Standard_EXPORT void NextHide();
 
-  //! process hiding between <Pt1> and <Pt2>.
   Standard_EXPORT HLRAlgo_BiPoint::PointsT& Hide(HLRAlgo_EdgeStatus& status,
                                                  int&                Index,
                                                  bool&               reg1,
@@ -56,7 +53,6 @@ public:
 
   Standard_EXPORT void NextShow();
 
-  //! process hiding between <Pt1> and <Pt2>.
   Standard_EXPORT HLRAlgo_BiPoint::PointsT& Show(int&  Index,
                                                  bool& reg1,
                                                  bool& regn,

@@ -10,7 +10,6 @@ class Interface_Check;
 class StepVisual_Colour;
 class StepData_StepWriter;
 
-//! Read & Write Module for Colour
 class RWStepVisual_RWColour
 {
 public:

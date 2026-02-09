@@ -8,10 +8,6 @@
 #include <math_IntegerVector.hpp>
 class math_Matrix;
 
-//! Parallel Approximation in n curves.
-//! This package gives all the algorithms used to approximate a MultiLine
-//! described by the tool MLineTool.
-//! The result of the approximation will be a MultiCurve.
 class AppParCurves
 {
 public:

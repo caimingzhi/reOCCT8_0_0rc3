@@ -15,7 +15,6 @@ class StepAP214_AutoDesignDateAndPersonAssignment : public StepBasic_PersonAndOr
 {
 
 public:
-  //! Returns a AutoDesignDateAndPersonAssignment
   Standard_EXPORT StepAP214_AutoDesignDateAndPersonAssignment();
 
   Standard_EXPORT void Init(

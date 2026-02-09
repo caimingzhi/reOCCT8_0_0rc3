@@ -10,9 +10,6 @@
 #include <Standard_Integer.hpp>
 class IntTools_Context;
 
-//! The class provides the computation of
-//! a working (shrunk) range [t1, t2] for
-//! the 3D-curve of the edge.
 class IntTools_ShrunkRange
 {
 public:
@@ -41,15 +38,10 @@ public:
 
   Standard_EXPORT void Perform();
 
-  //! Returns TRUE in case the shrunk range is computed
   bool IsDone() const { return myIsDone; }
 
-  //! Returns FALSE in case the shrunk range is
-  //! too short and the edge cannot be split,
-  //! otherwise returns TRUE
   bool IsSplittable() const { return myIsSplittable; }
 
-  //! Returns the length of the edge if computed.
   double Length() const { return myLength; }
 
 protected:

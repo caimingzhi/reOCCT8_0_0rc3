@@ -5,7 +5,6 @@
 
 #include <Draw_Interpretor.hpp>
 
-//! Contains commands to work with shapes and assemblies
 class XDEDRAW_Shapes
 {
 public:

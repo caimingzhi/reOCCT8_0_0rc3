@@ -12,29 +12,22 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_SplitCurve, Standard_Transient)
 
-//=================================================================================================
-
 ShapeUpgrade_SplitCurve::ShapeUpgrade_SplitCurve()
     : myNbCurves(0),
       myStatus(0)
 {
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_SplitCurve::Init(const double First, const double Last)
 {
   myStatus = ShapeExtend::EncodeStatus(ShapeExtend_OK);
-  //  if (ShapeUpgrade::Debug()) std::cout << "SplitCurve::Init"<<std::endl;
 
   myNbCurves = 1;
-  // mySplitValues.Clear();
+
   mySplitValues = new NCollection_HSequence<double>;
   mySplitValues->Append(First);
   mySplitValues->Append(Last);
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_SplitCurve::SetSplitValues(
   const occ::handle<NCollection_HSequence<double>>& SplitValues)
@@ -63,38 +56,27 @@ void ShapeUpgrade_SplitCurve::SetSplitValues(
   }
 }
 
-//=================================================================================================
-
-void ShapeUpgrade_SplitCurve::Build(const bool /*Segment*/)
+void ShapeUpgrade_SplitCurve::Build(const bool)
 {
   myStatus = ShapeExtend::EncodeStatus(ShapeExtend_OK);
 }
-
-//=================================================================================================
 
 const occ::handle<NCollection_HSequence<double>>& ShapeUpgrade_SplitCurve::SplitValues() const
 {
   return mySplitValues;
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_SplitCurve::Perform(const bool Segment)
 {
   Compute();
-  // if ( ! mySplitValues.IsNull() )
-  //   SetSplitValues(mySplitValues);
+
   Build(Segment);
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_SplitCurve::Compute()
 {
   myStatus = ShapeExtend::EncodeStatus(ShapeExtend_OK);
 }
-
-//=================================================================================================
 
 bool ShapeUpgrade_SplitCurve::Status(const ShapeExtend_Status status) const
 {

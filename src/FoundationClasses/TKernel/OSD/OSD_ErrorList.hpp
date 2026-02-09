@@ -3,18 +3,11 @@
 #include <OSD_WhoAmI.hpp>
 #include <errno.h>
 
-// List of OSD error codes
-
 #define ERR_SURPRISE -2
-// Error message management didn't follow code evolution
 
 #define ERR_UNKNOWN -1
-// Unknown system error
 
 #define ERR_NONE 0
-// No error
-
-// Errors common to alot of classes
 
 #define ERR_ACCESS 1
 #define ERR_EXIST 2
@@ -33,14 +26,8 @@
 #define ERR_ROFS 15
 #define ERR_TOOBIG 16
 
-//------------------- Error list by class Family ------------------------
-
-// Class Directory
-
 #define ERR_DMLINK 17
 #define ERR_DNOENT 18
-
-// Class File
 
 #define ERR_FAGAIN 19
 #define ERR_FBADF 20
@@ -57,8 +44,6 @@
 #define ERR_FRANGE 31
 #define ERR_FWFD 32
 
-// Class FileNode
-
 #define ERR_FNBUSY 33
 #define ERR_FNFILE 34
 #define ERR_FNINVAL 35
@@ -66,5 +51,4 @@
 #define ERR_FNNOTEMPTY 37
 #define ERR_FNXDEV 38
 
-// Package
 #define ERR_PPERM 50

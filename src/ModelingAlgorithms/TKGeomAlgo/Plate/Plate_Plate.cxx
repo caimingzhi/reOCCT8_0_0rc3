@@ -13,8 +13,6 @@
 #include <Plate_Plate.hpp>
 #include <Plate_SampledCurveConstraint.hpp>
 
-//=================================================================================================
-
 Plate_Plate::Plate_Plate()
     : order(0),
       n_el(0),
@@ -35,8 +33,6 @@ Plate_Plate::Plate_Plate()
   memset(ddu, 0, sizeof(ddu));
   memset(ddv, 0, sizeof(ddv));
 }
-
-//=================================================================================================
 
 Plate_Plate::Plate_Plate(const Plate_Plate& Ref)
     : order(Ref.order),
@@ -108,8 +104,6 @@ Plate_Plate::Plate_Plate(const Plate_Plate& Ref)
   }
 }
 
-//=================================================================================================
-
 Plate_Plate& Plate_Plate::Copy(const Plate_Plate& Ref)
 {
   Init();
@@ -173,8 +167,6 @@ Plate_Plate& Plate_Plate::Copy(const Plate_Plate& Ref)
   }
   return *this;
 }
-
-//=================================================================================================
 
 void Plate_Plate::Load(const Plate_PinpointConstraint& PConst)
 {
@@ -248,11 +240,6 @@ void Plate_Plate::Load(const Plate_GlobalTranslationConstraint& GTConst)
   Load(GTConst.LXYZC());
 }
 
-//=======================================================================
-// function : SolveTI
-// purpose  : to solve the set of constraints
-//=======================================================================
-
 void Plate_Plate::SolveTI(const int                    ord,
                           const double                 anisotropie,
                           const Message_ProgressRange& theProgress)
@@ -271,7 +258,6 @@ void Plate_Plate::SolveTI(const int                    ord,
   if (anisotropie > 1.e+6)
     return;
 
-  // computation of the bounding box of the 2d PPconstraints
   double xmin, xmax, ymin, ymax;
   UVBox(xmin, xmax, ymin, ymax);
 
@@ -305,15 +291,8 @@ void Plate_Plate::SolveTI(const int                    ord,
     SolveTI3(IterationNumber, theProgress);
 }
 
-//=======================================================================
-// function : SolveTI1
-// purpose  : to solve the set of constraints in the easiest case,
-//           only PinPointConstraints are loaded
-//=======================================================================
-
 void Plate_Plate::SolveTI1(const int IterationNumber, const Message_ProgressRange& theProgress)
 {
-  // computation of square matrix members
 
   n_dim = n_el + order * (order + 1) / 2;
   math_Matrix mat(0, n_dim - 1, 0, n_dim - 1, 0.);
@@ -370,7 +349,6 @@ void Plate_Plate::SolveTI1(const int IterationNumber, const Message_ProgressRang
     }
   }
 
-  // initialisation of the Gauss algorithm
   double pivot_max = 1.e-12;
   OK               = true;
 
@@ -405,7 +383,7 @@ void Plate_Plate::SolveTI1(const int IterationNumber, const Message_ProgressRang
 
   if (OK)
   {
-    //   computation of the linear system solution for the X, Y and Z coordinates
+
     math_Vector sec_member(0, n_dim - 1, 0.);
     math_Vector sol(0, n_dim - 1);
 
@@ -419,7 +397,7 @@ void Plate_Plate::SolveTI1(const int IterationNumber, const Message_ProgressRang
         sec_member(i) = myConstraints(i + 1).Value().Coord(icoor);
       }
       algo_gauss.Solve(sec_member, sol);
-      // alr iteration pour affiner la solution
+
       {
         math_Vector sol1(0, n_dim - 1);
         math_Vector sec_member1(0, n_dim - 1);
@@ -430,7 +408,6 @@ void Plate_Plate::SolveTI1(const int IterationNumber, const Message_ProgressRang
           sol += sol1;
         }
       }
-      // finalr
 
       for (i = 0; i < n_dim; i++)
       {
@@ -440,15 +417,8 @@ void Plate_Plate::SolveTI1(const int IterationNumber, const Message_ProgressRang
   }
 }
 
-//=======================================================================
-// function : SolveTI2
-// purpose  : to solve the set of constraints in the medium case,
-//           LinearXYZ constraints are provided but no LinearScalar one
-//=======================================================================
-
 void Plate_Plate::SolveTI2(const int IterationNumber, const Message_ProgressRange& theProgress)
 {
-  // computation of square matrix members
 
   int nCC1 = myConstraints.Length();
   int nCC2 = 0;
@@ -486,9 +456,8 @@ void Plate_Plate::SolveTI2(const int IterationNumber, const Message_ProgressRang
 
   fillXYZmatrix(mat, 0, 0, nCC1, nCC2);
 
-  // initialisation of the Gauss algorithm
   double pivot_max = 1.e-12;
-  OK               = true; // ************ JHH
+  OK               = true;
 
   Message_ProgressScope aScope(theProgress, "Plate_Plate::SolveTI2()", 10);
   math_Gauss            algo_gauss(mat, pivot_max, aScope.Next(7));
@@ -520,7 +489,7 @@ void Plate_Plate::SolveTI2(const int IterationNumber, const Message_ProgressRang
 
   if (OK)
   {
-    //   computation of the linear system solution for the X, Y and Z coordinates
+
     math_Vector sec_member(0, n_dimat - 1, 0.);
     math_Vector sol(0, n_dimat - 1);
 
@@ -548,7 +517,7 @@ void Plate_Plate::SolveTI2(const int IterationNumber, const Message_ProgressRang
       }
 
       algo_gauss.Solve(sec_member, sol);
-      // alr iteration pour affiner la solution
+
       {
         math_Vector sol1(0, n_dimat - 1);
         math_Vector sec_member1(0, n_dimat - 1);
@@ -559,7 +528,6 @@ void Plate_Plate::SolveTI2(const int IterationNumber, const Message_ProgressRang
           sol += sol1;
         }
       }
-      // finalr
 
       for (i = 0; i < nCC1; i++)
         Solution(i).SetCoord(icoor, sol(i));
@@ -588,14 +556,8 @@ void Plate_Plate::SolveTI2(const int IterationNumber, const Message_ProgressRang
   }
 }
 
-//=======================================================================
-// function : SolveTI3
-// purpose  : to solve the set of constraints in the most general situation
-//=======================================================================
-
 void Plate_Plate::SolveTI3(const int IterationNumber, const Message_ProgressRange& theProgress)
 {
-  // computation of square matrix members
 
   int nCC1 = myConstraints.Length();
 
@@ -795,9 +757,8 @@ void Plate_Plate::SolveTI3(const int IterationNumber, const Message_ProgressRang
     for (i = 0; i < j; i++)
       mat(i, j) = mat(j, i);
 
-  // initialisation of the Gauss algorithm
   double pivot_max = 1.e-12;
-  OK               = true; // ************ JHH
+  OK               = true;
 
   Message_ProgressScope aScope(theProgress, "Plate_Plate::SolveTI3()", 10);
   math_Gauss            algo_gauss(mat, pivot_max, aScope.Next(7));
@@ -831,7 +792,7 @@ void Plate_Plate::SolveTI3(const int IterationNumber, const Message_ProgressRang
 
   if (OK)
   {
-    //   computation of the linear system solution for the X, Y and Z coordinates
+
     math_Vector sec_member(0, n_dimat - 1, 0.);
     math_Vector sol(0, n_dimat - 1);
 
@@ -867,7 +828,7 @@ void Plate_Plate::SolveTI3(const int IterationNumber, const Message_ProgressRang
       }
 
     algo_gauss.Solve(sec_member, sol);
-    // iteration to refine the solution
+
     {
       math_Vector sol1(0, n_dimat - 1);
       math_Vector sec_member1(0, n_dimat - 1);
@@ -924,8 +885,6 @@ void Plate_Plate::SolveTI3(const int IterationNumber, const Message_ProgressRang
     }
   }
 }
-
-//=================================================================================================
 
 void Plate_Plate::fillXYZmatrix(math_Matrix& mat,
                                 const int    i0,
@@ -1056,21 +1015,15 @@ void Plate_Plate::fillXYZmatrix(math_Matrix& mat,
   }
 }
 
-//=================================================================================================
-
 bool Plate_Plate::IsDone() const
 {
   return OK;
 }
 
-//=================================================================================================
-
 void Plate_Plate::destroy()
 {
   Init();
 }
-
-//=================================================================================================
 
 void Plate_Plate::Init()
 {
@@ -1096,8 +1049,6 @@ void Plate_Plate::Init()
   OK                 = true;
   maxConstraintOrder = 0;
 }
-
-//=================================================================================================
 
 gp_XYZ Plate_Plate::Evaluate(const gp_XY& point2d) const
 {
@@ -1128,8 +1079,6 @@ gp_XYZ Plate_Plate::Evaluate(const gp_XY& point2d) const
   return valeur;
 }
 
-//=================================================================================================
-
 gp_XYZ Plate_Plate::EvaluateDerivative(const gp_XY& point2d, const int iu, const int iv) const
 {
   if (solution == nullptr)
@@ -1158,12 +1107,6 @@ gp_XYZ Plate_Plate::EvaluateDerivative(const gp_XY& point2d, const int iu, const
   return valeur;
 }
 
-//=======================================================================
-// function : Plate_Plate::CoefPol
-// purpose  : give back the array of power basis coefficient of
-// the polynomial part of the Plate function
-//=======================================================================
-
 void Plate_Plate::CoefPol(occ::handle<NCollection_HArray2<gp_XYZ>>& Coefs) const
 {
   Coefs = new NCollection_HArray2<gp_XYZ>(0, order - 1, 0, order - 1, gp_XYZ(0., 0., 0.));
@@ -1172,27 +1115,15 @@ void Plate_Plate::CoefPol(occ::handle<NCollection_HArray2<gp_XYZ>>& Coefs) const
     for (int iv = 0; iu + iv < order; iv++)
     {
       Coefs->ChangeValue(iu, iv) = Solution(i) * ddu[iu] * ddv[iv];
-      // Coefs->ChangeValue(idu,idv) = Solution(i);
-      //  it is necessary to reset this line if one remove factors in method Polm.
+
       i++;
     }
 }
-
-//=======================================================================
-// function : Plate_Plate::Continuity
-// purpose  : give back the continuity order of the Plate function
-//=======================================================================
 
 int Plate_Plate::Continuity() const
 {
   return 2 * order - 3 - maxConstraintOrder;
 }
-
-//=======================================================================
-// function : Plate_Plate::SolEm
-// purpose  : compute the (iu,iv)th derivative of the fundamental solution
-// of Laplcian at the power order
-//=======================================================================
 
 double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) const
 {
@@ -1202,8 +1133,7 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
 
   if (iv > iu)
   {
-    // SolEm is symmetric in (u<->v) : we swap u and v if iv>iu
-    // to avoid some code
+
     IU = iv;
     IV = iu;
     U  = point2d.Y() * ddv[1];
@@ -1237,11 +1167,6 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
   int     m   = order;
   int     mm1 = m - 1;
   double& r   = aThis->R;
-
-  // double pr = pow(R, mm1 - IU - IV);
-  //  this expression takes a lot of time
-  //(does not take into account a small integer value of the exponent)
-  //
 
   int    expo = mm1 - IU - IV;
   double pr;
@@ -1289,7 +1214,7 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
         case 1:
         {
           double m2 = m * m;
-          // DUV = 4*pr*U*V*(-3+2*L+2*m-3*L*m+L*m2);
+
           DUV = 4 * pr * U * V * ((2 * m - 3) + (m2 - 3 * m + 2) * L);
         }
         break;
@@ -1385,7 +1310,6 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
           double u2v2 = v2 * U2;
           double r2   = r * r;
 
-          // copy-paste the mathematics
           DUV = -100 * ru2 + 48 * L * ru2 + 140 * m * ru2 - 100 * L * m * ru2 - 60 * m2 * ru2
                 + 70 * L * m2 * ru2 + 8 * m3 * ru2 - 20 * L * m3 * ru2 + 2 * L * m4 * ru2
                 - 300 * rv2 + 144 * L * rv2 + 420 * m * rv2 - 300 * L * m * rv2 - 180 * m2 * rv2
@@ -1413,7 +1337,6 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
           double u2v2 = v2 * U2;
           double r2   = r * r;
 
-          // copy-paste the mathematics
           DUV = 1644 * ru2 - 720 * L * ru2 - 2700 * m * ru2 + 1644 * L * m * ru2 + 1530 * m2 * ru2
                 - 1350 * L * m2 * ru2 - 360 * m3 * ru2 + 510 * L * m3 * ru2 + 30 * m4 * ru2
                 - 90 * L * m4 * ru2 + 6 * L * m5 * ru2 + 1644 * rv2 - 720 * L * rv2 - 2700 * m * rv2
@@ -1465,7 +1388,6 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
           double ru2 = R * U2;
           double r2  = R * R;
 
-          // copy-paste the mathematics
           DUV = -600 * ru2 + 288 * L * ru2 + 840 * m * ru2 - 600 * L * m * ru2 - 360 * m2 * ru2
                 + 420 * L * m2 * ru2 + 48 * m3 * ru2 - 120 * L * m3 * ru2 + 12 * L * m4 * ru2
                 + 33 * r2 - 18 * L * r2 - 36 * m * r2 + 33 * L * m * r2 + 9 * m2 * r2
@@ -1495,7 +1417,6 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
           double ru4   = r * u4;
           double r2v2  = r2 * v2;
 
-          // copy-paste the mathematics
           DUV = 6576 * ru2v2 - 2880 * L * ru2v2 - 10800 * m * ru2v2 + 6576 * L * m * ru2v2
                 + 6120 * m2 * ru2v2 - 5400 * L * m2 * ru2v2 - 1440 * m3 * ru2v2
                 + 2040 * L * m3 * ru2v2 + 120 * m4 * ru2v2 - 360 * L * m4 * ru2v2
@@ -1535,7 +1456,6 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
           double r2v2  = r2 * v2;
           double ru4   = r * u4;
 
-          // copy-paste the mathematics
           DUV = -42336 * ru2v2 + 17280 * L * ru2v2 + 77952 * m * ru2v2 - 42336 * L * m * ru2v2
                 - 52920 * m2 * ru2v2 + 38976 * L * m2 * ru2v2 + 16800 * m3 * ru2v2
                 - 17640 * L * m3 * ru2v2 - 2520 * m4 * ru2v2 + 4200 * L * m4 * ru2v2
@@ -1578,7 +1498,6 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
           double r2  = R * R;
           double ru2 = R * U2;
 
-          // copy-paste the mathematics
           DUV = -1000 * ru2 + 480 * L * ru2 + 1400 * m * ru2 - 1000 * L * m * ru2 - 600 * m2 * ru2
                 + 700 * L * m2 * ru2 + 80 * m3 * ru2 - 200 * L * m3 * ru2 + 20 * L * m4 * ru2
                 + 165 * r2 - 90 * L * r2 - 180 * m * r2 + 165 * L * m * r2 + 45 * m2 * r2
@@ -1601,7 +1520,6 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
           double ru2 = r * U2;
           double r2  = r * r;
 
-          // copy-paste the mathematics
           DUV = 5480 * ru2 - 2400 * L * ru2 - 9000 * m * ru2 + 5480 * L * m * ru2 + 5100 * m2 * ru2
                 - 4500 * L * m2 * ru2 - 1200 * m3 * ru2 + 1700 * L * m3 * ru2 + 100 * m4 * ru2
                 - 300 * L * m4 * ru2 + 20 * L * m5 * ru2 - 750 * r2 + 360 * L * r2 + 1050 * m * r2
@@ -1634,7 +1552,6 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
           double r2v2  = r2 * v2;
           double ru4   = r * u4;
 
-          // copy-paste the mathematics
           DUV =
 
             -70560 * ru2v2 + 28800 * L * ru2v2 + 129920 * m * ru2v2 - 70560 * L * m * ru2v2
@@ -1682,7 +1599,6 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
           double r2u2 = r2 * U2;
           double ru4  = r * u4;
 
-          // copy-paste the mathematics
           DUV = 16440 * ru4 - 7200 * L * ru4 - 27000 * m * ru4 + 16440 * L * m * ru4
                 + 15300 * m2 * ru4 - 13500 * L * m2 * ru4 - 3600 * m3 * ru4 + 5100 * L * m3 * ru4
                 + 300 * m4 * ru4 - 900 * L * m4 * ru4 + 60 * L * m5 * ru4 - 4500 * r2u2
@@ -1709,8 +1625,6 @@ double Plate_Plate::SolEm(const gp_XY& point2d, const int iu, const int iv) cons
 
   return DUV * ddu[iu] * ddv[iv];
 }
-
-//=================================================================================================
 
 void Plate_Plate::UVBox(double& UMin, double& UMax, double& VMin, double& VMax) const
 {
@@ -1779,8 +1693,6 @@ void Plate_Plate::UVBox(double& UMin, double& UMax, double& VMin, double& VMax) 
   }
 }
 
-//=================================================================================================
-
 void Plate_Plate::UVConstraints(NCollection_Sequence<gp_XY>& Seq) const
 {
   for (int i = 1; i <= myConstraints.Length(); i++)
@@ -1789,8 +1701,6 @@ void Plate_Plate::UVConstraints(NCollection_Sequence<gp_XY>& Seq) const
       Seq.Append((myConstraints.Value(i)).Pnt2d());
   }
 }
-
-//=======================================================================
 
 void Plate_Plate::SetPolynomialPartOnly(const bool PPOnly)
 {

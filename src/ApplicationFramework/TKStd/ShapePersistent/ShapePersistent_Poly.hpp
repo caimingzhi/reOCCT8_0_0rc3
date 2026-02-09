@@ -145,22 +145,21 @@ public:
   typedef instance<pTriangulation, Poly_Triangulation>                   Triangulation;
 
 public:
-  //! Create a persistent object for a 2D polygon
   Standard_EXPORT static occ::handle<Polygon2D> Translate(
     const occ::handle<Poly_Polygon2D>& thePoly,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a 3D polygon
+
   Standard_EXPORT static occ::handle<Polygon3D> Translate(
     const occ::handle<Poly_Polygon3D>& thePoly,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a triangulation
+
   Standard_EXPORT static occ::handle<PolygonOnTriangulation> Translate(
     const occ::handle<Poly_PolygonOnTriangulation>& thePolyOnTriang,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&
       theMap);
-  //! Create a persistent object for a polygon on triangulation
+
   Standard_EXPORT static occ::handle<Triangulation> Translate(
     const occ::handle<Poly_Triangulation>& thePolyTriang,
     NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>&

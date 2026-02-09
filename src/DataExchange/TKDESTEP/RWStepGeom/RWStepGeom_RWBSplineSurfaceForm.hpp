@@ -17,9 +17,6 @@ namespace RWStepGeom_RWBSplineSurfaceForm
   static constexpr char bssfCylindricalSurf[]       = (".CYLINDRICAL_SURF.");
   static constexpr char bssfQuadricSurf[]           = (".QUADRIC_SURF.");
 
-  //! Convert StepGeom_BSplineSurfaceForm to string
-  //! @param theSourceEnum The StepGeom_BSplineSurfaceForm value to convert
-  //! @return The corresponding string representation or nullptr if not found
   inline const char* ConvertToString(const StepGeom_BSplineSurfaceForm theSourceEnum)
   {
     switch (theSourceEnum)
@@ -50,10 +47,6 @@ namespace RWStepGeom_RWBSplineSurfaceForm
     return nullptr;
   }
 
-  //! Convert string to StepGeom_BSplineSurfaceForm
-  //! @param theFormString The string to convert
-  //! @param theResultEnum The corresponding StepGeom_BSplineSurfaceForm value
-  //! @return true if the conversion was successful, false otherwise
   inline bool ConvertToEnum(const char* theFormString, StepGeom_BSplineSurfaceForm& theResultEnum)
   {
     if (IsEqual(theFormString, bssfSurfOfLinearExtrusion))

@@ -2,12 +2,10 @@
 
 #ifdef HAVE_FFMPEG
 
-  // activate some C99 macros like UINT64_C in "stdint.h" which used by FFmpeg
   #ifndef __STDC_CONSTANT_MACROS
     #define __STDC_CONSTANT_MACROS
   #endif
 
-  // Standard C headers needed for compilation
   #include <stdint.h>
 
   #include <Standard_WarningsDisable.hpp>
@@ -20,20 +18,17 @@ extern "C"
 };
   #include <Standard_WarningsRestore.hpp>
 
-  // Version detection macros
   #define FFMPEG_VERSION_4_4 AV_VERSION_INT(58, 0, 0)
   #define FFMPEG_VERSION_5_0 AV_VERSION_INT(59, 0, 0)
   #define FFMPEG_VERSION_6_0 AV_VERSION_INT(60, 0, 0)
   #define FFMPEG_VERSION_7_0 AV_VERSION_INT(61, 0, 0)
 
-  // Check if we're using FFmpeg 5.0+ (major API change point)
   #if LIBAVCODEC_VERSION_INT >= FFMPEG_VERSION_5_0
     #define FFMPEG_NEW_API 1
   #else
     #define FFMPEG_NEW_API 0
   #endif
 
-  // Additional version checks for specific functions
   #if LIBAVCODEC_VERSION_INT >= AV_VERSION_INT(57, 37, 100)
     #define FFMPEG_HAVE_NEW_DECODE_API 1
   #else
@@ -46,19 +41,14 @@ extern "C"
     #define FFMPEG_HAVE_AVCODEC_PARAMETERS 0
   #endif
 
-  // Constant compatibility for different FFmpeg versions
-
-  // Error buffer size might be different
   #ifndef AV_ERROR_MAX_STRING_SIZE
     #define AV_ERROR_MAX_STRING_SIZE 64
   #endif
 
-  // Codec flags compatibility
   #ifndef AV_CODEC_FLAG_GLOBAL_HEADER
     #define AV_CODEC_FLAG_GLOBAL_HEADER CODEC_FLAG_GLOBAL_HEADER
   #endif
 
-  // Pixel format compatibility - old names to new names
   #ifndef AV_PIX_FMT_YUV420P
     #define AV_PIX_FMT_YUV420P PIX_FMT_YUV420P
   #endif
@@ -75,7 +65,6 @@ extern "C"
     #define AV_PIX_FMT_YUVJ420P PIX_FMT_YUVJ420P
   #endif
 
-  // For old FFmpeg versions that don't have AV_PIX_FMT_* constants
   #ifndef PIX_FMT_YUV420P
     #define PIX_FMT_YUV420P AV_PIX_FMT_YUV420P
   #endif
@@ -92,7 +81,6 @@ extern "C"
     #define PIX_FMT_YUVJ420P AV_PIX_FMT_YUVJ420P
   #endif
 
-  // AVRounding compatibility - handle missing AV_ prefix
   #ifndef AV_ROUND_NEAR_INF
     #ifdef AVROUND_NEAR_INF
       #define AV_ROUND_NEAR_INF AVROUND_NEAR_INF
@@ -108,7 +96,6 @@ extern "C"
     #endif
   #endif
 
-  // Also define the old names for compatibility
   #ifndef AVROUND_NEAR_INF
     #define AVROUND_NEAR_INF AV_ROUND_NEAR_INF
   #endif
@@ -116,9 +103,6 @@ extern "C"
     #define AVROUND_PASS_MINMAX AV_ROUND_PASS_MINMAX
   #endif
 
-// Compatibility functions and macros
-
-// av_register_all() - deprecated/removed in FFmpeg 4.0+
 inline void ffmpeg_register_all()
 {
   #if !FFMPEG_NEW_API
@@ -126,7 +110,6 @@ inline void ffmpeg_register_all()
   #endif
 }
 
-// AVCodec constness changes
 inline AVCodec* ffmpeg_find_encoder(enum AVCodecID id)
 {
   #if FFMPEG_NEW_API
@@ -154,4 +137,4 @@ inline AVCodec* ffmpeg_find_decoder(enum AVCodecID id)
   #endif
 }
 
-#endif // HAVE_FFMPEG
+#endif

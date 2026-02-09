@@ -8,17 +8,13 @@
 #include <TDF_DeltaOnModification.hpp>
 class TDataStd_RealArray;
 
-//! This class provides default services for an
-//! AttributeDelta on a MODIFICATION action
 class TDataStd_DeltaOnModificationOfRealArray : public TDF_DeltaOnModification
 {
 
 public:
-  //! Initializes a TDF_DeltaOnModification.
   Standard_EXPORT TDataStd_DeltaOnModificationOfRealArray(
     const occ::handle<TDataStd_RealArray>& Arr);
 
-  //! Applies the delta to the attribute.
   Standard_EXPORT void Apply() override;
 
   DEFINE_STANDARD_RTTIEXT(TDataStd_DeltaOnModificationOfRealArray, TDF_DeltaOnModification)

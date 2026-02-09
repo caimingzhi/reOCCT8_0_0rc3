@@ -15,10 +15,6 @@
 #include <gp_Pln.hpp>
 #include <Message.hpp>
 
-//=======================================================================
-// box
-//=======================================================================
-
 static int box(Draw_Interpretor&, int n, const char** a)
 {
   gp_Pnt anOrigin;
@@ -167,24 +163,17 @@ static int box(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// wedge
-//=======================================================================
-
 static int wedge(Draw_Interpretor&, int n, const char** a)
 {
   TopoDS_Solid S;
 
-  //  int i = 0;
   if (n == 15 || n == 18)
   {
     gp_Pnt LocalP(Draw::Atof(a[2]), Draw::Atof(a[3]), Draw::Atof(a[4]));
     gp_Dir LocalN(Draw::Atof(a[5]), Draw::Atof(a[6]), Draw::Atof(a[7]));
     gp_Dir LocalVx(Draw::Atof(a[8]), Draw::Atof(a[9]), Draw::Atof(a[10]));
     gp_Ax2 Axis(LocalP, LocalN, LocalVx);
-    //    gp_Ax2 Axis(gp_Pnt(Draw::Atof(a[2]),Draw::Atof(a[3]),Draw::Atof(a[4])),
-    //		gp_Dir(Draw::Atof(a[5]),Draw::Atof(a[6]),Draw::Atof(a[7])),
-    //		gp_Dir(Draw::Atof(a[8]),Draw::Atof(a[9]),Draw::Atof(a[10])));
+
     if (n == 15)
     {
       S = BRepPrimAPI_MakeWedge(Axis,
@@ -227,10 +216,6 @@ static int wedge(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// cylinder
-//=======================================================================
-
 static int cylinder(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 3)
@@ -267,10 +252,6 @@ static int cylinder(Draw_Interpretor&, int n, const char** a)
   DBRep::Set(a[1], S);
   return 0;
 }
-
-//=======================================================================
-// cone
-//=======================================================================
 
 static int cone(Draw_Interpretor&, int n, const char** a)
 {
@@ -311,10 +292,6 @@ static int cone(Draw_Interpretor&, int n, const char** a)
   DBRep::Set(a[1], S);
   return 0;
 }
-
-//=======================================================================
-// sphere
-//=======================================================================
 
 static int sphere(Draw_Interpretor&, int n, const char** a)
 {
@@ -373,10 +350,6 @@ static int sphere(Draw_Interpretor&, int n, const char** a)
   DBRep::Set(a[1], S);
   return 0;
 }
-
-//=======================================================================
-// torus
-//=======================================================================
 
 static int torus(Draw_Interpretor&, int n, const char** a)
 {
@@ -442,8 +415,6 @@ static int torus(Draw_Interpretor&, int n, const char** a)
   DBRep::Set(a[1], S);
   return 0;
 }
-
-//=================================================================================================
 
 void BRepTest::PrimitiveCommands(Draw_Interpretor& theCommands)
 {

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Standard_Type.hpp>
@@ -150,7 +139,7 @@ void StepData_PDescr::SetFrom(const occ::handle<StepData_PDescr>& other)
   int i, maxenum = other->EnumMax();
   for (i = 0; i <= maxenum; i++)
     AddEnumDef(other->EnumText(i));
-  //  SELECT types are not copied
+
   thetype = other->Type();
   thearit = other->Arity();
   thefrom = other;
@@ -178,8 +167,6 @@ void StepData_PDescr::SetField(const char* name, const int rank)
   thefnum = rank;
 }
 
-//    ######  INTERRO  ######
-
 bool StepData_PDescr::IsSelect() const
 {
   if (!thefrom.IsNull())
@@ -195,7 +182,7 @@ occ::handle<StepData_PDescr> StepData_PDescr::Member(const char* name) const
   if (thesnam.IsEqual(name))
     return this;
   if (thenext.IsNull())
-    return descr; // null
+    return descr;
   return thenext->Member(name);
 }
 
@@ -330,8 +317,4 @@ int StepData_PDescr::FieldRank() const
   return thefnum;
 }
 
-void StepData_PDescr::Check(const StepData_Field& /*afild*/,
-                            occ::handle<Interface_Check>& /*ach*/) const
-{
-  //  For now...
-}
+void StepData_PDescr::Check(const StepData_Field&, occ::handle<Interface_Check>&) const {}

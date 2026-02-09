@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// gka 05.03.99 S4134 upgrade from CD to DIS
 
 #include <Interface_EntityIterator.hpp>
 #include "RWStepBasic_RWProductDefinitionFormation.hpp"
@@ -29,32 +16,23 @@ void RWStepBasic_RWProductDefinitionFormation::ReadStep(
   const occ::handle<StepBasic_ProductDefinitionFormation>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 3, ach, "product_definition_formation"))
     return;
 
-  // --- own field : id ---
-
   occ::handle<TCollection_HAsciiString> aId;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
-  data->ReadString(num, 1, "id", ach, aId);
 
-  // --- own field : description ---
+  data->ReadString(num, 1, "id", ach, aId);
 
   occ::handle<TCollection_HAsciiString> aDescription;
   if (data->IsParamDefined(num, 2))
-  { // gka 05.03.99 S4134 upgrade from CD to DIS
-    // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+  {
+
     data->ReadString(num, 2, "description", ach, aDescription);
   }
-  // --- own field : ofProduct ---
 
   occ::handle<StepBasic_Product> aOfProduct;
-  // szv#4:S4163:12Mar99 `bool stat3 =` not needed
-  data->ReadEntity(num, 3, "of_product", ach, STANDARD_TYPE(StepBasic_Product), aOfProduct);
 
-  //--- Initialisation of the read entity ---
+  data->ReadEntity(num, 3, "of_product", ach, STANDARD_TYPE(StepBasic_Product), aOfProduct);
 
   ent->Init(aId, aDescription, aOfProduct);
 }
@@ -64,11 +42,7 @@ void RWStepBasic_RWProductDefinitionFormation::WriteStep(
   const occ::handle<StepBasic_ProductDefinitionFormation>& ent) const
 {
 
-  // --- own field : id ---
-
   SW.Send(ent->Id());
-
-  // --- own field : description ---
 
   if (!ent->Description().IsNull())
   {
@@ -78,8 +52,6 @@ void RWStepBasic_RWProductDefinitionFormation::WriteStep(
   {
     SW.SendUndef();
   }
-
-  // --- own field : ofProduct ---
 
   SW.Send(ent->OfProduct());
 }

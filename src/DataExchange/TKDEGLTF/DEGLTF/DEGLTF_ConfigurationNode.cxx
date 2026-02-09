@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DEGLTF_ConfigurationNode.hpp>
 
@@ -28,13 +17,9 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 DEGLTF_ConfigurationNode::DEGLTF_ConfigurationNode()
 
   = default;
-
-//=================================================================================================
 
 DEGLTF_ConfigurationNode::DEGLTF_ConfigurationNode(
   const occ::handle<DEGLTF_ConfigurationNode>& theNode)
@@ -42,8 +27,6 @@ DEGLTF_ConfigurationNode::DEGLTF_ConfigurationNode(
 {
   InternalParameters = theNode->InternalParameters;
 }
-
-//=================================================================================================
 
 bool DEGLTF_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& theResource)
 {
@@ -136,8 +119,6 @@ bool DEGLTF_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& 
                             aScope);
   return true;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString DEGLTF_ConfigurationNode::Save() const
 {
@@ -335,49 +316,35 @@ TCollection_AsciiString DEGLTF_ConfigurationNode::Save() const
   return aResult;
 }
 
-//=================================================================================================
-
 occ::handle<DE_ConfigurationNode> DEGLTF_ConfigurationNode::Copy() const
 {
   return new DEGLTF_ConfigurationNode(*this);
 }
-
-//=================================================================================================
 
 occ::handle<DE_Provider> DEGLTF_ConfigurationNode::BuildProvider()
 {
   return new DEGLTF_Provider(this);
 }
 
-//=================================================================================================
-
 bool DEGLTF_ConfigurationNode::IsImportSupported() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool DEGLTF_ConfigurationNode::IsExportSupported() const
 {
   return true;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DEGLTF_ConfigurationNode::GetFormat() const
 {
   return TCollection_AsciiString("GLTF");
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DEGLTF_ConfigurationNode::GetVendor() const
 {
   return TCollection_AsciiString("OCC");
 }
-
-//=================================================================================================
 
 NCollection_List<TCollection_AsciiString> DEGLTF_ConfigurationNode::GetExtensions() const
 {

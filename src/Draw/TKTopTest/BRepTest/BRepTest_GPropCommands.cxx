@@ -172,12 +172,10 @@ int props(Draw_Interpretor& di, int n, const char** a)
     di << "IZ = " << Iz << "\n\n";
   }
 
-  // if (n == 2) {
   gp_Ax2 axes(P, Pr.ThirdAxisOfInertia(), Pr.FirstAxisOfInertia());
 
   occ::handle<Draw_Axis3D> Dax = new Draw_Axis3D(axes, Draw_orange, 30);
   dout << Dax;
-  //}
 
   return 0;
 }
@@ -222,7 +220,7 @@ int vpropsgk(Draw_Interpretor& di, int n, const char** a)
   bool   CGFlag     = false;
   bool   IFlag      = false;
   double eps        = 1.e-3;
-  // double    aDefaultTol = 1.e-3;
+
   int mode = 0;
 
   eps  = Draw::Atof(a[2]);
@@ -239,12 +237,7 @@ int vpropsgk(Draw_Interpretor& di, int n, const char** a)
   if (mode == 2 || mode == 3)
     IFlag = true;
 
-  // OSD_Chronometer aChrono;
-
-  // aChrono.Reset();
-  // aChrono.Start();
   eps = BRepGProp::VolumePropertiesGK(S, G, eps, onlyClosed, isUseSpan, CGFlag, IFlag, SkipShared);
-  // aChrono.Stop();
 
   Standard_SStream aSStream0;
   int              anOutWidth = 24;
@@ -328,8 +321,6 @@ int vpropsgk(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 void BRepTest::GPropCommands(Draw_Interpretor& theCommands)
 {

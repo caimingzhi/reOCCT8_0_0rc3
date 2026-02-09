@@ -1107,5 +1107,3 @@ static const char XSMessage_XSTEP_us[] =
   "!\n"
   ".IGES_10020\n"
   " Null area wire was detected, wire skipped.\n";
-
-// clang-format on

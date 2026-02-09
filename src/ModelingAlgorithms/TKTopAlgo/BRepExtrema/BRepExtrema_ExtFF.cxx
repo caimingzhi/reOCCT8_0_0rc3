@@ -7,21 +7,17 @@
 #include <Precision.hpp>
 #include <BRepAdaptor_Surface.hpp>
 
-//=================================================================================================
-
 BRepExtrema_ExtFF::BRepExtrema_ExtFF(const TopoDS_Face& F1, const TopoDS_Face& F2)
 {
   Initialize(F2);
   Perform(F1, F2);
 }
 
-//=================================================================================================
-
 void BRepExtrema_ExtFF::Initialize(const TopoDS_Face& F2)
 {
   BRepAdaptor_Surface Surf(F2);
   if (Surf.GetType() == GeomAbs_OtherSurface)
-    return; // protect against non-geometric type (e.g. triangulation)
+    return;
 
   myHS       = new BRepAdaptor_Surface(Surf);
   double Tol = std::min(BRep_Tool::Tolerance(F2), Precision::Confusion());
@@ -32,8 +28,6 @@ void BRepExtrema_ExtFF::Initialize(const TopoDS_Face& F2)
   myExtSS.Initialize(*myHS, U1, U2, V1, V2, Tol);
 }
 
-//=================================================================================================
-
 void BRepExtrema_ExtFF::Perform(const TopoDS_Face& F1, const TopoDS_Face& F2)
 {
   mySqDist.Clear();
@@ -42,7 +36,7 @@ void BRepExtrema_ExtFF::Perform(const TopoDS_Face& F1, const TopoDS_Face& F2)
 
   BRepAdaptor_Surface Surf1(F1);
   if (myHS.IsNull() || Surf1.GetType() == GeomAbs_OtherSurface)
-    return; // protect against non-geometric type (e.g. triangulation)
+    return;
 
   occ::handle<BRepAdaptor_Surface> HS1 = new BRepAdaptor_Surface(Surf1);
   double Tol1                          = std::min(BRep_Tool::Tolerance(F1), Precision::Confusion());
@@ -59,7 +53,7 @@ void BRepExtrema_ExtFF::Perform(const TopoDS_Face& F1, const TopoDS_Face& F2)
     mySqDist.Append(myExtSS.SquareDistance(1));
   else
   {
-    // Exploration of points and classification
+
     BRepClass_FaceClassifier classifier;
     const double             Tol2 = BRep_Tool::Tolerance(F2);
     Extrema_POnSurf          P1, P2;

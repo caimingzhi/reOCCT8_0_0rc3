@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_PointsOnSurface, BRep_PointRepresentation)
 
-//=================================================================================================
-
 BRep_PointsOnSurface::BRep_PointsOnSurface(const double                     P,
                                            const occ::handle<Geom_Surface>& S,
                                            const TopLoc_Location&           L)
@@ -15,21 +13,15 @@ BRep_PointsOnSurface::BRep_PointsOnSurface(const double                     P,
 {
 }
 
-//=================================================================================================
-
 const occ::handle<Geom_Surface>& BRep_PointsOnSurface::Surface() const
 {
   return mySurface;
 }
 
-//=================================================================================================
-
 void BRep_PointsOnSurface::Surface(const occ::handle<Geom_Surface>& S)
 {
   mySurface = S;
 }
-
-//=================================================================================================
 
 void BRep_PointsOnSurface::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

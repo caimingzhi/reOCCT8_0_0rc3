@@ -16,15 +16,12 @@
 
 #include <cstdio>
 #include <cstring>
-//
-//
+
 static int bfillds(Draw_Interpretor&, int, const char**);
 static int bbuild(Draw_Interpretor&, int, const char**);
 static int bbop(Draw_Interpretor&, int, const char**);
 static int bsplit(Draw_Interpretor&, int, const char**);
 static int buildbop(Draw_Interpretor&, int, const char**);
-
-//=================================================================================================
 
 void BOPTest::PartitionCommands(Draw_Interpretor& theCommands)
 {
@@ -32,9 +29,9 @@ void BOPTest::PartitionCommands(Draw_Interpretor& theCommands)
   if (done)
     return;
   done = true;
-  // Chapter's name
+
   const char* g = "BOPTest commands";
-  // Commands
+
   theCommands.Add("bfillds",
                   "Performs intersection of the arguments added for the operation by baddobjects "
                   "and baddtools commands.\n"
@@ -106,8 +103,6 @@ void BOPTest::PartitionCommands(Draw_Interpretor& theCommands)
     g);
 }
 
-//=================================================================================================
-
 int bfillds(Draw_Interpretor& di, int n, const char** a)
 {
   if (n > 2)
@@ -115,7 +110,7 @@ int bfillds(Draw_Interpretor& di, int n, const char** a)
     di.PrintHelp(a[0]);
     return 1;
   }
-  //
+
   char                                     buf[32];
   bool                                     bRunParallel, bNonDestructive, bShowTime;
   int                                      aNbS;
@@ -129,14 +124,14 @@ int bfillds(Draw_Interpretor& di, int n, const char** a)
     di << "No objects to process\n";
     return 0;
   }
-  //
+
   bShowTime = false;
-  //
+
   bRunParallel           = BOPTest_Objects::RunParallel();
   bNonDestructive        = BOPTest_Objects::NonDestructive();
   aTol                   = BOPTest_Objects::FuzzyValue();
   BOPAlgo_GlueEnum aGlue = BOPTest_Objects::Glue();
-  //
+
   if (n == 2)
   {
     if (!strcmp(a[1], "-t"))
@@ -148,35 +143,35 @@ int bfillds(Draw_Interpretor& di, int n, const char** a)
       di << "Warning: invalid key\n";
     }
   }
-  //
+
   NCollection_List<TopoDS_Shape>& aLT = BOPTest_Objects::Tools();
-  //
+
   aIt.Initialize(aLS);
   for (; aIt.More(); aIt.Next())
   {
     const TopoDS_Shape& aS = aIt.Value();
     aLC.Append(aS);
   }
-  //
+
   aIt.Initialize(aLT);
   for (; aIt.More(); aIt.Next())
   {
     const TopoDS_Shape& aS = aIt.Value();
     aLC.Append(aS);
   }
-  //
+
   BOPAlgo_PaveFiller& aPF = BOPTest_Objects::PaveFiller();
-  //
+
   aPF.SetArguments(aLC);
   aPF.SetRunParallel(bRunParallel);
   aPF.SetNonDestructive(bNonDestructive);
   aPF.SetFuzzyValue(aTol);
   aPF.SetGlue(aGlue);
   aPF.SetUseOBB(BOPTest_Objects::UseOBB());
-  //
+
   OSD_Timer aTimer;
   aTimer.Start();
-  //
+
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
   aPF.Perform(aProgress->Start());
   BOPTest::ReportAlerts(aPF.GetReport());
@@ -184,19 +179,17 @@ int bfillds(Draw_Interpretor& di, int n, const char** a)
   {
     return 0;
   }
-  //
+
   aTimer.Stop();
-  //
+
   if (bShowTime)
   {
     Sprintf(buf, "  Tps: %7.2lf\n", aTimer.ElapsedTime());
     di << buf;
   }
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 int bbuild(Draw_Interpretor& di, int n, const char** a)
 {
@@ -205,25 +198,25 @@ int bbuild(Draw_Interpretor& di, int n, const char** a)
     di.PrintHelp(a[0]);
     return 1;
   }
-  //
+
   BOPDS_PDS pDS = BOPTest_Objects::PDS();
   if (!pDS)
   {
     di << "Prepare PaveFiller first\n";
     return 0;
   }
-  //
+
   char buf[128];
   bool bRunParallel, bShowTime;
 
   NCollection_List<TopoDS_Shape>::Iterator aIt;
-  //
+
   BOPAlgo_PaveFiller& aPF = BOPTest_Objects::PaveFiller();
-  //
+
   BOPTest_Objects::SetBuilderDefault();
   BOPAlgo_Builder& aBuilder = BOPTest_Objects::Builder();
   aBuilder.Clear();
-  //
+
   NCollection_List<TopoDS_Shape>& aLSObj = BOPTest_Objects::Shapes();
   aIt.Initialize(aLSObj);
   for (; aIt.More(); aIt.Next())
@@ -231,7 +224,7 @@ int bbuild(Draw_Interpretor& di, int n, const char** a)
     const TopoDS_Shape& aS = aIt.Value();
     aBuilder.AddArgument(aS);
   }
-  //
+
   NCollection_List<TopoDS_Shape>& aLSTool = BOPTest_Objects::Tools();
   aIt.Initialize(aLSTool);
   for (; aIt.More(); aIt.Next())
@@ -239,7 +232,7 @@ int bbuild(Draw_Interpretor& di, int n, const char** a)
     const TopoDS_Shape& aS = aIt.Value();
     aBuilder.AddArgument(aS);
   }
-  //
+
   bShowTime    = false;
   bRunParallel = BOPTest_Objects::RunParallel();
   if (n == 3)
@@ -256,16 +249,15 @@ int bbuild(Draw_Interpretor& di, int n, const char** a)
   aBuilder.SetRunParallel(bRunParallel);
   aBuilder.SetCheckInverted(BOPTest_Objects::CheckInverted());
   aBuilder.SetToFillHistory(BRepTest_Objects::IsHistoryNeeded());
-  //
+
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
-  //
+
   OSD_Timer aTimer;
   aTimer.Start();
-  //
+
   aBuilder.PerformWithFiller(aPF, aProgress->Start());
   BOPTest::ReportAlerts(aBuilder.GetReport());
 
-  // Set history of GF operation into the session
   if (BRepTest_Objects::IsHistoryNeeded())
     BRepTest_Objects::SetHistory(aPF.Arguments(), aBuilder);
 
@@ -273,27 +265,25 @@ int bbuild(Draw_Interpretor& di, int n, const char** a)
   {
     return 0;
   }
-  //
+
   aTimer.Stop();
-  //
+
   if (bShowTime)
   {
     Sprintf(buf, "  Tps: %7.2lf\n", aTimer.ElapsedTime());
     di << buf;
   }
-  //
+
   const TopoDS_Shape& aR = aBuilder.Shape();
   if (aR.IsNull())
   {
     di << "Result is a null shape\n";
     return 0;
   }
-  //
+
   DBRep::Set(a[1], aR);
   return 0;
 }
-
-//=================================================================================================
 
 int bbop(Draw_Interpretor& di, int n, const char** a)
 {
@@ -302,14 +292,14 @@ int bbop(Draw_Interpretor& di, int n, const char** a)
     di.PrintHelp(a[0]);
     return 1;
   }
-  //
+
   BOPDS_PDS pDS = BOPTest_Objects::PDS();
   if (!pDS)
   {
     di << "Prepare PaveFiller first\n";
     return 0;
   }
-  //
+
   BOPAlgo_Operation anOp = BOPTest::GetOperationType(a[2]);
   if (anOp == BOPAlgo_UNKNOWN)
   {
@@ -330,9 +320,9 @@ int bbop(Draw_Interpretor& di, int n, const char** a)
       di << "Warning: invalid key\n";
     }
   }
-  //
+
   BOPAlgo_PaveFiller& aPF = BOPTest_Objects::PaveFiller();
-  //
+
   BOPAlgo_Builder* pBuilder = nullptr;
 
   if (anOp != BOPAlgo_SECTION)
@@ -343,9 +333,9 @@ int bbop(Draw_Interpretor& di, int n, const char** a)
   {
     pBuilder = &BOPTest_Objects::Section();
   }
-  //
+
   pBuilder->Clear();
-  //
+
   NCollection_List<TopoDS_Shape>&          aLSObj = BOPTest_Objects::Shapes();
   NCollection_List<TopoDS_Shape>::Iterator aIt(aLSObj);
   for (; aIt.More(); aIt.Next())
@@ -353,11 +343,11 @@ int bbop(Draw_Interpretor& di, int n, const char** a)
     const TopoDS_Shape& aS = aIt.Value();
     pBuilder->AddArgument(aS);
   }
-  //
+
   if (anOp != BOPAlgo_SECTION)
   {
     BOPAlgo_BOP* pBOP = (BOPAlgo_BOP*)pBuilder;
-    //
+
     NCollection_List<TopoDS_Shape>& aLSTools = BOPTest_Objects::Tools();
     aIt.Initialize(aLSTools);
     for (; aIt.More(); aIt.Next())
@@ -365,7 +355,7 @@ int bbop(Draw_Interpretor& di, int n, const char** a)
       const TopoDS_Shape& aS = aIt.Value();
       pBOP->AddTool(aS);
     }
-    //
+
     pBOP->SetOperation(anOp);
   }
   else
@@ -378,20 +368,19 @@ int bbop(Draw_Interpretor& di, int n, const char** a)
       pBuilder->AddArgument(aS);
     }
   }
-  //
+
   pBuilder->SetRunParallel(bRunParallel);
   pBuilder->SetCheckInverted(BOPTest_Objects::CheckInverted());
   pBuilder->SetToFillHistory(BRepTest_Objects::IsHistoryNeeded());
-  //
+
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
-  //
+
   OSD_Timer aTimer;
   aTimer.Start();
-  //
+
   pBuilder->PerformWithFiller(aPF, aProgress->Start());
   BOPTest::ReportAlerts(pBuilder->GetReport());
 
-  // Set history of Boolean operation into the session
   if (BRepTest_Objects::IsHistoryNeeded())
     BRepTest_Objects::SetHistory(aPF.Arguments(), *pBuilder);
 
@@ -399,30 +388,28 @@ int bbop(Draw_Interpretor& di, int n, const char** a)
   {
     return 0;
   }
-  //
+
   aTimer.Stop();
-  //
+
   if (bShowTime)
   {
     char buf[32];
     Sprintf(buf, "  Tps: %7.2lf\n", aTimer.ElapsedTime());
     di << buf;
   }
-  //
+
   const TopoDS_Shape& aR = pBuilder->Shape();
   if (aR.IsNull())
   {
     di << "Result is a null shape\n";
     return 0;
   }
-  //
+
   BOPTest_Objects::SetBuilder(pBuilder);
-  //
+
   DBRep::Set(a[1], aR);
   return 0;
 }
-
-//=================================================================================================
 
 int bsplit(Draw_Interpretor& di, int n, const char** a)
 {
@@ -431,46 +418,40 @@ int bsplit(Draw_Interpretor& di, int n, const char** a)
     di.PrintHelp(a[0]);
     return 1;
   }
-  //
+
   BOPDS_PDS pDS = BOPTest_Objects::PDS();
   if (!pDS)
   {
     di << "Prepare PaveFiller first\n";
     return 0;
   }
-  //
+
   BOPAlgo_PaveFiller& aPF = BOPTest_Objects::PaveFiller();
-  //
+
   BOPAlgo_Splitter* pSplitter = &BOPTest_Objects::Splitter();
   pSplitter->Clear();
-  //
-  // set objects
+
   const NCollection_List<TopoDS_Shape>& aLSObjects = BOPTest_Objects::Shapes();
   pSplitter->SetArguments(aLSObjects);
-  //
-  // set tools
+
   NCollection_List<TopoDS_Shape>& aLSTools = BOPTest_Objects::Tools();
   pSplitter->SetTools(aLSTools);
-  //
-  // set options
+
   pSplitter->SetRunParallel(BOPTest_Objects::RunParallel());
   pSplitter->SetNonDestructive(BOPTest_Objects::NonDestructive());
   pSplitter->SetFuzzyValue(BOPTest_Objects::FuzzyValue());
   pSplitter->SetCheckInverted(BOPTest_Objects::CheckInverted());
   pSplitter->SetToFillHistory(BRepTest_Objects::IsHistoryNeeded());
-  //
-  // measure the time of the operation
+
   OSD_Timer aTimer;
   aTimer.Start();
-  //
-  // perform the operation
+
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
   pSplitter->PerformWithFiller(aPF, aProgress->Start());
-  //
+
   aTimer.Stop();
   BOPTest::ReportAlerts(pSplitter->GetReport());
 
-  // Set history of Split operation into the session
   if (BRepTest_Objects::IsHistoryNeeded())
     BRepTest_Objects::SetHistory(aPF.Arguments(), *pSplitter);
 
@@ -478,8 +459,7 @@ int bsplit(Draw_Interpretor& di, int n, const char** a)
   {
     return 0;
   }
-  //
-  // show time if necessary
+
   if (n == 3)
   {
     if (!strcmp(a[2], "-t"))
@@ -493,22 +473,19 @@ int bsplit(Draw_Interpretor& di, int n, const char** a)
       di << "Warning: invalid key\n";
     }
   }
-  //
-  // Debug commands support
+
   BOPTest_Objects::SetBuilder(pSplitter);
-  //
+
   const TopoDS_Shape& aR = pSplitter->Shape();
   if (aR.IsNull())
   {
     di << " null shape\n";
     return 0;
   }
-  //
+
   DBRep::Set(a[1], aR);
   return 0;
 }
-
-//=================================================================================================
 
 int buildbop(Draw_Interpretor& di, int n, const char** a)
 {
@@ -538,7 +515,6 @@ int buildbop(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  // Get arguments and operation
   NCollection_List<TopoDS_Shape> aLObjects, aLTools;
   BOPAlgo_Operation              anOp = BOPAlgo_UNKNOWN;
 
@@ -558,13 +534,13 @@ int buildbop(Draw_Interpretor& di, int n, const char** a)
       {
         if (a[j][0] == '-')
         {
-          // reached the following key
+
           i = j - 1;
           break;
         }
         else
         {
-          // Get the shape
+
           TopoDS_Shape aS = DBRep::Get(a[j]);
           if (aS.IsNull())
           {
@@ -584,7 +560,7 @@ int buildbop(Draw_Interpretor& di, int n, const char** a)
           aList.Append(aS);
         }
       }
-      // End of arguments is reached
+
       if (j == n)
         break;
     }
@@ -632,13 +608,11 @@ int buildbop(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  // Create new report for the operation
   occ::handle<Message_Report>         aReport   = new Message_Report;
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
-  // Build specific operation
+
   pBuilder->BuildBOP(aLObjects, aLTools, anOp, aProgress->Start(), aReport);
 
-  // Report alerts of the operation
   BOPTest::ReportAlerts(aReport);
 
   if (!aReport->GetAlerts(Message_Fail).IsEmpty())
@@ -646,13 +620,11 @@ int buildbop(Draw_Interpretor& di, int n, const char** a)
     return 0;
   }
 
-  // Set history of Split operation into the session
   if (BRepTest_Objects::IsHistoryNeeded())
     BRepTest_Objects::SetHistory(pDS->Arguments(), *pBuilder);
 
-  // Result shape
   const TopoDS_Shape& aR = pBuilder->Shape();
-  // Draw result shape
+
   DBRep::Set(a[1], aR);
 
   return 0;

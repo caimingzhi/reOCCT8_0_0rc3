@@ -1,10 +1,4 @@
 #include <ShapeFix.hpp>
-//: k2 abv 16.12.98: eliminating code duplication
-// pdn     18.12.98: checking deviation for SP edges
-//:   abv 22.02.99: method FillFace() removed since PRO13123 is fixed
-// szv#4 S4163
-// szv#9:S4244:19Aug99: Added method FixWireGaps
-// szv#10:S4244:23Aug99: Added method FixFaceGaps
 
 #include <BRep_Builder.hpp>
 #include <BRep_Tool.hpp>
@@ -19,7 +13,6 @@
 #include <TopoDS_Face.hpp>
 #include <Geom_Surface.hpp>
 
-//: i2
 #include <gp_Pnt.hpp>
 #include <Geom_Plane.hpp>
 #include <Geom2dAdaptor_Curve.hpp>
@@ -50,20 +43,17 @@
 #include <Message_Msg.hpp>
 #include <ShapeExtend_BasicMsgRegistrator.hpp>
 
-//=================================================================================================
-
 bool ShapeFix::SameParameter(const TopoDS_Shape&                                 shape,
                              const bool                                          enforce,
                              const double                                        preci,
                              const Message_ProgressRange&                        theProgress,
                              const occ::handle<ShapeExtend_BasicMsgRegistrator>& theMsgReg)
 {
-  // Calculate number of edges
+
   int aNbEdges = 0;
   for (TopExp_Explorer anEdgeExp(shape, TopAbs_EDGE); anEdgeExp.More(); anEdgeExp.Next())
     ++aNbEdges;
 
-  // Calculate number of faces
   int aNbFaces = 0;
   for (TopExp_Explorer anEdgeExp(shape, TopAbs_FACE); anEdgeExp.More(); anEdgeExp.Next())
     ++aNbFaces;
@@ -83,11 +73,10 @@ bool ShapeFix::SameParameter(const TopoDS_Shape&                                
   TopExp_Explorer            ex(shape, TopAbs_EDGE);
   Message_Msg                doneMsg("FixEdge.SameParameter.MSG0");
 
-  // Start progress scope (no need to check if progress exists -- it is safe)
   Message_ProgressScope aPSForSameParam(theProgress, "Fixing same parameter problem", 2);
 
   {
-    // Start progress scope (no need to check if progress exists -- it is safe)
+
     Message_ProgressScope aPS(aPSForSameParam.Next(), "Fixing edge", aNbEdges);
 
     while (ex.More())
@@ -124,7 +113,7 @@ bool ShapeFix::SameParameter(const TopoDS_Shape&                                
         }
         else
         {
-          sfe->FixSameParameter(E); // K2-SEP97
+          sfe->FixSameParameter(E);
         }
 
         if (!BRep_Tool::SameParameter(E))
@@ -146,22 +135,18 @@ bool ShapeFix::SameParameter(const TopoDS_Shape&                                
           theMsgReg->Send(E, doneMsg, Message_Warning);
         }
 
-        // Complete step in current progress scope
         aPS.Next();
-      } // -- end while
+      }
 
-      // Halt algorithm in case of user's abort
       if (!aPS.More())
         return false;
     }
   }
 
   {
-    // Start progress scope (no need to check if progress exists -- it is safe)
+
     Message_ProgressScope aPS(aPSForSameParam.Next(), "Update tolerances", aNbFaces);
 
-    //: i2 abv 21 Aug 98: ProSTEP TR8 Motor.rle face 710:
-    // Update tolerance of edges on planes (no pcurves are stored)
     for (TopExp_Explorer exp(shape, TopAbs_FACE); exp.More() && aPS.More(); exp.Next(), aPS.Next())
     {
       TopoDS_Face               face = TopoDS::Face(exp.Current());
@@ -212,7 +197,7 @@ bool ShapeFix::SameParameter(const TopoDS_Shape&                                
         }
         if (isChanged)
         {
-          tol = 1.00005 * sqrt(tol2); // coeff: see trj3_pm1-ct-203.stp #19681, edge 10
+          tol = 1.00005 * sqrt(tol2);
           if (tol >= tol0)
           {
             B.UpdateEdge(edge, tol);
@@ -225,7 +210,7 @@ bool ShapeFix::SameParameter(const TopoDS_Shape&                                
         }
       }
     }
-    // Halt algorithm in case of user's abort
+
     if (!aPS.More())
       return false;
   }
@@ -242,14 +227,10 @@ bool ShapeFix::SameParameter(const TopoDS_Shape&                                
   return status;
 }
 
-//=================================================================================================
-
 void ShapeFix::EncodeRegularity(const TopoDS_Shape& shape, const double tolang)
 {
   BRepLib::EncodeRegularity(shape, tolang);
 }
-
-//=================================================================================================
 
 TopoDS_Shape ShapeFix::RemoveSmallEdges(TopoDS_Shape&                    Shape,
                                         const double                     Tolerance,
@@ -262,7 +243,7 @@ TopoDS_Shape ShapeFix::RemoveSmallEdges(TopoDS_Shape&                    Shape,
   sfs->FixFaceTool()->FixOrientationMode()   = false;
   sfs->FixFaceTool()->FixSmallAreaWireMode() = false;
   sfs->FixWireTool()->ModifyTopologyMode()   = true;
-  // sfs.FixWireTool().FixReorderMode() = false;
+
   sfs->FixWireTool()->FixConnectedMode()        = false;
   sfs->FixWireTool()->FixEdgeCurvesMode()       = false;
   sfs->FixWireTool()->FixDegeneratedMode()      = false;
@@ -275,10 +256,6 @@ TopoDS_Shape ShapeFix::RemoveSmallEdges(TopoDS_Shape&                    Shape,
   return result;
 }
 
-//=======================================================================
-// function : ReplaceVertex
-// purpose  : auxiliary for FixVertexPosition
-//=======================================================================
 static TopoDS_Edge ReplaceVertex(const TopoDS_Edge& theEdge, const gp_Pnt& theP, const bool theFwd)
 {
   TopoDS_Vertex aNewVertex;
@@ -304,10 +281,6 @@ static TopoDS_Edge ReplaceVertex(const TopoDS_Edge& theEdge, const gp_Pnt& theP,
   return aNewEdge;
 }
 
-//=======================================================================
-// function : getNearPoint
-// purpose  : auxiliary for FixVertexPosition
-//=======================================================================
 static double getNearPoint(const NCollection_Sequence<gp_Pnt>& aSeq1,
                            const NCollection_Sequence<gp_Pnt>& aSeq2,
                            gp_XYZ&                             acent)
@@ -338,10 +311,6 @@ static double getNearPoint(const NCollection_Sequence<gp_Pnt>& aSeq1,
   return mindist;
 }
 
-//=======================================================================
-// function : getNearestEdges
-// purpose  : auxiliary for FixVertexPosition
-//=======================================================================
 static bool getNearestEdges(NCollection_List<TopoDS_Shape>&     theLEdges,
                             const TopoDS_Vertex&                theVert,
                             NCollection_Sequence<TopoDS_Shape>& theSuitEdges,
@@ -400,7 +369,7 @@ static bool getNearestEdges(NCollection_List<TopoDS_Shape>&     theLEdges,
 
     bool isLoop = ((aVert1.IsSame(aVert11) && aVert2.IsSame(aVert12))
                    || (aVert1.IsSame(aVert12) && aVert2.IsSame(aVert11)));
-    if (isLoop /*&& !aseqsuit.Length()*/ && (atempList.Extent() > anumLoop))
+    if (isLoop && (atempList.Extent() > anumLoop))
     {
       atempList.Append(aEdge);
       atempList.Remove(alIter);
@@ -493,8 +462,6 @@ static bool getNearestEdges(NCollection_List<TopoDS_Shape>&     theLEdges,
   return isDone;
 }
 
-//=================================================================================================
-
 bool ShapeFix::FixVertexPosition(TopoDS_Shape&                          theshape,
                                  const double                           theTolerance,
                                  const occ::handle<ShapeBuild_ReShape>& thecontext)
@@ -544,8 +511,6 @@ bool ShapeFix::FixVertexPosition(TopoDS_Shape&                          theshape
     aledges = aMapVertEdges.FindFromIndex(i);
     if (aledges.Extent() == 1)
       continue;
-    // if tolerance of vertex is more than specified tolerance
-    //  check distance between curves and vertex
 
     if (!getNearestEdges(aledges,
                          aVert,
@@ -556,7 +521,6 @@ bool ShapeFix::FixVertexPosition(TopoDS_Shape&                          theshape
                          acenterreject))
       continue;
 
-    // update vertex by nearest point
     bool isAdd = false;
     int  k     = 1;
     for (; k <= aSuitEdges.Length(); k++)
@@ -582,13 +546,8 @@ bool ShapeFix::FixVertexPosition(TopoDS_Shape&                          theshape
         gp_Pnt p1 = aCurve->Value(aFirst);
         gp_Pnt p2 = aCurve->Value(aLast);
 
-        // if distance between ends of curve more than specified tolerance
-        // but vertices are the same that one of the vertex will be replaced.
-
         bool isReplace = (aVert1n.IsSame(aVert2n) && p1.Distance(p2) > theTolerance);
 
-        // double dd1 = (acenter - p1.XYZ()).Modulus();
-        // double dd2 = (acenter - p2.XYZ()).Modulus();
         if (isFirst)
         {
           if (k > 2)
@@ -635,8 +594,6 @@ bool ShapeFix::FixVertexPosition(TopoDS_Shape&                          theshape
 
       BRep_Builder aB;
 
-      //  aB.UpdateVertex(aVert,Precision::Confusion());
-      // else {
       isDone = true;
       TopoDS_Vertex aNewVertex;
       aB.MakeVertex(aNewVertex, acenter, Precision::Confusion());
@@ -690,8 +647,6 @@ bool ShapeFix::FixVertexPosition(TopoDS_Shape&                          theshape
     theshape = thecontext->Apply(theshape);
   return isDone;
 }
-
-//=================================================================================================
 
 double ShapeFix::LeastEdgeSize(TopoDS_Shape& theShape)
 {

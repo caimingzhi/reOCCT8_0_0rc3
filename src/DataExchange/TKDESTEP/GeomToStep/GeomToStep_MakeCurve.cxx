@@ -28,9 +28,6 @@
 #include <StepGeom_Line.hpp>
 #include <Geom2d_TrimmedCurve.hpp>
 
-//=============================================================================
-// Creation d' une Curve de prostep a partir d' une Curve de Geom
-//=============================================================================
 GeomToStep_MakeCurve::GeomToStep_MakeCurve(const occ::handle<Geom_Curve>& C,
                                            const StepData_Factors&        theLocalFactors)
 {
@@ -51,7 +48,7 @@ GeomToStep_MakeCurve::GeomToStep_MakeCurve(const occ::handle<Geom_Curve>& C,
   {
     occ::handle<Geom_TrimmedCurve> T = occ::down_cast<Geom_TrimmedCurve>(C);
     occ::handle<Geom_Curve>        B = T->BasisCurve();
-    //    TANT PIS, on passe la courbe de base ...
+
     if (B->IsKind(STANDARD_TYPE(Geom_BSplineCurve)))
     {
       occ::handle<Geom_BSplineCurve> BS = occ::down_cast<Geom_BSplineCurve>(B->Copy());
@@ -85,10 +82,6 @@ GeomToStep_MakeCurve::GeomToStep_MakeCurve(const occ::handle<Geom_Curve>& C,
     done = false;
 }
 
-//=============================================================================
-// Creation d'une Curve de prostep a partir d' une Curve de Geom2d
-//=============================================================================
-
 GeomToStep_MakeCurve::GeomToStep_MakeCurve(const occ::handle<Geom2d_Curve>& C,
                                            const StepData_Factors&          theLocalFactors)
 {
@@ -102,12 +95,6 @@ GeomToStep_MakeCurve::GeomToStep_MakeCurve(const occ::handle<Geom2d_Curve>& C,
   else if (C->IsKind(STANDARD_TYPE(Geom2d_Conic)))
   {
 
-    // ----------------------------------------------------------------------
-    // A Circle of an Ellipse can be indirect. An indirect Axis in not
-    // mappable onto STEP. Then to avoid changing the topology, the Circle
-    // or the Ellipse are converted into BSpline Curves
-    // ----------------------------------------------------------------------
-
     if (C->IsKind(STANDARD_TYPE(Geom2d_Circle)))
     {
       occ::handle<Geom2d_Circle> theC2d = occ::down_cast<Geom2d_Circle>(C);
@@ -119,7 +106,7 @@ GeomToStep_MakeCurve::GeomToStep_MakeCurve(const occ::handle<Geom2d_Curve>& C,
 #endif
         occ::handle<Geom2d_BSplineCurve> aBSplineCurve2d =
           Geom2dConvert::CurveToBSplineCurve(theC2d);
-        const occ::handle<Geom2d_BoundedCurve>& aBC2d = aBSplineCurve2d; // to avoid ambiguity
+        const occ::handle<Geom2d_BoundedCurve>& aBC2d = aBSplineCurve2d;
         GeomToStep_MakeBoundedCurve             MkBoundedC(aBC2d, theLocalFactors);
         theCurve = MkBoundedC.Value();
       }
@@ -141,7 +128,7 @@ GeomToStep_MakeCurve::GeomToStep_MakeCurve(const occ::handle<Geom2d_Curve>& C,
 #endif
         occ::handle<Geom2d_BSplineCurve> aBSplineCurve2d =
           Geom2dConvert::CurveToBSplineCurve(theE2d);
-        const occ::handle<Geom2d_BoundedCurve>& aBC2d = aBSplineCurve2d; // to avoid ambiguity
+        const occ::handle<Geom2d_BoundedCurve>& aBC2d = aBSplineCurve2d;
         GeomToStep_MakeBoundedCurve             MkBoundedC(aBC2d, theLocalFactors);
         theCurve = MkBoundedC.Value();
       }
@@ -174,10 +161,6 @@ GeomToStep_MakeCurve::GeomToStep_MakeCurve(const occ::handle<Geom2d_Curve>& C,
   else
     done = false;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_Curve>& GeomToStep_MakeCurve::Value() const
 {

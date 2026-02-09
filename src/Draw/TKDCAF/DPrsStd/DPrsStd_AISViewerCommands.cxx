@@ -14,11 +14,6 @@
 #include <TPrsStd_AISViewer.hpp>
 #include <AIS_InteractiveContext.hpp>
 
-//=======================================================================
-// function : DPrsStd_AISInitViewer
-// purpose  : AISInitViewer (DOC)
-//=======================================================================
-
 static int DPrsStd_AISInitViewer(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
   if (theArgNb != 2)
@@ -47,8 +42,6 @@ static int DPrsStd_AISInitViewer(Draw_Interpretor& theDI, int theArgNb, const ch
   return 0;
 }
 
-//=================================================================================================
-
 static int DPrsStd_AISRepaint(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 2)
@@ -64,8 +57,6 @@ static int DPrsStd_AISRepaint(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=================================================================================================
-
 void DPrsStd::AISViewerCommands(Draw_Interpretor& theCommands)
 {
 
@@ -74,8 +65,6 @@ void DPrsStd::AISViewerCommands(Draw_Interpretor& theCommands)
     return;
   done          = true;
   const char* g = "DPrsStd : standard presentation commands";
-
-  // standard commands working on AISViewer
 
   theCommands.Add("AISInitViewer", "AISInitViewer (DOC)", __FILE__, DPrsStd_AISInitViewer, g);
 

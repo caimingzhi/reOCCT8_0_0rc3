@@ -13,15 +13,11 @@
 
 IMPLEMENT_DERIVED_ATTRIBUTE(TDataStd_Relation, TDataStd_Expression)
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_Relation::GetID()
 {
   static Standard_GUID TDataStd_RelationID("ce24146b-8e57-11d1-8953-080009dc4425");
   return TDataStd_RelationID;
 }
-
-//=================================================================================================
 
 occ::handle<TDataStd_Relation> TDataStd_Relation::Set(const TDF_Label& L)
 {
@@ -34,40 +30,28 @@ occ::handle<TDataStd_Relation> TDataStd_Relation::Set(const TDF_Label& L)
   return A;
 }
 
-//=================================================================================================
-
 TDataStd_Relation::TDataStd_Relation() = default;
-
-//=================================================================================================
 
 void TDataStd_Relation::SetRelation(const TCollection_ExtendedString& R)
 {
   SetExpression(R);
 }
 
-//=================================================================================================
-
 const TCollection_ExtendedString& TDataStd_Relation::GetRelation() const
 {
   return GetExpression();
 }
-
-//=================================================================================================
 
 const Standard_GUID& TDataStd_Relation::ID() const
 {
   return GetID();
 }
 
-//=================================================================================================
-
 Standard_OStream& TDataStd_Relation::Dump(Standard_OStream& anOS) const
 {
   anOS << "Relation";
   return anOS;
 }
-
-//=================================================================================================
 
 void TDataStd_Relation::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

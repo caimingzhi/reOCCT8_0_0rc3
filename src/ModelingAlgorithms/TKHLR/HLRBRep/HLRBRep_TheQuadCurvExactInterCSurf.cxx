@@ -8,8 +8,6 @@
 
 #include "../../TKGeomAlgo/IntCurveSurface/IntCurveSurface_QuadricCurveExactInterUtils.hpp"
 
-//==================================================================================================
-
 HLRBRep_TheQuadCurvExactInterCSurf::HLRBRep_TheQuadCurvExactInterCSurf(HLRBRep_Surface* S,
                                                                        const gp_Lin&    C)
     : nbpnts(-1),
@@ -23,35 +21,25 @@ HLRBRep_TheQuadCurvExactInterCSurf::HLRBRep_TheQuadCurvExactInterCSurf(HLRBRep_S
     HLRBRep_TheQuadCurvFuncOfTheQuadCurvExactInterCSurf>(S, C, pnts, intv, nbpnts, nbintv);
 }
 
-//==================================================================================================
-
 bool HLRBRep_TheQuadCurvExactInterCSurf::IsDone() const
 {
   return (nbpnts != -1);
 }
-
-//==================================================================================================
 
 int HLRBRep_TheQuadCurvExactInterCSurf::NbRoots() const
 {
   return nbpnts;
 }
 
-//==================================================================================================
-
 int HLRBRep_TheQuadCurvExactInterCSurf::NbIntervals() const
 {
   return nbintv;
 }
 
-//==================================================================================================
-
 double HLRBRep_TheQuadCurvExactInterCSurf::Root(const int Index) const
 {
   return pnts(Index);
 }
-
-//==================================================================================================
 
 void HLRBRep_TheQuadCurvExactInterCSurf::Intervals(const int Index, double& a, double& b) const
 {

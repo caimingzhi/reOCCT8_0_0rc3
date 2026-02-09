@@ -11,65 +11,37 @@
 
 #include <cmath>
 
-//! @file MathRoot_Multiple.hpp
-//! @brief Algorithms for finding all roots of a function in a given range.
-//!
-//! These algorithms sample the function to find sign changes, then refine
-//! each root using Brent's method. They can find multiple roots in a single call.
-
 namespace MathRoot
 {
   using namespace MathUtils;
 
-  //! Result for multiple root finding.
-  //! Contains all found roots sorted in ascending order.
   struct MultipleResult
   {
-    MathUtils::Status          Status = MathUtils::Status::NotConverged; //!< Computation status
-    size_t                     NbIterations = 0;  //!< Total iterations across all roots
-    NCollection_Vector<double> Roots;             //!< Found roots (sorted)
-    NCollection_Vector<double> Values;            //!< Function values at roots
-    bool                       IsAllNull = false; //!< True if function is essentially zero in range
+    MathUtils::Status          Status       = MathUtils::Status::NotConverged;
+    size_t                     NbIterations = 0;
+    NCollection_Vector<double> Roots;
+    NCollection_Vector<double> Values;
+    bool                       IsAllNull = false;
 
-    //! Returns true if computation succeeded.
     bool IsDone() const { return Status == MathUtils::Status::OK; }
 
-    //! Conversion to bool for convenient checking.
     explicit operator bool() const { return IsDone(); }
 
-    //! Returns the number of roots found.
     int NbRoots() const { return Roots.Length(); }
 
-    //! Access root by index (0-based).
     double operator[](int theIndex) const { return Roots.Value(theIndex); }
   };
 
-  //! Configuration for multiple root finding.
   struct MultipleConfig
   {
-    int    NbSamples     = 100;   //!< Number of sample points for initial search
-    double XTolerance    = 1e-10; //!< Tolerance on X for convergence
-    double FTolerance    = 1e-10; //!< Tolerance on F(X) for convergence
-    double NullTolerance = 1e-12; //!< Tolerance to consider function as null
-    int    MaxIterations = 100;   //!< Max iterations per root refinement
-    double Offset        = 0.0;   //!< Find roots of f(x) - Offset = 0
+    int    NbSamples     = 100;
+    double XTolerance    = 1e-10;
+    double FTolerance    = 1e-10;
+    double NullTolerance = 1e-12;
+    int    MaxIterations = 100;
+    double Offset        = 0.0;
   };
 
-  //! Finds all real roots of a function within the range [theLower, theUpper].
-  //! Uses uniform sampling to detect sign changes, then refines each root using Brent's method.
-  //!
-  //! Algorithm:
-  //! 1. Sample function at NbSamples uniform points
-  //! 2. Detect all sign changes and zero crossings
-  //! 3. For each bracket, apply Brent's method to find precise root
-  //! 4. Check for extrema that might touch zero
-  //!
-  //! @tparam Function type with Value(double theX, double& theF) method
-  //! @param theFunc function object to find roots of
-  //! @param theLower lower bound of search interval
-  //! @param theUpper upper bound of search interval
-  //! @param theConfig configuration parameters
-  //! @return result containing all found roots
   template <typename Function>
   MultipleResult FindAllRoots(Function&             theFunc,
                               double                theLower,
@@ -79,19 +51,15 @@ namespace MathRoot
     MultipleResult aResult;
     aResult.Status = MathUtils::Status::OK;
 
-    // Ensure proper ordering
     double aLower = std::min(theLower, theUpper);
     double aUpper = std::max(theLower, theUpper);
 
-    // Minimum samples
     const int    aNbSamples = std::max(theConfig.NbSamples, 10);
     const double aDx        = (aUpper - aLower) / aNbSamples;
 
-    // Ensure EpsX is not too small relative to interval
     const double aMinEpsX = 1e-10 * (std::abs(aLower) + std::abs(aUpper));
     const double aEpsX    = std::max(theConfig.XTolerance, aMinEpsX);
 
-    // Sample function values
     math_Vector aSamples(0, aNbSamples);
     math_Vector aXValues(0, aNbSamples);
 
@@ -118,7 +86,6 @@ namespace MathRoot
       return aResult;
     }
 
-    // Check if function is essentially null everywhere
     aResult.IsAllNull = true;
     for (int i = 0; i <= aNbSamples; ++i)
     {
@@ -134,10 +101,8 @@ namespace MathRoot
       return aResult;
     }
 
-    // Helper to add root if not duplicate
     auto addRoot = [&](double theRoot, double theValue)
     {
-      // Check for duplicates
       for (int k = 0; k < aResult.Roots.Length(); ++k)
       {
         if (std::abs(theRoot - aResult.Roots.Value(k)) < aEpsX)
@@ -149,7 +114,6 @@ namespace MathRoot
       aResult.Values.Append(theValue);
     };
 
-    // Create wrapper for Brent that uses Value-only interface
     class BrentWrapper
     {
     public:
@@ -174,7 +138,6 @@ namespace MathRoot
 
     BrentWrapper aWrapper(theFunc, theConfig.Offset);
 
-    // Find sign changes
     for (int i = 0; i < aNbSamples; ++i)
     {
       const double aF0 = aSamples(i);
@@ -182,14 +145,12 @@ namespace MathRoot
       const double aX0 = aXValues(i);
       const double aX1 = aXValues(i + 1);
 
-      // Exact zero at sample point
       if (std::abs(aF0) < theConfig.FTolerance)
       {
         addRoot(aX0, aF0 + theConfig.Offset);
         continue;
       }
 
-      // Sign change detected
       if (aF0 * aF1 < 0.0)
       {
         MathUtils::Config aBrentConfig;
@@ -209,13 +170,11 @@ namespace MathRoot
       }
     }
 
-    // Check last sample point
     if (std::abs(aSamples(aNbSamples)) < theConfig.FTolerance)
     {
       addRoot(aXValues(aNbSamples), aSamples(aNbSamples) + theConfig.Offset);
     }
 
-    // Sort roots using indices
     const int aNbRoots = aResult.Roots.Length();
     if (aNbRoots > 1)
     {
@@ -225,7 +184,6 @@ namespace MathRoot
         aIndices(i) = i;
       }
 
-      // Simple insertion sort for small arrays
       for (int i = 1; i < aNbRoots; ++i)
       {
         int aKey = aIndices(i);
@@ -251,17 +209,6 @@ namespace MathRoot
     return aResult;
   }
 
-  //! Finds all real roots of a function with derivative within range [theLower, theUpper].
-  //! Can also detect extrema where function touches zero without crossing.
-  //!
-  //! This version uses derivative information for better extrema detection.
-  //!
-  //! @tparam Function type with Values(double theX, double& theF, double& theDF) method
-  //! @param theFunc function object with derivative
-  //! @param theLower lower bound of search interval
-  //! @param theUpper upper bound of search interval
-  //! @param theConfig configuration parameters
-  //! @return result containing all found roots
   template <typename Function>
   MultipleResult FindAllRootsWithDerivative(Function&             theFunc,
                                             double                theLower,
@@ -280,7 +227,6 @@ namespace MathRoot
     const double aMinEpsX = 1e-10 * (std::abs(aLower) + std::abs(aUpper));
     const double aEpsX    = std::max(theConfig.XTolerance, aMinEpsX);
 
-    // Sample function values and derivatives
     math_Vector aFValues(0, aNbSamples);
     math_Vector aDFValues(0, aNbSamples);
     math_Vector aXValues(0, aNbSamples);
@@ -309,7 +255,6 @@ namespace MathRoot
       return aResult;
     }
 
-    // Check if function is essentially null
     aResult.IsAllNull = true;
     for (int i = 0; i <= aNbSamples; ++i)
     {
@@ -325,7 +270,6 @@ namespace MathRoot
       return aResult;
     }
 
-    // Helper to add root if not duplicate
     auto addRoot = [&](double theRoot, double theValue)
     {
       for (int k = 0; k < aResult.Roots.Length(); ++k)
@@ -339,7 +283,6 @@ namespace MathRoot
       aResult.Values.Append(theValue);
     };
 
-    // Wrapper for Brent using Values interface
     class BrentWrapper
     {
     public:
@@ -365,7 +308,6 @@ namespace MathRoot
 
     BrentWrapper aWrapper(theFunc, theConfig.Offset);
 
-    // Find sign changes
     for (int i = 0; i < aNbSamples; ++i)
     {
       const double aF0 = aFValues(i);
@@ -373,14 +315,12 @@ namespace MathRoot
       const double aX0 = aXValues(i);
       const double aX1 = aXValues(i + 1);
 
-      // Exact zero at sample point
       if (std::abs(aF0) < theConfig.FTolerance)
       {
         addRoot(aX0, aF0 + theConfig.Offset);
         continue;
       }
 
-      // Sign change
       if (aF0 * aF1 < 0.0)
       {
         MathUtils::Config aBrentConfig;
@@ -398,13 +338,13 @@ namespace MathRoot
           addRoot(*aBrentResult.Root, aRootValue);
         }
       }
-      // Check for potential extrema touching zero
+
       else if (aF0 > 0.0 && aF1 > 0.0)
       {
-        // Potential minimum - check if derivative changes sign
+
         if (aDFValues(i) < 0.0 && aDFValues(i + 1) > 0.0)
         {
-          // Find the minimum using bisection on derivative
+
           double aXL = aX0, aXR = aX1;
 
           for (int anIter = 0; anIter < 20; ++anIter)
@@ -424,7 +364,6 @@ namespace MathRoot
               aXR = aXM;
             }
 
-            // Check if minimum is close enough to zero
             if (std::abs(aFM) < theConfig.FTolerance)
             {
               addRoot(aXM, aFM + theConfig.Offset);
@@ -435,7 +374,7 @@ namespace MathRoot
       }
       else if (aF0 < 0.0 && aF1 < 0.0)
       {
-        // Potential maximum - check if derivative changes sign
+
         if (aDFValues(i) > 0.0 && aDFValues(i + 1) < 0.0)
         {
           double aXL = aX0, aXR = aX1;
@@ -467,13 +406,11 @@ namespace MathRoot
       }
     }
 
-    // Check last sample point
     if (std::abs(aFValues(aNbSamples)) < theConfig.FTolerance)
     {
       addRoot(aXValues(aNbSamples), aFValues(aNbSamples) + theConfig.Offset);
     }
 
-    // Sort roots using indices
     const int aNbRoots = aResult.Roots.Length();
     if (aNbRoots > 1)
     {
@@ -483,7 +420,6 @@ namespace MathRoot
         aIndices(i) = i;
       }
 
-      // Simple insertion sort for small arrays
       for (int i = 1; i < aNbRoots; ++i)
       {
         int aKey = aIndices(i);
@@ -509,13 +445,6 @@ namespace MathRoot
     return aResult;
   }
 
-  //! Convenience alias using default configuration.
-  //! @tparam Function type with Value(double, double&) method
-  //! @param theFunc function to find roots of
-  //! @param theLower lower bound
-  //! @param theUpper upper bound
-  //! @param theNbSamples number of sample points
-  //! @return result with all found roots
   template <typename Function>
   MultipleResult FindAllRoots(Function& theFunc, double theLower, double theUpper, int theNbSamples)
   {

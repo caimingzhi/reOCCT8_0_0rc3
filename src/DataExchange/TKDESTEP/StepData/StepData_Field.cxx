@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <TCollection_HAsciiString.hpp>
 #include <NCollection_Array1.hpp>
@@ -25,13 +14,6 @@
 #include <NCollection_Array2.hpp>
 #include <NCollection_HArray2.hpp>
 
-//  The kind encodes the data type, access mode (direct or via Select),
-//  and arity (simple, list, square array)
-//  Values for Kind: 0 = Clear/Undefined
-//  KindInteger KindBoolean KindLogical KindEnum KindReal KindString KindEntity
-//  + KindSelect which substitutes and can combine with them
-//  + KindList and KindList2 which can combine with them
-//  (on KindArity mask and ShiftArity offset)
 #define KindInteger 1
 #define KindBoolean 2
 #define KindLogical 3
@@ -87,7 +69,7 @@ void StepData_Field::CopyFrom(const StepData_Field& other)
   }
   if (thekind == KindSelect)
   {
-    //  Differents cas
+
     DeclareAndCast(StepData_SelectReal, sr, theany);
     if (!sr.IsNull())
     {
@@ -118,7 +100,7 @@ void StepData_Field::CopyFrom(const StepData_Field& other)
       return;
     }
   }
-  //    Les listes ...
+
   if ((thekind & KindArity) == KindList)
   {
     int i, low, up;
@@ -160,16 +142,12 @@ void StepData_Field::CopyFrom(const StepData_Field& other)
       up  = ht->Upper();
       occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>> ht2 =
         new NCollection_HArray1<occ::handle<Standard_Transient>>(low, up);
-      //  Should handle SelectMember cases...
+
       for (i = low; i <= up; i++)
         ht2->SetValue(i, ht->Value(i));
       return;
     }
   }
-  //    Remains the 2D list...
-  //  if ((thekind & KindArity) == KindList2) {
-  //    DeclareAndCast(NCollection_HArray2<occ::handle<Standard_Transient>>,ht,theany);
-  //  }
 }
 
 void StepData_Field::Clear(const int kind)
@@ -199,7 +177,6 @@ void StepData_Field::SetInt(const int val)
   if (thekind == KindInteger || thekind == KindBoolean || thekind == KindLogical
       || thekind == KindEnum)
     theint = val;
-  //  else ?
 }
 
 void StepData_Field::SetInteger(const int val)
@@ -313,11 +290,10 @@ void StepData_Field::SetEntity()
 
 void StepData_Field::SetList(const int size, const int first)
 {
-  //  WARNING: we don't handle expansion...
 
   theint  = size;
   thereal = 0.0;
-  theany.Nullify(); // ?? agrandissement ??
+  theany.Nullify();
   switch (thekind)
   {
     case KindInteger:
@@ -333,7 +309,7 @@ void StepData_Field::SetList(const int size, const int first)
       theany =
         new NCollection_HArray1<occ::handle<TCollection_HAsciiString>>(first, first + size - 1);
       break;
-      //  default : en particulier si "non specifie" (any)
+
     default:
       theany = new NCollection_HArray1<occ::handle<Standard_Transient>>(first, first + size - 1);
   }
@@ -344,7 +320,6 @@ void StepData_Field::SetList(const int size, const int first)
 
 void StepData_Field::SetList2(const int siz1, const int siz2, const int f1, const int f2)
 {
-  //  WARNING: we don't handle expansion...
 
   theint  = siz1;
   thereal = double(siz2);
@@ -373,7 +348,7 @@ void StepData_Field::SetList2(const int siz1, const int siz2, const int f1, cons
                                                                         f2,
                                                                         f2 + siz2 - 1);
       break;
-      //  default : en particulier si "non specifie" (any)
+
     default:
       theany = new NCollection_HArray2<occ::handle<Standard_Transient>>(f1,
                                                                         f1 + siz1 - 1,
@@ -483,10 +458,10 @@ void StepData_Field::SetInt(const int num, const int val, const int kind)
     hi->SetValue(num, val);
     return;
   }
-  //   If already started with something else, change and put selects
+
   DeclareAndCast(NCollection_HArray1<occ::handle<Standard_Transient>>, ht, theany);
   if (ht.IsNull())
-    return; // yena erreur, ou alors OfReal
+    return;
   thekind = KindAny | KindList;
   DeclareAndCast(StepData_SelectMember, sm, ht->Value(num));
   if (sm.IsNull())
@@ -544,10 +519,10 @@ void StepData_Field::SetReal(const int num, const double val)
     hr->SetValue(num, val);
     return;
   }
-  //   If already started with something else, change and put selects
+
   DeclareAndCast(NCollection_HArray1<occ::handle<Standard_Transient>>, ht, theany);
   if (ht.IsNull())
-    return; // yena erreur, ou alors OfInteger
+    return;
   thekind = KindAny | KindList;
   DeclareAndCast(StepData_SelectMember, sm, ht->Value(num));
   if (sm.IsNull())
@@ -566,7 +541,7 @@ void StepData_Field::SetString(const int num, const char* val)
     hs->SetValue(num, new TCollection_HAsciiString(val));
     return;
   }
-  //    et si OfInteger ou OfReal ?
+
   DeclareAndCast(NCollection_HArray1<occ::handle<Standard_Transient>>, ht, theany);
   if (ht.IsNull())
     return;
@@ -644,8 +619,6 @@ void StepData_Field::SetEntity(const int num, const occ::handle<Standard_Transie
   }
 }
 
-//     QUERIES
-
 bool StepData_Field::IsSet(const int n1, const int n2) const
 {
   if (thekind == 0)
@@ -679,10 +652,10 @@ int StepData_Field::ItemKind(const int n1, const int n2) const
 {
   if ((thekind & KindArity) == 0)
     return Kind(true);
-  int kind = TrueKind(thekind); // si Any, evaluer ...
+  int kind = TrueKind(thekind);
   if (kind != KindAny)
     return kind;
-  //  Otherwise, look for a Transient
+
   occ::handle<Standard_Transient> item;
   if ((thekind & KindArity) == KindList)
   {
@@ -928,7 +901,7 @@ const char* StepData_Field::EnumText(const int n1, const int n2) const
 
 occ::handle<Standard_Transient> StepData_Field::Entity(const int n1, const int n2) const
 {
-  occ::handle<Standard_Transient> nulval; // null handle
+  occ::handle<Standard_Transient> nulval;
   if ((thekind & KindArity) == 0)
   {
     if (thekind == KindEntity)

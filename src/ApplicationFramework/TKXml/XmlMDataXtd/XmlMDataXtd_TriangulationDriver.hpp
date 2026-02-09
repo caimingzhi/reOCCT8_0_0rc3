@@ -9,7 +9,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class XmlObjMgt_Persistent;
 
-//! TDataStd_Mesh attribute XML Driver.
 class XmlMDataXtd_TriangulationDriver : public XmlMDF_ADriver
 {
 

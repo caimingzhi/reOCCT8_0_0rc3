@@ -4,8 +4,6 @@
 
 #include <IGESData_IGESEntity.hpp>
 
-//! defines required type for LineFont in directory part
-//! an effective LineFont entity must inherits it
 class IGESData_LineFontEntity : public IGESData_IGESEntity
 {
 

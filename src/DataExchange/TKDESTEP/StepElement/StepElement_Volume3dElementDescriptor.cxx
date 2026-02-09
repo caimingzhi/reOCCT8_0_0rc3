@@ -3,11 +3,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepElement_Volume3dElementDescriptor, StepElement_ElementDescriptor)
 
-//=================================================================================================
-
 StepElement_Volume3dElementDescriptor::StepElement_Volume3dElementDescriptor() = default;
-
-//=================================================================================================
 
 void StepElement_Volume3dElementDescriptor::Init(
   const StepElement_ElementOrder               aElementDescriptor_TopologyOrder,
@@ -24,15 +20,11 @@ void StepElement_Volume3dElementDescriptor::Init(
   theShape = aShape;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<occ::handle<StepElement_VolumeElementPurposeMember>>>
   StepElement_Volume3dElementDescriptor::Purpose() const
 {
   return thePurpose;
 }
-
-//=================================================================================================
 
 void StepElement_Volume3dElementDescriptor::SetPurpose(
   const occ::handle<NCollection_HArray1<occ::handle<StepElement_VolumeElementPurposeMember>>>&
@@ -41,14 +33,10 @@ void StepElement_Volume3dElementDescriptor::SetPurpose(
   thePurpose = aPurpose;
 }
 
-//=================================================================================================
-
 StepElement_Volume3dElementShape StepElement_Volume3dElementDescriptor::Shape() const
 {
   return theShape;
 }
-
-//=================================================================================================
 
 void StepElement_Volume3dElementDescriptor::SetShape(const StepElement_Volume3dElementShape aShape)
 {

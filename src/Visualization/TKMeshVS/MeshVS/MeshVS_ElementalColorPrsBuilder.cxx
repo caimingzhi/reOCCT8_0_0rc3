@@ -26,8 +26,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_ElementalColorPrsBuilder, MeshVS_PrsBuilder)
 
-//=================================================================================================
-
 MeshVS_ElementalColorPrsBuilder::MeshVS_ElementalColorPrsBuilder(
   const occ::handle<MeshVS_Mesh>&       Parent,
   const MeshVS_DisplayModeFlags&        Flags,
@@ -38,8 +36,6 @@ MeshVS_ElementalColorPrsBuilder::MeshVS_ElementalColorPrsBuilder(
 {
   SetExcluding(true);
 }
-
-//=================================================================================================
 
 void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
                                             const TColStd_PackedMapOfInteger&      IDs,
@@ -74,7 +70,6 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
       || (myElemColorMap1.IsEmpty() && myElemColorMap2.IsEmpty()))
     return;
 
-  // subtract the hidden elements and ids to exclude (to minimise allocated memory)
   TColStd_PackedMapOfInteger anIDs;
   anIDs.Assign(IDs);
   occ::handle<TColStd_HPackedMapOfInteger> aHiddenElems = myParentMesh->GetHiddenElems();
@@ -82,8 +77,6 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
     anIDs.Subtract(aHiddenElems->Map());
   anIDs.Subtract(IDsToExclude);
 
-  // STEP 0: We looking for two colored elements, who has equal two colors and move it
-  // to map of elements with one assigned color
   NCollection_List<int> aColorOne;
   for (NCollection_DataMap<int, MeshVS_TwoColors>::Iterator anIter(*anElemTwoColorsMap);
        anIter.More();
@@ -103,13 +96,11 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
   for (NCollection_List<int>::Iterator aLIter(aColorOne); aLIter.More(); aLIter.Next())
     anElemTwoColorsMap->UnBind(aLIter.Value());
 
-  // The map is to resort itself by colors.
-  // STEP 1: We start sorting elements with one assigned color
   for (NCollection_DataMap<int, Quantity_Color>::Iterator anIterM(*anElemColorMap); anIterM.More();
        anIterM.Next())
   {
     int aMKey = anIterM.Key();
-    // The ID of current element
+
     bool IsExist = false;
     for (NCollection_DataMap<Quantity_Color, NCollection_Map<int>>::Iterator anIterC(
            aColorsOfElements);
@@ -130,13 +121,12 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
     }
   }
 
-  // STEP 2: We start sorting elements with two assigned colors
   for (NCollection_DataMap<int, MeshVS_TwoColors>::Iterator anIterM2(*anElemTwoColorsMap);
        anIterM2.More();
        anIterM2.Next())
   {
     int aMKey = anIterM2.Key();
-    // The ID of current element
+
     bool IsExist = false;
     for (NCollection_DataMap<MeshVS_TwoColors, NCollection_Map<int>>::Iterator anIterC2(
            aTwoColorsOfElements);
@@ -157,7 +147,6 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
     }
   }
 
-  // Now we are ready to draw faces with equal colors
   Aspect_TypeOfLine anEdgeType  = Aspect_TOL_SOLID;
   Aspect_TypeOfLine aLineType   = Aspect_TOL_SOLID;
   double            anEdgeWidth = 1.0, aLineWidth = 1.0;
@@ -203,16 +192,10 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
                                            Graphic3d_NameOfMaterial_Plastified};
   for (int i = 0; i < 2; i++)
   {
-    // OCC20644 "plastic" is most suitable here, as it is "non-physic"
-    // so TelUpdateMaterial() from OpenGl_attri.c uses the interior
-    // color from AspectFillArea3d to calculate all material colors
+
     aMaterial[i].SetSpecularColor(Quantity_NOC_BLACK);
     aMaterial[i].SetEmissiveColor(Quantity_NOC_BLACK);
 
-    // OCC21720 For single-colored elements turning all material components off is a good idea,
-    // as anyhow the normals are not computed and the lighting will be off,
-    // the element color will be taken from Graphic3d_AspectFillArea3d's interior color,
-    // and there is no need to spend time on updating material properties
     if (!IsReflect)
     {
       aMaterial[i].SetAmbientColor(Quantity_NOC_BLACK);
@@ -220,17 +203,12 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
     }
     else
     {
-      // OCC20644 This stuff is important in order for elemental and nodal colors
-      // to produce similar visual impression and also to make colors match
-      // those in the color scale most exactly (the sum of all reflection
-      // coefficients is equal to 1). See also MeshVS_NodalColorPrsBuilder
-      // class for more explanations.
+
       aMaterial[i].SetAmbientColor(Quantity_Color(NCollection_Vec3<float>(0.5f)));
       aMaterial[i].SetDiffuseColor(Quantity_Color(NCollection_Vec3<float>(0.5f)));
     }
   }
 
-  // Draw elements with one color
   occ::handle<Graphic3d_Group> aGGroup, aGroup2, aLGroup, aSGroup;
   if (!aTwoColorsOfElements.IsEmpty())
   {
@@ -295,7 +273,7 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
           {
             const NCollection_Sequence<int>& aFaceNodes = aTopo->Value(aFaceIdx);
 
-            if (anEdgeOn) // add edge segments
+            if (anEdgeOn)
             {
               aNbEdgePrimitives += aFaceNodes.Length();
             }
@@ -308,24 +286,19 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
       {
         if (anEdgeOn)
         {
-          aNbLinkPrimitives += aNbNodes - 1; // add link segments
+          aNbLinkPrimitives += aNbNodes - 1;
         }
       }
       else if (aType == MeshVS_ET_Face)
       {
         if (anEdgeOn)
         {
-          aNbEdgePrimitives += aNbNodes; // add edge segments
+          aNbEdgePrimitives += aNbNodes;
         }
 
-        aNbFacePrimitives += aNbNodes - 2; // add face triangles
+        aNbFacePrimitives += aNbNodes - 2;
       }
     }
-
-    // Here we do not use indices arrays because they are not effective for some mesh
-    // drawing modes: shrinking mode (displaces the vertices inside the polygon), 3D
-    // cell rendering (normal interpolation is not always applicable - flat shading),
-    // elemental coloring (color interpolation is impossible)
 
     occ::handle<Graphic3d_ArrayOfTriangles> aFaceTriangles =
       new Graphic3d_ArrayOfTriangles((aNbFacePrimitives + aNbVolmPrimitives) * 3, 0, IsReflect);
@@ -337,8 +310,6 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
       new Graphic3d_ArrayOfSegments(aNbLinkPrimitives * 2);
     bool IsPolyL = false;
 
-    // OCC20644 NOTE: aColIter.Key() color is then scaled by TelUpdateMaterial() in OpenGl_attri.c
-    // using the material reflection coefficients. This affects the visual result.
     occ::handle<Graphic3d_AspectFillArea3d> aFillAspect =
       new Graphic3d_AspectFillArea3d(Aspect_IS_SOLID,
                                      aColIter.Key(),
@@ -405,7 +376,7 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
         }
         else if (aType == MeshVS_ET_Face)
         {
-          // Preparing normals
+
           occ::handle<NCollection_HArray1<double>> aNormals;
           bool                                     aHasNormals =
             IsReflect
@@ -501,35 +472,24 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
                                             Graphic3d_NameOfMaterial_Plastified};
   for (int i = 0; i < 2; i++)
   {
-    // OCC20644 "plastic" is most suitable here, as it is "non-physic"
-    // so TelUpdateMaterial() from OpenGl_attri.c uses the interior
-    // color from AspectFillArea3d to calculate all material colors
+
     aMaterial2[i].SetSpecularColor(Quantity_NOC_BLACK);
     aMaterial2[i].SetEmissiveColor(Quantity_NOC_BLACK);
 
     if (!IsReflect)
     {
-      // OCC21720 Cannot turn ALL material components off, as such a material
-      // would be ignored by TelUpdateMaterial(), but we need it in order
-      // to have different materials for front and back sides!
-      // Instead, trying to make material color "nondirectional" with
-      // only ambient component on.
+
       aMaterial2[i].SetAmbientColor(Quantity_Color(NCollection_Vec3<float>(1.0f)));
       aMaterial2[i].SetDiffuseColor(Quantity_NOC_BLACK);
     }
     else
     {
-      // OCC20644 This stuff is important in order for elemental and nodal colors
-      // to produce similar visual impression and also to make colors match
-      // those in the color scale most exactly (the sum of all reflection
-      // coefficients is equal to 1). See also MeshVS_NodalColorPrsBuilder
-      // class for more explanations.
+
       aMaterial2[i].SetAmbientColor(Quantity_Color(NCollection_Vec3<float>(0.5f)));
       aMaterial2[i].SetDiffuseColor(Quantity_Color(NCollection_Vec3<float>(0.5f)));
     }
   }
 
-  // Draw faces with two color
   if (!aTwoColorsOfElements.IsEmpty())
   {
     occ::handle<Graphic3d_AspectFillArea3d> aGroupFillAspect2 =
@@ -540,7 +500,7 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
                                      anEdgeWidth,
                                      aMaterial2[0],
                                      aMaterial2[1]);
-    aGroup2->SetClosed(false); // ignore toSupressBackFaces
+    aGroup2->SetClosed(false);
     aGroup2->SetGroupPrimitivesAspect(aGroupFillAspect2);
   }
   for (NCollection_DataMap<MeshVS_TwoColors, NCollection_Map<int>>::Iterator aColIter2(
@@ -570,10 +530,10 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
       {
         if (anEdgeOn)
         {
-          aNbEdgePrimitives += aNbNodes; // add edge segments
+          aNbEdgePrimitives += aNbNodes;
         }
 
-        aNbFacePrimitives += aNbNodes - 2; // add face triangles
+        aNbFacePrimitives += aNbNodes - 2;
       }
     }
 
@@ -587,8 +547,6 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
     Quantity_Color   aMyIntColor, aMyBackColor;
     ExtractColors(aTC, aMyIntColor, aMyBackColor);
 
-    // OCC20644 NOTE: aMyIntColor color is then scaled by TelUpdateMaterial() in OpenGl_attri.c
-    // using the material reflection coefficients. This affects the visual result.
     occ::handle<Graphic3d_AspectFillArea3d> anAsp = new Graphic3d_AspectFillArea3d(Aspect_IS_SOLID,
                                                                                    aMyIntColor,
                                                                                    anEdgeColor,
@@ -599,10 +557,7 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
     anAsp->SetDistinguishOn();
     anAsp->SetInteriorColor(aMyIntColor);
     anAsp->SetBackInteriorColor(aMyBackColor);
-    /*if (anEdgeOn)
-      anAsp->SetEdgeOn();
-    else
-      anAsp->SetEdgeOff();*/
+
     aGroup2->SetPrimitivesAspect(anAsp);
 
     for (it.Reset(); it.More(); it.Next())
@@ -618,11 +573,10 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
 
         if (aType == MeshVS_ET_Face && NbNodes > 0)
         {
-          // Preparing normal(s) to show reflections if requested
+
           occ::handle<NCollection_HArray1<double>> aNormals;
-          // OCC21720 Always passing normals to OpenGL to make materials work
-          // For OpenGL: "No normals" -> "No lighting" -> "no materials taken into account"
-          bool aHasNormals = /*IsReflect &&*/
+
+          bool aHasNormals =
             aSource->GetNormalsByElement(aKey, IsMeshSmoothShading, aMaxFaceNodes, aNormals);
 
           for (int aNodeIdx = 0; aNodeIdx < NbNodes - 2; ++aNodeIdx)
@@ -675,29 +629,21 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
   }
 }
 
-//=================================================================================================
-
 void MeshVS_ElementalColorPrsBuilder::SetColors1(
   const NCollection_DataMap<int, Quantity_Color>& theColorMap)
 {
   myElemColorMap1 = theColorMap;
 }
 
-//=================================================================================================
-
 const NCollection_DataMap<int, Quantity_Color>& MeshVS_ElementalColorPrsBuilder::GetColors1() const
 {
   return myElemColorMap1;
 }
 
-//=================================================================================================
-
 bool MeshVS_ElementalColorPrsBuilder::HasColors1() const
 {
   return (myElemColorMap1.Extent() > 0);
 }
-
-//=================================================================================================
 
 bool MeshVS_ElementalColorPrsBuilder::GetColor1(const int ID, Quantity_Color& theColor) const
 {
@@ -708,8 +654,6 @@ bool MeshVS_ElementalColorPrsBuilder::GetColor1(const int ID, Quantity_Color& th
   return aRes;
 }
 
-//=================================================================================================
-
 void MeshVS_ElementalColorPrsBuilder::SetColor1(const int theID, const Quantity_Color& theCol)
 {
   bool aRes = myElemColorMap1.IsBound(theID);
@@ -719,15 +663,11 @@ void MeshVS_ElementalColorPrsBuilder::SetColor1(const int theID, const Quantity_
     myElemColorMap1.Bind(theID, theCol);
 }
 
-//=================================================================================================
-
 void MeshVS_ElementalColorPrsBuilder::SetColors2(
   const NCollection_DataMap<int, MeshVS_TwoColors>& theColorMap)
 {
   myElemColorMap2 = theColorMap;
 }
-
-//=================================================================================================
 
 const NCollection_DataMap<int, MeshVS_TwoColors>& MeshVS_ElementalColorPrsBuilder::GetColors2()
   const
@@ -735,14 +675,10 @@ const NCollection_DataMap<int, MeshVS_TwoColors>& MeshVS_ElementalColorPrsBuilde
   return myElemColorMap2;
 }
 
-//=================================================================================================
-
 bool MeshVS_ElementalColorPrsBuilder::HasColors2() const
 {
   return (myElemColorMap2.Extent() > 0);
 }
-
-//=================================================================================================
 
 bool MeshVS_ElementalColorPrsBuilder::GetColor2(const int ID, MeshVS_TwoColors& theColor) const
 {
@@ -752,8 +688,6 @@ bool MeshVS_ElementalColorPrsBuilder::GetColor2(const int ID, MeshVS_TwoColors& 
 
   return aRes;
 }
-
-//=================================================================================================
 
 bool MeshVS_ElementalColorPrsBuilder::GetColor2(const int       ID,
                                                 Quantity_Color& theColor1,
@@ -766,16 +700,12 @@ bool MeshVS_ElementalColorPrsBuilder::GetColor2(const int       ID,
   return aRes;
 }
 
-//=================================================================================================
-
 void MeshVS_ElementalColorPrsBuilder::SetColor2(const int             theID,
                                                 const Quantity_Color& theCol1,
                                                 const Quantity_Color& theCol2)
 {
   SetColor2(theID, BindTwoColors(theCol1, theCol2));
 }
-
-//=================================================================================================
 
 void MeshVS_ElementalColorPrsBuilder::SetColor2(const int theID, const MeshVS_TwoColors& theCol)
 {

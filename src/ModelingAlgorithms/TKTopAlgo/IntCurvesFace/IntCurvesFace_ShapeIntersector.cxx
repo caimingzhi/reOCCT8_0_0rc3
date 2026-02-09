@@ -123,23 +123,6 @@ void IntCurvesFace_ShapeIntersector::Perform(const occ::handle<Adaptor3d_Curve>&
   SortResult();
 }
 
-//-- ================================================================================
-//-- myIntersector   : Sequence of the addresses
-//-- myIndexPt          : 1 2 3 .... n  Points before the sorting
-//-- myNumberFace       : Number of the face (of the intersector) of the point myIndexPt(i)
-//-- myNumberIntPnt     : Number of the point  myIndexPt(i) of the intersection
-// myNumberFace(myIndexPt(i))
-//-- myIndexPar         : Parameter W of point myIndexPt(i)
-//--
-//-- To sum up, for each point index of K = myIndexPt(i) on a
-//--      * the face to which it belongs                               : myNumberFace(K)
-//--      * the number of the point in the intersection for FaceCurve  : myNumberIntPnt(K)
-//--      * the parameter W of the point on the curve                  : myIndexPar(K)
-//--
-//-- SortResult Sorts the points in ascending order of W
-//-- (updating the index table TabPt(.))
-//--
-//-- ================================================================================
 void IntCurvesFace_ShapeIntersector::SortResult()
 {
   myIsDone   = true;
@@ -149,7 +132,6 @@ void IntCurvesFace_ShapeIntersector::SortResult()
   myIndexIntPnt.Clear();
   myIndexPar.Clear();
 
-  // Retrieval of the results
   for (int f = 1; f <= myNbFaces; ++f)
   {
     occ::handle<IntCurvesFace_Intersector> anIntersector = myIntersector.ChangeValue(f);
@@ -171,7 +153,6 @@ void IntCurvesFace_ShapeIntersector::SortResult()
     }
   }
 
-  // Sort according to parameter  w
   bool isOK;
   do
   {

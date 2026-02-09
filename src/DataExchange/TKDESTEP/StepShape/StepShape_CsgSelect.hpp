@@ -13,19 +13,16 @@ class StepShape_CsgSelect
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Returns a CsgSelect SelectType
   Standard_EXPORT StepShape_CsgSelect();
 
   Standard_EXPORT void SetTypeOfContent(const int aTypeOfContent);
 
   Standard_EXPORT int TypeOfContent() const;
 
-  //! returns Value as a BooleanResult (Null if another type)
   Standard_EXPORT occ::handle<StepShape_BooleanResult> BooleanResult() const;
 
   Standard_EXPORT void SetBooleanResult(const occ::handle<StepShape_BooleanResult>& aBooleanResult);
 
-  //! returns Value as a CsgPrimitive (Null if another type)
   Standard_EXPORT StepShape_CsgPrimitive CsgPrimitive() const;
 
   Standard_EXPORT void SetCsgPrimitive(const StepShape_CsgPrimitive& aCsgPrimitive);

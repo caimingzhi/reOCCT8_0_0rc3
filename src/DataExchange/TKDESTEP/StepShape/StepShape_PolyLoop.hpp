@@ -15,7 +15,6 @@ class StepShape_PolyLoop : public StepShape_Loop
 {
 
 public:
-  //! Returns a PolyLoop
   Standard_EXPORT StepShape_PolyLoop();
 
   Standard_EXPORT void Init(

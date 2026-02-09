@@ -4,8 +4,6 @@
 
 #include <HLRAlgo_EdgeStatus.hpp>
 
-//=================================================================================================
-
 HLRAlgo_EdgeStatus::HLRAlgo_EdgeStatus()
     : myStart(0.0),
       myEnd(0.0),
@@ -15,8 +13,6 @@ HLRAlgo_EdgeStatus::HLRAlgo_EdgeStatus()
       myAllVisible(false)
 {
 }
-
-//=================================================================================================
 
 HLRAlgo_EdgeStatus::HLRAlgo_EdgeStatus(const double Start,
                                        const float  TolStart,
@@ -32,8 +28,6 @@ HLRAlgo_EdgeStatus::HLRAlgo_EdgeStatus(const double Start,
   ShowAll();
 }
 
-//=================================================================================================
-
 void HLRAlgo_EdgeStatus::Initialize(const double Start,
                                     const float  TolStart,
                                     const double End,
@@ -46,8 +40,6 @@ void HLRAlgo_EdgeStatus::Initialize(const double Start,
   ShowAll();
 }
 
-//=================================================================================================
-
 int HLRAlgo_EdgeStatus::NbVisiblePart() const
 {
   if (AllHidden())
@@ -57,8 +49,6 @@ int HLRAlgo_EdgeStatus::NbVisiblePart() const
   else
     return myVisibles.NbIntervals();
 }
-
-//=================================================================================================
 
 void HLRAlgo_EdgeStatus::VisiblePart(const int Index,
                                      double&   Start,
@@ -71,8 +61,6 @@ void HLRAlgo_EdgeStatus::VisiblePart(const int Index,
   else
     myVisibles.Value(Index).Bounds(Start, TolStart, End, TolEnd);
 }
-
-//=================================================================================================
 
 void HLRAlgo_EdgeStatus::Hide(const double Start,
                               const float  TolStart,

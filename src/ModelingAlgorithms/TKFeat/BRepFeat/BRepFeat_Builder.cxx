@@ -24,19 +24,13 @@
 #include <NCollection_DataMap.hpp>
 class BOPDS_PaveBlock;
 
-//=================================================================================================
-
 BRepFeat_Builder::BRepFeat_Builder()
 
 {
   Clear();
 }
 
-//=================================================================================================
-
 BRepFeat_Builder::~BRepFeat_Builder() = default;
-
-//=================================================================================================
 
 void BRepFeat_Builder::Clear()
 {
@@ -45,34 +39,26 @@ void BRepFeat_Builder::Clear()
   BOPAlgo_BOP::Clear();
 }
 
-//=================================================================================================
-
 void BRepFeat_Builder::Init(const TopoDS_Shape& theShape)
 {
   Clear();
-  //
+
   AddArgument(theShape);
 }
-
-//=================================================================================================
 
 void BRepFeat_Builder::Init(const TopoDS_Shape& theShape, const TopoDS_Shape& theTool)
 {
   Clear();
-  //
+
   AddArgument(theShape);
   AddTool(theTool);
 }
-
-//=================================================================================================
 
 void BRepFeat_Builder::SetOperation(const int theFuse)
 {
   myFuse      = theFuse;
   myOperation = myFuse ? BOPAlgo_FUSE : BOPAlgo_CUT;
 }
-
-//=================================================================================================
 
 void BRepFeat_Builder::SetOperation(const int theFuse, const bool theFlag)
 {
@@ -87,12 +73,10 @@ void BRepFeat_Builder::SetOperation(const int theFuse, const bool theFlag)
   }
 }
 
-//=================================================================================================
-
 void BRepFeat_Builder::PartsOfTool(NCollection_List<TopoDS_Shape>& aLT)
 {
   TopExp_Explorer aExp;
-  //
+
   aLT.Clear();
   aExp.Init(myShape, TopAbs_SOLID);
   for (; aExp.More(); aExp.Next())
@@ -101,8 +85,6 @@ void BRepFeat_Builder::PartsOfTool(NCollection_List<TopoDS_Shape>& aLT)
     aLT.Append(aS);
   }
 }
-
-//=================================================================================================
 
 void BRepFeat_Builder::KeepParts(const NCollection_List<TopoDS_Shape>& theIm)
 {
@@ -115,53 +97,47 @@ void BRepFeat_Builder::KeepParts(const NCollection_List<TopoDS_Shape>& theIm)
   }
 }
 
-//=================================================================================================
-
 void BRepFeat_Builder::KeepPart(const TopoDS_Shape& thePart)
 {
   TopoDS_Shape    aF, aFOr;
   TopExp_Explorer aExp;
-  //
+
   TopExp::MapShapes(thePart, myShapes);
 }
-
-//=================================================================================================
 
 void BRepFeat_Builder::Prepare()
 {
   GetReport()->Clear();
-  //
+
   BRep_Builder    aBB;
   TopoDS_Compound aC;
   aBB.MakeCompound(aC);
   myShape = aC;
-  //
+
   FillRemoved();
 }
-
-//=================================================================================================
 
 void BRepFeat_Builder::FillRemoved()
 {
   TopExp_Explorer aExp;
-  //
+
   const TopoDS_Shape& aArgs0 = myArguments.First();
   const TopoDS_Shape& aArgs1 = myTools.First();
-  //
+
   aExp.Init(aArgs0, TopAbs_SOLID);
   for (; aExp.More(); aExp.Next())
   {
     const TopoDS_Shape& aS = aExp.Current();
     myImages.UnBind(aS);
   }
-  //
+
   if (!myImages.IsBound(aArgs1))
   {
     return;
   }
-  //
+
   NCollection_List<TopoDS_Shape>::Iterator aItIm;
-  //
+
   NCollection_List<TopoDS_Shape>& aLS = myImages.ChangeFind(aArgs1);
   aItIm.Initialize(aLS);
   for (; aItIm.More(); aItIm.Next())
@@ -170,8 +146,6 @@ void BRepFeat_Builder::FillRemoved()
     FillRemoved(aS, myRemoved);
   }
 }
-
-//=================================================================================================
 
 void BRepFeat_Builder::PerformResult(const Message_ProgressRange& theRange)
 {
@@ -187,7 +161,6 @@ void BRepFeat_Builder::PerformResult(const Message_ProgressRange& theRange)
   double                aBSPart = 15;
   aWhole -= aBSPart;
 
-  // Compute PI steps
   const int                  aSize = 4;
   NCollection_Array1<double> aSteps(0, aSize - 1);
   {
@@ -209,48 +182,46 @@ void BRepFeat_Builder::PerformResult(const Message_ProgressRange& theRange)
       aSteps(3) = aTreatCompounds * aWhole / aSum;
     }
   }
-  //
+
   Prepare();
-  //
+
   RebuildFaces();
   aPS.Next(aSteps(0));
-  //
+
   FillImagesContainers(TopAbs_SHELL, aPS.Next(aSteps(1)));
   if (HasErrors())
   {
     return;
   }
-  //
+
   FillImagesSolids(aPS.Next(aSteps(2)));
   if (HasErrors())
   {
     return;
   }
-  //
+
   CheckSolidImages();
-  //
+
   BuildResult(TopAbs_SOLID);
   if (HasErrors())
   {
     return;
   }
-  //
+
   FillImagesCompounds(aPS.Next(aSteps(3)));
   if (HasErrors())
   {
     return;
   }
-  //
+
   BuildResult(TopAbs_COMPOUND);
   if (HasErrors())
   {
     return;
   }
-  //
+
   BuildShape(aPS.Next(aBSPart));
 }
-
-//=================================================================================================
 
 void BRepFeat_Builder::RebuildFaces()
 {
@@ -267,7 +238,7 @@ void BRepFeat_Builder::RebuildFaces()
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator aItM;
   NCollection_Map<BOPTools_Set>                                    aMST;
   NCollection_List<TopoDS_Shape>                                   aLE;
-  //
+
   aItM.Initialize(myShapes);
   for (; aItM.More(); aItM.Next())
   {
@@ -279,17 +250,17 @@ void BRepFeat_Builder::RebuildFaces()
       aMST.Add(aST);
     }
   }
-  //
+
   aNbS = myDS->NbSourceShapes();
   for (i = 0; i < aNbS; ++i)
   {
     const BOPDS_ShapeInfo& aSI = myDS->ShapeInfo(i);
-    //
+
     iRank = myDS->Rank(i);
     if (iRank == 1)
     {
       const TopoDS_Shape& aS = aSI.Shape();
-      //
+
       if (myImages.IsBound(aS))
       {
         NCollection_List<TopoDS_Shape>& aLIm = myImages.ChangeFind(aS);
@@ -307,20 +278,20 @@ void BRepFeat_Builder::RebuildFaces()
       }
       continue;
     }
-    //
+
     if (aSI.ShapeType() != TopAbs_FACE)
     {
       continue;
     }
-    //
+
     const BOPDS_FaceInfo& aFI = myDS->FaceInfo(i);
     const TopoDS_Face&    aF  = (*(TopoDS_Face*)(&aSI.Shape()));
-    //
+
     if (!myImages.IsBound(aF))
     {
       continue;
     }
-    //
+
     anOriF = aF.Orientation();
     aFF    = aF;
     aFF.Orientation(TopAbs_FORWARD);
@@ -330,7 +301,6 @@ void BRepFeat_Builder::RebuildFaces()
 
     aLE.Clear();
 
-    // bounding edges
     aExp.Init(aFF, TopAbs_EDGE);
     for (; aExp.More(); aExp.Next())
     {
@@ -341,12 +311,12 @@ void BRepFeat_Builder::RebuildFaces()
       if (myImages.IsBound(aE))
       {
         NCollection_List<TopoDS_Shape>& aLEIm = myImages.ChangeFind(aE);
-        //
+
         bRem = false;
         bIm  = false;
         aME.Clear();
         NCollection_List<TopoDS_Shape> aLEImNew;
-        //
+
         aItIm.Initialize(aLEIm);
         for (; aItIm.More(); aItIm.Next())
         {
@@ -370,7 +340,7 @@ void BRepFeat_Builder::RebuildFaces()
               }
             }
           }
-          //
+
           if (bVInShapes)
           {
             bIm = true;
@@ -382,13 +352,13 @@ void BRepFeat_Builder::RebuildFaces()
             aME.Add(aS);
           }
         }
-        //
+
         if (!bIm)
         {
           aLE.Append(aE);
           continue;
         }
-        //
+
         if (bRem && bIm)
         {
           if (aLEIm.Extent() == 2)
@@ -407,7 +377,7 @@ void BRepFeat_Builder::RebuildFaces()
             }
           }
         }
-        //
+
         aItIm.Initialize(aLEIm);
         for (; aItIm.More(); aItIm.Next())
         {
@@ -419,7 +389,7 @@ void BRepFeat_Builder::RebuildFaces()
             aLE.Append(aSp);
             continue;
           }
-          //
+
           if (anOriE == TopAbs_INTERNAL)
           {
             aSp.Orientation(TopAbs_FORWARD);
@@ -428,21 +398,21 @@ void BRepFeat_Builder::RebuildFaces()
             aLE.Append(aSp);
             continue;
           }
-          //
+
           if (bIsClosed)
           {
             if (!BRep_Tool::IsClosed(aSp, aFF))
             {
               BOPTools_AlgoTools3D::DoSplitSEAMOnFace(aSp, aFF);
             }
-            //
+
             aSp.Orientation(TopAbs_FORWARD);
             aLE.Append(aSp);
             aSp.Orientation(TopAbs_REVERSED);
             aLE.Append(aSp);
             continue;
-          } // if (bIsClosed){
-          //
+          }
+
           aSp.Orientation(anOriE);
           bToReverse = BOPTools_AlgoTools::IsSplitToReverse(aSp, aE, myContext);
           if (bToReverse)
@@ -461,8 +431,7 @@ void BRepFeat_Builder::RebuildFaces()
     int aNbPBIn, aNbPBSc;
     aNbPBIn = aMPBIn.Extent();
     aNbPBSc = aMPBSc.Extent();
-    //
-    // in edges
+
     for (j = 1; j <= aNbPBIn; ++j)
     {
       const occ::handle<BOPDS_PaveBlock>& aPB = aMPBIn(j);
@@ -472,13 +441,13 @@ void BRepFeat_Builder::RebuildFaces()
       {
         continue;
       }
-      //
+
       aSp.Orientation(TopAbs_FORWARD);
       aLE.Append(aSp);
       aSp.Orientation(TopAbs_REVERSED);
       aLE.Append(aSp);
     }
-    // section edges
+
     for (j = 1; j <= aNbPBSc; ++j)
     {
       const occ::handle<BOPDS_PaveBlock>& aPB = aMPBSc(j);
@@ -488,14 +457,13 @@ void BRepFeat_Builder::RebuildFaces()
       {
         continue;
       }
-      //
+
       aSp.Orientation(TopAbs_FORWARD);
       aLE.Append(aSp);
       aSp.Orientation(TopAbs_REVERSED);
       aLE.Append(aSp);
     }
 
-    // build new faces
     BOPAlgo_BuilderFace aBF;
     aBF.SetFace(aFF);
     aBF.SetShapes(aLE);
@@ -510,37 +478,35 @@ void BRepFeat_Builder::RebuildFaces()
     for (; aItIm.More(); aItIm.Next())
     {
       TopoDS_Shape& aFR = aItIm.ChangeValue();
-      //
+
       BOPTools_Set aST;
       aST.Add(aFR, TopAbs_EDGE);
       bFlagSD = aMST.Contains(aST);
-      //
+
       const BOPTools_Set& aSTx = aMST.Added(aST);
       aSx                      = aSTx.Shape();
       aSx.Orientation(anOriF);
       aLFIm.Append(aSx);
-      //
+
       NCollection_List<TopoDS_Shape>* pLOr = myOrigins.ChangeSeek(aSx);
       if (!pLOr)
       {
         pLOr = myOrigins.Bound(aSx, NCollection_List<TopoDS_Shape>());
       }
       pLOr->Append(aF);
-      //
+
       if (bFlagSD)
       {
         myShapesSD.Bind(aFR, aSx);
       }
     }
-    //
+
     if (aLFIm.Extent() == 0)
     {
       myImages.UnBind(aF);
     }
   }
 }
-
-//=================================================================================================
 
 void BRepFeat_Builder::RebuildEdge(
   const TopoDS_Shape&                                           theE,
@@ -564,10 +530,9 @@ void BRepFeat_Builder::RebuildEdge(
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator aItM;
   NCollection_Map<occ::handle<BOPDS_PaveBlock>>                    aMPB;
   NCollection_Map<occ::handle<BOPDS_PaveBlock>>::Iterator          aItMPB;
-  //
+
   aSI.SetShapeType(TopAbs_EDGE);
 
-  // 1. collect origin vertices to aMV map.
   nE                                = myDS->Index(theE);
   const BOPDS_ShapeInfo&       aSIE = myDS->ShapeInfo(nE);
   const NCollection_List<int>& aLS  = aSIE.SubShapes();
@@ -583,18 +548,17 @@ void BRepFeat_Builder::RebuildEdge(
     aMV.Add(nVx);
     aMVOr.Add(nVx);
   }
-  //
-  // 2. collect vertices that should be removed to aMI map.
+
   aPBNew                                                 = new BOPDS_PaveBlock;
   NCollection_List<BOPDS_Pave>&                   aLPExt = aPBNew->ChangeExtPaves();
   NCollection_List<occ::handle<BOPDS_PaveBlock>>& aLPB   = myDS->ChangePaveBlocks(nE);
-  //
+
   for (aItPB.Initialize(aLPB); aItPB.More(); aItPB.Next())
   {
     const occ::handle<BOPDS_PaveBlock>& aPB = aItPB.Value();
     nE1                                     = aPB->Edge();
     const TopoDS_Shape& aE1                 = myDS->Shape(nE1);
-    //
+
     if (aME.Contains(aE1))
     {
       aPB->Indices(nV1, nV2);
@@ -606,12 +570,12 @@ void BRepFeat_Builder::RebuildEdge(
       aMPB.Add(aPB);
     }
   }
-  // 3. collect vertices that split the source shape.
+
   for (aItPB.Initialize(aLPB); aItPB.More(); aItPB.Next())
   {
     const occ::handle<BOPDS_PaveBlock>& aPB = aItPB.Value();
     aPB->Indices(nV1, nV2);
-    //
+
     if (!aMI.Contains(nV1))
     {
       aMV.Add(nV1);
@@ -621,12 +585,12 @@ void BRepFeat_Builder::RebuildEdge(
       aMV.Add(nV2);
     }
   }
-  // 4. collect ext paves.
+
   for (aItPB.Initialize(aLPB); aItPB.More(); aItPB.Next())
   {
     const occ::handle<BOPDS_PaveBlock>& aPB = aItPB.Value();
     aPB->Indices(nV1, nV2);
-    //
+
     if (aMV.Contains(nV1))
     {
       if (aMAdd.Add(nV1) || aMVOr.Contains(nV1))
@@ -634,7 +598,7 @@ void BRepFeat_Builder::RebuildEdge(
         aLPExt.Append(aPB->Pave1());
       }
     }
-    //
+
     if (aMV.Contains(nV2))
     {
       if (aMAdd.Add(nV2) || aMVOr.Contains(nV2))
@@ -646,25 +610,24 @@ void BRepFeat_Builder::RebuildEdge(
 
   aE = (*(TopoDS_Edge*)(&theE));
   aE.Orientation(TopAbs_FORWARD);
-  //
+
   aLIm.Clear();
-  //
-  // 5. split edge by new set of vertices.
+
   aLPB.Clear();
   aPBNew->SetOriginalEdge(nE);
   aPBNew->Update(aLPB, false);
-  //
+
   for (aItPB.Initialize(aLPB); aItPB.More(); aItPB.Next())
   {
     occ::handle<BOPDS_PaveBlock>& aPB    = aItPB.ChangeValue();
     const BOPDS_Pave&             aPave1 = aPB->Pave1();
     aPave1.Contents(nV1, aT1);
-    //
+
     const BOPDS_Pave& aPave2 = aPB->Pave2();
     aPave2.Contents(nV2, aT2);
-    //
+
     aItMPB.Initialize(aMPB);
-    // check if it is the old pave block.
+
     bOld = false;
     for (; aItMPB.More(); aItMPB.Next())
     {
@@ -683,29 +646,27 @@ void BRepFeat_Builder::RebuildEdge(
     {
       continue;
     }
-    //
+
     aV1 = (*(TopoDS_Vertex*)(&myDS->Shape(nV1)));
     aV1.Orientation(TopAbs_FORWARD);
-    //
+
     aV2 = (*(TopoDS_Vertex*)(&myDS->Shape(nV2)));
     aV2.Orientation(TopAbs_REVERSED);
-    //
+
     BOPTools_AlgoTools::MakeSplitEdge(aE, aV1, aT1, aV2, aT2, aSp);
     BOPTools_AlgoTools2D::BuildPCurveForEdgeOnFace(aSp, theF, myContext);
-    //
+
     aSI.SetShape(aSp);
-    //
+
     Bnd_Box& aBox = aSI.ChangeBox();
     BRepBndLib::Add(aSp, aBox);
-    //
+
     nSp = myDS->Append(aSI);
-    //
+
     aPB->SetEdge(nSp);
     aLIm.Append(aSp);
   }
 }
-
-//=================================================================================================
 
 void BRepFeat_Builder::CheckSolidImages()
 {
@@ -715,21 +676,21 @@ void BRepFeat_Builder::CheckSolidImages()
   NCollection_List<TopoDS_Shape>::Iterator               aIt;
   TopExp_Explorer                                        aExp, aExpF;
   bool                                                   bFlagSD;
-  //
+
   const TopoDS_Shape& aArgs0 = myArguments.First();
   const TopoDS_Shape& aArgs1 = myTools.First();
-  //
+
   const NCollection_List<TopoDS_Shape>& aLSIm = myImages.Find(aArgs1);
   aIt.Initialize(aLSIm);
   for (; aIt.More(); aIt.Next())
   {
     const TopoDS_Shape& aSolIm = aIt.Value();
-    //
+
     BOPTools_Set aST;
     aST.Add(aSolIm, TopAbs_FACE);
     aMST.Add(aST);
   }
-  //
+
   aExp.Init(aArgs0, TopAbs_SOLID);
   for (; aExp.More(); aExp.Next())
   {
@@ -741,15 +702,15 @@ void BRepFeat_Builder::CheckSolidImages()
       for (; aIt.More(); aIt.Next())
       {
         const TopoDS_Shape& aSolIm = aIt.Value();
-        //
+
         BOPTools_Set aST;
         aST.Add(aSolIm, TopAbs_FACE);
         bFlagSD = aMST.Contains(aST);
-        //
+
         const BOPTools_Set& aSTx = aMST.Added(aST);
         const TopoDS_Shape& aSx  = aSTx.Shape();
         aLSImNew.Append(aSx);
-        //
+
         if (bFlagSD)
         {
           myShapesSD.Bind(aSolIm, aSx);
@@ -760,8 +721,6 @@ void BRepFeat_Builder::CheckSolidImages()
   }
 }
 
-//=================================================================================================
-
 void BRepFeat_Builder::FillRemoved(const TopoDS_Shape&                                     S,
                                    NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& M)
 {
@@ -769,7 +728,7 @@ void BRepFeat_Builder::FillRemoved(const TopoDS_Shape&                          
   {
     return;
   }
-  //
+
   M.Add(S);
   TopoDS_Iterator It(S);
   while (It.More())
@@ -779,8 +738,6 @@ void BRepFeat_Builder::FillRemoved(const TopoDS_Shape&                          
   }
 }
 
-//=================================================================================================
-
 void BRepFeat_Builder::FillIn3DParts(
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& theDraftSolids,
   const Message_ProgressRange&                                              theRange)
@@ -789,7 +746,6 @@ void BRepFeat_Builder::FillIn3DParts(
 
   BOPAlgo_Builder::FillIn3DParts(theDraftSolids, theRange);
 
-  // Clear the IN parts of the solids from the removed faces
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>::
     Iterator itM(myInParts);
   for (; itM.More(); itM.Next())

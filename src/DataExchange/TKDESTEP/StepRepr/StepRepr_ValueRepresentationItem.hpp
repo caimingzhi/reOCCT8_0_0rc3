@@ -11,7 +11,6 @@ class StepRepr_ValueRepresentationItem : public StepRepr_RepresentationItem
 {
 
 public:
-  //! Returns a ValueRepresentationItem
   Standard_EXPORT StepRepr_ValueRepresentationItem();
 
   Standard_EXPORT void Init(

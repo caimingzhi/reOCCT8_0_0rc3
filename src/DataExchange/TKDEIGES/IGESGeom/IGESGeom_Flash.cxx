@@ -22,7 +22,6 @@ void IGESGeom_Flash::Init(const gp_XY&                            aPoint,
   theRotation  = aRotation;
   theReference = aReference;
   InitTypeAndForm(125, FormNumber());
-  // FormNumber : 0-4, Shape of the Flash
 }
 
 void IGESGeom_Flash::SetFormNumber(const int form)

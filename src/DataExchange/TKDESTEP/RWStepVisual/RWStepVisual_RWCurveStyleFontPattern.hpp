@@ -10,7 +10,6 @@ class Interface_Check;
 class StepVisual_CurveStyleFontPattern;
 class StepData_StepWriter;
 
-//! Read & Write Module for CurveStyleFontPattern
 class RWStepVisual_RWCurveStyleFontPattern
 {
 public:

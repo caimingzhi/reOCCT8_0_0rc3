@@ -11,7 +11,6 @@ class StepShape_DefinitionalRepresentationAndShapeRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ConversionBasedUnitAndLengthUnit
 class RWStepShape_RWDefinitionalRepresentationAndShapeRepresentation
 {
 public:

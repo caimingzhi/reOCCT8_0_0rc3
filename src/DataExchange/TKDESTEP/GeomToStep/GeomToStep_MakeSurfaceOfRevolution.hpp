@@ -9,10 +9,6 @@
 class StepGeom_SurfaceOfRevolution;
 class Geom_SurfaceOfRevolution;
 
-//! This class implements the mapping between class
-//! SurfaceOfRevolution from Geom and the class
-//! SurfaceOfRevolution from StepGeom which describes a
-//! surface_of_revolution from Prostep
 class GeomToStep_MakeSurfaceOfRevolution : public GeomToStep_Root
 {
 public:

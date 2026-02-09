@@ -13,7 +13,7 @@ void IGESSolid_SolidOfLinearExtrusion::Init(const occ::handle<IGESData_IGESEntit
 {
   theCurve     = aCurve;
   theLength    = Length;
-  theDirection = Direction; // default (0,0,1)
+  theDirection = Direction;
   InitTypeAndForm(164, 0);
 }
 

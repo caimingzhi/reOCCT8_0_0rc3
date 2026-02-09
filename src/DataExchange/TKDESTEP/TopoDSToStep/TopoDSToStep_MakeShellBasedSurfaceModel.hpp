@@ -14,10 +14,6 @@ class Transfer_FinderProcess;
 class TopoDS_Shell;
 class TopoDS_Solid;
 
-//! This class implements the mapping between classes
-//! Face, Shell or Solid from TopoDS and ShellBasedSurfaceModel
-//! from StepShape. All the topology and geometry comprised
-//! into the shape are taken into account and translated.
 class TopoDSToStep_MakeShellBasedSurfaceModel : public TopoDSToStep_Root
 {
 public:

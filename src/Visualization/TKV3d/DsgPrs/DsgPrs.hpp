@@ -9,14 +9,11 @@ class Geom_Curve;
 class Geom_Surface;
 class Prs3d_DimensionAspect;
 
-//! Describes Standard Presentations for DsgIHM objects
 class DsgPrs
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! draws symbols ((one or two) arrows,(one or two)points
-  //! at thebeginning and at the end of the dimension
   Standard_EXPORT static void ComputeSymbol(const occ::handle<Prs3d_Presentation>&    aPresentation,
                                             const occ::handle<Prs3d_DimensionAspect>& anAspect,
                                             const gp_Pnt&                             pt1,
@@ -83,10 +80,6 @@ public:
                                                 gp_Pnt&       aRadLineOrign,
                                                 gp_Pnt&       aRadLineEnd);
 
-  //! computes Geometry for fillet radius presentation;
-  //! special case flag SpecCase equal true if
-  //! radius of fillet circle = 0 or if angle between
-  //! Vec1(Center, FirstPoint) and Vec2(Center,SecondPoint) equal 0 or PI
   Standard_EXPORT static void ComputeFilletRadiusPresentation(const double  ArrowLength,
                                                               const double  Value,
                                                               const gp_Pnt& Position,
@@ -104,7 +97,6 @@ public:
                                                               gp_Dir&       DirOfArrow,
                                                               gp_Pnt&       DrawPosition);
 
-  //! computes length of ellipse arc in parametric units
   Standard_EXPORT static double DistanceFromApex(const gp_Elips& elips,
                                                  const gp_Pnt&   Apex,
                                                  const double    par);

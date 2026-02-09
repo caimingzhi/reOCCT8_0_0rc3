@@ -5,8 +5,6 @@
 
 const double aBorderDivisor = 1.0e+4;
 
-//=================================================================================================
-
 math_PSO::math_PSO(math_MultipleVarFunction* theFunc,
                    const math_Vector&        theLowBorder,
                    const math_Vector&        theUppBorder,
@@ -27,8 +25,6 @@ math_PSO::math_PSO(math_MultipleVarFunction* theFunc,
   mySteps     = theSteps;
 }
 
-//=================================================================================================
-
 void math_PSO::Perform(math_PSOParticlesPool& theParticles,
                        int                    theNbParticles,
                        double&                theValue,
@@ -38,24 +34,20 @@ void math_PSO::Perform(math_PSOParticlesPool& theParticles,
   performPSOWithGivenParticles(theParticles, theNbParticles, theValue, theOutPnt, theNbIter);
 }
 
-//=================================================================================================
-
 void math_PSO::Perform(const math_Vector& theSteps,
                        double&            theValue,
                        math_Vector&       theOutPnt,
                        const int          theNbIter)
 {
-  // Initialization.
+
   math_Vector aMinUV(1, myN), aMaxUV(1, myN);
   aMinUV   = myLowBorder + (myUppBorder - myLowBorder) / aBorderDivisor;
   aMaxUV   = myUppBorder - (myUppBorder - myLowBorder) / aBorderDivisor;
   myNbIter = theNbIter;
   mySteps  = theSteps;
 
-  // To generate initial distribution it is necessary to have grid steps.
   math_PSOParticlesPool aPool(myNbParticles, myN);
 
-  // Generate initial particles distribution.
   bool        isRegularGridFinished = false;
   double      aCurrValue;
   math_Vector aCurrPoint(1, myN);
@@ -80,8 +72,7 @@ void math_PSO::Perform(const math_Vector& theSteps,
       aParticle = aPool.GetWorstParticle();
     }
 
-    // Step.
-    aCurrPoint(1) += std::max(mySteps(1), 1.0e-15); // Avoid too small step
+    aCurrPoint(1) += std::max(mySteps(1), 1.0e-15);
     for (int aDimIdx = 1; aDimIdx < myN; ++aDimIdx)
     {
       if (aCurrPoint(aDimIdx) > aMaxUV(aDimIdx))
@@ -93,15 +84,12 @@ void math_PSO::Perform(const math_Vector& theSteps,
         break;
     }
 
-    // Stop criteria.
     if (aCurrPoint(myN) > aMaxUV(myN))
       isRegularGridFinished = true;
   } while (!isRegularGridFinished);
 
   performPSOWithGivenParticles(aPool, myNbParticles, theValue, theOutPnt, theNbIter);
 }
-
-//=================================================================================================
 
 void math_PSO::performPSOWithGivenParticles(math_PSOParticlesPool& theParticles,
                                             int                    theNbParticles,
@@ -116,12 +104,10 @@ void math_PSO::performPSOWithGivenParticles(math_PSOParticlesPool& theParticles,
   myNbParticles                     = theNbParticles;
   math_PSOParticlesPool& aParticles = theParticles;
 
-  // Current particle data.
   math_Vector   aCurrPoint(1, myN);
   math_Vector   aBestGlobalPosition(1, myN);
   PSO_Particle* aParticle = nullptr;
 
-  // Generate initial particle velocities.
   math_BullardGenerator aRandom;
   for (int aPartIdx = 1; aPartIdx <= myNbParticles; ++aPartIdx)
   {
@@ -138,13 +124,11 @@ void math_PSO::performPSOWithGivenParticles(math_PSOParticlesPool& theParticles,
     aBestGlobalPosition(aDimIdx + 1) = aParticle->Position[aDimIdx];
   double aBestGlobalDistance = aParticle->Distance;
 
-  // This velocity is used for detecting stagnation state.
   math_Vector aTerminationVelocity(1, myN);
   aTerminationVelocity = mySteps / 2048.0;
-  // This velocity shows minimal velocity on current step.
+
   math_Vector aMinimalVelocity(1, myN);
 
-  // Run PSO iterations
   for (int aStep = 1; aStep < myNbIter; ++aStep)
   {
     aMinimalVelocity.Init(RealLast());
@@ -207,7 +191,7 @@ void math_PSO::performPSOWithGivenParticles(math_PSOParticlesPool& theParticles,
 
     if (isTerminalVelocityReached)
     {
-      // Minimum number of steps
+
       const int aMinSteps = 16;
 
       if (aStep > aMinSteps)

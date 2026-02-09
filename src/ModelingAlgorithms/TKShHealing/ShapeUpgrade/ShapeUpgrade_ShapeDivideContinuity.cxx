@@ -7,8 +7,6 @@
 #include <ShapeUpgrade_WireDivide.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 ShapeUpgrade_ShapeDivideContinuity::ShapeUpgrade_ShapeDivideContinuity()
 {
   myCurve3dCriterion = GeomAbs_C1;
@@ -17,8 +15,6 @@ ShapeUpgrade_ShapeDivideContinuity::ShapeUpgrade_ShapeDivideContinuity()
   myTolerance3d      = Precision::Confusion();
   myTolerance2d      = Precision::PConfusion();
 }
-
-//=================================================================================================
 
 ShapeUpgrade_ShapeDivideContinuity::ShapeUpgrade_ShapeDivideContinuity(const TopoDS_Shape& S)
     : ShapeUpgrade_ShapeDivide(S)
@@ -30,42 +26,30 @@ ShapeUpgrade_ShapeDivideContinuity::ShapeUpgrade_ShapeDivideContinuity(const Top
   myTolerance2d      = Precision::PConfusion();
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_ShapeDivideContinuity::SetTolerance(const double Tol)
 {
   myTolerance3d = Tol;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_ShapeDivideContinuity::SetTolerance2d(const double Tol)
 {
   myTolerance2d = Tol;
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_ShapeDivideContinuity::SetBoundaryCriterion(const GeomAbs_Shape Criterion)
 {
   myCurve3dCriterion = Criterion;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_ShapeDivideContinuity::SetPCurveCriterion(const GeomAbs_Shape Criterion)
 {
   myCurve2dCriterion = Criterion;
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_ShapeDivideContinuity::SetSurfaceCriterion(const GeomAbs_Shape Criterion)
 {
   mySurfaceCriterion = Criterion;
 }
-
-//=================================================================================================
 
 occ::handle<ShapeUpgrade_FaceDivide> ShapeUpgrade_ShapeDivideContinuity::GetSplitFaceTool() const
 {

@@ -10,7 +10,6 @@ class Interface_Check;
 class StepGeom_GeometricRepresentationItem;
 class StepData_StepWriter;
 
-//! Read & Write Module for GeometricRepresentationItem
 class RWStepGeom_RWGeometricRepresentationItem
 {
 public:

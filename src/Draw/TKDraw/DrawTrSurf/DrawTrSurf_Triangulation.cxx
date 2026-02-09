@@ -13,20 +13,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_Triangulation, Draw_Drawable3D)
 
-//=================================================================================================
-
 DrawTrSurf_Triangulation::DrawTrSurf_Triangulation(const occ::handle<Poly_Triangulation>& T)
     : myTriangulation(T),
       myNodes(false),
       myTriangles(false)
 {
-  // Build the connect tool
+
   Poly_Connect pc(T);
 
   int i, j, nFree, nInternal, nbTriangles = T->NbTriangles();
   int t[3];
 
-  // count the free edges
   nFree = 0;
   for (i = 1; i <= nbTriangles; i++)
   {
@@ -36,7 +33,6 @@ DrawTrSurf_Triangulation::DrawTrSurf_Triangulation(const occ::handle<Poly_Triang
         nFree++;
   }
 
-  // allocate the arrays
   myFree      = new NCollection_HArray1<int>(1, 2 * nFree);
   nInternal   = (3 * nbTriangles - nFree) / 2;
   myInternals = new NCollection_HArray1<int>(1, 2 * nInternal);
@@ -59,7 +55,7 @@ DrawTrSurf_Triangulation::DrawTrSurf_Triangulation(const occ::handle<Poly_Triang
         Free(fr + 1) = n[k];
         fr += 2;
       }
-      // internal edge if this triangle has a lower index than the adjacent
+
       else if (i < t[j])
       {
         Internal(in)     = n[j];
@@ -70,14 +66,10 @@ DrawTrSurf_Triangulation::DrawTrSurf_Triangulation(const occ::handle<Poly_Triang
   }
 }
 
-//=================================================================================================
-
 void DrawTrSurf_Triangulation::DrawOn(Draw_Display& dis) const
 {
-  // Display the edges
-  int i, n;
 
-  // free edges
+  int i, n;
 
   dis.SetColor(Draw_rouge);
   const NCollection_Array1<int>& Free = myFree->Array1();
@@ -87,8 +79,6 @@ void DrawTrSurf_Triangulation::DrawOn(Draw_Display& dis) const
     dis.Draw(myTriangulation->Node(Free[2 * i - 1]), myTriangulation->Node(Free[2 * i]));
   }
 
-  // internal edges
-
   dis.SetColor(Draw_bleu);
   const NCollection_Array1<int>& Internal = myInternals->Array1();
   n                                       = Internal.Length() / 2;
@@ -97,7 +87,6 @@ void DrawTrSurf_Triangulation::DrawOn(Draw_Display& dis) const
     dis.Draw(myTriangulation->Node(Internal[2 * i - 1]), myTriangulation->Node(Internal[2 * i]));
   }
 
-  // texts
   char text[50];
   if (myNodes)
   {
@@ -130,21 +119,15 @@ void DrawTrSurf_Triangulation::DrawOn(Draw_Display& dis) const
   }
 }
 
-//=================================================================================================
-
 occ::handle<Draw_Drawable3D> DrawTrSurf_Triangulation::Copy() const
 {
   return new DrawTrSurf_Triangulation(myTriangulation);
 }
 
-//=================================================================================================
-
 void DrawTrSurf_Triangulation::Dump(Standard_OStream& S) const
 {
   Poly::Dump(myTriangulation, S);
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Triangulation::Save(Standard_OStream& theStream) const
 {
@@ -165,14 +148,10 @@ void DrawTrSurf_Triangulation::Save(Standard_OStream& theStream) const
 #endif
 }
 
-//=================================================================================================
-
 occ::handle<Draw_Drawable3D> DrawTrSurf_Triangulation::Restore(Standard_IStream& theStream)
 {
   return new DrawTrSurf_Triangulation(Poly::ReadTriangulation(theStream));
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Triangulation::Whatis(Draw_Interpretor& I) const
 {

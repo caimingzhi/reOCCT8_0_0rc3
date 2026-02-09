@@ -94,10 +94,9 @@ void ShapeAnalysis_ShapeContents::ClearFlags()
 void ShapeAnalysis_ShapeContents::Perform(const TopoDS_Shape& Shape)
 {
   Clear();
-  //  On y va
+
   TopExp_Explorer                                        exp;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> mapsh;
-  //  On note pour les SOLIDES : ceux qui ont des trous (plus d un SHELL)
 
   for (exp.Init(Shape, TopAbs_SOLID); exp.More(); exp.Next())
   {
@@ -113,8 +112,6 @@ void ShapeAnalysis_ShapeContents::Perform(const TopoDS_Shape& Shape)
   }
   myNbSharedSolids = mapsh.Extent();
 
-  //  Pour les SHELLS, on compte les faces dans les SHELLS
-  //  Ensuite une soustraction, et on a les faces libres
   mapsh.Clear();
   int nbfaceshell = 0;
   for (exp.Init(Shape, TopAbs_SHELL); exp.More(); exp.Next())
@@ -127,13 +124,6 @@ void ShapeAnalysis_ShapeContents::Perform(const TopoDS_Shape& Shape)
       nbfaceshell++;
   }
   myNbSharedShells = mapsh.Extent();
-  //  On note pour les FACES pas mal de choses (surface, topologie)
-  //  * Surface BSpline > 8192 poles
-  //  * Surface BSpline "OnlyC0" (not yet impl)
-  //  * Surface Offset
-  //  * Surface Elementaire INDIRECTE
-  //  * Presence de COUTURES; en particulier WIRE A PLUS D UNE COUTURE
-  //  * Edge : OffsetCurve
 
   mapsh.Clear();
   for (exp.Init(Shape, TopAbs_FACE); exp.More(); exp.Next())
@@ -151,8 +141,7 @@ void ShapeAnalysis_ShapeContents::Perform(const TopoDS_Shape& Shape)
       myNbTrimSurf++;
       surf = trsu->BasisSurface();
     }
-    // #10 rln 27/02/98 BUC50003 entity 56
-    // C0 if at least in one direction (U or V)
+
     if (!surf.IsNull() && !(surf->IsCNu(1) && surf->IsCNv(1)))
     {
       myNbC0Surfaces++;
@@ -250,7 +239,6 @@ void ShapeAnalysis_ShapeContents::Perform(const TopoDS_Shape& Shape)
   }
   myNbSharedWires = mapsh.Extent();
 
-  //  Ne pas oublier les FACES :
   myNbFreeFaces = myNbFaces - nbfaceshell;
 
   mapsh.Clear();

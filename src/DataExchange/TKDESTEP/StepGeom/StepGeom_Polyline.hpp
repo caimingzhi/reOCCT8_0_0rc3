@@ -15,7 +15,6 @@ class StepGeom_Polyline : public StepGeom_BoundedCurve
 {
 
 public:
-  //! Returns a Polyline
   Standard_EXPORT StepGeom_Polyline();
 
   Standard_EXPORT void Init(

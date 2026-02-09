@@ -8,8 +8,6 @@
 #include <AdvApprox_Cutting.hpp>
 #include <Standard_Boolean.hpp>
 
-//! inherits class Cutting; contains a list of preferential points (di)i
-//! if Cutting is necessary in [a,b], we cut at the di nearest from (a+b)/2.
 class AdvApprox_PrefCutting : public AdvApprox_Cutting
 {
 public:

@@ -11,7 +11,6 @@ class StepGeom_Placement;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for Placement
 class RWStepGeom_RWPlacement
 {
 public:

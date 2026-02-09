@@ -6,11 +6,7 @@
 #include <StepRepr_RepresentationContext.hpp>
 #include <StepShape_ShapeDimensionRepresentation.hpp>
 
-//=================================================================================================
-
 RWStepShape_RWShapeDimensionRepresentation::RWStepShape_RWShapeDimensionRepresentation() = default;
-
-//=================================================================================================
 
 void RWStepShape_RWShapeDimensionRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&                data,
@@ -18,11 +14,9 @@ void RWStepShape_RWShapeDimensionRepresentation::ReadStep(
   occ::handle<Interface_Check>&                              ach,
   const occ::handle<StepShape_ShapeDimensionRepresentation>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "shape_dimension_representation"))
     return;
-
-  // Inherited fields of Representation
 
   occ::handle<TCollection_HAsciiString> aRepresentation_Name;
   data->ReadString(num, 1, "representation.name", ach, aRepresentation_Name);
@@ -75,7 +69,6 @@ void RWStepShape_RWShapeDimensionRepresentation::ReadStep(
                    STANDARD_TYPE(StepRepr_RepresentationContext),
                    aRepresentation_ContextOfItems);
 
-  // Initialize entity
   if (anItems.IsNull())
   {
     ent->Init(aRepresentation_Name, aRepresentation_Items, aRepresentation_ContextOfItems);
@@ -86,14 +79,10 @@ void RWStepShape_RWShapeDimensionRepresentation::ReadStep(
   }
 }
 
-//=================================================================================================
-
 void RWStepShape_RWShapeDimensionRepresentation::WriteStep(
   StepData_StepWriter&                                       SW,
   const occ::handle<StepShape_ShapeDimensionRepresentation>& ent) const
 {
-
-  // Inherited fields of Representation
 
   SW.Send(ent->StepRepr_Representation::Name());
 
@@ -120,14 +109,10 @@ void RWStepShape_RWShapeDimensionRepresentation::WriteStep(
   SW.Send(ent->StepRepr_Representation::ContextOfItems());
 }
 
-//=================================================================================================
-
 void RWStepShape_RWShapeDimensionRepresentation::Share(
   const occ::handle<StepShape_ShapeDimensionRepresentation>& ent,
   Interface_EntityIterator&                                  iter) const
 {
-
-  // Inherited fields of Representation
 
   if (ent->ItemsAP242().IsNull())
   {

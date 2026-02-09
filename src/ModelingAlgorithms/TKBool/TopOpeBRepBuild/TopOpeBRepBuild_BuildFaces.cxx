@@ -19,30 +19,24 @@ extern bool TopOpeBRepBuild_GetcontextSF2();
 extern bool TopOpeBRepBuild_GettraceSHEX();
 #endif
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::BuildFaces(const int                                       iS,
                                          const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
 {
   double       aTBSTol, aTBCTol;
   BRep_Builder aBB;
   TopoDS_Shape aFace;
-  //
-  // modified by NIZNHY-PKV Mon Dec 13 10:00:23 2010f
+
   const TopOpeBRepDS_Surface& aTBS = HDS->Surface(iS);
   aTBSTol                          = aTBS.Tolerance();
-  //
+
   myBuildTool.MakeFace(aFace, aTBS);
-  //
-  // myBuildTool.MakeFace(aFace,HDS->Surface(iS));
-  // modified by NIZNHY-PKV Mon Dec 13 10:01:03 2010t
-  //
+
   TopOpeBRepBuild_WireEdgeSet WES(aFace, this);
-  //
+
 #ifdef OCCT_DEBUG
   bool tSE = TopOpeBRepBuild_GettraceSPF();
 #endif
-  //
+
   TopOpeBRepDS_CurveIterator SCurves(HDS->SurfaceCurves(iS));
   for (; SCurves.More(); SCurves.Next())
   {
@@ -57,14 +51,14 @@ void TopOpeBRepBuild_Builder::BuildFaces(const int                              
     for (; Iti.More(); Iti.Next())
     {
       anEdge = Iti.Value();
-      // modified by NIZNHY-PKV Mon Dec 13 10:09:38 2010f
+
       TopoDS_Edge& aE = *((TopoDS_Edge*)&anEdge);
       aTBCTol         = BRep_Tool::Tolerance(aE);
       if (aTBCTol < aTBSTol)
       {
         aBB.UpdateEdge(aE, aTBSTol);
       }
-      // modified by NIZNHY-PKV Mon Dec 13 10:09:43 2010f
+
       TopAbs_Orientation ori = SCurves.Orientation(TopAbs_IN);
       myBuildTool.Orientation(anEdge, ori);
       const occ::handle<Geom2d_Curve>& PC = SCurves.PCurve();
@@ -72,13 +66,11 @@ void TopOpeBRepBuild_Builder::BuildFaces(const int                              
       WES.AddStartElement(anEdge);
     }
   }
-  //
+
   TopOpeBRepBuild_FaceBuilder     FABU(WES, aFace);
   NCollection_List<TopoDS_Shape>& FaceList = ChangeNewFaces(iS);
   MakeFaces(aFace, FABU, FaceList);
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder::BuildFaces(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
 {

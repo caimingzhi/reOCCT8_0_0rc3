@@ -23,8 +23,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StdPrs_HLRPolyShape, StdPrs_HLRShapeI)
 
-//=================================================================================================
-
 void StdPrs_HLRPolyShape::ComputeHLR(const occ::handle<Prs3d_Presentation>& aPresentation,
                                      const TopoDS_Shape&                    aShape,
                                      const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -41,11 +39,10 @@ void StdPrs_HLRPolyShape::ComputeHLR(const occ::handle<Prs3d_Presentation>& aPre
 
   TopExp_Explorer ex;
 
-  // find vertices not under ancestors.
   TopAbs_ShapeEnum E = aShape.ShapeType();
   if (E == TopAbs_COMPOUND)
   {
-    // it is necessary to present isolated vertexes instead of hiding them.
+
     for (ex.Init(aShape, TopAbs_VERTEX, TopAbs_EDGE); ex.More(); ex.Next())
     {
       StdPrs_WFShape::Add(aPresentation, ex.Current(), aDrawer);
@@ -111,7 +108,6 @@ void StdPrs_HLRPolyShape::ComputeHLR(const occ::handle<Prs3d_Presentation>& aPre
     }
   }
 
-  // storage in the group
   if (aDrawer->DrawHiddenLine())
   {
     int aNbHiddenSegments = 0;

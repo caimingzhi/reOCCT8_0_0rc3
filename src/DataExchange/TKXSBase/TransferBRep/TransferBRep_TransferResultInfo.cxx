@@ -3,14 +3,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TransferBRep_TransferResultInfo, Standard_Transient)
 
-//=================================================================================================
-
 TransferBRep_TransferResultInfo::TransferBRep_TransferResultInfo()
 {
   Clear();
 }
-
-//=================================================================================================
 
 void TransferBRep_TransferResultInfo::Clear()
 {

@@ -7,7 +7,6 @@
 class gp_Pnt;
 class TopoDS_Vertex;
 
-//! Provides methods to build vertices.
 class BRepLib_MakeVertex : public BRepLib_MakeShape
 {
 public:

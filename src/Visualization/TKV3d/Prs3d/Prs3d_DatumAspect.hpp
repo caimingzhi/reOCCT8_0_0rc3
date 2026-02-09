@@ -3,32 +3,16 @@
 #include <Prs3d_ArrowAspect.hpp>
 #include <Prs3d_DatumAttribute.hpp>
 
-// Copyright (c) 2016 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//! Enumeration defining axes used in datum aspect, see Prs3d_Datum.
 enum Prs3d_DatumAxes
 {
-  Prs3d_DatumAxes_XAxis  = 0x01,                                          //!< X axis of the datum
-  Prs3d_DatumAxes_YAxis  = 0x02,                                          //!< Y axis of the datum
-  Prs3d_DatumAxes_ZAxis  = 0x04,                                          //!< Z axis of the datum
-  Prs3d_DatumAxes_XYAxes = Prs3d_DatumAxes_XAxis | Prs3d_DatumAxes_YAxis, //!< XOY 2D axes
-  Prs3d_DatumAxes_YZAxes = Prs3d_DatumAxes_YAxis | Prs3d_DatumAxes_ZAxis, //!< YOZ 2D axes
-  Prs3d_DatumAxes_XZAxes = Prs3d_DatumAxes_XAxis | Prs3d_DatumAxes_ZAxis, //!< XOZ 2D axes
-  Prs3d_DatumAxes_XYZAxes =
-    Prs3d_DatumAxes_XAxis | Prs3d_DatumAxes_YAxis | Prs3d_DatumAxes_ZAxis, //!< XYZ 3D axes
+  Prs3d_DatumAxes_XAxis   = 0x01,
+  Prs3d_DatumAxes_YAxis   = 0x02,
+  Prs3d_DatumAxes_ZAxis   = 0x04,
+  Prs3d_DatumAxes_XYAxes  = Prs3d_DatumAxes_XAxis | Prs3d_DatumAxes_YAxis,
+  Prs3d_DatumAxes_YZAxes  = Prs3d_DatumAxes_YAxis | Prs3d_DatumAxes_ZAxis,
+  Prs3d_DatumAxes_XZAxes  = Prs3d_DatumAxes_XAxis | Prs3d_DatumAxes_ZAxis,
+  Prs3d_DatumAxes_XYZAxes = Prs3d_DatumAxes_XAxis | Prs3d_DatumAxes_YAxis | Prs3d_DatumAxes_ZAxis,
 
-  // old aliases
   Prs3d_DA_XAxis   = Prs3d_DatumAxes_XAxis,
   Prs3d_DA_YAxis   = Prs3d_DatumAxes_YAxis,
   Prs3d_DA_ZAxis   = Prs3d_DatumAxes_ZAxis,
@@ -44,34 +28,27 @@ enum Prs3d_DatumAxes
 #include <Prs3d_ShadingAspect.hpp>
 #include <Prs3d_TextAspect.hpp>
 
-//! A framework to define the display of datums.
 class Prs3d_DatumAspect : public Prs3d_BasicAspect
 {
   DEFINE_STANDARD_RTTIEXT(Prs3d_DatumAspect, Prs3d_BasicAspect)
 public:
-  //! An empty constructor.
   Standard_EXPORT Prs3d_DatumAspect();
 
-  //! Returns line aspect for specified part.
   const occ::handle<Prs3d_LineAspect>& LineAspect(Prs3d_DatumParts thePart) const
   {
     return myLineAspects[thePart];
   }
 
-  //! Returns shading aspect for specified part.
   const occ::handle<Prs3d_ShadingAspect>& ShadingAspect(Prs3d_DatumParts thePart) const
   {
     return myShadedAspects[thePart];
   }
 
-  //! Returns the text attributes for rendering label of specified part
-  //! (Prs3d_DatumParts_XAxis/Prs3d_DatumParts_YAxis/Prs3d_DatumParts_ZAxis).
   const occ::handle<Prs3d_TextAspect>& TextAspect(Prs3d_DatumParts thePart) const
   {
     return myTextAspects[thePart];
   }
 
-  //! Sets text attributes for rendering labels.
   void SetTextAspect(const occ::handle<Prs3d_TextAspect>& theTextAspect)
   {
     myTextAspects[Prs3d_DatumParts_XAxis] = theTextAspect;
@@ -79,46 +56,35 @@ public:
     myTextAspects[Prs3d_DatumParts_ZAxis] = theTextAspect;
   }
 
-  //! Returns the point aspect of origin wireframe presentation
   const occ::handle<Prs3d_PointAspect>& PointAspect() const { return myPointAspect; }
 
-  //! Returns the point aspect of origin wireframe presentation
   void SetPointAspect(const occ::handle<Prs3d_PointAspect>& theAspect)
   {
     myPointAspect = theAspect;
   }
 
-  //! Returns the arrow aspect of presentation.
   const occ::handle<Prs3d_ArrowAspect>& ArrowAspect() const { return myArrowAspect; }
 
-  //! Sets the arrow aspect of presentation
   void SetArrowAspect(const occ::handle<Prs3d_ArrowAspect>& theAspect)
   {
     myArrowAspect = theAspect;
   }
 
-  //! Returns true if the given part is used in axes of aspect
   Standard_EXPORT bool DrawDatumPart(Prs3d_DatumParts thePart) const;
 
-  //! Sets the axes used in the datum aspect
   void SetDrawDatumAxes(Prs3d_DatumAxes theType) { myAxes = theType; }
 
-  //! Returns axes used in the datum aspect
   Prs3d_DatumAxes DatumAxes() const { return myAxes; }
 
-  //! Returns the attribute of the datum type
   double Attribute(Prs3d_DatumAttribute theType) const { return myAttributes[theType]; }
 
-  //! Sets the attribute of the datum type
   void SetAttribute(Prs3d_DatumAttribute theType, const double theValue)
   {
     myAttributes[theType] = theValue;
   }
 
-  //! Returns the length of the displayed first axis.
   Standard_EXPORT double AxisLength(Prs3d_DatumParts thePart) const;
 
-  //! Sets the lengths of the three axes.
   void SetAxisLength(double theL1, double theL2, double theL3)
   {
     myAttributes[Prs3d_DatumAttribute_XAxisLength] = theL1;
@@ -126,32 +92,24 @@ public:
     myAttributes[Prs3d_DatumAttribute_ZAxisLength] = theL3;
   }
 
-  //! @return true if axes labels are drawn; TRUE by default.
   bool ToDrawLabels() const { return myToDrawLabels; }
 
-  //! Sets option to draw or not to draw text labels for axes
   void SetDrawLabels(bool theToDraw) { myToDrawLabels = theToDraw; }
 
   void SetToDrawLabels(bool theToDraw) { myToDrawLabels = theToDraw; }
 
-  //! @return true if axes arrows are drawn; TRUE by default.
   bool ToDrawArrows() const { return myToDrawArrows; }
 
-  //! Sets option to draw or not arrows for axes
   void SetDrawArrows(bool theToDraw) { myToDrawArrows = theToDraw; }
 
-  //! Performs deep copy of attributes from another aspect instance.
   Standard_EXPORT void CopyAspectsFrom(const occ::handle<Prs3d_DatumAspect>& theOther);
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
 public:
-  //! Returns type of arrow for a type of axis
   Standard_EXPORT static Prs3d_DatumParts ArrowPartForAxis(Prs3d_DatumParts thePart);
 
 public:
-  //! Returns the text attributes for rendering labels.
   Standard_DEPRECATED(
     "This method is deprecated - TextAspect() with axis parameter should be called instead")
 

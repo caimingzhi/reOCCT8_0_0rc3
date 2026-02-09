@@ -11,7 +11,6 @@ class StepBasic_MeasureWithUnit : public Standard_Transient
 {
 
 public:
-  //! Returns a MeasureWithUnit
   Standard_EXPORT StepBasic_MeasureWithUnit();
 
   Standard_EXPORT void Init(const occ::handle<StepBasic_MeasureValueMember>& aValueComponent,

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_LineBuffer.hpp>
 #include <Standard_OutOfRange.hpp>
@@ -91,11 +80,9 @@ void Interface_LineBuffer::Clear()
   myLine.SetValue(1, '\0');
 }
 
-// ....                        RESULTATS                        ....
-
 void Interface_LineBuffer::Prepare()
 {
-  //  ATTENTION aux blanx initiaux
+
   if (myInit > 0)
   {
     if ((myLen + myInit) > myMax)
@@ -112,10 +99,10 @@ void Interface_LineBuffer::Prepare()
       myLine.SetValue(i, ' ');
     }
   }
-  //  MANAGE KEEP: is it playable? otherwise, cancel. if yes, note the junction
+
   if (myKeep > 0)
   {
-    myKeep += (myInit + 1); // myInit, and +1 because Keep INCLUDED
+    myKeep += (myInit + 1);
   }
   if (myKeep > 0)
   {
@@ -133,7 +120,7 @@ void Interface_LineBuffer::Prepare()
 
 void Interface_LineBuffer::Keep()
 {
-  //  If Keep, save from myKeep + 1 to myLen (+1 for final 0)
+
   if (myKeep > 0)
   {
     myLine.SetValue(1, myKept);
@@ -176,8 +163,6 @@ occ::handle<TCollection_HAsciiString> Interface_LineBuffer::Moved()
   Keep();
   return R;
 }
-
-// ....                        AJOUTS                        ....
 
 void Interface_LineBuffer::Add(const char* theText)
 {

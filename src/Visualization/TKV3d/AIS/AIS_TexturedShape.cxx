@@ -22,8 +22,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_TexturedShape, AIS_Shape)
 
-//=================================================================================================
-
 AIS_TexturedShape::AIS_TexturedShape(const TopoDS_Shape& theShape)
     : AIS_Shape(theShape),
       myPredefTexture(Graphic3d_NameOfTexture2D(0)),
@@ -35,8 +33,6 @@ AIS_TexturedShape::AIS_TexturedShape(const TopoDS_Shape& theShape)
       myToShowTriangles(false)
 {
 }
-
-//=================================================================================================
 
 void AIS_TexturedShape::SetTextureFileName(const TCollection_AsciiString& theTextureFileName)
 {
@@ -64,16 +60,12 @@ void AIS_TexturedShape::SetTextureFileName(const TCollection_AsciiString& theTex
   }
 }
 
-//=================================================================================================
-
 void AIS_TexturedShape::SetTexturePixMap(const occ::handle<Image_PixMap>& theTexturePixMap)
 {
   myTextureFile   = "";
   myPredefTexture = Graphic3d_NOT_2D_UNKNOWN;
   myTexturePixMap = theTexturePixMap;
 }
-
-//=================================================================================================
 
 void AIS_TexturedShape::SetTextureRepeat(const bool   theToRepeat,
                                          const double theURepeat,
@@ -83,21 +75,15 @@ void AIS_TexturedShape::SetTextureRepeat(const bool   theToRepeat,
   myUVRepeat.SetCoord(theURepeat, theVRepeat);
 }
 
-//=================================================================================================
-
 void AIS_TexturedShape::SetTextureMapOn()
 {
   myToMapTexture = true;
 }
 
-//=================================================================================================
-
 void AIS_TexturedShape::SetTextureMapOff()
 {
   myToMapTexture = false;
 }
-
-//=================================================================================================
 
 void AIS_TexturedShape::SetTextureOrigin(const bool   theToSetTextureOrigin,
                                          const double theUOrigin,
@@ -107,8 +93,6 @@ void AIS_TexturedShape::SetTextureOrigin(const bool   theToSetTextureOrigin,
   myUVOrigin.SetCoord(theUOrigin, theVOrigin);
 }
 
-//=================================================================================================
-
 void AIS_TexturedShape::SetTextureScale(const bool   theToSetTextureScale,
                                         const double theScaleU,
                                         const double theScaleV)
@@ -117,28 +101,20 @@ void AIS_TexturedShape::SetTextureScale(const bool   theToSetTextureScale,
   myUVScale.SetCoord(theScaleU, theScaleV);
 }
 
-//=================================================================================================
-
 void AIS_TexturedShape::ShowTriangles(const bool theToShowTriangles)
 {
   myToShowTriangles = theToShowTriangles;
 }
-
-//=================================================================================================
 
 void AIS_TexturedShape::EnableTextureModulate()
 {
   myModulate = true;
 }
 
-//=================================================================================================
-
 void AIS_TexturedShape::DisableTextureModulate()
 {
   myModulate = false;
 }
-
-//=================================================================================================
 
 void AIS_TexturedShape::SetColor(const Quantity_Color& theColor)
 {
@@ -155,14 +131,10 @@ void AIS_TexturedShape::SetColor(const Quantity_Color& theColor)
   }
 }
 
-//=================================================================================================
-
 void AIS_TexturedShape::UnsetColor()
 {
   AIS_Shape::UnsetColor();
 }
-
-//=================================================================================================
 
 void AIS_TexturedShape::SetMaterial(const Graphic3d_MaterialAspect& theMat)
 {
@@ -178,8 +150,6 @@ void AIS_TexturedShape::SetMaterial(const Graphic3d_MaterialAspect& theMat)
   }
 }
 
-//=================================================================================================
-
 void AIS_TexturedShape::UnsetMaterial()
 {
   AIS_Shape::UnsetMaterial();
@@ -194,14 +164,10 @@ void AIS_TexturedShape::UnsetMaterial()
   }
 }
 
-//=================================================================================================
-
 void AIS_TexturedShape::UpdateAttributes()
 {
   updateAttributes(Presentation());
 }
-
-//=================================================================================================
 
 void AIS_TexturedShape::updateAttributes(const occ::handle<Prs3d_Presentation>& thePrs)
 {
@@ -273,7 +239,6 @@ void AIS_TexturedShape::updateAttributes(const occ::handle<Prs3d_Presentation>& 
     myAspect->SetEdgeOff();
   }
 
-  // Go through all groups to change fill aspect for all primitives
   for (NCollection_Sequence<occ::handle<Graphic3d_Group>>::Iterator aGroupIt(thePrs->Groups());
        aGroupIt.More();
        aGroupIt.Next())
@@ -282,8 +247,6 @@ void AIS_TexturedShape::updateAttributes(const occ::handle<Prs3d_Presentation>& 
     aGroup->SetGroupPrimitivesAspect(myAspect);
   }
 }
-
-//=================================================================================================
 
 void AIS_TexturedShape::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                 const occ::handle<Prs3d_Presentation>& thePrs,
@@ -296,7 +259,7 @@ void AIS_TexturedShape::Compute(const occ::handle<PrsMgr_PresentationManager>&,
 
   if (myshape.ShapeType() >= TopAbs_WIRE && myshape.ShapeType() <= TopAbs_VERTEX)
   {
-    // TopAbs_WIRE -> 7, TopAbs_EDGE -> 8, TopAbs_VERTEX -> 9 (Graphic3d_DisplayPriority_Highlight)
+
     const int aPrior =
       (int)Graphic3d_DisplayPriority_Above1 + (int)myshape.ShapeType() - TopAbs_WIRE;
     thePrs->SetVisual(Graphic3d_TOS_ALL);
@@ -317,7 +280,7 @@ void AIS_TexturedShape::Compute(const occ::handle<PrsMgr_PresentationManager>&,
       break;
     }
     case AIS_Shaded:
-    case 3: // texture mapping on triangulation
+    case 3:
     {
       StdPrs_ToolTriangulatedShape::ClearOnOwnDeflectionChange(myshape, myDrawer, true);
       if (myshape.ShapeType() > TopAbs_FACE)
@@ -359,7 +322,7 @@ void AIS_TexturedShape::Compute(const occ::handle<PrsMgr_PresentationManager>&,
       }
       break;
     }
-    case 2: // Bounding box
+    case 2:
     {
       if (IsInfinite())
       {

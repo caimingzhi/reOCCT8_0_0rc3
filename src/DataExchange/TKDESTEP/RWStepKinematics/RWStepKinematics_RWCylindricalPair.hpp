@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_CylindricalPair;
 
-//! Read & Write tool for CylindricalPair
 class RWStepKinematics_RWCylindricalPair
 {
 public:

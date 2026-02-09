@@ -10,52 +10,34 @@ class gp_Trsf;
 class gp_Pnt;
 class gp_Vec;
 
-//! Defines a curve which consists of several segments.
-//! Implements basic interface to it.
 class ShapeExtend_ComplexCurve : public Geom_Curve
 {
 
 public:
-  //! Returns number of curves
   Standard_EXPORT virtual int NbCurves() const = 0;
 
-  //! Returns curve given by its index
   Standard_EXPORT virtual const occ::handle<Geom_Curve>& Curve(const int index) const = 0;
 
-  //! Returns number of the curve for the given parameter U
-  //! and local parameter UOut for the found curve
   Standard_EXPORT virtual int LocateParameter(const double U, double& UOut) const = 0;
 
-  //! Returns global parameter for the whole curve according
-  //! to the segment and local parameter on it
   Standard_EXPORT virtual double LocalToGlobal(const int index, const double Ulocal) const = 0;
 
-  //! Applies transformation to each curve
   Standard_EXPORT void Transform(const gp_Trsf& T) override;
 
-  //! Returns 1 - U
   double ReversedParameter(const double U) const override;
 
-  //! Returns 0
   double FirstParameter() const override;
 
-  //! Returns 1
   double LastParameter() const override;
 
-  //! Returns True if the curve is closed
   bool IsClosed() const override;
 
-  //! Returns False
   bool IsPeriodic() const override;
 
-  //! Returns GeomAbs_C0
   GeomAbs_Shape Continuity() const override;
 
-  //! Returns False if N > 0
   bool IsCN(const int N) const override;
 
-  //! Returns point at parameter U.
-  //! Finds appropriate curve and local parameter on it.
   Standard_EXPORT void D0(const double U, gp_Pnt& P) const override;
 
   Standard_EXPORT void D1(const double U, gp_Pnt& P, gp_Vec& V1) const override;
@@ -70,11 +52,8 @@ public:
 
   Standard_EXPORT gp_Vec DN(const double U, const int N) const override;
 
-  //! Returns scale factor for recomputing of deviatives.
   Standard_EXPORT virtual double GetScaleFactor(const int ind) const = 0;
 
-  //! Checks geometrical connectivity of the curves, including
-  //! closure (sets fields myClosed)
   Standard_EXPORT bool CheckConnectivity(const double Preci);
 
   DEFINE_STANDARD_RTTIEXT(ShapeExtend_ComplexCurve, Geom_Curve)
@@ -82,7 +61,6 @@ public:
 protected:
   Standard_EXPORT ShapeExtend_ComplexCurve();
 
-  //! Transform the derivative according to its order
   Standard_EXPORT void TransformDN(gp_Vec& V, const int ind, const int N) const;
 
   bool myClosed;
@@ -93,42 +71,30 @@ inline double ShapeExtend_ComplexCurve::ReversedParameter(const double U) const
   return (1 - U);
 }
 
-//=================================================================================================
-
 inline double ShapeExtend_ComplexCurve::FirstParameter() const
 {
   return 0;
 }
-
-//=================================================================================================
 
 inline double ShapeExtend_ComplexCurve::LastParameter() const
 {
   return 1;
 }
 
-//=================================================================================================
-
 inline bool ShapeExtend_ComplexCurve::IsClosed() const
 {
   return myClosed;
 }
-
-//=================================================================================================
 
 inline bool ShapeExtend_ComplexCurve::IsPeriodic() const
 {
   return false;
 }
 
-//=================================================================================================
-
 inline GeomAbs_Shape ShapeExtend_ComplexCurve::Continuity() const
 {
   return GeomAbs_C0;
 }
-
-//=================================================================================================
 
 inline bool ShapeExtend_ComplexCurve::IsCN(const int N) const
 {

@@ -11,7 +11,6 @@ class StepAP214_AppliedDateAssignment;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AppliedDateAssignment
 class RWStepAP214_RWAppliedDateAssignment
 {
 public:

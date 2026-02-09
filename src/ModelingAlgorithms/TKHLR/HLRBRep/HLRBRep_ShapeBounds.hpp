@@ -9,8 +9,6 @@
 #include <Standard_Integer.hpp>
 class HLRTopoBRep_OutLiner;
 
-//! Contains a Shape and the bounds of its vertices,
-//! edges and faces in the DataStructure.
 class HLRBRep_ShapeBounds
 {
 public:
@@ -86,42 +84,30 @@ inline HLRBRep_ShapeBounds::HLRBRep_ShapeBounds()
 {
 }
 
-//=================================================================================================
-
 inline void HLRBRep_ShapeBounds::Shape(const occ::handle<HLRTopoBRep_OutLiner>& S)
 {
   myShape = S;
 }
-
-//=================================================================================================
 
 inline const occ::handle<HLRTopoBRep_OutLiner>& HLRBRep_ShapeBounds::Shape() const
 {
   return myShape;
 }
 
-//=================================================================================================
-
 inline void HLRBRep_ShapeBounds::ShapeData(const occ::handle<Standard_Transient>& SD)
 {
   myShapeData = SD;
 }
-
-//=================================================================================================
 
 inline const occ::handle<Standard_Transient>& HLRBRep_ShapeBounds::ShapeData() const
 {
   return myShapeData;
 }
 
-//=================================================================================================
-
 inline void HLRBRep_ShapeBounds::NbOfIso(const int nbIso)
 {
   myNbIso = nbIso;
 }
-
-//=================================================================================================
 
 inline int HLRBRep_ShapeBounds::NbOfIso() const
 {

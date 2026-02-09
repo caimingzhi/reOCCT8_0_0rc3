@@ -8,11 +8,7 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWCurveElementEndOffset::RWStepFEA_RWCurveElementEndOffset() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWCurveElementEndOffset::ReadStep(
   const occ::handle<StepData_StepReaderData>&       data,
@@ -20,11 +16,9 @@ void RWStepFEA_RWCurveElementEndOffset::ReadStep(
   occ::handle<Interface_Check>&                     ach,
   const occ::handle<StepFEA_CurveElementEndOffset>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "curve_element_end_offset"))
     return;
-
-  // Own fields of CurveElementEndOffset
 
   StepFEA_CurveElementEndCoordinateSystem aCoordinateSystem;
   data->ReadEntity(num, 1, "coordinate_system", ach, aCoordinateSystem);
@@ -44,18 +38,13 @@ void RWStepFEA_RWCurveElementEndOffset::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aCoordinateSystem, aOffsetVector);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWCurveElementEndOffset::WriteStep(
   StepData_StepWriter&                              SW,
   const occ::handle<StepFEA_CurveElementEndOffset>& ent) const
 {
-
-  // Own fields of CurveElementEndOffset
 
   SW.Send(ent->CoordinateSystem().Value());
 
@@ -68,13 +57,9 @@ void RWStepFEA_RWCurveElementEndOffset::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWCurveElementEndOffset::Share(const occ::handle<StepFEA_CurveElementEndOffset>& ent,
                                               Interface_EntityIterator& iter) const
 {
-
-  // Own fields of CurveElementEndOffset
 
   iter.AddItem(ent->CoordinateSystem().Value());
 }

@@ -15,10 +15,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=============================================================================
-// Creation d' une bspline_Surface_with_knots_and_rational_bspline_Surface de
-// prostep a partir d' une BSplineSurface de Geom
-//=============================================================================
 GeomToStep_MakeBSplineSurfaceWithKnots::GeomToStep_MakeBSplineSurfaceWithKnots(
   const occ::handle<Geom_BSplineSurface>& BS,
   const StepData_Factors&                 theLocalFactors)
@@ -136,10 +132,6 @@ GeomToStep_MakeBSplineSurfaceWithKnots::GeomToStep_MakeBSplineSurfaceWithKnots(
   theBSplineSurfaceWithKnots = BSWK;
   done                       = true;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_BSplineSurfaceWithKnots>& GeomToStep_MakeBSplineSurfaceWithKnots::Value()
   const

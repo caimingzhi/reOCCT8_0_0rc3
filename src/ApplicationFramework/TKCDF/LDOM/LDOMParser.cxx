@@ -12,18 +12,11 @@
   #include <unistd.h>
 #endif
 
-//=================================================================================================
-
 LDOMParser::~LDOMParser()
 {
   if (myReader)
     delete myReader;
 }
-
-//=======================================================================
-// function : ReadRecord
-// purpose  : Take the next lexical element from XML stream
-//=======================================================================
 
 #ifdef LDOM_PARSER_TRACE
 static
@@ -91,11 +84,6 @@ inline
   return aType;
 }
 
-//=======================================================================
-// function : GetError
-// purpose  : Return text describing a parsing error
-//=======================================================================
-
 const TCollection_AsciiString& LDOMParser::GetError(TCollection_AsciiString& aData) const
 {
   char* aStr = (char*)myCurrentData.str();
@@ -104,11 +92,6 @@ const TCollection_AsciiString& LDOMParser::GetError(TCollection_AsciiString& aDa
   return myError;
 }
 
-//=======================================================================
-// function : GetBOM
-// purpose  : Returns the byte order mask defined at the start of a stream
-//=======================================================================
-
 LDOM_OSStream::BOMType LDOMParser::GetBOM() const
 {
   if (myReader)
@@ -116,24 +99,18 @@ LDOM_OSStream::BOMType LDOMParser::GetBOM() const
   return LDOM_OSStream::BOM_UNDEFINED;
 }
 
-//=================================================================================================
-
 bool LDOMParser::parse(std::istream& anInput, const bool theTagPerStep, const bool theWithoutRoot)
 {
-  // Open the DOM Document
+
   myDocument = new LDOM_MemManager(20000);
   myError.Clear();
 
-  // Create the Reader instance
   if (myReader)
     delete myReader;
   myReader = new LDOM_XmlReader(myDocument, myError, theTagPerStep);
 
-  // Parse
   return ParseDocument(anInput, theWithoutRoot);
 }
-
-//=================================================================================================
 
 bool LDOMParser::parse(const char* const aFileName)
 {
@@ -150,11 +127,6 @@ bool LDOMParser::parse(const char* const aFileName)
     return true;
   }
 }
-
-//=======================================================================
-// function : ParseDocument
-// purpose  : parse the whole document (abstracted from the XML source)
-//=======================================================================
 
 bool LDOMParser::ParseDocument(std::istream& theIStream, const bool theWithoutRoot)
 {
@@ -223,7 +195,6 @@ bool LDOMParser::ParseDocument(std::istream& theIStream, const bool theWithoutRo
           {
             isInsertFictRootElement = true;
 
-            // create fiction root element
             TCollection_AsciiString aFicName("document");
             myReader->CreateElement(aFicName.ToCString(), aFicName.Length());
           }
@@ -265,11 +236,6 @@ bool LDOMParser::ParseDocument(std::istream& theIStream, const bool theWithoutRo
   }
   return isError;
 }
-
-//=======================================================================
-// function : ParseElement
-// purpose  : parse one element, given the type of its XML presentation
-//=======================================================================
 
 bool LDOMParser::ParseElement(Standard_IStream& theIStream, bool& theDocStart)
 {
@@ -337,7 +303,7 @@ bool LDOMParser::ParseElement(Standard_IStream& theIStream, bool& theDocStart)
         {
           int aTextLen;
           aTextStr = LDOM_CharReference::Decode((char*)myCurrentData.str(), aTextLen);
-          // try to convert to integer
+
           if (IsDigit(aTextStr[0]))
           {
             if (LDOM_XmlReader::getInteger(aTextValue, aTextStr, aTextStr + aTextLen))
@@ -378,34 +344,20 @@ bool LDOMParser::ParseElement(Standard_IStream& theIStream, bool& theDocStart)
   return isError;
 }
 
-//=======================================================================
-// function : startElement
-// purpose  : virtual hook on 'StartElement' event for descendant classes
-//=======================================================================
-
 bool LDOMParser::startElement()
 {
   return false;
 }
-
-//=======================================================================
-// function : endElement
-// purpose  : virtual hook on 'EndElement' event for descendant classes
-//=======================================================================
 
 bool LDOMParser::endElement()
 {
   return false;
 }
 
-//=================================================================================================
-
 LDOM_Element LDOMParser::getCurrentElement() const
 {
   return LDOM_Element(myReader->GetElement(), myDocument);
 }
-
-//=================================================================================================
 
 LDOM_Document LDOMParser::getDocument()
 {

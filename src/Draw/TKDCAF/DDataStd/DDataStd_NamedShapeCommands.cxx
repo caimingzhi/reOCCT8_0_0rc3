@@ -10,14 +10,7 @@
 #include <DBRep.hpp>
 #include <TopoDS.hpp>
 
-// LES ATTRIBUTES
-
 #include <TNaming_Builder.hpp>
-
-//=======================================================================
-// function : DDataStd_SetShape
-// purpose  : SetShape (DF, entry, drawshape)
-//=======================================================================
 
 static int DDataStd_SetShape(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -41,8 +34,6 @@ static int DDataStd_SetShape(Draw_Interpretor& di, int nb, const char** arg)
   di << "DDataStd_SetShape : Error\n";
   return 1;
 }
-
-//=================================================================================================
 
 void DDataStd::NamedShapeCommands(Draw_Interpretor& theCommands)
 {

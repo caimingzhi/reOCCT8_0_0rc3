@@ -301,5 +301,3 @@ static const char Shaders_SkydomBackground_fs[] =
   "\n"
   "  occFragColor = computeIncidentLight (normalize (aRayDirection), anUv, uTime);\n"
   "}\n";
-
-// clang-format on

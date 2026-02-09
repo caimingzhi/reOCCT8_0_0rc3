@@ -7,8 +7,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Font_FTLibrary, Standard_Transient)
 
-//=================================================================================================
-
 Font_FTLibrary::Font_FTLibrary()
     : myFTLib(nullptr)
 {
@@ -19,8 +17,6 @@ Font_FTLibrary::Font_FTLibrary()
   }
 #endif
 }
-
-//=================================================================================================
 
 Font_FTLibrary::~Font_FTLibrary()
 {

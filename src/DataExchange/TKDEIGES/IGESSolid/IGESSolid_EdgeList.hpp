@@ -9,29 +9,12 @@
 #include <Standard_Integer.hpp>
 class IGESSolid_VertexList;
 
-//! defines EdgeList, Type <504> Form <1>
-//! in package IGESSolid
-//! EdgeList is defined as a segment joining two vertices
-//! It contains one or more edge tuples.
 class IGESSolid_EdgeList : public IGESData_IGESEntity
 {
 
 public:
   Standard_EXPORT IGESSolid_EdgeList();
 
-  //! This method is used to set the fields of the class
-  //! EdgeList
-  //! - curves           : the model space curves
-  //! - startVertexList  : the vertex list that contains the
-  //! start vertices
-  //! - startVertexIndex : the index of the vertex in the
-  //! corresponding vertex list
-  //! - endVertexList    : the vertex list that contains the
-  //! end vertices
-  //! - endVertexIndex   : the index of the vertex in the
-  //! corresponding vertex list
-  //! raises exception if size of curves,startVertexList,startVertexIndex,
-  //! endVertexList and endVertexIndex do no match
   Standard_EXPORT void Init(
     const occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>&  curves,
     const occ::handle<NCollection_HArray1<occ::handle<IGESSolid_VertexList>>>& startVertexList,
@@ -39,29 +22,16 @@ public:
     const occ::handle<NCollection_HArray1<occ::handle<IGESSolid_VertexList>>>& endVertexList,
     const occ::handle<NCollection_HArray1<int>>&                               endVertexIndex);
 
-  //! returns the number of edges in the edge list
   Standard_EXPORT int NbEdges() const;
 
-  //! returns the num'th model space curve
-  //! raises Exception if num <= 0 or num > NbEdges()
   Standard_EXPORT occ::handle<IGESData_IGESEntity> Curve(const int num) const;
 
-  //! returns the num'th start vertex list
-  //! raises Exception if num <= 0 or num > NbEdges()
   Standard_EXPORT occ::handle<IGESSolid_VertexList> StartVertexList(const int num) const;
 
-  //! returns the index of num'th start vertex in
-  //! the corresponding start vertex list
-  //! raises Exception if num <= 0 or num > NbEdges()
   Standard_EXPORT int StartVertexIndex(const int num) const;
 
-  //! returns the num'th end vertex list
-  //! raises Exception if num <= 0 or num > NbEdges()
   Standard_EXPORT occ::handle<IGESSolid_VertexList> EndVertexList(const int num) const;
 
-  //! returns the index of num'th end vertex in
-  //! the corresponding end vertex list
-  //! raises Exception if num <= 0 or num > NbEdges()
   Standard_EXPORT int EndVertexIndex(const int num) const;
 
   DEFINE_STANDARD_RTTIEXT(IGESSolid_EdgeList, IGESData_IGESEntity)

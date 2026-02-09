@@ -6,14 +6,11 @@
 
 #include <BRepMesh_DegreeOfFreedom.hpp>
 
-//! Light weighted structure representing triangle
-//! of mesh consisting of oriented links.
 class BRepMesh_Triangle
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Default constructor.
   BRepMesh_Triangle()
       : myMovability(BRepMesh_Free)
   {
@@ -25,10 +22,6 @@ public:
     myOrientations[2] = false;
   }
 
-  //! Constructor.
-  //! @param theEdges array of edges of triangle.
-  //! @param theOrientations array of edge's orientations.
-  //! @param theMovability movability of triangle.
   BRepMesh_Triangle(const int (&theEdges)[3],
                     const bool (&theOrientations)[3],
                     const BRepMesh_DegreeOfFreedom theMovability)
@@ -36,10 +29,6 @@ public:
     Initialize(theEdges, theOrientations, theMovability);
   }
 
-  //! Initializes the triangle by the given parameters.
-  //! @param theEdges array of edges of triangle.
-  //! @param theOrientations array of edge's orientations.
-  //! @param theMovability movability of triangle.
   void Initialize(const int (&theEdges)[3],
                   const bool (&theOrientations)[3],
                   const BRepMesh_DegreeOfFreedom theMovability)
@@ -49,24 +38,16 @@ public:
     myMovability = theMovability;
   }
 
-  //! Gets edges with orientations composing the triangle.
-  //! @param[out] theEdges array edges are stored to.
-  //! @param[out] theOrientations array orientations are stored to.
   void Edges(int (&theEdges)[3], bool (&theOrientations)[3]) const
   {
     memcpy(theEdges, myEdges, sizeof(myEdges));
     memcpy(theOrientations, myOrientations, sizeof(myOrientations));
   }
 
-  //! Returns movability of the triangle.
   BRepMesh_DegreeOfFreedom Movability() const { return myMovability; }
 
-  //! Sets movability of the triangle.
   void SetMovability(const BRepMesh_DegreeOfFreedom theMovability) { myMovability = theMovability; }
 
-  //! Checks for equality with another triangle.
-  //! @param theOther triangle to be checked against this one.
-  //! @return TRUE if equal, FALSE if not.
   bool IsEqual(const BRepMesh_Triangle& theOther) const
   {
     if (myMovability == BRepMesh_Deleted || theOther.myMovability == BRepMesh_Deleted)
@@ -93,7 +74,6 @@ public:
     return false;
   }
 
-  //! Alias for IsEqual.
   bool operator==(const BRepMesh_Triangle& theOther) const { return IsEqual(theOther); }
 
   int                      myEdges[3];
@@ -111,7 +91,7 @@ namespace std
       int aCombination[3] = {theTriangle.myEdges[0],
                              theTriangle.myEdges[1],
                              theTriangle.myEdges[2]};
-      std::sort(aCombination, aCombination + 3); // Sort the numbers in ascending order
+      std::sort(aCombination, aCombination + 3);
       return opencascade::hashBytes(aCombination, sizeof(aCombination));
     }
   };

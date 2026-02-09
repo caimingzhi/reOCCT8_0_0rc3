@@ -8,19 +8,6 @@
 #include <Standard_Transient.hpp>
 #include <TopAbs_Orientation.hpp>
 
-//! An EdgesBlock is a set of Edges. It is used by the
-//! DataStructure to structure the Edges.
-//!
-//! An EdgesBlock contains:
-//!
-//! * An Array of index of Edges.
-//!
-//! * An Array of flagsf
-//! (Orientation
-//!  OutLine
-//!  Internal
-//!  Double
-//!  IsoLine)
 class HLRAlgo_EdgesBlock : public Standard_Transient
 {
 
@@ -62,7 +49,6 @@ public:
     }
   };
 
-  //! Create a Block of Edges for a wire.
   Standard_EXPORT HLRAlgo_EdgesBlock(const int NbEdges);
 
   int NbEdges() const { return myEdges.Upper(); }

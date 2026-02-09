@@ -12,7 +12,6 @@ class StepVisual_CameraModelD2 : public StepVisual_CameraModel
 {
 
 public:
-  //! Returns a CameraModelD2
   Standard_EXPORT StepVisual_CameraModelD2();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

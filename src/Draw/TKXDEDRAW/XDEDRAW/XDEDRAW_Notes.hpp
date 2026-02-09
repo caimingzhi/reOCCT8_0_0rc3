@@ -5,7 +5,6 @@
 
 #include <Draw_Interpretor.hpp>
 
-//! Contains commands to work with notes
 class XDEDRAW_Notes
 {
 public:

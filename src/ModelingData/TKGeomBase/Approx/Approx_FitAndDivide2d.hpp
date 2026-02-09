@@ -15,10 +15,6 @@ class Approx_FitAndDivide2d
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! The MultiLine <Line> will be approximated until tolerances
-  //! will be reached.
-  //! The approximation will be done from degreemin to degreemax
-  //! with a cutting if the corresponding boolean is True.
   Standard_EXPORT Approx_FitAndDivide2d(
     const AppCont_Function&       Line,
     const int                     degreemin   = 3,
@@ -29,7 +25,6 @@ public:
     const AppParCurves_Constraint FirstC      = AppParCurves_TangencyPoint,
     const AppParCurves_Constraint LastC       = AppParCurves_TangencyPoint);
 
-  //! Initializes the fields of the algorithm.
   Standard_EXPORT Approx_FitAndDivide2d(
     const int                     degreemin   = 3,
     const int                     degreemax   = 8,
@@ -39,56 +34,34 @@ public:
     const AppParCurves_Constraint FirstC      = AppParCurves_TangencyPoint,
     const AppParCurves_Constraint LastC       = AppParCurves_TangencyPoint);
 
-  //! runs the algorithm after having initialized the fields.
   Standard_EXPORT void Perform(const AppCont_Function& Line);
 
-  //! changes the degrees of the approximation.
   Standard_EXPORT void SetDegrees(const int degreemin, const int degreemax);
 
-  //! Changes the tolerances of the approximation.
   Standard_EXPORT void SetTolerances(const double Tolerance3d, const double Tolerance2d);
 
-  //! Changes the constraints of the approximation.
   Standard_EXPORT void SetConstraints(const AppParCurves_Constraint FirstC,
                                       const AppParCurves_Constraint LastC);
 
-  //! Changes the max number of segments, which is allowed for cutting.
   Standard_EXPORT void SetMaxSegments(const int theMaxSegments);
 
-  //! Set inverse order of degree selection:
-  //! if theInvOrdr = true, current degree is chosen by inverse order -
-  //! from maxdegree to mindegree.
-  //! By default inverse order is used.
   Standard_EXPORT void SetInvOrder(const bool theInvOrder);
 
-  //! Set value of hang checking flag
-  //! if this flag = true, possible hang of algorithm is checked
-  //! and algorithm is forced to stop.
-  //! By default hang checking is used.
   Standard_EXPORT void SetHangChecking(const bool theHangChecking);
 
-  //! returns False if at a moment of the approximation,
-  //! the status NoApproximation has been sent by the user
-  //! when more points were needed.
   Standard_EXPORT bool IsAllApproximated() const;
 
-  //! returns False if the status NoPointsAdded has been sent.
   Standard_EXPORT bool IsToleranceReached() const;
 
-  //! returns the tolerances 2d and 3d of the <Index> MultiCurve.
   Standard_EXPORT void Error(const int Index, double& tol3d, double& tol2d) const;
 
-  //! Returns the number of MultiCurve doing the approximation
-  //! of the MultiLine.
   Standard_EXPORT int NbMultiCurves() const;
 
-  //! returns the approximation MultiCurve of range <Index>.
   Standard_EXPORT AppParCurves_MultiCurve Value(const int Index = 1) const;
 
   Standard_EXPORT void Parameters(const int Index, double& firstp, double& lastp) const;
 
 private:
-  //! is internally used by the algorithms.
   Standard_EXPORT bool Compute(const AppCont_Function& Line,
                                const double            Ufirst,
                                const double            Ulast,

@@ -21,7 +21,6 @@ class StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface : public StepGeo
 {
 
 public:
-  //! Returns a BSplineSurfaceWithKnotsAndRationalBSplineSurface
   Standard_EXPORT StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface();
 
   Standard_EXPORT void Init(

@@ -13,63 +13,40 @@ class Poly_Polygon3D;
 class Poly_Polygon2D;
 class Poly_PolygonOnTriangulation;
 
-//! Root class for the curve representations. Contains
-//! a location.
 class BRep_CurveRepresentation : public Standard_Transient
 {
 
 public:
-  //! A 3D curve representation.
   Standard_EXPORT virtual bool IsCurve3D() const;
 
-  //! A curve in the parametric space of a surface.
   Standard_EXPORT virtual bool IsCurveOnSurface() const;
 
-  //! A continuity between two surfaces.
   Standard_EXPORT virtual bool IsRegularity() const;
 
-  //! A curve with two parametric curves on the same
-  //! surface.
   Standard_EXPORT virtual bool IsCurveOnClosedSurface() const;
 
-  //! Is it a curve in the parametric space of <S> with
-  //! location <L>.
   Standard_EXPORT virtual bool IsCurveOnSurface(const occ::handle<Geom_Surface>& S,
                                                 const TopLoc_Location&           L) const;
 
-  //! Is it a regularity between <S1> and <S2> with
-  //! location <L1> and <L2>.
   Standard_EXPORT virtual bool IsRegularity(const occ::handle<Geom_Surface>& S1,
                                             const occ::handle<Geom_Surface>& S2,
                                             const TopLoc_Location&           L1,
                                             const TopLoc_Location&           L2) const;
 
-  //! A 3D polygon representation.
   Standard_EXPORT virtual bool IsPolygon3D() const;
 
-  //! A representation by an array of nodes on a
-  //! triangulation.
   Standard_EXPORT virtual bool IsPolygonOnTriangulation() const;
 
-  //! Is it a polygon in the definition of <T> with
-  //! location <L>.
   Standard_EXPORT virtual bool IsPolygonOnTriangulation(const occ::handle<Poly_Triangulation>& T,
                                                         const TopLoc_Location& L) const;
 
-  //! A representation by two arrays of nodes on a
-  //! triangulation.
   Standard_EXPORT virtual bool IsPolygonOnClosedTriangulation() const;
 
-  //! A polygon in the parametric space of a surface.
   Standard_EXPORT virtual bool IsPolygonOnSurface() const;
 
-  //! Is it a polygon in the parametric space of <S> with
-  //! location <L>.
   Standard_EXPORT virtual bool IsPolygonOnSurface(const occ::handle<Geom_Surface>& S,
                                                   const TopLoc_Location&           L) const;
 
-  //! Two 2D polygon representations in the parametric
-  //! space of a surface.
   Standard_EXPORT virtual bool IsPolygonOnClosedSurface() const;
 
   const TopLoc_Location& Location() const;
@@ -124,10 +101,8 @@ public:
 
   Standard_EXPORT virtual void Continuity(const GeomAbs_Shape C);
 
-  //! Return a copy of this representation.
   Standard_EXPORT virtual occ::handle<BRep_CurveRepresentation> Copy() const = 0;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT virtual void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
   DEFINE_STANDARD_RTTIEXT(BRep_CurveRepresentation, Standard_Transient)
@@ -142,8 +117,6 @@ inline const TopLoc_Location& BRep_CurveRepresentation::Location() const
 {
   return myLocation;
 }
-
-//=================================================================================================
 
 inline void BRep_CurveRepresentation::Location(const TopLoc_Location& L)
 {

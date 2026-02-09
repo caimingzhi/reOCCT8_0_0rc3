@@ -1,16 +1,4 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
@@ -27,8 +15,6 @@
 #include <NCollection_Array2.hpp>
 #include <NCollection_HArray2.hpp>
 
-//=================================================================================================
-
 AdvApprox_SimpleApprox::AdvApprox_SimpleApprox(const int                          TotalDimension,
                                                const int                          TotalNumSS,
                                                const GeomAbs_Shape                Continuity,
@@ -43,8 +29,6 @@ AdvApprox_SimpleApprox::AdvApprox_SimpleApprox(const int                        
       myJacPol(JacobiBase),
       myEvaluator((void*)&Func)
 {
-
-  // the Check of input parameters
 
   switch (Continuity)
   {
@@ -63,11 +47,9 @@ AdvApprox_SimpleApprox::AdvApprox_SimpleApprox(const int                        
 
   int DegreeQ = myWorkDegree - 2 * (myNivConstr + 1);
 
-  // the extraction of the Legendre roots
   myTabPoints = new NCollection_HArray1<double>(0, NbGaussPoints / 2);
   JacobiBase.Points(NbGaussPoints, myTabPoints->ChangeArray1());
 
-  // the extraction of the Gauss Weights
   myTabWeights = new NCollection_HArray2<double>(0, NbGaussPoints / 2, 0, DegreeQ);
   JacobiBase.Weights(NbGaussPoints, myTabWeights->ChangeArray2());
 
@@ -79,8 +61,6 @@ AdvApprox_SimpleApprox::AdvApprox_SimpleApprox(const int                        
   done     = false;
 }
 
-//=================================================================================================
-
 void AdvApprox_SimpleApprox::Perform(const NCollection_Array1<int>&    LocalDimension,
                                      const NCollection_Array1<double>& LocalTolerancesArray,
                                      const double                      First,
@@ -88,15 +68,12 @@ void AdvApprox_SimpleApprox::Perform(const NCollection_Array1<int>&    LocalDime
                                      const int                         MaxDegree)
 
 {
-  // ======= the computation of Pp(t) = Rr(t) + W(t)*Qq(t) =======
 
   done = false;
   int i, idim, k, numss;
 
   int                          Dimension = myTotalDimension;
   AdvApprox_EvaluatorFunction& Evaluator = *(AdvApprox_EvaluatorFunction*)myEvaluator;
-
-  // ===== the computation of Rr(t) (the first part of Pp) ======
 
   int DegreeR = 2 * myNivConstr + 1;
   int DegreeQ = myWorkDegree - 2 * (myNivConstr + 1);
@@ -115,7 +92,7 @@ void AdvApprox_SimpleApprox::Perform(const NCollection_Array1<int>&    LocalDime
   {
     Evaluator(&Dimension, FirstLast, &param, &derive, pResult, &ErrorCode);
     if (ErrorCode != 0)
-      return; // Evaluation error
+      return;
     if (derive >= 1)
       Result *= Fact;
     if (derive == 2)
@@ -130,7 +107,7 @@ void AdvApprox_SimpleApprox::Perform(const NCollection_Array1<int>&    LocalDime
   {
     Evaluator(&Dimension, FirstLast, &param, &derive, pResult, &ErrorCode);
     if (ErrorCode != 0)
-      return; // Evaluation error
+      return;
     if (derive >= 1)
       Result *= Fact;
     if (derive == 2)
@@ -150,8 +127,6 @@ void AdvApprox_SimpleApprox::Perform(const NCollection_Array1<int>&    LocalDime
                            myLastConstr->Array2(),
                            myCoeff->ChangeArray1());
 
-  // ===== the computation of the coefficients of Qq(t) (the second part of Pp) ======
-
   math_Vector Fti(1, myTotalDimension);
   math_Vector Rpti(1, myTotalDimension);
   math_Vector Rmti(1, myTotalDimension);
@@ -168,7 +143,7 @@ void AdvApprox_SimpleApprox::Perform(const NCollection_Array1<int>&    LocalDime
     tip = alin * ti + blin;
     Evaluator(&Dimension, FirstLast, &tip, &derive, pFti, &ErrorCode);
     if (ErrorCode != 0)
-      return; // Evaluation error
+      return;
     for (idim = 1; idim <= myTotalDimension; idim++)
     {
       mySomTab->SetValue(i_idim, Fti(idim));
@@ -183,7 +158,7 @@ void AdvApprox_SimpleApprox::Perform(const NCollection_Array1<int>&    LocalDime
     tin = -alin * ti + blin;
     Evaluator(&Dimension, FirstLast, &tin, &derive, pFti, &ErrorCode);
     if (ErrorCode != 0)
-      return; // Evaluation error
+      return;
     PLib::EvalPolynomial(ti, derive, DegreeR, myTotalDimension, Coef1[0], Rpti(1));
     ti = -ti;
     PLib::EvalPolynomial(ti, derive, DegreeR, myTotalDimension, Coef1[0], Rmti(1));
@@ -196,14 +171,13 @@ void AdvApprox_SimpleApprox::Perform(const NCollection_Array1<int>&    LocalDime
     }
   }
 
-  // for odd NbGaussPoints - the computation of [ F(0) - R(0) ]
   if (myNbGaussPoints % 2 == 1)
   {
     ti  = myTabPoints->Value(0);
     tip = blin;
     Evaluator(&Dimension, FirstLast, &tip, &derive, pFti, &ErrorCode);
     if (ErrorCode != 0)
-      return; // Evaluation error
+      return;
     PLib::EvalPolynomial(ti, derive, DegreeR, myTotalDimension, Coef1[0], Rpti(1));
     for (idim = 1; idim <= myTotalDimension; idim++)
     {
@@ -212,7 +186,6 @@ void AdvApprox_SimpleApprox::Perform(const NCollection_Array1<int>&    LocalDime
     }
   }
 
-  // the computation of Qq(t)
   double Sum = 0.;
   for (k = 0; k <= DegreeQ; k += 2)
   {
@@ -249,9 +222,7 @@ void AdvApprox_SimpleApprox::Perform(const NCollection_Array1<int>&    LocalDime
       }
     }
   }
-  //  for (i=0; i<(WorkDegree+1)*TotalDimension; i++)
-  //    std::cout << "  Coeff(" << i << ") = " << Coeff(i) << std::endl;
-  // the computing of NewDegree
+
   NCollection_Array1<double> JacCoeff(0, myTotalDimension * (myWorkDegree + 1) - 1);
 
   double MaxErr, AverageErr;
@@ -283,7 +254,7 @@ void AdvApprox_SimpleApprox::Perform(const NCollection_Array1<int>&    LocalDime
     RangSS       = RangSS + Dim;
     RangJacCoeff = RangJacCoeff + (myWorkDegree + 1) * Dim;
   }
-  // the computing of MaxError and AverageError
+
   RangSS       = 0;
   RangJacCoeff = 0;
   for (numss = 1; numss <= myTotalNumSS; numss++)
@@ -303,70 +274,50 @@ void AdvApprox_SimpleApprox::Perform(const NCollection_Array1<int>&    LocalDime
   done     = true;
 }
 
-//=================================================================================================
-
 bool AdvApprox_SimpleApprox::IsDone() const
 {
   return done;
 }
-
-//=================================================================================================
 
 int AdvApprox_SimpleApprox::Degree() const
 {
   return myDegree;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<double>> AdvApprox_SimpleApprox::Coefficients() const
 {
   return myCoeff;
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray2<double>> AdvApprox_SimpleApprox::FirstConstr() const
 {
   return myFirstConstr;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray2<double>> AdvApprox_SimpleApprox::LastConstr() const
 {
   return myLastConstr;
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<double>> AdvApprox_SimpleApprox::SomTab() const
 {
   return mySomTab;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<double>> AdvApprox_SimpleApprox::DifTab() const
 {
   return myDifTab;
 }
-
-//=================================================================================================
 
 double AdvApprox_SimpleApprox::MaxError(const int Index) const
 {
   return myMaxError->Value(Index);
 }
 
-//=================================================================================================
-
 double AdvApprox_SimpleApprox::AverageError(const int Index) const
 {
   return myAverageError->Value(Index);
 }
-
-//=================================================================================================
 
 void AdvApprox_SimpleApprox::Dump(Standard_OStream& o) const
 {

@@ -40,10 +40,6 @@ bool GeomFill_PlanFunc::Values(const double X, double& F, double& D)
   return true;
 }
 
-// void  GeomFill_PlanFunc::D2(const double  X,
-//			    double& F,
-//			    double& D1,
-//			    double& D2)
 void GeomFill_PlanFunc::D2(const double, double&, double&, double&) {}
 
 void GeomFill_PlanFunc::DEDT(const double X, const gp_Vec& DPnt, const gp_Vec& DVec, double& DFDT)
@@ -55,15 +51,15 @@ void GeomFill_PlanFunc::DEDT(const double X, const gp_Vec& DPnt, const gp_Vec& D
 
 void GeomFill_PlanFunc::D2E(const double  X,
                             const gp_Vec& DP,
-                            //			     const gp_Vec& D2P,
+
                             const gp_Vec&,
                             const gp_Vec& DV,
-                            //			     const gp_Vec& D2V,
+
                             const gp_Vec&,
                             double& DFDT,
-                            //			     double& ,
-                            double& /*D2FDT2*/,
-                            //			     double& D2FDTDX)
+
+                            double&,
+
                             double&)
 {
   gp_Vec dg;

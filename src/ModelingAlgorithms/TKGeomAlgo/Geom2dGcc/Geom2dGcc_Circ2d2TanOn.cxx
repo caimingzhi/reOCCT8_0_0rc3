@@ -46,10 +46,6 @@ Geom2dGcc_Circ2d2TanOn::Geom2dGcc_Circ2d2TanOn(const Geom2dGcc_QualifiedCurve& Q
   const occ::handle<Geom2d_Curve>& CC2   = C2.Curve();
   const occ::handle<Geom2d_Curve>& Con   = OnCurve.Curve();
 
-  //=============================================================================
-  //                            Appel a GccAna.                                 +
-  //=============================================================================
-
   Invert = false;
   NbrSol = 0;
   if ((Type1 == GeomAbs_Line || Type1 == GeomAbs_Circle)
@@ -236,10 +232,6 @@ Geom2dGcc_Circ2d2TanOn::Geom2dGcc_Circ2d2TanOn(const Geom2dGcc_QualifiedCurve& Q
         }
       }
     }
-
-    //=============================================================================
-    //                            Appel a GccGeo.                                 +
-    //=============================================================================
 
     else
     {
@@ -450,10 +442,6 @@ Geom2dGcc_Circ2d2TanOn::Geom2dGcc_Circ2d2TanOn(const Geom2dGcc_QualifiedCurve&  
   const occ::handle<Geom2d_Curve>& CC1   = C1.Curve();
   const occ::handle<Geom2d_Curve>& Con   = OnCurve.Curve();
 
-  //=============================================================================
-  //                            Appel a GccAna.                                 +
-  //=============================================================================
-
   Invert = false;
   NbrSol = 0;
   if (Type1 == GeomAbs_Line || Type1 == GeomAbs_Circle)
@@ -534,9 +522,6 @@ Geom2dGcc_Circ2d2TanOn::Geom2dGcc_Circ2d2TanOn(const Geom2dGcc_QualifiedCurve&  
         }
       }
     }
-    //=============================================================================
-    //                            Appel a GccGeo.                                 +
-    //=============================================================================
 
     else
     {
@@ -690,10 +675,6 @@ Geom2dGcc_Circ2d2TanOn::Geom2dGcc_Circ2d2TanOn(const occ::handle<Geom2d_Point>& 
   GeomAbs_CurveType                Type3 = OnCurve.GetType();
   const occ::handle<Geom2d_Curve>& Con   = OnCurve.Curve();
 
-  //=============================================================================
-  //                            Appel a GccAna.                                 +
-  //=============================================================================
-
   Invert = false;
   NbrSol = 0;
   if (Type3 == GeomAbs_Line || Type3 == GeomAbs_Circle)
@@ -731,10 +712,6 @@ Geom2dGcc_Circ2d2TanOn::Geom2dGcc_Circ2d2TanOn(const occ::handle<Geom2d_Point>& 
       }
     }
   }
-
-  //=============================================================================
-  //                            Appel a GccGeo.                                 +
-  //=============================================================================
 
   else
   {
@@ -1001,5 +978,4 @@ bool Geom2dGcc_Circ2d2TanOn::IsTheSame2(const int Index) const
   {
     return TheSame1(Index) != 0;
   }
-  //  return true;
 }

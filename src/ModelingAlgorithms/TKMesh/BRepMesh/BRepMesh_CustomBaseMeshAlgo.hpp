@@ -6,21 +6,16 @@
 #include <BRepMesh_Delaun.hpp>
 #include <BRepMesh_MeshTool.hpp>
 
-//! Class provides base functionality to build face triangulation using custom triangulation
-//! algorithm. Performs generation of mesh using raw data from model.
 class BRepMesh_CustomBaseMeshAlgo : public BRepMesh_ConstrainedBaseMeshAlgo
 {
 public:
-  //! Constructor.
   BRepMesh_CustomBaseMeshAlgo() = default;
 
-  //! Destructor.
   ~BRepMesh_CustomBaseMeshAlgo() override = default;
 
   DEFINE_STANDARD_RTTIEXT(BRepMesh_CustomBaseMeshAlgo, BRepMesh_ConstrainedBaseMeshAlgo)
 
 protected:
-  //! Generates mesh for the contour stored in data structure.
   void generateMesh(const Message_ProgressRange& theRange) override
   {
     const occ::handle<BRepMesh_DataStructureOfDelaun>& aStructure = this->getStructure();
@@ -41,14 +36,11 @@ protected:
         aAuxVertices.Append(aExtNodesIt);
       }
 
-      // Set aux vertices if there are some to clean up mesh correctly.
       aMesher.SetAuxVertices(aAuxVertices);
     }
 
     aMesher.ProcessConstraints();
 
-    // Destruction of triangles containing aux vertices added (possibly) during base mesh
-    // computation.
     if (isRemoveAux)
     {
       aMesher.RemoveAuxElements();
@@ -61,6 +53,5 @@ protected:
   }
 
 protected:
-  //! Builds base triangulation using custom triangulation algorithm.
   Standard_EXPORT virtual void buildBaseTriangulation() = 0;
 };

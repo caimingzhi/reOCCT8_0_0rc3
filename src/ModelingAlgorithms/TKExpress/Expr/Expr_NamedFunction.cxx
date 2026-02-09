@@ -100,7 +100,7 @@ bool Expr_NamedFunction::IsIdentical(const occ::handle<Expr_GeneralFunction>& fu
 
 bool Expr_NamedFunction::IsLinearOnVariable(const int) const
 {
-  // bad implementation, should be improved
+
   return myExp->IsLinear();
 }
 

@@ -18,26 +18,23 @@
 
 class StdLPersistent_Collection
 {
-  // Converters
+
   struct noConversion;
   struct byteConverter;
   struct boolConverter;
   struct stringConverter;
   struct referenceConverter;
 
-  // Base templates
   template <class Base>
   class booleanArrayBase : public Base
   {
   public:
-    //! Empty constructor.
     booleanArrayBase()
         : myLower(0),
           myUpper(0)
     {
     }
 
-    //! Read persistent data from a file.
     void Read(StdObjMgt_ReadData& theReadData) override
     {
       Base::Read(theReadData);
@@ -85,12 +82,10 @@ class StdLPersistent_Collection
     inline void import(const ArrayHandle& theArray, Converter theConverter) const;
   };
 
-  // Instance templates
   template <template <class> class BaseT, class HArrayClass, class AttribClass, class Converter>
   class instance : public BaseT<typename StdObjMgt_Attribute<AttribClass>::SingleRef>
   {
   public:
-    //! Import transient attribute from the persistent data.
     Standard_EXPORT void ImportAttribute() override;
   };
 
@@ -98,23 +93,19 @@ class StdLPersistent_Collection
   class instance_1 : public Instance
   {
   public:
-    //! Empty constructor.
     instance_1()
         : myDelta(false)
     {
     }
 
-    //! Read persistent data from a file.
     Standard_EXPORT void Read(StdObjMgt_ReadData& theReadData) override;
 
-    //! Import transient attribute from the persistent data.
     Standard_EXPORT void ImportAttribute() override;
 
   private:
     bool myDelta;
   };
 
-  // Collection type specialization
   template <class HArrayClass, class AttribClass, class Converter = noConversion>
   struct booleanArrayT : instance<booleanArrayBase, HArrayClass, AttribClass, Converter>
   {
@@ -140,13 +131,11 @@ class StdLPersistent_Collection
   {
   };
 
-  // Internal array types
   typedef StdLPersistent_HArray1::Integer    integer;
   typedef StdLPersistent_HArray1::Real       real;
   typedef StdLPersistent_HArray1::Persistent persistent;
 
 public:
-  // Final specialization
   typedef booleanArrayT<integer, TDataStd_BooleanArray, byteConverter> BooleanArray;
 
   typedef directArrayT<integer, TDataStd_IntegerArray> IntegerArray;

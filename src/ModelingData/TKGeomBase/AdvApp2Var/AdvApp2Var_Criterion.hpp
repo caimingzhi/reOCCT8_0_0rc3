@@ -11,7 +11,6 @@
 class AdvApp2Var_Patch;
 class AdvApp2Var_Context;
 
-//! this class contains a given criterion to be satisfied
 class AdvApp2Var_Criterion
 {
 public:

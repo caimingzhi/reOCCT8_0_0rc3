@@ -4,11 +4,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepAP203_CcDesignSecurityClassification,
                            StepBasic_SecurityClassificationAssignment)
 
-//=================================================================================================
-
 StepAP203_CcDesignSecurityClassification::StepAP203_CcDesignSecurityClassification() = default;
-
-//=================================================================================================
 
 void StepAP203_CcDesignSecurityClassification::Init(
   const occ::handle<StepBasic_SecurityClassification>&
@@ -21,15 +17,11 @@ void StepAP203_CcDesignSecurityClassification::Init(
   theItems = aItems;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<StepAP203_ClassifiedItem>>
   StepAP203_CcDesignSecurityClassification::Items() const
 {
   return theItems;
 }
-
-//=================================================================================================
 
 void StepAP203_CcDesignSecurityClassification::SetItems(
   const occ::handle<NCollection_HArray1<StepAP203_ClassifiedItem>>& aItems)

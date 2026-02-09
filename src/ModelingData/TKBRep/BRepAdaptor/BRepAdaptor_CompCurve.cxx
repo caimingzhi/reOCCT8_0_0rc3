@@ -57,8 +57,6 @@ BRepAdaptor_CompCurve::BRepAdaptor_CompCurve(const TopoDS_Wire& theWire,
   Initialize(theWire, theIsAC, theFirst, theLast, theTolerance);
 }
 
-//=================================================================================================
-
 occ::handle<Adaptor3d_Curve> BRepAdaptor_CompCurve::ShallowCopy() const
 {
   occ::handle<BRepAdaptor_CompCurve> aCopy = new BRepAdaptor_CompCurve();
@@ -121,7 +119,7 @@ void BRepAdaptor_CompCurve::Initialize(const TopoDS_Wire& W, const bool AC)
     }
   }
 
-  Forward = true; // Default ; The Reverse Edges are parsed.
+  Forward = true;
   if ((NbEdge > 2) || ((NbEdge == 2) && (!myWire.Closed())))
   {
     TopAbs_Orientation Or = myCurves->Value(1).Edge().Orientation();
@@ -129,12 +127,12 @@ void BRepAdaptor_CompCurve::Initialize(const TopoDS_Wire& W, const bool AC)
     TopExp::CommonVertex(myCurves->Value(1).Edge(), myCurves->Value(2).Edge(), VI);
     VL = TopExp::LastVertex(myCurves->Value(1).Edge());
     if (VI.IsSame(VL))
-    { // The direction of parsing is always preserved
+    {
       if (Or == TopAbs_REVERSED)
         Forward = false;
     }
     else
-    { // The direction of parsing is always reversed
+    {
       if (Or != TopAbs_REVERSED)
         Forward = false;
     }
@@ -155,14 +153,13 @@ void BRepAdaptor_CompCurve::Initialize(const TopoDS_Wire& W,
   TLast  = Last;
   PTol   = Tol;
 
-  // Trim the extremal curves.
   occ::handle<BRepAdaptor_Curve> HC;
   int                            i1, i2;
   double                         f = TFirst, l = TLast, d;
   i1 = i2 = CurIndex;
   Prepare(f, d, i1);
   Prepare(l, d, i2);
-  CurIndex = (i1 + i2) / 2; // Small optimization
+  CurIndex = (i1 + i2) / 2;
   if (i1 == i2)
   {
     if (l > f)
@@ -238,7 +235,6 @@ void BRepAdaptor_CompCurve::Intervals(NCollection_Array1<double>& T, const GeomA
   int    ii, jj, kk, n;
   double f, F, delta;
 
-  // First curve (direction of parsing of the edge)
   n                                           = myCurves->ChangeValue(1).NbIntervals(S);
   occ::handle<NCollection_HArray1<double>> Ti = new (NCollection_HArray1<double>)(1, n + 1);
   myCurves->ChangeValue(1).Intervals(Ti->ChangeArray1(), S);
@@ -246,7 +242,7 @@ void BRepAdaptor_CompCurve::Intervals(NCollection_Array1<double>& T, const GeomA
   F = myKnots->Value(1);
   if (delta < 0)
   {
-    // invert the direction of parsing
+
     for (kk = 1, jj = Ti->Length(); jj > 0; kk++, jj--)
       T(kk) = F + (Ti->Value(jj) - f) * delta;
   }
@@ -256,7 +252,6 @@ void BRepAdaptor_CompCurve::Intervals(NCollection_Array1<double>& T, const GeomA
       T(kk) = F + (Ti->Value(kk) - f) * delta;
   }
 
-  // and the next
   for (ii = 2; ii <= myCurves->Length(); ii++)
   {
     n = myCurves->ChangeValue(ii).NbIntervals(S);
@@ -267,7 +262,7 @@ void BRepAdaptor_CompCurve::Intervals(NCollection_Array1<double>& T, const GeomA
     F = myKnots->Value(ii);
     if (delta < 0)
     {
-      // invert the direction of parcing
+
       for (jj = Ti->Length() - 1; jj > 0; kk++, jj--)
         T(kk) = F + (Ti->Value(jj) - f) * delta;
     }
@@ -373,9 +368,7 @@ double BRepAdaptor_CompCurve::Resolution(const double R3d) const
 
 GeomAbs_CurveType BRepAdaptor_CompCurve::GetType() const
 {
-  return GeomAbs_OtherCurve; // temporary
-  //  if ( myCurves->Length() > 1) return GeomAbs_OtherCurve;
-  //  return myCurves->Value(1).GetType();
+  return GeomAbs_OtherCurve;
 }
 
 gp_Lin BRepAdaptor_CompCurve::Line() const
@@ -433,15 +426,6 @@ occ::handle<Geom_BSplineCurve> BRepAdaptor_CompCurve::BSpline() const
   return myCurves->Value(1).BSpline();
 }
 
-//=======================================================================
-// function : Prepare
-// purpose  :
-// When the parameter is close to "node" the rule is determined
-// depending on the sign of tol:
-//   - negative -> Rule preceding to the node.
-//   - positive -> Rule following after the node.
-//=======================================================================
-
 void BRepAdaptor_CompCurve::Prepare(double& W, double& Delta, int& theCurIndex) const
 {
   double f, l, Wtest, Eps;
@@ -455,9 +439,8 @@ void BRepAdaptor_CompCurve::Prepare(double& W, double& Delta, int& theCurIndex) 
     Eps = -PTol;
   }
 
-  Wtest = W + Eps; // Offset to discriminate the nodes
+  Wtest = W + Eps;
 
-  // Find the index
   bool Trouve = false;
   if (myKnots->Value(theCurIndex) > Wtest)
   {
@@ -468,7 +451,7 @@ void BRepAdaptor_CompCurve::Prepare(double& W, double& Delta, int& theCurIndex) 
         Trouve      = true;
       }
     if (!Trouve)
-      theCurIndex = 1; // Out of limits...
+      theCurIndex = 1;
   }
 
   else if (myKnots->Value(theCurIndex + 1) <= Wtest)
@@ -480,16 +463,14 @@ void BRepAdaptor_CompCurve::Prepare(double& W, double& Delta, int& theCurIndex) 
         Trouve      = true;
       }
     if (!Trouve)
-      theCurIndex = myCurves->Length(); // Out of limits...
+      theCurIndex = myCurves->Length();
   }
 
-  // Invert ?
   const TopoDS_Edge& E  = myCurves->Value(theCurIndex).Edge();
   TopAbs_Orientation Or = E.Orientation();
   bool               Reverse;
   Reverse = (Forward && (Or == TopAbs_REVERSED)) || (!Forward && (Or != TopAbs_REVERSED));
 
-  // Calculate the local parameter
   BRep_Tool::Range(E, f, l);
   Delta = myKnots->Value(theCurIndex + 1) - myKnots->Value(theCurIndex);
   if (Delta > PTol * 1.e-9)
@@ -508,14 +489,12 @@ void BRepAdaptor_CompCurve::Prepare(double& W, double& Delta, int& theCurIndex) 
 
 void BRepAdaptor_CompCurve::InvPrepare(const int index, double& First, double& Delta) const
 {
-  // Invert?
+
   const TopoDS_Edge& E  = myCurves->Value(index).Edge();
   TopAbs_Orientation Or = E.Orientation();
   bool               Reverse;
   Reverse = (Forward && (Or == TopAbs_REVERSED)) || (!Forward && (Or != TopAbs_REVERSED));
 
-  // Calculate the parameters of reparametrisation
-  // such as : T = Ti + (t-First)*Delta
   double f, l;
   BRep_Tool::Range(E, f, l);
   Delta = myKnots->Value(index + 1) - myKnots->Value(index);

@@ -6,7 +6,6 @@
 #include <Draw_Color.hpp>
 #include <Standard_Transient.hpp>
 
-//! Contains the colors of a shape.
 class HLRTest_ShapeData : public Standard_Transient
 {
 
@@ -58,77 +57,55 @@ inline void HLRTest_ShapeData::VisibleColor(const Draw_Color& CVis)
   myVColor = CVis;
 }
 
-//=================================================================================================
-
 inline void HLRTest_ShapeData::VisibleOutLineColor(const Draw_Color& COVis)
 {
   myVOColor = COVis;
 }
-
-//=================================================================================================
 
 inline void HLRTest_ShapeData::VisibleIsoColor(const Draw_Color& CIVis)
 {
   myVIColor = CIVis;
 }
 
-//=================================================================================================
-
 inline void HLRTest_ShapeData::HiddenColor(const Draw_Color& CHid)
 {
   myHColor = CHid;
 }
-
-//=================================================================================================
 
 inline void HLRTest_ShapeData::HiddenOutLineColor(const Draw_Color& COHid)
 {
   myHOColor = COHid;
 }
 
-//=================================================================================================
-
 inline void HLRTest_ShapeData::HiddenIsoColor(const Draw_Color& CIHid)
 {
   myHIColor = CIHid;
 }
-
-//=================================================================================================
 
 inline Draw_Color HLRTest_ShapeData::VisibleColor() const
 {
   return myVColor;
 }
 
-//=================================================================================================
-
 inline Draw_Color HLRTest_ShapeData::VisibleOutLineColor() const
 {
   return myVOColor;
 }
-
-//=================================================================================================
 
 inline Draw_Color HLRTest_ShapeData::VisibleIsoColor() const
 {
   return myVIColor;
 }
 
-//=================================================================================================
-
 inline Draw_Color HLRTest_ShapeData::HiddenColor() const
 {
   return myHColor;
 }
 
-//=================================================================================================
-
 inline Draw_Color HLRTest_ShapeData::HiddenOutLineColor() const
 {
   return myHOColor;
 }
-
-//=================================================================================================
 
 inline Draw_Color HLRTest_ShapeData::HiddenIsoColor() const
 {

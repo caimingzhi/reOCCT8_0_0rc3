@@ -11,10 +11,6 @@
 #include <StepGeom_SweptSurface.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d' une SweptSurface de prostep a partir d' une
-// SweptSurface de Geom
-//=============================================================================
 GeomToStep_MakeSweptSurface::GeomToStep_MakeSweptSurface(const occ::handle<Geom_SweptSurface>& S,
                                                          const StepData_Factors& theLocalFactors)
 {
@@ -35,10 +31,6 @@ GeomToStep_MakeSweptSurface::GeomToStep_MakeSweptSurface(const occ::handle<Geom_
   else
     done = false;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_SweptSurface>& GeomToStep_MakeSweptSurface::Value() const
 {

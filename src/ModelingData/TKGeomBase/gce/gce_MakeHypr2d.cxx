@@ -6,12 +6,6 @@
 #include <gp_Pnt2d.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   Creation d une Hyperbola 2d de gp de centre <Center> et de sommets   +
-//   <S1> et <S2>.                                                        +
-//   <CenterS1> donne le grand axe .                                      +
-//   <S1> donne le grand rayon et <S2> le petit rayon.                    +
-//=========================================================================
 gce_MakeHypr2d::gce_MakeHypr2d(const gp_Pnt2d& S1, const gp_Pnt2d& S2, const gp_Pnt2d& Center)
 {
   gp_Dir2d XAxis(gp_XY(S1.XY() - Center.XY()));

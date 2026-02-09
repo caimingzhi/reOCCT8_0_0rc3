@@ -15,7 +15,6 @@ class StepVisual_StyledItem : public StepRepr_RepresentationItem
 {
 
 public:
-  //! Returns a StyledItem
   StepVisual_StyledItem() = default;
 
   Standard_EXPORT void Init(
@@ -53,8 +52,8 @@ public:
 
 private:
   occ::handle<NCollection_HArray1<occ::handle<StepVisual_PresentationStyleAssignment>>> myStyles;
-  //! May be StepRepr_RepresentationItem for AP214(203) and StepVisual_StyledItemTarget for AP242
+
   occ::handle<Standard_Transient> myItem;
-  //! This is downcasted from myItem
+
   occ::handle<StepRepr_RepresentationItem> myReprItem;
 };

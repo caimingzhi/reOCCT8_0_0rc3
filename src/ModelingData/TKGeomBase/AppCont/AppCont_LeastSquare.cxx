@@ -9,8 +9,6 @@
 #include <AppCont_ContMatrices.hpp>
 #include <PLib.hpp>
 
-//=================================================================================================
-
 void AppCont_LeastSquare::FixSingleBorderPoint(const AppCont_Function&       theSSP,
                                                const double                  theU,
                                                const double                  theU0,
@@ -33,7 +31,6 @@ void AppCont_LeastSquare::FixSingleBorderPoint(const AppCont_Function&       the
     aCurrParam = aStartParam + dd;
     theSSP.Value(aCurrParam, aTabP2d, aTabP);
 
-    // from second iteration
     if (anIter > 1)
     {
       aCurrDist = 0.0;
@@ -49,9 +46,8 @@ void AppCont_LeastSquare::FixSingleBorderPoint(const AppCont_Function&       the
         aCurrDist += aTabP2d(j).Distance(aPrevP2d(j));
         i2 += 2;
       }
-      (void)i2; // unused but set for debug
+      (void)i2;
 
-      // from the third iteration
       if (anIter > 2 && aCurrDist / aPrevDist > 10.0)
         break;
     }
@@ -64,8 +60,6 @@ void AppCont_LeastSquare::FixSingleBorderPoint(const AppCont_Function&       the
   theFix2d = aPrevP2d;
   theFix   = aPrevP;
 }
-
-//=================================================================================================
 
 AppCont_LeastSquare::AppCont_LeastSquare(const AppCont_Function&       SSP,
                                          const double                  U0,
@@ -122,7 +116,6 @@ AppCont_LeastSquare::AppCont_LeastSquare(const AppCont_Function&       SSP,
       myLastC = AppParCurves_PassPoint;
   }
 
-  // Compute control points params on which approximation will be built.
   math_Vector GaussP(1, myNbPoints), GaussW(1, myNbPoints);
   math::GaussPoints(myNbPoints, GaussP);
   math::GaussWeights(myNbPoints, GaussW);
@@ -145,7 +138,6 @@ AppCont_LeastSquare::AppCont_LeastSquare(const AppCont_Function&       SSP,
     }
   }
 
-  // Compute control points.
   for (i = FirstP; i <= LastP; i++)
   {
     U = myParam(i);
@@ -164,7 +156,6 @@ AppCont_LeastSquare::AppCont_LeastSquare(const AppCont_Function&       SSP,
     }
   }
 
-  // Fix possible "period jump".
   int aMaxDim = 3 * myNbP + 2 * myNbP2d;
   for (int aDimIdx = 1; aDimIdx <= aMaxDim; aDimIdx++)
   {
@@ -198,7 +189,6 @@ AppCont_LeastSquare::AppCont_LeastSquare(const AppCont_Function&       SSP,
 
   VBernstein(classe, myNbPoints, myVB);
 
-  // Traitement du second membre:
   NCollection_Array1<double> tmppoints(1, nbcol);
 
   for (c = 1; c <= classe; c++)
@@ -223,7 +213,6 @@ AppCont_LeastSquare::AppCont_LeastSquare(const AppCont_Function&       SSP,
 
     math_Matrix InvM(1, classe, 1, classe);
     InvMMatrix(classe, InvM);
-    // Calcul direct des poles:
 
     for (i = 1; i <= classe; i++)
     {
@@ -318,7 +307,7 @@ AppCont_LeastSquare::AppCont_LeastSquare(const AppCont_Function&       SSP,
     if (myFirstC == AppParCurves_PassPoint)
     {
       bdeb = 2;
-      // mise a jour du second membre:
+
       for (i = 1; i <= classe; i++)
       {
         Coeff = M(i, 1);
@@ -344,7 +333,7 @@ AppCont_LeastSquare::AppCont_LeastSquare(const AppCont_Function&       SSP,
 
     if (myFirstC == AppParCurves_TangencyPoint)
     {
-      // On fixe le second pole::
+
       bdeb = 3;
       SSP.D1(U0, aTabV2d, aTabV);
 
@@ -428,12 +417,7 @@ AppCont_LeastSquare::AppCont_LeastSquare(const AppCont_Function&       SSP,
         }
       }
 
-      // Resolution:
-      // ===========
       math_Matrix IBP(bdeb, bfin, bdeb, bfin);
-
-      // dans IBPMatrix at IBTMatrix ne sont stockees que les resultats pour
-      // une classe inferieure ou egale a 26 (pour l instant du moins.)
 
       if (bdeb == 2 && bfin == classe - 1 && classe <= 26)
       {
@@ -474,8 +458,6 @@ AppCont_LeastSquare::AppCont_LeastSquare(const AppCont_Function&       SSP,
   }
 }
 
-//=================================================================================================
-
 const AppParCurves_MultiCurve& AppCont_LeastSquare::Value()
 {
 
@@ -484,7 +466,6 @@ const AppParCurves_MultiCurve& AppCont_LeastSquare::Value()
   gp_Pnt2d Pt2d;
   int      ideb = 1, ifin = myDegre + 1;
 
-  // On met le resultat dans les curves correspondantes
   for (i = ideb; i <= ifin; i++)
   {
     j2 = 1;
@@ -505,8 +486,6 @@ const AppParCurves_MultiCurve& AppCont_LeastSquare::Value()
   }
   return mySCU;
 }
-
-//=================================================================================================
 
 void AppCont_LeastSquare::Error(double& F, double& MaxE3d, double& MaxE2d) const
 {
@@ -565,8 +544,6 @@ void AppCont_LeastSquare::Error(double& F, double& MaxE3d, double& MaxE2d) const
   MaxE3d = std::sqrt(MaxE3d);
   MaxE2d = std::sqrt(MaxE2d);
 }
-
-//=================================================================================================
 
 bool AppCont_LeastSquare::IsDone() const
 {

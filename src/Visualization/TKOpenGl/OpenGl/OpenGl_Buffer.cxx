@@ -6,8 +6,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_Buffer, OpenGl_Resource)
 
-//=================================================================================================
-
 size_t OpenGl_Buffer::sizeOfGlType(unsigned int theType)
 {
   switch (theType)
@@ -33,8 +31,6 @@ size_t OpenGl_Buffer::sizeOfGlType(unsigned int theType)
       return 0;
   }
 }
-
-//=================================================================================================
 
 TCollection_AsciiString OpenGl_Buffer::FormatTarget(unsigned int theTarget)
 {
@@ -74,8 +70,6 @@ TCollection_AsciiString OpenGl_Buffer::FormatTarget(unsigned int theTarget)
   return OpenGl_Context::FormatGlEnumHex(theTarget);
 }
 
-//=================================================================================================
-
 OpenGl_Buffer::OpenGl_Buffer()
     : myOffset(nullptr),
       myBufferId(NO_BUFFER),
@@ -85,14 +79,10 @@ OpenGl_Buffer::OpenGl_Buffer()
 {
 }
 
-//=================================================================================================
-
 OpenGl_Buffer::~OpenGl_Buffer()
 {
   Release(nullptr);
 }
-
-//=================================================================================================
 
 bool OpenGl_Buffer::Create(const occ::handle<OpenGl_Context>& theGlCtx)
 {
@@ -103,8 +93,6 @@ bool OpenGl_Buffer::Create(const occ::handle<OpenGl_Context>& theGlCtx)
   return myBufferId != NO_BUFFER;
 }
 
-//=================================================================================================
-
 void OpenGl_Buffer::Release(OpenGl_Context* theGlCtx)
 {
   if (myBufferId == NO_BUFFER)
@@ -112,7 +100,6 @@ void OpenGl_Buffer::Release(OpenGl_Context* theGlCtx)
     return;
   }
 
-  // application can not handle this case by exception - this is bug in code
   Standard_ASSERT_RETURN(
     theGlCtx != nullptr,
     "OpenGl_Buffer destroyed without GL context! Possible GPU memory leakage...",
@@ -126,21 +113,15 @@ void OpenGl_Buffer::Release(OpenGl_Context* theGlCtx)
   myBufferId = NO_BUFFER;
 }
 
-//=================================================================================================
-
 void OpenGl_Buffer::Bind(const occ::handle<OpenGl_Context>& theGlCtx) const
 {
   theGlCtx->core15fwd->glBindBuffer(GetTarget(), myBufferId);
 }
 
-//=================================================================================================
-
 void OpenGl_Buffer::Unbind(const occ::handle<OpenGl_Context>& theGlCtx) const
 {
   theGlCtx->core15fwd->glBindBuffer(GetTarget(), NO_BUFFER);
 }
-
-//=================================================================================================
 
 void OpenGl_Buffer::BindBufferBase(const occ::handle<OpenGl_Context>& theGlCtx,
                                    unsigned int                       theIndex)
@@ -148,15 +129,11 @@ void OpenGl_Buffer::BindBufferBase(const occ::handle<OpenGl_Context>& theGlCtx,
   theGlCtx->core30->glBindBufferBase(GetTarget(), theIndex, myBufferId);
 }
 
-//=================================================================================================
-
 void OpenGl_Buffer::UnbindBufferBase(const occ::handle<OpenGl_Context>& theGlCtx,
                                      unsigned int                       theIndex)
 {
   theGlCtx->core30->glBindBufferBase(GetTarget(), theIndex, NO_BUFFER);
 }
-
-//=================================================================================================
 
 void OpenGl_Buffer::BindBufferRange(const occ::handle<OpenGl_Context>& theGlCtx,
                                     unsigned int                       theIndex,
@@ -170,8 +147,6 @@ void OpenGl_Buffer::BindBufferRange(const occ::handle<OpenGl_Context>& theGlCtx,
                                       (GLsizeiptr)theSize);
 }
 
-//=================================================================================================
-
 bool OpenGl_Buffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
                          const unsigned int                 theComponentsNb,
                          const int                          theElemsNb,
@@ -179,8 +154,6 @@ bool OpenGl_Buffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
 {
   return init(theGlCtx, theComponentsNb, theElemsNb, theData, GL_FLOAT);
 }
-
-//=================================================================================================
 
 bool OpenGl_Buffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
                          const unsigned int                 theComponentsNb,
@@ -190,8 +163,6 @@ bool OpenGl_Buffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
   return init(theGlCtx, theComponentsNb, theElemsNb, theData, GL_UNSIGNED_INT);
 }
 
-//=================================================================================================
-
 bool OpenGl_Buffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
                          const unsigned int                 theComponentsNb,
                          const int                          theElemsNb,
@@ -200,8 +171,6 @@ bool OpenGl_Buffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
   return init(theGlCtx, theComponentsNb, theElemsNb, theData, GL_UNSIGNED_SHORT);
 }
 
-//=================================================================================================
-
 bool OpenGl_Buffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
                          const unsigned int                 theComponentsNb,
                          const int                          theElemsNb,
@@ -209,8 +178,6 @@ bool OpenGl_Buffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
 {
   return init(theGlCtx, theComponentsNb, theElemsNb, theData, GL_UNSIGNED_BYTE);
 }
-
-//=================================================================================================
 
 bool OpenGl_Buffer::init(const occ::handle<OpenGl_Context>& theGlCtx,
                          const unsigned int                 theComponentsNb,
@@ -233,8 +200,7 @@ bool OpenGl_Buffer::init(const occ::handle<OpenGl_Context>& theGlCtx,
                                     theData,
                                     GL_STATIC_DRAW);
   const int anErr = theGlCtx->core15fwd->glGetError();
-  if (anErr != GL_NO_ERROR
-      && anErr != GL_OUT_OF_MEMORY) // pass-through out-of-memory error, but log unexpected errors
+  if (anErr != GL_NO_ERROR && anErr != GL_OUT_OF_MEMORY)
   {
     theGlCtx->PushMessage(GL_DEBUG_SOURCE_APPLICATION,
                           GL_DEBUG_TYPE_ERROR,
@@ -250,8 +216,6 @@ bool OpenGl_Buffer::init(const occ::handle<OpenGl_Context>& theGlCtx,
   return anErr == GL_NO_ERROR;
 }
 
-//=================================================================================================
-
 bool OpenGl_Buffer::SubData(const occ::handle<OpenGl_Context>& theGlCtx,
                             const int                          theElemFrom,
                             const int                          theElemsNb,
@@ -259,8 +223,6 @@ bool OpenGl_Buffer::SubData(const occ::handle<OpenGl_Context>& theGlCtx,
 {
   return subData(theGlCtx, theElemFrom, theElemsNb, theData, GL_FLOAT);
 }
-
-//=================================================================================================
 
 bool OpenGl_Buffer::SubData(const occ::handle<OpenGl_Context>& theGlCtx,
                             const int                          theElemFrom,
@@ -270,8 +232,6 @@ bool OpenGl_Buffer::SubData(const occ::handle<OpenGl_Context>& theGlCtx,
   return subData(theGlCtx, theElemFrom, theElemsNb, theData, GL_UNSIGNED_INT);
 }
 
-//=================================================================================================
-
 bool OpenGl_Buffer::SubData(const occ::handle<OpenGl_Context>& theGlCtx,
                             const int                          theElemFrom,
                             const int                          theElemsNb,
@@ -280,8 +240,6 @@ bool OpenGl_Buffer::SubData(const occ::handle<OpenGl_Context>& theGlCtx,
   return subData(theGlCtx, theElemFrom, theElemsNb, theData, GL_UNSIGNED_SHORT);
 }
 
-//=================================================================================================
-
 bool OpenGl_Buffer::SubData(const occ::handle<OpenGl_Context>& theGlCtx,
                             const int                          theElemFrom,
                             const int                          theElemsNb,
@@ -289,8 +247,6 @@ bool OpenGl_Buffer::SubData(const occ::handle<OpenGl_Context>& theGlCtx,
 {
   return subData(theGlCtx, theElemFrom, theElemsNb, theData, GL_UNSIGNED_BYTE);
 }
-
-//=================================================================================================
 
 bool OpenGl_Buffer::subData(const occ::handle<OpenGl_Context>& theGlCtx,
                             const int                          theElemFrom,
@@ -306,11 +262,11 @@ bool OpenGl_Buffer::subData(const occ::handle<OpenGl_Context>& theGlCtx,
 
   Bind(theGlCtx);
   const size_t aDataSize = sizeOfGlType(theDataType);
-  theGlCtx->core15fwd->glBufferSubData(
-    GetTarget(),
-    GLintptr(theElemFrom) * GLintptr(myComponentsNb) * aDataSize,    // offset in bytes
-    GLsizeiptr(theElemsNb) * GLsizeiptr(myComponentsNb) * aDataSize, // size   in bytes
-    theData);
+  theGlCtx->core15fwd->glBufferSubData(GetTarget(),
+                                       GLintptr(theElemFrom) * GLintptr(myComponentsNb) * aDataSize,
+                                       GLsizeiptr(theElemsNb) * GLsizeiptr(myComponentsNb)
+                                         * aDataSize,
+                                       theData);
   const int anErr = theGlCtx->core15fwd->glGetError();
   if (anErr != GL_NO_ERROR)
   {
@@ -331,8 +287,6 @@ bool OpenGl_Buffer::subData(const occ::handle<OpenGl_Context>& theGlCtx,
   return anErr == GL_NO_ERROR;
 }
 
-//=================================================================================================
-
 bool OpenGl_Buffer::GetSubData(const occ::handle<OpenGl_Context>& theGlCtx,
                                const int                          theElemFrom,
                                const int                          theElemsNb,
@@ -340,8 +294,6 @@ bool OpenGl_Buffer::GetSubData(const occ::handle<OpenGl_Context>& theGlCtx,
 {
   return getSubData(theGlCtx, theElemFrom, theElemsNb, theData, GL_FLOAT);
 }
-
-//=================================================================================================
 
 bool OpenGl_Buffer::GetSubData(const occ::handle<OpenGl_Context>& theGlCtx,
                                const int                          theElemFrom,
@@ -351,8 +303,6 @@ bool OpenGl_Buffer::GetSubData(const occ::handle<OpenGl_Context>& theGlCtx,
   return getSubData(theGlCtx, theElemFrom, theElemsNb, theData, GL_UNSIGNED_SHORT);
 }
 
-//=================================================================================================
-
 bool OpenGl_Buffer::GetSubData(const occ::handle<OpenGl_Context>& theGlCtx,
                                const int                          theElemFrom,
                                const int                          theElemsNb,
@@ -361,8 +311,6 @@ bool OpenGl_Buffer::GetSubData(const occ::handle<OpenGl_Context>& theGlCtx,
   return getSubData(theGlCtx, theElemFrom, theElemsNb, theData, GL_UNSIGNED_INT);
 }
 
-//=================================================================================================
-
 bool OpenGl_Buffer::GetSubData(const occ::handle<OpenGl_Context>& theGlCtx,
                                const int                          theElemFrom,
                                const int                          theElemsNb,
@@ -370,8 +318,6 @@ bool OpenGl_Buffer::GetSubData(const occ::handle<OpenGl_Context>& theGlCtx,
 {
   return getSubData(theGlCtx, theElemFrom, theElemsNb, theData, GL_UNSIGNED_BYTE);
 }
-
-//=================================================================================================
 
 bool OpenGl_Buffer::getSubData(const occ::handle<OpenGl_Context>& theGlCtx,
                                const int                          theElemFrom,
@@ -394,8 +340,6 @@ bool OpenGl_Buffer::getSubData(const occ::handle<OpenGl_Context>& theGlCtx,
   Unbind(theGlCtx);
   return isDone;
 }
-
-//=================================================================================================
 
 void OpenGl_Buffer::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

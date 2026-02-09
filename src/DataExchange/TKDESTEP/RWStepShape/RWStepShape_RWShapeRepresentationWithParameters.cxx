@@ -7,12 +7,8 @@
 #include <StepRepr_RepresentationItem.hpp>
 #include <StepShape_ShapeRepresentationWithParameters.hpp>
 
-//=================================================================================================
-
 RWStepShape_RWShapeRepresentationWithParameters::RWStepShape_RWShapeRepresentationWithParameters() =
   default;
-
-//=================================================================================================
 
 void RWStepShape_RWShapeRepresentationWithParameters::ReadStep(
   const occ::handle<StepData_StepReaderData>&                     data,
@@ -20,11 +16,9 @@ void RWStepShape_RWShapeRepresentationWithParameters::ReadStep(
   occ::handle<Interface_Check>&                                   ach,
   const occ::handle<StepShape_ShapeRepresentationWithParameters>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "shape_representation_with_parameters"))
     return;
-
-  // Inherited fields of Representation
 
   occ::handle<TCollection_HAsciiString> aRepresentation_Name;
   data->ReadString(num, 1, "representation.name", ach, aRepresentation_Name);
@@ -58,18 +52,13 @@ void RWStepShape_RWShapeRepresentationWithParameters::ReadStep(
                    STANDARD_TYPE(StepRepr_RepresentationContext),
                    aRepresentation_ContextOfItems);
 
-  // Initialize entity
   ent->Init(aRepresentation_Name, aRepresentation_Items, aRepresentation_ContextOfItems);
 }
-
-//=================================================================================================
 
 void RWStepShape_RWShapeRepresentationWithParameters::WriteStep(
   StepData_StepWriter&                                            SW,
   const occ::handle<StepShape_ShapeRepresentationWithParameters>& ent) const
 {
-
-  // Inherited fields of Representation
 
   SW.Send(ent->StepRepr_Representation::Name());
 
@@ -85,14 +74,10 @@ void RWStepShape_RWShapeRepresentationWithParameters::WriteStep(
   SW.Send(ent->StepRepr_Representation::ContextOfItems());
 }
 
-//=================================================================================================
-
 void RWStepShape_RWShapeRepresentationWithParameters::Share(
   const occ::handle<StepShape_ShapeRepresentationWithParameters>& ent,
   Interface_EntityIterator&                                       iter) const
 {
-
-  // Inherited fields of Representation
 
   for (int i1 = 1; i1 <= ent->StepRepr_Representation::NbItems(); i1++)
   {

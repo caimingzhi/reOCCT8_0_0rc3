@@ -19,7 +19,6 @@ void DsgPrs_SymbPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresen
   TA->SetColor(Quantity_NOC_GREEN);
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), TA, aText, OffsetPoint);
 
-  // 2eme groupe : marker
   occ::handle<Geom_CartesianPoint> theP = new Geom_CartesianPoint(OffsetPoint);
   occ::handle<Prs3d_PointAspect>   PA   = aDrawer->PointAspect();
   PA->SetTypeOfMarker(Aspect_TOM_RING2);

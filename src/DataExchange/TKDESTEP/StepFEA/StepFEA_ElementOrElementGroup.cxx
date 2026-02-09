@@ -3,11 +3,7 @@
 #include <StepFEA_ElementOrElementGroup.hpp>
 #include <StepFEA_ElementRepresentation.hpp>
 
-//=================================================================================================
-
 StepFEA_ElementOrElementGroup::StepFEA_ElementOrElementGroup() = default;
-
-//=================================================================================================
 
 int StepFEA_ElementOrElementGroup::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -20,15 +16,11 @@ int StepFEA_ElementOrElementGroup::CaseNum(const occ::handle<Standard_Transient>
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepFEA_ElementRepresentation> StepFEA_ElementOrElementGroup::ElementRepresentation()
   const
 {
   return occ::down_cast<StepFEA_ElementRepresentation>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepFEA_ElementGroup> StepFEA_ElementOrElementGroup::ElementGroup() const
 {

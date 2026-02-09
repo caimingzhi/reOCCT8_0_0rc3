@@ -11,31 +11,6 @@
 
 #define NullAngle 1.e-6
 
-// QuasiAngular is rational definition of std::cos(theta(t) and sin(theta)
-// on [-alpha, +alpha] with
-//                     2      2
-//                    U   -  V
-//  cos (theta(t)) = ----------
-//                     2      2
-//                    U   +  V
-
-//                      2 * U*V
-//   sin (theta(t)) = ----------
-//                      2      2
-//                     U   +  V
-//                     3
-//       V(t) = t + c t
-//                     2
-//       U(t) = 1 + b t
-//            1
-//       c = ---  + b
-//            3
-//            -1                     gamma
-//       b =---------  +   -----------------------
-//                 2
-//            gamma         3*(tang gamma - gamma)
-//     with gamma = alpha / 2
-
 GeomFill_QuasiAngularConvertor::GeomFill_QuasiAngularConvertor()
     : myinit(false),
       B(1, 7, 1, 7),
@@ -56,14 +31,13 @@ bool GeomFill_QuasiAngularConvertor::Initialized() const
 void GeomFill_QuasiAngularConvertor::Init()
 {
   if (myinit)
-    return; // On n'initialise qu'une fois
+    return;
   int                                      ii, jj, Ordre = 7;
   double                                   terme;
   NCollection_Array1<double>               Coeffs(1, Ordre * Ordre), TrueInter(1, 2), Inter(1, 2);
   occ::handle<NCollection_HArray2<double>> Poles1d =
     new (NCollection_HArray2<double>)(1, Ordre, 1, Ordre);
 
-  // Calcul de B
   Inter.SetValue(1, -1);
   Inter.SetValue(2, 1);
   TrueInter.SetValue(1, -1);
@@ -75,7 +49,6 @@ void GeomFill_QuasiAngularConvertor::Init()
     Coeffs.SetValue(ii + (ii - 1) * Ordre, 1);
   }
 
-  // Convertion
   Convert_CompPolynomialToPoles AConverter(Ordre, Ordre - 1, Ordre - 1, Coeffs, Inter, TrueInter);
   AConverter.Poles(Poles1d);
 
@@ -85,14 +58,13 @@ void GeomFill_QuasiAngularConvertor::Init()
     {
       terme = Poles1d->Value(ii, jj);
       if (std::abs(terme - 1) < 1.e-9)
-        terme = 1; // petite retouche
+        terme = 1;
       if (std::abs(terme + 1) < 1.e-9)
         terme = -1;
       B(ii, jj) = terme;
     }
   }
 
-  // Init des polynomes
   Vx.Init(0);
   Vx(1) = 1;
   Vy.Init(0);
@@ -114,7 +86,7 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
   double beta, beta2, beta3, beta4, beta5, beta6, wi;
   gp_XYZ aux;
   gp_Mat Rot;
-  // Calcul de la transformation
+
   gp_Vec V1(Center, FirstPnt), V2;
   Rot.SetRotation(Dir.XYZ(), Angle / 2);
   aux = V1.XYZ();
@@ -124,7 +96,6 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
 
   gp_Mat M(V1.X(), V2.X(), 0, V1.Y(), V2.Y(), 0, V1.Z(), V2.Z(), 0);
 
-  // Calcul des coeffs  -----------
   beta  = Angle / 4;
   beta2 = beta * beta;
   beta3 = beta * beta2;
@@ -138,7 +109,6 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
     {
       double cf = 2.0 / (3 * 5 * 7);
       b         = -(0.2 + cf * beta2) / (1 + 0.2 * beta2);
-      //     b = beta5 / cf;
     }
     else
     {
@@ -153,27 +123,22 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
   b2 = b * b;
   c2 = c * c;
 
-  // X = U*U - V*V
   Vx(3) = beta2 * (2 * b - 1);
   Vx(5) = beta4 * (b2 - 2 * c);
   Vx(7) = -beta6 * c2;
 
-  // Y = 2*U*V
   Vy(2) = 2 * beta;
   Vy(4) = beta3 * 2 * (c + b);
   Vy(6) = 2 * beta5 * b * c;
 
-  // W = U*U + V*V
   Vw(3) = beta2 * (1 + 2 * b);
   Vw(5) = beta4 * (2 * c + b2);
   Vw(7) = beta6 * c2;
 
-  // Calculs des poles
   Px.Multiply(B, Vx);
   Py.Multiply(B, Vy);
   W.Multiply(B, Vw);
 
-  // Transfo
   gp_XYZ pnt;
   for (ii = 1; ii <= 7; ii++)
   {
@@ -208,16 +173,12 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
   double beta, beta2, beta3, beta4, beta5, beta6, betaprim;
   gp_Vec V1(Center, FirstPnt), V1Prim, V2;
 
-  // Calcul des  transformations
   gp_XYZ aux;
   double Sina, Cosa;
   gp_Mat Rot, RotPrim, D, DPrim;
-  // La rotation s'ecrit I +  sin(Ang) * D + (1. - cos(Ang)) * D*D
-  // ou D est l'application x -> Dir ^ x
+
   Rot.SetRotation(Dir.XYZ(), Angle / 2);
-  // La derive s'ecrit donc :
-  // AngPrim * (sin(Ang)*D*D + cos(Ang)*D)
-  // + sin(Ang)*DPrim  + (1. - cos(Ang)) *(DPrim*D + D*DPrim)
+
   Sina = std::sin(Angle / 2);
   Cosa = std::cos(Angle / 2);
   D.SetCross(Dir.XYZ());
@@ -240,7 +201,6 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
   V2 = (DDir.Crossed(V1)).Added(Dir.Crossed(V1Prim));
   gp_Mat MPrim(V1Prim.X(), V2.X(), 0, V1Prim.Y(), V2.Y(), 0, V1Prim.Z(), V2.Z(), 0);
 
-  // Calcul des constante  -----------
   beta     = Angle / 4;
   betaprim = DAngle / 4;
   beta2    = beta * beta;
@@ -251,7 +211,7 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
 
   if (std::abs(beta) < NullAngle)
   {
-    // On calcul b par D.L
+
     double cf = 2.0 / (3 * 5 * 7);
     double Num, Denom;
     Num   = 0.2 + cf * beta2;
@@ -277,7 +237,6 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
   b2 = b * b;
   c2 = c * c;
 
-  // X = U*U - V*V
   Vx(3) = beta2 * (2 * b - 1);
   Vx(5) = beta4 * (b2 - 2 * c);
   Vx(7) = -beta6 * c2;
@@ -286,7 +245,6 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
   DVx(5) = 4 * beta3 * betaprim * (b2 - 2 * c) + 2 * beta4 * bpr * (b - 1);
   DVx(7) = -6 * beta5 * betaprim * c2 - 2 * beta6 * bpr * c;
 
-  // Y = 2*U*V
   Vy(2) = 2 * beta;
   Vy(4) = beta3 * 2 * (c + b);
   Vy(6) = 2 * beta5 * b * c;
@@ -295,19 +253,17 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
   DVy(4) = 6 * beta2 * betaprim * (b + c) + 4 * beta3 * bpr;
   DVy(6) = 10 * beta4 * betaprim * b * c + 2 * beta5 * bpr * (b + c);
 
-  // W = U*U + V*V
   Vw(3) = beta2 * (1 + 2 * b);
   Vw(5) = beta4 * (2 * c + b2);
   Vw(7) = beta6 * c2;
   DVw.Init(0);
-  //  DVw(3) = 2*(beta*betaprim*(1 + 2*b) + beta2*bpr);
+
   DVw(3) = 2 * beta * (betaprim * (1 + 2 * b) + beta * bpr);
-  //  DVw(5) = 4*beta3*betaprim*(2*c + b2) + 2*beta4*bpr*(b+1);
+
   DVw(5) = 2 * beta3 * (2 * betaprim * (2 * c + b2) + beta * bpr * (b + 1));
-  //  DVw(7) = 6*beta5*betaprim*c2 + 2*beta6*bpr*c;
+
   DVw(7) = 2 * beta5 * c * (3 * betaprim * c + beta * bpr);
 
-  // Calcul des poles
   Px.Multiply(B, Vx);
   Py.Multiply(B, Vy);
   W.Multiply(B, Vw);
@@ -364,16 +320,12 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
   double daux, b, b2, c, c2, bpr, bsc;
   gp_Vec V1(Center, FirstPnt), V1Prim, V1Secn, V2;
 
-  // Calcul des  transformations
   gp_XYZ auxyz;
   double Sina, Cosa;
   gp_Mat Rot, RotPrim, RotSecn, D, DPrim, DSecn, DDP, Maux;
-  // La rotation s'ecrit I +  sin(Ang) * D + (1. - cos(Ang)) * D*D
-  // ou D est l'application x -> Dir ^ x
+
   Rot.SetRotation(Dir.XYZ(), Angle / 2);
-  // La derive s'ecrit donc :
-  // AngPrim * (sin(Ang)*D*D + cos(Ang)*D)
-  // + sin(Ang)*DPrim  + (1. - cos(Ang)) *(DPrim*D + D*DPrim)
+
   Sina = std::sin(Angle / 2);
   Cosa = std::cos(Angle / 2);
   D.SetCross(Dir.XYZ());
@@ -425,7 +377,6 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
   V2 += (D2Dir.Crossed(V1)).Added(Dir.Crossed(V1Secn));
   gp_Mat MSecn(V1Secn.X(), V2.X(), 0, V1Secn.Y(), V2.Y(), 0, V1Secn.Z(), V2.Z(), 0);
 
-  // Calcul des coeff  -----------
   double tan_b, dtan_b, d2tan_b;
   double beta, beta2, beta3, beta4, beta5, beta6, betaprim, betasecn;
   double betaprim2, bpr2;
@@ -441,7 +392,7 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
 
   if (std::abs(beta) < NullAngle)
   {
-    // On calcul b par D.L
+
     double cf = -2.0 / 21;
     double Num, Denom, aux;
     Num   = 0.2 + cf * beta2;
@@ -475,7 +426,6 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
   c2   = c * c;
   bpr2 = bpr * bpr;
 
-  // X = U*U - V*V
   Vx(3) = beta2 * (2 * b - 1);
   Vx(5) = beta4 * (b2 - 2 * c);
   Vx(7) = -beta6 * c2;
@@ -491,7 +441,6 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
   D2Vx(7) = -6 * c2 * (5 * beta4 * betaprim2 + beta5 * betasecn) - 24 * beta5 * betaprim * bpr * c
             - 2 * beta6 * (bsc * c + bpr2);
 
-  // Y = 2*U*V
   Vy(2) = 2 * beta;
   Vy(4) = beta3 * 2 * (c + b);
   Vy(6) = 2 * beta5 * b * c;
@@ -506,7 +455,6 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
   D2Vy(6) = 10 * b * c * (4 * beta3 * betaprim2 + beta4 * betasecn)
             + 40 * beta4 * betaprim * bpr * (b + c) + 2 * beta5 * (bsc * (b + c) + 2 * bpr2);
 
-  // W = U*U + V*V
   Vw(3) = beta2 * (1 + 2 * b);
   Vw(5) = beta4 * (2 * c + b2);
   Vw(7) = beta6 * c2;
@@ -522,7 +470,6 @@ void GeomFill_QuasiAngularConvertor::Section(const gp_Pnt&               FirstPn
   D2Vw(7) = 6 * c2 * (5 * beta4 * betaprim2 + beta5 * betasecn) + 24 * beta5 * betaprim * bpr * c
             + 2 * beta6 * (bsc * c + bpr2);
 
-  // Calcul des poles
   Px = B * Vx;
   Py = B * Vy;
   W.Multiply(B, Vw);

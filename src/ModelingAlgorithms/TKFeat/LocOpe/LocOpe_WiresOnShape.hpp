@@ -26,13 +26,8 @@ public:
 
   Standard_EXPORT void Init(const TopoDS_Shape& S);
 
-  //! Add splitting edges or wires for whole initial shape
-  //! without additional specification edge->face, edge->edge
-  //! This method puts edge on the corresponding faces from initial shape
   Standard_EXPORT bool Add(const NCollection_Sequence<TopoDS_Shape>& theEdges);
 
-  //! Set the flag of check internal intersections
-  //! default value is True (to check)
   void SetCheckInterior(const bool ToCheckInterior);
 
   Standard_EXPORT void Bind(const TopoDS_Wire& W, const TopoDS_Face& F);
@@ -53,37 +48,21 @@ public:
 
   Standard_EXPORT TopoDS_Edge Edge();
 
-  //! Returns the face of the shape on which the current
-  //! edge is projected.
   Standard_EXPORT TopoDS_Face OnFace();
 
-  //! If the current edge is projected on an edge,
-  //! returns <true> and sets the value of <E>.
-  //! Otherwise, returns <false>.
   Standard_EXPORT bool OnEdge(TopoDS_Edge& E);
 
   Standard_EXPORT void NextEdge();
 
   Standard_EXPORT bool OnVertex(const TopoDS_Vertex& Vwire, TopoDS_Vertex& Vshape);
 
-  //! If the vertex <V> lies on an edge of the original
-  //! shape, returns <true> and sets the
-  //! concerned edge in <E>, and the parameter on the
-  //! edge in <P>.
-  //! Else returns <false>.
   Standard_EXPORT bool OnEdge(const TopoDS_Vertex& V, TopoDS_Edge& E, double& P);
 
-  //! If the vertex <V> lies on an edge of the original
-  //! shape, returns <true> and sets the
-  //! concerned edge in <E>, and the parameter on the
-  //! edge in <P>.
-  //! Else returns <false>.
   Standard_EXPORT bool OnEdge(const TopoDS_Vertex& V,
                               const TopoDS_Edge&   EdgeFrom,
                               TopoDS_Edge&         E,
                               double&              P);
 
-  //! tells is the face to be split by section or not
   bool IsFaceWithSection(const TopoDS_Shape& aFace) const;
 
   DEFINE_STANDARD_RTTIEXT(LocOpe_WiresOnShape, Standard_Transient)
@@ -103,14 +82,10 @@ inline void LocOpe_WiresOnShape::SetCheckInterior(const bool ToCheckInterior)
   myCheckInterior = ToCheckInterior;
 }
 
-//=================================================================================================
-
 inline bool LocOpe_WiresOnShape::IsDone() const
 {
   return myDone;
 }
-
-//=================================================================================================
 
 inline bool LocOpe_WiresOnShape::IsFaceWithSection(const TopoDS_Shape& aFace) const
 {

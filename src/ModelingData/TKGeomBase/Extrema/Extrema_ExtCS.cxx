@@ -102,7 +102,7 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
   GeomAbs_CurveType myCtype = C.GetType();
 
   myDone = false;
-  // Try analytic computation of extrema
+
   bool isComputeAnalytic = true;
 
   switch (myCtype)
@@ -238,7 +238,7 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
       }
       break;
     }
-      //  Modified by skv - Thu Jul  7 12:29:34 2005 OCC9134 Begin
+
     case GeomAbs_Circle:
     {
       if (myStype == GeomAbs_Cylinder)
@@ -262,7 +262,7 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
     {
       if (myCtype == GeomAbs_Hyperbola && myStype == GeomAbs_Plane)
       {
-        //  Modified by skv - Thu Jul  7 12:29:34 2005 OCC9134 End
+
         myExtElCS.Perform(C.Hyperbola(), myS->Plane());
         break;
       }
@@ -301,8 +301,7 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
 
         if (mySqDist.Length() == 0 && NbExt > 0)
         {
-          // Analytical extrema seem to be out of curve/surface boundaries.
-          // Try extremity points of curve.
+
           gp_Pnt aPOnC[2], aPOnS[2];
           double aT[2]    = {myucinf, myucsup}, U[2], V[2];
           double aDist[2] = {-1, -1};
@@ -353,26 +352,25 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
 
           bool bAdd[2] = {false, false};
 
-          // Choose solution to add
           if (aDist[0] >= 0. && aDist[1] >= 0.)
           {
             double aDiff = aDist[0] - aDist[1];
-            // Both computed -> take only minimal
+
             if (std::abs(aDiff) < Precision::Confusion())
-              // Add both
+
               bAdd[0] = bAdd[1] = true;
             else if (aDiff < 0)
-              // Add first
+
               bAdd[0] = true;
             else
-              // Add second
+
               bAdd[1] = true;
           }
           else if (aDist[0] >= 0.)
-            // Add first
+
             bAdd[0] = true;
           else if (aDist[1] >= 0.)
-            // Add second
+
             bAdd[1] = true;
 
           for (i = 0; i < 2; ++i)
@@ -386,14 +384,13 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
     }
   }
 
-  // Elementary extrema is not done, try generic solution
   Extrema_GenExtCS Ext;
   Ext.Initialize(*myS, NbU, NbV, mytolS);
   if (myCtype == GeomAbs_Hyperbola)
   {
     double tmin = std::max(-20., C.FirstParameter());
     double tmax = std::min(20., C.LastParameter());
-    Ext.Perform(C, NbT, tmin, tmax, mytolC); // to avoid overflow
+    Ext.Perform(C, NbT, tmin, tmax, mytolC);
   }
   else
   {
@@ -420,7 +417,6 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
       AddSolution(C, T, U, V, PC.Value(), PS.Value(), Ext.SquareDistance(i));
     }
 
-    // Add sharp points
     int                        SolNumber   = mySqDist.Length();
     void*                      CopyC       = (void*)&C;
     Adaptor3d_Curve&           aC          = *(Adaptor3d_Curve*)CopyC;
@@ -461,7 +457,7 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
         AddSolution(C, T, U, V, aPnt, aProjPS.Point(jmin).Value(), MinSqDist);
       }
     }
-    // Cut sharp solutions to keep only minimum and maximum
+
     int imin = SolNumber + 1, imax = mySqDist.Length();
     for (i = SolNumber + 1; i <= mySqDist.Length(); i++)
     {

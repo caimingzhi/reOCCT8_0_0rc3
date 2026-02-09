@@ -11,26 +11,21 @@ class StepFEA_FeaAreaDensity;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write tool for FeaAreaDensity
 class RWStepFEA_RWFeaAreaDensity
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepFEA_RWFeaAreaDensity();
 
-  //! Reads FeaAreaDensity
   Standard_HIDDEN void ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                 const int                                   num,
                                 occ::handle<Interface_Check>&               ach,
                                 const occ::handle<StepFEA_FeaAreaDensity>&  ent) const;
 
-  //! Writes FeaAreaDensity
   Standard_HIDDEN void WriteStep(StepData_StepWriter&                       SW,
                                  const occ::handle<StepFEA_FeaAreaDensity>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(const occ::handle<StepFEA_FeaAreaDensity>& ent,
                              Interface_EntityIterator&                  iter) const;
 };

@@ -51,10 +51,6 @@
 Standard_IMPORT Draw_Viewer dout;
 #endif
 
-//=======================================================================
-// vertex
-//=======================================================================
-
 static int vertex(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 3)
@@ -85,17 +81,13 @@ static int vertex(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// range
-//=======================================================================
-
 static int range(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4)
     return 1;
   TopoDS_Shape aLocalShape(DBRep::Get(a[1], TopAbs_EDGE));
   TopoDS_Edge  E = TopoDS::Edge(aLocalShape);
-  //  TopoDS_Edge E = TopoDS::Edge(DBRep::Get(a[1],TopAbs_EDGE));
+
   if (E.IsNull())
     return 1;
   double       f = Draw::Atof(a[n - 2]);
@@ -107,17 +99,13 @@ static int range(Draw_Interpretor&, int n, const char** a)
   {
     aLocalShape   = DBRep::Get(a[2], TopAbs_FACE);
     TopoDS_Face F = TopoDS::Face(aLocalShape);
-    //    TopoDS_Face F = TopoDS::Face(DBRep::Get(a[2],TopAbs_FACE));
+
     if (F.IsNull())
       return 1;
     B.Range(E, F, f, l);
   }
   return 0;
 }
-
-//=======================================================================
-// trim
-//=======================================================================
 
 static int trim(Draw_Interpretor& di, int n, const char** a)
 {
@@ -168,15 +156,11 @@ static int trim(Draw_Interpretor& di, int n, const char** a)
   }
   else
   {
-    // std::cout <<"Error creating edge"<<std::endl;
+
     di << "Error creating edge\n";
   }
   return 0;
 }
-
-//=======================================================================
-// polyline
-//=======================================================================
 
 static int polyline(Draw_Interpretor&, int n, const char** a)
 {
@@ -196,10 +180,6 @@ static int polyline(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// polyvertex
-//=======================================================================
-
 static int polyvertex(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4)
@@ -218,10 +198,6 @@ static int polyvertex(Draw_Interpretor&, int n, const char** a)
   DBRep::Set(a[1], W.Wire());
   return 0;
 }
-
-//=======================================================================
-// wire
-//=======================================================================
 
 static int wire(Draw_Interpretor& di, int n, const char** a)
 {
@@ -263,7 +239,7 @@ static int wire(Draw_Interpretor& di, int n, const char** a)
 
   if (!MW.IsDone())
   {
-    // std::cout << "Wire not done" << std::endl;
+
     di << "Wire not done with an error:\n";
     switch (MW.Error())
     {
@@ -285,10 +261,6 @@ static int wire(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// mkedge
-//=======================================================================
-
 static int mkedge(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
@@ -300,7 +272,7 @@ static int mkedge(Draw_Interpretor& di, int n, const char** a)
 
   if (C.IsNull() && C2d.IsNull() && P3d.IsNull())
   {
-    // std::cout << a[2] << " is not a curve" << std::endl;
+
     di << a[2] << " is not a curve or polygon 3d\n";
     return 1;
   }
@@ -331,7 +303,7 @@ static int mkedge(Draw_Interpretor& di, int n, const char** a)
     }
     TopoDS_Shape  aLocalShape(DBRep::Get(a[3 + i], TopAbs_VERTEX));
     TopoDS_Vertex V1 = TopoDS::Vertex(aLocalShape);
-    //    TopoDS_Vertex V1 = TopoDS::Vertex(DBRep::Get(a[3+i],TopAbs_VERTEX));
+
     if (n == 5 + i)
     {
       if (V1.IsNull())
@@ -347,7 +319,7 @@ static int mkedge(Draw_Interpretor& di, int n, const char** a)
       {
         aLocalShape      = DBRep::Get(a[4 + i], TopAbs_VERTEX);
         TopoDS_Vertex V2 = TopoDS::Vertex(aLocalShape);
-        //  TopoDS_Vertex V2 = TopoDS::Vertex(DBRep::Get(a[4+i],TopAbs_VERTEX));
+
         if (!C.IsNull())
           edge = BRepBuilderAPI_MakeEdge(C, V1, V2);
         else if (S.IsNull())
@@ -360,7 +332,7 @@ static int mkedge(Draw_Interpretor& di, int n, const char** a)
     {
       aLocalShape      = DBRep::Get(a[5 + i], TopAbs_VERTEX);
       TopoDS_Vertex V2 = TopoDS::Vertex(aLocalShape);
-      //      TopoDS_Vertex V2 = TopoDS::Vertex(DBRep::Get(a[5+i],TopAbs_VERTEX));
+
       if (!C.IsNull())
         edge = BRepBuilderAPI_MakeEdge(C, V1, V2, Draw::Atof(a[4]), Draw::Atof(a[6]));
       else if (S.IsNull())
@@ -376,9 +348,6 @@ static int mkedge(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// mkcurve
-//=======================================================================
 Standard_IMPORT Draw_Color DrawTrSurf_CurveColor(const Draw_Color col);
 Standard_IMPORT void       DBRep_WriteColorOrientation();
 Standard_IMPORT Draw_Color DBRep_ColorOrientation(const TopAbs_Orientation Or);
@@ -399,7 +368,7 @@ static int mkcurve(Draw_Interpretor& di, int n, const char** a)
   occ::handle<Geom_Curve> C = BRep_Tool::Curve(TopoDS::Edge(S), L, f, l);
   if (C.IsNull())
   {
-    // std::cout << a[2] << " has no 3d curve" << std::endl;
+
     di << a[2] << " has no 3d curve\n";
     return 1;
   }
@@ -422,8 +391,6 @@ static int mkcurve(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int mkpoint(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 3)
@@ -440,10 +407,6 @@ static int mkpoint(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=======================================================================
-// mk2dcurve
-//=======================================================================
 
 static int mk2dcurve(Draw_Interpretor& di, int na, const char** a)
 {
@@ -466,7 +429,7 @@ static int mk2dcurve(Draw_Interpretor& di, int na, const char** a)
 
   if (na == 3)
   {
-    // get the first PCurve connected to edge E
+
     BRep_Tool::CurveOnSurface(E, C, Surf, L, f, l);
   }
   else if (na == 4)
@@ -487,8 +450,7 @@ static int mk2dcurve(Draw_Interpretor& di, int na, const char** a)
 
   if (C.IsNull())
   {
-    // std::cout << a[2] << " has no 2d curve"; if (na == 4) std::cout << " on " << a[3];
-    // std::cout << std::endl;
+
     di << a[2] << " has no 2d curve";
 
     if (hasFace)
@@ -505,10 +467,6 @@ static int mk2dcurve(Draw_Interpretor& di, int na, const char** a)
   return 0;
 }
 
-//=======================================================================
-// edge
-//=======================================================================
-
 static int edge(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4)
@@ -521,10 +479,6 @@ static int edge(Draw_Interpretor&, int n, const char** a)
   DBRep::Set(a[1], E);
   return 0;
 }
-
-//=======================================================================
-// isoedge
-//=======================================================================
 
 static int isoedge(Draw_Interpretor&, int n, const char** a)
 {
@@ -577,10 +531,6 @@ static int isoedge(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// transfert
-//=======================================================================
-
 static int transfert(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 3)
@@ -596,49 +546,12 @@ static int transfert(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// profile
-// command to build a profile
-//=======================================================================
-
 static int profile(Draw_Interpretor& di, int n, const char** a)
 {
-  // this command build a profile
-  // from a moving point
 
   if (n == 1)
   {
-    // print help
 
-    // std::cout << "profile name [code values] [code values] ...\n";
-    // std::cout << "  Build a profile in the XY plane from a moving point and direction\n";
-    // std::cout << "  The original point and direction are 0 0 and 1 0\n";
-    // std::cout << "  Codes and values describe the point or direction change\n";
-    // std::cout << "  When the point change the direction becomes the tangent\n";
-    // std::cout << "  All angles are in degree (may be negative)\n";
-    // std::cout << "  By default the profile is closed and a face is built\n";
-    // std::cout << "\n";
-    // std::cout << "  Instruction Parameters         Action\n";
-    // std::cout << "  O           X Y Z              Set the origin of the plane\n";
-    // std::cout << "  P           DX DY DZ UX UY UZ  Set the normal and X of the plane\n";
-    // std::cout << "  S           Face               Set the Plane (Face must be a Face)\n";
-    // std::cout << "  F           X Y                Set the first point\n";
-    // std::cout << "  X           DX                 Translate point along X\n";
-    // std::cout << "  Y           DY                 Translate point along Y\n";
-    // std::cout << "  L           DL                 Translate point along direction\n";
-    // std::cout << "  XX          X                  Set point X coordinate\n";
-    // std::cout << "  YY          Y                  Set point Y coordinate\n";
-    // std::cout << "  T           DX DY              Translate point\n";
-    // std::cout << "  TT          X Y                Set point\n";
-    // std::cout << "  R           Angle              Rotate direction\n";
-    // std::cout << "  RR          Angle              Set direction\n";
-    // std::cout << "  D           DX DY              Set direction\n";
-    // std::cout << "  IX          X                  Intersect with vertical\n";
-    // std::cout << "  IY          Y                  Intersect with horizontal\n";
-    // std::cout << "  C           Radius Angle       Arc of circle tangent to direction\n";
-    // std::cout << "  W                              Make a closed wire\n";
-    // std::cout << "  WW                             Make an open wire\n";
-    // std::cout << std::endl;
     di << "profile name [code values] [code values] ...\n";
     di << "  Build a profile in the XY plane from a moving point and direction\n";
     di << "  The original point and direction are 0 0 and 1 0\n";
@@ -757,7 +670,7 @@ static int profile(Draw_Interpretor& di, int n, const char** a)
         {
           TopoDS_Shape aLocalShape(DBRep::Get(a[i], TopAbs_FACE));
           TopoDS_Face  Face = TopoDS::Face(aLocalShape);
-          //  TopoDS_Face Face = TopoDS::Face(DBRep::Get(a[i],TopAbs_FACE));
+
           if (Face.IsNull())
           {
             di << "profile : no face found";
@@ -869,7 +782,7 @@ static int profile(Draw_Interpretor& di, int n, const char** a)
           length    = std::sqrt(vx * vx + vy * vy);
           if (length > Precision::Confusion())
           {
-            // move = line; DUB
+
             dx = vx / length;
             dy = vy / length;
           }
@@ -991,15 +904,13 @@ static int profile(Draw_Interpretor& di, int n, const char** a)
         break;
     }
 
-    // update first
     first     = stayfirst;
     stayfirst = false;
 
-    // next segment....
     i++;
     if ((i == n) && close)
     {
-      // the closing segment
+
       dx     = x0 - x;
       dy     = y0 - y;
       length = std::sqrt(dx * dx + dy * dy);
@@ -1012,8 +923,6 @@ static int profile(Draw_Interpretor& di, int n, const char** a)
       }
     }
   }
-
-  // get the result, face or wire
 
   if (face)
   {
@@ -1050,29 +959,12 @@ badargs:
   return 1;
 }
 
-//=======================================================================
-// profile
-// command to build a profile
-//=======================================================================
-
 static int bsplineprof(Draw_Interpretor& di, int n, const char** a)
 {
-  // this command build a profile
-  // from a moving point
 
   if (n == 1)
   {
-    // print help
 
-    // std::cout << " bsplineprof name [S face] [W WW]  "              << std::endl;
-    // std::cout << " for an edge : <digitizes> ... <mouse button 2> " << std::endl ;
-    // std::cout << " to end profile : <mouse button 3> "              << std::endl ;
-    // std::cout << "  Build a profile in the XY plane from digitizes" << std::endl ;
-    // std::cout << "  By default the profile is closed and a face is built\n";
-    // std::cout << "\n";
-    // std::cout << "  W                              Make a closed wire\n";
-    // std::cout << "  WW                             Make an open wire\n";
-    // std::cout << std::endl;
     di << " bsplineprof name [S face] [W WW]  " << "\n";
     di << " for an edge : <digitizes> ... <mouse button 2> " << "\n";
     di << " to end profile : <mouse button 3> " << "\n";
@@ -1089,14 +981,14 @@ static int bsplineprof(Draw_Interpretor& di, int n, const char** a)
   gp_Pnt2d first_point(0.0e0, 0.0e0);
   int      i    = 2;
   bool     wait = true;
-  //  double x0 = 0, y0 = 0, x = 0, y = 0, dx = 1, dy = 0;
+
   double                  x = 0, y = 0, dx = 1, dy = 0;
   BRepBuilderAPI_MakeWire MW;
   gp_Ax3                  DummyHP(gp::XOY());
   gp_Pln                  P(DummyHP);
   bool                    face  = true;
   bool                    close = true;
-  //  bool first = true;
+
   bool                      isplanar = true;
   double                    length;
   TopoDS_Shape              S;
@@ -1116,7 +1008,7 @@ static int bsplineprof(Draw_Interpretor& di, int n, const char** a)
           {
             TopoDS_Shape aLocalShape(DBRep::Get(a[i], TopAbs_FACE));
             TopoDS_Face  Face = TopoDS::Face(aLocalShape);
-            //    TopoDS_Face Face = TopoDS::Face(DBRep::Get(a[i],TopAbs_FACE));
+
             if (Face.IsNull())
             {
               di << "profile : no face found";
@@ -1150,10 +1042,7 @@ static int bsplineprof(Draw_Interpretor& di, int n, const char** a)
       }
     }
   }
-  //
-  //  to be done : close the profile using the first point of the contour
-  //               and the point taken with mouse button 3
-  //
+
   occ::handle<Geom2d_BSplineCurve>           C;
   occ::handle<Geom_Curve>                    curve3d_ptr;
   int                                        id, ii;
@@ -1292,45 +1181,12 @@ static int bsplineprof(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// 2dprofile
-// command to build a profile
-//=======================================================================
-
 static int profile2d(Draw_Interpretor& di, int n, const char** a)
 {
-  // this command build a profile with 2d curves.
-  // from a moving point
 
   if (n == 1)
   {
-    // print help
 
-    // std::cout << "profile name [code values] [code values] ...\n";
-    // std::cout << "  Build a profile in the UV plane from a moving point and direction\n";
-    // std::cout << "  The original point and direction are 0 0 and 1 0\n";
-    // std::cout << "  Codes and values describe the point or direction change\n";
-    // std::cout << "  When the point change the direction becomes the tangent\n";
-    // std::cout << "  All angles are in degree (may be negative)\n";
-    // std::cout << "  By default the profile is closed \n";
-    // std::cout << "\n";
-    // std::cout << "  Instruction Parameters         Action\n";
-    // std::cout << "  F           X Y                Set the first point\n";
-    // std::cout << "  X           DX                 Translate point along X\n";
-    // std::cout << "  Y           DY                 Translate point along Y\n";
-    // std::cout << "  L           DL                 Translate point along direction\n";
-    // std::cout << "  XX          X                  Set point X coordinate\n";
-    // std::cout << "  YY          Y                  Set point Y coordinate\n";
-    // std::cout << "  T           DX DY              Translate point\n";
-    // std::cout << "  TT          X Y                Set point\n";
-    // std::cout << "  R           Angle              Rotate direction\n";
-    // std::cout << "  RR          Angle              Set direction\n";
-    // std::cout << "  D           DX DY              Set direction\n";
-    // std::cout << "  IX          X                  Intersect with vertical\n";
-    // std::cout << "  IY          Y                  Intersect with horizontal\n";
-    // std::cout << "  C           Radius Angle       Arc of circle tangent to direction\n";
-    // std::cout << "  W                              Make a closed wire\n";
-    // std::cout << std::endl;
     di << "profile name [code values] [code values] ...\n";
     di << "  Build a profile in the UV plane from a moving point and direction\n";
     di << "  The original point and direction are 0 0 and 1 0\n";
@@ -1492,7 +1348,7 @@ static int profile2d(Draw_Interpretor& di, int n, const char** a)
           length    = std::sqrt(vx * vx + vy * vy);
           if (length > Precision::Confusion())
           {
-            // move = line; DUB
+
             dx = vx / length;
             dy = vy / length;
           }
@@ -1612,15 +1468,13 @@ static int profile2d(Draw_Interpretor& di, int n, const char** a)
         break;
     }
 
-    // update first
     first     = stayfirst;
     stayfirst = false;
 
-    // next segment....
     i++;
     if ((i == n) && close)
     {
-      // the closing segment
+
       dx     = x0 - x;
       dy     = y0 - y;
       length = std::sqrt(dx * dx + dy * dy);
@@ -1649,8 +1503,6 @@ badargs:
   di << "profile : bad number of arguments";
   return 1;
 }
-
-//=================================================================================================
 
 int mkoffset(Draw_Interpretor& di, int n, const char** a)
 {
@@ -1722,15 +1574,13 @@ int mkoffset(Draw_Interpretor& di, int n, const char** a)
     else
     {
       Sprintf(name, "%s_%d", a[1], Compt++);
-      char* temp = name; // portage WNT
+      char* temp = name;
       DBRep::Set(temp, Paral.Shape());
     }
   }
 
   return 0;
 }
-
-//=================================================================================================
 
 int openoffset(Draw_Interpretor& di, int n, const char** a)
 {
@@ -1795,15 +1645,13 @@ int openoffset(Draw_Interpretor& di, int n, const char** a)
     else
     {
       Sprintf(name, "%s_%d", a[1], Compt++);
-      char* temp = name; // portage WNT
+      char* temp = name;
       DBRep::Set(temp, Paral.Shape());
     }
   }
 
   return 0;
 }
-
-//=================================================================================================
 
 int pickface(Draw_Interpretor& di, int, const char**)
 {
@@ -1828,25 +1676,23 @@ int edgeintersector(Draw_Interpretor& di, int n, const char** a)
   TopoDS_Edge  E[2];
   TopoDS_Shape aLocalShape(DBRep::Get(a[2], TopAbs_EDGE));
   E[0] = TopoDS::Edge(aLocalShape);
-  //  E[0] = TopoDS::Edge(DBRep::Get(a[2],TopAbs_EDGE));
+
   if (E[0].IsNull())
     return 1;
   aLocalShape = DBRep::Get(a[3], TopAbs_EDGE);
   E[1]        = TopoDS::Edge(aLocalShape);
-  //  E[1] = TopoDS::Edge(DBRep::Get(a[3],TopAbs_EDGE));
+
   if (E[1].IsNull())
     return 1;
   aLocalShape   = DBRep::Get(a[4], TopAbs_FACE);
   TopoDS_Face F = TopoDS::Face(aLocalShape);
-  //  TopoDS_Face F  = TopoDS::Face(DBRep::Get(a[4],TopAbs_FACE));
+
   if (F.IsNull())
     return 1;
 
   TopOpeBRep_EdgesIntersector EInter;
   char                        name[100];
-  //------------------------------------------------------
-  // Calculate point of intersection 2D
-  //-----------------------------------------------------
+
   EInter.SetFaces(F, F);
   double TolInter = 1.e-7;
   if (n == 6)
@@ -1857,7 +1703,7 @@ int edgeintersector(Draw_Interpretor& di, int n, const char** a)
 
   if (EInter.IsEmpty())
   {
-    // std::cout << " No intersection found" << std::endl;
+
     di << " No intersection found\n";
     return 0;
   }
@@ -1879,19 +1725,12 @@ int edgeintersector(Draw_Interpretor& di, int n, const char** a)
     DBRep::Set(name, V);
     for (int i = 1; i <= 2; i++)
     {
-      //---------------------------------------------------------------
-      // to be able to rank parameter on edge
-      // it is necessary to code it internally
-      //---------------------------------------------------------------
+
       double U = P2D.Parameter(i);
 
       V.Orientation(TopAbs_INTERNAL);
       B.UpdateVertex(V, U, E[i - 1], Tol);
-      //      B.UpdateVertex(TopoDS::Vertex(V.Oriented(TopAbs_INTERNAL)),
-      //		     U,E[i-1],Tol);
-      //---------------------------------------------------------------
-      // Orientation of vertex in the transition.
-      //---------------------------------------------------------------
+
       TopAbs_Orientation OO = TopAbs_REVERSED;
       if (P2D.IsVertex(i))
       {
@@ -1901,55 +1740,48 @@ int edgeintersector(Draw_Interpretor& di, int n, const char** a)
       {
         OO = TopAbs_FORWARD;
       }
-      // std::cout << " Orientation of vertex " << NbV << " on " << a[i+1] << ": ";
+
       di << " Orientation of vertex " << NbV << " on " << a[i + 1] << ": ";
       if (OO == TopAbs_FORWARD)
       {
-        // std::cout << "FORWARD" << std::endl;
+
         di << "FORWARD\n";
       }
       else
       {
-        // std::cout << "REVERSED" << std::endl;
+
         di << "REVERSED\n";
       }
     }
   }
-  // POP pour NT
+
   return 0;
 }
 
-//=================================================================================
-// function : arclinconvert
-// purpose  : Convert a single face to a face with contour made of arcs and segments
-//=================================================================================
-
-static int arclinconvert(Draw_Interpretor& /*dout*/, int n, const char** a)
+static int arclinconvert(Draw_Interpretor&, int n, const char** a)
 {
-  // Check the command arguments
+
   if (n < 3)
   {
     std::cout << "Error: " << a[0] << " - invalid number of arguments" << std::endl;
     std::cout << "Usage: type help " << a[0] << std::endl;
-    return 1; // TCL_ERROR
+    return 1;
   }
 
-  // read shape
   const TopoDS_Shape aShape = DBRep::Get(a[2]);
   if (aShape.IsNull())
   {
     std::cout << "Error: " << a[2] << " is null" << std::endl;
-    return 1; // TCL_ERROR
+    return 1;
   }
 
   TopAbs_ShapeEnum aType = aShape.ShapeType();
   if (aType != TopAbs_WIRE && aType != TopAbs_FACE)
   {
     std::cout << "Error: " << a[2] << " is neither wire no face" << std::endl;
-    return 1; // TCL_ERROR
+    return 1;
   }
 
-  // read tolerance
   double aTol = 0.01;
   if (n > 3)
     aTol = Draw::Atof(a[3]);
@@ -1964,7 +1796,7 @@ static int arclinconvert(Draw_Interpretor& /*dout*/, int n, const char** a)
     if (aFaceMaker.Error() != BRepBuilderAPI_FaceDone)
     {
       std::cout << "Error: failed to find a face for the wire " << a[2] << std::endl;
-      return 1; // TCL_ERROR
+      return 1;
     }
     const TopoDS_Face& aFace = aFaceMaker.Face();
     TopoDS_Iterator    anIter(aFace);
@@ -1980,14 +1812,12 @@ static int arclinconvert(Draw_Interpretor& /*dout*/, int n, const char** a)
   if (aResult.IsNull())
   {
     std::cout << "Error: could not convert " << a[2] << std::endl;
-    return 1; // TCL_ERROR
+    return 1;
   }
 
   DBRep::Set(a[1], aResult);
-  return 0; // TCL_OK
+  return 0;
 }
-
-//=================================================================================================
 
 int concatC0wire(Draw_Interpretor&, int n, const char** c)
 {
@@ -1997,21 +1827,15 @@ int concatC0wire(Draw_Interpretor&, int n, const char** c)
   TopoDS_Shape S = DBRep::Get(c[2], TopAbs_WIRE);
 
   if (S.IsNull())
-    return 1; // test if the shape is empty
+    return 1;
 
   TopoDS_Wire  W = TopoDS::Wire(S);
   TopoDS_Shape res;
 
-  res = BRepAlgo::ConcatenateWireC0(W); // treatment
+  res = BRepAlgo::ConcatenateWireC0(W);
   DBRep::Set(c[1], res);
   return 0;
 }
-
-//=======================================================================
-// function : concatwire
-// purpose  : reduce the multiply degree of the knots to the minimum without
-//           changing the geometry
-//=======================================================================
 
 static int concatwire(Draw_Interpretor&, int n, const char** c)
 {
@@ -2019,30 +1843,28 @@ static int concatwire(Draw_Interpretor&, int n, const char** c)
   if (n < 3)
     return 1;
 
-  if (n == 4) // check if it's C1 or G1
+  if (n == 4)
     if (!strcmp(c[3], "G1"))
       Option = GeomAbs_G1;
 
   TopoDS_Shape S = DBRep::Get(c[2], TopAbs_WIRE);
 
   if (S.IsNull())
-    return 1; // test if the shape is empty
+    return 1;
 
   TopoDS_Wire W = TopoDS::Wire(S);
   TopoDS_Wire res;
-  res = BRepAlgo::ConcatenateWire(W, Option); // processing
+  res = BRepAlgo::ConcatenateWire(W, Option);
   DBRep::Set(c[1], res);
   return 0;
 }
-
-//=================================================================================================
 
 int build3d(Draw_Interpretor& di, int n, const char** a)
 {
 
   if ((n < 2) || (n > 3))
   {
-    // std::cout << " 1 or 2 arguments expected" << std::endl;
+
     di << " 1 or 2 arguments expected\n";
     return 1;
   }
@@ -2060,7 +1882,7 @@ int build3d(Draw_Interpretor& di, int n, const char** a)
   {
     Ok = BRepLib::BuildCurves3d(S, Draw::Atof(a[2]));
   }
-  // if (!Ok) {std::cout << " one of the computation failed" << std::endl;}
+
   if (!Ok)
   {
     di << " one of the computation failed\n";
@@ -2068,11 +1890,6 @@ int build3d(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=======================================================================
-// function : reducepcurves
-// purpose  : remove pcurves that are unused in this shape
-//=======================================================================
 
 int reducepcurves(Draw_Interpretor& di, int n, const char** a)
 {
@@ -2084,7 +1901,7 @@ int reducepcurves(Draw_Interpretor& di, int n, const char** a)
   {
     TopoDS_Shape aShape = DBRep::Get(a[i]);
     if (aShape.IsNull())
-      // std::cout << a[i] << " is not a valid shape" << std::endl;
+
       di << a[i] << " is not a valid shape\n";
     else
       BRepTools::RemoveUnusedPCurves(aShape);
@@ -2092,8 +1909,6 @@ int reducepcurves(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 void BRepTest::CurveCommands(Draw_Interpretor& theCommands)
 {

@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include "RWStepKinematics_RWPrismaticPairValue.hpp"
 
@@ -10,11 +10,7 @@
 #include <StepKinematics_KinematicPair.hpp>
 #include <Standard_Real.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWPrismaticPairValue::RWStepKinematics_RWPrismaticPairValue() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWPrismaticPairValue::ReadStep(
   const occ::handle<StepData_StepReaderData>&           theData,
@@ -22,16 +18,12 @@ void RWStepKinematics_RWPrismaticPairValue::ReadStep(
   occ::handle<Interface_Check>&                         theArch,
   const occ::handle<StepKinematics_PrismaticPairValue>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 3, theArch, "prismatic_pair_value"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
-
-  // Inherited fields of PairValue
 
   occ::handle<StepKinematics_KinematicPair> aPairValue_AppliesToPair;
   theData->ReadEntity(theNum,
@@ -41,47 +33,28 @@ void RWStepKinematics_RWPrismaticPairValue::ReadStep(
                       STANDARD_TYPE(StepKinematics_KinematicPair),
                       aPairValue_AppliesToPair);
 
-  // Own fields of PrismaticPairValue
-
   double aActualTranslation;
   theData->ReadReal(theNum, 3, "actual_translation", theArch, aActualTranslation);
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name, aPairValue_AppliesToPair, aActualTranslation);
 }
-
-//=================================================================================================
 
 void RWStepKinematics_RWPrismaticPairValue::WriteStep(
   StepData_StepWriter&                                  theSW,
   const occ::handle<StepKinematics_PrismaticPairValue>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Own fields of PairValue
 
   theSW.Send(theEnt->AppliesToPair());
 
-  // Own fields of PrismaticPairValue
-
   theSW.Send(theEnt->ActualTranslation());
 }
-
-//=================================================================================================
 
 void RWStepKinematics_RWPrismaticPairValue::Share(
   const occ::handle<StepKinematics_PrismaticPairValue>& theEnt,
   Interface_EntityIterator&                             iter) const
 {
 
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of PairValue
-
   iter.AddItem(theEnt->StepKinematics_PairValue::AppliesToPair());
-
-  // Own fields of PrismaticPairValue
 }

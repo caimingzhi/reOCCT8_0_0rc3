@@ -1,4 +1,4 @@
-// Created on : Thu Mar 24 18:30:11 2022
+
 
 #include "RWStepVisual_RWComplexTriangulatedSurfaceSet.hpp"
 #include <StepVisual_ComplexTriangulatedSurfaceSet.hpp>
@@ -15,12 +15,8 @@
 #include <Standard_Real.hpp>
 #include <Standard_Transient.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWComplexTriangulatedSurfaceSet::RWStepVisual_RWComplexTriangulatedSurfaceSet() =
   default;
-
-//=================================================================================================
 
 void RWStepVisual_RWComplexTriangulatedSurfaceSet::ReadStep(
   const occ::handle<StepData_StepReaderData>&                  theData,
@@ -28,18 +24,14 @@ void RWStepVisual_RWComplexTriangulatedSurfaceSet::ReadStep(
   occ::handle<Interface_Check>&                                theCheck,
   const occ::handle<StepVisual_ComplexTriangulatedSurfaceSet>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 7, theCheck, "complex_triangulated_surface_set"))
   {
     return;
   }
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theCheck, aRepresentationItem_Name);
-
-  // Inherited fields of TessellatedSurfaceSet
 
   occ::handle<StepVisual_CoordinatesList> aTessellatedSurfaceSet_Coordinates;
   theData->ReadEntity(theNum,
@@ -79,8 +71,6 @@ void RWStepVisual_RWComplexTriangulatedSurfaceSet::ReadStep(
       }
     }
   }
-
-  // Own fields of ComplexTriangulatedSurfaceSet
 
   occ::handle<NCollection_HArray1<int>> aPnindex;
   int                                   sub5 = 0;
@@ -149,7 +139,6 @@ void RWStepVisual_RWComplexTriangulatedSurfaceSet::ReadStep(
     }
   }
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aTessellatedSurfaceSet_Coordinates,
                aTessellatedSurfaceSet_Pnmax,
@@ -159,29 +148,19 @@ void RWStepVisual_RWComplexTriangulatedSurfaceSet::ReadStep(
                aTriangleFans);
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWComplexTriangulatedSurfaceSet::WriteStep(
   StepData_StepWriter&                                         theSW,
   const occ::handle<StepVisual_ComplexTriangulatedSurfaceSet>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Own fields of TessellatedSurfaceSet
 
   theSW.Send(theEnt->Coordinates());
 
   theSW.Send(theEnt->Pnmax());
 
   theSW.OpenSub();
-  // According to "Recommended Practices Recommended Practices for 3D Tessellated Geometry",
-  // Release 1.1:
-  // "...The size of the list of normals may be:
-  //    0: no normals are defined..."
-  // In OCC this situation is reflected by nullptr normals container.
+
   if (theEnt->NbNormals() != 0)
   {
     for (int i3 = 1; i3 <= theEnt->Normals()->NbRows(); i3++)
@@ -197,8 +176,6 @@ void RWStepVisual_RWComplexTriangulatedSurfaceSet::WriteStep(
     }
   }
   theSW.CloseSub();
-
-  // Own fields of ComplexTriangulatedSurfaceSet
 
   theSW.OpenSub();
   for (int i4 = 1; i4 <= theEnt->Pnindex()->Length(); i4++)
@@ -241,18 +218,10 @@ void RWStepVisual_RWComplexTriangulatedSurfaceSet::WriteStep(
   theSW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWComplexTriangulatedSurfaceSet::Share(
   const occ::handle<StepVisual_ComplexTriangulatedSurfaceSet>& theEnt,
   Interface_EntityIterator&                                    theIter) const
 {
 
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of TessellatedSurfaceSet
-
   theIter.AddItem(theEnt->StepVisual_TessellatedSurfaceSet::Coordinates());
-
-  // Own fields of ComplexTriangulatedSurfaceSet
 }

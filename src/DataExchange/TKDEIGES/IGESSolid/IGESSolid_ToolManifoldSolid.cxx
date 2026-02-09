@@ -18,7 +18,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-// MGE 31/07/98
 IGESSolid_ToolManifoldSolid::IGESSolid_ToolManifoldSolid() = default;
 
 void IGESSolid_ToolManifoldSolid::ReadOwnParams(const occ::handle<IGESSolid_ManifoldSolid>& ent,
@@ -26,22 +25,18 @@ void IGESSolid_ToolManifoldSolid::ReadOwnParams(const occ::handle<IGESSolid_Mani
                                                 IGESData_ParamReader& PR) const
 {
 
-  // MGE 31/07/98
-  // Building of messages
-  //========================================
   Message_Msg Msg180("XSTEP_180");
-  //========================================
 
-  bool                                  abool, shellFlag; // szv#4:S4163:12Mar99 `st` moved down
-  int                                   nbshells, i;
-  occ::handle<NCollection_HArray1<int>> voidShellFlags;
-  occ::handle<IGESData_IGESEntity>      shell;
-  occ::handle<IGESSolid_Shell>          ashell;
+  bool                                                           abool, shellFlag;
+  int                                                            nbshells, i;
+  occ::handle<NCollection_HArray1<int>>                          voidShellFlags;
+  occ::handle<IGESData_IGESEntity>                               shell;
+  occ::handle<IGESSolid_Shell>                                   ashell;
   occ::handle<NCollection_HArray1<occ::handle<IGESSolid_Shell>>> voidShells;
   IGESData_Status                                                aStatus;
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, shell))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg178("XSTEP_178");
     switch (aStatus)
     {
@@ -65,18 +60,14 @@ void IGESSolid_ToolManifoldSolid::ReadOwnParams(const occ::handle<IGESSolid_Mani
     }
   }
 
-  PR.ReadBoolean(PR.Current(), Msg180, shellFlag); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadBoolean(PR.Current(), Msg180, shellFlag);
   bool st = PR.ReadInteger(PR.Current(), nbshells);
   if (!st)
   {
     Message_Msg Msg181("XSTEP_181");
     PR.SendFail(Msg181);
   }
-  /*
-    st = PR.ReadEntity(IR, PR.Current(), "Shell", shell);
-    st = PR.ReadBoolean(PR.Current(), "Shell orientation", shellFlag);
-    st = PR.ReadInteger(PR.Current(), "Number of shells", nbshells);
-  */
+
   if (st && nbshells > 0)
   {
     voidShells     = new NCollection_HArray1<occ::handle<IGESSolid_Shell>>(1, nbshells);
@@ -84,12 +75,7 @@ void IGESSolid_ToolManifoldSolid::ReadOwnParams(const occ::handle<IGESSolid_Mani
     voidShellFlags->Init(0);
     for (i = 1; i <= nbshells; i++)
     {
-      // st = PR.ReadEntity(IR, PR.Current(), Msg179,
-      // STANDARD_TYPE(IGESSolid_Shell), ashell); //szv#4:S4163:12Mar99 moved in if
-      /*
-      st = PR.ReadEntity(IR, PR.Current(), "Void shells",
-             STANDARD_TYPE(IGESSolid_Shell), ashell);
-      */
+
       if (PR.ReadEntity(IR, PR.Current(), aStatus, STANDARD_TYPE(IGESSolid_Shell), ashell))
         voidShells->SetValue(i, ashell);
       else
@@ -124,7 +110,7 @@ void IGESSolid_ToolManifoldSolid::ReadOwnParams(const occ::handle<IGESSolid_Mani
         }
       }
 
-      PR.ReadBoolean(PR.Current(), Msg180, abool); // szv#4:S4163:12Mar99 `st=` not needed
+      PR.ReadBoolean(PR.Current(), Msg180, abool);
       if (abool)
         voidShellFlags->SetValue(i, 1);
     }
@@ -185,7 +171,7 @@ void IGESSolid_ToolManifoldSolid::OwnCopy(const occ::handle<IGESSolid_ManifoldSo
 }
 
 IGESData_DirChecker IGESSolid_ToolManifoldSolid::DirChecker(
-  const occ::handle<IGESSolid_ManifoldSolid>& /* ent */) const
+  const occ::handle<IGESSolid_ManifoldSolid>&) const
 {
   IGESData_DirChecker DC(186, 0);
 
@@ -197,9 +183,9 @@ IGESData_DirChecker IGESSolid_ToolManifoldSolid::DirChecker(
   return DC;
 }
 
-void IGESSolid_ToolManifoldSolid::OwnCheck(const occ::handle<IGESSolid_ManifoldSolid>& /* ent */,
+void IGESSolid_ToolManifoldSolid::OwnCheck(const occ::handle<IGESSolid_ManifoldSolid>&,
                                            const Interface_ShareTool&,
-                                           occ::handle<Interface_Check>& /* ach */) const
+                                           occ::handle<Interface_Check>&) const
 {
 }
 

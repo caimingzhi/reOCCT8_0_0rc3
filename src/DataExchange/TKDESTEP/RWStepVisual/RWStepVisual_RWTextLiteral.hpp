@@ -11,7 +11,6 @@ class StepVisual_TextLiteral;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for TextLiteral
 class RWStepVisual_RWTextLiteral
 {
 public:

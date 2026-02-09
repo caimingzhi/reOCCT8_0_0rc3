@@ -18,8 +18,6 @@ extern "C"
 
 IMPLEMENT_STANDARD_RTTIEXT(Media_Frame, Standard_Transient)
 
-//=================================================================================================
-
 Image_Format Media_Frame::FormatFFmpeg2Occt(int theFormat)
 {
 #ifdef HAVE_FFMPEG
@@ -49,8 +47,6 @@ Image_Format Media_Frame::FormatFFmpeg2Occt(int theFormat)
   return Image_Format_UNKNOWN;
 #endif
 }
-
-//=================================================================================================
 
 int Media_Frame::FormatOcct2FFmpeg(Image_Format theFormat)
 {
@@ -86,7 +82,7 @@ int Media_Frame::FormatOcct2FFmpeg(Image_Format theFormat)
     case Image_Format_RGF_half:
     case Image_Format_RGBAF_half:
     case Image_Format_UNKNOWN:
-      return AV_PIX_FMT_NONE; // unsupported
+      return AV_PIX_FMT_NONE;
   }
   return AV_PIX_FMT_NONE;
 #else
@@ -94,8 +90,6 @@ int Media_Frame::FormatOcct2FFmpeg(Image_Format theFormat)
   return 0;
 #endif
 }
-
-//=================================================================================================
 
 Media_Frame::Media_Frame()
     : myFrame(nullptr),
@@ -109,8 +103,6 @@ Media_Frame::Media_Frame()
   Unref();
 }
 
-//=================================================================================================
-
 Media_Frame::~Media_Frame()
 {
 #ifdef HAVE_FFMPEG
@@ -118,16 +110,12 @@ Media_Frame::~Media_Frame()
 #endif
 }
 
-//=================================================================================================
-
 void Media_Frame::Unref()
 {
 #ifdef HAVE_FFMPEG
   av_frame_unref(myFrame);
 #endif
 }
-
-//=================================================================================================
 
 bool Media_Frame::IsFullRangeYUV() const
 {
@@ -138,26 +126,20 @@ bool Media_Frame::IsFullRangeYUV() const
 #endif
 }
 
-//=================================================================================================
-
 void Media_Frame::Swap(const occ::handle<Media_Frame>& theFrame1,
                        const occ::handle<Media_Frame>& theFrame2)
 {
   std::swap(theFrame1->myFrame, theFrame2->myFrame);
 }
 
-//=================================================================================================
-
 bool Media_Frame::IsEmpty() const
 {
 #ifdef HAVE_FFMPEG
-  return myFrame->format == -1; // AV_PIX_FMT_NONE
+  return myFrame->format == -1;
 #else
   return true;
 #endif
 }
-
-//=================================================================================================
 
 int Media_Frame::SizeX() const
 {
@@ -168,8 +150,6 @@ int Media_Frame::SizeX() const
 #endif
 }
 
-//=================================================================================================
-
 int Media_Frame::SizeY() const
 {
 #ifdef HAVE_FFMPEG
@@ -179,8 +159,6 @@ int Media_Frame::SizeY() const
 #endif
 }
 
-//=================================================================================================
-
 int Media_Frame::Format() const
 {
 #ifdef HAVE_FFMPEG
@@ -189,8 +167,6 @@ int Media_Frame::Format() const
   return 0;
 #endif
 }
-
-//=================================================================================================
 
 uint8_t* Media_Frame::Plane(int thePlaneId) const
 {
@@ -202,8 +178,6 @@ uint8_t* Media_Frame::Plane(int thePlaneId) const
 #endif
 }
 
-//=================================================================================================
-
 int Media_Frame::LineSize(int thePlaneId) const
 {
 #ifdef HAVE_FFMPEG
@@ -214,8 +188,6 @@ int Media_Frame::LineSize(int thePlaneId) const
 #endif
 }
 
-//=================================================================================================
-
 int64_t Media_Frame::BestEffortTimestamp() const
 {
 #ifdef HAVE_FFMPEG
@@ -224,8 +196,6 @@ int64_t Media_Frame::BestEffortTimestamp() const
   return 0;
 #endif
 }
-
-//=================================================================================================
 
 bool Media_Frame::InitWrapper(const occ::handle<Image_PixMap>& thePixMap)
 {

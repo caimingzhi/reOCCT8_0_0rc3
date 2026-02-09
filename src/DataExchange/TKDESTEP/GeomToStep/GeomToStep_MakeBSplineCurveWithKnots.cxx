@@ -15,10 +15,6 @@
 #include <TCollection_HAsciiString.hpp>
 #include <Standard_Integer.hpp>
 
-//=============================================================================
-// Creation d' une bspline_curve_with_knots de
-// prostep a partir d' une BSplineCurve de Geom
-//=============================================================================
 GeomToStep_MakeBSplineCurveWithKnots::GeomToStep_MakeBSplineCurveWithKnots(
   const occ::handle<Geom_BSplineCurve>& BS,
   const StepData_Factors&               theLocalFactors)
@@ -28,11 +24,6 @@ GeomToStep_MakeBSplineCurveWithKnots::GeomToStep_MakeBSplineCurveWithKnots(
 #undef Array1OfPnt_gen
 }
 
-//=============================================================================
-// Creation d' une bspline_curve_with_knots de
-// prostep a partir d' une BSplineCurve de Geom2d
-//=============================================================================
-
 GeomToStep_MakeBSplineCurveWithKnots::GeomToStep_MakeBSplineCurveWithKnots(
   const occ::handle<Geom2d_BSplineCurve>& BS,
   const StepData_Factors&                 theLocalFactors)
@@ -41,10 +32,6 @@ GeomToStep_MakeBSplineCurveWithKnots::GeomToStep_MakeBSplineCurveWithKnots(
 #include "GeomToStep_MakeBSplineCurveWithKnots_gen.hpp"
 #undef Array1OfPnt_gen
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_BSplineCurveWithKnots>& GeomToStep_MakeBSplineCurveWithKnots::Value()
   const

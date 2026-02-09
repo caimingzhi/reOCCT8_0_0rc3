@@ -93,8 +93,6 @@ static int solutions(Draw_Interpretor& di, Geom2dGcc_Circ2d3Tan& ct3, const char
   }
 }
 
-//=================================================================================================
-
 static int solutions(Draw_Interpretor& theDI, Geom2dGcc_Circ2dTanCen& theCt2, const char* theName)
 {
   char solname[200];
@@ -119,8 +117,6 @@ static int solutions(Draw_Interpretor& theDI, Geom2dGcc_Circ2dTanCen& theCt2, co
     return 1;
   }
 }
-
-//=================================================================================================
 
 static int Cirtang(Draw_Interpretor& theDI, int theNArgs, const char** theArgVals)
 {
@@ -195,7 +191,7 @@ static int Cirtang(Draw_Interpretor& theDI, int theNArgs, const char** theArgVal
 
   if (aNbCurves == 3)
   {
-    // C-C-C
+
     Geom2dGcc_Circ2d3Tan aCt3(Geom2dGcc::Unqualified(aC[0]),
                               Geom2dGcc::Unqualified(aC[1]),
                               Geom2dGcc::Unqualified(aC[2]),
@@ -210,7 +206,7 @@ static int Cirtang(Draw_Interpretor& theDI, int theNArgs, const char** theArgVal
   {
     if (aNbPnts >= 1)
     {
-      // C-C-P
+
       Geom2dGcc_Circ2d3Tan aCt3(Geom2dGcc::Unqualified(aC[0]),
                                 Geom2dGcc::Unqualified(aC[1]),
                                 new Geom2d_CartesianPoint(aP[0]),
@@ -222,7 +218,7 @@ static int Cirtang(Draw_Interpretor& theDI, int theNArgs, const char** theArgVal
     }
     else if (aRadius > 0)
     {
-      // C-C-R
+
       Geom2dGcc_Circ2d2TanRad aCt3(Geom2dGcc::Unqualified(aC[0]),
                                    Geom2dGcc::Unqualified(aC[1]),
                                    aRadius,
@@ -238,7 +234,7 @@ static int Cirtang(Draw_Interpretor& theDI, int theNArgs, const char** theArgVal
   {
     if (aNbPnts == 2)
     {
-      // C-P-P
+
       Geom2dGcc_Circ2d3Tan aCt3(Geom2dGcc::Unqualified(aC[0]),
                                 new Geom2d_CartesianPoint(aP[0]),
                                 new Geom2d_CartesianPoint(aP[1]),
@@ -251,7 +247,7 @@ static int Cirtang(Draw_Interpretor& theDI, int theNArgs, const char** theArgVal
     {
       if (aRadius > 0.0)
       {
-        // C-P-R
+
         Geom2dGcc_Circ2d2TanRad aCt3(Geom2dGcc::Unqualified(aC[0]),
                                      new Geom2d_CartesianPoint(aP[0]),
                                      aRadius,
@@ -261,7 +257,7 @@ static int Cirtang(Draw_Interpretor& theDI, int theNArgs, const char** theArgVal
       }
       else
       {
-        // C-P
+
         Geom2dGcc_Circ2dTanCen aCt2(Geom2dGcc::Unqualified(aC[0]),
                                     new Geom2d_CartesianPoint(aP[0]),
                                     aTol);
@@ -277,7 +273,7 @@ static int Cirtang(Draw_Interpretor& theDI, int theNArgs, const char** theArgVal
   {
     if (aNbPnts == 3)
     {
-      // P-P-P
+
       Geom2dGcc_Circ2d3Tan aCt3(new Geom2d_CartesianPoint(aP[0]),
                                 new Geom2d_CartesianPoint(aP[1]),
                                 new Geom2d_CartesianPoint(aP[2]),
@@ -287,7 +283,7 @@ static int Cirtang(Draw_Interpretor& theDI, int theNArgs, const char** theArgVal
     }
     else if (aRadius > 0)
     {
-      // P-P-R
+
       Geom2dGcc_Circ2d2TanRad aCt3(new Geom2d_CartesianPoint(aP[0]),
                                    new Geom2d_CartesianPoint(aP[1]),
                                    aRadius,
@@ -303,8 +299,6 @@ static int Cirtang(Draw_Interpretor& theDI, int theNArgs, const char** theArgVal
   theDI << "Error: Unsupported set of input data!\n";
   return 1;
 }
-
-//=================================================================================================
 
 static int lintang(Draw_Interpretor& di, int n, const char** a)
 {
@@ -341,7 +335,7 @@ static int lintang(Draw_Interpretor& di, int n, const char** a)
       {
         occ::handle<Geom2d_Line> LS = new Geom2d_Line(ct3.ThisSolution(i));
         Sprintf(solname, "%s_%d", a[1], i);
-        char* temp = solname; // pour portage WNT
+        char* temp = solname;
         DrawTrSurf::Set(temp, LS);
         di << solname << " ";
       }
@@ -362,7 +356,7 @@ static int lintang(Draw_Interpretor& di, int n, const char** a)
       {
         occ::handle<Geom2d_Line> LS = new Geom2d_Line(ct3.ThisSolution(i));
         Sprintf(solname, "%s_%d", a[1], i);
-        char* temp = solname; // pour portage WNT
+        char* temp = solname;
         DrawTrSurf::Set(temp, LS);
         di << solname << " ";
       }
@@ -376,9 +370,8 @@ static int lintang(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//==================================================================================
 static int interpol(Draw_Interpretor& di, int n, const char** a)
-//==================================================================================
+
 {
   if (n == 1)
   {
@@ -526,8 +519,7 @@ static int interpol(Draw_Interpretor& di, int n, const char** a)
   }
   else if (n == 3)
   {
-    // lecture du fichier.
-    // nbpoints, 2d ou 3d, puis valeurs.
+
     const char*   nomfic = a[2];
     std::ifstream iFile(nomfic, std::ios::in);
     if (!iFile)
@@ -583,14 +575,12 @@ static int tanginterpol(Draw_Interpretor& di, int n, const char** a)
     return 1;
 
   int ii, jj,
-    //    num_knots,
-    //    degree,
+
     num_tangents, num_read, num_start, num_parameters;
 
   double
-    //    delta,
+
     tolerance;
-  //    parameter ;
 
   bool   periodic_flag = false;
   gp_Pnt a_point;
@@ -675,9 +665,8 @@ static int tanginterpol(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//==================================================================================
 static int gcarc(Draw_Interpretor& di, int n, const char** a)
-//==================================================================================
+
 {
   if (n >= 5)
   {
@@ -702,7 +691,7 @@ static int gcarc(Draw_Interpretor& di, int n, const char** a)
         {
           if (DrawTrSurf::GetPoint(a[5], P3))
           {
-            //	    if (DrawTrSurf::GetPoint(a[6], P4)) {
+
             if (n > 6)
             {
               DrawTrSurf::GetPoint(a[6], P4);
@@ -728,8 +717,6 @@ static int gcarc(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 void GeometryTest::ConstraintCommands(Draw_Interpretor& theCommands)
 {
 
@@ -741,7 +728,7 @@ void GeometryTest::ConstraintCommands(Draw_Interpretor& theCommands)
   DrawTrSurf::BasicCommands(theCommands);
 
   const char* g;
-  // constrained constructs
+
   g = "GEOMETRY Constraints";
 
   theCommands.Add("cirtang",

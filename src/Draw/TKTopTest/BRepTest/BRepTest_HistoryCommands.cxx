@@ -16,18 +16,15 @@ static int Modified(Draw_Interpretor&, int, const char**);
 static int Generated(Draw_Interpretor&, int, const char**);
 static int IsDeleted(Draw_Interpretor&, int, const char**);
 
-//=================================================================================================
-
 void BRepTest::HistoryCommands(Draw_Interpretor& theCommands)
 {
   static bool isDone = false;
   if (isDone)
     return;
   isDone = true;
-  // Chapter's name
+
   const char* group = "History commands";
 
-  // Commands
   theCommands.Add("setfillhistory",
                   "Controls the history collection by the algorithms and its saving into the "
                   "session after algorithm is done.\n"
@@ -69,8 +66,6 @@ void BRepTest::HistoryCommands(Draw_Interpretor& theCommands)
                   group);
 }
 
-//=================================================================================================
-
 int SetFillHistory(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
   if (theArgc > 2)
@@ -92,8 +87,6 @@ int SetFillHistory(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   return 0;
 }
 
-//=================================================================================================
-
 int SaveHistory(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
   if (theArgc != 2)
@@ -102,7 +95,6 @@ int SaveHistory(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     return 1;
   }
 
-  // Get the history from the session
   occ::handle<BRepTools_History> aHistory = BRepTest_Objects::History();
   if (aHistory.IsNull())
   {
@@ -117,8 +109,6 @@ int SaveHistory(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   return 0;
 }
 
-//=================================================================================================
-
 static occ::handle<BRepTools_History> GetHistory(Draw_Interpretor& theDI, const char* theName)
 {
   occ::handle<BRepTest_DrawableHistory> aHistory =
@@ -132,8 +122,6 @@ static occ::handle<BRepTools_History> GetHistory(Draw_Interpretor& theDI, const 
 
   return aHistory->History();
 }
-
-//=================================================================================================
 
 static TopoDS_Shape GetShape(Draw_Interpretor& theDI, const char* theName)
 {
@@ -153,8 +141,6 @@ static TopoDS_Shape GetShape(Draw_Interpretor& theDI, const char* theName)
   return aS;
 }
 
-//=================================================================================================
-
 static TopoDS_Shape MakeCompound(const NCollection_List<TopoDS_Shape>& theLS)
 {
   TopoDS_Shape aC;
@@ -169,8 +155,6 @@ static TopoDS_Shape MakeCompound(const NCollection_List<TopoDS_Shape>& theLS)
   }
   return aC;
 }
-
-//=================================================================================================
 
 int Modified(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
@@ -201,8 +185,6 @@ int Modified(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   return 0;
 }
 
-//=================================================================================================
-
 int Generated(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
   if (theArgc != 4)
@@ -231,8 +213,6 @@ int Generated(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 
   return 0;
 }
-
-//=================================================================================================
 
 int IsDeleted(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {

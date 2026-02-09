@@ -9,15 +9,9 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_BaseMeshAlgo, IMeshTools_MeshAlgo)
 
-//=================================================================================================
-
 BRepMesh_BaseMeshAlgo::BRepMesh_BaseMeshAlgo() = default;
 
-//=================================================================================================
-
 BRepMesh_BaseMeshAlgo::~BRepMesh_BaseMeshAlgo() = default;
-
-//=================================================================================================
 
 void BRepMesh_BaseMeshAlgo::Perform(const IMeshData::IFaceHandle& theDFace,
                                     const IMeshTools_Parameters&  theParameters,
@@ -44,18 +38,16 @@ void BRepMesh_BaseMeshAlgo::Perform(const IMeshData::IFaceHandle& theDFace,
       commitSurfaceTriangulation();
     }
   }
-  catch (Standard_Failure const& /*theException*/)
+  catch (Standard_Failure const&)
   {
   }
 
-  myDFace.Nullify(); // Do not hold link to face.
+  myDFace.Nullify();
   myStructure.Nullify();
   myNodesMap.Nullify();
   myUsedNodes.Nullify();
   myAllocator.Nullify();
 }
-
-//=================================================================================================
 
 bool BRepMesh_BaseMeshAlgo::initDataStructure()
 {
@@ -64,8 +56,7 @@ bool BRepMesh_BaseMeshAlgo::initDataStructure()
     const IMeshData::IWireHandle& aDWire = myDFace->GetWire(aWireIt);
     if (aDWire->IsSet(IMeshData_SelfIntersectingWire))
     {
-      // TODO: here we can add points of self-intersecting wire as fixed points
-      // in order to keep consistency of nodes with adjacent faces.
+
       continue;
     }
 
@@ -99,7 +90,7 @@ bool BRepMesh_BaseMeshAlgo::initDataStructure()
             const int aLinkIndex = addLinkToMesh(aPrevNodeIndex, aNodeIndex, aOri);
             if (aWireIt != 0 && aLinkIndex <= aLinksNb)
             {
-              // Prevent holes around wire of zero area.
+
               BRepMesh_Edge& aLink = const_cast<BRepMesh_Edge&>(myStructure->GetLink(aLinkIndex));
               aLink.SetMovability(BRepMesh_Fixed);
             }
@@ -113,8 +104,6 @@ bool BRepMesh_BaseMeshAlgo::initDataStructure()
 
   return true;
 }
-
-//=================================================================================================
 
 int BRepMesh_BaseMeshAlgo::registerNode(const gp_Pnt&                  thePoint,
                                         const gp_Pnt2d&                thePoint2d,
@@ -132,8 +121,6 @@ int BRepMesh_BaseMeshAlgo::registerNode(const gp_Pnt&                  thePoint,
   return aNodeIndex;
 }
 
-//=================================================================================================
-
 int BRepMesh_BaseMeshAlgo::addNodeToStructure(const gp_Pnt2d&                thePoint,
                                               const int                      theLocation3d,
                                               const BRepMesh_DegreeOfFreedom theMovability,
@@ -142,8 +129,6 @@ int BRepMesh_BaseMeshAlgo::addNodeToStructure(const gp_Pnt2d&                the
   BRepMesh_Vertex aNode(thePoint.XY(), theLocation3d, theMovability);
   return myStructure->AddNode(aNode, isForceAdd);
 }
-
-//=================================================================================================
 
 int BRepMesh_BaseMeshAlgo::addLinkToMesh(const int                theFirstNodeId,
                                          const int                theLastNodeId,
@@ -162,8 +147,6 @@ int BRepMesh_BaseMeshAlgo::addLinkToMesh(const int                theFirstNodeId
   return std::abs(aLinkIndex);
 }
 
-//=================================================================================================
-
 TopAbs_Orientation BRepMesh_BaseMeshAlgo::fixSeamEdgeOrientation(
   const IMeshData::IEdgeHandle&   theDEdge,
   const IMeshData::IPCurveHandle& thePCurve) const
@@ -173,7 +156,7 @@ TopAbs_Orientation BRepMesh_BaseMeshAlgo::fixSeamEdgeOrientation(
     const IMeshData::IPCurveHandle& aPCurve = theDEdge->GetPCurve(aPCurveIt);
     if (aPCurve->GetFace() == myDFace && thePCurve != aPCurve)
     {
-      // Simple check that another pcurve of seam edge does not coincide with reference one.
+
       const gp_Pnt2d& aPnt1_1 = thePCurve->GetPoint(0);
       const gp_Pnt2d& aPnt2_1 = thePCurve->GetPoint(thePCurve->ParametersNb() - 1);
 
@@ -194,8 +177,6 @@ TopAbs_Orientation BRepMesh_BaseMeshAlgo::fixSeamEdgeOrientation(
   return thePCurve->GetOrientation();
 }
 
-//=================================================================================================
-
 void BRepMesh_BaseMeshAlgo::commitSurfaceTriangulation()
 {
   occ::handle<Poly_Triangulation> aTriangulation = collectTriangles();
@@ -209,8 +190,6 @@ void BRepMesh_BaseMeshAlgo::commitSurfaceTriangulation()
 
   BRepMesh_ShapeTool::AddInFace(myDFace->GetFace(), aTriangulation);
 }
-
-//=================================================================================================
 
 occ::handle<Poly_Triangulation> BRepMesh_BaseMeshAlgo::collectTriangles()
 {
@@ -247,8 +226,6 @@ occ::handle<Poly_Triangulation> BRepMesh_BaseMeshAlgo::collectTriangles()
   return aRes;
 }
 
-//=================================================================================================
-
 void BRepMesh_BaseMeshAlgo::collectNodes(const occ::handle<Poly_Triangulation>& theTriangulation)
 {
   for (int i = 1; i <= myNodesMap->Size(); ++i)
@@ -263,8 +240,6 @@ void BRepMesh_BaseMeshAlgo::collectNodes(const occ::handle<Poly_Triangulation>& 
     }
   }
 }
-
-//=================================================================================================
 
 gp_Pnt2d BRepMesh_BaseMeshAlgo::getNodePoint2d(const BRepMesh_Vertex& theVertex) const
 {

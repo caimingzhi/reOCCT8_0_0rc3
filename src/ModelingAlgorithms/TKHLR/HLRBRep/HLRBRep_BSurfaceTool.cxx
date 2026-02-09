@@ -2,8 +2,6 @@
 
 #include <BRepAdaptor_Surface.hpp>
 
-//=================================================================================================
-
 int HLRBRep_BSurfaceTool::NbSamplesU(const BRepAdaptor_Surface& S)
 {
   int                 nbs;
@@ -52,8 +50,6 @@ int HLRBRep_BSurfaceTool::NbSamplesU(const BRepAdaptor_Surface& S)
   return (nbs);
 }
 
-//=================================================================================================
-
 int HLRBRep_BSurfaceTool::NbSamplesV(const BRepAdaptor_Surface& S)
 {
   int                 nbs;
@@ -98,8 +94,6 @@ int HLRBRep_BSurfaceTool::NbSamplesV(const BRepAdaptor_Surface& S)
   return (nbs);
 }
 
-//=================================================================================================
-
 int HLRBRep_BSurfaceTool::NbSamplesU(const BRepAdaptor_Surface& S, const double u1, const double u2)
 {
   int nbs = NbSamplesU(S);
@@ -116,8 +110,6 @@ int HLRBRep_BSurfaceTool::NbSamplesU(const BRepAdaptor_Surface& S, const double 
   }
   return (n);
 }
-
-//=================================================================================================
 
 int HLRBRep_BSurfaceTool::NbSamplesV(const BRepAdaptor_Surface& S, const double v1, const double v2)
 {

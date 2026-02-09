@@ -1,9 +1,5 @@
 #include <Standard_Mutex.hpp>
 
-//=============================================
-// Standard_Mutex::Standard_Mutex
-//=============================================
-
 Standard_Mutex::Standard_Mutex()
 {
 #if (defined(_WIN32) || defined(__WIN32__))
@@ -17,10 +13,6 @@ Standard_Mutex::Standard_Mutex()
 #endif
 }
 
-//=============================================
-// Standard_Mutex::~Standard_Mutex
-//=============================================
-
 Standard_Mutex::~Standard_Mutex()
 {
 #if (defined(_WIN32) || defined(__WIN32__))
@@ -29,10 +21,6 @@ Standard_Mutex::~Standard_Mutex()
   pthread_mutex_destroy(&myMutex);
 #endif
 }
-
-//=============================================
-// Standard_Mutex::Lock
-//=============================================
 
 void Standard_Mutex::Lock()
 {
@@ -43,10 +31,6 @@ void Standard_Mutex::Lock()
 #endif
 }
 
-//=============================================
-// Standard_Mutex::TryLock
-//=============================================
-
 bool Standard_Mutex::TryLock()
 {
 #if (defined(_WIN32) || defined(__WIN32__))
@@ -55,10 +39,6 @@ bool Standard_Mutex::TryLock()
   return (pthread_mutex_trylock(&myMutex) != EBUSY);
 #endif
 }
-
-//=============================================
-// Standard_Mutex::DestroyCallback
-//=============================================
 
 void Standard_Mutex::DestroyCallback()
 {

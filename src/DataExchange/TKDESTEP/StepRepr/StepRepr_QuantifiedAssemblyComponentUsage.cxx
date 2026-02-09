@@ -6,12 +6,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_QuantifiedAssemblyComponentUsage,
                            StepRepr_AssemblyComponentUsage)
 
-//=================================================================================================
-
 StepRepr_QuantifiedAssemblyComponentUsage::StepRepr_QuantifiedAssemblyComponentUsage() = default;
 
-//=================================================================================================
-
 void StepRepr_QuantifiedAssemblyComponentUsage::Init(
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Id,
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Name,
@@ -37,8 +33,6 @@ void StepRepr_QuantifiedAssemblyComponentUsage::Init(
   theQuantity = aQuantity;
 }
 
-//=================================================================================================
-
 void StepRepr_QuantifiedAssemblyComponentUsage::Init(
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Id,
   const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Name,
@@ -63,15 +57,11 @@ void StepRepr_QuantifiedAssemblyComponentUsage::Init(
 
   theQuantity = aQuantity;
 }
-
-//=================================================================================================
 
 occ::handle<Standard_Transient> StepRepr_QuantifiedAssemblyComponentUsage::Quantity() const
 {
   return theQuantity;
 }
-
-//=================================================================================================
 
 void StepRepr_QuantifiedAssemblyComponentUsage::SetQuantity(
   const occ::handle<Standard_Transient>& aQuantity)

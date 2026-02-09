@@ -11,7 +11,6 @@ class StepBasic_LocalTime;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for LocalTime
 class RWStepBasic_RWLocalTime
 {
 public:

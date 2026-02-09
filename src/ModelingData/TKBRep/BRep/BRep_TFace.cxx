@@ -7,15 +7,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_TFace, TopoDS_TFace)
 
-//=================================================================================================
-
 BRep_TFace::BRep_TFace()
     : myTolerance(RealEpsilon()),
       myNaturalRestriction(false)
 {
 }
-
-//=================================================================================================
 
 occ::handle<TopoDS_TShape> BRep_TFace::EmptyCopy() const
 {
@@ -25,8 +21,6 @@ occ::handle<TopoDS_TShape> BRep_TFace::EmptyCopy() const
   TF->Tolerance(myTolerance);
   return TF;
 }
-
-//=================================================================================================
 
 const occ::handle<Poly_Triangulation>& BRep_TFace::Triangulation(
   const Poly_MeshPurpose thePurpose) const
@@ -47,14 +41,12 @@ const occ::handle<Poly_Triangulation>& BRep_TFace::Triangulation(
   }
   if ((thePurpose & Poly_MeshPurpose_AnyFallback) != 0 && !myTriangulations.IsEmpty())
   {
-    // if none matching other criteria was found return the first defined triangulation
+
     return myTriangulations.First();
   }
   static const occ::handle<Poly_Triangulation> anEmptyTriangulation;
   return anEmptyTriangulation;
 }
-
-//=================================================================================================
 
 void BRep_TFace::Triangulation(const occ::handle<Poly_Triangulation>& theTriangulation,
                                const bool                             theToReset)
@@ -63,7 +55,7 @@ void BRep_TFace::Triangulation(const occ::handle<Poly_Triangulation>& theTriangu
   {
     if (!myActiveTriangulation.IsNull())
     {
-      // Reset Active bit
+
       myActiveTriangulation->SetMeshPurpose(myActiveTriangulation->MeshPurpose()
                                             & ~Poly_MeshPurpose_Active);
       myActiveTriangulation.Nullify();
@@ -71,11 +63,10 @@ void BRep_TFace::Triangulation(const occ::handle<Poly_Triangulation>& theTriangu
     myTriangulations.Clear();
     if (!theTriangulation.IsNull())
     {
-      // Reset list of triangulations to new list with only one input triangulation that will be
-      // active
+
       myTriangulations.Append(theTriangulation);
       myActiveTriangulation = theTriangulation;
-      // Set Active bit
+
       theTriangulation->SetMeshPurpose(theTriangulation->MeshPurpose() | Poly_MeshPurpose_Active);
     }
     return;
@@ -84,17 +75,17 @@ void BRep_TFace::Triangulation(const occ::handle<Poly_Triangulation>& theTriangu
        anIter.More();
        anIter.Next())
   {
-    // Make input triangulation active if it is already contained in list of triangulations
+
     if (anIter.Value() == theTriangulation)
     {
       if (!myActiveTriangulation.IsNull())
       {
-        // Reset Active bit
+
         myActiveTriangulation->SetMeshPurpose(myActiveTriangulation->MeshPurpose()
                                               & ~Poly_MeshPurpose_Active);
       }
       myActiveTriangulation = theTriangulation;
-      // Set Active bit
+
       theTriangulation->SetMeshPurpose(theTriangulation->MeshPurpose() | Poly_MeshPurpose_Active);
       return;
     }
@@ -103,22 +94,20 @@ void BRep_TFace::Triangulation(const occ::handle<Poly_Triangulation>& theTriangu
        anIter.More();
        anIter.Next())
   {
-    // Replace active triangulation to input one
+
     if (anIter.Value() == myActiveTriangulation)
     {
-      // Reset Active bit
+
       myActiveTriangulation->SetMeshPurpose(myActiveTriangulation->MeshPurpose()
                                             & ~Poly_MeshPurpose_Active);
       anIter.ChangeValue()  = theTriangulation;
       myActiveTriangulation = theTriangulation;
-      // Set Active bit
+
       theTriangulation->SetMeshPurpose(theTriangulation->MeshPurpose() | Poly_MeshPurpose_Active);
       return;
     }
   }
 }
-
-//=================================================================================================
 
 void BRep_TFace::Triangulations(
   const NCollection_List<occ::handle<Poly_Triangulation>>& theTriangulations,
@@ -142,7 +131,7 @@ void BRep_TFace::Triangulations(
     {
       anActiveInList = true;
     }
-    // Reset Active bit
+
     aTriangulation->SetMeshPurpose(aTriangulation->MeshPurpose() & ~Poly_MeshPurpose_Active);
   }
   Standard_ASSERT_RAISE(theActiveTriangulation.IsNull() || anActiveInList,
@@ -150,7 +139,7 @@ void BRep_TFace::Triangulations(
   myTriangulations = theTriangulations;
   if (theActiveTriangulation.IsNull())
   {
-    // Save the first one as active
+
     myActiveTriangulation = myTriangulations.First();
   }
   else
@@ -160,8 +149,6 @@ void BRep_TFace::Triangulations(
   myActiveTriangulation->SetMeshPurpose(myActiveTriangulation->MeshPurpose()
                                         | Poly_MeshPurpose_Active);
 }
-
-//=================================================================================================
 
 void BRep_TFace::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

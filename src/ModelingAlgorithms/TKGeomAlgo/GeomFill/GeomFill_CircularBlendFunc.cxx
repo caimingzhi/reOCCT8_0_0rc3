@@ -35,13 +35,8 @@ static void GeomFillFusInt(const NCollection_Array1<double>& I1,
 {
   int              ind1 = 1, ind2 = 1;
   constexpr double Epspar = Precision::PConfusion() * 0.99;
-  // en suposant que le positionement fonctionne a PConfusion()/2
-  double v1, v2;
-  // Initialisations : les IND1 et IND2 pointent sur le 1er element
-  // de chacune des 2 tables a traiter.
 
-  //--- On remplit TABSOR en parcourant TABLE1 et TABLE2 simultanement ---
-  //------------------ en eliminant les occurrences multiples ------------
+  double v1, v2;
 
   while ((ind1 <= I1.Upper()) && (ind2 <= I2.Upper()))
   {
@@ -49,20 +44,20 @@ static void GeomFillFusInt(const NCollection_Array1<double>& I1,
     v2 = I2(ind2);
     if (std::abs(v1 - v2) <= Epspar)
     {
-      // Ici les elements de I1 et I2 conviennent .
+
       Seq.Append((v1 + v2) / 2);
       ind1++;
       ind2++;
     }
     else if (v1 < v2)
     {
-      // Ici l' element de I1 convient.
+
       Seq.Append(v1);
       ind1++;
     }
     else
     {
-      // Ici l' element de TABLE2 convient.
+
       Seq.Append(v2);
       ind2++;
     }
@@ -70,7 +65,6 @@ static void GeomFillFusInt(const NCollection_Array1<double>& I1,
 
   if (ind1 > I1.Upper())
   {
-    //----- Ici I1 est epuise, on complete avec la fin de TABLE2 -------
 
     for (; ind2 <= I2.Upper(); ind2++)
     {
@@ -80,7 +74,6 @@ static void GeomFillFusInt(const NCollection_Array1<double>& I1,
 
   if (ind2 > I2.Upper())
   {
-    //----- Ici I2 est epuise, on complete avec la fin de I1 -------
 
     for (; ind1 <= I1.Upper(); ind1++)
     {
@@ -98,25 +91,21 @@ GeomFill_CircularBlendFunc::GeomFill_CircularBlendFunc(const occ::handle<Adaptor
       minang(RealLast()),
       distmin(RealLast())
 {
-  // Recopie des arguments
+
   myPath = myTPath = Path;
   myCurve1 = myTCurve1 = Curve1;
   myCurve2 = myTCurve2 = Curve2;
   myRadius             = Radius;
 
-  // Estimations numeriques
   Discret();
 
-  // Type de convertion ?
   if (Polynomial)
     myTConv = Convert_Polynomial;
   else if (maxang > 0.65 * M_PI)
-    myTConv = Convert_QuasiAngular; // car c'est Continue
+    myTConv = Convert_QuasiAngular;
   else
     myTConv = Convert_TgtThetaOver2;
-  // car c'est le plus performant
 
-  // On en deduit la structure
   GeomFill::GetShape(maxang, myNbPoles, myNbKnots, myDegree, myTConv);
 }
 
@@ -161,17 +150,13 @@ void GeomFill_CircularBlendFunc::Discret()
   if (Samp.IsDone())
   {
     Percent = ((double)1) / (2 * Samp.NbPoints());
-    //    char name[100];
+
     for (ii = 1; ii <= Samp.NbPoints(); ii++)
     {
       T = Samp.Parameter(ii);
       myCurve1->D0(T, P1);
       myCurve2->D0(T, P2);
-      /*
-            Sprintf(name,"PNT_%d",NbSections++);
-            DrawTrSurf::Set(name, P1);
-            Sprintf(name,"PNT_%d",NbSections++);
-            DrawTrSurf::Set(name, P2);*/
+
       myPath->D0(T, Center);
       ns1.SetXYZ(Center.XYZ() - P1.XYZ());
       ns2.SetXYZ(Center.XYZ() - P2.XYZ());
@@ -220,7 +205,6 @@ void GeomFill_CircularBlendFunc::Discret()
   }
   myBary.ChangeCoord() *= Percent;
 
-  // Faut il inverser la trajectoire ?
   T = (TFirst + TLast) / 2;
   myCurve1->D0(T, P1);
   myCurve2->D0(T, P2);
@@ -229,7 +213,6 @@ void GeomFill_CircularBlendFunc::Discret()
   ns1.SetXYZ(Center.XYZ() - P1.XYZ());
   ns2.SetXYZ(Center.XYZ() - P2.XYZ());
 
-  // myreverse = (DCenter.Dot(ns1.Crossed(ns2)) < 0);
   myreverse = false;
 }
 
@@ -244,7 +227,6 @@ bool GeomFill_CircularBlendFunc::D0(const double Param,
   gp_Vec ns1, ns2, nplan;
   gp_XYZ temp;
 
-  // Positionnement
   myTPath->D0(Param, Center);
   myTCurve1->D0(Param, P1);
   myTCurve2->D0(Param, P2);
@@ -259,7 +241,6 @@ bool GeomFill_CircularBlendFunc::D0(const double Param,
       nplan.Reverse();
   }
 
-  // Normalisation
   ns1.Normalize();
   ns2.Normalize();
   nplan.Normalize();
@@ -267,35 +248,33 @@ bool GeomFill_CircularBlendFunc::D0(const double Param,
   temp.SetLinearForm(myRadius, ns1.XYZ(), myRadius, ns2.XYZ(), 1, P1.XYZ(), P2.XYZ());
   Center.ChangeCoord() = 0.5 * temp;
 
-  // Section
   GeomFill::GetCircle(myTConv, ns1, ns2, nplan, P1, P2, myRadius, Center, Poles, Weigths);
 
   return true;
 }
 
 bool GeomFill_CircularBlendFunc::D1(const double Param,
-                                    //						const double First,
+
                                     const double,
-                                    //						const double Last,
+
                                     const double,
                                     NCollection_Array1<gp_Pnt>& Poles,
                                     NCollection_Array1<gp_Vec>& DPoles,
-                                    //						NCollection_Array1<gp_Pnt2d>& Poles2d,
+
                                     NCollection_Array1<gp_Pnt2d>&,
-                                    //						NCollection_Array1<gp_Vec2d>& DPoles2d,
+
                                     NCollection_Array1<gp_Vec2d>&,
                                     NCollection_Array1<double>& Weigths,
                                     NCollection_Array1<double>& DWeigths)
 {
   gp_Pnt P1, P2, Center;
   double invnorm1, invnorm2, invnormp;
-  //  gp_Vec DCenter, D2Center, nplan, dnplan, DP1, DP2;
+
   gp_Vec DCenter, nplan, dnplan, DP1, DP2;
-  //  gp_Vec ns1, ns2, Dns1, Dns2, vtmp;
+
   gp_Vec ns1, ns2, Dns1, Dns2;
   gp_XYZ temp;
 
-  // Positionemment
   myTPath->D1(Param, Center, DCenter);
   myTCurve1->D1(Param, P1, DP1);
   myTCurve2->D1(Param, P2, DP2);
@@ -320,7 +299,6 @@ bool GeomFill_CircularBlendFunc::D1(const double Param,
     }
   }
 
-  // Normalisation
   invnorm1 = ((double)1) / ns1.Magnitude();
   invnorm2 = ((double)1) / ns2.Magnitude();
 
@@ -365,18 +343,18 @@ bool GeomFill_CircularBlendFunc::D1(const double Param,
 }
 
 bool GeomFill_CircularBlendFunc::D2(const double Param,
-                                    //						const double First,
+
                                     const double,
-                                    //						const double Last,
+
                                     const double,
                                     NCollection_Array1<gp_Pnt>& Poles,
                                     NCollection_Array1<gp_Vec>& DPoles,
                                     NCollection_Array1<gp_Vec>& D2Poles,
-                                    //						NCollection_Array1<gp_Pnt2d>& Poles2d,
+
                                     NCollection_Array1<gp_Pnt2d>&,
-                                    //						NCollection_Array1<gp_Vec2d>& DPoles2d,
+
                                     NCollection_Array1<gp_Vec2d>&,
-                                    //						NCollection_Array1<gp_Vec2d>& D2Poles2d,
+
                                     NCollection_Array1<gp_Vec2d>&,
                                     NCollection_Array1<double>& Weigths,
                                     NCollection_Array1<double>& DWeigths,
@@ -389,7 +367,6 @@ bool GeomFill_CircularBlendFunc::D2(const double Param,
   gp_Vec ns1, ns2, Dns1, Dns2, D2ns1, D2ns2;
   gp_XYZ temp;
 
-  // Positionement
   myTPath->D2(Param, Center, DCenter, D2Center);
   myTCurve1->D2(Param, P1, DP1, D2P1);
   myTCurve2->D2(Param, P2, DP2, D2P2);
@@ -418,7 +395,6 @@ bool GeomFill_CircularBlendFunc::D2(const double Param,
     }
   }
 
-  // Normalisation
   invnorm1 = ((double)1) / ns1.Magnitude();
   invnorm2 = ((double)1) / ns2.Magnitude();
 
@@ -537,16 +513,6 @@ int GeomFill_CircularBlendFunc::NbIntervals(const GeomAbs_Shape S) const
   myPath->Intervals(ICenter, GeomFillNextShape(S));
   myCurve1->Intervals(ICb1, S);
   myCurve2->Intervals(ICb2, S);
-  /* std::cout << "Intervals : " << S << std::endl;
-   std::cout << "-- Center-> " << std::endl;
-   for (ii=1; ii<=ICenter.Length(); ii++) std::cout << " , "<< ICenter(ii);
-   std::cout << std::endl; std::cout << std::endl;
-   std::cout << "-- Cb1-> " << std::endl;
-   for (ii=1; ii<=ICb1.Length(); ii++) std::cout << " , "<< ICb1(ii);
-   std::cout << std::endl; std::cout << std::endl;
-   std::cout << "-- Cb2-> " << std::endl;
-   for (ii=1; ii<=ICb2.Length(); ii++) std::cout << " , "<< ICb1(ii);
-   std::cout << std::endl; std::cout << std::endl;*/
 
   GeomFillFusInt(ICb1, ICb2, Inter);
 
@@ -586,7 +552,6 @@ void GeomFill_CircularBlendFunc::Intervals(NCollection_Array1<double>& T,
   Inter.Clear();
   GeomFillFusInt(ICenter, ICbs, Inter);
 
-  // Recopie du resultat
   for (ii = 1; ii <= Inter.Length(); ii++)
     T(ii) = Inter(ii);
 }
@@ -613,10 +578,7 @@ void GeomFill_CircularBlendFunc::GetTolerance(const double                BoundT
   Tol3d(low) = Tol3d(up) = std::min(Tol, BoundTol);
 }
 
-void GeomFill_CircularBlendFunc::SetTolerance(const double, const double)
-{
-  // y rien a faire !
-}
+void GeomFill_CircularBlendFunc::SetTolerance(const double, const double) {}
 
 gp_Pnt GeomFill_CircularBlendFunc::BarycentreOfSurf() const
 {

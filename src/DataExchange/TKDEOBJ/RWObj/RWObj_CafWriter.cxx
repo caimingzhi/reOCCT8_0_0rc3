@@ -1,15 +1,4 @@
-// Copyright (c) 2015-2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <RWObj_CafWriter.hpp>
 
@@ -31,19 +20,17 @@ IMPLEMENT_STANDARD_RTTIEXT(RWObj_CafWriter, Standard_Transient)
 
 namespace
 {
-  //! Trivial cast.
+
   inline NCollection_Vec3<float> objXyzToVec(const gp_XYZ& thePnt)
   {
     return NCollection_Vec3<float>((float)thePnt.X(), (float)thePnt.Y(), (float)thePnt.Z());
   }
 
-  //! Trivial cast.
   inline NCollection_Vec2<float> objXyToVec(const gp_XY& thePnt)
   {
     return NCollection_Vec2<float>((float)thePnt.X(), (float)thePnt.Y());
   }
 
-  //! Read name attribute.
   static TCollection_AsciiString readNameAttribute(const TDF_Label& theRefLabel)
   {
     occ::handle<TDataStd_Name> aNodeName;
@@ -55,28 +42,17 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 RWObj_CafWriter::RWObj_CafWriter(const TCollection_AsciiString& theFile)
     : myFile(theFile)
 {
-  // OBJ file format doesn't define length units;
-  // Y-up coordinate system is most commonly used (but also undefined)
-  // myCSTrsf.SetOutputCoordinateSystem (RWMesh_CoordinateSystem_negZfwd_posYup);
 }
 
-//=================================================================================================
-
 RWObj_CafWriter::~RWObj_CafWriter() = default;
-
-//=================================================================================================
 
 bool RWObj_CafWriter::toSkipFaceMesh(const RWMesh_FaceIterator& theFaceIter)
 {
   return theFaceIter.IsEmptyMesh();
 }
-
-//=================================================================================================
 
 bool RWObj_CafWriter::Perform(
   const occ::handle<TDocStd_Document>&                                                theDocument,
@@ -88,8 +64,6 @@ bool RWObj_CafWriter::Perform(
   aShapeTool->GetFreeShapes(aRoots);
   return Perform(theDocument, aRoots, nullptr, theFileInfo, theProgress);
 }
-
-//=================================================================================================
 
 bool RWObj_CafWriter::Perform(
   const occ::handle<TDocStd_Document>&            theDocument,
@@ -115,7 +89,7 @@ bool RWObj_CafWriter::Perform(
   }
 
   int    aNbNodesAll = 0, aNbElemsAll = 0;
-  double aNbPEntities    = 0; // steps for progress range
+  double aNbPEntities    = 0;
   bool   toCreateMatFile = false;
   for (XCAFPrs_DocumentExplorer aDocExplorer(theDocument,
                                              theRootLabels,
@@ -173,13 +147,12 @@ bool RWObj_CafWriter::Perform(
     TCollection_AsciiString aRootName = readNameAttribute(aRefLabel);
     if (aRootName.EndsWith(".obj"))
     {
-      // workaround import/export of .obj file
+
       aRootDepth = 1;
     }
   }
 
-  // simple global progress sentry - ignores size of node and index data
-  const double              aPatchStep = 2048.0; // about 100 KiB
+  const double              aPatchStep = 2048.0;
   Message_LazyProgressScope aPSentry(theProgress, "OBJ export", aNbPEntities, aPatchStep);
 
   bool isDone = true;
@@ -229,8 +202,6 @@ bool RWObj_CafWriter::Perform(
   return isDone && !aPSentry.IsAborted();
 }
 
-//=================================================================================================
-
 void RWObj_CafWriter::addFaceInfo(const RWMesh_FaceIterator& theFace,
                                   int&                       theNbNodes,
                                   int&                       theNbElems,
@@ -246,7 +217,7 @@ void RWObj_CafWriter::addFaceInfo(const RWMesh_FaceIterator& theFace,
   {
     theNbProgressSteps += theFace.NbNodes();
   }
-  if (theFace.HasTexCoords()) //&& !theFace.FaceStyle().Texture().IsEmpty()
+  if (theFace.HasTexCoords())
   {
     theNbProgressSteps += theFace.NbNodes();
   }
@@ -255,8 +226,6 @@ void RWObj_CafWriter::addFaceInfo(const RWMesh_FaceIterator& theFace,
     theToCreateMatFile || theFace.HasFaceColor()
     || (!theFace.FaceStyle().BaseColorTexture().IsNull() && theFace.HasTexCoords());
 }
-
-//=================================================================================================
 
 bool RWObj_CafWriter::writeShape(RWObj_ObjWriterContext&        theWriter,
                                  RWObj_ObjMaterialMap&          theMatMgr,
@@ -279,9 +248,9 @@ bool RWObj_CafWriter::writeShape(RWObj_ObjWriterContext&        theWriter,
     ++theWriter.NbFaces;
     {
       const bool hasNormals = aFaceIter.HasNormals();
-      // clang-format off
-      const bool hasTexCoords = aFaceIter.HasTexCoords(); //&& !aFaceIter.FaceStyle().Texture().IsEmpty();
-      // clang-format on
+
+      const bool hasTexCoords = aFaceIter.HasTexCoords();
+
       if (theWriter.NbFaces != 1)
       {
         toCreateGroup = toCreateGroup || hasNormals != theWriter.HasNormals()
@@ -307,13 +276,11 @@ bool RWObj_CafWriter::writeShape(RWObj_ObjWriterContext&        theWriter,
       theWriter.WriteActiveMaterial(aMatName);
     }
 
-    // write nodes
     if (!writePositions(theWriter, thePSentry, aFaceIter))
     {
       return false;
     }
 
-    // write normals
     if (theWriter.HasNormals() && !writeNormals(theWriter, thePSentry, aFaceIter))
     {
       return false;
@@ -333,8 +300,6 @@ bool RWObj_CafWriter::writeShape(RWObj_ObjWriterContext&        theWriter,
   return true;
 }
 
-//=================================================================================================
-
 bool RWObj_CafWriter::writePositions(RWObj_ObjWriterContext&    theWriter,
                                      Message_LazyProgressScope& thePSentry,
                                      const RWMesh_FaceIterator& theFace)
@@ -352,8 +317,6 @@ bool RWObj_CafWriter::writePositions(RWObj_ObjWriterContext&    theWriter,
   }
   return true;
 }
-
-//=================================================================================================
 
 bool RWObj_CafWriter::writeNormals(RWObj_ObjWriterContext&    theWriter,
                                    Message_LazyProgressScope& thePSentry,
@@ -374,8 +337,6 @@ bool RWObj_CafWriter::writeNormals(RWObj_ObjWriterContext&    theWriter,
   return true;
 }
 
-//=================================================================================================
-
 bool RWObj_CafWriter::writeTextCoords(RWObj_ObjWriterContext&    theWriter,
                                       Message_LazyProgressScope& thePSentry,
                                       const RWMesh_FaceIterator& theFace)
@@ -392,8 +353,6 @@ bool RWObj_CafWriter::writeTextCoords(RWObj_ObjWriterContext&    theWriter,
   }
   return true;
 }
-
-//=================================================================================================
 
 bool RWObj_CafWriter::writeIndices(RWObj_ObjWriterContext&    theWriter,
                                    Message_LazyProgressScope& thePSentry,

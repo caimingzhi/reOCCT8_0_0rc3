@@ -1,15 +1,4 @@
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <TDF_DerivedAttribute.hpp>
 
@@ -22,7 +11,6 @@
 namespace TDF_DerivedAttributeGlobals
 {
 
-  //! Data for the derived attribute correct creation
   struct CreatorData
   {
     TDF_DerivedAttribute::NewDerived myCreator;
@@ -30,14 +18,12 @@ namespace TDF_DerivedAttributeGlobals
     const char*                      myTypeName;
   };
 
-  //! List that contains the methods that create all registered derived attributes
   static NCollection_List<CreatorData>& Creators()
   {
     static NCollection_List<CreatorData> THE_CREATORS_LIST;
     return THE_CREATORS_LIST;
   }
 
-  //! Global map of the string-type of derived attribute -> instance of such attribute
   static NCollection_DataMap<const char*, occ::handle<TDF_Attribute>, Standard_CStringHasher>&
     Attributes()
   {
@@ -46,7 +32,6 @@ namespace TDF_DerivedAttributeGlobals
     return THE_DERIVED;
   }
 
-  //! Global map of the string-type of derived attribute -> type name to identify this attribute
   static NCollection_DataMap<const char*, TCollection_AsciiString*, Standard_CStringHasher>& Types()
   {
     static NCollection_DataMap<const char*, TCollection_AsciiString*, Standard_CStringHasher>
@@ -54,7 +39,6 @@ namespace TDF_DerivedAttributeGlobals
     return THE_DERIVED_TYPES;
   }
 
-  //! To minimize simultaneous access to global "DERIVED" maps from parallel threads
   static std::mutex& Mutex()
   {
     static std::mutex THE_DERIVED_MUTEX;
@@ -62,11 +46,6 @@ namespace TDF_DerivedAttributeGlobals
   }
 } // namespace TDF_DerivedAttributeGlobals
 
-//=======================================================================
-// function : Register
-// purpose  : Registers a derived by the pointer to a method that creates a new derived attribute
-// instance
-//=======================================================================
 TDF_DerivedAttribute::NewDerived TDF_DerivedAttribute::Register(NewDerived  theNewAttributeFunction,
                                                                 const char* theNameSpace,
                                                                 const char* theTypeName)
@@ -79,15 +58,10 @@ TDF_DerivedAttribute::NewDerived TDF_DerivedAttribute::Register(NewDerived  theN
   return theNewAttributeFunction;
 }
 
-//=======================================================================
-// function : Initialize
-// purpose  : Checks synchronization and performs initialization of derived attributes maps if
-// needed
-//=======================================================================
 static void Initialize()
 {
   if (!TDF_DerivedAttributeGlobals::Creators().IsEmpty())
-  { // initialization
+  {
     NCollection_List<TDF_DerivedAttributeGlobals::CreatorData>::Iterator aCreator;
     for (aCreator.Initialize(TDF_DerivedAttributeGlobals::Creators()); aCreator.More();
          aCreator.Next())
@@ -113,7 +87,6 @@ static void Initialize()
         aTypeName += aCreator.Value().myTypeName;
       }
 
-      // persistent storage of types strings: they are not changed like maps on resize
       static NCollection_List<TCollection_AsciiString> THE_TYPES_STORAGE;
       THE_TYPES_STORAGE.Append(aTypeName);
       TDF_DerivedAttributeGlobals::Types().Bind(aDerivedDynamicType, &(THE_TYPES_STORAGE.Last()));
@@ -122,8 +95,6 @@ static void Initialize()
     TDF_DerivedAttributeGlobals::Creators().Clear();
   }
 }
-
-//=================================================================================================
 
 occ::handle<TDF_Attribute> TDF_DerivedAttribute::Attribute(const char* theType)
 {
@@ -139,8 +110,6 @@ occ::handle<TDF_Attribute> TDF_DerivedAttribute::Attribute(const char* theType)
   return aNullAttrib;
 }
 
-//=================================================================================================
-
 const TCollection_AsciiString& TDF_DerivedAttribute::TypeName(const char* theType)
 {
   std::lock_guard<std::mutex> aLock(TDF_DerivedAttributeGlobals::Mutex());
@@ -152,8 +121,6 @@ const TCollection_AsciiString& TDF_DerivedAttribute::TypeName(const char* theTyp
 
   return TCollection_AsciiString::EmptyString();
 }
-
-//=================================================================================================
 
 void TDF_DerivedAttribute::Attributes(NCollection_List<occ::handle<TDF_Attribute>>& theList)
 {

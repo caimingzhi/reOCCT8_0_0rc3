@@ -22,8 +22,6 @@ double Geom2d_Point::SquareDistance(const occ::handle<Geom2d_Point>& Other) cons
   return P1.SquareDistance(P2);
 }
 
-//=================================================================================================
-
 void Geom2d_Point::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {
   OCCT_DUMP_TRANSIENT_CLASS_BEGIN(theOStream)

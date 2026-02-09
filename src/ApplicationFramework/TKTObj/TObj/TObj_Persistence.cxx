@@ -1,21 +1,11 @@
 #include <TObj_Persistence.hpp>
 #include <TObj_Object.hpp>
 
-//=======================================================================
-// function : getMapOfTypes
-// purpose  : Returns the map of types
-//=======================================================================
-
 NCollection_DataMap<TCollection_AsciiString, void*>& TObj_Persistence::getMapOfTypes()
 {
   static NCollection_DataMap<TCollection_AsciiString, void*> myMapOfTypes;
   return myMapOfTypes;
 }
-
-//=======================================================================
-// function : Constructor
-// purpose  : Register the type for persistence
-//=======================================================================
 
 TObj_Persistence::TObj_Persistence(const char* theType)
 {
@@ -23,14 +13,10 @@ TObj_Persistence::TObj_Persistence(const char* theType)
   getMapOfTypes().Bind(theType, this);
 }
 
-//=================================================================================================
-
 TObj_Persistence::~TObj_Persistence()
 {
   getMapOfTypes().UnBind(myType);
 }
-
-//=================================================================================================
 
 occ::handle<TObj_Object> TObj_Persistence::CreateNewObject(const char*      theType,
                                                            const TDF_Label& theLabel)
@@ -43,8 +29,6 @@ occ::handle<TObj_Object> TObj_Persistence::CreateNewObject(const char*      theT
   }
   return nullptr;
 }
-
-//=================================================================================================
 
 void TObj_Persistence::DumpTypes(Standard_OStream& theOs)
 {

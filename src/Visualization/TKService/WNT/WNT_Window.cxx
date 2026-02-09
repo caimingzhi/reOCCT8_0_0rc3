@@ -1,19 +1,7 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #if defined(_WIN32)
-  // include windows.h first to have all definitions available
+
   #include <windows.h>
 #endif
 
@@ -36,8 +24,6 @@ IMPLEMENT_STANDARD_RTTIEXT(WNT_Window, Aspect_Window)
     #define MOUSEEVENTF_FROMTOUCH 0xFF515700
   #endif
 
-//! Auxiliary tool for handling WM_TOUCH events.
-//! Dynamically loads functions from User32 available since Win7 and later.
 class WNT_Window::TouchInputHelper : public Standard_Transient
 {
 public:
@@ -52,7 +38,6 @@ public:
   typedef NCollection_LocalArray<TOUCHINPUT, 16> InnerTouchArray;
 
 public:
-  //! Main constructor.
   TouchInputHelper()
       : myRegisterTouchWindow(NULL),
         myUnregisterTouchWindow(NULL),
@@ -63,7 +48,7 @@ public:
     HMODULE aUser32Module = GetModuleHandleW(L"User32");
     if (aUser32Module != NULL)
     {
-      // User32 should be already loaded
+
       myRegisterTouchWindow =
         (RegisterTouchWindow_t)GetProcAddress(aUser32Module, "RegisterTouchWindow");
       myUnregisterTouchWindow =
@@ -74,10 +59,8 @@ public:
     }
   }
 
-  //! Return TRUE if window has been registered.
   bool IsRegistered() const { return myIsRegistered; }
 
-  //! Register window to receive WM_TOUCH events.
   bool Register(HWND theWin)
   {
     if (myRegisterTouchWindow == NULL)
@@ -90,15 +73,13 @@ public:
       myIsRegistered = true;
       return true;
     }
-    // Message::SendTrace() << "RegisterTouchWindow() FAILED";
+
     return false;
   }
 
-  //! Array of touches retrieved from HTOUCHINPUT.
   class TouchInputInfo : public InnerTouchArray
   {
   public:
-    //! Main constructor.
     TouchInputInfo(const TouchInputHelper& theHelper, const MSG& theMsg)
         : InnerTouchArray(0),
           myHelper(&theHelper),
@@ -116,7 +97,6 @@ public:
       }
     }
 
-    //! Destructor.
     ~TouchInputInfo()
     {
       if (myHelper->myCloseTouchInputHandle != NULL)
@@ -137,8 +117,6 @@ private:
   CloseTouchInputHandle_t myCloseTouchInputHandle;
   bool                    myIsRegistered;
 };
-
-//=================================================================================================
 
 WNT_Window::WNT_Window(const char*                    theTitle,
                        const occ::handle<WNT_WClass>& theClass,
@@ -176,7 +154,6 @@ WNT_Window::WNT_Window(const char*                    theTitle,
     aStyle |= WS_CLIPCHILDREN;
   }
 
-  // include decorations in the window dimensions to reproduce same behavior of Xw_Window
   RECT aRect;
   aRect.top    = myYTop;
   aRect.bottom = myYBottom;
@@ -210,8 +187,6 @@ WNT_Window::WNT_Window(const char*                    theTitle,
   SetBackground(theBackColor);
 }
 
-//=================================================================================================
-
 WNT_Window::WNT_Window(const Aspect_Handle theHandle, const Quantity_NameOfColor theBackColor)
     : myHWindow(theHandle),
       myHParentWindow(GetParent((HWND)theHandle)),
@@ -233,8 +208,6 @@ WNT_Window::WNT_Window(const Aspect_Handle theHandle, const Quantity_NameOfColor
   myYBottom = aPlace.rcNormalPosition.bottom;
 }
 
-//=================================================================================================
-
 WNT_Window::~WNT_Window()
 {
   if (myHWindow == NULL || myIsForeign)
@@ -246,14 +219,10 @@ WNT_Window::~WNT_Window()
   myIsForeign = false;
 }
 
-//=================================================================================================
-
 void WNT_Window::SetCursor(const Aspect_Handle theCursor) const
 {
   ::SetClassLongPtrW((HWND)myHWindow, GCLP_HCURSOR, (LONG_PTR)theCursor);
 }
-
-//=================================================================================================
 
 bool WNT_Window::IsMapped() const
 {
@@ -268,8 +237,6 @@ bool WNT_Window::IsMapped() const
   return !(aPlace.showCmd == SW_HIDE || aPlace.showCmd == SW_MINIMIZE);
 }
 
-//=================================================================================================
-
 void WNT_Window::Map() const
 {
   if (!IsVirtual())
@@ -277,8 +244,6 @@ void WNT_Window::Map() const
     Map(SW_SHOW);
   }
 }
-
-//=================================================================================================
 
 void WNT_Window::Map(const int theMapMode) const
 {
@@ -291,14 +256,10 @@ void WNT_Window::Map(const int theMapMode) const
   ::UpdateWindow((HWND)myHWindow);
 }
 
-//=================================================================================================
-
 void WNT_Window::Unmap() const
 {
   Map(SW_HIDE);
 }
-
-//=================================================================================================
 
 Aspect_TypeOfResize WNT_Window::DoResize()
 {
@@ -361,8 +322,6 @@ Aspect_TypeOfResize WNT_Window::DoResize()
   return Aspect_TOR_UNKNOWN;
 }
 
-//=================================================================================================
-
 double WNT_Window::Ratio() const
 {
   if (IsVirtual())
@@ -374,8 +333,6 @@ double WNT_Window::Ratio() const
   GetClientRect((HWND)myHWindow, &aRect);
   return double(aRect.right - aRect.left) / double(aRect.bottom - aRect.top);
 }
-
-//=================================================================================================
 
 void WNT_Window::Position(int& theX1, int& theY1, int& theX2, int& theY2) const
 {
@@ -410,8 +367,6 @@ void WNT_Window::Position(int& theX1, int& theY1, int& theX2, int& theY2) const
   theY2 = aPntRight.y;
 }
 
-//=================================================================================================
-
 void WNT_Window::Size(int& theWidth, int& theHeight) const
 {
   if (IsVirtual())
@@ -427,8 +382,6 @@ void WNT_Window::Size(int& theWidth, int& theHeight) const
   theHeight = aRect.bottom;
 }
 
-//=================================================================================================
-
 void WNT_Window::SetPos(const int theX, const int theY, const int theX1, const int theY1)
 {
   myXLeft   = theX;
@@ -437,15 +390,11 @@ void WNT_Window::SetPos(const int theX, const int theY, const int theX1, const i
   myYBottom = theY1;
 }
 
-//=================================================================================================
-
 void WNT_Window::SetTitle(const TCollection_AsciiString& theTitle)
 {
   const TCollection_ExtendedString aTitleW(theTitle);
   SetWindowTextW((HWND)myHWindow, aTitleW.ToWideString());
 }
-
-//=================================================================================================
 
 void WNT_Window::InvalidateContent(const occ::handle<Aspect_DisplayConnection>&)
 {
@@ -455,8 +404,6 @@ void WNT_Window::InvalidateContent(const occ::handle<Aspect_DisplayConnection>&)
   }
 }
 
-//=================================================================================================
-
 Aspect_VKey WNT_Window::VirtualKeyFromNative(int theKey)
 {
   if (theKey >= int('0') && theKey <= int('9'))
@@ -465,12 +412,12 @@ Aspect_VKey WNT_Window::VirtualKeyFromNative(int theKey)
   }
   if (theKey >= int('A') && theKey <= int('Z'))
   {
-    // main latin alphabet keys
+
     return Aspect_VKey((theKey - int('A')) + Aspect_VKey_A);
   }
   if (theKey >= VK_F1 && theKey <= VK_F24)
   {
-    // special keys
+
     if (theKey <= VK_F12)
     {
       return Aspect_VKey((theKey - VK_F1) + Aspect_VKey_F1);
@@ -479,7 +426,7 @@ Aspect_VKey WNT_Window::VirtualKeyFromNative(int theKey)
   }
   if (theKey >= VK_NUMPAD0 && theKey <= VK_NUMPAD9)
   {
-    // numpad keys
+
     return Aspect_VKey((theKey - VK_NUMPAD0) + Aspect_VKey_Numpad0);
   }
 
@@ -505,7 +452,7 @@ Aspect_VKey WNT_Window::VirtualKeyFromNative(int theKey)
     case VK_CONTROL:
       return Aspect_VKey_Control;
     case VK_MENU:
-      return Aspect_VKey_Alt; // Aspect_VKey_Menu;
+      return Aspect_VKey_Alt;
     case VK_PAUSE:
     case VK_CAPITAL:
       return Aspect_VKey_UNKNOWN;
@@ -540,7 +487,7 @@ Aspect_VKey WNT_Window::VirtualKeyFromNative(int theKey)
     case VK_SNAPSHOT:
       return Aspect_VKey_UNKNOWN;
     case VK_INSERT:
-      return Aspect_VKey_UNKNOWN; // Aspect_VKey_Insert
+      return Aspect_VKey_UNKNOWN;
     case VK_DELETE:
       return Aspect_VKey_Delete;
     case VK_HELP:
@@ -625,8 +572,6 @@ Aspect_VKey WNT_Window::VirtualKeyFromNative(int theKey)
   return Aspect_VKey_UNKNOWN;
 }
 
-//=================================================================================================
-
 Aspect_VKeyFlags WNT_Window::MouseKeyFlagsFromEvent(WPARAM theKeys)
 {
   Aspect_VKeyFlags aFlags = Aspect_VKeyFlags_NONE;
@@ -644,8 +589,6 @@ Aspect_VKeyFlags WNT_Window::MouseKeyFlagsFromEvent(WPARAM theKeys)
   }
   return aFlags;
 }
-
-//=================================================================================================
 
 Aspect_VKeyFlags WNT_Window::MouseKeyFlagsAsync()
 {
@@ -665,8 +608,6 @@ Aspect_VKeyFlags WNT_Window::MouseKeyFlagsAsync()
   return aFlags;
 }
 
-//=================================================================================================
-
 Aspect_VKeyMouse WNT_Window::MouseButtonsFromEvent(WPARAM theKeys)
 {
   Aspect_VKeyMouse aButtons = Aspect_VKeyMouse_NONE;
@@ -684,8 +625,6 @@ Aspect_VKeyMouse WNT_Window::MouseButtonsFromEvent(WPARAM theKeys)
   }
   return aButtons;
 }
-
-//=================================================================================================
 
 Aspect_VKeyMouse WNT_Window::MouseButtonsAsync()
 {
@@ -707,8 +646,6 @@ Aspect_VKeyMouse WNT_Window::MouseButtonsAsync()
   return aButtons;
 }
 
-//=================================================================================================
-
 int WNT_Window::RegisterRawInputDevices(unsigned int theRawDeviceMask)
 {
   if (IsVirtual() || myHWindow == NULL)
@@ -716,23 +653,22 @@ int WNT_Window::RegisterRawInputDevices(unsigned int theRawDeviceMask)
     return 0;
   }
 
-  // hidusage.h
   enum HidUsagePage
   {
     THE_HID_USAGE_PAGE_GENERIC = 0x01
-  }; // HID_USAGE_PAGE_GENERIC
+  };
 
   enum HidUsage
   {
-    THE_HID_USAGE_GENERIC_MOUSE                 = 0x02, // HID_USAGE_GENERIC_MOUSE
-    THE_HID_USAGE_GENERIC_MULTI_AXIS_CONTROLLER = 0x08, // HID_USAGE_GENERIC_MULTI_AXIS_CONTROLLER
+    THE_HID_USAGE_GENERIC_MOUSE                 = 0x02,
+    THE_HID_USAGE_GENERIC_MULTI_AXIS_CONTROLLER = 0x08,
   };
 
   int            aNbDevices = 0;
   RAWINPUTDEVICE aRawInDevList[2];
   if ((theRawDeviceMask & RawInputMask_Mouse) != 0)
   {
-    // mouse
+
     RAWINPUTDEVICE& aRawMouse = aRawInDevList[aNbDevices++];
     aRawMouse.usUsagePage     = THE_HID_USAGE_PAGE_GENERIC;
     aRawMouse.usUsage         = THE_HID_USAGE_GENERIC_MOUSE;
@@ -741,11 +677,11 @@ int WNT_Window::RegisterRawInputDevices(unsigned int theRawDeviceMask)
   }
   if ((theRawDeviceMask & RawInputMask_SpaceMouse) != 0)
   {
-    // space mouse
+
     RAWINPUTDEVICE& aRawSpace = aRawInDevList[aNbDevices++];
     aRawSpace.usUsagePage     = THE_HID_USAGE_PAGE_GENERIC;
     aRawSpace.usUsage         = THE_HID_USAGE_GENERIC_MULTI_AXIS_CONTROLLER;
-    aRawSpace.dwFlags         = 0; // RIDEV_DEVNOTIFY
+    aRawSpace.dwFlags         = 0;
     aRawSpace.hwndTarget      = (HWND)myHWindow;
   }
 
@@ -763,8 +699,6 @@ int WNT_Window::RegisterRawInputDevices(unsigned int theRawDeviceMask)
   }
   return 0;
 }
-
-//=================================================================================================
 
 bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& theMsg)
 {
@@ -844,7 +778,7 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
         isEmulated = true;
         if (!myTouchInputHelper.IsNull() && myTouchInputHelper->IsRegistered())
         {
-          // Message::SendTrace ("Skipping mouse message emulated from touches...");
+
           break;
         }
       }
@@ -910,7 +844,6 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
       Aspect_VKeyMouse      aButtons = WNT_Window::MouseButtonsFromEvent(theMsg.wParam);
       Aspect_VKeyFlags      aFlags   = WNT_Window::MouseKeyFlagsFromEvent(theMsg.wParam);
 
-      // don't make a slide-show from input events - fetch the actual mouse cursor position
       CURSORINFO aCursor;
       aCursor.cbSize = sizeof(aCursor);
       if (::GetCursorInfo(&aCursor) != FALSE)
@@ -918,7 +851,7 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
         POINT aCursorPnt = {aCursor.ptScreenPos.x, aCursor.ptScreenPos.y};
         if (ScreenToClient(theMsg.hwnd, &aCursorPnt))
         {
-          // as we override mouse position, we need overriding also mouse state
+
           aPos.SetValues(aCursorPnt.x, aCursorPnt.y);
           aButtons = WNT_Window::MouseButtonsAsync();
           aFlags   = WNT_Window::MouseKeyFlagsAsync();
@@ -927,7 +860,7 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
 
       if (theMsg.hwnd != (HWND)myHWindow)
       {
-        // mouse move events come also for inactive windows
+
         return false;
       }
 
@@ -1001,7 +934,6 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
       {
         const TOUCHINPUT& aTouchSrc = aSrcTouches[aTouchIter];
         const size_t      aTouchId  = (size_t)aTouchSrc.dwID;
-        // const size_t aDeviceId = (size_t )aTouchSrc.hSource;
 
         const NCollection_Vec2<int>    aSize = aWinBotRight - aWinTopLeft;
         const NCollection_Vec2<double> aNewPos2d =
@@ -1046,4 +978,4 @@ bool WNT_Window::ProcessMessage(Aspect_WindowInputListener& theListener, MSG& th
   return false;
 }
 
-#endif // _WIN32
+#endif

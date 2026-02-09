@@ -12,9 +12,6 @@
 #include <GeomAdaptor_Curve.hpp>
 #include <Precision.hpp>
 
-// Typedef to reduce code complexity.
-
-// Class representing tree selector for point object.
 class BRepClass3d_BndBoxTreeSelectorPoint : public NCollection_UBTree<int, Bnd_Box>::Selector
 {
 public:
@@ -28,7 +25,6 @@ public:
 
   bool Accept(const int& theObj) override;
 
-  // Sets current point for boxes-point collisions.
   void SetCurrentPoint(const gp_Pnt& theP) { myP = theP; }
 
 private:
@@ -37,26 +33,24 @@ private:
     delete;
 
 private:
-  const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>&
-         myMapOfShape; // shapes (vertices + edges)
-  gp_Pnt myP;
+  const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& myMapOfShape;
+  gp_Pnt                                                               myP;
 };
 
-// Class representing tree selector for line object.
 class BRepClass3d_BndBoxTreeSelectorLine : public NCollection_UBTree<int, Bnd_Box>::Selector
 {
 public:
   struct EdgeParam
   {
     TopoDS_Edge myE;
-    double      myParam;  // par on myE
-    double      myLParam; // par on line
+    double      myParam;
+    double      myLParam;
   };
 
   struct VertParam
   {
     TopoDS_Vertex myV;
-    double        myLParam; // par on line
+    double        myLParam;
   };
 
 public:
@@ -71,7 +65,6 @@ public:
 
   bool Accept(const int& theObj) override;
 
-  // Sets current line for boxes-line collisions
   void SetCurrentLine(const gp_Lin& theL, const double theMaxParam)
   {
     myL = theL;
@@ -104,7 +97,6 @@ public:
     myIsValid = true;
   }
 
-  //! Returns TRUE if correct classification is possible
   bool IsCorrect() const { return myIsValid; }
 
 private:
@@ -112,11 +104,10 @@ private:
   BRepClass3d_BndBoxTreeSelectorLine& operator=(const BRepClass3d_BndBoxTreeSelectorLine&) = delete;
 
 private:
-  const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>&
-                                  myMapOfShape; // shapes (vertices + edges)
-  gp_Lin                          myL;
-  NCollection_Sequence<EdgeParam> myEP; // output result (edge vs line)
-  NCollection_Sequence<VertParam> myVP; // output result (vertex vs line)
-  GeomAdaptor_Curve               myLC;
-  bool                            myIsValid;
+  const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& myMapOfShape;
+  gp_Lin                                                               myL;
+  NCollection_Sequence<EdgeParam>                                      myEP;
+  NCollection_Sequence<VertParam>                                      myVP;
+  GeomAdaptor_Curve                                                    myLC;
+  bool                                                                 myIsValid;
 };

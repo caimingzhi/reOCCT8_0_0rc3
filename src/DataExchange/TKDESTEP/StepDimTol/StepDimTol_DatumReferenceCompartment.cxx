@@ -2,6 +2,4 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_DatumReferenceCompartment, StepDimTol_GeneralDatumReference)
 
-//=================================================================================================
-
 StepDimTol_DatumReferenceCompartment::StepDimTol_DatumReferenceCompartment() = default;

@@ -1,16 +1,4 @@
-// Author: Ilya Khramov
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Graphic3d_CubeMapOrder.hpp>
 
@@ -18,15 +6,11 @@
 
 #include <bitset>
 
-//=================================================================================================
-
 Graphic3d_CubeMapOrder::Graphic3d_CubeMapOrder()
     : myConvolution(0),
       myHasOverflows(false)
 {
 }
-
-//=================================================================================================
 
 Graphic3d_CubeMapOrder::Graphic3d_CubeMapOrder(unsigned char thePosXLocation,
                                                unsigned char theNegXLocation,
@@ -45,15 +29,11 @@ Graphic3d_CubeMapOrder::Graphic3d_CubeMapOrder(unsigned char thePosXLocation,
   Set(Graphic3d_CMS_NEG_Z, theNegZLocation);
 }
 
-//=================================================================================================
-
 Graphic3d_CubeMapOrder::Graphic3d_CubeMapOrder(const Graphic3d_ValidatedCubeMapOrder& theOrder)
     : myConvolution(theOrder.Order.myConvolution),
       myHasOverflows(theOrder.Order.myHasOverflows)
 {
 }
-
-//=================================================================================================
 
 Graphic3d_CubeMapOrder& Graphic3d_CubeMapOrder::Set(const Graphic3d_CubeMapOrder& theOrder)
 {
@@ -62,10 +42,6 @@ Graphic3d_CubeMapOrder& Graphic3d_CubeMapOrder::Set(const Graphic3d_CubeMapOrder
   return *this;
 }
 
-// =======================================================================
-// function : operator=
-// purpose  :
-// =======================================================================
 Graphic3d_ValidatedCubeMapOrder Graphic3d_CubeMapOrder::Validated() const
 {
   if (!IsValid())
@@ -76,8 +52,6 @@ Graphic3d_ValidatedCubeMapOrder Graphic3d_CubeMapOrder::Validated() const
 
   return *this;
 }
-
-//=================================================================================================
 
 Graphic3d_CubeMapOrder& Graphic3d_CubeMapOrder::Set(Graphic3d_CubeMapSide theCubeMapSide,
                                                     unsigned char         theValue)
@@ -91,23 +65,15 @@ Graphic3d_CubeMapOrder& Graphic3d_CubeMapOrder::Set(Graphic3d_CubeMapSide theCub
   return *this;
 }
 
-//=================================================================================================
-
 unsigned char Graphic3d_CubeMapOrder::Get(Graphic3d_CubeMapSide theCubeMapSide) const
 {
   return get(static_cast<unsigned char>(theCubeMapSide));
 }
 
-// =======================================================================
-// function : operator[]
-// purpose  :
-// =======================================================================
 unsigned char Graphic3d_CubeMapOrder::operator[](Graphic3d_CubeMapSide theCubeMapSide) const
 {
   return Get(theCubeMapSide);
 }
-
-//=================================================================================================
 
 Graphic3d_CubeMapOrder& Graphic3d_CubeMapOrder::SetDefault()
 {
@@ -117,8 +83,6 @@ Graphic3d_CubeMapOrder& Graphic3d_CubeMapOrder::SetDefault()
   }
   return *this;
 }
-
-//=================================================================================================
 
 Graphic3d_CubeMapOrder& Graphic3d_CubeMapOrder::Permute(
   const Graphic3d_ValidatedCubeMapOrder& thePermutation)
@@ -131,8 +95,6 @@ Graphic3d_CubeMapOrder& Graphic3d_CubeMapOrder::Permute(
   return *this;
 }
 
-//=================================================================================================
-
 Graphic3d_CubeMapOrder Graphic3d_CubeMapOrder::Permuted(
   const Graphic3d_ValidatedCubeMapOrder& thePermutation) const
 {
@@ -140,8 +102,6 @@ Graphic3d_CubeMapOrder Graphic3d_CubeMapOrder::Permuted(
   anOrder.Permute(thePermutation);
   return anOrder;
 }
-
-//=================================================================================================
 
 Graphic3d_CubeMapOrder& Graphic3d_CubeMapOrder::Swap(Graphic3d_CubeMapSide theFirstSide,
                                                      Graphic3d_CubeMapSide theSecondSide)
@@ -152,8 +112,6 @@ Graphic3d_CubeMapOrder& Graphic3d_CubeMapOrder::Swap(Graphic3d_CubeMapSide theFi
   return *this;
 }
 
-//=================================================================================================
-
 Graphic3d_CubeMapOrder Graphic3d_CubeMapOrder::Swapped(Graphic3d_CubeMapSide theFirstSide,
                                                        Graphic3d_CubeMapSide theSecondSide) const
 {
@@ -162,8 +120,6 @@ Graphic3d_CubeMapOrder Graphic3d_CubeMapOrder::Swapped(Graphic3d_CubeMapSide the
   return anOrder;
 }
 
-//=================================================================================================
-
 Graphic3d_CubeMapOrder& Graphic3d_CubeMapOrder::Clear()
 {
   myConvolution  = 0;
@@ -171,14 +127,10 @@ Graphic3d_CubeMapOrder& Graphic3d_CubeMapOrder::Clear()
   return *this;
 }
 
-//=================================================================================================
-
 bool Graphic3d_CubeMapOrder::IsEmpty() const
 {
   return myConvolution == 0;
 }
-
-//=================================================================================================
 
 bool Graphic3d_CubeMapOrder::HasRepetitions() const
 {
@@ -195,28 +147,20 @@ bool Graphic3d_CubeMapOrder::HasRepetitions() const
   return false;
 }
 
-//=================================================================================================
-
 bool Graphic3d_CubeMapOrder::HasOverflows() const
 {
   return myHasOverflows;
 }
-
-//=================================================================================================
 
 bool Graphic3d_CubeMapOrder::IsValid() const
 {
   return !HasRepetitions() && !HasOverflows();
 }
 
-//=================================================================================================
-
 unsigned char Graphic3d_CubeMapOrder::get(unsigned char theCubeMapSide) const
 {
   return (myConvolution / (1 << (theCubeMapSide * 3))) % (1 << 3);
 }
-
-//=================================================================================================
 
 void Graphic3d_CubeMapOrder::set(unsigned char theCubeMapSide, unsigned char theValue)
 {
@@ -225,14 +169,10 @@ void Graphic3d_CubeMapOrder::set(unsigned char theCubeMapSide, unsigned char the
   myConvolution += aValuePlace * theValue;
 }
 
-//=================================================================================================
-
 void Graphic3d_CubeMapOrder::set(Graphic3d_CubeMapSide theCubeMapSide, unsigned char theValue)
 {
   set(static_cast<unsigned char>(theCubeMapSide), theValue);
 }
-
-//=================================================================================================
 
 const Graphic3d_ValidatedCubeMapOrder& Graphic3d_CubeMapOrder::Default()
 {

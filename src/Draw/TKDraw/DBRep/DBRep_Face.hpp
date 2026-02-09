@@ -10,12 +10,10 @@
 #include <GeomAbs_IsoType.hpp>
 #include <Standard_Real.hpp>
 
-//! Display of a face. Face + Array of iso + color.
 class DBRep_Face : public Standard_Transient
 {
 
 public:
-  //! N is the number of iso intervals.
   Standard_EXPORT DBRep_Face(const TopoDS_Face& F, const int N, const Draw_Color& C);
 
   const TopoDS_Face& Face() const;
@@ -50,21 +48,15 @@ inline const TopoDS_Face& DBRep_Face::Face() const
   return myFace;
 }
 
-//=================================================================================================
-
 inline void DBRep_Face::Face(const TopoDS_Face& F)
 {
   myFace = F;
 }
 
-//=================================================================================================
-
 inline int DBRep_Face::NbIsos() const
 {
   return myTypes.Upper();
 }
-
-//=================================================================================================
 
 inline void DBRep_Face::Iso(const int             I,
                             const GeomAbs_IsoType T,
@@ -78,31 +70,25 @@ inline void DBRep_Face::Iso(const int             I,
   myParams(3 * I)     = T2;
 }
 
-//=================================================================================================
-
 inline void DBRep_Face::GetIso(const int        I,
                                GeomAbs_IsoType& T,
                                double&          Par,
                                double&          T1,
                                double&          T2) const
 {
-  // JR/Hp :
+
   int IntTyp = myTypes(I);
   T          = (GeomAbs_IsoType)IntTyp;
-  //  T   =  (GeomAbs_IsoType) myTypes(I);
+
   Par = myParams(3 * I - 2);
   T1  = myParams(3 * I - 1);
   T2  = myParams(3 * I);
 }
 
-//=================================================================================================
-
 inline const Draw_Color& DBRep_Face::Color() const
 {
   return myColor;
 }
-
-//=================================================================================================
 
 inline void DBRep_Face::Color(const Draw_Color& C)
 {

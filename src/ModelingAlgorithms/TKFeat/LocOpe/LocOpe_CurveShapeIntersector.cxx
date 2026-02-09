@@ -12,8 +12,6 @@
 
 static void Perform(BRepIntCurveSurface_Inter&, NCollection_Sequence<LocOpe_PntFace>&);
 
-//=================================================================================================
-
 void LocOpe_CurveShapeIntersector::Init(const gp_Ax1& Axis, const TopoDS_Shape& S)
 {
   myDone = false;
@@ -29,8 +27,6 @@ void LocOpe_CurveShapeIntersector::Init(const gp_Ax1& Axis, const TopoDS_Shape& 
   Perform(theInt, myPoints);
   myDone = true;
 }
-
-//=================================================================================================
 
 void LocOpe_CurveShapeIntersector::Init(const gp_Circ& C, const TopoDS_Shape& S)
 {
@@ -51,8 +47,6 @@ void LocOpe_CurveShapeIntersector::Init(const gp_Circ& C, const TopoDS_Shape& S)
   Perform(theInt, myPoints);
   myDone = true;
 }
-
-//=================================================================================================
 
 bool LocOpe_CurveShapeIntersector::LocalizeAfter(const double        From,
                                                  TopAbs_Orientation& Or,
@@ -105,7 +99,7 @@ bool LocOpe_CurveShapeIntersector::LocalizeAfter(const double        From,
         IndFrom = i;
       }
       else
-      { // on a une intersection franche
+      {
         IndTo  = i - 1;
         found  = true;
         RetVal = true;
@@ -115,8 +109,6 @@ bool LocOpe_CurveShapeIntersector::LocalizeAfter(const double        From,
 
   return RetVal;
 }
-
-//=================================================================================================
 
 bool LocOpe_CurveShapeIntersector::LocalizeBefore(const double        From,
                                                   TopAbs_Orientation& Or,
@@ -169,7 +161,7 @@ bool LocOpe_CurveShapeIntersector::LocalizeBefore(const double        From,
         IndTo = i;
       }
       else
-      { // on a une intersection franche
+      {
         IndFrom = i + 1;
         found   = true;
         RetVal  = true;
@@ -179,8 +171,6 @@ bool LocOpe_CurveShapeIntersector::LocalizeBefore(const double        From,
 
   return RetVal;
 }
-
-//=================================================================================================
 
 bool LocOpe_CurveShapeIntersector::LocalizeAfter(const int           FromInd,
                                                  TopAbs_Orientation& Or,
@@ -248,7 +238,7 @@ bool LocOpe_CurveShapeIntersector::LocalizeAfter(const int           FromInd,
         IndFrom = i;
       }
       else
-      { // on a une intersection franche
+      {
         IndTo  = i - 1;
         found  = true;
         RetVal = true;
@@ -257,8 +247,6 @@ bool LocOpe_CurveShapeIntersector::LocalizeAfter(const int           FromInd,
   }
   return RetVal;
 }
-
-//=================================================================================================
 
 bool LocOpe_CurveShapeIntersector::LocalizeBefore(const int           FromInd,
                                                   TopAbs_Orientation& Or,
@@ -326,7 +314,7 @@ bool LocOpe_CurveShapeIntersector::LocalizeBefore(const int           FromInd,
         IndTo = i;
       }
       else
-      { // on a une intersection franche
+      {
         IndFrom = i + 1;
         found   = true;
         RetVal  = true;
@@ -335,8 +323,6 @@ bool LocOpe_CurveShapeIntersector::LocalizeBefore(const int           FromInd,
   }
   return RetVal;
 }
-
-//=================================================================================================
 
 static void Perform(BRepIntCurveSurface_Inter&            theInt,
                     NCollection_Sequence<LocOpe_PntFace>& thePoints)

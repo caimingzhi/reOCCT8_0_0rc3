@@ -1,15 +1,4 @@
-// Copyright (c) 2023 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XSDRAWPLY.hpp>
 
@@ -37,8 +26,6 @@
 #include <XCAFPrs_DocumentExplorer.hpp>
 #include <XSControl_WorkSession.hpp>
 #include <XSDRAW.hpp>
-
-//=================================================================================================
 
 static int WritePly(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -300,15 +287,13 @@ static int WritePly(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
 
 namespace
 {
-  // Singleton to ensure DEPLY plugin is registered only once
+
   void DEPLYSingleton()
   {
     static DE_PluginHolder<DEPLY_ConfigurationNode> aHolder;
     (void)aHolder;
   }
 } // namespace
-
-//=================================================================================================
 
 void XSDRAWPLY::Factory(Draw_Interpretor& theDI)
 {
@@ -319,11 +304,10 @@ void XSDRAWPLY::Factory(Draw_Interpretor& theDI)
   }
   aIsActivated = true;
 
-  //! Ensure DEPLY plugin is registered
   DEPLYSingleton();
 
-  const char* aGroup = "XSTEP-STL/VRML"; // Step transfer file commands
-  // XSDRAW::LoadDraw(theCommands);
+  const char* aGroup = "XSTEP-STL/VRML";
+
   theDI.Add("WritePly",
             R"(
 WritePly Doc file [-normals {0|1}]=1 [-colors {0|1}]=1 [-uv {0|1}]=0 [-partId {0|1}]=1 [-faceId {0|1}]=0
@@ -346,9 +330,7 @@ Generate point cloud out of the shape and write it into PLY file.
             aGroup);
   theDI.Add("writeply", "writeply shape file", __FILE__, WritePly, aGroup);
 
-  // Load XSDRAW session for pilot activation
   XSDRAW::LoadDraw(theDI);
 }
 
-// Declare entry point PLUGINFACTORY
 DPLUGIN(XSDRAWPLY)

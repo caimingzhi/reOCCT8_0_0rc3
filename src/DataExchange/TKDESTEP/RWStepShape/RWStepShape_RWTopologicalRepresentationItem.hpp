@@ -10,7 +10,6 @@ class Interface_Check;
 class StepShape_TopologicalRepresentationItem;
 class StepData_StepWriter;
 
-//! Read & Write Module for TopologicalRepresentationItem
 class RWStepShape_RWTopologicalRepresentationItem
 {
 public:

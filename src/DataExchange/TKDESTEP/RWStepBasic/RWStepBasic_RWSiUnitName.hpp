@@ -34,9 +34,6 @@ namespace RWStepBasic_RWSiUnitName
   static constexpr char sunWeber[]         = ".WEBER.";
   static constexpr char sunCoulomb[]       = ".COULOMB.";
 
-  //! Convert StepBasic_SiUnitName to string
-  //! @param theNameEnum The StepBasic_SiUnitName value to convert
-  //! @return The corresponding string representation
   inline const char* ConvertToString(const StepBasic_SiUnitName theNameEnum)
   {
     switch (theNameEnum)
@@ -98,13 +95,9 @@ namespace RWStepBasic_RWSiUnitName
       case StepBasic_sunCoulomb:
         return sunCoulomb;
     }
-    return nullptr; // Default value
+    return nullptr;
   }
 
-  //! Convert string to StepBasic_SiUnitName
-  //! @param theNameStr The string to convert
-  //! @param theResultEnum The corresponding StepBasic_SiUnitName value
-  //! @return true if the conversion was successful, false otherwise
   inline bool ConvertToEnum(const char* theNameStr, StepBasic_SiUnitName& theResultEnum)
   {
     if (IsEqual(theNameStr, sunHertz))

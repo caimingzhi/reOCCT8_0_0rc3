@@ -5,29 +5,21 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_BvhCStructureSet, BVH_PrimitiveSet3d)
 
-//=================================================================================================
-
 Graphic3d_BvhCStructureSet::Graphic3d_BvhCStructureSet()
 {
   myBuilder =
     new BVH_BinnedBuilder<double, 3>(BVH_Constants_LeafNodeSizeSingle, BVH_Constants_MaxTreeDepth);
 }
 
-//=================================================================================================
-
 int Graphic3d_BvhCStructureSet::Size() const
 {
   return myStructs.Size();
 }
 
-//=================================================================================================
-
 Graphic3d_BndBox3d Graphic3d_BvhCStructureSet::Box(const int theIdx) const
 {
   return myStructs.FindKey(theIdx + 1)->BoundingBox();
 }
-
-//=================================================================================================
 
 double Graphic3d_BvhCStructureSet::Center(const int theIdx, const int theAxis) const
 {
@@ -39,20 +31,16 @@ double Graphic3d_BvhCStructureSet::Center(const int theIdx, const int theAxis) c
   return aCenter;
 }
 
-//=================================================================================================
-
 void Graphic3d_BvhCStructureSet::Swap(const int theIdx1, const int theIdx2)
 {
   myStructs.Swap(theIdx1 + 1, theIdx2 + 1);
 }
 
-//=================================================================================================
-
 bool Graphic3d_BvhCStructureSet::Add(const Graphic3d_CStructure* theStruct)
 {
   const int aSize = myStructs.Size();
 
-  if (myStructs.Add(theStruct) > aSize) // new structure?
+  if (myStructs.Add(theStruct) > aSize)
   {
     MarkDirty();
 
@@ -61,8 +49,6 @@ bool Graphic3d_BvhCStructureSet::Add(const Graphic3d_CStructure* theStruct)
 
   return false;
 }
-
-//=================================================================================================
 
 bool Graphic3d_BvhCStructureSet::Remove(const Graphic3d_CStructure* theStruct)
 {
@@ -80,15 +66,11 @@ bool Graphic3d_BvhCStructureSet::Remove(const Graphic3d_CStructure* theStruct)
   return false;
 }
 
-//=================================================================================================
-
 void Graphic3d_BvhCStructureSet::Clear()
 {
   myStructs.Clear();
   MarkDirty();
 }
-
-//=================================================================================================
 
 const Graphic3d_CStructure* Graphic3d_BvhCStructureSet::GetStructureById(int theId)
 {

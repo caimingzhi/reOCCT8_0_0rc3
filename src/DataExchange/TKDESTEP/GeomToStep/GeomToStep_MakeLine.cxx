@@ -14,9 +14,6 @@
 #include <StepGeom_Vector.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d' une line de prostep a partir d' une Lin de gp
-//=============================================================================
 GeomToStep_MakeLine::GeomToStep_MakeLine(const gp_Lin& L, const StepData_Factors& theLocalFactors)
 {
 #define Vec_gen gp_Vec
@@ -24,20 +21,12 @@ GeomToStep_MakeLine::GeomToStep_MakeLine(const gp_Lin& L, const StepData_Factors
 #undef Vec_gen
 }
 
-//=============================================================================
-// Creation d' une line de prostep a partir d' une Lin2d de gp
-//=============================================================================
-
 GeomToStep_MakeLine::GeomToStep_MakeLine(const gp_Lin2d& L, const StepData_Factors& theLocalFactors)
 {
 #define Vec_gen gp_Vec2d
 #include "GeomToStep_MakeLine_gen.hpp"
 #undef Vec_gen
 }
-
-//=============================================================================
-// Creation d' une line de prostep a partir d' une Line de Geom
-//=============================================================================
 
 GeomToStep_MakeLine::GeomToStep_MakeLine(const occ::handle<Geom_Line>& Gline,
                                          const StepData_Factors&       theLocalFactors)
@@ -49,10 +38,6 @@ GeomToStep_MakeLine::GeomToStep_MakeLine(const occ::handle<Geom_Line>& Gline,
 #undef Vec_gen
 }
 
-//=============================================================================
-// Creation d' une line de prostep a partir d' une Line de Geom2d
-//=============================================================================
-
 GeomToStep_MakeLine::GeomToStep_MakeLine(const occ::handle<Geom2d_Line>& Gline,
                                          const StepData_Factors&         theLocalFactors)
 {
@@ -62,10 +47,6 @@ GeomToStep_MakeLine::GeomToStep_MakeLine(const occ::handle<Geom2d_Line>& Gline,
 #include "GeomToStep_MakeLine_gen.hpp"
 #undef Vec_gen
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_Line>& GeomToStep_MakeLine::Value() const
 {

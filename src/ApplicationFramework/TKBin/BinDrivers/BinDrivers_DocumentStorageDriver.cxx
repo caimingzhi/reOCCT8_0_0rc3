@@ -12,19 +12,13 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinDrivers_DocumentStorageDriver, BinLDrivers_DocumentStorageDriver)
 
-//=================================================================================================
-
 BinDrivers_DocumentStorageDriver::BinDrivers_DocumentStorageDriver() = default;
-
-//=================================================================================================
 
 occ::handle<BinMDF_ADriverTable> BinDrivers_DocumentStorageDriver::AttributeDrivers(
   const occ::handle<Message_Messenger>& theMessageDriver)
 {
   return BinDrivers::AttributeDrivers(theMessageDriver);
 }
-
-//=================================================================================================
 
 bool BinDrivers_DocumentStorageDriver::IsWithTriangles() const
 {
@@ -39,8 +33,6 @@ bool BinDrivers_DocumentStorageDriver::IsWithTriangles() const
     occ::down_cast<BinMNaming_NamedShapeDriver>(aDriver);
   return !aShapesDriver.IsNull() && aShapesDriver->IsWithTriangles();
 }
-
-//=================================================================================================
 
 void BinDrivers_DocumentStorageDriver::SetWithTriangles(
   const occ::handle<Message_Messenger>& theMessageDriver,
@@ -92,11 +84,9 @@ void BinDrivers_DocumentStorageDriver::EnableQuickPartWriting(
   aShapesDriver->EnableQuickPart(theValue);
 }
 
-//=================================================================================================
-
 void BinDrivers_DocumentStorageDriver::Clear()
 {
-  // Clear NamedShape driver
+
   occ::handle<BinMDF_ADriver> aDriver;
   if (myDrivers->GetDriver(STANDARD_TYPE(TNaming_NamedShape), aDriver))
   {
@@ -106,8 +96,6 @@ void BinDrivers_DocumentStorageDriver::Clear()
   }
   BinLDrivers_DocumentStorageDriver::Clear();
 }
-
-//=================================================================================================
 
 bool BinDrivers_DocumentStorageDriver::IsWithNormals() const
 {
@@ -122,8 +110,6 @@ bool BinDrivers_DocumentStorageDriver::IsWithNormals() const
     occ::down_cast<BinMNaming_NamedShapeDriver>(aDriver);
   return !aShapesDriver.IsNull() && aShapesDriver->IsWithNormals();
 }
-
-//=================================================================================================
 
 void BinDrivers_DocumentStorageDriver::SetWithNormals(
   const occ::handle<Message_Messenger>& theMessageDriver,
@@ -150,10 +136,6 @@ void BinDrivers_DocumentStorageDriver::SetWithNormals(
   aShapesDriver->SetWithNormals(theWithNormals);
 }
 
-//=======================================================================
-// function : WriteShapeSection
-// purpose  : Implements WriteShapeSection
-//=======================================================================
 void BinDrivers_DocumentStorageDriver::WriteShapeSection(BinLDrivers_DocumentSection& theSection,
                                                          Standard_OStream&            theOS,
                                                          const TDocStd_FormatVersion  theDocVer,
@@ -178,6 +160,5 @@ void BinDrivers_DocumentStorageDriver::WriteShapeSection(BinLDrivers_DocumentSec
     }
   }
 
-  // Write the section info in the TOC.
   theSection.Write(theOS, aShapesSectionOffset, theDocVer);
 }

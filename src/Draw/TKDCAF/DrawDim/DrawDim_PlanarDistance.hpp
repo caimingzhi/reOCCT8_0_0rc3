@@ -9,9 +9,6 @@ class Draw_Display;
 class gp_Pnt;
 class TopoDS_Edge;
 
-//! PlanarDistance point/point
-//! PlanarDistance point/line
-//! PlanarDistance line/line
 class DrawDim_PlanarDistance : public DrawDim_PlanarDimension
 {
 
@@ -22,7 +19,6 @@ public:
 
   Standard_EXPORT DrawDim_PlanarDistance(const TopoDS_Shape& geom1, const TopoDS_Shape& geom2);
 
-  //! private
   Standard_EXPORT void DrawOn(Draw_Display& dis) const override;
 
   DEFINE_STANDARD_RTTIEXT(DrawDim_PlanarDistance, DrawDim_PlanarDimension)

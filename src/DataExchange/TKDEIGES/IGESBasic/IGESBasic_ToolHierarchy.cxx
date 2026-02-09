@@ -13,7 +13,7 @@
 IGESBasic_ToolHierarchy::IGESBasic_ToolHierarchy() = default;
 
 void IGESBasic_ToolHierarchy::ReadOwnParams(const occ::handle<IGESBasic_Hierarchy>& ent,
-                                            const occ::handle<IGESData_IGESReaderData>& /*IR*/,
+                                            const occ::handle<IGESData_IGESReaderData>&,
                                             IGESData_ParamReader& PR) const
 {
   int tempNbPropertyValues;
@@ -23,9 +23,7 @@ void IGESBasic_ToolHierarchy::ReadOwnParams(const occ::handle<IGESBasic_Hierarch
   int tempBlankStatus;
   int tempLineWeight;
   int tempColorNum;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadInteger(PR.Current(), "No. of Property values", tempNbPropertyValues);
   PR.ReadInteger(PR.Current(), "LineFont", tempLineFont);
   PR.ReadInteger(PR.Current(), "View", tempView);
@@ -56,14 +54,14 @@ void IGESBasic_ToolHierarchy::WriteOwnParams(const occ::handle<IGESBasic_Hierarc
   IW.Send(ent->NewColorNum());
 }
 
-void IGESBasic_ToolHierarchy::OwnShared(const occ::handle<IGESBasic_Hierarchy>& /*ent*/,
-                                        Interface_EntityIterator& /*iter*/) const
+void IGESBasic_ToolHierarchy::OwnShared(const occ::handle<IGESBasic_Hierarchy>&,
+                                        Interface_EntityIterator&) const
 {
 }
 
 void IGESBasic_ToolHierarchy::OwnCopy(const occ::handle<IGESBasic_Hierarchy>& another,
                                       const occ::handle<IGESBasic_Hierarchy>& ent,
-                                      Interface_CopyTool& /*TC*/) const
+                                      Interface_CopyTool&) const
 {
   ent->Init(6,
             another->NewLineFont(),
@@ -85,13 +83,13 @@ bool IGESBasic_ToolHierarchy::OwnCorrect(const occ::handle<IGESBasic_Hierarchy>&
               ent->NewBlankStatus(),
               ent->NewLineWeight(),
               ent->NewColorNum());
-  return res; // nbpropertyvalues=6
+  return res;
 }
 
 IGESData_DirChecker IGESBasic_ToolHierarchy::DirChecker(
-  const occ::handle<IGESBasic_Hierarchy>& /*ent*/) const
+  const occ::handle<IGESBasic_Hierarchy>&) const
 {
-  IGESData_DirChecker DC(406, 10); // Form no = 10 & Type = 406
+  IGESData_DirChecker DC(406, 10);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
@@ -120,9 +118,9 @@ void IGESBasic_ToolHierarchy::OwnCheck(const occ::handle<IGESBasic_Hierarchy>& e
 }
 
 void IGESBasic_ToolHierarchy::OwnDump(const occ::handle<IGESBasic_Hierarchy>& ent,
-                                      const IGESData_IGESDumper& /*dumper*/,
+                                      const IGESData_IGESDumper&,
                                       Standard_OStream& S,
-                                      const int /*level*/) const
+                                      const int) const
 {
   S << "IGESBasic_Hierarchy\n"
     << "Number of property values : " << ent->NbPropertyValues() << "\n"

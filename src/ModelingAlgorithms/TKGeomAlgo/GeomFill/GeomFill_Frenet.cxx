@@ -23,10 +23,6 @@ static const double MaxSingular = 1.e-5;
 
 static const int maxDerivOrder = 3;
 
-//=======================================================================
-// function : FDeriv
-// purpose  : computes (F/|F|)'
-//=======================================================================
 static gp_Vec FDeriv(const gp_Vec& F, const gp_Vec& DF)
 {
   double Norma  = F.Magnitude();
@@ -34,10 +30,6 @@ static gp_Vec FDeriv(const gp_Vec& F, const gp_Vec& DF)
   return Result;
 }
 
-//=======================================================================
-// function : DDeriv
-// purpose  : computes (F/|F|)''
-//=======================================================================
 static gp_Vec DDeriv(const gp_Vec& F, const gp_Vec& DF, const gp_Vec& D2F)
 {
   double Norma = F.Magnitude();
@@ -49,16 +41,12 @@ static gp_Vec DDeriv(const gp_Vec& F, const gp_Vec& DF, const gp_Vec& D2F)
   return Result;
 }
 
-//=======================================================================
-// function : CosAngle
-// purpose  : Return a cosine between vectors theV1 and theV2.
-//=======================================================================
 static double CosAngle(const gp_Vec& theV1, const gp_Vec& theV2)
 {
   const double aTol = gp::Resolution();
 
   const double m1 = theV1.Magnitude(), m2 = theV2.Magnitude();
-  if ((m1 <= aTol) || (m2 <= aTol)) // Vectors are codirectional
+  if ((m1 <= aTol) || (m2 <= aTol))
     return 1.0;
 
   double aCAng = theV1.Dot(theV2) / (m1 * m2);
@@ -72,14 +60,10 @@ static double CosAngle(const gp_Vec& theV1, const gp_Vec& theV2)
   return aCAng;
 }
 
-//=================================================================================================
-
 GeomFill_Frenet::GeomFill_Frenet()
     : isSngl(false)
 {
 }
-
-//=================================================================================================
 
 occ::handle<GeomFill_TrihedronLaw> GeomFill_Frenet::Copy() const
 {
@@ -88,8 +72,6 @@ occ::handle<GeomFill_TrihedronLaw> GeomFill_Frenet::Copy() const
     copy->SetCurve(myCurve);
   return copy;
 }
-
-//=================================================================================================
 
 bool GeomFill_Frenet::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
 {
@@ -106,21 +88,19 @@ bool GeomFill_Frenet::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
       case GeomAbs_Parabola:
       case GeomAbs_Line:
       {
-        // No problem
+
         isSngl = false;
         break;
       }
       default:
       {
-        // We have to search singularities
+
         Init();
       }
     }
   }
   return true;
 }
-
-//=================================================================================================
 
 void GeomFill_Frenet::Init()
 {
@@ -131,7 +111,6 @@ void GeomFill_Frenet::Init()
   constexpr double   Tol2 = Tol * Tol;
   constexpr double   PTol = Precision::PConfusion();
 
-  // We want to determine if the curve has linear segments
   int                                      NbIntC2 = myCurve->NbIntervals(GeomAbs_C2);
   occ::handle<NCollection_HArray1<double>> myC2Disc =
     new NCollection_HArray1<double>(1, NbIntC2 + 1);
@@ -171,10 +150,9 @@ void GeomFill_Frenet::Init()
     AveFunc(i) = Average / NbControl;
   }
 
-  // Here we are looking for singularities
   NCollection_Sequence<double>* SeqArray = new NCollection_Sequence<double>[NbIntC2];
   NCollection_Sequence<double>  SnglSeq;
-  //  double Value2, preValue=1.e200, t;
+
   double        Value2, t;
   Extrema_ExtPC Ext;
   gp_Pnt        Origin(0, 0, 0);
@@ -183,7 +161,7 @@ void GeomFill_Frenet::Init()
   {
     if (!IsLin->Value(i) && !IsConst->Value(i))
     {
-      Func.SetRatio(1. / AveFunc(i)); // Normalization
+      Func.SetRatio(1. / AveFunc(i));
       Ext.Initialize(Func, myC2Disc->Value(i), myC2Disc->Value(i + 1), TolF);
       Ext.Perform(Origin);
       if (Ext.IsDone() && Ext.NbExt() != 0)
@@ -198,7 +176,7 @@ void GeomFill_Frenet::Init()
           }
         }
       }
-      // sorting
+
       if (SeqArray[i - 1].Length() != 0)
       {
         NCollection_Array1<double> anArray(1, SeqArray[i - 1].Length());
@@ -210,18 +188,17 @@ void GeomFill_Frenet::Init()
       }
     }
   }
-  // Filling SnglSeq by first sets of roots
+
   for (i = 0; i < NbIntC2; i++)
     for (j = 1; j <= SeqArray[i].Length(); j++)
       SnglSeq.Append(SeqArray[i](j));
 
-  // Extrema works bad, need to pass second time
   for (i = 0; i < NbIntC2; i++)
     if (!SeqArray[i].IsEmpty())
     {
       SeqArray[i].Prepend(myC2Disc->Value(i + 1));
       SeqArray[i].Append(myC2Disc->Value(i + 2));
-      Func.SetRatio(1. / AveFunc(i + 1)); // Normalization
+      Func.SetRatio(1. / AveFunc(i + 1));
       for (j = 1; j < SeqArray[i].Length(); j++)
         if (SeqArray[i](j + 1) - SeqArray[i](j) > PTol)
         {
@@ -247,7 +224,7 @@ void GeomFill_Frenet::Init()
 
   if (SnglSeq.Length() > 0)
   {
-    // sorting
+
     NCollection_Array1<double> anArray(1, SnglSeq.Length());
     for (i = 1; i <= SnglSeq.Length(); i++)
       anArray(i) = SnglSeq(i);
@@ -255,7 +232,6 @@ void GeomFill_Frenet::Init()
     for (i = 1; i <= SnglSeq.Length(); i++)
       SnglSeq(i) = anArray(i);
 
-    // discard repeating elements
     bool found = true;
     j          = 1;
     while (found)
@@ -275,7 +251,6 @@ void GeomFill_Frenet::Init()
     for (i = 1; i <= mySngl->Length(); i++)
       mySngl->ChangeValue(i) = SnglSeq(i);
 
-    // computation of length of singular interval
     mySnglLen = new NCollection_HArray1<double>(1, mySngl->Length());
     gp_Vec SnglDer, SnglDer2;
     double norm;
@@ -298,7 +273,7 @@ void GeomFill_Frenet::Init()
 #endif
     if (mySngl->Length() > 1)
     {
-      // we have to merge singular points that have common parts of singular intervals
+
       NCollection_Sequence<gp_Pnt2d> tmpSeq;
       tmpSeq.Append(gp_Pnt2d(mySngl->Value(1), mySnglLen->Value(1)));
       double U11, U12, U21, U22;
@@ -337,39 +312,27 @@ void GeomFill_Frenet::Init()
     isSngl = false;
 }
 
-//=======================================================================
-// function :  RotateTrihedron
-// purpose  :  This function revolves the trihedron (which is determined of
-//            given "Tangent", "Normal" and "BiNormal" vectors)
-//            to coincide "Tangent" and "NewTangent" axes.
-//=======================================================================
 bool GeomFill_Frenet::RotateTrihedron(gp_Vec&       Tangent,
                                       gp_Vec&       Normal,
                                       gp_Vec&       BiNormal,
                                       const gp_Vec& NewTangent) const
 {
-  const double anInfCOS = cos(Precision::Angular()); // 0.99999995
+  const double anInfCOS = cos(Precision::Angular());
   const double aTol     = gp::Resolution();
 
   gp_Vec       anAxis = Tangent.Crossed(NewTangent);
   const double NT     = anAxis.Magnitude();
   if (NT <= aTol)
-    // No rotation required
+
     return true;
   else
-    anAxis /= NT; // Normalization
+    anAxis /= NT;
 
   const double aPx = anAxis.X(), aPy = anAxis.Y(), aPz = anAxis.Z();
-  const double aCAng = CosAngle(Tangent, NewTangent); // cosine
+  const double aCAng = CosAngle(Tangent, NewTangent);
 
   const double anAddCAng = 1.0 - aCAng;
-  const double aSAng     = sqrt(1.0 - aCAng * aCAng); // sine
-
-  // According to rotate direction, sine of rotation angle might be
-  // positive or negative.
-  // We can research to choose necessary sign. But I think, it is more
-  // effectively, to rotate "Tangent" vector in both direction. After that
-  // we can choose necessary rotation direction in depend of results.
+  const double aSAng     = sqrt(1.0 - aCAng * aCAng);
 
   const gp_Vec aV11(anAddCAng * aPx * aPx + aCAng,
                     anAddCAng * aPx * aPy - aPz * aSAng,
@@ -409,8 +372,6 @@ bool GeomFill_Frenet::RotateTrihedron(gp_Vec&       Tangent,
   return CosAngle(Tangent, NewTangent) >= anInfCOS;
 }
 
-//=================================================================================================
-
 bool GeomFill_Frenet::D0(const double theParam, gp_Vec& Tangent, gp_Vec& Normal, gp_Vec& BiNormal)
 {
   const double aTol = gp::Resolution();
@@ -431,13 +392,11 @@ bool GeomFill_Frenet::D0(const double theParam, gp_Vec& Tangent, gp_Vec& Normal,
   const double aDelta         = (anUsupremum - anUinfium) * DivisionFactor;
   double       Ndu            = Tangent.Magnitude();
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
   if (Ndu <= aTol)
   {
     gp_Vec aTn;
-    // Derivative is approximated by Taylor-series
 
-    int  anIndex       = 1; // Derivative order
+    int  anIndex       = 1;
     bool isDeriveFound = false;
 
     do
@@ -465,12 +424,11 @@ bool GeomFill_Frenet::D0(const double theParam, gp_Vec& Tangent, gp_Vec& Normal,
 
       if (aDirFactor < 0.0)
         aTn = -aTn;
-    } // if(IsDeriveFound)
+    }
     else
     {
-      // Derivative is approximated by three points
 
-      gp_Pnt Ptemp(0.0, 0.0, 0.0); //(0,0,0)-coordinate
+      gp_Pnt Ptemp(0.0, 0.0, 0.0);
       gp_Pnt P1, P2, P3;
       bool   IsParameterGrown;
 
@@ -495,13 +453,11 @@ bool GeomFill_Frenet::D0(const double theParam, gp_Vec& Tangent, gp_Vec& Normal,
         aTn = -3 * V1 + 4 * V2 - V3;
       else
         aTn = V1 - 4 * V2 + 3 * V3;
-    } // else of "if(IsDeriveFound)" condition
+    }
     Ndu         = aTn.Magnitude();
     gp_Pnt Pt   = P;
     double dPar = 10.0 * aDelta;
 
-    // Recursive calling is used for determine of trihedron for
-    // point, which is near to given.
     if (theParam - anUinfium < dPar)
     {
       if (!D0(aParam + dPar, Tangent, Normal, BiNormal))
@@ -522,7 +478,7 @@ bool GeomFill_Frenet::D0(const double theParam, gp_Vec& Tangent, gp_Vec& Normal,
 #endif
       return false;
     }
-  } // if(Ndu <= aTol)
+  }
   else
   {
     Tangent  = Tangent / Ndu;
@@ -543,8 +499,6 @@ bool GeomFill_Frenet::D0(const double theParam, gp_Vec& Tangent, gp_Vec& Normal,
   return true;
 }
 
-//=================================================================================================
-
 bool GeomFill_Frenet::D1(const double Param,
                          gp_Vec&      Tangent,
                          gp_Vec&      DTangent,
@@ -559,13 +513,11 @@ bool GeomFill_Frenet::D1(const double Param,
     if (SingularD1(Param, Index, Tangent, DTangent, Normal, DNormal, BiNormal, DBiNormal, Delta))
       return true;
 
-  //  double Norma;
   double theParam = Param + Delta;
   gp_Vec DC1, DC2, DC3;
   myTrimmed->D3(theParam, P, DC1, DC2, DC3);
   Tangent = DC1.Normalized();
 
-  // if (DC2.Magnitude() <= NullTol || Tangent.Crossed(DC2).Magnitude() <= NullTol) {
   if (Tangent.Crossed(DC2).Magnitude() <= gp::Resolution())
   {
     gp_Ax2 Axe(gp_Pnt(0, 0, 0), Tangent);
@@ -591,8 +543,6 @@ bool GeomFill_Frenet::D1(const double Param,
   DNormal = DBiNormal.Crossed(Tangent) + BiNormal.Crossed(DTangent);
   return true;
 }
-
-//=================================================================================================
 
 bool GeomFill_Frenet::D2(const double Param,
                          gp_Vec&      Tangent,
@@ -622,7 +572,6 @@ bool GeomFill_Frenet::D2(const double Param,
                    Delta))
       return true;
 
-  //  double Norma;
   double theParam = Param + Delta;
   gp_Vec DC1, DC2, DC3, DC4;
   myTrimmed->D3(theParam, P, DC1, DC2, DC3);
@@ -630,7 +579,6 @@ bool GeomFill_Frenet::D2(const double Param,
 
   Tangent = DC1.Normalized();
 
-  // if (DC2.Magnitude() <= NullTol || Tangent.Crossed(DC2).Magnitude() <= NullTol) {
   if (Tangent.Crossed(DC2).Magnitude() <= gp::Resolution())
   {
     gp_Ax2 Axe(gp_Pnt(0, 0, 0), Tangent);
@@ -667,8 +615,6 @@ bool GeomFill_Frenet::D2(const double Param,
   return true;
 }
 
-//=================================================================================================
-
 int GeomFill_Frenet::NbIntervals(const GeomAbs_Shape S) const
 {
   GeomAbs_Shape tmpS = GeomAbs_C0;
@@ -703,8 +649,6 @@ int GeomFill_Frenet::NbIntervals(const GeomAbs_Shape S) const
 
   return Fusion.Length() - 1;
 }
-
-//=================================================================================================
 
 void GeomFill_Frenet::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const
 {
@@ -746,7 +690,7 @@ void GeomFill_Frenet::Intervals(NCollection_Array1<double>& T, const GeomAbs_Sha
 
 void GeomFill_Frenet::GetAverageLaw(gp_Vec& ATangent, gp_Vec& ANormal, gp_Vec& ABiNormal)
 {
-  int    Num = 20; // order of digitalization
+  int    Num = 20;
   gp_Vec T, N, BN;
   ATangent    = gp_Vec(0, 0, 0);
   ANormal     = gp_Vec(0, 0, 0);
@@ -771,21 +715,15 @@ void GeomFill_Frenet::GetAverageLaw(gp_Vec& ATangent, gp_Vec& ANormal, gp_Vec& A
   ANormal   = ABiNormal.Crossed(ATangent);
 }
 
-//=================================================================================================
-
 bool GeomFill_Frenet::IsConstant() const
 {
   return (myCurve->GetType() == GeomAbs_Line);
 }
 
-//=================================================================================================
-
 bool GeomFill_Frenet::IsOnlyBy3dCurve() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool GeomFill_Frenet::IsSingular(const double U, int& Index) const
 {
@@ -802,8 +740,6 @@ bool GeomFill_Frenet::IsSingular(const double U, int& Index) const
   }
   return false;
 }
-
-//=================================================================================================
 
 bool GeomFill_Frenet::DoSingular(const double U,
                                  const int    Index,
@@ -845,14 +781,14 @@ bool GeomFill_Frenet::DoSingular(const double U,
     double magn = BiNormal.Magnitude();
     if (magn > Precision::Confusion())
     {
-      // modified by jgv, 12.08.03 for OCC605 ////
+
       gp_Vec NextBiNormal = Tangent.Crossed(myTrimmed->DN(U, i + 1));
       if (NextBiNormal.Magnitude() > magn)
       {
         i++;
         BiNormal = NextBiNormal;
       }
-      ///////////////////////////////////////////
+
       break;
     }
   }

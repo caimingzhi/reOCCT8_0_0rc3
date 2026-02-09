@@ -9,8 +9,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 GeomPlate_PlateG0Criterion::GeomPlate_PlateG0Criterion(const NCollection_Sequence<gp_XY>&  Data,
                                                        const NCollection_Sequence<gp_XYZ>& G0Data,
                                                        const double                        Maximum,
@@ -23,8 +21,6 @@ GeomPlate_PlateG0Criterion::GeomPlate_PlateG0Criterion(const NCollection_Sequenc
   myType        = Type;
   myRepartition = Repart;
 }
-
-//=================================================================================================
 
 void GeomPlate_PlateG0Criterion::Value(AdvApp2Var_Patch& P, const AdvApp2Var_Context& C) const
 {
@@ -54,7 +50,7 @@ void GeomPlate_PlateG0Criterion::Value(AdvApp2Var_Patch& P, const AdvApp2Var_Con
   int k1, k2, pos, ll = 1;
   for (k1 = 1; k1 <= NbCoeff[0]; k1++)
   {
-    // JAG 99.04.29    pos = 3*(MaxNbCoeff[0])*(k1-1);
+
     pos = 3 * (MaxNbCoeff[1]) * (k1 - 1);
     for (k2 = 1; k2 <= NbCoeff[1]; k2++, pos += 3)
     {
@@ -69,11 +65,11 @@ void GeomPlate_PlateG0Criterion::Value(AdvApp2Var_Patch& P, const AdvApp2Var_Con
   for (i = 1; i <= NbCtr; i++)
   {
     gp_XY P2d = myData.Value(i);
-    //    gp_Pnt PP = myXYZ.Value(i);
+
     gp_Pnt P3d;
     if (UInt[0] < P2d.X() && P2d.X() < UInt[1] && VInt[0] < P2d.Y() && P2d.Y() < VInt[1])
     {
-      //   u,v recadres sur (-1,1)
+
       up = (2 * P2d.X() - UInt[0] - UInt[1]) / (UInt[1] - UInt[0]);
       vp = (2 * P2d.Y() - VInt[0] - VInt[1]) / (VInt[1] - VInt[0]);
       PLib::EvalPoly2Var(up, vp, 0, 0, NbCoeff[0] - 1, NbCoeff[1] - 1, 3, Coeffs[0], Digit[0]);
@@ -92,8 +88,6 @@ void GeomPlate_PlateG0Criterion::Value(AdvApp2Var_Patch& P, const AdvApp2Var_Con
   }
   P.SetCritValue(std::sqrt(dist));
 }
-
-//=================================================================================================
 
 bool GeomPlate_PlateG0Criterion::IsSatisfied(const AdvApp2Var_Patch& P) const
 {

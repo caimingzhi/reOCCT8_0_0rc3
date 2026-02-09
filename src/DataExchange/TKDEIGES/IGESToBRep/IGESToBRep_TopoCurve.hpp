@@ -24,27 +24,17 @@ class Geom_Curve;
 class Geom2d_BSplineCurve;
 class Geom2d_Curve;
 
-//! Provides methods to transfer topologic curves entities
-//! from IGES to CASCADE.
 class IGESToBRep_TopoCurve : public IGESToBRep_CurveAndSurface
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates a tool TopoCurve ready to run, with
-  //! epsilons set to 1.E-04, TheModeTopo to True, the
-  //! optimization of the continuity to False.
   Standard_EXPORT IGESToBRep_TopoCurve();
 
-  //! Creates a tool TopoCurve ready to run and sets its
-  //! fields as CS's.
   Standard_EXPORT IGESToBRep_TopoCurve(const IGESToBRep_CurveAndSurface& CS);
 
-  //! Creates a tool TopoCurve ready to run and sets its
-  //! fields as CS's.
   Standard_EXPORT IGESToBRep_TopoCurve(const IGESToBRep_TopoCurve& CS);
 
-  //! Creates a tool TopoCurve ready to run.
   Standard_EXPORT IGESToBRep_TopoCurve(const double eps,
                                        const double epsGeom,
                                        const double epsCoeff,
@@ -91,8 +81,6 @@ public:
   Standard_EXPORT TopoDS_Shape
     TransferCurveOnSurface(const occ::handle<IGESGeom_CurveOnSurface>& start);
 
-  //! Transfers a CurveOnSurface directly on a face to trim it.
-  //! The CurveOnSurface have to be defined Outer or Inner.
   Standard_EXPORT TopoDS_Shape
     TransferCurveOnFace(TopoDS_Face&                                face,
                         const occ::handle<IGESGeom_CurveOnSurface>& start,
@@ -102,7 +90,6 @@ public:
 
   Standard_EXPORT TopoDS_Shape TransferBoundary(const occ::handle<IGESGeom_Boundary>& start);
 
-  //! Transfers a Boundary directly on a face to trim it.
   Standard_EXPORT TopoDS_Shape TransferBoundaryOnFace(TopoDS_Face&                          face,
                                                       const occ::handle<IGESGeom_Boundary>& start,
                                                       const gp_Trsf2d&                      trans,
@@ -110,26 +97,18 @@ public:
 
   Standard_EXPORT void ApproxBSplineCurve(const occ::handle<Geom_BSplineCurve>& start);
 
-  //! Returns the count of Curves in "TheCurves"
   Standard_EXPORT int NbCurves() const;
 
-  //! Returns a Curve given its rank, by default the first one
-  //! (null Curvee if out of range) in "TheCurves"
   Standard_EXPORT occ::handle<Geom_Curve> Curve(const int num = 1) const;
 
   Standard_EXPORT void Approx2dBSplineCurve(const occ::handle<Geom2d_BSplineCurve>& start);
 
-  //! Returns the count of Curves in "TheCurves2d"
   Standard_EXPORT int NbCurves2d() const;
 
-  //! Returns a Curve given its rank, by default the first one
-  //! (null Curvee if out of range) in "TheCurves2d"
   Standard_EXPORT occ::handle<Geom2d_Curve> Curve2d(const int num = 1) const;
 
-  //! Sets TheBadCase flag
   Standard_EXPORT void SetBadCase(const bool value);
 
-  //! Returns TheBadCase flag
   Standard_EXPORT bool BadCase() const;
 
 private:

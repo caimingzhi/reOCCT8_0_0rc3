@@ -17,8 +17,6 @@
 
 #include <cstdio>
 
-//=================================================================================================
-
 void QADNaming::GetShape(const char*                     LabelName,
                          const occ::handle<TDF_Data>&    DF,
                          NCollection_List<TopoDS_Shape>& L)
@@ -36,8 +34,6 @@ void QADNaming::GetShape(const char*                     LabelName,
   }
 }
 
-//=================================================================================================
-
 void QADNaming_BuildMap(NCollection_Map<TDF_Label>& Updated, const TDF_Label& Lab)
 {
   TDF_ChildIterator it(Lab);
@@ -47,8 +43,6 @@ void QADNaming_BuildMap(NCollection_Map<TDF_Label>& Updated, const TDF_Label& La
     QADNaming_BuildMap(Updated, it.Value());
   }
 }
-
-//=================================================================================================
 
 TopoDS_Shape QADNaming::CurrentShape(const char* LabelName, const occ::handle<TDF_Data>& DF)
 {
@@ -72,15 +66,11 @@ TopoDS_Shape QADNaming::CurrentShape(const char* LabelName, const occ::handle<TD
   return S;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString QADNaming::GetEntry(const TopoDS_Shape&          Shape,
                                             const occ::handle<TDF_Data>& DF,
                                             int&                         theStatus)
 {
   theStatus = 0;
-  // occ::handle<TNaming_UsedShapes> US;
-  // DF->Root().FindAttribute(TNaming_UsedShapes::GetID(),US);
 
   if (!TNaming_Tool::HasLabel(DF->Root(), Shape))
   {
@@ -90,7 +80,7 @@ TCollection_AsciiString QADNaming::GetEntry(const TopoDS_Shape&          Shape,
   TDF_Label               Lab = TNaming_Tool::Label(DF->Root(), Shape, Transdef);
   TCollection_AsciiString entry;
   TDF_Tool::Entry(Lab, entry);
-  // Update theStatus;
+
   TNaming_Iterator it(Lab, DF->Transaction());
   for (; it.More(); it.Next())
   {
@@ -100,8 +90,6 @@ TCollection_AsciiString QADNaming::GetEntry(const TopoDS_Shape&          Shape,
   }
   return entry;
 }
-
-//=================================================================================================
 
 bool QADNaming::Entry(void* const theArguments, TDF_Label& theLabel)
 {
@@ -119,10 +107,6 @@ bool QADNaming::Entry(void* const theArguments, TDF_Label& theLabel)
   return false;
 }
 
-//=======================================================================
-// function : IsSameShapes
-// purpose  : IsSameShapes DrawShape1 DrawShape2
-//=======================================================================
 static int QADNaming_IsSameShapes(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 3)
@@ -138,10 +122,6 @@ static int QADNaming_IsSameShapes(Draw_Interpretor& di, int nb, const char** arg
   return 1;
 }
 
-//=======================================================================
-// function : CenterOfShape
-// purpose  : CenterOfShape DrawShape
-//=======================================================================
 static int QADNaming_CenterOfShape(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 2)
@@ -171,8 +151,6 @@ static int QADNaming_CenterOfShape(Draw_Interpretor& di, int nb, const char** ar
   return 1;
 }
 
-//=================================================================================================
-
 void QADNaming::AllCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
@@ -186,7 +164,6 @@ void QADNaming::AllCommands(Draw_Interpretor& theCommands)
   QADNaming::ToolsCommands(theCommands);
   QADNaming::SelectionCommands(theCommands);
 
-  // auxiliary command IsSameShapes
   theCommands.Add("IsSameShapes",
                   "IsSameShapes DrawShape1 DrawShape2",
                   __FILE__,
@@ -197,7 +174,7 @@ void QADNaming::AllCommands(Draw_Interpretor& theCommands)
                   __FILE__,
                   QADNaming_CenterOfShape,
                   "Auxiliary methods");
-  // define the TCL variable Draw_NamingData
+
   const char* com = "set Draw_NamingData 1";
   theCommands.Eval(com);
 }

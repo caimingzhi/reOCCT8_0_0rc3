@@ -3,6 +3,4 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_NodeDefinition, StepRepr_ShapeAspect)
 
-//=================================================================================================
-
 StepFEA_NodeDefinition::StepFEA_NodeDefinition() = default;

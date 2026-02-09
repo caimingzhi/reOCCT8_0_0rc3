@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_SelectPointed.hpp>
 #include <IFSelect_SelectSuite.hpp>
@@ -72,8 +61,6 @@ Interface_EntityIterator IFSelect_SelectSuite::RootResult(const Interface_Graph&
   bool                     firstin = (HasInput() || HasAlternate());
   if (firstin)
     iter = InputResult(G);
-  //   Starting : we take the Input/Alternate IF one of the 2 is set
-  //   Otherwise, we start on the basic definition of the first selection
 
   int i, nb = NbItems();
   for (i = 1; i <= nb; i++)
@@ -81,7 +68,7 @@ Interface_EntityIterator IFSelect_SelectSuite::RootResult(const Interface_Graph&
     occ::handle<IFSelect_SelectDeduct> anitem = Item(i);
     if (firstin)
       anitem->Alternate()->SetList(iter.Content());
-    firstin = true; // then it's systematic
+    firstin = true;
     iter    = anitem->UniqueResult(G);
   }
   return iter;

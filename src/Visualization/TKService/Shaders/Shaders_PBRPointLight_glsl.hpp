@@ -26,5 +26,3 @@ static const char Shaders_PBRPointLight_glsl[] =
   "                                        occLight_Specular (theId),\n"
   "                                        occLight_Intensity(theId) * anAtten);\n"
   "}\n";
-
-// clang-format on

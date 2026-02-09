@@ -9,9 +9,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=============================================================================
-// Creation d' une direction de prostep a partir d' une Dir de gp
-//=============================================================================
 GeomToStep_MakeDirection::GeomToStep_MakeDirection(const gp_Dir& D)
 {
   occ::handle<StepGeom_Direction>          Dir        = new StepGeom_Direction;
@@ -28,10 +25,6 @@ GeomToStep_MakeDirection::GeomToStep_MakeDirection(const gp_Dir& D)
   done         = true;
 }
 
-//=============================================================================
-// Creation d' une direction de prostep a partir d' une Dir2d de gp
-//=============================================================================
-
 GeomToStep_MakeDirection::GeomToStep_MakeDirection(const gp_Dir2d& D)
 {
   occ::handle<StepGeom_Direction>          Dir        = new StepGeom_Direction;
@@ -46,10 +39,6 @@ GeomToStep_MakeDirection::GeomToStep_MakeDirection(const gp_Dir2d& D)
   theDirection = Dir;
   done         = true;
 }
-
-//=============================================================================
-// Creation d' une direction de prostep a partir d' une Direction de Geom
-//=============================================================================
 
 GeomToStep_MakeDirection::GeomToStep_MakeDirection(const occ::handle<Geom_Direction>& Direc)
 {
@@ -69,10 +58,6 @@ GeomToStep_MakeDirection::GeomToStep_MakeDirection(const occ::handle<Geom_Direct
   done         = true;
 }
 
-//=============================================================================
-// Creation d' une direction de prostep a partir d' une Direction de Geom2d
-//=============================================================================
-
 GeomToStep_MakeDirection::GeomToStep_MakeDirection(const occ::handle<Geom2d_Direction>& Direc)
 {
   gp_Dir2d                                 D;
@@ -89,10 +74,6 @@ GeomToStep_MakeDirection::GeomToStep_MakeDirection(const occ::handle<Geom2d_Dire
   theDirection = Dir;
   done         = true;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_Direction>& GeomToStep_MakeDirection::Value() const
 {

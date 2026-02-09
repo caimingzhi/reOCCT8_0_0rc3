@@ -5,7 +5,6 @@
 
 #include <Standard_Integer.hpp>
 
-//! to Update OutLines.
 struct HLRAlgo_PolyInternalSegment
 {
   DEFINE_STANDARD_ALLOC

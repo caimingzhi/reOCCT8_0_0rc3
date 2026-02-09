@@ -12,7 +12,6 @@ class StepShape_RevolvedFaceSolid : public StepShape_SweptFaceSolid
 {
 
 public:
-  //! Returns a RevolvedFaceSolid
   Standard_EXPORT StepShape_RevolvedFaceSolid();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

@@ -7,34 +7,20 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StdSelect_EdgeFilter, SelectMgr_Filter)
 
-/*#include <.hxx>
-#include <.hxx>
-#include <.hxx>
-#include <.hxx>
-#include <.hxx>
-*/
-//=================================================================================================
-
 StdSelect_EdgeFilter ::StdSelect_EdgeFilter(const StdSelect_TypeOfEdge Edge)
     : mytype(Edge)
 {
 }
-
-//=================================================================================================
 
 void StdSelect_EdgeFilter ::SetType(const StdSelect_TypeOfEdge aNewType)
 {
   mytype = aNewType;
 }
 
-//=================================================================================================
-
 StdSelect_TypeOfEdge StdSelect_EdgeFilter::Type() const
 {
   return mytype;
 }
-
-//=================================================================================================
 
 bool StdSelect_EdgeFilter::IsOk(const occ::handle<SelectMgr_EntityOwner>& EO) const
 {

@@ -5,39 +5,17 @@
 
 #include <cmath>
 
-//! Core utilities for modern math solvers.
 namespace MathUtils
 {
 
-  //! Result of line search operation.
   struct LineSearchResult
   {
-    bool   IsValid = false; //!< True if line search succeeded
-    double Alpha   = 0.0;   //!< Step size found
-    double FNew    = 0.0;   //!< Function value at new point
-    int    NbEvals = 0;     //!< Number of function evaluations
+    bool   IsValid = false;
+    double Alpha   = 0.0;
+    double FNew    = 0.0;
+    int    NbEvals = 0;
   };
 
-  //! Backtracking line search with Armijo condition.
-  //! Finds alpha such that f(x + alpha*d) <= f(x) + c1*alpha*grad(f).d
-  //! (sufficient decrease condition)
-  //!
-  //! Algorithm:
-  //! 1. Start with alpha = alpha_init
-  //! 2. If Armijo condition satisfied, return alpha
-  //! 3. Otherwise alpha = rho * alpha and repeat
-  //!
-  //! @tparam Function type with Value(const math_Vector&, double&) method
-  //! @param theFunc objective function
-  //! @param theX current point
-  //! @param theDir search direction (should be descent direction)
-  //! @param theGrad gradient at current point
-  //! @param theFx function value at current point
-  //! @param theAlphaInit initial step size (default 1.0)
-  //! @param theC1 Armijo parameter (default 1e-4)
-  //! @param theRho backtracking factor (default 0.5)
-  //! @param theMaxIter maximum iterations (default 50)
-  //! @return line search result with step size
   template <typename Function>
   LineSearchResult ArmijoBacktrack(Function&          theFunc,
                                    const math_Vector& theX,
@@ -56,44 +34,39 @@ namespace MathUtils
     const int aLower = theX.Lower();
     const int aUpper = theX.Upper();
 
-    // Compute directional derivative: grad(f) . d
     double aDirDeriv = 0.0;
     for (int i = aLower; i <= aUpper; ++i)
     {
       aDirDeriv += theGrad(i) * theDir(i);
     }
 
-    // Ensure descent direction
     if (aDirDeriv >= 0.0)
     {
-      // Not a descent direction, return failure
+
       aResult.IsValid = false;
       return aResult;
     }
 
-    // Temporary vector for new point
     math_Vector aXNew(aLower, aUpper);
 
     for (int k = 0; k < theMaxIter; ++k)
     {
-      // Compute new point: x + alpha*d
+
       for (int i = aLower; i <= aUpper; ++i)
       {
         aXNew(i) = theX(i) + aResult.Alpha * theDir(i);
       }
 
-      // Evaluate function at new point
       double aFNew = 0.0;
       if (!theFunc.Value(aXNew, aFNew))
       {
-        // Function evaluation failed, reduce step
+
         aResult.Alpha *= theRho;
         ++aResult.NbEvals;
         continue;
       }
       ++aResult.NbEvals;
 
-      // Check Armijo condition: f(x + alpha*d) <= f(x) + c1*alpha*phi'(0)
       if (aFNew <= theFx + theC1 * aResult.Alpha * aDirDeriv)
       {
         aResult.IsValid = true;
@@ -101,41 +74,18 @@ namespace MathUtils
         return aResult;
       }
 
-      // Reduce step size
       aResult.Alpha *= theRho;
 
-      // Check for too small step
       if (aResult.Alpha < THE_EPSILON)
       {
         break;
       }
     }
 
-    // Failed to satisfy Armijo condition
     aResult.IsValid = false;
     return aResult;
   }
 
-  //! Strong Wolfe line search.
-  //! Finds alpha satisfying both:
-  //! 1. Armijo: f(x + alpha*d) <= f(x) + c1*alpha*grad(f).d
-  //! 2. Curvature: |grad(f)(x + alpha*d).d| <= c2*|grad(f).d|
-  //!
-  //! Uses bracketing and zoom procedure for guaranteed convergence.
-  //!
-  //! @tparam Function type with:
-  //!   - Value(const math_Vector&, double&) for function value
-  //!   - Gradient(const math_Vector&, math_Vector&) for gradient
-  //! @param theFunc objective function with gradient
-  //! @param theX current point
-  //! @param theDir search direction
-  //! @param theGrad gradient at current point
-  //! @param theFx function value at current point
-  //! @param theAlphaInit initial step size
-  //! @param theC1 Armijo parameter (default 1e-4)
-  //! @param theC2 curvature parameter (default 0.9)
-  //! @param theMaxIter maximum iterations
-  //! @return line search result
   template <typename Function>
   LineSearchResult WolfeSearch(Function&          theFunc,
                                const math_Vector& theX,
@@ -153,7 +103,6 @@ namespace MathUtils
     const int aLower = theX.Lower();
     const int aUpper = theX.Upper();
 
-    // Compute initial directional derivative
     double aPhi0Prime = 0.0;
     for (int i = aLower; i <= aUpper; ++i)
     {
@@ -175,10 +124,9 @@ namespace MathUtils
 
     double aPhiLo = theFx;
 
-    // Phase 1: Bracket finding
     for (int k = 0; k < theMaxIter; ++k)
     {
-      // Evaluate at current alpha
+
       for (int i = aLower; i <= aUpper; ++i)
       {
         aXNew(i) = theX(i) + aAlpha * theDir(i);
@@ -187,7 +135,7 @@ namespace MathUtils
       double aPhi = 0.0;
       if (!theFunc.Value(aXNew, aPhi))
       {
-        // Shrink interval
+
         aAlphaHi = aAlpha;
         aAlpha   = 0.5 * (aAlphaLo + aAlphaHi);
         ++aResult.NbEvals;
@@ -195,15 +143,13 @@ namespace MathUtils
       }
       ++aResult.NbEvals;
 
-      // Check Armijo
       if (aPhi > theFx + theC1 * aAlpha * aPhi0Prime || (k > 0 && aPhi >= aPhiLo))
       {
-        // Found bracket [alpha_lo, alpha]
+
         aAlphaHi = aAlpha;
         break;
       }
 
-      // Evaluate gradient at new point
       if (!theFunc.Gradient(aXNew, aGradNew))
       {
         aResult.IsValid = false;
@@ -216,7 +162,6 @@ namespace MathUtils
         aPhiPrime += aGradNew(i) * theDir(i);
       }
 
-      // Check curvature condition
       if (std::abs(aPhiPrime) <= -theC2 * aPhi0Prime)
       {
         aResult.IsValid = true;
@@ -227,23 +172,21 @@ namespace MathUtils
 
       if (aPhiPrime >= 0.0)
       {
-        // Found bracket [alpha, alpha_lo]
+
         aAlphaHi = aAlphaLo;
         aAlphaLo = aAlpha;
         aPhiLo   = aPhi;
         break;
       }
 
-      // Increase alpha
       aAlphaLo = aAlpha;
       aPhiLo   = aPhi;
       aAlpha   = 0.5 * (aAlpha + aAlphaHi);
     }
 
-    // Phase 2: Zoom
     for (int k = 0; k < theMaxIter; ++k)
     {
-      // Bisection
+
       aAlpha = 0.5 * (aAlphaLo + aAlphaHi);
 
       for (int i = aLower; i <= aUpper; ++i)
@@ -294,33 +237,18 @@ namespace MathUtils
         aPhiLo   = aPhi;
       }
 
-      // Check for convergence
       if (std::abs(aAlphaHi - aAlphaLo) < THE_EPSILON)
       {
         break;
       }
     }
 
-    // Return best found
     aResult.IsValid = true;
     aResult.Alpha   = aAlpha;
     aResult.FNew    = aPhiLo;
     return aResult;
   }
 
-  //! Exact line search using Brent's method.
-  //! Minimizes f(x + alpha*d) over alpha in [-alpha_max, alpha_max].
-  //! First brackets the minimum by exploring both directions.
-  //! More expensive than inexact line search but can be more robust.
-  //!
-  //! @tparam Function type with Value(const math_Vector&, double&) method
-  //! @param theFunc objective function
-  //! @param theX current point
-  //! @param theDir search direction
-  //! @param theAlphaMax maximum step size (searches in both directions)
-  //! @param theTolerance convergence tolerance
-  //! @param theMaxIter maximum iterations
-  //! @return line search result
   template <typename Function>
   LineSearchResult ExactLineSearch(Function&          theFunc,
                                    const math_Vector& theX,
@@ -337,7 +265,6 @@ namespace MathUtils
 
     math_Vector aXNew(aLower, aUpper);
 
-    // Lambda to evaluate phi(alpha) = f(x + alpha*d)
     auto aEvalPhi = [&](double theAlpha, double& thePhi) -> bool
     {
       for (int i = aLower; i <= aUpper; ++i)
@@ -348,11 +275,9 @@ namespace MathUtils
       return theFunc.Value(aXNew, thePhi);
     };
 
-    // Brent's method for 1D minimization
-    // Search in [-theAlphaMax, theAlphaMax] to handle both directions
     double aA = -theAlphaMax;
     double aB = theAlphaMax;
-    double aX = 0.0; // Start at the current point
+    double aX = 0.0;
     double aW = aX;
     double aV = aX;
 
@@ -374,7 +299,6 @@ namespace MathUtils
       const double aTol1 = theTolerance * std::abs(aX) + THE_ZERO_TOL / 10.0;
       const double aTol2 = 2.0 * aTol1;
 
-      // Check convergence
       if (std::abs(aX - aXm) <= (aTol2 - 0.5 * (aB - aA)))
       {
         aResult.IsValid = true;
@@ -386,7 +310,6 @@ namespace MathUtils
       double aU            = 0.0;
       bool   aUseParabolic = false;
 
-      // Try parabolic interpolation
       if (std::abs(aE) > aTol1)
       {
         const double aR = (aX - aW) * (aFx - aFv);
@@ -442,7 +365,6 @@ namespace MathUtils
         return aResult;
       }
 
-      // Update bracket
       if (aFu <= aFx)
       {
         if (aU < aX)
@@ -493,22 +415,12 @@ namespace MathUtils
     return aResult;
   }
 
-  //! Quadratic interpolation step for line search.
-  //! Given phi(0), phi'(0), and phi(alpha1), finds minimum of quadratic fit.
-  //!
-  //! @param thePhi0 function value at 0
-  //! @param thePhi0Prime directional derivative at 0
-  //! @param theAlpha1 current step size
-  //! @param thePhi1 function value at alpha1
-  //! @return interpolated step size
   inline double QuadraticInterpolation(double thePhi0,
                                        double thePhi0Prime,
                                        double theAlpha1,
                                        double thePhi1)
   {
-    // Quadratic: phi(alpha) = phi(0) + phi'(0)*alpha + c*alpha^2
-    // where c = (phi(alpha1) - phi(0) - phi'(0)*alpha1) / alpha1^2
-    // Minimum at alpha* = -phi'(0) / (2c)
+
     const double aNum   = thePhi0Prime * theAlpha1 * theAlpha1;
     const double aDenom = 2.0 * (thePhi1 - thePhi0 - thePhi0Prime * theAlpha1);
 
@@ -519,7 +431,6 @@ namespace MathUtils
 
     double aAlphaNew = -aNum / aDenom;
 
-    // Safeguard: ensure we stay within reasonable bounds
     if (aAlphaNew < 0.1 * theAlpha1)
     {
       aAlphaNew = 0.1 * theAlpha1;

@@ -3,18 +3,10 @@
 #include <gp_Trsf2d.hpp>
 #include <gp_Vec2d.hpp>
 
-//=========================================================================
-//   Creation d une translation 2d de gp de vecteur de translation Vec.   +
-//=========================================================================
 gce_MakeTranslation2d::gce_MakeTranslation2d(const gp_Vec2d& Vec)
 {
   TheTranslation2d.SetTranslation(Vec);
 }
-
-//=========================================================================
-//   Creation d une translation 2d de gp de vecteur de translation le     +
-//   vecteur reliant Point1 a Point2.                                     +
-//=========================================================================
 
 gce_MakeTranslation2d::gce_MakeTranslation2d(const gp_Pnt2d& Point1, const gp_Pnt2d& Point2)
 {

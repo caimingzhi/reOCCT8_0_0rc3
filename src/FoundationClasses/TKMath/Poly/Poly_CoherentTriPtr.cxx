@@ -1,7 +1,5 @@
 #include <Poly_CoherentTriPtr.hpp>
 
-//=================================================================================================
-
 void Poly_CoherentTriPtr::Iterator::Next()
 {
   if (myCurrent)
@@ -11,8 +9,6 @@ void Poly_CoherentTriPtr::Iterator::Next()
       myCurrent = nullptr;
   }
 }
-
-//=================================================================================================
 
 void Poly_CoherentTriPtr::Append(const Poly_CoherentTriangle*                  pTri,
                                  const occ::handle<NCollection_BaseAllocator>& theAlloc)
@@ -27,8 +23,6 @@ void Poly_CoherentTriPtr::Append(const Poly_CoherentTriangle*                  p
   myNext                       = aNewPtr;
 }
 
-//=================================================================================================
-
 void Poly_CoherentTriPtr::Prepend(const Poly_CoherentTriangle*                  pTri,
                                   const occ::handle<NCollection_BaseAllocator>& theAlloc)
 {
@@ -41,8 +35,6 @@ void Poly_CoherentTriPtr::Prepend(const Poly_CoherentTriangle*                  
   aNewPtr->myNext              = this;
   myPrevious                   = aNewPtr;
 }
-
-//=================================================================================================
 
 void Poly_CoherentTriPtr::Remove(Poly_CoherentTriPtr*                          thePtr,
                                  const occ::handle<NCollection_BaseAllocator>& theAlloc)
@@ -59,8 +51,6 @@ void Poly_CoherentTriPtr::Remove(Poly_CoherentTriPtr*                          t
   }
   anAlloc->Free(thePtr);
 }
-
-//=================================================================================================
 
 void Poly_CoherentTriPtr::RemoveList(Poly_CoherentTriPtr*                          thePtr,
                                      const occ::handle<NCollection_BaseAllocator>& theAlloc)

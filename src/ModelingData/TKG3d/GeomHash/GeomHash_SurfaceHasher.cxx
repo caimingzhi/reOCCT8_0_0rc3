@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GeomHash_SurfaceHasher.hpp>
 
@@ -39,8 +28,6 @@
 #include <GeomHash_RectangularTrimmedSurfaceHasher.hpp>
 #include <GeomHash_OffsetSurfaceHasher.hpp>
 
-//=================================================================================================
-
 std::size_t GeomHash_SurfaceHasher::operator()(
   const occ::handle<Geom_Surface>& theSurface) const noexcept
 {
@@ -49,7 +36,6 @@ std::size_t GeomHash_SurfaceHasher::operator()(
     return 0;
   }
 
-  // Dispatch based on actual surface type
   if (occ::handle<Geom_Plane> aPlane = occ::down_cast<Geom_Plane>(theSurface))
   {
     return GeomHash_PlaneHasher{}(aPlane);
@@ -100,11 +86,8 @@ std::size_t GeomHash_SurfaceHasher::operator()(
     return GeomHash_OffsetSurfaceHasher{}(aOffset);
   }
 
-  // Unknown surface type - hash the type name
   return Standard_CStringHasher{}(theSurface->DynamicType()->Name());
 }
-
-//=================================================================================================
 
 bool GeomHash_SurfaceHasher::operator()(const occ::handle<Geom_Surface>& theSurface1,
                                         const occ::handle<Geom_Surface>& theSurface2) const noexcept
@@ -119,13 +102,11 @@ bool GeomHash_SurfaceHasher::operator()(const occ::handle<Geom_Surface>& theSurf
     return true;
   }
 
-  // Must be same type
   if (theSurface1->DynamicType() != theSurface2->DynamicType())
   {
     return false;
   }
 
-  // Dispatch based on actual surface type
   if (occ::handle<Geom_Plane> aPlane1 = occ::down_cast<Geom_Plane>(theSurface1))
   {
     return GeomHash_PlaneHasher{}(aPlane1, occ::down_cast<Geom_Plane>(theSurface2));
@@ -187,6 +168,5 @@ bool GeomHash_SurfaceHasher::operator()(const occ::handle<Geom_Surface>& theSurf
     return GeomHash_OffsetSurfaceHasher{}(aOff1, occ::down_cast<Geom_OffsetSurface>(theSurface2));
   }
 
-  // Unknown surface type - compare by pointer
   return theSurface1.get() == theSurface2.get();
 }

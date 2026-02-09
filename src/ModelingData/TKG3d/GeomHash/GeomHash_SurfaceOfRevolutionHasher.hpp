@@ -6,11 +6,9 @@
 #include <GeomHash_DirectionHasher.hpp>
 #include <GeomHash_CurveHasher.hpp>
 
-//! OCCT-style hasher for Geom_SurfaceOfRevolution.
-//! Used for geometry deduplication.
 struct GeomHash_SurfaceOfRevolutionHasher
 {
-  // Hashes the revolution surface by its axis and basis curve.
+
   std::size_t operator()(const occ::handle<Geom_SurfaceOfRevolution>& theSurface) const noexcept
   {
     const GeomHash_PointHasher     aPointHasher;
@@ -24,7 +22,6 @@ struct GeomHash_SurfaceOfRevolutionHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two revolution surfaces.
   bool operator()(const occ::handle<Geom_SurfaceOfRevolution>& theSurface1,
                   const occ::handle<Geom_SurfaceOfRevolution>& theSurface2) const noexcept
   {

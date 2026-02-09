@@ -10,7 +10,6 @@ class Interface_Check;
 class StepRepr_IntegerRepresentationItem;
 class StepData_StepWriter;
 
-//! Read & Write Module for IntegerRepresentationItem
 class RWStepRepr_RWIntegerRepresentationItem
 {
 public:

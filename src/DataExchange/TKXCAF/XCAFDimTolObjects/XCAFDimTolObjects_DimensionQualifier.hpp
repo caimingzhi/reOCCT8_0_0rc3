@@ -1,6 +1,5 @@
 #pragma once
 
-//! Defines types of qualifier
 enum XCAFDimTolObjects_DimensionQualifier
 {
   XCAFDimTolObjects_DimensionQualifier_None,

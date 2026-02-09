@@ -24,7 +24,6 @@ void IGESGeom_Plane::Init(const double                            A,
   theAttach = attach;
   theSize   = aSize;
   InitTypeAndForm(108, FormNumber());
-  // FormNumber : 0 No Curve. +1 Bound. -1 Hole
 }
 
 void IGESGeom_Plane::SetFormNumber(const int form)
@@ -90,21 +89,17 @@ double IGESGeom_Plane::SymbolSize() const
 
 void IGESGeom_Plane::TransformedEquation(double& A, double& B, double& C, double& D) const
 {
-  // eqn of plane AX + BY + CZ = D
 
   double x1, y1, z1, x2, y2, z2, x3, y3, z3;
 
-  // case 1 intersection of the plane with the XY plane.
   x1 = 0.0;
   y1 = 0.0;
   z1 = theD / theC;
 
-  // case 2 intersection of the plane with the XZ plane.
   x2 = 0.0;
   y2 = theD / theB;
   z2 = 0.0;
 
-  // case 3 intersection of the plane with the YZ plane.
   x3 = theD / theA;
   y3 = 0.0;
   z3 = 0.0;
@@ -124,21 +119,6 @@ void IGESGeom_Plane::TransformedEquation(double& A, double& B, double& C, double
   y3 = P3.Y();
   z3 = P3.Z();
 
-  /*
-    General eqn of plane can also be written as
-    a(x1 -x2) + b(y1 - y2) + c(z1 - z2) = 0
-    a(x3 - x2) + b(y3 - y2) + c(z3 -z2) = 0
-    Applying Cramer's Rule :
-    a                       b                       c
-    -------------   =   ---------------     =    ---------------   =   k
-    |y3-y2  z3-z2|      |z3-z2   x3-x2|          |x3-x2   y3-y2|
-    |y1-y2  z1-z2|      |z1-z2   x1-x2|          |x1-x2   y1-y2|
-
-    .
-    . .  a = c1*k , b = c2*k , c = c3*k
-    hence c1(x - x2) + c2(y - y2) + c3(z - z2) = 0
-
-  */
   double c1, c2, c3;
 
   c1 = (y1 * (-z3 + z2) + y2 * (-z1 + z3) + y3 * (z1 - z2));

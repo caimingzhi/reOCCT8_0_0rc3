@@ -11,7 +11,6 @@ class StepShape_Block : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a Block
   Standard_EXPORT StepShape_Block();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&  aName,

@@ -10,16 +10,13 @@
 #include <gp_Pnt2d.hpp>
 #include <math_FunctionSet.hpp>
 
-//! Abstract class to use the Energy of an FairCurve
 class FairCurve_DistributionOfEnergy : public math_FunctionSet
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! returns the number of variables of the function.
   Standard_EXPORT int NbVariables() const override;
 
-  //! returns the number of equations of the function.
   Standard_EXPORT int NbEquations() const override;
 
   Standard_EXPORT void SetDerivativeOrder(const int DerivativeOrder);

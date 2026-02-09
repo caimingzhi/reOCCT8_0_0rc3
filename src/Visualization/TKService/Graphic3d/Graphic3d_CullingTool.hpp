@@ -5,19 +5,14 @@
 #include <Standard_TypeDef.hpp>
 #include <Graphic3d_WorldViewProjState.hpp>
 
-//! Graphic3d_CullingTool class provides a possibility to store parameters of view volume,
-//! such as its vertices and equations, and contains methods detecting if given AABB overlaps view
-//! volume.
 class Graphic3d_CullingTool
 {
 public:
-  //! Auxiliary structure holding non-persistent culling options.
   struct CullingContext
   {
-    double DistCull;  //!< culling distance
-    double SizeCull2; //!< squared culling size
+    double DistCull;
+    double SizeCull2;
 
-    //! Empty constructor.
     CullingContext()
         : DistCull(-1.0),
           SizeCull2(-1.0)
@@ -25,17 +20,15 @@ public:
     }
   };
 
-  //! Auxiliary structure representing 3D plane.
   struct Plane
   {
-    //! Creates default plane.
+
     Plane()
         : Origin(0.0, 0.0, 0.0),
           Normal(0.0, 0.0, 1.0)
     {
     }
 
-    //! Creates plane with specific parameters.
     Plane(const NCollection_Vec3<double>& theOrigin, const NCollection_Vec3<double>& theNormal)
         : Origin(theOrigin),
           Normal(theNormal)
@@ -47,14 +40,8 @@ public:
   };
 
 public:
-  //! Creates an empty selector object with parallel projection type by default.
   Standard_EXPORT Graphic3d_CullingTool();
 
-  //! Retrieves view volume's planes equations and its vertices from projection and world-view
-  //! matrices.
-  //! @param[in] theCamera  camera definition
-  //! @param[in] theModelWorld  optional object transformation for computing frustum in object local
-  //! coordinate system
   Standard_EXPORT void SetViewVolume(
     const occ::handle<Graphic3d_Camera>& theCamera,
     const NCollection_Mat4<double>&      theModelWorld = NCollection_Mat4<double>());
@@ -63,24 +50,12 @@ public:
                                        int    theViewportHeight,
                                        double theResolutionRatio);
 
-  //! Setup distance culling.
   Standard_EXPORT void SetCullingDistance(CullingContext& theCtx, double theDistance) const;
 
-  //! Setup size culling.
   Standard_EXPORT void SetCullingSize(CullingContext& theCtx, double theSize) const;
 
-  //! Caches view volume's vertices projections along its normals and AABBs dimensions.
-  //! Must be called at the beginning of each BVH tree traverse loop.
   Standard_EXPORT void CacheClipPtsProjections();
 
-  //! Checks whether given AABB should be entirely culled or not.
-  //! @param[in] theCtx     culling properties
-  //! @param[in] theMinPnt  maximum point of AABB
-  //! @param[in] theMaxPnt  minimum point of AABB
-  //! @param[out] theIsInside  flag indicating if AABB is fully inside; initial value should be set
-  //! to TRUE
-  //! @return TRUE if AABB is completely outside of view frustum or culled by size/distance;
-  //!         FALSE in case of partial or complete overlap (use theIsInside to distinguish)
   bool IsCulled(const CullingContext&           theCtx,
                 const NCollection_Vec3<double>& theMinPnt,
                 const NCollection_Vec3<double>& theMaxPnt,
@@ -91,74 +66,49 @@ public:
            || IsTooSmall(theCtx, theMinPnt, theMaxPnt);
   }
 
-  //! Return the camera definition.
   const occ::handle<Graphic3d_Camera>& Camera() const { return myCamera; }
 
-  //! Returns current projection matrix.
   const NCollection_Mat4<double>& ProjectionMatrix() const { return myProjectionMat; }
 
-  //! Returns current world view transformation matrix.
   const NCollection_Mat4<double>& WorldViewMatrix() const { return myWorldViewMat; }
 
   int ViewportWidth() const { return myViewportWidth; }
 
   int ViewportHeight() const { return myViewportHeight; }
 
-  //! Returns state of current world view projection transformation matrices.
   const Graphic3d_WorldViewProjState& WorldViewProjState() const { return myWorldViewProjState; }
 
-  //! Returns camera eye position.
   const NCollection_Vec3<double>& CameraEye() const { return myCamEye; }
 
-  //! Returns camera direction.
   const NCollection_Vec3<double>& CameraDirection() const { return myCamDir; }
 
 public:
-  //! Calculates signed distance from plane to point.
-  //! @param[in] theNormal  the plane's normal.
-  //! @param[in] thePnt
   Standard_EXPORT double SignedPlanePointDistance(const NCollection_Vec4<double>& theNormal,
                                                   const NCollection_Vec4<double>& thePnt);
 
-  //! Detects if AABB overlaps view volume using separating axis theorem (SAT).
-  //! @param[in] theMinPnt    maximum point of AABB
-  //! @param[in] theMaxPnt    minimum point of AABB
-  //! @param[out] theIsInside  flag indicating if AABB is fully inside; initial value should be set
-  //! to TRUE
-  //! @return TRUE if AABB is completely outside of view frustum;
-  //!         FALSE in case of partial or complete overlap (use theIsInside to distinguish)
-  //! @sa SelectMgr_Frustum::hasOverlap()
   bool IsOutFrustum(const NCollection_Vec3<double>& theMinPnt,
                     const NCollection_Vec3<double>& theMaxPnt,
                     bool*                           theIsInside = nullptr) const
   {
-    //     E1
-    //    |_ E0
-    //   /
-    //    E2
-    if (theMinPnt[0] > myMaxOrthoProjectionPts[0] // E0 test (x axis)
-        || theMaxPnt[0] < myMinOrthoProjectionPts[0]
-        || theMinPnt[1] > myMaxOrthoProjectionPts[1] // E1 test (y axis)
-        || theMaxPnt[1] < myMinOrthoProjectionPts[1]
-        || theMinPnt[2] > myMaxOrthoProjectionPts[2] // E2 test (z axis)
-        || theMaxPnt[2] < myMinOrthoProjectionPts[2])
+
+    if (theMinPnt[0] > myMaxOrthoProjectionPts[0] || theMaxPnt[0] < myMinOrthoProjectionPts[0]
+        || theMinPnt[1] > myMaxOrthoProjectionPts[1] || theMaxPnt[1] < myMinOrthoProjectionPts[1]
+        || theMinPnt[2] > myMaxOrthoProjectionPts[2] || theMaxPnt[2] < myMinOrthoProjectionPts[2])
     {
       return true;
     }
     if (theIsInside != nullptr && *theIsInside)
     {
-      *theIsInside = theMinPnt[0] >= myMinOrthoProjectionPts[0] // E0 test (x axis)
-                     && theMaxPnt[0] <= myMaxOrthoProjectionPts[0]
-                     && theMinPnt[1] >= myMinOrthoProjectionPts[1] // E1 test (y axis)
-                     && theMaxPnt[1] <= myMaxOrthoProjectionPts[1]
-                     && theMinPnt[1] >= myMinOrthoProjectionPts[2] // E2 test (z axis)
-                     && theMaxPnt[1] <= myMaxOrthoProjectionPts[2];
+      *theIsInside =
+        theMinPnt[0] >= myMinOrthoProjectionPts[0] && theMaxPnt[0] <= myMaxOrthoProjectionPts[0]
+        && theMinPnt[1] >= myMinOrthoProjectionPts[1] && theMaxPnt[1] <= myMaxOrthoProjectionPts[1]
+        && theMinPnt[1] >= myMinOrthoProjectionPts[2] && theMaxPnt[1] <= myMaxOrthoProjectionPts[2];
     }
 
     const int anIncFactor = myIsProjectionParallel ? 2 : 1;
     for (int aPlaneIter = 0; aPlaneIter < PlanesNB - 1; aPlaneIter += anIncFactor)
     {
-      // frustum normals
+
       const NCollection_Vec3<double>& anAxis = myClipPlanes[aPlaneIter].Normal;
       const NCollection_Vec3<double>  aPVertex(anAxis.x() > 0.0 ? theMaxPnt.x() : theMinPnt.x(),
                                               anAxis.y() > 0.0 ? theMaxPnt.y() : theMinPnt.y(),
@@ -192,13 +142,6 @@ public:
     return false;
   }
 
-  //! Returns TRUE if given AABB should be discarded by distance culling criterion.
-  //! @param[in] theMinPnt    maximum point of AABB
-  //! @param[in] theMaxPnt    minimum point of AABB
-  //! @param[out] theIsInside  flag indicating if AABB is fully inside; initial value should be set
-  //! to TRUE
-  //! @return TRUE if AABB is completely behind culling distance;
-  //!         FALSE in case of partial or complete overlap (use theIsInside to distinguish)
   bool IsTooDistant(const CullingContext&           theCtx,
                     const NCollection_Vec3<double>& theMinPnt,
                     const NCollection_Vec3<double>& theMaxPnt,
@@ -209,24 +152,22 @@ public:
       return false;
     }
 
-    // check distance to the bounding sphere as fast approximation
     const NCollection_Vec3<double> aSphereCenter = (theMinPnt + theMaxPnt) * 0.5;
     const double                   aSphereRadius = (theMaxPnt - theMinPnt).maxComp() * 0.5;
     const double                   aDistToCenter = (aSphereCenter - myCamEye).Modulus();
     if ((aDistToCenter - aSphereRadius) > theCtx.DistCull)
     {
-      // clip if closest point is behind culling distance
+
       return true;
     }
     if (theIsInside != nullptr && *theIsInside)
     {
-      // check if farthest point is before culling distance
+
       *theIsInside = (aDistToCenter + aSphereRadius) <= theCtx.DistCull;
     }
     return false;
   }
 
-  //! Returns TRUE if given AABB should be discarded by size culling criterion.
   bool IsTooSmall(const CullingContext&           theCtx,
                   const NCollection_Vec3<double>& theMinPnt,
                   const NCollection_Vec3<double>& theMaxPnt) const
@@ -242,15 +183,12 @@ public:
       return aBoxDiag2 < theCtx.SizeCull2;
     }
 
-    // note that distances behind the Eye (aBndDist < 0) are not scaled correctly here,
-    // but majority of such objects should be culled by frustum
     const NCollection_Vec3<double> aBndCenter = (theMinPnt + theMaxPnt) * 0.5;
     const double                   aBndDist   = (aBndCenter - myCamEye).Dot(myCamDir);
     return aBoxDiag2 < theCtx.SizeCull2 * aBndDist * aBndDist;
   }
 
 protected:
-  //! Enumerates planes of view volume.
   enum
   {
     Plane_Left,
@@ -263,22 +201,16 @@ protected:
   };
 
 protected:
-  Plane                                        myClipPlanes[PlanesNB]; //!< Planes
-  NCollection_Array1<NCollection_Vec3<double>> myClipVerts;            //!< Vertices
+  Plane                                        myClipPlanes[PlanesNB];
+  NCollection_Array1<NCollection_Vec3<double>> myClipVerts;
 
-  occ::handle<Graphic3d_Camera> myCamera; //!< camera definition
+  occ::handle<Graphic3d_Camera> myCamera;
 
-  // for caching clip points projections onto viewing area normals once per traverse
-  // ORDER: LEFT, RIGHT, BOTTOM, TOP, NEAR, FAR
-  // clang-format off
-  double myMaxClipProjectionPts[PlanesNB]; //!< Max view volume's vertices projections onto its normals
-  double myMinClipProjectionPts[PlanesNB]; //!< Min view volume's vertices projections onto its normals
+  double myMaxClipProjectionPts[PlanesNB];
+  double myMinClipProjectionPts[PlanesNB];
 
-  // for caching clip points projections onto AABB normals once per traverse
-  // ORDER: E0, E1, E2
-  double myMaxOrthoProjectionPts[3]; //!< Max view volume's vertices projections onto normalized dimensions of AABB
-  double myMinOrthoProjectionPts[3]; //!< Min view volume's vertices projections onto normalized dimensions of AABB
-  // clang-format on
+  double myMaxOrthoProjectionPts[3];
+  double myMinOrthoProjectionPts[3];
 
   bool myIsProjectionParallel;
 
@@ -288,10 +220,10 @@ protected:
   int myViewportWidth;
   int myViewportHeight;
 
-  Graphic3d_WorldViewProjState myWorldViewProjState; //!< State of world view projection matrices.
+  Graphic3d_WorldViewProjState myWorldViewProjState;
 
-  NCollection_Vec3<double> myCamEye;    //!< camera eye position for distance culling
-  NCollection_Vec3<double> myCamDir;    //!< camera direction for size culling
-  double                   myCamScale;  //!< camera scale for size culling
-  double                   myPixelSize; //!< pixel size for size culling
+  NCollection_Vec3<double> myCamEye;
+  NCollection_Vec3<double> myCamDir;
+  double                   myCamScale;
+  double                   myPixelSize;
 };

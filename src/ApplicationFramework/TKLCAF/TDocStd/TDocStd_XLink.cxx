@@ -16,14 +16,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDocStd_XLink, TDF_Attribute)
 
-//=================================================================================================
-
 TDocStd_XLink::TDocStd_XLink()
     : myNext(nullptr)
 {
 }
-
-//=================================================================================================
 
 occ::handle<TDocStd_XLink> TDocStd_XLink::Set(const TDF_Label& atLabel)
 {
@@ -36,28 +32,22 @@ occ::handle<TDocStd_XLink> TDocStd_XLink::Set(const TDF_Label& atLabel)
   return xRef;
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Reference> TDocStd_XLink::Update()
 {
   TDF_Label                     reflabel;
   occ::handle<TDocStd_Document> refdoc;
   int                           IEntry = myDocEntry.IntegerValue();
-  occ::handle<TDocStd_Document> mydoc  = TDocStd_Document::Get(Label()); // mon document
+  occ::handle<TDocStd_Document> mydoc  = TDocStd_Document::Get(Label());
   refdoc                               = occ::down_cast<TDocStd_Document>(mydoc->Document(IEntry));
   TDF_Tool::Label(refdoc->GetData(), myLabelEntry, reflabel);
-  // return TXLink::Import(reflabel,Label());
+
   return TDF_Reference::Set(Label(), reflabel);
 }
-
-//=================================================================================================
 
 const Standard_GUID& TDocStd_XLink::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 const Standard_GUID& TDocStd_XLink::GetID()
 {
@@ -65,22 +55,16 @@ const Standard_GUID& TDocStd_XLink::GetID()
   return myID;
 }
 
-//=================================================================================================
-
 void TDocStd_XLink::DocumentEntry(const TCollection_AsciiString& aDocEntry)
 {
   Backup();
   myDocEntry = aDocEntry;
 }
 
-//=================================================================================================
-
 const TCollection_AsciiString& TDocStd_XLink::DocumentEntry() const
 {
   return myDocEntry;
 }
-
-//=================================================================================================
 
 void TDocStd_XLink::LabelEntry(const TDF_Label& aLabel)
 {
@@ -88,30 +72,22 @@ void TDocStd_XLink::LabelEntry(const TDF_Label& aLabel)
   TDF_Tool::Entry(aLabel, myLabelEntry);
 }
 
-//=================================================================================================
-
 void TDocStd_XLink::LabelEntry(const TCollection_AsciiString& aLabEntry)
 {
   Backup();
   myLabelEntry = aLabEntry;
 }
 
-//=================================================================================================
-
 const TCollection_AsciiString& TDocStd_XLink::LabelEntry() const
 {
   return myLabelEntry;
 }
-
-//=================================================================================================
 
 void TDocStd_XLink::AfterAddition()
 {
   TDocStd_XLinkRoot::Insert(this);
   Label().Imported(true);
 }
-
-//=================================================================================================
 
 void TDocStd_XLink::BeforeRemoval()
 {
@@ -122,13 +98,7 @@ void TDocStd_XLink::BeforeRemoval()
   }
 }
 
-//=======================================================================
-// function : BeforeUndo
-// purpose  : Before application of a TDF_Delta.
-//=======================================================================
-
-bool TDocStd_XLink::BeforeUndo(const occ::handle<TDF_AttributeDelta>& anAttDelta,
-                               const bool /*forceIt*/)
+bool TDocStd_XLink::BeforeUndo(const occ::handle<TDF_AttributeDelta>& anAttDelta, const bool)
 {
   if (anAttDelta->IsKind(STANDARD_TYPE(TDF_DeltaOnAddition)))
   {
@@ -137,13 +107,7 @@ bool TDocStd_XLink::BeforeUndo(const occ::handle<TDF_AttributeDelta>& anAttDelta
   return true;
 }
 
-//=======================================================================
-// function : AfterUndo
-// purpose  : After application of a TDF_Delta.
-//=======================================================================
-
-bool TDocStd_XLink::AfterUndo(const occ::handle<TDF_AttributeDelta>& anAttDelta,
-                              const bool /*forceIt*/)
+bool TDocStd_XLink::AfterUndo(const occ::handle<TDF_AttributeDelta>& anAttDelta, const bool)
 {
   if (anAttDelta->IsKind(STANDARD_TYPE(TDF_DeltaOnRemoval)))
   {
@@ -152,8 +116,6 @@ bool TDocStd_XLink::AfterUndo(const occ::handle<TDF_AttributeDelta>& anAttDelta,
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDocStd_XLink::BackupCopy() const
 {
   occ::handle<TDocStd_XLink> xRef = new TDocStd_XLink();
@@ -161,8 +123,6 @@ occ::handle<TDF_Attribute> TDocStd_XLink::BackupCopy() const
   xRef->LabelEntry(myLabelEntry);
   return xRef;
 }
-
-//=================================================================================================
 
 void TDocStd_XLink::Restore(const occ::handle<TDF_Attribute>& anAttribute)
 {
@@ -174,17 +134,13 @@ void TDocStd_XLink::Restore(const occ::handle<TDF_Attribute>& anAttribute)
   }
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDocStd_XLink::NewEmpty() const
 {
   return new TDocStd_XLink();
 }
 
-//=================================================================================================
-
 void TDocStd_XLink::Paste(const occ::handle<TDF_Attribute>& intoAttribute,
-                          const occ::handle<TDF_RelocationTable>& /*aRelocationTable*/) const
+                          const occ::handle<TDF_RelocationTable>&) const
 {
   occ::handle<TDocStd_XLink> xRef(occ::down_cast<TDocStd_XLink>(intoAttribute));
   if (!xRef.IsNull())
@@ -193,8 +149,6 @@ void TDocStd_XLink::Paste(const occ::handle<TDF_Attribute>& intoAttribute,
     xRef->LabelEntry(myLabelEntry);
   }
 }
-
-//=================================================================================================
 
 Standard_OStream& TDocStd_XLink::Dump(Standard_OStream& anOS) const
 {

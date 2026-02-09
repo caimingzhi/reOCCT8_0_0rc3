@@ -19,54 +19,40 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_Angle, DrawDim_Dimension)
 
-//=================================================================================================
-
 DrawDim_Angle::DrawDim_Angle(const TopoDS_Face& plane1, const TopoDS_Face& plane2)
 {
   myPlane1 = plane1;
   myPlane2 = plane2;
 }
 
-//=================================================================================================
-
 const TopoDS_Face& DrawDim_Angle::Plane1() const
 {
   return myPlane1;
 }
-
-//=================================================================================================
 
 void DrawDim_Angle::Plane1(const TopoDS_Face& plane)
 {
   myPlane1 = plane;
 }
 
-//=================================================================================================
-
 const TopoDS_Face& DrawDim_Angle::Plane2() const
 {
   return myPlane2;
 }
-
-//=================================================================================================
 
 void DrawDim_Angle::Plane2(const TopoDS_Face& plane)
 {
   myPlane2 = plane;
 }
 
-//=================================================================================================
-
 void DrawDim_Angle::DrawOn(Draw_Display&) const
 {
 
-  // input
   TopoDS_Shape myFShape = myPlane1;
   TopoDS_Shape mySShape = myPlane2;
   double       myVal    = GetValue();
   gp_Ax1       myAxis;
 
-  // output
   gp_Pnt myFAttach;
   gp_Pnt mySAttach;
   gp_Pnt myPosition(0., 0., 0.);
@@ -75,7 +61,6 @@ void DrawDim_Angle::DrawOn(Draw_Display&) const
   gp_Dir mySDir;
   bool   myAutomaticPosition = true;
 
-  // calculation of myAxis
   gp_Pln pln1, pln2;
   if (!DrawDim::Pln(myPlane1, pln1))
     return;
@@ -118,8 +103,7 @@ void DrawDim_Angle::DrawOn(Draw_Display&) const
   else
   {
     curpos = myPosition;
-    // myFAttach  = the point of myFShape closest to curpos (except for the case when this is a
-    // point on the axis)
+
     double          dist = RealLast();
     TopExp_Explorer explo1(myFShape, TopAbs_VERTEX);
     gp_Pnt          AxePosition = AxePos.Location();
@@ -155,13 +139,10 @@ void DrawDim_Angle::DrawOn(Draw_Display&) const
 
   if (!myAutomaticPosition)
   {
-    // Projection of the position on the plane defined by myFDir mySDir and normal theAxisDir
+
     gp_Pln aPln(myCenter, theAxisDir);
     double U, V;
     ElSLib::Parameters(aPln, curpos, U, V);
     curpos = ElSLib::Value(U, V, aPln);
   }
-
-  // DISPLAY
-  // Add (myVal, myText,myCenter,myFAttach,mySAttach,myFDir,mySDir,theAxisDir,curpos)
 }

@@ -11,7 +11,6 @@ class StepGeom_SurfaceOfRevolution;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SurfaceOfRevolution
 class RWStepGeom_RWSurfaceOfRevolution
 {
 public:

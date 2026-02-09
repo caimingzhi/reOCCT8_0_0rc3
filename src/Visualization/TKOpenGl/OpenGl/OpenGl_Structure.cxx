@@ -10,8 +10,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_Structure, Graphic3d_CStructure)
 
-//=================================================================================================
-
 void OpenGl_Structure::renderBoundingBox(const occ::handle<OpenGl_Workspace>& theWorkspace) const
 {
   if (!myBndBox.IsValid())
@@ -87,8 +85,6 @@ void OpenGl_Structure::renderBoundingBox(const occ::handle<OpenGl_Workspace>& th
   aCtx->BindTextures(aPrevTexture, occ::handle<OpenGl_ShaderProgram>());
 }
 
-//=================================================================================================
-
 OpenGl_Structure::OpenGl_Structure(const occ::handle<Graphic3d_StructureManager>& theManager)
     : Graphic3d_CStructure(theManager),
       myInstancedStructure(nullptr),
@@ -99,14 +95,10 @@ OpenGl_Structure::OpenGl_Structure(const occ::handle<Graphic3d_StructureManager>
   updateLayerTransformation();
 }
 
-//=================================================================================================
-
 OpenGl_Structure::~OpenGl_Structure()
 {
   Release(occ::handle<OpenGl_Context>());
 }
-
-//=================================================================================================
 
 void OpenGl_Structure::SetZLayer(const Graphic3d_ZLayerId theLayerIndex)
 {
@@ -114,15 +106,13 @@ void OpenGl_Structure::SetZLayer(const Graphic3d_ZLayerId theLayerIndex)
   updateLayerTransformation();
 }
 
-//=================================================================================================
-
 void OpenGl_Structure::SetTransformation(const occ::handle<TopLoc_Datum3D>& theTrsf)
 {
   myTrsf       = theTrsf;
   myIsMirrored = false;
   if (!myTrsf.IsNull())
   {
-    // Determinant of transform matrix less then 0 means that mirror transform applied.
+
     const gp_Trsf& aTrsf = myTrsf->Transformation();
     const double   aDet =
       aTrsf.Value(1, 1)
@@ -141,8 +131,6 @@ void OpenGl_Structure::SetTransformation(const occ::handle<TopLoc_Datum3D>& theT
   }
 }
 
-//=================================================================================================
-
 void OpenGl_Structure::SetTransformPersistence(
   const occ::handle<Graphic3d_TransformPers>& theTrsfPers)
 {
@@ -153,8 +141,6 @@ void OpenGl_Structure::SetTransformPersistence(
   myTrsfPers = theTrsfPers;
   updateLayerTransformation();
 }
-
-//=================================================================================================
 
 void OpenGl_Structure::updateLayerTransformation()
 {
@@ -172,8 +158,6 @@ void OpenGl_Structure::updateLayerTransformation()
   aRenderTrsf.GetMat4(myRenderTrsf);
 }
 
-//=================================================================================================
-
 void OpenGl_Structure::GraphicHighlight(
   const occ::handle<Graphic3d_PresentationAttributes>& theStyle)
 {
@@ -181,15 +165,11 @@ void OpenGl_Structure::GraphicHighlight(
   highlight        = 1;
 }
 
-//=================================================================================================
-
 void OpenGl_Structure::GraphicUnhighlight()
 {
   highlight = 0;
   myHighlightStyle.Nullify();
 }
-
-//=================================================================================================
 
 void OpenGl_Structure::OnVisibilityChanged()
 {
@@ -198,8 +178,6 @@ void OpenGl_Structure::OnVisibilityChanged()
     ++myModificationState;
   }
 }
-
-//=================================================================================================
 
 bool OpenGl_Structure::IsRaytracable() const
 {
@@ -210,8 +188,6 @@ bool OpenGl_Structure::IsRaytracable() const
 
   return myInstancedStructure != nullptr && myInstancedStructure->IsRaytracable();
 }
-
-//=================================================================================================
 
 void OpenGl_Structure::UpdateStateIfRaytracable(const bool toCheck) const
 {
@@ -234,8 +210,6 @@ void OpenGl_Structure::UpdateStateIfRaytracable(const bool toCheck) const
   }
 }
 
-//=================================================================================================
-
 void OpenGl_Structure::Connect(Graphic3d_CStructure& theStructure)
 {
   OpenGl_Structure* aStruct = static_cast<OpenGl_Structure*>(&theStructure);
@@ -250,8 +224,6 @@ void OpenGl_Structure::Connect(Graphic3d_CStructure& theStructure)
     UpdateStateIfRaytracable(false);
   }
 }
-
-//=================================================================================================
 
 void OpenGl_Structure::Disconnect(Graphic3d_CStructure& theStructure)
 {
@@ -268,8 +240,6 @@ void OpenGl_Structure::Disconnect(Graphic3d_CStructure& theStructure)
   }
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_Group> OpenGl_Structure::NewGroup(
   const occ::handle<Graphic3d_Structure>& theStruct)
 {
@@ -277,8 +247,6 @@ occ::handle<Graphic3d_Group> OpenGl_Structure::NewGroup(
   myGroups.Append(aGroup);
   return aGroup;
 }
-
-//=================================================================================================
 
 void OpenGl_Structure::RemoveGroup(const occ::handle<Graphic3d_Group>& theGroup)
 {
@@ -291,7 +259,7 @@ void OpenGl_Structure::RemoveGroup(const occ::handle<Graphic3d_Group>& theGroup)
        aGroupIter.More();
        aGroupIter.Next())
   {
-    // Check for the given group
+
     if (aGroupIter.Value() == theGroup)
     {
       const bool wasRaytracable = static_cast<const OpenGl_Group&>(*theGroup).IsRaytracable();
@@ -309,25 +277,19 @@ void OpenGl_Structure::RemoveGroup(const occ::handle<Graphic3d_Group>& theGroup)
   }
 }
 
-//=================================================================================================
-
 void OpenGl_Structure::Clear()
 {
   Clear(GlDriver()->GetSharedContext());
 }
 
-//=================================================================================================
-
 void OpenGl_Structure::Clear(const occ::handle<OpenGl_Context>& theGlCtx)
 {
   bool aRaytracableGroupDeleted(false);
 
-  // Release groups
   for (OpenGl_Structure::GroupIterator aGroupIter(myGroups); aGroupIter.More(); aGroupIter.Next())
   {
     aRaytracableGroupDeleted |= aGroupIter.Value()->IsRaytracable();
 
-    // Delete objects
     aGroupIter.ChangeValue()->Release(theGlCtx);
   }
   myGroups.Clear();
@@ -340,8 +302,6 @@ void OpenGl_Structure::Clear(const occ::handle<OpenGl_Context>& theGlCtx)
   Is2dText       = false;
   IsForHighlight = false;
 }
-
-//=================================================================================================
 
 void OpenGl_Structure::renderGeometry(const occ::handle<OpenGl_Workspace>& theWorkspace,
                                       bool&                                theHasClosed) const
@@ -386,8 +346,6 @@ void OpenGl_Structure::renderGeometry(const occ::handle<OpenGl_Workspace>& theWo
   }
 }
 
-//=================================================================================================
-
 void OpenGl_Structure::applyTransformation(const occ::handle<OpenGl_Context>& theContext,
                                            const gp_Trsf&                     theTrsf,
                                            const bool                         toEnable) const
@@ -408,11 +366,9 @@ void OpenGl_Structure::applyTransformation(const occ::handle<OpenGl_Context>& th
   }
 }
 
-//=================================================================================================
-
 void OpenGl_Structure::Render(const occ::handle<OpenGl_Workspace>& theWorkspace) const
 {
-  // Process the structure only if visible
+
   if (!visible)
   {
     return;
@@ -420,20 +376,17 @@ void OpenGl_Structure::Render(const occ::handle<OpenGl_Workspace>& theWorkspace)
 
   const occ::handle<OpenGl_Context>& aCtx = theWorkspace->GetGlContext();
 
-  // Render named status
   if (highlight && !myHighlightStyle.IsNull() && myHighlightStyle->Method() != Aspect_TOHM_BOUNDBOX)
   {
     theWorkspace->SetHighlightStyle(myHighlightStyle);
   }
 
-  // Apply local transformation
   aCtx->ModelWorldState.Push();
   NCollection_Mat4<float>& aModelWorld = aCtx->ModelWorldState.ChangeCurrent();
   aModelWorld                          = myRenderTrsf;
 
   const bool anOldGlNormalize = aCtx->IsGlNormalizeEnabled();
 
-  // detect scale transform
   if (aCtx->core11ffp != nullptr && !myTrsf.IsNull())
   {
     const double aScale = myTrsf->Trsf().ScaleFactor();
@@ -460,22 +413,17 @@ void OpenGl_Structure::Render(const occ::handle<OpenGl_Workspace>& theWorkspace)
 #endif
   }
 
-  // Take into account transform persistence
   aCtx->ApplyModelViewMatrix();
 
-  // remember aspects
   const OpenGl_Aspects* aPrevAspectFace = theWorkspace->Aspects();
 
-  // Apply correction for mirror transform
   if (myIsMirrored)
   {
     aCtx->core11fwd->glFrontFace(GL_CW);
   }
 
-  // Collect clipping planes of structure scope
   aCtx->ChangeClipping().SetLocalPlanes(myClipPlanes);
 
-  // True if structure is fully clipped
   bool isClipped   = false;
   bool hasDisabled = false;
   if (aCtx->Clipping().IsClippingOrCappingOn())
@@ -490,11 +438,7 @@ void OpenGl_Structure::Render(const occ::handle<OpenGl_Workspace>& theWorkspace)
     {
       if (myTrsfPers->IsZoomOrRotate())
       {
-        // Zoom/rotate persistence object lives in two worlds at the same time.
-        // Global clipping planes can not be trivially applied without being converted
-        // into local space of transformation persistence object.
-        // As more simple alternative - just clip entire object by its anchor point defined in the
-        // world space.
+
         const gp_Pnt anAnchor = myTrsfPers->AnchorPoint();
         for (OpenGl_ClippingIterator aPlaneIt(aCtx->Clipping());
              aPlaneIt.More() && aPlaneIt.IsGlobal();
@@ -506,7 +450,6 @@ void OpenGl_Structure::Render(const occ::handle<OpenGl_Workspace>& theWorkspace)
             continue;
           }
 
-          // check for clipping
           const NCollection_Vec4<double> aCheckPnt(anAnchor.X(), anAnchor.Y(), anAnchor.Z(), 1.0);
           if (aPlane->ProbePoint(aCheckPnt) == Graphic3d_ClipState_Out)
           {
@@ -520,8 +463,6 @@ void OpenGl_Structure::Render(const occ::handle<OpenGl_Workspace>& theWorkspace)
       hasDisabled = aCtx->Clipping().HasDisabled();
     }
 
-    // Set of clipping planes that do not intersect the structure,
-    // and thus can be disabled to improve rendering performance
     if (aBBox.IsValid() && myTrsfPers.IsNull())
     {
       for (OpenGl_ClippingIterator aPlaneIt(aCtx->Clipping()); aPlaneIt.More(); aPlaneIt.Next())
@@ -548,51 +489,44 @@ void OpenGl_Structure::Render(const occ::handle<OpenGl_Workspace>& theWorkspace)
 
     if ((!myClipPlanes.IsNull() && !myClipPlanes->IsEmpty()) || hasDisabled)
     {
-      // Set OCCT state uniform variables
+
       aCtx->ShaderManager()->UpdateClippingState();
     }
   }
 
-  // Render groups
   bool hasClosedPrims = false;
   if (!isClipped)
   {
     renderGeometry(theWorkspace, hasClosedPrims);
   }
 
-  // Reset correction for mirror transform
   if (myIsMirrored)
   {
     aCtx->core11fwd->glFrontFace(GL_CCW);
   }
 
-  // Render capping for structure groups
   if (hasClosedPrims && aCtx->Clipping().IsCappingOn())
   {
     OpenGl_CappingAlgo::RenderCapping(theWorkspace, *this);
   }
 
-  // Revert structure clippings
   if (hasDisabled)
   {
-    // enable planes that were previously disabled
+
     aCtx->ChangeClipping().RestoreDisabled();
   }
   aCtx->ChangeClipping().SetLocalPlanes(occ::handle<Graphic3d_SequenceOfHClipPlane>());
   if ((!myClipPlanes.IsNull() && !myClipPlanes->IsEmpty()) || hasDisabled)
   {
-    // Set OCCT state uniform variables
+
     aCtx->ShaderManager()->RevertClippingState();
   }
 
-  // Restore local transformation
   aCtx->ModelWorldState.Pop();
   aCtx->SetGlNormalizeEnabled(anOldGlNormalize);
 
-  // Restore aspects
   theWorkspace->SetAspects(aPrevAspectFace);
 
-  // Apply highlight box
   if (!isClipped && !myHighlightStyle.IsNull()
       && myHighlightStyle->Method() == Aspect_TOHM_BOUNDBOX)
   {
@@ -612,20 +546,15 @@ void OpenGl_Structure::Render(const occ::handle<OpenGl_Workspace>& theWorkspace)
 #endif
   }
 
-  // Restore named status
   theWorkspace->SetHighlightStyle(occ::handle<Graphic3d_PresentationAttributes>());
 }
 
-//=================================================================================================
-
 void OpenGl_Structure::Release(const occ::handle<OpenGl_Context>& theGlCtx)
 {
-  // Release groups
+
   Clear(theGlCtx);
   myHighlightStyle.Nullify();
 }
-
-//=================================================================================================
 
 void OpenGl_Structure::ReleaseGlResources(const occ::handle<OpenGl_Context>& theGlCtx)
 {
@@ -635,22 +564,18 @@ void OpenGl_Structure::ReleaseGlResources(const occ::handle<OpenGl_Context>& the
   }
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_CStructure> OpenGl_Structure::ShadowLink(
   const occ::handle<Graphic3d_StructureManager>& theManager) const
 {
   return new OpenGl_StructureShadow(theManager, this);
 }
 
-//=================================================================================================
-
 void OpenGl_Structure::applyPersistence(const occ::handle<OpenGl_Context>&          theCtx,
                                         const occ::handle<Graphic3d_TransformPers>& theTrsfPers,
                                         const bool                                  theIsLocal,
                                         bool& theOldCastShadows) const
 {
-  // temporarily disable shadows on non-3d objects
+
   theOldCastShadows = theCtx->ShaderManager()->SetCastShadows(false);
 
   theCtx->WorldViewState.Push();
@@ -658,7 +583,7 @@ void OpenGl_Structure::applyPersistence(const occ::handle<OpenGl_Context>&      
 
   if (theIsLocal && theTrsfPers->IsZoomOrRotate())
   {
-    // move anchor point to presentation location
+
     theCtx->ModelWorldState.Push();
     NCollection_Mat4<float>& aModelWorld   = theCtx->ModelWorldState.ChangeCurrent();
     gp_Pnt                   aStartPnt     = theTrsfPers->AnchorPoint();
@@ -667,9 +592,9 @@ void OpenGl_Structure::applyPersistence(const occ::handle<OpenGl_Context>&      
                                                                       (float)aStartPnt.Y(),
                                                                       (float)aStartPnt.Z(),
                                                                       1.0f);
-    // clang-format off
-    aModelWorld.SetColumn (3, NCollection_Vec4<float> (NCollection_Vec3<float> (0.0), 1.0)); // reset translation part
-    // clang-format on
+
+    aModelWorld.SetColumn(3, NCollection_Vec4<float>(NCollection_Vec3<float>(0.0), 1.0));
+
     aStartPnt.SetCoord(anAnchorPoint.x(), anAnchorPoint.y(), anAnchorPoint.z());
 
     theTrsfPers->Apply(theCtx->Camera(),
@@ -698,8 +623,6 @@ void OpenGl_Structure::applyPersistence(const occ::handle<OpenGl_Context>&      
   }
 }
 
-//=================================================================================================
-
 void OpenGl_Structure::revertPersistence(const occ::handle<OpenGl_Context>&          theCtx,
                                          const occ::handle<Graphic3d_TransformPers>& theTrsfPers,
                                          const bool                                  theIsLocal,
@@ -712,8 +635,6 @@ void OpenGl_Structure::revertPersistence(const occ::handle<OpenGl_Context>&     
   theCtx->WorldViewState.Pop();
   theCtx->ShaderManager()->SetCastShadows(theOldCastShadows);
 }
-
-//=================================================================================================
 
 void OpenGl_Structure::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

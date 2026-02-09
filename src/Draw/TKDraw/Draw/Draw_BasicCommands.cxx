@@ -33,9 +33,9 @@
 
   #define RLIM_INFINITY 0x7fffffff
 
-static clock_t CPU_CURRENT; // cpu time already used at last
-                            // cpulimit call. (sec.)
-#else                       /* _WIN32 */
+static clock_t CPU_CURRENT;
+
+#else
 
   #include <sys/resource.h>
   #include <csignal>
@@ -46,16 +46,12 @@ static clock_t CPU_CURRENT; // cpu time already used at last
     #define RLIMIT_CPU 0
   #endif
 
-#endif /* _WIN32 */
+#endif
 
 extern bool Draw_Batch;
 
-static clock_t   CPU_LIMIT; // Cpu_limit in Sec.
+static clock_t   CPU_LIMIT;
 static OSD_Timer aTimer;
-
-//=======================================================================
-// chronom
-//=======================================================================
 
 extern bool Draw_Chrono;
 
@@ -191,8 +187,6 @@ static int dchronom(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   return 0;
 }
 
-//=================================================================================================
-
 static int ifbatch(Draw_Interpretor& DI, int, const char**)
 {
   if (Draw_Batch)
@@ -202,8 +196,6 @@ static int ifbatch(Draw_Interpretor& DI, int, const char**)
 
   return 0;
 }
-
-//=================================================================================================
 
 extern bool         Draw_Spying;
 extern std::filebuf Draw_Spyfile;
@@ -238,7 +230,6 @@ static int dlog(Draw_Interpretor& di, int n, const char** a)
   if (!strcmp(a[1], "on") && n == 2)
   {
     di.SetDoLog(true);
-    //    di.Log() << "dlog on" << std::endl; // for symmetry
   }
   else if (!strcmp(a[1], "off") && n == 2)
   {
@@ -302,7 +293,7 @@ static int dbreak(Draw_Interpretor& di, int, const char**)
   catch (OSD_Exception_CTRL_BREAK const&)
   {
     di << "User pressed Control-Break";
-    return 1; // Tcl exception
+    return 1;
   }
 
   return 0;
@@ -310,7 +301,7 @@ static int dbreak(Draw_Interpretor& di, int, const char**)
 
 static int dversion(Draw_Interpretor& di, int, const char**)
 {
-  // print OCCT version and OCCTY-specific macros used
+
   di << "Open CASCADE Technology " << OCC_VERSION_STRING_EXT << "\n";
 #ifdef OCCT_DEBUG
   di << "Extended debug mode\n";
@@ -379,12 +370,6 @@ static int dversion(Draw_Interpretor& di, int, const char**)
   di << "Exceptions enabled\n";
 #endif
 
-  // check compiler, OS, etc. using pre-processor macros provided by compiler
-  // see "Pre-defined C/C++ Compiler Macros" http://sourceforge.net/p/predef/wiki/
-  // note that only modern compilers that are known to be used for OCCT are recognized
-
-  // compiler; note that GCC and MSVC are last as other compilers (e.g. Intel) can also define
-  // __GNUC__ and _MSC_VER
 #if defined(__INTEL_COMPILER)
   di << "Compiler: Intel " << __INTEL_COMPILER << "\n";
 #elif defined(__BORLANDC__)
@@ -410,7 +395,6 @@ static int dversion(Draw_Interpretor& di, int, const char**)
   di << "Compiler: unrecognized\n";
 #endif
 
-  // Cygwin and MinGW specifics
 #if defined(__CYGWIN__)
   di << "Cygwin\n";
 #endif
@@ -420,7 +404,6 @@ static int dversion(Draw_Interpretor& di, int, const char**)
   di << "MinGW 32 " << __MINGW32_MAJOR_VERSION << "." << __MINGW32_MINOR_VERSION << "\n";
 #endif
 
-  // architecture
 #if defined(__amd64) || defined(__x86_64) || defined(_M_AMD64)
   di << "Architecture: AMD64\n";
 #elif defined(__i386) || defined(_M_IX86) || defined(__X86__) || defined(_X86_)
@@ -452,14 +435,13 @@ static int dversion(Draw_Interpretor& di, int, const char**)
   di << "Architecture: unrecognized\n";
 #endif
 
-  // OS
 #if defined(_WIN32) || defined(__WINDOWS__) || defined(__WIN32__)
   di << "OS: Windows\n";
 #elif defined(__APPLE__) || defined(__MACH__)
   di << "OS: Mac OS X\n";
 #elif defined(__sun)
   di << "OS: SUN Solaris\n";
-#elif defined(__ANDROID__) /* must be before Linux */
+#elif defined(__ANDROID__)
   #include <android/api-level.h>
   di << "OS: Android (__ANDROID_API__ = " << __ANDROID_API__ << ")\n";
 #elif defined(__QNXNTO__)
@@ -487,8 +469,6 @@ static int dversion(Draw_Interpretor& di, int, const char**)
   return 0;
 }
 
-//=================================================================================================
-
 static int Draw_wait(Draw_Interpretor&, int n, const char** a)
 {
   int w = 10;
@@ -501,10 +481,8 @@ static int Draw_wait(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 #ifdef _WIN32
-static unsigned int __stdcall CpuFunc(void* /*param*/)
+static unsigned int __stdcall CpuFunc(void*)
 {
   clock_t anElapCurrent;
   clock_t aCurrent;
@@ -557,7 +535,7 @@ static void cpulimitSignalHandler(int)
   exit(2);
 }
 
-static void* CpuFunc(void* /*threadarg*/)
+static void* CpuFunc(void*)
 {
   clock_t anElapCurrent;
   for (;;)
@@ -574,9 +552,6 @@ static void* CpuFunc(void* /*threadarg*/)
 }
 #endif
 
-// Returns time in seconds defined by the argument string,
-// multiplied by factor defined in environment variable
-// CSF_CPULIMIT_FACTOR (if it exists, 1 otherwise)
 static clock_t GetCpuLimit(const char* theParam)
 {
   clock_t aValue = Draw::Atoi(theParam);
@@ -594,7 +569,7 @@ static int cpulimit(Draw_Interpretor& di, int n, const char** a)
 {
   static int aFirst = 1;
 #ifdef _WIN32
-  // Windows specific code
+
   unsigned int __stdcall CpuFunc(void*);
   unsigned aThreadID;
 
@@ -610,7 +585,7 @@ static int cpulimit(Draw_Interpretor& di, int n, const char** a)
     CPU_CURRENT = clock_t(anUserSeconds + aSystemSeconds);
     aTimer.Reset();
     aTimer.Start();
-    if (aFirst) // Launch the thread only at the 1st call.
+    if (aFirst)
     {
       aFirst = 0;
       _beginthreadex(NULL, 0, CpuFunc, NULL, 0, &aThreadID);
@@ -618,7 +593,7 @@ static int cpulimit(Draw_Interpretor& di, int n, const char** a)
   }
 
 #else
-  // Unix & Linux
+
   rlimit rlp;
   rlp.rlim_max = RLIM_INFINITY;
   if (n <= 1)
@@ -638,17 +613,15 @@ static int cpulimit(Draw_Interpretor& di, int n, const char** a)
     di << "status cpulimit setrlimit : " << aStatus << "\n";
   }
 
-  // set signal handler to print a message before death
   struct sigaction act, oact;
   memset(&act, 0, sizeof(act));
   act.sa_handler = cpulimitSignalHandler;
   sigaction(SIGXCPU, &act, &oact);
 
-  // cpulimit for elapsed time
   aTimer.Reset();
   aTimer.Start();
   pthread_t cpulimitThread;
-  if (aFirst) // Launch the thread only at the 1st call.
+  if (aFirst)
   {
     aFirst = 0;
     pthread_create(&cpulimitThread, nullptr, CpuFunc, nullptr);
@@ -657,8 +630,6 @@ static int cpulimit(Draw_Interpretor& di, int n, const char** a)
   di << "CPU and elapsed time limit set to " << (double)CPU_LIMIT << " seconds";
   return 0;
 }
-
-//=================================================================================================
 
 static int dlocale(Draw_Interpretor& di, int n, const char** argv)
 {
@@ -692,8 +663,6 @@ static int dlocale(Draw_Interpretor& di, int n, const char** argv)
     std::cout << "Error: unsupported locale specification: " << locale << std::endl;
   return 0;
 }
-
-//=================================================================================================
 
 static int dmeminfo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -762,8 +731,6 @@ static int dmeminfo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
   return 0;
 }
 
-//=================================================================================================
-
 static int dparallel(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
   const occ::handle<OSD_ThreadPool>& aDefPool = OSD_ThreadPool::DefaultPool();
@@ -827,11 +794,9 @@ static int dparallel(Draw_Interpretor& theDI, int theArgNb, const char** theArgV
   return 0;
 }
 
-//=================================================================================================
-
 static int dperf(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
-  // reset if argument is provided and it is not '0'
+
   int reset = (theArgNb > 1 ? theArgVec[1][0] != '0' && theArgVec[1][0] != '\0' : 0);
   const TCollection_AsciiString anOutput = OSD_PerfMeter::PrintALL();
   theDI << anOutput;
@@ -843,15 +808,12 @@ static int dperf(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
   return 0;
 }
 
-//=================================================================================================
-
 static int dsetsignal(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
   OSD_SignalMode aMode     = OSD_SignalMode_Set;
   bool           aSetFPE   = OSD::ToCatchFloatingSignals();
   int            aStackLen = OSD::SignalStackTraceLength();
 
-  // default for FPE signal is defined by CSF_FPE variable, if set
   OSD_Environment         aEnv("CSF_FPE");
   TCollection_AsciiString aEnvStr = aEnv.Value();
   if (!aEnvStr.IsEmpty())
@@ -859,7 +821,6 @@ static int dsetsignal(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     aSetFPE = (aEnvStr.Value(1) != '0');
   }
 
-  // parse arguments
   for (int anArgIter = 1; anArgIter < theArgNb; ++anArgIter)
   {
     TCollection_AsciiString anArg(theArgVec[anArgIter]);
@@ -907,7 +868,6 @@ static int dsetsignal(Draw_Interpretor& theDI, int theArgNb, const char** theArg
   OSD::SetSignal(aMode, aSetFPE);
   OSD::SetSignalStackTraceLength(aStackLen);
 
-  // report actual status in the end
   const char* aModeStr = nullptr;
   switch (OSD::SignalMode())
   {
@@ -930,8 +890,6 @@ static int dsetsignal(Draw_Interpretor& theDI, int theArgNb, const char** theArg
         << "Stack Trace Length: " << aStackLen << "\n";
   return 0;
 }
-
-//=================================================================================================
 
 static int dtracelevel(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -1028,8 +986,6 @@ static int dtracelevel(Draw_Interpretor& theDI, int theArgNb, const char** theAr
   return 0;
 }
 
-//=================================================================================================
-
 static int ddebugtraces(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
   if (theArgNb < 2)
@@ -1046,8 +1002,6 @@ static int ddebugtraces(Draw_Interpretor& theDI, int theArgNb, const char** theA
   Standard_Failure::SetDefaultStackTraceLength(Draw::Atoi(theArgVec[1]));
   return 0;
 }
-
-//=================================================================================================
 
 static int dputs(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
@@ -1217,8 +1171,6 @@ void Draw::BasicCommands(Draw_Interpretor& theCommands)
     dparallel,
     g);
 
-  // Logging commands; note that their names are hard-coded in the code
-  // of Draw_Interpretor, thus should not be changed without update of that code!
   theCommands.Add("dlog",
                   "manage logging of commands and output; run without args to get help",
                   __FILE__,

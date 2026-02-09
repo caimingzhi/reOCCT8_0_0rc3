@@ -7,19 +7,13 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IVtkOCC_ViewerSelector, SelectMgr_ViewerSelector)
 
-//=================================================================================================
-
 IVtkOCC_ViewerSelector::IVtkOCC_ViewerSelector()
     : myPixTol(2),
       myToUpdateTol(true)
 {
 }
 
-//=================================================================================================
-
 IVtkOCC_ViewerSelector::~IVtkOCC_ViewerSelector() = default;
-
-//=================================================================================================
 
 occ::handle<Graphic3d_Camera> IVtkOCC_ViewerSelector::ConvertVtkToOccCamera(
   const IVtk_IView::Handle& theView)
@@ -62,10 +56,6 @@ occ::handle<Graphic3d_Camera> IVtkOCC_ViewerSelector::ConvertVtkToOccCamera(
   return aCamera;
 }
 
-//============================================================================
-// Method:  Pick
-// Purpose: Implements point picking
-//============================================================================
 void IVtkOCC_ViewerSelector::Pick(const int                 theXPix,
                                   const int                 theYPix,
                                   const IVtk_IView::Handle& theView)
@@ -75,10 +65,7 @@ void IVtkOCC_ViewerSelector::Pick(const int                 theXPix,
 
   if (myToUpdateTol)
   {
-    // Compute and set a sensitivity tolerance according to the renderer (viewport).
-    // TODO: Think if this works well in perspective view...'cause result depends
-    // on position on the screen, but we always use the point close to the
-    // screen's origin...
+
     mySelectingVolumeMgr.SetPixelTolerance(myPixTol);
 
     myToUpdateTol = false;
@@ -99,8 +86,6 @@ void IVtkOCC_ViewerSelector::Pick(const int                 theXPix,
   TraverseSensitives(-1);
 }
 
-//=================================================================================================
-
 void IVtkOCC_ViewerSelector::Pick(const int                 theXMin,
                                   const int                 theYMin,
                                   const int                 theXMax,
@@ -113,10 +98,7 @@ void IVtkOCC_ViewerSelector::Pick(const int                 theXMin,
 
   if (myToUpdateTol)
   {
-    // Compute and set a sensitivity tolerance according to the renderer (viewport).
-    // TODO: Think if this works well in perspective view...'cause result depends
-    // on position on the screen, but we always use the point close to the
-    // screen's origin...
+
     mySelectingVolumeMgr.SetPixelTolerance(myPixTol);
 
     myToUpdateTol = false;
@@ -139,13 +121,11 @@ void IVtkOCC_ViewerSelector::Pick(const int                 theXMin,
   TraverseSensitives(-1);
 }
 
-//=================================================================================================
-
 void IVtkOCC_ViewerSelector::Pick(double**                  thePoly,
                                   const int                 theNbPoints,
                                   const IVtk_IView::Handle& theView)
 {
-  // Build NCollection_Array1<gp_Pnt2d> from input array of doubles
+
   NCollection_Array1<gp_Pnt2d> aPolyline(1, theNbPoints);
   for (int anIt = 0; anIt < theNbPoints; anIt++)
   {
@@ -158,10 +138,7 @@ void IVtkOCC_ViewerSelector::Pick(double**                  thePoly,
 
   if (myToUpdateTol)
   {
-    // Compute and set a sensitivity tolerance according to the renderer (viewport).
-    // TODO: Think if this works well in perspective view...'cause result depends
-    // on position on the screen, but we always use the point close to the
-    // screen's origin...
+
     mySelectingVolumeMgr.SetPixelTolerance(myPixTol);
 
     myToUpdateTol = false;
@@ -184,10 +161,6 @@ void IVtkOCC_ViewerSelector::Pick(double**                  thePoly,
   TraverseSensitives(-1);
 }
 
-//============================================================================
-// Method:  Activate
-// Purpose: Activates the given selection
-//============================================================================
 void IVtkOCC_ViewerSelector::Activate(const occ::handle<SelectMgr_Selection>& theSelection)
 {
   for (NCollection_Vector<occ::handle<SelectMgr_SensitiveEntity>>::Iterator aSelEntIter(
@@ -205,10 +178,6 @@ void IVtkOCC_ViewerSelector::Activate(const occ::handle<SelectMgr_Selection>& th
   }
 }
 
-//============================================================================
-// Method:  Deactivate
-// Purpose: Deactivate the given selection
-//============================================================================
 void IVtkOCC_ViewerSelector::Deactivate(const occ::handle<SelectMgr_Selection>& theSelection)
 {
   for (NCollection_Vector<occ::handle<SelectMgr_SensitiveEntity>>::Iterator aSelEntIter(

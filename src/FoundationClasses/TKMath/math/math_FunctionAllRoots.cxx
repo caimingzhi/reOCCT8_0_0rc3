@@ -1,23 +1,8 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// #ifndef OCCT_DEBUG
+
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
-
-// #endif
 
 #include <math_FunctionAllRoots.hpp>
 #include <math_FunctionRoots.hpp>
@@ -91,7 +76,6 @@ math_FunctionAllRoots::math_FunctionAllRoots(math_FunctionWithDerivative& F,
         Res2(F, S.GetParameter(i - 1), S.GetParameter(i), 10, EpsX, EpsF, 0.0, cst);
       Standard_NumericError_Raise_if((!Res2.IsDone()) || (Res2.IsAllNull()), " ");
 
-      //-- || (Res2.NbSolutions()!=0), " ");  lbr le 13 mai 87 (!=0 -> ==0)
       if (Res2.NbSolutions() != 0)
       {
         if (Res2.Value(1) < FinNul)
@@ -152,7 +136,7 @@ math_FunctionAllRoots::math_FunctionAllRoots(math_FunctionWithDerivative& F,
   }
 
   if (InterNul)
-  { // rajouter l intervalle finissant au dernier pt
+  {
     pdeb.Append(DebNul);
     ideb.Append(Indd);
     FinNul = S.GetParameter(Nbp);
@@ -164,7 +148,7 @@ math_FunctionAllRoots::math_FunctionAllRoots(math_FunctionWithDerivative& F,
   }
 
   if (pdeb.Length() == 0)
-  { // Pas d intervalle nul
+  {
 
     math_FunctionRoots Res(F, S.GetParameter(1), S.GetParameter(Nbp), Nbp, EpsX, EpsF, 0.0);
     Standard_NumericError_Raise_if((!Res.IsDone()) || (Res.IsAllNull()), " ");
@@ -180,8 +164,7 @@ math_FunctionAllRoots::math_FunctionAllRoots(math_FunctionWithDerivative& F,
     int NbpMin = 3;
     int Nbrpt;
     if (!Nuld)
-    { // Recherche des solutions entre S.GetParameter(1)
-      // et le debut du 1er intervalle nul
+    {
 
       Nbrpt = (int)std::trunc(
         std::abs((pdeb.Value(1) - S.GetParameter(1)) / (S.GetParameter(Nbp) - S.GetParameter(1)))
@@ -212,8 +195,7 @@ math_FunctionAllRoots::math_FunctionAllRoots(math_FunctionWithDerivative& F,
       }
     }
     if (!Nulf)
-    { // Recherche des solutions entre la fin du
-      // dernier intervalle nul et Value(Nbp).
+    {
 
       Nbrpt = (int)std::trunc(std::abs((S.GetParameter(Nbp) - pfin.Value(pdeb.Length()))
                                        / (S.GetParameter(Nbp) - S.GetParameter(1)))

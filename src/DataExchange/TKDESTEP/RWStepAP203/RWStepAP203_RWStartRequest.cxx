@@ -7,22 +7,16 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepAP203_RWStartRequest::RWStepAP203_RWStartRequest() = default;
-
-//=================================================================================================
 
 void RWStepAP203_RWStartRequest::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                           const int                                   num,
                                           occ::handle<Interface_Check>&               ach,
                                           const occ::handle<StepAP203_StartRequest>&  ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "start_request"))
     return;
-
-  // Inherited fields of ActionRequestAssignment
 
   occ::handle<StepBasic_VersionedActionRequest> aActionRequestAssignment_AssignedActionRequest;
   data->ReadEntity(num,
@@ -31,8 +25,6 @@ void RWStepAP203_RWStartRequest::ReadStep(const occ::handle<StepData_StepReaderD
                    ach,
                    STANDARD_TYPE(StepBasic_VersionedActionRequest),
                    aActionRequestAssignment_AssignedActionRequest);
-
-  // Own fields of StartRequest
 
   occ::handle<NCollection_HArray1<StepAP203_StartRequestItem>> aItems;
   int                                                          sub2 = 0;
@@ -49,21 +41,14 @@ void RWStepAP203_RWStartRequest::ReadStep(const occ::handle<StepData_StepReaderD
     }
   }
 
-  // Initialize entity
   ent->Init(aActionRequestAssignment_AssignedActionRequest, aItems);
 }
-
-//=================================================================================================
 
 void RWStepAP203_RWStartRequest::WriteStep(StepData_StepWriter&                       SW,
                                            const occ::handle<StepAP203_StartRequest>& ent) const
 {
 
-  // Inherited fields of ActionRequestAssignment
-
   SW.Send(ent->StepBasic_ActionRequestAssignment::AssignedActionRequest());
-
-  // Own fields of StartRequest
 
   SW.OpenSub();
   for (int i1 = 1; i1 <= ent->Items()->Length(); i1++)
@@ -74,17 +59,11 @@ void RWStepAP203_RWStartRequest::WriteStep(StepData_StepWriter&                 
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepAP203_RWStartRequest::Share(const occ::handle<StepAP203_StartRequest>& ent,
                                        Interface_EntityIterator&                  iter) const
 {
 
-  // Inherited fields of ActionRequestAssignment
-
   iter.AddItem(ent->StepBasic_ActionRequestAssignment::AssignedActionRequest());
-
-  // Own fields of StartRequest
 
   for (int i2 = 1; i2 <= ent->Items()->Length(); i2++)
   {

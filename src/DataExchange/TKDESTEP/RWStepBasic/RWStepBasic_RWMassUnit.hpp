@@ -11,26 +11,21 @@ class StepBasic_MassUnit;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write tool for MassUnit
 class RWStepBasic_RWMassUnit
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepBasic_RWMassUnit();
 
-  //! Reads MassUnit
   Standard_HIDDEN void ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                 const int                                   num,
                                 occ::handle<Interface_Check>&               ach,
                                 const occ::handle<StepBasic_MassUnit>&      ent) const;
 
-  //! Writes MassUnit
   Standard_HIDDEN void WriteStep(StepData_StepWriter&                   SW,
                                  const occ::handle<StepBasic_MassUnit>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(const occ::handle<StepBasic_MassUnit>& ent,
                              Interface_EntityIterator&              iter) const;
 };

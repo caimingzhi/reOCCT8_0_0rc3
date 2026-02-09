@@ -1,16 +1,12 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_KinematicPropertyMechanismRepresentation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_KinematicPropertyMechanismRepresentation,
                            StepKinematics_KinematicPropertyDefinitionRepresentation)
 
-//=================================================================================================
-
 StepKinematics_KinematicPropertyMechanismRepresentation::
   StepKinematics_KinematicPropertyMechanismRepresentation() = default;
-
-//=================================================================================================
 
 void StepKinematics_KinematicPropertyMechanismRepresentation::Init(
   const StepRepr_RepresentedDefinition& thePropertyDefinitionRepresentation_Definition,
@@ -25,15 +21,11 @@ void StepKinematics_KinematicPropertyMechanismRepresentation::Init(
   myBase = theBase;
 }
 
-//=================================================================================================
-
 occ::handle<StepKinematics_KinematicLinkRepresentation>
   StepKinematics_KinematicPropertyMechanismRepresentation::Base() const
 {
   return myBase;
 }
-
-//=================================================================================================
 
 void StepKinematics_KinematicPropertyMechanismRepresentation::SetBase(
   const occ::handle<StepKinematics_KinematicLinkRepresentation>& theBase)

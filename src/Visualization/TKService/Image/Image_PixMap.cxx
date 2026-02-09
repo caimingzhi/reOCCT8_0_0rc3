@@ -7,13 +7,13 @@
 
 namespace
 {
-  //! Structure defining image pixel format description.
+
   struct Image_FormatInfo
   {
-    const char*  Name;         //!< string representation
-    int          Format;       //!< enumeration name
-    unsigned int NbComponents; //!< number of components
-    unsigned int PixelSize;    //!< bytes per pixel
+    const char*  Name;
+    int          Format;
+    unsigned int NbComponents;
+    unsigned int PixelSize;
 
     Image_FormatInfo(Image_Format theFormat,
                      const char*  theName,
@@ -44,7 +44,6 @@ namespace
 #define CompressedImageFormatInfo(theName, theNbComponents, thePixelSize)                          \
   Image_FormatInfo(Image_CompressedFormat_##theName, #theName, theNbComponents, thePixelSize)
 
-  //! Table of image pixel formats.
   static const Image_FormatInfo Image_Table_ImageFormats[Image_CompressedFormat_NB] = {
     ImageFormatInfo(UNKNOWN, 0, 1),
     ImageFormatInfo(Gray, 1, 1),
@@ -66,20 +65,14 @@ namespace
     ImageFormatInfo(RGF_half, 2, sizeof(uint16_t) * 2),
     ImageFormatInfo(RGBAF_half, 4, sizeof(uint16_t) * 4),
     ImageFormatInfo(Gray16, 1, 2),
-    CompressedImageFormatInfo(RGB_S3TC_DXT1,
-                              3,
-                              1), // DXT1 uses circa half a byte per pixel (64 bits per 4x4 block)
+    CompressedImageFormatInfo(RGB_S3TC_DXT1, 3, 1),
     CompressedImageFormatInfo(RGBA_S3TC_DXT1, 4, 1),
-    CompressedImageFormatInfo(RGBA_S3TC_DXT3,
-                              4,
-                              1), // DXT3/5 uses circa 1 byte per pixel (128 bits per 4x4 block)
+    CompressedImageFormatInfo(RGBA_S3TC_DXT3, 4, 1),
     CompressedImageFormatInfo(RGBA_S3TC_DXT5, 4, 1)};
 } // namespace
 
 IMPLEMENT_STANDARD_RTTIEXT(Image_PixMapData, NCollection_Buffer)
 IMPLEMENT_STANDARD_RTTIEXT(Image_PixMap, Standard_Transient)
-
-//=================================================================================================
 
 const occ::handle<NCollection_BaseAllocator>& Image_PixMap::DefaultAllocator()
 {
@@ -88,42 +81,30 @@ const occ::handle<NCollection_BaseAllocator>& Image_PixMap::DefaultAllocator()
   return THE_ALLOC;
 }
 
-//=================================================================================================
-
 const char* Image_PixMap::ImageFormatToString(Image_Format theFormat)
 {
   return Image_Table_ImageFormats[theFormat].Name;
 }
-
-//=================================================================================================
 
 const char* Image_PixMap::ImageFormatToString(Image_CompressedFormat theFormat)
 {
   return Image_Table_ImageFormats[theFormat].Name;
 }
 
-//=================================================================================================
-
 Image_PixMap::Image_PixMap()
     : myImgFormat(Image_Format_Gray)
 {
 }
-
-//=================================================================================================
 
 Image_PixMap::~Image_PixMap()
 {
   Clear();
 }
 
-//=================================================================================================
-
 size_t Image_PixMap::SizePixelBytes(const Image_Format thePixelFormat)
 {
   return Image_Table_ImageFormats[thePixelFormat].PixelSize;
 }
-
-//=================================================================================================
 
 void Image_PixMap::SetFormat(Image_Format thePixelFormat)
 {
@@ -140,8 +121,6 @@ void Image_PixMap::SetFormat(Image_Format thePixelFormat)
 
   myImgFormat = thePixelFormat;
 }
-
-//=================================================================================================
 
 bool Image_PixMap::InitWrapper3D(Image_Format                    thePixelFormat,
                                  uint8_t*                        theDataPtr,
@@ -164,8 +143,6 @@ bool Image_PixMap::InitWrapper3D(Image_Format                    thePixelFormat,
   return true;
 }
 
-//=================================================================================================
-
 bool Image_PixMap::InitWrapper(Image_Format thePixelFormat,
                                uint8_t*     theDataPtr,
                                const size_t theSizeX,
@@ -178,8 +155,6 @@ bool Image_PixMap::InitWrapper(Image_Format thePixelFormat,
                        theSizeRowBytes);
 }
 
-//=================================================================================================
-
 bool Image_PixMap::InitTrash3D(Image_Format                    thePixelFormat,
                                const NCollection_Vec3<size_t>& theSizeXYZ,
                                const size_t                    theSizeRowBytes)
@@ -191,7 +166,6 @@ bool Image_PixMap::InitTrash3D(Image_Format                    thePixelFormat,
     return false;
   }
 
-  // use argument only if it greater
   const size_t aSizeRowBytes =
     std::max(theSizeRowBytes, theSizeXYZ.x() * SizePixelBytes(thePixelFormat));
   myData.Init(DefaultAllocator(),
@@ -202,8 +176,6 @@ bool Image_PixMap::InitTrash3D(Image_Format                    thePixelFormat,
   return !myData.IsEmpty();
 }
 
-//=================================================================================================
-
 bool Image_PixMap::InitTrash(Image_Format thePixelFormat,
                              const size_t theSizeX,
                              const size_t theSizeY,
@@ -213,8 +185,6 @@ bool Image_PixMap::InitTrash(Image_Format thePixelFormat,
                      NCollection_Vec3<size_t>(theSizeX, theSizeY, 1),
                      theSizeRowBytes);
 }
-
-//=================================================================================================
 
 bool Image_PixMap::InitZero3D(Image_Format                    thePixelFormat,
                               const NCollection_Vec3<size_t>& theSizeXYZ,
@@ -239,13 +209,11 @@ bool Image_PixMap::InitZero3D(Image_Format                    thePixelFormat,
   return true;
 }
 
-//=================================================================================================
-
 bool Image_PixMap::InitCopy(const Image_PixMap& theCopy)
 {
   if (&theCopy == this)
   {
-    // self-copying disallowed
+
     return false;
   }
 
@@ -268,8 +236,6 @@ bool Image_PixMap::InitCopy(const Image_PixMap& theCopy)
   return true;
 }
 
-//=================================================================================================
-
 void Image_PixMap::Clear()
 {
   occ::handle<NCollection_BaseAllocator> anEmptyAlloc;
@@ -280,8 +246,6 @@ void Image_PixMap::Clear()
               nullptr);
 }
 
-//=================================================================================================
-
 Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValue,
                                                    const Image_Format theFormat,
                                                    const bool         theToLinearize)
@@ -291,9 +255,8 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
     case Image_Format_GrayF:
     {
       const float& aPixel = *reinterpret_cast<const float*>(theRawValue);
-      // clang-format off
-      return Quantity_ColorRGBA (NCollection_Vec4<float> (aPixel, aPixel, aPixel, 1.0f)); // opaque
-      // clang-format on
+
+      return Quantity_ColorRGBA(NCollection_Vec4<float>(aPixel, aPixel, aPixel, 1.0f));
     }
     case Image_Format_AlphaF:
     {
@@ -320,14 +283,13 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
     case Image_Format_RGBF:
     {
       const Image_ColorRGBF& aPixel = *reinterpret_cast<const Image_ColorRGBF*>(theRawValue);
-      // clang-format off
-      return Quantity_ColorRGBA (NCollection_Vec4<float> (aPixel.r(), aPixel.g(), aPixel.b(), 1.0f)); // opaque
+
+      return Quantity_ColorRGBA(NCollection_Vec4<float>(aPixel.r(), aPixel.g(), aPixel.b(), 1.0f));
     }
     case Image_Format_BGRF:
     {
-      const Image_ColorBGRF& aPixel = *reinterpret_cast<const Image_ColorBGRF*> (theRawValue);
-      return Quantity_ColorRGBA (NCollection_Vec4<float> (aPixel.r(), aPixel.g(), aPixel.b(), 1.0f)); // opaque
-      // clang-format on
+      const Image_ColorBGRF& aPixel = *reinterpret_cast<const Image_ColorBGRF*>(theRawValue);
+      return Quantity_ColorRGBA(NCollection_Vec4<float>(aPixel.r(), aPixel.g(), aPixel.b(), 1.0f));
     }
     case Image_Format_GrayF_half:
     {
@@ -441,7 +403,7 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
     {
       const uint8_t& aPixel      = *reinterpret_cast<const uint8_t*>(theRawValue);
       const float    anIntensity = float(aPixel) / 255.0f;
-      return Quantity_ColorRGBA(anIntensity, anIntensity, anIntensity, 1.0f); // opaque
+      return Quantity_ColorRGBA(anIntensity, anIntensity, anIntensity, 1.0f);
     }
     case Image_Format_Alpha:
     {
@@ -452,7 +414,7 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
     {
       const uint16_t& aPixel      = *reinterpret_cast<const uint16_t*>(theRawValue);
       const float     anIntensity = float(aPixel) / 65535.0f;
-      return Quantity_ColorRGBA(anIntensity, anIntensity, anIntensity, 1.0f); // opaque
+      return Quantity_ColorRGBA(anIntensity, anIntensity, anIntensity, 1.0f);
     }
     case Image_Format_UNKNOWN:
     {
@@ -460,11 +422,8 @@ Quantity_ColorRGBA Image_PixMap::ColorFromRawPixel(const uint8_t*     theRawValu
     }
   }
 
-  // unsupported image type
-  return Quantity_ColorRGBA(0.0f, 0.0f, 0.0f, 0.0f); // transparent
+  return Quantity_ColorRGBA(0.0f, 0.0f, 0.0f, 0.0f);
 }
-
-//=================================================================================================
 
 void Image_PixMap::ColorToRawPixel(uint8_t*                  theRawValue,
                                    const Image_Format        theFormat,
@@ -695,8 +654,6 @@ void Image_PixMap::ColorToRawPixel(uint8_t*                  theRawValue,
   }
 }
 
-//=================================================================================================
-
 bool Image_PixMap::SwapRgbaBgra(Image_PixMap& theImage)
 {
   switch (theImage.Format())
@@ -772,8 +729,6 @@ bool Image_PixMap::SwapRgbaBgra(Image_PixMap& theImage)
       return false;
   }
 }
-
-//=================================================================================================
 
 void Image_PixMap::ToBlackWhite(Image_PixMap& theImage)
 {
@@ -865,8 +820,6 @@ void Image_PixMap::ToBlackWhite(Image_PixMap& theImage)
   }
 }
 
-//=================================================================================================
-
 bool Image_PixMap::FlipY(Image_PixMap& theImage)
 {
   if (theImage.IsEmpty() || theImage.SizeX() == 0 || theImage.SizeY() == 0)
@@ -881,7 +834,6 @@ bool Image_PixMap::FlipY(Image_PixMap& theImage)
     return false;
   }
 
-  // for odd height middle row should be left as is
   size_t aNbRowsHalf = theImage.SizeY() / 2;
   for (size_t aSlice = 0; aSlice < theImage.SizeZ(); ++aSlice)
   {

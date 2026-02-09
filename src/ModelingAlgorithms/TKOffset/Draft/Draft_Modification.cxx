@@ -35,16 +35,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Draft_Modification, BRepTools_Modification)
 
-//=================================================================================================
-
 Draft_Modification::Draft_Modification(const TopoDS_Shape& S)
     : myComp(false),
       myShape(S)
 {
   TopExp::MapShapesAndAncestors(myShape, TopAbs_EDGE, TopAbs_FACE, myEFMap);
 }
-
-//=================================================================================================
 
 void Draft_Modification::Clear()
 {
@@ -57,16 +53,12 @@ void Draft_Modification::Clear()
   errStat = Draft_NoError;
 }
 
-//=================================================================================================
-
 void Draft_Modification::Init(const TopoDS_Shape& S)
 {
   myShape = S;
   Clear();
   TopExp::MapShapesAndAncestors(myShape, TopAbs_EDGE, TopAbs_FACE, myEFMap);
 }
-
-//=================================================================================================
 
 bool Draft_Modification::Add(const TopoDS_Face& F,
                              const gp_Dir&      Direction,
@@ -86,8 +78,6 @@ bool Draft_Modification::Add(const TopoDS_Face& F,
   curFace = F;
   return InternalAdd(F, Direction, Angle, NeutralPlane, Flag);
 }
-
-//=================================================================================================
 
 void Draft_Modification::Remove(const TopoDS_Face& F)
 {
@@ -135,28 +125,20 @@ void Draft_Modification::Remove(const TopoDS_Face& F)
   }
 }
 
-//=================================================================================================
-
 bool Draft_Modification::IsDone() const
 {
   return myComp && badShape.IsNull();
 }
-
-//=================================================================================================
 
 Draft_ErrorStatus Draft_Modification::Error() const
 {
   return errStat;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& Draft_Modification::ProblematicShape() const
 {
   return badShape;
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& Draft_Modification::ConnectedFaces(const TopoDS_Face& F)
 {
@@ -183,8 +165,6 @@ const NCollection_List<TopoDS_Shape>& Draft_Modification::ConnectedFaces(const T
   return conneF;
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& Draft_Modification::ModifiedFaces()
 {
   if (!badShape.IsNull())
@@ -204,8 +184,6 @@ const NCollection_List<TopoDS_Shape>& Draft_Modification::ModifiedFaces()
 
   return conneF;
 }
-
-//=================================================================================================
 
 bool Draft_Modification::NewSurface(const TopoDS_Face&         F,
                                     occ::handle<Geom_Surface>& S,
@@ -237,8 +215,6 @@ bool Draft_Modification::NewSurface(const TopoDS_Face&         F,
   return true;
 }
 
-//=================================================================================================
-
 bool Draft_Modification::NewCurve(const TopoDS_Edge&       E,
                                   occ::handle<Geom_Curve>& C,
                                   TopLoc_Location&         L,
@@ -264,8 +240,6 @@ bool Draft_Modification::NewCurve(const TopoDS_Edge&       E,
   return true;
 }
 
-//=================================================================================================
-
 bool Draft_Modification::NewPoint(const TopoDS_Vertex& V, gp_Pnt& P, double& Tol)
 {
   if (!IsDone())
@@ -282,8 +256,6 @@ bool Draft_Modification::NewPoint(const TopoDS_Vertex& V, gp_Pnt& P, double& Tol
   P   = myVMap.FindFromKey(V).Geometry();
   return true;
 }
-
-//=================================================================================================
 
 bool Draft_Modification::NewCurve2d(const TopoDS_Edge& E,
                                     const TopoDS_Face& F,
@@ -332,7 +304,6 @@ bool Draft_Modification::NewCurve2d(const TopoDS_Edge& E,
       }
     }
 
-    //  if (!BRep_Tool::IsClosed(E,F)) {
     BRep_Tool::Range(NewE, Fp, Lp);
     occ::handle<Geom_TrimmedCurve> TC =
       new Geom_TrimmedCurve(myEMap.FindFromKey(E).Geometry(), Fp, Lp);
@@ -370,39 +341,37 @@ bool Draft_Modification::NewCurve2d(const TopoDS_Edge& E,
     gp_Pnt2d                  PF, NewPF;
     gp_Vec2d                  aV2DT, vectra(2. * M_PI, 0.);
     occ::handle<Geom2d_Curve> aC2DE;
-    //
+
     aC2DE = BRep_Tool::CurveOnSurface(E, F, aT1, aT2);
-    //
+
     PF = aC2DE->Value(0.5 * (aT1 + aT2));
-    //
+
     NewPF = C->Value(0.5 * (Fp + Lp));
-    //
+
     aD2 = NewPF.SquareDistance(PF);
-    //
+
     bTranslate = false;
     if (NewPF.Translated(vectra).SquareDistance(PF) < aD2)
     {
       aV2DT      = vectra;
-      bTranslate = !bTranslate; // True
+      bTranslate = !bTranslate;
     }
     else if (NewPF.Translated(-vectra).SquareDistance(PF) < aD2)
     {
       aV2DT      = -vectra;
-      bTranslate = !bTranslate; // True
+      bTranslate = !bTranslate;
     }
-    //
+
     if (bTranslate)
     {
       C->Translate(aV2DT);
     }
   }
-  //
+
   occ::handle<Geom_Curve> aC3d = BRep_Tool::Curve(NewE, Fp, Lp);
   Tol                          = BRepTools::EvalAndUpdateTol(NewE, aC3d, C, SB, Fp, Lp);
   return true;
 }
-
-//=================================================================================================
 
 bool Draft_Modification::NewParameter(const TopoDS_Vertex& V,
                                       const TopoDS_Edge&   E,
@@ -442,7 +411,6 @@ bool Draft_Modification::NewParameter(const TopoDS_Vertex& V,
       paramf = BRep_Tool::Parameter(FV, E);
     }
 
-    // Patch
     double           FirstPar = GC->FirstParameter(), LastPar = GC->LastParameter();
     constexpr double pconf = Precision::PConfusion();
     if (std::abs(paramf - LastPar) <= pconf)
@@ -470,8 +438,6 @@ bool Draft_Modification::NewParameter(const TopoDS_Vertex& V,
   Tol = std::max(BRep_Tool::Tolerance(V), BRep_Tool::Tolerance(E));
   return true;
 }
-
-//=================================================================================================
 
 GeomAbs_Shape Draft_Modification::Continuity(const TopoDS_Edge& E,
                                              const TopoDS_Face& F1,

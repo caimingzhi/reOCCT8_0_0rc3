@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepRepr_RepresentationReference;
 
-//! Read & Write tool for RepresentationReference
 class RWStepRepr_RWRepresentationReference
 {
 public:

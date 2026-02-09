@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DEXCAF_ConfigurationNode.hpp>
 
@@ -29,13 +18,9 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 DEXCAF_ConfigurationNode::DEXCAF_ConfigurationNode()
 
   = default;
-
-//=================================================================================================
 
 DEXCAF_ConfigurationNode::DEXCAF_ConfigurationNode(
   const occ::handle<DEXCAF_ConfigurationNode>& theNode)
@@ -43,8 +28,6 @@ DEXCAF_ConfigurationNode::DEXCAF_ConfigurationNode(
 {
   InternalParameters = theNode->InternalParameters;
 }
-
-//=================================================================================================
 
 bool DEXCAF_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& theResource)
 {
@@ -60,8 +43,6 @@ bool DEXCAF_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& 
 
   return true;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString DEXCAF_ConfigurationNode::Save() const
 {
@@ -114,49 +95,35 @@ TCollection_AsciiString DEXCAF_ConfigurationNode::Save() const
   return aResult;
 }
 
-//=================================================================================================
-
 occ::handle<DE_ConfigurationNode> DEXCAF_ConfigurationNode::Copy() const
 {
   return new DEXCAF_ConfigurationNode(*this);
 }
-
-//=================================================================================================
 
 occ::handle<DE_Provider> DEXCAF_ConfigurationNode::BuildProvider()
 {
   return new DEXCAF_Provider(this);
 }
 
-//=================================================================================================
-
 bool DEXCAF_ConfigurationNode::IsImportSupported() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool DEXCAF_ConfigurationNode::IsExportSupported() const
 {
   return true;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DEXCAF_ConfigurationNode::GetFormat() const
 {
   return TCollection_AsciiString("XCAF");
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DEXCAF_ConfigurationNode::GetVendor() const
 {
   return TCollection_AsciiString("OCC");
 }
-
-//=================================================================================================
 
 NCollection_List<TCollection_AsciiString> DEXCAF_ConfigurationNode::GetExtensions() const
 {
@@ -164,8 +131,6 @@ NCollection_List<TCollection_AsciiString> DEXCAF_ConfigurationNode::GetExtension
   anExt.Append("xbf");
   return anExt;
 }
-
-//=================================================================================================
 
 bool DEXCAF_ConfigurationNode::CheckContent(const occ::handle<NCollection_Buffer>& theBuffer) const
 {

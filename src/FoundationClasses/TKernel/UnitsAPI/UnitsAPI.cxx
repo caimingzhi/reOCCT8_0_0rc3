@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OSD_Environment.hpp>
 #include <Resource_Manager.hpp>
@@ -24,8 +12,6 @@ static Units_UnitsSystem             LocalSystemUnits, SILocalSystemUnits, MDTVL
 static TCollection_AsciiString       rstring;
 static UnitsAPI_SystemUnits          localSystem   = UnitsAPI_SI;
 static UnitsAPI_SystemUnits          currentSystem = UnitsAPI_DEFAULT;
-
-//=================================================================================================
 
 void UnitsAPI::CheckLoading(const UnitsAPI_SystemUnits aSystemUnits)
 {
@@ -131,8 +117,6 @@ void UnitsAPI::CheckLoading(const UnitsAPI_SystemUnits aSystemUnits)
   }
 }
 
-//=================================================================================================
-
 double UnitsAPI::CurrentToLS(const double aData, const char* aQuantity)
 {
   double aValue = aData;
@@ -154,8 +138,6 @@ double UnitsAPI::CurrentToLS(const double aData, const char* aQuantity)
   return aValue;
 }
 
-//=================================================================================================
-
 double UnitsAPI::CurrentToSI(const double aData, const char* aQuantity)
 {
   double aValue = aData;
@@ -175,8 +157,6 @@ double UnitsAPI::CurrentToSI(const double aData, const char* aQuantity)
 
   return aValue;
 }
-
-//=================================================================================================
 
 double UnitsAPI::CurrentFromLS(const double aData, const char* aQuantity)
 {
@@ -199,8 +179,6 @@ double UnitsAPI::CurrentFromLS(const double aData, const char* aQuantity)
   return aValue;
 }
 
-//=================================================================================================
-
 double UnitsAPI::CurrentFromSI(const double aData, const char* aQuantity)
 {
   double aValue = aData;
@@ -220,8 +198,6 @@ double UnitsAPI::CurrentFromSI(const double aData, const char* aQuantity)
 
   return aValue;
 }
-
-//=================================================================================================
 
 double UnitsAPI::CurrentToAny(const double aData, const char* aQuantity, const char* aUnit)
 {
@@ -243,8 +219,6 @@ double UnitsAPI::CurrentToAny(const double aData, const char* aQuantity, const c
   return aValue;
 }
 
-//=================================================================================================
-
 double UnitsAPI::CurrentFromAny(const double aData, const char* aQuantity, const char* aUnit)
 {
   double aValue = aData;
@@ -264,8 +238,6 @@ double UnitsAPI::CurrentFromAny(const double aData, const char* aQuantity, const
 
   return aValue;
 }
-
-//=================================================================================================
 
 double UnitsAPI::AnyToLS(const double aData, const char* aUnit)
 {
@@ -288,8 +260,6 @@ double UnitsAPI::AnyToLS(const double aData, const char* aUnit)
   return aValue;
 }
 
-//=================================================================================================
-
 double UnitsAPI::AnyToLS(const double aData, const char* aUnit, occ::handle<Units_Dimensions>& aDim)
 {
   double aValue = aData;
@@ -310,8 +280,6 @@ double UnitsAPI::AnyToLS(const double aData, const char* aUnit, occ::handle<Unit
   return aValue;
 }
 
-//=================================================================================================
-
 double UnitsAPI::AnyToSI(const double aData, const char* aUnit)
 {
   double aValue;
@@ -320,8 +288,6 @@ double UnitsAPI::AnyToSI(const double aData, const char* aUnit)
   return aValue;
 }
 
-//=================================================================================================
-
 double UnitsAPI::AnyToSI(const double aData, const char* aUnit, occ::handle<Units_Dimensions>& aDim)
 {
   double aValue;
@@ -329,8 +295,6 @@ double UnitsAPI::AnyToSI(const double aData, const char* aUnit, occ::handle<Unit
   aValue = Units::ToSI(aData, aUnit, aDim);
   return aValue;
 }
-
-//=================================================================================================
 
 double UnitsAPI::AnyFromLS(const double aData, const char* aUnit)
 {
@@ -352,8 +316,6 @@ double UnitsAPI::AnyFromLS(const double aData, const char* aUnit)
   return aValue;
 }
 
-//=================================================================================================
-
 double UnitsAPI::AnyFromSI(const double aData, const char* aUnit)
 {
   double aValue;
@@ -362,8 +324,6 @@ double UnitsAPI::AnyFromSI(const double aData, const char* aUnit)
   return aValue;
 }
 
-//=================================================================================================
-
 double UnitsAPI::AnyToAny(const double aData, const char* aUnit1, const char* aUnit2)
 {
   double aValue = aData;
@@ -371,8 +331,6 @@ double UnitsAPI::AnyToAny(const double aData, const char* aUnit1, const char* aU
   aValue = Units::Convert(aValue, aUnit1, aUnit2);
   return aValue;
 }
-
-//=================================================================================================
 
 double UnitsAPI::LSToSI(const double aData, const char* aQuantity)
 {
@@ -393,8 +351,6 @@ double UnitsAPI::LSToSI(const double aData, const char* aQuantity)
   return aValue;
 }
 
-//=================================================================================================
-
 double UnitsAPI::SIToLS(const double aData, const char* aQuantity)
 {
   double aValue = aData;
@@ -414,22 +370,16 @@ double UnitsAPI::SIToLS(const double aData, const char* aQuantity)
   return aValue;
 }
 
-//=================================================================================================
-
 void UnitsAPI::SetLocalSystem(const UnitsAPI_SystemUnits aSystemUnits)
 {
   CheckLoading(aSystemUnits);
   localSystem = currentSystem;
 }
 
-//=================================================================================================
-
 UnitsAPI_SystemUnits UnitsAPI::LocalSystem()
 {
   return localSystem;
 }
-
-//=================================================================================================
 
 void UnitsAPI::SetCurrentUnit(const char* aQuantity, const char* anUnit)
 {
@@ -437,23 +387,17 @@ void UnitsAPI::SetCurrentUnit(const char* aQuantity, const char* anUnit)
   CurrentUnits->SetResource(aQuantity, anUnit);
 }
 
-//=================================================================================================
-
 void UnitsAPI::Save()
 {
   CheckLoading(localSystem);
   CurrentUnits->Save();
 }
 
-//=================================================================================================
-
 void UnitsAPI::Reload()
 {
   currentSystem = UnitsAPI_DEFAULT;
   CheckLoading(localSystem);
 }
-
-//=================================================================================================
 
 static TCollection_AsciiString astring;
 
@@ -464,94 +408,68 @@ const char* UnitsAPI::CurrentUnit(const char* aQuantity)
   return astring.ToCString();
 }
 
-//=================================================================================================
-
 occ::handle<Units_Dimensions> UnitsAPI::Dimensions(const char* aType)
 {
   return Units::Dimensions(aType);
 }
-
-//=================================================================================================
 
 occ::handle<Units_Dimensions> UnitsAPI::DimensionLess()
 {
   return Units_Dimensions::ALess();
 }
 
-//=================================================================================================
-
 occ::handle<Units_Dimensions> UnitsAPI::DimensionMass()
 {
   return Units_Dimensions::AMass();
 }
-
-//=================================================================================================
 
 occ::handle<Units_Dimensions> UnitsAPI::DimensionLength()
 {
   return Units_Dimensions::ALength();
 }
 
-//=================================================================================================
-
 occ::handle<Units_Dimensions> UnitsAPI::DimensionTime()
 {
   return Units_Dimensions::ATime();
 }
-
-//=================================================================================================
 
 occ::handle<Units_Dimensions> UnitsAPI::DimensionElectricCurrent()
 {
   return Units_Dimensions::AElectricCurrent();
 }
 
-//=================================================================================================
-
 occ::handle<Units_Dimensions> UnitsAPI::DimensionThermodynamicTemperature()
 {
   return Units_Dimensions::AThermodynamicTemperature();
 }
-
-//=================================================================================================
 
 occ::handle<Units_Dimensions> UnitsAPI::DimensionAmountOfSubstance()
 {
   return Units_Dimensions::AAmountOfSubstance();
 }
 
-//=================================================================================================
-
 occ::handle<Units_Dimensions> UnitsAPI::DimensionLuminousIntensity()
 {
   return Units_Dimensions::ALuminousIntensity();
 }
-
-//=================================================================================================
 
 occ::handle<Units_Dimensions> UnitsAPI::DimensionPlaneAngle()
 {
   return Units_Dimensions::APlaneAngle();
 }
 
-//=================================================================================================
-
 occ::handle<Units_Dimensions> UnitsAPI::DimensionSolidAngle()
 {
   return Units_Dimensions::ASolidAngle();
 }
 
-//=================================================================================================
-
-bool UnitsAPI::Check(const char* aQuantity, const char* /*aUnit*/)
+bool UnitsAPI::Check(const char* aQuantity, const char*)
 {
   bool status = false;
   CheckLoading(UnitsAPI_DEFAULT);
   if (CurrentUnits->Find(aQuantity))
   {
     TCollection_AsciiString current(CurrentUnits->Value(aQuantity));
-    //    aValue = AnyToAny(aData,current.ToCString(),aUnit);
-    //    aValue = Units::Convert(aValue,aUnit1,aUnit2);
   }
 
   return status;

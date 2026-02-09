@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GeomFill_CorrectedFrenet.hpp>
 #include <Geom_BSplineCurve.hpp>
@@ -26,8 +15,6 @@
 #include <Standard_Real.hpp>
 
 #include <gtest/gtest.h>
-
-//==================================================================================================
 
 TEST(GeomFill_CorrectedFrenet, EndlessLoopPrevention)
 {
@@ -71,8 +58,6 @@ TEST(GeomFill_CorrectedFrenet, EndlessLoopPrevention)
   EXPECT_GT(aBinormal2.Magnitude(), 1e-10);
 }
 
-//==================================================================================================
-
 TEST(GeomFill_CorrectedFrenet, SmallStepHandling)
 {
   NCollection_Array1<gp_Pnt> aPoles(1, 2);
@@ -97,8 +82,6 @@ TEST(GeomFill_CorrectedFrenet, SmallStepHandling)
 
   EXPECT_NO_THROW({ aCorrectedFrenet.D0(0.5, aTangent, aNormal, aBinormal); });
 }
-
-//==================================================================================================
 
 TEST(GeomFill_CorrectedFrenet, ParameterProgressionGuarantee)
 {
@@ -133,8 +116,6 @@ TEST(GeomFill_CorrectedFrenet, ParameterProgressionGuarantee)
   }
 }
 
-//==================================================================================================
-
 TEST(GeomFill_CorrectedFrenet, ActualReproducerCase)
 {
   NCollection_Array1<gp_Pnt> aPoints(1, 4);
@@ -155,10 +136,8 @@ TEST(GeomFill_CorrectedFrenet, ActualReproducerCase)
 
   GeomFill_CorrectedFrenet aCorrectedFrenet(false);
 
-  // This SetCurve call should not hang (was causing infinite loops)
   EXPECT_NO_THROW({ aCorrectedFrenet.SetCurve(anAdaptor.ShallowCopy()); });
 
-  // Verify we can evaluate the trihedron at various parameters
   gp_Vec aTangent, aNormal, aBinormal;
 
   EXPECT_NO_THROW({ aCorrectedFrenet.D0(0.0, aTangent, aNormal, aBinormal); });

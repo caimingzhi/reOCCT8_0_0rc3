@@ -10,11 +10,6 @@ class StepGeom_BoundedCurve;
 class Geom_BoundedCurve;
 class Geom2d_BoundedCurve;
 
-//! This class implements the mapping between classes
-//! BoundedCurve from Geom, Geom2d and the class BoundedCurve from
-//! StepGeom which describes a BoundedCurve from prostep.
-//! As BoundedCurve is an abstract BoundedCurve this class
-//! is an access to the sub-class required.
 class GeomToStep_MakeBoundedCurve : public GeomToStep_Root
 {
 public:

@@ -7,13 +7,11 @@
 class Geom_Curve;
 class Draw_Display;
 
-//! This class defines a drawable curve in 3d space.
 class DrawTrSurf_Curve : public DrawTrSurf_Drawable
 {
   DEFINE_STANDARD_RTTIEXT(DrawTrSurf_Curve, DrawTrSurf_Drawable)
   Draw_Drawable3D_FACTORY
 public:
-  //! creates a drawable curve from a curve of package Geom.
   Standard_EXPORT DrawTrSurf_Curve(const occ::handle<Geom_Curve>& C, const bool DispOrigin = true);
 
   Standard_EXPORT DrawTrSurf_Curve(const occ::handle<Geom_Curve>& C,
@@ -50,16 +48,12 @@ public:
 
   double RadiusRatio() const { return radiusratio; }
 
-  //! For variable copy.
   Standard_EXPORT occ::handle<Draw_Drawable3D> Copy() const override;
 
-  //! For variable dump.
   Standard_EXPORT void Dump(Standard_OStream& S) const override;
 
-  //! Save drawable into stream.
   Standard_EXPORT void Save(Standard_OStream& theStream) const override;
 
-  //! For variable whatis command. Set as a result the type of the variable.
   Standard_EXPORT void Whatis(Draw_Interpretor& I) const override;
 
 protected:

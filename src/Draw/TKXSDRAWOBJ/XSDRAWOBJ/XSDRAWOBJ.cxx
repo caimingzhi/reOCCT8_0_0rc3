@@ -1,15 +1,4 @@
-// Copyright (c) 2023 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XSDRAWOBJ.hpp>
 
@@ -34,10 +23,6 @@
 #include <XSControl_WorkSession.hpp>
 #include <XSDRAW.hpp>
 
-//=============================================================================
-// function : parseCoordinateSystem
-// purpose  : Parse RWMesh_CoordinateSystem enumeration
-//=============================================================================
 static bool parseCoordinateSystem(const char* theArg, RWMesh_CoordinateSystem& theSystem)
 {
   TCollection_AsciiString aCSStr(theArg);
@@ -56,8 +41,6 @@ static bool parseCoordinateSystem(const char* theArg, RWMesh_CoordinateSystem& t
   }
   return true;
 }
-
-//=================================================================================================
 
 static int ReadObj(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -229,8 +212,6 @@ static int ReadObj(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVe
   return 0;
 }
 
-///=================================================================================================
-
 static int WriteObj(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   TCollection_AsciiString          anObjFilePath;
@@ -334,15 +315,13 @@ static int WriteObj(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
 
 namespace
 {
-  // Singleton to ensure DEOBJ plugin is registered only once
+
   void DEOBJSingleton()
   {
     static DE_PluginHolder<DEOBJ_ConfigurationNode> aHolder;
     (void)aHolder;
   }
 } // namespace
-
-//=================================================================================================
 
 void XSDRAWOBJ::Factory(Draw_Interpretor& theDI)
 {
@@ -353,10 +332,9 @@ void XSDRAWOBJ::Factory(Draw_Interpretor& theDI)
   }
   aIsActivated = true;
 
-  //! Ensure DEOBJ plugin is registered
   DEOBJSingleton();
 
-  const char* aGroup = "XSTEP-STL/VRML"; // Step transfer file commands
+  const char* aGroup = "XSTEP-STL/VRML";
   theDI.Add(
     "ReadObj",
     "ReadObj Doc file [-fileCoordSys {Zup|Yup}] [-fileUnit Unit]"
@@ -396,9 +374,7 @@ void XSDRAWOBJ::Factory(Draw_Interpretor& theDI)
     aGroup);
   theDI.Add("writeobj", "writeobj shape file", __FILE__, WriteObj, aGroup);
 
-  // Load XSDRAW session for pilot activation
   XSDRAW::LoadDraw(theDI);
 }
 
-// Declare entry point PLUGINFACTORY
 DPLUGIN(XSDRAWOBJ)

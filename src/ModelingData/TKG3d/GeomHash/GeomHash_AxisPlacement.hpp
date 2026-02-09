@@ -5,12 +5,9 @@
 #include <GeomHash_PointHasher.hpp>
 #include <GeomHash_DirectionHasher.hpp>
 
-//! OCCT-style hasher for gp_Ax2 (axis placement).
-//! Used for geometry deduplication.
-//! Compositional hasher using PointHasher and DirectionHasher.
 struct GeomHash_AxisPlacement
 {
-  // Hashes the axis placement by location, axis direction, and X direction.
+
   std::size_t operator()(const gp_Ax2& theAxisPlacement) const noexcept
   {
     const GeomHash_PointHasher     aPointHasher;
@@ -23,7 +20,6 @@ struct GeomHash_AxisPlacement
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two axis placements.
   bool operator()(const gp_Ax2& theAxisPlacement1, const gp_Ax2& theAxisPlacement2) const noexcept
   {
     const GeomHash_PointHasher     aPointHasher;

@@ -45,11 +45,7 @@ public:
 
   Standard_EXPORT static void MkConnectedCommands(Draw_Interpretor& aDI);
 
-  //! Prints errors and warnings if any and draws attached shapes
-  //! if flag BOPTest_Objects::DrawWarnShapes() is set
   Standard_EXPORT static void ReportAlerts(const occ::handle<Message_Report>& theReport);
 
-  //! Returns operation type according to the given string.
-  //! For numeric values, the number correspond to the order in enum.
   Standard_EXPORT static BOPAlgo_Operation GetOperationType(const char* theOp);
 };

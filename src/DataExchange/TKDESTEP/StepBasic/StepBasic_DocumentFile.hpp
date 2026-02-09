@@ -8,15 +8,12 @@ class StepBasic_CharacterizedObject;
 class TCollection_HAsciiString;
 class StepBasic_DocumentType;
 
-//! Representation of STEP entity DocumentFile
 class StepBasic_DocumentFile : public StepBasic_Document
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT StepBasic_DocumentFile();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>& aDocument_Id,
     const occ::handle<TCollection_HAsciiString>& aDocument_Name,
@@ -27,10 +24,8 @@ public:
     const bool                                   hasCharacterizedObject_Description,
     const occ::handle<TCollection_HAsciiString>& aCharacterizedObject_Description);
 
-  //! Returns data for supertype CharacterizedObject
   Standard_EXPORT occ::handle<StepBasic_CharacterizedObject> CharacterizedObject() const;
 
-  //! Set data for supertype CharacterizedObject
   Standard_EXPORT void SetCharacterizedObject(
     const occ::handle<StepBasic_CharacterizedObject>& CharacterizedObject);
 

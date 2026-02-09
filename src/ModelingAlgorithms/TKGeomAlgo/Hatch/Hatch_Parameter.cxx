@@ -2,8 +2,6 @@
 #include <Hatch_Line.hpp>
 #include <Hatch_Parameter.hpp>
 
-//=================================================================================================
-
 Hatch_Parameter::Hatch_Parameter()
     : myPar1(0.0),
       myStart(false),
@@ -11,8 +9,6 @@ Hatch_Parameter::Hatch_Parameter()
       myPar2(0.0)
 {
 }
-
-//=================================================================================================
 
 Hatch_Parameter::Hatch_Parameter(const double Par1,
                                  const bool   Start,

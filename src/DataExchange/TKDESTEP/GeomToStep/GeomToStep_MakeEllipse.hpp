@@ -11,10 +11,6 @@ class gp_Elips;
 class Geom_Ellipse;
 class Geom2d_Ellipse;
 
-//! This class implements the mapping between classes
-//! Ellipse from Geom, and Circ from gp, and the class
-//! Ellipse from StepGeom which describes a Ellipse from
-//! Prostep.
 class GeomToStep_MakeEllipse : public GeomToStep_Root
 {
 public:

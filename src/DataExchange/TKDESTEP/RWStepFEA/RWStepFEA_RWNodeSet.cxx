@@ -6,27 +6,19 @@
 #include <StepFEA_NodeRepresentation.hpp>
 #include <StepFEA_NodeSet.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWNodeSet::RWStepFEA_RWNodeSet() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWNodeSet::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                    const int                                   num,
                                    occ::handle<Interface_Check>&               ach,
                                    const occ::handle<StepFEA_NodeSet>&         ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "node_set"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   data->ReadString(num, 1, "representation_item.name", ach, aRepresentationItem_Name);
-
-  // Own fields of NodeSet
 
   occ::handle<NCollection_HArray1<occ::handle<StepFEA_NodeRepresentation>>> aNodes;
   int                                                                       sub2 = 0;
@@ -48,21 +40,14 @@ void RWStepFEA_RWNodeSet::ReadStep(const occ::handle<StepData_StepReaderData>& d
     }
   }
 
-  // Initialize entity
   ent->Init(aRepresentationItem_Name, aNodes);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWNodeSet::WriteStep(StepData_StepWriter&                SW,
                                     const occ::handle<StepFEA_NodeSet>& ent) const
 {
 
-  // Inherited fields of RepresentationItem
-
   SW.Send(ent->StepRepr_RepresentationItem::Name());
-
-  // Own fields of NodeSet
 
   SW.OpenSub();
   for (int i1 = 1; i1 <= ent->Nodes()->Length(); i1++)
@@ -73,15 +58,9 @@ void RWStepFEA_RWNodeSet::WriteStep(StepData_StepWriter&                SW,
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWNodeSet::Share(const occ::handle<StepFEA_NodeSet>& ent,
                                 Interface_EntityIterator&           iter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Own fields of NodeSet
 
   for (int i1 = 1; i1 <= ent->Nodes()->Length(); i1++)
   {

@@ -4,8 +4,6 @@
 
 #define MYDS (*((TopOpeBRepDS_DataStructure*)myDS))
 
-//=================================================================================================
-
 TopOpeBRepDS_PointExplorer::TopOpeBRepDS_PointExplorer()
     : myIndex(1),
       myMax(0),
@@ -15,15 +13,11 @@ TopOpeBRepDS_PointExplorer::TopOpeBRepDS_PointExplorer()
 {
 }
 
-//=================================================================================================
-
 TopOpeBRepDS_PointExplorer::TopOpeBRepDS_PointExplorer(const TopOpeBRepDS_DataStructure& DS,
                                                        const bool                        FindKeep)
 {
   Init(DS, FindKeep);
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_PointExplorer::Init(const TopOpeBRepDS_DataStructure& DS, const bool FindKeep)
 {
@@ -33,8 +27,6 @@ void TopOpeBRepDS_PointExplorer::Init(const TopOpeBRepDS_DataStructure& DS, cons
   myFindKeep = FindKeep;
   Find();
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_PointExplorer::Find()
 {
@@ -56,22 +48,16 @@ void TopOpeBRepDS_PointExplorer::Find()
   }
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_PointExplorer::More() const
 {
   return myFound;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_PointExplorer::Next()
 {
   myIndex++;
   Find();
 }
-
-//=================================================================================================
 
 const TopOpeBRepDS_Point& TopOpeBRepDS_PointExplorer::Point() const
 {
@@ -85,15 +71,11 @@ const TopOpeBRepDS_Point& TopOpeBRepDS_PointExplorer::Point() const
   }
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_PointExplorer::IsPoint(const int I) const
 {
   bool b = MYDS.myPoints.IsBound(I);
   return b;
 }
-
-//=================================================================================================
 
 bool TopOpeBRepDS_PointExplorer::IsPointKeep(const int I) const
 {
@@ -102,8 +84,6 @@ bool TopOpeBRepDS_PointExplorer::IsPointKeep(const int I) const
     b = MYDS.Point(I).Keep();
   return b;
 }
-
-//=================================================================================================
 
 const TopOpeBRepDS_Point& TopOpeBRepDS_PointExplorer::Point(const int I) const
 {
@@ -117,8 +97,6 @@ const TopOpeBRepDS_Point& TopOpeBRepDS_PointExplorer::Point(const int I) const
   }
 }
 
-//=================================================================================================
-
 int TopOpeBRepDS_PointExplorer::NbPoint()
 {
   myIndex = 1;
@@ -129,8 +107,6 @@ int TopOpeBRepDS_PointExplorer::NbPoint()
     n++;
   return n;
 }
-
-//=================================================================================================
 
 int TopOpeBRepDS_PointExplorer::Index() const
 {

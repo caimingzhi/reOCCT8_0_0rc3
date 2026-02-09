@@ -26,7 +26,6 @@ void IGESDraw_ToolRectArraySubfigure::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&     IR,
   IGESData_ParamReader&                           PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   gp_XYZ                                tempLowerLeftCorner;
   double                                tempScaleFactor;
@@ -35,16 +34,14 @@ void IGESDraw_ToolRectArraySubfigure::ReadOwnParams(
   double                                tempColumnSeparation, tempRowSeparation, tempRotationAngle;
   int                                   tempNbColumns, tempNbRows, tempDoDontFlag, tempListCount;
 
-  // clang-format off
-  PR.ReadEntity(IR, PR.Current(), "Base Entity", tempBaseEntity); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR, PR.Current(), "Base Entity", tempBaseEntity);
 
   if (PR.DefinedElseSkip())
-    PR.ReadReal(PR.Current(), "Scale Factor", tempScaleFactor); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
-  else
-    tempScaleFactor = 1.0; // Setting to default value of 1.0
+    PR.ReadReal(PR.Current(), "Scale Factor", tempScaleFactor);
 
-  // szv#4:S4163:12Mar99 `st=` not needed
+  else
+    tempScaleFactor = 1.0;
+
   PR.ReadXYZ(PR.CurrentList(1, 3), "Lower Left Coordinate Of Array", tempLowerLeftCorner);
   PR.ReadInteger(PR.Current(), "Number Of Columns", tempNbColumns);
   PR.ReadInteger(PR.Current(), "Number Of Rows", tempNbRows);
@@ -52,30 +49,24 @@ void IGESDraw_ToolRectArraySubfigure::ReadOwnParams(
   PR.ReadReal(PR.Current(), "Vertical Distance Between Rows", tempRowSeparation);
   PR.ReadReal(PR.Current(), "Rotation Angle", tempRotationAngle);
 
-  // st = PR.ReadInteger(PR.Current(), "DO-DONT List Count", tempListCount); //szv#4:S4163:12Mar99
-  // moved in if
   if (PR.ReadInteger(PR.Current(), "DO-DONT List Count", tempListCount))
   {
-    // Initialise HArray1 only if there is no error reading its Length
+
     if (tempListCount > 0)
       tempPositions = new NCollection_HArray1<int>(1, tempListCount);
     else if (tempListCount < 0)
       PR.AddFail("DO-DONT List Count : Less than Zero");
   }
 
-  // clang-format off
-  PR.ReadInteger(PR.Current(), "DO-DONT Flag", tempDoDontFlag); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadInteger(PR.Current(), "DO-DONT Flag", tempDoDontFlag);
 
-  // Read the HArray1 only if its Length was read without any Error
   if (!tempPositions.IsNull())
   {
     int I;
     for (I = 1; I <= tempListCount; I++)
     {
       int tempPos;
-      // st = PR.ReadInteger(PR.Current(), "Number Of Position To Process",
-      // tempPos); //szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadInteger(PR.Current(), "Number Of Position To Process", tempPos))
         tempPositions->SetValue(I, tempPos);
     }
@@ -159,7 +150,7 @@ void IGESDraw_ToolRectArraySubfigure::OwnCopy(
 }
 
 IGESData_DirChecker IGESDraw_ToolRectArraySubfigure::DirChecker(
-  const occ::handle<IGESDraw_RectArraySubfigure>& /*ent*/) const
+  const occ::handle<IGESDraw_RectArraySubfigure>&) const
 {
   IGESData_DirChecker DC(412, 0);
   DC.Structure(IGESData_DefVoid);
@@ -171,10 +162,9 @@ IGESData_DirChecker IGESDraw_ToolRectArraySubfigure::DirChecker(
   return DC;
 }
 
-void IGESDraw_ToolRectArraySubfigure::OwnCheck(
-  const occ::handle<IGESDraw_RectArraySubfigure>& /*ent*/,
-  const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /*ach*/) const
+void IGESDraw_ToolRectArraySubfigure::OwnCheck(const occ::handle<IGESDraw_RectArraySubfigure>&,
+                                               const Interface_ShareTool&,
+                                               occ::handle<Interface_Check>&) const
 {
 }
 
@@ -191,7 +181,7 @@ void IGESDraw_ToolRectArraySubfigure::OwnDump(const occ::handle<IGESDraw_RectArr
   S << "\n"
     << "Scale Factor : " << ent->ScaleFactor() << "  "
     << "Lower Left Corner Of Array : ";
-  IGESData_DumpXYZL(S, level, ent->LowerLeftCorner(), gp_GTrsf()); // no location
+  IGESData_DumpXYZL(S, level, ent->LowerLeftCorner(), gp_GTrsf());
   S << "Number Of Columns : " << ent->NbColumns() << "  "
     << "Number Of Rows    : " << ent->NbRows() << "\n"
     << "Horizontal Distance Between Columns : " << ent->ColumnSeparation() << "\n"

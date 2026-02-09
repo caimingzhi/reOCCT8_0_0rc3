@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <PrsMgr_Presentation.hpp>
 
@@ -37,8 +25,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 PrsMgr_Presentation::PrsMgr_Presentation(const occ::handle<PrsMgr_PresentationManager>& thePrsMgr,
                                          const occ::handle<PrsMgr_PresentableObject>& thePrsObject,
                                          const int                                    theMode)
@@ -57,23 +43,19 @@ PrsMgr_Presentation::PrsMgr_Presentation(const occ::handle<PrsMgr_PresentationMa
   SetMutable(myPresentableObject->IsMutable());
 }
 
-//=================================================================================================
-
 void PrsMgr_Presentation::Display()
 {
   display(false);
   myBeforeHighlightState = State_Visible;
 }
 
-//=================================================================================================
-
 void PrsMgr_Presentation::display(const bool theIsHighlight)
 {
   if (!base_type::IsDisplayed())
   {
-    // clang-format off
-    base_type::SetIsForHighlight (theIsHighlight); // optimization - disable frustum culling for this presentation
-    // clang-format on
+
+    base_type::SetIsForHighlight(theIsHighlight);
+
     base_type::Display();
   }
   else if (!base_type::IsVisible())
@@ -82,8 +64,6 @@ void PrsMgr_Presentation::display(const bool theIsHighlight)
   }
 }
 
-//=================================================================================================
-
 void PrsMgr_Presentation::Erase()
 {
   if (IsDeleted())
@@ -91,16 +71,13 @@ void PrsMgr_Presentation::Erase()
     return;
   }
 
-  // Erase structure from structure manager
   erase();
   clear(true);
-  // Disconnect other structures
+
   DisconnectAll(Graphic3d_TOC_DESCENDANT);
-  // Clear groups and remove graphic structure
+
   Remove();
 }
-
-//=================================================================================================
 
 void PrsMgr_Presentation::Highlight(const occ::handle<Prs3d_Drawer>& theStyle)
 {
@@ -112,8 +89,6 @@ void PrsMgr_Presentation::Highlight(const occ::handle<Prs3d_Drawer>& theStyle)
   display(true);
   base_type::Highlight(theStyle);
 }
-
-//=================================================================================================
 
 void PrsMgr_Presentation::Unhighlight()
 {
@@ -131,15 +106,9 @@ void PrsMgr_Presentation::Unhighlight()
   }
 }
 
-//=================================================================================================
-
 void PrsMgr_Presentation::Clear(const bool theWithDestruction)
 {
-  // This modification remove the contain of the structure:
-  // Consequence:
-  //    1. The memory zone of the group is reused
-  //    2. The speed for animation is constant
-  // myPresentableObject = NULL;
+
   SetUpdateStatus(true);
   if (IsDeleted())
   {
@@ -149,8 +118,6 @@ void PrsMgr_Presentation::Clear(const bool theWithDestruction)
   clear(theWithDestruction);
   DisconnectAll(Graphic3d_TOC_DESCENDANT);
 }
-
-//=================================================================================================
 
 void PrsMgr_Presentation::Compute()
 {
@@ -171,8 +138,6 @@ void PrsMgr_Presentation::Compute()
   myPresentableObject->Compute(myPresentationManager, this, aDispMode);
 }
 
-//=================================================================================================
-
 void PrsMgr_Presentation::computeHLR(const occ::handle<Graphic3d_Camera>& theProjector,
                                      occ::handle<Graphic3d_Structure>&    theStructToFill)
 {
@@ -185,21 +150,15 @@ void PrsMgr_Presentation::computeHLR(const occ::handle<Graphic3d_Camera>& thePro
   myPresentableObject->computeHLR(theProjector, Transformation(), aPrs);
 }
 
-//=================================================================================================
-
 void PrsMgr_Presentation::RecomputeTransformation(const occ::handle<Graphic3d_Camera>& theProjector)
 {
   myPresentableObject->RecomputeTransformation(theProjector);
 }
 
-//=================================================================================================
-
 PrsMgr_Presentation::~PrsMgr_Presentation()
 {
   Erase();
 }
-
-//=================================================================================================
 
 void PrsMgr_Presentation::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

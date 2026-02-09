@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_ContextDependentKinematicLinkRepresentation;
 
-//! Read & Write tool for ContextDependentKinematicLinkRepresentation
 class RWStepKinematics_RWContextDependentKinematicLinkRepresentation
 {
 public:

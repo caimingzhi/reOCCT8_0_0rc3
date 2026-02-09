@@ -12,8 +12,6 @@ bool GeomFill_TrihedronLaw::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
   return true;
 }
 
-//=================================================================================================
-
 GeomFill_PipeError GeomFill_TrihedronLaw::ErrorStatus() const
 {
   return GeomFill_PipeOk;

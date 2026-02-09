@@ -14,8 +14,6 @@ class StepRepr_RepresentationItem;
 class TCollection_AsciiString;
 class TopoDS_Shape;
 
-//! Provides data to process non-manifold topology when
-//! reading from STEP.
 class StepToTopoDS_NMTool
 {
 public:

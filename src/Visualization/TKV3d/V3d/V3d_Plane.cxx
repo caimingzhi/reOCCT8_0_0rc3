@@ -8,14 +8,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(V3d_Plane, Standard_Transient)
 
-//=================================================================================================
-
 V3d_Plane::V3d_Plane(const double theA, const double theB, const double theC, const double theD)
     : myPlane(new Graphic3d_ClipPlane(gp_Pln(theA, theB, theC, theD)))
 {
 }
-
-//=================================================================================================
 
 void V3d_Plane::SetPlane(const double theA, const double theB, const double theC, const double theD)
 {
@@ -25,8 +21,6 @@ void V3d_Plane::SetPlane(const double theA, const double theB, const double theC
     Update();
   }
 }
-
-//=================================================================================================
 
 void V3d_Plane::Display(const occ::handle<V3d_View>& theView, const Quantity_Color& theColor)
 {
@@ -62,8 +56,6 @@ void V3d_Plane::Display(const occ::handle<V3d_View>& theView, const Quantity_Col
   Update();
 }
 
-//=================================================================================================
-
 void V3d_Plane::Erase()
 {
   if (!myGraphicStructure.IsNull())
@@ -71,8 +63,6 @@ void V3d_Plane::Erase()
     myGraphicStructure->Erase();
   }
 }
-
-//=================================================================================================
 
 void V3d_Plane::Plane(double& theA, double& theB, double& theC, double& theD) const
 {
@@ -83,8 +73,6 @@ void V3d_Plane::Plane(double& theA, double& theB, double& theC, double& theD) co
   theD                                            = anEquation[3];
 }
 
-//=================================================================================================
-
 bool V3d_Plane::IsDisplayed() const
 {
   if (myGraphicStructure.IsNull())
@@ -94,8 +82,6 @@ bool V3d_Plane::IsDisplayed() const
 
   return myGraphicStructure->IsDisplayed();
 }
-
-//=================================================================================================
 
 void V3d_Plane::Update()
 {

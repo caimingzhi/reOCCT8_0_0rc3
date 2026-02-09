@@ -4,25 +4,17 @@
 #include <TopOpeBRepBuild_WireToFace.hpp>
 #include <TopOpeBRepDS_BuildTool.hpp>
 
-//=================================================================================================
-
 TopOpeBRepBuild_WireToFace::TopOpeBRepBuild_WireToFace() = default;
-
-//=================================================================================================
 
 void TopOpeBRepBuild_WireToFace::Init()
 {
   myLW.Clear();
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_WireToFace::AddWire(const TopoDS_Wire& W)
 {
   myLW.Append(W);
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_WireToFace::MakeFaces(const TopoDS_Face& F, NCollection_List<TopoDS_Shape>& LF)
 {

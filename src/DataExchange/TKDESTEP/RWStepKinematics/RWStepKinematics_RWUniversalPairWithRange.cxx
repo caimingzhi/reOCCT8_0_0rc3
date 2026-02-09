@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:16 2020
+
 
 #include "RWStepKinematics_RWUniversalPairWithRange.hpp"
 
@@ -12,11 +12,7 @@
 #include <StepKinematics_KinematicJoint.hpp>
 #include <Standard_Real.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWUniversalPairWithRange::RWStepKinematics_RWUniversalPairWithRange() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWUniversalPairWithRange::ReadStep(
   const occ::handle<StepData_StepReaderData>&               theData,
@@ -24,16 +20,12 @@ void RWStepKinematics_RWUniversalPairWithRange::ReadStep(
   occ::handle<Interface_Check>&                             theArch,
   const occ::handle<StepKinematics_UniversalPairWithRange>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 17, theArch, "universal_pair_with_range"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
-
-  // Inherited fields of ItemDefinedTransformation
 
   occ::handle<TCollection_HAsciiString> aItemDefinedTransformation_Name;
   theData->ReadString(theNum,
@@ -74,8 +66,6 @@ void RWStepKinematics_RWUniversalPairWithRange::ReadStep(
                       STANDARD_TYPE(StepRepr_RepresentationItem),
                       aItemDefinedTransformation_TransformItem2);
 
-  // Inherited fields of KinematicPair
-
   occ::handle<StepKinematics_KinematicJoint> aKinematicPair_Joint;
   theData->ReadEntity(theNum,
                       6,
@@ -83,8 +73,6 @@ void RWStepKinematics_RWUniversalPairWithRange::ReadStep(
                       theArch,
                       STANDARD_TYPE(StepKinematics_KinematicJoint),
                       aKinematicPair_Joint);
-
-  // Inherited fields of LowOrderKinematicPair
 
   bool aLowOrderKinematicPair_TX;
   theData->ReadBoolean(theNum,
@@ -128,8 +116,6 @@ void RWStepKinematics_RWUniversalPairWithRange::ReadStep(
                        theArch,
                        aLowOrderKinematicPair_RZ);
 
-  // Inherited fields of UniversalPair
-
   double aUniversalPair_InputSkewAngle;
   bool   hasUniversalPair_InputSkewAngle = true;
   if (theData->IsParamDefined(theNum, 13))
@@ -145,8 +131,6 @@ void RWStepKinematics_RWUniversalPairWithRange::ReadStep(
     hasUniversalPair_InputSkewAngle = false;
     aUniversalPair_InputSkewAngle   = 0;
   }
-
-  // Own fields of UniversalPairWithRange
 
   double aLowerLimitFirstRotation;
   bool   hasLowerLimitFirstRotation = true;
@@ -204,7 +188,6 @@ void RWStepKinematics_RWUniversalPairWithRange::ReadStep(
     aUpperLimitSecondRotation   = 0;
   }
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aItemDefinedTransformation_Name,
                hasItemDefinedTransformation_Description,
@@ -230,18 +213,12 @@ void RWStepKinematics_RWUniversalPairWithRange::ReadStep(
                aUpperLimitSecondRotation);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWUniversalPairWithRange::WriteStep(
   StepData_StepWriter&                                      theSW,
   const occ::handle<StepKinematics_UniversalPairWithRange>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Inherited fields of ItemDefinedTransformation
 
   theSW.Send(theEnt->ItemDefinedTransformation()->Name());
 
@@ -256,11 +233,7 @@ void RWStepKinematics_RWUniversalPairWithRange::WriteStep(
 
   theSW.Send(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Own fields of KinematicPair
-
   theSW.Send(theEnt->Joint());
-
-  // Own fields of LowOrderKinematicPair
 
   theSW.SendBoolean(theEnt->TX());
 
@@ -274,16 +247,12 @@ void RWStepKinematics_RWUniversalPairWithRange::WriteStep(
 
   theSW.SendBoolean(theEnt->RZ());
 
-  // Own fields of UniversalPair
-
   if (theEnt->HasInputSkewAngle())
   {
     theSW.Send(theEnt->InputSkewAngle());
   }
   else
     theSW.SendUndef();
-
-  // Own fields of UniversalPairWithRange
 
   if (theEnt->HasLowerLimitFirstRotation())
   {
@@ -314,28 +283,14 @@ void RWStepKinematics_RWUniversalPairWithRange::WriteStep(
     theSW.SendUndef();
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWUniversalPairWithRange::Share(
   const occ::handle<StepKinematics_UniversalPairWithRange>& theEnt,
   Interface_EntityIterator&                                 iter) const
 {
 
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of ItemDefinedTransformation
-
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem1());
 
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Inherited fields of KinematicPair
-
   iter.AddItem(theEnt->StepKinematics_KinematicPair::Joint());
-
-  // Inherited fields of LowOrderKinematicPair
-
-  // Inherited fields of UniversalPair
-
-  // Own fields of UniversalPairWithRange
 }

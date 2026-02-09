@@ -11,7 +11,6 @@ class StepGeom_PointReplica;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for PointReplica
 class RWStepGeom_RWPointReplica
 {
 public:

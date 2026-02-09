@@ -10,7 +10,6 @@ class StepShape_CsgSolid : public StepShape_SolidModel
 {
 
 public:
-  //! Returns a CsgSolid
   Standard_EXPORT StepShape_CsgSolid();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

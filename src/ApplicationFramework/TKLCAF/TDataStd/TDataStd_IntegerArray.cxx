@@ -12,18 +12,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_IntegerArray, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_IntegerArray::GetID()
 {
   static Standard_GUID TDataStd_IntegerArrayID("2a96b61d-ec8b-11d0-bee7-080009dc3333");
   return TDataStd_IntegerArrayID;
 }
 
-//=======================================================================
-// function : SetAttr
-// purpose  : Implements Set functionality
-//=======================================================================
 static occ::handle<TDataStd_IntegerArray> SetAttr(const TDF_Label&     label,
                                                   const int            lower,
                                                   const int            upper,
@@ -46,15 +40,11 @@ static occ::handle<TDataStd_IntegerArray> SetAttr(const TDF_Label&     label,
   return A;
 }
 
-//=================================================================================================
-
 TDataStd_IntegerArray::TDataStd_IntegerArray()
     : myIsDelta(false),
       myID(GetID())
 {
 }
-
-//=================================================================================================
 
 void TDataStd_IntegerArray::Init(const int lower, const int upper)
 {
@@ -62,11 +52,6 @@ void TDataStd_IntegerArray::Init(const int lower, const int upper)
   Backup();
   myValue = new NCollection_HArray1<int>(lower, upper, 0);
 }
-
-//=======================================================================
-// function : Set
-// purpose  : isDelta applicable only for new attributes
-//=======================================================================
 
 occ::handle<TDataStd_IntegerArray> TDataStd_IntegerArray::Set(const TDF_Label& label,
                                                               const int        lower,
@@ -76,11 +61,6 @@ occ::handle<TDataStd_IntegerArray> TDataStd_IntegerArray::Set(const TDF_Label& l
 {
   return SetAttr(label, lower, upper, isDelta, GetID());
 }
-
-//=======================================================================
-// function : Set
-// purpose  : Set user defined attribute with specific ID
-//=======================================================================
 
 occ::handle<TDataStd_IntegerArray> TDataStd_IntegerArray::Set(const TDF_Label&     label,
                                                               const Standard_GUID& theGuid,
@@ -92,8 +72,6 @@ occ::handle<TDataStd_IntegerArray> TDataStd_IntegerArray::Set(const TDF_Label&  
   return SetAttr(label, lower, upper, isDelta, theGuid);
 }
 
-//=================================================================================================
-
 void TDataStd_IntegerArray::SetValue(const int index, const int value)
 {
   if (myValue.IsNull())
@@ -104,16 +82,12 @@ void TDataStd_IntegerArray::SetValue(const int index, const int value)
   myValue->SetValue(index, value);
 }
 
-//=================================================================================================
-
 int TDataStd_IntegerArray::Value(const int index) const
 {
   if (myValue.IsNull())
     return 0;
   return myValue->Value(index);
 }
-
-//=================================================================================================
 
 int TDataStd_IntegerArray::Lower() const
 {
@@ -122,8 +96,6 @@ int TDataStd_IntegerArray::Lower() const
   return myValue->Lower();
 }
 
-//=================================================================================================
-
 int TDataStd_IntegerArray::Upper() const
 {
   if (myValue.IsNull())
@@ -131,21 +103,12 @@ int TDataStd_IntegerArray::Upper() const
   return myValue->Upper();
 }
 
-//=================================================================================================
-
 int TDataStd_IntegerArray::Length() const
 {
   if (myValue.IsNull())
     return 0;
   return myValue->Length();
 }
-
-//=======================================================================
-// function : ChangeArray
-// purpose  : If value of <newArray> differs from <myValue>, Backup
-//         : performed and myValue refers to new instance of HArray1OfInteger
-//         : that holds <newArray>
-//=======================================================================
 
 void TDataStd_IntegerArray::ChangeArray(const occ::handle<NCollection_HArray1<int>>& newArray,
                                         const bool                                   isCheckItems)
@@ -175,7 +138,7 @@ void TDataStd_IntegerArray::ChangeArray(const occ::handle<NCollection_HArray1<in
   }
 
   Backup();
-  // Handles of myValue of current and backuped attributes will be different!
+
   if (myValue.IsNull() || !aDimEqual)
     myValue = new NCollection_HArray1<int>(aLower, anUpper);
 
@@ -183,14 +146,10 @@ void TDataStd_IntegerArray::ChangeArray(const occ::handle<NCollection_HArray1<in
     myValue->SetValue(i, newArray->Value(i));
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_IntegerArray::ID() const
 {
   return myID;
 }
-
-//=================================================================================================
 
 void TDataStd_IntegerArray::SetID(const Standard_GUID& theGuid)
 {
@@ -200,22 +159,16 @@ void TDataStd_IntegerArray::SetID(const Standard_GUID& theGuid)
   myID = theGuid;
 }
 
-//=================================================================================================
-
 void TDataStd_IntegerArray::SetID()
 {
   Backup();
   myID = GetID();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDataStd_IntegerArray::NewEmpty() const
 {
   return new TDataStd_IntegerArray();
 }
-
-//=================================================================================================
 
 void TDataStd_IntegerArray::Restore(const occ::handle<TDF_Attribute>& With)
 {
@@ -235,8 +188,6 @@ void TDataStd_IntegerArray::Restore(const occ::handle<TDF_Attribute>& With)
     myValue.Nullify();
 }
 
-//=================================================================================================
-
 void TDataStd_IntegerArray::Paste(const occ::handle<TDF_Attribute>& Into,
                                   const occ::handle<TDF_RelocationTable>&) const
 {
@@ -252,8 +203,6 @@ void TDataStd_IntegerArray::Paste(const occ::handle<TDF_Attribute>& Into,
     }
   }
 }
-
-//=================================================================================================
 
 Standard_OStream& TDataStd_IntegerArray::Dump(Standard_OStream& anOS) const
 {
@@ -272,13 +221,8 @@ Standard_OStream& TDataStd_IntegerArray::Dump(Standard_OStream& anOS) const
   anOS << sguid;
   anOS << std::endl;
 
-  // anOS <<"\nAttribute fields: ";
-  //  anOS << TDF_Attribute::Dump(anOS);
-
   return anOS;
 }
-
-//=================================================================================================
 
 occ::handle<TDF_DeltaOnModification> TDataStd_IntegerArray::DeltaOnModification(
   const occ::handle<TDF_Attribute>& OldAttribute) const
@@ -289,8 +233,6 @@ occ::handle<TDF_DeltaOnModification> TDataStd_IntegerArray::DeltaOnModification(
   else
     return new TDF_DefaultDeltaOnModification(OldAttribute);
 }
-
-//=================================================================================================
 
 void TDataStd_IntegerArray::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

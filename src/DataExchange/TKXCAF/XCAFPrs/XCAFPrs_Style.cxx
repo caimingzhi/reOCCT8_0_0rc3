@@ -2,8 +2,6 @@
 
 #include <Standard_Dump.hpp>
 
-//=================================================================================================
-
 XCAFPrs_Style::XCAFPrs_Style()
     : myHasColorSurf(false),
       myHasColorCurv(false),
@@ -11,15 +9,11 @@ XCAFPrs_Style::XCAFPrs_Style()
 {
 }
 
-//=================================================================================================
-
 void XCAFPrs_Style::SetColorSurf(const Quantity_ColorRGBA& theColor)
 {
   myColorSurf    = theColor;
   myHasColorSurf = true;
 }
-
-//=================================================================================================
 
 void XCAFPrs_Style::UnSetColorSurf()
 {
@@ -28,23 +22,17 @@ void XCAFPrs_Style::UnSetColorSurf()
   myColorSurf.SetAlpha(1.0f);
 }
 
-//=================================================================================================
-
 void XCAFPrs_Style::SetColorCurv(const Quantity_Color& theColor)
 {
   myColorCurv    = theColor;
   myHasColorCurv = true;
 }
 
-//=================================================================================================
-
 void XCAFPrs_Style::UnSetColorCurv()
 {
   myHasColorCurv = false;
   myColorCurv.SetValues(Quantity_NOC_YELLOW);
 }
-
-//=================================================================================================
 
 void XCAFPrs_Style::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

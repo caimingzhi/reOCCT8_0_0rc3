@@ -18,8 +18,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_VectorPrsBuilder, MeshVS_PrsBuilder)
 
-//=================================================================================================
-
 MeshVS_VectorPrsBuilder::MeshVS_VectorPrsBuilder(const occ::handle<MeshVS_Mesh>&       Parent,
                                                  const double                          MaxLength,
                                                  const Quantity_Color&                 VectorColor,
@@ -43,8 +41,6 @@ MeshVS_VectorPrsBuilder::MeshVS_VectorPrsBuilder(const occ::handle<MeshVS_Mesh>&
   }
 }
 
-//=================================================================================================
-
 const NCollection_DataMap<int, gp_Vec>& MeshVS_VectorPrsBuilder::GetVectors(
   const bool IsElements) const
 {
@@ -53,8 +49,6 @@ const NCollection_DataMap<int, gp_Vec>& MeshVS_VectorPrsBuilder::GetVectors(
   else
     return myNodeVectorMap;
 }
-
-//=================================================================================================
 
 void MeshVS_VectorPrsBuilder::SetVectors(const bool                              IsElements,
                                          const NCollection_DataMap<int, gp_Vec>& theMap)
@@ -65,8 +59,6 @@ void MeshVS_VectorPrsBuilder::SetVectors(const bool                             
     myNodeVectorMap = theMap;
 }
 
-//=================================================================================================
-
 bool MeshVS_VectorPrsBuilder::HasVectors(const bool IsElement) const
 {
   bool aRes = (myNodeVectorMap.Extent() > 0);
@@ -74,8 +66,6 @@ bool MeshVS_VectorPrsBuilder::HasVectors(const bool IsElement) const
     aRes = (myElemVectorMap.Extent() > 0);
   return aRes;
 }
-
-//=================================================================================================
 
 bool MeshVS_VectorPrsBuilder::GetVector(const bool IsElement, const int ID, gp_Vec& Vect) const
 {
@@ -90,8 +80,6 @@ bool MeshVS_VectorPrsBuilder::GetVector(const bool IsElement, const int ID, gp_V
   return aRes;
 }
 
-//=================================================================================================
-
 void MeshVS_VectorPrsBuilder::SetVector(const bool IsElement, const int ID, const gp_Vec& Vect)
 {
   NCollection_DataMap<int, gp_Vec>* aMap = &myNodeVectorMap;
@@ -104,8 +92,6 @@ void MeshVS_VectorPrsBuilder::SetVector(const bool IsElement, const int ID, cons
   else
     aMap->Bind(ID, Vect);
 }
-
-//=================================================================================================
 
 void MeshVS_VectorPrsBuilder::GetMinMaxVectorValue(const bool IsElement,
                                                    double&    MinValue,
@@ -130,8 +116,6 @@ void MeshVS_VectorPrsBuilder::GetMinMaxVectorValue(const bool IsElement,
       MaxValue = aCurValue;
   }
 }
-
-//=================================================================================================
 
 #define NB_VERTICES 2
 #define NB_BOUNDS 1
@@ -163,23 +147,20 @@ void MeshVS_VectorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
   int                        NbNodes;
   MeshVS_EntityType          aType;
 
-  // DECLARE ARRAYS OF PRIMITIVES
   const NCollection_DataMap<int, gp_Vec>& aMap       = GetVectors(IsElement);
   int                                     aNbVectors = aMap.Extent();
 
   if (aNbVectors <= 0)
     return;
 
-  // polylines
   int aNbVertices = aNbVectors * NB_VERTICES;
 
   occ::handle<Graphic3d_ArrayOfPrimitives> aLineArray = new Graphic3d_ArrayOfSegments(aNbVertices);
   occ::handle<Graphic3d_ArrayOfPrimitives> aArrowLineArray =
     new Graphic3d_ArrayOfSegments(aNbVertices);
 
-  occ::handle<Graphic3d_ArrayOfPrimitives> aTriangleArray = new Graphic3d_ArrayOfSegments(
-    aNbVectors * 8 /* vertices per arrow */,
-    aNbVectors * 12 /* segments per arrow */ * 2 /* indices per segment */);
+  occ::handle<Graphic3d_ArrayOfPrimitives> aTriangleArray =
+    new Graphic3d_ArrayOfSegments(aNbVectors * 8, aNbVectors * 12 * 2);
 
   NCollection_Array1<gp_Pnt> anArrowPnt(1, 8);
   double                     k, b, aMaxValue, aMinValue, aValue, X, Y, Z;
@@ -203,7 +184,6 @@ void MeshVS_VectorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
 
   TColStd_PackedMapOfInteger aCustomElements;
 
-  // subtract the hidden elements and ids to exclude (to minimize allocated memory)
   TColStd_PackedMapOfInteger anIDs;
   anIDs.Assign(IDs);
   if (IsElement)
@@ -273,7 +253,6 @@ void MeshVS_VectorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
   Quantity_Color aColor;
   aDrawer->GetColor(MeshVS_DA_VectorColor, aColor);
 
-  // Add primitive arrays to group
   occ::handle<Graphic3d_AspectLine3d> aLinAspect =
     new Graphic3d_AspectLine3d(aColor, Aspect_TOL_SOLID, 1.5);
 
@@ -301,10 +280,6 @@ void MeshVS_VectorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
     CustomBuild(Prs, aCustomElements, IDsToExclude, theDisplayMode);
 }
 
-//=======================================================================
-// name    : DrawVector
-// Purpose : Fill arrays of primitives for drawing force
-//=======================================================================
 void MeshVS_VectorPrsBuilder::DrawVector(
   const gp_Trsf&                                  theTrsf,
   const double                                    theLength,
@@ -318,7 +293,7 @@ void MeshVS_VectorPrsBuilder::DrawVector(
 
   const double aMinLength   = theMaxLength * (1 - mySimpleStartPrm);
   const double aLocalLength = (!myIsSimplePrs || theLength > aMinLength ? theLength : aMinLength);
-  // draw line
+
   gp_Pnt aLinePnt[2] = {gp_Pnt(0, 0, 0), gp_Pnt(0, 0, aLocalLength)};
   theTrsf.Transforms(aLinePnt[0].ChangeCoord());
   theTrsf.Transforms(aLinePnt[1].ChangeCoord());
@@ -326,7 +301,6 @@ void MeshVS_VectorPrsBuilder::DrawVector(
   theLines->AddVertex(aLinePnt[0]);
   theLines->AddVertex(aLinePnt[1]);
 
-  // draw arrow
   if (!myIsSimplePrs)
   {
     int aLower = theArrowPoints.Lower(), aUpper = theArrowPoints.Upper();
@@ -371,10 +345,6 @@ void MeshVS_VectorPrsBuilder::DrawVector(
   }
 }
 
-//=======================================================================
-// name    : calculateArrow
-// Purpose : Calculate points of arrow ( 8 pnts )
-//=======================================================================
 double MeshVS_VectorPrsBuilder::calculateArrow(NCollection_Array1<gp_Pnt>& Points,
                                                const double                Length,
                                                const double                ArrowPart)
@@ -395,14 +365,10 @@ double MeshVS_VectorPrsBuilder::calculateArrow(NCollection_Array1<gp_Pnt>& Point
   return h;
 }
 
-//=================================================================================================
-
 void MeshVS_VectorPrsBuilder::SetSimplePrsMode(const bool IsSimpleArrow)
 {
   myIsSimplePrs = IsSimpleArrow;
 }
-
-//=================================================================================================
 
 void MeshVS_VectorPrsBuilder::SetSimplePrsParams(const double theLineWidthParam,
                                                  const double theStartParam,

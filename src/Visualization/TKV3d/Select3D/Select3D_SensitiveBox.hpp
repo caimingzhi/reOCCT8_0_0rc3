@@ -2,22 +2,13 @@
 
 #include <Select3D_SensitiveEntity.hpp>
 
-//! A framework to define selection by a sensitive box.
 class Select3D_SensitiveBox : public Select3D_SensitiveEntity
 {
   DEFINE_STANDARD_RTTIEXT(Select3D_SensitiveBox, Select3D_SensitiveEntity)
 public:
-  //! Constructs a sensitive box object defined by the
-  //! owner theOwnerId, and the box theBox.
   Standard_EXPORT Select3D_SensitiveBox(const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
                                         const Bnd_Box&                            theBox);
 
-  //! Constructs a sensitive box object defined by the
-  //! owner theOwnerId, and the coordinates theXmin, theYMin, theZMin, theXMax, theYMax, theZMax.
-  //! theXmin, theYMin and theZMin define the minimum point in
-  //! the front lower left hand corner of the box,
-  //! and theXMax, theYMax and theZMax define the maximum
-  //! point in the back upper right hand corner of the box.
   Standard_EXPORT Select3D_SensitiveBox(const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
                                         const double                              theXMin,
                                         const double                              theYMin,
@@ -26,12 +17,10 @@ public:
                                         const double                              theYMax,
                                         const double                              theZMax);
 
-  //! Returns the amount of sub-entities in sensitive
   Standard_EXPORT int NbSubElements() const override;
 
   Standard_EXPORT occ::handle<Select3D_SensitiveEntity> GetConnected() override;
 
-  //! Checks whether the box overlaps current selecting volume
   Standard_EXPORT bool Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                SelectBasics_PickResult&             thePickResult) override;
 
@@ -48,21 +37,15 @@ public:
     return aBox;
   }
 
-  //! Returns center of the box. If location
-  //! transformation is set, it will be applied
   Standard_EXPORT gp_Pnt CenterOfGeometry() const override;
 
-  //! Returns coordinates of the box. If location
-  //! transformation is set, it will be applied
   Standard_EXPORT Select3D_BndBox3d BoundingBox() override;
 
-  //! Returns TRUE if BVH tree is in invalidated state
   bool ToBuildBVH() const override { return false; }
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
 private:
-  Select3D_BndBox3d myBox;      //!< 3d coordinates of box corners
-  gp_Pnt            myCenter3d; //!< 3d coordinate of box's center
+  Select3D_BndBox3d myBox;
+  gp_Pnt            myCenter3d;
 };

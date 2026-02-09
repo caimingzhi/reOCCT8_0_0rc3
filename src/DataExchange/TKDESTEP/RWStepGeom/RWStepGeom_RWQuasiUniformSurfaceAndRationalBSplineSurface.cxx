@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -34,28 +23,21 @@ void RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface::ReadStep(
 
   int num = num0;
 
-  // --- Instance of plex component BoundedSurface ---
-
   if (!data->CheckNbParams(num, 0, ach, "bounded_surface"))
     return;
 
   num = data->NextForComplex(num);
 
-  // --- Instance of common supertype BSplineSurface ---
-
   if (!data->CheckNbParams(num, 7, ach, "b_spline_surface"))
     return;
-  // --- field : uDegree ---
 
   int aUDegree;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadInteger(num, 1, "u_degree", ach, aUDegree);
-  // --- field : vDegree ---
 
   int aVDegree;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
   data->ReadInteger(num, 2, "v_degree", ach, aVDegree);
-  // --- field : controlPointsList ---
 
   occ::handle<NCollection_HArray2<occ::handle<StepGeom_CartesianPoint>>> aControlPointsList;
   occ::handle<StepGeom_CartesianPoint>                                   anent3;
@@ -73,7 +55,7 @@ void RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface::ReadStep(
       {
         for (int j3 = 1; j3 <= nbj3; j3++)
         {
-          // szv#4:S4163:12Mar99 `bool stat3 =` not needed
+
           if (data->ReadEntity(nsi3,
                                j3,
                                "cartesian_point",
@@ -86,8 +68,6 @@ void RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface::ReadStep(
     }
   }
 
-  // --- field : surfaceForm ---
-
   StepGeom_BSplineSurfaceForm aSurfaceForm = StepGeom_bssfPlaneSurf;
   if (data->ParamType(num, 4) == Interface_ParamEnum)
   {
@@ -99,44 +79,33 @@ void RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface::ReadStep(
   }
   else
     ach->AddFail("Parameter #4 (surface_form) is not an enumeration");
-  // --- field : uClosed ---
 
   StepData_Logical aUClosed;
-  // szv#4:S4163:12Mar99 `bool stat5 =` not needed
+
   data->ReadLogical(num, 5, "u_closed", ach, aUClosed);
-  // --- field : vClosed ---
 
   StepData_Logical aVClosed;
-  // szv#4:S4163:12Mar99 `bool stat6 =` not needed
+
   data->ReadLogical(num, 6, "v_closed", ach, aVClosed);
-  // --- field : selfIntersect ---
 
   StepData_Logical aSelfIntersect;
-  // szv#4:S4163:12Mar99 `bool stat7 =` not needed
+
   data->ReadLogical(num, 7, "self_intersect", ach, aSelfIntersect);
 
   num = data->NextForComplex(num);
-
-  // --- Instance of plex component GeometricRepresentationItem ---
 
   if (!data->CheckNbParams(num, 0, ach, "geometric_representation_item"))
     return;
 
   num = data->NextForComplex(num);
 
-  // --- Instance of plex component QuasiUniformSurface ---
-
   if (!data->CheckNbParams(num, 0, ach, "quasi_uniform_surface"))
     return;
 
   num = data->NextForComplex(num);
 
-  // --- Instance of plex component RationalBSplineSurface ---
-
   if (!data->CheckNbParams(num, 1, ach, "rational_b_spline_surface"))
     return;
-
-  // --- field : weightsData ---
 
   occ::handle<NCollection_HArray2<double>> aWeightsData;
   double                                   aWeightsDataItem;
@@ -153,7 +122,7 @@ void RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface::ReadStep(
       {
         for (int j8 = 1; j8 <= nbj8; j8++)
         {
-          // szv#4:S4163:12Mar99 `bool stat8 =` not needed
+
           if (data->ReadReal(nsi8, j8, "weights_data", ach, aWeightsDataItem))
             aWeightsData->SetValue(i8, j8, aWeightsDataItem);
         }
@@ -163,25 +132,17 @@ void RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface::ReadStep(
 
   num = data->NextForComplex(num);
 
-  // --- Instance of plex component RepresentationItem ---
-
   if (!data->CheckNbParams(num, 1, ach, "representation_item"))
     return;
 
-  // --- field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat9 =` not needed
+
   data->ReadString(num, 1, "name", ach, aName);
 
   num = data->NextForComplex(num);
 
-  // --- Instance of plex component Surface ---
-
   if (!data->CheckNbParams(num, 0, ach, "surface"))
     return;
-
-  //--- Initialisation of the red entity ---
 
   ent->Init(aName,
             aUDegree,
@@ -199,20 +160,13 @@ void RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface::WriteStep(
   const occ::handle<StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface>& ent) const
 {
 
-  // --- Instance of plex component BoundedSurface ---
-
   SW.StartEntity("BOUNDED_SURFACE");
 
-  // --- Instance of common supertype BSplineSurface ---
-
   SW.StartEntity("B_SPLINE_SURFACE");
-  // --- field : uDegree ---
 
   SW.Send(ent->UDegree());
-  // --- field : vDegree ---
 
   SW.Send(ent->VDegree());
-  // --- field : controlPointsList ---
 
   SW.OpenSub();
   for (int i3 = 1; i3 <= ent->NbControlPointsListI(); i3++)
@@ -227,32 +181,20 @@ void RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface::WriteStep(
     SW.CloseSub();
   }
   SW.CloseSub();
-  // --- field : surfaceForm ---
 
   SW.SendEnum(RWStepGeom_RWBSplineSurfaceForm::ConvertToString(ent->SurfaceForm()));
 
-  // --- field : uClosed ---
-
   SW.SendLogical(ent->UClosed());
-  // --- field : vClosed ---
 
   SW.SendLogical(ent->VClosed());
-  // --- field : selfIntersect ---
 
   SW.SendLogical(ent->SelfIntersect());
 
-  // --- Instance of plex component GeometricRepresentationItem ---
-
   SW.StartEntity("GEOMETRIC_REPRESENTATION_ITEM");
-
-  // --- Instance of plex component QuasiUniformSurface ---
 
   SW.StartEntity("QUASI_UNIFORM_SURFACE");
 
-  // --- Instance of plex component RationalBSplineSurface ---
-
   SW.StartEntity("RATIONAL_B_SPLINE_SURFACE");
-  // --- field : weightsData ---
 
   SW.OpenSub();
   for (int i8 = 1; i8 <= ent->NbWeightsDataI(); i8++)
@@ -268,14 +210,9 @@ void RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface::WriteStep(
   }
   SW.CloseSub();
 
-  // --- Instance of plex component RepresentationItem ---
-
   SW.StartEntity("REPRESENTATION_ITEM");
-  // --- field : name ---
 
   SW.Send(ent->Name());
-
-  // --- Instance of plex component Surface ---
 
   SW.StartEntity("SURFACE");
 }

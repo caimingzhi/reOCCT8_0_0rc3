@@ -7,23 +7,12 @@
 #include <StdFail_NotDone.hpp>
 #include <Standard_OutOfRange.hpp>
 
-//! Generic class for finding extremal distances between a point and a curve.
-//!
-//! This template class searches for all parameter values u where the distance
-//! function F(u) = distance(P, C(u)) has an extremum, i.e., where dF/du = 0.
-//!
-//! @tparam TheCurve   The curve type (e.g., Adaptor3d_Curve, Adaptor2d_Curve2d)
-//! @tparam TheTool    The curve tool providing static methods (FirstParameter, LastParameter)
-//! @tparam ThePOnC    The point-on-curve type (e.g., Extrema_POnCurv, Extrema_POnCurv2d)
-//! @tparam ThePoint   The point type (e.g., gp_Pnt, gp_Pnt2d)
-//! @tparam ThePCF     The point-curve function type for extremum computation
 template <typename TheCurve, typename TheTool, typename ThePOnC, typename ThePoint, typename ThePCF>
 class Extrema_GGenExtPC
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Default constructor.
   Extrema_GGenExtPC()
       : myDone(false),
         myInit(false),
@@ -35,12 +24,6 @@ public:
   {
   }
 
-  //! Calculates all extremum distances between point P and curve C.
-  //! @param theP       The point
-  //! @param theC       The curve
-  //! @param theNbSample Number of sample points for root finding
-  //! @param theTolU    Tolerance on parameter u
-  //! @param theTolF    Tolerance on function value
   Extrema_GGenExtPC(const ThePoint& theP,
                     const TheCurve& theC,
                     const int       theNbSample,
@@ -52,14 +35,6 @@ public:
     Perform(theP);
   }
 
-  //! Calculates all extremum distances in a given parameter range.
-  //! @param theP       The point
-  //! @param theC       The curve
-  //! @param theNbSample Number of sample points for root finding
-  //! @param theUmin    Lower bound of parameter range
-  //! @param theUsup    Upper bound of parameter range
-  //! @param theTolU    Tolerance on parameter u
-  //! @param theTolF    Tolerance on function value
   Extrema_GGenExtPC(const ThePoint& theP,
                     const TheCurve& theC,
                     const int       theNbSample,
@@ -73,11 +48,6 @@ public:
     Perform(theP);
   }
 
-  //! Initializes the algorithm with the full curve parameter range.
-  //! @param theC       The curve
-  //! @param theNbU     Number of sample points
-  //! @param theTolU    Tolerance on parameter u
-  //! @param theTolF    Tolerance on function value
   void Initialize(const TheCurve& theC,
                   const int       theNbU,
                   const double    theTolU,
@@ -92,13 +62,6 @@ public:
     myusup = TheTool::LastParameter(theC);
   }
 
-  //! Initializes the algorithm with a specified parameter range.
-  //! @param theC       The curve
-  //! @param theNbU     Number of sample points
-  //! @param theUmin    Lower bound of parameter range
-  //! @param theUsup    Upper bound of parameter range
-  //! @param theTolU    Tolerance on parameter u
-  //! @param theTolF    Tolerance on function value
   void Initialize(const TheCurve& theC,
                   const int       theNbU,
                   const double    theUmin,
@@ -115,12 +78,6 @@ public:
     myusup = theUsup;
   }
 
-  //! Initializes only the parameter range and tolerances.
-  //! @param theNbU     Number of sample points
-  //! @param theUmin    Lower bound of parameter range
-  //! @param theUsup    Upper bound of parameter range
-  //! @param theTolU    Tolerance on parameter u
-  //! @param theTolF    Tolerance on function value
   void Initialize(const int    theNbU,
                   const double theUmin,
                   const double theUsup,
@@ -134,12 +91,8 @@ public:
     myusup     = theUsup;
   }
 
-  //! Initializes the curve for the function.
-  //! @param theC The curve
   void Initialize(const TheCurve& theC) { myF.Initialize(theC); }
 
-  //! Performs the extremum search for the given point.
-  //! @param theP The point to find extrema from
   void Perform(const ThePoint& theP)
   {
     myF.SetPoint(theP);
@@ -155,11 +108,8 @@ public:
     myDone = true;
   }
 
-  //! Returns true if the distances are found.
   bool IsDone() const { return myDone; }
 
-  //! Returns the number of extremum distances.
-  //! @return Number of extrema found
   int NbExt() const
   {
     if (!IsDone())
@@ -169,9 +119,6 @@ public:
     return myF.NbExt();
   }
 
-  //! Returns the Nth extremum square distance.
-  //! @param theN Index of the extremum (1-based)
-  //! @return Square distance value
   double SquareDistance(const int theN) const
   {
     if ((theN < 1) || (theN > NbExt()))
@@ -181,9 +128,6 @@ public:
     return myF.SquareDistance(theN);
   }
 
-  //! Returns true if the Nth extremum distance is a minimum.
-  //! @param theN Index of the extremum (1-based)
-  //! @return true if minimum, false if maximum
   bool IsMin(const int theN) const
   {
     if ((theN < 1) || (theN > NbExt()))
@@ -193,9 +137,6 @@ public:
     return myF.IsMin(theN);
   }
 
-  //! Returns the point of the Nth extremum distance.
-  //! @param theN Index of the extremum (1-based)
-  //! @return The point on curve
   const ThePOnC& Point(const int theN) const
   {
     if ((theN < 1) || (theN > NbExt()))

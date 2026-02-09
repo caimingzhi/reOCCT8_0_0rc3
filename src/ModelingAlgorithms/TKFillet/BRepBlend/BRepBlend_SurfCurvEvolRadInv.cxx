@@ -3,8 +3,6 @@
 #include <Law_Function.hpp>
 #include <math_Matrix.hpp>
 
-//=================================================================================================
-
 BRepBlend_SurfCurvEvolRadInv::BRepBlend_SurfCurvEvolRadInv(const occ::handle<Adaptor3d_Surface>& S,
                                                            const occ::handle<Adaptor3d_Curve>&   C,
                                                            const occ::handle<Adaptor3d_Curve>&   Cg,
@@ -15,8 +13,6 @@ BRepBlend_SurfCurvEvolRadInv::BRepBlend_SurfCurvEvolRadInv(const occ::handle<Ada
 {
   tevol = Evol;
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfCurvEvolRadInv::Set(const int Choix)
 {
@@ -37,14 +33,10 @@ void BRepBlend_SurfCurvEvolRadInv::Set(const int Choix)
   }
 }
 
-//=================================================================================================
-
 int BRepBlend_SurfCurvEvolRadInv::NbEquations() const
 {
   return 3;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfCurvEvolRadInv::Value(const math_Vector& X, math_Vector& F)
 {
@@ -53,7 +45,7 @@ bool BRepBlend_SurfCurvEvolRadInv::Value(const math_Vector& X, math_Vector& F)
   guide->D1(X(1), ptgui, d1gui);
   ray          = sg1 * tevol->Value(X(1));
   gp_Vec nplan = d1gui.Normalized();
-  //  double theD = -(nplan.XYZ().Dot(ptgui.XYZ()));
+
   gp_XYZ nplanXYZ(nplan.XYZ());
   gp_XYZ ptguiXYZ(ptgui.XYZ());
   double theD = nplanXYZ.Dot(ptguiXYZ);
@@ -77,8 +69,6 @@ bool BRepBlend_SurfCurvEvolRadInv::Value(const math_Vector& X, math_Vector& F)
   F(3) = ref.SquareMagnitude() - ray * ray;
   return true;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfCurvEvolRadInv::Derivatives(const math_Vector& X, math_Matrix& D)
 {
@@ -157,8 +147,6 @@ bool BRepBlend_SurfCurvEvolRadInv::Derivatives(const math_Vector& X, math_Matrix
   return true;
 }
 
-//=================================================================================================
-
 bool BRepBlend_SurfCurvEvolRadInv::Values(const math_Vector& X, math_Vector& F, math_Matrix& D)
 {
   gp_Pnt ptgui;
@@ -171,7 +159,7 @@ bool BRepBlend_SurfCurvEvolRadInv::Values(const math_Vector& X, math_Vector& F, 
   double normd1gui      = d1gui.Magnitude();
   double unsurnormd1gui = 1. / normd1gui;
   gp_Vec nplan          = d1gui.Multiplied(unsurnormd1gui);
-  //  double theD = -(nplan.XYZ().Dot(ptgui.XYZ()));
+
   gp_XYZ nplanXYZ(nplan.XYZ());
   gp_XYZ ptcurXYZ(ptgui.XYZ());
   double theD = nplanXYZ.Dot(ptcurXYZ);
@@ -245,14 +233,10 @@ bool BRepBlend_SurfCurvEvolRadInv::Values(const math_Vector& X, math_Vector& F, 
   return true;
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfCurvEvolRadInv::Set(const occ::handle<Adaptor2d_Curve2d>& Rst)
 {
   rst = Rst;
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfCurvEvolRadInv::GetTolerance(math_Vector& Tolerance, const double Tol) const
 {
@@ -264,8 +248,6 @@ void BRepBlend_SurfCurvEvolRadInv::GetTolerance(math_Vector& Tolerance, const do
   Tolerance(3) = rst->Resolution(std::min(ru, rv));
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfCurvEvolRadInv::GetBounds(math_Vector& InfBound, math_Vector& SupBound) const
 {
   InfBound(1) = guide->FirstParameter();
@@ -275,8 +257,6 @@ void BRepBlend_SurfCurvEvolRadInv::GetBounds(math_Vector& InfBound, math_Vector&
   InfBound(3) = rst->FirstParameter();
   SupBound(3) = rst->LastParameter();
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfCurvEvolRadInv::IsSolution(const math_Vector& Sol, const double Tol)
 {

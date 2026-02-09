@@ -8,12 +8,6 @@
 #include <IntAna2d_IntPoint.hpp>
 #include <Standard_NegativeValue.hpp>
 
-//   Circle passing by two points of given radius.
-//   ==============================================
-//==============================================================================
-//   Solution of the equation of second degree showing that the center of the  +
-//   circle is equidistant from two points.                                    +
-//==============================================================================
 GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const gp_Pnt2d& Point1,
                                            const gp_Pnt2d& Point2,
                                            const double    Radius,
@@ -53,7 +47,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const gp_Pnt2d& Point1,
         NbrSol   = 1;
         gp_Ax2d axe(gp_Pnt2d(0.5 * (Point1.XY() + Point2.XY())), dirx);
         cirsol(1) = gp_Circ2d(axe, Radius);
-        //      =================================
+
         qualifier1(1) = GccEnt_noqualifier;
         qualifier2(1) = GccEnt_noqualifier;
         TheSame1(1)   = 0;
@@ -75,7 +69,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const gp_Pnt2d& Point1,
               NbrSol++;
               gp_Pnt2d Center(Intp.Point(i).Value());
               cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-              //            =======================================================
+
               qualifier1(NbrSol) = GccEnt_noqualifier;
               qualifier2(NbrSol) = GccEnt_noqualifier;
               TheSame1(NbrSol)   = 0;

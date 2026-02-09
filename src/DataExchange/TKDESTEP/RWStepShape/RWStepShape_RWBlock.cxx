@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include "RWStepShape_RWBlock.hpp"
@@ -26,42 +15,28 @@ void RWStepShape_RWBlock::ReadStep(const occ::handle<StepData_StepReaderData>& d
                                    const occ::handle<StepShape_Block>&         ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 5, ach, "block"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- own field : position ---
-
   occ::handle<StepGeom_Axis2Placement3d> aPosition;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
   data->ReadEntity(num, 2, "position", ach, STANDARD_TYPE(StepGeom_Axis2Placement3d), aPosition);
 
-  // --- own field : x ---
-
   double aX;
-  // szv#4:S4163:12Mar99 `bool stat3 =` not needed
+
   data->ReadReal(num, 3, "x", ach, aX);
 
-  // --- own field : y ---
-
   double aY;
-  // szv#4:S4163:12Mar99 `bool stat4 =` not needed
+
   data->ReadReal(num, 4, "y", ach, aY);
 
-  // --- own field : z ---
-
   double aZ;
-  // szv#4:S4163:12Mar99 `bool stat5 =` not needed
-  data->ReadReal(num, 5, "z", ach, aZ);
 
-  //--- Initialisation of the read entity ---
+  data->ReadReal(num, 5, "z", ach, aZ);
 
   ent->Init(aName, aPosition, aX, aY, aZ);
 }
@@ -70,23 +45,13 @@ void RWStepShape_RWBlock::WriteStep(StepData_StepWriter&                SW,
                                     const occ::handle<StepShape_Block>& ent) const
 {
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
-
-  // --- own field : position ---
 
   SW.Send(ent->Position());
 
-  // --- own field : x ---
-
   SW.Send(ent->X());
 
-  // --- own field : y ---
-
   SW.Send(ent->Y());
-
-  // --- own field : z ---
 
   SW.Send(ent->Z());
 }

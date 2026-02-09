@@ -19,8 +19,6 @@ public:
 
   Standard_EXPORT TopOpeBRepBuild_SolidBuilder();
 
-  //! Create a SolidBuilder to build the areas on
-  //! the shapes (shells, blocks of faces) described by <LS>.
   Standard_EXPORT TopOpeBRepBuild_SolidBuilder(TopOpeBRepBuild_ShellFaceSet& FS,
                                                const bool                    ForceClass = false);
 
@@ -40,10 +38,6 @@ public:
 
   Standard_EXPORT bool IsOldShell() const;
 
-  //! Returns current shell
-  //! This shell may be :
-  //! * an old shell OldShell(), which has not been reconstructed;
-  //! * a new shell made of faces described by ...NewFace() methods.
   Standard_EXPORT const TopoDS_Shape& OldShell() const;
 
   Standard_EXPORT int InitFace();
@@ -52,7 +46,6 @@ public:
 
   Standard_EXPORT void NextFace();
 
-  //! Returns current new face of current new shell.
   Standard_EXPORT const TopoDS_Shape& Face() const;
 
 private:

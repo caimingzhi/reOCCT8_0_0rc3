@@ -19,5 +19,3 @@ static const char Shaders_PBRCookTorrance_glsl[] =
   "  aCookTorrance /= 4.0;\n"
   "  return aCookTorrance;\n"
   "}\n";
-
-// clang-format on

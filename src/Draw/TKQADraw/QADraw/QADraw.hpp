@@ -6,7 +6,6 @@
 
 #include <Draw_Interpretor.hpp>
 
-//! Draw Harness plugin defining non-general commands specific to test cases.
 class QADraw
 {
 public:
@@ -18,6 +17,5 @@ public:
 
   Standard_EXPORT static void TutorialCommands(Draw_Interpretor& theCommands);
 
-  //! Loads all QA Draw commands. Used for plugin.
   Standard_EXPORT static void Factory(Draw_Interpretor& theCommands);
 };

@@ -9,8 +9,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_CurveOnClosedSurface, BRep_CurveOnSurface)
 
-//=================================================================================================
-
 BRep_CurveOnClosedSurface::BRep_CurveOnClosedSurface(const occ::handle<Geom2d_Curve>& PC1,
                                                      const occ::handle<Geom2d_Curve>& PC2,
                                                      const occ::handle<Geom_Surface>& S,
@@ -22,21 +20,15 @@ BRep_CurveOnClosedSurface::BRep_CurveOnClosedSurface(const occ::handle<Geom2d_Cu
 {
 }
 
-//=================================================================================================
-
 bool BRep_CurveOnClosedSurface::IsCurveOnClosedSurface() const
 {
   return true;
 }
 
-//=================================================================================================
-
 bool BRep_CurveOnClosedSurface::IsRegularity() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool BRep_CurveOnClosedSurface::IsRegularity(const occ::handle<Geom_Surface>& S1,
                                              const occ::handle<Geom_Surface>& S2,
@@ -46,49 +38,35 @@ bool BRep_CurveOnClosedSurface::IsRegularity(const occ::handle<Geom_Surface>& S1
   return ((Surface() == S1) && (Surface() == S2) && (Location() == L1) && (Location() == L2));
 }
 
-//=================================================================================================
-
 const occ::handle<Geom2d_Curve>& BRep_CurveOnClosedSurface::PCurve2() const
 {
   return myPCurve2;
 }
-
-//=================================================================================================
 
 const GeomAbs_Shape& BRep_CurveOnClosedSurface::Continuity() const
 {
   return myContinuity;
 }
 
-//=================================================================================================
-
 const occ::handle<Geom_Surface>& BRep_CurveOnClosedSurface::Surface2() const
 {
   return Surface();
 }
-
-//=================================================================================================
 
 const TopLoc_Location& BRep_CurveOnClosedSurface::Location2() const
 {
   return Location();
 }
 
-//=================================================================================================
-
 void BRep_CurveOnClosedSurface::PCurve2(const occ::handle<Geom2d_Curve>& C)
 {
   myPCurve2 = C;
 }
 
-//=================================================================================================
-
 void BRep_CurveOnClosedSurface::Continuity(const GeomAbs_Shape C)
 {
   myContinuity = C;
 }
-
-//=================================================================================================
 
 occ::handle<BRep_CurveRepresentation> BRep_CurveOnClosedSurface::Copy() const
 {
@@ -102,8 +80,6 @@ occ::handle<BRep_CurveRepresentation> BRep_CurveOnClosedSurface::Copy() const
   return C;
 }
 
-//=================================================================================================
-
 void BRep_CurveOnClosedSurface::Update()
 {
   if (!Precision::IsNegativeInfinite(First()))
@@ -112,8 +88,6 @@ void BRep_CurveOnClosedSurface::Update()
     myPCurve2->D0(Last(), myUV22);
   BRep_CurveOnSurface::Update();
 }
-
-//=================================================================================================
 
 void BRep_CurveOnClosedSurface::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

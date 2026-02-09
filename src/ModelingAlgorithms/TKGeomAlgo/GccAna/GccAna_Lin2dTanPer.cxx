@@ -1,21 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//=========================================================================
-//   CREATION of a STRAIGHT LINE TANGENT to a CIRCLE or PASSING by a POINT   +
-//                      and ORTHOGONAL to a STRAIGHT LINE.                      +
-//=========================================================================
 
 #include <ElCLib.hpp>
 #include <GccAna_Lin2dTanPer.hpp>
@@ -31,12 +14,6 @@
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   Straight line passing by point  : ThePoint and                       +
-//       orthogonal to straight line : TheLin.                            +
-//   Create the straight line of origin     : ThePoint                           +
-//                  and direction  : TheLin.Direction() turned by 90   +
-//=========================================================================
 GccAna_Lin2dTanPer::GccAna_Lin2dTanPer(const gp_Pnt2d& ThePnt, const gp_Lin2d& TheLin)
     : linsol(1, 1),
       qualifier1(1, 1),
@@ -50,9 +27,9 @@ GccAna_Lin2dTanPer::GccAna_Lin2dTanPer(const gp_Pnt2d& ThePnt, const gp_Lin2d& T
 
   linsol(1) = gp_Lin2d(ThePnt,
                        gp_Dir2d(-(TheLin.Direction().Y()),
-                                // ===============================================================
+
                                 TheLin.Direction().X()));
-  //                                      ========================
+
   pnttg1sol(1) = ThePnt;
   IntAna2d_AnaIntersection Intp(linsol(1), TheLin);
   if (Intp.IsDone())
@@ -73,13 +50,6 @@ GccAna_Lin2dTanPer::GccAna_Lin2dTanPer(const gp_Pnt2d& ThePnt, const gp_Lin2d& T
   WellDone   = true;
 }
 
-//=========================================================================
-//   Straight line passing by point      : ThePnt                             +
-//       and orthogonal to circle        : TheCircle.                         +
-//   Create the straight line of origin  : ThePoint                           +
-//                  and direction        : (TheCircle.Location(),ThePnt).     +
-//=========================================================================
-
 GccAna_Lin2dTanPer::GccAna_Lin2dTanPer(const gp_Pnt2d& ThePnt, const gp_Circ2d& TheCircle)
     : linsol(1, 1),
       qualifier1(1, 1),
@@ -92,9 +62,9 @@ GccAna_Lin2dTanPer::GccAna_Lin2dTanPer(const gp_Pnt2d& ThePnt, const gp_Circ2d& 
 {
 
   linsol(1) = gp_Lin2d(ThePnt,
-                       // ============================
+
                        gp_Dir2d(TheCircle.Location().XY() - ThePnt.XY()));
-  //                      ================================================
+
   pnttg1sol(1) = ThePnt;
   IntAna2d_AnaIntersection Intp(linsol(1), TheCircle);
   if (Intp.IsDone())
@@ -119,13 +89,6 @@ GccAna_Lin2dTanPer::GccAna_Lin2dTanPer(const gp_Pnt2d& ThePnt, const gp_Circ2d& 
   WellDone   = true;
 }
 
-//=========================================================================
-//   Straight line tangent to circle     : Qualified1 (C1)                    +
-//   and orthogonal to straight line     : TheLin.                            +
-//   Create straight line of origin      : P1 (on C1)                         +
-//                  and direction        : TheLin.Direction() turned by 90`   +
-//=========================================================================
-
 GccAna_Lin2dTanPer::GccAna_Lin2dTanPer(const GccEnt_QualifiedCirc& Qualified1,
                                        const gp_Lin2d&             TheLin)
     : linsol(1, 2),
@@ -146,18 +109,18 @@ GccAna_Lin2dTanPer::GccAna_Lin2dTanPer(const GccEnt_QualifiedCirc& Qualified1,
 
   if (Qualified1.IsEnclosed())
   {
-    // ============================
+
     throw GccEnt_BadQualifier();
   }
   else if (Qualified1.IsEnclosing())
   {
-    // ==================================
+
     nbsol = 1;
     signe = -1;
   }
   else if (Qualified1.IsOutside())
   {
-    // ================================
+
     nbsol = 1;
     signe = 1;
   }
@@ -171,13 +134,12 @@ GccAna_Lin2dTanPer::GccAna_Lin2dTanPer(const GccEnt_QualifiedCirc& Qualified1,
   {
     signe = -signe;
     NbrSol++;
-    linsol(NbrSol) =
-      gp_Lin2d(gp_Pnt2d((C1.Location().XY()).Added(signe * xy)),
-               //   =======================================================================
-               gp_Dir2d(-TheLin.Direction().Y(),
-                        //                           =================================
-                        TheLin.Direction().X()));
-    //                                    ========================
+    linsol(NbrSol) = gp_Lin2d(gp_Pnt2d((C1.Location().XY()).Added(signe * xy)),
+
+                              gp_Dir2d(-TheLin.Direction().Y(),
+
+                                       TheLin.Direction().X()));
+
     pnttg1sol(NbrSol) = gp_Pnt2d((C1.Location().XY()).Added(signe * xy));
     IntAna2d_AnaIntersection Intp(linsol(NbrSol), TheLin);
     if (Intp.IsDone())
@@ -198,13 +160,6 @@ GccAna_Lin2dTanPer::GccAna_Lin2dTanPer(const GccEnt_QualifiedCirc& Qualified1,
   }
 }
 
-//=========================================================================
-//   Straight line tangent to circle     : Qualified1 (C1)                    +
-//       and orthogonal to circle        : TheCircle.                         +
-//   Create straight line of origin      : P1 (on C1)                         +
-//                  and direction        : TheLin.Direction() turned by 90`   +
-//=========================================================================
-
 GccAna_Lin2dTanPer::GccAna_Lin2dTanPer(const GccEnt_QualifiedCirc& Qualified1,
                                        const gp_Circ2d&            TheCircle)
     : linsol(1, 2),
@@ -224,24 +179,24 @@ GccAna_Lin2dTanPer::GccAna_Lin2dTanPer(const GccEnt_QualifiedCirc& Qualified1,
 
   if (Qualified1.IsEnclosed())
   {
-    // ============================
+
     throw GccEnt_BadQualifier();
   }
   else if (Qualified1.IsEnclosing())
   {
-    // ==================================
+
     signe         = -1;
     qualifier1(1) = GccEnt_enclosing;
   }
   else if (Qualified1.IsOutside())
   {
-    // ================================
+
     signe         = 1;
     qualifier1(1) = GccEnt_outside;
   }
   else if (Qualified1.IsUnqualified())
   {
-    // ====================================
+
     signe         = -1;
     qualifier1(1) = GccEnt_enclosing;
     qualifier1(2) = GccEnt_outside;
@@ -252,10 +207,10 @@ GccAna_Lin2dTanPer::GccAna_Lin2dTanPer(const GccEnt_QualifiedCirc& Qualified1,
     signe = -signe;
     gp_Dir2d D1(TheCircle.Location().XY() - C1.Location().XY());
     linsol(NbrSol) = gp_Lin2d(gp_Pnt2d((C1.Location().XY()) +
-                                       //   ===================================================
+
                                        signe * (D1.XY() * C1.Radius())),
                               gp_Dir2d(-D1.Y(), D1.X()));
-    //                     ======================================================
+
     pnttg1sol(NbrSol) = gp_Pnt2d((C1.Location().XY()) + signe * (D1.XY() * C1.Radius()));
     IntAna2d_AnaIntersection Intp(linsol(NbrSol), TheCircle);
     if (Intp.IsDone())

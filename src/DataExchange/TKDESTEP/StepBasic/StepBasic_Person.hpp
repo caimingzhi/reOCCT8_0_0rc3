@@ -14,7 +14,6 @@ class StepBasic_Person : public Standard_Transient
 {
 
 public:
-  //! Returns a Person
   Standard_EXPORT StepBasic_Person();
 
   Standard_EXPORT void Init(

@@ -2,15 +2,11 @@
 #include <BRepAlgoAPI_Common.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 BRepAlgoAPI_Common::BRepAlgoAPI_Common()
 
 {
   myOperation = BOPAlgo_COMMON;
 }
-
-//=================================================================================================
 
 BRepAlgoAPI_Common::BRepAlgoAPI_Common(const BOPAlgo_PaveFiller& aPF)
     : BRepAlgoAPI_BooleanOperation(aPF)
@@ -18,11 +14,7 @@ BRepAlgoAPI_Common::BRepAlgoAPI_Common(const BOPAlgo_PaveFiller& aPF)
   myOperation = BOPAlgo_COMMON;
 }
 
-//=================================================================================================
-
 BRepAlgoAPI_Common::~BRepAlgoAPI_Common() = default;
-
-//=================================================================================================
 
 BRepAlgoAPI_Common::BRepAlgoAPI_Common(const TopoDS_Shape&          S1,
                                        const TopoDS_Shape&          S2,
@@ -31,8 +23,6 @@ BRepAlgoAPI_Common::BRepAlgoAPI_Common(const TopoDS_Shape&          S1,
 {
   Build(theRange);
 }
-
-//=================================================================================================
 
 BRepAlgoAPI_Common::BRepAlgoAPI_Common(const TopoDS_Shape&          S1,
                                        const TopoDS_Shape&          S2,

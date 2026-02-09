@@ -13,14 +13,10 @@
 #include <TopOpeBRepDS_Dumper.hpp>
 #include <TopOpeBRepDS_HDataStructure.hpp>
 
-//=================================================================================================
-
 TopOpeBRepDS_Dumper::TopOpeBRepDS_Dumper(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
 {
   myHDS = HDS;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString TopOpeBRepDS_Dumper::SDumpRefOri(const TopOpeBRepDS_Kind K,
                                                          const int               I) const
@@ -40,8 +36,6 @@ TCollection_AsciiString TopOpeBRepDS_Dumper::SDumpRefOri(const TopOpeBRepDS_Kind
   return SS;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString TopOpeBRepDS_Dumper::SDumpRefOri(const TopoDS_Shape& S) const
 {
   TCollection_AsciiString SS;
@@ -51,8 +45,6 @@ TCollection_AsciiString TopOpeBRepDS_Dumper::SDumpRefOri(const TopoDS_Shape& S) 
   SS                         = SDumpRefOri(k, i);
   return SS;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString TopOpeBRepDS_Dumper::SPrintShape(const int IS) const
 {
@@ -64,14 +56,12 @@ TCollection_AsciiString TopOpeBRepDS_Dumper::SPrintShape(const int IS) const
   return SS;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString TopOpeBRepDS_Dumper::SPrintShape(const TopoDS_Shape& S) const
 {
   const TopOpeBRepDS_DataStructure& BDS    = myHDS->DS();
   const int                         IS     = myHDS->DS().Shape(S);
   int                               rankIS = BDS.AncestorRank(IS);
-  // JR/Hp  TCollection_AsciiString s1,s2;
+
   const char* s1;
   const char* s2;
   if (BDS.KeepShape(IS))
@@ -89,8 +79,6 @@ TCollection_AsciiString TopOpeBRepDS_Dumper::SPrintShape(const TopoDS_Shape& S) 
   return sse;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString TopOpeBRepDS_Dumper::SPrintShapeRefOri(
   const TopoDS_Shape&            S,
   const TCollection_AsciiString& astr) const
@@ -98,8 +86,6 @@ TCollection_AsciiString TopOpeBRepDS_Dumper::SPrintShapeRefOri(
   TCollection_AsciiString SS = astr + SPrintShape(S) + " " + SDumpRefOri(S);
   return SS;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString TopOpeBRepDS_Dumper::SPrintShapeRefOri(
   const NCollection_List<TopoDS_Shape>& L,

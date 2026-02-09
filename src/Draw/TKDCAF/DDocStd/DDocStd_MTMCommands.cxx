@@ -20,14 +20,9 @@
 #include <Draw_Interpretor.hpp>
 #include <TDF_Reference.hpp>
 
-//=======================================================================
-// function : mtmCreate
-// purpose  : creates new new multiple transactions' manager
-//=======================================================================
-
 static occ::handle<TDocStd_MultiTransactionManager> sMultiTransactionManager = nullptr;
 
-static int mtmCreate(Draw_Interpretor& /*di*/, int n, const char** a)
+static int mtmCreate(Draw_Interpretor&, int n, const char** a)
 {
   if (!sMultiTransactionManager.IsNull())
     sMultiTransactionManager->SetUndoLimit(0);
@@ -37,11 +32,6 @@ static int mtmCreate(Draw_Interpretor& /*di*/, int n, const char** a)
     sMultiTransactionManager->SetUndoLimit(Draw::Atoi(a[1]));
   return 0;
 }
-
-//=======================================================================
-// function : mtmAddDocument
-// purpose  : adds a document to the transactions manager
-//=======================================================================
 
 static int mtmAddDocument(Draw_Interpretor& di, int n, const char** a)
 {
@@ -69,9 +59,7 @@ static int mtmAddDocument(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
-static int mtmOpenTransaction(Draw_Interpretor& di, int /*n*/, const char** /*a*/)
+static int mtmOpenTransaction(Draw_Interpretor& di, int, const char**)
 {
   if (sMultiTransactionManager.IsNull())
   {
@@ -81,11 +69,6 @@ static int mtmOpenTransaction(Draw_Interpretor& di, int /*n*/, const char** /*a*
   sMultiTransactionManager->OpenCommand();
   return 0;
 }
-
-//=======================================================================
-// function : mtmCommitTransaction
-// purpose  : commits last opened transaction
-//=======================================================================
 
 static int mtmCommitTransaction(Draw_Interpretor& di, int n, const char** a)
 {
@@ -101,12 +84,7 @@ static int mtmCommitTransaction(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : mtmAbortTransaction
-// purpose  : aborts last opened transaction
-//=======================================================================
-
-static int mtmAbortTransaction(Draw_Interpretor& di, int /*n*/, const char** /*a*/)
+static int mtmAbortTransaction(Draw_Interpretor& di, int, const char**)
 {
   if (sMultiTransactionManager.IsNull())
   {
@@ -117,12 +95,7 @@ static int mtmAbortTransaction(Draw_Interpretor& di, int /*n*/, const char** /*a
   return 0;
 }
 
-//=======================================================================
-// function : mtmDump
-// purpose  : dumps state of the multiple transaction manager
-//=======================================================================
-
-static int mtmDump(Draw_Interpretor& di, int /*n*/, const char** /*a*/)
+static int mtmDump(Draw_Interpretor& di, int, const char**)
 {
   if (sMultiTransactionManager.IsNull())
   {
@@ -130,7 +103,7 @@ static int mtmDump(Draw_Interpretor& di, int /*n*/, const char** /*a*/)
     return 1;
   }
   di << "*** Dump of MTM ***\n";
-  // sMultiTransactionManager->DumpTransaction(std::cout);
+
   Standard_SStream aStream;
   sMultiTransactionManager->DumpTransaction(aStream);
   di << aStream;
@@ -138,12 +111,7 @@ static int mtmDump(Draw_Interpretor& di, int /*n*/, const char** /*a*/)
   return 0;
 }
 
-//=======================================================================
-// function : mtmUndo
-// purpose  : undos last transaction
-//=======================================================================
-
-static int mtmUndo(Draw_Interpretor& di, int /*n*/, const char** /*a*/)
+static int mtmUndo(Draw_Interpretor& di, int, const char**)
 {
   if (sMultiTransactionManager.IsNull())
   {
@@ -154,12 +122,7 @@ static int mtmUndo(Draw_Interpretor& di, int /*n*/, const char** /*a*/)
   return 0;
 }
 
-//=======================================================================
-// function : mtmRedo
-// purpose  : redos last transaction
-//=======================================================================
-
-static int mtmRedo(Draw_Interpretor& di, int /*n*/, const char** /*a*/)
+static int mtmRedo(Draw_Interpretor& di, int, const char**)
 {
   if (sMultiTransactionManager.IsNull())
   {
@@ -169,11 +132,6 @@ static int mtmRedo(Draw_Interpretor& di, int /*n*/, const char** /*a*/)
   sMultiTransactionManager->Redo();
   return 0;
 }
-
-//=======================================================================
-// function : mtmNestedMode
-// purpose  : redos last transaction
-//=======================================================================
 
 static int mtmNestedMode(Draw_Interpretor& di, int n, const char** a)
 {
@@ -190,8 +148,6 @@ static int mtmNestedMode(Draw_Interpretor& di, int n, const char** a)
   sMultiTransactionManager->SetNestedTransactionMode(aMode);
   return 0;
 }
-
-//=================================================================================================
 
 static int XAttributeValue(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -330,11 +286,6 @@ static int XAttributeValue(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
-// function : mtmRemoveDocument
-// purpose  : removes a document from the transactions manager
-//=======================================================================
-
 static int mtmRemoveDocument(Draw_Interpretor& di, int n, const char** a)
 {
   if (sMultiTransactionManager.IsNull())
@@ -360,8 +311,6 @@ static int mtmRemoveDocument(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 void DDocStd::MTMCommands(Draw_Interpretor& theCommands)
 {

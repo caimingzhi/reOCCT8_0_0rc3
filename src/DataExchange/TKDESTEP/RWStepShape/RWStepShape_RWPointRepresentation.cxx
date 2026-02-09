@@ -7,11 +7,7 @@
 #include <StepRepr_RepresentationItem.hpp>
 #include <StepShape_PointRepresentation.hpp>
 
-//=================================================================================================
-
 RWStepShape_RWPointRepresentation::RWStepShape_RWPointRepresentation() = default;
-
-//=================================================================================================
 
 void RWStepShape_RWPointRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&       data,
@@ -19,11 +15,9 @@ void RWStepShape_RWPointRepresentation::ReadStep(
   occ::handle<Interface_Check>&                     ach,
   const occ::handle<StepShape_PointRepresentation>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "point_representation"))
     return;
-
-  // Inherited fields of Representation
 
   occ::handle<TCollection_HAsciiString> aRepresentation_Name;
   data->ReadString(num, 1, "representation.name", ach, aRepresentation_Name);
@@ -57,18 +51,13 @@ void RWStepShape_RWPointRepresentation::ReadStep(
                    STANDARD_TYPE(StepRepr_RepresentationContext),
                    aRepresentation_ContextOfItems);
 
-  // Initialize entity
   ent->Init(aRepresentation_Name, aRepresentation_Items, aRepresentation_ContextOfItems);
 }
-
-//=================================================================================================
 
 void RWStepShape_RWPointRepresentation::WriteStep(
   StepData_StepWriter&                              SW,
   const occ::handle<StepShape_PointRepresentation>& ent) const
 {
-
-  // Inherited fields of Representation
 
   SW.Send(ent->StepRepr_Representation::Name());
 
@@ -84,13 +73,9 @@ void RWStepShape_RWPointRepresentation::WriteStep(
   SW.Send(ent->StepRepr_Representation::ContextOfItems());
 }
 
-//=================================================================================================
-
 void RWStepShape_RWPointRepresentation::Share(const occ::handle<StepShape_PointRepresentation>& ent,
                                               Interface_EntityIterator& iter) const
 {
-
-  // Inherited fields of Representation
 
   for (int i1 = 1; i1 <= ent->StepRepr_Representation::NbItems(); i1++)
   {

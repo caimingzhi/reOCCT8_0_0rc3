@@ -5,14 +5,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Printer, Message_Printer)
 
-//=================================================================================================
-
 Draw_Printer::Draw_Printer(Draw_Interpretor& theTcl)
     : myTcl(&theTcl)
 {
 }
-
-//=================================================================================================
 
 void Draw_Printer::send(const TCollection_AsciiString& theString,
                         const Message_Gravity          theGravity) const

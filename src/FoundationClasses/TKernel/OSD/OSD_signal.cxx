@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OSD.hpp>
 #include <Standard_CString.hpp>
@@ -26,21 +15,15 @@
 static OSD_SignalMode OSD_WasSetSignal           = OSD_SignalMode_AsIs;
 static int            OSD_SignalStackTraceLength = 0;
 
-//=================================================================================================
-
 OSD_SignalMode OSD::SignalMode()
 {
   return OSD_WasSetSignal;
 }
 
-//=================================================================================================
-
 int OSD::SignalStackTraceLength()
 {
   return OSD_SignalStackTraceLength;
 }
-
-//=================================================================================================
 
 void OSD::SetSignalStackTraceLength(int theLength)
 {
@@ -48,7 +31,6 @@ void OSD::SetSignalStackTraceLength(int theLength)
 }
 
 #ifdef _WIN32
-//---------------------------- Windows NT System --------------------------------
 
   #ifdef NOUSER
     #undef NOUSER
@@ -61,7 +43,7 @@ void OSD::SetSignalStackTraceLength(int theLength)
   #include <strsafe.h>
 
   #ifndef STATUS_FLOAT_MULTIPLE_FAULTS
-    // <ntstatus.h>
+
     #define STATUS_FLOAT_MULTIPLE_FAULTS (0xC00002B4L)
     #define STATUS_FLOAT_MULTIPLE_TRAPS (0xC00002B5L)
   #endif
@@ -93,7 +75,6 @@ static bool fCtrlBrk;
 
 static bool fMsgBox;
 
-// used to forbid simultaneous execution of setting / executing handlers
 static std::mutex THE_SIGNAL_MUTEX;
 
 static LONG __fastcall _osd_raise(DWORD theCode, const char* theMsg, const char* theStack);
@@ -112,8 +93,6 @@ static LONG _osd_debug(void);
     #define THROW_OR_JUMP(Type, Message, Stack) throw Type(Message, Stack)
   #endif
 
-//=================================================================================================
-
 static LONG CallHandler(DWORD theExceptionCode, EXCEPTION_POINTERS* theExcPtr)
 {
   ptrdiff_t ExceptionInformation1 = 0, ExceptionInformation0 = 0;
@@ -123,7 +102,6 @@ static LONG CallHandler(DWORD theExceptionCode, EXCEPTION_POINTERS* theExcPtr)
     ExceptionInformation0 = theExcPtr->ExceptionRecord->ExceptionInformation[0];
   }
 
-  // lock the mutex to prevent simultaneous handling
   std::lock_guard<std::mutex> aLock(THE_SIGNAL_MUTEX);
 
   static char aBuffer[2048];
@@ -258,7 +236,7 @@ static LONG CallHandler(DWORD theExceptionCode, EXCEPTION_POINTERS* theExcPtr)
     case EXCEPTION_STACK_OVERFLOW:
     {
   #if defined(_MSC_VER) && (_MSC_VER >= 1300) && !defined(OCCT_UWP)
-      // try recovering from stack overflow: available in MS VC++ 7.0
+
       if (!_resetstkoflw())
       {
         strcat_s(aBuffer, sizeof(aBuffer), "Unrecoverable STACK OVERFLOW");
@@ -282,7 +260,6 @@ static LONG CallHandler(DWORD theExceptionCode, EXCEPTION_POINTERS* theExcPtr)
     }
   }
 
-  // reset FPE state (before message box, otherwise it may fail to show up)
   if (isFloatErr)
   {
     OSD::SetFloatingSignal(true);
@@ -298,7 +275,7 @@ static LONG CallHandler(DWORD theExceptionCode, EXCEPTION_POINTERS* theExcPtr)
   }
 
   #if !defined(OCCT_UWP) && !defined(__MINGW32__) && !defined(__CYGWIN32__)
-  // provide message to the user with possibility to stop
+
   if (aBuffer[0] != '\0' && fMsgBox && theExceptionCode != EXCEPTION_NONCONTINUABLE_EXCEPTION)
   {
     MessageBeep(MB_ICONHAND);
@@ -325,15 +302,9 @@ static LONG CallHandler(DWORD theExceptionCode, EXCEPTION_POINTERS* theExcPtr)
   return _osd_raise(theExceptionCode, aBuffer, aStackBuffer);
 }
 
-//=======================================================================
-// function : SIGWntHandler
-// purpose  : Will only be used if user calls ::raise() function with
-//           signal type set in OSD::SetSignal() - SIGSEGV, SIGFPE, SIGILL
-//           (the latter will likely be removed in the future)
-//=======================================================================
 static void SIGWntHandler(int signum, int sub_code)
 {
-  // lock the mutex to prevent simultaneous handling
+
   std::lock_guard<std::mutex> aLock(THE_SIGNAL_MUTEX);
 
   switch (signum)
@@ -388,17 +359,8 @@ static void SIGWntHandler(int signum, int sub_code)
   #endif
 }
 
-  //=======================================================================
-  // function : TranslateSE
-  // purpose  : Translate Structural Exceptions into C++ exceptions
-  //           Will be used when user's code is compiled with /EHa option
-  //=======================================================================
   #ifdef _MSC_VER
-    // If this file compiled with the default MSVC options for exception
-    // handling (/GX or /EHsc) then the following warning is issued:
-    //   warning C4535: calling _set_se_translator() requires /EHa
-    // However it is correctly inserted and used when user's code compiled with /EHa.
-    // So, here we disable the warning.
+
     #pragma warning(disable : 4535)
 
 static void TranslateSE(unsigned int theCode, EXCEPTION_POINTERS* theExcPtr)
@@ -407,40 +369,26 @@ static void TranslateSE(unsigned int theCode, EXCEPTION_POINTERS* theExcPtr)
 }
   #endif
 
-//=======================================================================
-// function : WntHandler
-// purpose  : Will be used when user's code is compiled with /EHs
-//           option and unless user sets his own exception handler with
-//           ::SetUnhandledExceptionFilter().
-//=======================================================================
 static LONG WINAPI WntHandler(EXCEPTION_POINTERS* lpXP)
 {
   DWORD dwExceptionCode = lpXP->ExceptionRecord->ExceptionCode;
   return CallHandler(dwExceptionCode, lpXP);
 }
 
-//=================================================================================================
-
 void OSD::SetFloatingSignal(bool theFloatingSignal)
 {
   _fpreset();
   _clearfp();
 
-  // Note: zero bit means exception will be raised
   _controlfp(theFloatingSignal ? 0 : _OSD_FPX, _OSD_FPX);
 }
 
-//=================================================================================================
-
 bool OSD::ToCatchFloatingSignals()
 {
-  // return true if at least one of bits within _OSD_FPX
-  // is unset, which means relevant FPE will raise exception
+
   int aControlWord = _controlfp(0, 0);
   return (_OSD_FPX & ~aControlWord) != 0;
 }
-
-//=================================================================================================
 
 void OSD::SetThreadLocalSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
 {
@@ -457,11 +405,9 @@ void OSD::SetThreadLocalSignal(OSD_SignalMode theSignalMode, bool theFloatingSig
   SetFloatingSignal(theFloatingSignal);
 }
 
-//=================================================================================================
-
 void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
 {
-  // lock the mutex to prevent simultaneous handling
+
   std::lock_guard<std::mutex> aLock(THE_SIGNAL_MUTEX);
 
   OSD_WasSetSignal = theSignalMode;
@@ -475,7 +421,7 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
     fMsgBox = true;
     if (OSD_SignalStackTraceLength == 0)
     {
-      // enable stack trace if CSF_DEBUG_MODE is set
+
       OSD_SignalStackTraceLength = 10;
     }
   }
@@ -484,10 +430,6 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
     fMsgBox = false;
   }
 
-  // Set exception handler (ignored when running under debugger). It will be used in most cases
-  // when user's code is compiled with /EHs
-  // Replaces the existing top-level exception filter for all existing and all future threads
-  // in the calling process
   {
     LPTOP_LEVEL_EXCEPTION_FILTER aPreviousFunc = NULL;
     if (theSignalMode == OSD_SignalMode_Set || theSignalMode == OSD_SignalMode_SetUnhandled)
@@ -500,14 +442,13 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
       ::SetUnhandledExceptionFilter(aPreviousFunc);
     }
   }
-  #endif // NTDDI_WIN10_TH2
+  #endif
 
-  // Signal handlers will only be used when function ::raise() is called
   const int NBSIG               = 3;
   const int aSignalTypes[NBSIG] = {SIGSEGV, SIGILL, SIGFPE};
   for (int i = 0; i < NBSIG; ++i)
   {
-    typedef void (*SignalFuncType)(int); // same as _crt_signal_t available since vc14
+    typedef void (*SignalFuncType)(int);
     SignalFuncType aPreviousFunc = SIG_DFL;
     if (theSignalMode == OSD_SignalMode_Set || theSignalMode == OSD_SignalMode_SetUnhandled)
     {
@@ -524,7 +465,6 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
                     std::cout << "OSD::SetSignal(): signal() returns SIG_ERR");
   }
 
-  // Set Ctrl-C and Ctrl-Break handler
   fCtrlBrk = false;
   #ifndef OCCT_UWP
   if (theSignalMode == OSD_SignalMode_Set || theSignalMode == OSD_SignalMode_SetUnhandled)
@@ -540,9 +480,6 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
   SetThreadLocalSignal(theSignalMode, theFloatingSignal);
 }
 
-//============================================================================
-//==== ControlBreak
-//============================================================================
 void OSD::ControlBreak()
 {
   if (fCtrlBrk)
@@ -550,12 +487,10 @@ void OSD::ControlBreak()
     fCtrlBrk = false;
     throw OSD_Exception_CTRL_BREAK("*** INTERRUPT ***");
   }
-} // end OSD :: ControlBreak
+}
 
   #ifndef OCCT_UWP
-//============================================================================
-//==== _osd_ctrl_break_handler
-//============================================================================
+
 static BOOL WINAPI _osd_ctrl_break_handler(DWORD dwCode)
 {
   if (dwCode == CTRL_C_EVENT || dwCode == CTRL_BREAK_EVENT)
@@ -567,12 +502,9 @@ static BOOL WINAPI _osd_ctrl_break_handler(DWORD dwCode)
     exit(254);
 
   return TRUE;
-} // end _osd_ctrl_break_handler
+}
   #endif
 
-//============================================================================
-//==== _osd_raise
-//============================================================================
 static LONG __fastcall _osd_raise(DWORD theCode, const char* theMsg, const char* theStack)
 {
   const char* aMsg = theMsg;
@@ -640,9 +572,7 @@ static LONG __fastcall _osd_raise(DWORD theCode, const char* theMsg, const char*
 }
 
   #if !defined(OCCT_UWP) && !defined(__MINGW32__) && !defined(__CYGWIN32__)
-//============================================================================
-//==== _osd_debug
-//============================================================================
+
 LONG _osd_debug(void)
 {
 
@@ -695,7 +625,6 @@ LONG _osd_debug(void)
       si.cb      = sizeof(STARTUPINFO);
       si.dwFlags = STARTF_FORCEONFEEDBACK;
 
-      //   std::cout << "_osd_debug -> CreateProcess" << std::endl ;
       if (!CreateProcess(NULL,
                          cmdLine,
                          NULL,
@@ -708,44 +637,32 @@ LONG _osd_debug(void)
                          &pi))
         __leave;
 
-      //   std::cout << "_osd_debug -> WaitForSingleObject " << std::endl ;
       WaitForSingleObject(hEvent, INFINITE);
-      //   std::cout << "_osd_debug <- WaitForSingleObject -> CloseHandle " << std::endl ;
 
       CloseHandle(pi.hProcess);
       CloseHandle(pi.hThread);
 
-      //   std::cout << "_osd_debug fDbgLoaded  " << std::endl ;
       fDbgLoaded = TRUE;
-
-    } // end __try
+    }
 
     __finally
     {
 
-      //   std::cout << "_osd_debug -> CloseHandle(hKey) " << std::endl ;
       if (hKey != INVALID_HANDLE_VALUE)
         CloseHandle(hKey);
-      //   std::cout << "_osd_debug -> CloseHandle(hEvent) " << std::endl ;
+
       if (hEvent != INVALID_HANDLE_VALUE)
         CloseHandle(hEvent);
-      //   std::cout << "_osd_debug end __finally " << std::endl ;
-
-    } // end __finally
-
-  } /* end if */
+    }
+  }
 
   action = fDbgLoaded ? EXCEPTION_CONTINUE_EXECUTION : EXCEPTION_EXECUTE_HANDLER;
-  // std::cout << "_osd_debug return " << action << " EXCEPTION_CONTINUE_EXECUTION("
-  //      << EXCEPTION_CONTINUE_EXECUTION << ")" << std::endl ;
+
   return action;
+}
+  #endif
 
-} // end _osd_debug
-  #endif /* ! OCCT_UWP && ! __CYGWIN__ && ! __MINGW32__ */
-
-#else /* ! _WIN32 */
-
-//---------- All Systems except Windows NT : ----------------------------------
+#else
 
   #include <cstdio>
 
@@ -762,18 +679,14 @@ LONG _osd_debug(void)
 
   #include <Standard_ErrorHandler.hpp>
 
-  // POSIX threads
   #include <pthread.h>
 
   #ifdef __linux__
     #include <cfenv>
-  // #include  <fenv.h>
+
   #endif
 
-// variable signalling that Control-C has been pressed (SIGINT signal)
 static bool fCtrlBrk;
-
-// const OSD_WhoAmI Iam = OSD_WPackage;
 
 typedef void(ACT_SIGIO_HANDLER)();
 ACT_SIGIO_HANDLER* ADR_ACT_SIGIO_HANDLER = nullptr;
@@ -793,36 +706,17 @@ typedef void (*SIG_PFV)(int);
 
   #define _OSD_FPX (FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW)
 
-  //============================================================================
-  //==== Handler
-  //====     Catch the different signals:
-  //====          1- The Fatal signals, which cause the end of process:
-  //====          2- The exceptions which are "signaled" by Raise.
-  //====     The Fatal Signals:
-  //====        SIGHUP, SIGINT, SIGQUIT, SIGILL, SIGKILL, SIGBUS, SIGSYS
-  //====     The Exceptions:
-  //====        SIGFPE
-  //====         (SUN versions)
-  //====           FPE_INTOVF_TRAP    // ..... integer overflow
-  //====           FPE_INTDIV_TRAP    // ..... integer divide by zero
-  //====           FPE_FLTINEX_TRAP   // ..... [floating inexact result]
-  //====           FPE_FLTDIV_TRAP    // ..... [floating divide by zero]
-  //====           FPE_FLTUND_TRAP    // ..... [floating underflow]
-  //====           FPE_FLTOPER_TRAP   // ..... [floating inexact result]
-  //====           FPE_FLTOVF_TRAP    // ..... [floating overflow]
-  //==== SIGSEGV is handled by "SegvHandler()"
-  //============================================================================
   #ifdef SA_SIGINFO
-static void Handler(const int theSignal, siginfo_t* /*theSigInfo*/, void* const /*theContext*/)
+static void Handler(const int theSignal, siginfo_t*, void* const)
   #else
 static void Handler(const int theSignal)
   #endif
 {
   struct sigaction oldact, act;
-  // re-install the signal
+
   if (!sigaction(theSignal, nullptr, &oldact))
   {
-    // std::cout << " signal is " << theSignal << " handler is " <<  oldact.sa_handler << std::endl;
+
     if (sigaction(theSignal, &oldact, &act))
       perror("sigaction");
   }
@@ -831,8 +725,6 @@ static void Handler(const int theSignal)
     perror("sigaction");
   }
 
-  // std::cout << "OSD::Handler: signal " << (int) theSignal << " occurred inside a try block " <<
-  // std::endl ;
   if (ADR_ACT_SIGIO_HANDLER != nullptr)
     (*ADR_ACT_SIGIO_HANDLER)();
 
@@ -845,11 +737,9 @@ static void Handler(const int theSignal)
       exit(SIGHUP);
       break;
     case SIGINT:
-      // For safe handling of Control-C as stop event, arm a variable but do not
-      // generate longjump (we are out of context anyway)
+
       fCtrlBrk = true;
-      // Standard_ErrorHandler::Abort(OSD_SIGINT("SIGINT 'interrupt' detected."));
-      // exit(SIGINT);
+
       break;
     case SIGQUIT:
       Standard_ErrorHandler::Abort(OSD_SIGQUIT("SIGQUIT 'quit' detected."));
@@ -889,7 +779,7 @@ static void Handler(const int theSignal)
       Standard_ErrorHandler::Abort(Standard_NumericError("SIGFPE Arithmetic exception detected"));
       break;
   #else
-      // Reste SOLARIS
+
       if (aSigInfo)
       {
         switch (aSigInfo->si_code)
@@ -934,9 +824,6 @@ static void Handler(const int theSignal)
   }
 }
 
-  //============================================================================
-  //==== SegvHandler
-  //============================================================================
   #ifdef SA_SIGINFO
 
 static void SegvHandler(const int theSignal, siginfo_t* theSigInfo, void* const theContext)
@@ -976,8 +863,6 @@ static void SegvHandler(const int theSignal, siginfo_t* theSigInfo, void* const 
 }
 
   #elif defined(_hpux) || defined(HPUX)
-// Not ACTIVE ? SA_SIGINFO is defined on SUN, OSF, SGI and HP (and Linux) !
-// pour version 09.07
 
 static void SegvHandler(const int theSignal, siginfo_t* theSigInfo, void* const theContext)
 {
@@ -1001,8 +886,6 @@ static void SegvHandler(const int theSignal, siginfo_t* theSigInfo, void* const 
 }
 
   #endif
-
-//=================================================================================================
 
 void OSD::SetFloatingSignal(bool theFloatingSignal)
 {
@@ -1033,8 +916,6 @@ void OSD::SetFloatingSignal(bool theFloatingSignal)
   #endif
 }
 
-//=================================================================================================
-
 bool OSD::ToCatchFloatingSignals()
 {
   #if defined(__linux__) && defined(__GLIBC__)
@@ -1044,17 +925,10 @@ bool OSD::ToCatchFloatingSignals()
   #endif
 }
 
-//=================================================================================================
-
-void OSD::SetThreadLocalSignal(OSD_SignalMode /*theSignalMode*/, bool theFloatingSignal)
+void OSD::SetThreadLocalSignal(OSD_SignalMode, bool theFloatingSignal)
 {
   SetFloatingSignal(theFloatingSignal);
 }
-
-//============================================================================
-//==== SetSignal
-//====     Set the different signals:
-//============================================================================
 
 void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
 {
@@ -1063,10 +937,9 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
   OSD_WasSetSignal = theSignalMode;
   if (theSignalMode == OSD_SignalMode_AsIs)
   {
-    return; // nothing to be done with signal handlers
+    return;
   }
 
-  // Prepare signal descriptors
   struct sigaction anActSet, anActDfl, anActOld;
   sigemptyset(&anActSet.sa_mask);
   sigemptyset(&anActDfl.sa_mask);
@@ -1084,23 +957,21 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
   #endif
   anActDfl.sa_handler = SIG_DFL;
 
-  // Set signal handlers; NB: SIGSEGV must be the last one!
   const int NBSIG = 8;
   const int aSignalTypes[NBSIG] =
     {SIGFPE, SIGHUP, SIGINT, SIGQUIT, SIGILL, SIGBUS, SIGSYS, SIGSEGV};
   for (int i = 0; i < NBSIG; ++i)
   {
-    // SIGSEGV has special handler
+
     if (aSignalTypes[i] == SIGSEGV)
     {
   #ifdef SA_SIGINFO
-      anActSet.sa_sigaction = /*(void(*)(int, siginfo_t *, void*))*/ SegvHandler;
+      anActSet.sa_sigaction = SegvHandler;
   #else
-      anActSet.sa_handler = /*(SIG_PFV)*/ SegvHandler;
+      anActSet.sa_handler = SegvHandler;
   #endif
     }
 
-    // set handler according to specified mode and current handler
     int retcode = -1;
     if (theSignalMode == OSD_SignalMode_Set || theSignalMode == OSD_SignalMode_SetUnhandled)
     {
@@ -1123,10 +994,6 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
                               << std::endl);
   }
 }
-
-//============================================================================
-//==== ControlBreak
-//============================================================================
 
 void OSD ::ControlBreak()
 {

@@ -101,7 +101,6 @@ bool BOOPNINTL::Get(int n, char** a)
   return false;
 }
 
-// ===========
 static bool TopOpeBRep_traceEEFF = false;
 
 Standard_EXPORT void TopOpeBRep_SettraceEEFF(const bool b)
@@ -141,7 +140,6 @@ Standard_EXPORT bool TopOpeBRep_GettraceEEFF(const int i1, const int i2, const i
   return b;
 }
 
-// ===========
 static bool TopOpeBRep_traceNVP = false;
 
 Standard_EXPORT void TopOpeBRep_SettraceNVP(const bool b)
@@ -181,7 +179,6 @@ Standard_EXPORT bool TopOpeBRep_GettraceNVP(int i1, int i2, int i3, int i4, int 
   return b;
 }
 
-// ===========
 static bool TopOpeBRep_traceSHA = false;
 
 Standard_EXPORT void TopOpeBRep_SettraceSHA(const bool b)
@@ -216,5 +213,4 @@ Standard_EXPORT bool TopOpeBRep_GettraceSHA(const int i1)
   return BOOPSHA.Get(1, t);
 }
 
-// #ifdef OCCT_DEBUG
 #endif

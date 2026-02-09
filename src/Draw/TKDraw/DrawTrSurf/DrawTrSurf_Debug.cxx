@@ -7,10 +7,6 @@
 #include <Geom_Geometry.hpp>
 #include <Geom2d_Curve.hpp>
 
-// This file defines global functions not declared in any public header,
-// intended for use from debugger prompt (Command Window in Visual Studio)
-
-//! Save geometric object identified by pointer to handle
 Standard_EXPORT const char* DrawTrSurf_Set(const char* theNameStr, void* theHandlePtr)
 {
   if (theNameStr == nullptr || theHandlePtr == nullptr)
@@ -42,7 +38,6 @@ Standard_EXPORT const char* DrawTrSurf_Set(const char* theNameStr, void* theHand
   }
 }
 
-//! Set point to DRAW variable
 Standard_EXPORT const char* DrawTrSurf_SetPnt(const char* theNameStr, void* thePntPtr)
 {
   if (theNameStr == nullptr || thePntPtr == nullptr)
@@ -68,7 +63,6 @@ Standard_EXPORT const char* DrawTrSurf_SetPnt(const char* theNameStr, void* theP
   }
 }
 
-//! Set 2d point to DRAW variable
 Standard_EXPORT const char* DrawTrSurf_SetPnt2d(const char* theNameStr, void* thePnt2dPtr)
 {
   if (theNameStr == nullptr || thePnt2dPtr == nullptr)
@@ -89,10 +83,6 @@ Standard_EXPORT const char* DrawTrSurf_SetPnt2d(const char* theNameStr, void* th
   }
 }
 
-// MSVC debugger cannot deal correctly with functions whose argunments
-// have non-standard types. Here we define alternative to the above functions
-// with good types with the hope that GDB on Linux or other debugger could
-// work with them (DBX could, on SUN Solaris).
 #ifndef _MSC_VER
 
 Standard_EXPORT const char* DrawTrSurf_Set(const char*                            name,
@@ -111,25 +101,4 @@ Standard_EXPORT const char* DrawTrSurf_Set(const char* theName, const gp_Pnt2d& 
   return DrawTrSurf_SetPnt2d(theName, (void*)&thePnt2d);
 }
 
-#endif /* _MSC_VER */
-
-// old function, looks too dangerous to be used
-/*
-void DrawTrSurf_Get(const char* name, occ::handle<Standard_Transient>& G)
-{
-  occ::handle<Geom_Geometry> GG = DrawTrSurf::Get(name);
-  std::cout << "Nom : " << name << std::endl;
-  if (!GG.IsNull()) {
-    G = GG;
-    return;
-  }
-
-  occ::handle<Geom2d_Curve> GC = DrawTrSurf::GetCurve2d(name);
-  if (!GC.IsNull()) {
-    G = GC;
-    return;
-  }
-
-  std::cout << "*** Not a geometric object ***" << std::endl;
-}
-*/
+#endif

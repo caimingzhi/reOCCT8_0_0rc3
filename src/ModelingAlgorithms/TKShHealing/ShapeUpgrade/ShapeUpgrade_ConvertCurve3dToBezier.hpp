@@ -8,48 +8,33 @@
 #include <NCollection_HSequence.hpp>
 #include <ShapeUpgrade_SplitCurve3d.hpp>
 
-//! converts/splits a 3d curve of any type to a list of beziers
 class ShapeUpgrade_ConvertCurve3dToBezier : public ShapeUpgrade_SplitCurve3d
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT ShapeUpgrade_ConvertCurve3dToBezier();
 
-  //! Sets mode for conversion Geom_Line to bezier.
   void SetLineMode(const bool mode);
 
-  //! Returns the Geom_Line conversion mode.
   bool GetLineMode() const;
 
-  //! Sets mode for conversion Geom_Circle to bezier.
   void SetCircleMode(const bool mode);
 
-  //! Returns the Geom_Circle conversion mode.
   bool GetCircleMode() const;
 
-  //! Returns the Geom_Conic conversion mode.
   void SetConicMode(const bool mode);
 
-  //! Performs converting and computes the resulting shape.
   bool GetConicMode() const;
 
-  //! Converts curve into a list of beziers, and stores the
-  //! splitting parameters on original curve.
   Standard_EXPORT void Compute() override;
 
-  //! Splits a list of beziers computed by Compute method according
-  //! the split values and splitting parameters.
   Standard_EXPORT void Build(const bool Segment) override;
 
-  //! Returns the list of split parameters in original curve parametrisation.
   Standard_EXPORT occ::handle<NCollection_HSequence<double>> SplitParams() const;
 
   DEFINE_STANDARD_RTTIEXT(ShapeUpgrade_ConvertCurve3dToBezier, ShapeUpgrade_SplitCurve3d)
 
 private:
-  //! Returns the list of bezier curves correspondent to original
-  //! curve.
   Standard_EXPORT occ::handle<NCollection_HSequence<occ::handle<Geom_Curve>>> Segments() const;
 
   occ::handle<NCollection_HSequence<occ::handle<Geom_Curve>>> mySegments;
@@ -64,35 +49,25 @@ inline void ShapeUpgrade_ConvertCurve3dToBezier::SetLineMode(const bool mode)
   myLineMode = mode;
 }
 
-//=================================================================================================
-
 inline bool ShapeUpgrade_ConvertCurve3dToBezier::GetLineMode() const
 {
   return myLineMode;
 }
-
-//=================================================================================================
 
 inline void ShapeUpgrade_ConvertCurve3dToBezier::SetCircleMode(const bool mode)
 {
   myCircleMode = mode;
 }
 
-//=================================================================================================
-
 inline bool ShapeUpgrade_ConvertCurve3dToBezier::GetCircleMode() const
 {
   return myCircleMode;
 }
 
-//=================================================================================================
-
 inline void ShapeUpgrade_ConvertCurve3dToBezier::SetConicMode(const bool mode)
 {
   myConicMode = mode;
 }
-
-//=================================================================================================
 
 inline bool ShapeUpgrade_ConvertCurve3dToBezier::GetConicMode() const
 {

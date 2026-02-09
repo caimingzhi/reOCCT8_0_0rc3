@@ -1,15 +1,4 @@
-// Copyright (c) 2013-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Aspect_DisplayConnection.hpp>
 
@@ -23,8 +12,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Aspect_DisplayConnection, Standard_Transient)
 
-//=================================================================================================
-
 Aspect_DisplayConnection::Aspect_DisplayConnection()
 {
 #if defined(HAVE_XLIB)
@@ -37,8 +24,6 @@ Aspect_DisplayConnection::Aspect_DisplayConnection()
   Init(nullptr);
 #endif
 }
-
-//=================================================================================================
 
 Aspect_DisplayConnection::~Aspect_DisplayConnection()
 {
@@ -54,8 +39,6 @@ Aspect_DisplayConnection::~Aspect_DisplayConnection()
 #endif
 }
 
-//=================================================================================================
-
 Aspect_DisplayConnection::Aspect_DisplayConnection(const TCollection_AsciiString& theDisplayName)
     : myDisplay(nullptr),
       myDefVisualInfo(nullptr),
@@ -66,8 +49,6 @@ Aspect_DisplayConnection::Aspect_DisplayConnection(const TCollection_AsciiString
   Init(nullptr);
 }
 
-//=================================================================================================
-
 Aspect_DisplayConnection::Aspect_DisplayConnection(Aspect_XDisplay* theDisplay)
     : myDisplay(nullptr),
       myDefVisualInfo(nullptr),
@@ -76,8 +57,6 @@ Aspect_DisplayConnection::Aspect_DisplayConnection(Aspect_XDisplay* theDisplay)
 {
   Init(theDisplay);
 }
-
-//=================================================================================================
 
 void Aspect_DisplayConnection::SetDefaultVisualInfo(Aspect_XVisualInfo* theVisual,
                                                     Aspect_FBConfig     theFBConfig)
@@ -91,8 +70,6 @@ void Aspect_DisplayConnection::SetDefaultVisualInfo(Aspect_XVisualInfo* theVisua
   myDefVisualInfo = theVisual;
   myDefFBConfig   = theFBConfig;
 }
-
-//=================================================================================================
 
 void Aspect_DisplayConnection::Init(Aspect_XDisplay* theDisplay)
 {

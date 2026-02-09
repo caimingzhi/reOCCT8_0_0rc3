@@ -7,22 +7,16 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepAP203_RWStartWork::RWStepAP203_RWStartWork() = default;
-
-//=================================================================================================
 
 void RWStepAP203_RWStartWork::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                        const int                                   num,
                                        occ::handle<Interface_Check>&               ach,
                                        const occ::handle<StepAP203_StartWork>&     ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "start_work"))
     return;
-
-  // Inherited fields of ActionAssignment
 
   occ::handle<StepBasic_Action> aActionAssignment_AssignedAction;
   data->ReadEntity(num,
@@ -31,8 +25,6 @@ void RWStepAP203_RWStartWork::ReadStep(const occ::handle<StepData_StepReaderData
                    ach,
                    STANDARD_TYPE(StepBasic_Action),
                    aActionAssignment_AssignedAction);
-
-  // Own fields of StartWork
 
   occ::handle<NCollection_HArray1<StepAP203_WorkItem>> aItems;
   int                                                  sub2 = 0;
@@ -49,21 +41,14 @@ void RWStepAP203_RWStartWork::ReadStep(const occ::handle<StepData_StepReaderData
     }
   }
 
-  // Initialize entity
   ent->Init(aActionAssignment_AssignedAction, aItems);
 }
-
-//=================================================================================================
 
 void RWStepAP203_RWStartWork::WriteStep(StepData_StepWriter&                    SW,
                                         const occ::handle<StepAP203_StartWork>& ent) const
 {
 
-  // Inherited fields of ActionAssignment
-
   SW.Send(ent->StepBasic_ActionAssignment::AssignedAction());
-
-  // Own fields of StartWork
 
   SW.OpenSub();
   for (int i1 = 1; i1 <= ent->Items()->Length(); i1++)
@@ -74,17 +59,11 @@ void RWStepAP203_RWStartWork::WriteStep(StepData_StepWriter&                    
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepAP203_RWStartWork::Share(const occ::handle<StepAP203_StartWork>& ent,
                                     Interface_EntityIterator&               iter) const
 {
 
-  // Inherited fields of ActionAssignment
-
   iter.AddItem(ent->StepBasic_ActionAssignment::AssignedAction());
-
-  // Own fields of StartWork
 
   for (int i2 = 1; i2 <= ent->Items()->Length(); i2++)
   {

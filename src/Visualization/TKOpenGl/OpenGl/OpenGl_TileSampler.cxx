@@ -2,11 +2,6 @@
 #include <OpenGl_TileSampler.hpp>
 #include <Graphic3d_RenderingParams.hpp>
 
-// define to debug algorithm values
-// #define RAY_TRACE_PRINT_DEBUG_INFO
-
-//=================================================================================================
-
 OpenGl_TileSampler::OpenGl_TileSampler()
     : myLastSample(0),
       myScaleFactor(1.0f),
@@ -14,8 +9,6 @@ OpenGl_TileSampler::OpenGl_TileSampler()
       myViewSize(0, 0)
 {
 }
-
-//=================================================================================================
 
 void OpenGl_TileSampler::GrabVarianceMap(const occ::handle<OpenGl_Context>& theContext,
                                          const occ::handle<OpenGl_Texture>& theTexture)
@@ -61,7 +54,7 @@ void OpenGl_TileSampler::GrabVarianceMap(const occ::handle<OpenGl_Context>& theC
 
       float& aTile = myVarianceMap.ChangeValue(aRowIter, aColIter);
       aTile        = aFactor * float(aRawValue);
-      aTile *= 1.0f / tileArea((int)aColIter, (int)aRowIter); // average error over the tile
+      aTile *= 1.0f / tileArea((int)aColIter, (int)aRowIter);
       if (aRowIter != 0)
       {
         aTile += myVarianceMap.Value(aRowIter - 1, aColIter);
@@ -69,7 +62,6 @@ void OpenGl_TileSampler::GrabVarianceMap(const occ::handle<OpenGl_Context>& theC
     }
   }
 
-  // build marginal distribution
   for (size_t aX = 0; aX < myVarianceMap.SizeX; ++aX)
   {
     myMarginalMap[aX] = myVarianceMap.Value(myVarianceMap.SizeY - 1, aX);
@@ -83,8 +75,6 @@ void OpenGl_TileSampler::GrabVarianceMap(const occ::handle<OpenGl_Context>& theC
   dumpMap(std::cerr, myVarianceRaw, "OpenGl_TileSampler, Variance map");
 #endif
 }
-
-//=================================================================================================
 
 void OpenGl_TileSampler::dumpMap(std::ostream&                     theStream,
                                  const Image_PixMapTypedData<int>& theMap,
@@ -101,8 +91,6 @@ void OpenGl_TileSampler::dumpMap(std::ostream&                     theStream,
     theStream << "\n";
   }
 }
-
-//=================================================================================================
 
 NCollection_Vec2<int> OpenGl_TileSampler::nextTileToSample()
 {
@@ -129,8 +117,6 @@ NCollection_Vec2<int> OpenGl_TileSampler::nextTileToSample()
   ++myLastSample;
   return aTile;
 }
-
-//=================================================================================================
 
 void OpenGl_TileSampler::SetSize(const Graphic3d_RenderingParams& theParams,
                                  const NCollection_Vec2<int>&     theSize)
@@ -178,7 +164,6 @@ void OpenGl_TileSampler::SetSize(const Graphic3d_RenderingParams& theParams,
     myMarginalMap.assign(myMarginalMap.size(), 0.0f);
   }
 
-  // calculate a size of compact offsets texture optimal for rendering reduced number of tiles
   int aNbShunkTilesX = (int)myTiles.SizeX, aNbShunkTilesY = (int)myTiles.SizeY;
   if (theParams.NbRayTracingTiles > 0)
   {
@@ -197,8 +182,6 @@ void OpenGl_TileSampler::SetSize(const Graphic3d_RenderingParams& theParams,
   }
 }
 
-//=================================================================================================
-
 bool OpenGl_TileSampler::upload(const occ::handle<OpenGl_Context>& theContext,
                                 const occ::handle<OpenGl_Texture>& theSamplesTexture,
                                 const occ::handle<OpenGl_Texture>& theOffsetsTexture,
@@ -209,16 +192,6 @@ bool OpenGl_TileSampler::upload(const occ::handle<OpenGl_Context>& theContext,
     return false;
   }
 
-  // Fill in myTiles map with a number of passes (samples) per tile.
-  // By default, all tiles receive 1 sample, but basing on visual error level (myVarianceMap),
-  // this amount is re-distributed from tiles having smallest error take 0 samples to tiles having
-  // larger error. This redistribution is smoothed by Halton sampler.
-  //
-  // myOffsets map is filled as redirection of currently rendered tile to another one
-  // so that tiles having smallest error level have 0 tiles redirected from,
-  // while tiles with great error level might be rendered more than 1.
-  // This map is used within single-pass rendering method requiring atomic float operation support
-  // from hardware.
   myTiles.Init(0);
   Image_PixMapTypedData<NCollection_Vec2<int>>& anOffsets =
     theAdaptive ? myOffsetsShrunk : myOffsets;
@@ -238,10 +211,6 @@ bool OpenGl_TileSampler::upload(const occ::handle<OpenGl_Context>& theContext,
   dumpMap(std::cerr, myTiles, "OpenGl_TileSampler, Samples");
 #endif
 
-  // Fill in myTileSamples map from myTiles with an actual number of Samples per Tile as multiple of
-  // Tile Area (e.g. tile that should be rendered ones will have amount of samples equal to its are
-  // 4x4=16). This map is used for discarding tile fragments having <=0 of samples left within
-  // multi-pass rendering.
   myTileSamples.Init(0);
   for (size_t aRowIter = 0; aRowIter < myTiles.SizeY; ++aRowIter)
   {

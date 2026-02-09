@@ -5,14 +5,11 @@
 #include <gp_Vec.hpp>
 #include <TopoDS_Shape.hpp>
 
-// perform checks on the argument
 static const TopoDS_Shape& check(const TopoDS_Shape& S)
 {
   BRepLib::BuildCurves3d(S);
   return S;
 }
-
-//=================================================================================================
 
 BRepPrimAPI_MakePrism::BRepPrimAPI_MakePrism(const TopoDS_Shape& S,
                                              const gp_Vec&       V,
@@ -22,8 +19,6 @@ BRepPrimAPI_MakePrism::BRepPrimAPI_MakePrism(const TopoDS_Shape& S,
 {
   Build();
 }
-
-//=================================================================================================
 
 BRepPrimAPI_MakePrism::BRepPrimAPI_MakePrism(const TopoDS_Shape& S,
                                              const gp_Dir&       D,
@@ -35,36 +30,26 @@ BRepPrimAPI_MakePrism::BRepPrimAPI_MakePrism(const TopoDS_Shape& S,
   Build();
 }
 
-//=================================================================================================
-
 const BRepSweep_Prism& BRepPrimAPI_MakePrism::Prism() const
 {
   return myPrism;
 }
 
-//=================================================================================================
-
-void BRepPrimAPI_MakePrism::Build(const Message_ProgressRange& /*theRange*/)
+void BRepPrimAPI_MakePrism::Build(const Message_ProgressRange&)
 {
   myShape = myPrism.Shape();
   Done();
 }
-
-//=================================================================================================
 
 TopoDS_Shape BRepPrimAPI_MakePrism::FirstShape()
 {
   return myPrism.FirstShape();
 }
 
-//=================================================================================================
-
 TopoDS_Shape BRepPrimAPI_MakePrism::LastShape()
 {
   return myPrism.LastShape();
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepPrimAPI_MakePrism::Generated(const TopoDS_Shape& S)
 {
@@ -76,33 +61,15 @@ const NCollection_List<TopoDS_Shape>& BRepPrimAPI_MakePrism::Generated(const Top
   return myGenerated;
 }
 
-// Modified by skv - Fri Mar  4 15:50:09 2005 Begin
-
-//=======================================================================
-// function : FirstShape
-// purpose  : This method returns the bottom shape of the prism, generated
-//           with theShape (subShape of the generating shape)
-//=======================================================================
-
 TopoDS_Shape BRepPrimAPI_MakePrism::FirstShape(const TopoDS_Shape& theShape)
 {
   return myPrism.FirstShape(theShape);
 }
 
-//=======================================================================
-// function : LastShape
-// purpose  : This method returns the top shape of the prism, generated
-//           with theShape (subShape of the generating shape)
-//=======================================================================
-
 TopoDS_Shape BRepPrimAPI_MakePrism::LastShape(const TopoDS_Shape& theShape)
 {
   return myPrism.LastShape(theShape);
 }
-
-// Modified by skv - Fri Mar  4 15:50:09 2005 End
-
-//=================================================================================================
 
 bool BRepPrimAPI_MakePrism::IsDeleted(const TopoDS_Shape& S)
 {

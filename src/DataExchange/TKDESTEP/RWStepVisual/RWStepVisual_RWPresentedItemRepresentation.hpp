@@ -11,7 +11,6 @@ class StepVisual_PresentedItemRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for PresentedItemRepresentation
 class RWStepVisual_RWPresentedItemRepresentation
 {
 public:

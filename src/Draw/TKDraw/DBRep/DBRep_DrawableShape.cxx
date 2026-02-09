@@ -40,18 +40,14 @@ IMPLEMENT_STANDARD_RTTIEXT(DBRep_DrawableShape, Draw_Drawable3D)
 
 static double IsoRatio = 1.001;
 
-static int MaxPlotCount = 5; // To avoid huge recursive calls in
-static int PlotCount    = 0; // PlotEdge and PlotIso for cases of "bad"
-                             // curves and surfaces
-                             // Set PlotCount = 0 before first call of
-                             // PlotEdge or PlotIso
+static int MaxPlotCount = 5;
+static int PlotCount    = 0;
+
 static TopoDS_Shape pickshape;
 static double       upick, vpick;
 #ifdef _WIN32
 extern Draw_Viewer dout;
 #endif
-
-//=================================================================================================
 
 DBRep_DrawableShape::DBRep_DrawableShape(const TopoDS_Shape& aShape,
                                          const Draw_Color&   FreeCol,
@@ -79,8 +75,6 @@ DBRep_DrawableShape::DBRep_DrawableShape(const TopoDS_Shape& aShape,
   myShape = aShape;
 }
 
-//=================================================================================================
-
 void DBRep_DrawableShape::updateDisplayData() const
 {
   myFaces.Clear();
@@ -88,10 +82,6 @@ void DBRep_DrawableShape::updateDisplayData() const
 
   if (myShape.IsNull())
     return;
-
-  //==============================================================
-  // Process the faces
-  //==============================================================
 
   TopExp_Explorer ExpFace;
   TopLoc_Location l;
@@ -116,10 +106,6 @@ void DBRep_DrawableShape::updateDisplayData() const
       myFaces.Append(new DBRep_Face(TopologicalFace, 0, myEdgeCol));
   }
 
-  //==============================================================
-  // process a 3D edge
-  //==============================================================
-
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     edgemap;
   TopExp::MapShapesAndAncestors(myShape, TopAbs_EDGE, TopAbs_FACE, edgemap);
@@ -130,11 +116,9 @@ void DBRep_DrawableShape::updateDisplayData() const
 
     const TopoDS_Edge& theEdge = TopoDS::Edge(edgemap.FindKey(iedge));
 
-    // skip degenerated edges
     if (BRep_Tool::Degenerated(theEdge))
       continue;
 
-    // compute the number of faces
     int nbf = edgemap(iedge).Extent();
 
     Draw_Color EdgeColor;
@@ -143,25 +127,20 @@ void DBRep_DrawableShape::updateDisplayData() const
     {
 
       case 0:
-        EdgeColor = myEdgeCol; // isolated edge
+        EdgeColor = myEdgeCol;
         break;
 
       case 1:
-        EdgeColor = myFreeCol; // edge in only one face
+        EdgeColor = myFreeCol;
         break;
 
       default:
-        EdgeColor = myConnCol; // edge shared by at least two faces
+        EdgeColor = myConnCol;
     }
 
     myEdges.Append(new DBRep_Edge(theEdge, EdgeColor));
   }
 }
-
-//=======================================================================
-// function : ChangeNbIsos
-// purpose  : Changes the number of isoparametric curves in a shape.
-//=======================================================================
 
 void DBRep_DrawableShape::ChangeNbIsos(const int NbIsos)
 {
@@ -191,17 +170,10 @@ void DBRep_DrawableShape::ChangeNbIsos(const int NbIsos)
   }
 }
 
-//=======================================================================
-// Function : NbIsos
-// Purpose  : Returns the number of isoparametric curves in a shape.
-//=======================================================================
-
 int DBRep_DrawableShape::NbIsos() const
 {
   return myNbIsos;
 }
-
-//=================================================================================================
 
 int DBRep_DrawableShape::Discret() const
 {
@@ -323,8 +295,6 @@ static void PlotEdge(Draw_Display&            dis,
   }
 }
 
-//=================================================================================================
-
 void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
 {
   bool halt = false;
@@ -339,7 +309,6 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
   if (myFaces.IsEmpty() || myEdges.IsEmpty())
     updateDisplayData();
 
-  // hidden lines
   if (myHLR)
   {
     DBRep_DrawableShape* p = (DBRep_DrawableShape*)this;
@@ -350,11 +319,10 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
   GeomAbs_IsoType T;
   double          Par, T1, T2;
   double          U1, U2, V1, V2, stepU = 0., stepV = 0.;
-  //  gp_Pnt P, P1;
+
   gp_Pnt P;
   int    i, j;
 
-  // Faces
   occ::handle<Poly_Triangulation> Tr;
   TopLoc_Location                 aTempLoc;
   TopLoc_Location                 loc;
@@ -405,11 +373,8 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
 
       BRepAdaptor_Surface S(F->Face(), restriction);
 
-      // BRepAdaptor_Surface S(F->Face(),false);
-
       GeomAbs_SurfaceType SurfType = S.GetType();
 
-// If the type of the surface is GeomAbs_SurfaceOfExtrusion or GeomAbs_SurfaceOfRevolution
 #ifdef OCCT_DEBUG
       GeomAbs_CurveType CurvType;
 #else
@@ -473,10 +438,10 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
 
           switch (SurfType)
           {
-              //-------------GeomAbs_Plane---------------
+
             case GeomAbs_Plane:
               break;
-              //----GeomAbs_Cylinder   GeomAbs_Cone------
+
             case GeomAbs_Cylinder:
             case GeomAbs_Cone:
               if (T == GeomAbs_IsoV)
@@ -497,8 +462,7 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
                 }
               }
               break;
-              //---GeomAbs_Sphere   GeomAbs_Torus--------
-              // GeomAbs_BezierSurface GeomAbs_BezierSurface
+
             case GeomAbs_Sphere:
             case GeomAbs_Torus:
             case GeomAbs_OffsetSurface:
@@ -518,7 +482,7 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
                 }
               }
               break;
-              //-------------GeomAbs_BSplineSurface------
+
             case GeomAbs_BezierSurface:
             case GeomAbs_BSplineSurface:
               for (j = 1; j <= myDiscret / 2; j++)
@@ -539,8 +503,7 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
                 V1 += stepV * 2.;
               }
               break;
-              //-------------GeomAbs_SurfaceOfExtrusion--
-              //-------------GeomAbs_SurfaceOfRevolution-
+
             case GeomAbs_SurfaceOfExtrusion:
             case GeomAbs_SurfaceOfRevolution:
               if ((T == GeomAbs_IsoV && SurfType == GeomAbs_SurfaceOfRevolution)
@@ -627,10 +590,6 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
       }
     }
 
-    //=====================================
-    // trace des eventuelles triangulations.
-    //=====================================
-
     if (aSurf.IsNull() || mytriangulations)
     {
       Tr = BRep_Tool::Triangulation(F->Face(), loc);
@@ -642,7 +601,6 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
     itf.Next();
   }
 
-  // Edges
   NCollection_List<occ::handle<DBRep_Edge>>::Iterator ite(myEdges);
   while (ite.More() && !halt)
   {
@@ -654,17 +612,16 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
     else
       dis.SetColor(E->Color());
 
-    // display geometrical curve if exists.
     bool   isgeom = BRep_Tool::IsGeometric(E->Edge());
     double aCheckU1, aCheckU2;
 
     if (isgeom)
     {
-      // check the range (to report bad edges)
+
       BRep_Tool::Range(E->Edge(), aCheckU1, aCheckU2);
       if (aCheckU2 < aCheckU1)
       {
-        // bad orientation
+
         std::cout << "DBRep_DrawableShape : Bad parameters on edge." << std::endl;
         BRepTools::Dump(E->Edge(), std::cout);
         ite.Next();
@@ -762,7 +719,7 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
 
       if (myDispOr)
       {
-        // display an arrow at the end
+
         gp_Pnt aPnt;
         gp_Vec V;
         C.D1(l, aPnt, V);
@@ -782,20 +739,12 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
           dis.DrawTo(p1);
           dis.DrawTo(p2);
         }
-
-        //	gp_Vec tang;
-        //	C.D1(l,P,tang);
       }
     }
-
-    //======================================
-    // trace des representations polygonales:
-    //======================================
 
     if (!isgeom || mypolygons)
     {
 
-      // Polygones 3d:
       occ::handle<Poly_Polygon3D> Polyg = BRep_Tool::Polygon3D(E->Edge(), loc);
       if (!Polyg.IsNull())
       {
@@ -816,7 +765,6 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
       else
       {
 
-        // Polygone sur triangulation:
         occ::handle<Poly_Triangulation>          PolyTr;
         occ::handle<Poly_PolygonOnTriangulation> Poly;
         BRep_Tool::PolygonOnTriangulation(E->Edge(), Poly, PolyTr, loc);
@@ -842,8 +790,6 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
     ite.Next();
   }
 
-  // Vertices
-
   TopExp_Explorer exv;
   dis.SetColor(myConnCol);
 
@@ -863,13 +809,10 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
   }
 }
 
-//=================================================================================================
-
 void DBRep_DrawableShape::DisplayHiddenLines(Draw_Display& dis)
 {
   int id = dis.ViewId();
 
-  // get the projection
   gp_Trsf T;
   dout.GetTrsf(id, T);
   double focal = -1;
@@ -884,15 +827,14 @@ void DBRep_DrawableShape::DisplayHiddenLines(Draw_Display& dis)
 
   BRepMesh_IncrementalMesh MESH(myShape, aMeshParams);
   bool                     recompute = true;
-  // find if the view must be recomputed
+
   NCollection_List<DBRep_HideData>::Iterator it(myHidData);
 
   while (it.More())
   {
     if (it.Value().ViewId() == id)
     {
-      // we have the view
-      // but did we rotate it
+
       double ang = it.Value().Angle();
       recompute  = !it.Value().IsSame(T, focal) || myAng != ang;
       if (recompute)
@@ -911,7 +853,7 @@ void DBRep_DrawableShape::DisplayHiddenLines(Draw_Display& dis)
     }
     it.Next();
   }
-  // recompute the hidden lines and display them
+
   if (recompute)
   {
     DBRep_HideData theData;
@@ -927,14 +869,10 @@ void DBRep_DrawableShape::DisplayHiddenLines(Draw_Display& dis)
   }
 }
 
-//=================================================================================================
-
 TopoDS_Shape DBRep_DrawableShape::Shape() const
 {
   return myShape;
 }
-
-//=================================================================================================
 
 occ::handle<Draw_Drawable3D> DBRep_DrawableShape::Copy() const
 {
@@ -949,28 +887,20 @@ occ::handle<Draw_Drawable3D> DBRep_DrawableShape::Copy() const
   return D;
 }
 
-//=================================================================================================
-
 void DBRep_DrawableShape::DisplayOrientation(const bool D)
 {
   myDispOr = D;
 }
-
-//=================================================================================================
 
 void DBRep_DrawableShape::DisplayTriangulation(const bool D)
 {
   mytriangulations = D;
 }
 
-//=================================================================================================
-
 void DBRep_DrawableShape::DisplayPolygons(const bool D)
 {
   mypolygons = D;
 }
-
-//=================================================================================================
 
 void DBRep_DrawableShape::DisplayHLR(const bool   withHLR,
                                      const bool   withRg1,
@@ -985,21 +915,15 @@ void DBRep_DrawableShape::DisplayHLR(const bool   withHLR,
   myAng = ang;
 }
 
-//=================================================================================================
-
 bool DBRep_DrawableShape::DisplayTriangulation() const
 {
   return mytriangulations;
 }
 
-//=================================================================================================
-
 bool DBRep_DrawableShape::DisplayPolygons() const
 {
   return mypolygons;
 }
-
-//=================================================================================================
 
 void DBRep_DrawableShape::GetDisplayHLR(bool&   withHLR,
                                         bool&   withRg1,
@@ -1014,14 +938,10 @@ void DBRep_DrawableShape::GetDisplayHLR(bool&   withHLR,
   ang     = myAng;
 }
 
-//=================================================================================================
-
 void DBRep_DrawableShape::Dump(Standard_OStream& S) const
 {
   BRepTools::Dump(myShape, S);
 }
-
-//=================================================================================================
 
 void DBRep_DrawableShape::Save(Standard_OStream& theStream) const
 {
@@ -1035,8 +955,6 @@ void DBRep_DrawableShape::Save(Standard_OStream& theStream) const
     aShapeSet.Write(myShape, theStream);
   }
 }
-
-//=================================================================================================
 
 occ::handle<Draw_Drawable3D> DBRep_DrawableShape::Restore(Standard_IStream& theStream)
 {
@@ -1070,8 +988,6 @@ occ::handle<Draw_Drawable3D> DBRep_DrawableShape::Restore(Standard_IStream& theS
   return aDrawShape;
 }
 
-//=================================================================================================
-
 void DBRep_DrawableShape::Whatis(Draw_Interpretor& s) const
 {
   if (myShape.IsNull())
@@ -1096,8 +1012,6 @@ void DBRep_DrawableShape::Whatis(Draw_Interpretor& s) const
     s << " Convex";
 }
 
-//=================================================================================================
-
 void DBRep_DrawableShape::LastPick(TopoDS_Shape& s, double& u, double& v)
 {
   s = pickshape;
@@ -1105,19 +1019,16 @@ void DBRep_DrawableShape::LastPick(TopoDS_Shape& s, double& u, double& v)
   v = vpick;
 }
 
-//=================================================================================================
-
 void DBRep_DrawableShape::display(const occ::handle<Poly_Triangulation>& T,
                                   const gp_Trsf&                         tr,
                                   Draw_Display&                          dis) const
 {
-  // Build the connect tool
+
   Poly_Connect pc(T);
 
   int i, j, nFree, nbTriangles = T->NbTriangles();
   int t[3];
 
-  // count the free edges
   nFree = 0;
   for (i = 1; i <= nbTriangles; i++)
   {
@@ -1127,7 +1038,6 @@ void DBRep_DrawableShape::display(const occ::handle<Poly_Triangulation>& T,
         nFree++;
   }
 
-  // allocate the arrays
   NCollection_Array1<int>                   Free(1, std::max(1, 2 * nFree));
   NCollection_Vector<NCollection_Vec2<int>> anInternal;
 
@@ -1147,7 +1057,7 @@ void DBRep_DrawableShape::display(const occ::handle<Poly_Triangulation>& T,
         Free(fr + 1) = n[k];
         fr += 2;
       }
-      // internal edge if this triangle has a lower index than the adjacent
+
       else if (i < t[j])
       {
         anInternal.Append(NCollection_Vec2<int>(n[j], n[k]));
@@ -1155,9 +1065,6 @@ void DBRep_DrawableShape::display(const occ::handle<Poly_Triangulation>& T,
     }
   }
 
-  // Display the edges
-
-  // free edges
   int nn;
   dis.SetColor(Draw_rouge);
   nn = Free.Length() / 2;
@@ -1165,8 +1072,6 @@ void DBRep_DrawableShape::display(const occ::handle<Poly_Triangulation>& T,
   {
     dis.Draw(T->Node(Free[2 * i - 1]).Transformed(tr), T->Node(Free[2 * i]).Transformed(tr));
   }
-
-  // internal edges
 
   dis.SetColor(Draw_bleu);
   for (NCollection_Vector<NCollection_Vec2<int>>::Iterator anInterIter(anInternal);
@@ -1178,8 +1083,6 @@ void DBRep_DrawableShape::display(const occ::handle<Poly_Triangulation>& T,
     dis.Draw(T->Node(n1).Transformed(tr), T->Node(n2).Transformed(tr));
   }
 }
-
-//=================================================================================================
 
 bool DBRep_DrawableShape::addMeshNormals(NCollection_Vector<std::pair<gp_Pnt, gp_Pnt>>& theNormals,
                                          const TopoDS_Face&                             theFace,
@@ -1234,8 +1137,6 @@ bool DBRep_DrawableShape::addMeshNormals(NCollection_Vector<std::pair<gp_Pnt, gp
   return true;
 }
 
-//=================================================================================================
-
 void DBRep_DrawableShape::addMeshNormals(
   NCollection_DataMap<TopoDS_Face, NCollection_Vector<std::pair<gp_Pnt, gp_Pnt>>>& theNormals,
   const TopoDS_Shape&                                                              theShape,
@@ -1254,8 +1155,6 @@ void DBRep_DrawableShape::addMeshNormals(
     addMeshNormals(*aFaceNormals, aFace, theLength);
   }
 }
-
-//=================================================================================================
 
 bool DBRep_DrawableShape::addSurfaceNormals(
   NCollection_Vector<std::pair<gp_Pnt, gp_Pnt>>& theNormals,
@@ -1310,8 +1209,6 @@ bool DBRep_DrawableShape::addSurfaceNormals(
   }
   return true;
 }
-
-//=================================================================================================
 
 void DBRep_DrawableShape::addSurfaceNormals(
   NCollection_DataMap<TopoDS_Face, NCollection_Vector<std::pair<gp_Pnt, gp_Pnt>>>& theNormals,

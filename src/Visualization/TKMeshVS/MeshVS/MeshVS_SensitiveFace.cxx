@@ -4,8 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_SensitiveFace, Select3D_SensitiveFace)
 
-//=================================================================================================
-
 MeshVS_SensitiveFace::MeshVS_SensitiveFace(const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
                                            const NCollection_Array1<gp_Pnt>&         thePnts,
                                            const Select3D_TypeOfSensitivity          theSensitivity)

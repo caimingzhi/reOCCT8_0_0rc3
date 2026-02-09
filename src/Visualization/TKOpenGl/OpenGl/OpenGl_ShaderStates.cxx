@@ -1,35 +1,21 @@
 #include <OpenGl_ShaderStates.hpp>
 
-//=================================================================================================
-
 OpenGl_StateInterface::OpenGl_StateInterface()
     : myIndex(0)
 {
 }
 
-// =======================================================================
-// function : OpenGl_ProjectionState
-// purpose  : Creates uninitialized projection state
-// =======================================================================
 OpenGl_ProjectionState::OpenGl_ProjectionState()
     : myInverseNeedUpdate(false)
 {
 }
 
-// =======================================================================
-// function : Set
-// purpose  : Sets new OCCT projection state
-// =======================================================================
 void OpenGl_ProjectionState::Set(const NCollection_Mat4<float>& theProjectionMatrix)
 {
   myProjectionMatrix  = theProjectionMatrix;
   myInverseNeedUpdate = true;
 }
 
-// =======================================================================
-// function : ProjectionMatrixInverse
-// purpose  : Returns inverse of current projection matrix
-// =======================================================================
 const NCollection_Mat4<float>& OpenGl_ProjectionState::ProjectionMatrixInverse() const
 {
   if (myInverseNeedUpdate)
@@ -40,29 +26,17 @@ const NCollection_Mat4<float>& OpenGl_ProjectionState::ProjectionMatrixInverse()
   return myProjectionMatrixInverse;
 }
 
-// =======================================================================
-// function : OpenGl_ModelWorldState
-// purpose  : Creates uninitialized model-world state
-// =======================================================================
 OpenGl_ModelWorldState::OpenGl_ModelWorldState()
     : myInverseNeedUpdate(false)
 {
 }
 
-// =======================================================================
-// function : Set
-// purpose  : Sets new model-world matrix
-// =======================================================================
 void OpenGl_ModelWorldState::Set(const NCollection_Mat4<float>& theModelWorldMatrix)
 {
   myModelWorldMatrix  = theModelWorldMatrix;
   myInverseNeedUpdate = true;
 }
 
-// =======================================================================
-// function : ModelWorldMatrixInverse
-// purpose  : Returns inverse of current model-world matrix
-// =======================================================================
 const NCollection_Mat4<float>& OpenGl_ModelWorldState::ModelWorldMatrixInverse() const
 {
   if (myInverseNeedUpdate)
@@ -73,29 +47,17 @@ const NCollection_Mat4<float>& OpenGl_ModelWorldState::ModelWorldMatrixInverse()
   return myModelWorldMatrixInverse;
 }
 
-// =======================================================================
-// function : OpenGl_WorldViewState
-// purpose  : Creates uninitialized world-view state
-// =======================================================================
 OpenGl_WorldViewState::OpenGl_WorldViewState()
     : myInverseNeedUpdate(false)
 {
 }
 
-// =======================================================================
-// function : Set
-// purpose  : Sets new world-view matrix
-// =======================================================================
 void OpenGl_WorldViewState::Set(const NCollection_Mat4<float>& theWorldViewMatrix)
 {
   myWorldViewMatrix   = theWorldViewMatrix;
   myInverseNeedUpdate = true;
 }
 
-// =======================================================================
-// function : WorldViewMatrixInverse
-// purpose  : Returns inverse of current world-view matrix
-// =======================================================================
 const NCollection_Mat4<float>& OpenGl_WorldViewState::WorldViewMatrixInverse() const
 {
   if (myInverseNeedUpdate)
@@ -106,26 +68,18 @@ const NCollection_Mat4<float>& OpenGl_WorldViewState::WorldViewMatrixInverse() c
   return myWorldViewMatrixInverse;
 }
 
-// =======================================================================
-// function : OpenGl_ClippingState
-// purpose  : Creates new clipping state
-// =======================================================================
 OpenGl_ClippingState::OpenGl_ClippingState()
     : myIndex(0),
       myNextIndex(1)
 {
 }
 
-//=================================================================================================
-
 void OpenGl_ClippingState::Update()
 {
   myStateStack.Prepend(myIndex);
-  myIndex = myNextIndex; // use myNextIndex here to handle properly Update() after Revert()
+  myIndex = myNextIndex;
   ++myNextIndex;
 }
-
-//=================================================================================================
 
 void OpenGl_ClippingState::Revert()
 {

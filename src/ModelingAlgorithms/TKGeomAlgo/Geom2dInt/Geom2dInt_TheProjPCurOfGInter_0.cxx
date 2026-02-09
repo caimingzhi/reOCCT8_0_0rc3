@@ -30,14 +30,14 @@ double Geom2dInt_TheProjPCurOfGInter::FindParameter(const Adaptor2d_Curve2d& C,
 
   if (!Loc.IsDone())
   {
-    //-- cout<<"\n Erreur dans LocateExtPC "<<endl;
+
     theparam = defaultparam;
   }
   else
   {
     if (!Loc.IsMin())
     {
-      //-- cout<<"\n Erreur dans LocateExtPC (Maximum trouve) "<<endl;
+
       theparam = defaultparam;
     }
     else

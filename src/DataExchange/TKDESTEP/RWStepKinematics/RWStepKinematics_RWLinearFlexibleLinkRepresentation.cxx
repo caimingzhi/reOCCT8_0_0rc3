@@ -1,4 +1,4 @@
-// Created on : Fri May 08 19:02:07 2020
+
 
 #include "RWStepKinematics_RWLinearFlexibleLinkRepresentation.hpp"
 
@@ -13,12 +13,8 @@
 #include <StepRepr_RepresentationContext.hpp>
 #include <StepKinematics_KinematicLink.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWLinearFlexibleLinkRepresentation::
   RWStepKinematics_RWLinearFlexibleLinkRepresentation() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWLinearFlexibleLinkRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&                         theData,
@@ -26,11 +22,9 @@ void RWStepKinematics_RWLinearFlexibleLinkRepresentation::ReadStep(
   occ::handle<Interface_Check>&                                       theArch,
   const occ::handle<StepKinematics_LinearFlexibleLinkRepresentation>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 4, theArch, "linear_flexible_link_representation"))
     return;
-
-  // Inherited fields of Representation
 
   occ::handle<TCollection_HAsciiString> aRepresentation_Name;
   theData->ReadString(theNum, 1, "representation.name", theArch, aRepresentation_Name);
@@ -64,8 +58,6 @@ void RWStepKinematics_RWLinearFlexibleLinkRepresentation::ReadStep(
                       STANDARD_TYPE(StepRepr_RepresentationContext),
                       aRepresentation_ContextOfItems);
 
-  // Inherited fields of KinematicLinkRepresentation
-
   occ::handle<StepKinematics_KinematicLink> aKinematicLinkRepresentation_RepresentedLink;
   theData->ReadEntity(theNum,
                       4,
@@ -74,21 +66,16 @@ void RWStepKinematics_RWLinearFlexibleLinkRepresentation::ReadStep(
                       STANDARD_TYPE(StepKinematics_KinematicLink),
                       aKinematicLinkRepresentation_RepresentedLink);
 
-  // Initialize entity
   theEnt->Init(aRepresentation_Name,
                aRepresentation_Items,
                aRepresentation_ContextOfItems,
                aKinematicLinkRepresentation_RepresentedLink);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWLinearFlexibleLinkRepresentation::WriteStep(
   StepData_StepWriter&                                                theSW,
   const occ::handle<StepKinematics_LinearFlexibleLinkRepresentation>& theEnt) const
 {
-
-  // Own fields of Representation
 
   theSW.Send(theEnt->Name());
 
@@ -102,19 +89,13 @@ void RWStepKinematics_RWLinearFlexibleLinkRepresentation::WriteStep(
 
   theSW.Send(theEnt->ContextOfItems());
 
-  // Own fields of KinematicLinkRepresentation
-
   theSW.Send(theEnt->RepresentedLink());
 }
-
-//=================================================================================================
 
 void RWStepKinematics_RWLinearFlexibleLinkRepresentation::Share(
   const occ::handle<StepKinematics_LinearFlexibleLinkRepresentation>& theEnt,
   Interface_EntityIterator&                                           iter) const
 {
-
-  // Inherited fields of Representation
 
   for (int i1 = 1; i1 <= theEnt->StepRepr_Representation::Items()->Length(); i1++)
   {
@@ -124,8 +105,6 @@ void RWStepKinematics_RWLinearFlexibleLinkRepresentation::Share(
   }
 
   iter.AddItem(theEnt->StepRepr_Representation::ContextOfItems());
-
-  // Inherited fields of KinematicLinkRepresentation
 
   iter.AddItem(theEnt->StepKinematics_KinematicLinkRepresentation::RepresentedLink());
 }

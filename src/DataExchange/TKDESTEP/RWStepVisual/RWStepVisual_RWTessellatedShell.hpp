@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_TessellatedShell;
 
-//! Read & Write tool for TessellatedShell
 class RWStepVisual_RWTessellatedShell
 {
 

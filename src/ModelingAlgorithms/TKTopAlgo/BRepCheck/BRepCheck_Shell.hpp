@@ -23,16 +23,8 @@ public:
 
   Standard_EXPORT void Blind() override;
 
-  //! Checks if the oriented faces of the shell give a
-  //! closed shell. If the wire is closed, returns
-  //! BRepCheck_NoError. If <Update> is set to
-  //! true, registers the status in the list.
   Standard_EXPORT BRepCheck_Status Closed(const bool Update = false);
 
-  //! Checks if the oriented faces of the shell are
-  //! correctly oriented. An internal call is made to
-  //! the method Closed. If <Update> is set to
-  //! true, registers the status in the list.
   Standard_EXPORT BRepCheck_Status Orientation(const bool Update = false);
 
   Standard_EXPORT void SetUnorientable();

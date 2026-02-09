@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Geom2d_CartesianPoint.hpp>
 #include <Interface_Check.hpp>
@@ -21,16 +10,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_Binder, Standard_Transient)
 
-//=================================================================================================
-
 Transfer_Binder::Transfer_Binder()
 {
   thestatus = Transfer_StatusVoid;
   theexecst = Transfer_StatusInitial;
   thecheck  = new Interface_Check;
 }
-
-//=================================================================================================
 
 void Transfer_Binder::Merge(const occ::handle<Transfer_Binder>& other)
 {
@@ -40,8 +25,6 @@ void Transfer_Binder::Merge(const occ::handle<Transfer_Binder>& other)
     theexecst = other->StatusExec();
   thecheck->GetMessages(other->Check());
 }
-
-//=================================================================================================
 
 bool Transfer_Binder::IsMultiple() const
 {
@@ -60,8 +43,6 @@ bool Transfer_Binder::IsMultiple() const
   return false;
 }
 
-//=================================================================================================
-
 void Transfer_Binder::AddResult(const occ::handle<Transfer_Binder>& next)
 {
   if (next == this || next.IsNull())
@@ -71,7 +52,7 @@ void Transfer_Binder::AddResult(const occ::handle<Transfer_Binder>& next)
     thenextr = next;
   else
   {
-    // Modification of recursive to cycle
+
     occ::handle<Transfer_Binder> theBinder = theendr.IsNull() ? thenextr : theendr;
     while (theBinder != next)
     {
@@ -87,8 +68,6 @@ void Transfer_Binder::AddResult(const occ::handle<Transfer_Binder>& next)
   }
 }
 
-//=================================================================================================
-
 void Transfer_Binder::CutResult(const occ::handle<Transfer_Binder>& next)
 {
   if (thenextr.IsNull())
@@ -98,7 +77,7 @@ void Transfer_Binder::CutResult(const occ::handle<Transfer_Binder>& next)
     thenextr.Nullify();
     theendr.Nullify();
   }
-  // else thenextr->CutResult (next);
+
   else
   {
     occ::handle<Transfer_Binder> currBinder = thenextr, currNext;
@@ -112,14 +91,10 @@ void Transfer_Binder::CutResult(const occ::handle<Transfer_Binder>& next)
   }
 }
 
-//=================================================================================================
-
 occ::handle<Transfer_Binder> Transfer_Binder::NextResult() const
 {
   return thenextr;
 }
-
-//=================================================================================================
 
 void Transfer_Binder::SetResultPresent()
 {
@@ -129,14 +104,10 @@ void Transfer_Binder::SetResultPresent()
   thestatus = Transfer_StatusDefined;
 }
 
-//=================================================================================================
-
 bool Transfer_Binder::HasResult() const
 {
   return (thestatus != Transfer_StatusVoid);
 }
-
-//=================================================================================================
 
 void Transfer_Binder::SetAlreadyUsed()
 {
@@ -144,30 +115,20 @@ void Transfer_Binder::SetAlreadyUsed()
     thestatus = Transfer_StatusUsed;
 }
 
-//=================================================================================================
-
 Transfer_StatusResult Transfer_Binder::Status() const
 {
   return thestatus;
 }
-
-//  ############    Checks    ############
-
-//=================================================================================================
 
 Transfer_StatusExec Transfer_Binder::StatusExec() const
 {
   return theexecst;
 }
 
-//=================================================================================================
-
 void Transfer_Binder::SetStatusExec(const Transfer_StatusExec stat)
 {
   theexecst = stat;
 }
-
-//=================================================================================================
 
 void Transfer_Binder::AddFail(const char* mess, const char* orig)
 {
@@ -175,41 +136,31 @@ void Transfer_Binder::AddFail(const char* mess, const char* orig)
   thecheck->AddFail(mess, orig);
 }
 
-//=================================================================================================
-
 void Transfer_Binder::AddWarning(const char* mess, const char* orig)
 {
-  //  theexecst = Transfer_StatusError;
+
   thecheck->AddWarning(mess, orig);
 }
-
-//=================================================================================================
 
 const occ::handle<Interface_Check> Transfer_Binder::Check() const
 {
   return thecheck;
 }
 
-//=================================================================================================
-
 occ::handle<Interface_Check> Transfer_Binder::CCheck()
 {
   return thecheck;
 }
 
-//=================================================================================================
-
 Transfer_Binder::~Transfer_Binder()
 {
-  // To prevent stack overflow on long chains it is needed
-  // to avoid recursive destruction of the field thenextr
+
   if (!thenextr.IsNull())
   {
     occ::handle<Transfer_Binder> aCurr = thenextr;
     theendr.Nullify();
     thenextr.Nullify();
-    // we check GetRefCount in order to not destroy a chain if it belongs also
-    // to another upper level chain (two chains continue at the same binder)
+
     while (!aCurr->thenextr.IsNull() && aCurr->thenextr->GetRefCount() == 1)
     {
       occ::handle<Transfer_Binder> aPrev = aCurr;

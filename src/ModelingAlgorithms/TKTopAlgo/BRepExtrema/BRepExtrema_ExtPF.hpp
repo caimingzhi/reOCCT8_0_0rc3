@@ -17,7 +17,6 @@ public:
 
   BRepExtrema_ExtPF() = default;
 
-  //! It calculates all the distances.
   Standard_EXPORT BRepExtrema_ExtPF(const TopoDS_Vertex&  TheVertex,
                                     const TopoDS_Face&    TheFace,
                                     const Extrema_ExtFlag TheFlag = Extrema_ExtFlag_MINMAX,
@@ -27,23 +26,16 @@ public:
                                   const Extrema_ExtFlag TheFlag = Extrema_ExtFlag_MINMAX,
                                   const Extrema_ExtAlgo TheAlgo = Extrema_ExtAlgo_Grad);
 
-  //! An exception is raised if the fields have not been initialized.
-  //! Be careful: this method uses the Face only for classify not for the fields.
   Standard_EXPORT void Perform(const TopoDS_Vertex& TheVertex, const TopoDS_Face& TheFace);
 
-  //! True if the distances are found.
   bool IsDone() const { return myExtPS.IsDone(); }
 
-  //! Returns the number of extremum distances.
   int NbExt() const { return myPoints.Length(); }
 
-  //! Returns the value of the <N>th extremum square distance.
   double SquareDistance(const int N) const { return mySqDist.Value(N); }
 
-  //! Returns the parameters on the Face of the <N>th extremum distance.
   void Parameter(const int N, double& U, double& V) const { myPoints.Value(N).Parameter(U, V); }
 
-  //! Returns the Point of the <N>th extremum distance.
   gp_Pnt Point(const int N) const { return myPoints.Value(N).Value(); }
 
   void SetFlag(const Extrema_ExtFlag F) { myExtPS.SetFlag(F); }

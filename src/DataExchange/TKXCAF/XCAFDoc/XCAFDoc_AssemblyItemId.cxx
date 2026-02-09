@@ -99,8 +99,6 @@ TCollection_AsciiString XCAFDoc_AssemblyItemId::ToString() const
   return aStr;
 }
 
-//=================================================================================================
-
 void XCAFDoc_AssemblyItemId::DumpJson(Standard_OStream& theOStream, int) const
 {
   OCCT_DUMP_CLASS_BEGIN(theOStream, XCAFDoc_AssemblyItemId)

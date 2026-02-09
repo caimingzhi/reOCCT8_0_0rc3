@@ -2,19 +2,12 @@
 #include <LDOM_MemManager.hpp>
 #include <LDOM_Attr.hpp>
 
-//=================================================================================================
-
 LDOM_BasicAttribute::LDOM_BasicAttribute(const LDOM_Attr& anAttr)
     : LDOM_BasicNode(anAttr.Origin()),
       myName(anAttr.getName().GetString()),
       myValue(anAttr.getValue())
 {
 }
-
-//=======================================================================
-// function : Create
-// purpose  : construction in the Document's data pool
-//=======================================================================
 
 LDOM_BasicAttribute& LDOM_BasicAttribute::Create(const LDOMBasicString&              theName,
                                                  const occ::handle<LDOM_MemManager>& theDoc,
@@ -29,11 +22,6 @@ LDOM_BasicAttribute& LDOM_BasicAttribute::Create(const LDOMBasicString&         
   aNewAtt->myNodeType = LDOM_Node::ATTRIBUTE_NODE;
   return *aNewAtt;
 }
-
-//=======================================================================
-// function : operator =
-// purpose  : Assignment to NULL
-//=======================================================================
 
 LDOM_BasicAttribute& LDOM_BasicAttribute::operator=(const LDOM_NullPtr* aNull)
 {

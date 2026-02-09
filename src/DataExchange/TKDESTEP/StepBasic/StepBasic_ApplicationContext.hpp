@@ -10,7 +10,6 @@ class StepBasic_ApplicationContext : public Standard_Transient
 {
 
 public:
-  //! Returns a ApplicationContext
   Standard_EXPORT StepBasic_ApplicationContext();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aApplication);

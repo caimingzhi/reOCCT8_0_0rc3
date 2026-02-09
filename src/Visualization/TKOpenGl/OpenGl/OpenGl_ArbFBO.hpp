@@ -2,7 +2,6 @@
 
 #include <OpenGl_GlFunctions.hpp>
 
-//! FBO is available on OpenGL 2.0+ hardware
 struct OpenGl_ArbFBO : protected OpenGl_GlFunctions
 {
 
@@ -31,8 +30,6 @@ struct OpenGl_ArbFBO : protected OpenGl_GlFunctions
 #endif
 };
 
-//! FBO blit is available in OpenGL 3.0+.
-//! Moved out from OpenGl_ArbFBO since it is unavailable in OpenGL ES 2.0.
 struct OpenGl_ArbFBOBlit : protected OpenGl_GlFunctions
 {
 

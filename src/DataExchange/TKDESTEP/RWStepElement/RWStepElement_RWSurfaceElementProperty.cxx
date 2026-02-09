@@ -5,11 +5,7 @@
 #include <StepElement_SurfaceElementProperty.hpp>
 #include <StepElement_SurfaceSectionField.hpp>
 
-//=================================================================================================
-
 RWStepElement_RWSurfaceElementProperty::RWStepElement_RWSurfaceElementProperty() = default;
-
-//=================================================================================================
 
 void RWStepElement_RWSurfaceElementProperty::ReadStep(
   const occ::handle<StepData_StepReaderData>&            data,
@@ -17,11 +13,9 @@ void RWStepElement_RWSurfaceElementProperty::ReadStep(
   occ::handle<Interface_Check>&                          ach,
   const occ::handle<StepElement_SurfaceElementProperty>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "surface_element_property"))
     return;
-
-  // Own fields of SurfaceElementProperty
 
   occ::handle<TCollection_HAsciiString> aPropertyId;
   data->ReadString(num, 1, "property_id", ach, aPropertyId);
@@ -33,18 +27,13 @@ void RWStepElement_RWSurfaceElementProperty::ReadStep(
   data
     ->ReadEntity(num, 3, "section", ach, STANDARD_TYPE(StepElement_SurfaceSectionField), aSection);
 
-  // Initialize entity
   ent->Init(aPropertyId, aDescription, aSection);
 }
-
-//=================================================================================================
 
 void RWStepElement_RWSurfaceElementProperty::WriteStep(
   StepData_StepWriter&                                   SW,
   const occ::handle<StepElement_SurfaceElementProperty>& ent) const
 {
-
-  // Own fields of SurfaceElementProperty
 
   SW.Send(ent->PropertyId());
 
@@ -53,14 +42,10 @@ void RWStepElement_RWSurfaceElementProperty::WriteStep(
   SW.Send(ent->Section());
 }
 
-//=================================================================================================
-
 void RWStepElement_RWSurfaceElementProperty::Share(
   const occ::handle<StepElement_SurfaceElementProperty>& ent,
   Interface_EntityIterator&                              iter) const
 {
-
-  // Own fields of SurfaceElementProperty
 
   iter.AddItem(ent->Section());
 }

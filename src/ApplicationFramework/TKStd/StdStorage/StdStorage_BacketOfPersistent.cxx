@@ -1,15 +1,4 @@
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <StdStorage_BacketOfPersistent.hpp>
 #include <StdObjMgt_Persistent.hpp>
@@ -22,14 +11,10 @@ StdStorage_Bucket::~StdStorage_Bucket()
   Clear();
 }
 
-//=================================================================================================
-
 void StdStorage_Bucket::Clear()
 {
   myCurrentSpace = -1;
 }
-
-//=================================================================================================
 
 void StdStorage_Bucket::Append(StdObjMgt_Persistent* sp)
 {
@@ -37,14 +22,10 @@ void StdStorage_Bucket::Append(StdObjMgt_Persistent* sp)
   mySpace[myCurrentSpace] = sp;
 }
 
-//=================================================================================================
-
 StdObjMgt_Persistent* StdStorage_Bucket::Value(const int theIndex) const
 {
   return mySpace[theIndex];
 }
-
-//=================================================================================================
 
 StdStorage_BucketOfPersistent::StdStorage_BucketOfPersistent(const int theBucketSize,
                                                              const int theBucketNumber)
@@ -58,8 +39,6 @@ StdStorage_BucketOfPersistent::StdStorage_BucketOfPersistent(const int theBucket
   myLength              = 0;
   myCurrentBucketNumber = 0;
 }
-
-//=================================================================================================
 
 void StdStorage_BucketOfPersistent::Clear()
 {
@@ -85,8 +64,6 @@ StdStorage_BucketOfPersistent::~StdStorage_BucketOfPersistent()
   myBuckets = nullptr;
 }
 
-//=================================================================================================
-
 StdObjMgt_Persistent* StdStorage_BucketOfPersistent::Value(const int theIndex)
 {
   int theInd, theCurrentBucketNumber, tecurrentind = theIndex - 1;
@@ -95,8 +72,6 @@ StdObjMgt_Persistent* StdStorage_BucketOfPersistent::Value(const int theIndex)
 
   return myBuckets[theCurrentBucketNumber]->mySpace[theInd];
 }
-
-//=================================================================================================
 
 void StdStorage_BucketOfPersistent::Append(const occ::handle<StdObjMgt_Persistent>& sp)
 {
@@ -127,8 +102,6 @@ void StdStorage_BucketOfPersistent::Append(const occ::handle<StdObjMgt_Persisten
   myCurrentBucket->mySpace[myCurrentBucket->myCurrentSpace] = sp.operator->();
 }
 
-//=================================================================================================
-
 StdStorage_BucketIterator::StdStorage_BucketIterator(StdStorage_BucketOfPersistent* aBucketManager)
 {
   if (aBucketManager)
@@ -144,8 +117,6 @@ StdStorage_BucketIterator::StdStorage_BucketIterator(StdStorage_BucketOfPersiste
     myMoreObject = false;
 }
 
-//=================================================================================================
-
 void StdStorage_BucketIterator::Reset()
 {
   if (myBucket)
@@ -159,8 +130,6 @@ void StdStorage_BucketIterator::Reset()
   else
     myMoreObject = false;
 }
-
-//=================================================================================================
 
 void StdStorage_BucketIterator::Init(StdStorage_BucketOfPersistent* aBucketManager)
 {
@@ -176,8 +145,6 @@ void StdStorage_BucketIterator::Init(StdStorage_BucketOfPersistent* aBucketManag
   else
     myMoreObject = false;
 }
-
-//=================================================================================================
 
 void StdStorage_BucketIterator::Next()
 {

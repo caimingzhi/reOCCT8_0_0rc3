@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_CubicBezierTriangulatedFace;
 
-//! Read & Write tool for CubicBezierTriangulatedFace
 class RWStepVisual_RWCubicBezierTriangulatedFace
 {
 

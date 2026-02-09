@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <StepTidy_LineReducer.hpp>
 
@@ -19,8 +8,6 @@
 #include <StepGeom_SurfaceCurve.hpp>
 #include <StepRepr_DefinitionalRepresentation.hpp>
 #include <StepGeom_SeamCurve.hpp>
-
-//==================================================================================================
 
 StepTidy_LineReducer::StepTidy_LineReducer(const occ::handle<XSControl_WorkSession>& theWS)
     : StepTidy_EntityReducer<StepGeom_Line, StepTidy_LineHasher>(theWS)
@@ -32,8 +19,6 @@ StepTidy_LineReducer::StepTidy_LineReducer(const occ::handle<XSControl_WorkSessi
                    replaceDefinitionalRepresentation);
   registerReplacer(STANDARD_TYPE(StepGeom_SeamCurve), replaceSeamCurve);
 }
-
-//==================================================================================================
 
 bool StepTidy_LineReducer::replaceEdgeCurve(const occ::handle<StepGeom_Line>&      theOldEntity,
                                             const occ::handle<StepGeom_Line>&      theNewEntity,
@@ -48,8 +33,6 @@ bool StepTidy_LineReducer::replaceEdgeCurve(const occ::handle<StepGeom_Line>&   
   return false;
 }
 
-//==================================================================================================
-
 bool StepTidy_LineReducer::replaceTrimmedCurve(const occ::handle<StepGeom_Line>&      theOldEntity,
                                                const occ::handle<StepGeom_Line>&      theNewEntity,
                                                const occ::handle<Standard_Transient>& theSharing)
@@ -63,8 +46,6 @@ bool StepTidy_LineReducer::replaceTrimmedCurve(const occ::handle<StepGeom_Line>&
   return false;
 }
 
-//==================================================================================================
-
 bool StepTidy_LineReducer::replaceSurfaceCurve(const occ::handle<StepGeom_Line>&      theOldEntity,
                                                const occ::handle<StepGeom_Line>&      theNewEntity,
                                                const occ::handle<Standard_Transient>& theSharing)
@@ -77,8 +58,6 @@ bool StepTidy_LineReducer::replaceSurfaceCurve(const occ::handle<StepGeom_Line>&
   }
   return false;
 }
-
-//==================================================================================================
 
 bool StepTidy_LineReducer::replaceDefinitionalRepresentation(
   const occ::handle<StepGeom_Line>&      theOldEntity,
@@ -101,8 +80,6 @@ bool StepTidy_LineReducer::replaceDefinitionalRepresentation(
   }
   return isReplaced;
 }
-
-//==================================================================================================
 
 bool StepTidy_LineReducer::replaceSeamCurve(const occ::handle<StepGeom_Line>&      theOldEntity,
                                             const occ::handle<StepGeom_Line>&      theNewEntity,

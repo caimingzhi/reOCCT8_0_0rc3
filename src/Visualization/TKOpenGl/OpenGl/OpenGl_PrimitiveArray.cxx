@@ -10,7 +10,7 @@
 
 namespace
 {
-  //! Convert data type to GL info
+
   inline GLenum toGlDataType(const Graphic3d_TypeOfData theType, GLint& theNbComp)
   {
     switch (theType)
@@ -43,12 +43,10 @@ namespace
 
 } // namespace
 
-//! Auxiliary template for VBO with interleaved attributes.
 template <class TheBaseClass, int NbAttributes>
 class OpenGl_VertexBufferT : public TheBaseClass
 {
 public:
-  //! Create uninitialized VBO.
   OpenGl_VertexBufferT(const Graphic3d_Buffer& theAttribs)
       : Stride(theAttribs.IsInterleaved() ? theAttribs.Stride : 0)
   {
@@ -154,8 +152,6 @@ private:
   int                 Stride;
 };
 
-//=================================================================================================
-
 void OpenGl_PrimitiveArray::clearMemoryGL(const occ::handle<OpenGl_Context>& theGlCtx) const
 {
   if (!myVboIndices.IsNull())
@@ -169,8 +165,6 @@ void OpenGl_PrimitiveArray::clearMemoryGL(const occ::handle<OpenGl_Context>& the
     myVboAttribs.Nullify();
   }
 }
-
-//=================================================================================================
 
 bool OpenGl_PrimitiveArray::initNormalVbo(const occ::handle<OpenGl_Context>& theCtx) const
 {
@@ -217,8 +211,6 @@ bool OpenGl_PrimitiveArray::initNormalVbo(const occ::handle<OpenGl_Context>& the
                                 "reserved size is not supported");
   }
 
-  // specify data type as Byte and NbComponents as Stride, so that
-  // OpenGl_VertexBuffer::EstimatedDataSize() will return correct value
   const int aNbVertexes =
     (isAttribMutable || !isAttribInterleaved) ? myAttribs->NbMaxElements() : myAttribs->NbElements;
   if (!myVboAttribs->init(theCtx,
@@ -244,8 +236,7 @@ bool OpenGl_PrimitiveArray::initNormalVbo(const occ::handle<OpenGl_Context>& the
   {
     if (isAttribMutable && isAttribInterleaved)
     {
-      // for mutable interlaced array we can change dynamically number of vertexes (they will be
-      // just skipped at the end of buffer); this doesn't matter in case if we have indexed array
+
       myVboAttribs->SetElemsNb(myAttribs->NbElements);
     }
     return true;
@@ -299,8 +290,6 @@ bool OpenGl_PrimitiveArray::initNormalVbo(const occ::handle<OpenGl_Context>& the
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_PrimitiveArray::buildVBO(const occ::handle<OpenGl_Context>& theCtx,
                                      const bool                         theToKeepData) const
 {
@@ -309,7 +298,7 @@ bool OpenGl_PrimitiveArray::buildVBO(const occ::handle<OpenGl_Context>& theCtx,
   if (myAttribs.IsNull() || myAttribs->IsEmpty() || myAttribs->NbElements < 1
       || myAttribs->NbAttributes < 1 || myAttribs->NbAttributes > 10)
   {
-    // vertices should be always defined - others are optional
+
     return false;
   }
 
@@ -387,15 +376,10 @@ bool OpenGl_PrimitiveArray::buildVBO(const occ::handle<OpenGl_Context>& theCtx,
   myVboAttribs = aVboAttribs;
   if (!theCtx->caps->keepArrayData && !theToKeepData)
   {
-    // does not make sense for compatibility mode
-    // myIndices.Nullify();
-    // myAttribs.Nullify();
   }
 
   return true;
 }
-
-//=================================================================================================
 
 void OpenGl_PrimitiveArray::updateVBO(const occ::handle<OpenGl_Context>& theCtx) const
 {
@@ -434,8 +418,6 @@ void OpenGl_PrimitiveArray::updateVBO(const occ::handle<OpenGl_Context>& theCtx)
   }
 }
 
-//=================================================================================================
-
 void OpenGl_PrimitiveArray::drawArray(const occ::handle<OpenGl_Workspace>& theWorkspace,
                                       const NCollection_Vec4<float>*       theFaceColors,
                                       const bool                           theHasVertColor) const
@@ -445,7 +427,7 @@ void OpenGl_PrimitiveArray::drawArray(const occ::handle<OpenGl_Workspace>& theWo
   {
     if (myDrawMode == GL_POINTS && aGlContext->core11ffp != nullptr)
     {
-      // extreme compatibility mode - without sprites but with markers
+
       drawMarkers(theWorkspace);
     }
     return;
@@ -459,7 +441,7 @@ void OpenGl_PrimitiveArray::drawArray(const occ::handle<OpenGl_Workspace>& theWo
   myVboAttribs->BindAllAttributes(aGlContext);
   if (theHasVertColor && toHilight)
   {
-    // disable per-vertex color
+
     OpenGl_VertexBuffer::unbindAttribute(aGlContext, Graphic3d_TOA_COLOR);
   }
   if (!myVboIndices.IsNull())
@@ -468,7 +450,7 @@ void OpenGl_PrimitiveArray::drawArray(const occ::handle<OpenGl_Workspace>& theWo
     GLubyte* anOffset = myVboIndices->GetDataOffset();
     if (!myBounds.IsNull())
     {
-      // draw primitives by vertex count with the indices
+
       const size_t aStride = myVboIndices->GetDataType() == GL_UNSIGNED_SHORT
                                ? sizeof(unsigned short)
                                : sizeof(unsigned int);
@@ -486,7 +468,7 @@ void OpenGl_PrimitiveArray::drawArray(const occ::handle<OpenGl_Workspace>& theWo
     }
     else
     {
-      // draw one (or sequential) primitive by the indices
+
       aGlContext->core11fwd->glDrawElements(aDrawMode,
                                             myVboIndices->GetElemsNb(),
                                             myVboIndices->GetDataType(),
@@ -518,11 +500,8 @@ void OpenGl_PrimitiveArray::drawArray(const occ::handle<OpenGl_Workspace>& theWo
     }
   }
 
-  // bind with 0
   myVboAttribs->UnbindAllAttributes(aGlContext);
 }
-
-//=================================================================================================
 
 void OpenGl_PrimitiveArray::drawEdges(const occ::handle<OpenGl_Workspace>& theWorkspace) const
 {
@@ -555,10 +534,6 @@ void OpenGl_PrimitiveArray::drawEdges(const occ::handle<OpenGl_Workspace>& theWo
     aGlContext->core11fwd->glDisable(GL_LIGHTING);
   }
 
-  /// OCC22236 NOTE: draw edges for all situations:
-  /// 1) draw elements with GL_LINE style as edges from myPArray->bufferVBO[VBOEdges] indices array
-  /// 2) draw elements from vertex array, when bounds defines count of primitive's vertices.
-  /// 3) draw primitive's edges by vertexes if no edges and bounds array is specified
   myVboAttribs->BindPositionAttribute(aGlContext);
 
   aGlContext->SetColor4fv(theWorkspace->EdgeColor().a() >= 0.1f
@@ -573,7 +548,6 @@ void OpenGl_PrimitiveArray::drawEdges(const occ::handle<OpenGl_Workspace>& theWo
     myVboIndices->Bind(aGlContext);
     GLubyte* anOffset = myVboIndices->GetDataOffset();
 
-    // draw primitives by vertex count with the indices
     if (!myBounds.IsNull())
     {
       const size_t aStride = myVboIndices->GetDataType() == GL_UNSIGNED_SHORT
@@ -589,7 +563,7 @@ void OpenGl_PrimitiveArray::drawEdges(const occ::handle<OpenGl_Workspace>& theWo
         anOffset += aStride * aNbElemsInGroup;
       }
     }
-    // draw one (or sequential) primitive by the indices
+
     else
     {
       aGlContext->core11fwd->glDrawElements(aDrawMode,
@@ -617,14 +591,10 @@ void OpenGl_PrimitiveArray::drawEdges(const occ::handle<OpenGl_Workspace>& theWo
                                                                : myAttribs->NbElements);
   }
 
-  // unbind buffers
   myVboAttribs->UnbindAttribute(aGlContext, Graphic3d_TOA_POS);
 
-  // restore line context
   aGlContext->SetPolygonMode(aPolyModeOld);
 }
-
-//=================================================================================================
 
 void OpenGl_PrimitiveArray::drawMarkers(const occ::handle<OpenGl_Workspace>& theWorkspace) const
 {
@@ -655,7 +625,7 @@ void OpenGl_PrimitiveArray::drawMarkers(const occ::handle<OpenGl_Workspace>& the
 
   if (anAspectMarker->HasPointSprite(aCtx))
   {
-    // Textured markers will be drawn with the point sprites
+
     aCtx->SetPointSize(anAspectMarker->MarkerSize());
     aCtx->SetPointSpriteOrigin();
 
@@ -666,7 +636,7 @@ void OpenGl_PrimitiveArray::drawMarkers(const occ::handle<OpenGl_Workspace>& the
 
     aCtx->SetPointSize(1.0f);
   }
-  // Textured markers will be drawn with the glBitmap
+
   else if (const occ::handle<OpenGl_PointSprite>& aSprite =
              anAspectMarker->SpriteRes(aCtx, theWorkspace->ToHighlight()))
   {
@@ -691,8 +661,6 @@ void OpenGl_PrimitiveArray::drawMarkers(const occ::handle<OpenGl_Workspace>& the
   }
 }
 
-//=================================================================================================
-
 OpenGl_PrimitiveArray::OpenGl_PrimitiveArray(const OpenGl_GraphicDriver* theDriver)
 
     : myDrawMode(DRAW_MODE_NONE),
@@ -704,8 +672,6 @@ OpenGl_PrimitiveArray::OpenGl_PrimitiveArray(const OpenGl_GraphicDriver* theDriv
     myUID = theDriver->GetNextPrimitiveArrayUID();
   }
 }
-
-//=================================================================================================
 
 OpenGl_PrimitiveArray::OpenGl_PrimitiveArray(const OpenGl_GraphicDriver*               theDriver,
                                              const Graphic3d_TypeOfPrimitiveArray      theType,
@@ -722,7 +688,7 @@ OpenGl_PrimitiveArray::OpenGl_PrimitiveArray(const OpenGl_GraphicDriver*        
 {
   if (!myIndices.IsNull() && myIndices->NbElements < 1)
   {
-    // dummy index buffer?
+
     myIndices.Nullify();
   }
 
@@ -739,11 +705,7 @@ OpenGl_PrimitiveArray::OpenGl_PrimitiveArray(const OpenGl_GraphicDriver*        
   setDrawMode(theType);
 }
 
-//=================================================================================================
-
 OpenGl_PrimitiveArray::~OpenGl_PrimitiveArray() = default;
-
-//=================================================================================================
 
 void OpenGl_PrimitiveArray::Release(OpenGl_Context* theContext)
 {
@@ -766,8 +728,6 @@ void OpenGl_PrimitiveArray::Release(OpenGl_Context* theContext)
   }
 }
 
-//=================================================================================================
-
 size_t OpenGl_PrimitiveArray::EstimatedDataSize() const
 {
   size_t aSize = 0;
@@ -781,8 +741,6 @@ size_t OpenGl_PrimitiveArray::EstimatedDataSize() const
   }
   return aSize;
 }
-
-//=================================================================================================
 
 void OpenGl_PrimitiveArray::UpdateDrawStats(Graphic3d_FrameStatsDataTmp& theStats,
                                             bool                         theIsDetailed) const
@@ -871,8 +829,6 @@ void OpenGl_PrimitiveArray::UpdateDrawStats(Graphic3d_FrameStatsDataTmp& theStat
   }
 }
 
-//=================================================================================================
-
 void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorkspace) const
 {
   if (myDrawMode == DRAW_MODE_NONE)
@@ -884,7 +840,7 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
   const occ::handle<OpenGl_Context>& aCtx         = theWorkspace->GetGlContext();
 
   bool toDrawArray = true, toSetLinePolygMode = false;
-  int  toDrawInteriorEdges = 0; // 0 - no edges, 1 - glsl edges, 2 - polygonMode
+  int  toDrawInteriorEdges = 0;
   if (myIsFillType)
   {
     toDrawArray = anAspectFace->Aspect()->InteriorStyle() != Aspect_IS_EMPTY;
@@ -930,10 +886,9 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
     }
   }
 
-  // create VBOs on first render call
   if (!myIsVboInit)
   {
-    // compatibility - keep data to draw markers using display lists
+
     bool toKeepData = myDrawMode == GL_POINTS && anAspectFace->IsDisplayListSprite(aCtx);
     if (aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
     {
@@ -949,9 +904,9 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
   }
 
   Graphic3d_TypeOfShadingModel aShadingModel = Graphic3d_TypeOfShadingModel_Unlit;
-  // clang-format off
-  anAspectFace = theWorkspace->ApplyAspects (false); // do not bind textures before binding the program
-  // clang-format on
+
+  anAspectFace = theWorkspace->ApplyAspects(false);
+
   const occ::handle<OpenGl_TextureSet>& aTextureSet = theWorkspace->TextureSet();
   const bool                            toEnableEnvMap =
     !aTextureSet.IsNull() && aTextureSet == theWorkspace->EnvironmentTexture();
@@ -1014,10 +969,8 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
       }
     }
 
-    // bind textures after GLSL program to set mock textures to slots used by program
     aCtx->BindTextures(aTextureSet, aCtx->ActiveProgram());
-    if (!aTextureSet.IsNull() && !aTextureSet->IsEmpty()
-        && myDrawMode != GL_POINTS) // transformation is not supported within point sprites
+    if (!aTextureSet.IsNull() && !aTextureSet->IsEmpty() && myDrawMode != GL_POINTS)
     {
       if (const occ::handle<OpenGl_Texture>& aFirstTexture = aTextureSet->First())
       {
@@ -1059,7 +1012,6 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
 
     drawArray(theWorkspace, aFaceColors, hasColorAttrib);
 
-    // draw outline - only closed triangulation with defined vertex normals can be drawn in this way
     if (anAspectFace->Aspect()->ToDrawSilhouette() && aCtx->ToCullBackFaces()
         && aCtx->ShaderManager()->BindOutlineProgram())
     {
@@ -1091,7 +1043,6 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
     }
   }
 
-  // draw triangulation edges using Polygon Mode
   if (toDrawInteriorEdges == 2)
   {
     if (anAspectFace->Aspect()->InteriorStyle() == Aspect_IS_HOLLOW
@@ -1105,8 +1056,6 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
     }
   }
 }
-
-//=================================================================================================
 
 void OpenGl_PrimitiveArray::setDrawMode(const Graphic3d_TypeOfPrimitiveArray theType)
 {
@@ -1143,7 +1092,7 @@ void OpenGl_PrimitiveArray::setDrawMode(const Graphic3d_TypeOfPrimitiveArray the
       myDrawMode   = GL_TRIANGLE_FAN;
       myIsFillType = true;
       break;
-    //
+
     case Graphic3d_TOPA_LINES_ADJACENCY:
       myDrawMode   = GL_LINES_ADJACENCY;
       myIsFillType = false;
@@ -1160,7 +1109,7 @@ void OpenGl_PrimitiveArray::setDrawMode(const Graphic3d_TypeOfPrimitiveArray the
       myDrawMode   = GL_TRIANGLE_STRIP_ADJACENCY;
       myIsFillType = true;
       break;
-    //
+
     case Graphic3d_TOPA_QUADRANGLES:
       myDrawMode   = GL_QUADS;
       myIsFillType = true;
@@ -1180,8 +1129,6 @@ void OpenGl_PrimitiveArray::setDrawMode(const Graphic3d_TypeOfPrimitiveArray the
   }
 }
 
-//=================================================================================================
-
 bool OpenGl_PrimitiveArray::processIndices(const occ::handle<OpenGl_Context>& theContext) const
 {
   if (myIndices.IsNull() || myAttribs.IsNull() || theContext->hasUintIndex)
@@ -1197,7 +1144,7 @@ bool OpenGl_PrimitiveArray::processIndices(const occ::handle<OpenGl_Context>& th
                          myAttribs->AttributesArray(),
                          myAttribs->NbAttributes))
     {
-      return false; // failed to initialize attribute array
+      return false;
     }
 
     for (int anIdxIdx = 0; anIdxIdx < myIndices->NbElements; ++anIdxIdx)
@@ -1215,15 +1162,13 @@ bool OpenGl_PrimitiveArray::processIndices(const occ::handle<OpenGl_Context>& th
   return true;
 }
 
-//=================================================================================================
-
 void OpenGl_PrimitiveArray::InitBuffers(const occ::handle<OpenGl_Context>&        theContext,
                                         const Graphic3d_TypeOfPrimitiveArray      theType,
                                         const occ::handle<Graphic3d_IndexBuffer>& theIndices,
                                         const occ::handle<Graphic3d_Buffer>&      theAttribs,
                                         const occ::handle<Graphic3d_BoundBuffer>& theBounds)
 {
-  // Release old graphic resources
+
   Release(theContext.get());
 
   myIndices = theIndices;
@@ -1236,8 +1181,6 @@ void OpenGl_PrimitiveArray::InitBuffers(const occ::handle<OpenGl_Context>&      
 
   setDrawMode(theType);
 }
-
-//=================================================================================================
 
 void OpenGl_PrimitiveArray::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

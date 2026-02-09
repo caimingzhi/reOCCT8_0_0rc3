@@ -135,8 +135,6 @@ Geom2dGcc_FunctionTanCuCuCu::Geom2dGcc_FunctionTanCuCuCu(const gp_Lin2d&        
   TheType = Geom2dGcc_LiCuCu;
 }
 
-//==========================================================================
-
 int Geom2dGcc_FunctionTanCuCuCu::NbVariables() const
 {
   return 3;
@@ -159,7 +157,7 @@ bool Geom2dGcc_FunctionTanCuCuCu::Value(const math_Vector& X, math_Vector& Fval)
   gp_Vec2d D22;
   gp_Vec2d D23;
   InitDerivative(X, Point1, Point2, Point3, Tan1, Tan2, Tan3, D21, D22, D23);
-  // pipj (normes) et PiPj (non Normes).
+
   gp_XY  P1P2(gp_Vec2d(Point1, Point2).XY());
   gp_XY  P2P3(gp_Vec2d(Point2, Point3).XY());
   gp_XY  P3P1(gp_Vec2d(Point3, Point1).XY());
@@ -191,11 +189,11 @@ bool Geom2dGcc_FunctionTanCuCuCu::Value(const math_Vector& X, math_Vector& Fval)
   {
     p3p1 = gp_XY(0., 0.);
   }
-  // derivees premieres non normees Deriv1ui.
+
   gp_XY Deriv1u1(Tan1.XY());
   gp_XY Deriv1u2(Tan2.XY());
   gp_XY Deriv1u3(Tan3.XY());
-  // normales aux courbes.
+
   double nnor1 = Deriv1u1.Modulus();
   double nnor2 = Deriv1u2.Modulus();
   double nnor3 = Deriv1u3.Modulus();
@@ -227,7 +225,7 @@ bool Geom2dGcc_FunctionTanCuCuCu::Value(const math_Vector& X, math_Vector& Fval)
   {
     nor3 = gp_XY(0., 0.);
   }
-  // determination des signes pour les produits scalaires.
+
   double   signe1 = 1.;
   double   signe2 = 1.;
   double   signe3 = 1.;
@@ -250,8 +248,7 @@ bool Geom2dGcc_FunctionTanCuCuCu::Value(const math_Vector& X, math_Vector& Fval)
   {
     signe3 = -1;
   }
-  // Fonctions Fui.
-  // ==============
+
   Fval(1) = signe1 * nor1.Dot(p1p2) + signe2 * nor2.Dot(p1p2);
   Fval(2) = signe2 * nor2.Dot(p2p3) + signe3 * nor3.Dot(p2p3);
   Fval(3) = signe3 * nor3.Dot(p3p1) + signe1 * nor1.Dot(p3p1);

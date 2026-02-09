@@ -5,77 +5,59 @@
 #include <MeshVS_MeshSelectionMethod.hpp>
 #include <Select3D_SensitiveSet.hpp>
 
-//! Sensitive entity covering entire mesh for global selection.
 class MeshVS_CommonSensitiveEntity : public Select3D_SensitiveSet
 {
   DEFINE_STANDARD_RTTIEXT(MeshVS_CommonSensitiveEntity, Select3D_SensitiveSet)
 public:
-  //! Default constructor.
   Standard_EXPORT MeshVS_CommonSensitiveEntity(const occ::handle<SelectMgr_EntityOwner>& theOwner,
                                                const occ::handle<MeshVS_Mesh>&  theParentMesh,
                                                const MeshVS_MeshSelectionMethod theSelMethod);
 
-  //! Destructor.
   Standard_EXPORT ~MeshVS_CommonSensitiveEntity() override;
 
-  //! Number of elements.
   Standard_EXPORT int NbSubElements() const override;
 
-  //! Returns the amount of sub-entities of the complex entity
   Standard_EXPORT int Size() const override;
 
-  //! Returns bounding box of sub-entity with index theIdx in sub-entity list
   Standard_EXPORT Select3D_BndBox3d Box(const int theIdx) const override;
 
-  //! Returns geometry center of sensitive entity index theIdx along the given axis theAxis
   Standard_EXPORT double Center(const int theIdx, const int theAxis) const override;
 
-  //! Swaps items with indexes theIdx1 and theIdx2
   Standard_EXPORT void Swap(const int theIdx1, const int theIdx2) override;
 
-  //! Returns bounding box of the triangulation. If location
-  //! transformation is set, it will be applied
   Standard_EXPORT Select3D_BndBox3d BoundingBox() override;
 
-  //! Returns center of a mesh
   Standard_EXPORT gp_Pnt CenterOfGeometry() const override;
 
-  //! Create a copy.
   occ::handle<Select3D_SensitiveEntity> GetConnected() override
   {
     return new MeshVS_CommonSensitiveEntity(*this);
   }
 
 protected:
-  //! Checks whether the entity with index theIdx overlaps the current selecting volume
   Standard_EXPORT bool overlapsElement(SelectBasics_PickResult&             thePickResult,
                                        SelectBasics_SelectingVolumeManager& theMgr,
                                        int                                  theElemIdx,
                                        bool theIsFullInside) override;
 
-  //! Checks whether the entity with index theIdx is inside the current selecting volume
   Standard_EXPORT bool elementIsInside(SelectBasics_SelectingVolumeManager& theMgr,
                                        int                                  theElemIdx,
                                        bool theIsFullInside) override;
 
-  //! Calculates distance from the 3d projection of used-picked screen point to center of the
-  //! geometry
   Standard_EXPORT double distanceToCOG(SelectBasics_SelectingVolumeManager& theMgr) override;
 
-  //! Protected copy constructor.
   Standard_EXPORT MeshVS_CommonSensitiveEntity(const MeshVS_CommonSensitiveEntity& theOther);
 
 private:
-  //! Return point for specified index.
   gp_Pnt getVertexByIndex(const int theNodeIdx) const;
 
 private:
-  occ::handle<MeshVS_DataSource> myDataSource;  //!< mesh data source
-  NCollection_Vector<int>        myItemIndexes; //!< indices for BVH tree reordering
-  MeshVS_MeshSelectionMethod     mySelMethod;   //!< selection mode
-                                                // clang-format off
-  int                     myMaxFaceNodes; //!< maximum nodes within the element in mesh
-                                                // clang-format on
-  gp_Pnt            myCOG;                      //!< center of gravity
-  Select3D_BndBox3d myBndBox;                   //!< bounding box
+  occ::handle<MeshVS_DataSource> myDataSource;
+  NCollection_Vector<int>        myItemIndexes;
+  MeshVS_MeshSelectionMethod     mySelMethod;
+
+  int myMaxFaceNodes;
+
+  gp_Pnt            myCOG;
+  Select3D_BndBox3d myBndBox;
 };

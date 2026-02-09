@@ -29,8 +29,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_TangentRelation, PrsDim_Relation)
 
-//=================================================================================================
-
 PrsDim_TangentRelation::PrsDim_TangentRelation(const TopoDS_Shape&            aFShape,
                                                const TopoDS_Shape&            aSShape,
                                                const occ::handle<Geom_Plane>& aPlane,
@@ -42,8 +40,6 @@ PrsDim_TangentRelation::PrsDim_TangentRelation(const TopoDS_Shape&            aF
   myPlane             = aPlane;
   myAutomaticPosition = false;
 }
-
-//=================================================================================================
 
 void PrsDim_TangentRelation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                      const occ::handle<Prs3d_Presentation>& aPresentation,
@@ -66,8 +62,6 @@ void PrsDim_TangentRelation::Compute(const occ::handle<PrsMgr_PresentationManage
   }
 }
 
-//=================================================================================================
-
 void PrsDim_TangentRelation::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSelection,
                                               const int)
 {
@@ -82,15 +76,7 @@ void PrsDim_TangentRelation::ComputeSelection(const occ::handle<SelectMgr_Select
   aSelection->Add(seg);
 }
 
-//=================================================================================================
-
-void PrsDim_TangentRelation::ComputeTwoFacesTangent(
-  const occ::handle<Prs3d_Presentation>& /*aPresentation*/)
-{
-}
-
-// jfa 19/10/2000 begin
-//=================================================================================================
+void PrsDim_TangentRelation::ComputeTwoFacesTangent(const occ::handle<Prs3d_Presentation>&) {}
 
 static bool ComputeTangencyPoint(const occ::handle<Geom_Curve>& GC1,
                                  const occ::handle<Geom_Curve>& GC2,
@@ -126,7 +112,7 @@ static bool ComputeTangencyPoint(const occ::handle<Geom_Curve>& GC1,
     {
       if (GC1->IsInstance(STANDARD_TYPE(Geom_Line)))
       {
-        continue; // tangent line and conic can have only one point with zero distance
+        continue;
       }
       gp_Vec aVector1, aVector2;
       if (GC1->IsInstance(STANDARD_TYPE(Geom_Circle)))
@@ -153,18 +139,14 @@ static bool ComputeTangencyPoint(const occ::handle<Geom_Curve>& GC1,
         double                    par_inter = ElCLib::Parameter(ellipse->Elips(), P2);
         ElCLib::D1(par_inter, ellipse->Elips(), P2, aVector2);
       }
-      //	  if ( aVector1.IsParallel(aVector2, 100*Precision::Angular()) ) break;
+
       if (aVector1.IsParallel(aVector2, M_PI / 360.0))
-        break; // 0.5 graduce
+        break;
     }
   }
   aPoint = PC1;
   return true;
 }
-
-// jfa 19/10/2000 end
-
-//=================================================================================================
 
 void PrsDim_TangentRelation::ComputeTwoEdgesTangent(
   const occ::handle<Prs3d_Presentation>& aPresentation)
@@ -191,7 +173,7 @@ void PrsDim_TangentRelation::ComputeTwoEdgesTangent(
   }
 
   aPresentation->SetInfiniteState(isInfinite1 || isInfinite2);
-  // current face
+
   BRepBuilderAPI_MakeFace makeface(myPlane->Pln());
   BRepAdaptor_Surface     adp(makeface.Face());
 
@@ -227,7 +209,6 @@ void PrsDim_TangentRelation::ComputeTwoEdgesTangent(
   else
     return;
 
-  // First find the tangengy vector if exists
   TopoDS_Vertex   VCom;
   TopExp_Explorer expF(TopoDS::Edge(myFShape), TopAbs_VERTEX);
   TopExp_Explorer expS(TopoDS::Edge(mySShape), TopAbs_VERTEX);
@@ -249,27 +230,25 @@ void PrsDim_TangentRelation::ComputeTwoEdgesTangent(
   }
 
   gp_Vec theVector;
-  gp_Pnt pint3d;          // tangency point
-  gp_Dir theDir;          // tangency direction
-  double par_inter = 0.0; // parameter of tangency point
+  gp_Pnt pint3d;
+  gp_Dir theDir;
+  double par_inter = 0.0;
 
   if (found)
   {
     pint3d = BRep_Tool::Pnt(VCom);
   }
 
-  // Otherwise it is found as if it was known that 2 curves
-  // are tangents (which must be the cases)
   switch (typArg)
   {
-    case 12: // circle line
+    case 12:
     {
       occ::handle<Geom_Line>   line(occ::down_cast<Geom_Line>(copy1));
       occ::handle<Geom_Circle> circle(occ::down_cast<Geom_Circle>(copy2));
 
       if (!found)
       {
-        // it is enough to project the circus  center on the straight line
+
         par_inter = ElCLib::Parameter(line->Lin(), circle->Location());
         pint3d    = ElCLib::Value(par_inter, line->Lin());
       }
@@ -284,14 +263,14 @@ void PrsDim_TangentRelation::ComputeTwoEdgesTangent(
       }
     }
     break;
-    case 21: // circle line
+    case 21:
     {
       occ::handle<Geom_Circle> circle(occ::down_cast<Geom_Circle>(copy1));
       occ::handle<Geom_Line>   line(occ::down_cast<Geom_Line>(copy2));
 
       if (!found)
       {
-        // it is enough to project the circus  center on the straight line
+
         par_inter = ElCLib::Parameter(line->Lin(), circle->Location());
         pint3d    = ElCLib::Value(par_inter, line->Lin());
       }
@@ -306,8 +285,8 @@ void PrsDim_TangentRelation::ComputeTwoEdgesTangent(
       }
     }
     break;
-    // jfa 19/10/2000 begin
-    case 13: // line ellipse
+
+    case 13:
     {
       occ::handle<Geom_Line>    line(occ::down_cast<Geom_Line>(copy1));
       occ::handle<Geom_Ellipse> ellipse(occ::down_cast<Geom_Ellipse>(copy2));
@@ -328,7 +307,7 @@ void PrsDim_TangentRelation::ComputeTwoEdgesTangent(
       }
     }
     break;
-    case 31: // ellipse line
+    case 31:
     {
       occ::handle<Geom_Ellipse> ellipse(occ::down_cast<Geom_Ellipse>(copy1));
       occ::handle<Geom_Line>    line(occ::down_cast<Geom_Line>(copy2));
@@ -349,7 +328,7 @@ void PrsDim_TangentRelation::ComputeTwoEdgesTangent(
       }
     }
     break;
-    case 22: // circle circle
+    case 22:
     {
       occ::handle<Geom_Circle> circle1(occ::down_cast<Geom_Circle>(copy1));
       occ::handle<Geom_Circle> circle2(occ::down_cast<Geom_Circle>(copy2));
@@ -391,7 +370,7 @@ void PrsDim_TangentRelation::ComputeTwoEdgesTangent(
       theDir = gp_Dir(theVector);
     }
     break;
-    case 23: // circle ellipse
+    case 23:
     {
       occ::handle<Geom_Circle>  circle(occ::down_cast<Geom_Circle>(copy1));
       occ::handle<Geom_Ellipse> ellipse(occ::down_cast<Geom_Ellipse>(copy2));
@@ -421,7 +400,7 @@ void PrsDim_TangentRelation::ComputeTwoEdgesTangent(
       theDir = gp_Dir(theVector);
     }
     break;
-    case 32: // ellipse circle
+    case 32:
     {
       occ::handle<Geom_Ellipse> ellipse(occ::down_cast<Geom_Ellipse>(copy1));
       occ::handle<Geom_Circle>  circle(occ::down_cast<Geom_Circle>(copy2));
@@ -451,7 +430,7 @@ void PrsDim_TangentRelation::ComputeTwoEdgesTangent(
       theDir = gp_Dir(theVector);
     }
     break;
-    case 33: // ellipse ellipse
+    case 33:
     {
       occ::handle<Geom_Ellipse> ellipse1(occ::down_cast<Geom_Ellipse>(copy1));
       occ::handle<Geom_Ellipse> ellipse2(occ::down_cast<Geom_Ellipse>(copy2));
@@ -481,7 +460,7 @@ void PrsDim_TangentRelation::ComputeTwoEdgesTangent(
       theDir = gp_Dir(theVector);
     }
     break;
-    // jfa 19/10/2000 end
+
     default:
       return;
   }

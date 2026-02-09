@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Bnd_Box.hpp>
 #include <BndLib_Add3dCurve.hpp>
@@ -44,9 +32,9 @@
 #include <Geom_Plane.hpp>
 #include <Extrema_ExtSS.hpp>
 #include <GeomAdaptor_Surface.hpp>
-//
+
 static bool CanUseEdges(const Adaptor3d_Surface& BS);
-//
+
 static void FindExactUVBounds(const TopoDS_Face& F,
                               double&            umin,
                               double&            umax,
@@ -54,7 +42,7 @@ static void FindExactUVBounds(const TopoDS_Face& F,
                               double&            vmax,
                               const double       Tol,
                               bool&              isNaturalRestriction);
-//
+
 static void AdjustFaceBox(const BRepAdaptor_Surface& BS,
                           const double               umin,
                           const double               umax,
@@ -63,7 +51,7 @@ static void AdjustFaceBox(const BRepAdaptor_Surface& BS,
                           Bnd_Box&                   FaceBox,
                           const Bnd_Box&             EdgeBox,
                           const double               Tol);
-//
+
 static bool IsModifySize(const BRepAdaptor_Surface&     theBS,
                          const gp_Pln&                  thePln,
                          const gp_Pnt&                  theP,
@@ -75,16 +63,10 @@ static bool IsModifySize(const BRepAdaptor_Surface&     theBS,
                          const double                   theTolU,
                          const double                   theTolV);
 
-//
-//=======================================================================
-// function : Add
-// purpose  : Add a shape bounding to a box
-//=======================================================================
 void BRepBndLib::Add(const TopoDS_Shape& S, Bnd_Box& B, bool useTriangulation)
 {
   TopExp_Explorer ex;
 
-  // Add the faces
   BRepAdaptor_Surface BS;
   TopLoc_Location     l, aDummyLoc;
   int                 i, nbNodes;
@@ -97,7 +79,7 @@ void BRepBndLib::Add(const TopoDS_Shape& S, Bnd_Box& B, bool useTriangulation)
     const occ::handle<Geom_Surface>&       GS = BRep_Tool::Surface(F, aDummyLoc);
     if ((useTriangulation || GS.IsNull()) && !T.IsNull() && T->MinMax(B, l))
     {
-      //       B.Enlarge(T->Deflection());
+
       B.Enlarge(T->Deflection() + BRep_Tool::Tolerance(F));
     }
     else
@@ -112,7 +94,7 @@ void BRepBndLib::Add(const TopoDS_Shape& S, Bnd_Box& B, bool useTriangulation)
         }
         else
         {
-          // on travaille directement sur les courbes 3d.
+
           TopExp_Explorer ex2(F, TopAbs_EDGE);
           if (!ex2.More())
           {
@@ -137,7 +119,6 @@ void BRepBndLib::Add(const TopoDS_Shape& S, Bnd_Box& B, bool useTriangulation)
     }
   }
 
-  // Add the edges not in faces
   occ::handle<NCollection_HArray1<int>>    HIndices;
   occ::handle<Poly_PolygonOnTriangulation> Poly;
   occ::handle<Poly_Triangulation>          T;
@@ -164,7 +145,7 @@ void BRepBndLib::Add(const TopoDS_Shape& S, Bnd_Box& B, bool useTriangulation)
         else
           B.Add(Nodes[i].Transformed(l));
       }
-      //       B.Enlarge(P3d->Deflection());
+
       B.Enlarge(P3d->Deflection() + BRep_Tool::Tolerance(E));
     }
     else
@@ -188,7 +169,7 @@ void BRepBndLib::Add(const TopoDS_Shape& S, Bnd_Box& B, bool useTriangulation)
             B.Add(T->Node(Indices[i]).Transformed(l));
           }
         }
-        // 	B.Enlarge(T->Deflection());
+
         B.Enlarge(Poly->Deflection() + BRep_Tool::Tolerance(E));
       }
       else
@@ -202,8 +183,6 @@ void BRepBndLib::Add(const TopoDS_Shape& S, Bnd_Box& B, bool useTriangulation)
     }
   }
 
-  // Add the vertices not in edges
-
   for (ex.Init(S, TopAbs_VERTEX, TopAbs_EDGE); ex.More(); ex.Next())
   {
     B.Add(BRep_Tool::Pnt(TopoDS::Vertex(ex.Current())));
@@ -211,18 +190,9 @@ void BRepBndLib::Add(const TopoDS_Shape& S, Bnd_Box& B, bool useTriangulation)
   }
 }
 
-//=======================================================================
-// function : AddClose
-// purpose  : Add a precise shape bounding to a box
-//=======================================================================
-
 void BRepBndLib::AddClose(const TopoDS_Shape& S, Bnd_Box& B)
 {
   TopExp_Explorer ex;
-
-  // No faces
-
-  // Add the edges
 
   BRepAdaptor_Curve BC;
 
@@ -236,18 +206,12 @@ void BRepBndLib::AddClose(const TopoDS_Shape& S, Bnd_Box& B)
     }
   }
 
-  // Add the vertices not in edges
-
   for (ex.Init(S, TopAbs_VERTEX, TopAbs_EDGE); ex.More(); ex.Next())
   {
     B.Add(BRep_Tool::Pnt(TopoDS::Vertex(ex.Current())));
   }
 }
 
-//=======================================================================
-// function : AddOptimal
-// purpose  : Add a shape bounding to a box
-//=======================================================================
 void BRepBndLib::AddOptimal(const TopoDS_Shape& S,
                             Bnd_Box&            B,
                             const bool          useTriangulation,
@@ -255,7 +219,6 @@ void BRepBndLib::AddOptimal(const TopoDS_Shape& S,
 {
   TopExp_Explorer ex;
 
-  // Add the faces
   BRepAdaptor_Surface             BS;
   occ::handle<Poly_Triangulation> T;
   TopLoc_Location                 l;
@@ -269,7 +232,7 @@ void BRepBndLib::AddOptimal(const TopoDS_Shape& S,
     Bnd_Box aLocBox;
     if (useTriangulation && !T.IsNull() && T->MinMax(aLocBox, l))
     {
-      //       B.Enlarge(T->Deflection());
+
       aLocBox.Enlarge(T->Deflection() + BRep_Tool::Tolerance(F));
       double xmin, ymin, zmin, xmax, ymax, zmax;
       aLocBox.Get(xmin, ymin, zmin, xmax, ymax, zmax);
@@ -315,7 +278,7 @@ void BRepBndLib::AddOptimal(const TopoDS_Shape& S,
           double Tol                  = useShapeTolerance ? BRep_Tool::Tolerance(F) : 0.;
           FindExactUVBounds(F, umin, umax, vmin, vmax, Tol, isNaturalRestriction);
           BndLib_AddSurface::AddOptimal(BS, umin, umax, vmin, vmax, Tol, aLocBox);
-          //
+
           if (!isNaturalRestriction)
           {
             TopExp_Explorer ex2(F, TopAbs_EDGE);
@@ -348,7 +311,6 @@ void BRepBndLib::AddOptimal(const TopoDS_Shape& S,
     }
   }
 
-  // Add the edges not in faces
   occ::handle<NCollection_HArray1<int>>    HIndices;
   occ::handle<Poly_PolygonOnTriangulation> Poly;
 
@@ -410,8 +372,6 @@ void BRepBndLib::AddOptimal(const TopoDS_Shape& S,
     }
   }
 
-  // Add the vertices not in edges
-
   for (ex.Init(S, TopAbs_VERTEX, TopAbs_EDGE); ex.More(); ex.Next())
   {
     Bnd_Box              aLocBox;
@@ -425,11 +385,6 @@ void BRepBndLib::AddOptimal(const TopoDS_Shape& S,
   }
 }
 
-//=======================================================================
-// function : CanUseEdges
-// purpose  : Define is it possible using only edges bnd boxes
-//           to get face bnd box
-//=======================================================================
 bool CanUseEdges(const Adaptor3d_Surface& BS)
 {
   GeomAbs_SurfaceType aST = BS.GetType();
@@ -462,8 +417,6 @@ bool CanUseEdges(const Adaptor3d_Surface& BS)
   return false;
 }
 
-//=================================================================================================
-
 void FindExactUVBounds(const TopoDS_Face& FF,
                        double&            umin,
                        double&            umax,
@@ -475,13 +428,12 @@ void FindExactUVBounds(const TopoDS_Face& FF,
   TopoDS_Face F = FF;
   F.Orientation(TopAbs_FORWARD);
   TopExp_Explorer ex(F, TopAbs_EDGE);
-  //
-  // Check Natural restriction
-  isNaturalRestriction = BRep_Tool::NaturalRestriction(F); // Can we trust this flag?
+
+  isNaturalRestriction = BRep_Tool::NaturalRestriction(F);
   BRepAdaptor_Surface aBAS(F, false);
   if (!isNaturalRestriction)
   {
-    // Check by comparing pcurves and surface boundaries
+
     umin                 = aBAS.FirstUParameter();
     umax                 = aBAS.LastUParameter();
     vmin                 = aBAS.FirstVParameter();
@@ -507,7 +459,7 @@ void FindExactUVBounds(const TopoDS_Face& FF,
       {
         break;
       }
-      //
+
       aC2D->D1((aT1 + aT2) / 2., aP, aV);
       double magn = aV.SquareMagnitude();
       if (magn < gp::Resolution())
@@ -527,7 +479,7 @@ void FindExactUVBounds(const TopoDS_Face& FF,
       {
         ElCLib::InPeriod(v, vmin, vmax);
       }
-      //
+
       if (std::abs(u - umin) <= TolU || std::abs(u - umax) <= TolU)
       {
         double d = Dv * aV;
@@ -570,7 +522,7 @@ void FindExactUVBounds(const TopoDS_Face& FF,
       isNaturalRestriction = true;
     }
   }
-  //
+
   if (isNaturalRestriction)
   {
     umin = aBAS.FirstUParameter();
@@ -580,7 +532,6 @@ void FindExactUVBounds(const TopoDS_Face& FF,
     return;
   }
 
-  // fill box for the given face
   double    aT1, aT2;
   double    TolU  = std::max(aBAS.UResolution(Tol), Precision::PConfusion());
   double    TolV  = std::max(aBAS.VResolution(Tol), Precision::PConfusion());
@@ -595,18 +546,15 @@ void FindExactUVBounds(const TopoDS_Face& FF,
     {
       continue;
     }
-    //
+
     BndLib_Add2dCurve::AddOptimal(aC2D, aT1, aT2, TolUV, aBox);
-    //
   }
 
-  // In some cases no edges are found
   if (!aBox.IsVoid())
   {
     aBox.Get(umin, vmin, umax, vmax);
   }
 
-  //
   TopLoc_Location           aLoc;
   occ::handle<Geom_Surface> aS = BRep_Tool::Surface(FF, aLoc);
   double                    aUmin, aUmax, aVmin, aVmax;
@@ -625,7 +573,7 @@ void FindExactUVBounds(const TopoDS_Face& FF,
       umax -= delta / 2;
     }
   }
-  //
+
   if (!aS->IsVPeriodic())
   {
     vmin = std::max(aVmin, vmin);
@@ -642,8 +590,6 @@ void FindExactUVBounds(const TopoDS_Face& FF,
   }
 }
 
-//=================================================================================================
-
 inline void Reorder(double& a, double& b)
 {
   if (a > b)
@@ -653,8 +599,6 @@ inline void Reorder(double& a, double& b)
     b        = t;
   }
 }
-
-//=================================================================================================
 
 bool IsModifySize(const BRepAdaptor_Surface&     theBS,
                   const gp_Pln&                  thePln,
@@ -700,7 +644,7 @@ bool IsModifySize(const BRepAdaptor_Surface&     theBS,
       {
         return false;
       }
-      //
+
       gp_Pnt2d     aP2d(uextr, vextr);
       TopAbs_State aSt = theFClass.Perform(aP2d);
       if (aSt != TopAbs_IN)
@@ -710,15 +654,12 @@ bool IsModifySize(const BRepAdaptor_Surface&     theBS,
     }
     else
     {
-      return true; // extrema point seems to be out of face UV bounds
+      return true;
     }
   }
-  //
+
   return false;
 }
-
-//
-//=================================================================================================
 
 void AdjustFaceBox(const BRepAdaptor_Surface& BS,
                    const double               umin,
@@ -741,18 +682,18 @@ void AdjustFaceBox(const BRepAdaptor_Surface& BS,
 
   double fxmin, fymin, fzmin, fxmax, fymax, fzmax;
   double exmin, eymin, ezmin, exmax, eymax, ezmax;
-  //
+
   FaceBox.Get(fxmin, fymin, fzmin, fxmax, fymax, fzmax);
   EdgeBox.Get(exmin, eymin, ezmin, exmax, eymax, ezmax);
-  //
+
   double                  TolU = std::max(BS.UResolution(Tol), Precision::PConfusion());
   double                  TolV = std::max(BS.VResolution(Tol), Precision::PConfusion());
   BRepTopAdaptor_FClass2d FClass(BS.Face(), std::max(TolU, TolV));
-  //
+
   bool isModified = false;
   if (exmin > fxmin)
   {
-    //
+
     gp_Pln pl(gp_Ax3(gp_Pnt(fxmin, fymin, fzmin), gp::DX()));
     gp_Pnt aP(fxmin, fymax, fzmax);
     if (IsModifySize(BS, pl, aP, umin, umax, vmin, vmax, FClass, TolU, TolV))
@@ -763,7 +704,7 @@ void AdjustFaceBox(const BRepAdaptor_Surface& BS,
   }
   if (exmax < fxmax)
   {
-    //
+
     gp_Pln pl(gp_Ax3(gp_Pnt(fxmax, fymax, fzmax), gp::DX()));
     gp_Pnt aP(fxmax, fymin, fzmin);
     if (IsModifySize(BS, pl, aP, umin, umax, vmin, vmax, FClass, TolU, TolV))
@@ -772,10 +713,10 @@ void AdjustFaceBox(const BRepAdaptor_Surface& BS,
       isModified = true;
     }
   }
-  //
+
   if (eymin > fymin)
   {
-    //
+
     gp_Pln pl(gp_Ax3(gp_Pnt(fxmin, fymin, fzmin), gp::DY()));
     gp_Pnt aP(fxmax, fymin, fzmax);
     if (IsModifySize(BS, pl, aP, umin, umax, vmin, vmax, FClass, TolU, TolV))
@@ -786,7 +727,7 @@ void AdjustFaceBox(const BRepAdaptor_Surface& BS,
   }
   if (eymax < fymax)
   {
-    //
+
     gp_Pln pl(gp_Ax3(gp_Pnt(fxmax, fymax, fzmax), gp::DY()));
     gp_Pnt aP(fxmin, fymax, fzmin);
     if (IsModifySize(BS, pl, aP, umin, umax, vmin, vmax, FClass, TolU, TolV))
@@ -795,10 +736,10 @@ void AdjustFaceBox(const BRepAdaptor_Surface& BS,
       isModified = true;
     }
   }
-  //
+
   if (ezmin > fzmin)
   {
-    //
+
     gp_Pln pl(gp_Ax3(gp_Pnt(fxmin, fymin, fzmin), gp::DZ()));
     gp_Pnt aP(fxmax, fymax, fzmin);
     if (IsModifySize(BS, pl, aP, umin, umax, vmin, vmax, FClass, TolU, TolV))
@@ -809,7 +750,7 @@ void AdjustFaceBox(const BRepAdaptor_Surface& BS,
   }
   if (ezmax < fzmax)
   {
-    //
+
     gp_Pln pl(gp_Ax3(gp_Pnt(fxmax, fymax, fzmax), gp::DZ()));
     gp_Pnt aP(fxmin, fymin, fzmax);
     if (IsModifySize(BS, pl, aP, umin, umax, vmin, vmax, FClass, TolU, TolV))
@@ -818,7 +759,7 @@ void AdjustFaceBox(const BRepAdaptor_Surface& BS,
       isModified = true;
     }
   }
-  //
+
   if (isModified)
   {
     FaceBox.SetVoid();

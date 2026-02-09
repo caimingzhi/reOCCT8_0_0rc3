@@ -4,9 +4,6 @@
 #include <TopoDS_Iterator.hpp>
 #include <TopoDS_Shape.hpp>
 
-// #define MDTV_DEB_INT
-//=================================================================================================
-
 TNaming_ShapesSet::TNaming_ShapesSet(const TopoDS_Shape& CS, const TopAbs_ShapeEnum Type)
 {
   if (CS.IsNull())
@@ -32,7 +29,6 @@ TNaming_ShapesSet::TNaming_ShapesSet(const TopoDS_Shape& CS, const TopAbs_ShapeE
   else
   {
 
-    // corrected by vro 13.09.00:
     if (Type > CS.ShapeType())
     {
       for (TopExp_Explorer exp(CS, Type); exp.More(); exp.Next())
@@ -45,16 +41,11 @@ TNaming_ShapesSet::TNaming_ShapesSet(const TopoDS_Shape& CS, const TopAbs_ShapeE
     }
     else
     {
-      //      for (TopoDS_Iterator it(CS) ; it.More(); it.Next()) {
-      //	Add(it.Value());
-      //      }
+
       Add(CS);
     }
-    // end of correction by vro.
   }
 }
-
-//=================================================================================================
 
 void TNaming_ShapesSet::Add(const TNaming_ShapesSet& Shapes)
 {
@@ -64,8 +55,6 @@ void TNaming_ShapesSet::Add(const TNaming_ShapesSet& Shapes)
     myMap.Add(it.Value());
   }
 }
-
-//=================================================================================================
 
 void TNaming_ShapesSet::Filter(const TNaming_ShapesSet& Shapes)
 {
@@ -82,8 +71,6 @@ void TNaming_ShapesSet::Filter(const TNaming_ShapesSet& Shapes)
   }
   Remove(ToRemove);
 }
-
-//=================================================================================================
 
 void TNaming_ShapesSet::Remove(const TNaming_ShapesSet& Shapes)
 {

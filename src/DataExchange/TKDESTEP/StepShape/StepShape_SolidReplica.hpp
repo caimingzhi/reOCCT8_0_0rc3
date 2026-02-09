@@ -11,7 +11,6 @@ class StepShape_SolidReplica : public StepShape_SolidModel
 {
 
 public:
-  //! Returns a SolidReplica
   Standard_EXPORT StepShape_SolidReplica();
 
   Standard_EXPORT void Init(

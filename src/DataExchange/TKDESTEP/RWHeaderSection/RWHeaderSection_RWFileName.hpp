@@ -10,7 +10,6 @@ class Interface_Check;
 class HeaderSection_FileName;
 class StepData_StepWriter;
 
-//! Read & Write Module for FileName
 class RWHeaderSection_RWFileName
 {
 public:

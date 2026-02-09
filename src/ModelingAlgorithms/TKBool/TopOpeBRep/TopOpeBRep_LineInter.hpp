@@ -94,11 +94,8 @@ public:
 
   Standard_EXPORT occ::handle<Geom_Curve> Curve(const double parmin, const double parmax) const;
 
-  //! returns the edge of a RESTRICTION line (or a null edge).
   Standard_EXPORT const TopoDS_Shape& Arc() const;
 
-  //! returns true if Arc() edge (of a RESTRICTION line) is
-  //! an edge of the original face <Index> (1 or 2).
   Standard_EXPORT bool ArcIsEdge(const int I) const;
 
   const occ::handle<IntPatch_WLine>& LineW() const;
@@ -165,8 +162,6 @@ private:
 
 #include <IntPatch_Line.hpp>
 
-//=================================================================================================
-
 inline TopOpeBRep_LineInter::TopOpeBRep_LineInter()
     : myOK(true),
       myIndex(0),
@@ -181,11 +176,9 @@ inline TopOpeBRep_LineInter::TopOpeBRep_LineInter()
       myTypeLineCurve(TopOpeBRep_OTHERTYPE),
       myexF1(0),
       myexF2(0)
-// myLineTonF1, myLineTonF2
+
 {
 }
-
-//=================================================================================================
 
 inline void TopOpeBRep_LineInter::SetFaces(const TopoDS_Face& F1, const TopoDS_Face& F2)
 {
@@ -193,105 +186,75 @@ inline void TopOpeBRep_LineInter::SetFaces(const TopoDS_Face& F1, const TopoDS_F
   myF2 = F2;
 }
 
-//=================================================================================================
-
 inline TopOpeBRep_TypeLineCurve TopOpeBRep_LineInter::TypeLineCurve() const
 {
   return myTypeLineCurve;
 }
-
-//=================================================================================================
 
 inline int TopOpeBRep_LineInter::NbVPoint() const
 {
   return myNbVPoint;
 }
 
-//=================================================================================================
-
 inline bool TopOpeBRep_LineInter::INL() const
 {
   return myINL;
 }
-
-//=================================================================================================
 
 inline bool TopOpeBRep_LineInter::IsVClosed() const
 {
   return myIsVClosed;
 }
 
-//=================================================================================================
-
 inline bool TopOpeBRep_LineInter::HasVPonR() const
 {
   return myHasVPonR;
 }
-
-//=================================================================================================
 
 inline IntSurf_TypeTrans TopOpeBRep_LineInter::TransitionOnS1() const
 {
   return myIL->TransitionOnS1();
 }
 
-//=================================================================================================
-
 inline IntSurf_TypeTrans TopOpeBRep_LineInter::TransitionOnS2() const
 {
   return myIL->TransitionOnS2();
 }
-
-//=================================================================================================
 
 inline IntSurf_Situation TopOpeBRep_LineInter::SituationS1() const
 {
   return myIL->SituationS1();
 }
 
-//=================================================================================================
-
 inline IntSurf_Situation TopOpeBRep_LineInter::SituationS2() const
 {
   return myIL->SituationS2();
 }
-
-//=================================================================================================
 
 inline const occ::handle<IntPatch_WLine>& TopOpeBRep_LineInter::LineW() const
 {
   return myILW;
 }
 
-//=================================================================================================
-
 inline const occ::handle<IntPatch_GLine>& TopOpeBRep_LineInter::LineG() const
 {
   return myILG;
 }
-
-//=================================================================================================
 
 inline const occ::handle<IntPatch_RLine>& TopOpeBRep_LineInter::LineR() const
 {
   return myILR;
 }
 
-//=================================================================================================
-
 inline void TopOpeBRep_LineInter::Index(const int I)
 {
   myIndex = I;
 }
 
-//=================================================================================================
-
 inline int TopOpeBRep_LineInter::Index() const
 {
   return myIndex;
 }
-
-//=================================================================================================
 
 inline bool TopOpeBRep_LineInter::OK() const
 {

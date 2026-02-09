@@ -5,12 +5,9 @@
 #include <GeomHash_PointHasher.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom_BezierCurve (3D Bezier curve).
-//! Used for geometry deduplication.
-//! Hashes only metadata (degree, pole count, rationality) for efficiency.
 struct GeomHash_BezierCurveHasher
 {
-  // Hashes the Bezier curve metadata only.
+
   std::size_t operator()(const occ::handle<Geom_BezierCurve>& theCurve) const noexcept
   {
     const std::size_t aHashes[3] = {opencascade::hash(theCurve->Degree()),
@@ -19,19 +16,16 @@ struct GeomHash_BezierCurveHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two Bezier curves by full geometric data.
   bool operator()(const occ::handle<Geom_BezierCurve>& theCurve1,
                   const occ::handle<Geom_BezierCurve>& theCurve2) const noexcept
   {
     constexpr double aTolerance = 1e-12;
 
-    // Compare degrees
     if (theCurve1->Degree() != theCurve2->Degree())
     {
       return false;
     }
 
-    // Compare rationality
     if (theCurve1->IsRational() != theCurve2->IsRational())
     {
       return false;
@@ -39,7 +33,6 @@ struct GeomHash_BezierCurveHasher
 
     const GeomHash_PointHasher aPointHasher;
 
-    // Compare poles
     for (int i = 1; i <= theCurve1->NbPoles(); ++i)
     {
       if (!aPointHasher(theCurve1->Pole(i), theCurve2->Pole(i)))
@@ -48,7 +41,6 @@ struct GeomHash_BezierCurveHasher
       }
     }
 
-    // Compare weights if rational
     if (theCurve1->IsRational())
     {
       for (int i = 1; i <= theCurve1->NbPoles(); ++i)

@@ -22,13 +22,10 @@ public:
 
   Standard_EXPORT int NumberOfTypes() const;
 
-  //! add a type to the list
   Standard_EXPORT void AddType(const TCollection_AsciiString& aName, const int aTypeNum);
 
-  //! returns the name of the type with number <aTypeNum>
   Standard_EXPORT TCollection_AsciiString Type(const int aTypeNum) const;
 
-  //! returns the name of the type with number <aTypeNum>
   Standard_EXPORT int Type(const TCollection_AsciiString& aTypeName) const;
 
   Standard_EXPORT bool IsType(const TCollection_AsciiString& aName) const;

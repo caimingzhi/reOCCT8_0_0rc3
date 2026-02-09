@@ -10,7 +10,6 @@ class Blend_SurfRstFunction;
 class Blend_AppFunction;
 class Blend_Point;
 
-//! Function to approximate by AppSurface for Curve/Surface contact.
 class BRepBlend_AppFuncRst : public BRepBlend_AppFuncRoot
 {
 

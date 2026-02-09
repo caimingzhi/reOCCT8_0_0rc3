@@ -4,8 +4,6 @@
 #include <gp_Vec.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 GeomLib_CheckBSplineCurve::GeomLib_CheckBSplineCurve(const occ::handle<Geom_BSplineCurve>& Curve,
                                                      const double Tolerance,
                                                      const double AngularTolerance)
@@ -29,7 +27,6 @@ GeomLib_CheckBSplineCurve::GeomLib_CheckBSplineCurve(const occ::handle<Geom_BSpl
 
     const double CrossProdSqTol = myAngularTolerance * myAngularTolerance;
 
-    // Near first
     tangent           = gp_Vec(myCurve->Pole(1), myCurve->Pole(2));
     tangent_magnitude = tangent.Magnitude();
     if (tangent_magnitude > myTolerance)
@@ -59,7 +56,6 @@ GeomLib_CheckBSplineCurve::GeomLib_CheckBSplineCurve(const occ::handle<Geom_BSpl
       }
     }
 
-    // Near last
     tangent           = gp_Vec(myCurve->Pole(num_poles), myCurve->Pole(num_poles - 1));
     tangent_magnitude = tangent.Magnitude();
     if (tangent_magnitude > myTolerance)
@@ -88,22 +84,18 @@ GeomLib_CheckBSplineCurve::GeomLib_CheckBSplineCurve(const occ::handle<Geom_BSpl
         }
       }
     }
-  } // if (( ! myCurve->IsPeriodic() )&& num_poles >= 4)
+  }
   else
   {
     myDone = true;
   }
 }
 
-//=================================================================================================
-
 void GeomLib_CheckBSplineCurve::NeedTangentFix(bool& FirstFlag, bool& LastFlag) const
 {
   FirstFlag = myFixFirstTangent;
   LastFlag  = myFixLastTangent;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_BSplineCurve> GeomLib_CheckBSplineCurve::FixedTangent(const bool FirstFlag,
                                                                        const bool LastFlag)
@@ -118,14 +110,10 @@ occ::handle<Geom_BSplineCurve> GeomLib_CheckBSplineCurve::FixedTangent(const boo
   return new_curve;
 }
 
-//=================================================================================================
-
 void GeomLib_CheckBSplineCurve::FixTangent(const bool FirstFlag, const bool LastFlag)
 {
   FixTangentOnCurve(myCurve, FirstFlag, LastFlag);
 }
-
-//=================================================================================================
 
 void GeomLib_CheckBSplineCurve::FixTangentOnCurve(occ::handle<Geom_BSplineCurve>& theCurve,
                                                   const bool                      FirstFlag,

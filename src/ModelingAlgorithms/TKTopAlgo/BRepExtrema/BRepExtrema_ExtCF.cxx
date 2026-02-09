@@ -7,39 +7,33 @@
 #include <BRepAdaptor_Surface.hpp>
 #include <BRepAdaptor_Curve.hpp>
 
-//=================================================================================================
-
 BRepExtrema_ExtCF::BRepExtrema_ExtCF(const TopoDS_Edge& E, const TopoDS_Face& F)
 {
   Initialize(E, F);
   Perform(E, F);
 }
 
-//=================================================================================================
-
 void BRepExtrema_ExtCF::Initialize(const TopoDS_Edge& E, const TopoDS_Face& F)
 {
   BRepAdaptor_Surface Surf(F);
   if (Surf.GetType() == GeomAbs_OtherSurface || !BRep_Tool::IsGeometric(E))
-    return; // protect against non-geometric type (e.g. triangulation)
+    return;
   BRepAdaptor_Curve aC(E);
   myHS = new BRepAdaptor_Surface(Surf);
   double aTolC, aTolS;
-  //
+
   aTolS = std::min(BRep_Tool::Tolerance(F), Precision::Confusion());
   aTolS = std::min(Surf.UResolution(aTolS), Surf.VResolution(aTolS));
   aTolS = std::max(aTolS, Precision::PConfusion());
-  //
+
   aTolC = std::min(BRep_Tool::Tolerance(E), Precision::Confusion());
   aTolC = aC.Resolution(aTolC);
   aTolC = std::max(aTolC, Precision::PConfusion());
-  //
+
   double U1, U2, V1, V2;
   BRepTools::UVBounds(F, U1, U2, V1, V2);
   myExtCS.Initialize(*myHS, U1, U2, V1, V2, aTolC, aTolS);
 }
-
-//=================================================================================================
 
 void BRepExtrema_ExtCF::Perform(const TopoDS_Edge& E, const TopoDS_Face& F2)
 {
@@ -48,7 +42,7 @@ void BRepExtrema_ExtCF::Perform(const TopoDS_Edge& E, const TopoDS_Face& F2)
   myPointsOnC.Clear();
 
   if (myHS.IsNull())
-    return; // protect against non-geometric type (e.g. triangulation)
+    return;
 
   double U1, U2;
   BRep_Tool::Range(E, U1, U2);
@@ -64,13 +58,10 @@ void BRepExtrema_ExtCF::Perform(const TopoDS_Edge& E, const TopoDS_Face& F2)
     mySqDist.Append(myExtCS.SquareDistance(1));
   else
   {
-    // Exploration of points and classification
+
     const double            Tol = BRep_Tool::Tolerance(F2);
     BRepTopAdaptor_FClass2d classifier(F2, Tol);
 
-    // If the underlying surface of the face is periodic
-    // Extrema should return the point within the period,
-    // so there is no point to adjust it in classifier.
     bool isAdjustPeriodic = false;
 
     Extrema_POnCurv P1;

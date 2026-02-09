@@ -23,9 +23,6 @@ IMPLEMENT_STANDARD_RTTIEXT(BinMNaming_NamingDriver, BinMDF_ADriver)
 #define NULL_ENTRY "0:0"
 #define OBSOLETE_NUM (int)sizeof(int)
 
-//=======================================================================
-// 'Z' - is reserved for: forfidden to use
-//=======================================================================
 static char NameTypeToChar(const TNaming_NameType theNameType)
 {
   switch (theNameType)
@@ -59,7 +56,6 @@ static char NameTypeToChar(const TNaming_NameType theNameType)
   }
 }
 
-//=======================================================================
 static TNaming_NameType CharTypeToName(const char theCharType)
 {
   switch (theCharType)
@@ -93,7 +89,6 @@ static TNaming_NameType CharTypeToName(const char theCharType)
   }
 }
 
-//=======================================================================
 static char ShapeTypeToChar(const TopAbs_ShapeEnum theShapeType)
 {
   switch (theShapeType)
@@ -117,10 +112,9 @@ static char ShapeTypeToChar(const TopAbs_ShapeEnum theShapeType)
     case TopAbs_SHAPE:
       return 'A';
   }
-  return 'A'; // To avoid compilation error message.
+  return 'A';
 }
 
-//=======================================================================
 static TopAbs_ShapeEnum CharToShapeType(const char theCharType)
 {
   switch (theCharType)
@@ -144,27 +138,18 @@ static TopAbs_ShapeEnum CharToShapeType(const char theCharType)
     case 'A':
       return TopAbs_SHAPE;
   }
-  return TopAbs_SHAPE; // To avoid compilation error message.
+  return TopAbs_SHAPE;
 }
-
-//=================================================================================================
 
 BinMNaming_NamingDriver::BinMNaming_NamingDriver(const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TNaming_Naming)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMNaming_NamingDriver::NewEmpty() const
 {
   return new TNaming_Naming();
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 
 bool BinMNaming_NamingDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                     const occ::handle<TDF_Attribute>& theTarget,
@@ -176,29 +161,27 @@ bool BinMNaming_NamingDriver::Paste(const BinObjMgt_Persistent&       theSource,
 
   TNaming_Name&              aName = anAtt->ChangeName();
   TCollection_ExtendedString aMsg;
-  // 1. NameType
+
   char aValue;
   bool ok    = theSource >> aValue;
   bool aNewF = false;
   if (ok)
   {
     if (aValue == 'Z')
-    { // new format
+    {
       aNewF = true;
-      ok    = theSource >> aValue; // skip the sign & get NameType
+      ok    = theSource >> aValue;
       if (!ok)
         return ok;
     }
 
     aName.Type(CharTypeToName(aValue));
 
-    // 2. ShapeType
     ok = theSource >> aValue;
     if (ok)
     {
       aName.ShapeType(CharToShapeType(aValue));
 
-      // 3. Args
       int                             aNbArgs = 0;
       int                             anIndx;
       occ::handle<TNaming_NamedShape> aNS;
@@ -208,12 +191,13 @@ bool BinMNaming_NamingDriver::Paste(const BinObjMgt_Persistent&       theSource,
         if (aNbArgs > 0)
         {
           int i;
-          // read array
+
           for (i = 1; i <= aNbArgs; i++)
           {
-            // clang-format off
-            if(!aNewF && i > OBSOLETE_NUM) break;//interrupt reading as old format can have only 4 items
-            // clang-format on
+
+            if (!aNewF && i > OBSOLETE_NUM)
+              break;
+
             ok = theSource >> anIndx;
             if (!ok)
               break;
@@ -229,14 +213,14 @@ bool BinMNaming_NamingDriver::Paste(const BinObjMgt_Persistent&       theSource,
               aName.Append(aNS);
             }
           }
-          // patch to release the rest of items
+
           if (!aNewF && aNbArgs < OBSOLETE_NUM)
           {
             for (i = aNbArgs + 1; i <= OBSOLETE_NUM; i++)
               theSource >> anIndx;
           }
         }
-        // 4. StopNS
+
         ok = theSource >> anIndx;
         if (ok)
         {
@@ -252,7 +236,6 @@ bool BinMNaming_NamingDriver::Paste(const BinObjMgt_Persistent&       theSource,
             aName.StopNamedShape(aNS);
           }
 
-          // 5. Index
           ok = theSource >> anIndx;
           if (ok)
             aName.Index(anIndx);
@@ -291,10 +274,9 @@ bool BinMNaming_NamingDriver::Paste(const BinObjMgt_Persistent&       theSource,
                     << " Ok = " << theSource.IsOK() << std::endl;
 #endif
 
-          // 6. context label
           if (!entry.IsEmpty() && !entry.IsEqual(TCollection_AsciiString(NULL_ENTRY)))
           {
-            TDF_Label tLab; // Null label.
+            TDF_Label tLab;
             TDF_Tool::Label(anAtt->Label().Data(), entry, tLab, true);
             if (!tLab.IsNull())
               aName.ContextLabel(tLab);
@@ -305,11 +287,11 @@ bool BinMNaming_NamingDriver::Paste(const BinObjMgt_Persistent&       theSource,
             && theRelocTable.GetHeaderData()->StorageVersion().IntegerValue()
                  <= TDocStd_FormatVersion_VERSION_6)
         {
-          // Orientation processing - converting from old format
+
           occ::handle<TNaming_NamedShape> aNShape;
           if (anAtt->Label().FindAttribute(TNaming_NamedShape::GetID(), aNShape))
           {
-            // const TDF_Label& aLab = aNS->Label();
+
             TNaming_Iterator itL(aNShape);
             for (; itL.More(); itL.Next())
             {
@@ -320,7 +302,7 @@ bool BinMNaming_NamingDriver::Paste(const BinObjMgt_Persistent&       theSource,
               {
                 if (itL.More() && itL.NewShape().ShapeType() != TopAbs_VERTEX
                     && !itL.OldShape().IsNull() && itL.OldShape().ShapeType() == TopAbs_VERTEX)
-                { // OR-N
+                {
                   TopAbs_Orientation OrientationToApply = itL.OldShape().Orientation();
                   aName.Orientation(OrientationToApply);
                 }
@@ -359,11 +341,6 @@ bool BinMNaming_NamingDriver::Paste(const BinObjMgt_Persistent&       theSource,
   return ok;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
-
 void BinMNaming_NamingDriver::Paste(
   const occ::handle<TDF_Attribute>&                        theSource,
   BinObjMgt_Persistent&                                    theTarget,
@@ -372,24 +349,20 @@ void BinMNaming_NamingDriver::Paste(
   occ::handle<TNaming_Naming> anAtt = occ::down_cast<TNaming_Naming>(theSource);
   const TNaming_Name&         aName = anAtt->GetName();
 
-  // 0. add the sign of new format (to fix misprint with Array size)
   theTarget.PutCharacter('Z');
 
-  // 1. << NameType to Char
   theTarget << NameTypeToChar(aName.Type());
 
-  // 2. << ShapeType to Char
   theTarget << ShapeTypeToChar(aName.ShapeType());
 
-  // 3. Keep Args
   int anIndx;
   int aNbArgs = aName.Arguments().Extent();
-  theTarget << aNbArgs; // keep Number
+  theTarget << aNbArgs;
   if (aNbArgs > 0)
   {
     int                     i = 0;
     NCollection_Array1<int> anArray(1, aNbArgs);
-    // fill array
+
     for (NCollection_List<occ::handle<TNaming_NamedShape>>::Iterator it(aName.Arguments());
          it.More();
          it.Next())
@@ -406,10 +379,9 @@ void BinMNaming_NamingDriver::Paste(
       anArray.SetValue(i, anIndx);
     }
 
-    theTarget.PutIntArray((BinObjMgt_PInteger)&anArray.Value(1), aNbArgs); // keep Array
+    theTarget.PutIntArray((BinObjMgt_PInteger)&anArray.Value(1), aNbArgs);
   }
 
-  // 4. keep StopNS
   occ::handle<TNaming_NamedShape> aStopNS = aName.StopNamedShape();
   if (!aStopNS.IsNull())
   {
@@ -421,15 +393,12 @@ void BinMNaming_NamingDriver::Paste(
     anIndx = 0;
   theTarget << anIndx;
 
-  // 5. keep Index
   theTarget << aName.Index();
 
-  // 6. keep context label
   TCollection_AsciiString entry(NULL_ENTRY);
   if (!aName.ContextLabel().IsNull())
     TDF_Tool::Entry(aName.ContextLabel(), entry);
   theTarget << entry;
 
-  // 7. keep Orientation
   theTarget << (int)aName.Orientation();
 }

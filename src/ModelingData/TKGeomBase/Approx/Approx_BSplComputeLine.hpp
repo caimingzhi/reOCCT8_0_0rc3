@@ -76,7 +76,7 @@ static void DUMP(const MultiLine& Line)
       Sprintf(solname, "%s%i%s_%i", "p", j, "3d", i);
       char* Temp = solname;
       DrawTrSurf::Set(Temp, tabP(j));
-      //      DrawTrSurf::Set(solname, tabP(j));
+
       if (i == firstP || i == lastP)
       {
         Sprintf(mytext, "%s%i", " ", i);
@@ -89,7 +89,7 @@ static void DUMP(const MultiLine& Line)
       Sprintf(solname, "%s%i%s_%i", "p", j, "2d", i);
       char* Temp = solname;
       DrawTrSurf::Set(Temp, tabP2d(j));
-      //      DrawTrSurf::Set(solname, tabP2d(j));
+
       if (i == firstP || i == lastP)
       {
         Sprintf(mytext, "%s%i", " ", i);
@@ -98,7 +98,6 @@ static void DUMP(const MultiLine& Line)
       }
     }
 
-    // le cas des tangentes aux extremites:
     if (i == firstP || i == lastP)
     {
       if (nbP3d != 0 && nbP2d != 0)
@@ -117,7 +116,6 @@ static void DUMP(const MultiLine& Line)
           L3dt       = new Geom_TrimmedCurve(L3d, 0.0, 0.3);
           char* Temp = solname;
           DrawTrSurf::Set(Temp, L3dt);
-          //	  DrawTrSurf::Set(solname, L3dt);
         }
         for (j = 1; j <= nbP2d; j++)
         {
@@ -126,7 +124,6 @@ static void DUMP(const MultiLine& Line)
           L2dt       = new Geom2d_TrimmedCurve(L2d, 0.0, 0.3);
           char* Temp = solname;
           DrawTrSurf::Set(Temp, L2dt);
-          //	  DrawTrSurf::Set(solname, L2dt);
         }
       }
     }
@@ -160,7 +157,6 @@ static void DUMP(const AppParCurves_MultiBSpCurve& C)
       Sprintf(solname, "%s%i%s_%i", "c", i, "3d", nbappel);
       char* Temp = solname;
       DrawTrSurf::Set(Temp, BSp);
-      //      DrawTrSurf::Set(solname, BSp);
     }
     else
     {
@@ -169,15 +165,12 @@ static void DUMP(const AppParCurves_MultiBSpCurve& C)
       Sprintf(solname, "%s%i%s_%i", "c", i, "2d", nbappel);
       char* Temp = solname;
       DrawTrSurf::Set(Temp, BSp2d);
-      //      DrawTrSurf::Set(solname, BSp2d);
     }
   }
   dout.Flush();
 }
 
 #endif
-
-//=================================================================================================
 
 void Approx_BSplComputeLine::FirstTangencyVector(const MultiLine& Line,
                                                  const int        index,
@@ -230,7 +223,6 @@ void Approx_BSplComputeLine::FirstTangencyVector(const MultiLine& Line,
   else
   {
 
-    // recherche d un vecteur tangent par construction d une parabole:
     AppParCurves_Constraint firstC, lastC;
     firstC = lastC      = AppParCurves_PassPoint;
     int         nbpoles = 3;
@@ -263,8 +255,6 @@ void Approx_BSplComputeLine::FirstTangencyVector(const MultiLine& Line,
     }
   }
 }
-
-//=================================================================================================
 
 void Approx_BSplComputeLine::LastTangencyVector(const MultiLine& Line,
                                                 const int        index,
@@ -316,7 +306,6 @@ void Approx_BSplComputeLine::LastTangencyVector(const MultiLine& Line,
   else
   {
 
-    // recherche d un vecteur tangent par construction d une parabole:
     AppParCurves_Constraint firstC, lastC;
     firstC = lastC      = AppParCurves_PassPoint;
     int         nbpoles = 3;
@@ -350,16 +339,12 @@ void Approx_BSplComputeLine::LastTangencyVector(const MultiLine& Line,
   }
 }
 
-//=================================================================================================
-
 double Approx_BSplComputeLine::SearchFirstLambda(const MultiLine&                  Line,
                                                  const math_Vector&                aPar,
                                                  const NCollection_Array1<double>& Theknots,
                                                  const math_Vector&                V,
                                                  const int                         index) const
 {
-
-  // dq/dw = lambda* V = (p2-p1)/(u2-u1)
 
   int      nbP2d, nbP3d;
   gp_Pnt   P1, P2;
@@ -414,8 +399,6 @@ double Approx_BSplComputeLine::SearchFirstLambda(const MultiLine&               
   return ((S * lambda) * (Theknots(2) - Theknots(1)) / (Theknots(nbknots) - Theknots(1)));
 }
 
-//=================================================================================================
-
 double Approx_BSplComputeLine::SearchLastLambda(const MultiLine&                  Line,
                                                 const math_Vector&                aPar,
                                                 const NCollection_Array1<double>& Theknots,
@@ -423,7 +406,6 @@ double Approx_BSplComputeLine::SearchLastLambda(const MultiLine&                
                                                 const int                         index) const
 
 {
-  // dq/dw = lambda* V = (p2-p1)/(u2-u1)
 
   int      nbP2d, nbP3d;
   gp_Pnt   P1, P2;
@@ -479,8 +461,6 @@ double Approx_BSplComputeLine::SearchLastLambda(const MultiLine&                
           / (Theknots(nbknots) - Theknots(1)));
 }
 
-//=================================================================================================
-
 Approx_BSplComputeLine::Approx_BSplComputeLine(const MultiLine&   Line,
                                                const math_Vector& Parameters,
                                                const int          degreemin,
@@ -517,8 +497,6 @@ Approx_BSplComputeLine::Approx_BSplComputeLine(const MultiLine&   Line,
   Perform(Line);
 }
 
-//=================================================================================================
-
 Approx_BSplComputeLine::Approx_BSplComputeLine(const math_Vector& Parameters,
                                                const int          degreemin,
                                                const int          degreemax,
@@ -553,8 +531,6 @@ Approx_BSplComputeLine::Approx_BSplComputeLine(const math_Vector& Parameters,
   tolreached                  = false;
 }
 
-//=================================================================================================
-
 Approx_BSplComputeLine::Approx_BSplComputeLine(const int                        degreemin,
                                                const int                        degreemax,
                                                const double                     Tolerance3d,
@@ -583,8 +559,6 @@ Approx_BSplComputeLine::Approx_BSplComputeLine(const int                        
   currenttol3d = currenttol2d = RealLast();
   tolreached                  = false;
 }
-
-//=================================================================================================
 
 Approx_BSplComputeLine::Approx_BSplComputeLine(const MultiLine&                 Line,
                                                const int                        degreemin,
@@ -617,8 +591,6 @@ Approx_BSplComputeLine::Approx_BSplComputeLine(const MultiLine&                 
   Perform(Line);
 }
 
-//=================================================================================================
-
 void Approx_BSplComputeLine::Perform(const MultiLine& Line)
 {
 
@@ -630,7 +602,6 @@ void Approx_BSplComputeLine::Perform(const MultiLine& Line)
   int  i, Thefirstpt, Thelastpt;
   bool Finish = false, begin = true;
 
-  // recherche des vraies contraintes donnees par la Line:
   FindRealConstraints(Line);
 
   Thefirstpt    = LineTool::FirstPoint(Line);
@@ -668,9 +639,6 @@ void Approx_BSplComputeLine::Perform(const MultiLine& Line)
   if (!mycut)
   {
 
-    // cas ou on ne desire pas de noeuds supplementaires.
-    // ==================================================
-
     if (!myhasknots)
     {
       NCollection_Array1<double> theknots(1, 2);
@@ -696,10 +664,6 @@ void Approx_BSplComputeLine::Perform(const MultiLine& Line)
   else
   {
 
-    // cas ou on va iterer a partir de noeuds donnes par l''utilisateur
-    // ou a partir d''une bezier.
-    // ================================================================
-
     while (!Finish)
     {
 
@@ -711,20 +675,11 @@ void Approx_BSplComputeLine::Perform(const MultiLine& Line)
         if (!myhasmults)
         {
 
-          // 1er cas: l''utilisateur donne des noeuds de depart mais
-          // a nous de fixer  les multiplicites  en  fonction  de  la
-          // continuite desiree.
-          // ========================================================
-
           NCollection_Array1<int> TheMults(1, myknots->Length());
           alldone = Compute(Line, myfirstpt, mylastpt, TheParam, myknots->Array1(), TheMults);
         }
         else
         {
-
-          // 2eme cas: l''utilisateur donne des noeuds de depart
-          // avec leurs multiplicites.
-          // ===================================================
 
           alldone = Compute(Line,
                             myfirstpt,
@@ -738,9 +693,6 @@ void Approx_BSplComputeLine::Perform(const MultiLine& Line)
 
       else
       {
-
-        // 3eme cas: l''utilisateur ne donne aucun noeuds de depart
-        // ========================================================
 
         NCollection_Array1<double> Theknots(1, nbknots);
         NCollection_Array1<int>    TheMults(1, nbknots);
@@ -773,28 +725,20 @@ void Approx_BSplComputeLine::Perform(const MultiLine& Line)
 #endif
 }
 
-//=================================================================================================
-
 const NCollection_Array1<double>& Approx_BSplComputeLine::Parameters() const
 {
   return myParameters->Array1();
 }
-
-//=================================================================================================
 
 const AppParCurves_MultiBSpCurve& Approx_BSplComputeLine::Value() const
 {
   return TheMultiBSpCurve;
 }
 
-//=================================================================================================
-
 AppParCurves_MultiBSpCurve& Approx_BSplComputeLine::ChangeValue()
 {
   return TheMultiBSpCurve;
 }
-
-//=================================================================================================
 
 void Approx_BSplComputeLine::Parameters(const MultiLine& Line,
                                         const int        firstP,
@@ -805,9 +749,6 @@ void Approx_BSplComputeLine::Parameters(const MultiLine& Line,
   double    dist;
   const int aNbp = lastP - firstP + 1;
 
-  // The first parameter should always be zero according to all the logic below,
-  // so division by any value will give zero anyway, so it should never be scaled
-  // to avoid case when there is only one parameter in the array thus division by zero happens.
   TheParameters(firstP) = 0.0;
   if (aNbp == 2)
   {
@@ -863,7 +804,7 @@ void Approx_BSplComputeLine::Parameters(const MultiLine& Line,
         TheParameters(i) = TheParameters(i - 1) + dist;
       }
       else
-      { // Par == Approx_Centripetal
+      {
         TheParameters(i) = TheParameters(i - 1) + std::sqrt(dist);
       }
     }
@@ -878,8 +819,6 @@ void Approx_BSplComputeLine::Parameters(const MultiLine& Line,
     }
   }
 }
-
-//=================================================================================================
 
 bool Approx_BSplComputeLine::Compute(const MultiLine&                  Line,
                                      const int                         fpt,
@@ -1030,7 +969,7 @@ bool Approx_BSplComputeLine::Compute(const MultiLine&                  Line,
     {
       if (TheTol3d <= mytol3d && TheTol2d <= mytol2d)
       {
-        // Stockage de la multicurve approximee.
+
         tolreached       = true;
         TheMultiBSpCurve = mySCU;
         currenttol3d     = TheTol3d;
@@ -1064,8 +1003,6 @@ bool Approx_BSplComputeLine::Compute(const MultiLine&                  Line,
   return false;
 }
 
-//=================================================================================================
-
 void Approx_BSplComputeLine::SetParameters(const math_Vector& ThePar)
 {
   myfirstParam = new NCollection_HArray1<double>(ThePar.Lower(), ThePar.Upper());
@@ -1074,8 +1011,6 @@ void Approx_BSplComputeLine::SetParameters(const math_Vector& ThePar)
     myfirstParam->SetValue(i, ThePar(i));
   }
 }
-
-//=================================================================================================
 
 void Approx_BSplComputeLine::SetKnots(const NCollection_Array1<double>& Knots)
 {
@@ -1086,8 +1021,6 @@ void Approx_BSplComputeLine::SetKnots(const NCollection_Array1<double>& Knots)
     myknots->SetValue(i, Knots(i));
   }
 }
-
-//=================================================================================================
 
 void Approx_BSplComputeLine::SetKnotsAndMultiplicities(const NCollection_Array1<double>& Knots,
                                                        const NCollection_Array1<int>&    Mults)
@@ -1106,8 +1039,6 @@ void Approx_BSplComputeLine::SetKnotsAndMultiplicities(const NCollection_Array1<
     mymults->SetValue(i, Mults(i));
   }
 }
-
-//=================================================================================================
 
 void Approx_BSplComputeLine::Init(const int                        degreemin,
                                   const int                        degreemax,
@@ -1128,23 +1059,17 @@ void Approx_BSplComputeLine::Init(const int                        degreemin,
   myitermax  = NbIterations;
 }
 
-//=================================================================================================
-
 void Approx_BSplComputeLine::SetDegrees(const int degreemin, const int degreemax)
 {
   mydegremin = degreemin;
   mydegremax = degreemax;
 }
 
-//=================================================================================================
-
 void Approx_BSplComputeLine::SetTolerances(const double Tolerance3d, const double Tolerance2d)
 {
   mytol3d = Tolerance3d;
   mytol2d = Tolerance2d;
 }
-
-//=================================================================================================
 
 void Approx_BSplComputeLine::SetConstraints(const AppParCurves_Constraint FirstC,
                                             const AppParCurves_Constraint LastC)
@@ -1153,28 +1078,20 @@ void Approx_BSplComputeLine::SetConstraints(const AppParCurves_Constraint FirstC
   mylastC  = LastC;
 }
 
-//=================================================================================================
-
 void Approx_BSplComputeLine::SetPeriodic(const bool thePeriodic)
 {
   myPeriodic = thePeriodic;
 }
-
-//=================================================================================================
 
 bool Approx_BSplComputeLine::IsAllApproximated() const
 {
   return alldone;
 }
 
-//=================================================================================================
-
 bool Approx_BSplComputeLine::IsToleranceReached() const
 {
   return tolreached;
 }
-
-//=================================================================================================
 
 void Approx_BSplComputeLine::Error(double& tol3d, double& tol2d) const
 {
@@ -1182,14 +1099,10 @@ void Approx_BSplComputeLine::Error(double& tol3d, double& tol2d) const
   tol2d = currenttol2d;
 }
 
-//=================================================================================================
-
 void Approx_BSplComputeLine::SetContinuity(const int C)
 {
   mycont = C;
 }
-
-//=================================================================================================
 
 void Approx_BSplComputeLine::FindRealConstraints(const MultiLine& Line)
 {
@@ -1265,8 +1178,6 @@ void Approx_BSplComputeLine::FindRealConstraints(const MultiLine& Line)
   }
 }
 
-//=================================================================================================
-
 void Approx_BSplComputeLine::Interpol(const MultiLine& Line)
 {
   int i, Thefirstpt, Thelastpt, deg = 3;
@@ -1274,7 +1185,7 @@ void Approx_BSplComputeLine::Interpol(const MultiLine& Line)
   Thefirstpt = LineTool::FirstPoint(Line);
   Thelastpt  = LineTool::LastPoint(Line);
   math_Vector TheParam(Thefirstpt, Thelastpt, 0.0);
-  // Par = Approx_ChordLength;
+
   if (myfirstParam.IsNull())
   {
     Parameters(Line, Thefirstpt, Thelastpt, TheParam);
@@ -1290,7 +1201,6 @@ void Approx_BSplComputeLine::Interpol(const MultiLine& Line)
   double                  lambda1, lambda2;
   double                  Fv;
 
-  // Recherche du nombre de noeuds.
   int nbknots, nbpoles, nbpoints;
   nbpoints = Thelastpt - Thefirstpt + 1;
 
@@ -1314,7 +1224,6 @@ void Approx_BSplComputeLine::Interpol(const MultiLine& Line)
     nbpoles = nbpoints + 2;
     nbknots = nbpoints;
 
-    // Resolution:
     NCollection_Array1<double> Theknots(1, nbknots);
     Theknots(1)       = TheParam(Thefirstpt);
     Theknots(nbknots) = TheParam(Thelastpt);
@@ -1407,8 +1316,6 @@ void Approx_BSplComputeLine::Interpol(const MultiLine& Line)
     myParameters->SetValue(i, TheParam(i));
   }
 }
-
-//=================================================================================================
 
 void Approx_BSplComputeLine::TangencyVector(const MultiLine&               Line,
                                             const AppParCurves_MultiCurve& C,

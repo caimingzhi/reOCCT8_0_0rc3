@@ -5,8 +5,6 @@
 
 class Poly_Polygon3D;
 
-//! Used to display a 3d polygon.
-//! Optional display of nodes.
 class DrawTrSurf_Polygon3D : public Draw_Drawable3D
 {
   DEFINE_STANDARD_RTTIEXT(DrawTrSurf_Polygon3D, Draw_Drawable3D)
@@ -22,17 +20,12 @@ public:
 
   Standard_EXPORT void DrawOn(Draw_Display& dis) const override;
 
-  //! For variable copy.
   Standard_EXPORT occ::handle<Draw_Drawable3D> Copy() const override;
 
-  //! For variable dump.
   Standard_EXPORT void Dump(Standard_OStream& S) const override;
 
-  //! Save drawable into stream.
   Standard_EXPORT void Save(Standard_OStream& theStream) const override;
 
-  //! For variable whatis command. Set as a result the
-  //! type of the variable.
   Standard_EXPORT void Whatis(Draw_Interpretor& I) const override;
 
 private:

@@ -13,67 +13,42 @@ class Standard_GUID;
 class TDF_RelocationTable;
 class TDF_DataSet;
 
-//! Provides links between functions.
 class TFunction_GraphNode : public TDF_Attribute
 {
 
 public:
-  //! Static methods
-  //! ==============
-  //! Finds or Creates a graph node attribute at the label <L>.
-  //! Returns the attribute.
   Standard_EXPORT static occ::handle<TFunction_GraphNode> Set(const TDF_Label& L);
 
-  //! Returns the GUID for GraphNode attribute.
-  //! Instant methods
-  //! ===============
-  //! Constructor (empty).
   Standard_EXPORT static const Standard_GUID& GetID();
 
   Standard_EXPORT TFunction_GraphNode();
 
-  //! Defines a reference to the function as a previous one.
   Standard_EXPORT bool AddPrevious(const int funcID);
 
-  //! Defines a reference to the function as a previous one.
   Standard_EXPORT bool AddPrevious(const TDF_Label& func);
 
-  //! Removes a reference to the function as a previous one.
   Standard_EXPORT bool RemovePrevious(const int funcID);
 
-  //! Removes a reference to the function as a previous one.
   Standard_EXPORT bool RemovePrevious(const TDF_Label& func);
 
-  //! Returns a map of previous functions.
   Standard_EXPORT const NCollection_Map<int>& GetPrevious() const;
 
-  //! Clears a map of previous functions.
   Standard_EXPORT void RemoveAllPrevious();
 
-  //! Defines a reference to the function as a next one.
   Standard_EXPORT bool AddNext(const int funcID);
 
-  //! Defines a reference to the function as a next one.
   Standard_EXPORT bool AddNext(const TDF_Label& func);
 
-  //! Removes a reference to the function as a next one.
   Standard_EXPORT bool RemoveNext(const int funcID);
 
-  //! Removes a reference to the function as a next one.
   Standard_EXPORT bool RemoveNext(const TDF_Label& func);
 
-  //! Returns a map of next functions.
   Standard_EXPORT const NCollection_Map<int>& GetNext() const;
 
-  //! Clears a map of next functions.
   Standard_EXPORT void RemoveAllNext();
 
-  //! Returns the execution status of the function.
   Standard_EXPORT TFunction_ExecutionStatus GetStatus() const;
 
-  //! Defines an execution status for a function.
-  //! Implementation of Attribute methods
-  //! ===================================
   Standard_EXPORT void SetStatus(const TFunction_ExecutionStatus status);
 
   Standard_EXPORT const Standard_GUID& ID() const override;

@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Extrema_ExtPC2d.hpp>
 #include <Extrema_POnCurv2d.hpp>
@@ -29,17 +17,11 @@
 #include <Standard_Integer.hpp>
 #include <NCollection_Array1.hpp>
 
-//=========================================================================
-//   Creation d un cercle tangent a une courbe centre en un point.        +
-//=========================================================================
 Geom2dGcc_Circ2dTanCenGeo::Geom2dGcc_Circ2dTanCenGeo(const Geom2dGcc_QCurve& Qualified1,
                                                      const gp_Pnt2d&         Pcenter,
                                                      const double            Tolerance)
     :
 
-      //========================================================================
-      //   Initialisation des champs.                                          +
-      //========================================================================
       WellDone(false),
       NbrSol(0),
       cirsol(1, 2),
@@ -134,8 +116,6 @@ Geom2dGcc_Circ2dTanCenGeo::Geom2dGcc_Circ2dTanCenGeo(const Geom2dGcc_QCurve& Qua
     }
   }
 }
-
-//=========================================================================
 
 bool Geom2dGcc_Circ2dTanCenGeo::IsDone() const
 {

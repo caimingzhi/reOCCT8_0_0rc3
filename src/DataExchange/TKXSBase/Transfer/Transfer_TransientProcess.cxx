@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -24,22 +13,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Transfer_TransientProcess, Transfer_ProcessForTransient)
 
-//=================================================================================================
-
 Transfer_TransientProcess::Transfer_TransientProcess(const int nb)
     : Transfer_ProcessForTransient(nb)
 {
   thetrroots = new NCollection_HSequence<occ::handle<Standard_Transient>>;
 }
 
-//=================================================================================================
-
 void Transfer_TransientProcess::SetModel(const occ::handle<Interface_InterfaceModel>& model)
 {
   themodel = model;
 }
-
-//=================================================================================================
 
 occ::handle<Interface_InterfaceModel> Transfer_TransientProcess::Model() const
 {
@@ -55,36 +38,26 @@ void Transfer_TransientProcess::SetGraph(const occ::handle<Interface_HGraph>& HG
     themodel.Nullify();
 }
 
-//=================================================================================================
-
 bool Transfer_TransientProcess::HasGraph() const
 {
   return !thegraph.IsNull();
 }
-
-//=================================================================================================
 
 occ::handle<Interface_HGraph> Transfer_TransientProcess::HGraph() const
 {
   return thegraph;
 }
 
-//=================================================================================================
-
 const Interface_Graph& Transfer_TransientProcess::Graph() const
 {
   return thegraph->Graph();
 }
-
-//=================================================================================================
 
 void Transfer_TransientProcess::SetContext(const char*                            name,
                                            const occ::handle<Standard_Transient>& ctx)
 {
   thectx.Bind(name, ctx);
 }
-
-//=================================================================================================
 
 bool Transfer_TransientProcess::GetContext(const char*                       name,
                                            const occ::handle<Standard_Type>& type,
@@ -104,15 +77,11 @@ bool Transfer_TransientProcess::GetContext(const char*                       nam
   return !ctx.IsNull();
 }
 
-//=================================================================================================
-
 NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transient>>&
   Transfer_TransientProcess::Context()
 {
   return thectx;
 }
-
-//=================================================================================================
 
 void Transfer_TransientProcess::PrintTrace(const occ::handle<Standard_Transient>& start,
                                            Standard_OStream&                      S) const
@@ -123,23 +92,16 @@ void Transfer_TransientProcess::PrintTrace(const occ::handle<Standard_Transient>
     {
       S << "Entity ";
       themodel->Print(start, S, 1);
-      //      S<<"id ";  themodel->Print (start,S);
-      //      S<<" Type:"<<themodel->TypeName (start);
     }
     else
       S << "Entity Type:" << Interface_InterfaceModel::ClassName(start->DynamicType()->Name());
-    //  << start (handle)  ??
   }
 }
-
-//=================================================================================================
 
 int Transfer_TransientProcess::CheckNum(const occ::handle<Standard_Transient>& start) const
 {
   return (themodel.IsNull() ? 0 : themodel->Number(start));
 }
-
-//=================================================================================================
 
 Interface_EntityIterator Transfer_TransientProcess::TypedSharings(
   const occ::handle<Standard_Transient>& start,
@@ -150,8 +112,6 @@ Interface_EntityIterator Transfer_TransientProcess::TypedSharings(
     return iter;
   return thegraph->Graph().TypedSharings(start, type);
 }
-
-//=================================================================================================
 
 bool Transfer_TransientProcess::IsDataLoaded(const occ::handle<Standard_Transient>& start) const
 {
@@ -165,8 +125,6 @@ bool Transfer_TransientProcess::IsDataLoaded(const occ::handle<Standard_Transien
   return !themodel->IsRedefinedContent(num);
 }
 
-//=================================================================================================
-
 bool Transfer_TransientProcess::IsDataFail(const occ::handle<Standard_Transient>& start) const
 {
   if (themodel.IsNull())
@@ -176,16 +134,14 @@ bool Transfer_TransientProcess::IsDataFail(const occ::handle<Standard_Transient>
     return false;
   if (themodel->IsErrorEntity(num))
     return true;
-  const occ::handle<Interface_Check> ach = themodel->Check(num, false); // semantic
+  const occ::handle<Interface_Check> ach = themodel->Check(num, false);
   return ach->HasFailed();
 }
 
-//=================================================================================================
-
-void Transfer_TransientProcess::PrintStats(const int /*mode*/, Standard_OStream& S) const
+void Transfer_TransientProcess::PrintStats(const int, Standard_OStream& S) const
 {
   S << "\n*******************************************************************\n";
-  //  if (mode == 1) {    //  Basic statistics
+
   S << "********                 Basic Statistics                  ********" << std::endl;
 
   occ::handle<Interface_InterfaceModel> model = Model();
@@ -224,11 +180,9 @@ void Transfer_TransientProcess::PrintStats(const int /*mode*/, Standard_OStream&
     S << "****                Warnings on : " << Interface_MSG::Blanks(nbw, 4) << nbw
       << " Entities\n";
   S << "*******************************************************************";
-  //  }
+
   S << std::endl;
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> Transfer_TransientProcess::
   RootsForTransfer()

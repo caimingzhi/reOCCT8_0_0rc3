@@ -10,7 +10,6 @@ class Draw_Display;
 class HLRBRep_Data;
 class HLRBRep_EdgeData;
 
-//! Used to display the results.
 class HLRTest_DrawableEdgeTool : public Draw_Drawable3D
 {
 

@@ -1,8 +1,6 @@
 #include <Bisector_PointOnBis.hpp>
 #include <gp_Pnt2d.hpp>
 
-//=================================================================================================
-
 Bisector_PointOnBis::Bisector_PointOnBis()
     : param1(0.0),
       param2(0.0),
@@ -11,8 +9,6 @@ Bisector_PointOnBis::Bisector_PointOnBis()
       infinite(false)
 {
 }
-
-//=================================================================================================
 
 Bisector_PointOnBis::Bisector_PointOnBis(const double    Param1,
                                          const double    Param2,
@@ -28,91 +24,65 @@ Bisector_PointOnBis::Bisector_PointOnBis(const double    Param1,
   infinite = false;
 }
 
-//=================================================================================================
-
 void Bisector_PointOnBis::ParamOnC1(const double Param)
 {
   param1 = Param;
 }
-
-//=================================================================================================
 
 void Bisector_PointOnBis::ParamOnC2(const double Param)
 {
   param2 = Param;
 }
 
-//=================================================================================================
-
 void Bisector_PointOnBis::ParamOnBis(const double Param)
 {
   paramBis = Param;
 }
-
-//=================================================================================================
 
 void Bisector_PointOnBis::Distance(const double Distance)
 {
   distance = Distance;
 }
 
-//=================================================================================================
-
 void Bisector_PointOnBis::Point(const gp_Pnt2d& P)
 {
   point = P;
 }
-
-//=================================================================================================
 
 void Bisector_PointOnBis::IsInfinite(const bool Infinite)
 {
   infinite = Infinite;
 }
 
-//=================================================================================================
-
 double Bisector_PointOnBis::ParamOnC1() const
 {
   return param1;
 }
-
-//=================================================================================================
 
 double Bisector_PointOnBis::ParamOnC2() const
 {
   return param2;
 }
 
-//=================================================================================================
-
 double Bisector_PointOnBis::ParamOnBis() const
 {
   return paramBis;
 }
-
-//=================================================================================================
 
 double Bisector_PointOnBis::Distance() const
 {
   return distance;
 }
 
-//=================================================================================================
-
 gp_Pnt2d Bisector_PointOnBis::Point() const
 {
   return point;
 }
 
-//=================================================================================================
-
 bool Bisector_PointOnBis::IsInfinite() const
 {
   return infinite;
 }
-
-//=================================================================================================
 
 void Bisector_PointOnBis::Dump() const
 {

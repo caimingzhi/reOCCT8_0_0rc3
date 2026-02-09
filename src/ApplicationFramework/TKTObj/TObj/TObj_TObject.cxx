@@ -6,11 +6,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_TObject, TDF_Attribute)
 
-//=================================================================================================
-
 TObj_TObject::TObj_TObject() = default;
-
-//=================================================================================================
 
 const Standard_GUID& TObj_TObject::GetID()
 {
@@ -18,22 +14,16 @@ const Standard_GUID& TObj_TObject::GetID()
   return GInterfaceID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TObj_TObject::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 void TObj_TObject::Set(const occ::handle<TObj_Object>& theElem)
 {
   Backup();
   myElem = theElem;
 }
-
-//=================================================================================================
 
 occ::handle<TObj_TObject> TObj_TObject::Set(const TDF_Label&                theLabel,
                                             const occ::handle<TObj_Object>& theElem)
@@ -48,21 +38,15 @@ occ::handle<TObj_TObject> TObj_TObject::Set(const TDF_Label&                theL
   return A;
 }
 
-//=================================================================================================
-
 occ::handle<TObj_Object> TObj_TObject::Get() const
 {
   return myElem;
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TObj_TObject::NewEmpty() const
 {
   return new TObj_TObject();
 }
-
-//=================================================================================================
 
 void TObj_TObject::Restore(const occ::handle<TDF_Attribute>& theWith)
 {
@@ -70,26 +54,18 @@ void TObj_TObject::Restore(const occ::handle<TDF_Attribute>& theWith)
   myElem                      = R->Get();
 }
 
-//=================================================================================================
-
 void TObj_TObject::Paste(const occ::handle<TDF_Attribute>& theInto,
-                         const occ::handle<TDF_RelocationTable>& /* RT */) const
+                         const occ::handle<TDF_RelocationTable>&) const
 {
   occ::handle<TObj_TObject> R = occ::down_cast<TObj_TObject>(theInto);
   R->Set(myElem);
 }
 
-//=======================================================================
-// function : BeforeForget
-// purpose  : Tell TObj_Object to die,
-//           i.e. (myElem->IsAlive() == false) after that
-//=======================================================================
-
 void TObj_TObject::BeforeForget()
 {
   if (!myElem.IsNull())
   {
-    // attempt to delete all data from sublabels of object to remove dependences
+
     TDF_Label aObjLabel = myElem->myLabel;
     if (!aObjLabel.IsNull())
     {
@@ -102,21 +78,14 @@ void TObj_TObject::BeforeForget()
           aSubLabel.ForgetAllAttributes(true);
       }
     }
-    // remove back references before document die
+
     myElem->RemoveBackReferences(TObj_Forced);
     TDF_Label aNullLabel;
     myElem->myLabel = aNullLabel;
   }
 }
 
-//=======================================================================
-// function : AfterUndo
-// purpose  : Tell TObj_Object to rise from the dead,
-//           i.e. (myElem->IsAlive() == true) after that
-//=======================================================================
-
-bool TObj_TObject::AfterUndo(const occ::handle<TDF_AttributeDelta>& anAttDelta,
-                             const bool /*forceIt*/)
+bool TObj_TObject::AfterUndo(const occ::handle<TDF_AttributeDelta>& anAttDelta, const bool)
 {
   if (!myElem.IsNull())
   {

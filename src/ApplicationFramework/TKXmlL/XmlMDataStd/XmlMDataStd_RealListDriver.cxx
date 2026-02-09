@@ -12,25 +12,17 @@ IMPLEMENT_DOMSTRING(FirstIndexString, "first")
 IMPLEMENT_DOMSTRING(LastIndexString, "last")
 IMPLEMENT_DOMSTRING(AttributeIDString, "reallistattguid")
 
-//=================================================================================================
-
 XmlMDataStd_RealListDriver::XmlMDataStd_RealListDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataStd_RealListDriver::NewEmpty() const
 {
   return new TDataStd_RealList();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDataStd_RealListDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                        const occ::handle<TDF_Attribute>& theTarget,
                                        XmlObjMgt_RRelocationTable&) const
@@ -38,16 +30,14 @@ bool XmlMDataStd_RealListDriver::Paste(const XmlObjMgt_Persistent&       theSour
   const occ::handle<TDataStd_RealList> aRealList = occ::down_cast<TDataStd_RealList>(theTarget);
   const XmlObjMgt_Element&             anElement = theSource;
 
-  // attribute id
   Standard_GUID       aGUID;
   XmlObjMgt_DOMString aGUIDStr = anElement.getAttribute(::AttributeIDString());
   if (aGUIDStr.Type() == XmlObjMgt_DOMString::LDOM_NULL)
-    aGUID = TDataStd_RealList::GetID(); // default case
+    aGUID = TDataStd_RealList::GetID();
   else
-    aGUID = Standard_GUID(static_cast<const char*>(aGUIDStr.GetString())); // user defined case
+    aGUID = Standard_GUID(static_cast<const char*>(aGUIDStr.GetString()));
   aRealList->SetID(aGUID);
 
-  // Read the FirstIndex; if the attribute is absent initialize to 1
   int                 aFirstInd, aLastInd, ind;
   XmlObjMgt_DOMString aFirstIndex = anElement.getAttribute(::FirstIndexString());
   if (aFirstIndex == nullptr)
@@ -62,7 +52,6 @@ bool XmlMDataStd_RealListDriver::Paste(const XmlObjMgt_Persistent&       theSour
     return false;
   }
 
-  // Read the LastIndex; the attribute should be present
   if (!anElement.getAttribute(::LastIndexString()).GetInteger(aLastInd))
   {
     TCollection_ExtendedString aMessageString =
@@ -73,7 +62,6 @@ bool XmlMDataStd_RealListDriver::Paste(const XmlObjMgt_Persistent&       theSour
     return false;
   }
 
-  // Check the type of LDOMString
   const XmlObjMgt_DOMString& aString = XmlObjMgt::GetStringValue(anElement);
   if (aLastInd == 0)
     aFirstInd = 0;
@@ -108,10 +96,10 @@ bool XmlMDataStd_RealListDriver::Paste(const XmlObjMgt_Persistent&       theSour
                                      " for RealList attribute as \"")
           + aValueStr + "\"";
         myMessageDriver->Send(aMessageString, Message_Warning);
-        // skip the first space, if exists
+
         while (*aValueStr != 0 && IsSpace(*aValueStr))
           ++aValueStr;
-        // skip to the next space separator
+
         while (*aValueStr != 0 && !IsSpace(*aValueStr))
           ++aValueStr;
       }
@@ -122,10 +110,6 @@ bool XmlMDataStd_RealListDriver::Paste(const XmlObjMgt_Persistent&       theSour
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMDataStd_RealListDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                        XmlObjMgt_Persistent&             theTarget,
                                        XmlObjMgt_SRelocationTable&) const
@@ -134,8 +118,7 @@ void XmlMDataStd_RealListDriver::Paste(const occ::handle<TDF_Attribute>& theSour
 
   int anU = aRealList->Extent();
   theTarget.Element().setAttribute(::LastIndexString(), anU);
-  // Allocation of 25 chars for each double value including the space:
-  // An example: -3.1512678732195273e+020
+
   NCollection_LocalArray<char> str(25 * anU + 1);
   if (anU == 0)
     str[0] = 0;
@@ -153,7 +136,7 @@ void XmlMDataStd_RealListDriver::Paste(const occ::handle<TDF_Attribute>& theSour
 
   if (aRealList->ID() != TDataStd_RealList::GetID())
   {
-    // convert GUID
+
     char                aGuidStr[Standard_GUID_SIZE_ALLOC];
     Standard_PCharacter pGuidStr = aGuidStr;
     aRealList->ID().ToCString(pGuidStr);

@@ -16,47 +16,13 @@ class Geom_Curve;
 class TopoDS_Face;
 class TopoDS_Edge;
 
-//! Describes functions to build prism features.
-//! These can be depressions or protrusions.
-//! The semantics of prism feature creation is
-//! based on the construction of shapes:
-//! -   along a length
-//! -   up to a limiting face
-//! -   from a limiting face to a height.
-//! The shape defining construction of the prism feature can be
-//! either the supporting edge or the concerned area of a face.
-//! In case of the supporting edge, this contour
-//! can be attached to a face of the basis shape by
-//! binding. When the contour is bound to this face,
-//! the information that the contour will slide on the
-//! face becomes available to the relevant class methods.
-//! In case of the concerned area of a face, you
-//! could, for example, cut it out and move it to a
-//! different height which will define the limiting
-//! face of a protrusion or depression.
 class BRepFeat_MakePrism : public BRepFeat_Form
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Builds a prism by projecting a
-  //! wire along the face of a shape. Initializes the prism class.
   BRepFeat_MakePrism();
 
-  //! Builds a prism by projecting a
-  //! wire along the face of a shape. a face Pbase is selected in
-  //! the shape Sbase to serve as the basis for
-  //! the prism. The orientation of the prism will
-  //! be defined by the vector Direction.
-  //! Fuse offers a choice between:
-  //! -   removing matter with a Boolean cut using the setting 0
-  //! -   adding matter with Boolean fusion using the setting 1.
-  //! The sketch face Skface serves to determine
-  //! the type of operation. If it is inside the basis
-  //! shape, a local operation such as glueing can be performed.
-  //! Exceptions
-  //! Standard_ConstructionError if the face
-  //! does not belong to the basis or the prism shape.
   BRepFeat_MakePrism(const TopoDS_Shape& Sbase,
                      const TopoDS_Shape& Pbase,
                      const TopoDS_Face&  Skface,
@@ -64,16 +30,6 @@ public:
                      const int           Fuse,
                      const bool          Modify);
 
-  //! Initializes this algorithm for building prisms along surfaces.
-  //! A face Pbase is selected in the shape Sbase
-  //! to serve as the basis for the prism. The
-  //! orientation of the prism will be defined by the vector Direction.
-  //! Fuse offers a choice between:
-  //! -   removing matter with a Boolean cut using the setting 0
-  //! -   adding matter with Boolean fusion using the setting 1.
-  //! The sketch face Skface serves to determine
-  //! the type of operation. If it is inside the basis
-  //! shape, a local operation such as glueing can be performed.
   Standard_EXPORT void Init(const TopoDS_Shape& Sbase,
                             const TopoDS_Shape& Pbase,
                             const TopoDS_Face&  Skface,
@@ -81,40 +37,24 @@ public:
                             const int           Fuse,
                             const bool          Modify);
 
-  //! Indicates that the edge <E> will slide on the face
-  //! <OnFace>. Raises ConstructionError if the face does not belong to the
-  //! basis shape, or the edge to the prismed shape.
   Standard_EXPORT void Add(const TopoDS_Edge& E, const TopoDS_Face& OnFace);
 
   Standard_EXPORT void Perform(const double Length);
 
   Standard_EXPORT void Perform(const TopoDS_Shape& Until);
 
-  //! Assigns one of the following semantics
-  //! -   to a height Length
-  //! -   to a face Until
-  //! -   from a face From to a height Until.
-  //! Reconstructs the feature topologically according to the semantic option chosen.
   Standard_EXPORT void Perform(const TopoDS_Shape& From, const TopoDS_Shape& Until);
 
-  //! Realizes a semi-infinite prism, limited by the
-  //! position of the prism base. All other faces extend infinitely.
   Standard_EXPORT void PerformUntilEnd();
 
-  //! Realizes a semi-infinite prism, limited by the face Funtil.
   Standard_EXPORT void PerformFromEnd(const TopoDS_Shape& FUntil);
 
-  //! Builds an infinite prism. The infinite descendants will not be kept in the result.
   Standard_EXPORT void PerformThruAll();
 
-  //! Assigns both a limiting shape, Until from
-  //! TopoDS_Shape, and a height, Length at which to stop generation of the prism feature.
   Standard_EXPORT void PerformUntilHeight(const TopoDS_Shape& Until, const double Length);
 
-  //! Returns the list of curves S parallel to the axis of the prism.
   Standard_EXPORT void Curves(NCollection_Sequence<occ::handle<Geom_Curve>>& S) override;
 
-  //! Generates a curve along the center of mass of the primitive.
   Standard_EXPORT occ::handle<Geom_Curve> BarycCurve() override;
 
 private:
@@ -131,8 +71,6 @@ inline BRepFeat_MakePrism::BRepFeat_MakePrism()
     : myStatusError(BRepFeat_OK)
 {
 }
-
-//=================================================================================================
 
 inline BRepFeat_MakePrism::BRepFeat_MakePrism(const TopoDS_Shape& Sbase,
                                               const TopoDS_Shape& Pbase,

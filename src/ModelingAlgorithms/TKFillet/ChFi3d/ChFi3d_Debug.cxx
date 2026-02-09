@@ -21,10 +21,6 @@
 OSD_Chronometer simul, elspine, chemine;
 #endif
 
-//*********************************
-// timing of the simulation
-//*********************************
-
 static bool ChFi3d_traceCHRON = false;
 
 void ChFi3d_SettraceCHRON(const bool b)
@@ -36,10 +32,6 @@ bool ChFi3d_GettraceCHRON()
 {
   return ChFi3d_traceCHRON;
 }
-
-//*********************************
-// trace a line of path
-//*********************************
 
 static bool ChFi3d_traceDRAWWALK = false;
 
@@ -53,10 +45,6 @@ bool ChFi3d_GettraceDRAWWALK()
   return ChFi3d_traceDRAWWALK;
 }
 
-//**********************************
-// trace a line of intersection
-//**********************************
-
 static bool ChFi3d_traceDRAWINT = false;
 
 void ChFi3d_SettraceDRAWINT(const bool b)
@@ -68,10 +56,6 @@ bool ChFi3d_GettraceDRAWINT()
 {
   return ChFi3d_traceDRAWINT;
 }
-
-//*************************************************
-// return surfaces of approximated fillets.
-//*************************************************
 
 static bool ChFi3d_traceDRAWFIL = false;
 
@@ -85,10 +69,6 @@ bool ChFi3d_GettraceDRAWFIL()
   return ChFi3d_traceDRAWFIL;
 }
 
-//*************************************************
-// return extended faces for the path.
-//*************************************************
-
 static bool ChFi3d_traceDRAWENLARGE = false;
 
 void ChFi3d_SettraceDRAWENLARGE(const bool b)
@@ -101,10 +81,6 @@ bool ChFi3d_GettraceDRAWENLARGE()
   return ChFi3d_traceDRAWENLARGE;
 }
 
-//*************************************************
-// return the guideline for the triple corners.
-//*************************************************
-
 static bool ChFi3d_traceDRAWSPINE = false;
 
 void ChFi3d_SettraceDRAWSPINE(const bool b)
@@ -116,10 +92,6 @@ bool ChFi3d_GettraceDRAWSPINE()
 {
   return ChFi3d_traceDRAWSPINE;
 }
-
-//*************************************************
-// set the type of guideline for the triple corners.
-//*************************************************
 
 void ChFi3d_SetcontextSPINEBEZIER(const bool b);
 void ChFi3d_SetcontextSPINECIRCLE(const bool b);
@@ -176,9 +148,6 @@ bool ChFi3d_GetcontextSPINECE()
   return ChFi3d_contextSPINECE;
 }
 
-//*************************************************
-// Forced passage by the path for KPart
-//*************************************************
 static bool ChFi3d_contextFORCEBLEND = false;
 
 void ChFi3d_SetcontextFORCEBLEND(const bool b)
@@ -203,9 +172,6 @@ bool ChFi3d_GetcontextFORCEFILLING()
   return ChFi3d_contextFORCEFILLING;
 }
 
-//*************************************************
-// No optimization for approx
-//*************************************************
 static bool ChFi3d_contextNOOPT = false;
 
 void ChFi3d_SetcontextNOOPT(const bool b)
@@ -219,9 +185,7 @@ bool ChFi3d_GetcontextNOOPT()
 }
 
 #ifdef OCCT_DEBUG
-// ***********************************************
-//    initialization and result of a chrono
-//************************************************
+
 Standard_EXPORT void ChFi3d_InitChron(OSD_Chronometer& ch)
 {
   ch.Reset();
@@ -237,16 +201,9 @@ Standard_EXPORT void ChFi3d_ResultChron(OSD_Chronometer& ch, double& time)
 }
 #endif
 
-//==============================================================
-// function : ChFi3d_CheckSurfData
-// purpose  : function allows to trace SurfData to check
-//            construction of all elements, namely pcurves
-//==============================================================
 void ChFi3d_CheckSurfData(const TopOpeBRepDS_DataStructure&   DStr,
                           const occ::handle<ChFiDS_SurfData>& Data)
 {
-  // trace of the surface defined by the chamfer or the fillet
-  //  corresponding to SurfData
 
   occ::handle<Geom_Surface> surf = (DStr.Surface(Data->Surf())).Surface();
   if (!surf.IsNull())

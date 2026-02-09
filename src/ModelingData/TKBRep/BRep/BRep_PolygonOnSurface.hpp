@@ -8,8 +8,6 @@ class Poly_Polygon2D;
 class Geom_Surface;
 class TopLoc_Location;
 
-//! Representation of a 2D polygon in the parametric
-//! space of a surface.
 class BRep_PolygonOnSurface : public BRep_CurveRepresentation
 {
 
@@ -18,12 +16,8 @@ public:
                                         const occ::handle<Geom_Surface>&   S,
                                         const TopLoc_Location&             L);
 
-  //! A 2D polygon representation in the parametric
-  //! space of a surface.
   Standard_EXPORT bool IsPolygonOnSurface() const override;
 
-  //! A 2D polygon representation in the parametric
-  //! space of a surface.
   Standard_EXPORT bool IsPolygonOnSurface(const occ::handle<Geom_Surface>& S,
                                           const TopLoc_Location&           L) const override;
 
@@ -33,10 +27,8 @@ public:
 
   Standard_EXPORT void Polygon(const occ::handle<Poly_Polygon2D>& P) override;
 
-  //! Return a copy of this representation.
   Standard_EXPORT occ::handle<BRep_CurveRepresentation> Copy() const override;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(BRep_PolygonOnSurface, BRep_CurveRepresentation)

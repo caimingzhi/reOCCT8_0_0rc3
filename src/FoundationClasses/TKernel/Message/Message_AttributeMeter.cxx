@@ -1,15 +1,4 @@
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Message_AttributeMeter.hpp>
 
@@ -21,29 +10,21 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Message_AttributeMeter, Message_Attribute)
 
-//=================================================================================================
-
 Message_AttributeMeter::Message_AttributeMeter(const TCollection_AsciiString& theName)
     : Message_Attribute(theName)
 {
 }
-
-//=================================================================================================
 
 bool Message_AttributeMeter::HasMetric(const Message_MetricType& theMetric) const
 {
   return myMetrics.Contains(theMetric);
 }
 
-//=================================================================================================
-
 bool Message_AttributeMeter::IsMetricValid(const Message_MetricType& theMetric) const
 {
   return std::abs(StartValue(theMetric) - UndefinedMetricValue()) > Precision::Confusion()
          && std::abs(StopValue(theMetric) - UndefinedMetricValue()) > Precision::Confusion();
 }
-
-//=================================================================================================
 
 double Message_AttributeMeter::StartValue(const Message_MetricType& theMetric) const
 {
@@ -54,8 +35,6 @@ double Message_AttributeMeter::StartValue(const Message_MetricType& theMetric) c
 
   return myMetrics.Seek(theMetric)->first;
 }
-
-//=================================================================================================
 
 void Message_AttributeMeter::SetStartValue(const Message_MetricType& theMetric,
                                            const double              theValue)
@@ -70,8 +49,6 @@ void Message_AttributeMeter::SetStartValue(const Message_MetricType& theMetric,
   }
 }
 
-//=================================================================================================
-
 double Message_AttributeMeter::StopValue(const Message_MetricType& theMetric) const
 {
   if (!HasMetric(theMetric))
@@ -81,8 +58,6 @@ double Message_AttributeMeter::StopValue(const Message_MetricType& theMetric) co
   return myMetrics.Seek(theMetric)->second;
 }
 
-//=================================================================================================
-
 void Message_AttributeMeter::SetStopValue(const Message_MetricType& theMetric,
                                           const double              theValue)
 {
@@ -91,8 +66,6 @@ void Message_AttributeMeter::SetStopValue(const Message_MetricType& theMetric,
     aValPtr->second = theValue;
   }
 }
-
-//=================================================================================================
 
 void Message_AttributeMeter::SetAlertMetrics(const occ::handle<Message_AlertExtended>& theAlert,
                                              const bool theStartValue)
@@ -112,7 +85,6 @@ void Message_AttributeMeter::SetAlertMetrics(const occ::handle<Message_AlertExte
   occ::handle<Message_Report>                       aReport         = Message::DefaultReport(true);
   const NCollection_IndexedMap<Message_MetricType>& anActiveMetrics = aReport->ActiveMetrics();
 
-  // time metrics
   if (anActiveMetrics.Contains(Message_MetricType_WallClock))
   {
     OSD_Timer aTimer;
@@ -188,7 +160,6 @@ void Message_AttributeMeter::SetAlertMetrics(const occ::handle<Message_AlertExte
     }
   }
 
-  // memory metrics
   OSD_MemInfo aMemInfo(false);
   aMemInfo.SetActive(false);
   NCollection_IndexedMap<OSD_MemInfo::Counter> aCounters;
@@ -233,8 +204,6 @@ void Message_AttributeMeter::SetAlertMetrics(const occ::handle<Message_AlertExte
     }
   }
 }
-
-//=================================================================================================
 
 void Message_AttributeMeter::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

@@ -1,18 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//-----------------------------------------------------------------
 
 #include <ElCLib.hpp>
 #include <Extrema_ExtPExtS.hpp>
@@ -26,8 +12,6 @@
 #include <Standard_NotImplemented.hpp>
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
-
-//=================================================================================================
 
 static bool IsoIsDeg(const Adaptor3d_Surface& S,
                      const double             Param,
@@ -88,8 +72,6 @@ static bool IsoIsDeg(const Adaptor3d_Surface& S,
   return Along;
 }
 
-//=================================================================================================
-
 void Extrema_ExtPS::TreatSolution(const Extrema_POnSurf& PS, const double Val)
 {
   double U, V;
@@ -98,7 +80,6 @@ void Extrema_ExtPS::TreatSolution(const Extrema_POnSurf& PS, const double Val)
   {
     U = ElCLib::InPeriod(U, myuinf, myuinf + myS->UPeriod());
 
-    // Handle trimmed surfaces.
     if (U > myusup + mytolu)
       U -= myS->UPeriod();
     if (U < myuinf - mytolu)
@@ -108,7 +89,6 @@ void Extrema_ExtPS::TreatSolution(const Extrema_POnSurf& PS, const double Val)
   {
     V = ElCLib::InPeriod(V, myvinf, myvinf + myS->VPeriod());
 
-    // Handle trimmed surfaces.
     if (V > myvsup + mytolv)
       V -= myS->VPeriod();
     if (V < myvinf - mytolv)
@@ -121,8 +101,6 @@ void Extrema_ExtPS::TreatSolution(const Extrema_POnSurf& PS, const double Val)
     mySqDist.Append(Val);
   }
 }
-
-//=================================================================================================
 
 Extrema_ExtPS::Extrema_ExtPS()
     : myS(nullptr),
@@ -140,8 +118,6 @@ Extrema_ExtPS::Extrema_ExtPS()
       mytype(GeomAbs_OtherSurface)
 {
 }
-
-//=================================================================================================
 
 Extrema_ExtPS::Extrema_ExtPS(const gp_Pnt&            theP,
                              const Adaptor3d_Surface& theS,
@@ -164,8 +140,6 @@ Extrema_ExtPS::Extrema_ExtPS(const gp_Pnt&            theP,
   Perform(theP);
 }
 
-//=================================================================================================
-
 Extrema_ExtPS::Extrema_ExtPS(const gp_Pnt&            theP,
                              const Adaptor3d_Surface& theS,
                              const double             theUinf,
@@ -184,8 +158,6 @@ Extrema_ExtPS::Extrema_ExtPS(const gp_Pnt&            theP,
 
   Perform(theP);
 }
-
-//=================================================================================================
 
 void Extrema_ExtPS::Initialize(const Adaptor3d_Surface& theS,
                                const double             theUinf,
@@ -239,8 +211,6 @@ void Extrema_ExtPS::Initialize(const Adaptor3d_Surface& theS,
   myExtPExtS.Nullify();
   myExtPRevS.Nullify();
 }
-
-//=================================================================================================
 
 void Extrema_ExtPS::Perform(const gp_Pnt& thePoint)
 {

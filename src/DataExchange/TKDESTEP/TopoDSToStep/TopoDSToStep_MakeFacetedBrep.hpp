@@ -13,11 +13,6 @@ class TopoDS_Shell;
 class Transfer_FinderProcess;
 class TopoDS_Solid;
 
-//! This class implements the mapping between classes
-//! Shell or Solid from TopoDS and FacetedBrep from
-//! StepShape. All the topology and geometry comprised
-//! into the shell or the solid are taken into account and
-//! translated.
 class TopoDSToStep_MakeFacetedBrep : public TopoDSToStep_Root
 {
 public:

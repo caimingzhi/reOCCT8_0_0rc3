@@ -5,11 +5,7 @@
 #include <StepFEA_FeaModelDefinition.hpp>
 #include <StepRepr_ProductDefinitionShape.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWFeaModelDefinition::RWStepFEA_RWFeaModelDefinition() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWFeaModelDefinition::ReadStep(
   const occ::handle<StepData_StepReaderData>&    data,
@@ -17,11 +13,9 @@ void RWStepFEA_RWFeaModelDefinition::ReadStep(
   occ::handle<Interface_Check>&                  ach,
   const occ::handle<StepFEA_FeaModelDefinition>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "fea_model_definition"))
     return;
-
-  // Inherited fields of ShapeAspect
 
   occ::handle<TCollection_HAsciiString> aShapeAspect_Name;
   data->ReadString(num, 1, "shape_aspect.name", ach, aShapeAspect_Name);
@@ -44,21 +38,16 @@ void RWStepFEA_RWFeaModelDefinition::ReadStep(
                     ach,
                     aShapeAspect_ProductDefinitional);
 
-  // Initialize entity
   ent->Init(aShapeAspect_Name,
             aShapeAspect_Description,
             aShapeAspect_OfShape,
             aShapeAspect_ProductDefinitional);
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWFeaModelDefinition::WriteStep(
   StepData_StepWriter&                           SW,
   const occ::handle<StepFEA_FeaModelDefinition>& ent) const
 {
-
-  // Inherited fields of ShapeAspect
 
   SW.Send(ent->StepRepr_ShapeAspect::Name());
 
@@ -69,13 +58,9 @@ void RWStepFEA_RWFeaModelDefinition::WriteStep(
   SW.SendLogical(ent->StepRepr_ShapeAspect::ProductDefinitional());
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWFeaModelDefinition::Share(const occ::handle<StepFEA_FeaModelDefinition>& ent,
                                            Interface_EntityIterator& iter) const
 {
-
-  // Inherited fields of ShapeAspect
 
   iter.AddItem(ent->StepRepr_ShapeAspect::OfShape());
 }

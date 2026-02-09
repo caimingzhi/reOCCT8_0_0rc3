@@ -10,11 +10,7 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_Map.hpp>
 
-//=================================================================================================
-
 HLRBRep_PolyHLRToShape::HLRBRep_PolyHLRToShape() = default;
-
-//=================================================================================================
 
 void HLRBRep_PolyHLRToShape::Update(const occ::handle<HLRBRep_PolyAlgo>& A)
 {
@@ -59,8 +55,6 @@ void HLRBRep_PolyHLRToShape::Update(const occ::handle<HLRBRep_PolyAlgo>& A)
     }
   }
 }
-
-//=================================================================================================
 
 TopoDS_Shape HLRBRep_PolyHLRToShape::InternalCompound(const int           typ,
                                                       const bool          visible,

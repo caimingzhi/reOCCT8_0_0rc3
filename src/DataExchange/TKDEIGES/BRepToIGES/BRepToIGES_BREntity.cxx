@@ -23,10 +23,7 @@
 #include <Transfer_TransientMapper.hpp>
 #include <TransferBRep_ShapeMapper.hpp>
 
-// #include <ShapeCustom.hpp>
 char Name[100];
-
-//=================================================================================================
 
 BRepToIGES_BREntity::BRepToIGES_BREntity()
     : TheUnitFactor(1.0),
@@ -36,8 +33,6 @@ BRepToIGES_BREntity::BRepToIGES_BREntity()
 {
 }
 
-//=================================================================================================
-
 void BRepToIGES_BREntity::Init()
 {
   TheMap        = new Transfer_FinderProcess();
@@ -45,8 +40,6 @@ void BRepToIGES_BREntity::Init()
   myConvSurface = Interface_Static::IVal("write.convertsurface.mode") != 0;
   myPCurveMode  = Interface_Static::IVal("write.surfacecurve.mode") != 0;
 }
-
-//=================================================================================================
 
 void BRepToIGES_BREntity::SetModel(const occ::handle<IGESData_IGESModel>& model)
 {
@@ -56,43 +49,31 @@ void BRepToIGES_BREntity::SetModel(const occ::handle<IGESData_IGESModel>& model)
     TheUnitFactor = unitfactor;
 }
 
-//=================================================================================================
-
 occ::handle<IGESData_IGESModel> BRepToIGES_BREntity::GetModel() const
 {
   return TheModel;
 }
-
-//=================================================================================================
 
 double BRepToIGES_BREntity::GetUnit() const
 {
   return TheUnitFactor;
 }
 
-//=================================================================================================
-
 void BRepToIGES_BREntity::SetTransferProcess(const occ::handle<Transfer_FinderProcess>& TP)
 {
   TheMap = TP;
 }
-
-//=================================================================================================
 
 occ::handle<Transfer_FinderProcess> BRepToIGES_BREntity::GetTransferProcess() const
 {
   return TheMap;
 }
 
-//=================================================================================================
-
 occ::handle<IGESData_IGESEntity> BRepToIGES_BREntity::TransferShape(
   const TopoDS_Shape&          start,
   const Message_ProgressRange& theProgress)
 {
   occ::handle<IGESData_IGESEntity> res;
-  //  TopoDS_Shape theShape;
-  // int Nb = 1; //szv#4:S4163:12Mar99 not needed
 
   if (start.IsNull())
     return res;
@@ -121,11 +102,6 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BREntity::TransferShape(
   }
   else
   {
-    //    the following function forces indirect surfaces to
-    //    direct surfaces (mandatory in IGES)
-    //    theShape = ShapeCustom::DirectFaces(start);
-    // Sprintf(Name,"res_%d",Nb++);
-    // DBRep::Set(Name,theShape);
 
     if (start.ShapeType() == TopAbs_FACE)
     {
@@ -164,14 +140,11 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BREntity::TransferShape(
     }
     else
     {
-      // error message
     }
   }
 
   return res;
 }
-
-//=================================================================================================
 
 void BRepToIGES_BREntity::AddFail(const TopoDS_Shape& start, const char* amess)
 {
@@ -179,15 +152,11 @@ void BRepToIGES_BREntity::AddFail(const TopoDS_Shape& start, const char* amess)
   TheMap->AddFail(Mapper, amess);
 }
 
-//=================================================================================================
-
 void BRepToIGES_BREntity::AddWarning(const TopoDS_Shape& start, const char* amess)
 {
   occ::handle<TransferBRep_ShapeMapper> Mapper = new TransferBRep_ShapeMapper(start);
   TheMap->AddWarning(Mapper, amess);
 }
-
-//=================================================================================================
 
 void BRepToIGES_BREntity::AddFail(const occ::handle<Standard_Transient>& start, const char* amess)
 {
@@ -195,16 +164,12 @@ void BRepToIGES_BREntity::AddFail(const occ::handle<Standard_Transient>& start, 
   TheMap->AddFail(Mapper, amess);
 }
 
-//=================================================================================================
-
 void BRepToIGES_BREntity::AddWarning(const occ::handle<Standard_Transient>& start,
                                      const char*                            amess)
 {
   occ::handle<Transfer_TransientMapper> Mapper = new Transfer_TransientMapper(start);
   TheMap->AddWarning(Mapper, amess);
 }
-
-//=================================================================================================
 
 bool BRepToIGES_BREntity::HasShapeResult(const TopoDS_Shape& start) const
 {
@@ -214,8 +179,6 @@ bool BRepToIGES_BREntity::HasShapeResult(const TopoDS_Shape& start) const
     return false;
   return binder->HasResult();
 }
-
-//=================================================================================================
 
 occ::handle<Standard_Transient> BRepToIGES_BREntity::GetShapeResult(const TopoDS_Shape& start) const
 {
@@ -230,8 +193,6 @@ occ::handle<Standard_Transient> BRepToIGES_BREntity::GetShapeResult(const TopoDS
   return res;
 }
 
-//=================================================================================================
-
 void BRepToIGES_BREntity::SetShapeResult(const TopoDS_Shape&                    start,
                                          const occ::handle<Standard_Transient>& result)
 {
@@ -241,8 +202,6 @@ void BRepToIGES_BREntity::SetShapeResult(const TopoDS_Shape&                    
   TheMap->Bind(Mapper, binder);
 }
 
-//=================================================================================================
-
 bool BRepToIGES_BREntity::HasShapeResult(const occ::handle<Standard_Transient>& start) const
 {
   occ::handle<Transfer_TransientMapper> Mapper = new Transfer_TransientMapper(start);
@@ -251,8 +210,6 @@ bool BRepToIGES_BREntity::HasShapeResult(const occ::handle<Standard_Transient>& 
     return false;
   return binder->HasResult();
 }
-
-//=================================================================================================
 
 occ::handle<Standard_Transient> BRepToIGES_BREntity::GetShapeResult(
   const occ::handle<Standard_Transient>& start) const
@@ -268,8 +225,6 @@ occ::handle<Standard_Transient> BRepToIGES_BREntity::GetShapeResult(
   return res;
 }
 
-//=================================================================================================
-
 void BRepToIGES_BREntity::SetShapeResult(const occ::handle<Standard_Transient>& start,
                                          const occ::handle<Standard_Transient>& result)
 {
@@ -279,20 +234,14 @@ void BRepToIGES_BREntity::SetShapeResult(const occ::handle<Standard_Transient>& 
   binder->SetResult(result);
 }
 
-//=================================================================================================
-
 bool BRepToIGES_BREntity::GetConvertSurfaceMode() const
 {
   return myConvSurface;
 }
 
-//=================================================================================================
-
 bool BRepToIGES_BREntity::GetPCurveMode() const
 {
   return myPCurveMode;
 }
-
-//=================================================================================================
 
 BRepToIGES_BREntity::~BRepToIGES_BREntity() = default;

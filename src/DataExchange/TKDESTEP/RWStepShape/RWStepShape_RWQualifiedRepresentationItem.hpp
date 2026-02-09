@@ -11,7 +11,6 @@ class StepShape_QualifiedRepresentationItem;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for QualifiedRepresentationItem
 class RWStepShape_RWQualifiedRepresentationItem
 {
 public:

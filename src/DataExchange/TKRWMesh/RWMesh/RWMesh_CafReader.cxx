@@ -1,16 +1,4 @@
-// Author: Kirill Gavrilov
-// Copyright (c) 2016-2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <RWMesh_CafReader.hpp>
 
@@ -35,8 +23,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(RWMesh_CafReader, Standard_Transient)
 
-//=================================================================================================
-
 RWMesh_CafReader::RWMesh_CafReader()
     : myToFillDoc(true),
       myToFillIncomplete(true),
@@ -44,8 +30,6 @@ RWMesh_CafReader::RWMesh_CafReader()
       myExtraStatus(RWMesh_CafReaderStatusEx_NONE)
 {
 }
-
-//=================================================================================================
 
 RWMesh_CafReader::~RWMesh_CafReader() = default;
 
@@ -58,8 +42,6 @@ void RWMesh_CafReader::SetDocument(const occ::handle<TDocStd_Document>& theDoc)
     SetSystemLengthUnit(aScaleFactorM);
   }
 }
-
-//=================================================================================================
 
 TopoDS_Shape RWMesh_CafReader::SingleShape() const
 {
@@ -82,8 +64,6 @@ TopoDS_Shape RWMesh_CafReader::SingleShape() const
   return TopoDS_Shape();
 }
 
-//=================================================================================================
-
 bool RWMesh_CafReader::perform(const TCollection_AsciiString& theFile,
                                const Message_ProgressRange&   theProgress,
                                const bool                     theToProbe)
@@ -92,8 +72,6 @@ bool RWMesh_CafReader::perform(const TCollection_AsciiString& theFile,
   OSD_OpenStream(aStream, theFile, std::ios_base::in | std::ios_base::binary);
   return perform(aStream, theFile, theProgress, theToProbe);
 }
-
-//=================================================================================================
 
 bool RWMesh_CafReader::perform(std::istream&                  theStream,
                                const TCollection_AsciiString& theFile,
@@ -158,8 +136,6 @@ bool RWMesh_CafReader::perform(std::istream&                  theStream,
   return true;
 }
 
-//=================================================================================================
-
 void RWMesh_CafReader::fillDocument()
 {
   if (!myToFillDoc || myXdeDoc.IsNull() || myRootShapes.IsEmpty())
@@ -167,7 +143,6 @@ void RWMesh_CafReader::fillDocument()
     return;
   }
 
-  // set units
   double aLengthUnit = 1.;
   if (!XCAFDoc_DocumentTool::GetLengthUnit(myXdeDoc, aLengthUnit))
   {
@@ -180,7 +155,7 @@ void RWMesh_CafReader::fillDocument()
 
   const bool wasAutoNaming = XCAFDoc_ShapeTool::AutoNaming();
   XCAFDoc_ShapeTool::SetAutoNaming(false);
-  const TCollection_AsciiString aRootName; // = generateRootName (theFile);
+  const TCollection_AsciiString aRootName;
   CafDocumentTools              aTools;
   aTools.ShapeTool       = XCAFDoc_DocumentTool::ShapeTool(myXdeDoc->Main());
   aTools.ColorTool       = XCAFDoc_DocumentTool::ColorTool(myXdeDoc->Main());
@@ -193,8 +168,6 @@ void RWMesh_CafReader::fillDocument()
   XCAFDoc_DocumentTool::ShapeTool(myXdeDoc->Main())->UpdateAssemblies();
   XCAFDoc_ShapeTool::SetAutoNaming(wasAutoNaming);
 }
-
-//=================================================================================================
 
 void RWMesh_CafReader::setShapeName(const TDF_Label&               theLabel,
                                     const TopAbs_ShapeEnum         theShapeType,
@@ -215,8 +188,6 @@ void RWMesh_CafReader::setShapeName(const TDF_Label&               theLabel,
     TDataStd_Name::Set(theLabel, theParentName);
   }
 }
-
-//=================================================================================================
 
 void RWMesh_CafReader::setShapeStyle(const CafDocumentTools& theTools,
                                      const TDF_Label&        theLabel,
@@ -242,8 +213,6 @@ void RWMesh_CafReader::setShapeStyle(const CafDocumentTools& theTools,
     theTools.VisMaterialTool->SetShapeMaterial(theLabel, aMaterialLabel);
   }
 }
-
-//=================================================================================================
 
 void RWMesh_CafReader::setShapeNamedData(const CafDocumentTools&,
                                          const TDF_Label&                       theLabel,
@@ -275,8 +244,6 @@ void RWMesh_CafReader::setShapeNamedData(const CafDocumentTools&,
     }
   }
 }
-
-//=================================================================================================
 
 bool RWMesh_CafReader::addShapeIntoDoc(CafDocumentTools&              theTools,
                                        const TopoDS_Shape&            theShape,
@@ -313,8 +280,7 @@ bool RWMesh_CafReader::addShapeIntoDoc(CafDocumentTools&              theTools,
 
     if (toMakeAssembly)
     {
-      // create an empty Compound to add as assembly, so that we can add children one-by-one via
-      // AddComponent()
+
       TopoDS_Compound aCompound;
       BRep_Builder    aBuilder;
       aBuilder.MakeCompound(aCompound);
@@ -326,12 +292,12 @@ bool RWMesh_CafReader::addShapeIntoDoc(CafDocumentTools&              theTools,
   TDF_Label aNewLabel, anOldLabel;
   if (theLabel.IsNull())
   {
-    // add new shape
+
     aNewLabel = theTools.ShapeTool->AddShape(aShapeToAdd, toMakeAssembly);
   }
   else if (theTools.ShapeTool->IsAssembly(theLabel))
   {
-    // add shape as component
+
     if (theTools.ComponentMap.Find(aShapeNoLoc, anOldLabel))
     {
       aNewLabel = theTools.ShapeTool->AddComponent(theLabel, anOldLabel, theShape.Location());
@@ -350,7 +316,7 @@ bool RWMesh_CafReader::addShapeIntoDoc(CafDocumentTools&              theTools,
   }
   else
   {
-    // add shape as sub-shape
+
     aNewLabel = theTools.ShapeTool->AddSubShape(theLabel, theShape);
     if (!aNewLabel.IsNull())
     {
@@ -373,7 +339,6 @@ bool RWMesh_CafReader::addShapeIntoDoc(CafDocumentTools&              theTools,
     }
   }
 
-  // if new label is a reference get referred shape
   TDF_Label aNewRefLabel = aNewLabel;
   theTools.ShapeTool->GetReferredShape(aNewLabel, aNewRefLabel);
 
@@ -383,7 +348,7 @@ bool RWMesh_CafReader::addShapeIntoDoc(CafDocumentTools&              theTools,
   bool hasProductName = false;
   if (aNewLabel != aNewRefLabel)
   {
-    // put attributes to the Instance (overrides Product attributes)
+
     RWMesh_NodeAttributes aShapeAttribs;
     if (!theShape.Location().IsIdentity() && myAttribMap.Find(theShape, aShapeAttribs))
     {
@@ -398,31 +363,29 @@ bool RWMesh_CafReader::addShapeIntoDoc(CafDocumentTools&              theTools,
       setShapeName(aNewLabel, aShapeType, aShapeAttribs.Name, theLabel, theParentName);
       if (aRefShapeAttribs.Name.IsEmpty() && !aShapeAttribs.Name.IsEmpty())
       {
-        // it is not nice having unnamed Product, so copy name from first Instance (probably the
-        // only one)
+
         hasProductName = true;
         setShapeName(aNewRefLabel, aShapeType, aShapeAttribs.Name, theLabel, theParentName);
       }
       else if (aShapeAttribs.Name.IsEmpty() && !aRefShapeAttribs.Name.IsEmpty())
       {
-        // copy name from Product
+
         setShapeName(aNewLabel, aShapeType, aRefShapeAttribs.Name, theLabel, theParentName);
       }
     }
     else
     {
-      // copy name from Product
+
       setShapeName(aNewLabel, aShapeType, aRefShapeAttribs.Name, theLabel, theParentName);
     }
   }
 
   if (!anOldLabel.IsNull())
   {
-    // already defined in the document
+
     return true;
   }
 
-  // put attributes to the Product (shared across Instances)
   if (!hasProductName)
   {
     setShapeName(aNewRefLabel, aShapeType, aRefShapeAttribs.Name, theLabel, theParentName);
@@ -432,7 +395,7 @@ bool RWMesh_CafReader::addShapeIntoDoc(CafDocumentTools&              theTools,
 
   if (theTools.ShapeTool->IsAssembly(aNewRefLabel))
   {
-    // store sub-shapes (iterator is set to not inherit Location of parent object)
+
     TCollection_AsciiString aDummyName;
     for (TopoDS_Iterator aSubShapeIter(theShape, true, false); aSubShapeIter.More();
          aSubShapeIter.Next())
@@ -442,8 +405,7 @@ bool RWMesh_CafReader::addShapeIntoDoc(CafDocumentTools&              theTools,
   }
   else
   {
-    // store a plain list of sub-shapes in case if they have custom attributes (usually per-face
-    // color)
+
     for (TopoDS_Iterator aSubShapeIter(theShape, true, false); aSubShapeIter.More();
          aSubShapeIter.Next())
     {
@@ -452,8 +414,6 @@ bool RWMesh_CafReader::addShapeIntoDoc(CafDocumentTools&              theTools,
   }
   return true;
 }
-
-//=================================================================================================
 
 bool RWMesh_CafReader::addSubShapeIntoDoc(CafDocumentTools&   theTools,
                                           const TopoDS_Shape& theShape,
@@ -468,8 +428,6 @@ bool RWMesh_CafReader::addSubShapeIntoDoc(CafDocumentTools&   theTools,
   const TopAbs_ShapeEnum aShapeType = theShape.ShapeType();
   const bool aHasAttribs = myAttribMap.Find(theShape.Located(TopLoc_Location()), aShapeAttribs);
 
-  // check for the attribute
-  // shell or wire may not contain an attribute, but its subshapes need to be checked
   if (!aHasAttribs && aShapeType != TopAbs_SHELL && aShapeType != TopAbs_WIRE)
   {
     return false;
@@ -495,11 +453,9 @@ bool RWMesh_CafReader::addSubShapeIntoDoc(CafDocumentTools&   theTools,
   occ::handle<XCAFDoc_ShapeMapTool> aShapeMapTool = XCAFDoc_ShapeMapTool::Set(aNewLabel);
   aShapeMapTool->SetShape(theShape);
 
-  // if new label is a reference get referred shape
   TDF_Label aNewRefLabel = aNewLabel;
   theTools.ShapeTool->GetReferredShape(aNewLabel, aNewRefLabel);
 
-  // put attributes to the Product (shared across Instances)
   setShapeName(aNewRefLabel,
                aShapeType,
                aShapeAttribs.Name,
@@ -510,8 +466,6 @@ bool RWMesh_CafReader::addSubShapeIntoDoc(CafDocumentTools&   theTools,
 
   return true;
 }
-
-//=================================================================================================
 
 void RWMesh_CafReader::generateNames(const TCollection_AsciiString& theFile,
                                      const int                      theRootLower,
@@ -534,7 +488,6 @@ void RWMesh_CafReader::generateNames(const TCollection_AsciiString& theFile,
     return;
   }
 
-  // replace empty names
   occ::handle<TDataStd_Name>      aNodeName;
   int                             aRootIndex = NCollection_Sequence<TDF_Label>::Lower();
   NCollection_Sequence<TDF_Label> aNewRootLabels;

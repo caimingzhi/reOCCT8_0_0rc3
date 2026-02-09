@@ -22,11 +22,9 @@
 #include <DBRep_DrawableShape.hpp>
 #include <cstdio>
 
-//=================================================================================================
-
 static void Display(const char* Name, const TopoDS_Shape& S)
 {
-  // char* name = Name;
+
   static int    nbIsos  = 2;
   static double size    = 100.;
   static int    discret = 30;
@@ -36,20 +34,16 @@ static void Display(const char* Name, const TopoDS_Shape& S)
   Draw::Set(Name, D);
 }
 
-//=================================================================================================
-
 static void DumpNaming(const occ::handle<TNaming_Naming>& naming, Draw_Interpretor& di)
 {
   TCollection_AsciiString Entry;
   const TNaming_Name&     AName = naming->GetName();
 
-  // TNaming::Print(AName.Type(),std::cout);
   Standard_SStream aSStream1;
   TNaming::Print(AName.Type(), aSStream1);
   di << aSStream1;
   di << " ";
 
-  // TopAbs::Print(AName.ShapeType(),std::cout);
   Standard_SStream aSStream2;
   TopAbs::Print(AName.ShapeType(), aSStream2);
   di << aSStream2;
@@ -66,11 +60,6 @@ static void DumpNaming(const occ::handle<TNaming_Naming>& naming, Draw_Interpret
     di << " Stop " << Entry.ToCString();
   }
 }
-
-//=======================================================================
-// function : SelectShape ou SelectGeometry
-// purpose  : "Select DF entry shape [context]",
-//=======================================================================
 
 static int QADNaming_Select(Draw_Interpretor& di, int n, const char** a)
 {
@@ -100,11 +89,6 @@ static int QADNaming_Select(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=======================================================================
-// function : SolveSelection
-// purpose  : "SolveSelection DF entry",
-//=======================================================================
-
 static int QADNaming_SolveSelection(Draw_Interpretor& di, int n, const char** a)
 {
   if (n >= 3)
@@ -126,7 +110,7 @@ static int QADNaming_SolveSelection(Draw_Interpretor& di, int n, const char** a)
     }
     bool         done = SL.Solve(valid);
     TopoDS_Shape Res  = TNaming_Tool::CurrentShape(SL.NamedShape());
-    // TopoDS_Shape Res = TNaming_Tool::CurrentShape(NS);
+
     Sprintf(name, "%s_%s", "new", a[2]);
     Display(name, Res);
     return done ? 0 : 1;
@@ -134,11 +118,6 @@ static int QADNaming_SolveSelection(Draw_Interpretor& di, int n, const char** a)
   di << "Usage:  DumpSelection DF entry [validlabel1 validlabel2 ...]\n";
   return 1;
 }
-
-//=======================================================================
-// function : DumpSelection
-// purpose  : DumpSelection DF entry (R)
-//=======================================================================
 
 static int QADNaming_DumpSelection(Draw_Interpretor& di, int n, const char** a)
 {
@@ -184,11 +163,6 @@ static int QADNaming_DumpSelection(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=======================================================================
-// function : ArgsSelection
-// purpose  : ArgsSelection DF entry
-//=======================================================================
-
 static int QADNaming_ArgsSelection(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 3)
@@ -222,8 +196,6 @@ static int QADNaming_ArgsSelection(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=================================================================================================
-
 static void CollectAttachment(const TDF_Label&                                  root,
                               const occ::handle<TNaming_Naming>&                naming,
                               NCollection_Map<occ::handle<TNaming_NamedShape>>& attachment)
@@ -250,8 +222,6 @@ static void CollectAttachment(const TDF_Label&                                  
     }
   }
 }
-
-//=================================================================================================
 
 static int QADNaming_Attachment(Draw_Interpretor& di, int n, const char** a)
 {
@@ -296,8 +266,6 @@ static int QADNaming_Attachment(Draw_Interpretor& di, int n, const char** a)
   di << "QADNaming_Attachment : Error\n";
   return 1;
 }
-
-//=================================================================================================
 
 void QADNaming::SelectionCommands(Draw_Interpretor& theCommands)
 {

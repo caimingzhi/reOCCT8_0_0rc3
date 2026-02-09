@@ -15,18 +15,6 @@ enum Vrml_Texture2Wrap
 #include <Standard_OStream.hpp>
 class Vrml_SFImage;
 
-//! defines a Texture2 node of VRML specifying properties of geometry
-//! and its appearance.
-//! This property node defines a texture map and parameters for that map
-//! The texture can be read from the URL specified by the filename field.
-//! To turn off texturing, set the filename field to an empty string ("").
-//! Textures can alsobe specified inline by setting the image field
-//! to contain the texture data.
-//! By default:
-//! myFilename ("")
-//! myImage (0 0 0)
-//! myWrapS (Vrml_REPEAT)
-//! myWrapT (Vrml_REPEAT)
 class Vrml_Texture2
 {
 public:

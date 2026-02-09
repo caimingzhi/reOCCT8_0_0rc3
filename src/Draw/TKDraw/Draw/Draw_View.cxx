@@ -1,22 +1,9 @@
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Draw_View.hpp>
 #include <Draw_Viewer.hpp>
 
 #include <gp_Trsf.hpp>
-
-//=================================================================================================
 
 Draw_View::Draw_View(int             theId,
                      Draw_Viewer*    theViewer,
@@ -46,7 +33,6 @@ Draw_View::Draw_View(int             theId,
   memset(myType, 0, sizeof(myType));
 }
 
-//! Find window by it's XID - applicable only to X11.
 static Aspect_Drawable findWindow(const char* theWindow)
 {
   Aspect_Drawable aWindow = 0;
@@ -57,8 +43,6 @@ static Aspect_Drawable findWindow(const char* theWindow)
 #endif
   return aWindow;
 }
-
-//=================================================================================================
 
 Draw_View::Draw_View(int theId, Draw_Viewer* theViewer, const char* theTitle)
     : Draw_Window(theTitle,
@@ -82,18 +66,14 @@ Draw_View::Draw_View(int theId, Draw_Viewer* theViewer, const char* theTitle)
   memset(myType, 0, sizeof(myType));
 }
 
-//=================================================================================================
-
 Draw_View::~Draw_View()
 {
   Draw_Window::Destroy();
 }
 
-//=================================================================================================
-
 bool Draw_View::Init(const char* theType)
 {
-  { // default fields
+  {
     myFocalDistance = 500.;
     myIsPers        = false;
     myIs2D          = strcmp("-2D-", theType) == 0;
@@ -309,14 +289,10 @@ bool Draw_View::Init(const char* theType)
   return true;
 }
 
-//=================================================================================================
-
 void Draw_View::Transform(const gp_Trsf& theTransformation)
 {
   myMatrix.Multiply(theTransformation);
 }
-
-//=================================================================================================
 
 void Draw_View::ResetFrame()
 {
@@ -325,8 +301,6 @@ void Draw_View::ResetFrame()
   myFrameX1 = 0;
   myFrameY1 = 0;
 }
-
-//=================================================================================================
 
 void Draw_View::GetFrame(int& theX0, int& theY0, int& theX1, int& theY1)
 {
@@ -346,8 +320,6 @@ void Draw_View::GetFrame(int& theX0, int& theY0, int& theX1, int& theY1)
     theY1 = myFrameY1;
   }
 }
-
-//=================================================================================================
 
 void Draw_View::WExpose()
 {

@@ -3,16 +3,12 @@
 #include <TopLoc_ItemLocation.hpp>
 #include <TopLoc_Location.hpp>
 
-//=================================================================================================
-
 TopLoc_ItemLocation::TopLoc_ItemLocation(const occ::handle<TopLoc_Datum3D>& D, const int P)
     : myDatum(D),
       myPower(P),
       myTrsf(D->Transformation().Powered(P))
 {
 }
-
-//=================================================================================================
 
 void TopLoc_ItemLocation::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

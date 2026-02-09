@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DBRep_Edge, Standard_Transient)
 
-//=================================================================================================
-
 DBRep_Edge::DBRep_Edge(const TopoDS_Edge& E, const Draw_Color& C)
     : myEdge(E),
       myColor(C)

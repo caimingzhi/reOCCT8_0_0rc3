@@ -8,37 +8,12 @@
 #include <IntAna_Quadric.hpp>
 #include <ElSLib.hpp>
 
-//----------------------------------------------------------------------
-//--
-//--  Equation generale des quadriques :
-//--
-//--   f(x,y,z) =       CXX X**2  + CYY Y**2  + CZZ Z**2
-//--
-//--             + 2 (  CXY X Y   + CXZ X Z   + CYZ Y Z )
-//--
-//--             + 2 (  CX  X     + CY  Y     + CZ  Z)
-//--
-//--             + CCte
-//--
-//--
-//----------------------------------------------------------------------
-//----------------------------------------------------------------------
-//-- Quadric Vide
-//----------------------------------------------------------------------
 IntAna_Quadric::IntAna_Quadric()
 {
   CXX = CYY = CZZ = CXY = CXZ = CYZ = CX = CY = CZ = 0.0;
   CCte                                             = 1.0;
 }
 
-//----------------------------------------------------------------------
-//-- Pln  -----> Quadric
-//--
-//-- Coefficients sur gp_Pln retourne A,B,C,D
-//-- 	          avec f(x,y,z)  =    A x    + B y   +  C z   + D
-//--
-//--  que l on identifie a        2(  CX x   + CY y  +  CZ z ) + CCte
-//----------------------------------------------------------------------
 void IntAna_Quadric::SetQuadric(const gp_Pln& P)
 {
   P.Coefficients(CX, CY, CZ, CCte);
@@ -57,9 +32,6 @@ IntAna_Quadric::IntAna_Quadric(const gp_Pln& P)
   CXX = CYY = CZZ = CXY = CXZ = CYZ = 0.0;
 }
 
-//----------------------------------------------------------------------
-//-- Cylinder -----> Quadric
-//----------------------------------------------------------------------
 void IntAna_Quadric::SetQuadric(const gp_Cylinder& Cyl)
 {
   Cyl.Coefficients(CXX, CYY, CZZ, CXY, CXZ, CYZ, CX, CY, CZ, CCte);
@@ -70,9 +42,6 @@ IntAna_Quadric::IntAna_Quadric(const gp_Cylinder& Cyl)
   Cyl.Coefficients(CXX, CYY, CZZ, CXY, CXZ, CYZ, CX, CY, CZ, CCte);
 }
 
-//----------------------------------------------------------------------
-//-- Cone -----> Quadric
-//----------------------------------------------------------------------
 IntAna_Quadric::IntAna_Quadric(const gp_Cone& Cone)
 {
   SetQuadric(Cone);
@@ -85,9 +54,6 @@ void IntAna_Quadric::SetQuadric(const gp_Cone& Cone)
   mySpecialPoints.Append(ElSLib::Value(0.0, aVParam, Cone));
 }
 
-//----------------------------------------------------------------------
-//-- Sphere -----> Quadric
-//----------------------------------------------------------------------
 void IntAna_Quadric::SetQuadric(const gp_Sphere& Sph)
 {
   Sph.Coefficients(CXX, CYY, CZZ, CXY, CXZ, CYZ, CX, CY, CZ, CCte);
@@ -100,9 +66,6 @@ IntAna_Quadric::IntAna_Quadric(const gp_Sphere& Sph)
   SetQuadric(Sph);
 }
 
-//----------------------------------------------------------------------
-//-- Returns the Coefficients of the Quadric
-//----------------------------------------------------------------------
 void IntAna_Quadric::Coefficients(double& _CXX,
                                   double& _CYY,
                                   double& _CZZ,
@@ -126,9 +89,6 @@ void IntAna_Quadric::Coefficients(double& _CXX,
   _CCte = CCte;
 }
 
-//----------------------------------------------------------------------
-//-- Computes the Coefficients in a new coordinate system
-//----------------------------------------------------------------------
 void IntAna_Quadric::NewCoefficients(double&       _CXX,
                                      double&       _CYY,
                                      double&       _CZZ,
@@ -141,11 +101,9 @@ void IntAna_Quadric::NewCoefficients(double&       _CXX,
                                      double&       _CCte,
                                      const gp_Ax3& Axis) const
 {
-  double t11, t12, t13, t14; // x = t11 X + t12 Y + t13 Z + t14
-  double t21, t22, t23, t24; // y = t21 X + t22 Y + t23 Z + t24
-  double t31, t32, t33, t34; // z = t31 X + t32 Y + t33 Z + t34
-
-  //   = X DirX + Y DirY + Z DirZ + Loc
+  double t11, t12, t13, t14;
+  double t21, t22, t23, t24;
+  double t31, t32, t33, t34;
 
   double Cxx, Cyy, Czz, Cxy, Cxz, Cyz, Cx, Cy, Cz, Ccte;
 
@@ -164,12 +122,6 @@ void IntAna_Quadric::NewCoefficients(double&       _CXX,
   t32 = Trans.Value(3, 2);
   t33 = Trans.Value(3, 3);
   t34 = Trans.Value(3, 4);
-
-  //      P0(x,y,z)=_CXX x x + _CYY y y + ... + _CCte =0  (x,y,z "absolute" coordinates)
-  // and  P1(X(x,y,z),Y(x,y,z),Z(x,y,z))=P0(x,y,z)
-  //
-  // with P1(X,Y,Z)= Cxx X X + Cyy Y Y + Czz Z Z + 2 Cxy X Y ... + Ccte
-  //               = _CXX  x x + _CYY  y y  +  ...  +  _CCte
 
   double t11_P2 = t11 * t11;
   double t21_P2 = t21 * t21;

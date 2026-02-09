@@ -4,11 +4,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepShape_ValueFormatTypeQualifier.hpp>
 
-//=================================================================================================
-
 RWStepShape_RWValueFormatTypeQualifier::RWStepShape_RWValueFormatTypeQualifier() = default;
-
-//=================================================================================================
 
 void RWStepShape_RWValueFormatTypeQualifier::ReadStep(
   const occ::handle<StepData_StepReaderData>&            data,
@@ -16,20 +12,15 @@ void RWStepShape_RWValueFormatTypeQualifier::ReadStep(
   occ::handle<Interface_Check>&                          ach,
   const occ::handle<StepShape_ValueFormatTypeQualifier>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 1, ach, "value_format_type_qualifier"))
     return;
-
-  // Own fields of ValueFormatTypeQualifier
 
   occ::handle<TCollection_HAsciiString> aFormatType;
   data->ReadString(num, 1, "format_type", ach, aFormatType);
 
-  // Initialize entity
   ent->Init(aFormatType);
 }
-
-//=================================================================================================
 
 void RWStepShape_RWValueFormatTypeQualifier::WriteStep(
   StepData_StepWriter&                                   SW,

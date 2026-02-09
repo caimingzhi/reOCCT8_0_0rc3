@@ -9,16 +9,9 @@
 #include <NCollection_Array1.hpp>
 #include <Standard_Integer.hpp>
 
-//! A WiresBlock is a set of Blocks. It is used by the
-//! DataStructure to structure the Edges.
-//!
-//! A WiresBlock contains:
-//!
-//! * An Array of Blocks.
 class HLRAlgo_WiresBlock : public Standard_Transient
 {
 public:
-  //! Create a Block of Blocks.
   HLRAlgo_WiresBlock(const int NbWires)
       : myWires(1, NbWires)
   {

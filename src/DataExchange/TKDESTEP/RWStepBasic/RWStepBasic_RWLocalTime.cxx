@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include "RWStepBasic_RWLocalTime.hpp"
@@ -26,24 +15,18 @@ void RWStepBasic_RWLocalTime::ReadStep(const occ::handle<StepData_StepReaderData
                                        const occ::handle<StepBasic_LocalTime>&     ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 4, ach, "local_time"))
     return;
 
-  // --- own field : hourComponent ---
-
   int aHourComponent;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
-  data->ReadInteger(num, 1, "hour_component", ach, aHourComponent);
 
-  // --- own field : minuteComponent ---
+  data->ReadInteger(num, 1, "hour_component", ach, aHourComponent);
 
   int  aMinuteComponent;
   bool hasAminuteComponent = true;
   if (data->IsParamDefined(num, 2))
   {
-    // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
     data->ReadInteger(num, 2, "minute_component", ach, aMinuteComponent);
   }
   else
@@ -52,13 +35,11 @@ void RWStepBasic_RWLocalTime::ReadStep(const occ::handle<StepData_StepReaderData
     aMinuteComponent    = 0;
   }
 
-  // --- own field : secondComponent ---
-
   double aSecondComponent;
   bool   hasAsecondComponent = true;
   if (data->IsParamDefined(num, 3))
   {
-    // szv#4:S4163:12Mar99 `bool stat3 =` not needed
+
     data->ReadReal(num, 3, "second_component", ach, aSecondComponent);
   }
   else
@@ -67,18 +48,14 @@ void RWStepBasic_RWLocalTime::ReadStep(const occ::handle<StepData_StepReaderData
     aSecondComponent    = 0.;
   }
 
-  // --- own field : zone ---
-
   occ::handle<StepBasic_CoordinatedUniversalTimeOffset> aZone;
-  // szv#4:S4163:12Mar99 `bool stat4 =` not needed
+
   data->ReadEntity(num,
                    4,
                    "zone",
                    ach,
                    STANDARD_TYPE(StepBasic_CoordinatedUniversalTimeOffset),
                    aZone);
-
-  //--- Initialisation of the read entity ---
 
   ent->Init(aHourComponent,
             hasAminuteComponent,
@@ -92,11 +69,7 @@ void RWStepBasic_RWLocalTime::WriteStep(StepData_StepWriter&                    
                                         const occ::handle<StepBasic_LocalTime>& ent) const
 {
 
-  // --- own field : hourComponent ---
-
   SW.Send(ent->HourComponent());
-
-  // --- own field : minuteComponent ---
 
   bool hasAminuteComponent = ent->HasMinuteComponent();
   if (hasAminuteComponent)
@@ -108,8 +81,6 @@ void RWStepBasic_RWLocalTime::WriteStep(StepData_StepWriter&                    
     SW.SendUndef();
   }
 
-  // --- own field : secondComponent ---
-
   bool hasAsecondComponent = ent->HasSecondComponent();
   if (hasAsecondComponent)
   {
@@ -119,8 +90,6 @@ void RWStepBasic_RWLocalTime::WriteStep(StepData_StepWriter&                    
   {
     SW.SendUndef();
   }
-
-  // --- own field : zone ---
 
   SW.Send(ent->Zone());
 }

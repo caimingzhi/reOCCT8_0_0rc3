@@ -7,8 +7,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_Dimension, Draw_Drawable3D)
 
-//=================================================================================================
-
 DrawDim_Dimension::DrawDim_Dimension()
     : is_valued(false),
       myValue(0.0),
@@ -16,15 +14,11 @@ DrawDim_Dimension::DrawDim_Dimension()
 {
 }
 
-//=================================================================================================
-
 void DrawDim_Dimension::SetValue(const double avalue)
 {
   is_valued = true;
   myValue   = avalue;
 }
-
-//=================================================================================================
 
 double DrawDim_Dimension::GetValue() const
 {
@@ -33,28 +27,20 @@ double DrawDim_Dimension::GetValue() const
   return myValue;
 }
 
-//=================================================================================================
-
 bool DrawDim_Dimension::IsValued() const
 {
   return is_valued;
 }
-
-//=================================================================================================
 
 Draw_Color DrawDim_Dimension::TextColor() const
 {
   return myTextColor;
 }
 
-//=================================================================================================
-
 void DrawDim_Dimension::TextColor(const Draw_Color& C)
 {
   myTextColor = C;
 }
-
-//=================================================================================================
 
 void DrawDim_Dimension::DrawText(const gp_Pnt& P, Draw_Display& D) const
 {

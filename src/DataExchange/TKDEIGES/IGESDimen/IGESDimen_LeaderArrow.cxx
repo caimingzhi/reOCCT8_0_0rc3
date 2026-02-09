@@ -25,7 +25,6 @@ void IGESDimen_LeaderArrow::Init(const double                                   
   theArrowHead       = position;
   theSegmentTails    = segments;
   InitTypeAndForm(214, FormNumber());
-  // FormNumber precises the Type of the Arrow (1-12)
 }
 
 void IGESDimen_LeaderArrow::SetFormNumber(const int form)

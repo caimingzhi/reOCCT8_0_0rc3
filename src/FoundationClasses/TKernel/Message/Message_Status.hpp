@@ -8,15 +8,11 @@ enum Message_StatusType
   Message_FAIL  = 0x00000800
 };
 
-//! Enumeration covering all execution statuses supported by the class
-//! Message_ExecStatus: 32 statuses per each of 4 types (DONE, WARN, ALARM, FAIL)
-
 enum Message_Status
 {
-  //! Empty status
+
   Message_None = 0,
 
-  //! Something done, 32 variants
   Message_Done1 = Message_DONE,
   Message_Done2,
   Message_Done3,
@@ -50,7 +46,6 @@ enum Message_Status
   Message_Done31,
   Message_Done32,
 
-  //! Warning for possible problem encountered, 32 variants
   Message_Warn1 = Message_WARN,
   Message_Warn2,
   Message_Warn3,
@@ -84,7 +79,6 @@ enum Message_Status
   Message_Warn31,
   Message_Warn32,
 
-  //! Alarm (severe warning) for problem encountered, 32 variants
   Message_Alarm1 = Message_ALARM,
   Message_Alarm2,
   Message_Alarm3,
@@ -118,7 +112,6 @@ enum Message_Status
   Message_Alarm31,
   Message_Alarm32,
 
-  //! Execution failed, 32 variants
   Message_Fail1 = Message_FAIL,
   Message_Fail2,
   Message_Fail3,

@@ -7,48 +7,36 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataXtd_PresentationDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataXtd_PresentationDriver::BinMDataXtd_PresentationDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataXtd_Presentation)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataXtd_PresentationDriver::NewEmpty() const
 {
   return new TDataXtd_Presentation();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
-
 bool BinMDataXtd_PresentationDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                            const occ::handle<TDF_Attribute>& theTarget,
-                                           BinObjMgt_RRelocationTable& /*theRT*/) const
+                                           BinObjMgt_RRelocationTable&) const
 {
   bool                               ok          = false;
   occ::handle<TDataXtd_Presentation> anAttribute = occ::down_cast<TDataXtd_Presentation>(theTarget);
 
-  // Display status
   int aValue;
   ok = theSource >> aValue;
   if (!ok)
     return ok;
   anAttribute->SetDisplayed(aValue != 0);
 
-  // GUID
   Standard_GUID aGUID;
   ok = theSource >> aGUID;
   if (!ok)
     return ok;
   anAttribute->SetDriverGUID(aGUID);
 
-  // Color
   ok = theSource >> aValue;
   if (!ok)
     return ok;
@@ -65,7 +53,6 @@ bool BinMDataXtd_PresentationDriver::Paste(const BinObjMgt_Persistent&       the
     anAttribute->UnsetColor();
   }
 
-  // Material
   ok = theSource >> aValue;
   if (!ok)
     return ok;
@@ -74,7 +61,6 @@ bool BinMDataXtd_PresentationDriver::Paste(const BinObjMgt_Persistent&       the
   else
     anAttribute->UnsetMaterial();
 
-  // Transparency
   double aRValue;
   ok = theSource >> aRValue;
   if (!ok)
@@ -84,7 +70,6 @@ bool BinMDataXtd_PresentationDriver::Paste(const BinObjMgt_Persistent&       the
   else
     anAttribute->UnsetTransparency();
 
-  // Width
   ok = theSource >> aRValue;
   if (!ok)
     return ok;
@@ -93,7 +78,6 @@ bool BinMDataXtd_PresentationDriver::Paste(const BinObjMgt_Persistent&       the
   else
     anAttribute->UnsetWidth();
 
-  // Mode
   ok = theSource >> aValue;
   if (!ok)
     return ok;
@@ -105,25 +89,17 @@ bool BinMDataXtd_PresentationDriver::Paste(const BinObjMgt_Persistent&       the
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
-
 void BinMDataXtd_PresentationDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
   BinObjMgt_Persistent&             theTarget,
-  NCollection_IndexedMap<occ::handle<Standard_Transient>>& /*theSRT*/) const
+  NCollection_IndexedMap<occ::handle<Standard_Transient>>&) const
 {
   occ::handle<TDataXtd_Presentation> anAttribute = occ::down_cast<TDataXtd_Presentation>(theSource);
 
-  // Display status
   theTarget.PutBoolean(anAttribute->IsDisplayed());
 
-  // GUID
   theTarget.PutGUID(anAttribute->GetDriverGUID());
 
-  // Color
   if (anAttribute->HasOwnColor())
   {
     const int anOldEnum = TDataXtd_Presentation::getOldColorNameFromNewEnum(anAttribute->Color());
@@ -134,25 +110,21 @@ void BinMDataXtd_PresentationDriver::Paste(
     theTarget.PutInteger(-1);
   }
 
-  // Material
   if (anAttribute->HasOwnMaterial())
     theTarget.PutInteger(anAttribute->MaterialIndex());
   else
     theTarget.PutInteger(-1);
 
-  // Transparency
   if (anAttribute->HasOwnTransparency())
     theTarget.PutReal(anAttribute->Transparency());
   else
     theTarget.PutReal(-1.);
 
-  // Width
   if (anAttribute->HasOwnWidth())
     theTarget.PutReal(anAttribute->Width());
   else
     theTarget.PutReal(-1.);
 
-  // Mode
   if (anAttribute->HasOwnMode())
     theTarget.PutInteger(anAttribute->Mode());
   else

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Adaptor3d_IsoCurve.hpp>
 #include <Bnd_Box2d.hpp>
@@ -24,8 +13,6 @@
 #include <VrmlConverter_IsoAspect.hpp>
 #include <VrmlConverter_WFRestrictedFace.hpp>
 
-//=================================================================================================
-
 void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                        anOStream,
                                          const occ::handle<BRepAdaptor_Surface>&  aFace,
                                          const bool                               DrawUIso,
@@ -39,7 +26,6 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
 
   StdPrs_ToolRFace ToolRst(aFace);
 
-  // compute bounds of the restriction
   double    UMin, UMax, VMin, VMax;
   int       i;
   gp_Pnt2d  P1, P2;
@@ -53,7 +39,6 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
 
   B.Get(UMin, VMin, UMax, VMax);
 
-  // load the infinite isos
   Hatch_Hatcher isobuild(1.e-5, ToolRst.IsOriented());
   bool          UClosed = aFace->IsUClosed();
   bool          VClosed = aFace->IsVClosed();
@@ -95,7 +80,6 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
     }
   }
 
-  // trim the isos
   double U1, U2, U, DU;
 
   for (ToolRst.Init(); ToolRst.More(); ToolRst.Next())
@@ -130,8 +114,6 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
     }
   }
 
-  // draw the isos
-
   Adaptor3d_IsoCurve anIso;
   anIso.Load(aFace);
   int NumberOfLines = isobuild.NbLines();
@@ -156,25 +138,11 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
   laU = aDrawer->UIsoAspect();
   laV = aDrawer->VIsoAspect();
 
-  //     std::cout << std::endl;
-
-  //     std::cout << "Face:aDrawer>UMaterial1 = " << aDrawer->UIsoAspect()->HasMaterial() <<
-  //     std::endl; std::cout << "Face:aDrawer>VMaterial1 = " <<
-  //     aDrawer->VIsoAspect()->HasMaterial() << std::endl; std::cout << "Face:aDrawer>LineAspect1 =
-  //     " << aDrawer->LineAspect()->HasMaterial() << std::endl; std::cout << "Face:la1 = " <<
-  //     latmp->HasMaterial() << std::endl; std::cout << "Face:laU1 = " << laU->HasMaterial() <<
-  //     std::endl; std::cout << "Face:laV1 = " << laV->HasMaterial() << std::endl; std::cout <<
-  //     "Face:iau1 = " << iautmp->HasMaterial() << std::endl; std::cout << "Face:iav1 = " <<
-  //     iavtmp->HasMaterial() << std::endl;
-
-  // creation of Vrml objects
-
-  // Separator 1 {
   Vrml_Separator SE1;
   Vrml_Separator SE2;
   Vrml_Separator SE3;
 
-  bool flag = false; // to check a call of Vrml_Separator.Print(anOStream)
+  bool flag = false;
 
   SE1.Print(anOStream);
 
@@ -193,7 +161,7 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
         laU->SetHasMaterial(false);
 
         flag = true;
-        // Separator 2 {
+
         SE2.Print(anOStream);
       }
       aDrawer->SetLineAspect(laU);
@@ -220,7 +188,7 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
 
       if (flag)
       {
-        // Separator 2 }
+
         SE2.Print(anOStream);
         flag = false;
       }
@@ -241,7 +209,6 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
         laV->SetHasMaterial(false);
         flag = true;
 
-        // Separator 3 {
         SE3.Print(anOStream);
       }
 
@@ -269,33 +236,19 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
 
       if (flag)
       {
-        // Separator 3 }
+
         SE3.Print(anOStream);
         flag = false;
       }
     }
   }
 
-  // Separator 1 }
   SE1.Print(anOStream);
 
   aDrawer->SetLineAspect(latmp);
   aDrawer->SetUIsoAspect(iautmp);
   aDrawer->SetVIsoAspect(iavtmp);
-
-  //     std::cout << std::endl;
-
-  //     std::cout << "Face:aDrawer>UMaterial4 = " << aDrawer->UIsoAspect()->HasMaterial() <<
-  //     std::endl; std::cout << "Face:aDrawer>VMaterial4 = " <<
-  //     aDrawer->VIsoAspect()->HasMaterial() << std::endl; std::cout << "Face:aDrawer>LineAspect4 =
-  //     " << aDrawer->LineAspect()->HasMaterial() << std::endl; std::cout << "Face:la4 = " <<
-  //     latmp->HasMaterial() << std::endl; std::cout << "Face:laU4 = " << laU->HasMaterial() <<
-  //     std::endl; std::cout << "Face:laV4 = " << laV->HasMaterial() << std::endl; std::cout <<
-  //     "Face:iau4 = " << iautmp->HasMaterial() << std::endl; std::cout << "Face:iav4 = " <<
-  //     iavtmp->HasMaterial() << std::endl;
 }
-
-//=================================================================================================
 
 void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                        anOStream,
                                          const occ::handle<BRepAdaptor_Surface>&  aFace,
@@ -308,8 +261,6 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
   VrmlConverter_WFRestrictedFace::Add(anOStream, aFace, true, true, finu, finv, aDrawer);
 }
 
-//=================================================================================================
-
 void VrmlConverter_WFRestrictedFace::AddUIso(Standard_OStream&                        anOStream,
                                              const occ::handle<BRepAdaptor_Surface>&  aFace,
                                              const occ::handle<VrmlConverter_Drawer>& aDrawer)
@@ -320,8 +271,6 @@ void VrmlConverter_WFRestrictedFace::AddUIso(Standard_OStream&                  
 
   VrmlConverter_WFRestrictedFace::Add(anOStream, aFace, true, false, finu, finv, aDrawer);
 }
-
-//=================================================================================================
 
 void VrmlConverter_WFRestrictedFace::AddVIso(Standard_OStream&                        anOStream,
                                              const occ::handle<BRepAdaptor_Surface>&  aFace,

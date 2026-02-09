@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Adaptor2d_Curve2d.hpp>
 #include <Adaptor3d_IsoCurve.hpp>
@@ -29,14 +18,12 @@
 #include <VrmlConverter_IsoAspect.hpp>
 #include <VrmlConverter_WFDeflectionRestrictedFace.hpp>
 
-//=================================================================================================
-
 static double GetDeflection(const occ::handle<BRepAdaptor_Surface>&  aFace,
                             const occ::handle<VrmlConverter_Drawer>& aDrawer)
 {
 
   double theRequestedDeflection;
-  if (aDrawer->TypeOfDeflection() == Aspect_TOD_RELATIVE) // TOD_RELATIVE, TOD_ABSOLUTE
+  if (aDrawer->TypeOfDeflection() == Aspect_TOD_RELATIVE)
   {
     Bnd_Box box;
     BndLib_AddSurface::Add(aFace->Surface(), Precision::Confusion(), box);
@@ -56,8 +43,6 @@ static double GetDeflection(const occ::handle<BRepAdaptor_Surface>&  aFace,
       diagonal               = 1000000.;
       theRequestedDeflection = aDrawer->DeviationCoefficient() * diagonal;
     }
-    //      std::cout << "diagonal = " << diagonal << std::endl;
-    //      std::cout << "theRequestedDeflection = " << theRequestedDeflection << std::endl;
   }
   else
   {
@@ -65,8 +50,6 @@ static double GetDeflection(const occ::handle<BRepAdaptor_Surface>&  aFace,
   }
   return theRequestedDeflection;
 }
-
-//=================================================================================================
 
 void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
                                                    const occ::handle<BRepAdaptor_Surface>& aFace,
@@ -87,7 +70,6 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
 
   double aLimit = aDrawer->MaximalParameterValue();
 
-  // compute bounds of the restriction
   double UMin, UMax, VMin, VMax;
   int    i;
 
@@ -96,7 +78,6 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
   VMin = VF;
   VMax = VL;
 
-  // load the isos
   Hatch_Hatcher isobuild(1.e-5, ToolRst.IsOriented());
   bool          UClosed = aFace->IsUClosed();
   bool          VClosed = aFace->IsVClosed();
@@ -138,7 +119,6 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
     }
   }
 
-  // trim the isos
   gp_Pnt2d P1, P2;
   double   U1, U2;
   gp_Pnt   dummypnt;
@@ -186,8 +166,6 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
     }
   }
 
-  // draw the isos
-
   Adaptor3d_IsoCurve anIso;
   anIso.Load(aFace);
   int NumberOfLines = isobuild.NbLines();
@@ -216,7 +194,7 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
   Vrml_Separator SE2;
   Vrml_Separator SE3;
 
-  bool flag = false; // to check a call of Vrml_Separator.Print(anOStream)
+  bool flag = false;
 
   SE1.Print(anOStream);
 
@@ -235,7 +213,7 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
         laU->SetHasMaterial(false);
 
         flag = true;
-        // Separator 2 {
+
         SE2.Print(anOStream);
       }
       aDrawer->SetLineAspect(laU);
@@ -261,7 +239,7 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
       }
       if (flag)
       {
-        // Separator 2 }
+
         SE2.Print(anOStream);
         flag = false;
       }
@@ -282,7 +260,6 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
         laV->SetHasMaterial(false);
         flag = true;
 
-        // Separator 3 {
         SE3.Print(anOStream);
       }
 
@@ -310,22 +287,19 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
 
       if (flag)
       {
-        // Separator 3 }
+
         SE3.Print(anOStream);
         flag = false;
       }
     }
   }
 
-  // Separator 1 }
   SE1.Print(anOStream);
 
   aDrawer->SetLineAspect(latmp);
   aDrawer->SetUIsoAspect(iautmp);
   aDrawer->SetVIsoAspect(iavtmp);
 }
-
-//=================================================================================================
 
 void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
                                                    const occ::handle<BRepAdaptor_Surface>&  aFace,
@@ -347,8 +321,6 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
                                                 aDrawer);
 }
 
-//=================================================================================================
-
 void VrmlConverter_WFDeflectionRestrictedFace::AddUIso(
   Standard_OStream&                        anOStream,
   const occ::handle<BRepAdaptor_Surface>&  aFace,
@@ -368,8 +340,6 @@ void VrmlConverter_WFDeflectionRestrictedFace::AddUIso(
                                                 finv,
                                                 aDrawer);
 }
-
-//=================================================================================================
 
 void VrmlConverter_WFDeflectionRestrictedFace::AddVIso(
   Standard_OStream&                        anOStream,

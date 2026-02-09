@@ -14,13 +14,8 @@
 #include <TDF_Tool.hpp>
 #include <TPrsStd_AISViewer.hpp>
 #include <AIS_InteractiveContext.hpp>
-// pour propagate
+
 #include <TDocStd_XLinkTool.hpp>
-
-// typedef int (* DFBROWSER_CALL)(const occ::handle<TDocStd_Document>&);
-// static DFBROWSER_CALL gDFunc = 0;
-
-//=================================================================================================
 
 static int DDocStd_Main(Draw_Interpretor& di, int nb, const char** a)
 {
@@ -36,8 +31,6 @@ static int DDocStd_Main(Draw_Interpretor& di, int nb, const char** a)
   return 1;
 }
 
-//=================================================================================================
-
 static int DDocStd_Format(Draw_Interpretor& di, int n, const char** a)
 {
   occ::handle<TDocStd_Document> D;
@@ -45,7 +38,7 @@ static int DDocStd_Format(Draw_Interpretor& di, int n, const char** a)
   {
     if (!DDocStd::GetDocument(a[1], D))
       return 1;
-    // std::cout << "FORMAT : " << D->StorageFormat() << std::endl;
+
     di << "FORMAT : ";
     Standard_SStream aStream;
     D->StorageFormat().Print(aStream);
@@ -63,10 +56,6 @@ static int DDocStd_Format(Draw_Interpretor& di, int n, const char** a)
   di << "DDocStd_Format : Error\n";
   return 1;
 }
-
-//=======================================================================
-// function : Copy "Copy DOC entry XDOC xentry",
-//=======================================================================
 
 static int DDocStd_Copy(Draw_Interpretor& di, int n, const char** a)
 {
@@ -94,10 +83,6 @@ static int DDocStd_Copy(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=======================================================================
-// function : CopyWithLink "Copy DOC entry XDOC xentry",
-//=======================================================================
-
 static int DDocStd_CopyWithLink(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 5)
@@ -123,10 +108,6 @@ static int DDocStd_CopyWithLink(Draw_Interpretor& di, int n, const char** a)
   di << "DDocStd_CopyWithLink : Error\n";
   return 1;
 }
-
-//=======================================================================
-// function : UpdateLink (D,[xrefentry])
-//=======================================================================
 
 static int DDocStd_UpdateLink(Draw_Interpretor& di, int nb, const char** a)
 {
@@ -164,8 +145,6 @@ static int DDocStd_UpdateLink(Draw_Interpretor& di, int nb, const char** a)
   return 1;
 }
 
-//=================================================================================================
-
 static int DDocStd_UndoLimit(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
@@ -181,17 +160,11 @@ static int DDocStd_UndoLimit(Draw_Interpretor& di, int n, const char** a)
     D->SetUndoLimit(lim);
   }
 
-  // display current values
   di << D->GetUndoLimit() << " ";
   di << D->GetAvailableUndos() << " ";
   di << D->GetAvailableRedos();
   return 0;
 }
-
-//=======================================================================
-// function : Undo, Redo
-// purpose  : Undo (DOC)
-//=======================================================================
 
 static int DDocStd_Undo(Draw_Interpretor& di, int n, const char** a)
 {
@@ -208,7 +181,6 @@ static int DDocStd_Undo(Draw_Interpretor& di, int n, const char** a)
     step = Draw::Atoi(a[2]);
   }
 
-  // test if the command was undo or redo
   bool undo = a[0][0] == 'U';
 
   for (i = 1; i <= step; i++)
@@ -225,7 +197,6 @@ static int DDocStd_Undo(Draw_Interpretor& di, int n, const char** a)
     }
   }
 
-  // Redraw the viewer.
   occ::handle<AIS_InteractiveContext> IC;
   if (TPrsStd_AISViewer::Find(D->Main(), IC))
     IC->UpdateCurrentViewer();
@@ -233,9 +204,7 @@ static int DDocStd_Undo(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
-static int DDocStd_NewCommand(Draw_Interpretor& /*di*/, int n, const char** a)
+static int DDocStd_NewCommand(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 2)
     return 1;
@@ -246,9 +215,7 @@ static int DDocStd_NewCommand(Draw_Interpretor& /*di*/, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
-static int DDocStd_OpenCommand(Draw_Interpretor& /*di*/, int n, const char** a)
+static int DDocStd_OpenCommand(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 2)
     return 1;
@@ -260,9 +227,7 @@ static int DDocStd_OpenCommand(Draw_Interpretor& /*di*/, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
-static int DDocStd_AbortCommand(Draw_Interpretor& /*di*/, int n, const char** a)
+static int DDocStd_AbortCommand(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 2)
     return 1;
@@ -273,9 +238,7 @@ static int DDocStd_AbortCommand(Draw_Interpretor& /*di*/, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
-static int DDocStd_CommitCommand(Draw_Interpretor& /*di*/, int n, const char** a)
+static int DDocStd_CommitCommand(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 2)
     return 1;
@@ -286,11 +249,6 @@ static int DDocStd_CommitCommand(Draw_Interpretor& /*di*/, int n, const char** a
   return 0;
 }
 
-//=======================================================================
-// function : DDocStd_DumpDocument
-// purpose  : DumpDocument (DOC)
-//=======================================================================
-
 static int DDocStd_DumpDocument(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 2)
@@ -299,37 +257,31 @@ static int DDocStd_DumpDocument(Draw_Interpretor& di, int nb, const char** arg)
     if (!DDocStd::GetDocument(arg[1], D))
       return 1;
     di << "\n";
-    // document name
+
     if (D->IsSaved())
       di << "DOCUMENT      : " << D->GetName();
     else
       di << "DOCUMENT      : not saved";
     di << "\n";
-    // format
-    // std::cout << "FORMAT        : " << D->StorageFormat();
+
     di << "FORMAT        : ";
     Standard_SStream aStream;
     D->StorageFormat().Print(aStream);
     di << aStream;
     di << "\n";
-    // command
+
     di << "COMMAND       : ";
     if (D->HasOpenCommand())
       di << " Is Open";
     else
       di << " Is Not Open";
-    // undo
+
     di << "UNDO          :";
     di << " limit :" << D->GetUndoLimit();
     di << " undos :" << D->GetAvailableUndos() << " ";
     di << " redos :" << D->GetAvailableRedos();
     di << "\n";
-    // std::cout << "CURRENT :";
-    //     TCollection_AsciiString string;
-    //     TDF_Tool::Entry(D->CurrentLabel(),string);
-    //     std::cout << string;
-    //     std::cout << std::endl;
-    // modified
+
     di << "MODIFIED      : ";
     if (D->IsModified())
       di << "true";
@@ -359,11 +311,6 @@ static int DDocStd_DumpDocument(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=======================================================================
-// function : SetModified
-// purpose  : Set modifications in a document
-//=======================================================================
-
 static int DDocStd_SetModified(Draw_Interpretor& di, int n, const char** a)
 {
   if (n > 2)
@@ -383,35 +330,12 @@ static int DDocStd_SetModified(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=================================================================================================
-
-static int DDocStd_Propagate(Draw_Interpretor& di, int /*n*/, const char** /*a*/)
+static int DDocStd_Propagate(Draw_Interpretor& di, int, const char**)
 {
-  //   if (n == 2) {
-  //     occ::handle<TDocStd_Document> D;
-  //     if (!DDocStd::GetDocument(a[1],D)) return 1;
-  //     if (D->IsValid()) {
-  //       std::cout << "the document is valid" << std::endl;
-  //       return 0;
-  //     }
-  //     occ::handle<TDesign_Function> F;
-  //     if (!D->Main().FindAttribute(TDesign_Function::GetID(),F)) {
-  //       std::cout << "no function found at main" << std::endl;
-  //       return 0;
-  //     }
-  //     TFunction_Logbook mdf (true);
-  //     for (NCollection_Map<TDF_Label>::Iterator it (D->GetModified());it.More();it.Next()) {
-  //       mdf.SetTouched(it.Key());
-  //     }
-  //     F->Execute(mdf);
-  //     D->PurgeModified();
-  //     return 0;
-  //   }
+
   di << "DDocStd_Propagate : not implemented\n";
   return 1;
 }
-
-//=================================================================================================
 
 static int DDocStd_StoreTriangulation(Draw_Interpretor& theDi,
                                       int               theNbArgs,
@@ -439,7 +363,6 @@ static int DDocStd_StoreTriangulation(Draw_Interpretor& theDi,
     TCollection_AsciiString aParam(theArgVec[anArgIter]);
     aParam.LowerCase();
 
-    // toStore optional positional parameter
     int aParsedIntegerValue(0);
     if (anArgIter == 1 && Draw::ParseInteger(aParam.ToCString(), aParsedIntegerValue))
     {
@@ -472,8 +395,6 @@ static int DDocStd_StoreTriangulation(Draw_Interpretor& theDi,
   return 0;
 }
 
-//=================================================================================================
-
 void DDocStd::DocumentCommands(Draw_Interpretor& theCommands)
 {
 
@@ -484,11 +405,7 @@ void DDocStd::DocumentCommands(Draw_Interpretor& theCommands)
 
   const char* g = "DDocStd commands";
 
-  // Data Framework Access
-
   theCommands.Add("Main", "Main (DOC)", __FILE__, DDocStd_Main, g);
-
-  // DUMP
 
   theCommands.Add("Format", "Format (DOC, [format])", __FILE__, DDocStd_Format, g);
 
@@ -503,8 +420,6 @@ void DDocStd::DocumentCommands(Draw_Interpretor& theCommands)
                   DDocStd_StoreTriangulation,
                   g);
 
-  // XREF
-
   theCommands.Add("Copy", "Copy DOC entry XDOC xentry", __FILE__, DDocStd_Copy, g);
 
   theCommands.Add("CopyWithLink",
@@ -514,8 +429,6 @@ void DDocStd::DocumentCommands(Draw_Interpretor& theCommands)
                   g);
 
   theCommands.Add("UpdateLink", "UpdateLink DOC [entry]", __FILE__, DDocStd_UpdateLink, g);
-
-  // UNDO/REDO
 
   theCommands.Add("UndoLimit",
                   "UndoLimit DOC (Value), return UndoLimit Undos Redos",
@@ -534,8 +447,6 @@ void DDocStd::DocumentCommands(Draw_Interpretor& theCommands)
   theCommands.Add("AbortCommand", "AbortCommand DOC", __FILE__, DDocStd_AbortCommand, g);
 
   theCommands.Add("CommitCommand", "CommitCommand DOC", __FILE__, DDocStd_CommitCommand, g);
-
-  // Modif and Propagation
 
   theCommands.Add("SetModified",
                   "SetModified DOC Label1 Label2 ....",

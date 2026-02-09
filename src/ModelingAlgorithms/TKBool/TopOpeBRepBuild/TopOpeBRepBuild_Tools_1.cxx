@@ -36,15 +36,11 @@ static bool Validate(const Adaptor3d_Curve& CRef,
                      const bool             SameParameter,
                      double&                aNewTolerance);
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Tools::CorrectTolerances(const TopoDS_Shape& aShape, const double aMaxTol)
 {
   TopOpeBRepBuild_Tools::CorrectPointOnCurve(aShape, aMaxTol);
   TopOpeBRepBuild_Tools::CorrectCurveOnSurface(aShape, aMaxTol);
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Tools::CorrectPointOnCurve(const TopoDS_Shape& S, const double aMaxTol)
 {
@@ -58,8 +54,6 @@ void TopOpeBRepBuild_Tools::CorrectPointOnCurve(const TopoDS_Shape& S, const dou
     CheckEdge(E, aMaxTol);
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Tools::CorrectCurveOnSurface(const TopoDS_Shape& S, const double aMaxTol)
 {
@@ -82,14 +76,9 @@ void TopOpeBRepBuild_Tools::CorrectCurveOnSurface(const TopoDS_Shape& S, const d
   }
 }
 
-//=======================================================================
-// Function : CorrectEdgeTolerance
-// purpose :  Correct tolerances for Edge
-//=======================================================================
 void CorrectEdgeTolerance(const TopoDS_Edge& myShape, const TopoDS_Face& S, const double aMaxTol)
 {
-  //
-  // 1. Minimum of conditions to Perform
+
   occ::handle<BRep_CurveRepresentation> myCref;
   occ::handle<Adaptor3d_Curve>          myHCurve;
 
@@ -126,11 +115,11 @@ void CorrectEdgeTolerance(const TopoDS_Edge& myShape, const TopoDS_Face& S, cons
 
   if (unique == 0)
   {
-    return; //...No3DCurve
+    return;
   }
   if (unique > 1)
   {
-    return; //...Multiple3DCurve;
+    return;
   }
 
   if (myCref.IsNull() && !Degenerated)
@@ -150,7 +139,7 @@ void CorrectEdgeTolerance(const TopoDS_Edge& myShape, const TopoDS_Face& S, cons
 
   else if (!myCref.IsNull() && Degenerated)
   {
-    return; //...InvalidDegeneratedFlag;
+    return;
   }
 
   if (!myCref.IsNull())
@@ -161,7 +150,7 @@ void CorrectEdgeTolerance(const TopoDS_Edge& myShape, const TopoDS_Face& S, cons
     if (Last <= First)
     {
       myCref.Nullify();
-      return; // InvalidRange;
+      return;
     }
 
     else
@@ -174,7 +163,7 @@ void CorrectEdgeTolerance(const TopoDS_Edge& myShape, const TopoDS_Face& S, cons
         myHCurve = new GeomAdaptor_Curve(GAC3d);
       }
       else
-      { // curve on surface
+      {
         occ::handle<Geom_Surface> Sref = myCref->Surface();
         Sref = occ::down_cast<Geom_Surface>(Sref->Transformed(myCref->Location().Transformation()));
         const occ::handle<Geom2d_Curve>& PCref   = myCref->PCurve();
@@ -186,8 +175,6 @@ void CorrectEdgeTolerance(const TopoDS_Edge& myShape, const TopoDS_Face& S, cons
     }
   }
 
-  //===============================================
-  // 2. Tolerances in InContext
   {
     if (myCref.IsNull())
       return;
@@ -218,7 +205,7 @@ void CorrectEdgeTolerance(const TopoDS_Edge& myShape, const TopoDS_Face& S, cons
         GC->Range(f, l);
         if (SameRange && (f != First || l != Last))
         {
-          return; // BRepCheck_InvalidSameRangeFlag;
+          return;
         }
 
         occ::handle<Geom_Surface> Sb = cr->Surface();
@@ -230,15 +217,15 @@ void CorrectEdgeTolerance(const TopoDS_Edge& myShape, const TopoDS_Face& S, cons
         ok = Validate(*myHCurve, ACS, Tol, SameParameter, aNewTol);
         if (ok)
         {
-          // printf("(Edge,1) Tolerance=%15.10lg\n", aNewTol);
+
           if (aNewTol < aMaxTol)
             TE->UpdateTolerance(aNewTol);
         }
         if (cr->IsCurveOnClosedSurface())
         {
-          // checkclosed = true;
-          GHPC->Load(cr->PCurve2(), f, l); // same bounds
-          ACS.Load(GHPC, GAHS);            // sans doute inutile
+
+          GHPC->Load(cr->PCurve2(), f, l);
+          ACS.Load(GHPC, GAHS);
           ok = Validate(*myHCurve, ACS, Tol, SameParameter, aNewTol);
           if (ok)
           {
@@ -264,16 +251,15 @@ void CorrectEdgeTolerance(const TopoDS_Edge& myShape, const TopoDS_Face& S, cons
         P = occ::down_cast<Geom_Plane>(Su);
       }
       if (P.IsNull())
-      {         // not a plane
-        return; // BRepCheck::Add(lst,BRepCheck_NoCurveOnSurface);
+      {
+        return;
       }
       else
-      { // on fait la projection a la volee, comme BRep_Tool
+      {
         P = occ::down_cast<Geom_Plane>(P->Transformed(L.Transformation()));
-        // on projette Cref sur ce plan
+
         occ::handle<GeomAdaptor_Surface> GAHS = new GeomAdaptor_Surface(P);
 
-        // Dub - Normalement myHCurve est une GeomAdaptor_Curve
         occ::handle<GeomAdaptor_Curve> Gac = occ::down_cast<GeomAdaptor_Curve>(myHCurve);
         occ::handle<Geom_Curve>        C3d = Gac->Curve();
         occ::handle<Geom_Curve>        ProjOnPlane =
@@ -291,20 +277,18 @@ void CorrectEdgeTolerance(const TopoDS_Edge& myShape, const TopoDS_Face& S, cons
 
         Adaptor3d_CurveOnSurface ACS(GHPC, GAHS);
 
-        ok = Validate(*myHCurve, ACS, Tol, true, aNewTol); // voir dub...
+        ok = Validate(*myHCurve, ACS, Tol, true, aNewTol);
         if (ok)
         {
           if (aNewTol < aMaxTol)
             TE->UpdateTolerance(aNewTol);
         }
       }
-    } // end of if (!pcurvefound) {
-  } // end of  2. Tolerances in InContext
+    }
+  }
 }
 
 #define NCONTROL 23
-
-//=================================================================================================
 
 bool Validate(const Adaptor3d_Curve& CRef,
               const Adaptor3d_Curve& Other,
@@ -322,8 +306,7 @@ bool Validate(const Adaptor3d_Curve& CRef,
 
   bool aFlag = false;
   bool proj  = (!SameParameter || First != Other.FirstParameter() || Last != Other.LastParameter());
-  //
-  // 1.
+
   if (!proj)
   {
     for (i = 0; i < NCONTROL; i++)
@@ -342,8 +325,6 @@ bool Validate(const Adaptor3d_Curve& CRef,
     }
   }
 
-  //
-  // 2.
   else
   {
     Extrema_LocateExtPC refd, otherd;
@@ -421,10 +402,6 @@ bool Validate(const Adaptor3d_Curve& CRef,
   return aFlag;
 }
 
-//=======================================================================
-// Function : CheckEdge
-// purpose :  Correct tolerances for Vertices on Edge
-//=======================================================================
 void CheckEdge(const TopoDS_Edge& Ed, const double aMaxTol)
 {
   TopoDS_Edge E = Ed;
@@ -509,8 +486,6 @@ void CheckEdge(const TopoDS_Edge& Ed, const double aMaxTol)
     }
   }
 }
-
-//=================================================================================================
 
 bool TopOpeBRepBuild_Tools::CheckFaceClosed2d(const TopoDS_Face& theFace)
 {

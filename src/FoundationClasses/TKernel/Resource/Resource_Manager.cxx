@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Resource_Manager.hpp>
 
@@ -35,7 +23,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Resource_Manager, Standard_Transient)
 
-//! Auxiliary enumeration for function WhatKindOfLine().
 enum Resource_KindOfLine
 {
   Resource_KOL_End,
@@ -52,8 +39,6 @@ static Resource_KindOfLine WhatKindOfLine(OSD_File&                aFile,
 static int GetLine(OSD_File& aFile, TCollection_AsciiString& aLine);
 
 static bool Debug;
-
-//=================================================================================================
 
 Resource_Manager::Resource_Manager(const TCollection_AsciiString& theName,
                                    const TCollection_AsciiString& theDefaultsDirectory,
@@ -131,16 +116,12 @@ Resource_Manager::Resource_Manager(const char* aName, const bool Verbose)
               << "UserDefaults\" not set." << std::endl;
 }
 
-//=================================================================================================
-
 Resource_Manager::Resource_Manager()
     : myName(""),
       myVerbose(false),
       myInitialized(false)
 {
 }
-
-//=================================================================================================
 
 void Resource_Manager::Load(
   const TCollection_AsciiString&                                         thePath,
@@ -250,8 +231,6 @@ static Resource_KindOfLine WhatKindOfLine(OSD_File&                aFile,
   return Resource_KOL_Resource;
 }
 
-// Retourne 0 (EOF) ou une ligne toujours terminee par <NL>.
-
 static int GetLine(OSD_File& aFile, TCollection_AsciiString& aLine)
 {
   TCollection_AsciiString Buffer;
@@ -275,11 +254,6 @@ static int GetLine(OSD_File& aFile, TCollection_AsciiString& aLine)
   return 1;
 }
 
-//=======================================================================
-// function : Save
-// purpose  : Sort and save the user resources in the user file.
-//           Creates the file if it does not exist.
-//=======================================================================
 bool Resource_Manager::Save() const
 {
   TCollection_AsciiString anEnvVar("CSF_");
@@ -394,11 +368,6 @@ bool Resource_Manager::Save() const
   return true;
 }
 
-//=======================================================================
-// function : Integer
-// purpose  : Gets the value of an integer resource
-//=======================================================================
-
 int Resource_Manager::Integer(const char* aResourceName) const
 {
   TCollection_AsciiString Result = Value(aResourceName);
@@ -411,11 +380,6 @@ int Resource_Manager::Integer(const char* aResourceName) const
   }
   return Result.IntegerValue();
 }
-
-//=======================================================================
-// function : Real
-// purpose  : Gets the value of a real resource
-//=======================================================================
 
 double Resource_Manager::Real(const char* aResourceName) const
 {
@@ -430,11 +394,6 @@ double Resource_Manager::Real(const char* aResourceName) const
   return Result.RealValue();
 }
 
-//=======================================================================
-// function : Value
-// purpose  : Gets the value of a CString resource
-//=======================================================================
-
 const char* Resource_Manager::Value(const char* aResource) const
 {
   TCollection_AsciiString Resource(aResource);
@@ -444,11 +403,6 @@ const char* Resource_Manager::Value(const char* aResource) const
     return myRefMap(Resource).ToCString();
   throw Resource_NoSuchResource(aResource);
 }
-
-//=======================================================================
-// function : ExtValue
-// purpose  : Gets the value of a ExtString resource
-//=======================================================================
 
 const char16_t* Resource_Manager::ExtValue(const char* aResource)
 {
@@ -465,31 +419,16 @@ const char16_t* Resource_Manager::ExtValue(const char* aResource)
   return myExtStrMap(Resource).ToExtString();
 }
 
-//=======================================================================
-// function : SetResource
-// purpose  : Sets the new value of an integer resource.
-//           If the resource does not exist, it is created.
-//=======================================================================
 void Resource_Manager::SetResource(const char* aResourceName, const int aValue)
 {
   SetResource(aResourceName, TCollection_AsciiString(aValue).ToCString());
 }
 
-//=======================================================================
-// function : SetResource
-// purpose  : Sets the new value of a real resource.
-//           If the resource does not exist, it is created.
-//=======================================================================
 void Resource_Manager::SetResource(const char* aResourceName, const double aValue)
 {
   SetResource(aResourceName, TCollection_AsciiString(aValue).ToCString());
 }
 
-//=======================================================================
-// function : SetResource
-// purpose  : Sets the new value of ExtString resource.
-//           If the resource does not exist, it is created.
-//=======================================================================
 void Resource_Manager::SetResource(const char* aResource, const char16_t* aValue)
 {
   Standard_PCharacter        pStr;
@@ -501,20 +440,13 @@ void Resource_Manager::SetResource(const char* aResource, const char16_t* aValue
   {
     myExtStrMap(Resource) = ExtValue;
   }
-  //
+
   pStr = (Standard_PCharacter)FormatStr.ToCString();
-  //
-  Resource_Unicode::ConvertUnicodeToFormat(ExtValue,
-                                           pStr, // FormatStr.ToCString(),
-                                           FormatStr.Length());
+
+  Resource_Unicode::ConvertUnicodeToFormat(ExtValue, pStr, FormatStr.Length());
   SetResource(aResource, FormatStr.ToCString());
 }
 
-//=======================================================================
-// function : SetResource
-// purpose  : Sets the new value of an enum resource.
-//           If the resource does not exist, it is created.
-//=======================================================================
 void Resource_Manager::SetResource(const char* aResource, const char* aValue)
 {
   TCollection_AsciiString Resource = aResource;
@@ -523,25 +455,17 @@ void Resource_Manager::SetResource(const char* aResource, const char* aValue)
     myUserMap(Resource) = Value;
 }
 
-//=======================================================================
-// function : Find
-// purpose  : Tells if a resource exits.
-//=======================================================================
 bool Resource_Manager::Find(const char* aResource) const
 {
   TCollection_AsciiString Resource(aResource);
   return myUserMap.IsBound(Resource) || myRefMap.IsBound(Resource);
 }
 
-//=================================================================================================
-
 bool Resource_Manager::Find(const TCollection_AsciiString& theResource,
                             TCollection_AsciiString&       theValue) const
 {
   return myUserMap.Find(theResource, theValue) || myRefMap.Find(theResource, theValue);
 }
-
-//=================================================================================================
 
 void Resource_Manager::GetResourcePath(TCollection_AsciiString& aPath,
                                        const char*              aName,
@@ -572,8 +496,6 @@ void Resource_Manager::GetResourcePath(TCollection_AsciiString& aPath,
 
   anOSDPath.SystemName(aPath);
 }
-
-//=================================================================================================
 
 NCollection_DataMap<TCollection_AsciiString, TCollection_AsciiString>& Resource_Manager::GetMap(
   bool theRefMap)

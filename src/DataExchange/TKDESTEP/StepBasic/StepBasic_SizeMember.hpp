@@ -5,8 +5,6 @@
 
 #include <StepData_SelectReal.hpp>
 
-//! For immediate members of SizeSelect, i.e. :
-//! ParameterValue (a Real)
 class StepBasic_SizeMember : public StepData_SelectReal
 {
 

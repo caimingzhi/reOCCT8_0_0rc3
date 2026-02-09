@@ -13,7 +13,6 @@ class ShapeUpgrade_SplitCurve2d;
 class Geom_Curve;
 class Geom2d_Curve;
 
-// resolve name collisions with X11 headers
 #ifdef Status
   #undef Status
 #endif
@@ -32,19 +31,12 @@ public:
                                       double&                    First,
                                       double&                    Last);
 
-  //! Sets the tool for splitting 3D curves.
   Standard_EXPORT void SetSplitCurve3dTool(
     const occ::handle<ShapeUpgrade_SplitCurve3d>& splitCurve3dTool);
 
-  //! Sets the tool for splitting pcurves.
   Standard_EXPORT void SetSplitCurve2dTool(
     const occ::handle<ShapeUpgrade_SplitCurve2d>& splitCurve2dTool);
 
-  //! Queries the status of last call to Perform
-  //! OK   :
-  //! DONE1:
-  //! DONE2:
-  //! FAIL1:
   Standard_EXPORT bool Status(const ShapeExtend_Status status) const;
 
   DEFINE_STANDARD_RTTIEXT(ShapeUpgrade_FixSmallCurves, ShapeUpgrade_Tool)
@@ -52,7 +44,6 @@ public:
 protected:
   Standard_EXPORT virtual occ::handle<ShapeUpgrade_SplitCurve3d> GetSplitCurve3dTool() const;
 
-  //! Returns the tool for splitting pcurves.
   Standard_EXPORT virtual occ::handle<ShapeUpgrade_SplitCurve2d> GetSplitCurve2dTool() const;
 
   int                                    myStatus;

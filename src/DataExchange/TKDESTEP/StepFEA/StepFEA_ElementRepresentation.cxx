@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_ElementRepresentation, StepRepr_Representation)
 
-//=================================================================================================
-
 StepFEA_ElementRepresentation::StepFEA_ElementRepresentation() = default;
-
-//=================================================================================================
 
 void StepFEA_ElementRepresentation::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentation_Name,
@@ -24,15 +20,11 @@ void StepFEA_ElementRepresentation::Init(
   theNodeList = aNodeList;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<occ::handle<StepFEA_NodeRepresentation>>>
   StepFEA_ElementRepresentation::NodeList() const
 {
   return theNodeList;
 }
-
-//=================================================================================================
 
 void StepFEA_ElementRepresentation::SetNodeList(
   const occ::handle<NCollection_HArray1<occ::handle<StepFEA_NodeRepresentation>>>& aNodeList)

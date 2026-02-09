@@ -19,28 +19,26 @@
 IGESSolid_ToolConeFrustum::IGESSolid_ToolConeFrustum() = default;
 
 void IGESSolid_ToolConeFrustum::ReadOwnParams(const occ::handle<IGESSolid_ConeFrustum>& ent,
-                                              const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                              const occ::handle<IGESData_IGESReaderData>&,
                                               IGESData_ParamReader& PR) const
 {
   double tempHeight, tempR1, tempR2, tempreal;
   gp_XYZ tempCenter, tempAxis;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  PR.ReadReal(PR.Current(), "Height", tempHeight); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Height", tempHeight);
 
-  PR.ReadReal(PR.Current(), "Larger face radius", tempR1); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Larger face radius", tempR1);
 
   if (PR.DefinedElseSkip())
-    // clang-format off
-    PR.ReadReal(PR.Current(), "Smaller face radius", tempR2); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+
+    PR.ReadReal(PR.Current(), "Smaller face radius", tempR2);
+
   else
     tempR2 = 0.0;
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Face center (X)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Face center (X)", tempreal))
       tempCenter.SetX(tempreal);
   }
@@ -49,8 +47,7 @@ void IGESSolid_ToolConeFrustum::ReadOwnParams(const occ::handle<IGESSolid_ConeFr
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Face center (Y)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Face center (Y)", tempreal))
       tempCenter.SetY(tempreal);
   }
@@ -59,8 +56,7 @@ void IGESSolid_ToolConeFrustum::ReadOwnParams(const occ::handle<IGESSolid_ConeFr
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Face center (Z)", tempreal); //szv#4:S4163:12Mar99 moved in
-    // if
+
     if (PR.ReadReal(PR.Current(), "Face center (Z)", tempreal))
       tempCenter.SetZ(tempreal);
   }
@@ -69,8 +65,7 @@ void IGESSolid_ToolConeFrustum::ReadOwnParams(const occ::handle<IGESSolid_ConeFr
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Axis direction (I)", tempreal); //szv#4:S4163:12Mar99 moved
-    // in if
+
     if (PR.ReadReal(PR.Current(), "Axis direction (I)", tempreal))
       tempAxis.SetX(tempreal);
   }
@@ -79,8 +74,7 @@ void IGESSolid_ToolConeFrustum::ReadOwnParams(const occ::handle<IGESSolid_ConeFr
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Axis direction (J)", tempreal); //szv#4:S4163:12Mar99 moved
-    // in if
+
     if (PR.ReadReal(PR.Current(), "Axis direction (J)", tempreal))
       tempAxis.SetY(tempreal);
   }
@@ -89,8 +83,7 @@ void IGESSolid_ToolConeFrustum::ReadOwnParams(const occ::handle<IGESSolid_ConeFr
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Axis direction (K)", tempreal); //szv#4:S4163:12Mar99 moved
-    // in if
+
     if (PR.ReadReal(PR.Current(), "Axis direction (K)", tempreal))
       tempAxis.SetZ(tempreal);
   }
@@ -118,14 +111,14 @@ void IGESSolid_ToolConeFrustum::WriteOwnParams(const occ::handle<IGESSolid_ConeF
   IW.Send(ent->Axis().Z());
 }
 
-void IGESSolid_ToolConeFrustum::OwnShared(const occ::handle<IGESSolid_ConeFrustum>& /* ent */,
-                                          Interface_EntityIterator& /* iter */) const
+void IGESSolid_ToolConeFrustum::OwnShared(const occ::handle<IGESSolid_ConeFrustum>&,
+                                          Interface_EntityIterator&) const
 {
 }
 
 void IGESSolid_ToolConeFrustum::OwnCopy(const occ::handle<IGESSolid_ConeFrustum>& another,
                                         const occ::handle<IGESSolid_ConeFrustum>& ent,
-                                        Interface_CopyTool& /* TC */) const
+                                        Interface_CopyTool&) const
 {
   ent->Init(another->Height(),
             another->LargerRadius(),
@@ -135,7 +128,7 @@ void IGESSolid_ToolConeFrustum::OwnCopy(const occ::handle<IGESSolid_ConeFrustum>
 }
 
 IGESData_DirChecker IGESSolid_ToolConeFrustum::DirChecker(
-  const occ::handle<IGESSolid_ConeFrustum>& /* ent */) const
+  const occ::handle<IGESSolid_ConeFrustum>&) const
 {
   IGESData_DirChecker DC(156, 0);
 
@@ -163,7 +156,7 @@ void IGESSolid_ToolConeFrustum::OwnCheck(const occ::handle<IGESSolid_ConeFrustum
 }
 
 void IGESSolid_ToolConeFrustum::OwnDump(const occ::handle<IGESSolid_ConeFrustum>& ent,
-                                        const IGESData_IGESDumper& /* dumper */,
+                                        const IGESData_IGESDumper&,
                                         Standard_OStream& S,
                                         const int         level) const
 {

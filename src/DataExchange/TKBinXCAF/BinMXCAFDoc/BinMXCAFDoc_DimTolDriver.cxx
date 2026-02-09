@@ -8,26 +8,20 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_DimTolDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMXCAFDoc_DimTolDriver::BinMXCAFDoc_DimTolDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_DimTol)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMXCAFDoc_DimTolDriver::NewEmpty() const
 {
   return new XCAFDoc_DimTol();
 }
 
-//=================================================================================================
-
 bool BinMXCAFDoc_DimTolDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                      const occ::handle<TDF_Attribute>& theTarget,
-                                     BinObjMgt_RRelocationTable& /*theRelocTable*/) const
+                                     BinObjMgt_RRelocationTable&) const
 {
   occ::handle<XCAFDoc_DimTol> anAtt = occ::down_cast<XCAFDoc_DimTol>(theTarget);
   int                         aKind, aFirstInd, aLastInd;
@@ -52,12 +46,9 @@ bool BinMXCAFDoc_DimTolDriver::Paste(const BinObjMgt_Persistent&       theSource
   return true;
 }
 
-//=================================================================================================
-
-void BinMXCAFDoc_DimTolDriver::Paste(
-  const occ::handle<TDF_Attribute>& theSource,
-  BinObjMgt_Persistent&             theTarget,
-  NCollection_IndexedMap<occ::handle<Standard_Transient>>& /*theRelocTable*/) const
+void BinMXCAFDoc_DimTolDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
+                                     BinObjMgt_Persistent&             theTarget,
+                                     NCollection_IndexedMap<occ::handle<Standard_Transient>>&) const
 {
   occ::handle<XCAFDoc_DimTol> anAtt = occ::down_cast<XCAFDoc_DimTol>(theSource);
   theTarget << anAtt->GetKind();

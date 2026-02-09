@@ -5,15 +5,11 @@
 #include <iomanip>
 #include <fstream>
 
-//=================================================================================================
-
 HatchGen_Domain::HatchGen_Domain()
     : myHasFirstPoint(false),
       myHasSecondPoint(false)
 {
 }
-
-//=================================================================================================
 
 HatchGen_Domain::HatchGen_Domain(const HatchGen_PointOnHatching& P1,
                                  const HatchGen_PointOnHatching& P2)
@@ -23,8 +19,6 @@ HatchGen_Domain::HatchGen_Domain(const HatchGen_PointOnHatching& P1,
       mySecondPoint(P2)
 {
 }
-
-//=================================================================================================
 
 HatchGen_Domain::HatchGen_Domain(const HatchGen_PointOnHatching& P, const bool First)
 {
@@ -41,8 +35,6 @@ HatchGen_Domain::HatchGen_Domain(const HatchGen_PointOnHatching& P, const bool F
     mySecondPoint    = P;
   }
 }
-
-//=================================================================================================
 
 void HatchGen_Domain::Dump(const int Index) const
 {

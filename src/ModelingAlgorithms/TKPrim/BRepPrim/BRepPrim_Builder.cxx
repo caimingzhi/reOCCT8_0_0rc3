@@ -19,18 +19,12 @@
 #include <TopoDS_Vertex.hpp>
 #include <TopoDS_Wire.hpp>
 
-//=================================================================================================
-
 BRepPrim_Builder::BRepPrim_Builder() = default;
-
-//=================================================================================================
 
 BRepPrim_Builder::BRepPrim_Builder(const BRep_Builder& B)
     : myBuilder(B)
 {
 }
-
-//=================================================================================================
 
 void BRepPrim_Builder::MakeShell(TopoDS_Shell& S) const
 {
@@ -38,21 +32,15 @@ void BRepPrim_Builder::MakeShell(TopoDS_Shell& S) const
   S.Closed(true);
 }
 
-//=================================================================================================
-
 void BRepPrim_Builder::MakeFace(TopoDS_Face& F, const gp_Pln& P) const
 {
   myBuilder.MakeFace(F, new Geom_Plane(P), Precision::Confusion());
 }
 
-//=================================================================================================
-
 void BRepPrim_Builder::MakeWire(TopoDS_Wire& W) const
 {
   myBuilder.MakeWire(W);
 }
-
-//=================================================================================================
 
 void BRepPrim_Builder::MakeDegeneratedEdge(TopoDS_Edge& E) const
 {
@@ -60,28 +48,20 @@ void BRepPrim_Builder::MakeDegeneratedEdge(TopoDS_Edge& E) const
   myBuilder.Degenerated(E, true);
 }
 
-//=================================================================================================
-
 void BRepPrim_Builder::MakeEdge(TopoDS_Edge& E, const gp_Lin& L) const
 {
   myBuilder.MakeEdge(E, new Geom_Line(L), Precision::Confusion());
 }
-
-//=================================================================================================
 
 void BRepPrim_Builder::MakeEdge(TopoDS_Edge& E, const gp_Circ& C) const
 {
   myBuilder.MakeEdge(E, new Geom_Circle(C), Precision::Confusion());
 }
 
-//=================================================================================================
-
 void BRepPrim_Builder::SetPCurve(TopoDS_Edge& E, const TopoDS_Face& F, const gp_Lin2d& L) const
 {
   myBuilder.UpdateEdge(E, new Geom2d_Line(L), F, Precision::Confusion());
 }
-
-//=================================================================================================
 
 void BRepPrim_Builder::SetPCurve(TopoDS_Edge&       E,
                                  const TopoDS_Face& F,
@@ -94,38 +74,24 @@ void BRepPrim_Builder::SetPCurve(TopoDS_Edge&       E,
                        new Geom2d_Line(L2),
                        F,
                        Precision::Confusion());
-  //  myBuilder.UpdateEdge(TopoDS::Edge(E.Oriented(TopAbs_FORWARD)),
-  //		       new Geom2d_Line(L1),
-  //		       new Geom2d_Line(L2),
-  //		       F,Precision::Confusion());
+
   myBuilder.Continuity(E, F, F, GeomAbs_CN);
 }
-
-//=================================================================================================
 
 void BRepPrim_Builder::SetPCurve(TopoDS_Edge& E, const TopoDS_Face& F, const gp_Circ2d& C) const
 {
   myBuilder.UpdateEdge(E, new Geom2d_Circle(C), F, Precision::Confusion());
 }
 
-//=================================================================================================
-
 void BRepPrim_Builder::MakeVertex(TopoDS_Vertex& V, const gp_Pnt& P) const
 {
   myBuilder.MakeVertex(V, P, Precision::Confusion());
 }
 
-//=================================================================================================
-
 void BRepPrim_Builder::ReverseFace(TopoDS_Face& F) const
 {
   F.Reverse();
 }
-
-//=======================================================================
-// function : AddEdgeVertex
-// purpose  : Add a Vertex to an Edge
-//=======================================================================
 
 void BRepPrim_Builder::AddEdgeVertex(TopoDS_Edge&         E,
                                      const TopoDS_Vertex& V,
@@ -138,11 +104,6 @@ void BRepPrim_Builder::AddEdgeVertex(TopoDS_Edge&         E,
   myBuilder.Add(E, VV);
   myBuilder.UpdateVertex(VV, P, E, Precision::Confusion());
 }
-
-//=======================================================================
-// function : AddEdgeVertex
-// purpose  : Add a Vertex to an Edge
-//=======================================================================
 
 void BRepPrim_Builder::AddEdgeVertex(TopoDS_Edge&         E,
                                      const TopoDS_Vertex& V,
@@ -157,8 +118,6 @@ void BRepPrim_Builder::AddEdgeVertex(TopoDS_Edge&         E,
   myBuilder.Range(E, P1, P2);
 }
 
-//=================================================================================================
-
 void BRepPrim_Builder::SetParameters(TopoDS_Edge& E,
                                      const TopoDS_Vertex&,
                                      const double P1,
@@ -166,8 +125,6 @@ void BRepPrim_Builder::SetParameters(TopoDS_Edge& E,
 {
   myBuilder.Range(E, P1, P2);
 }
-
-//=================================================================================================
 
 void BRepPrim_Builder::AddWireEdge(TopoDS_Wire& W, const TopoDS_Edge& E, const bool direct) const
 {
@@ -177,28 +134,20 @@ void BRepPrim_Builder::AddWireEdge(TopoDS_Wire& W, const TopoDS_Edge& E, const b
   myBuilder.Add(W, EE);
 }
 
-//=================================================================================================
-
 void BRepPrim_Builder::AddFaceWire(TopoDS_Face& F, const TopoDS_Wire& W) const
 {
   myBuilder.Add(F, W);
 }
-
-//=================================================================================================
 
 void BRepPrim_Builder::AddShellFace(TopoDS_Shell& S, const TopoDS_Face& F) const
 {
   myBuilder.Add(S, F);
 }
 
-//=================================================================================================
-
 void BRepPrim_Builder::CompleteEdge(TopoDS_Edge& E) const
 {
   BRepTools::Update(E);
 }
-
-//=================================================================================================
 
 void BRepPrim_Builder::CompleteWire(TopoDS_Wire& W) const
 {
@@ -206,14 +155,10 @@ void BRepPrim_Builder::CompleteWire(TopoDS_Wire& W) const
   BRepTools::Update(W);
 }
 
-//=================================================================================================
-
 void BRepPrim_Builder::CompleteFace(TopoDS_Face& F) const
 {
   BRepTools::Update(F);
 }
-
-//=================================================================================================
 
 void BRepPrim_Builder::CompleteShell(TopoDS_Shell& S) const
 {

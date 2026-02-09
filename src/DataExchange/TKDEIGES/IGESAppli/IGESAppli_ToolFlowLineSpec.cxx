@@ -17,10 +17,10 @@
 IGESAppli_ToolFlowLineSpec::IGESAppli_ToolFlowLineSpec() = default;
 
 void IGESAppli_ToolFlowLineSpec::ReadOwnParams(const occ::handle<IGESAppli_FlowLineSpec>& ent,
-                                               const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                               const occ::handle<IGESData_IGESReaderData>&,
                                                IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   int                                                                     num;
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> tempNameAndModifiers;
   if (!PR.ReadInteger(PR.Current(), "Number of property values", num))
@@ -29,7 +29,7 @@ void IGESAppli_ToolFlowLineSpec::ReadOwnParams(const occ::handle<IGESAppli_FlowL
     tempNameAndModifiers = new NCollection_HArray1<occ::handle<TCollection_HAsciiString>>(1, num);
   else
     PR.AddFail("Number of property values: Not Positive");
-  // szv#4:S4163:12Mar99 `st=` not needed
+
   if (!tempNameAndModifiers.IsNull())
     PR.ReadTexts(PR.CurrentList(num), "Name and Modifiers", tempNameAndModifiers);
 
@@ -46,14 +46,14 @@ void IGESAppli_ToolFlowLineSpec::WriteOwnParams(const occ::handle<IGESAppli_Flow
     IW.Send(ent->Modifier(i));
 }
 
-void IGESAppli_ToolFlowLineSpec::OwnShared(const occ::handle<IGESAppli_FlowLineSpec>& /* ent */,
-                                           Interface_EntityIterator& /* iter */) const
+void IGESAppli_ToolFlowLineSpec::OwnShared(const occ::handle<IGESAppli_FlowLineSpec>&,
+                                           Interface_EntityIterator&) const
 {
 }
 
 void IGESAppli_ToolFlowLineSpec::OwnCopy(const occ::handle<IGESAppli_FlowLineSpec>& another,
                                          const occ::handle<IGESAppli_FlowLineSpec>& ent,
-                                         Interface_CopyTool& /* TC */) const
+                                         Interface_CopyTool&) const
 {
   int num = another->NbPropertyValues();
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> tempNameAndModifiers =
@@ -64,7 +64,7 @@ void IGESAppli_ToolFlowLineSpec::OwnCopy(const occ::handle<IGESAppli_FlowLineSpe
 }
 
 IGESData_DirChecker IGESAppli_ToolFlowLineSpec::DirChecker(
-  const occ::handle<IGESAppli_FlowLineSpec>& /* ent */) const
+  const occ::handle<IGESAppli_FlowLineSpec>&) const
 {
   IGESData_DirChecker DC(406, 14);
   DC.Structure(IGESData_DefVoid);
@@ -78,14 +78,14 @@ IGESData_DirChecker IGESAppli_ToolFlowLineSpec::DirChecker(
   return DC;
 }
 
-void IGESAppli_ToolFlowLineSpec::OwnCheck(const occ::handle<IGESAppli_FlowLineSpec>& /* ent */,
+void IGESAppli_ToolFlowLineSpec::OwnCheck(const occ::handle<IGESAppli_FlowLineSpec>&,
                                           const Interface_ShareTool&,
-                                          occ::handle<Interface_Check>& /* ach */) const
+                                          occ::handle<Interface_Check>&) const
 {
 }
 
 void IGESAppli_ToolFlowLineSpec::OwnDump(const occ::handle<IGESAppli_FlowLineSpec>& ent,
-                                         const IGESData_IGESDumper& /* dumper */,
+                                         const IGESData_IGESDumper&,
                                          Standard_OStream& S,
                                          const int         level) const
 {

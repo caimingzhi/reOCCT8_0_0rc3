@@ -12,7 +12,6 @@ class StepBasic_SiUnitAndThermodynamicTemperatureUnit : public StepBasic_SiUnit
 {
 
 public:
-  //! Returns a SiUnitAndThermodynamicTemperatureUnit
   Standard_EXPORT StepBasic_SiUnitAndThermodynamicTemperatureUnit();
 
   Standard_EXPORT void Init(const bool                 hasAprefix,

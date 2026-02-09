@@ -26,8 +26,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_MaxRadiusDimension, PrsDim_EllipseRadiusDimension)
 
-//=================================================================================================
-
 PrsDim_MaxRadiusDimension::PrsDim_MaxRadiusDimension(const TopoDS_Shape&               aShape,
                                                      const double                      aVal,
                                                      const TCollection_ExtendedString& aText)
@@ -38,8 +36,6 @@ PrsDim_MaxRadiusDimension::PrsDim_MaxRadiusDimension(const TopoDS_Shape&        
   myAutomaticPosition = true;
   myArrowSize         = myVal / 100.;
 }
-
-//=================================================================================================
 
 PrsDim_MaxRadiusDimension::PrsDim_MaxRadiusDimension(const TopoDS_Shape&               aShape,
                                                      const double                      aVal,
@@ -56,14 +52,12 @@ PrsDim_MaxRadiusDimension::PrsDim_MaxRadiusDimension(const TopoDS_Shape&        
   SetArrowSize(anArrowSize);
 }
 
-//=================================================================================================
-
 void PrsDim_MaxRadiusDimension::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                         const occ::handle<Prs3d_Presentation>& aPresentation,
                                         const int)
 {
-  //  if( myAutomaticPosition )
-  { // ota : recompute in any case
+
+  {
     ComputeGeometry();
     myEllipse.SetMajorRadius(myVal);
     gp_Vec v1(myEllipse.XAxis().Direction());
@@ -77,22 +71,19 @@ void PrsDim_MaxRadiusDimension::Compute(const occ::handle<PrsMgr_PresentationMan
     ComputeEllipse(aPresentation);
 }
 
-//=================================================================================================
-
 void PrsDim_MaxRadiusDimension::ComputeEllipse(const occ::handle<Prs3d_Presentation>& aPresentation)
 {
 
   occ::handle<Prs3d_DimensionAspect> la  = myDrawer->DimensionAspect();
   occ::handle<Prs3d_ArrowAspect>     arr = la->ArrowAspect();
 
-  // size
   if (!myArrowSizeIsDefined)
   {
     myArrowSize = std::min(myArrowSize, myVal / 5.);
   }
   arr->SetLength(myArrowSize);
 
-  double U; //,V;
+  double U;
   gp_Pnt curPos, Center;
   Center = myEllipse.Location();
   if (myAutomaticPosition)
@@ -106,7 +97,7 @@ void PrsDim_MaxRadiusDimension::ComputeEllipse(const occ::handle<Prs3d_Presentat
         PrsDim::TranslatePointToBound(myPosition, gp_Dir(gp_Vec(Center, myPosition)), myBndBox);
     curPos = myPosition;
   }
-  else //! AutomaticPosition
+  else
   {
     curPos = myPosition;
     gp_Lin L1(myEllipse.XAxis());
@@ -118,7 +109,6 @@ void PrsDim_MaxRadiusDimension::ComputeEllipse(const occ::handle<Prs3d_Presentat
       myEndOfArrow = myApexN;
   }
 
-  // Presenatation
   DsgPrs_EllipseRadiusPresentation::Add(aPresentation,
                                         myDrawer,
                                         myVal,
@@ -130,8 +120,6 @@ void PrsDim_MaxRadiusDimension::ComputeEllipse(const occ::handle<Prs3d_Presentat
                                         mySymbolPrs);
 }
 
-//=================================================================================================
-
 void PrsDim_MaxRadiusDimension::ComputeArcOfEllipse(
   const occ::handle<Prs3d_Presentation>& aPresentation)
 {
@@ -139,7 +127,6 @@ void PrsDim_MaxRadiusDimension::ComputeArcOfEllipse(
   occ::handle<Prs3d_DimensionAspect> la  = myDrawer->DimensionAspect();
   occ::handle<Prs3d_ArrowAspect>     arr = la->ArrowAspect();
 
-  // size
   if (!myArrowSizeIsDefined)
   {
     myArrowSize = std::min(myArrowSize, myVal / 5.);
@@ -161,11 +148,10 @@ void PrsDim_MaxRadiusDimension::ComputeArcOfEllipse(
         PrsDim::TranslatePointToBound(myPosition, gp_Dir(gp_Vec(Center, myPosition)), myBndBox);
     curPos = myPosition;
   }
-  else //! AutomaticPosition
+  else
   {
     curPos = myPosition;
-    //      ElSLib::Parameters ( myPlane->Pln(), curPos, U, V );
-    //      curPos = ElSLib::Value (U, V, myPlane->Pln());
+
     gp_Lin L1(myEllipse.XAxis());
     par    = ElCLib::Parameter(L1, curPos);
     curPos = ElCLib::Value(par, L1);
@@ -178,7 +164,6 @@ void PrsDim_MaxRadiusDimension::ComputeArcOfEllipse(
     myPosition = curPos;
   }
 
-  //  double parEnd = ElCLib::Parameter ( myEllipse, myEndOfArrow );
   double parStart = 0.;
   if (!IsInDomain)
   {
@@ -216,17 +201,15 @@ void PrsDim_MaxRadiusDimension::ComputeArcOfEllipse(
                                           mySymbolPrs);
 }
 
-//=================================================================================================
-
 void PrsDim_MaxRadiusDimension::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSelection,
-                                                 const int /*aMode*/)
+                                                 const int)
 {
 
   gp_Pnt center          = myEllipse.Location();
   gp_Pnt AttachmentPoint = myPosition;
   double dist            = center.Distance(AttachmentPoint);
   double aRadius         = myVal;
-  // double inside  = false;
+
   gp_Pnt pt1;
   if (dist > aRadius)
     pt1 = AttachmentPoint;
@@ -236,7 +219,6 @@ void PrsDim_MaxRadiusDimension::ComputeSelection(const occ::handle<SelectMgr_Sel
   occ::handle<Select3D_SensitiveSegment> seg = new Select3D_SensitiveSegment(own, center, pt1);
   aSelection->Add(seg);
 
-  // Text
   double                             size(std::min(myVal / 100. + 1.e-6, myArrowSize + 1.e-6));
   occ::handle<Select3D_SensitiveBox> box = new Select3D_SensitiveBox(own,
                                                                      AttachmentPoint.X(),
@@ -247,7 +229,6 @@ void PrsDim_MaxRadiusDimension::ComputeSelection(const occ::handle<SelectMgr_Sel
                                                                      AttachmentPoint.Z() + size);
   aSelection->Add(box);
 
-  // Arc of Ellipse
   if (myIsAnArc)
   {
 

@@ -7,14 +7,12 @@
 #include <SWDRAW_ShapeProcess.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 static int ApplySequence(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 4)
   {
     di << "Specify result, shape, resource name and prefix (optional)\n";
-    return 1 /* Error */;
+    return 1;
   }
   const char* arg1 = argv[1];
   const char* arg2 = argv[2];
@@ -26,7 +24,7 @@ static int ApplySequence(Draw_Interpretor& di, int argc, const char** argv)
   if (Shape.IsNull())
   {
     di << "Shape unknown : " << arg2 << "\n";
-    return 1 /* Error */;
+    return 1;
   }
 
   occ::handle<ShapeProcess_ShapeContext> context = new ShapeProcess_ShapeContext(Shape, arg3);
@@ -34,7 +32,7 @@ static int ApplySequence(Draw_Interpretor& di, int argc, const char** argv)
   context->PrintStatistics();
 
   TopoDS_Shape result = context->Result();
-  //  seq.PrintPreparationResult ();
+
   if (result.IsNull())
   {
     di << "No result\n";
@@ -47,8 +45,6 @@ static int ApplySequence(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 void SWDRAW_ShapeProcess::InitCommands(Draw_Interpretor& theCommands)
 {
   static bool initactor = false;
@@ -60,7 +56,7 @@ void SWDRAW_ShapeProcess::InitCommands(Draw_Interpretor& theCommands)
 
   ShapeProcess_OperLibrary::Init();
 
-  const char* g = SWDRAW::GroupName(); // "Tests of DivideTool";
+  const char* g = SWDRAW::GroupName();
 
   theCommands.Add("SPApply",
                   "SPApply result shape rscfilename [sequence]",

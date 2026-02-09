@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <math_NewtonMinimum.hpp>
 #include <math_MultipleVarFunctionWithHessian.hpp>
@@ -29,7 +18,6 @@
 namespace
 {
 
-  // Quadratic bowl function: f(x,y) = (x-1)^2 + 2*(y-2)^2, minimum at (1, 2) with value 0
   class QuadraticBowlWithHessian : public math_MultipleVarFunctionWithHessian
   {
   public:
@@ -64,7 +52,7 @@ namespace
     {
       Value(theX, theF);
       Gradient(theX, theG);
-      // Hessian matrix: [[2, 0], [0, 4]]
+
       theH(1, 1) = 2.0;
       theH(1, 2) = 0.0;
       theH(2, 1) = 0.0;
@@ -73,7 +61,6 @@ namespace
     }
   };
 
-  // Rosenbrock function: f(x,y) = (1-x)^2 + 100*(y-x^2)^2
   class RosenbrockWithHessian : public math_MultipleVarFunctionWithHessian
   {
   public:
@@ -116,7 +103,6 @@ namespace
       Value(theX, theF);
       Gradient(theX, theG);
 
-      // Hessian matrix computation
       theH(1, 1) = 2.0 + 1200.0 * x * x - 400.0 * (y - x * x);
       theH(1, 2) = -400.0 * x;
       theH(2, 1) = -400.0 * x;
@@ -125,7 +111,6 @@ namespace
     }
   };
 
-  // 3D quadratic function: f(x,y,z) = (x-1)^2 + 2*(y-2)^2 + 3*(z-3)^2
   class Quadratic3DWithHessian : public math_MultipleVarFunctionWithHessian
   {
   public:
@@ -163,7 +148,6 @@ namespace
       Value(theX, theF);
       Gradient(theX, theG);
 
-      // Diagonal Hessian matrix
       theH.Init(0.0);
       theH(1, 1) = 2.0;
       theH(2, 2) = 4.0;
@@ -172,7 +156,6 @@ namespace
     }
   };
 
-  // Non-convex function with saddle point: f(x,y) = x^2 - y^2
   class SaddleFunction : public math_MultipleVarFunctionWithHessian
   {
   public:
@@ -208,7 +191,6 @@ namespace
       Value(theX, theF);
       Gradient(theX, theG);
 
-      // Hessian matrix: [[2, 0], [0, -2]] (indefinite)
       theH(1, 1) = 2.0;
       theH(1, 2) = 0.0;
       theH(2, 1) = 0.0;
@@ -217,15 +199,15 @@ namespace
     }
   };
 
-} // anonymous namespace
+} // namespace
 
 TEST(MathNewtonMinimumTest, QuadraticBowlOptimization)
 {
-  // Test Newton minimum on simple quadratic bowl function
+
   QuadraticBowlWithHessian aFunc;
 
   math_Vector aStartPoint(1, 2);
-  aStartPoint(1) = 0.0; // Start at (0, 0)
+  aStartPoint(1) = 0.0;
   aStartPoint(2) = 0.0;
 
   math_NewtonMinimum aSolver(aFunc, 1.0e-10);
@@ -243,14 +225,14 @@ TEST(MathNewtonMinimumTest, QuadraticBowlOptimization)
 
 TEST(MathNewtonMinimumTest, RosenbrockOptimization)
 {
-  // Test Newton minimum on challenging Rosenbrock function
+
   RosenbrockWithHessian aFunc;
 
   math_Vector aStartPoint(1, 2);
-  aStartPoint(1) = 0.8; // Start closer to minimum
+  aStartPoint(1) = 0.8;
   aStartPoint(2) = 0.8;
 
-  math_NewtonMinimum aSolver(aFunc, 1.0e-6, 100); // More iterations for challenging function
+  math_NewtonMinimum aSolver(aFunc, 1.0e-6, 100);
   aSolver.Perform(aFunc, aStartPoint);
 
   EXPECT_TRUE(aSolver.IsDone()) << "Should find minimum for Rosenbrock function";
@@ -263,11 +245,11 @@ TEST(MathNewtonMinimumTest, RosenbrockOptimization)
 
 TEST(MathNewtonMinimumTest, ThreeDimensionalOptimization)
 {
-  // Test Newton minimum on 3D quadratic function
+
   Quadratic3DWithHessian aFunc;
 
   math_Vector aStartPoint(1, 3);
-  aStartPoint(1) = 0.0; // Start at (0, 0, 0)
+  aStartPoint(1) = 0.0;
   aStartPoint(2) = 0.0;
   aStartPoint(3) = 0.0;
 
@@ -285,7 +267,7 @@ TEST(MathNewtonMinimumTest, ThreeDimensionalOptimization)
 
 TEST(MathNewtonMinimumTest, BoundedOptimization)
 {
-  // Test Newton minimum with bounds
+
   QuadraticBowlWithHessian aFunc;
 
   math_Vector aStartPoint(1, 2);
@@ -317,14 +299,13 @@ TEST(MathNewtonMinimumTest, BoundedOptimization)
 
 TEST(MathNewtonMinimumTest, CustomTolerance)
 {
-  // Test with different tolerance values
+
   QuadraticBowlWithHessian aFunc;
 
   math_Vector aStartPoint(1, 2);
   aStartPoint(1) = 0.0;
   aStartPoint(2) = 0.0;
 
-  // Loose tolerance
   math_NewtonMinimum aSolver1(aFunc, 1.0e-3);
   aSolver1.Perform(aFunc, aStartPoint);
 
@@ -332,7 +313,6 @@ TEST(MathNewtonMinimumTest, CustomTolerance)
   EXPECT_NEAR(aSolver1.Location()(1), 1.0, 1.0e-2) << "Location should be approximately correct";
   EXPECT_NEAR(aSolver1.Location()(2), 2.0, 1.0e-2) << "Location should be approximately correct";
 
-  // Tight tolerance
   math_NewtonMinimum aSolver2(aFunc, 1.0e-12);
   aSolver2.Perform(aFunc, aStartPoint);
 
@@ -343,14 +323,13 @@ TEST(MathNewtonMinimumTest, CustomTolerance)
 
 TEST(MathNewtonMinimumTest, CustomIterationLimit)
 {
-  // Test with custom iteration limits
+
   RosenbrockWithHessian aFunc;
 
   math_Vector aStartPoint(1, 2);
   aStartPoint(1) = 0.8;
   aStartPoint(2) = 0.8;
 
-  // Few iterations
   math_NewtonMinimum aSolver1(aFunc, 1.0e-6, 5);
   aSolver1.Perform(aFunc, aStartPoint);
 
@@ -359,7 +338,6 @@ TEST(MathNewtonMinimumTest, CustomIterationLimit)
     EXPECT_LE(aSolver1.NbIterations(), 5) << "Should respect iteration limit";
   }
 
-  // Many iterations
   math_NewtonMinimum aSolver2(aFunc, 1.0e-8, 200);
   aSolver2.Perform(aFunc, aStartPoint);
 
@@ -368,7 +346,7 @@ TEST(MathNewtonMinimumTest, CustomIterationLimit)
 
 TEST(MathNewtonMinimumTest, GradientAccess)
 {
-  // Test gradient vector access
+
   QuadraticBowlWithHessian aFunc;
 
   math_Vector aStartPoint(1, 2);
@@ -384,7 +362,6 @@ TEST(MathNewtonMinimumTest, GradientAccess)
   EXPECT_NEAR(aGrad(1), 0.0, 1.0e-8) << "Gradient should be near zero at minimum";
   EXPECT_NEAR(aGrad(2), 0.0, 1.0e-8) << "Gradient should be near zero at minimum";
 
-  // Test gradient output method
   math_Vector aGradOut(1, 2);
   aSolver.Gradient(aGradOut);
   EXPECT_NEAR(aGradOut(1), 0.0, 1.0e-8) << "Output gradient should match";
@@ -393,7 +370,7 @@ TEST(MathNewtonMinimumTest, GradientAccess)
 
 TEST(MathNewtonMinimumTest, LocationAccess)
 {
-  // Test location vector access methods
+
   QuadraticBowlWithHessian aFunc;
 
   math_Vector aStartPoint(1, 2);
@@ -405,7 +382,6 @@ TEST(MathNewtonMinimumTest, LocationAccess)
 
   EXPECT_TRUE(aSolver.IsDone()) << "Should find minimum";
 
-  // Test location output method
   math_Vector aLocOut(1, 2);
   aSolver.Location(aLocOut);
   EXPECT_NEAR(aLocOut(1), 1.0, 1.0e-8) << "Output location should match";
@@ -414,7 +390,7 @@ TEST(MathNewtonMinimumTest, LocationAccess)
 
 TEST(MathNewtonMinimumTest, CustomConvexity)
 {
-  // Test with custom convexity parameter
+
   QuadraticBowlWithHessian aFunc;
 
   math_Vector aStartPoint(1, 2);
@@ -431,7 +407,7 @@ TEST(MathNewtonMinimumTest, CustomConvexity)
 
 TEST(MathNewtonMinimumTest, WithSingularityTreatment)
 {
-  // Test with singularity treatment enabled
+
   QuadraticBowlWithHessian aFunc;
 
   math_Vector aStartPoint(1, 2);
@@ -448,7 +424,7 @@ TEST(MathNewtonMinimumTest, WithSingularityTreatment)
 
 TEST(MathNewtonMinimumTest, NonConvexFunction)
 {
-  // Test with non-convex function (saddle point)
+
   SaddleFunction aFunc;
 
   math_Vector aStartPoint(1, 2);
@@ -458,22 +434,18 @@ TEST(MathNewtonMinimumTest, NonConvexFunction)
   math_NewtonMinimum aSolver(aFunc, 1.0e-10, 40, 1.0e-6, false);
   aSolver.Perform(aFunc, aStartPoint);
 
-  // Function is not convex, Newton method may not converge
-  // Testing that algorithm can handle non-convex functions
   EXPECT_NO_THROW(aSolver.Perform(aFunc, aStartPoint))
     << "Should handle non-convex function gracefully";
 }
 
 TEST(MathNewtonMinimumTest, UnperformedState)
 {
-  // Test state handling before Perform() is called
+
   QuadraticBowlWithHessian aFunc;
   math_NewtonMinimum       aSolver(aFunc, 1.0e-10);
 
-  // Before Perform() is called, solver should report not done
   EXPECT_FALSE(aSolver.IsDone()) << "Solver should not be done before Perform()";
 
-  // In release builds, verify the solver maintains consistent state
   if (!aSolver.IsDone())
   {
     EXPECT_FALSE(aSolver.IsDone()) << "State should be consistent when not done";
@@ -482,7 +454,7 @@ TEST(MathNewtonMinimumTest, UnperformedState)
 
 TEST(MathNewtonMinimumTest, DimensionCompatibility)
 {
-  // Test dimension compatibility handling
+
   QuadraticBowlWithHessian aFunc;
 
   math_Vector aStartPoint(1, 2);
@@ -494,22 +466,20 @@ TEST(MathNewtonMinimumTest, DimensionCompatibility)
 
   EXPECT_TRUE(aSolver.IsDone()) << "Should find minimum";
 
-  // Test with correctly dimensioned vectors
-  math_Vector aCorrectVec(1, 2); // 2D vector for 2D function
+  math_Vector aCorrectVec(1, 2);
   aSolver.Location(aCorrectVec);
   aSolver.Gradient(aCorrectVec);
 
-  // Verify the results make sense
   EXPECT_EQ(aCorrectVec.Length(), 2) << "Vector should have correct dimension";
 }
 
 TEST(MathNewtonMinimumTest, StartingNearMinimum)
 {
-  // Test when starting point is already near the minimum
+
   QuadraticBowlWithHessian aFunc;
 
   math_Vector aStartPoint(1, 2);
-  aStartPoint(1) = 1.001; // Very close to minimum at (1, 2)
+  aStartPoint(1) = 1.001;
   aStartPoint(2) = 1.999;
 
   math_NewtonMinimum aSolver(aFunc, 1.0e-12);
@@ -524,7 +494,7 @@ TEST(MathNewtonMinimumTest, StartingNearMinimum)
 
 TEST(MathNewtonMinimumTest, StatusAccess)
 {
-  // Test status access method
+
   QuadraticBowlWithHessian aFunc;
 
   math_Vector aStartPoint(1, 2);
@@ -536,6 +506,5 @@ TEST(MathNewtonMinimumTest, StatusAccess)
 
   EXPECT_TRUE(aSolver.IsDone()) << "Should find minimum";
 
-  // Test that we can access the status without exception
   EXPECT_NO_THROW(aSolver.GetStatus()) << "Should be able to get status after completion";
 }

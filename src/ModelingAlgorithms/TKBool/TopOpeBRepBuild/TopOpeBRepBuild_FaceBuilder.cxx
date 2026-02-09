@@ -22,12 +22,8 @@
 #include <NCollection_IndexedDataMap.hpp>
 #include <NCollection_IndexedMap.hpp>
 
-// #include <BRepAdaptor_Curve2d.hpp>
 #undef RM_HANGING
-// MSV: RM_HANGING behaviour: when state of wire is UNCLOSEDW we do not
-// remove the whole wire but remove the chains of hanging edges. This would
-// produce a good result in some cases. But :-( it gives regressions on grid
-// tests (1cto 021 W4,X4). Therefore I leaved this code not active.
+
 #ifdef RM_HANGING
   #include <Standard_Integer.hpp>
 #endif
@@ -38,11 +34,7 @@ extern bool TopOpeBRepBuild_GettracePURGE();
 void debifb() {}
 #endif
 
-//=================================================================================================
-
 TopOpeBRepBuild_FaceBuilder::TopOpeBRepBuild_FaceBuilder() = default;
-
-//=================================================================================================
 
 TopOpeBRepBuild_FaceBuilder::TopOpeBRepBuild_FaceBuilder(TopOpeBRepBuild_WireEdgeSet& WES,
                                                          const TopoDS_Shape&          F,
@@ -50,8 +42,6 @@ TopOpeBRepBuild_FaceBuilder::TopOpeBRepBuild_FaceBuilder(TopOpeBRepBuild_WireEdg
 {
   InitFaceBuilder(WES, F, ForceClass);
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_FaceBuilder::InitFaceBuilder(TopOpeBRepBuild_WireEdgeSet& WES,
                                                   const TopoDS_Shape&          F,
@@ -65,12 +55,11 @@ void TopOpeBRepBuild_FaceBuilder::InitFaceBuilder(TopOpeBRepBuild_WireEdgeSet& W
   myFaceAreaBuilder.InitFaceAreaBuilder(LS, WEC, ForceClass);
 }
 
-//---------------------------------------------------------------
 void FUN_DetectVerticesOn1Edge(
   const TopoDS_Shape&                                                              W,
   NCollection_IndexedDataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& mapVon1E)
 {
-  // Fills the map <mapVon1edge>,with vertices of <W> of 3d connexity 1.
+
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     mapVedges;
   TopExp::MapShapesAndAncestors(W, TopAbs_VERTEX, TopAbs_EDGE, mapVedges);
@@ -85,7 +74,7 @@ void FUN_DetectVerticesOn1Edge(
     const NCollection_List<TopoDS_Shape>& loE = mapVedges.FindFromIndex(i);
     if (loE.Extent() < 2)
     {
-      // Keeping INTERNAL or EXTERNAL edges
+
       const TopoDS_Shape& E    = loE.First();
       TopAbs_Orientation  oriE = E.Orientation();
       if ((oriE == TopAbs_INTERNAL) || (oriE == TopAbs_EXTERNAL))
@@ -127,9 +116,7 @@ int FUN_AnalyzemapVon1E(
   }
   else
   {
-    // Finding among all vertices,couple of vertices falling on same
-    // geometry.
-    // Filling up map <mapVV>,with (vi,vj),vi and vj are on same point.
+
     double tol = Precision::Confusion();
     for (int i = 1; i <= nV; i++)
     {
@@ -146,14 +133,11 @@ int FUN_AnalyzemapVon1E(
           mapVV.Add(vj, vi);
           break;
         }
-      } // j
-    } // i
+      }
+    }
     int nVV = mapVV.Extent();
 #ifdef RM_HANGING
-    // MSV Oct 4, 2001: consider GCLOSEDW even if not all vertices from mapVon1E
-    //                  hit into mapVV; reason is the left vertices may start
-    //                  useless chains of hanging edges that can be removed to
-    //                  achieve a closed wire.
+
     if (nVV > 0)
       res = GCLOSEDW;
 #else
@@ -164,27 +148,15 @@ int FUN_AnalyzemapVon1E(
       res = UNCLOSEDW;
   }
   return res;
-} // FUN_AnalyzemapVon1E
-
-//=================================================================================================
+}
 
 void TopOpeBRepBuild_FaceBuilder::DetectUnclosedWire(
   NCollection_IndexedDataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& mapVVsameG,
   NCollection_IndexedDataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& mapVon1Edge)
 {
-  // wire unclosed : has vertices of connexity == 1
-  // exception : a wire of one closed edge with only one vertex describing
-  //             a face or a degenerated edge.
 
   mapVVsameG.Clear();
   mapVon1Edge.Clear();
-
-  // During the wire processing,
-  // * IF THE WIRE IS G-CLOSED,we fill up the maps :
-  //  - <mapVVsameG> with vertices falling on same geometry
-  //  - <mapVon1Edge> with (key = vertex,item = edge),
-  //    the vertex is connected to only one unclosed,undegenerated edge.
-  // * Else,if it is unclosed,we delete it (or it`s hanging edges).
 
   InitFace();
   for (; MoreFace(); NextFace())
@@ -204,7 +176,6 @@ void TopOpeBRepBuild_FaceBuilder::DetectUnclosedWire(
         AddEdgeWire(Edge(), cmp);
       TopoDS_Shape W = cmp;
 
-      // <mapVon1E> binds vertices of connexity 1 attached to one non-closed,non-degenerated edge.
       NCollection_IndexedDataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> mapVon1E;
       FUN_DetectVerticesOn1Edge(W, mapVon1E);
 
@@ -234,7 +205,7 @@ void TopOpeBRepBuild_FaceBuilder::DetectUnclosedWire(
       else if (res == UNCLOSEDW)
       {
 #ifdef RM_HANGING
-        // MSV Oct 4, 2001: remove hanging edges
+
         NCollection_IndexedDataMap<TopoDS_Shape,
                                    NCollection_List<TopoDS_Shape>,
                                    TopTools_ShapeMapHasher>
@@ -245,12 +216,11 @@ void TopOpeBRepBuild_FaceBuilder::DetectUnclosedWire(
         {
           TopoDS_Vertex V = TopoDS::Vertex(mapVon1E.FindKey(i));
           if (mapVV.Contains(V))
-            continue; // V is in same geometry pair
+            continue;
           while (1)
           {
             const NCollection_List<TopoDS_Shape>& LE = mapVE.FindFromKey(V);
 
-            // get not yet processed edge, count the number of such edges
             int                                      nEdges = 0;
             TopoDS_Edge                              Edge;
             NCollection_List<int>                    LOI;
@@ -264,7 +234,7 @@ void TopOpeBRepBuild_FaceBuilder::DetectUnclosedWire(
                 TopoDS_Vertex Vf, Vl;
                 TopExp::Vertices(E, Vf, Vl);
                 LOI.Append(I);
-                // consider not small edges only
+
                 if (!Vf.IsSame(Vl))
                 {
                   Edge = E;
@@ -273,14 +243,12 @@ void TopOpeBRepBuild_FaceBuilder::DetectUnclosedWire(
               }
             }
             if (nEdges != 1)
-              break; // stop this chain
+              break;
 
-            // remove edges from Block Builder
             NCollection_List<int>::Iterator itLOI(LOI);
             for (; itLOI.More(); itLOI.Next())
               myBlockBuilder.SetValid(itLOI.Value(), false);
 
-            // get other vertex
             TopoDS_Vertex aV1, aV2, otherV;
             TopExp::Vertices(Edge, aV1, aV2);
             if (aV1.IsSame(V))
@@ -296,24 +264,22 @@ void TopOpeBRepBuild_FaceBuilder::DetectUnclosedWire(
         TopExp_Explorer ex;
         for (ex.Init(W, TopAbs_EDGE); ex.More(); ex.Next())
         {
-          //	for (TopExp_Explorer ex(W,TopAbs_EDGE);ex.More();ex.Next()) {
+
           int I = myBlockBuilder.Element(ex.Current());
           myBlockBuilder.SetValid(I, false);
         }
 #endif
       }
-    } // MoreWire
-  } // MoreFace
-} // DetectUnclosedWire
-
-//=================================================================================================
+    }
+  }
+}
 
 void TopOpeBRepBuild_FaceBuilder::CorrectGclosedWire(
   const NCollection_IndexedDataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& mapVVref,
   const NCollection_IndexedDataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&
     mapVon1Edge)
 {
-  // prequesitory : edges described by <mapVon1Edge> are not closed,not degenerated
+
 #ifdef OCCT_DEBUG
   if (TopOpeBRepBuild_GettracePURGE())
   {
@@ -338,14 +304,12 @@ void TopOpeBRepBuild_FaceBuilder::CorrectGclosedWire(
     BB.Remove(E, V);
     TopoDS_Shape  aLocalShape = Vref.Oriented(V.Orientation());
     TopoDS_Vertex newVref     = TopoDS::Vertex(aLocalShape);
-    //    TopoDS_Vertex newVref = TopoDS::Vertex(Vref.Oriented(V.Orientation()));
+
     BB.Add(E, newVref);
     TopOpeBRepDS_BuildTool BT;
     BT.Parameter(E, newVref, paronE);
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_FaceBuilder::DetectPseudoInternalEdge(
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& MapE)
@@ -365,8 +329,8 @@ void TopOpeBRepBuild_FaceBuilder::DetectPseudoInternalEdge(
       InitEdge();
       for (; MoreEdge(); NextEdge())
         AddEdgeWire(Edge(), cmp);
-    } // MoreWire
-  } // MoreFace
+    }
+  }
 
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     mapVOE;
@@ -403,14 +367,10 @@ void TopOpeBRepBuild_FaceBuilder::DetectPseudoInternalEdge(
   }
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRepBuild_FaceBuilder::Face() const
 {
   return myFace;
 }
-
-//=================================================================================================
 
 int TopOpeBRepBuild_FaceBuilder::InitFace()
 {
@@ -418,22 +378,16 @@ int TopOpeBRepBuild_FaceBuilder::InitFace()
   return n;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepBuild_FaceBuilder::MoreFace() const
 {
   bool b = myFaceAreaBuilder.MoreArea();
   return b;
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_FaceBuilder::NextFace()
 {
   myFaceAreaBuilder.NextArea();
 }
-
-//=================================================================================================
 
 int TopOpeBRepBuild_FaceBuilder::InitWire()
 {
@@ -441,22 +395,16 @@ int TopOpeBRepBuild_FaceBuilder::InitWire()
   return n;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepBuild_FaceBuilder::MoreWire() const
 {
   bool b = myFaceAreaBuilder.MoreLoop();
   return b;
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_FaceBuilder::NextWire()
 {
   myFaceAreaBuilder.NextLoop();
 }
-
-//=================================================================================================
 
 bool TopOpeBRepBuild_FaceBuilder::IsOldWire() const
 {
@@ -465,8 +413,6 @@ bool TopOpeBRepBuild_FaceBuilder::IsOldWire() const
   return b;
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& TopOpeBRepBuild_FaceBuilder::OldWire() const
 {
   const occ::handle<TopOpeBRepBuild_Loop>& L = myFaceAreaBuilder.Loop();
@@ -474,11 +420,9 @@ const TopoDS_Shape& TopOpeBRepBuild_FaceBuilder::OldWire() const
   return B;
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_FaceBuilder::FindNextValidElement()
 {
-  // prerequisites : myBlockIterator.Initialize
+
   myFaceAreaBuilder.Loop();
   bool found = false;
 
@@ -492,8 +436,6 @@ void TopOpeBRepBuild_FaceBuilder::FindNextValidElement()
       myBlockIterator.Next();
   }
 }
-
-//=================================================================================================
 
 int TopOpeBRepBuild_FaceBuilder::InitEdge()
 {
@@ -510,23 +452,17 @@ int TopOpeBRepBuild_FaceBuilder::InitEdge()
   return n;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepBuild_FaceBuilder::MoreEdge() const
 {
   bool b = myBlockIterator.More();
   return b;
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_FaceBuilder::NextEdge()
 {
   myBlockIterator.Next();
   FindNextValidElement();
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& TopOpeBRepBuild_FaceBuilder::Edge() const
 {
@@ -542,21 +478,14 @@ const TopoDS_Shape& TopOpeBRepBuild_FaceBuilder::Edge() const
   return E;
 }
 
-//=================================================================================================
-
-int TopOpeBRepBuild_FaceBuilder::EdgeConnexity(const TopoDS_Shape& /*E*/) const
+int TopOpeBRepBuild_FaceBuilder::EdgeConnexity(const TopoDS_Shape&) const
 {
 #ifdef OCCT_DEBUG
   throw Standard_ProgramError("FaceBuilder::EdgeConnexity management disactivated");
 #else
   return 0;
 #endif
-  //  bool inmosi = myMOSI.IsBound(E);
-  //  int nmosi = (inmosi) ? myMOSI.Find(E) : 0;
-  //  return nmosi;
 }
-
-//=================================================================================================
 
 int TopOpeBRepBuild_FaceBuilder::AddEdgeWire(const TopoDS_Shape& E, TopoDS_Shape& W) const
 {
@@ -564,32 +493,17 @@ int TopOpeBRepBuild_FaceBuilder::AddEdgeWire(const TopoDS_Shape& E, TopoDS_Shape
   BRep_Builder BB;
   BB.Add(W, E);
   nadd++;
-  //  int nmosi = EdgeConnexity(E);
-  //  bool addEC = (nmosi == 1);
-  //  if (addEC) {
-  //    TopAbs_Orientation oe = E.Orientation();
-  //    TopAbs_Orientation oc = TopAbs::Complement(oe);
-  //    TopoDS_Shape EC = E.Oriented(oc);
-  //    BB.Add(W,EC);nadd++;
-  //  }
+
   return nadd;
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_FaceBuilder::MakeLoops(TopOpeBRepBuild_ShapeSet& SS)
 {
   TopOpeBRepBuild_BlockBuilder&                        BB = myBlockBuilder;
   NCollection_List<occ::handle<TopOpeBRepBuild_Loop>>& LL = myLoopSet.ChangeListOfLoop();
 
-  // Build blocks on elements of SS
   BB.MakeBlock(SS);
 
-  // make list of loop (LL) of the LoopSet
-  // - on shapes of the ShapeSet (SS)
-  // - on blocks of the BlockBuilder (BB)
-
-  // Add shapes of SS as shape loops
   LL.Clear();
   for (SS.InitShapes(); SS.MoreShapes(); SS.NextShape())
   {
@@ -598,7 +512,6 @@ void TopOpeBRepBuild_FaceBuilder::MakeLoops(TopOpeBRepBuild_ShapeSet& SS)
     LL.Append(ShapeLoop);
   }
 
-  // Add blocks of BB as block loops
   for (BB.InitBlock(); BB.MoreBlock(); BB.NextBlock())
   {
     TopOpeBRepBuild_BlockIterator     BI        = BB.BlockIterator();

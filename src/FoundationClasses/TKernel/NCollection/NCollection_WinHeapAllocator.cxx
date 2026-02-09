@@ -7,8 +7,6 @@ IMPLEMENT_STANDARD_RTTIEXT(NCollection_WinHeapAllocator, NCollection_BaseAllocat
   #include <windows.h>
 #endif
 
-//=================================================================================================
-
 NCollection_WinHeapAllocator::NCollection_WinHeapAllocator(const size_t theInitSizeBytes)
     :
 #if (defined(_WIN32) || defined(__WIN32__))
@@ -17,15 +15,13 @@ NCollection_WinHeapAllocator::NCollection_WinHeapAllocator(const size_t theInitS
       myToZeroMemory(false)
 {
 #if defined(_WIN32) && (_WIN32_WINNT >= 0x0501)
-  // activate LHF to improve small size allocations
+
   ULONG aHeapInfo = 2;
   HeapSetInformation(myHeapH, HeapCompatibilityInformation, &aHeapInfo, sizeof(aHeapInfo));
 #else
   (void)theInitSizeBytes;
 #endif
 }
-
-//=================================================================================================
 
 NCollection_WinHeapAllocator::~NCollection_WinHeapAllocator()
 {
@@ -34,11 +30,9 @@ NCollection_WinHeapAllocator::~NCollection_WinHeapAllocator()
 #endif
 }
 
-//=================================================================================================
-
 void* NCollection_WinHeapAllocator::Allocate(const size_t theSize)
 {
-  // the size is rounded up to word size.
+
   const size_t aRoundSize = (theSize + 3) & ~0x3;
 #if (defined(_WIN32) || defined(__WIN32__))
   void* aResult = HeapAlloc(myHeapH, myToZeroMemory ? HEAP_ZERO_MEMORY : 0, aRoundSize);
@@ -53,8 +47,6 @@ void* NCollection_WinHeapAllocator::Allocate(const size_t theSize)
   }
   return aResult;
 }
-
-//=================================================================================================
 
 void NCollection_WinHeapAllocator::Free(void* theAddress)
 {

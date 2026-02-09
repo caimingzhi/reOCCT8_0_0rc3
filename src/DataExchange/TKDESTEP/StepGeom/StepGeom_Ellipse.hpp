@@ -11,7 +11,6 @@ class StepGeom_Ellipse : public StepGeom_Conic
 {
 
 public:
-  //! Returns a Ellipse
   Standard_EXPORT StepGeom_Ellipse();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

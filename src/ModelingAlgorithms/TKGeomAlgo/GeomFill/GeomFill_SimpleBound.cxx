@@ -9,8 +9,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_SimpleBound, GeomFill_Boundary)
 
-//=================================================================================================
-
 GeomFill_SimpleBound::GeomFill_SimpleBound(const occ::handle<Adaptor3d_Curve>& Curve,
                                            const double                        Tol3d,
                                            const double                        Tolang)
@@ -18,8 +16,6 @@ GeomFill_SimpleBound::GeomFill_SimpleBound(const occ::handle<Adaptor3d_Curve>& C
       myC3d(Curve)
 {
 }
-
-//=================================================================================================
 
 gp_Pnt GeomFill_SimpleBound::Value(const double U) const
 {
@@ -29,8 +25,6 @@ gp_Pnt GeomFill_SimpleBound::Value(const double U) const
   return myC3d->Value(x);
 }
 
-//=================================================================================================
-
 void GeomFill_SimpleBound::D1(const double U, gp_Pnt& P, gp_Vec& V) const
 {
   double x = U, dx = 1.;
@@ -39,8 +33,6 @@ void GeomFill_SimpleBound::D1(const double U, gp_Pnt& P, gp_Vec& V) const
   myC3d->D1(x, P, V);
   V.Multiply(dx);
 }
-
-//=================================================================================================
 
 void GeomFill_SimpleBound::Reparametrize(const double First,
                                          const double Last,
@@ -56,8 +48,6 @@ void GeomFill_SimpleBound::Reparametrize(const double First,
   occ::down_cast<Law_BSpFunc>(myPar)->SetCurve(curve);
 }
 
-//=================================================================================================
-
 void GeomFill_SimpleBound::Bounds(double& First, double& Last) const
 {
   if (!myPar.IsNull())
@@ -68,8 +58,6 @@ void GeomFill_SimpleBound::Bounds(double& First, double& Last) const
     Last  = myC3d->LastParameter();
   }
 }
-
-//=================================================================================================
 
 bool GeomFill_SimpleBound::IsDegenerated() const
 {

@@ -8,16 +8,12 @@
 
 extern bool Draw_Bounds;
 
-//=================================================================================================
-
 void Draw_Display::DrawMarker(const gp_Pnt& pt, const Draw_MarkerShape S, const int Size)
 {
   gp_Pnt2d p;
   Project(pt, p);
   DrawMarker(p, S, Size);
 }
-
-//=================================================================================================
 
 void Draw_Display::DrawMarker(const gp_Pnt2d& pt, const Draw_MarkerShape S, const int ISize)
 {
@@ -74,7 +70,7 @@ void Draw_Display::DrawMarker(const gp_Pnt2d& pt, const Draw_MarkerShape S, cons
       break;
 
     case Draw_Circle:
-      //    gp_Circ2d C;
+
       C.SetRadius(ISize);
       C.SetLocation(pt);
       Draw(C, 0, 2 * M_PI, false);
@@ -86,16 +82,12 @@ void Draw_Display::DrawMarker(const gp_Pnt2d& pt, const Draw_MarkerShape S, cons
   MoveTo(pt);
 }
 
-//=================================================================================================
-
 void Draw_Display::DrawMarker(const gp_Pnt& pt, const Draw_MarkerShape S, const double Size)
 {
   gp_Pnt2d p;
   Project(pt, p);
   DrawMarker(p, S, Size);
 }
-
-//=================================================================================================
 
 void Draw_Display::DrawMarker(const gp_Pnt2d& pt, const Draw_MarkerShape S, const double R)
 {
@@ -119,7 +111,7 @@ void Draw_Display::DrawMarker(const gp_Pnt2d& pt, const Draw_MarkerShape S, cons
       gp_Circ2d C;
       C.SetRadius(R);
       C.SetLocation(pt);
-      // if the circus is too small, a "plus" is drawn to mark the point
+
       bool b = (R * Zoom()) > 2;
       if (b)
         Draw(C, 0, 2 * M_PI);
@@ -132,8 +124,6 @@ void Draw_Display::DrawMarker(const gp_Pnt2d& pt, const Draw_MarkerShape S, cons
 
 #define MAXPNT 200
 #define DEFLECTION 5
-
-//=================================================================================================
 
 void Draw_Display::Draw(const gp_Circ& C,
                         const double   A1,
@@ -186,8 +176,6 @@ void Draw_Display::Draw(const gp_Circ& C,
   DrawTo(P);
 }
 
-//=================================================================================================
-
 void Draw_Display::Draw(const gp_Circ2d& C,
                         const double     A1,
                         const double     A3,
@@ -213,7 +201,7 @@ void Draw_Display::Draw(const gp_Circ2d& C,
 
   gp_Circ2d Cloc(C);
   if (!ModifyWithZoom)
-  { // the effet of zoom is cancelled to follow
+  {
     double Size = Cloc.Radius() / Zoom();
     Cloc.SetRadius(Size);
   }
@@ -238,8 +226,6 @@ void Draw_Display::Draw(const gp_Circ2d& C,
   P = ElCLib::Value(A2, Cloc);
   DrawTo(P);
 }
-
-//=================================================================================================
 
 gp_Pnt2d Draw_Display::Project(const gp_Pnt& p) const
 {

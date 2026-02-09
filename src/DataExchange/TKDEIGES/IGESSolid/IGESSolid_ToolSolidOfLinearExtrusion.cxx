@@ -26,18 +26,14 @@ void IGESSolid_ToolSolidOfLinearExtrusion::ReadOwnParams(
   gp_XYZ                           tempDirection;
   double                           tempLength;
   double                           tempreal;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  // clang-format off
-  PR.ReadEntity(IR, PR.Current(), "Curve Entity", tempEntity); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR, PR.Current(), "Curve Entity", tempEntity);
 
-  PR.ReadReal(PR.Current(), "Length of extrusion", tempLength); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadReal(PR.Current(), "Length of extrusion", tempLength);
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Extrusion direction (I)", tempreal); //szv#4:S4163:12Mar99
-    // moved in if
+
     if (PR.ReadReal(PR.Current(), "Extrusion direction (I)", tempreal))
       tempDirection.SetX(tempreal);
   }
@@ -46,8 +42,7 @@ void IGESSolid_ToolSolidOfLinearExtrusion::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Extrusion direction (J)", tempreal); //szv#4:S4163:12Mar99
-    // moved in if
+
     if (PR.ReadReal(PR.Current(), "Extrusion direction (J)", tempreal))
       tempDirection.SetY(tempreal);
   }
@@ -56,8 +51,7 @@ void IGESSolid_ToolSolidOfLinearExtrusion::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Extrusion direction (K)", tempreal); //szv#4:S4163:12Mar99
-    // moved in if
+
     if (PR.ReadReal(PR.Current(), "Extrusion direction (K)", tempreal))
       tempDirection.SetZ(tempreal);
   }
@@ -101,7 +95,7 @@ void IGESSolid_ToolSolidOfLinearExtrusion::OwnCopy(
 }
 
 IGESData_DirChecker IGESSolid_ToolSolidOfLinearExtrusion::DirChecker(
-  const occ::handle<IGESSolid_SolidOfLinearExtrusion>& /* ent */) const
+  const occ::handle<IGESSolid_SolidOfLinearExtrusion>&) const
 {
   IGESData_DirChecker DC(164, 0);
 

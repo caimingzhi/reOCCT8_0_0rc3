@@ -10,7 +10,6 @@ class Interface_Check;
 class StepShape_PrecisionQualifier;
 class StepData_StepWriter;
 
-//! Read & Write Module for PrecisionQualifier
 class RWStepShape_RWPrecisionQualifier
 {
 public:

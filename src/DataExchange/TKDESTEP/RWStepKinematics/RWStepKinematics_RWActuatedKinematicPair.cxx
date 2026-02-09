@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include "RWStepKinematics_RWActuatedKinematicPair.hpp"
 
@@ -12,11 +12,7 @@
 #include <StepKinematics_KinematicJoint.hpp>
 #include <StepKinematics_ActuatedDirection.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWActuatedKinematicPair::RWStepKinematics_RWActuatedKinematicPair() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWActuatedKinematicPair::ReadStep(
   const occ::handle<StepData_StepReaderData>&              theData,
@@ -24,16 +20,12 @@ void RWStepKinematics_RWActuatedKinematicPair::ReadStep(
   occ::handle<Interface_Check>&                            theArch,
   const occ::handle<StepKinematics_ActuatedKinematicPair>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 12, theArch, "actuated_kinematic_pair"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
-
-  // Inherited fields of ItemDefinedTransformation
 
   occ::handle<TCollection_HAsciiString> aItemDefinedTransformation_Name;
   theData->ReadString(theNum,
@@ -74,8 +66,6 @@ void RWStepKinematics_RWActuatedKinematicPair::ReadStep(
                       STANDARD_TYPE(StepRepr_RepresentationItem),
                       aItemDefinedTransformation_TransformItem2);
 
-  // Inherited fields of KinematicPair
-
   occ::handle<StepKinematics_KinematicJoint> aKinematicPair_Joint;
   theData->ReadEntity(theNum,
                       6,
@@ -83,8 +73,6 @@ void RWStepKinematics_RWActuatedKinematicPair::ReadStep(
                       theArch,
                       STANDARD_TYPE(StepKinematics_KinematicJoint),
                       aKinematicPair_Joint);
-
-  // Own fields of ActuatedKinematicPair
 
   StepKinematics_ActuatedDirection aTX   = StepKinematics_adNotActuated;
   bool                             hasTX = true;
@@ -242,7 +230,6 @@ void RWStepKinematics_RWActuatedKinematicPair::ReadStep(
     hasRZ = false;
   }
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aItemDefinedTransformation_Name,
                hasItemDefinedTransformation_Description,
@@ -264,18 +251,12 @@ void RWStepKinematics_RWActuatedKinematicPair::ReadStep(
                aRZ);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWActuatedKinematicPair::WriteStep(
   StepData_StepWriter&                                     theSW,
   const occ::handle<StepKinematics_ActuatedKinematicPair>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Inherited fields of ItemDefinedTransformation
 
   theSW.Send(theEnt->ItemDefinedTransformation()->Name());
 
@@ -290,11 +271,7 @@ void RWStepKinematics_RWActuatedKinematicPair::WriteStep(
 
   theSW.Send(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Own fields of KinematicPair
-
   theSW.Send(theEnt->Joint());
-
-  // Own fields of ActuatedKinematicPair
 
   if (theEnt->HasTX())
   {
@@ -423,24 +400,14 @@ void RWStepKinematics_RWActuatedKinematicPair::WriteStep(
     theSW.SendUndef();
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWActuatedKinematicPair::Share(
   const occ::handle<StepKinematics_ActuatedKinematicPair>& theEnt,
   Interface_EntityIterator&                                iter) const
 {
 
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of ItemDefinedTransformation
-
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem1());
 
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Inherited fields of KinematicPair
-
   iter.AddItem(theEnt->StepKinematics_KinematicPair::Joint());
-
-  // Own fields of ActuatedKinematicPair
 }

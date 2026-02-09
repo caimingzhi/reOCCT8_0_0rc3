@@ -1,15 +1,4 @@
-// Copyright (c) 2008-2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <math.hpp>
 #include <Standard_Assert.hpp>
@@ -17,22 +6,19 @@
 #include <BRepGProp_Domain.hpp>
 #include <BRepGProp_Gauss.hpp>
 
-// If the following is defined the error of algorithm is calculated by static moments
 #define IS_MIN_DIM
 
 namespace
 {
-  // Minimal value of interval's range for computation | minimal value of "dim" | ...
+
   static const double EPS_PARAM          = 1.e-12;
   static const double EPS_DIM            = 1.e-30;
   static const double ERROR_ALGEBR_RATIO = 2.0 / 3.0;
 
-  // Maximum of GaussPoints on a subinterval and maximum of subintervals
   static const int GPM        = math::GaussPointsMax();
   static const int SUBS_POWER = 32;
   static const int SM         = SUBS_POWER * GPM + 1;
 
-  // Auxiliary inner functions to perform arithmetic operations.
   static double Add(const double theA, const double theB)
   {
     return theA + theB;
@@ -82,7 +68,7 @@ namespace
 
   static double MultInf(const double theA, const double theB)
   {
-    if ((theA == 0.0) || (theB == 0.0)) // strictly zerro (without any tolerances)
+    if ((theA == 0.0) || (theB == 0.0))
       return 0.0;
 
     if (Precision::IsPositiveInfinite(theA))
@@ -121,8 +107,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 BRepGProp_Gauss::Inertia::Inertia()
     : Mass(0.0),
       Ix(0.0),
@@ -137,14 +121,10 @@ BRepGProp_Gauss::Inertia::Inertia()
 {
 }
 
-//=================================================================================================
-
 void BRepGProp_Gauss::Inertia::Reset()
 {
   memset(reinterpret_cast<void*>(this), 0, sizeof(BRepGProp_Gauss::Inertia));
 }
-
-//=================================================================================================
 
 BRepGProp_Gauss::BRepGProp_Gauss(const BRepGProp_GaussType theType)
     : myType(theType)
@@ -153,14 +133,10 @@ BRepGProp_Gauss::BRepGProp_Gauss(const BRepGProp_GaussType theType)
   mult = (::Mult);
 }
 
-//=================================================================================================
-
 int BRepGProp_Gauss::MaxSubs(const int theN, const int theCoeff)
 {
   return IntegerLast() / theCoeff < theN ? IntegerLast() : theN * theCoeff + 1;
 }
-
-//=================================================================================================
 
 void BRepGProp_Gauss::Init(NCollection_Handle<math_Vector>& theOutVec,
                            const double                     theValue,
@@ -177,8 +153,6 @@ void BRepGProp_Gauss::Init(NCollection_Handle<math_Vector>& theOutVec,
       theOutVec->Value(i) = theValue;
   }
 }
-
-//=================================================================================================
 
 void BRepGProp_Gauss::InitMass(const double  theValue,
                                const int     theFirst,
@@ -200,8 +174,6 @@ void BRepGProp_Gauss::InitMass(const double  theValue,
   for (int i = aFirst; i <= aLast; ++i)
     theArray->ChangeValue(i).Mass = theValue;
 }
-
-//=================================================================================================
 
 int BRepGProp_Gauss::FillIntervalBounds(const double                      theA,
                                         const double                      theB,
@@ -249,8 +221,6 @@ int BRepGProp_Gauss::FillIntervalBounds(const double                      theA,
   return k;
 }
 
-//=================================================================================================
-
 void BRepGProp_Gauss::computeVInertiaOfElementaryPart(const gp_Pnt&             thePoint,
                                                       const gp_Vec&             theNormal,
                                                       const gp_Pnt&             theLocation,
@@ -269,32 +239,28 @@ void BRepGProp_Gauss::computeVInertiaOfElementaryPart(const gp_Pnt&             
 
   if (theIsByPoint)
   {
-    /////////////////////                        ///////////////////////
-    //    OFV code     //                        //    Initial code   //
-    /////////////////////                        ///////////////////////
-    // modified by APO
 
-    double dv = x * xn + y * yn + z * zn; // xyz  = x * y * z;
-    theOutInertia.Mass += dv / 3.0;       // Ixyi += zn * xyz;
-    theOutInertia.Ix += 0.25 * x * dv;    // Iyzi += xn * xyz;
-    theOutInertia.Iy += 0.25 * y * dv;    // Ixzi += yn * xyz;
-    theOutInertia.Iz += 0.25 * z * dv;    // xi = x * x * x * xn / 3.0;
-    x -= theCoeff[0];                     // yi = y * y * y * yn / 3.0;
-    y -= theCoeff[1];                     // zi = z * z * z * zn / 3.0;
-    z -= theCoeff[2];                     // Ixxi += (yi + zi);
-    dv *= 0.2;                            // Iyyi += (xi + zi);
-    theOutInertia.Ixy -= x * y * dv;      // Izzi += (xi + yi);
-    theOutInertia.Iyz -= y * z * dv;      // x -= Coeff[0];
-    theOutInertia.Ixz -= x * z * dv;      // y -= Coeff[1];
-    x *= x;                               // z -= Coeff[2];
-    y *= y;                               // dv = x * xn + y * yn + z * zn;
-    z *= z;                               // dvi +=  dv;
-    theOutInertia.Ixx += (y + z) * dv;    // Ixi += x * dv;
-    theOutInertia.Iyy += (x + z) * dv;    // Iyi += y * dv;
-    theOutInertia.Izz += (x + y) * dv;    // Izi += z * dv;
+    double dv = x * xn + y * yn + z * zn;
+    theOutInertia.Mass += dv / 3.0;
+    theOutInertia.Ix += 0.25 * x * dv;
+    theOutInertia.Iy += 0.25 * y * dv;
+    theOutInertia.Iz += 0.25 * z * dv;
+    x -= theCoeff[0];
+    y -= theCoeff[1];
+    z -= theCoeff[2];
+    dv *= 0.2;
+    theOutInertia.Ixy -= x * y * dv;
+    theOutInertia.Iyz -= y * z * dv;
+    theOutInertia.Ixz -= x * z * dv;
+    x *= x;
+    y *= y;
+    z *= z;
+    theOutInertia.Ixx += (y + z) * dv;
+    theOutInertia.Iyy += (x + z) * dv;
+    theOutInertia.Izz += (x + y) * dv;
   }
   else
-  { // By plane
+  {
     const double s = xn * theCoeff[0] + yn * theCoeff[1] + zn * theCoeff[2];
 
     double d1 = theCoeff[0] * x + theCoeff[1] * y + theCoeff[2] * z - theCoeff[3];
@@ -333,15 +299,13 @@ void BRepGProp_Gauss::computeVInertiaOfElementaryPart(const gp_Pnt&             
   }
 }
 
-//=================================================================================================
-
 void BRepGProp_Gauss::computeSInertiaOfElementaryPart(const gp_Pnt&             thePoint,
                                                       const gp_Vec&             theNormal,
                                                       const gp_Pnt&             theLocation,
                                                       const double              theWeight,
                                                       BRepGProp_Gauss::Inertia& theOutInertia)
 {
-  // ds - Jacobien (x, y, z) -> (u, v) = ||n||
+
   const double ds = mult(theNormal.Magnitude(), theWeight);
   const double x  = add(thePoint.X(), -theLocation.X());
   const double y  = add(thePoint.Y(), -theLocation.Y());
@@ -369,8 +333,6 @@ void BRepGProp_Gauss::computeSInertiaOfElementaryPart(const gp_Pnt&             
   theOutInertia.Izz = add(theOutInertia.Izz, add(XXdS, YYdS));
 }
 
-//=================================================================================================
-
 void BRepGProp_Gauss::checkBounds(const double theU1,
                                   const double theU2,
                                   const double theV1,
@@ -383,8 +345,6 @@ void BRepGProp_Gauss::checkBounds(const double theU1,
     mult = (::MultInf);
   }
 }
-
-//=================================================================================================
 
 void BRepGProp_Gauss::addAndRestoreInertia(const BRepGProp_Gauss::Inertia& theInInertia,
                                            BRepGProp_Gauss::Inertia&       theOutInertia)
@@ -401,8 +361,6 @@ void BRepGProp_Gauss::addAndRestoreInertia(const BRepGProp_Gauss::Inertia& theIn
   theOutInertia.Iyz  = add(theOutInertia.Iyz, theInInertia.Iyz);
 }
 
-//=================================================================================================
-
 void BRepGProp_Gauss::multAndRestoreInertia(const double              theValue,
                                             BRepGProp_Gauss::Inertia& theInOutInertia)
 {
@@ -417,8 +375,6 @@ void BRepGProp_Gauss::multAndRestoreInertia(const double              theValue,
   theInOutInertia.Ixz  = mult(theInOutInertia.Ixz, theValue);
   theInOutInertia.Iyz  = mult(theInOutInertia.Iyz, theValue);
 }
-
-//=================================================================================================
 
 void BRepGProp_Gauss::convert(const BRepGProp_Gauss::Inertia& theInertia,
                               gp_Pnt&                         theOutGravityCenter,
@@ -444,8 +400,6 @@ void BRepGProp_Gauss::convert(const BRepGProp_Gauss::Inertia& theInertia,
                                  gp_XYZ(-theInertia.Ixy, theInertia.Iyy, -theInertia.Iyz),
                                  gp_XYZ(-theInertia.Ixz, -theInertia.Iyz, theInertia.Izz));
 }
-
-//=================================================================================================
 
 void BRepGProp_Gauss::convert(const BRepGProp_Gauss::Inertia& theInertia,
                               const double                    theCoeff[],
@@ -484,8 +438,6 @@ void BRepGProp_Gauss::convert(const BRepGProp_Gauss::Inertia& theInertia,
                                  gp_XYZ(theInertia.Ixz, theInertia.Iyz, theInertia.Izz));
 }
 
-//=================================================================================================
-
 double BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
                                 BRepGProp_Domain& theDomain,
                                 const gp_Pnt&     theLocation,
@@ -505,7 +457,6 @@ double BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
   InertiaArray             anInertiaL = new NCollection_Array1<Inertia>(1, SM);
   InertiaArray             anInertiaU = new NCollection_Array1<Inertia>(1, SM);
 
-  // Prepare Gauss points and weights
   NCollection_Handle<math_Vector> LGaussP[2];
   NCollection_Handle<math_Vector> LGaussW[2];
   NCollection_Handle<math_Vector> UGaussP[2];
@@ -532,28 +483,23 @@ double BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
   NCollection_Handle<math_Vector> ErrU  = new math_Vector(1, SM, 0.0);
   NCollection_Handle<math_Vector> ErrUL = new math_Vector(1, SM, 0.0);
 
-  // Face parametrization in U and V direction
   double BV1, BV2, BU1, BU2;
   theSurface.Bounds(BU1, BU2, BV1, BV2);
   checkBounds(BU1, BU2, BV1, BV2);
 
-  //
   const int          NumSubs = SUBS_POWER;
   const TopoDS_Face& aF      = theSurface.GetFace();
-  // clang-format off
-  const bool isNaturalRestriction = (aF.NbChildren () == 0); //theSurface.NaturalRestriction();
-  // clang-format on
+
+  const bool isNaturalRestriction = (aF.NbChildren() == 0);
 
   double CIx, CIy, CIz, CIxy, CIxz, CIyz;
   double CDim[2], CIxx[2], CIyy[2], CIzz[2];
 
-  // Boundary curve parametrization
   double u1 = BU1, u2, l1, l2, lm, lr, l, v;
 
-  // On the boundary curve u-v
   gp_Pnt2d Puv;
   gp_Vec2d Vuv;
-  double   Dul; // Dul = Du / Dl
+  double   Dul;
 
   int iLS, iLSubEnd, iGL, iGLEnd, NbLGaussP[2], LRange[2], iL, kL, kLEnd, IL, JL;
   int i, iUSubEnd, NbUGaussP[2], URange[2], kU, kUEnd, IU, JU;
@@ -629,7 +575,7 @@ double BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
       BRepGProp_Gauss::Init(ErrL, 0.0, 1, LMaxSubs);
       BRepGProp_Gauss::Init(ErrUL, 0.0, 1, LMaxSubs);
 
-      do // while: L
+      do
       {
         if (++JL > iLSubEnd)
         {
@@ -685,7 +631,7 @@ double BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
                 else
                 {
                   theSurface.D12d(l, Puv, Vuv);
-                  Dul = Vuv.Y() * LGaussW[iGL]->Value(iL); // Dul = Du / Dl
+                  Dul = Vuv.Y() * LGaussW[iGL]->Value(iL);
 
                   if (std::abs(Dul) < EPS_PARAM)
                     continue;
@@ -693,7 +639,6 @@ double BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
                   v  = Puv.Y();
                   u2 = Puv.X();
 
-                  // Check on cause out off bounds of value current parameter
                   if (v < BV1)
                     v = BV1;
                   else if (v > BV2)
@@ -725,7 +670,7 @@ double BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
                 ErrorU = 0.0;
 
                 do
-                { // while: U
+                {
                   if (++JU > iUSubEnd)
                   {
                     URange[0] = IU = ErrU->Max();
@@ -889,8 +834,8 @@ double BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
                   CIxz = add(CIxz, mult(anIU.Ixz, Dul));
                   CIyz = add(CIyz, mult(anIU.Iyz, Dul));
                 }
-              } // for: iL
-            } // for: iGL
+              }
+            }
 
             BRepGProp_Gauss::Inertia& aLI = anInertiaL->ChangeValue(iLS);
 
@@ -930,11 +875,9 @@ double BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
             aLI.Ixy = mult(CIxy, lr);
             aLI.Ixz = mult(CIxz, lr);
             aLI.Iyz = mult(CIyz, lr);
-          } // for: (kL)iLS
+          }
         }
 
-        // Calculate/correct epsilon of computation by current value of dim
-        // That is need for not spend time for
         if (JL == iLSubEnd)
         {
           kLEnd = 2;
@@ -1022,8 +965,6 @@ double BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
   return Eps;
 }
 
-//=================================================================================================
-
 double BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
                                 BRepGProp_Domain& theDomain,
                                 const gp_Pnt&     theLocation,
@@ -1045,8 +986,6 @@ double BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
                  theOutInertia);
 }
 
-//=================================================================================================
-
 void BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
                               BRepGProp_Domain& theDomain,
                               const gp_Pnt&     theLocation,
@@ -1066,7 +1005,6 @@ void BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
 
   const int NbGaussgp_Pnts = std::max(NbUGaussgp_Pnts, NbVGaussgp_Pnts);
 
-  // Number of Gauss points for the integration on the face
   math_Vector GaussSPV(1, NbGaussgp_Pnts);
   math_Vector GaussSWV(1, NbGaussgp_Pnts);
   math::GaussPoints(NbGaussgp_Pnts, GaussSPV);
@@ -1134,8 +1072,6 @@ void BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
   convert(anInertia, theOutGravityCenter, theOutInertia, theOutMass);
 }
 
-//=================================================================================================
-
 void BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
                               BRepGProp_Domain& theDomain,
                               const gp_Pnt&     theLocation,
@@ -1151,7 +1087,7 @@ void BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
   theSurface.Bounds(u1, u2, v1, v2);
   checkBounds(u1, u2, v1, v2);
 
-  double _u2 = u2; // OCC104
+  double _u2 = u2;
 
   BRepGProp_Gauss::Inertia anInertia;
   for (; theDomain.More(); theDomain.Next())
@@ -1187,7 +1123,7 @@ void BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
       theSurface.D12d(l, Puv, Vuv);
 
       u2             = Puv.X();
-      u2             = std::min(std::max(u1, u2), _u2); // OCC104
+      u2             = std::min(std::max(u1, u2), _u2);
       const double v = std::min(std::max(Puv.Y(), v1), v2);
 
       const double Dul = Vuv.Y() * GaussW(i);
@@ -1225,8 +1161,6 @@ void BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
   convert(anInertia, theCoeff, theIsByPoint, theOutGravityCenter, theOutInertia, theOutMass);
 }
 
-//=================================================================================================
-
 void BRepGProp_Gauss::Compute(const BRepGProp_Face& theSurface,
                               const gp_Pnt&         theLocation,
                               const double          theCoeff[],
@@ -1242,7 +1176,6 @@ void BRepGProp_Gauss::Compute(const BRepGProp_Face& theSurface,
   const int UOrder = std::min(theSurface.UIntegrationOrder(), math::GaussPointsMax());
   const int VOrder = std::min(theSurface.VIntegrationOrder(), math::GaussPointsMax());
 
-  // Gauss points and weights
   math_Vector GaussPU(1, UOrder);
   math_Vector GaussWU(1, UOrder);
   math_Vector GaussPV(1, VOrder);
@@ -1283,7 +1216,7 @@ void BRepGProp_Gauss::Compute(const BRepGProp_Face& theSurface,
                                         theIsByPoint,
                                         anInertiaOfElementaryPart);
       }
-      else // Sinert
+      else
       {
         computeSInertiaOfElementaryPart(aPoint,
                                         aNormal,
@@ -1308,15 +1241,13 @@ void BRepGProp_Gauss::Compute(const BRepGProp_Face& theSurface,
   {
     convert(anInertia, theCoeff, theIsByPoint, theOutGravityCenter, theOutInertia, theOutMass);
   }
-  else // Sinert
+  else
   {
     convert(anInertia, theOutGravityCenter, theOutInertia, theOutMass);
   }
 
   theOutMass *= vr;
 }
-
-//=================================================================================================
 
 void BRepGProp_Gauss::Compute(const BRepGProp_Face& theSurface,
                               const gp_Pnt&         theLocation,

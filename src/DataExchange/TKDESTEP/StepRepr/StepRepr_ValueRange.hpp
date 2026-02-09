@@ -5,7 +5,6 @@
 
 #include <StepRepr_CompoundRepresentationItem.hpp>
 
-//! Added for Dimensional Tolerances
 class StepRepr_ValueRange : public StepRepr_CompoundRepresentationItem
 {
 

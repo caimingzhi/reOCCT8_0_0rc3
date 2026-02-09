@@ -11,8 +11,6 @@ class TCollection_HAsciiString;
 class Standard_Transient;
 class Interface_InterfaceModel;
 
-//! This class is aimed to display and edit the Directory Part of
-//! an IGESEntity
 class IGESSelect_EditDirPart : public IFSelect_Editor
 {
 

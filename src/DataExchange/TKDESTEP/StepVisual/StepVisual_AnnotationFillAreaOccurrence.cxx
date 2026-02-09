@@ -2,11 +2,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_AnnotationFillAreaOccurrence, StepVisual_AnnotationOccurrence)
 
-//=================================================================================================
-
 StepVisual_AnnotationFillAreaOccurrence::StepVisual_AnnotationFillAreaOccurrence() = default;
-
-//=================================================================================================
 
 void StepVisual_AnnotationFillAreaOccurrence::Init(
   const occ::handle<TCollection_HAsciiString>& theName,

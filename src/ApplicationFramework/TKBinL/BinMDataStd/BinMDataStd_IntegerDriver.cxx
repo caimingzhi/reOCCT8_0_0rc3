@@ -7,25 +7,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_IntegerDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_IntegerDriver::BinMDataStd_IntegerDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_Integer)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_IntegerDriver::NewEmpty() const
 {
   return new TDataStd_Integer();
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 
 bool BinMDataStd_IntegerDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                       const occ::handle<TDF_Attribute>& theTarget,
@@ -37,7 +28,7 @@ bool BinMDataStd_IntegerDriver::Paste(const BinObjMgt_Persistent&       theSourc
   if (ok)
     anAtt->Set(aValue);
   if (theRT.GetHeaderData()->StorageVersion().IntegerValue() >= TDocStd_FormatVersion_VERSION_9)
-  { // process user defined guid
+  {
     const int&    aPos = theSource.Position();
     Standard_GUID aGuid;
     ok = theSource >> aGuid;
@@ -56,11 +47,6 @@ bool BinMDataStd_IntegerDriver::Paste(const BinObjMgt_Persistent&       theSourc
   return ok;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
-
 void BinMDataStd_IntegerDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
   BinObjMgt_Persistent&             theTarget,
@@ -68,7 +54,7 @@ void BinMDataStd_IntegerDriver::Paste(
 {
   occ::handle<TDataStd_Integer> anAtt = occ::down_cast<TDataStd_Integer>(theSource);
   theTarget << anAtt->Get();
-  // process user defined guid
+
   if (anAtt->ID() != TDataStd_Integer::GetID())
     theTarget << anAtt->ID();
 }

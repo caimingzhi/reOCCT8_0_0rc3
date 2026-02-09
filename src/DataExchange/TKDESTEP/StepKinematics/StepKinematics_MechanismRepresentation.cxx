@@ -1,14 +1,10 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_MechanismRepresentation.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_MechanismRepresentation, StepRepr_Representation)
 
-//=================================================================================================
-
 StepKinematics_MechanismRepresentation::StepKinematics_MechanismRepresentation() = default;
-
-//=================================================================================================
 
 void StepKinematics_MechanismRepresentation::Init(
   const occ::handle<TCollection_HAsciiString>& theRepresentation_Name,
@@ -24,15 +20,11 @@ void StepKinematics_MechanismRepresentation::Init(
   myRepresentedTopology = theRepresentedTopology;
 }
 
-//=================================================================================================
-
 StepKinematics_KinematicTopologyRepresentationSelect StepKinematics_MechanismRepresentation::
   RepresentedTopology() const
 {
   return myRepresentedTopology;
 }
-
-//=================================================================================================
 
 void StepKinematics_MechanismRepresentation::SetRepresentedTopology(
   const StepKinematics_KinematicTopologyRepresentationSelect& theRepresentedTopology)

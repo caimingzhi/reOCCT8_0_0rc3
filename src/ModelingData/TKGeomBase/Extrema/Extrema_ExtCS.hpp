@@ -15,9 +15,6 @@ class Extrema_POnCurv;
 class Extrema_POnSurf;
 class gp_Pnt;
 
-//! It calculates all the extremum distances
-//! between a curve and a surface.
-//! These distances can be minimum or maximum.
 class Extrema_ExtCS
 {
 public:
@@ -25,15 +22,11 @@ public:
 
   Standard_EXPORT Extrema_ExtCS();
 
-  //! It calculates all the distances between C and S.
   Standard_EXPORT Extrema_ExtCS(const Adaptor3d_Curve&   C,
                                 const Adaptor3d_Surface& S,
                                 const double             TolC,
                                 const double             TolS);
 
-  //! It calculates all the distances between C and S.
-  //! UCinf and UCmax are the start and end parameters
-  //! of the curve.
   Standard_EXPORT Extrema_ExtCS(const Adaptor3d_Curve&   C,
                                 const Adaptor3d_Surface& S,
                                 const double             UCinf,
@@ -45,10 +38,8 @@ public:
                                 const double             TolC,
                                 const double             TolS);
 
-  //! Initializes the fields of the algorithm.
   Standard_EXPORT void Initialize(const Adaptor3d_Surface& S, const double TolC, const double TolS);
 
-  //! Initializes the fields of the algorithm.
   Standard_EXPORT void Initialize(const Adaptor3d_Surface& S,
                                   const double             Uinf,
                                   const double             Usup,
@@ -57,24 +48,16 @@ public:
                                   const double             TolC,
                                   const double             TolS);
 
-  //! Computes the distances.
-  //! An exception is raised if the fields have not been
-  //! initialized.
   Standard_EXPORT void Perform(const Adaptor3d_Curve& C, const double Uinf, const double Usup);
 
-  //! Returns True if the distances are found.
   Standard_EXPORT bool IsDone() const;
 
-  //! Returns True if the curve is on a parallel surface.
   Standard_EXPORT bool IsParallel() const;
 
-  //! Returns the number of extremum distances.
   Standard_EXPORT int NbExt() const;
 
-  //! Returns the value of the Nth resulting square distance.
   Standard_EXPORT double SquareDistance(const int N) const;
 
-  //! Returns the point of the Nth resulting distance.
   Standard_EXPORT void Points(const int N, Extrema_POnCurv& P1, Extrema_POnSurf& P2) const;
 
 private:
@@ -87,7 +70,6 @@ private:
                                    const double           SquareDist);
 
 private:
-  // disallow copies
   Extrema_ExtCS(Extrema_ExtCS&)            = delete;
   Extrema_ExtCS& operator=(Extrema_ExtCS&) = delete;
 

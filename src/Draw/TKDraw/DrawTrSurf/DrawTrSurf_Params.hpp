@@ -3,7 +3,6 @@
 #include <Draw_Color.hpp>
 #include <Draw_MarkerShape.hpp>
 
-//! DrawTrSurf parameters.
 struct DrawTrSurf_Params
 {
 public:

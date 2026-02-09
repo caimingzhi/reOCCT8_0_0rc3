@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDoc_DimTolTool.hpp>
 
@@ -41,11 +30,7 @@ IMPLEMENT_DERIVED_ATTRIBUTE_WITH_TYPE(XCAFDoc_DimTolTool,
                                       "xcaf",
                                       "DimTolTool")
 
-//=================================================================================================
-
 XCAFDoc_DimTolTool::XCAFDoc_DimTolTool() = default;
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_DimTolTool> XCAFDoc_DimTolTool::Set(const TDF_Label& L)
 {
@@ -59,22 +44,16 @@ occ::handle<XCAFDoc_DimTolTool> XCAFDoc_DimTolTool::Set(const TDF_Label& L)
   return A;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_DimTolTool::GetID()
 {
   static Standard_GUID DGTTblID("72afb19b-44de-11d8-8776-001083004c77");
   return DGTTblID;
 }
 
-//=================================================================================================
-
 TDF_Label XCAFDoc_DimTolTool::BaseLabel() const
 {
   return Label();
 }
-
-//=================================================================================================
 
 const occ::handle<XCAFDoc_ShapeTool>& XCAFDoc_DimTolTool::ShapeTool()
 {
@@ -83,15 +62,11 @@ const occ::handle<XCAFDoc_ShapeTool>& XCAFDoc_DimTolTool::ShapeTool()
   return myShapeTool;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_DimTolTool::IsDimTol(const TDF_Label& theDimTolL) const
 {
   occ::handle<XCAFDoc_DimTol> aDimTolAttr;
   return theDimTolL.FindAttribute(XCAFDoc_DimTol::GetID(), aDimTolAttr);
 }
-
-//=================================================================================================
 
 bool XCAFDoc_DimTolTool::IsDimension(const TDF_Label& theDimTolL) const
 {
@@ -99,15 +74,11 @@ bool XCAFDoc_DimTolTool::IsDimension(const TDF_Label& theDimTolL) const
   return theDimTolL.FindAttribute(XCAFDoc_Dimension::GetID(), aDimTolAttr);
 }
 
-//=================================================================================================
-
 bool XCAFDoc_DimTolTool::IsGeomTolerance(const TDF_Label& theDimTolL) const
 {
   occ::handle<XCAFDoc_GeomTolerance> aDimTolAttr;
   return theDimTolL.FindAttribute(XCAFDoc_GeomTolerance::GetID(), aDimTolAttr);
 }
-
-//=================================================================================================
 
 void XCAFDoc_DimTolTool::GetDimTolLabels(NCollection_Sequence<TDF_Label>& theLabels) const
 {
@@ -121,8 +92,6 @@ void XCAFDoc_DimTolTool::GetDimTolLabels(NCollection_Sequence<TDF_Label>& theLab
   }
 }
 
-//=================================================================================================
-
 void XCAFDoc_DimTolTool::GetDimensionLabels(NCollection_Sequence<TDF_Label>& theLabels) const
 {
   theLabels.Clear();
@@ -135,8 +104,6 @@ void XCAFDoc_DimTolTool::GetDimensionLabels(NCollection_Sequence<TDF_Label>& the
   }
 }
 
-//=================================================================================================
-
 void XCAFDoc_DimTolTool::GetGeomToleranceLabels(NCollection_Sequence<TDF_Label>& theLabels) const
 {
   theLabels.Clear();
@@ -148,8 +115,6 @@ void XCAFDoc_DimTolTool::GetGeomToleranceLabels(NCollection_Sequence<TDF_Label>&
       theLabels.Append(aL);
   }
 }
-
-//=================================================================================================
 
 bool XCAFDoc_DimTolTool::FindDimTol(const int                                       kind,
                                     const occ::handle<NCollection_HArray1<double>>& aVal,
@@ -176,7 +141,7 @@ bool XCAFDoc_DimTolTool::FindDimTol(const int                                   
     if (!(aDescription == aDescription1))
       continue;
     if (kind < 20)
-    { // dimension
+    {
       for (int i = 1; i <= aVal->Length(); i++)
       {
         if (std::abs(aVal->Value(i) - aVal1->Value(i)) > Precision::Confusion())
@@ -184,7 +149,7 @@ bool XCAFDoc_DimTolTool::FindDimTol(const int                                   
       }
     }
     else if (kind < 50)
-    { // tolerance
+    {
       if (std::abs(aVal->Value(1) - aVal1->Value(1)) > Precision::Confusion())
         IsEqual = false;
     }
@@ -197,8 +162,6 @@ bool XCAFDoc_DimTolTool::FindDimTol(const int                                   
   return false;
 }
 
-//=================================================================================================
-
 TDF_Label XCAFDoc_DimTolTool::FindDimTol(
   const int                                       kind,
   const occ::handle<NCollection_HArray1<double>>& aVal,
@@ -209,8 +172,6 @@ TDF_Label XCAFDoc_DimTolTool::FindDimTol(
   FindDimTol(kind, aVal, aName, aDescription, L);
   return L;
 }
-
-//=================================================================================================
 
 TDF_Label XCAFDoc_DimTolTool::AddDimTol(
   const int                                       kind,
@@ -231,8 +192,6 @@ TDF_Label XCAFDoc_DimTolTool::AddDimTol(
   return DimTolL;
 }
 
-//=================================================================================================
-
 TDF_Label XCAFDoc_DimTolTool::AddDimension()
 {
   TDF_Label     aDimTolL;
@@ -243,8 +202,6 @@ TDF_Label XCAFDoc_DimTolTool::AddDimension()
   TDataStd_Name::Set(aDimTolL, aStr);
   return aDimTolL;
 }
-
-//=================================================================================================
 
 TDF_Label XCAFDoc_DimTolTool::AddGeomTolerance()
 {
@@ -257,15 +214,11 @@ TDF_Label XCAFDoc_DimTolTool::AddGeomTolerance()
   return aDimTolL;
 }
 
-//=================================================================================================
-
 void XCAFDoc_DimTolTool::SetDimension(const TDF_Label& theL, const TDF_Label& theDimTolL) const
 {
   TDF_Label nullLab;
   SetDimension(theL, nullLab, theDimTolL);
 }
-
-//=================================================================================================
 
 void XCAFDoc_DimTolTool::SetDimension(const TDF_Label& theFirstL,
                                       const TDF_Label& theSecondL,
@@ -278,8 +231,6 @@ void XCAFDoc_DimTolTool::SetDimension(const TDF_Label& theFirstL,
     aSecondLS.Append(theSecondL);
   SetDimension(aFirstLS, aSecondLS, theDimTolL);
 }
-
-//=================================================================================================
 
 void XCAFDoc_DimTolTool::SetDimension(const NCollection_Sequence<TDF_Label>& theFirstL,
                                       const NCollection_Sequence<TDF_Label>& theSecondL,
@@ -355,8 +306,6 @@ void XCAFDoc_DimTolTool::SetDimension(const NCollection_Sequence<TDF_Label>& the
   }
 }
 
-//=================================================================================================
-
 void XCAFDoc_DimTolTool::SetGeomTolerance(const TDF_Label& theL, const TDF_Label& theGeomTolL) const
 {
   NCollection_Sequence<TDF_Label> aSeq;
@@ -364,17 +313,9 @@ void XCAFDoc_DimTolTool::SetGeomTolerance(const TDF_Label& theL, const TDF_Label
   SetGeomTolerance(aSeq, theGeomTolL);
 }
 
-//=================================================================================================
-
 void XCAFDoc_DimTolTool::SetGeomTolerance(const NCollection_Sequence<TDF_Label>& theL,
                                           const TDF_Label&                       theGeomTolL) const
 {
-  //  // set reference
-  //  occ::handle<TDataStd_TreeNode> refNode, mainNode;
-  //  refNode = TDataStd_TreeNode::Set ( theDimTolL, XCAFDoc::GeomToleranceRefGUID() );
-  //  mainNode  = TDataStd_TreeNode::Set ( theL,       XCAFDoc::GeomToleranceRefGUID() );
-  //  refNode->Remove(); // abv: fix against bug in TreeNode::Append()
-  //  mainNode->Append(refNode);
 
   if (!IsGeomTolerance(theGeomTolL) || theL.Length() == 0)
   {
@@ -415,19 +356,15 @@ void XCAFDoc_DimTolTool::SetGeomTolerance(const NCollection_Sequence<TDF_Label>&
   }
 }
 
-//=================================================================================================
-
 void XCAFDoc_DimTolTool::SetDimTol(const TDF_Label& theL, const TDF_Label& theDimTolL) const
 {
-  // set reference
+
   occ::handle<TDataStd_TreeNode> refNode, mainNode;
   refNode  = TDataStd_TreeNode::Set(theDimTolL, XCAFDoc::DimTolRefGUID());
   mainNode = TDataStd_TreeNode::Set(theL, XCAFDoc::DimTolRefGUID());
-  refNode->Remove(); // abv: fix against bug in TreeNode::Append()
+  refNode->Remove();
   mainNode->Append(refNode);
 }
-
-//=================================================================================================
 
 TDF_Label XCAFDoc_DimTolTool::SetDimTol(
   const TDF_Label&                                L,
@@ -440,8 +377,6 @@ TDF_Label XCAFDoc_DimTolTool::SetDimTol(
   SetDimTol(L, DimTolL);
   return DimTolL;
 }
-
-//=================================================================================================
 
 bool XCAFDoc_DimTolTool::GetRefShapeLabel(const TDF_Label&                 theL,
                                           NCollection_Sequence<TDF_Label>& theShapeLFirst,
@@ -499,8 +434,6 @@ bool XCAFDoc_DimTolTool::GetRefShapeLabel(const TDF_Label&                 theL,
   return true;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_DimTolTool::GetRefDimensionLabels(const TDF_Label&                 theShapeL,
                                                NCollection_Sequence<TDF_Label>& theDimTols) const
 {
@@ -526,8 +459,6 @@ bool XCAFDoc_DimTolTool::GetRefDimensionLabels(const TDF_Label&                 
   return aResult;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_DimTolTool::GetRefGeomToleranceLabels(
   const TDF_Label&                 theShapeL,
   NCollection_Sequence<TDF_Label>& theDimTols) const
@@ -545,8 +476,6 @@ bool XCAFDoc_DimTolTool::GetRefGeomToleranceLabels(
   return true;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_DimTolTool::GetRefDatumLabel(const TDF_Label&                 theShapeL,
                                           NCollection_Sequence<TDF_Label>& theDatum) const
 {
@@ -561,8 +490,6 @@ bool XCAFDoc_DimTolTool::GetRefDatumLabel(const TDF_Label&                 theSh
   }
   return true;
 }
-
-//=================================================================================================
 
 bool XCAFDoc_DimTolTool::GetDimTol(const TDF_Label&                          DimTolL,
                                    int&                                      kind,
@@ -583,15 +510,11 @@ bool XCAFDoc_DimTolTool::GetDimTol(const TDF_Label&                          Dim
   return true;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_DimTolTool::IsDatum(const TDF_Label& theDimTolL) const
 {
   occ::handle<XCAFDoc_Datum> aDatumAttr;
   return theDimTolL.FindAttribute(XCAFDoc_Datum::GetID(), aDatumAttr);
 }
-
-//=================================================================================================
 
 void XCAFDoc_DimTolTool::GetDatumLabels(NCollection_Sequence<TDF_Label>& theLabels) const
 {
@@ -604,8 +527,6 @@ void XCAFDoc_DimTolTool::GetDatumLabels(NCollection_Sequence<TDF_Label>& theLabe
       theLabels.Append(L);
   }
 }
-
-//=================================================================================================
 
 bool XCAFDoc_DimTolTool::FindDatum(const occ::handle<TCollection_HAsciiString>& aName,
                                    const occ::handle<TCollection_HAsciiString>& aDescription,
@@ -631,8 +552,6 @@ bool XCAFDoc_DimTolTool::FindDatum(const occ::handle<TCollection_HAsciiString>& 
   return false;
 }
 
-//=================================================================================================
-
 TDF_Label XCAFDoc_DimTolTool::AddDatum(
   const occ::handle<TCollection_HAsciiString>& aName,
   const occ::handle<TCollection_HAsciiString>& aDescription,
@@ -646,8 +565,6 @@ TDF_Label XCAFDoc_DimTolTool::AddDatum(
   return DatumL;
 }
 
-//=================================================================================================
-
 TDF_Label XCAFDoc_DimTolTool::AddDatum()
 {
   TDF_Label     aDatumL;
@@ -657,8 +574,6 @@ TDF_Label XCAFDoc_DimTolTool::AddDatum()
   TDataStd_Name::Set(aDatumL, "DGT:Datum");
   return aDatumL;
 }
-
-//=================================================================================================
 
 void XCAFDoc_DimTolTool::SetDatum(const NCollection_Sequence<TDF_Label>& theL,
                                   const TDF_Label&                       theDatumL) const
@@ -702,8 +617,6 @@ void XCAFDoc_DimTolTool::SetDatum(const NCollection_Sequence<TDF_Label>& theL,
   }
 }
 
-//=================================================================================================
-
 void XCAFDoc_DimTolTool::SetDatum(
   const TDF_Label&                             L,
   const TDF_Label&                             TolerL,
@@ -717,7 +630,7 @@ void XCAFDoc_DimTolTool::SetDatum(
   NCollection_Sequence<TDF_Label> aLabels;
   aLabels.Append(L);
   SetDatum(aLabels, DatumL);
-  // set reference
+
   occ::handle<XCAFDoc_GraphNode> FGNode;
   occ::handle<XCAFDoc_GraphNode> ChGNode;
   if (!TolerL.FindAttribute(XCAFDoc::DatumTolRefGUID(), FGNode))
@@ -736,12 +649,10 @@ void XCAFDoc_DimTolTool::SetDatum(
   ChGNode->SetFather(FGNode);
 }
 
-//=================================================================================================
-
 void XCAFDoc_DimTolTool::SetDatumToGeomTol(const TDF_Label& theDatumL,
                                            const TDF_Label& theTolerL) const
 {
-  // set reference
+
   occ::handle<XCAFDoc_GraphNode> aFGNode;
   occ::handle<XCAFDoc_GraphNode> aChGNode;
   if (!theTolerL.FindAttribute(XCAFDoc::DatumTolRefGUID(), aFGNode))
@@ -760,8 +671,6 @@ void XCAFDoc_DimTolTool::SetDatumToGeomTol(const TDF_Label& theDatumL,
   aChGNode->SetFather(aFGNode);
 }
 
-//=================================================================================================
-
 bool XCAFDoc_DimTolTool::GetDatum(const TDF_Label&                       theDatumL,
                                   occ::handle<TCollection_HAsciiString>& theName,
                                   occ::handle<TCollection_HAsciiString>& theDescription,
@@ -777,8 +686,6 @@ bool XCAFDoc_DimTolTool::GetDatum(const TDF_Label&                       theDatu
   return true;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_DimTolTool::GetDatumOfTolerLabels(const TDF_Label&                 theDimTolL,
                                                NCollection_Sequence<TDF_Label>& theDatums)
 {
@@ -793,8 +700,6 @@ bool XCAFDoc_DimTolTool::GetDatumOfTolerLabels(const TDF_Label&                 
   }
   return true;
 }
-
-//=================================================================================================
 
 bool XCAFDoc_DimTolTool::GetDatumWithObjectOfTolerLabels(const TDF_Label& theDimTolL,
                                                          NCollection_Sequence<TDF_Label>& theDatums)
@@ -817,15 +722,13 @@ bool XCAFDoc_DimTolTool::GetDatumWithObjectOfTolerLabels(const TDF_Label& theDim
     occ::handle<TCollection_HAsciiString> aName = aDatumObj->GetName();
     if (!aDatumNameMap.Add(aName->String()))
     {
-      // the datum has already been appended to sequence, due to one of its datum targets
+
       continue;
     }
     theDatums.Append(aDatumNode->Label());
   }
   return true;
 }
-
-//=================================================================================================
 
 bool XCAFDoc_DimTolTool::GetTolerOfDatumLabels(const TDF_Label&                 theDatumL,
                                                NCollection_Sequence<TDF_Label>& theTols) const
@@ -841,36 +744,26 @@ bool XCAFDoc_DimTolTool::GetTolerOfDatumLabels(const TDF_Label&                 
   return true;
 }
 
-//=================================================================================================
-
 bool XCAFDoc_DimTolTool::IsLocked(const TDF_Label& theViewL) const
 {
   occ::handle<TDataStd_UAttribute> anAttr;
   return theViewL.FindAttribute(XCAFDoc::LockGUID(), anAttr);
 }
 
-//=================================================================================================
-
 void XCAFDoc_DimTolTool::Lock(const TDF_Label& theViewL) const
 {
   TDataStd_UAttribute::Set(theViewL, XCAFDoc::LockGUID());
 }
-
-//=================================================================================================
 
 void XCAFDoc_DimTolTool::Unlock(const TDF_Label& theViewL) const
 {
   theViewL.ForgetAttribute(XCAFDoc::LockGUID());
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_DimTolTool::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 void XCAFDoc_DimTolTool::GetGDTPresentations(
   NCollection_IndexedDataMap<TDF_Label, TopoDS_Shape>& theGDTLabelToShape) const
@@ -924,8 +817,6 @@ void XCAFDoc_DimTolTool::GetGDTPresentations(
   }
 }
 
-//=================================================================================================
-
 void XCAFDoc_DimTolTool::SetGDTPresentations(
   NCollection_IndexedDataMap<TDF_Label, TopoDS_Shape>& theGDTLabelToPrs)
 {
@@ -967,8 +858,6 @@ void XCAFDoc_DimTolTool::SetGDTPresentations(
     }
   }
 }
-
-//=================================================================================================
 
 void XCAFDoc_DimTolTool::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

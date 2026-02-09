@@ -9,12 +9,6 @@
 #include <Standard_Transient.hpp>
 #include <Standard_OStream.hpp>
 
-//! defines a Material node of VRML specifying properties of geometry
-//! and its appearance.
-//! This node defines the current surface material properties for all subsequent shapes.
-//! Material sets several components of the current material during traversal. Different shapes
-//! interpret materials with multiple values differently. To bind materials to shapes, use a
-//! MaterialBinding node.
 class Vrml_Material : public Standard_Transient
 {
 

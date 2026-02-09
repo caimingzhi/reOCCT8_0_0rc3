@@ -5,11 +5,7 @@
 #include <StepRepr_Representation.hpp>
 #include <StepShape_TopologicalRepresentationItem.hpp>
 
-//=================================================================================================
-
 StepVisual_StyledItemTarget::StepVisual_StyledItemTarget() = default;
-
-//=================================================================================================
 
 int StepVisual_StyledItemTarget::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {

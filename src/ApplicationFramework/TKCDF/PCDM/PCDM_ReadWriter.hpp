@@ -20,7 +20,6 @@ class PCDM_ReadWriter : public Standard_Transient
 {
 
 public:
-  //! returns PCDM_ReadWriter_1.
   Standard_EXPORT virtual TCollection_AsciiString Version() const = 0;
 
   Standard_EXPORT virtual void WriteReferenceCounter(
@@ -61,7 +60,6 @@ public:
                                    const TCollection_ExtendedString&      aFileName,
                                    const Storage_OpenMode                 anOpenMode);
 
-  //! returns the convenient Reader for a File.
   Standard_EXPORT static occ::handle<PCDM_ReadWriter> Reader(
     const TCollection_ExtendedString& aFileName);
 
@@ -70,15 +68,9 @@ public:
   Standard_EXPORT static void WriteFileFormat(const occ::handle<Storage_Data>& aData,
                                               const occ::handle<CDM_Document>& aDocument);
 
-  //! tries to get a format in the file. returns an empty
-  //! string if the file could not be read or does not have
-  //! a FileFormat information.
   Standard_EXPORT static TCollection_ExtendedString FileFormat(
     const TCollection_ExtendedString& aFileName);
 
-  //! tries to get a format from the stream. returns an empty
-  //! string if the file could not be read or does not have
-  //! a FileFormat information.
   Standard_EXPORT static TCollection_ExtendedString FileFormat(Standard_IStream& theIStream,
                                                                occ::handle<Storage_Data>& theData);
 

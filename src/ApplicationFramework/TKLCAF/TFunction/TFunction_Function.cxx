@@ -8,20 +8,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TFunction_Function, TDF_Attribute)
 
-//=======================================================================
-// function : GetID
-// purpose  : Static method to get an ID
-//=======================================================================
 const Standard_GUID& TFunction_Function::GetID()
 {
   static Standard_GUID TFunction_FunctionID("5b35ca00-5b78-11d1-8940-080009dc3333");
   return TFunction_FunctionID;
 }
-
-//=======================================================================
-// function : Set
-// purpose  : Finds or creates a function attribute
-//=======================================================================
 
 occ::handle<TFunction_Function> TFunction_Function::Set(const TDF_Label& L)
 {
@@ -33,12 +24,6 @@ occ::handle<TFunction_Function> TFunction_Function::Set(const TDF_Label& L)
   }
   return F;
 }
-
-//=======================================================================
-// function : Set
-// purpose  : Finds or creates a function attribute and initializes
-//         : a driver for it
-//=======================================================================
 
 occ::handle<TFunction_Function> TFunction_Function::Set(const TDF_Label&     L,
                                                         const Standard_GUID& DriverID)
@@ -53,41 +38,19 @@ occ::handle<TFunction_Function> TFunction_Function::Set(const TDF_Label&     L,
   return F;
 }
 
-//=======================================================================
-// function : ID
-// purpose  : Returns GUID of the function
-//=======================================================================
-
 const Standard_GUID& TFunction_Function::ID() const
 {
   return GetID();
 }
-
-//=======================================================================
-// function : Find
-// purpose  : Finds a function if it is on the label
-//=======================================================================
-
-// bool TFunction_Function::Find(const TDF_Label& L,
-// 					  occ::handle<TFunction_Function>& F)
-// {
-//   if (!L.FindAttribute(TFunction_Function::GetID(), F))
-//     return false;
-//   return true;
-// }
-
-//=================================================================================================
 
 TFunction_Function::TFunction_Function()
     : myFailure(0)
 {
 }
 
-//=================================================================================================
-
 void TFunction_Function::SetDriverGUID(const Standard_GUID& guid)
 {
-  // OCC2932 correction
+
   if (myDriverGUID == guid)
     return;
 
@@ -95,22 +58,15 @@ void TFunction_Function::SetDriverGUID(const Standard_GUID& guid)
   myDriverGUID = guid;
 }
 
-//=======================================================================
-// function : SetFailure
-// purpose  : Sets the failed status of the function
-//=======================================================================
-
 void TFunction_Function::SetFailure(const int mode)
 {
-  // OCC2932 correction
+
   if (myFailure == mode)
     return;
 
   Backup();
   myFailure = mode;
 }
-
-//=================================================================================================
 
 void TFunction_Function::Restore(const occ::handle<TDF_Attribute>& other)
 {
@@ -119,45 +75,26 @@ void TFunction_Function::Restore(const occ::handle<TDF_Attribute>& other)
   myDriverGUID                      = F->myDriverGUID;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : Method for Copy mechanism
-//=======================================================================
-
 void TFunction_Function::Paste(const occ::handle<TDF_Attribute>& into,
-                               const occ::handle<TDF_RelocationTable>& /*RT*/) const
+                               const occ::handle<TDF_RelocationTable>&) const
 {
   occ::handle<TFunction_Function> intof = occ::down_cast<TFunction_Function>(into);
   intof->SetFailure(myFailure);
   intof->SetDriverGUID(myDriverGUID);
 }
 
-//=======================================================================
-// function : NewEmpty
-// purpose  : Returns new empty function attribute
-//=======================================================================
-
 occ::handle<TDF_Attribute> TFunction_Function::NewEmpty() const
 {
   return new TFunction_Function();
 }
 
-//=======================================================================
-// function : References
-// purpose  : Collects the references
-//=======================================================================
-
-void TFunction_Function::References(const occ::handle<TDF_DataSet>& /*aDataSet*/) const {}
-
-//=================================================================================================
+void TFunction_Function::References(const occ::handle<TDF_DataSet>&) const {}
 
 Standard_OStream& TFunction_Function::Dump(Standard_OStream& anOS) const
 {
   TDF_Attribute::Dump(anOS);
   return anOS;
 }
-
-//=================================================================================================
 
 void TFunction_Function::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

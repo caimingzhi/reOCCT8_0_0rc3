@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_UnconstrainedPair;
 
-//! Read & Write tool for UnconstrainedPair
 class RWStepKinematics_RWUnconstrainedPair
 {
 public:

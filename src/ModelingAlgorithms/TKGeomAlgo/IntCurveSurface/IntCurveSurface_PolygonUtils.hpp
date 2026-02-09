@@ -8,23 +8,9 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//! Utility functions for polygon discretization of curves.
-//! These template functions implement the core logic previously in IntCurveSurface_Polygon.gxx.
 namespace IntCurveSurface_PolygonUtils
 {
 
-  //! Initialize polygon with uniform parameter sampling.
-  //! Samples theNbPntIn points along the curve from theBinf to theBsup with equal parameter
-  //! spacing. Computes the bounding box and estimates the maximum deflection.
-  //! @tparam CurveType Type of curve (e.g., occ::handle<Adaptor3d_Curve> or gp_Lin)
-  //! @tparam CurveTool Tool class providing curve operations (D0, Value, FirstParameter, etc.)
-  //! @param[in]     theCurve       The curve to discretize
-  //! @param[in]     theBinf        First parameter value
-  //! @param[in]     theBsup        Last parameter value
-  //! @param[in]     theNbPntIn     Number of sample points
-  //! @param[in,out] thePnts        Array to store sampled points (must be pre-allocated)
-  //! @param[in,out] theBnd         Bounding box to update
-  //! @param[out]    theDeflection  Estimated maximum deflection
   template <typename CurveType, typename CurveTool>
   void InitUniform(const CurveType&            theCurve,
                    const double                theBinf,
@@ -46,7 +32,6 @@ namespace IntCurveSurface_PolygonUtils
       u += du;
     }
 
-    // Calculate deflection estimate by measuring distance from midpoints to chord lines
     theDeflection = 0.0;
     if (theNbPntIn > 3)
     {
@@ -72,17 +57,6 @@ namespace IntCurveSurface_PolygonUtils
     }
   }
 
-  //! Initialize polygon with explicit parameter array.
-  //! Samples points at the specified parameter values and stores them for later lookup.
-  //! @tparam CurveType Type of curve (e.g., occ::handle<Adaptor3d_Curve> or gp_Lin)
-  //! @tparam CurveTool Tool class providing curve operations
-  //! @param[in]     theCurve       The curve to discretize
-  //! @param[in]     theUpars       Array of parameter values
-  //! @param[in]     theNbPntIn     Number of sample points
-  //! @param[in,out] thePnts        Array to store sampled points (must be pre-allocated)
-  //! @param[in,out] theBnd         Bounding box to update
-  //! @param[out]    theDeflection  Estimated maximum deflection
-  //! @param[out]    theParams      Handle to store copy of parameters (created internally)
   template <typename CurveType, typename CurveTool>
   void InitWithParams(const CurveType&                          theCurve,
                       const NCollection_Array1<double>&         theUpars,
@@ -104,7 +78,6 @@ namespace IntCurveSurface_PolygonUtils
       thePnts.SetValue(i, P);
     }
 
-    // Calculate deflection estimate
     theDeflection = 0.0;
     if (theNbPntIn > 3)
     {
@@ -129,15 +102,6 @@ namespace IntCurveSurface_PolygonUtils
     }
   }
 
-  //! Compute approximate parameter on curve for a given polygon segment and position.
-  //! This is a non-template function as it only operates on stored data.
-  //! @param[in] theIndex       Segment index (1-based)
-  //! @param[in] theParamOnLine Position along segment [0,1]
-  //! @param[in] theBinf        First parameter of polygon range
-  //! @param[in] theBsup        Last parameter of polygon range
-  //! @param[in] theNbPntIn     Number of points in polygon
-  //! @param[in] theParams      Optional explicit parameter array (may be null for uniform)
-  //! @return Approximate parameter value on the curve
   inline double ApproxParamOnCurve(int                                             theIndex,
                                    double                                          theParamOnLine,
                                    const double                                    theBinf,

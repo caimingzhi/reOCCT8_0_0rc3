@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DE_ConfigurationContext.hpp>
 
@@ -34,7 +23,6 @@ enum DE_ConfigurationContext_KindOfLine
 
 namespace
 {
-  //=================================================================================================
 
   static bool GetLine(OSD_File& theFile, TCollection_AsciiString& theLine)
   {
@@ -60,8 +48,6 @@ namespace
     } while (theLine.Value(theLine.Length()) != '\n');
     return true;
   }
-
-  //=================================================================================================
 
   static DE_ConfigurationContext_KindOfLine WhatKindOfLine(const TCollection_AsciiString& theLine,
                                                            TCollection_AsciiString&       theToken1,
@@ -130,8 +116,6 @@ namespace
     return DE_ConfigurationContext_KindOfLine_Resource;
   }
 
-  //=================================================================================================
-
   static TCollection_AsciiString MakeName(const TCollection_AsciiString& theScope,
                                           const TCollection_AsciiString& theParam)
   {
@@ -145,11 +129,7 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 DE_ConfigurationContext::DE_ConfigurationContext() = default;
-
-//=================================================================================================
 
 bool DE_ConfigurationContext::Load(const TCollection_AsciiString& theConfiguration)
 {
@@ -171,8 +151,6 @@ bool DE_ConfigurationContext::Load(const TCollection_AsciiString& theConfigurati
   }
   return true;
 }
-
-//=================================================================================================
 
 bool DE_ConfigurationContext::LoadFile(const TCollection_AsciiString& theFile)
 {
@@ -198,8 +176,6 @@ bool DE_ConfigurationContext::LoadFile(const TCollection_AsciiString& theFile)
   return true;
 }
 
-//=================================================================================================
-
 bool DE_ConfigurationContext::LoadStr(const TCollection_AsciiString& theResource)
 {
   myResource.Clear();
@@ -223,16 +199,12 @@ bool DE_ConfigurationContext::LoadStr(const TCollection_AsciiString& theResource
   return true;
 }
 
-//=================================================================================================
-
 bool DE_ConfigurationContext::IsParamSet(const TCollection_AsciiString& theParam,
                                          const TCollection_AsciiString& theScope) const
 {
   TCollection_AsciiString aResource(MakeName(theScope, theParam));
   return myResource.IsBound(aResource);
 }
-
-//=================================================================================================
 
 double DE_ConfigurationContext::RealVal(const TCollection_AsciiString& theParam,
                                         const double                   theDefValue,
@@ -242,8 +214,6 @@ double DE_ConfigurationContext::RealVal(const TCollection_AsciiString& theParam,
   return GetReal(theParam, aVal, theScope) ? aVal : theDefValue;
 }
 
-//=================================================================================================
-
 int DE_ConfigurationContext::IntegerVal(const TCollection_AsciiString& theParam,
                                         const int                      theDefValue,
                                         const TCollection_AsciiString& theScope) const
@@ -251,8 +221,6 @@ int DE_ConfigurationContext::IntegerVal(const TCollection_AsciiString& theParam,
   int aVal = 0;
   return GetInteger(theParam, aVal, theScope) ? aVal : theDefValue;
 }
-
-//=================================================================================================
 
 bool DE_ConfigurationContext::BooleanVal(const TCollection_AsciiString& theParam,
                                          const bool                     theDefValue,
@@ -262,8 +230,6 @@ bool DE_ConfigurationContext::BooleanVal(const TCollection_AsciiString& theParam
   return GetBoolean(theParam, aVal, theScope) ? aVal : theDefValue;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DE_ConfigurationContext::StringVal(
   const TCollection_AsciiString& theParam,
   const TCollection_AsciiString& theDefValue,
@@ -272,8 +238,6 @@ TCollection_AsciiString DE_ConfigurationContext::StringVal(
   TCollection_AsciiString aVal = "";
   return GetString(theParam, aVal, theScope) ? aVal : theDefValue;
 }
-
-//=================================================================================================
 
 bool DE_ConfigurationContext::GetReal(const TCollection_AsciiString& theParam,
                                       double&                        theValue,
@@ -292,8 +256,6 @@ bool DE_ConfigurationContext::GetReal(const TCollection_AsciiString& theParam,
   return false;
 }
 
-//=================================================================================================
-
 bool DE_ConfigurationContext::GetInteger(const TCollection_AsciiString& theParam,
                                          int&                           theValue,
                                          const TCollection_AsciiString& theScope) const
@@ -310,8 +272,6 @@ bool DE_ConfigurationContext::GetInteger(const TCollection_AsciiString& theParam
   }
   return false;
 }
-
-//=================================================================================================
 
 bool DE_ConfigurationContext::GetBoolean(const TCollection_AsciiString& theParam,
                                          bool&                          theValue,
@@ -330,8 +290,6 @@ bool DE_ConfigurationContext::GetBoolean(const TCollection_AsciiString& theParam
   return false;
 }
 
-//=================================================================================================
-
 bool DE_ConfigurationContext::GetString(const TCollection_AsciiString& theParam,
                                         TCollection_AsciiString&       theStr,
                                         const TCollection_AsciiString& theScope) const
@@ -339,8 +297,6 @@ bool DE_ConfigurationContext::GetString(const TCollection_AsciiString& theParam,
   TCollection_AsciiString aResource = MakeName(theScope, theParam);
   return myResource.Find(aResource, theStr);
 }
-
-//=================================================================================================
 
 bool DE_ConfigurationContext::GetStringSeq(const TCollection_AsciiString&             theParam,
                                            NCollection_List<TCollection_AsciiString>& theValue,
@@ -368,8 +324,6 @@ bool DE_ConfigurationContext::GetStringSeq(const TCollection_AsciiString&       
   }
   return true;
 }
-
-//=================================================================================================
 
 bool DE_ConfigurationContext::load(const TCollection_AsciiString& theResourceLine)
 {

@@ -16,8 +16,6 @@
 #include <TopoDS.hpp>
 #include <TopoDS_Edge.hpp>
 
-//=================================================================================================
-
 TopoDS_Edge HLRBRep::MakeEdge(const HLRBRep_Curve& ec, const double U1, const double U2)
 {
   TopoDS_Edge  Edg;
@@ -85,7 +83,7 @@ TopoDS_Edge HLRBRep::MakeEdge(const HLRBRep_Curve& ec, const double U1, const do
         NCollection_Array1<gp_Pnt2d> Poles(1, theCurve->NbPoles());
         NCollection_Array1<double>   knots(1, theCurve->NbKnots());
         NCollection_Array1<int>      mults(1, theCurve->NbKnots());
-        //-- ec.KnotsAndMultiplicities(knots,mults);
+
         theCurve->Knots(knots);
         theCurve->Multiplicities(mults);
         if (theCurve->IsRational())
@@ -114,7 +112,7 @@ TopoDS_Edge HLRBRep::MakeEdge(const HLRBRep_Curve& ec, const double U1, const do
         NCollection_Array1<gp_Pnt2d> Poles(1, ec.NbPoles());
         NCollection_Array1<double>   knots(1, ec.NbKnots());
         NCollection_Array1<int>      mults(1, ec.NbKnots());
-        //-- ec.KnotsAndMultiplicities(knots,mults);
+
         ec.Knots(knots);
         ec.Multiplicities(mults);
         if (ec.IsRational())
@@ -164,18 +162,13 @@ TopoDS_Edge HLRBRep::MakeEdge(const HLRBRep_Curve& ec, const double U1, const do
   return Edg;
 }
 
-//=================================================================================================
-
 TopoDS_Edge HLRBRep::MakeEdge3d(const HLRBRep_Curve& ec, const double U1, const double U2)
 {
   TopoDS_Edge Edg;
-  // const double sta = ec.Parameter2d(U1);
-  // const double end = ec.Parameter2d(U2);
 
   TopoDS_Edge anEdge = ec.GetCurve().Edge();
   double      fpar, lpar;
-  // BRep_Tool::Range(anEdge, fpar, lpar);
-  // occ::handle<Geom_Curve> aCurve = BRep_Tool::Curve(anEdge, fpar, lpar);
+
   BRepAdaptor_Curve BAcurve(anEdge);
   fpar = BAcurve.FirstParameter();
   lpar = BAcurve.LastParameter();
@@ -185,7 +178,6 @@ TopoDS_Edge HLRBRep::MakeEdge3d(const HLRBRep_Curve& ec, const double U1, const 
   BRep_Builder BB;
   BB.Range(Edg, U1, U2);
 
-  // Share vertices if possible
   TopoDS_Vertex V1, V2, V1new, V2new;
   TopExp::Vertices(anEdge, V1, V2);
 
@@ -211,8 +203,6 @@ TopoDS_Edge HLRBRep::MakeEdge3d(const HLRBRep_Curve& ec, const double U1, const 
   BB.Add(Edg, V2new);
   return Edg;
 }
-
-//=================================================================================================
 
 void HLRBRep::PolyHLRAngleAndDeflection(const double InAngl, double& OutAngl, double& OutDefl)
 {

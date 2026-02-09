@@ -3,59 +3,28 @@
 #include <NCollection_BaseAllocator.hpp>
 #include <NCollection_DataMap.hpp>
 
-//!
-//! Class NCollection_AccAllocator - accumulating memory allocator. This
-//! class allocates memory on request returning the pointer to the allocated
-//! space. The allocation units are grouped in blocks requested from the
-//! system as required. This memory is returned to the system when all
-//! allocations in a block are freed.
-//!
-//! By comparison with the standard new() and malloc() calls, this method is
-//! faster and consumes very small additional memory to maintain the heap.
-//!
-//! By comparison with NCollection_IncAllocator, this class requires some more
-//! additional memory and a little more time for allocation and deallocation.
-//! Memory overhead for NCollection_IncAllocator is 12 bytes per block;
-//! average memory overhead for NCollection_AccAllocator is 28 bytes per block.
-//!
-//! All pointers returned by Allocate() are aligned to 4 byte boundaries.
-//! To define the sizeof memory blocks requested from the OS, use the
-//! parameter of the constructor (measured in bytes).
-
 class NCollection_AccAllocator : public NCollection_BaseAllocator
 {
-  // --------- PUBLIC CONSTANTS ---------
+
 public:
-  //! Alignment of all allocated objects: 4 bytes
   static constexpr size_t Align = 4;
 
-  //! Default block size
   static constexpr size_t DefaultBlockSize = 24600;
 
-  //! Number of last blocks to check for free space
   static constexpr int MaxLookupBlocks = 16;
 
-  // ---------- PUBLIC METHODS ----------
 public:
-  //! Constructor
   Standard_EXPORT NCollection_AccAllocator(const size_t theBlockSize = DefaultBlockSize);
 
-  //! Destructor
   Standard_EXPORT ~NCollection_AccAllocator() override;
 
-  //! Allocate memory with given size
   Standard_EXPORT void* Allocate(const size_t theSize) override;
 
-  //! Allocate memory with given size
   void* AllocateOptimal(const size_t theSize) override { return Allocate(theSize); }
 
-  //! Free a previously allocated memory;
-  //! memory is returned to the OS when all allocations in some block are freed
   Standard_EXPORT void Free(void* theAddress) override;
 
-  // --------- PROTECTED TYPES ---------
 protected:
-  //! Size value aligned to a 4 byte boundary
   class AlignedSize
   {
     size_t myValue;
@@ -74,7 +43,6 @@ protected:
     constexpr operator size_t() const noexcept { return myValue; }
   };
 
-  //! A pointer aligned to a 4 byte boundary
   class AlignedPtr
   {
     uint8_t* myValue;
@@ -103,19 +71,14 @@ protected:
     AlignedPtr operator+=(const AlignedSize theValue) noexcept { return myValue += theValue; }
   };
 
-  //! A key for the map of blocks
   struct Key
   {
     size_t Value;
   };
 
-  //! Key hasher
   class Hasher
   {
   public:
-    //! Returns hash code for the given key
-    //! @param theKey the key which hash code is to be computed
-    //! @return a computed hash code
     size_t operator()(const Key theKey) const noexcept { return theKey.Value; }
 
     bool operator()(const Key theKey1, const Key theKey2) const noexcept
@@ -124,7 +87,6 @@ protected:
     }
   };
 
-  //! Descriptor of a block
   struct Block
   {
     void*      address;
@@ -155,35 +117,26 @@ protected:
     bool IsEmpty() const noexcept { return allocCount == 0; }
   };
 
-  // --------- PROTECTED METHODS ---------
 protected:
-  //! Calculate a key for the data map basing on the given address
   inline Key getKey(void* const theAddress) const noexcept
   {
     Key aKey = {(size_t)theAddress / myBlockSize};
     return aKey;
   }
 
-  //! Find a block that the given allocation unit belongs to
   Standard_EXPORT Block* findBlock(void* const theAddress, Key& theKey) noexcept;
 
-  //! Allocate a new block and return a pointer to it
   Standard_EXPORT Block* allocateNewBlock(const size_t theSize);
 
-  // --------- PROHIBITED METHODS ---------
 private:
   NCollection_AccAllocator(const NCollection_AccAllocator&)            = delete;
   NCollection_AccAllocator& operator=(const NCollection_AccAllocator&) = delete;
 
-  // --------- PROTECTED DATA ---------
 protected:
   AlignedSize                             myBlockSize;
   Block*                                  mypLastBlock;
   NCollection_DataMap<Key, Block, Hasher> myBlocks;
 
-  // Declaration of CASCADE RTTI
 public:
   DEFINE_STANDARD_RTTIEXT(NCollection_AccAllocator, NCollection_BaseAllocator)
 };
-
-// Definition of HANDLE object using Standard_DefineHandle.hpp

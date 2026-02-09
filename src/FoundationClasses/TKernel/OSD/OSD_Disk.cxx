@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OSD_Disk.hpp>
 
@@ -96,8 +84,6 @@ extern "C"
   #include <cerrno>
 #endif
 
-//=================================================================================================
-
 OSD_Disk::OSD_Disk()
 {
 #ifdef _WIN32
@@ -113,8 +99,6 @@ OSD_Disk::OSD_Disk()
   }
 #endif
 }
-
-//=================================================================================================
 
 OSD_Disk::OSD_Disk(const OSD_Path& theName)
     : myDiskName(theName.Disk())
@@ -133,14 +117,10 @@ OSD_Disk::OSD_Disk(const char* theName)
 #endif
 }
 
-//=================================================================================================
-
 void OSD_Disk::SetName(const OSD_Path& theName)
 {
   myDiskName = theName.Disk();
 }
-
-//=================================================================================================
 
 OSD_Path OSD_Disk::Name() const
 {
@@ -152,8 +132,6 @@ OSD_Path OSD_Disk::Name() const
   return aPath;
 #endif
 }
-
-//=================================================================================================
 
 int OSD_Disk::DiskSize()
 {
@@ -170,7 +148,7 @@ int OSD_Disk::DiskSize()
   }
 
   ULONGLONG aSize = aNbTotalBytes.QuadPart / 512;
-  return (int)aSize; // may be an overflow
+  return (int)aSize;
 #else
   struct statvfs aBuffer;
   if (statvfs(myDiskName.ToCString(), &aBuffer) == 0)
@@ -182,8 +160,6 @@ int OSD_Disk::DiskSize()
   return 0;
 #endif
 }
-
-//=================================================================================================
 
 int OSD_Disk::DiskFree()
 {
@@ -200,7 +176,7 @@ int OSD_Disk::DiskFree()
   }
 
   ULONGLONG aSize = aNbFreeAvailableBytes.QuadPart / 512;
-  return (int)aSize; // may be an overflow
+  return (int)aSize;
 #else
   struct statvfs aBuffer;
   if (statvfs(myDiskName.ToCString(), &aBuffer) == 0)

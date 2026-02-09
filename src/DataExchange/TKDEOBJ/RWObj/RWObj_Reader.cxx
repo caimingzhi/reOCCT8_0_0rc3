@@ -1,16 +1,4 @@
-// Author: Kirill Gavrilov
-// Copyright (c) 2017-2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <RWObj_Reader.hpp>
 
@@ -44,10 +32,9 @@ IMPLEMENT_STANDARD_RTTIEXT(RWObj_Reader, Standard_Transient)
 
 namespace
 {
-  // The length of buffer to read (in bytes)
+
   static const size_t THE_BUFFER_SIZE = 4 * 1024;
 
-  //! Return TRUE if given polygon has clockwise node order.
   static bool isClockwisePolygon(const occ::handle<BRepMesh_DataStructureOfDelaun>& theMesh,
                                  const IMeshData::VectorOfInteger&                  theIndexes)
   {
@@ -65,8 +52,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 RWObj_Reader::RWObj_Reader()
     : myMemLimitBytes(size_t(-1)),
       myMemEstim(0),
@@ -77,8 +62,6 @@ RWObj_Reader::RWObj_Reader()
       myToAbort(false)
 {
 }
-
-//=================================================================================================
 
 bool RWObj_Reader::read(std::istream&                  theStream,
                         const TCollection_AsciiString& theFile,
@@ -100,7 +83,6 @@ bool RWObj_Reader::read(std::istream&                  theStream,
   myExternalFiles.Clear();
   myActiveSubMesh = RWObj_SubMesh();
 
-  // determine file location to load associated files
   TCollection_AsciiString aFileName;
   OSD_Path::FolderAndFileFromPath(theFile, myFolder, aFileName);
   myCurrElem.resize(1024, -1);
@@ -112,7 +94,6 @@ bool RWObj_Reader::read(std::istream&                  theStream,
     return false;
   }
 
-  // determine length of file
   theStream.seekg(0, std::istream::end);
   const int64_t aFileLen = theStream.tellg();
   theStream.seekg(0, std::istream::beg);
@@ -246,7 +227,6 @@ bool RWObj_Reader::read(std::istream&                  theStream,
     }
   }
 
-  // collect external references
   for (NCollection_DataMap<TCollection_AsciiString, RWObj_Material>::Iterator aMatIter(myMaterials);
        aMatIter.More();
        aMatIter.Next())
@@ -266,7 +246,6 @@ bool RWObj_Reader::read(std::istream&                  theStream,
     }
   }
 
-  // flush the last group
   if (!theToProbe)
   {
     addMesh(myActiveSubMesh, RWObj_SubMeshReason_NewObject);
@@ -279,8 +258,6 @@ bool RWObj_Reader::read(std::istream&                  theStream,
 
   return true;
 }
-
-//=================================================================================================
 
 void RWObj_Reader::pushIndices(const char* thePos)
 {
@@ -296,7 +273,6 @@ void RWObj_Reader::pushIndices(const char* thePos)
       break;
     }
 
-    // parse UV index
     thePos = aNext;
     if (*thePos == '/')
     {
@@ -307,7 +283,6 @@ void RWObj_Reader::pushIndices(const char* thePos)
         thePos       = aNext;
       }
 
-      // parse Normal index
       if (*thePos == '/')
       {
         ++thePos;
@@ -319,7 +294,6 @@ void RWObj_Reader::pushIndices(const char* thePos)
       }
     }
 
-    // handle negative indices
     if (a3Indices[0] < -1)
     {
       a3Indices[0] += myObjVerts.Upper() + 2;
@@ -348,7 +322,7 @@ void RWObj_Reader::pushIndices(const char* thePos)
       {
         myMemEstim += sizeof(NCollection_Vec3<float>);
       }
-      myMemEstim += sizeof(NCollection_Vec4<int>) + sizeof(int); // naive map
+      myMemEstim += sizeof(NCollection_Vec4<int>) + sizeof(int);
       if (a3Indices[0] < myObjVerts.Lower() || a3Indices[0] > myObjVerts.Upper())
       {
         myToAbort = true;
@@ -444,8 +418,6 @@ void RWObj_Reader::pushIndices(const char* thePos)
   }
 }
 
-//=================================================================================================
-
 int RWObj_Reader::triangulatePolygonFan(const NCollection_Array1<int>& theIndices)
 {
   const int aNbElemNodes = theIndices.Size();
@@ -461,8 +433,6 @@ int RWObj_Reader::triangulatePolygonFan(const NCollection_Array1<int>& theIndice
   }
   return aNbElemNodes - 2;
 }
-
-//=================================================================================================
 
 gp_XYZ RWObj_Reader::polygonCenter(const NCollection_Array1<int>& theIndices)
 {
@@ -487,8 +457,6 @@ gp_XYZ RWObj_Reader::polygonCenter(const NCollection_Array1<int>& theIndices)
   aCenter /= (double)theIndices.Size();
   return aCenter;
 }
-
-//=================================================================================================
 
 gp_XYZ RWObj_Reader::polygonNormal(const NCollection_Array1<int>& theIndices)
 {
@@ -520,8 +488,6 @@ gp_XYZ RWObj_Reader::polygonNormal(const NCollection_Array1<int>& theIndices)
   return aNormal;
 }
 
-//=================================================================================================
-
 int RWObj_Reader::triangulatePolygon(const NCollection_Array1<int>& theIndices)
 {
   const int aNbElemNodes = theIndices.Size();
@@ -532,7 +498,6 @@ int RWObj_Reader::triangulatePolygon(const NCollection_Array1<int>& theIndices)
 
   const gp_XYZ aPolygonNorm = polygonNormal(theIndices);
 
-  // map polygon onto plane
   gp_XYZ aXDir;
   {
     const double aAbsXYZ[]       = {std::abs(aPolygonNorm.X()),
@@ -611,39 +576,31 @@ int RWObj_Reader::triangulatePolygon(const NCollection_Array1<int>& theIndices)
   return triangulatePolygonFan(theIndices);
 }
 
-//=================================================================================================
-
 void RWObj_Reader::pushObject(const char* theObjectName)
 {
   TCollection_AsciiString aNewObject;
   if (!RWObj_Tools::ReadName(theObjectName, aNewObject))
   {
-    // empty group name is OK
   }
   if (addMesh(myActiveSubMesh, RWObj_SubMeshReason_NewObject))
   {
-    myPackedIndices.Clear(); // vertices might be duplicated after this point...
+    myPackedIndices.Clear();
   }
   myActiveSubMesh.Object = aNewObject;
 }
-
-//=================================================================================================
 
 void RWObj_Reader::pushGroup(const char* theGroupName)
 {
   TCollection_AsciiString aNewGroup;
   if (!RWObj_Tools::ReadName(theGroupName, aNewGroup))
   {
-    // empty group name is OK
   }
   if (addMesh(myActiveSubMesh, RWObj_SubMeshReason_NewGroup))
   {
-    myPackedIndices.Clear(); // vertices might be duplicated after this point...
+    myPackedIndices.Clear();
   }
   myActiveSubMesh.Group = aNewGroup;
 }
-
-//=================================================================================================
 
 void RWObj_Reader::pushSmoothGroup(const char* theSmoothGroupIndex)
 {
@@ -655,27 +612,22 @@ void RWObj_Reader::pushSmoothGroup(const char* theSmoothGroupIndex)
   }
   if (myActiveSubMesh.SmoothGroup.IsEqual(aNewSmoothGroup))
   {
-    // Ignore duplicated statements to workaround some weird OBJ files.
-    // Note that smooth groups are handled in different manner than groups and objects,
-    // which always flushed even with equal names.
+
     return;
   }
 
   if (addMesh(myActiveSubMesh, RWObj_SubMeshReason_NewSmoothGroup))
   {
-    myPackedIndices.Clear(); // vertices might be duplicated after this point...
+    myPackedIndices.Clear();
   }
   myActiveSubMesh.SmoothGroup = aNewSmoothGroup;
 }
-
-//=================================================================================================
 
 void RWObj_Reader::pushMaterial(const char* theMaterialName)
 {
   TCollection_AsciiString aNewMat;
   if (!RWObj_Tools::ReadName(theMaterialName, aNewMat))
   {
-    // empty material name is allowed by specs
   }
   else if (!myMaterials.IsBound(aNewMat))
   {
@@ -685,18 +637,15 @@ void RWObj_Reader::pushMaterial(const char* theMaterialName)
   }
   if (myActiveSubMesh.Material.IsEqual(aNewMat))
   {
-    return; // ignore
+    return;
   }
 
-  // implicitly create a new group to split materials
   if (addMesh(myActiveSubMesh, RWObj_SubMeshReason_NewMaterial))
   {
-    myPackedIndices.Clear(); // vertices might be duplicated after this point...
+    myPackedIndices.Clear();
   }
   myActiveSubMesh.Material = aNewMat;
 }
-
-//=================================================================================================
 
 void RWObj_Reader::readMaterialLib(const char* theFileName)
 {
@@ -714,8 +663,6 @@ void RWObj_Reader::readMaterialLib(const char* theFileName)
     myExternalFiles.Add(myFolder + aMatPath);
   }
 }
-
-//=================================================================================================
 
 bool RWObj_Reader::checkMemory()
 {

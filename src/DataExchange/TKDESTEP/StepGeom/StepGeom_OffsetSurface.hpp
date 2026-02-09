@@ -12,7 +12,6 @@ class StepGeom_OffsetSurface : public StepGeom_Surface
 {
 
 public:
-  //! Returns a OffsetSurface
   Standard_EXPORT StepGeom_OffsetSurface();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

@@ -11,12 +11,6 @@
 #include <NCollection_DataMap.hpp>
 #include <NCollection_Map.hpp>
 
-//=======================================================================
-// function : DNaming_CheckHasSame
-// purpose  : CheckIsSame  Shape1 Shape2
-//           - for test ShapeCopy mechanism
-//=======================================================================
-
 static int DNaming_CheckHasSame(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb < 4)
@@ -76,12 +70,6 @@ static int DNaming_CheckHasSame(Draw_Interpretor& di, int nb, const char** arg)
   return 0;
 }
 
-//=======================================================================
-// function : DNaming_TCopyShape
-// purpose  : CopyShape  Shape1 [Shape2 ...]
-//           - for test ShapeCopy mechanism
-//=======================================================================
-
 static int DNaming_TCopyShape(Draw_Interpretor& di, int nb, const char** arg)
 {
   TNaming_Translator TR;
@@ -101,7 +89,6 @@ static int DNaming_TCopyShape(Draw_Interpretor& di, int nb, const char** arg)
       BRepTools::Read(S, arg[i], aBuilder);
     }
 
-    // Add to Map
     if (S.IsNull())
       return (1);
     else
@@ -109,9 +96,8 @@ static int DNaming_TCopyShape(Draw_Interpretor& di, int nb, const char** arg)
       aDMapOfShapeOfName.Bind(S, name);
       TR.Add(S);
     }
-  } // for ...
+  }
 
-  // PERFORM
   TR.Perform();
 
   if (TR.IsDone())
@@ -132,12 +118,6 @@ static int DNaming_TCopyShape(Draw_Interpretor& di, int nb, const char** arg)
   di << "DNaming_CopyShape : Error\n";
   return 1;
 }
-
-//=======================================================================
-// function : DNaming_TCopyTool
-// purpose  : CopyTool  Shape1 [Shape2 ...]
-//           - for test TNaming_CopyShape::CopyTool mechanism
-//=======================================================================
 
 static int DNaming_TCopyTool(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -168,16 +148,13 @@ static int DNaming_TCopyTool(Draw_Interpretor& di, int nb, const char** arg)
       continue;
     }
 
-    // Perform copying.
     TNaming_CopyShape::CopyTool(aShape, aMap, aResult);
 
-    // Draw result.
     TCollection_AsciiString aName(arg[i]);
 
     aName.AssignCat("_c");
     DBRep::Set(aName.ToCString(), aResult);
 
-    // Compose all names of copies.
     if (!aCopyNames.IsEmpty())
     {
       aCopyNames.AssignCat(" ");
@@ -190,8 +167,6 @@ static int DNaming_TCopyTool(Draw_Interpretor& di, int nb, const char** arg)
 
   return 0;
 }
-
-//=================================================================================================
 
 void DNaming::ToolsCommands(Draw_Interpretor& theCommands)
 {

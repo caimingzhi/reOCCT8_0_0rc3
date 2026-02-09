@@ -2,11 +2,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepElement_SurfaceSection, Standard_Transient)
 
-//=================================================================================================
-
 StepElement_SurfaceSection::StepElement_SurfaceSection() = default;
-
-//=================================================================================================
 
 void StepElement_SurfaceSection::Init(
   const StepElement_MeasureOrUnspecifiedValue& aOffset,
@@ -21,28 +17,20 @@ void StepElement_SurfaceSection::Init(
   theNonStructuralMassOffset = aNonStructuralMassOffset;
 }
 
-//=================================================================================================
-
 StepElement_MeasureOrUnspecifiedValue StepElement_SurfaceSection::Offset() const
 {
   return theOffset;
 }
-
-//=================================================================================================
 
 void StepElement_SurfaceSection::SetOffset(const StepElement_MeasureOrUnspecifiedValue& aOffset)
 {
   theOffset = aOffset;
 }
 
-//=================================================================================================
-
 StepElement_MeasureOrUnspecifiedValue StepElement_SurfaceSection::NonStructuralMass() const
 {
   return theNonStructuralMass;
 }
-
-//=================================================================================================
 
 void StepElement_SurfaceSection::SetNonStructuralMass(
   const StepElement_MeasureOrUnspecifiedValue& aNonStructuralMass)
@@ -50,14 +38,10 @@ void StepElement_SurfaceSection::SetNonStructuralMass(
   theNonStructuralMass = aNonStructuralMass;
 }
 
-//=================================================================================================
-
 StepElement_MeasureOrUnspecifiedValue StepElement_SurfaceSection::NonStructuralMassOffset() const
 {
   return theNonStructuralMassOffset;
 }
-
-//=================================================================================================
 
 void StepElement_SurfaceSection::SetNonStructuralMassOffset(
   const StepElement_MeasureOrUnspecifiedValue& aNonStructuralMassOffset)

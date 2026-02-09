@@ -11,14 +11,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDF_ADriverTable, Standard_Transient)
 
-//=================================================================================================
-
 BinMDF_ADriverTable::BinMDF_ADriverTable() = default;
-
-//=======================================================================
-// function : AddDriver
-// purpose  : Adds a translation driver <theDriver>.
-//=======================================================================
 
 void BinMDF_ADriverTable::AddDriver(const occ::handle<BinMDF_ADriver>& theDriver)
 {
@@ -26,12 +19,10 @@ void BinMDF_ADriverTable::AddDriver(const occ::handle<BinMDF_ADriver>& theDriver
   myMap.Bind(aType, theDriver);
 }
 
-//=================================================================================================
-
 void BinMDF_ADriverTable::AddDerivedDriver(const occ::handle<TDF_Attribute>& theInstance)
 {
   const occ::handle<Standard_Type>& anInstanceType = theInstance->DynamicType();
-  if (!myMap.IsBound(anInstanceType)) // no direct driver, use a derived one
+  if (!myMap.IsBound(anInstanceType))
   {
     for (occ::handle<Standard_Type> aType = anInstanceType->Parent(); !aType.IsNull();
          aType                            = aType->Parent())
@@ -47,8 +38,6 @@ void BinMDF_ADriverTable::AddDerivedDriver(const occ::handle<TDF_Attribute>& the
   }
 }
 
-//=================================================================================================
-
 const occ::handle<Standard_Type>& BinMDF_ADriverTable::AddDerivedDriver(const char* theDerivedType)
 {
   if (occ::handle<TDF_Attribute> anInstance = TDF_DerivedAttribute::Attribute(theDerivedType))
@@ -59,13 +48,6 @@ const occ::handle<Standard_Type>& BinMDF_ADriverTable::AddDerivedDriver(const ch
   static const occ::handle<Standard_Type> aNullType;
   return aNullType;
 }
-
-//=======================================================================
-// function : AssignIds
-// purpose  : Assigns the IDs to the drivers of the given Types.
-//           It uses indices in the map as IDs.
-//           Useful in storage procedure.
-//=======================================================================
 
 void BinMDF_ADriverTable::AssignIds(
   const NCollection_IndexedMap<occ::handle<Standard_Transient>>& theTypes)
@@ -88,18 +70,11 @@ void BinMDF_ADriverTable::AssignIds(
   }
 }
 
-//=======================================================================
-// function : AssignIds
-// purpose  : Assigns the IDs to the drivers of the given Type Names;
-//           It uses indices in the sequence as IDs.
-//           Useful in retrieval procedure.
-//=======================================================================
-
 void BinMDF_ADriverTable::AssignIds(
   const NCollection_Sequence<TCollection_AsciiString>& theTypeNames)
 {
   myMapId.Clear();
-  // first prepare the data map (TypeName => TypeID) for input types
+
   NCollection_DataMap<TCollection_AsciiString, int> aStringIdMap;
   int                                               i;
   for (i = 1; i <= theTypeNames.Length(); i++)
@@ -107,7 +82,7 @@ void BinMDF_ADriverTable::AssignIds(
     const TCollection_AsciiString& aTypeName = theTypeNames(i);
     aStringIdMap.Bind(aTypeName, i);
   }
-  // and now associate the names with the registered types
+
   NCollection_DataMap<occ::handle<Standard_Type>, occ::handle<BinMDF_ADriver>>::Iterator it(myMap);
   for (; it.More(); it.Next())
   {
@@ -121,7 +96,6 @@ void BinMDF_ADriverTable::AssignIds(
     }
   }
 
-  // try to add derived drivers for attributes not found in myMap
   for (NCollection_DataMap<TCollection_AsciiString, int>::Iterator aStrId(aStringIdMap);
        aStrId.More();
        aStrId.Next())

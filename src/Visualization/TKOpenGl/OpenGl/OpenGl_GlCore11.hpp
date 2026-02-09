@@ -2,14 +2,10 @@
 
 #include <OpenGl_GlFunctions.hpp>
 
-//! OpenGL 1.1 core without deprecated Fixed Pipeline entry points.
-//! Notice that all functions within this structure are actually exported by system GL library.
-//! The main purpose for these hint - to control visibility of functions per GL version
-//! (global functions should not be used directly to achieve this effect!).
 struct OpenGl_GlCore11Fwd : protected OpenGl_GlFunctions
 {
 
-public: //! @name Miscellaneous
+public:
   using OpenGl_GlFunctions::glBlendFunc;
   using OpenGl_GlFunctions::glClear;
   using OpenGl_GlFunctions::glClearColor;
@@ -31,7 +27,7 @@ public: //! @name Miscellaneous
   using OpenGl_GlFunctions::glPolygonOffset;
   using OpenGl_GlFunctions::glScissor;
 
-public: //! @name Depth Buffer
+public:
   using OpenGl_GlFunctions::glClearDepth;
   using OpenGl_GlFunctions::glClearDepthf;
   using OpenGl_GlFunctions::glDepthFunc;
@@ -39,24 +35,24 @@ public: //! @name Depth Buffer
   using OpenGl_GlFunctions::glDepthRange;
   using OpenGl_GlFunctions::glDepthRangef;
 
-public: //! @name Transformation
+public:
   using OpenGl_GlFunctions::glViewport;
 
-public: //! @name Vertex Arrays
+public:
   using OpenGl_GlFunctions::glDrawArrays;
   using OpenGl_GlFunctions::glDrawElements;
 
-public: //! @name Raster functions
+public:
   using OpenGl_GlFunctions::glPixelStorei;
   using OpenGl_GlFunctions::glReadPixels;
 
-public: //! @name Stenciling
+public:
   using OpenGl_GlFunctions::glClearStencil;
   using OpenGl_GlFunctions::glStencilFunc;
   using OpenGl_GlFunctions::glStencilMask;
   using OpenGl_GlFunctions::glStencilOp;
 
-public: //! @name Texture mapping
+public:
   using OpenGl_GlFunctions::glBindTexture;
   using OpenGl_GlFunctions::glCopyTexImage2D;
   using OpenGl_GlFunctions::glCopyTexSubImage2D;
@@ -72,7 +68,7 @@ public: //! @name Texture mapping
   using OpenGl_GlFunctions::glTexParameteriv;
   using OpenGl_GlFunctions::glTexSubImage2D;
 
-public: //! @name desktop extensions - not supported in OpenGL ES 2..0
+public:
   using OpenGl_GlFunctions::glAlphaFunc;
   using OpenGl_GlFunctions::glCopyTexImage1D;
   using OpenGl_GlFunctions::glCopyTexSubImage1D;
@@ -81,14 +77,11 @@ public: //! @name desktop extensions - not supported in OpenGL ES 2..0
   using OpenGl_GlFunctions::glTexImage1D;
   using OpenGl_GlFunctions::glTexSubImage1D;
 
-  // added to OpenGL ES 3.0
   using OpenGl_GlFunctions::glDrawBuffer;
   using OpenGl_GlFunctions::glReadBuffer;
 
-  // added to OpenGL ES 3.1
   using OpenGl_GlFunctions::glGetTexLevelParameteriv;
 
-  // added to OpenGL ES 3.2
   using OpenGl_GlFunctions::glGetPointerv;
 
   using OpenGl_GlFunctions::glLogicOp;
@@ -150,7 +143,6 @@ public: //! @name desktop extensions - not supported in OpenGL ES 2..0
   #define GL_LIGHT6 0x4006
   #define GL_LIGHT7 0x4007
 
-  // LightParameter
   #define GL_AMBIENT 0x1200
   #define GL_DIFFUSE 0x1201
   #define GL_SPECULAR 0x1202
@@ -167,7 +159,6 @@ public: //! @name desktop extensions - not supported in OpenGL ES 2..0
   #define GL_AMBIENT_AND_DIFFUSE 0x1602
   #define GL_COLOR_INDEXES 0x1603
 
-  // MatrixMode
   #define GL_MODELVIEW 0x1700
   #define GL_PROJECTION 0x1701
   #define GL_TEXTURE 0x1702
@@ -211,29 +202,23 @@ public: //! @name desktop extensions - not supported in OpenGL ES 2..0
   #define GL_ALPHA_TEST_FUNC 0x0BC1
   #define GL_ALPHA_TEST_REF 0x0BC2
 
-  // TextureCoordName
   #define GL_S 0x2000
   #define GL_T 0x2001
   #define GL_R 0x2002
   #define GL_Q 0x2003
 
-  // TextureEnvMode
   #define GL_MODULATE 0x2100
   #define GL_DECAL 0x2101
 
-  // TextureEnvParameter
   #define GL_TEXTURE_ENV_MODE 0x2200
   #define GL_TEXTURE_ENV_COLOR 0x2201
 
-  // TextureEnvTarget
   #define GL_TEXTURE_ENV 0x2300
 
-  // TextureGenMode
   #define GL_EYE_LINEAR 0x2400
   #define GL_OBJECT_LINEAR 0x2401
   #define GL_SPHERE_MAP 0x2402
 
-  // TextureGenParameter
   #define GL_TEXTURE_GEN_MODE 0x2500
   #define GL_OBJECT_PLANE 0x2501
   #define GL_EYE_PLANE 0x2502
@@ -260,10 +245,6 @@ public: //! @name desktop extensions - not supported in OpenGL ES 2..0
   #define GL_STACK_UNDERFLOW 0x0504
 #endif
 
-//! OpenGL 1.1 core.
-//! Notice that all functions within this structure are actually exported by system GL library.
-//! The main purpose for these hint - to control visibility of functions per GL version
-//! (global functions should not be used directly to achieve this effect!).
 struct OpenGl_GlCore11 : protected OpenGl_GlFunctions
 {
 
@@ -271,19 +252,19 @@ public:
   using OpenGl_GlFunctions::glGetTexEnviv;
   using OpenGl_GlFunctions::glTexEnvi;
 
-public: //! @name Begin/End primitive specification (removed since 3.1)
+public:
   using OpenGl_GlFunctions::glColor4fv;
 
-public: //! @name Matrix operations (removed since 3.1)
+public:
   using OpenGl_GlFunctions::glLoadIdentity;
   using OpenGl_GlFunctions::glLoadMatrixf;
   using OpenGl_GlFunctions::glMatrixMode;
 
-public: //! @name Line and Polygon stipple (removed since 3.1)
+public:
   using OpenGl_GlFunctions::glLineStipple;
   using OpenGl_GlFunctions::glPolygonStipple;
 
-public: //! @name Fixed pipeline lighting (removed since 3.1)
+public:
   using OpenGl_GlFunctions::glColorMaterial;
   using OpenGl_GlFunctions::glLightf;
   using OpenGl_GlFunctions::glLightfv;
@@ -293,10 +274,10 @@ public: //! @name Fixed pipeline lighting (removed since 3.1)
   using OpenGl_GlFunctions::glMaterialfv;
   using OpenGl_GlFunctions::glShadeModel;
 
-public: //! @name clipping plane (removed since 3.1)
+public:
   using OpenGl_GlFunctions::glClipPlane;
 
-public: //! @name Display lists (removed since 3.1)
+public:
   using OpenGl_GlFunctions::glCallList;
   using OpenGl_GlFunctions::glCallLists;
   using OpenGl_GlFunctions::glDeleteLists;
@@ -305,20 +286,20 @@ public: //! @name Display lists (removed since 3.1)
   using OpenGl_GlFunctions::glListBase;
   using OpenGl_GlFunctions::glNewList;
 
-public: //! @name Current raster position and Rectangles (removed since 3.1)
+public:
   using OpenGl_GlFunctions::glRasterPos2i;
   using OpenGl_GlFunctions::glRasterPos3fv;
 
-public: //! @name Texture mapping (removed since 3.1)
+public:
   using OpenGl_GlFunctions::glTexGenfv;
   using OpenGl_GlFunctions::glTexGeni;
 
-public: //! @name Pixel copying (removed since 3.1)
+public:
   using OpenGl_GlFunctions::glBitmap;
   using OpenGl_GlFunctions::glCopyPixels;
   using OpenGl_GlFunctions::glDrawPixels;
 
-public: //! @name Edge flags and fixed-function vertex processing (removed since 3.1)
+public:
   using OpenGl_GlFunctions::glColorPointer;
   using OpenGl_GlFunctions::glDisableClientState;
   using OpenGl_GlFunctions::glEnableClientState;

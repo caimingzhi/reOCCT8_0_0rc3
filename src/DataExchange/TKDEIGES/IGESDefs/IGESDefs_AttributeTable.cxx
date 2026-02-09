@@ -12,9 +12,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESDefs_AttributeTable, IGESData_IGESEntity)
 
-//  WARNING  WARNING : The "ROW" designation is not continued as is
-//  The Attribute Number is given first (therefore, in column of HArray2 and not
-//  in row), the Column number second (therefore, as a Row number)
 IGESDefs_AttributeTable::IGESDefs_AttributeTable() = default;
 
 void IGESDefs_AttributeTable::Init(
@@ -30,7 +27,6 @@ void IGESDefs_AttributeTable::Init(
   else if (fn < 0 || fn > 1)
     fn = 0;
   InitTypeAndForm(422, fn);
-  //  FormNumber : 0 SingleRow, 1 MultipleRows (can be reduced to one ...)
 }
 
 void IGESDefs_AttributeTable::SetDefinition(const occ::handle<IGESDefs_AttributeDef>& def)
@@ -108,5 +104,5 @@ bool IGESDefs_AttributeTable::AttributeAsLogical(const int Atnum,
                                                  const int Rownum,
                                                  const int Valuenum) const
 {
-  return (AttributeAsInteger(Atnum, Rownum, Valuenum) != 0); // shortcut
+  return (AttributeAsInteger(Atnum, Rownum, Valuenum) != 0);
 }

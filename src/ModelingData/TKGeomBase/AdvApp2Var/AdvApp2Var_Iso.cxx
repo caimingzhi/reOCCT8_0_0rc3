@@ -12,8 +12,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AdvApp2Var_Iso, Standard_Transient)
 
-//=================================================================================================
-
 AdvApp2Var_Iso::AdvApp2Var_Iso()
     : myType(GeomAbs_IsoU),
       myConstPar(0.5),
@@ -29,8 +27,6 @@ AdvApp2Var_Iso::AdvApp2Var_Iso()
       myHasResult(false)
 {
 }
-
-//=================================================================================================
 
 AdvApp2Var_Iso::AdvApp2Var_Iso(const GeomAbs_IsoType type,
                                const double          cte,
@@ -64,21 +60,15 @@ AdvApp2Var_Iso::AdvApp2Var_Iso(const GeomAbs_IsoType type,
   }
 }
 
-//=================================================================================================
-
 bool AdvApp2Var_Iso::IsApproximated() const
 {
   return myApprIsDone;
 }
 
-//=================================================================================================
-
 bool AdvApp2Var_Iso::HasResult() const
 {
   return myHasResult;
 }
-
-//=================================================================================================
 
 void AdvApp2Var_Iso::MakeApprox(const AdvApp2Var_Context&           Conditions,
                                 const double                        U0,
@@ -89,26 +79,24 @@ void AdvApp2Var_Iso::MakeApprox(const AdvApp2Var_Context&           Conditions,
                                 AdvApp2Var_Node&                    NodeBegin,
                                 AdvApp2Var_Node&                    NodeEnd)
 {
-  // fixed values
+
   int NBCRMX = 1, NBCRBE;
-  // data stored in the Context
+
   int NDIMEN, NBSESP, NDIMSE;
   NDIMEN = Conditions.TotalDimension();
   NBSESP = Conditions.TotalNumberSSP();
-  // Attention : works only in 3D
+
   NDIMSE = 3;
-  // the domain of the grid
+
   double UVFONC[4];
   UVFONC[0] = U0;
   UVFONC[1] = U1;
   UVFONC[2] = V0;
   UVFONC[3] = V1;
 
-  // data related to the processed iso
   int    IORDRE = myExtremOrder, IDERIV = myDerivOrder;
   double TCONST = myConstPar;
 
-  // data related to the type of the iso
   int                                      ISOFAV = 0, NBROOT = 0, NDGJAC = 0, NCFLIM = 1;
   double                                   TABDEC[2];
   occ::handle<NCollection_HArray1<double>> HUROOT = Conditions.URoots();
@@ -142,16 +130,13 @@ void AdvApp2Var_Iso::MakeApprox(const AdvApp2Var_Context&           Conditions,
       NDGJAC = Conditions.VJacDeg();
       NCFLIM = Conditions.VLimit();
       break;
-      // #ifndef OCCT_DEBUG
-      // pkv f
+
     case GeomAbs_NoneIso:
-      // pkv t
+
     default:
       break;
-      // #endif
   }
 
-  // data relative to the position of iso (front or cut line)
   occ::handle<NCollection_HArray1<double>> HEPSAPR = new NCollection_HArray1<double>(1, NBSESP);
   int                                      iesp;
   switch (myPosition)
@@ -189,7 +174,6 @@ void AdvApp2Var_Iso::MakeApprox(const AdvApp2Var_Context&           Conditions,
   }
   double* EPSAPR = (double*)&HEPSAPR->ChangeArray1()(HEPSAPR->Lower());
 
-  // the tables of approximations
   int                                      SZCRB = NDIMEN * NCFLIM;
   occ::handle<NCollection_HArray1<double>> HCOURBE =
     new NCollection_HArray1<double>(1, SZCRB * (IDERIV + 1));
@@ -215,30 +199,23 @@ void AdvApp2Var_Iso::MakeApprox(const AdvApp2Var_Context&           Conditions,
   double*                                  EMXAPP = new double[NBSESP];
   occ::handle<NCollection_HArray2<double>> HERRMOY =
     new NCollection_HArray2<double>(1, NBSESP, 1, IDERIV + 1);
-  // #ifdef OCCT_DEBUG
-  // double *ERRMOY =
-  // #endif
-  //   (double *) &HERRMOY->ChangeArray2()(HERRMOY ->LowerRow(),HERRMOY ->LowerCol());
+
   double* EMYAPP = new double[NBSESP];
-  //
-  // the approximations
-  //
+
   int IERCOD = 0, NCOEFF = 0;
   int iapp, ncfapp, ierapp;
-  //  int id,ic,ideb;
+
   for (iapp = 0; iapp <= IDERIV; iapp++)
   {
-    //   approximation of the derivative of order iapp
+
     ncfapp = 0;
     ierapp = 0;
-    // GCC 3.0 would not accept this line without the void
-    // pointer cast.  Perhaps the real problem is a definition
-    // somewhere that has a void * in it.
+
     AdvApp2Var_ApproxF2var::mma2fnc_(&NDIMEN,
                                      &NBSESP,
                                      &NDIMSE,
                                      UVFONC,
-                                     /*(void *)*/ Func,
+                                     Func,
                                      &TCONST,
                                      &ISOFAV,
                                      &NBROOT,
@@ -260,7 +237,7 @@ void AdvApp2Var_Iso::MakeApprox(const AdvApp2Var_Context&           Conditions,
                                      EMXAPP,
                                      EMYAPP,
                                      &ierapp);
-    //   error and coefficient management.
+
     if (ierapp > 0)
     {
       myApprIsDone = false;
@@ -271,7 +248,7 @@ void AdvApp2Var_Iso::MakeApprox(const AdvApp2Var_Context&           Conditions,
       NCOEFF = ncfapp;
     if (ierapp == -1)
       IERCOD = -1;
-    //   return constraints of order 0 to IORDRE of extremities
+
     int ider, jpos = HCONTR1->Lower();
     for (ider = 0; ider <= IORDRE; ider++)
     {
@@ -300,28 +277,27 @@ void AdvApp2Var_Iso::MakeApprox(const AdvApp2Var_Context&           Conditions,
       }
       jpos += 3;
     }
-    //   return errors
+
     for (iesp = 1; iesp <= NBSESP; iesp++)
     {
       HERRMAX->SetValue(iesp, iapp + 1, EMXAPP[iesp - 1]);
       HERRMOY->SetValue(iesp, iapp + 1, EMYAPP[iesp - 1]);
     }
-    // passage to the approximation of higher order
+
     CRBAPP += SZCRB;
     SOMAPP += SZTAB;
     DIFAPP += SZTAB;
   }
 
-  // management of results
   if (IERCOD == 0)
   {
-    //   all approximations are correct
+
     myApprIsDone = true;
     myHasResult  = true;
   }
   else if (IERCOD == -1)
   {
-    //   at least one approximation is not correct
+
     myApprIsDone = false;
     myHasResult  = true;
   }
@@ -344,8 +320,6 @@ FINISH:
   delete[] EMYAPP;
 }
 
-//=================================================================================================
-
 void AdvApp2Var_Iso::ChangeDomain(const double a, const double b)
 {
   if (myType == GeomAbs_IsoU)
@@ -360,8 +334,6 @@ void AdvApp2Var_Iso::ChangeDomain(const double a, const double b)
   }
 }
 
-//=================================================================================================
-
 void AdvApp2Var_Iso::ChangeDomain(const double a, const double b, const double c, const double d)
 {
   myU0 = a;
@@ -370,21 +342,15 @@ void AdvApp2Var_Iso::ChangeDomain(const double a, const double b, const double c
   myV1 = d;
 }
 
-//=================================================================================================
-
 void AdvApp2Var_Iso::SetConstante(const double newcte)
 {
   myConstPar = newcte;
 }
 
-//=================================================================================================
-
 void AdvApp2Var_Iso::SetPosition(const int newpos)
 {
   myPosition = newpos;
 }
-
-//=================================================================================================
 
 void AdvApp2Var_Iso::ResetApprox()
 {
@@ -392,29 +358,21 @@ void AdvApp2Var_Iso::ResetApprox()
   myHasResult  = false;
 }
 
-//=================================================================================================
-
 void AdvApp2Var_Iso::OverwriteApprox()
 {
   if (myHasResult)
     myApprIsDone = true;
 }
 
-//=================================================================================================
-
 GeomAbs_IsoType AdvApp2Var_Iso::Type() const
 {
   return myType;
 }
 
-//=================================================================================================
-
 double AdvApp2Var_Iso::Constante() const
 {
   return myConstPar;
 }
-
-//=================================================================================================
 
 double AdvApp2Var_Iso::T0() const
 {
@@ -428,8 +386,6 @@ double AdvApp2Var_Iso::T0() const
   }
 }
 
-//=================================================================================================
-
 double AdvApp2Var_Iso::T1() const
 {
   if (myType == GeomAbs_IsoU)
@@ -442,35 +398,25 @@ double AdvApp2Var_Iso::T1() const
   }
 }
 
-//=================================================================================================
-
 double AdvApp2Var_Iso::U0() const
 {
   return myU0;
 }
-
-//=================================================================================================
 
 double AdvApp2Var_Iso::U1() const
 {
   return myU1;
 }
 
-//=================================================================================================
-
 double AdvApp2Var_Iso::V0() const
 {
   return myV0;
 }
 
-//=================================================================================================
-
 double AdvApp2Var_Iso::V1() const
 {
   return myV1;
 }
-
-//=================================================================================================
 
 int AdvApp2Var_Iso::UOrder() const
 {
@@ -480,8 +426,6 @@ int AdvApp2Var_Iso::UOrder() const
     return myExtremOrder;
 }
 
-//=================================================================================================
-
 int AdvApp2Var_Iso::VOrder() const
 {
   if (Type() == GeomAbs_IsoV)
@@ -490,21 +434,15 @@ int AdvApp2Var_Iso::VOrder() const
     return myExtremOrder;
 }
 
-//=================================================================================================
-
 int AdvApp2Var_Iso::Position() const
 {
   return myPosition;
 }
 
-//=================================================================================================
-
 int AdvApp2Var_Iso::NbCoeff() const
 {
   return myNbCoeff;
 }
-
-//=================================================================================================
 
 const occ::handle<NCollection_HArray1<double>>& AdvApp2Var_Iso::Polynom() const
 {

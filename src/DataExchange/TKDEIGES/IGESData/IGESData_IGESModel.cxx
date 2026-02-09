@@ -1,19 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// pdn 11.01.99 modification for linking on NT
-// #73 rln 10.03.99 S4135: "read.scale.unit" does not affect GlobalSection
-// #13 smh 13.01.2000 : Parsing long year date
 
 #include <IGESData_BasicEditor.hpp>
 #include <IGESData_IGESEntity.hpp>
@@ -32,30 +17,21 @@ IMPLEMENT_STANDARD_RTTIEXT(IGESData_IGESModel, Interface_InterfaceModel)
 
 static const char* voidline = "";
 
-// Internal routine used for VerifyCheck
 void IGESData_VerifyDate(const occ::handle<TCollection_HAsciiString>& str,
                          occ::handle<Interface_Check>&                ach,
                          const char*                                  mess);
 
-//=================================================================================================
-
 IGESData_IGESModel::IGESData_IGESModel()
 {
   thestart = new NCollection_HSequence<occ::handle<TCollection_HAsciiString>>();
-  //  thecheckstx = new Interface_Check;
-  //  thechecksem = new Interface_Check;
 }
-
-//=================================================================================================
 
 void IGESData_IGESModel::ClearHeader()
 {
-  IGESData_GlobalSection newheader; // Un peu brutal, certes
+  IGESData_GlobalSection newheader;
   theheader = newheader;
   thestart  = new NCollection_HSequence<occ::handle<TCollection_HAsciiString>>();
 }
-
-//=================================================================================================
 
 void IGESData_IGESModel::DumpHeader(Standard_OStream& S, const int) const
 {
@@ -104,11 +80,7 @@ void IGESData_IGESModel::DumpHeader(Standard_OStream& S, const int) const
     S << "[12]  Receiver              : " << str->ToCString() << "\n";
   S << "[13]  Scale                 : " << theheader.Scale() << "\n";
   S << "[14]  Unit  Flag            : " << theheader.UnitFlag();
-  //  if (Interface_Static::IVal("read.scale.unit") == 1)
-  // #73 rln 10.03.99 S4135: "read.scale.unit" does not affect GlobalSection
-  //    S << "    -> Value (in Meter) = " << theheader.UnitValue() / 1000 <<"\n";
-  //  else S << "    -> Value (in Millimeter) = " << theheader.UnitValue()<<"\n";
-  // abv 02 Mar 00: no unit parameter in OCC
+
   S << "    -> Value (in CASCADE units) = " << theheader.UnitValue() << "\n";
 
   str = theheader.UnitName();
@@ -161,22 +133,16 @@ void IGESData_IGESModel::DumpHeader(Standard_OStream& S, const int) const
   S << " ****     End of Dump      ****" << std::endl;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> IGESData_IGESModel::
   StartSection() const
 {
   return thestart;
 }
 
-//=================================================================================================
-
 int IGESData_IGESModel::NbStartLines() const
 {
   return thestart->Length();
 }
-
-//=================================================================================================
 
 const char* IGESData_IGESModel::StartLine(const int num) const
 {
@@ -184,8 +150,6 @@ const char* IGESData_IGESModel::StartLine(const int num) const
     return thestart->Value(num)->ToCString();
   return voidline;
 }
-
-//=================================================================================================
 
 void IGESData_IGESModel::ClearStartSection()
 {
@@ -211,8 +175,6 @@ void IGESData_IGESModel::SetStartSection(
     thestart = list;
 }
 
-//=================================================================================================
-
 void IGESData_IGESModel::AddStartLine(const char* line, const int atnum)
 {
   if (atnum <= 0 || atnum > thestart->Length())
@@ -221,23 +183,19 @@ void IGESData_IGESModel::AddStartLine(const char* line, const int atnum)
     thestart->InsertBefore(atnum, new TCollection_HAsciiString(line));
 }
 
-//=================================================================================================
-
 void IGESData_IGESModel::SetGlobalSection(const IGESData_GlobalSection& header)
 {
   theheader = header;
 }
 
-//=================================================================================================
-
 bool IGESData_IGESModel::ApplyStatic(const char* param)
 {
   if (param[0] == '\0')
   {
-    // bool ret = true; //szv#4:S4163:12Mar99 not needed
-    ApplyStatic("receiver"); // szv#4:S4163:12Mar99 'ret =' not needed
-    ApplyStatic("author");   // szv#4:S4163:12Mar99 'ret =' not needed
-    ApplyStatic("company");  // szv#4:S4163:12Mar99 'ret =' not needed
+
+    ApplyStatic("receiver");
+    ApplyStatic("author");
+    ApplyStatic("company");
     return true;
   }
 
@@ -266,14 +224,10 @@ bool IGESData_IGESModel::ApplyStatic(const char* param)
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<IGESData_IGESEntity> IGESData_IGESModel::Entity(const int num) const
 {
   return GetCasted(IGESData_IGESEntity, Value(num));
 }
-
-//=================================================================================================
 
 int IGESData_IGESModel::DNum(const occ::handle<IGESData_IGESEntity>& ent) const
 {
@@ -284,8 +238,6 @@ int IGESData_IGESModel::DNum(const occ::handle<IGESData_IGESEntity>& ent) const
     return 2 * num - 1;
 }
 
-//=================================================================================================
-
 void IGESData_IGESModel::GetFromAnother(const occ::handle<Interface_InterfaceModel>& other)
 {
   DeclareAndCast(IGESData_IGESModel, another, other);
@@ -294,41 +246,18 @@ void IGESData_IGESModel::GetFromAnother(const occ::handle<Interface_InterfaceMod
   SetStartSection(another->StartSection(), true);
 }
 
-//=================================================================================================
-
 occ::handle<Interface_InterfaceModel> IGESData_IGESModel::NewEmptyModel() const
 {
   return new IGESData_IGESModel;
 }
 
-//=================================================================================================
-
 void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
 {
-  // MGE 23/07/98
-  // =====================================
-  // Message_Msg Msg40 ("XSTEP_40");
-  // Message_Msg Msg41 ("XSTEP_41");
-  // Message_Msg Msg42 ("XSTEP_42");
-  // Message_Msg Msg43 ("XSTEP_43");
-  // Message_Msg Msg44 ("XSTEP_44");
-  // Message_Msg Msg45 ("XSTEP_45");
-  // Message_Msg Msg46 ("XSTEP_46");
-  // Message_Msg Msg47 ("XSTEP_47");
-  // Message_Msg Msg48 ("XSTEP_48");
-  // Message_Msg Msg50 ("XSTEP_50");
-  // Message_Msg Msg51 ("XSTEP_51");
-  // Message_Msg Msg52 ("XSTEP_52");
-  // Message_Msg Msg53 ("XSTEP_53");
-  // Message_Msg Msg54 ("XSTEP_54");
-  // Message_Msg Msg55 ("XSTEP_55");
-  // =====================================
 
   char del[2];
   del[0] = theheader.Separator();
   del[1] = theheader.EndMark();
-  // Sending of message : Parameter Delimiter Character and Record Delimiter Character must be
-  // different.
+
   if (del[0] == del[1])
   {
     Message_Msg Msg40("XSTEP_40");
@@ -340,13 +269,13 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
         || (del[i] >= 48 && del[i] <= 57) || del[i] == 68 || del[i] == 69 || del[i] == 72
         || del[i] >= 127)
     {
-      // Sending of message : Parameter Delimiter Character is incorrect.
+
       if (i == 0)
       {
         Message_Msg Msg41("XSTEP_41");
         ach->SendFail(Msg41);
       }
-      // Sending of message : Character Record Delimiter parameter is incorrect.
+
       else
       {
         Message_Msg Msg42("XSTEP_42");
@@ -354,35 +283,31 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
       }
     }
   }
-  // Sending of message : Single Precision Magnitude parameter is incorrect.
+
   if (theheader.MaxPower10Single() <= 0)
   {
     Message_Msg Msg43("XSTEP_43");
     ach->SendFail(Msg43);
   }
 
-  // Sending of message : Precision Significance parameter is incorrect.
   if (theheader.MaxDigitsSingle() <= 0)
   {
     Message_Msg Msg44("XSTEP_44");
     ach->SendFail(Msg44);
   }
 
-  // Sending of messages : Double Precision Magnitude parameter is incorrect.
   if (theheader.MaxPower10Double() <= 0)
   {
     Message_Msg Msg45("XSTEP_45");
     ach->SendFail(Msg45);
   }
 
-  // Sending of message : Double Precision Significance parameter is incorrect.
   if (theheader.MaxDigitsDouble() <= 0)
   {
     Message_Msg Msg46("XSTEP_46");
     ach->SendFail(Msg46);
   }
 
-  // Sending of message : Model Space Scale parameter is incorrect.
   if (theheader.Scale() <= 0.)
   {
     Message_Msg Msg47("XSTEP_47");
@@ -391,17 +316,15 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
 
   int unf = theheader.UnitFlag();
 
-  // Sending of message : Unit Flag parameter is incorrect.
   if (unf < 1 || unf > 11)
   {
     Message_Msg Msg48("XSTEP_48");
     ach->SendFail(Msg48);
   }
 
-  // ..  should we verify UnitName in accordance with UnitFlag ?
   if (theheader.UnitName().IsNull())
   {
-    // Sending of message : Unit Name parameter is undefined.
+
     if (unf == 3)
     {
       Message_Msg Msg50("XSTEP_50");
@@ -422,7 +345,7 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
         break;
       case 3:
         unok = true;
-        break; // nom libre
+        break;
       case 4:
         unok = !strcmp(unm, "FT");
         break;
@@ -452,7 +375,7 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
         ach->SendFail(Msg48);
         break;
     }
-    // Sending of message : Flag parameter doesn`t correspond to the Unit Name parameter.
+
     if (!unok)
     {
       Message_Msg Msg51("XSTEP_51");
@@ -461,15 +384,13 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
   }
 
   IGESData_VerifyDate(theheader.Date(), ach, "Creation Date");
-  // Sending of message : Minimum Resolution parameter is incorrect.
+
   if (theheader.Resolution() <= 0.)
   {
     Message_Msg Msg52("XSTEP_52");
     ach->SendFail(Msg52);
   }
-  // ..  how to verify the max coordinates ?
 
-  // Sending of message : Version Flag parameter is incorrect.
   if (theheader.IGESVersion() < 1
       || theheader.IGESVersion() > IGESData_BasicEditor::IGESVersionMax())
   {
@@ -477,7 +398,6 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
     ach->SendWarning(Msg53);
   }
 
-  // Sending of message : Drafting Standard Flag parameter is incorrect.
   if (theheader.DraftingStandard() < 0
       || theheader.DraftingStandard() > IGESData_BasicEditor::DraftingMax())
   {
@@ -485,10 +405,9 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
     ach->SendWarning(Msg54);
   }
 
-  // Sending of message :
   if (theheader.IGESVersion() >= 9)
   {
-    // Sending of message : Last change Date parameter is undefined.
+
     if (!theheader.HasLastChangeDate())
     {
       Message_Msg Msg55("XSTEP_55");
@@ -503,12 +422,9 @@ void IGESData_VerifyDate(const occ::handle<TCollection_HAsciiString>& str,
                          occ::handle<Interface_Check>&                ach,
                          const char*                                  mess)
 {
-  // MGE 23/07/98
-  // =====================================
-  Message_Msg Msg57("XSTEP_57");
-  // =====================================
 
-  //  Warning this is Hollerith format
+  Message_Msg Msg57("XSTEP_57");
+
   if (str.IsNull())
   {
     ach->SendFail(Msg57);
@@ -522,7 +438,7 @@ void IGESData_VerifyDate(const occ::handle<TCollection_HAsciiString>& str,
     Msg57.Arg(18);
   if (((stdvar->Length() != 13) && (stdvar->Length() != 15)) || !stdvar->IsRealValue())
     ach->SendFail(Msg57);
-  // smh#13 For short year date
+
   else if ((stdvar->Value(3) > '1' || (stdvar->Value(3) == '1' && stdvar->Value(4) > '2'))
            && (stdvar->Length() == 13))
     ach->SendFail(Msg57);
@@ -536,7 +452,7 @@ void IGESData_VerifyDate(const occ::handle<TCollection_HAsciiString>& str,
   else if ((stdvar->Value(8) > '2' || (stdvar->Value(8) == '2' && stdvar->Value(9) > '3'))
            && (stdvar->Length() == 13))
     ach->SendFail(Msg57);
-  // smh#13 For long year date
+
   else if ((stdvar->Value(5) > '1' || (stdvar->Value(5) == '1' && stdvar->Value(6) > '2'))
            && (stdvar->Length() == 15))
     ach->SendFail(Msg57);
@@ -550,8 +466,6 @@ void IGESData_VerifyDate(const occ::handle<TCollection_HAsciiString>& str,
            && (stdvar->Length() == 15))
     ach->SendFail(Msg57);
 }
-
-//=================================================================================================
 
 void IGESData_IGESModel::SetLineWeights(const double defw)
 {
@@ -567,11 +481,7 @@ void IGESData_IGESModel::SetLineWeights(const double defw)
     Entity(i)->SetLineWeight(defw, maxw, lwg);
 }
 
-//=================================================================================================
-
 void IGESData_IGESModel::ClearLabels() {}
-
-//=================================================================================================
 
 void IGESData_IGESModel::PrintLabel(const occ::handle<Standard_Transient>& ent,
                                     Standard_OStream&                      S) const
@@ -589,8 +499,6 @@ void IGESData_IGESModel::PrintLabel(const occ::handle<Standard_Transient>& ent,
   }
 }
 
-//=================================================================================================
-
 void IGESData_IGESModel::PrintToLog(const occ::handle<Standard_Transient>& ent,
                                     Standard_OStream&                      S) const
 {
@@ -603,12 +511,9 @@ void IGESData_IGESModel::PrintToLog(const occ::handle<Standard_Transient>& ent,
     else
     {
       S << " DE : " << (2 * num - 1) << " type : " << igesent->TypeNumber();
-      //      int num2 = igesent->TypeNumber();
     }
   }
 }
-
-//=================================================================================================
 
 void IGESData_IGESModel::PrintInfo(const occ::handle<Standard_Transient>& ent,
                                    Standard_OStream&                      S) const
@@ -627,8 +532,6 @@ void IGESData_IGESModel::PrintInfo(const occ::handle<Standard_Transient>& ent,
     }
   }
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> IGESData_IGESModel::StringLabel(
   const occ::handle<Standard_Transient>& ent) const

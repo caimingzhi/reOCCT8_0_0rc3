@@ -7,8 +7,6 @@
 #include <Standard_Transient.hpp>
 #include <Standard_Integer.hpp>
 
-//! Extension of NCollection_DataMap<TCollection_ExtendedString, TCollection_ExtendedString> class
-//! to be manipulated by handle.
 class TDataStd_HDataMapOfStringString : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(TDataStd_HDataMapOfStringString, Standard_Transient)

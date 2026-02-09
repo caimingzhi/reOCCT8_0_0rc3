@@ -10,7 +10,6 @@ class StepBasic_OrganizationRole : public Standard_Transient
 {
 
 public:
-  //! Returns a OrganizationRole
   Standard_EXPORT StepBasic_OrganizationRole();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName);

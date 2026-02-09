@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <math_Householder.hpp>
 #include <math_Matrix.hpp>
@@ -29,7 +18,7 @@ namespace
 
   TEST(MathHouseholderTest, ExactlyDeterminedSystem)
   {
-    // Test with a square matrix (exact solution exists)
+
     math_Matrix aA(1, 3, 1, 3);
     aA(1, 1) = 1.0;
     aA(1, 2) = 2.0;
@@ -39,12 +28,12 @@ namespace
     aA(2, 3) = 6.0;
     aA(3, 1) = 7.0;
     aA(3, 2) = 8.0;
-    aA(3, 3) = 10.0; // Note: 9 would make it singular
+    aA(3, 3) = 10.0;
 
     math_Vector aB(1, 3);
     aB(1) = 14.0;
     aB(2) = 32.0;
-    aB(3) = 55.0; // Should give solution approximately [1, 2, 3]
+    aB(3) = 55.0;
 
     math_Householder aHouseholder(aA, aB);
     EXPECT_TRUE(aHouseholder.IsDone()) << "Householder should succeed for well-conditioned system";
@@ -52,7 +41,6 @@ namespace
     math_Vector aSol(1, 3);
     aHouseholder.Value(aSol, 1);
 
-    // Verify solution by checking A * x = b
     math_Vector aVerify(1, 3);
     for (int i = 1; i <= 3; i++)
     {
@@ -70,16 +58,16 @@ namespace
 
   TEST(MathHouseholderTest, OverdeterminedSystem)
   {
-    // Test with an overdetermined system (more equations than unknowns)
-    math_Matrix aA(1, 4, 1, 2); // 4 equations, 2 unknowns
+
+    math_Matrix aA(1, 4, 1, 2);
     aA(1, 1) = 1.0;
-    aA(1, 2) = 1.0; // x + y = 2 (approximately)
+    aA(1, 2) = 1.0;
     aA(2, 1) = 1.0;
-    aA(2, 2) = 2.0; // x + 2y = 3
+    aA(2, 2) = 2.0;
     aA(3, 1) = 2.0;
-    aA(3, 2) = 1.0; // 2x + y = 3
+    aA(3, 2) = 1.0;
     aA(4, 1) = 1.0;
-    aA(4, 2) = 3.0; // x + 3y = 4
+    aA(4, 2) = 3.0;
 
     math_Vector aB(1, 4);
     aB(1) = 2.0;
@@ -93,15 +81,13 @@ namespace
     math_Vector aSol(1, 2);
     aHouseholder.Value(aSol, 1);
 
-    // For least squares, solution should minimize ||A*x - b||^2
-    // Expected solution is approximately [1, 1]
     EXPECT_NEAR(aSol(1), 1.0, 1.0e-6) << "Least squares solution X(1)";
     EXPECT_NEAR(aSol(2), 1.0, 1.0e-6) << "Least squares solution X(2)";
   }
 
   TEST(MathHouseholderTest, MultipleRightHandSides)
   {
-    // Test solving A*X = B where B has multiple columns
+
     math_Matrix aA(1, 3, 1, 2);
     aA(1, 1) = 1.0;
     aA(1, 2) = 0.0;
@@ -110,26 +96,23 @@ namespace
     aA(3, 1) = 1.0;
     aA(3, 2) = 1.0;
 
-    math_Matrix aB(1, 3, 1, 2); // Two right-hand sides
+    math_Matrix aB(1, 3, 1, 2);
     aB(1, 1) = 1.0;
-    aB(1, 2) = 2.0; // First RHS: [1, 3, 4]
+    aB(1, 2) = 2.0;
     aB(2, 1) = 3.0;
-    aB(2, 2) = 4.0; // Second RHS: [2, 4, 6]
+    aB(2, 2) = 4.0;
     aB(3, 1) = 4.0;
     aB(3, 2) = 6.0;
 
     math_Householder aHouseholder(aA, aB);
     EXPECT_TRUE(aHouseholder.IsDone()) << "Householder should succeed for multiple RHS";
 
-    // Get first solution
     math_Vector aSol1(1, 2);
     aHouseholder.Value(aSol1, 1);
 
-    // Get second solution
     math_Vector aSol2(1, 2);
     aHouseholder.Value(aSol2, 2);
 
-    // Expected solutions: first RHS gives approximately [1, 3], second gives [2, 4]
     EXPECT_NEAR(aSol1(1), 1.0, 1.0e-6) << "First solution X(1)";
     EXPECT_NEAR(aSol1(2), 3.0, 1.0e-6) << "First solution X(2)";
 
@@ -139,33 +122,31 @@ namespace
 
   TEST(MathHouseholderTest, NearSingularMatrix)
   {
-    // Test with nearly singular matrix
+
     math_Matrix aA(1, 3, 1, 3);
     aA(1, 1) = 1.0;
     aA(1, 2) = 2.0;
     aA(1, 3) = 3.0;
     aA(2, 1) = 2.0;
     aA(2, 2) = 4.0;
-    aA(2, 3) = 6.0 + 1.0e-15; // Nearly dependent
+    aA(2, 3) = 6.0 + 1.0e-15;
     aA(3, 1) = 3.0;
     aA(3, 2) = 6.0;
-    aA(3, 3) = 9.0 + 2.0e-15; // Nearly dependent
+    aA(3, 3) = 9.0 + 2.0e-15;
 
     math_Vector aB(1, 3);
     aB(1) = 1.0;
     aB(2) = 2.0;
     aB(3) = 3.0;
 
-    // With default EPS, should handle near-singularity
     math_Householder aHouseholder(aA, aB);
 
-    // Near-singular matrix should fail with default EPS
     EXPECT_FALSE(aHouseholder.IsDone()) << "Should fail for near-singular matrix with default EPS";
   }
 
   TEST(MathHouseholderTest, CustomEpsilon)
   {
-    // Test with custom epsilon threshold using well-conditioned values
+
     math_Matrix aA(1, 2, 1, 2);
     aA(1, 1) = 1.0e-3;
     aA(1, 2) = 1.0;
@@ -176,18 +157,16 @@ namespace
     aB(1) = 1.0;
     aB(2) = 2.0;
 
-    // Test that default EPS works with this matrix
     math_Householder aHouseholder1(aA, aB);
     EXPECT_TRUE(aHouseholder1.IsDone()) << "Should succeed with default EPS";
 
-    // Test with very restrictive EPS that should fail
     math_Householder aHouseholder2(aA, aB, 1.0e-2);
     EXPECT_FALSE(aHouseholder2.IsDone()) << "Should fail with very restrictive EPS";
   }
 
   TEST(MathHouseholderTest, IdentityMatrix)
   {
-    // Test with identity matrix (trivial case)
+
     math_Matrix aA(1, 3, 1, 3);
     aA(1, 1) = 1.0;
     aA(1, 2) = 0.0;
@@ -210,18 +189,14 @@ namespace
     math_Vector aSol(1, 3);
     aHouseholder.Value(aSol, 1);
 
-    // For identity matrix, solution should equal RHS
     EXPECT_NEAR(aSol(1), 5.0, Precision::Confusion()) << "Identity matrix solution X(1)";
     EXPECT_NEAR(aSol(2), 7.0, Precision::Confusion()) << "Identity matrix solution X(2)";
     EXPECT_NEAR(aSol(3), 9.0, Precision::Confusion()) << "Identity matrix solution X(3)";
   }
 
-  // Removed RangeConstructor test due to unknown exception issues
-  // TODO: Investigate math_Householder range constructor compatibility
-
   TEST(MathHouseholderTest, DimensionCompatibility)
   {
-    // Test dimension compatibility handling
+
     math_Matrix aA(1, 3, 1, 2);
     aA(1, 1) = 1.0;
     aA(1, 2) = 2.0;
@@ -230,18 +205,15 @@ namespace
     aA(3, 1) = 5.0;
     aA(3, 2) = 6.0;
 
-    // Test with correctly sized B vector
-    math_Vector aB_correct(1, 3); // Correct size 3
+    math_Vector aB_correct(1, 3);
     aB_correct(1) = 1.0;
     aB_correct(2) = 2.0;
     aB_correct(3) = 3.0;
 
-    // Test with correctly sized B vector - should work
     math_Householder aHouseholder1(aA, aB_correct);
     EXPECT_TRUE(aHouseholder1.IsDone()) << "Should work with correct B vector size";
 
-    // Test with correctly sized B matrix
-    math_Matrix aB_matrix_correct(1, 3, 1, 2); // Correct row count 3
+    math_Matrix aB_matrix_correct(1, 3, 1, 2);
     aB_matrix_correct(1, 1) = 1.0;
     aB_matrix_correct(1, 2) = 4.0;
     aB_matrix_correct(2, 1) = 2.0;
@@ -255,10 +227,10 @@ namespace
 
   TEST(MathHouseholderTest, NearZeroMatrixState)
   {
-    // Create a scenario where Householder fails
+
     math_Matrix aA(1, 2, 1, 2);
     aA(1, 1) = 1.0e-25;
-    aA(1, 2) = 0.0; // Extremely small values
+    aA(1, 2) = 0.0;
     aA(2, 1) = 0.0;
     aA(2, 2) = 1.0e-25;
 
@@ -266,20 +238,20 @@ namespace
     aB(1) = 1.0;
     aB(2) = 2.0;
 
-    math_Householder aHouseholder(aA, aB, 1.0e-10); // Large EPS
+    math_Householder aHouseholder(aA, aB, 1.0e-10);
     EXPECT_FALSE(aHouseholder.IsDone()) << "Should fail for nearly zero matrix";
   }
 
   TEST(MathHouseholderTest, ValidIndexRange)
   {
-    // Test valid index range handling
+
     math_Matrix aA(1, 2, 1, 2);
     aA(1, 1) = 1.0;
     aA(1, 2) = 0.0;
     aA(2, 1) = 0.0;
     aA(2, 2) = 1.0;
 
-    math_Matrix aB(1, 2, 1, 2); // Two columns
+    math_Matrix aB(1, 2, 1, 2);
     aB(1, 1) = 1.0;
     aB(1, 2) = 2.0;
     aB(2, 1) = 3.0;
@@ -290,27 +262,25 @@ namespace
 
     math_Vector aSol(1, 2);
 
-    // Test valid indices
-    aHouseholder.Value(aSol, 1); // Should work
+    aHouseholder.Value(aSol, 1);
     EXPECT_EQ(aSol.Length(), 2) << "Solution vector should have correct size";
 
-    aHouseholder.Value(aSol, 2); // Should work
+    aHouseholder.Value(aSol, 2);
     EXPECT_EQ(aSol.Length(), 2) << "Solution vector should have correct size";
 
-    // Verify we have the expected number of columns to work with
     EXPECT_EQ(aB.ColNumber(), 2) << "Matrix should have 2 columns available";
   }
 
   TEST(MathHouseholderTest, RegressionTest)
   {
-    // Regression test with known data
+
     math_Matrix aA(1, 3, 1, 2);
     aA(1, 1) = 2.0;
-    aA(1, 2) = 1.0; // 2x + y = 5
+    aA(1, 2) = 1.0;
     aA(2, 1) = 1.0;
-    aA(2, 2) = 1.0; // x + y = 3
+    aA(2, 2) = 1.0;
     aA(3, 1) = 1.0;
-    aA(3, 2) = 2.0; // x + 2y = 4
+    aA(3, 2) = 2.0;
 
     math_Vector aB(1, 3);
     aB(1) = 5.0;
@@ -323,9 +293,8 @@ namespace
     math_Vector aSol(1, 2);
     aHouseholder.Value(aSol, 1);
 
-    // Expected least squares solution
     EXPECT_NEAR(aSol(1), 2.0, 1.0e-10) << "Regression solution X(1)";
     EXPECT_NEAR(aSol(2), 1.0, 1.0e-10) << "Regression solution X(2)";
   }
 
-} // anonymous namespace
+} // namespace

@@ -11,26 +11,21 @@ class StepFEA_NodeGroup;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write tool for NodeGroup
 class RWStepFEA_RWNodeGroup
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepFEA_RWNodeGroup();
 
-  //! Reads NodeGroup
   Standard_HIDDEN void ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                 const int                                   num,
                                 occ::handle<Interface_Check>&               ach,
                                 const occ::handle<StepFEA_NodeGroup>&       ent) const;
 
-  //! Writes NodeGroup
   Standard_HIDDEN void WriteStep(StepData_StepWriter&                  SW,
                                  const occ::handle<StepFEA_NodeGroup>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(const occ::handle<StepFEA_NodeGroup>& ent,
                              Interface_EntityIterator&             iter) const;
 };

@@ -13,43 +13,26 @@ namespace MathLin
 {
   using namespace MathUtils;
 
-  //! Method for solving least squares problems.
   enum class LeastSquaresMethod
   {
-    NormalEquations, //!< A^T*A*x = A^T*b (fast but less stable)
-    QR,              //!< Householder QR (good balance of speed and stability)
-    SVD              //!< SVD (most stable, handles rank-deficient matrices)
+    NormalEquations,
+    QR,
+    SVD
   };
 
-  //! Result for least squares problems.
   struct LeastSquaresResult
   {
     Status                     Status = Status::NotConverged;
-    std::optional<math_Vector> Solution;   //!< Least squares solution x
-    std::optional<double>      Residual;   //!< ||Ax - b||_2 (L2 norm of residual)
-    std::optional<double>      ResidualSq; //!< ||Ax - b||_2^2 (squared residual)
-    int                        Rank = 0;   //!< Numerical rank of A (for SVD)
+    std::optional<math_Vector> Solution;
+    std::optional<double>      Residual;
+    std::optional<double>      ResidualSq;
+    int                        Rank = 0;
 
     bool IsDone() const { return Status == Status::OK; }
 
     explicit operator bool() const { return IsDone(); }
   };
 
-  //! Solve overdetermined linear least squares: minimize ||Ax - b||_2.
-  //!
-  //! Given m x n matrix A (m >= n) and m-vector b, finds n-vector x
-  //! that minimizes the 2-norm of the residual r = Ax - b.
-  //!
-  //! Methods:
-  //! - NormalEquations: Solves A^T*A*x = A^T*b (fastest, may lose precision)
-  //! - QR: Uses Householder QR decomposition (good general choice)
-  //! - SVD: Most robust, handles rank-deficient systems
-  //!
-  //! @param theA coefficient matrix (m x n, m >= n)
-  //! @param theB right-hand side vector (length m)
-  //! @param theMethod solution method (default: QR)
-  //! @param theTolerance for rank/singularity detection
-  //! @return least squares result
   inline LeastSquaresResult LeastSquares(const math_Matrix& theA,
                                          const math_Vector& theB,
                                          LeastSquaresMethod theMethod    = LeastSquaresMethod::QR,
@@ -64,7 +47,6 @@ namespace MathLin
     const int aM        = aRowUpper - aRowLower + 1;
     const int aN        = aColUpper - aColLower + 1;
 
-    // Check dimensions
     if (theB.Length() != aM)
     {
       aResult.Status = Status::InvalidInput;
@@ -77,11 +59,10 @@ namespace MathLin
     {
       case LeastSquaresMethod::NormalEquations:
       {
-        // Form normal equations: A^T * A * x = A^T * b
+
         math_Matrix aAtA(aColLower, aColUpper, aColLower, aColUpper, 0.0);
         math_Vector aAtb(aColLower, aColUpper, 0.0);
 
-        // Compute A^T * A
         for (int i = aColLower; i <= aColUpper; ++i)
         {
           for (int j = aColLower; j <= aColUpper; ++j)
@@ -95,7 +76,6 @@ namespace MathLin
           }
         }
 
-        // Compute A^T * b
         for (int i = aColLower; i <= aColUpper; ++i)
         {
           double aSum = 0.0;
@@ -106,7 +86,6 @@ namespace MathLin
           aAtb(i) = aSum;
         }
 
-        // Solve the normal equations
         aLinResult   = Solve(aAtA, aAtb, theTolerance);
         aResult.Rank = (aLinResult.IsDone()) ? aN : 0;
       }
@@ -117,7 +96,7 @@ namespace MathLin
         aLinResult = SolveQR(theA, theB, theTolerance);
         if (aLinResult.IsDone())
         {
-          // Estimate rank from QR (not exact)
+
           aResult.Rank = aN;
         }
       }
@@ -128,7 +107,7 @@ namespace MathLin
         aLinResult = SolveSVD(theA, theB, theTolerance);
         if (aLinResult.IsDone())
         {
-          // Get rank from SVD
+
           SVDResult aSVD = SVD(theA, theTolerance);
           aResult.Rank   = aSVD.IsDone() ? aSVD.Rank : 0;
         }
@@ -144,7 +123,6 @@ namespace MathLin
 
     aResult.Solution = aLinResult.Solution;
 
-    // Compute residual ||Ax - b||_2
     const math_Vector& aX          = *aResult.Solution;
     double             aResidualSq = 0.0;
 
@@ -165,17 +143,6 @@ namespace MathLin
     return aResult;
   }
 
-  //! Solve weighted least squares: minimize ||W^{1/2}(Ax - b)||_2.
-  //!
-  //! Equivalent to minimizing sum of w_i * (a_i^T * x - b_i)^2
-  //! where w_i are the weights.
-  //!
-  //! @param theA coefficient matrix (m x n)
-  //! @param theB right-hand side vector (length m)
-  //! @param theW weight vector (length m, positive values)
-  //! @param theMethod solution method
-  //! @param theTolerance for rank detection
-  //! @return weighted least squares result
   inline LeastSquaresResult WeightedLeastSquares(
     const math_Matrix& theA,
     const math_Vector& theB,
@@ -191,14 +158,12 @@ namespace MathLin
     const int aColUpper = theA.UpperCol();
     const int aM        = aRowUpper - aRowLower + 1;
 
-    // Check dimensions
     if (theB.Length() != aM || theW.Length() != aM)
     {
       aResult.Status = Status::InvalidInput;
       return aResult;
     }
 
-    // Check weights are positive
     for (int i = theW.Lower(); i <= theW.Upper(); ++i)
     {
       if (theW(i) <= 0.0)
@@ -208,7 +173,6 @@ namespace MathLin
       }
     }
 
-    // Apply weights: A' = W^{1/2} * A, b' = W^{1/2} * b
     math_Matrix aWA(aRowLower, aRowUpper, aColLower, aColUpper);
     math_Vector aWB(theB.Lower(), theB.Upper());
 
@@ -222,21 +186,9 @@ namespace MathLin
       aWB(theB.Lower() + i - aRowLower) = aSqrtW * theB(theB.Lower() + i - aRowLower);
     }
 
-    // Solve weighted system
     return LeastSquares(aWA, aWB, theMethod, theTolerance);
   }
 
-  //! Solve regularized least squares (Tikhonov/Ridge regression):
-  //! minimize ||Ax - b||_2^2 + lambda*||x||_2^2
-  //!
-  //! Adds regularization to stabilize ill-conditioned problems.
-  //! The solution is: x = (A^T*A + lambda*I)^{-1} * A^T * b
-  //!
-  //! @param theA coefficient matrix (m x n)
-  //! @param theB right-hand side vector (length m)
-  //! @param theLambda regularization parameter (>= 0)
-  //! @param theTolerance for singularity detection
-  //! @return regularized least squares result
   inline LeastSquaresResult RegularizedLeastSquares(const math_Matrix& theA,
                                                     const math_Vector& theB,
                                                     double             theLambda,
@@ -251,7 +203,6 @@ namespace MathLin
     const int aM        = aRowUpper - aRowLower + 1;
     const int aN        = aColUpper - aColLower + 1;
 
-    // Check dimensions
     if (theB.Length() != aM)
     {
       aResult.Status = Status::InvalidInput;
@@ -264,11 +215,9 @@ namespace MathLin
       return aResult;
     }
 
-    // Form regularized normal equations: (A^T*A + lambda*I) * x = A^T * b
     math_Matrix aAtA(aColLower, aColUpper, aColLower, aColUpper, 0.0);
     math_Vector aAtb(aColLower, aColUpper, 0.0);
 
-    // Compute A^T * A + lambda*I
     for (int i = aColLower; i <= aColUpper; ++i)
     {
       for (int j = aColLower; j <= aColUpper; ++j)
@@ -280,11 +229,10 @@ namespace MathLin
         }
         aAtA(i, j) = aSum;
       }
-      // Add regularization
+
       aAtA(i, i) += theLambda;
     }
 
-    // Compute A^T * b
     for (int i = aColLower; i <= aColUpper; ++i)
     {
       double aSum = 0.0;
@@ -295,7 +243,6 @@ namespace MathLin
       aAtb(i) = aSum;
     }
 
-    // Solve the regularized normal equations
     LinearResult aLinResult = Solve(aAtA, aAtb, theTolerance);
     if (!aLinResult.IsDone())
     {
@@ -306,7 +253,6 @@ namespace MathLin
     aResult.Solution = aLinResult.Solution;
     aResult.Rank     = aN;
 
-    // Compute residual
     const math_Vector& aX          = *aResult.Solution;
     double             aResidualSq = 0.0;
 
@@ -327,17 +273,6 @@ namespace MathLin
     return aResult;
   }
 
-  //! Compute optimal regularization parameter using Leave-One-Out Cross-Validation.
-  //!
-  //! Minimizes the LOO-CV score: sum_i (a_i^T * x_{-i} - b_i)^2
-  //! where x_{-i} is the solution with the i-th observation removed.
-  //!
-  //! @param theA coefficient matrix
-  //! @param theB right-hand side vector
-  //! @param theLambdaMin minimum lambda to consider
-  //! @param theLambdaMax maximum lambda to consider
-  //! @param theNbPoints number of lambda values to try
-  //! @return optimal regularization parameter
   inline double OptimalRegularization(const math_Matrix& theA,
                                       const math_Vector& theB,
                                       double             theLambdaMin = 1.0e-10,
@@ -347,7 +282,6 @@ namespace MathLin
     double aBestLambda = theLambdaMin;
     double aBestScore  = std::numeric_limits<double>::max();
 
-    // Logarithmic grid search
     const double aLogMin  = std::log10(theLambdaMin);
     const double aLogMax  = std::log10(theLambdaMax);
     const double aLogStep = (aLogMax - aLogMin) / (theNbPoints - 1);

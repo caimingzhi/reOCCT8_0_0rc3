@@ -9,26 +9,18 @@
 #include <Precision.hpp>
 #include <ProjLib_Torus.hpp>
 
-//=================================================================================================
-
 ProjLib_Torus::ProjLib_Torus() = default;
-
-//=================================================================================================
 
 ProjLib_Torus::ProjLib_Torus(const gp_Torus& To)
 {
   Init(To);
 }
 
-//=================================================================================================
-
 ProjLib_Torus::ProjLib_Torus(const gp_Torus& To, const gp_Circ& C)
 {
   Init(To);
   Project(C);
 }
-
-//=================================================================================================
 
 void ProjLib_Torus::Init(const gp_Torus& To)
 {
@@ -37,18 +29,6 @@ void ProjLib_Torus::Init(const gp_Torus& To)
   myIsPeriodic = false;
   isDone       = false;
 }
-
-//=======================================================================
-// function : EvalPnt2d / EvalDir2d
-// purpose  : returns the Projected Pnt / Dir in the parametrization range
-//           of myPlane.
-//           P is a point on a torus with the same Position as To,
-//           but with a major an minor radius equal to 1.
-//           ( in order to avoid to divide by Radius)
-//                / X = (1+cosV)*cosU        U = Atan(Y/X)
-//            P = | Y = (1+cosV)*sinU   ==>
-//                \ Z = sinV                 V = std::asin( Z)
-//=======================================================================
 
 static gp_Pnt2d EvalPnt2d(const gp_Vec& Ve, const gp_Torus& To)
 {
@@ -70,8 +50,6 @@ static gp_Pnt2d EvalPnt2d(const gp_Vec& Ve, const gp_Torus& To)
   return gp_Pnt2d(U, V);
 }
 
-//=================================================================================================
-
 void ProjLib_Torus::Project(const gp_Circ& C)
 {
   myType = GeomAbs_Line;
@@ -83,16 +61,12 @@ void ProjLib_Torus::Project(const gp_Circ& C)
   gp_Vec Zt(myTorus.Position().Direction());
   gp_Vec OC(myTorus.Location(), C.Location());
 
-  //  if (OC.Magnitude() < Precision::Confusion()      ||
-  //      OC.IsParallel(myTorus.Position().Direction(),
-  //		    Precision::Angular())) {
-
   if (OC.Magnitude() < Precision::Confusion()
       || C.Position().Direction().IsParallel(myTorus.Position().Direction(), Precision::Angular()))
   {
-    // Iso V
-    gp_Pnt2d P1 = EvalPnt2d(Xc, myTorus); // evaluate U1
-    gp_Pnt2d P2 = EvalPnt2d(Yc, myTorus); // evaluate U2
+
+    gp_Pnt2d P1 = EvalPnt2d(Xc, myTorus);
+    gp_Pnt2d P2 = EvalPnt2d(Yc, myTorus);
     double   Z  = OC.Dot(myTorus.Position().Direction());
     Z /= myTorus.MinorRadius();
 
@@ -100,11 +74,11 @@ void ProjLib_Torus::Project(const gp_Circ& C)
 
     if (Z > 1.)
     {
-      V = M_PI / 2.; // simple protection
-    } // against calculation errors
+      V = M_PI / 2.;
+    }
     else if (Z < -1.)
-    {                // it happens that Z is slightly
-      V = -M_PI / 2; // greater than 1.
+    {
+      V = -M_PI / 2;
     }
     else
     {
@@ -122,8 +96,7 @@ void ProjLib_Torus::Project(const gp_Circ& C)
     P1.SetY(V);
     P2.SetY(V);
     gp_Vec2d V2d(P1, P2);
-    // Normalement std::abs( P1.X() - P2.X()) = PI/2
-    // Si != PI/2, on a traverse la periode => On reverse la Direction
+
     if (std::abs(P1.X() - P2.X()) > M_PI)
       V2d.Reverse();
 
@@ -134,19 +107,17 @@ void ProjLib_Torus::Project(const gp_Circ& C)
   }
   else
   {
-    // Iso U  -> U = angle( Xt, OC)
+
     double U = Xt.AngleWithRef(OC, Xt ^ Yt);
     if (U < 0.)
       U += 2 * M_PI;
 
-    // Origine de la droite
     double V1 = OC.AngleWithRef(Xc, OC ^ Zt);
     if (V1 < 0.)
       V1 += 2 * M_PI;
 
     gp_Pnt2d P1(U, V1);
 
-    // Direction de la droite
     gp_Dir2d D2 = gp::DY2d();
     if (((OC ^ Zt) * (Xc ^ Yc)) < 0.)
     {

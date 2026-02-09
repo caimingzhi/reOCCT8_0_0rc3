@@ -5,7 +5,6 @@
 
 #include <StepBasic_ProductDefinitionContext.hpp>
 
-//! class added to Schema AP214 around April 1996
 class StepBasic_DesignContext : public StepBasic_ProductDefinitionContext
 {
 

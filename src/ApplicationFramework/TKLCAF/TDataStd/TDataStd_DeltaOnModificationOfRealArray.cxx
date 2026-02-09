@@ -14,7 +14,6 @@ IMPLEMENT_STANDARD_RTTIEXT(TDataStd_DeltaOnModificationOfRealArray, TDF_DeltaOnM
 #ifdef OCCT_DEBUG
   #define MAXUP 1000
 #endif
-//=================================================================================================
 
 TDataStd_DeltaOnModificationOfRealArray::TDataStd_DeltaOnModificationOfRealArray(
   const occ::handle<TDataStd_RealArray>& OldAtt)
@@ -56,7 +55,7 @@ TDataStd_DeltaOnModificationOfRealArray::TDataStd_DeltaOnModificationOfRealArray
       {
         aCase = 3;
         N     = myUp2;
-      } // Up1 > Up2
+      }
 
       NCollection_List<int> aList;
       for (i = Arr1->Lower(); i <= N; i++)
@@ -86,8 +85,6 @@ TDataStd_DeltaOnModificationOfRealArray::TDataStd_DeltaOnModificationOfRealArray
 #endif
   }
 }
-
-//=================================================================================================
 
 void TDataStd_DeltaOnModificationOfRealArray::Apply()
 {
@@ -125,7 +122,7 @@ void TDataStd_DeltaOnModificationOfRealArray::Apply()
   else if (myUp1 < myUp2)
     aCase = 2;
   else
-    aCase = 3; // Up1 > Up2
+    aCase = 3;
 
   if (aCase == 1 && (myIndxes.IsNull() || myValues.IsNull()))
     return;
@@ -149,7 +146,7 @@ void TDataStd_DeltaOnModificationOfRealArray::Apply()
     aCurAtt->myValue = realArr;
   }
   else
-  { // == 3
+  {
     int                                      low     = aRealArr->Lower();
     occ::handle<NCollection_HArray1<double>> realArr = new NCollection_HArray1<double>(low, myUp1);
     for (i = aRealArr->Lower(); i <= myUp2 && i <= aRealArr->Upper(); i++)

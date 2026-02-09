@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_LowOrderKinematicPairWithRange;
 
-//! Read & Write tool for LowOrderKinematicPairWithRange
 class RWStepKinematics_RWLowOrderKinematicPairWithRange
 {
 public:

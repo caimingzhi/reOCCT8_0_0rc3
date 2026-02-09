@@ -20,15 +20,11 @@
 #include <TopoDSToStep_Tool.hpp>
 #include <Transfer_FinderProcess.hpp>
 
-//=================================================================================================
-
 TopoDSToStep_Builder::TopoDSToStep_Builder()
     : myError(TopoDSToStep_BuilderOther)
 {
   done = false;
 }
-
-//=================================================================================================
 
 TopoDSToStep_Builder::TopoDSToStep_Builder(const TopoDS_Shape&                        aShape,
                                            TopoDSToStep_Tool&                         aTool,
@@ -40,8 +36,6 @@ TopoDSToStep_Builder::TopoDSToStep_Builder(const TopoDS_Shape&                  
   done = false;
   Init(aShape, aTool, FP, theTessellatedGeomParam, theLocalFactors, theProgress);
 }
-
-//=================================================================================================
 
 void TopoDSToStep_Builder::Init(const TopoDS_Shape&                        aShape,
                                 TopoDSToStep_Tool&                         myTool,
@@ -70,21 +64,6 @@ void TopoDSToStep_Builder::Init(const TopoDS_Shape&                        aShap
       occ::handle<StepShape_TopologicalRepresentationItem>  Fpms;
       NCollection_Sequence<occ::handle<Standard_Transient>> mySeq;
 
-      //	const TopoDS_Shell ForwardShell =
-      //	  TopoDS::Shell(myShell.Oriented(TopAbs_FORWARD));
-
-      //	TopExp_Explorer myExp(ForwardShell, TopAbs_FACE);
-      //  CKY  9-DEC-1997 (PRO9824 et consorts)
-      //   Pour passer les orientations : ELLES SONT DONNEES EN RELATIF
-      //   Donc, pour SHELL, on doit l ecrire en direct en STEP (pas le choix)
-      //   -> il faut repercuter en dessous, donc explorer le Shell TEL QUEL
-      //   Pour FACE WIRE, d une part on ECRIT SON ORIENTATION relative au contenant
-      //     (puisqu on peut), d autre part on EXPLORE EN FORWARD : ainsi les
-      //     orientations des sous-shapes sont relatives a leur contenant immediat
-      //     et la recombinaison en lecture est sans malice
-      //  Il reste ici et la du code relatif a "en Faceted on combine differemment"
-      //  -> reste encore du menage a faire
-
       TopExp_Explorer anExp;
 
       TopoDSToStep_MakeStepFace MkFace;
@@ -109,11 +88,6 @@ void TopoDSToStep_Builder::Init(const TopoDS_Shape&                        aShap
         }
         else
         {
-          // MakeFace Error Handling : warning only
-          //	    std::cout << "Warning : one Face has not been mapped" << std::endl;
-          //	  occ::handle<TransferBRep_ShapeMapper> errShape =
-          //	    new TransferBRep_ShapeMapper(Face);
-          //	    FP->AddWarning(errShape, " a Face from a Shell has not been mapped");
         }
       }
       if (!aPS1.More())
@@ -136,19 +110,13 @@ void TopoDSToStep_Builder::Init(const TopoDS_Shape&                        aShap
         occ::handle<TCollection_HAsciiString> aName = new TCollection_HAsciiString("");
         CFSpms->Init(aName, aSet);
 
-        // --------------------------------------------------------------
-        // To add later : if not facetted context & shell is reversed
-        //                then shall create an oriented_shell with
-        //                orientation flag to false.
-        // --------------------------------------------------------------
-
         myTool.Bind(aShape, CFSpms);
         myResult = CFSpms;
         done     = true;
       }
       else
       {
-        // Builder Error handling;
+
         myError = TopoDSToStep_NoFaceMapped;
         done    = false;
       }
@@ -184,8 +152,7 @@ void TopoDSToStep_Builder::Init(const TopoDS_Shape&                        aShap
       if (theTessellatedGeomParam == 1 || (theTessellatedGeomParam == 2 && !MkFace.IsDone()))
       {
         Message_ProgressScope aPS(theProgress, nullptr, 1);
-        // fourth parameter is true in order to create a tessellated_surface_set entity
-        // or put false to create a triangulated_face instead
+
         MkTessFace.Init(Face, myTool, FP, true, theLocalFactors, aPS.Next());
       }
 
@@ -206,11 +173,9 @@ void TopoDSToStep_Builder::Init(const TopoDS_Shape&                        aShap
       }
       else
       {
-        // MakeFace Error Handling : Face not Mapped
+
         myError = TopoDSToStep_BuilderOther;
-        //	  occ::handle<TransferBRep_ShapeMapper> errShape =
-        //	    new TransferBRep_ShapeMapper(Face);
-        //	  FP->AddWarning(errShape, " the Face has not been mapped");
+
         done = false;
       }
       break;
@@ -220,30 +185,18 @@ void TopoDSToStep_Builder::Init(const TopoDS_Shape&                        aShap
   }
 }
 
-// ============================================================================
-// Method  : Value
-// Purpose : Returns TopologicalRepresentationItem as the result
-// ============================================================================
 const occ::handle<StepShape_TopologicalRepresentationItem>& TopoDSToStep_Builder::Value() const
 {
   StdFail_NotDone_Raise_if(!done, "TopoDSToStep_Builder::Value() - no result");
   return myResult;
 }
 
-// ============================================================================
-// Method  : TessellatedValue
-// Purpose : Returns TopologicalRepresentationItem as the optional result
-// ============================================================================
 const occ::handle<StepVisual_TessellatedItem>& TopoDSToStep_Builder::TessellatedValue() const
 {
   StdFail_NotDone_Raise_if(!done, "TopoDSToStep_Builder::TessellatedValue() - no result");
   return myTessellatedResult;
 }
 
-// ============================================================================
-// Method  : Error
-// Purpose : Returns builder error if the process is not done
-// ============================================================================
 TopoDSToStep_BuilderError TopoDSToStep_Builder::Error() const
 {
   return myError;

@@ -10,101 +10,47 @@
 
 #include <functional>
 
-//! Base class for removing duplicate entities.
-//! Implements the logic of processing entities and removing duplicates.
-//! Child classes should only implement and register replacer functions
-//! for each specific type of sharing entity.
-//! How to use:
-//! 1. Create an instance of the child class.
-//! 2. Add entities to the processor using ProcessEntity() method. Entities
-//!    that can be merged will be stored in the internal map, others will be ignored.
-//! 3. Call Perform() method to replace duplicate entities. After this call
-//!    all duplicate entities will be replaced in a model with the first processed entity
-//!    that is evaluated as equal to them.
-//!    IMPORTANT: Duplicated entities will be replaced but not removed from the model!
-//! 4. Call GetReplacedEntities() to get a list of replaced duplicates. This list can be used
-//!    to remove entities from the model.
-//! @tparam ProcessedType Type of the processed entities.
-//! @tparam ProcessedTypeHasher OCCT-Style hasher for the processed entities.
 template <typename ProcessedType, typename ProcessedTypeHasher>
 class StepTidy_EntityReducer
 {
 protected:
-  // Map of duplicate entities. Key is the first processed entity, value is a list of duplicates.
   using DuplicateMap = NCollection_DataMap<occ::handle<ProcessedType>,
                                            std::vector<occ::handle<ProcessedType>>,
                                            ProcessedTypeHasher>;
-  // Function to replace an entity in sharings. First argument is the old entity, second is the new
-  // entity, third is the sharing in which the entity should be replaced. Returns true if the entity
-  // was replaced, false otherwise.
+
   using ReplacerFunction = std::function<bool(const occ::handle<ProcessedType>&,
                                               const occ::handle<ProcessedType>&,
                                               const occ::handle<Standard_Transient>)>;
-  // Map of replacer functions. Key is the type of the sharing entity, value is the replacer
-  // function for this type.
+
   using ReplacerMap = NCollection_DataMap<occ::handle<Standard_Type>, ReplacerFunction>;
 
 protected:
-  //! Constructor. Accepts a work session containing the model to process.
-  //! Protected to prevent direct instantiation of the base class. Only child classes should be
-  //! allowed to instantiate.
-  //! @param theWS Work session.
   StepTidy_EntityReducer(const occ::handle<XSControl_WorkSession>& theWS);
 
 public:
-  //! Function to process an entity. If the entity can be merged, it will be stored in the internal
-  //! map. If the entity cannot be merged, it will be ignored.
-  //! Entity can only be processed if:
-  //! 1. The type of entity is ProcessedType.
-  //! 2. All sharings of the entity have a registered replacer function.
-  //! @param theEntity Entity to process.
-  //! @return True if the entity was processed, false if it was ignored.
   Standard_EXPORT bool ProcessEntity(const occ::handle<Standard_Transient>& theEntity);
 
-  //! Function to replace duplicate entities. After this call, all duplicate entities will be
-  //! replaced with the first processed entity that is evaluated as equal to them.
-  //! IMPORTANT: Duplicated entities will be replaced but not removed from the model!
-  //! @param theReplacedEntities List where replaced entities will be stored.
-  //!        This list can be used to remove entities from the model.
   Standard_EXPORT void Perform(
     NCollection_Map<occ::handle<Standard_Transient>>& theReplacedEntities);
 
 protected:
-  //! Register a replacer function for a specific type of sharing entity.
-  //! Should be used by child classes to register replacer functions for each specific type of
-  //! sharing entity. If a sharing entity of the specified type is encountered during processing,
-  //! the registered replacer function will be called to replace the old entity with the new one.
-  //! All replacers must be registered before calling ProcessEntity() method.
-  //! @param theType Type of the sharing entity.
-  //! @param theReplacer Replacer function.
   void registerReplacer(const occ::handle<Standard_Type>& theType,
                         const ReplacerFunction&           theReplacer);
 
 public:
-  //! Checks if all sharings have registered replacers for their types.
-  //! @param theSharings List of sharings to check.
-  //! @return True if all sharings have registered replacers, false otherwise.
   bool hasAllReplacers(
     const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& theSharings) const;
 
-  //! Replaces an old entity with a new entity in sharings.
-  //! Should only be called if all sharings have registered replacers.
-  //! @param theOldEntity Old entity to replace.
-  //! @param theNewEntity New entity to replace old entity with.
-  //! @param theSharings List of old entity sharings to replace the entity in.
-  //! @return True if all entities were replaced, false if at least one entity was not replaced.
   bool replaceInSharings(
     const occ::handle<ProcessedType>&                                          theOldEntity,
     const occ::handle<ProcessedType>&                                          theNewEntity,
     const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& theSharings) const;
 
 private:
-  occ::handle<XSControl_WorkSession> myWS;           //!< Work session.
-  ReplacerMap                        myReplacerMap;  //!< Map of replacer functions.
-  DuplicateMap                       myDuplicateMap; //!< Map of duplicate entities.
+  occ::handle<XSControl_WorkSession> myWS;
+  ReplacerMap                        myReplacerMap;
+  DuplicateMap                       myDuplicateMap;
 };
-
-//==================================================================================================
 
 template <typename ProcessedType, typename ProcessedTypeHasher>
 StepTidy_EntityReducer<ProcessedType, ProcessedTypeHasher>::StepTidy_EntityReducer(
@@ -114,8 +60,6 @@ StepTidy_EntityReducer<ProcessedType, ProcessedTypeHasher>::StepTidy_EntityReduc
       myDuplicateMap()
 {
 }
-
-//==================================================================================================
 
 template <typename ProcessedType, typename ProcessedTypeHasher>
 bool StepTidy_EntityReducer<ProcessedType, ProcessedTypeHasher>::ProcessEntity(
@@ -134,20 +78,18 @@ bool StepTidy_EntityReducer<ProcessedType, ProcessedTypeHasher>::ProcessEntity(
     std::vector<occ::handle<ProcessedType>>* anIter = myDuplicateMap.ChangeSeek(anEntity);
     if (anIter == nullptr)
     {
-      // Add as a new key.
+
       myDuplicateMap.Bind(anEntity, std::vector<occ::handle<ProcessedType>>{});
     }
     else
     {
-      // Add as a value.
+
       anIter->push_back(anEntity);
     }
   }
 
   return true;
 }
-
-//==================================================================================================
 
 template <typename ProcessedType, typename ProcessedTypeHasher>
 void StepTidy_EntityReducer<ProcessedType, ProcessedTypeHasher>::Perform(
@@ -180,8 +122,6 @@ void StepTidy_EntityReducer<ProcessedType, ProcessedTypeHasher>::Perform(
   }
 }
 
-//==================================================================================================
-
 template <typename ProcessedType, typename ProcessedTypeHasher>
 void StepTidy_EntityReducer<ProcessedType, ProcessedTypeHasher>::registerReplacer(
   const occ::handle<Standard_Type>& theType,
@@ -189,8 +129,6 @@ void StepTidy_EntityReducer<ProcessedType, ProcessedTypeHasher>::registerReplace
 {
   myReplacerMap.Bind(theType, theReplacer);
 }
-
-//==================================================================================================
 
 template <typename ProcessedType, typename ProcessedTypeHasher>
 bool StepTidy_EntityReducer<ProcessedType, ProcessedTypeHasher>::hasAllReplacers(
@@ -206,7 +144,6 @@ bool StepTidy_EntityReducer<ProcessedType, ProcessedTypeHasher>::hasAllReplacers
                      { return myReplacerMap.IsBound(theSharing->DynamicType()); });
 }
 
-//==================================================================================================
 template <typename ProcessedType, typename ProcessedTypeHasher>
 bool StepTidy_EntityReducer<ProcessedType, ProcessedTypeHasher>::replaceInSharings(
   const occ::handle<ProcessedType>&                                          theOldEntity,

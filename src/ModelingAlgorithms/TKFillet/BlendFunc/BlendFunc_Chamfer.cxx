@@ -5,8 +5,6 @@
 #include <math_Matrix.hpp>
 #include <Standard_NotImplemented.hpp>
 
-//=================================================================================================
-
 BlendFunc_Chamfer::BlendFunc_Chamfer(const occ::handle<Adaptor3d_Surface>& S1,
                                      const occ::handle<Adaptor3d_Surface>& S2,
                                      const occ::handle<Adaptor3d_Curve>&   CG)
@@ -16,8 +14,6 @@ BlendFunc_Chamfer::BlendFunc_Chamfer(const occ::handle<Adaptor3d_Surface>& S1,
 {
 }
 
-//=================================================================================================
-
 void BlendFunc_Chamfer::Set(const double Dist1, const double Dist2, const int Choix)
 {
   corde1.SetDist(Dist1);
@@ -25,15 +21,11 @@ void BlendFunc_Chamfer::Set(const double Dist1, const double Dist2, const int Ch
   choix = Choix;
 }
 
-//=================================================================================================
-
 void BlendFunc_Chamfer::Set(const double Param)
 {
   corde1.SetParam(Param);
   corde2.SetParam(Param);
 }
-
-//=================================================================================================
 
 bool BlendFunc_Chamfer::IsSolution(const math_Vector& Sol, const double Tol)
 {
@@ -53,8 +45,6 @@ bool BlendFunc_Chamfer::IsSolution(const math_Vector& Sol, const double Tol)
   return issol;
 }
 
-//=================================================================================================
-
 bool BlendFunc_Chamfer::Value(const math_Vector& X, math_Vector& F)
 {
   math_Vector x(1, 2), f(1, 2);
@@ -73,8 +63,6 @@ bool BlendFunc_Chamfer::Value(const math_Vector& X, math_Vector& F)
 
   return true;
 }
-
-//=================================================================================================
 
 bool BlendFunc_Chamfer::Derivatives(const math_Vector& X, math_Matrix& D)
 {
@@ -109,60 +97,40 @@ bool BlendFunc_Chamfer::Derivatives(const math_Vector& X, math_Matrix& D)
   return true;
 }
 
-//=================================================================================================
-
 const gp_Pnt& BlendFunc_Chamfer::PointOnS1() const
 {
   return corde1.PointOnS();
 }
-
-//=================================================================================================
 
 const gp_Pnt& BlendFunc_Chamfer::PointOnS2() const
 {
   return corde2.PointOnS();
 }
 
-//=================================================================================================
-
 bool BlendFunc_Chamfer::IsTangencyPoint() const
 {
   return corde1.IsTangencyPoint() && corde2.IsTangencyPoint();
 }
-
-//=================================================================================================
 
 const gp_Vec& BlendFunc_Chamfer::TangentOnS1() const
 {
   return corde1.TangentOnS();
 }
 
-//=================================================================================================
-
 const gp_Vec& BlendFunc_Chamfer::TangentOnS2() const
 {
   return corde2.TangentOnS();
 }
-
-//=================================================================================================
 
 const gp_Vec2d& BlendFunc_Chamfer::Tangent2dOnS1() const
 {
   return corde1.Tangent2dOnS();
 }
 
-//=================================================================================================
-
 const gp_Vec2d& BlendFunc_Chamfer::Tangent2dOnS2() const
 {
   return corde2.Tangent2dOnS();
 }
-
-//=======================================================================
-// function : Tangent
-// purpose  : TgF,NmF et TgL,NmL les tangentes et normales respectives
-//           aux surfaces S1 et S2
-//=======================================================================
 
 void BlendFunc_Chamfer::Tangent(const double U1,
                                 const double V1,
@@ -206,10 +174,6 @@ void BlendFunc_Chamfer::Tangent(const double U1,
     TgL.Reverse();
 }
 
-//=======================================================================
-// function : GetSectionSize
-// purpose  : Non implementee (non necessaire car non rationel)
-//=======================================================================
 double BlendFunc_Chamfer::GetSectionSize() const
 {
   throw Standard_NotImplemented("BlendFunc_Chamfer::GetSectionSize()");

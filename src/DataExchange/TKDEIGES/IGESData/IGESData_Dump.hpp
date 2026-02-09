@@ -1,8 +1,5 @@
 #pragma once
 
-//		       --------------------------
-//			    IGESData_Dump.hpp
-//		       --------------------------
 #include <gp_XY.hpp>
 #include <gp_Pnt2d.hpp>
 #include <gp_XYZ.hpp>
@@ -11,77 +8,6 @@
 #include <gp_Dir.hpp>
 #include <gp_GTrsf.hpp>
 #include <Interface_MSG.hpp>
-
-//  ###############################################################
-//  Macros to help Dumping Parts of IGES Entities
-//  (for useful and repetitive cases but which apply to different classes
-//   but with similar signatures, such as Arrays)
-//  Remember that the class IGESDumper processes itself individual dump of
-//  IGESEntity
-
-//  General Names are : IGESData_Dump***(S,arglist);  S being an output Stream
-
-//  ---------------------------------------------------------------
-//                          AVAILABLE MACROS
-
-//  Dumping simple IGESEntity : see the class IGESDumper itself
-//  Dumping a text as HAsciiString (either from PCollection or TCollection)
-//  (manages an empty pointer) :
-//  IGESData_DumpString(S,str)  displays   " "Content" " or "(undefined)"
-
-//  Dumping Simple Data : Level must be managed by the caller
-//  (general rule : Transformed Display to be used if Level > 5)
-
-//  IGESData_DumpXY(S,XYval)               " (Xval,Yval)"         (no Transf)
-//  IGESData_DumpXYT(S,XYVal,Trsf)         " (Xval,Yval)"         Z ignored
-//  IGESData_DumpXYTZ(S,XYVal,Trsf,Z)      " (Xval,Yval,Zval)"    Z combined
-//  IGESData_DumpXYZ(S,XYZval)             " (Xval,Yval,Zval)"    (no Transf)
-//  IGESData_DumpXYZT(S,XYZval,Trsf)       " (Xval,Yval,Zval)"    (Transf)
-
-//  Dumping Simple Data with Level : first displays Immediate Value, then
-//  if Level > 5 and Transformation is not Identity, displays Transformed Value
-
-//  IGESData_DumpXYL(S,Level,XYVal,Trsf)    " (Xval,Yval)  Transformed : (..)"
-//  IGESData_DumpXYLZ(S,Level,XYVal,Trsf,Z) " (Xval,Yval,Zval)  Transformed :."
-//  IGESData_DumpXYZL(S,Level,XYZval,Trsf)  " (Xval,Yval,Zval)  Transformed :."
-
-//  Dumping Lists : general features
-//      Lower and Upper are effective Values (immediate or given by functions).
-//      Typically, give Lower = 1, Upper = ent->NbItems()
-//      Item is the name of the access fonction (without its Index)
-//      For Instance,   Item = compcurve->Curve  AND NOT  compcurve->Curve(..)
-//      If Level is present, it commands more or less extensive display :
-//        Level = 4, only limits are displayed
-//  If it is a classic list, starting from 1 with a count (which can be 0),
-//  displays "Count <upper> ..."  or "Empty". Else, display "(low - up) ..."
-//        Level = 5, in addfition items are displayed shortly
-//        (Entity Directory Numbers, XY/XYZ Coordinates)
-//        Level > 5, in some cases, items are displayed with more details
-//        (Entities with Type/Form, XY/XYZ with Transformed equivalents)
-
-//  IGESData_DumpListVal(S,Lower,Upper,Item)   Item can be Real,Integer,
-//                more generally, any type having operator << to occ::handle<Message_Messenger>
-//  IGESData_DumpListXY(S,Lower,Upper,Item)    Item : XY without Transformation
-//  IGESData_DumpListXYZ(S,Lower,Upper,Item)   Item : XYZ without Transf
-
-//  IGESData_DumpVals(S,Level,Lower,Upper,Item)             Item : Real,Integer
-//  IGESData_DumpListXYL(S,Level,Lower,Upper,Item,Trsf)     Item : XY
-//  IGESData_DumpListXYLZ(S,Level,Lower,Upper,Item,Trsf,Z)  Item : XY. Z is a
-//                Common Displacement
-//  IGESData_DumpListXYZL(S,Level,Lower,Upper,Item,Trsf)    Item : XYZ
-
-//  IGESData_DumpStrings(S,Level,Lower,Upper,Item)          Item : HAsciiString
-//  IGESData_DumpEntities(S,Dumper,Level,Lower,Upper,Item)  Item : IGESEntity
-//                Dumper is an IGESDumper which displays IGES Entities
-
-//  Dumping Complex Arrays : only the most useful cases are taken into account
-//  Doubles Arrays (Rectangles) and Single Arrays of Single Arrays (Jagged)
-
-//  IGESData_DumpRectVals(S,Level,LowerRow,UpperRow,LowerCol,UpperCol,Item)
-//           LowerRow,LowerCol,UpperRow,UpperCol : effective values
-//           Item : Real,Integer
-
-//  ---------------------------------------------------------------
 
 #define IGESData_DumpString(S, str)                                                                \
   if (str.IsNull())                                                                                \

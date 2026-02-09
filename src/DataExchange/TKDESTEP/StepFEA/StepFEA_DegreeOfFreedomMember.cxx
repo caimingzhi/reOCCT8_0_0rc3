@@ -6,21 +6,15 @@ IMPLEMENT_STANDARD_RTTIEXT(StepFEA_DegreeOfFreedomMember, StepData_SelectNamed)
 static const char* anEnumeratedCurveElementFreedom     = "ENUMERATED_DEGREE_OF_FREEDOM";
 static const char* anApplicationDefinedDegreeOfFreedom = "APPLICATION_DEFINED_DEGREE_OF_FREEDOM";
 
-//=================================================================================================
-
 StepFEA_DegreeOfFreedomMember::StepFEA_DegreeOfFreedomMember()
     : mycase(0)
 {
 }
 
-//=================================================================================================
-
 bool StepFEA_DegreeOfFreedomMember::HasName() const
 {
   return mycase > 0;
 }
-
-//=================================================================================================
 
 const char* StepFEA_DegreeOfFreedomMember::Name() const
 {
@@ -36,9 +30,7 @@ const char* StepFEA_DegreeOfFreedomMember::Name() const
   return "";
 }
 
-//=================================================================================================
-
-static int CompareNames(const char* name, int& /*numen*/)
+static int CompareNames(const char* name, int&)
 {
   int thecase = 0;
   if (!name || name[0] == '\0')
@@ -51,44 +43,9 @@ static int CompareNames(const char* name, int& /*numen*/)
   {
     thecase = 2;
   }
-  /*if (!name || name[0] == '\0') thecase = 0;
-   else if(!strcmp (name,"XTranslation")) {
-     thecase = 1;
-     numen =  1;
-   }
-   else if(!strcmp (name,"YTranslation")) {
-     thecase = 1;
-     numen =  2;
-   }
-   else if(!strcmp (name,"ZTranslation")) {
-     thecase = 1;
-     numen =  3;
-   }
-   else if(!strcmp (name,"XRotation")) {
-     thecase = 1;
-     numen =  4;
-   }
-   else if(!strcmp (name,"YRotation")) {
-     thecase = 1;
-     numen =  5;
-   }
-   else if(!strcmp (name,"ZRotation")) {
-     thecase = 1;
-     numen =  6;
-   }
-   else if(!strcmp (name,"Warp")) {
-     thecase = 1;
-     numen =  7;
-   }
-   else if(!strcmp (name,"None")) {
-     thecase = 1;
-     numen =  8;
-   }
-   else if(!strcmp (name,"ApplicationDefinedDegreeOfFreedom")) thecase = 2;*/
+
   return thecase;
 }
-
-//=================================================================================================
 
 bool StepFEA_DegreeOfFreedomMember::SetName(const char* name)
 {
@@ -98,8 +55,6 @@ bool StepFEA_DegreeOfFreedomMember::SetName(const char* name)
     SetInteger(numit);
   return (mycase > 0);
 }
-
-//=================================================================================================
 
 bool StepFEA_DegreeOfFreedomMember::Matches(const char* name) const
 {

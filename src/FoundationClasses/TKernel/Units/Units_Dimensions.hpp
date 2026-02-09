@@ -6,21 +6,10 @@
 #include <Standard_Transient.hpp>
 #include <Standard_Integer.hpp>
 
-//! This class includes all the methods to create and
-//! manipulate the dimensions of the physical
-//! quantities.
 class Units_Dimensions : public Standard_Transient
 {
 
 public:
-  //! Returns a Dimensions object which represents the
-  //! dimension of a physical quantity. Each of the
-  //! <amass>, <alength>, <atime>, <anelectriccurrent>,
-  //! <athermodynamictemperature>, <anamountofsubstance>,
-  //! <aluminousintensity>, <aplaneangle>, <asolidangle> are
-  //! the powers for the 7 fundamental units of physical
-  //! quantity and the 2 secondary fundamental units of
-  //! physical quantity.
   Standard_EXPORT Units_Dimensions(const double amass,
                                    const double alength,
                                    const double atime,
@@ -31,66 +20,38 @@ public:
                                    const double aplaneangle,
                                    const double asolidangle);
 
-  //! Returns the power of mass stored in the dimensions.
   double Mass() const;
 
-  //! Returns the power of length stored in the dimensions.
   double Length() const;
 
-  //! Returns the power of time stored in the dimensions.
   double Time() const;
 
-  //! Returns the power of electrical intensity (current)
-  //! stored in the dimensions.
   double ElectricCurrent() const;
 
-  //! Returns the power of temperature stored in the
-  //! dimensions.
   double ThermodynamicTemperature() const;
 
-  //! Returns the power of quantity of material (mole)
-  //! stored in the dimensions.
   double AmountOfSubstance() const;
 
-  //! Returns the power of light intensity stored in the
-  //! dimensions.
   double LuminousIntensity() const;
 
-  //! Returns the power of plane angle stored in the
-  //! dimensions.
   double PlaneAngle() const;
 
-  //! Returns the power of solid angle stored in the
-  //! dimensions.
   double SolidAngle() const;
 
-  //! Returns the quantity string of the dimension
   Standard_EXPORT const char* Quantity() const;
 
-  //! Creates and returns a new Dimensions object which is
-  //! the result of the multiplication of <me> and
-  //! <adimensions>.
   Standard_EXPORT occ::handle<Units_Dimensions> Multiply(
     const occ::handle<Units_Dimensions>& adimensions) const;
 
-  //! Creates and returns a new Dimensions object which is
-  //! the result of the division of <me> by <adimensions>.
   Standard_EXPORT occ::handle<Units_Dimensions> Divide(
     const occ::handle<Units_Dimensions>& adimensions) const;
 
-  //! Creates and returns a new Dimensions object which is
-  //! the result of the power of <me> and <anexponent>.
   Standard_EXPORT occ::handle<Units_Dimensions> Power(const double anexponent) const;
 
-  //! Returns true if <me> and <adimensions> have the same
-  //! dimensions, false otherwise.
   Standard_EXPORT bool IsEqual(const occ::handle<Units_Dimensions>& adimensions) const;
 
-  //! Returns false if <me> and <adimensions> have the same
-  //! dimensions, true otherwise.
   Standard_EXPORT bool IsNotEqual(const occ::handle<Units_Dimensions>& adimensions) const;
 
-  //! Useful for degugging.
   Standard_EXPORT void Dump(const int ashift) const;
 
   Standard_EXPORT static occ::handle<Units_Dimensions> ALess();
@@ -111,7 +72,6 @@ public:
 
   Standard_EXPORT static occ::handle<Units_Dimensions> APlaneAngle();
 
-  //! Returns the basic dimensions.
   Standard_EXPORT static occ::handle<Units_Dimensions> ASolidAngle();
 
   DEFINE_STANDARD_RTTIEXT(Units_Dimensions, Standard_Transient)
@@ -133,56 +93,40 @@ inline double Units_Dimensions::Mass() const
   return themass;
 }
 
-//=================================================================================================
-
 inline double Units_Dimensions::Length() const
 {
   return thelength;
 }
-
-//=================================================================================================
 
 inline double Units_Dimensions::Time() const
 {
   return thetime;
 }
 
-//=================================================================================================
-
 inline double Units_Dimensions::ElectricCurrent() const
 {
   return theelectriccurrent;
 }
-
-//=================================================================================================
 
 inline double Units_Dimensions::ThermodynamicTemperature() const
 {
   return thethermodynamictemperature;
 }
 
-//=================================================================================================
-
 inline double Units_Dimensions::AmountOfSubstance() const
 {
   return theamountofsubstance;
 }
-
-//=================================================================================================
 
 inline double Units_Dimensions::LuminousIntensity() const
 {
   return theluminousintensity;
 }
 
-//=================================================================================================
-
 inline double Units_Dimensions::PlaneAngle() const
 {
   return theplaneangle;
 }
-
-//=================================================================================================
 
 inline double Units_Dimensions::SolidAngle() const
 {

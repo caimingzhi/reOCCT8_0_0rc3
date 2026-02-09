@@ -2,11 +2,7 @@
 #include <TopOpeBRepBuild_LoopClassifier.hpp>
 #include <TopOpeBRepBuild_LoopSet.hpp>
 
-//=================================================================================================
-
 TopOpeBRepBuild_FaceAreaBuilder::TopOpeBRepBuild_FaceAreaBuilder() = default;
-
-//=================================================================================================
 
 TopOpeBRepBuild_FaceAreaBuilder::TopOpeBRepBuild_FaceAreaBuilder(TopOpeBRepBuild_LoopSet&        LS,
                                                                  TopOpeBRepBuild_LoopClassifier& LC,
@@ -14,8 +10,6 @@ TopOpeBRepBuild_FaceAreaBuilder::TopOpeBRepBuild_FaceAreaBuilder(TopOpeBRepBuild
 {
   InitFaceAreaBuilder(LS, LC, ForceClass);
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_FaceAreaBuilder::InitFaceAreaBuilder(TopOpeBRepBuild_LoopSet&        LS,
                                                           TopOpeBRepBuild_LoopClassifier& LC,

@@ -1,43 +1,16 @@
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ShapePersistent_Geom.hpp>
 #include <ShapePersistent_Geom_Curve.hpp>
 #include <ShapePersistent_Geom_Surface.hpp>
 #include <StdObject_gp_Vectors.hpp>
 
-//=======================================================================
-// function : Read
-// purpose  : Read persistent data from a file
-//=======================================================================
 void ShapePersistent_Geom::Geometry::Read(StdObjMgt_ReadData&) {}
 
-//=======================================================================
-// function : Write
-// purpose  : Write persistent data to a file
-//=======================================================================
 void ShapePersistent_Geom::Geometry::Write(StdObjMgt_WriteData&) const {}
 
-//=======================================================================
-// function : PChildren
-// purpose  : Gets persistent objects
-//=======================================================================
 void ShapePersistent_Geom::Geometry::PChildren(SequenceOfPersistent&) const {}
 
-//=======================================================================
-// function : Translate
-// purpose  : Create a persistent object for a curve
-//=======================================================================
 Handle(ShapePersistent_Geom::Curve) ShapePersistent_Geom::Translate(
   const occ::handle<Geom_Curve>&                                                           theCurve,
   NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>& theMap)
@@ -102,10 +75,6 @@ Handle(ShapePersistent_Geom::Curve) ShapePersistent_Geom::Translate(
   return aPC;
 }
 
-//=======================================================================
-// function : Translate
-// purpose  : Create a persistent object for a surface
-//=======================================================================
 Handle(ShapePersistent_Geom::Surface) ShapePersistent_Geom::Translate(
   const occ::handle<Geom_Surface>&                                                         theSurf,
   NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>& theMap)

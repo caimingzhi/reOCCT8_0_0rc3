@@ -15,7 +15,6 @@ void IGESGeom_RuledSurface::Init(const occ::handle<IGESData_IGESEntity>& aCurve,
   theDirFlag = aDirFlag;
   theDevFlag = aDevFlag;
   InitTypeAndForm(118, FormNumber());
-  //    FormNumber 0-1 : Ruling spec.  0/Arc Length  1/Parameter
 }
 
 void IGESGeom_RuledSurface::SetRuledByParameter(const bool F)

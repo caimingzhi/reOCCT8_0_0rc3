@@ -26,14 +26,8 @@ static void FusionneIntervalles(const NCollection_Array1<double>& I1,
 {
   int    ind1 = 1, ind2 = 1;
   double Epspar = Precision::PConfusion() * 0.99;
-  // supposed that positioning works with PConfusion()/2
-  double v1, v2;
-  // Initialisation : IND1 and IND2 point at the 1st element
-  // of each of 2 tables to be processed. INDS points at the last
-  // element of TABSOR
 
-  //--- TABSOR is filled by parsing TABLE1 and TABLE2 simultaneously ---
-  //------------------ by removing multiple occurrences ------------
+  double v1, v2;
 
   while ((ind1 <= I1.Upper()) && (ind2 <= I2.Upper()))
   {
@@ -41,20 +35,20 @@ static void FusionneIntervalles(const NCollection_Array1<double>& I1,
     v2 = I2(ind2);
     if (std::abs(v1 - v2) <= Epspar)
     {
-      // Here elements of I1 and I2 are suitable.
+
       Seq.Append((v1 + v2) / 2);
       ind1++;
       ind2++;
     }
     else if (v1 < v2)
     {
-      // Here the element of I1 is suitable.
+
       Seq.Append(v1);
       ind1++;
     }
     else
     {
-      // Here the element of TABLE2 is suitable.
+
       Seq.Append(v2);
       ind2++;
     }
@@ -62,7 +56,6 @@ static void FusionneIntervalles(const NCollection_Array1<double>& I1,
 
   if (ind1 > I1.Upper())
   {
-    //----- Here I1 is empty, to be completed with the end of TABLE2 -------
 
     for (; ind2 <= I2.Upper(); ind2++)
     {
@@ -72,7 +65,6 @@ static void FusionneIntervalles(const NCollection_Array1<double>& I1,
 
   if (ind2 > I2.Upper())
   {
-    //----- Here I2 is empty, to be completed with the end of I1 -------
 
     for (; ind1 <= I1.Upper(); ind1++)
     {
@@ -80,8 +72,6 @@ static void FusionneIntervalles(const NCollection_Array1<double>& I1,
     }
   }
 }
-
-//=================================================================================================
 
 BlendFunc_EvolRad::BlendFunc_EvolRad(const occ::handle<Adaptor3d_Surface>& S1,
                                      const occ::handle<Adaptor3d_Surface>& S2,
@@ -109,21 +99,16 @@ BlendFunc_EvolRad::BlendFunc_EvolRad(const occ::handle<Adaptor3d_Surface>& S1,
   fevol = Law;
   tevol = Law;
 
-  // Initialisaton of cash control variables.
   tval = -9.876e100;
   xval.Init(-9.876e100);
   myXOrder = -1;
   myTOrder = -1;
 }
 
-//=================================================================================================
-
 int BlendFunc_EvolRad::NbEquations() const
 {
   return 4;
 }
-
-//=================================================================================================
 
 void BlendFunc_EvolRad::Set(const int Choix)
 {
@@ -163,28 +148,16 @@ void BlendFunc_EvolRad::Set(const int Choix)
   }
 }
 
-//=================================================================================================
-
 void BlendFunc_EvolRad::Set(const BlendFunc_SectionShape TypeSection)
 {
   mySShape = TypeSection;
 }
-
-//=======================================================================
-// function : ComputeValues
-// purpose  : OBLIGATORY passage for all computations
-//           This method manages the positioning on Surfaces and Curves
-//           Partial calculation of equations and their derivatives
-//           Storage of some intermediary results in fields to be
-//           used in other methods.
-//=======================================================================
 
 bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
                                       const int          Order,
                                       const bool         byParam,
                                       const double       Param)
 {
-  // static declaration to avoid systematic realloc
 
   static gp_Vec d3u1, d3v1, d3uuv1, d3uvv1, d3u2, d3v2, d3uuv2, d3uvv2;
   static gp_Vec d1gui, d2gui, d3gui;
@@ -192,13 +165,11 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
   static double invnormtg, dinvnormtg;
   double        T = Param, aux;
 
-  // Case of implicit parameter
   if (!byParam)
   {
     T = param;
   }
 
-  // The work is done already?
   bool lX_OK = (Order <= myXOrder);
   int  ii;
   for (ii = 1; ((ii <= X.Length()) && lX_OK); ii++)
@@ -213,7 +184,6 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
     return true;
   }
 
-  // Processing of t
   if (!t_OK)
   {
     tval = T;
@@ -225,7 +195,7 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
     {
       myTOrder = 0;
     }
-    //----- Positioning on the curve and the law----------------
+
     switch (myTOrder)
     {
       case 0:
@@ -265,12 +235,11 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
     }
   }
 
-  // Processing of X
   if (!lX_OK)
   {
     xval     = X;
     myXOrder = Order;
-    //-------------- Positioning on surfaces -----------------
+
     switch (myXOrder)
     {
       case 0:
@@ -306,10 +275,10 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
       default:
         return false;
     }
-    // Case of degenerated surfaces
+
     if (nsurf1.Magnitude() < Eps)
     {
-      //     gp_Vec normal;
+
       gp_Pnt2d P(X(1), X(2));
       if (Order == 0)
         BlendFunc::ComputeNormal(surf1, P, nsurf1);
@@ -318,7 +287,7 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
     }
     if (nsurf2.Magnitude() < Eps)
     {
-      //     gp_Vec normal;
+
       gp_Pnt2d P(X(3), X(4));
       if (Order == 0)
         BlendFunc::ComputeNormal(surf2, P, nsurf2);
@@ -327,7 +296,6 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
     }
   }
 
-  // -------------------- Positioning of order 0 ---------------------
   double invnorm1, invnorm2, ndotns1, ndotns2, theD;
   double ray1 = sg1 * ray;
   double ray2 = sg2 * ray;
@@ -349,7 +317,7 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
     invnorm1 = ((double)1) / invnorm1;
   else
   {
-    invnorm1 = 1; // Unsatisfactory, but it is not necessary to stop
+    invnorm1 = 1;
 #ifdef OCCT_DEBUG
     std::cout << " EvolRad : Surface singuliere " << std::endl;
 #endif
@@ -358,7 +326,7 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
     invnorm2 = ((double)1) / invnorm2;
   else
   {
-    invnorm2 = 1; // Unsatisfactory, but it is not necessary to stop
+    invnorm2 = 1;
 #ifdef OCCT_DEBUG
     std::cout << " EvolRad : Surface singuliere " << std::endl;
 #endif
@@ -378,7 +346,6 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
   E(3) = resul.Y();
   E(4) = resul.Z();
 
-  // -------------------- Positioning of order 1 ---------------------
   if (Order >= 1)
   {
     double grosterme, cube, carre;
@@ -389,7 +356,7 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
     DEDX(1, 4) = nplan.Dot(d1v2) / 2;
 
     cube = invnorm1 * invnorm1 * invnorm1;
-    // Derived compared to u1
+
     grosterme = -ncrossns1.Dot(nplan.Crossed(dns1u1)) * cube;
     dndu1.SetLinearForm(grosterme * ndotns1 + invnorm1 * nplan.Dot(dns1u1),
                         nplan,
@@ -403,7 +370,6 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
     DEDX(3, 1) = resul.Y();
     DEDX(4, 1) = resul.Z();
 
-    // Derived compared to v1
     grosterme = -ncrossns1.Dot(nplan.Crossed(dns1v1)) * cube;
     dndv1.SetLinearForm(grosterme * ndotns1 + invnorm1 * nplan.Dot(dns1v1),
                         nplan,
@@ -418,7 +384,7 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
     DEDX(4, 2) = resul.Z();
 
     cube = invnorm2 * invnorm2 * invnorm2;
-    // Derivee par rapport a u2
+
     grosterme = -ncrossns2.Dot(nplan.Crossed(dns1u2)) * cube;
     dndu2.SetLinearForm(grosterme * ndotns2 + invnorm2 * nplan.Dot(dns1u2),
                         nplan,
@@ -432,7 +398,6 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
     DEDX(3, 3) = resul.Y();
     DEDX(4, 3) = resul.Z();
 
-    // Derived compared to v2
     grosterme = -ncrossns2.Dot(nplan.Crossed(dns1v2)) * cube;
     dndv2.SetLinearForm(grosterme * ndotns2 + invnorm2 * nplan.Dot(dns1v2),
                         nplan,
@@ -449,7 +414,7 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
     if (byParam)
     {
       temp.SetXYZ((pts1.XYZ() + pts2.XYZ()) / 2 - ptgui.XYZ());
-      // Derived from n1 compared to w
+
       grosterme = ncrossns1.Dot(dnplan.Crossed(nsurf1)) * invnorm1 * invnorm1;
       dn1w.SetLinearForm((dnplan.Dot(nsurf1) - grosterme * ndotns1) * invnorm1,
                          nplan,
@@ -458,7 +423,6 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
                          grosterme * invnorm1,
                          nsurf1);
 
-      // Derived from n2 compared to w
       grosterme = ncrossns2.Dot(dnplan.Crossed(nsurf2)) * invnorm2 * invnorm2;
       dn2w.SetLinearForm((dnplan.Dot(nsurf2) - grosterme * ndotns2) * invnorm2,
                          nplan,
@@ -474,10 +438,10 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
       DEDT(3) = resul.Y();
       DEDT(4) = resul.Z();
     }
-    // ------   Positioning of order 2  -----------------------------
+
     if (Order == 2)
     {
-      //     gp_Vec d2ndu1,  d2ndu2, d2ndv1, d2ndv2, d2nduv1, d2nduv2;
+
       gp_Vec d2ns1u1, d2ns1u2, d2ns1v1, d2ns1v2, d2ns1uv1, d2ns1uv2;
       double uterm, vterm, smallterm, p1, p2, p12;
       double DPrim, DSecn;
@@ -490,13 +454,10 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
       D2EDX2(1, 3, 3) = nplan.Dot(d2u2) / 2;
       D2EDX2(1, 4, 3) = D2EDX2(1, 3, 4) = nplan.Dot(d2uv2) / 2;
       D2EDX2(1, 4, 4)                   = nplan.Dot(d2v2) / 2;
-      // ================
-      // ==  Surface 1 ==
-      // ================
+
       carre = invnorm1 * invnorm1;
       cube  = carre * invnorm1;
-      // Derived double compared to u1
-      // Derived from the norm
+
       d2ns1u1.SetLinearForm(1, d3u1.Crossed(d1v1), 2, d2u1.Crossed(d2uv1), 1, d1u1.Crossed(d3uuv1));
       DPrim     = ncrossns1.Dot(nplan.Crossed(dns1u1));
       smallterm = -2 * DPrim * cube;
@@ -518,15 +479,13 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
       D2EDX2(3, 1, 1) = resul.Y();
       D2EDX2(4, 1, 1) = resul.Z();
 
-      // Derived double compared to u1, v1
-      // Derived from the norm
       d2ns1uv1 = (d3uuv1.Crossed(d1v1)) + (d2u1.Crossed(d2v1)) + (d1u1.Crossed(d3uvv1));
       uterm    = ncrossns1.Dot(nplan.Crossed(dns1u1));
       vterm    = ncrossns1.Dot(nplan.Crossed(dns1v1));
       DSecn =
         (nplan.Crossed(dns1v1)).Dot(nplan.Crossed(dns1u1)) + ncrossns1.Dot(nplan.Crossed(d2ns1uv1));
       grosterme = (3 * uterm * vterm * carre - DSecn) * cube;
-      uterm *= -cube; // and only now
+      uterm *= -cube;
       vterm *= -cube;
 
       p1 = nplan.Dot(dns1u1);
@@ -546,8 +505,6 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
       D2EDX2(3, 2, 1) = D2EDX2(3, 1, 2) = resul.Y();
       D2EDX2(4, 2, 1) = D2EDX2(4, 1, 2) = resul.Z();
 
-      // Derived double compared to v1
-      // Derived from the norm
       d2ns1v1.SetLinearForm(1, d1u1.Crossed(d3v1), 2, d2uv1.Crossed(d2v1), 1, d3uvv1.Crossed(d1v1));
       DPrim     = ncrossns1.Dot(nplan.Crossed(dns1v1));
       smallterm = -2 * DPrim * cube;
@@ -569,13 +526,10 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
       D2EDX2(2, 2, 2) = resul.X();
       D2EDX2(3, 2, 2) = resul.Y();
       D2EDX2(4, 2, 2) = resul.Z();
-      // ================
-      // ==  Surface 2 ==
-      // ================
+
       carre = invnorm2 * invnorm2;
       cube  = carre * invnorm2;
-      // Derived double compared to u2
-      // Derived from the norm
+
       d2ns1u2.SetLinearForm(1, d3u2.Crossed(d1v2), 2, d2u2.Crossed(d2uv2), 1, d1u2.Crossed(d3uuv2));
       DPrim     = ncrossns2.Dot(nplan.Crossed(dns1u2));
       smallterm = -2 * DPrim * cube;
@@ -597,15 +551,13 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
       D2EDX2(3, 3, 3) = resul.Y();
       D2EDX2(4, 3, 3) = resul.Z();
 
-      // Derived double compared to u2, v2
-      // Derived from the norm
       d2ns1uv2 = (d3uuv2.Crossed(d1v2)) + (d2u2.Crossed(d2v2)) + (d1u2.Crossed(d3uvv2));
       uterm    = ncrossns2.Dot(nplan.Crossed(dns1u2));
       vterm    = ncrossns2.Dot(nplan.Crossed(dns1v2));
       DSecn =
         (nplan.Crossed(dns1v2)).Dot(nplan.Crossed(dns1u2)) + ncrossns2.Dot(nplan.Crossed(d2ns1uv2));
       grosterme = (3 * uterm * vterm * carre - DSecn) * cube;
-      uterm *= -cube; // and only now
+      uterm *= -cube;
       vterm *= -cube;
 
       p1 = nplan.Dot(dns1u2);
@@ -625,8 +577,6 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
       D2EDX2(3, 4, 3) = D2EDX2(3, 3, 4) = resul.Y();
       D2EDX2(4, 4, 3) = D2EDX2(4, 3, 4) = resul.Z();
 
-      // Derived double compared to v2
-      // Derived from the norm
       d2ns1v2.SetLinearForm(1, d1u2.Crossed(d3v2), 2, d2uv2.Crossed(d2v2), 1, d3uvv2.Crossed(d1v2));
       DPrim     = ncrossns2.Dot(nplan.Crossed(dns1v2));
       smallterm = -2 * DPrim * cube;
@@ -652,7 +602,7 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
       if (byParam)
       {
         double tterm;
-        //  ---------- Double Derivation on t, X --------------------------
+
         D2EDXDT(1, 1) = dnplan.Dot(d1u1) / 2;
         D2EDXDT(1, 2) = dnplan.Dot(d1v1) / 2;
         D2EDXDT(1, 3) = dnplan.Dot(d1u2) / 2;
@@ -660,10 +610,10 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
 
         carre = invnorm1 * invnorm1;
         cube  = carre * invnorm1;
-        //--> Derived compared to u1 and t
+
         tterm     = ncrossns1.Dot(dnplan.Crossed(nsurf1));
         smallterm = -tterm * cube;
-        // Derived from the norm
+
         uterm = ncrossns1.Dot(nplan.Crossed(dns1u1));
         DSecn = (nplan.Crossed(dns1u1)).Dot(dnplan.Crossed(nsurf1))
                 + ncrossns1.Dot(dnplan.Crossed(dns1u1));
@@ -687,8 +637,6 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
         D2EDXDT(3, 1) = resul.Y();
         D2EDXDT(4, 1) = resul.Z();
 
-        //--> Derived compared to v1 and t
-        // Derived from the norm
         uterm = ncrossns1.Dot(nplan.Crossed(dns1v1));
         DSecn = (nplan.Crossed(dns1v1)).Dot(dnplan.Crossed(nsurf1))
                 + ncrossns1.Dot(dnplan.Crossed(dns1v1));
@@ -713,10 +661,10 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
 
         carre = invnorm2 * invnorm2;
         cube  = carre * invnorm2;
-        //--> Derived compared to u2 and t
+
         tterm     = ncrossns2.Dot(dnplan.Crossed(nsurf2));
         smallterm = -tterm * cube;
-        // Derived from the norm
+
         uterm = ncrossns2.Dot(nplan.Crossed(dns1u2));
         DSecn = (nplan.Crossed(dns1u2)).Dot(dnplan.Crossed(nsurf2))
                 + ncrossns2.Dot(dnplan.Crossed(dns1u2));
@@ -740,8 +688,6 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
         D2EDXDT(3, 3) = resul.Y();
         D2EDXDT(4, 3) = resul.Z();
 
-        //--> Derived compared to v2 and t
-        // Derived from the norm
         uterm = ncrossns2.Dot(nplan.Crossed(dns1v2));
         DSecn = (nplan.Crossed(dns1v2)).Dot(dnplan.Crossed(nsurf2))
                 + ncrossns2.Dot(dnplan.Crossed(dns1v2));
@@ -765,11 +711,9 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
         D2EDXDT(3, 4) = resul.Y();
         D2EDXDT(4, 4) = resul.Z();
 
-        //  ---------- Double derivation on t -----------------------------
-        // Derived from n1 compared to w
         carre = invnorm1 * invnorm1;
         cube  = carre * invnorm1;
-        // Derived from the norm
+
         DPrim     = ncrossns1.Dot(dnplan.Crossed(nsurf1));
         smallterm = -2 * DPrim * cube;
         DSecn = (dnplan.Crossed(nsurf1)).SquareMagnitude() + ncrossns1.Dot(d2nplan.Crossed(nsurf1));
@@ -787,10 +731,9 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
                             d2nplan);
         d2n1w += temp;
 
-        // Derived from n2 compared to w
         carre = invnorm2 * invnorm2;
         cube  = carre * invnorm2;
-        // Derived from the norm
+
         DPrim     = ncrossns2.Dot(dnplan.Crossed(nsurf2));
         smallterm = -2 * DPrim * cube;
         DSecn = (dnplan.Crossed(nsurf2)).SquareMagnitude() + ncrossns2.Dot(d2nplan.Crossed(nsurf2));
@@ -824,26 +767,16 @@ bool BlendFunc_EvolRad::ComputeValues(const math_Vector& X,
   return true;
 }
 
-//=================================================================================================
-
 void BlendFunc_EvolRad::Set(const double Param)
 {
   param = Param;
 }
-
-//=======================================================================
-// function : Set
-// purpose  : Segments curve in its useful part.
-//           Small precision is taken at random
-//=======================================================================
 
 void BlendFunc_EvolRad::Set(const double First, const double Last)
 {
   tcurv = curv->Trim(First, Last, 1.e-12);
   tevol = fevol->Trim(First, Last, 1.e-12);
 }
-
-//=================================================================================================
 
 void BlendFunc_EvolRad::GetTolerance(math_Vector& Tolerance, const double Tol) const
 {
@@ -852,8 +785,6 @@ void BlendFunc_EvolRad::GetTolerance(math_Vector& Tolerance, const double Tol) c
   Tolerance(3) = surf2->UResolution(Tol);
   Tolerance(4) = surf2->VResolution(Tol);
 }
-
-//=================================================================================================
 
 void BlendFunc_EvolRad::GetBounds(math_Vector& InfBound, math_Vector& SupBound) const
 {
@@ -877,8 +808,6 @@ void BlendFunc_EvolRad::GetBounds(math_Vector& InfBound, math_Vector& SupBound) 
   }
 }
 
-//=================================================================================================
-
 bool BlendFunc_EvolRad::IsSolution(const math_Vector& Sol, const double Tol)
 
 {
@@ -890,7 +819,6 @@ bool BlendFunc_EvolRad::IsSolution(const math_Vector& Sol, const double Tol)
   if (std::abs(E(1)) <= Tol && E(2) * E(2) + E(3) * E(3) + E(4) * E(4) <= Tol * Tol)
   {
 
-    // ns1, ns2, np are copied locally to avoid crushing the fields !
     gp_Vec ns1, ns2, np;
     ns1 = nsurf1;
     ns2 = nsurf2;
@@ -899,14 +827,14 @@ bool BlendFunc_EvolRad::IsSolution(const math_Vector& Sol, const double Tol)
     norm = nplan.Crossed(ns1).Magnitude();
     if (norm < Eps)
     {
-      norm = 1; // Unsatisfactory, but it is not necessary to stop
+      norm = 1;
     }
     ns1.SetLinearForm(nplan.Dot(ns1) / norm, nplan, -1. / norm, ns1);
 
     norm = nplan.Crossed(ns2).Magnitude();
     if (norm < Eps)
     {
-      norm = 1; // Unsatisfactory, but it is not necessary to stop
+      norm = 1;
     }
     ns2.SetLinearForm(nplan.Dot(ns2) / norm, nplan, -1. / norm, ns2);
 
@@ -939,21 +867,20 @@ bool BlendFunc_EvolRad::IsSolution(const math_Vector& Sol, const double Tol)
     {
       istangent = true;
     }
-    // update of maxang
 
     if (sg1 > 0.)
-    { // sg1*ray
+    {
       ns1.Reverse();
     }
     if (sg2 > 0.)
-    { // sg2*ray
+    {
       ns2.Reverse();
     }
     Cosa = ns1.Dot(ns2);
     Sina = nplan.Dot(ns1.Crossed(ns2));
     if (choix % 2 != 0)
     {
-      Sina = -Sina; // nplan is changed into -nplan
+      Sina = -Sina;
     }
 
     if (Cosa > 1.)
@@ -962,7 +889,7 @@ bool BlendFunc_EvolRad::IsSolution(const math_Vector& Sol, const double Tol)
       Sina = 0.;
     }
     Angle = std::acos(Cosa);
-    // Reframing on ]-pi/2, 3pi/2]
+
     if (Sina < 0.)
     {
       if (Cosa > 0.)
@@ -995,14 +922,10 @@ bool BlendFunc_EvolRad::IsSolution(const math_Vector& Sol, const double Tol)
   return false;
 }
 
-//=================================================================================================
-
 double BlendFunc_EvolRad::GetMinimalDistance() const
 {
   return distmin;
 }
-
-//=================================================================================================
 
 bool BlendFunc_EvolRad::Value(const math_Vector& X, math_Vector& F)
 {
@@ -1011,8 +934,6 @@ bool BlendFunc_EvolRad::Value(const math_Vector& X, math_Vector& F)
   F  = E;
   return Ok;
 }
-
-//=================================================================================================
 
 bool BlendFunc_EvolRad::Derivatives(const math_Vector& X, math_Matrix& D)
 {
@@ -1030,8 +951,6 @@ bool BlendFunc_EvolRad::Values(const math_Vector& X, math_Vector& F, math_Matrix
   D  = DEDX;
   return Ok;
 }
-
-//=================================================================================================
 
 void BlendFunc_EvolRad::Tangent(const double U1,
                                 const double V1,
@@ -1082,8 +1001,6 @@ void BlendFunc_EvolRad::Tangent(const double U1,
   }
 }
 
-//=================================================================================================
-
 bool BlendFunc_EvolRad::TwistOnS1() const
 {
   if (istangent)
@@ -1093,8 +1010,6 @@ bool BlendFunc_EvolRad::TwistOnS1() const
   return tg1.Dot(nplan) < 0.;
 }
 
-//=================================================================================================
-
 bool BlendFunc_EvolRad::TwistOnS2() const
 {
   if (istangent)
@@ -1103,8 +1018,6 @@ bool BlendFunc_EvolRad::TwistOnS2() const
   }
   return tg2.Dot(nplan) < 0.;
 }
-
-//=================================================================================================
 
 void BlendFunc_EvolRad::Section(const double Param,
                                 const double U1,
@@ -1134,13 +1047,12 @@ void BlendFunc_EvolRad::Section(const double Param,
   norm1 = nplan.Crossed(ns1).Magnitude();
   if (norm1 < Eps)
   {
-    norm1 = 1; // Unsatisfactory, but it is not necessary to stop
+    norm1 = 1;
   }
   ns1.SetLinearForm(nplan.Dot(ns1) / norm1, nplan, -1. / norm1, ns1);
 
   Center.SetXYZ(pts1.XYZ() + sg1 * ray * ns1.XYZ());
 
-  // ns1 is oriented from the center to pts1
   if (sg1 > 0.)
   {
     ns1.Reverse();
@@ -1153,7 +1065,7 @@ void BlendFunc_EvolRad::Section(const double Param,
   C.SetPosition(gp_Ax2(Center, np, ns1));
   Pdeb = 0.;
   Pfin = ElCLib::Parameter(C, pts2);
-  // Test of negative and almost null angles : Single Case
+
   if (Pfin > 1.5 * M_PI)
   {
     np.Reverse();
@@ -1164,28 +1076,20 @@ void BlendFunc_EvolRad::Section(const double Param,
     Pfin += Precision::PConfusion();
 }
 
-//=================================================================================================
-
 const gp_Pnt& BlendFunc_EvolRad::PointOnS1() const
 {
   return pts1;
 }
-
-//=================================================================================================
 
 const gp_Pnt& BlendFunc_EvolRad::PointOnS2() const
 {
   return pts2;
 }
 
-//=================================================================================================
-
 bool BlendFunc_EvolRad::IsTangencyPoint() const
 {
   return istangent;
 }
-
-//=================================================================================================
 
 const gp_Vec& BlendFunc_EvolRad::TangentOnS1() const
 {
@@ -1196,8 +1100,6 @@ const gp_Vec& BlendFunc_EvolRad::TangentOnS1() const
   return tg1;
 }
 
-//=================================================================================================
-
 const gp_Vec& BlendFunc_EvolRad::TangentOnS2() const
 {
   if (istangent)
@@ -1206,8 +1108,6 @@ const gp_Vec& BlendFunc_EvolRad::TangentOnS2() const
   }
   return tg2;
 }
-
-//=================================================================================================
 
 const gp_Vec2d& BlendFunc_EvolRad::Tangent2dOnS1() const
 {
@@ -1218,8 +1118,6 @@ const gp_Vec2d& BlendFunc_EvolRad::Tangent2dOnS1() const
   return tg12d;
 }
 
-//=================================================================================================
-
 const gp_Vec2d& BlendFunc_EvolRad::Tangent2dOnS2() const
 {
   if (istangent)
@@ -1229,28 +1127,20 @@ const gp_Vec2d& BlendFunc_EvolRad::Tangent2dOnS2() const
   return tg22d;
 }
 
-//=================================================================================================
-
 bool BlendFunc_EvolRad::IsRational() const
 {
   return (mySShape == BlendFunc_Rational || mySShape == BlendFunc_QuasiAngular);
 }
-
-//=================================================================================================
 
 double BlendFunc_EvolRad::GetSectionSize() const
 {
   return lengthmax;
 }
 
-//=================================================================================================
-
 void BlendFunc_EvolRad::GetMinimalWeight(NCollection_Array1<double>& Weights) const
 {
   BlendFunc::GetMinimalWeights(mySShape, myTConv, minang, maxang, Weights);
 }
-
-//=================================================================================================
 
 int BlendFunc_EvolRad::NbIntervals(const GeomAbs_Shape S) const
 {
@@ -1272,8 +1162,6 @@ int BlendFunc_EvolRad::NbIntervals(const GeomAbs_Shape S) const
   FusionneIntervalles(IntC, IntL, Inter);
   return Inter.Length() - 1;
 }
-
-//=================================================================================================
 
 void BlendFunc_EvolRad::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const
 {
@@ -1301,18 +1189,12 @@ void BlendFunc_EvolRad::Intervals(NCollection_Array1<double>& T, const GeomAbs_S
   }
 }
 
-//=================================================================================================
-
 void BlendFunc_EvolRad::GetShape(int& NbPoles, int& NbKnots, int& Degree, int& NbPoles2d)
 {
   NbPoles2d = 2;
   BlendFunc::GetShape(mySShape, maxang, NbPoles, NbKnots, Degree, myTConv);
 }
 
-//=======================================================================
-// function : GetTolerance
-// purpose  : Determine the Tolerance to be used in approximations.
-//=======================================================================
 void BlendFunc_EvolRad::GetTolerance(const double BoundTol,
                                      const double SurfTol,
                                      const double AngleTol,
@@ -1320,7 +1202,7 @@ void BlendFunc_EvolRad::GetTolerance(const double BoundTol,
                                      math_Vector& Tol1d) const
 {
   int    low = Tol3d.Lower(), up = Tol3d.Upper();
-  double rayon = lengthmin / maxang; // a radius is subtracted
+  double rayon = lengthmin / maxang;
   double Tol;
   Tol = GeomFill::GetTolerance(myTConv, maxang, rayon, AngleTol, SurfTol);
   Tol1d.Init(SurfTol);
@@ -1329,21 +1211,15 @@ void BlendFunc_EvolRad::GetTolerance(const double BoundTol,
   Tol3d(low) = Tol3d(up) = std::min(Tol, BoundTol);
 }
 
-//=================================================================================================
-
 void BlendFunc_EvolRad::Knots(NCollection_Array1<double>& TKnots)
 {
   GeomFill::Knots(myTConv, TKnots);
 }
 
-//=================================================================================================
-
 void BlendFunc_EvolRad::Mults(NCollection_Array1<int>& TMults)
 {
   GeomFill::Mults(myTConv, TMults);
 }
-
-//=================================================================================================
 
 void BlendFunc_EvolRad::Section(const Blend_Point&            P,
                                 NCollection_Array1<gp_Pnt>&   Poles,
@@ -1362,11 +1238,9 @@ void BlendFunc_EvolRad::Section(const Blend_Point&            P,
   P.ParametersOnS1(X(1), X(2));
   P.ParametersOnS2(X(3), X(4));
 
-  // Calculation and storage of distmin
   ComputeValues(X, 0, true, prm);
   distmin = std::min(distmin, pts1.Distance(pts2));
 
-  // ns1, ns2, np are copied locally to avoid crashing the fields !
   ns1 = nsurf1;
   ns2 = nsurf2;
   np  = nplan;
@@ -1388,14 +1262,14 @@ void BlendFunc_EvolRad::Section(const Blend_Point&            P,
   norm2 = nplan.Crossed(ns2).Magnitude();
   if (norm1 < Eps)
   {
-    norm1 = 1; // Unsatisfactory, but it is not necessary to stop
+    norm1 = 1;
 #ifdef OCCT_DEBUG
     std::cout << " EvolRad : Surface singuliere " << std::endl;
 #endif
   }
   if (norm2 < Eps)
   {
-    norm2 = 1; // Unsatisfactory, but it is not necessary to stop
+    norm2 = 1;
 #ifdef OCCT_DEBUG
     std::cout << " EvolRad : Surface singuliere " << std::endl;
 #endif
@@ -1405,9 +1279,6 @@ void BlendFunc_EvolRad::Section(const Blend_Point&            P,
   ns2.SetLinearForm(nplan.Dot(ns2) / norm2, nplan, -1. / norm2, ns2);
 
   Center.SetXYZ(pts1.XYZ() + sg1 * ray * ns1.XYZ());
-
-  // ns1 (resp. ns2) is oriented from center to pts1 (resp. pts2),
-  // and the trihedron ns1,ns2,nplan is made direct.
 
   if (sg1 > 0.)
   {
@@ -1424,8 +1295,6 @@ void BlendFunc_EvolRad::Section(const Blend_Point&            P,
 
   GeomFill::GetCircle(myTConv, ns1, ns2, np, pts1, pts2, std::abs(ray), Center, Poles, Weights);
 }
-
-//=================================================================================================
 
 bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
                                 NCollection_Array1<gp_Pnt>&   Poles,
@@ -1449,11 +1318,9 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
   P.ParametersOnS1(sol(1), sol(2));
   P.ParametersOnS2(sol(3), sol(4));
 
-  // Calculation of equations
   ComputeValues(sol, 1, true, prm);
   distmin = std::min(distmin, pts1.Distance(pts2));
 
-  // ns1, ns2, np are copied locally to avoid crashing fields !
   ns1     = nsurf1;
   ns2     = nsurf2;
   np      = nplan;
@@ -1462,7 +1329,7 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
 
   if (!pts1.IsEqual(pts2, 1.e-4))
   {
-    // Calculation of derived  Normal processing
+
     math_Gauss Resol(DEDX, 1.e-9);
 
     if (Resol.IsDone())
@@ -1493,7 +1360,6 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
     istgt = false;
   }
 
-  // Tops 2D
   Poles2d(Poles2d.Lower()).SetCoord(sol(1), sol(2));
   Poles2d(Poles2d.Upper()).SetCoord(sol(3), sol(4));
   if (!istgt)
@@ -1502,7 +1368,6 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
     DPoles2d(Poles2d.Upper()).SetCoord(secmember(3), secmember(4));
   }
 
-  // the linear case is processed...
   if (mySShape == BlendFunc_Linear)
   {
     Poles(low)   = pts1;
@@ -1519,19 +1384,18 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
     return (!istgt);
   }
 
-  // Case of the circle
   norm1 = nplan.Crossed(ns1).Magnitude();
   norm2 = nplan.Crossed(ns2).Magnitude();
   if (norm1 < Eps)
   {
-    norm1 = 1; // Unsatisfactory, but it is not necessary to stop
+    norm1 = 1;
 #ifdef OCCT_DEBUG
     std::cout << " EvolRad : Surface singuliere " << std::endl;
 #endif
   }
   if (norm2 < Eps)
   {
-    norm2 = 1; // Unsatisfactory, but it is not necessary to stop
+    norm2 = 1;
 #ifdef OCCT_DEBUG
     std::cout << " EvolRad : Surface singuliere " << std::endl;
 #endif
@@ -1545,9 +1409,6 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
   {
     tgc.SetLinearForm(sg1 * ray, dnorm1w, sg1 * dray, ns1, tg1);
   }
-
-  // ns1 is oriented from center to pts1, and  ns2 from center to pts2
-  // and the trihedron ns1,ns2,nplan is made direct
 
   if (sg1 > 0.)
   {
@@ -1572,7 +1433,7 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
   }
 
   if (ray < 0.)
-  { // to avoid std::abs(dray) some lines below
+  {
     rayprim = -rayprim;
   }
 
@@ -1605,8 +1466,6 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
   }
 }
 
-//=================================================================================================
-
 bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
                                 NCollection_Array1<gp_Pnt>&   Poles,
                                 NCollection_Array1<gp_Vec>&   DPoles,
@@ -1634,148 +1493,9 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
   P.ParametersOnS1(X(1), X(2));
   P.ParametersOnS2(X(3), X(4));
 
-  /*
-  #ifdef OCCT_DEBUG
-    double deltat = 1.e-9;
-    if (prm==tcurv->LastParameter()){deltat *= -1;} //Pour les discont
-    double deltaX = 1.e-9;
-    int ii, jj;
-    gp_Vec d_plan, d1, d2, pdiff;
-    math_Matrix M(1,4,1,4), MDiff(1,4,1,4);
-    math_Matrix Mu1(1,4,1,4), Mv1(1,4,1,4);
-    math_Matrix Mu2(1,4,1,4), Mv2(1,4,1,4);
-    math_Vector V(1,4), VDiff(1,4),dx(1,4);
-
-    dx = X;
-    dx(1)+=deltaX;
-    ComputeValues(dx, 1, true, prm );
-    Mu1 = DEDX;
-
-    dx = X;
-    dx(2)+=deltaX;
-    ComputeValues(dx, 1, true, prm);
-    Mv1 = DEDX;
-
-    dx = X;
-    dx(3)+=deltaX;
-    ComputeValues(dx, 1, true, prm  );
-    Mu2 = DEDX;
-
-    dx = X;
-    dx(4)+=deltaX;
-    ComputeValues(dx, 1,  true, prm );
-    Mv2 = DEDX;
-
-    ComputeValues(X, 1, true, prm+deltat);
-    M = DEDX;
-    V = DEDT;
-    d_plan = dnplan;
-    d1 = dn1w;
-    d2 = dn2w;
-  # endif
-  */
-  // Calculs des equations
   ComputeValues(X, 2, true, prm);
   distmin = std::min(distmin, pts1.Distance(pts2));
 
-  /*
-  #ifdef OCCT_DEBUG
-    MDiff = (M - DEDX)*(1/deltat);
-    VDiff = (V - DEDT)*(1/deltat);
-
-    pdiff = (d_plan - dnplan)*(1/deltat);
-    if ((pdiff-d2nplan).Magnitude() > 1.e-4*(pdiff.Magnitude()+1.e-1))
-      {
-        std::cout << "d2nplan = (" << d2nplan.X() << ","<< d2nplan.Y() << ","<< d2nplan.Z() <<
-  ")"<<std::endl; std::cout << "Diff fi = (" << pdiff.X() << ","<<  pdiff.Y() << ","<<  pdiff.Z() <<
-  ")"<<std::endl;
-      }
-
-    pdiff = (d1 - dn1w)*(1/deltat);
-    if ((pdiff-d2n1w).Magnitude() > 1.e-4*(pdiff.Magnitude()+1.e-1))
-      {
-        std::cout << "d2n1w   = (" << d2n1w.X() << ","<< d2n1w.Y() << ","<< d2n1w.Z() <<
-  ")"<<std::endl; std::cout << "Diff fi = (" << pdiff.X() << ","<<  pdiff.Y() << ","<<  pdiff.Z() <<
-  ")"<<std::endl;
-      }
-    pdiff = (d2 - dn2w)*(1/deltat);
-    if ((pdiff-d2n2w).Magnitude() > 1.e-4*(pdiff.Magnitude()+1.e-1))
-      {
-        std::cout << "d2n2w   = (" << d2n2w.X() << ","<< d2n2w.Y() << ","<< d2n2w.Z() <<
-  ")"<<std::endl; std::cout << "Diff fi = (" << pdiff.X() << ","<<  pdiff.Y() << ","<<  pdiff.Z() <<
-  ")"<<std::endl;
-      }
-
-    for ( ii=1; ii<=4; ii++) {
-      if (std::abs(VDiff(ii)-D2EDT2(ii)) > 1.e-4*(std::abs(D2EDT2(ii))+1.e-1))
-      {
-        std::cout << "erreur sur D2EDT2 : "<< ii << std::endl;
-            std::cout << D2EDT2(ii) << " D.F = " << VDiff(ii) << std::endl;
-      }
-      for (jj=1; jj<=4; jj++) {
-        if (std::abs(MDiff(ii,jj)-D2EDXDT(ii, jj)) >
-            1.e-3*(std::abs(D2EDXDT(ii, jj))+1.e-2))
-            {
-          std::cout << "erreur sur D2EDXDT : "<< ii << " , " << jj << std::endl;
-          std::cout << D2EDXDT(ii,jj) << " D.F = " << MDiff(ii,jj) << std::endl;
-            }
-      }
-    }
-  // Test de D2EDX2 en u1
-    MDiff = (Mu1 - DEDX)/deltaX;
-    for (ii=1; ii<=4; ii++) {
-      for (jj=1; jj<=4; jj++) {
-        if (std::abs(MDiff(ii,jj)-D2EDX2(ii, jj, 1)) >
-        1.e-4*(std::abs(D2EDX2(ii, jj, 1))+1.e-1))
-      {
-        std::cout << "erreur sur D2EDX2 : "<< ii << " , " << jj << " , " << 1 << std::endl;
-        std::cout << D2EDX2(ii,jj, 1) << " D.F = " << MDiff(ii,jj) << std::endl;
-      }
-      }
-    }
-
-  // Test de D2EDX2 en v1
-    MDiff = (Mv1 - DEDX)/deltaX;
-    for (ii=1; ii<=4; ii++) {
-      for (jj=1; jj<=4; jj++) {
-        if (std::abs(MDiff(ii,jj)-D2EDX2(ii, jj, 2)) >
-        1.e-4*(std::abs(D2EDX2(ii, jj, 2))+1.e-1))
-      {
-        std::cout << "erreur sur D2EDX2 : "<< ii << " , " << jj << " , " << 2 << std::endl;
-        std::cout << D2EDX2(ii,jj, 2) << " D.F = " << MDiff(ii,jj) << std::endl;
-      }
-      }
-    }
-  // Test de D2EDX2 en u2
-    MDiff = (Mu2 - DEDX)/deltaX;
-    for (ii=1; ii<=4; ii++) {
-      for (jj=1; jj<=4; jj++) {
-        if (std::abs(MDiff(ii,jj)-D2EDX2(ii, jj, 3)) >
-        1.e-4*(std::abs(D2EDX2(ii, jj, 3))+1.e-1))
-      {
-        std::cout << "erreur sur D2EDX2 : "<< ii << " , " << jj << " , " << 3 << std::endl;
-        std::cout << D2EDX2(ii,jj, 3) << " D.F = " << MDiff(ii,jj) << std::endl;
-      }
-      }
-    }
-
-  // Test de D2EDX2 en v2
-    MDiff = (Mv2 - DEDX)/deltaX;
-    for (ii=1; ii<=4; ii++) {
-      for (jj=1; jj<=4; jj++) {
-        if (std::abs(MDiff(ii,jj)-D2EDX2(ii, jj, 4)) >
-        1.e-4*(std::abs(D2EDX2(ii, jj, 4))+1.e-1))
-      {
-        std::cout << "erreur sur D2EDX2 : "<< ii << " , " << jj << " , "
-        << 4 << std::endl;
-        std::cout << D2EDX2(ii,jj, 4) << " D.F = " << MDiff(ii,jj) << std::endl;
-      }
-      }
-    }
-  #endif
-  */
-
-  // ns1, ns2, np are copied locally to avoid crashing the fields
   ns1     = nsurf1;
   ns2     = nsurf2;
   np      = nplan;
@@ -1786,8 +1506,8 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
 
   if (!pts1.IsEqual(pts2, 1.e-4))
   {
-    math_Gauss Resol(DEDX, 1.e-9); // Tolerance to precise
-    // Calculation of derived Normal Processing
+    math_Gauss Resol(DEDX, 1.e-9);
+
     if (Resol.IsDone())
     {
       Resol.Solve(-DEDT, sol);
@@ -1848,7 +1568,6 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
     d2norm2w.SetLinearForm(secmember(3), dndu2, secmember(4), dndv2, temp);
   }
 
-  // Tops 2d
   Poles2d(Poles2d.Lower()).SetCoord(X(1), X(2));
   Poles2d(Poles2d.Upper()).SetCoord(X(3), X(4));
   if (!istgt)
@@ -1859,7 +1578,6 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
     D2Poles2d(Poles2d.Upper()).SetCoord(secmember(3), secmember(4));
   }
 
-  // the linear is processed...
   if (mySShape == BlendFunc_Linear)
   {
     Poles(low)   = pts1;
@@ -1880,19 +1598,18 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
     return (!istgt);
   }
 
-  // Case of the circle
   norm1 = nplan.Crossed(ns1).Magnitude();
   norm2 = nplan.Crossed(ns2).Magnitude();
   if (norm1 < Eps)
   {
-    norm1 = 1; // Unsatisfactory, but it is not necessary to stop
+    norm1 = 1;
 #ifdef OCCT_DEBUG
     std::cout << " EvolRad : Surface singuliere " << std::endl;
 #endif
   }
   if (norm2 < Eps)
   {
-    norm2 = 1; // Unsatisfactory, but it is not necessary to stop
+    norm2 = 1;
 #ifdef OCCT_DEBUG
     std::cout << " EvolRad : Surface singuliere " << std::endl;
 #endif
@@ -1908,9 +1625,6 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
     dtgc.SetLinearForm(sg1 * ray, d2norm1w, 2 * sg1 * dray, dnorm1w, sg1 * d2ray, ns1);
     dtgc += dtg1;
   }
-
-  // ns1 is oriented from the center to pts1, and ns2 from the center to pts2
-  // and the trihedron ns1,ns2,nplan is made direct
 
   if (sg1 > 0.)
   {
@@ -1938,7 +1652,7 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
   }
 
   if (ray < 0.)
-  { // to avoid std::abs(dray) several lines below
+  {
     rayprim = -rayprim;
     raysecn = -raysecn;
   }

@@ -5,14 +5,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Interface_ParamList, Standard_Transient)
 
-//=================================================================================================
-
 Interface_ParamList::Interface_ParamList(const int theIncrement)
     : myVector(theIncrement)
 {
 }
-
-//=================================================================================================
 
 void Interface_ParamList::SetValue(const int theIndex, const Interface_FileParameter& theValue)
 {
@@ -20,15 +16,11 @@ void Interface_ParamList::SetValue(const int theIndex, const Interface_FileParam
   myVector.SetValue(ind, theValue);
 }
 
-//=================================================================================================
-
 const Interface_FileParameter& Interface_ParamList::Value(const int theIndex) const
 {
   int ind = theIndex - 1;
   return myVector.Value(ind);
 }
-
-//=================================================================================================
 
 Interface_FileParameter& Interface_ParamList::ChangeValue(const int theIndex)
 {

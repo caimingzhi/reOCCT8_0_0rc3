@@ -14,115 +14,40 @@ class gp_Pnt2d;
 class Geom2dGcc_Lin2dTanOblIter;
 class Geom2dAdaptor_Curve;
 
-//! This class implements the algorithms used to
-//! create 2d line tangent to a curve QualifiedCurv and
-//! doing an angle Angle with a line TheLin.
-//! The angle must be in Radian.
-//! Describes functions for building a 2D line making a given
-//! angle with a line and tangential to a curve.
-//! A Lin2dTanObl object provides a framework for:
-//! -   defining the construction of 2D line(s),
-//! -   implementing the construction algorithm, and
-//! -   consulting the result(s).
 class Geom2dGcc_Lin2dTanObl
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! This class implements the algorithm used to
-  //! create 2d line tangent to a curve and doing an
-  //! angle Angle with the line TheLin.
-  //! Angle must be in Radian.
-  //! Tolang is the angular tolerance.
   Standard_EXPORT Geom2dGcc_Lin2dTanObl(const Geom2dGcc_QualifiedCurve& Qualified1,
                                         const gp_Lin2d&                 TheLin,
                                         const double                    TolAng,
                                         const double                    Angle);
 
-  //! This class implements the algorithm used to
-  //! create 2d line tangent to a curve and doing an
-  //! angle Angle with the line TheLin.
-  //! Angle must be in Radian.
-  //! Param2 is the initial guess on the curve QualifiedCurv.
-  //! Tolang is the angular tolerance.
-  //! Warning
-  //! An iterative algorithm is used if Qualified1 is more
-  //! complex than a line or a circle. In such cases, the
-  //! algorithm constructs only one solution.
-  //! Exceptions
-  //! GccEnt_BadQualifier if a qualifier is inconsistent with
-  //! the argument it qualifies (for example, enclosed for a circle).
   Standard_EXPORT Geom2dGcc_Lin2dTanObl(const Geom2dGcc_QualifiedCurve& Qualified1,
                                         const gp_Lin2d&                 TheLin,
                                         const double                    TolAng,
                                         const double                    Param1,
                                         const double                    Angle);
 
-  //! Returns true if the construction algorithm does not fail
-  //! (even if it finds no solution).
-  //! Note: IsDone protects against a failure arising from a
-  //! more internal intersection algorithm, which has reached its numeric limits.
   Standard_EXPORT bool IsDone() const;
 
-  //! Returns the number of lines, representing solutions computed by this algorithm.
-  //! Exceptions
-  //! StdFail_NotDone if the construction fails.
   Standard_EXPORT int NbSolutions() const;
 
-  //! Returns a line, representing the solution of index Index
-  //! computed by this algorithm.
-  //! Exceptions
-  //! Standard_OutOfRange if Index is less than zero or
-  //! greater than the number of solutions computed by this algorithm.
-  //! StdFail_NotDone if the construction fails.
   Standard_EXPORT gp_Lin2d ThisSolution(const int Index) const;
 
-  //! Returns the qualifier Qualif1 of the tangency argument
-  //! for the solution of index Index computed by this algorithm.
-  //! The returned qualifier is:
-  //! -   that specified at the start of construction when the
-  //! solutions are defined as enclosing or outside with
-  //! respect to the argument, or
-  //! -   that computed during construction (i.e. enclosing or
-  //! outside) when the solutions are defined as unqualified
-  //! with respect to the argument, or
-  //! -   GccEnt_noqualifier if the tangency argument is a point.
-  //! Exceptions
-  //! Standard_OutOfRange if Index is less than zero or
-  //! greater than the number of solutions computed by this algorithm.
-  //! StdFail_NotDone if the construction fails.
   Standard_EXPORT void WhichQualifier(const int Index, GccEnt_Position& Qualif1) const;
 
-  //! Returns information about the tangency point between the
-  //! result and the first argument.
-  //! ParSol is the intrinsic parameter of the point PntSol on
-  //! the solution curv.
-  //! ParArg is the intrinsic parameter of the point PntSol on
-  //! the argument curv.
   Standard_EXPORT void Tangency1(const int Index,
                                  double&   ParSol,
                                  double&   ParArg,
                                  gp_Pnt2d& PntSol) const;
 
-  //! Returns the point of intersection PntSol between the
-  //! solution of index Index and the second argument (the line) of this algorithm.
-  //! ParSol is the parameter of the point PntSol on the
-  //! solution. ParArg is the parameter of the point PntSol on the second argument (the line).
-  //! Exceptions
-  //! StdFail_NotDone if the construction fails.
-  //! Geom2dGcc_IsParallel if the solution and the second
-  //! argument (the line) are parallel.
-  //! Standard_OutOfRange if Index is less than zero or
-  //! greater than the number of solutions computed by this algorithm.
   Standard_EXPORT void Intersection2(const int Index,
                                      double&   ParSol,
                                      double&   ParArg,
                                      gp_Pnt2d& PntSol) const;
 
-  //! Returns true if the line and the solution are parallel. This
-  //! is the case when the angle given at the time of
-  //! construction is equal to 0 or Pi.
-  //! Exceptions StdFail_NotDone if the construction fails.
   Standard_EXPORT bool IsParallel2() const;
 
 private:

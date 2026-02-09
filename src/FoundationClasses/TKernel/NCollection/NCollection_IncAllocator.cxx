@@ -1,15 +1,4 @@
-// Copyright (c) 2002-2023 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <NCollection_IncAllocator.hpp>
 
@@ -21,14 +10,13 @@ IMPLEMENT_STANDARD_RTTIEXT(NCollection_IncAllocator, NCollection_BaseAllocator)
 
 namespace
 {
-  // Bounds for checking block size level
-  // clang-format off
-  static constexpr unsigned THE_SMALL_BOUND_BLOCK_SIZE = NCollection_IncAllocator::THE_DEFAULT_BLOCK_SIZE * 16;   // 196 KB
-  static constexpr unsigned THE_MEDIUM_BOUND_BLOCK_SIZE = NCollection_IncAllocator::THE_DEFAULT_BLOCK_SIZE * 64;  // 786 KB
-  static constexpr unsigned THE_LARGE_BOUND_BLOCK_SIZE = NCollection_IncAllocator::THE_DEFAULT_BLOCK_SIZE * 1024; // 12 MB
-  // clang-format on
 
-  //=================================================================================================
+  static constexpr unsigned THE_SMALL_BOUND_BLOCK_SIZE =
+    NCollection_IncAllocator::THE_DEFAULT_BLOCK_SIZE * 16;
+  static constexpr unsigned THE_MEDIUM_BOUND_BLOCK_SIZE =
+    NCollection_IncAllocator::THE_DEFAULT_BLOCK_SIZE * 64;
+  static constexpr unsigned THE_LARGE_BOUND_BLOCK_SIZE =
+    NCollection_IncAllocator::THE_DEFAULT_BLOCK_SIZE * 1024;
 
   NCollection_IncAllocator::IBlockSizeLevel computeLevel(const unsigned int theSize)
   {
@@ -55,15 +43,11 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 NCollection_IncAllocator::NCollection_IncAllocator(const size_t theDefaultSize)
     : myBlockSize(static_cast<unsigned>(
         theDefaultSize < THE_MINIMUM_BLOCK_SIZE ? THE_DEFAULT_BLOCK_SIZE : theDefaultSize))
 {
 }
-
-//=================================================================================================
 
 void NCollection_IncAllocator::SetThreadSafe(const bool theIsThreadSafe)
 {
@@ -80,29 +64,25 @@ void NCollection_IncAllocator::SetThreadSafe(const bool theIsThreadSafe)
   }
 }
 
-//=================================================================================================
-
 NCollection_IncAllocator::~NCollection_IncAllocator()
 {
   clean();
 }
 
-//=================================================================================================
-
 void* NCollection_IncAllocator::AllocateOptimal(const size_t theSize)
 {
   std::unique_lock<std::mutex> aLock =
     myMutex ? std::unique_lock<std::mutex>(*myMutex) : std::unique_lock<std::mutex>();
-  // Allocating using general block
+
   IBlock* aBlock = nullptr;
-  // Use allocated blocks
+
   if (myAllocationHeap && myAllocationHeap->AvailableSize >= theSize)
   {
     aBlock = myAllocationHeap;
   }
-  else // Allocate new general block
+  else
   {
-    if (++myBlockCount % 5 == 0) // increase count before checking
+    if (++myBlockCount % 5 == 0)
     {
       increaseBlockSize();
     }
@@ -130,7 +110,7 @@ void* NCollection_IncAllocator::AllocateOptimal(const size_t theSize)
   {
     IBlock* aBlockIter           = aBlock->NextBlock;
     IBlock* aBlockToReplaceAfter = nullptr;
-    while (aBlockIter) // Search new sorted position
+    while (aBlockIter)
     {
       if (aBlockIter->AvailableSize > aBlock->AvailableSize)
       {
@@ -140,7 +120,7 @@ void* NCollection_IncAllocator::AllocateOptimal(const size_t theSize)
       }
       break;
     }
-    if (aBlockToReplaceAfter) // Update list order
+    if (aBlockToReplaceAfter)
     {
       IBlock* aNext                   = aBlockToReplaceAfter->NextBlock;
       aBlockToReplaceAfter->NextBlock = aBlock;
@@ -151,14 +131,10 @@ void* NCollection_IncAllocator::AllocateOptimal(const size_t theSize)
   return aRes;
 }
 
-//=================================================================================================
-
 void* NCollection_IncAllocator::Allocate(const size_t theSize)
 {
   return AllocateOptimal(theSize);
 }
-
-//=================================================================================================
 
 void NCollection_IncAllocator::clean()
 {
@@ -177,8 +153,6 @@ void NCollection_IncAllocator::clean()
   myBlockCount     = 0;
   myBlockSize      = THE_DEFAULT_BLOCK_SIZE;
 }
-
-//=================================================================================================
 
 void NCollection_IncAllocator::increaseBlockSize()
 {
@@ -201,8 +175,6 @@ void NCollection_IncAllocator::increaseBlockSize()
   }
 }
 
-//=================================================================================================
-
 void NCollection_IncAllocator::resetBlock(IBlock* theBlock) const
 {
   theBlock->AvailableSize =
@@ -210,8 +182,6 @@ void NCollection_IncAllocator::resetBlock(IBlock* theBlock) const
     + (theBlock->CurPointer - (reinterpret_cast<char*>(theBlock) + sizeof(IBlock)));
   theBlock->CurPointer = reinterpret_cast<char*>(theBlock) + sizeof(IBlock);
 }
-
-//=================================================================================================
 
 void NCollection_IncAllocator::Reset(const bool theReleaseMemory)
 {
@@ -228,13 +198,11 @@ void NCollection_IncAllocator::Reset(const bool theReleaseMemory)
     IBlock* aCur    = aHeapIter;
     aHeapIter       = aHeapIter->NextOrderedBlock;
     aCur->NextBlock = aHeapIter;
-    resetBlock(aCur); // reset size and pointer
+    resetBlock(aCur);
   }
   myAllocationHeap = myOrderedBlocks;
   myUsedHeap       = nullptr;
 }
-
-//=================================================================================================
 
 NCollection_IncAllocator::IBlock::IBlock(void* thePointer, const size_t theSize)
     : CurPointer(static_cast<char*>(thePointer) + sizeof(IBlock)),

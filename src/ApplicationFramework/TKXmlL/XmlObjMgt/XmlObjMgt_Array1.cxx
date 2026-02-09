@@ -7,8 +7,6 @@ IMPLEMENT_DOMSTRING(LowerString, "lower")
 IMPLEMENT_DOMSTRING(UpperString, "upper")
 IMPLEMENT_DOMSTRING(IndString, "index")
 
-//=================================================================================================
-
 XmlObjMgt_Array1::XmlObjMgt_Array1(const XmlObjMgt_Element&   theParent,
                                    const XmlObjMgt_DOMString& theName)
     : myElement(XmlObjMgt::FindChildByName(theParent, theName)),
@@ -24,26 +22,18 @@ XmlObjMgt_Array1::XmlObjMgt_Array1(const XmlObjMgt_Element&   theParent,
   }
 }
 
-//=================================================================================================
-
 XmlObjMgt_Array1::XmlObjMgt_Array1(const int aFirst, const int aLast)
     : myFirst(aFirst),
       myLast(aLast)
 {
 }
 
-//=======================================================================
-// function : CreateArrayElement
-// purpose  : Create DOM_Element representing the array, under 'theParent'
-//=======================================================================
-
 void XmlObjMgt_Array1::CreateArrayElement(XmlObjMgt_Element&         theParent,
                                           const XmlObjMgt_DOMString& theName)
 {
   if (myLast > 0)
   {
-    // AGV    XmlObjMgt_Document& anOwnerDoc =
-    // AGV      (XmlObjMgt_Document&)theParent.getOwnerDocument();
+
     XmlObjMgt_Document anOwnerDoc = XmlObjMgt_Document(theParent.getOwnerDocument());
     myElement                     = anOwnerDoc.createElement(theName);
     theParent.appendChild(myElement);
@@ -56,15 +46,11 @@ void XmlObjMgt_Array1::CreateArrayElement(XmlObjMgt_Element&         theParent,
   }
 }
 
-//=================================================================================================
-
 void XmlObjMgt_Array1::SetValue(const int theIndex, XmlObjMgt_Element& theValue)
 {
   myElement.appendChild(theValue);
   theValue.setAttribute(::IndString(), theIndex);
 }
-
-//=================================================================================================
 
 XmlObjMgt_Element XmlObjMgt_Array1::Value(const int theIndex) const
 {

@@ -3,17 +3,12 @@
 #include <NCollection_List.hpp>
 #include <NCollection_Map.hpp>
 
-// To avoid too much resizing actions, et 23 est un nombre premier.
 #define TDF_IDFilterMapSize 23
-
-//=================================================================================================
 
 TDF_IDFilter::TDF_IDFilter(const bool ignoreMode)
     : myIgnore(ignoreMode)
 {
 }
-
-//=================================================================================================
 
 void TDF_IDFilter::IgnoreAll(const bool ignore)
 {
@@ -22,8 +17,6 @@ void TDF_IDFilter::IgnoreAll(const bool ignore)
   myIDMap.ReSize(TDF_IDFilterMapSize);
 }
 
-//=================================================================================================
-
 void TDF_IDFilter::Keep(const Standard_GUID& anID)
 {
   if (myIgnore)
@@ -31,8 +24,6 @@ void TDF_IDFilter::Keep(const Standard_GUID& anID)
   else
     myIDMap.Remove(anID);
 }
-
-//=================================================================================================
 
 void TDF_IDFilter::Keep(const NCollection_List<Standard_GUID>& anIDList)
 {
@@ -54,8 +45,6 @@ void TDF_IDFilter::Keep(const NCollection_List<Standard_GUID>& anIDList)
   }
 }
 
-//=================================================================================================
-
 void TDF_IDFilter::Ignore(const Standard_GUID& anID)
 {
   if (myIgnore)
@@ -63,8 +52,6 @@ void TDF_IDFilter::Ignore(const Standard_GUID& anID)
   else
     myIDMap.Add(anID);
 }
-
-//=================================================================================================
 
 void TDF_IDFilter::Ignore(const NCollection_List<Standard_GUID>& anIDList)
 {
@@ -86,16 +73,12 @@ void TDF_IDFilter::Ignore(const NCollection_List<Standard_GUID>& anIDList)
   }
 }
 
-//=================================================================================================
-
 void TDF_IDFilter::IDList(NCollection_List<Standard_GUID>& anIDList) const
 {
   anIDList.Clear();
   for (NCollection_Map<Standard_GUID>::Iterator itr(myIDMap); itr.More(); itr.Next())
     anIDList.Append(itr.Key());
 }
-
-//=================================================================================================
 
 void TDF_IDFilter::Copy(const TDF_IDFilter& fromFilter)
 {
@@ -107,8 +90,6 @@ void TDF_IDFilter::Copy(const TDF_IDFilter& fromFilter)
   else
     Ignore(idl);
 }
-
-//=================================================================================================
 
 void TDF_IDFilter::Dump(Standard_OStream& anOS) const
 {

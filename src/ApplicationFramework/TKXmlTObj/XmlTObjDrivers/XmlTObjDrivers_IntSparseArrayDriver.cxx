@@ -10,29 +10,16 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlTObjDrivers_IntSparseArrayDriver, XmlMDF_ADriver)
 #define ITEM_ID "itemId_"
 #define ITEM_VALUE "itemValue_"
 
-//=================================================================================================
-
 XmlTObjDrivers_IntSparseArrayDriver::XmlTObjDrivers_IntSparseArrayDriver(
   const occ::handle<Message_Messenger>& theMessageDriver)
     : XmlMDF_ADriver(theMessageDriver, nullptr)
 {
 }
 
-//=======================================================================
-// function : NewEmpty
-// purpose  : Creates a new attribute
-//=======================================================================
-
 occ::handle<TDF_Attribute> XmlTObjDrivers_IntSparseArrayDriver::NewEmpty() const
 {
   return new TObj_TIntSparseArray;
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : Retrieve. Translate the contents of <theSource> and put it
-//           into <theTarget>.
-//=======================================================================
 
 bool XmlTObjDrivers_IntSparseArrayDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                                 const occ::handle<TDF_Attribute>& theTarget,
@@ -41,7 +28,6 @@ bool XmlTObjDrivers_IntSparseArrayDriver::Paste(const XmlObjMgt_Persistent&     
   const XmlObjMgt_Element&          anElement = theSource;
   occ::handle<TObj_TIntSparseArray> aTarget   = occ::down_cast<TObj_TIntSparseArray>(theTarget);
 
-  // get pairs (ID, value) while ID != 0
   int                     i = 1;
   TCollection_AsciiString anItemID;
   TCollection_AsciiString anIdStr = TCollection_AsciiString(ITEM_ID) + TCollection_AsciiString(i);
@@ -53,7 +39,7 @@ bool XmlTObjDrivers_IntSparseArrayDriver::Paste(const XmlObjMgt_Persistent&     
     TCollection_AsciiString anItemValue = anElement.getAttribute(aStrIndex.ToCString());
     if (anItemValue.IsIntegerValue())
     {
-      // store the value in the target array
+
       aTarget->SetDoBackup(false);
       aTarget->SetValue(anItemID.IntegerValue(), anItemValue.IntegerValue());
       aTarget->SetDoBackup(true);
@@ -63,20 +49,12 @@ bool XmlTObjDrivers_IntSparseArrayDriver::Paste(const XmlObjMgt_Persistent&     
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : Store. Translate the contents of <theSource> and put it
-//           into <theTarget>
-//=======================================================================
-
 void XmlTObjDrivers_IntSparseArrayDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                                 XmlObjMgt_Persistent&             theTarget,
                                                 XmlObjMgt_SRelocationTable&) const
 {
   occ::handle<TObj_TIntSparseArray> aSource = occ::down_cast<TObj_TIntSparseArray>(theSource);
 
-  // put only non-null values as pairs (ID, value)
-  // terminate the list by ID=0
   TObj_TIntSparseArray::Iterator anIt = aSource->GetIterator();
   int                            i    = 1;
   for (; anIt.More(); anIt.Next())
@@ -91,7 +69,7 @@ void XmlTObjDrivers_IntSparseArrayDriver::Paste(const occ::handle<TDF_Attribute>
     theTarget.Element().setAttribute(aStrIndex.ToCString(), anIt.Value());
     i++;
   }
-  // write last item
+
   TCollection_AsciiString anIdStr = TCollection_AsciiString(ITEM_ID) + TCollection_AsciiString(i);
   TCollection_AsciiString aStrIndex =
     TCollection_AsciiString(ITEM_VALUE) + TCollection_AsciiString(i);

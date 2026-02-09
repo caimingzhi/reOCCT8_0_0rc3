@@ -9,26 +9,18 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TopLoc_Datum3D, Standard_Transient)
 
-//=================================================================================================
-
 TopLoc_Datum3D::TopLoc_Datum3D() = default;
-
-//=================================================================================================
 
 TopLoc_Datum3D::TopLoc_Datum3D(const gp_Trsf& T)
     : myTrsf(T)
 {
 }
 
-//=================================================================================================
-
 void TopLoc_Datum3D::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {
   OCCT_DUMP_TRANSIENT_CLASS_BEGIN(theOStream)
   OCCT_DUMP_FIELD_VALUES_DUMPED(theOStream, theDepth, &myTrsf)
 }
-
-//=================================================================================================
 
 void TopLoc_Datum3D::ShallowDump(Standard_OStream& S) const
 {

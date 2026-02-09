@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Aspect_RectangularGrid.hpp>
 
@@ -127,15 +116,6 @@ double Aspect_RectangularGrid::SecondAngle() const
 void Aspect_RectangularGrid::Init()
 {
 
-  //+zov Fixing CTS17856
-  //  a1 = Cos (myFirstAngle + RotationAngle() );
-  //  b1 = Sin (myFirstAngle + RotationAngle() );
-  //  c1 = XOrigin() * b1 - YOrigin() * a1;
-  //
-  //  a2 = Cos (mySecondAngle + RotationAngle() + M_PI / 2.);
-  //  b2 = Sin (mySecondAngle + RotationAngle() + M_PI / 2.);
-  //  c2 = XOrigin() * b2 - YOrigin() * a2;
-
   double angle1 = myFirstAngle + RotationAngle();
   double angle2 = mySecondAngle + RotationAngle();
   if (angle1 != 0.)
@@ -164,7 +144,6 @@ void Aspect_RectangularGrid::Init()
     b2 = 0.;
     c2 = YOrigin();
   }
-  //-zov
 }
 
 bool Aspect_RectangularGrid::CheckAngle(const double alpha, const double beta) const
@@ -173,8 +152,6 @@ bool Aspect_RectangularGrid::CheckAngle(const double alpha, const double beta) c
                    - std::cos(alpha) * std::sin(beta + M_PI / 2.))
           != 0);
 }
-
-//=================================================================================================
 
 void Aspect_RectangularGrid::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

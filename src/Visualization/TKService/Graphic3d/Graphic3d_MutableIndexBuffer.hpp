@@ -2,30 +2,23 @@
 
 #include <Graphic3d_IndexBuffer.hpp>
 
-//! Mutable index buffer.
 class Graphic3d_MutableIndexBuffer : public Graphic3d_IndexBuffer
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_MutableIndexBuffer, Graphic3d_IndexBuffer)
 public:
-  //! Empty constructor.
   Graphic3d_MutableIndexBuffer(const occ::handle<NCollection_BaseAllocator>& theAlloc)
       : Graphic3d_IndexBuffer(theAlloc)
   {
   }
 
-  //! Return TRUE if data can be invalidated.
   bool IsMutable() const override { return true; }
 
-  //! Return invalidated range.
   Graphic3d_BufferRange InvalidatedRange() const override { return myInvalidatedRange; }
 
-  //! Reset invalidated range.
   void Validate() override { myInvalidatedRange.Clear(); }
 
-  //! Invalidate the entire buffer data.
   void Invalidate() override { invalidate(Graphic3d_BufferRange(0, (int)mySize)); }
 
-  //! Invalidate the given indexes (starting from 0)
   void Invalidate(int theIndexLower, int theIndexUpper)
   {
     Standard_OutOfRange_Raise_if(theIndexLower > theIndexUpper,
@@ -34,9 +27,8 @@ public:
       Graphic3d_BufferRange(Stride * theIndexLower, Stride * (theIndexUpper - theIndexLower + 1)));
   }
 
-  //! Invalidate specified sub-range of data (as byte offsets).
   void invalidate(const Graphic3d_BufferRange& theRange) { myInvalidatedRange.Unite(theRange); }
 
 protected:
-  Graphic3d_BufferRange myInvalidatedRange; //!< invalidated buffer data range (as byte offsets)
+  Graphic3d_BufferRange myInvalidatedRange;
 };

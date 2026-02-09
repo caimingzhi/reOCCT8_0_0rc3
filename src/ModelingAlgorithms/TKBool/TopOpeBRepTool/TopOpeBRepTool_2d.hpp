@@ -51,7 +51,7 @@ Standard_EXPORT occ::handle<Geom2d_Curve> FC2D_CurveOnSurface(const TopoDS_Edge&
                                                               double&            l,
                                                               double&            tol,
                                                               const bool         trim3d = false);
-// modified by NIZHNY-MZV
+
 Standard_EXPORT occ::handle<Geom2d_Curve> FC2D_MakeCurveOnSurface(const TopoDS_Edge& E,
                                                                   const TopoDS_Face& F,
                                                                   double&            f,

@@ -1,23 +1,9 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GeomConvert_FuncCylinderLSDist.hpp>
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 #include <math_Vector.hpp>
-
-//=================================================================================================
 
 GeomConvert_FuncCylinderLSDist::GeomConvert_FuncCylinderLSDist(
   const occ::handle<NCollection_HArray1<gp_XYZ>>& thePoints,
@@ -27,14 +13,10 @@ GeomConvert_FuncCylinderLSDist::GeomConvert_FuncCylinderLSDist(
 {
 }
 
-//=================================================================================================
-
 int GeomConvert_FuncCylinderLSDist::NbVariables() const
 {
   return 4;
 }
-
-//=================================================================================================
 
 bool GeomConvert_FuncCylinderLSDist::Value(const math_Vector& X, double& F)
 {
@@ -53,8 +35,6 @@ bool GeomConvert_FuncCylinderLSDist::Value(const math_Vector& X, double& F)
 
   return true;
 }
-
-//=================================================================================================
 
 bool GeomConvert_FuncCylinderLSDist::Gradient(const math_Vector& X, math_Vector& G)
 
@@ -77,7 +57,7 @@ bool GeomConvert_FuncCylinderLSDist::Gradient(const math_Vector& X, math_Vector&
     G(1) += d * Dx0;
     G(2) += d * Dy0;
     G(3) += d * Dz0;
-    //
+
     G(4) += d;
   }
 
@@ -86,8 +66,6 @@ bool GeomConvert_FuncCylinderLSDist::Gradient(const math_Vector& X, math_Vector&
 
   return true;
 }
-
-//=================================================================================================
 
 bool GeomConvert_FuncCylinderLSDist::Values(const math_Vector& X, double& F, math_Vector& G)
 {
@@ -110,9 +88,9 @@ bool GeomConvert_FuncCylinderLSDist::Values(const math_Vector& X, double& F, mat
     G(1) += d * Dx0;
     G(2) += d * Dy0;
     G(3) += d * Dz0;
-    //
+
     G(4) += d;
-    //
+
     F += d * d;
   }
 

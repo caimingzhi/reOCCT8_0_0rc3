@@ -8,8 +8,6 @@
   #define M_SQRT2 1.41421356237309504880168872420969808
 #endif
 
-//=================================================================================================
-
 OpenGl_BackgroundArray::OpenGl_BackgroundArray(const Graphic3d_TypeOfBackground theType)
     : OpenGl_PrimitiveArray(nullptr, Graphic3d_TOPA_TRIANGLES, nullptr, nullptr, nullptr),
       myType(theType),
@@ -26,8 +24,6 @@ OpenGl_BackgroundArray::OpenGl_BackgroundArray(const Graphic3d_TypeOfBackground 
   myGradientParams.type   = Aspect_GradientFillMethod_None;
 }
 
-//=================================================================================================
-
 void OpenGl_BackgroundArray::SetTextureParameters(const Aspect_FillMethod theFillMethod)
 {
   if (myType != Graphic3d_TOB_TEXTURE)
@@ -39,15 +35,11 @@ void OpenGl_BackgroundArray::SetTextureParameters(const Aspect_FillMethod theFil
   invalidateData();
 }
 
-//=================================================================================================
-
 void OpenGl_BackgroundArray::SetTextureFillMethod(const Aspect_FillMethod theFillMethod)
 {
   myFillMethod = theFillMethod;
   invalidateData();
 }
-
-//=================================================================================================
 
 void OpenGl_BackgroundArray::SetGradientParameters(const Quantity_Color&           theColor1,
                                                    const Quantity_Color&           theColor2,
@@ -69,8 +61,6 @@ void OpenGl_BackgroundArray::SetGradientParameters(const Quantity_Color&        
   invalidateData();
 }
 
-//=================================================================================================
-
 void OpenGl_BackgroundArray::SetGradientFillMethod(const Aspect_GradientFillMethod theType)
 {
   if (myType != Graphic3d_TOB_GRADIENT)
@@ -81,8 +71,6 @@ void OpenGl_BackgroundArray::SetGradientFillMethod(const Aspect_GradientFillMeth
   myGradientParams.type = theType;
   invalidateData();
 }
-
-//=================================================================================================
 
 bool OpenGl_BackgroundArray::IsDefined() const
 {
@@ -100,14 +88,10 @@ bool OpenGl_BackgroundArray::IsDefined() const
   return false;
 }
 
-//=================================================================================================
-
 void OpenGl_BackgroundArray::invalidateData()
 {
   myToUpdate = true;
 }
-
-//=================================================================================================
 
 bool OpenGl_BackgroundArray::init(const occ::handle<OpenGl_Workspace>& theWorkspace) const
 {
@@ -155,7 +139,6 @@ bool OpenGl_BackgroundArray::init(const occ::handle<OpenGl_Workspace>& theWorksp
     }
   }
 
-  // Init VBO
   if (myIsVboInit)
   {
     clearMemoryGL(aCtx);
@@ -163,16 +146,13 @@ bool OpenGl_BackgroundArray::init(const occ::handle<OpenGl_Workspace>& theWorksp
   buildVBO(aCtx, true);
   myIsVboInit = true;
 
-  // Data is up-to-date
   myToUpdate = false;
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Context>& theCtx) const
 {
-  // Initialize data for primitive array
+
   Graphic3d_Attribute aGragientAttribInfo[] = {{Graphic3d_TOA_POS, Graphic3d_TOD_VEC2},
                                                {Graphic3d_TOA_COLOR, Graphic3d_TOD_VEC3}};
 
@@ -265,15 +245,14 @@ bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Contex
 
         NCollection_Vec2<float>* anUvData = reinterpret_cast<NCollection_Vec2<float>*>(
           myAttribs->changeValue(anIt) + myAttribs->AttributeOffset(1));
-        // cyclically move highlighted corner depending on myGradientParams.type
+
         *anUvData = anUVs[(anIt + myGradientParams.type - Aspect_GradientFillMethod_Corner1) % 4];
       }
       return true;
     }
     case Aspect_GradientFillMethod_Elliptical:
     {
-      // construction of a circle circumscribed about a view rectangle
-      // using parametric equation (scaled by aspect ratio and centered)
+
       const int aSubdiv = 64;
       if (!myAttribs->Init(aSubdiv + 2, aGragientAttribInfo, 2))
       {
@@ -303,7 +282,7 @@ bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Contex
           myAttribs->changeValue(anIt) + myAttribs->AttributeOffset(1));
         *aColorData = myGradientParams.color2.rgb();
       }
-      // the central vertex is colored in different way
+
       NCollection_Vec3<float>* aColorData = reinterpret_cast<NCollection_Vec3<float>*>(
         myAttribs->changeValue(0) + myAttribs->AttributeOffset(1));
       *aColorData = myGradientParams.color1.rgb();
@@ -345,8 +324,6 @@ bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Contex
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_BackgroundArray::createTextureArray(
   const occ::handle<OpenGl_Workspace>& theWorkspace) const
 {
@@ -358,18 +335,14 @@ bool OpenGl_BackgroundArray::createTextureArray(
     return false;
   }
 
-  GLfloat aTexRangeX = 1.0f; // texture <s> coordinate
-  GLfloat aTexRangeY = 1.0f; // texture <t> coordinate
+  GLfloat aTexRangeX = 1.0f;
+  GLfloat aTexRangeY = 1.0f;
 
-  // Set up for stretching or tiling
   GLfloat anOffsetX = 0.5f * (float)myViewWidth;
   GLfloat anOffsetY = 0.5f * (float)myViewHeight;
 
-  // Setting this coefficient to -1.0f allows to tile textures relatively to the top-left corner of
-  // the view (value 1.0f corresponds to the initial behavior - tiling from the bottom-left corner)
   GLfloat aCoef = -1.0f;
 
-  // Get texture parameters
   const occ::handle<OpenGl_Context>& aCtx         = theWorkspace->GetGlContext();
   const OpenGl_Aspects*              anAspectFace = theWorkspace->Aspects();
   GLfloat aTextureWidth  = (GLfloat)anAspectFace->TextureSet(aCtx)->First()->SizeX();
@@ -385,10 +358,6 @@ bool OpenGl_BackgroundArray::createTextureArray(
     aTexRangeX = (GLfloat)myViewWidth / aTextureWidth;
     aTexRangeY = (GLfloat)myViewHeight / aTextureHeight;
   }
-
-  // NOTE: texture is mapped using GL_REPEAT wrapping mode so integer part
-  // is simply ignored, and negative multiplier is here for convenience only
-  // and does not result e.g. in texture mirroring
 
   NCollection_Vec2<float>* aData =
     reinterpret_cast<NCollection_Vec2<float>*>(myAttribs->changeValue(0));
@@ -420,8 +389,6 @@ bool OpenGl_BackgroundArray::createTextureArray(
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_BackgroundArray::createCubeMapArray() const
 {
   const Graphic3d_Attribute aCubeMapAttribInfo[] = {{Graphic3d_TOA_POS, Graphic3d_TOD_VEC3}};
@@ -449,14 +416,8 @@ bool OpenGl_BackgroundArray::createCubeMapArray() const
     aData[7].SetValues(1.0, 1.0, -1.0);
   }
   {
-    const unsigned short THE_BOX_TRIS[] = {
-      0, 1, 2, 2, 1, 3, // top face
-      1, 5, 7, 1, 7, 3, // right face
-      0, 6, 4, 0, 2, 6, // left face
-      4, 6, 5, 6, 7, 5, // bottom face
-      0, 5, 1, 0, 4, 5, // front face
-      2, 7, 6, 2, 3, 7  // back face
-    };
+    const unsigned short THE_BOX_TRIS[] = {0, 1, 2, 2, 1, 3, 1, 5, 7, 1, 7, 3, 0, 6, 4, 0, 2, 6,
+                                           4, 6, 5, 6, 7, 5, 0, 5, 1, 0, 4, 5, 2, 7, 6, 2, 3, 7};
     for (unsigned int aVertIter = 0; aVertIter < 6 * 3 * 2; ++aVertIter)
     {
       myIndices->SetIndex(aVertIter, THE_BOX_TRIS[aVertIter]);
@@ -465,8 +426,6 @@ bool OpenGl_BackgroundArray::createCubeMapArray() const
 
   return true;
 }
-
-//=================================================================================================
 
 void OpenGl_BackgroundArray::Render(const occ::handle<OpenGl_Workspace>& theWorkspace,
                                     Graphic3d_Camera::Projection         theProjection) const
@@ -498,17 +457,10 @@ void OpenGl_BackgroundArray::Render(const occ::handle<OpenGl_Workspace>& theWork
   if (myType == Graphic3d_TOB_CUBEMAP)
   {
     Graphic3d_Camera aCamera(aCtx->Camera());
-    aCamera.SetZRange(0.01, 1.0); // is needed to avoid perspective camera exception
+    aCamera.SetZRange(0.01, 1.0);
 
-    // cancel translation
     aCamera.MoveEyeTo(gp_Pnt(0.0, 0.0, 0.0));
 
-    // Handle projection matrix:
-    // - Cancel any head-to-eye translation for HMD display;
-    // - Ignore stereoscopic projection in case of non-HMD 3D display
-    //   (ideally, we would need a stereoscopic cubemap image; adding a parallax makes no sense);
-    // - Force perspective projection when orthographic camera is active
-    //   (orthographic projection makes no sense for cubemap).
     const bool isCustomProj = aCamera.IsCustomStereoFrustum() || aCamera.IsCustomStereoProjection();
     aCamera.SetProjectionType(theProjection == Graphic3d_Camera::Projection_Orthographic
                                   || !isCustomProj
@@ -519,7 +471,7 @@ void OpenGl_BackgroundArray::Render(const occ::handle<OpenGl_Workspace>& theWork
     aWorldView  = aCamera.OrientationMatrixF();
     if (isCustomProj)
     {
-      // get projection matrix without pre-multiplied stereoscopic head-to-eye translation
+
       if (theProjection == Graphic3d_Camera::Projection_MonoLeftEye)
       {
         NCollection_Mat4<float> aMatProjL, aMatHeadToEyeL, aMatProjR, aMatHeadToEyeR;

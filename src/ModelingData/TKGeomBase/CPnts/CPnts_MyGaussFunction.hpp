@@ -8,7 +8,6 @@
 #include <math_Function.hpp>
 #include <Standard_Real.hpp>
 
-//! for implementation, compute values for Gauss
 class CPnts_MyGaussFunction : public math_Function
 {
 public:
@@ -16,9 +15,6 @@ public:
 
   CPnts_MyGaussFunction();
 
-  //! F is a pointer on a function D is a client data
-  //!
-  //! Each value is computed with F(D)
   Standard_EXPORT void Init(const CPnts_RealFunction& F, void* const D);
 
   Standard_EXPORT bool Value(const double X, double& F) override;

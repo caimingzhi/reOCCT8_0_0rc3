@@ -5,22 +5,16 @@
 #include <StepDimTol_DatumTarget.hpp>
 #include <StepRepr_ProductDefinitionShape.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWDatumTarget::RWStepDimTol_RWDatumTarget() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWDatumTarget::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                           const int                                   num,
                                           occ::handle<Interface_Check>&               ach,
                                           const occ::handle<StepDimTol_DatumTarget>&  ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 5, ach, "datum_target"))
     return;
-
-  // Inherited fields of ShapeAspect
 
   occ::handle<TCollection_HAsciiString> aShapeAspect_Name;
   data->ReadString(num, 1, "shape_aspect.name", ach, aShapeAspect_Name);
@@ -46,12 +40,9 @@ void RWStepDimTol_RWDatumTarget::ReadStep(const occ::handle<StepData_StepReaderD
                     ach,
                     aShapeAspect_ProductDefinitional);
 
-  // Own fields of DatumTarget
-
   occ::handle<TCollection_HAsciiString> aTargetId;
   data->ReadString(num, 5, "target_id", ach, aTargetId);
 
-  // Initialize entity
   ent->Init(aShapeAspect_Name,
             aShapeAspect_Description,
             aShapeAspect_OfShape,
@@ -59,13 +50,9 @@ void RWStepDimTol_RWDatumTarget::ReadStep(const occ::handle<StepData_StepReaderD
             aTargetId);
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWDatumTarget::WriteStep(StepData_StepWriter&                       SW,
                                            const occ::handle<StepDimTol_DatumTarget>& ent) const
 {
-
-  // Inherited fields of ShapeAspect
 
   SW.Send(ent->StepRepr_ShapeAspect::Name());
 
@@ -75,20 +62,12 @@ void RWStepDimTol_RWDatumTarget::WriteStep(StepData_StepWriter&                 
 
   SW.SendLogical(ent->StepRepr_ShapeAspect::ProductDefinitional());
 
-  // Own fields of DatumTarget
-
   SW.Send(ent->TargetId());
 }
-
-//=================================================================================================
 
 void RWStepDimTol_RWDatumTarget::Share(const occ::handle<StepDimTol_DatumTarget>& ent,
                                        Interface_EntityIterator&                  iter) const
 {
 
-  // Inherited fields of ShapeAspect
-
   iter.AddItem(ent->StepRepr_ShapeAspect::OfShape());
-
-  // Own fields of DatumTarget
 }

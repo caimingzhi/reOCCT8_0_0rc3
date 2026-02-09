@@ -57,10 +57,6 @@ private:
   double                         param;
 };
 
-//=================================================================================================
-// Inline implementations
-//=================================================================================================
-
 inline void Contap_ThePathPointOfTheSearch::SetValue(const gp_Pnt&                         P,
                                                      const double                          Tol,
                                                      const occ::handle<Adaptor3d_HVertex>& V,

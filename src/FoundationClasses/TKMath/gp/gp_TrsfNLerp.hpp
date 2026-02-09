@@ -5,27 +5,14 @@
 #include <NCollection_Lerp.hpp>
 #include <Precision.hpp>
 
-//! Linear interpolation tool for transformation defined by gp_Trsf.
-//!
-//! In general case, there is a no well-defined interpolation between arbitrary transformations,
-//! because desired transient values might vary depending on application needs.
-//!
-//! This tool performs independent interpolation of three logical
-//! transformation parts - rotation (using gp_QuaternionNLerp), translation and scale factor.
-//! Result of such interpolation might be not what application expects,
-//! thus this tool might be considered for simple cases or for interpolating between small
-//! intervals.
 template <>
 class NCollection_Lerp<gp_Trsf>
 {
 public:
-  //! Empty constructor
   NCollection_Lerp() = default;
 
-  //! Main constructor.
   NCollection_Lerp(const gp_Trsf& theStart, const gp_Trsf& theEnd) { Init(theStart, theEnd); }
 
-  //! Initialize values.
   void Init(const gp_Trsf& theStart, const gp_Trsf& theEnd)
   {
     myTrsfStart = theStart;
@@ -35,10 +22,6 @@ public:
     myScaleLerp.Init(theStart.ScaleFactor(), theEnd.ScaleFactor());
   }
 
-  //! Compute interpolated value between two values.
-  //! @param theT normalized interpolation coefficient within [0, 1] range,
-  //!             with 0 pointing to first value and 1 to the second value.
-  //! @param[out] theResult  interpolated value
   void Interpolate(double theT, gp_Trsf& theResult) const
   {
     if (std::abs(theT - 0.0) < Precision::Confusion())

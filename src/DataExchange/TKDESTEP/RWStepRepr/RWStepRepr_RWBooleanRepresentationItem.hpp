@@ -10,7 +10,6 @@ class Interface_Check;
 class StepRepr_BooleanRepresentationItem;
 class StepData_StepWriter;
 
-//! Read & Write Module for BooleanRepresentationItem
 class RWStepRepr_RWBooleanRepresentationItem
 {
 public:

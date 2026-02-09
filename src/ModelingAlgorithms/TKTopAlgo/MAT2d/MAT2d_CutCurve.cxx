@@ -7,18 +7,12 @@
 #include <Standard_OutOfRange.hpp>
 #include <NCollection_Sequence.hpp>
 
-//=================================================================================================
-
 MAT2d_CutCurve::MAT2d_CutCurve() = default;
-
-//=================================================================================================
 
 MAT2d_CutCurve::MAT2d_CutCurve(const occ::handle<Geom2d_Curve>& C)
 {
   Perform(C);
 }
-
-//=================================================================================================
 
 void MAT2d_CutCurve::Perform(const occ::handle<Geom2d_Curve>& C)
 {
@@ -66,14 +60,10 @@ void MAT2d_CutCurve::Perform(const occ::handle<Geom2d_Curve>& C)
   }
 }
 
-//=================================================================================================
-
 bool MAT2d_CutCurve::UnModified() const
 {
   return theCurves.IsEmpty();
 }
-
-//=================================================================================================
 
 int MAT2d_CutCurve::NbCurves() const
 {
@@ -83,8 +73,6 @@ int MAT2d_CutCurve::NbCurves() const
   }
   return theCurves.Length();
 }
-
-//=================================================================================================
 
 occ::handle<Geom2d_TrimmedCurve> MAT2d_CutCurve::Value(const int Index) const
 {

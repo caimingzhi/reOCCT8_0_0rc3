@@ -31,10 +31,9 @@ namespace
 {
 
   #if defined(HAVE_EGL)
-  //
+
   #elif defined(_WIN32)
 
-    // WGL_ARB_pixel_format
     #ifndef WGL_NUMBER_PIXEL_FORMATS_ARB
       #define WGL_NUMBER_PIXEL_FORMATS_ARB 0x2000
       #define WGL_DRAW_TO_WINDOW_ARB 0x2001
@@ -88,9 +87,8 @@ namespace
 
       #define WGL_TYPE_RGBA_ARB 0x202B
       #define WGL_TYPE_COLORINDEX_ARB 0x202C
-    #endif // WGL_NUMBER_PIXEL_FORMATS_ARB
+    #endif
 
-    // WGL_ARB_create_context_profile
     #ifndef WGL_CONTEXT_MAJOR_VERSION_ARB
       #define WGL_CONTEXT_MAJOR_VERSION_ARB 0x2091
       #define WGL_CONTEXT_MINOR_VERSION_ARB 0x2092
@@ -98,14 +96,12 @@ namespace
       #define WGL_CONTEXT_FLAGS_ARB 0x2094
       #define WGL_CONTEXT_PROFILE_MASK_ARB 0x9126
 
-      // WGL_CONTEXT_FLAGS bits
       #define WGL_CONTEXT_DEBUG_BIT_ARB 0x0001
       #define WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB 0x0002
 
-      // WGL_CONTEXT_PROFILE_MASK_ARB bits
       #define WGL_CONTEXT_CORE_PROFILE_BIT_ARB 0x00000001
       #define WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB 0x00000002
-    #endif // WGL_CONTEXT_MAJOR_VERSION_ARB
+    #endif
 
   static LRESULT CALLBACK wndProcDummy(HWND theWin, UINT theMsg, WPARAM theParamW, LPARAM theParamL)
   {
@@ -113,7 +109,6 @@ namespace
   }
   #elif defined(HAVE_XLIB)
 
-    // GLX_ARB_create_context
     #ifndef GLX_CONTEXT_MAJOR_VERSION_ARB
       #define GLX_CONTEXT_DEBUG_BIT_ARB 0x00000001
       #define GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB 0x00000002
@@ -121,19 +116,16 @@ namespace
       #define GLX_CONTEXT_MINOR_VERSION_ARB 0x2092
       #define GLX_CONTEXT_FLAGS_ARB 0x2094
 
-      // GLX_ARB_create_context_profile
       #define GLX_CONTEXT_CORE_PROFILE_BIT_ARB 0x00000001
       #define GLX_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB 0x00000002
       #define GLX_CONTEXT_PROFILE_MASK_ARB 0x9126
     #endif
 
-  //! Dummy XError handler which just skips errors
-  static int xErrorDummyHandler(Display* /*theDisplay*/, XErrorEvent* /*theErrorEvent*/)
+  static int xErrorDummyHandler(Display*, XErrorEvent*)
   {
     return 0;
   }
 
-  //! Auxiliary method to format list.
   static void addMsgToList(TCollection_ExtendedString&       theList,
                            const TCollection_ExtendedString& theMsg)
   {
@@ -147,15 +139,11 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 OpenGl_Window::OpenGl_Window()
     : myOwnGContext(false),
       mySwapInterval(0)
 {
 }
-
-//=================================================================================================
 
 void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
                          const occ::handle<Aspect_Window>&        thePlatformWindow,
@@ -188,15 +176,7 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
   EGLSurface anEglSurf = EGL_NO_SURFACE;
   if ((EGLContext)theGContext == EGL_NO_CONTEXT)
   {
-    // EGL_KHR_gl_colorspace extension specifies if OpenGL should write into window buffer as into
-    // sRGB or RGB framebuffer
-    // const int aSurfAttribs[] =
-    //{
-    //  EGL_GL_COLORSPACE_KHR, !theCaps->sRGBDisable ? EGL_GL_COLORSPACE_SRGB_KHR :
-    //  EGL_GL_COLORSPACE_LINEAR_KHR, EGL_NONE,
-    //};
 
-    // create new surface
     anEglSurf = eglCreateWindowSurface(anEglDisplay,
                                        anEglConfig,
                                        (EGLNativeWindowType)myPlatformWindow->NativeHandle(),
@@ -208,20 +188,15 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
     }
     else if (anEglSurf == EGL_NO_SURFACE)
     {
-      // window-less EGL context (off-screen)
-      // throw Aspect_GraphicDeviceDefinitionError("OpenGl_Window, EGL is unable to retrieve current
-      // surface!");
+
       if (anEglConfig != NULL)
       {
-    #if !defined(__EMSCRIPTEN__) // eglCreatePbufferSurface() is not implemented by Emscripten EGL
+    #if !defined(__EMSCRIPTEN__)
         const int aSurfAttribs[] = {EGL_WIDTH,
                                     mySize.x(),
                                     EGL_HEIGHT,
                                     mySize.y(),
-                                    // EGL_KHR_gl_colorspace extension specifies if OpenGL should
-                                    // write into window buffer as into sRGB or RGB framebuffer
-                                    // EGL_GL_COLORSPACE_KHR, !theCaps->sRGBDisable ?
-                                    // EGL_GL_COLORSPACE_SRGB_KHR : EGL_GL_COLORSPACE_LINEAR_KHR,
+
                                     EGL_NONE};
         anEglSurf                = eglCreatePbufferSurface(anEglDisplay, anEglConfig, aSurfAttribs);
         if (anEglSurf == EGL_NO_SURFACE)
@@ -249,20 +224,15 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
     anEglSurf = eglGetCurrentSurface(EGL_DRAW);
     if (anEglSurf == EGL_NO_SURFACE)
     {
-      // window-less EGL context (off-screen)
-      // throw Aspect_GraphicDeviceDefinitionError("OpenGl_Window, EGL is unable to retrieve current
-      // surface!");
+
       if (anEglConfig != NULL)
       {
-    #if !defined(__EMSCRIPTEN__) // eglCreatePbufferSurface() is not implemented by Emscripten EGL
+    #if !defined(__EMSCRIPTEN__)
         const int aSurfAttribs[] = {EGL_WIDTH,
                                     mySize.x(),
                                     EGL_HEIGHT,
                                     mySize.y(),
-                                    // EGL_KHR_gl_colorspace extension specifies if OpenGL should
-                                    // write into window buffer as into sRGB or RGB framebuffer
-                                    // EGL_GL_COLORSPACE_KHR, !theCaps->sRGBDisable ?
-                                    // EGL_GL_COLORSPACE_SRGB_KHR : EGL_GL_COLORSPACE_LINEAR_KHR,
+
                                     EGL_NONE};
         anEglSurf                = eglCreatePbufferSurface(anEglDisplay, anEglConfig, aSurfAttribs);
         if (anEglSurf == EGL_NO_SURFACE)
@@ -308,7 +278,6 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
 
   int aPixelFrmtId = ChoosePixelFormat(aWindowDC, &aPixelFrmt);
 
-  // in case of failure try without stereo if any
   const bool hasStereo = aPixelFrmtId != 0 && theCaps->contextStereo;
   if (aPixelFrmtId == 0 && theCaps->contextStereo)
   {
@@ -341,7 +310,7 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
   HGLRC aSlaveCtx = !theShareCtx.IsNull() ? (HGLRC)theShareCtx->myGContext : NULL;
   if (aGContext == NULL)
   {
-    // create temporary context to retrieve advanced context creation procedures
+
     HMODULE   aModule = GetModuleHandleW(NULL);
     WNDCLASSW aClass;
     memset(&aClass, 0, sizeof(aClass));
@@ -414,7 +383,6 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
       }
     }
 
-    // choose extended pixel format
     if (aChoosePixProc != NULL)
     {
       const int aPixAttribs[] = {
@@ -428,9 +396,7 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
         hasStereo ? GL_TRUE : GL_FALSE,
         WGL_PIXEL_TYPE_ARB,
         WGL_TYPE_RGBA_ARB,
-        // WGL_SAMPLE_BUFFERS_ARB, 1,
-        // WGL_SAMPLES_ARB,        8,
-        // WGL_COLOR_BITS_ARB,     24,
+
         WGL_RED_BITS_ARB,
         theCaps->buffersDeepColor ? 10 : 8,
         WGL_GREEN_BITS_ARB,
@@ -443,12 +409,7 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
         24,
         WGL_STENCIL_BITS_ARB,
         8,
-        // WGL_EXT_colorspace extension specifies if OpenGL should write into window buffer as into
-        // sRGB or RGB framebuffer
-        // WGL_COLORSPACE_EXT, !theCaps->sRGBDisable ? WGL_COLORSPACE_SRGB_EXT :
-        // WGL_COLORSPACE_LINEAR_EXT,
-        // requires WGL_ARB_framebuffer_sRGB or WGL_EXT_framebuffer_sRGB extensions
-        // WGL_FRAMEBUFFER_SRGB_CAPABLE_EXT, !theCaps->sRGBDisable ? GL_TRUE : GL_FALSE,
+
         WGL_ACCELERATION_ARB,
         theCaps->contextNoAccel ? WGL_NO_ACCELERATION_ARB : WGL_FULL_ACCELERATION_ARB,
         0,
@@ -458,12 +419,11 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
       if (!aChoosePixProc(aWindowDC, aPixAttribs, NULL, 1, &aPixelFrmtId, &aFrmtsNb)
           && theCaps->buffersDeepColor)
       {
-        /// TODO
+
         Message::SendFail() << "Error: unable to find RGB10_A2 window buffer format!";
       }
     }
 
-    // setup pixel format - may be set only once per window
     if (!SetPixelFormat(aWindowDC, aPixelFrmtId, &aPixelFrmt))
     {
       ReleaseDC(aWindow, aWindowDC);
@@ -474,7 +434,6 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
       throw Aspect_GraphicDeviceDefinitionError(aMsg.ToCString());
     }
 
-    // create GL context with extra options
     if (aCreateCtxProc != NULL)
     {
       if (!theCaps->contextCompatible)
@@ -490,10 +449,6 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
                                  0,
                                  0};
 
-        // Try to create the core profile of highest OpenGL version supported by OCCT
-        // (this will be done automatically by some drivers when requesting 3.2,
-        //  but some will not (e.g. AMD Catalyst) since WGL_ARB_create_context_profile specification
-        //  allows both implementations).
         for (int aLowVer4 = 6; aLowVer4 >= 0 && aGContext == NULL; --aLowVer4)
         {
           aCoreCtxAttribs[1] = 4;
@@ -512,9 +467,7 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
       if (aGContext == NULL)
       {
         int aCtxAttribs[] = {
-          // Beware! NVIDIA drivers reject context creation when WGL_CONTEXT_PROFILE_MASK_ARB are
-          // specified but not WGL_CONTEXT_MAJOR_VERSION_ARB/WGL_CONTEXT_MINOR_VERSION_ARB.
-          // WGL_CONTEXT_PROFILE_MASK_ARB,  WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB,
+
           WGL_CONTEXT_FLAGS_ARB,
           theCaps->contextDebug ? WGL_CONTEXT_DEBUG_BIT_ARB : 0,
           0,
@@ -559,7 +512,7 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
 
     if (aGContext == NULL)
     {
-      // create context using obsolete functionality
+
       aGContext = wglCreateContext(aWindowDC);
     }
     if (aGContext == NULL)
@@ -573,7 +526,6 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
     }
   }
 
-  // all GL context within one OpenGl_GraphicDriver should be shared!
   if (aSlaveCtx != NULL && wglShareLists(aSlaveCtx, aGContext) != TRUE)
   {
     TCollection_AsciiString aMsg("OpenGl_Window::CreateWindow: wglShareLists failed. Error code: ");
@@ -613,14 +565,12 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
       "OpenGl_Window::CreateWindow: window Visual does not support GL rendering!");
   }
 
-  // create new context
   GLXFBConfig anFBConfig = myPlatformWindow->NativeFBConfig();
   const char* aGlxExts   = glXQueryExtensionsString(aDisp, aVisInfo.screen);
   if (myOwnGContext && anFBConfig != nullptr
       && OpenGl_Context::CheckExtension(aGlxExts, "GLX_ARB_create_context_profile"))
   {
-    // Replace default XError handler to ignore errors.
-    // Warning - this is global for all threads!
+
     typedef int (*xerrorhandler_t)(Display*, XErrorEvent*);
     xerrorhandler_t anOldHandler = XSetErrorHandler(xErrorDummyHandler);
 
@@ -644,7 +594,6 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
                                0,
                                0};
 
-      // try to create the core profile of highest OpenGL version supported by OCCT
       for (int aLowVer4 = 6; aLowVer4 >= 0 && aGContext == nullptr; --aLowVer4)
       {
         aCoreCtxAttribs[1] = 4;
@@ -693,7 +642,6 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
     }
   }
 
-  // check Visual for OpenGl context's parameters compatibility
   TCollection_ExtendedString aList;
   int                        isDoubleBuffer = 0, isRGBA = 0, isStereo = 0;
   int                        aDepthSize = 0, aStencilSize = 0;
@@ -735,15 +683,13 @@ void OpenGl_Window::Init(const occ::handle<OpenGl_GraphicDriver>& theDriver,
                     (Aspect_RenderingContext)aGContext,
                     isCoreProfile);
   #else
-  // not implemented
+
   (void)isCoreProfile;
   #endif
   myGlContext->Share(theShareCtx);
   myGlContext->SetSwapInterval(mySwapInterval);
   init();
 }
-
-//=================================================================================================
 
 OpenGl_Window::~OpenGl_Window()
 {
@@ -753,9 +699,6 @@ OpenGl_Window::~OpenGl_Window()
     return;
   }
 
-  // release "GL" context if it is owned by window
-  // Mesa implementation can fail to destroy GL context if it set for current thread.
-  // It should be safer to unset thread GL context before its destruction.
   #if defined(HAVE_EGL)
   if ((EGLSurface)myGlContext->myWindow != EGL_NO_SURFACE)
   {
@@ -791,18 +734,15 @@ OpenGl_Window::~OpenGl_Window()
       glXMakeCurrent(aDisplay, None, nullptr);
     }
 
-    // FSXXX sync necessary if non-direct rendering
     glXWaitGL();
     glXDestroyContext(aDisplay, aWindowGContext);
   }
   #else
-    // not implemented
+
   #endif
 }
 
-#endif // !__APPLE__
-
-//=================================================================================================
+#endif
 
 bool OpenGl_Window::Activate()
 {
@@ -811,15 +751,13 @@ bool OpenGl_Window::Activate()
 
 #if !defined(__APPLE__) || defined(HAVE_XLIB)
 
-//=================================================================================================
-
 void OpenGl_Window::Resize()
 {
   NCollection_Vec2<int> aWinSize;
   mySizeWindow->Size(aWinSize.x(), aWinSize.y());
   if (mySize == aWinSize)
   {
-    // if the size is not changed - do nothing
+
     return;
   }
 
@@ -827,8 +765,6 @@ void OpenGl_Window::Resize()
 
   init();
 }
-
-//=================================================================================================
 
 void OpenGl_Window::init()
 {
@@ -840,9 +776,7 @@ void OpenGl_Window::init()
   #if defined(HAVE_EGL)
   if ((EGLSurface)myGlContext->myWindow == EGL_NO_SURFACE)
   {
-    // define an offscreen default FBO to avoid rendering into EGL_NO_SURFACE;
-    // note that this code is currently never called, since eglCreatePbufferSurface() is used
-    // instead as more robust solution for offscreen rendering on bugged OpenGL ES drivers
+
     occ::handle<OpenGl_FrameBuffer> aDefFbo =
       myGlContext->SetDefaultFrameBuffer(occ::handle<OpenGl_FrameBuffer>());
     if (!aDefFbo.IsNull())
@@ -876,7 +810,7 @@ void OpenGl_Window::init()
                     &mySize.y());
   }
   #else
-    //
+
   #endif
 
   myGlContext->core11fwd->glDisable(GL_DITHER);
@@ -890,8 +824,6 @@ void OpenGl_Window::init()
   }
 }
 
-//=================================================================================================
-
 void OpenGl_Window::SetSwapInterval(bool theToForceNoSync)
 {
   const int aSwapInterval = theToForceNoSync ? 0 : myGlContext->caps->swapInterval;
@@ -902,4 +834,4 @@ void OpenGl_Window::SetSwapInterval(bool theToForceNoSync)
   }
 }
 
-#endif // !__APPLE__
+#endif

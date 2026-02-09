@@ -23,17 +23,12 @@
 #include <Precision.hpp>
 #include <TopOpeBRepDS_DataStructure.hpp>
 
-//=======================================================================
-// function : ChFiKPart_Sphere
-// purpose  : Construction of a spherical fillet the contours which of
-//           are not all isos, from three tops.
-//=======================================================================
 bool ChFiKPart_Sphere(TopOpeBRepDS_DataStructure&           DStr,
                       const occ::handle<ChFiDS_SurfData>&   Data,
                       const occ::handle<Adaptor3d_Surface>& S1,
                       const occ::handle<Adaptor3d_Surface>& S2,
                       const TopAbs_Orientation              OrFace1,
-                      const TopAbs_Orientation /*OrFace2*/,
+                      const TopAbs_Orientation,
                       const TopAbs_Orientation Or1,
                       const TopAbs_Orientation,
                       const double    Rad,
@@ -41,10 +36,6 @@ bool ChFiKPart_Sphere(TopOpeBRepDS_DataStructure&           DStr,
                       const gp_Pnt2d& P1S2,
                       const gp_Pnt2d& P2S2)
 {
-  // Construction of the sphere :
-  // - pole south on PS1
-  // - origine of u given by P1S2
-  // - u+ to P2S2
 
   double ptol = Precision::Confusion();
   gp_Pnt p1, p2, p3;
@@ -93,8 +84,6 @@ bool ChFiKPart_Sphere(TopOpeBRepDS_DataStructure&           DStr,
   occ::handle<Geom_SphericalSurface> gsph = new Geom_SphericalSurface(FilAx3, Rad);
   Data->ChangeSurf(ChFiKPart_IndexSurfaceInDS(gsph, DStr));
 
-  // the normal of the sphere is compared to the normal of the face
-  // oriented to determine the final orientation of the fillet.
   bool toreverse = (ddz.Dot(df1) <= 0.);
   if (toreverse)
   {
@@ -105,16 +94,10 @@ bool ChFiKPart_Sphere(TopOpeBRepDS_DataStructure&           DStr,
     Data->ChangeOrientation() = TopAbs_FORWARD;
   }
 
-  // Parameters of p2 and p3 are calculated on the Sphere to have
-  // ranges of curves.
   double uu1, vv1, uu2, vv2;
   ElSLib::SphereParameters(FilAx3, Rad, p2, uu1, vv1);
   uu1 = 0.;
   ElSLib::SphereParameters(FilAx3, Rad, p3, uu2, vv2);
-
-  // FaceInterferences are loaded with pcurves and curves 3d.
-
-  // Pointed side.
 
   occ::handle<Geom_Curve>   C;
   occ::handle<Geom2d_Curve> C2d;
@@ -129,8 +112,6 @@ bool ChFiKPart_Sphere(TopOpeBRepDS_DataStructure&           DStr,
                                                  trans,
                                                  C2d,
                                                  C2dFil);
-
-  // The other side.
 
   double  ang = ddx.Angle(ddy);
   gp_Dir  dci = ddx.Crossed(ddy);

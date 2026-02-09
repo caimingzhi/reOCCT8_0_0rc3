@@ -3,8 +3,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMeshData_Wire, IMeshData_Wire)
 
-//=================================================================================================
-
 BRepMeshData_Wire::BRepMeshData_Wire(const TopoDS_Wire&                           theWire,
                                      const int                                    theEdgeNb,
                                      const occ::handle<NCollection_IncAllocator>& theAllocator)
@@ -14,18 +12,12 @@ BRepMeshData_Wire::BRepMeshData_Wire(const TopoDS_Wire&                         
 {
 }
 
-//=================================================================================================
-
 BRepMeshData_Wire::~BRepMeshData_Wire() = default;
-
-//=================================================================================================
 
 int BRepMeshData_Wire::EdgesNb() const
 {
   return myDEdges.Size();
 }
-
-//=================================================================================================
 
 int BRepMeshData_Wire::AddEdge(const IMeshData::IEdgePtr& theDEdge,
                                const TopAbs_Orientation   theOrientation)
@@ -38,14 +30,10 @@ int BRepMeshData_Wire::AddEdge(const IMeshData::IEdgePtr& theDEdge,
   return aIndex;
 }
 
-//=================================================================================================
-
 const IMeshData::IEdgePtr& BRepMeshData_Wire::GetEdge(const int theIndex) const
 {
   return myDEdges(theIndex);
 }
-
-//=================================================================================================
 
 TopAbs_Orientation BRepMeshData_Wire::GetEdgeOrientation(const int theIndex) const
 {

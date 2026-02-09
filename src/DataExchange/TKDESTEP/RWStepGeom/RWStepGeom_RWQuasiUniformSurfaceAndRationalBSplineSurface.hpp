@@ -11,7 +11,6 @@ class StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for QuasiUniformSurfaceAndRationalBSplineSurface
 class RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface
 {
 public:

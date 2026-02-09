@@ -15,7 +15,6 @@ class StepAP214_AppliedOrganizationAssignment : public StepBasic_OrganizationAss
 {
 
 public:
-  //! Returns a AppliedOrganizationAssignment
   Standard_EXPORT StepAP214_AppliedOrganizationAssignment();
 
   Standard_EXPORT void Init(

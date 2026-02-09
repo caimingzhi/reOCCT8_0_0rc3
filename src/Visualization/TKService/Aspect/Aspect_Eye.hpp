@@ -1,6 +1,5 @@
 #pragma once
 
-//! Camera eye index within stereoscopic pair.
 enum Aspect_Eye
 {
   Aspect_Eye_Left,

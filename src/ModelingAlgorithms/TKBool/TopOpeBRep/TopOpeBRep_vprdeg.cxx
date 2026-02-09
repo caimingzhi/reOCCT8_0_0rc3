@@ -9,7 +9,7 @@
 #include <TopOpeBRepDS_Transition.hpp>
 
 #include <TopoDS.hpp>
-// #include <BRepAdaptor_Curve2d.hpp>
+
 #include <gp_Vec.hpp>
 #include <BRep_Tool.hpp>
 #include <TopExp.hpp>
@@ -27,7 +27,6 @@
 #define M_ON(st) (st == TopAbs_ON)
 #define M_REVERSED(st) (st == TopAbs_REVERSED)
 
-// modified by NIZHNY-MKK  Tue Nov 21 17:30:23 2000.BEGIN
 static NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
                              aMapOfTreatedVertexListOfEdge;
 static TopOpeBRep_PLineInter localCurrentLine = nullptr;
@@ -43,32 +42,31 @@ static bool local_FindVertex(
                                    NCollection_List<TopoDS_Shape>,
                                    TopTools_ShapeMapHasher>& theMapOfVertexEdges,
   TopoDS_Vertex&                                             theVertex);
-// modified by NIZHNY-MKK  Tue Nov 21 17:30:27 2000.END
 
 #ifdef OCCT_DEBUG
 Standard_EXPORT bool FUN_debnull(const TopoDS_Shape& s);
 #endif
 
 Standard_EXPORT occ::handle<TopOpeBRepDS_Interference> MakeEPVInterference(
-  const TopOpeBRepDS_Transition& T, // transition
-  const int                      S, // curve/edge index
-  const int                      G, // point/vertex index
-  const double                   P, // parameter of G on S
+  const TopOpeBRepDS_Transition& T,
+  const int                      S,
+  const int                      G,
+  const double                   P,
   const TopOpeBRepDS_Kind        GK,
-  const bool                     B); // G is a vertex (or not) of the interference master
+  const bool                     B);
 
 Standard_EXPORT occ::handle<TopOpeBRepDS_Interference> MakeEPVInterference(
-  const TopOpeBRepDS_Transition& T,  // transition
-  const int                      S,  // curve/edge index
-  const int                      G,  // point/vertex index
-  const double                   P,  // parameter of G on S
-  const TopOpeBRepDS_Kind        GK, // POINT/VERTEX
+  const TopOpeBRepDS_Transition& T,
+  const int                      S,
+  const int                      G,
+  const double                   P,
+  const TopOpeBRepDS_Kind        GK,
   const TopOpeBRepDS_Kind        SK,
-  const bool                     B); // G is a vertex (or not) of the interference master
+  const bool                     B);
 
-#define M_FINDVP (0)  // only look for new vp
-#define M_MKNEWVP (1) // only make newvp
-#define M_GETVP (2)   // steps (0) [+(1) if (O) fails]
+#define M_FINDVP (0)
+#define M_MKNEWVP (1)
+#define M_GETVP (2)
 Standard_EXPORT void FUN_VPIndex(
   TopOpeBRep_FacesFiller&                                         FF,
   const TopOpeBRep_LineInter&                                     L,
@@ -77,11 +75,11 @@ Standard_EXPORT void FUN_VPIndex(
   const occ::handle<TopOpeBRepDS_HDataStructure>&                 HDS,
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& DSCIL,
   TopOpeBRepDS_Kind&                                              PVKind,
-  int&                                                            PVIndex, // out
+  int&                                                            PVIndex,
   bool&                                                           EPIfound,
-  occ::handle<TopOpeBRepDS_Interference>&                         IEPI, // out
+  occ::handle<TopOpeBRepDS_Interference>&                         IEPI,
   bool&                                                           CPIfound,
-  occ::handle<TopOpeBRepDS_Interference>&                         ICPI, // out
+  occ::handle<TopOpeBRepDS_Interference>&                         ICPI,
   const int                                                       mkVP);
 
 Standard_EXPORT void FUN_FillVof12(const TopOpeBRep_LineInter& L, TopOpeBRepDS_PDataStructure pDS)
@@ -160,16 +158,13 @@ Standard_EXPORT void FUN_GetdgData(
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
     datamap)
 {
-  // purpose : fills up map datamap = {(v, (closinge,degeneratede))}
-  //           with shapes with same rank
 
-  NCollection_DataMap<TopoDS_Shape, int, TopTools_ShapeMapHasher>
-    shaperk; // rkshape = {shape,rank=1,2}
-             // clang-format off
-  NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher> mapvec, mapved; // mapvec = {(v,lec),(ec,lv)}, mapved = {(v,led),(ed,lv)}
-             // clang-format on
-  NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>
-    mapvvsd; // mapvvsd = {(v,v)}
+  NCollection_DataMap<TopoDS_Shape, int, TopTools_ShapeMapHasher> shaperk;
+
+  NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher> mapvec,
+    mapved;
+
+  NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> mapvvsd;
 
   TopOpeBRep_VPointInterIterator itvp(L);
   for (; itvp.More(); itvp.Next())
@@ -209,11 +204,10 @@ Standard_EXPORT void FUN_GetdgData(
           FUN_addmapve(mapved, v, e);
         if (iscl)
           FUN_addmapve(mapvec, v, e);
-      } // ison
-    } // i = 1..2
-  } // itvp
+      }
+    }
+  }
 
-  // filling up map mapvvsd
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>::
     Iterator itm(mapved);
   for (; itm.More(); itm.Next())
@@ -232,13 +226,12 @@ Standard_EXPORT void FUN_GetdgData(
       {
         TopExp_Explorer     ex(e, TopAbs_VERTEX);
         const TopoDS_Shape& vsd = ex.Current();
-        // recall : if vsd is not bound in shaperk,
-        //          it is not bound in <L> either
+
         mapvvsd.Bind(v, vsd);
         mapvvsd.Bind(vsd, v);
       }
     }
-  } // itm(mapved)
+  }
 
   itm.Initialize(mapved);
   for (; itm.More(); itm.Next())
@@ -262,10 +255,7 @@ Standard_EXPORT void FUN_GetdgData(
     bool         isbv = mapvec.IsBound(v), isbvsd = hassd ? mapvec.IsBound(vsd) : false;
     if (!isbv && !isbvsd)
     {
-      // **************************************************
-      // interference with closing edge is not found,
-      // adding new information to the ds
-      // **************************************************
+
       NCollection_IndexedDataMap<TopoDS_Shape,
                                  NCollection_List<TopoDS_Shape>,
                                  TopTools_ShapeMapHasher>
@@ -312,9 +302,8 @@ Standard_EXPORT void FUN_GetdgData(
     ls.Append(cle);
     ls.Append(dge);
     datamap.Bind(vv, ls);
-  } // itm(mapved)
+  }
 
-  // filling sdm shapes
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator ittm(mapvvsd);
   for (; ittm.More(); ittm.Next())
   {
@@ -325,7 +314,7 @@ Standard_EXPORT void FUN_GetdgData(
     TopoDS_Vertex        v2  = (rkv == 2) ? v : ov;
     pDS->FillShapesSameDomain(v1, v2);
   }
-} // FUN_GetdgData
+}
 
 #define NOI (0)
 #define MKI1 (1)
@@ -337,12 +326,12 @@ static int FUN_putInterfonDegenEd(
   const TopoDS_Face&            F1,
   const TopoDS_Face&            F2,
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
-                                            DataforDegenEd, // const but for copy &
+                                            DataforDegenEd,
   occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
   int&                                      is,
   TopoDS_Edge&                              dgE,
-  // int& makeinterf, // 1,2,3 : compute interf1, or2 or the 2 interfs
-  int&, // 1,2,3 : compute interf1, or2 or the 2 interfs
+
+  int&,
   TopOpeBRepDS_Transition& Trans1,
   double&                  param1,
   TopOpeBRepDS_Transition& Trans2,
@@ -354,13 +343,13 @@ static int FUN_putInterfonDegenEd(
 {
   OOEi.Nullify();
 
-  bool on3   = (VP.ShapeIndex() == 3); // <VP> is shared by edge of 1 and edge of 2.
+  bool on3   = (VP.ShapeIndex() == 3);
   bool onv12 = VP.IsVertexOnS1() && VP.IsVertexOnS2();
 
   const TopOpeBRepDS_DataStructure& BDS = HDS->ChangeDS();
   TopoDS_Vertex                     v;
   int                               rkv = 0;
-  //  int iv;
+
   TopoDS_Vertex ov;
   for (int ShapeIndex = 1; ShapeIndex <= 2; ShapeIndex++)
   {
@@ -373,12 +362,11 @@ static int FUN_putInterfonDegenEd(
       continue;
     rkv = ShapeIndex;
     break;
-  } // ShapeIndex = 1..2
+  }
   if (rkv == 0)
-    return NOI; // compute interference once only.
+    return NOI;
   bool isvsd = HDS->HasSameDomain(v);
 
-  // edges dge, cle on shape<rkdg>
   const NCollection_List<TopoDS_Shape>& loe = DataforDegenEd.Find(v);
   const TopoDS_Edge&                    cle = TopoDS::Edge(loe.First());
   const TopoDS_Edge&                    dge = TopoDS::Edge(loe.Last());
@@ -400,18 +388,14 @@ static int FUN_putInterfonDegenEd(
   gp_Pnt2d    uvi;
   TopoDS_Face fi, f;
   {
-    //     double u,v;
-    //     if (rki == 1) VP.ParametersOnS1(u,v);
-    //     else          VP.ParametersOnS2(u,v);
-    //     uvi = gp_Pnt2d(u,v);
-    // modified by NIZHNY-MKK  Tue Nov 21 17:44:56 2000.BEGIN
+
     double upar, vpar;
     if (rki == 1)
       VP.ParametersOnS1(upar, vpar);
     else
       VP.ParametersOnS2(upar, vpar);
     uvi = gp_Pnt2d(upar, vpar);
-    // modified by NIZHNY-MKK  Tue Nov 21 17:44:59 2000.END
+
     fi = (rki == 1) ? F1 : F2;
     f  = (rkdg == 1) ? F1 : F2;
   }
@@ -429,17 +413,19 @@ static int FUN_putInterfonDegenEd(
       ov = (rkv == 2) ? TopoDS::Vertex(VP.VertexOnS1()) : TopoDS::Vertex(VP.VertexOnS2());
     else
     {
-      // modified by NIZHNY-MKK  Tue Nov 21 17:45:46 2000.BEGIN
-      //       bool ok = FUN_ds_getoov(v,HDS,ov);
-      //       if (!ok) return false;
+
       bool found = FUN_ds_getoov(v, HDS, ov);
       if (!found)
         return NOI;
-      // modified by NIZHNY-MKK  Tue Nov 21 17:45:50 2000.END
     }
-    // clang-format off
-    if (rkv != rkdg) {TopoDS_Vertex tmp = v; v = ov; ov = tmp; rkv = rkdg;} // ensure v is vertex of dge
-    // clang-format on
+
+    if (rkv != rkdg)
+    {
+      TopoDS_Vertex tmp = v;
+      v                 = ov;
+      ov                = tmp;
+      rkv               = rkdg;
+    }
   }
 
   int    mkt  = 0;
@@ -448,7 +434,7 @@ static int FUN_putInterfonDegenEd(
   {
     TopoDS_Edge ei   = (rki == 1) ? TopoDS::Edge(VP.ArcOnS1()) : TopoDS::Edge(VP.ArcOnS2());
     double      pari = (rki == 1) ? VP.ParameterOnArc1() : VP.ParameterOnArc2();
-    // if okrest, ei interfers in the compute of transitions for dge
+
     mktdg.SetRest(pari, ei);
     ok = mktdg.MkTonE(ei, mkt, par1, par2);
     if ((!ok) || (mkt == NOI))
@@ -456,11 +442,10 @@ static int FUN_putInterfonDegenEd(
     OOEi      = ei;
     paronOOEi = pari;
     hasOOEi   = true;
-  } // on3
+  }
   else
   {
-    // modified by NIZHNY-MKK  Tue Nov 21 17:31:14 2000.BEGIN
-    // This search, compute and check the data which was not computed by intersector.
+
     if ((rki == 1 && VP.IsOnDomS1()) || (rki == 2 && VP.IsOnDomS2()))
     {
       TopoDS_Edge ei   = (rki == 1) ? TopoDS::Edge(VP.ArcOnS1()) : TopoDS::Edge(VP.ArcOnS2());
@@ -521,7 +506,7 @@ static int FUN_putInterfonDegenEd(
         ok = mktdg.MkTonE(mkt, par1, par2);
       }
     }
-    // modified by NIZHNY-MKK  Tue Nov 21 17:31:36 2000.END
+
     if ((!ok) || (mkt == NOI))
       return NOI;
   }
@@ -538,32 +523,20 @@ static int FUN_putInterfonDegenEd(
     param2 = par2;
   }
   return mkt;
-  //  **********   iterate on restrictions of fi  **********
-  //  NCollection_List<TopoDS_Shape> lei; mktdg.GetAllRest(lei);
-  //  NCollection_List<TopoDS_Shape>::Iterator ite(lei);
-  //  for (; ite.More(); ite.Next()){
-  //    bool oki = mktdg.MkTonE(ei,mkt,par1,par2);
-  //    ... NYI
-  //  }
-} // FUN_putInterfonDegenEd
+}
 
-//=======================================================================
-// function : ProcessVPondgE
-// purpose  : SUPPLYING INTPATCH when a degenerated edge is touched.
-//=======================================================================
-
-#define s_NOIdgE (0) // do NOT compute any interference
-#define s_IdgE (1)   // compute interference(s) on dgE
-#define s_IOOEi (2)  // compute interference(s) on OOEi
+#define s_NOIdgE (0)
+#define s_IdgE (1)
+#define s_IOOEi (2)
 
 bool TopOpeBRep_FacesFiller::ProcessVPondgE(const TopOpeBRep_VPointInter&           VP,
                                             const int                               ShapeIndex,
                                             TopOpeBRepDS_Kind&                      PVKind,
-                                            int&                                    PVIndex, // out
+                                            int&                                    PVIndex,
                                             bool&                                   EPIfound,
-                                            occ::handle<TopOpeBRepDS_Interference>& IEPI, // out
+                                            occ::handle<TopOpeBRepDS_Interference>& IEPI,
                                             bool&                                   CPIfound,
-                                            occ::handle<TopOpeBRepDS_Interference>& ICPI) // out
+                                            occ::handle<TopOpeBRepDS_Interference>& ICPI)
 {
   if (PVIndex == 0)
     FUN_VPIndex((*this),
@@ -571,22 +544,14 @@ bool TopOpeBRep_FacesFiller::ProcessVPondgE(const TopOpeBRep_VPointInter&       
                 VP,
                 ShapeIndex,
                 myHDS,
-                myDSCIL, // in
+                myDSCIL,
                 PVKind,
-                PVIndex, // out
+                PVIndex,
                 EPIfound,
-                IEPI, // out
+                IEPI,
                 CPIfound,
-                ICPI, // out
+                ICPI,
                 M_FINDVP);
-
-  // kpart : sphere/box, with one sphere's degenerated edge lying on one boxe's
-  // face, IN or ON the face
-  // if (mIdgEorOOEi), adds interferences on degenerated edge
-
-  // If interferences should be added, finds out <VP>'s geometry
-  // in existing interferences (see out parameters <EPIfound>..);
-  // adds a new point/vertex to the DS if necessary.
 
   bool                    hasOOEi = false;
   TopoDS_Edge             OOEi;
@@ -600,7 +565,6 @@ bool TopOpeBRep_FacesFiller::ProcessVPondgE(const TopOpeBRep_VPointInter&       
     return false;
   }
 
-  // modified by NIZHNY-MKK  Tue Nov 21 17:35:29 2000
   local_ReduceMapOfTreatedVertices(myLine);
 
   bool        isT2d = false;
@@ -626,32 +590,23 @@ bool TopOpeBRep_FacesFiller::ProcessVPondgE(const TopOpeBRep_VPointInter&       
     return false;
   }
 
-  // -------------------------------------------------------------------
-  //             --- DS geometry Management ---
-  // -------------------------------------------------------------------
-
   if (PVIndex == 0)
     FUN_VPIndex((*this),
                 (*myLine),
                 VP,
                 ShapeIndex,
                 myHDS,
-                myDSCIL, // in
+                myDSCIL,
                 PVKind,
-                PVIndex, // out
+                PVIndex,
                 EPIfound,
-                IEPI, // out
+                IEPI,
                 CPIfound,
-                ICPI, // out
+                ICPI,
                 M_MKNEWVP);
 
-  // -------------------------------------------------------------------
-  //             --- EVI on degenerated edge ---
-  //             ---       on OOEi           ---
-  // -------------------------------------------------------------------
-
   int rankFi = (rankdg == 1) ? 2 : 1;
-  //  TopoDS_Shape dgEd = VP.Edge(rankdg);
+
   TopoDS_Face Fi;
   if (rankFi == 1)
     Fi = myF1;
@@ -659,8 +614,6 @@ bool TopOpeBRep_FacesFiller::ProcessVPondgE(const TopOpeBRep_VPointInter&       
     Fi = myF2;
   int iFi = myDS->AddShape(Fi, rankFi);
   myDS->AddShape(dgEd, rankdg);
-  //  int iOOEi = 0;
-  //  if (hasOOEi) iOOEi = myDS->AddShape(OOEi,rankFi);
 
   int rkv = myDS->AncestorRank(myDS->Shape(PVIndex));
 
@@ -669,14 +622,6 @@ bool TopOpeBRep_FacesFiller::ProcessVPondgE(const TopOpeBRep_VPointInter&       
     T1ondg.Index(iFi);
     bool isvertex1 = (rkv == 1);
 
-    /*
-        if (hasOOEi) {
-          occ::handle<TopOpeBRepDS_Interference> EVI1i =
-       ::MakeEPVInterference(T1ondg,iOOEi,PVIndex,par1ondg,
-                          TopOpeBRepDS_VERTEX,TopOpeBRepDS_EDGE,isvertex1);
-          myHDS->StoreInterference(EVI1i,dgEd);
-        }
-    */
     if (!isT2d)
     {
       occ::handle<TopOpeBRepDS_Interference> EVI1 = ::MakeEPVInterference(T1ondg,
@@ -694,14 +639,6 @@ bool TopOpeBRep_FacesFiller::ProcessVPondgE(const TopOpeBRep_VPointInter&       
     T2ondg.Index(iFi);
     bool isvertex2 = (rkv == 2);
 
-    /*
-        if (hasOOEi) {
-          occ::handle<TopOpeBRepDS_Interference> EVI2i =
-       ::MakeEPVInterference(T2ondg,iOOEi,PVIndex,par2ondg,
-                          TopOpeBRepDS_VERTEX,TopOpeBRepDS_EDGE,isvertex2);
-          myHDS->StoreInterference(EVI2i,dgEd);
-        }
-    */
     if (!isT2d)
     {
       occ::handle<TopOpeBRepDS_Interference> EVI2 = ::MakeEPVInterference(T2ondg,
@@ -716,9 +653,8 @@ bool TopOpeBRep_FacesFiller::ProcessVPondgE(const TopOpeBRep_VPointInter&       
   }
 
   return true;
-} // ProcessVPondgE
+}
 
-// modified by NIZHNY-MKK  Tue Nov 21 17:32:52 2000.BEGIN
 static bool local_FindTreatedEdgeOnVertex(const TopoDS_Edge&   theEdge,
                                           const TopoDS_Vertex& theVertex)
 {
@@ -776,5 +712,3 @@ static void local_ReduceMapOfTreatedVertices(const TopOpeBRep_PLineInter& theCur
     }
   }
 }
-
-// modified by NIZHNY-MKK  Tue Nov 21 17:32:55 2000.END

@@ -1,21 +1,4 @@
-// Copyright (c) 1996-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// Jeannine PANCIATICI le 06/06/96
-// Igor FEOKTISTOV 14/12/98 - correction of Approximate() and Init().
-// Approximation of a MultiLine of points described by the tool MLineTool.
-// with variational criteria
 
 #include <AppDef_MultiLine.hpp>
 #include <AppDef_Variational.hpp>
@@ -60,19 +43,12 @@
 #include <math_Vector.hpp>
 #include <PLib_HermitJacobi.hpp>
 
-// Add this line:
 #include <algorithm>
 
 #if defined(_MSC_VER)
   #include <stdio.h>
-#endif /* _MSC_VER */
+#endif
 
-//
-//=======================================================================
-// function : AppDef_Variational
-// purpose  : Initialization of   the   fields.
-//=======================================================================
-//
 AppDef_Variational::AppDef_Variational(
   const AppDef_MultiLine&                                                SSP,
   const int                                                              FirstPoint,
@@ -97,19 +73,19 @@ AppDef_Variational::AppDef_Variational(
       myWithMinMax(WithMinMax),
       myWithCutting(WithCutting)
 {
-  // Verifications:
+
   if (myMaxDegree < 1)
     throw Standard_DomainError();
   myMaxDegree = std::min(30, myMaxDegree);
-  //
+
   if (myMaxSegment < 1)
     throw Standard_DomainError();
-  //
+
   if (myWithMinMax != 0 && myWithMinMax != 1)
     throw Standard_DomainError();
   if (myWithCutting != 0 && myWithCutting != 1)
     throw Standard_DomainError();
-  //
+
   myIsOverConstr = false;
   myIsCreated    = false;
   myIsDone       = false;
@@ -127,11 +103,11 @@ AppDef_Variational::AppDef_Variational(
     default:
       throw Standard_ConstructionError();
   }
-  //
+
   myNbP2d     = AppDef_MyLineTool::NbP2d(SSP);
   myNbP3d     = AppDef_MyLineTool::NbP3d(SSP);
   myDimension = 2 * myNbP2d + 3 * myNbP3d;
-  //
+
   myPercent[0] = 0.4;
   myPercent[1] = 0.2;
   myPercent[2] = 0.4;
@@ -139,18 +115,14 @@ AppDef_Variational::AppDef_Variational(
   myKnots->SetValue(1, 0.);
   myKnots->SetValue(2, 1.);
 
-  //  Declaration
-  //
   mySmoothCriterion = new AppDef_LinearCriteria(mySSP, myFirstPoint, myLastPoint);
   myParameters      = new NCollection_HArray1<double>(myFirstPoint, myLastPoint);
   myNbPoints        = myLastPoint - myFirstPoint + 1;
   if (myNbPoints <= 0)
     throw Standard_ConstructionError();
-  //
+
   myTabPoints = new NCollection_HArray1<double>(1, myDimension * myNbPoints);
-  //
-  //  Table of Points initialization
-  //
+
   int                          ipoint, jp2d, jp3d, index;
   NCollection_Array1<gp_Pnt>   TabP3d(1, std::max(1, myNbP3d));
   NCollection_Array1<gp_Pnt2d> TabP2d(1, std::max(1, myNbP2d));
@@ -213,14 +185,6 @@ AppDef_Variational::AppDef_Variational(
   Init();
 }
 
-//
-//=======================================================================
-// function : Init
-// purpose  : Initializes the tables of constraints
-//           and verifies if the problem is not over-constrained.
-//           This method is used in the Create and the method SetConstraint.
-//=======================================================================
-//
 void AppDef_Variational::Init()
 {
 
@@ -246,8 +210,6 @@ void AppDef_Variational::Init()
   myTfthet =
     new NCollection_HArray1<double>(1, std::max(1, (2 * myNbP2d + 6 * myNbP3d) * myNbConstraints));
 
-  //
-  // Table of types initialization
   int iconstr;
   index          = 1;
   jndex          = 1;
@@ -427,7 +389,7 @@ void AppDef_Variational::Init()
     }
     CurMultyPoint += myNbP3d * 6 + myNbP2d * 2;
   }
-  // OverConstraint Detection
+
   int MaxSeg;
   if (myWithCutting)
     MaxSeg = myMaxSegment;
@@ -447,12 +409,6 @@ void AppDef_Variational::Init()
   }
 }
 
-//
-//=======================================================================
-// function : Approximate
-// purpose  : Makes the approximation with the current fields.
-//=======================================================================
-//
 void AppDef_Variational::Approximate()
 
 {
@@ -469,14 +425,10 @@ void AppDef_Variational::Approximate()
 
   mySmoothCriterion->GetCurve(TheCurve);
 
-  //---------------------------------------------------------------------
-
   TheMotor(mySmoothCriterion, WQuadratic, WQuality, TheCurve, Ecarts);
 
   if (myWithMinMax && myTolerance < myMaxError)
     Adjusting(mySmoothCriterion, WQuadratic, WQuality, TheCurve, Ecarts);
-
-  //---------------------------------------------------------------------
 
   int jp2d, jp3d, ipole, NbElem = TheCurve->NbElements();
 
@@ -515,32 +467,7 @@ void AppDef_Variational::Approximate()
       PolynomialIntervalsPtr->SetValue(ii, 1, debfin[0]);
       PolynomialIntervalsPtr->SetValue(ii, 2, debfin[1]);
     }
-    /*
-    printf("\n =========== Parameters for converting\n");
-    printf("nb_courbes : %d \n", NbElem);
-    printf("tab_option[4] : %d \n", myNivCont);
-    printf("myDimension : %d \n", myDimension);
-    printf("myMaxDegree : %d \n", myMaxDegree);
-    printf("\n NbcoeffPtr :\n");
-    for(ii = 1; ii <= NbElem; ii++)  printf("NbCoeffPtr(%d) = %d \n", ii, NbCoeffPtr->Value(ii));
-    size = NbElem*(myMaxDegree + 1) * myDimension;
-    printf("\n CoeffPtr :\n");
-    for(ii = 1; ii <= size; ii++)  printf("CoeffPtr(%d) = %.8e \n", ii, CoeffPtr->Value(ii));
-    printf("\n PolinimialIntervalsPtr :\n");
-    for (ii = PolynomialIntervalsPtr->LowerRow() ;
-    ii <= PolynomialIntervalsPtr->UpperRow() ;ii++)
-    {
-    printf(" %d : [%f, %f] \n", ii, PolynomialIntervalsPtr->Value(ii,1),
-    PolynomialIntervalsPtr->Value(ii,2)) ;
-    }
-    printf("\n IntervallesPtr :\n");
-    for (ii = IntervallesPtr->Lower();
-    ii <= IntervallesPtr->Upper() - 1; ii++)
-    {
-    printf(" %d : [%f, %f] \n", ii, IntervallesPtr->Value(ii),
-    IntervallesPtr->Value(ii+1)) ;
-    }
-    */
+
     Convert_CompPolynomialToPoles AConverter(NbElem,
                                              myNivCont,
                                              myDimension,
@@ -554,7 +481,7 @@ void AppDef_Variational::Approximate()
       occ::handle<NCollection_HArray2<double>> PolesPtr;
       occ::handle<NCollection_HArray1<int>>    Mults;
       int                                      NbPoles = AConverter.NbPoles();
-      //	int Deg=AConverter.Degree();
+
       NCollection_Array1<AppParCurves_MultiPoint> TabMU(1, NbPoles);
       AConverter.Poles(PolesPtr);
       AConverter.Knots(myKnots);
@@ -563,27 +490,16 @@ void AppDef_Variational::Approximate()
       for (ipole = PolesPtr->LowerRow(); ipole <= PolesPtr->UpperRow(); ipole++)
       {
         int index = PolesPtr->LowerCol();
-        /*	    if(myNbP2d !=0 )
-        {
-        for (jp2d=1;jp2d<=myNbP2d;jp2d++)
-        {
-        P2d.SetX(PolesPtr->Value(ipole,index++));
-        P2d.SetY(PolesPtr->Value(ipole,index++));
-        TabP2d.SetValue(jp2d,P2d);
-        }
-        }*/
+
         if (myNbP3d != 0)
         {
           for (jp3d = 1; jp3d <= myNbP3d; jp3d++)
           {
-            //                       std::cout << "\n Poles(ipole,1)" <<
-            //                       PolesPtr->Value(ipole,index);
+
             P3d.SetX(PolesPtr->Value(ipole, index++));
-            //                       std::cout << "\n Poles(ipole,1)" <<
-            //                       PolesPtr->Value(ipole,index);
+
             P3d.SetY(PolesPtr->Value(ipole, index++));
-            //                       std::cout << "\n Poles(ipole,1)" <<
-            //                       PolesPtr->Value(ipole,index);
+
             P3d.SetZ(PolesPtr->Value(ipole, index++));
             TabP3d.SetValue(jp3d, P3d);
           }
@@ -621,48 +537,21 @@ void AppDef_Variational::Approximate()
   }
 }
 
-//
-//=======================================================================
-// function : IsCreated
-// purpose  : returns True if the creation is done
-//=======================================================================
-//
 bool AppDef_Variational::IsCreated() const
 {
   return myIsCreated;
 }
 
-//
-//=======================================================================
-// function : IsDone
-// purpose  : returns True if the  approximation is ok
-//=======================================================================
-//
 bool AppDef_Variational::IsDone() const
 {
   return myIsDone;
 }
 
-//
-//=======================================================================
-// function : IsOverConstrained
-// purpose  : returns True if the problem is overconstrained
-//           in this case, approximation cannot be done.
-//=======================================================================
-//
 bool AppDef_Variational::IsOverConstrained() const
 {
   return myIsOverConstr;
 }
 
-//
-//=======================================================================
-// function : Value
-// purpose  : returns all the BSpline curves approximating the
-//    	     MultiLine SSP after minimization of the parameter.
-
-//=======================================================================
-//
 AppParCurves_MultiBSpCurve AppDef_Variational::Value() const
 {
   if (!myIsDone)
@@ -670,14 +559,6 @@ AppParCurves_MultiBSpCurve AppDef_Variational::Value() const
   return myMBSpCurve;
 }
 
-//
-//=======================================================================
-// function : MaxError
-// purpose  : returns the maximum of the distances between
-//           the points of the multiline and the approximation
-//           curves.
-//=======================================================================
-//
 double AppDef_Variational::MaxError() const
 {
   if (!myIsDone)
@@ -685,12 +566,6 @@ double AppDef_Variational::MaxError() const
   return myMaxError;
 }
 
-//
-//=======================================================================
-// function : MaxErrorIndex
-// purpose  : returns the index of the MultiPoint of ErrorMax
-//=======================================================================
-//
 int AppDef_Variational::MaxErrorIndex() const
 {
   if (!myIsDone)
@@ -698,14 +573,6 @@ int AppDef_Variational::MaxErrorIndex() const
   return myMaxErrorIndex;
 }
 
-//
-//=======================================================================
-// function : QuadraticError
-// purpose  :  returns the quadratic average of the distances between
-//            the points of the multiline and the approximation
-//            curves.
-//=======================================================================
-//
 double AppDef_Variational::QuadraticError() const
 {
   if (!myIsDone)
@@ -713,13 +580,6 @@ double AppDef_Variational::QuadraticError() const
   return myCriterium[0];
 }
 
-//
-//=======================================================================
-// function : Distance
-// purpose  : returns the distances between the points of the
-//           multiline and the approximation curves.
-//=======================================================================
-//
 void AppDef_Variational::Distance(math_Matrix& mat)
 
 {
@@ -768,13 +628,6 @@ void AppDef_Variational::Distance(math_Matrix& mat)
   }
 }
 
-//
-//=======================================================================
-// function : AverageError
-// purpose  : returns the average error between
-//           the MultiLine and the approximation.
-//=======================================================================
-//
 double AppDef_Variational::AverageError() const
 {
   if (!myIsDone)
@@ -782,12 +635,6 @@ double AppDef_Variational::AverageError() const
   return myAverageError;
 }
 
-//
-//=======================================================================
-// function : Parameters
-// purpose  : returns the parameters uses to the approximations
-//=======================================================================
-//
 const occ::handle<NCollection_HArray1<double>>& AppDef_Variational::Parameters() const
 {
   if (!myIsDone)
@@ -795,12 +642,6 @@ const occ::handle<NCollection_HArray1<double>>& AppDef_Variational::Parameters()
   return myParameters;
 }
 
-//
-//=======================================================================
-// function : Knots
-// purpose  : returns the knots uses to the approximations
-//=======================================================================
-//
 const occ::handle<NCollection_HArray1<double>>& AppDef_Variational::Knots() const
 {
   if (!myIsDone)
@@ -808,12 +649,6 @@ const occ::handle<NCollection_HArray1<double>>& AppDef_Variational::Knots() cons
   return myKnots;
 }
 
-//
-//=======================================================================
-// function : Criterium
-// purpose  : returns the values of the quality criterium.
-//=======================================================================
-//
 void AppDef_Variational::Criterium(double& VFirstOrder,
                                    double& VSecondOrder,
                                    double& VThirdOrder) const
@@ -825,13 +660,6 @@ void AppDef_Variational::Criterium(double& VFirstOrder,
   VThirdOrder  = myCriterium[3];
 }
 
-//
-//=======================================================================
-// function : CriteriumWeight
-// purpose  : returns the Weights (as percent) associed  to the criterium used in
-//           the  optimization.
-//=======================================================================
-//
 void AppDef_Variational::CriteriumWeight(double& Percent1, double& Percent2, double& Percent3) const
 {
   Percent1 = myPercent[0];
@@ -839,91 +667,41 @@ void AppDef_Variational::CriteriumWeight(double& Percent1, double& Percent2, dou
   Percent3 = myPercent[2];
 }
 
-//
-//=======================================================================
-// function : MaxDegree
-// purpose  : returns the Maximum Degree used in the approximation
-//=======================================================================
-//
 int AppDef_Variational::MaxDegree() const
 {
   return myMaxDegree;
 }
 
-//
-//=======================================================================
-// function : MaxSegment
-// purpose  : returns the Maximum of segment used in the approximation
-//=======================================================================
-//
 int AppDef_Variational::MaxSegment() const
 {
   return myMaxSegment;
 }
 
-//
-//=======================================================================
-// function : Continuity
-// purpose  : returns the Continuity used in the approximation
-//=======================================================================
-//
 GeomAbs_Shape AppDef_Variational::Continuity() const
 {
   return myContinuity;
 }
 
-//
-//=======================================================================
-// function : WithMinMax
-// purpose  : returns if the  approximation  search to  minimize the
-//           maximum Error or not.
-//=======================================================================
-//
 bool AppDef_Variational::WithMinMax() const
 {
   return myWithMinMax;
 }
 
-//
-//=======================================================================
-// function : WithCutting
-// purpose  :  returns if the  approximation can insert new Knots or not.
-//=======================================================================
-//
 bool AppDef_Variational::WithCutting() const
 {
   return myWithCutting;
 }
 
-//
-//=======================================================================
-// function : Tolerance
-// purpose  : returns the tolerance used in the approximation.
-//=======================================================================
-//
 double AppDef_Variational::Tolerance() const
 {
   return myTolerance;
 }
 
-//
-//=======================================================================
-// function : NbIterations
-// purpose  : returns the number of iterations used in the approximation.
-//=======================================================================
-//
 int AppDef_Variational::NbIterations() const
 {
   return myNbIterations;
 }
 
-//
-//=======================================================================
-// function : Dump
-// purpose  : Prints on the stream o information on the current state
-//           of the object.
-//=======================================================================
-//
 void AppDef_Variational::Dump(Standard_OStream& o) const
 {
   o << " \nVariational Smoothing " << std::endl;
@@ -970,13 +748,6 @@ void AppDef_Variational::Dump(Standard_OStream& o) const
   }
 }
 
-//=======================================================================
-// function : SetConstraints
-// purpose  : Define the constraints to approximate
-//           If this value is incompatible with the others fields
-//           this method modify nothing and returns false
-//=======================================================================
-//
 bool AppDef_Variational::SetConstraints(
   const occ::handle<NCollection_HArray1<AppParCurves_ConstraintCouple>>& aConstraint)
 
@@ -986,39 +757,17 @@ bool AppDef_Variational::SetConstraints(
   return !myIsOverConstr;
 }
 
-//
-//=======================================================================
-// function : SetParameters
-// purpose  : Defines the parameters used by the approximations.
-//=======================================================================
-//
 void AppDef_Variational::SetParameters(const occ::handle<NCollection_HArray1<double>>& param)
 {
   myParameters->ChangeArray1() = param->Array1();
 }
 
-//
-//=======================================================================
-// function : SetKnots
-// purpose  : Defines the knots used by the approximations
-//    --          If this value is incompatible with the others fields
-//    --          this method modify nothing and returns false
-//=======================================================================
-//
 bool AppDef_Variational::SetKnots(const occ::handle<NCollection_HArray1<double>>& knots)
 {
   myKnots->ChangeArray1() = knots->Array1();
   return true;
 }
 
-//
-//=======================================================================
-// function : SetMaxDegree
-// purpose  : Define the Maximum Degree used in the approximation
-//           If this value is incompatible with the others fields
-//           this method modify nothing and returns false
-//=======================================================================
-//
 bool AppDef_Variational::SetMaxDegree(const int Degree)
 {
   if (((Degree - myNivCont) * myMaxSegment - myNbPassPoints - 2 * myNbTangPoints
@@ -1035,14 +784,6 @@ bool AppDef_Variational::SetMaxDegree(const int Degree)
   }
 }
 
-//
-//=======================================================================
-// function : SetMaxSegment
-// purpose  : Define the maximum number of segments used in the approximation
-//           If this value is incompatible with the others fields
-//           this method modify nothing and returns false
-//=======================================================================
-//
 bool AppDef_Variational::SetMaxSegment(const int NbSegment)
 {
   if (myWithCutting
@@ -1057,14 +798,6 @@ bool AppDef_Variational::SetMaxSegment(const int NbSegment)
   }
 }
 
-//
-//=======================================================================
-// function : SetContinuity
-// purpose  : Define the Continuity used in the approximation
-//           If this value is incompatible with the others fields
-//           this method modify nothing and returns false
-//=======================================================================
-//
 bool AppDef_Variational::SetContinuity(const GeomAbs_Shape C)
 {
   int NivCont = 0;
@@ -1096,13 +829,6 @@ bool AppDef_Variational::SetContinuity(const GeomAbs_Shape C)
   }
 }
 
-//
-//=======================================================================
-// function : SetWithMinMax
-// purpose  : Define if the  approximation  search to  minimize the
-//           maximum Error or not.
-//=======================================================================
-//
 void AppDef_Variational::SetWithMinMax(const bool MinMax)
 {
   myWithMinMax = MinMax;
@@ -1110,14 +836,6 @@ void AppDef_Variational::SetWithMinMax(const bool MinMax)
   InitSmoothCriterion();
 }
 
-//
-//=======================================================================
-// function : SetWithCutting
-// purpose  : Define if the  approximation can insert new Knots or not.
-//           If this value is incompatible with the others fields
-//           this method modify nothing and returns false
-//=======================================================================
-//
 bool AppDef_Variational::SetWithCutting(const bool Cutting)
 {
   if (!Cutting)
@@ -1150,13 +868,6 @@ bool AppDef_Variational::SetWithCutting(const bool Cutting)
   }
 }
 
-//
-//=======================================================================
-// function : SetCriteriumWeight
-// purpose  : define the Weights (as percent) associed to the criterium used in
-//           the  optimization.
-//=======================================================================
-//
 void AppDef_Variational::SetCriteriumWeight(const double Percent1,
                                             const double Percent2,
                                             const double Percent3)
@@ -1171,14 +882,6 @@ void AppDef_Variational::SetCriteriumWeight(const double Percent1,
   InitSmoothCriterion();
 }
 
-//
-//=======================================================================
-// function : SetCriteriumWeight
-// purpose  :  define the  Weight   (as  percent)  associed  to   the
-//            criterium   Order used in   the optimization  : Others
-//            weights are updated.
-//=======================================================================
-//
 void AppDef_Variational::SetCriteriumWeight(const int Order, const double Percent)
 {
   if (Percent < 0)
@@ -1194,42 +897,24 @@ void AppDef_Variational::SetCriteriumWeight(const int Order, const double Percen
   InitSmoothCriterion();
 }
 
-//
-//=======================================================================
-// function : SetTolerance
-// purpose  : define the tolerance used in the approximation.
-//=======================================================================
-//
 void AppDef_Variational::SetTolerance(const double Tol)
 {
   myTolerance = Tol;
   InitSmoothCriterion();
 }
 
-//
-//=======================================================================
-// function : SetNbIterations
-// purpose  : define the number of iterations used in the approximation.
-//=======================================================================
-//
 void AppDef_Variational::SetNbIterations(const int Iter)
 {
   myNbIterations = Iter;
 }
 
-//====================== Private Methodes =============================//
-//=======================================================================
-// function : TheMotor
-// purpose  : Smoothing's motor like STRIM routine "MOTLIS"
-//=======================================================================
 void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
-                                  //			 const double WQuadratic,
+
                                   const double,
                                   const double                WQuality,
                                   occ::handle<FEmTool_Curve>& TheCurve,
                                   NCollection_Array1<double>& Ecarts)
 {
-  // ...
 
   const double BigValue = 1.e37, SmallValue = 1.e-6, SmallestValue = 1.e-9;
 
@@ -1252,16 +937,14 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
   double J1min, J2min, J3min;
   int    iprog;
 
-  // (0) Init
-
   J->GetEstimation(e1, e2, e3);
   J1min = 1.e-8;
   J2min = J3min = (e1 + 1.e-8) * 1.e-6;
 
   if (e1 < J1min)
-    e1 = J1min; // Like in
+    e1 = J1min;
   if (e2 < J2min)
-    e2 = J2min; // MOTLIS
+    e2 = J2min;
   if (e3 < J3min)
     e3 = J3min;
 
@@ -1279,12 +962,9 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
   J->SetCurve(CCurrent);
   FEmTool_Assembly* TheAssembly = new FEmTool_Assembly(Dependence->Array2(), J->AssemblyTable());
 
-  //============        Optimization      ============================
-  //  int inagain = 0;
   while (again)
   {
 
-    // (1) Loop  Optimization / Estimation
     lestim      = true;
     bool lconst = true;
     NbEst       = 0;
@@ -1294,7 +974,6 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
     while (lestim)
     {
 
-      //     (1.1) Curve's Optimization.
       EpsLength = SmallValue * CBLONG / NbrPnt;
       CNew      = new (
         FEmTool_Curve)(CCurrent->Dimension(), CCurrent->NbElements(), CCurrent->Base(), EpsLength);
@@ -1307,8 +986,6 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
 
       lconst = false;
 
-      //        (1.2) calculation of quality criteria and improvement
-      //              of estimation.
       ICDANA = J->QualityValues(J1min, J2min, J3min, VALCRI[0], VALCRI[1], VALCRI[2]);
 
       if (ICDANA > 0)
@@ -1317,9 +994,6 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
       J->ErrorValues(ERRMAX, ERRQUA, ERRMOY);
 
       isnear = ((std::sqrt(ERRQUA / NbrPnt) < 2 * WQuality) && (myNbIterations > 1));
-
-      //       (1.3) Optimization of ti by orthogonal projection
-      //             and calculation of the error at points.
 
       if (isnear)
       {
@@ -1337,7 +1011,6 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
       else
         NewTi = CurrentTi;
 
-      //        (1.4) Progression's test
       iprog = 0;
       if ((EROLD > WQuality) && (ERRMAX < 0.95 * EROLD))
         iprog++;
@@ -1367,7 +1040,7 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
 
       if (iprog < 2 && NbEst == 0)
       {
-        //             (1.5) Invalidation of new knots.
+
         VALCRI[0] = VOCRI[0];
         VALCRI[1] = VOCRI[1];
         VALCRI[2] = VOCRI[2];
@@ -1376,7 +1049,7 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
         CCurrent  = COld;
         CurrentTi = OldTi;
 
-        goto L8000; // exit
+        goto L8000;
       }
 
       VOCRI[0] = VALCRI[0];
@@ -1388,13 +1061,11 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
       CCurrent  = CNew;
       CurrentTi = NewTi;
 
-      //       (1.6) Test if the Estimations seems  OK, else repeat
       NbEst++;
       lestim = ((NbEst < MaxNbEst) && (ICDANA == 2) && (iprog > 0));
 
       if (lestim && isnear)
       {
-        //           (1.7) Optimization of ti by ACR.
 
         std::stable_sort(CurrentTi->begin(), CurrentTi->end());
 
@@ -1408,15 +1079,13 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
       }
     }
 
-    //     (2) loop of parametric / geometric optimization
-
     Iter    = 1;
     ToOptim = ((Iter < myNbIterations) && (isnear));
 
     while (ToOptim)
     {
       Iter++;
-      //     (2.1) Save current results
+
       VOCRI[0]              = VALCRI[0];
       VOCRI[1]              = VALCRI[1];
       VOCRI[2]              = VALCRI[2];
@@ -1424,8 +1093,6 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
       LNOLD                 = CBLONG;
       COld                  = CCurrent;
       OldTi->ChangeArray1() = CurrentTi->Array1();
-
-      //     (2.2) Optimization des ti by ACR.
 
       std::stable_sort(CurrentTi->begin(), CurrentTi->end());
 
@@ -1437,7 +1104,6 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
       ACR(CCurrent, CurrentTi->ChangeArray1(), Decima);
       lconst = true;
 
-      //      (2.3) Optimisation des courbes
       EpsLength = SmallValue * CBLONG / NbrPnt;
 
       CNew = new (
@@ -1451,15 +1117,11 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
 
       CCurrent = CNew;
 
-      //      (2.4) calculation of quality criteria and improvement
-      //             of estimation.
-
       ICDANA = J->QualityValues(J1min, J2min, J3min, VALCRI[0], VALCRI[1], VALCRI[2]);
       if (ICDANA > 0)
         lconst = true;
 
       J->GetEstimation(e1, e2, e3);
-      //       (2.5) Optimization of ti by orthogonal projection
 
       NewTi = new (NCollection_HArray1<double>)(1, CurrentTi->Length());
       Project(CCurrent,
@@ -1471,8 +1133,6 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
               ERRQUA,
               ERRMOY,
               2);
-
-      //       (2.6)  Test de non regression
 
       int iregre = 0;
       if (NbrConstraint < NbrPnt)
@@ -1495,8 +1155,7 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
 
       if (iregre >= 2)
       {
-        //      if (iregre >= 1) {
-        // (2.7) on restaure l'iteration precedente
+
         VALCRI[0]                 = VOCRI[0];
         VALCRI[1]                 = VOCRI[1];
         VALCRI[2]                 = VOCRI[2];
@@ -1507,7 +1166,7 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
         ToOptim                   = false;
       }
       else
-      { // Iteration is Ok.
+      {
         CCurrent  = CNew;
         CurrentTi = NewTi;
       }
@@ -1515,21 +1174,15 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
         ToOptim = false;
     }
 
-    // (3) Decoupe eventuelle
-
     if ((CCurrent->NbElements() < myMaxSegment) && myWithCutting)
     {
 
-      //    (3.1) Sauvgarde de l'etat precedent
       VOCRI[0]              = VALCRI[0];
       VOCRI[1]              = VALCRI[1];
       VOCRI[2]              = VALCRI[2];
       EROLD                 = ERRMAX;
       COld                  = CCurrent;
       OldTi->ChangeArray1() = CurrentTi->Array1();
-
-      //       (3.2) On arrange les ti : Trie + recadrage sur (0,1)
-      //         ---> On trie, afin d'assurer l'ordre par la suite.
 
       std::stable_sort(CurrentTi->begin(), CurrentTi->end());
 
@@ -1545,15 +1198,13 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
         CurrentTi->SetValue(NbrPnt, 1.);
       }
 
-      //       (3.3) Insert new Knots
-
       SplitCurve(CCurrent, CurrentTi->Array1(), EpsLength, CNew, iscut);
       if (!iscut)
         again = false;
       else
       {
         CCurrent = CNew;
-        // New Knots => New Assembly.
+
         J->SetCurve(CNew);
         delete TheAssembly;
         TheAssembly = new FEmTool_Assembly(Dependence->Array2(), J->AssemblyTable());
@@ -1565,11 +1216,8 @@ void AppDef_Variational::TheMotor(occ::handle<AppDef_SmoothCriterion>& J,
     }
   }
 
-  //    ================   Great loop end   ===================
-
 L8000:
 
-  // (4) Compute the best Error.
   NewTi = new (NCollection_HArray1<double>)(1, CurrentTi->Length());
   Project(CCurrent,
           CurrentTi->Array1(),
@@ -1580,8 +1228,6 @@ L8000:
           ERRQUA,
           ERRMOY,
           10);
-
-  // (5) field's update
 
   TheCurve                     = CCurrent;
   J->EstLength()               = CBLONG;
@@ -1600,10 +1246,6 @@ L8000:
   delete TheAssembly;
 }
 
-//=======================================================================
-// function : Optimization
-// purpose  :  (like FORTRAN subroutine MINIMI)
-//=======================================================================
 void AppDef_Variational::Optimization(occ::handle<AppDef_SmoothCriterion>& J,
                                       FEmTool_Assembly&                    A,
                                       const bool                           ToAssemble,
@@ -1625,7 +1267,6 @@ void AppDef_Variational::Optimization(occ::handle<AppDef_SmoothCriterion>& J,
 
   double CBLONG = J->EstLength();
 
-  // Updating Assembly
   if (ToAssemble)
     A.NullifyMatrix();
   A.NullifyVector();
@@ -1646,22 +1287,18 @@ void AppDef_Variational::Optimization(occ::handle<AppDef_SmoothCriterion>& J,
     }
   }
 
-  // Solution of system
   if (ToAssemble)
   {
     if (NbConstr != 0)
-    { // Treatment of constraints
+    {
       AssemblingConstraints(Curve, Parameters, CBLONG, A);
     }
     A.Solve();
   }
   A.Solution(Sol);
 
-  // Updating J
   J->SetCurve(Curve);
   J->InputVector(Sol, AssTable);
-
-  // Updating Curve and reduction of degree
 
   int    Newdeg;
   double MaxError;
@@ -1703,7 +1340,6 @@ void AppDef_Variational::Project(const occ::handle<FEmTool_Curve>& C,
                                  const int                         NbIterations) const
 
 {
-  // Initialisation
 
   const double Seuil = 1.e-9, Eps = 1.e-12;
 
@@ -1738,8 +1374,6 @@ void AppDef_Variational::Project(const occ::handle<FEmTool_Curve>& C,
     }
     Dist = std::sqrt(Dist);
 
-    // ------- Newton's method for solving (C'(t),C(t) - P) = 0
-
     while (EnCour)
     {
 
@@ -1755,22 +1389,20 @@ void AppDef_Variational::Project(const occ::handle<FEmTool_Curve>& C,
       {
         Aux = ValOfC(i) - myTabPoints->Value(i0 + i);
         DF  = FirstDerOfC(i);
-        F1 += Aux * DF;                       // (C'(t),C(t) - P)
-        F2 += DF * DF + Aux * SecndDerOfC(i); // ((C'(t),C(t) - P))'
+        F1 += Aux * DF;
+        F2 += DF * DF + Aux * SecndDerOfC(i);
       }
 
       if (std::abs(F2) < Eps)
         EnCour = false;
       else
       {
-        // Formula of Newton x(k+1) = x(k) - F(x(k))/F'(x(k))
+
         TNew -= F1 / F2;
         if (TNew < 0.)
           TNew = 0.;
         if (TNew > 1.)
           TNew = 1.;
-
-        // Analysis of result
 
         C->D0(TNew, ValOfC);
 
@@ -1786,13 +1418,13 @@ void AppDef_Variational::Project(const occ::handle<FEmTool_Curve>& C,
 
         if (Ecart <= -Seuil)
         {
-          // Pas d'amelioration on s'arrete
+
           EnCour = false;
           TNew   = T0;
           Dist   = Dist0;
         }
         else if (Ecart <= Seuil)
-          // Convergence
+
           NItCv++;
         else
           NItCv = 0;
@@ -1813,9 +1445,7 @@ void AppDef_Variational::Project(const occ::handle<FEmTool_Curve>& C,
     AveErr += Dist;
   }
 
-  // clang-format off
-  NumPoints = NumPoints + myFirstPoint - 1;// Setting NumPoints to interval [myFirstPoint, myLastPoint]
-  // clang-format on
+  NumPoints = NumPoints + myFirstPoint - 1;
 }
 
 void AppDef_Variational::ACR(occ::handle<FEmTool_Curve>& Curve,
@@ -1833,16 +1463,11 @@ void AppDef_Variational::ACR(occ::handle<FEmTool_Curve>& Curve,
   int    ipnt, ii, IElm, IOld, POld, PCnt, ICnt = 0;
   int    NbCntr = myNbPassPoints + myNbTangPoints + myNbCurvPoints;
 
-  //     (1) Calcul de la longueur de courbe
-
   Curve->Length(Ti(TiFirst), Ti(TiLast), CbLong);
-
-  //     (2)  Mise de l'acr dans Ti
 
   if (NbrPnt >= 2)
   {
 
-    //     (2.0) Initialisation
     DeltaT = (Ti(TiLast) - Ti(TiFirst)) / Decima;
     VTest  = Ti(TiFirst) + DeltaT;
 
@@ -1883,7 +1508,7 @@ void AppDef_Variational::ACR(occ::handle<FEmTool_Curve>& Curve,
           ipnt  = TiLast;
           TPara = Ti(ipnt);
         }
-        //        (2.2), (2.3) Cacul la longueur de courbe
+
         Curve->Length(Ti(TiFirst), TPara, UNew);
 
         UNew /= CbLong;
@@ -1891,7 +1516,6 @@ void AppDef_Variational::ACR(occ::handle<FEmTool_Curve>& Curve,
         while (Knots(IElm + 1) < TPara && IElm < KLast - 1)
           IElm++;
 
-        //         (2.4) Mise a jours des parametres de decoupe
         DTInv = 1. / (TPara - TOld);
         DU    = UNew - UOld;
 
@@ -1901,9 +1525,6 @@ void AppDef_Variational::ACR(occ::handle<FEmTool_Curve>& Curve,
           Knots(ii) = UOld + Ratio * DU;
         }
 
-        //           (2.5) Mise a jours des parametres de points.
-
-        // Very strange loop, because it never works (POld+1 > ipnt-1)
         for (ii = POld + 1; ii <= ipnt - 1; ii++)
         {
           Ratio  = (Ti(ii) - TOld) * DTInv;
@@ -1917,20 +1538,16 @@ void AppDef_Variational::ACR(occ::handle<FEmTool_Curve>& Curve,
         TOld = TPara;
         POld = ipnt;
       }
-      //        --> Nouveau seuil parametrique pour le decimage
 
       if (TPara >= VTest)
       {
-        //	ii = RealToInt((TPara - VTest + Eps) / DeltaT);
-        //	VTest += (ii + 1) * DeltaT;
+
         VTest += std::ceil((TPara - VTest + Eps) / DeltaT) * DeltaT;
         if (VTest > 1. - Eps)
           VTest = 1.;
       }
     }
   }
-
-  //     --- On ajuste les valeurs extremes
 
   Ti(TiFirst) = 0.;
   Ti(TiLast)  = 1.;
@@ -1943,12 +1560,6 @@ void AppDef_Variational::ACR(occ::handle<FEmTool_Curve>& Curve,
   Knots(KFirst) = 0.;
   Knots(KLast)  = 1.;
 }
-
-//----------------------------------------------------------//
-// int NearIndex                               //
-// Purpose: searching nearest index of TabPar corresponding //
-// given value T (is similar to fortran routine MSRRE2)     //
-//----------------------------------------------------------//
 
 static int NearIndex(const double                      T,
                      const NCollection_Array1<double>& TabPar,
@@ -1987,12 +1598,6 @@ static int NearIndex(const double                      T,
   return Ibeg;
 }
 
-//----------------------------------------------------------//
-// void GettingKnots                                        //
-// Purpose: calculating values of new Knots for elements    //
-// with degree that is equal Deg                            //
-//----------------------------------------------------------//
-
 static void GettingKnots(const NCollection_Array1<double>& TabPar,
                          const occ::handle<FEmTool_Curve>& InCurve,
                          const int                         Deg,
@@ -2014,7 +1619,7 @@ static void GettingKnots(const NCollection_Array1<double>& TabPar,
 
     el++;
     i0++;
-    i1++; // i0, i1 are indexes of left and right knots of element el
+    i1++;
 
     if (InCurve->Degree(el) == Deg)
     {
@@ -2093,15 +1698,10 @@ void AppDef_Variational::SplitCurve(const occ::handle<FEmTool_Curve>& InCurve,
     iscut = false;
 }
 
-//=======================================================================
-// function : InitSmoothCriterion
-// purpose  : Initializes the SmoothCriterion
-//=======================================================================
 void AppDef_Variational::InitSmoothCriterion()
 {
 
   const double Eps2 = 1.e-6, Eps3 = 1.e-9;
-  //  const double J1 = .01, J2 = .001, J3 = .001;
 
   double Length;
 
@@ -2112,13 +1712,7 @@ void AppDef_Variational::InitSmoothCriterion()
   double E1, E2, E3;
 
   InitCriterionEstimations(Length, E1, E2, E3);
-  /*
-  J1 = 1.e-8; J2 = J3 = (E1 + 1.e-8) * 1.e-6;
 
-  if(E1 < J1) E1 = J1;
-  if(E2 < J2) E2 = J2;
-  if(E3 < J3) E3 = J3;
-  */
   mySmoothCriterion->EstLength() = Length;
   mySmoothCriterion->SetEstimation(E1, E2, E3);
 
@@ -2146,7 +1740,6 @@ void AppDef_Variational::InitSmoothCriterion()
   int                        NbElem;
   double                     CurvTol = Eps2 * Length / myNbPoints;
 
-  // Decoupe de l'intervalle en fonction des contraintes
   if (myWithCutting && NbConstr != 0)
   {
 
@@ -2166,13 +1759,6 @@ void AppDef_Variational::InitSmoothCriterion()
   return;
 }
 
-//
-//=======================================================================
-// function : InitParameters
-// purpose  : Calculation of initial estimation of the multicurve's length
-//           and parameters for multipoints.
-//=======================================================================
-//
 void AppDef_Variational::InitParameters(double& Length)
 {
 
@@ -2206,18 +1792,10 @@ void AppDef_Variational::InitParameters(double& Length)
 
   myParameters->SetValue(myLastPoint, 1.);
 
-  // Avec peu de point il y a sans doute sous estimation ...
   if (myNbPoints < 10)
     Length *= (1. + 0.1 / (myNbPoints - 1));
 }
 
-//
-//=======================================================================
-// function : InitCriterionEstimations
-// purpose  : Calculation of initial estimation of the linear criteria
-//
-//=======================================================================
-//
 void AppDef_Variational::InitCriterionEstimations(const double Length,
                                                   double&      E1,
                                                   double&      E2,
@@ -2229,8 +1807,6 @@ void AppDef_Variational::InitCriterionEstimations(const double Length,
 
   math_Vector VTang1(1, myDimension), VTang2(1, myDimension), VTang3(1, myDimension),
     VScnd1(1, myDimension), VScnd2(1, myDimension), VScnd3(1, myDimension);
-
-  // ========== Treatment of first point =================
 
   int ipnt = myFirstPoint;
 
@@ -2245,11 +1821,8 @@ void AppDef_Variational::InitCriterionEstimations(const double Length,
   ipnt++;
   EstSecnd(ipnt, VTang1, VTang3, Length, VScnd2);
 
-  //  Modified by skv - Fri Apr  8 14:58:12 2005 OCC8559 Begin
-  //   double Delta = .5 * (myParameters->Value(ipnt) - myParameters->Value(--ipnt));
   int    anInd = ipnt;
   double Delta = .5 * (myParameters->Value(anInd) - myParameters->Value(--ipnt));
-  //  Modified by skv - Fri Apr  8 14:58:12 2005 OCC8559 End
 
   if (Delta <= Eps1)
     Delta = 1.;
@@ -2257,7 +1830,6 @@ void AppDef_Variational::InitCriterionEstimations(const double Length,
   E2 = VScnd1.Norm2() * Delta;
 
   E3 = (Delta > Eps1) ? VScnd2.Subtracted(VScnd1).Norm2() / (4. * Delta) : 0.;
-  // ========== Treatment of internal points =================
 
   int CurrPoint = 2;
 
@@ -2311,8 +1883,6 @@ void AppDef_Variational::InitCriterionEstimations(const double Length,
       CurrPoint = 1;
   }
 
-  // ========== Treatment of last point =================
-
   Delta = .5 * (myParameters->Value(myLastPoint) - myParameters->Value(myLastPoint - 1));
   if (Delta <= Eps1)
     Delta = 1.;
@@ -2347,14 +1917,6 @@ void AppDef_Variational::InitCriterionEstimations(const double Length,
   E3 *= aux;
 }
 
-//
-//=======================================================================
-// function : EstTangent
-// purpose  : Calculation of  estimation of the Tangent
-//           (see fortran routine MMLIPRI)
-//=======================================================================
-//
-
 void AppDef_Variational::EstTangent(const int ipnt, math_Vector& VTang) const
 
 {
@@ -2366,7 +1928,7 @@ void AppDef_Variational::EstTangent(const int ipnt, math_Vector& VTang) const
 
   if (ipnt == myFirstPoint)
   {
-    // Estimation at first point
+
     if (myNbPoints < 3)
       Wpnt = 0.;
     else
@@ -2378,10 +1940,6 @@ void AppDef_Variational::EstTangent(const int ipnt, math_Vector& VTang) const
       math_Vector Pnt2((double*)&myTabPoints->Value(adr2), 1, myDimension);
       math_Vector Pnt3((double*)&myTabPoints->Value(adr3), 1, myDimension);
 
-      // Parabolic interpolation
-      // if we have parabolic interpolation: F(t) = A0 + A1*t + A2*t*t,
-      // first derivative for t=0 is A1 = ((d2-1)*P1 + P2 - d2*P3)/(d*(1-d))
-      //       d= |P2-P1|/(|P2-P1|+|P3-P2|), d2 = d*d
       double V1 = Pnt2.Subtracted(Pnt1).Norm();
       double V2 = 0.;
       if (V1 > Eps1)
@@ -2395,7 +1953,6 @@ void AppDef_Variational::EstTangent(const int ipnt, math_Vector& VTang) const
       }
       else
       {
-        // Simple 2-point estimation
 
         VTang = Pnt2 - Pnt1;
       }
@@ -2403,7 +1960,7 @@ void AppDef_Variational::EstTangent(const int ipnt, math_Vector& VTang) const
   }
   else if (ipnt == myLastPoint)
   {
-    // Estimation at last point
+
     if (myNbPoints < 3)
       Wpnt = 0.;
     else
@@ -2416,10 +1973,6 @@ void AppDef_Variational::EstTangent(const int ipnt, math_Vector& VTang) const
       math_Vector Pnt2((double*)&myTabPoints->Value(adr2), 1, myDimension);
       math_Vector Pnt3((double*)&myTabPoints->Value(adr3), 1, myDimension);
 
-      // Parabolic interpolation
-      // if we have parabolic interpolation: F(t) = A0 + A1*t + A2*t*t,
-      // first derivative for t=1 is 2*A2 + A1 = ((d2+1)*P1 - P2 - d2*P3)/(d*(1-d))
-      //       d= |P2-P1|/(|P2-P1|+|P3-P2|), d2 = d*(d-2)
       double V1 = Pnt2.Subtracted(Pnt1).Norm();
       double V2 = 0.;
       if (V1 > Eps1)
@@ -2433,7 +1986,6 @@ void AppDef_Variational::EstTangent(const int ipnt, math_Vector& VTang) const
       }
       else
       {
-        // Simple 2-point estimation
 
         VTang = Pnt3 - Pnt2;
       }
@@ -2457,12 +2009,8 @@ void AppDef_Variational::EstTangent(const int ipnt, math_Vector& VTang) const
   else
     VTang /= Vnorm;
 
-  // Estimation with constraints
-
   double Wcnt  = 0.;
   int    IdCnt = 1;
-
-  // Warning!! Here it is suppoused that all points are in range [myFirstPoint, myLastPoint]
 
   int         NbConstr = myNbPassPoints + myNbTangPoints + myNbCurvPoints;
   math_Vector VCnt(1, myDimension, 0.);
@@ -2492,8 +2040,6 @@ void AppDef_Variational::EstTangent(const int ipnt, math_Vector& VTang) const
     }
   }
 
-  // Averaging of estimation
-
   double Denom = Wpnt + Wcnt;
   if (Denom == 0.)
     Denom = 1.;
@@ -2510,13 +2056,6 @@ void AppDef_Variational::EstTangent(const int ipnt, math_Vector& VTang) const
     VTang /= Vnorm;
 }
 
-//
-//=======================================================================
-// function : EstSecnd
-// purpose  : Calculation of  estimation of the second derivative
-//           (see fortran routine MLIMSCN)
-//=======================================================================
-//
 void AppDef_Variational::EstSecnd(const int          ipnt,
                                   const math_Vector& VTang1,
                                   const math_Vector& VTang2,
@@ -2545,12 +2084,8 @@ void AppDef_Variational::EstSecnd(const int          ipnt,
 
   VScnd = (VTang2 - VTang1) * aux;
 
-  // Estimation with constraints
-
   double Wcnt  = 0.;
   int    IdCnt = 1;
-
-  // Warning!! Here it is suppoused that all points are in range [myFirstPoint, myLastPoint]
 
   int         NbConstr = myNbPassPoints + myNbTangPoints + myNbCurvPoints;
   math_Vector VCnt(1, myDimension, 0.);
@@ -2582,8 +2117,6 @@ void AppDef_Variational::EstSecnd(const int          ipnt,
     }
   }
 
-  // Averaging of estimation
-
   double Denom = Wpnt + Wcnt;
   if (Denom == 0.)
     Denom = 1.;
@@ -2593,19 +2126,11 @@ void AppDef_Variational::EstSecnd(const int          ipnt,
   VScnd = (Wpnt * VScnd + (Wcnt * Length) * VCnt) * Denom;
 }
 
-//
-//=======================================================================
-// function : InitCutting
-// purpose  : Realisation of curve's cutting a priory accordingly to
-//           constraints (see fortran routine MLICUT)
-//=======================================================================
-//
 void AppDef_Variational::InitCutting(const PLib_HermitJacobi&    aBase,
                                      const double                CurvTol,
                                      occ::handle<FEmTool_Curve>& aCurve) const
 {
 
-  // Definition of number of elements
   int ORCMx = -1, NCont = 0, i, kk, NbElem;
   int NbConstr = myNbPassPoints + myNbTangPoints + myNbCurvPoints;
 
@@ -2713,10 +2238,6 @@ void AppDef_Variational::InitCutting(const PLib_HermitJacobi&    aBase,
   }
 }
 
-//=======================================================================
-// function : Adjusting
-// purpose  : Smoothing's  adjusting like STRIM routine "MAJLIS"
-//=======================================================================
 void AppDef_Variational::Adjusting(occ::handle<AppDef_SmoothCriterion>& J,
                                    double&                              WQuadratic,
                                    double&                              WQuality,
@@ -2724,17 +2245,12 @@ void AppDef_Variational::Adjusting(occ::handle<AppDef_SmoothCriterion>& J,
                                    NCollection_Array1<double>&          Ecarts)
 {
 
-  //  std::cout << "=========== Adjusting =============" << std::endl;
-
-  /* Initialized data */
-
   const int    mxiter        = 2;
   const double eps1          = 1e-6;
   int          NbrPnt        = myLastPoint - myFirstPoint + 1;
   int          NbrConstraint = myNbPassPoints + myNbTangPoints + myNbCurvPoints;
   double       CurvTol       = eps1 * J->EstLength() / NbrPnt;
 
-  /* Local variables */
   int                                 iter, ipnt;
   double                              ecart, emold, erold, tpara;
   double                              vocri[4], j1cibl, vtest, vseuil;
@@ -2745,13 +2261,9 @@ void AppDef_Variational::Adjusting(occ::handle<AppDef_SmoothCriterion>& J,
   occ::handle<FEmTool_Curve>          CNew;
   double                              E1, E2, E3;
 
-  /* (0.b) Initialisations */
-
   loptim = true;
   iter   = 0;
   tbpoid.Init(1.);
-
-  /* ============   boucle sur le moteur de lissage  ============== */
 
   vtest  = WQuality * .9;
   j1cibl = std::sqrt(myCriterium[0] / (NbrPnt - NbrConstraint));
@@ -2761,8 +2273,6 @@ void AppDef_Variational::Adjusting(occ::handle<AppDef_SmoothCriterion>& J,
 
     ++iter;
 
-    /*     (1) Sauvegarde de l'etat precedents */
-
     vocri[0] = myCriterium[0];
     vocri[1] = myCriterium[1];
     vocri[2] = myCriterium[2];
@@ -2770,14 +2280,10 @@ void AppDef_Variational::Adjusting(occ::handle<AppDef_SmoothCriterion>& J,
     erold    = myMaxError;
     emold    = myAverageError;
 
-    /*     (2) Augmentation du poids des moindre carre */
-
     if (j1cibl > vtest)
     {
       WQuadratic = j1cibl / vtest * WQuadratic;
     }
-
-    /*     (3) Augmentation du poid associe aux points a problemes */
 
     vseuil = WQuality * .88;
 
@@ -2789,8 +2295,6 @@ void AppDef_Variational::Adjusting(occ::handle<AppDef_SmoothCriterion>& J,
         tbpoid(ipnt) = (ecart * 3 + 1.) * tbpoid(ipnt);
       }
     }
-
-    /*     (4) Decoupe force */
 
     if (TheCurve->NbElements() < myMaxSegment && myWithCutting)
     {
@@ -2834,11 +2338,7 @@ void AppDef_Variational::Adjusting(occ::handle<AppDef_SmoothCriterion>& J,
 
     JNew->SetCurve(CNew);
 
-    /*     (5) Relissage */
-
     TheMotor(JNew, WQuadratic, WQuality, CNew, Ecarts);
-
-    /*     (6) Tests de rejet */
 
     j1cibl = std::sqrt(myCriterium[0] / (NbrPnt - NbrConstraint));
     vseuil = std::sqrt(vocri[1]) + (erold - myMaxError) * 4;
@@ -2863,8 +2363,6 @@ void AppDef_Variational::Adjusting(occ::handle<AppDef_SmoothCriterion>& J,
       TheCurve = CNew;
       J->SetCurve(TheCurve);
     }
-
-    /*     (7) Test de convergence */
 
     if (((iter >= mxiter) && (myMaxSegment == CNew->NbElements())) || myMaxError < WQuality)
     {
@@ -2903,12 +2401,10 @@ void AppDef_Variational::AssemblingConstraints(const occ::handle<FEmTool_Curve>&
     Ntheta     = 6 * myNbP3d + 2 * myNbP2d;
   int NbConstr = myNbPassPoints + myNbTangPoints + myNbCurvPoints;
 
-  //  Ng3d = 3 * NbConstr + 2 * myNbTangPoints + 5 * myNbCurvPoints;
-  //  Ng2d = 2 * NbConstr + 1 * myNbTangPoints + 3 * myNbCurvPoints;
   Ng3d   = 3 * NbConstr + 3 * myNbTangPoints + 5 * myNbCurvPoints;
   Ng2d   = 2 * NbConstr + 2 * myNbTangPoints + 3 * myNbCurvPoints;
   NBeg2d = Ng3d * myNbP3d;
-  //  NgPC1 = NbConstr + myNbCurvPoints;
+
   NgPC1   = NbConstr + myNbTangPoints + myNbCurvPoints;
   NPass   = 0;
   NTang3d = 3 * NgPC1;
@@ -3035,31 +2531,6 @@ void AppDef_Variational::AssemblingConstraints(const occ::handle<FEmTool_Curve>&
       n0 += Ng2d;
     }
 
-    /*    if(TypOfConstr == 1) {
-
-    IndexOfConstraint = NTang3d + 1;
-    jt = Ntheta * (i - 1);
-    for(pnt = 1; pnt <= myNbP3d; pnt++) {
-    for(k = 1; k <= 3; k++) {
-    A.AddConstraint(IndexOfConstraint, curel, k, myTtheta->Value(jt + k) *  V1, 0.);
-    A.AddConstraint(IndexOfConstraint + 1, curel, k, myTtheta->Value(jt + 3 + k) *  V1, 0.);
-    }
-    IndexOfConstraint += Ng3d;
-    jt += 6;
-    }
-
-    IndexOfConstraint = NBeg2d + NTang2d + 1;
-    for(pnt = 1; pnt <= myNbP2d; pnt++) {
-    for(k = 1; k <= 2; k++) {
-    A.AddConstraint(IndexOfConstraint, curel, k, myTtheta->Value(jt + k) * V1, 0.);
-    }
-    IndexOfConstraint += Ng2d;
-    jt += 2;
-    }
-
-    NTang3d += 2;
-    NTang2d += 1;
-    } */
     if (TypOfConstr == 1)
     {
 
@@ -3247,7 +2718,6 @@ bool AppDef_Variational::InitTthetaF(const int                     ndimen,
       myTtheta->SetValue(begin + 5, theta2.Z());
     }
 
-    // Calculation of myTfthet
     if (typcon == AppParCurves_CurvaturePoint)
     {
       XX = std::pow(T.X(), 2);

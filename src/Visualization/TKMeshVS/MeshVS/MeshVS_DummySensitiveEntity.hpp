@@ -5,10 +5,6 @@
 #include <Select3D_SensitiveEntity.hpp>
 #include <SelectBasics_SelectingVolumeManager.hpp>
 
-//! This class allows to create owners to all elements or nodes,
-//! both hidden and shown, but these owners user cannot select "by hands"
-//! in viewer. They means for internal application tasks, for example, receiving
-//! all owners, both for hidden and shown entities.
 class MeshVS_DummySensitiveEntity : public Select3D_SensitiveEntity
 {
 public:

@@ -9,7 +9,6 @@ class StepRepr_MechanicalDesignAndDraughtingRelationship
     : public StepRepr_RepresentationRelationship
 {
 public:
-  //! Returns a MechanicalDesignAndDraughtingRelationship
   Standard_EXPORT StepRepr_MechanicalDesignAndDraughtingRelationship();
 
   DEFINE_STANDARD_RTTIEXT(StepRepr_MechanicalDesignAndDraughtingRelationship,

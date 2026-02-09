@@ -9,10 +9,6 @@
 class StepGeom_SphericalSurface;
 class Geom_SphericalSurface;
 
-//! This class implements the mapping between class
-//! SphericalSurface from Geom and the class
-//! SphericalSurface from StepGeom which describes a
-//! spherical_surface from Prostep
 class GeomToStep_MakeSphericalSurface : public GeomToStep_Root
 {
 public:

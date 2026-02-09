@@ -1,19 +1,6 @@
-// Copyright (c) 2018 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Graphic3d_FrameStatsData.hpp>
-
-//=================================================================================================
 
 Graphic3d_FrameStatsData::Graphic3d_FrameStatsData()
     : myFps(-1.0),
@@ -28,13 +15,9 @@ Graphic3d_FrameStatsData::Graphic3d_FrameStatsData()
   Reset();
 }
 
-//=================================================================================================
-
 Graphic3d_FrameStatsData::Graphic3d_FrameStatsData(const Graphic3d_FrameStatsData& theOther)
 
   = default;
-
-//=================================================================================================
 
 Graphic3d_FrameStatsData::Graphic3d_FrameStatsData(Graphic3d_FrameStatsData&& theOther) noexcept
     : myCounters(std::move(theOther.myCounters)),
@@ -48,10 +31,6 @@ Graphic3d_FrameStatsData::Graphic3d_FrameStatsData(Graphic3d_FrameStatsData&& th
 {
 }
 
-// =======================================================================
-// function : operator=
-// purpose  :
-// =======================================================================
 Graphic3d_FrameStatsData& Graphic3d_FrameStatsData::operator=(
   const Graphic3d_FrameStatsData& theOther)
 {
@@ -70,10 +49,6 @@ Graphic3d_FrameStatsData& Graphic3d_FrameStatsData::operator=(
   return *this;
 }
 
-// =======================================================================
-// function : operator=
-// purpose  :
-// =======================================================================
 Graphic3d_FrameStatsData& Graphic3d_FrameStatsData::operator=(
   Graphic3d_FrameStatsData&& theOther) noexcept
 {
@@ -92,8 +67,6 @@ Graphic3d_FrameStatsData& Graphic3d_FrameStatsData::operator=(
   return *this;
 }
 
-//=================================================================================================
-
 void Graphic3d_FrameStatsData::Reset()
 {
   myFps             = -1.0;
@@ -105,8 +78,6 @@ void Graphic3d_FrameStatsData::Reset()
   myTimersMin.assign(myTimersMin.size(), RealLast());
   myTimersMax.assign(myTimersMax.size(), 0.0);
 }
-
-//=================================================================================================
 
 void Graphic3d_FrameStatsData::FillMax(const Graphic3d_FrameStatsData& theOther)
 {
@@ -128,15 +99,11 @@ void Graphic3d_FrameStatsData::FillMax(const Graphic3d_FrameStatsData& theOther)
   }
 }
 
-//=================================================================================================
-
 Graphic3d_FrameStatsDataTmp::Graphic3d_FrameStatsDataTmp()
 {
   myOsdTimers.resize(Graphic3d_FrameStatsTimer_NB, OSD_Timer(true));
   myTimersPrev.resize(Graphic3d_FrameStatsTimer_NB, 0.0);
 }
-
-//=================================================================================================
 
 void Graphic3d_FrameStatsDataTmp::FlushTimers(size_t theNbFrames, bool theIsFinal)
 {
@@ -157,8 +124,6 @@ void Graphic3d_FrameStatsDataTmp::FlushTimers(size_t theNbFrames, bool theIsFina
     }
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_FrameStatsDataTmp::Reset()
 {

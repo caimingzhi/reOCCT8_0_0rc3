@@ -1,8 +1,6 @@
 #include <BRepTest.hpp>
 #include <DBRep.hpp>
 
-//=================================================================================================
-
 void BRepTest::AllCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
@@ -28,12 +26,11 @@ void BRepTest::AllCommands(Draw_Interpretor& theCommands)
   BRepTest::OtherCommands(theCommands);
   BRepTest::ExtremaCommands(theCommands);
   BRepTest::CheckCommands(theCommands);
-  //  BRepTest::PlacementCommands(theCommands) ;
+
   BRepTest::ProjectionCommands(theCommands);
   BRepTest::HistoryCommands(theCommands);
   BRepTest::HelixCommands(theCommands);
 
-  // define the TCL variable Draw_TOPOLOGY
   const char* com = "set Draw_TOPOLOGY 1";
   theCommands.Eval(com);
 }

@@ -2,8 +2,6 @@
 
 #include <cstdio>
 
-//=================================================================================================
-
 void IntPolyh_Point::Middle(const occ::handle<Adaptor3d_Surface>& MySurface,
                             const IntPolyh_Point&                 Point1,
                             const IntPolyh_Point&                 Point2)
@@ -18,12 +16,10 @@ void IntPolyh_Point::Middle(const occ::handle<Adaptor3d_Surface>& MySurface,
   myZ = PtXYZ.Z();
 }
 
-//=================================================================================================
-
 IntPolyh_Point IntPolyh_Point::Add(const IntPolyh_Point& P1) const
 {
   IntPolyh_Point res;
-  //
+
   res.SetX(myX + P1.X());
   res.SetY(myY + P1.Y());
   res.SetZ(myZ + P1.Z());
@@ -32,12 +28,10 @@ IntPolyh_Point IntPolyh_Point::Add(const IntPolyh_Point& P1) const
   return res;
 }
 
-//=================================================================================================
-
 IntPolyh_Point IntPolyh_Point::Sub(const IntPolyh_Point& P1) const
 {
   IntPolyh_Point res;
-  //
+
   res.SetX(myX - P1.X());
   res.SetY(myY - P1.Y());
   res.SetZ(myZ - P1.Z());
@@ -46,12 +40,10 @@ IntPolyh_Point IntPolyh_Point::Sub(const IntPolyh_Point& P1) const
   return res;
 }
 
-//=================================================================================================
-
 IntPolyh_Point IntPolyh_Point::Divide(const double RR) const
 {
   IntPolyh_Point res;
-  //
+
   if (std::abs(RR) > 10.0e-20)
   {
     res.SetX(myX / RR);
@@ -67,12 +59,10 @@ IntPolyh_Point IntPolyh_Point::Divide(const double RR) const
   return res;
 }
 
-//=================================================================================================
-
 IntPolyh_Point IntPolyh_Point::Multiplication(const double RR) const
 {
   IntPolyh_Point res;
-  //
+
   res.SetX(myX * RR);
   res.SetY(myY * RR);
   res.SetZ(myZ * RR);
@@ -81,15 +71,11 @@ IntPolyh_Point IntPolyh_Point::Multiplication(const double RR) const
   return res;
 }
 
-//=================================================================================================
-
 double IntPolyh_Point::SquareModulus() const
 {
   double res = myX * myX + myY * myY + myZ * myZ;
   return res;
 }
-
-//=================================================================================================
 
 double IntPolyh_Point::SquareDistance(const IntPolyh_Point& P2) const
 {
@@ -98,15 +84,11 @@ double IntPolyh_Point::SquareDistance(const IntPolyh_Point& P2) const
   return res;
 }
 
-//=================================================================================================
-
 double IntPolyh_Point::Dot(const IntPolyh_Point& b) const
 {
   double t = myX * b.myX + myY * b.myY + myZ * b.myZ;
   return t;
 }
-
-//=================================================================================================
 
 void IntPolyh_Point::Cross(const IntPolyh_Point& a, const IntPolyh_Point& b)
 {
@@ -115,14 +97,10 @@ void IntPolyh_Point::Cross(const IntPolyh_Point& a, const IntPolyh_Point& b)
   myZ = a.myX * b.myY - a.myY * b.myX;
 }
 
-//=================================================================================================
-
 void IntPolyh_Point::Dump() const
 {
   printf("\nPoint : x=%+8.3eg y=%+8.3eg z=%+8.3eg u=%+8.3eg v=%+8.3eg\n", myX, myY, myZ, myU, myV);
 }
-
-//=================================================================================================
 
 void IntPolyh_Point::Dump(const int i) const
 {

@@ -10,7 +10,6 @@ class StepBasic_Date : public Standard_Transient
 {
 
 public:
-  //! Returns a Date
   Standard_EXPORT StepBasic_Date();
 
   Standard_EXPORT void Init(const int aYearComponent);

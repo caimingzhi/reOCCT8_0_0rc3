@@ -15,65 +15,42 @@ class Media_CodecContext;
 class Media_FormatContext;
 class Media_Scaler;
 
-//! Player context.
 class Media_PlayerContext : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(Media_PlayerContext, Standard_Transient)
 public:
-  //! Dump first video frame.
-  //! @param[in] theSrcVideo  path to the video
-  //! @param[out] theMediaInfo  video description
   Standard_EXPORT static occ::handle<Media_Frame> DumpFirstFrame(
     const TCollection_AsciiString& theSrcVideo,
     TCollection_AsciiString&       theMediaInfo);
 
-  //! Dump first video frame.
-  //! @param[in] theSrcVideo  path to the video
-  //! @param[in] theOutImage  path to make a screenshot
-  //! @param[out] theMediaInfo  video description
-  //! @param[in] theMaxSize  when positive - downscales image to specified size
   Standard_EXPORT static bool DumpFirstFrame(const TCollection_AsciiString& theSrcVideo,
                                              const TCollection_AsciiString& theOutImage,
                                              TCollection_AsciiString&       theMediaInfo,
                                              int                            theMaxSize = 0);
 
 public:
-  //! Main constructor.
-  //! Note that Frame Queue is stored as pointer,
-  //! and it is expected that this context is stored as a class field of Frame Queue.
   Standard_EXPORT Media_PlayerContext(Media_IFrameQueue* theFrameQueue);
 
-  //! Destructor.
   Standard_EXPORT ~Media_PlayerContext() override;
 
 public:
-  //! Set new input for playback.
   Standard_EXPORT void SetInput(const TCollection_AsciiString& theInputPath, bool theToWait);
 
-  //! Return playback state.
   Standard_EXPORT void PlaybackState(bool& theIsPaused, double& theProgress, double& theDuration);
 
-  //! Pause/Pause playback depending on the current state.
   Standard_EXPORT void PlayPause(bool& theIsPaused, double& theProgress, double& theDuration);
 
-  //! Seek to specified position.
   Standard_EXPORT void Seek(double thePosSec);
 
-  //! Pause playback.
   Standard_EXPORT void Pause();
 
-  //! Resume playback.
   Standard_EXPORT void Resume();
 
-  //! Return TRUE if queue requires RGB pixel format or can handle also YUV pixel format; TRUE by
-  //! default.
   bool ToForceRgb() const { return myToForceRgb; }
 
-  //! Set if queue requires RGB pixel format or can handle also YUV pixel format.
   void SetForceRgb(bool theToForce) { myToForceRgb = theToForce; }
 
 private:
-  //! Internal enumeration for events.
   enum Media_PlayerEvent
   {
     Media_PlayerEvent_NONE = 0,
@@ -84,23 +61,18 @@ private:
   };
 
 private:
-  //! Thread loop.
   Standard_EXPORT void doThreadLoop();
 
-  //! Push new playback event.
   Standard_EXPORT void pushPlayEvent(Media_PlayerEvent thePlayEvent);
 
-  //! Fetch new playback event.
   Standard_EXPORT bool popPlayEvent(Media_PlayerEvent&                      thePlayEvent,
                                     const occ::handle<Media_FormatContext>& theFormatCtx,
                                     const occ::handle<Media_CodecContext>&  theVideoCtx,
                                     const occ::handle<Media_Frame>&         theFrame);
 
-  //! Decode new frame.
   bool receiveFrame(const occ::handle<Media_Frame>&        theFrame,
                     const occ::handle<Media_CodecContext>& theVideoCtx);
 
-  //! Thread creation callback.
   static void* doThreadWrapper(void* theData)
   {
     Media_PlayerContext* aThis = (Media_PlayerContext*)theData;
@@ -109,23 +81,22 @@ private:
   }
 
 private:
-  Media_IFrameQueue* myFrameQueue; //!< frame queue
-  OSD_Thread         myThread;     //!< working thread
-  std::mutex         myMutex;      //!< mutex for events
-                                   // clang-format off
-  Standard_Condition          myWakeEvent;      //!< event to wake up working thread and proceed new playback event
-  Standard_Condition          myNextEvent;      //!< event to check if working thread processed next file event (e.g. released file handles of previous input)
-  Media_Timer                 myTimer;          //!< playback timer       
-  double               myDuration;       //!< playback duration
+  Media_IFrameQueue* myFrameQueue;
+  OSD_Thread         myThread;
+  std::mutex         myMutex;
 
-  occ::handle<Media_BufferPool>    myBufferPools[4]; //!< per-plane pools
-  occ::handle<Media_Frame>         myFrameTmp;       //!< temporary object holding decoded frame
-  occ::handle<Media_Scaler>        myScaler;         //!< pixel format conversion tool
-  bool                        myToForceRgb;     //!< flag indicating if queue requires RGB pixel format or can handle also YUV pixel format
-                                   // clang-format on
+  Standard_Condition myWakeEvent;
+  Standard_Condition myNextEvent;
+  Media_Timer        myTimer;
+  double             myDuration;
 
-  volatile bool              myToShutDown; //!< flag to terminate working thread
-  TCollection_AsciiString    myInputPath;  //!< new input to open
-  volatile double            mySeekTo;     //!< new seeking position
-  volatile Media_PlayerEvent myPlayEvent;  //!< playback event
+  occ::handle<Media_BufferPool> myBufferPools[4];
+  occ::handle<Media_Frame>      myFrameTmp;
+  occ::handle<Media_Scaler>     myScaler;
+  bool                          myToForceRgb;
+
+  volatile bool              myToShutDown;
+  TCollection_AsciiString    myInputPath;
+  volatile double            mySeekTo;
+  volatile Media_PlayerEvent myPlayEvent;
 };

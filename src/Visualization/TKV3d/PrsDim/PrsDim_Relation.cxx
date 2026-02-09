@@ -29,8 +29,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_Relation, AIS_InteractiveObject)
 
-//=================================================================================================
-
 PrsDim_Relation::PrsDim_Relation(const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d)
     : AIS_InteractiveObject(aTypeOfPresentation3d),
       myVal(1.),
@@ -44,8 +42,6 @@ PrsDim_Relation::PrsDim_Relation(const PrsMgr_TypeOfPresentation3d aTypeOfPresen
       myArrowSizeIsDefined(false)
 {
 }
-
-//=================================================================================================
 
 void PrsDim_Relation::ComputeProjEdgePresentation(const occ::handle<Prs3d_Presentation>& aPrs,
                                                   const TopoDS_Edge&                     anEdge,
@@ -78,7 +74,6 @@ void PrsDim_Relation::ComputeProjEdgePresentation(const occ::handle<Prs3d_Presen
 
   TopoDS_Edge E;
 
-  // Calcul de la presentation de l'edge
   if (ProjCurv->IsInstance(STANDARD_TYPE(Geom_Line)))
   {
     occ::handle<Geom_Line> gl(occ::down_cast<Geom_Line>(ProjCurv));
@@ -105,7 +100,6 @@ void PrsDim_Relation::ComputeProjEdgePresentation(const occ::handle<Prs3d_Presen
   }
   StdPrs_WFShape::Add(aPrs, E, myDrawer);
 
-  // Calcul de la presentation des lignes de raccord
   myDrawer->WireAspect()->SetTypeOfLine(aCallTOL);
   if (!isInfinite)
   {
@@ -132,16 +126,8 @@ void PrsDim_Relation::ComputeProjEdgePresentation(const occ::handle<Prs3d_Presen
       BRepBuilderAPI_MakeVertex MakVert2(LastP);
       StdPrs_WFShape::Add(aPrs, MakVert2.Vertex(), myDrawer);
     }
-    /*
-        BRepBuilderAPI_MakeEdge MakEd1 (FirstP, ppf);
-        StdPrs_WFShape::Add (aPrs, MakEd1.Edge(), myDrawer);
-        BRepBuilderAPI_MakeEdge MakEd2 (LastP, ppl);
-        StdPrs_WFShape::Add (aPrs, MakEd2.Edge(), myDrawer);
-    */
   }
 }
-
-//=================================================================================================
 
 void PrsDim_Relation::ComputeProjVertexPresentation(const occ::handle<Prs3d_Presentation>& aPrs,
                                                     const TopoDS_Vertex&                   aVertex,
@@ -182,7 +168,6 @@ void PrsDim_Relation::ComputeProjVertexPresentation(const occ::handle<Prs3d_Pres
     li->SetWidth(width);
   }
 
-  // Si les points ne sont pas confondus...
   if (!ProjPoint.IsEqual(BRep_Tool::Pnt(aVertex), Precision::Confusion()))
   {
     occ::handle<Graphic3d_Group>           aGroup         = aPrs->NewGroup();
@@ -193,8 +178,6 @@ void PrsDim_Relation::ComputeProjVertexPresentation(const occ::handle<Prs3d_Pres
     aGroup->AddPrimitiveArray(anArrayOfLines);
   }
 }
-
-//=================================================================================================
 
 void PrsDim_Relation::SetColor(const Quantity_Color& aCol)
 {
@@ -227,8 +210,6 @@ void PrsDim_Relation::SetColor(const Quantity_Color& aCol)
   DIMENSION->SetLineAspect(LINE);
   DIMENSION->SetTextAspect(TEXT);
 }
-
-//=================================================================================================
 
 void PrsDim_Relation::UnsetColor()
 {

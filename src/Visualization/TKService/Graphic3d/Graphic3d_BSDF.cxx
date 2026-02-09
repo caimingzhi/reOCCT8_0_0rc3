@@ -4,8 +4,6 @@
 
 #include <algorithm>
 
-//=================================================================================================
-
 NCollection_Vec4<float> Graphic3d_Fresnel::Serialize() const
 {
   NCollection_Vec4<float> aData = NCollection_Vec4<float>(myFresnelData, 0.f);
@@ -18,14 +16,10 @@ NCollection_Vec4<float> Graphic3d_Fresnel::Serialize() const
   return aData;
 }
 
-//=================================================================================================
-
 inline float fresnelNormal(float theN, float theK)
 {
   return ((theN - 1.f) * (theN - 1.f) + theK * theK) / ((theN + 1.f) * (theN + 1.f) + theK * theK);
 }
-
-//=================================================================================================
 
 Graphic3d_Fresnel Graphic3d_Fresnel::CreateConductor(
   const NCollection_Vec3<float>& theRefractionIndex,
@@ -39,15 +33,11 @@ Graphic3d_Fresnel Graphic3d_Fresnel::CreateConductor(
   return Graphic3d_Fresnel(Graphic3d_FM_SCHLICK, aFresnel);
 }
 
-//=================================================================================================
-
 void Graphic3d_Fresnel::DumpJson(Standard_OStream& theOStream, int theDepth) const {
   OCCT_DUMP_CLASS_BEGIN(theOStream, Graphic3d_Fresnel)
 
     OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, myFresnelType)
       OCCT_DUMP_FIELD_VALUES_DUMPED(theOStream, theDepth, &myFresnelData)}
-
-//=================================================================================================
 
 Graphic3d_BSDF::Graphic3d_BSDF()
     : Ks(NCollection_Vec3<float>(0.f), 1.f)
@@ -56,18 +46,12 @@ Graphic3d_BSDF::Graphic3d_BSDF()
   FresnelBase = Graphic3d_Fresnel::CreateConstant(1.f);
 }
 
-// =======================================================================
-// function : operator==
-// purpose  :
-// =======================================================================
 bool Graphic3d_BSDF::operator==(const Graphic3d_BSDF& theOther) const
 {
   return Kc == theOther.Kc && Kd == theOther.Kd && Kt == theOther.Kt && Ks == theOther.Ks
          && Le == theOther.Le && Absorption == theOther.Absorption
          && FresnelCoat == theOther.FresnelCoat && FresnelBase == theOther.FresnelBase;
 }
-
-//=================================================================================================
 
 void Graphic3d_BSDF::Normalize()
 {
@@ -89,8 +73,6 @@ void Graphic3d_BSDF::Normalize()
   }
 }
 
-//=================================================================================================
-
 Graphic3d_BSDF Graphic3d_BSDF::CreateDiffuse(const NCollection_Vec3<float>& theWeight)
 {
   Graphic3d_BSDF aBSDF;
@@ -100,8 +82,6 @@ Graphic3d_BSDF Graphic3d_BSDF::CreateDiffuse(const NCollection_Vec3<float>& theW
   return aBSDF;
 }
 
-//=================================================================================================
-
 Graphic3d_BSDF Graphic3d_BSDF::CreateMetallic(const NCollection_Vec3<float>& theWeight,
                                               const Graphic3d_Fresnel&       theFresnel,
                                               const float                    theRoughness)
@@ -110,14 +90,10 @@ Graphic3d_BSDF Graphic3d_BSDF::CreateMetallic(const NCollection_Vec3<float>& the
 
   aBSDF.FresnelBase = theFresnel;
 
-  // Selecting between specular and glossy
-  // BRDF depending on the given roughness
   aBSDF.Ks = NCollection_Vec4<float>(theWeight, theRoughness);
 
   return aBSDF;
 }
-
-//=================================================================================================
 
 Graphic3d_BSDF Graphic3d_BSDF::CreateTransparent(const NCollection_Vec3<float>& theWeight,
                                                  const NCollection_Vec3<float>& theAbsorptionColor,
@@ -125,13 +101,10 @@ Graphic3d_BSDF Graphic3d_BSDF::CreateTransparent(const NCollection_Vec3<float>& 
 {
   Graphic3d_BSDF aBSDF;
 
-  // Create Fresnel parameters for the coat layer;
-  // set it to 0 value to simulate ideal refractor
   aBSDF.FresnelCoat = Graphic3d_Fresnel::CreateConstant(0.f);
 
   aBSDF.Kt = theWeight;
 
-  // Link reflection and transmission coefficients
   aBSDF.Kc.r() = aBSDF.Kt.r();
   aBSDF.Kc.g() = aBSDF.Kt.g();
   aBSDF.Kc.b() = aBSDF.Kt.b();
@@ -141,8 +114,6 @@ Graphic3d_BSDF Graphic3d_BSDF::CreateTransparent(const NCollection_Vec3<float>& 
   return aBSDF;
 }
 
-//=================================================================================================
-
 Graphic3d_BSDF Graphic3d_BSDF::CreateGlass(const NCollection_Vec3<float>& theWeight,
                                            const NCollection_Vec3<float>& theAbsorptionColor,
                                            const float                    theAbsorptionCoeff,
@@ -150,7 +121,6 @@ Graphic3d_BSDF Graphic3d_BSDF::CreateGlass(const NCollection_Vec3<float>& theWei
 {
   Graphic3d_BSDF aBSDF;
 
-  // Create Fresnel parameters for the coat layer
   aBSDF.FresnelCoat = Graphic3d_Fresnel::CreateDielectric(theRefractionIndex);
 
   aBSDF.Kt = theWeight;
@@ -163,8 +133,6 @@ Graphic3d_BSDF Graphic3d_BSDF::CreateGlass(const NCollection_Vec3<float>& theWei
 
   return aBSDF;
 }
-
-//=================================================================================================
 
 Graphic3d_BSDF Graphic3d_BSDF::CreateMetallicRoughness(const Graphic3d_PBRMaterial& thePbr)
 {
@@ -193,8 +161,6 @@ Graphic3d_BSDF Graphic3d_BSDF::CreateMetallicRoughness(const Graphic3d_PBRMateri
 
   return aBsdf;
 }
-
-//=================================================================================================
 
 void Graphic3d_BSDF::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

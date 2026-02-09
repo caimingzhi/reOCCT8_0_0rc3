@@ -9,7 +9,6 @@ class StepShape_ManifoldSurfaceShapeRepresentation : public StepShape_ShapeRepre
 {
 
 public:
-  //! Returns a ManifoldSurfaceShapeRepresentation
   Standard_EXPORT StepShape_ManifoldSurfaceShapeRepresentation();
 
   DEFINE_STANDARD_RTTIEXT(StepShape_ManifoldSurfaceShapeRepresentation,

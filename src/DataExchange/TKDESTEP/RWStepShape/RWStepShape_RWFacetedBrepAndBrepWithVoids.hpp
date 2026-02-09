@@ -11,7 +11,6 @@ class StepShape_FacetedBrepAndBrepWithVoids;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for FacetedBrepAndBrepWithVoids
 class RWStepShape_RWFacetedBrepAndBrepWithVoids
 {
 public:

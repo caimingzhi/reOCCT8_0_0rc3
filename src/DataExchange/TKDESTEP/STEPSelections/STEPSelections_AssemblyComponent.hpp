@@ -41,15 +41,11 @@ inline occ::handle<StepShape_ShapeDefinitionRepresentation> STEPSelections_Assem
   return mySDR;
 }
 
-//=================================================================================================
-
 inline occ::handle<NCollection_HSequence<occ::handle<STEPSelections_AssemblyLink>>>
   STEPSelections_AssemblyComponent::GetList() const
 {
   return myList;
 }
-
-//=================================================================================================
 
 inline void STEPSelections_AssemblyComponent::SetSDR(
   const occ::handle<StepShape_ShapeDefinitionRepresentation>& sdr)

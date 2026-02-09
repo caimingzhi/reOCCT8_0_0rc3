@@ -5,12 +5,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_ArbitraryVolume3dElementCoordinateSystem,
                            StepFEA_FeaRepresentationItem)
 
-//=================================================================================================
-
 StepFEA_ArbitraryVolume3dElementCoordinateSystem::
   StepFEA_ArbitraryVolume3dElementCoordinateSystem() = default;
-
-//=================================================================================================
 
 void StepFEA_ArbitraryVolume3dElementCoordinateSystem::Init(
   const occ::handle<TCollection_HAsciiString>&    aRepresentationItem_Name,
@@ -21,15 +17,11 @@ void StepFEA_ArbitraryVolume3dElementCoordinateSystem::Init(
   theCoordinateSystem = aCoordinateSystem;
 }
 
-//=================================================================================================
-
 occ::handle<StepFEA_FeaAxis2Placement3d> StepFEA_ArbitraryVolume3dElementCoordinateSystem::
   CoordinateSystem() const
 {
   return theCoordinateSystem;
 }
-
-//=================================================================================================
 
 void StepFEA_ArbitraryVolume3dElementCoordinateSystem::SetCoordinateSystem(
   const occ::handle<StepFEA_FeaAxis2Placement3d>& aCoordinateSystem)

@@ -6,27 +6,19 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeExtend_BasicMsgRegistrator, Standard_Transient)
 
-//=================================================================================================
-
 ShapeExtend_BasicMsgRegistrator::ShapeExtend_BasicMsgRegistrator() = default;
 
-//=================================================================================================
-
-void ShapeExtend_BasicMsgRegistrator::Send(const occ::handle<Standard_Transient>& /*object*/,
-                                           const Message_Msg& /*message*/,
-                                           const Message_Gravity /*gravity*/)
+void ShapeExtend_BasicMsgRegistrator::Send(const occ::handle<Standard_Transient>&,
+                                           const Message_Msg&,
+                                           const Message_Gravity)
 {
 }
 
-//=================================================================================================
-
-void ShapeExtend_BasicMsgRegistrator::Send(const TopoDS_Shape& /*shape*/,
-                                           const Message_Msg& /*message*/,
-                                           const Message_Gravity /*gravity*/)
+void ShapeExtend_BasicMsgRegistrator::Send(const TopoDS_Shape&,
+                                           const Message_Msg&,
+                                           const Message_Gravity)
 {
 }
-
-//=================================================================================================
 
 void ShapeExtend_BasicMsgRegistrator::Send(const Message_Msg&    message,
                                            const Message_Gravity gravity)

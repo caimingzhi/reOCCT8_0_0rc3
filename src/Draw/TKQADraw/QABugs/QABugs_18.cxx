@@ -152,7 +152,6 @@ static int OCC367(Draw_Interpretor& di, int argc, const char** argv)
   double      percent      = Draw::Atof(argv[6]);
   bool        aStatus      = false;
 
-  // Find the first vertex of the wire
   BRepTools_WireExplorer wire_exp(myTopoDSWire);
   TopoDS_Vertex          vlast;
   {

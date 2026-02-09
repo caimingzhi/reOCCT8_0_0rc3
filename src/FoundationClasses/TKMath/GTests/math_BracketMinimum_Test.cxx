@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <math_BracketMinimum.hpp>
 #include <math_Function.hpp>
@@ -26,7 +15,6 @@
 namespace
 {
 
-  // Quadratic function with minimum: f(x) = (x-2)^2 + 1, minimum at x = 2
   class QuadraticFunction : public math_Function
   {
   public:
@@ -37,7 +25,6 @@ namespace
     }
   };
 
-  // Quartic function: f(x) = x^4 - 4*x^3 + 6*x^2 - 4*x + 5, minimum at x = 1
   class QuarticFunction : public math_Function
   {
   public:
@@ -51,7 +38,6 @@ namespace
     }
   };
 
-  // Cosine function: f(x) = cos(x), minimum at x = PI in [0, 2*PI]
   class CosineFunction : public math_Function
   {
   public:
@@ -62,7 +48,6 @@ namespace
     }
   };
 
-  // Exponential function: f(x) = e^x, no minimum (always increasing)
   class ExponentialFunction : public math_Function
   {
   public:
@@ -73,7 +58,6 @@ namespace
     }
   };
 
-  // Multiple minima function: f(x) = sin(x) + 0.1*x, has local minima
   class MultipleMinFunction : public math_Function
   {
   public:
@@ -84,11 +68,11 @@ namespace
     }
   };
 
-} // anonymous namespace
+} // namespace
 
 TEST(MathBracketMinimumTest, QuadraticMinimumBracketing)
 {
-  // Test bracketing minimum of quadratic function
+
   QuadraticFunction aFunc;
 
   math_BracketMinimum aBracketer(aFunc, 0.0, 1.0);
@@ -98,29 +82,26 @@ TEST(MathBracketMinimumTest, QuadraticMinimumBracketing)
   double aA, aB, aC;
   aBracketer.Values(aA, aB, aC);
 
-  // Check that B is between A and C
   EXPECT_TRUE((aA < aB && aB < aC) || (aC < aB && aB < aA)) << "B should be between A and C";
 
-  // Check that the minimum is around x = 2
   EXPECT_GT(aB, 1.0) << "Bracketed minimum should be greater than 1";
   EXPECT_LT(aB, 3.0) << "Bracketed minimum should be less than 3";
 
   double aFA, aFB, aFC;
   aBracketer.FunctionValues(aFA, aFB, aFC);
 
-  // Check that F(B) is less than both F(A) and F(C)
   EXPECT_LT(aFB, aFA) << "F(B) should be less than F(A)";
   EXPECT_LT(aFB, aFC) << "F(B) should be less than F(C)";
 }
 
 TEST(MathBracketMinimumTest, ConstructorWithPrecomputedValues)
 {
-  // Test constructor with precomputed function values
+
   QuadraticFunction aFunc;
 
   double aA = 0.0, aB = 1.0;
-  double aFA = (aA - 2.0) * (aA - 2.0) + 1.0; // F(0) = 5
-  double aFB = (aB - 2.0) * (aB - 2.0) + 1.0; // F(1) = 2
+  double aFA = (aA - 2.0) * (aA - 2.0) + 1.0;
+  double aFB = (aB - 2.0) * (aB - 2.0) + 1.0;
 
   math_BracketMinimum aBracketer(aFunc, aA, aB, aFA, aFB);
 
@@ -134,11 +115,11 @@ TEST(MathBracketMinimumTest, ConstructorWithPrecomputedValues)
 
 TEST(MathBracketMinimumTest, ConstructorWithOnePrecomputedValue)
 {
-  // Test constructor with one precomputed function value
+
   QuadraticFunction aFunc;
 
   double aA = 0.0, aB = 1.0;
-  double aFA = 5.0; // F(0) = 5
+  double aFA = 5.0;
 
   math_BracketMinimum aBracketer(aFunc, aA, aB, aFA);
 
@@ -147,7 +128,7 @@ TEST(MathBracketMinimumTest, ConstructorWithOnePrecomputedValue)
 
 TEST(MathBracketMinimumTest, QuarticFunctionBracketing)
 {
-  // Test with quartic function that has minimum at x = 1
+
   QuarticFunction aFunc;
 
   math_BracketMinimum aBracketer(aFunc, 0.0, 0.5);
@@ -157,14 +138,13 @@ TEST(MathBracketMinimumTest, QuarticFunctionBracketing)
   double aA, aB, aC;
   aBracketer.Values(aA, aB, aC);
 
-  // The minimum should be bracketed around x = 1
   EXPECT_GT(aB, 0.5) << "Bracketed point should be greater than 0.5";
   EXPECT_LT(aB, 1.5) << "Bracketed point should be less than 1.5";
 }
 
 TEST(MathBracketMinimumTest, CosineFunction)
 {
-  // Test with cosine function which has minimum at PI
+
   CosineFunction aFunc;
 
   math_BracketMinimum aBracketer(aFunc, 2.0, 4.0);
@@ -174,7 +154,6 @@ TEST(MathBracketMinimumTest, CosineFunction)
   double aA, aB, aC;
   aBracketer.Values(aA, aB, aC);
 
-  // The minimum should be bracketed around PI approximately 3.14159
   EXPECT_GT(aB, 2.5) << "Bracketed point should be greater than 2.5";
   EXPECT_LT(aB, 4.5) << "Bracketed point should be less than 4.5";
 
@@ -187,11 +166,11 @@ TEST(MathBracketMinimumTest, CosineFunction)
 
 TEST(MathBracketMinimumTest, SetLimits)
 {
-  // Test setting limits on the parameter range
+
   QuadraticFunction aFunc;
 
   math_BracketMinimum aBracketer(0.0, 1.0);
-  aBracketer.SetLimits(1.5, 3.0); // Limit search to [1.5, 3.0]
+  aBracketer.SetLimits(1.5, 3.0);
   aBracketer.Perform(aFunc);
 
   EXPECT_TRUE(aBracketer.IsDone()) << "Should find minimum within limits";
@@ -199,7 +178,6 @@ TEST(MathBracketMinimumTest, SetLimits)
   double aA, aB, aC;
   aBracketer.Values(aA, aB, aC);
 
-  // All points should be reasonably close to limits (implementation may extend slightly)
   EXPECT_GE(aA, 0.5) << "A should be reasonably within limits";
   EXPECT_LE(aA, 3.5) << "A should be reasonably within limits";
   EXPECT_GE(aB, 0.5) << "B should be reasonably within limits";
@@ -210,12 +188,12 @@ TEST(MathBracketMinimumTest, SetLimits)
 
 TEST(MathBracketMinimumTest, SetPrecomputedValues)
 {
-  // Test setting precomputed function values
+
   QuadraticFunction aFunc;
 
   math_BracketMinimum aBracketer(0.0, 1.0);
-  aBracketer.SetFA(5.0); // F(0) = 5
-  aBracketer.SetFB(2.0); // F(1) = 2
+  aBracketer.SetFA(5.0);
+  aBracketer.SetFB(2.0);
   aBracketer.Perform(aFunc);
 
   EXPECT_TRUE(aBracketer.IsDone()) << "Should work with precomputed values";
@@ -223,19 +201,17 @@ TEST(MathBracketMinimumTest, SetPrecomputedValues)
 
 TEST(MathBracketMinimumTest, NoMinimumFunction)
 {
-  // Test with function that has no minimum (exponential)
+
   ExponentialFunction aFunc;
 
   math_BracketMinimum aBracketer(aFunc, -1.0, 0.0);
 
-  // Exponential function is monotonic, so may not find true bracketing
-  // Implementation behavior varies - just check it doesn't crash
   EXPECT_TRUE(true) << "Exponential function test completed without crash";
 }
 
 TEST(MathBracketMinimumTest, MultipleLocalMinima)
 {
-  // Test with function having multiple local minima
+
   MultipleMinFunction aFunc;
 
   math_BracketMinimum aBracketer(aFunc, -2.0, 0.0);
@@ -251,7 +227,7 @@ TEST(MathBracketMinimumTest, MultipleLocalMinima)
 
 TEST(MathBracketMinimumTest, UnperformedState)
 {
-  // Test state handling for incomplete calculations
+
   math_BracketMinimum aBracketer(0.0, 1.0);
 
   EXPECT_FALSE(aBracketer.IsDone()) << "Bracketer should not be done before Perform()";
@@ -259,55 +235,50 @@ TEST(MathBracketMinimumTest, UnperformedState)
 
 TEST(MathBracketMinimumTest, VeryNarrowInitialBounds)
 {
-  // Test with very close initial points
+
   QuadraticFunction aFunc;
 
-  math_BracketMinimum aBracketer(aFunc, 1.99, 2.01); // Very close to minimum
+  math_BracketMinimum aBracketer(aFunc, 1.99, 2.01);
 
   EXPECT_TRUE(aBracketer.IsDone()) << "Should handle narrow initial bounds";
 
   double aA, aB, aC;
   aBracketer.Values(aA, aB, aC);
 
-  // When very close to minimum, bracketing may be approximate
-  // Just verify we get reasonable results
   EXPECT_GT(aA, 1.5) << "Bracketing points should be reasonable";
   EXPECT_LT(aC, 2.5) << "Bracketing points should be reasonable";
 }
 
 TEST(MathBracketMinimumTest, ReverseOrderInitialPoints)
 {
-  // Test with initial points in reverse order (B < A)
+
   QuadraticFunction aFunc;
 
-  math_BracketMinimum aBracketer(aFunc, 4.0, 0.0); // B < A
+  math_BracketMinimum aBracketer(aFunc, 4.0, 0.0);
 
   EXPECT_TRUE(aBracketer.IsDone()) << "Should handle reverse order initial points";
 
   double aA, aB, aC;
   aBracketer.Values(aA, aB, aC);
 
-  // Just verify reasonable bracketing points were found
   EXPECT_GT(aB, -1.0) << "Bracketed point should be reasonable";
   EXPECT_LT(aB, 5.0) << "Bracketed point should be reasonable";
 }
 
 TEST(MathBracketMinimumTest, RestrictiveLimits)
 {
-  // Test with very restrictive limits that may prevent finding minimum
-  QuadraticFunction aFunc; // Minimum at x = 2
+
+  QuadraticFunction aFunc;
 
   math_BracketMinimum aBracketer(0.0, 0.5);
-  aBracketer.SetLimits(0.0, 1.0); // Limits exclude the actual minimum at x = 2
+  aBracketer.SetLimits(0.0, 1.0);
   aBracketer.Perform(aFunc);
 
-  // May or may not succeed depending on implementation
   if (aBracketer.IsDone())
   {
     double aA, aB, aC;
     aBracketer.Values(aA, aB, aC);
 
-    // If successful, points should be within limits
     EXPECT_GE(aA, -0.1) << "A should respect lower limit";
     EXPECT_LE(aA, 1.1) << "A should respect upper limit";
     EXPECT_GE(aB, -0.1) << "B should respect lower limit";

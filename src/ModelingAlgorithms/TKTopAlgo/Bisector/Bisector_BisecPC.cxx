@@ -16,8 +16,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Bisector_BisecPC, Bisector_Curve)
 
-//=================================================================================================
-
 Bisector_BisecPC::Bisector_BisecPC()
     : sign(0.0),
       bisInterval(0),
@@ -31,8 +29,6 @@ Bisector_BisecPC::Bisector_BisecPC()
 {
 }
 
-//=================================================================================================
-
 Bisector_BisecPC::Bisector_BisecPC(const occ::handle<Geom2d_Curve>& Cu,
                                    const gp_Pnt2d&                  P,
                                    const double                     Side,
@@ -40,8 +36,6 @@ Bisector_BisecPC::Bisector_BisecPC(const occ::handle<Geom2d_Curve>& Cu,
 {
   Perform(Cu, P, Side, DistMax);
 }
-
-//=================================================================================================
 
 Bisector_BisecPC::Bisector_BisecPC(const occ::handle<Geom2d_Curve>& Cu,
                                    const gp_Pnt2d&                  P,
@@ -63,8 +57,6 @@ Bisector_BisecPC::Bisector_BisecPC(const occ::handle<Geom2d_Curve>& Cu,
   isConvex       = Bisector::IsConvex(curve, sign);
 }
 
-//=================================================================================================
-
 void Bisector_BisecPC::Perform(const occ::handle<Geom2d_Curve>& Cu,
                                const gp_Pnt2d&                  P,
                                const double                     Side,
@@ -75,16 +67,11 @@ void Bisector_BisecPC::Perform(const occ::handle<Geom2d_Curve>& Cu,
   distMax  = DistMax;
   sign     = Side;
   isConvex = Bisector::IsConvex(curve, sign);
-  //--------------------------------------------
-  // Calculate interval of definition.
-  //--------------------------------------------
+
   ComputeIntervals();
   if (isEmpty)
     return;
 
-  //-------------------------
-  // Construction extensions.
-  //-------------------------
   bisInterval    = 1;
   extensionStart = false;
   extensionEnd   = false;
@@ -112,35 +99,25 @@ void Bisector_BisecPC::Perform(const occ::handle<Geom2d_Curve>& Cu,
   }
 }
 
-//=================================================================================================
-
 bool Bisector_BisecPC::IsExtendAtStart() const
 {
   return extensionStart;
 }
-
-//=================================================================================================
 
 bool Bisector_BisecPC::IsExtendAtEnd() const
 {
   return extensionEnd;
 }
 
-//=================================================================================================
-
 void Bisector_BisecPC::Reverse()
 {
   throw Standard_NotImplemented();
 }
 
-//=================================================================================================
-
 double Bisector_BisecPC::ReversedParameter(const double U) const
 {
   return LastParameter() + FirstParameter() - U;
 }
-
-//=================================================================================================
 
 occ::handle<Geom2d_Geometry> Bisector_BisecPC::Copy() const
 {
@@ -165,8 +142,6 @@ occ::handle<Geom2d_Geometry> Bisector_BisecPC::Copy() const
   return C;
 }
 
-//=================================================================================================
-
 void Bisector_BisecPC::Transform(const gp_Trsf2d& T)
 {
   curve->Transform(T);
@@ -175,28 +150,20 @@ void Bisector_BisecPC::Transform(const gp_Trsf2d& T)
   pointEndBis.Transform(T);
 }
 
-//=================================================================================================
-
 bool Bisector_BisecPC::IsCN(const int N) const
 {
   return curve->IsCN(N + 1);
 }
-
-//=================================================================================================
 
 double Bisector_BisecPC::FirstParameter() const
 {
   return startIntervals.First();
 }
 
-//=================================================================================================
-
 double Bisector_BisecPC::LastParameter() const
 {
   return endIntervals.Last();
 }
-
-//=================================================================================================
 
 GeomAbs_Shape Bisector_BisecPC::Continuity() const
 {
@@ -217,28 +184,20 @@ GeomAbs_Shape Bisector_BisecPC::Continuity() const
   return GeomAbs_C0;
 }
 
-//=================================================================================================
-
 int Bisector_BisecPC::NbIntervals() const
 {
   return startIntervals.Length();
 }
-
-//=================================================================================================
 
 double Bisector_BisecPC::IntervalFirst(const int I) const
 {
   return startIntervals.Value(I);
 }
 
-//=================================================================================================
-
 double Bisector_BisecPC::IntervalLast(const int I) const
 {
   return endIntervals.Value(I);
 }
-
-//=================================================================================================
 
 GeomAbs_Shape Bisector_BisecPC::IntervalContinuity() const
 {
@@ -259,16 +218,11 @@ GeomAbs_Shape Bisector_BisecPC::IntervalContinuity() const
   return GeomAbs_C0;
 }
 
-//=================================================================================================
-
 bool Bisector_BisecPC::IsClosed() const
 {
   if (curve->IsClosed())
   {
-    //-----------------------------------------------------------------------
-    // The bisectrice is closed if the curve is closed and the bissectrice
-    // has only one domain of continuity equal to the one of the curve.
-    // -----------------------------------------------------------------------
+
     if (startIntervals.First() == curve->FirstParameter()
         && endIntervals.First() == curve->LastParameter())
       return true;
@@ -276,14 +230,10 @@ bool Bisector_BisecPC::IsClosed() const
   return false;
 }
 
-//=================================================================================================
-
 bool Bisector_BisecPC::IsPeriodic() const
 {
   return false;
 }
-
-//=================================================================================================
 
 void Bisector_BisecPC::Extension(const double U,
                                  gp_Pnt2d&    P,
@@ -322,17 +272,6 @@ void Bisector_BisecPC::Extension(const double U,
   }
 }
 
-//=============================================================================
-// function : Values
-// purpose : To each point of the curve is associated a point on the
-//           bissectrice. The equation of the bissectrice is:
-//                              || PP(u)||**2
-//           F(u) = P(u) - 1/2* -------------- * N(u)
-//                              (N(u)|PP(u))
-//
-//           N(u) normal to the curve by u.
-//           ( | ) designation of the scalar product.
-//=============================================================================
 void Bisector_BisecPC::Values(const double U,
                               const int    N,
                               gp_Pnt2d&    P,
@@ -392,19 +331,18 @@ void Bisector_BisecPC::Values(const double U,
   }
 
   if (N == 0)
-    return; // End Calculation Point;
+    return;
 
-  gp_Vec2d Nu(-Tuu.Y(), Tuu.X()); // derivative of the normal by U.
+  gp_Vec2d Nu(-Tuu.Y(), Tuu.X());
   double   NuPPC    = Nu.Dot(aPPC);
   double   TuPPC    = Tu.Dot(aPPC);
   double   NorPPCE2 = NorPPC * NorPPC;
   double   A2       = TuPPC / NorPPC - 0.5 * NuPPC * SquarePPC / NorPPCE2;
 
-  //--------------------------
   V1 = Tu - A1 * Nu - A2 * Nor;
-  //--------------------------
+
   if (N == 1)
-    return; // End calculation D1.
+    return;
 
   gp_Vec2d Nuu(-T3u.Y(), T3u.X());
 
@@ -416,14 +354,10 @@ void Bisector_BisecPC::Values(const double U,
   double A22 = (0.5 * NuuPPC * SquarePPC + NuPPC * TuPPC) / NorPPCE2
                - NuPPC * SquarePPC * NorPPC * NuPPC / NorPPCE4;
   double A2u = A21 - A22;
-  //----------------------------------------
+
   V2 = Tuu - 2 * A2 * Nu - A1 * Nuu - A2u * Nor;
-  //----------------------------------------
 }
 
-//=================================================================================================
-
-// Unused :
 #ifdef OCCT_DEBUG_CUR
 static double Curvature(const occ::handle<Geom2d_Curve>& C, double U, double Tol)
 {
@@ -444,16 +378,6 @@ static double Curvature(const occ::handle<Geom2d_Curve>& C, double U, double Tol
 }
 #endif
 
-//=============================================================================
-// function : Distance
-// purpose  : distance at the square of the point of parameter U to the curve and at point:
-//
-//            2             ||PP(u)||**4           2
-//           d =   1/4* ------------------- ||Nor||
-//                         (Nor(u)/PP(u))**2
-//
-//           where Nor is the normal to the curve by U.
-//=============================================================================
 double Bisector_BisecPC::Distance(const double U) const
 {
   gp_Vec2d Tan;
@@ -475,11 +399,7 @@ double Bisector_BisecPC::Distance(const double U) const
     {
       return 0.;
     }
-    //----------------------------------------------------
-    // the point is on a concave curve.
-    // The required point is not the common point.
-    // This can avoid the discontinuity of the bisectrice.
-    //----------------------------------------------------
+
     else
     {
       return Precision::Infinite();
@@ -495,9 +415,7 @@ double Bisector_BisecPC::Distance(const double U) const
     double A    = 0.5 * SquareMagPPC / Prosca;
     double Dist = A * A * NorNor;
 #ifdef OCCT_DEBUG_CUR
-    //----------------------------------------
-    // Test Curvature if the curve is concave.
-    //----------------------------------------
+
     if (!isConvex)
     {
       double K = Curvature(curve, UOnCurve, Precision::Confusion());
@@ -514,16 +432,12 @@ double Bisector_BisecPC::Distance(const double U) const
   }
 }
 
-//=================================================================================================
-
 void Bisector_BisecPC::D0(const double U, gp_Pnt2d& P) const
 {
   P = point;
   gp_Vec2d V1, V2, V3;
   Values(U, 0, P, V1, V2, V3);
 }
-
-//=================================================================================================
 
 void Bisector_BisecPC::D1(const double U, gp_Pnt2d& P, gp_Vec2d& V) const
 {
@@ -533,8 +447,6 @@ void Bisector_BisecPC::D1(const double U, gp_Pnt2d& P, gp_Vec2d& V) const
   Values(U, 1, P, V, V2, V3);
 }
 
-//=================================================================================================
-
 void Bisector_BisecPC::D2(const double U, gp_Pnt2d& P, gp_Vec2d& V1, gp_Vec2d& V2) const
 {
   P = point;
@@ -543,8 +455,6 @@ void Bisector_BisecPC::D2(const double U, gp_Pnt2d& P, gp_Vec2d& V1, gp_Vec2d& V
   gp_Vec2d V3;
   Values(U, 2, P, V1, V2, V3);
 }
-
-//=================================================================================================
 
 void Bisector_BisecPC::D3(const double U,
                           gp_Pnt2d&    P,
@@ -558,8 +468,6 @@ void Bisector_BisecPC::D3(const double U,
   V3.SetCoord(0., 0.);
   Values(U, 3, P, V1, V2, V3);
 }
-
-//=================================================================================================
 
 gp_Vec2d Bisector_BisecPC::DN(const double U, const int N) const
 {
@@ -582,8 +490,6 @@ gp_Vec2d Bisector_BisecPC::DN(const double U, const int N) const
     }
   }
 }
-
-//=================================================================================================
 
 double Bisector_BisecPC::SearchBound(const double U1, const double U2) const
 {
@@ -612,14 +518,10 @@ double Bisector_BisecPC::SearchBound(const double U1, const double U2) const
   return UMid;
 }
 
-//=================================================================================================
-
 void Bisector_BisecPC::CuspFilter()
 {
   throw Standard_NotImplemented();
 }
-
-//=================================================================================================
 
 void Bisector_BisecPC::ComputeIntervals()
 {
@@ -684,24 +586,14 @@ void Bisector_BisecPC::ComputeIntervals()
   startIntervals.Append(UStart);
   endIntervals.Append(UEnd);
 
-  //------------------------------------------------------------------------
-  // Eventual offset of the parameter on the curve correspondingly to the one
-  // on the curve. The offset can be done if the curve is periodical and the
-  // point of initial parameter is less then the interval of continuity.
-  //------------------------------------------------------------------------
   if (curve->IsPeriodic())
   {
     if (startIntervals.Length() > 1)
-    { // Plusieurs intervals.
+    {
       if (endIntervals.Last() == curve->LastParameter()
           && startIntervals.First() == curve->FirstParameter())
       {
-        //---------------------------------------------------------------
-        // the bissectrice is defined at the origin.
-        // => Fusion of the first and the last interval.
-        // => 0 on the bisectrice becomes the start of the first interval
-        // => offset of parameter on all limits of intervals.
-        //---------------------------------------------------------------
+
         startIntervals.Remove(1);
         endIntervals.Remove(endIntervals.Length());
 
@@ -717,28 +609,20 @@ void Bisector_BisecPC::ComputeIntervals()
   }
 }
 
-//=================================================================================================
-
 double Bisector_BisecPC::LinkBisCurve(const double U) const
 {
   return (U - shiftParameter);
 }
-
-//=================================================================================================
 
 double Bisector_BisecPC::LinkCurveBis(const double U) const
 {
   return (U + shiftParameter);
 }
 
-//=================================================================================================
-
 bool Bisector_BisecPC::IsEmpty() const
 {
   return isEmpty;
 }
-
-//=================================================================================================
 
 double Bisector_BisecPC::Parameter(const gp_Pnt2d& P) const
 {
@@ -782,8 +666,6 @@ double Bisector_BisecPC::Parameter(const gp_Pnt2d& P) const
   return LinkCurveBis(UOnCurve);
 }
 
-//=================================================================================================
-
 static void Indent(const int Offset)
 {
   if (Offset > 0)
@@ -794,8 +676,6 @@ static void Indent(const int Offset)
     }
   }
 }
-
-//=================================================================================================
 
 void Bisector_BisecPC::Init(const occ::handle<Geom2d_Curve>&    Curve,
                             const gp_Pnt2d&                     Point,
@@ -830,9 +710,6 @@ void Bisector_BisecPC::Init(const occ::handle<Geom2d_Curve>&    Curve,
   pointEndBis     = PointEndBis;
 }
 
-//=================================================================================================
-
-// void Bisector_BisecPC::Dump(const int Deep,
 void Bisector_BisecPC::Dump(const int, const int Offset) const
 {
   Indent(Offset);

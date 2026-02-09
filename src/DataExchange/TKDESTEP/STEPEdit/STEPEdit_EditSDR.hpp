@@ -11,8 +11,6 @@ class TCollection_HAsciiString;
 class Standard_Transient;
 class Interface_InterfaceModel;
 
-//! EditSDR is an Editor fit for a Shape Definition Representation
-//! which designates a Product Definition
 class STEPEdit_EditSDR : public IFSelect_Editor
 {
 

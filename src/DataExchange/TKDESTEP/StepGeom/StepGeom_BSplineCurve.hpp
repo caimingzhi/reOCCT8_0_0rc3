@@ -17,7 +17,6 @@ class StepGeom_BSplineCurve : public StepGeom_BoundedCurve
 {
 
 public:
-  //! Returns a BSplineCurve
   Standard_EXPORT StepGeom_BSplineCurve();
 
   Standard_EXPORT void Init(

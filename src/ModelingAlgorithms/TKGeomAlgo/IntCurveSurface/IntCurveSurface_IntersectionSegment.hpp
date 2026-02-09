@@ -6,9 +6,6 @@
 
 #include <IntCurveSurface_IntersectionPoint.hpp>
 
-//! A IntersectionSegment describes a segment of curve
-//! (w1,w2) where distance(C(w),Surface) is less than a
-//! given tolerances.
 class IntCurveSurface_IntersectionSegment
 {
 public:

@@ -14,8 +14,6 @@ extern bool TopOpeBRepTool_GettraceVC();
 extern bool TopOpeBRepTool_GettraceCLOV();
 #endif
 
-//=================================================================================================
-
 TopOpeBRepBuild_PaveClassifier::TopOpeBRepBuild_PaveClassifier(const TopoDS_Shape& E)
     : myEdgePeriodic(false),
       mySameParameters(false),
@@ -33,10 +31,10 @@ TopOpeBRepBuild_PaveClassifier::TopOpeBRepBuild_PaveClassifier(const TopoDS_Shap
       if (C->IsPeriodic())
       {
         TopoDS_Vertex v1, v2;
-        TopExp::Vertices(myEdge, v1, v2); // v1 FORWARD, v2 REVERSED
+        TopExp::Vertices(myEdge, v1, v2);
         if (!v1.IsNull() && !v2.IsNull())
         {
-          // --- the edge has vertices
+
           myFirst        = f;
           double fC      = C->FirstParameter();
           double lC      = C->LastParameter();
@@ -49,7 +47,7 @@ TopOpeBRepBuild_PaveClassifier::TopOpeBRepBuild_PaveClassifier(const TopoDS_Shap
         }
         else
         {
-          // --- the edge has no vertices
+
           myFirst          = f;
           myPeriod         = l - f;
           myEdgePeriodic   = true;
@@ -77,11 +75,8 @@ TopOpeBRepBuild_PaveClassifier::TopOpeBRepBuild_PaveClassifier(const TopoDS_Shap
       }
     }
 #endif
-
-  } // ! degenerated
+  }
 }
-
-//=================================================================================================
 
 TopAbs_State TopOpeBRepBuild_PaveClassifier::CompareOnNonPeriodic()
 {
@@ -148,8 +143,6 @@ TopAbs_State TopOpeBRepBuild_PaveClassifier::CompareOnNonPeriodic()
   return state;
 }
 
-//=================================================================================================
-
 double TopOpeBRepBuild_PaveClassifier::AdjustCase(const double             p1,
                                                   const TopAbs_Orientation o,
                                                   const double             first,
@@ -159,7 +152,7 @@ double TopOpeBRepBuild_PaveClassifier::AdjustCase(const double             p1,
 {
   double p2;
   if (std::abs(p1 - first) < tol)
-  { // p1 is first
+  {
     if (o == TopAbs_REVERSED)
     {
       p2  = p1 + period;
@@ -172,23 +165,21 @@ double TopOpeBRepBuild_PaveClassifier::AdjustCase(const double             p1,
     }
   }
   else
-  { // p1 is not on first
+  {
     double last = first + period;
     if (std::abs(p1 - last) < tol)
-    { // p1 is on last
+    {
       p2  = p1;
       cas = 3;
     }
     else
-    { // p1 is not on last
+    {
       p2  = ElCLib::InPeriod(p1, first, last);
       cas = 4;
     }
   }
   return p2;
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_PaveClassifier::AdjustOnPeriodic()
 {
@@ -227,15 +218,11 @@ void TopOpeBRepBuild_PaveClassifier::AdjustOnPeriodic()
 #endif
 }
 
-//=================================================================================================
-
 bool TopOpeBRepBuild_PaveClassifier::ToAdjustOnPeriodic() const
 {
   bool toadjust = ((mySameParameters) || (myO1 != myO2));
   return toadjust;
 }
-
-//=================================================================================================
 
 TopAbs_State TopOpeBRepBuild_PaveClassifier::CompareOnPeriodic()
 {
@@ -274,15 +261,13 @@ TopAbs_State TopOpeBRepBuild_PaveClassifier::CompareOnPeriodic()
   return state;
 }
 
-//=================================================================================================
-
 TopAbs_State TopOpeBRepBuild_PaveClassifier::Compare(const occ::handle<TopOpeBRepBuild_Loop>& L1,
                                                      const occ::handle<TopOpeBRepBuild_Loop>& L2)
 {
   const occ::handle<TopOpeBRepBuild_Pave>& PV1 = *((occ::handle<TopOpeBRepBuild_Pave>*)&(L1));
   const occ::handle<TopOpeBRepBuild_Pave>& PV2 = *((occ::handle<TopOpeBRepBuild_Pave>*)&(L2));
 
-  myCas1 = myCas2 = 0; // debug
+  myCas1 = myCas2 = 0;
   myO1            = PV1->Vertex().Orientation();
   myO2            = PV2->Vertex().Orientation();
   myP1            = PV1->Parameter();
@@ -323,8 +308,6 @@ TopAbs_State TopOpeBRepBuild_PaveClassifier::Compare(const occ::handle<TopOpeBRe
   return state;
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_PaveClassifier::SetFirstParameter(const double P)
 {
   myFirst          = P;
@@ -335,8 +318,6 @@ void TopOpeBRepBuild_PaveClassifier::SetFirstParameter(const double P)
     std::cout << std::endl << "VC : set first parameter " << myFirst << std::endl;
 #endif
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_PaveClassifier::ClosedVertices(const bool Closed)
 {

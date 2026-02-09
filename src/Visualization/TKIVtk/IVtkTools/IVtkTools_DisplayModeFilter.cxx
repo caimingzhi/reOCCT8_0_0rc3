@@ -1,7 +1,6 @@
 #include <IVtkTools_DisplayModeFilter.hpp>
 #include <IVtkVTK_ShapeData.hpp>
 
-// prevent disabling some MSVC warning messages by VTK headers
 #ifdef _MSC_VER
   #pragma warning(push)
 #endif
@@ -14,17 +13,13 @@
 
 vtkStandardNewMacro(IVtkTools_DisplayModeFilter)
 
-  //============================================================================
-  // Method: Constructor
-  // Purpose:
-  //============================================================================
   IVtkTools_DisplayModeFilter::IVtkTools_DisplayModeFilter()
     : myDisplayMode(DM_Wireframe),
       myDoDisplaySharedVertices(false),
       myDrawFaceBoundaries(false),
       myIsSmoothShading(true)
 {
-  // Filter according to values in subshapes types array.
+
   myIdsArrayName = IVtkVTK_ShapeData::ARRNAME_MESH_TYPES();
 
   NCollection_Map<IVtk_IdType> aTypes;
@@ -46,15 +41,8 @@ vtkStandardNewMacro(IVtkTools_DisplayModeFilter)
   myModesDefinition[DM_Shading] = aTypes;
 }
 
-//=================================================================================================
-
 IVtkTools_DisplayModeFilter::~IVtkTools_DisplayModeFilter() = default;
 
-//============================================================================
-// Method: RequestData
-// Purpose: Filters cells according to the selected display mode by mesh
-//          parts types.
-//============================================================================
 int IVtkTools_DisplayModeFilter::RequestData(vtkInformation*        theRequest,
                                              vtkInformationVector** theInputVector,
                                              vtkInformationVector*  theOutputVector)
@@ -63,8 +51,6 @@ int IVtkTools_DisplayModeFilter::RequestData(vtkInformation*        theRequest,
   myToCopyNormals = myIsSmoothShading && (myDisplayMode == DM_Shading);
   return Superclass::RequestData(theRequest, theInputVector, theOutputVector);
 }
-
-//=================================================================================================
 
 void IVtkTools_DisplayModeFilter::PrintSelf(std::ostream& theOs, vtkIndent theIndent)
 {
@@ -79,8 +65,6 @@ void IVtkTools_DisplayModeFilter::PrintSelf(std::ostream& theOs, vtkIndent theIn
     theOs << "Shading\n";
   }
 }
-
-//=================================================================================================
 
 void IVtkTools_DisplayModeFilter::SetDisplaySharedVertices(const bool theDoDisplay)
 {
@@ -105,8 +89,6 @@ void IVtkTools_DisplayModeFilter::SetDisplaySharedVertices(const bool theDoDispl
   }
 }
 
-//=================================================================================================
-
 void IVtkTools_DisplayModeFilter::SetDisplayMode(const IVtk_DisplayMode theMode)
 {
   if (myDisplayMode != theMode)
@@ -116,22 +98,16 @@ void IVtkTools_DisplayModeFilter::SetDisplayMode(const IVtk_DisplayMode theMode)
   }
 }
 
-//=================================================================================================
-
 IVtk_DisplayMode IVtkTools_DisplayModeFilter::GetDisplayMode() const
 {
   return myDisplayMode;
 }
-
-//=================================================================================================
 
 const NCollection_Map<IVtk_IdType>& IVtkTools_DisplayModeFilter::MeshTypesForMode(
   IVtk_DisplayMode theMode) const
 {
   return myModesDefinition[theMode];
 }
-
-//=================================================================================================
 
 void IVtkTools_DisplayModeFilter::SetMeshTypesForMode(
   IVtk_DisplayMode                    theMode,
@@ -140,8 +116,6 @@ void IVtkTools_DisplayModeFilter::SetMeshTypesForMode(
   myModesDefinition[theMode] = theMeshTypes;
   Modified();
 }
-
-//=================================================================================================
 
 void IVtkTools_DisplayModeFilter::SetFaceBoundaryDraw(bool theToDraw)
 {
@@ -158,8 +132,6 @@ void IVtkTools_DisplayModeFilter::SetFaceBoundaryDraw(bool theToDraw)
   }
   Modified();
 }
-
-//=================================================================================================
 
 void IVtkTools_DisplayModeFilter::SetSmoothShading(bool theIsSmooth)
 {

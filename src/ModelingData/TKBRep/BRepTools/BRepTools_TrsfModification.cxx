@@ -22,29 +22,21 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepTools_TrsfModification, BRepTools_Modification)
 
-//=================================================================================================
-
 BRepTools_TrsfModification::BRepTools_TrsfModification(const gp_Trsf& T)
     : myTrsf(T),
       myCopyMesh(false)
 {
 }
 
-//=================================================================================================
-
 gp_Trsf& BRepTools_TrsfModification::Trsf()
 {
   return myTrsf;
 }
 
-//=================================================================================================
-
 bool& BRepTools_TrsfModification::IsCopyMesh()
 {
   return myCopyMesh;
 }
-
-//=================================================================================================
 
 bool BRepTools_TrsfModification::NewSurface(const TopoDS_Face&         F,
                                             occ::handle<Geom_Surface>& S,
@@ -56,7 +48,7 @@ bool BRepTools_TrsfModification::NewSurface(const TopoDS_Face&         F,
   S = BRep_Tool::Surface(F, L);
   if (S.IsNull())
   {
-    // processing cases when there is no geometry
+
     return false;
   }
 
@@ -74,8 +66,6 @@ bool BRepTools_TrsfModification::NewSurface(const TopoDS_Face&         F,
 
   return true;
 }
-
-//=================================================================================================
 
 bool BRepTools_TrsfModification::NewTriangulation(const TopoDS_Face&               theFace,
                                                   occ::handle<Poly_Triangulation>& theTriangulation)
@@ -100,16 +90,16 @@ bool BRepTools_TrsfModification::NewTriangulation(const TopoDS_Face&            
   }
 
   theTriangulation = theTriangulation->Copy();
-  theTriangulation->SetCachedMinMax(Bnd_Box()); // clear bounding box
+  theTriangulation->SetCachedMinMax(Bnd_Box());
   theTriangulation->Deflection(theTriangulation->Deflection() * std::abs(myTrsf.ScaleFactor()));
-  // apply transformation to 3D nodes
+
   for (int anInd = 1; anInd <= theTriangulation->NbNodes(); ++anInd)
   {
     gp_Pnt aP = theTriangulation->Node(anInd);
     aP.Transform(aTrsf);
     theTriangulation->SetNode(anInd, aP);
   }
-  // modify 2D nodes
+
   occ::handle<Geom_Surface> aSurf = BRep_Tool::Surface(theFace, aLoc);
   if (theTriangulation->HasUVNodes() && !aSurf.IsNull())
   {
@@ -122,7 +112,7 @@ bool BRepTools_TrsfModification::NewTriangulation(const TopoDS_Face&            
       theTriangulation->SetUVNode(anInd, aP2d);
     }
   }
-  // modify triangles orientation in case of mirror transformation
+
   if (myTrsf.ScaleFactor() < 0.0)
   {
     for (int anInd = 1; anInd <= theTriangulation->NbTriangles(); ++anInd)
@@ -134,7 +124,7 @@ bool BRepTools_TrsfModification::NewTriangulation(const TopoDS_Face&            
       theTriangulation->SetTriangle(anInd, aTria);
     }
   }
-  // modify normals
+
   if (theTriangulation->HasNormals())
   {
     for (int anInd = 1; anInd <= theTriangulation->NbNodes(); ++anInd)
@@ -147,8 +137,6 @@ bool BRepTools_TrsfModification::NewTriangulation(const TopoDS_Face&            
 
   return true;
 }
-
-//=================================================================================================
 
 bool BRepTools_TrsfModification::NewPolygon(const TopoDS_Edge&           theE,
                                             occ::handle<Poly_Polygon3D>& theP)
@@ -176,10 +164,10 @@ bool BRepTools_TrsfModification::NewPolygon(const TopoDS_Edge&           theE,
   NCollection_Array1<gp_Pnt>& aNodesArray = theP->ChangeNodes();
   for (int anId = aNodesArray.Lower(); anId <= aNodesArray.Upper(); ++anId)
   {
-    // Applying the transformation to each node of polygon
+
     aNodesArray.ChangeValue(anId).Transform(aTrsf);
   }
-  // transform the parametrization
+
   if (theP->HasParameters())
   {
     TopLoc_Location         aCurveLoc;
@@ -200,8 +188,6 @@ bool BRepTools_TrsfModification::NewPolygon(const TopoDS_Edge&           theE,
   }
   return true;
 }
-
-//=================================================================================================
 
 bool BRepTools_TrsfModification::NewPolygonOnTriangulation(
   const TopoDS_Edge&                        theE,
@@ -229,7 +215,6 @@ bool BRepTools_TrsfModification::NewPolygonOnTriangulation(
   theP = theP->Copy();
   theP->Deflection(theP->Deflection() * std::abs(myTrsf.ScaleFactor()));
 
-  // transform the parametrization
   occ::handle<Geom_Surface> aSurf = BRep_Tool::Surface(theF, aLoc);
   double                    aFirst, aLast;
   occ::handle<Geom2d_Curve> aC2d = BRep_Tool::CurveOnSurface(theE, theF, aFirst, aLast);
@@ -253,8 +238,6 @@ bool BRepTools_TrsfModification::NewPolygonOnTriangulation(
 
   return true;
 }
-
-//=================================================================================================
 
 bool BRepTools_TrsfModification::NewCurve(const TopoDS_Edge&       E,
                                           occ::handle<Geom_Curve>& C,
@@ -280,8 +263,6 @@ bool BRepTools_TrsfModification::NewCurve(const TopoDS_Edge&       E,
   return true;
 }
 
-//=================================================================================================
-
 bool BRepTools_TrsfModification::NewPoint(const TopoDS_Vertex& V, gp_Pnt& P, double& Tol)
 {
   P   = BRep_Tool::Pnt(V);
@@ -291,8 +272,6 @@ bool BRepTools_TrsfModification::NewPoint(const TopoDS_Vertex& V, gp_Pnt& P, dou
 
   return true;
 }
-
-//=================================================================================================
 
 bool BRepTools_TrsfModification::NewCurve2d(const TopoDS_Edge& E,
                                             const TopoDS_Face& F,
@@ -309,7 +288,7 @@ bool BRepTools_TrsfModification::NewCurve2d(const TopoDS_Edge& E,
 
   if (S.IsNull())
   {
-    // processing the case when the surface (geometry) is deleted
+
     return false;
   }
   GeomAdaptor_Surface GAsurf(S);
@@ -371,11 +350,11 @@ bool BRepTools_TrsfModification::NewCurve2d(const TopoDS_Edge& E,
       newl = NewC->LastParameter();
     }
   }
-  // il faut parfois recadrer les ranges 3d / 2d
+
   TopoDS_Vertex V1, V2;
   TopExp::Vertices(E, V1, V2);
-  TopoDS_Shape initEFOR = E.Oriented(TopAbs_FORWARD);                            // skl
-  TopoDS_Edge  EFOR     = TopoDS::Edge(initEFOR /*E.Oriented(TopAbs_FORWARD)*/); // skl
+  TopoDS_Shape initEFOR = E.Oriented(TopAbs_FORWARD);
+  TopoDS_Edge  EFOR     = TopoDS::Edge(initEFOR);
   double       aTolV;
   NewParameter(V1, EFOR, f, aTolV);
   NewParameter(V2, EFOR, l, aTolV);
@@ -384,15 +363,13 @@ bool BRepTools_TrsfModification::NewCurve2d(const TopoDS_Edge& E,
   return true;
 }
 
-//=================================================================================================
-
 bool BRepTools_TrsfModification::NewParameter(const TopoDS_Vertex& V,
                                               const TopoDS_Edge&   E,
                                               double&              P,
                                               double&              Tol)
 {
   if (V.IsNull())
-    return false; // infinite edge may have Null vertex
+    return false;
 
   TopLoc_Location loc;
   Tol = BRep_Tool::Tolerance(V);
@@ -409,8 +386,6 @@ bool BRepTools_TrsfModification::NewParameter(const TopoDS_Vertex& V,
 
   return true;
 }
-
-//=================================================================================================
 
 GeomAbs_Shape BRepTools_TrsfModification::Continuity(const TopoDS_Edge& E,
                                                      const TopoDS_Face& F1,

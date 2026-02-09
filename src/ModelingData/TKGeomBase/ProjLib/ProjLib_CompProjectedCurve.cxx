@@ -60,9 +60,6 @@ static void ResultChron(OSD_Chronometer& ch, double& time)
 }
 #endif
 
-// Structure to perform splits computation.
-// This structure is not thread-safe since operations under mySplits should be performed in a
-// critical section. myPeriodicDir - 0 for U periodicity and 1 for V periodicity.
 struct SplitDS
 {
   SplitDS(const occ::handle<Adaptor3d_Curve>&   theCurve,
@@ -94,36 +91,23 @@ struct SplitDS
   Extrema_ExtPS* myExtPS;
 
 private:
-  // Assignment operator is forbidden.
   void operator=(const SplitDS& theSplitDS) = delete;
 };
 
-//! Compute split points in the parameter space of the curve.
 static void BuildCurveSplits(const occ::handle<Adaptor3d_Curve>&   theCurve,
                              const occ::handle<Adaptor3d_Surface>& theSurface,
                              const double                          theTolU,
                              const double                          theTolV,
                              NCollection_Vector<double>&           theSplits);
 
-//! Perform splitting on a specified direction. Sub-method in BuildCurveSplits.
 static void SplitOnDirection(SplitDS& theSplitDS);
 
-//! Perform recursive search of the split points.
 static void FindSplitPoint(SplitDS& theSplitDS, const double theMinParam, const double theMaxParam);
 
-//=======================================================================
-// function : Comparator
-// purpose  : used in sort algorithm
-//=======================================================================
 inline bool Comparator(const double theA, const double theB)
 {
   return theA < theB;
 }
-
-//=======================================================================
-// function : d1
-// purpose  : computes first derivative of the projected curve
-//=======================================================================
 
 static void d1(const double                          t,
                const double                          u,
@@ -136,7 +120,7 @@ static void d1(const double                          t,
   gp_Vec DS1_u, DS1_v, DS2_u, DS2_uv, DS2_v, DC1_t;
   Surface->D2(u, v, S, DS1_u, DS1_v, DS2_u, DS2_v, DS2_uv);
   Curve->D1(t, C, DC1_t);
-  gp_Vec Ort(C, S); // Ort = S - C
+  gp_Vec Ort(C, S);
 
   gp_Vec2d dE_dt(-DC1_t * DS1_u, -DC1_t * DS1_v);
   gp_XY    dE_du(DS1_u * DS1_u + Ort * DS2_u, DS1_u * DS1_v + Ort * DS2_uv);
@@ -150,11 +134,6 @@ static void d1(const double                          t,
 
   V = -gp_Vec2d(gp_Vec2d(M.Row(1)) * dE_dt, gp_Vec2d(M.Row(2)) * dE_dt);
 }
-
-//=======================================================================
-// function : d2
-// purpose  : computes second derivative of the projected curve
-//=======================================================================
 
 static void d2(const double                          t,
                const double                          u,
@@ -180,34 +159,23 @@ static void d2(const double                          t,
 
   gp_Mat2d M(gp_XY(dE_dv.Y() / det, -dE_du.Y() / det), gp_XY(-dE_dv.X() / det, dE_du.X() / det));
 
-  // First derivative
   V1 = -gp_Vec2d(gp_Vec2d(M.Row(1)) * dE_dt, gp_Vec2d(M.Row(2)) * dE_dt);
 
-  /* Second derivative */
-
-  // Computation of d2E_dt2 = S1
   gp_Vec2d d2E_dt(-DC2_t * DS1_u, -DC2_t * DS1_v);
 
-  // Computation of 2*(d2E/dtdX)(dX/dt) = S2
   gp_Vec2d d2E1_dtdX(-DC1_t * DS2_u, -DC1_t * DS2_uv);
   gp_Vec2d d2E2_dtdX(-DC1_t * DS2_uv, -DC1_t * DS2_v);
   gp_Vec2d S2 = 2 * gp_Vec2d(d2E1_dtdX * V1, d2E2_dtdX * V1);
 
-  // Computation of (d2E/dX2)*(dX/dt)2 = S3
-
-  // Row11 = (d2E1/du2, d2E1/dudv)
   double   tmp;
   gp_Vec2d Row11(3 * DS1_u * DS2_u + Ort * DS3_u,
                  tmp = 2 * DS1_u * DS2_uv + DS1_v * DS2_u + Ort * DS3_uuv);
 
-  // Row12 = (d2E1/dudv, d2E1/dv2)
   gp_Vec2d Row12(tmp, DS2_v * DS1_u + 2 * DS1_v * DS2_uv + Ort * DS3_uvv);
 
-  // Row21 = (d2E2/du2, d2E2/dudv)
   gp_Vec2d Row21(DS2_u * DS1_v + 2 * DS1_u * DS2_uv + Ort * DS3_uuv,
                  tmp = 2 * DS2_uv * DS1_v + DS1_u * DS2_v + Ort * DS3_uvv);
 
-  // Row22 = (d2E2/duv, d2E2/dvdv)
   gp_Vec2d Row22(tmp, 3 * DS1_v * DS2_v + Ort * DS3_v);
 
   gp_Vec2d S3(V1 * gp_Vec2d(Row11 * V1, Row12 * V1), V1 * gp_Vec2d(Row21 * V1, Row22 * V1));
@@ -216,16 +184,6 @@ static void d2(const double                          t,
 
   V2 = -gp_Vec2d(gp_Vec2d(M.Row(1)) * Sum, gp_Vec2d(M.Row(2)) * Sum);
 }
-
-//=======================================================================
-// function : d1CurveOnSurf
-// purpose  : computes first derivative of the 3d projected curve
-//=======================================================================
-
-//=======================================================================
-// function : d2CurveOnSurf
-// purpose  : computes second derivative of the 3D projected curve
-//=======================================================================
 
 static void d2CurvOnSurf(const double                          t,
                          const double                          u,
@@ -252,34 +210,23 @@ static void d2CurvOnSurf(const double                          t,
 
   gp_Mat2d M(gp_XY(dE_dv.Y() / det, -dE_du.Y() / det), gp_XY(-dE_dv.X() / det, dE_du.X() / det));
 
-  // First derivative
   V12d = -gp_Vec2d(gp_Vec2d(M.Row(1)) * dE_dt, gp_Vec2d(M.Row(2)) * dE_dt);
 
-  /* Second derivative */
-
-  // Computation of d2E_dt2 = S1
   gp_Vec2d d2E_dt(-DC2_t * DS1_u, -DC2_t * DS1_v);
 
-  // Computation of 2*(d2E/dtdX)(dX/dt) = S2
   gp_Vec2d d2E1_dtdX(-DC1_t * DS2_u, -DC1_t * DS2_uv);
   gp_Vec2d d2E2_dtdX(-DC1_t * DS2_uv, -DC1_t * DS2_v);
   gp_Vec2d S2 = 2 * gp_Vec2d(d2E1_dtdX * V12d, d2E2_dtdX * V12d);
 
-  // Computation of (d2E/dX2)*(dX/dt)2 = S3
-
-  // Row11 = (d2E1/du2, d2E1/dudv)
   double   tmp;
   gp_Vec2d Row11(3 * DS1_u * DS2_u + Ort * DS3_u,
                  tmp = 2 * DS1_u * DS2_uv + DS1_v * DS2_u + Ort * DS3_uuv);
 
-  // Row12 = (d2E1/dudv, d2E1/dv2)
   gp_Vec2d Row12(tmp, DS2_v * DS1_u + 2 * DS1_v * DS2_uv + Ort * DS3_uvv);
 
-  // Row21 = (d2E2/du2, d2E2/dudv)
   gp_Vec2d Row21(DS2_u * DS1_v + 2 * DS1_u * DS2_uv + Ort * DS3_uuv,
                  tmp = 2 * DS2_uv * DS1_v + DS1_u * DS2_v + Ort * DS3_uvv);
 
-  // Row22 = (d2E2/duv, d2E2/dvdv)
   gp_Vec2d Row22(tmp, 3 * DS1_v * DS2_v + Ort * DS3_v);
 
   gp_Vec2d S3(V12d * gp_Vec2d(Row11 * V12d, Row12 * V12d),
@@ -293,11 +240,6 @@ static void d2CurvOnSurf(const double                          t,
   V2 = DS2_u * V12d.X() * V12d.X() + DS1_u * V22d.X() + 2 * DS2_uv * V12d.X() * V12d.Y()
        + DS2_v * V12d.Y() * V12d.Y() + DS1_v * V22d.Y();
 }
-
-//=======================================================================
-// function : ExactBound
-// purpose  : computes exact boundary point
-//=======================================================================
 
 static bool ExactBound(gp_Pnt&                               Sol,
                        const double                          NotSol,
@@ -315,13 +257,12 @@ static bool ExactBound(gp_Pnt&                               Sol,
   LastU  = Surface->LastUParameter();
   FirstV = Surface->FirstVParameter();
   LastV  = Surface->LastVParameter();
-  // Here we have to compute the boundary that projection is going to intersect
+
   gp_Vec2d D2d;
-  // these variables are to estimate which boundary has more opportunity
-  // to be intersected
+
   double RU1, RU2, RV1, RV2;
   d1(Sol.X(), U0, V0, D2d, Curve, Surface);
-  // Here we assume that D2d != (0, 0)
+
   if (std::abs(D2d.X()) < gp::Resolution())
   {
     RU1 = Precision::Infinite();
@@ -411,11 +352,6 @@ static bool ExactBound(gp_Pnt&                               Sol,
   return isDone;
 }
 
-//=======================================================================
-// function : DichExactBound
-// purpose  : computes exact boundary point
-//=======================================================================
-
 static void DichExactBound(gp_Pnt&                               Sol,
                            const double                          NotSol,
                            const double                          Tol,
@@ -463,8 +399,6 @@ static void DichExactBound(gp_Pnt&                               Sol,
 #endif
 }
 
-//=================================================================================================
-
 static bool InitialPoint(const gp_Pnt&                         Point,
                          const double                          t,
                          const occ::handle<Adaptor3d_Curve>&   C,
@@ -496,7 +430,7 @@ static bool InitialPoint(const gp_Pnt&                         Point,
   if (aExtPS.IsDone() && aExtPS.NbExt())
   {
     int i, Nend;
-    // Search for the nearest solution which is also a normal projection
+
     Nend = aExtPS.NbExt();
     for (i = 1; i <= Nend; i++)
     {
@@ -529,8 +463,6 @@ static bool InitialPoint(const gp_Pnt&                         Point,
   }
 }
 
-//=================================================================================================
-
 ProjLib_CompProjectedCurve::ProjLib_CompProjectedCurve()
     : myNbCurves(0),
       myMaxDist(0.0),
@@ -538,8 +470,6 @@ ProjLib_CompProjectedCurve::ProjLib_CompProjectedCurve()
       myTolV(0.0)
 {
 }
-
-//=================================================================================================
 
 ProjLib_CompProjectedCurve::ProjLib_CompProjectedCurve(
   const occ::handle<Adaptor3d_Surface>& theSurface,
@@ -562,8 +492,6 @@ ProjLib_CompProjectedCurve::ProjLib_CompProjectedCurve(
 {
   Init();
 }
-
-//=================================================================================================
 
 ProjLib_CompProjectedCurve::ProjLib_CompProjectedCurve(
   const occ::handle<Adaptor3d_Surface>& theSurface,
@@ -588,8 +516,6 @@ ProjLib_CompProjectedCurve::ProjLib_CompProjectedCurve(
   Init();
 }
 
-//=================================================================================================
-
 ProjLib_CompProjectedCurve::ProjLib_CompProjectedCurve(
   const double                          theTol3d,
   const occ::handle<Adaptor3d_Surface>& theSurface,
@@ -612,8 +538,6 @@ ProjLib_CompProjectedCurve::ProjLib_CompProjectedCurve(
 
   Init();
 }
-
-//=================================================================================================
 
 occ::handle<Adaptor2d_Curve2d> ProjLib_CompProjectedCurve::ShallowCopy() const
 {
@@ -640,15 +564,13 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_CompProjectedCurve::ShallowCopy() const
   return aCopy;
 }
 
-//=================================================================================================
-
 void ProjLib_CompProjectedCurve::Init()
 {
   myTabInt.Nullify();
   NCollection_Vector<double> aSplits;
   aSplits.Clear();
 
-  double Tol; // Tolerance for ExactBound
+  double Tol;
   int    i, Nend = 0, aSplitIdx = 0;
   bool   FromLastU = false, isSplitsComputed = false;
 
@@ -656,8 +578,7 @@ void ProjLib_CompProjectedCurve::Init()
   Extrema_ExtCS    CExt(*myCurve, *mySurface, aTolExt, aTolExt);
   if (CExt.IsDone() && CExt.NbExt())
   {
-    // Search for the minimum solution.
-    // Avoid usage of extrema result that can be wrong for extrusion.
+
     if (myMaxDist > 0 &&
 
         mySurface->GetType() != GeomAbs_SurfaceOfExtrusion)
@@ -672,7 +593,7 @@ void ProjLib_CompProjectedCurve::Init()
           min_val2 = CExt.SquareDistance(i);
       }
       if (min_val2 > myMaxDist * myMaxDist)
-        return; // No near solution -> exit.
+        return;
     }
   }
 
@@ -681,8 +602,7 @@ void ProjLib_CompProjectedCurve::Init()
   FirstU                     = myCurve->FirstParameter();
   LastU                      = myCurve->LastParameter();
   const double GlobalMinStep = 1.e-4;
-  //<GlobalMinStep> is sufficiently small to provide solving from initial point
-  // and, on the other hand, it is sufficiently large to avoid too close solutions.
+
   const double MinStep = 0.01 * (LastU - FirstU), MaxStep = 0.1 * (LastU - FirstU);
   SearchStep = 10 * MinStep;
   Step       = SearchStep;
@@ -699,11 +619,9 @@ void ProjLib_CompProjectedCurve::Init()
 
   gp_Pnt Triple, prevTriple;
 
-  // Basic loop
   while (t <= LastU)
   {
-    // Search for the beginning of a new continuous part
-    // to avoid infinite computation in some difficult cases.
+
     new_part = false;
     if (t > FirstU && std::abs(t - prevDeb) <= Precision::PConfusion())
       SameDeb = true;
@@ -717,7 +635,6 @@ void ProjLib_CompProjectedCurve::Init()
       gp_Pnt CPoint;
       double ParT, ParU, ParV;
 
-      // Search an initial point in the list of Extrema Curve-Surface
       if (Nend != 0 && !CExt.IsParallel())
       {
         for (i = 1; i <= Nend; i++)
@@ -749,7 +666,7 @@ void ProjLib_CompProjectedCurve::Init()
 #ifdef OCCT_DEBUG_CHRONO
         InitChron(chr_init_point);
 #endif
-        // PConfusion - use geometric tolerances in extrema / optimization.
+
         initpoint = InitialPoint(CPoint, t, myCurve, mySurface, myTolU, myTolV, U, V, myMaxDist);
 #ifdef OCCT_DEBUG_CHRONO
         ResultChron(chr_init_point, t_init_point);
@@ -758,8 +675,7 @@ void ProjLib_CompProjectedCurve::Init()
       }
       if (initpoint)
       {
-        // When U or V lie on surface joint in some cases we cannot use them
-        // as initial point for aPrjPS, so we switch them
+
         gp_Vec2d D;
 
         if ((mySurface->IsUPeriodic()
@@ -802,8 +718,7 @@ void ProjLib_CompProjectedCurve::Init()
 
         if (myMaxDist > 0)
         {
-          // Here we are going to stop if the distance between projection and
-          // corresponding curve point is greater than myMaxDist
+
           gp_Pnt POnS;
           double d;
           mySurface->D0(U, V, POnS);
@@ -818,7 +733,7 @@ void ProjLib_CompProjectedCurve::Init()
         Triple = gp_Pnt(t, U, V);
         if (t != FirstU)
         {
-          // Search for exact boundary point
+
           Tol = std::min(myTolU, myTolV);
           gp_Vec2d aD;
           d1(Triple.X(), Triple.Y(), Triple.Z(), aD, myCurve, mySurface);
@@ -849,7 +764,6 @@ void ProjLib_CompProjectedCurve::Init()
     if (!new_part)
       break;
 
-    // We have found a new continuous part
     occ::handle<NCollection_HSequence<gp_Pnt>> hSeq = new NCollection_HSequence<gp_Pnt>();
     mySequence->Append(hSeq);
     myNbCurves++;
@@ -857,9 +771,8 @@ void ProjLib_CompProjectedCurve::Init()
     prevTriple = Triple;
 
     if (Triple.X() == LastU)
-      break; // return;
+      break;
 
-    // Computation of WalkStep
     gp_Vec D1, D2;
     double MagnD1, MagnD2;
     d2CurvOnSurf(Triple.X(), Triple.Y(), Triple.Z(), D1, D2, myCurve, mySurface);
@@ -878,15 +791,14 @@ void ProjLib_CompProjectedCurve::Init()
     double prevStep = Step;
     double U0, V0;
 
-    // Here we are trying to prolong continuous part
     while (t <= LastU && new_part)
     {
 
       U0 = Triple.Y() + (Step / prevStep) * (Triple.Y() - prevTriple.Y());
       V0 = Triple.Z() + (Step / prevStep) * (Triple.Z() - prevTriple.Z());
-      // adjust U0 to be in [mySurface->FirstUParameter(),mySurface->LastUParameter()]
+
       U0 = std::min(std::max(U0, aLowBorder.X()), aUppBorder.X());
-      // adjust V0 to be in [mySurface->FirstVParameter(),mySurface->LastVParameter()]
+
       V0 = std::min(std::max(V0, aLowBorder.Y()), aUppBorder.Y());
 
       aPrjPS.Perform(t, U0, V0, aTol, aLowBorder, aUppBorder, FuncTol, true);
@@ -894,7 +806,7 @@ void ProjLib_CompProjectedCurve::Init()
       {
         if (Step <= GlobalMinStep)
         {
-          // Search for exact boundary point
+
           Tol = std::min(myTolU, myTolV);
           gp_Vec2d D;
           d1(Triple.X(), Triple.Y(), Triple.Z(), D, myCurve, mySurface);
@@ -916,7 +828,7 @@ void ProjLib_CompProjectedCurve::Init()
           {
             t = LastU + 1;
             break;
-          } // return;
+          }
 
           Step = SearchStep;
           t    = Triple.X() + Step;
@@ -929,7 +841,7 @@ void ProjLib_CompProjectedCurve::Init()
         }
         else
         {
-          // decrease step
+
           double SaveStep = Step;
           Step /= 2.;
           t = Triple.X() + Step;
@@ -937,22 +849,20 @@ void ProjLib_CompProjectedCurve::Init()
           {
             Step = Step + LastU - t;
             if (std::abs(Step - SaveStep) <= Precision::PConfusion())
-              Step = GlobalMinStep; // to avoid looping
+              Step = GlobalMinStep;
             t = LastU;
           }
         }
       }
-      // Go further
+
       else
       {
         prevTriple = Triple;
         prevStep   = Step;
         Triple     = gp_Pnt(t, aPrjPS.Solution().X(), aPrjPS.Solution().Y());
 
-        // Check for possible local traps.
         UpdateTripleByTrapCriteria(Triple);
 
-        // Protection from case when the whole curve lies on a seam.
         if (!isSplitsComputed)
         {
           bool isUPossible = false;
@@ -973,7 +883,7 @@ void ProjLib_CompProjectedCurve::Init()
 
           if (isUPossible || isVPossible)
           {
-            // When point is good conditioned.
+
             BuildCurveSplits(myCurve, mySurface, myTolU, myTolV, aSplits);
             isSplitsComputed = true;
           }
@@ -987,8 +897,8 @@ void ProjLib_CompProjectedCurve::Init()
         {
           t = LastU + 1;
           break;
-        } // return;
-        // Computation of WalkStep
+        }
+
         d2CurvOnSurf(Triple.X(), Triple.Y(), Triple.Z(), D1, D2, myCurve, mySurface);
         MagnD1 = D1.Magnitude();
         MagnD2 = D2.Magnitude();
@@ -1005,40 +915,36 @@ void ProjLib_CompProjectedCurve::Init()
           t    = LastU;
         }
 
-        // We assume at least one point of cache inside of a split.
         const int aSize = aSplits.Size();
         for (int anIdx = aSplitIdx; anIdx < aSize; ++anIdx)
         {
           const double aParam = aSplits(anIdx);
           if (std::abs(aParam - Triple.X()) < Precision::PConfusion())
           {
-            // The current point is equal to a split point.
+
             new_part = false;
 
-            // Move split index to avoid check of the whole list.
             ++aSplitIdx;
             break;
           }
           else if (aParam < t + Precision::PConfusion())
           {
-            // The next point crosses the split point.
+
             t    = aParam;
             Step = t - prevTriple.X();
           }
-        } // for(int anIdx = aSplitIdx; anIdx < aSize; ++anIdx)
+        }
       }
     }
   }
 
-  // Sequence post-proceeding.
   int j;
 
-  // 1. Removing poor parts
   int NbPart = myNbCurves;
   int ipart  = 1;
   for (i = 1; i <= NbPart; i++)
   {
-    //    int NbPoints = mySequence->Value(i)->Length();
+
     if (mySequence->Value(ipart)->Length() < 2)
     {
       mySequence->Remove(ipart);
@@ -1051,7 +957,6 @@ void ProjLib_CompProjectedCurve::Init()
   if (myNbCurves == 0)
     return;
 
-  // 2. Removing common parts of bounds
   for (i = 1; i < myNbCurves; i++)
   {
     if (mySequence->Value(i)->Value(mySequence->Value(i)->Length()).X()
@@ -1061,8 +966,6 @@ void ProjLib_CompProjectedCurve::Init()
         mySequence->Value(i)->Value(mySequence->Value(i)->Length()).X() + 1.e-12);
     }
   }
-
-  // 3. Computation of the maximum distance from each part of curve to surface
 
   myMaxDistance = new NCollection_HArray1<double>(1, myNbCurves);
   myMaxDistance->Init(0);
@@ -1083,8 +986,6 @@ void ProjLib_CompProjectedCurve::Init()
     }
   }
 
-  // 4. Check the projection to be a single point
-
   gp_Pnt2d Pmoy, Pcurr, P;
   double   AveU, AveV;
   mySnglPnts = new NCollection_HArray1<bool>(1, myNbCurves);
@@ -1092,7 +993,6 @@ void ProjLib_CompProjectedCurve::Init()
 
   for (i = 1; i <= myNbCurves; i++)
   {
-    // compute an average U and V
 
     for (j = 1, AveU = 0., AveV = 0.; j <= mySequence->Value(i)->Length(); j++)
     {
@@ -1114,8 +1014,6 @@ void ProjLib_CompProjectedCurve::Init()
     }
   }
 
-  // 5. Check the projection to be an isoparametric curve of the surface
-
   myUIso = new NCollection_HArray1<bool>(1, myNbCurves);
   myUIso->Init(true);
 
@@ -1131,11 +1029,8 @@ void ProjLib_CompProjectedCurve::Init()
       continue;
     }
 
-    // new test for isoparametrics
-
     if (mySequence->Value(i)->Length() > 2)
     {
-      // compute an average U and V
 
       for (j = 1, AveU = 0., AveV = 0.; j <= mySequence->Value(i)->Length(); j++)
       {
@@ -1145,7 +1040,6 @@ void ProjLib_CompProjectedCurve::Init()
       AveU /= mySequence->Value(i)->Length();
       AveV /= mySequence->Value(i)->Length();
 
-      // is i-part U-isoparametric ?
       for (j = 1; j <= mySequence->Value(i)->Length(); j++)
       {
         if (std::abs(mySequence->Value(i)->Value(j).Y() - AveU) > myTolU)
@@ -1155,7 +1049,6 @@ void ProjLib_CompProjectedCurve::Init()
         }
       }
 
-      // is i-part V-isoparametric ?
       for (j = 1; j <= mySequence->Value(i)->Length(); j++)
       {
         if (std::abs(mySequence->Value(i)->Value(j).Z() - AveV) > myTolV)
@@ -1164,12 +1057,9 @@ void ProjLib_CompProjectedCurve::Init()
           break;
         }
       }
-      //
     }
   }
 }
-
-//=================================================================================================
 
 void ProjLib_CompProjectedCurve::Perform()
 {
@@ -1182,8 +1072,8 @@ void ProjLib_CompProjectedCurve::Perform()
   gp_Pnt2d                       P2d, Pdeb, Pfin;
   gp_Pnt                         P;
   occ::handle<Adaptor2d_Curve2d> HPCur;
-  occ::handle<Adaptor3d_Surface> HS = mySurface->ShallowCopy(); // For expand bounds of surface
-  occ::handle<Geom2d_Curve>      PCur2d;                        // Only for isoparametric projection
+  occ::handle<Adaptor3d_Surface> HS = mySurface->ShallowCopy();
+  occ::handle<Geom2d_Curve>      PCur2d;
   occ::handle<Geom_Curve>        PCur3d;
 
   if (myProj2d)
@@ -1212,7 +1102,7 @@ void ProjLib_CompProjectedCurve::Perform()
 
   for (int k = 1; k <= myNbCurves; k++)
   {
-    if (IsSinglePnt(k, P2d)) // Part k of the projection is punctual
+    if (IsSinglePnt(k, P2d))
     {
       GetSurface()->D0(P2d.X(), P2d.Y(), P);
       if (myProj2d)
@@ -1228,9 +1118,9 @@ void ProjLib_CompProjectedCurve::Perform()
     else
     {
       Bounds(k, Udeb, Ufin);
-      gp_Dir2d Dir; // Only for isoparametric projection
+      gp_Dir2d Dir;
 
-      if (IsUIso(k, UIso)) // Part k of the projection is U-isoparametric curve
+      if (IsUIso(k, UIso))
       {
         approx2d = false;
 
@@ -1249,7 +1139,7 @@ void ProjLib_CompProjectedCurve::Perform()
         PCur2d = new Geom2d_TrimmedCurve(new Geom2d_Line(gp_Pnt2d(UIso, 0), Dir), Udeb, Ufin);
         HPCur  = new Geom2dAdaptor_Curve(PCur2d);
       }
-      else if (IsVIso(k, VIso)) // Part k of the projection is V-isoparametric curve
+      else if (IsVIso(k, VIso))
       {
         approx2d = false;
 
@@ -1346,21 +1236,15 @@ void ProjLib_CompProjectedCurve::Perform()
   }
 }
 
-//=================================================================================================
-
 void ProjLib_CompProjectedCurve::SetTol3d(const double theTol3d)
 {
   myTol3d = theTol3d;
 }
 
-//=================================================================================================
-
 void ProjLib_CompProjectedCurve::SetContinuity(const GeomAbs_Shape theContinuity)
 {
   myContinuity = theContinuity;
 }
-
-//=================================================================================================
 
 void ProjLib_CompProjectedCurve::SetMaxDegree(const int theMaxDegree)
 {
@@ -1369,8 +1253,6 @@ void ProjLib_CompProjectedCurve::SetMaxDegree(const int theMaxDegree)
   myMaxDegree = theMaxDegree;
 }
 
-//=================================================================================================
-
 void ProjLib_CompProjectedCurve::SetMaxSeg(const int theMaxSeg)
 {
   if (theMaxSeg < 1)
@@ -1378,49 +1260,35 @@ void ProjLib_CompProjectedCurve::SetMaxSeg(const int theMaxSeg)
   myMaxSeg = theMaxSeg;
 }
 
-//=================================================================================================
-
 void ProjLib_CompProjectedCurve::SetProj3d(const bool theProj3d)
 {
   myProj3d = theProj3d;
 }
-
-//=================================================================================================
 
 void ProjLib_CompProjectedCurve::SetProj2d(const bool theProj2d)
 {
   myProj2d = theProj2d;
 }
 
-//=================================================================================================
-
 void ProjLib_CompProjectedCurve::Load(const occ::handle<Adaptor3d_Surface>& S)
 {
   mySurface = S;
 }
-
-//=================================================================================================
 
 void ProjLib_CompProjectedCurve::Load(const occ::handle<Adaptor3d_Curve>& C)
 {
   myCurve = C;
 }
 
-//=================================================================================================
-
 const occ::handle<Adaptor3d_Surface>& ProjLib_CompProjectedCurve::GetSurface() const
 {
   return mySurface;
 }
 
-//=================================================================================================
-
 const occ::handle<Adaptor3d_Curve>& ProjLib_CompProjectedCurve::GetCurve() const
 {
   return myCurve;
 }
-
-//=================================================================================================
 
 void ProjLib_CompProjectedCurve::GetTolerance(double& TolU, double& TolV) const
 {
@@ -1428,14 +1296,10 @@ void ProjLib_CompProjectedCurve::GetTolerance(double& TolU, double& TolV) const
   TolV = myTolV;
 }
 
-//=================================================================================================
-
 int ProjLib_CompProjectedCurve::NbCurves() const
 {
   return myNbCurves;
 }
-
-//=================================================================================================
 
 void ProjLib_CompProjectedCurve::Bounds(const int Index, double& Udeb, double& Ufin) const
 {
@@ -1445,8 +1309,6 @@ void ProjLib_CompProjectedCurve::Bounds(const int Index, double& Udeb, double& U
   Ufin = mySequence->Value(Index)->Value(mySequence->Value(Index)->Length()).X();
 }
 
-//=================================================================================================
-
 bool ProjLib_CompProjectedCurve::IsSinglePnt(const int Index, gp_Pnt2d& P) const
 {
   if (Index < 1 || Index > myNbCurves)
@@ -1454,8 +1316,6 @@ bool ProjLib_CompProjectedCurve::IsSinglePnt(const int Index, gp_Pnt2d& P) const
   P = gp_Pnt2d(mySequence->Value(Index)->Value(1).Y(), mySequence->Value(Index)->Value(1).Z());
   return mySnglPnts->Value(Index);
 }
-
-//=================================================================================================
 
 bool ProjLib_CompProjectedCurve::IsUIso(const int Index, double& U) const
 {
@@ -1465,8 +1325,6 @@ bool ProjLib_CompProjectedCurve::IsUIso(const int Index, double& U) const
   return myUIso->Value(Index);
 }
 
-//=================================================================================================
-
 bool ProjLib_CompProjectedCurve::IsVIso(const int Index, double& V) const
 {
   if (Index < 1 || Index > myNbCurves)
@@ -1475,16 +1333,12 @@ bool ProjLib_CompProjectedCurve::IsVIso(const int Index, double& V) const
   return myVIso->Value(Index);
 }
 
-//=================================================================================================
-
 gp_Pnt2d ProjLib_CompProjectedCurve::Value(const double t) const
 {
   gp_Pnt2d P;
   D0(t, P);
   return P;
 }
-
-//=================================================================================================
 
 void ProjLib_CompProjectedCurve::D0(const double U, gp_Pnt2d& P) const
 {
@@ -1513,10 +1367,6 @@ void ProjLib_CompProjectedCurve::D0(const double U, gp_Pnt2d& P) const
     if ((U >= mySequence->Value(i)->Value(j).X()) && (U <= mySequence->Value(i)->Value(j + 1).X()))
       break;
 
-  //  U0 = mySequence->Value(i)->Value(j).Y();
-  //  V0 = mySequence->Value(i)->Value(j).Z();
-
-  //  Cubic Interpolation
   if (mySequence->Value(i)->Length() < 4
       || (std::abs(U - mySequence->Value(i)->Value(j).X()) <= Precision::PConfusion()))
   {
@@ -1572,7 +1422,6 @@ void ProjLib_CompProjectedCurve::D0(const double U, gp_Pnt2d& P) const
     else if (V0 > mySurface->LastVParameter())
       V0 = mySurface->LastVParameter();
   }
-  // End of cubic interpolation
 
   ProjLib_PrjResolve aPrjPS(*myCurve, *mySurface, 1);
   aPrjPS.Perform(U,
@@ -1591,7 +1440,7 @@ void ProjLib_CompProjectedCurve::D0(const double U, gp_Pnt2d& P) const
     if (aExtPS.IsDone() && aExtPS.NbExt())
     {
       int k, Nend, imin = 1;
-      // Search for the nearest solution which is also a normal projection
+
       Nend = aExtPS.NbExt();
       for (k = 2; k <= Nend; k++)
         if (aExtPS.SquareDistance(k) < aExtPS.SquareDistance(imin))
@@ -1606,8 +1455,6 @@ void ProjLib_CompProjectedCurve::D0(const double U, gp_Pnt2d& P) const
   }
 }
 
-//=================================================================================================
-
 void ProjLib_CompProjectedCurve::D1(const double t, gp_Pnt2d& P, gp_Vec2d& V) const
 {
   double u, v;
@@ -1617,8 +1464,6 @@ void ProjLib_CompProjectedCurve::D1(const double t, gp_Pnt2d& P, gp_Vec2d& V) co
   d1(t, u, v, V, myCurve, mySurface);
 }
 
-//=================================================================================================
-
 void ProjLib_CompProjectedCurve::D2(const double t, gp_Pnt2d& P, gp_Vec2d& V1, gp_Vec2d& V2) const
 {
   double u, v;
@@ -1627,8 +1472,6 @@ void ProjLib_CompProjectedCurve::D2(const double t, gp_Pnt2d& P, gp_Vec2d& V1, g
   v = P.Y();
   d2(t, u, v, V1, V2, myCurve, mySurface);
 }
-
-//=================================================================================================
 
 gp_Vec2d ProjLib_CompProjectedCurve::DN(const double t, const int N) const
 {
@@ -1653,29 +1496,21 @@ gp_Vec2d ProjLib_CompProjectedCurve::DN(const double t, const int N) const
   return gp_Vec2d();
 }
 
-//=================================================================================================
-
 const occ::handle<NCollection_HSequence<occ::handle<NCollection_HSequence<gp_Pnt>>>>&
   ProjLib_CompProjectedCurve::GetSequence() const
 {
   return mySequence;
 }
 
-//=================================================================================================
-
 double ProjLib_CompProjectedCurve::FirstParameter() const
 {
   return myCurve->FirstParameter();
 }
 
-//=================================================================================================
-
 double ProjLib_CompProjectedCurve::LastParameter() const
 {
   return myCurve->LastParameter();
 }
-
-//=================================================================================================
 
 GeomAbs_Shape ProjLib_CompProjectedCurve::Continuity() const
 {
@@ -1690,16 +1525,12 @@ GeomAbs_Shape ProjLib_CompProjectedCurve::Continuity() const
   return ContC;
 }
 
-//=================================================================================================
-
 double ProjLib_CompProjectedCurve::MaxDistance(const int Index) const
 {
   if (Index < 1 || Index > myNbCurves)
     throw Standard_NoSuchObject();
   return myMaxDistance->Value(Index);
 }
-
-//=================================================================================================
 
 int ProjLib_CompProjectedCurve::NbIntervals(const GeomAbs_Shape S) const
 {
@@ -1708,8 +1539,6 @@ int ProjLib_CompProjectedCurve::NbIntervals(const GeomAbs_Shape S) const
   return myTabInt->Length() - 1;
 }
 
-//=================================================================================================
-
 void ProjLib_CompProjectedCurve::Intervals(NCollection_Array1<double>& T,
                                            const GeomAbs_Shape         S) const
 {
@@ -1717,8 +1546,6 @@ void ProjLib_CompProjectedCurve::Intervals(NCollection_Array1<double>& T,
     BuildIntervals(S);
   T = myTabInt->Array1();
 }
-
-//=================================================================================================
 
 void ProjLib_CompProjectedCurve::BuildIntervals(const GeomAbs_Shape S) const
 {
@@ -1761,14 +1588,12 @@ void ProjLib_CompProjectedCurve::BuildIntervals(const GeomAbs_Shape S) const
   occ::handle<NCollection_HArray1<double>> BArr = nullptr, CArr = nullptr, UArr = nullptr,
                                            VArr = nullptr;
 
-  // processing projection bounds
   BArr = new NCollection_HArray1<double>(1, 2 * myNbCurves);
   for (i = 1; i <= myNbCurves; i++)
   {
     Bounds(i, BArr->ChangeValue(2 * i - 1), BArr->ChangeValue(2 * i));
   }
 
-  // processing curve discontinuities
   if (NbIntCur > 1)
   {
     CArr = new NCollection_HArray1<double>(1, NbIntCur - 1);
@@ -1778,12 +1603,11 @@ void ProjLib_CompProjectedCurve::BuildIntervals(const GeomAbs_Shape S) const
     }
   }
 
-  // processing U-surface discontinuities
   NCollection_Sequence<double> TUdisc;
 
   for (k = 2; k <= NbIntSurU; k++)
   {
-    //    std::cout<<"CutPntsU("<<k<<") = "<<CutPntsU(k)<<std::endl;
+
     for (i = 1; i <= myNbCurves; i++)
     {
       for (j = 1; j < mySequence->Value(i)->Length(); j++)
@@ -1820,7 +1644,7 @@ void ProjLib_CompProjectedCurve::BuildIntervals(const GeomAbs_Shape S) const
                          gp_Pnt2d(Tl, mySurface->FirstVParameter()),
                          gp_Pnt2d(Tr, mySurface->LastVParameter()),
                          FuncTol);
-          //
+
           if (Solver.IsDone())
           {
             TUdisc.Append(Solver.Solution().X());
@@ -1845,14 +1669,14 @@ void ProjLib_CompProjectedCurve::BuildIntervals(const GeomAbs_Shape S) const
       UArr->ChangeValue(i) = TUdisc(i);
     }
   }
-  // processing V-surface discontinuities
+
   NCollection_Sequence<double> TVdisc;
 
   for (k = 2; k <= NbIntSurV; k++)
   {
     for (i = 1; i <= myNbCurves; i++)
     {
-      //      std::cout<<"CutPntsV("<<k<<") = "<<CutPntsV(k)<<std::endl;
+
       for (j = 1; j < mySequence->Value(i)->Length(); j++)
       {
 
@@ -1888,7 +1712,7 @@ void ProjLib_CompProjectedCurve::BuildIntervals(const GeomAbs_Shape S) const
                          gp_Pnt2d(Tl, mySurface->FirstUParameter()),
                          gp_Pnt2d(Tr, mySurface->LastUParameter()),
                          FuncTol);
-          //
+
           if (Solver.IsDone())
           {
             TVdisc.Append(Solver.Solution().X());
@@ -1915,7 +1739,6 @@ void ProjLib_CompProjectedCurve::BuildIntervals(const GeomAbs_Shape S) const
     }
   }
 
-  // fusion
   NCollection_Sequence<double> Fusion;
   if (!CArr.IsNull())
   {
@@ -1966,8 +1789,6 @@ void ProjLib_CompProjectedCurve::BuildIntervals(const GeomAbs_Shape S) const
   }
 }
 
-//=================================================================================================
-
 occ::handle<Adaptor2d_Curve2d> ProjLib_CompProjectedCurve::Trim(const double First,
                                                                 const double Last,
                                                                 const double Tol) const
@@ -1978,56 +1799,40 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_CompProjectedCurve::Trim(const double Fir
   return HCS;
 }
 
-//=================================================================================================
-
 GeomAbs_CurveType ProjLib_CompProjectedCurve::GetType() const
 {
   return GeomAbs_OtherCurve;
 }
-
-//=================================================================================================
 
 bool ProjLib_CompProjectedCurve::ResultIsPoint(const int theIndex) const
 {
   return myResultIsPoint->Value(theIndex);
 }
 
-//=================================================================================================
-
 double ProjLib_CompProjectedCurve::GetResult2dUApproxError(const int theIndex) const
 {
   return myResult2dUApproxError->Value(theIndex);
 }
-
-//=================================================================================================
 
 double ProjLib_CompProjectedCurve::GetResult2dVApproxError(const int theIndex) const
 {
   return myResult2dVApproxError->Value(theIndex);
 }
 
-//=================================================================================================
-
 double ProjLib_CompProjectedCurve::GetResult3dApproxError(const int theIndex) const
 {
   return myResult3dApproxError->Value(theIndex);
 }
-
-//=================================================================================================
 
 occ::handle<Geom2d_Curve> ProjLib_CompProjectedCurve::GetResult2dC(const int theIndex) const
 {
   return myResult2dCurve->Value(theIndex);
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> ProjLib_CompProjectedCurve::GetResult3dC(const int theIndex) const
 {
   return myResult3dCurve->Value(theIndex);
 }
-
-//=================================================================================================
 
 gp_Pnt2d ProjLib_CompProjectedCurve::GetResult2dP(const int theIndex) const
 {
@@ -2036,8 +1841,6 @@ gp_Pnt2d ProjLib_CompProjectedCurve::GetResult2dP(const int theIndex) const
   return myResult2dPoint->Value(theIndex);
 }
 
-//=================================================================================================
-
 gp_Pnt ProjLib_CompProjectedCurve::GetResult3dP(const int theIndex) const
 {
   Standard_TypeMismatch_Raise_if(!myResultIsPoint->Value(theIndex),
@@ -2045,17 +1848,13 @@ gp_Pnt ProjLib_CompProjectedCurve::GetResult3dP(const int theIndex) const
   return myResult3dPoint->Value(theIndex);
 }
 
-//=================================================================================================
-
 void ProjLib_CompProjectedCurve::UpdateTripleByTrapCriteria(gp_Pnt& thePoint) const
 {
   bool isProblemsPossible = false;
-  // Check possible traps cases:
 
-  // 25892 bug.
   if (mySurface->GetType() == GeomAbs_SurfaceOfRevolution)
   {
-    // Compute maximal deviation from 3D and choose the biggest one.
+
     double aVRes   = mySurface->VResolution(Precision::Confusion());
     double aMaxTol = std::max(Precision::PConfusion(), aVRes);
 
@@ -2066,7 +1865,6 @@ void ProjLib_CompProjectedCurve::UpdateTripleByTrapCriteria(gp_Pnt& thePoint) co
     }
   }
 
-  // 27135 bug. Trap on degenerated edge.
   if (mySurface->GetType() == GeomAbs_Sphere
       && (std::abs(thePoint.Z() - mySurface->FirstVParameter()) < Precision::PConfusion()
           || std::abs(thePoint.Z() - mySurface->LastVParameter()) < Precision::PConfusion()
@@ -2093,7 +1891,6 @@ void ProjLib_CompProjectedCurve::UpdateTripleByTrapCriteria(gp_Pnt& thePoint) co
   if (!isDone)
     return;
 
-  // Restore original position in case of period jump.
   if (mySurface->IsUPeriodic()
       && std::abs(std::abs(U - thePoint.Y()) - mySurface->UPeriod()) < Precision::PConfusion())
   {
@@ -2107,8 +1904,6 @@ void ProjLib_CompProjectedCurve::UpdateTripleByTrapCriteria(gp_Pnt& thePoint) co
   thePoint.SetY(U);
   thePoint.SetZ(V);
 }
-
-//=================================================================================================
 
 void BuildCurveSplits(const occ::handle<Adaptor3d_Curve>&   theCurve,
                       const occ::handle<Adaptor3d_Surface>& theSurface,
@@ -2143,19 +1938,8 @@ void BuildCurveSplits(const occ::handle<Adaptor3d_Curve>&   theCurve,
   std::sort(aDS.mySplits.begin(), aDS.mySplits.end(), Comparator);
 }
 
-//=======================================================================
-// function : SplitOnDirection
-// purpose  : This method compute points in the parameter space of the curve
-//           on which curve should be split since period jump is happen.
-//=======================================================================
 void SplitOnDirection(SplitDS& theSplitDS)
 {
-  // Algorithm:
-  // Create 3D curve which is correspond to the periodic bound in 2d space.
-  // Run curve / curve extrema and run extrema point / surface to check that
-  // the point will be projected to the periodic bound.
-  // In this method assumed that the points cannot be closer to each other that 1% of the parameter
-  // space.
 
   gp_Pnt2d aStartPnt(theSplitDS.mySurface->FirstUParameter(),
                      theSplitDS.mySurface->FirstVParameter());
@@ -2170,7 +1954,6 @@ void SplitOnDirection(SplitDS& theSplitDS)
       ? theSplitDS.mySurface->LastUParameter() - theSplitDS.mySurface->FirstUParameter()
       : theSplitDS.mySurface->LastVParameter() - theSplitDS.mySurface->FirstVParameter();
 
-  // Create line which is represent periodic border.
   occ::handle<Geom2d_Curve>        aC2GC = new Geom2d_Line(aStartPnt, aDir);
   occ::handle<Geom2dAdaptor_Curve> aC    = new Geom2dAdaptor_Curve(aC2GC, 0, aLast2DParam);
   Adaptor3d_CurveOnSurface         aCOnS(aC, theSplitDS.mySurface);
@@ -2178,21 +1961,19 @@ void SplitOnDirection(SplitDS& theSplitDS)
   theSplitDS.myExtCCLast2DParam = aLast2DParam;
 
   FindSplitPoint(theSplitDS,
-                 theSplitDS.myCurve->FirstParameter(), // Initial curve range.
+                 theSplitDS.myCurve->FirstParameter(),
                  theSplitDS.myCurve->LastParameter());
 }
 
-//=================================================================================================
-
 void FindSplitPoint(SplitDS& theSplitDS, const double theMinParam, const double theMaxParam)
 {
-  // Make extrema copy to avoid dependencies between different levels of the recursion.
+
   Extrema_ExtCC anExtCC;
   anExtCC.SetCurve(1, *theSplitDS.myExtCCCurve1);
   anExtCC.SetCurve(2, *theSplitDS.myCurve);
-  // clang-format off
-  anExtCC.SetSingleSolutionFlag (true); // Search only one solution since multiple invocations are needed.
-  // clang-format on
+
+  anExtCC.SetSingleSolutionFlag(true);
+
   anExtCC.SetRange(1, 0, theSplitDS.myExtCCLast2DParam);
   anExtCC.SetRange(2, theMinParam, theMaxParam);
   anExtCC.Perform();
@@ -2209,8 +1990,6 @@ void FindSplitPoint(SplitDS& theSplitDS, const double theMinParam, const double 
       if (!theSplitDS.myExtPS->IsDone())
         return;
 
-      // Find point with the minimal Euclidean distance to avoid
-      // false positive points detection.
       int       aMinIdx    = -1;
       double    aMinSqDist = RealLast();
       const int aNbPext    = theSplitDS.myExtPS->NbExt();
@@ -2225,7 +2004,6 @@ void FindSplitPoint(SplitDS& theSplitDS, const double theMinParam, const double 
         }
       }
 
-      // Check that is point will be projected to the periodic border.
       const Extrema_POnSurf& aPOnS = theSplitDS.myExtPS->Point(aMinIdx);
       double                 U, V, aProjParam;
       aPOnS.Parameter(U, V);
@@ -2241,7 +2019,7 @@ void FindSplitPoint(SplitDS& theSplitDS, const double theMinParam, const double 
         if (aParam > aCFParam + Precision::PConfusion()
             && aParam < aCLParam - Precision::PConfusion())
         {
-          // Add only inner points.
+
           theSplitDS.mySplits.Append(aParam);
         }
 
@@ -2250,14 +2028,14 @@ void FindSplitPoint(SplitDS& theSplitDS, const double theMinParam, const double 
 
         if (aParam - aDelta > theMinParam + Precision::PConfusion())
         {
-          FindSplitPoint(theSplitDS, theMinParam, aParam - aDelta); // Curve parameters.
+          FindSplitPoint(theSplitDS, theMinParam, aParam - aDelta);
         }
 
         if (aParam + aDelta < theMaxParam - Precision::PConfusion())
         {
-          FindSplitPoint(theSplitDS, aParam + aDelta, theMaxParam); // Curve parameters.
+          FindSplitPoint(theSplitDS, aParam + aDelta, theMaxParam);
         }
       }
-    } // for (int anIdx = 1; anIdx <= aNbExt; ++anIdx)
+    }
   }
 }

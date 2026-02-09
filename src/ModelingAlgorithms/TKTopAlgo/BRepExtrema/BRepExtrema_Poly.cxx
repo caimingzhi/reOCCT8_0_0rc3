@@ -9,8 +9,6 @@
 #include <gp_Pnt.hpp>
 #include <NCollection_Array1.hpp>
 
-//=================================================================================================
-
 bool BRepExtrema_Poly::Distance(const TopoDS_Shape& S1,
                                 const TopoDS_Shape& S2,
                                 gp_Pnt&             P1,

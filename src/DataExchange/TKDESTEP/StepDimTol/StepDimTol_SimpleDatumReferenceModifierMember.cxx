@@ -27,37 +27,26 @@ static StepData_EnumTool tool(".ANY_CROSS_SECTION.",
                               ".POINT.",
                               ".TRANSLATION.");
 
-//=================================================================================================
-
 StepDimTol_SimpleDatumReferenceModifierMember::StepDimTol_SimpleDatumReferenceModifierMember() =
   default;
-
-//=================================================================================================
 
 const char* StepDimTol_SimpleDatumReferenceModifierMember::EnumText() const
 {
   return tool.Text(Int()).ToCString();
 }
 
-//=================================================================================================
-
-void StepDimTol_SimpleDatumReferenceModifierMember::SetEnumText(const int /*theValue*/,
-                                                                const char* theText)
+void StepDimTol_SimpleDatumReferenceModifierMember::SetEnumText(const int, const char* theText)
 {
   int aVal = tool.Value(theText);
   if (aVal >= 0)
     SetInt(aVal);
 }
 
-//=================================================================================================
-
 void StepDimTol_SimpleDatumReferenceModifierMember::SetValue(
   const StepDimTol_SimpleDatumReferenceModifier theValue)
 {
   SetInt(int(theValue));
 }
-
-//=================================================================================================
 
 StepDimTol_SimpleDatumReferenceModifier StepDimTol_SimpleDatumReferenceModifierMember::Value() const
 {

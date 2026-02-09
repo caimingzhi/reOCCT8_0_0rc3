@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_AppliedModifiers.hpp>
 #include <IFSelect_ContextModif.hpp>
@@ -38,16 +27,12 @@
 #include <cstdio>
 IMPLEMENT_STANDARD_RTTIEXT(IFSelect_ModelCopier, Standard_Transient)
 
-// #define MISOPOINT
 IFSelect_ModelCopier::IFSelect_ModelCopier() = default;
 
 void IFSelect_ModelCopier::SetShareOut(const occ::handle<IFSelect_ShareOut>& sho)
 {
   theshareout = sho;
 }
-
-//  ########################################################################
-//  ########    GLOBAL TRANSFER OPERATIONS (memorized or not)    ########
 
 void IFSelect_ModelCopier::ClearResult()
 {
@@ -120,8 +105,6 @@ bool IFSelect_ModelCopier::ClearAppliedModifiers(const int num)
   return true;
 }
 
-//  ....    Copy : Performs Transfers, Memorizes them (no file sending here)
-
 Interface_CheckIterator IFSelect_ModelCopier::Copy(IFSelect_ShareOutResult&                 eval,
                                                    const occ::handle<IFSelect_WorkLibrary>& WL,
                                                    const occ::handle<Interface_Protocol>& protocol)
@@ -129,8 +112,6 @@ Interface_CheckIterator IFSelect_ModelCopier::Copy(IFSelect_ShareOutResult&     
   Interface_CopyTool TC(eval.Graph().Model(), protocol);
   return Copying(eval, WL, protocol, TC);
 }
-
-//  Internal Copy
 
 Interface_CheckIterator IFSelect_ModelCopier::Copying(
   IFSelect_ShareOutResult&                 eval,
@@ -172,8 +153,6 @@ Interface_CheckIterator IFSelect_ModelCopier::Copying(
   return checks;
 }
 
-//  Send with two arguments : File Sending of Result already memorized
-
 Interface_CheckIterator IFSelect_ModelCopier::SendCopied(
   const occ::handle<IFSelect_WorkLibrary>& WL,
   const occ::handle<Interface_Protocol>&   protocol)
@@ -192,11 +171,7 @@ Interface_CheckIterator IFSelect_ModelCopier::SendCopied(
       bool                    res      = WL->WriteFile(ctx);
       Interface_CheckIterator checklst = ctx.CheckList();
       checks.Merge(checklst);
-      //	(FileName(i).ToCString(), FileModel(i),protocol,curapp,checks);
-      //      if (!checks.IsEmpty(false)) {
-      //	sout<<"  **  On Sending File n0."<<i<<", Check Messages :  **"<<std::endl;
-      //	checks.Print (sout,false);
-      //      }
+
       if (!res)
       {
         char mess[100];
@@ -213,8 +188,6 @@ Interface_CheckIterator IFSelect_ModelCopier::SendCopied(
   checks.SetName("X-STEP WorkSession : Split Send (Copy+Write)");
   return checks;
 }
-
-//  .... Send with 4 arguments : Transfer Calculation and File Sending
 
 Interface_CheckIterator IFSelect_ModelCopier::Send(IFSelect_ShareOutResult&                 eval,
                                                    const occ::handle<IFSelect_WorkLibrary>& WL,
@@ -261,11 +234,7 @@ Interface_CheckIterator IFSelect_ModelCopier::Sending(
     bool                    res      = WL->WriteFile(ctx);
     Interface_CheckIterator checklst = ctx.CheckList();
     checks.Merge(checklst);
-    //      (filename.ToCString(), model, protocol, curapp, checks);
-    //    if (!checks.IsEmpty(false)) {
-    //      sout<<"  **  On Sending File "<<filename<<", Check Messages :  **"<<std::endl;
-    //      checks.Print (sout,model,false);
-    //    }
+
     if (!res)
     {
       char mess[100];
@@ -282,8 +251,6 @@ Interface_CheckIterator IFSelect_ModelCopier::Sending(
   checks.SetName("X-STEP WorkSession : Split Send (only Write)");
   return checks;
 }
-
-//  .... SendAll : Data to transfer in G, no split, file sending
 
 Interface_CheckIterator IFSelect_ModelCopier::SendAll(
   const char*                              filename,
@@ -324,16 +291,9 @@ Interface_CheckIterator IFSelect_ModelCopier::SendAll(
   checks.Merge(checklst);
   if (!res)
     checks.CCheck(0)->AddFail("SendAll (WriteFile) has failed");
-  //  if (!checks.IsEmpty(false)) {
-  //    Message::SendWarning() <<
-  //      "  **    SendAll has produced Check Messages :    **"<<std::endl;
-  //    checks.Print (sout,model,false);
-  //  }
+
   return checks;
 }
-
-//  .... SendSelected : Data to transfer in G, filtered by iter,
-//       no split, file sending
 
 Interface_CheckIterator IFSelect_ModelCopier::SendSelected(
   const char*                              filename,
@@ -350,9 +310,8 @@ Interface_CheckIterator IFSelect_ModelCopier::SendSelected(
     return checks;
   occ::handle<Interface_InterfaceModel> newmod = original->NewEmptyModel();
   Interface_CopyTool                    TC(original, protocol);
-  TC.FillModel(newmod); // for Header ...
+  TC.FillModel(newmod);
 
-  //  No copy : AddWithRefs plus Bind declaration
   Interface_GeneralLib lib(protocol);
   for (list.Start(); list.More(); list.Next())
   {
@@ -380,7 +339,7 @@ Interface_CheckIterator IFSelect_ModelCopier::SendSelected(
               newmod,
               applied,
               checks);
-  //  Feed Remaining : copied entities are to be noted
+
   occ::handle<Standard_Transient> ent1, ent2;
   for (int ic = TC.LastCopiedAfter(0, ent1, ent2); ic > 0; ic = TC.LastCopiedAfter(ic, ent1, ent2))
   {
@@ -393,16 +352,9 @@ Interface_CheckIterator IFSelect_ModelCopier::SendSelected(
   checks.Merge(checklst);
   if (!res)
     checks.CCheck(0)->AddFail("SendSelected (WriteFile) has failed");
-  //  if (!checks.IsEmpty(false)) {
-  //    Message::SendWarning() <<
-  //      "  **    SendSelected has produced Check Messages :    **"<<std::endl;
-  //    checks.Print (sout,original,false);
-  //  }
+
   return checks;
 }
-
-//  ##########################################################################
-//  ########        A UNIT TRANSFER (with Modifications)        ########
 
 void IFSelect_ModelCopier::CopiedModel(const Interface_Graph&                   G,
                                        const occ::handle<IFSelect_WorkLibrary>& WL,
@@ -410,17 +362,12 @@ void IFSelect_ModelCopier::CopiedModel(const Interface_Graph&                   
                                        const Interface_EntityIterator&          tocopy,
                                        const TCollection_AsciiString&           filename,
                                        const int                                dispnum,
-                                       const int /* numod */,
+                                       const int,
                                        Interface_CopyTool&                     TC,
                                        occ::handle<Interface_InterfaceModel>&  newmod,
                                        occ::handle<IFSelect_AppliedModifiers>& applied,
                                        Interface_CheckIterator&                checks) const
 {
-  //  ...  First "standard" part : filling the model  ...
-  //  We create the Model, we fill it with Entities, and with the starting Header
-
-  //  WARNING : dispnum = 0  means take original model, copy nothing
-  //                             and also : no Dispatch (bulk sending)
 
   applied.Nullify();
   const occ::handle<Interface_InterfaceModel>& original = G.Model();
@@ -431,7 +378,7 @@ void IFSelect_ModelCopier::CopiedModel(const Interface_Graph&                   
     WL->CopyModel(original, newmod, tocopy, TC);
 
     occ::handle<Standard_Transient> ent1, ent2;
-    //  Feed Remaining : copied entities are to be noted
+
     for (int ic = TC.LastCopiedAfter(0, ent1, ent2); ic > 0;
          ic     = TC.LastCopiedAfter(ic, ent1, ent2))
     {
@@ -442,21 +389,19 @@ void IFSelect_ModelCopier::CopiedModel(const Interface_Graph&                   
   else if (newmod.IsNull())
     newmod = original;
 
-  //  ...  Then : We take into account the Model Modifiers  ...
   int nbmod = 0;
   if (!theshareout.IsNull())
     nbmod = theshareout->NbModifiers(true);
-  int i; // svv Jan11 2000 : porting on DEC
+  int i;
   for (i = 1; i <= nbmod; i++)
   {
     occ::handle<IFSelect_Modifier> unmod = theshareout->ModelModifier(i);
 
-    //    First,  Dispatch/Packet criterion
     if (dispnum > 0)
       if (!unmod->Applies(theshareout->Dispatch(dispnum)))
         continue;
     IFSelect_ContextModif ctx(G, TC, filename.ToCString());
-    //    Then, the Selection
+
     occ::handle<IFSelect_Selection> sel = unmod->Selection();
     if (!sel.IsNull())
     {
@@ -468,16 +413,8 @@ void IFSelect_ModelCopier::CopiedModel(const Interface_Graph&                   
     unmod->Perform(ctx, newmod, protocol, TC);
     Interface_CheckIterator checklst = ctx.CheckList();
     checks.Merge(checklst);
-
-    //    Should we record errors in newmod ? good question
-    //    if (!checks.IsEmpty(false)) {
-    //      Message::SendWarning() <<
-    //        " Messages on Copied Model n0 "<<numod<<", Dispatch Rank "<<dispnum<<std::endl;
-    //      checks.Print(sout,newmod,false);
-    //    }
   }
 
-  //  ...  Then the File Modifiers : in fact, we record them  ...
   nbmod = 0;
   if (!theshareout.IsNull())
     nbmod = theshareout->NbModifiers(false);
@@ -488,22 +425,18 @@ void IFSelect_ModelCopier::CopiedModel(const Interface_Graph&                   
   {
     occ::handle<IFSelect_GeneralModifier> unmod = theshareout->GeneralModifier(false, i);
 
-    //    First,  Dispatch/Packet criterion
     if (dispnum > 0)
       if (!unmod->Applies(theshareout->Dispatch(dispnum)))
         continue;
-    //    Then, the Selection
+
     occ::handle<IFSelect_Selection> sel = unmod->Selection();
     if (sel.IsNull())
-      applied->AddModif(unmod); // empty -> we take all
+      applied->AddModif(unmod);
     else
     {
       Interface_EntityIterator        list = sel->UniqueResult(G);
       occ::handle<Standard_Transient> newent;
 
-      //    Entities designated by the Selection and Copied ?
-      //    -> if there is at least one, the Modifier applies, otherwise it is rejected
-      //    -> and this list is exploitable by the Modifier ...
       for (list.Start(); list.More(); list.Next())
       {
         if (TC.Search(list.Value(), newent))
@@ -519,7 +452,7 @@ void IFSelect_ModelCopier::CopiedRemaining(const Interface_Graph&               
                                            occ::handle<Interface_InterfaceModel>&   newmod)
 {
   const occ::handle<Interface_InterfaceModel>& original = G.Model();
-  //  Interface_CopyTool TC(original,protocol);
+
   newmod = original->NewEmptyModel();
   TC.Clear();
   Interface_EntityIterator tocopy;
@@ -531,7 +464,7 @@ void IFSelect_ModelCopier::CopiedRemaining(const Interface_Graph&               
     if (G.Status(i) == 0)
       tocopy.AddItem(original->Value(i));
     else
-      theremain->SetValue(i, -1); //  ?? -1
+      theremain->SetValue(i, -1);
   }
   WL->CopyModel(original, newmod, tocopy, TC);
 
@@ -539,7 +472,7 @@ void IFSelect_ModelCopier::CopiedRemaining(const Interface_Graph&               
     newmod.Nullify();
   else
   {
-    //  WHAT FOLLOWS MUST NOT BE DELETED ! cf theremain
+
     occ::handle<Standard_Transient> ent1, ent2;
     for (int ic = TC.LastCopiedAfter(0, ent1, ent2); ic > 0;
          ic     = TC.LastCopiedAfter(ic, ent1, ent2))
@@ -547,7 +480,7 @@ void IFSelect_ModelCopier::CopiedRemaining(const Interface_Graph&               
       if (ic <= theremain->Upper())
         theremain->SetValue(ic, 1);
     }
-//  some debugging prints
+
 #ifdef MISOPOINT
     std::cout << " Remaining Model : " << newmod->NbEntities() << " Entities" << std::endl;
     int ne = 0;
@@ -585,9 +518,6 @@ bool IFSelect_ModelCopier::SetRemaining(Interface_Graph& CG) const
   return true;
 }
 
-//  ##########################################################################
-//  ########        RESULT of Transfer Memorization        ########
-
 int IFSelect_ModelCopier::NbFiles() const
 {
   return thefilemodels.Length();
@@ -614,12 +544,12 @@ void IFSelect_ModelCopier::BeginSentFiles(const occ::handle<IFSelect_ShareOut>& 
   thesentfiles.Nullify();
   if (record)
     thesentfiles = new NCollection_HSequence<occ::handle<TCollection_HAsciiString>>();
-  //  and default file numbering : held by ShareOut
+
   if (sho.IsNull())
     return;
   int lastrun = sho->LastRun();
   sho->ClearResult(true);
-  sho->SetLastRun(lastrun); // we are only interested in the numbers
+  sho->SetLastRun(lastrun);
 }
 
 void IFSelect_ModelCopier::AddSentFile(const char* filename)

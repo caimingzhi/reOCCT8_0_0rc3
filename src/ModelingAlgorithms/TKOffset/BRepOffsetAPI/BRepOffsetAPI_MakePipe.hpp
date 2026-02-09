@@ -10,39 +10,13 @@
 class TopoDS_Wire;
 class TopoDS_Shape;
 
-//! Describes functions to build pipes.
-//! A pipe is built a basis shape (called the profile) along
-//! a wire (called the spine) by sweeping.
-//! The profile must not contain solids.
-//! A MakePipe object provides a framework for:
-//! - defining the construction of a pipe,
-//! - implementing the construction algorithm, and
-//! - consulting the result.
-//! Warning
-//! The MakePipe class implements pipe constructions
-//! with G1 continuous spines only.
 class BRepOffsetAPI_MakePipe : public BRepPrimAPI_MakeSweep
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Constructs a pipe by sweeping the shape Profile along
-  //! the wire Spine.The angle made by the spine with the profile is
-  //! maintained along the length of the pipe.
-  //! Warning
-  //! Spine must be G1 continuous; that is, on the connection
-  //! vertex of two edges of the wire, the tangent vectors on
-  //! the left and on the right must have the same direction,
-  //! though not necessarily the same magnitude.
-  //! Exceptions
-  //! Standard_DomainError if the profile is a solid or a
-  //! composite solid.
   Standard_EXPORT BRepOffsetAPI_MakePipe(const TopoDS_Wire& Spine, const TopoDS_Shape& Profile);
 
-  //! the same as previous but with setting of
-  //! mode of sweep and the flag that indicates attempt
-  //! to approximate a C1-continuous surface if a swept
-  //! surface proved to be C0.
   Standard_EXPORT BRepOffsetAPI_MakePipe(const TopoDS_Wire&       Spine,
                                          const TopoDS_Shape&      Profile,
                                          const GeomFill_Trihedron aMode,
@@ -50,14 +24,11 @@ public:
 
   Standard_EXPORT const BRepFill_Pipe& Pipe() const;
 
-  //! Builds the resulting shape (redefined from MakeShape).
   Standard_EXPORT void Build(
     const Message_ProgressRange& theRange = Message_ProgressRange()) override;
 
-  //! Returns the TopoDS Shape of the bottom of the prism.
   Standard_EXPORT TopoDS_Shape FirstShape() override;
 
-  //! Returns the TopoDS Shape of the top of the prism.
   Standard_EXPORT TopoDS_Shape LastShape() override;
 
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& Generated(const TopoDS_Shape& S) override;

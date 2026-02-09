@@ -9,16 +9,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_TagSource, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& TDF_TagSource::GetID()
 {
 
   static Standard_GUID TDF_TagSourceID("2a96b611-ec8b-11d0-bee7-080009dc3333");
   return TDF_TagSourceID;
 }
-
-//=================================================================================================
 
 occ::handle<TDF_TagSource> TDF_TagSource::Set(const TDF_Label& L)
 {
@@ -32,8 +28,6 @@ occ::handle<TDF_TagSource> TDF_TagSource::Set(const TDF_Label& L)
   return T;
 }
 
-//=================================================================================================
-
 TDF_Label TDF_TagSource::NewChild(const TDF_Label& L)
 {
   occ::handle<TDF_TagSource> T;
@@ -45,78 +39,58 @@ TDF_Label TDF_TagSource::NewChild(const TDF_Label& L)
   return T->NewChild();
 }
 
-//=================================================================================================
-
 TDF_TagSource::TDF_TagSource()
     : myTag(0)
 {
 }
 
-//=================================================================================================
-
 int TDF_TagSource::NewTag()
 {
 
-  Backup(); // FID 02/07/98
+  Backup();
   return ++myTag;
 }
-
-//=================================================================================================
 
 TDF_Label TDF_TagSource::NewChild()
 {
   return Label().FindChild(NewTag(), true);
 }
 
-//=================================================================================================
-
 int TDF_TagSource::Get() const
 {
   return myTag;
 }
 
-//=================================================================================================
-
 void TDF_TagSource::Set(const int T)
 {
-  // OCC2932 correction
+
   if (myTag == T)
     return;
 
-  Backup(); // FID 02/07/98
+  Backup();
   myTag = T;
 }
-
-//=================================================================================================
 
 const Standard_GUID& TDF_TagSource::ID() const
 {
   return GetID();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDF_TagSource::NewEmpty() const
 {
   return new TDF_TagSource();
 }
-
-//=================================================================================================
 
 void TDF_TagSource::Restore(const occ::handle<TDF_Attribute>& With)
 {
   myTag = occ::down_cast<TDF_TagSource>(With)->Get();
 }
 
-//=================================================================================================
-
 void TDF_TagSource::Paste(const occ::handle<TDF_Attribute>& Into,
                           const occ::handle<TDF_RelocationTable>&) const
 {
   occ::down_cast<TDF_TagSource>(Into)->Set(myTag);
 }
-
-//=================================================================================================
 
 void TDF_TagSource::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

@@ -7,9 +7,6 @@
 #include <Standard_Real.hpp>
 #include <Standard_OStream.hpp>
 
-//! defines a Sphere node of VRML specifying geometry shapes.
-//! This node represents a sphere.
-//! By default, the sphere is centred at (0,0,0) and has a radius of 1.
 class Vrml_Sphere
 {
 public:

@@ -4,8 +4,6 @@
 #include <gp_Pnt2d.hpp>
 #include <gp_Vec2d.hpp>
 
-//=================================================================================================
-
 GeomLib_Check2dBSplineCurve::GeomLib_Check2dBSplineCurve(
   const occ::handle<Geom2d_BSplineCurve>& Curve,
   const double                            Tolerance,
@@ -30,7 +28,6 @@ GeomLib_Check2dBSplineCurve::GeomLib_Check2dBSplineCurve(
 
     const double CrossProdTol = myAngularTolerance;
 
-    // Near first
     tangent           = gp_Vec2d(myCurve->Pole(1), myCurve->Pole(2));
     tangent_magnitude = tangent.Magnitude();
     if (tangent_magnitude > myTolerance)
@@ -59,7 +56,6 @@ GeomLib_Check2dBSplineCurve::GeomLib_Check2dBSplineCurve(
       }
     }
 
-    // Near last
     tangent           = gp_Vec2d(myCurve->Pole(num_poles), myCurve->Pole(num_poles - 1));
     tangent_magnitude = tangent.Magnitude();
     if (tangent_magnitude > myTolerance)
@@ -87,22 +83,18 @@ GeomLib_Check2dBSplineCurve::GeomLib_Check2dBSplineCurve(
         }
       }
     }
-  } // if (( ! myCurve->IsPeriodic() )&& num_poles >= 4)
+  }
   else
   {
     myDone = true;
   }
 }
 
-//=================================================================================================
-
 void GeomLib_Check2dBSplineCurve::NeedTangentFix(bool& FirstFlag, bool& LastFlag) const
 {
   FirstFlag = myFixFirstTangent;
   LastFlag  = myFixLastTangent;
 }
-
-//=================================================================================================
 
 occ::handle<Geom2d_BSplineCurve> GeomLib_Check2dBSplineCurve::FixedTangent(const bool FirstFlag,
                                                                            const bool LastFlag)
@@ -117,14 +109,10 @@ occ::handle<Geom2d_BSplineCurve> GeomLib_Check2dBSplineCurve::FixedTangent(const
   return new_curve;
 }
 
-//=================================================================================================
-
 void GeomLib_Check2dBSplineCurve::FixTangent(const bool FirstFlag, const bool LastFlag)
 {
   FixTangentOnCurve(myCurve, FirstFlag, LastFlag);
 }
-
-//=================================================================================================
 
 void GeomLib_Check2dBSplineCurve::FixTangentOnCurve(occ::handle<Geom2d_BSplineCurve>& theCurve,
                                                     const bool                        FirstFlag,

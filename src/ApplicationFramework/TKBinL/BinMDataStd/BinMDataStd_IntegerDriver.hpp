@@ -10,7 +10,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! Integer attribute Driver.
 class BinMDataStd_IntegerDriver : public BinMDF_ADriver
 {
 

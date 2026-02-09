@@ -1,15 +1,4 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BinTools_OStream.hpp>
 
@@ -17,15 +6,11 @@
   #include <FSD_BinaryFile.hpp>
 #endif
 
-//=================================================================================================
-
 BinTools_OStream::BinTools_OStream(Standard_OStream& theStream)
     : myStream(&theStream),
       myPosition(theStream.tellp())
 {
 }
-
-//=================================================================================================
 
 void BinTools_OStream::WriteReference(const uint64_t& thePosition)
 {
@@ -68,23 +53,15 @@ void BinTools_OStream::WriteReference(const uint64_t& thePosition)
   }
 }
 
-//=================================================================================================
-
 void BinTools_OStream::WriteShape(const TopAbs_ShapeEnum&   theType,
                                   const TopAbs_Orientation& theOrientation)
 {
   uint8_t aType = static_cast<uint8_t>(BinTools_ObjectType_EndShape) + 1
-                  + // taking into account that orientation <= 3
-                  (static_cast<uint8_t>(theType) << 2)
-                  + static_cast<uint8_t>(theOrientation); // and type <= 8
+                  + (static_cast<uint8_t>(theType) << 2) + static_cast<uint8_t>(theOrientation);
   myStream->put((uint8_t)aType);
   myPosition += sizeof(uint8_t);
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_OStream& BinTools_OStream::operator<<(const BinTools_ObjectType& theType)
 {
   myStream->put((uint8_t)theType);
@@ -92,10 +69,6 @@ BinTools_OStream& BinTools_OStream::operator<<(const BinTools_ObjectType& theTyp
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_OStream& BinTools_OStream::operator<<(const uint8_t& theValue)
 {
   myStream->put(theValue);
@@ -103,10 +76,6 @@ BinTools_OStream& BinTools_OStream::operator<<(const uint8_t& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_OStream& BinTools_OStream::operator<<(const double& theValue)
 {
 #if DO_INVERSE
@@ -119,10 +88,6 @@ BinTools_OStream& BinTools_OStream::operator<<(const double& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_OStream& BinTools_OStream::operator<<(const bool& theValue)
 {
   myStream->put((uint8_t)(theValue ? 1 : 0));
@@ -130,10 +95,6 @@ BinTools_OStream& BinTools_OStream::operator<<(const bool& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_OStream& BinTools_OStream::operator<<(const int& theValue)
 {
 #if DO_INVERSE
@@ -146,10 +107,6 @@ BinTools_OStream& BinTools_OStream::operator<<(const int& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_OStream& BinTools_OStream::operator<<(const char16_t& theValue)
 {
 #if DO_INVERSE
@@ -162,10 +119,6 @@ BinTools_OStream& BinTools_OStream::operator<<(const char16_t& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_OStream& BinTools_OStream::operator<<(const gp_Pnt& theValue)
 {
 #if DO_INVERSE
@@ -182,10 +135,6 @@ BinTools_OStream& BinTools_OStream::operator<<(const gp_Pnt& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_OStream& BinTools_OStream::operator<<(const gp_Dir& theValue)
 {
 #if DO_INVERSE
@@ -202,10 +151,6 @@ BinTools_OStream& BinTools_OStream::operator<<(const gp_Dir& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_OStream& BinTools_OStream::operator<<(const gp_Pnt2d& theValue)
 {
 #if DO_INVERSE
@@ -220,10 +165,6 @@ BinTools_OStream& BinTools_OStream::operator<<(const gp_Pnt2d& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_OStream& BinTools_OStream::operator<<(const gp_Dir2d& theValue)
 {
 #if DO_INVERSE
@@ -238,10 +179,6 @@ BinTools_OStream& BinTools_OStream::operator<<(const gp_Dir2d& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_OStream& BinTools_OStream::operator<<(const gp_Trsf& theValue)
 {
   gp_XYZ aTr  = theValue.TranslationPart();
@@ -278,10 +215,6 @@ BinTools_OStream& BinTools_OStream::operator<<(const gp_Trsf& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_OStream& BinTools_OStream::operator<<(const Poly_Triangle& theValue)
 {
   theValue.Value(1);
@@ -299,10 +232,6 @@ BinTools_OStream& BinTools_OStream::operator<<(const Poly_Triangle& theValue)
   return *this;
 }
 
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 BinTools_OStream& BinTools_OStream::operator<<(const NCollection_Vec3<float>& theValue)
 {
 #if DO_INVERSE
@@ -319,16 +248,12 @@ BinTools_OStream& BinTools_OStream::operator<<(const NCollection_Vec3<float>& th
   return *this;
 }
 
-//=================================================================================================
-
 void BinTools_OStream::PutBools(const bool theValue1, const bool theValue2, const bool theValue3)
 {
   uint8_t aValue = (theValue1 ? 1 : 0) | (theValue2 ? 2 : 0) | (theValue3 ? 4 : 0);
   myStream->write((char*)&aValue, sizeof(uint8_t));
   myPosition += sizeof(uint8_t);
 }
-
-//=================================================================================================
 
 void BinTools_OStream::PutBools(const bool theValue1,
                                 const bool theValue2,

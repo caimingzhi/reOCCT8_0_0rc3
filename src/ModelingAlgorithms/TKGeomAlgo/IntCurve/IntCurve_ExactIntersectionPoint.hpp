@@ -3,9 +3,6 @@
 #include <math_NewtonFunctionSetRoot.hpp>
 #include <gp_Vec2d.hpp>
 
-//======================================================================
-//===
-//======================================================================
 IntCurve_ExactIntersectionPoint::IntCurve_ExactIntersectionPoint(const TheCurve& C1,
                                                                  const TheCurve& C2,
                                                                  const double    Tol)
@@ -24,8 +21,6 @@ IntCurve_ExactIntersectionPoint::IntCurve_ExactIntersectionPoint(const TheCurve&
   ToleranceVector.Value(2) = TheCurveTool::EpsX(C2);
 }
 
-//=================================================================================================
-
 void IntCurve_ExactIntersectionPoint::Perform(const IntCurve_ThePolygon2d& Poly1,
                                               const IntCurve_ThePolygon2d& Poly2,
                                               int&                         NumSegOn1,
@@ -33,14 +28,7 @@ void IntCurve_ExactIntersectionPoint::Perform(const IntCurve_ThePolygon2d& Poly1
                                               double&                      ParamOnSeg1,
                                               double&                      ParamOnSeg2)
 {
-  //----------------------------------------------------------------------
-  //-- On prend comme bornes de recherches  :
-  //--
-  //--   Segment      :      i-1        i           i+1        i+2
-  //--
-  //--                  |---------|-----X-------|---------|----------|
-  //--                Inf                                Sup
-  //--
+
   if (NumSegOn1 >= Poly1.NbSegments() && ParamOnSeg1 == 0.0)
   {
     NumSegOn1--;
@@ -85,17 +73,17 @@ void IntCurve_ExactIntersectionPoint::Perform(const IntCurve_ThePolygon2d& Poly1
   IntCurve_ExactIntersectionPoint::MathPerform();
   if (nbroots == 0)
   {
-    //      double DeflectionOn1 = Poly1.DeflectionOverEstimation();
+
     Poly1.DeflectionOverEstimation();
-    //      double DeflectionOn2 = Poly2.DeflectionOverEstimation();
+
     Poly2.DeflectionOverEstimation();
-    // if(DeflectionOn2 > Poly1.BeginOfSeg(NumSegOn1).Distance(Poly1.EndOfSeg(NumSegOn1))) {
+
     {
-      //-- On risque de donner des bornes sur la courbe 1 trop etroites.
+
       int    diff         = 1;
       double AnBinfVector = BInfVector.Value(1);
       double AnBsupVector = BSupVector.Value(1);
-      //---------------- On elargit les bornes par la gauche --------------------
+
       do
       {
         diff++;
@@ -107,11 +95,11 @@ void IntCurve_ExactIntersectionPoint::Perform(const IntCurve_ThePolygon2d& Poly1
         else
           BInfVector.Value(1) = Poly1.ApproxParamOnCurve(NumSegOn1 - diff, (double)0.0);
         IntCurve_ExactIntersectionPoint::MathPerform();
-        //-- le 18 nov 97
+
         if (diff > 3)
           diff += NumSegOn1 / 2;
       } while (nbroots == 0 && diff != 0);
-      //---------------- On elargit les bornes par la droite --------------------
+
       if (nbroots == 0)
       {
         BInfVector.Value(1) = AnBinfVector;
@@ -127,7 +115,7 @@ void IntCurve_ExactIntersectionPoint::Perform(const IntCurve_ThePolygon2d& Poly1
           else
             BSupVector.Value(1) = Poly1.ApproxParamOnCurve(NumSegOn1 + 1 + diff, (double)0.0);
           IntCurve_ExactIntersectionPoint::MathPerform();
-          //-- le 18 nov 97
+
           if (diff > 3)
             diff += 1 + (Poly1.NbSegments() - NumSegOn1) / 2;
         } while (nbroots == 0 && diff != 0);
@@ -137,11 +125,11 @@ void IntCurve_ExactIntersectionPoint::Perform(const IntCurve_ThePolygon2d& Poly1
 
     if (nbroots == 0)
     {
-      //-- On risque de donner des bornes sur la courbe 1 trop etroites.
+
       int    diff         = 1;
       double AnBinfVector = BInfVector.Value(2);
       double AnBsupVector = BSupVector.Value(2);
-      //---------------- On elargit les bornes par la gauche --------------------
+
       do
       {
         diff++;
@@ -153,11 +141,11 @@ void IntCurve_ExactIntersectionPoint::Perform(const IntCurve_ThePolygon2d& Poly1
         else
           BInfVector.Value(2) = Poly2.ApproxParamOnCurve(NumSegOn2 - diff, (double)0.0);
         IntCurve_ExactIntersectionPoint::MathPerform();
-        //-- le 18 nov 97
+
         if (diff > 3)
           diff += NumSegOn2 / 2;
       } while (nbroots == 0 && diff != 0);
-      //---------------- On elargit les bornes par la droite --------------------
+
       if (nbroots == 0)
       {
         BInfVector.Value(2) = AnBinfVector;
@@ -173,7 +161,7 @@ void IntCurve_ExactIntersectionPoint::Perform(const IntCurve_ThePolygon2d& Poly1
           else
             BSupVector.Value(2) = Poly2.ApproxParamOnCurve(NumSegOn2 + 1 + diff, (double)0.0);
           IntCurve_ExactIntersectionPoint::MathPerform();
-          //-- le 18 nov 97
+
           if (diff > 3)
             diff += 1 + (Poly2.NbSegments() - NumSegOn2) / 2;
         } while (nbroots == 0 && diff != 0);
@@ -182,8 +170,6 @@ void IntCurve_ExactIntersectionPoint::Perform(const IntCurve_ThePolygon2d& Poly1
     }
   }
 }
-
-//=================================================================================================
 
 void IntCurve_ExactIntersectionPoint::Perform(const double Uo,
                                               const double Vo,
@@ -205,22 +191,16 @@ void IntCurve_ExactIntersectionPoint::Perform(const double Uo,
   IntCurve_ExactIntersectionPoint::MathPerform();
 }
 
-//=================================================================================================
-
 int IntCurve_ExactIntersectionPoint::NbRoots() const
 {
   return (nbroots);
 }
-
-//=================================================================================================
 
 void IntCurve_ExactIntersectionPoint::Roots(double& U, double& V)
 {
   U = Root.Value(1);
   V = Root.Value(2);
 }
-
-//=================================================================================================
 
 void IntCurve_ExactIntersectionPoint::MathPerform(void)
 {
@@ -246,8 +226,6 @@ void IntCurve_ExactIntersectionPoint::MathPerform(void)
     nbroots         = 0;
   }
 }
-
-//======================================================================
 
 bool IntCurve_ExactIntersectionPoint::AnErrorOccurred() const
 {

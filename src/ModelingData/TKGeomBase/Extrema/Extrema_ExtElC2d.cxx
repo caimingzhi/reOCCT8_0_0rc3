@@ -11,8 +11,6 @@
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 Extrema_ExtElC2d::Extrema_ExtElC2d()
 {
   myDone  = false;
@@ -24,22 +22,8 @@ Extrema_ExtElC2d::Extrema_ExtElC2d()
   }
 }
 
-//=================================================================================================
-
 Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Lin2d& C2, const double)
-/*-----------------------------------------------------------------------------
-Function:
-   Find min distance between 2 straight lines.
 
-Method:
-  Let D1 and D2 be 2 directions of straight lines C1 and C2.
-  2 cases are considered:
-  1- if Angle(D1,D2) < AngTol, the straight lines are parallel.
-     The distance is the distance between any point of C1 and straight line C2.
-  2- if Angle(D1,D2) > AngTol:
-     Let P = C1(u1) and P =C2(u2) the point intersection:
-
------------------------------------------------------------------------------*/
 {
   myDone  = false;
   myIsPar = false;
@@ -59,18 +43,13 @@ Method:
   }
   else
   {
-    // Vector from P1 to P2 (P2 - P1).
+
     gp_Vec2d aP1P2(C1.Location(), C2.Location());
 
-    // Solve linear system using Cramer's rule:
-    // D1.X * t1 + D2.X * (-t2)  = P2.X - P1.X
-    // D1.Y * t1 + D2.Y * (-t2)  = P2.Y - P1.Y
-
-    // There is no division by zero since lines are not parallel.
     double aDelim = 1 / (D1 ^ D2);
 
     double aParam1 = (aP1P2 ^ D2) * aDelim;
-    double aParam2 = -(D1 ^ aP1P2) * aDelim; // -1.0 coefficient before t2.
+    double aParam2 = -(D1 ^ aP1P2) * aDelim;
 
     gp_Pnt2d P1 = ElCLib::Value(aParam1, C1);
     gp_Pnt2d P2 = ElCLib::Value(aParam2, C2);
@@ -83,20 +62,9 @@ Method:
 
   myDone = true;
 }
-//=============================================================================
 
 Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Circ2d& C2, const double)
-/*-----------------------------------------------------------------------------
-Function:
-  Find extreme distances between straight line C1 and circle C2.
 
-Method:
-  Let P1=C1(u1) and P2=C2(u2) be two solution points
-        D the direction of straight line C1
-    T the tangent at point P2;
-  Then, ( P1P2.D = 0. (1)
-         ( P1P2.T = 0. (2)
------------------------------------------------------------------------------*/
 {
   myIsPar = false;
   myDone  = false;
@@ -106,7 +74,6 @@ Method:
     mySqDist[anIdx] = RealLast();
   }
 
-  // Calculate T1 in the reference of the circle ...
   gp_Dir2d D = C1.Direction();
   gp_Dir2d x2, y2;
   x2 = C2.XAxis().Direction();
@@ -146,7 +113,6 @@ Method:
   myDone = true;
 }
 
-// =============================================================================
 Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Elips2d& C2)
 {
   myDone  = true;
@@ -158,7 +124,6 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Elips2d& C2)
     mySqDist[anIdx] = RealLast();
   }
 
-  // Calculate T1 in the reference of the ellipse ...
   gp_Dir2d D = C1.Direction();
   gp_Dir2d x2, y2;
   x2 = C2.XAxis().Direction();
@@ -197,8 +162,6 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Elips2d& C2)
   myDone = true;
 }
 
-//=============================================================================
-
 Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Hypr2d& C2)
 {
   myIsPar = false;
@@ -209,7 +172,6 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Hypr2d& C2)
     mySqDist[anIdx] = RealLast();
   }
 
-  // Calculate T1 in the reference of the parabole ...
   gp_Dir2d D = C1.Direction();
   gp_Dir2d x2, y2;
   x2        = C2.XAxis().Direction();
@@ -240,8 +202,6 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Hypr2d& C2)
   myDone = true;
 }
 
-//============================================================================
-
 Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Parab2d& C2)
 {
   myIsPar = false;
@@ -252,7 +212,6 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Parab2d& C2)
     mySqDist[anIdx] = RealLast();
   }
 
-  // Calculate  T1 in the reference of the parabole ...
   gp_Dir2d D = C1.Direction();
   gp_Dir2d x2, y2;
   x2        = C2.MirrorAxis().Direction();
@@ -277,8 +236,6 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Parab2d& C2)
   myNbExt++;
   myDone = true;
 }
-
-//============================================================================
 
 Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Circ2d& C2)
 {
@@ -337,8 +294,6 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Circ2d& C2)
   }
 }
 
-//===========================================================================
-
 Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Elips2d& C2)
 {
   myIsPar = false;
@@ -376,8 +331,6 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Elips2d& C2)
     }
   }
 }
-
-//============================================================================
 
 Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Hypr2d& C2)
 {
@@ -417,8 +370,6 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Hypr2d& C2)
   }
 }
 
-//============================================================================
-
 Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Parab2d& C2)
 {
   myIsPar = false;
@@ -457,14 +408,10 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Parab2d& C2)
   }
 }
 
-//============================================================================
-
 bool Extrema_ExtElC2d::IsDone() const
 {
   return myDone;
 }
-
-//============================================================================
 
 bool Extrema_ExtElC2d::IsParallel() const
 {
@@ -474,8 +421,6 @@ bool Extrema_ExtElC2d::IsParallel() const
   }
   return myIsPar;
 }
-
-//============================================================================
 
 int Extrema_ExtElC2d::NbExt() const
 {
@@ -487,8 +432,6 @@ int Extrema_ExtElC2d::NbExt() const
   return myNbExt;
 }
 
-//============================================================================
-
 double Extrema_ExtElC2d::SquareDistance(const int N) const
 {
   if (N < 1 || N > NbExt())
@@ -499,8 +442,6 @@ double Extrema_ExtElC2d::SquareDistance(const int N) const
   return mySqDist[N - 1];
 }
 
-//============================================================================
-
 void Extrema_ExtElC2d::Points(const int N, Extrema_POnCurv2d& P1, Extrema_POnCurv2d& P2) const
 {
   if (N < 1 || N > NbExt())
@@ -510,5 +451,3 @@ void Extrema_ExtElC2d::Points(const int N, Extrema_POnCurv2d& P1, Extrema_POnCur
   P1 = myPoint[N - 1][0];
   P2 = myPoint[N - 1][1];
 }
-
-//============================================================================

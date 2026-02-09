@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMeshData_PCurve, IMeshData_PCurve)
 
-//=================================================================================================
-
 BRepMeshData_PCurve::BRepMeshData_PCurve(const IMeshData::IFacePtr& theDFace,
                                          const TopAbs_Orientation   theOrientation,
                                          const occ::handle<NCollection_IncAllocator>& theAllocator)
@@ -17,11 +15,7 @@ BRepMeshData_PCurve::BRepMeshData_PCurve(const IMeshData::IFacePtr& theDFace,
 {
 }
 
-//=================================================================================================
-
 BRepMeshData_PCurve::~BRepMeshData_PCurve() = default;
-
-//=================================================================================================
 
 void BRepMeshData_PCurve::InsertPoint(const int       thePosition,
                                       const gp_Pnt2d& thePoint,
@@ -32,16 +26,12 @@ void BRepMeshData_PCurve::InsertPoint(const int       thePosition,
   myIndices.insert(myIndices.begin() + thePosition, 0);
 }
 
-//=================================================================================================
-
 void BRepMeshData_PCurve::AddPoint(const gp_Pnt2d& thePoint, const double theParamOnPCurve)
 {
   myPoints2d.push_back(thePoint);
   myParameters.push_back(theParamOnPCurve);
   myIndices.push_back(0);
 }
-
-//=================================================================================================
 
 gp_Pnt2d& BRepMeshData_PCurve::GetPoint(const int theIndex)
 {
@@ -50,16 +40,12 @@ gp_Pnt2d& BRepMeshData_PCurve::GetPoint(const int theIndex)
   return myPoints2d[theIndex];
 }
 
-//=================================================================================================
-
 int& BRepMeshData_PCurve::GetIndex(const int theIndex)
 {
   Standard_OutOfRange_Raise_if(theIndex < 0 || theIndex >= static_cast<int>(myIndices.size()),
                                "BRepMeshData_PCurve::GetIndex");
   return myIndices[theIndex];
 }
-
-//=================================================================================================
 
 double& BRepMeshData_PCurve::GetParameter(const int theIndex)
 {
@@ -68,14 +54,10 @@ double& BRepMeshData_PCurve::GetParameter(const int theIndex)
   return myParameters[theIndex];
 }
 
-//=================================================================================================
-
 int BRepMeshData_PCurve::ParametersNb() const
 {
   return static_cast<int>(myParameters.size());
 }
-
-//=================================================================================================
 
 void BRepMeshData_PCurve::RemovePoint(const int theIndex)
 {
@@ -84,14 +66,10 @@ void BRepMeshData_PCurve::RemovePoint(const int theIndex)
   removeParameter(theIndex);
 }
 
-//=================================================================================================
-
 void BRepMeshData_PCurve::removeParameter(const int theIndex)
 {
   myParameters.erase(myParameters.begin() + theIndex);
 }
-
-//=================================================================================================
 
 void BRepMeshData_PCurve::Clear(const bool isKeepEndPoints)
 {

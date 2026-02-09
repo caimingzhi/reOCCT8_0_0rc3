@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRep_Builder.hpp>
 #include <Interface_CheckIterator.hpp>
@@ -223,8 +212,6 @@ bool TransferBRep_Reader::IsDone() const
   return theDone;
 }
 
-//   ######    RESULTAT : SHAPES    ######
-
 int TransferBRep_Reader::NbShapes() const
 {
   return theShapes->Length();
@@ -264,8 +251,6 @@ TopoDS_Shape TransferBRep_Reader::ShapeResult(const occ::handle<Standard_Transie
   return TransferBRep::ShapeResult(theProc, ent);
 }
 
-//   ######    RESULTAT : TRANSIENTS    ######
-
 int TransferBRep_Reader::NbTransients() const
 {
   return theTransi->Length();
@@ -281,8 +266,6 @@ occ::handle<Standard_Transient> TransferBRep_Reader::Transient(const int num) co
 {
   return theTransi->Value(num);
 }
-
-//   ######    CHECKS    ######
 
 bool TransferBRep_Reader::CheckStatusResult(const bool withprint) const
 {

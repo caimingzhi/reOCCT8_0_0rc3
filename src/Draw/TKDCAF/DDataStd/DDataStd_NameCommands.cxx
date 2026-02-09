@@ -7,17 +7,10 @@
 #include <TDF_Data.hpp>
 #include <TDF_Label.hpp>
 
-// ATTRIBUTES
-
 #include <TDataStd_Name.hpp>
 
 #include <TCollection_ExtendedString.hpp>
 #include <NCollection_List.hpp>
-
-//=======================================================================
-// function : DDataStd_SetName
-// purpose  : SetName (DF, entry, name [,guid])
-//=======================================================================
 
 static int DDataStd_SetName(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -48,12 +41,6 @@ static int DDataStd_SetName(Draw_Interpretor& di, int nb, const char** arg)
   di << "DDataStd_SetName : Error\n";
   return 1;
 }
-
-// #define DEB_DDataStd
-//=======================================================================
-// function : DDataStd_GetName
-// purpose  : GetName (DF, entry [,guid])
-//=======================================================================
 
 static int DDataStd_GetName(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -92,8 +79,6 @@ static int DDataStd_GetName(Draw_Interpretor& di, int nb, const char** arg)
   di << "DDataStd_SetName : Error\n";
   return 1;
 }
-
-//=================================================================================================
 
 void DDataStd::NameCommands(Draw_Interpretor& theCommands)
 {

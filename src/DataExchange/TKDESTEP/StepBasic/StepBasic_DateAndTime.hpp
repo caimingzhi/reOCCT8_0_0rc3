@@ -11,7 +11,6 @@ class StepBasic_DateAndTime : public Standard_Transient
 {
 
 public:
-  //! Returns a DateAndTime
   Standard_EXPORT StepBasic_DateAndTime();
 
   Standard_EXPORT void Init(const occ::handle<StepBasic_Date>&      aDateComponent,

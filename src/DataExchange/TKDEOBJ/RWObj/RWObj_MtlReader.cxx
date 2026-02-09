@@ -1,16 +1,4 @@
-// Author: Kirill Gavrilov
-// Copyright (c) 2017-2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <RWObj_MtlReader.hpp>
 
@@ -24,11 +12,7 @@
 
 namespace
 {
-  //! Try to find a new location of the file relative to specified folder from absolute path.
-  //! @param theAbsolutePath original absolute file path
-  //! @param theNewFoler     the new folder to look for the file
-  //! @param theRelativePath result file path relative to theNewFoler
-  //! @return true if relative file has been found
+
   static bool findRelativePath(const TCollection_AsciiString& theAbsolutePath,
                                const TCollection_AsciiString& theNewFoler,
                                TCollection_AsciiString&       theRelativePath)
@@ -76,8 +60,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 RWObj_MtlReader::RWObj_MtlReader(
   NCollection_DataMap<TCollection_AsciiString, RWObj_Material>& theMaterials)
     : myFile(nullptr),
@@ -86,8 +68,6 @@ RWObj_MtlReader::RWObj_MtlReader(
 {
 }
 
-//=================================================================================================
-
 RWObj_MtlReader::~RWObj_MtlReader()
 {
   if (myFile != nullptr)
@@ -95,8 +75,6 @@ RWObj_MtlReader::~RWObj_MtlReader()
     ::fclose(myFile);
   }
 }
-
-//=================================================================================================
 
 bool RWObj_MtlReader::Read(const TCollection_AsciiString& theFolder,
                            const TCollection_AsciiString& theFile)
@@ -121,7 +99,6 @@ bool RWObj_MtlReader::Read(const TCollection_AsciiString& theFolder,
 
     const char* aPos = aLine;
 
-    // skip spaces
     for (; IsSpace(*aPos);)
     {
       ++aPos;
@@ -143,7 +120,7 @@ bool RWObj_MtlReader::Read(const TCollection_AsciiString& theFolder,
         }
         else
         {
-          // reset incomplete material definition
+
           aMat = RWObj_Material();
         }
         myMaterials->Bind(aMatName, aMat);
@@ -223,7 +200,7 @@ bool RWObj_MtlReader::Read(const TCollection_AsciiString& theFolder,
     }
     else if (*aPos == 'd' && IsSpace(aPos[1]))
     {
-      // dissolve
+
       aPos += 2;
       char*  aNext   = nullptr;
       double anAlpha = Strtod(aPos, &aNext);
@@ -261,17 +238,6 @@ bool RWObj_MtlReader::Read(const TCollection_AsciiString& theFolder,
         hasAspect = true;
       }
     }
-    /*else if (::memcmp (aPos, "illum", 5) == 0)
-    {
-      aPos += 6;
-      char* aNext = NULL;
-      const int aModel = strtol (aPos, &aNext, 10);
-      aPos = aNext;
-      if (aModel < 0 || aModel > 10)
-      {
-        // unknown model
-      }
-    }*/
   }
 
   if (!aMatName.IsEmpty())
@@ -282,7 +248,7 @@ bool RWObj_MtlReader::Read(const TCollection_AsciiString& theFolder,
     }
     else
     {
-      // reset incomplete material definition
+
       aMat = RWObj_Material();
     }
     myMaterials->Bind(aMatName, aMat);
@@ -290,8 +256,6 @@ bool RWObj_MtlReader::Read(const TCollection_AsciiString& theFolder,
 
   return myMaterials->Extent() != aNbMatOld;
 }
-
-//=================================================================================================
 
 void RWObj_MtlReader::processTexturePath(TCollection_AsciiString&       theTexturePath,
                                          const TCollection_AsciiString& theFolder)
@@ -304,7 +268,7 @@ void RWObj_MtlReader::processTexturePath(TCollection_AsciiString&       theTextu
       + theTexturePath);
     if (!OSD_File(theTexturePath).Exists())
     {
-      // workaround absolute filenames - try to find the same file at the OBJ file location
+
       TCollection_AsciiString aRelativePath;
       if (findRelativePath(theTexturePath, theFolder, aRelativePath))
       {
@@ -318,8 +282,6 @@ void RWObj_MtlReader::processTexturePath(TCollection_AsciiString&       theTextu
   }
 }
 
-//=================================================================================================
-
 bool RWObj_MtlReader::validateScalar(const double theValue)
 {
   if (theValue < 0.0 || theValue > 1.0)
@@ -330,8 +292,6 @@ bool RWObj_MtlReader::validateScalar(const double theValue)
   }
   return true;
 }
-
-//=================================================================================================
 
 bool RWObj_MtlReader::validateColor(const NCollection_Vec3<float>& theVec)
 {

@@ -16,30 +16,22 @@ static NCollection_DataMap<TCollection_AsciiString, occ::handle<ShapeProcess_Ope
 
 namespace
 {
-  //! Simple RAII class to lock the scope of the current operation.
+
   class ScopeLock
   {
   public:
-    //! Constructor.
-    //! Locks the scope of the current operation.
-    //! @param theContext the context to lock.
-    //! @param theScopeName the name of the scope to lock.
     ScopeLock(ShapeProcess_Context& theContext, const char* theScopeName)
         : myContext(theContext)
     {
       myContext.SetScope(theScopeName);
     }
 
-    //! Destructor.
-    //! Unlocks the scope of the current operation.
     ~ScopeLock() { myContext.UnSetScope(); }
 
   private:
-    ShapeProcess_Context& myContext; //!< The context to lock.
+    ShapeProcess_Context& myContext;
   };
 } // namespace
-
-//=================================================================================================
 
 bool ShapeProcess::RegisterOperator(const char* name, const occ::handle<ShapeProcess_Operator>& op)
 {
@@ -54,8 +46,6 @@ bool ShapeProcess::RegisterOperator(const char* name, const occ::handle<ShapePro
   return true;
 }
 
-//=================================================================================================
-
 bool ShapeProcess::FindOperator(const char* name, occ::handle<ShapeProcess_Operator>& op)
 {
   if (!aMapOfOperators.IsBound(name))
@@ -69,15 +59,12 @@ bool ShapeProcess::FindOperator(const char* name, occ::handle<ShapeProcess_Opera
   return !op.IsNull();
 }
 
-//=================================================================================================
-
 bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
                            const char*                              seq,
                            const Message_ProgressRange&             theProgress)
 {
   ScopeLock aSequenceScope(*context, seq);
 
-  // get description of the sequence
   TCollection_AsciiString sequence;
   if (!context->GetString("exec.op", sequence))
   {
@@ -87,7 +74,7 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
 #endif
     if (context->TraceLevel() > 0)
     {
-      Message_Msg SMSG3("SP.Sequence.Warn.NoSeq"); // Sequence %s not found
+      Message_Msg SMSG3("SP.Sequence.Warn.NoSeq");
       context->Messenger()->Send(SMSG3 << seq, Message_Warning);
     }
     return false;
@@ -103,10 +90,9 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
     sequenceOfOperators.Append(oper);
   }
 
-  // put a message
   if (context->TraceLevel() >= 2)
   {
-    Message_Msg             SMSG0("SP.Sequence.Info.Seq"); // Sequence of operators: %s
+    Message_Msg             SMSG0("SP.Sequence.Info.Seq");
     TCollection_AsciiString Seq;
     for (int i1 = 1; i1 <= sequenceOfOperators.Length(); i1++)
     {
@@ -118,7 +104,6 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
     context->Messenger()->Send(SMSG0, Message_Info);
   }
 
-  // iterate on operators in the sequence
   bool                  isDone = false;
   Message_ProgressScope aPS(theProgress, nullptr, sequenceOfOperators.Length());
   for (i = 1; i <= sequenceOfOperators.Length() && aPS.More(); i++)
@@ -128,7 +113,7 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
 
     if (context->TraceLevel() >= 2)
     {
-      Message_Msg SMSG5("SP.Sequence.Info.Operator"); // Operator %d/%d: %s
+      Message_Msg SMSG5("SP.Sequence.Info.Operator");
       SMSG5 << i << sequenceOfOperators.Length() << oper.ToCString();
       context->Messenger()->Send(SMSG5, Message_Alarm);
     }
@@ -138,7 +123,7 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
     {
       if (context->TraceLevel() > 0)
       {
-        Message_Msg SMSG1("SP.Sequence.Error.NoOp"); // Operator %s not found
+        Message_Msg SMSG1("SP.Sequence.Error.NoOp");
         context->Messenger()->Send(SMSG1 << oper, Message_Alarm);
       }
       continue;
@@ -153,7 +138,7 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
     }
     catch (Standard_Failure const& anException)
     {
-      Message_Msg SMSG2("SP.Sequence.Error.Except"); // Operator %s failed with exception %s
+      Message_Msg SMSG2("SP.Sequence.Error.Except");
       SMSG2 << oper << anException.what();
       context->Messenger()->Send(SMSG2, Message_Alarm);
     }
@@ -161,8 +146,6 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
 
   return isDone;
 }
-
-//=================================================================================================
 
 bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& theContext,
                            const ShapeProcess::OperationsFlags&     theOperations,
@@ -189,7 +172,7 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& theContext,
     const char*                               anOperationName = anOperator.first;
     const occ::handle<ShapeProcess_Operator>& anOperation     = anOperator.second;
     Message_ProgressRange                     aProgressRange  = aProgressScope.Next();
-    ScopeLock anOperationScope(*theContext, anOperationName); // Set operation scope.
+    ScopeLock                                 anOperationScope(*theContext, anOperationName);
     try
     {
       OCC_CATCH_SIGNALS;
@@ -197,15 +180,13 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& theContext,
     }
     catch (const Standard_Failure& anException)
     {
-      Message_Msg aMessage("SP.Sequence.Error.Except"); // Operator %s failed with exception %s
+      Message_Msg aMessage("SP.Sequence.Error.Except");
       aMessage << anOperationName << anException.what();
       theContext->Messenger()->Send(aMessage, Message_Alarm);
     }
   }
   return anIsAnySuccess;
 }
-
-//=================================================================================================
 
 std::pair<ShapeProcess::Operation, bool> ShapeProcess::ToOperationFlag(const char* theName)
 {
@@ -226,8 +207,6 @@ std::pair<ShapeProcess::Operation, bool> ShapeProcess::ToOperationFlag(const cha
   }
   return {Operation::First, false};
 }
-
-//=================================================================================================
 
 std::vector<std::pair<const char*, occ::handle<ShapeProcess_Operator>>> ShapeProcess::getOperators(
   const ShapeProcess::OperationsFlags& theFlags)
@@ -253,8 +232,6 @@ std::vector<std::pair<const char*, occ::handle<ShapeProcess_Operator>>> ShapePro
   }
   return aResult;
 }
-
-//=================================================================================================
 
 const char* ShapeProcess::toOperationName(const Operation theOperation)
 {

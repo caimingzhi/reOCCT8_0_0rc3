@@ -16,8 +16,6 @@ IMPLEMENT_STANDARD_RTTIEXT(HLRTest_DrawablePolyEdgeTool, Draw_Drawable3D)
 #define PntY2 ((double*)Coordinates)[4]
 #define PntZ2 ((double*)Coordinates)[5]
 
-//=================================================================================================
-
 HLRTest_DrawablePolyEdgeTool::HLRTest_DrawablePolyEdgeTool(const occ::handle<HLRBRep_PolyAlgo>& Alg,
                                                            const int  ViewId,
                                                            const bool Debug)
@@ -91,8 +89,6 @@ HLRTest_DrawablePolyEdgeTool::HLRTest_DrawablePolyEdgeTool(const occ::handle<HLR
     ChronHide.Show();
   }
 }
-
-//=================================================================================================
 
 void HLRTest_DrawablePolyEdgeTool::DrawOn(Draw_Display& D) const
 {

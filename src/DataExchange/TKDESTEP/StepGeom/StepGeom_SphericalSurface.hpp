@@ -11,7 +11,6 @@ class StepGeom_SphericalSurface : public StepGeom_ElementarySurface
 {
 
 public:
-  //! Returns a SphericalSurface
   Standard_EXPORT StepGeom_SphericalSurface();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&  aName,

@@ -10,8 +10,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRTest_DrawableEdgeTool, Draw_Drawable3D)
 
-//=================================================================================================
-
 HLRTest_DrawableEdgeTool::HLRTest_DrawableEdgeTool(const occ::handle<HLRBRep_Algo>& Alg,
                                                    const bool                       Visible,
                                                    const bool                       IsoLine,
@@ -27,8 +25,6 @@ HLRTest_DrawableEdgeTool::HLRTest_DrawableEdgeTool(const occ::handle<HLRBRep_Alg
 {
 }
 
-//=================================================================================================
-
 void HLRTest_DrawableEdgeTool::DrawOn(Draw_Display& D) const
 {
   if (myViewId == D.ViewId())
@@ -40,17 +36,13 @@ void HLRTest_DrawableEdgeTool::DrawOn(Draw_Display& D) const
   }
 }
 
-//=================================================================================================
-
 void HLRTest_DrawableEdgeTool::InternalDraw(Draw_Display& D, const int typ) const
 {
   occ::handle<HLRBRep_Data> DS = myAlgo->DataStructure();
 
   if (!DS.IsNull())
   {
-    //    double sta,end;
-    //    float tolsta,tolend;
-    //    int ie,v1,v2,e1,e2,f1,f2;
+
     int               ie, e2;
     int               iCB = 1;
     int               nCB = myAlgo->NbShapes();
@@ -92,8 +84,6 @@ void HLRTest_DrawableEdgeTool::InternalDraw(Draw_Display& D, const int typ) cons
   }
 }
 
-//=================================================================================================
-
 void HLRTest_DrawableEdgeTool::DrawFace(Draw_Display&              D,
                                         const int                  typ,
                                         const int                  nCB,
@@ -126,8 +116,6 @@ void HLRTest_DrawableEdgeTool::DrawFace(Draw_Display&              D,
     }
   }
 }
-
-//=================================================================================================
 
 void HLRTest_DrawableEdgeTool::DrawEdge(Draw_Display&     D,
                                         const bool        inFace,

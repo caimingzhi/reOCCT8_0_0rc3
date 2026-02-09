@@ -3,8 +3,6 @@
 #include <gp_Pnt.hpp>
 #include <gp_XYZ.hpp>
 
-//=================================================================================================
-
 void Intf::PlaneEquation(const gp_Pnt& P1,
                          const gp_Pnt& P2,
                          const gp_Pnt& P3,
@@ -26,8 +24,6 @@ void Intf::PlaneEquation(const gp_Pnt& P1,
     PolarDistance = NormalVector * P1.XYZ();
   }
 }
-
-//=================================================================================================
 
 bool Intf::Contain(const gp_Pnt& P1, const gp_Pnt& P2, const gp_Pnt& P3, const gp_Pnt& ThePnt)
 {

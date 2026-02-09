@@ -22,8 +22,6 @@ typedef gp_Trsf       Trsf;
 typedef gp_Vec        Vec;
 typedef gp_XYZ        XYZ;
 
-//=================================================================================================
-
 occ::handle<Geom_Geometry> Geom_Parabola::Copy() const
 {
 
@@ -32,15 +30,11 @@ occ::handle<Geom_Geometry> Geom_Parabola::Copy() const
   return Prb;
 }
 
-//=================================================================================================
-
 Geom_Parabola::Geom_Parabola(const gp_Parab& Prb)
     : focalLength(Prb.Focal())
 {
   pos = Prb.Position();
 }
-
-//=================================================================================================
 
 Geom_Parabola::Geom_Parabola(const Ax2& A2, const double Focal)
     : focalLength(Focal)
@@ -51,8 +45,6 @@ Geom_Parabola::Geom_Parabola(const Ax2& A2, const double Focal)
   pos = A2;
 }
 
-//=================================================================================================
-
 Geom_Parabola::Geom_Parabola(const Ax1& D, const Pnt& F)
 {
 
@@ -61,63 +53,45 @@ Geom_Parabola::Geom_Parabola(const Ax1& D, const Pnt& F)
   focalLength = Prb.Focal();
 }
 
-//=================================================================================================
-
 double Geom_Parabola::ReversedParameter(const double U) const
 {
   return (-U);
 }
-
-//=================================================================================================
 
 bool Geom_Parabola::IsClosed() const
 {
   return false;
 }
 
-//=================================================================================================
-
 bool Geom_Parabola::IsPeriodic() const
 {
   return false;
 }
-
-//=================================================================================================
 
 double Geom_Parabola::Eccentricity() const
 {
   return 1.0;
 }
 
-//=================================================================================================
-
 double Geom_Parabola::FirstParameter() const
 {
   return -Precision::Infinite();
 }
-
-//=================================================================================================
 
 double Geom_Parabola::Focal() const
 {
   return focalLength;
 }
 
-//=================================================================================================
-
 double Geom_Parabola::LastParameter() const
 {
   return Precision::Infinite();
 }
 
-//=================================================================================================
-
 double Geom_Parabola::Parameter() const
 {
   return 2.0 * focalLength;
 }
-
-//=================================================================================================
 
 void Geom_Parabola::SetFocal(const double Focal)
 {
@@ -127,16 +101,12 @@ void Geom_Parabola::SetFocal(const double Focal)
   focalLength = Focal;
 }
 
-//=================================================================================================
-
 void Geom_Parabola::SetParab(const gp_Parab& Prb)
 {
 
   focalLength = Prb.Focal();
   pos         = Prb.Position();
 }
-
-//=================================================================================================
 
 Ax1 Geom_Parabola::Directrix() const
 {
@@ -145,15 +115,11 @@ Ax1 Geom_Parabola::Directrix() const
   return Prb.Directrix();
 }
 
-//=================================================================================================
-
 void Geom_Parabola::D0(const double U, Pnt& P) const
 {
 
   P = ElCLib::ParabolaValue(U, pos, focalLength);
 }
-
-//=================================================================================================
 
 void Geom_Parabola::D1(const double U, Pnt& P, Vec& V1) const
 {
@@ -161,15 +127,11 @@ void Geom_Parabola::D1(const double U, Pnt& P, Vec& V1) const
   ElCLib::ParabolaD1(U, pos, focalLength, P, V1);
 }
 
-//=================================================================================================
-
 void Geom_Parabola::D2(const double U, Pnt& P, Vec& V1, Vec& V2) const
 {
 
   ElCLib::ParabolaD2(U, pos, focalLength, P, V1, V2);
 }
-
-//=================================================================================================
 
 void Geom_Parabola::D3(const double U, Pnt& P, Vec& V1, Vec& V2, Vec& V3) const
 {
@@ -178,16 +140,12 @@ void Geom_Parabola::D3(const double U, Pnt& P, Vec& V1, Vec& V2, Vec& V3) const
   V3.SetCoord(0.0, 0.0, 0.0);
 }
 
-//=================================================================================================
-
 Vec Geom_Parabola::DN(const double U, const int N) const
 {
 
   Standard_RangeError_Raise_if(N < 1, " ");
   return ElCLib::ParabolaDN(U, pos, focalLength, N);
 }
-
-//=================================================================================================
 
 Pnt Geom_Parabola::Focus() const
 {
@@ -198,15 +156,11 @@ Pnt Geom_Parabola::Focus() const
   return Pnt(Xp + focalLength * Xd, Yp + focalLength * Yd, Zp + focalLength * Zd);
 }
 
-//=================================================================================================
-
 gp_Parab Geom_Parabola::Parab() const
 {
 
   return gp_Parab(pos, focalLength);
 }
-
-//=================================================================================================
 
 void Geom_Parabola::Transform(const Trsf& T)
 {
@@ -215,8 +169,6 @@ void Geom_Parabola::Transform(const Trsf& T)
   pos.Transform(T);
 }
 
-//=================================================================================================
-
 double Geom_Parabola::TransformedParameter(const double U, const gp_Trsf& T) const
 {
   if (Precision::IsInfinite(U))
@@ -224,14 +176,10 @@ double Geom_Parabola::TransformedParameter(const double U, const gp_Trsf& T) con
   return U * std::abs(T.ScaleFactor());
 }
 
-//=================================================================================================
-
 double Geom_Parabola::ParametricTransformation(const gp_Trsf& T) const
 {
   return std::abs(T.ScaleFactor());
 }
-
-//=================================================================================================
 
 void Geom_Parabola::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

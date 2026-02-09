@@ -1,15 +1,4 @@
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <NCollection_Handle.hpp>
 #include <NCollection_Array1.hpp>
@@ -37,28 +26,20 @@
 
 #include <cstdio>
 
-//=======================================================================
-// StdStorage::Version
-//=======================================================================
 TCollection_AsciiString StdStorage::Version()
 {
   TCollection_AsciiString v("1.3");
   return v;
 }
 
-//=======================================================================
-// StdStorage::Read
-// Reads data from a file
-//=======================================================================
 Storage_Error StdStorage::Read(const TCollection_AsciiString& theFileName,
                                occ::handle<StdStorage_Data>&  theData)
 {
-  // Create a driver appropriate for the given file
+
   occ::handle<Storage_BaseDriver> aDriver;
   if (PCDM::FileDriverType(theFileName, aDriver) == PCDM_TOFD_Unknown)
     return Storage_VSWrongFileDriver;
 
-  // Try to open the file
   try
   {
     OCC_CATCH_SIGNALS
@@ -72,10 +53,6 @@ Storage_Error StdStorage::Read(const TCollection_AsciiString& theFileName,
   return Read(aDriver, theData);
 }
 
-//=======================================================================
-// StdStorage::Read
-// Reads data from a pre-opened for reading driver
-//=======================================================================
 Storage_Error StdStorage::Read(const occ::handle<Storage_BaseDriver>& theDriver,
                                occ::handle<StdStorage_Data>&          theData)
 {
@@ -88,15 +65,12 @@ Storage_Error StdStorage::Read(const occ::handle<Storage_BaseDriver>& theDriver,
   occ::handle<StdStorage_TypeData>   aTypeData   = theData->TypeData();
   occ::handle<StdStorage_RootData>   aRootData   = theData->RootData();
 
-  // Read header section
   if (!aHeaderData->Read(theDriver))
     return aHeaderData->ErrorStatus();
 
-  // Read types section
   if (!aTypeData->Read(theDriver))
     return aTypeData->ErrorStatus();
 
-  // Select instantiators for the used types
   NCollection_Array1<StdObjMgt_Persistent::Instantiator> anInstantiators(
     1,
     aTypeData->NumberOfTypes());
@@ -109,13 +83,11 @@ Storage_Error StdStorage::Read(const occ::handle<Storage_BaseDriver>& theDriver,
       return Storage_VSUnknownType;
   }
 
-  // Read root section
   if (!aRootData->Read(theDriver))
     return aRootData->ErrorStatus();
 
   Storage_Error anError;
 
-  // Read and parse reference section
   StdObjMgt_ReadData aReadData(theDriver, aHeaderData->NumberOfObjects());
 
   anError = theDriver->BeginReadRefSection();
@@ -147,7 +119,6 @@ Storage_Error StdStorage::Read(const occ::handle<Storage_BaseDriver>& theDriver,
   if (anError != Storage_VSOk)
     return anError;
 
-  // Read and parse data section
   anError = theDriver->BeginReadDataSection();
   if (anError != Storage_VSOk)
     return anError;
@@ -195,9 +166,6 @@ Storage_Error StdStorage::Read(const occ::handle<Storage_BaseDriver>& theDriver,
   return Storage_VSOk;
 }
 
-//=======================================================================
-// StdStorage::currentDate
-//=======================================================================
 static TCollection_AsciiString currentDate()
 {
 #define SLENGTH 80
@@ -216,9 +184,6 @@ static TCollection_AsciiString currentDate()
 #undef SLENGTH
 }
 
-//=======================================================================
-// StdStorage::Write
-//=======================================================================
 Storage_Error StdStorage::Write(const occ::handle<Storage_BaseDriver>& theDriver,
                                 const occ::handle<StdStorage_Data>&    theData)
 {
@@ -275,21 +240,18 @@ Storage_Error StdStorage::Write(const occ::handle<Storage_BaseDriver>& theDriver
 
   try
   {
-    // Write header section
+
     if (!aHeaderData->Write(theDriver))
       return aHeaderData->ErrorStatus();
 
-    // Write types section
     if (!aTypeData->Write(theDriver))
       return aTypeData->ErrorStatus();
 
-    // Write root section
     if (!aRootData->Write(theDriver))
       return aRootData->ErrorStatus();
 
     Storage_Error anError;
 
-    // Write reference section
     anError = theDriver->BeginWriteRefSection();
     if (anError != Storage_VSOk)
       return anError;
@@ -306,7 +268,6 @@ Storage_Error StdStorage::Write(const occ::handle<Storage_BaseDriver>& theDriver
     if (anError != Storage_VSOk)
       return anError;
 
-    // Write data section
     anError = theDriver->BeginWriteDataSection();
     if (anError != Storage_VSOk)
       return anError;

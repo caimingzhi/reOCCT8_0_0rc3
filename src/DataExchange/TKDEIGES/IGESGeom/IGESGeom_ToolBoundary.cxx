@@ -22,29 +22,21 @@
 
 #include <cstdio>
 
-// MGE 30/07/98
-//=================================================================================================
-
 IGESGeom_ToolBoundary::IGESGeom_ToolBoundary() = default;
-
-//=================================================================================================
 
 void IGESGeom_ToolBoundary::ReadOwnParams(const occ::handle<IGESGeom_Boundary>&       ent,
                                           const occ::handle<IGESData_IGESReaderData>& IR,
                                           IGESData_ParamReader&                       PR) const
 {
-  // MGE 30/07/98
 
-  // bool st; //szv#4:S4163:12Mar99 not needed
-  int                              num; // szv#4:S4163:12Mar99 j not needed, i moved down in `for`
-  int                              tempType, tempPreference;
-  occ::handle<IGESData_IGESEntity> tempSurface;
+  int                                                                num;
+  int                                                                tempType, tempPreference;
+  occ::handle<IGESData_IGESEntity>                                   tempSurface;
   occ::handle<NCollection_HArray1<int>>                              tempSenses;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> tempModelCurves;
   occ::handle<IGESBasic_HArray1OfHArray1OfIGESEntity>                tempParameterCurves;
   IGESData_Status                                                    aStatus;
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   if (!PR.ReadInteger(PR.Current(), tempType))
   {
     Message_Msg Msg122("XTSEP_122");
@@ -95,13 +87,12 @@ void IGESGeom_ToolBoundary::ReadOwnParams(const occ::handle<IGESGeom_Boundary>& 
 
   if (!tempSenses.IsNull() && !tempModelCurves.IsNull() && !tempParameterCurves.IsNull())
   {
-    // clang-format off
-    for ( int i = 1;  i <= num;  i++ ) //szv#4:S4163:12Mar99 int moved in `for`
-    // clang-format on
+
+    for (int i = 1; i <= num; i++)
+
     {
       occ::handle<IGESData_IGESEntity> tempEnt;
-      // st = PR.ReadEntity(IR, PR.Current(), Msg127, tempEnt); //szv#4:S4163:12Mar99 moved in if
-      // st = PR.ReadEntity(IR, PR.Current(), "Model Space Curves", tempEnt);
+
       if (PR.ReadEntity(IR, PR.Current(), aStatus, tempEnt))
         tempModelCurves->SetValue(i, tempEnt);
       else
@@ -130,8 +121,7 @@ void IGESGeom_ToolBoundary::ReadOwnParams(const occ::handle<IGESGeom_Boundary>& 
       }
 
       int tempSense;
-      // st = PR.ReadInteger(PR.Current(), Msg128, tempSense); //szv#4:S4163:12Mar99 moved in if
-      // st = PR.ReadInteger(PR.Current(), "Orientation flags", tempSense);
+
       if (PR.ReadInteger(PR.Current(), tempSense))
         tempSenses->SetValue(i, tempSense);
       else
@@ -141,45 +131,15 @@ void IGESGeom_ToolBoundary::ReadOwnParams(const occ::handle<IGESGeom_Boundary>& 
       }
 
       int tempCount;
-      // st = PR.ReadInteger(PR.Current(), Msg129, tempCount); //szv#4:S4163:12Mar99 moved in if
-      // st = PR.ReadInteger(PR.Current(), "Count of Parameter Space Curves", tempCount);
-      // szv#4:S4163:12Mar99 optimized
-      /*
-              if (st && tempCount >= 0)
-            {
-              occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> tempParCurves;
-              if (tempCount > 0)
-                st = PR.ReadEnts (IR,PR.CurrentList(tempCount), Msg130, tempParCurves);
-                //st = PR.ReadEnts (IR,PR.CurrentList(tempCount), "Parameter Space Curves",
-         tempParCurves);
-      */
-      /*
-                {
-              tempParCurves = new
-                NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, tempCount);
-              for ( j = 1; j <= tempCount; j++ ) {
-                occ::handle<IGESData_IGESEntity> tempEnt;
-                st = PR.ReadEntity(IR, PR.Current(),
-                           "Parameter Space Curves", tempEnt);
-                if (st) tempParCurves->SetValue(j, tempEnt);
-              }
-                }
-      */
-      /*
-              tempParameterCurves->SetValue(i, tempParCurves);
-            }
-          if (st && tempCount < 0)
-            PR.SendFail(Msg129);
-      */
+
       if (PR.ReadInteger(PR.Current(), tempCount) && (tempCount >= 0))
       {
         occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> tempParCurves;
         if (tempCount > 0)
         {
           Message_Msg Msg130("XTSEP_130");
-          // clang-format off
-		PR.ReadEnts (IR,PR.CurrentList(tempCount), Msg130, tempParCurves); //szv#4:S4163:12Mar99 `st=` not needed
-                                      // clang-format on
+
+          PR.ReadEnts(IR, PR.CurrentList(tempCount), Msg130, tempParCurves);
         }
         tempParameterCurves->SetValue(i, tempParCurves);
       }
@@ -195,8 +155,6 @@ void IGESGeom_ToolBoundary::ReadOwnParams(const occ::handle<IGESGeom_Boundary>& 
   ent
     ->Init(tempType, tempPreference, tempSurface, tempModelCurves, tempSenses, tempParameterCurves);
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolBoundary::WriteOwnParams(const occ::handle<IGESGeom_Boundary>& ent,
                                            IGESData_IGESWriter&                  IW) const
@@ -222,8 +180,6 @@ void IGESGeom_ToolBoundary::WriteOwnParams(const occ::handle<IGESGeom_Boundary>&
   }
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolBoundary::OwnShared(const occ::handle<IGESGeom_Boundary>& ent,
                                       Interface_EntityIterator&             iter) const
 {
@@ -242,8 +198,6 @@ void IGESGeom_ToolBoundary::OwnShared(const occ::handle<IGESGeom_Boundary>& ent,
     }
   }
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolBoundary::OwnCopy(const occ::handle<IGESGeom_Boundary>& another,
                                     const occ::handle<IGESGeom_Boundary>& ent,
@@ -284,15 +238,13 @@ void IGESGeom_ToolBoundary::OwnCopy(const occ::handle<IGESGeom_Boundary>& anothe
     ->Init(tempType, tempPreference, tempSurface, tempModelCurves, tempSenses, tempParameterCurves);
 }
 
-//=================================================================================================
-
 bool IGESGeom_ToolBoundary::OwnCorrect(const occ::handle<IGESGeom_Boundary>& ent) const
 {
-  //  bool t0 = (ent->BoundaryType() == 0);
+
   bool res = false;
   bool r2d = false;
   int  nb  = ent->NbModelSpaceCurves();
-  int  i; // svv Jan11 2000 : porting on DEC
+  int  i;
   for (i = 1; i <= nb; i++)
   {
     int nbi = ent->NbParameterCurves(i);
@@ -311,14 +263,7 @@ bool IGESGeom_ToolBoundary::OwnCorrect(const occ::handle<IGESGeom_Boundary>& ent
   if (!r2d)
     return res;
   if (ent->BoundaryType() != 0)
-    return res; // OK
-
-  //  Remaining Boundary Type : if there are ParameterCurves, it must be valued 1
-  //  We therefore reconstruct the Boundary identically, but with BoundaryType = 1
-
-  // if type = 0, nullify all ParameterCurves
-  //  -> We reconstruct, with Null ParameterCurves
-  // In addition, the ParameterCurves must have their UseFlag at 5
+    return res;
 
   occ::handle<IGESBasic_HArray1OfHArray1OfIGESEntity> cv2d =
     new IGESBasic_HArray1OfHArray1OfIGESEntity(1, nb);
@@ -335,36 +280,23 @@ bool IGESGeom_ToolBoundary::OwnCorrect(const occ::handle<IGESGeom_Boundary>& ent
   return true;
 }
 
-//=================================================================================================
-
-IGESData_DirChecker IGESGeom_ToolBoundary::DirChecker(
-  const occ::handle<IGESGeom_Boundary>& /* ent */) const
+IGESData_DirChecker IGESGeom_ToolBoundary::DirChecker(const occ::handle<IGESGeom_Boundary>&) const
 {
   IGESData_DirChecker DC(141, 0);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
   DC.SubordinateStatusRequired(0);
   DC.HierarchyStatusIgnored();
   return DC;
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolBoundary::OwnCheck(const occ::handle<IGESGeom_Boundary>& ent,
                                      const Interface_ShareTool&,
                                      occ::handle<Interface_Check>& ach) const
 {
-  // MGE 30/07/98
-  // Building of messages
-  //========================================
-  // Message_Msg Msg122("XTSEP_122");
-  // Message_Msg Msg123("XTSEP_123");
-  // Message_Msg Msg125("XTSEP_125");
-  // Message_Msg Msg128("XTSEP_128");
-  //========================================
 
   if ((ent->BoundaryType() != 0) && (ent->BoundaryType() != 1))
   {
@@ -377,8 +309,6 @@ void IGESGeom_ToolBoundary::OwnCheck(const occ::handle<IGESGeom_Boundary>& ent,
     ach->SendFail(Msg123);
   }
 
-  // we should also test that, for BoundaryType = 1, the Surface is indeed
-  //  Parametric ... (at least one case fails : it is Plane 108)
   if (ent->BoundaryType() == 1)
   {
     if (ent->Surface()->TypeNumber() == 108)
@@ -395,19 +325,7 @@ void IGESGeom_ToolBoundary::OwnCheck(const occ::handle<IGESGeom_Boundary>& ent,
       Message_Msg Msg128("XTSEP_128");
       ach->SendFail(Msg128);
     }
-  /*
-    if (ent->BoundaryType() == 0)
-      for ( num = ent->NbModelSpaceCurves(), i = 1; i <= num; i++ )
-        if (ent->NbParameterCurves(i) != 0)
-      {
-            char mess[80];
-        Sprintf(mess,"Nb. Parameter Space Curve %d !=0 while Boundary Type=0",i);
-        ach.SendFail(mess);
-      }
-  */
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolBoundary::OwnDump(const occ::handle<IGESGeom_Boundary>& ent,
                                     const IGESData_IGESDumper&            dumper,

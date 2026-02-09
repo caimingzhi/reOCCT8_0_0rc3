@@ -29,14 +29,10 @@ inline HLRTopoBRep_VData::HLRTopoBRep_VData()
 {
 }
 
-//=================================================================================================
-
 inline double HLRTopoBRep_VData::Parameter() const
 {
   return myParameter;
 }
-
-//=================================================================================================
 
 inline const TopoDS_Shape& HLRTopoBRep_VData::Vertex() const
 {

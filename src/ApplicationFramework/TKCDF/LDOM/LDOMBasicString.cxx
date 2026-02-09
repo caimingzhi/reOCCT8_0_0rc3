@@ -4,14 +4,9 @@
 #include <TCollection_ExtendedString.hpp>
 #include <cerrno>
 
-//=======================================================================
-// function : LDOMString
-// purpose  : Create a free string (not connected to any type of container)
-//=======================================================================
-
 LDOMBasicString::LDOMBasicString(const char* aValue)
 {
-  if (aValue == nullptr /*|| aValue[0] == '\0'*/)
+  if (aValue == nullptr)
   {
     myType    = LDOM_NULL;
     myVal.ptr = nullptr;
@@ -25,14 +20,9 @@ LDOMBasicString::LDOMBasicString(const char* aValue)
   }
 }
 
-//=======================================================================
-// function : LDOMString
-// purpose  : Create an Ascii string managed by LDOM_Document
-//=======================================================================
-
 LDOMBasicString::LDOMBasicString(const char* aValue, const occ::handle<LDOM_MemManager>& aDoc)
 {
-  if (aValue == nullptr /*|| aValue[0] == '\0'*/)
+  if (aValue == nullptr)
   {
     myType    = LDOM_NULL;
     myVal.ptr = nullptr;
@@ -45,11 +35,6 @@ LDOMBasicString::LDOMBasicString(const char* aValue, const occ::handle<LDOM_MemM
     memcpy(myVal.ptr, aValue, aLen);
   }
 }
-
-//=======================================================================
-// function : LDOMString
-// purpose  : Create an Ascii string managed by LDOM_Document
-//=======================================================================
 
 LDOMBasicString::LDOMBasicString(const char*                         aValue,
                                  const int                           aLen,
@@ -68,8 +53,6 @@ LDOMBasicString::LDOMBasicString(const char*                         aValue,
     ((char*)myVal.ptr)[aLen] = '\0';
   }
 }
-
-//=================================================================================================
 
 LDOMBasicString::LDOMBasicString(const LDOMBasicString& anOther)
     : myType(anOther.Type())
@@ -97,8 +80,6 @@ LDOMBasicString::LDOMBasicString(const LDOMBasicString& anOther)
   }
 }
 
-//=================================================================================================
-
 LDOMBasicString::~LDOMBasicString()
 {
   if (myType == LDOM_AsciiFree)
@@ -108,11 +89,6 @@ LDOMBasicString::~LDOMBasicString()
   }
 }
 
-//=======================================================================
-// function : operator =
-// purpose  : Assignment to NULL
-//=======================================================================
-
 LDOMBasicString& LDOMBasicString::operator=(const LDOM_NullPtr*)
 {
   if (myType == LDOM_AsciiFree && myVal.ptr)
@@ -121,11 +97,6 @@ LDOMBasicString& LDOMBasicString::operator=(const LDOM_NullPtr*)
   myVal.ptr = nullptr;
   return *this;
 }
-
-//=======================================================================
-// function : operator =
-// purpose  : Assignment
-//=======================================================================
 
 LDOMBasicString& LDOMBasicString::operator=(const LDOMBasicString& anOther)
 {
@@ -160,11 +131,6 @@ LDOMBasicString& LDOMBasicString::operator=(const LDOMBasicString& anOther)
   }
   return *this;
 }
-
-//=======================================================================
-// function : equals
-// purpose  : Compare two strings by content
-//=======================================================================
 
 bool LDOMBasicString::equals(const LDOMBasicString& anOther) const
 {
@@ -212,8 +178,6 @@ bool LDOMBasicString::equals(const LDOMBasicString& anOther) const
   return aResult;
 }
 
-//=================================================================================================
-
 LDOMBasicString::operator TCollection_AsciiString() const
 {
   switch (myType)
@@ -230,8 +194,6 @@ LDOMBasicString::operator TCollection_AsciiString() const
   return TCollection_AsciiString();
 }
 
-//=================================================================================================
-
 LDOMBasicString::operator TCollection_ExtendedString() const
 {
   switch (myType)
@@ -247,7 +209,7 @@ LDOMBasicString::operator TCollection_ExtendedString() const
       const long  aUnicodeHeader = 0xfeff;
       const char* ptr            = static_cast<const char*>(myVal.ptr);
       errno                      = 0;
-      // Check if ptr is ascii string
+
       if (ptr[0] != '#' || ptr[1] != '#')
         return TCollection_ExtendedString(ptr);
       buf[0] = ptr[2];
@@ -257,7 +219,6 @@ LDOMBasicString::operator TCollection_ExtendedString() const
       if (strtol(&buf[0], nullptr, 16) != aUnicodeHeader)
         return TCollection_ExtendedString(ptr);
 
-      // convert Unicode to Extended String
       ptr += 2;
       size_t    aLength = (strlen(ptr) / 4), j = 0;
       char16_t* aResult = new char16_t[aLength--];
@@ -285,8 +246,6 @@ LDOMBasicString::operator TCollection_ExtendedString() const
   }
   return TCollection_ExtendedString();
 }
-
-//=================================================================================================
 
 bool LDOMBasicString::GetInteger(int& aResult) const
 {
@@ -316,9 +275,7 @@ bool LDOMBasicString::GetInteger(int& aResult) const
 
 #ifdef OCCT_DEBUG
   #ifndef _MSC_VER
-    //=======================================================================
-    // Debug Function for DBX: use "print -p <Variable> or pp <Variable>"
-    //=======================================================================
+
     #include <LDOM_OSStream.hpp>
     #define FLITERAL 0x10
 

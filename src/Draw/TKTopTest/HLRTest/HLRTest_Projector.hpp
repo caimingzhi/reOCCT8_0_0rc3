@@ -4,7 +4,6 @@
 #include <Draw_Drawable3D.hpp>
 #include <Draw_Interpretor.hpp>
 
-//! Draw Variable Projector to test.
 class HLRTest_Projector : public Draw_Drawable3D
 {
   DEFINE_STANDARD_RTTIEXT(HLRTest_Projector, Draw_Drawable3D)
@@ -14,20 +13,14 @@ public:
 
   const HLRAlgo_Projector& Projector() const { return myProjector; }
 
-  //! Does nothing,
   Standard_EXPORT void DrawOn(Draw_Display& dis) const override;
 
-  //! For variable copy.
   Standard_EXPORT occ::handle<Draw_Drawable3D> Copy() const override;
 
-  //! For variable dump.
   Standard_EXPORT void Dump(Standard_OStream& S) const override;
 
-  //! Save drawable into stream.
   Standard_EXPORT void Save(Standard_OStream& theStream) const override;
 
-  //! For variable whatis command. Set as a result the
-  //! type of the variable.
   Standard_EXPORT void Whatis(Draw_Interpretor& I) const override;
 
 private:

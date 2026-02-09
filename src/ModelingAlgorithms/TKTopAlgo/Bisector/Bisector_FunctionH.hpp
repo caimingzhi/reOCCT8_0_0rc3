@@ -11,9 +11,6 @@
 #include <Standard_Real.hpp>
 class Geom2d_Curve;
 
-//! H(v) = (T1.P2(v) - P1) * ||T(v)|| -
-//! 2         2
-//! (T(v).P2(v) - P1) * ||T1||
 class Bisector_FunctionH : public math_FunctionWithDerivative
 {
 public:
@@ -23,13 +20,10 @@ public:
                                      const gp_Pnt2d&                  P1,
                                      const gp_Vec2d&                  T1);
 
-  //! Computes the values of the Functions for the variable <X>.
   Standard_EXPORT bool Value(const double X, double& F) override;
 
   Standard_EXPORT bool Derivative(const double X, double& D) override;
 
-  //! Returns the values of the functions and the derivatives
-  //! for the variable <X>.
   Standard_EXPORT bool Values(const double X, double& F, double& D) override;
 
 private:

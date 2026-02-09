@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRep_Tool.hpp>
 #include <BRepAdaptor_Curve2d.hpp>
@@ -34,8 +22,8 @@ BRepTopAdaptor_HVertex::BRepTopAdaptor_HVertex(const TopoDS_Vertex&             
 
 gp_Pnt2d BRepTopAdaptor_HVertex::Value()
 {
-  //  return myCurve->Value(Parameter(myCurve));
-  return gp_Pnt2d(RealFirst(), RealFirst()); // do nothing
+
+  return gp_Pnt2d(RealFirst(), RealFirst());
 }
 
 double BRepTopAdaptor_HVertex::Parameter(const occ::handle<Adaptor2d_Curve2d>& C)
@@ -73,15 +61,11 @@ double BRepTopAdaptor_HVertex::Resolution(const occ::handle<Adaptor2d_Curve2d>& 
     return (ResUV1);
   }
 
-  // for lack of better options limit the parametric solution to
-  // 10 million*tolerance of the point
-
   if (tv > 1.e7 * mag)
     ResUV = 1.e7;
   else
     ResUV = tv / mag;
 
-  // Control
   if (Or == TopAbs_REVERSED)
     pp = p + ResUV;
   else
@@ -100,7 +84,7 @@ double BRepTopAdaptor_HVertex::Resolution(const occ::handle<Adaptor2d_Curve2d>& 
   double Dist = P.Distance(P1);
   if ((Dist > 1e-12) && ((Dist > 1.1 * tv) || (Dist < 0.8 * tv)))
   {
-    // Refine if possible
+
     double Dist1;
     if (Or == TopAbs_REVERSED)
       pp = p + tv / Dist;
@@ -118,7 +102,7 @@ double BRepTopAdaptor_HVertex::Resolution(const occ::handle<Adaptor2d_Curve2d>& 
     Dist1 = P.Distance(P1);
     if (std::abs(Dist1 - tv) < std::abs(Dist - tv))
     {
-      // Take the result of interpolation
+
       ResUV = tv / Dist;
       Dist  = Dist1;
     }
@@ -141,7 +125,7 @@ double BRepTopAdaptor_HVertex::Resolution(const occ::handle<Adaptor2d_Curve2d>& 
     Dist1 = P.Distance(P1);
     if (std::abs(Dist1 - tv) < std::abs(Dist - tv))
     {
-      // Take the new estimation
+
       ResUV = tv / mag;
       Dist  = Dist1;
     }

@@ -28,7 +28,7 @@ void IGESGraph_TextDisplayTemplate::Init(const double                           
   theMirrorFlag    = aMirrorFlag;
   theRotateFlag    = aRotationFlag;
   theCorner        = aCorner;
-  InitTypeAndForm(312, FormNumber()); // FormNumber 0-1 : Incremental status
+  InitTypeAndForm(312, FormNumber());
 }
 
 void IGESGraph_TextDisplayTemplate::SetIncremental(const bool F)

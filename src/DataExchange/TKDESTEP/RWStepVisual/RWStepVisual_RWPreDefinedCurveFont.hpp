@@ -10,7 +10,6 @@ class Interface_Check;
 class StepVisual_PreDefinedCurveFont;
 class StepData_StepWriter;
 
-//! Read & Write Module for PreDefinedCurveFont
 class RWStepVisual_RWPreDefinedCurveFont
 {
 public:

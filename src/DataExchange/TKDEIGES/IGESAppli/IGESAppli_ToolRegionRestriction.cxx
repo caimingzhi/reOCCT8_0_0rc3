@@ -15,7 +15,7 @@ IGESAppli_ToolRegionRestriction::IGESAppli_ToolRegionRestriction() = default;
 
 void IGESAppli_ToolRegionRestriction::ReadOwnParams(
   const occ::handle<IGESAppli_RegionRestriction>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /*IR*/,
+  const occ::handle<IGESData_IGESReaderData>&,
   IGESData_ParamReader& PR) const
 {
   int tempNbPropertyValues;
@@ -45,21 +45,20 @@ void IGESAppli_ToolRegionRestriction::WriteOwnParams(
   IW.Send(ent->ElectricalCktRestriction());
 }
 
-void IGESAppli_ToolRegionRestriction::OwnShared(
-  const occ::handle<IGESAppli_RegionRestriction>& /*ent*/,
-  Interface_EntityIterator& /*iter*/) const
+void IGESAppli_ToolRegionRestriction::OwnShared(const occ::handle<IGESAppli_RegionRestriction>&,
+                                                Interface_EntityIterator&) const
 {
 }
 
 void IGESAppli_ToolRegionRestriction::OwnCopy(
   const occ::handle<IGESAppli_RegionRestriction>& another,
   const occ::handle<IGESAppli_RegionRestriction>& ent,
-  Interface_CopyTool& /*TC*/) const
+  Interface_CopyTool&) const
 {
   ent->Init(3,
             another->ElectricalViasRestriction(),
             another->ElectricalComponentRestriction(),
-            another->ElectricalCktRestriction()); // nbprops = 3
+            another->ElectricalCktRestriction());
 }
 
 bool IGESAppli_ToolRegionRestriction::OwnCorrect(
@@ -70,20 +69,20 @@ bool IGESAppli_ToolRegionRestriction::OwnCorrect(
     ent->Init(3,
               ent->ElectricalViasRestriction(),
               ent->ElectricalComponentRestriction(),
-              ent->ElectricalCktRestriction()); // nbprops = 3
+              ent->ElectricalCktRestriction());
   if (ent->SubordinateStatus() != 0)
   {
     occ::handle<IGESData_LevelListEntity> nulevel;
     ent->InitLevel(nulevel, 0);
     res = true;
   }
-  return res; // + reset level according to subordinate
+  return res;
 }
 
 IGESData_DirChecker IGESAppli_ToolRegionRestriction::DirChecker(
-  const occ::handle<IGESAppli_RegionRestriction>& /*ent*/) const
+  const occ::handle<IGESAppli_RegionRestriction>&) const
 {
-  IGESData_DirChecker DC(406, 2); // Form no = 2 & Type = 406
+  IGESData_DirChecker DC(406, 2);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
@@ -107,14 +106,12 @@ void IGESAppli_ToolRegionRestriction::OwnCheck(const occ::handle<IGESAppli_Regio
     ach->AddFail("Incorrect value for Electrical Component Restriction");
   if (ent->ElectricalCktRestriction() < 0 || ent->ElectricalCktRestriction() > 2)
     ach->AddFail("Incorrect value for Electrical Circuit Restriction");
-  // UNFINISHED
-  // level ignored if this property is subordinate -- queried
 }
 
 void IGESAppli_ToolRegionRestriction::OwnDump(const occ::handle<IGESAppli_RegionRestriction>& ent,
-                                              const IGESData_IGESDumper& /*dumper*/,
+                                              const IGESData_IGESDumper&,
                                               Standard_OStream& S,
-                                              const int /*level*/) const
+                                              const int) const
 {
   S << "IGESAppli_RegionRestriction\n"
     << "Number of property values : " << ent->NbPropertyValues() << "\n"

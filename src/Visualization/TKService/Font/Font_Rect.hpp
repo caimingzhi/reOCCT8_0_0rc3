@@ -3,19 +3,16 @@
 #include <NCollection_Vec2.hpp>
 #include <Standard_Dump.hpp>
 
-//! Auxiliary POD structure - 2D rectangle definition.
 struct Font_Rect
 {
 
-  float Left;   //!< left   position
-  float Right;  //!< right  position
-  float Top;    //!< top    position
-  float Bottom; //!< bottom position
+  float Left;
+  float Right;
+  float Top;
+  float Bottom;
 
-  //! Top-left corner as vec2.
   NCollection_Vec2<float> TopLeft() const { return NCollection_Vec2<float>(Left, Top); }
 
-  //! Top-left corner as vec2.
   NCollection_Vec2<float>& TopLeft(NCollection_Vec2<float>& theVec) const
   {
     theVec.x() = Left;
@@ -23,7 +20,6 @@ struct Font_Rect
     return theVec;
   }
 
-  //! Top-right corner as vec2.
   NCollection_Vec2<float>& TopRight(NCollection_Vec2<float>& theVec) const
   {
     theVec.x() = Right;
@@ -31,7 +27,6 @@ struct Font_Rect
     return theVec;
   }
 
-  //! Bottom-left corner as vec2.
   NCollection_Vec2<float>& BottomLeft(NCollection_Vec2<float>& theVec) const
   {
     theVec.x() = Left;
@@ -39,7 +34,6 @@ struct Font_Rect
     return theVec;
   }
 
-  //! Bottom-right corner as vec2.
   NCollection_Vec2<float>& BottomRight(NCollection_Vec2<float>& theVec) const
   {
     theVec.x() = Right;
@@ -47,13 +41,10 @@ struct Font_Rect
     return theVec;
   }
 
-  //! Rectangle width.
   float Width() const { return Right - Left; }
 
-  //! Rectangle height.
   float Height() const { return Top - Bottom; }
 
-  //! Dumps the content of me into the stream
   void DumpJson(Standard_OStream& theOStream, int) const
   {
     OCCT_DUMP_CLASS_BEGIN(theOStream, Font_Rect)

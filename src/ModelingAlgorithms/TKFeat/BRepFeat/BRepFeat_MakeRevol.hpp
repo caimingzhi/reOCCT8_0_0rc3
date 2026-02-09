@@ -16,24 +16,13 @@ class Geom_Curve;
 class TopoDS_Face;
 class TopoDS_Edge;
 
-//! Describes functions to build revolved shells from basis shapes.
 class BRepFeat_MakeRevol : public BRepFeat_Form
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! initializes the revolved shell class.
   BRepFeat_MakeRevol();
 
-  //! a face Pbase is selected in the
-  //! shape Sbase to serve as the basis for the
-  //! revolved shell. The revolution will be defined
-  //! by the axis Axis and Fuse offers a choice between:
-  //! -   removing matter with a Boolean cut using the setting 0
-  //! -   adding matter with Boolean fusion using the setting 1.
-  //! The sketch face Skface serves to determine
-  //! the type of operation. If it is inside the basis
-  //! shape, a local operation such as glueing can be performed.
   BRepFeat_MakeRevol(const TopoDS_Shape& Sbase,
                      const TopoDS_Shape& Pbase,
                      const TopoDS_Face&  Skface,
@@ -48,25 +37,16 @@ public:
                             const int           Fuse,
                             const bool          Modify);
 
-  //! Indicates that the edge <E> will slide on the face
-  //! <OnFace>. Raises ConstructionError if the face does not belong to the
-  //! basis shape, or the edge to the prismed shape.
   Standard_EXPORT void Add(const TopoDS_Edge& E, const TopoDS_Face& OnFace);
 
   Standard_EXPORT void Perform(const double Angle);
 
   Standard_EXPORT void Perform(const TopoDS_Shape& Until);
 
-  //! Reconstructs the feature topologically.
   Standard_EXPORT void Perform(const TopoDS_Shape& From, const TopoDS_Shape& Until);
 
-  //! Builds an infinite shell. The infinite descendants
-  //! will not be kept in the result.
   Standard_EXPORT void PerformThruAll();
 
-  //! Assigns both a limiting shape, Until from
-  //! TopoDS_Shape, and an angle, Angle at
-  //! which to stop generation of the revolved shell feature.
   Standard_EXPORT void PerformUntilAngle(const TopoDS_Shape& Until, const double Angle);
 
   Standard_EXPORT void Curves(NCollection_Sequence<occ::handle<Geom_Curve>>& S) override;
@@ -87,8 +67,6 @@ inline BRepFeat_MakeRevol::BRepFeat_MakeRevol()
     : myStatusError(BRepFeat_OK)
 {
 }
-
-//=================================================================================================
 
 inline BRepFeat_MakeRevol::BRepFeat_MakeRevol(const TopoDS_Shape& Sbase,
                                               const TopoDS_Shape& Pbase,

@@ -11,8 +11,6 @@ class StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for
-//! GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx
 class RWStepGeom_RWGeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx
 {
 public:

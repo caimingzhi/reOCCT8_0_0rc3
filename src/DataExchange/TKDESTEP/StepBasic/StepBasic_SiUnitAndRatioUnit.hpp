@@ -12,7 +12,6 @@ class StepBasic_SiUnitAndRatioUnit : public StepBasic_SiUnit
 {
 
 public:
-  //! Returns a SiUnitAndRatioUnit
   Standard_EXPORT StepBasic_SiUnitAndRatioUnit();
 
   Standard_EXPORT void Init(const bool                 hasAprefix,

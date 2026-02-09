@@ -16,18 +16,16 @@ void RWStepBasic_RWConversionBasedUnitAndAreaUnit::ReadStep(
   const occ::handle<StepBasic_ConversionBasedUnitAndAreaUnit>& ent) const
 {
   int num = num0;
-  // data->NamedForComplex("AREA_UNIT",num0,num,ach);
+
   if (!data->CheckNbParams(num, 0, ach, "area_unit"))
     return;
 
-  // --- Instance of plex component ConversionBasedUnit ---
   num = data->NextForComplex(num);
   if (!data->CheckNbParams(num, 2, ach, "conversion_based_unit"))
     return;
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- field : conversionFactor ---
   occ::handle<Standard_Transient> aConversionFactor;
   data->ReadEntity(num,
                    2,

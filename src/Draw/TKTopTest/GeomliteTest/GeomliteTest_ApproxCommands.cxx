@@ -37,11 +37,6 @@
 Standard_IMPORT Draw_Viewer dout;
 #endif
 
-// Draw_Color DrawTrSurf_CurveColor(const Draw_Color);
-
-//=======================================================================
-// function :  NbConstraint
-//=======================================================================
 static int NbConstraint(const AppParCurves_Constraint C1, const AppParCurves_Constraint C2)
 {
   int N = 0;
@@ -89,9 +84,6 @@ static int NbConstraint(const AppParCurves_Constraint C1, const AppParCurves_Con
   return N;
 }
 
-//=======================================================================
-// function : PointsByPick
-//=======================================================================
 static int PointsByPick(occ::handle<NCollection_HArray1<AppDef_MultiPointConstraint>>& MPC,
                         Draw_Interpretor&                                              di)
 {
@@ -107,11 +99,9 @@ static int PointsByPick(occ::handle<NCollection_HArray1<AppDef_MultiPointConstra
   gp_Pnt   P;
   gp_Pnt2d P2d;
 
-  // bool newcurve;
-
   if (dout.Is3D(id))
   {
-    // Cas du 3D -------
+
     occ::handle<Draw_Marker3D>   mark;
     NCollection_Sequence<gp_Pnt> ThePoints;
     P.SetCoord((double)XX / zoom, (double)YY / zoom, 0.0);
@@ -148,7 +138,7 @@ static int PointsByPick(occ::handle<NCollection_HArray1<AppDef_MultiPointConstra
 
   else
   {
-    // Cas du 2D -------
+
     occ::handle<Draw_Marker2D>     mark;
     NCollection_Sequence<gp_Pnt2d> ThePoints;
     P2d.SetCoord((double)XX / zoom, (double)YY / zoom);
@@ -184,9 +174,6 @@ static int PointsByPick(occ::handle<NCollection_HArray1<AppDef_MultiPointConstra
   return id;
 }
 
-//=======================================================================
-// function : PointsByFile
-//=======================================================================
 static void PointsByFile(occ::handle<NCollection_HArray1<AppDef_MultiPointConstraint>>&   MPC,
                          occ::handle<NCollection_HArray1<AppParCurves_ConstraintCouple>>& TABofCC,
                          std::ifstream&                                                   iFile,
@@ -231,7 +218,7 @@ static void PointsByFile(occ::handle<NCollection_HArray1<AppDef_MultiPointConstr
       int num, ordre;
       iFile >> nbc;
       if ((nbc < 1) || (nbc > nbp))
-        return; // Y a comme un probleme
+        return;
       AppParCurves_Constraint Constraint = AppParCurves_NoConstraint;
       TABofCC = new NCollection_HArray1<AppParCurves_ConstraintCouple>(1, nbp);
       for (i = 1; i <= nbp; i++)
@@ -294,7 +281,7 @@ static void PointsByFile(occ::handle<NCollection_HArray1<AppDef_MultiPointConstr
       int num, ordre;
       iFile >> nbc;
       if ((nbc < 1) || (nbc > nbp))
-        return; // Y a comme un probleme
+        return;
       AppParCurves_Constraint Constraint = AppParCurves_NoConstraint;
       TABofCC = new NCollection_HArray1<AppParCurves_ConstraintCouple>(1, nbp);
       for (i = 1; i <= nbp; i++)
@@ -327,13 +314,8 @@ static void PointsByFile(occ::handle<NCollection_HArray1<AppDef_MultiPointConstr
   }
 }
 
-//==================================================================================
 static int smoothing(Draw_Interpretor& di, int n, const char** a)
-//==================================================================================
-//  Tolerance < 0 lissage "filtre"
-//  Tolerance > 0 lissage avec respect de l'erreur max
-//  Tolerance = 0 interpolation.
-//
+
 {
   double Tolerance = 0;
 
@@ -365,7 +347,7 @@ static int smoothing(Draw_Interpretor& di, int n, const char** a)
     {
       Constraint = AppParCurves_NoConstraint;
     }
-    // Designation Graphique ------------------------
+
     id = PointsByPick(Points, di);
   }
   else if (n >= 4)
@@ -389,8 +371,7 @@ static int smoothing(Draw_Interpretor& di, int n, const char** a)
 
     if (n > ific)
     {
-      // lecture du fichier.
-      // nbpoints, 2d ou 3d, puis valeurs.
+
       const char*   nomfic = a[ific];
       std::ifstream iFile(nomfic, std::ios::in);
       if (!iFile)
@@ -402,20 +383,19 @@ static int smoothing(Draw_Interpretor& di, int n, const char** a)
     }
     else
     {
-      // Designation Graphique
+
       id = PointsByPick(Points, di);
     }
   }
 
   AppDef_MultiLine AML(Points->Array1());
 
-  // Compute --------------
   int i;
   if (Points->Value(1).NbPoints() == 0)
   {
-    // Cas 2d
+
     occ::handle<NCollection_HArray1<gp_Pnt2d>> ThePoints;
-    // Calcul du lissage
+
     int NbPoints = Points->Length();
     if (TABofCC.IsNull())
     {
@@ -445,7 +425,7 @@ static int smoothing(Draw_Interpretor& di, int n, const char** a)
     Variation.Approximate();
 
 #ifdef GEOMLITETEST_DEB
-    // Variation.Dump(std::cout);
+
     Standard_SStream aSStream;
     Variation.Dump(aSStream);
     di << aSStream;
@@ -494,7 +474,7 @@ static int smoothing(Draw_Interpretor& di, int n, const char** a)
     }
     Variation.Approximate();
 #ifdef GEOMLITETEST_DEB
-    // Variation.Dump(std::cout);
+
     Standard_SStream aSStream;
     Variation.Dump(aSStream);
     di << aSStream;
@@ -516,9 +496,8 @@ static int smoothing(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=============================================================================
 static int smoothingbybezier(Draw_Interpretor& di, int n, const char** a)
-//============================================================================
+
 {
   double                  Tolerance  = 0;
   AppParCurves_Constraint Constraint = AppParCurves_NoConstraint;
@@ -576,12 +555,11 @@ static int smoothingbybezier(Draw_Interpretor& di, int n, const char** a)
       Constraint = AppParCurves_NoConstraint;
     }
     if (n == 5)
-      // Designation Graphique ------------------------
+
       id = PointsByPick(Points, di);
     else
     {
-      // lecture du fichier.
-      // nbpoints, 2d ou 3d, puis valeurs.
+
       const char*   nomfic = a[5];
       std::ifstream iFile(nomfic, std::ios::in);
       if (!iFile)
@@ -595,13 +573,12 @@ static int smoothingbybezier(Draw_Interpretor& di, int n, const char** a)
 
   AppDef_MultiLine AML(Points->Array1());
 
-  // Compute --------------
   int i;
   if (Points->Value(1).NbPoints() == 0)
   {
-    // Cas 2d
+
     occ::handle<NCollection_HArray1<gp_Pnt2d>> ThePoints;
-    // Calcul du lissage
+
     int NbPoints = Points->Length();
     if (TABofCC.IsNull())
     {
@@ -683,7 +660,7 @@ static int smoothingbybezier(Draw_Interpretor& di, int n, const char** a)
   }
   else
   {
-    // Cas 3d
+
     occ::handle<NCollection_HArray1<gp_Pnt>> ThePoints;
     int                                      NbPoints = Points->Length();
     if (TABofCC.IsNull())
@@ -766,8 +743,6 @@ static int smoothingbybezier(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 void GeomliteTest::ApproxCommands(Draw_Interpretor& theCommands)
 {
 
@@ -779,7 +754,7 @@ void GeomliteTest::ApproxCommands(Draw_Interpretor& theCommands)
   DrawTrSurf::BasicCommands(theCommands);
 
   const char* g;
-  // constrained constructs
+
   g = "GEOMETRY Constraints";
 
   theCommands.Add("bsmooth", "bsmooth cname tol [-D degree] [fic]", __FILE__, smoothing, g);

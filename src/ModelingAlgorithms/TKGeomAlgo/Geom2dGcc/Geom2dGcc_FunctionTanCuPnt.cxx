@@ -3,21 +3,6 @@
 #include <gp_Pnt2d.hpp>
 #include <gp_Vec2d.hpp>
 
-//=========================================================================
-//  soit P1 le point sur la courbe Geom2dAdaptor_Curve d abscisse u.      +
-//  soit C  le point ThePoint.                                            +
-//  Nous cherchons donc les zeros de la fonction suivante:                +
-//                                                                        +
-//                 -->   -->                                              +
-//                 CP1 /\ T                                               +
-//             ---------------  =  F(u)                                   +
-//             ||CP1|| * ||T||                                            +
-//                                                                        +
-//  La derivee de cette fonction est :                                    +
-//            CP1 /\ N        (T.N)*((CP1/\T).((CP1/\T))                  +
-//     f(u) = --------  -  --------------------------------               +
-//               N.N            N*N*N*CP1*CP1*CP1                         +
-//=========================================================================
 Geom2dGcc_FunctionTanCuPnt::Geom2dGcc_FunctionTanCuPnt(const Geom2dAdaptor_Curve& C,
                                                        const gp_Pnt2d&            Point)
 {
@@ -67,8 +52,6 @@ bool Geom2dGcc_FunctionTanCuPnt::Values(const double X, double& Fval, double& De
     TheDirection.Crossed(Vec2) / (NormeD1 * NormeDir)
     - (TheDirection.Crossed(Vec1) / (NormeD1 * NormeDir))
         * (Vec1.Dot(Vec2) / (NormeD1 * NormeD1) + Vec1.Dot(TheDirection) / (NormeDir * NormeDir));
-
-  //  std::cout  << "U = "<< X << " F ="<< Fval <<" DF ="<< Deriv<<std::endl;
 
   return true;
 }

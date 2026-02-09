@@ -10,25 +10,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_IntegerListDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_IntegerListDriver::BinMDataStd_IntegerListDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_IntegerList)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_IntegerListDriver::NewEmpty() const
 {
   return new TDataStd_IntegerList();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool BinMDataStd_IntegerListDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                           const occ::handle<TDF_Attribute>& theTarget,
                                           BinObjMgt_RRelocationTable&       theRelocTable) const
@@ -55,10 +47,6 @@ bool BinMDataStd_IntegerListDriver::Paste(const BinObjMgt_Persistent&       theS
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void BinMDataStd_IntegerListDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
   BinObjMgt_Persistent&             theTarget,
@@ -85,7 +73,6 @@ void BinMDataStd_IntegerListDriver::Paste(
     theTarget.PutIntArray(aPtr, aLength);
   }
 
-  // process user defined guid
   if (anAtt->ID() != TDataStd_IntegerList::GetID())
     theTarget << anAtt->ID();
 }

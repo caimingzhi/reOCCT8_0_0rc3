@@ -4,8 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_TextureSet, Standard_Transient)
 
-//=================================================================================================
-
 OpenGl_TextureSet::OpenGl_TextureSet(const occ::handle<OpenGl_Texture>& theTexture)
     : myTextures(0, 0),
       myTextureSetBits(Graphic3d_TextureSetBits_NONE)
@@ -17,15 +15,11 @@ OpenGl_TextureSet::OpenGl_TextureSet(const occ::handle<OpenGl_Texture>& theTextu
   }
 }
 
-//=================================================================================================
-
 bool OpenGl_TextureSet::IsModulate() const
 {
   return myTextures.IsEmpty() || myTextures.First().Texture.IsNull()
          || myTextures.First().Texture->Sampler()->Parameters()->IsModulate();
 }
-
-//=================================================================================================
 
 bool OpenGl_TextureSet::HasNonPointSprite() const
 {
@@ -39,8 +33,6 @@ bool OpenGl_TextureSet::HasNonPointSprite() const
   }
   return !myTextures.First().Texture.IsNull();
 }
-
-//=================================================================================================
 
 bool OpenGl_TextureSet::HasPointSprite() const
 {

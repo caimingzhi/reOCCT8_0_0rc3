@@ -23,8 +23,6 @@
 #include <gp_Pln.hpp>
 #include <DrawTrSurf.hpp>
 
-//=================================================================================================
-
 static int DrawDim_DISTANCE(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 1)
@@ -40,7 +38,7 @@ static int DrawDim_DISTANCE(Draw_Interpretor& di, int nb, const char** arg)
     {
       TopoDS_Shape aLocalShape = DBRep::Get(arg[2], TopAbs_FACE);
       TopoDS_Face  plan        = TopoDS::Face(aLocalShape);
-      //      TopoDS_Face plan =  TopoDS::Face(DBRep::Get(arg[2],TopAbs_FACE));
+
       TopoDS_Shape geom1 = DBRep::Get(arg[3]);
       TopoDS_Shape geom2 = DBRep::Get(arg[4]);
       if (!plan.IsNull() && !geom1.IsNull() && !geom2.IsNull())
@@ -69,8 +67,6 @@ static int DrawDim_DISTANCE(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=================================================================================================
-
 static int DrawDim_ANGLE(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 1)
@@ -88,9 +84,7 @@ static int DrawDim_ANGLE(Draw_Interpretor& di, int nb, const char** arg)
       TopoDS_Edge line1        = TopoDS::Edge(aLocalShape);
       aLocalShape              = DBRep::Get(arg[4], TopAbs_EDGE);
       TopoDS_Edge line2        = TopoDS::Edge(aLocalShape);
-      //      TopoDS_Face plan =  TopoDS::Face(DBRep::Get(arg[2],TopAbs_FACE));
-      //      TopoDS_Edge line1 = TopoDS::Edge(DBRep::Get(arg[3],TopAbs_EDGE));
-      //      TopoDS_Edge line2 = TopoDS::Edge(DBRep::Get(arg[4],TopAbs_EDGE));
+
       if (!plan.IsNull() && !line1.IsNull() && !line2.IsNull())
       {
         DIST = new DrawDim_PlanarAngle(plan, line1, line2);
@@ -105,8 +99,6 @@ static int DrawDim_ANGLE(Draw_Interpretor& di, int nb, const char** arg)
   di << "DrawDim_PlanarAngle : error\n";
   return 1;
 }
-
-//=================================================================================================
 
 static int DrawDim_RADIUS(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -123,8 +115,7 @@ static int DrawDim_RADIUS(Draw_Interpretor& di, int nb, const char** arg)
       TopoDS_Face  plan        = TopoDS::Face(aLocalShape);
       aLocalShape              = DBRep::Get(arg[3], TopAbs_EDGE);
       TopoDS_Edge cercle       = TopoDS::Edge(aLocalShape);
-      //      TopoDS_Face plan =  TopoDS::Face(DBRep::Get(arg[2],TopAbs_FACE));
-      //      TopoDS_Edge cercle = TopoDS::Edge(DBRep::Get(arg[3],TopAbs_EDGE));
+
       if (!plan.IsNull() && !cercle.IsNull())
       {
         DIST = new DrawDim_PlanarRadius(cercle);
@@ -140,24 +131,22 @@ static int DrawDim_RADIUS(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=================================================================================================
-
 static int DrawDim_CENTER(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb == 3)
   {
     TopoDS_Shape aLocalShape = DBRep::Get(arg[2], TopAbs_EDGE);
     TopoDS_Edge  edge        = TopoDS::Edge(aLocalShape);
-    //    TopoDS_Edge edge = TopoDS::Edge(DBRep::Get(arg[2],TopAbs_EDGE));
+
     double                  f, l;
     occ::handle<Geom_Curve> curve = BRep_Tool::Curve(edge, f, l);
     if (curve->IsKind(STANDARD_TYPE(Geom_Circle)))
     {
       gp_Circ circle = occ::down_cast<Geom_Circle>(curve)->Circ();
       gp_Pnt  center = circle.Location();
-      //: abv: avoid dependence on TKTopAlgo
+
       TopoDS_Vertex vc;
-      //      = BRepBuilderAPI_MakeVertex (center);
+
       BRep_Builder B;
       B.MakeVertex(vc, center, Precision::Confusion());
       DBRep::Set(arg[1], vc);
@@ -168,15 +157,13 @@ static int DrawDim_CENTER(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=================================================================================================
-
 static int DrawDim_VARIABLES(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 2)
     return 1;
   TopoDS_Shape aLocalShape = DBRep::Get(a[1], TopAbs_FACE);
   TopoDS_Face  F           = TopoDS::Face(aLocalShape);
-  //  TopoDS_Face F = TopoDS::Face(DBRep::Get(a[1],TopAbs_FACE));
+
   if (F.IsNull())
     return 0;
 
@@ -220,8 +207,6 @@ static int DrawDim_VARIABLES(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int DrawDim_SPLACEMENT(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 4)
@@ -231,8 +216,7 @@ static int DrawDim_SPLACEMENT(Draw_Interpretor& di, int n, const char** a)
     TopoDS_Face  from        = TopoDS::Face(aLocalShape);
     aLocalShape              = DBRep::Get(a[3], TopAbs_FACE);
     TopoDS_Face to           = TopoDS::Face(aLocalShape);
-    //    TopoDS_Face from = TopoDS::Face(DBRep::Get(a[2],TopAbs_FACE));
-    //    TopoDS_Face to = TopoDS::Face(DBRep::Get(a[3],TopAbs_FACE));
+
     if (!shape.IsNull() && !from.IsNull() && !to.IsNull())
     {
       gp_Pln pfrom, pto;
@@ -252,8 +236,6 @@ static int DrawDim_SPLACEMENT(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=================================================================================================
-
 static int DrawDim_GPLACEMENT(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 4)
@@ -263,8 +245,7 @@ static int DrawDim_GPLACEMENT(Draw_Interpretor& di, int n, const char** a)
     TopoDS_Face                from        = TopoDS::Face(aLocalShape);
     aLocalShape                            = DBRep::Get(a[3], TopAbs_FACE);
     TopoDS_Face to                         = TopoDS::Face(aLocalShape);
-    //    TopoDS_Face from = TopoDS::Face(DBRep::Get(a[2],TopAbs_FACE));
-    //    TopoDS_Face to = TopoDS::Face(DBRep::Get(a[3],TopAbs_FACE));
+
     if (!geom.IsNull() && !from.IsNull() && !to.IsNull())
     {
       gp_Pln pfrom, pto;
@@ -283,11 +264,9 @@ static int DrawDim_GPLACEMENT(Draw_Interpretor& di, int n, const char** a)
   return 1;
 }
 
-//=================================================================================================
-
 void DrawDim::PlanarDimensionCommands(Draw_Interpretor& theCommands)
 {
-  // syntaxes
+
   theCommands.Add("distance", "distance,no args to get help", __FILE__, DrawDim_DISTANCE);
 
   theCommands.Add("radius", "radius, no args to get help", __FILE__, DrawDim_RADIUS);

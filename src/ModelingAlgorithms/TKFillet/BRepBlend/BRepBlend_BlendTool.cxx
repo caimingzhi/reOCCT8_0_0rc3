@@ -14,11 +14,6 @@
 #include <gp_Vec2d.hpp>
 #include <IntRes2d_IntersectionPoint.hpp>
 
-//=======================================================================
-// function : Project
-// purpose  : Projection orthogonal d'un point sur une courbe
-// pmn 8/10/98 : On retourne toujours une distance. (BUC60360)
-//=======================================================================
 bool BRepBlend_BlendTool::Project(const gp_Pnt2d& P,
                                   const occ::handle<Adaptor3d_Surface>&,
                                   const occ::handle<Adaptor2d_Curve2d>& C,
@@ -60,10 +55,6 @@ bool BRepBlend_BlendTool::Project(const gp_Pnt2d& P,
   return true;
 }
 
-//=======================================================================
-// function : Inters
-// purpose  : Intersection d'un segment avec une courbe
-//=======================================================================
 bool BRepBlend_BlendTool::Inters(const gp_Pnt2d& P1,
                                  const gp_Pnt2d& P2,
                                  const occ::handle<Adaptor3d_Surface>&,

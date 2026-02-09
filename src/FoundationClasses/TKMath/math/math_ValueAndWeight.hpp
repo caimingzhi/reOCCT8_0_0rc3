@@ -3,7 +3,6 @@
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
-//! Simple container storing two reals: value and weight
 class math_ValueAndWeight
 {
 public:
@@ -30,7 +29,6 @@ private:
   double myWeight;
 };
 
-//! Comparison operator for math_ValueAndWeight, needed for sorting algorithms
 inline bool operator<(const math_ValueAndWeight& theLeft, const math_ValueAndWeight& theRight)
 {
   return theLeft.Value() < theRight.Value();

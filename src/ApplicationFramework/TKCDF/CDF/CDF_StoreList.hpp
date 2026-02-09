@@ -21,8 +21,6 @@ public:
 
   Standard_EXPORT bool IsConsistent() const;
 
-  //! stores each object of the storelist in the reverse
-  //! order of which they had been added.
   Standard_EXPORT PCDM_StoreStatus
     Store(occ::handle<CDM_MetaData>&   aMetaData,
           TCollection_ExtendedString&  aStatusAssociatedText,

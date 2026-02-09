@@ -23,12 +23,10 @@ public:
                                 const Draw_Color&      C,
                                 const double           RSize);
 
-  //! myPos field
   Standard_EXPORT gp_Pnt2d& ChangePos();
 
   Standard_EXPORT void DrawOn(Draw_Display& dis) const override;
 
-  //! Returns always false
   Standard_EXPORT bool PickReject(const double X, const double Y, const double Prec) const override;
 
   DEFINE_STANDARD_RTTIEXT(Draw_Marker2D, Draw_Drawable2D)

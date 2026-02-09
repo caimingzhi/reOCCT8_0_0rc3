@@ -14,7 +14,6 @@
 class Storage_BaseDriver;
 class StdStorage_Root;
 
-//! Storage root data section contains root persistent objects
 class StdStorage_RootData : public Standard_Transient
 {
   friend class StdStorage_Data;
@@ -22,47 +21,28 @@ class StdStorage_RootData : public Standard_Transient
 public:
   DEFINE_STANDARD_RTTIEXT(StdStorage_RootData, Standard_Transient)
 
-  //! Reads the root data section from the container defined by theDriver.
-  //! Returns true in case of success. Otherwise, one need to get
-  //! an error code and description using ErrorStatus and ErrorStatusExtension
-  //! functions correspondingly.
   Standard_EXPORT bool Read(const occ::handle<Storage_BaseDriver>& theDriver);
 
-  //! Writes the root data section to the container defined by theDriver.
-  //! Returns true in case of success. Otherwise, one need to get
-  //! an error code and description using ErrorStatus and ErrorStatusExtension
-  //! functions correspondingly.
   Standard_EXPORT bool Write(const occ::handle<Storage_BaseDriver>& theDriver);
 
-  //! Returns the number of roots.
   Standard_EXPORT int NumberOfRoots() const;
 
-  //! Add a root to <me>. If a root with same name is present, it
-  //! will be replaced by <aRoot>.
   Standard_EXPORT void AddRoot(const occ::handle<StdStorage_Root>& aRoot);
 
-  //! Returns a sequence of all roots
   Standard_EXPORT occ::handle<NCollection_HSequence<occ::handle<StdStorage_Root>>> Roots() const;
 
-  //! Finds a root with name <aName>.
   Standard_EXPORT occ::handle<StdStorage_Root> Find(const TCollection_AsciiString& aName) const;
 
-  //! Returns true if <me> contains a root named <aName>
   Standard_EXPORT bool IsRoot(const TCollection_AsciiString& aName) const;
 
-  //! Removes the root named <aName>.
   Standard_EXPORT void RemoveRoot(const TCollection_AsciiString& aName);
 
-  //! Returns a status of the latest call to Read / Write functions
   Standard_EXPORT Storage_Error ErrorStatus() const;
 
-  //! Returns an error message if any of the latest call to Read / Write functions
   Standard_EXPORT TCollection_AsciiString ErrorStatusExtension() const;
 
-  //! Clears error status
   Standard_EXPORT void ClearErrorStatus();
 
-  //! Removes all persistent root objects
   Standard_EXPORT void Clear();
 
 private:

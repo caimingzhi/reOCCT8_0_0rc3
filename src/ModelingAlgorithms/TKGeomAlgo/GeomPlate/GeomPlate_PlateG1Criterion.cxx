@@ -9,9 +9,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//  static bool  first = true;
-//=================================================================================================
-
 GeomPlate_PlateG1Criterion::GeomPlate_PlateG1Criterion(const NCollection_Sequence<gp_XY>&  Data,
                                                        const NCollection_Sequence<gp_XYZ>& G1Data,
                                                        const double                        Maximum,
@@ -24,8 +21,6 @@ GeomPlate_PlateG1Criterion::GeomPlate_PlateG1Criterion(const NCollection_Sequenc
   myType        = Type;
   myRepartition = Repart;
 }
-
-//=================================================================================================
 
 void GeomPlate_PlateG1Criterion::Value(AdvApp2Var_Patch& P, const AdvApp2Var_Context& C) const
 {
@@ -55,7 +50,7 @@ void GeomPlate_PlateG1Criterion::Value(AdvApp2Var_Patch& P, const AdvApp2Var_Con
   int k1, k2, pos, ll = 1;
   for (k1 = 1; k1 <= NbCoeff[0]; k1++)
   {
-    // JAG 99.04.29    pos = 3*(MaxNbCoeff[0])*(k1-1);
+
     pos = 3 * (MaxNbCoeff[1]) * (k1 - 1);
     for (k2 = 1; k2 <= NbCoeff[1]; k2++, pos += 3)
     {
@@ -74,7 +69,7 @@ void GeomPlate_PlateG1Criterion::Value(AdvApp2Var_Patch& P, const AdvApp2Var_Con
     gp_XY  P2d = myData.Value(i);
     if (UInt[0] < P2d.X() && P2d.X() < UInt[1] && VInt[0] < P2d.Y() && P2d.Y() < VInt[1])
     {
-      //   u,v recadres sur (-1,1)
+
       up = (2 * P2d.X() - UInt[0] - UInt[1]) / (UInt[1] - UInt[0]);
       vp = (2 * P2d.Y() - VInt[0] - VInt[1]) / (VInt[1] - VInt[0]);
       PLib::EvalPoly2Var(up, vp, 1, 0, NbCoeff[0] - 1, NbCoeff[1] - 1, 3, Coeffs[0], Digit[0]);
@@ -108,8 +103,6 @@ void GeomPlate_PlateG1Criterion::Value(AdvApp2Var_Patch& P, const AdvApp2Var_Con
   }
   P.SetCritValue(ang);
 }
-
-//=================================================================================================
 
 bool GeomPlate_PlateG1Criterion::IsSatisfied(const AdvApp2Var_Patch& P) const
 {

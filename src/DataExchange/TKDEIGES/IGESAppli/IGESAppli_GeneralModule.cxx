@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IGESAppli_DrilledHole.hpp>
 #include <IGESAppli_ElementResults.hpp>
@@ -63,9 +52,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(IGESAppli_GeneralModule, IGESData_GeneralModule)
 
-//  Each Module is attached to a Protocol : it must interpret Case Numbers
-//  (arguments <CN> of various methods) in accordance to values returned by
-//  the method TypeNumber from this Protocol
 IGESAppli_GeneralModule::IGESAppli_GeneralModule() = default;
 
 void IGESAppli_GeneralModule::OwnSharedCase(const int                               CN,
@@ -411,7 +397,7 @@ IGESData_DirChecker IGESAppli_GeneralModule::DirChecker(
     default:
       break;
   }
-  return IGESData_DirChecker(); // by default, no specific criterium
+  return IGESData_DirChecker();
 }
 
 void IGESAppli_GeneralModule::OwnCheckCase(const int                               CN,
@@ -659,7 +645,7 @@ bool IGESAppli_GeneralModule::NewVoid(const int CN, occ::handle<Standard_Transie
       ent = new IGESAppli_RegionRestriction;
       break;
     default:
-      return false; // by default, Failure on Recognize
+      return false;
   }
   return true;
 }
@@ -829,7 +815,7 @@ void IGESAppli_GeneralModule::OwnCopyCase(const int                             
 }
 
 int IGESAppli_GeneralModule::CategoryNumber(const int CN,
-                                            const occ::handle<Standard_Transient>& /*ent*/,
+                                            const occ::handle<Standard_Transient>&,
                                             const Interface_ShareTool&) const
 {
   if (CN == 4 || CN == 5 || CN == 17)

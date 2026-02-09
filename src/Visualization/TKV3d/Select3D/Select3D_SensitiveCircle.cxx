@@ -4,10 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Select3D_SensitiveCircle, Select3D_SensitiveEntity)
 
-//=======================================================================
-// function : Select3D_SensitiveCircle (constructor)
-// purpose  : Definition of a sensitive circle
-//=======================================================================
 Select3D_SensitiveCircle::Select3D_SensitiveCircle(
   const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
   const gp_Circ&                            theCircle,
@@ -24,10 +20,6 @@ Select3D_SensitiveCircle::Select3D_SensitiveCircle(
   }
 }
 
-//=======================================================================
-// function : Matches
-// purpose  : Checks whether the circle overlaps current selecting volume
-//=======================================================================
 bool Select3D_SensitiveCircle::Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                        SelectBasics_PickResult&             thePickResult)
 {
@@ -55,8 +47,6 @@ bool Select3D_SensitiveCircle::Matches(SelectBasics_SelectingVolumeManager& theM
   return true;
 }
 
-//=================================================================================================
-
 occ::handle<Select3D_SensitiveEntity> Select3D_SensitiveCircle::GetConnected()
 {
   bool                                  anIsFilled = mySensType == Select3D_TOS_INTERIOR;
@@ -64,8 +54,6 @@ occ::handle<Select3D_SensitiveEntity> Select3D_SensitiveCircle::GetConnected()
     new Select3D_SensitiveCircle(myOwnerId, Circle(), anIsFilled);
   return aNewEntity;
 }
-
-//=================================================================================================
 
 Select3D_BndBox3d Select3D_SensitiveCircle::BoundingBox()
 {
@@ -78,8 +66,6 @@ Select3D_BndBox3d Select3D_SensitiveCircle::BoundingBox()
 
   return aBox;
 }
-
-//=================================================================================================
 
 gp_Pnt Select3D_SensitiveCircle::CenterOfGeometry() const
 {

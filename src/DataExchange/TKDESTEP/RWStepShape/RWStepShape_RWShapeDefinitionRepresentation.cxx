@@ -5,12 +5,8 @@
 #include <StepRepr_Representation.hpp>
 #include <StepShape_ShapeDefinitionRepresentation.hpp>
 
-//=================================================================================================
-
 RWStepShape_RWShapeDefinitionRepresentation::RWStepShape_RWShapeDefinitionRepresentation() =
   default;
-
-//=================================================================================================
 
 void RWStepShape_RWShapeDefinitionRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&                 data,
@@ -18,11 +14,9 @@ void RWStepShape_RWShapeDefinitionRepresentation::ReadStep(
   occ::handle<Interface_Check>&                               ach,
   const occ::handle<StepShape_ShapeDefinitionRepresentation>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "shape_definition_representation"))
     return;
-
-  // Inherited fields of PropertyDefinitionRepresentation
 
   StepRepr_RepresentedDefinition aPropertyDefinitionRepresentation_Definition;
   data->ReadEntity(num,
@@ -39,33 +33,24 @@ void RWStepShape_RWShapeDefinitionRepresentation::ReadStep(
                    STANDARD_TYPE(StepRepr_Representation),
                    aPropertyDefinitionRepresentation_UsedRepresentation);
 
-  // Initialize entity
   ent->Init(aPropertyDefinitionRepresentation_Definition,
             aPropertyDefinitionRepresentation_UsedRepresentation);
 }
-
-//=================================================================================================
 
 void RWStepShape_RWShapeDefinitionRepresentation::WriteStep(
   StepData_StepWriter&                                        SW,
   const occ::handle<StepShape_ShapeDefinitionRepresentation>& ent) const
 {
 
-  // Inherited fields of PropertyDefinitionRepresentation
-
   SW.Send(ent->StepRepr_PropertyDefinitionRepresentation::Definition().Value());
 
   SW.Send(ent->StepRepr_PropertyDefinitionRepresentation::UsedRepresentation());
 }
 
-//=================================================================================================
-
 void RWStepShape_RWShapeDefinitionRepresentation::Share(
   const occ::handle<StepShape_ShapeDefinitionRepresentation>& ent,
   Interface_EntityIterator&                                   iter) const
 {
-
-  // Inherited fields of PropertyDefinitionRepresentation
 
   iter.AddItem(ent->StepRepr_PropertyDefinitionRepresentation::Definition().Value());
 

@@ -11,7 +11,6 @@ class StepGeom_ToroidalSurface : public StepGeom_ElementarySurface
 {
 
 public:
-  //! Returns a ToroidalSurface
   Standard_EXPORT StepGeom_ToroidalSurface();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&  aName,

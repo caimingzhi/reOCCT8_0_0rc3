@@ -11,8 +11,6 @@
   #include <DrawTrSurf.hpp>
 #endif
 
-//=================================================================================================
-
 ApproxInt_MultiLine::ApproxInt_MultiLine()
 {
   PtrOnmySvSurfaces = NULL;
@@ -32,8 +30,6 @@ ApproxInt_MultiLine::ApproxInt_MultiLine()
   U2o               = 0.;
   V2o               = 0.;
 }
-
-//=================================================================================================
 
 ApproxInt_MultiLine::ApproxInt_MultiLine(const Handle_TheLine& line,
                                          void* const           svsurf,
@@ -70,14 +66,9 @@ ApproxInt_MultiLine::ApproxInt_MultiLine(const Handle_TheLine& line,
 
 {
 #ifdef OCCT_DEBUG
-  // if(indicemin == indicemax)
-  //{
-  //   cout<<"ApproxInt_MultiLine: indicemin = indicemax = " << indicemin << endl;
-  // }
+
 #endif
 }
-
-//=================================================================================================
 
 ApproxInt_MultiLine::ApproxInt_MultiLine(const Handle_TheLine& line,
                                          const int             NbP3d,
@@ -112,28 +103,19 @@ ApproxInt_MultiLine::ApproxInt_MultiLine(const Handle_TheLine& line,
       V2o(v2o)
 {
 #ifdef OCCT_DEBUG
-  // if(indicemin == indicemax)
-  //{
-  //   cout<<"ApproxInt_MultiLine: indicemin = indicemax = " << indicemin << endl;
-  // }
+
 #endif
 }
-
-//=================================================================================================
 
 int ApproxInt_MultiLine::FirstPoint() const
 {
   return indicemin;
 }
 
-//=================================================================================================
-
 int ApproxInt_MultiLine::LastPoint() const
 {
   return indicemax;
 }
-
-//=================================================================================================
 
 Approx_Status ApproxInt_MultiLine::WhatStatus() const
 {
@@ -143,29 +125,21 @@ Approx_Status ApproxInt_MultiLine::WhatStatus() const
     return Approx_NoPointsAdded;
 }
 
-//=================================================================================================
-
 int ApproxInt_MultiLine::NbP3d() const
 {
   return nbp3d;
 }
-
-//=================================================================================================
 
 int ApproxInt_MultiLine::NbP2d() const
 {
   return nbp2d;
 }
 
-//=================================================================================================
-
 void ApproxInt_MultiLine::Value(const int Index, NCollection_Array1<gp_Pnt>& TabPnt) const
 {
   const gp_Pnt aP = myLine->Point(Index).Value();
   TabPnt(1).SetCoord(aP.X() + Xo, aP.Y() + Yo, aP.Z() + Zo);
 }
-
-//=================================================================================================
 
 void ApproxInt_MultiLine::Value(const int Index, NCollection_Array1<gp_Pnt2d>& TabPnt2d) const
 {
@@ -193,8 +167,6 @@ void ApproxInt_MultiLine::Value(const int Index, NCollection_Array1<gp_Pnt2d>& T
   }
 }
 
-//=================================================================================================
-
 void ApproxInt_MultiLine::Value(const int                     Index,
                                 NCollection_Array1<gp_Pnt>&   TabPnt,
                                 NCollection_Array1<gp_Pnt2d>& TabPnt2d) const
@@ -202,8 +174,6 @@ void ApproxInt_MultiLine::Value(const int                     Index,
   Value(Index, TabPnt);
   Value(Index, TabPnt2d);
 }
-
-//=================================================================================================
 
 bool ApproxInt_MultiLine::Tangency(const int Index, NCollection_Array1<gp_Vec>& TabVec) const
 {
@@ -222,8 +192,6 @@ bool ApproxInt_MultiLine::Tangency(const int Index, NCollection_Array1<gp_Vec>& 
 
   return ret;
 }
-
-//=================================================================================================
 
 bool ApproxInt_MultiLine::Tangency(const int Index, NCollection_Array1<gp_Vec2d>& TabVec2d) const
 {
@@ -272,8 +240,6 @@ bool ApproxInt_MultiLine::Tangency(const int Index, NCollection_Array1<gp_Vec2d>
   return ret;
 }
 
-//=================================================================================================
-
 bool ApproxInt_MultiLine::Tangency(const int                     Index,
                                    NCollection_Array1<gp_Vec>&   TabVec,
                                    NCollection_Array1<gp_Vec2d>& TabVec2d) const
@@ -281,15 +247,13 @@ bool ApproxInt_MultiLine::Tangency(const int                     Index,
   return (Tangency(Index, TabVec) && Tangency(Index, TabVec2d));
 }
 
-//=================================================================================================
-
 ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
                                                        const int High,
                                                        const int aNbPntsToInsert) const
 {
   if (PtrOnmySvSurfaces == NULL)
   {
-    //-- cout<<"\n Erreur dans : ApproxInt_MultiLine  ApproxInt_MultiLine::MakeMLBetween "<<endl;
+
     occ::handle<IntSurf_LineOn2S> vide1 = new IntSurf_LineOn2S();
     occ::handle<TheLine>          vide  = new TheLine(vide1, false);
     return (ApproxInt_MultiLine(vide,
@@ -308,7 +272,6 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
                                 p2donfirst,
                                 1,
                                 1));
-    //-- return(*this);
   }
 
   bool aSaveUseSolver = ((TheSvSurfaces*)PtrOnmySvSurfaces)->GetUseSolver();
@@ -330,15 +293,6 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
   gp_Vec2d TS1, TS2;
   gp_Pnt   P;
 
-  //-----------------------l-------------------------------------------
-  //--  Indice     :   Low       Low+1     I    I+1         High    --
-  //--                                                              --
-  //--  Abs.Curv.  :  S(Low)              S(I)  S(I+1)      S(High) --
-  //--                                                              --
-  //--                On echantillonne a abcisse curviligne         --
-  //--                constante.                                    --
-  //--                L abcisse est calculee sur les params U1,V1   --
-  //------------------------------------------------------------------
   NCollection_Array1<double> U1(Low, High);
   NCollection_Array1<double> V1(Low, High);
   NCollection_Array1<double> U2(Low, High);
@@ -346,9 +300,6 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
   NCollection_Array1<double> AC(Low, High);
   double                     s, ds;
 
-  //------------------------------------------------------------
-  //-- Creation des Tableaux U1 .. V2 et AC
-  //--
   double u1, v1, u2, v2;
   int    i;
   myLine->Point(Low).Parameters(u1, v1, u2, v2);
@@ -372,7 +323,7 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
     AC(i) = AC(i-1) + sqrt((du1*du1)+(dv1*dv1));
   }
 #else
-  //-- Essai du 19 juin 96 (parametrage selon abs curv en XYZ)
+
   for (i = Low + 1; i <= High; i++)
   {
     myLine->Point(i).Parameters(u1, v1, u2, v2);
@@ -384,8 +335,6 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
   }
 
 #endif
-  //-------------------------------------------------------------
-  //-- Creation des structures contenant les resultats
 
   occ::handle<IntSurf_LineOn2S> ResultPntOn2SLine = new IntSurf_LineOn2S();
 
@@ -400,12 +349,7 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
 
   for (i = 2, s = ds; (s < smax && Indice <= High - 1); i++, s += ds)
   {
-    //----------------------------------------------------------
-    //-- Recherche des indices des points                     --
-    //-- Point           :    2       i       NbPnts-1        --
-    //-- s                            s                       --
-    //-- Current Indice tel que AC(Indice)<= s < AC(Indice+1) --
-    //----------------------------------------------------------
+
     while (AC(Indice + 1) <= s)
     {
       if (!HasBeenInserted)
@@ -430,11 +374,6 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
     double b   = AC(Indice + 1) - s;
     double nab = 1.0 / (a + b);
 
-    //----------------------------------------------------------
-    //-- Verification :  Si Dist au prochain  point < dsmin   --
-    //--                 Si Dist au precedent point < dsmin   --
-    //--                                                      --
-    //----------------------------------------------------------
     if ((a > dsmin) && (b > dsmin))
     {
       u1 = (U1(Indice) * b + U1(Indice + 1) * a) * nab;
@@ -445,19 +384,15 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
       if (((TheSvSurfaces*)PtrOnmySvSurfaces)->Compute(u1, v1, u2, v2, P, T, TS1, TS2))
       {
         StartPOn2S.SetValue(P, u1, v1, u2, v2);
-        //-- cout<<" Insertion du point calcule : "<<u1<<","<<v1<<","<<u2<<","<<v2<<",";
-        //-- cout<<P.X()<<","<<P.Y()<<","<<P.Z()<<endl;
+
         ResultPntOn2SLine->Add(StartPOn2S);
       }
       else
       {
-        //-- cout<<" Probleme Non Traite ds ApproxInt_ApproxIntIntersection "<<endl;
       }
     }
     else
     {
-      //-- Point non situe a distance suffisante de 2 pts existants
-      //-- avec le point p[indice] deja insere
 
       if (b < 0.0)
       {
@@ -466,7 +401,6 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
           if (!HasBeenInserted)
             ResultPntOn2SLine->Add(myLine->Point(Indice));
 
-          //-- cout<<" Insertion du point :"<<Indice<<endl;
           HasBeenInserted = false;
           Indice++;
 
@@ -490,11 +424,8 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
     }
   }
 
-  ResultPntOn2SLine->Add(myLine->Point(High)); //--  Point NbPnts
+  ResultPntOn2SLine->Add(myLine->Point(High));
   occ::handle<TheLine> temp = new TheLine(ResultPntOn2SLine, false);
-
-  //-- Verification   a posteriori
-  //-- On verifie qu il n y a pas de virage trop important en 2d et en 3d
 
   temp->Point(1).Parameters(u1, v1, u2, v2);
   gp_Pnt2d P1A(u1, v1);
@@ -512,7 +443,7 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
   {
     double d, du, dv, duv2;
     temp->Point(i).Parameters(u1, v1, u2, v2);
-    //-- Virage P1A P1B P1C
+
     P1C.SetCoord(u1, v1);
     du   = P1B.X() - P1A.X();
     dv   = P1B.Y() - P1A.Y();
@@ -529,7 +460,6 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
       break;
     }
 
-    //-- Virage P2A P2B P2C
     P2C.SetCoord(u2, v2);
     du   = P2B.X() - P2A.X();
     dv   = P2B.Y() - P2A.Y();
@@ -552,16 +482,7 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
   }
 
 #ifdef OCCT_DEBUG
-  // if (temp->NbPnts() < NbPntsToInsert + High - Low + 1)
-  //{
-  //   cout<<" *** Pas assez de points entre :"<<
-  //             Low<<" et "<<High<<" -> "<<temp->NbPnts()<<endl;
-  // }
 
-  // if(CodeErreur)
-  //{
-  //   cout<<" *** CodeErreur : "<<CodeErreur<<endl;
-  // }
 #endif
 
   if ((temp->NbPnts() >= NbPntsToInsert + High - Low + 1) && (CodeErreur == 0))
@@ -586,8 +507,7 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
   }
   else
   {
-    //-- cout<<" ApproxInt_MultiLine "<<endl;
-    //-- cout<<" Pas de Rajout de points ds1min =  "<<minds1<<" ds2min = "<<minds2<<endl;
+
     ((TheSvSurfaces*)PtrOnmySvSurfaces)->SetUseSolver(aSaveUseSolver);
     occ::handle<IntSurf_LineOn2S> vide1 = new IntSurf_LineOn2S();
     occ::handle<TheLine>          vide  = new TheLine(vide1, false);
@@ -609,8 +529,6 @@ ApproxInt_MultiLine ApproxInt_MultiLine::MakeMLBetween(const int Low,
                                 1));
   }
 }
-
-//=================================================================================================
 
 bool ApproxInt_MultiLine::MakeMLOneMorePoint(const int            theLow,
                                              const int            theHigh,
@@ -635,8 +553,6 @@ bool ApproxInt_MultiLine::MakeMLOneMorePoint(const int            theLow,
   for (int Indice = theLow; Indice <= theHigh; Indice++)
     ResultPntOn2SLine->Add(myLine->Point(Indice));
 
-  // Insert new point between (theIndbad-1) and theIndbad
-  // Using <thePtrSVSurf> for Rsnld: it may be ImpPrm or PrmPrm
   gp_Pnt PrevPnt = myLine->Point(theIndbad - 1).Value();
   gp_Pnt CurPnt  = myLine->Point(theIndbad).Value();
   double uprev1, vprev1, uprev2, vprev2, ucur1, vcur1, ucur2, vcur2;
@@ -735,8 +651,6 @@ bool ApproxInt_MultiLine::MakeMLOneMorePoint(const int            theLow,
                                         ResultPntOn2SLine->NbPoints());
   return true;
 }
-
-//=================================================================================================
 
 void ApproxInt_MultiLine::Dump() const
 {

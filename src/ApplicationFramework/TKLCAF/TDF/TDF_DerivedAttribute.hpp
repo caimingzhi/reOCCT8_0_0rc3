@@ -5,16 +5,10 @@
 
 class TCollection_AsciiString;
 
-//! @def DEFINE_DERIVED_ATTRIBUTE
-//! Defines declaration of Handle method and declares methods for serialization
-//! of derived attribute
 #define DEFINE_DERIVED_ATTRIBUTE(Class, Base)                                                      \
   DEFINE_STANDARD_RTTIEXT(Class, Base);                                                            \
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 
-//! @def IMPLEMENT_DERIVED_ATTRIBUTE
-//! Defines implementation of Handle method, serialization methods and registers the derived
-//! attribute
 #define IMPLEMENT_DERIVED_ATTRIBUTE(Class, Base)                                                   \
   IMPLEMENT_STANDARD_RTTIEXT(Class, Base)                                                          \
   static occ::handle<TDF_Attribute> TDF_DERIVED_New##Class()                                       \
@@ -28,8 +22,6 @@ class TCollection_AsciiString;
     return TDF_DERIVED_##Class();                                                                  \
   }
 
-//! @def IMPLEMENT_DERIVED_ATTRIBUTE_WITH_TYPE
-//! Defines implementation of Handle method and registers the derived attribute
 #define IMPLEMENT_DERIVED_ATTRIBUTE_WITH_TYPE(Class, Base, NameSpace, TypeName)                    \
   IMPLEMENT_STANDARD_RTTIEXT(Class, Base)                                                          \
   static occ::handle<TDF_Attribute> TDF_DERIVED_New##Class()                                       \
@@ -43,26 +35,18 @@ class TCollection_AsciiString;
     return TDF_DERIVED_##Class();                                                                  \
   }
 
-//! Class provides global access (through static methods) to all derived attributes information.
-//! It is used internally by macros for registration of derived attributes and driver-tables
-//! for getting this data.
 class TDF_DerivedAttribute
 {
 public:
-  /// A function of derived attribute that returns a new attribute instance
   typedef occ::handle<TDF_Attribute> (*NewDerived)();
 
-  //! Registers a derived by the pointer to a method that creates a new derived attribute instance
   Standard_EXPORT static NewDerived Register(NewDerived  theNewAttributeFunction,
                                              const char* theNameSpace = nullptr,
                                              const char* theTypeName  = nullptr);
 
-  //! Returns the derived registered attribute by its type.
   Standard_EXPORT static occ::handle<TDF_Attribute> Attribute(const char* theType);
 
-  //! Returns the type name of the registered attribute by its type.
   Standard_EXPORT static const TCollection_AsciiString& TypeName(const char* theType);
 
-  //! Returns all the derived registered attributes list.
   Standard_EXPORT static void Attributes(NCollection_List<occ::handle<TDF_Attribute>>& theList);
 };

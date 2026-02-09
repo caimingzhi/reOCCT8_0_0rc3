@@ -13,8 +13,6 @@ class IntCurveSurface_TheQuadCurvExactHInter
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Provides the signed distance function : Q(w)
-  //! and its first derivative dQ(w)/dw
   Standard_EXPORT IntCurveSurface_TheQuadCurvExactHInter(const occ::handle<Adaptor3d_Surface>& S,
                                                          const occ::handle<Adaptor3d_Curve>&   C);
 
@@ -26,8 +24,6 @@ public:
 
   Standard_EXPORT int NbIntervals() const;
 
-  //! U1 and U2 are the parameters of
-  //! a segment on the curve.
   Standard_EXPORT void Intervals(const int Index, double& U1, double& U2) const;
 
 private:

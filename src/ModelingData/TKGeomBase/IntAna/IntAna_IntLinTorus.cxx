@@ -1,20 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//-- IntAna_IntLinTorus.cxx
-//-- lbr : la methode avec les coefficients est catastrophique.
-//--       Mise en place d'une vraie solution.
 
 #include <ElCLib.hpp>
 #include <ElSLib.hpp>
@@ -45,15 +29,10 @@ void IntAna_IntLinTorus::Perform(const gp_Lin& L, const gp_Torus& T)
   gp_Pnt PL = L.Location();
   gp_Dir DL = L.Direction();
 
-  // Reparametrize the line:
-  // set its location as nearest to the location of torus
   gp_Pnt TorLoc       = T.Location();
   double ParamOfNewPL = gp_Vec(PL, TorLoc).Dot(gp_Vec(DL));
   gp_Pnt NewPL(PL.XYZ() + ParamOfNewPL * DL.XYZ());
 
-  //--------------------------------------------------------------
-  //-- Coefficients de la ligne dans le repere du cone
-  //--
   gp_Trsf trsf;
   trsf.SetTransformation(T.Position());
   NewPL.Transform(trsf);

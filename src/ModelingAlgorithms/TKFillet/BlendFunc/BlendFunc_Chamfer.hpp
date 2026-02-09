@@ -11,8 +11,6 @@ class gp_Pnt;
 class gp_Vec;
 class gp_Vec2d;
 
-//! Class for a function used to compute a "ordinary" chamfer:
-//! when distances from spine to surfaces are constant
 class BlendFunc_Chamfer : public BlendFunc_GenChamfer
 {
 public:
@@ -22,16 +20,8 @@ public:
                                     const occ::handle<Adaptor3d_Surface>& S2,
                                     const occ::handle<Adaptor3d_Curve>&   CG);
 
-  //! computes the values <F> of the Functions for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Value(const math_Vector& X, math_Vector& F) override;
 
-  //! returns the values <D> of the derivatives for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Derivatives(const math_Vector& X, math_Matrix& D) override;
 
   Standard_EXPORT void Set(const double Param) override;
@@ -52,10 +42,6 @@ public:
 
   Standard_EXPORT const gp_Vec2d& Tangent2dOnS2() const override;
 
-  //! Returns the tangent vector at the section,
-  //! at the beginning and the end of the section, and
-  //! returns the normal (of the surfaces) at
-  //! these points.
   Standard_EXPORT void Tangent(const double U1,
                                const double V1,
                                const double U2,
@@ -65,10 +51,8 @@ public:
                                gp_Vec&      NormFirst,
                                gp_Vec&      NormLast) const override;
 
-  //! Sets the distances and the "quadrant".
   Standard_EXPORT void Set(const double Dist1, const double Dist2, const int Choix) override;
 
-  //! Returns the length of the maximum section
   Standard_EXPORT double GetSectionSize() const override;
 
 private:

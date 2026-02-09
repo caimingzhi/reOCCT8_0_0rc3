@@ -1,4 +1,4 @@
-// Created on : Fri May 08 19:02:07 2020
+
 
 #include "RWStepKinematics_RWLinearFlexibleAndPlanarCurvePair.hpp"
 
@@ -12,12 +12,8 @@
 #include <StepKinematics_KinematicJoint.hpp>
 #include <StepGeom_Curve.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWLinearFlexibleAndPlanarCurvePair::
   RWStepKinematics_RWLinearFlexibleAndPlanarCurvePair() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWLinearFlexibleAndPlanarCurvePair::ReadStep(
   const occ::handle<StepData_StepReaderData>&                         theData,
@@ -25,16 +21,12 @@ void RWStepKinematics_RWLinearFlexibleAndPlanarCurvePair::ReadStep(
   occ::handle<Interface_Check>&                                       theArch,
   const occ::handle<StepKinematics_LinearFlexibleAndPlanarCurvePair>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 8, theArch, "linear_flexible_and_planar_curve_pair"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
-
-  // Inherited fields of ItemDefinedTransformation
 
   occ::handle<TCollection_HAsciiString> aItemDefinedTransformation_Name;
   theData->ReadString(theNum,
@@ -75,8 +67,6 @@ void RWStepKinematics_RWLinearFlexibleAndPlanarCurvePair::ReadStep(
                       STANDARD_TYPE(StepRepr_RepresentationItem),
                       aItemDefinedTransformation_TransformItem2);
 
-  // Inherited fields of KinematicPair
-
   occ::handle<StepKinematics_KinematicJoint> aKinematicPair_Joint;
   theData->ReadEntity(theNum,
                       6,
@@ -85,15 +75,12 @@ void RWStepKinematics_RWLinearFlexibleAndPlanarCurvePair::ReadStep(
                       STANDARD_TYPE(StepKinematics_KinematicJoint),
                       aKinematicPair_Joint);
 
-  // Own fields of LinearFlexibleAndPlanarCurvePair
-
   occ::handle<StepGeom_Curve> aPairCurve;
   theData->ReadEntity(theNum, 7, "pair_curve", theArch, STANDARD_TYPE(StepGeom_Curve), aPairCurve);
 
   bool aOrientation;
   theData->ReadBoolean(theNum, 8, "orientation", theArch, aOrientation);
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aItemDefinedTransformation_Name,
                hasItemDefinedTransformation_Description,
@@ -105,18 +92,12 @@ void RWStepKinematics_RWLinearFlexibleAndPlanarCurvePair::ReadStep(
                aOrientation);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWLinearFlexibleAndPlanarCurvePair::WriteStep(
   StepData_StepWriter&                                                theSW,
   const occ::handle<StepKinematics_LinearFlexibleAndPlanarCurvePair>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Inherited fields of ItemDefinedTransformation
 
   theSW.Send(theEnt->ItemDefinedTransformation()->Name());
 
@@ -131,37 +112,23 @@ void RWStepKinematics_RWLinearFlexibleAndPlanarCurvePair::WriteStep(
 
   theSW.Send(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Own fields of KinematicPair
-
   theSW.Send(theEnt->Joint());
-
-  // Own fields of LinearFlexibleAndPlanarCurvePair
 
   theSW.Send(theEnt->PairCurve());
 
   theSW.SendBoolean(theEnt->Orientation());
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWLinearFlexibleAndPlanarCurvePair::Share(
   const occ::handle<StepKinematics_LinearFlexibleAndPlanarCurvePair>& theEnt,
   Interface_EntityIterator&                                           iter) const
 {
 
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of ItemDefinedTransformation
-
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem1());
 
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Inherited fields of KinematicPair
-
   iter.AddItem(theEnt->StepKinematics_KinematicPair::Joint());
-
-  // Own fields of LinearFlexibleAndPlanarCurvePair
 
   iter.AddItem(theEnt->PairCurve());
 }

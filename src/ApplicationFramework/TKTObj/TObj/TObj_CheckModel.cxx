@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TObj_CheckModel, Message_Algorithm)
 
-//=================================================================================================
-
 bool TObj_CheckModel::Perform()
 {
   ClearStatus();
@@ -18,11 +16,9 @@ bool TObj_CheckModel::Perform()
   return checkReferences();
 }
 
-//=================================================================================================
-
 bool TObj_CheckModel::checkReferences()
 {
-  // iterate by all objects in the model
+
   occ::handle<TObj_ObjectIterator> anIt;
   for (anIt = myModel->GetObjects(); anIt->More(); anIt->Next())
   {
@@ -33,7 +29,6 @@ bool TObj_CheckModel::checkReferences()
       continue;
     }
 
-    // Check references
     occ::handle<TObj_ObjectIterator> aRefIter;
     for (aRefIter = anObj->GetReferences(); aRefIter->More(); aRefIter->Next())
     {
@@ -44,16 +39,15 @@ bool TObj_CheckModel::checkReferences()
         continue;
       }
 
-      // check availability of corresponding back reference
       occ::handle<TObj_ObjectIterator> aBackIter = aReferred->GetBackReferences();
       if (aBackIter.IsNull())
-        continue; // object does not support back references
+        continue;
 
       for (; aBackIter->More(); aBackIter->Next())
         if (aBackIter->Value() == anObj)
           break;
       if (aBackIter->More())
-        continue; // ok, back reference found
+        continue;
 
       if (IsToFix())
       {
@@ -64,10 +58,9 @@ bool TObj_CheckModel::checkReferences()
         SetStatus(Message_Alarm4, anObj->GetName());
     }
 
-    // Checking back references
     aRefIter = anObj->GetBackReferences();
     if (aRefIter.IsNull())
-      continue; // object does not support back references
+      continue;
     NCollection_Sequence<occ::handle<TObj_Object>> aBadBackRefs;
     for (; aRefIter->More(); aRefIter->Next())
     {
@@ -83,7 +76,7 @@ bool TObj_CheckModel::checkReferences()
         if (aForwIter->Value() == anObj)
           break;
       if (aForwIter->More())
-        continue; // ok, reference found
+        continue;
 
       if (IsToFix())
       {
@@ -94,7 +87,6 @@ bool TObj_CheckModel::checkReferences()
         SetStatus(Message_Alarm5, anObj->GetName());
     }
 
-    // remove back references to objects that are not referenced actually
     for (int i = 1; i <= aBadBackRefs.Length(); i++)
       anObj->RemoveBackReference(aBadBackRefs(i));
   }

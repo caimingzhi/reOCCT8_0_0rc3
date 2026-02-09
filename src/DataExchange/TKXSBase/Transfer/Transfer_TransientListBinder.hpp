@@ -10,10 +10,6 @@
 #include <Standard_Integer.hpp>
 class Standard_Transient;
 
-//! This binder binds several (a list of) Transients with a starting
-//! entity, when this entity itself corresponds to a simple list
-//! of Transients. Each part is not seen as a sub-result of an
-//! independent component, but as an item of a built-in list
 class Transfer_TransientListBinder : public Transfer_Binder
 {
 
@@ -29,13 +25,11 @@ public:
 
   Standard_EXPORT const char* ResultTypeName() const override;
 
-  //! Adds an item to the result list
   Standard_EXPORT void AddResult(const occ::handle<Standard_Transient>& res);
 
   Standard_EXPORT occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> Result()
     const;
 
-  //! Changes an already defined sub-result
   Standard_EXPORT void SetResult(const int num, const occ::handle<Standard_Transient>& res);
 
   Standard_EXPORT int NbTransients() const;

@@ -14,7 +14,6 @@ class TCollection_HAsciiString;
 class StepVisual_CameraModelD3MultiClipping : public StepVisual_CameraModelD3
 {
 public:
-  //! Returns a CameraModelD3MultiClipping
   Standard_EXPORT StepVisual_CameraModelD3MultiClipping();
 
   Standard_EXPORT void Init(

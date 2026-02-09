@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_EditForm.hpp>
 #include <IGESData_ColorEntity.hpp>
@@ -55,8 +44,7 @@ static occ::handle<Interface_TypedValue> NewDefList(const char* name)
 IGESSelect_EditDirPart::IGESSelect_EditDirPart()
     : IFSelect_Editor(23)
 {
-  // int i,nb; //szv#4:S4163:12Mar99 unused
-  //   Definition
+
   occ::handle<Interface_TypedValue> typenum =
     new Interface_TypedValue("Type Number", Interface_ParamInteger);
   SetValue(1, typenum, "D1:Type", IFSelect_EditRead);
@@ -150,16 +138,16 @@ TCollection_AsciiString IGESSelect_EditDirPart::Label() const
   return TCollection_AsciiString("IGES Header");
 }
 
-bool IGESSelect_EditDirPart::Recognize(const occ::handle<IFSelect_EditForm>& /*form*/) const
+bool IGESSelect_EditDirPart::Recognize(const occ::handle<IFSelect_EditForm>&) const
 {
   return true;
-} // ??
+}
 
 occ::handle<TCollection_HAsciiString> IGESSelect_EditDirPart::StringValue(
-  const occ::handle<IFSelect_EditForm>& /*form*/,
+  const occ::handle<IFSelect_EditForm>&,
   const int num) const
 {
-  //  Default Values
+
   return TypedValue(num)->HStringValue();
 }
 
@@ -252,12 +240,11 @@ bool IGESSelect_EditDirPart::Load(const occ::handle<IFSelect_EditForm>&        f
 bool IGESSelect_EditDirPart::Update(const occ::handle<IFSelect_EditForm>&        form,
                                     const int                                    num,
                                     const occ::handle<TCollection_HAsciiString>& val,
-                                    const bool /*enforce*/) const
+                                    const bool) const
 {
   occ::handle<TCollection_HAsciiString> nulstr;
   occ::handle<IGESData_IGESModel>       modl = occ::down_cast<IGESData_IGESModel>(form->Model());
 
-  //    LineFont
   if (num == 5)
   {
     if (val.IsNull())
@@ -273,7 +260,6 @@ bool IGESSelect_EditDirPart::Update(const occ::handle<IFSelect_EditForm>&       
       form->Touch(4, DefTypeName(IGESData_DefReference));
   }
 
-  //    Level
   if (num == 8)
   {
     if (val.IsNull())
@@ -289,7 +275,6 @@ bool IGESSelect_EditDirPart::Update(const occ::handle<IFSelect_EditForm>&       
       form->Touch(7, DefListName(IGESData_DefSeveral));
   }
 
-  //    View
   if (num == 11)
   {
     if (val.IsNull())
@@ -298,7 +283,6 @@ bool IGESSelect_EditDirPart::Update(const occ::handle<IFSelect_EditForm>&       
       form->Touch(10, DefListName(IGESData_DefOne));
   }
 
-  //    Color
   if (num == 20)
   {
     if (val.IsNull())

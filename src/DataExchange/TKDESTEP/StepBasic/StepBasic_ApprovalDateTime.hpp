@@ -7,7 +7,6 @@
 #include <Standard_Transient.hpp>
 class StepBasic_Approval;
 
-//! Added from StepBasic Rev2 to Rev4
 class StepBasic_ApprovalDateTime : public Standard_Transient
 {
 

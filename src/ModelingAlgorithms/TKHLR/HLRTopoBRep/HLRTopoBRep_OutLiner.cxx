@@ -23,26 +23,18 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRTopoBRep_OutLiner, Standard_Transient)
 
-//=================================================================================================
-
 HLRTopoBRep_OutLiner::HLRTopoBRep_OutLiner() = default;
-
-//=================================================================================================
 
 HLRTopoBRep_OutLiner::HLRTopoBRep_OutLiner(const TopoDS_Shape& OriS)
     : myOriginalShape(OriS)
 {
 }
 
-//=================================================================================================
-
 HLRTopoBRep_OutLiner::HLRTopoBRep_OutLiner(const TopoDS_Shape& OriS, const TopoDS_Shape& OutS)
     : myOriginalShape(OriS),
       myOutLinedShape(OutS)
 {
 }
-
-//=================================================================================================
 
 void HLRTopoBRep_OutLiner::Fill(
   const HLRAlgo_Projector&                                                         P,
@@ -75,11 +67,6 @@ void HLRTopoBRep_OutLiner::Fill(
   }
 }
 
-//=======================================================================
-// Function : ProcessFace
-// Purpose  : Build a Face using myDS and add the new face to a shell
-//=======================================================================
-
 void HLRTopoBRep_OutLiner::ProcessFace(
   const TopoDS_Face&                                                               F,
   TopoDS_Shape&                                                                    S,
@@ -87,24 +74,13 @@ void HLRTopoBRep_OutLiner::ProcessFace(
 {
   BRep_Builder    B;
   TopExp_Explorer exE, exW;
-  // bool splitted = false;
 
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     aVEMap;
   TopExp::MapShapesAndAncestors(F, TopAbs_VERTEX, TopAbs_EDGE, aVEMap);
 
-  TopoDS_Shape NF; // = F;
-                   // NF.Free(true);
+  TopoDS_Shape NF;
 
-  // for (exE.Init(F,TopAbs_EDGE); exE.More(); exE.Next()) {
-  // if (myDS.EdgeHasSplE(TopoDS::Edge(exE.Current()))) {
-  // splitted = true;
-  // break;
-  //}
-  //}
-
-  // if (splitted) { // the face contains a splitted edge :
-  //  Make a copy with the new Edges
   NF = F.EmptyCopied();
 
   for (exW.Init(F, TopAbs_WIRE); exW.More(); exW.Next())
@@ -132,14 +108,14 @@ void HLRTopoBRep_OutLiner::ProcessFace(
         B.Add(W, E);
       }
     }
-    B.Add(NF, W); // add the new wire in the new face.
+    B.Add(NF, W);
   }
-  //}
+
   myDS.AddIntL(F);
   NCollection_List<TopoDS_Shape>& OutL = myDS.AddOutL(F);
 
   if (myDS.FaceHasIntL(F))
-  { // get the InternalOutLines on face F
+  {
     TopoDS_Wire W;
 
     NCollection_List<TopoDS_Shape>::Iterator itE;
@@ -147,7 +123,6 @@ void HLRTopoBRep_OutLiner::ProcessFace(
     {
       TopoDS_Edge E = TopoDS::Edge(itE.Value());
       E.Orientation(TopAbs_INTERNAL);
-      // Check, if outline edge coincides real edge
 
       BRepAdaptor_Curve C(E);
       double            par = 0.34 * C.FirstParameter() + 0.66 * C.LastParameter();
@@ -175,7 +150,7 @@ void HLRTopoBRep_OutLiner::ProcessFace(
             }
             else
             {
-              // Try to project one point
+
               Extrema_ExtPC anExt(P, aC);
               if (anExt.IsDone())
               {
@@ -186,11 +161,10 @@ void HLRTopoBRep_OutLiner::ProcessFace(
                   int    ec;
                   for (ec = 1; ec <= aNe; ++ec)
                   {
-                    //		    dist = std::min(dist, anExt.Value(ec));
+
                     dist = std::min(dist, anExt.SquareDistance(ec));
                   }
 
-                  //		  if(dist <= 1.e-7) {
                   if (dist <= 1.e-14)
                   {
                     SameEdge = true;
@@ -232,11 +206,11 @@ void HLRTopoBRep_OutLiner::ProcessFace(
       }
     }
     if (!W.IsNull())
-      B.Add(NF, W); // add the new wire in the new face.
+      B.Add(NF, W);
   }
 
   if (myDS.FaceHasIsoL(F))
-  { // get the IsoLines on face F
+  {
     TopoDS_Wire W;
 
     NCollection_List<TopoDS_Shape>::Iterator itE;
@@ -245,7 +219,7 @@ void HLRTopoBRep_OutLiner::ProcessFace(
       TopoDS_Edge E = TopoDS::Edge(itE.Value());
       E.Orientation(TopAbs_INTERNAL);
       if (myDS.EdgeHasSplE(E))
-      { // normally IsoLines are never split.
+      {
 
         NCollection_List<TopoDS_Shape>::Iterator itS;
         for (itS.Initialize(myDS.EdgeSplE(E)); itS.More(); itS.Next())
@@ -267,18 +241,13 @@ void HLRTopoBRep_OutLiner::ProcessFace(
       }
     }
     if (!W.IsNull())
-      B.Add(NF, W); // add the new wire in the new face.
+      B.Add(NF, W);
   }
   myDS.AddOldS(NF, F);
   MST.Bind(NF, MST.ChangeFind(F));
-  //
-  B.Add(S, NF); // add the face in the shell.
-}
 
-//=======================================================================
-// function : BuildShape
-// purpose  : Build the OutLinedShape
-//=======================================================================
+  B.Add(S, NF);
+}
 
 void HLRTopoBRep_OutLiner::BuildShape(
   NCollection_DataMap<TopoDS_Shape, BRepTopAdaptor_Tool, TopTools_ShapeMapHasher>& MST)
@@ -289,7 +258,7 @@ void HLRTopoBRep_OutLiner::BuildShape(
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> ShapeMap;
 
   for (exshell.Init(myOriginalShape, TopAbs_SHELL); exshell.More(); exshell.Next())
-  { // faces in a shell (open or close)
+  {
     TopoDS_Shell theShell;
     B.MakeShell(theShell);
     theShell.Closed(exshell.Current().Closed());
@@ -303,12 +272,11 @@ void HLRTopoBRep_OutLiner::BuildShape(
   }
 
   for (exface.Init(myOriginalShape, TopAbs_FACE, TopAbs_SHELL); exface.More(); exface.Next())
-  { // faces not in a shell
+  {
     if (ShapeMap.Add(exface.Current()))
       ProcessFace(TopoDS::Face(exface.Current()), myOutLinedShape, MST);
   }
 
-  for (exedge.Init(myOriginalShape, TopAbs_EDGE, TopAbs_FACE); exedge.More();
-       exedge.Next()) // edges not in a face
+  for (exedge.Init(myOriginalShape, TopAbs_EDGE, TopAbs_FACE); exedge.More(); exedge.Next())
     B.Add(myOutLinedShape, exedge.Current());
 }

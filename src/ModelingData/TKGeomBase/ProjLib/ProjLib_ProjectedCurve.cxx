@@ -31,8 +31,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ProjLib_ProjectedCurve, Adaptor2d_Curve2d)
 
-//=================================================================================================
-
 static double ComputeTolU(const occ::handle<Adaptor3d_Surface>& theSurf, const double theTolerance)
 {
   double aTolU = theSurf->UResolution(theTolerance);
@@ -44,8 +42,6 @@ static double ComputeTolU(const occ::handle<Adaptor3d_Surface>& theSurf, const d
   return aTolU;
 }
 
-//=================================================================================================
-
 static double ComputeTolV(const occ::handle<Adaptor3d_Surface>& theSurf, const double theTolerance)
 {
   double aTolV = theSurf->VResolution(theTolerance);
@@ -56,8 +52,6 @@ static double ComputeTolV(const occ::handle<Adaptor3d_Surface>& theSurf, const d
 
   return aTolV;
 }
-
-//=================================================================================================
 
 static bool IsoIsDeg(const Adaptor3d_Surface& S,
                      const double             Param,
@@ -103,8 +97,6 @@ static bool IsoIsDeg(const Adaptor3d_Surface& S,
   return Along;
 }
 
-//=================================================================================================
-
 static void TrimC3d(occ::handle<Adaptor3d_Curve>& myCurve,
                     bool*                         IsTrimmed,
                     const double                  dt,
@@ -136,11 +128,9 @@ static void TrimC3d(occ::handle<Adaptor3d_Curve>& myCurve,
   }
 }
 
-//=================================================================================================
-
 static void ExtendC2d(occ::handle<Geom2d_BSplineCurve>& aRes,
-                      const double /*t*/,
-                      const double /*dt*/,
+                      const double,
+                      const double,
                       const double u1,
                       const double u2,
                       const double v1,
@@ -159,7 +149,7 @@ static void ExtendC2d(occ::handle<Geom2d_BSplineCurve>& aRes,
 
   aRes->D1(theParam, aPBnd, aVBnd);
   aDBnd.SetXY(aVBnd.XY());
-  gp_Lin2d aLin(aPBnd, aDBnd); // line in direction of derivative
+  gp_Lin2d aLin(aPBnd, aDBnd);
 
   gp_Pnt2d thePole;
   gp_Dir2d theBoundDir;
@@ -190,7 +180,7 @@ static void ExtendC2d(occ::handle<Geom2d_BSplineCurve>& aRes,
       break;
     }
   }
-  gp_Lin2d BoundLin(thePole, theBoundDir); // one of the bounds of rectangle
+  gp_Lin2d BoundLin(thePole, theBoundDir);
   double   ParOnLin = 0.;
   if (theBoundDir.IsParallel(aDBnd, 100. * Precision::Angular()))
   {
@@ -207,7 +197,7 @@ static void ExtendC2d(occ::handle<Geom2d_BSplineCurve>& aRes,
 
     double D = U1y * U2x - U1x * U2y;
 
-    ParOnLin = (Uo21y * U1x - Uo21x * U1y) / D; // parameter of intersection point
+    ParOnLin = (Uo21y * U1x - Uo21x * U1y) / D;
   }
 
   occ::handle<Geom2d_Line> aSegLine = new Geom2d_Line(aLin);
@@ -218,8 +208,6 @@ static void ExtendC2d(occ::handle<Geom2d_BSplineCurve>& aRes,
   aCompCurve.Add(aSegment, aTol, anAfter);
   aRes = aCompCurve.BSplineCurve();
 }
-
-//=================================================================================================
 
 static void Project(ProjLib_Projector& P, occ::handle<Adaptor3d_Curve>& C)
 {
@@ -244,14 +232,12 @@ static void Project(ProjLib_Projector& P, occ::handle<Adaptor3d_Curve>& C)
     case GeomAbs_BSplineCurve:
     case GeomAbs_BezierCurve:
     case GeomAbs_OffsetCurve:
-    case GeomAbs_OtherCurve: // try the approximation
+    case GeomAbs_OtherCurve:
       break;
     default:
       throw Standard_NoSuchObject(" ");
   }
 }
-
-//=================================================================================================
 
 ProjLib_ProjectedCurve::ProjLib_ProjectedCurve()
     : myTolerance(Precision::Confusion()),
@@ -263,8 +249,6 @@ ProjLib_ProjectedCurve::ProjLib_ProjectedCurve()
 {
 }
 
-//=================================================================================================
-
 ProjLib_ProjectedCurve::ProjLib_ProjectedCurve(const occ::handle<Adaptor3d_Surface>& S)
     : myTolerance(Precision::Confusion()),
       myDegMin(-1),
@@ -275,8 +259,6 @@ ProjLib_ProjectedCurve::ProjLib_ProjectedCurve(const occ::handle<Adaptor3d_Surfa
 {
   Load(S);
 }
-
-//=================================================================================================
 
 ProjLib_ProjectedCurve::ProjLib_ProjectedCurve(const occ::handle<Adaptor3d_Surface>& S,
                                                const occ::handle<Adaptor3d_Curve>&   C)
@@ -291,8 +273,6 @@ ProjLib_ProjectedCurve::ProjLib_ProjectedCurve(const occ::handle<Adaptor3d_Surfa
   Perform(C);
 }
 
-//=================================================================================================
-
 ProjLib_ProjectedCurve::ProjLib_ProjectedCurve(const occ::handle<Adaptor3d_Surface>& S,
                                                const occ::handle<Adaptor3d_Curve>&   C,
                                                const double                          Tol)
@@ -306,8 +286,6 @@ ProjLib_ProjectedCurve::ProjLib_ProjectedCurve(const occ::handle<Adaptor3d_Surfa
   Load(S);
   Perform(C);
 }
-
-//=================================================================================================
 
 occ::handle<Adaptor2d_Curve2d> ProjLib_ProjectedCurve::ShallowCopy() const
 {
@@ -332,21 +310,15 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ProjectedCurve::ShallowCopy() const
   return aCopy;
 }
 
-//=================================================================================================
-
 void ProjLib_ProjectedCurve::Load(const occ::handle<Adaptor3d_Surface>& S)
 {
   mySurface = S;
 }
 
-//=================================================================================================
-
 void ProjLib_ProjectedCurve::Load(const double theTol)
 {
   myTolerance = theTol;
 }
-
-//=================================================================================================
 
 void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
 {
@@ -400,8 +372,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
       Project(P, myCurve);
       if (P.IsDone())
       {
-        // on met dans la pseudo-periode ( car Sphere n'est pas
-        // periodique en V !)
+
         P.SetInBounds(myCurve->FirstParameter());
       }
       else
@@ -420,7 +391,6 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
         double maxdist = std::max(Pf.Distance(aLoc), Pl.Distance(aLoc));
         TolConf        = std::max(anR * minang, std::abs(anR - maxdist));
 
-        // Surface has pole at V = Vmin and Vmax
         gp_Pnt Pole = mySurface->Value(U1, Vmin);
         TrimC3d(myCurve, IsTrimmed, dt, Pole, SingularCase, 3, TolConf);
         Pole = mySurface->Value(U1, Vmax);
@@ -455,28 +425,28 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
 
       if (IsoIsDeg(S, U1, GeomAbs_IsoU, 0., myTolerance))
       {
-        // Surface has pole at U = Umin
+
         gp_Pnt Pole = mySurface->Value(U1, V1);
         TrimC3d(myCurve, IsTrimmed, dt, Pole, SingularCase, 1, TolConf);
       }
 
       if (IsoIsDeg(S, U2, GeomAbs_IsoU, 0., myTolerance))
       {
-        // Surface has pole at U = Umax
+
         gp_Pnt Pole = mySurface->Value(U2, V1);
         TrimC3d(myCurve, IsTrimmed, dt, Pole, SingularCase, 2, TolConf);
       }
 
       if (IsoIsDeg(S, V1, GeomAbs_IsoV, 0., myTolerance))
       {
-        // Surface has pole at V = Vmin
+
         gp_Pnt Pole = mySurface->Value(U1, V1);
         TrimC3d(myCurve, IsTrimmed, dt, Pole, SingularCase, 3, TolConf);
       }
 
       if (IsoIsDeg(S, V2, GeomAbs_IsoV, 0., myTolerance))
       {
-        // Surface has pole at V = Vmax
+
         gp_Pnt Pole = mySurface->Value(U1, V2);
         TrimC3d(myCurve, IsTrimmed, dt, Pole, SingularCase, 4, TolConf);
       }
@@ -498,13 +468,13 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
         {
           if (IsTrimmed[0])
           {
-            // Add segment before start of curve
+
             f = myCurve->FirstParameter();
             ExtendC2d(aRes, f, -dt, U1, U2, V1, V2, 0, SingularCase[0]);
           }
           if (IsTrimmed[1])
           {
-            // Add segment after end of curve
+
             l = myCurve->LastParameter();
             ExtendC2d(aRes, l, dt, U1, U2, V1, V2, 1, SingularCase[1]);
           }
@@ -528,13 +498,12 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
     default:
     {
       isAnalyticalSurf    = false;
-      double Vsingular[2] = {0.0, 0.0}; // for surfaces of revolution
+      double Vsingular[2] = {0.0, 0.0};
       double f = 0.0, l = 0.0;
       dt = 0.0;
 
       if (mySurface->GetType() == GeomAbs_SurfaceOfRevolution)
       {
-        // Check possible singularity
 
         gp_Pnt P = mySurface->AxeOfRevolution().Location();
         gp_Dir N = mySurface->AxeOfRevolution().Direction();
@@ -551,7 +520,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
           IsTrimmed[0] = true;
           f            = f + dt;
           myCurve      = myCurve->Trim(f, l, Precision::Confusion());
-          // Searching the parameter on the basis curve for surface of revolution
+
           Extrema_ExtPC anExtr(P, *mySurface->BasisCurve(), myTolerance);
           if (anExtr.IsDone())
           {
@@ -567,7 +536,6 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
           }
           else
             Vsingular[0] = ElCLib::Parameter(L, P);
-          // SingularCase[0] = 3;
         }
 
         P = myCurve->Value(l);
@@ -576,7 +544,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
           IsTrimmed[1] = true;
           l            = l - dt;
           myCurve      = myCurve->Trim(f, l, Precision::Confusion());
-          // Searching the parameter on the basis curve for surface of revolution
+
           Extrema_ExtPC anExtr(P, *mySurface->BasisCurve(), myTolerance);
           if (anExtr.IsDone())
           {
@@ -592,7 +560,6 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
           }
           else
             Vsingular[1] = ElCLib::Parameter(L, P);
-          // SingularCase[1] = 4;
         }
       }
 
@@ -608,9 +575,6 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
       occ::handle<ProjLib_HCompProjectedCurve> HProjector =
         new ProjLib_HCompProjectedCurve(mySurface, myCurve, aTolU, aTolV, aMaxDist);
 
-      // Normally, within the framework of ProjLib, the result
-      // must be one and only one curve!
-      // Moreover, this curve must not be a Single point
       int    NbCurves = HProjector->NbCurves();
       double Udeb = 0.0, Ufin = 0.0;
       if (NbCurves > 0)
@@ -621,7 +585,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
       {
         return;
       }
-      // Approximons cette courbe algorithmique.
+
       bool          Only3d     = false;
       bool          Only2d     = true;
       GeomAbs_Shape Continuity = GeomAbs_C1;
@@ -653,7 +617,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
         myTolerance *= (aNewTol2d / aTol2d);
         if (IsTrimmed[0] || IsTrimmed[1])
         {
-          // Treatment only for surface of revolution
+
           double u1, u2, v1, v2;
           u1 = mySurface->FirstUParameter();
           u2 = mySurface->LastUParameter();
@@ -662,12 +626,12 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
 
           if (IsTrimmed[0])
           {
-            // Add segment before start of curve
+
             ExtendC2d(aRes, f, -dt, u1, u2, Vsingular[0], v2, 0, 3);
           }
           if (IsTrimmed[1])
           {
-            // Add segment after end of curve
+
             ExtendC2d(aRes, l, dt, u1, u2, v1, Vsingular[1], 1, 4);
           }
           occ::handle<Geom2d_Curve> NewCurve2d;
@@ -681,7 +645,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
           aRes = occ::down_cast<Geom2d_BSplineCurve>(NewCurve2d);
           if (Continuity == GeomAbs_C0)
           {
-            // try to smoother the Curve GeomAbs_C1.
+
             int    aDeg       = aRes->Degree();
             bool   OK         = true;
             double aSmoothTol = std::max(Precision::Confusion(), aNewTol2d);
@@ -701,7 +665,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
 
   if (!myResult.IsDone() && isAnalyticalSurf)
   {
-    // Use advanced analytical projector if base analytical projection failed.
+
     ProjLib_ComputeApprox Comp;
     Comp.SetTolerance(myTolerance);
     Comp.SetDegree(myDegMin, myDegMax);
@@ -709,7 +673,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
     Comp.SetBndPnt(myBndPnt);
     Comp.Perform(myCurve, mySurface);
     if (Comp.Bezier().IsNull() && Comp.BSpline().IsNull())
-      return; // advanced projector has been failed too
+      return;
     myResult.Done();
     occ::handle<Geom2d_BSplineCurve> aRes;
     if (Comp.BSpline().IsNull())
@@ -724,13 +688,13 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
     {
       if (IsTrimmed[0])
       {
-        // Add segment before start of curve
+
         double f = myCurve->FirstParameter();
         ExtendC2d(aRes, f, -dt, U1, U2, V1, V2, 0, SingularCase[0]);
       }
       if (IsTrimmed[1])
       {
-        // Add segment after end of curve
+
         double l = myCurve->LastParameter();
         ExtendC2d(aRes, l, dt, U1, U2, V1, V2, 1, SingularCase[1]);
       }
@@ -748,7 +712,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
     }
     else
     {
-      // set the type
+
       if (SType == GeomAbs_Plane && CType == GeomAbs_BezierCurve)
       {
         myResult.SetType(GeomAbs_BezierCurve);
@@ -760,7 +724,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
         myResult.SetBSpline(Comp.BSpline());
       }
     }
-    // set the periodicity flag
+
     if (SType == GeomAbs_Plane && CType == GeomAbs_BSplineCurve && myCurve->IsPeriodic())
     {
       myResult.SetPeriodic();
@@ -771,9 +735,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
   bool isPeriodic[] = {mySurface->IsUPeriodic(), mySurface->IsVPeriodic()};
   if (myResult.IsDone() && (isPeriodic[0] || isPeriodic[1]))
   {
-    // Check result curve to be in params space.
 
-    // U and V parameters space correspondingly.
     const double aSurfFirstPar[2] = {mySurface->FirstUParameter(), mySurface->FirstVParameter()};
     double       aSurfPeriod[2]   = {0.0, 0.0};
     if (isPeriodic[0])
@@ -843,12 +805,12 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
 
         if (anIdx == 1)
         {
-          // U param space.
+
           myResult.UFrame(aT1, aT2, aSurfFirstPar[anIdx - 1], aSurfPeriod[anIdx - 1]);
         }
         else
         {
-          // V param space.
+
           myResult.VFrame(aT1, aT2, aSurfFirstPar[anIdx - 1], aSurfPeriod[anIdx - 1]);
         }
       }
@@ -856,78 +818,56 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
   }
 }
 
-//=================================================================================================
-
 void ProjLib_ProjectedCurve::SetDegree(const int theDegMin, const int theDegMax)
 {
   myDegMin = theDegMin;
   myDegMax = theDegMax;
 }
 
-//=================================================================================================
-
 void ProjLib_ProjectedCurve::SetMaxSegments(const int theMaxSegments)
 {
   myMaxSegments = theMaxSegments;
 }
-
-//=================================================================================================
 
 void ProjLib_ProjectedCurve::SetBndPnt(const AppParCurves_Constraint theBndPnt)
 {
   myBndPnt = theBndPnt;
 }
 
-//=================================================================================================
-
 void ProjLib_ProjectedCurve::SetMaxDist(const double theMaxDist)
 {
   myMaxDist = theMaxDist;
 }
-
-//=================================================================================================
 
 const occ::handle<Adaptor3d_Surface>& ProjLib_ProjectedCurve::GetSurface() const
 {
   return mySurface;
 }
 
-//=================================================================================================
-
 const occ::handle<Adaptor3d_Curve>& ProjLib_ProjectedCurve::GetCurve() const
 {
   return myCurve;
 }
-
-//=================================================================================================
 
 double ProjLib_ProjectedCurve::GetTolerance() const
 {
   return myTolerance;
 }
 
-//=================================================================================================
-
 double ProjLib_ProjectedCurve::FirstParameter() const
 {
   return myCurve->FirstParameter();
 }
-
-//=================================================================================================
 
 double ProjLib_ProjectedCurve::LastParameter() const
 {
   return myCurve->LastParameter();
 }
 
-//=================================================================================================
-
 GeomAbs_Shape ProjLib_ProjectedCurve::Continuity() const
 {
   throw Standard_NotImplemented("ProjLib_ProjectedCurve::Continuity() - method is not implemented");
 }
-
-//=================================================================================================
 
 int ProjLib_ProjectedCurve::NbIntervals(const GeomAbs_Shape) const
 {
@@ -935,127 +875,90 @@ int ProjLib_ProjectedCurve::NbIntervals(const GeomAbs_Shape) const
     "ProjLib_ProjectedCurve::NbIntervals() - method is not implemented");
 }
 
-//=================================================================================================
-
-// void ProjLib_ProjectedCurve::Intervals(NCollection_Array1<double>&  T,
 void ProjLib_ProjectedCurve::Intervals(NCollection_Array1<double>&, const GeomAbs_Shape) const
 {
   throw Standard_NotImplemented("ProjLib_ProjectedCurve::Intervals() - method is not implemented");
 }
-
-//=================================================================================================
 
 bool ProjLib_ProjectedCurve::IsClosed() const
 {
   throw Standard_NotImplemented("ProjLib_ProjectedCurve::IsClosed() - method is not implemented");
 }
 
-//=================================================================================================
-
 bool ProjLib_ProjectedCurve::IsPeriodic() const
 {
   return myResult.IsPeriodic();
 }
-
-//=================================================================================================
 
 double ProjLib_ProjectedCurve::Period() const
 {
   throw Standard_NotImplemented("ProjLib_ProjectedCurve::Period() - method is not implemented");
 }
 
-//=================================================================================================
-
 gp_Pnt2d ProjLib_ProjectedCurve::Value(const double) const
 {
   throw Standard_NotImplemented("ProjLib_ProjectedCurve::Value() - method is not implemented");
 }
-
-//=================================================================================================
 
 void ProjLib_ProjectedCurve::D0(const double, gp_Pnt2d&) const
 {
   throw Standard_NotImplemented("ProjLib_ProjectedCurve::D0() - method is not implemented");
 }
 
-//=================================================================================================
-
 void ProjLib_ProjectedCurve::D1(const double, gp_Pnt2d&, gp_Vec2d&) const
 {
   throw Standard_NotImplemented("ProjLib_ProjectedCurve::D1() - method is not implemented");
 }
-
-//=================================================================================================
 
 void ProjLib_ProjectedCurve::D2(const double, gp_Pnt2d&, gp_Vec2d&, gp_Vec2d&) const
 {
   throw Standard_NotImplemented("ProjLib_ProjectedCurve::D2() - method is not implemented");
 }
 
-//=================================================================================================
-
 void ProjLib_ProjectedCurve::D3(const double, gp_Pnt2d&, gp_Vec2d&, gp_Vec2d&, gp_Vec2d&) const
 {
   throw Standard_NotImplemented("ProjLib_ProjectedCurve::D3() - method is not implemented");
 }
-
-//=================================================================================================
 
 gp_Vec2d ProjLib_ProjectedCurve::DN(const double, const int) const
 {
   throw Standard_NotImplemented("ProjLib_ProjectedCurve::DN() - method is not implemented");
 }
 
-//=================================================================================================
-
 double ProjLib_ProjectedCurve::Resolution(const double) const
 {
   throw Standard_NotImplemented("ProjLib_ProjectedCurve::Resolution() - method is not implemented");
 }
-
-//=================================================================================================
 
 GeomAbs_CurveType ProjLib_ProjectedCurve::GetType() const
 {
   return myResult.GetType();
 }
 
-//=================================================================================================
-
 gp_Lin2d ProjLib_ProjectedCurve::Line() const
 {
   return myResult.Line();
 }
-
-//=================================================================================================
 
 gp_Circ2d ProjLib_ProjectedCurve::Circle() const
 {
   return myResult.Circle();
 }
 
-//=================================================================================================
-
 gp_Elips2d ProjLib_ProjectedCurve::Ellipse() const
 {
   return myResult.Ellipse();
 }
-
-//=================================================================================================
 
 gp_Hypr2d ProjLib_ProjectedCurve::Hyperbola() const
 {
   return myResult.Hyperbola();
 }
 
-//=================================================================================================
-
 gp_Parab2d ProjLib_ProjectedCurve::Parabola() const
 {
   return myResult.Parabola();
 }
-
-//=================================================================================================
 
 int ProjLib_ProjectedCurve::Degree() const
 {
@@ -1071,11 +974,8 @@ int ProjLib_ProjectedCurve::Degree() const
     return myResult.Bezier()->Degree();
   }
 
-  // portage WNT
   return 0;
 }
-
-//=================================================================================================
 
 bool ProjLib_ProjectedCurve::IsRational() const
 {
@@ -1090,11 +990,9 @@ bool ProjLib_ProjectedCurve::IsRational() const
   {
     return myResult.Bezier()->IsRational();
   }
-  // portage WNT
+
   return false;
 }
-
-//=================================================================================================
 
 int ProjLib_ProjectedCurve::NbPoles() const
 {
@@ -1110,11 +1008,8 @@ int ProjLib_ProjectedCurve::NbPoles() const
     return myResult.Bezier()->NbPoles();
   }
 
-  // portage WNT
   return 0;
 }
-
-//=================================================================================================
 
 int ProjLib_ProjectedCurve::NbKnots() const
 {
@@ -1123,26 +1018,18 @@ int ProjLib_ProjectedCurve::NbKnots() const
   return myResult.BSpline()->NbKnots();
 }
 
-//=================================================================================================
-
 occ::handle<Geom2d_BezierCurve> ProjLib_ProjectedCurve::Bezier() const
 {
   return myResult.Bezier();
 }
-
-//=================================================================================================
 
 occ::handle<Geom2d_BSplineCurve> ProjLib_ProjectedCurve::BSpline() const
 {
   return myResult.BSpline();
 }
 
-//=================================================================================================
-
 occ::handle<Adaptor2d_Curve2d> ProjLib_ProjectedCurve::Trim
-  //(const double First,
-  // const double Last,
-  // const double Tolerance) const
+
   (const double, const double, const double) const
 {
   throw Standard_NotImplemented("ProjLib_ProjectedCurve::Trim() - method is not implemented");

@@ -1,16 +1,4 @@
-// Author: Ilya Khramov
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OpenGl_PBREnvironment.hpp>
 
@@ -26,8 +14,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_PBREnvironment, OpenGl_NamedResource)
 
-//! Constructor of this class saves necessary OpenGL states components which can be changed by
-//! OpenGl_PBREnvironment. Destructor restores state back.
 class OpenGl_PBREnvironmentSentry
 {
 public:
@@ -69,9 +55,8 @@ private:
     myContext->core11fwd->glDepthMask(GL_FALSE);
     myContext->core11fwd->glDisable(GL_BLEND);
     myContext->core11fwd->glDisable(GL_SCISSOR_TEST);
-    // clang-format off
-    myContext->SetColorMaskRGBA (NCollection_Vec4<bool> (true)); // force writes into all components, including alpha
-    // clang-format on
+
+    myContext->SetColorMaskRGBA(NCollection_Vec4<bool>(true));
   }
 
   void restore()
@@ -124,8 +109,6 @@ private:
   NCollection_Vec4<float>           myClearColor;
 };
 
-//=================================================================================================
-
 occ::handle<OpenGl_PBREnvironment> OpenGl_PBREnvironment::Create(
   const occ::handle<OpenGl_Context>& theCtx,
   unsigned int                       thePow2Size,
@@ -154,8 +137,6 @@ occ::handle<OpenGl_PBREnvironment> OpenGl_PBREnvironment::Create(
   return anEnvironment;
 }
 
-//=================================================================================================
-
 OpenGl_PBREnvironment::OpenGl_PBREnvironment(const occ::handle<OpenGl_Context>& theCtx,
                                              unsigned int                       thePowOf2Size,
                                              unsigned int                   theSpecMapLevelsNumber,
@@ -179,16 +160,12 @@ OpenGl_PBREnvironment::OpenGl_PBREnvironment(const occ::handle<OpenGl_Context>& 
   }
 }
 
-//=================================================================================================
-
 void OpenGl_PBREnvironment::Bind(const occ::handle<OpenGl_Context>& theCtx)
 {
   myIBLMaps[OpenGl_TypeOfIBLMap_DiffuseSH].Bind(theCtx);
   myIBLMaps[OpenGl_TypeOfIBLMap_Specular].Bind(theCtx);
   myIsNeededToBeBound = false;
 }
-
-//=================================================================================================
 
 void OpenGl_PBREnvironment::Unbind(const occ::handle<OpenGl_Context>& theCtx)
 {
@@ -197,16 +174,12 @@ void OpenGl_PBREnvironment::Unbind(const occ::handle<OpenGl_Context>& theCtx)
   myIsNeededToBeBound = true;
 }
 
-//=================================================================================================
-
 void OpenGl_PBREnvironment::Clear(const occ::handle<OpenGl_Context>& theCtx,
                                   const NCollection_Vec3<float>&     theColor)
 {
   OpenGl_PBREnvironmentSentry aSentry(theCtx);
   clear(theCtx, theColor);
 }
-
-//=================================================================================================
 
 void OpenGl_PBREnvironment::Bake(const occ::handle<OpenGl_Context>& theCtx,
                                  const occ::handle<OpenGl_Texture>& theEnvMap,
@@ -232,8 +205,6 @@ void OpenGl_PBREnvironment::Bake(const occ::handle<OpenGl_Context>& theCtx,
        theProbability);
 }
 
-//=================================================================================================
-
 bool OpenGl_PBREnvironment::SizesAreDifferent(unsigned int thePow2Size,
                                               unsigned int theSpecMapLevelsNumber) const
 {
@@ -242,8 +213,6 @@ bool OpenGl_PBREnvironment::SizesAreDifferent(unsigned int thePow2Size,
     std::max(2u, std::min(theSpecMapLevelsNumber, std::max(1u, thePow2Size) + 1));
   return myPow2Size != thePow2Size || mySpecMapLevelsNumber != theSpecMapLevelsNumber;
 }
-
-//=================================================================================================
 
 void OpenGl_PBREnvironment::Release(OpenGl_Context* theCtx)
 {
@@ -261,14 +230,10 @@ void OpenGl_PBREnvironment::Release(OpenGl_Context* theCtx)
   myVBO.Release(theCtx);
 }
 
-//=================================================================================================
-
 OpenGl_PBREnvironment::~OpenGl_PBREnvironment()
 {
   Release(nullptr);
 }
-
-//=================================================================================================
 
 bool OpenGl_PBREnvironment::initTextures(const occ::handle<OpenGl_Context>& theCtx)
 {
@@ -285,8 +250,6 @@ bool OpenGl_PBREnvironment::initTextures(const occ::handle<OpenGl_Context>& theC
   myIBLMaps[OpenGl_TypeOfIBLMap_DiffuseFallback].Sampler()->Parameters()->SetFilter(
     Graphic3d_TOTF_NEAREST);
 
-  // NVIDIA's driver didn't work properly with 3 channel texture for diffuse SH coefficients so that
-  // alpha channel has been added
   if (!myIBLMaps[OpenGl_TypeOfIBLMap_DiffuseSH].Init(
         theCtx,
         OpenGl_TextureFormat::FindFormat(theCtx, Image_Format_RGBAF, false),
@@ -321,8 +284,6 @@ bool OpenGl_PBREnvironment::initTextures(const occ::handle<OpenGl_Context>& theC
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_PBREnvironment::initVAO(const occ::handle<OpenGl_Context>& theCtx)
 {
   const float aVertexPos[] =
@@ -330,15 +291,11 @@ bool OpenGl_PBREnvironment::initVAO(const occ::handle<OpenGl_Context>& theCtx)
   return myVBO.Init(theCtx, 4, 4, aVertexPos);
 }
 
-//=================================================================================================
-
 bool OpenGl_PBREnvironment::initFBO(const occ::handle<OpenGl_Context>& theCtx)
 {
   theCtx->arbFBO->glGenFramebuffers(1, &myFBO);
   return checkFBOComplentess(theCtx);
 }
-
-//=================================================================================================
 
 bool OpenGl_PBREnvironment::processDiffIBLMap(const occ::handle<OpenGl_Context>& theCtx,
                                               const BakingParams*                theDrawParams)
@@ -379,7 +336,7 @@ bool OpenGl_PBREnvironment::processDiffIBLMap(const occ::handle<OpenGl_Context>&
 
     if (!myCanRenderFloat)
     {
-      // unpack RGBA8 values to floats
+
       Image_PixMap anImageIn;
       anImageIn.InitZero(myCanRenderFloat ? Image_Format_RGBAF : Image_Format_RGBA,
                          aViewport[2],
@@ -462,8 +419,6 @@ bool OpenGl_PBREnvironment::processDiffIBLMap(const occ::handle<OpenGl_Context>&
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_PBREnvironment::processSpecIBLMap(const occ::handle<OpenGl_Context>& theCtx,
                                               const BakingParams*                theDrawParams)
 {
@@ -489,7 +444,7 @@ bool OpenGl_PBREnvironment::processSpecIBLMap(const occ::handle<OpenGl_Context>&
   const OpenGl_TextureFormat aTexFormat =
     OpenGl_TextureFormat::FindSizedFormat(theCtx,
                                           myIBLMaps[OpenGl_TypeOfIBLMap_Specular].SizedFormat());
-  // ES 2.0 does not support sized formats and format conversions - them detected from data type
+
   const GLint anIntFormat =
     (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES || theCtx->IsGlGreaterEqual(3, 0))
       ? aTexFormat.InternalFormat()
@@ -566,8 +521,6 @@ bool OpenGl_PBREnvironment::processSpecIBLMap(const occ::handle<OpenGl_Context>&
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_PBREnvironment::checkFBOComplentess(const occ::handle<OpenGl_Context>& theCtx)
 {
   myCanRenderFloat = true;
@@ -579,11 +532,7 @@ bool OpenGl_PBREnvironment::checkFBOComplentess(const occ::handle<OpenGl_Context
                                          0);
   if (theCtx->arbFBO->glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
   {
-    // Some WebGL 1.0 and OpenGL ES 2.0 implementations support float textures which cannot be used
-    // as render targets. This capability could be exposed by
-    // WEBGL_color_buffer_float/EXT_color_buffer_float extensions, but the simplest way is just to
-    // check FBO status. The fallback solution involves rendering into RGBA8 texture with floating
-    // values packed, and using glReadPixels() + conversion + texture upload of computed values.
+
     myCanRenderFloat = false;
     theCtx->arbFBO->glFramebufferTexture2D(
       GL_FRAMEBUFFER,
@@ -622,8 +571,6 @@ bool OpenGl_PBREnvironment::checkFBOComplentess(const occ::handle<OpenGl_Context
   }
   return true;
 }
-
-//=================================================================================================
 
 void OpenGl_PBREnvironment::bake(const occ::handle<OpenGl_Context>& theCtx,
                                  const occ::handle<OpenGl_Texture>& theEnvMap,
@@ -669,8 +616,6 @@ void OpenGl_PBREnvironment::bake(const occ::handle<OpenGl_Context>& theCtx,
 
   theEnvMap->Unbind(theCtx, theCtx->PBREnvLUTTexUnit());
 }
-
-//=================================================================================================
 
 void OpenGl_PBREnvironment::clear(const occ::handle<OpenGl_Context>& theCtx,
                                   const NCollection_Vec3<float>&     theColor)

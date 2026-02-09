@@ -1,26 +1,5 @@
 #pragma once
 
-//! Error codes returned by the ErrorStatus
-//! function on a Storage_Data set of data during a
-//! storage or retrieval operation :
-//! -   Storage_VSOk : no problem has been detected
-//! -   Storage_VSOpenError : an error has
-//! occurred when opening the driver
-//! -   Storage_VSModeError : the driver has not
-//! been opened in the correct mode
-//! -   Storage_VSCloseError : an error has
-//! occurred when closing the driver
-//! -   Storage_VSAlreadyOpen : the driver is already open
-//! -   Storage_VSNotOpen : the driver is not open
-//! -   Storage_VSSectionNotFound : a section
-//! has not been found in the driver
-//! -   Storage_VSWriteError : an error occurred when writing the driver
-//! -   Storage_VSFormatError : the file format is wrong
-//! -   Storage_VSUnknownType : a type is not known from the schema
-//! -   Storage_VSTypeMismatch : trying to read a wrong type
-//! -   Storage_VSInternalError : an internal error has been detected
-//! -   Storage_VSExtCharParityError : an error
-//! has occurred while reading 16 bit character
 enum Storage_Error
 {
   Storage_VSOk,

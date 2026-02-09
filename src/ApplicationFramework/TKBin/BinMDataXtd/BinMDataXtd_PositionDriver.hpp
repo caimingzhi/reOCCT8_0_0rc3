@@ -10,7 +10,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! Position Attribute Driver.
 class BinMDataXtd_PositionDriver : public BinMDF_ADriver
 {
 

@@ -42,7 +42,7 @@ int IGESSolid_ManifoldSolid::NbVoidShells() const
 
 occ::handle<IGESSolid_Shell> IGESSolid_ManifoldSolid::VoidShell(const int index) const
 {
-  occ::handle<IGESSolid_Shell> ashell; // par defaut sera Null
+  occ::handle<IGESSolid_Shell> ashell;
   if (!theVoidShells.IsNull())
     ashell = theVoidShells->Value(index);
   return ashell;
@@ -53,5 +53,5 @@ bool IGESSolid_ManifoldSolid::VoidOrientationFlag(const int index) const
   if (!theOrientFlags.IsNull())
     return (theOrientFlags->Value(index) != 0);
   else
-    return false; // pour retourner qqchose ...
+    return false;
 }

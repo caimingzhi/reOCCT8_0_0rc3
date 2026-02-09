@@ -14,9 +14,6 @@ public:
 
   Standard_EXPORT GeomLib_LogSample(const double A, const double B, const int N);
 
-  //! Returns the value of parameter of the point of
-  //! range Index : A + ((Index-1)/(NbPoints-1))*B.
-  //! An exception is raised if Index<=0 or Index>NbPoints.
   Standard_EXPORT double GetParameter(const int Index) const override;
 
 private:

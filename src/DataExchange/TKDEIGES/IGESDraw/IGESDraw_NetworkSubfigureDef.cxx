@@ -48,7 +48,6 @@ int IGESDraw_NetworkSubfigureDef::NbEntities() const
 occ::handle<IGESData_IGESEntity> IGESDraw_NetworkSubfigureDef::Entity(const int Index) const
 {
   return theEntities->Value(Index);
-  // if Index is out of bound HArray1 will raise OutOfRange exception
 }
 
 int IGESDraw_NetworkSubfigureDef::TypeFlag() const
@@ -81,11 +80,9 @@ bool IGESDraw_NetworkSubfigureDef::HasPointEntity(const int Index) const
   if (thePointEntities.IsNull())
     return false;
   return (!thePointEntities->Value(Index).IsNull());
-  // if Index is out of bound HArray1 will raise OutOfRange exception
 }
 
 occ::handle<IGESDraw_ConnectPoint> IGESDraw_NetworkSubfigureDef::PointEntity(const int Index) const
 {
   return thePointEntities->Value(Index);
-  // if Index is out of bound HArray1 will raise OutOfRange exception
 }

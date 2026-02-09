@@ -17,8 +17,6 @@ public:
 
   Standard_EXPORT static TCollection_AsciiString CreationDate();
 
-  //! Defines format "XmlLOcaf" and registers its read and write drivers
-  //! in the specified application
   Standard_EXPORT static void DefineFormat(const occ::handle<TDocStd_Application>& theApp);
 
   Standard_EXPORT static occ::handle<XmlMDF_ADriverTable> AttributeDrivers(

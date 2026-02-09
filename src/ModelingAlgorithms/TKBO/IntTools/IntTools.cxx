@@ -16,8 +16,6 @@
 
 #include <algorithm>
 
-//=================================================================================================
-
 int IntTools::GetRadius(const BRepAdaptor_Curve& C, const double t1, const double t3, double& aR)
 {
   GeomAbs_CurveType aType = C.GetType();
@@ -41,8 +39,7 @@ int IntTools::GetRadius(const BRepAdaptor_Curve& C, const double t1, const doubl
   P1 = C.Value(t1);
   P2 = C.Value(t2);
   P3 = C.Value(t3);
-  //
-  //
+
   gce_MakeCirc  aMakeCirc(P1, P2, P3);
   gce_ErrorType anErrorType;
 
@@ -53,20 +50,17 @@ int IntTools::GetRadius(const BRepAdaptor_Curve& C, const double t1, const doubl
 
     if (anErrorType == gce_ConfusedPoints || anErrorType == gce_IntersectionError
         || anErrorType == gce_ColinearPoints)
-    { // modified by NIZNHY-PKV Fri Sep 24 09:54:05 2004ft
+    {
       return 2;
     }
     return -1;
   }
-  //
-  //
+
   gp_Circ aCirc = aMakeCirc.Value();
   aR            = aCirc.Radius();
 
   return 0;
 }
-
-//=================================================================================================
 
 int IntTools::PrepareArgs(BRepAdaptor_Curve&          C,
                           const double                Tmax,
@@ -93,7 +87,7 @@ int IntTools::PrepareArgs(BRepAdaptor_Curve&          C,
     tNext = tCurrent + dt;
     if (i == Discret)
       tNext = Tmax;
-    ///////////////////////////////////////////////////
+
     if (!aRFlag)
     {
       continue;
@@ -101,16 +95,16 @@ int IntTools::PrepareArgs(BRepAdaptor_Curve&          C,
     if (aCurveType == GeomAbs_BSplineCurve || aCurveType == GeomAbs_BezierCurve
         || aCurveType == GeomAbs_OffsetCurve || aCurveType == GeomAbs_Ellipse
         || aCurveType == GeomAbs_OtherCurve)
-    { // modified by NIZNHY-PKV Fri Sep 24 09:52:42 2004ft
+    {
       continue;
     }
-    //
+
     ip = IntTools::GetRadius(C, tCurrent, tNext, aR);
     if (ip < 0)
     {
       return 1;
     }
-    //
+
     if (!ip)
     {
       anAbsDeflection = Deflection * aR;
@@ -145,8 +139,6 @@ int IntTools::PrepareArgs(BRepAdaptor_Curve&          C,
   return 0;
 }
 
-//=================================================================================================
-
 double IntTools::Length(const TopoDS_Edge& anEdge)
 {
   double aLength = 0;
@@ -160,8 +152,6 @@ double IntTools::Length(const TopoDS_Edge& anEdge)
   }
   return aLength;
 }
-
-//=================================================================================================
 
 void IntTools::RemoveIdenticalRoots(NCollection_Sequence<IntTools_Root>& aSR, const double anEpsT)
 {
@@ -183,21 +173,16 @@ void IntTools::RemoveIdenticalRoots(NCollection_Sequence<IntTools_Root>& aSR, co
   }
 }
 
-//=======================================================================
-
 namespace
 {
-  // Auxiliary: comparator function for sorting roots
+
   bool IntTools_RootComparator(const IntTools_Root& theLeft, const IntTools_Root& theRight)
   {
     return theLeft.Root() < theRight.Root();
   }
 } // namespace
 
-//=================================================================================================
-
-void IntTools::SortRoots(NCollection_Sequence<IntTools_Root>& mySequenceOfRoots,
-                         const double /*myEpsT*/)
+void IntTools::SortRoots(NCollection_Sequence<IntTools_Root>& mySequenceOfRoots, const double)
 {
   int j, aNbRoots;
 
@@ -218,8 +203,6 @@ void IntTools::SortRoots(NCollection_Sequence<IntTools_Root>& mySequenceOfRoots,
   }
 }
 
-//=================================================================================================
-
 void IntTools::FindRootStates(NCollection_Sequence<IntTools_Root>& mySequenceOfRoots,
                               const double                         myEpsNull)
 {
@@ -237,7 +220,7 @@ void IntTools::FindRootStates(NCollection_Sequence<IntTools_Root>& mySequenceOfR
     aType = aR.Type();
     switch (aType)
     {
-      case 0: // Simple Root
+      case 0:
         if (f1 > 0. && f2 < 0.)
         {
           aR.SetStateBefore(TopAbs_OUT);
@@ -250,12 +233,12 @@ void IntTools::FindRootStates(NCollection_Sequence<IntTools_Root>& mySequenceOfR
         }
         break;
 
-      case 1: // Complete 0;
+      case 1:
         aR.SetStateBefore(TopAbs_ON);
         aR.SetStateAfter(TopAbs_ON);
         break;
 
-      case 2: // Smart;
+      case 2:
         absf2 = fabs(f2);
         if (absf2 < myEpsNull)
         {
@@ -285,7 +268,7 @@ void IntTools::FindRootStates(NCollection_Sequence<IntTools_Root>& mySequenceOfR
 
       default:
         break;
-    } // switch (aType)
+    }
   }
 }
 
@@ -296,8 +279,6 @@ void IntTools::FindRootStates(NCollection_Sequence<IntTools_Root>& mySequenceOfR
 #include <gp_Hypr.hpp>
 #include <gp_Parab.hpp>
 #include <GeomAPI_ProjectPointOnCurve.hpp>
-
-//=================================================================================================
 
 int IntTools::Parameter(const gp_Pnt& aP, const occ::handle<Geom_Curve>& aCurve, double& aParameter)
 {

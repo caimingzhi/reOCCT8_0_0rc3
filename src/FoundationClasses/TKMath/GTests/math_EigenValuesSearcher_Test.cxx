@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <math_EigenValuesSearcher.hpp>
 #include <math_Vector.hpp>
@@ -27,7 +16,7 @@
 
 namespace
 {
-  // Helper function to create a tridiagonal matrix from arrays
+
   void createTridiagonalMatrix(const NCollection_Array1<double>& theDiagonal,
                                const NCollection_Array1<double>& theSubdiagonal,
                                math_Matrix&                      theMatrix)
@@ -35,11 +24,9 @@ namespace
     const int aN = theDiagonal.Length();
     theMatrix.Init(0.0);
 
-    // Set diagonal elements
     for (int i = 1; i <= aN; i++)
       theMatrix(i, i) = theDiagonal(i);
 
-    // Set sub and super diagonal elements
     for (int i = 2; i <= aN; i++)
     {
       theMatrix(i, i - 1) = theSubdiagonal(i);
@@ -47,7 +34,6 @@ namespace
     }
   }
 
-  // Helper function to verify eigenvalue-eigenvector relationship: A*v = lambda*v
   bool verifyEigenPair(const math_Matrix& theMatrix,
                        const double       theEigenValue,
                        const math_Vector& theEigenVector,
@@ -56,7 +42,6 @@ namespace
     const int   aN = theMatrix.RowNumber();
     math_Vector aResult(1, aN);
 
-    // Compute A*v
     for (int i = 1; i <= aN; i++)
     {
       double aSum = 0.0;
@@ -65,7 +50,6 @@ namespace
       aResult(i) = aSum;
     }
 
-    // Check if A*v ~= lambda*v
     for (int i = 1; i <= aN; i++)
     {
       const double aExpected = theEigenValue * theEigenVector(i);
@@ -76,7 +60,6 @@ namespace
     return true;
   }
 
-  // Helper function to check if eigenvectors are orthogonal
   bool areOrthogonal(const math_Vector& theVec1,
                      const math_Vector& theVec2,
                      const double       theTolerance = 1e-12)
@@ -88,7 +71,6 @@ namespace
     return std::abs(aDotProduct) < theTolerance;
   }
 
-  // Helper function to compute vector norm
   double vectorNorm(const math_Vector& theVector)
   {
     double aNorm = 0.0;
@@ -98,11 +80,10 @@ namespace
   }
 } // namespace
 
-// Test constructor with dimension mismatch
 TEST(math_EigenValuesSearcherTest, ConstructorDimensionMismatch)
 {
   NCollection_Array1<double> aDiagonal(1, 3);
-  NCollection_Array1<double> aSubdiagonal(1, 2); // Wrong size
+  NCollection_Array1<double> aSubdiagonal(1, 2);
 
   aDiagonal.SetValue(1, 1.0);
   aDiagonal.SetValue(2, 2.0);
@@ -113,18 +94,16 @@ TEST(math_EigenValuesSearcherTest, ConstructorDimensionMismatch)
 
   math_EigenValuesSearcher searcher(aDiagonal, aSubdiagonal);
 
-  // Should not be done due to dimension mismatch
   EXPECT_FALSE(searcher.IsDone());
 }
 
-// Test 1x1 matrix (trivial case)
 TEST(math_EigenValuesSearcherTest, OneByOneMatrix)
 {
   NCollection_Array1<double> aDiagonal(1, 1);
   NCollection_Array1<double> aSubdiagonal(1, 1);
 
   aDiagonal.SetValue(1, 5.0);
-  aSubdiagonal.SetValue(1, 0.0); // Not used for 1x1 matrix
+  aSubdiagonal.SetValue(1, 0.0);
 
   math_EigenValuesSearcher searcher(aDiagonal, aSubdiagonal);
 
@@ -137,17 +116,14 @@ TEST(math_EigenValuesSearcherTest, OneByOneMatrix)
   EXPECT_NEAR(eigenvec(1), 1.0, Precision::Confusion());
 }
 
-// Test 2x2 symmetric tridiagonal matrix
 TEST(math_EigenValuesSearcherTest, TwoByTwoMatrix)
 {
   NCollection_Array1<double> aDiagonal(1, 2);
   NCollection_Array1<double> aSubdiagonal(1, 2);
 
-  // Matrix: [2 1]
-  //         [1 3]
   aDiagonal.SetValue(1, 2.0);
   aDiagonal.SetValue(2, 3.0);
-  aSubdiagonal.SetValue(1, 0.0); // Not used
+  aSubdiagonal.SetValue(1, 0.0);
   aSubdiagonal.SetValue(2, 1.0);
 
   math_EigenValuesSearcher searcher(aDiagonal, aSubdiagonal);
@@ -155,49 +131,41 @@ TEST(math_EigenValuesSearcherTest, TwoByTwoMatrix)
   EXPECT_TRUE(searcher.IsDone());
   EXPECT_EQ(searcher.Dimension(), 2);
 
-  // Verify eigenvalues are approximately 0.382 and 4.618
   std::vector<double> eigenvals = {searcher.EigenValue(1), searcher.EigenValue(2)};
   std::sort(eigenvals.begin(), eigenvals.end());
 
-  const double lambda1 = 2.5 - 0.5 * std::sqrt(5.0); // ~= 0.382
-  const double lambda2 = 2.5 + 0.5 * std::sqrt(5.0); // ~= 4.618
+  const double lambda1 = 2.5 - 0.5 * std::sqrt(5.0);
+  const double lambda2 = 2.5 + 0.5 * std::sqrt(5.0);
 
   EXPECT_NEAR(eigenvals[0], lambda1, 1e-10);
   EXPECT_NEAR(eigenvals[1], lambda2, 1e-10);
 
-  // Create original matrix for verification
   math_Matrix originalMatrix(1, 2, 1, 2);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 
-  // Verify eigenvalue-eigenvector relationships
   for (int i = 1; i <= 2; i++)
   {
     const double      eigenval = searcher.EigenValue(i);
     const math_Vector eigenvec = searcher.EigenVector(i);
 
     EXPECT_TRUE(verifyEigenPair(originalMatrix, eigenval, eigenvec, 1e-10));
-    EXPECT_NEAR(vectorNorm(eigenvec), 1.0, 1e-10); // Should be normalized
+    EXPECT_NEAR(vectorNorm(eigenvec), 1.0, 1e-10);
   }
 
-  // Verify eigenvectors are orthogonal
   const math_Vector vec1 = searcher.EigenVector(1);
   const math_Vector vec2 = searcher.EigenVector(2);
   EXPECT_TRUE(areOrthogonal(vec1, vec2, 1e-10));
 }
 
-// Test 3x3 symmetric tridiagonal matrix
 TEST(math_EigenValuesSearcherTest, ThreeByThreeMatrix)
 {
   NCollection_Array1<double> aDiagonal(1, 3);
   NCollection_Array1<double> aSubdiagonal(1, 3);
 
-  // Matrix: [4 1 0]
-  //         [1 4 1]
-  //         [0 1 4]
   aDiagonal.SetValue(1, 4.0);
   aDiagonal.SetValue(2, 4.0);
   aDiagonal.SetValue(3, 4.0);
-  aSubdiagonal.SetValue(1, 0.0); // Not used
+  aSubdiagonal.SetValue(1, 0.0);
   aSubdiagonal.SetValue(2, 1.0);
   aSubdiagonal.SetValue(3, 1.0);
 
@@ -206,11 +174,9 @@ TEST(math_EigenValuesSearcherTest, ThreeByThreeMatrix)
   EXPECT_TRUE(searcher.IsDone());
   EXPECT_EQ(searcher.Dimension(), 3);
 
-  // Create original matrix for verification
   math_Matrix originalMatrix(1, 3, 1, 3);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 
-  // Verify all eigenvalue-eigenvector pairs
   for (int i = 1; i <= 3; i++)
   {
     const double      eigenval = searcher.EigenValue(i);
@@ -220,7 +186,6 @@ TEST(math_EigenValuesSearcherTest, ThreeByThreeMatrix)
     EXPECT_NEAR(vectorNorm(eigenvec), 1.0, 1e-10);
   }
 
-  // Verify orthogonality of eigenvectors
   for (int i = 1; i <= 3; i++)
   {
     for (int j = i + 1; j <= 3; j++)
@@ -232,7 +197,6 @@ TEST(math_EigenValuesSearcherTest, ThreeByThreeMatrix)
   }
 }
 
-// Test diagonal matrix (eigenvalues should be diagonal elements)
 TEST(math_EigenValuesSearcherTest, DiagonalMatrix)
 {
   NCollection_Array1<double> aDiagonal(1, 4);
@@ -243,7 +207,6 @@ TEST(math_EigenValuesSearcherTest, DiagonalMatrix)
   aDiagonal.SetValue(3, 3.0);
   aDiagonal.SetValue(4, 4.0);
 
-  // All subdiagonal elements are zero
   aSubdiagonal.SetValue(1, 0.0);
   aSubdiagonal.SetValue(2, 0.0);
   aSubdiagonal.SetValue(3, 0.0);
@@ -254,7 +217,6 @@ TEST(math_EigenValuesSearcherTest, DiagonalMatrix)
   EXPECT_TRUE(searcher.IsDone());
   EXPECT_EQ(searcher.Dimension(), 4);
 
-  // For a diagonal matrix, eigenvalues should be the diagonal elements
   std::vector<double> eigenvals;
   for (int i = 1; i <= 4; i++)
     eigenvals.push_back(searcher.EigenValue(i));
@@ -267,13 +229,11 @@ TEST(math_EigenValuesSearcherTest, DiagonalMatrix)
   EXPECT_NEAR(eigenvals[3], 4.0, Precision::Confusion());
 }
 
-// Test identity matrix
 TEST(math_EigenValuesSearcherTest, IdentityMatrix)
 {
   NCollection_Array1<double> aDiagonal(1, 3);
   NCollection_Array1<double> aSubdiagonal(1, 3);
 
-  // Identity matrix
   aDiagonal.SetValue(1, 1.0);
   aDiagonal.SetValue(2, 1.0);
   aDiagonal.SetValue(3, 1.0);
@@ -287,21 +247,17 @@ TEST(math_EigenValuesSearcherTest, IdentityMatrix)
   EXPECT_TRUE(searcher.IsDone());
   EXPECT_EQ(searcher.Dimension(), 3);
 
-  // All eigenvalues should be 1.0
   for (int i = 1; i <= 3; i++)
   {
     EXPECT_NEAR(searcher.EigenValue(i), 1.0, Precision::Confusion());
   }
 }
 
-// Test matrix with negative eigenvalues
 TEST(math_EigenValuesSearcherTest, NegativeEigenvalues)
 {
   NCollection_Array1<double> aDiagonal(1, 2);
   NCollection_Array1<double> aSubdiagonal(1, 2);
 
-  // Matrix: [-1  2]
-  //         [ 2 -1]
   aDiagonal.SetValue(1, -1.0);
   aDiagonal.SetValue(2, -1.0);
   aSubdiagonal.SetValue(1, 0.0);
@@ -311,14 +267,12 @@ TEST(math_EigenValuesSearcherTest, NegativeEigenvalues)
 
   EXPECT_TRUE(searcher.IsDone());
 
-  // Eigenvalues should be -3 and 1
   std::vector<double> eigenvals = {searcher.EigenValue(1), searcher.EigenValue(2)};
   std::sort(eigenvals.begin(), eigenvals.end());
 
   EXPECT_NEAR(eigenvals[0], -3.0, 1e-10);
   EXPECT_NEAR(eigenvals[1], 1.0, 1e-10);
 
-  // Create original matrix for verification
   math_Matrix originalMatrix(1, 2, 1, 2);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 
@@ -330,17 +284,15 @@ TEST(math_EigenValuesSearcherTest, NegativeEigenvalues)
   }
 }
 
-// Test larger matrix (5x5)
 TEST(math_EigenValuesSearcherTest, FiveByFiveMatrix)
 {
   NCollection_Array1<double> aDiagonal(1, 5);
   NCollection_Array1<double> aSubdiagonal(1, 5);
 
-  // Create a symmetric tridiagonal matrix with pattern
   for (int i = 1; i <= 5; i++)
     aDiagonal.SetValue(i, 2.0);
 
-  aSubdiagonal.SetValue(1, 0.0); // Not used
+  aSubdiagonal.SetValue(1, 0.0);
   for (int i = 2; i <= 5; i++)
     aSubdiagonal.SetValue(i, -1.0);
 
@@ -349,11 +301,9 @@ TEST(math_EigenValuesSearcherTest, FiveByFiveMatrix)
   EXPECT_TRUE(searcher.IsDone());
   EXPECT_EQ(searcher.Dimension(), 5);
 
-  // Create original matrix for verification
   math_Matrix originalMatrix(1, 5, 1, 5);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 
-  // Verify all eigenvalue-eigenvector pairs
   for (int i = 1; i <= 5; i++)
   {
     const double      eigenval = searcher.EigenValue(i);
@@ -363,16 +313,14 @@ TEST(math_EigenValuesSearcherTest, FiveByFiveMatrix)
     EXPECT_NEAR(vectorNorm(eigenvec), 1.0, 1e-9);
   }
 
-  // Check that all eigenvalues are reasonable
   for (int i = 1; i <= 5; i++)
   {
     const double eigenval = searcher.EigenValue(i);
-    EXPECT_GE(eigenval, 0.0); // All eigenvalues should be non-negative for this matrix
-    EXPECT_LE(eigenval, 4.0); // Should be bounded
+    EXPECT_GE(eigenval, 0.0);
+    EXPECT_LE(eigenval, 4.0);
   }
 }
 
-// Test with very small subdiagonal elements (near singular)
 TEST(math_EigenValuesSearcherTest, SmallSubdiagonalElements)
 {
   NCollection_Array1<double> aDiagonal(1, 3);
@@ -390,7 +338,6 @@ TEST(math_EigenValuesSearcherTest, SmallSubdiagonalElements)
 
   EXPECT_TRUE(searcher.IsDone());
 
-  // Should converge to approximately diagonal values
   std::vector<double> eigenvals;
   for (int i = 1; i <= 3; i++)
     eigenvals.push_back(searcher.EigenValue(i));
@@ -402,15 +349,11 @@ TEST(math_EigenValuesSearcherTest, SmallSubdiagonalElements)
   EXPECT_NEAR(eigenvals[2], 3.0, 1e-10);
 }
 
-// Test with zero diagonal elements
 TEST(math_EigenValuesSearcherTest, ZeroDiagonalElements)
 {
   NCollection_Array1<double> aDiagonal(1, 3);
   NCollection_Array1<double> aSubdiagonal(1, 3);
 
-  // Matrix: [0 1 0]
-  //         [1 0 1]
-  //         [0 1 0]
   aDiagonal.SetValue(1, 0.0);
   aDiagonal.SetValue(2, 0.0);
   aDiagonal.SetValue(3, 0.0);
@@ -424,7 +367,6 @@ TEST(math_EigenValuesSearcherTest, ZeroDiagonalElements)
   EXPECT_TRUE(searcher.IsDone());
   EXPECT_EQ(searcher.Dimension(), 3);
 
-  // Eigenvalues should be -sqrt(2), 0, sqrt(2)
   std::vector<double> eigenvals;
   for (int i = 1; i <= 3; i++)
     eigenvals.push_back(searcher.EigenValue(i));
@@ -436,7 +378,6 @@ TEST(math_EigenValuesSearcherTest, ZeroDiagonalElements)
   EXPECT_NEAR(eigenvals[2], std::sqrt(2.0), 1e-10);
 }
 
-// Test with large diagonal elements (numerical stability)
 TEST(math_EigenValuesSearcherTest, LargeDiagonalElements)
 {
   NCollection_Array1<double> aDiagonal(1, 3);
@@ -454,7 +395,6 @@ TEST(math_EigenValuesSearcherTest, LargeDiagonalElements)
 
   EXPECT_TRUE(searcher.IsDone());
 
-  // Create original matrix for verification
   math_Matrix originalMatrix(1, 3, 1, 3);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 
@@ -468,13 +408,11 @@ TEST(math_EigenValuesSearcherTest, LargeDiagonalElements)
   }
 }
 
-// Test with alternating pattern
 TEST(math_EigenValuesSearcherTest, AlternatingPattern)
 {
   NCollection_Array1<double> aDiagonal(1, 4);
   NCollection_Array1<double> aSubdiagonal(1, 4);
 
-  // Matrix with alternating diagonal pattern
   aDiagonal.SetValue(1, 1.0);
   aDiagonal.SetValue(2, -1.0);
   aDiagonal.SetValue(3, 1.0);
@@ -489,7 +427,6 @@ TEST(math_EigenValuesSearcherTest, AlternatingPattern)
 
   EXPECT_TRUE(searcher.IsDone());
 
-  // Verify eigenvalue-eigenvector relationships
   math_Matrix originalMatrix(1, 4, 1, 4);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 
@@ -502,20 +439,18 @@ TEST(math_EigenValuesSearcherTest, AlternatingPattern)
   }
 }
 
-// Test repeated eigenvalues (multiple eigenvalues)
 TEST(math_EigenValuesSearcherTest, RepeatedEigenvalues)
 {
   NCollection_Array1<double> aDiagonal(1, 4);
   NCollection_Array1<double> aSubdiagonal(1, 4);
 
-  // Matrix designed to have repeated eigenvalues
   aDiagonal.SetValue(1, 2.0);
   aDiagonal.SetValue(2, 2.0);
   aDiagonal.SetValue(3, 2.0);
   aDiagonal.SetValue(4, 2.0);
 
   aSubdiagonal.SetValue(1, 0.0);
-  aSubdiagonal.SetValue(2, 0.0); // Block diagonal structure
+  aSubdiagonal.SetValue(2, 0.0);
   aSubdiagonal.SetValue(3, 0.0);
   aSubdiagonal.SetValue(4, 0.0);
 
@@ -523,14 +458,12 @@ TEST(math_EigenValuesSearcherTest, RepeatedEigenvalues)
 
   EXPECT_TRUE(searcher.IsDone());
 
-  // All eigenvalues should be 2.0
   for (int i = 1; i <= 4; i++)
   {
     EXPECT_NEAR(searcher.EigenValue(i), 2.0, Precision::Confusion());
   }
 }
 
-// Test with very small matrix elements (precision test)
 TEST(math_EigenValuesSearcherTest, VerySmallElements)
 {
   NCollection_Array1<double> aDiagonal(1, 3);
@@ -561,13 +494,11 @@ TEST(math_EigenValuesSearcherTest, VerySmallElements)
   }
 }
 
-// Test antisymmetric subdiagonal pattern
 TEST(math_EigenValuesSearcherTest, AntisymmetricSubdiagonal)
 {
   NCollection_Array1<double> aDiagonal(1, 5);
   NCollection_Array1<double> aSubdiagonal(1, 5);
 
-  // Symmetric tridiagonal with specific pattern
   for (int i = 1; i <= 5; i++)
     aDiagonal.SetValue(i, static_cast<double>(i));
 
@@ -584,7 +515,6 @@ TEST(math_EigenValuesSearcherTest, AntisymmetricSubdiagonal)
   math_Matrix originalMatrix(1, 5, 1, 5);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 
-  // Verify all eigenvalue-eigenvector pairs
   for (int i = 1; i <= 5; i++)
   {
     const double      eigenval = searcher.EigenValue(i);
@@ -593,7 +523,6 @@ TEST(math_EigenValuesSearcherTest, AntisymmetricSubdiagonal)
     EXPECT_TRUE(verifyEigenPair(originalMatrix, eigenval, eigenvec, 1e-9));
   }
 
-  // Verify orthogonality
   for (int i = 1; i <= 5; i++)
   {
     for (int j = i + 1; j <= 5; j++)
@@ -605,14 +534,12 @@ TEST(math_EigenValuesSearcherTest, AntisymmetricSubdiagonal)
   }
 }
 
-// Test Wilkinson matrix (known challenging case)
 TEST(math_EigenValuesSearcherTest, WilkinsonMatrix)
 {
   const int                  n = 5;
   NCollection_Array1<double> aDiagonal(1, n);
   NCollection_Array1<double> aSubdiagonal(1, n);
 
-  // Wilkinson matrix W_n pattern
   const int m = (n - 1) / 2;
   for (int i = 1; i <= n; i++)
   {
@@ -640,7 +567,6 @@ TEST(math_EigenValuesSearcherTest, WilkinsonMatrix)
   }
 }
 
-// Test with mixed positive/negative diagonal
 TEST(math_EigenValuesSearcherTest, MixedSignDiagonal)
 {
   NCollection_Array1<double> aDiagonal(1, 4);
@@ -673,7 +599,6 @@ TEST(math_EigenValuesSearcherTest, MixedSignDiagonal)
     EXPECT_TRUE(verifyEigenPair(originalMatrix, eigenval, eigenvec, 1e-9));
   }
 
-  // Check trace preservation (sum of eigenvalues = sum of diagonal)
   double eigenSum = 0.0, diagSum = 0.0;
   for (int i = 1; i <= 4; i++)
   {
@@ -683,14 +608,12 @@ TEST(math_EigenValuesSearcherTest, MixedSignDiagonal)
   EXPECT_NEAR(eigenSum, diagSum, 1e-9);
 }
 
-// Test maximum size matrix (stress test)
 TEST(math_EigenValuesSearcherTest, LargerMatrix)
 {
   const int                  n = 8;
   NCollection_Array1<double> aDiagonal(1, n);
   NCollection_Array1<double> aSubdiagonal(1, n);
 
-  // Create a more complex pattern
   for (int i = 1; i <= n; i++)
   {
     aDiagonal.SetValue(i, static_cast<double>(i * i));
@@ -710,7 +633,6 @@ TEST(math_EigenValuesSearcherTest, LargerMatrix)
   math_Matrix originalMatrix(1, n, 1, n);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 
-  // Verify all eigenvalue-eigenvector pairs
   for (int i = 1; i <= n; i++)
   {
     const double      eigenval = searcher.EigenValue(i);
@@ -720,7 +642,6 @@ TEST(math_EigenValuesSearcherTest, LargerMatrix)
     EXPECT_NEAR(vectorNorm(eigenvec), 1.0, 1e-8);
   }
 
-  // Test orthogonality for larger matrix
   for (int i = 1; i <= n; i++)
   {
     for (int j = i + 1; j <= n; j++)
@@ -732,7 +653,6 @@ TEST(math_EigenValuesSearcherTest, LargerMatrix)
   }
 }
 
-// Test with rational number patterns
 TEST(math_EigenValuesSearcherTest, RationalNumberPattern)
 {
   NCollection_Array1<double> aDiagonal(1, 4);
@@ -765,7 +685,6 @@ TEST(math_EigenValuesSearcherTest, RationalNumberPattern)
   }
 }
 
-// Test near-degenerate case (eigenvalues very close)
 TEST(math_EigenValuesSearcherTest, NearDegenerateEigenvalues)
 {
   NCollection_Array1<double> aDiagonal(1, 3);
@@ -783,14 +702,12 @@ TEST(math_EigenValuesSearcherTest, NearDegenerateEigenvalues)
 
   EXPECT_TRUE(searcher.IsDone());
 
-  // Should still find distinct eigenvalues despite near-degeneracy
   std::vector<double> eigenvals;
   for (int i = 1; i <= 3; i++)
     eigenvals.push_back(searcher.EigenValue(i));
 
   std::sort(eigenvals.begin(), eigenvals.end());
 
-  // Eigenvalues should be close to but distinct from diagonal values
   EXPECT_NEAR(eigenvals[0], 1.0, 1e-7);
   EXPECT_NEAR(eigenvals[1], 1.0 + 1e-8, 1e-7);
   EXPECT_NEAR(eigenvals[2], 1.0 + 2e-8, 1e-7);
@@ -807,29 +724,25 @@ TEST(math_EigenValuesSearcherTest, NearDegenerateEigenvalues)
   }
 }
 
-// Test deflation condition edge case - subdiagonal element smaller than machine epsilon
 TEST(math_EigenValuesSearcherTest, DeflationConditionPrecision)
 {
   NCollection_Array1<double> aDiagonal(1, 4);
   NCollection_Array1<double> aSubdiagonal(1, 4);
 
-  // Large diagonal elements
   aDiagonal.SetValue(1, 1e6);
   aDiagonal.SetValue(2, 2e6);
   aDiagonal.SetValue(3, 3e6);
   aDiagonal.SetValue(4, 4e6);
 
-  // Subdiagonal elements at machine epsilon level
   aSubdiagonal.SetValue(1, 0.0);
-  aSubdiagonal.SetValue(2, 1e-15); // Should trigger deflation
-  aSubdiagonal.SetValue(3, 2e-15); // Should trigger deflation
-  aSubdiagonal.SetValue(4, 3e-15); // Should trigger deflation
+  aSubdiagonal.SetValue(2, 1e-15);
+  aSubdiagonal.SetValue(3, 2e-15);
+  aSubdiagonal.SetValue(4, 3e-15);
 
   math_EigenValuesSearcher searcher(aDiagonal, aSubdiagonal);
 
   EXPECT_TRUE(searcher.IsDone());
 
-  // Should converge quickly due to deflation
   math_Matrix originalMatrix(1, 4, 1, 4);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 
@@ -841,7 +754,6 @@ TEST(math_EigenValuesSearcherTest, DeflationConditionPrecision)
     EXPECT_TRUE(verifyEigenPair(originalMatrix, eigenval, eigenvec, 1e-9));
   }
 
-  // Eigenvalues should be close to diagonal elements due to small off-diagonal
   std::vector<double> eigenvals;
   for (int i = 1; i <= 4; i++)
     eigenvals.push_back(searcher.EigenValue(i));
@@ -854,7 +766,6 @@ TEST(math_EigenValuesSearcherTest, DeflationConditionPrecision)
   EXPECT_NEAR(eigenvals[3], 4e6, 1e3);
 }
 
-// Test exact zero subdiagonal elements (should deflate immediately)
 TEST(math_EigenValuesSearcherTest, ExactZeroSubdiagonal)
 {
   NCollection_Array1<double> aDiagonal(1, 5);
@@ -868,15 +779,14 @@ TEST(math_EigenValuesSearcherTest, ExactZeroSubdiagonal)
 
   aSubdiagonal.SetValue(1, 0.0);
   aSubdiagonal.SetValue(2, 1.0);
-  aSubdiagonal.SetValue(3, 0.0); // Exact zero - should cause deflation
+  aSubdiagonal.SetValue(3, 0.0);
   aSubdiagonal.SetValue(4, 2.0);
-  aSubdiagonal.SetValue(5, 0.0); // Exact zero - should cause deflation
+  aSubdiagonal.SetValue(5, 0.0);
 
   math_EigenValuesSearcher searcher(aDiagonal, aSubdiagonal);
 
   EXPECT_TRUE(searcher.IsDone());
 
-  // Should handle block structure correctly
   math_Matrix originalMatrix(1, 5, 1, 5);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 
@@ -889,25 +799,22 @@ TEST(math_EigenValuesSearcherTest, ExactZeroSubdiagonal)
   }
 }
 
-// Test convergence behavior with maximum iterations edge case
 TEST(math_EigenValuesSearcherTest, ConvergenceBehavior)
 {
   NCollection_Array1<double> aDiagonal(1, 6);
   NCollection_Array1<double> aSubdiagonal(1, 6);
 
-  // Create a matrix that might require more iterations to converge
   for (int i = 1; i <= 6; i++)
     aDiagonal.SetValue(i, static_cast<double>(i) * 0.1);
 
   aSubdiagonal.SetValue(1, 0.0);
   for (int i = 2; i <= 6; i++)
-    aSubdiagonal.SetValue(i, 0.99); // Large off-diagonal elements
+    aSubdiagonal.SetValue(i, 0.99);
 
   math_EigenValuesSearcher searcher(aDiagonal, aSubdiagonal);
 
   EXPECT_TRUE(searcher.IsDone());
 
-  // Should still converge within maximum iterations
   math_Matrix originalMatrix(1, 6, 1, 6);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 
@@ -920,13 +827,11 @@ TEST(math_EigenValuesSearcherTest, ConvergenceBehavior)
   }
 }
 
-// Test underflow/overflow protection
 TEST(math_EigenValuesSearcherTest, NumericalStability)
 {
   NCollection_Array1<double> aDiagonal(1, 3);
   NCollection_Array1<double> aSubdiagonal(1, 3);
 
-  // Mix of very large and very small values
   aDiagonal.SetValue(1, 1e-100);
   aDiagonal.SetValue(2, 1e100);
   aDiagonal.SetValue(3, 1e-50);
@@ -939,7 +844,6 @@ TEST(math_EigenValuesSearcherTest, NumericalStability)
 
   EXPECT_TRUE(searcher.IsDone());
 
-  // Should handle extreme values without overflow/underflow
   for (int i = 1; i <= 3; i++)
   {
     const double eigenval = searcher.EigenValue(i);
@@ -955,20 +859,18 @@ TEST(math_EigenValuesSearcherTest, NumericalStability)
   }
 }
 
-// Test Wilkinson shift effectiveness
 TEST(math_EigenValuesSearcherTest, WilkinsonShiftAccuracy)
 {
   NCollection_Array1<double> aDiagonal(1, 3);
   NCollection_Array1<double> aSubdiagonal(1, 3);
 
-  // Matrix where Wilkinson shift should provide fast convergence
   aDiagonal.SetValue(1, 1.0);
   aDiagonal.SetValue(2, 2.0);
-  aDiagonal.SetValue(3, 1.0000001); // Very close to first diagonal element
+  aDiagonal.SetValue(3, 1.0000001);
 
   aSubdiagonal.SetValue(1, 0.0);
   aSubdiagonal.SetValue(2, 1.0);
-  aSubdiagonal.SetValue(3, 0.0000001); // Very small
+  aSubdiagonal.SetValue(3, 0.0000001);
 
   math_EigenValuesSearcher searcher(aDiagonal, aSubdiagonal);
 
@@ -986,20 +888,18 @@ TEST(math_EigenValuesSearcherTest, WilkinsonShiftAccuracy)
   }
 }
 
-// Test special case when radius becomes zero in QL step
 TEST(math_EigenValuesSearcherTest, ZeroRadiusHandling)
 {
   NCollection_Array1<double> aDiagonal(1, 4);
   NCollection_Array1<double> aSubdiagonal(1, 4);
 
-  // Configuration that might lead to zero radius in computeHypotenuseLength
   aDiagonal.SetValue(1, 0.0);
   aDiagonal.SetValue(2, 0.0);
   aDiagonal.SetValue(3, 1.0);
   aDiagonal.SetValue(4, 1.0);
 
   aSubdiagonal.SetValue(1, 0.0);
-  aSubdiagonal.SetValue(2, 1e-16); // Very small but non-zero
+  aSubdiagonal.SetValue(2, 1e-16);
   aSubdiagonal.SetValue(3, 1e-16);
   aSubdiagonal.SetValue(4, 0.0);
 
@@ -1019,13 +919,11 @@ TEST(math_EigenValuesSearcherTest, ZeroRadiusHandling)
   }
 }
 
-// Test pathological case with all equal elements
 TEST(math_EigenValuesSearcherTest, PathologicalEqualElements)
 {
   NCollection_Array1<double> aDiagonal(1, 5);
   NCollection_Array1<double> aSubdiagonal(1, 5);
 
-  // All elements equal - degenerate case
   const double value = 42.0;
   for (int i = 1; i <= 5; i++)
     aDiagonal.SetValue(i, value);
@@ -1038,7 +936,6 @@ TEST(math_EigenValuesSearcherTest, PathologicalEqualElements)
 
   EXPECT_TRUE(searcher.IsDone());
 
-  // Algorithm should still work correctly
   math_Matrix originalMatrix(1, 5, 1, 5);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 
@@ -1051,7 +948,6 @@ TEST(math_EigenValuesSearcherTest, PathologicalEqualElements)
   }
 }
 
-// Test matrix with systematically increasing subdiagonal elements
 TEST(math_EigenValuesSearcherTest, IncreasingSubdiagonal)
 {
   NCollection_Array1<double> aDiagonal(1, 6);
@@ -1071,7 +967,6 @@ TEST(math_EigenValuesSearcherTest, IncreasingSubdiagonal)
   math_Matrix originalMatrix(1, 6, 1, 6);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 
-  // Verify all pairs and orthogonality
   for (int i = 1; i <= 6; i++)
   {
     const double      eigenval = searcher.EigenValue(i);
@@ -1081,7 +976,6 @@ TEST(math_EigenValuesSearcherTest, IncreasingSubdiagonal)
     EXPECT_NEAR(vectorNorm(eigenvec), 1.0, 1e-10);
   }
 
-  // Check orthogonality of all eigenvector pairs
   for (int i = 1; i <= 6; i++)
   {
     for (int j = i + 1; j <= 6; j++)
@@ -1093,15 +987,11 @@ TEST(math_EigenValuesSearcherTest, IncreasingSubdiagonal)
   }
 }
 
-// Test to demonstrate and verify the deflation condition behavior
-// This test documents the precision semantics of the deflation test:
-// |e[i]| + (|d[i]| + |d[i+1]|) == |d[i]| + |d[i+1]| in floating-point arithmetic
 TEST(math_EigenValuesSearcherTest, DeflationConditionSemantics)
 {
   NCollection_Array1<double> aDiagonal(1, 3);
   NCollection_Array1<double> aSubdiagonal(1, 3);
 
-  // Test 1: Large diagonal elements with subdiagonal at machine epsilon level
   const double largeDiag1       = 1e8;
   const double largeDiag2       = 2e8;
   const double machEpsilonLevel = largeDiag1 * std::numeric_limits<double>::epsilon();
@@ -1111,23 +1001,18 @@ TEST(math_EigenValuesSearcherTest, DeflationConditionSemantics)
   aDiagonal.SetValue(3, 3e8);
 
   aSubdiagonal.SetValue(1, 0.0);
-  aSubdiagonal.SetValue(
-    2,
-    machEpsilonLevel); // Should trigger deflation due to floating-point precision
-  aSubdiagonal.SetValue(3, machEpsilonLevel * 0.5); // Even smaller, should definitely deflate
+  aSubdiagonal.SetValue(2, machEpsilonLevel);
+  aSubdiagonal.SetValue(3, machEpsilonLevel * 0.5);
 
-  // Verify the mathematical behavior that the deflation condition tests
   const double diagSum       = std::abs(largeDiag1) + std::abs(largeDiag2);
   const double testCondition = machEpsilonLevel + diagSum;
 
-  // This should be true in floating-point arithmetic due to precision limits
   EXPECT_EQ(testCondition, diagSum)
     << "Deflation condition should hold for machine-epsilon level elements";
 
   math_EigenValuesSearcher searcher(aDiagonal, aSubdiagonal);
   EXPECT_TRUE(searcher.IsDone());
 
-  // Should converge efficiently due to deflation
   math_Matrix originalMatrix(1, 3, 1, 3);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 
@@ -1135,18 +1020,16 @@ TEST(math_EigenValuesSearcherTest, DeflationConditionSemantics)
   {
     const double      eigenval = searcher.EigenValue(i);
     const math_Vector eigenvec = searcher.EigenVector(i);
-    // Use looser tolerance for very large eigenvalues
+
     EXPECT_TRUE(verifyEigenPair(originalMatrix, eigenval, eigenvec, 1e-6));
   }
 }
 
-// Test edge case where deflation condition is exactly at the boundary
 TEST(math_EigenValuesSearcherTest, DeflationBoundaryCondition)
 {
   NCollection_Array1<double> aDiagonal(1, 4);
   NCollection_Array1<double> aSubdiagonal(1, 4);
 
-  // Create diagonal elements of different scales
   aDiagonal.SetValue(1, 1.0);
   aDiagonal.SetValue(2, 1000.0);
   aDiagonal.SetValue(3, 1e-6);
@@ -1154,25 +1037,20 @@ TEST(math_EigenValuesSearcherTest, DeflationBoundaryCondition)
 
   aSubdiagonal.SetValue(1, 0.0);
 
-  // Set subdiagonal elements right at the deflation boundary for different scales
   const double eps = std::numeric_limits<double>::epsilon();
 
-  // For first pair: should deflate
   const double sum1 = std::abs(aDiagonal(1)) + std::abs(aDiagonal(2));
-  aSubdiagonal.SetValue(2, sum1 * eps * 0.1); // Below machine epsilon relative to sum
+  aSubdiagonal.SetValue(2, sum1 * eps * 0.1);
 
-  // For second pair: should deflate
   const double sum2 = std::abs(aDiagonal(2)) + std::abs(aDiagonal(3));
   aSubdiagonal.SetValue(3, sum2 * eps * 0.1);
 
-  // For third pair: should deflate
   const double sum3 = std::abs(aDiagonal(3)) + std::abs(aDiagonal(4));
   aSubdiagonal.SetValue(4, sum3 * eps * 0.1);
 
   math_EigenValuesSearcher searcher(aDiagonal, aSubdiagonal);
   EXPECT_TRUE(searcher.IsDone());
 
-  // Verify that algorithm handles the mixed scales correctly
   math_Matrix originalMatrix(1, 4, 1, 4);
   createTridiagonalMatrix(aDiagonal, aSubdiagonal, originalMatrix);
 

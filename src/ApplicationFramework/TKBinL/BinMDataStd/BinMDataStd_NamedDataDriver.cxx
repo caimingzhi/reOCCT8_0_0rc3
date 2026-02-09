@@ -8,25 +8,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_NamedDataDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_NamedDataDriver::BinMDataStd_NamedDataDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_NamedData)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_NamedDataDriver::NewEmpty() const
 {
   return new TDataStd_NamedData();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool BinMDataStd_NamedDataDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                         const occ::handle<TDF_Attribute>& theTarget,
                                         BinObjMgt_RRelocationTable&) const
@@ -38,7 +30,7 @@ bool BinMDataStd_NamedDataDriver::Paste(const BinObjMgt_Persistent&       theSou
   int aLower, anUpper, i;
   if (!(theSource >> aLower >> anUpper))
     return false;
-  //  const int aLength = anUpper - aLower + 1;
+
   if (anUpper < aLower)
     return false;
   if (anUpper | aLower)
@@ -73,7 +65,6 @@ bool BinMDataStd_NamedDataDriver::Paste(const BinObjMgt_Persistent&       theSou
     T->ChangeReals(aReals);
   }
 
-  // strings
   if (!(theSource >> aLower >> anUpper))
     return false;
   if (anUpper < aLower)
@@ -92,7 +83,6 @@ bool BinMDataStd_NamedDataDriver::Paste(const BinObjMgt_Persistent&       theSou
     T->ChangeStrings(aStrings);
   }
 
-  // Bytes
   if (!(theSource >> aLower >> anUpper))
     return false;
   if (anUpper < aLower)
@@ -111,7 +101,6 @@ bool BinMDataStd_NamedDataDriver::Paste(const BinObjMgt_Persistent&       theSou
     T->ChangeBytes(aBytes);
   }
 
-  // arrays of integers
   if (!(theSource >> aLower >> anUpper))
     return false;
   if (anUpper < aLower)
@@ -145,7 +134,6 @@ bool BinMDataStd_NamedDataDriver::Paste(const BinObjMgt_Persistent&       theSou
       T->ChangeArraysOfIntegers(anIntArrays);
   }
 
-  // arrays of reals
   if (!(theSource >> aLower >> anUpper))
     return false;
   if (anUpper < aLower)
@@ -181,10 +169,6 @@ bool BinMDataStd_NamedDataDriver::Paste(const BinObjMgt_Persistent&       theSou
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void BinMDataStd_NamedDataDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
   BinObjMgt_Persistent&             theTarget,
@@ -193,16 +177,15 @@ void BinMDataStd_NamedDataDriver::Paste(
   occ::handle<TDataStd_NamedData> S = occ::down_cast<TDataStd_NamedData>(theSource);
   if (S.IsNull())
     return;
-  //  int i=0;
 
   S->LoadDeferredData();
   if (S->HasIntegers() && !S->GetIntegersContainer().IsEmpty())
   {
-    theTarget.PutInteger(1) << S->GetIntegersContainer().Extent(); // dim
+    theTarget.PutInteger(1) << S->GetIntegersContainer().Extent();
     NCollection_DataMap<TCollection_ExtendedString, int>::Iterator itr(S->GetIntegersContainer());
     for (; itr.More(); itr.Next())
     {
-      theTarget << itr.Key() << itr.Value(); // key - value;
+      theTarget << itr.Key() << itr.Value();
     }
   }
   else
@@ -260,9 +243,9 @@ void BinMDataStd_NamedDataDriver::Paste(
       itr(S->GetArraysOfIntegersContainer());
     for (; itr.More(); itr.Next())
     {
-      theTarget << itr.Key(); // key
+      theTarget << itr.Key();
       const NCollection_Array1<int>& anArr1 = itr.Value()->Array1();
-      theTarget << anArr1.Lower() << anArr1.Upper(); // value Arr1 dimensions
+      theTarget << anArr1.Lower() << anArr1.Upper();
       int* aPtr = (int*)&anArr1(anArr1.Lower());
       theTarget.PutIntArray(aPtr, anArr1.Length());
     }
@@ -274,15 +257,15 @@ void BinMDataStd_NamedDataDriver::Paste(
 
   if (S->HasArraysOfReals() && !S->GetArraysOfRealsContainer().IsEmpty())
   {
-    theTarget.PutInteger(1) << S->GetArraysOfRealsContainer().Extent(); // dim
+    theTarget.PutInteger(1) << S->GetArraysOfRealsContainer().Extent();
     NCollection_DataMap<TCollection_ExtendedString,
                         occ::handle<NCollection_HArray1<double>>>::Iterator
       itr(S->GetArraysOfRealsContainer());
     for (; itr.More(); itr.Next())
     {
-      theTarget << itr.Key(); // key
+      theTarget << itr.Key();
       const NCollection_Array1<double>& anArr1 = itr.Value()->Array1();
-      theTarget << anArr1.Lower() << anArr1.Upper(); // value Arr1 dimensions
+      theTarget << anArr1.Lower() << anArr1.Upper();
       double* aPtr = (double*)&anArr1(anArr1.Lower());
       theTarget.PutRealArray(aPtr, anArr1.Length());
     }

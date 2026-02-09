@@ -1,37 +1,17 @@
 #pragma once
 
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
-
-//! Enumerates built-in meshing algorithms factories implementing IMeshTools_MeshAlgoFactory
-//! interface.
 enum IMeshTools_MeshAlgoType
 {
-  IMeshTools_MeshAlgoType_DEFAULT =
-    -1, //!< use global default (IMeshTools_MeshAlgoType_Watson or CSF_MeshAlgo)
-  IMeshTools_MeshAlgoType_Watson =
-    0, //!< generate 2D Delaunay triangulation based on Watson algorithm (BRepMesh_MeshAlgoFactory)
-  IMeshTools_MeshAlgoType_Delabella, //!< generate 2D Delaunay triangulation based on Delabella
-                                     //!< algorithm (BRepMesh_DelabellaMeshAlgoFactory)
+  IMeshTools_MeshAlgoType_DEFAULT = -1,
+  IMeshTools_MeshAlgoType_Watson  = 0,
+  IMeshTools_MeshAlgoType_Delabella,
 };
 
 #include <Precision.hpp>
 
-//! Structure storing meshing parameters
 struct IMeshTools_Parameters
 {
 
-  //! Default constructor
   IMeshTools_Parameters()
       : MeshAlgo(IMeshTools_MeshAlgoType_DEFAULT),
         Angle(0.5),
@@ -51,62 +31,35 @@ struct IMeshTools_Parameters
   {
   }
 
-  //! Returns factor used to compute default value of MinSize
-  //! (minimum mesh edge length) from deflection
   static double RelMinSize() { return 0.1; }
 
-  //! 2D Delaunay triangulation algorithm factory to use
   IMeshTools_MeshAlgoType MeshAlgo;
 
-  //! Angular deflection used to tessellate the boundary edges
   double Angle;
 
-  //! Linear deflection used to tessellate the boundary edges
   double Deflection;
 
-  //! Angular deflection used to tessellate the face interior
   double AngleInterior;
 
-  //! Linear deflection used to tessellate the face interior
   double DeflectionInterior;
 
-  //! Minimum size parameter limiting size of triangle's edges to prevent
-  //! sinking into amplification in case of distorted curves and surfaces.
   double MinSize;
 
-  //! Switches on/off multi-thread computation
   bool InParallel;
 
-  //! Switches on/off relative computation of edge tolerance
-  //! If true, deflection used for the polygonalisation of each edge will be
-  //! <defle> * Size of Edge. The deflection used for the faces will be the
-  //! maximum deflection of their edges.
   bool Relative;
 
-  //! Mode to take or not to take internal face vertices into account
-  //! in triangulation process
   bool InternalVerticesMode;
 
-  //! Parameter to check the deviation of triangulation and interior of
-  //! the face
   bool ControlSurfaceDeflection;
 
-  // Enables/disables check triggered by ControlSurfaceDeflection flag
-  // for all types of surfaces including analytical.
   bool EnableControlSurfaceDeflectionAllSurfaces;
 
-  //! Cleans temporary data model when algorithm is finished.
   bool CleanModel;
 
-  //! Enables/disables local adjustment of min size depending on edge size.
-  //! Disabled by default.
   bool AdjustMinSize;
 
-  //! Enables/disables usage of shape tolerances for computing face deflection.
-  //! Disabled by default.
   bool ForceFaceDeflection;
 
-  //! Allows/forbids the decrease of the quality of the generated mesh
-  //! over the existing one.
   bool AllowQualityDecrease;
 };

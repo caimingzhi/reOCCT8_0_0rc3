@@ -9,8 +9,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_Point, Draw_Drawable3D)
 
-//=================================================================================================
-
 DrawTrSurf_Point::DrawTrSurf_Point(const gp_Pnt&          P,
                                    const Draw_MarkerShape Shape,
                                    const Draw_Color&      Col)
@@ -20,8 +18,6 @@ DrawTrSurf_Point::DrawTrSurf_Point(const gp_Pnt&          P,
       myColor(Col)
 {
 }
-
-//=================================================================================================
 
 DrawTrSurf_Point::DrawTrSurf_Point(const gp_Pnt2d&        P,
                                    const Draw_MarkerShape Shape,
@@ -33,14 +29,10 @@ DrawTrSurf_Point::DrawTrSurf_Point(const gp_Pnt2d&        P,
 {
 }
 
-//=================================================================================================
-
 bool DrawTrSurf_Point::Is3D() const
 {
   return is3D;
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Point::DrawOn(Draw_Display& dis) const
 {
@@ -51,23 +43,17 @@ void DrawTrSurf_Point::DrawOn(Draw_Display& dis) const
     dis.DrawMarker(Point2d(), myShape);
 }
 
-//=================================================================================================
-
 void DrawTrSurf_Point::Point(const gp_Pnt& P)
 {
   myPoint = P;
   is3D    = true;
 }
 
-//=================================================================================================
-
 void DrawTrSurf_Point::Point2d(const gp_Pnt2d& P)
 {
   myPoint.SetCoord(P.X(), P.Y(), 0);
   is3D = false;
 }
-
-//=================================================================================================
 
 occ::handle<Draw_Drawable3D> DrawTrSurf_Point::Copy() const
 {
@@ -79,8 +65,6 @@ occ::handle<Draw_Drawable3D> DrawTrSurf_Point::Copy() const
 
   return P;
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Point::Dump(Standard_OStream& S) const
 {
@@ -103,8 +87,6 @@ void DrawTrSurf_Point::Dump(Standard_OStream& S) const
   S.precision(prec);
 #endif
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Point::Save(Standard_OStream& theStream) const
 {
@@ -132,8 +114,6 @@ void DrawTrSurf_Point::Save(Standard_OStream& theStream) const
 #endif
 }
 
-//=================================================================================================
-
 occ::handle<Draw_Drawable3D> DrawTrSurf_Point::Restore(Standard_IStream& theStream)
 {
   const DrawTrSurf_Params& aParams = DrawTrSurf::Parameters();
@@ -159,8 +139,6 @@ occ::handle<Draw_Drawable3D> DrawTrSurf_Point::Restore(Standard_IStream& theStre
   }
   return aDrawPoint;
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Point::Whatis(Draw_Interpretor& S) const
 {

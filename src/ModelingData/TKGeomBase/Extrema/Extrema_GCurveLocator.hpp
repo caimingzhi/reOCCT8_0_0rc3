@@ -7,26 +7,12 @@
 
 #include <cmath>
 
-//! Template class for locating the closest point on a curve to a given point.
-//! Among a set of sampled points on the curve, finds the one closest to the target.
-//!
-//! @tparam TheCurve the curve type
-//! @tparam TheCurveTool the curve tool providing curve operations
-//! @tparam ThePOnC the point-on-curve type
-//! @tparam ThePoint the point type (gp_Pnt or gp_Pnt2d)
 template <typename TheCurve, typename TheCurveTool, typename ThePOnC, typename ThePoint>
 class Extrema_GCurveLocator
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Among a set of points {C(ui), i=1,NbU}, locate the point
-  //! P=C(uj) such that:
-  //! distance(P,C) = Min{distance(P,C(ui))}
-  //! @param theP the target point
-  //! @param theC the curve to sample
-  //! @param theNbU the number of sample points
-  //! @param thePapp the result point on curve
   static void Locate(const ThePoint& theP, const TheCurve& theC, const int theNbU, ThePOnC& thePapp)
   {
     if (theNbU < 2)
@@ -56,16 +42,6 @@ public:
     thePapp.SetValues(aUMin, aPntMin);
   }
 
-  //! Among a set of points {C(ui), i=1,NbU}, locate the point
-  //! P=C(uj) such that:
-  //! distance(P,C) = Min{distance(P,C(ui))}
-  //! The search is done between theUmin and theUsup.
-  //! @param theP the target point
-  //! @param theC the curve to sample
-  //! @param theNbU the number of sample points
-  //! @param theUmin the minimum parameter value
-  //! @param theUsup the maximum parameter value
-  //! @param thePapp the result point on curve
   static void Locate(const ThePoint& theP,
                      const TheCurve& theC,
                      const int       theNbU,

@@ -5,23 +5,17 @@
 
 #define INITDEFLE Precision::PConfusion() * 100.
 
-//=================================================================================================
-
 IntPatch_PolyLine::IntPatch_PolyLine()
     : IntPatch_Polygo(INITDEFLE),
       onfirst(false)
 {
 }
 
-//=================================================================================================
-
 IntPatch_PolyLine::IntPatch_PolyLine(const double InitDefle)
     : IntPatch_Polygo(InitDefle),
       onfirst(false)
 {
 }
-
-//=================================================================================================
 
 void IntPatch_PolyLine::SetWLine(const bool OnFirst, const occ::handle<IntPatch_WLine>& Line)
 {
@@ -31,8 +25,6 @@ void IntPatch_PolyLine::SetWLine(const bool OnFirst, const occ::handle<IntPatch_
   Prepare();
 }
 
-//=================================================================================================
-
 void IntPatch_PolyLine::SetRLine(const bool OnFirst, const occ::handle<IntPatch_RLine>& Line)
 {
   typ     = IntPatch_Restriction;
@@ -40,8 +32,6 @@ void IntPatch_PolyLine::SetRLine(const bool OnFirst, const occ::handle<IntPatch_
   onfirst = OnFirst;
   Prepare();
 }
-
-//=================================================================================================
 
 void IntPatch_PolyLine::Prepare()
 {
@@ -70,42 +60,42 @@ void IntPatch_PolyLine::Prepare()
         d_2 = eps_2;
       if (d_2 > myError * myError)
       {
-        // try to compute deflection more precisely using parabola interpolation
+
         gp_XY  V23 = P3.XY() - P2.XY();
         double d12 = V12.Modulus(), d23 = V23.Modulus();
-        // compute parameter of P2 (assume parameters of P1,P3 are 0,1)
+
         double tm = d12 / (d12 + d23);
         if (tm > 0.1 && tm < 0.9)
         {
           tm -= (tm - 0.5) * 0.6;
           double tm1mtm = tm * (1 - tm);
-          // coefficients of parabola
+
           double Ax = (tm * V13.X() - V12.X()) / tm1mtm;
           double Bx = (V12.X() - tm * tm * V13.X()) / tm1mtm;
           double Cx = P1.X();
           double Ay = (tm * V13.Y() - V12.Y()) / tm1mtm;
           double By = (V12.Y() - tm * tm * V13.Y()) / tm1mtm;
           double Cy = P1.Y();
-          // equations of lines P1-P2 and P2-P3
+
           double A1 = V12.Y() / d12;
           double B1 = -V12.X() / d12;
           double C1 = (P2.X() * P1.Y() - P1.X() * P2.Y()) / d12;
           double A2 = V23.Y() / d23;
           double B2 = -V23.X() / d23;
           double C2 = (P3.X() * P2.Y() - P2.X() * P3.Y()) / d23;
-          // points on parabola with max deflection
+
           double t1  = -0.5 * (A1 * Bx + B1 * By) / (A1 * Ax + B1 * Ay);
           double t2  = -0.5 * (A2 * Bx + B2 * By) / (A2 * Ax + B2 * Ay);
           double xt1 = Ax * t1 * t1 + Bx * t1 + Cx;
           double yt1 = Ay * t1 * t1 + By * t1 + Cy;
           double xt2 = Ax * t2 * t2 + Bx * t2 + Cx;
           double yt2 = Ay * t2 * t2 + By * t2 + Cy;
-          // max deflection on segments P1-P2 and P2-P3
+
           double d1 = std::abs(A1 * xt1 + B1 * yt1 + C1);
           double d2 = std::abs(A2 * xt2 + B2 * yt2 + C2);
           if (d2 > d1)
             d1 = d2;
-          // select min deflection from linear and parabolic ones
+
           if (d1 * d1 < d_2)
             d_2 = d1 * d1;
         }
@@ -120,21 +110,15 @@ void IntPatch_PolyLine::Prepare()
   myBox.Enlarge(myError);
 }
 
-//=================================================================================================
-
 void IntPatch_PolyLine::ResetError()
 {
   myError = INITDEFLE;
 }
 
-//=================================================================================================
-
 int IntPatch_PolyLine::NbPoints() const
 {
   return (typ == IntPatch_Walking ? wpoly->NbPnts() : rpoly->NbPnts());
 }
-
-//=================================================================================================
 
 gp_Pnt2d IntPatch_PolyLine::Point(const int Index) const
 {

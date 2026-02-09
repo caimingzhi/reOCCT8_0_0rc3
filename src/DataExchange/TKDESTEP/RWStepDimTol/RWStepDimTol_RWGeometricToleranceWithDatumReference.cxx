@@ -9,12 +9,8 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWGeometricToleranceWithDatumReference::
   RWStepDimTol_RWGeometricToleranceWithDatumReference() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWGeometricToleranceWithDatumReference::ReadStep(
   const occ::handle<StepData_StepReaderData>&                         data,
@@ -22,11 +18,9 @@ void RWStepDimTol_RWGeometricToleranceWithDatumReference::ReadStep(
   occ::handle<Interface_Check>&                                       ach,
   const occ::handle<StepDimTol_GeometricToleranceWithDatumReference>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 5, ach, "geometric_tolerance_with_datum_reference"))
     return;
-
-  // Inherited fields of GeometricTolerance
 
   occ::handle<TCollection_HAsciiString> aGeometricTolerance_Name;
   data->ReadString(num, 1, "geometric_tolerance.name", ach, aGeometricTolerance_Name);
@@ -49,8 +43,6 @@ void RWStepDimTol_RWGeometricToleranceWithDatumReference::ReadStep(
                    ach,
                    aGeometricTolerance_TolerancedShapeAspect);
 
-  // Own fields of GeometricToleranceWithDatumReference
-
   occ::handle<NCollection_HArray1<StepDimTol_DatumSystemOrReference>> aDatumSystem;
   int                                                                 sub5 = 0;
   if (data->ReadSubList(num, 5, "datum_system", ach, sub5))
@@ -66,7 +58,6 @@ void RWStepDimTol_RWGeometricToleranceWithDatumReference::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aGeometricTolerance_Name,
             aGeometricTolerance_Description,
             aGeometricTolerance_Magnitude,
@@ -74,14 +65,10 @@ void RWStepDimTol_RWGeometricToleranceWithDatumReference::ReadStep(
             aDatumSystem);
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWGeometricToleranceWithDatumReference::WriteStep(
   StepData_StepWriter&                                                SW,
   const occ::handle<StepDimTol_GeometricToleranceWithDatumReference>& ent) const
 {
-
-  // Inherited fields of GeometricTolerance
 
   SW.Send(ent->StepDimTol_GeometricTolerance::Name());
 
@@ -90,8 +77,6 @@ void RWStepDimTol_RWGeometricToleranceWithDatumReference::WriteStep(
   SW.Send(ent->StepDimTol_GeometricTolerance::Magnitude());
 
   SW.Send(ent->StepDimTol_GeometricTolerance::TolerancedShapeAspect().Value());
-
-  // Own fields of GeometricToleranceWithDatumReference
 
   SW.OpenSub();
   for (int i4 = 1; i4 <= ent->DatumSystemAP242()->Length(); i4++)
@@ -102,20 +87,14 @@ void RWStepDimTol_RWGeometricToleranceWithDatumReference::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWGeometricToleranceWithDatumReference::Share(
   const occ::handle<StepDimTol_GeometricToleranceWithDatumReference>& ent,
   Interface_EntityIterator&                                           iter) const
 {
 
-  // Inherited fields of GeometricTolerance
-
   iter.AddItem(ent->StepDimTol_GeometricTolerance::Magnitude());
 
   iter.AddItem(ent->StepDimTol_GeometricTolerance::TolerancedShapeAspect().Value());
-
-  // Own fields of GeometricToleranceWithDatumReference
 
   for (int i3 = 1; i3 <= ent->DatumSystemAP242()->Length(); i3++)
   {

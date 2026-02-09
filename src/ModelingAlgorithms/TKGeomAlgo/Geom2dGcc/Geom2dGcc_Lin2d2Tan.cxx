@@ -12,7 +12,6 @@
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
 
-//  Modified by Sergey KHROMOV - Wed Oct 16 11:44:41 2002 Begin
 Geom2dGcc_Lin2d2Tan::Geom2dGcc_Lin2d2Tan(const Geom2dGcc_QualifiedCurve& Qualified1,
                                          const Geom2dGcc_QualifiedCurve& Qualified2,
                                          const double                    Tolang)
@@ -33,10 +32,6 @@ Geom2dGcc_Lin2d2Tan::Geom2dGcc_Lin2d2Tan(const Geom2dGcc_QualifiedCurve& Qualifi
   GeomAbs_CurveType                Type1 = C1.GetType();
   GeomAbs_CurveType                Type2 = C2.GetType();
 
-  //=============================================================================
-  //                            Appel a GccAna.                                 +
-  //=============================================================================
-
   NbrSol = 0;
   if (Type1 == GeomAbs_Circle && Type2 == GeomAbs_Circle)
   {
@@ -48,10 +43,10 @@ Geom2dGcc_Lin2d2Tan::Geom2dGcc_Lin2d2Tan(const Geom2dGcc_QualifiedCurve& Qualifi
     GccEnt_QualifiedCirc       Qc2 = GccEnt_QualifiedCirc(c2, Qualified2.Qualifier());
     GccAna_Lin2d2Tan           Lin(Qc1, Qc2, Tolang);
     WellDone = Lin.IsDone();
-    //  Modified by Sergey KHROMOV - Thu Apr  5 17:50:48 2001 Begin
+
     if (WellDone)
     {
-      //  Modified by Sergey KHROMOV - Thu Apr  5 17:50:49 2001 End
+
       NbrSol = Lin.NbSolutions();
       for (int i = 1; i <= NbrSol; i++)
       {
@@ -118,10 +113,6 @@ Geom2dGcc_Lin2d2Tan::Geom2dGcc_Lin2d2Tan(const Geom2dGcc_QualifiedCurve& Qualifi
   const occ::handle<Geom2d_Curve>& CC1   = C1.Curve();
   GeomAbs_CurveType                Type1 = C1.GetType();
 
-  //=============================================================================
-  //                            Appel a GccAna.                                 +
-  //=============================================================================
-
   NbrSol = 0;
   if (Type1 == GeomAbs_Circle)
   {
@@ -170,8 +161,6 @@ Geom2dGcc_Lin2d2Tan::Geom2dGcc_Lin2d2Tan(const Geom2dGcc_QualifiedCurve& Qualifi
   }
 }
 
-//  Modified by Sergey KHROMOV - Wed Oct 16 11:44:41 2002 End
-
 Geom2dGcc_Lin2d2Tan::Geom2dGcc_Lin2d2Tan(const Geom2dGcc_QualifiedCurve& Qualified1,
                                          const Geom2dGcc_QualifiedCurve& Qualified2,
                                          const double                    Tolang,
@@ -194,10 +183,6 @@ Geom2dGcc_Lin2d2Tan::Geom2dGcc_Lin2d2Tan(const Geom2dGcc_QualifiedCurve& Qualifi
   GeomAbs_CurveType                Type1 = C1.GetType();
   GeomAbs_CurveType                Type2 = C2.GetType();
 
-  //=============================================================================
-  //                            Appel a GccAna.                                 +
-  //=============================================================================
-
   NbrSol = 0;
   if (Type1 == GeomAbs_Circle && Type2 == GeomAbs_Circle)
   {
@@ -209,10 +194,10 @@ Geom2dGcc_Lin2d2Tan::Geom2dGcc_Lin2d2Tan(const Geom2dGcc_QualifiedCurve& Qualifi
     GccEnt_QualifiedCirc       Qc2 = GccEnt_QualifiedCirc(c2, Qualified2.Qualifier());
     GccAna_Lin2d2Tan           Lin(Qc1, Qc2, Tolang);
     WellDone = Lin.IsDone();
-    //  Modified by Sergey KHROMOV - Thu Apr  5 17:50:48 2001 Begin
+
     if (WellDone)
     {
-      //  Modified by Sergey KHROMOV - Thu Apr  5 17:50:49 2001 End
+
       NbrSol = Lin.NbSolutions();
       for (int i = 1; i <= NbrSol; i++)
       {
@@ -229,10 +214,10 @@ Geom2dGcc_Lin2d2Tan::Geom2dGcc_Lin2d2Tan(const Geom2dGcc_QualifiedCurve& Qualifi
     Geom2dGcc_QCurve        Qc2(C2, Qualified2.Qualifier());
     Geom2dGcc_Lin2d2TanIter Lin(Qc1, Qc2, Param1, Param2, Tolang);
     WellDone = Lin.IsDone();
-    //  Modified by Sergey KHROMOV - Thu Apr  5 17:51:59 2001 Begin
+
     if (WellDone)
     {
-      //  Modified by Sergey KHROMOV - Thu Apr  5 17:52:00 2001 End
+
       NbrSol    = 1;
       linsol(1) = Lin.ThisSolution();
       Lin.Tangency1(par1sol(1), pararg1(1), pnttg1sol(1));
@@ -260,10 +245,6 @@ Geom2dGcc_Lin2d2Tan::Geom2dGcc_Lin2d2Tan(const Geom2dGcc_QualifiedCurve& Qualifi
   const occ::handle<Geom2d_Curve>& CC1   = C1.Curve();
   GeomAbs_CurveType                Type1 = C1.GetType();
 
-  //=============================================================================
-  //                            Appel a GccAna.                                 +
-  //=============================================================================
-
   NbrSol = 0;
   if (Type1 == GeomAbs_Circle)
   {
@@ -272,10 +253,10 @@ Geom2dGcc_Lin2d2Tan::Geom2dGcc_Lin2d2Tan(const Geom2dGcc_QualifiedCurve& Qualifi
     GccEnt_QualifiedCirc       Qc1 = GccEnt_QualifiedCirc(c1, Qualified1.Qualifier());
     GccAna_Lin2d2Tan           Lin(Qc1, ThePoint, Tolang);
     WellDone = Lin.IsDone();
-    //  Modified by Sergey KHROMOV - Thu Apr  5 17:52:32 2001 Begin
+
     if (WellDone)
     {
-      //  Modified by Sergey KHROMOV - Thu Apr  5 17:52:34 2001 End
+
       NbrSol = Lin.NbSolutions();
       for (int i = 1; i <= NbrSol; i++)
       {
@@ -291,10 +272,10 @@ Geom2dGcc_Lin2d2Tan::Geom2dGcc_Lin2d2Tan(const Geom2dGcc_QualifiedCurve& Qualifi
     Geom2dGcc_QCurve        Qc1(C1, Qualified1.Qualifier());
     Geom2dGcc_Lin2d2TanIter Lin(Qc1, ThePoint, Param1, Tolang);
     WellDone = Lin.IsDone();
-    //  Modified by Sergey KHROMOV - Thu Apr  5 17:53:01 2001 Begin
+
     if (WellDone)
     {
-      //  Modified by Sergey KHROMOV - Thu Apr  5 17:53:02 2001 End
+
       NbrSol    = 1;
       linsol(1) = Lin.ThisSolution();
       Lin.Tangency1(par1sol(1), pararg1(1), pnttg1sol(1));

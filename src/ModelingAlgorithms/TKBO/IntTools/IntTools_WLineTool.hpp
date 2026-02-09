@@ -9,7 +9,6 @@ class TopoDS_Face;
 class GeomInt_LineConstructor;
 class IntTools_Context;
 
-//! IntTools_WLineTool provides set of static methods related to walking lines.
 class IntTools_WLineTool
 {
 public:

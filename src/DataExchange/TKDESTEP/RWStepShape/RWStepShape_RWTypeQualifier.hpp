@@ -10,7 +10,6 @@ class Interface_Check;
 class StepShape_TypeQualifier;
 class StepData_StepWriter;
 
-//! Read & Write Module for TypeQualifier
 class RWStepShape_RWTypeQualifier
 {
 public:

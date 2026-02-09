@@ -10,7 +10,6 @@ class Interface_Check;
 class StepVisual_CameraModel;
 class StepData_StepWriter;
 
-//! Read & Write Module for CameraModel
 class RWStepVisual_RWCameraModel
 {
 public:

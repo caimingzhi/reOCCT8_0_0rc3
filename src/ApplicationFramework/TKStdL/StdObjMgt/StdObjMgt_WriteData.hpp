@@ -6,13 +6,9 @@
 class StdObjMgt_Persistent;
 class Standard_GUID;
 
-//! Auxiliary data used to write persistent objects to a file.
 class StdObjMgt_WriteData
 {
 public:
-  //! Auxiliary class used to automate begin and end of
-  //! writing object (adding opening and closing parenthesis)
-  //! at constructor and destructor
   class ObjectSentry
   {
   public:

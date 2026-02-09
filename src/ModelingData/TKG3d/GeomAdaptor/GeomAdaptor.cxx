@@ -24,8 +24,6 @@
 #include <Geom_ToroidalSurface.hpp>
 #include <Geom_TrimmedCurve.hpp>
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> GeomAdaptor::MakeCurve(const Adaptor3d_Curve& HC)
 {
   occ::handle<Geom_Curve> C;
@@ -64,7 +62,6 @@ occ::handle<Geom_Curve> GeomAdaptor::MakeCurve(const Adaptor3d_Curve& HC)
       throw Standard_DomainError("GeomAdaptor::MakeCurve : OtherCurve");
   }
 
-  // trim the curve if necassary.
   if ((!C.IsNull() && (HC.FirstParameter() != C->FirstParameter()))
       || (HC.LastParameter() != C->LastParameter()))
   {
@@ -74,8 +71,6 @@ occ::handle<Geom_Curve> GeomAdaptor::MakeCurve(const Adaptor3d_Curve& HC)
 
   return C;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Surface> GeomAdaptor::MakeSurface(const Adaptor3d_Surface& HS,
                                                    const bool               theTrimFlag)
@@ -134,7 +129,6 @@ occ::handle<Geom_Surface> GeomAdaptor::MakeSurface(const Adaptor3d_Surface& HS,
   if (S.IsNull() || !theTrimFlag)
     return S;
 
-  // trim the surface if necassary.
   double U1, U2, V1, V2;
   S->Bounds(U1, U2, V1, V2);
   if ((HS.FirstUParameter() != U1) || (HS.LastUParameter() != U2) || (HS.FirstVParameter() != V1)

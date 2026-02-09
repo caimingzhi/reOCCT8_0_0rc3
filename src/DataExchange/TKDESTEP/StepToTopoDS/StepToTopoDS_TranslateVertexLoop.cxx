@@ -14,18 +14,10 @@
 #include <TopoDS_Wire.hpp>
 #include <Transfer_TransientProcess.hpp>
 
-// #include <BRepAPI.hxx>
-//=================================================================================================
-
 StepToTopoDS_TranslateVertexLoop::StepToTopoDS_TranslateVertexLoop()
     : myError(StepToTopoDS_TranslateVertexLoopOther)
 {
 }
-
-// ============================================================================
-// Method  : StepToTopoDS_TranslateVertexLoop::StepToTopoDS_TranslateVertexLoop
-// Purpose : Constructor with a VertexLoop and a Tool
-// ============================================================================
 
 StepToTopoDS_TranslateVertexLoop::StepToTopoDS_TranslateVertexLoop(
   const occ::handle<StepShape_VertexLoop>& VL,
@@ -36,23 +28,17 @@ StepToTopoDS_TranslateVertexLoop::StepToTopoDS_TranslateVertexLoop(
   Init(VL, T, NMTool, theLocalFactors);
 }
 
-// ============================================================================
-// Method  : Init
-// Purpose : Init  with a VertexLoop and a Tool
-// ============================================================================
-
 void StepToTopoDS_TranslateVertexLoop::Init(const occ::handle<StepShape_VertexLoop>& VL,
                                             StepToTopoDS_Tool&                       aTool,
                                             StepToTopoDS_NMTool&                     NMTool,
                                             const StepData_Factors& theLocalFactors)
 {
-  // A Vertex Loop shall be mapped onto a Vertex + Edge + Wire;
+
   if (!aTool.IsBound(VL))
   {
     BRep_Builder                           B;
     occ::handle<Transfer_TransientProcess> TP = aTool.TransientProcess();
 
-    //: S4136    double preci = BRepAPI::Precision();
     occ::handle<StepShape_Vertex> Vtx;
     TopoDS_Vertex                 V1, V2;
     TopoDS_Edge                   E;
@@ -94,21 +80,11 @@ void StepToTopoDS_TranslateVertexLoop::Init(const occ::handle<StepShape_VertexLo
   }
 }
 
-// ============================================================================
-// Method  : Value
-// Purpose : Return the mapped Shape
-// ============================================================================
-
 const TopoDS_Shape& StepToTopoDS_TranslateVertexLoop::Value() const
 {
   StdFail_NotDone_Raise_if(!done, "StepToTopoDS_TranslateVertexLoop::Value() - no result");
   return myResult;
 }
-
-// ============================================================================
-// Method  : Error
-// Purpose : Return the TranslateVertexLoop Error code
-// ============================================================================
 
 StepToTopoDS_TranslateVertexLoopError StepToTopoDS_TranslateVertexLoop::Error() const
 {

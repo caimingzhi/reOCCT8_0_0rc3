@@ -117,8 +117,6 @@ static void FindLimits(const occ::handle<Adaptor3d_Surface>& surf,
   }
 }
 
-//=================================================================================================
-
 void StdPrs_WFSurface::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                            const occ::handle<Adaptor3d_Surface>&  aSurface,
                            const occ::handle<Prs3d_Drawer>&       aDrawer)
@@ -139,9 +137,6 @@ void StdPrs_WFSurface::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
   Adaptor3d_IsoCurve anIso;
   anIso.Load(aSurface);
 
-  // Trace des frontieres.
-  // *********************
-  //
   if (!(UClosed && VClosed))
   {
     aPresentation->CurrentGroup()->SetPrimitivesAspect(aDrawer->FreeBoundaryAspect()->Aspect());
@@ -170,10 +165,7 @@ void StdPrs_WFSurface::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
       freeCurves.Append(aPntsV2);
     }
   }
-  //
-  // Trace des isoparametriques.
-  // ***************************
-  //
+
   int fin = aDrawer->UIsoAspect()->Number();
   if (fin != 0)
   {
@@ -204,7 +196,7 @@ void StdPrs_WFSurface::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
   }
 
   int nbVertices = 0, nbBounds = 0;
-  // Draw surface via primitive array
+
   if (UIsoCurves.Size() > 0)
   {
     nbBounds = UIsoCurves.Size();

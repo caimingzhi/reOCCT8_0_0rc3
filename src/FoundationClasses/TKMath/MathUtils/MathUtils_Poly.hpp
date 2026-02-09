@@ -5,16 +5,9 @@
 #include <cmath>
 #include <array>
 
-//! Modern math solver utilities.
 namespace MathUtils
 {
 
-  //! Evaluate polynomial using Horner's method.
-  //! Coefficients are ordered as [a0, a1, a2, ...] for P(x) = a0 + a1*x + a2*x^2 + ...
-  //! @param theCoeffs coefficient array (constant term first)
-  //! @param theDegree polynomial degree
-  //! @param theX evaluation point
-  //! @return P(theX)
   inline double EvalPoly(const double* theCoeffs, int theDegree, double theX)
   {
     double aResult = theCoeffs[theDegree];
@@ -25,13 +18,6 @@ namespace MathUtils
     return aResult;
   }
 
-  //! Evaluate polynomial and its derivative using Horner's method.
-  //! Computes both P(x) and P'(x) efficiently in a single pass.
-  //! @param theCoeffs coefficient array (constant term first)
-  //! @param theDegree polynomial degree
-  //! @param theX evaluation point
-  //! @param[out] theValue P(theX)
-  //! @param[out] theDeriv P'(theX)
   inline void EvalPolyDeriv(const double* theCoeffs,
                             int           theDegree,
                             double        theX,
@@ -47,12 +33,6 @@ namespace MathUtils
     }
   }
 
-  //! Evaluate polynomial with coefficients in descending order.
-  //! Coefficients are ordered as [an, a(n-1), ..., a1, a0] for P(x) = an*x^n + ... + a0.
-  //! @param theCoeffs coefficient array (leading term first)
-  //! @param theDegree polynomial degree
-  //! @param theX evaluation point
-  //! @return P(theX)
   inline double EvalPolyDesc(const double* theCoeffs, int theDegree, double theX)
   {
     double aResult = theCoeffs[0];
@@ -63,13 +43,6 @@ namespace MathUtils
     return aResult;
   }
 
-  //! Newton-Raphson refinement for polynomial root.
-  //! Polishes an approximate root to higher precision.
-  //! @param theCoeffs coefficient array (constant term first)
-  //! @param theDegree polynomial degree
-  //! @param theRoot initial root estimate
-  //! @param theMaxIter maximum refinement iterations
-  //! @return refined root value
   inline double RefinePolyRoot(const double* theCoeffs,
                                int           theDegree,
                                double        theRoot,
@@ -98,18 +71,12 @@ namespace MathUtils
     return aX;
   }
 
-  //! Newton-Raphson refinement with coefficients in descending order.
-  //! @param theCoeffs coefficient array (leading term first)
-  //! @param theDegree polynomial degree
-  //! @param theRoot initial root estimate
-  //! @param theMaxIter maximum refinement iterations
-  //! @return refined root value
   inline double RefinePolyRootDesc(const double* theCoeffs,
                                    int           theDegree,
                                    double        theRoot,
                                    int           theMaxIter = 5)
   {
-    // Convert to ascending order for refinement
+
     std::array<double, 5> aAsc;
     for (int i = 0; i <= theDegree; ++i)
     {
@@ -118,9 +85,6 @@ namespace MathUtils
     return RefinePolyRoot(aAsc.data(), theDegree, theRoot, theMaxIter);
   }
 
-  //! Sort roots in ascending order (simple insertion sort for small arrays).
-  //! @param theRoots array of roots
-  //! @param theCount number of roots
   inline void SortRoots(double* theRoots, size_t theCount)
   {
     for (size_t i = 1; i < theCount; ++i)
@@ -136,11 +100,6 @@ namespace MathUtils
     }
   }
 
-  //! Remove duplicate roots within tolerance.
-  //! @param theRoots array of sorted roots
-  //! @param theCount current number of roots
-  //! @param theTolerance tolerance for duplicate detection
-  //! @return new count after removing duplicates
   inline size_t RemoveDuplicateRoots(double* theRoots,
                                      size_t  theCount,
                                      double  theTolerance = 1.0e-10)
@@ -162,14 +121,6 @@ namespace MathUtils
     return aNewCount;
   }
 
-  //! Compute depressed cubic coefficients.
-  //! Transforms x^3 + bx^2 + cx + d to t^3 + pt + q via x = t - b/3.
-  //! @param theB coefficient of x^2 (after dividing by leading coeff)
-  //! @param theC coefficient of x
-  //! @param theD constant term
-  //! @param[out] theP coefficient of t in depressed form
-  //! @param[out] theQ constant term in depressed form
-  //! @param[out] theShift substitution shift (b/3)
   inline void DepressCubic(double  theB,
                            double  theC,
                            double  theD,
@@ -183,16 +134,6 @@ namespace MathUtils
     theQ             = theD - theB * theC / 3.0 + 2.0 * aB2 * theB / 27.0;
   }
 
-  //! Compute depressed quartic coefficients.
-  //! Transforms x^4 + bx^3 + cx^2 + dx + e to t^4 + pt^2 + qt + r via x = t - b/4.
-  //! @param theB coefficient of x^3 (after dividing by leading coeff)
-  //! @param theC coefficient of x^2
-  //! @param theD coefficient of x
-  //! @param theE constant term
-  //! @param[out] theP coefficient of t^2 in depressed form
-  //! @param[out] theQ coefficient of t in depressed form
-  //! @param[out] theR constant term in depressed form
-  //! @param[out] theShift substitution shift (b/4)
   inline void DepressQuartic(double  theB,
                              double  theC,
                              double  theD,

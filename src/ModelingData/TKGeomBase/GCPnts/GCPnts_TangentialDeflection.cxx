@@ -64,8 +64,6 @@ namespace
     }
   }
 
-  // Return number of interval of continuity on which theParam is located.
-  // Last parameter is used to increase search speed.
   static int getIntervalIdx(const double                theParam,
                             NCollection_Array1<double>& theIntervs,
                             const int                   thePreviousIdx)
@@ -73,8 +71,7 @@ namespace
     int anIdx;
     for (anIdx = thePreviousIdx; anIdx < theIntervs.Upper(); anIdx++)
     {
-      if (theParam >= theIntervs(anIdx)
-          && theParam <= theIntervs(anIdx + 1)) // Inside of anIdx interval.
+      if (theParam >= theIntervs(anIdx) && theParam <= theIntervs(anIdx + 1))
       {
         break;
       }
@@ -82,8 +79,6 @@ namespace
     return anIdx;
   }
 } // namespace
-
-//=================================================================================================
 
 GCPnts_TangentialDeflection::GCPnts_TangentialDeflection()
     : myAngularDeflection(0.0),
@@ -95,8 +90,6 @@ GCPnts_TangentialDeflection::GCPnts_TangentialDeflection()
       myFirstu(0.0)
 {
 }
-
-//=================================================================================================
 
 GCPnts_TangentialDeflection::GCPnts_TangentialDeflection(const Adaptor3d_Curve& theC,
                                                          const double theAngularDeflection,
@@ -119,8 +112,6 @@ GCPnts_TangentialDeflection::GCPnts_TangentialDeflection(const Adaptor3d_Curve& 
              theUTol,
              theMinLen);
 }
-
-//=================================================================================================
 
 GCPnts_TangentialDeflection::GCPnts_TangentialDeflection(const Adaptor3d_Curve& theC,
                                                          const double           theFirstParameter,
@@ -148,8 +139,6 @@ GCPnts_TangentialDeflection::GCPnts_TangentialDeflection(const Adaptor3d_Curve& 
              theMinLen);
 }
 
-//=================================================================================================
-
 GCPnts_TangentialDeflection::GCPnts_TangentialDeflection(const Adaptor2d_Curve2d& theC,
                                                          const double theAngularDeflection,
                                                          const double theCurvatureDeflection,
@@ -171,8 +160,6 @@ GCPnts_TangentialDeflection::GCPnts_TangentialDeflection(const Adaptor2d_Curve2d
              theUTol,
              theMinLen);
 }
-
-//=================================================================================================
 
 GCPnts_TangentialDeflection::GCPnts_TangentialDeflection(const Adaptor2d_Curve2d& theC,
                                                          const double             theFirstParameter,
@@ -200,8 +187,6 @@ GCPnts_TangentialDeflection::GCPnts_TangentialDeflection(const Adaptor2d_Curve2d
              theMinLen);
 }
 
-//=================================================================================================
-
 void GCPnts_TangentialDeflection::Initialize(const Adaptor3d_Curve& theC,
                                              const double           theAngularDeflection,
                                              const double           theCurvatureDeflection,
@@ -219,8 +204,6 @@ void GCPnts_TangentialDeflection::Initialize(const Adaptor3d_Curve& theC,
              theMinLen);
 }
 
-//=================================================================================================
-
 void GCPnts_TangentialDeflection::Initialize(const Adaptor2d_Curve2d& theC,
                                              const double             theAngularDeflection,
                                              const double             theCurvatureDeflection,
@@ -237,8 +220,6 @@ void GCPnts_TangentialDeflection::Initialize(const Adaptor2d_Curve2d& theC,
              theUTol,
              theMinLen);
 }
-
-//=================================================================================================
 
 void GCPnts_TangentialDeflection::Initialize(const Adaptor3d_Curve& theC,
                                              const double           theFirstParameter,
@@ -259,8 +240,6 @@ void GCPnts_TangentialDeflection::Initialize(const Adaptor3d_Curve& theC,
              theMinLen);
 }
 
-//=================================================================================================
-
 void GCPnts_TangentialDeflection::Initialize(const Adaptor2d_Curve2d& theC,
                                              const double             theFirstParameter,
                                              const double             theLastParameter,
@@ -279,8 +258,6 @@ void GCPnts_TangentialDeflection::Initialize(const Adaptor2d_Curve2d& theC,
              theUTol,
              theMinLen);
 }
-
-//=================================================================================================
 
 template <class TheCurve>
 void GCPnts_TangentialDeflection::EvaluateDu(const TheCurve& theC,
@@ -304,8 +281,6 @@ void GCPnts_TangentialDeflection::EvaluateDu(const TheCurve& theC,
     }
   }
 }
-
-//=================================================================================================
 
 template <class TheCurve>
 void GCPnts_TangentialDeflection::PerformLinear(const TheCurve& theC)
@@ -331,12 +306,10 @@ void GCPnts_TangentialDeflection::PerformLinear(const TheCurve& theC)
   myPoints.Append(P);
 }
 
-//=================================================================================================
-
 template <class TheCurve>
 void GCPnts_TangentialDeflection::PerformCircular(const TheCurve& theC)
 {
-  // akm 8/01/02 : check the radius before divide by it
+
   double dfR = theC.Circle().Radius();
   double Du  = GCPnts_TangentialDeflection::ArcAngularStep(dfR,
                                                           myCurvatureDeflection,
@@ -344,7 +317,7 @@ void GCPnts_TangentialDeflection::PerformCircular(const TheCurve& theC)
                                                           myMinLen);
 
   const double aDiff = myLastU - myFirstu;
-  // Round up number of points to satisfy curvatureDeflection more precisely
+
   int NbPoints = (int)std::min(std::ceil(aDiff / Du), 1.0e+6);
   NbPoints     = std::max(NbPoints, myMinNbPnts - 1);
   Du           = aDiff / NbPoints;
@@ -363,8 +336,6 @@ void GCPnts_TangentialDeflection::PerformCircular(const TheCurve& theC)
   myParameters.Append(myLastU);
   myPoints.Append(P);
 }
-
-//=================================================================================================
 
 template <class TheCurve>
 void GCPnts_TangentialDeflection::initialize(const TheCurve& theC,
@@ -434,8 +405,6 @@ void GCPnts_TangentialDeflection::initialize(const TheCurve& theC,
   }
 }
 
-//=================================================================================================
-
 int GCPnts_TangentialDeflection::AddPoint(const gp_Pnt& thePnt,
                                           const double  theParam,
                                           const bool    theIsReplace)
@@ -471,8 +440,6 @@ int GCPnts_TangentialDeflection::AddPoint(const gp_Pnt& thePnt,
   return index;
 }
 
-//=================================================================================================
-
 double GCPnts_TangentialDeflection::ArcAngularStep(const double theRadius,
                                                    const double theLinearDeflection,
                                                    const double theAngularDeflection,
@@ -487,7 +454,6 @@ double GCPnts_TangentialDeflection::ArcAngularStep(const double theRadius,
   {
     Du = std::max(1.0 - (theLinearDeflection / theRadius), 0.0);
 
-    // It is not suitable to consider min size greater than 1/4 arc len.
     if (theMinLength > aPrecision)
       aMinSizeAng = std::min(theMinLength / theRadius, M_PI_2);
   }
@@ -495,8 +461,6 @@ double GCPnts_TangentialDeflection::ArcAngularStep(const double theRadius,
   Du = std::max(std::min(Du, theAngularDeflection), aMinSizeAng);
   return Du;
 }
-
-//=================================================================================================
 
 template <class TheCurve>
 void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
@@ -507,7 +471,7 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
   double Du, Dusave, MiddleU, L1, L2;
 
   double           U1   = myFirstu;
-  constexpr double LTol = Precision::Confusion(); // protection longueur nulle
+  constexpr double LTol = Precision::Confusion();
   double           ATol = 1.e-2 * myAngularDeflection;
   if (ATol > 1.e-2)
   {
@@ -520,8 +484,6 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
 
   D0(theC, myLastU, LastPoint);
 
-  // Initialization du calcul
-
   bool NotDone = true;
   Dusave       = (myLastU - myFirstu) * Us3;
   Du           = Dusave;
@@ -529,19 +491,18 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
   myParameters.Append(U1);
   myPoints.Append(CurrentPoint);
 
-  // Used to detect "isLine" current bspline and in Du computation in general handling.
   const int                  NbInterv = theC.NbIntervals(GeomAbs_CN);
   NCollection_Array1<double> Intervs(1, NbInterv + 1);
   theC.Intervals(Intervs, GeomAbs_CN);
 
   if (NotDone || Du > 5. * Dusave)
   {
-    // C'est soit une droite, soit une singularite :
+
     V1 = (LastPoint.XYZ() - CurrentPoint.XYZ());
     L1 = V1.Modulus();
     if (L1 > LTol)
     {
-      // Si c'est une droite on verifie en calculant minNbPoints :
+
       bool IsLine   = true;
       int  NbPoints = (myMinNbPnts > 3) ? myMinNbPnts : 3;
       switch (theC.GetType())
@@ -563,17 +524,16 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
           break;
         }
       }
-      ////
+
       double param = 0.;
       for (i = 1; i <= NbInterv && IsLine; ++i)
       {
-        // Avoid usage intervals out of [myFirstu, myLastU].
+
         if ((Intervs(i + 1) < myFirstu) || (Intervs(i) > myLastU))
         {
           continue;
         }
 
-        // Fix border points in applicable intervals, to avoid be out of target interval.
         if ((Intervs(i) < myFirstu) && (Intervs(i + 1) > myFirstu))
         {
           Intervs(i) = myFirstu;
@@ -608,8 +568,7 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
       }
       else
       {
-        // c'etait une singularite on continue:
-        // Du = Dusave;
+
         EvaluateDu(theC, param, MiddlePoint, Du, NotDone);
       }
     }
@@ -622,8 +581,7 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
       L1 = V1.Modulus();
       if (L1 < LTol)
       {
-        // L1 < LTol C'est une courbe de longueur nulle, calcul termine :
-        // on renvoi un segment de 2 points   (protection)
+
         myParameters.Append(myLastU);
         myPoints.Append(LastPoint);
         return;
@@ -647,11 +605,10 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
     }
   }
 
-  // Traitement normal pour une courbe
   bool   MorePoints = true;
   double U2         = myFirstu;
-  double AngleMax   = myAngularDeflection * 0.5; // because we take the midpoint
-  // Indexes of intervals of U1 and U2, used to handle non-uniform case.
+  double AngleMax   = myAngularDeflection * 0.5;
+
   int    aIdx[2]       = {Intervs.Lower(), Intervs.Lower()};
   bool   isNeedToCheck = false;
   gp_Pnt aPrevPoint    = myPoints.Last();
@@ -661,7 +618,7 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
     aIdx[0] = getIntervalIdx(U1, Intervs, aIdx[0]);
     U2 += Du;
 
-    if (U2 >= myLastU) // Bout de courbe
+    if (U2 >= myLastU)
     {
       U2           = myLastU;
       CurrentPoint = LastPoint;
@@ -670,7 +627,7 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
     }
     else
     {
-      D0(theC, U2, CurrentPoint); // Point suivant
+      D0(theC, U2, CurrentPoint);
     }
 
     double Coef = 0.0, ACoef = 0., FCoef = 0.;
@@ -679,14 +636,14 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
     Correction = true;
     TooSmall   = false;
 
-    while (Correction) // Ajustement Du
+    while (Correction)
     {
       if (isNeedToCheck)
       {
         aIdx[1] = getIntervalIdx(U2, Intervs, aIdx[0]);
-        if (aIdx[1] > aIdx[0]) // Jump to another polynom.
+        if (aIdx[1] > aIdx[0])
         {
-          // Set Du to the smallest value and check deflection on it.
+
           if (Du > (Intervs(aIdx[0] + 1) - Intervs(aIdx[0])) * Us3)
           {
             Du = (Intervs(aIdx[0] + 1) - Intervs(aIdx[0])) * Us3;
@@ -699,16 +656,16 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
           }
         }
       }
-      MiddleU = (U1 + U2) * 0.5; // Verif / au point milieu
+      MiddleU = (U1 + U2) * 0.5;
       D0(theC, MiddleU, MiddlePoint);
 
-      V1 = (CurrentPoint.XYZ() - aPrevPoint.XYZ()); // Critere de fleche
+      V1 = (CurrentPoint.XYZ() - aPrevPoint.XYZ());
       V2 = (MiddlePoint.XYZ() - aPrevPoint.XYZ());
       L1 = V1.Modulus();
 
       FCoef = (L1 > myMinLen) ? V1.CrossMagnitude(V2) / (L1 * myCurvatureDeflection) : 0.0;
 
-      V1 = (CurrentPoint.XYZ() - MiddlePoint.XYZ()); // Critere d'angle
+      V1 = (CurrentPoint.XYZ() - MiddlePoint.XYZ());
       L1 = V1.Modulus();
       L2 = V2.Modulus();
       if (L1 > myMinLen && L2 > myMinLen)
@@ -721,7 +678,6 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
         ACoef = 0.0;
       }
 
-      // On retient le plus penalisant
       Coef = std::max(ACoef, FCoef);
 
       if (isNeedToCheck && Coef < 0.55)
@@ -764,7 +720,7 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
           else
           {
             TooSmall = true;
-            // double UUU2 = U2;
+
             Du += std::min((U2 - U1) * (1. - Coef), Du * Us3);
 
             U2 = U1 + Du;
@@ -807,7 +763,7 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
       {
         if (FCoef > ACoef)
         {
-          // La fleche est critere de decoupage
+
           EvaluateDu(theC, U2, CurrentPoint, Du, NotDone);
           if (NotDone)
           {
@@ -820,7 +776,7 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
         }
         else
         {
-          // L'angle est le critere de decoupage
+
           Du += (Du - Dusave) * (Du / Dusave);
           if (Du > 1.5 * Dusave)
             Du = 1.5 * Dusave;
@@ -847,15 +803,9 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
       Dusave = Du;
     }
   }
-  // Recalage avant dernier point :
+
   i = myPoints.Length() - 1;
-  //  Real d = myPoints (i).Distance (myPoints (i+1));
-  // if (std::abs(myParameters (i) - myParameters (i+1))<= 0.000001 || d < Precision::Confusion()) {
-  //    cout<<"deux points confondus"<<endl;
-  //    myParameters.Remove (i+1);
-  //    myPoints.Remove (i+1);
-  //    i--;
-  //  }
+
   if (i >= 2)
   {
     MiddleU = myParameters(i - 1);
@@ -865,13 +815,7 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
     myPoints.SetValue(i, MiddlePoint);
   }
 
-  //-- On rajoute des points aux milieux des segments si le nombre
-  //-- mini de points n'est pas atteint
-  //--
   int Nbp = myPoints.Length();
-
-  // std::cout << "GCPnts_TangentialDeflection: Number of Points (" << Nbp << " " << myMinNbPnts <<
-  // " )" << std::endl;
 
   while (Nbp < myMinNbPnts)
   {
@@ -884,7 +828,7 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
       Nbp++;
     }
   }
-  // Additional check for intervals
+
   const double MinLen2 = myMinLen * myMinLen;
   const int    MaxNbp  = 10 * Nbp;
   for (i = 1; i < Nbp; ++i)
@@ -897,7 +841,6 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
       continue;
     }
 
-    // Check maximal deflection on interval;
     double dmax = 0.;
     double umax = 0.;
     double amax = 0.;
@@ -915,7 +858,7 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
           myParameters.InsertAfter(i, umax);
           myPoints.InsertAfter(i, MiddlePoint);
           ++Nbp;
-          --i; // To compensate ++i in loop header: i must point to first part of split interval
+          --i;
           if (Nbp > MaxNbp)
           {
             break;
@@ -926,8 +869,6 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
   }
 }
 
-//=================================================================================================
-
 template <class TheCurve>
 void GCPnts_TangentialDeflection::EstimDefl(const TheCurve& theC,
                                             const double    theU1,
@@ -936,12 +877,12 @@ void GCPnts_TangentialDeflection::EstimDefl(const TheCurve& theC,
                                             double&         theUMax)
 {
   const double Du = (myLastU - myFirstu);
-  //
+
   typename GCPnts_TCurveTypes<TheCurve>::DistFunction aFunc(theC, theU1, theU2);
-  //
+
   const int    aNbIter = 100;
   const double aRelTol = std::max(1.e-3, 2. * myUTol / (std::abs(theU1) + std::abs(theU2)));
-  //
+
   math_BrentMinimum anOptLoc(aRelTol, aNbIter, myUTol);
   anOptLoc.Perform(aFunc, theU1, (theU1 + theU2) / 2., theU2);
   if (anOptLoc.IsDone())
@@ -950,21 +891,20 @@ void GCPnts_TangentialDeflection::EstimDefl(const TheCurve& theC,
     theUMax    = anOptLoc.Location();
     return;
   }
-  //
+
   math_Vector aLowBorder(1, 1), aUppBorder(1, 1), aSteps(1, 1);
   aSteps(1)              = std::max(0.1 * Du, 100. * myUTol);
   const int aNbParticles = std::max(8, RealToInt(32 * (theU2 - theU1) / Du));
   aLowBorder(1)          = theU1;
   aUppBorder(1)          = theU2;
-  //
-  //
+
   double                                                aValue = 0.0;
   math_Vector                                           aT(1, 1);
   typename GCPnts_TCurveTypes<TheCurve>::DistFunctionMV aFuncMV(aFunc);
 
   math_PSO aFinder(&aFuncMV, aLowBorder, aUppBorder, aSteps, aNbParticles);
   aFinder.Perform(aSteps, aValue, aT);
-  //
+
   anOptLoc.Perform(aFunc,
                    std::max(aT(1) - aSteps(1), theU1),
                    aT(1),

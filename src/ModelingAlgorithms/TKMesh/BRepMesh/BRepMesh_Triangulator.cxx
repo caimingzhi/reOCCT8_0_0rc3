@@ -1,17 +1,4 @@
-// Created: 2017-12-28
-//
-// Copyright (c) 2017 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRepMesh_Triangulator.hpp>
 #include <Precision.hpp>
@@ -27,7 +14,6 @@
 
 namespace
 {
-  //=================================================================================================
 
   inline int wireNodesNb(const NCollection_List<NCollection_Sequence<int>>& theWires)
   {
@@ -41,8 +27,6 @@ namespace
     return nbNodes;
   }
 
-  //=================================================================================================
-
   inline void appendTriangle(const int                        theNode1,
                              const int                        theNode2,
                              const int                        theNode3,
@@ -53,8 +37,6 @@ namespace
     thePolyTriangles.Append(aT1);
   }
 } // namespace
-
-//=================================================================================================
 
 occ::handle<Poly_Triangulation> BRepMesh_Triangulator::ToPolyTriangulation(
   const NCollection_Array1<gp_Pnt>&      theNodes,
@@ -70,8 +52,6 @@ occ::handle<Poly_Triangulation> BRepMesh_Triangulator::ToPolyTriangulation(
   return new Poly_Triangulation(theNodes, aTriangles);
 }
 
-//=================================================================================================
-
 BRepMesh_Triangulator::BRepMesh_Triangulator(
   const NCollection_Vector<gp_XYZ>&                  theXYZs,
   const NCollection_List<NCollection_Sequence<int>>& theWires,
@@ -81,8 +61,6 @@ BRepMesh_Triangulator::BRepMesh_Triangulator(
       myPlane(gp::Origin(), theNorm)
 {
 }
-
-//=================================================================================================
 
 bool BRepMesh_Triangulator::Perform(NCollection_List<Poly_Triangle>& thePolyTriangles)
 {
@@ -100,7 +78,7 @@ bool BRepMesh_Triangulator::Perform(NCollection_List<Poly_Triangle>& thePolyTria
     const NCollection_Sequence<int>& aTmpWire = myWires.First();
     if (aTmpWire.Length() < 5)
     {
-      // prepare triangles from simple wire (3 or 4 points)
+
       addTriange34(aTmpWire, thePolyTriangles);
       return true;
     }
@@ -123,14 +101,10 @@ bool BRepMesh_Triangulator::Perform(NCollection_List<Poly_Triangle>& thePolyTria
   return true;
 }
 
-//=======================================================================
-// function : addTriange34
-// purpose  : auxiliary for makeTrianglesUsingBRepMesh
-//=======================================================================
 void BRepMesh_Triangulator::addTriange34(const NCollection_Sequence<int>& theW,
                                          NCollection_List<Poly_Triangle>& thePolyTriangles)
 {
-  // prepare triangles from simple wire (3 or 4 points)
+
   if (theW.Length() == 3)
   {
     Poly_Triangle aT(theW(1) + 1, theW(2) + 1, theW(3) + 1);
@@ -143,7 +117,7 @@ void BRepMesh_Triangulator::addTriange34(const NCollection_Sequence<int>& theW,
     bool   use13 = true;
     if (d24 < d13)
     {
-      // additional check for inner corner
+
       static int aPivotNodes[4] = {2, 4, 1, 3};
       use13                     = checkCondition(aPivotNodes, theW);
     }
@@ -166,10 +140,6 @@ void BRepMesh_Triangulator::addTriange34(const NCollection_Sequence<int>& theW,
   }
 }
 
-//=======================================================================
-// function : checkCondition
-// purpose  : auxiliary for addTriange34
-//=======================================================================
 bool BRepMesh_Triangulator::checkCondition(const int (&theNodes)[4],
                                            const NCollection_Sequence<int>& theW)
 {
@@ -184,15 +154,11 @@ bool BRepMesh_Triangulator::checkCondition(const int (&theNodes)[4],
           || gp_Dir(aCross1).IsEqual(gp_Dir(aCross2), 0.01));
 }
 
-//=================================================================================================
-
 bool BRepMesh_Triangulator::prepareMeshStructure()
 {
   myIndices       = new IMeshData::VectorOfInteger(wireNodesNb(myWires));
   myMeshStructure = new BRepMesh_DataStructureOfDelaun(new NCollection_IncAllocator);
 
-  // fill this structure created BRepMesh_Vertexes using 2d points received
-  // by projection initial 3d point on plane.
   try
   {
     int                                                   aNumNode = 0;
@@ -230,13 +196,11 @@ bool BRepMesh_Triangulator::prepareMeshStructure()
   return true;
 }
 
-//=================================================================================================
-
 bool BRepMesh_Triangulator::triangulate(NCollection_List<Poly_Triangle>& thePolyTriangles)
 {
   try
   {
-    // perform triangulation used created aMeshStructure
+
     BRepMesh_Delaun                aTriangulation(myMeshStructure, *myIndices);
     const IMeshData::MapOfInteger& aTriangles = myMeshStructure->ElementsOfDomain();
     if (aTriangles.Extent() < 1)
@@ -244,7 +208,6 @@ bool BRepMesh_Triangulator::triangulate(NCollection_List<Poly_Triangle>& thePoly
       return false;
     }
 
-    // prepare Poly_Triangles from result triangles and add to returned list
     for (IMeshData::IteratorOfMapOfInteger aTriIter(aTriangles); aTriIter.More(); aTriIter.Next())
     {
       const int                aTriangleId = aTriIter.Key();

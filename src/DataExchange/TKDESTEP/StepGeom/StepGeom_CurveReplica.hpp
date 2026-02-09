@@ -11,7 +11,6 @@ class StepGeom_CurveReplica : public StepGeom_Curve
 {
 
 public:
-  //! Returns a CurveReplica
   Standard_EXPORT StepGeom_CurveReplica();
 
   Standard_EXPORT void Init(

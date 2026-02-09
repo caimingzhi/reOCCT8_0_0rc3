@@ -5,11 +5,9 @@
 #include <GeomHash_AxisPlacement.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom_CylindricalSurface.
-//! Used for geometry deduplication.
 struct GeomHash_CylindricalSurfaceHasher
 {
-  // Hashes the cylinder by its position and radius.
+
   std::size_t operator()(const occ::handle<Geom_CylindricalSurface>& theCylinder) const noexcept
   {
     constexpr double aTolerance = 1e-12;
@@ -22,7 +20,6 @@ struct GeomHash_CylindricalSurfaceHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two cylinders by their positions and radii.
   bool operator()(const occ::handle<Geom_CylindricalSurface>& theCylinder1,
                   const occ::handle<Geom_CylindricalSurface>& theCylinder2) const noexcept
   {

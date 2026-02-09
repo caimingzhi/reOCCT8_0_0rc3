@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_ContextWrite.hpp>
 #include <IGESAppli.hpp>
@@ -57,7 +46,7 @@ IGESSelect_WorkLibrary::IGESSelect_WorkLibrary(const bool modefnes)
 
   if (!deja)
   {
-    occ::handle<IGESSelect_Dumper> sesdump = new IGESSelect_Dumper; // ainsi,cestfait
+    occ::handle<IGESSelect_Dumper> sesdump = new IGESSelect_Dumper;
     deja                                   = 1;
   }
   SetDumpLevels(4, 6);
@@ -95,7 +84,7 @@ int IGESSelect_WorkLibrary::ReadFile(const char*                            name
 bool IGESSelect_WorkLibrary::WriteFile(IFSelect_ContextWrite& ctx) const
 {
   Message_Messenger::StreamBuffer sout = Message::SendInfo();
-  //  Preparation
+
   DeclareAndCast(IGESData_IGESModel, igesmod, ctx.Model());
   DeclareAndCast(IGESData_Protocol, prot, ctx.Protocol());
 
@@ -114,7 +103,6 @@ bool IGESSelect_WorkLibrary::WriteFile(IFSelect_ContextWrite& ctx) const
   IGESData_IGESWriter VW(igesmod);
   sout << "(" << igesmod->NbEntities() << " ents) ";
 
-  //  File Modifiers
   int nbmod = ctx.NbModifiers();
   for (int numod = 1; numod <= nbmod; numod++)
   {
@@ -122,16 +110,14 @@ bool IGESSelect_WorkLibrary::WriteFile(IFSelect_ContextWrite& ctx) const
     DeclareAndCast(IGESSelect_FileModifier, filemod, ctx.FileModifier());
     if (!filemod.IsNull())
       filemod->Perform(ctx, VW);
-    //   (impressions de mise au point)
+
     sout << " .. FileMod." << numod << " " << filemod->Label();
     if (ctx.IsForAll())
       sout << " (all model)";
     else
       sout << " (" << ctx.NbEntities() << " entities)";
-    //    sout << std::flush;
   }
 
-  //  Envoi
   VW.SendModel(prot);
   sout << " Write ";
   if (themodefnes)
@@ -155,7 +141,7 @@ occ::handle<IGESData_Protocol> IGESSelect_WorkLibrary::DefineProtocol()
     return IGESProto;
   occ::handle<IGESData_Protocol> IGESProto1 = IGESSolid::Protocol();
   occ::handle<IGESData_Protocol> IGESProto2 = IGESAppli::Protocol();
-  //  occ::handle<IGESData_FileProtocol> IGESProto  = new IGESData_FileProtocol;
+
   IGESProto = new IGESData_FileProtocol;
   IGESProto->Add(IGESProto1);
   IGESProto->Add(IGESProto2);
@@ -188,7 +174,6 @@ void IGESSelect_WorkLibrary::DumpEntity(const occ::handle<Interface_InterfaceMod
     return;
   }
 
-  //  We start the dump : first the Error case
   if (iserr)
   {
     S << " ERRONEOUS, Content, Type cdl : ";

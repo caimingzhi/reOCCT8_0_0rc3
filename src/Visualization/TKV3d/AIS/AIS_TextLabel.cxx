@@ -20,8 +20,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_TextLabel, AIS_InteractiveObject)
 
-//=================================================================================================
-
 AIS_TextLabel::AIS_TextLabel()
     : myText("?"),
       myHasOrientation3D(false),
@@ -32,8 +30,6 @@ AIS_TextLabel::AIS_TextLabel()
   myDrawer->SetDisplayMode(0);
 }
 
-//=================================================================================================
-
 void AIS_TextLabel::SetColor(const Quantity_Color& theColor)
 {
   hasOwnColor = true;
@@ -41,8 +37,6 @@ void AIS_TextLabel::SetColor(const Quantity_Color& theColor)
   myDrawer->TextAspect()->SetColor(theColor);
   SynchronizeAspects();
 }
-
-//=================================================================================================
 
 void AIS_TextLabel::SetTransparency(const double theValue)
 {
@@ -58,72 +52,50 @@ void AIS_TextLabel::SetTransparency(const double theValue)
   SynchronizeAspects();
 }
 
-//=================================================================================================
-
 void AIS_TextLabel::SetText(const TCollection_ExtendedString& theText)
 {
   myText = theText;
 }
-
-//=================================================================================================
 
 void AIS_TextLabel::SetPosition(const gp_Pnt& thePosition)
 {
   myOrientation3D.SetLocation(thePosition);
 }
 
-//=================================================================================================
-
 void AIS_TextLabel::SetHJustification(const Graphic3d_HorizontalTextAlignment theHJust)
 {
   myDrawer->TextAspect()->SetHorizontalJustification(theHJust);
 }
 
-//=======================================================================
-// function : SetVJustification
-// purpose  : Setup vertical justification.
-//=======================================================================
 void AIS_TextLabel::SetVJustification(const Graphic3d_VerticalTextAlignment theVJust)
 {
   myDrawer->TextAspect()->SetVerticalJustification(theVJust);
 }
-
-//=================================================================================================
 
 void AIS_TextLabel::SetAngle(const double theAngle)
 {
   myDrawer->TextAspect()->Aspect()->SetTextAngle(theAngle * 180.0 / M_PI);
 }
 
-//=================================================================================================
-
 void AIS_TextLabel::SetZoomable(const bool theIsZoomable)
 {
   myDrawer->TextAspect()->Aspect()->SetTextZoomable(theIsZoomable);
 }
-
-//=================================================================================================
 
 void AIS_TextLabel::SetHeight(const double theHeight)
 {
   myDrawer->TextAspect()->SetHeight(theHeight);
 }
 
-//=================================================================================================
-
 void AIS_TextLabel::SetFontAspect(const Font_FontAspect theFontAspect)
 {
   myDrawer->TextAspect()->Aspect()->SetTextFontAspect(theFontAspect);
 }
 
-//=================================================================================================
-
 void AIS_TextLabel::SetFont(const char* theFont)
 {
   myDrawer->TextAspect()->SetFont(theFont);
 }
-
-//=================================================================================================
 
 void AIS_TextLabel::SetOrientation3D(const gp_Ax2& theOrientation)
 {
@@ -131,77 +103,55 @@ void AIS_TextLabel::SetOrientation3D(const gp_Ax2& theOrientation)
   myOrientation3D    = theOrientation;
 }
 
-//=================================================================================================
-
 void AIS_TextLabel::UnsetOrientation3D()
 {
   myHasOrientation3D = false;
 }
-
-//=================================================================================================
 
 const gp_Pnt& AIS_TextLabel::Position() const
 {
   return myOrientation3D.Location();
 }
 
-//=================================================================================================
-
 const TCollection_AsciiString& AIS_TextLabel::FontName() const
 {
   return myDrawer->TextAspect()->Aspect()->Font();
 }
-
-//=================================================================================================
 
 Font_FontAspect AIS_TextLabel::FontAspect() const
 {
   return myDrawer->TextAspect()->Aspect()->GetTextFontAspect();
 }
 
-//=================================================================================================
-
 const gp_Ax2& AIS_TextLabel::Orientation3D() const
 {
   return myOrientation3D;
 }
-
-//=================================================================================================
 
 bool AIS_TextLabel::HasOrientation3D() const
 {
   return myHasOrientation3D;
 }
 
-//=================================================================================================
-
 void AIS_TextLabel::SetFlipping(const bool theIsFlipping)
 {
   myHasFlipping = theIsFlipping;
 }
-
-//=================================================================================================
 
 bool AIS_TextLabel::HasFlipping() const
 {
   return myHasFlipping;
 }
 
-//=================================================================================================
-
 void AIS_TextLabel::SetDisplayType(const Aspect_TypeOfDisplayText theDisplayType)
 {
   myDrawer->TextAspect()->Aspect()->SetDisplayType(theDisplayType);
 }
 
-//=================================================================================================
-
 void AIS_TextLabel::SetColorSubTitle(const Quantity_Color& theColor)
 {
   myDrawer->TextAspect()->Aspect()->SetColorSubTitle(theColor);
 }
-
-//=================================================================================================
 
 void AIS_TextLabel::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                             const occ::handle<Prs3d_Presentation>& thePrs,
@@ -249,7 +199,7 @@ void AIS_TextLabel::Compute(const occ::handle<PrsMgr_PresentationManager>&,
         bool aHasOwnAnchor = HasOwnAnchorPoint();
         if (myHasFlipping)
         {
-          aHasOwnAnchor = false; // always not using own anchor if flipping
+          aHasOwnAnchor = false;
         }
         occ::handle<Graphic3d_Text> aText =
           Prs3d_Text::Draw(thePrs->CurrentGroup(), anAsp, myText, anOrientation, aHasOwnAnchor);
@@ -287,8 +237,6 @@ void AIS_TextLabel::Compute(const occ::handle<PrsMgr_PresentationManager>&,
   }
 }
 
-//=================================================================================================
-
 void AIS_TextLabel::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection,
                                      const int                               theMode)
 {
@@ -319,7 +267,6 @@ void AIS_TextLabel::ComputeSelection(const occ::handle<SelectMgr_Selection>& the
       const double aDy         = aHeight * 0.5;
       gp_Trsf      aLabelPlane = calculateLabelTrsf(aPosition, aCenterOfLabel);
 
-      // sensitive planar rectangle for text
       NCollection_Array1<gp_Pnt> aRectanglePoints(1, 5);
       aRectanglePoints.ChangeValue(1) = gp_Pnt(-aDx, -aDy, 0.0).Transformed(aLabelPlane);
       aRectanglePoints.ChangeValue(2) = gp_Pnt(-aDx, aDy, 0.0).Transformed(aLabelPlane);
@@ -336,14 +283,12 @@ void AIS_TextLabel::ComputeSelection(const occ::handle<SelectMgr_Selection>& the
   }
 }
 
-//=================================================================================================
-
 bool AIS_TextLabel::calculateLabelParams(const gp_Pnt& thePosition,
                                          gp_Pnt&       theCenterOfLabel,
                                          double&       theWidth,
                                          double&       theHeight) const
 {
-  // Get width and height of text
+
   occ::handle<Prs3d_TextAspect>    anAsp = myDrawer->TextAspect();
   const Graphic3d_RenderingParams& aRendParams =
     GetContext()->CurrentViewer()->DefaultRenderingParams();
@@ -386,8 +331,6 @@ bool AIS_TextLabel::calculateLabelParams(const gp_Pnt& thePosition,
 
   return true;
 }
-
-//=================================================================================================
 
 gp_Trsf AIS_TextLabel::calculateLabelTrsf(const gp_Pnt& thePosition, gp_Pnt& theCenterOfLabel) const
 {

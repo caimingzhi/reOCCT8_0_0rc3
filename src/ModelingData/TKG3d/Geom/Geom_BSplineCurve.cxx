@@ -19,8 +19,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_BSplineCurve, Geom_BoundedCurve)
 
-//=================================================================================================
-
 static void CheckCurveData(const NCollection_Array1<gp_Pnt>& CPoles,
                            const NCollection_Array1<double>& CKnots,
                            const NCollection_Array1<int>&    CMults,
@@ -49,7 +47,6 @@ static void CheckCurveData(const NCollection_Array1<gp_Pnt>& CPoles,
     throw Standard_ConstructionError("BSpline curve: # Poles and degree mismatch");
 }
 
-//! Check rationality of an array of weights
 static bool Rational(const NCollection_Array1<double>& theWeights)
 {
   for (int i = theWeights.Lower(); i < theWeights.Upper(); i++)
@@ -62,14 +59,10 @@ static bool Rational(const NCollection_Array1<double>& theWeights)
   return false;
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Geometry> Geom_BSplineCurve::Copy() const
 {
   return new Geom_BSplineCurve(*this);
 }
-
-//=================================================================================================
 
 Geom_BSplineCurve::Geom_BSplineCurve(const Geom_BSplineCurve& theOther)
     : rational(theOther.rational),
@@ -80,7 +73,7 @@ Geom_BSplineCurve::Geom_BSplineCurve(const Geom_BSplineCurve& theOther)
       maxderivinv(theOther.maxderivinv),
       maxderivinvok(false)
 {
-  // Deep copy all data arrays without validation
+
   poles = new NCollection_HArray1<gp_Pnt>(theOther.poles->Lower(), theOther.poles->Upper());
   poles->ChangeArray1() = theOther.poles->Array1();
 
@@ -104,8 +97,6 @@ Geom_BSplineCurve::Geom_BSplineCurve(const Geom_BSplineCurve& theOther)
   }
 }
 
-//=================================================================================================
-
 Geom_BSplineCurve::Geom_BSplineCurve(const NCollection_Array1<gp_Pnt>& Poles,
                                      const NCollection_Array1<double>& Knots,
                                      const NCollection_Array1<int>&    Mults,
@@ -116,11 +107,8 @@ Geom_BSplineCurve::Geom_BSplineCurve(const NCollection_Array1<gp_Pnt>& Poles,
       deg(Degree),
       maxderivinvok(false)
 {
-  // check
 
   CheckCurveData(Poles, Knots, Mults, Degree, Periodic);
-
-  // copy arrays
 
   poles                 = new NCollection_HArray1<gp_Pnt>(1, Poles.Length());
   poles->ChangeArray1() = Poles;
@@ -133,8 +121,6 @@ Geom_BSplineCurve::Geom_BSplineCurve(const NCollection_Array1<gp_Pnt>& Poles,
 
   UpdateKnots();
 }
-
-//=================================================================================================
 
 Geom_BSplineCurve::Geom_BSplineCurve(const NCollection_Array1<gp_Pnt>& Poles,
                                      const NCollection_Array1<double>& Weights,
@@ -150,8 +136,6 @@ Geom_BSplineCurve::Geom_BSplineCurve(const NCollection_Array1<gp_Pnt>& Poles,
 
 {
 
-  // check
-
   CheckCurveData(Poles, Knots, Mults, Degree, Periodic);
 
   if (Weights.Length() != Poles.Length())
@@ -164,11 +148,8 @@ Geom_BSplineCurve::Geom_BSplineCurve(const NCollection_Array1<gp_Pnt>& Poles,
       throw Standard_ConstructionError("Geom_BSplineCurve: Weights values too small");
   }
 
-  // check really rational
   if (CheckRational)
     rational = Rational(Weights);
-
-  // copy arrays
 
   poles                 = new NCollection_HArray1<gp_Pnt>(1, Poles.Length());
   poles->ChangeArray1() = Poles;
@@ -187,14 +168,10 @@ Geom_BSplineCurve::Geom_BSplineCurve(const NCollection_Array1<gp_Pnt>& Poles,
   UpdateKnots();
 }
 
-//=================================================================================================
-
 int Geom_BSplineCurve::MaxDegree()
 {
   return BSplCLib::MaxDegree();
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::IncreaseDegree(const int Degree)
 {
@@ -243,8 +220,6 @@ void Geom_BSplineCurve::IncreaseDegree(const int Degree)
   UpdateKnots();
 }
 
-//=================================================================================================
-
 void Geom_BSplineCurve::IncreaseMultiplicity(const int Index, const int M)
 {
   NCollection_Array1<double> k(1, 1);
@@ -253,8 +228,6 @@ void Geom_BSplineCurve::IncreaseMultiplicity(const int Index, const int M)
   m(1) = M - mults->Value(Index);
   InsertKnots(k, m, Epsilon(1.), true);
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::IncreaseMultiplicity(const int I1, const int I2, const int M)
 {
@@ -267,8 +240,6 @@ void Geom_BSplineCurve::IncreaseMultiplicity(const int I1, const int I2, const i
   InsertKnots(k, m, Epsilon(1.), true);
 }
 
-//=================================================================================================
-
 void Geom_BSplineCurve::IncrementMultiplicity(const int I1, const int I2, const int Step)
 {
   occ::handle<NCollection_HArray1<double>> tk = knots;
@@ -277,8 +248,6 @@ void Geom_BSplineCurve::IncrementMultiplicity(const int I1, const int I2, const 
   m.Init(Step);
   InsertKnots(k, m, Epsilon(1.), true);
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::InsertKnot(const double U,
                                    const int    M,
@@ -292,14 +261,12 @@ void Geom_BSplineCurve::InsertKnot(const double U,
   InsertKnots(k, m, ParametricTolerance, Add);
 }
 
-//=================================================================================================
-
 void Geom_BSplineCurve::InsertKnots(const NCollection_Array1<double>& Knots,
                                     const NCollection_Array1<int>&    Mults,
                                     const double                      Epsilon,
                                     const bool                        Add)
 {
-  // Check and compute new sizes
+
   int nbpoles, nbknots;
 
   if (!BSplCLib::PrepareInsertKnots(deg,
@@ -353,8 +320,6 @@ void Geom_BSplineCurve::InsertKnots(const NCollection_Array1<double>& Knots,
   mults   = nmults;
   UpdateKnots();
 }
-
-//=================================================================================================
 
 bool Geom_BSplineCurve::RemoveKnot(const int Index, const int M, const double Tolerance)
 {
@@ -424,8 +389,6 @@ bool Geom_BSplineCurve::RemoveKnot(const int Index, const int M, const double To
   return true;
 }
 
-//=================================================================================================
-
 void Geom_BSplineCurve::Reverse()
 {
   BSplCLib::Reverse(knots->ChangeArray1());
@@ -441,14 +404,10 @@ void Geom_BSplineCurve::Reverse()
   UpdateKnots();
 }
 
-//=================================================================================================
-
 double Geom_BSplineCurve::ReversedParameter(const double U) const
 {
   return (FirstParameter() + LastParameter() - U);
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::Segment(const double U1, const double U2, const double theTolerance)
 {
@@ -463,7 +422,6 @@ void Geom_BSplineCurve::Segment(const double U1, const double U2, const double t
   NCollection_Array1<double> Knots(1, 2);
   NCollection_Array1<int>    Mults(1, 2);
 
-  // define param distance to keep (eap, Apr 18 2002, occ311)
   if (periodic)
   {
     double Period = LastParameter() - FirstParameter();
@@ -496,9 +454,7 @@ void Geom_BSplineCurve::Segment(const double U1, const double U2, const double t
                             index,
                             NewU2);
 
-  //-- DBB
   double aNu2 = NewU2;
-  //-- DBB
 
   Knots(1) = std::min(NewU1, NewU2);
   Knots(2) = std::max(NewU1, NewU2);
@@ -506,16 +462,14 @@ void Geom_BSplineCurve::Segment(const double U1, const double U2, const double t
 
   double AbsUMax = std::max(std::abs(NewU1), std::abs(NewU2));
 
-  //  Modified by Sergey KHROMOV - Fri Apr 11 12:15:40 2003 Begin
   AbsUMax = std::max(AbsUMax, std::max(std::abs(FirstParameter()), std::abs(LastParameter())));
-  //  Modified by Sergey KHROMOV - Fri Apr 11 12:15:40 2003 End
 
   double Eps = std::max(Epsilon(AbsUMax), theTolerance);
 
   InsertKnots(Knots, Mults, Eps);
 
   if (periodic)
-  { // set the origine at NewU1
+  {
     index = 0;
     BSplCLib::LocateParameter(deg,
                               knots->Array1(),
@@ -526,15 +480,14 @@ void Geom_BSplineCurve::Segment(const double U1, const double U2, const double t
                               knots->Upper(),
                               index,
                               U);
-    // Test si l'insertion est Ok et decalage sinon.
-    if (std::abs(knots->Value(index + 1) - U) <= Eps) // <= pour etre homogene a InsertKnots
+
+    if (std::abs(knots->Value(index + 1) - U) <= Eps)
       index++;
     SetOrigin(index);
     SetNotPeriodic();
     NewU2 = NewU1 + DU;
   }
 
-  // compute index1 and index2 to set the new knots and mults
   int index1 = 0, index2 = 0;
   int FromU1 = knots->Lower();
   int ToU2   = knots->Upper();
@@ -567,8 +520,7 @@ void Geom_BSplineCurve::Segment(const double U1, const double U2, const double t
   occ::handle<NCollection_HArray1<double>> nknots = new NCollection_HArray1<double>(1, nbknots);
   occ::handle<NCollection_HArray1<int>>    nmults = new NCollection_HArray1<int>(1, nbknots);
 
-  // to restore changed U1
-  if (DU > 0) // if was periodic
+  if (DU > 0)
     DU = NewU1 - U1;
 
   int i, k = 1;
@@ -581,7 +533,6 @@ void Geom_BSplineCurve::Segment(const double U1, const double U2, const double t
   nmults->SetValue(1, deg + 1);
   nmults->SetValue(nbknots, deg + 1);
 
-  // compute index1 and index2 to set the new poles and weights
   int pindex1 = BSplCLib::PoleIndex(deg, index1, periodic, mults->Array1());
   int pindex2 = BSplCLib::PoleIndex(deg, index2, periodic, mults->Array1());
 
@@ -613,7 +564,6 @@ void Geom_BSplineCurve::Segment(const double U1, const double U2, const double t
     }
   }
 
-  //-- DBB
   if (wasPeriodic)
   {
     nknots->ChangeValue(nknots->Lower()) = U1;
@@ -622,7 +572,6 @@ void Geom_BSplineCurve::Segment(const double U1, const double U2, const double t
       nknots->ChangeValue(nknots->Upper()) = U1 + aDDU;
     }
   }
-  //-- DBB
 
   knots = nknots;
   mults = nmults;
@@ -633,8 +582,6 @@ void Geom_BSplineCurve::Segment(const double U1, const double U2, const double t
   maxderivinvok = false;
   UpdateKnots();
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::SetKnot(const int Index, const double K)
 {
@@ -668,8 +615,6 @@ void Geom_BSplineCurve::SetKnot(const int Index, const double K)
   }
 }
 
-//=================================================================================================
-
 void Geom_BSplineCurve::SetKnots(const NCollection_Array1<double>& K)
 {
   CheckCurveData(poles->Array1(), K, mults->Array1(), deg, periodic);
@@ -678,15 +623,11 @@ void Geom_BSplineCurve::SetKnots(const NCollection_Array1<double>& K)
   UpdateKnots();
 }
 
-//=================================================================================================
-
 void Geom_BSplineCurve::SetKnot(const int Index, const double K, const int M)
 {
   IncreaseMultiplicity(Index, M);
   SetKnot(Index, K);
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::SetPeriodic()
 {
@@ -704,7 +645,6 @@ void Geom_BSplineCurve::SetPeriodic()
   mults                        = new NCollection_HArray1<int>(1, cmults.Length());
   mults->ChangeArray1()        = cmults;
 
-  // compute new number of poles;
   int nbp = BSplCLib::NbPoles(deg, true, cmults);
 
   occ::handle<NCollection_HArray1<gp_Pnt>> tp = poles;
@@ -725,8 +665,6 @@ void Geom_BSplineCurve::SetPeriodic()
   maxderivinvok = false;
   UpdateKnots();
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::SetOrigin(const int Index)
 {
@@ -749,7 +687,6 @@ void Geom_BSplineCurve::SetOrigin(const int Index)
   occ::handle<NCollection_HArray1<int>> nmults   = new NCollection_HArray1<int>(1, nbknots);
   NCollection_Array1<int>&              newmults = nmults->ChangeArray1();
 
-  // set the knots and mults
   double period = knots->Value(last) - knots->Value(first);
   k             = 1;
   for (i = Index; i <= last; i++)
@@ -769,7 +706,6 @@ void Geom_BSplineCurve::SetOrigin(const int Index)
   for (i = first + 1; i <= Index; i++)
     index += mults->Value(i);
 
-  // set the poles and weights
   occ::handle<NCollection_HArray1<gp_Pnt>> npoles     = new NCollection_HArray1<gp_Pnt>(1, nbpoles);
   occ::handle<NCollection_HArray1<double>> nweights   = new NCollection_HArray1<double>(1, nbpoles);
   NCollection_Array1<gp_Pnt>&              newpoles   = npoles->ChangeArray1();
@@ -816,13 +752,11 @@ void Geom_BSplineCurve::SetOrigin(const int Index)
   UpdateKnots();
 }
 
-//=================================================================================================
-
 void Geom_BSplineCurve::SetOrigin(const double U, const double Tol)
 {
   if (!periodic)
     throw Standard_NoSuchObject("Geom_BSplineCurve::SetOrigin");
-  // U est il dans la period.
+
   double uf = FirstParameter(), ul = LastParameter();
   double u = U, period = ul - uf;
   while (Tol < (uf - u))
@@ -831,7 +765,7 @@ void Geom_BSplineCurve::SetOrigin(const double U, const double Tol)
     u -= period;
 
   if (std::abs(U - u) > Tol)
-  { // On reparametre la courbe
+  {
     double delta = U - u;
     uf += delta;
     ul += delta;
@@ -843,7 +777,7 @@ void Geom_BSplineCurve::SetOrigin(const double U, const double Tol)
     }
     UpdateKnots();
   }
-  // For periodic curve, uf and ul represent the same point
+
   if (std::abs(U - uf) < Tol || std::abs(U - ul) < Tol)
     return;
 
@@ -867,8 +801,6 @@ void Geom_BSplineCurve::SetOrigin(const double U, const double Tol)
   }
   SetOrigin(ik);
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::SetNotPeriodic()
 {
@@ -909,8 +841,6 @@ void Geom_BSplineCurve::SetNotPeriodic()
   }
 }
 
-//=================================================================================================
-
 void Geom_BSplineCurve::SetPole(const int Index, const gp_Pnt& P)
 {
   if (Index < 1 || Index > poles->Length())
@@ -919,15 +849,11 @@ void Geom_BSplineCurve::SetPole(const int Index, const gp_Pnt& P)
   maxderivinvok = false;
 }
 
-//=================================================================================================
-
 void Geom_BSplineCurve::SetPole(const int Index, const gp_Pnt& P, const double W)
 {
   SetPole(Index, P);
   SetWeight(Index, W);
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::SetWeight(const int Index, const double W)
 {
@@ -960,8 +886,6 @@ void Geom_BSplineCurve::SetWeight(const int Index, const double W)
   }
   maxderivinvok = false;
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::MovePoint(const double  U,
                                   const gp_Pnt& P,
@@ -997,8 +921,6 @@ void Geom_BSplineCurve::MovePoint(const double  U,
   }
 }
 
-//=================================================================================================
-
 void Geom_BSplineCurve::MovePointAndTangent(const double  U,
                                             const gp_Pnt& P,
                                             const gp_Vec& Tangent,
@@ -1010,9 +932,7 @@ void Geom_BSplineCurve::MovePointAndTangent(const double  U,
   int ii;
   if (IsPeriodic())
   {
-    //
-    // for the time being do not deal with periodic curves
-    //
+
     SetNotPeriodic();
   }
   NCollection_Array1<gp_Pnt> new_poles(1, poles->Length());
@@ -1043,8 +963,6 @@ void Geom_BSplineCurve::MovePointAndTangent(const double  U,
     maxderivinvok         = false;
   }
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::UpdateKnots()
 {
@@ -1095,11 +1013,6 @@ void Geom_BSplineCurve::UpdateKnots()
   }
 }
 
-//=======================================================================
-// function : Normalizes the parameters if the curve is periodic
-// purpose  : that is compute the cache so that it is valid
-//=======================================================================
-
 void Geom_BSplineCurve::PeriodicNormalization(double& Parameter) const
 {
   double Period;
@@ -1117,8 +1030,6 @@ void Geom_BSplineCurve::PeriodicNormalization(double& Parameter) const
     }
   }
 }
-
-//=================================================================================================
 
 void Geom_BSplineCurve::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

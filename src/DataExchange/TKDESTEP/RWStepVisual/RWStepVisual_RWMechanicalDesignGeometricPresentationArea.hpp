@@ -11,7 +11,6 @@ class StepVisual_MechanicalDesignGeometricPresentationArea;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for MechanicalDesignGeometricPresentationArea
 class RWStepVisual_RWMechanicalDesignGeometricPresentationArea
 {
 public:

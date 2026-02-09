@@ -13,8 +13,6 @@
 static char                tc[1000];
 static Standard_PCharacter thePluginId = tc;
 
-//=================================================================================================
-
 occ::handle<Standard_Transient> Plugin::Load(const Standard_GUID& aGUID, const bool theVerbose)
 {
 
@@ -83,8 +81,6 @@ occ::handle<Standard_Transient> Plugin::Load(const Standard_GUID& aGUID, const b
   else
     f = theMapOfFunctions(pid);
 
-  // Cast through void* to avoid -Wcast-function-type-mismatch warning.
-  // This is safe for dynamically loaded plugin symbols.
   Standard_Transient* (*fp)(const Standard_GUID&) =
     reinterpret_cast<Standard_Transient* (*)(const Standard_GUID&)>(reinterpret_cast<void*>(f));
   occ::handle<Standard_Transient> theServiceFactory = (*fp)(aGUID);

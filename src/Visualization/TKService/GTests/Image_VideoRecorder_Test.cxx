@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Image_VideoRecorder.hpp>
 #include <Image_PixMap.hpp>
@@ -42,7 +31,6 @@ TEST_F(Image_VideoRecorderTest, VideoParamsStructure)
 {
   Image_VideoParams params;
 
-  // Test default values
   EXPECT_EQ(0, params.Width);
   EXPECT_EQ(0, params.Height);
   EXPECT_EQ(0, params.FpsNum);
@@ -51,7 +39,6 @@ TEST_F(Image_VideoRecorderTest, VideoParamsStructure)
   EXPECT_TRUE(params.VideoCodec.IsEmpty());
   EXPECT_TRUE(params.PixelFormat.IsEmpty());
 
-  // Test setters
   params.SetFramerate(30);
   EXPECT_EQ(30, params.FpsNum);
   EXPECT_EQ(1, params.FpsDen);
@@ -67,18 +54,17 @@ TEST_F(Image_VideoRecorderTest, OpenVideoFile)
   Image_VideoParams params;
   params.Width  = 320;
   params.Height = 240;
-  params.SetFramerate(15); // Low framerate for test
+  params.SetFramerate(15);
   params.Format      = "avi";
-  params.VideoCodec  = "mpeg4"; // Use a commonly available codec
+  params.VideoCodec  = "mpeg4";
   params.PixelFormat = "yuv420p";
 
-  // Test opening a valid video file
   bool isOpened = myRecorder->Open("test_video.avi", params);
   EXPECT_TRUE(isOpened);
 
   if (isOpened)
   {
-    // Test frame access
+
     Image_PixMap& frame = myRecorder->ChangeFrame();
     EXPECT_EQ(params.Width, frame.Width());
     EXPECT_EQ(params.Height, frame.Height());
@@ -93,7 +79,6 @@ TEST_F(Image_VideoRecorderTest, InvalidParameters)
 {
 #ifdef HAVE_FFMPEG
   Image_VideoParams params;
-  // Leave parameters invalid (width=0, height=0)
 
   bool isOpened = myRecorder->Open("invalid_test.avi", params);
   EXPECT_FALSE(isOpened);
@@ -104,9 +89,9 @@ TEST_F(Image_VideoRecorderTest, WriteFrames)
 {
 #ifdef HAVE_FFMPEG
   Image_VideoParams params;
-  params.Width  = 160; // Small size for fast test
+  params.Width  = 160;
   params.Height = 120;
-  params.SetFramerate(10); // Low framerate
+  params.SetFramerate(10);
   params.Format      = "avi";
   params.VideoCodec  = "mpeg4";
   params.PixelFormat = "yuv420p";
@@ -115,23 +100,21 @@ TEST_F(Image_VideoRecorderTest, WriteFrames)
 
   if (isOpened)
   {
-    // Fill frame with test pattern
+
     Image_PixMap& frame = myRecorder->ChangeFrame();
 
-    // Create a simple red-to-blue gradient
     for (int y = 0; y < params.Height; ++y)
     {
       for (int x = 0; x < params.Width; ++x)
       {
         uint8_t* pixel = frame.ChangeData() + (y * frame.SizeRowBytes()) + (x * 4);
-        pixel[0]       = (uint8_t)(255 * x / params.Width);  // Red gradient
-        pixel[1]       = 0;                                  // Green
-        pixel[2]       = (uint8_t)(255 * y / params.Height); // Blue gradient
-        pixel[3]       = 255;                                // Alpha
+        pixel[0]       = (uint8_t)(255 * x / params.Width);
+        pixel[1]       = 0;
+        pixel[2]       = (uint8_t)(255 * y / params.Height);
+        pixel[3]       = 255;
       }
     }
 
-    // Test writing a few frames
     EXPECT_EQ(0, myRecorder->FrameCount());
 
     EXPECT_TRUE(myRecorder->PushFrame());
@@ -145,12 +128,12 @@ TEST_F(Image_VideoRecorderTest, WriteFrames)
 
     myRecorder->Close();
   }
-#endif // HAVE_FFMPEG
+#endif
 }
 
 TEST_F(Image_VideoRecorderTest, CloseWithoutOpen)
 {
-  // Test that closing without opening doesn't crash
+
   myRecorder->Close();
   EXPECT_EQ(0, myRecorder->FrameCount());
 }

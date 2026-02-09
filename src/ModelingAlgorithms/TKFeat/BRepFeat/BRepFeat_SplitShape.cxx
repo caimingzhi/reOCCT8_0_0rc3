@@ -3,9 +3,7 @@
 #include <TopoDS_Shape.hpp>
 #include <TopExp_Explorer.hpp>
 
-//=================================================================================================
-
-void BRepFeat_SplitShape::Build(const Message_ProgressRange& /*theRange*/)
+void BRepFeat_SplitShape::Build(const Message_ProgressRange&)
 {
   mySShape.Perform(myWOnShape);
   if (mySShape.IsDone())
@@ -16,21 +14,15 @@ void BRepFeat_SplitShape::Build(const Message_ProgressRange& /*theRange*/)
   }
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& BRepFeat_SplitShape::DirectLeft() const
 {
   return mySShape.DirectLeft();
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& BRepFeat_SplitShape::Left() const
 {
   return mySShape.Left();
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepFeat_SplitShape::Right() const
 {
@@ -53,17 +45,12 @@ const NCollection_List<TopoDS_Shape>& BRepFeat_SplitShape::Right() const
   return myRight;
 }
 
-//=================================================================================================
-
 bool BRepFeat_SplitShape::IsDeleted(const TopoDS_Shape& F)
 {
   NCollection_List<TopoDS_Shape>::Iterator itl(((LocOpe_Spliter*)&mySShape)->DescendantShapes(F));
-  // all that to swindle the constant
 
-  return (!itl.More()); // a priori impossible
+  return (!itl.More());
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepFeat_SplitShape::Modified(const TopoDS_Shape& F)
 {

@@ -11,7 +11,6 @@ class StepBasic_LengthUnit;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for LengthUnit
 class RWStepBasic_RWLengthUnit
 {
 public:

@@ -6,11 +6,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_CurveElementIntervalConstant, StepFEA_CurveElementInterval)
 
-//=================================================================================================
-
 StepFEA_CurveElementIntervalConstant::StepFEA_CurveElementIntervalConstant() = default;
-
-//=================================================================================================
 
 void StepFEA_CurveElementIntervalConstant::Init(
   const occ::handle<StepFEA_CurveElementLocation>& aCurveElementInterval_FinishPosition,
@@ -23,15 +19,11 @@ void StepFEA_CurveElementIntervalConstant::Init(
   theSection = aSection;
 }
 
-//=================================================================================================
-
 occ::handle<StepElement_CurveElementSectionDefinition> StepFEA_CurveElementIntervalConstant::
   Section() const
 {
   return theSection;
 }
-
-//=================================================================================================
 
 void StepFEA_CurveElementIntervalConstant::SetSection(
   const occ::handle<StepElement_CurveElementSectionDefinition>& aSection)

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include <Interface_GeneralModule.hpp>
@@ -26,7 +15,7 @@ Interface_ShareFlags::Interface_ShareFlags(const occ::handle<Interface_Interface
                                            const Interface_GeneralLib&                  lib)
     : theflags(amodel->NbEntities())
 {
-  occ::handle<Interface_GTool> gtool; // null
+  occ::handle<Interface_GTool> gtool;
   themodel = amodel;
   Evaluate(lib, gtool);
 }
@@ -43,7 +32,7 @@ Interface_ShareFlags::Interface_ShareFlags(const occ::handle<Interface_Interface
                                            const occ::handle<Interface_Protocol>&       protocol)
     : theflags(amodel->NbEntities())
 {
-  occ::handle<Interface_GTool> gtool; // null
+  occ::handle<Interface_GTool> gtool;
   themodel = amodel;
   Evaluate(Interface_GeneralLib(protocol), gtool);
 }
@@ -67,7 +56,7 @@ Interface_ShareFlags::Interface_ShareFlags(const Interface_Graph& agraph)
   theroots = new NCollection_HSequence<occ::handle<Standard_Transient>>();
   for (int i = 1; i <= nb; i++)
   {
-    //    Result obtained from the Graph
+
     occ::handle<Standard_Transient>                                     ent = themodel->Value(i);
     occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> list =
       agraph.GetSharings(ent);
@@ -87,17 +76,14 @@ void Interface_ShareFlags::Evaluate(const Interface_GeneralLib&         lib,
   if (nb == 0)
     return;
   theroots = new NCollection_HSequence<occ::handle<Standard_Transient>>();
-  int i; // svv Jan11 2000 : porting on DEC
+  int i;
   for (i = 1; i <= nb; i++)
   {
 
-    //    WARNING: If Entity not loaded hence unreadable, switch to its
-    //    equivalent "Content"
     occ::handle<Standard_Transient> ent = themodel->Value(i);
     if (themodel->IsRedefinedContent(i))
       ent = themodel->ReportEntity(i)->Content();
 
-    //    Result obtained via GeneralLib
     Interface_EntityIterator             iter;
     occ::handle<Interface_GeneralModule> module;
     int                                  CN;
@@ -112,11 +98,10 @@ void Interface_ShareFlags::Evaluate(const Interface_GeneralLib&         lib,
         module->FillShared(themodel, CN, ent, iter);
     }
 
-    //    Entities shared by <ent>: need to mark each one as "Shared"
     for (iter.Start(); iter.More(); iter.Next())
     {
       int num = themodel->Number(iter.Value());
-      theflags.SetTrue(num); // Et Voila
+      theflags.SetTrue(num);
     }
   }
   for (i = 1; i <= nb; i++)

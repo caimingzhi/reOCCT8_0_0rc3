@@ -8,11 +8,7 @@
 
 namespace
 {
-  //! Auxiliary function splits elapsed time in seconds into Hours, Minutes and Seconds.
-  //! @param theTimeSec [in]  elapsed time in seconds
-  //! @param theHours   [out] clamped elapsed hours
-  //! @param theMinutes [out] clamped elapsed minutes within range [0, 59]
-  //! @param theSeconds [out] clamped elapsed seconds within range [0, 60)
+
   static void timeToHoursMinutesSeconds(double  theTimeSec,
                                         int&    theHours,
                                         int&    theMinutes,
@@ -25,7 +21,7 @@ namespace
   }
 
 #ifdef _WIN32
-  //! Define a structure for initializing global constant of pair values.
+
   struct PerfCounterFreq
   {
     LARGE_INTEGER Freq;
@@ -36,12 +32,10 @@ namespace
 #endif
 } // namespace
 
-//=================================================================================================
-
 double OSD_Timer::GetWallClockTime()
 {
 #ifdef _WIN32
-  // compute clock frequence on first call
+
   static const PerfCounterFreq aFreq;
 
   LARGE_INTEGER aTime;
@@ -54,15 +48,12 @@ double OSD_Timer::GetWallClockTime()
   #endif
 #else
   struct timeval aTime;
-  // use time of first call as base for computing total time,
-  // to avoid loss of precision due to big values of tv_sec (counted since 1970)
+
   static const time_t aStartSec = (gettimeofday(&aTime, nullptr) == 0 ? aTime.tv_sec : 0);
   return gettimeofday(&aTime, nullptr) == 0 ? (aTime.tv_sec - aStartSec) + 0.000001 * aTime.tv_usec
                                             : 0.0;
 #endif
 }
-
-//=================================================================================================
 
 OSD_Timer::OSD_Timer(bool theThisThreadOnly)
     : OSD_Chronometer(theThisThreadOnly),
@@ -71,8 +62,6 @@ OSD_Timer::OSD_Timer(bool theThisThreadOnly)
 {
 }
 
-//=================================================================================================
-
 void OSD_Timer::Reset(const double theTimeElapsedSec)
 {
   myTimeStart = 0.0;
@@ -80,15 +69,11 @@ void OSD_Timer::Reset(const double theTimeElapsedSec)
   OSD_Chronometer::Reset();
 }
 
-//=================================================================================================
-
 void OSD_Timer::Reset()
 {
   myTimeStart = myTimeCumul = 0.0;
   OSD_Chronometer::Reset();
 }
-
-//=================================================================================================
 
 void OSD_Timer::Restart()
 {
@@ -97,14 +82,10 @@ void OSD_Timer::Restart()
   OSD_Chronometer::Restart();
 }
 
-//=================================================================================================
-
 void OSD_Timer::Show() const
 {
   Show(std::cout);
 }
-
-//=================================================================================================
 
 double OSD_Timer::ElapsedTime() const
 {
@@ -116,8 +97,6 @@ double OSD_Timer::ElapsedTime() const
   return myTimeCumul + GetWallClockTime() - myTimeStart;
 }
 
-//=================================================================================================
-
 void OSD_Timer::Show(double& theSeconds, int& theMinutes, int& theHours, double& theCPUtime) const
 {
   const double aTimeCumul =
@@ -125,8 +104,6 @@ void OSD_Timer::Show(double& theSeconds, int& theMinutes, int& theHours, double&
   timeToHoursMinutesSeconds(aTimeCumul, theHours, theMinutes, theSeconds);
   OSD_Chronometer::Show(theCPUtime);
 }
-
-//=================================================================================================
 
 void OSD_Timer::Show(Standard_OStream& theOStream) const
 {
@@ -143,8 +120,6 @@ void OSD_Timer::Show(Standard_OStream& theOStream) const
   theOStream.precision(prec);
 }
 
-//=================================================================================================
-
 void OSD_Timer::Stop()
 {
   if (!myIsStopped)
@@ -153,8 +128,6 @@ void OSD_Timer::Stop()
     OSD_Chronometer::Stop();
   }
 }
-
-//=================================================================================================
 
 void OSD_Timer::Start()
 {

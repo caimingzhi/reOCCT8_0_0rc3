@@ -4,19 +4,6 @@
 
 #include <Standard_Integer.hpp>
 #include <Standard_CString.hpp>
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
 #include <Standard_Type.hpp>
 
@@ -40,7 +27,6 @@ class Standard_GUID
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates a GUID with all zeros.
   constexpr Standard_GUID() noexcept
       : my32b(0),
         my16b1(0),
@@ -55,19 +41,10 @@ public:
   {
   }
 
-  //! build a GUID from an ascii string with the
-  //! following format:
-  //! Length : 36 char
-  //! "00000000-0000-0000-0000-000000000000"
   Standard_EXPORT Standard_GUID(const char* aGuid);
 
-  //! build a GUID from an unicode string with the
-  //! following format:
-  //!
-  //! "00000000-0000-0000-0000-000000000000"
   Standard_EXPORT Standard_GUID(const char16_t* aGuid);
 
-  //! Creates a GUID from the given components.
   constexpr Standard_GUID(const int      a32b,
                           const char16_t a16b1,
                           const char16_t a16b2,
@@ -91,7 +68,6 @@ public:
   {
   }
 
-  //! Creates a GUID from a Standard_UUID.
   constexpr Standard_GUID(const Standard_UUID& theUUID) noexcept
       : my32b(theUUID.Data1),
         my16b1(theUUID.Data2),
@@ -106,24 +82,12 @@ public:
   {
   }
 
-  //! Copy constructor.
   constexpr Standard_GUID(const Standard_GUID& theGuid) noexcept = default;
 
-  //! translate the GUID into ascii string
-  //! the aStrGuid is allocated by user.
-  //! the guid have the following format:
-  //!
-  //! "00000000-0000-0000-0000-000000000000"
   Standard_EXPORT void ToCString(const Standard_PCharacter aStrGuid) const;
 
-  //! translate the GUID into unicode string
-  //! the aStrGuid is allocated by user.
-  //! the guid have the following format:
-  //!
-  //! "00000000-0000-0000-0000-000000000000"
   Standard_EXPORT void ToExtString(const Standard_PExtCharacter aStrGuid) const;
 
-  //! Converts to Standard_UUID.
   constexpr Standard_UUID ToUUID() const noexcept
   {
     return Standard_UUID{static_cast<uint32_t>(my32b),
@@ -139,7 +103,6 @@ public:
                           my8b6}};
   }
 
-  //! Returns true if this GUID is equal to uid.
   constexpr bool IsSame(const Standard_GUID& uid) const noexcept
   {
     return my32b == uid.my32b && my16b1 == uid.my16b1 && my16b2 == uid.my16b2
@@ -149,12 +112,10 @@ public:
 
   constexpr bool operator==(const Standard_GUID& uid) const noexcept { return IsSame(uid); }
 
-  //! Returns true if this GUID is not equal to uid.
   constexpr bool IsNotSame(const Standard_GUID& uid) const noexcept { return !IsSame(uid); }
 
   constexpr bool operator!=(const Standard_GUID& uid) const noexcept { return IsNotSame(uid); }
 
-  //! Assigns uid to this GUID.
   constexpr void Assign(const Standard_GUID& uid) noexcept
   {
     my32b  = uid.my32b;
@@ -175,7 +136,6 @@ public:
     return *this;
   }
 
-  //! Assigns uid to this GUID.
   constexpr void Assign(const Standard_UUID& uid) noexcept
   {
     my32b  = uid.Data1;
@@ -196,13 +156,8 @@ public:
     return *this;
   }
 
-  //! Display the GUID with the following format:
-  //!
-  //! "00000000-0000-0000-0000-000000000000"
   Standard_EXPORT void ShallowDump(Standard_OStream& aStream) const;
 
-  //! Check the format of a GUID string.
-  //! It checks the size, the position of the '-' and the correct size of fields.
   Standard_EXPORT static bool CheckGUIDFormat(const char* aGuid);
 
   template <class T>

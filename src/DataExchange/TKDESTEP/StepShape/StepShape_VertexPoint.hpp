@@ -11,7 +11,6 @@ class StepShape_VertexPoint : public StepShape_Vertex
 {
 
 public:
-  //! Returns a VertexPoint
   Standard_EXPORT StepShape_VertexPoint();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

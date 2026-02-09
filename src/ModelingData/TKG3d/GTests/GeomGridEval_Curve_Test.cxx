@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -39,7 +28,6 @@ namespace
 {
   const double THE_TOLERANCE = 1e-10;
 
-  //! Helper function to create uniform parameters
   NCollection_Array1<double> CreateUniformParams(double theFirst, double theLast, int theNbPoints)
   {
     NCollection_Array1<double> aParams(1, theNbPoints);
@@ -51,7 +39,6 @@ namespace
     return aParams;
   }
 
-  //! Helper function to create a simple B-spline curve
   occ::handle<Geom_BSplineCurve> CreateSimpleBSpline()
   {
     NCollection_Array1<gp_Pnt> aPoles(1, 4);
@@ -71,13 +58,9 @@ namespace
   }
 } // namespace
 
-//==================================================================================================
-// Tests for GeomGridEval_Line
-//==================================================================================================
-
 TEST(GeomGridEval_LineTest, BasicEvaluation)
 {
-  // Create a Geom_Line along X axis starting at origin
+
   occ::handle<Geom_Line> aGeomLine = new Geom_Line(gp_Pnt(0, 0, 0), gp_Dir(1, 0, 0));
 
   GeomGridEval_Line anEval(aGeomLine);
@@ -88,7 +71,6 @@ TEST(GeomGridEval_LineTest, BasicEvaluation)
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
   EXPECT_EQ(aGrid.Size(), 11);
 
-  // Verify points
   for (int i = 1; i <= 11; ++i)
   {
     const double t         = aParams.Value(i);
@@ -101,7 +83,7 @@ TEST(GeomGridEval_LineTest, BasicEvaluation)
 
 TEST(GeomGridEval_LineTest, NonOriginLine)
 {
-  // Create a line at (1, 2, 3) along direction (1, 1, 1)/sqrt(3)
+
   occ::handle<Geom_Line> aGeomLine = new Geom_Line(gp_Pnt(1, 2, 3), gp_Dir(1, 1, 1));
 
   GeomGridEval_Line anEval(aGeomLine);
@@ -110,29 +92,22 @@ TEST(GeomGridEval_LineTest, NonOriginLine)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // Verify first and last point
   EXPECT_NEAR(aGrid.Value(1).Distance(gp_Pnt(1, 2, 3)), 0.0, THE_TOLERANCE);
 
-  // Line direction is normalized, so t=5 moves 5 units along normalized direction
   const double d     = 5.0 / std::sqrt(3.0);
   gp_Pnt       aLast = gp_Pnt(1 + d, 2 + d, 3 + d);
   EXPECT_NEAR(aGrid.Value(6).Distance(aLast), 0.0, THE_TOLERANCE);
 }
 
-//==================================================================================================
-// Tests for GeomGridEval_Circle
-//==================================================================================================
-
 TEST(GeomGridEval_CircleTest, BasicEvaluation)
 {
-  // Circle in XY plane, radius 2, center at origin
+
   occ::handle<Geom_Circle> aGeomCircle =
     new Geom_Circle(gp_Ax2(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 2.0);
 
   GeomGridEval_Circle anEval(aGeomCircle);
   EXPECT_FALSE(anEval.Geometry().IsNull());
 
-  // Test at 0, PI/2, PI, 3PI/2, 2PI
   NCollection_Array1<double> aParams(1, 5);
   aParams.SetValue(1, 0.0);
   aParams.SetValue(2, M_PI / 2);
@@ -142,30 +117,25 @@ TEST(GeomGridEval_CircleTest, BasicEvaluation)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // u=0: (2, 0, 0)
   EXPECT_NEAR(aGrid.Value(1).X(), 2.0, THE_TOLERANCE);
   EXPECT_NEAR(aGrid.Value(1).Y(), 0.0, THE_TOLERANCE);
 
-  // u=PI/2: (0, 2, 0)
   EXPECT_NEAR(aGrid.Value(2).X(), 0.0, THE_TOLERANCE);
   EXPECT_NEAR(aGrid.Value(2).Y(), 2.0, THE_TOLERANCE);
 
-  // u=PI: (-2, 0, 0)
   EXPECT_NEAR(aGrid.Value(3).X(), -2.0, THE_TOLERANCE);
   EXPECT_NEAR(aGrid.Value(3).Y(), 0.0, THE_TOLERANCE);
 
-  // u=3PI/2: (0, -2, 0)
   EXPECT_NEAR(aGrid.Value(4).X(), 0.0, THE_TOLERANCE);
   EXPECT_NEAR(aGrid.Value(4).Y(), -2.0, THE_TOLERANCE);
 
-  // u=2PI: back to (2, 0, 0)
   EXPECT_NEAR(aGrid.Value(5).X(), 2.0, THE_TOLERANCE);
   EXPECT_NEAR(aGrid.Value(5).Y(), 0.0, THE_TOLERANCE);
 }
 
 TEST(GeomGridEval_CircleTest, NonStandardCircle)
 {
-  // Circle in YZ plane, radius 3, center at (1, 0, 0)
+
   occ::handle<Geom_Circle> aGeomCircle =
     new Geom_Circle(gp_Ax2(gp_Pnt(1, 0, 0), gp_Dir(1, 0, 0)), 3.0);
 
@@ -175,18 +145,13 @@ TEST(GeomGridEval_CircleTest, NonStandardCircle)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // All points should be at distance 3 from center (1, 0, 0)
   const gp_Pnt aCenter(1, 0, 0);
   for (int i = 1; i <= aGrid.Size(); ++i)
   {
     EXPECT_NEAR(aGrid.Value(i).Distance(aCenter), 3.0, THE_TOLERANCE);
-    EXPECT_NEAR(aGrid.Value(i).X(), 1.0, THE_TOLERANCE); // All points have X=1
+    EXPECT_NEAR(aGrid.Value(i).X(), 1.0, THE_TOLERANCE);
   }
 }
-
-//==================================================================================================
-// Tests for GeomGridEval_BSplineCurve
-//==================================================================================================
 
 TEST(GeomGridEval_BSplineCurveTest, BasicEvaluation)
 {
@@ -200,7 +165,6 @@ TEST(GeomGridEval_BSplineCurveTest, BasicEvaluation)
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
   EXPECT_EQ(aGrid.Size(), 11);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 11; ++i)
   {
     gp_Pnt aExpected = aCurve->Value(aParams.Value(i));
@@ -220,19 +184,14 @@ TEST(GeomGridEval_BSplineCurveTest, EndpointsMatch)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // First point should match first pole
   EXPECT_NEAR(aGrid.Value(1).Distance(gp_Pnt(0, 0, 0)), 0.0, THE_TOLERANCE);
-  // Last point should match last pole
+
   EXPECT_NEAR(aGrid.Value(2).Distance(gp_Pnt(4, 0, 0)), 0.0, THE_TOLERANCE);
 }
 
-//==================================================================================================
-// Tests for GeomGridEval_OtherCurve (fallback)
-//==================================================================================================
-
 TEST(GeomGridEval_OtherCurveTest, EllipseFallback)
 {
-  // Ellipse is not directly supported, so it should use OtherCurve fallback
+
   occ::handle<Geom_Ellipse> anEllipse =
     new Geom_Ellipse(gp_Ax2(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 3.0, 2.0);
   GeomAdaptor_Curve anAdaptor(anEllipse);
@@ -243,17 +202,12 @@ TEST(GeomGridEval_OtherCurveTest, EllipseFallback)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 9; ++i)
   {
     gp_Pnt aExpected = anEllipse->Value(aParams.Value(i));
     EXPECT_NEAR(aGrid.Value(i).Distance(aExpected), 0.0, THE_TOLERANCE);
   }
 }
-
-//==================================================================================================
-// Tests for GeomGridEval_Curve (unified dispatcher)
-//==================================================================================================
 
 TEST(GeomGridEval_CurveTest, LineDispatch)
 {
@@ -270,7 +224,6 @@ TEST(GeomGridEval_CurveTest, LineDispatch)
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
   EXPECT_EQ(aGrid.Size(), 11);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 11; ++i)
   {
     gp_Pnt aExpected = aGeomLine->Value(aParams.Value(i));
@@ -293,7 +246,6 @@ TEST(GeomGridEval_CurveTest, CircleDispatch)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 17; ++i)
   {
     gp_Pnt aExpected = aGeomCircle->Value(aParams.Value(i));
@@ -315,7 +267,6 @@ TEST(GeomGridEval_CurveTest, BSplineDispatch)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 21; ++i)
   {
     gp_Pnt aExpected = aCurve->Value(aParams.Value(i));
@@ -338,7 +289,6 @@ TEST(GeomGridEval_CurveTest, EllipseDispatch)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 13; ++i)
   {
     gp_Pnt aExpected = anEllipse->Value(aParams.Value(i));
@@ -361,7 +311,6 @@ TEST(GeomGridEval_CurveTest, HyperbolaDispatch)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 11; ++i)
   {
     gp_Pnt aExpected = aHypr->Value(aParams.Value(i));
@@ -384,7 +333,6 @@ TEST(GeomGridEval_CurveTest, ParabolaDispatch)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 11; ++i)
   {
     gp_Pnt aExpected = aParab->Value(aParams.Value(i));
@@ -394,7 +342,7 @@ TEST(GeomGridEval_CurveTest, ParabolaDispatch)
 
 TEST(GeomGridEval_CurveTest, BezierCurveDispatch)
 {
-  // Bezier curve is not optimized, should use fallback
+
   NCollection_Array1<gp_Pnt> aPoles(1, 4);
   aPoles.SetValue(1, gp_Pnt(0, 0, 0));
   aPoles.SetValue(2, gp_Pnt(1, 2, 0));
@@ -412,7 +360,6 @@ TEST(GeomGridEval_CurveTest, BezierCurveDispatch)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 11; ++i)
   {
     gp_Pnt aExpected = aBezier->Value(aParams.Value(i));
@@ -422,7 +369,7 @@ TEST(GeomGridEval_CurveTest, BezierCurveDispatch)
 
 TEST(GeomGridEval_CurveTest, OffsetCurveFallbackDispatch)
 {
-  // Offset curve is not optimized, should use fallback
+
   occ::handle<Geom_Line>        aLine    = new Geom_Line(gp_Pnt(0, 0, 0), gp_Dir(1, 0, 0));
   occ::handle<Geom_OffsetCurve> anOffset = new Geom_OffsetCurve(aLine, 1.0, gp::DZ());
   GeomAdaptor_Curve             anAdaptor(anOffset);
@@ -436,7 +383,6 @@ TEST(GeomGridEval_CurveTest, OffsetCurveFallbackDispatch)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 6; ++i)
   {
     gp_Pnt aExpected = anOffset->Value(aParams.Value(i));
@@ -479,19 +425,14 @@ TEST(GeomGridEval_CurveTest, EmptyParams)
   anEval.Initialize(anAdaptor);
   EXPECT_TRUE(anEval.IsInitialized());
 
-  // EvaluateGrid with empty params should return empty
   NCollection_Array1<double> aEmptyParams;
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aEmptyParams);
   EXPECT_TRUE(aGrid.IsEmpty());
 }
 
-//==================================================================================================
-// Additional tests for B-spline curves (from BSplCLib_GridEvaluator_Test)
-//==================================================================================================
-
 TEST(GeomGridEval_BSplineCurveTest, RationalBSpline)
 {
-  // Create a rational B-spline (NURBS circle approximation)
+
   NCollection_Array1<gp_Pnt> aPoles(1, 4);
   NCollection_Array1<double> aWeights(1, 4);
 
@@ -522,7 +463,6 @@ TEST(GeomGridEval_BSplineCurveTest, RationalBSpline)
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
   EXPECT_EQ(aGrid.Size(), 21);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 21; ++i)
   {
     gp_Pnt aExpected = aCurve->Value(aParams.Value(i));
@@ -532,8 +472,7 @@ TEST(GeomGridEval_BSplineCurveTest, RationalBSpline)
 
 TEST(GeomGridEval_BSplineCurveTest, MultiSpanBSpline)
 {
-  // Create a B-spline with multiple spans (degree 3, 6 control points, 1 internal knot)
-  // Formula: n_poles = sum(multiplicities) - degree - 1 = (4 + 2 + 4) - 3 - 1 = 6
+
   NCollection_Array1<gp_Pnt> aPoles(1, 6);
   aPoles.SetValue(1, gp_Pnt(0, 0, 0));
   aPoles.SetValue(2, gp_Pnt(1, 2, 0));
@@ -559,7 +498,6 @@ TEST(GeomGridEval_BSplineCurveTest, MultiSpanBSpline)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // Verify against direct evaluation - should match exactly
   for (int i = 1; i <= 31; ++i)
   {
     gp_Pnt aExpected = aCurve->Value(aParams.Value(i));
@@ -569,7 +507,7 @@ TEST(GeomGridEval_BSplineCurveTest, MultiSpanBSpline)
 
 TEST(GeomGridEval_BSplineCurveTest, HighDegree)
 {
-  // Create a higher degree B-spline (degree 5)
+
   NCollection_Array1<gp_Pnt> aPoles(1, 6);
   aPoles.SetValue(1, gp_Pnt(0, 0, 0));
   aPoles.SetValue(2, gp_Pnt(1, 3, 0));
@@ -593,7 +531,6 @@ TEST(GeomGridEval_BSplineCurveTest, HighDegree)
 
   NCollection_Array1<gp_Pnt> aGrid = anEval.EvaluateGrid(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 51; ++i)
   {
     gp_Pnt aExpected = aCurve->Value(aParams.Value(i));
@@ -601,13 +538,9 @@ TEST(GeomGridEval_BSplineCurveTest, HighDegree)
   }
 }
 
-//==================================================================================================
-// Tests for Curve Derivative Evaluation (D1, D2, D3)
-//==================================================================================================
-
 TEST(GeomGridEval_LineTest, DerivativeD1)
 {
-  // Line along (1, 2, 3) normalized direction
+
   occ::handle<Geom_Line> aGeomLine = new Geom_Line(gp_Pnt(0, 0, 0), gp_Dir(1, 2, 3));
   GeomGridEval_Line      anEval(aGeomLine);
 
@@ -616,11 +549,10 @@ TEST(GeomGridEval_LineTest, DerivativeD1)
   NCollection_Array1<GeomGridEval::CurveD1> aGrid = anEval.EvaluateGridD1(aParams);
   EXPECT_EQ(aGrid.Size(), 6);
 
-  // For a line, D1 is constant (the direction vector)
   gp_Dir aDir(1, 2, 3);
   for (int i = 1; i <= 6; ++i)
   {
-    // Verify D1 is the direction
+
     EXPECT_NEAR(aGrid.Value(i).D1.X(), aDir.X(), THE_TOLERANCE);
     EXPECT_NEAR(aGrid.Value(i).D1.Y(), aDir.Y(), THE_TOLERANCE);
     EXPECT_NEAR(aGrid.Value(i).D1.Z(), aDir.Z(), THE_TOLERANCE);
@@ -637,7 +569,6 @@ TEST(GeomGridEval_LineTest, DerivativeD2D3)
   NCollection_Array1<GeomGridEval::CurveD2> aGridD2 = anEval.EvaluateGridD2(aParams);
   NCollection_Array1<GeomGridEval::CurveD3> aGridD3 = anEval.EvaluateGridD3(aParams);
 
-  // For a line, D2 and D3 are zero
   for (int i = 1; i <= 6; ++i)
   {
     EXPECT_NEAR(aGridD2.Value(i).D2.Magnitude(), 0.0, THE_TOLERANCE);
@@ -661,7 +592,6 @@ TEST(GeomGridEval_CircleTest, DerivativeD1)
 
   NCollection_Array1<GeomGridEval::CurveD1> aGrid = anEval.EvaluateGridD1(aParams);
 
-  // Verify D1 against direct evaluation
   for (int i = 1; i <= 5; ++i)
   {
     gp_Pnt aPnt;
@@ -682,7 +612,6 @@ TEST(GeomGridEval_CircleTest, DerivativeD2)
 
   NCollection_Array1<GeomGridEval::CurveD2> aGrid = anEval.EvaluateGridD2(aParams);
 
-  // Verify D2 against direct evaluation
   for (int i = 1; i <= 9; ++i)
   {
     gp_Pnt aPnt;
@@ -703,7 +632,6 @@ TEST(GeomGridEval_BSplineCurveTest, DerivativeD1)
 
   NCollection_Array1<GeomGridEval::CurveD1> aGrid = anEval.EvaluateGridD1(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 11; ++i)
   {
     gp_Pnt aPnt;
@@ -723,7 +651,6 @@ TEST(GeomGridEval_BSplineCurveTest, DerivativeD2)
 
   NCollection_Array1<GeomGridEval::CurveD2> aGrid = anEval.EvaluateGridD2(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 11; ++i)
   {
     gp_Pnt aPnt;
@@ -744,7 +671,6 @@ TEST(GeomGridEval_BSplineCurveTest, DerivativeD3)
 
   NCollection_Array1<GeomGridEval::CurveD3> aGrid = anEval.EvaluateGridD3(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 11; ++i)
   {
     gp_Pnt aPnt;
@@ -770,7 +696,6 @@ TEST(GeomGridEval_CurveTest, UnifiedDerivativeD1)
 
   NCollection_Array1<GeomGridEval::CurveD1> aGrid = anEval.EvaluateGridD1(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 9; ++i)
   {
     gp_Pnt aPnt;
@@ -793,7 +718,6 @@ TEST(GeomGridEval_CurveTest, UnifiedDerivativeD2)
 
   NCollection_Array1<GeomGridEval::CurveD2> aGrid = anEval.EvaluateGridD2(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 11; ++i)
   {
     gp_Pnt aPnt;
@@ -805,10 +729,6 @@ TEST(GeomGridEval_CurveTest, UnifiedDerivativeD2)
   }
 }
 
-//==================================================================================================
-// Tests for Curve Third Derivative Evaluation (D3)
-//==================================================================================================
-
 TEST(GeomGridEval_CircleTest, DerivativeD3)
 {
   occ::handle<Geom_Circle> aGeomCircle =
@@ -819,7 +739,6 @@ TEST(GeomGridEval_CircleTest, DerivativeD3)
 
   NCollection_Array1<GeomGridEval::CurveD3> aGrid = anEval.EvaluateGridD3(aParams);
 
-  // Verify D3 against direct evaluation
   for (int i = 1; i <= 9; ++i)
   {
     gp_Pnt aPnt;
@@ -834,7 +753,7 @@ TEST(GeomGridEval_CircleTest, DerivativeD3)
 
 TEST(GeomGridEval_OffsetCurveTest, DerivativeD3)
 {
-  // Offset curve from a circle
+
   occ::handle<Geom_Circle> aCircle = new Geom_Circle(gp_Ax2(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)), 2.0);
   occ::handle<Geom_OffsetCurve> anOffset = new Geom_OffsetCurve(aCircle, 0.5, gp::DZ());
   GeomAdaptor_Curve             anAdaptor(anOffset);
@@ -845,7 +764,6 @@ TEST(GeomGridEval_OffsetCurveTest, DerivativeD3)
 
   NCollection_Array1<GeomGridEval::CurveD3> aGrid = anEval.EvaluateGridD3(aParams);
 
-  // Verify D3 against adaptor evaluation
   for (int i = 1; i <= 9; ++i)
   {
     gp_Pnt aPnt;
@@ -860,7 +778,7 @@ TEST(GeomGridEval_OffsetCurveTest, DerivativeD3)
 
 TEST(GeomGridEval_CurveTest, OffsetCurveDerivativeD3)
 {
-  // Offset curve via unified dispatcher
+
   occ::handle<Geom_Line>        aLine    = new Geom_Line(gp_Pnt(0, 0, 0), gp_Dir(1, 0, 0));
   occ::handle<Geom_OffsetCurve> anOffset = new Geom_OffsetCurve(aLine, 1.0, gp::DZ());
   GeomAdaptor_Curve             anAdaptor(anOffset);
@@ -873,7 +791,6 @@ TEST(GeomGridEval_CurveTest, OffsetCurveDerivativeD3)
 
   NCollection_Array1<GeomGridEval::CurveD3> aGrid = anEval.EvaluateGridD3(aParams);
 
-  // Verify D3 against adaptor evaluation
   for (int i = 1; i <= 6; ++i)
   {
     gp_Pnt aPnt;
@@ -898,7 +815,6 @@ TEST(GeomGridEval_CurveTest, UnifiedDerivativeD3)
 
   NCollection_Array1<GeomGridEval::CurveD3> aGrid = anEval.EvaluateGridD3(aParams);
 
-  // Verify against direct evaluation
   for (int i = 1; i <= 11; ++i)
   {
     gp_Pnt aPnt;
@@ -910,10 +826,6 @@ TEST(GeomGridEval_CurveTest, UnifiedDerivativeD3)
     EXPECT_NEAR((aGrid.Value(i).D3 - aD3).Magnitude(), 0.0, THE_TOLERANCE);
   }
 }
-
-//==================================================================================================
-// Tests for BSpline Curve DN (Arbitrary Order Derivative)
-//==================================================================================================
 
 TEST(GeomGridEval_BSplineCurveTest, DerivativeDN_Order1)
 {
@@ -965,7 +877,7 @@ TEST(GeomGridEval_BSplineCurveTest, DerivativeDN_Order3)
 
 TEST(GeomGridEval_BSplineCurveTest, DerivativeDN_BeyondDegree)
 {
-  // Cubic B-spline (degree 3), 4th derivative should be zero
+
   occ::handle<Geom_BSplineCurve> aCurve = CreateSimpleBSpline();
   GeomGridEval_BSplineCurve      anEval(aCurve);
 
@@ -981,7 +893,7 @@ TEST(GeomGridEval_BSplineCurveTest, DerivativeDN_BeyondDegree)
 
 TEST(GeomGridEval_BSplineCurveTest, DerivativeDN_RationalCurve)
 {
-  // Create a rational B-spline (NURBS)
+
   NCollection_Array1<gp_Pnt> aPoles(1, 4);
   NCollection_Array1<double> aWeights(1, 4);
 
@@ -1008,7 +920,6 @@ TEST(GeomGridEval_BSplineCurveTest, DerivativeDN_RationalCurve)
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 1.0, 21);
 
-  // Test DN for orders 1, 2, 3
   for (int aOrder = 1; aOrder <= 3; ++aOrder)
   {
     NCollection_Array1<gp_Vec> aGrid = anEval.EvaluateGridDN(aParams, aOrder);
@@ -1023,7 +934,7 @@ TEST(GeomGridEval_BSplineCurveTest, DerivativeDN_RationalCurve)
 
 TEST(GeomGridEval_BSplineCurveTest, DerivativeDN_MultiSpan)
 {
-  // Create a multi-span B-spline (degree 3, with internal knot)
+
   NCollection_Array1<gp_Pnt> aPoles(1, 6);
   aPoles.SetValue(1, gp_Pnt(0, 0, 0));
   aPoles.SetValue(2, gp_Pnt(1, 2, 0));
@@ -1046,7 +957,6 @@ TEST(GeomGridEval_BSplineCurveTest, DerivativeDN_MultiSpan)
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 1.0, 31);
 
-  // Test DN for orders 1, 2, 3
   for (int aOrder = 1; aOrder <= 3; ++aOrder)
   {
     NCollection_Array1<gp_Vec> aGrid = anEval.EvaluateGridDN(aParams, aOrder);

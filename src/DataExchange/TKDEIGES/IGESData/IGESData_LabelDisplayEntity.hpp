@@ -4,8 +4,6 @@
 
 #include <IGESData_IGESEntity.hpp>
 
-//! defines required type for LabelDisplay in directory part
-//! an effective LabelDisplay entity must inherits it
 class IGESData_LabelDisplayEntity : public IGESData_IGESEntity
 {
 

@@ -52,14 +52,11 @@ void BuildPolynomialCosAndSin(const double                              UFirst,
 {
 
   double Delta, locUFirst,
-    //  locULast,
-    //  temp_value,
+
     t_min, t_max, trim_min, trim_max, middle, Angle, PI2 = 2 * M_PI;
   int ii, degree = num_poles - 1;
   locUFirst = UFirst;
 
-  // Return UFirst in [-2PI; 2PI]
-  // to make rotations without risk
   while (locUFirst > PI2)
   {
     locUFirst -= PI2;
@@ -69,19 +66,10 @@ void BuildPolynomialCosAndSin(const double                              UFirst,
     locUFirst += PI2;
   }
 
-  // Return to the arc [0, Delta]
   Delta  = ULast - UFirst;
   middle = 0.5e0 * Delta;
 
-  // coincide the required bisector of the angular sector with
-  // axis -Ox definition of the circle in Bezier of degree 7 so that
-  // parametre 1/2 of Bezier was exactly a point of the bissectrice
-  // of the required angular sector.
-  //
   Angle = middle - M_PI;
-  //
-  // Circle of radius 1. See Euclid
-  //
 
   NCollection_Array1<gp_Pnt2d> TPoles(1, 8), NewTPoles(1, 8);
   TPoles(1).SetCoord(1., 0.);
@@ -106,12 +94,9 @@ void BuildPolynomialCosAndSin(const double                              UFirst,
   t_max *= 0.5e0;
   t_max    = std::min(t_max, 1.0e0);
   trim_max = Locate(Delta, TPoles, t_min, t_max);
-  //
-  // as Bezier is symmetric correspondingly to the bissector
-  // of the angular sector ...
 
   trim_min = 1.0e0 - trim_max;
-  //
+
   double knot_array[2];
   int    mults_array[2];
   knot_array[0]  = 0.0e0;
@@ -135,7 +120,6 @@ void BuildPolynomialCosAndSin(const double                              UFirst,
                      NewTPoles,
                      BSplCLib::NoWeights());
 
-  // readjustment is obviously redundant
   double   SinD = std::sin(Delta), CosD = std::cos(Delta);
   gp_Pnt2d Pdeb(1., 0.);
   gp_Pnt2d Pfin(CosD, SinD);
@@ -146,14 +130,12 @@ void BuildPolynomialCosAndSin(const double                              UFirst,
   Pdeb.ChangeCoord() += theXY;
   NewTPoles(2) = Pdeb;
 
-  // readjustment to Euclid
   dtg                  = NewTPoles(num_poles).Distance(NewTPoles(num_poles - 1));
   NewTPoles(num_poles) = Pfin;
   theXY.SetCoord(dtg * SinD, -dtg * CosD);
   Pfin.ChangeCoord() += theXY;
   NewTPoles(num_poles - 1) = Pfin;
 
-  // Rotation to return to the arc [LocUFirst, LocUFirst+Delta]
   T.SetRotation(gp::Origin2d(), locUFirst);
   for (ii = 1; ii <= num_poles; ii++)
   {
@@ -167,104 +149,3 @@ void BuildPolynomialCosAndSin(const double                              UFirst,
     DenominatorPtr->SetValue(ii, 1.);
   }
 }
-
-/*
-void BuildHermitePolynomialCosAndSin
-  (const double UFirst,
-   const double ULast,
-   const int num_poles,
-   occ::handle<NCollection_HArray1<double>>& CosNumeratorPtr,
-   occ::handle<NCollection_HArray1<double>>& SinNumeratorPtr,
-   occ::handle<NCollection_HArray1<double>>& DenominatorPtr)
-{
-
-  if (num_poles%2 != 0) {
-    throw Standard_ConstructionError();
-  }
-  int ii;
-  int ordre_deriv = num_poles/2;
-  double ang = ULast - UFirst;
-  double Cd = std::cos(UFirst);
-  double Sd = std::sin(UFirst);
-  double Cf = std::cos(ULast);
-  double Sf = std::sin(ULast);
-
-  int Degree = num_poles-1;
-  NCollection_Array1<double> FlatKnots(1,2*num_poles);
-  NCollection_Array1<double> Parameters(1,num_poles);
-  NCollection_Array1<int> ContactOrderArray(1,num_poles);
-  NCollection_Array1<gp_Pnt2d> Poles(1,num_poles);
-  NCollection_Array1<gp_Pnt2d> TPoles(1,num_poles);
-
-  for (ii=1; ii<=num_poles; ii++) {
-    FlatKnots(ii) = 0.;
-    FlatKnots(ii+num_poles) = 1.;
-  }
-
-  double coef = 1.;
-  double xd,yd,xf,yf;
-
-  for (ii=1; ii<=ordre_deriv; ii++) {
-    Parameters(ii) = 0.;
-    Parameters(ii+ordre_deriv) = 1.;
-
-    ContactOrderArray(ii) = ContactOrderArray(num_poles-ii+1) = ii-1;
-
-    switch ((ii-1)%4) {
-    case 0:
-      {
-    xd = Cd*coef;
-    yd = Sd*coef;
-    xf = Cf*coef;
-    yf = Sf*coef;
-      }
-      break;
-    case 1:
-      {
-    xd = -Sd*coef;
-    yd =  Cd*coef;
-    xf = -Sf*coef;
-    yf =  Cf*coef;
-      }
-      break;
-    case 2:
-      {
-    xd = -Cd*coef;
-    yd = -Sd*coef;
-    xf = -Cf*coef;
-    yf = -Sf*coef;
-      }
-      break;
-    case 3:
-      {
-    xd =  Sd*coef;
-    yd = -Cd*coef;
-    xf =  Sf*coef;
-    yf = -Cf*coef;
-      }
-      break;
-    }
-
-    Poles(ii).SetX(xd);
-    Poles(ii).SetY(yd);
-    Poles(num_poles-ii+1).SetX(xf);
-    Poles(num_poles-ii+1).SetY(yf);
-
-    coef *= ang;
-  }
-
-  int InversionPb;
-  BSplCLib::Interpolate(Degree,FlatKnots,Parameters,
-            ContactOrderArray,Poles,InversionPb);
-
-  if (InversionPb !=0) {
-    throw Standard_ConstructionError();
-  }
-  for (ii=1; ii<=num_poles; ii++) {
-    CosNumeratorPtr->SetValue(ii,Poles(ii).X());
-    SinNumeratorPtr->SetValue(ii,Poles(ii).Y());
-    DenominatorPtr->SetValue(ii,1.);
-  }
-
-}
-*/

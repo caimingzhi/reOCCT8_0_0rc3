@@ -15,7 +15,6 @@ class StepGeom_RectangularCompositeSurface : public StepGeom_BoundedSurface
 {
 
 public:
-  //! Returns a RectangularCompositeSurface
   Standard_EXPORT StepGeom_RectangularCompositeSurface();
 
   Standard_EXPORT void Init(

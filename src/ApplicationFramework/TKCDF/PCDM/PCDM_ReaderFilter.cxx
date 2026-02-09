@@ -1,15 +1,4 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <PCDM_ReaderFilter.hpp>
 
@@ -64,8 +53,7 @@ bool PCDM_ReaderFilter::IsPassed(const TCollection_AsciiString& theEntry) const
     if (theEntry.StartsWith(anEntry.Value()))
     {
       if (theEntry.Length() > anEntry.Value().Length()
-          && theEntry.Value(anEntry.Value().Length() + 1)
-               != ':') // case when theEntry="0:10" should not match "0:1"
+          && theEntry.Value(anEntry.Value().Length() + 1) != ':')
         continue;
       return true;
     }
@@ -75,15 +63,14 @@ bool PCDM_ReaderFilter::IsPassed(const TCollection_AsciiString& theEntry) const
 
 bool PCDM_ReaderFilter::IsSubPassed(const TCollection_AsciiString& theEntry) const
 {
-  if (mySubTrees.IsEmpty() || theEntry.Length() == 2) // root is always passed if any sub is defined
+  if (mySubTrees.IsEmpty() || theEntry.Length() == 2)
     return true;
   for (NCollection_List<TCollection_AsciiString>::Iterator anEntry(mySubTrees); anEntry.More();
        anEntry.Next())
   {
     if (theEntry.Length() < anEntry.Value().Length()
         && anEntry.Value().Value(theEntry.Length() + 1) == ':'
-        && // case when theEntry="0:1" should not match "0:10"
-        anEntry.Value().StartsWith(theEntry))
+        && anEntry.Value().StartsWith(theEntry))
       return true;
   }
   return false;
@@ -102,13 +89,13 @@ void PCDM_ReaderFilter::StartIteration()
   myTree.Bind(-1, nullptr);
   if (mySubTrees.IsEmpty())
     return;
-  // create an iteration-tree by the mySubTrees entries
+
   for (NCollection_List<TCollection_AsciiString>::Iterator aTreeIter(mySubTrees); aTreeIter.More();
        aTreeIter.Next())
   {
     TagTree*                aMap = &myTree;
     TCollection_AsciiString aTagStr, anEntry = aTreeIter.Value();
-    for (int aTagIndex = 2; !anEntry.IsEmpty(); ++aTagIndex) // skip the root tag
+    for (int aTagIndex = 2; !anEntry.IsEmpty(); ++aTagIndex)
     {
       aTagStr = anEntry.Token(":", aTagIndex);
       if (aTagStr.IsEmpty())
@@ -121,12 +108,12 @@ void PCDM_ReaderFilter::StartIteration()
       else
       {
         TagTree* aNewMap = new TagTree;
-        aNewMap->Bind(-1, aMap); // to be able to iterate up, keep father map in the child
+        aNewMap->Bind(-1, aMap);
         aMap->Bind(aTag, aNewMap);
         aMap = aNewMap;
       }
     }
-    aMap->Bind(-2, nullptr); // identifier that this node is in subtrees definition
+    aMap->Bind(-2, nullptr);
   }
 }
 

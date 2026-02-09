@@ -4,9 +4,6 @@
 
 class LDOM_NullPtr;
 
-//  Block of comments describing class LDOM_BasicNode
-//
-
 class LDOM_BasicNode
 {
 public:
@@ -20,15 +17,11 @@ public:
   Standard_EXPORT const LDOM_BasicNode* GetSibling() const;
 
 protected:
-  // ---------- PROTECTED METHODS ----------
-
   LDOM_BasicNode()
       : myNodeType(LDOM_Node::UNKNOWN),
         mySibling(nullptr)
   {
   }
-
-  //    Empty constructor
 
   LDOM_BasicNode(LDOM_Node::NodeType aType)
       : myNodeType(aType),
@@ -36,15 +29,11 @@ protected:
   {
   }
 
-  //    Constructor
-
   LDOM_BasicNode(const LDOM_BasicNode& anOther)
       : myNodeType(anOther.getNodeType()),
         mySibling(anOther.GetSibling())
   {
   }
-
-  //    Copy constructor
 
   LDOM_BasicNode& operator=(const LDOM_NullPtr*)
   {
@@ -60,7 +49,6 @@ protected:
   friend class LDOM_BasicElement;
   friend class LDOM_Node;
   friend class LDOMParser;
-  // ---------- PROTECTED FIELDSS ----------
 
   LDOM_Node::NodeType   myNodeType;
   const LDOM_BasicNode* mySibling;

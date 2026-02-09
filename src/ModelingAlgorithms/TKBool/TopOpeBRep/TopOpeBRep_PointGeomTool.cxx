@@ -7,8 +7,6 @@
 #include <TopOpeBRep_VPointInter.hpp>
 #include <TopOpeBRepDS_Point.hpp>
 
-//=================================================================================================
-
 TopOpeBRepDS_Point TopOpeBRep_PointGeomTool::MakePoint(const TopOpeBRep_VPointInter& IP)
 {
   double tolip  = IP.Tolerance();
@@ -34,7 +32,7 @@ TopOpeBRepDS_Point TopOpeBRep_PointGeomTool::MakePoint(const TopOpeBRep_VPointIn
     const TopoDS_Edge& E2 = TopoDS::Edge(IP.Edge(2));
     double             t1 = BRep_Tool::Tolerance(E1);
     double             t2 = BRep_Tool::Tolerance(E2);
-    //    tolout = std::max(t1,t2);
+
     if (t1 > 0.9)
       t1 = 0.9;
     if (t1 > 0.9)
@@ -45,15 +43,11 @@ TopOpeBRepDS_Point TopOpeBRep_PointGeomTool::MakePoint(const TopOpeBRep_VPointIn
   return TopOpeBRepDS_Point(IP.Value(), tolout);
 }
 
-//=================================================================================================
-
 TopOpeBRepDS_Point TopOpeBRep_PointGeomTool::MakePoint(const TopOpeBRep_Point2d& P2D)
 {
   double tol = P2D.Tolerance();
   return TopOpeBRepDS_Point(P2D.Value(), tol);
 }
-
-//=================================================================================================
 
 TopOpeBRepDS_Point TopOpeBRep_PointGeomTool::MakePoint(const TopOpeBRep_FaceEdgeIntersector& FEI)
 {
@@ -61,14 +55,10 @@ TopOpeBRepDS_Point TopOpeBRep_PointGeomTool::MakePoint(const TopOpeBRep_FaceEdge
   return TopOpeBRepDS_Point(FEI.Value(), tol);
 }
 
-//=================================================================================================
-
 TopOpeBRepDS_Point TopOpeBRep_PointGeomTool::MakePoint(const TopoDS_Shape& S)
 {
   return TopOpeBRepDS_Point(S);
 }
-
-//=================================================================================================
 
 bool TopOpeBRep_PointGeomTool::IsEqual(const TopOpeBRepDS_Point& DSP1,
                                        const TopOpeBRepDS_Point& DSP2)

@@ -10,7 +10,6 @@ class StepBasic_ConversionBasedUnitAndAreaUnit : public StepBasic_ConversionBase
 {
 
 public:
-  //! Returns a ConversionBasedUnitAndAreaUnit
   Standard_EXPORT StepBasic_ConversionBasedUnitAndAreaUnit();
 
   Standard_EXPORT void SetAreaUnit(const occ::handle<StepBasic_AreaUnit>& anAreaUnit);

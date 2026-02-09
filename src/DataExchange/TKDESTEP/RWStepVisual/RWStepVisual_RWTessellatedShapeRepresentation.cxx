@@ -1,4 +1,4 @@
-// Created on : Thu Mar 24 18:30:12 2022
+
 
 #include "RWStepVisual_RWTessellatedShapeRepresentation.hpp"
 #include <StepVisual_TessellatedShapeRepresentation.hpp>
@@ -11,12 +11,8 @@
 #include <NCollection_HArray1.hpp>
 #include <StepRepr_RepresentationContext.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWTessellatedShapeRepresentation::RWStepVisual_RWTessellatedShapeRepresentation() =
   default;
-
-//=================================================================================================
 
 void RWStepVisual_RWTessellatedShapeRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&                   theData,
@@ -24,13 +20,11 @@ void RWStepVisual_RWTessellatedShapeRepresentation::ReadStep(
   occ::handle<Interface_Check>&                                 theCheck,
   const occ::handle<StepVisual_TessellatedShapeRepresentation>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 3, theCheck, "tessellated_shape_representation"))
   {
     return;
   }
-
-  // Inherited fields of Representation
 
   occ::handle<TCollection_HAsciiString> aRepresentation_Name;
   theData->ReadString(theNum, 1, "representation.name", theCheck, aRepresentation_Name);
@@ -64,18 +58,13 @@ void RWStepVisual_RWTessellatedShapeRepresentation::ReadStep(
                       STANDARD_TYPE(StepRepr_RepresentationContext),
                       aRepresentation_ContextOfItems);
 
-  // Initialize entity
   theEnt->Init(aRepresentation_Name, aRepresentation_Items, aRepresentation_ContextOfItems);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWTessellatedShapeRepresentation::WriteStep(
   StepData_StepWriter&                                          theSW,
   const occ::handle<StepVisual_TessellatedShapeRepresentation>& theEnt) const
 {
-
-  // Own fields of Representation
 
   theSW.Send(theEnt->Name());
 
@@ -90,14 +79,11 @@ void RWStepVisual_RWTessellatedShapeRepresentation::WriteStep(
   theSW.Send(theEnt->ContextOfItems());
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWTessellatedShapeRepresentation::Share(
   const occ::handle<StepVisual_TessellatedShapeRepresentation>& theEnt,
   Interface_EntityIterator&                                     theIter) const
 {
 
-  // Inherited fields of Representation
   if (!theEnt->StepRepr_Representation::Items().IsNull())
   {
     for (int i1 = 1; i1 <= theEnt->StepRepr_Representation::Items()->Length(); i1++)

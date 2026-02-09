@@ -8,8 +8,6 @@
 #include <Standard_ConstructionError.hpp>
 #include <Standard_Dump.hpp>
 
-//=================================================================================================
-
 gp_Ax3::gp_Ax3(const gp_Pnt& P, const gp_Dir& V)
     : axis(P, V)
 {
@@ -20,11 +18,6 @@ gp_Ax3::gp_Ax3(const gp_Pnt& P, const gp_Dir& V)
   const double Babs = std::abs(B);
   const double Cabs = std::abs(C);
   gp_Dir       D;
-
-  //  pour determiner l axe X :
-  //  on dit que le produit scalaire Vx.V = 0.
-  //  et on recherche le max(A,B,C) pour faire la division.
-  //  l une des coordonnees du vecteur est nulle.
 
   if (Babs <= Aabs && Babs <= Cabs)
   {

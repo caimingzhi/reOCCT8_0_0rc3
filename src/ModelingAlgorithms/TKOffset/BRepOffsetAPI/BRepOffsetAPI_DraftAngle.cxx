@@ -31,19 +31,13 @@
 #include <Geom2dInt_GInter.hpp>
 #include <IntRes2d_IntersectionPoint.hpp>
 
-//=================================================================================================
-
 BRepOffsetAPI_DraftAngle::BRepOffsetAPI_DraftAngle() = default;
-
-//=================================================================================================
 
 BRepOffsetAPI_DraftAngle::BRepOffsetAPI_DraftAngle(const TopoDS_Shape& S)
 {
   myInitialShape = S;
   myModification = new Draft_Modification(S);
 }
-
-//=================================================================================================
 
 void BRepOffsetAPI_DraftAngle::Clear()
 {
@@ -52,8 +46,6 @@ void BRepOffsetAPI_DraftAngle::Clear()
     occ::down_cast<Draft_Modification>(myModification)->Clear();
   }
 }
-
-//=================================================================================================
 
 void BRepOffsetAPI_DraftAngle::Init(const TopoDS_Shape& S)
 {
@@ -69,23 +61,19 @@ void BRepOffsetAPI_DraftAngle::Init(const TopoDS_Shape& S)
   }
 }
 
-//=================================================================================================
-
 void BRepOffsetAPI_DraftAngle::Add(const TopoDS_Face& F,
                                    const gp_Dir&      D,
                                    const double       Angle,
                                    const gp_Pln&      Plane,
                                    const bool         Flag)
 {
-  // POP-DPF : protection
+
   if (std::abs(Angle) <= 1.e-04)
     return;
   Standard_NullObject_Raise_if(myInitialShape.IsNull(),
                                "BRepOffsetAPI_DraftAngle::Add() - initial shape is not set");
   occ::down_cast<Draft_Modification>(myModification)->Add(F, D, Angle, Plane, Flag);
 }
-
-//=================================================================================================
 
 bool BRepOffsetAPI_DraftAngle::AddDone() const
 {
@@ -94,16 +82,12 @@ bool BRepOffsetAPI_DraftAngle::AddDone() const
   return occ::down_cast<Draft_Modification>(myModification)->ProblematicShape().IsNull();
 }
 
-//=================================================================================================
-
 void BRepOffsetAPI_DraftAngle::Remove(const TopoDS_Face& F)
 {
   Standard_NullObject_Raise_if(myInitialShape.IsNull(),
                                "BRepOffsetAPI_DraftAngle::Remove() - initial shape is not set");
   occ::down_cast<Draft_Modification>(myModification)->Remove(F);
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& BRepOffsetAPI_DraftAngle::ProblematicShape() const
 {
@@ -113,16 +97,12 @@ const TopoDS_Shape& BRepOffsetAPI_DraftAngle::ProblematicShape() const
   return occ::down_cast<Draft_Modification>(myModification)->ProblematicShape();
 }
 
-//=================================================================================================
-
 Draft_ErrorStatus BRepOffsetAPI_DraftAngle::Status() const
 {
   Standard_NullObject_Raise_if(myInitialShape.IsNull(),
                                "BRepOffsetAPI_DraftAngle::Status() - initial shape is not set");
   return occ::down_cast<Draft_Modification>(myModification)->Error();
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_DraftAngle::ConnectedFaces(
   const TopoDS_Face& F) const
@@ -133,8 +113,6 @@ const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_DraftAngle::ConnectedFaces(
   return occ::down_cast<Draft_Modification>(myModification)->ConnectedFaces(F);
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_DraftAngle::ModifiedFaces() const
 {
   Standard_NullObject_Raise_if(
@@ -142,8 +120,6 @@ const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_DraftAngle::ModifiedFaces() 
     "BRepOffsetAPI_DraftAngle::ModifiedFaces() - initial shape is not set");
   return occ::down_cast<Draft_Modification>(myModification)->ModifiedFaces();
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_DraftAngle::Generated(const TopoDS_Shape& S)
 {
@@ -173,8 +149,6 @@ const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_DraftAngle::Generated(const 
   return myGenerated;
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_DraftAngle::Modified(const TopoDS_Shape& S)
 {
   myGenerated.Clear();
@@ -191,7 +165,7 @@ const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_DraftAngle::Modified(const T
 
     if (!DMod->NewSurface(TopoDS::Face(S), Surf, L, Tol, RW, RF))
     {
-      // Ce n est pas une generation => peut etre une  modif
+
       if (myVtxToReplace.IsEmpty())
       {
         myGenerated.Append(ModifiedShape(S));
@@ -208,8 +182,6 @@ const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_DraftAngle::Modified(const T
   }
   return myGenerated;
 }
-
-//=================================================================================================
 
 TopoDS_Shape BRepOffsetAPI_DraftAngle::ModifiedShape(const TopoDS_Shape& S) const
 {
@@ -231,9 +203,7 @@ TopoDS_Shape BRepOffsetAPI_DraftAngle::ModifiedShape(const TopoDS_Shape& S) cons
   }
 }
 
-//=================================================================================================
-
-void BRepOffsetAPI_DraftAngle::Build(const Message_ProgressRange& /*theRange*/)
+void BRepOffsetAPI_DraftAngle::Build(const Message_ProgressRange&)
 {
   occ::down_cast<Draft_Modification>(myModification)->Perform();
   if (!occ::down_cast<Draft_Modification>(myModification)->IsDone())
@@ -247,8 +217,6 @@ void BRepOffsetAPI_DraftAngle::Build(const Message_ProgressRange& /*theRange*/)
     CorrectVertexTol();
   }
 }
-
-//=================================================================================================
 
 void BRepOffsetAPI_DraftAngle::CorrectWires()
 {
@@ -302,19 +270,17 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
     CurEdge = Eseq(i);
     CurWire = Wseq(i);
     CurFace = Fseq(i);
-    //
+
     const TopoDS_Face& aFace = TopoDS::Face(CurFace);
-    //
-    // Prepare 2D adaptors for intersection.
-    // The seam edge has two 2D curve, thus we have to create 2 adaptors
+
     BRepAdaptor_Curve2d aBAC2D1(TopoDS::Edge(CurEdge), aFace);
     BRepAdaptor_Curve2d aBAC2D1R(TopoDS::Edge(CurEdge.Reversed()), aFace);
-    // Get surface of the face to get 3D intersection point
+
     TopLoc_Location                  aLoc;
     const occ::handle<Geom_Surface>& aSurf = BRep_Tool::Surface(aFace, aLoc);
-    // Get the tolerance of the current edge to compare intersection points
+
     double aTolCurE = BRep_Tool::Tolerance(TopoDS::Edge(CurEdge));
-    //
+
     wit.Initialize(CurFace);
     for (; wit.More(); wit.Next())
     {
@@ -327,22 +293,21 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
         for (; eit.More(); eit.Next())
         {
           const TopoDS_Edge& anEdge = TopoDS::Edge(eit.Value());
-          //
-          // Prepare 2D adaptor for intersection
+
           BRepAdaptor_Curve2d aBAC2D2(anEdge, aFace);
-          // Perform intersection
+
           Geom2dInt_GInter aGInter;
           aGInter.Perform(aBAC2D1, aBAC2D2, TolInter, TolInter);
           if (!aGInter.IsDone() || aGInter.IsEmpty())
           {
-            // If first intersection is empty try intersection with reversed edge
+
             aGInter.Perform(aBAC2D1R, aBAC2D2, TolInter, TolInter);
             if (!aGInter.IsDone() || aGInter.IsEmpty())
             {
               continue;
             }
           }
-          //
+
           Wadd = true;
           if (!WFmap.IsBound(aWire))
             WFmap.Bind(aWire, CurFace);
@@ -371,21 +336,18 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
             NCollection_Sequence<double> emptyseq;
             Emap.Bind(CurEdge, emptyseq);
           }
-          //
-          // Get the tolerance of edge to compare intersection points
+
           double aTolE = BRep_Tool::Tolerance(anEdge);
-          // Tolerance to compare the intersection points is the maximal
-          // tolerance of intersecting edges
+
           double aTolCmp = std::max(aTolCurE, aTolE);
-          //
+
           int aNbIntPnt = aGInter.NbPoints();
           for (k = 1; k <= aNbIntPnt; ++k)
           {
             const IntRes2d_IntersectionPoint& aP2DInt = aGInter.Point(k);
             const gp_Pnt2d&                   aP2D    = aP2DInt.Value();
             gp_Pnt                            aP3D    = aSurf->Value(aP2D.X(), aP2D.Y());
-            //
-            // Check if the intersection point is new
+
             int ied = 0;
             for (j = 1; j <= pts.Length(); j++)
             {
@@ -404,7 +366,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
               ParsSeam(ind).Append(aP2DInt.ParamOnFirst());
             }
           }
-        } // for (; eit.More(); eit.Next())
+        }
         if (Wadd)
         {
           if (!WWmap.IsBound(CurWire))
@@ -414,11 +376,10 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
           }
           WWmap(CurWire).Append(aWire);
         }
-      } // if (! aWire.IsSame( CurWire ))
-    } // for (; wit.More(); wit.Next())
-  } // for (i = 1; i <= Eseq.Length(); i++)
+      }
+    }
+  }
 
-  // Sorting
   for (i = 1; i <= NonSeam.Length(); i++)
   {
     for (j = 1; j < ParsNonSeam(i).Length(); j++)
@@ -461,9 +422,9 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
   }
   NCollection_DataMap<TopoDS_Shape, NCollection_Sequence<double>, TopTools_ShapeMapHasher> EPmap;
   NCollection_DataMap<TopoDS_Shape, NCollection_Sequence<TopoDS_Shape>, TopTools_ShapeMapHasher>
-    EVmap; // Seam
+    EVmap;
   NCollection_DataMap<TopoDS_Shape, NCollection_Sequence<TopoDS_Shape>, TopTools_ShapeMapHasher>
-    EWmap; // Seam and wires intersecting it
+    EWmap;
   iter.Initialize(Emap);
   for (; iter.More(); iter.Next())
   {
@@ -475,7 +436,6 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
     EWmap.Bind(iter.Key(), shapeseq2);
   }
 
-  // Reconstruction of non-seam edges
   BRepTools_Substitution aSub;
   BRep_Builder           BB;
   for (i = 1; i <= NonSeam.Length(); i++)
@@ -490,7 +450,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
     int firstind         = 1;
     par                  = ParsNonSeam(i)(1);
     TopoDS_Edge SeamEdge = TopoDS::Edge(Seam(i)(1));
-    // Find the face
+
     for (j = 1; j <= Eseq.Length(); j++)
       if (SeamEdge.IsSame(Eseq(j)))
         break;
@@ -511,7 +471,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
     {
       TopoDS_Shape aLocalShape = anEdge.EmptyCopied();
       NewE                     = TopoDS::Edge(aLocalShape);
-      // NewE = TopoDS::Edge( anEdge.EmptyCopied() );
+
       TopoDS_Vertex NewV;
       par = ParsNonSeam(i)(j);
       BB.Range(NewE, prevpar, par);
@@ -548,10 +508,10 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
       prevpar = par;
       PrevV   = NewV;
     }
-    // The last edge
+
     TopoDS_Shape aLocalShape = anEdge.EmptyCopied();
     NewE                     = TopoDS::Edge(aLocalShape);
-    // NewE = TopoDS::Edge( anEdge.EmptyCopied() );
+
     par = LastPar;
     if (std::abs(prevpar - par) > Precision::Confusion())
     {
@@ -562,11 +522,9 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
       NewEdges.Append(NewE);
     }
 
-    // Substitute anEdge by NewEdges
     aSub.Substitute(anEdge, NewEdges);
   }
 
-  // Sorting of EPmap and EVmap and removing repeating points from them
   iter.Initialize(EPmap);
   for (; iter.More(); iter.Next())
   {
@@ -628,7 +586,6 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
     EWmap(iter.Key()) = SeqShape2;
   }
 
-  // Reconstruction of seam edges
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> VEmap;
   iter.Initialize(Emap);
   for (; iter.More(); iter.Next())
@@ -675,7 +632,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
     {
       TopoDS_Shape aLocalShape = anEdge.EmptyCopied();
       NewE                     = TopoDS::Edge(aLocalShape);
-      // NewE = TopoDS::Edge( anEdge.EmptyCopied() );
+
       BB.Range(NewE, fpar, lpar);
       NewE.Orientation(TopAbs_FORWARD);
       if (firstind == 1)
@@ -683,7 +640,6 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
         BB.Add(NewE, Vfirst.Oriented(TopAbs_FORWARD));
         aLocalShape = SeqVer(1).Oriented(TopAbs_REVERSED);
         BB.Add(NewE, TopoDS::Vertex(aLocalShape));
-        // BB.Add( NewE, TopoDS::Vertex( SeqVer(1).Oriented(TopAbs_REVERSED) ) );
       }
       else
       {
@@ -691,8 +647,6 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
         BB.Add(NewE, TopoDS::Vertex(aLocalShape));
         aLocalShape = SeqVer(2).Oriented(TopAbs_REVERSED);
         BB.Add(NewE, TopoDS::Vertex(aLocalShape));
-        // BB.Add( NewE, TopoDS::Vertex( SeqVer(1).Oriented(TopAbs_FORWARD) ) );
-        // BB.Add( NewE, TopoDS::Vertex( SeqVer(2).Oriented(TopAbs_REVERSED) ) );
       }
       NewEdges.Append(NewE);
 
@@ -701,11 +655,11 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
       {
         aLocalShape = anEdge.EmptyCopied();
         NewE        = TopoDS::Edge(aLocalShape);
-        // NewE = TopoDS::Edge( anEdge.EmptyCopied() );
+
         fpar = Seq(i);
         lpar = Seq(i + 1);
         BB.Range(NewE, fpar, lpar);
-        // Find vertices
+
         for (j = 1; j <= Seq2.Length(); j++)
         {
           if (std::abs(fpar - Seq2(j)) <= Precision::Confusion())
@@ -718,8 +672,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
         BB.Add(NewE, TopoDS::Vertex(aLocalShapeCur));
         aLocalShapeCur = SeqVer(j + 1).Oriented(TopAbs_REVERSED);
         BB.Add(NewE, TopoDS::Vertex(aLocalShapeCur));
-        // BB.Add( NewE, TopoDS::Vertex( SeqVer(j).Oriented(TopAbs_FORWARD) ) );
-        // BB.Add( NewE, TopoDS::Vertex( SeqVer(j+1).Oriented(TopAbs_REVERSED) ) );
+
         NewEdges.Append(NewE);
       }
     }
@@ -731,20 +684,18 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
       continue;
     TopoDS_Shape aLocalShape = anEdge.EmptyCopied();
     NewE                     = TopoDS::Edge(aLocalShape);
-    // NewE = TopoDS::Edge( anEdge.EmptyCopied() );
+
     BB.Range(NewE, fpar, lpar);
     NewE.Orientation(TopAbs_FORWARD);
     aLocalShape = SeqVer(SeqVer.Length()).Oriented(TopAbs_FORWARD);
     BB.Add(NewE, TopoDS::Vertex(aLocalShape));
-    // BB.Add( NewE, TopoDS::Vertex( SeqVer(SeqVer.Length()).Oriented(TopAbs_FORWARD) ) );
+
     BB.Add(NewE, Vlast.Oriented(TopAbs_REVERSED));
     NewEdges.Append(NewE);
 
-    // Substitute anEdge by NewEdges
     aSub.Substitute(anEdge, NewEdges);
   }
 
-  // Removing edges connected with missing extremities of seam edges
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator itve(VEmap);
   for (; itve.More(); itve.Next())
   {
@@ -789,7 +740,6 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
       myShape = listSh.First();
   }
 
-  // Reconstruction of wires
   NCollection_List<TopoDS_Shape> theCopy;
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>::
     Iterator itww(WWmap);
@@ -806,7 +756,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
       CurFace            = WFmap(aWire);
       theCopy            = aSub.Copy(aWire);
       aWire              = theCopy.First();
-      // Adjusting period
+
       TopLoc_Location           L;
       occ::handle<Geom_Surface> theSurf = BRep_Tool::Surface(TopoDS::Face(CurFace), L);
       eit.Initialize(aWire);
@@ -854,7 +804,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
           }
         }
       }
-      ///////////////////
+
       eit.Initialize(aWire, false);
       for (; eit.More(); eit.Next())
       {
@@ -872,8 +822,6 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
   }
 }
 
-//=================================================================================================
-
 void BRepOffsetAPI_DraftAngle::CorrectVertexTol()
 {
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> anInitVertices, anInitEdges, aNewEdges;
@@ -887,7 +835,6 @@ void BRepOffsetAPI_DraftAngle::CorrectVertexTol()
       anInitVertices.Add(anIter.Value());
     }
   }
-  //
 
   BRep_Builder aBB;
   myVtxToReplace.Clear();
@@ -895,16 +842,15 @@ void BRepOffsetAPI_DraftAngle::CorrectVertexTol()
   for (; anExp.More(); anExp.Next())
   {
     const TopoDS_Shape& anE = anExp.Current();
-    // Skip old (not modified) edges
+
     if (anInitEdges.Contains(anE))
       continue;
-    //
-    // Skip processed edges
+
     if (aNewEdges.Contains(anE))
       continue;
-    //
+
     aNewEdges.Add(anE);
-    //
+
     double          anETol = BRep_Tool::Tolerance(TopoDS::Edge(anE));
     TopoDS_Iterator anIter(anE);
     for (; anIter.More(); anIter.Next())
@@ -935,12 +881,12 @@ void BRepOffsetAPI_DraftAngle::CorrectVertexTol()
       }
     }
   }
-  //
+
   if (myVtxToReplace.IsEmpty())
   {
     return;
   }
-  //
+
   mySubs.Clear();
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator anIter(
     myVtxToReplace);
@@ -950,5 +896,4 @@ void BRepOffsetAPI_DraftAngle::CorrectVertexTol()
   }
   mySubs.Apply(myShape);
   myShape = mySubs.Value(myShape);
-  //
 }

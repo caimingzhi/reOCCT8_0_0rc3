@@ -50,58 +50,6 @@ Geom2dGcc_FunctionTanCuCu::Geom2dGcc_FunctionTanCuCu(const gp_Circ2d&           
   TheType   = Geom2dGcc_CiCu;
 }
 
-//=========================================================================
-//  soit P1 le point sur la courbe TheCurve1 d abscisse u1.               +
-//  soit P2 le point sur la courbe TheCurve2 d abscisse u2.               +
-//  soit T1 la tangente a la courbe TheCurve1 en P1.                      +
-//  soit T2 la tangente a la courbe TheCurve2 en P2.                      +
-//  Nous voulons P1 et P2 tels que :                                      +
-//           --->    -->                                                  +
-//        *  P1P2 /\ T1 = 0                                               +
-//                                                                        +
-//           -->   -->                                                    +
-//        *  T1 /\ T2 = 0                                                 +
-//                                                                        +
-//  Nous cherchons donc les zeros des fonctions suivantes:                +
-//             --->    -->                                                +
-//        *    P1P2 /\ T1                                                 +
-//          --------------- = F1(u)                                       +
-//            --->     -->                                                +
-//          ||P1P2||*||T1||                                               +
-//                                                                        +
-//              -->   -->                                                 +
-//        *     T1 /\ T2                                                  +
-//          --------------- = F2(u)                                       +
-//             -->    -->                                                 +
-//           ||T2||*||T1||                                                +
-//                                                                        +
-//  Les derivees de ces fonctions sont :                                  +
-//                                           2              2             +
-//   dF1        P1P2/\N1       (P1P2/\T1)*[T1*(-T1).P1P2+P1P2*(T1.N1)]    +
-//  ----- = --------------- - -----------------------------------------   +
-//   du1                                     3        3                   +
-//           ||P1P2||*||T1||         ||P1P2|| * ||T1||                    +
-//                                                                        +
-//                                                    2                   +
-//   dF1        T2/\T1                  (P1P2/\T1)*[T1*(T2.P1P2)          +
-//  ----- = --------------- - -----------------------------------------   +
-//   du2                                     3        3                   +
-//           ||P1P2||*||T1||         ||P1P2|| * ||T1||                    +
-//                                                                        +
-//                                                          2             +
-//   dF2             N1/\T2                 T1/\T2*(N1.T1)T2              +
-//  ----- =     ----------------  -  -----------------------------        +
-//   du1                                          3        3              +
-//                ||T1||*||T2||             ||T1|| * ||T2||               +
-//                                                                        +
-//                                                          2             +
-//   dF2             T1/\N2                 T1/\T2*(N2.T2)T1              +
-//  ----- =     ----------------  -  -----------------------------        +
-//   du2                                          3        3              +
-//                ||T1||*||T2||             ||T1|| * ||T2||               +
-//                                                                        +
-//=========================================================================
-
 int Geom2dGcc_FunctionTanCuCu::NbVariables() const
 {
   return 2;

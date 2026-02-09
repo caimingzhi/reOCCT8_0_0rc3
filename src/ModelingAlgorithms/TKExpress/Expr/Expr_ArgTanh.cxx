@@ -63,11 +63,8 @@ occ::handle<Expr_GeneralExpression> Expr_ArgTanh::Derivative(
 
   occ::handle<Expr_Square> sq = new Expr_Square(Expr::CopyShare(op));
 
-  // 1 - X2
-
   occ::handle<Expr_Difference> thedif = 1.0 - sq->ShallowSimplified();
 
-  // ArgTanh'(F(X)) = F'(X)/(1 - F(X)2)
   occ::handle<Expr_Division> thediv = derop / thedif->ShallowSimplified();
 
   return thediv->ShallowSimplified();

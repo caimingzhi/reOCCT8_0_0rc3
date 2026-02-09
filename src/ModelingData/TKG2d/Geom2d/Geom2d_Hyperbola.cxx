@@ -24,8 +24,6 @@ typedef gp_Vec2d         Vec2d;
 typedef gp_Trsf2d        Trsf2d;
 typedef gp_XY            XY;
 
-//=================================================================================================
-
 occ::handle<Geom2d_Geometry> Geom2d_Hyperbola::Copy() const
 {
   occ::handle<Geom2d_Hyperbola> H;
@@ -33,16 +31,12 @@ occ::handle<Geom2d_Geometry> Geom2d_Hyperbola::Copy() const
   return H;
 }
 
-//=================================================================================================
-
 Geom2d_Hyperbola::Geom2d_Hyperbola(const gp_Hypr2d& H)
 {
   majorRadius = H.MajorRadius();
   minorRadius = H.MinorRadius();
   pos         = H.Axis();
 }
-
-//=================================================================================================
 
 Geom2d_Hyperbola::Geom2d_Hyperbola(const Ax2d&  A,
                                    const double MajorRadius,
@@ -56,8 +50,6 @@ Geom2d_Hyperbola::Geom2d_Hyperbola(const Ax2d&  A,
   pos = gp_Ax22d(A, Sense);
 }
 
-//=================================================================================================
-
 Geom2d_Hyperbola::Geom2d_Hyperbola(const gp_Ax22d& Axis,
                                    const double    MajorRadius,
                                    const double    MinorRadius)
@@ -69,16 +61,12 @@ Geom2d_Hyperbola::Geom2d_Hyperbola(const gp_Ax22d& Axis,
   pos = Axis;
 }
 
-//=================================================================================================
-
 void Geom2d_Hyperbola::SetHypr2d(const gp_Hypr2d& H)
 {
   majorRadius = H.MajorRadius();
   minorRadius = H.MinorRadius();
   pos         = H.Axis();
 }
-
-//=================================================================================================
 
 void Geom2d_Hyperbola::SetMajorRadius(const double MajorRadius)
 {
@@ -88,8 +76,6 @@ void Geom2d_Hyperbola::SetMajorRadius(const double MajorRadius)
     majorRadius = MajorRadius;
 }
 
-//=================================================================================================
-
 void Geom2d_Hyperbola::SetMinorRadius(const double MinorRadius)
 {
   if (MinorRadius < 0.0)
@@ -98,49 +84,35 @@ void Geom2d_Hyperbola::SetMinorRadius(const double MinorRadius)
     minorRadius = MinorRadius;
 }
 
-//=================================================================================================
-
 gp_Hypr2d Geom2d_Hyperbola::Hypr2d() const
 {
   return gp_Hypr2d(pos, majorRadius, minorRadius);
 }
-
-//=================================================================================================
 
 double Geom2d_Hyperbola::ReversedParameter(const double U) const
 {
   return (-U);
 }
 
-//=================================================================================================
-
 double Geom2d_Hyperbola::FirstParameter() const
 {
   return -Precision::Infinite();
 }
-
-//=================================================================================================
 
 double Geom2d_Hyperbola::LastParameter() const
 {
   return Precision::Infinite();
 }
 
-//=================================================================================================
-
 bool Geom2d_Hyperbola::IsClosed() const
 {
   return false;
 }
 
-//=================================================================================================
-
 bool Geom2d_Hyperbola::IsPeriodic() const
 {
   return false;
 }
-
-//=================================================================================================
 
 Ax2d Geom2d_Hyperbola::Asymptote1() const
 {
@@ -148,15 +120,11 @@ Ax2d Geom2d_Hyperbola::Asymptote1() const
   return Hv.Asymptote1();
 }
 
-//=================================================================================================
-
 Ax2d Geom2d_Hyperbola::Asymptote2() const
 {
   gp_Hypr2d Hv(pos, majorRadius, minorRadius);
   return Hv.Asymptote2();
 }
-
-//=================================================================================================
 
 gp_Hypr2d Geom2d_Hyperbola::ConjugateBranch1() const
 {
@@ -164,15 +132,11 @@ gp_Hypr2d Geom2d_Hyperbola::ConjugateBranch1() const
   return Hv.ConjugateBranch1();
 }
 
-//=================================================================================================
-
 gp_Hypr2d Geom2d_Hyperbola::ConjugateBranch2() const
 {
   gp_Hypr2d Hv(pos, majorRadius, minorRadius);
   return Hv.ConjugateBranch2();
 }
-
-//=================================================================================================
 
 Ax2d Geom2d_Hyperbola::Directrix1() const
 {
@@ -180,15 +144,11 @@ Ax2d Geom2d_Hyperbola::Directrix1() const
   return Hv.Directrix1();
 }
 
-//=================================================================================================
-
 Ax2d Geom2d_Hyperbola::Directrix2() const
 {
   gp_Hypr2d Hv(pos, majorRadius, minorRadius);
   return Hv.Directrix2();
 }
-
-//=================================================================================================
 
 double Geom2d_Hyperbola::Eccentricity() const
 {
@@ -196,14 +156,10 @@ double Geom2d_Hyperbola::Eccentricity() const
   return (std::sqrt(majorRadius * majorRadius + minorRadius * minorRadius)) / majorRadius;
 }
 
-//=================================================================================================
-
 double Geom2d_Hyperbola::Focal() const
 {
   return 2.0 * std::sqrt(majorRadius * majorRadius + minorRadius * minorRadius);
 }
-
-//=================================================================================================
 
 Pnt2d Geom2d_Hyperbola::Focus1() const
 {
@@ -214,8 +170,6 @@ Pnt2d Geom2d_Hyperbola::Focus1() const
   return Pnt2d(Pxy);
 }
 
-//=================================================================================================
-
 Pnt2d Geom2d_Hyperbola::Focus2() const
 {
   double C   = std::sqrt(majorRadius * majorRadius + minorRadius * minorRadius);
@@ -225,21 +179,15 @@ Pnt2d Geom2d_Hyperbola::Focus2() const
   return Pnt2d(Pxy);
 }
 
-//=================================================================================================
-
 double Geom2d_Hyperbola::MajorRadius() const
 {
   return majorRadius;
 }
 
-//=================================================================================================
-
 double Geom2d_Hyperbola::MinorRadius() const
 {
   return minorRadius;
 }
-
-//=================================================================================================
 
 gp_Hypr2d Geom2d_Hyperbola::OtherBranch() const
 {
@@ -247,43 +195,31 @@ gp_Hypr2d Geom2d_Hyperbola::OtherBranch() const
   return Hv.OtherBranch();
 }
 
-//=================================================================================================
-
 double Geom2d_Hyperbola::Parameter() const
 {
   Standard_DomainError_Raise_if(majorRadius <= gp::Resolution(), " ");
   return (minorRadius * minorRadius) / majorRadius;
 }
 
-//=================================================================================================
-
 void Geom2d_Hyperbola::D0(const double U, Pnt2d& P) const
 {
   P = ElCLib::HyperbolaValue(U, pos, majorRadius, minorRadius);
 }
-
-//=================================================================================================
 
 void Geom2d_Hyperbola::D1(const double U, Pnt2d& P, Vec2d& V1) const
 {
   ElCLib::HyperbolaD1(U, pos, majorRadius, minorRadius, P, V1);
 }
 
-//=================================================================================================
-
 void Geom2d_Hyperbola::D2(const double U, Pnt2d& P, Vec2d& V1, Vec2d& V2) const
 {
   ElCLib::HyperbolaD2(U, pos, majorRadius, minorRadius, P, V1, V2);
 }
 
-//=================================================================================================
-
 void Geom2d_Hyperbola::D3(const double U, Pnt2d& P, Vec2d& V1, Vec2d& V2, Vec2d& V3) const
 {
   ElCLib::HyperbolaD3(U, pos, majorRadius, minorRadius, P, V1, V2, V3);
 }
-
-//=================================================================================================
 
 Vec2d Geom2d_Hyperbola::DN(const double U, const int N) const
 {
@@ -291,16 +227,12 @@ Vec2d Geom2d_Hyperbola::DN(const double U, const int N) const
   return ElCLib::HyperbolaDN(U, pos, majorRadius, minorRadius, N);
 }
 
-//=================================================================================================
-
 void Geom2d_Hyperbola::Transform(const Trsf2d& T)
 {
   majorRadius = majorRadius * std::abs(T.ScaleFactor());
   minorRadius = minorRadius * std::abs(T.ScaleFactor());
   pos.Transform(T);
 }
-
-//=================================================================================================
 
 void Geom2d_Hyperbola::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

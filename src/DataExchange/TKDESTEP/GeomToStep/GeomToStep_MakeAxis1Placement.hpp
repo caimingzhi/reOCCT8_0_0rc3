@@ -13,10 +13,6 @@ class gp_Ax2d;
 class Geom_Axis1Placement;
 class Geom2d_AxisPlacement;
 
-//! This class implements the mapping between classes
-//! Axis1Placement from Geom and Ax1 from gp, and the class
-//! Axis1Placement from StepGeom which describes an
-//! Axis1Placement from Prostep.
 class GeomToStep_MakeAxis1Placement : public GeomToStep_Root
 {
 public:

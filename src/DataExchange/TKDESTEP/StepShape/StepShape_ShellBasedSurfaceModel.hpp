@@ -14,7 +14,6 @@ class StepShape_ShellBasedSurfaceModel : public StepGeom_GeometricRepresentation
 {
 
 public:
-  //! Returns a ShellBasedSurfaceModel
   Standard_EXPORT StepShape_ShellBasedSurfaceModel();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&             aName,

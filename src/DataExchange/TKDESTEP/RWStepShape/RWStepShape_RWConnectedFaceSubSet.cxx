@@ -8,11 +8,7 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepShape_RWConnectedFaceSubSet::RWStepShape_RWConnectedFaceSubSet() = default;
-
-//=================================================================================================
 
 void RWStepShape_RWConnectedFaceSubSet::ReadStep(
   const occ::handle<StepData_StepReaderData>&       data,
@@ -20,16 +16,12 @@ void RWStepShape_RWConnectedFaceSubSet::ReadStep(
   occ::handle<Interface_Check>&                     ach,
   const occ::handle<StepShape_ConnectedFaceSubSet>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "connected_face_sub_set"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   data->ReadString(num, 1, "representation_item.name", ach, aRepresentationItem_Name);
-
-  // Inherited fields of ConnectedFaceSet
 
   occ::handle<NCollection_HArray1<occ::handle<StepShape_Face>>> aConnectedFaceSet_CfsFaces;
   int                                                           sub2 = 0;
@@ -51,8 +43,6 @@ void RWStepShape_RWConnectedFaceSubSet::ReadStep(
     }
   }
 
-  // Own fields of ConnectedFaceSubSet
-
   occ::handle<StepShape_ConnectedFaceSet> aParentFaceSet;
   data->ReadEntity(num,
                    3,
@@ -61,22 +51,15 @@ void RWStepShape_RWConnectedFaceSubSet::ReadStep(
                    STANDARD_TYPE(StepShape_ConnectedFaceSet),
                    aParentFaceSet);
 
-  // Initialize entity
   ent->Init(aRepresentationItem_Name, aConnectedFaceSet_CfsFaces, aParentFaceSet);
 }
-
-//=================================================================================================
 
 void RWStepShape_RWConnectedFaceSubSet::WriteStep(
   StepData_StepWriter&                              SW,
   const occ::handle<StepShape_ConnectedFaceSubSet>& ent) const
 {
 
-  // Inherited fields of RepresentationItem
-
   SW.Send(ent->StepRepr_RepresentationItem::Name());
-
-  // Inherited fields of ConnectedFaceSet
 
   SW.OpenSub();
   for (int i1 = 1; i1 <= ent->StepShape_ConnectedFaceSet::CfsFaces()->Length(); i1++)
@@ -86,28 +69,18 @@ void RWStepShape_RWConnectedFaceSubSet::WriteStep(
   }
   SW.CloseSub();
 
-  // Own fields of ConnectedFaceSubSet
-
   SW.Send(ent->ParentFaceSet());
 }
-
-//=================================================================================================
 
 void RWStepShape_RWConnectedFaceSubSet::Share(const occ::handle<StepShape_ConnectedFaceSubSet>& ent,
                                               Interface_EntityIterator& iter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of ConnectedFaceSet
 
   for (int i1 = 1; i1 <= ent->StepShape_ConnectedFaceSet::CfsFaces()->Length(); i1++)
   {
     occ::handle<StepShape_Face> Var0 = ent->StepShape_ConnectedFaceSet::CfsFaces()->Value(i1);
     iter.AddItem(Var0);
   }
-
-  // Own fields of ConnectedFaceSubSet
 
   iter.AddItem(ent->ParentFaceSet());
 }

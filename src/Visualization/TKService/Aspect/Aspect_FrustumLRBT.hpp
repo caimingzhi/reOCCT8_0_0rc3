@@ -1,6 +1,5 @@
 #pragma once
 
-//! Structure defining frustum boundaries.
 template <typename Elem_t>
 struct Aspect_FrustumLRBT
 {
@@ -9,7 +8,6 @@ struct Aspect_FrustumLRBT
   Elem_t Bottom;
   Elem_t Top;
 
-  //! Empty constructor.
   Aspect_FrustumLRBT()
       : Left(0),
         Right(0),
@@ -18,7 +16,6 @@ struct Aspect_FrustumLRBT
   {
   }
 
-  //! Copy/cast constructor.
   template <typename Other_t>
   explicit Aspect_FrustumLRBT(const Aspect_FrustumLRBT<Other_t>& theOther)
       : Left(static_cast<Elem_t>(theOther.Left)),
@@ -28,7 +25,6 @@ struct Aspect_FrustumLRBT
   {
   }
 
-  //! Apply multiply factor.
   void Multiply(Elem_t theScale)
   {
     Left *= theScale;
@@ -37,7 +33,6 @@ struct Aspect_FrustumLRBT
     Top *= theScale;
   }
 
-  //! Return multiplied frustum.
   Aspect_FrustumLRBT<Elem_t> Multiplied(Elem_t theScale)
   {
     Aspect_FrustumLRBT<Elem_t> aCopy(*this);

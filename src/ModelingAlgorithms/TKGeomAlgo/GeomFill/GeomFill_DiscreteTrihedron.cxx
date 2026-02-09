@@ -16,8 +16,6 @@ IMPLEMENT_STANDARD_RTTIEXT(GeomFill_DiscreteTrihedron, GeomFill_TrihedronLaw)
 
 static const double TolConf = Precision::Confusion();
 
-//=================================================================================================
-
 GeomFill_DiscreteTrihedron::GeomFill_DiscreteTrihedron()
     : myUseFrenet(false)
 {
@@ -26,8 +24,6 @@ GeomFill_DiscreteTrihedron::GeomFill_DiscreteTrihedron()
   myTrihedrons = new NCollection_HSequence<gp_Ax2>();
 }
 
-//=================================================================================================
-
 occ::handle<GeomFill_TrihedronLaw> GeomFill_DiscreteTrihedron::Copy() const
 {
   occ::handle<GeomFill_DiscreteTrihedron> copy = new (GeomFill_DiscreteTrihedron)();
@@ -35,8 +31,6 @@ occ::handle<GeomFill_TrihedronLaw> GeomFill_DiscreteTrihedron::Copy() const
     copy->SetCurve(myCurve);
   return copy;
 }
-
-//=================================================================================================
 
 bool GeomFill_DiscreteTrihedron::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
 {
@@ -53,7 +47,7 @@ bool GeomFill_DiscreteTrihedron::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
       case GeomAbs_Parabola:
       case GeomAbs_Line:
       {
-        // No problem
+
         myUseFrenet = true;
         myFrenet->SetCurve(C);
         break;
@@ -61,7 +55,7 @@ bool GeomFill_DiscreteTrihedron::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
       default:
       {
         myUseFrenet = false;
-        // We have to fill <myKnots> and <myTrihedrons>
+
         Init();
         break;
       }
@@ -70,15 +64,12 @@ bool GeomFill_DiscreteTrihedron::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
   return myUseFrenet;
 }
 
-//=================================================================================================
-
 void GeomFill_DiscreteTrihedron::Init()
 {
   int                        NbIntervals = myTrimmed->NbIntervals(GeomAbs_CN);
   NCollection_Array1<double> Knots(1, NbIntervals + 1);
   myTrimmed->Intervals(Knots, GeomAbs_CN);
 
-  // double Tol = Precision::Confusion();
   int NbSamples = 10;
 
   int i, j;
@@ -110,10 +101,10 @@ void GeomFill_DiscreteTrihedron::Init()
       SubPnt = myTrimmed->Value(Param + subdelta);
       Tangent.SetXYZ(SubPnt.XYZ() - Pnt.XYZ());
     }
-    // Tangent.Normalize();
-    TangDir = Tangent; // normalize;
+
+    TangDir = Tangent;
     Tangent = TangDir;
-    if (i == 1) // first point
+    if (i == 1)
     {
       gp_Ax2 FirstAxis(Origin, TangDir);
       myTrihedrons->Append(FirstAxis);
@@ -123,12 +114,12 @@ void GeomFill_DiscreteTrihedron::Init()
       gp_Ax2 LastAxis       = myTrihedrons->Value(myTrihedrons->Length());
       gp_Vec LastTangent    = LastAxis.Direction();
       gp_Vec AxisOfRotation = LastTangent ^ Tangent;
-      if (AxisOfRotation.Magnitude() <= gp::Resolution()) // tangents are equal or opposite
+      if (AxisOfRotation.Magnitude() <= gp::Resolution())
       {
         double ScalarProduct = LastTangent * Tangent;
-        if (ScalarProduct > 0.) // tangents are equal
+        if (ScalarProduct > 0.)
           myTrihedrons->Append(LastAxis);
-        else // tangents are opposite
+        else
         {
           double NewParam = (myKnots->Value(i - 1) + myKnots->Value(i)) / 2.;
           if (NewParam - myKnots->Value(i - 1) < gp::Resolution())
@@ -138,19 +129,17 @@ void GeomFill_DiscreteTrihedron::Init()
           i--;
         }
       }
-      else // good value of angle
+      else
       {
         double theAngle = LastTangent.AngleWithRef(Tangent, AxisOfRotation);
         gp_Ax1 theAxisOfRotation(Origin, AxisOfRotation);
         gp_Ax2 NewAxis = LastAxis.Rotated(theAxisOfRotation, theAngle);
-        NewAxis.SetDirection(TangDir); // to prevent accumulation of floating computations error
+        NewAxis.SetDirection(TangDir);
         myTrihedrons->Append(NewAxis);
       }
     }
   }
 }
-
-//=================================================================================================
 
 bool GeomFill_DiscreteTrihedron::D0(const double Param,
                                     gp_Vec&      Tangent,
@@ -163,16 +152,14 @@ bool GeomFill_DiscreteTrihedron::D0(const double Param,
   }
   else
   {
-    // Locate <Param> in the sequence <myKnots>
+
     int              Index  = -1;
     constexpr double TolPar = Precision::PConfusion();
-    // double TolConf = Precision::Confusion();
+
     int    NbSamples = 10;
     gp_Pnt Origin(0., 0., 0.);
 
     int i;
-    // gp_Ax2 PrevAxis;
-    // double PrevParam;
 
     int I1, I2;
     I1 = 1;
@@ -196,7 +183,7 @@ bool GeomFill_DiscreteTrihedron::D0(const double Param,
     gp_Ax2 theAxis;
     if (std::abs(Param - PrevParam) < TolPar)
       theAxis = PrevAxis;
-    else //<Param> is between knots
+    else
     {
       myTrimmed->D1(Param, myPoint, Tangent);
       double norm = Tangent.Magnitude();
@@ -208,24 +195,24 @@ bool GeomFill_DiscreteTrihedron::D0(const double Param,
         gp_Pnt SubPnt = myTrimmed->Value(Param + subdelta);
         Tangent.SetXYZ(SubPnt.XYZ() - myPoint.XYZ());
       }
-      // Tangent.Normalize();
-      gp_Dir TangDir(Tangent); // normalize;
+
+      gp_Dir TangDir(Tangent);
       Tangent               = TangDir;
       gp_Vec PrevTangent    = PrevAxis.Direction();
       gp_Vec AxisOfRotation = PrevTangent ^ Tangent;
-      if (AxisOfRotation.Magnitude() <= gp::Resolution()) // tangents are equal
+      if (AxisOfRotation.Magnitude() <= gp::Resolution())
       {
-        // we assume that tangents can not be opposite
+
         theAxis = PrevAxis;
       }
-      else // good value of angle
+      else
       {
         double theAngle = PrevTangent.AngleWithRef(Tangent, AxisOfRotation);
         gp_Ax1 theAxisOfRotation(Origin, AxisOfRotation);
         theAxis = PrevAxis.Rotated(theAxisOfRotation, theAngle);
       }
-      theAxis.SetDirection(TangDir); // to prevent accumulation of floating computations error
-    } // end of else (Param is between knots)
+      theAxis.SetDirection(TangDir);
+    }
 
     Tangent  = theAxis.Direction();
     Normal   = theAxis.XDirection();
@@ -233,8 +220,6 @@ bool GeomFill_DiscreteTrihedron::D0(const double Param,
   }
   return true;
 }
-
-//=================================================================================================
 
 bool GeomFill_DiscreteTrihedron::D1(const double Param,
                                     gp_Vec&      Tangent,
@@ -258,8 +243,6 @@ bool GeomFill_DiscreteTrihedron::D1(const double Param,
   }
   return true;
 }
-
-//=================================================================================================
 
 bool GeomFill_DiscreteTrihedron::D2(const double Param,
                                     gp_Vec&      Tangent,
@@ -299,14 +282,10 @@ bool GeomFill_DiscreteTrihedron::D2(const double Param,
   return true;
 }
 
-//=================================================================================================
-
 int GeomFill_DiscreteTrihedron::NbIntervals(const GeomAbs_Shape) const
 {
   return (myTrimmed->NbIntervals(GeomAbs_CN));
 }
-
-//=================================================================================================
 
 void GeomFill_DiscreteTrihedron::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape) const
 {
@@ -315,7 +294,7 @@ void GeomFill_DiscreteTrihedron::Intervals(NCollection_Array1<double>& T, const 
 
 void GeomFill_DiscreteTrihedron::GetAverageLaw(gp_Vec& ATangent, gp_Vec& ANormal, gp_Vec& ABiNormal)
 {
-  int    Num = 20; // order of digitalization
+  int    Num = 20;
   gp_Vec T, N, BN;
   ATangent    = gp_Vec(0, 0, 0);
   ANormal     = gp_Vec(0, 0, 0);
@@ -340,14 +319,10 @@ void GeomFill_DiscreteTrihedron::GetAverageLaw(gp_Vec& ATangent, gp_Vec& ANormal
   ANormal   = ABiNormal.Crossed(ATangent);
 }
 
-//=================================================================================================
-
 bool GeomFill_DiscreteTrihedron::IsConstant() const
 {
   return (myCurve->GetType() == GeomAbs_Line);
 }
-
-//=================================================================================================
 
 bool GeomFill_DiscreteTrihedron::IsOnlyBy3dCurve() const
 {

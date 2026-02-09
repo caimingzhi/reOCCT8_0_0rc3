@@ -12,15 +12,10 @@ class Quantity_Color;
 class Graphic3d_MaterialAspect;
 class TCollection_AsciiString;
 
-//! This class provided the common interface to share between classes
-//! big set of constants affecting to object appearance. By default, this class
-//! can store integers, doubles, OCC colors, OCC materials. Each of OCC enum members
-//! can be stored as integers.
 class MeshVS_Drawer : public Standard_Transient
 {
 
 public:
-  //! This method copies other drawer contents to this.
   Standard_EXPORT virtual void Assign(const occ::handle<MeshVS_Drawer>& aDrawer);
 
   Standard_EXPORT void SetInteger(const int Key, const int Value);

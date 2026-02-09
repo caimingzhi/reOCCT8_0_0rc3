@@ -4,12 +4,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_ProductDefinitionReferenceWithLocalRepresentation,
                            StepBasic_ProductDefinition)
 
-//=================================================================================================
-
 StepBasic_ProductDefinitionReferenceWithLocalRepresentation::
   StepBasic_ProductDefinitionReferenceWithLocalRepresentation() = default;
-
-//=================================================================================================
 
 void StepBasic_ProductDefinitionReferenceWithLocalRepresentation::Init(
   const occ::handle<StepBasic_ExternalSource>&             theSource,

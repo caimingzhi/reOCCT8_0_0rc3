@@ -1,15 +1,11 @@
 #include <BOPAlgo_ToolsProvider.hpp>
 #include <BOPAlgo_PaveFiller.hpp>
 
-//=================================================================================================
-
 BOPAlgo_ToolsProvider::BOPAlgo_ToolsProvider()
     : myTools(myAllocator),
       myMapTools(100, myAllocator)
 {
 }
-
-//=================================================================================================
 
 BOPAlgo_ToolsProvider::BOPAlgo_ToolsProvider(
   const occ::handle<NCollection_BaseAllocator>& theAllocator)
@@ -19,8 +15,6 @@ BOPAlgo_ToolsProvider::BOPAlgo_ToolsProvider(
 {
 }
 
-//=================================================================================================
-
 void BOPAlgo_ToolsProvider::Clear()
 {
   BOPAlgo_Builder::Clear();
@@ -28,15 +22,11 @@ void BOPAlgo_ToolsProvider::Clear()
   myMapTools.Clear();
 }
 
-//=================================================================================================
-
 void BOPAlgo_ToolsProvider::AddTool(const TopoDS_Shape& theShape)
 {
   if (myMapTools.Add(theShape))
     myTools.Append(theShape);
 }
-
-//=================================================================================================
 
 void BOPAlgo_ToolsProvider::SetTools(const NCollection_List<TopoDS_Shape>& theShapes)
 {

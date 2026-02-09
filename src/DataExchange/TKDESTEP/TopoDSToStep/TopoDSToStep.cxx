@@ -140,8 +140,6 @@ occ::handle<TCollection_HAsciiString> TopoDSToStep::DecodeVertexError(
   return mess;
 }
 
-//=================================================================================================
-
 void TopoDSToStep::AddResult(const occ::handle<Transfer_FinderProcess>& FP,
                              const TopoDS_Shape&                        Shape,
                              const occ::handle<Standard_Transient>&     ent)
@@ -157,8 +155,6 @@ void TopoDSToStep::AddResult(const occ::handle<Transfer_FinderProcess>& FP,
   else
     binder->AddResult(result);
 }
-
-//=================================================================================================
 
 void TopoDSToStep::AddResult(const occ::handle<Transfer_FinderProcess>& FP,
                              const TopoDSToStep_Tool&                   Tool)

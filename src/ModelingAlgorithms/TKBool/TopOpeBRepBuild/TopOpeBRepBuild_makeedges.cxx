@@ -20,8 +20,6 @@ extern void debedbu(const int i)
 }
 #endif
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::GPVSMakeEdges(const TopoDS_Shape&             EF,
                                             TopOpeBRepBuild_PaveSet&        PVS,
                                             NCollection_List<TopoDS_Shape>& LOE) const
@@ -51,10 +49,7 @@ void TopOpeBRepBuild_Builder::GPVSMakeEdges(const TopoDS_Shape&             EF,
   bool                        ForceClass = false;
   EDBU.InitEdgeBuilder(PVS, VCL, ForceClass);
   GEDBUMakeEdges(EF, EDBU, LOE);
-
-} // GPVSMakeEdges
-
-//=================================================================================================
+}
 
 void TopOpeBRepBuild_Builder::GEDBUMakeEdges(const TopoDS_Shape&             EF,
                                              TopOpeBRepBuild_EdgeBuilder&    EDBU,
@@ -87,15 +82,15 @@ void TopOpeBRepBuild_Builder::GEDBUMakeEdges(const TopoDS_Shape&             EF,
     bool tosplit = false;
     for (EDBU.InitVertex(); EDBU.MoreVertex(); EDBU.NextVertex())
       nloop++;
-    // 0 ou 1 vertex sur edge courante => suppression edge
+
     if (nloop <= 1)
       continue;
 
     myBuildTool.CopyEdge(EF, newEdge);
 
-    int nVF = 0, nVR = 0; // nb vertex FORWARD,REVERSED
+    int nVF = 0, nVR = 0;
 
-    TopoDS_Shape VF, VR; // gestion du bit Closed
+    TopoDS_Shape VF, VR;
     VF.Nullify();
     VR.Nullify();
 
@@ -106,7 +101,7 @@ void TopOpeBRepBuild_Builder::GEDBUMakeEdges(const TopoDS_Shape&             EF,
 
       bool hassd = myDataStructure->HasSameDomain(V);
       if (hassd)
-      { // on prend le vertex reference de V
+      {
         int iref = myDataStructure->SameDomainReference(V);
         V        = myDataStructure->Shape(iref);
         V.Orientation(Vori);
@@ -166,9 +161,8 @@ void TopOpeBRepBuild_Builder::GEDBUMakeEdges(const TopoDS_Shape&             EF,
         double parV = EDBU.Parameter();
         myBuildTool.AddEdgeVertex(newEdge, V);
         myBuildTool.Parameter(newEdge, V, parV);
-      } // !equafound
-
-    } // EDBUloop.InitVertex :  on vertices of new edge newEdge
+      }
+    }
 
     bool addedge = (nVF == 1 && nVR == 1);
     if (addedge)
@@ -185,6 +179,5 @@ void TopOpeBRepBuild_Builder::GEDBUMakeEdges(const TopoDS_Shape&             EF,
       if (!tosplit)
         LOE.Append(newEdge);
     }
-  } // EDBU.InitEdge : loop on EDBU edges
-
-} // GEDBUMakeEdges
+  }
+}

@@ -11,15 +11,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_Reference, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& TDF_Reference::GetID()
 {
   static Standard_GUID TDF_ReferenceID("2a96b610-ec8b-11d0-bee7-080009dc3333");
   return TDF_ReferenceID;
 }
-
-//=================================================================================================
 
 occ::handle<TDF_Reference> TDF_Reference::Set(const TDF_Label& L, const TDF_Label& Origin)
 {
@@ -33,15 +29,11 @@ occ::handle<TDF_Reference> TDF_Reference::Set(const TDF_Label& L, const TDF_Labe
   return A;
 }
 
-//=================================================================================================
-
 TDF_Reference::TDF_Reference() = default;
-
-//=================================================================================================
 
 void TDF_Reference::Set(const TDF_Label& Origin)
 {
-  // OCC2932 correction
+
   if (myOrigin == Origin)
     return;
 
@@ -49,35 +41,25 @@ void TDF_Reference::Set(const TDF_Label& Origin)
   myOrigin = Origin;
 }
 
-//=================================================================================================
-
 TDF_Label TDF_Reference::Get() const
 {
   return myOrigin;
 }
-
-//=================================================================================================
 
 const Standard_GUID& TDF_Reference::ID() const
 {
   return GetID();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDF_Reference::NewEmpty() const
 {
   return new TDF_Reference();
 }
 
-//=================================================================================================
-
 void TDF_Reference::Restore(const occ::handle<TDF_Attribute>& With)
 {
   myOrigin = occ::down_cast<TDF_Reference>(With)->Get();
 }
-
-//=================================================================================================
 
 void TDF_Reference::Paste(const occ::handle<TDF_Attribute>&       Into,
                           const occ::handle<TDF_RelocationTable>& RT) const
@@ -91,27 +73,18 @@ void TDF_Reference::Paste(const occ::handle<TDF_Attribute>&       Into,
   occ::down_cast<TDF_Reference>(Into)->Set(tLab);
 }
 
-//=======================================================================
-// function : References
-// purpose  : Adds the referenced attributes or labels.
-//=======================================================================
-
 void TDF_Reference::References(const occ::handle<TDF_DataSet>& aDataSet) const
 {
-  // clang-format off
-  if (!Label().IsImported()) aDataSet->AddLabel( myOrigin); //pour real et entier mais surtout pas les parts ...
-  // clang-format on
-}
 
-//=================================================================================================
+  if (!Label().IsImported())
+    aDataSet->AddLabel(myOrigin);
+}
 
 Standard_OStream& TDF_Reference::Dump(Standard_OStream& anOS) const
 {
   anOS << "Reference";
   return anOS;
 }
-
-//=================================================================================================
 
 void TDF_Reference::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

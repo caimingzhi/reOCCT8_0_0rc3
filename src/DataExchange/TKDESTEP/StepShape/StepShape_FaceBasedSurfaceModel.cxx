@@ -3,11 +3,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_FaceBasedSurfaceModel, StepGeom_GeometricRepresentationItem)
 
-//=================================================================================================
-
 StepShape_FaceBasedSurfaceModel::StepShape_FaceBasedSurfaceModel() = default;
-
-//=================================================================================================
 
 void StepShape_FaceBasedSurfaceModel::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentationItem_Name,
@@ -18,15 +14,11 @@ void StepShape_FaceBasedSurfaceModel::Init(
   theFbsmFaces = aFbsmFaces;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<occ::handle<StepShape_ConnectedFaceSet>>>
   StepShape_FaceBasedSurfaceModel::FbsmFaces() const
 {
   return theFbsmFaces;
 }
-
-//=================================================================================================
 
 void StepShape_FaceBasedSurfaceModel::SetFbsmFaces(
   const occ::handle<NCollection_HArray1<occ::handle<StepShape_ConnectedFaceSet>>>& aFbsmFaces)

@@ -23,10 +23,8 @@ public:
 
   Standard_EXPORT void Perform(const NCollection_Sequence<AppParCurves_MultiCurve>& TheSeq);
 
-  //! return the composite MultiCurves as a MultiBSpCurve.
   Standard_EXPORT const AppParCurves_MultiBSpCurve& Value() const;
 
-  //! return the composite MultiCurves as a MultiBSpCurve.
   Standard_EXPORT const AppParCurves_MultiBSpCurve& ChangeValue();
 
 private:

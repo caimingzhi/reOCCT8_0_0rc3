@@ -7,10 +7,6 @@
 #include <Units_UnitSentence.hpp>
 #include <UnitsAPI.hpp>
 
-//=======================================================================
-// function : parsing
-// purpose  : parsing of unit's expression
-//=======================================================================
 static int parsing(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 2)
@@ -37,7 +33,7 @@ static int parsing(Draw_Interpretor& di, int argc, const char** argv)
   for (; i <= nbIter; i++)
   {
     aUnitSent.Analyse();
-    // aUnitSent.Dump();
+
     occ::handle<NCollection_HSequence<occ::handle<Units_Token>>> aseq = aUnitSent.Sequence();
   }
   atoken = aUnitSent.Evaluate();
@@ -45,19 +41,13 @@ static int parsing(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
-// function : unitsdico
-// purpose  : dump dictionary of units
-//=======================================================================
-static int unitsdico(Draw_Interpretor& /* di */, int /*argc*/, const char** /*argv*/)
+static int unitsdico(Draw_Interpretor&, int, const char**)
 {
   UnitsAPI::SetLocalSystem();
   int mode = 2;
   Units::DictionaryOfUnits(false)->Dump(mode);
   return 0;
 }
-
-//=================================================================================================
 
 static int converttoSI(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -75,8 +65,6 @@ static int converttoSI(Draw_Interpretor& di, int argc, const char** argv)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int converttoMDTV(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -96,8 +84,6 @@ static int converttoMDTV(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int unit(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 4)
@@ -108,8 +94,6 @@ static int unit(Draw_Interpretor& di, int n, const char** a)
   else
     return 1;
 }
-
-//=================================================================================================
 
 void Draw::UnitCommands(Draw_Interpretor& theCommands)
 {

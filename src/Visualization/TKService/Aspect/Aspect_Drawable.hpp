@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef _WIN32
-typedef void* Aspect_Drawable; /* HDC under WNT */
+typedef void* Aspect_Drawable;
 #else
-typedef unsigned long Aspect_Drawable; /* Window or Pixmap under UNIX */
-#endif /* _WIN32 */
+typedef unsigned long Aspect_Drawable;
+#endif

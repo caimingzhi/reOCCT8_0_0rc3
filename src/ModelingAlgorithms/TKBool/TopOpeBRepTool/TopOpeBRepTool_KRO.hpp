@@ -5,7 +5,6 @@
   #include <TCollection_AsciiString.hpp>
   #include <Standard_OStream.hpp>
 
-// POP pour NT
 class TOPKRO : public OSD_Chronometer
 {
 public:

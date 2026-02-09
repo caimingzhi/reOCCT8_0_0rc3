@@ -9,7 +9,6 @@ class StepVisual_PresentationSet : public Standard_Transient
 {
 
 public:
-  //! Returns a PresentationSet
   Standard_EXPORT StepVisual_PresentationSet();
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_PresentationSet, Standard_Transient)

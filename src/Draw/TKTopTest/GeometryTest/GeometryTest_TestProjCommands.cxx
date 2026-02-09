@@ -12,8 +12,6 @@
 Standard_IMPORT Draw_Viewer dout;
 #endif
 
-//=================================================================================================
-
 static int xdistcc(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 5)
@@ -86,8 +84,6 @@ static int xdistcc(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int xdistc2dc2dss(Draw_Interpretor&, int n, const char** a)
 {
@@ -181,8 +177,6 @@ static int xdistc2dc2dss(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int xdistcc2ds(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 6)
@@ -268,8 +262,6 @@ static int xdistcc2ds(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int xdistcs(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 6)
@@ -283,7 +275,7 @@ static int xdistcs(Draw_Interpretor& di, int n, const char** a)
               << std::endl;
     return 0;
   }
-  //
+
   bool                       bRet;
   int                        i, aNbP, iSize;
   double                     aTol, aD, aT, aT1, aT2, dT;
@@ -293,26 +285,26 @@ static int xdistcs(Draw_Interpretor& di, int n, const char** a)
   GeomAPI_ProjectPointOnSurf aPPS;
   occ::handle<Draw_Marker3D> aMr;
   Draw_Color                 aColor(Draw_rouge);
-  //
+
   aTol = 1.e-7;
-  //
+
   aC = DrawTrSurf::GetCurve(a[1]);
   if (aC.IsNull())
   {
     di << "Error: " << a[1] << " is not a curve!\n";
     return 0;
   }
-  //
+
   aS = DrawTrSurf::GetSurface(a[2]);
   if (aS.IsNull())
   {
     di << "Error: " << a[2] << " is not a surface!\n";
     return 0;
   }
-  //
+
   aT1 = Draw::Atof(a[3]);
   aT2 = Draw::Atof(a[4]);
-  //
+
   aNbP = 10;
   if (n > 5)
   {
@@ -320,9 +312,9 @@ static int xdistcs(Draw_Interpretor& di, int n, const char** a)
   }
   double anErrTol = (n > 6 ? Draw::Atof(a[6]) : RealLast());
   double aWarnTol = (n > 7 ? Draw::Atof(a[7]) : RealLast());
-  //
+
   iSize = 3;
-  //
+
   dT = (aT2 - aT1) / (aNbP - 1);
 
   double aMaxParam = 0.0;
@@ -334,7 +326,7 @@ static int xdistcs(Draw_Interpretor& di, int n, const char** a)
     {
       aT = aT2;
     }
-    //
+
     aC->D0(aT, aP);
     aPPS.Init(aP, aS, aTol);
     bRet = aPPS.IsDone();
@@ -343,9 +335,9 @@ static int xdistcs(Draw_Interpretor& di, int n, const char** a)
       di << "Error: GeomAPI_ProjectPointOnSurf failed\n";
       return 0;
     }
-    //
+
     aD = aPPS.LowerDistance();
-    // report error or warning if distance is greater than tolerance
+
     if (aD > anErrTol)
     {
       di << "Error in " << a[1] << ":";
@@ -357,7 +349,7 @@ static int xdistcs(Draw_Interpretor& di, int n, const char** a)
     char aMsg[256];
     Sprintf(aMsg, " T=%lg\tD=%lg\n", aT, aD);
     di << aMsg;
-    //
+
     aMr = new Draw_Marker3D(aP, Draw_Plus, aColor, iSize);
     dout << aMr;
 
@@ -370,11 +362,9 @@ static int xdistcs(Draw_Interpretor& di, int n, const char** a)
 
   di << "Max distance = " << aMaxDist << "\n";
   di << "Param = " << aMaxParam << "\n";
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 void GeometryTest::TestProjCommands(Draw_Interpretor& theCommands)
 {

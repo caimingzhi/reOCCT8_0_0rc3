@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDoc.hpp>
 #include <XCAFDoc_ColorType.hpp>
@@ -38,15 +27,11 @@
 #include <XCAFDoc_ShapeMapTool.hpp>
 #include <XCAFDoc_Volume.hpp>
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc::ShapeRefGUID()
 {
   static const Standard_GUID ID("5b896afe-3adf-11d4-b9b7-0060b0ee281b");
   return ID;
 }
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc::AssemblyGUID()
 {
@@ -54,15 +39,11 @@ const Standard_GUID& XCAFDoc::AssemblyGUID()
   return ID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc::ExternRefGUID()
 {
   static const Standard_GUID ID("6b896b01-3adf-11d4-b9b7-0060b0ee281b");
   return ID;
 }
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc::ColorRefGUID(const XCAFDoc_ColorType type)
 {
@@ -82,17 +63,13 @@ const Standard_GUID& XCAFDoc::ColorRefGUID(const XCAFDoc_ColorType type)
   }
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc::DimTolRefGUID()
 {
-  // static const Standard_GUID IDDimTol("58ed092d-44de-11d8-8776-001083004c77");
+
   static const Standard_GUID ID("efd212e9-6dfd-11d4-b9c8-0060b0ee281b");
-  // return IDDimTol;
+
   return ID;
 }
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc::DimensionRefFirstGUID()
 {
@@ -100,15 +77,11 @@ const Standard_GUID& XCAFDoc::DimensionRefFirstGUID()
   return ID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc::DimensionRefSecondGUID()
 {
   static const Standard_GUID ID("efd212e0-6dfd-11d4-b9c8-0060b0ee281b");
   return ID;
 }
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc::GeomToleranceRefGUID()
 {
@@ -116,25 +89,19 @@ const Standard_GUID& XCAFDoc::GeomToleranceRefGUID()
   return ID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc::DatumRefGUID()
 {
   static const Standard_GUID ID("efd212e2-6dfd-11d4-b9c8-0060b0ee281b");
   return ID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc::DatumTolRefGUID()
 {
-  // static const Standard_GUID IDDimTol("58ed092d-44de-11d8-8776-001083004c77");
+
   static const Standard_GUID ID("efd212e7-6dfd-11d4-b9c8-0060b0ee281b");
-  // return IDDimTol;
+
   return ID;
 }
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc::LayerRefGUID()
 {
@@ -142,15 +109,11 @@ const Standard_GUID& XCAFDoc::LayerRefGUID()
   return ID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc::MaterialRefGUID()
 {
   static const Standard_GUID ID("efd212f7-6dfd-11d4-b9c8-0060b0ee281b");
   return ID;
 }
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc::VisMaterialRefGUID()
 {
@@ -158,15 +121,11 @@ const Standard_GUID& XCAFDoc::VisMaterialRefGUID()
   return ID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc::NoteRefGUID()
 {
   static const Standard_GUID ID("F3599E50-F84A-493e-8D1B-1284E79322F1");
   return ID;
 }
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc::InvisibleGUID()
 {
@@ -174,15 +133,11 @@ const Standard_GUID& XCAFDoc::InvisibleGUID()
   return ID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc::ColorByLayerGUID()
 {
   static const Standard_GUID ID("279e8c1e-70af-4130-b626-9cc52a537db8");
   return ID;
 }
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc::SHUORefGUID()
 {
@@ -190,15 +145,11 @@ const Standard_GUID& XCAFDoc::SHUORefGUID()
   return ID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc::ViewRefGUID()
 {
   static const Standard_GUID ID("efd213e5-6dfd-11d4-b9c8-0060b0ee281b");
   return ID;
 }
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc::ViewRefShapeGUID()
 {
@@ -206,15 +157,11 @@ const Standard_GUID& XCAFDoc::ViewRefShapeGUID()
   return ID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc::ViewRefGDTGUID()
 {
   static const Standard_GUID ID("efd213e7-6dfd-11d4-b9c8-0060b0ee281b");
   return ID;
 }
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc::ViewRefPlaneGUID()
 {
@@ -222,15 +169,11 @@ const Standard_GUID& XCAFDoc::ViewRefPlaneGUID()
   return ID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc::ViewRefNoteGUID()
 {
   static const Standard_GUID ID("C814ACC6-43AC-4812-9B2A-4E9A2A549354");
   return ID;
 }
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc::ViewRefAnnotationGUID()
 {
@@ -238,15 +181,11 @@ const Standard_GUID& XCAFDoc::ViewRefAnnotationGUID()
   return ID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc::LockGUID()
 {
   static const Standard_GUID ID("efd213eb-6dfd-11d4-b9c8-0060b0ee281b");
   return ID;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString XCAFDoc::AttributeInfo(const occ::handle<TDF_Attribute>& theAtt)
 {
@@ -433,7 +372,7 @@ TCollection_AsciiString XCAFDoc::AttributeInfo(const occ::handle<TDF_Attribute>&
     int                                      kind = val->GetKind();
     occ::handle<NCollection_HArray1<double>> HAR  = val->GetVal();
     if (kind < 20)
-    { // dimension
+    {
       anInfo = "Diameter (ValueRange[";
       anInfo += TCollection_AsciiString(HAR->Value(1));
       anInfo += TCollection_AsciiString(",");

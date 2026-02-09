@@ -24,7 +24,6 @@ void IGESDimen_ToolFlagNote::ReadOwnParams(const occ::handle<IGESDimen_FlagNote>
                                            const occ::handle<IGESData_IGESReaderData>& IR,
                                            IGESData_ParamReader&                       PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
 
   gp_XYZ                                                               lowerLeft;
   double                                                               angle;
@@ -32,17 +31,15 @@ void IGESDimen_ToolFlagNote::ReadOwnParams(const occ::handle<IGESDimen_FlagNote>
   int                                                                  nbval;
   occ::handle<NCollection_HArray1<occ::handle<IGESDimen_LeaderArrow>>> leaders;
 
-  // clang-format off
-  PR.ReadXYZ (PR.CurrentList(1, 3), "Lower Left Corner Co-ords", lowerLeft); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadXYZ(PR.CurrentList(1, 3), "Lower Left Corner Co-ords", lowerLeft);
 
-  PR.ReadReal(PR.Current(), "Rotation Angle", angle); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Rotation Angle", angle);
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "General Note Entity",
                 STANDARD_TYPE(IGESDimen_GeneralNote),
-                note); // szv#4:S4163:12Mar99 `st=` not needed
+                note);
 
   bool st = PR.ReadInteger(PR.Current(), "Number of Leaders", nbval);
   if (st && nbval > 0)
@@ -52,8 +49,7 @@ void IGESDimen_ToolFlagNote::ReadOwnParams(const occ::handle<IGESDimen_FlagNote>
     for (int i = 1; i <= nbval; i++)
     {
       occ::handle<IGESDimen_LeaderArrow> anentity;
-      // st = PR.ReadEntity(IR, PR.Current(), "Leaders",
-      // STANDARD_TYPE(IGESDimen_LeaderArrow), anentity); //szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "Leaders",
@@ -115,8 +111,7 @@ void IGESDimen_ToolFlagNote::OwnCopy(const occ::handle<IGESDimen_FlagNote>& anot
   ent->Init(lowerLeft, angle, note, leaders);
 }
 
-IGESData_DirChecker IGESDimen_ToolFlagNote::DirChecker(
-  const occ::handle<IGESDimen_FlagNote>& /* ent */) const
+IGESData_DirChecker IGESDimen_ToolFlagNote::DirChecker(const occ::handle<IGESDimen_FlagNote>&) const
 {
   IGESData_DirChecker DC(208, 0);
   DC.Structure(IGESData_DefVoid);
@@ -127,9 +122,9 @@ IGESData_DirChecker IGESDimen_ToolFlagNote::DirChecker(
   return DC;
 }
 
-void IGESDimen_ToolFlagNote::OwnCheck(const occ::handle<IGESDimen_FlagNote>& /* ent */,
+void IGESDimen_ToolFlagNote::OwnCheck(const occ::handle<IGESDimen_FlagNote>&,
                                       const Interface_ShareTool&,
-                                      occ::handle<Interface_Check>& /* ach */) const
+                                      occ::handle<Interface_Check>&) const
 {
 }
 

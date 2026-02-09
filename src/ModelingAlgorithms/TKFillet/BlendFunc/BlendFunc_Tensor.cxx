@@ -13,8 +13,7 @@ BlendFunc_Tensor::BlendFunc_Tensor(const int NbRow, const int NbCol, const int N
 
 void BlendFunc_Tensor::Init(const double InitialValue)
 {
-  // int I, T = nbrow * nbcol *  nbmat;
-  // for (I=1; I<=T; I++) {Tab(I) = InitialValue;}
+
   Tab.Init(InitialValue);
 }
 

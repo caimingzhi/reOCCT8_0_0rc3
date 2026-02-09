@@ -11,7 +11,6 @@ class StepShape_ContextDependentShapeRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ContextDependentShapeRepresentation
 class RWStepShape_RWContextDependentShapeRepresentation
 {
 public:

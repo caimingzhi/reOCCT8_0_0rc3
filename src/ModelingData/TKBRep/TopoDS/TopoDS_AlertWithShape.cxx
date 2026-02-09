@@ -4,25 +4,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TopoDS_AlertWithShape, Message_Alert)
 
-//=================================================================================================
-
 TopoDS_AlertWithShape::TopoDS_AlertWithShape(const TopoDS_Shape& theShape)
 {
   myShape = theShape;
 }
-
-//=================================================================================================
 
 bool TopoDS_AlertWithShape::SupportsMerge() const
 {
   return false;
 }
 
-//=================================================================================================
-
-bool TopoDS_AlertWithShape::Merge(const occ::handle<Message_Alert>& /*theTarget*/)
+bool TopoDS_AlertWithShape::Merge(const occ::handle<Message_Alert>&)
 {
   return false;
-  //  occ::handle<TopoDS_AlertWithShape> aTarget = Handle(TopoDS_AlertWithShape)::DownCast
-  //  (theTarget); return aTarget->GetShape() == myShape;
 }

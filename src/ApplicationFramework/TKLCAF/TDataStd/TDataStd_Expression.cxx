@@ -13,15 +13,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_Expression, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_Expression::GetID()
 {
   static Standard_GUID TDataStd_ExpressionID("ce24146a-8e57-11d1-8953-080009dc4425");
   return TDataStd_ExpressionID;
 }
-
-//=================================================================================================
 
 occ::handle<TDataStd_Expression> TDataStd_Expression::Set(const TDF_Label& L)
 {
@@ -34,22 +30,16 @@ occ::handle<TDataStd_Expression> TDataStd_Expression::Set(const TDF_Label& L)
   return A;
 }
 
-//=================================================================================================
-
 TDataStd_Expression::TDataStd_Expression() = default;
-
-//=================================================================================================
 
 TCollection_ExtendedString TDataStd_Expression::Name() const
 {
-  return myExpression; // ->String();
+  return myExpression;
 }
-
-//=================================================================================================
 
 void TDataStd_Expression::SetExpression(const TCollection_ExtendedString& E)
 {
-  // OCC2932 correction
+
   if (myExpression == E)
     return;
 
@@ -57,28 +47,20 @@ void TDataStd_Expression::SetExpression(const TCollection_ExtendedString& E)
   myExpression = E;
 }
 
-//=================================================================================================
-
 const TCollection_ExtendedString& TDataStd_Expression::GetExpression() const
 {
   return myExpression;
 }
-
-//=================================================================================================
 
 NCollection_List<occ::handle<TDF_Attribute>>& TDataStd_Expression::GetVariables()
 {
   return myVariables;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_Expression::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 void TDataStd_Expression::Restore(const occ::handle<TDF_Attribute>& With)
 {
@@ -95,14 +77,10 @@ void TDataStd_Expression::Restore(const occ::handle<TDF_Attribute>& With)
   }
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDataStd_Expression::NewEmpty() const
 {
   return new TDataStd_Expression();
 }
-
-//=================================================================================================
 
 void TDataStd_Expression::Paste(const occ::handle<TDF_Attribute>&       Into,
                                 const occ::handle<TDF_RelocationTable>& RT) const
@@ -119,15 +97,11 @@ void TDataStd_Expression::Paste(const occ::handle<TDF_Attribute>&       Into,
   }
 }
 
-//=================================================================================================
-
 Standard_OStream& TDataStd_Expression::Dump(Standard_OStream& anOS) const
 {
   anOS << "Expression";
   return anOS;
 }
-
-//=================================================================================================
 
 void TDataStd_Expression::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

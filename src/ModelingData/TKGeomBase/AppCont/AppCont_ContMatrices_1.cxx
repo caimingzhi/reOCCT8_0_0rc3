@@ -4936,7 +4936,7 @@ void IBPMatrix(const int classe, math_Matrix& IBPMa)
 {
   if (classe > 26)
     throw Standard_DimensionError("IBPMatrix: classe > 26");
-  //  math_Matrix IBPMa(1, classe-2, 1, classe-2);
+
   int i, j, k = 0, Som = 0;
   for (i = 1; i < classe - 2; i++)
   {

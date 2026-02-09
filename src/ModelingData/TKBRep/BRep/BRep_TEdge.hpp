@@ -9,29 +9,16 @@
 #include <TopoDS_TEdge.hpp>
 class TopoDS_TShape;
 
-//! The TEdge from BRep is inherited from the TEdge
-//! from TopoDS. It contains the geometric data.
-//!
-//! The TEdge contains a:
-//!
-//! * tolerance.
-//! * same parameter flag.
-//! * same range flag.
-//! * Degenerated flag.
-//! * list of curve representation.
 class BRep_TEdge : public TopoDS_TEdge
 {
 
 public:
-  //! Creates an empty TEdge.
   Standard_EXPORT BRep_TEdge();
 
   double Tolerance() const;
 
   void Tolerance(const double T);
 
-  //! Sets the tolerance to the max of <T> and the
-  //! current tolerance.
   void UpdateTolerance(const double T);
 
   Standard_EXPORT bool SameParameter() const;
@@ -50,10 +37,8 @@ public:
 
   NCollection_List<occ::handle<BRep_CurveRepresentation>>& ChangeCurves();
 
-  //! Returns a copy of the TShape with no sub-shapes.
   Standard_EXPORT occ::handle<TopoDS_TShape> EmptyCopy() const override;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(BRep_TEdge, TopoDS_TEdge)
@@ -69,14 +54,10 @@ inline double BRep_TEdge::Tolerance() const
   return myTolerance;
 }
 
-//=================================================================================================
-
 inline void BRep_TEdge::Tolerance(const double T)
 {
   myTolerance = T;
 }
-
-//=================================================================================================
 
 inline void BRep_TEdge::UpdateTolerance(const double T)
 {
@@ -84,14 +65,10 @@ inline void BRep_TEdge::UpdateTolerance(const double T)
     myTolerance = T;
 }
 
-//=================================================================================================
-
 inline const NCollection_List<occ::handle<BRep_CurveRepresentation>>& BRep_TEdge::Curves() const
 {
   return myCurves;
 }
-
-//=================================================================================================
 
 inline NCollection_List<occ::handle<BRep_CurveRepresentation>>& BRep_TEdge::ChangeCurves()
 {

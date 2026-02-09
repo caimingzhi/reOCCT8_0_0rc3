@@ -10,11 +10,7 @@
 #include <NCollection_HArray1.hpp>
 #include <StepVisual_ViewVolume.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWCameraModelD3MultiClipping::RWStepVisual_RWCameraModelD3MultiClipping() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWCameraModelD3MultiClipping::ReadStep(
   const occ::handle<StepData_StepReaderData>&               data,
@@ -22,15 +18,13 @@ void RWStepVisual_RWCameraModelD3MultiClipping::ReadStep(
   occ::handle<Interface_Check>&                             ach,
   const occ::handle<StepVisual_CameraModelD3MultiClipping>& ent) const
 {
-  // Number of Parameter Control
+
   if (!data->CheckNbParams(num, 4, ach, "camera_model_d3_multi_clipping"))
     return;
 
-  // Inherited field : name
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // Inherited field : view_reference_system
   occ::handle<StepGeom_Axis2Placement3d> aViewReferenceSystem;
   data->ReadEntity(num,
                    2,
@@ -39,7 +33,6 @@ void RWStepVisual_RWCameraModelD3MultiClipping::ReadStep(
                    STANDARD_TYPE(StepGeom_Axis2Placement3d),
                    aViewReferenceSystem);
 
-  // Inherited field : perspective_of_volume
   occ::handle<StepVisual_ViewVolume> aPerspectiveOfVolume;
   data->ReadEntity(num,
                    3,
@@ -48,7 +41,6 @@ void RWStepVisual_RWCameraModelD3MultiClipping::ReadStep(
                    STANDARD_TYPE(StepVisual_ViewVolume),
                    aPerspectiveOfVolume);
 
-  // Own field : shape_clipping
   occ::handle<NCollection_HArray1<StepVisual_CameraModelD3MultiClippingInterectionSelect>>
                                                          aShapeClipping;
   StepVisual_CameraModelD3MultiClippingInterectionSelect anEnt;
@@ -66,26 +58,20 @@ void RWStepVisual_RWCameraModelD3MultiClipping::ReadStep(
     }
   }
 
-  // Initialization of the read entity
   ent->Init(aName, aViewReferenceSystem, aPerspectiveOfVolume, aShapeClipping);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWCameraModelD3MultiClipping::WriteStep(
   StepData_StepWriter&                                      SW,
   const occ::handle<StepVisual_CameraModelD3MultiClipping>& ent) const
 {
-  // Inherited field name
+
   SW.Send(ent->Name());
 
-  // Inherited field view_reference_system
   SW.Send(ent->ViewReferenceSystem());
 
-  // Inherited field view_reference_system
   SW.Send(ent->PerspectiveOfVolume());
 
-  // Own field: shape_clipping
   SW.OpenSub();
   for (int i = 1; i <= ent->ShapeClipping()->Length(); i++)
   {
@@ -94,17 +80,15 @@ void RWStepVisual_RWCameraModelD3MultiClipping::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWCameraModelD3MultiClipping::Share(
   const occ::handle<StepVisual_CameraModelD3MultiClipping>& ent,
   Interface_EntityIterator&                                 iter) const
 {
-  // Inherited field view_reference_system
+
   iter.GetOneItem(ent->ViewReferenceSystem());
-  // Inherited field : perspective_of_volume
+
   iter.GetOneItem(ent->PerspectiveOfVolume());
-  // Own field: shape_clipping
+
   int i, nb = ent->ShapeClipping()->Length();
   for (i = 1; i <= nb; i++)
     iter.AddItem(ent->ShapeClipping()->Value(i).Value());

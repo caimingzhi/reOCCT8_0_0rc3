@@ -6,10 +6,6 @@
 #include <StepData_SelectMember.hpp>
 #include <Standard_Integer.hpp>
 
-//! A SelectReal is a SelectMember specialised for a basic real
-//! type in a select which also accepts entities : this one has
-//! NO NAME
-//! For a named select, see SelectNamed
 class StepData_SelectReal : public StepData_SelectMember
 {
 

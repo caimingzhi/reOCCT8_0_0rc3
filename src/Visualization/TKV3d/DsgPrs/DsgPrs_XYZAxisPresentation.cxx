@@ -9,8 +9,6 @@
 #include <Prs3d_Presentation.hpp>
 #include <Prs3d_TextAspect.hpp>
 
-//=================================================================================================
-
 void DsgPrs_XYZAxisPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                      const occ::handle<Prs3d_LineAspect>&   aLineAspect,
                                      const gp_Dir&                          aDir,

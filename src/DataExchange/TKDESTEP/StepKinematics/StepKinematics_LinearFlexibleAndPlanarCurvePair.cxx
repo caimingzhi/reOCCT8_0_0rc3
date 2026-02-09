@@ -1,16 +1,12 @@
-// Created on : Fri May 08 19:02:07 2020
+
 
 #include <StepKinematics_LinearFlexibleAndPlanarCurvePair.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_LinearFlexibleAndPlanarCurvePair,
                            StepKinematics_HighOrderKinematicPair)
 
-//=================================================================================================
-
 StepKinematics_LinearFlexibleAndPlanarCurvePair::StepKinematics_LinearFlexibleAndPlanarCurvePair() =
   default;
-
-//=================================================================================================
 
 void StepKinematics_LinearFlexibleAndPlanarCurvePair::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -36,14 +32,10 @@ void StepKinematics_LinearFlexibleAndPlanarCurvePair::Init(
   myOrientation = theOrientation;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_Curve> StepKinematics_LinearFlexibleAndPlanarCurvePair::PairCurve() const
 {
   return myPairCurve;
 }
-
-//=================================================================================================
 
 void StepKinematics_LinearFlexibleAndPlanarCurvePair::SetPairCurve(
   const occ::handle<StepGeom_Curve>& thePairCurve)
@@ -51,14 +43,10 @@ void StepKinematics_LinearFlexibleAndPlanarCurvePair::SetPairCurve(
   myPairCurve = thePairCurve;
 }
 
-//=================================================================================================
-
 bool StepKinematics_LinearFlexibleAndPlanarCurvePair::Orientation() const
 {
   return myOrientation;
 }
-
-//=================================================================================================
 
 void StepKinematics_LinearFlexibleAndPlanarCurvePair::SetOrientation(const bool theOrientation)
 {

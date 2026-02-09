@@ -23,7 +23,7 @@ void IGESDraw_ToolSegmentedViewsVisible::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&        IR,
   IGESData_ParamReader&                              PR) const
 {
-  // bool                              st; //szv#4:S4163:12Mar99 moved down
+
   int nbval;
 
   occ::handle<NCollection_HArray1<occ::handle<IGESData_ViewKindEntity>>> views;
@@ -35,7 +35,6 @@ void IGESDraw_ToolSegmentedViewsVisible::ReadOwnParams(
   occ::handle<NCollection_HArray1<occ::handle<IGESData_LineFontEntity>>> lineFontDefinitions;
   occ::handle<NCollection_HArray1<int>>                                  lineWeights;
 
-  // Reading nbval(Integer)
   bool st = PR.ReadInteger(PR.Current(), "No. of View/segment blocks", nbval);
   if (st && nbval > 0)
   {
@@ -59,9 +58,7 @@ void IGESDraw_ToolSegmentedViewsVisible::ReadOwnParams(
 
     for (int i = 1; i <= nbval; i++)
     {
-      // Reading views(HArray1OfView)
-      // st = PR.ReadEntity( IR, PR.Current(), "Instance of views",
-      // STANDARD_TYPE(IGESData_ViewKindEntity), tempView ); //szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "Instance of views",
@@ -69,24 +66,16 @@ void IGESDraw_ToolSegmentedViewsVisible::ReadOwnParams(
                         tempView))
         views->SetValue(i, tempView);
 
-      // Reading breakpointParameters(HArray1OfReal)
-      // st = PR.ReadReal(PR.Current(), "array breakpointParameters", tempBreak );
-      // //szv#4:S4163:12Mar99 moved in if
       if (PR.ReadReal(PR.Current(), "array breakpointParameters", tempBreak))
         breakpointParameters->SetValue(i, tempBreak);
 
-      // Reading displayFlags(HArray1OfInteger)
-      // st = PR.ReadInteger( PR.Current(), "array displayFlags", tempDisplay );
-      // //szv#4:S4163:12Mar99 moved in if
       if (PR.ReadInteger(PR.Current(), "array displayFlags", tempDisplay))
         displayFlags->SetValue(i, tempDisplay);
 
       int curnum = PR.CurrentNumber();
 
-      //  Reading Color : Value (>0) or Definition (<0 = D.E. Pointer)
-      // clang-format off
-	PR.ReadInteger( PR.Current(), "array colorValues", tempColorValue); //szv#4:S4163:12Mar99 `st=` not needed
-      // clang-format on
+      PR.ReadInteger(PR.Current(), "array colorValues", tempColorValue);
+
       if (tempColorValue < 0)
       {
         colorValues->SetValue(i, -1);
@@ -100,10 +89,9 @@ void IGESDraw_ToolSegmentedViewsVisible::ReadOwnParams(
         colorValues->SetValue(i, tempColorValue);
 
       curnum = PR.CurrentNumber();
-      //  Reading Line Font : Value (>0) or Definition (<0 = D.E. Pointer)
-      // clang-format off
-	PR.ReadInteger( PR.Current(), "array lineFontValues", tempLineFontValue ); //szv#4:S4163:12Mar99 `st=` not needed
-      // clang-format on
+
+      PR.ReadInteger(PR.Current(), "array lineFontValues", tempLineFontValue);
+
       if (tempLineFontValue < 0)
       {
         lineFontValues->SetValue(i, -1);
@@ -115,9 +103,6 @@ void IGESDraw_ToolSegmentedViewsVisible::ReadOwnParams(
       else
         lineFontValues->SetValue(i, tempLineFontValue);
 
-      // Reading lineWeights(HArray1OfInteger)
-      // st = PR.ReadInteger( PR.Current(), "array lineWeights", tempLine ); //szv#4:S4163:12Mar99
-      // moved in if
       if (PR.ReadInteger(PR.Current(), "array lineWeights", tempLine))
         lineWeights->SetValue(i, tempLine);
     }
@@ -149,12 +134,12 @@ void IGESDraw_ToolSegmentedViewsVisible::WriteOwnParams(
     IW.Send(ent->DisplayFlag(i));
 
     if (ent->IsColorDefinition(i))
-      IW.Send(ent->ColorDefinition(i), true); // negative
+      IW.Send(ent->ColorDefinition(i), true);
     else
       IW.Send(ent->ColorValue(i));
 
     if (ent->IsFontDefinition(i))
-      IW.Send(ent->LineFontDefinition(i), true); // negative
+      IW.Send(ent->LineFontDefinition(i), true);
     else
       IW.Send(ent->LineFontValue(i));
 
@@ -225,7 +210,6 @@ void IGESDraw_ToolSegmentedViewsVisible::OwnCopy(
     else
     {
       colorValues->SetValue(i, another->ColorValue(i));
-      ////          colorDefinitions->SetValue( i, NULL );    by default
     }
 
     if (another->IsFontDefinition(i))
@@ -237,7 +221,6 @@ void IGESDraw_ToolSegmentedViewsVisible::OwnCopy(
     else
     {
       lineFontValues->SetValue(i, another->LineFontValue(i));
-      ////          lineFontDefinitions->SetValue( i, NULL );  by default
     }
 
     lineWeights->SetValue(i, another->LineWeightItem(i));
@@ -254,7 +237,7 @@ void IGESDraw_ToolSegmentedViewsVisible::OwnCopy(
 }
 
 IGESData_DirChecker IGESDraw_ToolSegmentedViewsVisible::DirChecker(
-  const occ::handle<IGESDraw_SegmentedViewsVisible>& /*ent*/) const
+  const occ::handle<IGESDraw_SegmentedViewsVisible>&) const
 {
   IGESData_DirChecker DC(402, 19);
   DC.Structure(IGESData_DefVoid);
@@ -269,9 +252,9 @@ IGESData_DirChecker IGESDraw_ToolSegmentedViewsVisible::DirChecker(
 }
 
 void IGESDraw_ToolSegmentedViewsVisible::OwnCheck(
-  const occ::handle<IGESDraw_SegmentedViewsVisible>& /*ent*/,
+  const occ::handle<IGESDraw_SegmentedViewsVisible>&,
   const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /*ach*/) const
+  occ::handle<Interface_Check>&) const
 {
 }
 
@@ -297,8 +280,8 @@ void IGESDraw_ToolSegmentedViewsVisible::OwnDump(
   {
     case 4:
       S << " [ for content, ask level > 4 ]\n";
-      break; // Nothing to be dumped here
-    case 5:  // Presently level 5 and 6 have the same Dump
+      break;
+    case 5:
     case 6:
     {
       int I;

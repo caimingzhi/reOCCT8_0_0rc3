@@ -10,36 +10,26 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_AttributeDelta, Standard_Transient)
 
-//=================================================================================================
-
 TDF_AttributeDelta::TDF_AttributeDelta(const occ::handle<TDF_Attribute>& anAttribute)
     : myAttribute(anAttribute),
       myLabel(anAttribute->Label())
 {
 }
 
-//=================================================================================================
-
 TDF_Label TDF_AttributeDelta::Label() const
 {
   return myLabel;
 }
-
-//=================================================================================================
 
 occ::handle<TDF_Attribute> TDF_AttributeDelta::Attribute() const
 {
   return myAttribute;
 }
 
-//=================================================================================================
-
 Standard_GUID TDF_AttributeDelta::ID() const
 {
   return myAttribute->ID();
 }
-
-//=================================================================================================
 
 Standard_OStream& TDF_AttributeDelta::Dump(Standard_OStream& OS) const
 {
@@ -49,8 +39,6 @@ Standard_OStream& TDF_AttributeDelta::Dump(Standard_OStream& OS) const
   OS << " on " << Attribute()->DynamicType()->Name();
   return OS;
 }
-
-//=================================================================================================
 
 void TDF_AttributeDelta::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

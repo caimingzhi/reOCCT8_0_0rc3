@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// gka 05.03.99 S4134 upgrade from CD to DIS
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -30,18 +17,14 @@ void RWStepBasic_RWPersonalAddress::ReadStep(
   const occ::handle<StepBasic_PersonalAddress>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 14, ach, "personal_address"))
     return;
-
-  // --- inherited field : internalLocation ---
 
   occ::handle<TCollection_HAsciiString> aInternalLocation;
   bool                                  hasAinternalLocation = true;
   if (data->IsParamDefined(num, 1))
   {
-    // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
     data->ReadString(num, 1, "internal_location", ach, aInternalLocation);
   }
   else
@@ -50,13 +33,11 @@ void RWStepBasic_RWPersonalAddress::ReadStep(
     aInternalLocation.Nullify();
   }
 
-  // --- inherited field : streetNumber ---
-
   occ::handle<TCollection_HAsciiString> aStreetNumber;
   bool                                  hasAstreetNumber = true;
   if (data->IsParamDefined(num, 2))
   {
-    // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
     data->ReadString(num, 2, "street_number", ach, aStreetNumber);
   }
   else
@@ -65,13 +46,11 @@ void RWStepBasic_RWPersonalAddress::ReadStep(
     aStreetNumber.Nullify();
   }
 
-  // --- inherited field : street ---
-
   occ::handle<TCollection_HAsciiString> aStreet;
   bool                                  hasAstreet = true;
   if (data->IsParamDefined(num, 3))
   {
-    // szv#4:S4163:12Mar99 `bool stat3 =` not needed
+
     data->ReadString(num, 3, "street", ach, aStreet);
   }
   else
@@ -80,13 +59,11 @@ void RWStepBasic_RWPersonalAddress::ReadStep(
     aStreet.Nullify();
   }
 
-  // --- inherited field : postalBox ---
-
   occ::handle<TCollection_HAsciiString> aPostalBox;
   bool                                  hasApostalBox = true;
   if (data->IsParamDefined(num, 4))
   {
-    // szv#4:S4163:12Mar99 `bool stat4 =` not needed
+
     data->ReadString(num, 4, "postal_box", ach, aPostalBox);
   }
   else
@@ -95,13 +72,11 @@ void RWStepBasic_RWPersonalAddress::ReadStep(
     aPostalBox.Nullify();
   }
 
-  // --- inherited field : town ---
-
   occ::handle<TCollection_HAsciiString> aTown;
   bool                                  hasAtown = true;
   if (data->IsParamDefined(num, 5))
   {
-    // szv#4:S4163:12Mar99 `bool stat5 =` not needed
+
     data->ReadString(num, 5, "town", ach, aTown);
   }
   else
@@ -110,13 +85,11 @@ void RWStepBasic_RWPersonalAddress::ReadStep(
     aTown.Nullify();
   }
 
-  // --- inherited field : region ---
-
   occ::handle<TCollection_HAsciiString> aRegion;
   bool                                  hasAregion = true;
   if (data->IsParamDefined(num, 6))
   {
-    // szv#4:S4163:12Mar99 `bool stat6 =` not needed
+
     data->ReadString(num, 6, "region", ach, aRegion);
   }
   else
@@ -125,13 +98,11 @@ void RWStepBasic_RWPersonalAddress::ReadStep(
     aRegion.Nullify();
   }
 
-  // --- inherited field : postalCode ---
-
   occ::handle<TCollection_HAsciiString> aPostalCode;
   bool                                  hasApostalCode = true;
   if (data->IsParamDefined(num, 7))
   {
-    // szv#4:S4163:12Mar99 `bool stat7 =` not needed
+
     data->ReadString(num, 7, "postal_code", ach, aPostalCode);
   }
   else
@@ -140,13 +111,11 @@ void RWStepBasic_RWPersonalAddress::ReadStep(
     aPostalCode.Nullify();
   }
 
-  // --- inherited field : country ---
-
   occ::handle<TCollection_HAsciiString> aCountry;
   bool                                  hasAcountry = true;
   if (data->IsParamDefined(num, 8))
   {
-    // szv#4:S4163:12Mar99 `bool stat8 =` not needed
+
     data->ReadString(num, 8, "country", ach, aCountry);
   }
   else
@@ -155,13 +124,11 @@ void RWStepBasic_RWPersonalAddress::ReadStep(
     aCountry.Nullify();
   }
 
-  // --- inherited field : facsimileNumber ---
-
   occ::handle<TCollection_HAsciiString> aFacsimileNumber;
   bool                                  hasAfacsimileNumber = true;
   if (data->IsParamDefined(num, 9))
   {
-    // szv#4:S4163:12Mar99 `bool stat9 =` not needed
+
     data->ReadString(num, 9, "facsimile_number", ach, aFacsimileNumber);
   }
   else
@@ -170,13 +137,11 @@ void RWStepBasic_RWPersonalAddress::ReadStep(
     aFacsimileNumber.Nullify();
   }
 
-  // --- inherited field : telephoneNumber ---
-
   occ::handle<TCollection_HAsciiString> aTelephoneNumber;
   bool                                  hasAtelephoneNumber = true;
   if (data->IsParamDefined(num, 10))
   {
-    // szv#4:S4163:12Mar99 `bool stat10 =` not needed
+
     data->ReadString(num, 10, "telephone_number", ach, aTelephoneNumber);
   }
   else
@@ -185,13 +150,11 @@ void RWStepBasic_RWPersonalAddress::ReadStep(
     aTelephoneNumber.Nullify();
   }
 
-  // --- inherited field : electronicMailAddress ---
-
   occ::handle<TCollection_HAsciiString> aElectronicMailAddress;
   bool                                  hasAelectronicMailAddress = true;
   if (data->IsParamDefined(num, 11))
   {
-    // szv#4:S4163:12Mar99 `bool stat11 =` not needed
+
     data->ReadString(num, 11, "electronic_mail_address", ach, aElectronicMailAddress);
   }
   else
@@ -200,13 +163,11 @@ void RWStepBasic_RWPersonalAddress::ReadStep(
     aElectronicMailAddress.Nullify();
   }
 
-  // --- inherited field : telexNumber ---
-
   occ::handle<TCollection_HAsciiString> aTelexNumber;
   bool                                  hasAtelexNumber = true;
   if (data->IsParamDefined(num, 12))
   {
-    // szv#4:S4163:12Mar99 `bool stat12 =` not needed
+
     data->ReadString(num, 12, "telex_number", ach, aTelexNumber);
   }
   else
@@ -214,8 +175,6 @@ void RWStepBasic_RWPersonalAddress::ReadStep(
     hasAtelexNumber = false;
     aTelexNumber.Nullify();
   }
-
-  // --- own field : people ---
 
   occ::handle<NCollection_HArray1<occ::handle<StepBasic_Person>>> aPeople;
   occ::handle<StepBasic_Person>                                   anent13;
@@ -226,21 +185,18 @@ void RWStepBasic_RWPersonalAddress::ReadStep(
     aPeople  = new NCollection_HArray1<occ::handle<StepBasic_Person>>(1, nb13);
     for (int i13 = 1; i13 <= nb13; i13++)
     {
-      // szv#4:S4163:12Mar99 `bool stat13 =` not needed
+
       if (data->ReadEntity(nsub13, i13, "person", ach, STANDARD_TYPE(StepBasic_Person), anent13))
         aPeople->SetValue(i13, anent13);
     }
   }
 
-  // --- own field : description ---
-
   occ::handle<TCollection_HAsciiString> aDescription;
   if (data->IsParamDefined(num, 14))
-  { // gka 05.03.99 S4134 upgrade from CD to DIS
-    // szv#4:S4163:12Mar99 `bool stat14 =` not needed
+  {
+
     data->ReadString(num, 14, "description", ach, aDescription);
   }
-  //--- Initialisation of the read entity ---
 
   ent->Init(hasAinternalLocation,
             aInternalLocation,
@@ -275,8 +231,6 @@ void RWStepBasic_RWPersonalAddress::WriteStep(
   const occ::handle<StepBasic_PersonalAddress>& ent) const
 {
 
-  // --- inherited field internalLocation ---
-
   bool hasAinternalLocation = ent->HasInternalLocation();
   if (hasAinternalLocation)
   {
@@ -286,8 +240,6 @@ void RWStepBasic_RWPersonalAddress::WriteStep(
   {
     SW.SendUndef();
   }
-
-  // --- inherited field streetNumber ---
 
   bool hasAstreetNumber = ent->HasStreetNumber();
   if (hasAstreetNumber)
@@ -299,8 +251,6 @@ void RWStepBasic_RWPersonalAddress::WriteStep(
     SW.SendUndef();
   }
 
-  // --- inherited field street ---
-
   bool hasAstreet = ent->HasStreet();
   if (hasAstreet)
   {
@@ -310,8 +260,6 @@ void RWStepBasic_RWPersonalAddress::WriteStep(
   {
     SW.SendUndef();
   }
-
-  // --- inherited field postalBox ---
 
   bool hasApostalBox = ent->HasPostalBox();
   if (hasApostalBox)
@@ -323,8 +271,6 @@ void RWStepBasic_RWPersonalAddress::WriteStep(
     SW.SendUndef();
   }
 
-  // --- inherited field town ---
-
   bool hasAtown = ent->HasTown();
   if (hasAtown)
   {
@@ -334,8 +280,6 @@ void RWStepBasic_RWPersonalAddress::WriteStep(
   {
     SW.SendUndef();
   }
-
-  // --- inherited field region ---
 
   bool hasAregion = ent->HasRegion();
   if (hasAregion)
@@ -347,8 +291,6 @@ void RWStepBasic_RWPersonalAddress::WriteStep(
     SW.SendUndef();
   }
 
-  // --- inherited field postalCode ---
-
   bool hasApostalCode = ent->HasPostalCode();
   if (hasApostalCode)
   {
@@ -358,8 +300,6 @@ void RWStepBasic_RWPersonalAddress::WriteStep(
   {
     SW.SendUndef();
   }
-
-  // --- inherited field country ---
 
   bool hasAcountry = ent->HasCountry();
   if (hasAcountry)
@@ -371,8 +311,6 @@ void RWStepBasic_RWPersonalAddress::WriteStep(
     SW.SendUndef();
   }
 
-  // --- inherited field facsimileNumber ---
-
   bool hasAfacsimileNumber = ent->HasFacsimileNumber();
   if (hasAfacsimileNumber)
   {
@@ -382,8 +320,6 @@ void RWStepBasic_RWPersonalAddress::WriteStep(
   {
     SW.SendUndef();
   }
-
-  // --- inherited field telephoneNumber ---
 
   bool hasAtelephoneNumber = ent->HasTelephoneNumber();
   if (hasAtelephoneNumber)
@@ -395,8 +331,6 @@ void RWStepBasic_RWPersonalAddress::WriteStep(
     SW.SendUndef();
   }
 
-  // --- inherited field electronicMailAddress ---
-
   bool hasAelectronicMailAddress = ent->HasElectronicMailAddress();
   if (hasAelectronicMailAddress)
   {
@@ -406,8 +340,6 @@ void RWStepBasic_RWPersonalAddress::WriteStep(
   {
     SW.SendUndef();
   }
-
-  // --- inherited field telexNumber ---
 
   bool hasAtelexNumber = ent->HasTelexNumber();
   if (hasAtelexNumber)
@@ -419,16 +351,12 @@ void RWStepBasic_RWPersonalAddress::WriteStep(
     SW.SendUndef();
   }
 
-  // --- own field : people ---
-
   SW.OpenSub();
   for (int i13 = 1; i13 <= ent->NbPeople(); i13++)
   {
     SW.Send(ent->PeopleValue(i13));
   }
   SW.CloseSub();
-
-  // --- own field : description ---
 
   SW.Send(ent->Description());
 }

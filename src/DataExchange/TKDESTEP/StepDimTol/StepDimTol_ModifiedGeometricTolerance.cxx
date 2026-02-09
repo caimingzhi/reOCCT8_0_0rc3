@@ -6,11 +6,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_ModifiedGeometricTolerance, StepDimTol_GeometricTolerance)
 
-//=================================================================================================
-
 StepDimTol_ModifiedGeometricTolerance::StepDimTol_ModifiedGeometricTolerance() = default;
-
-//=================================================================================================
 
 void StepDimTol_ModifiedGeometricTolerance::Init(
   const occ::handle<TCollection_HAsciiString>& theGeometricTolerance_Name,
@@ -27,8 +23,6 @@ void StepDimTol_ModifiedGeometricTolerance::Init(
   myModifier = theModifier;
 }
 
-//=================================================================================================
-
 void StepDimTol_ModifiedGeometricTolerance::Init(
   const occ::handle<TCollection_HAsciiString>& theGeometricTolerance_Name,
   const occ::handle<TCollection_HAsciiString>& theGeometricTolerance_Description,
@@ -44,14 +38,10 @@ void StepDimTol_ModifiedGeometricTolerance::Init(
   myModifier = theModifier;
 }
 
-//=================================================================================================
-
 StepDimTol_LimitCondition StepDimTol_ModifiedGeometricTolerance::Modifier() const
 {
   return myModifier;
 }
-
-//=================================================================================================
 
 void StepDimTol_ModifiedGeometricTolerance::SetModifier(const StepDimTol_LimitCondition theModifier)
 {

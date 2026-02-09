@@ -23,9 +23,7 @@ void IGESAppli_ToolNode::ReadOwnParams(const occ::handle<IGESAppli_Node>&       
 {
   gp_XYZ                                     tempCoordinates;
   occ::handle<IGESGeom_TransformationMatrix> tempSystem;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadXYZ(PR.CurrentList(1, 3), "Coordinates of Node (XYZ)", tempCoordinates);
 
   if (PR.DefinedElseSkip())
@@ -65,9 +63,9 @@ void IGESAppli_ToolNode::OwnCopy(const occ::handle<IGESAppli_Node>& another,
   ent->Init(aCoord, aSystem);
 }
 
-IGESData_DirChecker IGESAppli_ToolNode::DirChecker(const occ::handle<IGESAppli_Node>& /*ent*/) const
+IGESData_DirChecker IGESAppli_ToolNode::DirChecker(const occ::handle<IGESAppli_Node>&) const
 {
-  IGESData_DirChecker DC(134, 0); // Form no = 0 & Type = 134
+  IGESData_DirChecker DC(134, 0);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefVoid);
   DC.LineWeight(IGESData_DefVoid);

@@ -11,7 +11,6 @@ class DrawTrSurf_BSplineCurve2d : public DrawTrSurf_Curve2d
   DEFINE_STANDARD_RTTIEXT(DrawTrSurf_BSplineCurve2d, DrawTrSurf_Curve2d)
   Draw_Drawable3D_FACTORY
 public:
-  //! creates a drawable BSpline curve from a BSpline curve of package Geom2d.
   Standard_EXPORT DrawTrSurf_BSplineCurve2d(const occ::handle<Geom2d_BSplineCurve>& C);
 
   Standard_EXPORT DrawTrSurf_BSplineCurve2d(const occ::handle<Geom2d_BSplineCurve>& C,
@@ -34,11 +33,6 @@ public:
 
   void ClearKnots() { drawKnots = false; }
 
-  //! Returns in <Index> the index of the first pole of the
-  //! curve projected by the Display <D> at a distance lower
-  //! than <Prec> from <X,Y>. If no pole is found index is
-  //! set to 0, else index is always greater than the input
-  //! value of index.
   Standard_EXPORT void FindPole(const double        X,
                                 const double        Y,
                                 const Draw_Display& D,
@@ -63,7 +57,6 @@ public:
 
   Draw_Color PolesColor() const { return polesLook; }
 
-  //! For variable copy.
   Standard_EXPORT occ::handle<Draw_Drawable3D> Copy() const override;
 
 private:

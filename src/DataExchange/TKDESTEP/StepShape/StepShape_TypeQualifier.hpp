@@ -6,7 +6,6 @@
 #include <Standard_Transient.hpp>
 class TCollection_HAsciiString;
 
-//! Added for Dimensional Tolerances
 class StepShape_TypeQualifier : public Standard_Transient
 {
 

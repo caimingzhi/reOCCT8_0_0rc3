@@ -9,10 +9,6 @@ class StepGeom_Conic;
 class Geom_Conic;
 class Geom2d_Conic;
 
-//! This class implements the mapping between classes
-//! Conic from Geom and the class Conic from StepGeom
-//! which describes a Conic from prostep. As Conic is an abstract
-//! Conic this class is an access to the sub-class required.
 class GeomToStep_MakeConic : public GeomToStep_Root
 {
 public:

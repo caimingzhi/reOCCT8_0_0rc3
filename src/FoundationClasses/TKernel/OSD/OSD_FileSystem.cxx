@@ -1,23 +1,10 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <OSD_FileSystem.hpp>
 #include <OSD_FileSystemSelector.hpp>
 #include <OSD_LocalFileSystem.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(OSD_FileSystem, Standard_Transient)
-
-//=================================================================================================
 
 static occ::handle<OSD_FileSystem> createDefaultFileSystem()
 {
@@ -26,23 +13,15 @@ static occ::handle<OSD_FileSystem> createDefaultFileSystem()
   return aSystem;
 }
 
-//=================================================================================================
-
 OSD_FileSystem::OSD_FileSystem() = default;
 
-//=================================================================================================
-
 OSD_FileSystem::~OSD_FileSystem() = default;
-
-//=================================================================================================
 
 const occ::handle<OSD_FileSystem>& OSD_FileSystem::DefaultFileSystem()
 {
   static const occ::handle<OSD_FileSystem> aDefSystem = createDefaultFileSystem();
   return aDefSystem;
 }
-
-//=================================================================================================
 
 void OSD_FileSystem::AddDefaultProtocol(const occ::handle<OSD_FileSystem>& theFileSystem,
                                         bool                               theIsPreferred)
@@ -52,16 +31,12 @@ void OSD_FileSystem::AddDefaultProtocol(const occ::handle<OSD_FileSystem>& theFi
   aFileSelector->AddProtocol(theFileSystem, theIsPreferred);
 }
 
-//=================================================================================================
-
 void OSD_FileSystem::RemoveDefaultProtocol(const occ::handle<OSD_FileSystem>& theFileSystem)
 {
   occ::handle<OSD_FileSystemSelector> aFileSelector =
     occ::down_cast<OSD_FileSystemSelector>(DefaultFileSystem());
   aFileSelector->RemoveProtocol(theFileSystem);
 }
-
-//=================================================================================================
 
 std::shared_ptr<std::istream> OSD_FileSystem::OpenIStream(
   const TCollection_AsciiString&       theUrl,
@@ -80,7 +55,7 @@ std::shared_ptr<std::istream> OSD_FileSystem::OpenIStream(
   {
     if (!anOldStream->good())
     {
-      // Reset flags without re-opening
+
       anOldStream->clear();
     }
     aNewStream = anOldStream;
@@ -106,8 +81,6 @@ std::shared_ptr<std::istream> OSD_FileSystem::OpenIStream(
   }
   return aNewStream;
 }
-
-//=================================================================================================
 
 std::shared_ptr<std::ostream> OSD_FileSystem::OpenOStream(const TCollection_AsciiString& theUrl,
                                                           const std::ios_base::openmode  theMode)

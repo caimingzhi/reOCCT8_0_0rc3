@@ -14,29 +14,25 @@ void RWStepRepr_RWConstructiveGeometryRepresentationRelationship::ReadStep(
   occ::handle<Interface_Check>&                                               ach,
   const occ::handle<StepRepr_ConstructiveGeometryRepresentationRelationship>& ent) const
 {
-  // Number of Parameter Control
+
   if (!data->CheckNbParams(num, 4, ach, "constructive_geometry_representation_relationship"))
     return;
 
-  // Inherited field : name
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // Inherited field : description
   occ::handle<TCollection_HAsciiString> aDescription;
   if (data->IsParamDefined(num, 2))
   {
     data->ReadString(num, 2, "description", ach, aDescription);
   }
-  // Inherited field : rep_1
+
   occ::handle<StepRepr_Representation> aRep1;
   data->ReadEntity(num, 3, "rep_1", ach, STANDARD_TYPE(StepRepr_Representation), aRep1);
 
-  // Inherited field : rep_2
   occ::handle<StepRepr_Representation> aRep2;
   data->ReadEntity(num, 4, "rep_2", ach, STANDARD_TYPE(StepRepr_Representation), aRep2);
 
-  // Initialisation of the read entity
   ent->Init(aName, aDescription, aRep1, aRep2);
 }
 
@@ -44,16 +40,13 @@ void RWStepRepr_RWConstructiveGeometryRepresentationRelationship::WriteStep(
   StepData_StepWriter&                                                        SW,
   const occ::handle<StepRepr_ConstructiveGeometryRepresentationRelationship>& ent) const
 {
-  // Inherited field : name
+
   SW.Send(ent->Name());
 
-  // Inherited field : description
   SW.Send(ent->Description());
 
-  // Inherited field : rep_1
   SW.Send(ent->Rep1());
 
-  // Inherited field : rep_2
   SW.Send(ent->Rep2());
 }
 

@@ -7,12 +7,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol,
                            StepDimTol_GeoTolAndGeoTolWthDatRef)
 
-//=================================================================================================
-
 StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol::
   StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol() = default;
-
-//=================================================================================================
 
 void StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol::Init(
   const occ::handle<TCollection_HAsciiString>&                        theName,
@@ -31,8 +27,6 @@ void StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol::Init(
                                             theType);
   myUnequallyDisposedGeometricTolerance = theUDGT;
 }
-
-//=================================================================================================
 
 void StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol::Init(
   const occ::handle<TCollection_HAsciiString>&                        theName,

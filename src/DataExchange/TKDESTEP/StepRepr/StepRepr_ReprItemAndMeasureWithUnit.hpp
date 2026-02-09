@@ -7,8 +7,6 @@
 class StepRepr_MeasureRepresentationItem;
 class StepBasic_MeasureWithUnit;
 
-//! Base class for complex types (MEASURE_REPRESENTATION_ITEM, MEASURE_WITH_UNIT,
-//! REPRESENTATION_ITEM, LENGTH_MEASURE_WITH_UNIT/PLANE_ANGLE_MEASURE_WITH_UNIT).
 class StepRepr_ReprItemAndMeasureWithUnit : public StepRepr_RepresentationItem
 {
 

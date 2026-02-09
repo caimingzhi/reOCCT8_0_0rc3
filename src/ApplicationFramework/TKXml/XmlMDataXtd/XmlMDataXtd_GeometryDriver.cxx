@@ -22,22 +22,16 @@ IMPLEMENT_DOMSTRING(GeomSplineString, "slpine")
 IMPLEMENT_DOMSTRING(GeomPlaneString, "plane")
 IMPLEMENT_DOMSTRING(GeomCylinderString, "cylinder")
 
-//=================================================================================================
-
 XmlMDataXtd_GeometryDriver::XmlMDataXtd_GeometryDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataXtd_GeometryDriver::NewEmpty() const
 {
   return (new TDataXtd_Geometry());
 }
-
-//=================================================================================================
 
 bool XmlMDataXtd_GeometryDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                        const occ::handle<TDF_Attribute>& theTarget,
@@ -59,8 +53,6 @@ bool XmlMDataXtd_GeometryDriver::Paste(const XmlObjMgt_Persistent&       theSour
   return true;
 }
 
-//=================================================================================================
-
 void XmlMDataXtd_GeometryDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                        XmlObjMgt_Persistent&             theTarget,
                                        XmlObjMgt_SRelocationTable&) const
@@ -68,8 +60,6 @@ void XmlMDataXtd_GeometryDriver::Paste(const occ::handle<TDF_Attribute>& theSour
   occ::handle<TDataXtd_Geometry> aG = occ::down_cast<TDataXtd_Geometry>(theSource);
   theTarget.Element().setAttribute(::TypeString(), GeometryTypeString(aG->GetType()));
 }
-
-//=================================================================================================
 
 static bool GeometryTypeEnum(const XmlObjMgt_DOMString& theString, TDataXtd_GeometryEnum& theResult)
 {
@@ -96,8 +86,6 @@ static bool GeometryTypeEnum(const XmlObjMgt_DOMString& theString, TDataXtd_Geom
   theResult = aResult;
   return true;
 }
-
-//=================================================================================================
 
 static const XmlObjMgt_DOMString& GeometryTypeString(const TDataXtd_GeometryEnum theE)
 {

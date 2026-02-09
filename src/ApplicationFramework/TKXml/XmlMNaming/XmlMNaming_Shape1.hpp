@@ -8,12 +8,6 @@
 #include <XmlObjMgt_Document.hpp>
 class TopoDS_Shape;
 
-//! The XmlMNaming_Shape1 is the Persistent view of a TopoDS_Shape.
-//!
-//! Shape1 contains:
-//! - a reference to a TShape
-//! - a reference to Location
-//! - an Orientation.
 class XmlMNaming_Shape1
 {
 public:
@@ -23,10 +17,8 @@ public:
 
   Standard_EXPORT XmlMNaming_Shape1(const XmlObjMgt_Element& E);
 
-  //! return myElement
   Standard_EXPORT const XmlObjMgt_Element& Element() const;
 
-  //! return myElement
   Standard_EXPORT XmlObjMgt_Element& Element();
 
   Standard_EXPORT int TShapeId() const;

@@ -25,7 +25,6 @@ public:
 
   GeomInt_IntSS();
 
-  //! performs general intersection of two surfaces just now
   GeomInt_IntSS(const occ::handle<Geom_Surface>& S1,
                 const occ::handle<Geom_Surface>& S2,
                 const double                     Tol,
@@ -33,7 +32,6 @@ public:
                 const bool                       ApproxS1 = false,
                 const bool                       ApproxS2 = false);
 
-  //! general intersection of two surfaces
   Standard_EXPORT void Perform(const occ::handle<Geom_Surface>& S1,
                                const occ::handle<Geom_Surface>& S2,
                                const double                     Tol,
@@ -41,7 +39,6 @@ public:
                                const bool                       ApproxS1 = false,
                                const bool                       ApproxS2 = false);
 
-  //! intersection of adapted surfaces
   void Perform(const occ::handle<GeomAdaptor_Surface>& HS1,
                const occ::handle<GeomAdaptor_Surface>& HS2,
                const double                            Tol,
@@ -49,7 +46,6 @@ public:
                const bool                              ApproxS1 = false,
                const bool                              ApproxS2 = false);
 
-  //! general intersection using a starting point
   Standard_EXPORT void Perform(const occ::handle<Geom_Surface>& S1,
                                const occ::handle<Geom_Surface>& S2,
                                const double                     Tol,
@@ -61,7 +57,6 @@ public:
                                const bool                       ApproxS1 = false,
                                const bool                       ApproxS2 = false);
 
-  //! intersection of adapted surfaces using a starting point
   void Perform(const occ::handle<GeomAdaptor_Surface>& HS1,
                const occ::handle<GeomAdaptor_Surface>& HS2,
                const double                            Tol,
@@ -105,7 +100,6 @@ public:
 
   Standard_EXPORT void TolFixTangents(double& aTolCheck, double& aTolAngCheck);
 
-  //! converts RLine to Geom(2d)_Curve.
   Standard_EXPORT static void TreatRLine(const occ::handle<IntPatch_RLine>&      theRL,
                                          const occ::handle<GeomAdaptor_Surface>& theHS1,
                                          const occ::handle<GeomAdaptor_Surface>& theHS2,
@@ -114,7 +108,6 @@ public:
                                          occ::handle<Geom2d_Curve>&              theC2d2,
                                          double&                                 theTolReached);
 
-  //! creates 2D-curve on given surface from given 3D-curve
   Standard_EXPORT static void BuildPCurves(const double                     theFirst,
                                            const double                     theLast,
                                            const double                     theUmin,
@@ -126,7 +119,6 @@ public:
                                            const occ::handle<Geom_Curve>&   theCurve,
                                            occ::handle<Geom2d_Curve>&       theCurve2d);
 
-  //! creates 2D-curve on given surface from given 3D-curve
   Standard_EXPORT static void BuildPCurves(const double                     f,
                                            const double                     l,
                                            double&                          Tol,
@@ -134,9 +126,6 @@ public:
                                            const occ::handle<Geom_Curve>&   C,
                                            occ::handle<Geom2d_Curve>&       C2d);
 
-  //! puts into theArrayOfParameters the parameters of intersection
-  //! points of given theC2d1 and theC2d2 curves with the boundaries
-  //! of the source surface.
   Standard_EXPORT static void TrimILineOnSurfBoundaries(
     const occ::handle<Geom2d_Curve>& theC2d1,
     const occ::handle<Geom2d_Curve>& theC2d2,
@@ -191,8 +180,6 @@ private:
 #include <IntPatch_Point.hpp>
 #include <Geom_Surface.hpp>
 
-//=================================================================================================
-
 inline GeomInt_IntSS::GeomInt_IntSS()
     : myNbrestr(0),
       myTolReached2d(0.0),
@@ -201,8 +188,6 @@ inline GeomInt_IntSS::GeomInt_IntSS()
       myTolAngCheck(1.e-6)
 {
 }
-
-//=================================================================================================
 
 inline GeomInt_IntSS::GeomInt_IntSS(const occ::handle<Geom_Surface>& S1,
                                     const occ::handle<Geom_Surface>& S2,
@@ -219,10 +204,6 @@ inline GeomInt_IntSS::GeomInt_IntSS(const occ::handle<Geom_Surface>& S1,
   Perform(S1, S2, Tol, Approx, ApproxS1, ApproxS2);
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Intersection of Adapted surfaces
-//=======================================================================
 inline void GeomInt_IntSS::Perform(const occ::handle<GeomAdaptor_Surface>& HS1,
                                    const occ::handle<GeomAdaptor_Surface>& HS2,
                                    const double                            Tol,
@@ -235,10 +216,6 @@ inline void GeomInt_IntSS::Perform(const occ::handle<GeomAdaptor_Surface>& HS1,
   InternalPerform(Tol, Approx, ApproxS1, ApproxS2, false, 0., 0., 0., 0.);
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Intersection of Adapted surfaces with a Starting Point
-//=======================================================================
 inline void GeomInt_IntSS::Perform(const occ::handle<GeomAdaptor_Surface>& HS1,
                                    const occ::handle<GeomAdaptor_Surface>& HS2,
                                    const double                            Tol,
@@ -255,35 +232,25 @@ inline void GeomInt_IntSS::Perform(const occ::handle<GeomAdaptor_Surface>& HS1,
   InternalPerform(Tol, Approx, ApproxS1, ApproxS2, true, U1, V1, U2, V2);
 }
 
-//=================================================================================================
-
 inline bool GeomInt_IntSS::IsDone() const
 {
   return myIntersector.IsDone();
 }
-
-//=================================================================================================
 
 inline double GeomInt_IntSS::TolReached2d() const
 {
   return myTolReached2d;
 }
 
-//=================================================================================================
-
 inline double GeomInt_IntSS::TolReached3d() const
 {
   return myTolReached3d;
 }
 
-//=================================================================================================
-
 inline int GeomInt_IntSS::NbLines() const
 {
   return sline.Length() - myNbrestr;
 }
-
-//=================================================================================================
 
 inline int GeomInt_IntSS::NbBoundaries() const
 {
@@ -291,14 +258,10 @@ inline int GeomInt_IntSS::NbBoundaries() const
   return myNbrestr;
 }
 
-//=================================================================================================
-
 inline int GeomInt_IntSS::NbPoints() const
 {
   return myIntersector.NbPnts();
 }
-
-//=================================================================================================
 
 inline gp_Pnt GeomInt_IntSS::Point(const int Index) const
 {

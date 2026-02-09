@@ -21,9 +21,6 @@
 #include <StepGeom_Hyperbola.hpp>
 #include <StepGeom_Parabola.hpp>
 
-//=============================================================================
-// Creation d' une Conic de prostep a partir d' une Conic de Geom
-//=============================================================================
 GeomToStep_MakeConic::GeomToStep_MakeConic(const occ::handle<Geom_Conic>& C,
                                            const StepData_Factors&        theLocalFactors)
 {
@@ -61,10 +58,6 @@ GeomToStep_MakeConic::GeomToStep_MakeConic(const occ::handle<Geom_Conic>& C,
   }
 }
 
-//=============================================================================
-// Creation d' une Conic2d de prostep a partir d' une Conic de Geom2d
-//=============================================================================
-
 GeomToStep_MakeConic::GeomToStep_MakeConic(const occ::handle<Geom2d_Conic>& C,
                                            const StepData_Factors&          theLocalFactors)
 {
@@ -95,18 +88,13 @@ GeomToStep_MakeConic::GeomToStep_MakeConic(const occ::handle<Geom2d_Conic>& C,
   }
   else
   {
-    // Attention : Other 2d conics shall be implemented ...
-    //             To be performed later !
+
 #ifdef OCCT_DEBUG
     std::cout << "2D conic not yet implemented" << std::endl;
 #endif
     done = false;
   }
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_Conic>& GeomToStep_MakeConic::Value() const
 {

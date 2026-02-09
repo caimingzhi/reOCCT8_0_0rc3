@@ -7,18 +7,12 @@
 #include <IntCurveSurface_IntersectionPoint.hpp>
 #include <IntCurveSurface_IntersectionSegment.hpp>
 
-//=================================================================================================
-
 GeomAPI_IntCS::GeomAPI_IntCS() = default;
-
-//=================================================================================================
 
 GeomAPI_IntCS::GeomAPI_IntCS(const occ::handle<Geom_Curve>& C, const occ::handle<Geom_Surface>& S)
 {
   Perform(C, S);
 }
-
-//=================================================================================================
 
 void GeomAPI_IntCS::Perform(const occ::handle<Geom_Curve>& C, const occ::handle<Geom_Surface>& S)
 {
@@ -30,31 +24,20 @@ void GeomAPI_IntCS::Perform(const occ::handle<Geom_Curve>& C, const occ::handle<
   myIntCS.Perform(HC, HS);
 }
 
-//=================================================================================================
-
 bool GeomAPI_IntCS::IsDone() const
 {
   return myIntCS.IsDone();
 }
-
-//=================================================================================================
 
 int GeomAPI_IntCS::NbPoints() const
 {
   return myIntCS.NbPoints();
 }
 
-//=======================================================================
-// function : gp_Pnt&
-// purpose  :
-//=======================================================================
-
 const gp_Pnt& GeomAPI_IntCS::Point(const int Index) const
 {
   return myIntCS.Point(Index).Pnt();
 }
-
-//=================================================================================================
 
 void GeomAPI_IntCS::Parameters(const int Index, double& U, double& V, double& W) const
 {
@@ -65,14 +48,10 @@ void GeomAPI_IntCS::Parameters(const int Index, double& U, double& V, double& W)
   W = ThePoint.W();
 }
 
-//=================================================================================================
-
 int GeomAPI_IntCS::NbSegments() const
 {
   return myIntCS.NbSegments();
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Curve> GeomAPI_IntCS::Segment(const int Index) const
 {
@@ -85,8 +64,6 @@ occ::handle<Geom_Curve> GeomAPI_IntCS::Segment(const int Index) const
 
   return TheCurve;
 }
-
-//=================================================================================================
 
 void GeomAPI_IntCS::Parameters(const int Index,
                                double&   U1,

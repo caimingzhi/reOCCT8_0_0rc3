@@ -10,7 +10,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! TDataStd_Name attribute Driver.
 class BinMDataStd_GenericExtStringDriver : public BinMDF_ADriver
 {
 
@@ -22,12 +21,10 @@ public:
 
   Standard_EXPORT const occ::handle<Standard_Type>& SourceType() const override;
 
-  //! persistent -> transient (retrieve)
   Standard_EXPORT bool Paste(const BinObjMgt_Persistent&       Source,
                              const occ::handle<TDF_Attribute>& Target,
                              BinObjMgt_RRelocationTable&       RelocTable) const override;
 
-  //! transient -> persistent (store)
   Standard_EXPORT void Paste(
     const occ::handle<TDF_Attribute>&                        Source,
     BinObjMgt_Persistent&                                    Target,

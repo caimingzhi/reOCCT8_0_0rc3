@@ -1,23 +1,10 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
-// New API
 #include <MathOpt_Powell.hpp>
 #include <MathOpt_BFGS.hpp>
 
-// Old API
 #include <math_Powell.hpp>
 #include <math_BFGS.hpp>
 #include <math_MultipleVarFunction.hpp>
@@ -30,12 +17,6 @@ namespace
 {
   constexpr double THE_TOLERANCE = 1.0e-6;
 
-  // ============================================================================
-  // Adapter classes for old API (inherit from math_MultipleVarFunction)
-  // ============================================================================
-
-  //! Quadratic function: f(x,y) = (x-1)^2 + (y-2)^2
-  //! Minimum at (1, 2) with f = 0
   class QuadraticFuncOld : public math_MultipleVarFunction
   {
   public:
@@ -50,8 +31,6 @@ namespace
     }
   };
 
-  //! Rosenbrock function: f(x,y) = 100*(y-x^2)^2 + (1-x)^2
-  //! Minimum at (1, 1) with f = 0
   class RosenbrockFuncOld : public math_MultipleVarFunction
   {
   public:
@@ -68,8 +47,6 @@ namespace
     }
   };
 
-  //! Booth function: f(x,y) = (x + 2y - 7)^2 + (2x + y - 5)^2
-  //! Minimum at (1, 3) with f = 0
   class BoothFuncOld : public math_MultipleVarFunction
   {
   public:
@@ -86,8 +63,6 @@ namespace
     }
   };
 
-  //! Sphere function in N dimensions: f(x) = sum(x_i^2)
-  //! Minimum at origin with f = 0
   class SphereFuncOld : public math_MultipleVarFunction
   {
   private:
@@ -112,11 +87,6 @@ namespace
     }
   };
 
-  // ============================================================================
-  // Adapter classes for old BFGS API (inherit from math_MultipleVarFunctionWithGradient)
-  // ============================================================================
-
-  //! Quadratic function with gradient: f(x,y) = (x-1)^2 + (y-2)^2
   class QuadraticFuncGradOld : public math_MultipleVarFunctionWithGradient
   {
   public:
@@ -143,7 +113,6 @@ namespace
     }
   };
 
-  //! Rosenbrock function with gradient
   class RosenbrockFuncGradOld : public math_MultipleVarFunctionWithGradient
   {
   public:
@@ -174,7 +143,6 @@ namespace
     }
   };
 
-  //! Booth function with gradient
   class BoothFuncGradOld : public math_MultipleVarFunctionWithGradient
   {
   public:
@@ -207,7 +175,6 @@ namespace
     }
   };
 
-  //! Sphere function with gradient
   class SphereFuncGradOld : public math_MultipleVarFunctionWithGradient
   {
   private:
@@ -245,10 +212,6 @@ namespace
       return Value(theX, theF) && Gradient(theX, theG);
     }
   };
-
-  // ============================================================================
-  // Function classes for new API
-  // ============================================================================
 
   struct QuadraticFuncNew
   {
@@ -336,7 +299,6 @@ namespace
     }
   };
 
-  //! Create identity matrix for Powell directions.
   math_Matrix CreateIdentityMatrix(int theN)
   {
     math_Matrix aMat(1, theN, 1, theN, 0.0);
@@ -349,10 +311,6 @@ namespace
 
 } // namespace
 
-// ============================================================================
-// math_Powell vs MathOpt::Powell comparison tests
-// ============================================================================
-
 TEST(MathOpt_NDim_ComparisonTest, Powell_Quadratic)
 {
   QuadraticFuncOld anOldFunc;
@@ -362,12 +320,10 @@ TEST(MathOpt_NDim_ComparisonTest, Powell_Quadratic)
   aStart(1) = 5.0;
   aStart(2) = 7.0;
 
-  // Old API
   math_Powell anOldSolver(anOldFunc, 1.0e-8, 200);
   math_Matrix aDirections = CreateIdentityMatrix(2);
   anOldSolver.Perform(anOldFunc, aStart, aDirections);
 
-  // New API
   MathOpt::Config aConfig;
   aConfig.MaxIterations = 200;
   aConfig.XTolerance    = 1.0e-8;
@@ -377,12 +333,10 @@ TEST(MathOpt_NDim_ComparisonTest, Powell_Quadratic)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find the same minimum
   EXPECT_NEAR(anOldSolver.Location()(1), (*aNewResult.Solution)(1), THE_TOLERANCE);
   EXPECT_NEAR(anOldSolver.Location()(2), (*aNewResult.Solution)(2), THE_TOLERANCE);
   EXPECT_NEAR(anOldSolver.Minimum(), *aNewResult.Value, THE_TOLERANCE);
 
-  // Verify correctness
   EXPECT_NEAR((*aNewResult.Solution)(1), 1.0, THE_TOLERANCE);
   EXPECT_NEAR((*aNewResult.Solution)(2), 2.0, THE_TOLERANCE);
   EXPECT_NEAR(*aNewResult.Value, 0.0, THE_TOLERANCE);
@@ -397,12 +351,10 @@ TEST(MathOpt_NDim_ComparisonTest, Powell_Booth)
   aStart(1) = 0.0;
   aStart(2) = 0.0;
 
-  // Old API
   math_Powell anOldSolver(anOldFunc, 1.0e-8, 200);
   math_Matrix aDirections = CreateIdentityMatrix(2);
   anOldSolver.Perform(anOldFunc, aStart, aDirections);
 
-  // New API
   MathOpt::Config aConfig;
   aConfig.MaxIterations = 200;
   aConfig.XTolerance    = 1.0e-8;
@@ -412,12 +364,10 @@ TEST(MathOpt_NDim_ComparisonTest, Powell_Booth)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find the same minimum
   EXPECT_NEAR(anOldSolver.Location()(1), (*aNewResult.Solution)(1), THE_TOLERANCE);
   EXPECT_NEAR(anOldSolver.Location()(2), (*aNewResult.Solution)(2), THE_TOLERANCE);
   EXPECT_NEAR(anOldSolver.Minimum(), *aNewResult.Value, THE_TOLERANCE);
 
-  // Verify correctness
   EXPECT_NEAR((*aNewResult.Solution)(1), 1.0, THE_TOLERANCE);
   EXPECT_NEAR((*aNewResult.Solution)(2), 3.0, THE_TOLERANCE);
   EXPECT_NEAR(*aNewResult.Value, 0.0, THE_TOLERANCE);
@@ -432,12 +382,10 @@ TEST(MathOpt_NDim_ComparisonTest, Powell_Rosenbrock)
   aStart(1) = -1.0;
   aStart(2) = 1.0;
 
-  // Old API - needs more iterations for Rosenbrock
   math_Powell anOldSolver(anOldFunc, 1.0e-6, 1000);
   math_Matrix aDirections = CreateIdentityMatrix(2);
   anOldSolver.Perform(anOldFunc, aStart, aDirections);
 
-  // New API
   MathOpt::Config aConfig;
   aConfig.MaxIterations = 1000;
   aConfig.XTolerance    = 1.0e-6;
@@ -447,11 +395,9 @@ TEST(MathOpt_NDim_ComparisonTest, Powell_Rosenbrock)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find the minimum (relaxed tolerance for Rosenbrock)
   EXPECT_NEAR(anOldSolver.Location()(1), (*aNewResult.Solution)(1), 1.0e-3);
   EXPECT_NEAR(anOldSolver.Location()(2), (*aNewResult.Solution)(2), 1.0e-3);
 
-  // Verify correctness (Rosenbrock minimum at (1, 1))
   EXPECT_NEAR((*aNewResult.Solution)(1), 1.0, 1.0e-3);
   EXPECT_NEAR((*aNewResult.Solution)(2), 1.0, 1.0e-3);
 }
@@ -466,12 +412,10 @@ TEST(MathOpt_NDim_ComparisonTest, Powell_Sphere3D)
   aStart(2) = -2.0;
   aStart(3) = 4.0;
 
-  // Old API
   math_Powell anOldSolver(anOldFunc, 1.0e-8, 200);
   math_Matrix aDirections = CreateIdentityMatrix(3);
   anOldSolver.Perform(anOldFunc, aStart, aDirections);
 
-  // New API
   MathOpt::Config aConfig;
   aConfig.MaxIterations = 200;
   aConfig.XTolerance    = 1.0e-8;
@@ -481,7 +425,6 @@ TEST(MathOpt_NDim_ComparisonTest, Powell_Sphere3D)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find the origin
   for (int i = 1; i <= 3; ++i)
   {
     EXPECT_NEAR(anOldSolver.Location()(i), (*aNewResult.Solution)(i), THE_TOLERANCE);
@@ -490,10 +433,6 @@ TEST(MathOpt_NDim_ComparisonTest, Powell_Sphere3D)
   EXPECT_NEAR(anOldSolver.Minimum(), *aNewResult.Value, THE_TOLERANCE);
   EXPECT_NEAR(*aNewResult.Value, 0.0, THE_TOLERANCE);
 }
-
-// ============================================================================
-// math_BFGS vs MathOpt::BFGS comparison tests
-// ============================================================================
 
 TEST(MathOpt_NDim_ComparisonTest, BFGS_Quadratic)
 {
@@ -504,11 +443,9 @@ TEST(MathOpt_NDim_ComparisonTest, BFGS_Quadratic)
   aStart(1) = 5.0;
   aStart(2) = 7.0;
 
-  // Old API
   math_BFGS anOldSolver(2, 1.0e-8, 100);
   anOldSolver.Perform(anOldFunc, aStart);
 
-  // New API
   MathOpt::Config aConfig;
   aConfig.MaxIterations = 100;
   aConfig.XTolerance    = 1.0e-8;
@@ -518,12 +455,10 @@ TEST(MathOpt_NDim_ComparisonTest, BFGS_Quadratic)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find the same minimum
   EXPECT_NEAR(anOldSolver.Location()(1), (*aNewResult.Solution)(1), THE_TOLERANCE);
   EXPECT_NEAR(anOldSolver.Location()(2), (*aNewResult.Solution)(2), THE_TOLERANCE);
   EXPECT_NEAR(anOldSolver.Minimum(), *aNewResult.Value, THE_TOLERANCE);
 
-  // Verify correctness
   EXPECT_NEAR((*aNewResult.Solution)(1), 1.0, THE_TOLERANCE);
   EXPECT_NEAR((*aNewResult.Solution)(2), 2.0, THE_TOLERANCE);
   EXPECT_NEAR(*aNewResult.Value, 0.0, THE_TOLERANCE);
@@ -538,11 +473,9 @@ TEST(MathOpt_NDim_ComparisonTest, BFGS_Booth)
   aStart(1) = 0.0;
   aStart(2) = 0.0;
 
-  // Old API
   math_BFGS anOldSolver(2, 1.0e-8, 100);
   anOldSolver.Perform(anOldFunc, aStart);
 
-  // New API
   MathOpt::Config aConfig;
   aConfig.MaxIterations = 100;
   aConfig.XTolerance    = 1.0e-8;
@@ -552,12 +485,10 @@ TEST(MathOpt_NDim_ComparisonTest, BFGS_Booth)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find the same minimum
   EXPECT_NEAR(anOldSolver.Location()(1), (*aNewResult.Solution)(1), THE_TOLERANCE);
   EXPECT_NEAR(anOldSolver.Location()(2), (*aNewResult.Solution)(2), THE_TOLERANCE);
   EXPECT_NEAR(anOldSolver.Minimum(), *aNewResult.Value, THE_TOLERANCE);
 
-  // Verify correctness
   EXPECT_NEAR((*aNewResult.Solution)(1), 1.0, THE_TOLERANCE);
   EXPECT_NEAR((*aNewResult.Solution)(2), 3.0, THE_TOLERANCE);
   EXPECT_NEAR(*aNewResult.Value, 0.0, THE_TOLERANCE);
@@ -572,11 +503,9 @@ TEST(MathOpt_NDim_ComparisonTest, BFGS_Rosenbrock)
   aStart(1) = -1.0;
   aStart(2) = 1.0;
 
-  // Old API - needs more iterations for Rosenbrock
   math_BFGS anOldSolver(2, 1.0e-6, 1000);
   anOldSolver.Perform(anOldFunc, aStart);
 
-  // New API
   MathOpt::Config aConfig;
   aConfig.MaxIterations = 1000;
   aConfig.XTolerance    = 1.0e-6;
@@ -586,11 +515,9 @@ TEST(MathOpt_NDim_ComparisonTest, BFGS_Rosenbrock)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find the minimum (relaxed tolerance for Rosenbrock)
   EXPECT_NEAR(anOldSolver.Location()(1), (*aNewResult.Solution)(1), 1.0e-3);
   EXPECT_NEAR(anOldSolver.Location()(2), (*aNewResult.Solution)(2), 1.0e-3);
 
-  // Verify correctness (Rosenbrock minimum at (1, 1))
   EXPECT_NEAR((*aNewResult.Solution)(1), 1.0, 1.0e-3);
   EXPECT_NEAR((*aNewResult.Solution)(2), 1.0, 1.0e-3);
 }
@@ -605,11 +532,9 @@ TEST(MathOpt_NDim_ComparisonTest, BFGS_Sphere3D)
   aStart(2) = -2.0;
   aStart(3) = 4.0;
 
-  // Old API
   math_BFGS anOldSolver(3, 1.0e-8, 100);
   anOldSolver.Perform(anOldFunc, aStart);
 
-  // New API
   MathOpt::Config aConfig;
   aConfig.MaxIterations = 100;
   aConfig.XTolerance    = 1.0e-8;
@@ -619,7 +544,6 @@ TEST(MathOpt_NDim_ComparisonTest, BFGS_Sphere3D)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find the origin
   for (int i = 1; i <= 3; ++i)
   {
     EXPECT_NEAR(anOldSolver.Location()(i), (*aNewResult.Solution)(i), THE_TOLERANCE);
@@ -628,10 +552,6 @@ TEST(MathOpt_NDim_ComparisonTest, BFGS_Sphere3D)
   EXPECT_NEAR(anOldSolver.Minimum(), *aNewResult.Value, THE_TOLERANCE);
   EXPECT_NEAR(*aNewResult.Value, 0.0, THE_TOLERANCE);
 }
-
-// ============================================================================
-// Iteration count comparison tests
-// ============================================================================
 
 TEST(MathOpt_NDim_ComparisonTest, IterationCount_BFGSVsPowell)
 {
@@ -652,10 +572,8 @@ TEST(MathOpt_NDim_ComparisonTest, IterationCount_BFGSVsPowell)
   ASSERT_TRUE(aPowellResult.IsDone());
   ASSERT_TRUE(aBFGSResult.IsDone());
 
-  // Both should find the same minimum
   EXPECT_NEAR(*aPowellResult.Value, *aBFGSResult.Value, THE_TOLERANCE);
 
-  // BFGS should use fewer iterations on quadratic functions (due to superlinear convergence)
   EXPECT_LT(aBFGSResult.NbIterations, aPowellResult.NbIterations);
 }
 
@@ -680,20 +598,14 @@ TEST(MathOpt_NDim_ComparisonTest, IterationCount_LBFGSVsBFGS)
   ASSERT_TRUE(aBFGSResult.IsDone());
   ASSERT_TRUE(aLBFGSResult.IsDone());
 
-  // Both should find the same minimum
   EXPECT_NEAR(*aBFGSResult.Value, *aLBFGSResult.Value, THE_TOLERANCE);
 
-  // Both should find the origin
   for (int i = 1; i <= 5; ++i)
   {
     EXPECT_NEAR((*aBFGSResult.Solution)(i), 0.0, THE_TOLERANCE);
     EXPECT_NEAR((*aLBFGSResult.Solution)(i), 0.0, THE_TOLERANCE);
   }
 }
-
-// ============================================================================
-// Accuracy comparison tests
-// ============================================================================
 
 TEST(MathOpt_NDim_ComparisonTest, Accuracy_BFGSVsOld)
 {
@@ -704,14 +616,11 @@ TEST(MathOpt_NDim_ComparisonTest, Accuracy_BFGSVsOld)
   aStart(1) = 5.0;
   aStart(2) = 7.0;
 
-  // Tighter tolerance
   const double aTightTol = 1.0e-12;
 
-  // Old API
   math_BFGS anOldSolver(2, aTightTol, 200);
   anOldSolver.Perform(anOldFunc, aStart);
 
-  // New API
   MathOpt::Config aConfig;
   aConfig.MaxIterations = 200;
   aConfig.XTolerance    = aTightTol;
@@ -721,23 +630,17 @@ TEST(MathOpt_NDim_ComparisonTest, Accuracy_BFGSVsOld)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should achieve good accuracy
   EXPECT_NEAR(anOldSolver.Location()(1), 1.0, 1.0e-8);
   EXPECT_NEAR(anOldSolver.Location()(2), 2.0, 1.0e-8);
   EXPECT_NEAR((*aNewResult.Solution)(1), 1.0, 1.0e-8);
   EXPECT_NEAR((*aNewResult.Solution)(2), 2.0, 1.0e-8);
 }
 
-// ============================================================================
-// Different starting points comparison tests
-// ============================================================================
-
 TEST(MathOpt_NDim_ComparisonTest, DifferentStartingPoints)
 {
   QuadraticFuncGradOld anOldFunc;
   QuadraticFuncNew     aNewFunc;
 
-  // Test multiple starting points
   std::vector<std::pair<double, double>> aStartPoints = {{0.0, 0.0},
                                                          {10.0, 10.0},
                                                          {-5.0, 5.0},
@@ -749,11 +652,9 @@ TEST(MathOpt_NDim_ComparisonTest, DifferentStartingPoints)
     aStart(1) = aPoint.first;
     aStart(2) = aPoint.second;
 
-    // Old API
     math_BFGS anOldSolver(2, 1.0e-8, 200);
     anOldSolver.Perform(anOldFunc, aStart);
 
-    // New API
     MathOpt::Config aConfig;
     aConfig.MaxIterations = 200;
     aConfig.XTolerance    = 1.0e-8;
@@ -765,7 +666,6 @@ TEST(MathOpt_NDim_ComparisonTest, DifferentStartingPoints)
     ASSERT_TRUE(aNewResult.IsDone())
       << "New API failed for start point (" << aPoint.first << ", " << aPoint.second << ")";
 
-    // Both should find the same minimum
     EXPECT_NEAR(anOldSolver.Location()(1), (*aNewResult.Solution)(1), THE_TOLERANCE);
     EXPECT_NEAR(anOldSolver.Location()(2), (*aNewResult.Solution)(2), THE_TOLERANCE);
     EXPECT_NEAR((*aNewResult.Solution)(1), 1.0, THE_TOLERANCE);

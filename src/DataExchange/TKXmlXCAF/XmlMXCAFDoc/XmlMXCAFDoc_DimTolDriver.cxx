@@ -13,25 +13,17 @@ IMPLEMENT_DOMSTRING(FirstIndexString, "first")
 IMPLEMENT_DOMSTRING(LastIndexString, "last")
 IMPLEMENT_DOMSTRING(ValueIndexString, "values")
 
-//=================================================================================================
-
 XmlMXCAFDoc_DimTolDriver::XmlMXCAFDoc_DimTolDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "DimTol")
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMXCAFDoc_DimTolDriver::NewEmpty() const
 {
   return (new XCAFDoc_DimTol());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMXCAFDoc_DimTolDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                      const occ::handle<TDF_Attribute>& theTarget,
                                      XmlObjMgt_RRelocationTable&) const
@@ -88,7 +80,7 @@ bool XmlMXCAFDoc_DimTolDriver::Paste(const XmlObjMgt_Persistent&       theSource
   occ::handle<NCollection_HArray1<double>> aHArr;
   if (aLength > 0)
   {
-    // read real array
+
     double                     aValue  = 0.;
     const XmlObjMgt_DOMString& aString = anElement.getAttribute(::ValueIndexString());
     aHArr                              = new NCollection_HArray1<double>(aFirstInd, aLastInd);
@@ -114,10 +106,6 @@ bool XmlMXCAFDoc_DimTolDriver::Paste(const XmlObjMgt_Persistent&       theSource
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMXCAFDoc_DimTolDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                      XmlObjMgt_Persistent&             theTarget,
                                      XmlObjMgt_SRelocationTable&) const

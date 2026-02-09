@@ -24,15 +24,12 @@
 
 static bool AdvApprox_Debug = 0;
 
-//=====================================================
 static void MAPDBN(const int                    dimension,
                    const double                 Debut,
                    const double                 Fin,
                    AdvApprox_EvaluatorFunction& Evaluator,
                    const int                    Iordre)
-// Objet : Controle par difference finis, des derives
-// Warning : En mode Debug, uniquement
-///===================================================
+
 {
   int         derive, OrdreDer, ier, NDIMEN = dimension;
   double*     Ptr;
@@ -48,7 +45,7 @@ static void MAPDBN(const int                    dimension,
 
   for (OrdreDer = 1, derive = 0; OrdreDer <= Iordre; OrdreDer++, derive++)
   {
-    // Verif au debut
+
     Ptr = (double*)&V1.Value(1);
     t   = Debut + h;
     Evaluator(&NDIMEN, ab, &t, &derive, Ptr, &ier);
@@ -70,7 +67,6 @@ static void MAPDBN(const int                    dimension,
       std::cout << " Erreur estime : " << (Der - Diff) << std::endl;
     }
 
-    // Verif a la fin
     Ptr = (double*)&V1.Value(1);
     t   = Fin - h;
     Evaluator(&NDIMEN, ab, &t, &derive, Ptr, &ier);
@@ -95,7 +91,6 @@ static void MAPDBN(const int                    dimension,
 }
 #endif
 
-//===================================================================
 static void PrepareConvert(const int                         NumCurves,
                            const int                         MaxDegree,
                            const int                         ContinuityOrder,
@@ -109,11 +104,9 @@ static void PrepareConvert(const int                         NumCurves,
                            const NCollection_Array1<double>& LocalTolerance,
                            NCollection_Array1<double>&       ErrorMax,
                            NCollection_Array1<int>&          Continuity)
-// Pour determiner les continuites locales
-//====================================================================
 
 {
-  // Declaration
+
   bool isCi;
   int  icurve, idim, iordre, ii, Dimension = Num1DSS + 2 * Num2DSS + 3 * Num3DSS,
                                 NbSpace = Num1DSS + Num2DSS + Num3DSS;
@@ -131,14 +124,13 @@ static void PrepareConvert(const int                         NumCurves,
   Res1 = (double*)&(Result.ChangeValue(1));
   Res2 = (double*)&(Result.ChangeValue((ContinuityOrder + 1) * Dimension + 1));
 
-  // Init
   Continuity.Init(0);
   if (ContinuityOrder == 0)
     return;
 
   for (icurve = 1; icurve < NumCurves; icurve++)
   {
-    // Init et positionement au noeud
+
     isCi = true;
     Coef1 =
       (double*)&(Coefficients.Value((icurve - 1) * Dimension * RealDegree + Coefficients.Lower()));
@@ -158,11 +150,8 @@ static void PrepareConvert(const int                         NumCurves,
                          Coef2[0],
                          Res2[0]);
 
-    // Verif dans chaque sous espaces.
     for (iordre = 1; iordre <= ContinuityOrder && isCi; iordre++)
     {
-
-      // fixing a bug PRO18577
 
       double Toler = 1.0e-5;
 
@@ -172,8 +161,8 @@ static void PrepareConvert(const int                         NumCurves,
       double f2_divizor  = TrueIntervals(icurve + 2) - TrueIntervals(icurve + 1);
       double fract1, fract2;
 
-      if (std::abs(f1_divizor) < Toler) // this is to avoid divizion by zero
-        // in this case fract1 =  5.14755758946803e-85
+      if (std::abs(f1_divizor) < Toler)
+
         facteur1 = 0.0;
       else
       {
@@ -181,7 +170,7 @@ static void PrepareConvert(const int                         NumCurves,
         facteur1 = std::pow(fract1, iordre);
       }
       if (std::abs(f2_divizor) < Toler)
-        // in this case fract2 =  6.77193633669143e-313
+
         facteur2 = 0.0;
       else
       {
@@ -200,12 +189,12 @@ static void PrepareConvert(const int                         NumCurves,
         eps  = LocalTolerance(idim) * 0.01;
         diff = std::abs(Val1[ii] * facteur1 - Val2[ii] * facteur2);
         moy  = std::abs(Val1[ii] * facteur1 + Val2[ii] * facteur2);
-        // Un premier controle sur la valeur relative
+
         if (diff > moy * 1.e-9)
         {
           Prec(idim)    = diff * normal1;
           Suivant(idim) = diff * normal2;
-          // Et un second sur le majorant d'erreur engendree
+
           if (Prec(idim) > eps || Suivant(idim) > eps)
             isCi = false;
         }
@@ -263,7 +252,7 @@ static void PrepareConvert(const int                         NumCurves,
           Suivant(idim) = 0;
         }
       }
-      // Si c'est bon on update le tout
+
       if (isCi)
       {
         Continuity(icurve + 1) = iordre;
@@ -278,125 +267,28 @@ static void PrepareConvert(const int                         NumCurves,
   }
 }
 
-//=======================================================================
-// function : ApproxFunction
-//
-// purpose  :  Approximation d' UNE fonction non polynomiale (dans l'espace de
-//     dimension NDIMEN) par N courbes polynomiales, par la methode
-//     des moindres carres. Le parametre de la fonction est conserve.
-//
-//     ARGUMENTS D'ENTREE :
-// C     ------------------
-// C     NDIMEN   : Dimension totale de l' espace (somme des dimensions
-// C              des sous-espaces).
-// C     NBSESP : Nombre de sous-espaces "independants".
-// C     NDIMSE : Table des dimensions des sous-espaces.
-// C     ABFONC : Bornes de l' intervalle (a,b) de definition de la
-// C              fonction a approcher.
-// C     FONCNP : Fonction externe de positionnement sur la fonction non
-// C              polynomiale a approcher.
-// C     IORDRE : Ordre de contrainte aux extremites de chaque courbe
-// C              polynomiale cree :
-// C              -1 = pas de contraintes,
-// C               0 = contraintes de passage aux bornes (i.e. C0),
-// C               1 = C0 + contraintes de derivees 1eres (i.e. C1),
-// C               2 = C1 + contraintes de derivees 2ndes (i.e. C2).
-// C     NBCRMX : Nombre maxi de courbes polynomiales a calculer.
-// C     NCFLIM : Nombre LIMITE de coeff des "courbes" polynomiales
-// C              d' approximation. Doit etre superieur ou egal a
-// C              2*IORDRE + 2 et inferieur ou egal a 50 et a NCOFMX).
-// C              Limite a 14 apres l'appel a VRIRAZ pour eviter le bruit.
-// C     EPSAPR : Table des erreurs d' approximations souhaitees
-// C              sous-espace par sous-espace.
-// C     ICODEO  : Code d' init. des parametres de discretisation.
-// C              (choix de NBPNT et de NDJAC).
-// C              = 1 calcul rapide avec precision moyenne sur les coeff.
-// C              = 2 calcul rapide avec meilleure precision "    "    ".
-// C              = 3 calcul un peu plus lent avec bonne precision     ".
-// C              = 4 calcul lent avec la meilleure precision possible ".
-// C
-// C
-// C     ARGUMENTS DE SORTIE :
-// C     -------------------
-// C     NBCRBE : Nombre de courbes polynomiales creees.
-// C     NCFTAB : Table des nombres de coeff. significatifs des NBCRBE
-// C              "courbes" calculees.
-// C     CRBTAB : Tableau des coeff. des "courbes" polynomiales calculees.
-// C              Doit etre dimensionne a CRBTAB(NDIMEN,NCOFMX,NBCRMX).
-// C     TABINT : Table des NBCRBE + 1 bornes des intervalles de decoupe de
-// C              FONCNP.
-// C     ERRMAX : Table des erreurs (sous-espace par sous espace)
-// C              MAXIMALES commises dans l' approximation de FONCNP par
-// C              par les NBCRBE courbes polynomiales.
-// C     ERRMOY : Table des erreurs (sous-espace par sous espace)
-// C              MOYENNES commises dans l' approximation de FONCNP par
-// C              par les NBCRBE courbes polynomiales.
-// C     IERCOD : Code d' erreur :
-// C              -1 = ERRMAX > EPSAPR pour au moins un des sous-espace.
-// C                   On a alors NCRBMX courbes calculees, certaines de
-// C                   degre mathematique min(NCFLIM,14)-1 ou la precision
-// C                   demandee n' est pas atteinte.
-// C              -2 = Pb dans le mode DEBUG
-// C               0 = Tout est ok.
-// C               1 = Pb d' incoherence des entrees.
-// C              10 = Pb de calcul de l' interpolation des contraintes.
-// C              13 = Pb dans l' allocation dynamique.
-// C              33 = Pb dans la recuperation des donnees du block data
-// C                   des coeff. d' integration par la methode de GAUSS.
-// C              >100 Pb dans l' evaluation de FONCNP, le code d' erreur
-// C                   renvoye est egal au code d' erreur de FONCNP + 100.
-// C
-//
-// -->  La i-eme courbe polynomiale creee correspond a l' approximation
-// C     de FONCNP sur l' intervalle (TABINT(i),TABINT(i+1)). TABINT(i)
-//      est une suite STRICTEMENT monotone avec TABINT(1)=ABFONC(1) et
-//      TABINT(NBCRBE+1)=ABFONC(2).
-//
-// -->  Si IERCOD=-1, la precision demandee n' est pas atteinte (ERRMAX
-// C     est superieur a EPSAPR sur au moins l' un des sous-espaces), mais
-//      on donne le meilleur resultat possible pour min(NCFLIM,14),NBCRMX
-//      et EPSAPR choisis par l' utilisateur Dans ce cas (ainsi que pour
-// C     IERCOD=0), on a une solution.
-// C
-// C--> ATTENTION : Toute modification du calcul de NDJAC et NBPNT
-// C                doit etre reportee dans le programme MAPNBP.
-//
-//    HISTORIQUE DES MODIFICATIONS   :
-//    --------------------------------
-//
-//    20-08-1996 : PMN ; Creation d'apres la routine Fortran MAPFNC
-//======================================================================
 void AdvApprox_ApproxAFunction::Approximation(
   const int TotalDimension,
-  // Dimension totale de l' espace
-  // (somme des dimensions des sous-espaces).
-  const int                      TotalNumSS,     // Nombre de sous-espaces "independants".
-  const NCollection_Array1<int>& LocalDimension, // dimensions des sous-espaces.
+
+  const int                      TotalNumSS,
+  const NCollection_Array1<int>& LocalDimension,
   const double                   First,
   const double                   Last,
-  // Intervalle (a,b) de definition de la fonction a approcher.
+
   AdvApprox_EvaluatorFunction& Evaluator,
-  // Fonction externe de positionnement sur la fonction a approcher.
+
   const AdvApprox_Cutting& CutTool,
-  // Maniere de decouper en 2 un intervalle.
+
   const int ContinuityOrder,
-  // ordre de continutie a respecter (-1, 0, 1, 2)
+
   const int NumMaxCoeffs,
-  // Nombre LIMITE de coeff des "courbes" polynomiales
-  // d' approximation. Doit etre superieur ou egal a
-  // Doit etre superieur ou egal a  2*ContinuityOrder + 2
-  // Limite a 14 pour eviter le bruit.
+
   const int MaxSegments,
-  // Nombre maxi de courbes polynomiales a calculer.
+
   const NCollection_Array1<double>& LocalTolerancesArray,
-  // Tolerances d'approximation souhaitees sous-espace par sous-espace.
+
   const int code_precis,
-  // Code d' init. des parametres de discretisation.
-  // C              (choix de NBPNT et de NDJAC).
-  // C              = 1 calcul rapide avec precision moyenne sur les coeff.
-  // C              = 2 calcul rapide avec meilleure precision "    "    ".
-  // C              = 3 calcul un peu plus lent avec bonne precision     ".
-  // C              = 4 calcul lent avec la meilleure precision possible ".
+
   int&                        NumCurves,
   NCollection_Array1<int>&    NumCoeffPerCurveArray,
   NCollection_Array1<double>& CoefficientArray,
@@ -405,20 +297,17 @@ void AdvApprox_ApproxAFunction::Approximation(
   NCollection_Array1<double>& AverageErrorArray,
   int&                        ErrorCode)
 {
-  //  double EpsPar =  Precision::Confusion();
+
   int NUPIL, TheDeg;
 #ifdef OCCT_DEBUG
   int NDIMEN = TotalDimension;
 #endif
   bool isCut = false;
 
-  // Defintion des Tableaux C
   double* TABINT = (double*)&IntervalsArray(1);
 
   ErrorCode = 0;
   CoefficientArray.Init(0);
-
-  //-------------------------- Verification des entrees ------------------
 
   if ((MaxSegments < 1) || (std::abs(Last - First) < 1.e-9))
   {
@@ -426,8 +315,6 @@ void AdvApprox_ApproxAFunction::Approximation(
     return;
   }
 
-  //--> La dimension totale doit etre la somme des dimensions des
-  //    sous-espaces
   int IDIM = 0;
   for (int I = 1; I <= TotalNumSS; I++)
   {
@@ -454,27 +341,17 @@ void AdvApprox_ApproxAFunction::Approximation(
       throw Standard_ConstructionError();
   }
 
-  //--------------------- Choix du nombre de points ----------------------
-  //---------- et du degre de lissage dans la base orthogonale -----------
-  //-->  NDJAC est le degre de "travail" dans la base orthogonale.
-
   int NbGaussPoints, WorkDegree;
 
   PLib::JacobiParameters(Continuity, NumMaxCoeffs - 1, code_precis, NbGaussPoints, WorkDegree);
-  //      NDJAC=WorkDegree;
-
-  //------------------ Initialisation de la gestion des decoupes ---------
 
   TABINT[0] = First;
   TABINT[1] = Last;
   NUPIL     = 1;
   NumCurves = 0;
 
-  // C**********************************************************************
-  // C                       APPROXIMATION AVEC DECOUPES
-  // C**********************************************************************
   PLib_JacobiPolynomial JacobiBase(WorkDegree, Continuity);
-  // Portage HP le compilateur refuse le debranchement
+
   int                    IS;
   bool                   goto_fin_de_boucle;
   int                    MaxDegree = NumMaxCoeffs - 1;
@@ -487,12 +364,8 @@ void AdvApprox_ApproxAFunction::Approximation(
                                 Evaluator);
   while ((NUPIL - NumCurves) != 0)
   {
-    //--> Lorsque l' on a atteint le haut de la pile, c' est fini !
 
-    // Portage HP le compilateur refuse le debranchement
     goto_fin_de_boucle = false;
-
-    //---- Calcul de la courbe d' approximation dans la base de Jacobi -----
 
     Approx.Perform(LocalDimension,
                    LocalTolerancesArray,
@@ -505,11 +378,7 @@ void AdvApprox_ApproxAFunction::Approximation(
       return;
     }
 
-    //---------- Calcul du degre de la courbe et de l' erreur max ----------
-
     NumCoeffPerCurveArray(NumCurves + 1) = 0;
-
-    //    L'erreur doit etre satisfaite sur tous les sous-espaces sinon, on decoupe
 
     bool MaxMaxErr = true;
     for (IS = 1; IS <= TotalNumSS; IS++)
@@ -524,11 +393,10 @@ void AdvApprox_ApproxAFunction::Approximation(
     if (MaxMaxErr)
     {
       NumCurves++;
-      //            NumCoeffPerCurveArray(NumCurves) = Approx.Degree()+1;
     }
     else
     {
-      //-> ...sinon on essai de decouper l' intervalle courant en 2...
+
       double TMIL;
       bool   Large;
 
@@ -537,8 +405,7 @@ void AdvApprox_ApproxAFunction::Approximation(
       if (NUPIL < MaxSegments && Large)
       {
 
-        //	       if (IS!=1) {NumCurves--;}
-        isCut         = true; // Ca y est, on le sait !
+        isCut         = true;
         double* IDEB  = TABINT + NumCurves + 1;
         double* IDEB1 = IDEB + 1;
         int     ILONG = NUPIL - NumCurves - 1;
@@ -548,35 +415,29 @@ void AdvApprox_ApproxAFunction::Approximation(
         }
         IDEB[0] = TMIL;
         NUPIL++;
-        //--> ... et on recommence.
-        // Portage HP le compilateur refuse le debranchement
+
         goto_fin_de_boucle = true;
-        //	       break;
       }
       else
       {
-        //--> Si la pile est pleine...
-        // pour l'instant               ErrorCode=-1;
+
         NumCurves++;
-        //               NumCoeffPerCurveArray(NumCurves) = Approx.Degree()+1;
       }
     }
-    //         IDIM += NDSES;
-    // Portage HP le compilateur refuse le debranchement
+
     if (goto_fin_de_boucle)
       continue;
     for (IS = 1; IS <= TotalNumSS; IS++)
     {
       ErrorMaxArray.SetValue(IS + (NumCurves - 1) * TotalNumSS, Approx.MaxError(IS));
-      //---> ...et calcul de l' erreur moyenne.
+
       AverageErrorArray.SetValue(IS + (NumCurves - 1) * TotalNumSS, Approx.AverageError(IS));
     }
 
     occ::handle<NCollection_HArray1<double>> HJacCoeff = Approx.Coefficients();
     TheDeg                                             = Approx.Degree();
     if (isCut && (TheDeg < 2 * ContinuityOrder + 1))
-      // Pour ne pas bruiter les derives aux bouts, et garder une continuite
-      // correcte sur la BSpline resultat.
+
       TheDeg = 2 * ContinuityOrder + 1;
 
     NumCoeffPerCurveArray(NumCurves) = TheDeg + 1;
@@ -589,7 +450,7 @@ void AdvApprox_ApproxAFunction::Approximation(
     }
 
 #ifdef OCCT_DEBUG
-    // Test des derives par difference finis
+
     int IORDRE = ContinuityOrder;
 
     if (IORDRE > 0 && AdvApprox_Debug)
@@ -597,17 +458,9 @@ void AdvApprox_ApproxAFunction::Approximation(
       MAPDBN(NDIMEN, TABINT[NumCurves - 1], TABINT[NumCurves], Evaluator, IORDRE);
     }
 #endif
-    // Portage HP le compilateur refuse le debranchement
-    //     fin_de_boucle:
-    //     {;}  fin de la boucle while
   }
   return;
 }
-
-//=======================================================================
-// function : AdvApprox_ApproxAFunction
-// purpose  : Constructeur avec Decoupe Dichotomique
-//=======================================================================
 
 AdvApprox_ApproxAFunction::AdvApprox_ApproxAFunction(
   const int                                       Num1DSS,
@@ -667,10 +520,6 @@ AdvApprox_ApproxAFunction::AdvApprox_ApproxAFunction(
   Perform(Num1DSS, Num2DSS, Num3DSS, CutTool);
 }
 
-//=======================================================================
-// function : AdvApprox_ApproxAFunction::Perform
-// purpose  : Make all the Work !!
-//=======================================================================
 void AdvApprox_ApproxAFunction::Perform(const int                Num1DSS,
                                         const int                Num2DSS,
                                         const int                Num3DSS,
@@ -683,9 +532,7 @@ void AdvApprox_ApproxAFunction::Perform(const int                Num1DSS,
   {
     myMaxDegree = 14;
   }
-  //
-  // Input
-  //
+
   myNumSubSpaces[0]     = Num1DSS;
   myNumSubSpaces[1]     = Num2DSS;
   myNumSubSpaces[2]     = Num3DSS;
@@ -712,10 +559,7 @@ void AdvApprox_ApproxAFunction::Perform(const int                Num1DSS,
   int    NumMaxCoeffs = std::max(myMaxDegree + 1, 2 * ContinuityOrder + 2);
   myMaxDegree         = NumMaxCoeffs - 1;
   int code_precis     = 1;
-  //
-  //  WARNING : the polynomial coefficients are the
-  //  taylor expansion of the polynomial at 0.0e0 !
-  //
+
   ApproxStartEnd[0] = -1.0e0;
   ApproxStartEnd[1] = 1.0e0;
 
@@ -742,9 +586,6 @@ void AdvApprox_ApproxAFunction::Perform(const int                Num1DSS,
     LocalDimension.SetValue(index, 3);
     index += 1;
   }
-  //
-  // Output
-  //
 
   int ErrorCode = 0, NumCurves, size = myMaxSegments * NumMaxCoeffs * TotalDimension;
   occ::handle<NCollection_HArray1<int>> NumCoeffPerCurvePtr =
@@ -772,25 +613,22 @@ void AdvApprox_ApproxAFunction::Perform(const int                Num1DSS,
                 myMaxSegments,
                 LocalTolerances,
                 code_precis,
-                NumCurves,                            // Nombre de courbe en sortie
-                NumCoeffPerCurvePtr->ChangeArray1(),  // Nbre de coeff par courbe
-                LocalCoefficientsPtr->ChangeArray1(), // Les Coeffs solutions
-                IntervalsPtr->ChangeArray1(),         // La Table des decoupes
-                ErrorMax,                             // Majoration de l'erreur
-                AverageError,                         // Erreur moyenne constatee
+                NumCurves,
+                NumCoeffPerCurvePtr->ChangeArray1(),
+                LocalCoefficientsPtr->ChangeArray1(),
+                IntervalsPtr->ChangeArray1(),
+                ErrorMax,
+                AverageError,
                 ErrorCode);
 
   if (ErrorCode == 0 || ErrorCode == -1)
   {
-    //
-    // si tout est OK ou bien on a un resultat dont l une des erreurs max est
-    // plus grande que la tolerance demandee
 
     NCollection_Array1<int>    TabContinuity(1, NumCurves);
     NCollection_Array2<double> PolynomialIntervalsPtr(1, NumCurves, 1, 2);
     for (ii = PolynomialIntervalsPtr.LowerRow(); ii <= PolynomialIntervalsPtr.UpperRow(); ii++)
     {
-      // On force un degre 1 minimum (PRO5474)
+
       NumCoeffPerCurvePtr->ChangeValue(ii) = std::max(2, NumCoeffPerCurvePtr->Value(ii));
       PolynomialIntervalsPtr.SetValue(ii, 1, ApproxStartEnd[0]);
       PolynomialIntervalsPtr.SetValue(ii, 2, ApproxStartEnd[1]);
@@ -864,7 +702,7 @@ void AdvApprox_ApproxAFunction::Perform(const int                Num1DSS,
         index += myNumSubSpaces[0];
       }
 
-      dim_index = index; // Pour le cas ou il n'y a pas de 2D
+      dim_index = index;
 
       if (myNumSubSpaces[1] > 0)
       {
@@ -908,7 +746,7 @@ void AdvApprox_ApproxAFunction::Perform(const int                Num1DSS,
           my2DAverageError->SetValue(jj, error_value);
         }
         index += myNumSubSpaces[1];
-        // Pour les poles il faut doubler le decalage :
+
         dim_index = index + myNumSubSpaces[1];
       }
 
@@ -966,8 +804,6 @@ void AdvApprox_ApproxAFunction::Perform(const int                Num1DSS,
   }
 }
 
-//=================================================================================================
-
 void AdvApprox_ApproxAFunction::Poles(const int Index, NCollection_Array1<gp_Pnt>& P) const
 {
   int ii;
@@ -977,16 +813,12 @@ void AdvApprox_ApproxAFunction::Poles(const int Index, NCollection_Array1<gp_Pnt
   }
 }
 
-//=================================================================================================
-
 int AdvApprox_ApproxAFunction::NbPoles() const
 {
   if (myDone || myHasResult)
     return BSplCLib::NbPoles(myDegree, false, myMults->Array1());
   return 0;
 }
-
-//=================================================================================================
 
 void AdvApprox_ApproxAFunction::Poles2d(const int Index, NCollection_Array1<gp_Pnt2d>& P) const
 {
@@ -997,8 +829,6 @@ void AdvApprox_ApproxAFunction::Poles2d(const int Index, NCollection_Array1<gp_P
   }
 }
 
-//=================================================================================================
-
 void AdvApprox_ApproxAFunction::Poles1d(const int Index, NCollection_Array1<double>& P) const
 {
   int ii;
@@ -1007,8 +837,6 @@ void AdvApprox_ApproxAFunction::Poles1d(const int Index, NCollection_Array1<doub
     P.SetValue(ii, my1DPoles->Value(ii, Index));
   }
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<double>> AdvApprox_ApproxAFunction::MaxError(const int D) const
 
@@ -1034,16 +862,12 @@ occ::handle<NCollection_HArray1<double>> AdvApprox_ApproxAFunction::MaxError(con
   return EPtr;
 }
 
-//=================================================================================================
-
 double AdvApprox_ApproxAFunction::MaxError(const int D, const int Index) const
 {
   occ::handle<NCollection_HArray1<double>> EPtr = MaxError(D);
 
   return EPtr->Value(Index);
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<double>> AdvApprox_ApproxAFunction::AverageError(const int D) const
 
@@ -1068,8 +892,6 @@ occ::handle<NCollection_HArray1<double>> AdvApprox_ApproxAFunction::AverageError
   }
   return EPtr;
 }
-
-//=================================================================================================
 
 double AdvApprox_ApproxAFunction::AverageError(const int D, const int Index) const
 

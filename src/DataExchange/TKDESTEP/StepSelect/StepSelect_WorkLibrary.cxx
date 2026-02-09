@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_ContextWrite.hpp>
 #include <Interface_Check.hpp>
@@ -44,8 +33,6 @@ StepSelect_WorkLibrary::StepSelect_WorkLibrary(const bool copymode)
   SetDumpHelp(2, "Entity + shareds (level 1) as in file");
 }
 
-// rq : les init sont faits par ailleurs, pas de souci a se faire
-
 void StepSelect_WorkLibrary::SetDumpLabel(const int mode)
 {
   thelabmode = mode;
@@ -77,7 +64,7 @@ int StepSelect_WorkLibrary::ReadStream(const char*                            th
 
 bool StepSelect_WorkLibrary::WriteFile(IFSelect_ContextWrite& ctx) const
 {
-  //  Preparation
+
   Message_Messenger::StreamBuffer sout = Message::SendInfo();
   DeclareAndCast(StepData_StepModel, stepmodel, ctx.Model());
   DeclareAndCast(StepData_Protocol, stepro, ctx.Protocol());
@@ -98,7 +85,6 @@ bool StepSelect_WorkLibrary::WriteFile(IFSelect_ContextWrite& ctx) const
   StepData_StepWriter SW(stepmodel);
   sout << "(" << stepmodel->NbEntities() << " ents) ";
 
-  //  File Modifiers
   int nbmod = ctx.NbModifiers();
   for (int numod = 1; numod <= nbmod; numod++)
   {
@@ -106,16 +92,14 @@ bool StepSelect_WorkLibrary::WriteFile(IFSelect_ContextWrite& ctx) const
     DeclareAndCast(StepSelect_FileModifier, filemod, ctx.FileModifier());
     if (!filemod.IsNull())
       filemod->Perform(ctx, SW);
-    //   (impressions de mise au point)
+
     sout << " .. FileMod." << numod << filemod->Label();
     if (ctx.IsForAll())
       sout << " (all model)";
     else
       sout << " (" << ctx.NbEntities() << " entities)";
-    //    sout << std::flush;
   }
 
-  //  Envoi
   SW.SendModel(stepro);
   Interface_CheckIterator chl = SW.CheckList();
   for (chl.Start(); chl.More(); chl.Next())
@@ -165,7 +149,6 @@ void StepSelect_WorkLibrary::DumpEntity(const occ::handle<Interface_InterfaceMod
     return;
   }
 
-  //  On attaque le dump : d abord cas de l Erreur
   S << " Type cdl : " << entity->DynamicType()->Name() << std::endl;
   if (iserr)
     S << " ***  NOT WELL LOADED : CONTENT FROM FILE  ***" << std::endl;

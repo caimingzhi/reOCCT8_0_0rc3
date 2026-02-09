@@ -16,7 +16,6 @@
 #include <TopOpeBRepTool_TOPOLOGY.hpp>
 #include <TopOpeBRepTool_makeTransition.hpp>
 
-// LOIinfsup
 #define M_ON(st) (st == TopAbs_ON)
 #define M_REVERSED(st) (st == TopAbs_REVERSED)
 
@@ -26,20 +25,20 @@ Standard_EXPORT void debooarc(const int i);
 #endif
 
 Standard_EXPORT occ::handle<TopOpeBRepDS_Interference> MakeEPVInterference(
-  const TopOpeBRepDS_Transition& T, // transition
-  const int                      S, // curve/edge index
-  const int                      G, // point/vertex index
-  const double                   P, // parameter of G on S
+  const TopOpeBRepDS_Transition& T,
+  const int                      S,
+  const int                      G,
+  const double                   P,
   const TopOpeBRepDS_Kind        GK,
-  const bool                     B); // G is a vertex (or not) of the interference master
+  const bool                     B);
 Standard_EXPORT occ::handle<TopOpeBRepDS_Interference> MakeEPVInterference(
-  const TopOpeBRepDS_Transition& T,  // transition
-  const int                      S,  // curve/edge index
-  const int                      G,  // point/vertex index
-  const double                   P,  // parameter of G on S
-  const TopOpeBRepDS_Kind        GK, // POINT/VERTEX
+  const TopOpeBRepDS_Transition& T,
+  const int                      S,
+  const int                      G,
+  const double                   P,
+  const TopOpeBRepDS_Kind        GK,
   const TopOpeBRepDS_Kind        SK,
-  const bool                     B); // G is a vertex (or not) of the interference master
+  const bool                     B);
 
 static bool FUN_INlos(const TopoDS_Shape& S, const NCollection_List<TopoDS_Shape>& loS)
 {
@@ -50,20 +49,13 @@ static bool FUN_INlos(const TopoDS_Shape& S, const NCollection_List<TopoDS_Shape
   return false;
 }
 
-//=======================================================================
-// function : GetEdgeTrans
-// purpose  : Computes E<Sind> transition on <F> at point <VP>
-//           Computes FORWARD or REVERSED transitions,
-//           returns transition UNKNOWN elsewhere.
-//=======================================================================
 TopOpeBRepDS_Transition TopOpeBRep_FacesFiller::GetEdgeTrans(const TopOpeBRep_VPointInter& VP,
                                                              const TopOpeBRepDS_Kind       PVKind,
                                                              const int                     PVIndex,
                                                              const int          ShapeIndex,
                                                              const TopoDS_Face& F)
 {
-  // VP is on couture <Ec> of rank <sind>
-  //       on face <F> of rank <oosind>.
+
   int  OOShapeIndex = (ShapeIndex == 1) ? 2 : 1;
   int  vpsind       = VP.ShapeIndex();
   bool on2edges     = (vpsind == 3);
@@ -97,7 +89,7 @@ TopOpeBRepDS_Transition TopOpeBRep_FacesFiller::GetEdgeTrans(const TopOpeBRep_VP
 
   double par1, par2;
   int    SIedgeIndex = (myHDS->HasShape(edge)) ? myHDS->Shape(edge) : 0;
-  //  if (SIedgeIndex != 0) FDS_getupperlower(myHDS,SIedgeIndex,paredge,par1,par2);
+
   if (SIedgeIndex != 0)
   {
     bool isonboundper;
@@ -115,10 +107,8 @@ TopOpeBRepDS_Transition TopOpeBRep_FacesFiller::GetEdgeTrans(const TopOpeBRep_VP
     FUN_tool_bounds(edge, par1, par2);
 
   TopOpeBRepDS_Transition T;
-  // xpu : 16-01-98
-  //       <Tr> relative to 3d <OOface> matter,
-  //       we take into account <Tr> / 2d <OOface> only if <edge> is normal to <OOface>
-  double tola   = Precision::Angular() * 1.e+2; // dealing with tolerances
+
+  double tola   = Precision::Angular() * 1.e+2;
   bool   EtgF   = FUN_tool_EtgF(paredge, edge, OOuv, F, tola);
   bool   rest   = FUN_INlos(edge, myERL);
   bool   isse   = myHDS->DS().IsSectionEdge(edge);
@@ -146,26 +136,21 @@ TopOpeBRepDS_Transition TopOpeBRep_FacesFiller::GetEdgeTrans(const TopOpeBRep_VP
   return T;
 }
 
-//=======================================================================
-// function : ProcessVPonclosingR
-// purpose  : SUPPLYING INTPATCH when <VP> is on closing arc.
-//=======================================================================
-void TopOpeBRep_FacesFiller::ProcessVPonclosingR(
-  const TopOpeBRep_VPointInter& VP,
-  //                                const TopoDS_Shape& GFace,
-  const TopoDS_Shape&,
-  const int                      ShapeIndex,
-  const TopOpeBRepDS_Transition& transEdge,
-  const TopOpeBRepDS_Kind        PVKind,
-  const int                      PVIndex,
-  //				const bool EPIfound,
-  const bool,
-  //                                const occ::handle<TopOpeBRepDS_Interference>& IEPI)
-  const occ::handle<TopOpeBRepDS_Interference>&)
+void TopOpeBRep_FacesFiller::ProcessVPonclosingR(const TopOpeBRep_VPointInter& VP,
+
+                                                 const TopoDS_Shape&,
+                                                 const int                      ShapeIndex,
+                                                 const TopOpeBRepDS_Transition& transEdge,
+                                                 const TopOpeBRepDS_Kind        PVKind,
+                                                 const int                      PVIndex,
+
+                                                 const bool,
+
+                                                 const occ::handle<TopOpeBRepDS_Interference>&)
 {
-  //  bool isvertex = VP.IsVertex(ShapeIndex);
+
   bool isvertex     = (PVKind == TopOpeBRepDS_VERTEX);
-  int  absindex     = VP.ShapeIndex(); // 0,1,2,3
+  int  absindex     = VP.ShapeIndex();
   int  OOShapeIndex = (ShapeIndex == 1) ? 2 : 1;
   bool on2edges     = (absindex == 3);
   bool hasONedge    = (VP.State(OOShapeIndex) == TopAbs_ON);
@@ -177,14 +162,12 @@ void TopOpeBRep_FacesFiller::ProcessVPonclosingR(
   if (iOOFace == 0)
     iOOFace = myDS->AddShape(OOFace, OOShapeIndex);
 
-  // current VPoint is on <edge>
   const TopoDS_Edge& edge = TopoDS::Edge(VP.Edge(ShapeIndex));
   if (!myDS->HasShape(edge))
     myDS->AddShape(edge, ShapeIndex);
 
   double paredge = VP.EdgeParameter(ShapeIndex);
 
-  // dummy if !<hasOOedge>
   int         OOedgeIndex = 0;
   TopoDS_Edge OOedge;
   if (hasOOedge)
@@ -201,15 +184,6 @@ void TopOpeBRep_FacesFiller::ProcessVPonclosingR(
       OOedgeIndex = myDS->AddShape(OOedge, OOShapeIndex);
   }
 
-  // ===================================================================
-  //             --- Edge/(POINT,VERTEX) Interference (EPI) creation ---
-  // ===================================================================
-
-  // 1. <edge> enters or outers myF<OOShapeIndex> at <VP>,
-  //  transition <transEdge> returned by IntPatch is valid (FORWARD/REVERSED).
-  // 2. <edge> is tangent to myF<OOShapeIndex> :
-  //  transEdge should be INTERNAL/EXTERNAL.
-
   bool                    Tunk = transEdge.IsUnknown();
   TopOpeBRepDS_Transition transAdd;
   bool                    newtransEdge = Tunk;
@@ -218,9 +192,6 @@ void TopOpeBRep_FacesFiller::ProcessVPonclosingR(
   else
     transAdd = transEdge;
 
-  // !!! if the compute of <transAdd> fails, we add transEdge.
-  // hasOOedge  : <VP> is ON edge <edge> and ON <OOFace>
-  // !hasOOedge : <VP> is ON edge <edge> and IN <OOFace>
   {
     TopOpeBRepDS_Transition T = transAdd;
     T.Index(iOOFace);
@@ -236,5 +207,4 @@ void TopOpeBRep_FacesFiller::ProcessVPonclosingR(
       ::MakeEPVInterference(T, OOedgeIndex, PVIndex, paredge, PVKind, isvertex);
     myHDS->StoreInterference(EPI, edge);
   }
-
-} // ProcessVPonclosingR
+}

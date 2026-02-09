@@ -5,7 +5,6 @@
 #include <Geom2d_BSplineCurve.hpp>
 #include <GeomAbs_CurveType.hpp>
 
-//============================================================
 int BRepBlend_HCurve2dTool::NbSamples(const occ::handle<Adaptor2d_Curve2d>& C,
                                       const double                          U0,
                                       const double                          U1)

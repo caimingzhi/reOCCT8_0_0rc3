@@ -2,18 +2,15 @@
 
 #include <Graphic3d_Buffer.hpp>
 
-//! Index buffer.
 class Graphic3d_IndexBuffer : public Graphic3d_Buffer
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_IndexBuffer, Graphic3d_Buffer)
 public:
-  //! Empty constructor.
   Graphic3d_IndexBuffer(const occ::handle<NCollection_BaseAllocator>& theAlloc)
       : Graphic3d_Buffer(theAlloc)
   {
   }
 
-  //! Allocates new empty index array
   template <typename IndexType_t>
   bool Init(const int theNbElems)
   {
@@ -34,17 +31,14 @@ public:
     return true;
   }
 
-  //! Allocates new empty index array
   bool InitInt32(const int theNbElems) { return Init<int>(theNbElems); }
 
-  //! Access index at specified position
   int Index(const int theIndex) const
   {
     return Stride == sizeof(unsigned short) ? int(Value<unsigned short>(theIndex))
                                             : int(Value<unsigned int>(theIndex));
   }
 
-  //! Change index at specified position
   void SetIndex(const int theIndex, const int theValue)
   {
     if (Stride == sizeof(unsigned short))
@@ -57,7 +51,6 @@ public:
     }
   }
 
-  //! Dumps the content of me into the stream
   void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override
   {
     OCCT_DUMP_TRANSIENT_CLASS_BEGIN(theOStream)

@@ -12,7 +12,6 @@ class StepAP242_GeometricItemSpecificUsage;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for GeometricItemSpecificUsage
 class RWStepAP242_RWGeometricItemSpecificUsage
 {
 public:

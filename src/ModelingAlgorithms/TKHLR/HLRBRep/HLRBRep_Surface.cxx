@@ -7,19 +7,15 @@
 #include <NCollection_Array2.hpp>
 #include <TopoDS_Face.hpp>
 
-//=================================================================================================
-
 HLRBRep_Surface::HLRBRep_Surface()
     : myType(GeomAbs_OtherSurface),
       myProj(nullptr)
 {
 }
 
-//=================================================================================================
-
 void HLRBRep_Surface::Surface(const TopoDS_Face& F)
 {
-  // mySurf.Initialize(F,false);
+
   mySurf.Initialize(F, true);
   GeomAbs_SurfaceType typ = HLRBRep_BSurfaceTool::GetType(mySurf);
   switch (typ)
@@ -30,7 +26,7 @@ void HLRBRep_Surface::Surface(const TopoDS_Face& F)
     case GeomAbs_Cone:
     case GeomAbs_Sphere:
     case GeomAbs_Torus:
-      // unchanged type
+
       myType = typ;
       break;
 
@@ -48,8 +44,6 @@ void HLRBRep_Surface::Surface(const TopoDS_Face& F)
       break;
   }
 }
-
-//=================================================================================================
 
 bool HLRBRep_Surface::SideRowsOfPoles(const double                tol,
                                       const int                   nbuPoles,
@@ -71,7 +65,7 @@ bool HLRBRep_Surface::SideRowsOfPoles(const double                tol,
   result = true;
 
   for (iu = 1; iu <= nbuPoles && result; iu++)
-  { // Side iso u ?
+  {
     Pnt(iu, 1).Coord(x0, y0, z);
 
     for (iv = 2; iv <= nbvPoles && result; iv++)
@@ -85,7 +79,7 @@ bool HLRBRep_Surface::SideRowsOfPoles(const double                tol,
   result = true;
 
   for (iv = 1; iv <= nbvPoles && result; iv++)
-  { // Side iso v ?
+  {
     Pnt(1, iv).Coord(x0, y0, z);
 
     for (iu = 2; iu <= nbuPoles && result; iu++)
@@ -97,7 +91,6 @@ bool HLRBRep_Surface::SideRowsOfPoles(const double                tol,
   if (result)
     return result;
 
-  // Are the Poles in a Side Plane ?
   NCollection_Array1<gp_Pnt> p(1, nbuPoles * nbvPoles);
   int                        i = 0;
 
@@ -117,8 +110,6 @@ bool HLRBRep_Surface::SideRowsOfPoles(const double                tol,
 
   return result;
 }
-
-//=================================================================================================
 
 bool HLRBRep_Surface::IsSide(const double tolF, const double toler) const
 {
@@ -189,8 +180,6 @@ bool HLRBRep_Surface::IsSide(const double tolF, const double toler) const
     return false;
 }
 
-//=================================================================================================
-
 bool HLRBRep_Surface::IsAbove(const bool back, const HLRBRep_Curve* A, const double tol) const
 {
   bool planar = (myType == GeomAbs_Plane);
@@ -241,16 +230,12 @@ bool HLRBRep_Surface::IsAbove(const bool back, const HLRBRep_Curve* A, const dou
     return false;
 }
 
-//=================================================================================================
-
 gp_Pnt HLRBRep_Surface::Value(const double U, const double V) const
 {
   gp_Pnt P;
   D0(U, V, P);
   return P;
 }
-
-//=================================================================================================
 
 gp_Pln HLRBRep_Surface::Plane() const
 {

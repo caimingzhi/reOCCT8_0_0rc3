@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include "RWStepKinematics_RWProductDefinitionRelationshipKinematics.hpp"
 
@@ -9,12 +9,8 @@
 #include <TCollection_HAsciiString.hpp>
 #include <StepRepr_CharacterizedDefinition.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWProductDefinitionRelationshipKinematics::
   RWStepKinematics_RWProductDefinitionRelationshipKinematics() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWProductDefinitionRelationshipKinematics::ReadStep(
   const occ::handle<StepData_StepReaderData>&                                theData,
@@ -22,11 +18,9 @@ void RWStepKinematics_RWProductDefinitionRelationshipKinematics::ReadStep(
   occ::handle<Interface_Check>&                                              theArch,
   const occ::handle<StepKinematics_ProductDefinitionRelationshipKinematics>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 3, theArch, "product_definition_relationship_kinematics"))
     return;
-
-  // Inherited fields of PropertyDefinition
 
   occ::handle<TCollection_HAsciiString> aPropertyDefinition_Name;
   theData->ReadString(theNum, 1, "property_definition.name", theArch, aPropertyDefinition_Name);
@@ -54,21 +48,16 @@ void RWStepKinematics_RWProductDefinitionRelationshipKinematics::ReadStep(
                       theArch,
                       aPropertyDefinition_Definition);
 
-  // Initialize entity
   theEnt->Init(aPropertyDefinition_Name,
                hasPropertyDefinition_Description,
                aPropertyDefinition_Description,
                aPropertyDefinition_Definition);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWProductDefinitionRelationshipKinematics::WriteStep(
   StepData_StepWriter&                                                       theSW,
   const occ::handle<StepKinematics_ProductDefinitionRelationshipKinematics>& theEnt) const
 {
-
-  // Own fields of PropertyDefinition
 
   theSW.Send(theEnt->Name());
 
@@ -82,14 +71,10 @@ void RWStepKinematics_RWProductDefinitionRelationshipKinematics::WriteStep(
   theSW.Send(theEnt->Definition().Value());
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWProductDefinitionRelationshipKinematics::Share(
   const occ::handle<StepKinematics_ProductDefinitionRelationshipKinematics>& theEnt,
   Interface_EntityIterator&                                                  iter) const
 {
-
-  // Inherited fields of PropertyDefinition
 
   iter.AddItem(theEnt->StepRepr_PropertyDefinition::Definition().Value());
 }

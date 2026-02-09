@@ -6,7 +6,6 @@
 #include <Plate_GtoCConstraint.hpp>
 #include <Plate_PinpointConstraint.hpp>
 
-// alr le 12/11/96
 static const double NORMIN = 1.e-10;
 static const double COSMIN = 1.e-2;
 
@@ -28,15 +27,13 @@ Plate_GtoCConstraint::Plate_GtoCConstraint(const gp_XY&    point2d,
   nb_PPConstraints = 0;
 
   gp_XYZ normale = D1T.Du ^ D1T.Dv;
-  // alr le 12/11/96
+
   if (normale.Modulus() < NORMIN)
     return;
   normale.Normalize();
 
-  // G1 Constraints
-
   gp_XYZ normaleS = D1S.Du ^ D1S.Dv;
-  // alr le 12/11/96
+
   if (normaleS.Modulus() < NORMIN)
     return;
   normaleS.Normalize();
@@ -67,8 +64,6 @@ Plate_GtoCConstraint::Plate_GtoCConstraint(const gp_XY&    point2d,
   if (normale.Modulus() < NORMIN)
     return;
   normale.Normalize();
-
-  // G1 Constraints
 
   gp_XYZ normaleS = D1S.Du ^ D1S.Dv;
   if (normaleS.Modulus() < NORMIN)
@@ -106,14 +101,13 @@ Plate_GtoCConstraint::Plate_GtoCConstraint(const gp_XY&    point2d,
   nb_PPConstraints = 0;
 
   gp_XYZ normale = D1T.Du ^ D1T.Dv;
-  // alr le 12/11/96
+
   if (normale.Modulus() < NORMIN)
     return;
   normale.Normalize();
 
-  // G1 Constraints
   gp_XYZ normaleS = D1S.Du ^ D1S.Dv;
-  // alr le 12/11/96
+
   if (normaleS.Modulus() < NORMIN)
     return;
   normaleS.Normalize();
@@ -130,7 +124,6 @@ Plate_GtoCConstraint::Plate_GtoCConstraint(const gp_XY&    point2d,
   myPPC[1]         = Plate_PinpointConstraint(pnt2d, dv, 0, 1);
   nb_PPConstraints = 2;
 
-  // G2 Constraints
   gp_XYZ Su = D1S.Du + du;
   gp_XYZ Sv = D1S.Dv + dv;
 
@@ -186,14 +179,13 @@ Plate_GtoCConstraint::Plate_GtoCConstraint(const gp_XY&    point2d,
   nb_PPConstraints = 0;
 
   gp_XYZ normale = D1T.Du ^ D1T.Dv;
-  // alr le 12/11/96
+
   if (normale.Modulus() < NORMIN)
     return;
   normale.Normalize();
 
-  // G1 Constraints
   gp_XYZ normaleS = D1S.Du ^ D1S.Dv;
-  // alr le 12/11/96
+
   if (normaleS.Modulus() < NORMIN)
     return;
   normaleS.Normalize();
@@ -215,7 +207,6 @@ Plate_GtoCConstraint::Plate_GtoCConstraint(const gp_XY&    point2d,
   myPPC[1]         = Plate_PinpointConstraint(pnt2d, dv, 0, 1);
   nb_PPConstraints = 2;
 
-  // G2 Constraints
   gp_XYZ Su = D1S.Du + du;
   gp_XYZ Sv = D1S.Dv + dv;
 
@@ -275,7 +266,6 @@ Plate_GtoCConstraint::Plate_GtoCConstraint(const gp_XY&    point2d,
     return;
   normale.Normalize();
 
-  // G1 Constraints
   gp_XYZ normaleS = D1S.Du ^ D1S.Dv;
   if (normaleS.Modulus() < NORMIN)
     return;
@@ -293,7 +283,6 @@ Plate_GtoCConstraint::Plate_GtoCConstraint(const gp_XY&    point2d,
   myPPC[1]         = Plate_PinpointConstraint(pnt2d, dv, 0, 1);
   nb_PPConstraints = 2;
 
-  // G2 Constraints
   gp_XYZ Su = D1S.Du + du;
   gp_XYZ Sv = D1S.Dv + dv;
 
@@ -334,8 +323,6 @@ Plate_GtoCConstraint::Plate_GtoCConstraint(const gp_XY&    point2d,
   myPPC[3]         = Plate_PinpointConstraint(pnt2d, duv, 1, 1);
   myPPC[4]         = Plate_PinpointConstraint(pnt2d, dvv, 0, 2);
   nb_PPConstraints = 5;
-
-  // G3 Constraints
 
   vec(0) = (D2S.Duu + duu - Suu) * Su;
   vec(1) = (D2S.Duu + duu - Suu) * Sv;
@@ -391,16 +378,15 @@ Plate_GtoCConstraint::Plate_GtoCConstraint(const gp_XY&    point2d,
   nb_PPConstraints = 9;
 }
 
-Plate_GtoCConstraint::Plate_GtoCConstraint(
-  const gp_XY&    point2d,
-  const Plate_D1& D1S,
-  const Plate_D1& D1T,
-  const Plate_D2& D2S,
-  const Plate_D2& D2T,
-  const Plate_D3& D3S,
-  const Plate_D3& D3T,
-  //                                           const gp_XYZ& nP)
-  const gp_XYZ&)
+Plate_GtoCConstraint::Plate_GtoCConstraint(const gp_XY&    point2d,
+                                           const Plate_D1& D1S,
+                                           const Plate_D1& D1T,
+                                           const Plate_D2& D2S,
+                                           const Plate_D2& D2T,
+                                           const Plate_D3& D3S,
+                                           const Plate_D3& D3T,
+
+                                           const gp_XYZ&)
     : myD1SurfInit(D1S)
 {
 
@@ -412,7 +398,6 @@ Plate_GtoCConstraint::Plate_GtoCConstraint(
     return;
   normale.Normalize();
 
-  // G1 Constraints
   gp_XYZ normaleS = D1S.Du ^ D1S.Dv;
   if (normaleS.Modulus() < NORMIN)
     return;
@@ -430,7 +415,6 @@ Plate_GtoCConstraint::Plate_GtoCConstraint(
   myPPC[1]         = Plate_PinpointConstraint(pnt2d, dv, 0, 1);
   nb_PPConstraints = 2;
 
-  // G2 Constraints
   gp_XYZ Su = D1S.Du + du;
   gp_XYZ Sv = D1S.Dv + dv;
 
@@ -473,7 +457,6 @@ Plate_GtoCConstraint::Plate_GtoCConstraint(
   myPPC[4]         = Plate_PinpointConstraint(pnt2d, dvv, 0, 2);
   nb_PPConstraints = 5;
 
-  // G3 Constraints
   vec(0) = (D2S.Duu + duu - Suu) * Su;
   vec(1) = (D2S.Duu + duu - Suu) * Sv;
   gauss.Solve(vec, sol);

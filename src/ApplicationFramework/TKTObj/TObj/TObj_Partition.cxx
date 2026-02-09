@@ -8,14 +8,10 @@
 IMPLEMENT_STANDARD_RTTIEXT(TObj_Partition, TObj_Object)
 IMPLEMENT_TOBJOCAF_PERSISTENCE(TObj_Partition)
 
-//=================================================================================================
-
 TObj_Partition::TObj_Partition(const TDF_Label& theLabel, const bool theSetName)
     : TObj_Object(theLabel, theSetName)
 {
 }
-
-//=================================================================================================
 
 occ::handle<TObj_Partition> TObj_Partition::Create(const TDF_Label& theLabel, const bool theSetName)
 {
@@ -23,8 +19,6 @@ occ::handle<TObj_Partition> TObj_Partition::Create(const TDF_Label& theLabel, co
   aPartition->SetLastIndex(0);
   return aPartition;
 }
-
-//=================================================================================================
 
 TDF_Label TObj_Partition::NewLabel() const
 {
@@ -34,14 +28,10 @@ TDF_Label TObj_Partition::NewLabel() const
   return aLabel;
 }
 
-//=================================================================================================
-
 void TObj_Partition::SetNamePrefix(const occ::handle<TCollection_HExtendedString>& thePrefix)
 {
   myPrefix = thePrefix;
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HExtendedString> TObj_Partition::GetNewName(const bool theIsToChangeCount)
 {
@@ -56,15 +46,10 @@ occ::handle<TCollection_HExtendedString> TObj_Partition::GetNewName(const bool t
     aName = new TCollection_HExtendedString(myPrefix->String() + aRank++);
   } while (GetModel()->IsRegisteredName(aName, GetDictionary()));
 
-  // the last index is increased taking into account only names that are
-  // actually set; the name requested by the current operation can be
-  // dropped later and this will not cause index to be increased
   if (theIsToChangeCount && --aRank > saveRank)
     SetLastIndex(aRank);
   return aName;
 }
-
-//=================================================================================================
 
 occ::handle<TObj_Partition> TObj_Partition::GetPartition(const occ::handle<TObj_Object>& theObject)
 {
@@ -73,7 +58,6 @@ occ::handle<TObj_Partition> TObj_Partition::GetPartition(const occ::handle<TObj_
   {
     TDF_Label aLabel = theObject->GetLabel().Father();
 
-    // find partition which contains the object
     while (aPartition.IsNull() && !aLabel.IsNull())
     {
       occ::handle<TObj_Object> anObject;
@@ -87,21 +71,15 @@ occ::handle<TObj_Partition> TObj_Partition::GetPartition(const occ::handle<TObj_
   return aPartition;
 }
 
-//=================================================================================================
-
 int TObj_Partition::GetLastIndex() const
 {
   return getInteger(DataTag_LastIndex);
 }
 
-//=================================================================================================
-
 void TObj_Partition::SetLastIndex(const int theIndex)
 {
   setInteger(theIndex, DataTag_LastIndex);
 }
-
-//=================================================================================================
 
 bool TObj_Partition::copyData(const occ::handle<TObj_Object>& theTargetObject)
 {
@@ -119,11 +97,6 @@ bool TObj_Partition::copyData(const occ::handle<TObj_Object>& theTargetObject)
   return IsDone;
 }
 
-//=======================================================================
-// function : SetName
-// purpose  : do not register a name in the dictionary
-//=======================================================================
-
 bool TObj_Partition::SetName(const occ::handle<TCollection_HExtendedString>& theName) const
 {
   occ::handle<TCollection_HExtendedString> anOldName = GetName();
@@ -133,10 +106,5 @@ bool TObj_Partition::SetName(const occ::handle<TCollection_HExtendedString>& the
   TDataStd_Name::Set(GetLabel(), theName->String());
   return true;
 }
-
-//=======================================================================
-// function : AfterRetrieval
-// purpose  : do not register a name in the dictionary
-//=======================================================================
 
 void TObj_Partition::AfterRetrieval() {}

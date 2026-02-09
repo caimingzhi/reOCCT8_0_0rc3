@@ -11,7 +11,6 @@ class StepShape_RightCircularCone : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a RightCircularCone
   Standard_EXPORT StepShape_RightCircularCone();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

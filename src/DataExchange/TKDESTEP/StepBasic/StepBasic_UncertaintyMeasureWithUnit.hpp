@@ -12,7 +12,6 @@ class StepBasic_UncertaintyMeasureWithUnit : public StepBasic_MeasureWithUnit
 {
 
 public:
-  //! Returns a UncertaintyMeasureWithUnit
   Standard_EXPORT StepBasic_UncertaintyMeasureWithUnit();
 
   Standard_EXPORT void Init(const occ::handle<StepBasic_MeasureValueMember>& aValueComponent,

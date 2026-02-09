@@ -15,7 +15,6 @@ class TDF_Attribute;
 class XmlObjMgt_Persistent;
 class TopLoc_Location;
 
-//! Attribute Driver.
 class XmlMXCAFDoc_LocationDriver : public XmlMDF_ADriver
 {
 
@@ -33,12 +32,10 @@ public:
                              XmlObjMgt_Persistent&             Target,
                              XmlObjMgt_SRelocationTable&       RelocTable) const override;
 
-  //! Translate a non storable Location to a storable Location.
   Standard_EXPORT void Translate(const TopLoc_Location&      theLoc,
                                  XmlObjMgt_Element&          theParent,
                                  XmlObjMgt_SRelocationTable& theMap) const;
 
-  //! Translate a storable Location to a non storable Location.
   Standard_EXPORT bool Translate(const XmlObjMgt_Element&    theParent,
                                  TopLoc_Location&            theLoc,
                                  XmlObjMgt_RRelocationTable& theMap) const;

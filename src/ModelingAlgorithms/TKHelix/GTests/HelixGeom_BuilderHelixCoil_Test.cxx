@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -44,7 +33,6 @@ TEST_F(HelixGeom_BuilderHelixCoil_Test, BasicConstruction)
   occ::handle<Geom_Curve> aCurve = aCurves(1);
   EXPECT_FALSE(aCurve.IsNull());
 
-  // Test curve endpoints
   gp_Pnt aP1, aP2;
   aCurve->D0(aCurve->FirstParameter(), aP1);
   aCurve->D0(aCurve->LastParameter(), aP2);
@@ -62,12 +50,10 @@ TEST_F(HelixGeom_BuilderHelixCoil_Test, DefaultParameters)
 {
   HelixGeom_BuilderHelixCoil aBuilder;
 
-  // Use default parameters
   aBuilder.Perform();
 
   EXPECT_EQ(aBuilder.ErrorStatus(), 0);
 
-  // Check default approximation parameters
   GeomAbs_Shape aCont;
   int           aMaxDegree, aMaxSeg;
   aBuilder.ApproxParameters(aCont, aMaxDegree, aMaxSeg);
@@ -83,13 +69,11 @@ TEST_F(HelixGeom_BuilderHelixCoil_Test, ParameterSymmetry)
 {
   HelixGeom_BuilderHelixCoil aBuilder;
 
-  // Set parameters
   double aT1 = 0.5, aT2 = 5.5, aPitch = 12.5, aRStart = 3.5, aTaperAngle = 0.15;
   bool   aIsClockwise = false;
 
   aBuilder.SetCurveParameters(aT1, aT2, aPitch, aRStart, aTaperAngle, aIsClockwise);
 
-  // Get parameters back
   double aT1_out, aT2_out, aPitch_out, aRStart_out, aTaperAngle_out;
   bool   aIsClockwise_out;
 
@@ -115,7 +99,7 @@ TEST_F(HelixGeom_BuilderHelixCoil_Test, TaperedHelix)
   aBuilder.Perform();
 
   EXPECT_EQ(aBuilder.ErrorStatus(), 0);
-  EXPECT_LE(aBuilder.ToleranceReached(), myTolerance * 10); // Allow some tolerance margin
+  EXPECT_LE(aBuilder.ToleranceReached(), myTolerance * 10);
 
   const NCollection_Sequence<occ::handle<Geom_Curve>>& aCurves = aBuilder.Curves();
   EXPECT_EQ(aCurves.Length(), 1);
@@ -123,11 +107,9 @@ TEST_F(HelixGeom_BuilderHelixCoil_Test, TaperedHelix)
   occ::handle<Geom_Curve> aCurve = aCurves(1);
   EXPECT_FALSE(aCurve.IsNull());
 
-  // Verify that the curve is a B-spline
   occ::handle<Geom_BSplineCurve> aBSpline = occ::down_cast<Geom_BSplineCurve>(aCurve);
   EXPECT_FALSE(aBSpline.IsNull());
 
-  // Check B-spline properties
   EXPECT_LE(aBSpline->Degree(), 8);
   EXPECT_GT(aBSpline->NbPoles(), 0);
 }

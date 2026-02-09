@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_ScrewPairWithRange;
 
-//! Read & Write tool for ScrewPairWithRange
 class RWStepKinematics_RWScrewPairWithRange
 {
 public:

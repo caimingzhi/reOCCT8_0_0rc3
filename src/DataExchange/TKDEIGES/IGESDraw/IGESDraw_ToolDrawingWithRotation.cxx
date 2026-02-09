@@ -27,7 +27,7 @@ void IGESDraw_ToolDrawingWithRotation::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&      IR,
   IGESData_ParamReader&                            PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   int nbval;
 
   occ::handle<NCollection_HArray1<occ::handle<IGESData_ViewKindEntity>>> views;
@@ -35,7 +35,6 @@ void IGESDraw_ToolDrawingWithRotation::ReadOwnParams(
   occ::handle<NCollection_HArray1<double>>                               orientationAngles;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>     annotations;
 
-  // Reading nbval(Count of Array Views)
   bool st = PR.ReadInteger(PR.Current(), "count of array views", nbval);
   if (st && nbval > 0)
   {
@@ -49,10 +48,7 @@ void IGESDraw_ToolDrawingWithRotation::ReadOwnParams(
 
     for (int i = 1; i <= nbval; i++)
     {
-      // Reading views(HArray1OfView)
-      // st = PR.ReadEntity (IR, PR.Current(), "Instance of views",
-      // STANDARD_TYPE(IGESData_ViewKindEntity), tempView,true); //szv#4:S4163:12Mar99
-      // moved in if
+
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "Instance of views",
@@ -61,49 +57,28 @@ void IGESDraw_ToolDrawingWithRotation::ReadOwnParams(
                         true))
         views->SetValue(i, tempView);
 
-      // Reading viewOrigins(HArray1OfXY)
-      // st = PR.ReadXY(PR.CurrentList(1, 2), "array viewOrigins", tempXY); //szv#4:S4163:12Mar99
-      // moved in if
       if (PR.ReadXY(PR.CurrentList(1, 2), "array viewOrigins", tempXY))
         viewOrigins->SetValue(i, tempXY);
 
       if (PR.DefinedElseSkip())
       {
-        // Reading orientationAngles(HArray1OfReal)
-        // st = PR.ReadReal(PR.Current(), "array viewOrigins", tempOrient); //szv#4:S4163:12Mar99
-        // moved in if
+
         if (PR.ReadReal(PR.Current(), "array viewOrigins", tempOrient))
           orientationAngles->SetValue(i, tempOrient);
       }
       else
-        orientationAngles->SetValue(i, 0.0); // Default Value
+        orientationAngles->SetValue(i, 0.0);
     }
   }
   else if (nbval <= 0)
     PR.AddFail("Count of view entities : Not Positive");
 
-  // Reading nbval(No. of Annotation Entities)
-  // st = PR.ReadInteger(PR.Current(), "Count of array of Annotation entities", nbval);
-  // //szv#4:S4163:12Mar99 moved in if
   if (PR.ReadInteger(PR.Current(), "Count of array of Annotation entities", nbval))
   {
     if (nbval > 0)
-      // clang-format off
-      PR.ReadEnts (IR,PR.CurrentList(nbval), "Annotation Entities", annotations); //szv#4:S4163:12Mar99 `st=` not needed
-    // clang-format on
-    /*
-          {
-        // Reading annotations(HArray1OfIGESEntity)
-        annotations = new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, nbval);
-        occ::handle<IGESData_IGESEntity> tempAnnotation;
-        for (int i = 1; i <= nbval; i++)
-              {
-            st = PR.ReadEntity
-              (IR, PR.Current(), "annotation entity", tempAnnotation,true);
-            if (st) annotations->SetValue(i, tempAnnotation);
-              }
-          }
-    */
+
+      PR.ReadEnts(IR, PR.CurrentList(nbval), "Annotation Entities", annotations);
+
     else if (nbval < 0)
       PR.AddFail("Count of Annotation entities : Less than zero");
   }
@@ -118,7 +93,7 @@ void IGESDraw_ToolDrawingWithRotation::WriteOwnParams(
 {
   int Up = ent->NbViews();
   IW.Send(Up);
-  int i; // svv Jan 10 2000 : porting on DEC
+  int i;
   for (i = 1; i <= Up; i++)
   {
     IW.Send(ent->ViewItem(i));
@@ -138,7 +113,7 @@ void IGESDraw_ToolDrawingWithRotation::OwnShared(
   Interface_EntityIterator&                        iter) const
 {
   int Up = ent->NbViews();
-  int i; // svv Jan 10 2000 : porting on DEC
+  int i;
   for (i = 1; i <= Up; i++)
     iter.GetOneItem(ent->ViewItem(i));
   Up = ent->NbAnnotations();
@@ -190,7 +165,7 @@ void IGESDraw_ToolDrawingWithRotation::OwnCopy(
 bool IGESDraw_ToolDrawingWithRotation::OwnCorrect(
   const occ::handle<IGESDraw_DrawingWithRotation>& ent) const
 {
-  //  Vues vides : les supprimer
+
   int i, nb = ent->NbViews();
   int nbtrue = nb;
   for (i = 1; i <= nb; i++)
@@ -226,7 +201,6 @@ bool IGESDraw_ToolDrawingWithRotation::OwnCorrect(
     orientationAngles->SetValue(nbtrue, ent->OrientationAngle(i));
   }
 
-  //  Ne pas oublier les annotations ...
   int                                                                nbanot = ent->NbAnnotations();
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> annotations =
     new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, nbanot);
@@ -238,7 +212,7 @@ bool IGESDraw_ToolDrawingWithRotation::OwnCorrect(
 }
 
 IGESData_DirChecker IGESDraw_ToolDrawingWithRotation::DirChecker(
-  const occ::handle<IGESDraw_DrawingWithRotation>& /*ent*/) const
+  const occ::handle<IGESDraw_DrawingWithRotation>&) const
 {
   IGESData_DirChecker DC(404, 1);
   DC.Structure(IGESData_DefVoid);
@@ -301,7 +275,7 @@ void IGESDraw_ToolDrawingWithRotation::OwnDump(const occ::handle<IGESDraw_Drawin
     << "Orientation Angles : "
     << "Count = " << ent->NbViews() << "\n";
 
-  if (level > 4) // Level = 4 : no Dump. Level = 5 & 6 have same Dump
+  if (level > 4)
   {
     int I;
     int up = ent->NbViews();

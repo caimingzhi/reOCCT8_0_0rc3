@@ -11,8 +11,6 @@
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 
-//=================================================================================================
-
 class Approx_Curve3d_Eval : public AdvApprox_EvaluatorFunction
 {
 public:
@@ -27,7 +25,7 @@ public:
                 double  StartEnd[2],
                 double* Parameter,
                 int*    DerivativeRequest,
-                double* Result, // [Dimension]
+                double* Result,
                 int*    ErrorCode) override;
 
 private:
@@ -37,15 +35,14 @@ private:
 
 void Approx_Curve3d_Eval::Evaluate(int*    Dimension,
                                    double  StartEnd[2],
-                                   double* Param,  // Parameter at which evaluation
-                                   int*    Order,  // Derivative Request
-                                   double* Result, // [Dimension]
+                                   double* Param,
+                                   int*    Order,
+                                   double* Result,
                                    int*    ErrorCode)
 {
   *ErrorCode = 0;
   double par = *Param;
 
-  // Dimension is incorrect
   if (*Dimension != 3)
   {
     *ErrorCode = 1;
@@ -94,7 +91,6 @@ Approx_Curve3d::Approx_Curve3d(const occ::handle<Adaptor3d_Curve>& Curve,
                                const int                           MaxSegments,
                                const int                           MaxDegree)
 {
-  // Initialisation of input parameters of AdvApprox
 
   int                                      Num1DSS = 0, Num2DSS = 0, Num3DSS = 1;
   occ::handle<NCollection_HArray1<double>> OneDTolNul, TwoDTolNul;

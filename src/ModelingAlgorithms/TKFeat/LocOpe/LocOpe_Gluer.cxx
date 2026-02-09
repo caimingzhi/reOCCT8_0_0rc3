@@ -32,8 +32,6 @@ static TopAbs_Orientation GetOrientation(const TopoDS_Face&, const TopoDS_Face&)
 
 static bool Contains(const NCollection_List<TopoDS_Shape>&, const TopoDS_Shape&);
 
-//=================================================================================================
-
 void LocOpe_Gluer::Init(const TopoDS_Shape& Sbase, const TopoDS_Shape& Snew)
 {
   mySb = Sbase;
@@ -45,8 +43,6 @@ void LocOpe_Gluer::Init(const TopoDS_Shape& Sbase, const TopoDS_Shape& Snew)
   myOri  = TopAbs_INTERNAL;
   myOpe  = LocOpe_INVALID;
 }
-
-//=================================================================================================
 
 void LocOpe_Gluer::Bind(const TopoDS_Face& Fnew, const TopoDS_Face& Fbase)
 {
@@ -66,7 +62,6 @@ void LocOpe_Gluer::Bind(const TopoDS_Face& Fnew, const TopoDS_Face& Fbase)
 
   TopoDS_Shape aLocalFace = Fnew.Oriented(exp.Current().Orientation());
   TopoDS_Face  Fnor       = TopoDS::Face(aLocalFace);
-  //  TopoDS_Face Fnor = TopoDS::Face(Fnew.Oriented(exp.Current().Orientation()));
 
   for (exp.Init(mySb, TopAbs_FACE); exp.More(); exp.Next())
   {
@@ -82,7 +77,7 @@ void LocOpe_Gluer::Bind(const TopoDS_Face& Fnew, const TopoDS_Face& Fbase)
 
   aLocalFace       = Fbase.Oriented(exp.Current().Orientation());
   TopoDS_Face Fbor = TopoDS::Face(aLocalFace);
-  //  TopoDS_Face Fbor = TopoDS::Face(Fbase.Oriented(exp.Current().Orientation()));
+
   TopAbs_Orientation Ori = GetOrientation(Fnor, Fbor);
 
   if (myOri == TopAbs_INTERNAL)
@@ -106,25 +101,21 @@ void LocOpe_Gluer::Bind(const TopoDS_Face& Fnew, const TopoDS_Face& Fbase)
   for (exp.Init(Fnor, TopAbs_EDGE); exp.More(); exp.Next())
   {
     const TopoDS_Edge& edg = TopoDS::Edge(exp.Current());
-    //    if (!myMapEF.IsBound(edg)) {
-    //      myMapEF.Bind(edg,Fbor);
+
     if (!myMapEF.Contains(edg))
     {
       myMapEF.Add(edg, Fbor);
     }
-    //    else if (!myMapEF(edg).IsSame(Fbor)) {
+
     else if (!myMapEF.FindFromKey(edg).IsSame(Fbor))
     {
-      //      myMapEF.UnBind(edg); // edg sur 2 face. a binder avec l`edge commun
+
       myMapEF.ChangeFromKey(edg).Nullify();
-      // edg sur 2 face. a binder avec l`edge commun
     }
   }
-  //  myMapEF.Bind(Fnor,Fbor);
+
   myMapEF.Add(Fnor, Fbor);
 }
-
-//=================================================================================================
 
 void LocOpe_Gluer::Bind(const TopoDS_Edge& Enew, const TopoDS_Edge& Ebase)
 {
@@ -134,8 +125,6 @@ void LocOpe_Gluer::Bind(const TopoDS_Edge& Enew, const TopoDS_Edge& Ebase)
   }
   myMapEE.Bind(Enew, Ebase);
 }
-
-//=================================================================================================
 
 void LocOpe_Gluer::Perform()
 {
@@ -166,7 +155,7 @@ void LocOpe_Gluer::Perform()
       }
     }
     else
-    { // TopAbs_FACE
+    {
       theGS->GlueOnFace(TopoDS::Face(S));
     }
   }
@@ -190,8 +179,7 @@ void LocOpe_Gluer::Perform()
   {
     return;
   }
-  // Mise a jour des descendants
-  //  for (TopExp_Explorer exp(mySb,TopAbs_FACE); exp.More(); exp.Next()) {
+
   TopExp_Explorer exp(mySb, TopAbs_FACE);
   for (; exp.More(); exp.Next())
   {
@@ -218,7 +206,6 @@ void LocOpe_Gluer::Perform()
 
     AddEdges();
 
-    // Mise a jour des descendants
     NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>::
       Iterator itd;
     for (itd.Initialize(myDescF); itd.More(); itd.Next())
@@ -233,7 +220,7 @@ void LocOpe_Gluer::Perform()
         {
           const TopoDS_Face& descface = TopoDS::Face(itl2.Value());
           if (!descface.IsNull())
-          { // sinon la face a disparu
+          {
             newDesc.Append(descface);
           }
         }
@@ -242,7 +229,6 @@ void LocOpe_Gluer::Perform()
     }
   }
 
-  // recodage des regularites
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     theMapEF1, theMapEF2;
   TopExp::MapShapesAndAncestors(mySn, TopAbs_EDGE, TopAbs_FACE, theMapEF1);
@@ -259,7 +245,7 @@ void LocOpe_Gluer::Perform()
       GeomAbs_Shape      thecont = BRep_Tool::Continuity(edg, fac1, fac2);
       if (thecont >= GeomAbs_G1)
       {
-        // on essaie de recoder
+
         int ind2 = theMapEF2.FindIndex(edg);
         if (ind2 != 0)
         {
@@ -281,7 +267,7 @@ void LocOpe_Gluer::Perform()
       }
     }
   }
-  // creation de la liste d`edge
+
   theWOnS->InitEdgeIterator();
   while (theWOnS->MoreEdge())
   {
@@ -292,7 +278,7 @@ void LocOpe_Gluer::Perform()
       if (edg1.IsSame(edg))
       {
         myEdges.Append(edg);
-        // recodage eventuel des regularites sur cet edge
+
         const NCollection_List<TopoDS_Shape>& L = theMapEF2(ind);
         if (L.Extent() == 2)
         {
@@ -313,11 +299,7 @@ void LocOpe_Gluer::Perform()
     }
     theWOnS->NextEdge();
   }
-
-  // recodage eventuel des regularites sur cet edge
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& LocOpe_Gluer::DescendantFaces(const TopoDS_Face& F) const
 {
@@ -331,8 +313,6 @@ const NCollection_List<TopoDS_Shape>& LocOpe_Gluer::DescendantFaces(const TopoDS
   return nullList;
 }
 
-//=================================================================================================
-
 static TopAbs_Orientation GetOrientation(const TopoDS_Face& Fn, const TopoDS_Face& Fb)
 {
 
@@ -340,14 +320,12 @@ static TopAbs_Orientation GetOrientation(const TopoDS_Face& Fn, const TopoDS_Fac
   Sn = BRep_Tool::Surface(Fn);
   Sb = BRep_Tool::Surface(Fb);
 
-  // Find a point on Sb
   TopExp_Explorer exp;
   double          f, l;
   gp_Pnt2d        ptvtx;
   gp_Pnt          pvt;
   gp_Vec          d1u, d1v, n1, n2;
 
-  // Initialize extrema projector once for the target surface
   GeomAdaptor_Surface GAS(Sb);
   const double        TolU = GAS.UResolution(Precision::Confusion());
   const double        TolV = GAS.VResolution(Precision::Confusion());
@@ -392,7 +370,6 @@ static TopAbs_Orientation GetOrientation(const TopoDS_Face& Fn, const TopoDS_Fac
           n1.Reverse();
         }
 
-        // Projection sur Sb
         anExtPS.Perform(pvt);
         if (anExtPS.IsDone())
         {
@@ -433,8 +410,6 @@ static TopAbs_Orientation GetOrientation(const TopoDS_Face& Fn, const TopoDS_Fac
   return TopAbs_INTERNAL;
 }
 
-//=================================================================================================
-
 static bool Contains(const NCollection_List<TopoDS_Shape>& L, const TopoDS_Shape& S)
 {
   NCollection_List<TopoDS_Shape>::Iterator it;
@@ -448,15 +423,13 @@ static bool Contains(const NCollection_List<TopoDS_Shape>& L, const TopoDS_Shape
   return false;
 }
 
-//=================================================================================================
-
 void LocOpe_Gluer::AddEdges()
 {
   TopExp_Explorer exp, expsb;
   exp.Init(mySn, TopAbs_EDGE);
 
   TopLoc_Location Loc;
-  //  double l, f;
+
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> MapV, MapFPrism, MapE;
   TopExp_Explorer                                               vexp;
   int                                                           flag, i;

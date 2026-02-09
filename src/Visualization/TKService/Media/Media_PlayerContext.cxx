@@ -30,8 +30,6 @@ extern "C"
 
 IMPLEMENT_STANDARD_RTTIEXT(Media_PlayerContext, Standard_Transient)
 
-//=================================================================================================
-
 Media_PlayerContext::Media_PlayerContext(Media_IFrameQueue* theFrameQueue)
     : myFrameQueue(theFrameQueue),
       myThread(doThreadWrapper),
@@ -46,11 +44,7 @@ Media_PlayerContext::Media_PlayerContext(Media_IFrameQueue* theFrameQueue)
   myThread.Run(this);
 
 #if defined(_WIN32) && !defined(OCCT_UWP)
-  // Adjust system timer
-  // By default Windows2K+ timer has ugly precision
-  // Thus - Sleep(1) may be long 14ms!
-  // We force best available precision to make Sleep() more adequate
-  // This affect whole system while running application!
+
   TIMECAPS aTimeCaps = {0, 0};
   if (timeGetDevCaps(&aTimeCaps, sizeof(aTimeCaps)) == TIMERR_NOERROR)
   {
@@ -63,8 +57,6 @@ Media_PlayerContext::Media_PlayerContext(Media_IFrameQueue* theFrameQueue)
 #endif
 }
 
-//=================================================================================================
-
 Media_PlayerContext::~Media_PlayerContext()
 {
   myToShutDown = true;
@@ -72,7 +64,7 @@ Media_PlayerContext::~Media_PlayerContext()
   myThread.Wait();
 
 #if defined(_WIN32) && !defined(OCCT_UWP)
-  // restore timer adjustments
+
   TIMECAPS aTimeCaps = {0, 0};
   if (timeGetDevCaps(&aTimeCaps, sizeof(aTimeCaps)) == TIMERR_NOERROR)
   {
@@ -84,8 +76,6 @@ Media_PlayerContext::~Media_PlayerContext()
   }
 #endif
 }
-
-//=================================================================================================
 
 occ::handle<Media_Frame> Media_PlayerContext::DumpFirstFrame(
   const TCollection_AsciiString& theSrcVideo,
@@ -152,8 +142,6 @@ occ::handle<Media_Frame> Media_PlayerContext::DumpFirstFrame(
   return aFrame;
 }
 
-//=================================================================================================
-
 bool Media_PlayerContext::DumpFirstFrame(const TCollection_AsciiString& theSrcVideo,
                                          const TCollection_AsciiString& theOutImage,
                                          TCollection_AsciiString&       theMediaInfo,
@@ -186,8 +174,6 @@ bool Media_PlayerContext::DumpFirstFrame(const TCollection_AsciiString& theSrcVi
     return false;
   }
 
-  // Image_Format aFormat = aFrame->FormatFFmpeg2Occt (aFrame->Format());
-  // if (aFormat == Image_Format_UNKNOWN || theMaxSize > 0)
   {
     occ::handle<Media_Frame> anRgbFrame = new Media_Frame();
     anRgbFrame->InitWrapper(aPixMap);
@@ -204,8 +190,6 @@ bool Media_PlayerContext::DumpFirstFrame(const TCollection_AsciiString& theSrcVi
   aPixMap->SetTopDown(true);
   return aPixMap->Save(theOutImage);
 }
-
-//=================================================================================================
 
 void Media_PlayerContext::SetInput(const TCollection_AsciiString& theInputPath, bool theToWait)
 {
@@ -225,8 +209,6 @@ void Media_PlayerContext::SetInput(const TCollection_AsciiString& theInputPath, 
   }
 }
 
-//=================================================================================================
-
 void Media_PlayerContext::PlaybackState(bool& theIsPaused, double& theProgress, double& theDuration)
 {
   std::lock_guard<std::mutex> aLock(myMutex);
@@ -234,8 +216,6 @@ void Media_PlayerContext::PlaybackState(bool& theIsPaused, double& theProgress, 
   theProgress = myTimer.ElapsedTime();
   theDuration = myDuration;
 }
-
-//=================================================================================================
 
 void Media_PlayerContext::PlayPause(bool& theIsPaused, double& theProgress, double& theDuration)
 {
@@ -254,8 +234,6 @@ void Media_PlayerContext::PlayPause(bool& theIsPaused, double& theProgress, doub
   }
 }
 
-//=================================================================================================
-
 void Media_PlayerContext::Seek(double thePosSec)
 {
   std::lock_guard<std::mutex> aLock(myMutex);
@@ -263,15 +241,11 @@ void Media_PlayerContext::Seek(double thePosSec)
   pushPlayEvent(Media_PlayerEvent_SEEK);
 }
 
-//=================================================================================================
-
 void Media_PlayerContext::Pause()
 {
   std::lock_guard<std::mutex> aLock(myMutex);
   pushPlayEvent(Media_PlayerEvent_PAUSE);
 }
-
-//=================================================================================================
 
 void Media_PlayerContext::Resume()
 {
@@ -279,16 +253,12 @@ void Media_PlayerContext::Resume()
   pushPlayEvent(Media_PlayerEvent_RESUME);
 }
 
-//=================================================================================================
-
 void Media_PlayerContext::pushPlayEvent(Media_PlayerEvent thePlayEvent)
 {
-  // NOTE: Caller must hold myMutex lock before calling this method
+
   myPlayEvent = thePlayEvent;
   myWakeEvent.Set();
 }
-
-//=================================================================================================
 
 bool Media_PlayerContext::popPlayEvent(Media_PlayerEvent&                      thePlayEvent,
                                        const occ::handle<Media_FormatContext>& theFormatCtx,
@@ -332,13 +302,10 @@ bool Media_PlayerContext::popPlayEvent(Media_PlayerEvent&                      t
   return thePlayEvent != Media_PlayerEvent_NONE;
 }
 
-//! Returns nearest (greater or equal) aligned number.
 static int getAligned(size_t theNumber, size_t theAlignment = 32)
 {
   return int(theNumber + theAlignment - 1 - (theNumber - 1) % theAlignment);
 }
-
-//=================================================================================================
 
 bool Media_PlayerContext::receiveFrame(const occ::handle<Media_Frame>&        theFrame,
                                        const occ::handle<Media_CodecContext>& theVideoCtx)
@@ -470,13 +437,9 @@ bool Media_PlayerContext::receiveFrame(const occ::handle<Media_Frame>&        th
   return true;
 }
 
-//=================================================================================================
-
 void Media_PlayerContext::doThreadLoop()
 {
-  // always set OCCT signal handler to catch signals if any;
-  // this is safe (for thread local handler) since the thread
-  // is owned by this class
+
   OSD::SetThreadLocalSignal(OSD_SignalMode_Set, false);
 
   occ::handle<Media_Frame> aFrame;

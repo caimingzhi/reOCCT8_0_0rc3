@@ -1,6 +1,5 @@
 #ifdef _WIN32
 
-  // include windows.h first to have all definitions available
   #include <windows.h>
 
   #include "Draw_Window.hpp"
@@ -11,24 +10,15 @@
 
   #define USEDEFAULT 200
 
-/*--------------------------------------------------------*\
-|  REGISTER APPLICATION CLASS
-|  Enregistrement des classes de fenetres de l'application
-|
-\*--------------------------------------------------------*/
 BOOL RegisterAppClass(HINSTANCE theInstance)
 {
   WNDCLASSW wndClass;
 
-  // Parametres communs aux classes
-  //-----
   wndClass.style      = CS_HREDRAW | CS_VREDRAW | CS_CLASSDC;
   wndClass.cbClsExtra = 0;
   wndClass.hCursor    = LoadCursor(NULL, IDC_ARROW);
   wndClass.hInstance  = theInstance;
 
-  // Enregistrement de la fenetre principale
-  //-----
   wndClass.cbWndExtra    = sizeof(void*);
   wndClass.lpfnWndProc   = (WNDPROC)WndProc;
   wndClass.hIcon         = LoadIconW(theInstance, MAKEINTRESOURCEW(IDI_ICON1));
@@ -40,9 +30,7 @@ BOOL RegisterAppClass(HINSTANCE theInstance)
     return FALSE;
   }
 
-  // Enregistrement de la fenetre DrawWindow
-  //------
-  wndClass.cbWndExtra    = sizeof(void*); // Extra Memory
+  wndClass.cbWndExtra    = sizeof(void*);
   wndClass.lpfnWndProc   = (WNDPROC)Draw_Window::DrawProc;
   wndClass.hIcon         = 0;
   wndClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
@@ -54,8 +42,6 @@ BOOL RegisterAppClass(HINSTANCE theInstance)
     return FALSE;
   }
 
-  // Enregistrement de la fenetre CommandWindow
-  //------
   wndClass.lpfnWndProc   = (WNDPROC)CommandProc;
   wndClass.hIcon         = 0;
   wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
@@ -71,22 +57,12 @@ BOOL RegisterAppClass(HINSTANCE theInstance)
   return TRUE;
 }
 
-/*--------------------------------------------------------*\
-|  UNREGISTER APPLICATION CLASS
-|    Suppression des classes de fenetres de l'application
-|
-\*--------------------------------------------------------*/
 VOID UnregisterAppClass(HINSTANCE theInstance)
 {
   UnregisterClassW(APPCLASS, theInstance);
   UnregisterClassW(DRAWCLASS, theInstance);
 }
 
-/*--------------------------------------------------------*\
-|  CREATE APPLICATION WINDOW
-|    Creation de la fenetre Top-Level
-|
-\*--------------------------------------------------------*/
 HWND CreateAppWindow(HINSTANCE theInstance)
 {
   return CreateWindowW(APPCLASS,
@@ -102,11 +78,6 @@ HWND CreateAppWindow(HINSTANCE theInstance)
                        NULL);
 }
 
-/*--------------------------------------------------------*\
-|  CREATE MDI CLIENT WINDOW
-|    Creation de la fenetre qui contient des fenetres MDI
-|
-\*--------------------------------------------------------*/
 HWND CreateMDIClientWindow(HWND theWndFrame)
 {
   CLIENTCREATESTRUCT ccs;

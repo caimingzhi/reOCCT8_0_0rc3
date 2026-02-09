@@ -18,34 +18,26 @@
 #include <Message_Messenger.hpp>
 #include <Message_Msg.hpp>
 
-// MGE 03/08/98
-//=================================================================================================
-
 IGESSolid_ToolFace::IGESSolid_ToolFace() = default;
-
-//=================================================================================================
 
 void IGESSolid_ToolFace::ReadOwnParams(const occ::handle<IGESSolid_Face>&          ent,
                                        const occ::handle<IGESData_IGESReaderData>& IR,
                                        IGESData_ParamReader&                       PR) const
 {
-  // MGE 03/08/98
-  // Building of messages
-  //========================================
+
   Message_Msg Msg197("XSTEP_197");
   Message_Msg Msg198("XSTEP_198");
-  //========================================
 
-  bool                             outerLoopFlag; // szv#4:S4163:12Mar99 `st` moved down
-  occ::handle<IGESData_IGESEntity> anent;
-  occ::handle<IGESSolid_Loop>      aloop;
-  occ::handle<IGESData_IGESEntity> tempSurface;
-  int                              nbloops;
+  bool                                                          outerLoopFlag;
+  occ::handle<IGESData_IGESEntity>                              anent;
+  occ::handle<IGESSolid_Loop>                                   aloop;
+  occ::handle<IGESData_IGESEntity>                              tempSurface;
+  int                                                           nbloops;
   occ::handle<NCollection_HArray1<occ::handle<IGESSolid_Loop>>> tempLoops;
   IGESData_Status                                               aStatus;
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, tempSurface))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg196("XSTEP_196");
     switch (aStatus)
     {
@@ -73,25 +65,19 @@ void IGESSolid_ToolFace::ReadOwnParams(const occ::handle<IGESSolid_Face>&       
   {
     PR.SendFail(Msg197);
   }
-  /*
-    st = PR.ReadEntity(IR, PR.Current(), "Surface", tempSurface);
-    st = PR.ReadInteger(PR.Current(), "Number of loops", nbloops);
-  */
+
   if (st && nbloops > 0)
     tempLoops = new NCollection_HArray1<occ::handle<IGESSolid_Loop>>(1, nbloops);
   else
     PR.SendFail(Msg197);
 
-  PR.ReadBoolean(PR.Current(), Msg198, outerLoopFlag); // szv#4:S4163:12Mar99 `st=` not needed
-  // st = PR.ReadBoolean(PR.Current(), "Outer loop flag", outerLoopFlag);
+  PR.ReadBoolean(PR.Current(), Msg198, outerLoopFlag);
 
   if (!tempLoops.IsNull())
   {
     for (int i = 1; i <= nbloops; i++)
     {
-      // st = PR.ReadEntity(IR, PR.Current(), Msg199, STANDARD_TYPE(IGESSolid_Loop), aloop);
-      // //szv#4:S4163:12Mar99 moved in if st = PR.ReadEntity(IR, PR.Current(), "Loops",
-      // STANDARD_TYPE(IGESSolid_Loop), aloop);
+
       if (PR.ReadEntity(IR, PR.Current(), aStatus, STANDARD_TYPE(IGESSolid_Loop), aloop))
         tempLoops->SetValue(i, aloop);
       else
@@ -131,8 +117,6 @@ void IGESSolid_ToolFace::ReadOwnParams(const occ::handle<IGESSolid_Face>&       
   ent->Init(tempSurface, outerLoopFlag, tempLoops);
 }
 
-//=================================================================================================
-
 void IGESSolid_ToolFace::WriteOwnParams(const occ::handle<IGESSolid_Face>& ent,
                                         IGESData_IGESWriter&               IW) const
 {
@@ -144,8 +128,6 @@ void IGESSolid_ToolFace::WriteOwnParams(const occ::handle<IGESSolid_Face>& ent,
     IW.Send(ent->Loop(i));
 }
 
-//=================================================================================================
-
 void IGESSolid_ToolFace::OwnShared(const occ::handle<IGESSolid_Face>& ent,
                                    Interface_EntityIterator&          iter) const
 {
@@ -154,8 +136,6 @@ void IGESSolid_ToolFace::OwnShared(const occ::handle<IGESSolid_Face>& ent,
   for (int i = 1; i <= upper; i++)
     iter.GetOneItem(ent->Loop(i));
 }
-
-//=================================================================================================
 
 void IGESSolid_ToolFace::OwnCopy(const occ::handle<IGESSolid_Face>& another,
                                  const occ::handle<IGESSolid_Face>& ent,
@@ -176,10 +156,7 @@ void IGESSolid_ToolFace::OwnCopy(const occ::handle<IGESSolid_Face>& another,
   ent->Init(tempSurface, outerLoopFlag, tempLoops);
 }
 
-//=================================================================================================
-
-IGESData_DirChecker IGESSolid_ToolFace::DirChecker(
-  const occ::handle<IGESSolid_Face>& /* ent */) const
+IGESData_DirChecker IGESSolid_ToolFace::DirChecker(const occ::handle<IGESSolid_Face>&) const
 {
   IGESData_DirChecker DC(510, 1);
 
@@ -192,17 +169,10 @@ IGESData_DirChecker IGESSolid_ToolFace::DirChecker(
   return DC;
 }
 
-//=================================================================================================
-
 void IGESSolid_ToolFace::OwnCheck(const occ::handle<IGESSolid_Face>& ent,
                                   const Interface_ShareTool&,
                                   occ::handle<Interface_Check>& ach) const
 {
-  // MGE 03/08/98
-  // Building of messages
-  //========================================
-  // Message_Msg Msg197("XSTEP_197");
-  //========================================
 
   if (ent->NbLoops() <= 0)
   {
@@ -210,8 +180,6 @@ void IGESSolid_ToolFace::OwnCheck(const occ::handle<IGESSolid_Face>& ent,
     ach->SendFail(Msg197);
   }
 }
-
-//=================================================================================================
 
 void IGESSolid_ToolFace::OwnDump(const occ::handle<IGESSolid_Face>& ent,
                                  const IGESData_IGESDumper&         dumper,

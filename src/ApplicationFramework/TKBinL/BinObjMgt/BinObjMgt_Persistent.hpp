@@ -41,18 +41,11 @@ class TDF_Label;
 class Standard_GUID;
 class TDF_Data;
 
-//! Binary persistent representation of an object.
-//! Really it is used as a buffer for read/write an object.
-//!
-//! It takes care of Little/Big endian by inversing bytes
-//! in objects of standard types (see FSD_FileHeader.hpp
-//! for the default value of DO_INVERSE).
 class BinObjMgt_Persistent
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_EXPORT BinObjMgt_Persistent();
 
   Standard_EXPORT BinObjMgt_Persistent& PutCharacter(const char theValue);
@@ -83,12 +76,10 @@ public:
 
   BinObjMgt_Persistent& operator<<(const float theValue) { return PutShortReal(theValue); }
 
-  //! Offset in output buffer is not aligned
   Standard_EXPORT BinObjMgt_Persistent& PutCString(const char* theValue);
 
   BinObjMgt_Persistent& operator<<(const char* theValue) { return PutCString(theValue); }
 
-  //! Offset in output buffer is word-aligned
   Standard_EXPORT BinObjMgt_Persistent& PutAsciiString(const TCollection_AsciiString& theValue);
 
   BinObjMgt_Persistent& operator<<(const TCollection_AsciiString& theValue)
@@ -96,7 +87,6 @@ public:
     return PutAsciiString(theValue);
   }
 
-  //! Offset in output buffer is word-aligned
   Standard_EXPORT BinObjMgt_Persistent& PutExtendedString(
     const TCollection_ExtendedString& theValue);
 
@@ -113,27 +103,21 @@ public:
 
   BinObjMgt_Persistent& operator<<(const Standard_GUID& theValue) { return PutGUID(theValue); }
 
-  //! Put C array of char, theLength is the number of elements
   Standard_EXPORT BinObjMgt_Persistent& PutCharArray(const BinObjMgt_PChar theArray,
                                                      const int             theLength);
 
-  //! Put C array of unsigned chars, theLength is the number of elements
   Standard_EXPORT BinObjMgt_Persistent& PutByteArray(const BinObjMgt_PByte theArray,
                                                      const int             theLength);
 
-  //! Put C array of ExtCharacter, theLength is the number of elements
   Standard_EXPORT BinObjMgt_Persistent& PutExtCharArray(const BinObjMgt_PExtChar theArray,
                                                         const int                theLength);
 
-  //! Put C array of int, theLength is the number of elements
   Standard_EXPORT BinObjMgt_Persistent& PutIntArray(const BinObjMgt_PInteger theArray,
                                                     const int                theLength);
 
-  //! Put C array of double, theLength is the number of elements
   Standard_EXPORT BinObjMgt_Persistent& PutRealArray(const BinObjMgt_PReal theArray,
                                                      const int             theLength);
 
-  //! Put C array of float, theLength is the number of elements
   Standard_EXPORT BinObjMgt_Persistent& PutShortRealArray(const BinObjMgt_PShortReal theArray,
                                                           const int                  theLength);
 
@@ -194,153 +178,92 @@ public:
     return GetGUID(theValue);
   }
 
-  //! Get C array of char, theLength is the number of elements;
-  //! theArray must point to a
-  //! space enough to place theLength elements
   Standard_EXPORT const BinObjMgt_Persistent& GetCharArray(const BinObjMgt_PChar theArray,
                                                            const int             theLength) const;
 
-  //! Get C array of unsigned chars, theLength is the number of elements;
-  //! theArray must point to a
-  //! space enough to place theLength elements
   Standard_EXPORT const BinObjMgt_Persistent& GetByteArray(const BinObjMgt_PByte theArray,
                                                            const int             theLength) const;
 
-  //! Get C array of ExtCharacter, theLength is the number of elements;
-  //! theArray must point to a
-  //! space enough to place theLength elements
   Standard_EXPORT const BinObjMgt_Persistent& GetExtCharArray(const BinObjMgt_PExtChar theArray,
                                                               const int theLength) const;
 
-  //! Get C array of int, theLength is the number of elements;
-  //! theArray must point to a
-  //! space enough to place theLength elements
   Standard_EXPORT const BinObjMgt_Persistent& GetIntArray(const BinObjMgt_PInteger theArray,
                                                           const int                theLength) const;
 
-  //! Get C array of double, theLength is the number of elements;
-  //! theArray must point to a
-  //! space enough to place theLength elements
   Standard_EXPORT const BinObjMgt_Persistent& GetRealArray(const BinObjMgt_PReal theArray,
                                                            const int             theLength) const;
 
-  //! Get C array of float, theLength is the number of elements;
-  //! theArray must point to a
-  //! space enough to place theLength elements
   Standard_EXPORT const BinObjMgt_Persistent& GetShortRealArray(const BinObjMgt_PShortReal theArray,
                                                                 const int theLength) const;
 
-  //! Tells the current position for get/put
   int Position() const;
 
-  //! Sets the current position for get/put.
-  //! Resets an error state depending on the validity of thePos.
-  //! Returns the new state (value of IsOK())
   bool SetPosition(const int thePos) const;
 
-  //! Truncates the buffer by current position,
-  //! i.e. updates mySize
   void Truncate();
 
-  //! Indicates an error after Get methods or SetPosition
   bool IsError() const;
 
   bool operator!() const { return IsError(); }
 
-  //! Indicates a good state after Get methods or SetPosition
   bool IsOK() const;
 
   operator bool() const { return IsOK(); }
 
-  //! Initializes me to reuse again
   Standard_EXPORT void Init();
 
-  //! Sets the Id of the object
   void SetId(const int theId);
 
-  //! Sets the Id of the type of the object
   void SetTypeId(const int theId);
 
-  //! Returns the Id of the object
   int Id() const;
 
-  //! Returns the Id of the type of the object
   int TypeId() const;
 
-  //! Returns the length of data
   int Length() const;
 
-  //! Stores <me> to the stream.
-  //! inline Standard_OStream& operator<< (Standard_OStream&,
-  //! BinObjMgt_Persistent&) is also available.
-  //! If theDirectStream is true, after this data the direct stream data is stored.
   Standard_EXPORT Standard_OStream& Write(Standard_OStream& theOS,
                                           const bool        theDirectStream = false);
 
-  //! Retrieves <me> from the stream.
-  //! inline Standard_IStream& operator>> (Standard_IStream&,
-  //! BinObjMgt_Persistent&) is also available
   Standard_EXPORT Standard_IStream& Read(Standard_IStream& theIS);
 
-  //! Frees the allocated memory;
-  //! This object can be reused after call to Init
   Standard_EXPORT void Destroy();
 
   ~BinObjMgt_Persistent() { Destroy(); }
 
-  //! Sets the stream for direct writing
   Standard_EXPORT void SetOStream(Standard_OStream& theStream) { myOStream = &theStream; }
 
-  //! Sets the stream for direct reading
   Standard_EXPORT void SetIStream(Standard_IStream& theStream) { myIStream = &theStream; }
 
-  //! Gets the stream for and enables direct writing
   Standard_EXPORT Standard_OStream* GetOStream();
-  //! Gets the stream for and enables direct reading
+
   Standard_EXPORT Standard_IStream* GetIStream();
 
-  //! Returns true if after this record a direct writing to the stream is performed.
   Standard_EXPORT bool IsDirect() { return myDirectWritingIsEnabled; }
 
-  //! Returns the start position of the direct writing in the stream
   Standard_EXPORT occ::handle<BinObjMgt_Position> StreamStart() { return myStreamStart; }
 
 private:
-  //! Aligns myOffset to the given size;
-  //! enters the next piece if the end of the current one is reached;
-  //! toClear==true means to fill unused space by 0
   void alignOffset(const int theSize, const bool toClear = false) const;
 
-  //! Prepares the room for theSize bytes;
-  //! returns the number of pieces except for the current one
-  //! are to be occupied
   int prepareForPut(const int theSize);
 
-  //! Allocates theNbPieces more pieces
   Standard_EXPORT void incrementData(const int theNbPieces);
 
-  //! Checks if there is no more data of the given size starting
-  //! from the current position in myData
   bool noMoreData(const int theSize) const;
 
-  //! Puts theLength bytes from theArray
   Standard_EXPORT void putArray(void* const theArray, const int theSize);
 
-  //! Gets theLength bytes into theArray
   Standard_EXPORT void getArray(void* const theArray, const int theSize) const;
 
-  //! Inverses bytes in the data addressed by the given values
   Standard_EXPORT void inverseExtCharData(const int theIndex,
                                           const int theOffset,
                                           const int theSize);
 
-  //! Inverses bytes in the data addressed by the given values
   Standard_EXPORT void inverseIntData(const int theIndex, const int theOffset, const int theSize);
 
-  //! Inverses bytes in the data addressed by the given values
   Standard_EXPORT void inverseRealData(const int theIndex, const int theOffset, const int theSize);
 
-  //! Inverses bytes in the data addressed by the given values
   Standard_EXPORT void inverseShortRealData(const int theIndex,
                                             const int theOffset,
                                             const int theSize);
@@ -350,31 +273,20 @@ private:
   int                         myOffset;
   int                         mySize;
   bool                        myIsError;
-  Standard_OStream*           myOStream; ///< stream to write in case direct writing is enabled
-  Standard_IStream*           myIStream; ///< stream to write in case direct reading is enabled
+  Standard_OStream*           myOStream;
+  Standard_IStream*           myIStream;
   bool                        myDirectWritingIsEnabled;
-  // clang-format off
-  occ::handle<BinObjMgt_Position> myStreamStart; ///< position where the direct writing to the script is started
-  // clang-format on
+
+  occ::handle<BinObjMgt_Position> myStreamStart;
 };
 
 #define BP_HEADSIZE ((int)(3 * sizeof(int)))
 #define BP_PIECESIZE 102400
 
-//=======================================================================
-// function : SetId
-// purpose  : Sets the Id of the object
-//=======================================================================
-
 inline void BinObjMgt_Persistent::SetId(const int theId)
 {
   ((int*)myData(1))[1] = theId;
 }
-
-//=======================================================================
-// function : SetTypeId
-// purpose  : Sets the Id of the type of the object
-//=======================================================================
 
 inline void BinObjMgt_Persistent::SetTypeId(const int theTypeId)
 {
@@ -382,72 +294,35 @@ inline void BinObjMgt_Persistent::SetTypeId(const int theTypeId)
   myStreamStart.Nullify();
 }
 
-//=======================================================================
-// function : Id
-// purpose  : Returns the Id of the object
-//=======================================================================
-
 inline int BinObjMgt_Persistent::Id() const
 {
   return ((int*)myData(1))[1];
 }
-
-//=======================================================================
-// function : TypeId
-// purpose  : Returns the Id of the type of the object
-//=======================================================================
 
 inline int BinObjMgt_Persistent::TypeId() const
 {
   return ((int*)myData(1))[0];
 }
 
-//=======================================================================
-// function : Length
-// purpose  : Returns the length of data
-//=======================================================================
-
 inline int BinObjMgt_Persistent::Length() const
 {
   return mySize - BP_HEADSIZE;
 }
-
-//=======================================================================
-// function : operator <<
-// purpose  :
-//=======================================================================
 
 inline Standard_OStream& operator<<(Standard_OStream& theOS, BinObjMgt_Persistent& theObj)
 {
   return theObj.Write(theOS);
 }
 
-//=======================================================================
-// function : operator >>
-// purpose  :
-//=======================================================================
-
 inline Standard_IStream& operator>>(Standard_IStream& theIS, BinObjMgt_Persistent& theObj)
 {
   return theObj.Read(theIS);
 }
 
-//=======================================================================
-// function : Position
-// purpose  : Tells the current position for get/put
-//=======================================================================
-
 inline int BinObjMgt_Persistent::Position() const
 {
   return (myIndex - 1) * BP_PIECESIZE + myOffset;
 }
-
-//=======================================================================
-// function : SetPosition
-// purpose  : Sets the current position for get/put.
-//           Resets an error state depending on the validity of thePos.
-//           Returns the new state (value of IsOK())
-//=======================================================================
 
 inline bool BinObjMgt_Persistent::SetPosition(const int thePos) const
 {
@@ -457,43 +332,20 @@ inline bool BinObjMgt_Persistent::SetPosition(const int thePos) const
   return !myIsError;
 }
 
-//=======================================================================
-// function : Truncate
-// purpose  : Truncates the buffer by current position,
-//           i.e. updates mySize
-//=======================================================================
-
 inline void BinObjMgt_Persistent::Truncate()
 {
   mySize = Position();
 }
-
-//=======================================================================
-// function : IsError
-// purpose  : Indicates an error after Get methods or SetPosition
-//=======================================================================
 
 inline bool BinObjMgt_Persistent::IsError() const
 {
   return myIsError;
 }
 
-//=======================================================================
-// function : IsOK
-// purpose  : Indicates a good state after Get methods or SetPosition
-//=======================================================================
-
 inline bool BinObjMgt_Persistent::IsOK() const
 {
   return !myIsError;
 }
-
-//=======================================================================
-// function : alignOffset
-// purpose  : Aligns myOffset to the given size;
-//           enters the next piece if the end of the current one is reached;
-//           toClear==true means to fill unused space by 0
-//=======================================================================
 
 inline void BinObjMgt_Persistent::alignOffset(const int theSize, const bool toClear) const
 {
@@ -507,7 +359,6 @@ inline void BinObjMgt_Persistent::alignOffset(const int theSize, const bool toCl
     ((BinObjMgt_Persistent*)this)->myOffset = anOffset;
   }
 
-  // ensure there is a room for at least one item in the current piece
   if (myOffset >= BP_PIECESIZE)
   {
     ((BinObjMgt_Persistent*)this)->myIndex++;
@@ -515,19 +366,12 @@ inline void BinObjMgt_Persistent::alignOffset(const int theSize, const bool toCl
   }
 }
 
-//=======================================================================
-// function : prepareForPut
-// purpose  : Prepares the room for theSize bytes;
-//           returns the number of pieces except for the current one
-//           are to be occupied
-//=======================================================================
-
 inline int BinObjMgt_Persistent::prepareForPut(const int theSize)
 {
   int nbPieces = (myOffset + theSize - 1) / BP_PIECESIZE;
   int nbToAdd  = myIndex + nbPieces - myData.Length();
   if (nbToAdd > 0)
-    // create needed pieces
+
     incrementData(nbToAdd);
   int aNewPosition = Position() + theSize;
   if (aNewPosition > mySize)
@@ -535,30 +379,20 @@ inline int BinObjMgt_Persistent::prepareForPut(const int theSize)
   return nbPieces;
 }
 
-//=======================================================================
-// function : noMoreData
-// purpose  : Checks if there is no more data of the given size starting
-//           from the current position in myData
-//=======================================================================
-
 inline bool BinObjMgt_Persistent::noMoreData(const int theSize) const
 {
   ((BinObjMgt_Persistent*)this)->myIsError = Position() + theSize > mySize;
   return myIsError;
 }
 
-//=================================================================================================
-
 inline BinObjMgt_Persistent& BinObjMgt_Persistent::PutBoolean(const bool theValue)
 {
   return PutInteger((int)theValue);
 }
 
-//=================================================================================================
-
 inline const BinObjMgt_Persistent& BinObjMgt_Persistent::GetBoolean(bool& theValue) const
 {
-  //  int anIntVal = (int) theValue;
+
   int anIntVal;
   GetInteger(anIntVal);
   theValue = anIntVal != 0;

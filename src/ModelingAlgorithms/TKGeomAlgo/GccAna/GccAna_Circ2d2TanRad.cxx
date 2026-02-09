@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ElCLib.hpp>
 #include <GccAna_Circ2d2TanRad.hpp>
@@ -26,19 +14,6 @@
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
 
-// circular tangent to two cercles and given radius
-//====================================================
-//==================================================================
-// Initialize WellDone to false.                                   +
-// Return circle C1 and circle C2.                                 +
-// Leave with error if the construction is impossible.             +
-// Distinguish boundary cases to process them separately.          +
-// Create parallel to C1 in the proper direction.                  +
-// Create parallel to C2 in the proper direction.                  +
-// Intersect parallels ==> center point of the solution.           +
-// Create the solution to be added to already found solutions.     +
-// Fill the fields.                                                +
-//==================================================================
 GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified1,
                                            const GccEnt_QualifiedCirc& Qualified2,
                                            const double                Radius,
@@ -98,7 +73,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     dist = (center2).Distance(center1);
     if ((Qualified1.IsEnclosed()) && Qualified2.IsEnclosed())
     {
-      //   =========================================================
+
       if (Radius * 2.0 - std::abs(R1 + R2 - dist) > Tol)
       {
         WellDone = true;
@@ -133,7 +108,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
           }
           gp_Ax2d axe(gp_Pnt2d(center2.XY() - rbid * dir1.XY()), dirx);
           cirsol(1) = gp_Circ2d(axe, Radius);
-          //         =================================
+
           qualifier1(1) = Qualified1.Qualifier();
           qualifier2(1) = Qualified2.Qualifier();
           pnttg1sol(1)  = gp_Pnt2d(center2.XY() + signe * R2 * dir1.XY());
@@ -152,10 +127,10 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       }
     }
     else if (((Qualified1.IsEnclosed()) && Qualified2.IsEnclosing()) ||
-             //   ===================================================================
+
              ((Qualified1.IsEnclosing()) && Qualified2.IsEnclosed()))
     {
-      //            ========================================================
+
       if (Qualified1.IsEnclosing())
       {
         R3      = R1;
@@ -167,7 +142,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
         center1 = center2;
         center2 = center3;
         dir1.Reverse();
-        // it is necessary to swap the resulting tangency points
+
         invers = true;
       }
       if ((R2 - Radius > Tol) || (Tol < Radius - R1) || (Tol > R1 - dist - R2)
@@ -197,7 +172,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
         NbrSol   = 1;
         gp_Ax2d axe(C(2).Location(), dirx);
         cirsol(1) = gp_Circ2d(axe, Radius);
-        //       =================================
+
         qualifier1(1) = Qualified1.Qualifier();
         qualifier2(1) = Qualified2.Qualifier();
       }
@@ -217,7 +192,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
           NbrSol   = 1;
           gp_Ax2d axe(gp_Pnt2d(center1.XY() + signe * (R1 - Radius) * dir1.XY()), dirx);
           cirsol(1) = gp_Circ2d(axe, Radius);
-          //         =================================
+
           qualifier1(1) = Qualified1.Qualifier();
           qualifier2(1) = Qualified2.Qualifier();
           pnttg1sol(1)  = gp_Pnt2d(center1.XY() + signe * R1 * dir1.XY());
@@ -234,10 +209,10 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       }
     }
     else if (((Qualified1.IsEnclosed()) && (Qualified2.IsOutside())) ||
-             //   ===================================================================
+
              ((Qualified1.IsOutside()) && (Qualified2.IsEnclosed())))
     {
-      //            ========================================================
+
       if (Qualified1.IsOutside())
       {
         C(2)    = gp_Circ2d(C1);
@@ -249,7 +224,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
         center1 = center2;
         center2 = center3;
         dir1.Reverse();
-        // it is necessary to swap the resulting tangency points
+
         invers = true;
       }
       if ((Radius - R1 > Tol) || (dist - R2 - R1 > Tol)
@@ -288,7 +263,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
           NbrSol   = 1;
           gp_Ax2d axe(gp_Pnt2d(center1.XY() + signe * (R1 - Radius) * dir1.XY()), dirx);
           cirsol(1) = gp_Circ2d(axe, Radius);
-          //         =================================
+
           qualifier1(1) = Qualified1.Qualifier();
           qualifier2(1) = Qualified2.Qualifier();
           pnttg1sol(1)  = gp_Pnt2d(center1.XY() + signe * R1 * dir1.XY());
@@ -305,10 +280,10 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       }
     }
     else if (((Qualified1.IsEnclosed()) && (Qualified2.IsUnqualified())) ||
-             //   =======================================================================
+
              ((Qualified1.IsUnqualified()) && (Qualified2.IsEnclosed())))
     {
-      //            ============================================================
+
       if (Qualified1.IsUnqualified())
       {
         C(1)    = gp_Circ2d(C2);
@@ -320,7 +295,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
         center1 = center2;
         center2 = center3;
         dir1.Reverse();
-        // it is necessary to swap the resulting tangency points
+
         invers = true;
       }
       if ((Radius - R1 > Tol) || (dist - R2 - R1 > Tol))
@@ -335,7 +310,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
           NbrSol   = 1;
           gp_Ax2d ax(gp_Pnt2d(center1.XY() + (R1 - Radius) * dir1.XY()), dirx);
           cirsol(1) = gp_Circ2d(ax, Radius);
-          //         ================================
+
           qualifier1(1) = Qualified1.Qualifier();
           qualifier2(1) = Qualified2.Qualifier();
           pnttg2sol(1)  = gp_Pnt2d(center1.XY() + (dist - R2) * dir1.XY());
@@ -362,7 +337,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if ((Qualified1.IsEnclosing()) && (Qualified2.IsEnclosing()))
     {
-      //   ==================================================================
+
       if ((Tol < std::max(R1, R2) - Radius) || (Tol < std::max(R1, R2) - dist - std::min(R1, R2))
           || (dist + R1 + R2 - Radius * 2.0 > Tol))
       {
@@ -385,7 +360,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
           NbrSol   = 1;
           gp_Ax2d axe(gp_Pnt2d(center1.XY() + signe * (R1 - Radius) * dir1.XY()), dirx);
           cirsol(1) = gp_Circ2d(axe, Radius);
-          //         =================================
+
           qualifier1(1) = Qualified1.Qualifier();
           qualifier2(1) = Qualified2.Qualifier();
           pnttg1sol(1)  = gp_Pnt2d(center1.XY() + R1 * dir1.XY());
@@ -415,7 +390,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
           }
           gp_Ax2d axe(C(1).Location(), dirx);
           cirsol(1) = gp_Circ2d(axe, Radius);
-          //         =================================
+
           qualifier1(1) = Qualified1.Qualifier();
           qualifier2(1) = Qualified2.Qualifier();
         }
@@ -428,10 +403,10 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       }
     }
     else if (((Qualified1.IsEnclosing()) && (Qualified2.IsOutside())) ||
-             //   ====================================================================
+
              ((Qualified1.IsOutside()) && (Qualified2.IsEnclosing())))
     {
-      //            =========================================================
+
       if (Qualified1.IsOutside())
       {
         C(1)    = gp_Circ2d(C2);
@@ -443,7 +418,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
         center1 = center2;
         center2 = center3;
         dir1.Reverse();
-        // it is necessary to swap the resulting tangency points
+
         invers = true;
       }
       if ((R1 - Radius > Tol) || (Tol < R1 + R2 - dist) || (dist - R2 + R1 - Radius * 2.0 > Tol))
@@ -466,7 +441,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
         TheSame2(1) = 0;
         gp_Ax2d axe(gp_Pnt2d(center1.XY() + (R1 - Radius) * dir1.XY()), dirx);
         cirsol(1) = gp_Circ2d(axe, Radius);
-        //       =================================
+
         qualifier1(1) = Qualified1.Qualifier();
         qualifier2(1) = Qualified2.Qualifier();
         pnttg1sol(1)  = gp_Pnt2d(center1.XY() - R1 * dir1.XY());
@@ -480,10 +455,10 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       }
     }
     else if (((Qualified1.IsEnclosing()) && (Qualified2.IsUnqualified())) ||
-             //   ========================================================================
+
              ((Qualified1.IsUnqualified()) && (Qualified2.IsEnclosing())))
     {
-      //            =============================================================
+
       if (Qualified1.IsUnqualified())
       {
         C(1)    = gp_Circ2d(C2);
@@ -520,7 +495,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
         NbrSol   = 1;
         gp_Ax2d axe(gp_Pnt2d(center1.XY() + (Radius - R1) * dir1.XY()), dirx);
         cirsol(1) = gp_Circ2d(axe, Radius);
-        //       =================================
+
         qualifier1(1) = Qualified1.Qualifier();
         qualifier2(1) = Qualified2.Qualifier();
         pnttg1sol(1)  = gp_Pnt2d(center1.XY() + R1 * dir1.XY());
@@ -537,7 +512,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if ((Qualified1.IsOutside()) && (Qualified2.IsOutside()))
     {
-      //   ==============================================================
+
       if (Tol < std::max(R1, R2) - dist - std::min(R1, R2))
       {
         WellDone = true;
@@ -562,7 +537,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
           }
           gp_Ax2d axe(gp_Pnt2d(center1.XY() + signe * (Radius + R1) * dir1.XY()), dirx);
           cirsol(1) = gp_Circ2d(axe, Radius);
-          //         =================================
+
           qualifier1(1) = Qualified1.Qualifier();
           qualifier2(1) = Qualified2.Qualifier();
           pnttg1sol(1)  = gp_Pnt2d(center1.XY() + signe * R1 * dir1.XY());
@@ -576,7 +551,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
           NbrSol   = 1;
           gp_Ax2d ax(gp_Pnt2d(center1.XY() + (R1 + Radius) * dir1.XY()), dirx);
           cirsol(1) = gp_Circ2d(ax, Radius);
-          //         ================================
+
           qualifier1(1) = Qualified1.Qualifier();
           qualifier2(1) = Qualified2.Qualifier();
           pnttg1sol(1)  = gp_Pnt2d(center1.XY() + R1 * dir1.XY());
@@ -593,10 +568,10 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       }
     }
     else if (((Qualified1.IsOutside()) && (Qualified2.IsUnqualified())) ||
-             //   ======================================================================
+
              ((Qualified1.IsUnqualified()) && (Qualified2.IsOutside())))
     {
-      //            ===========================================================
+
       if (Qualified1.IsUnqualified())
       {
         C(1)    = gp_Circ2d(C2);
@@ -608,7 +583,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
         center1 = center2;
         center2 = center3;
         dir1.Reverse();
-        // it is necessary to swap the resulting tangency points
+
         invers = true;
       }
       if (Tol < R1 - dist - R2)
@@ -635,7 +610,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
           NbrSol   = 1;
           gp_Ax2d axe(gp_Pnt2d(center1.XY() + (Radius + R1) * dir1.XY()), dirx);
           cirsol(1) = gp_Circ2d(axe, Radius);
-          //         =================================
+
           qualifier1(1) = Qualified1.Qualifier();
           qualifier2(1) = Qualified2.Qualifier();
           pnttg1sol(1)  = gp_Pnt2d(center1.XY() + R1 * dir1.XY());
@@ -655,7 +630,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if ((Qualified1.IsUnqualified()) && (Qualified2.IsUnqualified()))
     {
-      //   ======================================================================
+
       if ((dist - R1 - R2 > Tol) && (Tol < (dist - R1 - R2 - Radius * 2)))
       {
         WellDone = true;
@@ -703,7 +678,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
               NbrSol++;
               gp_Pnt2d Center(Intp.Point(i).Value());
               cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-              //             =======================================================
+
               dir1 = gp_Dir2d(Center.XY() - center1.XY());
               gp_Dir2d dir2(Center.XY() - center2.XY());
               double   distcc1 = Center.Distance(center1);
@@ -773,7 +748,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       }
     }
   }
-  // swapping of resulting tangency points if necessary
+
   if (invers)
   {
     gp_Pnt2d Psav;
@@ -784,7 +759,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       pnttg2sol(i) = Psav;
     }
   }
-  // calculation of parameters of tangency points
+
   for (int i = 1; i <= NbrSol; i++)
   {
     par1sol(i) = ElCLib::Parameter(cirsol(i), pnttg1sol(i));

@@ -11,76 +11,25 @@
 #include <Convert_ParameterisationType.hpp>
 class gp_Pnt2d;
 
-//! Root class for algorithms which convert a conic curve into
-//! a BSpline curve (CircleToBSplineCurve, EllipseToBSplineCurve,
-//! HyperbolaToBSplineCurve, ParabolaToBSplineCurve).
-//! These algorithms all work on 2D curves from the gp
-//! package and compute all the data needed to construct a
-//! BSpline curve equivalent to the conic curve. This data consists of:
-//! -   the degree of the curve,
-//! -   the periodic characteristics of the curve,
-//! -   a poles table with associated weights,
-//! -   a knots table with associated multiplicities.
-//! The abstract class ConicToBSplineCurve provides a
-//! framework for storing and consulting this computed data.
-//! The data may then be used to construct a
-//! Geom2d_BSplineCurve curvSuper class of the following classes :
-//! This abstract class implements the methods to get the geometric
-//! representation of the B-spline curve equivalent to the conic.
-//! The B-spline is computed at the creation time in the sub classes.
-//! The B-spline curve is defined with its degree, its control points
-//! (Poles), its weights, its knots and their multiplicity.
-//! All the geometric entities used in this package are defined in 2D
-//! space.
-//! KeyWords :
-//! Convert, Conic, BSplineCurve, 2D.
 class Convert_ConicToBSplineCurve
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Returns the degree of the BSpline curve whose data is
-  //! computed in this framework.
   Standard_EXPORT int Degree() const;
 
-  //! Returns the number of poles of the BSpline curve whose
-  //! data is computed in this framework.
   Standard_EXPORT int NbPoles() const;
 
-  //! Returns the number of knots of the BSpline curve whose
-  //! data is computed in this framework.
   Standard_EXPORT int NbKnots() const;
 
-  //! Returns true if the BSpline curve whose data is computed in
-  //! this framework is periodic.
   Standard_EXPORT bool IsPeriodic() const;
 
-  //! Returns the pole of index Index to the poles table of the
-  //! BSpline curve whose data is computed in this framework.
-  //! Exceptions
-  //! Standard_OutOfRange if Index is outside the bounds of
-  //! the poles table of the BSpline curve whose data is computed in this framework.
   Standard_EXPORT gp_Pnt2d Pole(const int Index) const;
 
-  //! Returns the weight of the pole of index Index to the poles
-  //! table of the BSpline curve whose data is computed in this framework.
-  //! Exceptions
-  //! Standard_OutOfRange if Index is outside the bounds of
-  //! the poles table of the BSpline curve whose data is computed in this framework.
   Standard_EXPORT double Weight(const int Index) const;
 
-  //! Returns the knot of index Index to the knots table of the
-  //! BSpline curve whose data is computed in this framework.
-  //! Exceptions
-  //! Standard_OutOfRange if Index is outside the bounds of
-  //! the knots table of the BSpline curve whose data is computed in this framework.
   Standard_EXPORT double Knot(const int Index) const;
 
-  //! Returns the multiplicity of the knot of index Index to the
-  //! knots table of the BSpline curve whose data is computed in this framework.
-  //! Exceptions
-  //! Standard_OutOfRange if Index is outside the bounds of
-  //! the knots table of the BSpline curve whose data is computed in this framework.
   Standard_EXPORT int Multiplicity(const int Index) const;
 
   Standard_EXPORT void BuildCosAndSin(const Convert_ParameterisationType        Parametrisation,

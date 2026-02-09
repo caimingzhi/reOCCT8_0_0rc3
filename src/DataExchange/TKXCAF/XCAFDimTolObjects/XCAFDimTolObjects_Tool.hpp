@@ -25,19 +25,14 @@ public:
 
   Standard_EXPORT XCAFDimTolObjects_Tool(const occ::handle<TDocStd_Document>& theDoc);
 
-  //! Returns a sequence of Dimensions currently stored
-  //! in the GD&T table
   Standard_EXPORT void GetDimensions(
     NCollection_Sequence<occ::handle<XCAFDimTolObjects_DimensionObject>>&
       theDimensionObjectSequence) const;
 
-  //! Returns all Dimensions defined for Shape
   Standard_EXPORT bool GetRefDimensions(
     const TopoDS_Shape&                                                   theShape,
     NCollection_Sequence<occ::handle<XCAFDimTolObjects_DimensionObject>>& theDimensions) const;
 
-  //! Returns a sequence of Tolerances currently stored
-  //! in the GD&T table
   Standard_EXPORT void GetGeomTolerances(
     NCollection_Sequence<occ::handle<XCAFDimTolObjects_GeomToleranceObject>>&
       theGeomToleranceObjectSequence,
@@ -45,7 +40,6 @@ public:
     NCollection_DataMap<occ::handle<XCAFDimTolObjects_GeomToleranceObject>,
                         occ::handle<XCAFDimTolObjects_DatumObject>>&  theMap) const;
 
-  //! Returns all GeomTolerances defined for Shape
   Standard_EXPORT bool GetRefGeomTolerances(
     const TopoDS_Shape& theShape,
     NCollection_Sequence<occ::handle<XCAFDimTolObjects_GeomToleranceObject>>&
@@ -54,7 +48,6 @@ public:
     NCollection_DataMap<occ::handle<XCAFDimTolObjects_GeomToleranceObject>,
                         occ::handle<XCAFDimTolObjects_DatumObject>>&  theMap) const;
 
-  //! Returns DatumObject defined for Shape
   Standard_EXPORT bool GetRefDatum(const TopoDS_Shape&                         theShape,
                                    occ::handle<XCAFDimTolObjects_DatumObject>& theDatum) const;
 

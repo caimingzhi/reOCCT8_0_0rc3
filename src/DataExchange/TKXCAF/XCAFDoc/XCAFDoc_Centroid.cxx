@@ -9,19 +9,13 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDoc_Centroid, TDF_Attribute)
 
-//=================================================================================================
-
 XCAFDoc_Centroid::XCAFDoc_Centroid() = default;
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc_Centroid::GetID()
 {
   static Standard_GUID CentroidID("efd212f3-6dfd-11d4-b9c8-0060b0ee281b");
   return CentroidID;
 }
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_Centroid> XCAFDoc_Centroid::Set(const TDF_Label& L, const gp_Pnt& pnt)
 {
@@ -35,22 +29,16 @@ occ::handle<XCAFDoc_Centroid> XCAFDoc_Centroid::Set(const TDF_Label& L, const gp
   return A;
 }
 
-//=================================================================================================
-
 void XCAFDoc_Centroid::Set(const gp_Pnt& pnt)
 {
   Backup();
   myCentroid = pnt;
 }
 
-//=================================================================================================
-
 gp_Pnt XCAFDoc_Centroid::Get() const
 {
   return myCentroid;
 }
-
-//=================================================================================================
 
 bool XCAFDoc_Centroid::Get(const TDF_Label& label, gp_Pnt& pnt)
 {
@@ -62,36 +50,26 @@ bool XCAFDoc_Centroid::Get(const TDF_Label& label, gp_Pnt& pnt)
   return true;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_Centroid::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 void XCAFDoc_Centroid::Restore(const occ::handle<TDF_Attribute>& With)
 {
   myCentroid = occ::down_cast<XCAFDoc_Centroid>(With)->Get();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XCAFDoc_Centroid::NewEmpty() const
 {
   return new XCAFDoc_Centroid();
 }
 
-//=================================================================================================
-
 void XCAFDoc_Centroid::Paste(const occ::handle<TDF_Attribute>& Into,
-                             const occ::handle<TDF_RelocationTable>& /* RT */) const
+                             const occ::handle<TDF_RelocationTable>&) const
 {
   occ::down_cast<XCAFDoc_Centroid>(Into)->Set(myCentroid);
 }
-
-//=================================================================================================
 
 Standard_OStream& XCAFDoc_Centroid::Dump(Standard_OStream& anOS) const
 {
@@ -101,8 +79,6 @@ Standard_OStream& XCAFDoc_Centroid::Dump(Standard_OStream& anOS) const
   anOS << myCentroid.Z() << ")";
   return anOS;
 }
-
-//=================================================================================================
 
 void XCAFDoc_Centroid::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

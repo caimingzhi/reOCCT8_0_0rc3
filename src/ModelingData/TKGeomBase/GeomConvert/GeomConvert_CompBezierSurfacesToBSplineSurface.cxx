@@ -13,14 +13,13 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-// ============================================================================
 GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesToBSplineSurface(
   const NCollection_Array2<occ::handle<Geom_BezierSurface>>& Beziers)
-// ============================================================================
+
 {
   int ii;
   myDone = true;
-  // Choix des noeuds
+
   myUKnots = new (NCollection_HArray1<double>)(1, Beziers.ColLength() + 1);
   for (ii = 0; ii < myUKnots->Length(); ii++)
   {
@@ -33,16 +32,14 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
     myVKnots->SetValue(ii + 1, ii);
   }
 
-  // Calcul des Poles
   Perform(Beziers);
 }
 
-// ============================================================================
 GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesToBSplineSurface(
   const NCollection_Array2<occ::handle<Geom_BezierSurface>>& Beziers,
   const double                                               Tolerance,
   const bool                                                 RemoveKnots)
-// ============================================================================
+
 {
   int                     ii, jj, multU = 0, multV, minus;
   bool                    Ok;
@@ -53,12 +50,9 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
 
   myDone = true;
 
-  // Choix des noeuds
-
   myUKnots = new (NCollection_HArray1<double>)(1, Beziers.ColLength() + 1);
   myVKnots = new (NCollection_HArray1<double>)(1, Beziers.RowLength() + 1);
 
-  // --> en U
   myUKnots->SetValue(1, 0);
   jj         = myVKnots->Length() / 2;
   FirstCurve = Beziers(1, jj)->VIso(0.3);
@@ -70,7 +64,7 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
   myUKnots->SetValue(2, L1);
 
   V1 = vec.Magnitude();
-  // if the parameterization is too strange we keep the pseudo-length
+
   if ((V1 > 1000 * L1) || (V1 < L1 * 1.e-3))
     V1 = L1;
 
@@ -85,7 +79,6 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
     V3 = vec.Magnitude();
     L2 = P1.Distance(P2) + P2.Distance(P3);
 
-    // On calcul le ratio, en evitant les cas tordus...
     if ((V2 > 1000 * L2) || (V2 < L2 * 1.e-3))
       V2 = L2;
     if ((V3 > 1000 * L2) || (V3 < L2 * 1.e-3))
@@ -101,17 +94,14 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
       Ratio = 1;
     }
 
-    // On en deduit un  nouveau noeud
     val = myUKnots->Value(ii);
     myUKnots->SetValue(ii + 1, val + Ratio * (val - myUKnots->Value(ii - 1)));
 
-    // Et c'est reparti, pour un tour
     L1         = L2;
     V1         = V3;
     FirstCurve = SecondCurve;
   }
 
-  // --> en V
   myVKnots->SetValue(1, 0);
   ii         = myUKnots->Length() / 2;
   FirstCurve = Beziers(ii, 1)->UIso(0.3);
@@ -123,7 +113,7 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
   myVKnots->SetValue(2, L1);
 
   V1 = vec.Magnitude();
-  // if the parameterization is too strange we keep the pseudo-length
+
   if ((V1 > 1000 * L1) || (V1 < L1 * 1.e-3))
     V1 = L1;
 
@@ -138,7 +128,6 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
     V3 = vec.Magnitude();
     L2 = P1.Distance(P2) + P2.Distance(P3);
 
-    // On calcul le ratio, en evitant les cas tordus...
     if ((V2 > 1000 * L2) || (V2 < L2 * 1.e-3))
       V2 = L2;
     if ((V3 > 1000 * L2) || (V3 < L2 * 1.e-3))
@@ -154,20 +143,16 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
       Ratio = 1;
     }
 
-    // On en deduit un  nouveau noeud
     val = myVKnots->Value(jj);
     myVKnots->SetValue(jj + 1, val + Ratio * (val - myVKnots->Value(jj - 1)));
 
-    // Et c'est reparti, pour un tour
     L1         = L2;
     V1         = V3;
     FirstCurve = SecondCurve;
   }
 
-  // Calcul des Poles
   Perform(Beziers);
 
-  // Reduction de la multiplicite
   occ::handle<Geom_BSplineSurface> Surface = new (Geom_BSplineSurface)(myPoles->Array2(),
                                                                        myUKnots->Array1(),
                                                                        myVKnots->Array1(),
@@ -203,7 +188,6 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
     }
   }
 
-  // Les nouveaux champs sont arrivees ....
   myPoles = new (NCollection_HArray2<gp_Pnt>)(1, Surface->NbUPoles(), 1, Surface->NbVPoles());
   Surface->Poles(myPoles->ChangeArray2());
 
@@ -218,7 +202,6 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
   Surface->VKnots(myVKnots->ChangeArray1());
 }
 
-// ============================================================================
 GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesToBSplineSurface(
   const NCollection_Array2<occ::handle<Geom_BezierSurface>>& Beziers,
   const NCollection_Array1<double>&                          UKnots,
@@ -226,24 +209,20 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
   const GeomAbs_Shape                                        UContinuity,
   const GeomAbs_Shape                                        VContinuity,
   const double                                               Tolerance)
-// ============================================================================
+
 {
   int  decu = 0, decv = 0;
   bool Ok;
 
   myDone = true;
 
-  // Recuperation des noeuds
   myUKnots                 = new (NCollection_HArray1<double>)(1, Beziers.ColLength() + 1);
   myUKnots->ChangeArray1() = UKnots;
 
   myVKnots                 = new (NCollection_HArray1<double>)(1, Beziers.RowLength() + 1);
   myVKnots->ChangeArray1() = VKnots;
 
-  // Calcul des Poles
   Perform(Beziers);
-
-  // Obtention des bonne continuitee
 
   switch (UContinuity)
   {
@@ -327,7 +306,6 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
       }
     }
 
-    // Les nouveaux champs sont arrivees ....
     myPoles = new (NCollection_HArray2<gp_Pnt>)(1, Surface->NbUPoles(), 1, Surface->NbVPoles());
     Surface->Poles(myPoles->ChangeArray2());
     Surface->UMultiplicities(myUMults->ChangeArray1());
@@ -335,14 +313,12 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
   }
 }
 
-// ================================================================================
 void GeomConvert_CompBezierSurfacesToBSplineSurface::Perform(
   const NCollection_Array2<occ::handle<Geom_BezierSurface>>& Beziers)
-// ================================================================================
+
 {
   int IU, IV;
 
-  // (1) Determination des degrees et si le resultat est rationnel.
   isrational = false;
   myUDegree  = 1;
   myVDegree  = 1;
@@ -364,8 +340,6 @@ void GeomConvert_CompBezierSurfacesToBSplineSurface::Perform(
 
   Standard_NotImplemented_Raise_if(isrational, "CompBezierSurfacesToBSpl : rational !");
 
-  // (2) Boucle sur les carreaux  -----------------------------
-
   occ::handle<Geom_BezierSurface> Patch;
   int                             UIndex, VIndex, uindex, vindex, udeb, vdeb;
   int                             upol, vpol, ii;
@@ -385,10 +359,8 @@ void GeomConvert_CompBezierSurfacesToBSplineSurface::Perform(
       Patch  = Beziers(IU, IV);
       VIndex = (IV - 1) * myVDegree + 1;
 
-      // (2.1) Augmentation du degree
       Patch->Increase(myUDegree, myVDegree);
 
-      // (2.2) Poles a recopier
       if (IU == 1)
       {
         udeb = 1;
@@ -417,7 +389,6 @@ void GeomConvert_CompBezierSurfacesToBSplineSurface::Perform(
         }
       }
 
-      // (2.3) Poles a sommer
       if (udeb == 2)
       {
         vindex = VIndex + vdeb - 1;
@@ -443,12 +414,6 @@ void GeomConvert_CompBezierSurfacesToBSplineSurface::Perform(
     }
   }
 
-  // (3) Elimination of redundancies
-  // because in the previous loop we count:
-  // - 2 times the poles associated with simple knots
-  // - 4 times the poles associated with double knots (in U and V)
-
-  // (3.1) Elimination in U
   for (UIndex = myUDegree + 1, ii = 2; ii < myUKnots->Length(); ii++, UIndex += myUDegree)
   {
     for (vpol = 1; vpol <= myPoles->UpperCol(); vpol++)
@@ -457,7 +422,6 @@ void GeomConvert_CompBezierSurfacesToBSplineSurface::Perform(
     }
   }
 
-  // (3.2) Elimination en V
   for (VIndex = myVDegree + 1, ii = 2; ii < myVKnots->Length(); ii++, VIndex += myVDegree)
   {
     for (upol = 1; upol <= myPoles->UpperRow(); upol++)
@@ -466,7 +430,6 @@ void GeomConvert_CompBezierSurfacesToBSplineSurface::Perform(
     }
   }
 
-  // (4) Init des multiplicites
   myUMults = new (NCollection_HArray1<int>)(1, myUKnots->Length());
   myUMults->Init(myUDegree);
   myUMults->SetValue(1, myUDegree + 1);
@@ -478,9 +441,8 @@ void GeomConvert_CompBezierSurfacesToBSplineSurface::Perform(
   myVMults->SetValue(myVMults->Upper(), myVDegree + 1);
 }
 
-// ========================================================================
 bool GeomConvert_CompBezierSurfacesToBSplineSurface::IsDone() const
-// ========================================================================
+
 {
   return myDone;
 }

@@ -14,17 +14,15 @@
 
 static int RemoveFeatures(Draw_Interpretor&, int, const char**);
 
-//=================================================================================================
-
 void BOPTest::RemoveFeaturesCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
   if (done)
     return;
   done = true;
-  // Chapter's name
+
   const char* group = "BOPTest commands";
-  // Commands
+
   theCommands.Add("removefeatures",
                   "removefeatures result shape f1 f2 ... [-parallel]\n"
                   "\t\tRemoves user-defined features (faces) from the shape.\n"
@@ -37,8 +35,6 @@ void BOPTest::RemoveFeaturesCommands(Draw_Interpretor& theCommands)
                   group);
 }
 
-//=================================================================================================
-
 int RemoveFeatures(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
   if (theArgc < 4)
@@ -47,7 +43,6 @@ int RemoveFeatures(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     return 1;
   }
 
-  // Get the shape to remove the features from
   TopoDS_Shape aShape = DBRep::Get(theArgv[2]);
   if (aShape.IsNull())
   {
@@ -58,7 +53,6 @@ int RemoveFeatures(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   BRepAlgoAPI_Defeaturing aRF;
   aRF.SetShape(aShape);
 
-  // Add faces to remove
   for (int i = 3; i < theArgc; ++i)
   {
     TopoDS_Shape aF = DBRep::Get(theArgv[i]);
@@ -66,7 +60,7 @@ int RemoveFeatures(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     {
       if (!strcmp(theArgv[i], "-parallel"))
       {
-        // enable the parallel processing mode
+
         aRF.SetRunParallel(true);
       }
       else
@@ -80,10 +74,9 @@ int RemoveFeatures(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 
   aRF.SetToFillHistory(BRepTest_Objects::IsHistoryNeeded());
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(theDI, 1);
-  // Perform the removal
+
   aRF.Build(aProgress->Start());
 
-  // Check for the errors/warnings
   BOPTest::ReportAlerts(aRF.GetReport());
 
   if (BRepTest_Objects::IsHistoryNeeded())

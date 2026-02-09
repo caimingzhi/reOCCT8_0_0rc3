@@ -12,7 +12,6 @@ class StepBasic_SiUnitAndLengthUnit : public StepBasic_SiUnit
 {
 
 public:
-  //! Returns a SiUnitAndLengthUnit
   Standard_EXPORT StepBasic_SiUnitAndLengthUnit();
 
   Standard_EXPORT void Init(const bool                 hasAprefix,

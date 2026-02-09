@@ -14,14 +14,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeCustom_TrsfModification, BRepTools_TrsfModification)
 
-//=================================================================================================
-
 ShapeCustom_TrsfModification::ShapeCustom_TrsfModification(const gp_Trsf& T)
     : BRepTools_TrsfModification(T)
 {
 }
-
-//=================================================================================================
 
 bool ShapeCustom_TrsfModification::NewSurface(const TopoDS_Face&         F,
                                               occ::handle<Geom_Surface>& S,
@@ -35,8 +31,6 @@ bool ShapeCustom_TrsfModification::NewSurface(const TopoDS_Face&         F,
   return result;
 }
 
-//=================================================================================================
-
 bool ShapeCustom_TrsfModification::NewCurve(const TopoDS_Edge&       E,
                                             occ::handle<Geom_Curve>& C,
                                             TopLoc_Location&         L,
@@ -47,16 +41,12 @@ bool ShapeCustom_TrsfModification::NewCurve(const TopoDS_Edge&       E,
   return result;
 }
 
-//=================================================================================================
-
 bool ShapeCustom_TrsfModification::NewPoint(const TopoDS_Vertex& V, gp_Pnt& P, double& Tol)
 {
   bool result = BRepTools_TrsfModification::NewPoint(V, P, Tol);
   Tol = (*((occ::handle<BRep_TVertex>*)&V.TShape()))->Tolerance() * std::abs(Trsf().ScaleFactor());
   return result;
 }
-
-//=================================================================================================
 
 bool ShapeCustom_TrsfModification::NewCurve2d(const TopoDS_Edge&         E,
                                               const TopoDS_Face&         F,
@@ -69,8 +59,6 @@ bool ShapeCustom_TrsfModification::NewCurve2d(const TopoDS_Edge&         E,
   Tol = (*((occ::handle<BRep_TEdge>*)&E.TShape()))->Tolerance() * std::abs(Trsf().ScaleFactor());
   return result;
 }
-
-//=================================================================================================
 
 bool ShapeCustom_TrsfModification::NewParameter(const TopoDS_Vertex& V,
                                                 const TopoDS_Edge&   E,

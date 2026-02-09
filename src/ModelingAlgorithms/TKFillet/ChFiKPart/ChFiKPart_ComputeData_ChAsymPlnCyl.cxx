@@ -28,24 +28,6 @@
 #include <Precision.hpp>
 #include <TopOpeBRepDS_DataStructure.hpp>
 
-// pour tester
-//=======================================================================
-// function : MakeChAsym
-// purpose  : Compute the chamfer in the particular case Plane/Cylinder
-//            or Cylinder/Plane
-//            Compute the SurfData <Data> of the chamfer build on the <Spine>
-//            between the plane <Pln> and the cylinder <Cyl>, with the
-//            distances <Dis> and <Angle> on <Pln> on <Cyl>.
-//            <Or1> and <Or2> are the orientations of <Pln> and <Cyl>
-//            and <Ofpl> this of the face carried by <Pln>.
-//            <First> is the start point on the <Spine>
-//            <Plandab> is equal to True if the plane is the surface S1
-//            <fu> and <lu> are the first and last u parameters of the
-//            cylinder
-//            DisOnPlan is equal to True if Dis on plan, else False
-// out      : True if the chanfer has been computed
-//            False else
-//=======================================================================
 bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
                           const occ::handle<ChFiDS_SurfData>& Data,
                           const gp_Pln&                       Pln,
@@ -62,9 +44,7 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
                           const bool                          plandab,
                           const bool                          DisOnP)
 {
-  // compute the chamfer surface(cone)
 
-  // compute the normals to the plane surface & to the plane face
   gp_Ax3 PosPl = Pln.Position();
   gp_Dir Dpl   = PosPl.XDirection().Crossed(PosPl.YDirection());
   gp_Dir norf  = Dpl;
@@ -73,25 +53,23 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
   if (Or1 == TopAbs_REVERSED)
     Dpl.Reverse();
 
-  // compute the origin Or of the cone
   gp_Pnt Or = Cyl.Location();
   double u, v;
   ElSLib::PlaneParameters(PosPl, Or, u, v);
   gp_Pnt2d pt2dPln(u, v);
   ElSLib::PlaneD0(u, v, PosPl, Or);
-  gp_Pnt PtPl = Or; // projection of the cylinder origin
-                    // on the plane
+  gp_Pnt PtPl = Or;
 
-  gp_Pnt PtSp; // start 3d point on the Spine
-  gp_Vec DSp;  // tangent vector to the spine on PtSp
+  gp_Pnt PtSp;
+  gp_Vec DSp;
   ElCLib::D1(First, Spine, PtSp, DSp);
   gp_Dir Dx(gp_Vec(Or, PtSp));
   gp_Dir Dy(DSp);
   ElSLib::Parameters(Cyl, PtSp, u, v);
-  gp_Pnt PtCyl; // point on the cylinder and on the Spine
+  gp_Pnt PtCyl;
   gp_Vec Vu, Vv;
   ElSLib::D1(u, v, Cyl, PtCyl, Vu, Vv);
-  gp_Dir Dcyl(Vu.Crossed(Vv)); // normal to the cylinder in PtSp
+  gp_Dir Dcyl(Vu.Crossed(Vv));
   if (Or2 == TopAbs_REVERSED)
     Dcyl.Reverse();
   bool dedans = (Dcyl.Dot(Dx) <= 0.);
@@ -99,7 +77,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
   bool   pointu = false;
   double ConRad, Rad, SemiAngl;
 
-  // Calculation of distance
   double dis1, dis2, cosNPCyl, sinNPCyl;
 
   if ((plandab && DisOnP) || (!plandab && !DisOnP))
@@ -119,14 +96,12 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
 
   Or.SetCoord(Or.X() + dis2 * Dpl.X(), Or.Y() + dis2 * Dpl.Y(), Or.Z() + dis2 * Dpl.Z());
 
-  // variables used to compute the semiangle of the cone
   gp_Dir Vec1(Or.X() - PtPl.X(), Or.Y() - PtPl.Y(), Or.Z() - PtPl.Z());
   gp_Pnt Pt(Or.X() + dis1 * PosPl.XDirection().X(),
             Or.Y() + dis1 * PosPl.XDirection().Y(),
             Or.Z() + dis1 * PosPl.XDirection().Z());
   gp_Dir Vec2(Pt.X() - PtPl.X(), Pt.Y() - PtPl.Y(), Pt.Z() - PtPl.Z());
 
-  // compute the parameters of the conical surface
   if (dedans)
   {
     Rad = Cyl.Radius() - dis1;
@@ -152,17 +127,13 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
 
   occ::handle<Geom_ConicalSurface> gcon = new Geom_ConicalSurface(ConAx3, SemiAngl, ConRad);
 
-  // changes due to the fact the parameters of the chamfer must go increasing
-  // from surface S1 to surface S2
   if ((dedans && !plandab) || (!dedans && plandab))
   {
-    gcon->VReverse(); // be careful : the SemiAngle was changed
+    gcon->VReverse();
     ConAx3   = gcon->Position();
     SemiAngl = gcon->SemiAngle();
   }
 
-  // changes due to the fact we have reversed the V direction of
-  // parametrization
   if (ConAx3.YDirection().Dot(DSp) <= 0.)
   {
     ConAx3.YReverse();
@@ -171,10 +142,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
 
   Data->ChangeSurf(ChFiKPart_IndexSurfaceInDS(gcon, DStr));
 
-  // compute the chamfer's orientation according to the orientation
-  // of the faces
-
-  // search the normal to the cone
   gp_Vec deru, derv;
   ElSLib::ConeD1(0., 0., ConAx3, ConRad, SemiAngl, Pt, deru, derv);
 
@@ -190,12 +157,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
     Data->ChangeOrientation() = TopAbs_FORWARD;
   }
 
-  // we load of the faceInterference with the pcurves and
-  //  the 3d curves
-
-  // Case of the plane face
-  // NB: in the case 'pointu', no pcurve on the plane surface
-  // and no intersection plane-chamfer are needed
   occ::handle<Geom2d_Circle> GCir2dPln;
   occ::handle<Geom_Circle>   GCirPln;
   gp_Ax2                     CirAx2 = ConAx3.Ax2();
@@ -203,11 +164,10 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
 
   if (!pointu)
   {
-    // intersection plane-chamfer
+
     gp_Circ CirPln(CirAx2, Rad);
     GCirPln = new Geom_Circle(CirPln);
 
-    // pcurve on the plane
     ElSLib::PlaneParameters(PosPl, Pt, u, v);
     gp_Pnt2d  p2dPln(u, v);
     gp_Dir2d  d2d(DSp.Dot(PosPl.XDirection()), DSp.Dot(PosPl.YDirection()));
@@ -216,7 +176,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
     GCir2dPln = new Geom2d_Circle(cir2dPln);
   }
 
-  // pcurve on the chamfer
   gp_Pnt2d p2dch;
   if (plandab)
     v = -sqrt(dis1 * dis1 + dis2 * dis2);
@@ -227,7 +186,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
   gp_Lin2d                 lin2dch(p2dch, gp::DX2d());
   occ::handle<Geom2d_Line> GLin2dCh1 = new Geom2d_Line(lin2dch);
 
-  // orientation
   TopAbs_Orientation trans;
   gp_Dir             norpl = PosPl.XDirection().Crossed(PosPl.YDirection());
   toreverse                = (norCon.Dot(norpl) <= 0.);
@@ -255,20 +213,15 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
                                                    GLin2dCh1);
   }
 
-  // Case of the cylindrical face
-
-  // intersection cylinder-chamfer
   CirAx2.SetLocation(Or);
   gp_Circ                  CirCyl(CirAx2, ConRad);
   occ::handle<Geom_Circle> GCirCyl = new Geom_Circle(CirCyl);
 
-  // pcurve on the chamfer
   p2dch.SetCoord(0., 0.);
   ElSLib::ConeD1(0., 0., ConAx3, ConRad, SemiAngl, Pt, deru, derv);
   lin2dch.SetLocation(p2dch);
   occ::handle<Geom2d_Line> GLin2dCh2 = new Geom2d_Line(lin2dch);
 
-  // pcurve on the cylinder
   norCon.SetXYZ(deru.Crossed(derv).XYZ());
 
   Pt.SetCoord(Or.X() + ConRad * Dx.X(), Or.Y() + ConRad * Dx.Y(), Or.Z() + ConRad * Dx.Z());
@@ -299,7 +252,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
   gp_Lin2d                 lin2dCyl(p2dCyl, d2dCyl);
   occ::handle<Geom2d_Line> GLin2dCyl = new Geom2d_Line(lin2dCyl);
 
-  // orientation
   toreverse = (norCon.Dot(norcyl) <= 0.);
   if ((toreverse && plandab) || (!toreverse && !plandab))
   {
@@ -328,17 +280,12 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
   return true;
 }
 
-//=======================================================================
-// function : MakeChAsym
-// purpose  : case cylinder/plane or plane/cylinder.
-//=======================================================================
-
 bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
                           const occ::handle<ChFiDS_SurfData>& Data,
                           const gp_Pln&                       Pln,
                           const gp_Cylinder&                  Cyl,
-                          const double /*fu*/,
-                          const double /*lu*/,
+                          const double,
+                          const double,
                           const TopAbs_Orientation Or1,
                           const TopAbs_Orientation Or2,
                           const double             Dis,
@@ -349,11 +296,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
                           const bool               plandab,
                           const bool               DisOnP)
 {
-  // calculation of the fillet plane.
-  // or1 and or2 permit to determine in which of four sides created by
-  // intersection of 2 surfaces we are
-  //        _|_          Ofpl is orientation of the plane face allowing
-  //         |4          to determine the side of the material
 
   gp_Pnt OrSpine = ElCLib::Value(First, Spine);
   gp_Pnt POnCyl, POnPln, OrCyl;
@@ -368,15 +310,13 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
   }
 
   gp_Ax3 AxCyl = Cyl.Position();
-  // OrCyl is the point on axis of cylinder in the plane normal to the
-  // axis containing OrSpine
+
   gp_Pnt Loc = AxCyl.Location();
   gp_Vec LocSp(Loc, OrSpine);
   gp_XYZ temp = AxCyl.Direction().XYZ();
   temp        = temp.Multiplied(LocSp.XYZ().Multiplied(temp));
   OrCyl.SetXYZ((Loc.XYZ()).Added(temp));
 
-  // construction of POnPln
   gp_Vec VecTranslPln, tmp;
 
   tmp = gp_Vec(OrSpine, OrCyl);
@@ -394,7 +334,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
   gp_Vec VecTranslCyl;
   VecTranslCyl = gp_Vec(OrSpine, OrCyl);
 
-  // Calculation of distances dis1 and dis2, depending on Dis and Angle
   gp_Vec DirSOrC = VecTranslCyl.Normalized();
   double cosA1   = DirSOrC.Dot(VecTranslPln.Normalized());
   double sinA1   = std::sqrt(1. - cosA1 * cosA1);
@@ -436,7 +375,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
     dis2 = Dis;
   }
 
-  // construction of POnCyl
   double alpha   = (2 * std::asin(dis2 * 0.5 / ray));
   gp_Vec VecTemp = VecTranslCyl.Reversed();
 
@@ -455,7 +393,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
   ElSLib::Parameters(Cyl, POnCyl, UOnCyl, VOnCyl);
   ElSLib::CylinderD1(UOnCyl, VOnCyl, AxCyl, Cyl.Radius(), POnCyl, DUOnCyl, DVOnCyl);
 
-  // Construction of the point on the plane
   if (!IsDisOnP)
   {
     gp_Vec Corde(POnCyl, OrSpine);
@@ -484,11 +421,9 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
 
   POnPln.SetXYZ((OrSpine.XYZ()).Added(VecTranslPln.XYZ()));
 
-  // construction of the chamfer
   ElSLib::Parameters(Pln, POnPln, UOnPln, VOnPln);
   POnPln = ElSLib::PlaneValue(UOnPln, VOnPln, AxPln);
 
-  // construction of YDir to go from face1 to face2.
   gp_Vec YDir(POnPln, POnCyl);
   if (!plandab)
   {
@@ -499,8 +434,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
   occ::handle<Geom_Plane> Chamfer = new Geom_Plane(AxCh);
   Data->ChangeSurf(ChFiKPart_IndexSurfaceInDS(Chamfer, DStr));
 
-  // FaceInterferences are loaded with pcurves and curves 3d.
-  //----------- edge plan-Chamfer
   gp_Pnt2d PPln2d(UOnPln, VOnPln);
   gp_Dir2d VPln2d(XDir.Dot(AxPln.XDirection()), XDir.Dot(AxPln.YDirection()));
   gp_Lin2d Lin2dPln(PPln2d, VPln2d);
@@ -524,7 +457,7 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
 
   if (!IsDisOnP && PosChamfPln)
     toreverse = !toreverse;
-  // It is checked if the orientation of the Chamfer is the same as of the plane
+
   if (toreverse)
   {
     Data->ChangeOrientation() = TopAbs::Reverse(Ofpl);
@@ -540,7 +473,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
     trans = TopAbs_REVERSED;
   }
 
-  // trans allows to determine the "material" side on S1(2) limited by L3d
   if (plandab)
   {
     Data->ChangeInterferenceOnS1().SetInterference(ChFiKPart_IndexCurveInDS(L3d, DStr),
@@ -556,7 +488,6 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
                                                    LFil);
   }
 
-  //------------edge cylindre-Chamfer
   gp_Pnt2d PCyl2d(UOnCyl, VOnCyl);
   gp_Dir2d VCyl2d = gp::DY2d();
   if (XDir.Dot(AxCyl.Direction()) < 0)

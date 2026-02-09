@@ -23,107 +23,58 @@ class HLRBRep_SLProps
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Initializes the local properties of the surface <S>
-  //! for the parameter values (<U>, <V>).
-  //! The current point and the derivatives are
-  //! computed at the same time, which allows an
-  //! optimization of the computation time.
-  //! <N> indicates the maximum number of derivations to
-  //! be done (0, 1, or 2). For example, to compute
-  //! only the tangent, N should be equal to 1.
-  //! <Resolution> is the linear tolerance (it is used to test
-  //! if a vector is null).
   Standard_EXPORT HLRBRep_SLProps(const HLRBRep_SurfacePtr& S,
                                   const double              U,
                                   const double              V,
                                   const int                 N,
                                   const double              Resolution);
 
-  //! idem as previous constructor but without setting the value
-  //! of parameters <U> and <V>.
   Standard_EXPORT HLRBRep_SLProps(const HLRBRep_SurfacePtr& S,
                                   const int                 N,
                                   const double              Resolution);
 
-  //! idem as previous constructor but without setting the value
-  //! of parameters <U> and <V> and the surface.
-  //! the surface can have an empty constructor.
   Standard_EXPORT HLRBRep_SLProps(const int N, const double Resolution);
 
-  //! Initializes the local properties of the surface S
-  //! for the new surface.
   Standard_EXPORT void SetSurface(const HLRBRep_SurfacePtr& S);
 
-  //! Initializes the local properties of the surface S
-  //! for the new parameter values (<U>, <V>).
   Standard_EXPORT void SetParameters(const double U, const double V);
 
-  //! Returns the point.
   Standard_EXPORT const gp_Pnt& Value() const;
 
-  //! Returns the first U derivative.
-  //! The derivative is computed if it has not been yet.
   Standard_EXPORT const gp_Vec& D1U();
 
-  //! Returns the first V derivative.
-  //! The derivative is computed if it has not been yet.
   Standard_EXPORT const gp_Vec& D1V();
 
-  //! Returns the second U derivatives
-  //! The derivative is computed if it has not been yet.
   Standard_EXPORT const gp_Vec& D2U();
 
-  //! Returns the second V derivative.
-  //! The derivative is computed if it has not been yet.
   Standard_EXPORT const gp_Vec& D2V();
 
-  //! Returns the second UV cross-derivative.
-  //! The derivative is computed if it has not been yet.
   Standard_EXPORT const gp_Vec& DUV();
 
-  //! returns True if the U tangent is defined.
-  //! For example, the tangent is not defined if the
-  //! two first U derivatives are null.
   Standard_EXPORT bool IsTangentUDefined();
 
-  //! Returns the tangent direction <D> on the iso-V.
   Standard_EXPORT void TangentU(gp_Dir& D);
 
-  //! returns if the V tangent is defined.
-  //! For example, the tangent is not defined if the
-  //! two first V derivatives are null.
   Standard_EXPORT bool IsTangentVDefined();
 
-  //! Returns the tangent direction <D> on the iso-V.
   Standard_EXPORT void TangentV(gp_Dir& D);
 
-  //! Tells if the normal is defined.
   Standard_EXPORT bool IsNormalDefined();
 
-  //! Returns the normal direction.
   Standard_EXPORT const gp_Dir& Normal();
 
-  //! returns True if the curvature is defined.
   Standard_EXPORT bool IsCurvatureDefined();
 
-  //! returns True if the point is umbilic (i.e. if the
-  //! curvature is constant).
   Standard_EXPORT bool IsUmbilic();
 
-  //! Returns the maximum curvature
   Standard_EXPORT double MaxCurvature();
 
-  //! Returns the minimum curvature
   Standard_EXPORT double MinCurvature();
 
-  //! Returns the direction of the maximum and minimum curvature
-  //! <MaxD> and <MinD>
   Standard_EXPORT void CurvatureDirections(gp_Dir& MaxD, gp_Dir& MinD);
 
-  //! Returns the mean curvature.
   Standard_EXPORT double MeanCurvature();
 
-  //! Returns the Gaussian curvature
   Standard_EXPORT double GaussianCurvature();
 
 private:

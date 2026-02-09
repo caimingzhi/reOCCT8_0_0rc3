@@ -11,7 +11,6 @@ class StepShape_SweptAreaSolid;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SweptAreaSolid
 class RWStepShape_RWSweptAreaSolid
 {
 public:

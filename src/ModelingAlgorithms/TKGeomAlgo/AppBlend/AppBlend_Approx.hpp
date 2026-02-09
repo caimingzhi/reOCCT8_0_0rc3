@@ -11,7 +11,6 @@
 #include <Standard_Integer.hpp>
 #include <gp_Pnt2d.hpp>
 
-//! Bspline approximation of a surface.
 class AppBlend_Approx
 {
 public:

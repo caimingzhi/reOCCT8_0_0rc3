@@ -3,15 +3,11 @@
 #include <Precision.hpp>
 #include <TopExp_Explorer.hpp>
 
-//=================================================================================================
-
 BRepExtrema_SelfIntersection::BRepExtrema_SelfIntersection(const double theTolerance)
     : myTolerance(theTolerance)
 {
   myIsInit = false;
 }
-
-//=================================================================================================
 
 BRepExtrema_SelfIntersection::BRepExtrema_SelfIntersection(const TopoDS_Shape& theShape,
                                                            const double        theTolerance)
@@ -19,8 +15,6 @@ BRepExtrema_SelfIntersection::BRepExtrema_SelfIntersection(const TopoDS_Shape& t
 {
   LoadShape(theShape);
 }
-
-//=================================================================================================
 
 bool BRepExtrema_SelfIntersection::LoadShape(const TopoDS_Shape& theShape)
 {
@@ -50,10 +44,7 @@ bool BRepExtrema_SelfIntersection::LoadShape(const TopoDS_Shape& theShape)
 
 namespace
 {
-  // =======================================================================
-  // function : ccw
-  // purpose  : Check if triple is in counterclockwise order
-  // =======================================================================
+
   bool ccw(const BVH_Vec3d& theVertex0,
            const BVH_Vec3d& theVertex1,
            const BVH_Vec3d& theVertex2,
@@ -68,10 +59,6 @@ namespace
     return aSum < 0.0;
   }
 
-  // =======================================================================
-  // function : rayInsideAngle
-  // purpose  : Check the given ray is inside the angle
-  // =======================================================================
   bool rayInsideAngle(const BVH_Vec3d& theDirec,
                       const BVH_Vec3d& theEdge0,
                       const BVH_Vec3d& theEdge1,
@@ -83,8 +70,6 @@ namespace
     return ccw(ZERO_VEC, theEdge0, theDirec, theX, theY) == aCCW
            && ccw(ZERO_VEC, theDirec, theEdge1, theX, theY) == aCCW;
   }
-
-  //=================================================================================================
 
   void getProjectionAxes(const BVH_Vec3d& theNorm, int& theAxisX, int& theAxisY)
   {
@@ -100,8 +85,6 @@ namespace
     }
   }
 } // namespace
-
-//=================================================================================================
 
 BRepExtrema_ElementFilter::FilterResult BRepExtrema_SelfIntersection::isRegularSharedVertex(
   const BVH_Vec3d& theSharedVert,
@@ -124,7 +107,7 @@ BRepExtrema_ElementFilter::FilterResult BRepExtrema_SelfIntersection::isRegularS
   int anX;
   int anY;
 
-  if (aCrossLine.SquareModulus() < Precision::SquareConfusion()) // coplanar case
+  if (aCrossLine.SquareModulus() < Precision::SquareConfusion())
   {
     getProjectionAxes(aTrng0Normal, anX, anY);
 
@@ -138,7 +121,7 @@ BRepExtrema_ElementFilter::FilterResult BRepExtrema_SelfIntersection::isRegularS
 
     return BRepExtrema_ElementFilter::NoCheck;
   }
-  else // shared line should lie outside at least one triangle
+  else
   {
     getProjectionAxes(aTrng0Normal, anX, anY);
 
@@ -174,8 +157,6 @@ BRepExtrema_ElementFilter::FilterResult BRepExtrema_SelfIntersection::isRegularS
   }
 }
 
-//=================================================================================================
-
 BRepExtrema_ElementFilter::FilterResult BRepExtrema_SelfIntersection::isRegularSharedEdge(
   const BVH_Vec3d& theTrng0Vtxs0,
   const BVH_Vec3d& theTrng0Vtxs1,
@@ -192,7 +173,7 @@ BRepExtrema_ElementFilter::FilterResult BRepExtrema_SelfIntersection::isRegularS
 
   BVH_Vec3d aCrossLine = BVH_Vec3d::Cross(aTrng0Normal, aTrng1Normal);
 
-  if (aCrossLine.SquareModulus() > Precision::SquareConfusion()) // non-coplanar case
+  if (aCrossLine.SquareModulus() > Precision::SquareConfusion())
   {
     return BRepExtrema_ElementFilter::NoCheck;
   }
@@ -208,15 +189,13 @@ BRepExtrema_ElementFilter::FilterResult BRepExtrema_SelfIntersection::isRegularS
            : BRepExtrema_ElementFilter::Overlap;
 }
 
-//=================================================================================================
-
 BRepExtrema_ElementFilter::FilterResult BRepExtrema_SelfIntersection::PreCheckElements(
   const int theIndex1,
   const int theIndex2)
 {
   if (myElementSet->GetFaceID(theIndex1) == myElementSet->GetFaceID(theIndex2))
   {
-    return BRepExtrema_ElementFilter::NoCheck; // triangles are from the same face
+    return BRepExtrema_ElementFilter::NoCheck;
   }
 
   BVH_Vec3d aTrng0Vtxs[3];
@@ -237,19 +216,19 @@ BRepExtrema_ElementFilter::FilterResult BRepExtrema_SelfIntersection::PreCheckEl
       {
         aSharedVtxs.push_back(std::pair<int, int>(aVertIdx1, aVertIdx2));
 
-        break; // go to next vertex of the 1st triangle
+        break;
       }
     }
   }
 
-  if (aSharedVtxs.size() == 2) // check shared edge
+  if (aSharedVtxs.size() == 2)
   {
     return isRegularSharedEdge(aTrng0Vtxs[aSharedVtxs[0].first],
                                aTrng0Vtxs[aSharedVtxs[1].first],
                                aTrng0Vtxs[3 - aSharedVtxs[0].first - aSharedVtxs[1].first],
                                aTrng1Vtxs[3 - aSharedVtxs[0].second - aSharedVtxs[1].second]);
   }
-  else if (aSharedVtxs.size() == 1) // check shared vertex
+  else if (aSharedVtxs.size() == 1)
   {
     std::swap(*aTrng0Vtxs, aTrng0Vtxs[aSharedVtxs.front().first]);
     std::swap(*aTrng1Vtxs, aTrng1Vtxs[aSharedVtxs.front().second]);
@@ -263,8 +242,6 @@ BRepExtrema_ElementFilter::FilterResult BRepExtrema_SelfIntersection::PreCheckEl
 
   return BRepExtrema_ElementFilter::DoCheck;
 }
-
-//=================================================================================================
 
 void BRepExtrema_SelfIntersection::Perform()
 {

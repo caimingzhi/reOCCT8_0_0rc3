@@ -17,8 +17,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AdvApp2Var_Patch, Standard_Transient)
 
-//=================================================================================================
-
 AdvApp2Var_Patch::AdvApp2Var_Patch()
     : myU0(0.),
       myU1(1.),
@@ -35,8 +33,6 @@ AdvApp2Var_Patch::AdvApp2Var_Patch()
       myCritValue(0.)
 {
 }
-
-//=================================================================================================
 
 AdvApp2Var_Patch::AdvApp2Var_Patch(const double U0,
                                    const double U1,
@@ -60,27 +56,21 @@ AdvApp2Var_Patch::AdvApp2Var_Patch(const double U0,
 {
 }
 
-//=================================================================================================
-
 bool AdvApp2Var_Patch::IsDiscretised() const
 {
   return myDiscIsDone;
 }
-
-//=================================================================================================
 
 void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions,
                                   const AdvApp2Var_Framework&         Constraints,
                                   const AdvApp2Var_EvaluatorFunc2Var& Func)
 {
 
-  // data stored in the Context
   int NDIMEN, ISOFAV;
   NDIMEN = Conditions.TotalDimension();
-  // Attention : works only for 3D
+
   ISOFAV = Conditions.FavorIso();
 
-  // data related to the patch to be discretized
   int                                      NBPNTU, NBPNTV;
   int                                      IORDRU = myOrdInU, IORDRV = myOrdInV;
   occ::handle<NCollection_HArray1<double>> HUROOT = Conditions.URoots();
@@ -96,8 +86,6 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
   if (myOrdInV > -1)
     NBPNTV -= 2;
 
-  // data stored in the Framework Constraints cad Nodes and Isos
-  // C1, C2, C3 and C4 are dimensionnes in FORTRAN with (NDIMEN,IORDRU+2,IORDRV+2)
   int                                      SIZE   = NDIMEN * (IORDRU + 2) * (IORDRV + 2);
   occ::handle<NCollection_HArray1<double>> HCOINS = new NCollection_HArray1<double>(1, SIZE * 4);
   HCOINS->Init(0.);
@@ -109,10 +97,9 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
   {
     for (iv = 0; iv <= myOrdInV; iv++)
     {
-      // factor of normalization
+
       rho = pow(du, iu) * pow(dv, iv);
 
-      // F(U0,V0) and its derivatives normalized on (-1,1)
       valnorm = rho * ((Constraints.Node(myU0, myV0))->Point(iu, iv)).X();
       HCOINS->SetValue(1 + NDIMEN * iu + NDIMEN * (IORDRU + 2) * iv, valnorm);
       valnorm = rho * ((Constraints.Node(myU0, myV0))->Point(iu, iv)).Y();
@@ -120,7 +107,6 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
       valnorm = rho * ((Constraints.Node(myU0, myV0))->Point(iu, iv)).Z();
       HCOINS->SetValue(3 + NDIMEN * iu + NDIMEN * (IORDRU + 2) * iv, valnorm);
 
-      // F(U1,V0) and its derivatives normalized on (-1,1)
       valnorm = rho * ((Constraints.Node(myU1, myV0))->Point(iu, iv)).X();
       HCOINS->SetValue(SIZE + 1 + NDIMEN * iu + NDIMEN * (IORDRU + 2) * iv, valnorm);
       valnorm = rho * ((Constraints.Node(myU1, myV0))->Point(iu, iv)).Y();
@@ -128,7 +114,6 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
       valnorm = rho * ((Constraints.Node(myU1, myV0))->Point(iu, iv)).Z();
       HCOINS->SetValue(SIZE + 3 + NDIMEN * iu + NDIMEN * (IORDRU + 2) * iv, valnorm);
 
-      // F(U0,V1) and its derivatives normalized on (-1,1)
       valnorm = rho * ((Constraints.Node(myU0, myV1))->Point(iu, iv)).X();
       HCOINS->SetValue(2 * SIZE + 1 + NDIMEN * iu + NDIMEN * (IORDRU + 2) * iv, valnorm);
       valnorm = rho * ((Constraints.Node(myU0, myV1))->Point(iu, iv)).Y();
@@ -136,7 +121,6 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
       valnorm = rho * ((Constraints.Node(myU0, myV1))->Point(iu, iv)).Z();
       HCOINS->SetValue(2 * SIZE + 3 + NDIMEN * iu + NDIMEN * (IORDRU + 2) * iv, valnorm);
 
-      // F(U1,V1) and its derivatives normalized on (-1,1)
       valnorm = rho * ((Constraints.Node(myU1, myV1))->Point(iu, iv)).X();
       HCOINS->SetValue(3 * SIZE + 1 + NDIMEN * iu + NDIMEN * (IORDRU + 2) * iv, valnorm);
       valnorm = rho * ((Constraints.Node(myU1, myV1))->Point(iu, iv)).Y();
@@ -149,10 +133,6 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
   double* C2 = C1 + SIZE;
   double* C3 = C2 + SIZE;
   double* C4 = C3 + SIZE;
-
-  // tables SomTab and Diftab of discretization of isos U=U0 and U=U1
-  // SU0, SU1, DU0 and DU1 are dimensioned in FORTRAN to
-  // (1+NBPNTV/2)*NDIMEN*(IORDRU+1)
 
   SIZE = (1 + NBPNTV / 2) * NDIMEN;
 
@@ -172,7 +152,6 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
     new NCollection_HArray1<double>(1, SIZE * (IORDRU + 1));
   HDU1->ChangeArray1() = ((Constraints.IsoU(myU1, myV0, myV1)).DifTab())->Array1();
 
-  // normalization
   int ideb1, ideb2, ideb3, ideb4, jj;
   for (iu = 1; iu <= IORDRU; iu++)
   {
@@ -195,10 +174,6 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
   double* SU1 = (double*)&HSU1->ChangeArray1()(HSU1->Lower());
   double* DU1 = (double*)&HDU1->ChangeArray1()(HDU1->Lower());
 
-  // tables SomTab and Diftab of discretization of isos V=V0 and V=V1
-  // SU0, SU1, DU0 and DU1 are dimensioned in FORTRAN at
-  // (1+NBPNTU/2)*NDIMEN*(IORDRV+1)
-
   SIZE = (1 + NBPNTU / 2) * NDIMEN;
 
   occ::handle<NCollection_HArray1<double>> HSV0 =
@@ -217,7 +192,6 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
     new NCollection_HArray1<double>(1, SIZE * (IORDRV + 1));
   HDV1->ChangeArray1() = ((Constraints.IsoV(myU0, myU1, myV1)).DifTab())->Array1();
 
-  // normalisation
   for (iv = 1; iv <= IORDRV; iv++)
   {
     rho   = pow(dv, iv);
@@ -239,9 +213,6 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
   double* SV1 = (double*)&HSV1->ChangeArray1()(HSV1->Lower());
   double* DV1 = (double*)&HDV1->ChangeArray1()(HDV1->Lower());
 
-  // SOSOTB and DIDITB are dimensioned in FORTRAN at
-  // (0:NBPNTU/2,0:NBPNTV/2,NDIMEN)
-
   SIZE = (1 + NBPNTU / 2) * (1 + NBPNTV / 2) * NDIMEN;
 
   occ::handle<NCollection_HArray1<double>> HSOSO  = new NCollection_HArray1<double>(1, SIZE);
@@ -250,9 +221,6 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
   occ::handle<NCollection_HArray1<double>> HDIDI  = new NCollection_HArray1<double>(1, SIZE);
   double*                                  DIDITB = (double*)&HDIDI->ChangeArray1()(HDIDI->Lower());
   HDIDI->Init(0.);
-
-  // SODITB and DISOTB are dimensioned in FORTRAN at
-  // (1:NBPNTU/2,1:NBPNTV/2,NDIMEN)
 
   SIZE = (NBPNTU / 2) * (NBPNTV / 2) * NDIMEN;
 
@@ -265,7 +233,6 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
 
   int IERCOD = 0;
 
-  //  discretization of polynoms of interpolation
   AdvApp2Var_ApproxF2var::mma2cdi_(&NDIMEN,
                                    &NBPNTU,
                                    UROOT,
@@ -291,7 +258,6 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
                                    DIDITB,
                                    &IERCOD);
 
-  //  discretization of the square
   double UDBFN[2], VDBFN[2];
   UDBFN[0] = myU0;
   UDBFN[1] = myU1;
@@ -306,13 +272,10 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
     new NCollection_HArray1<double>(1, SIZE * NDIMEN);
   double* PTS = (double*)&HPOINTS->ChangeArray1()(HPOINTS->Lower());
 
-  // GCC 3.0 would not accept this line without the void
-  // pointer cast.  Perhaps the real problem is a definition
-  // somewhere that has a void * in it.
   AdvApp2Var_ApproxF2var::mma2ds1_(&NDIMEN,
                                    UDBFN,
                                    VDBFN,
-                                   /*(void *)*/ Func,
+                                   Func,
                                    &NBPNTU,
                                    &NBPNTV,
                                    UROOT,
@@ -326,7 +289,6 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
                                    TAB,
                                    &IERCOD);
 
-  // the results are stored
   if (IERCOD == 0)
   {
     myDiscIsDone = true;
@@ -341,40 +303,32 @@ void AdvApp2Var_Patch::Discretise(const AdvApp2Var_Context&           Conditions
   }
 }
 
-//=================================================================================================
-
 bool AdvApp2Var_Patch::HasResult() const
 {
   return myHasResult;
 }
-
-//=================================================================================================
 
 bool AdvApp2Var_Patch::IsApproximated() const
 {
   return myApprIsDone;
 }
 
-//=================================================================================================
-
 void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
                                       const AdvApp2Var_Framework& Constraints)
 {
-  // data stored in the  Context
+
   int NDIMEN;
   int IERCOD, NCFLMU, NCFLMV, NDegU, NDegV;
   NDIMEN = Conditions.TotalDimension();
-  // Attention : works only for 3D
+
   NCFLMU = Conditions.ULimit();
   NCFLMV = Conditions.VLimit();
   NDegU  = NCFLMU - 1;
   NDegV  = NCFLMV - 1;
 
-  // data relative to the patch
   int     IORDRU = myOrdInU, IORDRV = myOrdInV;
   double* PATCAN = (double*)&myEquation->ChangeArray1()(myEquation->Lower());
 
-  // curves of approximation of Isos U
   int                                      SIZE = NCFLMV * NDIMEN;
   occ::handle<NCollection_HArray1<double>> HIsoU0 =
     new NCollection_HArray1<double>(1, SIZE * (IORDRU + 1));
@@ -392,7 +346,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
   int*                                  NCFU1 = (int*)&HCFU1->ChangeArray1()(HCFU1->Lower());
   HCFU1->Init((Constraints.IsoU(myU1, myV0, myV1)).NbCoeff());
 
-  // normalization of Isos U
   int    iu, iv;
   double du = (myU1 - myU0) / 2, dv = (myV1 - myV0) / 2, rho, valnorm;
   int    ideb0, ideb1, jj;
@@ -409,7 +362,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
     }
   }
 
-  // curves of approximation of Isos V
   SIZE = NCFLMU * NDIMEN;
   occ::handle<NCollection_HArray1<double>> HIsoV0 =
     new NCollection_HArray1<double>(1, SIZE * (IORDRV + 1));
@@ -427,7 +379,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
   int*                                  NCFV1 = (int*)&HCFV1->ChangeArray1()(HCFV1->Lower());
   HCFV1->Init((Constraints.IsoV(myU0, myU1, myV1)).NbCoeff());
 
-  //  normalization of Isos V
   for (iv = 1; iv <= IORDRV; iv++)
   {
     rho   = pow(dv, iv);
@@ -440,7 +391,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
     }
   }
 
-  // add constraints to constant V
   occ::handle<NCollection_HArray1<double>> HHERMV =
     new NCollection_HArray1<double>(1, (2 * IORDRV + 2) * (2 * IORDRV + 2));
   double* HermV = (double*)&HHERMV->ChangeArray1()(HHERMV->Lower());
@@ -464,7 +414,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
                                      PATCAN);
   }
 
-  // add constraints to constant U
   occ::handle<NCollection_HArray1<double>> HHERMU =
     new NCollection_HArray1<double>(1, (2 * IORDRU + 2) * (2 * IORDRU + 2));
   double* HermU = (double*)&HHERMU->ChangeArray1()(HHERMU->Lower());
@@ -488,7 +437,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
                                      PATCAN);
   }
 
-  // add constraints at the corners
   int ideb;
   SIZE                                            = NDIMEN * (IORDRU + 2) * (IORDRV + 2);
   occ::handle<NCollection_HArray1<double>> HCOINS = new NCollection_HArray1<double>(1, SIZE * 4);
@@ -499,7 +447,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
     {
       rho = pow(du, iu) * pow(dv, iv);
 
-      // -F(U0,V0) and its derivatives normalized on (-1,1)
       ideb    = HCOINS->Lower() + NDIMEN * iu + NDIMEN * (IORDRU + 2) * iv - 1;
       valnorm = -rho * ((Constraints.Node(myU0, myV0))->Point(iu, iv)).X();
       HCOINS->SetValue(1 + ideb, valnorm);
@@ -508,7 +455,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
       valnorm = -rho * ((Constraints.Node(myU0, myV0))->Point(iu, iv)).Z();
       HCOINS->SetValue(3 + ideb, valnorm);
 
-      // -F(U1,V0) and its derivatives normalized on (-1,1)
       ideb += SIZE;
       valnorm = -rho * ((Constraints.Node(myU1, myV0))->Point(iu, iv)).X();
       HCOINS->SetValue(1 + ideb, valnorm);
@@ -517,7 +463,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
       valnorm = -rho * ((Constraints.Node(myU1, myV0))->Point(iu, iv)).Z();
       HCOINS->SetValue(3 + ideb, valnorm);
 
-      // -F(U0,V1) and its derivatives normalized on (-1,1)
       ideb += SIZE;
       valnorm = -rho * ((Constraints.Node(myU0, myV1))->Point(iu, iv)).X();
       HCOINS->SetValue(1 + ideb, valnorm);
@@ -526,7 +471,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
       valnorm = -rho * ((Constraints.Node(myU0, myV1))->Point(iu, iv)).Z();
       HCOINS->SetValue(3 + ideb, valnorm);
 
-      // -F(U1,V1) and its derivatives normalized on (-1,1)
       ideb += SIZE;
       valnorm = -rho * ((Constraints.Node(myU1, myV1))->Point(iu, iv)).X();
       HCOINS->SetValue(1 + ideb, valnorm);
@@ -537,7 +481,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
     }
   }
 
-  //  tables required for FORTRAN
   int                                      IORDMX = std::max(IORDRU, IORDRV);
   occ::handle<NCollection_HArray1<double>> HEXTR =
     new NCollection_HArray1<double>(1, 2 * IORDMX + 2);
@@ -548,7 +491,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
   int     idim, ncf0, ncf1, iun = 1;
   double* Is;
 
-  // add extremities of isos U
   for (iu = 1; iu <= IORDRU + 1; iu++)
   {
     ncf0 = HCFU0->Value(HCFU0->Lower() + iu - 1);
@@ -574,7 +516,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
     }
   }
 
-  // add extremities of isos V
   for (iv = 1; iv <= IORDRV + 1; iv++)
   {
     ncf0 = HCFV0->Value(HCFV0->Lower() + iv - 1);
@@ -600,7 +541,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
     }
   }
 
-  // add all to PATCAN
   double* C1 = (double*)&HCOINS->ChangeArray1()(HCOINS->Lower());
   double* C2 = C1 + SIZE;
   double* C3 = C2 + SIZE;
@@ -622,8 +562,6 @@ void AdvApp2Var_Patch::AddConstraints(const AdvApp2Var_Context&   Conditions,
   }
 }
 
-//=================================================================================================
-
 void AdvApp2Var_Patch::AddErrors(const AdvApp2Var_Framework& Constraints)
 {
   int NBSESP = 1, iesp;
@@ -637,7 +575,7 @@ void AdvApp2Var_Patch::AddErrors(const AdvApp2Var_Framework& Constraints)
 
   for (iesp = 1; iesp <= NBSESP; iesp++)
   {
-    //  error max in sub-space iesp
+
     errU = 0.;
     for (iv = 1; iv <= myOrdInV + 1; iv++)
     {
@@ -656,7 +594,6 @@ void AdvApp2Var_Patch::AddErrors(const AdvApp2Var_Framework& Constraints)
     }
     myMaxErrors->ChangeValue(iesp) += errU * hmax[myOrdInV + 1] + errV * hmax[myOrdInU + 1];
 
-    // average error in sub-space iesp
     errU = 0.;
     for (iv = 1; iv <= myOrdInV + 1; iv++)
     {
@@ -679,7 +616,6 @@ void AdvApp2Var_Patch::AddErrors(const AdvApp2Var_Framework& Constraints)
              + errV * hmax[myOrdInU + 1] * errV * hmax[myOrdInU + 1];
     myMoyErrors->SetValue(iesp, std::sqrt(error));
 
-    // max errors at iso-borders
     occ::handle<NCollection_HArray2<double>> HERISO =
       new NCollection_HArray2<double>(1, NBSESP, 1, 4);
     HERISO->SetValue(iesp, 1, ((Constraints.IsoV(myU0, myU1, myV0)).MaxErrors())->Value(iesp, 1));
@@ -687,7 +623,6 @@ void AdvApp2Var_Patch::AddErrors(const AdvApp2Var_Framework& Constraints)
     HERISO->SetValue(iesp, 3, ((Constraints.IsoU(myU0, myV0, myV1)).MaxErrors())->Value(iesp, 1));
     HERISO->SetValue(iesp, 4, ((Constraints.IsoU(myU1, myV0, myV1)).MaxErrors())->Value(iesp, 1));
 
-    // calculate max errors at the corners
     double emax1 = 0., emax2 = 0., emax3 = 0., emax4 = 0., err1, err2, err3, err4;
     for (iu = 0; iu <= myOrdInU; iu++)
     {
@@ -704,13 +639,11 @@ void AdvApp2Var_Patch::AddErrors(const AdvApp2Var_Framework& Constraints)
       }
     }
 
-    // calculate max errors on borders
     err1 = std::max(emax1, emax2);
     err2 = std::max(emax3, emax4);
     err3 = std::max(emax1, emax3);
     err4 = std::max(emax2, emax4);
 
-    //   calculate final errors on internal isos
     if ((Constraints.IsoV(myU0, myU1, myV0)).Position() == 0)
     {
       HERISO->ChangeValue(iesp, 1) += err1 * hmax[myOrdInU + 1];
@@ -731,14 +664,11 @@ void AdvApp2Var_Patch::AddErrors(const AdvApp2Var_Framework& Constraints)
   }
 }
 
-//=================================================================================================
-
 void AdvApp2Var_Patch::MakeApprox(const AdvApp2Var_Context&   Conditions,
                                   const AdvApp2Var_Framework& Constraints,
                                   const int                   NumDec)
 {
 
-  // data stored in the Context
   int NDIMEN, NBSESP, NDIMSE;
   int NBPNTU, NBPNTV, NCFLMU, NCFLMV, NDJACU, NDJACV;
   int NDegU, NDegV, NJacU, NJacV;
@@ -760,10 +690,8 @@ void AdvApp2Var_Patch::MakeApprox(const AdvApp2Var_Context&   Conditions,
   NJacU  = NDJACU + 1;
   NJacV  = NDJACV + 1;
 
-  // data relative to the processed patch
   int IORDRU = myOrdInU, IORDRV = myOrdInV, NDMINU = 1, NDMINV = 1, NCOEFU, NCOEFV;
-  // NDMINU and NDMINV depend on the nb of coeff of neighboring isos
-  // and of the required order of continuity
+
   NDMINU = std::max(1, 2 * IORDRU + 1);
   NCOEFU = (Constraints.IsoV(myU0, myU1, myV0)).NbCoeff() - 1;
   NDMINU = std::max(NDMINU, NCOEFU);
@@ -776,7 +704,6 @@ void AdvApp2Var_Patch::MakeApprox(const AdvApp2Var_Context&   Conditions,
   NCOEFV = (Constraints.IsoU(myU1, myV0, myV1)).NbCoeff() - 1;
   NDMINV = std::max(NDMINV, NCOEFV);
 
-  // tables of approximations
   occ::handle<NCollection_HArray1<double>> HEPSAPR = new NCollection_HArray1<double>(1, NBSESP);
   occ::handle<NCollection_HArray1<double>> HEPSFRO = new NCollection_HArray1<double>(1, NBSESP * 8);
   int                                      iesp;
@@ -809,13 +736,11 @@ void AdvApp2Var_Patch::MakeApprox(const AdvApp2Var_Context&   Conditions,
   occ::handle<NCollection_HArray1<double>> HERRMOY = new NCollection_HArray1<double>(1, NBSESP);
   double* ERRMOY = (double*)&HERRMOY->ChangeArray1()(HERRMOY->Lower());
 
-  // tables of discretization of the square
   double* SOSOTB = (double*)&mySosoTab->ChangeArray1()(mySosoTab->Lower());
   double* DISOTB = (double*)&myDisoTab->ChangeArray1()(myDisoTab->Lower());
   double* SODITB = (double*)&mySodiTab->ChangeArray1()(mySodiTab->Lower());
   double* DIDITB = (double*)&myDidiTab->ChangeArray1()(myDidiTab->Lower());
 
-  //  approximation
   int ITYDEC = 0, IERCOD = 0;
   int iun = 1, itrois = 3;
   NCOEFU = 0;
@@ -847,7 +772,6 @@ void AdvApp2Var_Patch::MakeApprox(const AdvApp2Var_Context&   Conditions,
                                    &ITYDEC,
                                    &IERCOD);
 
-  // results
   myCutSense = ITYDEC;
   if (ITYDEC == 0 && IERCOD <= 0)
   {
@@ -858,7 +782,6 @@ void AdvApp2Var_Patch::MakeApprox(const AdvApp2Var_Context&   Conditions,
     myMaxErrors  = HERRMAX;
     myMoyErrors  = HERRMOY;
 
-    // Passage to canonic on [-1,1]
     AdvApp2Var_MathBase::mmfmca9_(&NJacU,
                                   &NJacV,
                                   &NDIMEN,
@@ -884,11 +807,9 @@ void AdvApp2Var_Patch::MakeApprox(const AdvApp2Var_Context&   Conditions,
     }
     myEquation = HPCAN;
 
-    // Add constraints and errors
     AddConstraints(Conditions, Constraints);
     AddErrors(Constraints);
 
-    // Reduction of degrees if possible
     PATCAN = (double*)&myEquation->ChangeArray1()(myEquation->Lower());
 
     AdvApp2Var_ApproxF2var::mma2fx6_(&NCFLMU,
@@ -907,7 +828,6 @@ void AdvApp2Var_Patch::MakeApprox(const AdvApp2Var_Context&   Conditions,
                                      &myNbCoeffInU,
                                      &myNbCoeffInV);
 
-    // transposition (NCFLMU,NCFLMV,NDIMEN)Fortran-C++
     int aIU, aIN, dim, ii, jj;
     for (dim = 1; dim <= NDIMEN; dim++)
     {
@@ -931,8 +851,6 @@ void AdvApp2Var_Patch::MakeApprox(const AdvApp2Var_Context&   Conditions,
   }
 }
 
-//=================================================================================================
-
 void AdvApp2Var_Patch::ChangeDomain(const double a, const double b, const double c, const double d)
 {
   myU0 = a;
@@ -941,21 +859,11 @@ void AdvApp2Var_Patch::ChangeDomain(const double a, const double b, const double
   myV1 = d;
 }
 
-//============================================================================
-// function : ResetApprox
-// purpose  : allows removing a result when it is necessary to cut
-//============================================================================
-
 void AdvApp2Var_Patch::ResetApprox()
 {
   myApprIsDone = false;
   myHasResult  = false;
 }
-
-//============================================================================
-// function : OverwriteApprox
-// purpose  : allows preserving a result even if the precision is not satisfactory
-//============================================================================
 
 void AdvApp2Var_Patch::OverwriteApprox()
 {
@@ -963,64 +871,40 @@ void AdvApp2Var_Patch::OverwriteApprox()
     myApprIsDone = true;
 }
 
-//=================================================================================================
-
 double AdvApp2Var_Patch::U0() const
 {
   return myU0;
 }
-
-//=================================================================================================
 
 double AdvApp2Var_Patch::U1() const
 {
   return myU1;
 }
 
-//=================================================================================================
-
 double AdvApp2Var_Patch::V0() const
 {
   return myV0;
 }
-
-//=================================================================================================
 
 double AdvApp2Var_Patch::V1() const
 {
   return myV1;
 }
 
-//=================================================================================================
-
 int AdvApp2Var_Patch::UOrder() const
 {
   return myOrdInU;
 }
-
-//=================================================================================================
 
 int AdvApp2Var_Patch::VOrder() const
 {
   return myOrdInV;
 }
 
-//============================================================================
-// function : CutSense without Critere
-// purpose  : 0 : OK; 1 : required cut by U;
-//           2 : required cut by V; 3 : required cut by U and by V
-//============================================================================
-
 int AdvApp2Var_Patch::CutSense() const
 {
   return myCutSense;
 }
-
-//============================================================================
-// function : CutSense with critere
-// purpose  : 0 : OK; 1 : required cut by U;
-//           2 : required cut by V; 3 : required cut by U and by V
-//============================================================================
 
 int AdvApp2Var_Patch::CutSense(const AdvApp2Var_Criterion& Crit, const int NumDec) const
 {
@@ -1042,24 +926,15 @@ int AdvApp2Var_Patch::CutSense(const AdvApp2Var_Criterion& Crit, const int NumDe
   }
 }
 
-//=================================================================================================
-
 int AdvApp2Var_Patch::NbCoeffInU() const
 {
   return myNbCoeffInU;
 }
 
-//=================================================================================================
-
 int AdvApp2Var_Patch::NbCoeffInV() const
 {
   return myNbCoeffInV;
 }
-
-//============================================================================
-// function : ChangeNbCoeff
-// purpose  : allows increasing the nb of coeff (cf Network)
-//============================================================================
 
 void AdvApp2Var_Patch::ChangeNbCoeff(const int NbCoeffU, const int NbCoeffV)
 {
@@ -1069,40 +944,20 @@ void AdvApp2Var_Patch::ChangeNbCoeff(const int NbCoeffU, const int NbCoeffV)
     myNbCoeffInV = NbCoeffV;
 }
 
-//============================================================================
-// function : MaxErrors
-// purpose  : returns max errors of polynomial approximation
-//============================================================================
-
 occ::handle<NCollection_HArray1<double>> AdvApp2Var_Patch::MaxErrors() const
 {
   return myMaxErrors;
 }
-
-//============================================================================
-// function : AverageErrors
-// purpose  : returns average errors of polynomial approximation
-//============================================================================
 
 occ::handle<NCollection_HArray1<double>> AdvApp2Var_Patch::AverageErrors() const
 {
   return myMoyErrors;
 }
 
-//============================================================================
-// function : IsoErrors
-// purpose  : returns max errors on borders of polynomial approximation
-//============================================================================
-
 occ::handle<NCollection_HArray2<double>> AdvApp2Var_Patch::IsoErrors() const
 {
   return myIsoErrors;
 }
-
-//============================================================================
-// function : Poles
-// purpose  : returns poles of the polynomial approximation
-//============================================================================
 
 occ::handle<NCollection_HArray2<gp_Pnt>> AdvApp2Var_Patch::Poles(
   const int                 SSPIndex,
@@ -1125,7 +980,6 @@ occ::handle<NCollection_HArray2<gp_Pnt>> AdvApp2Var_Patch::Poles(
   NbCoeff->SetValue(1, myNbCoeffInU);
   NbCoeff->SetValue(2, myNbCoeffInV);
 
-  // Conversion
   Convert_GridPolynomialToPoles Conv(Cond.ULimit() - 1,
                                      Cond.VLimit() - 1,
                                      NbCoeff,
@@ -1135,11 +989,6 @@ occ::handle<NCollection_HArray2<gp_Pnt>> AdvApp2Var_Patch::Poles(
 
   return Conv.Poles();
 }
-
-//============================================================================
-// function : Coefficients
-// purpose  : returns coeff. of the equation of polynomial approximation
-//============================================================================
 
 occ::handle<NCollection_HArray1<double>> AdvApp2Var_Patch::Coefficients(
   const int                 SSPIndex,
@@ -1157,14 +1006,10 @@ occ::handle<NCollection_HArray1<double>> AdvApp2Var_Patch::Coefficients(
   return SousEquation;
 }
 
-//=================================================================================================
-
 double AdvApp2Var_Patch::CritValue() const
 {
   return myCritValue;
 }
-
-//=================================================================================================
 
 void AdvApp2Var_Patch::SetCritValue(const double dist)
 {

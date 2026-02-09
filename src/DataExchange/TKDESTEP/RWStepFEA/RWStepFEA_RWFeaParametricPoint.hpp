@@ -11,26 +11,21 @@ class StepFEA_FeaParametricPoint;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write tool for FeaParametricPoint
 class RWStepFEA_RWFeaParametricPoint
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepFEA_RWFeaParametricPoint();
 
-  //! Reads FeaParametricPoint
   Standard_HIDDEN void ReadStep(const occ::handle<StepData_StepReaderData>&    data,
                                 const int                                      num,
                                 occ::handle<Interface_Check>&                  ach,
                                 const occ::handle<StepFEA_FeaParametricPoint>& ent) const;
 
-  //! Writes FeaParametricPoint
   Standard_HIDDEN void WriteStep(StepData_StepWriter&                           SW,
                                  const occ::handle<StepFEA_FeaParametricPoint>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(const occ::handle<StepFEA_FeaParametricPoint>& ent,
                              Interface_EntityIterator&                      iter) const;
 };

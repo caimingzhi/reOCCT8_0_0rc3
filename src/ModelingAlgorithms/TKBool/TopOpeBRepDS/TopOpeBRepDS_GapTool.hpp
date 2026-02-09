@@ -39,8 +39,6 @@ public:
   Standard_EXPORT bool EdgeSupport(const occ::handle<TopOpeBRepDS_Interference>& I,
                                    TopoDS_Shape&                                 E) const;
 
-  //! Return les faces qui ont genere la section origine
-  //! de I
   Standard_EXPORT bool FacesSupport(const occ::handle<TopOpeBRepDS_Interference>& I,
                                     TopoDS_Shape&                                 F1,
                                     TopoDS_Shape&                                 F2) const;

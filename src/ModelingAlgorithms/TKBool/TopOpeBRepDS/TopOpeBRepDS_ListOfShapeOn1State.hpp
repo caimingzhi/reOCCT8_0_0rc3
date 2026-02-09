@@ -8,7 +8,6 @@
 #include <NCollection_List.hpp>
 #include <Standard_Boolean.hpp>
 
-//! represent a list of shape
 class TopOpeBRepDS_ListOfShapeOn1State
 {
 public:

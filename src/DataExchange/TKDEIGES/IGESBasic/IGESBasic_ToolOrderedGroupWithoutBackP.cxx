@@ -24,24 +24,14 @@ void IGESBasic_ToolOrderedGroupWithoutBackP::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&            IR,
   IGESData_ParamReader&                                  PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
+
   int                                                                nbval = 0;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> EntArray;
 
   if (PR.ReadInteger(PR.Current(), "Count of Entities", nbval))
-  { // szv#4:S4163:12Mar99 `st=` not needed
-    // clang-format off
-    PR.ReadEnts (IR,PR.CurrentList(nbval),"Entities",EntArray); //szv#4:S4163:12Mar99 `st=` not needed
-    // clang-format on
-    /*
-        EntArray = new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1,nbval);
-        for (int i = 1;i <= nbval;i++)
-          {
-        occ::handle<IGESData_IGESEntity> anent;
-        st = PR.ReadEntity (IR,PR.Current(),"Element of the Group",anent,true);
-        if (st) EntArray->SetValue(i,anent);
-          }
-    */
+  {
+
+    PR.ReadEnts(IR, PR.CurrentList(nbval), "Entities", EntArray);
   }
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(EntArray);
@@ -117,9 +107,9 @@ bool IGESBasic_ToolOrderedGroupWithoutBackP::OwnCorrect(
 }
 
 IGESData_DirChecker IGESBasic_ToolOrderedGroupWithoutBackP::DirChecker(
-  const occ::handle<IGESBasic_OrderedGroupWithoutBackP>& /* ent */) const
+  const occ::handle<IGESBasic_OrderedGroupWithoutBackP>&) const
 {
-  IGESData_DirChecker DC(402, 15); // TypeNo. 402, Form no. 15
+  IGESData_DirChecker DC(402, 15);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();

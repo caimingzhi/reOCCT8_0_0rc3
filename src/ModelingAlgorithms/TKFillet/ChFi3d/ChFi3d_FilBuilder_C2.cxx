@@ -60,14 +60,6 @@ extern void ChFi3d_InitChron(OSD_Chronometer& ch);
 extern void ChFi3d_ResultChron(OSD_Chronometer& ch, double& time);
 #endif
 
-//=======================================================================
-// function : ToricRotule
-// purpose  : Test if it is a particular case of torus routine.
-//           Three planes with two constant incident fillets
-//           of the same radius and the third face perpendicular to
-//           two others are required.
-//=======================================================================
-
 static bool ToricRotule(const BRepAdaptor_Surface&        fac,
                         const BRepAdaptor_Surface&        s1,
                         const BRepAdaptor_Surface&        s2,
@@ -108,13 +100,11 @@ static void RemoveSD(occ::handle<ChFiDS_Stripe>& Stripe, const int num1, const i
     Seq.Remove(num1, num2);
 }
 
-//=================================================================================================
-
 void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
 {
 #ifdef OCCT_DEBUG
   OSD_Chronometer ch;
-  ChFi3d_InitChron(ch); // init perf initialisation
+  ChFi3d_InitChron(ch);
 #endif
 
   done                                                        = false;
@@ -134,20 +124,13 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
   TopoDS_Face                                        FaCo;
   TopoDS_Edge                                        E1, E2, E;
   TopoDS_Vertex                                      V1, V2;
-  //  gp_Pnt P1,P2;
+
   int    nbsurf1, nbsurf2, deb1, fin1, deb2, fin2;
   double parE1, parE2;
-  // Necessary information on fillets is extracted
-  //------------------------------------------------------
-
-  // the first
-  //----------
 
   st1  = It.Value();
   Isd1 = ChFi3d_IndexOfSurfData(Vtx, st1, Sens1);
 
-  // the second
-  //----------
   It.Next();
   st2 = It.Value();
   if (st2 == st1)
@@ -159,8 +142,6 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
   {
     Isd2 = ChFi3d_IndexOfSurfData(Vtx, st2, Sens2);
   }
-
-  // If two edges to rounded are tangent GeomPlate is called
 
   if (Sens1 == 1)
     E1 = st1->Spine()->Edges(1);
@@ -215,8 +196,6 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
   if (!Okvisavis)
   {
 
-    // one is not limited to the first or the last surfdata
-    // to find the opposing data
     nbsurf1 = st1->SetOfSurfData()->Length();
     nbsurf2 = st2->SetOfSurfData()->Length();
     deb1    = 1;
@@ -296,7 +275,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
     Isd1 = ChFi3d_IndexOfSurfData(Vtx, st1, Sens1);
     Isd2 = ChFi3d_IndexOfSurfData(Vtx, st2, Sens2);
   }
-  // throw StdFail_NotDone("TwoCorner : no common face");
+
   int IFaArc1 = 3 - IFaCo1, IFaArc2 = 3 - IFaCo2;
   SeqFil1                  = st1->ChangeSetOfSurfData()->ChangeSequence();
   SeqFil2                  = st2->ChangeSetOfSurfData()->ChangeSequence();
@@ -305,8 +284,6 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
   sd2                      = SeqFil2.ChangeValue(Isd2);
   surf2                    = DStr.Surface(sd2->Surf()).Surface();
   TopAbs_Orientation OFaCo = FaCo.Orientation();
-  // The concavities are analyzed and the opposite face and the
-  // eventual intersection of 2 pcurves on this face are found.
 
   ChFiDS_State Stat1, Stat2;
   bool         isfirst1 = (Sens1 == 1);
@@ -315,9 +292,6 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
   Stat2                 = st2->Spine()->Status(isfirst2);
   bool c1biseau         = (Stat1 == ChFiDS_AllSame);
   bool c1rotule         = (Stat1 == ChFiDS_OnSame && Stat2 == ChFiDS_OnSame);
-
-  // It is checked if the fillets have a commonpoint on a common arc.
-  // This edge is the pivot of the bevel or the knee.
 
   ChFiDS_CommonPoint& CP1 = sd1->ChangeVertex(isfirst1, IFaArc1);
   ChFiDS_CommonPoint& CP2 = sd2->ChangeVertex(isfirst2, IFaArc2);
@@ -400,24 +374,22 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
   }
 
 #ifdef OCCT_DEBUG
-  ChFi3d_ResultChron(ch, t_t2cornerinit); // result perf initialisation
+  ChFi3d_ResultChron(ch, t_t2cornerinit);
 #endif
 
-  // bevel
-  //------
   ChFiDS_CommonPoint      cp11, cp12, cp21, cp22;
   ChFiDS_FaceInterference intf11, intf12, intf21, intf22;
 
   if (c1biseau)
   {
 #ifdef OCCT_DEBUG
-    ChFi3d_InitChron(ch); // init perf PerformTwoCornerbyInter
+    ChFi3d_InitChron(ch);
 #endif
 
     done = PerformTwoCornerbyInter(Index);
 
 #ifdef OCCT_DEBUG
-    ChFi3d_ResultChron(ch, t_perf2cornerbyinter); // result perf  PerformTwoCornerbyInter
+    ChFi3d_ResultChron(ch, t_perf2cornerbyinter);
 #endif
 
     if (!done)
@@ -428,7 +400,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
     }
   }
   else if (c1rotule)
-  { // save.
+  {
     cp11   = sd1->Vertex(isfirst1, 1);
     cp12   = sd1->Vertex(isfirst1, 2);
     cp21   = sd2->Vertex(isfirst2, 1);
@@ -438,17 +410,17 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
     intf21 = sd2->InterferenceOnS1();
     intf22 = sd2->InterferenceOnS2();
 #ifdef OCCT_DEBUG
-    ChFi3d_InitChron(ch); // init perf PerformTwoCornerbyInter
+    ChFi3d_InitChron(ch);
 #endif
 
     done = PerformTwoCornerbyInter(Index);
 
 #ifdef OCCT_DEBUG
-    ChFi3d_ResultChron(ch, t_perf2cornerbyinter); // result perf  PerformTwoCornerbyInter
+    ChFi3d_ResultChron(ch, t_perf2cornerbyinter);
 #endif
     if (!done)
     {
-      // restore
+
       sd1->ChangeVertex(isfirst1, 1) = cp11;
       sd1->ChangeVertex(isfirst1, 2) = cp12;
       sd2->ChangeVertex(isfirst2, 1) = cp21;
@@ -463,8 +435,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
 
   if (!c1biseau && !done)
   {
-    // new cornerdata is created
-    //-------------------------------
+
     occ::handle<ChFiDS_Stripe>                                        corner = new ChFiDS_Stripe();
     occ::handle<NCollection_HSequence<occ::handle<ChFiDS_SurfData>>>& cornerset =
       corner->ChangeSetOfSurfData();
@@ -476,8 +447,6 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
     {
       if (ToricRotule(BRFaCo, BRS1, BRS2, st1, st2))
       {
-        // Direct construction.
-        // ---------------------
 
         int                bid;
         TopAbs_Orientation ori     = OFaCo;
@@ -492,7 +461,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
         op1 = TopAbs::Reverse(op1);
         op2 = TopAbs::Reverse(op2);
 #ifdef OCCT_DEBUG
-        ChFi3d_InitChron(ch); // init perf ChFiKPart_ComputeData
+        ChFi3d_InitChron(ch);
 #endif
         double radius = occ::down_cast<ChFiDS_FilSpine>(st1->Spine())->Radius();
         done          = ChFiKPart_ComputeData::ComputeCorner(DStr,
@@ -506,13 +475,12 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
                                                     op2,
                                                     radius);
 #ifdef OCCT_DEBUG
-        ChFi3d_ResultChron(ch, t_chfikpartcompdata); // result perf ChFiKPart_ComputeData
+        ChFi3d_ResultChron(ch, t_chfikpartcompdata);
 #endif
       }
       else
       {
-        // Construction by filling remplissage
-        // ----------------------------
+
         double                         uPCArc1, uPCArc2;
         gp_Pnt2d                       p2da1, p2df1, p2da2, p2df2, p2dfac1, p2dfac2;
         gp_Vec2d                       v2dfac1, v2dfac2;
@@ -526,7 +494,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
         p2df2   = sd2->Interference(IFaCo2).PCurveOnSurf()->Value(uPCArc2);
         sd2->Interference(IFaCo2).PCurveOnFace()->D1(uPCArc2, p2dfac2, v2dfac2);
 #ifdef OCCT_DEBUG
-        ChFi3d_InitChron(ch); // init perf filling
+        ChFi3d_InitChron(ch);
 #endif
         B1 = ChFi3d_mkbound(surf1, p2df1, p2da1, tolapp3d, 2.e-4);
         B2 = ChFi3d_mkbound(surf2, p2df2, p2da2, tolapp3d, 2.e-4);
@@ -624,16 +592,15 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
                             false,
                             false);
 #ifdef OCCT_DEBUG
-        ChFi3d_ResultChron(ch, t_remplissage); // result perf filling
+        ChFi3d_ResultChron(ch, t_remplissage);
 #endif
       }
 #ifdef OCCT_DEBUG
-      ChFi3d_InitChron(ch); // init perf update DS
+      ChFi3d_InitChron(ch);
 #endif
       if (done)
       {
-        // Update 3 CornerData and the DS
-        // ----------------------------------------
+
         if (resetcp1)
         {
           gp_Pnt pjyl   = CP1.Point();
@@ -659,8 +626,6 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
         Pf2                           = CP1;
         Pl2                           = CP2;
 
-        // the corner to start,
-        // -----------------------
         ChFiDS_Regul regdeb, regfin;
         If1 = ChFi3d_IndexPointInDS(Pf1, DStr);
         If2 = ChFi3d_IndexPointInDS(Pf2, DStr);
@@ -767,8 +732,6 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
         }
         corner->SetSolidIndex(st1->SolidIndex());
 
-        // then the starting Stripe,
-        // ------------------------
         st1->SetCurve(Icf, isfirst1);
         st1->SetIndexPoint(If1, isfirst1, IFaCo1);
         st1->SetIndexPoint(If2, isfirst1, IFaArc1);
@@ -779,8 +742,6 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
         if (IFaCo1 == 2)
           st1->SetOrientation(TopAbs_REVERSED, isfirst1);
 
-        // then the end Stripe,
-        // -------------------------
         st2->SetCurve(Icl, isfirst2);
         st2->SetIndexPoint(Il1, isfirst2, IFaCo2);
         st2->SetIndexPoint(Il2, isfirst2, IFaArc2);
@@ -792,12 +753,12 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
           st2->SetOrientation(TopAbs_REVERSED, isfirst2);
       }
 #ifdef OCCT_DEBUG
-      ChFi3d_ResultChron(ch, t_t2cornerDS); // result perf update DS
+      ChFi3d_ResultChron(ch, t_t2cornerDS);
 #endif
     }
     else
     {
-      // it is necessary to make difference with
+
       if (!OkinterCC)
       {
         throw Standard_Failure("TwoCorner : No intersection pc pc");
@@ -841,9 +802,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
       {
         throw Standard_Failure("TwoCorner : Config unknown");
       }
-      // It is checked if surface ondiff has a point on arc from the side opposed
-      // to the common face and if this arc is connected to the base face
-      // opposed to common face of the surface onsame.
+
       ChFiDS_CommonPoint& cpopdif = sddif->ChangeVertex(isfirstdif, ifaopdif);
       if (!cpopdif.IsOnArc())
       {
@@ -864,7 +823,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
         }
       }
 #ifdef OCCT_DEBUG
-      ChFi3d_InitChron(ch); // init perf filling
+      ChFi3d_InitChron(ch);
 #endif
       occ::handle<GeomFill_Boundary> Bsam, Bdif, Bfac;
       gp_Pnt2d ppopsam = sdsam->Interference(ifaopsam).PCurveOnSurf()->Value(uintpcsam);
@@ -889,7 +848,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
       curvopsam->D1(uintpcsam, PPfacsam, VVfacsam);
       BRepAdaptor_Curve2d PCArcFac(Arcopdif, Fopsam);
       PCArcFac.D0(cpopdif.ParameterOnArc(), ppfacdif);
-      // jgv for OCC26173
+
       BRepAdaptor_Surface SurFopsam(Fopsam);
       if (SurFopsam.IsUClosed())
       {
@@ -902,7 +861,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
             ppfacdif.SetX(ppfacdif.X() - Uperiod);
         }
       }
-      //////////////////
+
       BRepAdaptor_Curve CArcFac(Arcopdif);
       CArcFac.D1(cpopdif.ParameterOnArc(), PPfacdif, VVfacdif);
       occ::handle<BRepAdaptor_Surface> HBRFopsam = new BRepAdaptor_Surface();
@@ -929,17 +888,14 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
                           false,
                           false);
 #ifdef OCCT_DEBUG
-      ChFi3d_ResultChron(ch, t_remplissage); // result perf filling
+      ChFi3d_ResultChron(ch, t_remplissage);
 #endif
       if (!done)
         throw Standard_Failure("concavites inverted : fail");
 #ifdef OCCT_DEBUG
-      ChFi3d_InitChron(ch); // init perf update DS
+      ChFi3d_InitChron(ch);
 #endif
-      // Update 3 CornerData and the DS
-      // ----------------------------------------
-      // the corner to start,
-      // -----------------------
+
       double                    P1deb, P2deb, P1fin, P2fin;
       int                       If1, If2, Il1, Il2, Icf, Icl;
       const ChFiDS_CommonPoint& Pf1 = coin->VertexFirstOnS1();
@@ -980,7 +936,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
       tolreached = std::max(tolreached, tolr1);
       TopOpeBRepDS_Curve Tcurv1(C3d, tolreached);
       Icf = DStr.AddCurve(Tcurv1);
-      // place the pcurve on face in the DS
+
       TopAbs_Orientation OpcFopsam = sdsam->Interference(ifaopsam).Transition();
       int                IFopsam   = sdsam->Index(ifaopsam);
       if (isfirstsam)
@@ -1035,11 +991,9 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
 
       corner->SetSolidIndex(stsam->SolidIndex());
 
-      // then Stripe OnSame
-      // ---------------------
       const ChFiDS_FaceInterference& intcoin1 = coin->InterferenceOnS1();
       stsam->SetCurve(intcoin1.LineIndex(), isfirstsam);
-      stsam->InDS(isfirstsam); // filDS already works from the corner.
+      stsam->InDS(isfirstsam);
       stsam->ChangePCurve(isfirstsam) = coin->InterferenceOnS1().PCurveOnFace();
       stsam->SetIndexPoint(If1, isfirstsam, ifaopsam);
       stsam->SetIndexPoint(Il1, isfirstsam, ifacosam);
@@ -1051,8 +1005,6 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
       if (ifaopsam == 2)
         stsam->SetOrientation(TopAbs_REVERSED, isfirstsam);
 
-      // then Stripe OnDiff
-      // ---------------------
       stdif->SetCurve(Icl, isfirstdif);
       stdif->ChangePCurve(isfirstdif) = pcsurfdif;
       stdif->SetIndexPoint(Il2, isfirstdif, ifaopdif);
@@ -1064,7 +1016,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
       if (ifaopdif == 1)
         stdif->SetOrientation(TopAbs_REVERSED, isfirstdif);
 #ifdef OCCT_DEBUG
-      ChFi3d_ResultChron(ch, t_t2cornerDS); // result perf update DS
+      ChFi3d_ResultChron(ch, t_t2cornerDS);
 #endif
     }
     if (!myEVIMap.IsBound(Vtx))

@@ -14,15 +14,11 @@
 #include <TopoDS.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 BRepIntCurveSurface_Inter::BRepIntCurveSurface_Inter()
 {
   myFastClass = new BRepTopAdaptor_TopolTool();
   Clear();
 }
-
-//=================================================================================================
 
 void BRepIntCurveSurface_Inter::Init(const TopoDS_Shape&      theShape,
                                      const GeomAdaptor_Curve& theCurve,
@@ -31,8 +27,6 @@ void BRepIntCurveSurface_Inter::Init(const TopoDS_Shape&      theShape,
   Load(theShape, theTol);
   Init(theCurve);
 }
-
-//=================================================================================================
 
 void BRepIntCurveSurface_Inter::Init(const TopoDS_Shape& theShape,
                                      const gp_Lin&       theLine,
@@ -45,8 +39,6 @@ void BRepIntCurveSurface_Inter::Init(const TopoDS_Shape& theShape,
   Init(aCurve);
 }
 
-//=================================================================================================
-
 void BRepIntCurveSurface_Inter::Clear()
 {
   myCurrentindex    = 0;
@@ -56,8 +48,6 @@ void BRepIntCurveSurface_Inter::Clear()
   myCurrentU        = 0;
   myCurrentV        = 0;
 }
-
-//=================================================================================================
 
 void BRepIntCurveSurface_Inter::Load(const TopoDS_Shape& theShape, const double theTol)
 {
@@ -69,8 +59,6 @@ void BRepIntCurveSurface_Inter::Load(const TopoDS_Shape& theShape, const double 
   for (; explorer.More(); explorer.Next())
     myFaces.Append(explorer.Current());
 }
-
-//=================================================================================================
 
 void BRepIntCurveSurface_Inter::Init(const GeomAdaptor_Curve& theCurve)
 {
@@ -86,14 +74,10 @@ void BRepIntCurveSurface_Inter::Init(const GeomAdaptor_Curve& theCurve)
   Find();
 }
 
-//=================================================================================================
-
 bool BRepIntCurveSurface_Inter::More() const
 {
   return (myIndFace <= myFaces.Length());
 }
-
-//=================================================================================================
 
 void BRepIntCurveSurface_Inter::Next()
 {
@@ -101,8 +85,6 @@ void BRepIntCurveSurface_Inter::Next()
     myCurrentindex++;
   Find();
 }
-
-//=================================================================================================
 
 void BRepIntCurveSurface_Inter::Find()
 {
@@ -122,7 +104,7 @@ void BRepIntCurveSurface_Inter::Find()
     if (aFaceBox.IsVoid())
     {
       BRepBndLib::Add(aCurface, aFaceBox);
-      aFaceBox.SetGap(myTolerance); // Precision::Confusion());
+      aFaceBox.SetGap(myTolerance);
     }
     bool isOut = (myCurve->GetType() == GeomAbs_Line
                     ? aFaceBox.IsOut(myCurve->Line())
@@ -136,7 +118,7 @@ void BRepIntCurveSurface_Inter::Find()
     if (!myCurrentnbpoints)
       continue;
 
-    const occ::handle<Adaptor3d_Surface>& aSurf = aSurfForFastClass; // to avoid ambiguity
+    const occ::handle<Adaptor3d_Surface>& aSurf = aSurfForFastClass;
     myFastClass->Initialize(aSurf);
     myIndFace = i;
     if (FindPoint())
@@ -150,8 +132,6 @@ void BRepIntCurveSurface_Inter::Find()
     return;
   }
 }
-
-//=================================================================================================
 
 bool BRepIntCurveSurface_Inter::FindPoint()
 {
@@ -176,42 +156,33 @@ bool BRepIntCurveSurface_Inter::FindPoint()
   return false;
 }
 
-//=================================================================================================
-
 IntCurveSurface_IntersectionPoint BRepIntCurveSurface_Inter::Point() const
 {
   if (myCurrentindex == 0)
     throw StdFail_NotDone();
   const IntCurveSurface_IntersectionPoint& ICPS = myIntcs.Point(myCurrentindex);
   return (IntCurveSurface_IntersectionPoint(ICPS.Pnt(),
-                                            myCurrentU, // ICPS.U(),
-                                            myCurrentV, // ICPS.V(),
+                                            myCurrentU,
+                                            myCurrentV,
                                             ICPS.W(),
                                             ICPS.Transition()));
-  //-- return(myIntcs.Point(myCurrentindex));
 }
-
-//=================================================================================================
 
 double BRepIntCurveSurface_Inter::U() const
 {
   if (myCurrentindex == 0)
     throw StdFail_NotDone();
-  //-- return(myIntcs.Point(myCurrentindex).U());
+
   return (myCurrentU);
 }
-
-//=================================================================================================
 
 double BRepIntCurveSurface_Inter::V() const
 {
   if (myCurrentindex == 0)
     throw StdFail_NotDone();
-  //-- return(myIntcs.Point(myCurrentindex).V());
+
   return (myCurrentV);
 }
-
-//=================================================================================================
 
 double BRepIntCurveSurface_Inter::W() const
 {
@@ -220,17 +191,13 @@ double BRepIntCurveSurface_Inter::W() const
   return (myIntcs.Point(myCurrentindex).W());
 }
 
-//=================================================================================================
-
 TopAbs_State BRepIntCurveSurface_Inter::State() const
 {
   if (myCurrentindex == 0)
     throw StdFail_NotDone();
-  //-- return(classifier.State());
+
   return (myCurrentstate);
 }
-
-//=================================================================================================
 
 IntCurveSurface_TransitionOnCurve BRepIntCurveSurface_Inter::Transition() const
 {
@@ -239,14 +206,10 @@ IntCurveSurface_TransitionOnCurve BRepIntCurveSurface_Inter::Transition() const
   return (myIntcs.Point(myCurrentindex).Transition());
 }
 
-//=================================================================================================
-
 const TopoDS_Face& BRepIntCurveSurface_Inter::Face() const
 {
   return (TopoDS::Face(myFaces.Value(myIndFace)));
 }
-
-//=================================================================================================
 
 const gp_Pnt& BRepIntCurveSurface_Inter::Pnt() const
 {

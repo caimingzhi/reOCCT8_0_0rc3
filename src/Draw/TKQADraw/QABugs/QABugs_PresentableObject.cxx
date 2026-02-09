@@ -27,10 +27,7 @@ void QABugs_PresentableObject::Compute(const occ::handle<PrsMgr_PresentationMana
   aGroup->SetPrimitivesAspect(anAspect->Aspect());
 
   occ::handle<Graphic3d_ArrayOfTriangles> aPrims =
-    new Graphic3d_ArrayOfTriangles(6,
-                                   0,
-                                   theMode == 1, // normals
-                                   true);        // color per vertex
+    new Graphic3d_ArrayOfTriangles(6, 0, theMode == 1, true);
   switch (theMode)
   {
     case 0:

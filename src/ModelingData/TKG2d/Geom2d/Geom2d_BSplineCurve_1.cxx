@@ -16,8 +16,6 @@
 #define FKNOTS (flatknots->Array1())
 #define FMULTS (BSplCLib::NoMults())
 
-//=================================================================================================
-
 bool Geom2d_BSplineCurve::IsCN(const int N) const
 {
   Standard_RangeError_Raise_if(N < 0, "Geom2d_BSplineCurve::IsCN");
@@ -46,8 +44,6 @@ bool Geom2d_BSplineCurve::IsCN(const int N) const
       return false;
   }
 }
-
-//=================================================================================================
 
 bool Geom2d_BSplineCurve::IsG1(const double theTf, const double theTl, const double theAngTol) const
 {
@@ -94,13 +90,9 @@ bool Geom2d_BSplineCurve::IsG1(const double theTf, const double theTl, const dou
   if (((aFirstParam - theTf) * (theTl - aFirstParam) < 0.0)
       && ((aLastParam - theTf) * (theTl - aLastParam) < 0.0))
   {
-    // Range [theTf, theTl] does not intersect curve boundaries
+
     return true;
   }
-
-  // Curve is closed or periodic and range [theTf, theTl]
-  // intersect curve boundary. Therefore, it is necessary to
-  // check if curve is smooth in its first and last point.
 
   gp_Pnt2d aP;
   gp_Vec2d aV1, aV2;
@@ -118,35 +110,25 @@ bool Geom2d_BSplineCurve::IsG1(const double theTf, const double theTl, const dou
   return true;
 }
 
-//=================================================================================================
-
 bool Geom2d_BSplineCurve::IsClosed() const
 {
   return (StartPoint().Distance(EndPoint())) <= gp::Resolution();
 }
-
-//=================================================================================================
 
 bool Geom2d_BSplineCurve::IsPeriodic() const
 {
   return periodic;
 }
 
-//=================================================================================================
-
 GeomAbs_Shape Geom2d_BSplineCurve::Continuity() const
 {
   return smooth;
 }
 
-//=================================================================================================
-
 int Geom2d_BSplineCurve::Degree() const
 {
   return deg;
 }
-
-//=================================================================================================
 
 void Geom2d_BSplineCurve::D0(const double U, gp_Pnt2d& P) const
 {
@@ -167,8 +149,6 @@ void Geom2d_BSplineCurve::D0(const double U, gp_Pnt2d& P) const
                &mults->Array1(),
                P);
 }
-
-//=================================================================================================
 
 void Geom2d_BSplineCurve::D1(const double U, gp_Pnt2d& P, gp_Vec2d& V1) const
 {
@@ -191,8 +171,6 @@ void Geom2d_BSplineCurve::D1(const double U, gp_Pnt2d& P, gp_Vec2d& V1) const
                V1);
 }
 
-//=================================================================================================
-
 void Geom2d_BSplineCurve::D2(const double U, gp_Pnt2d& P, gp_Vec2d& V1, gp_Vec2d& V2) const
 {
   int    aSpanIndex = 0;
@@ -214,8 +192,6 @@ void Geom2d_BSplineCurve::D2(const double U, gp_Pnt2d& P, gp_Vec2d& V1, gp_Vec2d
                V1,
                V2);
 }
-
-//=================================================================================================
 
 void Geom2d_BSplineCurve::D3(const double U,
                              gp_Pnt2d&    P,
@@ -244,8 +220,6 @@ void Geom2d_BSplineCurve::D3(const double U,
                V3);
 }
 
-//=================================================================================================
-
 gp_Vec2d Geom2d_BSplineCurve::DN(const double U, const int N) const
 {
   gp_Vec2d V;
@@ -262,8 +236,6 @@ gp_Vec2d Geom2d_BSplineCurve::DN(const double U, const int N) const
   return V;
 }
 
-//=================================================================================================
-
 gp_Pnt2d Geom2d_BSplineCurve::EndPoint() const
 {
   if (mults->Value(knots->Upper()) == deg + 1)
@@ -271,8 +243,6 @@ gp_Pnt2d Geom2d_BSplineCurve::EndPoint() const
   else
     return Value(LastParameter());
 }
-
-//=================================================================================================
 
 int Geom2d_BSplineCurve::FirstUKnotIndex() const
 {
@@ -282,14 +252,10 @@ int Geom2d_BSplineCurve::FirstUKnotIndex() const
     return BSplCLib::FirstUKnotIndex(deg, mults->Array1());
 }
 
-//=================================================================================================
-
 double Geom2d_BSplineCurve::FirstParameter() const
 {
   return flatknots->Value(deg + 1);
 }
-
-//=================================================================================================
 
 double Geom2d_BSplineCurve::Knot(const int Index) const
 {
@@ -297,14 +263,10 @@ double Geom2d_BSplineCurve::Knot(const int Index) const
   return knots->Value(Index);
 }
 
-//=================================================================================================
-
 GeomAbs_BSplKnotDistribution Geom2d_BSplineCurve::KnotDistribution() const
 {
   return knotSet;
 }
-
-//=================================================================================================
 
 void Geom2d_BSplineCurve::Knots(NCollection_Array1<double>& K) const
 {
@@ -319,8 +281,6 @@ const NCollection_Array1<double>& Geom2d_BSplineCurve::Knots() const
   return knots->Array1();
 }
 
-//=================================================================================================
-
 void Geom2d_BSplineCurve::KnotSequence(NCollection_Array1<double>& K) const
 {
   Standard_DomainError_Raise_if(K.Lower() < flatknots->Lower() || K.Upper() > flatknots->Upper(),
@@ -334,8 +294,6 @@ const NCollection_Array1<double>& Geom2d_BSplineCurve::KnotSequence() const
   return flatknots->Array1();
 }
 
-//=================================================================================================
-
 int Geom2d_BSplineCurve::LastUKnotIndex() const
 {
   if (periodic)
@@ -344,14 +302,10 @@ int Geom2d_BSplineCurve::LastUKnotIndex() const
     return BSplCLib::LastUKnotIndex(deg, mults->Array1());
 }
 
-//=================================================================================================
-
 double Geom2d_BSplineCurve::LastParameter() const
 {
   return flatknots->Value(flatknots->Upper() - deg);
 }
-
-//=================================================================================================
 
 gp_Pnt2d Geom2d_BSplineCurve::LocalValue(const double U, const int FromK1, const int ToK2) const
 {
@@ -359,8 +313,6 @@ gp_Pnt2d Geom2d_BSplineCurve::LocalValue(const double U, const int FromK1, const
   LocalD0(U, FromK1, ToK2, P);
   return P;
 }
-
-//=================================================================================================
 
 void Geom2d_BSplineCurve::LocalD0(const double U,
                                   const int    FromK1,
@@ -384,8 +336,6 @@ void Geom2d_BSplineCurve::LocalD0(const double U,
                FMULTS,
                P);
 }
-
-//=================================================================================================
 
 void Geom2d_BSplineCurve::LocalD1(const double U,
                                   const int    FromK1,
@@ -411,8 +361,6 @@ void Geom2d_BSplineCurve::LocalD1(const double U,
                P,
                V1);
 }
-
-//=================================================================================================
 
 void Geom2d_BSplineCurve::LocalD2(const double U,
                                   const int    FromK1,
@@ -440,8 +388,6 @@ void Geom2d_BSplineCurve::LocalD2(const double U,
                V1,
                V2);
 }
-
-//=================================================================================================
 
 void Geom2d_BSplineCurve::LocalD3(const double U,
                                   const int    FromK1,
@@ -472,8 +418,6 @@ void Geom2d_BSplineCurve::LocalD3(const double U,
                V3);
 }
 
-//=================================================================================================
-
 gp_Vec2d Geom2d_BSplineCurve::LocalDN(const double U,
                                       const int    FromK1,
                                       const int    ToK2,
@@ -500,16 +444,12 @@ gp_Vec2d Geom2d_BSplineCurve::LocalDN(const double U,
   return V;
 }
 
-//=================================================================================================
-
 int Geom2d_BSplineCurve::Multiplicity(const int Index) const
 {
   Standard_OutOfRange_Raise_if(Index < 1 || Index > mults->Length(),
                                "Geom2d_BSplineCurve::Multiplicity");
   return mults->Value(Index);
 }
-
-//=================================================================================================
 
 void Geom2d_BSplineCurve::Multiplicities(NCollection_Array1<int>& M) const
 {
@@ -523,29 +463,21 @@ const NCollection_Array1<int>& Geom2d_BSplineCurve::Multiplicities() const
   return mults->Array1();
 }
 
-//=================================================================================================
-
 int Geom2d_BSplineCurve::NbKnots() const
 {
   return knots->Length();
 }
-
-//=================================================================================================
 
 int Geom2d_BSplineCurve::NbPoles() const
 {
   return poles->Length();
 }
 
-//=================================================================================================
-
 const gp_Pnt2d& Geom2d_BSplineCurve::Pole(const int Index) const
 {
   Standard_OutOfRange_Raise_if(Index < 1 || Index > poles->Length(), "Geom2d_BSplineCurve::Pole");
   return poles->Value(Index);
 }
-
-//=================================================================================================
 
 void Geom2d_BSplineCurve::Poles(NCollection_Array1<gp_Pnt2d>& P) const
 {
@@ -558,8 +490,6 @@ const NCollection_Array1<gp_Pnt2d>& Geom2d_BSplineCurve::Poles() const
   return poles->Array1();
 }
 
-//=================================================================================================
-
 gp_Pnt2d Geom2d_BSplineCurve::StartPoint() const
 {
   if (mults->Value(1) == deg + 1)
@@ -567,8 +497,6 @@ gp_Pnt2d Geom2d_BSplineCurve::StartPoint() const
   else
     return Value(FirstParameter());
 }
-
-//=================================================================================================
 
 double Geom2d_BSplineCurve::Weight(const int Index) const
 {
@@ -578,8 +506,6 @@ double Geom2d_BSplineCurve::Weight(const int Index) const
   else
     return 1.;
 }
-
-//=================================================================================================
 
 void Geom2d_BSplineCurve::Weights(NCollection_Array1<double>& W) const
 {
@@ -601,25 +527,17 @@ const NCollection_Array1<double>* Geom2d_BSplineCurve::Weights() const
   return BSplCLib::NoWeights();
 }
 
-//=================================================================================================
-
 bool Geom2d_BSplineCurve::IsRational() const
 {
   return !weights.IsNull();
 }
-
-//=================================================================================================
 
 void Geom2d_BSplineCurve::Transform(const gp_Trsf2d& T)
 {
   NCollection_Array1<gp_Pnt2d>& CPoles = poles->ChangeArray1();
   for (int I = 1; I <= CPoles.Length(); I++)
     CPoles(I).Transform(T);
-
-  //  maxderivinvok = 0;
 }
-
-//=================================================================================================
 
 void Geom2d_BSplineCurve::LocateU(const double U,
                                   const double ParametricTolerance,
@@ -636,7 +554,7 @@ void Geom2d_BSplineCurve::LocateU(const double U,
 
   const NCollection_Array1<double>& CKnots = TheKnots->Array1();
 
-  PeriodicNormalization(NewU); // Attention a la periode
+  PeriodicNormalization(NewU);
   double UFirst               = CKnots(1);
   double ULast                = CKnots(CKnots.Length());
   double PParametricTolerance = std::abs(ParametricTolerance);
@@ -677,8 +595,6 @@ void Geom2d_BSplineCurve::LocateU(const double U,
     }
   }
 }
-
-//=================================================================================================
 
 void Geom2d_BSplineCurve::Resolution(const double ToleranceUV, double& UTolerance)
 {

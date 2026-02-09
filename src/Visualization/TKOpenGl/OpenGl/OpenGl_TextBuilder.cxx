@@ -6,9 +6,7 @@
 
 namespace
 {
-  //! Apply floor to vector components.
-  //! @param  theVec - vector to change (by reference!)
-  //! @return modified vector
+
   inline NCollection_Vec2<float>& floor(NCollection_Vec2<float>& theVec)
   {
     theVec.x() = std::floor(theVec.x());
@@ -17,11 +15,7 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 OpenGl_TextBuilder::OpenGl_TextBuilder() = default;
-
-//=================================================================================================
 
 void OpenGl_TextBuilder::createGlyphs(
   const occ::handle<Font_TextFormatter>& theFormatter,
@@ -75,8 +69,6 @@ void OpenGl_TextBuilder::createGlyphs(
     NCollection_Vector<NCollection_Vec2<float>>& aVerts = *theVertsPerTexture.ChangeValue(aListId);
     NCollection_Vector<NCollection_Vec2<float>>& aTCrds = *theTCrdsPerTexture.ChangeValue(aListId);
 
-    // apply floor on position to avoid blurring issues
-    // due to cross-pixel coordinates
     aVerts.Append(floor(aTile.px.TopRight(aVec)));
     aVerts.Append(floor(aTile.px.TopLeft(aVec)));
     aVerts.Append(floor(aTile.px.BottomLeft(aVec)));
@@ -92,8 +84,6 @@ void OpenGl_TextBuilder::createGlyphs(
     aTCrds.Append(aRectUV.BottomLeft(aVec));
   }
 }
-
-//=================================================================================================
 
 void OpenGl_TextBuilder::Perform(
   const occ::handle<Font_TextFormatter>&                theFormatter,

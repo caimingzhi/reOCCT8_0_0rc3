@@ -8,15 +8,11 @@
 #include <math_Vector.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 Extrema_GenLocateExtCS::Extrema_GenLocateExtCS()
     : myDone(false),
       mySqDist(RealLast())
 {
 }
-
-//=================================================================================================
 
 Extrema_GenLocateExtCS::Extrema_GenLocateExtCS(const Adaptor3d_Curve&   C,
                                                const Adaptor3d_Surface& S,
@@ -28,8 +24,6 @@ Extrema_GenLocateExtCS::Extrema_GenLocateExtCS(const Adaptor3d_Curve&   C,
 {
   Perform(C, S, T, U, V, Tol1, Tol2);
 }
-
-//=================================================================================================
 
 void Extrema_GenLocateExtCS::Perform(const Adaptor3d_Curve&   C,
                                      const Adaptor3d_Surface& S,
@@ -80,14 +74,10 @@ void Extrema_GenLocateExtCS::Perform(const Adaptor3d_Curve&   C,
   myDone   = true;
 }
 
-//=================================================================================================
-
 bool Extrema_GenLocateExtCS::IsDone() const
 {
   return myDone;
 }
-
-//=================================================================================================
 
 double Extrema_GenLocateExtCS::SquareDistance() const
 {
@@ -98,8 +88,6 @@ double Extrema_GenLocateExtCS::SquareDistance() const
   return mySqDist;
 }
 
-//=================================================================================================
-
 const Extrema_POnCurv& Extrema_GenLocateExtCS::PointOnCurve() const
 {
   if (!IsDone())
@@ -108,8 +96,6 @@ const Extrema_POnCurv& Extrema_GenLocateExtCS::PointOnCurve() const
   }
   return myPoint1;
 }
-
-//=================================================================================================
 
 const Extrema_POnSurf& Extrema_GenLocateExtCS::PointOnSurface() const
 {

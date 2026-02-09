@@ -94,7 +94,7 @@ Standard_EXPORT NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>, TColle
                 GetMapOfAIS();
 #endif
 
-static int OCC128(Draw_Interpretor& di, int /*argc*/, const char** argv)
+static int OCC128(Draw_Interpretor& di, int, const char** argv)
 {
   occ::handle<AIS_InteractiveContext> myAISContext = ViewerTest::GetAISContext();
   if (myAISContext.IsNull())
@@ -113,7 +113,6 @@ static int OCC128(Draw_Interpretor& di, int /*argc*/, const char** argv)
   myTrihedron->SetSize(100);
   myAISContext->Display(myTrihedron, true);
 
-  //  TopoDS_Shape shape1 = (TopoDS_Shape) BRepPrimAPI_MakeBox(50,50,50);
   TopoDS_Shape           shape1 = BRepPrimAPI_MakeBox(50, 50, 50).Shape();
   occ::handle<AIS_Shape> AS     = new AIS_Shape(shape1);
   AS->SetDisplayMode(1);
@@ -132,7 +131,7 @@ static int OCC128(Draw_Interpretor& di, int /*argc*/, const char** argv)
   return 0;
 }
 
-static int OCC136(Draw_Interpretor& di, int argc, const char** /*argv*/)
+static int OCC136(Draw_Interpretor& di, int argc, const char**)
 {
   if (argc > 1)
   {
@@ -140,18 +139,16 @@ static int OCC136(Draw_Interpretor& di, int argc, const char** /*argv*/)
     return 1;
   }
 
-  // create some primitives:
-  //  Two basic points:
   double Size = 100;
   gp_Pnt P0(0, 0, 0), P1(Size, Size, Size);
-  // box
+
   TopoDS_Solid aBox = BRepPrimAPI_MakeBox(P0, P1);
-  // sphere
+
   TopoDS_Solid aSphere = BRepPrimAPI_MakeSphere(Size * 0.5);
-  // cone
+
   gp_Ax2       anAx2(P1, gp_Dir(1, 1, 1));
   TopoDS_Solid aCone = BRepPrimAPI_MakeCone(anAx2, Size * 0.7, Size * 0.3, Size);
-  // cylinder
+
   anAx2.SetLocation(gp_Pnt(Size, 0, 0));
   anAx2.SetDirection(gp_Dir(-1, -1, 1));
   TopoDS_Solid aCyl = BRepPrimAPI_MakeCylinder(anAx2, Size * 0.5, Size);
@@ -165,7 +162,6 @@ static int OCC136(Draw_Interpretor& di, int argc, const char** /*argv*/)
 
   anAISCtx->EraseAll(false);
 
-  // load primitives to context
   occ::handle<AIS_InteractiveObject> aSh1 = new AIS_Shape(aBox);
   anAISCtx->Display(aSh1, false);
 
@@ -178,14 +174,12 @@ static int OCC136(Draw_Interpretor& di, int argc, const char** /*argv*/)
   occ::handle<AIS_InteractiveObject> aSh4 = new AIS_Shape(aCyl);
   anAISCtx->Display(aSh4, false);
 
-  // set selected
   anAISCtx->InitSelected();
   anAISCtx->AddOrRemoveSelected(aSh1, false);
   anAISCtx->AddOrRemoveSelected(aSh2, false);
   anAISCtx->AddOrRemoveSelected(aSh3, false);
   anAISCtx->AddOrRemoveSelected(aSh4, false);
 
-  // remove all this objects from context
   anAISCtx->Remove(aSh1, false);
   anAISCtx->Remove(aSh2, false);
   anAISCtx->Remove(aSh3, false);
@@ -229,28 +223,9 @@ static int BUC60610(Draw_Interpretor& di, int argc, const char** argv)
   return (1);
 }
 
-//====================================================
-//
-// Following code is inserted from
-// /dn03/KAS/dev/QAopt/src/QADraw/QADraw_TOPOLOGY.cxx
-// ( 75455 Apr 16 18:59)
-//
-//====================================================
-
-// OCC105
 #include <BRepTools_WireExplorer.hpp>
 #include <GCPnts_UniformAbscissa.hpp>
 #include <TopExp.hpp>
-
-//
-// usage : OCC105 shape
-//
-// comments:
-// GCPnts_UniformAbscissa returns bad end point foe first edge. Its value is
-
-// Value Pnt = -338.556216693211 -394.465571897208 0
-// should be
-// Value Pnt = -307.47165394 -340.18073533 0
 
 static int OCC105(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -259,10 +234,10 @@ static int OCC105(Draw_Interpretor& di, int argc, const char** argv)
     di << "Usage : OCC105 shape\n";
     return 1;
   }
-  //  TopoDS_Wire myTopoDSWire = TopoDS::Wire(DBRep::Get("aa.brep"));
+
   TopoDS_Wire myTopoDSWire = TopoDS::Wire(DBRep::Get(argv[1]));
-  double      l            = 0.5; // Draw::Atof(argv[2]);
-  // Find the first vertex of the wire
+  double      l            = 0.5;
+
   BRepTools_WireExplorer wire_exp(myTopoDSWire);
   TopoDS_Vertex          vlast;
   {
@@ -275,7 +250,7 @@ static int OCC105(Draw_Interpretor& di, int argc, const char** argv)
       vlast = vw1;
     else
     {
-      //      assert(vw2.IsSame(ve1) || vw2.IsSame(ve2));
+
       vlast = vw2;
     }
   }
@@ -297,8 +272,7 @@ static int OCC105(Draw_Interpretor& di, int argc, const char** argv)
     }
     else
     {
-      //          assert(ve2.IsSame(vlast));
-      //          assert ( wire_exp.Orientation( ) == TopAbs_REVERSED );
+
       acurve    = BRep_Tool::Curve(edge, ufirst, ulast);
       newufirst = acurve->ReversedParameter(ufirst);
       newulast  = acurve->ReversedParameter(ulast);
@@ -359,7 +333,7 @@ static int pipe_OCC9(Draw_Interpretor& di, int n, const char** a)
   }
   else
   {
-    aPipe.Perform(true /*, true*/);
+    aPipe.Perform(true);
   }
 
   if (!aPipe.IsDone())
@@ -373,11 +347,6 @@ static int pipe_OCC9(Draw_Interpretor& di, int n, const char** a)
   DrawTrSurf::Set(a[1], aSurf);
   return 0;
 }
-
-//======================================================================
-// OCC125
-// usage : OCC125 shell
-//======================================================================
 
 int OCC125(Draw_Interpretor& di, int n, const char** a)
 {
@@ -404,7 +373,7 @@ int OCC125(Draw_Interpretor& di, int n, const char** a)
   }
 
   const TopoDS_Shell& aShell = TopoDS::Shell(S);
-  //
+
   bool isAccountMultiConex, bNonManifold, bResult;
 
   isAccountMultiConex = true;
@@ -423,14 +392,14 @@ int OCC125(Draw_Interpretor& di, int n, const char** a)
   aRName = aRName + aDef;
   DBRep::Set(aRName.ToCString(), aShape);
   di << aRName.ToCString();
-  //
+
   return 0;
 }
 
 #include <BRepLib_FindSurface.hpp>
 
 int OCC157(Draw_Interpretor& di, int n, const char** a)
-// static int findplanarsurface(Draw_Interpretor&, int n, const char ** a)
+
 {
   if (n < 3)
   {
@@ -438,7 +407,6 @@ int OCC157(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  // try to read a shape:
   TopoDS_Shape inputShape = DBRep::Get(a[2]);
   if (inputShape.IsNull() || inputShape.ShapeType() != TopAbs_WIRE)
   {
@@ -464,7 +432,6 @@ int OCC157(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-// #include <MyCommandsCMD.h>
 #include <ShapeFix_Shape.hpp>
 #include <BRepOffsetAPI_MakeOffset.hpp>
 #include <GeomAbs_JoinType.hpp>
@@ -473,18 +440,6 @@ int OCC157(Draw_Interpretor& di, int n, const char** a)
 
 int OCC165(Draw_Interpretor& di, int n, const char** a)
 
-//=======================================================================
-
-// static int YOffset (Draw_Interpretor& di, int argc, const char ** argv);
-
-// void MyOffsets_Commands(Draw_Interpretor& theCommands)
-// {
-// 	theCommands.Add("yoffset" , "yoffset" , __FILE__, YOffset, " Offset on Z Direction");
-// }
-
-//=======================================================================
-
-// static int YOffset (Draw_Interpretor& di, int argc, const char ** argv)
 {
   if (n > 2)
   {
@@ -500,8 +455,7 @@ int OCC165(Draw_Interpretor& di, int n, const char** a)
 
   BRep_Builder aBuilder;
   TopoDS_Shape theShape;
-  // BRepTools::Read(theShape, static_cast<const
-  // char*>("/dn02/users_SUN/inv/3/OCC165/2d_tr_line.brep"), aBuilder);
+
   BRepTools::Read(theShape, file, aBuilder);
   DBRep::Set("shape", theShape);
 
@@ -529,14 +483,14 @@ int OCC165(Draw_Interpretor& di, int n, const char** a)
 
   double anOffset = 10;
 
-#endif /* _OFFSET_TELCO_ */
+#endif
 
   TopoDS_Face theFace = BRepBuilderAPI_MakeFace(theWire).Face();
   DBRep::Set("face", theFace);
 
   double           anAlt   = 0.;
   GeomAbs_JoinType theJoin = GeomAbs_Intersection;
-  // GeomAbs_Intersection; //GeomAbs_Arc;
+
   BRepOffsetAPI_MakeOffset aMakeOffset(theFace, theJoin);
   aMakeOffset.AddWire(theWire);
 
@@ -545,7 +499,6 @@ int OCC165(Draw_Interpretor& di, int n, const char** a)
   TopoDS_Shape theOffsetShapePos = aMakeOffset.Shape();
   DBRep::Set("offset", theOffsetShapePos);
   return 0;
-  // 	return TCL_OK;
 }
 
 #include <BRepAlgoAPI_Cut.hpp>
@@ -557,7 +510,7 @@ int OCC165(Draw_Interpretor& di, int n, const char** a)
 #include <BRepBuilderAPI_MakeEdge.hpp>
 #include <BRepBuilderAPI_MakeWire.hpp>
 
-static int OCC297(Draw_Interpretor& di, int /*argc*/, const char** argv)
+static int OCC297(Draw_Interpretor& di, int, const char** argv)
 
 {
   occ::handle<AIS_InteractiveContext> myAISContext = ViewerTest::GetAISContext();
@@ -629,7 +582,7 @@ static int OCC305(Draw_Interpretor& di, int argc, const char** argv)
 
   TopoDS_Shape sh;
   BRep_Builder builder;
-  // BRepTools::Read(sh, "/dn02/users_SUN/inv/3/OCC305/testc.brep", builder);
+
   BRepTools::Read(sh, file, builder);
 
   TopoDS_Wire wire;
@@ -651,18 +604,6 @@ static int OCC305(Draw_Interpretor& di, int argc, const char** argv)
     printf("\n length = %f", lprop.Mass());
   }
   DBRep::Set("Wire", wire);
-  // occ::handle<AIS_Shape> res = new AIS_Shape( wire );
-  // aContext->SetColor( res, Quantity_NOC_RED );
-  // aContext->Display( res );
-
-  // BRepOffsetAPI_MakeOffset off(wire, GeomAbs_Arc);
-  // off.Perform(0.5, 0);
-
-  // printf("\n IsDone = %d", off.IsDone());
-  // sh = off.Shape();
-  // res = new AIS_Shape( sh );
-  // aContext->SetColor( res, Quantity_NOC_GREEN );
-  // aContext->Display( res );
 
   return 0;
 }
@@ -851,24 +792,20 @@ int OCC299bug(Draw_Interpretor& theDi, int theArgNb, const char** theArgVec)
 #include <TDF_Label.hpp>
 #include <XCAFPrs_Driver.hpp>
 
-//=================================================================================================
-
 static int OCC363(Draw_Interpretor& di, int argc, const char** argv)
 {
   try
   {
     OCC_CATCH_SIGNALS
-    // 1. Verufy amount of arguments
+
     if (argc < 3)
     {
       di << "Error OCC363 : Use : OCC363 document filename\n";
       return 1;
     }
 
-    // 2. Retrieve DDocStd application
     occ::handle<TDocStd_Application> App = DDocStd::GetApplication();
 
-    // 3. Open document
     TCollection_ExtendedString    name(argv[2]);
     occ::handle<TDocStd_Document> Doc;
     if (App->Open(name, Doc) != PCDM_RS_OK)
@@ -880,7 +817,6 @@ static int OCC363(Draw_Interpretor& di, int argc, const char** argv)
     TDataStd_Name::Set(Doc->GetData()->Root(), argv[1]);
     Draw::Set(argv[1], DD);
 
-    // 4. Create prsentations
     occ::handle<XCAFDoc_ShapeTool>  shapes = XCAFDoc_DocumentTool::ShapeTool(Doc->Main());
     NCollection_Sequence<TDF_Label> seq;
     shapes->GetFreeShapes(seq);
@@ -899,86 +835,34 @@ static int OCC363(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-// Must use OCC299
-////======================================================================================
-//// Function : OCC372
-//// Purpose  :
-////======================================================================================
-// static int OCC372 (Draw_Interpretor& di, int argc, const char ** argv)
-//{
-//   try
-//   {
-//     OCC_CATCH_SIGNALS
-//     // 1. Verufy amount of arguments
-//     if(argc < 2) {di << "OCC372 FAULTY. Use : OCC372 brep-file";return 0;}
-//
-//     // 2. Read solid
-//     BRep_Builder B;
-//     TopoDS_Shape Ref;
-//     BRepTools::Read(Ref, argv[1], B);
-//
-//     // 3. Calculate location of aP3d in relation to the solid
-//     gp_Pnt aP3d(6311.4862583184, -2841.3092756034, 16.461053497188);
-//     BRepClass3d_SolidClassifier SC(Ref);
-//     SC.Perform(aP3d, 1e-7);
-//
-//     // 4. Check returned state. The point must be inside the solid.
-//     TopAbs_State aState=SC.State();
-//     switch (aState)
-//     {
-//     case TopAbs_OUT:
-//       di<<"OCC372 FAULTY. aState = TopAbs_OUT";
-//       return 0;
-//     case TopAbs_ON:
-//       di<<"OCC372 FAULTY. aState = TopAbs_ON";
-//      return 0;
-//     case TopAbs_IN:
-//       di<<"OCC372 OK. aState = TopAbs_IN" ;
-//       return 0;
-//     default:
-//       di<<"OCC372 FAULTY. aState = UNKNOWN";
-//       return 0;
-//     }
-//   }
-//   catch (Standard_Failure) { di<<"OCC372 FAULTY. Exception raised"; }
-//
-//   return 0;
-// }
-
 #include <BRepTopAdaptor_FClass2d.hpp>
-
-//=================================================================================================
 
 static int OCC377(Draw_Interpretor& di, int argc, const char** argv)
 {
   try
   {
     OCC_CATCH_SIGNALS
-    // 1. Verify validity of arguments
+
     if (argc < 1)
     {
       di << "Error OCC377. Use  OCC377 file x y precuv \n";
       return 0;
     }
 
-    // 2. Initialize parameters
     gp_Pnt2d p2d;
     p2d.SetX(Draw::Atof(argv[2]));
     p2d.SetY(Draw::Atof(argv[3]));
     double precuv = Draw::Atof(argv[4]);
 
-    // 3. Read shape
     BRep_Builder B;
     TopoDS_Shape Shape;
     BRepTools::Read(Shape, argv[1], B);
 
-    // 4. Verify whether enrtry point is on wire and reversed ones (indeed results of veridying must
-    // be same)
     TopExp_Explorer exp;
     int             i = 1;
     for (exp.Init(Shape.Oriented(TopAbs_FORWARD), TopAbs_WIRE); exp.More(); exp.Next(), i++)
     {
-      // 4.1. Verify whether enrtry point is on wire
+
       const TopoDS_Wire& wir     = TopoDS::Wire(exp.Current());
       TopoDS_Face        newFace = TopoDS::Face(Shape.EmptyCopied());
 
@@ -988,9 +872,6 @@ static int OCC377(Draw_Interpretor& di, int argc, const char** argv)
 
       BRepTopAdaptor_FClass2d FClass2d1(newFace, precuv);
       TopAbs_State            stat1 = FClass2d1.PerformInfinitePoint();
-      // di << "Wire " << i << ": Infinite point is " <<
-      //   ( stat1 == TopAbs_IN ? "IN" : stat1 == TopAbs_OUT ? "OUT" : stat1 == TopAbs_ON ? "ON" :
-      //   "UNKNOWN" ) << "\n";
 
       TCollection_AsciiString TmpString;
       stat1 == TopAbs_IN    ? TmpString.AssignCat("IN")
@@ -1000,9 +881,6 @@ static int OCC377(Draw_Interpretor& di, int argc, const char** argv)
       di << "Wire " << i << ": Infinite point is " << TmpString.ToCString() << "\n";
 
       stat1 = FClass2d1.Perform(p2d);
-      // di << "Wire " << i << ": point ( " << p2d.X() << ", " << p2d.Y() << " ) is " <<
-      //   ( stat1 == TopAbs_IN ? "IN" : stat1 == TopAbs_OUT ? "OUT" : stat1 == TopAbs_ON ? "ON" :
-      //   "UNKNOWN" ) << "\n";
 
       TmpString.Clear();
       stat1 == TopAbs_IN    ? TmpString.AssignCat("IN")
@@ -1012,16 +890,12 @@ static int OCC377(Draw_Interpretor& di, int argc, const char** argv)
       di << "Wire " << i << ": point ( " << p2d.X() << ", " << p2d.Y() << " ) is "
          << TmpString.ToCString() << "\n";
 
-      // 4.2. Verify whether enrtry point is on reversed wire
       newFace = TopoDS::Face(Shape.EmptyCopied());
       newFace.Orientation(TopAbs_FORWARD);
       orWire = TopAbs::Reverse(orWire);
       B.Add(newFace, wir.Oriented(orWire));
       BRepTopAdaptor_FClass2d FClass2d2(newFace, precuv);
       TopAbs_State            stat2 = FClass2d2.PerformInfinitePoint();
-      // di << "Reversed Wire " << i << ": Infinite point is " <<
-      //   ( stat2 == TopAbs_IN ? "IN" : stat2 == TopAbs_OUT ? "OUT" : stat2 == TopAbs_ON ? "ON" :
-      //   "UNKNOWN" ) << "\n";
 
       TmpString.Clear();
       stat2 == TopAbs_IN    ? TmpString.AssignCat("IN")
@@ -1031,9 +905,6 @@ static int OCC377(Draw_Interpretor& di, int argc, const char** argv)
       di << "Reversed Wire " << i << ": Infinite point is " << TmpString.ToCString() << "\n";
 
       stat2 = FClass2d2.Perform(p2d);
-      // di << "Reversed Wire " << i << ": point ( " << p2d.X() << ", " << p2d.Y() << " ) is " <<
-      //   ( stat2 == TopAbs_IN ? "IN" : stat2 == TopAbs_OUT ? "OUT" : stat2 == TopAbs_ON ? "ON" :
-      //   "UNKNOWN" ) << "\n";
 
       TmpString.Clear();
       stat2 == TopAbs_IN    ? TmpString.AssignCat("IN")
@@ -1043,7 +914,6 @@ static int OCC377(Draw_Interpretor& di, int argc, const char** argv)
       di << "Reversed Wire " << i << ": point ( " << p2d.X() << ", " << p2d.Y() << " ) is "
          << TmpString.ToCString() << "\n";
 
-      // 4.3. Compare results (they must be same)
       if (stat1 == stat2)
         di << "OCC377 OK\n";
       else
@@ -1064,14 +934,12 @@ static int OCC377(Draw_Interpretor& di, int argc, const char** argv)
 #include <ShapeUpgrade_ShapeDivideAngle.hpp>
 #include <ShapeBuild_ReShape.hpp>
 
-//=================================================================================================
-
 static int OCC22(Draw_Interpretor& di, int argc, const char** argv)
 {
   try
   {
     OCC_CATCH_SIGNALS
-    // 1. Verify arguments of the command
+
     if (argc < 5)
     {
       di
@@ -1082,13 +950,12 @@ static int OCC22(Draw_Interpretor& di, int argc, const char** argv)
     bool aConsiderLocation;
     aConsiderLocation = strcmp(argv[4], "0") != 0;
 
-    // 2. Iniitialize aShapeUpgrade
     ShapeUpgrade_ShapeDivideAngle aShapeUpgrade(M_PI / 2.);
-    // precision
+
     aShapeUpgrade.SetPrecision(Precision::Confusion());
-    // tolerance
+
     aShapeUpgrade.SetMaxTolerance(0.1);
-    // subshapes to be divided
+
     TopoDS_Shape aSubShapesToBeDivided = DBRep::Get(argv[3]);
     if (aSubShapesToBeDivided.IsNull())
     {
@@ -1097,13 +964,12 @@ static int OCC22(Draw_Interpretor& di, int argc, const char** argv)
       return 0;
     }
     aShapeUpgrade.Init(aSubShapesToBeDivided);
-    // context
+
     occ::handle<ShapeBuild_ReShape> aReshape = new ShapeBuild_ReShape;
     aShapeUpgrade.SetContext(aReshape);
     if (aConsiderLocation)
       aReshape->ModeConsiderLocation() = true;
 
-    // 3. Perform splitting
     if (aShapeUpgrade.Perform(false))
       di << "Upgrade_SplitRevolution_Done \n";
     else if (aShapeUpgrade.Status(ShapeExtend_OK))
@@ -1114,17 +980,15 @@ static int OCC22(Draw_Interpretor& di, int argc, const char** argv)
       return 0;
     }
 
-    // 4. Perform rebuilding shape
-    // 4.1. Retrieve Shape
     TopoDS_Shape anInitShape = DBRep::Get(argv[2]);
     if (anInitShape.IsNull())
     {
       di << "OCC22 FAULTY. Initial shape is not exist. Please verify input values \n";
       return 0;
     }
-    // 4.2 Rebuild retrieved shape
+
     TopoDS_Shape aResultShape = aReshape->Apply(anInitShape);
-    // 4.3. Create result Draw shape
+
     DBRep::Set(argv[1], aResultShape);
   }
   catch (Standard_Failure const&)
@@ -1143,14 +1007,12 @@ static int OCC22(Draw_Interpretor& di, int argc, const char** argv)
 #include <BRepMesh_IncrementalMesh.hpp>
 #include <IMeshTools_Parameters.hpp>
 
-//=================================================================================================
-
 static int OCC24(Draw_Interpretor& di, int argc, const char** argv)
 {
   try
   {
     OCC_CATCH_SIGNALS
-    // 1. Verify amount of arguments of the command
+
     if (argc < 6)
     {
       di << "OCC24 FAULTY. Use : OCC22 Result Shape CompoundOfSubshapes ResourceFileName "
@@ -1158,34 +1020,30 @@ static int OCC24(Draw_Interpretor& di, int argc, const char** argv)
       return 0;
     }
 
-    // 2. Retrieve parameters
-    // initial shape
     TopoDS_Shape anInitShape = DBRep::Get(argv[2]);
     if (anInitShape.IsNull())
     {
       di << "OCC24 FAULTY. Initial shape is not exist. Please verify input values \n";
       return 0;
     }
-    // compound of subshapes
+
     TopoDS_Shape aSubShapes = DBRep::Get(argv[3]);
     if (aSubShapes.IsNull())
     {
       di << "OCC24 FAULTY. Compound of subshapes is not exist. Please, verify input values. \n";
       return 0;
     }
-    // name of resource file
+
     const char* aResourceFile = argv[4];
-    // name of sequence from resource file to be executed
+
     const char* aSequenceName = argv[5];
 
-    // 3. Initialize ShapeContext and perform sequence of operation specified with resource file
     ShapeProcess_OperLibrary::Init();
     occ::handle<ShapeProcess_ShapeContext> aShapeContext =
       new ShapeProcess_ShapeContext(aSubShapes, aResourceFile);
     aShapeContext->SetDetalisation(TopAbs_EDGE);
     ShapeProcess::Perform(aShapeContext, aSequenceName);
 
-    // 4. Rebuild initil shape in accordance with performed operation
     occ::handle<ShapeBuild_ReShape> aReshape = new ShapeBuild_ReShape;
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator anIter(
       aShapeContext->Map());
@@ -1193,7 +1051,6 @@ static int OCC24(Draw_Interpretor& di, int argc, const char** argv)
       aReshape->Replace(anIter.Key(), anIter.Value());
     TopoDS_Shape aResultShape = aReshape->Apply(anInitShape);
 
-    // 5 Create resultant Draw shape
     DBRep::Set(argv[1], aResultShape);
   }
   catch (Standard_Failure const&)
@@ -1205,23 +1062,18 @@ static int OCC24(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=======================================================================
-// function : OCC369
-// purpose  : Verify whether exception occurs during building mesh
-//=======================================================================
 static int OCC369(Draw_Interpretor& di, int argc, const char** argv)
 {
   try
   {
     OCC_CATCH_SIGNALS
-    // 1. Verify amount of arguments of the command
+
     if (argc < 2)
     {
       di << "OCC369 FAULTY. Use : OCC369 Shape \n";
       return 0;
     }
 
-    // 2. Retrieve shape
     TopoDS_Shape aShape = DBRep::Get(argv[1]);
     if (aShape.IsNull())
     {
@@ -1229,7 +1081,6 @@ static int OCC369(Draw_Interpretor& di, int argc, const char** argv)
       return 0;
     }
 
-    // 3. Build mesh
     IMeshTools_Parameters aMeshParams;
     aMeshParams.Relative   = true;
     aMeshParams.Deflection = 0.2;
@@ -1277,15 +1128,8 @@ static int OCC524(Draw_Interpretor& di, int argc, const char** argv)
                      UpperColMatrix,
                      InitialValueMatrix);
 
-  // Vector.Dump(std::cout);
-  // std::cout<<std::endl;
-
-  // Matrix.Dump(std::cout);
-  // std::cout<<std::endl;
-
   Vector1.Multiply(Vector, Matrix);
 
-  // Vector1.Dump(std::cout);
   Standard_SStream aSStream1;
   Vector1.Dump(aSStream1);
   di << aSStream1;
@@ -1297,7 +1141,6 @@ static int OCC524(Draw_Interpretor& di, int argc, const char** argv)
   }
   Vector2.TMultiply(Vector, Matrix);
 
-  // Vector2.Dump(std::cout);
   Standard_SStream aSStream2;
   Vector2.Dump(aSStream2);
   di << aSStream2;
@@ -1308,14 +1151,10 @@ static int OCC524(Draw_Interpretor& di, int argc, const char** argv)
 
 #include <GeomPlate_BuildPlateSurface.hpp>
 
-//=================================================================================================
-
 #include <gce_MakeRotation.hpp>
 #include <gce_MakeTranslation.hpp>
 #include <BRepBuilderAPI_Transform.hpp>
 #include <BRepPrimAPI_MakeWedge.hpp>
-
-//=================================================================================================
 
 static int OCC578(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1330,15 +1169,8 @@ static int OCC578(Draw_Interpretor& di, int argc, const char** argv)
   double yperiod   = 1.0;
   double sub_thick = 0.5;
 
-  // mask_substrate
-  // TopoDS_Shape substrate = BRepPrimAPI_MakeBox( P0, xperiod, yperiod, sub_thick );
   TopoDS_Shape substrate = BRepPrimAPI_MakeBox(P0, xperiod, yperiod, sub_thick).Shape();
 
-  // --------------------------------------------------------------------
-
-  // wedge
-  // TopoDS_Shape wedge1 = BRepPrimAPI_MakeWedge(0.5, 0.05, 0.5,
-  //				      0.1,  0.1  , 0.4, 0.4 );
   TopoDS_Shape wedge1 = BRepPrimAPI_MakeWedge(0.5, 0.05, 0.5, 0.1, 0.1, 0.4, 0.4).Shape();
 
   gp_Trsf rotate = gce_MakeRotation(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(gp_Dir::D::X), 1.570795);
@@ -1356,11 +1188,6 @@ static int OCC578(Draw_Interpretor& di, int argc, const char** argv)
   }
   DBRep::Set(argv[1], wedge1a);
 
-  // --------------------------------------------------------------------
-
-  // wedge top
-  // TopoDS_Shape wedge2 = BRepPrimAPI_MakeWedge(0.5, 0.3, 0.5,
-  //				      0.1,  0.1  , 0.4, 0.4 );
   TopoDS_Shape wedge2 = BRepPrimAPI_MakeWedge(0.5, 0.3, 0.5, 0.1, 0.1, 0.4, 0.4).Shape();
 
   gp_Trsf rotate2 = gce_MakeRotation(gp_Pnt(0.0, 0.0, 0.0), gp_Dir(gp_Dir::D::X), 1.570795 * 3.0);
@@ -1378,7 +1205,6 @@ static int OCC578(Draw_Interpretor& di, int argc, const char** argv)
   }
   DBRep::Set(argv[2], wedge2a);
 
-  // combine wedges
   di << "wedge_common = BRepAlgoAPI_Fuse(wedge1a , wedge2a)\n";
   TopoDS_Shape wedge_common = BRepAlgoAPI_Fuse(wedge1a, wedge2a).Shape();
 
@@ -1400,8 +1226,6 @@ static int OCC578(Draw_Interpretor& di, int argc, const char** argv)
 #if defined(DDataStd_def01)
   #include <DDataStd_DrawPresentation.hpp>
 
-//=================================================================================================
-
 static int OCC739_DrawPresentation(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 1)
@@ -1410,15 +1234,13 @@ static int OCC739_DrawPresentation(Draw_Interpretor& di, int argc, const char** 
     return -1;
   }
   const Standard_GUID& guid = DDataStd_DrawPresentation::GetID();
-  // guid.ShallowDump(std::cout);
+
   Standard_SStream aSStream;
   guid.ShallowDump(aSStream);
   di << aSStream;
   return 0;
 }
 #endif
-
-//=================================================================================================
 
 static int OCC708(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1458,11 +1280,7 @@ static int OCC708(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 #include <GeomAPI_ProjectPointOnSurf.hpp>
-
-//=================================================================================================
 
 static int OCC867(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -1493,8 +1311,6 @@ static int OCC867(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int OCC909(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 3)
@@ -1503,8 +1319,8 @@ static int OCC909(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  TopoDS_Wire awire = TopoDS::Wire(DBRep::Get(argv[1])); // read the wire
-  TopoDS_Face aface = TopoDS::Face(DBRep::Get(argv[2])); // read the face
+  TopoDS_Wire awire = TopoDS::Wire(DBRep::Get(argv[1]));
+  TopoDS_Face aface = TopoDS::Face(DBRep::Get(argv[2]));
   if (awire.IsNull() || aface.IsNull())
   {
     di << "Null object\n";
@@ -1526,8 +1342,6 @@ static int OCC909(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int OCC921(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 2)
@@ -1536,7 +1350,7 @@ static int OCC921(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
   double      u1, u2, v1, v2;
-  TopoDS_Face F = TopoDS::Face(DBRep::Get(argv[1])); // read the shape
+  TopoDS_Face F = TopoDS::Face(DBRep::Get(argv[1]));
   if (F.IsNull())
     return 1;
   BRepTools::UVBounds(F, u1, u2, v1, v2);
@@ -1547,15 +1361,8 @@ static int OCC921(Draw_Interpretor& di, int argc, const char** argv)
 #include <Expr_NamedUnknown.hpp>
 #include <Expr_GeneralExpression.hpp>
 
-//=================================================================================================
-
 #include <DDF.hpp>
 #include <TPrsStd_AISViewer.hpp>
-
-//=======================================================================
-// function : OCC1029_AISTransparency
-// purpose  : OCC1029_AISTransparency  (DOC,entry,[real])
-//=======================================================================
 
 static int OCC1029_AISTransparency(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -1591,11 +1398,6 @@ static int OCC1029_AISTransparency(Draw_Interpretor& di, int nb, const char** ar
   return 1;
 }
 
-//=======================================================================
-// function : OCC1031_AISMaterial
-// purpose  : OCC1031_AISMaterial (DOC,entry,[material])
-//=======================================================================
-
 static int OCC1031_AISMaterial(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb >= 3)
@@ -1629,11 +1431,6 @@ static int OCC1031_AISMaterial(Draw_Interpretor& di, int nb, const char** arg)
   di << arg[0] << " : Error\n";
   return 1;
 }
-
-//=======================================================================
-// function : OCC1032_AISWidth
-// purpose  : OCC1032_AISWidth (DOC,entry,[width])
-//=======================================================================
 
 static int OCC1032_AISWidth(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -1669,11 +1466,6 @@ static int OCC1032_AISWidth(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=======================================================================
-// function : OCC1033_AISMode
-// purpose  : OCC1033_AISMode (DOC,entry,[mode])
-//=======================================================================
-
 static int OCC1033_AISMode(Draw_Interpretor& di, int nb, const char** arg)
 {
   if (nb >= 3)
@@ -1707,11 +1499,6 @@ static int OCC1033_AISMode(Draw_Interpretor& di, int nb, const char** arg)
   di << arg[0] << " : Error\n";
   return 1;
 }
-
-//=======================================================================
-// function : OCC1034_AISSelectionMode
-// purpose  : OCC1034_AISSelectionMode (DOC,entry,[selectionmode])
-//=======================================================================
 
 static int OCC1034_AISSelectionMode(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -1747,8 +1534,6 @@ static int OCC1034_AISSelectionMode(Draw_Interpretor& di, int nb, const char** a
   return 1;
 }
 
-//=================================================================================================
-
 static int OCC1487(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc != 5)
@@ -1759,7 +1544,6 @@ static int OCC1487(Draw_Interpretor& di, int argc, const char** argv)
 
   int CaseNumber = Draw::Atoi(argv[1]);
 
-  // BRepPrimAPI_MakeCylinder o_mc1 (gp_Ax2 (gp_Pnt(0,-50,140), gp_Dir(gp_Dir::D::X)), 50,1000);
   gp_Dir                   myDir(gp_Dir::D::X);
   gp_Pnt                   myPnt(0, -50, 140);
   gp_Ax2                   myAx2(myPnt, myDir);
@@ -1771,8 +1555,7 @@ static int OCC1487(Draw_Interpretor& di, int argc, const char** argv)
   TopoDS_Shape o_cut_shape;
   if (CaseNumber == 1)
   {
-    // BRepPrimAPI_MakeCylinder o_mc2 (gp_Ax2 (gp_Pnt(21.65064, -50.0, 127.5),gp_Dir(-sin(M_PI/3),
-    // 0.0, 0.5)), 5, 150);
+
     gp_Dir                   myDir_mc2(-sin(M_PI / 3), 0.0, 0.5);
     gp_Pnt                   myPnt_mc2(21.65064, -50.0, 127.5);
     gp_Ax2                   myAx2_mc2(myPnt_mc2, myDir_mc2);
@@ -1784,8 +1567,7 @@ static int OCC1487(Draw_Interpretor& di, int argc, const char** argv)
   }
   else
   {
-    // BRepPrimAPI_MakeCylinder o_mc2 (gp_Ax2 (gp_Pnt(978.34936, -50.0, 127.5),gp_Dir(sin(M_PI/3),
-    // 0.0, 0.5)), 5, 150);
+
     gp_Dir                   myDir_mc2(sin(M_PI / 3), 0.0, 0.5);
     gp_Pnt                   myPnt_mc2(978.34936, -50.0, 127.5);
     gp_Ax2                   myAx2_mc2(myPnt_mc2, myDir_mc2);
@@ -1805,8 +1587,6 @@ static int OCC1487(Draw_Interpretor& di, int argc, const char** argv)
 
 #include <NCollection_List.hpp>
 #include <BRepFilletAPI_MakeFillet.hpp>
-
-//=================================================================================================
 
 TopoDS_Shape OCC1077_boolbl(BRepAlgoAPI_BooleanOperation& aBoolenaOperation, const double aRadius)
 {
@@ -1859,16 +1639,10 @@ TopoDS_Shape OCC1077_cut_blend(const TopoDS_Shape& aShapeToCut,
                                const TopoDS_Shape& aTool,
                                const double        aRadius)
 {
-  // return OCC1077_boolbl(BRepAlgoAPI_Cut(aShapeToCut, aTool),aRadius);
+
   BRepAlgoAPI_Cut aCut(aShapeToCut, aTool);
   return OCC1077_boolbl(aCut, aRadius);
 }
-
-// TopoDS_Shape OCC1077_common_blend(const TopoDS_Shape& aShape1, const TopoDS_Shape& aShape2, const
-// double aRadius)
-//{
-//   return OCC1077_boolbl(BRepAlgoAPI_Common(aShape1, aShape2),aRadius);
-// }
 
 TopoDS_Shape OCC1077_Bug()
 {
@@ -1911,11 +1685,6 @@ static int OCC1077(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//////////////////////////////////////////////////////////////
-/*!
- * Compute uniform distribution of points using GCPnts_UniformAbscissa
- */
-//////////////////////////////////////////////////////////////
 static int OCC5739_UniAbs(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 4)
@@ -1985,7 +1754,7 @@ static int OCC6046(Draw_Interpretor& di, int argc, const char** argv)
     if ((i % (nb / 10)) == 0)
     {
       di << " " << i;
-      // std::cout.flush();
+
       di << "\n";
     }
   }
@@ -1997,7 +1766,7 @@ static int OCC6046(Draw_Interpretor& di, int argc, const char** argv)
     if ((i % (nb / 10)) == 0)
     {
       di << " " << i;
-      // std::cout.flush();
+
       di << "\n";
     }
   }
@@ -2019,22 +1788,22 @@ static int OCC5698(Draw_Interpretor& di, int argc, const char** argv)
   if (shape.IsNull())
     return 1;
   TopoDS_Wire wire = TopoDS::Wire(shape);
-  // create curve parameterised by curvilinear distance
+
   BRepAdaptor_CompCurve curve(wire, true);
   double                length      = curve.LastParameter();
   double                need_length = length / 2;
   gp_Pnt                pnt;
   curve.D0(need_length, pnt);
-  // create check_curve parameterised in a general way
+
   BRepAdaptor_CompCurve check_curve(wire);
   double                check_par = GCPnts_AbscissaPoint(check_curve, need_length, 0).Parameter();
   gp_Pnt                check_pnt;
   check_curve.D0(check_par, check_pnt);
-  // check that points are coinciding
+
   double error_dist = pnt.Distance(check_pnt);
   if (error_dist > Precision::Confusion())
   {
-    // std::cout.precision(3);
+
     di << "error_dist = " << error_dist << "  ( " << error_dist / need_length * 100 << " %)\n";
     return 0;
   }
@@ -2042,7 +1811,6 @@ static int OCC5698(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-// stack overflow can be successfully handled only on 32-bit Windows
 #if defined(_WIN32) && !defined(_WIN64)
 static int StackOverflow(int i = -1)
 {
@@ -2054,7 +1822,6 @@ static int StackOverflow(int i = -1)
 }
 #endif
 
-// this code does not work with optimize mode on Windows
 #if defined(_MSC_VER) && !defined(__clang__)
   #pragma optimize("", off)
 #endif
@@ -2068,15 +1835,14 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
   bool Succes;
 
   Succes = true;
-  // OSD::SetSignal();
 
-  { //==== Test Divide ByZero (Integer) ========================================
+  {
     try
     {
       OCC_CATCH_SIGNALS
       std::cout << "(Integer) Divide By Zero..." << std::endl;
       di << "(Integer) Divide By Zero...";
-      // std::cout.flush();
+
       di << "\n";
       int res, a = 4, b = 0;
       res = a / b;
@@ -2098,38 +1864,37 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
       di << ")... KO\n";
       Succes = false;
     }
-    // this case tests if (...) supersedes (Standard_*),
-    // the normal behaviour is not
+
     catch (...)
     {
       di << " unknown exception... (But) Ok\n";
     }
   }
 
-  { //==== Test Divide ByZero (Real) ===========================================
+  {
     try
     {
       OCC_CATCH_SIGNALS
       std::cout << "(Real) Divide By Zero..." << std::endl;
       di << "(Real) Divide By Zero...";
-      // std::cout.flush();
+
       di << "\n";
       double res, a = 4.0, b = 0.0;
       res = a / b;
       di << "Error: 4.0 / 0.0 = " << res << " - no exception is raised!\n";
       Succes = false;
     }
-    catch (Standard_DivideByZero const&) // Solaris, Windows w/o SSE2
+    catch (Standard_DivideByZero const&)
     {
       di << "Caught, OK\n";
     }
-    catch (Standard_NumericError const&) // Linux, Windows with SSE2
+    catch (Standard_NumericError const&)
     {
       di << "Caught, OK\n";
     }
     catch (Standard_Failure const& anException)
     {
-      // std::cout << " Caught (" << Standard_Failure::Caught() << ")... KO" << std::endl;
+
       di << " Caught (";
       di << anException.what();
       di << ")... KO\n";
@@ -2137,13 +1902,13 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
     }
   }
 
-  { //==== Test Overflow (Integer) =============================================
+  {
     try
     {
       OCC_CATCH_SIGNALS
       std::cout << "(Integer) Overflow..." << std::endl;
       di << "(Integer) Overflow...";
-      // std::cout.flush();
+
       di << "\n";
 #if defined(__clang__)
   #pragma clang diagnostic push
@@ -2172,7 +1937,7 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
     }
     catch (Standard_Failure const& anException)
     {
-      // std::cout << " Caught (" << Standard_Failure::Caught() << ")... KO" << std::endl;
+
       di << " Caught (";
       di << anException.what();
       di << ")... KO\n";
@@ -2180,33 +1945,33 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
     }
   }
 
-  { //==== Test Overflow (Real) ================================================
+  {
     try
     {
       OCC_CATCH_SIGNALS
       std::cout << "(Real) Overflow..." << std::endl;
       di << "(Real) Overflow...";
-      // std::cout.flush();
+
       di << "\n";
       constexpr double r   = RealLast();
       double           res = r * r;
 
-      (void)sin(1.); // this function tests FPU flags and raises signal (tested on LINUX).
+      (void)sin(1.);
 
       di << "Error: " << r << "*" << r << " = " << res << " - no exception is raised!\n";
       Succes = false;
     }
-    catch (Standard_Overflow const&) // Solaris, Windows w/o SSE2
+    catch (Standard_Overflow const&)
     {
       di << "Caught, OK\n";
     }
-    catch (Standard_NumericError const&) // Linux, Windows with SSE2
+    catch (Standard_NumericError const&)
     {
       di << "Caught, OK\n";
     }
     catch (Standard_Failure const& anException)
     {
-      // std::cout << " Caught (" << Standard_Failure::Caught() << ")... KO" << std::endl;
+
       di << " Caught (";
       di << anException.what();
       di << ")... KO\n";
@@ -2214,36 +1979,34 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
     }
   }
 
-  { //==== Test Underflow (Real) ===============================================
+  {
     try
     {
       OCC_CATCH_SIGNALS
-      // clang-format off
-      std::cout << "(Real) Underflow" << std::endl; // to have message in log even if process crashed
-      // clang-format on
+
+      std::cout << "(Real) Underflow" << std::endl;
+
       di << "(Real) Underflow";
-      // std::cout.flush();
+
       di << "\n";
       constexpr double r   = RealSmall();
       double           res = r * r;
-      // res = res + 1.;
-      //++++ std::cout<<"-- "<<res<<"="<<r<<"*"<<r<<"   Does not Caught... KO"<<std::endl;
-      //++++ Succes = false;
+
       di << "Not caught: " << r << "*" << r << " = " << res << ", still OK\n";
     }
-    catch (Standard_Underflow const&) // could be on Solaris, Windows w/o SSE2
+    catch (Standard_Underflow const&)
     {
       di << "Exception caught, KO\n";
       Succes = false;
     }
-    catch (Standard_NumericError const&) // could be on Linux, Windows with SSE2
+    catch (Standard_NumericError const&)
     {
       di << "Exception caught, KO\n";
       Succes = false;
     }
     catch (Standard_Failure const& anException)
     {
-      // std::cout << " Caught (" << Standard_Failure::Caught() << ")... KO" << std::endl;
+
       di << " Caught (";
       di << anException.what();
       di << ")... KO\n";
@@ -2251,13 +2014,13 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
     }
   }
 
-  { //==== Test Invalid Operation (Real) ===============================================
+  {
     try
     {
       OCC_CATCH_SIGNALS
       std::cout << "(Real) Invalid Operation..." << std::endl;
       di << "(Real) Invalid Operation...";
-      // std::cout.flush();
+
       di << "\n";
       double res, r = -1;
       res = sqrt(r);
@@ -2270,7 +2033,7 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
     }
     catch (Standard_Failure const& anException)
     {
-      // std::cout << " Caught (" << Standard_Failure::Caught() << ")... KO" << std::endl;
+
       di << " Caught (";
       di << anException.what();
       di << ")... KO\n";
@@ -2278,13 +2041,13 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
     }
   }
 
-  { //==== Test Access Violation ===============================================
+  {
     try
     {
       OCC_CATCH_SIGNALS
       std::cout << "Segmentation Fault..." << std::endl;
       di << "Segmentation Fault...";
-      // std::cout.flush();
+
       di << "\n";
       int* pint = nullptr;
       *pint     = 4;
@@ -2301,7 +2064,7 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
     }
     catch (Standard_Failure const& anException)
     {
-      // std::cout << " Caught (" << Standard_Failure::Caught() << ")... KO" << std::endl;
+
       di << " Caught (";
       di << anException.what();
       di << ")... KO\n";
@@ -2310,13 +2073,13 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
   }
 
 #if defined(_WIN32) && !defined(_WIN64)
-  { //==== Test Stack Overflow ===============================================
+  {
     try
     {
       OCC_CATCH_SIGNALS
       std::cout << "Stack Overflow..." << std::endl;
       di << "Stack Overflow...";
-      // std::cout.flush();
+
       di << "\n";
       StackOverflow();
       di << "Error - no exception is raised!\n";
@@ -2328,7 +2091,7 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
     }
     catch (Standard_Failure const& anException)
     {
-      // std::cout << " Caught (" << Standard_Failure::Caught() << ")... KO" << std::endl;
+
       di << " Caught (";
       di << anException.what();
       di << ")... KO\n";
@@ -2353,12 +2116,10 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
   #pragma optimize("", on)
 #endif
 
-// try disabling compiler optimizations and function inlining for proper stack
-// (VS2010 is skipped due to generation of extra compiler warnings)
 #if defined(_MSC_VER) && (_MSC_VER >= 1700) && !defined(__clang__)
   #pragma optimize("", off)
 #endif
-//! Auxiliary functions for printing synthetic backtrace
+
 class MyTestInterface : public Standard_Transient
 {
 public:
@@ -2404,11 +2165,9 @@ static Standard_NOINLINE int OCC30762(Draw_Interpretor& theDI, int theNbArgs, co
     return 1;
   }
 
-  // just print stack
   std::cout << "Test normal backtrace...\n";
   myTestFunction1(true);
 
-  // test access violation
   {
     try
     {
@@ -2481,7 +2240,7 @@ static int OCC7141(Draw_Interpretor& di, int argc, const char** argv)
   shapeTool->AddShape(AddTestStructure(nCount), true);
   STEPControl_StepModelType mode = STEPControl_AsIs;
   if (!Interface_Static::SetIVal("write.step.assembly", 1))
-  { // assembly mode
+  {
     di << "Failed to set assembly mode for step data\n\n";
     return 0;
   }
@@ -2500,7 +2259,7 @@ static int OCC7141(Draw_Interpretor& di, int argc, const char** argv)
   catch (Standard_Failure const& anException)
   {
     di << "Failed :\n\n";
-    // std::cout << Standard_Failure::Caught() << std::endl;
+
     di << anException.what();
   }
   di << argv[0] << " : Finish\n";
@@ -2516,7 +2275,6 @@ static int OCC7372(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  // 1. Create an array of points
   occ::handle<NCollection_HArray1<gp_Pnt2d>> ap = new NCollection_HArray1<gp_Pnt2d>(1, 5);
   ap->SetValue(1, gp_Pnt2d(100.0, 0.0));
   ap->SetValue(2, gp_Pnt2d(100.0, 100.0));
@@ -2524,20 +2282,16 @@ static int OCC7372(Draw_Interpretor& di, int argc, const char** argv)
   ap->SetValue(4, gp_Pnt2d(0.0, 0.0));
   ap->SetValue(5, gp_Pnt2d(50.0, -50.0));
 
-  // 2. Create a periodic bspline through these 5 points
   Geom2dAPI_Interpolate intp(ap, true, 1e-6);
   intp.Perform();
   occ::handle<Geom2d_BSplineCurve> bspline1 = intp.Curve();
 
-  // 3. Increase degree of curve from 3 to 8
-  bspline1->IncreaseDegree(8); // Increase degree to demonstrate the error
+  bspline1->IncreaseDegree(8);
   const char* CString1 = "BSplineCurve";
   DrawTrSurf::Set(CString1, bspline1);
 
-  // 4. Converts BSpline curve to Bezier segments
   Geom2dConvert_BSplineCurveToBezierCurve bc(bspline1);
 
-  // 5. Test the result of conversion
   TCollection_AsciiString aRName;
   for (int i = 1; i <= bc.NbArcs(); i++)
   {
@@ -2652,14 +2406,12 @@ static int OCC10138(Draw_Interpretor& di, int argc, const char** argv)
   int LOWER = Draw::Atoi(argv[1]);
   int UPPER = Draw::Atoi(argv[2]);
 
-  //! 0. Create an empty document with several test labels
   occ::handle<TDocStd_Document> doc = new TDocStd_Document("XmlOcaf");
   doc->SetUndoLimit(100);
   TDF_Label main_label = doc->Main();
   TDF_Label label1     = main_label.FindChild(1, true);
   TDF_Label label2     = main_label.FindChild(2, true);
 
-  //! 1. Set/Get OCAF attribute
   doc->OpenCommand();
   TDataStd_RealArray::Set(label1, LOWER, UPPER);
   occ::handle<TDataStd_RealArray> array;
@@ -2673,7 +2425,6 @@ static int OCC10138(Draw_Interpretor& di, int argc, const char** argv)
   }
   doc->CommitCommand();
 
-  //! 2. Set/Get value
   doc->OpenCommand();
   int i;
   for (i = LOWER; i <= UPPER; i++)
@@ -2689,7 +2440,6 @@ static int OCC10138(Draw_Interpretor& di, int argc, const char** argv)
   std::cout << "2: OK" << std::endl;
   doc->CommitCommand();
 
-  //! 3. Re-init the array
   doc->OpenCommand();
   array->Init(LOWER + 2, UPPER + 4);
   if (array->Lower() != LOWER + 2 && array->Upper() != UPPER + 4)
@@ -2710,7 +2460,6 @@ static int OCC10138(Draw_Interpretor& di, int argc, const char** argv)
   std::cout << "3: OK" << std::endl;
   doc->CommitCommand();
 
-  //! 4. Change array
   doc->OpenCommand();
   occ::handle<NCollection_HArray1<double>> arr =
     new NCollection_HArray1<double>(LOWER + 5, UPPER + 5);
@@ -2728,7 +2477,6 @@ static int OCC10138(Draw_Interpretor& di, int argc, const char** argv)
   std::cout << "4: OK" << std::endl;
   doc->CommitCommand();
 
-  //! 5. Copy the array
   doc->OpenCommand();
   TDF_CopyLabel copier(label1, label2);
   copier.Perform();
@@ -2754,8 +2502,6 @@ static int OCC10138(Draw_Interpretor& di, int argc, const char** argv)
   std::cout << "5: OK" << std::endl;
   doc->CommitCommand();
 
-  //! 6. Undo/Redo
-  //! 6.a: undoes the 5th action: the copied array should disappear
   doc->Undo();
   if (!label1.FindAttribute(TDataStd_RealArray::GetID(), array)
       || label2.FindAttribute(TDataStd_RealArray::GetID(), array2))
@@ -2763,7 +2509,7 @@ static int OCC10138(Draw_Interpretor& di, int argc, const char** argv)
     std::cout << "6.a: Failed.." << std::endl;
     return 6;
   }
-  //! 6.b: undoes the 4th action: the array should be changed to (lower+2,upper+4)
+
   doc->Undo();
   if (!label1.FindAttribute(TDataStd_RealArray::GetID(), array) || array->Lower() != LOWER + 2
       || array->Upper() != UPPER + 4)
@@ -2779,7 +2525,7 @@ static int OCC10138(Draw_Interpretor& di, int argc, const char** argv)
       return 6;
     }
   }
-  //! 6.c: undoes the 3d action: the array should be changed to (lower,upper)
+
   doc->Undo();
   if (!label1.FindAttribute(TDataStd_RealArray::GetID(), array) || array->Lower() != LOWER
       || array->Upper() != UPPER)
@@ -2795,7 +2541,7 @@ static int OCC10138(Draw_Interpretor& di, int argc, const char** argv)
       return 6;
     }
   }
-  //! 6.d: undoes and redoes the 2nd action: no change is expected.
+
   doc->Undo();
   doc->Redo();
   if (!label1.FindAttribute(TDataStd_RealArray::GetID(), array) || array->Lower() != LOWER
@@ -2814,7 +2560,6 @@ static int OCC10138(Draw_Interpretor& di, int argc, const char** argv)
   }
   std::cout << "6: OK" << std::endl;
 
-  //! 7. Re-set the array
   doc->OpenCommand();
   array = TDataStd_RealArray::Set(label1, LOWER + 1, UPPER + 1);
   if (array->Lower() != LOWER + 1 && array->Upper() != UPPER + 1)
@@ -2834,10 +2579,6 @@ static int OCC10138(Draw_Interpretor& di, int argc, const char** argv)
   }
   std::cout << "7: OK" << std::endl;
   doc->CommitCommand();
-
-  //! 8.Test of speed: set LOWER and UPPER equal to great integer number and
-  //! measure the time spent by this test.
-  //! Good luck!
 
   return 0;
 }
@@ -2866,7 +2607,7 @@ static int OCC7639(Draw_Interpretor& di, int argc, const char** argv)
   int                               j;
   for (j = 0; it.More(); it.Next(), j++)
   {
-    // di << it.Value() << "\n";
+
     di << j << " " << it.Value() << "\n";
   }
 
@@ -2916,14 +2657,12 @@ static int OCC8797(Draw_Interpretor& di, int argc, const char** argv)
 
   occ::handle<Geom_BSplineCurve> spline = new Geom_BSplineCurve(poles, knots, multi, 3);
 
-  // length!! 1.
   double               l_abcissa, l_gprop;
   GeomAdaptor_Curve    adaptor_spline(spline);
   GCPnts_AbscissaPoint temp;
   l_abcissa = GCPnts_AbscissaPoint::Length(adaptor_spline);
   std::cout << "Length Spline(abcissa_Pnt): " << l_abcissa << std::endl;
 
-  // length!! 2.
   TopoDS_Edge  edge = BRepBuilderAPI_MakeEdge(spline);
   GProp_GProps prop;
   BRepGProp::LinearProperties(edge, prop);
@@ -2950,7 +2689,6 @@ static int OCC7068(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  // ObjectsInside
   NCollection_List<occ::handle<AIS_InteractiveObject>> ListOfIO_1;
   AISContext->ObjectsInside(ListOfIO_1);
   di << "ObjectsInside = " << ListOfIO_1.Extent() << "\n";
@@ -2967,7 +2705,6 @@ static int OCC7068(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-// Test AIS_InteractiveContext::Hilight() call.
 static int OCC31965(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
   if (theArgNb != 2)
@@ -3126,11 +2863,9 @@ static int OCC15755(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-// For OCC16782 testing
 #include <AppStd_Application.hpp>
 #include <TDF_Tool.hpp>
-// Iterators
-// Attributes
+
 #include <TDataStd_Tick.hpp>
 #include <TDataStd_IntegerList.hpp>
 #include <TDataStd_RealList.hpp>
@@ -3142,32 +2877,29 @@ static int OCC15755(Draw_Interpretor& di, int argc, const char** argv)
 #include <TDataStd_ByteArray.hpp>
 #include <TDataStd_NamedData.hpp>
 #include <TDF_Reference.hpp>
-//
+
 occ::handle<AppStd_Application> app;
 
 int TestSetGet(const occ::handle<TDocStd_Document>& doc)
 {
-  // TDataStd_Tick:
-  // Set
+
   TDataStd_Tick::Set(doc->Main());
-  // Get
+
   occ::handle<TDataStd_Tick> tick;
   if (!doc->Main().FindAttribute(TDataStd_Tick::GetID(), tick))
     return 1;
-  // Forget
+
   doc->Main().ForgetAttribute(TDataStd_Tick::GetID());
   if (doc->Main().IsAttribute(TDataStd_Tick::GetID()))
     return 2;
   doc->Main().ResumeAttribute(tick);
   if (!doc->Main().IsAttribute(TDataStd_Tick::GetID()))
     return 3;
-  // Forget
+
   doc->Main().ForgetAttribute(TDataStd_Tick::GetID());
   if (doc->Main().IsAttribute(TDataStd_Tick::GetID()))
     return 2;
 
-  // TDataStd_IntegerList:
-  // Set
   occ::handle<TDataStd_IntegerList> setintlist = TDataStd_IntegerList::Set(doc->Main());
   setintlist->Append(2);
   setintlist->Prepend(1);
@@ -3176,7 +2908,7 @@ int TestSetGet(const occ::handle<TDocStd_Document>& doc)
   setintlist->Append(200);
   setintlist->Remove(0);
   setintlist->Remove(200);
-  // Get
+
   occ::handle<TDataStd_IntegerList> getintlist;
   if (!doc->Main().FindAttribute(TDataStd_IntegerList::GetID(), getintlist))
     return 1;
@@ -3195,8 +2927,6 @@ int TestSetGet(const occ::handle<TDocStd_Document>& doc)
   }
   getintlist->Clear();
 
-  // TDataStd_RealList:
-  // Set
   occ::handle<TDataStd_RealList> setdbllist = TDataStd_RealList::Set(doc->Main());
   setdbllist->Append(2.5);
   setdbllist->Prepend(1.5);
@@ -3205,7 +2935,7 @@ int TestSetGet(const occ::handle<TDocStd_Document>& doc)
   setdbllist->Append(200.5);
   setdbllist->Remove(0.5);
   setdbllist->Remove(200.5);
-  // Get
+
   occ::handle<TDataStd_RealList> getdbllist;
   if (!doc->Main().FindAttribute(TDataStd_RealList::GetID(), getdbllist))
     return 1;
@@ -3224,8 +2954,6 @@ int TestSetGet(const occ::handle<TDocStd_Document>& doc)
   }
   getdbllist->Clear();
 
-  // TDataStd_ExtStringList:
-  // Set
   occ::handle<TDataStd_ExtStringList> setstrlist = TDataStd_ExtStringList::Set(doc->Main());
   setstrlist->Append("Hello");
   setstrlist->Prepend("Guten Tag");
@@ -3234,7 +2962,7 @@ int TestSetGet(const occ::handle<TDocStd_Document>& doc)
   setstrlist->Append("Good bye");
   setstrlist->Remove("Bonsoir");
   setstrlist->Remove("Good bye");
-  // Get
+
   occ::handle<TDataStd_ExtStringList> getstrlist;
   if (!doc->Main().FindAttribute(TDataStd_ExtStringList::GetID(), getstrlist))
     return 1;
@@ -3254,12 +2982,10 @@ int TestSetGet(const occ::handle<TDocStd_Document>& doc)
   }
   getstrlist->Clear();
 
-  // TDataStd_BooleanList:
-  // Set
   occ::handle<TDataStd_BooleanList> setboollist = TDataStd_BooleanList::Set(doc->Main());
   setboollist->Append(true);
   setboollist->Prepend(false);
-  // Get
+
   occ::handle<TDataStd_BooleanList> getboollist;
   if (!doc->Main().FindAttribute(TDataStd_BooleanList::GetID(), getboollist))
     return 1;
@@ -3278,13 +3004,12 @@ int TestSetGet(const occ::handle<TDocStd_Document>& doc)
   }
   getboollist->Clear();
 
-  // TDataStd_ReferenceList:
   TDF_Label L1 = doc->Main().FindChild(100);
   TDF_Label L2 = doc->Main().FindChild(101);
   TDF_Label L3 = doc->Main().FindChild(102);
   TDF_Label L4 = doc->Main().FindChild(103);
   TDF_Label L5 = doc->Main().FindChild(104);
-  // Set
+
   occ::handle<TDataStd_ReferenceList> setreflist = TDataStd_ReferenceList::Set(doc->Main());
   setreflist->Append(L1);
   setreflist->Prepend(L2);
@@ -3293,7 +3018,7 @@ int TestSetGet(const occ::handle<TDocStd_Document>& doc)
   setreflist->Append(L5);
   setreflist->Remove(L4);
   setreflist->Remove(L5);
-  // Get
+
   occ::handle<TDataStd_ReferenceList> getreflist;
   if (!doc->Main().FindAttribute(TDataStd_ReferenceList::GetID(), getreflist))
     return 1;
@@ -3312,8 +3037,6 @@ int TestSetGet(const occ::handle<TDocStd_Document>& doc)
   }
   getreflist->Clear();
 
-  // TDataStd_BooleanArray:
-  // Set
   occ::handle<TDataStd_BooleanArray> setboolarr = TDataStd_BooleanArray::Set(doc->Main(), 12, 16);
   setboolarr->SetValue(12, true);
   setboolarr->SetValue(13, false);
@@ -3321,7 +3044,7 @@ int TestSetGet(const occ::handle<TDocStd_Document>& doc)
   setboolarr->SetValue(15, false);
   setboolarr->SetValue(16, true);
   setboolarr->SetValue(14, true);
-  // Get
+
   occ::handle<TDataStd_BooleanArray> getboolarr;
   if (!doc->Main().FindAttribute(TDataStd_BooleanArray::GetID(), getboolarr))
     return 1;
@@ -3336,15 +3059,13 @@ int TestSetGet(const occ::handle<TDocStd_Document>& doc)
   if (!getboolarr->Value(16))
     return 2;
 
-  // TDataStd_ReferenceArray:
-  // Set
   occ::handle<TDataStd_ReferenceArray> setrefarr = TDataStd_ReferenceArray::Set(doc->Main(), 0, 4);
   setrefarr->SetValue(0, L1);
   setrefarr->SetValue(1, L2);
   setrefarr->SetValue(2, L3);
   setrefarr->SetValue(3, L4);
   setrefarr->SetValue(4, L5);
-  // Get
+
   occ::handle<TDataStd_ReferenceArray> getrefarr;
   if (!doc->Main().FindAttribute(TDataStd_ReferenceArray::GetID(), getrefarr))
     return 1;
@@ -3359,15 +3080,13 @@ int TestSetGet(const occ::handle<TDocStd_Document>& doc)
   if (getrefarr->Value(4) != L5)
     return 2;
 
-  // TDataStd_ByteArray:
-  // Set
   occ::handle<TDataStd_ByteArray> setbytearr = TDataStd_ByteArray::Set(doc->Main(), 12, 16);
   setbytearr->SetValue(12, 0);
   setbytearr->SetValue(13, 1);
   setbytearr->SetValue(14, 2);
   setbytearr->SetValue(15, 3);
   setbytearr->SetValue(16, 255);
-  // Get
+
   occ::handle<TDataStd_ByteArray> getbytearr;
   if (!doc->Main().FindAttribute(TDataStd_ByteArray::GetID(), getbytearr))
     return 1;
@@ -3382,14 +3101,12 @@ int TestSetGet(const occ::handle<TDocStd_Document>& doc)
   if (getbytearr->Value(16) != 255)
     return 2;
 
-  // TDataStd_NamedData:
-  // Set:
   occ::handle<TDataStd_NamedData> setnd = TDataStd_NamedData::Set(doc->Main());
   setnd->SetInteger("Integer1", 1);
   setnd->SetInteger("Integer2", 2);
   setnd->SetInteger("Integer3", 8);
   setnd->SetInteger("Integer3", 3);
-  // Get:
+
   occ::handle<TDataStd_NamedData> getnd;
   if (!doc->Main().FindAttribute(TDataStd_NamedData::GetID(), getnd))
     return 1;
@@ -3407,7 +3124,7 @@ int TestSetGet(const occ::handle<TDocStd_Document>& doc)
 
 int TestUndoRedo(const occ::handle<TDocStd_Document>& doc)
 {
-  // TDataStd_Tick:
+
   doc->OpenCommand();
   occ::handle<TDataStd_Tick> tick = TDataStd_Tick::Set(doc->Main());
   doc->CommitCommand();
@@ -3420,7 +3137,6 @@ int TestUndoRedo(const occ::handle<TDocStd_Document>& doc)
   if (!doc->Main().IsAttribute(TDataStd_Tick::GetID()))
     return 3;
 
-  // TDataStd_IntegerList:
   doc->OpenCommand();
   occ::handle<TDataStd_IntegerList> intlist = TDataStd_IntegerList::Set(doc->Main());
   intlist->Append(2);
@@ -3442,7 +3158,6 @@ int TestUndoRedo(const occ::handle<TDocStd_Document>& doc)
     return 5;
   intlist->Clear();
 
-  // TDataStd_RealList:
   doc->OpenCommand();
   occ::handle<TDataStd_RealList> dbllist = TDataStd_RealList::Set(doc->Main());
   dbllist->Append(2.5);
@@ -3464,7 +3179,6 @@ int TestUndoRedo(const occ::handle<TDocStd_Document>& doc)
     return 5;
   dbllist->Clear();
 
-  // TDataStd_ExtStringList:
   doc->OpenCommand();
   occ::handle<TDataStd_ExtStringList> strlist = TDataStd_ExtStringList::Set(doc->Main());
   strlist->Append("Hello");
@@ -3486,7 +3200,6 @@ int TestUndoRedo(const occ::handle<TDocStd_Document>& doc)
     return 5;
   strlist->Clear();
 
-  // TDataStd_BooleanList:
   doc->OpenCommand();
   occ::handle<TDataStd_BooleanList> boollist = TDataStd_BooleanList::Set(doc->Main());
   boollist->Append(true);
@@ -3506,7 +3219,6 @@ int TestUndoRedo(const occ::handle<TDocStd_Document>& doc)
     return 5;
   boollist->Clear();
 
-  // TDataStd_ReferenceList:
   TDF_Label L1 = doc->Main().FindChild(100);
   TDF_Label L2 = doc->Main().FindChild(101);
   TDF_Label L3 = doc->Main().FindChild(102);
@@ -3532,7 +3244,6 @@ int TestUndoRedo(const occ::handle<TDocStd_Document>& doc)
     return 5;
   reflist->Clear();
 
-  // TDataStd_BooleanArray:
   doc->OpenCommand();
   occ::handle<TDataStd_BooleanArray> boolarr = TDataStd_BooleanArray::Set(doc->Main(), 23, 25);
   boolarr->SetValue(23, true);
@@ -3558,7 +3269,6 @@ int TestUndoRedo(const occ::handle<TDocStd_Document>& doc)
   if (!boolarr->Value(250))
     return 3;
 
-  // TDataStd_ReferenceArray:
   doc->OpenCommand();
   occ::handle<TDataStd_ReferenceArray> refarr = TDataStd_ReferenceArray::Set(doc->Main(), 5, 8);
   refarr->SetValue(5, L1);
@@ -3579,7 +3289,6 @@ int TestUndoRedo(const occ::handle<TDocStd_Document>& doc)
   if (refarr->Value(8) != L4)
     return 4;
 
-  // TDataStd_ByteArray:
   doc->OpenCommand();
   occ::handle<TDataStd_ByteArray> bytearr = TDataStd_ByteArray::Set(doc->Main(), 23, 25);
   bytearr->SetValue(23, 23);
@@ -3601,7 +3310,6 @@ int TestUndoRedo(const occ::handle<TDocStd_Document>& doc)
   if (bytearr->Value(250) != 250)
     return 3;
 
-  // TDataStd_NamedData:
   doc->OpenCommand();
   occ::handle<TDataStd_NamedData> nd = TDataStd_NamedData::Set(doc->Main());
   nd->SetByte("b14", 12);
@@ -3652,7 +3360,6 @@ int TestCopyPaste(const occ::handle<TDocStd_Document>& doc)
   TDF_Label     L2 = doc->Main().FindChild(2);
   TDF_CopyLabel copier(L1, L2);
 
-  // TDataStd_Tick:
   TDataStd_Tick::Set(L1);
   copier.Perform();
   if (!copier.IsDone())
@@ -3660,7 +3367,6 @@ int TestCopyPaste(const occ::handle<TDocStd_Document>& doc)
   if (!L2.IsAttribute(TDataStd_Tick::GetID()))
     return 2;
 
-  // TDataStd_IntegerList:
   occ::handle<TDataStd_IntegerList> intlist = TDataStd_IntegerList::Set(L1);
   intlist->Append(1);
   intlist->InsertAfter(2, 1);
@@ -3677,7 +3383,6 @@ int TestCopyPaste(const occ::handle<TDocStd_Document>& doc)
     return 4;
   intlist->Clear();
 
-  // TDataStd_RealList:
   occ::handle<TDataStd_RealList> dbllist = TDataStd_RealList::Set(L1);
   dbllist->Append(1.5);
   dbllist->InsertAfter(2.5, 1.5);
@@ -3694,7 +3399,6 @@ int TestCopyPaste(const occ::handle<TDocStd_Document>& doc)
     return 4;
   dbllist->Clear();
 
-  // TDataStd_ExtStringList:
   occ::handle<TDataStd_ExtStringList> strlist = TDataStd_ExtStringList::Set(L1);
   strlist->Append("Open CASCADE");
   strlist->InsertAfter(" - is the best set of libraries!", "Open CASCADE");
@@ -3711,7 +3415,6 @@ int TestCopyPaste(const occ::handle<TDocStd_Document>& doc)
     return 4;
   strlist->Clear();
 
-  // TDataStd_BooleanList:
   occ::handle<TDataStd_BooleanList> boollist = TDataStd_BooleanList::Set(L1);
   boollist->Append(true);
   boollist->Prepend(false);
@@ -3728,7 +3431,6 @@ int TestCopyPaste(const occ::handle<TDocStd_Document>& doc)
     return 4;
   boollist->Clear();
 
-  // TDataStd_ReferenceList:
   TDF_Label                           L100    = doc->Main().FindChild(100);
   TDF_Label                           L101    = doc->Main().FindChild(101);
   occ::handle<TDataStd_ReferenceList> reflist = TDataStd_ReferenceList::Set(L1);
@@ -3747,7 +3449,6 @@ int TestCopyPaste(const occ::handle<TDocStd_Document>& doc)
     return 4;
   reflist->Clear();
 
-  // TDataStd_BooleanArray:
   occ::handle<TDataStd_BooleanArray> boolarr = TDataStd_BooleanArray::Set(L1, 4, 6);
   boolarr->SetValue(4, true);
   boolarr->SetValue(6, true);
@@ -3764,7 +3465,6 @@ int TestCopyPaste(const occ::handle<TDocStd_Document>& doc)
   if (!boolarr->Value(6))
     return 3;
 
-  // TDataStd_ReferenceArray:
   occ::handle<TDataStd_ReferenceArray> refarr = TDataStd_ReferenceArray::Set(L1, 3, 4);
   refarr->SetValue(3, L100);
   refarr->SetValue(4, L101);
@@ -3779,7 +3479,6 @@ int TestCopyPaste(const occ::handle<TDocStd_Document>& doc)
   if (refarr->Value(4) != L101)
     return 3;
 
-  // TDataStd_ByteArray:
   occ::handle<TDataStd_ByteArray> bytearr = TDataStd_ByteArray::Set(L1, 4, 6);
   bytearr->SetValue(4, 40);
   bytearr->SetValue(6, 60);
@@ -3794,7 +3493,6 @@ int TestCopyPaste(const occ::handle<TDocStd_Document>& doc)
   if (bytearr->Value(6) != 60)
     return 3;
 
-  // TDataStd_NamedData:
   occ::handle<TDataStd_NamedData> nd = TDataStd_NamedData::Set(L1);
   nd->SetInteger("Integer1", 11);
   nd->SetReal("Real1", 11.1);
@@ -3853,28 +3551,28 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
                  const TCollection_ExtendedString& aFile2,
                  const TCollection_ExtendedString& aFile3)
 {
-  // Std
+
   occ::handle<TDocStd_Document> doc_std, doc_std_open;
   app->NewDocument("BinOcaf", doc_std);
-  // TDataStd_Tick:
+
   TDataStd_Tick::Set(doc_std->Main());
-  // TDataStd_IntegerList:
+
   occ::handle<TDataStd_IntegerList> intlist = TDataStd_IntegerList::Set(doc_std->Main());
   intlist->Append(1);
   intlist->Append(5);
-  // TDataStd_RealList:
+
   occ::handle<TDataStd_RealList> dbllist = TDataStd_RealList::Set(doc_std->Main());
   dbllist->Append(1.5);
   dbllist->Append(5.5);
-  // TDataStd_ExtStringList:
+
   occ::handle<TDataStd_ExtStringList> strlist = TDataStd_ExtStringList::Set(doc_std->Main());
   strlist->Append("Auf");
   strlist->Append("Wiedersehen");
-  // TDataStd_BooleanList:
+
   occ::handle<TDataStd_BooleanList> boollist = TDataStd_BooleanList::Set(doc_std->Main());
   boollist->Append(false);
   boollist->Append(true);
-  // TDataStd_ReferenceList:
+
   TCollection_AsciiString entry1, entry2, entry_first, entry_last;
   TDF_Label               Lstd1 = doc_std->Main().FindChild(100);
   TDF_Tool::Entry(Lstd1, entry1);
@@ -3883,31 +3581,29 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
   occ::handle<TDataStd_ReferenceList> reflist = TDataStd_ReferenceList::Set(doc_std->Main());
   reflist->Append(Lstd1);
   reflist->Append(Lstd2);
-  // TDataStd_BooleanArray:
+
   occ::handle<TDataStd_BooleanArray> boolarr = TDataStd_BooleanArray::Set(doc_std->Main(), 15, 18);
   boolarr->SetValue(15, false);
   boolarr->SetValue(16, true);
   boolarr->SetValue(17, true);
   boolarr->SetValue(18, true);
-  // TDataStd_ReferenceArray:
+
   occ::handle<TDataStd_ReferenceArray> refarr =
     TDataStd_ReferenceArray::Set(doc_std->Main(), 45, 46);
   refarr->SetValue(45, Lstd1);
   refarr->SetValue(46, Lstd2);
-  // TDataStd_ByteArray:
+
   occ::handle<TDataStd_ByteArray> bytearr = TDataStd_ByteArray::Set(doc_std->Main(), 15, 18);
   bytearr->SetValue(15, 150);
   bytearr->SetValue(16, 160);
   bytearr->SetValue(17, 170);
   bytearr->SetValue(18, 180);
-  // TDataStd_NamedData:
+
   occ::handle<TDataStd_NamedData> nameddata = TDataStd_NamedData::Set(doc_std->Main());
-  // TDF_Reference:
+
   TDF_Label                  Lstd3 = doc_std->Main().FindChild(103);
   occ::handle<TDF_Reference> ref   = TDF_Reference::Set(doc_std->Main(), Lstd3);
-  //
-  // Save
-  // if (app->SaveAs(doc_std, "W:\\doc.std") != PCDM_SS_OK)
+
   if (app->SaveAs(doc_std, aFile1) != PCDM_SS_OK)
     return 1;
   intlist.Nullify();
@@ -3919,7 +3615,7 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
   ref.Nullify();
   app->Close(doc_std);
   doc_std.Nullify();
-  // if (app->Open("W:\\doc.std", doc_std_open) != PCDM_RS_OK)
+
   if (app->Open(aFile1, doc_std_open) != PCDM_RS_OK)
     return 2;
   if (!doc_std_open->Main().IsAttribute(TDataStd_Tick::GetID()))
@@ -3991,28 +3687,27 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
   if (ref->Get().Tag() != 103)
     return 5;
 
-  // Xml
   occ::handle<TDocStd_Document> doc_xml, doc_xml_open;
   app->NewDocument("XmlOcaf", doc_xml);
-  // TDataStd_Tick:
+
   TDataStd_Tick::Set(doc_xml->Main());
-  // TDataStd_IntegerList:
+
   intlist = TDataStd_IntegerList::Set(doc_xml->Main());
   intlist->Append(1);
   intlist->Append(5);
-  // TDataStd_RealList:
+
   dbllist = TDataStd_RealList::Set(doc_xml->Main());
   dbllist->Append(1.5);
   dbllist->Append(5.5);
-  // TDataStd_ExtStringList:
+
   strlist = TDataStd_ExtStringList::Set(doc_xml->Main());
   strlist->Append("Guten ");
   strlist->Append("Tag");
-  // TDataStd_BooleanList:
+
   boollist = TDataStd_BooleanList::Set(doc_xml->Main());
   boollist->Append(false);
   boollist->Append(true);
-  // TDataStd_ReferenceList:
+
   TDF_Label Lxml1 = doc_xml->Main().FindChild(100);
   TDF_Tool::Entry(Lxml1, entry1);
   TDF_Label Lxml2 = doc_xml->Main().FindChild(101);
@@ -4020,7 +3715,7 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
   reflist = TDataStd_ReferenceList::Set(doc_xml->Main());
   reflist->Append(Lxml1);
   reflist->Append(Lxml2);
-  // TDataStd_BooleanArray:
+
   boolarr = TDataStd_BooleanArray::Set(doc_xml->Main(), 15, 24);
   boolarr->SetValue(15, false);
   boolarr->SetValue(16, true);
@@ -4032,11 +3727,11 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
   boolarr->SetValue(22, true);
   boolarr->SetValue(23, true);
   boolarr->SetValue(24, true);
-  // TDataStd_ReferenceArray:
+
   refarr = TDataStd_ReferenceArray::Set(doc_xml->Main(), 444, 445);
   refarr->SetValue(444, Lxml1);
   refarr->SetValue(445, Lxml2);
-  // TDataStd_ByteArray:
+
   bytearr = TDataStd_ByteArray::Set(doc_xml->Main(), 15, 24);
   bytearr->SetValue(15, 0);
   bytearr->SetValue(16, 10);
@@ -4048,19 +3743,17 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
   bytearr->SetValue(22, 253);
   bytearr->SetValue(23, 254);
   bytearr->SetValue(24, 255);
-  // TDF_Reference:
+
   Lstd3 = doc_xml->Main().FindChild(103);
   ref   = TDF_Reference::Set(doc_xml->Main(), Lstd3);
-  //
-  // Save
-  // if (app->SaveAs(doc_xml, "W:\\doc.xml") != PCDM_SS_OK)
+
   if (app->SaveAs(doc_xml, aFile2) != PCDM_SS_OK)
     return 1;
   intlist.Nullify();
   ref.Nullify();
   app->Close(doc_xml);
   doc_xml.Nullify();
-  // if (app->Open("W:\\doc.xml", doc_xml_open) != PCDM_RS_OK)
+
   if (app->Open(aFile2, doc_xml_open) != PCDM_RS_OK)
     return 2;
   if (!doc_xml_open->Main().IsAttribute(TDataStd_Tick::GetID()))
@@ -4156,28 +3849,27 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
   if (ref->Get().Tag() != 103)
     return 5;
 
-  // Bin
   occ::handle<TDocStd_Document> doc_bin, doc_bin_open;
   app->NewDocument("BinOcaf", doc_bin);
-  // TDataStd_Tick:
+
   TDataStd_Tick::Set(doc_bin->Main());
-  // TDataStd_IntegerList:
+
   intlist = TDataStd_IntegerList::Set(doc_bin->Main());
   intlist->Append(1);
   intlist->Append(5);
-  // TDataStd_RealList:
+
   dbllist = TDataStd_RealList::Set(doc_bin->Main());
   dbllist->Append(1.5);
   dbllist->Append(5.5);
-  // TDataStd_ExtStringList:
+
   strlist = TDataStd_ExtStringList::Set(doc_bin->Main());
   strlist->Append("Bonjour");
   strlist->Append("Bonsoir");
-  // TDataStd_BooleanList:
+
   boollist = TDataStd_BooleanList::Set(doc_bin->Main());
   boollist->Append(false);
   boollist->Append(true);
-  // TDataStd_ReferenceList:
+
   TDF_Label Lbin1 = doc_bin->Main().FindChild(100);
   TDF_Tool::Entry(Lbin1, entry1);
   TDF_Label Lbin2 = doc_bin->Main().FindChild(101);
@@ -4185,7 +3877,7 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
   reflist = TDataStd_ReferenceList::Set(doc_bin->Main());
   reflist->Append(Lbin1);
   reflist->Append(Lbin2);
-  // TDataStd_BooleanArray:
+
   boolarr = TDataStd_BooleanArray::Set(doc_bin->Main(), 15, 24);
   boolarr->SetValue(15, false);
   boolarr->SetValue(16, true);
@@ -4197,31 +3889,29 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
   boolarr->SetValue(22, true);
   boolarr->SetValue(23, true);
   boolarr->SetValue(24, true);
-  // TDataStd_ReferenceArray:
+
   refarr = TDataStd_ReferenceArray::Set(doc_bin->Main(), 0, 1);
   refarr->SetValue(0, Lbin1);
   refarr->SetValue(1, Lbin2);
-  // TDataStd_ByteArray:
+
   bytearr = TDataStd_ByteArray::Set(doc_bin->Main(), 15, 16);
   bytearr->SetValue(15, 0);
   bytearr->SetValue(16, 255);
-  // TDataStd_NamedData:
+
   nameddata = TDataStd_NamedData::Set(doc_bin->Main());
   nameddata->SetByte("A", 12);
   nameddata->SetByte("B", 234);
-  // TDF_Reference:
+
   Lstd3 = doc_bin->Main().FindChild(103);
   ref   = TDF_Reference::Set(doc_bin->Main(), Lstd3);
-  //
-  // Save
-  // if (app->SaveAs(doc_bin, "W:\\doc.cbf") != PCDM_SS_OK)
+
   if (app->SaveAs(doc_bin, aFile3) != PCDM_SS_OK)
     return 1;
   intlist.Nullify();
   ref.Nullify();
   app->Close(doc_bin);
   doc_bin.Nullify();
-  // if (app->Open("W:\\doc.cbf", doc_bin_open) != PCDM_RS_OK)
+
   if (app->Open(aFile3, doc_bin_open) != PCDM_RS_OK)
     return 2;
   if (!doc_bin_open->Main().IsAttribute(TDataStd_Tick::GetID()))
@@ -4309,8 +3999,6 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
 
   return 0;
 }
-
-// For OCC16782 testing
 
 static int OCC16782(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -4540,12 +4228,10 @@ int OCC22301(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  // Create mask 1111: extent == 4
   TColStd_PackedMapOfInteger aFullMask;
   for (int i = 0; i < 4; i++)
     aFullMask.Add(i);
 
-  // Create mask 1100: extent == 2
   TColStd_PackedMapOfInteger aPartMask;
   for (int i = 0; i < 2; i++)
     aPartMask.Add(i);
@@ -4555,11 +4241,11 @@ int OCC22301(Draw_Interpretor& di, int argc, const char** argv)
 
   bool isAffected;
 
-  isAffected = aFullMask.Intersect(aPartMask); // true; extent == 2 (OK)
+  isAffected = aFullMask.Intersect(aPartMask);
   di << "First time: aFullMask.Intersect(aPartMask), isAffected = " << (int)isAffected << "\n";
-  isAffected = aFullMask.Intersect(aPartMask); // true; extent == 0 (?)
+  isAffected = aFullMask.Intersect(aPartMask);
   di << "Second time: aFullMask.Intersect(aPartMask), isAffected = " << (int)isAffected << "\n";
-  isAffected = aFullMask.Subtract(aPartMask); // false (?)
+  isAffected = aFullMask.Subtract(aPartMask);
   di << "After two intersections: aFullMask.Subtract(aPartMask), isAffected = " << (int)isAffected
      << "\n";
 
@@ -4657,7 +4343,6 @@ int OCC22736(Draw_Interpretor& di, int argc, const char** argv)
   constexpr double aTol    = Precision::Confusion();
   int              aStatus = 0;
 
-  // After applying two times the same mirror the point is located on the same location OK
   gp_Pnt2d p1MirrorM1 = p1.Transformed(M1);
   if (std::abs(p2.X() - p1MirrorM1.X()) > aTol)
     aStatus = 2;
@@ -4670,8 +4355,6 @@ int OCC22736(Draw_Interpretor& di, int argc, const char** argv)
   if (std::abs(p1.Y() - p1MirrorM1M2.Y()) > aTol)
     aStatus = 5;
 
-  // If we apply the composed transformation of the same two mirrors to a point the result is //not
-  // located on the initial position.-->>ERROR
   gp_Pnt2d p1MirrorComp = p1.Transformed(Tcomp);
   if (std::abs(p1.X() - p1MirrorComp.X()) > aTol)
     aStatus = 6;
@@ -4682,7 +4365,7 @@ int OCC22736(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-int OCC23429(Draw_Interpretor& /*di*/, int narg, const char** a)
+int OCC23429(Draw_Interpretor&, int narg, const char** a)
 {
   if (narg < 4)
     return 1;
@@ -4761,18 +4444,15 @@ int OCC28478(Draw_Interpretor& di, int argc, const char** argv)
   int  nbInner = (argc > 2 ? Draw::Atoi(argv[2]) : 2);
   bool isInf   = (argc > 3 && !strcmp(argv[3], "-inf"));
 
-  // test behavior of progress indicator when using nested scopes with names
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
 
-  // Outer cycle
   Message_ProgressScope anOuter(aProgress->Start(), "Outer", nbOuter);
   for (int i = 0; i < nbOuter && anOuter.More(); i++)
   {
-    // Inner cycle
+
     Message_ProgressScope anInner(anOuter.Next(), "Inner", nbInner, isInf);
     for (int j = 0; j < (isInf ? 2 * nbInner : nbInner) && anInner.More(); j++, anInner.Next())
     {
-      // Cycle body
     }
   }
 
@@ -4811,7 +4491,7 @@ namespace
 
 int OCC25748(Draw_Interpretor& di, int argc, const char** argv)
 {
-  // test behavior of progress indicator in multi-threaded execution
+
   int  nIter      = 1000;
   int  aMatSize   = 1;
   bool isProgress = false;
@@ -4879,9 +4559,6 @@ void QABugs::Commands_11(Draw_Interpretor& theCommands)
 
   theCommands.Add("OCC128", "OCC128", __FILE__, OCC128, group);
 
-  // Remove as bad version of QAAddOrRemoveSelected from QADraw
-  // theCommands.Add("OCC129", "OCC129 shape islocal", __FILE__, OCC129, group);
-
   theCommands.Add("OCC136", "OCC136", __FILE__, OCC136, group);
   theCommands.Add("BUC60610", "BUC60610 iges_input [name]", __FILE__, BUC60610, group);
 
@@ -4895,21 +4572,19 @@ void QABugs::Commands_11(Draw_Interpretor& theCommands)
   theCommands.Add("OCC125", "OCC125 shell", __FILE__, OCC125, group);
 
   theCommands.Add("OCC157", "findplanarsurface Result wire Tol", __FILE__, OCC157, group);
-  // theCommands.Add("OCC165","OCC165",__FILE__,OCC165,group);
+
   theCommands.Add("OCC165", "OCC165 file", __FILE__, OCC165, group);
   theCommands.Add("OCC297", "OCC297", __FILE__, OCC297, group);
-  // theCommands.Add("OCC305","OCC305",__FILE__,OCC305,group);
+
   theCommands.Add("OCC305", "OCC305 file", __FILE__, OCC305, group);
 
-  // New commands:
   theCommands.Add("OCC381_Save", "OCC381_Save Doc", __FILE__, OCC381_Save, group);
   theCommands.Add("OCC381_SaveAs", "OCC381_SaveAs Doc Path", __FILE__, OCC381_SaveAs, group);
 
   theCommands.Add("OCC299", "OCC299 Solid Point [Tolerance=1.e-7]", __FILE__, OCC299bug, group);
 
   theCommands.Add("OCC363", "OCC363 document filename ", __FILE__, OCC363, group);
-  // Must use OCC299
-  // theCommands.Add("OCC372", "OCC372", __FILE__, OCC372, group);
+
   theCommands.Add("OCC377", "OCC377", __FILE__, OCC377, group);
   theCommands.Add("OCC22",
                   "OCC22 Result Shape CompoundOfSubshapesToBeDivided ConsiderLocation",
@@ -4928,7 +4603,7 @@ void QABugs::Commands_11(Draw_Interpretor& theCommands)
                   __FILE__,
                   OCC524,
                   group);
-  // theCommands.Add("OCC578", "OCC578 shape1 shape2 shape3", __FILE__, OCC578, group);
+
   theCommands.Add("OCC578", "OCC578 shape1 shape2 shape3", __FILE__, OCC578, group);
   theCommands.Add("OCC708",
                   "OCC708 shape ; Deactivate the current transformation",
@@ -4965,8 +4640,6 @@ void QABugs::Commands_11(Draw_Interpretor& theCommands)
                   OCC1034_AISSelectionMode,
                   group);
 
-  // theCommands.Add("OCC1487", "OCC1487 CylinderVariant(=1/2) cylinder1 cylinder2 cutshape",
-  // __FILE__, OCC1487, group);
   theCommands.Add("OCC1487",
                   "OCC1487 CylinderVariant(=1/2) cylinder1 cylinder2 cutshape",
                   __FILE__,

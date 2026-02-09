@@ -12,7 +12,6 @@ class StepBasic_SiUnit : public StepBasic_NamedUnit
 {
 
 public:
-  //! Returns a SiUnit
   Standard_EXPORT StepBasic_SiUnit();
 
   Standard_EXPORT void Init(const bool                 hasAprefix,

@@ -37,8 +37,6 @@ static void AddPoles(const occ::handle<Prs3d_Presentation>& aPresentation,
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 }
 
-//=================================================================================================
-
 void StdPrs_WFPoleSurface::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                const Adaptor3d_Surface&               aSurface,
                                const occ::handle<Prs3d_Drawer>&       aDrawer)

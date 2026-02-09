@@ -12,18 +12,6 @@ class gp_Pnt;
 class gp_Pnt2d;
 class gp_Lin;
 
-//! Implements a projector object.
-//! To transform and project Points and Planes.
-//! This object is designed to be used in the
-//! removal of hidden lines and is returned by the
-//! Prs3d_Projector::Projector function.
-//! You define the projection of the selected shape
-//! by calling one of the following functions:
-//! -   HLRBRep_Algo::Projector, or
-//! -   HLRBRep_PolyAlgo::Projector
-//! The choice depends on the algorithm, which you are using.
-//! The parameters of the view are defined at the
-//! time of construction of a Prs3d_Projector object.
 class HLRAlgo_Projector
 {
 public:
@@ -31,18 +19,12 @@ public:
 
   Standard_EXPORT HLRAlgo_Projector();
 
-  //! Creates an axonometric projector. <CS> is the
-  //! viewing coordinate system.
   Standard_EXPORT HLRAlgo_Projector(const gp_Ax2& CS);
 
-  //! Creates a perspective projector. <CS> is the
-  //! viewing coordinate system.
   Standard_EXPORT HLRAlgo_Projector(const gp_Ax2& CS, const double Focus);
 
-  //! build a Projector with automatic minmax directions.
   Standard_EXPORT HLRAlgo_Projector(const gp_Trsf& T, const bool Persp, const double Focus);
 
-  //! build a Projector with given minmax directions.
   Standard_EXPORT HLRAlgo_Projector(const gp_Trsf&  T,
                                     const bool      Persp,
                                     const double    Focus,
@@ -54,42 +36,31 @@ public:
 
   void Directions(gp_Vec2d& D1, gp_Vec2d& D2, gp_Vec2d& D3) const;
 
-  //! to compute with the given scale and translation.
   Standard_EXPORT void Scaled(const bool On = false);
 
-  //! Returns True if there is a perspective transformation.
   bool Perspective() const;
 
-  //! Returns the active transformation.
   Standard_EXPORT const gp_Trsf& Transformation() const;
 
-  //! Returns the active inverted transformation.
   const gp_Trsf& InvertedTransformation() const;
 
-  //! Returns the original transformation.
   const gp_Trsf& FullTransformation() const;
 
-  //! Returns the focal length.
   double Focus() const;
 
   void Transform(gp_Vec& D) const;
 
   void Transform(gp_Pnt& Pnt) const;
 
-  //! Transform and apply perspective if needed.
   Standard_EXPORT void Project(const gp_Pnt& P, gp_Pnt2d& Pout) const;
 
-  //! Transform and apply perspective if needed.
   Standard_EXPORT void Project(const gp_Pnt& P, double& X, double& Y, double& Z) const;
 
-  //! Transform and apply perspective if needed.
   Standard_EXPORT void Project(const gp_Pnt& P,
                                const gp_Vec& D1,
                                gp_Pnt2d&     Pout,
                                gp_Vec2d&     D1out) const;
 
-  //! return a line going through the eye towards the
-  //! 2d point <X,Y>.
   Standard_EXPORT gp_Lin Shoot(const double X, const double Y) const;
 
 private:
@@ -110,8 +81,6 @@ private:
 #include <gp_Vec.hpp>
 #include <gp_Pnt.hpp>
 
-//=================================================================================================
-
 inline void HLRAlgo_Projector::Directions(gp_Vec2d& D1, gp_Vec2d& D2, gp_Vec2d& D3) const
 {
   D1 = myD1;
@@ -119,34 +88,20 @@ inline void HLRAlgo_Projector::Directions(gp_Vec2d& D1, gp_Vec2d& D2, gp_Vec2d& 
   D3 = myD3;
 }
 
-//=================================================================================================
-
 inline bool HLRAlgo_Projector::Perspective() const
 {
   return myPersp;
 }
-
-/*
-//=================================================================================================
-
-inline const gp_Trsf & HLRAlgo_Projector::Transformation() const
-{ return myTrsf; }
-*/
-//=================================================================================================
 
 inline const gp_Trsf& HLRAlgo_Projector::InvertedTransformation() const
 {
   return myInvTrsf;
 }
 
-//=================================================================================================
-
 inline const gp_Trsf& HLRAlgo_Projector::FullTransformation() const
 {
   return myScaledTrsf;
 }
-
-//=================================================================================================
 
 inline double HLRAlgo_Projector::Focus() const
 {
@@ -154,14 +109,10 @@ inline double HLRAlgo_Projector::Focus() const
   return myFocus;
 }
 
-//=================================================================================================
-
 inline void HLRAlgo_Projector::Transform(gp_Vec& D) const
 {
   D.Transform(myTrsf);
 }
-
-//=================================================================================================
 
 inline void HLRAlgo_Projector::Transform(gp_Pnt& Pnt) const
 {

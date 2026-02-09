@@ -3,8 +3,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_DataSource3D, MeshVS_DataSource)
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<NCollection_Sequence<int>>> MeshVS_DataSource3D::GetPrismTopology(
   const int BasePoints) const
 {
@@ -20,8 +18,6 @@ occ::handle<NCollection_HArray1<NCollection_Sequence<int>>> MeshVS_DataSource3D:
   }
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<NCollection_Sequence<int>>> MeshVS_DataSource3D::GetPyramidTopology(
   const int BasePoints) const
 {
@@ -36,8 +32,6 @@ occ::handle<NCollection_HArray1<NCollection_Sequence<int>>> MeshVS_DataSource3D:
     return result;
   }
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<NCollection_Sequence<int>>> MeshVS_DataSource3D::
   CreatePrismTopology(const int BasePoints)
@@ -64,8 +58,6 @@ occ::handle<NCollection_HArray1<NCollection_Sequence<int>>> MeshVS_DataSource3D:
 
   return result;
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HArray1<NCollection_Sequence<int>>> MeshVS_DataSource3D::
   CreatePyramidTopology(const int BasePoints)

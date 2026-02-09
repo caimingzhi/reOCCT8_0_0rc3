@@ -3,8 +3,6 @@
 #include <Adaptor3d_TopolTool.hpp>
 #include <GeomAdaptor_Surface.hpp>
 
-//=================================================================================================
-
 void GeomInt_IntSS::Perform(const occ::handle<Geom_Surface>& S1,
                             const occ::handle<Geom_Surface>& S2,
                             const double                     Tol,
@@ -20,10 +18,6 @@ void GeomInt_IntSS::Perform(const occ::handle<Geom_Surface>& S1,
   InternalPerform(Tol, Approx, ApproxS1, ApproxS2, false, 0., 0., 0., 0.);
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : General intersection with a Starting Point
-//=======================================================================
 void GeomInt_IntSS::Perform(const occ::handle<Geom_Surface>& S1,
                             const occ::handle<Geom_Surface>& S2,
                             const double                     Tol,
@@ -42,8 +36,6 @@ void GeomInt_IntSS::Perform(const occ::handle<Geom_Surface>& S1,
     myHS2 = new GeomAdaptor_Surface(S2);
   InternalPerform(Tol, Approx, ApproxS1, ApproxS2, true, U1, V1, U2, V2);
 }
-
-//=================================================================================================
 
 void GeomInt_IntSS::InternalPerform(const double Tol,
                                     const bool   Approx,
@@ -123,7 +115,6 @@ void GeomInt_IntSS::InternalPerform(const double Tol,
         }
       }
 
-      // ============================================================
       if (myIntersector.IsDone())
       {
         const int nblin = myIntersector.NbLines();
@@ -136,15 +127,11 @@ void GeomInt_IntSS::InternalPerform(const double Tol,
   }
 }
 
-//=================================================================================================
-
 const occ::handle<Geom_Curve>& GeomInt_IntSS::Line(const int Index) const
 {
   StdFail_NotDone_Raise_if(!myIntersector.IsDone(), "GeomInt_IntSS::Line");
   return sline(Index + myNbrestr);
 }
-
-//=================================================================================================
 
 const occ::handle<Geom_Curve>& GeomInt_IntSS::Boundary(const int Index) const
 {
@@ -152,8 +139,6 @@ const occ::handle<Geom_Curve>& GeomInt_IntSS::Boundary(const int Index) const
   Standard_OutOfRange_Raise_if(Index <= 0 || Index > myNbrestr, "GeomInt_IntSS::Boundary");
   return sline(Index);
 }
-
-//=================================================================================================
 
 gp_Pnt2d GeomInt_IntSS::Pnt2d(const int Index, const bool OnFirst) const
 {
@@ -166,15 +151,11 @@ gp_Pnt2d GeomInt_IntSS::Pnt2d(const int Index, const bool OnFirst) const
   return gp_Pnt2d(U, V);
 }
 
-//=================================================================================================
-
 bool GeomInt_IntSS::HasLineOnS1(const int index) const
 {
   StdFail_NotDone_Raise_if(!myIntersector.IsDone(), "GeomInt_IntSS::HasLineOnS1");
   return (!slineS1(index).IsNull());
 }
-
-//=================================================================================================
 
 bool GeomInt_IntSS::HasLineOnS2(const int index) const
 {
@@ -182,15 +163,11 @@ bool GeomInt_IntSS::HasLineOnS2(const int index) const
   return (!slineS2(index).IsNull());
 }
 
-//=================================================================================================
-
 const occ::handle<Geom2d_Curve>& GeomInt_IntSS::LineOnS1(const int Index) const
 {
   StdFail_NotDone_Raise_if(!myIntersector.IsDone(), "GeomInt_IntSS::LineOnS1");
   return slineS1(Index);
 }
-
-//=================================================================================================
 
 const occ::handle<Geom2d_Curve>& GeomInt_IntSS::LineOnS2(const int Index) const
 {

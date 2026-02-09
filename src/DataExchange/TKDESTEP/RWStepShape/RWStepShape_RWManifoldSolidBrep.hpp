@@ -11,7 +11,6 @@ class StepShape_ManifoldSolidBrep;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ManifoldSolidBrep
 class RWStepShape_RWManifoldSolidBrep
 {
 public:

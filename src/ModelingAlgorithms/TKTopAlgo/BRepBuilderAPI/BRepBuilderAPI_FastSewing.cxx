@@ -21,10 +21,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepBuilderAPI_FastSewing, Standard_Transient)
 
-//=======================================================================
-// function : IntersetctionOfSets
-// purpose  : Returns minimal value of intersection result
-//=======================================================================
 static int IntersectionOfSets(const NCollection_List<int>& theSet1,
                               const NCollection_List<int>& theSet2)
 {
@@ -40,7 +36,7 @@ static int IntersectionOfSets(const NCollection_List<int>& theSet1,
       const int aVal2 = anIt2.Value();
       if (aVal1 == aVal2)
       {
-        // theIntersectionResult.Append(aVal1);
+
         if (aVal1 < aRetVal)
           aRetVal = aVal1;
       }
@@ -52,8 +48,6 @@ static int IntersectionOfSets(const NCollection_List<int>& theSet1,
 
   return aRetVal;
 }
-
-//=================================================================================================
 
 static occ::handle<Geom2d_Curve> Get2DCurve(const int    theIndex,
                                             const double theUfirst,
@@ -135,15 +129,11 @@ static occ::handle<Geom2d_Curve> Get2DCurve(const int    theIndex,
   return a2dCurv;
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_FastSewing::BRepBuilderAPI_FastSewing(const double theTol)
     : myTolerance(theTol),
       myStatusList(0)
 {
 }
-
-//=================================================================================================
 
 bool BRepBuilderAPI_FastSewing::Add(const TopoDS_Shape& theShape)
 {
@@ -155,7 +145,7 @@ bool BRepBuilderAPI_FastSewing::Add(const TopoDS_Shape& theShape)
   }
 
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMS;
-  // aMS.Add(theShape);
+
   TopExp_Explorer aFExp(theShape, TopAbs_FACE);
   for (; aFExp.More(); aFExp.Next())
   {
@@ -187,7 +177,7 @@ bool BRepBuilderAPI_FastSewing::Add(const TopoDS_Shape& theShape)
 
       FS_Face aFFace;
       aFFace.mySrcFace = aFace;
-      aFFace.myID      = myFaceVec.Length(); // because start index is 0
+      aFFace.myID      = myFaceVec.Length();
       myFaceVec.Append(aFFace);
       aResult = true;
     }
@@ -195,8 +185,6 @@ bool BRepBuilderAPI_FastSewing::Add(const TopoDS_Shape& theShape)
 
   return aResult;
 }
-
-//=================================================================================================
 
 bool BRepBuilderAPI_FastSewing::Add(const occ::handle<Geom_Surface>& theSurface)
 {
@@ -229,13 +217,11 @@ bool BRepBuilderAPI_FastSewing::Add(const occ::handle<Geom_Surface>& theSurface)
   aBuilder.MakeFace(aFace.mySrcFace, theSurface, myTolerance);
   aBuilder.NaturalRestriction(aFace.mySrcFace, true);
 
-  aFace.myID = myFaceVec.Length(); // because start index is 0
+  aFace.myID = myFaceVec.Length();
   myFaceVec.Append(aFace);
 
   return true;
 }
-
-//=================================================================================================
 
 void BRepBuilderAPI_FastSewing::Perform()
 {
@@ -248,7 +234,7 @@ void BRepBuilderAPI_FastSewing::Perform()
   try
   {
     {
-      // create vertices having unique coordinates
+
       double                                aRange  = Compute3DRange();
       occ::handle<NCollection_IncAllocator> anAlloc = new NCollection_IncAllocator;
       NCollection_CellFilter<NodeInspector> aCells(std::max(myTolerance, aRange / IntegerLast()),
@@ -265,23 +251,18 @@ void BRepBuilderAPI_FastSewing::Perform()
       FindEdges(i);
     }
 
-    // Create topological structures
-
     for (int i = myVertexVec.Lower(); i <= myVertexVec.Upper(); i++)
     {
       myVertexVec.ChangeValue(i).CreateTopologicalVertex(myTolerance);
     }
 
-    // Edges
     for (int i = myEdgeVec.Lower(); i <= myEdgeVec.Upper(); i++)
     {
       myEdgeVec.ChangeValue(i).CreateTopologicalEdge(myVertexVec, myFaceVec, myTolerance);
     }
 
-    // Shell
     BRepTools_Quilt aQuilt;
 
-    // Faces
     for (int i = myFaceVec.Lower(); i <= myFaceVec.Upper(); i++)
     {
       FS_Face& aFace = myFaceVec.ChangeValue(i);
@@ -296,24 +277,21 @@ void BRepBuilderAPI_FastSewing::Perform()
   {
     SetStatus(FS_Exception);
 #ifdef OCCT_DEBUG
-    // Standard_Failure::Caught()->Print(std::cout);
+
 #endif
     return;
   }
 }
-
-//=================================================================================================
 
 void BRepBuilderAPI_FastSewing::UpdateEdgeInfo(const int theIDPrevVertex,
                                                const int theIDCurrVertex,
                                                const int theFaceID,
                                                const int theIDCurvOnFace)
 {
-  // Indeed, two vertices combine into one edge only.
+
   const int anEdgeID = IntersectionOfSets(myVertexVec.Value(theIDPrevVertex).myEdges,
                                           myVertexVec.Value(theIDCurrVertex).myEdges);
 
-  // For DEBUG mode only
   Standard_ProgramError_Raise_if(
     anEdgeID < 0,
     "BRepBuilderAPI_FastSewing::UpdateEdgeInfo: Update not existing edge.");
@@ -324,15 +302,13 @@ void BRepBuilderAPI_FastSewing::UpdateEdgeInfo(const int theIDPrevVertex,
   aFace.SetEdge(theIDCurvOnFace, anEdge.myID);
 }
 
-//=================================================================================================
-
 void BRepBuilderAPI_FastSewing::CreateNewEdge(const int theIDPrevVertex,
                                               const int theIDCurrVertex,
                                               const int theFaceID,
                                               const int theIDCurvOnFace)
 {
   FS_Edge anEdge(theIDPrevVertex, theIDCurrVertex);
-  anEdge.myID = myEdgeVec.Length(); // because start index is 0
+  anEdge.myID = myEdgeVec.Length();
 
   anEdge.myFaces.Append(theFaceID);
   FS_Face& aFace = myFaceVec.ChangeValue(theFaceID);
@@ -341,7 +317,7 @@ void BRepBuilderAPI_FastSewing::CreateNewEdge(const int theIDPrevVertex,
   myVertexVec.ChangeValue(theIDPrevVertex).myEdges.Append(anEdge.myID);
 
   if (theIDPrevVertex == theIDCurrVertex)
-  { // the Edge is degenerated
+  {
     SetStatus(FS_Degenerated);
   }
   else
@@ -351,8 +327,6 @@ void BRepBuilderAPI_FastSewing::CreateNewEdge(const int theIDPrevVertex,
 
   myEdgeVec.Append(anEdge);
 }
-
-//=================================================================================================
 
 void BRepBuilderAPI_FastSewing::FindVertexes(const int                              theSurfID,
                                              NCollection_CellFilter<NodeInspector>& theCells)
@@ -381,8 +355,8 @@ void BRepBuilderAPI_FastSewing::FindVertexes(const int                          
     NodeInspector::Target aResID = anInspector.GetResult();
 
     if (aResID < 0)
-    {                                     // Add new Vertex
-      aVert.myID  = myVertexVec.Length(); // because start index is 0
+    {
+      aVert.myID  = myVertexVec.Length();
       aVert.myPnt = aPnts[i];
       aVert.myFaces.Append(theSurfID);
       myVertexVec.Append(aVert);
@@ -391,14 +365,12 @@ void BRepBuilderAPI_FastSewing::FindVertexes(const int                          
       theCells.Add(aVert.myID, aBox.CornerMin().XYZ(), aBox.CornerMax().XYZ());
     }
     else
-    { // Change existing vertex
+    {
       aFace.SetVertex(i, aResID);
       myVertexVec.ChangeValue(aResID).myFaces.Append(theSurfID);
     }
   }
 }
-
-//=================================================================================================
 
 void BRepBuilderAPI_FastSewing::FindEdges(const int theSurfID)
 {
@@ -415,12 +387,11 @@ void BRepBuilderAPI_FastSewing::FindEdges(const int theSurfID)
               aLastVertID  = aFace.myVertices[aLastVertIndex];
 
     if (aFirstVertID == aLastVertID)
-    { // Edge is degenerated.
+    {
       CreateNewEdge(aFirstVertID, aLastVertID, theSurfID, i);
       continue;
     }
 
-    // Must be minimal element from list
     const int anIntRes = IntersectionOfSets(myVertexVec.Value(aFirstVertID).myFaces,
                                             myVertexVec.Value(aLastVertID).myFaces);
 
@@ -429,13 +400,11 @@ void BRepBuilderAPI_FastSewing::FindEdges(const int theSurfID)
       CreateNewEdge(aFirstVertID, aLastVertID, theSurfID, i);
     }
     else
-    { // if(theSurfID > anIntRes) => The edge has been processed earlier
+    {
       UpdateEdgeInfo(aFirstVertID, aLastVertID, theSurfID, i);
     }
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_FastSewing::FS_VARStatuses BRepBuilderAPI_FastSewing::GetStatuses(
   Standard_OStream* const theOS)
@@ -449,7 +418,6 @@ BRepBuilderAPI_FastSewing::FS_VARStatuses BRepBuilderAPI_FastSewing::GetStatuses
     return myStatusList;
   }
 
-  // Number of bits
   const int   aNumMax = 8 * sizeof(myStatusList);
   FS_Statuses anIDS   = static_cast<FS_Statuses>(0x0001);
   for (int i = 1; i <= aNumMax; i++, anIDS = static_cast<FS_Statuses>(anIDS << 1))
@@ -492,8 +460,6 @@ BRepBuilderAPI_FastSewing::FS_VARStatuses BRepBuilderAPI_FastSewing::GetStatuses
   return myStatusList;
 }
 
-//=================================================================================================
-
 double BRepBuilderAPI_FastSewing::Compute3DRange()
 {
   Bnd_Box aBox;
@@ -522,8 +488,6 @@ double BRepBuilderAPI_FastSewing::Compute3DRange()
   return aDelta;
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_FastSewing::NodeInspector::NodeInspector(const NCollection_Vector<FS_Vertex>& theVec,
                                                         const gp_Pnt&                        thePnt,
                                                         const double                         theTol)
@@ -533,8 +497,6 @@ BRepBuilderAPI_FastSewing::NodeInspector::NodeInspector(const NCollection_Vector
 {
   mySQToler = theTol * theTol;
 }
-
-//=================================================================================================
 
 NCollection_CellFilter_Action BRepBuilderAPI_FastSewing::NodeInspector::Inspect(const Target theID)
 {
@@ -548,8 +510,6 @@ NCollection_CellFilter_Action BRepBuilderAPI_FastSewing::NodeInspector::Inspect(
 
   return CellFilter_Keep;
 }
-
-//=================================================================================================
 
 void BRepBuilderAPI_FastSewing::FS_Edge::CreateTopologicalEdge(
   const NCollection_Vector<FS_Vertex>& theVertexVec,
@@ -569,7 +529,6 @@ void BRepBuilderAPI_FastSewing::FS_Edge::CreateTopologicalEdge(
 
   const FS_Face& aFace = theFaceVec.Value(myFaces.Value(NCollection_Sequence<int>::Lower()));
 
-  // 3D-curves in 1st and 2nd faces are considered to be in same-range
   const occ::handle<Geom_Surface>& aSurf = BRep_Tool::Surface(aFace.mySrcFace, aLocation);
 
   double aUf = 0.0, aUl = 0.0, aVf = 0.0, aVl = 0.0;
@@ -585,7 +544,6 @@ void BRepBuilderAPI_FastSewing::FS_Edge::CreateTopologicalEdge(
     }
   }
 
-  // For DEBUG mode only
   Standard_ProgramError_Raise_if(
     anEdgeID < 0,
     "BRepBuilderAPI_FastSewing::FS_Edge::CreateTopologicalEdge: Single edge.");
@@ -629,14 +587,12 @@ void BRepBuilderAPI_FastSewing::FS_Edge::CreateTopologicalEdge(
   aBuilder.Range(myTopoEdge, a3dCurv->FirstParameter(), a3dCurv->LastParameter());
 }
 
-//=================================================================================================
-
 void BRepBuilderAPI_FastSewing::FS_Face::CreateTopologicalWire(
   const NCollection_Vector<FS_Edge>& theEdgeVec,
   const double                       theToler)
 {
   TopLoc_Location aLocation;
-  // 3D-curves in 1st and 2nd faces are considered to be in same-range
+
   const occ::handle<Geom_Surface>& aSurf = BRep_Tool::Surface(mySrcFace, aLocation);
   double                           aUf = 0.0, aUl = 0.0, aVf = 0.0, aVl = 0.0;
   aSurf->Bounds(aUf, aUl, aVf, aVl);
@@ -660,8 +616,6 @@ void BRepBuilderAPI_FastSewing::FS_Face::CreateTopologicalWire(
       continue;
     }
 
-    // Check if 3D and 2D-curve have same-orientation.
-    // If it is not, 2d-curve will be reversed.
     {
       double aFirstPar = 0.0, aLastPar = 0.0;
 
@@ -692,8 +646,6 @@ void BRepBuilderAPI_FastSewing::FS_Face::CreateTopologicalWire(
 
   myWire.Closed(true);
 }
-
-//=================================================================================================
 
 void BRepBuilderAPI_FastSewing::FS_Face::CreateTopologicalFace()
 {

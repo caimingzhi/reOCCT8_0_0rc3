@@ -10,7 +10,6 @@ namespace
 {
   typedef NCollection_Vec2<float> Vec2f;
 
-  //! Auxiliary function to translate corners by the vector.
   inline void move(NCollection_Vector<Vec2f>& theCorners,
                    const Vec2f&               theMoveVec,
                    int                        theCharLower,
@@ -22,7 +21,6 @@ namespace
     }
   }
 
-  //! Auxiliary function to translate corners in vertical direction.
   inline void moveY(NCollection_Vector<Vec2f>& theCorners,
                     const float                theMoveVec,
                     int                        theCharLower,
@@ -36,8 +34,6 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 Font_TextFormatter::Font_TextFormatter()
     : myAlignX(Graphic3d_HTA_LEFT),
       myAlignY(Graphic3d_VTA_TOP),
@@ -46,12 +42,12 @@ Font_TextFormatter::Font_TextFormatter()
       myIsWordWrapping(true),
       myLastSymbolWidth(0.0f),
       myMaxSymbolWidth(0.0f),
-      //
+
       myPen(0.0f, 0.0f),
       myLineSpacing(0.0f),
       myAscender(0.0f),
       myIsFormatted(false),
-      //
+
       myLinesNb(0),
       myRectLineStart(0),
       myNewLineNb(0),
@@ -62,16 +58,12 @@ Font_TextFormatter::Font_TextFormatter()
 {
 }
 
-//=================================================================================================
-
 void Font_TextFormatter::SetupAlignment(const Graphic3d_HorizontalTextAlignment theAlignX,
                                         const Graphic3d_VerticalTextAlignment   theAlignY)
 {
   myAlignX = theAlignX;
   myAlignY = theAlignY;
 }
-
-//=================================================================================================
 
 void Font_TextFormatter::Reset()
 {
@@ -86,8 +78,6 @@ void Font_TextFormatter::Reset()
   myMaxSymbolWidth  = 0.0f;
 }
 
-//=================================================================================================
-
 void Font_TextFormatter::Append(const NCollection_String& theString, Font_FTFont& theFont)
 {
   if (theString.IsEmpty())
@@ -99,9 +89,8 @@ void Font_TextFormatter::Append(const NCollection_String& theString, Font_FTFont
   myLineSpacing = std::max(myLineSpacing, theFont.LineSpacing());
   myString += theString;
 
-  int aSymbolsCounter = 0; // special counter to process tabulation symbols
+  int aSymbolsCounter = 0;
 
-  // first pass - render all symbols using associated font on single ZERO baseline
   for (Font_TextFormatter::Iterator aFormatterIt(*this); aFormatterIt.More(); aFormatterIt.Next())
   {
     const char32_t aCharThis = aFormatterIt.Symbol();
@@ -110,13 +99,13 @@ void Font_TextFormatter::Append(const NCollection_String& theString, Font_FTFont
     float anAdvanceX = 0;
     if (IsCommandSymbol(aCharThis))
     {
-      continue; // skip unsupported carriage control codes
+      continue;
     }
-    else if (aCharThis == '\x0A') // LF (line feed, new line)
+    else if (aCharThis == '\x0A')
     {
       aSymbolsCounter = 0;
       myNewLines.Append(myPen.x());
-      anAdvanceX = 0; // the symbol has null width
+      anAdvanceX = 0;
     }
     else if (aCharThis == ' ')
     {
@@ -139,8 +128,6 @@ void Font_TextFormatter::Append(const NCollection_String& theString, Font_FTFont
   }
   myLastSymbolWidth = myPen.x() - myCorners.Last().x();
 }
-
-//=================================================================================================
 
 void Font_TextFormatter::newLine(const int theLastRect, const float theMaxLineWidth)
 {
@@ -181,8 +168,6 @@ void Font_TextFormatter::newLine(const int theLastRect, const float theMaxLineWi
   myRectLineStart = theLastRect + 1;
 }
 
-//=================================================================================================
-
 void Font_TextFormatter::Format()
 {
   if (myCorners.Length() == 0 || myIsFormatted)
@@ -196,7 +181,6 @@ void Font_TextFormatter::Format()
   myBndWidth                  = 0.0f;
   myMoveVec.x() = myMoveVec.y() = 0.0f;
 
-  // split text into lines and apply horizontal alignment
   myPenCurrLine = -myAscender;
   int aRectIter = 0;
   myNewLineNb   = 0;
@@ -204,12 +188,12 @@ void Font_TextFormatter::Format()
   float aMaxLineWidth = Wrapping();
   if (HasWrapping())
   {
-    // it is not possible to wrap less than symbol width
+
     aMaxLineWidth = std::max(aMaxLineWidth, MaximumSymbolWidth());
   }
   else
   {
-    if (myNewLines.IsEmpty()) // If only one line
+    if (myNewLines.IsEmpty())
     {
       aMaxLineWidth = myPen.x();
     }
@@ -219,9 +203,8 @@ void Font_TextFormatter::Format()
       {
         aMaxLineWidth = std::max(aMaxLineWidth, LineWidth(aLineIt));
       }
-      // clang-format off
-      aMaxLineWidth = std::max(aMaxLineWidth, LineWidth (myNewLines.Size())); // processing the last line also
-      // clang-format on
+
+      aMaxLineWidth = std::max(aMaxLineWidth, LineWidth(myNewLines.Size()));
     }
   }
 
@@ -231,14 +214,14 @@ void Font_TextFormatter::Format()
     const char32_t aCharThis = aFormatterIt.Symbol();
     aRectIter                = aFormatterIt.SymbolPosition();
 
-    if (aCharThis == '\x0A') // LF (line feed, new line)
+    if (aCharThis == '\x0A')
     {
-      const int aLastRect = aRectIter; // last rect on current line
+      const int aLastRect = aRectIter;
       newLine(aLastRect, aMaxLineWidth);
       ++myNewLineNb;
       continue;
     }
-    else if (HasWrapping()) // wrap lines longer than maximum width
+    else if (HasWrapping())
     {
       int aFirstCornerId = myRectLineStart;
 
@@ -262,10 +245,9 @@ void Font_TextFormatter::Format()
           }
         }
       }
-      if (aNextXPos > aMaxLineWidth
-          || !isCurWordFits) // wrap the line and do processing of the symbol
+      if (aNextXPos > aMaxLineWidth || !isCurWordFits)
       {
-        const int aLastRect = aRectIter - 1; // last rect on current line
+        const int aLastRect = aRectIter - 1;
         newLine(aLastRect, aMaxLineWidth);
       }
     }
@@ -274,10 +256,8 @@ void Font_TextFormatter::Format()
 
   myBndWidth = aMaxLineWidth;
 
-  // move last line
   newLine(myCorners.Length() - 1, aMaxLineWidth);
 
-  // apply vertical alignment style
   if (myAlignY == Graphic3d_VTA_BOTTOM)
   {
     myBndTop = -myLineSpacing - myPenCurrLine;
@@ -297,8 +277,6 @@ void Font_TextFormatter::Format()
   }
 }
 
-//=================================================================================================
-
 bool Font_TextFormatter::GlyphBoundingBox(const int theIndex, Font_Rect& theBndBox) const
 {
   if (theIndex < 0 || theIndex >= Corners().Size())
@@ -313,18 +291,18 @@ bool Font_TextFormatter::GlyphBoundingBox(const int theIndex, Font_Rect& theBndB
   theBndBox.Top                              = theBndBox.Bottom + myLineSpacing;
   if (theIndex + 1 >= myCorners.Length())
   {
-    // the last symbol
+
     return true;
   }
 
   const NCollection_Vec2<float>& aNextLeftCorner = BottomLeft(theIndex + 1);
-  if (std::abs(aLeftCorner.y() - aNextLeftCorner.y()) < Precision::Confusion()) // in the same row
+  if (std::abs(aLeftCorner.y() - aNextLeftCorner.y()) < Precision::Confusion())
   {
     theBndBox.Right = aNextLeftCorner.x();
   }
   else
   {
-    // the next symbol is on the next row either by '\n' or by wrapping
+
     float aLineWidth = LineWidth(LineIndex(theIndex));
     theBndBox.Left   = aLeftCorner.x();
     switch (myAlignX)
@@ -343,8 +321,6 @@ bool Font_TextFormatter::GlyphBoundingBox(const int theIndex, Font_Rect& theBndB
   return true;
 }
 
-//=================================================================================================
-
 bool Font_TextFormatter::IsLFSymbol(const int theIndex) const
 {
   Font_Rect aBndBox;
@@ -355,8 +331,6 @@ bool Font_TextFormatter::IsLFSymbol(const int theIndex) const
 
   return std::abs(aBndBox.Right - aBndBox.Left) < Precision::Confusion();
 }
-
-//=================================================================================================
 
 float Font_TextFormatter::FirstPosition() const
 {
@@ -371,8 +345,6 @@ float Font_TextFormatter::FirstPosition() const
       return 0.5f * myBndWidth;
   }
 }
-
-//=================================================================================================
 
 int Font_TextFormatter::LinePositionIndex(const int theIndex) const
 {
@@ -390,8 +362,6 @@ int Font_TextFormatter::LinePositionIndex(const int theIndex) const
   return anIndex;
 }
 
-//=================================================================================================
-
 int Font_TextFormatter::LineIndex(const int theIndex) const
 {
   if (myLineSpacing < 0.0f)
@@ -401,8 +371,6 @@ int Font_TextFormatter::LineIndex(const int theIndex) const
 
   return (int)std::abs((BottomLeft(theIndex).y() + myAscender) / myLineSpacing);
 }
-
-//=================================================================================================
 
 float Font_TextFormatter::LineWidth(const int theIndex) const
 {
@@ -416,7 +384,7 @@ float Font_TextFormatter::LineWidth(const int theIndex) const
     return theIndex == 0 ? myNewLines[0] : myNewLines[theIndex] - myNewLines[theIndex - 1];
   }
 
-  if (theIndex == myNewLines.Length()) // the last line
+  if (theIndex == myNewLines.Length())
   {
     return theIndex == 0 ? myPen.x() : myPen.x() - myNewLines[theIndex - 1];
   }

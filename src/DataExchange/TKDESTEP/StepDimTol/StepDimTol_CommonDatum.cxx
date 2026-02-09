@@ -5,11 +5,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_CommonDatum, StepRepr_CompositeShapeAspect)
 
-//=================================================================================================
-
 StepDimTol_CommonDatum::StepDimTol_CommonDatum() = default;
-
-//=================================================================================================
 
 void StepDimTol_CommonDatum::Init(
   const occ::handle<TCollection_HAsciiString>&        theShapeAspect_Name,
@@ -33,14 +29,10 @@ void StepDimTol_CommonDatum::Init(
                 theDatum_Identification);
 }
 
-//=================================================================================================
-
 occ::handle<StepDimTol_Datum> StepDimTol_CommonDatum::Datum() const
 {
   return myDatum;
 }
-
-//=================================================================================================
 
 void StepDimTol_CommonDatum::SetDatum(const occ::handle<StepDimTol_Datum>& theDatum)
 {

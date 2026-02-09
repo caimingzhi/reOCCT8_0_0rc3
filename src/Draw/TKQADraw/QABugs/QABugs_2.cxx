@@ -19,21 +19,18 @@
 
 #include <cstdio>
 
-//=================================================================================================
-
 static int OCC527(Draw_Interpretor& di, int argc, const char** argv)
 {
   try
   {
     OCC_CATCH_SIGNALS
-    // 1. Verify amount of arguments of the command
+
     if (argc != 2)
     {
       di << "Usage : " << argv[0] << "OCC527 shape\n";
       return 1;
     }
 
-    // 2. Get selected shape
     TopoDS_Shape aShape = DBRep::Get(argv[1]);
     if (aShape.IsNull())
     {
@@ -41,7 +38,6 @@ static int OCC527(Draw_Interpretor& di, int argc, const char** argv)
       return 0;
     }
 
-    // 3. Explode entry shape on faces and build sections from Zmin to Zmax with step aStep
     const double Zmin = -40.228173882121, Zmax = 96.408126285268, aStep = 1.0;
     char         str[100];
     str[0] = 0;
@@ -51,31 +47,26 @@ static int OCC527(Draw_Interpretor& di, int argc, const char** argv)
     TopExp_Explorer aExp1;
     for (aExp1.Init(aShape, TopAbs_FACE); aExp1.More(); aExp1.Next())
     {
-      // Process one face
+
       str[0] = 0;
       Sprintf(str, "Face #%d: \t", nbf++);
       di << str;
       TopoDS_Face aFace = TopoDS::Face(aExp1.Current());
 
-      // Build BndBox in order to avoid try of building section
-      // if plane of the one does not intersect BndBox of the face
       Bnd_Box aFaceBox;
       BRepBndLib::Add(aFace, aFaceBox);
       double X1, X2, Y1, Y2, Z1, Z2;
       aFaceBox.Get(X1, Y1, Z1, X2, Y2, Z2);
 
-      // Build sections from Zmin to Zmax with step aStep
       double gmaxdist = 0.0, gzmax = Zmax;
       for (double zcur = Zmax; zcur > Zmin; zcur -= aStep)
       {
-        // If plane of the section does not intersect BndBox of the face do nothing
+
         if (zcur < Z1 || zcur > Z2)
           continue;
 
-        // Build current section
         gp_Pln pl(0, 0, 1, -zcur);
 
-        //
         di << "BRepAlgoAPI_Section aSection(aFace,pl,false)\n";
         BRepAlgoAPI_Section aSection(aFace, pl, false);
         aSection.Approximation(true);
@@ -96,7 +87,7 @@ static int OCC527(Draw_Interpretor& di, int argc, const char** argv)
               double        dist  = pl.Distance(BRep_Tool::Pnt(aV));
               if (dist > lmaxdist)
                 lmaxdist = dist;
-              // If section was built check distance between vertexes and plane of the one
+
               str[0] = 0;
               if (dist > toler)
                 Sprintf(str, "Dist=%f, Toler=%f, Param=%f FAULTY\n", dist, toler, gzmax);

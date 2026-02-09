@@ -11,7 +11,6 @@ class StepShape_ExtrudedAreaSolid;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ExtrudedAreaSolid
 class RWStepShape_RWExtrudedAreaSolid
 {
 public:

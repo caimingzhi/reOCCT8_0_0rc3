@@ -11,7 +11,6 @@ class StepVisual_AnnotationOccurrence;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AnnotationOccurrence
 class RWStepVisual_RWAnnotationOccurrence
 {
 public:

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRep_Builder.hpp>
 #include <BRep_Tool.hpp>
@@ -37,8 +26,6 @@
 #include <TopoDS_Shape.hpp>
 #include <NCollection_HSequence.hpp>
 
-//=================================================================================================
-
 bool IsRightContour(const NCollection_Sequence<gp_Pnt>& pts, const double prec)
 {
   int len = pts.Length();
@@ -46,7 +33,7 @@ bool IsRightContour(const NCollection_Sequence<gp_Pnt>& pts, const double prec)
     return true;
 
   NCollection_Array1<gp_Pnt> thePts(1, len);
-  int                        i; // svv Jan11 2000 : porting on DEC
+  int                        i;
   for (i = 1; i <= len; i++)
     thePts(i) = pts(i);
 
@@ -54,7 +41,6 @@ bool IsRightContour(const NCollection_Sequence<gp_Pnt>& pts, const double prec)
   if (ShapeAnalysis_Curve::IsPlanar(thePts, Norm, prec))
   {
 
-    // Make polygonal wire from points
     BRepBuilderAPI_MakePolygon mkPoly;
     for (i = 1; i <= len; i++)
       mkPoly.Add(thePts(i));
@@ -63,7 +49,6 @@ bool IsRightContour(const NCollection_Sequence<gp_Pnt>& pts, const double prec)
     if (mkPoly.IsDone())
     {
 
-      // Create mean plane
       gp_XYZ center(0, 0, 0);
       for (i = 1; i <= len; i++)
         center += thePts(i).XYZ();
@@ -85,8 +70,6 @@ bool IsRightContour(const NCollection_Sequence<gp_Pnt>& pts, const double prec)
 
   return false;
 }
-
-//=================================================================================================
 
 gp_Vec MeanNormal(const NCollection_Array1<gp_Pnt>& pts)
 {
@@ -111,14 +94,12 @@ gp_Vec MeanNormal(const NCollection_Array1<gp_Pnt>& pts)
   return gp_Vec(theNorm).Normalized();
 }
 
-//=================================================================================================
-
 ShapeConstruct_MakeTriangulation::ShapeConstruct_MakeTriangulation(
   const NCollection_Array1<gp_Pnt>& pnts,
   const double                      prec)
 {
   myPrecision = (prec > 0.0) ? prec : Precision::Confusion();
-  // Make polygonal wire from points
+
   BRepBuilderAPI_MakePolygon mkPoly;
   for (int i = pnts.Lower(); i <= pnts.Upper(); i++)
     mkPoly.Add(pnts(i));
@@ -131,8 +112,6 @@ ShapeConstruct_MakeTriangulation::ShapeConstruct_MakeTriangulation(
   }
 }
 
-//=================================================================================================
-
 ShapeConstruct_MakeTriangulation::ShapeConstruct_MakeTriangulation(const TopoDS_Wire& wire,
                                                                    const double       prec)
 {
@@ -141,30 +120,24 @@ ShapeConstruct_MakeTriangulation::ShapeConstruct_MakeTriangulation(const TopoDS_
   Build();
 }
 
-//=================================================================================================
-
-void ShapeConstruct_MakeTriangulation::Build(const Message_ProgressRange& /*theRange*/)
+void ShapeConstruct_MakeTriangulation::Build(const Message_ProgressRange&)
 {
   if (myShape.IsNull())
   {
-    // Triangulate polygonal wire
+
     if (!myWire.IsNull())
       Triangulate(myWire);
   }
 }
-
-//=================================================================================================
 
 bool ShapeConstruct_MakeTriangulation::IsDone() const
 {
   return (!myShape.IsNull());
 }
 
-//=================================================================================================
-
 void ShapeConstruct_MakeTriangulation::Triangulate(const TopoDS_Wire& wire)
 {
-  // Fill sequence of edges
+
   occ::handle<NCollection_HSequence<TopoDS_Shape>> theEdges =
     new NCollection_HSequence<TopoDS_Shape>;
   for (TopoDS_Iterator ite(wire); ite.More(); ite.Next())
@@ -176,7 +149,6 @@ void ShapeConstruct_MakeTriangulation::Triangulate(const TopoDS_Wire& wire)
   else
   {
 
-    // Fill array of end points
     ShapeAnalysis_Edge                       sae;
     occ::handle<NCollection_HArray1<gp_Pnt>> theAPnt = new NCollection_HArray1<gp_Pnt>(1, NbEdges);
     for (int i = 1; i <= NbEdges; i++)
@@ -184,44 +156,37 @@ void ShapeConstruct_MakeTriangulation::Triangulate(const TopoDS_Wire& wire)
 
     TopoDS_Wire theNewWire;
 
-    // Check planarity on array of points
     gp_XYZ Norm(0, 0, 0);
     if (ShapeAnalysis_Curve::IsPlanar(theAPnt->Array1(), Norm, myPrecision))
       AddFacet(wire);
     else
     {
 
-      // Current contour is not planar - triangulate
       NCollection_Sequence<int> theSegments;
       int                       cindex = 1, seqFlag = 1;
       NCollection_Array1<int>   llimits(1, 2), rlimits(1, 2);
       llimits.Init(NbEdges + 1);
       rlimits.Init(0);
 
-      // Find all "good" planar segments
       while (seqFlag)
       {
 
-        // Set up limits for current sequence
         int llimit = llimits(seqFlag);
         int rlimit = rlimits(seqFlag);
         if (rlimit <= llimit)
           rlimit += NbEdges;
 
-        // Check stop condition
         if ((rlimit - llimit) > (NbEdges - 2))
           break;
 
         NCollection_Sequence<gp_Pnt> theSPnt;
 
-        // Add 3 points of minimal facet
         int lindex = (cindex == 1 ? NbEdges : cindex - 1);
         int rindex = (cindex == NbEdges ? 1 : cindex + 1);
         theSPnt.Append(theAPnt->Value(lindex));
         theSPnt.Append(theAPnt->Value(cindex));
         theSPnt.Append(theAPnt->Value(rindex));
 
-        // Try prepending points
         bool isGood = true;
         while (isGood)
         {
@@ -247,7 +212,6 @@ void ShapeConstruct_MakeTriangulation::Triangulate(const TopoDS_Wire& wire)
           }
         }
 
-        // Try appending points
         isGood = true;
         while (isGood)
         {
@@ -273,17 +237,14 @@ void ShapeConstruct_MakeTriangulation::Triangulate(const TopoDS_Wire& wire)
           }
         }
 
-        // Record new planar segment
         theSegments.Append(lindex);
         theSegments.Append(rindex);
 
-        // Set up new limits
         cindex           = rindex;
         rlimits(seqFlag) = rindex;
         if (llimit > NbEdges)
           llimits(seqFlag) = lindex;
 
-        // Set up sequence index
         seqFlag = (seqFlag == 1) ? 2 : 1;
       }
 
@@ -291,14 +252,14 @@ void ShapeConstruct_MakeTriangulation::Triangulate(const TopoDS_Wire& wire)
       if (cindex % 4 == 0)
       {
         gp_Vec theBaseNorm = MeanNormal(theAPnt->Array1());
-        // Identify sequence of matching facets
+
         int    len = cindex / 2, lindex, rindex, seqlen, j;
         double theC, theC1 = 0.0, theC2 = 0.0;
-        int    ii; // svv Jan11 2000 : porting on DEC
-                   // skl : change "i" to "ii"
+        int    ii;
+
         for (ii = 0; ii < len; ii++)
         {
-          // Compute normal collinearity for facet
+
           lindex = theSegments(ii * 2 + 1);
           rindex = theSegments(ii * 2 + 2);
           seqlen = ((rindex > lindex) ? rindex - lindex + 1 : NbEdges - lindex + rindex + 1);
@@ -318,12 +279,11 @@ void ShapeConstruct_MakeTriangulation::Triangulate(const TopoDS_Wire& wire)
         }
         int best1 = ((theC1 > theC2) ? 0 : 2);
 
-        // Add "best" planar facets
         BRep_Builder B;
         TopoDS_Wire  theFacetWire;
         TopoDS_Edge  theLEdge, theSLEdge;
         len = cindex / 4;
-        // Check for special case - 1 shared line
+
         bool special = (len == 2 && theSegments(best1 + 1) == theSegments(4 + best1 + 2)
                         && theSegments(best1 + 2) == theSegments(4 + best1 + 1));
         int  pindex  = theSegments((len - 1) * 4 + best1 + 2);
@@ -335,7 +295,6 @@ void ShapeConstruct_MakeTriangulation::Triangulate(const TopoDS_Wire& wire)
           {
             TopoDS_Shape aLocalShape = theSLEdge.Reversed();
             theLEdge                 = TopoDS::Edge(aLocalShape);
-            //	    theLEdge = TopoDS::Edge(theSLEdge.Reversed());
           }
           else
           {
@@ -346,7 +305,7 @@ void ShapeConstruct_MakeTriangulation::Triangulate(const TopoDS_Wire& wire)
             theLEdge  = BRepBuilderAPI_MakeEdge(v1, v2);
             theSLEdge = theLEdge;
           }
-          // Create new facet wire
+
           B.MakeWire(theFacetWire);
           B.Add(theFacetWire, theLEdge.Reversed());
           int cur_edge = lindex;
@@ -362,7 +321,7 @@ void ShapeConstruct_MakeTriangulation::Triangulate(const TopoDS_Wire& wire)
           AddFacet(theFacetWire);
           if (!special)
           {
-            // Add edges to the new wire
+
             if (theNewWire.IsNull())
               B.MakeWire(theNewWire);
             cur_edge = pindex;
@@ -381,25 +340,20 @@ void ShapeConstruct_MakeTriangulation::Triangulate(const TopoDS_Wire& wire)
         }
       }
 
-      // Clear storage variables
       theEdges.Nullify();
       theAPnt.Nullify();
 
-      // Triangulate the rest of edges
       if (!theNewWire.IsNull())
         Triangulate(theNewWire);
     }
   }
 }
 
-//=================================================================================================
-
 void ShapeConstruct_MakeTriangulation::AddFacet(const TopoDS_Wire& wire)
 {
   if (wire.IsNull())
     return;
 
-  // Fill sequence of points
   ShapeAnalysis_Edge           sae;
   NCollection_Sequence<gp_Pnt> pts;
   for (TopoDS_Iterator ite(wire); ite.More(); ite.Next())
@@ -408,7 +362,6 @@ void ShapeConstruct_MakeTriangulation::AddFacet(const TopoDS_Wire& wire)
   if (nbp < 3)
     return;
 
-  // Create mean plane
   double cMod, maxMod = 0.0;
   gp_XYZ maxVec, Normal(0, 0, 0);
   for (i = 1; i <= nbp; i++)
@@ -449,13 +402,11 @@ void ShapeConstruct_MakeTriangulation::AddFacet(const TopoDS_Wire& wire)
   gp_Pln                  Pln(pts(1), gp_Dir(Normal));
   occ::handle<Geom_Plane> thePlane = new Geom_Plane(Pln);
 
-  // Mean plane created - build face
   BRep_Builder B;
   TopoDS_Face  theFace;
   B.MakeFace(theFace, thePlane, Precision::Confusion());
   B.Add(theFace, wire);
 
-  // Add new face to the shell
   if (myShape.IsNull())
     myShape = theFace;
   else

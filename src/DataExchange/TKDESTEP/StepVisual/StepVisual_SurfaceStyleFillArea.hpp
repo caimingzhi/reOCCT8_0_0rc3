@@ -10,7 +10,6 @@ class StepVisual_SurfaceStyleFillArea : public Standard_Transient
 {
 
 public:
-  //! Returns a SurfaceStyleFillArea
   Standard_EXPORT StepVisual_SurfaceStyleFillArea();
 
   Standard_EXPORT void Init(const occ::handle<StepVisual_FillAreaStyle>& aFillArea);

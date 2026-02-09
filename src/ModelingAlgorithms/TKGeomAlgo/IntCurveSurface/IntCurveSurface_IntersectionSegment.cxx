@@ -2,7 +2,6 @@
 
 IntCurveSurface_IntersectionSegment::IntCurveSurface_IntersectionSegment() = default;
 
-//================================================================================
 IntCurveSurface_IntersectionSegment::IntCurveSurface_IntersectionSegment(
   const IntCurveSurface_IntersectionPoint& P1,
   const IntCurveSurface_IntersectionPoint& P2)
@@ -11,7 +10,6 @@ IntCurveSurface_IntersectionSegment::IntCurveSurface_IntersectionSegment(
 {
 }
 
-//================================================================================
 void IntCurveSurface_IntersectionSegment::SetValues(const IntCurveSurface_IntersectionPoint& P1,
                                                     const IntCurveSurface_IntersectionPoint& P2)
 {
@@ -19,7 +17,6 @@ void IntCurveSurface_IntersectionSegment::SetValues(const IntCurveSurface_Inters
   myP2 = P2;
 }
 
-//================================================================================
 void IntCurveSurface_IntersectionSegment::Values(IntCurveSurface_IntersectionPoint& P1,
                                                  IntCurveSurface_IntersectionPoint& P2) const
 {
@@ -27,31 +24,26 @@ void IntCurveSurface_IntersectionSegment::Values(IntCurveSurface_IntersectionPoi
   P2 = myP2;
 }
 
-//================================================================================
 void IntCurveSurface_IntersectionSegment::FirstPoint(IntCurveSurface_IntersectionPoint& P1) const
 {
   P1 = myP1;
 }
 
-//================================================================================
 void IntCurveSurface_IntersectionSegment::SecondPoint(IntCurveSurface_IntersectionPoint& P2) const
 {
   P2 = myP2;
 }
 
-//================================================================================
 const IntCurveSurface_IntersectionPoint& IntCurveSurface_IntersectionSegment::FirstPoint() const
 {
   return (myP1);
 }
 
-//================================================================================
 const IntCurveSurface_IntersectionPoint& IntCurveSurface_IntersectionSegment::SecondPoint() const
 {
   return (myP2);
 }
 
-//================================================================================
 void IntCurveSurface_IntersectionSegment::Dump() const
 {
   std::cout << "\nIntersectionSegment : " << std::endl;

@@ -8,79 +8,43 @@
 class Geom_BezierSurface;
 class Geom_BezierCurve;
 
-//! This class provides an algorithm for constructing a Bezier surface filled from
-//! contiguous Bezier curves which form its boundaries.
-//! The algorithm accepts two, three or four Bezier curves
-//! as the boundaries of the target surface.
-//! A range of filling styles - more or less rounded, more or less flat - is available.
-//! A BezierCurves object provides a framework for:
-//! -   defining the boundaries, and the filling style of the surface
-//! -   implementing the construction algorithm
-//! -   consulting the result.
-//! Warning
-//! Some problems may show up with rational curves.
 class GeomFill_BezierCurves
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Constructs an empty framework for building a Bezier
-  //! surface from contiguous Bezier curves.
-  //! You use the Init function to define the boundaries of the surface.
   Standard_EXPORT GeomFill_BezierCurves();
 
-  //! Constructs a framework for building a Bezier surface
-  //! from the four contiguous Bezier curves, C1, C2, C3 and C4
-  //! Raises Standard_ConstructionError if the curves are not contiguous.
   Standard_EXPORT GeomFill_BezierCurves(const occ::handle<Geom_BezierCurve>& C1,
                                         const occ::handle<Geom_BezierCurve>& C2,
                                         const occ::handle<Geom_BezierCurve>& C3,
                                         const occ::handle<Geom_BezierCurve>& C4,
                                         const GeomFill_FillingStyle          Type);
 
-  //! Constructs a framework for building a Bezier surface
-  //! from the three contiguous Bezier curves, C1, C2 and C3
-  //! Raises Standard_ConstructionError if the curves are not contiguous.
   Standard_EXPORT GeomFill_BezierCurves(const occ::handle<Geom_BezierCurve>& C1,
                                         const occ::handle<Geom_BezierCurve>& C2,
                                         const occ::handle<Geom_BezierCurve>& C3,
                                         const GeomFill_FillingStyle          Type);
 
-  //! Constructs a framework for building a Bezier surface
-  //! from the two contiguous Bezier curves, C1 and C2
-  //! Raises Standard_ConstructionError if the curves are not contiguous.
   Standard_EXPORT GeomFill_BezierCurves(const occ::handle<Geom_BezierCurve>& C1,
                                         const occ::handle<Geom_BezierCurve>& C2,
                                         const GeomFill_FillingStyle          Type);
 
-  //! if the curves cannot be joined
   Standard_EXPORT void Init(const occ::handle<Geom_BezierCurve>& C1,
                             const occ::handle<Geom_BezierCurve>& C2,
                             const occ::handle<Geom_BezierCurve>& C3,
                             const occ::handle<Geom_BezierCurve>& C4,
                             const GeomFill_FillingStyle          Type);
 
-  //! if the curves cannot be joined
   Standard_EXPORT void Init(const occ::handle<Geom_BezierCurve>& C1,
                             const occ::handle<Geom_BezierCurve>& C2,
                             const occ::handle<Geom_BezierCurve>& C3,
                             const GeomFill_FillingStyle          Type);
 
-  //! Initializes or reinitializes this algorithm with two, three,
-  //! or four curves - C1, C2, C3, and C4 - and Type, one
-  //! of the following filling styles:
-  //! -   GeomFill_Stretch - the style with the flattest patch
-  //! -   GeomFill_Coons - a rounded style of patch with
-  //! less depth than that of Curved
-  //! -   GeomFill_Curved - the style with the most rounded patch.
-  //! Exceptions
-  //! Standard_ConstructionError if the curves are not contiguous.
   Standard_EXPORT void Init(const occ::handle<Geom_BezierCurve>& C1,
                             const occ::handle<Geom_BezierCurve>& C2,
                             const GeomFill_FillingStyle          Type);
 
-  //! Returns the Bezier surface resulting from the
-  //! computation performed by this algorithm.
   const occ::handle<Geom_BezierSurface>& Surface() const;
 
 private:

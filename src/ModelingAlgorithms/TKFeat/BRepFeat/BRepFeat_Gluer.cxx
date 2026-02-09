@@ -3,9 +3,7 @@
 #include <TopoDS_Shape.hpp>
 #include <NCollection_List.hpp>
 
-//=================================================================================================
-
-void BRepFeat_Gluer::Build(const Message_ProgressRange& /*theRange*/)
+void BRepFeat_Gluer::Build(const Message_ProgressRange&)
 {
   myGluer.Perform();
   if (myGluer.IsDone())
@@ -19,14 +17,10 @@ void BRepFeat_Gluer::Build(const Message_ProgressRange& /*theRange*/)
   }
 }
 
-//=================================================================================================
-
 bool BRepFeat_Gluer::IsDeleted(const TopoDS_Shape& F)
 {
   return (myGluer.DescendantFaces(TopoDS::Face(F)).IsEmpty());
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepFeat_Gluer::Modified(const TopoDS_Shape& F)
 {

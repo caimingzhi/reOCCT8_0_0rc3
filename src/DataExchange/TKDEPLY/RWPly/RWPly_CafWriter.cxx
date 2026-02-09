@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <RWPly_CafWriter.hpp>
 
@@ -28,8 +17,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(RWPly_CafWriter, Standard_Transient)
 
-//=================================================================================================
-
 RWPly_CafWriter::RWPly_CafWriter(const TCollection_AsciiString& theFile)
     : myFile(theFile),
       myIsDoublePrec(false),
@@ -41,18 +28,12 @@ RWPly_CafWriter::RWPly_CafWriter(const TCollection_AsciiString& theFile)
 {
 }
 
-//=================================================================================================
-
 RWPly_CafWriter::~RWPly_CafWriter() = default;
-
-//=================================================================================================
 
 bool RWPly_CafWriter::toSkipFaceMesh(const RWMesh_FaceIterator& theFaceIter)
 {
   return theFaceIter.IsEmptyMesh();
 }
-
-//=================================================================================================
 
 bool RWPly_CafWriter::Perform(
   const occ::handle<TDocStd_Document>&                                                theDocument,
@@ -64,8 +45,6 @@ bool RWPly_CafWriter::Perform(
   aShapeTool->GetFreeShapes(aRoots);
   return Perform(theDocument, aRoots, nullptr, theFileInfo, theProgress);
 }
-
-//=================================================================================================
 
 bool RWPly_CafWriter::Perform(
   const occ::handle<TDocStd_Document>&            theDocument,
@@ -91,7 +70,7 @@ bool RWPly_CafWriter::Perform(
   }
 
   int    aNbNodesAll = 0, aNbElemsAll = 0;
-  double aNbPEntities = 0; // steps for progress range
+  double aNbPEntities = 0;
   for (XCAFPrs_DocumentExplorer aDocExplorer(theDocument,
                                              theRootLabels,
                                              XCAFPrs_DocumentExplorerFlags_OnlyLeafNodes);
@@ -135,7 +114,6 @@ bool RWPly_CafWriter::Perform(
     return false;
   }
 
-  // simple global progress sentry
   const double              aPatchStep = 2048.0;
   Message_LazyProgressScope aPSentry(theProgress, "PLY export", aNbPEntities, aPatchStep);
 
@@ -181,8 +159,6 @@ bool RWPly_CafWriter::Perform(
   return isDone && !aPSentry.IsAborted();
 }
 
-//=================================================================================================
-
 void RWPly_CafWriter::addFaceInfo(const RWMesh_FaceIterator& theFace,
                                   int&                       theNbNodes,
                                   int&                       theNbElems)
@@ -190,8 +166,6 @@ void RWPly_CafWriter::addFaceInfo(const RWMesh_FaceIterator& theFace,
   theNbNodes += theFace.NbNodes();
   theNbElems += theFace.NbTriangles();
 }
-
-//=================================================================================================
 
 bool RWPly_CafWriter::writeShape(RWPly_PlyWriterContext&    theWriter,
                                  Message_LazyProgressScope& thePSentry,
@@ -221,8 +195,6 @@ bool RWPly_CafWriter::writeShape(RWPly_PlyWriterContext&    theWriter,
   return true;
 }
 
-//=================================================================================================
-
 bool RWPly_CafWriter::writeNodes(RWPly_PlyWriterContext&    theWriter,
                                  Message_LazyProgressScope& thePSentry,
                                  const RWMesh_FaceIterator& theFace)
@@ -233,8 +205,7 @@ bool RWPly_CafWriter::writeNodes(RWPly_PlyWriterContext&    theWriter,
   NCollection_Vec4<uint8_t> aColorVec(255);
   if (theFace.HasFaceColor())
   {
-    // NCollection_Vec4<float> aColorF = Quantity_ColorRGBA::Convert_LinearRGB_To_sRGB
-    // (theFace.FaceColor());
+
     NCollection_Vec4<float> aColorF = theFace.FaceColor();
     aColorVec.SetValues((unsigned char)int(aColorF.r() * 255.0f),
                         (unsigned char)int(aColorF.g() * 255.0f),
@@ -265,8 +236,6 @@ bool RWPly_CafWriter::writeNodes(RWPly_PlyWriterContext&    theWriter,
   }
   return true;
 }
-
-//=================================================================================================
 
 bool RWPly_CafWriter::writeIndices(RWPly_PlyWriterContext&    theWriter,
                                    Message_LazyProgressScope& thePSentry,

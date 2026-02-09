@@ -8,16 +8,12 @@
 #include <Transfer_Binder.hpp>
 #include <Transfer_ActorOfProcessForFinder.hpp>
 
-//=================================================================================================
-
 Transfer_IteratorOfProcessForFinder::Transfer_IteratorOfProcessForFinder(const bool withstarts)
 
 {
   if (withstarts)
     thestarts = new NCollection_HSequence<occ::handle<Transfer_Finder>>();
 }
-
-//=================================================================================================
 
 void Transfer_IteratorOfProcessForFinder::Add(const occ::handle<Transfer_Binder>& binder)
 {
@@ -27,8 +23,6 @@ void Transfer_IteratorOfProcessForFinder::Add(const occ::handle<Transfer_Binder>
   AddItem(binder);
 }
 
-//=================================================================================================
-
 void Transfer_IteratorOfProcessForFinder::Add(const occ::handle<Transfer_Binder>& binder,
                                               const occ::handle<Transfer_Finder>& start)
 {
@@ -36,8 +30,6 @@ void Transfer_IteratorOfProcessForFinder::Add(const occ::handle<Transfer_Binder>
   if (!thestarts.IsNull())
     thestarts->Append(start);
 }
-
-//=================================================================================================
 
 void Transfer_IteratorOfProcessForFinder::Filter(
   const occ::handle<NCollection_HSequence<occ::handle<Transfer_Finder>>>& list,
@@ -59,7 +51,6 @@ void Transfer_IteratorOfProcessForFinder::Filter(
     SelectItem(j, !keep);
   }
 
-  //  Comparison
   nb = list->Length();
   for (i = 1; i <= nb; i++)
   {
@@ -69,14 +60,10 @@ void Transfer_IteratorOfProcessForFinder::Filter(
   }
 }
 
-//=================================================================================================
-
 bool Transfer_IteratorOfProcessForFinder::HasStarting() const
 {
   return (!thestarts.IsNull());
 }
-
-//=================================================================================================
 
 const occ::handle<Transfer_Finder>& Transfer_IteratorOfProcessForFinder::Starting() const
 {

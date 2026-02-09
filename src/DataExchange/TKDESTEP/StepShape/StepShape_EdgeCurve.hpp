@@ -12,7 +12,6 @@ class StepShape_EdgeCurve : public StepShape_Edge
 {
 
 public:
-  //! Returns a EdgeCurve
   Standard_EXPORT StepShape_EdgeCurve();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

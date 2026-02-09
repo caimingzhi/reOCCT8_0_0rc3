@@ -22,31 +22,22 @@ void IGESSolid_ToolSphericalSurface::ReadOwnParams(
 {
   occ::handle<IGESGeom_Point>     tempCenter;
   double                          tempRadius;
-  occ::handle<IGESGeom_Direction> tempAxis;   // default Unparameterised
-  occ::handle<IGESGeom_Direction> tempRefdir; // default Unparameterised
-  // bool st; //szv#4:S4163:12Mar99 not needed
+  occ::handle<IGESGeom_Direction> tempAxis;
+  occ::handle<IGESGeom_Direction> tempRefdir;
 
-  PR.ReadEntity(IR,
-                PR.Current(),
-                "Center point",
-                STANDARD_TYPE(IGESGeom_Point),
-                tempCenter); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR, PR.Current(), "Center point", STANDARD_TYPE(IGESGeom_Point), tempCenter);
 
-  PR.ReadReal(PR.Current(), "Radius", tempRadius); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Radius", tempRadius);
 
-  if (ent->FormNumber() == 1) // Parametrised surface
+  if (ent->FormNumber() == 1)
   {
-    PR.ReadEntity(IR,
-                  PR.Current(),
-                  "Axis direction",
-                  STANDARD_TYPE(IGESGeom_Direction),
-                  tempAxis); // szv#4:S4163:12Mar99 `st=` not needed
+    PR.ReadEntity(IR, PR.Current(), "Axis direction", STANDARD_TYPE(IGESGeom_Direction), tempAxis);
 
     PR.ReadEntity(IR,
                   PR.Current(),
                   "Reference direction",
                   STANDARD_TYPE(IGESGeom_Direction),
-                  tempRefdir); // szv#4:S4163:12Mar99 `st=` not needed
+                  tempRefdir);
   }
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
@@ -95,7 +86,7 @@ void IGESSolid_ToolSphericalSurface::OwnCopy(const occ::handle<IGESSolid_Spheric
 }
 
 IGESData_DirChecker IGESSolid_ToolSphericalSurface::DirChecker(
-  const occ::handle<IGESSolid_SphericalSurface>& /*ent*/) const
+  const occ::handle<IGESSolid_SphericalSurface>&) const
 {
   IGESData_DirChecker DC(196, 0, 1);
 

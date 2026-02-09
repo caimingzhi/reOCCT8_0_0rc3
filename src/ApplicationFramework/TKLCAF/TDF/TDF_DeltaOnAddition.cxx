@@ -5,14 +5,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_DeltaOnAddition, TDF_AttributeDelta)
 
-//=================================================================================================
-
 TDF_DeltaOnAddition::TDF_DeltaOnAddition(const occ::handle<TDF_Attribute>& anAtt)
     : TDF_AttributeDelta(anAtt)
 {
 }
-
-//=================================================================================================
 
 void TDF_DeltaOnAddition::Apply()
 {

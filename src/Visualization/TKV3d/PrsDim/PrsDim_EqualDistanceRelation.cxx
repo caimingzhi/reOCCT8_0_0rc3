@@ -29,8 +29,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_EqualDistanceRelation, PrsDim_Relation)
 
-//=================================================================================================
-
 PrsDim_EqualDistanceRelation::PrsDim_EqualDistanceRelation(const TopoDS_Shape&            aShape1,
                                                            const TopoDS_Shape&            aShape2,
                                                            const TopoDS_Shape&            aShape3,
@@ -44,12 +42,9 @@ PrsDim_EqualDistanceRelation::PrsDim_EqualDistanceRelation(const TopoDS_Shape&  
   myShape4 = aShape4;
   myPlane  = aPlane;
 
-  // Temporary
-  myArrowSize = 3.0; // set the concrete value
+  myArrowSize = 3.0;
   mySymbolPrs = DsgPrs_AS_BOTHAR;
 }
-
-//=================================================================================================
 
 void PrsDim_EqualDistanceRelation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                            const occ::handle<Prs3d_Presentation>& aPresentation,
@@ -60,7 +55,7 @@ void PrsDim_EqualDistanceRelation::Compute(const occ::handle<PrsMgr_Presentation
   occ::handle<Prs3d_DimensionAspect> la  = myDrawer->DimensionAspect();
   occ::handle<Prs3d_ArrowAspect>     arr = la->ArrowAspect();
   arr->SetLength(myArrowSize);
-  // -- ota -- begin
+
   if (!myAutomaticPosition)
   {
     gp_Pnt aMiddle12((myPoint1.XYZ() + myPoint2.XYZ()) * 0.5);
@@ -184,8 +179,6 @@ void PrsDim_EqualDistanceRelation::Compute(const occ::handle<PrsMgr_Presentation
                                         myPlane);
 }
 
-//=================================================================================================
-
 void PrsDim_EqualDistanceRelation::ComputeSelection(
   const occ::handle<SelectMgr_Selection>& aSelection,
   const int)
@@ -199,7 +192,6 @@ void PrsDim_EqualDistanceRelation::ComputeSelection(
   seg = new Select3D_SensitiveSegment(own, myPoint3, myPoint4);
   aSelection->Add(seg);
 
-  // Line between two middles
   gp_Pnt Middle12((myPoint1.XYZ() + myPoint2.XYZ()) * 0.5),
     Middle34((myPoint3.XYZ() + myPoint4.XYZ()) * 0.5);
   seg = new Select3D_SensitiveSegment(own, Middle12, Middle34);
@@ -221,7 +213,7 @@ void PrsDim_EqualDistanceRelation::ComputeSelection(
     BRepAdaptor_Curve aCurve(TopoDS::Edge(myFShape));
     if (aCurve.GetType() == GeomAbs_Line)
     {
-      // add sensitive element - line
+
       seg = new Select3D_SensitiveSegment(own, myAttachPoint1, myPoint1);
       aSelection->Add(seg);
     }
@@ -248,7 +240,7 @@ void PrsDim_EqualDistanceRelation::ComputeSelection(
     BRepAdaptor_Curve aCurve(TopoDS::Edge(mySShape));
     if (aCurve.GetType() == GeomAbs_Line)
     {
-      // add sensitive element - line
+
       seg = new Select3D_SensitiveSegment(own, myAttachPoint2, myPoint2);
       aSelection->Add(seg);
     }
@@ -275,7 +267,7 @@ void PrsDim_EqualDistanceRelation::ComputeSelection(
     BRepAdaptor_Curve aCurve(TopoDS::Edge(myShape3));
     if (aCurve.GetType() == GeomAbs_Line)
     {
-      // add sensitive element - line
+
       seg = new Select3D_SensitiveSegment(own, myAttachPoint3, myPoint3);
       aSelection->Add(seg);
     }
@@ -307,7 +299,7 @@ void PrsDim_EqualDistanceRelation::ComputeSelection(
     BRepAdaptor_Curve aCurve(TopoDS::Edge(myShape4));
     if (aCurve.GetType() == GeomAbs_Line)
     {
-      // add sensitive element - line
+
       seg = new Select3D_SensitiveSegment(own, myAttachPoint4, myPoint4);
       aSelection->Add(seg);
     }
@@ -330,8 +322,6 @@ void PrsDim_EqualDistanceRelation::ComputeSelection(
   }
 }
 
-//=================================================================================================
-
 void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
   const occ::handle<Prs3d_Presentation>& aPresentation,
   const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -353,13 +343,12 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
   BRepAdaptor_Curve cu1(FirstEdge);
   BRepAdaptor_Curve cu2(SecondEdge);
 
-  // 3d lines
   occ::handle<Geom_Curve> geom1, geom2;
   gp_Pnt                  ptat11, ptat12, ptat21, ptat22;
 
   bool                    isInfinite1(false), isInfinite2(false);
   occ::handle<Geom_Curve> extCurv;
-  double                  arrsize = ArrowSize; // size
+  double                  arrsize = ArrowSize;
   double                  Val     = 0.;
   bool                    isInPlane1, isInPlane2;
 
@@ -391,14 +380,13 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
     const gp_Lin&          l1 = geom_lin1->Lin();
     const gp_Lin&          l2 = geom_lin2->Lin();
 
-    // Get Val value
     Val = l1.Distance(l2);
 
     DirAttach = l1.Direction();
 
     if (AutomaticPos)
     {
-      // compute position of offset point
+
       gp_Pnt curpos;
       double par1 = 0., par2 = 0.;
       if (!(isInfinite1 || isInfinite2))
@@ -406,12 +394,12 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
         par1 = ElCLib::Parameter(l1, ptat11);
         par2 = ElCLib::Parameter(l1, ptat21);
         if (par1 < par2)
-        { // project ptat11 on l2
+        {
           gp_Pnt p2 = ElCLib::Value(ElCLib::Parameter(l2, ptat11), l2);
           curpos.SetXYZ((ptat11.XYZ() + p2.XYZ()) * 0.5);
         }
         else
-        { // project ptat21 on l1
+        {
           gp_Pnt p2 = ElCLib::Value(par2, l1);
           curpos.SetXYZ((ptat21.XYZ() + p2.XYZ()) * 0.5);
         }
@@ -430,18 +418,16 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
       else
         curpos.SetXYZ((l1.Location().XYZ() + l2.Location().XYZ()) * 0.5);
 
-      // compute  offset
       gp_Vec offset(DirAttach);
       offset = offset * ArrowSize * (-10.);
       curpos.Translate(offset);
       Position = curpos;
     }
     else
-    { // project point on the plane
+    {
       Position = PrsDim::ProjectPointOnPlane(Position, Plane->Pln());
     }
 
-    // find attach points
     if (!isInfinite1)
     {
       if (Position.Distance(ptat11) > Position.Distance(ptat12))
@@ -495,13 +481,12 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
   }
   if (cu1.GetType() == GeomAbs_Circle && cu2.GetType() == GeomAbs_Circle)
   {
-    // Get first and last points of circles
+
     occ::handle<Geom_Circle> aCir1(occ::down_cast<Geom_Circle>(geom1));
     occ::handle<Geom_Circle> aCir2(occ::down_cast<Geom_Circle>(geom2));
     gp_Circ                  aCirc1 = aCir1->Circ();
     gp_Circ                  aCirc2 = aCir2->Circ();
 
-    // To avoid circles with different orientation
     constexpr double aTol = Precision::Confusion();
     if (aCirc2.Axis().IsOpposite(aCirc1.Axis(), aTol)
         || aCirc2.XAxis().IsOpposite(aCirc1.XAxis(), aTol)
@@ -515,10 +500,10 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
     {
       double par1 = 0, par2 = 0;
       gp_Pln aPln = Plane->Pln();
-      // Project ptat12 and ptat22 on constraint plane
+
       gp_Pnt PrPnt12 = PrsDim::ProjectPointOnPlane(ptat12, aPln);
       gp_Pnt PrPnt22 = PrsDim::ProjectPointOnPlane(ptat22, aPln);
-      // Project circles center on constraint plane
+
       gp_Pnt PrCenter = PrsDim::ProjectPointOnPlane(aCirc1.Location(), aPln);
 
       gp_Dir XDir = aPln.XAxis().Direction();
@@ -527,7 +512,7 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
       if (PrPnt12.Distance(PrCenter) > Precision::Confusion())
       {
         gp_Dir aDir1(PrPnt12.XYZ() - PrCenter.XYZ());
-        double anAngle = aDir1.Angle(XDir); // Get the angle in range [0, M_PI]
+        double anAngle = aDir1.Angle(XDir);
         if (aDir1.Dot(YDir) < 0)
           anAngle = 2 * M_PI - anAngle;
         par1 = anAngle;
@@ -536,7 +521,7 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
       if (PrPnt22.Distance(PrCenter) > Precision::Confusion())
       {
         gp_Dir aDir2(PrPnt22.XYZ() - PrCenter.XYZ());
-        double anAngle = aDir2.Angle(XDir); // Get the angle in range [0, M_PI]
+        double anAngle = aDir2.Angle(XDir);
         if (aDir2.Dot(YDir) < 0)
           anAngle = 2 * M_PI - anAngle;
         par2 = anAngle;
@@ -574,7 +559,7 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
                                                                 SymbolPrs);
 
     FirstAttach  = ptat12;
-    SecondAttach = ptat22; // assign attach points
+    SecondAttach = ptat22;
     Position.SetXYZ((FirstAttach.XYZ() + SecondAttach.XYZ()) * 0.5);
   }
 
@@ -585,7 +570,6 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
     arrsize = 0.;
   }
 
-  //  gp_Pnt pf, pl;
   if (!isInPlane1)
   {
     PrsDim::ComputeProjEdgePresentation(aPresentation, aDrawer, FirstEdge, geom1, ptat11, ptat12);
@@ -595,8 +579,6 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
     PrsDim::ComputeProjEdgePresentation(aPresentation, aDrawer, SecondEdge, geom2, ptat21, ptat22);
   }
 }
-
-//=================================================================================================
 
 void PrsDim_EqualDistanceRelation::ComputeTwoVerticesLength(
   const occ::handle<Prs3d_Presentation>& aPresentation,
@@ -637,13 +619,12 @@ void PrsDim_EqualDistanceRelation::ComputeTwoVerticesLength(
     }
   }
 
-  // size
   if (AutomaticPos)
   {
     if (!samePoint)
     {
       gp_Pnt curpos((FirstAttach.XYZ() + SecondAttach.XYZ()) * 0.5);
-      // make offset of curpos
+
       gp_Vec offset(DirAttach);
       offset = offset * ArrowSize * (-10.);
       curpos.Translate(offset);
@@ -653,9 +634,9 @@ void PrsDim_EqualDistanceRelation::ComputeTwoVerticesLength(
     {
       gp_Dir aDir = Plane->Pln().Axis().Direction();
       gp_Vec aVec(aDir.XYZ() * 10 * ArrowSize);
-      // Position = gp_Pnt(FirstAttach.XYZ()+gp_XYZ(1.,1.,1.)); // not correct
+
       Position = FirstAttach.Translated(aVec);
-      Position = PrsDim::ProjectPointOnPlane(Position, Plane->Pln()); // not needed really
+      Position = PrsDim::ProjectPointOnPlane(Position, Plane->Pln());
       DirAttach.SetXYZ(Position.XYZ() - FirstAttach.XYZ());
     }
   }
@@ -680,17 +661,14 @@ void PrsDim_EqualDistanceRelation::ComputeTwoVerticesLength(
                                                 DirAttach,
                                                 Position,
                                                 SymbolPrs,
-                                                FirstExtreme,   // returned
-                                                SecondExtreme); // returned
+                                                FirstExtreme,
+                                                SecondExtreme);
 
-  // Compute projection
   if (!isOnPlane1)
     PrsDim::ComputeProjVertexPresentation(aPresentation, aDrawer, FirstVertex, FirstAttach);
   if (!isOnPlane2)
     PrsDim::ComputeProjVertexPresentation(aPresentation, aDrawer, SecondVertex, SecondAttach);
 }
-
-//=================================================================================================
 
 void PrsDim_EqualDistanceRelation::ComputeOneEdgeOneVertexLength(
   const occ::handle<Prs3d_Presentation>& aPresentation,
@@ -724,13 +702,13 @@ void PrsDim_EqualDistanceRelation::ComputeOneEdgeOneVertexLength(
   {
     thevertex = TopoDS::Vertex(FirstShape);
     theedge   = TopoDS::Edge(SecondShape);
-    edgenum   = 2; // edge is the second shape
+    edgenum   = 2;
   }
   else
   {
     thevertex = TopoDS::Vertex(SecondShape);
     theedge   = TopoDS::Edge(FirstShape);
-    edgenum   = 1; // edge is the first shape
+    edgenum   = 1;
   }
   if (!PrsDim::ComputeGeometry(theedge,
                                aCurve,
@@ -749,11 +727,10 @@ void PrsDim_EqualDistanceRelation::ComputeOneEdgeOneVertexLength(
     occ::handle<Geom_Line> geom_lin(occ::down_cast<Geom_Line>(aCurve));
     const gp_Lin&          l = geom_lin->Lin();
 
-    // computation of Val
     Val = l.Distance(FirstAttach);
 
     gp_Dir DirAttach = l.Direction();
-    // size
+
     double arrsize = ArrowSize;
     if (std::abs(Val) <= Precision::Confusion())
     {
@@ -764,14 +741,14 @@ void PrsDim_EqualDistanceRelation::ComputeOneEdgeOneVertexLength(
     {
       gp_Pnt p = ElCLib::Value(ElCLib::Parameter(l, FirstAttach), l);
       gp_Pnt curpos((FirstAttach.XYZ() + p.XYZ()) * 0.5);
-      // make offset
+
       gp_Vec offset(DirAttach);
       offset = offset * ArrowSize * (-10.);
       curpos.Translate(offset);
       Position = curpos;
     }
     else
-    { // project point on the plane
+    {
       Position = PrsDim::ProjectPointOnPlane(Position, Plane->Pln());
     }
 
@@ -809,10 +786,10 @@ void PrsDim_EqualDistanceRelation::ComputeOneEdgeOneVertexLength(
   {
     gp_Circ aCirc1 = (occ::down_cast<Geom_Circle>(aCurve))->Circ();
     gp_Circ aCirc2(aCirc1);
-    aCirc2.SetRadius(0); // create the second formal circle
+    aCirc2.SetRadius(0);
     if (AutomaticPos)
     {
-      SecondAttach = ptonedge2; // a vertex
+      SecondAttach = ptonedge2;
       Position.SetXYZ((SecondAttach.XYZ() + aCirc1.Location().XYZ()) * 0.5);
     }
     else
@@ -824,15 +801,14 @@ void PrsDim_EqualDistanceRelation::ComputeOneEdgeOneVertexLength(
     occ::handle<Geom_Circle> aCurve2 = new Geom_Circle(aCirc2);
     DsgPrs_EqualDistancePresentation::AddIntervalBetweenTwoArcs(aPresentation,
                                                                 aDrawer,
-                                                                aCirc1,    // circle or arc
-                                                                aCirc2,    // really vertex
-                                                                ptonedge2, // last point of aCirc1
+                                                                aCirc1,
+                                                                aCirc2,
+                                                                ptonedge2,
                                                                 SecondAttach,
-                                                                FirstAttach, // vertex really
+                                                                FirstAttach,
                                                                 FirstAttach,
                                                                 SymbolPrs);
 
-    // Assign arc points
     if (edgenum == 1)
     {
       FirstExtreme  = SecondAttach;
@@ -841,20 +817,17 @@ void PrsDim_EqualDistanceRelation::ComputeOneEdgeOneVertexLength(
       FirstAttach   = ptonedge2;
     }
     else
-    { // vertex is the first shape, circle is sthe last.
+    {
       FirstExtreme  = FirstAttach;
       SecondExtreme = SecondAttach;
       SecondAttach  = ptonedge2;
     }
   }
 
-  // computation of Val
   Val = FirstAttach.Distance(SecondAttach);
 
-  // Display the pieces of attached to the curve if it is not
-  //  in the WP
   if (!isOnPlanEdge)
-  { // add presentation of projection of the edge in WP
+  {
     PrsDim::ComputeProjEdgePresentation(aPresentation,
                                         aDrawer,
                                         theedge,
@@ -863,9 +836,7 @@ void PrsDim_EqualDistanceRelation::ComputeOneEdgeOneVertexLength(
                                         ptonedge2);
   }
   if (!isOnPlanVertex)
-  { // add presentation of projection of the vertex in WP
+  {
     PrsDim::ComputeProjVertexPresentation(aPresentation, aDrawer, thevertex, FirstAttach);
   }
 }
-
-// -- ota -- end

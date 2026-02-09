@@ -8,10 +8,6 @@
 #include <gp_Pnt.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//  Constructions d un cylindre de gp par son Ax2 A2 et son rayon         +
-//  Radius.                                                               +
-//=========================================================================
 gce_MakeCylinder::gce_MakeCylinder(const gp_Ax2& A2, const double Radius)
 {
   if (Radius < 0.0)
@@ -24,11 +20,6 @@ gce_MakeCylinder::gce_MakeCylinder(const gp_Ax2& A2, const double Radius)
     TheError    = gce_Done;
   }
 }
-
-//=========================================================================
-//  Constructions d un cylindre de gp par son axe Axis et son rayon       +
-//  Radius.                                                               +
-//=========================================================================
 
 gce_MakeCylinder::gce_MakeCylinder(const gp_Ax1& Axis, const double Radius)
 {
@@ -60,21 +51,11 @@ gce_MakeCylinder::gce_MakeCylinder(const gp_Ax1& Axis, const double Radius)
   }
 }
 
-//=========================================================================
-//  Constructions d un cylindre de gp par un cercle.                      +
-//=========================================================================
-
 gce_MakeCylinder::gce_MakeCylinder(const gp_Circ& Circ)
 {
   TheCylinder = gp_Cylinder(Circ.Position(), Circ.Radius());
   TheError    = gce_Done;
 }
-
-//=========================================================================
-//  Constructions d un cylindre de gp par trois points P1, P2, P3.        +
-//  P1 et P2 donnent l axe du cylindre, la distance de P3 a l axe donne   +
-//  le rayon du cylindre.                                                 +
-//=========================================================================
 
 gce_MakeCylinder::gce_MakeCylinder(const gp_Pnt& P1, const gp_Pnt& P2, const gp_Pnt& P3)
 {
@@ -106,11 +87,6 @@ gce_MakeCylinder::gce_MakeCylinder(const gp_Pnt& P1, const gp_Pnt& P2, const gp_
   }
 }
 
-//=========================================================================
-//  Constructions d un cylindre de gp concentrique a un autre cylindre de +
-//  gp a une distance Dist.                                               +
-//=========================================================================
-
 gce_MakeCylinder::gce_MakeCylinder(const gp_Cylinder& Cyl, const double Dist)
 {
   double Rad = Cyl.Radius() + Dist;
@@ -125,11 +101,6 @@ gce_MakeCylinder::gce_MakeCylinder(const gp_Cylinder& Cyl, const double Dist)
     TheError = gce_Done;
   }
 }
-
-//=========================================================================
-//  Constructions d un cylindre de gp concentrique a un autre cylindre de +
-//  gp passant par le point P.                                            +
-//=========================================================================
 
 gce_MakeCylinder::gce_MakeCylinder(const gp_Cylinder& Cyl, const gp_Pnt& P)
 {

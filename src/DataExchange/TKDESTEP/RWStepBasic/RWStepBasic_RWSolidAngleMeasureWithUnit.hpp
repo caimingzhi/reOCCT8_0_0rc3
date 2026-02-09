@@ -11,7 +11,6 @@ class StepBasic_SolidAngleMeasureWithUnit;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SolidAngleMeasureWithUnit
 class RWStepBasic_RWSolidAngleMeasureWithUnit
 {
 public:

@@ -5,13 +5,10 @@
 #else
   #include <GL/glx.h>
 
-  // Preventing naming collisions between
-  // GLX and VTK versions 9.0 and above
   #ifdef AllValues
     #undef AllValues
   #endif
 
-  // Resolve name collisions with X11 headers
   #ifdef Status
     #undef Status
   #endif
@@ -41,8 +38,6 @@
 #include <Message.hpp>
 #include <Message_Messenger.hpp>
 
-//=================================================================================================
-
 static void ClearHighlightAndSelection(const occ::handle<ShapePipelineMap>& theMap,
                                        const bool                           doHighlighting,
                                        const bool                           doSelection)
@@ -70,8 +65,6 @@ static void ClearHighlightAndSelection(const occ::handle<ShapePipelineMap>& theM
 
 vtkStandardNewMacro(IVtkDraw_Interactor)
 
-  //=================================================================================================
-
   IVtkDraw_Interactor::IVtkDraw_Interactor()
     :
 #ifdef _WIN32
@@ -83,50 +76,36 @@ vtkStandardNewMacro(IVtkDraw_Interactor)
 {
 }
 
-//=================================================================================================
-
 IVtkDraw_Interactor::~IVtkDraw_Interactor() = default;
-
-//=================================================================================================
 
 void IVtkDraw_Interactor::SetShapePicker(const PSelector& theSelector)
 {
   mySelector = theSelector;
 }
 
-//=================================================================================================
-
 void IVtkDraw_Interactor::SetPipelines(const occ::handle<ShapePipelineMap>& thePipelines)
 {
   myPipelines = thePipelines;
 }
-
-//=================================================================================================
 
 void IVtkDraw_Interactor::SetOCCWindow(const occ::handle<Aspect_Window>& theWindow)
 {
   myWindow = theWindow;
 }
 
-//=================================================================================================
-
 const occ::handle<Aspect_Window>& IVtkDraw_Interactor::GetOCCWindow() const
 {
   return myWindow;
 }
-
-//=================================================================================================
 
 bool IVtkDraw_Interactor::IsEnabled() const
 {
   return (Enabled != 0);
 }
 
-//=================================================================================================
-
 void IVtkDraw_Interactor::Initialize()
 {
-  // Make sure we have a RenderWindow and camera
+
   if (!this->RenderWindow)
   {
     vtkErrorMacro(<< "No renderer defined!");
@@ -140,7 +119,6 @@ void IVtkDraw_Interactor::Initialize()
 
   this->Initialized = 1;
 
-  // Get the info we need from the RenderingWindow
   int* aSize;
 #ifdef _WIN32
   vtkWin32OpenGLRenderWindow* aRenWin;
@@ -167,8 +145,6 @@ void IVtkDraw_Interactor::Initialize()
 LRESULT CALLBACK WndProc(HWND theHWnd, UINT theUMsg, WPARAM theWParam, LPARAM theLParam);
 #endif
 
-//=================================================================================================
-
 void IVtkDraw_Interactor::Enable()
 {
   if (this->Enabled)
@@ -176,7 +152,6 @@ void IVtkDraw_Interactor::Enable()
     return;
   }
 
-  // Add event handlers
 #ifdef _WIN32
   SetWindowLongPtr(this->myWindowId, GWLP_USERDATA, (LONG_PTR)this);
   SetWindowLongPtr(this->myWindowId, GWLP_WNDPROC, (LONG_PTR)WndProc);
@@ -191,17 +166,15 @@ void IVtkDraw_Interactor::Enable()
   this->Modified();
 }
 
-//=================================================================================================
-
 void IVtkDraw_Interactor::MoveTo(int theX, int theY)
 {
-  // Processing highlighting
+
   mySelector->Pick(theX, theY, 0.0);
   vtkSmartPointer<vtkActorCollection> anActorCollection = mySelector->GetPickedActors();
 
   if (anActorCollection)
   {
-    // Highlight picked subshapes
+
     ClearHighlightAndSelection(myPipelines, true, false);
     anActorCollection->InitTraversal();
     while (vtkActor* anActor = anActorCollection->GetNextActor())
@@ -229,13 +202,10 @@ void IVtkDraw_Interactor::MoveTo(int theX, int theY)
 
       const occ::handle<IVtkDraw_HighlightAndSelectionPipeline>& aPL = myPipelines->Find(aShapeID);
 
-      // Add a subpolydata filter to the highlight pipeline for the shape data source.
       IVtkTools_SubPolyDataFilter* aFilter = aPL->GetHighlightFilter();
 
-      // Set the selected sub-shapes ids to subpolydata filter.
       NCollection_List<IVtk_IdType> aSubShapeIds = mySelector->GetPickedSubShapesIds(aShapeID);
 
-      // Get ids of cells for picked subshapes.
       NCollection_List<IVtk_IdType>           aSubIds;
       NCollection_List<IVtk_IdType>::Iterator aMetaIds(aSubShapeIds);
       for (; aMetaIds.More(); aMetaIds.Next())
@@ -256,16 +226,14 @@ void IVtkDraw_Interactor::MoveTo(int theX, int theY)
   this->Render();
 }
 
-//=================================================================================================
-
 void IVtkDraw_Interactor::OnSelection()
 {
-  // Processing selection
+
   vtkSmartPointer<vtkActorCollection> anActorCollection = mySelector->GetPickedActors();
 
   if (anActorCollection)
   {
-    // Highlight picked subshapes.
+
     ClearHighlightAndSelection(myPipelines, false, true);
     anActorCollection->InitTraversal();
     while (vtkActor* anActor = anActorCollection->GetNextActor())
@@ -293,13 +261,10 @@ void IVtkDraw_Interactor::OnSelection()
 
       const occ::handle<IVtkDraw_HighlightAndSelectionPipeline>& aPL = myPipelines->Find(aShapeID);
 
-      // Add a subpolydata filter to the selection pipeline for the shape data source.
       IVtkTools_SubPolyDataFilter* aFilter = aPL->GetSelectionFilter();
 
-      // Set the selected sub-shapes ids to subpolydata filter.
       NCollection_List<IVtk_IdType> aSubShapeIds = mySelector->GetPickedSubShapesIds(aShapeID);
 
-      // Get ids of cells for picked subshapes.
       NCollection_List<IVtk_IdType>           aSubIds;
       NCollection_List<IVtk_IdType>::Iterator aMetaIds(aSubShapeIds);
       for (; aMetaIds.More(); aMetaIds.Next())
@@ -322,8 +287,6 @@ void IVtkDraw_Interactor::OnSelection()
 
 #ifdef _WIN32
 
-//=================================================================================================
-
 void IVtkDraw_Interactor::OnMouseMove(HWND theHWnd, UINT theNFlags, int theX, int theY)
 {
   if (!this->Enabled)
@@ -338,7 +301,7 @@ void IVtkDraw_Interactor::OnMouseMove(HWND theHWnd, UINT theNFlags, int theX, in
   {
     this->InvokeEvent(vtkCommand::EnterEvent, NULL);
     this->myMouseInWindow = 1;
-    // request WM_MOUSELEAVE generation
+
     TRACKMOUSEEVENT aTme;
     aTme.cbSize    = sizeof(TRACKMOUSEEVENT);
     aTme.dwFlags   = TME_LEAVE;
@@ -351,8 +314,6 @@ void IVtkDraw_Interactor::OnMouseMove(HWND theHWnd, UINT theNFlags, int theX, in
 
   this->InvokeEvent(vtkCommand::MouseMoveEvent, NULL);
 }
-
-//=================================================================================================
 
 void IVtkDraw_Interactor::OnMouseWheelForward(HWND, UINT theNFlags, int theX, int theY)
 {
@@ -367,8 +328,6 @@ void IVtkDraw_Interactor::OnMouseWheelForward(HWND, UINT theNFlags, int theX, in
   this->InvokeEvent(vtkCommand::MouseWheelForwardEvent, NULL);
 }
 
-//=================================================================================================
-
 void IVtkDraw_Interactor::OnMouseWheelBackward(HWND, UINT theNFlags, int theX, int theY)
 {
   if (!this->Enabled)
@@ -381,8 +340,6 @@ void IVtkDraw_Interactor::OnMouseWheelBackward(HWND, UINT theNFlags, int theX, i
   this->SetAltKey(GetKeyState(VK_MENU) & (~1));
   this->InvokeEvent(vtkCommand::MouseWheelBackwardEvent, NULL);
 }
-
-//=================================================================================================
 
 void IVtkDraw_Interactor::OnLButtonDown(HWND theHWnd,
                                         UINT theNFlags,
@@ -409,8 +366,6 @@ void IVtkDraw_Interactor::OnLButtonDown(HWND theHWnd,
   this->InvokeEvent(vtkCommand::LeftButtonPressEvent, NULL);
 }
 
-//=================================================================================================
-
 void IVtkDraw_Interactor::OnLButtonUp(HWND, UINT theNFlags, int theX, int theY)
 {
   if (!this->Enabled)
@@ -424,8 +379,6 @@ void IVtkDraw_Interactor::OnLButtonUp(HWND, UINT theNFlags, int theX, int theY)
   this->InvokeEvent(vtkCommand::LeftButtonReleaseEvent, NULL);
   ReleaseCapture();
 }
-
-//=================================================================================================
 
 void IVtkDraw_Interactor::OnMButtonDown(HWND theHWnd,
                                         UINT theNFlags,
@@ -450,8 +403,6 @@ void IVtkDraw_Interactor::OnMButtonDown(HWND theHWnd,
   this->InvokeEvent(vtkCommand::MiddleButtonPressEvent, NULL);
 }
 
-//=================================================================================================
-
 void IVtkDraw_Interactor::OnMButtonUp(HWND, UINT theNFlags, int theX, int theY)
 {
   if (!this->Enabled)
@@ -464,8 +415,6 @@ void IVtkDraw_Interactor::OnMButtonUp(HWND, UINT theNFlags, int theX, int theY)
   this->InvokeEvent(vtkCommand::MiddleButtonReleaseEvent, NULL);
   ReleaseCapture();
 }
-
-//=================================================================================================
 
 void IVtkDraw_Interactor::OnRButtonDown(HWND theHWnd,
                                         UINT theNFlags,
@@ -491,8 +440,6 @@ void IVtkDraw_Interactor::OnRButtonDown(HWND theHWnd,
   this->InvokeEvent(vtkCommand::RightButtonPressEvent, NULL);
 }
 
-//=================================================================================================
-
 void IVtkDraw_Interactor::OnRButtonUp(HWND, UINT theNFlags, int theX, int theY)
 {
   if (!this->Enabled)
@@ -506,8 +453,6 @@ void IVtkDraw_Interactor::OnRButtonUp(HWND, UINT theNFlags, int theX, int theY)
   ReleaseCapture();
 }
 
-//=================================================================================================
-
 void IVtkDraw_Interactor::OnSize(HWND, UINT, int theX, int theY)
 {
   this->UpdateSize(theX, theY);
@@ -516,8 +461,6 @@ void IVtkDraw_Interactor::OnSize(HWND, UINT, int theX, int theY)
     this->InvokeEvent(vtkCommand::ConfigureEvent, NULL);
   }
 }
-
-//=================================================================================================
 
 void IVtkDraw_Interactor::OnTimer(HWND, UINT theTimerId)
 {
@@ -529,14 +472,11 @@ void IVtkDraw_Interactor::OnTimer(HWND, UINT theTimerId)
   int aTid = static_cast<int>(theTimerId);
   this->InvokeEvent(vtkCommand::TimerEvent, (void*)&aTid);
 
-  // Here we deal with one-shot versus repeating timers
   if (this->IsOneShotTimer(aTid))
   {
-    KillTimer(this->myWindowId, aTid); //'cause windows timers are always repeating
+    KillTimer(this->myWindowId, aTid);
   }
 }
-
-//=================================================================================================
 
 LRESULT CALLBACK WndProc(HWND theHWnd, UINT theUMsg, WPARAM theWParam, LPARAM theLParam)
 {
@@ -554,8 +494,6 @@ LRESULT CALLBACK WndProc(HWND theHWnd, UINT theUMsg, WPARAM theWParam, LPARAM th
 
   return aRes;
 }
-
-//=================================================================================================
 
 LRESULT CALLBACK ViewerWindowProc(HWND                 theHWnd,
                                   UINT                 theMsg,
@@ -671,14 +609,10 @@ LRESULT CALLBACK ViewerWindowProc(HWND                 theHWnd,
 
 #else
 
-//=================================================================================================
-
 Display* IVtkDraw_Interactor::GetDisplayId() const
 {
   return myDisplayId;
 }
-
-//=================================================================================================
 
 void IVtkDraw_Interactor::GetMousePosition(int* theX, int* theY)
 {
@@ -697,9 +631,7 @@ void IVtkDraw_Interactor::GetMousePosition(int* theX, int* theY)
                 &aKeys);
 }
 
-//=================================================================================================
-
-int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
+int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char**)
 {
   int  aXp, aYp;
   bool aPick = theArgNum > 0;
@@ -718,7 +650,7 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
       XEvent aResult;
       while (XCheckTypedWindowEvent(this->myDisplayId, this->myWindowId, Expose, &aResult))
       {
-        // just getting the expose configure event
+
         anEvent = aResult;
       }
 
@@ -728,7 +660,6 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
       aYp = this->Size[1] - anEvent.xexpose.y - 1;
       this->SetEventPosition(aXp, aYp);
 
-      // only render if we are currently accepting events
       if (this->Enabled)
       {
         this->InvokeEvent(vtkCommand::ExposeEvent, nullptr);
@@ -739,7 +670,7 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
 
     case MapNotify:
     {
-      // only render if we are currently accepting events
+
       if (this->Enabled && this->GetRenderWindow()->GetNeverRendered())
       {
         this->Render();
@@ -752,7 +683,7 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
       XEvent aResult;
       while (XCheckTypedWindowEvent(this->myDisplayId, this->myWindowId, ConfigureNotify, &aResult))
       {
-        // just getting the last configure event
+
         anEvent = aResult;
       }
       int aWidth  = anEvent.xconfigure.width;
@@ -766,19 +697,12 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
 
         SetEventPosition(aXp, this->Size[1] - aYp - 1);
 
-        // only render if we are currently accepting events
         if (Enabled)
         {
           this->InvokeEvent(vtkCommand::ConfigureEvent, nullptr);
           if (toResizeSmaller)
           {
-            // Don't call Render when the window is resized to be larger:
-            //
-            // - if the window is resized to be larger, an Expose event will
-            //   be triggered by the X server which will trigger a call to Render().
-            // - if the window is resized to be smaller, no Expose event will
-            //   be triggered by the X server, as no new area become visible.
-            //   only in this case, we need to explicitly call Render() in ConfigureNotify.
+
             this->Render();
           }
         }
@@ -799,14 +723,13 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
       aXp        = anEvent.xbutton.x;
       aYp        = anEvent.xbutton.y;
 
-      // check for double click
       static int aMousePressTime = 0;
       int        aRepeat         = 0;
-      // 400 ms threshold by default is probably good to start
+
       int anEventTime = static_cast<int>(anEvent.xbutton.time);
       if ((anEventTime - aMousePressTime) < 400)
       {
-        aMousePressTime -= 2000; // no double click next time
+        aMousePressTime -= 2000;
         aRepeat = 1;
       }
       else
@@ -917,9 +840,6 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
       int aShift = anEvent.xbutton.state & ShiftMask ? 1 : 0;
       int anAlt  = anEvent.xbutton.state & Mod1Mask ? 1 : 0;
 
-      // Note that even though the (x,y) location of the pointer is event structure,
-      // we must call XQueryPointer for the hints (motion event compression) to
-      // work properly.
       this->GetMousePosition(&aXp, &aYp);
       this->SetEventInformationFlipY(aXp, aYp, aCtrl, aShift);
       this->SetAltKey(anAlt);
@@ -933,12 +853,10 @@ int IVtkDraw_Interactor::ViewerMainLoop(int theArgNum, const char** /*theArgs*/)
   return aPick;
 }
 
-//=================================================================================================
-
 void IVtkDraw_Interactor::ProcessEvents(ClientData theData, int)
 {
   IVtkDraw_Interactor* anInteractor = (IVtkDraw_Interactor*)theData;
-  // test for X Event
+
   while (XPending(anInteractor->GetDisplayId()))
   {
     anInteractor->ViewerMainLoop(0, nullptr);

@@ -1,15 +1,4 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRepTools_PurgeLocations.hpp>
 #include <TopoDS_Iterator.hpp>
@@ -19,14 +8,10 @@
 #include <BRepTools_Modifier.hpp>
 #include <TopLoc_Datum3D.hpp>
 
-//=================================================================================================
-
 BRepTools_PurgeLocations::BRepTools_PurgeLocations()
     : myDone(false)
 {
 }
-
-//=================================================================================================
 
 bool BRepTools_PurgeLocations::Perform(const TopoDS_Shape& theShape)
 {
@@ -36,7 +21,6 @@ bool BRepTools_PurgeLocations::Perform(const TopoDS_Shape& theShape)
   myDone = true;
   AddShape(myShape);
 
-  // Check locations;
   int                     ind;
   NCollection_Vector<int> aBadTrsfInds;
   for (ind = 1;; ++ind)
@@ -108,8 +92,6 @@ bool BRepTools_PurgeLocations::Perform(const TopoDS_Shape& theShape)
   return myDone;
 }
 
-//=================================================================================================
-
 bool BRepTools_PurgeLocations::PurgeLocation(const TopoDS_Shape& theS, TopoDS_Shape& theRes)
 {
   bool            isDone  = true;
@@ -160,8 +142,6 @@ bool BRepTools_PurgeLocations::PurgeLocation(const TopoDS_Shape& theS, TopoDS_Sh
   return isDone;
 }
 
-//=================================================================================================
-
 void BRepTools_PurgeLocations::AddShape(const TopoDS_Shape& theS)
 {
   myMapShapes.Add(theS);
@@ -175,21 +155,15 @@ void BRepTools_PurgeLocations::AddShape(const TopoDS_Shape& theS)
   }
 }
 
-//=================================================================================================
-
 const TopoDS_Shape& BRepTools_PurgeLocations::GetResult() const
 {
   return myShape;
 }
 
-//=================================================================================================
-
 bool BRepTools_PurgeLocations::IsDone() const
 {
   return myDone;
 }
-
-//=================================================================================================
 
 TopoDS_Shape BRepTools_PurgeLocations::ModifiedShape(const TopoDS_Shape& theInitShape) const
 {

@@ -10,18 +10,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_RealList, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_RealList::GetID()
 {
   static Standard_GUID TDataStd_RealListID("349ACE18-7CD6-4525-9938-FBBF22AA54D3");
   return TDataStd_RealListID;
 }
 
-//=======================================================================
-// function : SetAttr
-// purpose  : Implements Set functionality
-//=======================================================================
 static occ::handle<TDataStd_RealList> SetAttr(const TDF_Label& label, const Standard_GUID& theGuid)
 {
   occ::handle<TDataStd_RealList> A;
@@ -34,45 +28,31 @@ static occ::handle<TDataStd_RealList> SetAttr(const TDF_Label& label, const Stan
   return A;
 }
 
-//=================================================================================================
-
 TDataStd_RealList::TDataStd_RealList()
     : myID(GetID())
 {
 }
-
-//=================================================================================================
 
 occ::handle<TDataStd_RealList> TDataStd_RealList::Set(const TDF_Label& label)
 {
   return SetAttr(label, GetID());
 }
 
-//=======================================================================
-// function : Set
-// purpose  : Set user defined attribute with specific ID
-//=======================================================================
 occ::handle<TDataStd_RealList> TDataStd_RealList::Set(const TDF_Label&     label,
                                                       const Standard_GUID& theGuid)
 {
   return SetAttr(label, theGuid);
 }
 
-//=================================================================================================
-
 bool TDataStd_RealList::IsEmpty() const
 {
   return myList.IsEmpty();
 }
 
-//=================================================================================================
-
 int TDataStd_RealList::Extent() const
 {
   return myList.Extent();
 }
-
-//=================================================================================================
 
 void TDataStd_RealList::Prepend(const double value)
 {
@@ -80,15 +60,11 @@ void TDataStd_RealList::Prepend(const double value)
   myList.Prepend(value);
 }
 
-//=================================================================================================
-
 void TDataStd_RealList::Append(const double value)
 {
   Backup();
   myList.Append(value);
 }
-
-//=================================================================================================
 
 bool TDataStd_RealList::InsertBefore(const double value, const double before_value)
 {
@@ -105,8 +81,6 @@ bool TDataStd_RealList::InsertBefore(const double value, const double before_val
   return false;
 }
 
-// Inserts the <value> before the <index> position.
-// The indices start with 1 .. Extent().
 bool TDataStd_RealList::InsertBeforeByIndex(const int index, const double before_value)
 {
   int                                i(1);
@@ -125,8 +99,6 @@ bool TDataStd_RealList::InsertBeforeByIndex(const int index, const double before
   return found;
 }
 
-//=================================================================================================
-
 bool TDataStd_RealList::InsertAfter(const double value, const double after_value)
 {
   NCollection_List<double>::Iterator itr(myList);
@@ -142,8 +114,6 @@ bool TDataStd_RealList::InsertAfter(const double value, const double after_value
   return false;
 }
 
-// Inserts the <value> after the <index> position.
-// The indices start with 1 .. Extent().
 bool TDataStd_RealList::InsertAfterByIndex(const int index, const double after_value)
 {
   int                                i(1);
@@ -162,8 +132,6 @@ bool TDataStd_RealList::InsertAfterByIndex(const int index, const double after_v
   return found;
 }
 
-//=================================================================================================
-
 bool TDataStd_RealList::Remove(const double value)
 {
   NCollection_List<double>::Iterator itr(myList);
@@ -179,10 +147,6 @@ bool TDataStd_RealList::Remove(const double value)
   return false;
 }
 
-//=======================================================================
-// function : Remove
-// purpose  : Removes a value at the <index> position.
-//=======================================================================
 bool TDataStd_RealList::RemoveByIndex(const int index)
 {
   int                                i(1);
@@ -201,43 +165,31 @@ bool TDataStd_RealList::RemoveByIndex(const int index)
   return found;
 }
 
-//=================================================================================================
-
 void TDataStd_RealList::Clear()
 {
   Backup();
   myList.Clear();
 }
 
-//=================================================================================================
-
 double TDataStd_RealList::First() const
 {
   return myList.First();
 }
-
-//=================================================================================================
 
 double TDataStd_RealList::Last() const
 {
   return myList.Last();
 }
 
-//=================================================================================================
-
 const NCollection_List<double>& TDataStd_RealList::List() const
 {
   return myList;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_RealList::ID() const
 {
   return myID;
 }
-
-//=================================================================================================
 
 void TDataStd_RealList::SetID(const Standard_GUID& theGuid)
 {
@@ -247,22 +199,16 @@ void TDataStd_RealList::SetID(const Standard_GUID& theGuid)
   myID = theGuid;
 }
 
-//=================================================================================================
-
 void TDataStd_RealList::SetID()
 {
   Backup();
   myID = GetID();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDataStd_RealList::NewEmpty() const
 {
   return new TDataStd_RealList();
 }
-
-//=================================================================================================
 
 void TDataStd_RealList::Restore(const occ::handle<TDF_Attribute>& With)
 {
@@ -275,8 +221,6 @@ void TDataStd_RealList::Restore(const occ::handle<TDF_Attribute>& With)
   }
   myID = aList->ID();
 }
-
-//=================================================================================================
 
 void TDataStd_RealList::Paste(const occ::handle<TDF_Attribute>& Into,
                               const occ::handle<TDF_RelocationTable>&) const
@@ -291,8 +235,6 @@ void TDataStd_RealList::Paste(const occ::handle<TDF_Attribute>& Into,
   aList->SetID(myID);
 }
 
-//=================================================================================================
-
 Standard_OStream& TDataStd_RealList::Dump(Standard_OStream& anOS) const
 {
   anOS << "\nRealList: ";
@@ -302,8 +244,6 @@ Standard_OStream& TDataStd_RealList::Dump(Standard_OStream& anOS) const
   anOS << std::endl;
   return anOS;
 }
-
-//=================================================================================================
 
 void TDataStd_RealList::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

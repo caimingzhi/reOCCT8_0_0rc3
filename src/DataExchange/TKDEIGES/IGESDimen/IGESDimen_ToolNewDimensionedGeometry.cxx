@@ -27,7 +27,7 @@ void IGESDimen_ToolNewDimensionedGeometry::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&          IR,
   IGESData_ParamReader&                                PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   int                                                                i, num;
   int                                                                tempNbDimens;
   int                                                                tempDimOrientFlag;
@@ -38,9 +38,9 @@ void IGESDimen_ToolNewDimensionedGeometry::ReadOwnParams(
   occ::handle<NCollection_HArray1<gp_XYZ>>                           tempPoints;
 
   if (PR.DefinedElseSkip())
-    // clang-format off
-    PR.ReadInteger(PR.Current(), "Number of Dimensions", tempNbDimens); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+
+    PR.ReadInteger(PR.Current(), "Number of Dimensions", tempNbDimens);
+
   else
     tempNbDimens = 1;
 
@@ -54,7 +54,6 @@ void IGESDimen_ToolNewDimensionedGeometry::ReadOwnParams(
   else
     PR.AddFail("Number of Geometries: Not Positive");
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadEntity(IR, PR.Current(), "Dimension Entity", tempDimen);
   PR.ReadInteger(PR.Current(), "Dimension Orientation Flag", tempDimOrientFlag);
   PR.ReadReal(PR.Current(), "Angle Value", tempAngle);
@@ -63,18 +62,17 @@ void IGESDimen_ToolNewDimensionedGeometry::ReadOwnParams(
     for (i = 1; i <= num; i++)
     {
       occ::handle<IGESData_IGESEntity> tempEnt;
-      // szv#4:S4163:12Mar99 `st=` not needed
-      // clang-format off
-	PR.ReadEntity(IR, PR.Current(), "Geometry Entity", tempEnt, (i == num)); // The last one may be Null
-	tempGeomEnts->SetValue(i, tempEnt);
 
-	int tempInt;
-	PR.ReadInteger(PR.Current(), "Dimension Location Flag", tempInt); //szv#4:S4163:12Mar99 `st=` not needed
-      // clang-format on
+      PR.ReadEntity(IR, PR.Current(), "Geometry Entity", tempEnt, (i == num));
+      tempGeomEnts->SetValue(i, tempEnt);
+
+      int tempInt;
+      PR.ReadInteger(PR.Current(), "Dimension Location Flag", tempInt);
+
       tempDimLocFlags->SetValue(i, tempInt);
 
       gp_XYZ tempPnt;
-      PR.ReadXYZ(PR.CurrentList(1, 3), "Point", tempPnt); // szv#4:S4163:12Mar99 `st=` not needed
+      PR.ReadXYZ(PR.CurrentList(1, 3), "Point", tempPnt);
       tempPoints->SetValue(i, tempPnt);
     }
 
@@ -161,7 +159,7 @@ bool IGESDimen_ToolNewDimensionedGeometry::OwnCorrect(
   }
   if (ent->NbDimensions() == 1)
     return res;
-  //   Force NbDimensions = 1 -> reconstruct
+
   int                                                                nb = ent->NbGeometries();
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> tempGeomEnts =
     new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, nb);
@@ -185,7 +183,7 @@ bool IGESDimen_ToolNewDimensionedGeometry::OwnCorrect(
 }
 
 IGESData_DirChecker IGESDimen_ToolNewDimensionedGeometry::DirChecker(
-  const occ::handle<IGESDimen_NewDimensionedGeometry>& /* ent */) const
+  const occ::handle<IGESDimen_NewDimensionedGeometry>&) const
 {
   IGESData_DirChecker DC(402, 21);
   DC.Structure(IGESData_DefVoid);

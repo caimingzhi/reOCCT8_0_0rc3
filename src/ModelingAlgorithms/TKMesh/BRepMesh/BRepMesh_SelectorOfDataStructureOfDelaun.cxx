@@ -4,19 +4,13 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_SelectorOfDataStructureOfDelaun, Standard_Transient)
 
-//=================================================================================================
-
 BRepMesh_SelectorOfDataStructureOfDelaun::BRepMesh_SelectorOfDataStructureOfDelaun() = default;
-
-//=================================================================================================
 
 BRepMesh_SelectorOfDataStructureOfDelaun::BRepMesh_SelectorOfDataStructureOfDelaun(
   const occ::handle<BRepMesh_DataStructureOfDelaun>& theMesh)
     : myMesh(theMesh)
 {
 }
-
-//=================================================================================================
 
 void BRepMesh_SelectorOfDataStructureOfDelaun::Initialize(
   const occ::handle<BRepMesh_DataStructureOfDelaun>& theMesh)
@@ -28,14 +22,10 @@ void BRepMesh_SelectorOfDataStructureOfDelaun::Initialize(
   myFrontier.Clear();
 }
 
-//=================================================================================================
-
 void BRepMesh_SelectorOfDataStructureOfDelaun::NeighboursOf(const BRepMesh_Vertex& theNode)
 {
   NeighboursOfNode(myMesh->IndexOf(theNode));
 }
-
-//=================================================================================================
 
 void BRepMesh_SelectorOfDataStructureOfDelaun::NeighboursOfNode(const int theNodeIndex)
 {
@@ -45,22 +35,16 @@ void BRepMesh_SelectorOfDataStructureOfDelaun::NeighboursOfNode(const int theNod
     elementsOfLink(aLinkIt.Value());
 }
 
-//=================================================================================================
-
 void BRepMesh_SelectorOfDataStructureOfDelaun::NeighboursOf(const BRepMesh_Edge& theLink)
 {
   NeighboursOfNode(theLink.FirstNode());
   NeighboursOfNode(theLink.LastNode());
 }
 
-//=================================================================================================
-
 void BRepMesh_SelectorOfDataStructureOfDelaun::NeighboursOfLink(const int theLinkIndex)
 {
   NeighboursOf(myMesh->GetLink(theLinkIndex));
 }
-
-//=================================================================================================
 
 void BRepMesh_SelectorOfDataStructureOfDelaun::NeighboursOf(const BRepMesh_Triangle& theElement)
 {
@@ -71,14 +55,10 @@ void BRepMesh_SelectorOfDataStructureOfDelaun::NeighboursOf(const BRepMesh_Trian
     NeighboursOfNode(v[i]);
 }
 
-//=================================================================================================
-
 void BRepMesh_SelectorOfDataStructureOfDelaun::NeighboursOfElement(const int theElementIndex)
 {
   NeighboursOf(myMesh->GetElement(theElementIndex));
 }
-
-//=================================================================================================
 
 void BRepMesh_SelectorOfDataStructureOfDelaun::NeighboursByEdgeOf(
   const BRepMesh_Triangle& theElement)
@@ -87,8 +67,6 @@ void BRepMesh_SelectorOfDataStructureOfDelaun::NeighboursByEdgeOf(
   for (int i = 0; i < 3; ++i)
     elementsOfLink(e[i]);
 }
-
-//=================================================================================================
 
 void BRepMesh_SelectorOfDataStructureOfDelaun::elementsOfLink(const int theIndex)
 {

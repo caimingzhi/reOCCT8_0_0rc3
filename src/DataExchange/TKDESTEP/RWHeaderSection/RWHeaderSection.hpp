@@ -9,6 +9,5 @@ class RWHeaderSection
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! enforced the initialisation of the libraries
   Standard_EXPORT static void Init();
 };

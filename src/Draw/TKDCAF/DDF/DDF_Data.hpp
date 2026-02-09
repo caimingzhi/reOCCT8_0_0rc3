@@ -8,7 +8,6 @@
 class TDF_Data;
 class Draw_Display;
 
-//! Encapsulates a data framework from TDF in a drawable object
 class DDF_Data : public Draw_Drawable3D
 {
 

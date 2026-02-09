@@ -8,7 +8,6 @@
 class TCollection_HAsciiString;
 class StepBasic_ApplicationContext;
 
-// resolve name collisions with X11 headers
 #ifdef Status
   #undef Status
 #endif
@@ -17,7 +16,6 @@ class StepBasic_ApplicationProtocolDefinition : public Standard_Transient
 {
 
 public:
-  //! Returns a ApplicationProtocolDefinition
   Standard_EXPORT StepBasic_ApplicationProtocolDefinition();
 
   Standard_EXPORT void Init(

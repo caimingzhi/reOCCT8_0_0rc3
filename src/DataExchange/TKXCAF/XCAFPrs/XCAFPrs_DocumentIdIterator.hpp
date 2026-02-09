@@ -2,11 +2,9 @@
 
 #include <XCAFPrs_Style.hpp>
 
-//! Auxiliary tool for iterating through Path identification string.
 class XCAFPrs_DocumentIdIterator
 {
 public:
-  //! Main constructor.
   XCAFPrs_DocumentIdIterator(const TCollection_AsciiString& thePath)
       : myPath(thePath),
         myPosition(0)
@@ -14,26 +12,20 @@ public:
     Next();
   }
 
-  //! Return TRUE if iterator points to a value.
   bool More() const { return !mySubId.IsEmpty(); }
 
-  //! Return current value.
   const TCollection_AsciiString& Value() const { return mySubId; }
 
-  //! Find the next value.
   void Next();
 
 private:
-  // Disable assignment operator.
   XCAFPrs_DocumentIdIterator& operator=(const XCAFPrs_DocumentIdIterator&) = delete;
 
 private:
-  const TCollection_AsciiString& myPath;     //!< full path
-  TCollection_AsciiString        mySubId;    //!< current value
-  int                            myPosition; //!< last processed new-line symbol
+  const TCollection_AsciiString& myPath;
+  TCollection_AsciiString        mySubId;
+  int                            myPosition;
 };
-
-//=================================================================================================
 
 inline void XCAFPrs_DocumentIdIterator::Next()
 {
@@ -41,11 +33,11 @@ inline void XCAFPrs_DocumentIdIterator::Next()
   {
     if (myPath.Value(aCharIndex) == '/')
     {
-      // intermediate items have trailing dot and separator before the next item
+
       const int aLen = aCharIndex - myPosition - 2;
       if (aLen < 1)
       {
-        return; // assert - should never happen for valid IDs!
+        return;
       }
 
       mySubId    = myPath.SubString(myPosition + 1, aCharIndex - 2);
@@ -55,7 +47,7 @@ inline void XCAFPrs_DocumentIdIterator::Next()
   }
   if (myPosition < myPath.Length())
   {
-    // last item has only trailing dot
+
     mySubId    = myPath.SubString(myPosition + 1, myPath.Length() - 1);
     myPosition = myPath.Length();
   }

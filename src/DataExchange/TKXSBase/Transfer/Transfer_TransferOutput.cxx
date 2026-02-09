@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// szv#4 S4163
 
 #include <Interface_EntityIterator.hpp>
 #include <Interface_Graph.hpp>
@@ -33,8 +20,6 @@ Transfer_TransferOutput::Transfer_TransferOutput(
   theproc = new Transfer_TransientProcess(amodel->NbEntities());
   theproc->SetActor(actor);
   themodel = amodel;
-  //  thescope = false;
-  //  theundef = Transfer_UndefIgnore;
 }
 
 Transfer_TransferOutput::Transfer_TransferOutput(
@@ -43,12 +28,7 @@ Transfer_TransferOutput::Transfer_TransferOutput(
 {
   theproc  = proc;
   themodel = amodel;
-  //  thescope = false; //szv#4:S4163:12Mar99 initialization needed
-  //  theundef = Transfer_UndefIgnore;
 }
-
-// bool&  Transfer_TransferOutput::ScopeMode ()
-//{  return  thescope;  }
 
 occ::handle<Interface_InterfaceModel> Transfer_TransferOutput::Model() const
 {
@@ -66,28 +46,9 @@ void Transfer_TransferOutput::Transfer(const occ::handle<Standard_Transient>& ob
   if (themodel->Number(obj) == 0)
     throw Transfer_TransferFailure(
       "TransferOutput : Transfer, entities do not come from same initial model");
-  //  int scope = 0;
-  //  if (thescope) scope = theproc->NewScope (obj);
 
-  //: 1 modified by ABV 5 Nov 97
-  //: 1  if (!theproc->Transfer(obj)) return;    // auparavant, traitement Undefined
-  //  bool ok =
   theproc->Transfer(obj, theProgress);
-  //  if (scope > 0) theproc->EndScope (scope);
-  //  if ( ! ok ) return;
-
-  /*  switch (theundef) {
-      case Transfer_UndefIgnore  : return;
-      case Transfer_UndefFailure : throw Transfer_TransferFailure("TransferOutput : Transfer
-    Undefined as Failure"); case Transfer_UndefContent : break; // on ne sait pas traiter ... case
-    Transfer_UndefUser    : break; // idem
-    }
-  */
 }
-
-//  Results :
-//   To transfer quite simply all roots of an interface model
-//   Each one is noted "Root" in the final Process
 
 void Transfer_TransferOutput::TransferRoots(const Message_ProgressRange& theProgress)
 {
@@ -104,11 +65,9 @@ void Transfer_TransferOutput::TransferRoots(const occ::handle<Interface_Protocol
   for (list.Start(); list.More() && aPS.More(); list.Next())
   {
     const occ::handle<Standard_Transient>& ent = list.Value();
-    //    int scope = 0;
-    //    if (thescope) scope = theproc->NewScope (ent);
+
     if (theproc->Transfer(ent, aPS.Next()))
       theproc->SetRoot(ent);
-    //    if (scope > 0) theproc->EndScope (scope);
   }
 }
 
@@ -123,11 +82,9 @@ void Transfer_TransferOutput::TransferRoots(const Interface_Graph&       G,
   for (list.Start(); list.More() && aPS.More(); list.Next())
   {
     const occ::handle<Standard_Transient>& ent = list.Value();
-    //    int scope = 0;
-    //    if (thescope) scope = theproc->NewScope (ent);
+
     if (theproc->Transfer(ent, aPS.Next()))
       theproc->SetRoot(ent);
-    //    if (scope > 0) theproc->EndScope (scope);
   }
 }
 

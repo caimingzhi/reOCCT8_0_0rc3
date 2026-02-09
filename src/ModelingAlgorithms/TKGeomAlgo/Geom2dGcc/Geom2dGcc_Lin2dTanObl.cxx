@@ -30,10 +30,6 @@ Geom2dGcc_Lin2dTanObl::Geom2dGcc_Lin2dTanObl(const Geom2dGcc_QualifiedCurve& Qua
   const occ::handle<Geom2d_Curve>& CC1   = C1.Curve();
   GeomAbs_CurveType                Type1 = C1.GetType();
 
-  //=============================================================================
-  //                            Appel a GccAna.                                 +
-  //=============================================================================
-
   WellDone = false;
   NbrSol   = 0;
   if (Type1 == GeomAbs_Circle)
@@ -100,10 +96,6 @@ Geom2dGcc_Lin2dTanObl::Geom2dGcc_Lin2dTanObl(const Geom2dGcc_QualifiedCurve& Qua
   Geom2dAdaptor_Curve              C1    = Qualified1.Qualified();
   const occ::handle<Geom2d_Curve>& CC1   = C1.Curve();
   GeomAbs_CurveType                Type1 = C1.GetType();
-
-  //=============================================================================
-  //                            Appel a GccAna.                                 +
-  //=============================================================================
 
   WellDone = false;
   NbrSol   = 0;

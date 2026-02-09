@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DrawTrSurf_Surface.hpp>
 
@@ -28,8 +16,6 @@ IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_Surface, DrawTrSurf_Drawable)
 
 double DrawTrSurf_SurfaceLimit = 400;
 
-//=================================================================================================
-
 DrawTrSurf_Surface::DrawTrSurf_Surface(const occ::handle<Geom_Surface>& S)
     : DrawTrSurf_Drawable(16, 0.01, 1)
 {
@@ -39,8 +25,6 @@ DrawTrSurf_Surface::DrawTrSurf_Surface(const occ::handle<Geom_Surface>& S)
   nbUIsos    = 1;
   nbVIsos    = 1;
 }
-
-//=================================================================================================
 
 DrawTrSurf_Surface::DrawTrSurf_Surface(const occ::handle<Geom_Surface>& S,
                                        const int                        Nu,
@@ -59,14 +43,10 @@ DrawTrSurf_Surface::DrawTrSurf_Surface(const occ::handle<Geom_Surface>& S,
   nbVIsos    = std::abs(Nv);
 }
 
-//=================================================================================================
-
 void DrawTrSurf_Surface::DrawOn(Draw_Display& dis) const
 {
   DrawOn(dis, true);
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Surface::DrawOn(Draw_Display& dis, const bool Iso) const
 {
@@ -193,7 +173,6 @@ void DrawTrSurf_Surface::DrawOn(Draw_Display& dis, const bool Iso) const
     }
   }
 
-  // draw bounds
   dis.SetColor(boundsLook);
   if (!UfirstInf)
     DrawIsoCurveOn(C, GeomAbs_IsoU, UFirst, VFirst, VLast, dis);
@@ -204,7 +183,6 @@ void DrawTrSurf_Surface::DrawOn(Draw_Display& dis, const bool Iso) const
   if (!VlastInf)
     DrawIsoCurveOn(C, GeomAbs_IsoV, VLast, UFirst, ULast, dis);
 
-  // draw marker
   DrawIsoCurveOn(C,
                  GeomAbs_IsoU,
                  UFirst + (ULast - UFirst) / 10.,
@@ -213,15 +191,11 @@ void DrawTrSurf_Surface::DrawOn(Draw_Display& dis, const bool Iso) const
                  dis);
 }
 
-//=================================================================================================
-
 void DrawTrSurf_Surface::ClearIsos()
 {
   nbUIsos = 0;
   nbVIsos = 0;
 }
-
-//=================================================================================================
 
 occ::handle<Draw_Drawable3D> DrawTrSurf_Surface::Copy() const
 {
@@ -238,21 +212,15 @@ occ::handle<Draw_Drawable3D> DrawTrSurf_Surface::Copy() const
   return DS;
 }
 
-//=================================================================================================
-
 void DrawTrSurf_Surface::Dump(Standard_OStream& S) const
 {
   GeomTools_SurfaceSet::PrintSurface(surf, S);
 }
 
-//=================================================================================================
-
 void DrawTrSurf_Surface::Save(Standard_OStream& theStream) const
 {
   GeomTools_SurfaceSet::PrintSurface(surf, theStream, true);
 }
-
-//=================================================================================================
 
 occ::handle<Draw_Drawable3D> DrawTrSurf_Surface::Restore(std::istream& theStream)
 {
@@ -268,8 +236,6 @@ occ::handle<Draw_Drawable3D> DrawTrSurf_Surface::Restore(std::istream& theStream
                                                                         aParams.DrawMode);
   return aDrawSurface;
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Surface::Whatis(Draw_Interpretor& S) const
 {

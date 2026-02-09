@@ -4,12 +4,8 @@
 #include <StepData_StepWriter.hpp>
 #include <StepElement_CurveElementEndReleasePacket.hpp>
 
-//=================================================================================================
-
 RWStepElement_RWCurveElementEndReleasePacket::RWStepElement_RWCurveElementEndReleasePacket() =
   default;
-
-//=================================================================================================
 
 void RWStepElement_RWCurveElementEndReleasePacket::ReadStep(
   const occ::handle<StepData_StepReaderData>&                  data,
@@ -17,11 +13,9 @@ void RWStepElement_RWCurveElementEndReleasePacket::ReadStep(
   occ::handle<Interface_Check>&                                ach,
   const occ::handle<StepElement_CurveElementEndReleasePacket>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "curve_element_end_release_packet"))
     return;
-
-  // Own fields of CurveElementEndReleasePacket
 
   StepElement_CurveElementFreedom aReleaseFreedom;
   data->ReadEntity(num, 1, "release_freedom", ach, aReleaseFreedom);
@@ -29,32 +23,23 @@ void RWStepElement_RWCurveElementEndReleasePacket::ReadStep(
   double aReleaseStiffness;
   data->ReadReal(num, 2, "release_stiffness", ach, aReleaseStiffness);
 
-  // Initialize entity
   ent->Init(aReleaseFreedom, aReleaseStiffness);
 }
-
-//=================================================================================================
 
 void RWStepElement_RWCurveElementEndReleasePacket::WriteStep(
   StepData_StepWriter&                                         SW,
   const occ::handle<StepElement_CurveElementEndReleasePacket>& ent) const
 {
 
-  // Own fields of CurveElementEndReleasePacket
-
   SW.Send(ent->ReleaseFreedom().Value());
 
   SW.Send(ent->ReleaseStiffness());
 }
 
-//=================================================================================================
-
 void RWStepElement_RWCurveElementEndReleasePacket::Share(
   const occ::handle<StepElement_CurveElementEndReleasePacket>& ent,
   Interface_EntityIterator&                                    iter) const
 {
-
-  // Own fields of CurveElementEndReleasePacket
 
   iter.AddItem(ent->ReleaseFreedom().Value());
 }

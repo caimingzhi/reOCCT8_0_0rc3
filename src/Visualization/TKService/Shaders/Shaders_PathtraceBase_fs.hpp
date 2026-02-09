@@ -1028,5 +1028,3 @@ static const char Shaders_PathtraceBase_fs[] =
   "}\n"
   "\n"
   "#endif\n";
-
-// clang-format on

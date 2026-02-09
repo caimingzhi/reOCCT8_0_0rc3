@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDoc_Datum.hpp>
 
@@ -56,21 +45,14 @@ enum ChildLab
   ChildLab_End
 };
 
-//=================================================================================================
-
 XCAFDoc_Datum::XCAFDoc_Datum() = default;
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc_Datum::GetID()
 {
   static Standard_GUID DID("58ed092e-44de-11d8-8776-001083004c77");
-  // static Standard_GUID ID("efd212e2-6dfd-11d4-b9c8-0060b0ee281b");
-  return DID;
-  // return ID;
-}
 
-//=================================================================================================
+  return DID;
+}
 
 occ::handle<XCAFDoc_Datum> XCAFDoc_Datum::Set(
   const TDF_Label&                             theLabel,
@@ -88,8 +70,6 @@ occ::handle<XCAFDoc_Datum> XCAFDoc_Datum::Set(
   return aDatum;
 }
 
-//=================================================================================================
-
 occ::handle<XCAFDoc_Datum> XCAFDoc_Datum::Set(const TDF_Label& theLabel)
 {
   occ::handle<XCAFDoc_Datum> aDatum;
@@ -101,8 +81,6 @@ occ::handle<XCAFDoc_Datum> XCAFDoc_Datum::Set(const TDF_Label& theLabel)
   return aDatum;
 }
 
-//=================================================================================================
-
 void XCAFDoc_Datum::Set(const occ::handle<TCollection_HAsciiString>& theName,
                         const occ::handle<TCollection_HAsciiString>& theDescription,
                         const occ::handle<TCollection_HAsciiString>& theIdentification)
@@ -113,8 +91,6 @@ void XCAFDoc_Datum::Set(const occ::handle<TCollection_HAsciiString>& theName,
   myIdentification = theIdentification;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> XCAFDoc_Datum::GetName() const
 {
   if (myName.IsNull())
@@ -122,21 +98,15 @@ occ::handle<TCollection_HAsciiString> XCAFDoc_Datum::GetName() const
   return myName;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> XCAFDoc_Datum::GetDescription() const
 {
   return myDescription;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> XCAFDoc_Datum::GetIdentification() const
 {
   return myIdentification;
 }
-
-//=================================================================================================
 
 void XCAFDoc_Datum::SetObject(const occ::handle<XCAFDimTolObjects_DatumObject>& theObject)
 {
@@ -314,8 +284,6 @@ void XCAFDoc_Datum::SetObject(const occ::handle<XCAFDimTolObjects_DatumObject>& 
     }
   }
 }
-
-//=================================================================================================
 
 occ::handle<XCAFDimTolObjects_DatumObject> XCAFDoc_Datum::GetObject() const
 {
@@ -509,14 +477,10 @@ occ::handle<XCAFDimTolObjects_DatumObject> XCAFDoc_Datum::GetObject() const
   return anObj;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_Datum::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 void XCAFDoc_Datum::Restore(const occ::handle<TDF_Attribute>& theWith)
 {
@@ -525,22 +489,16 @@ void XCAFDoc_Datum::Restore(const occ::handle<TDF_Attribute>& theWith)
   myIdentification = occ::down_cast<XCAFDoc_Datum>(theWith)->GetIdentification();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XCAFDoc_Datum::NewEmpty() const
 {
   return new XCAFDoc_Datum();
 }
 
-//=================================================================================================
-
 void XCAFDoc_Datum::Paste(const occ::handle<TDF_Attribute>& theInto,
-                          const occ::handle<TDF_RelocationTable>& /*RT*/) const
+                          const occ::handle<TDF_RelocationTable>&) const
 {
   occ::down_cast<XCAFDoc_Datum>(theInto)->Set(myName, myDescription, myIdentification);
 }
-
-//=================================================================================================
 
 void XCAFDoc_Datum::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

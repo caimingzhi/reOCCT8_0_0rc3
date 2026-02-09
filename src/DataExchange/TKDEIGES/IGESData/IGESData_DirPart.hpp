@@ -6,16 +6,13 @@
 
 class IGESData_IGESType;
 
-//! literal/numeric description of an entity's directory section, taken from file
 class IGESData_DirPart
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! creates an empty DirPart, ready to be filled by Init
   Standard_EXPORT IGESData_DirPart();
 
-  //! fills DirPart with consistent data read from file
   Standard_EXPORT void Init(const int   i1,
                             const int   i2,
                             const int   i3,
@@ -38,8 +35,6 @@ public:
                             const char* label,
                             const char* subscript);
 
-  //! returns values recorded in DirPart
-  //! (content of cstrings are modified)
   Standard_EXPORT void Values(int&        i1,
                               int&        i2,
                               int&        i3,
@@ -62,7 +57,6 @@ public:
                               const char* label,
                               const char* subscript) const;
 
-  //! returns "type" and "form" info, used to recognize the entity
   Standard_EXPORT IGESData_IGESType Type() const;
 
 private:

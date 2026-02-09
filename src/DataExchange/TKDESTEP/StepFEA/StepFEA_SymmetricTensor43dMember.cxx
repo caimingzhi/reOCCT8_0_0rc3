@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <StepFEA_SymmetricTensor43dMember.hpp>
 #include <TCollection_HAsciiString.hpp>
@@ -23,21 +12,15 @@ static const char* TIST  = "FEA_TRANSVERSE_ISOTROPIC_SYMMETRIC_TENSOR4_3D";
 static const char* CNOST = "FEA_COLUMN_NORMALISED_ORTHOTROPIC_SYMMETRIC_TENSOR4_3D";
 static const char* CNMST = "FEA_COLUMN_NORMALISED_MONOCLINIC_SYMMETRIC_TENSOR4_3D";
 
-//=================================================================================================
-
 StepFEA_SymmetricTensor43dMember::StepFEA_SymmetricTensor43dMember()
     : mycase(0)
 {
 }
 
-//=================================================================================================
-
 bool StepFEA_SymmetricTensor43dMember::HasName() const
 {
   return mycase > 0;
 }
-
-//=================================================================================================
 
 const char* StepFEA_SymmetricTensor43dMember::Name() const
 {
@@ -61,8 +44,6 @@ const char* StepFEA_SymmetricTensor43dMember::Name() const
   return "";
 }
 
-//=================================================================================================
-
 static int CompareNames(const char* name)
 {
   int thecase = 0;
@@ -83,15 +64,11 @@ static int CompareNames(const char* name)
   return thecase;
 }
 
-//=================================================================================================
-
 bool StepFEA_SymmetricTensor43dMember::SetName(const char* name)
 {
   mycase = CompareNames(name);
   return (mycase > 0);
 }
-
-//=================================================================================================
 
 bool StepFEA_SymmetricTensor43dMember::Matches(const char* name) const
 {

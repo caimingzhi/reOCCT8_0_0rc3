@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <PrsMgr_PresentationManager.hpp>
 
@@ -25,16 +13,12 @@ class PrsMgr_Presentation;
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsMgr_PresentationManager, Standard_Transient)
 
-//=================================================================================================
-
 PrsMgr_PresentationManager::PrsMgr_PresentationManager(
   const occ::handle<Graphic3d_StructureManager>& theStructureManager)
     : myStructureManager(theStructureManager),
       myImmediateModeOn(0)
 {
 }
-
-//=================================================================================================
 
 void PrsMgr_PresentationManager::Display(const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
                                          const int                                    theMode)
@@ -76,8 +60,6 @@ void PrsMgr_PresentationManager::Display(const occ::handle<PrsMgr_PresentableObj
     }
   }
 }
-
-//=================================================================================================
 
 void PrsMgr_PresentationManager::Erase(const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
                                        const int                                    theMode)
@@ -123,8 +105,6 @@ void PrsMgr_PresentationManager::Erase(const occ::handle<PrsMgr_PresentableObjec
   }
 }
 
-//=================================================================================================
-
 void PrsMgr_PresentationManager::Clear(const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
                                        const int                                    theMode)
 {
@@ -145,8 +125,6 @@ void PrsMgr_PresentationManager::Clear(const occ::handle<PrsMgr_PresentableObjec
     aPrs->Clear();
   }
 }
-
-//=================================================================================================
 
 void PrsMgr_PresentationManager::SetVisibility(
   const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
@@ -179,8 +157,6 @@ void PrsMgr_PresentationManager::SetVisibility(
   }
 }
 
-//=================================================================================================
-
 void PrsMgr_PresentationManager::Unhighlight(const occ::handle<PrsMgr_PresentableObject>& thePrsObj)
 {
   if (thePrsObj->ToPropagateVisualState())
@@ -209,8 +185,6 @@ void PrsMgr_PresentationManager::Unhighlight(const occ::handle<PrsMgr_Presentabl
   }
 }
 
-//=================================================================================================
-
 void PrsMgr_PresentationManager::SetDisplayPriority(
   const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
   const int                                    theMode,
@@ -233,8 +207,6 @@ void PrsMgr_PresentationManager::SetDisplayPriority(
     aPrs->SetDisplayPriority(theNewPrior);
   }
 }
-
-//=================================================================================================
 
 Graphic3d_DisplayPriority PrsMgr_PresentationManager::DisplayPriority(
   const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
@@ -259,8 +231,6 @@ Graphic3d_DisplayPriority PrsMgr_PresentationManager::DisplayPriority(
   return !aPrs.IsNull() ? aPrs->DisplayPriority() : Graphic3d_DisplayPriority_INVALID;
 }
 
-//=================================================================================================
-
 bool PrsMgr_PresentationManager::IsDisplayed(const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
                                              const int theMode) const
 {
@@ -281,8 +251,6 @@ bool PrsMgr_PresentationManager::IsDisplayed(const occ::handle<PrsMgr_Presentabl
   const occ::handle<PrsMgr_Presentation> aPrs = Presentation(thePrsObj, theMode);
   return !aPrs.IsNull() && aPrs->IsDisplayed();
 }
-
-//=================================================================================================
 
 bool PrsMgr_PresentationManager::IsHighlighted(
   const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
@@ -306,8 +274,6 @@ bool PrsMgr_PresentationManager::IsHighlighted(
   return !aPrs.IsNull() && aPrs->IsHighlighted();
 }
 
-//=================================================================================================
-
 void PrsMgr_PresentationManager::Update(const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
                                         const int                                    theMode) const
 {
@@ -328,8 +294,6 @@ void PrsMgr_PresentationManager::Update(const occ::handle<PrsMgr_PresentableObje
   }
 }
 
-//=================================================================================================
-
 void PrsMgr_PresentationManager::BeginImmediateDraw()
 {
   if (++myImmediateModeOn > 1)
@@ -339,8 +303,6 @@ void PrsMgr_PresentationManager::BeginImmediateDraw()
 
   ClearImmediateDraw();
 }
-
-//=================================================================================================
 
 void PrsMgr_PresentationManager::ClearImmediateDraw()
 {
@@ -363,11 +325,6 @@ void PrsMgr_PresentationManager::ClearImmediateDraw()
   myViewDependentImmediateList.Clear();
 }
 
-// =======================================================================
-// function : displayImmediate
-// purpose  : Handles the structures from myImmediateList and its visibility
-//            in all views of the viewer given by setting proper affinity
-// =======================================================================
 void PrsMgr_PresentationManager::displayImmediate(const occ::handle<V3d_Viewer>& theViewer)
 {
   for (NCollection_List<occ::handle<V3d_View>>::Iterator anActiveViewIter(
@@ -399,9 +356,7 @@ void PrsMgr_PresentationManager::displayImmediate(const occ::handle<V3d_Viewer>&
         aShadowPrs->Highlight(aPrs->HighlightStyle());
         myViewDependentImmediateList.Append(aShadowPrs);
       }
-      // handles custom highlight presentations which were defined in overridden
-      // HilightOwnerWithColor method of a custom AIS objects and maintain its
-      // visibility in different views on their own
+
       else if (aShadowPrs.IsNull())
       {
         aPrs->Display();
@@ -424,8 +379,6 @@ void PrsMgr_PresentationManager::displayImmediate(const occ::handle<V3d_Viewer>&
   }
 }
 
-//=================================================================================================
-
 void PrsMgr_PresentationManager::EndImmediateDraw(const occ::handle<V3d_Viewer>& theViewer)
 {
   if (--myImmediateModeOn > 0)
@@ -436,17 +389,11 @@ void PrsMgr_PresentationManager::EndImmediateDraw(const occ::handle<V3d_Viewer>&
   displayImmediate(theViewer);
 }
 
-// =======================================================================
-// function : RedrawImmediate
-// purpose  : Clears all immediate structures and redisplays with proper
-//            affinity
-//=======================================================================
 void PrsMgr_PresentationManager::RedrawImmediate(const occ::handle<V3d_Viewer>& theViewer)
 {
   if (myImmediateList.IsEmpty())
     return;
 
-  // Clear previously displayed structures
   for (NCollection_List<occ::handle<Prs3d_Presentation>>::Iterator anIter(myImmediateList);
        anIter.More();
        anIter.Next())
@@ -464,8 +411,6 @@ void PrsMgr_PresentationManager::RedrawImmediate(const occ::handle<V3d_Viewer>& 
 
   displayImmediate(theViewer);
 }
-
-//=================================================================================================
 
 void PrsMgr_PresentationManager::AddToImmediateList(const occ::handle<Prs3d_Presentation>& thePrs)
 {
@@ -486,8 +431,6 @@ void PrsMgr_PresentationManager::AddToImmediateList(const occ::handle<Prs3d_Pres
 
   myImmediateList.Append(thePrs);
 }
-
-//=================================================================================================
 
 bool PrsMgr_PresentationManager::HasPresentation(
   const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
@@ -511,8 +454,6 @@ bool PrsMgr_PresentationManager::HasPresentation(
   }
   return false;
 }
-
-//=================================================================================================
 
 occ::handle<PrsMgr_Presentation> PrsMgr_PresentationManager::Presentation(
   const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
@@ -546,12 +487,9 @@ occ::handle<PrsMgr_Presentation> PrsMgr_PresentationManager::Presentation(
   thePrsObj->Presentations().Append(aPrs);
   thePrsObj->Fill(this, aPrs, theMode);
 
-  // set layer index accordingly to object's presentations
   aPrs->SetUpdateStatus(false);
   return aPrs;
 }
-
-//=================================================================================================
 
 bool PrsMgr_PresentationManager::RemovePresentation(
   const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
@@ -572,8 +510,6 @@ bool PrsMgr_PresentationManager::RemovePresentation(
   }
   return false;
 }
-
-//=================================================================================================
 
 void PrsMgr_PresentationManager::SetZLayer(const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
                                            const Graphic3d_ZLayerId                     theLayerId)
@@ -597,15 +533,11 @@ void PrsMgr_PresentationManager::SetZLayer(const occ::handle<PrsMgr_PresentableO
   thePrsObj->SetZLayer(theLayerId);
 }
 
-//=================================================================================================
-
 Graphic3d_ZLayerId PrsMgr_PresentationManager::GetZLayer(
   const occ::handle<PrsMgr_PresentableObject>& thePrsObj) const
 {
   return thePrsObj->ZLayer();
 }
-
-//=================================================================================================
 
 void PrsMgr_PresentationManager::Connect(
   const occ::handle<PrsMgr_PresentableObject>& thePrsObject,
@@ -618,16 +550,12 @@ void PrsMgr_PresentationManager::Connect(
   aPrs->Connect(aPrsOther.get(), Graphic3d_TOC_DESCENDANT);
 }
 
-//=================================================================================================
-
 void PrsMgr_PresentationManager::Transform(const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
                                            const occ::handle<TopLoc_Datum3D>& theTransformation,
                                            const int                          theMode)
 {
   Presentation(thePrsObj, theMode)->SetTransformation(theTransformation);
 }
-
-//=================================================================================================
 
 void PrsMgr_PresentationManager::Color(const occ::handle<PrsMgr_PresentableObject>& thePrsObj,
                                        const occ::handle<Prs3d_Drawer>&             theStyle,
@@ -678,9 +606,7 @@ void PrsMgr_PresentationManager::Color(const occ::handle<PrsMgr_PresentableObjec
 
 namespace
 {
-  //! Internal function that scans thePrsList for shadow presentations
-  //! and applies transformation theTrsf to them in case if parent ID
-  //! of shadow presentation is equal to theRefId
+
   static void updatePrsTransformation(
     const NCollection_List<occ::handle<Prs3d_Presentation>>& thePrsList,
     const int                                                theRefId,
@@ -703,8 +629,6 @@ namespace
     }
   }
 } // namespace
-
-//=================================================================================================
 
 void PrsMgr_PresentationManager::UpdateHighlightTrsf(
   const occ::handle<V3d_Viewer>&               theViewer,

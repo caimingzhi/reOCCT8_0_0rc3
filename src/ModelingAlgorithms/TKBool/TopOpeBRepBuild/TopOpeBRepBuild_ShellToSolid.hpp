@@ -8,7 +8,6 @@
 class TopoDS_Shell;
 class TopoDS_Solid;
 
-//! This class builds solids from a set of shells SSh and a solid F.
 class TopOpeBRepBuild_ShellToSolid
 {
 public:

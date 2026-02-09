@@ -6,7 +6,6 @@
 
 class math_Matrix;
 
-//! Class for a function used to compute a ConstThroat chamfer on a surface's boundary
 class BlendFunc_ConstThroatInv : public BlendFunc_GenChamfInv
 {
 public:
@@ -18,16 +17,8 @@ public:
 
   Standard_EXPORT bool IsSolution(const math_Vector& Sol, const double Tol) override;
 
-  //! computes the values <F> of the Functions for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Value(const math_Vector& X, math_Vector& F) override;
 
-  //! returns the values <D> of the derivatives for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Derivatives(const math_Vector& X, math_Matrix& D) override;
 
   using Blend_FuncInv::Set;

@@ -65,20 +65,12 @@ static void ContourProperties(const TopoDS_Wire& wire, double& countourArea, dou
   countourLength = length;
 }
 
-//=================================================================================================
-
 ShapeAnalysis_FreeBoundsProperties::ShapeAnalysis_FreeBoundsProperties()
 {
   myClosedFreeBounds = new NCollection_HSequence<occ::handle<ShapeAnalysis_FreeBoundData>>();
   myOpenFreeBounds   = new NCollection_HSequence<occ::handle<ShapeAnalysis_FreeBoundData>>();
   myTolerance        = 0.;
 }
-
-//=======================================================================
-// function : ShapeAnalysis_FreeBoundsProperties
-// purpose  : Creates the object and calls corresponding Init.
-//    	     <shape> should be a compound of faces.
-//=======================================================================
 
 ShapeAnalysis_FreeBoundsProperties::ShapeAnalysis_FreeBoundsProperties(const TopoDS_Shape& shape,
                                                                        const double tolerance,
@@ -90,12 +82,6 @@ ShapeAnalysis_FreeBoundsProperties::ShapeAnalysis_FreeBoundsProperties(const Top
   Init(shape, tolerance, splitclosed, splitopen);
 }
 
-//=======================================================================
-// function : ShapeAnalysis_FreeBoundsProperties
-// purpose  : Creates the object and calls corresponding Init.
-//    	     <shape> should be a compound of shells.
-//=======================================================================
-
 ShapeAnalysis_FreeBoundsProperties::ShapeAnalysis_FreeBoundsProperties(const TopoDS_Shape& shape,
                                                                        const bool splitclosed,
                                                                        const bool splitopen)
@@ -106,12 +92,6 @@ ShapeAnalysis_FreeBoundsProperties::ShapeAnalysis_FreeBoundsProperties(const Top
   Init(shape, splitclosed, splitopen);
 }
 
-//=======================================================================
-// function : Init
-// purpose  : Initializes the object with given parameters.
-//   	     <shape> should be a compound of faces.
-//=======================================================================
-
 void ShapeAnalysis_FreeBoundsProperties::Init(const TopoDS_Shape& shape,
                                               const double        tolerance,
                                               const bool          splitclosed,
@@ -120,12 +100,6 @@ void ShapeAnalysis_FreeBoundsProperties::Init(const TopoDS_Shape& shape,
   Init(shape, splitclosed, splitopen);
   myTolerance = tolerance;
 }
-
-//=======================================================================
-// function : Init
-// purpose  : Initializes the object with given parameters.
-//   	     <shape> should be a compound of shells.
-//=======================================================================
 
 void ShapeAnalysis_FreeBoundsProperties::Init(const TopoDS_Shape& shape,
                                               const bool          splitclosed,
@@ -136,22 +110,6 @@ void ShapeAnalysis_FreeBoundsProperties::Init(const TopoDS_Shape& shape,
   mySplitOpen   = splitopen;
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Builds and analyzes free bounds of the shape.
-//           First calls ShapeAnalysis_FreeBounds for building free
-//           bounds.
-//           Then on each free bound computes its properties:
-//           - area of the contour,
-//           - perimeter of the contour,
-//           - ratio of average length to average width of the contour,
-//           - average width of contour,
-//           - notches on the contour and for each notch
-//            - maximum width of the notch.
-// returns:   True  - if no fails and free bounds are found,
-//           False - if fail or no free bounds are found
-//=======================================================================
-
 bool ShapeAnalysis_FreeBoundsProperties::Perform()
 {
   bool result = false;
@@ -160,8 +118,6 @@ bool ShapeAnalysis_FreeBoundsProperties::Perform()
   result |= CheckContours();
   return result;
 }
-
-//=================================================================================================
 
 bool ShapeAnalysis_FreeBoundsProperties::DispatchBounds()
 {
@@ -185,7 +141,7 @@ bool ShapeAnalysis_FreeBoundsProperties::DispatchBounds()
   ShapeExtend_Explorer                             shexpl;
   occ::handle<NCollection_HSequence<TopoDS_Shape>> tmpSeq =
     shexpl.SeqFromCompound(tmpClosedBounds, false);
-  int i; // svv Jan11 2000 : porting on DEC
+  int i;
   for (i = 1; i <= tmpSeq->Length(); i++)
   {
     TopoDS_Wire                              wire   = TopoDS::Wire(tmpSeq->Value(i));
@@ -207,11 +163,9 @@ bool ShapeAnalysis_FreeBoundsProperties::DispatchBounds()
   return true;
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_FreeBoundsProperties::CheckNotches(const double prec)
 {
-  int i; // svv Jan11 2000 : porting on DEC
+  int i;
   for (i = 1; i <= myClosedFreeBounds->Length(); i++)
   {
     occ::handle<ShapeAnalysis_FreeBoundData> fbData = myClosedFreeBounds->Value(i);
@@ -225,8 +179,6 @@ bool ShapeAnalysis_FreeBoundsProperties::CheckNotches(const double prec)
 
   return true;
 }
-
-//=================================================================================================
 
 bool ShapeAnalysis_FreeBoundsProperties::CheckNotches(
   occ::handle<ShapeAnalysis_FreeBoundData>& fbData,
@@ -245,12 +197,10 @@ bool ShapeAnalysis_FreeBoundsProperties::CheckNotches(
   return true;
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_FreeBoundsProperties::CheckContours(const double prec)
 {
   bool status = false;
-  int  i; // svv Jan11 2000 : porting on DEC
+  int  i;
   for (i = 1; i <= myClosedFreeBounds->Length(); i++)
   {
     occ::handle<ShapeAnalysis_FreeBoundData> fbData = myClosedFreeBounds->Value(i);
@@ -265,13 +215,11 @@ bool ShapeAnalysis_FreeBoundsProperties::CheckContours(const double prec)
   return status;
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_FreeBoundsProperties::CheckNotches(const TopoDS_Wire& wire,
                                                       const int          num,
                                                       TopoDS_Wire&       notch,
                                                       double&            distMax,
-                                                      const double /*prec*/)
+                                                      const double)
 {
   double                            tol = std::max(myTolerance, Precision::Confusion());
   occ::handle<ShapeExtend_WireData> wdt = new ShapeExtend_WireData(wire);
@@ -302,7 +250,7 @@ bool ShapeAnalysis_FreeBoundsProperties::CheckNotches(const TopoDS_Wire& wire,
   double                  First1, Last1, First2, Last2;
   occ::handle<Geom_Curve> c3d1, c3d2;
   ShapeAnalysis_Edge      sae;
-  // szv#4:S4163:12Mar99 optimized
+
   if (!sae.Curve3d(E1, c3d1, First1, Last1) || !sae.Curve3d(E2, c3d2, First2, Last2))
     return false;
 
@@ -336,7 +284,6 @@ bool ShapeAnalysis_FreeBoundsProperties::CheckNotches(const TopoDS_Wire& wire,
         p2 = First2;
       }
 
-      // szv#4:S4163:12Mar99 warning
       GeomAPI_ProjectPointOnCurve ppc(pntCurr, c3d2, p1, p2);
       double                      newDist = (ppc.NbPoints() ? ppc.LowerDistance() : 0);
       if (newDist > distMax)
@@ -349,11 +296,9 @@ bool ShapeAnalysis_FreeBoundsProperties::CheckNotches(const TopoDS_Wire& wire,
   return false;
 }
 
-//=================================================================================================
-
 bool ShapeAnalysis_FreeBoundsProperties::FillProperties(
   occ::handle<ShapeAnalysis_FreeBoundData>& fbData,
-  const double /*prec*/)
+  const double)
 {
   double area, length;
   ContourProperties(fbData->FreeBound(), area, length);
@@ -362,11 +307,11 @@ bool ShapeAnalysis_FreeBoundsProperties::FillProperties(
   double aver = 0;
 
   if (length != 0.)
-  {                                      // szv#4:S4163:12Mar99 anti-exception
-    double k = area / (length * length); // szv#4:S4163:12Mar99
-    // szv#4:S4163:12Mar99 optimized
+  {
+    double k = area / (length * length);
+
     if (k != 0.)
-    { // szv#4:S4163:12Mar99 anti-exception
+    {
       double aux = 1. - 16. * k;
       if (aux >= 0.)
       {

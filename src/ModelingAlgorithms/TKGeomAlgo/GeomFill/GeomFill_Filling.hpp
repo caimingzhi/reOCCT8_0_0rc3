@@ -10,7 +10,6 @@
 #include <NCollection_HArray2.hpp>
 #include <Standard_Integer.hpp>
 
-//! Root class for Filling;
 class GeomFill_Filling
 {
 public:

@@ -28,8 +28,6 @@ public:
     const NCollection_Sequence<NCollection_Sequence<occ::handle<AdvApp2Var_Iso>>>& UFrontier,
     const NCollection_Sequence<NCollection_Sequence<occ::handle<AdvApp2Var_Iso>>>& VFrontier);
 
-  //! search the Index of the first Iso not approximated,
-  //! if all Isos are approximated NULL is returned.
   Standard_EXPORT occ::handle<AdvApp2Var_Iso> FirstNotApprox(int& IndexIso, int& IndexStrip) const;
 
   Standard_EXPORT int FirstNode(const GeomAbs_IsoType Type,

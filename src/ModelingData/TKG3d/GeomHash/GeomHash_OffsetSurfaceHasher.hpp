@@ -5,11 +5,9 @@
 #include <GeomHash_SurfaceHasher.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom_OffsetSurface.
-//! Used for geometry deduplication.
 struct GeomHash_OffsetSurfaceHasher
 {
-  // Hashes the offset surface by its offset distance and basis surface.
+
   std::size_t operator()(const occ::handle<Geom_OffsetSurface>& theSurface) const noexcept
   {
     constexpr double aTolerance = 1e-12;
@@ -22,7 +20,6 @@ struct GeomHash_OffsetSurfaceHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two offset surfaces by their offset distances and basis surfaces.
   bool operator()(const occ::handle<Geom_OffsetSurface>& theSurface1,
                   const occ::handle<Geom_OffsetSurface>& theSurface2) const noexcept
   {

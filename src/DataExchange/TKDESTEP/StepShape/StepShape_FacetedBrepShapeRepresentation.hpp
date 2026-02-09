@@ -9,7 +9,6 @@ class StepShape_FacetedBrepShapeRepresentation : public StepShape_ShapeRepresent
 {
 
 public:
-  //! Returns a FacetedBrepShapeRepresentation
   Standard_EXPORT StepShape_FacetedBrepShapeRepresentation();
 
   DEFINE_STANDARD_RTTIEXT(StepShape_FacetedBrepShapeRepresentation, StepShape_ShapeRepresentation)

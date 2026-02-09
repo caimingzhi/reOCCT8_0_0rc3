@@ -28,8 +28,6 @@
 #include <GeomAPI_ProjectPointOnSurf.hpp>
 #include <Message.hpp>
 
-//=================================================================================================
-
 static void suppressarg(int& na, const char** a, const int d)
 {
   for (int i = d; i < na; i++)
@@ -39,10 +37,6 @@ static void suppressarg(int& na, const char** a, const int d)
   }
   na--;
 }
-
-//=======================================================================
-// mkface
-//=======================================================================
 
 static int mkface(Draw_Interpretor&, int n, const char** a)
 {
@@ -105,10 +99,6 @@ static int mkface(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// quilt
-//=======================================================================
-
 static int quilt(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4)
@@ -163,10 +153,6 @@ static int quilt(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// mksurface
-//=======================================================================
-
 static int mksurface(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 3)
@@ -181,10 +167,6 @@ static int mksurface(Draw_Interpretor&, int n, const char** a)
   DrawTrSurf::Set(a[1], C->Transformed(L.Transformation()));
   return 0;
 }
-
-//=======================================================================
-// mkplane
-//=======================================================================
 
 static int mkplane(Draw_Interpretor& theDI, int n, const char** a)
 {
@@ -228,9 +210,6 @@ static int mkplane(Draw_Interpretor& theDI, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// pcurve
-//=======================================================================
 Standard_IMPORT Draw_Color DrawTrSurf_CurveColor(const Draw_Color col);
 Standard_IMPORT void       DBRep_WriteColorOrientation();
 Standard_IMPORT Draw_Color DBRep_ColorOrientation(const TopAbs_Orientation Or);
@@ -249,7 +228,7 @@ static int pcurve(Draw_Interpretor&, int n, const char** a)
 
   if (n == 2)
   {
-    // pcurves of a face
+
     TopoDS_Shape S = DBRep::Get(a[1], TopAbs_FACE);
     if (S.IsNull())
       return 1;
@@ -337,10 +316,6 @@ static int pcurve(Draw_Interpretor&, int n, const char** a)
 
   return 0;
 }
-
-//=======================================================================
-// sewing
-//=======================================================================
 
 static int sewing(Draw_Interpretor& theDi, int theArgc, const char** theArgv)
 {
@@ -493,13 +468,11 @@ static int sewing(Draw_Interpretor& theDi, int theArgc, const char** theArgv)
   return 0;
 }
 
-//=================================================================================================
-
 int fastsewing(Draw_Interpretor& theDI, int theNArg, const char** theArgVal)
 {
   if (theNArg < 3)
   {
-    //                0         1       2     3         4
+
     theDI << "Use: fastsewing result [-tol <value>] <list_of_faces>\n";
     return 1;
   }
@@ -549,10 +522,6 @@ int fastsewing(Draw_Interpretor& theDI, int theNArg, const char** theArgVal)
   return 0;
 }
 
-//=======================================================================
-// continuity
-//=======================================================================
-
 static int continuity(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 2)
@@ -584,9 +553,6 @@ static int continuity(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// encoderegularity
-//=======================================================================
 static int encoderegularity(Draw_Interpretor&, int n, const char** a)
 
 {
@@ -655,10 +621,8 @@ static int getedgeregul(Draw_Interpretor& di, int argc, const char** argv)
   };
 
   di << aStrReg.ToCString() << "\n";
-  return 0; // Done
+  return 0;
 }
-
-//=================================================================================================
 
 static int projponf(Draw_Interpretor& di, int n, const char** a)
 {
@@ -669,31 +633,28 @@ static int projponf(Draw_Interpretor& di, int n, const char** a)
           "-g(grad)/-t(tree)]\n";
     return 1;
   }
-  // get face
+
   TopoDS_Shape aS = DBRep::Get(a[1]);
   if (aS.IsNull())
   {
     di << "the face is a null shape\n";
     return 0;
   }
-  //
+
   if (aS.ShapeType() != TopAbs_FACE)
   {
     di << "not a face\n";
     return 0;
   }
-  //
+
   const TopoDS_Face& aFace = *(TopoDS_Face*)&aS;
-  //
-  // get point
+
   gp_Pnt aP;
   DrawTrSurf::GetPoint(a[2], aP);
-  //
-  // get projection options
-  // default values;
+
   Extrema_ExtAlgo anExtAlgo = Extrema_ExtAlgo_Grad;
   Extrema_ExtFlag anExtFlag = Extrema_ExtFlag_MINMAX;
-  //
+
   for (int i = 3; i < n; ++i)
   {
     if (!strcasecmp(a[i], "-min"))
@@ -717,39 +678,35 @@ static int projponf(Draw_Interpretor& di, int n, const char** a)
       anExtAlgo = Extrema_ExtAlgo_Grad;
     }
   }
-  //
-  // get surface
+
   TopLoc_Location                  aLoc;
   const occ::handle<Geom_Surface>& aSurf = BRep_Tool::Surface(aFace, aLoc);
-  // move point to surface location
+
   aP.Transform(aLoc.Transformation().Inverted());
-  //
-  // get bounds of the surface
+
   double aUMin, aUMax, aVMin, aVMax;
   aSurf->Bounds(aUMin, aUMax, aVMin, aVMax);
-  //
-  // initialize projector
+
   GeomAPI_ProjectPointOnSurf aProjPS;
   aProjPS.Init(aSurf, aUMin, aUMax, aVMin, aVMax);
-  // set the options
+
   aProjPS.SetExtremaAlgo(anExtAlgo);
   aProjPS.SetExtremaFlag(anExtFlag);
-  // perform projection
+
   aProjPS.Perform(aP);
-  //
+
   if (aProjPS.NbPoints())
   {
-    // lower distance
+
     double aDist = aProjPS.LowerDistance();
-    // lower distance parameters
+
     double U, V;
     aProjPS.LowerDistanceParameters(U, V);
-    // nearest point
+
     gp_Pnt aPProj = aProjPS.NearestPoint();
-    // translate projection point to face location
+
     aPProj.Transform(aLoc.Transformation());
-    //
-    // print the projection values
+
     di << "proj dist = " << aDist << "\n";
     di << "uvproj = " << U << " " << V << "\n";
     di << "pproj = " << aPProj.X() << " " << aPProj.Y() << " " << aPProj.Z() << "\n";
@@ -767,8 +724,6 @@ static int projponf(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 void BRepTest::SurfaceCommands(Draw_Interpretor& theCommands)
 {

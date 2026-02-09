@@ -4,16 +4,14 @@
 
 namespace
 {
-  // Maximum number of QR iterations before convergence failure
+
   const int MAX_ITERATIONS = 30;
 
-  // Computes sqrt(x*x + y*y) avoiding overflow and underflow
   double computeHypotenuseLength(const double theX, const double theY)
   {
     return std::sqrt(theX * theX + theY * theY);
   }
 
-  // Shifts subdiagonal elements for QL algorithm initialization
   void shiftSubdiagonalElements(NCollection_Array1<double>& theSubdiagWork, const int theSize)
   {
     for (int anIdx = 2; anIdx <= theSize; anIdx++)
@@ -21,7 +19,6 @@ namespace
     theSubdiagWork(theSize) = 0.0;
   }
 
-  // Finds the end of the current unreduced submatrix using deflation
   int findSubmatrixEnd(const NCollection_Array1<double>& theDiagWork,
                        const NCollection_Array1<double>& theSubdiagWork,
                        const int                         theStart,
@@ -33,20 +30,12 @@ namespace
       const double aDiagSum =
         std::abs(theDiagWork(aSubmatrixEnd)) + std::abs(theDiagWork(aSubmatrixEnd + 1));
 
-      // Deflation test: Check if subdiagonal element is negligible
-      // The condition |e[i]| + (|d[i]| + |d[i+1]|) == |d[i]| + |d[i+1]|
-      // tests whether the subdiagonal element e[i] is smaller than machine epsilon
-      // relative to the adjacent diagonal elements. This is more robust than
-      // checking e[i] == 0.0 because it accounts for finite precision arithmetic.
-      // When this condition is true in floating-point arithmetic, the subdiagonal
-      // element can be treated as zero for convergence purposes.
       if (std::abs(theSubdiagWork(aSubmatrixEnd)) + aDiagSum == aDiagSum)
         break;
     }
     return aSubmatrixEnd;
   }
 
-  // Computes Wilkinson's shift for accelerated convergence
   double computeWilkinsonShift(const NCollection_Array1<double>& theDiagWork,
                                const NCollection_Array1<double>& theSubdiagWork,
                                const int                         theStart,
@@ -66,7 +55,6 @@ namespace
     return aShift;
   }
 
-  // Performs a single QL step with implicit shift
   bool performQLStep(NCollection_Array1<double>& theDiagWork,
                      NCollection_Array1<double>& theSubdiagWork,
                      NCollection_Array2<double>& theEigenVecWork,
@@ -105,7 +93,6 @@ namespace
       theDiagWork(aRowIdx + 1) = aShift + aPrevDiag;
       aShift                   = aCosine * aRadiusTemp - aSubdiagTemp;
 
-      // Update eigenvector matrix
       for (int aVecIdx = 1; aVecIdx <= theSize; aVecIdx++)
       {
         const double aTempVec = theEigenVecWork(aVecIdx, aRowIdx + 1);
@@ -116,7 +103,6 @@ namespace
       }
     }
 
-    // Handle special case and update final elements
     if (aRadius == 0.0 && aRowIdx >= 1)
       return true;
 
@@ -127,7 +113,6 @@ namespace
     return true;
   }
 
-  // Performs the complete QL algorithm iteration
   bool performQLAlgorithm(NCollection_Array1<double>& theDiagWork,
                           NCollection_Array1<double>& theSubdiagWork,
                           NCollection_Array2<double>& theEigenVecWork,
@@ -165,9 +150,7 @@ namespace
     return true;
   }
 
-} // anonymous namespace
-
-//=======================================================================
+} // namespace
 
 math_EigenValuesSearcher::math_EigenValuesSearcher(const NCollection_Array1<double>& theDiagonal,
                                                    const NCollection_Array1<double>& theSubdiagonal)
@@ -183,14 +166,11 @@ math_EigenValuesSearcher::math_EigenValuesSearcher(const NCollection_Array1<doub
     return;
   }
 
-  // Move lower bounds to 1 for consistent indexing
   myDiagonal.UpdateLowerBound(1);
   mySubdiagonal.UpdateLowerBound(1);
 
-  // Use internal arrays directly as working arrays
   shiftSubdiagonalElements(mySubdiagonal, myN);
 
-  // Initialize eigenvector matrix as identity matrix
   for (int aRowIdx = 1; aRowIdx <= myN; aRowIdx++)
     for (int aColIdx = 1; aColIdx <= myN; aColIdx++)
       myEigenVectors(aRowIdx, aColIdx) = (aRowIdx == aColIdx) ? 1.0 : 0.0;
@@ -202,7 +182,6 @@ math_EigenValuesSearcher::math_EigenValuesSearcher(const NCollection_Array1<doub
     isConverged = performQLAlgorithm(myDiagonal, mySubdiagonal, myEigenVectors, myN);
   }
 
-  // Store results directly in myEigenValues (myDiagonal contains eigenvalues after QL algorithm)
   if (isConverged)
   {
     for (int anIdx = 1; anIdx <= myN; anIdx++)
@@ -212,28 +191,20 @@ math_EigenValuesSearcher::math_EigenValuesSearcher(const NCollection_Array1<doub
   myIsDone = isConverged;
 }
 
-//=======================================================================
-
 bool math_EigenValuesSearcher::IsDone() const
 {
   return myIsDone;
 }
-
-//=======================================================================
 
 int math_EigenValuesSearcher::Dimension() const
 {
   return myN;
 }
 
-//=======================================================================
-
 double math_EigenValuesSearcher::EigenValue(const int theIndex) const
 {
   return myEigenValues(theIndex);
 }
-
-//=======================================================================
 
 math_Vector math_EigenValuesSearcher::EigenVector(const int theIndex) const
 {

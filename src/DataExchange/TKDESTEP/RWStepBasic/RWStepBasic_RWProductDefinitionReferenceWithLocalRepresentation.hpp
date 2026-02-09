@@ -11,7 +11,6 @@ class StepBasic_ProductDefinitionReferenceWithLocalRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ProductDefinitionReferenceWithLocalRepresentation
 class RWStepBasic_RWProductDefinitionReferenceWithLocalRepresentation
 {
 public:

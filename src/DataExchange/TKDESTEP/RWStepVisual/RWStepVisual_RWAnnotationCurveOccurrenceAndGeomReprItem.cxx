@@ -5,12 +5,8 @@
 #include <StepData_StepWriter.hpp>
 #include <StepVisual_AnnotationCurveOccurrenceAndGeomReprItem.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWAnnotationCurveOccurrenceAndGeomReprItem::
   RWStepVisual_RWAnnotationCurveOccurrenceAndGeomReprItem() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWAnnotationCurveOccurrenceAndGeomReprItem::ReadStep(
   const occ::handle<StepData_StepReaderData>&                             data,
@@ -20,12 +16,12 @@ void RWStepVisual_RWAnnotationCurveOccurrenceAndGeomReprItem::ReadStep(
 {
   int num = 0;
   data->NamedForComplex("REPRESENTATION_ITEM", "RPRITM", num0, num, ach);
-  // Inherited field : name
+
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
   data->NamedForComplex("STYLED_ITEM", "STYITM", num0, num, ach);
-  // Inherited field : styles
+
   occ::handle<NCollection_HArray1<occ::handle<StepVisual_PresentationStyleAssignment>>> aStyles;
   occ::handle<StepVisual_PresentationStyleAssignment>                                   anEnt;
   int                                                                                   nsub;
@@ -45,15 +41,11 @@ void RWStepVisual_RWAnnotationCurveOccurrenceAndGeomReprItem::ReadStep(
     }
   }
 
-  // Inherited field : item
   occ::handle<Standard_Transient> aItem;
   data->ReadEntity(num, 2, "item", ach, STANDARD_TYPE(Standard_Transient), aItem);
 
-  // Initialization of the read entity
   ent->Init(aName, aStyles, aItem);
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWAnnotationCurveOccurrenceAndGeomReprItem::WriteStep(
   StepData_StepWriter&                                                    SW,
@@ -63,11 +55,11 @@ void RWStepVisual_RWAnnotationCurveOccurrenceAndGeomReprItem::WriteStep(
   SW.StartEntity("ANNOTATION_OCCURRENCE");
   SW.StartEntity("GEOMETRIC_REPRESENTATION_ITEM");
   SW.StartEntity("REPRESENTATION_ITEM");
-  // Inherited field : name
+
   SW.Send(ent->Name());
 
   SW.StartEntity("STYLED_ITEM");
-  // Inherited field : styles
+
   SW.OpenSub();
   for (int i = 1; i <= ent->NbStyles(); i++)
   {
@@ -75,11 +67,8 @@ void RWStepVisual_RWAnnotationCurveOccurrenceAndGeomReprItem::WriteStep(
   }
   SW.CloseSub();
 
-  // Inherited field : item
   SW.Send(ent->Item());
 }
-
-//=================================================================================================
 
 void RWStepVisual_RWAnnotationCurveOccurrenceAndGeomReprItem::Share(
   const occ::handle<StepVisual_AnnotationCurveOccurrenceAndGeomReprItem>& ent,

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRep_Builder.hpp>
 #include <BRep_GCurve.hpp>
@@ -41,11 +30,8 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeCustom_ConvertToRevolution, ShapeCustom_Modification)
 
-//=================================================================================================
-
 ShapeCustom_ConvertToRevolution::ShapeCustom_ConvertToRevolution() = default;
 
-// Analyze surface: is it to be converted?
 static bool IsToConvert(const occ::handle<Geom_Surface>& S, occ::handle<Geom_ElementarySurface>& ES)
 {
   ES = occ::down_cast<Geom_ElementarySurface>(S);
@@ -72,8 +58,6 @@ static bool IsToConvert(const occ::handle<Geom_Surface>& S, occ::handle<Geom_Ele
          || ES->IsKind(STANDARD_TYPE(Geom_ConicalSurface));
 }
 
-//=================================================================================================
-
 bool ShapeCustom_ConvertToRevolution::NewSurface(const TopoDS_Face&         F,
                                                  occ::handle<Geom_Surface>& S,
                                                  TopLoc_Location&           L,
@@ -87,24 +71,11 @@ bool ShapeCustom_ConvertToRevolution::NewSurface(const TopoDS_Face&         F,
   if (!IsToConvert(S, ES))
     return false;
 
-  // remove location if it contains inversion
-  /*
-    gp_Trsf t = L.Transformation();
-    gp_Mat m = t.VectorialPart();
-    bool neg = t.IsNegative();
-    bool det = ( m.Determinant() <0 ? true : false );
-    if ( neg != det ) {
-      ES = Handle(Geom_ElementarySurface)::DownCast ( ES->Transformed(t) );
-      L.Identity();
-    }
-  */
-
   gp_Ax3 Ax3 = ES->Position();
   gp_Pnt pos = Ax3.Location();
   gp_Dir dir = Ax3.Direction();
   gp_Dir X   = Ax3.XDirection();
 
-  // create basis line to rotate
   occ::handle<Geom_Curve> BasisCurve;
   if (ES->IsKind(STANDARD_TYPE(Geom_SphericalSurface)))
   {
@@ -133,25 +104,13 @@ bool ShapeCustom_ConvertToRevolution::NewSurface(const TopoDS_Face&         F,
     BasisCurve = new Geom_Line(Ax1);
   }
 
-  // create revolution with proper U parametrization
   gp_Ax1 Axis = Ax3.Axis();
 
-  // if the surface is indirect (taking into account locations), reverse dir
-
-  /*
-    gp_Trsf t = L.Transformation();
-    gp_Mat m = t.VectorialPart();
-    bool neg = t.IsNegative();
-    bool det = ( m.Determinant() <0 ? true : false );
-    bool isdir = Ax3.Direct();
-    if ( ( neg != det ) == isdir ) Axis.Reverse();
-  */
   if (!Ax3.Direct())
     Axis.Reverse();
 
   occ::handle<Geom_SurfaceOfRevolution> Rev = new Geom_SurfaceOfRevolution(BasisCurve, Axis);
 
-  // set resulting surface and restore trimming or offsetting if necessary
   if (ES == S)
     S = Rev;
   else
@@ -180,17 +139,14 @@ bool ShapeCustom_ConvertToRevolution::NewSurface(const TopoDS_Face&         F,
   return true;
 }
 
-//=================================================================================================
-
 bool ShapeCustom_ConvertToRevolution::NewCurve(const TopoDS_Edge&       E,
                                                occ::handle<Geom_Curve>& C,
                                                TopLoc_Location&         L,
                                                double&                  Tol)
 {
-  //: p5 abv 26 Feb 99: force copying of edge if any its pcurve will be replaced
+
   occ::handle<BRep_TEdge>& TE = *((occ::handle<BRep_TEdge>*)&E.TShape());
 
-  // iterate on pcurves
   NCollection_List<occ::handle<BRep_CurveRepresentation>>::Iterator itcr(TE->Curves());
   for (; itcr.More(); itcr.Next())
   {
@@ -211,22 +167,16 @@ bool ShapeCustom_ConvertToRevolution::NewCurve(const TopoDS_Edge&       E,
   return false;
 }
 
-//=================================================================================================
-
-bool ShapeCustom_ConvertToRevolution::NewPoint(const TopoDS_Vertex& /*V*/,
-                                               gp_Pnt& /*P*/,
-                                               double& /*Tol*/)
+bool ShapeCustom_ConvertToRevolution::NewPoint(const TopoDS_Vertex&, gp_Pnt&, double&)
 {
-  // 3d points are never modified
+
   return false;
 }
-
-//=================================================================================================
 
 bool ShapeCustom_ConvertToRevolution::NewCurve2d(const TopoDS_Edge& E,
                                                  const TopoDS_Face& F,
                                                  const TopoDS_Edge& NewE,
-                                                 const TopoDS_Face& /*NewF*/,
+                                                 const TopoDS_Face&,
                                                  occ::handle<Geom2d_Curve>& C,
                                                  double&                    Tol)
 {
@@ -234,7 +184,6 @@ bool ShapeCustom_ConvertToRevolution::NewCurve2d(const TopoDS_Edge& E,
   occ::handle<Geom_Surface>           S = BRep_Tool::Surface(F, L);
   occ::handle<Geom_ElementarySurface> ES;
 
-  // just copy pcurve if either its surface is changing or edge was copied
   if (!IsToConvert(S, ES) && E.IsSame(NewE))
     return false;
 
@@ -244,8 +193,6 @@ bool ShapeCustom_ConvertToRevolution::NewCurve2d(const TopoDS_Edge& E,
   {
     C = occ::down_cast<Geom2d_Curve>(C->Copy());
 
-    // for spherical surface, surface of revolution since based on TrimmedCurve
-    // has V parametrisation shifted on 2PI; translate pcurve accordingly
     if (!ES.IsNull() && ES->IsKind(STANDARD_TYPE(Geom_SphericalSurface)))
     {
       gp_Vec2d shift(0., 2 * M_PI);
@@ -257,24 +204,20 @@ bool ShapeCustom_ConvertToRevolution::NewCurve2d(const TopoDS_Edge& E,
   return true;
 }
 
-//=================================================================================================
-
-bool ShapeCustom_ConvertToRevolution::NewParameter(const TopoDS_Vertex& /*V*/,
-                                                   const TopoDS_Edge& /*E*/,
-                                                   double& /*P*/,
-                                                   double& /*Tol*/)
+bool ShapeCustom_ConvertToRevolution::NewParameter(const TopoDS_Vertex&,
+                                                   const TopoDS_Edge&,
+                                                   double&,
+                                                   double&)
 {
   return false;
 }
 
-//=================================================================================================
-
 GeomAbs_Shape ShapeCustom_ConvertToRevolution::Continuity(const TopoDS_Edge& E,
                                                           const TopoDS_Face& F1,
                                                           const TopoDS_Face& F2,
-                                                          const TopoDS_Edge& /*NewE*/,
-                                                          const TopoDS_Face& /*NewF1*/,
-                                                          const TopoDS_Face& /*NewF2*/)
+                                                          const TopoDS_Edge&,
+                                                          const TopoDS_Face&,
+                                                          const TopoDS_Face&)
 {
   return BRep_Tool::Continuity(E, F1, F2);
 }

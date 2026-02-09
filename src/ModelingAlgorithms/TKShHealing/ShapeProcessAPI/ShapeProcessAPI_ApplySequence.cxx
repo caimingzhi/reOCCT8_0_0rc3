@@ -8,8 +8,6 @@
 #include <TCollection_AsciiString.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 ShapeProcessAPI_ApplySequence::ShapeProcessAPI_ApplySequence(const char* rscName,
                                                              const char* seqName)
 {
@@ -18,24 +16,19 @@ ShapeProcessAPI_ApplySequence::ShapeProcessAPI_ApplySequence(const char* rscName
   myContext->SetDetalisation(TopAbs_FACE);
   TCollection_AsciiString str(seqName);
 
-  // initialize operators
   ShapeProcess_OperLibrary::Init();
 
   mySeq = str;
 }
-
-//=================================================================================================
 
 occ::handle<ShapeProcess_ShapeContext>& ShapeProcessAPI_ApplySequence::Context()
 {
   return myContext;
 }
 
-//=================================================================================================
-
 TopoDS_Shape ShapeProcessAPI_ApplySequence::PrepareShape(const TopoDS_Shape& shape,
-                                                         const bool /*fillmap*/,
-                                                         const TopAbs_ShapeEnum /*until*/,
+                                                         const bool,
+                                                         const TopAbs_ShapeEnum,
                                                          const Message_ProgressRange& theProgress)
 {
   if (shape.IsNull())
@@ -53,22 +46,13 @@ TopoDS_Shape ShapeProcessAPI_ApplySequence::PrepareShape(const TopoDS_Shape& sha
   return myContext->Result();
 }
 
-//=================================================================================================
-
-void ShapeProcessAPI_ApplySequence::ClearMap()
-{
-  // myContext->Map().Clear();
-}
-
-//=================================================================================================
+void ShapeProcessAPI_ApplySequence::ClearMap() {}
 
 const NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&
   ShapeProcessAPI_ApplySequence::Map() const
 {
   return myContext->Map();
 }
-
-//=================================================================================================
 
 void ShapeProcessAPI_ApplySequence::PrintPreparationResult() const
 {
@@ -99,15 +83,14 @@ void ShapeProcessAPI_ApplySequence::PrintPreparationResult() const
 
   occ::handle<Message_Messenger> aMessenger = myContext->Messenger();
 
-  // mapping
-  Message_Msg EPMSG100("PrResult.Print.MSG100"); // Mapping:
+  Message_Msg EPMSG100("PrResult.Print.MSG100");
   aMessenger->Send(EPMSG100, Message_Info);
-  Message_Msg TPMSG50("PrResult.Print.MSG50"); //  Shells:
+  Message_Msg TPMSG50("PrResult.Print.MSG50");
   aMessenger->Send(TPMSG50, Message_Info);
-  Message_Msg EPMSG110("PrResult.Print.MSG110"); //    Result is Shell                 : %d
+  Message_Msg EPMSG110("PrResult.Print.MSG110");
   EPMSG110.Arg(SS);
   aMessenger->Send(EPMSG110, Message_Info);
-  Message_Msg EPMSG150("PrResult.Print.MSG150"); //    No Result                       : %d
+  Message_Msg EPMSG150("PrResult.Print.MSG150");
   EPMSG150.Arg(SN);
   aMessenger->Send(EPMSG150, Message_Info);
 
@@ -115,9 +98,9 @@ void ShapeProcessAPI_ApplySequence::PrintPreparationResult() const
   EPMSG110.Set(tmp110.ToCString());
   EPMSG150.Set(tmp150.ToCString());
 
-  Message_Msg TPMSG55("PrResult.Print.MSG55"); //  Faces:
+  Message_Msg TPMSG55("PrResult.Print.MSG55");
   aMessenger->Send(TPMSG55, Message_Info);
-  Message_Msg EPMSG115("PrResult.Print.MSG115"); //    Result is Face                  : %d
+  Message_Msg EPMSG115("PrResult.Print.MSG115");
   EPMSG115.Arg(FF);
   aMessenger->Send(EPMSG115, Message_Info);
   EPMSG110.Arg(FS);
@@ -125,7 +108,6 @@ void ShapeProcessAPI_ApplySequence::PrintPreparationResult() const
   EPMSG150.Arg(FN);
   aMessenger->Send(EPMSG150, Message_Info);
 
-  // preparation ratio
   double SPR = 1, FPR = 1;
   int    STotalR = SS, FTotalR = FF + FS;
   int    NbS = STotalR + SN, NbF = FTotalR + FN;
@@ -133,12 +115,12 @@ void ShapeProcessAPI_ApplySequence::PrintPreparationResult() const
     SPR = 1. * (NbS - SN) / NbS;
   if (NbF > 0)
     FPR = 1. * (NbF - FN) / NbF;
-  Message_Msg PMSG200("PrResult.Print.MSG200"); // Preparation ratio:
+  Message_Msg PMSG200("PrResult.Print.MSG200");
   aMessenger->Send(PMSG200, Message_Info);
-  Message_Msg PMSG205("PrResult.Print.MSG205"); //  Shells: %d per cent
+  Message_Msg PMSG205("PrResult.Print.MSG205");
   PMSG205.Arg((int)(100 * SPR));
   aMessenger->Send(PMSG205, Message_Info);
-  Message_Msg PMSG210("PrResult.Print.MSG210"); //  Faces : %d per cent
+  Message_Msg PMSG210("PrResult.Print.MSG210");
   PMSG210.Arg((int)(100 * FPR));
   aMessenger->Send(PMSG210, Message_Info);
 }

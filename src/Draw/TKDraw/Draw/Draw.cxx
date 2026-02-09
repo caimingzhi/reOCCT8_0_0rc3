@@ -61,12 +61,6 @@ static occ::handle<Draw_ProgressIndicator> global_Progress = nullptr;
 
 Standard_EXPORT bool Draw_Interprete(const char* command);
 
-// true if complete command
-
-// *******************************************************************
-// read an init file
-// *******************************************************************
-
 static void interpreteTclCommand(const TCollection_AsciiString& theCmd)
 {
 #ifdef _WIN32
@@ -111,7 +105,6 @@ static void ReadInitFile(const TCollection_AsciiString& theFileName)
   interpreteTclCommand(aCmd);
 }
 
-//! Define environment variable available from Tcl and OCCT.
 static void setOcctTclEnv(const TCollection_AsciiString& theName, TCollection_AsciiString& thePath)
 {
   if (thePath.IsEmpty())
@@ -128,26 +121,6 @@ static void setOcctTclEnv(const TCollection_AsciiString& theName, TCollection_As
   Tcl_PutEnv(aPutEnv.ToCString());
 }
 
-//! Look for resource within standard installation layouts relative to executable location.
-//!
-//! Bin (INSTALL_DIR_BIN):
-//!  - Windows: <prefix>/win64/vc10/bin(d)
-//!  - Unix:    <prefix>/bin
-//! Resources (INSTALL_DIR_RESOURCE):
-//!  - Windows: <prefix>/src
-//!  - Unix:    <prefix>/share/opencascade-7.0.0/resources
-//! Samples (INSTALL_DIR_SAMPLES):
-//!  - Windows: <prefix>/samples
-//!  - Unix:    <prefix>/share/opencascade-7.0.0/samples
-//! Tests (INSTALL_DIR_TESTS):
-//!  - Windows: <prefix>/tests
-//!  - Unix:    <prefix>/share/opencascade-7.0.0/tests
-//!
-//! @param theCasRoot  [out] found CASROOT location (e.g. installation folder)
-//! @param theResRoot  [out] found resources root location
-//! @param theResName   [in] resource to find ("resources", "samples", etc.)
-//! @param theProbeFile [in] file to probe within resources location (e.g.
-//! "DrawResources/DrawDefault" within "resources")
 static bool searchResources(TCollection_AsciiString&       theCasRoot,
                             TCollection_AsciiString&       theResRoot,
                             const TCollection_AsciiString& theResName,
@@ -180,21 +153,21 @@ static bool searchResources(TCollection_AsciiString&       theCasRoot,
       theResRoot = theCasRoot + aResLayout;
       return true;
     }
-    // <prefix>/bin(d)
+
     else if (OSD_File(anExeDir + "../" + aProbeFile).Exists())
     {
       theCasRoot = anExeDir + "..";
       theResRoot = theCasRoot + aResLayout;
       return true;
     }
-    // <prefix>/gcc/bin(d)
+
     else if (OSD_File(anExeDir + "../../" + aProbeFile).Exists())
     {
       theCasRoot = anExeDir + "../..";
       theResRoot = theCasRoot + aResLayout;
       return true;
     }
-    // <prefix>/win64/vc10/bin(d)
+
     else if (OSD_File(anExeDir + "../../../" + aProbeFile).Exists())
     {
       theCasRoot = anExeDir + "../../..";
@@ -209,17 +182,11 @@ static bool searchResources(TCollection_AsciiString&       theCasRoot,
   }
 }
 
-//=================================================================================================
-
 Draw_Interpretor& Draw::GetInterpretor()
 {
   return theCommands;
 }
 
-//=======================================================================
-// function :
-// purpose  : Set/Get Progress Indicator
-//=======================================================================
 void Draw::SetProgressBar(const occ::handle<Draw_ProgressIndicator>& theProgress)
 {
   global_Progress = theProgress;
@@ -231,10 +198,8 @@ occ::handle<Draw_ProgressIndicator> Draw::GetProgressBar()
 }
 
 #ifndef _WIN32
-/*--------------------------------------------------------*\
-|  exitProc: finalization handler for Tcl/Tk thread. Forces parent process to die
-\*--------------------------------------------------------*/
-void exitProc(ClientData /*dc*/)
+
+void exitProc(ClientData)
 {
   if (!Draw_Batch)
   {
@@ -244,9 +209,6 @@ void exitProc(ClientData /*dc*/)
 }
 #endif
 
-// *******************************************************************
-// main
-// *******************************************************************
 #ifdef _WIN32
 Standard_EXPORT void Draw_Appli(HINSTANCE             hInst,
                                 HINSTANCE             hPrevInst,
@@ -259,14 +221,12 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
 #endif
 {
 
-// prepend extra DLL search path to override system libraries like opengl32.dll
 #ifdef _WIN32
   OSD_Environment                  aUserDllEnv("CSF_UserDllPath");
   const TCollection_ExtendedString aUserDllPath(aUserDllEnv.Value());
   if (!aUserDllPath.IsEmpty())
   {
-    // This function available since Win XP SP1 #if (_WIN32_WINNT >= 0x0502).
-    // We retrieve dynamically here (kernel32 should be always preloaded).
+
     typedef BOOL(WINAPI * SetDllDirectoryW_t)(const wchar_t* thePathName);
     HMODULE            aKern32Module = GetModuleHandleW(L"kernel32");
     SetDllDirectoryW_t aFunc =
@@ -279,7 +239,6 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
     }
     else
     {
-      // std::cerr << "SetDllDirectoryW() is not available on this system!\n";
     }
     if (aKern32Module != NULL)
     {
@@ -288,14 +247,10 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
   }
 #endif
 
-  // *****************************************************************
-  // analyze arguments
-  // *****************************************************************
   Draw_Batch = false;
   TCollection_AsciiString aRunFile, aCommand;
   bool                    isInteractiveForced = false;
 
-  // parse command line
   for (int anArgIter = 1; anArgIter < argc; ++anArgIter)
   {
     TCollection_AsciiString anArg(argv[anArgIter]);
@@ -322,16 +277,16 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
     }
     else if (anArg == "-v")
     {
-      // force virtual windows
+
       Draw_VirtualWindows = true;
     }
     else if (anArg == "-i")
     {
-      // force interactive
+
       Draw_VirtualWindows = false;
       isInteractiveForced = true;
     }
-    else if (anArg == "-f") // -f option should be LAST!
+    else if (anArg == "-f")
     {
       Draw_VirtualWindows = !isInteractiveForced;
       if (++anArgIter < argc)
@@ -340,7 +295,7 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
       }
       break;
     }
-    else if (anArg == "-c") // -c option should be LAST!
+    else if (anArg == "-c")
     {
       Draw_VirtualWindows = !isInteractiveForced;
       if (++anArgIter < argc)
@@ -360,21 +315,14 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
     }
   }
 
-  // *****************************************************************
-  // set signals
-  // *****************************************************************
   OSD::SetSignal(false);
-  // OSD::SetSignalStackTraceLength (10);
 
 #ifdef _WIN32
-  // in interactive mode, force Windows to report dll loading problems interactively
+
   if (!Draw_VirtualWindows && !Draw_Batch)
     ::SetErrorMode(0);
 #endif
 
-  // *****************************************************************
-  // init X window and create display
-  // *****************************************************************
 #ifdef _WIN32
   HWND hWnd = NULL;
 #endif
@@ -394,7 +342,7 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
 
   if (!Draw_Batch)
   {
-    // Default colors
+
     for (int i = 0; i < MAXCOLOR; ++i)
     {
       if (!dout.DefineColor(i, ColorNames[i]))
@@ -404,14 +352,8 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
     }
   }
 
-  // *****************************************************************
-  // set maximum precision for cout
-  // *****************************************************************
   std::cout.precision(15);
 
-  // *****************************************************************
-  // standard commands
-  // *****************************************************************
   Draw::BasicCommands(theCommands);
   Draw::MessageCommands(theCommands);
   Draw::VariableCommands(theCommands);
@@ -419,19 +361,12 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
   if (!Draw_Batch)
     Draw::GraphicCommands(theCommands);
 
-  // *****************************************************************
-  // user commands
-  // *****************************************************************
   Draw_InitAppli(theCommands);
 
 #ifndef _WIN32
   Tcl_CreateExitHandler(exitProc, nullptr);
 #endif
 
-  // *****************************************************************
-  // read init files
-  // *****************************************************************
-  // default
   const TCollection_AsciiString aDrawDef(OSD_Environment("DRAWDEFAULT").Value());
   if (!aDrawDef.IsEmpty())
   {
@@ -447,7 +382,7 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
     }
     else
     {
-      // search for relative locations within standard development environment
+
       TCollection_AsciiString aResPath;
       if (searchResources(aCasRoot, aResPath, "resources", "DrawResources/DrawDefault"))
       {
@@ -481,16 +416,15 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
     }
   }
 
-  // read commands from file
   if (!aRunFile.IsEmpty())
   {
     if (!isInteractiveForced)
     {
-      // disable console messages colorization to avoid spoiling log with color codes
+
       theCommands.SetToColorize(false);
     }
     ReadInitFile(aRunFile);
-    // provide a clean exit, this is useful for some analysis tools
+
     if (!isInteractiveForced)
 #ifndef _WIN32
       return;
@@ -499,13 +433,12 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
 #endif
   }
 
-  // execute command from command line
   if (!aCommand.IsEmpty())
   {
 #ifdef _WIN32
     if (!Draw_Batch)
     {
-      // on Windows except batch mode, commands are executed in separate thread
+
       while (console_semaphore == HAS_CONSOLE_COMMAND)
         Sleep(10);
       TCollection_ExtendedString aCmdWide(aCommand);
@@ -516,8 +449,8 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
     }
     else
 #endif
-      Draw_Interprete(aCommand.ToCString()); // Linux and Windows batch mode
-    // provide a clean exit, this is useful for some analysis tools
+      Draw_Interprete(aCommand.ToCString());
+
     if (!isInteractiveForced)
 #ifndef _WIN32
       return;
@@ -526,9 +459,6 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
 #endif
   }
 
-  // *****************************************************************
-  // X loop
-  // *****************************************************************
   if (!Draw_Batch)
   {
 #ifdef _WIN32
@@ -552,13 +482,11 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
     }
   }
 #ifdef _WIN32
-  // Destruction de l'application
+
   Destroy_Appli(hInst);
 #endif
 }
-// #endif
 
-// User functions called before and after each command
 void (*Draw_BeforeCommand)()   = nullptr;
 void (*Draw_AfterCommand)(int) = nullptr;
 
@@ -575,10 +503,10 @@ bool Draw_Interprete(const char* com)
   }
 
 #ifdef _WIN32
-  // string is already converted into UTF-8
+
   Tcl_DStringAppend(&command, com, -1);
 #elif ((TCL_MAJOR_VERSION > 8) || ((TCL_MAJOR_VERSION == 8) && (TCL_MINOR_VERSION >= 1)))
-  // OCC63: Since Tcl 8.1 it uses UTF-8 encoding for internal representation of strings
+
   Tcl_ExternalToUtfDString(nullptr, com, -1, &command);
 #else
   Tcl_DStringAppend(&command, com, -1);
@@ -586,13 +514,6 @@ bool Draw_Interprete(const char* com)
 
   if (!Draw_Interpretor::Complete(Tcl_DStringValue(&command)))
     return false;
-
-  // *******************************************************************
-  // Command interpreter
-  // *******************************************************************
-
-  //  int i = 0;
-  //  int j = 0;
 
   bool wasspying = Draw_Spying;
 
@@ -645,18 +566,10 @@ bool Draw_Interprete(const char* com)
   return true;
 }
 
-//
-// for TCl
-//
-
 int Tcl_AppInit(Tcl_Interp*)
 {
   return 0;
 }
-
-//
-// for debug call
-//
 
 int Draw_Call(char* c)
 {
@@ -665,9 +578,6 @@ int Draw_Call(char* c)
   return r;
 }
 
-//=================================================================================
-//
-//=================================================================================
 void Draw::Load(Draw_Interpretor&              theDI,
                 const TCollection_AsciiString& theKey,
                 const TCollection_AsciiString& theResourceFileName,
@@ -727,8 +637,6 @@ void Draw::Load(Draw_Interpretor&              theDI,
     theMapOfFunctions.Bind(theKey, aFunc);
   }
 
-  // Cast through void* to avoid -Wcast-function-type-mismatch warning.
-  // This is safe for dynamically loaded plugin symbols.
   void (*fp)(Draw_Interpretor&) =
     reinterpret_cast<void (*)(Draw_Interpretor&)>(reinterpret_cast<void*>(aFunc));
   (*fp)(theDI);
@@ -739,11 +647,6 @@ namespace
   const int   THE_MAX_INTEGER_COLOR_COMPONENT = 255;
   const float THE_MAX_REAL_COLOR_COMPONENT    = 1.0f;
 
-  //! Parses string and get an integer color component (only values within range 0 .. 255 are
-  //! allowed)
-  //! @param theColorComponentString the string representing the color component
-  //! @param theIntegerColorComponent an integer color component that is a result of parsing
-  //! @return true if parsing was successful, or false otherwise
   static bool parseNumericalColorComponent(const char* theColorComponentString,
                                            int&        theIntegerColorComponent)
   {
@@ -761,11 +664,6 @@ namespace
     return true;
   }
 
-  //! Parses the string and gets a real color component from it (only values within range 0.0 .. 1.0
-  //! are allowed)
-  //! @param theColorComponentString the string representing the color component
-  //! @param theRealColorComponent a real color component that is a result of parsing
-  //! @return true if parsing was successful, or false otherwise
   static bool parseNumericalColorComponent(const char* theColorComponentString,
                                            float&      theRealColorComponent)
   {
@@ -784,11 +682,6 @@ namespace
     return true;
   }
 
-  //! Parses the string and gets a real color component from it (integer values 2 .. 255 are scaled
-  //! to the 0.0 .. 1.0 range, values 0 and 1 are leaved as they are)
-  //! @param theColorComponentString the string representing the color component
-  //! @param theColorComponent a color component that is a result of parsing
-  //! @return true if parsing was successful, or false otherwise
   static bool parseColorComponent(const char* theColorComponentString, float& theColorComponent)
   {
     int anIntegerColorComponent;
@@ -807,13 +700,6 @@ namespace
     return parseNumericalColorComponent(theColorComponentString, theColorComponent);
   }
 
-  //! Parses the array of strings and gets an integer color (only values within range 0 .. 255 are
-  //! allowed and at least one of components must be greater than 1)
-  //! @tparam TheNumber the type of resulting color vector elements
-  //! @param theNumberOfColorComponents the number of color components
-  //! @param theColorComponentStrings the array of strings representing color components
-  //! @param theNumericalColor a 4-component vector that is a result of parsing
-  //! @return true if parsing was successful, or false otherwise
   template <typename TheNumber>
   static bool parseNumericalColor(int&                         theNumberOfColorComponents,
                                   const char* const* const     theColorComponentStrings,
@@ -843,12 +729,6 @@ namespace
     return true;
   }
 
-  //! Parses an array of strings and get an integer color (only values within range 0 .. 255 are
-  //! allowed and at least one of components must be greater than 1)
-  //! @param theNumberOfColorComponents the number of color components
-  //! @param theColorComponentStrings the array of strings representing color components
-  //! @param theColor a color that is a result of parsing
-  //! @return true if parsing was successful, or false otherwise
   static bool parseIntegerColor(int&                     theNumberOfColorComponents,
                                 const char* const* const theColorComponentStrings,
                                 Quantity_ColorRGBA&      theColor)
@@ -871,12 +751,6 @@ namespace
     return true;
   }
 
-  //! Parses an array of strings and get a real color (only values within range 0.0 .. 1.0 are
-  //! allowed)
-  //! @param theNumberOfColorComponents the number of color components
-  //! @param theColorComponentStrings the array of strings representing color components
-  //! @param theColor a color that is a result of parsing
-  //! @return true if parsing was successful, or false otherwise
   static bool parseRealColor(int&                     theNumberOfColorComponents,
                              const char* const* const theColorComponentStrings,
                              Quantity_ColorRGBA&      theColor)
@@ -890,8 +764,6 @@ namespace
     return true;
   }
 } // namespace
-
-//=================================================================================================
 
 int Draw::parseColor(const int                theArgNb,
                      const char* const* const theArgVec,
@@ -934,8 +806,6 @@ int Draw::parseColor(const int                theArgNb,
   return 0;
 }
 
-//=================================================================================================
-
 bool Draw::ParseOnOff(const char* theArg, bool& theIsOn)
 {
   TCollection_AsciiString aFlag(theArg);
@@ -953,8 +823,6 @@ bool Draw::ParseOnOff(const char* theArg, bool& theIsOn)
   return false;
 }
 
-//=================================================================================================
-
 bool Draw::ParseOnOffIterator(int theArgsNb, const char** theArgVec, int& theArgIter)
 {
   bool isOn = true;
@@ -964,8 +832,6 @@ bool Draw::ParseOnOffIterator(int theArgsNb, const char** theArgVec, int& theArg
   }
   return isOn;
 }
-
-//=================================================================================================
 
 bool Draw::ParseOnOffNoIterator(int theArgsNb, const char** theArgVec, int& theArgIter)
 {

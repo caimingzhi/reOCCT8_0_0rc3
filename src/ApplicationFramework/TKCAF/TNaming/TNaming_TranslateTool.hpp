@@ -7,10 +7,6 @@
 #include <NCollection_IndexedDataMap.hpp>
 class TopoDS_Shape;
 
-//! tool to copy underlying TShape of a Shape.
-//! The TranslateTool class is provided to support the
-//! translation of topological data structures Transient
-//! to Transient.
 class TNaming_TranslateTool : public Standard_Transient
 {
 

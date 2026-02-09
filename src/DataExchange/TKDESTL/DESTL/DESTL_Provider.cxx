@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DESTL_Provider.hpp>
 
@@ -32,18 +21,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DESTL_Provider, DE_Provider)
 
-//=================================================================================================
-
 DESTL_Provider::DESTL_Provider() = default;
-
-//=================================================================================================
 
 DESTL_Provider::DESTL_Provider(const occ::handle<DE_ConfigurationNode>& theNode)
     : DE_Provider(theNode)
 {
 }
-
-//=================================================================================================
 
 bool DESTL_Provider::Read(const TCollection_AsciiString&       thePath,
                           const occ::handle<TDocStd_Document>& theDocument,
@@ -54,8 +37,6 @@ bool DESTL_Provider::Read(const TCollection_AsciiString&       thePath,
   return Read(thePath, theDocument, theProgress);
 }
 
-//=================================================================================================
-
 bool DESTL_Provider::Write(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
                            occ::handle<XSControl_WorkSession>&  theWS,
@@ -64,8 +45,6 @@ bool DESTL_Provider::Write(const TCollection_AsciiString&       thePath,
   (void)theWS;
   return Write(thePath, theDocument, theProgress);
 }
-
-//=================================================================================================
 
 bool DESTL_Provider::Read(const TCollection_AsciiString&       thePath,
                           const occ::handle<TDocStd_Document>& theDocument,
@@ -86,8 +65,6 @@ bool DESTL_Provider::Read(const TCollection_AsciiString&       thePath,
   return true;
 }
 
-//=================================================================================================
-
 bool DESTL_Provider::Write(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
                            const Message_ProgressRange&         theProgress)
@@ -98,7 +75,6 @@ bool DESTL_Provider::Write(const TCollection_AsciiString&       thePath,
     return false;
   }
 
-  // Extract shape from document
   NCollection_Sequence<TDF_Label> aLabels;
   occ::handle<XCAFDoc_ShapeTool>  aSTool = XCAFDoc_DocumentTool::ShapeTool(theDocument->Main());
   aSTool->GetFreeShapes(aLabels);
@@ -141,8 +117,6 @@ bool DESTL_Provider::Write(const TCollection_AsciiString&       thePath,
   return Write(thePath, aShape, theProgress);
 }
 
-//=================================================================================================
-
 bool DESTL_Provider::Read(const TCollection_AsciiString&      thePath,
                           TopoDS_Shape&                       theShape,
                           occ::handle<XSControl_WorkSession>& theWS,
@@ -152,8 +126,6 @@ bool DESTL_Provider::Read(const TCollection_AsciiString&      thePath,
   return Read(thePath, theShape, theProgress);
 }
 
-//=================================================================================================
-
 bool DESTL_Provider::Write(const TCollection_AsciiString&      thePath,
                            const TopoDS_Shape&                 theShape,
                            occ::handle<XSControl_WorkSession>& theWS,
@@ -162,8 +134,6 @@ bool DESTL_Provider::Write(const TCollection_AsciiString&      thePath,
   (void)theWS;
   return Write(thePath, theShape, theProgress);
 }
-
-//=================================================================================================
 
 bool DESTL_Provider::Read(const TCollection_AsciiString& thePath,
                           TopoDS_Shape&                  theShape,
@@ -218,8 +188,6 @@ bool DESTL_Provider::Read(const TCollection_AsciiString& thePath,
   return true;
 }
 
-//=================================================================================================
-
 bool DESTL_Provider::Write(const TCollection_AsciiString& thePath,
                            const TopoDS_Shape&            theShape,
                            const Message_ProgressRange&   theProgress)
@@ -249,8 +217,6 @@ bool DESTL_Provider::Write(const TCollection_AsciiString& thePath,
   return true;
 }
 
-//=================================================================================================
-
 bool DESTL_Provider::Read(ReadStreamList&                      theStreams,
                           const occ::handle<TDocStd_Document>& theDocument,
                           occ::handle<XSControl_WorkSession>&  theWS,
@@ -259,8 +225,6 @@ bool DESTL_Provider::Read(ReadStreamList&                      theStreams,
   (void)theWS;
   return Read(theStreams, theDocument, theProgress);
 }
-
-//=================================================================================================
 
 bool DESTL_Provider::Write(WriteStreamList&                     theStreams,
                            const occ::handle<TDocStd_Document>& theDocument,
@@ -271,8 +235,6 @@ bool DESTL_Provider::Write(WriteStreamList&                     theStreams,
   return Write(theStreams, theDocument, theProgress);
 }
 
-//=================================================================================================
-
 bool DESTL_Provider::Read(ReadStreamList&                     theStreams,
                           TopoDS_Shape&                       theShape,
                           occ::handle<XSControl_WorkSession>& theWS,
@@ -282,8 +244,6 @@ bool DESTL_Provider::Read(ReadStreamList&                     theStreams,
   return Read(theStreams, theShape, theProgress);
 }
 
-//=================================================================================================
-
 bool DESTL_Provider::Write(WriteStreamList&                    theStreams,
                            const TopoDS_Shape&                 theShape,
                            occ::handle<XSControl_WorkSession>& theWS,
@@ -292,8 +252,6 @@ bool DESTL_Provider::Write(WriteStreamList&                    theStreams,
   (void)theWS;
   return Write(theStreams, theShape, theProgress);
 }
-
-//=================================================================================================
 
 bool DESTL_Provider::Read(ReadStreamList&                      theStreams,
                           const occ::handle<TDocStd_Document>& theDocument,
@@ -323,8 +281,6 @@ bool DESTL_Provider::Read(ReadStreamList&                      theStreams,
   return true;
 }
 
-//=================================================================================================
-
 bool DESTL_Provider::Write(WriteStreamList&                     theStreams,
                            const occ::handle<TDocStd_Document>& theDocument,
                            const Message_ProgressRange&         theProgress)
@@ -342,7 +298,6 @@ bool DESTL_Provider::Write(WriteStreamList&                     theStreams,
     return false;
   }
 
-  // Extract shape from document
   NCollection_Sequence<TDF_Label> aLabels;
   occ::handle<XCAFDoc_ShapeTool>  aSTool = XCAFDoc_DocumentTool::ShapeTool(theDocument->Main());
   aSTool->GetFreeShapes(aLabels);
@@ -387,13 +342,11 @@ bool DESTL_Provider::Write(WriteStreamList&                     theStreams,
   return Write(theStreams, aShape, theProgress);
 }
 
-//=================================================================================================
-
 bool DESTL_Provider::Read(ReadStreamList&              theStreams,
                           TopoDS_Shape&                theShape,
                           const Message_ProgressRange& theProgress)
 {
-  // Validate stream map
+
   if (theStreams.IsEmpty())
   {
     Message::SendFail() << "Error: DESTL_Provider stream map is empty";
@@ -465,13 +418,11 @@ bool DESTL_Provider::Read(ReadStreamList&              theStreams,
   return true;
 }
 
-//=================================================================================================
-
 bool DESTL_Provider::Write(WriteStreamList&             theStreams,
                            const TopoDS_Shape&          theShape,
                            const Message_ProgressRange& theProgress)
 {
-  // Validate stream map
+
   if (theStreams.IsEmpty())
   {
     Message::SendFail() << "Error: DESTL_Provider stream map is empty";
@@ -514,14 +465,10 @@ bool DESTL_Provider::Write(WriteStreamList&             theStreams,
   return true;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DESTL_Provider::GetFormat() const
 {
   return TCollection_AsciiString("STL");
 }
-
-//=================================================================================================
 
 TCollection_AsciiString DESTL_Provider::GetVendor() const
 {

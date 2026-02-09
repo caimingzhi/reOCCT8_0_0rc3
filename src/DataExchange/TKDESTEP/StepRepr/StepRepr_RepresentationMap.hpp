@@ -11,7 +11,6 @@ class StepRepr_RepresentationMap : public Standard_Transient
 {
 
 public:
-  //! Returns a RepresentationMap
   Standard_EXPORT StepRepr_RepresentationMap();
 
   Standard_EXPORT void Init(const occ::handle<StepRepr_RepresentationItem>& aMappingOrigin,

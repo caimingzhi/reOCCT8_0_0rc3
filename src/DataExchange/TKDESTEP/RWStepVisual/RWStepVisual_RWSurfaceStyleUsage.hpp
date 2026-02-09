@@ -11,7 +11,6 @@ class StepVisual_SurfaceStyleUsage;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SurfaceStyleUsage
 class RWStepVisual_RWSurfaceStyleUsage
 {
 public:

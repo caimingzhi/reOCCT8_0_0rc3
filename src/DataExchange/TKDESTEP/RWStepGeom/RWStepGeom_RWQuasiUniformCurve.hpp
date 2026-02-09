@@ -11,7 +11,6 @@ class StepGeom_QuasiUniformCurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for QuasiUniformCurve
 class RWStepGeom_RWQuasiUniformCurve
 {
 public:

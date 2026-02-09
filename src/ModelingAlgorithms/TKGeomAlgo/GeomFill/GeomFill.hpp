@@ -16,13 +16,11 @@ class Geom_Curve;
 class gp_Vec;
 class gp_Pnt;
 
-//! Tools and Data to filling Surface and Sweep Surfaces
 class GeomFill
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Builds a ruled surface between the two curves, Curve1 and Curve2.
   Standard_EXPORT static occ::handle<Geom_Surface> Surface(const occ::handle<Geom_Curve>& Curve1,
                                                            const occ::handle<Geom_Curve>& Curve2);
 
@@ -103,8 +101,6 @@ public:
                                                 const double                       AngleMax,
                                                 NCollection_Array1<double>&        Weigths);
 
-  //! Used by the generical classes to determine
-  //! Tolerance for approximation
   Standard_EXPORT static double GetTolerance(const Convert_ParameterisationType TConv,
                                              const double                       AngleMin,
                                              const double                       Radius,

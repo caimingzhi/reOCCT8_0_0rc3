@@ -11,7 +11,6 @@ class StepBasic_ApplicationContextElement : public Standard_Transient
 {
 
 public:
-  //! Returns a ApplicationContextElement
   Standard_EXPORT StepBasic_ApplicationContextElement();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&     aName,

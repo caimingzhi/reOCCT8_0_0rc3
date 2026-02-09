@@ -10,12 +10,8 @@
 #include <NCollection_HArray1.hpp>
 #include <StepBasic_MeasureWithUnit.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWGeometricToleranceWithMaximumTolerance::
   RWStepDimTol_RWGeometricToleranceWithMaximumTolerance() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWGeometricToleranceWithMaximumTolerance::ReadStep(
   const occ::handle<StepData_StepReaderData>&                           data,
@@ -23,11 +19,9 @@ void RWStepDimTol_RWGeometricToleranceWithMaximumTolerance::ReadStep(
   occ::handle<Interface_Check>&                                         ach,
   const occ::handle<StepDimTol_GeometricToleranceWithMaximumTolerance>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 6, ach, "geometric_tolerance_with_modifiers"))
     return;
-
-  // inherited fields from GeometricTolerance
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "geometric_tolerance.name", ach, aName);
@@ -50,7 +44,6 @@ void RWStepDimTol_RWGeometricToleranceWithMaximumTolerance::ReadStep(
                    ach,
                    aTolerancedShapeAspect);
 
-  // inherited fields from GeometricToleranceWithModifiers
   occ::handle<NCollection_HArray1<StepDimTol_GeometricToleranceModifier>> aModifiers;
   int                                                                     sub5 = 0;
   if (data->ReadSubList(num, 5, "geometric_tolerance_with_modifiers.modifiers", ach, sub5))
@@ -103,8 +96,6 @@ void RWStepDimTol_RWGeometricToleranceWithMaximumTolerance::ReadStep(
     }
   }
 
-  // own fields of GeometricToleranceWithMaximumTolerance
-
   occ::handle<StepBasic_LengthMeasureWithUnit> aMaximumUpperTolerance;
   data->ReadEntity(num,
                    6,
@@ -113,7 +104,6 @@ void RWStepDimTol_RWGeometricToleranceWithMaximumTolerance::ReadStep(
                    STANDARD_TYPE(StepBasic_LengthMeasureWithUnit),
                    aMaximumUpperTolerance);
 
-  // Initialize entity
   ent->Init(aName,
             aDescription,
             aMagnitude,
@@ -122,14 +112,10 @@ void RWStepDimTol_RWGeometricToleranceWithMaximumTolerance::ReadStep(
             aMaximumUpperTolerance);
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWGeometricToleranceWithMaximumTolerance::WriteStep(
   StepData_StepWriter&                                                  SW,
   const occ::handle<StepDimTol_GeometricToleranceWithMaximumTolerance>& ent) const
 {
-
-  // inherited fields from GeometricTolerance
 
   SW.Send(ent->Name());
 
@@ -138,8 +124,6 @@ void RWStepDimTol_RWGeometricToleranceWithMaximumTolerance::WriteStep(
   SW.Send(ent->Magnitude());
 
   SW.Send(ent->TolerancedShapeAspect().Value());
-
-  // inherited fields from GeometricToleranceWithModifiers
 
   SW.OpenSub();
   for (int i = 1; i <= ent->NbModifiers(); i++)
@@ -195,19 +179,13 @@ void RWStepDimTol_RWGeometricToleranceWithMaximumTolerance::WriteStep(
   }
   SW.CloseSub();
 
-  // own fields of GeometricToleranceWithMaximumTolerance
-
   SW.Send(ent->MaximumUpperTolerance());
 }
-
-//=================================================================================================
 
 void RWStepDimTol_RWGeometricToleranceWithMaximumTolerance::Share(
   const occ::handle<StepDimTol_GeometricToleranceWithMaximumTolerance>& ent,
   Interface_EntityIterator&                                             iter) const
 {
-
-  // inherited fields from GeometricTolerance
 
   iter.AddItem(ent->Magnitude());
 

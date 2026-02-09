@@ -11,20 +11,14 @@
 class TDF_Label;
 class TDF_RelocationTable;
 
-//! Contains a list of bolleans.
 class TDataStd_BooleanList : public TDF_Attribute
 {
 
 public:
-  //! Static methods
-  //! ==============
-  //! Returns the ID of the list of booleans attribute.
   Standard_EXPORT static const Standard_GUID& GetID();
 
-  //! Finds or creates a list of boolean values attribute.
   Standard_EXPORT static occ::handle<TDataStd_BooleanList> Set(const TDF_Label& label);
 
-  //! Finds or creates a list of boolean values attribute with explicit user defined <guid>.
   Standard_EXPORT static occ::handle<TDataStd_BooleanList> Set(const TDF_Label&     label,
                                                                const Standard_GUID& theGuid);
 
@@ -44,25 +38,16 @@ public:
 
   Standard_EXPORT bool Last() const;
 
-  //! 1 - means TRUE,
-  //! 0 - means FALSE.
   Standard_EXPORT const NCollection_List<uint8_t>& List() const;
 
-  //! Inserts the <value> before the <index> position.
-  //! The indices start with 1 .. Extent().
   Standard_EXPORT bool InsertBefore(const int index, const bool before_value);
 
-  //! Inserts the <value> after the <index> position.
-  //! The indices start with 1 .. Extent().
   Standard_EXPORT bool InsertAfter(const int index, const bool after_value);
 
-  //! Removes a value at <index> position.
   Standard_EXPORT bool Remove(const int index);
 
-  //! Sets the explicit GUID (user defined) for the attribute.
   Standard_EXPORT void SetID(const Standard_GUID& theGuid) override;
 
-  //! Sets default GUID for the attribute.
   Standard_EXPORT void SetID() override;
 
   Standard_EXPORT const Standard_GUID& ID() const override;
@@ -76,7 +61,6 @@ public:
 
   Standard_EXPORT Standard_OStream& Dump(Standard_OStream& anOS) const override;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(TDataStd_BooleanList, TDF_Attribute)

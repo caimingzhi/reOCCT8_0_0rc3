@@ -10,7 +10,6 @@ class Interface_Check;
 class StepVisual_PreDefinedColour;
 class StepData_StepWriter;
 
-//! Read & Write Module for PreDefinedColour
 class RWStepVisual_RWPreDefinedColour
 {
 public:

@@ -6,22 +6,16 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWDocumentFile::RWStepBasic_RWDocumentFile() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWDocumentFile::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                           const int                                   num,
                                           occ::handle<Interface_Check>&               ach,
                                           const occ::handle<StepBasic_DocumentFile>&  ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 6, ach, "document_file"))
     return;
-
-  // Inherited fields of Document
 
   occ::handle<TCollection_HAsciiString> aDocument_Id;
   data->ReadString(num, 1, "document.id", ach, aDocument_Id);
@@ -48,8 +42,6 @@ void RWStepBasic_RWDocumentFile::ReadStep(const occ::handle<StepData_StepReaderD
                    STANDARD_TYPE(StepBasic_DocumentType),
                    aDocument_Kind);
 
-  // Inherited fields of CharacterizedObject
-
   occ::handle<TCollection_HAsciiString> aCharacterizedObject_Name;
   data->ReadString(num, 5, "characterized_object.name", ach, aCharacterizedObject_Name);
 
@@ -68,7 +60,6 @@ void RWStepBasic_RWDocumentFile::ReadStep(const occ::handle<StepData_StepReaderD
     hasCharacterizedObject_Description = false;
   }
 
-  // Initialize entity
   ent->Init(aDocument_Id,
             aDocument_Name,
             hasDocument_Description,
@@ -79,13 +70,9 @@ void RWStepBasic_RWDocumentFile::ReadStep(const occ::handle<StepData_StepReaderD
             aCharacterizedObject_Description);
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWDocumentFile::WriteStep(StepData_StepWriter&                       SW,
                                            const occ::handle<StepBasic_DocumentFile>& ent) const
 {
-
-  // Inherited fields of Document
 
   SW.Send(ent->StepBasic_Document::Id());
 
@@ -100,8 +87,6 @@ void RWStepBasic_RWDocumentFile::WriteStep(StepData_StepWriter&                 
 
   SW.Send(ent->StepBasic_Document::Kind());
 
-  // Inherited fields of CharacterizedObject
-
   SW.Send(ent->CharacterizedObject()->Name());
 
   if (ent->CharacterizedObject()->HasDescription())
@@ -112,15 +97,9 @@ void RWStepBasic_RWDocumentFile::WriteStep(StepData_StepWriter&                 
     SW.SendUndef();
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWDocumentFile::Share(const occ::handle<StepBasic_DocumentFile>& ent,
                                        Interface_EntityIterator&                  iter) const
 {
 
-  // Inherited fields of Document
-
   iter.AddItem(ent->StepBasic_Document::Kind());
-
-  // Inherited fields of CharacterizedObject
 }

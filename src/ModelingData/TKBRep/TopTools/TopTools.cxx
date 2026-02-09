@@ -2,8 +2,6 @@
 
 #include <TopTools_ShapeSet.hpp>
 
-//=================================================================================================
-
 void TopTools::Dump(const TopoDS_Shape& Sh, Standard_OStream& S)
 {
   TopTools_ShapeSet SSet;

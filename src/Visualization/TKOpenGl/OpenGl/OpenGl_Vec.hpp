@@ -12,12 +12,10 @@
 
 namespace OpenGl
 {
-  //! Tool class for selecting appropriate vector type.
-  //! \tparam T Numeric data type
+
   template <class T>
   struct VectorType
   {
-    // Not implemented
   };
 
   template <>
@@ -36,12 +34,9 @@ namespace OpenGl
     typedef NCollection_Vec4<float> Vec4;
   };
 
-  //! Tool class for selecting appropriate matrix type.
-  //! \tparam T Numeric data type
   template <class T>
   struct MatrixType
   {
-    // Not implemented
   };
 
   template <>

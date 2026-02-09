@@ -3,11 +3,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaAreaDensity, StepFEA_FeaMaterialPropertyRepresentationItem)
 
-//=================================================================================================
-
 StepFEA_FeaAreaDensity::StepFEA_FeaAreaDensity() = default;
-
-//=================================================================================================
 
 void StepFEA_FeaAreaDensity::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentationItem_Name,
@@ -18,14 +14,10 @@ void StepFEA_FeaAreaDensity::Init(
   theFeaConstant = aFeaConstant;
 }
 
-//=================================================================================================
-
 double StepFEA_FeaAreaDensity::FeaConstant() const
 {
   return theFeaConstant;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaAreaDensity::SetFeaConstant(const double aFeaConstant)
 {

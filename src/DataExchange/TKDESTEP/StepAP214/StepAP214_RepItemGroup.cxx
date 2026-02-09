@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_RepItemGroup, StepBasic_Group)
 
-//=================================================================================================
-
 StepAP214_RepItemGroup::StepAP214_RepItemGroup() = default;
-
-//=================================================================================================
 
 void StepAP214_RepItemGroup::Init(
   const occ::handle<TCollection_HAsciiString>& aGroup_Name,
@@ -20,14 +16,10 @@ void StepAP214_RepItemGroup::Init(
   theRepresentationItem->Init(aRepresentationItem_Name);
 }
 
-//=================================================================================================
-
 occ::handle<StepRepr_RepresentationItem> StepAP214_RepItemGroup::RepresentationItem() const
 {
   return theRepresentationItem;
 }
-
-//=================================================================================================
 
 void StepAP214_RepItemGroup::SetRepresentationItem(
   const occ::handle<StepRepr_RepresentationItem>& aRepresentationItem)

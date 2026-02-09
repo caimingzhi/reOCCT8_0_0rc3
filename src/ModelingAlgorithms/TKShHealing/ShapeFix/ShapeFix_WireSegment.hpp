@@ -13,87 +13,43 @@ class ShapeExtend_WireData;
 class TopoDS_Wire;
 class TopoDS_Edge;
 
-//! This class is auxiliary class (data storage) used in ComposeShell.
-//! It is intended for representing segment of the wire
-//! (or whole wire). The segment itself is represented by
-//! ShapeExtend_WireData. In addition, some associated data
-//! necessary for computations are stored:
-//!
-//! * Orientation flag - determines current use of the segment
-//! and used for parity checking:
-//!
-//! TopAbs_FORWARD and TopAbs_REVERSED - says that segment was
-//! traversed once in the corresponding direction, and hence
-//! it should be traversed once more in opposite direction;
-//!
-//! TopAbs_EXTERNAL - the segment was not yet traversed in any
-//! direction (i.e. not yet used as boundary)
-//!
-//! TopAbs_INTERNAL - the segment was traversed in both
-//! directions and hence is out of further work.
-//!
-//! Segments of initial bounding wires are created with
-//! orientation REVERSED (for outer wire) or FORWARD (for inner
-//! wires), and segments of splitting seams - with orientation
-//! EXTERNAL.
 class ShapeFix_WireSegment
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates empty segment.
   Standard_EXPORT ShapeFix_WireSegment();
 
-  //! Creates segment and initializes it with wire and orientation.
   Standard_EXPORT ShapeFix_WireSegment(const occ::handle<ShapeExtend_WireData>& wire,
                                        const TopAbs_Orientation ori = TopAbs_EXTERNAL);
 
-  //! Creates segment and initializes it with wire and orientation.
   Standard_EXPORT ShapeFix_WireSegment(const TopoDS_Wire&       wire,
                                        const TopAbs_Orientation ori = TopAbs_EXTERNAL);
 
-  //! Clears all fields.
   Standard_EXPORT void Clear();
 
-  //! Loads wire.
   Standard_EXPORT void Load(const occ::handle<ShapeExtend_WireData>& wire);
 
-  //! Returns wire.
   Standard_EXPORT const occ::handle<ShapeExtend_WireData>& WireData() const;
 
-  //! Sets orientation flag.
   Standard_EXPORT void Orientation(const TopAbs_Orientation ori);
 
-  //! Returns orientation flag.
   Standard_EXPORT TopAbs_Orientation Orientation() const;
 
-  //! Returns first vertex of the first edge in the wire
-  //! (no dependence on Orientation()).
   Standard_EXPORT TopoDS_Vertex FirstVertex() const;
 
-  //! Returns last vertex of the last edge in the wire
-  //! (no dependence on Orientation()).
   Standard_EXPORT TopoDS_Vertex LastVertex() const;
 
-  //! Returns True if FirstVertex() == LastVertex()
   Standard_EXPORT bool IsClosed() const;
 
-  //! Returns Number of edges in the wire
   Standard_EXPORT int NbEdges() const;
 
-  //! Returns edge by given index in the wire
   Standard_EXPORT TopoDS_Edge Edge(const int i) const;
 
-  //! Replaces edge at index i by new one.
   Standard_EXPORT void SetEdge(const int i, const TopoDS_Edge& edge);
 
-  //! Insert a new edge with index i and implicitly defined
-  //! patch indices (indefinite patch).
-  //! If i==0, edge is inserted at end of wire.
   Standard_EXPORT void AddEdge(const int i, const TopoDS_Edge& edge);
 
-  //! Insert a new edge with index i and explicitly defined
-  //! patch indices. If i==0, edge is inserted at end of wire.
   Standard_EXPORT void AddEdge(const int          i,
                                const TopoDS_Edge& edge,
                                const int          iumin,
@@ -101,7 +57,6 @@ public:
                                const int          ivmin,
                                const int          ivmax);
 
-  //! Set patch indices for edge i.
   Standard_EXPORT void SetPatchIndex(const int i,
                                      const int iumin,
                                      const int iumax,
@@ -114,20 +69,14 @@ public:
 
   Standard_EXPORT void DefineIVMin(const int i, const int ivmin);
 
-  //! Modify minimal or maximal patch index for edge i.
-  //! The corresponding patch index for that edge is modified so
-  //! as to satisfy eq. iumin <= myIUMin(i) <= myIUMax(i) <= iumax
   Standard_EXPORT void DefineIVMax(const int i, const int ivmax);
 
-  //! Returns patch indices for edge i.
   Standard_EXPORT void GetPatchIndex(const int i,
                                      int&      iumin,
                                      int&      iumax,
                                      int&      ivmin,
                                      int&      ivmax) const;
 
-  //! Checks patch indices for edge i to satisfy equations
-  //! IUMin(i) <= IUMax(i) <= IUMin(i)+1
   Standard_EXPORT bool CheckPatchIndex(const int i) const;
 
   Standard_EXPORT void SetVertex(const TopoDS_Vertex& theVertex);

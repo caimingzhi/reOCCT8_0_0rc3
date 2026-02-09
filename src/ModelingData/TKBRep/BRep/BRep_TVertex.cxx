@@ -5,14 +5,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRep_TVertex, TopoDS_TVertex)
 
-//=================================================================================================
-
 BRep_TVertex::BRep_TVertex()
     : myTolerance(RealEpsilon())
 {
 }
-
-//=================================================================================================
 
 occ::handle<TopoDS_TShape> BRep_TVertex::EmptyCopy() const
 {
@@ -21,8 +17,6 @@ occ::handle<TopoDS_TShape> BRep_TVertex::EmptyCopy() const
   TV->Tolerance(myTolerance);
   return TV;
 }
-
-//=================================================================================================
 
 void BRep_TVertex::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

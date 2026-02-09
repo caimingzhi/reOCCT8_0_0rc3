@@ -11,7 +11,6 @@ class StepGeom_PointOnCurve;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for PointOnCurve
 class RWStepGeom_RWPointOnCurve
 {
 public:

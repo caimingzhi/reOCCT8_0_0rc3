@@ -5,11 +5,7 @@
 #include <NCollection_Array2.hpp>
 #include <NCollection_HArray2.hpp>
 
-//=================================================================================================
-
 GeomFill_Coons::GeomFill_Coons() = default;
-
-//=================================================================================================
 
 GeomFill_Coons::GeomFill_Coons(const NCollection_Array1<gp_Pnt>& P1,
                                const NCollection_Array1<gp_Pnt>& P2,
@@ -18,8 +14,6 @@ GeomFill_Coons::GeomFill_Coons(const NCollection_Array1<gp_Pnt>& P1,
 {
   Init(P1, P2, P3, P4);
 }
-
-//=================================================================================================
 
 GeomFill_Coons::GeomFill_Coons(const NCollection_Array1<gp_Pnt>& P1,
                                const NCollection_Array1<gp_Pnt>& P2,
@@ -32,8 +26,6 @@ GeomFill_Coons::GeomFill_Coons(const NCollection_Array1<gp_Pnt>& P1,
 {
   Init(P1, P2, P3, P4, W1, W2, W3, W4);
 }
-
-//=================================================================================================
 
 void GeomFill_Coons::Init(const NCollection_Array1<gp_Pnt>& P1,
                           const NCollection_Array1<gp_Pnt>& P2,
@@ -49,7 +41,6 @@ void GeomFill_Coons::Init(const NCollection_Array1<gp_Pnt>& P1,
 
   myPoles = new NCollection_HArray2<gp_Pnt>(1, NPolU, 1, NPolV);
 
-  // The boundaries are not modified
   int i, j, k;
 
   for (i = 1; i <= NPolU; i++)
@@ -63,7 +54,6 @@ void GeomFill_Coons::Init(const NCollection_Array1<gp_Pnt>& P1,
     myPoles->SetValue(NPolU, i, P4(i));
   }
 
-  // Calcul des coefficients multiplicateurs
   NCollection_Array1<gp_Pnt> Coef(1, 4);
   NCollection_Array1<gp_Pnt> Pole(1, 4);
   NCollection_Array1<gp_Pnt> CoefU(1, NPolU);
@@ -103,7 +93,6 @@ void GeomFill_Coons::Init(const NCollection_Array1<gp_Pnt>& P1,
     CoefV(i).Coord(FV(i), GV(i), Dummy);
   }
 
-  // Clacul des poles interieurs
   gp_Pnt P;
   for (j = 2; j < NPolV; j++)
   {
@@ -125,8 +114,6 @@ void GeomFill_Coons::Init(const NCollection_Array1<gp_Pnt>& P1,
   }
 }
 
-//=================================================================================================
-
 void GeomFill_Coons::Init(const NCollection_Array1<gp_Pnt>& P1,
                           const NCollection_Array1<gp_Pnt>& P2,
                           const NCollection_Array1<gp_Pnt>& P3,
@@ -147,12 +134,11 @@ void GeomFill_Coons::Init(const NCollection_Array1<gp_Pnt>& P1,
   int NPolU = W1.Length();
   int NPolV = W2.Length();
 
-  // #ifdef OCCT_DEBUG
   double NU = NPolU - 1;
   double NV = NPolV - 1;
-  // #endif
+
   myWeights = new NCollection_HArray2<double>(1, NPolU, 1, NPolV);
-  // The boundaries are not modified
+
   int i, j;
   for (i = 1; i <= NPolU; i++)
   {
@@ -173,8 +159,6 @@ void GeomFill_Coons::Init(const NCollection_Array1<gp_Pnt>& P1,
       PU  = (i - 1) / NU;
       PU1 = 1 - PU;
 
-      //      double W = 0.5 * ( PV1 * W1(i) + PV  * W3(i) +
-      //			        PU  * W2(j) + PU1 * W4(j)  );
       double W =
         PV1 * W1(i) + PV * W3(i) + PU * W2(j) + PU1 * W4(j)
         - (PU1 * PV1 * W1(1) + PU * PV1 * W2(1) + PU * PV * W3(NPolU) + PU1 * PV * W4(NPolV));

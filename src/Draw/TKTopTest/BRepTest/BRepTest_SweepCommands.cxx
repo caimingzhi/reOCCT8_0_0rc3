@@ -43,10 +43,6 @@ static BRepOffsetAPI_ThruSections*  Generator = nullptr;
 #include <Message.hpp>
 #include <ShapeUpgrade_UnifySameDomain.hpp>
 
-//=======================================================================
-// prism
-//=======================================================================
-
 static int prism(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 6)
@@ -85,7 +81,6 @@ static int prism(Draw_Interpretor&, int n, const char** a)
 
   DBRep::Set(a[1], res);
 
-  // History
   NCollection_List<TopoDS_Shape> anArgs;
   anArgs.Append(base);
   BRepTest_Objects::SetHistory(anArgs, *Prism);
@@ -95,9 +90,6 @@ static int prism(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// revol
-//=======================================================================
 static int revol(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 10)
@@ -123,7 +115,6 @@ static int revol(Draw_Interpretor& di, int n, const char** a)
 
     DBRep::Set(a[1], res);
 
-    // History
     NCollection_List<TopoDS_Shape> anArgs;
     anArgs.Append(base);
     BRepTest_Objects::SetHistory(anArgs, Revol);
@@ -135,10 +126,6 @@ static int revol(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=======================================================================
-// pipe
-//=======================================================================
 
 static int pipe(Draw_Interpretor& di, int n, const char** a)
 {
@@ -182,7 +169,6 @@ static int pipe(Draw_Interpretor& di, int n, const char** a)
 
   DBRep::Set(a[1], S);
 
-  // Save history of pipe
   if (BRepTest_Objects::IsHistoryNeeded())
   {
     NCollection_List<TopoDS_Shape> aList;
@@ -193,8 +179,6 @@ static int pipe(Draw_Interpretor& di, int n, const char** a)
 
   return 0;
 }
-
-//=======================================================================
 
 static int geompipe(Draw_Interpretor&, int n, const char** a)
 {
@@ -242,8 +226,6 @@ static int geompipe(Draw_Interpretor&, int n, const char** a)
   DBRep::Set(a[1], F);
   return 0;
 }
-
-//=================================================================================================
 
 int evolved(Draw_Interpretor& di, int n, const char** a)
 {
@@ -352,8 +334,6 @@ int evolved(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int pruled(Draw_Interpretor&, int n, const char** a)
 {
   if (n != 4)
@@ -400,11 +380,6 @@ static int pruled(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : gener
-// purpose  : Create a surface between generating wires
-//=======================================================================
-
 int gener(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4)
@@ -432,8 +407,6 @@ int gener(Draw_Interpretor&, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int thrusections(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 6)
@@ -442,7 +415,7 @@ int thrusections(Draw_Interpretor& di, int n, const char** a)
   bool check      = true;
   bool samenumber = true;
   int  index      = 2;
-  // Lecture option
+
   if (!strcmp(a[1], "-N"))
   {
     if (n < 7)
@@ -512,7 +485,7 @@ int thrusections(Draw_Interpretor& di, int n, const char** a)
   {
     TopoDS_Shape Shell = Generator->Shape();
     DBRep::Set(a[index - 1], Shell);
-    // Save history of the lofting
+
     if (BRepTest_Objects::IsHistoryNeeded())
       BRepTest_Objects::SetHistory(Generator->Wires(), *Generator);
   }
@@ -547,9 +520,6 @@ int thrusections(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-//  mksweep
-//=======================================================================
 static int mksweep(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 2 && n != 5)
@@ -599,9 +569,6 @@ static int mksweep(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-//  setsweep
-//=======================================================================
 static int setsweep(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 1)
@@ -686,7 +653,7 @@ static int setsweep(Draw_Interpretor& di, int n, const char** a)
       Sweep->SetMode(Axe);
     }
   }
-  else if (!strcmp(a[1], "-G")) // contour guide
+  else if (!strcmp(a[1], "-G"))
   {
     if (n != 5)
     {
@@ -748,9 +715,6 @@ static int setsweep(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-//  addsweep
-//=======================================================================
 static int addsweep(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 1)
@@ -786,7 +750,7 @@ static int addsweep(Draw_Interpretor& di, int n, const char** a)
   if (n > 2)
   {
     int cur = 2;
-    // Reading of Vertex
+
     TopoDS_Shape InputVertex(DBRep::Get(a[cur], TopAbs_VERTEX));
     Vertex = TopoDS::Vertex(InputVertex);
     if (!Vertex.IsNull())
@@ -795,31 +759,28 @@ static int addsweep(Draw_Interpretor& di, int n, const char** a)
       HasVertex = true;
     }
 
-    // Reading of the translation option
     if ((n > cur) && !strcmp(a[cur], "-T"))
     {
       cur++;
       isT = true;
     }
 
-    // Reading of the rotation option
     if ((n > cur) && !strcmp(a[cur], "-R"))
     {
       cur++;
       isR = true;
     }
 
-    // law ?
     if (n > cur)
     {
       int nbreal = n - cur;
       if ((nbreal < 4) || (nbreal % 2 != 0))
       {
-        // std::cout << "bad arguments ! :" <<a[cur] << std::endl;
+
         di << "bad arguments ! :" << a[cur] << "\n";
       }
       else
-      { // law of interpolation
+      {
         int                          ii, L = nbreal / 2;
         NCollection_Array1<gp_Pnt2d> ParAndRad(1, L);
         for (ii = 1; ii <= L; ii++, cur += 2)
@@ -852,9 +813,6 @@ static int addsweep(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-//  deletesweep
-//=======================================================================
 static int deletesweep(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 2)
@@ -874,9 +832,6 @@ static int deletesweep(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-//  buildsweep
-//=======================================================================
 static int buildsweep(Draw_Interpretor& di, int n, const char** a)
 {
   if (n == 1)
@@ -911,7 +866,6 @@ static int buildsweep(Draw_Interpretor& di, int n, const char** a)
   {
     BRepBuilderAPI_TransitionMode Transition = BRepBuilderAPI_Transformed;
 
-    // Reading Transition
     if (!strcmp(a[cur], "-C"))
     {
       Transition = BRepBuilderAPI_RightCorner;
@@ -924,11 +878,10 @@ static int buildsweep(Draw_Interpretor& di, int n, const char** a)
     }
     Sweep->SetTransitionMode(Transition);
   }
-  // Reading solid ?
+
   if ((n > cur) && (!strcmp(a[cur], "-S")))
     mksolid = true;
 
-  // Calcul le resultat
   Sweep->Build();
   if (!Sweep->IsDone())
   {
@@ -954,7 +907,7 @@ static int buildsweep(Draw_Interpretor& di, int n, const char** a)
     }
     result = Sweep->Shape();
     DBRep::Set(a[1], result);
-    // Save history of sweep
+
     if (BRepTest_Objects::IsHistoryNeeded())
     {
       NCollection_List<TopoDS_Shape> aList;
@@ -968,11 +921,6 @@ static int buildsweep(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : errorsweep
-// purpose  : returns the summary error on resulting surfaces
-//           reached by Sweep
-//=======================================================================
 static int errorsweep(Draw_Interpretor& di, int, const char**)
 {
   if (!Sweep->IsDone())
@@ -985,9 +933,6 @@ static int errorsweep(Draw_Interpretor& di, int, const char**)
   return 0;
 }
 
-//=======================================================================
-//  simulsweep
-//=======================================================================
 static int simulsweep(Draw_Interpretor& di, int n, const char** a)
 {
   if ((n != 3) && (n != 4))
@@ -1014,7 +959,7 @@ static int simulsweep(Draw_Interpretor& di, int n, const char** a)
   if (n > 3)
   {
     BRepBuilderAPI_TransitionMode Transition = BRepBuilderAPI_Transformed;
-    // Lecture Transition
+
     if (!strcmp(a[3], "-C"))
     {
       Transition = BRepBuilderAPI_RightCorner;
@@ -1026,7 +971,6 @@ static int simulsweep(Draw_Interpretor& di, int n, const char** a)
     Sweep->SetTransitionMode(Transition);
   }
 
-  // Calculate the result
   Sweep->Simulate(N, List);
   for (ii = 1, it.Initialize(List); it.More(); it.Next(), ii++)
   {
@@ -1037,10 +981,7 @@ static int simulsweep(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-//  middlepath
-//=======================================================================
-static int middlepath(Draw_Interpretor& /*di*/, int n, const char** a)
+static int middlepath(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 5)
     return 1;
@@ -1065,8 +1006,6 @@ static int middlepath(Draw_Interpretor& /*di*/, int n, const char** a)
 
   return 0;
 }
-
-//=================================================================================================
 
 void BRepTest::SweepCommands(Draw_Interpretor& theCommands)
 {

@@ -3,8 +3,6 @@
 #include <Standard.hpp>
 #include <Standard_TypeDef.hpp>
 
-//! Auxiliary class optimizing creation of array buffer
-//! (using stack allocation for small arrays).
 template <class theItem, int MAX_ARRAY_SIZE = 1024>
 class NCollection_LocalArray
 {

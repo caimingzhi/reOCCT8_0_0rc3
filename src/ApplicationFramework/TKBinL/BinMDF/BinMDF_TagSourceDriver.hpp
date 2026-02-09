@@ -10,7 +10,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! TDF_TagSource Driver.
 class BinMDF_TagSourceDriver : public BinMDF_ADriver
 {
 

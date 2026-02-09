@@ -11,7 +11,6 @@ class StepBasic_ProductDefinitionWithAssociatedDocuments;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ProductDefinitionWithAssociatedDocuments
 class RWStepBasic_RWProductDefinitionWithAssociatedDocuments
 {
 public:

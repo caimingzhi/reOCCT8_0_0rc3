@@ -11,9 +11,6 @@ class TopoDS_Wire;
 class TopoDSToStep_Tool;
 class Transfer_FinderProcess;
 
-//! This class implements the mapping between classes
-//! Wire from TopoDS and TopologicalRepresentationItem from
-//! StepShape.
 class TopoDSToStep_MakeStepWire : public TopoDSToStep_Root
 {
 public:

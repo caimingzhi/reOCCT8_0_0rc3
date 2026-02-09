@@ -12,8 +12,6 @@ namespace
   static const char16_t THE_RADIUS_SYMBOL('R');
 }
 
-//=================================================================================================
-
 PrsDim_RadiusDimension::PrsDim_RadiusDimension(const gp_Circ& theCircle)
     : PrsDim_Dimension(PrsDim_KOD_RADIUS)
 {
@@ -22,8 +20,6 @@ PrsDim_RadiusDimension::PrsDim_RadiusDimension(const gp_Circ& theCircle)
   SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol_Before);
   SetFlyout(0.0);
 }
-
-//=================================================================================================
 
 PrsDim_RadiusDimension::PrsDim_RadiusDimension(const gp_Circ& theCircle,
                                                const gp_Pnt&  theAttachPoint)
@@ -35,8 +31,6 @@ PrsDim_RadiusDimension::PrsDim_RadiusDimension(const gp_Circ& theCircle,
   SetFlyout(0.0);
 }
 
-//=================================================================================================
-
 PrsDim_RadiusDimension::PrsDim_RadiusDimension(const TopoDS_Shape& theShape)
     : PrsDim_Dimension(PrsDim_KOD_RADIUS)
 {
@@ -45,8 +39,6 @@ PrsDim_RadiusDimension::PrsDim_RadiusDimension(const TopoDS_Shape& theShape)
   SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol_Before);
   SetFlyout(0.0);
 }
-
-//=================================================================================================
 
 void PrsDim_RadiusDimension::SetMeasuredGeometry(const gp_Circ& theCircle,
                                                  const gp_Pnt&  theAnchorPoint,
@@ -65,8 +57,6 @@ void PrsDim_RadiusDimension::SetMeasuredGeometry(const gp_Circ& theCircle,
 
   SetToUpdate();
 }
-
-//=================================================================================================
 
 void PrsDim_RadiusDimension::SetMeasuredGeometry(const TopoDS_Shape& theShape,
                                                  const gp_Pnt&       theAnchorPoint,
@@ -91,16 +81,12 @@ void PrsDim_RadiusDimension::SetMeasuredGeometry(const TopoDS_Shape& theShape,
   SetToUpdate();
 }
 
-//=================================================================================================
-
 bool PrsDim_RadiusDimension::CheckPlane(const gp_Pln& thePlane) const
 {
-  // Check if anchor point and circle center point belong to plane.
+
   return thePlane.Contains(myAnchorPoint, Precision::Confusion())
          || thePlane.Contains(myCircle.Location(), Precision::Confusion());
 }
-
-//=================================================================================================
 
 void PrsDim_RadiusDimension::ComputePlane()
 {
@@ -114,35 +100,25 @@ void PrsDim_RadiusDimension::ComputePlane()
   myPlane = gp_Pln(gp_Ax3(myCircle.Location(), myCircle.Axis().Direction(), aDimensionX));
 }
 
-//=================================================================================================
-
 const TCollection_AsciiString& PrsDim_RadiusDimension::GetModelUnits() const
 {
   return myDrawer->DimLengthModelUnits();
 }
-
-//=================================================================================================
 
 const TCollection_AsciiString& PrsDim_RadiusDimension::GetDisplayUnits() const
 {
   return myDrawer->DimLengthDisplayUnits();
 }
 
-//=================================================================================================
-
 void PrsDim_RadiusDimension::SetModelUnits(const TCollection_AsciiString& theUnits)
 {
   myDrawer->SetDimLengthModelUnits(theUnits);
 }
 
-//=================================================================================================
-
 void PrsDim_RadiusDimension::SetDisplayUnits(const TCollection_AsciiString& theUnits)
 {
   myDrawer->SetDimLengthDisplayUnits(theUnits);
 }
-
-//=================================================================================================
 
 double PrsDim_RadiusDimension::ComputeValue() const
 {
@@ -153,8 +129,6 @@ double PrsDim_RadiusDimension::ComputeValue() const
 
   return myCircle.Radius();
 }
-
-//=================================================================================================
 
 void PrsDim_RadiusDimension::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                      const occ::handle<Prs3d_Presentation>& thePresentation,
@@ -169,14 +143,10 @@ void PrsDim_RadiusDimension::Compute(const occ::handle<PrsMgr_PresentationManage
   DrawLinearDimension(thePresentation, theMode, myAnchorPoint, myCircle.Location(), true);
 }
 
-//=================================================================================================
-
 bool PrsDim_RadiusDimension::IsValidCircle(const gp_Circ& theCircle) const
 {
   return theCircle.Radius() > Precision::Confusion();
 }
-
-//=================================================================================================
 
 bool PrsDim_RadiusDimension::IsValidAnchor(const gp_Circ& theCircle, const gp_Pnt& theAnchor) const
 {
@@ -187,8 +157,6 @@ bool PrsDim_RadiusDimension::IsValidAnchor(const gp_Circ& theCircle, const gp_Pn
          && aCirclePlane.Contains(theAnchor, Precision::Confusion());
 }
 
-//=================================================================================================
-
 gp_Pnt PrsDim_RadiusDimension::GetTextPosition() const
 {
   if (IsTextPositionCustom())
@@ -196,11 +164,8 @@ gp_Pnt PrsDim_RadiusDimension::GetTextPosition() const
     return myFixedTextPosition;
   }
 
-  // Counts text position according to the dimension parameters
   return GetTextPositionForLinear(myAnchorPoint, myCircle.Location(), true);
 }
-
-//=================================================================================================
 
 void PrsDim_RadiusDimension::SetTextPosition(const gp_Pnt& theTextPos)
 {

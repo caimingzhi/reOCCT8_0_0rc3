@@ -11,7 +11,6 @@ class StepShape_OrientedOpenShell;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for OrientedOpenShell
 class RWStepShape_RWOrientedOpenShell
 {
 public:

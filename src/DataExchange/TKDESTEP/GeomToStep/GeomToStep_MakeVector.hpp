@@ -12,10 +12,6 @@ class gp_Vec2d;
 class Geom_Vector;
 class Geom2d_Vector;
 
-//! This class implements the mapping between classes
-//! Vector from Geom, Geom2d and Vec, Vec2d from gp, and the class
-//! Vector from StepGeom which describes a Vector from
-//! Prostep.
 class GeomToStep_MakeVector : public GeomToStep_Root
 {
 public:

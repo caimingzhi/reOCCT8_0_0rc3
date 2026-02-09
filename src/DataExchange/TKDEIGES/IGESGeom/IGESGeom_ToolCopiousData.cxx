@@ -15,37 +15,30 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-// MGE 28/07/98
-//=================================================================================================
-
 IGESGeom_ToolCopiousData::IGESGeom_ToolCopiousData() = default;
 
-//=================================================================================================
-
 void IGESGeom_ToolCopiousData::ReadOwnParams(const occ::handle<IGESGeom_CopiousData>& ent,
-                                             const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                             const occ::handle<IGESData_IGESReaderData>&,
                                              IGESData_ParamReader& PR) const
 {
-  // MGE 28/07/98
-  // Building of messages
 
   int                                      aDataType, nbData;
   double                                   aZPlane = 0;
   occ::handle<NCollection_HArray1<double>> allData;
 
   int upper;
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   bool data = false;
 
   if (!PR.ReadInteger(PR.Current(), aDataType))
-  { // szv#4:S4163:12Mar99 `st=` not needed
-    // st = PR.ReadInteger(PR.Current(), "Data Type", aDataType);
+  {
+
     Message_Msg Msg85("XSTEP_85");
     PR.SendFail(Msg85);
   }
 
   bool st = PR.ReadInteger(PR.Current(), nbData);
-  // st = PR.ReadInteger(PR.Current(), "Number of n-tuples", nbData);
+
   if (st && (nbData > 0))
     data = true;
   else
@@ -57,11 +50,10 @@ void IGESGeom_ToolCopiousData::ReadOwnParams(const occ::handle<IGESGeom_CopiousD
   if (aDataType == 1)
   {
     if (!PR.ReadReal(PR.Current(), aZPlane))
-    { // szv#4:S4163:12Mar99 `st=` not needed
+    {
       Message_Msg Msg87("XSTEP_87");
       PR.SendFail(Msg87);
     }
-    // if (aDataType == 1)  st = PR.ReadReal(PR.Current(), "Z Plane", aZPlane);
   }
 
   if (data)
@@ -74,16 +66,13 @@ void IGESGeom_ToolCopiousData::ReadOwnParams(const occ::handle<IGESGeom_CopiousD
       upper = 6 * nbData;
 
     Message_Msg Msg88("XSTEP_88");
-    // allData = new NCollection_HArray1<double>(1, upper) then fill it :
-    PR.ReadReals(PR.CurrentList(upper), Msg88, allData); // szv#4:S4163:12Mar99 `st=` not needed
-    // st = PR.ReadReals(PR.CurrentList(upper), "Tuples", allData);
+
+    PR.ReadReals(PR.CurrentList(upper), Msg88, allData);
   }
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(aDataType, aZPlane, allData);
 }
-
-//=================================================================================================
 
 void IGESGeom_ToolCopiousData::WriteOwnParams(const occ::handle<IGESGeom_CopiousData>& ent,
                                               IGESData_IGESWriter&                     IW) const
@@ -96,7 +85,7 @@ void IGESGeom_ToolCopiousData::WriteOwnParams(const occ::handle<IGESGeom_Copious
     IW.Send(ent->ZPlane());
   for (int I = 1; I <= upper; I++)
   {
-    // DataType = 1 : XY , 2 : XYZ , 3 : XYZ*2
+
     IW.Send(ent->Data(I, 1));
     IW.Send(ent->Data(I, 2));
     if (dtype > 1)
@@ -109,18 +98,14 @@ void IGESGeom_ToolCopiousData::WriteOwnParams(const occ::handle<IGESGeom_Copious
   }
 }
 
-//=================================================================================================
-
-void IGESGeom_ToolCopiousData::OwnShared(const occ::handle<IGESGeom_CopiousData>& /* ent */,
-                                         Interface_EntityIterator& /* iter */) const
+void IGESGeom_ToolCopiousData::OwnShared(const occ::handle<IGESGeom_CopiousData>&,
+                                         Interface_EntityIterator&) const
 {
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolCopiousData::OwnCopy(const occ::handle<IGESGeom_CopiousData>& another,
                                        const occ::handle<IGESGeom_CopiousData>& ent,
-                                       Interface_CopyTool& /* TC */) const
+                                       Interface_CopyTool&) const
 {
   int                                      upper;
   double                                   aZPlane   = 0;
@@ -172,8 +157,6 @@ void IGESGeom_ToolCopiousData::OwnCopy(const occ::handle<IGESGeom_CopiousData>& 
     ent->SetPolyline(another->IsPolyline());
 }
 
-//=================================================================================================
-
 IGESData_DirChecker IGESGeom_ToolCopiousData::DirChecker(
   const occ::handle<IGESGeom_CopiousData>& ent) const
 {
@@ -194,23 +177,17 @@ IGESData_DirChecker IGESGeom_ToolCopiousData::DirChecker(
   return DC;
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolCopiousData::OwnCheck(const occ::handle<IGESGeom_CopiousData>& ent,
                                         const Interface_ShareTool&,
                                         occ::handle<Interface_Check>& ach) const
 {
-  // MGE 28/07/98
-  // Building of messages
-  //======================================
+
   Message_Msg Msg71("XSTEP_71");
-  // Message_Msg Msg85("XSTEP_85");
-  //======================================
 
   int fn = ent->FormNumber();
   if ((fn > 3 && fn < 11) || (fn > 14 && fn < 63))
   {
-    //    Message_Msg Msg71("XSTEP_71");
+
     ach->SendFail(Msg71);
   }
   int dt = ent->DataType();
@@ -222,15 +199,13 @@ void IGESGeom_ToolCopiousData::OwnCheck(const occ::handle<IGESGeom_CopiousData>&
   if ((dt == 1 && (fn != 1 && fn != 11 && fn != 63)) || (dt == 2 && (fn != 2 && fn != 12))
       || (dt == 3 && (fn != 3 && fn != 13)))
   {
-    //    Message_Msg Msg71("XSTEP_71");
+
     ach->SendFail(Msg71);
   }
 }
 
-//=================================================================================================
-
 void IGESGeom_ToolCopiousData::OwnDump(const occ::handle<IGESGeom_CopiousData>& ent,
-                                       const IGESData_IGESDumper& /* dumper */,
+                                       const IGESData_IGESDumper&,
                                        Standard_OStream& S,
                                        const int         level) const
 {
@@ -279,7 +254,7 @@ void IGESGeom_ToolCopiousData::OwnDump(const occ::handle<IGESGeom_CopiousData>& 
 
       if (dtype == 3)
       {
-        //	gp_XYZ P = ent->Vector(i).XYZ();
+
         S << "\n   Vector (" << T.X() << "," << T.Y() << "," << T.Z() << ")";
         if (yatr)
         {

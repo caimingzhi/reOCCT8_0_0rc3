@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_SurfaceStyleReflectanceAmbient;
 
-//! Read & Write tool for SurfaceStyleReflectanceAmbient
 class RWStepVisual_RWSurfaceStyleReflectanceAmbient
 {
 public:

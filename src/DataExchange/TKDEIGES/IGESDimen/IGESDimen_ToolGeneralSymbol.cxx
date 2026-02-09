@@ -23,7 +23,7 @@ void IGESDimen_ToolGeneralSymbol::ReadOwnParams(const occ::handle<IGESDimen_Gene
                                                 const occ::handle<IGESData_IGESReaderData>& IR,
                                                 IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   int                                                                  i, num;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>   tempGeoms;
   occ::handle<NCollection_HArray1<occ::handle<IGESDimen_LeaderArrow>>> tempLeaders;
@@ -36,25 +36,15 @@ void IGESDimen_ToolGeneralSymbol::ReadOwnParams(const occ::handle<IGESDimen_Gene
                   PR.Current(),
                   "General Note Entity",
                   STANDARD_TYPE(IGESDimen_GeneralNote),
-                  tempNote); // szv#4:S4163:12Mar99 `st=` not needed
+                  tempNote);
 
   bool st = PR.ReadInteger(PR.Current(), "Number of Geometries", num);
   if (!st || num <= 0)
     PR.AddFail("Number of Geometries: Not Positive");
   if (num > 0)
   {
-    // clang-format off
-    PR.ReadEnts (IR,PR.CurrentList(num),"Geometry Entities",tempGeoms); //szv#4:S4163:12Mar99 `st=` not needed
-    // clang-format on
-    /*
-        tempGeoms = new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, num);
-        for ( i = 1; i <= num; i++)
-          {
-        occ::handle<IGESData_IGESEntity> tempEnt;
-        st = PR.ReadEntity(IR, PR.Current(), "Geometry Entity", tempEnt);
-        if (st) tempGeoms->SetValue(i, tempEnt);
-          }
-    */
+
+    PR.ReadEnts(IR, PR.CurrentList(num), "Geometry Entities", tempGeoms);
   }
   else
   {
@@ -69,8 +59,7 @@ void IGESDimen_ToolGeneralSymbol::ReadOwnParams(const occ::handle<IGESDimen_Gene
     for (i = 1; i <= num; i++)
     {
       occ::handle<IGESDimen_LeaderArrow> tempEnt;
-      // st = PR.ReadEntity(IR, PR.Current(), "Leader Entity",
-      // STANDARD_TYPE(IGESDimen_LeaderArrow), tempEnt); //szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "Leader Entity",
@@ -137,7 +126,7 @@ void IGESDimen_ToolGeneralSymbol::OwnCopy(const occ::handle<IGESDimen_GeneralSym
 }
 
 IGESData_DirChecker IGESDimen_ToolGeneralSymbol::DirChecker(
-  const occ::handle<IGESDimen_GeneralSymbol>& /* ent */) const
+  const occ::handle<IGESDimen_GeneralSymbol>&) const
 {
   IGESData_DirChecker DC(228, 0, 9999);
   DC.Structure(IGESData_DefVoid);

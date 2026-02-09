@@ -17,58 +17,35 @@ class Interface_Graph;
 class Standard_Transient;
 class Interface_EntityIterator;
 
-//! This class only says for each Entity of a Model, if it is
-//! Shared or not by one or more other(s) of this Model
-//! It uses the General Service "Shared".
 class Interface_ShareFlags
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates a ShareFlags from a Model and builds required data
-  //! (flags) by calling the General Service Library given as
-  //! argument <lib>
   Standard_EXPORT Interface_ShareFlags(const occ::handle<Interface_InterfaceModel>& amodel,
                                        const Interface_GeneralLib&                  lib);
 
-  //! Same as above, but GeneralLib is detained by a GTool
   Standard_EXPORT Interface_ShareFlags(const occ::handle<Interface_InterfaceModel>& amodel,
                                        const occ::handle<Interface_GTool>&          gtool);
 
-  //! Same as above, but GeneralLib is defined through a Protocol
   Standard_EXPORT Interface_ShareFlags(const occ::handle<Interface_InterfaceModel>& amodel,
                                        const occ::handle<Interface_Protocol>&       protocol);
 
-  //! Same as above, but works with the GTool of the Model
   Standard_EXPORT Interface_ShareFlags(const occ::handle<Interface_InterfaceModel>& amodel);
 
-  //! Creates a ShareFlags by querying information from a Graph
-  //! (remark that Graph also has a method IsShared)
   Standard_EXPORT Interface_ShareFlags(const Interface_Graph& agraph);
 
-  //! Returns the Model used for the evaluation
   Standard_EXPORT occ::handle<Interface_InterfaceModel> Model() const;
 
-  //! Returns True if <ent> is Shared by one or more other
-  //! Entity(ies) of the Model
   Standard_EXPORT bool IsShared(const occ::handle<Standard_Transient>& ent) const;
 
-  //! Returns the Entities which are not Shared (see their flags)
   Standard_EXPORT Interface_EntityIterator RootEntities() const;
 
-  //! Returns the count of root entities
   Standard_EXPORT int NbRoots() const;
 
-  //! Returns a root entity according its rank in the list of roots
-  //! By default, it returns the first one
   Standard_EXPORT occ::handle<Standard_Transient> Root(const int num = 1) const;
 
 private:
-  //! Computes flags at Creation time
-  //!
-  //! Normally, gtool suffices. But if a Graph is created from a
-  //! GeneralLib directly, it cannot be used
-  //! If <gtool> is defined, it has priority
   Standard_EXPORT void Evaluate(const Interface_GeneralLib&         lib,
                                 const occ::handle<Interface_GTool>& gtool);
 

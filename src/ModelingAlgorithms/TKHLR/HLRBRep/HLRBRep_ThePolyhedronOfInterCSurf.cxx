@@ -12,10 +12,7 @@
 
 #include "../../TKGeomAlgo/IntCurveSurface/IntCurveSurface_PolyhedronUtils.hpp"
 
-// Namespace alias for brevity
 namespace PolyUtils = IntCurveSurface_PolyhedronUtils;
-
-//==================================================================================================
 
 HLRBRep_ThePolyhedronOfInterCSurf::HLRBRep_ThePolyhedronOfInterCSurf(HLRBRep_Surface* Surface,
                                                                      const int        nbdU,
@@ -36,8 +33,6 @@ HLRBRep_ThePolyhedronOfInterCSurf::HLRBRep_ThePolyhedronOfInterCSurf(HLRBRep_Sur
   Init(Surface, u1, v1, u2, v2);
 }
 
-//==================================================================================================
-
 HLRBRep_ThePolyhedronOfInterCSurf::HLRBRep_ThePolyhedronOfInterCSurf(
   HLRBRep_Surface*                  Surface,
   const NCollection_Array1<double>& Upars,
@@ -54,14 +49,10 @@ HLRBRep_ThePolyhedronOfInterCSurf::HLRBRep_ThePolyhedronOfInterCSurf(
   Init(Surface, Upars, Vpars);
 }
 
-//==================================================================================================
-
 void HLRBRep_ThePolyhedronOfInterCSurf::Destroy()
 {
   PolyUtils::Destroy(C_MyPnts, C_MyU, C_MyV, C_MyIsOnBounds);
 }
-
-//==================================================================================================
 
 void HLRBRep_ThePolyhedronOfInterCSurf::Init(HLRBRep_Surface* Surface,
                                              const double     U0,
@@ -69,7 +60,7 @@ void HLRBRep_ThePolyhedronOfInterCSurf::Init(HLRBRep_Surface* Surface,
                                              const double     U1,
                                              const double     V1)
 {
-  // Initialize grid evaluator with the underlying BRepAdaptor_Surface
+
   GeomGridEval_Surface anEval;
   anEval.Initialize(Surface->Surface());
 
@@ -94,13 +85,11 @@ void HLRBRep_ThePolyhedronOfInterCSurf::Init(HLRBRep_Surface* Surface,
     PolyUtils::ComputeMaxBorderDeflection(anEval, U0, V0, U1, V1, nbdeltaU, nbdeltaV);
 }
 
-//==================================================================================================
-
 void HLRBRep_ThePolyhedronOfInterCSurf::Init(HLRBRep_Surface*                  Surface,
                                              const NCollection_Array1<double>& Upars,
                                              const NCollection_Array1<double>& Vpars)
 {
-  // Initialize grid evaluator with the underlying BRepAdaptor_Surface
+
   GeomGridEval_Surface anEval;
   anEval.Initialize(Surface->Surface());
 
@@ -128,35 +117,25 @@ void HLRBRep_ThePolyhedronOfInterCSurf::Init(HLRBRep_Surface*                  S
                                                               nbdeltaV);
 }
 
-//==================================================================================================
-
 void HLRBRep_ThePolyhedronOfInterCSurf::Parameters(const int Index, double& U, double& V) const
 {
   PolyUtils::Parameters(Index, C_MyU, C_MyV, U, V);
 }
-
-//==================================================================================================
 
 void HLRBRep_ThePolyhedronOfInterCSurf::DeflectionOverEstimation(const double flec)
 {
   PolyUtils::SetDeflectionOverEstimation(flec, TheDeflection, TheBnd);
 }
 
-//==================================================================================================
-
 double HLRBRep_ThePolyhedronOfInterCSurf::DeflectionOverEstimation() const
 {
   return TheDeflection;
 }
 
-//==================================================================================================
-
 const Bnd_Box& HLRBRep_ThePolyhedronOfInterCSurf::Bounding() const
 {
   return TheBnd;
 }
-
-//==================================================================================================
 
 void HLRBRep_ThePolyhedronOfInterCSurf::FillBounding()
 {
@@ -168,29 +147,21 @@ void HLRBRep_ThePolyhedronOfInterCSurf::FillBounding()
                           TheComponentsBnd);
 }
 
-//==================================================================================================
-
 const occ::handle<NCollection_HArray1<Bnd_Box>>& HLRBRep_ThePolyhedronOfInterCSurf::
   ComponentsBounding() const
 {
   return TheComponentsBnd;
 }
 
-//==================================================================================================
-
 int HLRBRep_ThePolyhedronOfInterCSurf::NbTriangles() const
 {
   return PolyUtils::NbTriangles(nbdeltaU, nbdeltaV);
 }
 
-//==================================================================================================
-
 int HLRBRep_ThePolyhedronOfInterCSurf::NbPoints() const
 {
   return PolyUtils::NbPoints(nbdeltaU, nbdeltaV);
 }
-
-//==================================================================================================
 
 int HLRBRep_ThePolyhedronOfInterCSurf::TriConnex(const int Triang,
                                                  const int Pivot,
@@ -201,8 +172,6 @@ int HLRBRep_ThePolyhedronOfInterCSurf::TriConnex(const int Triang,
   return PolyUtils::TriConnex(Triang, Pivot, Pedge, TriCon, OtherP, nbdeltaU, nbdeltaV);
 }
 
-//==================================================================================================
-
 void HLRBRep_ThePolyhedronOfInterCSurf::PlaneEquation(const int Triang,
                                                       gp_XYZ&   NormalVector,
                                                       double&   PolarDistance) const
@@ -212,8 +181,6 @@ void HLRBRep_ThePolyhedronOfInterCSurf::PlaneEquation(const int Triang,
   PolyUtils::PlaneEquation(Point(i1), Point(i2), Point(i3), NormalVector, PolarDistance);
 }
 
-//==================================================================================================
-
 bool HLRBRep_ThePolyhedronOfInterCSurf::Contain(const int Triang, const gp_Pnt& ThePnt) const
 {
   int i1, i2, i3;
@@ -221,11 +188,7 @@ bool HLRBRep_ThePolyhedronOfInterCSurf::Contain(const int Triang, const gp_Pnt& 
   return PolyUtils::Contain(Point(i1), Point(i2), Point(i3), ThePnt);
 }
 
-//==================================================================================================
-
 void HLRBRep_ThePolyhedronOfInterCSurf::Dump() const {}
-
-//==================================================================================================
 
 void HLRBRep_ThePolyhedronOfInterCSurf::Size(int& nbdu, int& nbdv) const
 {
@@ -233,28 +196,20 @@ void HLRBRep_ThePolyhedronOfInterCSurf::Size(int& nbdu, int& nbdv) const
   nbdv = nbdeltaV;
 }
 
-//==================================================================================================
-
 void HLRBRep_ThePolyhedronOfInterCSurf::Triangle(const int Index, int& P1, int& P2, int& P3) const
 {
   PolyUtils::Triangle(Index, P1, P2, P3, nbdeltaV);
 }
-
-//==================================================================================================
 
 const gp_Pnt& HLRBRep_ThePolyhedronOfInterCSurf::Point(const int Index, double& U, double& V) const
 {
   return PolyUtils::Point(Index, C_MyPnts, C_MyU, C_MyV, U, V);
 }
 
-//==================================================================================================
-
 const gp_Pnt& HLRBRep_ThePolyhedronOfInterCSurf::Point(const int Index) const
 {
   return PolyUtils::Point(Index, C_MyPnts);
 }
-
-//==================================================================================================
 
 void HLRBRep_ThePolyhedronOfInterCSurf::Point(const gp_Pnt&,
                                               const int,
@@ -264,14 +219,10 @@ void HLRBRep_ThePolyhedronOfInterCSurf::Point(const gp_Pnt&,
 {
 }
 
-//==================================================================================================
-
 void HLRBRep_ThePolyhedronOfInterCSurf::Point(const int Index, gp_Pnt& P) const
 {
   PolyUtils::Point(Index, C_MyPnts, P);
 }
-
-//==================================================================================================
 
 bool HLRBRep_ThePolyhedronOfInterCSurf::IsOnBound(const int Index1, const int Index2) const
 {
@@ -282,56 +233,40 @@ bool HLRBRep_ThePolyhedronOfInterCSurf::IsOnBound(const int Index1, const int In
                               nbdeltaV);
 }
 
-//==================================================================================================
-
 void HLRBRep_ThePolyhedronOfInterCSurf::UMinSingularity(const bool Sing)
 {
   UMinSingular = Sing;
 }
-
-//==================================================================================================
 
 void HLRBRep_ThePolyhedronOfInterCSurf::UMaxSingularity(const bool Sing)
 {
   UMaxSingular = Sing;
 }
 
-//==================================================================================================
-
 void HLRBRep_ThePolyhedronOfInterCSurf::VMinSingularity(const bool Sing)
 {
   VMinSingular = Sing;
 }
-
-//==================================================================================================
 
 void HLRBRep_ThePolyhedronOfInterCSurf::VMaxSingularity(const bool Sing)
 {
   VMaxSingular = Sing;
 }
 
-//==================================================================================================
-
 bool HLRBRep_ThePolyhedronOfInterCSurf::HasUMinSingularity() const
 {
   return UMinSingular;
 }
-
-//==================================================================================================
 
 bool HLRBRep_ThePolyhedronOfInterCSurf::HasUMaxSingularity() const
 {
   return UMaxSingular;
 }
 
-//==================================================================================================
-
 bool HLRBRep_ThePolyhedronOfInterCSurf::HasVMinSingularity() const
 {
   return VMinSingular;
 }
-
-//==================================================================================================
 
 bool HLRBRep_ThePolyhedronOfInterCSurf::HasVMaxSingularity() const
 {

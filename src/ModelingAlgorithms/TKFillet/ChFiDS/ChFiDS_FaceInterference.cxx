@@ -1,8 +1,6 @@
 #include <ChFiDS_FaceInterference.hpp>
 #include <Geom2d_Curve.hpp>
 
-//=================================================================================================
-
 ChFiDS_FaceInterference::ChFiDS_FaceInterference()
     : firstParam(0.0),
       lastParam(0.0),

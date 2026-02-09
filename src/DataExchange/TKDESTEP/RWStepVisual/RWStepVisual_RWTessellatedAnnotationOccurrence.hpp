@@ -11,7 +11,6 @@ class StepVisual_TessellatedAnnotationOccurrence;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AnnotationOccurrence
 class RWStepVisual_RWTessellatedAnnotationOccurrence
 {
 public:

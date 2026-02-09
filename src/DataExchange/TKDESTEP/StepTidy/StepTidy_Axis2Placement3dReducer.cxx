@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <StepTidy_Axis2Placement3dReducer.hpp>
 
@@ -26,8 +15,6 @@
 #include <StepGeom_ToroidalSurface.hpp>
 #include <StepShape_AdvancedBrepShapeRepresentation.hpp>
 #include <StepGeom_SphericalSurface.hpp>
-
-//==================================================================================================
 
 StepTidy_Axis2Placement3dReducer::StepTidy_Axis2Placement3dReducer(
   const occ::handle<XSControl_WorkSession>& theWS)
@@ -52,8 +39,6 @@ StepTidy_Axis2Placement3dReducer::StepTidy_Axis2Placement3dReducer(
   registerReplacer(STANDARD_TYPE(StepGeom_SphericalSurface), replaceSphericalSurface);
 }
 
-//==================================================================================================
-
 bool StepTidy_Axis2Placement3dReducer::replacePlane(
   const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
   const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
@@ -67,8 +52,6 @@ bool StepTidy_Axis2Placement3dReducer::replacePlane(
   }
   return false;
 }
-
-//==================================================================================================
 
 bool StepTidy_Axis2Placement3dReducer::replaceItemDefinedTransformation(
   const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
@@ -91,8 +74,6 @@ bool StepTidy_Axis2Placement3dReducer::replaceItemDefinedTransformation(
   return isReplaced;
 }
 
-//==================================================================================================
-
 bool StepTidy_Axis2Placement3dReducer::replaceCylindricalSurface(
   const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
   const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
@@ -107,8 +88,6 @@ bool StepTidy_Axis2Placement3dReducer::replaceCylindricalSurface(
   }
   return false;
 }
-
-//==================================================================================================
 
 bool StepTidy_Axis2Placement3dReducer::replaceShapeRepresentation(
   const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
@@ -129,8 +108,6 @@ bool StepTidy_Axis2Placement3dReducer::replaceShapeRepresentation(
   return isReplaced;
 }
 
-//==================================================================================================
-
 bool StepTidy_Axis2Placement3dReducer::replaceConstructiveGeometryRepresentation(
   const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
   const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
@@ -150,8 +127,6 @@ bool StepTidy_Axis2Placement3dReducer::replaceConstructiveGeometryRepresentation
   return isReplaced;
 }
 
-//==================================================================================================
-
 bool StepTidy_Axis2Placement3dReducer::replaceCircle(
   const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
   const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
@@ -166,8 +141,6 @@ bool StepTidy_Axis2Placement3dReducer::replaceCircle(
   }
   return false;
 }
-
-//==================================================================================================
 
 bool StepTidy_Axis2Placement3dReducer::replacePresentationLayerAssignment(
   const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
@@ -190,8 +163,6 @@ bool StepTidy_Axis2Placement3dReducer::replacePresentationLayerAssignment(
   return isReplaced;
 }
 
-//==================================================================================================
-
 bool StepTidy_Axis2Placement3dReducer::replaceStyledItem(
   const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
   const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
@@ -205,8 +176,6 @@ bool StepTidy_Axis2Placement3dReducer::replaceStyledItem(
   }
   return false;
 }
-
-//==================================================================================================
 
 bool StepTidy_Axis2Placement3dReducer::replaceEllipse(
   const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
@@ -223,8 +192,6 @@ bool StepTidy_Axis2Placement3dReducer::replaceEllipse(
   return false;
 }
 
-//==================================================================================================
-
 bool StepTidy_Axis2Placement3dReducer::replaceConicalSurface(
   const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
   const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
@@ -240,8 +207,6 @@ bool StepTidy_Axis2Placement3dReducer::replaceConicalSurface(
   return false;
 }
 
-//==================================================================================================
-
 bool StepTidy_Axis2Placement3dReducer::replaceToroidalSurface(
   const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
   const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
@@ -256,8 +221,6 @@ bool StepTidy_Axis2Placement3dReducer::replaceToroidalSurface(
   }
   return false;
 }
-
-//==================================================================================================
 
 bool StepTidy_Axis2Placement3dReducer::replaceAdvancedBrepShapeRepresentation(
   const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
@@ -277,8 +240,6 @@ bool StepTidy_Axis2Placement3dReducer::replaceAdvancedBrepShapeRepresentation(
   }
   return isReplaced;
 }
-
-//==================================================================================================
 
 bool StepTidy_Axis2Placement3dReducer::replaceSphericalSurface(
   const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,

@@ -18,20 +18,6 @@
 
 static const int aNbSolMAX = 16;
 
-// circulaire tangent a deux cercles et de rayon donne
-//====================================================
-//========================================================================
-// On initialise WellDone a false.                                       +
-// On recupere le cercle C1 et le cercle C2.                             +
-// On sort en erreur dans les cas ou la construction est impossible.     +
-// On distingue les cas limites pour les triater separement.             +
-// On fait la parallele a C1 dans le bon sens.                           +
-// On fait la parallele a C2 dans le bon sens.                           +
-// On intersecte les paralleles ==> point de centre de la solution.      +
-// On cree la solution qu on ajoute aux solutions deja trouvees.         +
-// On remplit les champs.                                                +
-//========================================================================
-
 Geom2dGcc_Circ2d2TanRad::Geom2dGcc_Circ2d2TanRad(const Geom2dGcc_QualifiedCurve& Qualified1,
                                                  const Geom2dGcc_QualifiedCurve& Qualified2,
                                                  const double                    Radius,
@@ -60,10 +46,6 @@ Geom2dGcc_Circ2d2TanRad::Geom2dGcc_Circ2d2TanRad(const Geom2dGcc_QualifiedCurve&
     const occ::handle<Geom2d_Curve>& CC2   = C2.Curve();
     GeomAbs_CurveType                Type1 = C1.GetType();
     GeomAbs_CurveType                Type2 = C2.GetType();
-
-    //=============================================================================
-    //                            Appel a GccAna.                                 +
-    //=============================================================================
 
     Invert = false;
     NbrSol = 0;
@@ -172,9 +154,7 @@ Geom2dGcc_Circ2d2TanRad::Geom2dGcc_Circ2d2TanRad(const Geom2dGcc_QualifiedCurve&
         }
       }
     }
-    //=============================================================================
-    //                            Appel a GccGeo.                                 +
-    //=============================================================================
+
     else
     {
       if (Type1 == GeomAbs_Line)
@@ -298,10 +278,6 @@ Geom2dGcc_Circ2d2TanRad::Geom2dGcc_Circ2d2TanRad(const Geom2dGcc_QualifiedCurve&
     const occ::handle<Geom2d_Curve>& CC1   = C1.Curve();
     GeomAbs_CurveType                Type1 = C1.GetType();
 
-    //=============================================================================
-    //                            Appel a GccAna.                                 +
-    //=============================================================================
-
     Invert = false;
     NbrSol = 0;
     if (Type1 == GeomAbs_Line || Type1 == GeomAbs_Circle)
@@ -335,9 +311,7 @@ Geom2dGcc_Circ2d2TanRad::Geom2dGcc_Circ2d2TanRad(const Geom2dGcc_QualifiedCurve&
         Results(CircAna);
       }
     }
-    //=============================================================================
-    //                            Appel a GccGeo.                                 +
-    //=============================================================================
+
     else
     {
       Geom2dGcc_QCurve           Qc1(C1, Qualified1.Qualifier());
@@ -375,10 +349,6 @@ Geom2dGcc_Circ2d2TanRad::Geom2dGcc_Circ2d2TanRad(const occ::handle<Geom2d_Point>
   }
   else
   {
-
-    //=============================================================================
-    //                            Appel a GccAna.                                 +
-    //=============================================================================
 
     Invert = false;
     NbrSol = 0;
@@ -621,5 +591,4 @@ bool Geom2dGcc_Circ2d2TanRad::IsTheSame2(const int Index) const
   {
     return TheSame1(Index) != 0;
   }
-  //  return true;
 }

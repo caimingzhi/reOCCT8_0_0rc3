@@ -3,7 +3,6 @@
 #include <IVtkTools.hpp>
 #include <IVtkOCC_Shape.hpp>
 
-// prevent disabling some MSVC warning messages by VTK headers
 #include <Standard_WarningsDisable.hpp>
 #include <vtkDataObject.h>
 #include <vtkSetGet.h>
@@ -17,16 +16,9 @@ class IVtkTools_ShapeDataSource;
 
 #ifdef _MSC_VER
   #pragma warning(push)
-  #pragma warning(disable : 4251) // avoid warning C4251: "class needs to have dll-interface..."
+  #pragma warning(disable : 4251)
 #endif
 
-//! @class IVtkTools_ShapeObject
-//! @brief VTK holder class for OCC shapes to pass them through pipelines.
-//!
-//! It is descendant of vtkObject (data). Logically it is a one of milestones of VTK pipeline.
-//! It stores data of OCC shape (the OccShape instance) in vtkInformation object of vtkDataObject.
-//! Then pass it to the actors through pipelines,
-//! so selection logic can access OccShape easily given the actor instance.
 class Standard_EXPORT IVtkTools_ShapeObject : public vtkDataObject
 {
 public:
@@ -34,42 +26,31 @@ public:
 
     static IVtkTools_ShapeObject* New();
 
-  //! Get OCC shape source from VTK data from actor's information object by key.
   static vtkSmartPointer<IVtkTools_ShapeDataSource> GetShapeSource(vtkActor* theActor);
 
-  //! Get OCC shape from VTK data from actor's information object by key.
   static IVtkOCC_Shape::Handle GetOccShape(vtkActor* theActor);
 
-  //! Static method to set OCC shape source to VTK dataset in information object
-  //! with key.
   static void SetShapeSource(IVtkTools_ShapeDataSource* theDataSource, vtkDataSet* theData);
 
-  //! Static method to set OCC shape source to VTK actor in information object
-  //! with key.
   static void SetShapeSource(IVtkTools_ShapeDataSource* theDataSource, vtkActor* theActor);
 
   typedef vtkInformationObjectBaseKey* KeyPtr;
 
-  //! Static method used by shape selection logic in order to establish
-  //! a connection from vtkActor to OccShape instance.
-  //! @return vtkInformationKey for retrieving OccShape instance from the actor
   static KeyPtr getKey();
 
-  //! OCC shape source setter.
   void SetShapeSource(IVtkTools_ShapeDataSource* theDataSource);
 
-  //! OCC shape source getter.
   IVtkTools_ShapeDataSource* GetShapeSource() const;
 
 protected:
   IVtkTools_ShapeObject();
   ~IVtkTools_ShapeObject() override;
 
-private: // not copyable
+private:
   IVtkTools_ShapeObject(const IVtkTools_ShapeObject&)            = delete;
   IVtkTools_ShapeObject& operator=(const IVtkTools_ShapeObject&) = delete;
 
-private: // OCC
+private:
   vtkWeakPointer<IVtkTools_ShapeDataSource> myShapeSource;
 
   static KeyPtr myKey;

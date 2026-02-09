@@ -33,21 +33,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Shape, AIS_InteractiveObject)
 
-// Auxiliary macros
 #define replaceAspectWithDef(theMap, theAspect)                                                    \
   if (myDrawer->Link()->theAspect()->Aspect() != myDrawer->theAspect()->Aspect())                  \
   {                                                                                                \
     theMap.Bind(myDrawer->theAspect()->Aspect(), myDrawer->Link()->theAspect()->Aspect());         \
   }
 
-// Auxiliary macros for replaceWithNewOwnAspects()
 #define replaceAspectWithOwn(theMap, theAspect)                                                    \
   if (myDrawer->Link()->theAspect()->Aspect() != myDrawer->theAspect()->Aspect())                  \
   {                                                                                                \
     theMap.Bind(myDrawer->Link()->theAspect()->Aspect(), myDrawer->theAspect()->Aspect());         \
   }
-
-//=================================================================================================
 
 void AIS_Shape::replaceWithNewOwnAspects()
 {
@@ -65,8 +61,6 @@ void AIS_Shape::replaceWithNewOwnAspects()
   replaceAspects(aReplaceMap);
 }
 
-//=================================================================================================
-
 AIS_Shape::AIS_Shape(const TopoDS_Shape& theShape)
     : AIS_InteractiveObject(PrsMgr_TOP_ProjectorDependent),
       myshape(theShape),
@@ -78,8 +72,6 @@ AIS_Shape::AIS_Shape(const TopoDS_Shape& theShape)
 {
 }
 
-//=================================================================================================
-
 void AIS_Shape::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                         const occ::handle<Prs3d_Presentation>& thePrs,
                         const int                              theMode)
@@ -89,10 +81,9 @@ void AIS_Shape::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     return;
   }
 
-  // wire,edge,vertex -> pas de HLR + priorite display superieure
   if (myshape.ShapeType() >= TopAbs_WIRE && myshape.ShapeType() <= TopAbs_VERTEX)
   {
-    // TopAbs_WIRE -> 7, TopAbs_EDGE -> 8, TopAbs_VERTEX -> 9 (Graphic3d_DisplayPriority_Highlight)
+
     const int aPrior =
       (int)Graphic3d_DisplayPriority_Above1 + (int)myshape.ShapeType() - TopAbs_WIRE;
     thePrs->SetVisual(Graphic3d_TOS_ALL);
@@ -101,7 +92,7 @@ void AIS_Shape::Compute(const occ::handle<PrsMgr_PresentationManager>&,
 
   if (IsInfinite())
   {
-    thePrs->SetInfiniteState(true); // not taken in account during FITALL
+    thePrs->SetInfiniteState(true);
   }
 
   switch (theMode)
@@ -169,7 +160,6 @@ void AIS_Shape::Compute(const occ::handle<PrsMgr_PresentationManager>&,
       break;
     }
 
-    // Bounding box.
     case 2:
     {
       if (IsInfinite())
@@ -183,11 +173,8 @@ void AIS_Shape::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     }
   }
 
-  // Recompute hidden line presentation (if necessary).
   thePrs->ReCompute();
 }
-
-//=================================================================================================
 
 void AIS_Shape::computeHlrPresentation(const occ::handle<Graphic3d_Camera>&   theProjector,
                                        const occ::handle<Prs3d_Presentation>& thePrs,
@@ -273,8 +260,6 @@ void AIS_Shape::computeHlrPresentation(const occ::handle<Graphic3d_Camera>&   th
   aDefDrawer->SetTypeOfDeflection(aPrevDef);
 }
 
-//=================================================================================================
-
 void AIS_Shape::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSelection,
                                  const int                               aMode)
 {
@@ -282,14 +267,12 @@ void AIS_Shape::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSelect
     return;
   if (myshape.ShapeType() == TopAbs_COMPOUND && myshape.NbChildren() == 0)
   {
-    // empty Shape -> empty Assembly.
+
     return;
   }
 
   TopAbs_ShapeEnum TypOfSel = AIS_Shape::SelectionType(aMode);
   TopoDS_Shape     shape    = myshape;
-
-  // POP protection against crash in low layers
 
   double aDeflection = StdPrs_ToolTriangulatedShape::GetDeflection(shape, myDrawer);
   try
@@ -317,7 +300,6 @@ void AIS_Shape::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSelect
     }
   }
 
-  // insert the drawer in the BrepOwners for hilight...
   StdSelect::SetDrawerForBRepOwner(aSelection, myDrawer);
 }
 
@@ -342,8 +324,6 @@ double AIS_Shape::Transparency() const
   return !aShading.IsNull() ? aShading->Transparency(myCurrentFacingModel) : 0.0;
 }
 
-//=================================================================================================
-
 bool AIS_Shape::setColor(const occ::handle<Prs3d_Drawer>& theDrawer,
                          const Quantity_Color&            theColor) const
 {
@@ -352,7 +332,6 @@ bool AIS_Shape::setColor(const occ::handle<Prs3d_Drawer>& theDrawer,
   toRecompute      = theDrawer->SetOwnLineAspects() || toRecompute;
   toRecompute      = theDrawer->SetupOwnPointAspect() || toRecompute;
 
-  // override color
   theDrawer->ShadingAspect()->SetColor(theColor, myCurrentFacingModel);
   theDrawer->LineAspect()->SetColor(theColor);
   theDrawer->WireAspect()->SetColor(theColor);
@@ -363,8 +342,6 @@ bool AIS_Shape::setColor(const occ::handle<Prs3d_Drawer>& theDrawer,
   theDrawer->FaceBoundaryAspect()->SetColor(theColor);
   return toRecompute;
 }
-
-//=================================================================================================
 
 void AIS_Shape::SetColor(const Quantity_Color& theColor)
 {
@@ -382,8 +359,6 @@ void AIS_Shape::SetColor(const Quantity_Color& theColor)
   }
   recomputeComputed();
 }
-
-//=================================================================================================
 
 void AIS_Shape::UnsetColor()
 {
@@ -453,7 +428,6 @@ void AIS_Shape::UnsetColor()
 
   if (!myDrawer->HasOwnShadingAspect())
   {
-    //
   }
   else if (HasMaterial() || IsTransparent() || myDrawer->ShadingAspect()->Aspect()->ToMapTexture())
   {
@@ -503,14 +477,11 @@ void AIS_Shape::UnsetColor()
   recomputeComputed();
 }
 
-//=================================================================================================
-
 bool AIS_Shape::setWidth(const occ::handle<Prs3d_Drawer>& theDrawer,
                          const double                     theLineWidth) const
 {
   bool toRecompute = theDrawer->SetOwnLineAspects();
 
-  // override width
   theDrawer->LineAspect()->SetWidth(theLineWidth);
   theDrawer->WireAspect()->SetWidth(theLineWidth);
   theDrawer->FreeBoundaryAspect()->SetWidth(theLineWidth);
@@ -519,8 +490,6 @@ bool AIS_Shape::setWidth(const occ::handle<Prs3d_Drawer>& theDrawer,
   theDrawer->FaceBoundaryAspect()->SetWidth(theLineWidth);
   return toRecompute;
 }
-
-//=================================================================================================
 
 void AIS_Shape::SetWidth(const double theLineWidth)
 {
@@ -536,8 +505,6 @@ void AIS_Shape::SetWidth(const double theLineWidth)
   }
   recomputeComputed();
 }
-
-//=================================================================================================
 
 void AIS_Shape::UnsetWidth()
 {
@@ -584,8 +551,6 @@ void AIS_Shape::UnsetWidth()
   recomputeComputed();
 }
 
-//=================================================================================================
-
 void AIS_Shape::setMaterial(const occ::handle<Prs3d_Drawer>& theDrawer,
                             const Graphic3d_MaterialAspect&  theMaterial,
                             const bool                       theToKeepColor,
@@ -607,8 +572,6 @@ void AIS_Shape::setMaterial(const occ::handle<Prs3d_Drawer>& theDrawer,
   }
 }
 
-//=================================================================================================
-
 void AIS_Shape::SetMaterial(const Graphic3d_MaterialAspect& theMat)
 {
   const bool toRecompute = !myDrawer->HasOwnShadingAspect();
@@ -625,8 +588,6 @@ void AIS_Shape::SetMaterial(const Graphic3d_MaterialAspect& theMat)
   }
 }
 
-//=================================================================================================
-
 void AIS_Shape::UnsetMaterial()
 {
   if (!HasMaterial())
@@ -636,7 +597,6 @@ void AIS_Shape::UnsetMaterial()
 
   if (!myDrawer->HasOwnShadingAspect())
   {
-    //
   }
   else if (HasColor() || IsTransparent() || myDrawer->ShadingAspect()->Aspect()->ToMapTexture())
   {
@@ -662,17 +622,13 @@ void AIS_Shape::UnsetMaterial()
   }
 }
 
-//=================================================================================================
-
 void AIS_Shape::setTransparency(const occ::handle<Prs3d_Drawer>& theDrawer,
                                 const double                     theValue) const
 {
   theDrawer->SetupOwnShadingAspect();
-  // override transparency
+
   theDrawer->ShadingAspect()->SetTransparency(theValue, myCurrentFacingModel);
 }
-
-//=================================================================================================
 
 void AIS_Shape::SetTransparency(const double theValue)
 {
@@ -689,8 +645,6 @@ void AIS_Shape::SetTransparency(const double theValue)
     replaceWithNewOwnAspects();
   }
 }
-
-//=================================================================================================
 
 void AIS_Shape::UnsetTransparency()
 {
@@ -713,34 +667,24 @@ void AIS_Shape::UnsetTransparency()
   }
 }
 
-//=================================================================================================
-
 const Bnd_Box& AIS_Shape::BoundingBox()
 {
   if (myshape.ShapeType() == TopAbs_COMPOUND && myshape.NbChildren() == 0)
   {
-    // empty Shape  -> empty Assembly.
+
     myBB.SetVoid();
     return myBB;
   }
 
   if (myCompBB)
   {
-    // Clear the bounding box to re-compute it.
+
     myBB.SetVoid();
     BRepBndLib::Add(myshape, myBB, false);
     myCompBB = false;
   }
   return myBB;
 }
-
-//*****
-//***** Reset
-//=======================================================================
-// function : SetOwnDeviationCoefficient
-// purpose  : resets myhasOwnDeviationCoefficient to false and
-//           returns true if it change
-//=======================================================================
 
 bool AIS_Shape::SetOwnDeviationCoefficient()
 {
@@ -750,12 +694,6 @@ bool AIS_Shape::SetOwnDeviationCoefficient()
   return itSet;
 }
 
-//=======================================================================
-// function : SetOwnDeviationAngle
-// purpose  : resets myhasOwnDeviationAngle to false and
-//           returns true if it change
-//=======================================================================
-
 bool AIS_Shape::SetOwnDeviationAngle()
 {
   bool itSet = myDrawer->HasOwnDeviationAngle();
@@ -764,23 +702,17 @@ bool AIS_Shape::SetOwnDeviationAngle()
   return itSet;
 }
 
-//=================================================================================================
-
 void AIS_Shape::SetOwnDeviationCoefficient(const double aCoefficient)
 {
   myDrawer->SetDeviationCoefficient(aCoefficient);
   SetToUpdate();
 }
 
-//=================================================================================================
-
 void AIS_Shape::SetOwnDeviationAngle(const double theAngle)
 {
   myDrawer->SetDeviationAngle(theAngle);
   SetToUpdate(AIS_WireFrame);
 }
-
-//=================================================================================================
 
 void AIS_Shape::SetAngleAndDeviation(const double anAngle)
 {
@@ -792,14 +724,10 @@ void AIS_Shape::SetAngleAndDeviation(const double anAngle)
   SetToUpdate();
 }
 
-//=================================================================================================
-
 double AIS_Shape::UserAngle() const
 {
   return myInitAng == 0. ? GetContext()->DeviationAngle() : myInitAng;
 }
-
-//=================================================================================================
 
 bool AIS_Shape::OwnDeviationCoefficient(double& aCoefficient, double& aPreviousCoefficient) const
 {
@@ -808,16 +736,12 @@ bool AIS_Shape::OwnDeviationCoefficient(double& aCoefficient, double& aPreviousC
   return myDrawer->HasOwnDeviationCoefficient();
 }
 
-//=================================================================================================
-
 bool AIS_Shape::OwnDeviationAngle(double& anAngle, double& aPreviousAngle) const
 {
   anAngle        = myDrawer->DeviationAngle();
   aPreviousAngle = myDrawer->PreviousDeviationAngle();
   return myDrawer->HasOwnDeviationAngle();
 }
-
-//=================================================================================================
 
 void AIS_Shape::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

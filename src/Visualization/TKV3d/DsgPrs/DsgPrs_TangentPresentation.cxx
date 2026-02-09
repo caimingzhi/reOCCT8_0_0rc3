@@ -22,7 +22,6 @@ void DsgPrs_TangentPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
   gp_Pnt p1   = OffsetPoint.Translated(vec1);
   gp_Pnt p2   = OffsetPoint.Translated(vec2);
 
-  // Aspect
   occ::handle<Prs3d_DimensionAspect> LA = aDrawer->DimensionAspect();
   LA->LineAspect()->SetTypeOfLine(Aspect_TOL_SOLID);
   occ::handle<Prs3d_ArrowAspect> ARR1 = LA->ArrowAspect();
@@ -30,7 +29,6 @@ void DsgPrs_TangentPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
   ARR1->SetLength(length / 5);
   ARR2->SetLength(length / 5);
 
-  // Array1OfVertex
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
   occ::handle<Graphic3d_ArrayOfSegments> aPrims = new Graphic3d_ArrayOfSegments(2);
@@ -38,7 +36,6 @@ void DsgPrs_TangentPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
   aPrims->AddVertex(p2);
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // fleche 1 :
   aPresentation->NewGroup();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
   Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
@@ -47,7 +44,6 @@ void DsgPrs_TangentPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
                     LA->ArrowAspect()->Angle(),
                     LA->ArrowAspect()->Length());
 
-  // fleche 2
   aPresentation->NewGroup();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
   Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),

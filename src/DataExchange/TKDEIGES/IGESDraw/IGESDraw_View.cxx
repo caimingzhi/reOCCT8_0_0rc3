@@ -9,8 +9,6 @@ IMPLEMENT_STANDARD_RTTIEXT(IGESDraw_View, IGESData_ViewKindEntity)
 
 IGESDraw_View::IGESDraw_View() = default;
 
-// This class inherits from IGESData_ViewKindEntity
-
 void IGESDraw_View::Init(const int                          aViewNum,
                          const double                       aScale,
                          const occ::handle<IGESGeom_Plane>& aLeftPlane,
@@ -34,7 +32,6 @@ void IGESDraw_View::Init(const int                          aViewNum,
 bool IGESDraw_View::IsSingle() const
 {
   return true;
-  // Redefined to return TRUE
 }
 
 int IGESDraw_View::NbViews() const

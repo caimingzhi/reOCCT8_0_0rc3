@@ -9,8 +9,6 @@
 #include <IntSurf.hpp>
 #include <IntSurf_LineOn2S.hpp>
 
-//=================================================================================================
-
 static inline void AddPointIntoLine(occ::handle<IntSurf_LineOn2S>& theLine,
                                     const double* const            theArrPeriods,
                                     IntSurf_PntOn2S&               thePoint,
@@ -30,10 +28,6 @@ static inline void AddPointIntoLine(occ::handle<IntSurf_LineOn2S>& theLine,
   theLine->Add(thePoint);
 }
 
-//=======================================================================
-// function : AddVertexPoint
-// purpose  : Extracts IntSurf_PntOn2S from theVertex and adds result in theLine.
-//=======================================================================
 static void AddVertexPoint(occ::handle<IntSurf_LineOn2S>& theLine,
                            IntPatch_Point&                theVertex,
                            const double* const            theArrPeriods)
@@ -42,15 +36,6 @@ static void AddVertexPoint(occ::handle<IntSurf_LineOn2S>& theLine,
   AddPointIntoLine(theLine, theArrPeriods, anApexPoint, &theVertex);
 }
 
-//=======================================================================
-// function : IsPoleOrSeam
-// purpose  : Processes theVertex depending on its type
-//            (pole/apex/point on boundary etc.) and adds it in theLine.
-//           thePIsoRef is the reference point using in case when the
-//            value of correspond parameter cannot be precise.
-//           theSingularSurfaceID contains the ID of surface with
-//            special point (0 - none, 1 - theS1, 2 - theS2)
-//=======================================================================
 static IntPatch_SpecPntType IsPoleOrSeam(const occ::handle<Adaptor3d_Surface>& theS1,
                                          const occ::handle<Adaptor3d_Surface>& theS2,
                                          const IntSurf_PntOn2S&                thePIsoRef,
@@ -123,8 +108,6 @@ static IntPatch_SpecPntType IsPoleOrSeam(const occ::handle<Adaptor3d_Surface>& t
   return IntPatch_SPntNone;
 }
 
-//=================================================================================================
-
 IntPatch_ALineToWLine::IntPatch_ALineToWLine(const occ::handle<Adaptor3d_Surface>& theS1,
                                              const occ::handle<Adaptor3d_Surface>& theS2,
                                              const int                             theNbPoints)
@@ -190,49 +173,35 @@ IntPatch_ALineToWLine::IntPatch_ALineToWLine(const occ::handle<Adaptor3d_Surface
   }
 }
 
-//=================================================================================================
-
 void IntPatch_ALineToWLine::SetTol3D(const double aTol)
 {
   myTol3D = aTol;
 }
-
-//=================================================================================================
 
 double IntPatch_ALineToWLine::Tol3D() const
 {
   return myTol3D;
 }
 
-//=================================================================================================
-
 void IntPatch_ALineToWLine::SetTolTransition(const double aTol)
 {
   myTolTransition = aTol;
 }
-
-//=================================================================================================
 
 double IntPatch_ALineToWLine::TolTransition() const
 {
   return myTolTransition;
 }
 
-//=================================================================================================
-
 void IntPatch_ALineToWLine::SetTolOpenDomain(const double aTol)
 {
   myTolOpenDomain = aTol;
 }
 
-//=================================================================================================
-
 double IntPatch_ALineToWLine::TolOpenDomain() const
 {
   return myTolOpenDomain;
 }
-
-//=================================================================================================
 
 void IntPatch_ALineToWLine::CorrectEndPoint(occ::handle<IntSurf_LineOn2S>& theLine,
                                             const int                      theIndex) const
@@ -240,7 +209,6 @@ void IntPatch_ALineToWLine::CorrectEndPoint(occ::handle<IntSurf_LineOn2S>& theLi
   const double aTol   = 1.e-5;
   const double aSqTol = 1.e-10;
 
-  // Perform linear extrapolation from two previous points
   int anIndFirst, anIndSecond;
   if (theIndex == 1)
   {
@@ -292,8 +260,6 @@ void IntPatch_ALineToWLine::CorrectEndPoint(occ::handle<IntSurf_LineOn2S>& theLi
   }
 }
 
-//=================================================================================================
-
 double IntPatch_ALineToWLine::GetSectionRadius(const gp_Pnt& thePnt3d) const
 {
   double aRetVal = RealLast();
@@ -331,8 +297,6 @@ double IntPatch_ALineToWLine::GetSectionRadius(const gp_Pnt& thePnt3d) const
   return aRetVal;
 }
 
-//=================================================================================================
-
 void IntPatch_ALineToWLine::MakeWLine(
   const occ::handle<IntPatch_ALine>&                theAline,
   NCollection_Sequence<occ::handle<IntPatch_Line>>& theLines) const
@@ -352,8 +316,6 @@ void IntPatch_ALineToWLine::MakeWLine(
   MakeWLine(theAline, f, l, theLines);
 }
 
-//=================================================================================================
-
 void IntPatch_ALineToWLine::MakeWLine(
   const occ::handle<IntPatch_ALine>&                theALine,
   const double                                      theFPar,
@@ -366,9 +328,6 @@ void IntPatch_ALineToWLine::MakeWLine(
     return;
   }
 
-  // The same points can be marked by different vertices.
-  // The code below unifies tolerances of all vertices
-  // marking the same points.
   for (int i = 1; i < aNbVert; i++)
   {
     IntPatch_Point&        aCurVert  = theALine->ChangeVertex(i);
@@ -397,7 +356,6 @@ void IntPatch_ALineToWLine::MakeWLine(
   NCollection_Array1<double>         aVertexParams(1, aNbVert);
   NCollection_Array1<IntPatch_Point> aSeqVertex(1, aNbVert);
 
-  // It is possible to have several vertices with equal parameters.
   NCollection_Array1<bool> hasVertexBeenChecked(1, aNbVert);
 
   occ::handle<IntSurf_LineOn2S> aLinOn2S;
@@ -412,10 +370,7 @@ void IntPatch_ALineToWLine::MakeWLine(
   }
 
   int    aSingularSurfaceID = 0;
-  double anArrPeriods[]     = {0.0,  // U1
-                               0.0,  // V1
-                               0.0,  // U2
-                               0.0}; // V2
+  double anArrPeriods[]     = {0.0, 0.0, 0.0, 0.0};
 
   IntSurf::SetPeriod(myS1, myS2, anArrPeriods);
 
@@ -481,10 +436,8 @@ void IntPatch_ALineToWLine::MakeWLine(
         theALine->D1(aParameter, aPnt3d, aTg);
         if (GetSectionRadius(aPnt3d) < 5.0e-6)
         {
-          // We cannot compute 2D-parameters of
-          // aPOn2S correctly.
 
-          if (anIsLastDegenerated) // the current last point is wrong
+          if (anIsLastDegenerated)
             aLinOn2S->RemovePoint(aLinOn2S->NbPoints());
 
           isPointValid = false;
@@ -528,8 +481,7 @@ void IntPatch_ALineToWLine::MakeWLine(
               const gp_Pnt aPnt3d(theALine->Value(aParam));
               if (aPOn2S.Value().SquareDistance(aPnt3d) < Precision::SquareConfusion())
               {
-                // i-th vertex is the same as a Pole/Apex.
-                // So, it should be ignored.
+
                 continue;
               }
             }
@@ -546,13 +498,13 @@ void IntPatch_ALineToWLine::MakeWLine(
 
           if (aPOn2S.IsSame(aPrevLPoint, std::max(Precision::Approximation(), aTol)))
           {
-            // Set V-parameter as precise value found on the previous step.
+
             if (aSingularSurfaceID == 1)
             {
               aPOn2S.ParametersOnS1(u2, v2);
               aPOn2S.SetValue(true, u1, v2);
             }
-            else // if (aSingularSurfaceID == 2)
+            else
             {
               aPOn2S.ParametersOnS2(u1, v1);
               aPOn2S.SetValue(false, u2, v1);
@@ -571,12 +523,12 @@ void IntPatch_ALineToWLine::MakeWLine(
           AddPointIntoLine(aLinOn2S, anArrPeriods, aPrevLPoint);
         }
         else if (aParameter == theLPar)
-        { // Strictly equal!!!
+        {
           break;
         }
         else if (aParameter + aStep < theLPar)
         {
-          // Prediction of the next point
+
           gp_Pnt aPnt3dNext;
           gp_Vec aTg;
           theALine->D1(aParameter + aStep, aPnt3dNext, aTg);
@@ -613,9 +565,6 @@ void IntPatch_ALineToWLine::MakeWLine(
             || (aPOn2S.IsSame(aVP.PntOn2S(), aVP.Tolerance())
                 && (std::abs(aVP.ParameterOnLine() - aParameter) < aPrmTol)))
         {
-          // We have either jumped over the vertex or "fell" on the vertex.
-          // However, ALine can be self-interfered. Therefore, we need to check
-          // vertex parameter and 3D-distance together.
 
           aVertexNumber = i;
           break;
@@ -646,7 +595,7 @@ void IntPatch_ALineToWLine::MakeWLine(
         }
         else
         {
-          // add point, set corresponding status: to be corrected later
+
           bool ToAdd = false;
           if (aLinOn2S->NbPoints() == 0)
           {
@@ -673,13 +622,6 @@ void IntPatch_ALineToWLine::MakeWLine(
       double         aNewVertexParam = aLinOn2S->NbPoints() + 1;
       int            aNbPointsPrev   = aLinOn2S->NbPoints();
 
-      // ATTENTION!!!
-      //  IsPoleOrSeam inserts new point in aLinOn2S if aVtx respects
-      // to some special point. Otherwise, aLinOn2S is not changed.
-
-      // Find a point for reference parameter. It will be used
-      // if real parameter value cannot be precise (see comment to
-      // IsPoleOrSeam(...) function).
       IntSurf_PntOn2S aPrefIso = aVtx.PntOn2S();
       if (aLinOn2S->NbPoints() < 1)
       {
@@ -708,7 +650,7 @@ void IntPatch_ALineToWLine::MakeWLine(
 
       if (aPrePointExist == IntPatch_SPntPole || aPrePointExist == IntPatch_SPntPoleSeamU)
       {
-        // set corresponding status: to be corrected later
+
         if (aLinOn2S->NbPoints() == 1)
           anIsFirstDegenerated = true;
         else
@@ -720,7 +662,7 @@ void IntPatch_ALineToWLine::MakeWLine(
       {
         if (aNbPointsPrev == aLinOn2S->NbPoints())
         {
-          // Vertex coincides any point of line and was not added into line
+
           aNewVertexParam = aNbPointsPrev;
         }
         aPrevParam = aParameter = aCurVertParam;
@@ -729,7 +671,7 @@ void IntPatch_ALineToWLine::MakeWLine(
       {
         if (!isPointValid)
         {
-          // Take a farther point of ALine (with greater parameter)
+
           continue;
         }
 
@@ -766,9 +708,8 @@ void IntPatch_ALineToWLine::MakeWLine(
             aLVtx.SetValue(aVertP2S);
             aLVtx.SetTolerance(aVertToler);
             double aParam = aLVtx.ParameterOnLine();
-            if (std::abs(aParam - theLPar)
-                <= Precision::PConfusion()) // in the case of closed curve,
-              aLVtx.SetParameter(-1);       // we don't know yet the number of points in the curve
+            if (std::abs(aParam - theLPar) <= Precision::PConfusion())
+              aLVtx.SetParameter(-1);
             else
               aLVtx.SetParameter(aNewVertexParam);
             aSeqVertex(++aNewVertID) = aLVtx;
@@ -815,7 +756,7 @@ void IntPatch_ALineToWLine::MakeWLine(
         aStepMin = 0.1 * aStep;
         aStepMax = 10.0 * aStep;
       }
-    } // for(; !isLast; aParameter += aStep)
+    }
 
     if (aLinOn2S->NbPoints() < 2)
     {
@@ -823,7 +764,6 @@ void IntPatch_ALineToWLine::MakeWLine(
       continue;
     }
 
-    // Correct first and last points if needed
     if (aLinOn2S->NbPoints() >= 3)
     {
       if (anIsFirstDegenerated)
@@ -832,11 +772,8 @@ void IntPatch_ALineToWLine::MakeWLine(
         CorrectEndPoint(aLinOn2S, aLinOn2S->NbPoints());
     }
 
-    //-----------------------------------------------------------------
-    //--              W  L  i  n  e     c  r  e  a  t  i  o  n      ---
-    //-----------------------------------------------------------------
     occ::handle<IntPatch_WLine> aWLine;
-    //
+
     if (theALine->TransitionOnS1() == IntSurf_Touch)
     {
       aWLine = new IntPatch_WLine(aLinOn2S,
@@ -852,7 +789,7 @@ void IntPatch_ALineToWLine::MakeWLine(
     }
     else
     {
-      // Computation of transitions of the line on two surfaces    ---
+
       const int     indice1 = std::max(aLinOn2S->NbPoints() / 3, 2);
       const gp_Pnt &aPP0    = aLinOn2S->Value(indice1 - 1).Value(),
                    &aPP1    = aLinOn2S->Value(indice1).Value();
@@ -881,14 +818,13 @@ void IntPatch_ALineToWLine::MakeWLine(
     for (int i = aSeqVertex.Lower(); i <= aNewVertID; i++)
     {
       IntPatch_Point aVtx = aSeqVertex(i);
-      if (aVtx.ParameterOnLine() == -1)      // in the case of closed curve,
-        aVtx.SetParameter(aWLine->NbPnts()); // we set the last parameter
+      if (aVtx.ParameterOnLine() == -1)
+        aVtx.SetParameter(aWLine->NbPnts());
       aWLine->AddVertex(aVtx);
     }
 
     aWLine->SetPeriod(anArrPeriods[0], anArrPeriods[1], anArrPeriods[2], anArrPeriods[3]);
 
-    // the method ComputeVertexParameters can reduce the number of points in <aWLine>
     aWLine->ComputeVertexParameters(myTol3D);
 
     if (aWLine->NbPnts() > 1)
@@ -899,16 +835,9 @@ void IntPatch_ALineToWLine::MakeWLine(
 #endif
       theLines.Append(aWLine);
     }
-  } // while(aParameter < theLPar)
+  }
 }
 
-//=======================================================================
-// function : CheckDeflection
-// purpose  : Returns:
-//            -1 - step is too small
-//            0  - step is normal
-//            +1 - step is too big
-//=======================================================================
 int IntPatch_ALineToWLine::CheckDeflection(const gp_XYZ& theMidPt,
                                            const double  theMaxDeflection) const
 {
@@ -927,8 +856,6 @@ int IntPatch_ALineToWLine::CheckDeflection(const gp_XYZ& theMidPt,
   return 0;
 }
 
-//=================================================================================================
-
 bool IntPatch_ALineToWLine::StepComputing(const occ::handle<IntPatch_ALine>& theALine,
                                           const IntSurf_PntOn2S&             thePOn2S,
                                           const double                       theLastParOfAline,
@@ -944,9 +871,6 @@ bool IntPatch_ALineToWLine::StepComputing(const occ::handle<IntPatch_ALine>& the
 
   const double anEps = myTol3D;
 
-  // Indeed, 1.0e+15 < 2^50 < 1.0e+16. Therefore,
-  // if we apply bisection method to the range with length
-  // 1.0e+6 then we will be able to find solution with max error ~1.0e-9.
   const int aNbIterMax = 50;
 
   const double aNotFilledRange = theLastParOfAline - theCurParam;
@@ -966,18 +890,10 @@ bool IntPatch_ALineToWLine::StepComputing(const occ::handle<IntPatch_ALine>& the
   }
   else
   {
-    // The 3D-step is defined as length of the tangent to the osculating circle
-    // by the condition that the distance from end point of the tangent to the
-    // circle is no greater than anEps. theStep is the step in
-    // parameter space of intersection curve (must be converted from 3D-step).
 
     theStep = std::min(sqrt(anEps * (2.0 * aR + anEps)) / theTgMagnitude, aMaxStep);
     theStep = std::max(theStep, aMinStep);
   }
-
-  // The step value has been computed for osculating circle.
-  // Now it should be checked for real intersection curve
-  // and is made more precise in case of necessity.
 
   int aNbIter = 0;
   do
@@ -995,7 +911,7 @@ bool IntPatch_ALineToWLine::StepComputing(const occ::handle<IntPatch_ALine>& the
     {
       aMinStep = theStep;
     }
-    else // if(aStatus > 0)
+    else
     {
       aMaxStep = theStep;
     }

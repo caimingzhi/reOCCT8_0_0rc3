@@ -16,9 +16,9 @@ GeomFill_LocFunction::GeomFill_LocFunction(const occ::handle<GeomFill_LocationLa
 }
 
 bool GeomFill_LocFunction::D0(const double Param,
-                              //					   const double First,
+
                               const double,
-                              //					   const double Last)
+
                               const double)
 {
   gp_Mat aM;
@@ -31,9 +31,9 @@ bool GeomFill_LocFunction::D0(const double Param,
 }
 
 bool GeomFill_LocFunction::D1(const double Param,
-                              //					   const double First,
+
                               const double,
-                              //					   const double Last)
+
                               const double)
 {
   NCollection_Array1<gp_Pnt2d> T1(1, 1);
@@ -53,9 +53,9 @@ bool GeomFill_LocFunction::D1(const double Param,
 }
 
 bool GeomFill_LocFunction::D2(const double Param,
-                              //					   const double First,
+
                               const double,
-                              //					   const double Last)
+
                               const double)
 {
   NCollection_Array1<gp_Pnt2d> T1(1, 1);

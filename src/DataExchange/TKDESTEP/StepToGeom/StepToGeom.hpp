@@ -90,10 +90,6 @@ class StepRepr_GlobalUnitAssignedContext;
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//! This class provides static methods to convert STEP geometric entities to OCCT.
-//! The methods returning handles will return null handle in case of error.
-//! The methods returning boolean will return True if succeeded and False if error.
-
 class StepToGeom
 {
 public:

@@ -15,8 +15,6 @@
 #include <Standard_DomainError.hpp>
 #include <Standard_NotImplemented.hpp>
 
-//=================================================================================================
-
 BlendFunc_CSConstRad::BlendFunc_CSConstRad(const occ::handle<Adaptor3d_Surface>& S,
                                            const occ::handle<Adaptor3d_Curve>&   C,
                                            const occ::handle<Adaptor3d_Curve>&   CG)
@@ -38,14 +36,10 @@ BlendFunc_CSConstRad::BlendFunc_CSConstRad(const occ::handle<Adaptor3d_Surface>&
   myTConv = Convert_TgtThetaOver2;
 }
 
-//=================================================================================================
-
 int BlendFunc_CSConstRad::NbEquations() const
 {
   return 3;
 }
-
-//=================================================================================================
 
 void BlendFunc_CSConstRad::Set(const double Radius, const int Choix)
 {
@@ -53,14 +47,10 @@ void BlendFunc_CSConstRad::Set(const double Radius, const int Choix)
   ray   = -std::abs(Radius);
 }
 
-//=================================================================================================
-
 void BlendFunc_CSConstRad::Set(const BlendFunc_SectionShape TypeSection)
 {
   mySShape = TypeSection;
 }
-
-//=================================================================================================
 
 void BlendFunc_CSConstRad::Set(const double Param)
 {
@@ -70,14 +60,10 @@ void BlendFunc_CSConstRad::Set(const double Param)
   theD   = -(nplan.XYZ().Dot(ptgui.XYZ()));
 }
 
-//=================================================================================================
-
 void BlendFunc_CSConstRad::Set(const double, const double)
 {
   throw Standard_NotImplemented("BlendFunc_CSConstRad::Set");
 }
-
-//=================================================================================================
 
 void BlendFunc_CSConstRad::GetTolerance(math_Vector& Tolerance, const double Tol) const
 {
@@ -85,8 +71,6 @@ void BlendFunc_CSConstRad::GetTolerance(math_Vector& Tolerance, const double Tol
   Tolerance(2) = surf->VResolution(Tol);
   Tolerance(3) = curv->Resolution(Tol);
 }
-
-//=================================================================================================
 
 void BlendFunc_CSConstRad::GetBounds(math_Vector& InfBound, math_Vector& SupBound) const
 {
@@ -111,8 +95,6 @@ void BlendFunc_CSConstRad::GetBounds(math_Vector& InfBound, math_Vector& SupBoun
   }
 }
 
-//=================================================================================================
-
 bool BlendFunc_CSConstRad::IsSolution(const math_Vector& Sol, const double Tol)
 {
   math_Vector valsol(1, 3), secmember(1, 3);
@@ -125,8 +107,6 @@ bool BlendFunc_CSConstRad::IsSolution(const math_Vector& Sol, const double Tol)
   Values(Sol, valsol, gradsol);
   if (std::abs(valsol(1)) <= Tol && std::abs(valsol(2)) <= Tol && std::abs(valsol(3)) <= Tol * Tol)
   {
-
-    // Calcul des tangentes
 
     pt2d = gp_Pnt2d(Sol(1), Sol(2));
     prmc = Sol(3);
@@ -172,7 +152,6 @@ bool BlendFunc_CSConstRad::IsSolution(const math_Vector& Sol, const double Tol)
     {
       istangent = true;
     }
-    // mise a jour de maxang
 
     ns2 = -resul.Normalized();
 
@@ -180,7 +159,7 @@ bool BlendFunc_CSConstRad::IsSolution(const math_Vector& Sol, const double Tol)
     Sina = nplan.Dot(ns.Crossed(ns2));
     if (choix % 2 != 0)
     {
-      Sina = -Sina; // nplan est change en -nplan
+      Sina = -Sina;
     }
 
     Angle = std::acos(Cosa);
@@ -204,8 +183,6 @@ bool BlendFunc_CSConstRad::IsSolution(const math_Vector& Sol, const double Tol)
   return false;
 }
 
-//=================================================================================================
-
 bool BlendFunc_CSConstRad::Value(const math_Vector& X, math_Vector& F)
 {
   gp_Vec d1u1, d1v1;
@@ -225,8 +202,6 @@ bool BlendFunc_CSConstRad::Value(const math_Vector& X, math_Vector& F)
   pt2d = gp_Pnt2d(X(1), X(2));
   return true;
 }
-
-//=================================================================================================
 
 bool BlendFunc_CSConstRad::Derivatives(const math_Vector& X, math_Matrix& D)
 {
@@ -255,7 +230,6 @@ bool BlendFunc_CSConstRad::Derivatives(const math_Vector& X, math_Matrix& D)
   vref.Divide(norm);
   vref.SetLinearForm(ray, vref, gp_Vec(ptc, pts));
 
-  // Derivee par rapport a u1
   temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
   grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
   resul.SetLinearForm(-ray / norm * (grosterme * ndotns - nplan.Dot(temp)),
@@ -268,7 +242,6 @@ bool BlendFunc_CSConstRad::Derivatives(const math_Vector& X, math_Matrix& D)
 
   D(3, 1) = 2. * (resul.Dot(vref));
 
-  // Derivee par rapport a v1
   temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
   grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
   resul.SetLinearForm(-ray / norm * (grosterme * ndotns - nplan.Dot(temp)),
@@ -286,8 +259,6 @@ bool BlendFunc_CSConstRad::Derivatives(const math_Vector& X, math_Matrix& D)
   pt2d = gp_Pnt2d(X(1), X(2));
   return true;
 }
-
-//=================================================================================================
 
 bool BlendFunc_CSConstRad::Values(const math_Vector& X, math_Vector& F, math_Matrix& D)
 {
@@ -322,7 +293,6 @@ bool BlendFunc_CSConstRad::Values(const math_Vector& X, math_Vector& F, math_Mat
 
   F(3) = vref.SquareMagnitude() - ray * ray;
 
-  // Derivee par rapport a u1
   temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
   grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
   resul.SetLinearForm(-ray / norm * (grosterme * ndotns - nplan.Dot(temp)),
@@ -335,7 +305,6 @@ bool BlendFunc_CSConstRad::Values(const math_Vector& X, math_Vector& F, math_Mat
 
   D(3, 1) = 2. * (resul.Dot(vref));
 
-  // Derivee par rapport a v1
   temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
   grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
   resul.SetLinearForm(-ray / norm * (grosterme * ndotns - nplan.Dot(temp)),
@@ -354,42 +323,30 @@ bool BlendFunc_CSConstRad::Values(const math_Vector& X, math_Vector& F, math_Mat
   return true;
 }
 
-//=================================================================================================
-
 const gp_Pnt& BlendFunc_CSConstRad::PointOnS() const
 {
   return pts;
 }
-
-//=================================================================================================
 
 const gp_Pnt& BlendFunc_CSConstRad::PointOnC() const
 {
   return ptc;
 }
 
-//=================================================================================================
-
 const gp_Pnt2d& BlendFunc_CSConstRad::Pnt2d() const
 {
   return pt2d;
 }
-
-//=================================================================================================
 
 double BlendFunc_CSConstRad::ParameterOnC() const
 {
   return prmc;
 }
 
-//=================================================================================================
-
 bool BlendFunc_CSConstRad::IsTangencyPoint() const
 {
   return istangent;
 }
-
-//=================================================================================================
 
 const gp_Vec& BlendFunc_CSConstRad::TangentOnS() const
 {
@@ -398,8 +355,6 @@ const gp_Vec& BlendFunc_CSConstRad::TangentOnS() const
   return tgs;
 }
 
-//=================================================================================================
-
 const gp_Vec& BlendFunc_CSConstRad::TangentOnC() const
 {
   if (istangent)
@@ -407,16 +362,12 @@ const gp_Vec& BlendFunc_CSConstRad::TangentOnC() const
   return tgc;
 }
 
-//=================================================================================================
-
 const gp_Vec2d& BlendFunc_CSConstRad::Tangent2d() const
 {
   if (istangent)
     throw Standard_DomainError("BlendFunc_CSConstRad::Tangent2d");
   return tg2d;
 }
-
-//=================================================================================================
 
 void BlendFunc_CSConstRad::Tangent(const double U, const double V, gp_Vec& TgS, gp_Vec& NmS) const
 {
@@ -435,8 +386,6 @@ void BlendFunc_CSConstRad::Tangent(const double U, const double V, gp_Vec& TgS, 
   if (choix % 2 == 1)
     TgS.Reverse();
 }
-
-//=================================================================================================
 
 void BlendFunc_CSConstRad::Section(const double Param,
                                    const double U,
@@ -490,8 +439,6 @@ bool BlendFunc_CSConstRad::Section(const Blend_Point&,
   throw Standard_DomainError("BlendFunc_CSConstRad::Section : Not implemented");
 }
 
-//=================================================================================================
-
 bool BlendFunc_CSConstRad::GetSection(const double                Param,
                                       const double                U,
                                       const double                V,
@@ -507,7 +454,7 @@ bool BlendFunc_CSConstRad::GetSection(const double                Param,
 
   int i, lowp = tabP.Lower(), lowv = tabV.Lower();
 
-  gp_Vec d1u1, d1v1, d2u1, d2v1, d2uv1, d1; //,d1u2,d1v2;
+  gp_Vec d1u1, d1v1, d2u1, d2v1, d2uv1, d1;
   gp_Vec ns, dnplan, dnw, dn2w, ncrn, dncrn, ns2;
   gp_Vec ncrossns, resul;
   gp_Vec resulu, resulv, temp;
@@ -543,8 +490,6 @@ bool BlendFunc_CSConstRad::GetSection(const double                Param,
   ndotns   = nplan.Dot(ns);
   norm     = ncrossns.Magnitude();
 
-  // Derivee de n1 par rapport a w
-
   grosterme = ncrossns.Dot(dnplan.Crossed(ns)) / norm / norm;
   dnw.SetLinearForm((dnplan.Dot(ns) - grosterme * ndotns) / norm,
                     nplan,
@@ -555,7 +500,7 @@ bool BlendFunc_CSConstRad::GetSection(const double                Param,
 
   temp.SetLinearForm(ndotns / norm, nplan, -1. / norm, ns);
   resul.SetLinearForm(ray, temp, gp_Vec(ptc, pts));
-  secmember(3) = -2. * ray * (dnw.Dot(resul)); // jag 950105 il manquait ray
+  secmember(3) = -2. * ray * (dnw.Dot(resul));
 
   math_Gauss Resol(gradsol);
   if (Resol.IsDone())
@@ -566,7 +511,6 @@ bool BlendFunc_CSConstRad::GetSection(const double                Param,
     tgs.SetLinearForm(secmember(1), d1u1, secmember(2), d1v1);
     tgc = secmember(3) * d1;
 
-    // Derivee de n1 par rapport a u1
     temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
     grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
     resulu.SetLinearForm(-(grosterme * ndotns - nplan.Dot(temp)) / norm,
@@ -576,7 +520,6 @@ bool BlendFunc_CSConstRad::GetSection(const double                Param,
                          -1. / norm,
                          temp);
 
-    // Derivee de n1 par rapport a v1
     temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
     grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
     resulv.SetLinearForm(-(grosterme * ndotns - nplan.Dot(temp)) / norm,
@@ -642,43 +585,30 @@ bool BlendFunc_CSConstRad::GetSection(const double                Param,
   return false;
 }
 
-//=================================================================================================
-
 bool BlendFunc_CSConstRad::IsRational() const
 {
   return (mySShape == BlendFunc_Rational || mySShape == BlendFunc_QuasiAngular);
 }
-
-//=================================================================================================
 
 double BlendFunc_CSConstRad::GetSectionSize() const
 {
   return maxang * std::abs(ray);
 }
 
-//=================================================================================================
-
 void BlendFunc_CSConstRad::GetMinimalWeight(NCollection_Array1<double>& Weights) const
 {
   BlendFunc::GetMinimalWeights(mySShape, myTConv, minang, maxang, Weights);
-  // On suppose que cela ne depend pas du Rayon!
 }
-
-//=================================================================================================
 
 int BlendFunc_CSConstRad::NbIntervals(const GeomAbs_Shape S) const
 {
   return curv->NbIntervals(BlendFunc::NextShape(S));
 }
 
-//=================================================================================================
-
 void BlendFunc_CSConstRad::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const
 {
   curv->Intervals(T, BlendFunc::NextShape(S));
 }
-
-//=================================================================================================
 
 void BlendFunc_CSConstRad::GetShape(int& NbPoles, int& NbKnots, int& Degree, int& NbPoles2d)
 {
@@ -686,10 +616,6 @@ void BlendFunc_CSConstRad::GetShape(int& NbPoles, int& NbKnots, int& Degree, int
   BlendFunc::GetShape(mySShape, maxang, NbPoles, NbKnots, Degree, myTConv);
 }
 
-//=======================================================================
-// function : GetTolerance
-// purpose  : Determine les Tolerance a utiliser dans les approximations.
-//=======================================================================
 void BlendFunc_CSConstRad::GetTolerance(const double BoundTol,
                                         const double SurfTol,
                                         const double AngleTol,
@@ -705,29 +631,23 @@ void BlendFunc_CSConstRad::GetTolerance(const double BoundTol,
   Tol3d(low) = Tol3d(up) = std::min(Tol, BoundTol);
 }
 
-//=================================================================================================
-
 void BlendFunc_CSConstRad::Knots(NCollection_Array1<double>& TKnots)
 {
   GeomFill::Knots(myTConv, TKnots);
 }
-
-//=================================================================================================
 
 void BlendFunc_CSConstRad::Mults(NCollection_Array1<int>& TMults)
 {
   GeomFill::Mults(myTConv, TMults);
 }
 
-//=================================================================================================
-
 void BlendFunc_CSConstRad::Section(const Blend_Point&            P,
                                    NCollection_Array1<gp_Pnt>&   Poles,
                                    NCollection_Array1<gp_Pnt2d>& Poles2d,
                                    NCollection_Array1<double>&   Weights)
 {
-  gp_Vec d1u1, d1v1; //,d1;
-  gp_Vec ns, ns2;    //,temp,np2;
+  gp_Vec d1u1, d1v1;
+  gp_Vec ns, ns2;
   gp_Pnt Center;
 
   double norm, u1, v1, w;
@@ -747,7 +667,6 @@ void BlendFunc_CSConstRad::Section(const Blend_Point&            P,
 
   Poles2d(Poles2d.Lower()).SetCoord(u1, v1);
 
-  // Cas Linear
   if (mySShape == BlendFunc_Linear)
   {
     Poles(low)   = pts;
@@ -774,8 +693,6 @@ void BlendFunc_CSConstRad::Section(const Blend_Point&            P,
   GeomFill::GetCircle(myTConv, ns, ns2, nplan, pts, ptc, std::abs(ray), Center, Poles, Weights);
 }
 
-//=================================================================================================
-
 bool BlendFunc_CSConstRad::Section(const Blend_Point&            P,
                                    NCollection_Array1<gp_Pnt>&   Poles,
                                    NCollection_Array1<gp_Vec>&   DPoles,
@@ -786,7 +703,7 @@ bool BlendFunc_CSConstRad::Section(const Blend_Point&            P,
 {
 
   gp_Vec d1u1, d1v1, d2u1, d2v1, d2uv1, d1;
-  gp_Vec ns, ns2, dnplan, dnw, dn2w; //,np2,dnp2;
+  gp_Vec ns, ns2, dnplan, dnw, dn2w;
   gp_Vec ncrossns;
   gp_Vec resulu, resulv, temp, tgct, resul;
 
@@ -826,8 +743,6 @@ bool BlendFunc_CSConstRad::Section(const Blend_Point&            P,
   ndotns   = nplan.Dot(ns);
   norm     = ncrossns.Magnitude();
 
-  // Derivee de n1 par rapport a w
-
   grosterme = ncrossns.Dot(dnplan.Crossed(ns)) / norm / norm;
   dnw.SetLinearForm((dnplan.Dot(ns) - grosterme * ndotns) / norm,
                     nplan,
@@ -838,7 +753,7 @@ bool BlendFunc_CSConstRad::Section(const Blend_Point&            P,
 
   temp.SetLinearForm(ndotns / norm, nplan, -1. / norm, ns);
   resul.SetLinearForm(ray, temp, gp_Vec(ptc, pts));
-  secmember(3) = -2. * ray * (dnw.Dot(resul)); // jag 950105 il manquait ray
+  secmember(3) = -2. * ray * (dnw.Dot(resul));
 
   math_Gauss Resol(gradsol);
 
@@ -850,7 +765,6 @@ bool BlendFunc_CSConstRad::Section(const Blend_Point&            P,
     tgs.SetLinearForm(secmember(1), d1u1, secmember(2), d1v1);
     tgc = secmember(3) * d1;
 
-    // Derivee de n1 par rapport a u1
     temp      = d2u1.Crossed(d1v1).Added(d1u1.Crossed(d2uv1));
     grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
     resulu.SetLinearForm(-(grosterme * ndotns - nplan.Dot(temp)) / norm,
@@ -860,7 +774,6 @@ bool BlendFunc_CSConstRad::Section(const Blend_Point&            P,
                          -1. / norm,
                          temp);
 
-    // Derivee de n1 par rapport a v1
     temp      = d2uv1.Crossed(d1v1).Added(d1u1.Crossed(d2v1));
     grosterme = ncrossns.Dot(nplan.Crossed(temp)) / norm / norm;
     resulv.SetLinearForm(-(grosterme * ndotns - nplan.Dot(temp)) / norm,
@@ -888,15 +801,12 @@ bool BlendFunc_CSConstRad::Section(const Blend_Point&            P,
     istgt = true;
   }
 
-  // Les poles 2d
-
   Poles2d(Poles2d.Lower()).SetCoord(sol(1), sol(2));
   if (!istgt)
   {
     DPoles2d(Poles2d.Lower()).SetCoord(secmember(1), secmember(2));
   }
 
-  // Cas Linear
   if (mySShape == BlendFunc_Linear)
   {
     Poles(low)   = pts;
@@ -913,7 +823,6 @@ bool BlendFunc_CSConstRad::Section(const Blend_Point&            P,
     return (!istgt);
   }
 
-  // Cas du cercle
   Center.SetXYZ(pts.XYZ() + ray * ns.XYZ());
   if (!istgt)
   {

@@ -7,12 +7,8 @@
 #include <StepRepr_RepresentationItem.hpp>
 #include <StepShape_EdgeBasedWireframeShapeRepresentation.hpp>
 
-//=================================================================================================
-
 RWStepShape_RWEdgeBasedWireframeShapeRepresentation::
   RWStepShape_RWEdgeBasedWireframeShapeRepresentation() = default;
-
-//=================================================================================================
 
 void RWStepShape_RWEdgeBasedWireframeShapeRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&                         data,
@@ -20,11 +16,9 @@ void RWStepShape_RWEdgeBasedWireframeShapeRepresentation::ReadStep(
   occ::handle<Interface_Check>&                                       ach,
   const occ::handle<StepShape_EdgeBasedWireframeShapeRepresentation>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "edge_based_wireframe_shape_representation"))
     return;
-
-  // Inherited fields of Representation
 
   occ::handle<TCollection_HAsciiString> aRepresentation_Name;
   data->ReadString(num, 1, "representation.name", ach, aRepresentation_Name);
@@ -58,18 +52,13 @@ void RWStepShape_RWEdgeBasedWireframeShapeRepresentation::ReadStep(
                    STANDARD_TYPE(StepRepr_RepresentationContext),
                    aRepresentation_ContextOfItems);
 
-  // Initialize entity
   ent->Init(aRepresentation_Name, aRepresentation_Items, aRepresentation_ContextOfItems);
 }
-
-//=================================================================================================
 
 void RWStepShape_RWEdgeBasedWireframeShapeRepresentation::WriteStep(
   StepData_StepWriter&                                                SW,
   const occ::handle<StepShape_EdgeBasedWireframeShapeRepresentation>& ent) const
 {
-
-  // Inherited fields of Representation
 
   SW.Send(ent->StepRepr_Representation::Name());
 
@@ -85,14 +74,10 @@ void RWStepShape_RWEdgeBasedWireframeShapeRepresentation::WriteStep(
   SW.Send(ent->StepRepr_Representation::ContextOfItems());
 }
 
-//=================================================================================================
-
 void RWStepShape_RWEdgeBasedWireframeShapeRepresentation::Share(
   const occ::handle<StepShape_EdgeBasedWireframeShapeRepresentation>& ent,
   Interface_EntityIterator&                                           iter) const
 {
-
-  // Inherited fields of Representation
 
   for (int i1 = 1; i1 <= ent->StepRepr_Representation::NbItems(); i1++)
   {

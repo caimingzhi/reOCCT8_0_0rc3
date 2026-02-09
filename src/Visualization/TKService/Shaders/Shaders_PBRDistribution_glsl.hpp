@@ -9,5 +9,3 @@ static const char Shaders_PBRDistribution_glsl[] =
   "  aDistribution = INV_PI * aDistribution * aDistribution;\n"
   "  return aDistribution;\n"
   "}\n";
-
-// clang-format on

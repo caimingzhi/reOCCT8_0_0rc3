@@ -10,7 +10,6 @@
 #include <StdFail_NotDone.hpp>
 #include <NCollection_Array1.hpp>
 
-//! This class represents distance objective function for surface / surface.
 class Extrema_FuncDistSS : public math_MultipleVarFunctionWithGradient
 {
 public:
@@ -73,8 +72,6 @@ private:
   const Adaptor3d_Surface* myS2;
 };
 
-//=================================================================================================
-
 Extrema_GenExtSS::Extrema_GenExtSS()
     : myu1min(0.0),
       myu1sup(0.0),
@@ -94,11 +91,7 @@ Extrema_GenExtSS::Extrema_GenExtSS()
   myInit = false;
 }
 
-//=================================================================================================
-
 Extrema_GenExtSS::~Extrema_GenExtSS() = default;
-
-//=================================================================================================
 
 Extrema_GenExtSS::Extrema_GenExtSS(const Adaptor3d_Surface& S1,
                                    const Adaptor3d_Surface& S2,
@@ -111,8 +104,6 @@ Extrema_GenExtSS::Extrema_GenExtSS(const Adaptor3d_Surface& S1,
   Initialize(S2, NbU, NbV, Tol2);
   Perform(S1, Tol1);
 }
-
-//=================================================================================================
 
 Extrema_GenExtSS::Extrema_GenExtSS(const Adaptor3d_Surface& S1,
                                    const Adaptor3d_Surface& S2,
@@ -134,8 +125,6 @@ Extrema_GenExtSS::Extrema_GenExtSS(const Adaptor3d_Surface& S1,
   Perform(S1, U1min, U1sup, V1min, V1sup, Tol1);
 }
 
-//=================================================================================================
-
 void Extrema_GenExtSS::Initialize(const Adaptor3d_Surface& S2,
                                   const int                NbU,
                                   const int                NbV,
@@ -147,8 +136,6 @@ void Extrema_GenExtSS::Initialize(const Adaptor3d_Surface& S2,
   myv2sup = S2.LastVParameter();
   Initialize(S2, NbU, NbV, myu2min, myu2sup, myv2min, myv2sup, Tol2);
 }
-
-//=================================================================================================
 
 void Extrema_GenExtSS::Initialize(const Adaptor3d_Surface& S2,
                                   const int                NbU,
@@ -170,8 +157,6 @@ void Extrema_GenExtSS::Initialize(const Adaptor3d_Surface& S2,
   myv2sup   = V2sup;
   mytol2    = Tol2;
 
-  // Parametrage de l echantillon sur S2
-
   double PasU = myu2sup - myu2min;
   double PasV = myv2sup - myv2min;
   double U0   = PasU / myusample / 100.;
@@ -181,7 +166,6 @@ void Extrema_GenExtSS::Initialize(const Adaptor3d_Surface& S2,
   U0          = myu2min + U0 / 2.;
   V0          = myv2min + V0 / 2.;
 
-  // Build UV parameter arrays for batch evaluation
   NCollection_Array1<double> aUParams(1, myusample);
   NCollection_Array1<double> aVParams(1, myvsample);
 
@@ -196,7 +180,6 @@ void Extrema_GenExtSS::Initialize(const Adaptor3d_Surface& S2,
     aVParams.SetValue(NoV, V);
   }
 
-  // Use batch grid evaluation for optimized surface point computation
   GeomGridEval_Surface anEvaluator;
   anEvaluator.Initialize(*myS2);
 
@@ -211,8 +194,6 @@ void Extrema_GenExtSS::Initialize(const Adaptor3d_Surface& S2,
   }
 }
 
-//=================================================================================================
-
 void Extrema_GenExtSS::Perform(const Adaptor3d_Surface& S1, const double Tol1)
 {
   myu1min = S1.FirstUParameter();
@@ -221,8 +202,6 @@ void Extrema_GenExtSS::Perform(const Adaptor3d_Surface& S1, const double Tol1)
   myv1sup = S1.LastVParameter();
   Perform(S1, myu1min, myu1sup, myv1min, myv1sup, Tol1);
 }
-
-//=================================================================================================
 
 void Extrema_GenExtSS::Perform(const Adaptor3d_Surface& S1,
                                const double             U1min,
@@ -242,8 +221,6 @@ void Extrema_GenExtSS::Perform(const Adaptor3d_Surface& S1,
   int    NoU1, NoV1, NoU2, NoV2;
   gp_Pnt P1, P2;
 
-  // Parametrage de l echantillon sur S1
-
   double PasU1 = myu1sup - myu1min;
   double PasV1 = myv1sup - myv1min;
   double U10   = PasU1 / myusample / 100.;
@@ -262,7 +239,6 @@ void Extrema_GenExtSS::Perform(const Adaptor3d_Surface& S1,
   U20          = myu2min + U20 / 2.;
   V20          = myv2min + V20 / 2.;
 
-  // Build UV parameter arrays for batch evaluation of S1
   NCollection_Array1<double> aU1Params(1, myusample);
   NCollection_Array1<double> aV1Params(1, myvsample);
 
@@ -277,7 +253,6 @@ void Extrema_GenExtSS::Perform(const Adaptor3d_Surface& S1,
     aV1Params.SetValue(NoV1, V1);
   }
 
-  // Use batch grid evaluation for optimized surface point computation
   GeomGridEval_Surface anEvaluator;
   anEvaluator.Initialize(S1);
 
@@ -290,12 +265,6 @@ void Extrema_GenExtSS::Perform(const Adaptor3d_Surface& S1,
       mypoints1->SetValue(NoU1, NoV1, aGrid.Value(NoU1, NoV1));
     }
   }
-
-  /*
-  b- Calcul des minima:
-     -----------------
-     b.a) Initialisations:
-  */
 
   math_Vector Tol(1, 4);
   Tol(1) = mytol1;
@@ -367,15 +336,12 @@ void Extrema_GenExtSS::Perform(const Adaptor3d_Surface& S1,
   {
     aBFGSSolver.Location(UV);
 
-    //  Store result in myF.
     myF.Value(UV, UV);
     myF.GetStateNumber();
   }
   else
   {
-    // If optimum is not computed successfully then compute by old approach.
 
-    // Restore initial point.
     UV(1) = U10 + (N1Umin - 1) * PasU1;
     UV(2) = V10 + (N1Vmin - 1) * PasV1;
     UV(3) = U20 + (N2Umin - 1) * PasU2;
@@ -385,31 +351,21 @@ void Extrema_GenExtSS::Perform(const Adaptor3d_Surface& S1,
     SR1.Perform(myF, UV, UVinf, UVsup);
   }
 
-  // math_FunctionSetRoot SR1(myF, Tol);
-  // SR1.Perform(myF, UV, UVinf, UVsup);
-
   UV(1) = U10 + (N1Umax - 1) * PasU1;
   UV(2) = V10 + (N1Vmax - 1) * PasV1;
   UV(3) = U20 + (N2Umax - 1) * PasU2;
   UV(4) = V20 + (N2Vmax - 1) * PasV2;
 
-  // It is impossible to compute max distance in the same manner,
-  // since for the distance functional for max have bad definition.
-  // So, for max computation old approach is used.
   math_FunctionSetRoot SR2(myF, Tol);
   SR2.Perform(myF, UV, UVinf, UVsup);
 
   myDone = true;
 }
 
-//=================================================================================================
-
 bool Extrema_GenExtSS::IsDone() const
 {
   return myDone;
 }
-
-//=================================================================================================
 
 int Extrema_GenExtSS::NbExt() const
 {
@@ -419,8 +375,6 @@ int Extrema_GenExtSS::NbExt() const
   }
   return myF.NbExt();
 }
-
-//=================================================================================================
 
 double Extrema_GenExtSS::SquareDistance(const int N) const
 {
@@ -432,8 +386,6 @@ double Extrema_GenExtSS::SquareDistance(const int N) const
   return myF.SquareDistance(N);
 }
 
-//=================================================================================================
-
 const Extrema_POnSurf& Extrema_GenExtSS::PointOnS1(const int N) const
 {
   if (N < 1 || N > NbExt())
@@ -443,8 +395,6 @@ const Extrema_POnSurf& Extrema_GenExtSS::PointOnS1(const int N) const
 
   return myF.PointOnS1(N);
 }
-
-//=================================================================================================
 
 const Extrema_POnSurf& Extrema_GenExtSS::PointOnS2(const int N) const
 {

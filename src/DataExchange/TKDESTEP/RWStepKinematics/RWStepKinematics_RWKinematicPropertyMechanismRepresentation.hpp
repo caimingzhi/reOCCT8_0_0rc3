@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_KinematicPropertyMechanismRepresentation;
 
-//! Read & Write tool for KinematicPropertyMechanismRepresentation
 class RWStepKinematics_RWKinematicPropertyMechanismRepresentation
 {
 public:

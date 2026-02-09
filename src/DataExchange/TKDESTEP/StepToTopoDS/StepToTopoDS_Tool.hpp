@@ -23,8 +23,6 @@ class Geom_Surface;
 class Geom_Curve;
 class Geom2d_Curve;
 
-//! This Tool Class provides Information to build
-//! a Cas.Cad BRep from a ProSTEP Shape model.
 class StepToTopoDS_Tool
 {
 public:

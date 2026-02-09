@@ -5,9 +5,6 @@
 #include <ExprIntrp_Generator.hpp>
 class TCollection_AsciiString;
 
-//! Implements an interpreter for defining functions.
-//! All its functionalities can be found in class
-//! GenExp.
 class ExprIntrp_GenFct : public ExprIntrp_Generator
 {
 

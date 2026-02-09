@@ -4,7 +4,6 @@
 #include <Geom2d_BSplineCurve.hpp>
 #include <GeomAbs_Shape.hpp>
 
-//! Makes an approximation for HCurve2d from Adaptor3d
 class Approx_Curve2d
 {
 public:

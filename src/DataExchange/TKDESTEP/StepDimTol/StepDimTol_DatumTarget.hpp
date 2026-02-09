@@ -8,15 +8,12 @@
 class TCollection_HAsciiString;
 class StepRepr_ProductDefinitionShape;
 
-//! Representation of STEP entity DatumTarget
 class StepDimTol_DatumTarget : public StepRepr_ShapeAspect
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT StepDimTol_DatumTarget();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>&        theShapeAspect_Name,
     const occ::handle<TCollection_HAsciiString>&        theShapeAspect_Description,
@@ -24,10 +21,8 @@ public:
     const StepData_Logical                              theShapeAspect_ProductDefinitional,
     const occ::handle<TCollection_HAsciiString>&        theTargetId);
 
-  //! Returns field TargetId
   Standard_EXPORT occ::handle<TCollection_HAsciiString> TargetId() const;
 
-  //! Set field TargetId
   Standard_EXPORT void SetTargetId(const occ::handle<TCollection_HAsciiString>& theTargetId);
 
   DEFINE_STANDARD_RTTIEXT(StepDimTol_DatumTarget, StepRepr_ShapeAspect)

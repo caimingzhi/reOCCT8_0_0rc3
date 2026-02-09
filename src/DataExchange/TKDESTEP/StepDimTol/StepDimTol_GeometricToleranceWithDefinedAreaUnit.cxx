@@ -3,12 +3,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_GeometricToleranceWithDefinedAreaUnit,
                            StepDimTol_GeometricToleranceWithDefinedUnit)
 
-//=================================================================================================
-
 StepDimTol_GeometricToleranceWithDefinedAreaUnit::
   StepDimTol_GeometricToleranceWithDefinedAreaUnit() = default;
-
-//=================================================================================================
 
 void StepDimTol_GeometricToleranceWithDefinedAreaUnit::Init(
   const occ::handle<TCollection_HAsciiString>&        theName,

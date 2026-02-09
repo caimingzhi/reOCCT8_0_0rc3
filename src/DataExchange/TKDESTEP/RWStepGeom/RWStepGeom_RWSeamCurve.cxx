@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_EntityIterator.hpp>
@@ -28,24 +17,16 @@ void RWStepGeom_RWSeamCurve::ReadStep(const occ::handle<StepData_StepReaderData>
                                       const occ::handle<StepGeom_SeamCurve>&      ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 4, ach, "seam_curve"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- inherited field : curve3d ---
-
   occ::handle<StepGeom_Curve> aCurve3d;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
-  data->ReadEntity(num, 2, "curve_3d", ach, STANDARD_TYPE(StepGeom_Curve), aCurve3d);
 
-  // --- inherited field : associatedGeometry ---
+  data->ReadEntity(num, 2, "curve_3d", ach, STANDARD_TYPE(StepGeom_Curve), aCurve3d);
 
   occ::handle<NCollection_HArray1<StepGeom_PcurveOrSurface>> aAssociatedGeometry;
   StepGeom_PcurveOrSurface                                   aAssociatedGeometryItem;
@@ -57,17 +38,15 @@ void RWStepGeom_RWSeamCurve::ReadStep(const occ::handle<StepData_StepReaderData>
     aAssociatedGeometry = new NCollection_HArray1<StepGeom_PcurveOrSurface>(1, nb3);
     for (int i3 = 1; i3 <= nb3; i3++)
     {
-      // szv#4:S4163:12Mar99 `bool stat3 =` not needed
+
       if (data->ReadEntity(nsub3, i3, "associated_geometry", ach, aAssociatedGeometryItem))
         aAssociatedGeometry->SetValue(i3, aAssociatedGeometryItem);
       if (i3 == 1)
         assgeomval = aAssociatedGeometryItem.Value();
-      else if (assgeomval == aAssociatedGeometryItem.Value()) //: a9 abv
+      else if (assgeomval == aAssociatedGeometryItem.Value())
         ach->AddFail("Seam Curve with twice the same geom");
     }
   }
-
-  // --- inherited field : masterRepresentation ---
 
   StepGeom_PreferredSurfaceCurveRepresentation aMasterRepresentation = StepGeom_pscrCurve3d;
   if (data->ParamType(num, 4) == Interface_ParamEnum)
@@ -82,8 +61,6 @@ void RWStepGeom_RWSeamCurve::ReadStep(const occ::handle<StepData_StepReaderData>
   else
     ach->AddFail("Parameter #4 (master_representation) is not an enumeration");
 
-  //--- Initialisation of the read entity ---
-
   ent->Init(aName, aCurve3d, aAssociatedGeometry, aMasterRepresentation);
 }
 
@@ -91,15 +68,9 @@ void RWStepGeom_RWSeamCurve::WriteStep(StepData_StepWriter&                   SW
                                        const occ::handle<StepGeom_SeamCurve>& ent) const
 {
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
 
-  // --- inherited field curve3d ---
-
   SW.Send(ent->Curve3d());
-
-  // --- inherited field associatedGeometry ---
 
   SW.OpenSub();
   for (int i3 = 1; i3 <= ent->NbAssociatedGeometry(); i3++)
@@ -107,8 +78,6 @@ void RWStepGeom_RWSeamCurve::WriteStep(StepData_StepWriter&                   SW
     SW.Send(ent->AssociatedGeometryValue(i3).Value());
   }
   SW.CloseSub();
-
-  // --- inherited field masterRepresentation ---
 
   SW.SendEnum(
     RWStepGeom_RWPreferredSurfaceCurveRepresentation::ConvertToString(ent->MasterRepresentation()));

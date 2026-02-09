@@ -125,8 +125,8 @@ occ::handle<Expr_GeneralExpression> Expr_Product::Derivative(
   {
     return new Expr_NumericValue(0.0);
   }
-  occ::handle<Expr_GeneralExpression> firstop = Expr::CopyShare(Operand(1)); // U
-  occ::handle<Expr_GeneralExpression> tailop;                                // V
+  occ::handle<Expr_GeneralExpression> firstop = Expr::CopyShare(Operand(1));
+  occ::handle<Expr_GeneralExpression> tailop;
   int                                 nbop = NbOperands();
   if (nbop == 2)
   {
@@ -141,15 +141,14 @@ occ::handle<Expr_GeneralExpression> Expr_Product::Derivative(
     }
     tailop = prodop;
   }
-  occ::handle<Expr_GeneralExpression> firstder = firstop->Derivative(X); // U'
-  occ::handle<Expr_GeneralExpression> tailder  = tailop->Derivative(X);  // V'
+  occ::handle<Expr_GeneralExpression> firstder = firstop->Derivative(X);
+  occ::handle<Expr_GeneralExpression> tailder  = tailop->Derivative(X);
 
-  occ::handle<Expr_Product> firstmember = firstop * tailder; // U*V'
+  occ::handle<Expr_Product> firstmember = firstop * tailder;
 
-  occ::handle<Expr_Product> secondmember = firstder * tailop; // U'*V
+  occ::handle<Expr_Product> secondmember = firstder * tailop;
 
   occ::handle<Expr_Sum> resu = firstmember->ShallowSimplified() + secondmember->ShallowSimplified();
-  // U*V' + U'*V
 
   return resu->ShallowSimplified();
 }
@@ -201,7 +200,7 @@ occ::handle<Expr_GeneralExpression> Expr_Product::ShallowSimplified() const
     op = Operand(i);
     if (op->IsKind(STANDARD_TYPE(Expr_NumericValue)))
     {
-      // numeric operands are cumulated separately
+
       occ::handle<Expr_NumericValue> NVop = occ::down_cast<Expr_NumericValue>(op);
       if (nbvals == 0)
       {
@@ -222,10 +221,10 @@ occ::handle<Expr_GeneralExpression> Expr_Product::ShallowSimplified() const
   }
   if (!noone)
   {
-    // numeric operands encountered
+
     if (newops.IsEmpty())
-    { // result is only numericvalue (even zero)
-      // only numerics
+    {
+
       return new Expr_NumericValue(vals);
     }
     if (vals != 0.0)
@@ -257,12 +256,12 @@ occ::handle<Expr_GeneralExpression> Expr_Product::ShallowSimplified() const
         return me;
       }
       occ::handle<Expr_NumericValue> thevals = new Expr_NumericValue(vals);
-      newops.Append(thevals); // non-zero value added
+      newops.Append(thevals);
       return new Expr_Product(newops);
     }
     else
     {
-      return new Expr_NumericValue(vals); // zero absorb
+      return new Expr_NumericValue(vals);
     }
   }
   occ::handle<Expr_Product> me = this;

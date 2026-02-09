@@ -1,6 +1,5 @@
 #pragma once
 
-//! --- Purpose statuts concernant la cause de l'erreur
 enum ChFiDS_ErrorStatus
 {
   ChFiDS_Ok,

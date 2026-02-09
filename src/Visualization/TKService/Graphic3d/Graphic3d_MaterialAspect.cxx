@@ -1,16 +1,4 @@
-// Copyright (c) 1991-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Graphic3d_MaterialAspect.hpp>
 
@@ -19,7 +7,7 @@
 
 namespace
 {
-  //! Raw material for defining list of standard materials
+
   struct RawMaterial
   {
     const char*           StringName;
@@ -29,17 +17,16 @@ namespace
     float                 TransparencyCoef;
     float                 RefractionIndex;
     float                 Shininess;
-    // clang-format off
-    float       AmbientCoef;  //!< coefficient for Graphic3d_MaterialAspect::SetColor()
-    float       DiffuseCoef;  //!< coefficient for Graphic3d_MaterialAspect::SetColor()
-    // clang-format on
+
+    float AmbientCoef;
+    float DiffuseCoef;
+
     Graphic3d_TypeOfMaterial MaterialType;
     Graphic3d_NameOfMaterial MaterialName;
 
     RawMaterial(Graphic3d_NameOfMaterial theName, const char* theStringName);
   };
 
-  //! Name list of standard materials (defined within enumeration).
   static const RawMaterial THE_MATERIALS[] = {
     RawMaterial(Graphic3d_NameOfMaterial_Brass, "Brass"),
     RawMaterial(Graphic3d_NameOfMaterial_Bronze, "Bronze"),
@@ -68,8 +55,6 @@ namespace
     RawMaterial(Graphic3d_NameOfMaterial_DEFAULT, "Default"),
     RawMaterial(Graphic3d_NameOfMaterial_UserDefined, "UserDefined")};
 } // namespace
-
-//=================================================================================================
 
 RawMaterial::RawMaterial(Graphic3d_NameOfMaterial theName, const char* theStringName)
     : StringName(theStringName),
@@ -286,7 +271,6 @@ RawMaterial::RawMaterial(Graphic3d_NameOfMaterial theName, const char* theString
     case Graphic3d_NameOfMaterial_Stone:
       MaterialType = Graphic3d_MATERIAL_PHYSIC;
 
-      // special case for SetColor()
       AmbientCoef = 0.19f * 0.25f;
       DiffuseCoef = 0.75f;
 
@@ -485,23 +469,17 @@ RawMaterial::RawMaterial(Graphic3d_NameOfMaterial theName, const char* theString
   PBRMaterial.SetBSDF(BSDF);
 }
 
-//=================================================================================================
-
 Graphic3d_MaterialAspect::Graphic3d_MaterialAspect()
     : myRequestedMaterialName(Graphic3d_NameOfMaterial_DEFAULT)
 {
   init(Graphic3d_NameOfMaterial_DEFAULT);
 }
 
-//=================================================================================================
-
 Graphic3d_MaterialAspect::Graphic3d_MaterialAspect(const Graphic3d_NameOfMaterial theName)
     : myRequestedMaterialName(theName)
 {
   init(theName);
 }
-
-//=================================================================================================
 
 void Graphic3d_MaterialAspect::init(const Graphic3d_NameOfMaterial theName)
 {
@@ -521,8 +499,6 @@ void Graphic3d_MaterialAspect::init(const Graphic3d_NameOfMaterial theName)
   myRequestedMaterialName          = theName;
 }
 
-//=================================================================================================
-
 void Graphic3d_MaterialAspect::IncreaseShine(const float theDelta)
 {
   const float anOldShine = myShininess;
@@ -533,8 +509,6 @@ void Graphic3d_MaterialAspect::IncreaseShine(const float theDelta)
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_MaterialAspect::SetMaterialType(const Graphic3d_TypeOfMaterial theType)
 {
   myMaterialType = theType;
@@ -543,8 +517,6 @@ void Graphic3d_MaterialAspect::SetMaterialType(const Graphic3d_TypeOfMaterial th
     setUserMaterial();
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_MaterialAspect::SetColor(const Quantity_Color& theColor)
 {
@@ -568,8 +540,6 @@ void Graphic3d_MaterialAspect::SetColor(const Quantity_Color& theColor)
   myColors[Graphic3d_TOR_DIFFUSE] = aDiffuse;
 }
 
-//=================================================================================================
-
 void Graphic3d_MaterialAspect::SetAmbientColor(const Quantity_Color& theColor)
 {
   if (myMaterialType == Graphic3d_MATERIAL_PHYSIC
@@ -580,8 +550,6 @@ void Graphic3d_MaterialAspect::SetAmbientColor(const Quantity_Color& theColor)
   }
   myColors[Graphic3d_TOR_AMBIENT] = theColor;
 }
-
-//=================================================================================================
 
 void Graphic3d_MaterialAspect::SetDiffuseColor(const Quantity_Color& theColor)
 {
@@ -594,8 +562,6 @@ void Graphic3d_MaterialAspect::SetDiffuseColor(const Quantity_Color& theColor)
   myColors[Graphic3d_TOR_DIFFUSE] = theColor;
 }
 
-//=================================================================================================
-
 void Graphic3d_MaterialAspect::SetSpecularColor(const Quantity_Color& theColor)
 {
   if (myMaterialType == Graphic3d_MATERIAL_PHYSIC
@@ -606,8 +572,6 @@ void Graphic3d_MaterialAspect::SetSpecularColor(const Quantity_Color& theColor)
   }
   myColors[Graphic3d_TOR_SPECULAR] = theColor;
 }
-
-//=================================================================================================
 
 void Graphic3d_MaterialAspect::SetEmissiveColor(const Quantity_Color& theColor)
 {
@@ -620,8 +584,6 @@ void Graphic3d_MaterialAspect::SetEmissiveColor(const Quantity_Color& theColor)
   myColors[Graphic3d_TOR_EMISSION] = theColor;
 }
 
-//=================================================================================================
-
 void Graphic3d_MaterialAspect::SetTransparency(const float theValue)
 {
   if (theValue < 0.0f || theValue > 1.0f)
@@ -633,8 +595,6 @@ void Graphic3d_MaterialAspect::SetTransparency(const float theValue)
   myPBRMaterial.SetAlpha(1.0f - theValue);
 }
 
-//=================================================================================================
-
 void Graphic3d_MaterialAspect::SetRefractionIndex(const float theValue)
 {
   if (theValue < 1.0f)
@@ -644,8 +604,6 @@ void Graphic3d_MaterialAspect::SetRefractionIndex(const float theValue)
 
   myRefractionIndex = theValue;
 }
-
-//=================================================================================================
 
 void Graphic3d_MaterialAspect::SetShininess(const float theValue)
 {
@@ -661,8 +619,6 @@ void Graphic3d_MaterialAspect::SetShininess(const float theValue)
   }
 }
 
-//=================================================================================================
-
 const char* Graphic3d_MaterialAspect::MaterialName(const int theRank)
 {
   if (theRank < 1 || theRank > NumberOfMaterials())
@@ -672,8 +628,6 @@ const char* Graphic3d_MaterialAspect::MaterialName(const int theRank)
   const RawMaterial& aMat = THE_MATERIALS[theRank - 1];
   return aMat.StringName;
 }
-
-//=================================================================================================
 
 bool Graphic3d_MaterialAspect::MaterialFromName(const char*               theName,
                                                 Graphic3d_NameOfMaterial& theMat)
@@ -692,41 +646,38 @@ bool Graphic3d_MaterialAspect::MaterialFromName(const char*               theNam
     }
   }
 
-  // parse aliases
-  if (aName == "Plastic") // Plastified
+  if (aName == "Plastic")
   {
     theMat = Graphic3d_NameOfMaterial_Plastified;
     return true;
   }
-  else if (aName == "Shiny_plastic") // Shiny_plastified
+  else if (aName == "Shiny_plastic")
   {
     theMat = Graphic3d_NameOfMaterial_ShinyPlastified;
     return true;
   }
-  else if (aName == "Plaster") // Plastered
+  else if (aName == "Plaster")
   {
     theMat = Graphic3d_NameOfMaterial_Plastered;
     return true;
   }
-  else if (aName == "Satin") // Satined
+  else if (aName == "Satin")
   {
     theMat = Graphic3d_NameOfMaterial_Satin;
     return true;
   }
-  else if (aName == "Neon_gnc") // Ionized
+  else if (aName == "Neon_gnc")
   {
     theMat = Graphic3d_NameOfMaterial_Ionized;
     return true;
   }
-  else if (aName == "Neon_phc") // Neon
+  else if (aName == "Neon_phc")
   {
     theMat = Graphic3d_NameOfMaterial_Neon;
     return true;
   }
   return false;
 }
-
-//=================================================================================================
 
 Graphic3d_TypeOfMaterial Graphic3d_MaterialAspect::MaterialType(const int theRank)
 {
@@ -737,8 +688,6 @@ Graphic3d_TypeOfMaterial Graphic3d_MaterialAspect::MaterialType(const int theRan
   const RawMaterial& aMat = THE_MATERIALS[theRank - 1];
   return aMat.MaterialType;
 }
-
-//=================================================================================================
 
 void Graphic3d_MaterialAspect::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

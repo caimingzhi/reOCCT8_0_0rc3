@@ -12,8 +12,6 @@ class BRepFill_OffsetWire;
 class TopoDS_Edge;
 class TopoDS_Shape;
 
-//! this class is used to find the generating shapes
-//! of an OffsetWire.
 class BRepFill_OffsetAncestors
 {
 public:
@@ -29,9 +27,6 @@ public:
 
   Standard_EXPORT bool HasAncestor(const TopoDS_Edge& S1) const;
 
-  //! may return a Null Shape if S1 is not a subShape
-  //! of <Paral>;
-  //! if Perform is not done.
   Standard_EXPORT const TopoDS_Shape& Ancestor(const TopoDS_Edge& S1) const;
 
 private:

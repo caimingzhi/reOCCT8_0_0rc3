@@ -2,15 +2,11 @@
 #include <TopoDS.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 BRepOffsetAPI_MakeThickSolid::BRepOffsetAPI_MakeThickSolid()
 {
-  // Build only solids.
+
   mySimpleOffsetShape.SetBuildSolidFlag(true);
 }
-
-//=================================================================================================
 
 void BRepOffsetAPI_MakeThickSolid::MakeThickSolidByJoin(
   const TopoDS_Shape&                   S,
@@ -41,8 +37,6 @@ void BRepOffsetAPI_MakeThickSolid::MakeThickSolidByJoin(
   Done();
 }
 
-//=================================================================================================
-
 void BRepOffsetAPI_MakeThickSolid::MakeThickSolidBySimple(const TopoDS_Shape& theS,
                                                           const double        theOffsetValue)
 {
@@ -59,11 +53,7 @@ void BRepOffsetAPI_MakeThickSolid::MakeThickSolidBySimple(const TopoDS_Shape& th
   Done();
 }
 
-//=================================================================================================
-
-void BRepOffsetAPI_MakeThickSolid::Build(const Message_ProgressRange& /*theRange*/) {}
-
-//=================================================================================================
+void BRepOffsetAPI_MakeThickSolid::Build(const Message_ProgressRange&) {}
 
 const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_MakeThickSolid::Modified(const TopoDS_Shape& F)
 {
@@ -75,8 +65,6 @@ const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_MakeThickSolid::Modified(con
     {
       myOffsetShape.OffsetFacesFromShapes().LastImage(F, myGenerated);
 
-      // Reverse generated shapes in case of small solids.
-      // Useful only for faces without influence on others.
       NCollection_List<TopoDS_Shape>::Iterator it(myGenerated);
       for (; it.More(); it.Next())
         it.ChangeValue().Reverse();

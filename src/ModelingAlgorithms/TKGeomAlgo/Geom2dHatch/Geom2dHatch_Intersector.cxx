@@ -6,15 +6,11 @@
 #include <gp_Lin2d.hpp>
 #include <Precision.hpp>
 
-//=================================================================================================
-
 Geom2dHatch_Intersector::Geom2dHatch_Intersector()
     : myConfusionTolerance(0.0),
       myTangencyTolerance(0.0)
 {
 }
-
-//=================================================================================================
 
 void Geom2dHatch_Intersector::Perform(const gp_Lin2d&            L,
                                       const double               P,
@@ -22,7 +18,6 @@ void Geom2dHatch_Intersector::Perform(const gp_Lin2d&            L,
                                       const Geom2dAdaptor_Curve& C)
 {
 
-  // double pfbid,plbid;
   IntRes2d_Domain DL;
   if (P != RealLast())
     DL.SetValues(L.Location(), 0., Tol, ElCLib::Value(P, L), P, Tol);
@@ -49,15 +44,13 @@ void Geom2dHatch_Intersector::Perform(const gp_Lin2d&            L,
   this->SetValues(Inter);
 }
 
-//=================================================================================================
-
 void Geom2dHatch_Intersector::LocalGeometry(const Geom2dAdaptor_Curve& E,
                                             const double               U,
                                             gp_Dir2d&                  Tang,
                                             gp_Dir2d&                  Norm,
                                             double&                    C) const
 {
-  // double f,l;
+
   Geom2dLProp_CLProps2d Prop(E.Curve(), U, 2, Precision::PConfusion());
 
   if (!Prop.IsTangentDefined())

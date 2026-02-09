@@ -10,7 +10,6 @@ class Interface_Check;
 class StepRepr_RepresentationContext;
 class StepData_StepWriter;
 
-//! Read & Write Module for RepresentationContext
 class RWStepRepr_RWRepresentationContext
 {
 public:

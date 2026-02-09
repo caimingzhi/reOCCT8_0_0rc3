@@ -13,7 +13,6 @@
 class TopOpeBRepDS_Interference;
 class TopOpeBRepDS_Curve;
 
-//! a tool computing complex transition on Face.
 class TopOpeBRepDS_FaceInterferenceTool
 {
 public:
@@ -21,15 +20,11 @@ public:
 
   Standard_EXPORT TopOpeBRepDS_FaceInterferenceTool(const TopOpeBRepDS_PDataStructure& P);
 
-  //! Eisnew = true if E is a new edge built on edge I->Geometry()
-  //! false if E is shape <=> I->Geometry()
   Standard_EXPORT void Init(const TopoDS_Shape&                           FI,
                             const TopoDS_Shape&                           E,
                             const bool                                    Eisnew,
                             const occ::handle<TopOpeBRepDS_Interference>& I);
 
-  //! Eisnew = true if E is a new edge built on edge I->Geometry()
-  //! false if E is shape <=> I->Geometry()
   Standard_EXPORT void Add(const TopoDS_Shape&                           FI,
                            const TopoDS_Shape&                           F,
                            const TopoDS_Shape&                           E,

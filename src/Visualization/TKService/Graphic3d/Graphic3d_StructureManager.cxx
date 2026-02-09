@@ -10,8 +10,6 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_StructureManager, Standard_Transient)
 #include <Graphic3d_CView.hpp>
 class Graphic3d_Structure;
 
-//=================================================================================================
-
 Graphic3d_StructureManager::Graphic3d_StructureManager(
   const occ::handle<Graphic3d_GraphicDriver>& theDriver)
     : myViewGenId(0, 31),
@@ -19,8 +17,6 @@ Graphic3d_StructureManager::Graphic3d_StructureManager(
       myDeviceLostFlag(false)
 {
 }
-
-//=================================================================================================
 
 Graphic3d_StructureManager::~Graphic3d_StructureManager()
 {
@@ -36,8 +32,6 @@ Graphic3d_StructureManager::~Graphic3d_StructureManager()
   myDefinedViews.Clear();
 }
 
-//=================================================================================================
-
 void Graphic3d_StructureManager::Update(const Graphic3d_ZLayerId theLayerId) const
 {
   for (NCollection_IndexedMap<Graphic3d_CView*>::Iterator aViewIt(myDefinedViews); aViewIt.More();
@@ -47,11 +41,9 @@ void Graphic3d_StructureManager::Update(const Graphic3d_ZLayerId theLayerId) con
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_StructureManager::Remove()
 {
-  // clear all structures whilst views are alive for correct GPU memory management
+
   for (NCollection_Map<occ::handle<Graphic3d_Structure>>::Iterator anIt(myDisplayedStructure);
        anIt.More();
        anIt.Next())
@@ -61,11 +53,8 @@ void Graphic3d_StructureManager::Remove()
   myDisplayedStructure.Clear();
   myHighlightedStructure.Clear();
 
-  // clear list of managed views
   myDefinedViews.Clear();
 }
-
-//=================================================================================================
 
 void Graphic3d_StructureManager::Erase()
 {
@@ -82,11 +71,6 @@ void Graphic3d_StructureManager::DisplayedStructures(
 {
 
   SG.Assign(myDisplayedStructure);
-
-  // JMBStandard_Integer Length  = myDisplayedStructure.Length ();
-
-  // JMBfor (int i=1; i<=Length; i++)
-  // JMB SG.Add (myDisplayedStructure.Value (i));
 }
 
 int Graphic3d_StructureManager::NumberOfDisplayedStructures() const
@@ -96,13 +80,6 @@ int Graphic3d_StructureManager::NumberOfDisplayedStructures() const
 
   return (Length);
 }
-
-// occ::handle<Graphic3d_Structure> Graphic3d_StructureManager::DisplayedStructure (const
-// int AnIndex) const {
-
-// return (myDisplayedStructure.Value (AnIndex));
-
-//}
 
 void Graphic3d_StructureManager::HighlightedStructures(
   NCollection_Map<occ::handle<Graphic3d_Structure>>& SG) const
@@ -114,7 +91,6 @@ void Graphic3d_StructureManager::HighlightedStructures(
 occ::handle<Graphic3d_Structure> Graphic3d_StructureManager::Identification(const int AId) const
 {
 
-  //  int ind=0;
   bool notfound = true;
 
   occ::handle<Graphic3d_Structure> StructNull;
@@ -148,8 +124,6 @@ void Graphic3d_StructureManager::RecomputeStructures()
 {
   myDeviceLostFlag = false;
 
-  // Go through all unique structures including child (connected) ones and ensure that they are
-  // computed.
   NCollection_Map<Graphic3d_Structure*> aStructNetwork;
   for (NCollection_Map<occ::handle<Graphic3d_Structure>>::Iterator anIter(myDisplayedStructure);
        anIter.More();
@@ -173,8 +147,6 @@ void Graphic3d_StructureManager::RecomputeStructures(
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_StructureManager::RegisterObject(
   const occ::handle<Standard_Transient>&     theObject,
   const occ::handle<Graphic3d_ViewAffinity>& theAffinity)
@@ -188,14 +160,10 @@ void Graphic3d_StructureManager::RegisterObject(
   myRegisteredObjects.Bind(theObject.operator->(), theAffinity);
 }
 
-//=================================================================================================
-
 void Graphic3d_StructureManager::UnregisterObject(const occ::handle<Standard_Transient>& theObject)
 {
   myRegisteredObjects.UnBind(theObject.operator->());
 }
-
-//=================================================================================================
 
 const occ::handle<Graphic3d_ViewAffinity>& Graphic3d_StructureManager::ObjectAffinity(
   const occ::handle<Standard_Transient>& theObject) const
@@ -210,8 +178,6 @@ const occ::handle<Graphic3d_ViewAffinity>& Graphic3d_StructureManager::ObjectAff
   return *aResult;
 }
 
-//=================================================================================================
-
 int Graphic3d_StructureManager::Identification(Graphic3d_CView* theView)
 {
   if (myDefinedViews.Contains(theView))
@@ -223,8 +189,6 @@ int Graphic3d_StructureManager::Identification(Graphic3d_CView* theView)
   return myViewGenId.Next();
 }
 
-//=================================================================================================
-
 void Graphic3d_StructureManager::UnIdentification(Graphic3d_CView* theView)
 {
   if (myDefinedViews.Contains(theView))
@@ -235,21 +199,15 @@ void Graphic3d_StructureManager::UnIdentification(Graphic3d_CView* theView)
   }
 }
 
-//=================================================================================================
-
 const NCollection_IndexedMap<Graphic3d_CView*>& Graphic3d_StructureManager::DefinedViews() const
 {
   return myDefinedViews;
 }
 
-//=================================================================================================
-
 int Graphic3d_StructureManager::MaxNumOfViews() const
 {
   return myViewGenId.Upper() - myViewGenId.Lower() + 1;
 }
-
-//=================================================================================================
 
 void Graphic3d_StructureManager::ReCompute(const occ::handle<Graphic3d_Structure>& theStructure)
 {
@@ -258,14 +216,11 @@ void Graphic3d_StructureManager::ReCompute(const occ::handle<Graphic3d_Structure
     return;
   }
 
-  // Recompute structure for all defined views
   for (int aViewIt = 1; aViewIt <= myDefinedViews.Extent(); ++aViewIt)
   {
     ReCompute(theStructure, myDefinedViews(aViewIt));
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_StructureManager::ReCompute(
   const occ::handle<Graphic3d_Structure>&            theStructure,
@@ -282,8 +237,6 @@ void Graphic3d_StructureManager::ReCompute(
   aView->ReCompute(theStructure);
 }
 
-//=================================================================================================
-
 void Graphic3d_StructureManager::Clear(Graphic3d_Structure* theStructure,
                                        const bool           theWithDestruction)
 {
@@ -293,8 +246,6 @@ void Graphic3d_StructureManager::Clear(Graphic3d_Structure* theStructure,
     aViewIt.Value()->Clear(theStructure, theWithDestruction);
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_StructureManager::Connect(const Graphic3d_Structure* theMother,
                                          const Graphic3d_Structure* theDaughter)
@@ -306,8 +257,6 @@ void Graphic3d_StructureManager::Connect(const Graphic3d_Structure* theMother,
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_StructureManager::Disconnect(const Graphic3d_Structure* theMother,
                                             const Graphic3d_Structure* theDaughter)
 {
@@ -317,8 +266,6 @@ void Graphic3d_StructureManager::Disconnect(const Graphic3d_Structure* theMother
     aViewIt.Value()->Disconnect(theMother, theDaughter);
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_StructureManager::Display(const occ::handle<Graphic3d_Structure>& theStructure)
 {
@@ -331,14 +278,11 @@ void Graphic3d_StructureManager::Display(const occ::handle<Graphic3d_Structure>&
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_StructureManager::Erase(const occ::handle<Graphic3d_Structure>& theStructure)
 {
   myDisplayedStructure.Remove(theStructure);
   myHighlightedStructure.Remove(theStructure);
 
-  // Erase structure in all defined views
   for (NCollection_IndexedMap<Graphic3d_CView*>::Iterator aViewIt(myDefinedViews); aViewIt.More();
        aViewIt.Next())
   {
@@ -346,13 +290,10 @@ void Graphic3d_StructureManager::Erase(const occ::handle<Graphic3d_Structure>& t
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_StructureManager::Highlight(const occ::handle<Graphic3d_Structure>& theStructure)
 {
   myHighlightedStructure.Add(theStructure);
 
-  // Highlight in all defined views
   for (NCollection_IndexedMap<Graphic3d_CView*>::Iterator aViewIt(myDefinedViews); aViewIt.More();
        aViewIt.Next())
   {
@@ -360,21 +301,16 @@ void Graphic3d_StructureManager::Highlight(const occ::handle<Graphic3d_Structure
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_StructureManager::UnHighlight(const occ::handle<Graphic3d_Structure>& theStructure)
 {
   myHighlightedStructure.Remove(theStructure);
 
-  // UnHighlight in all defined views
   for (NCollection_IndexedMap<Graphic3d_CView*>::Iterator aViewIt(myDefinedViews); aViewIt.More();
        aViewIt.Next())
   {
     aViewIt.Value()->UnHighlight(theStructure);
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_StructureManager::UnHighlight()
 {
@@ -386,8 +322,6 @@ void Graphic3d_StructureManager::UnHighlight()
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_StructureManager::SetTransform(const occ::handle<Graphic3d_Structure>& theStructure,
                                               const occ::handle<TopLoc_Datum3D>&      theTrsf)
 {
@@ -397,8 +331,6 @@ void Graphic3d_StructureManager::SetTransform(const occ::handle<Graphic3d_Struct
     aViewIt.Value()->SetTransform(theStructure, theTrsf);
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_StructureManager::ChangeDisplayPriority(
   const occ::handle<Graphic3d_Structure>& theStructure,
@@ -411,8 +343,6 @@ void Graphic3d_StructureManager::ChangeDisplayPriority(
     aViewIt.Value()->ChangePriority(theStructure, theOldPriority, theNewPriority);
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_StructureManager::ChangeZLayer(const occ::handle<Graphic3d_Structure>& theStructure,
                                               const Graphic3d_ZLayerId                theLayerId)
@@ -428,8 +358,6 @@ void Graphic3d_StructureManager::ChangeZLayer(const occ::handle<Graphic3d_Struct
     aViewIt.Value()->ChangeZLayer(theStructure, theLayerId);
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_StructureManager::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

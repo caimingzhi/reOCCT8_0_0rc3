@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// szv#9:PRO19565:04Oct99 loss of rotation matrix corrected
 
 #include <gp_Ax3.hpp>
 #include <gp_Dir.hpp>
@@ -49,15 +36,14 @@ IGESData_ToolLocation::IGESData_ToolLocation(const occ::handle<IGESData_IGESMode
 
 void IGESData_ToolLocation::Load()
 {
-  // For each Entity, except Transf and Assoc (except SingleParent), we consider
-  // its "OwnShared" as being dependents
+
   int nb = themodel->NbEntities();
   for (int i = 1; i <= nb; i++)
   {
     occ::handle<IGESData_IGESEntity> ent = themodel->Entity(i);
     if (ent->IsKind(STANDARD_TYPE(IGESData_TransfEntity)))
       continue;
-    // Case of SingleParentEntity
+
     if (ent->IsKind(STANDARD_TYPE(IGESData_SingleParentEntity)))
     {
       DeclareAndCast(IGESData_SingleParentEntity, assoc, ent);
@@ -68,9 +54,9 @@ void IGESData_ToolLocation::Load()
       continue;
     }
     if (ent->TypeNumber() == TYPEFORASSOC)
-      continue; // Assoc except SingleParent
-    // Current case
-    SetOwnAsDependent(ent); // which operates
+      continue;
+
+    SetOwnAsDependent(ent);
   }
 }
 
@@ -87,7 +73,7 @@ void IGESData_ToolLocation::SetReference(const occ::handle<IGESData_IGESEntity>&
   if (np == 0 || nc == 0)
     return;
   if (therefs(nc) > 0)
-    np = -1; // note ambigu
+    np = -1;
   therefs.SetValue(nc, np);
 }
 
@@ -99,7 +85,7 @@ void IGESData_ToolLocation::SetParentAssoc(const occ::handle<IGESData_IGESEntity
   if (np == 0 || nc == 0)
     return;
   if (theassocs(nc) > 0)
-    np = -1; // note ambigu
+    np = -1;
   theassocs.SetValue(nc, np);
 }
 
@@ -121,15 +107,10 @@ void IGESData_ToolLocation::SetOwnAsDependent(const occ::handle<IGESData_IGESEnt
   occ::handle<IGESData_GeneralModule> module = occ::down_cast<IGESData_GeneralModule>(gmodule);
   Interface_EntityIterator            list;
   module->OwnSharedCase(CN, ent, list);
-  // Remark : strictly speaking, we should ignore the referenced entities
-  // whose SubordinateStatus is 0 or 2 ...
-  // Question : is this Status always correct as it should be ?
+
   for (list.Start(); list.More(); list.Next())
     SetReference(ent, GetCasted(IGESData_IGESEntity, list.Value()));
 }
-
-//  #########################################################################
-//  ########                        RESULTATS                        ########
 
 bool IGESData_ToolLocation::IsTransf(const occ::handle<IGESData_IGESEntity>& ent) const
 {
@@ -212,9 +193,9 @@ bool IGESData_ToolLocation::HasParentByAssociativity(
 
 gp_GTrsf IGESData_ToolLocation::ParentLocation(const occ::handle<IGESData_IGESEntity>& ent) const
 {
-  gp_GTrsf                         locat; // by default, identity
+  gp_GTrsf                         locat;
   occ::handle<IGESData_IGESEntity> parent = Parent(ent);
-  // Definition recursive
+
   if (!parent.IsNull())
     locat = EffectiveLocation(parent);
   return locat;
@@ -223,8 +204,8 @@ gp_GTrsf IGESData_ToolLocation::ParentLocation(const occ::handle<IGESData_IGESEn
 gp_GTrsf IGESData_ToolLocation::EffectiveLocation(const occ::handle<IGESData_IGESEntity>& ent) const
 {
   gp_GTrsf locat = ent->Location();
-  // Combine Transf and ParentLocation
-  locat.PreMultiply(ParentLocation(ent)); // don't confuse the direction !
+
+  locat.PreMultiply(ParentLocation(ent));
   return locat;
 }
 
@@ -239,19 +220,19 @@ bool IGESData_ToolLocation::ConvertLocation(const double    prec,
                                             const double    unit)
 {
   if (result.Form() != gp_Identity)
-    result = gp_Trsf(); // Identity forced at start
-  // We take the content of <loc>. Be careful with addressing
+    result = gp_Trsf();
+
   gp_XYZ v1(loc.Value(1, 1), loc.Value(1, 2), loc.Value(1, 3));
   gp_XYZ v2(loc.Value(2, 1), loc.Value(2, 2), loc.Value(2, 3));
   gp_XYZ v3(loc.Value(3, 1), loc.Value(3, 2), loc.Value(3, 3));
-  // Are we dealing with a similarity ?
+
   double m1 = v1.Modulus();
   double m2 = v2.Modulus();
   double m3 = v3.Modulus();
-  // First is this matrix singular ?
+
   if (m1 < prec || m2 < prec || m3 < prec)
     return false;
-  double mm = (m1 + m2 + m3) / 3.; // here is the average Norm, see Scale
+  double mm = (m1 + m2 + m3) / 3.;
   if (std::abs(m1 - mm) > prec * mm || std::abs(m2 - mm) > prec * mm
       || std::abs(m3 - mm) > prec * mm)
     return false;
@@ -260,8 +241,7 @@ bool IGESData_ToolLocation::ConvertLocation(const double    prec,
   v3.Divide(m3);
   if (std::abs(v1.Dot(v2)) > prec || std::abs(v2.Dot(v3)) > prec || std::abs(v3.Dot(v1)) > prec)
     return false;
-  // Here, Orthogonal and same norms. Plus we normalized it
-  // Remain the other characteristics :
+
   if (std::abs(mm - 1.) > prec)
     result.SetScale(gp_Pnt(0, 0, 0), mm);
   gp_XYZ tp = loc.TranslationPart();
@@ -269,11 +249,11 @@ bool IGESData_ToolLocation::ConvertLocation(const double    prec,
     tp.Multiply(unit);
   if (tp.X() != 0. || tp.Y() != 0. || tp.Z() != 0.)
     result.SetTranslationPart(tp);
-  // We isolate the case of Identity (so easy and advantageous)
+
   if (v1.X() != 1. || v1.Y() != 0. || v1.Z() != 0. || v2.X() != 0. || v2.Y() != 1. || v2.Z() != 0.
       || v3.X() != 0. || v3.Y() != 0. || v3.Z() != 1.)
   {
-    // Not Identity : real construction from an Ax3
+
     gp_Dir d1(v1);
     gp_Dir d2(v2);
     gp_Dir d3(v3);
@@ -283,7 +263,7 @@ bool IGESData_ToolLocation::ConvertLocation(const double    prec,
       axes.YReverse();
     gp_Trsf transf;
     transf.SetTransformation(axes);
-    result *= transf; // szv#9:PRO19565:04Oct99
+    result *= transf;
   }
   return true;
 }

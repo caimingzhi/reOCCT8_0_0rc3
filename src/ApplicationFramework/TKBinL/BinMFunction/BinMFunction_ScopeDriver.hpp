@@ -11,7 +11,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! Scope attribute Driver.
 class BinMFunction_ScopeDriver : public BinMDF_ADriver
 {
 

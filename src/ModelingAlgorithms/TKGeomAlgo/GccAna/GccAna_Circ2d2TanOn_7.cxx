@@ -55,14 +55,10 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
   gp_Dir2d  dirL2(L2.Direction());
   gp_Dir2d  normL2(-dirL2.Y(), dirL2.X());
 
-  //=========================================================================
-  //   Processing of boundary cases.                                          +
-  //=========================================================================
-
   double                     Tol = std::abs(Tolerance);
   NCollection_Array1<double> Rradius(1, 2);
   int                        nbsol1 = 1;
-  //  int nbsol2 = 0;
+
   double   Ron     = OnCirc.Radius();
   double   distcco = OnCirc.Location().Distance(center1);
   gp_Dir2d dircc(OnCirc.Location().XY() - center1.XY());
@@ -114,7 +110,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
         WellDone = true;
         NbrSol++;
         cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(pinterm, dirx), Rradius(i));
-        //      ===========================================================
+
         gp_Dir2d dc1(center1.XY() - pinterm.XY());
         gp_Dir2d dc2(origin2.XY() - pinterm.XY());
         distcc1 = pinterm.Distance(center1);
@@ -164,10 +160,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
     }
   }
 
-  //=========================================================================
-  //   General case.                                                         +
-  //=========================================================================
-
   GccAna_CircLin2dBisec Bis(C1, L2);
   if (Bis.IsDone())
   {
@@ -194,7 +186,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
             gp_Pnt2d Center(Intp.Point(j).Value());
             double   dist1 = Center.Distance(center1);
             double   dist2 = L2.Distance(Center);
-            //	    int nbsol = 1;
+
             bool ok = false;
             if (Qualified1.IsEnclosed())
             {
@@ -249,7 +241,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
             {
               NbrSol++;
               cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-              //            =======================================================
+
               gp_Dir2d dc2(origin2.XY() - Center.XY());
               distcc1 = Center.Distance(center1);
               if (!Qualified1.IsUnqualified())

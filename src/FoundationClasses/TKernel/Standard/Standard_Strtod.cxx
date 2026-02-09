@@ -1,33 +1,4 @@
-/****************************************************************
- *
- * The author of this software is David M. Gay.
- *
- * Copyright (c) 1991, 2000, 2001 by Lucent Technologies.
- *
- * Permission to use, copy, modify, and distribute this software for any
- * purpose without fee is hereby granted, provided that this entire notice
- * is included in all copies of any software which is or includes a copy
- * or modification of this software and in all copies of the supporting
- * documentation for such software.
- *
- * THIS SOFTWARE IS BEING PROVIDED "AS IS", WITHOUT ANY EXPRESS OR IMPLIED
- * WARRANTY.  IN PARTICULAR, NEITHER THE AUTHOR NOR LUCENT MAKES ANY
- * REPRESENTATION OR WARRANTY OF ANY KIND CONCERNING THE MERCHANTABILITY
- * OF THIS SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
- *
- ***************************************************************/
 
-/*
- This code has been downloaded from  http://www.netlib.org/fp/ on 2017-12-16
- and adapted for use within Open CASCADE Technology as follows:
-
- 1. Macro IEEE_8087 is defined unconditionally
- 2. Forward declarations of strtod() and atof(), and 'extern C' statements are commented out
- 3. strtod() is renamed to Strtod() (OCCT signature)
- 4. dtoa(), freedtoa() and supporting functions are disabled (see DISABLE_DTOA)
- 5. Compiler warnings are suppressed
-
-*/
 
 #include <Standard_CString.hpp>
 
@@ -37,198 +8,6 @@
 #ifdef _MSC_VER
   #pragma warning(disable : 4706 4244 4127 4334)
 #endif
-
-/* Please send bug reports to David M. Gay (dmg at acm dot org,
- * with " at " changed at "@" and " dot " changed to ".").	*/
-
-/* On a machine with IEEE extended-precision registers, it is
- * necessary to specify double-precision (53-bit) rounding precision
- * before invoking strtod or dtoa.  If the machine uses (the equivalent
- * of) Intel 80x87 arithmetic, the call
- *	_control87(PC_53, MCW_PC);
- * does this with many compilers.  Whether this or another call is
- * appropriate depends on the compiler; for this to work, it may be
- * necessary to #include "float.h" or another system-dependent header
- * file.
- */
-
-/* strtod for IEEE-, VAX-, and IBM-arithmetic machines.
- * (Note that IEEE arithmetic is disabled by gcc's -ffast-math flag.)
- *
- * This strtod returns a nearest machine number to the input decimal
- * string (or sets errno to ERANGE).  With IEEE arithmetic, ties are
- * broken by the IEEE round-even rule.  Otherwise ties are broken by
- * biased rounding (add half and chop).
- *
- * Inspired loosely by William D. Clinger's paper "How to Read Floating
- * Point Numbers Accurately" [Proc. ACM SIGPLAN '90, pp. 92-101].
- *
- * Modifications:
- *
- *	1. We only require IEEE, IBM, or VAX double-precision
- *		arithmetic (not IEEE double-extended).
- *	2. We get by with floating-point arithmetic in a case that
- *		Clinger missed -- when we're computing d * 10^n
- *		for a small integer d and the integer n is not too
- *		much larger than 22 (the maximum integer k for which
- *		we can represent 10^k exactly), we may be able to
- *		compute (d*10^k) * 10^(e-k) with just one roundoff.
- *	3. Rather than a bit-at-a-time adjustment of the binary
- *		result in the hard case, we use floating-point
- *		arithmetic to determine the adjustment to within
- *		one bit; only in really hard cases do we need to
- *		compute a second residual.
- *	4. Because of 3., we don't need a large table of powers of 10
- *		for ten-to-e (just some small tables, e.g. of 10^k
- *		for 0 <= k <= 22).
- */
-
-/*
- * #define IEEE_8087 for IEEE-arithmetic machines where the least
- *	significant byte has the lowest address.
- * #define IEEE_MC68k for IEEE-arithmetic machines where the most
- *	significant byte has the lowest address.
- * #define Long int on machines with 32-bit ints and 64-bit longs.
- * #define IBM for IBM mainframe-style floating-point arithmetic.
- * #define VAX for VAX-style floating-point arithmetic (D_floating).
- * #define No_leftright to omit left-right logic in fast floating-point
- *	computation of dtoa.  This will cause dtoa modes 4 and 5 to be
- *	treated the same as modes 2 and 3 for some inputs.
- * #define Honor_FLT_ROUNDS if FLT_ROUNDS can assume the values 2 or 3
- *	and strtod and dtoa should round accordingly.  Unless Trust_FLT_ROUNDS
- *	is also #defined, fegetround() will be queried for the rounding mode.
- *	Note that both FLT_ROUNDS and fegetround() are specified by the C99
- *	standard (and are specified to be consistent, with fesetround()
- *	affecting the value of FLT_ROUNDS), but that some (Linux) systems
- *	do not work correctly in this regard, so using fegetround() is more
- *	portable than using FLT_ROUNDS directly.
- * #define Check_FLT_ROUNDS if FLT_ROUNDS can assume the values 2 or 3
- *	and Honor_FLT_ROUNDS is not #defined.
- * #define RND_PRODQUOT to use rnd_prod and rnd_quot (assembly routines
- *	that use extended-precision instructions to compute rounded
- *	products and quotients) with IBM.
- * #define ROUND_BIASED for IEEE-format with biased rounding and arithmetic
- *	that rounds toward +Infinity.
- * #define ROUND_BIASED_without_Round_Up for IEEE-format with biased
- *	rounding when the underlying floating-point arithmetic uses
- *	unbiased rounding.  This prevent using ordinary floating-point
- *	arithmetic when the result could be computed with one rounding error.
- * #define Inaccurate_Divide for IEEE-format with correctly rounded
- *	products but inaccurate quotients, e.g., for Intel i860.
- * #define NO_LONG_LONG on machines that do not have a "long long"
- *	integer type (of >= 64 bits).  On such machines, you can
- *	#define Just_16 to store 16 bits per 32-bit Long when doing
- *	high-precision integer arithmetic.  Whether this speeds things
- *	up or slows things down depends on the machine and the number
- *	being converted.  If long long is available and the name is
- *	something other than "long long", #define Llong to be the name,
- *	and if "unsigned Llong" does not work as an unsigned version of
- *	Llong, #define #ULLong to be the corresponding unsigned type.
- * #define Bad_float_h if your system lacks a float.h or if it does not
- *	define some or all of DBL_DIG, DBL_MAX_10_EXP, DBL_MAX_EXP,
- *	FLT_RADIX, FLT_ROUNDS, and DBL_MAX.
- * #define MALLOC your_malloc, where your_malloc(n) acts like malloc(n)
- *	if memory is available and otherwise does something you deem
- *	appropriate.  If MALLOC is undefined, malloc will be invoked
- *	directly -- and assumed always to succeed.  Similarly, if you
- *	want something other than the system's free() to be called to
- *	recycle memory acquired from MALLOC, #define FREE to be the
- *	name of the alternate routine.  (FREE or free is only called in
- *	pathological cases, e.g., in a dtoa call after a dtoa return in
- *	mode 3 with thousands of digits requested.)
- * #define Omit_Private_Memory to omit logic (added Jan. 1998) for making
- *	memory allocations from a private pool of memory when possible.
- *	When used, the private pool is PRIVATE_MEM bytes long:  2304 bytes,
- *	unless #defined to be a different length.  This default length
- *	suffices to get rid of MALLOC calls except for unusual cases,
- *	such as decimal-to-binary conversion of a very long string of
- *	digits.  The longest string dtoa can return is about 751 bytes
- *	long.  For conversions by strtod of strings of 800 digits and
- *	all dtoa conversions in single-threaded executions with 8-byte
- *	pointers, PRIVATE_MEM >= 7400 appears to suffice; with 4-byte
- *	pointers, PRIVATE_MEM >= 7112 appears adequate.
- * #define NO_INFNAN_CHECK if you do not wish to have INFNAN_CHECK
- *	#defined automatically on IEEE systems.  On such systems,
- *	when INFNAN_CHECK is #defined, strtod checks
- *	for Infinity and NaN (case insensitively).  On some systems
- *	(e.g., some HP systems), it may be necessary to #define NAN_WORD0
- *	appropriately -- to the most significant word of a quiet NaN.
- *	(On HP Series 700/800 machines, -DNAN_WORD0=0x7ff40000 works.)
- *	When INFNAN_CHECK is #defined and No_Hex_NaN is not #defined,
- *	strtod also accepts (case insensitively) strings of the form
- *	NaN(x), where x is a string of hexadecimal digits and spaces;
- *	if there is only one string of hexadecimal digits, it is taken
- *	for the 52 fraction bits of the resulting NaN; if there are two
- *	or more strings of hex digits, the first is for the high 20 bits,
- *	the second and subsequent for the low 32 bits, with intervening
- *	white space ignored; but if this results in none of the 52
- *	fraction bits being on (an IEEE Infinity symbol), then NAN_WORD0
- *	and NAN_WORD1 are used instead.
- * #define MULTIPLE_THREADS if the system offers preemptively scheduled
- *	multiple threads.  In this case, you must provide (or suitably
- *	#define) two locks, acquired by ACQUIRE_DTOA_LOCK(n) and freed
- *	by FREE_DTOA_LOCK(n) for n = 0 or 1.  (The second lock, accessed
- *	in pow5mult, ensures lazy evaluation of only one copy of high
- *	powers of 5; omitting this lock would introduce a small
- *	probability of wasting memory, but would otherwise be harmless.)
- *	You must also invoke freedtoa(s) to free the value s returned by
- *	dtoa.  You may do so whether or not MULTIPLE_THREADS is #defined.
-
- *	When MULTIPLE_THREADS is #defined, this source file provides
- *		void set_max_dtoa_threads(unsigned int n);
- *	and expects
- *		unsigned int dtoa_get_threadno(void);
- *	to be available (possibly provided by
- *		#define dtoa_get_threadno omp_get_thread_num
- *	if OpenMP is in use or by
- *		#define dtoa_get_threadno pthread_self
- *	if Pthreads is in use), to return the current thread number.
- *	If set_max_dtoa_threads(n) was called and the current thread
- *	number is k with k < n, then calls on ACQUIRE_DTOA_LOCK(...) and
- *	FREE_DTOA_LOCK(...) are avoided; instead each thread with thread
- *	number < n has a separate copy of relevant data structures.
- *	After set_max_dtoa_threads(n), a call set_max_dtoa_threads(m)
- *	with m <= n has has no effect, but a call with m > n is honored.
- *	Such a call invokes REALLOC (assumed to be "realloc" if REALLOC
- *	is not #defined) to extend the size of the relevant array.
-
- * #define NO_IEEE_Scale to disable new (Feb. 1997) logic in strtod that
- *	avoids underflows on inputs whose result does not underflow.
- *	If you #define NO_IEEE_Scale on a machine that uses IEEE-format
- *	floating-point numbers and flushes underflows to zero rather
- *	than implementing gradual underflow, then you must also #define
- *	Sudden_Underflow.
- * #define USE_LOCALE to use the current locale's decimal_point value.
- * #define SET_INEXACT if IEEE arithmetic is being used and extra
- *	computation should be done to set the inexact flag when the
- *	result is inexact and avoid setting inexact when the result
- *	is exact.  In this case, dtoa.c must be compiled in
- *	an environment, perhaps provided by #include "dtoa.c" in a
- *	suitable wrapper, that defines two functions,
- *		int get_inexact(void);
- *		void clear_inexact(void);
- *	such that get_inexact() returns a nonzero value if the
- *	inexact bit is already set, and clear_inexact() sets the
- *	inexact bit to 0.  When SET_INEXACT is #defined, strtod
- *	also does extra computations to set the underflow and overflow
- *	flags when appropriate (i.e., when the result is tiny and
- *	inexact or when it is a numeric value rounded to +-infinity).
- * #define NO_ERRNO if strtod should not assign errno = ERANGE when
- *	the result overflows to +-Infinity or underflows to 0.
- *	When errno should be assigned, under seemingly rare conditions
- *	it may be necessary to define Set_errno(x) suitably, e.g., in
- *	a local errno.h, such as
- *		#include <errno.h>
- *		#define Set_errno(x) _set_errno(x)
- * #define NO_HEX_FP to omit recognition of hexadecimal floating-point
- *	values by strtod.
- * #define NO_STRTOD_BIGCOMP (on IEEE-arithmetic systems only for now)
- *	to disable logic for "fast" testing of very long input strings
- *	to strtod.  This testing proceeds by initially truncating the
- *	input string, then if necessary comparing the whole string with
- *	a decimal expansion to decide close cases. This logic is only
- *	used for input more than STRTOD_DIGLIM digits long (default 40).
- */
 
 #ifndef Long
   #define Long int
@@ -246,10 +25,10 @@ typedef unsigned Long ULong;
       exit(1);                                                                                     \
     }
   #define Debug(x) x
-int dtoa_stats[7]; /* strtod_{64,96,bigcomp},dtoa_{exact,64,96,bigcomp} */
+int dtoa_stats[7];
 #else
-  #define assert(x) /*nothing*/
-  #define Debug(x)  /*nothing*/
+  #define assert(x)
+  #define Debug(x)
 #endif
 
 #include <cstdlib>
@@ -318,14 +97,14 @@ static double private_mem[PRIVATE_mem], *pmem_next = private_mem;
 
 #include <cerrno>
 
-#ifdef NO_ERRNO /*{*/
+#ifdef NO_ERRNO
   #undef Set_errno
   #define Set_errno(x)
 #else
   #ifndef Set_errno
     #define Set_errno(x) errno = x
   #endif
-#endif /*}*/
+#endif
 
 #ifdef Bad_float_h
 
@@ -334,7 +113,7 @@ static double private_mem[PRIVATE_mem], *pmem_next = private_mem;
     #define DBL_MAX_10_EXP 308
     #define DBL_MAX_EXP 1024
     #define FLT_RADIX 2
-  #endif /*IEEE_Arith*/
+  #endif
 
   #ifdef IBM
     #define DBL_DIG 16
@@ -356,16 +135,16 @@ static double private_mem[PRIVATE_mem], *pmem_next = private_mem;
     #define LONG_MAX 2147483647
   #endif
 
-#else /* ifndef Bad_float_h */
+#else
   #include <cfloat>
-#endif /* Bad_float_h */
+#endif
 
 #ifndef __MATH_H__
   #include <cmath>
 #endif
 
 #ifdef __cplusplus
-// extern "C" {
+
 #endif
 
 #if defined(IEEE_8087) + defined(IEEE_MC68k) + defined(VAX) + defined(IBM) != 1
@@ -374,39 +153,33 @@ Exactly one of IEEE_8087, IEEE_MC68k, VAX, or IBM should be defined.
 
 #undef USE_BF96
 
-#ifdef NO_LONG_LONG /*{{*/
+#ifdef NO_LONG_LONG
   #undef ULLong
   #ifdef Just_16
     #undef Pack_32
-  /* When Pack_32 is not defined, we store 16 bits per 32-bit Long.
-   * This makes some inner loops simpler and sometimes saves work
-   * during multiplications, but it often seems to make things slightly
-   * slower.  Hence the default is now to store 32 bits per Long.
-   */
+
   #endif
-#else /*}{ long long available */
+#else
   #ifndef Llong
     #define Llong long long
   #endif
   #ifndef ULLong
     #define ULLong unsigned Llong
   #endif
-  #ifndef NO_BF96 /*{*/
+  #ifndef NO_BF96
     #define USE_BF96
 
     #ifdef SET_INEXACT
       #define dtoa_divmax 27
     #else
-int dtoa_divmax = 2; /* Permit experimenting: on some systems, 64-bit integer */
-                     /* division is slow enough that we may sometimes want to */
-                     /* avoid using it.   We assume (but do not check) that   */
-                     /* dtoa_divmax <= 27.*/
+int dtoa_divmax = 2;
+
     #endif
 
 typedef struct BF96
-{                          /* Normalized 96-bit software floating point numbers */
-  unsigned int b0, b1, b2; /* b0 = most significant, binary point just to its left */
-  int          e;          /* number represented = b * 2^e, with .5 <= b < 1 */
+{
+  unsigned int b0, b1, b2;
+  int          e;
 } BF96;
 
 static BF96 pten[667] = {
@@ -775,145 +548,124 @@ static ULLong pfive[27] = {5ll,
 
     #ifndef DISABLE_DTOA
 static short int Lhint[2098] = {
-  /*18,*/ 19, 19,  19,  19,  20,  20,  20,  21,  21,  21,  22,  22,  22,  23,  23,  23,
-  23,         24,  24,  24,  25,  25,  25,  26,  26,  26,  26,  27,  27,  27,  28,  28,
-  28,         29,  29,  29,  29,  30,  30,  30,  31,  31,  31,  32,  32,  32,  32,  33,
-  33,         33,  34,  34,  34,  35,  35,  35,  35,  36,  36,  36,  37,  37,  37,  38,
-  38,         38,  38,  39,  39,  39,  40,  40,  40,  41,  41,  41,  41,  42,  42,  42,
-  43,         43,  43,  44,  44,  44,  44,  45,  45,  45,  46,  46,  46,  47,  47,  47,
-  47,         48,  48,  48,  49,  49,  49,  50,  50,  50,  51,  51,  51,  51,  52,  52,
-  52,         53,  53,  53,  54,  54,  54,  54,  55,  55,  55,  56,  56,  56,  57,  57,
-  57,         57,  58,  58,  58,  59,  59,  59,  60,  60,  60,  60,  61,  61,  61,  62,
-  62,         62,  63,  63,  63,  63,  64,  64,  64,  65,  65,  65,  66,  66,  66,  66,
-  67,         67,  67,  68,  68,  68,  69,  69,  69,  69,  70,  70,  70,  71,  71,  71,
-  72,         72,  72,  72,  73,  73,  73,  74,  74,  74,  75,  75,  75,  75,  76,  76,
-  76,         77,  77,  77,  78,  78,  78,  78,  79,  79,  79,  80,  80,  80,  81,  81,
-  81,         82,  82,  82,  82,  83,  83,  83,  84,  84,  84,  85,  85,  85,  85,  86,
-  86,         86,  87,  87,  87,  88,  88,  88,  88,  89,  89,  89,  90,  90,  90,  91,
-  91,         91,  91,  92,  92,  92,  93,  93,  93,  94,  94,  94,  94,  95,  95,  95,
-  96,         96,  96,  97,  97,  97,  97,  98,  98,  98,  99,  99,  99,  100, 100, 100,
-  100,        101, 101, 101, 102, 102, 102, 103, 103, 103, 103, 104, 104, 104, 105, 105,
-  105,        106, 106, 106, 106, 107, 107, 107, 108, 108, 108, 109, 109, 109, 110, 110,
-  110,        110, 111, 111, 111, 112, 112, 112, 113, 113, 113, 113, 114, 114, 114, 115,
-  115,        115, 116, 116, 116, 116, 117, 117, 117, 118, 118, 118, 119, 119, 119, 119,
-  120,        120, 120, 121, 121, 121, 122, 122, 122, 122, 123, 123, 123, 124, 124, 124,
-  125,        125, 125, 125, 126, 126, 126, 127, 127, 127, 128, 128, 128, 128, 129, 129,
-  129,        130, 130, 130, 131, 131, 131, 131, 132, 132, 132, 133, 133, 133, 134, 134,
-  134,        134, 135, 135, 135, 136, 136, 136, 137, 137, 137, 137, 138, 138, 138, 139,
-  139,        139, 140, 140, 140, 141, 141, 141, 141, 142, 142, 142, 143, 143, 143, 144,
-  144,        144, 144, 145, 145, 145, 146, 146, 146, 147, 147, 147, 147, 148, 148, 148,
-  149,        149, 149, 150, 150, 150, 150, 151, 151, 151, 152, 152, 152, 153, 153, 153,
-  153,        154, 154, 154, 155, 155, 155, 156, 156, 156, 156, 157, 157, 157, 158, 158,
-  158,        159, 159, 159, 159, 160, 160, 160, 161, 161, 161, 162, 162, 162, 162, 163,
-  163,        163, 164, 164, 164, 165, 165, 165, 165, 166, 166, 166, 167, 167, 167, 168,
-  168,        168, 169, 169, 169, 169, 170, 170, 170, 171, 171, 171, 172, 172, 172, 172,
-  173,        173, 173, 174, 174, 174, 175, 175, 175, 175, 176, 176, 176, 177, 177, 177,
-  178,        178, 178, 178, 179, 179, 179, 180, 180, 180, 181, 181, 181, 181, 182, 182,
-  182,        183, 183, 183, 184, 184, 184, 184, 185, 185, 185, 186, 186, 186, 187, 187,
-  187,        187, 188, 188, 188, 189, 189, 189, 190, 190, 190, 190, 191, 191, 191, 192,
-  192,        192, 193, 193, 193, 193, 194, 194, 194, 195, 195, 195, 196, 196, 196, 197,
-  197,        197, 197, 198, 198, 198, 199, 199, 199, 200, 200, 200, 200, 201, 201, 201,
-  202,        202, 202, 203, 203, 203, 203, 204, 204, 204, 205, 205, 205, 206, 206, 206,
-  206,        207, 207, 207, 208, 208, 208, 209, 209, 209, 209, 210, 210, 210, 211, 211,
-  211,        212, 212, 212, 212, 213, 213, 213, 214, 214, 214, 215, 215, 215, 215, 216,
-  216,        216, 217, 217, 217, 218, 218, 218, 218, 219, 219, 219, 220, 220, 220, 221,
-  221,        221, 221, 222, 222, 222, 223, 223, 223, 224, 224, 224, 224, 225, 225, 225,
-  226,        226, 226, 227, 227, 227, 228, 228, 228, 228, 229, 229, 229, 230, 230, 230,
-  231,        231, 231, 231, 232, 232, 232, 233, 233, 233, 234, 234, 234, 234, 235, 235,
-  235,        236, 236, 236, 237, 237, 237, 237, 238, 238, 238, 239, 239, 239, 240, 240,
-  240,        240, 241, 241, 241, 242, 242, 242, 243, 243, 243, 243, 244, 244, 244, 245,
-  245,        245, 246, 246, 246, 246, 247, 247, 247, 248, 248, 248, 249, 249, 249, 249,
-  250,        250, 250, 251, 251, 251, 252, 252, 252, 252, 253, 253, 253, 254, 254, 254,
-  255,        255, 255, 256, 256, 256, 256, 257, 257, 257, 258, 258, 258, 259, 259, 259,
-  259,        260, 260, 260, 261, 261, 261, 262, 262, 262, 262, 263, 263, 263, 264, 264,
-  264,        265, 265, 265, 265, 266, 266, 266, 267, 267, 267, 268, 268, 268, 268, 269,
-  269,        269, 270, 270, 270, 271, 271, 271, 271, 272, 272, 272, 273, 273, 273, 274,
-  274,        274, 274, 275, 275, 275, 276, 276, 276, 277, 277, 277, 277, 278, 278, 278,
-  279,        279, 279, 280, 280, 280, 280, 281, 281, 281, 282, 282, 282, 283, 283, 283,
-  283,        284, 284, 284, 285, 285, 285, 286, 286, 286, 287, 287, 287, 287, 288, 288,
-  288,        289, 289, 289, 290, 290, 290, 290, 291, 291, 291, 292, 292, 292, 293, 293,
-  293,        293, 294, 294, 294, 295, 295, 295, 296, 296, 296, 296, 297, 297, 297, 298,
-  298,        298, 299, 299, 299, 299, 300, 300, 300, 301, 301, 301, 302, 302, 302, 302,
-  303,        303, 303, 304, 304, 304, 305, 305, 305, 305, 306, 306, 306, 307, 307, 307,
-  308,        308, 308, 308, 309, 309, 309, 310, 310, 310, 311, 311, 311, 311, 312, 312,
-  312,        313, 313, 313, 314, 314, 314, 315, 315, 315, 315, 316, 316, 316, 317, 317,
-  317,        318, 318, 318, 318, 319, 319, 319, 320, 320, 320, 321, 321, 321, 321, 322,
-  322,        322, 323, 323, 323, 324, 324, 324, 324, 325, 325, 325, 326, 326, 326, 327,
-  327,        327, 327, 328, 328, 328, 329, 329, 329, 330, 330, 330, 330, 331, 331, 331,
-  332,        332, 332, 333, 333, 333, 333, 334, 334, 334, 335, 335, 335, 336, 336, 336,
-  336,        337, 337, 337, 338, 338, 338, 339, 339, 339, 339, 340, 340, 340, 341, 341,
-  341,        342, 342, 342, 342, 343, 343, 343, 344, 344, 344, 345, 345, 345, 346, 346,
-  346,        346, 347, 347, 347, 348, 348, 348, 349, 349, 349, 349, 350, 350, 350, 351,
-  351,        351, 352, 352, 352, 352, 353, 353, 353, 354, 354, 354, 355, 355, 355, 355,
-  356,        356, 356, 357, 357, 357, 358, 358, 358, 358, 359, 359, 359, 360, 360, 360,
-  361,        361, 361, 361, 362, 362, 362, 363, 363, 363, 364, 364, 364, 364, 365, 365,
-  365,        366, 366, 366, 367, 367, 367, 367, 368, 368, 368, 369, 369, 369, 370, 370,
-  370,        370, 371, 371, 371, 372, 372, 372, 373, 373, 373, 374, 374, 374, 374, 375,
-  375,        375, 376, 376, 376, 377, 377, 377, 377, 378, 378, 378, 379, 379, 379, 380,
-  380,        380, 380, 381, 381, 381, 382, 382, 382, 383, 383, 383, 383, 384, 384, 384,
-  385,        385, 385, 386, 386, 386, 386, 387, 387, 387, 388, 388, 388, 389, 389, 389,
-  389,        390, 390, 390, 391, 391, 391, 392, 392, 392, 392, 393, 393, 393, 394, 394,
-  394,        395, 395, 395, 395, 396, 396, 396, 397, 397, 397, 398, 398, 398, 398, 399,
-  399,        399, 400, 400, 400, 401, 401, 401, 402, 402, 402, 402, 403, 403, 403, 404,
-  404,        404, 405, 405, 405, 405, 406, 406, 406, 407, 407, 407, 408, 408, 408, 408,
-  409,        409, 409, 410, 410, 410, 411, 411, 411, 411, 412, 412, 412, 413, 413, 413,
-  414,        414, 414, 414, 415, 415, 415, 416, 416, 416, 417, 417, 417, 417, 418, 418,
-  418,        419, 419, 419, 420, 420, 420, 420, 421, 421, 421, 422, 422, 422, 423, 423,
-  423,        423, 424, 424, 424, 425, 425, 425, 426, 426, 426, 426, 427, 427, 427, 428,
-  428,        428, 429, 429, 429, 429, 430, 430, 430, 431, 431, 431, 432, 432, 432, 433,
-  433,        433, 433, 434, 434, 434, 435, 435, 435, 436, 436, 436, 436, 437, 437, 437,
-  438,        438, 438, 439, 439, 439, 439, 440, 440, 440, 441, 441, 441, 442, 442, 442,
-  442,        443, 443, 443, 444, 444, 444, 445, 445, 445, 445, 446, 446, 446, 447, 447,
-  447,        448, 448, 448, 448, 449, 449, 449, 450, 450, 450, 451, 451, 451, 451, 452,
-  452,        452, 453, 453, 453, 454, 454, 454, 454, 455, 455, 455, 456, 456, 456, 457,
-  457,        457, 457, 458, 458, 458, 459, 459, 459, 460, 460, 460, 461, 461, 461, 461,
-  462,        462, 462, 463, 463, 463, 464, 464, 464, 464, 465, 465, 465, 466, 466, 466,
-  467,        467, 467, 467, 468, 468, 468, 469, 469, 469, 470, 470, 470, 470, 471, 471,
-  471,        472, 472, 472, 473, 473, 473, 473, 474, 474, 474, 475, 475, 475, 476, 476,
-  476,        476, 477, 477, 477, 478, 478, 478, 479, 479, 479, 479, 480, 480, 480, 481,
-  481,        481, 482, 482, 482, 482, 483, 483, 483, 484, 484, 484, 485, 485, 485, 485,
-  486,        486, 486, 487, 487, 487, 488, 488, 488, 488, 489, 489, 489, 490, 490, 490,
-  491,        491, 491, 492, 492, 492, 492, 493, 493, 493, 494, 494, 494, 495, 495, 495,
-  495,        496, 496, 496, 497, 497, 497, 498, 498, 498, 498, 499, 499, 499, 500, 500,
-  500,        501, 501, 501, 501, 502, 502, 502, 503, 503, 503, 504, 504, 504, 504, 505,
-  505,        505, 506, 506, 506, 507, 507, 507, 507, 508, 508, 508, 509, 509, 509, 510,
-  510,        510, 510, 511, 511, 511, 512, 512, 512, 513, 513, 513, 513, 514, 514, 514,
-  515,        515, 515, 516, 516, 516, 516, 517, 517, 517, 518, 518, 518, 519, 519, 519,
-  520,        520, 520, 520, 521, 521, 521, 522, 522, 522, 523, 523, 523, 523, 524, 524,
-  524,        525, 525, 525, 526, 526, 526, 526, 527, 527, 527, 528, 528, 528, 529, 529,
-  529,        529, 530, 530, 530, 531, 531, 531, 532, 532, 532, 532, 533, 533, 533, 534,
-  534,        534, 535, 535, 535, 535, 536, 536, 536, 537, 537, 537, 538, 538, 538, 538,
-  539,        539, 539, 540, 540, 540, 541, 541, 541, 541, 542, 542, 542, 543, 543, 543,
-  544,        544, 544, 544, 545, 545, 545, 546, 546, 546, 547, 547, 547, 548, 548, 548,
-  548,        549, 549, 549, 550, 550, 550, 551, 551, 551, 551, 552, 552, 552, 553, 553,
-  553,        554, 554, 554, 554, 555, 555, 555, 556, 556, 556, 557, 557, 557, 557, 558,
-  558,        558, 559, 559, 559, 560, 560, 560, 560, 561, 561, 561, 562, 562, 562, 563,
-  563,        563, 563, 564, 564, 564, 565, 565, 565, 566, 566, 566, 566, 567, 567, 567,
-  568,        568, 568, 569, 569, 569, 569, 570, 570, 570, 571, 571, 571, 572, 572, 572,
-  572,        573, 573, 573, 574, 574, 574, 575, 575, 575, 575, 576, 576, 576, 577, 577,
-  577,        578, 578, 578, 579, 579, 579, 579, 580, 580, 580, 581, 581, 581, 582, 582,
-  582,        582, 583, 583, 583, 584, 584, 584, 585, 585, 585, 585, 586, 586, 586, 587,
-  587,        587, 588, 588, 588, 588, 589, 589, 589, 590, 590, 590, 591, 591, 591, 591,
-  592,        592, 592, 593, 593, 593, 594, 594, 594, 594, 595, 595, 595, 596, 596, 596,
-  597,        597, 597, 597, 598, 598, 598, 599, 599, 599, 600, 600, 600, 600, 601, 601,
-  601,        602, 602, 602, 603, 603, 603, 603, 604, 604, 604, 605, 605, 605, 606, 606,
-  606,        607, 607, 607, 607, 608, 608, 608, 609, 609, 609, 610, 610, 610, 610, 611,
-  611,        611, 612, 612, 612, 613, 613, 613, 613, 614, 614, 614, 615, 615, 615, 616,
-  616,        616, 616, 617, 617, 617, 618, 618, 618, 619, 619, 619, 619, 620, 620, 620,
-  621,        621, 621, 622, 622, 622, 622, 623, 623, 623, 624, 624, 624, 625, 625, 625,
-  625,        626, 626, 626, 627, 627, 627, 628, 628, 628, 628, 629, 629, 629, 630, 630,
-  630,        631, 631, 631, 631, 632, 632, 632, 633, 633, 633, 634, 634, 634, 634, 635,
-  635,        635, 636, 636, 636, 637, 637, 637, 638, 638, 638, 638, 639, 639, 639, 640,
-  640,        640, 641, 641, 641, 641, 642, 642, 642, 643, 643, 643, 644, 644, 644, 644,
-  645,        645, 645, 646, 646, 646, 647, 647, 647, 647, 648, 648, 648, 649, 649, 649,
-  650,        650};
+  19,  19,  19,  19,  20,  20,  20,  21,  21,  21,  22,  22,  22,  23,  23,  23,  23,  24,  24,
+  24,  25,  25,  25,  26,  26,  26,  26,  27,  27,  27,  28,  28,  28,  29,  29,  29,  29,  30,
+  30,  30,  31,  31,  31,  32,  32,  32,  32,  33,  33,  33,  34,  34,  34,  35,  35,  35,  35,
+  36,  36,  36,  37,  37,  37,  38,  38,  38,  38,  39,  39,  39,  40,  40,  40,  41,  41,  41,
+  41,  42,  42,  42,  43,  43,  43,  44,  44,  44,  44,  45,  45,  45,  46,  46,  46,  47,  47,
+  47,  47,  48,  48,  48,  49,  49,  49,  50,  50,  50,  51,  51,  51,  51,  52,  52,  52,  53,
+  53,  53,  54,  54,  54,  54,  55,  55,  55,  56,  56,  56,  57,  57,  57,  57,  58,  58,  58,
+  59,  59,  59,  60,  60,  60,  60,  61,  61,  61,  62,  62,  62,  63,  63,  63,  63,  64,  64,
+  64,  65,  65,  65,  66,  66,  66,  66,  67,  67,  67,  68,  68,  68,  69,  69,  69,  69,  70,
+  70,  70,  71,  71,  71,  72,  72,  72,  72,  73,  73,  73,  74,  74,  74,  75,  75,  75,  75,
+  76,  76,  76,  77,  77,  77,  78,  78,  78,  78,  79,  79,  79,  80,  80,  80,  81,  81,  81,
+  82,  82,  82,  82,  83,  83,  83,  84,  84,  84,  85,  85,  85,  85,  86,  86,  86,  87,  87,
+  87,  88,  88,  88,  88,  89,  89,  89,  90,  90,  90,  91,  91,  91,  91,  92,  92,  92,  93,
+  93,  93,  94,  94,  94,  94,  95,  95,  95,  96,  96,  96,  97,  97,  97,  97,  98,  98,  98,
+  99,  99,  99,  100, 100, 100, 100, 101, 101, 101, 102, 102, 102, 103, 103, 103, 103, 104, 104,
+  104, 105, 105, 105, 106, 106, 106, 106, 107, 107, 107, 108, 108, 108, 109, 109, 109, 110, 110,
+  110, 110, 111, 111, 111, 112, 112, 112, 113, 113, 113, 113, 114, 114, 114, 115, 115, 115, 116,
+  116, 116, 116, 117, 117, 117, 118, 118, 118, 119, 119, 119, 119, 120, 120, 120, 121, 121, 121,
+  122, 122, 122, 122, 123, 123, 123, 124, 124, 124, 125, 125, 125, 125, 126, 126, 126, 127, 127,
+  127, 128, 128, 128, 128, 129, 129, 129, 130, 130, 130, 131, 131, 131, 131, 132, 132, 132, 133,
+  133, 133, 134, 134, 134, 134, 135, 135, 135, 136, 136, 136, 137, 137, 137, 137, 138, 138, 138,
+  139, 139, 139, 140, 140, 140, 141, 141, 141, 141, 142, 142, 142, 143, 143, 143, 144, 144, 144,
+  144, 145, 145, 145, 146, 146, 146, 147, 147, 147, 147, 148, 148, 148, 149, 149, 149, 150, 150,
+  150, 150, 151, 151, 151, 152, 152, 152, 153, 153, 153, 153, 154, 154, 154, 155, 155, 155, 156,
+  156, 156, 156, 157, 157, 157, 158, 158, 158, 159, 159, 159, 159, 160, 160, 160, 161, 161, 161,
+  162, 162, 162, 162, 163, 163, 163, 164, 164, 164, 165, 165, 165, 165, 166, 166, 166, 167, 167,
+  167, 168, 168, 168, 169, 169, 169, 169, 170, 170, 170, 171, 171, 171, 172, 172, 172, 172, 173,
+  173, 173, 174, 174, 174, 175, 175, 175, 175, 176, 176, 176, 177, 177, 177, 178, 178, 178, 178,
+  179, 179, 179, 180, 180, 180, 181, 181, 181, 181, 182, 182, 182, 183, 183, 183, 184, 184, 184,
+  184, 185, 185, 185, 186, 186, 186, 187, 187, 187, 187, 188, 188, 188, 189, 189, 189, 190, 190,
+  190, 190, 191, 191, 191, 192, 192, 192, 193, 193, 193, 193, 194, 194, 194, 195, 195, 195, 196,
+  196, 196, 197, 197, 197, 197, 198, 198, 198, 199, 199, 199, 200, 200, 200, 200, 201, 201, 201,
+  202, 202, 202, 203, 203, 203, 203, 204, 204, 204, 205, 205, 205, 206, 206, 206, 206, 207, 207,
+  207, 208, 208, 208, 209, 209, 209, 209, 210, 210, 210, 211, 211, 211, 212, 212, 212, 212, 213,
+  213, 213, 214, 214, 214, 215, 215, 215, 215, 216, 216, 216, 217, 217, 217, 218, 218, 218, 218,
+  219, 219, 219, 220, 220, 220, 221, 221, 221, 221, 222, 222, 222, 223, 223, 223, 224, 224, 224,
+  224, 225, 225, 225, 226, 226, 226, 227, 227, 227, 228, 228, 228, 228, 229, 229, 229, 230, 230,
+  230, 231, 231, 231, 231, 232, 232, 232, 233, 233, 233, 234, 234, 234, 234, 235, 235, 235, 236,
+  236, 236, 237, 237, 237, 237, 238, 238, 238, 239, 239, 239, 240, 240, 240, 240, 241, 241, 241,
+  242, 242, 242, 243, 243, 243, 243, 244, 244, 244, 245, 245, 245, 246, 246, 246, 246, 247, 247,
+  247, 248, 248, 248, 249, 249, 249, 249, 250, 250, 250, 251, 251, 251, 252, 252, 252, 252, 253,
+  253, 253, 254, 254, 254, 255, 255, 255, 256, 256, 256, 256, 257, 257, 257, 258, 258, 258, 259,
+  259, 259, 259, 260, 260, 260, 261, 261, 261, 262, 262, 262, 262, 263, 263, 263, 264, 264, 264,
+  265, 265, 265, 265, 266, 266, 266, 267, 267, 267, 268, 268, 268, 268, 269, 269, 269, 270, 270,
+  270, 271, 271, 271, 271, 272, 272, 272, 273, 273, 273, 274, 274, 274, 274, 275, 275, 275, 276,
+  276, 276, 277, 277, 277, 277, 278, 278, 278, 279, 279, 279, 280, 280, 280, 280, 281, 281, 281,
+  282, 282, 282, 283, 283, 283, 283, 284, 284, 284, 285, 285, 285, 286, 286, 286, 287, 287, 287,
+  287, 288, 288, 288, 289, 289, 289, 290, 290, 290, 290, 291, 291, 291, 292, 292, 292, 293, 293,
+  293, 293, 294, 294, 294, 295, 295, 295, 296, 296, 296, 296, 297, 297, 297, 298, 298, 298, 299,
+  299, 299, 299, 300, 300, 300, 301, 301, 301, 302, 302, 302, 302, 303, 303, 303, 304, 304, 304,
+  305, 305, 305, 305, 306, 306, 306, 307, 307, 307, 308, 308, 308, 308, 309, 309, 309, 310, 310,
+  310, 311, 311, 311, 311, 312, 312, 312, 313, 313, 313, 314, 314, 314, 315, 315, 315, 315, 316,
+  316, 316, 317, 317, 317, 318, 318, 318, 318, 319, 319, 319, 320, 320, 320, 321, 321, 321, 321,
+  322, 322, 322, 323, 323, 323, 324, 324, 324, 324, 325, 325, 325, 326, 326, 326, 327, 327, 327,
+  327, 328, 328, 328, 329, 329, 329, 330, 330, 330, 330, 331, 331, 331, 332, 332, 332, 333, 333,
+  333, 333, 334, 334, 334, 335, 335, 335, 336, 336, 336, 336, 337, 337, 337, 338, 338, 338, 339,
+  339, 339, 339, 340, 340, 340, 341, 341, 341, 342, 342, 342, 342, 343, 343, 343, 344, 344, 344,
+  345, 345, 345, 346, 346, 346, 346, 347, 347, 347, 348, 348, 348, 349, 349, 349, 349, 350, 350,
+  350, 351, 351, 351, 352, 352, 352, 352, 353, 353, 353, 354, 354, 354, 355, 355, 355, 355, 356,
+  356, 356, 357, 357, 357, 358, 358, 358, 358, 359, 359, 359, 360, 360, 360, 361, 361, 361, 361,
+  362, 362, 362, 363, 363, 363, 364, 364, 364, 364, 365, 365, 365, 366, 366, 366, 367, 367, 367,
+  367, 368, 368, 368, 369, 369, 369, 370, 370, 370, 370, 371, 371, 371, 372, 372, 372, 373, 373,
+  373, 374, 374, 374, 374, 375, 375, 375, 376, 376, 376, 377, 377, 377, 377, 378, 378, 378, 379,
+  379, 379, 380, 380, 380, 380, 381, 381, 381, 382, 382, 382, 383, 383, 383, 383, 384, 384, 384,
+  385, 385, 385, 386, 386, 386, 386, 387, 387, 387, 388, 388, 388, 389, 389, 389, 389, 390, 390,
+  390, 391, 391, 391, 392, 392, 392, 392, 393, 393, 393, 394, 394, 394, 395, 395, 395, 395, 396,
+  396, 396, 397, 397, 397, 398, 398, 398, 398, 399, 399, 399, 400, 400, 400, 401, 401, 401, 402,
+  402, 402, 402, 403, 403, 403, 404, 404, 404, 405, 405, 405, 405, 406, 406, 406, 407, 407, 407,
+  408, 408, 408, 408, 409, 409, 409, 410, 410, 410, 411, 411, 411, 411, 412, 412, 412, 413, 413,
+  413, 414, 414, 414, 414, 415, 415, 415, 416, 416, 416, 417, 417, 417, 417, 418, 418, 418, 419,
+  419, 419, 420, 420, 420, 420, 421, 421, 421, 422, 422, 422, 423, 423, 423, 423, 424, 424, 424,
+  425, 425, 425, 426, 426, 426, 426, 427, 427, 427, 428, 428, 428, 429, 429, 429, 429, 430, 430,
+  430, 431, 431, 431, 432, 432, 432, 433, 433, 433, 433, 434, 434, 434, 435, 435, 435, 436, 436,
+  436, 436, 437, 437, 437, 438, 438, 438, 439, 439, 439, 439, 440, 440, 440, 441, 441, 441, 442,
+  442, 442, 442, 443, 443, 443, 444, 444, 444, 445, 445, 445, 445, 446, 446, 446, 447, 447, 447,
+  448, 448, 448, 448, 449, 449, 449, 450, 450, 450, 451, 451, 451, 451, 452, 452, 452, 453, 453,
+  453, 454, 454, 454, 454, 455, 455, 455, 456, 456, 456, 457, 457, 457, 457, 458, 458, 458, 459,
+  459, 459, 460, 460, 460, 461, 461, 461, 461, 462, 462, 462, 463, 463, 463, 464, 464, 464, 464,
+  465, 465, 465, 466, 466, 466, 467, 467, 467, 467, 468, 468, 468, 469, 469, 469, 470, 470, 470,
+  470, 471, 471, 471, 472, 472, 472, 473, 473, 473, 473, 474, 474, 474, 475, 475, 475, 476, 476,
+  476, 476, 477, 477, 477, 478, 478, 478, 479, 479, 479, 479, 480, 480, 480, 481, 481, 481, 482,
+  482, 482, 482, 483, 483, 483, 484, 484, 484, 485, 485, 485, 485, 486, 486, 486, 487, 487, 487,
+  488, 488, 488, 488, 489, 489, 489, 490, 490, 490, 491, 491, 491, 492, 492, 492, 492, 493, 493,
+  493, 494, 494, 494, 495, 495, 495, 495, 496, 496, 496, 497, 497, 497, 498, 498, 498, 498, 499,
+  499, 499, 500, 500, 500, 501, 501, 501, 501, 502, 502, 502, 503, 503, 503, 504, 504, 504, 504,
+  505, 505, 505, 506, 506, 506, 507, 507, 507, 507, 508, 508, 508, 509, 509, 509, 510, 510, 510,
+  510, 511, 511, 511, 512, 512, 512, 513, 513, 513, 513, 514, 514, 514, 515, 515, 515, 516, 516,
+  516, 516, 517, 517, 517, 518, 518, 518, 519, 519, 519, 520, 520, 520, 520, 521, 521, 521, 522,
+  522, 522, 523, 523, 523, 523, 524, 524, 524, 525, 525, 525, 526, 526, 526, 526, 527, 527, 527,
+  528, 528, 528, 529, 529, 529, 529, 530, 530, 530, 531, 531, 531, 532, 532, 532, 532, 533, 533,
+  533, 534, 534, 534, 535, 535, 535, 535, 536, 536, 536, 537, 537, 537, 538, 538, 538, 538, 539,
+  539, 539, 540, 540, 540, 541, 541, 541, 541, 542, 542, 542, 543, 543, 543, 544, 544, 544, 544,
+  545, 545, 545, 546, 546, 546, 547, 547, 547, 548, 548, 548, 548, 549, 549, 549, 550, 550, 550,
+  551, 551, 551, 551, 552, 552, 552, 553, 553, 553, 554, 554, 554, 554, 555, 555, 555, 556, 556,
+  556, 557, 557, 557, 557, 558, 558, 558, 559, 559, 559, 560, 560, 560, 560, 561, 561, 561, 562,
+  562, 562, 563, 563, 563, 563, 564, 564, 564, 565, 565, 565, 566, 566, 566, 566, 567, 567, 567,
+  568, 568, 568, 569, 569, 569, 569, 570, 570, 570, 571, 571, 571, 572, 572, 572, 572, 573, 573,
+  573, 574, 574, 574, 575, 575, 575, 575, 576, 576, 576, 577, 577, 577, 578, 578, 578, 579, 579,
+  579, 579, 580, 580, 580, 581, 581, 581, 582, 582, 582, 582, 583, 583, 583, 584, 584, 584, 585,
+  585, 585, 585, 586, 586, 586, 587, 587, 587, 588, 588, 588, 588, 589, 589, 589, 590, 590, 590,
+  591, 591, 591, 591, 592, 592, 592, 593, 593, 593, 594, 594, 594, 594, 595, 595, 595, 596, 596,
+  596, 597, 597, 597, 597, 598, 598, 598, 599, 599, 599, 600, 600, 600, 600, 601, 601, 601, 602,
+  602, 602, 603, 603, 603, 603, 604, 604, 604, 605, 605, 605, 606, 606, 606, 607, 607, 607, 607,
+  608, 608, 608, 609, 609, 609, 610, 610, 610, 610, 611, 611, 611, 612, 612, 612, 613, 613, 613,
+  613, 614, 614, 614, 615, 615, 615, 616, 616, 616, 616, 617, 617, 617, 618, 618, 618, 619, 619,
+  619, 619, 620, 620, 620, 621, 621, 621, 622, 622, 622, 622, 623, 623, 623, 624, 624, 624, 625,
+  625, 625, 625, 626, 626, 626, 627, 627, 627, 628, 628, 628, 628, 629, 629, 629, 630, 630, 630,
+  631, 631, 631, 631, 632, 632, 632, 633, 633, 633, 634, 634, 634, 634, 635, 635, 635, 636, 636,
+  636, 637, 637, 637, 638, 638, 638, 638, 639, 639, 639, 640, 640, 640, 641, 641, 641, 641, 642,
+  642, 642, 643, 643, 643, 644, 644, 644, 644, 645, 645, 645, 646, 646, 646, 647, 647, 647, 647,
+  648, 648, 648, 649, 649, 649, 650, 650};
 
 static int pfivebits[25] = {3,  5,  7,  10, 12, 14, 17, 19, 21, 24, 26, 28, 31,
                             33, 35, 38, 40, 42, 45, 47, 49, 52, 54, 56, 59};
     #endif
 
-  #endif /*}*/
-#endif   /*}} NO_LONG_LONG */
+  #endif
+#endif
 
                                               typedef union
 {
@@ -944,10 +696,6 @@ extern int strtod_diglim;
   #define strtod_diglim STRTOD_DIGLIM
 #endif
 
-/* The following definition of Storeinc is appropriate for MIPS processors.
- * An alternative that might be better on some machines is
- * #define Storeinc(a,b,c) (*a++ = b << 16 | c & 0xffff)
- */
 #if defined(IEEE_8087) + defined(VAX)
   #define Storeinc(a, b, c)                                                                        \
     (((unsigned short*)a)[1] = (unsigned short)b, ((unsigned short*)a)[0] = (unsigned short)c, a++)
@@ -955,12 +703,6 @@ extern int strtod_diglim;
   #define Storeinc(a, b, c)                                                                        \
     (((unsigned short*)a)[0] = (unsigned short)b, ((unsigned short*)a)[1] = (unsigned short)c, a++)
 #endif
-
-/* #define P DBL_MANT_DIG */
-/* Ten_pmax = floor(P*log(2)/log(5)) */
-/* Bletch = (highest power of 2 < DBL_MAX_10_EXP) / 16 */
-/* Quick_max = floor((P-1)*log(FLT_RADIX)/log(10) - 1) */
-/* Int_max = floor(P*log(FLT_RADIX)/log(10) - 1) */
 
 #ifdef IEEE_Arith
   #define Exp_shift 20
@@ -991,7 +733,7 @@ extern int strtod_diglim;
   #define Int_max 14
   #ifndef NO_IEEE_Scale
     #define Avoid_Underflow
-    #ifdef Flush_Denorm /* debugging option */
+    #ifdef Flush_Denorm
       #undef Sudden_Underflow
     #endif
   #endif
@@ -1002,7 +744,7 @@ extern int strtod_diglim;
     #else
       #define Flt_Rounds 1
     #endif
-  #endif /*Flt_Rounds*/
+  #endif
 
   #ifdef Honor_FLT_ROUNDS
     #undef Check_FLT_ROUNDS
@@ -1011,7 +753,7 @@ extern int strtod_diglim;
     #define Rounding Flt_Rounds
   #endif
 
-#else /* ifndef IEEE_Arith */
+#else
   #undef Check_FLT_ROUNDS
   #undef Honor_FLT_ROUNDS
   #undef SET_INEXACT
@@ -1032,7 +774,7 @@ extern int strtod_diglim;
     #define Emin (-260)
     #define Exp_1 0x41000000
     #define Exp_11 0x41000000
-    #define Ebits 8 /* exponent has 7 bits, but 8 is the right value in b2d */
+    #define Ebits 8
     #define Frac_mask 0xffffff
     #define Frac_mask1 0xffffff
     #define Bletch 4
@@ -1046,7 +788,7 @@ extern int strtod_diglim;
     #define Tiny1 0
     #define Quick_max 14
     #define Int_max 15
-  #else /* VAX */
+  #else
     #undef Flt_Rounds
     #define Flt_Rounds 1
     #define Exp_shift 23
@@ -1075,8 +817,8 @@ extern int strtod_diglim;
     #define Tiny1 0
     #define Quick_max 15
     #define Int_max 15
-  #endif /* IBM, VAX */
-#endif   /* IEEE_Arith */
+  #endif
+#endif
 
 #ifndef IEEE_Arith
   #define ROUND_BIASED
@@ -1118,17 +860,15 @@ struct BCinfo
   #define MTd , ThInfo** PTI
 static unsigned int maxthreads = 0;
 #else
-  #define MTa /*nothing*/
-  #define MTb /*nothing*/
-  #define MTd /*nothing*/
+  #define MTa
+  #define MTb
+  #define MTd
 #endif
 
 #define Kmax 7
 
 #ifdef __cplusplus
-// extern "C" double strtod(const char *s00, char **se);
-// extern "C" char *dtoa(double d, int mode, int ndigits,
-//			int *decpt, int *sign, char **rve);
+
 #endif
 
 struct Bigint
@@ -1213,8 +953,7 @@ static Bigint* Balloc(int k MTd)
   if (TI == &TI0)
     ACQUIRE_DTOA_LOCK(0);
 #endif
-  /* The k > Kmax case does not need ACQUIRE_DTOA_LOCK(0), */
-  /* but this case seems very unlikely. */
+
   if (k <= Kmax && (rv = freelist[k]))
     freelist[k] = rv->next;
   else
@@ -1277,7 +1016,7 @@ static void Bfree(Bigint* v MTd)
 #define Bcopy(x, y)                                                                                \
   memcpy((char*)&x->sign, (char*)&y->sign, y->wds * sizeof(Long) + 2 * sizeof(int))
 
-static Bigint* multadd(Bigint* b, int m, int a MTd) /* multiply by m and add a */
+static Bigint* multadd(Bigint* b, int m, int a MTd)
 {
   int i, wds;
 #ifdef ULLong
@@ -1590,7 +1329,7 @@ static Bigint* pow5mult(Bigint* b, int k MTd)
 #endif
   if (!(p5 = p5s))
   {
-    /* first time */
+
 #ifdef MULTIPLE_THREADS
     if (!(TI = *PTI))
       *PTI = TI = get_TI();
@@ -1955,7 +1694,7 @@ static Bigint* d2b(U* d, int* e, int* bits MTd)
   x = b->x;
 
   z = d0 & Frac_mask;
-  d0 &= 0x7fffffff; /* clear sign bit, which we ignore */
+  d0 &= 0x7fffffff;
 #ifdef Sudden_Underflow
   de = (int)(d0 >> Exp_shift);
   #ifndef IBM
@@ -2148,13 +1887,12 @@ static const double tinytens[] = {1e-16,
                                   1e-128,
   #ifdef Avoid_Underflow
                                   9007199254740992. * 9007199254740992.e-256
-  /* = 2^106 * 1e-256 */
+
   #else
                                   1e-256
   #endif
 };
-  /* The factor of 2^53 in tinytens[4] helps us avoid setting the underflow */
-  /* flag unnecessarily.  It leads to a song and dance at the end of strtod. */
+
   #define Scale_Bit 0x10
   #define n_bigtens 5
 #else
@@ -2182,7 +1920,7 @@ static const double tinytens[] = {1e-16, 1e-32};
   #endif
 #endif
 
-#ifdef Need_Hexdig /*{*/
+#ifdef Need_Hexdig
 static unsigned char hexdig[256] = {
   0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0,  0,  0,  0,  16, 17, 18, 19,
@@ -2194,7 +1932,7 @@ static unsigned char hexdig[256] = {
   0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0,  0,  0,  0};
-#endif /* } Need_Hexdig */
+#endif
 
 #ifdef INFNAN_CHECK
 
@@ -2229,12 +1967,11 @@ static void hexnan(U* rvp, const char** sp)
   const char* s;
   int         c1, havedig, udx0, xshift;
 
-  /**** if (!hexdig['0']) hexdig_init(); ****/
   x[0] = x[1] = 0;
   havedig = xshift = 0;
   udx0             = 1;
   s                = *sp;
-  /* allow optional initial 0x or 0X */
+
   while ((c = *(const unsigned char*)(s + 1)) && c <= ' ')
     ++s;
   if (s[1] == '0' && (s[2] == 'x' || s[2] == 'X'))
@@ -2253,19 +1990,19 @@ static void hexnan(U* rvp, const char** sp)
       continue;
     }
     #ifdef GDTOA_NON_PEDANTIC_NANCHECK
-    else if (/*(*/ c == ')' && havedig)
+    else if (c == ')' && havedig)
     {
       *sp = s + 1;
       break;
     }
     else
-      return; /* invalid form: don't change *sp */
+      return;
     #else
     else
     {
       do
       {
-        if (/*(*/ c == ')')
+        if (c == ')')
         {
           *sp = s + 1;
           break;
@@ -2291,8 +2028,8 @@ static void hexnan(U* rvp, const char** sp)
     word1(rvp) = x[1];
   }
 }
-  #endif /*No_Hex_NaN*/
-#endif   /* INFNAN_CHECK */
+  #endif
+#endif
 
 #ifdef Pack_32
   #define ULbits 32
@@ -2304,7 +2041,7 @@ static void hexnan(U* rvp, const char** sp)
   #define kmask 15
 #endif
 
-#if !defined(NO_HEX_FP) || defined(Honor_FLT_ROUNDS) /*{*/
+#if !defined(NO_HEX_FP) || defined(Honor_FLT_ROUNDS)
 static Bigint* increment(Bigint* b MTd)
 {
   ULong * x, *xe;
@@ -2334,9 +2071,9 @@ static Bigint* increment(Bigint* b MTd)
   return b;
 }
 
-#endif /*}*/
+#endif
 
-#ifndef NO_HEX_FP /*{*/
+#ifndef NO_HEX_FP
 
 static void rshift(Bigint* b, int k)
 {
@@ -2396,7 +2133,7 @@ static ULong any_on(Bigint* b, int k)
 }
 
 enum
-{ /* rounding values: same as FLT_ROUNDS */
+{
   Round_zero = 0,
   Round_near = 1,
   Round_up   = 2,
@@ -2415,10 +2152,10 @@ void gethex(const char** sp, U* rvp, int rounding, int sign MTd)
   #endif
   enum
   {
-  #ifdef IEEE_Arith /*{{*/
+  #ifdef IEEE_Arith
     emax = 0x7fe - Bias - P + 1,
     emin = Emin - P + 1
-  #else /*}{*/
+  #else
     emin = Emin - P,
     #ifdef VAX
     emax = 0x7ff - Bias - P
@@ -2427,7 +2164,7 @@ void gethex(const char** sp, U* rvp, int rounding, int sign MTd)
     #ifdef IBM
            emax = 0x7f - Bias - P
     #endif
-  #endif /*}}*/
+  #endif
   };
   #ifdef USE_LOCALE
   int i;
@@ -2449,7 +2186,6 @@ void gethex(const char** sp, U* rvp, int rounding, int sign MTd)
     #endif
   #endif
 
-  /**** if (!hexdig['0']) hexdig_init(); ****/
   havedig = 0;
   s0      = *(const unsigned char**)sp + 2;
   while (s0[havedig] == '0')
@@ -2503,7 +2239,7 @@ void gethex(const char** sp, U* rvp, int rounding, int sign MTd)
   #endif
     while (hexdig[*s])
       s++;
-  } /*}*/
+  }
   if (decpt)
     e = -(((Long)(s - decpt)) << 2);
 pcheck:
@@ -2517,7 +2253,7 @@ pcheck:
       {
         case '-':
           esign = 1;
-          /* no break */
+
           [[fallthrough]];
         case '+':
           s++;
@@ -2569,7 +2305,7 @@ pcheck:
       word0(rvp) = 0;
       word1(rvp) = 1;
       return;
-  #endif /* IEEE_Arith */
+  #endif
     }
     switch (rounding)
     {
@@ -2682,7 +2418,7 @@ pcheck:
     n      = emin - e;
     if (n >= nbits)
     {
-  #ifdef IEEE_Arith /*{*/
+  #ifdef IEEE_Arith
       switch (rounding)
       {
         case Round_near:
@@ -2697,7 +2433,7 @@ pcheck:
           if (sign)
             goto ret_tinyf;
       }
-  #endif /* } IEEE_Arith */
+  #endif
       Bfree(b MTa);
     retz:
       Set_errno(ERANGE);
@@ -2785,15 +2521,13 @@ pcheck:
   word1(rvp) = b->x[0];
   #endif
   #ifdef VAX
-  /* The next two lines ignore swap of low- and high-order 2 bytes. */
-  /* word0(rvp) = (b->x[1] & ~0x800000) | ((e + 129 + 55) << 23); */
-  /* word1(rvp) = b->x[0]; */
+
   word0(rvp) = ((b->x[1] & ~0x800000) >> 16) | ((e + 129 + 55) << 7) | (b->x[1] << 16);
   word1(rvp) = (b->x[0] >> 16) | (b->x[0] << 16);
   #endif
   Bfree(b MTa);
 }
-#endif /*!NO_HEX_FP}*/
+#endif
 
 static int dshift(Bigint* b, int p2)
 {
@@ -2818,8 +2552,8 @@ static int quorem(Bigint* b, Bigint* S)
 
   n = S->wds;
 #ifdef DEBUG
-  /*debug*/ if (b->wds > n)
-    /*debug*/ Bug("oversize b in quorem");
+  if (b->wds > n)
+    Bug("oversize b in quorem");
 #endif
   if (b->wds < n)
     return 0;
@@ -2827,16 +2561,15 @@ static int quorem(Bigint* b, Bigint* S)
   sxe = sx + --n;
   bx  = b->x;
   bxe = bx + n;
-  q   = *bxe / (*sxe + 1); /* ensure q <= true quotient */
+  q   = *bxe / (*sxe + 1);
 #ifdef DEBUG
   #ifdef NO_STRTOD_BIGCOMP
-  /*debug*/ if (q > 9)
+  if (q > 9)
   #else
-  /* An oversized q is possible when quorem is called from bigcomp and */
-  /* the input is near, e.g., twice the smallest denormalized number. */
-  /*debug*/ if (q > 15)
+
+  if (q > 15)
   #endif
-    /*debug*/ Bug("oversized quotient in quorem");
+    Bug("oversized quotient in quorem");
 #endif
   if (q)
   {
@@ -2925,7 +2658,7 @@ static int quorem(Bigint* b, Bigint* S)
   return q;
 }
 
-#if defined(Avoid_Underflow) || !defined(NO_STRTOD_BIGCOMP) /*{*/
+#if defined(Avoid_Underflow) || !defined(NO_STRTOD_BIGCOMP)
 static double sulp(U* x, BCinfo* bc)
 {
   U      u;
@@ -2934,12 +2667,12 @@ static double sulp(U* x, BCinfo* bc)
 
   rv = ulp(x);
   if (!bc->scale || (i = 2 * P + 1 - ((word0(x) & Exp_mask) >> Exp_shift)) <= 0)
-    return rv; /* Is there an example where i <= 0 ? */
+    return rv;
   word0(&u) = Exp_1 + (i << Exp_shift);
   word1(&u) = 0;
   return rv * u.d;
 }
-#endif /*}*/
+#endif
 
 #ifndef NO_STRTOD_BIGCOMP
 static void bigcomp(U* rv, const char* s0, BCinfo* bc MTd)
@@ -2954,8 +2687,8 @@ static void bigcomp(U* rv, const char* s0, BCinfo* bc MTd)
   speccase = 0;
   #ifndef Sudden_Underflow
   if (rv->d == 0.)
-  { /* special case: value near underflow-to-zero */
-    /* threshold was rounded to zero */
+  {
+
     b     = i2b(1 MTa);
     p2    = Emin - P + 1;
     bbits = 1;
@@ -2981,8 +2714,7 @@ static void bigcomp(U* rv, const char* s0, BCinfo* bc MTd)
   #ifdef Avoid_Underflow
   p2 -= bc->scale;
   #endif
-  /* floor(log2(rv)) == bbits - 1 + p2 */
-  /* Check for denormal case. */
+
   i = P - bbits;
   if (i > (j = P - Emin - 1 + p2))
   {
@@ -3020,9 +2752,7 @@ have_i:
   #endif
   p2 -= p5 + i;
   d = i2b(1 MTa);
-  /* Arrange for convenient computation of quotients:
-   * shift left if necessary so divisor has 4 leading 0 bits.
-   */
+
   if (p5 > 0)
     d = pow5mult(d, p5 MTa);
   else if (p5 < 0)
@@ -3043,16 +2773,11 @@ have_i:
   if ((d2 += i) > 0)
     d = lshift(d, d2 MTa);
 
-  /* Now b/d = exactly half-way between the two floating-point values */
-  /* on either side of the input string.  Compute first digit of b/d. */
-
   if (!(dig = quorem(b, d)))
   {
-    b   = multadd(b, 10, 0 MTa); /* very unlikely */
+    b   = multadd(b, 10, 0 MTa);
     dig = quorem(b, d);
   }
-
-  /* Compare b/d with s0 */
 
   for (i = 0; i < nd0;)
   {
@@ -3126,7 +2851,7 @@ ret:
   }
   else if (dd < 0)
   {
-    if (!dsign) /* does not happen for round-near */
+    if (!dsign)
     retlow1:
       dval(rv) -= sulp(rv, bc);
   }
@@ -3140,7 +2865,7 @@ ret:
   }
   else
   {
-    /* Exact half-way case:  apply round-even rule. */
+
     if ((j = ((word0(rv) & Exp_mask) >> Exp_shift) - bc->scale) <= 0)
     {
       i = 1 - j;
@@ -3166,7 +2891,7 @@ ret1:
   #endif
   return;
 }
-#endif /* NO_STRTOD_BIGCOMP */
+#endif
 
 double Strtod(const char* s00, char** se)
 {
@@ -3197,10 +2922,10 @@ double Strtod(const char* s00, char** se)
 #ifdef MULTIPLE_THREADS
   ThInfo* TI = 0;
 #endif
-#ifdef Honor_FLT_ROUNDS   /*{*/
-  #ifdef Trust_FLT_ROUNDS /*{{ only define this if FLT_ROUNDS really works! */
+#ifdef Honor_FLT_ROUNDS
+  #ifdef Trust_FLT_ROUNDS
   bc.rounding = Flt_Rounds;
-  #else  /*}{*/
+  #else
   bc.rounding = 1;
   switch (fegetround())
   {
@@ -3213,8 +2938,8 @@ double Strtod(const char* s00, char** se)
     case FE_DOWNWARD:
       bc.rounding = 3;
   }
-  #endif /*}}*/
-#endif   /*}*/
+  #endif
+#endif
 #ifdef USE_LOCALE
   const char* s2;
 #endif
@@ -3226,12 +2951,12 @@ double Strtod(const char* s00, char** se)
     {
       case '-':
         sign = 1;
-        /* no break */
+
         [[fallthrough]];
       case '+':
         if (*++s)
           goto break2;
-        /* no break */
+
         [[fallthrough]];
       case 0:
         goto ret0;
@@ -3248,7 +2973,7 @@ double Strtod(const char* s00, char** se)
 break2:
   if (*s == '0')
   {
-#ifndef NO_HEX_FP /*{*/
+#ifndef NO_HEX_FP
     switch (s[1])
     {
       case 'x':
@@ -3260,7 +2985,7 @@ break2:
   #endif
         goto ret;
     }
-#endif /*}*/
+#endif
     nz0 = 1;
     while (*++s == '0')
       ;
@@ -3392,10 +3117,8 @@ dig_done:
         while ((c = *++s) >= '0' && c <= '9')
           L = 10 * L + c - '0';
         if (s - s1 > 8 || L > 19999)
-          /* Avoid confusion from exponents
-           * so large that e might overflow.
-           */
-          e = 19999; /* safe for 16 bit ints */
+
+          e = 19999;
         else
           e = (int)L;
         if (esign)
@@ -3411,8 +3134,8 @@ dig_done:
   {
     if (!nz && !nz0)
     {
-#ifdef INFNAN_CHECK /*{*/
-      /* Check for Nan and Infinity */
+#ifdef INFNAN_CHECK
+
       if (!bc.dplen)
         switch (c)
         {
@@ -3435,13 +3158,13 @@ dig_done:
               word0(&rv) = NAN_WORD0;
               word1(&rv) = NAN_WORD1;
   #ifndef No_Hex_NaN
-              if (*s == '(') /*)*/
+              if (*s == '(')
                 hexnan(&rv, &s);
   #endif
               goto ret;
             }
         }
-#endif /*} INFNAN_CHECK */
+#endif
     ret0:
       s    = s00;
       sign = 0;
@@ -3449,11 +3172,6 @@ dig_done:
     goto ret;
   }
   bc.e0 = e1 = e -= nf;
-
-  /* Now we have nd0 digits, starting at s0, followed by a
-   * decimal point, followed by nd-nd0 digits.  The number we're
-   * after is the integer represented by those digits times
-   * 10**e */
 
   if (!nd0)
     nd0 = nd;
@@ -3496,29 +3214,27 @@ dig_done:
         goto vax_ovfl_check;
   #else
     #ifdef Honor_FLT_ROUNDS
-        /* round correctly FLT_ROUNDS = 2 or 3 */
+
         if (sign)
         {
           rv.d = -rv.d;
           sign = 0;
         }
     #endif
-        /* rv = */ rounded_product(dval(&rv), tens[e]);
+        rounded_product(dval(&rv), tens[e]);
         goto ret;
   #endif
       }
       i = DBL_DIG - nd;
       if (e <= Ten_pmax + i)
       {
-        /* A fancier test would sometimes let us do
-         * this for larger i values.
-         */
+
   #ifdef SET_INEXACT
         bc.inexact = 0;
         oldinexact = 1;
   #endif
   #ifdef Honor_FLT_ROUNDS
-        /* round correctly FLT_ROUNDS = 2 or 3 */
+
         if (sign)
         {
           rv.d = -rv.d;
@@ -3528,17 +3244,15 @@ dig_done:
         e -= i;
         dval(&rv) *= tens[i];
   #ifdef VAX
-        /* VAX exponent range is so narrow we must
-         * worry about overflow here...
-         */
+
       vax_ovfl_check:
         word0(&rv) -= P * Exp_msk1;
-        /* rv = */ rounded_product(dval(&rv), tens[e]);
+        rounded_product(dval(&rv), tens[e]);
         if ((word0(&rv) & Exp_mask) > Exp_msk1 * (DBL_MAX_EXP + Bias - 1 - P))
           goto ovfl;
         word0(&rv) += P * Exp_msk1;
   #else
-        /* rv = */ rounded_product(dval(&rv), tens[e]);
+        rounded_product(dval(&rv), tens[e]);
   #endif
         goto ret;
       }
@@ -3551,23 +3265,23 @@ dig_done:
       oldinexact = 1;
     #endif
     #ifdef Honor_FLT_ROUNDS
-      /* round correctly FLT_ROUNDS = 2 or 3 */
+
       if (sign)
       {
         rv.d = -rv.d;
         sign = 0;
       }
     #endif
-      /* rv = */ rounded_quotient(dval(&rv), tens[-e]);
+      rounded_quotient(dval(&rv), tens[-e]);
       goto ret;
     }
   #endif
-#endif /* ROUND_BIASED_without_Round_Up */
+#endif
   }
 #ifdef USE_BF96
   k = nd < 19 ? nd : 19;
 #endif
-  e1 += nd - k; /* scale factor = 10^e1 */
+  e1 += nd - k;
 
 #ifdef IEEE_Arith
   #ifdef SET_INEXACT
@@ -3586,9 +3300,9 @@ dig_done:
       bc.rounding = 0;
   }
   #endif
-#endif /*IEEE_Arith*/
+#endif
 
-#ifdef USE_BF96 /*{*/
+#ifdef USE_BF96
   Debug(++dtoa_stats[0]);
   i = e1 + 342;
   if (i < 0)
@@ -3597,7 +3311,7 @@ dig_done:
     goto ovfl;
   p10 = &pten[i];
   brv = yz;
-  /* shift brv left, with i =  number of bits shifted */
+
   i = 0;
   if (!(brv & 0xffffffff00000000ull))
   {
@@ -3631,21 +3345,17 @@ dig_done:
   }
   erv = (64 + 0x3fe) + p10->e - i;
   if (erv <= 0 && nd > 19)
-    goto many_digits; /* denormal: may need to look at all digits */
+    goto many_digits;
   bhi = brv >> 32;
   blo = brv & 0xffffffffull;
-  /* Unsigned 32-bit ints lie in [0,2^32-1] and */
-  /* unsigned 64-bit ints lie in [0, 2^64-1].  The product of two unsigned */
-  /* 32-bit ints is <= 2^64 - 2*2^32-1 + 1 = 2^64 - 1 - 2*(2^32 - 1), so */
-  /* we can add two unsigned 32-bit ints to the product of two such ints, */
-  /* and 64 bits suffice to contain the result. */
+
   t01 = bhi * p10->b1;
   t10 = blo * p10->b0 + (t01 & 0xffffffffull);
   t00 = bhi * p10->b0 + (t01 >> 32) + (t10 >> 32);
   if (t00 & 0x8000000000000000ull)
   {
     if ((t00 & 0x3ff) && (~t00 & 0x3fe))
-    { /* unambiguous result? */
+    {
       if (nd > 19 && ((t00 + (1 << i) + 2) & 0x400) ^ (t00 & 0x400))
         goto many_digits;
       if (erv <= 0)
@@ -3667,7 +3377,7 @@ dig_done:
   else
   {
     if ((t00 & 0x1ff) && (~t00 & 0x1fe))
-    { /* unambiguous result? */
+    {
       if (nd > 19 && ((t00 + (1 << i) + 2) & 0x200) ^ (t00 & 0x200))
         goto many_digits;
       if (erv <= 1)
@@ -3686,7 +3396,7 @@ dig_done:
       goto noround1;
     }
   }
-  /* 3 multiplies did not suffice; try a 96-bit approximation */
+
   Debug(++dtoa_stats[1]);
   t02    = bhi * p10->b2;
   t11    = blo * p10->b1 + (t02 & 0xffffffffull);
@@ -3700,7 +3410,7 @@ dig_done:
   if (t00 & 0x8000000000000000ull)
   {
     if (erv <= 0)
-    { /* denormal result */
+    {
       if (nd >= 20 || !((tlo & 0xfffffff0) | (t00 & 0x3ff)))
         goto many_digits;
     denormal:
@@ -3720,7 +3430,7 @@ dig_done:
         goto tiniest;
       }
       tg = 1ull << (11 - erv);
-      t00 &= ~(tg - 1); /* clear low bits */
+      t00 &= ~(tg - 1);
   #ifdef Honor_FLT_ROUNDS
       switch (bc.rounding)
       {
@@ -3777,9 +3487,7 @@ dig_done:
         && (nd <= 19
             || ((t00 + (1ull << i)) & 0xfffffffffffffc00ull) == (t00 & 0xfffffffffffffc00ull)))
     {
-      /* Unambiguous result. */
-      /* If nd > 19, then incrementing the 19th digit */
-      /* does not affect rv. */
+
   #ifdef Honor_FLT_ROUNDS
       switch (bc.rounding)
       {
@@ -3790,12 +3498,12 @@ dig_done:
       }
   #endif
       if (t00 & 0x400)
-      { /* round up */
+      {
       roundup:
         t00 += 0x800;
         if (!(t00 & 0x8000000000000000ull))
         {
-          /* rounded up to a power of 2 */
+
           if (erv >= 0x7fe)
             goto ovfl;
           terv       = erv + 1;
@@ -3814,7 +3522,7 @@ dig_done:
   else
   {
     if (erv <= 1)
-    { /* denormal result */
+    {
       if (nd >= 20 || !((tlo & 0xfffffff0) | (t00 & 0x1ff)))
         goto many_digits;
     denormal1:
@@ -3895,7 +3603,7 @@ dig_done:
         && (nd <= 19
             || ((t00 + (1ull << i)) & 0x7ffffffffffffe00ull) == (t00 & 0x7ffffffffffffe00ull)))
     {
-      /* Unambiguous result. */
+
   #ifdef Honor_FLT_ROUNDS
       switch (bc.rounding)
       {
@@ -3906,12 +3614,12 @@ dig_done:
       }
   #endif
       if (t00 & 0x200)
-      { /* round up */
+      {
       roundup1:
         t00 += 0x400;
         if (!(t00 & 0x4000000000000000ull))
         {
-          /* rounded up to a power of 2 */
+
           if (erv >= 0x7ff)
             goto ovfl;
           terv       = erv;
@@ -3951,15 +3659,13 @@ many_digits:
   else
     y = ULong(yz);
   dval(&rv) = yz;
-#endif /*}*/
+#endif
 
 #ifdef IEEE_Arith
   #ifdef Avoid_Underflow
   bc.scale = 0;
   #endif
-#endif /*IEEE_Arith*/
-
-  /* Get starting approximation = rv * 10**e1 */
+#endif
 
   if (e1 > 0)
   {
@@ -3970,13 +3676,13 @@ many_digits:
       if (e1 > DBL_MAX_10_EXP)
       {
       ovfl:
-        /* Can't trust HUGE_VAL */
+
 #ifdef IEEE_Arith
   #ifdef Honor_FLT_ROUNDS
         switch (bc.rounding)
         {
-          case 0: /* toward 0 */
-          case 3: /* toward -infinity */
+          case 0:
+          case 3:
             word0(&rv) = Big0;
             word1(&rv) = Big1;
             break;
@@ -3984,19 +3690,19 @@ many_digits:
             word0(&rv) = Exp_mask;
             word1(&rv) = 0;
         }
-  #else  /*Honor_FLT_ROUNDS*/
+  #else
         word0(&rv) = Exp_mask;
         word1(&rv) = 0;
-  #endif /*Honor_FLT_ROUNDS*/
+  #endif
   #ifdef SET_INEXACT
-        /* set overflow bit */
+
         dval(&rv0) = 1e300;
         dval(&rv0) *= dval(&rv0);
   #endif
-#else  /*IEEE_Arith*/
+#else
         word0(&rv) = Big0;
         word1(&rv) = Big1;
-#endif /*IEEE_Arith*/
+#endif
       range_err:
         if (bd0)
         {
@@ -4013,15 +3719,14 @@ many_digits:
       for (j = 0; e1 > 1; j++, e1 >>= 1)
         if (e1 & 1)
           dval(&rv) *= bigtens[j];
-      /* The last multiplication could overflow. */
+
       word0(&rv) -= P * Exp_msk1;
       dval(&rv) *= bigtens[j];
       if ((z = word0(&rv) & Exp_mask) > Exp_msk1 * (DBL_MAX_EXP + Bias - P))
         goto ovfl;
       if (z > Exp_msk1 * (DBL_MAX_EXP + Bias - 1 - P))
       {
-        /* set to largest number */
-        /* (Can't trust DBL_MAX) */
+
         word0(&rv) = Big0;
         word1(&rv) = Big1;
       }
@@ -4046,7 +3751,7 @@ many_digits:
           dval(&rv) *= tinytens[j];
       if (bc.scale && (j = 2 * P + 1 - ((word0(&rv) & Exp_mask) >> Exp_shift)) > 0)
       {
-        /* scaled rv is denormal; clear j low bits */
+
         if (j >= 32)
         {
           if (j > 54)
@@ -4064,7 +3769,7 @@ many_digits:
       for (j = 0; e1 > 1; j++, e1 >>= 1)
         if (e1 & 1)
           dval(&rv) *= tinytens[j];
-      /* The last multiplication could underflow. */
+
       dval(&rv0) = dval(&rv);
       dval(&rv) *= tinytens[j];
       if (!dval(&rv))
@@ -4085,28 +3790,18 @@ many_digits:
 #ifndef Avoid_Underflow
       word0(&rv) = Tiny0;
       word1(&rv) = Tiny1;
-      /* The refinement below will clean
-       * this approximation up.
-       */
     }
 #endif
   }
 }
 
-/* Now the hard part -- adjusting rv to the correct value.*/
-
-/* Put digits into bd: true value = bd * 10^e */
-
 bc.nd = nd - nz1;
 #ifndef NO_STRTOD_BIGCOMP
-bc.nd0 = nd0; /* Only needed if nd > strtod_diglim, but done here */
-/* to silence an erroneous warning about bc.nd0 */
-/* possibly not being initialized. */
+bc.nd0 = nd0;
+
 if (nd > strtod_diglim)
 {
-  /* ASSERT(strtod_diglim >= 18); 18 == one more than the */
-  /* minimum number of decimal digits to distinguish double values */
-  /* in IEEE arithmetic. */
+
   i = j = 18;
   if (i > nd0)
     j += bc.dplen;
@@ -4123,7 +3818,7 @@ if (nd > strtod_diglim)
   if (nd0 > nd)
     nd0 = nd;
   if (nd < 9)
-  { /* must recompute y */
+  {
     y = 0;
     for (i = 0; i < nd0; ++i)
       y = 10 * y + s0[i] - '0';
@@ -4138,7 +3833,7 @@ for (;;)
 {
   bd = Balloc(bd0->k MTb);
   Bcopy(bd, bd0);
-  bb = d2b(&rv, &bbe, &bbbits MTb); /* rv = bb * 2^bbe */
+  bb = d2b(&rv, &bbe, &bbbits MTb);
   bs = i2b(1 MTb);
 
   if (e >= 0)
@@ -4164,10 +3859,10 @@ for (;;)
   Lsb  = LSB;
   Lsb1 = 0;
   j    = bbe - bc.scale;
-  i    = j + bbbits - 1; /* logb(rv) */
+  i    = j + bbbits - 1;
   j    = P + 1 - bbbits;
   if (i < Emin)
-  { /* denormal */
+  {
     i = Emin - i;
     j -= i;
     if (i < 32)
@@ -4177,22 +3872,22 @@ for (;;)
     else
       Lsb1 = Exp_mask;
   }
-#else /*Avoid_Underflow*/
+#else
   #ifdef Sudden_Underflow
     #ifdef IBM
       j = 1 + 4 * P - 3 - bbbits + ((bbe + bbbits - 1) & 3);
     #else
       j = P + 1 - bbbits;
     #endif
-  #else  /*Sudden_Underflow*/
+  #else
       j = bbe;
-      i = j + bbbits - 1; /* logb(rv) */
-      if (i < Emin)       /* denormal */
+      i = j + bbbits - 1;
+      if (i < Emin)
         j += P - Emin;
       else
         j = P + 1 - bbbits;
-  #endif /*Sudden_Underflow*/
-#endif   /*Avoid_Underflow*/
+  #endif
+#endif
   bb2 += j;
   bd2 += j;
 #ifdef Avoid_Underflow
@@ -4226,12 +3921,12 @@ for (;;)
   bc.dsign    = delta->sign;
   delta->sign = 0;
   i           = cmp(delta, bs);
-#ifndef NO_STRTOD_BIGCOMP /*{*/
+#ifndef NO_STRTOD_BIGCOMP
   if (bc.nd > nd && i <= 0)
   {
     if (bc.dsign)
     {
-      /* Must use bigcomp(). */
+
       req_bigcomp = 1;
       break;
     }
@@ -4246,18 +3941,18 @@ for (;;)
     }
     else
   #endif
-      i = -1; /* Discarded digits make delta smaller. */
+      i = -1;
   }
-#endif                  /*}*/
-#ifdef Honor_FLT_ROUNDS /*{*/
+#endif
+#ifdef Honor_FLT_ROUNDS
   if (bc.rounding != 1)
   {
     if (i < 0)
     {
-      /* Error is less than an ulp */
+
       if (!delta->x[0] && delta->wds <= 1)
       {
-        /* exact */
+
   #ifdef SET_INEXACT
         bc.inexact = 0;
   #endif
@@ -4289,7 +3984,7 @@ for (;;)
           }
         }
       apply_adj:
-  #ifdef Avoid_Underflow /*{*/
+  #ifdef Avoid_Underflow
         if (bc.scale && (y = word0(&rv) & Exp_mask) <= 2 * P * Exp_msk1)
           word0(&adj) += (2 * P + 1) * Exp_msk1 - y;
   #else
@@ -4301,8 +3996,8 @@ for (;;)
           word0(&rv) -= P * Exp_msk1;
         }
         else
-    #endif /*Sudden_Underflow*/
-  #endif   /*Avoid_Underflow}*/
+    #endif
+  #endif
         dval(&rv) += adj.d * ulp(&rv);
       }
       break;
@@ -4312,7 +4007,7 @@ for (;;)
       adj.d = 1.;
     if (adj.d <= 0x7ffffffe)
     {
-      /* adj = rounding ? ceil(adj) : floor(adj); */
+
       y = adj.d;
       if (y != adj.d)
       {
@@ -4321,7 +4016,7 @@ for (;;)
         adj.d = y;
       }
     }
-  #ifdef Avoid_Underflow /*{*/
+  #ifdef Avoid_Underflow
     if (bc.scale && (y = word0(&rv) & Exp_mask) <= 2 * P * Exp_msk1)
       word0(&adj) += (2 * P + 1) * Exp_msk1 - y;
   #else
@@ -4337,8 +4032,8 @@ for (;;)
       word0(&rv) -= P * Exp_msk1;
       goto cont;
     }
-    #endif /*Sudden_Underflow*/
-  #endif   /*Avoid_Underflow}*/
+    #endif
+  #endif
     adj.d *= ulp(&rv);
     if (bc.dsign)
     {
@@ -4350,21 +4045,19 @@ for (;;)
       dval(&rv) -= adj.d;
     goto cont;
   }
-#endif /*}Honor_FLT_ROUNDS*/
+#endif
 
   if (i < 0)
   {
-    /* Error is less than half an ulp -- check for
-     * special case of mantissa a power of two.
-     */
+
     if (bc.dsign || word1(&rv) || word0(&rv) & Bndry_mask
-#ifdef IEEE_Arith /*{*/
+#ifdef IEEE_Arith
   #ifdef Avoid_Underflow
         || (word0(&rv) & Exp_mask) <= (2 * P + 1) * Exp_msk1
   #else
         || (word0(&rv) & Exp_mask) <= Exp_msk1
   #endif
-#endif /*}*/
+#endif
     )
     {
 #ifdef SET_INEXACT
@@ -4375,7 +4068,7 @@ for (;;)
     }
     if (!delta->x[0] && delta->wds <= 1)
     {
-      /* exact result */
+
 #ifdef SET_INEXACT
       bc.inexact = 0;
 #endif
@@ -4388,7 +4081,7 @@ for (;;)
   }
   if (i == 0)
   {
-    /* exactly half-way between */
+
     if (bc.dsign)
     {
       if ((word0(&rv) & Bndry_mask1) == Bndry_mask1
@@ -4401,7 +4094,7 @@ for (;;)
 #endif
                    0xffffffff))
       {
-        /*boundary case -- increment exponent*/
+
         if (word0(&rv) == Big0 && word1(&rv) == Big1)
           goto ovfl;
         word0(&rv) = (word0(&rv) & Exp_mask) + Exp_msk1
@@ -4419,8 +4112,8 @@ for (;;)
     else if (!(word0(&rv) & Bndry_mask) && !word1(&rv))
     {
     drop_down:
-      /* boundary case -- decrement exponent */
-#ifdef Sudden_Underflow /*{{*/
+
+#ifdef Sudden_Underflow
       L = word0(&rv) & Exp_mask;
   #ifdef IBM
       if (L < Exp_msk1)
@@ -4429,8 +4122,8 @@ for (;;)
       if (L <= (bc.scale ? (2 * P + 1) * Exp_msk1 : Exp_msk1))
     #else
       if (L <= Exp_msk1)
-    #endif /*Avoid_Underflow*/
-  #endif   /*IBM*/
+    #endif
+  #endif
       {
         if (bc.nd > nd)
         {
@@ -4440,7 +4133,7 @@ for (;;)
         goto undfl;
       }
       L -= Exp_msk1;
-#else /*Sudden_Underflow}{*/
+#else
   #ifdef Avoid_Underflow
           if (bc.scale)
           {
@@ -4448,10 +4141,9 @@ for (;;)
             if (L <= (2 * P + 1) * Exp_msk1)
             {
               if (L > (P + 2) * Exp_msk1)
-                /* round even ==> */
-                /* accept rv */
+
                 break;
-              /* rv = smallest denormal */
+
               if (bc.nd > nd)
               {
                 bc.uflchk = 1;
@@ -4460,9 +4152,9 @@ for (;;)
               goto undfl;
             }
           }
-  #endif /*Avoid_Underflow*/
+  #endif
           L = (word0(&rv) & Exp_mask) - Exp_msk1;
-#endif   /*Sudden_Underflow}}*/
+#endif
       word0(&rv) = L | Bndry_mask1;
       word1(&rv) = 0xffffffff;
 #ifdef IBM
@@ -4543,8 +4235,6 @@ for (;;)
     }
     else
     {
-      /* special case -- power of FLT_RADIX to be */
-      /* rounded down... */
 
       if (aadj < 2. / FLT_RADIX)
         aadj = 1. / FLT_RADIX;
@@ -4560,21 +4250,19 @@ for (;;)
 #ifdef Check_FLT_ROUNDS
     switch (bc.rounding)
     {
-      case 2: /* towards +infinity */
+      case 2:
         aadj1 -= 0.5;
         break;
-      case 0: /* towards 0 */
-      case 3: /* towards -infinity */
+      case 0:
+      case 3:
         aadj1 += 0.5;
     }
 #else
         if (Flt_Rounds == 0)
           aadj1 += 0.5;
-#endif /*Check_FLT_ROUNDS*/
+#endif
   }
   y = word0(&rv) & Exp_mask;
-
-  /* Check for overflow */
 
   if (y == Exp_msk1 * (DBL_MAX_EXP + Bias - 1))
   {
@@ -4660,14 +4348,8 @@ for (;;)
           adj.d = aadj1 * ulp(&rv);
           dval(&rv) += adj.d;
         }
-  #else  /*Sudden_Underflow*/
-        /* Compute adj so that the IEEE rounding rules will
-         * correctly round rv + adj in some half-way cases.
-         * If rv * ulp(rv) is denormalized (i.e.,
-         * y <= (P-1)*Exp_msk1), we must adjust aadj to avoid
-         * trouble from bits lost to denormalization;
-         * example: 1.2e-307 .
-         */
+  #else
+
         if (y <= (P - 1) * Exp_msk1 && aadj > 1.)
         {
           aadj1 = (double)(int)(aadj + 0.5);
@@ -4676,8 +4358,8 @@ for (;;)
         }
         adj.d = aadj1 * ulp(&rv);
         dval(&rv) += adj.d;
-  #endif /*Sudden_Underflow*/
-#endif   /*Avoid_Underflow*/
+  #endif
+#endif
   }
   z = word0(&rv) & Exp_mask;
 #ifndef SET_INEXACT
@@ -4688,10 +4370,10 @@ for (;;)
   #endif
       if (y == z)
       {
-        /* Can we stop now? */
+
         L = (Long)aadj;
         aadj -= L;
-        /* The tolerances below are conservative. */
+
         if (bc.dsign || word1(&rv) || word0(&rv) & Bndry_mask)
         {
           if (aadj < .4999999 || aadj > .5000001)
@@ -4733,7 +4415,7 @@ if (bc.scale)
   word1(&rv0) = 0;
   dval(&rv) *= dval(&rv0);
   #ifndef NO_ERRNO
-    /* try to avoid the bug of testing an 8087 register value */
+
     #ifdef IEEE_Arith
   if (!(word0(&rv) & Exp_mask))
     #else
@@ -4742,14 +4424,14 @@ if (bc.scale)
     Set_errno(ERANGE);
   #endif
 }
-#endif /* Avoid_Underflow */
+#endif
 ret:
 #ifdef SET_INEXACT
   if (bc.inexact)
 {
   if (!(word0(&rv) & Exp_mask))
   {
-    /* set underflow and inexact bits */
+
     dval(&rv0) = 1e-300;
     dval(&rv0) *= dval(&rv0);
   }
@@ -4767,7 +4449,6 @@ if (se)
 return sign ? -dval(&rv) : dval(&rv);
 }
 
-// disable dtoa() and related functions
 #ifndef DISABLE_DTOA
 
   #ifndef MULTIPLE_THREADS
@@ -4811,12 +4492,6 @@ rve_chk:
   return rv;
 }
 
-/* freedtoa(s) must be used to free values s returned by dtoa
- * when MULTIPLE_THREADS is #defined.  It should be used in all cases,
- * but for consistency with earlier versions of dtoa, it is optional
- * when MULTIPLE_THREADS is not defined.
- */
-
 void freedtoa(char* s)
 {
   #ifdef MULTIPLE_THREADS
@@ -4831,40 +4506,6 @@ void freedtoa(char* s)
   #endif
 }
 
-/* dtoa for IEEE arithmetic (dmg): convert double to ASCII string.
- *
- * Inspired by "How to Print Floating-Point Numbers Accurately" by
- * Guy L. Steele, Jr. and Jon L. White [Proc. ACM SIGPLAN '90, pp. 112-126].
- *
- * Modifications:
- *	1. Rather than iterating, we use a simple numeric overestimate
- *	   to determine k = floor(log10(d)).  We scale relevant
- *	   quantities using O(log2(k)) rather than O(k) multiplications.
- *	2. For some modes > 2 (corresponding to ecvt and fcvt), we don't
- *	   try to generate digits strictly left to right.  Instead, we
- *	   compute with fewer bits and propagate the carry if necessary
- *	   when rounding the final digit up.  This is often faster.
- *	3. Under the assumption that input will be rounded nearest,
- *	   mode 0 renders 1e23 as 1e23 rather than 9.999999999999999e22.
- *	   That is, we allow equality in stopping tests when the
- *	   round-nearest rule will give the same floating-point value
- *	   as would satisfaction of the stopping test with strict
- *	   inequality.
- *	4. We remove common factors of powers of 2 from relevant
- *	   quantities.
- *	5. When converting floating-point integers less than 1e16,
- *	   we use floating-point arithmetic rather than resorting
- *	   to multiple-precision integers.
- *	6. When asked to produce fewer than 15 digits, we first try
- *	   to get by with floating-point arithmetic; we resort to
- *	   multiple-precision integer arithmetic only if we cannot
- *	   guarantee that the floating-point calculation has given
- *	   the correctly rounded result.  For k requested digits and
- *	   "uniformly" distributed input, the probability is
- *	   something like 10^(k-15) that we must resort to the Long
- *	   calculation.
- */
-
 char* dtoa_r(double dd,
              int    mode,
              int    ndigits,
@@ -4874,48 +4515,6 @@ char* dtoa_r(double dd,
              char*  buf,
              size_t blen)
 {
-  /*	Arguments ndigits, decpt, sign are similar to those
-     of ecvt and fcvt; trailing zeros are suppressed from
-     the returned string.  If not null, *rve is set to point
-     to the end of the return value.  If d is +-Infinity or NaN,
-     then *decpt is set to 9999.
-
-     mode:
-         0 ==> shortest string that yields d when read in
-             and rounded to nearest.
-         1 ==> like 0, but with Steele & White stopping rule;
-             e.g. with IEEE P754 arithmetic , mode 0 gives
-             1e23 whereas mode 1 gives 9.999999999999999e22.
-         2 ==> max(1,ndigits) significant digits.  This gives a
-             return value similar to that of ecvt, except
-             that trailing zeros are suppressed.
-         3 ==> through ndigits past the decimal point.  This
-             gives a return value similar to that from fcvt,
-             except that trailing zeros are suppressed, and
-             ndigits can be negative.
-         4,5 ==> similar to 2 and 3, respectively, but (in
-             round-nearest mode) with the tests of mode 0 to
-             possibly return a shorter string that rounds to d.
-             With IEEE arithmetic and compilation with
-             -DHonor_FLT_ROUNDS, modes 4 and 5 behave the same
-             as modes 2 and 3 when FLT_ROUNDS != 1.
-         6-9 ==> Debugging modes similar to mode - 4:  don't try
-             fast floating-point estimate (if applicable).
-
-         Values of mode other than 0-9 are treated as mode 0.
-
-     When not NULL, buf is an output buffer of length blen, which must
-     be large enough to accommodate suppressed trailing zeros and a trailing
-     null byte.  If blen is too small, rv = NULL is returned, in which case
-     if rve is not NULL, a subsequent call with blen >= (*rve - rv) + 1
-     should succeed in returning buf.
-
-     When buf is NULL, sufficient space is allocated for the return value,
-     which, when done using, the caller should pass to freedtoa().
-
-     USE_BF is automatically defined when neither NO_LONG_LONG nor NO_BF96
-     is defined.
-     */
 
   #ifdef MULTIPLE_THREADS
   ThInfo* TI = 0;
@@ -4930,12 +4529,12 @@ char* dtoa_r(double dd,
   #ifdef SET_INEXACT
   int inexact, oldinexact;
   #endif
-  #ifdef USE_BF96 /*{{*/
+  #ifdef USE_BF96
   BF96*  p10;
   ULLong dbhi, dbits, dblo, den, hb, rb, rblo, res, res0, res3, reslo, sres, sulp, tv0, tv1, tv2,
     tv3, ulp, ulplo, ulpmask, ures, ureslo, zb;
   int eulp, k1, n2, ulpadj, ulpshift;
-  #else /*}{*/
+  #else
     #ifndef Sudden_Underflow
   ULong x;
     #endif
@@ -4948,12 +4547,12 @@ char* dtoa_r(double dd,
   U eps1;
       #endif
     #endif
-  #endif                  /*}}*/
-  #ifdef Honor_FLT_ROUNDS /*{*/
+  #endif
+  #ifdef Honor_FLT_ROUNDS
   int Rounding;
-    #ifdef Trust_FLT_ROUNDS /*{{ only define this if FLT_ROUNDS really works! */
+    #ifdef Trust_FLT_ROUNDS
   Rounding = Flt_Rounds;
-    #else  /*}{*/
+    #else
   Rounding = 1;
   switch (fegetround())
   {
@@ -4966,15 +4565,15 @@ char* dtoa_r(double dd,
     case FE_DOWNWARD:
       Rounding = 3;
   }
-    #endif /*}}*/
-  #endif   /*}*/
+    #endif
+  #endif
 
   u.d = dd;
   if (word0(&u) & Sign_bit)
   {
-    /* set sign for everything, including 0's and NaNs */
+
     *sign = 1;
-    word0(&u) &= ~Sign_bit; /* clear sign bit */
+    word0(&u) &= ~Sign_bit;
   }
   else
     *sign = 0;
@@ -4986,7 +4585,7 @@ char* dtoa_r(double dd,
   if (word0(&u) == 0x8000)
     #endif
   {
-    /* Infinity or NaN */
+
     *decpt = 9999;
     #ifdef IEEE_Arith
     if (!word1(&u) && !(word0(&u) & 0xfffff))
@@ -4996,7 +4595,7 @@ char* dtoa_r(double dd,
   }
   #endif
   #ifdef IBM
-  dval(&u) += 0; /* normalize */
+  dval(&u) += 0;
   #endif
   if (!dval(&u))
   {
@@ -5020,9 +4619,9 @@ char* dtoa_r(double dd,
       Rounding = 0;
   }
   #endif
-  #ifdef USE_BF96                            /*{{*/
-  dbits = (u.LL & 0xfffffffffffffull) << 11; /* fraction bits */
-  if ((be = u.LL >> 52))                     /* biased exponent; nonzero ==> normal */
+  #ifdef USE_BF96
+  dbits = (u.LL & 0xfffffffffffffull) << 11;
+  if ((be = u.LL >> 52))
   {
     dbits |= 0x8000000000000000ull;
     denorm = ulpadj = 0;
@@ -5074,9 +4673,7 @@ char* dtoa_r(double dd,
     --j;
   k = j - 342;
 
-    /* now 10^k <= dd < 10^(k+1) */
-
-  #else /*}{*/
+  #else
 
   b = d2b(&u, &be, &bbits MTb);
     #ifdef Sudden_Underflow
@@ -5093,28 +4690,6 @@ char* dtoa_r(double dd,
     dval(&d2) /= 1 << j;
     #endif
 
-  /* log(x)	~=~ log(1.5) + (x-1.5)/1.5
-   * log10(x)	 =  log(x) / log(10)
-   *		~=~ log(1.5)/log(10) + (x-1.5)/(1.5*log(10))
-   * log10(d) = (i-Bias)*log(2)/log(10) + log10(d2)
-   *
-   * This suggests computing an approximation k to log10(d) by
-   *
-   * k = (i - Bias)*0.301029995663981
-   *	+ ( (d2-1.5)*0.289529654602168 + 0.176091259055681 );
-   *
-   * We want k to be too large rather than too small.
-   * The error in the first-order Taylor series approximation
-   * is in our favor, so we just round up the constant enough
-   * to compensate for any error in the multiplication of
-   * (i - Bias) by 0.301029995663981; since |i - Bias| <= 1077,
-   * and 1077 * 0.30103 * 2^-52 ~=~ 7.2e-14,
-   * adding 1e-13 to the constant term more than suffices.
-   * Hence we adjust the constant term to 0.1760912590558.
-   * (We could get a more accurate k by invoking log10,
-   *  but this is probably not worthwhile.)
-   */
-
   i -= Bias;
     #ifdef IBM
   i <<= 2;
@@ -5125,12 +4700,11 @@ char* dtoa_r(double dd,
 }
 else
 {
-  /* d is denormalized */
 
   i         = bbits + be + (Bias + (P - 1) - 1);
   x         = i > 32 ? word0(&u) << (64 - i) | word1(&u) >> (i - 32) : word1(&u) << (32 - i);
   dval(&d2) = x;
-  word0(&d2) -= 31 * Exp_msk1; /* adjust exponent */
+  word0(&d2) -= 31 * Exp_msk1;
   i -= (Bias + (P - 1) - 1) + 1;
   denorm = 1;
 }
@@ -5138,7 +4712,7 @@ else
 ds = (dval(&d2) - 1.5) * 0.289529654602168 + 0.1760912590558 + i * 0.301029995663981;
 k  = (int)ds;
 if (ds < 0. && ds != k)
-  k--; /* want k = floor(ds) */
+  k--;
 k_check = 1;
 if (k >= 0 && k <= Ten_pmax)
 {
@@ -5169,7 +4743,7 @@ else
   b5 = -k;
   s5 = 0;
 }
-  #endif /*}}*/
+  #endif
   if (mode < 0 || mode > 9)
     mode = 0;
 
@@ -5178,7 +4752,7 @@ else
       #ifdef Check_FLT_ROUNDS
   try_quick = Rounding == 1;
       #endif
-    #endif /*SET_INEXACT*/
+    #endif
   #endif
 
   if (mode > 5)
@@ -5189,9 +4763,8 @@ else
   #endif
   }
   leftright = 1;
-  ilim = ilim1 = -1; /* Values for cases 0 and 1; done here to */
+  ilim = ilim1 = -1;
 
-  /* silence erroneous "gcc -Wall" warning. */
   switch (mode)
   {
     case 0:
@@ -5201,7 +4774,7 @@ else
       break;
     case 2:
       leftright = 0;
-      /* no break */
+
     case 4:
       if (ndigits <= 0)
         ndigits = 1;
@@ -5209,7 +4782,7 @@ else
       break;
     case 3:
       leftright = 0;
-      /* no break */
+
     case 5:
       i     = ndigits + k + 1;
       ilim  = i;
@@ -5232,8 +4805,6 @@ else
   }
   s = buf;
 
-  /* Check for special case that d is a normalized power of 2. */
-
   spec_case = 0;
   if (mode < 2
       || (leftright
@@ -5248,12 +4819,12 @@ else
   #endif
     )
     {
-      /* The special case */
+
       spec_case = 1;
     }
   }
 
-  #ifdef USE_BF96 /*{*/
+  #ifdef USE_BF96
   b = 0;
   if (ilim < 0 && (mode == 3 || mode == 5))
   {
@@ -5264,7 +4835,7 @@ else
   j        = 52 + 0x3ff - be;
   ulpshift = 0;
   ulplo    = 0;
-  /* Can we do an exact computation with 64-bit integer arithmetic? */
+
   if (k < 0)
   {
     if (k < -25)
@@ -5280,7 +4851,7 @@ else
       j -= ulpshift;
       res >>= ulpshift;
     }
-    /* Yes. */
+
     res *= ulp = pfive[k1];
     if (ulpshift)
     {
@@ -5306,10 +4877,10 @@ else
   }
   if (k <= dtoa_divmax && j + k >= 0)
   {
-    /* Another "yes" case -- we will use exact integer arithmetic. */
+
   use_exact:
     Debug(++dtoa_stats[3]);
-    res = dbits >> 11; /* residual */
+    res = dbits >> 11;
     ulp = 1;
     if (k <= 0)
       goto no_div;
@@ -5431,9 +5002,9 @@ else
 toobig:
   if (ilim > 28)
     goto Fast_failed1;
-  /* Scale by 10^-k */
+
   p10  = &pten[342 - k];
-  tv0  = p10->b2 * dblo; /* rarely matters, but does, e.g., for 9.862818194192001e18 */
+  tv0  = p10->b2 * dblo;
   tv1  = p10->b1 * dblo + (tv0 >> 32);
   tv2  = p10->b2 * dbhi + (tv1 & 0xffffffffull);
   tv3  = p10->b0 * dblo + (tv1 >> 32) + (tv2 >> 32);
@@ -5447,17 +5018,16 @@ toobig:
     res3 <<= 1;
     res = (res << 1) | ((res3 & 0x100000000ull) >> 32);
   }
-  res0 = res;                                         /* save for Fast_failed */
-    #if !defined(SET_INEXACT) && !defined(NO_DTOA_64) /*{*/
+  res0 = res;
+    #if !defined(SET_INEXACT) && !defined(NO_DTOA_64)
   if (ilim > 19)
     goto Fast_failed;
   Debug(++dtoa_stats[4]);
-  assert(be >= 0 && be <= 4); /* be = 0 is rare, but possible, e.g., for 1e20 */
+  assert(be >= 0 && be <= 4);
   res >>= 4 - be;
-  ulp = p10->b0; /* ulp */
+  ulp = p10->b0;
   ulp = (ulp << 29) | (p10->b1 >> 3);
-  /* scaled ulp = ulp * 2^(eulp - 60) */
-  /* We maintain 61 bits of the scaled ulp. */
+
   if (ilim == 0)
   {
     if (!(res & 0x7fffffffffffffeull) || !((~res) & 0x7fffffffffffffeull))
@@ -5467,7 +5037,7 @@ toobig:
       goto one_digit;
     goto no_digits;
   }
-  rb = 1; /* upper bound on rounding error */
+  rb = 1;
   for (;; ++i)
   {
     dig  = res >> 60;
@@ -5574,7 +5144,7 @@ toobig:
       ulp >>= 2;
     }
   }
-    #endif /*}*/
+    #endif
     #ifndef NO_BF96
 Fast_failed:
     #endif
@@ -5586,8 +5156,8 @@ Fast_failed:
   if (i)
     reslo = (res0 << (64 - i)) >> 32 | (reslo >> i);
   rb   = 0;
-  rblo = 4;       /* roundoff bound */
-  ulp  = p10->b0; /* ulp */
+  rblo = 4;
+  ulp  = p10->b0;
   ulp  = (ulp << 29) | (p10->b1 >> 3);
   eulp = j1;
   for (i = 1;; ++i)
@@ -5754,31 +5324,29 @@ Fast_failed1:
     b5 = -k;
     s5 = 0;
   }
-  #endif /*}*/
+  #endif
 
   #ifdef Honor_FLT_ROUNDS
   if (mode > 1 && Rounding != 1)
     leftright = 0;
   #endif
 
-  #ifndef USE_BF96 /*{*/
+  #ifndef USE_BF96
   if (ilim >= 0 && ilim <= Quick_max && try_quick)
   {
-
-    /* Try to get by with floating-point arithmetic. */
 
     i         = 0;
     dval(&d2) = dval(&u);
     j1        = -(k0 = k);
     ilim0     = ilim;
-    ieps      = 2; /* conservative */
+    ieps      = 2;
     if (k > 0)
     {
       ds = tens[k & 0xf];
       j  = k >> 4;
       if (j & Bletch)
       {
-        /* prevent overflows */
+
         j &= Bletch - 1;
         dval(&u) /= bigtens[n_bigtens - 1];
         ieps++;
@@ -5825,14 +5393,12 @@ Fast_failed1:
     #ifndef No_leftright
     if (leftright)
     {
-      /* Use Steele & White method of only
-       * generating digits needed.
-       */
+
       dval(&eps) = 0.5 / tens[ilim - 1] - dval(&eps);
       #ifdef IEEE_Arith
       if (j1 >= 307)
       {
-        eps1.d = 1.01e256; /* 1.01 allows roundoff in the next few lines */
+        eps1.d = 1.01e256;
         word0(&eps1) -= Exp_msk1 * (Bias + P - 1);
         dval(&eps1) *= tens[j1 & 0xf];
         for (i = 0, j = (j1 - 256) >> 4; j; j >>= 1, i++)
@@ -5842,7 +5408,7 @@ Fast_failed1:
           eps.d = eps1.d;
         if (10. - u.d < 10. * eps.d && eps.d < 1.)
         {
-          /* eps.d < 1. excludes trouble with the tiniest denormal */
+
           *s++ = '1';
           ++k;
           goto ret1;
@@ -5867,7 +5433,7 @@ Fast_failed1:
     else
     {
     #endif
-      /* Generate ilim digits, then fix them up. */
+
       dval(&eps) *= tens[ilim - 1];
       for (i = 1;; i++, dval(&u) *= 10.)
       {
@@ -5894,11 +5460,9 @@ Fast_failed1:
     ilim     = ilim0;
   }
 
-  /* Do we have a "small" integer? */
-
   if (be >= 0 && k <= Int_max)
   {
-    /* Yes. */
+
     ds = tens[k];
     if (ndigits < 0 && ilim <= 0)
     {
@@ -5912,7 +5476,7 @@ Fast_failed1:
       L = (Long)(dval(&u) / ds);
       dval(&u) -= L * ds;
     #ifdef Check_FLT_ROUNDS
-      /* If FLT_ROUNDS == 2, L will usually be high by 1 */
+
       if (dval(&u) < 0)
       {
         L--;
@@ -5962,7 +5526,7 @@ Fast_failed1:
     goto retc;
   }
 
-  #endif /*}*/
+  #endif
   m2  = b2;
   m5  = b5;
   mhi = mlo = 0;
@@ -6015,13 +5579,6 @@ Fast_failed1:
     s2 += Log2P;
   }
 
-  /* Arrange for convenient computation of quotients:
-   * shift left if necessary so divisor has 4 leading 0 bits.
-   *
-   * Perhaps we should just compute leading 28 bits of S once
-   * and for all and pass them and a shift to quorem, so it
-   * can do shifts and ors to compute the numerator for q.
-   */
   i = dshift(S, s2);
   b2 += i;
   m2 += i;
@@ -6036,7 +5593,7 @@ Fast_failed1:
     if (cmp(b, S) < 0)
     {
       k--;
-      b = multadd(b, 10, 0 MTb); /* we botched the k estimate */
+      b = multadd(b, 10, 0 MTb);
       if (leftright)
         mhi = multadd(mhi, 10, 0 MTb);
       ilim = ilim1;
@@ -6047,7 +5604,7 @@ Fast_failed1:
   {
     if (ilim < 0 || cmp(b, S = multadd(S, 5, 0 MTb)) <= 0)
     {
-      /* no digits, fcvt style */
+
     no_digits:
       k = -1 - ndigits;
       goto ret;
@@ -6062,10 +5619,6 @@ Fast_failed1:
     if (m2 > 0)
       mhi = lshift(mhi, m2 MTb);
 
-    /* Compute mlo -- check for special case
-     * that d is a normalized power of 2.
-     */
-
     mlo = mhi;
     if (spec_case)
     {
@@ -6077,9 +5630,7 @@ Fast_failed1:
     for (i = 1;; i++)
     {
       dig = quorem(b, S) + '0';
-      /* Do we yet have the shortest decimal string
-       * that will round to d?
-       */
+
       j     = cmp(b, mlo);
       delta = diff(S, mhi MTb);
       j1    = delta->sign ? 1 : cmp(b, delta);
@@ -6126,13 +5677,13 @@ Fast_failed1:
             case 2:
               goto keep_dig;
           }
-  #endif /*Honor_FLT_ROUNDS*/
+  #endif
         if (j1 > 0)
         {
           b  = lshift(b, 1 MTb);
           j1 = cmp(b, S);
   #ifdef ROUND_BIASED
-          if (j1 >= 0 /*)*/
+          if (j1 >= 0
   #else
         if ((j1 > 0 || (j1 == 0 && dig & 1))
   #endif
@@ -6150,7 +5701,7 @@ Fast_failed1:
           goto accept_dig;
   #endif
         if (dig == '9')
-        { /* possible if i == 1 */
+        {
         round_9_up:
           *s++ = '9';
           goto roundoff;
@@ -6190,8 +5741,6 @@ Fast_failed1:
         break;
       b = multadd(b, 10, 0 MTb);
     }
-
-  /* Round off last digit */
 
   #ifdef Honor_FLT_ROUNDS
   if (mode > 1)
@@ -6257,10 +5806,7 @@ ret1:
 
 char* dtoa(double dd, int mode, int ndigits, int* decpt, int* sign, char** rve)
 {
-  /*	Sufficient space is allocated to the return value
-      to hold the suppressed trailing zeros.
-      See dtoa_r() above for details on the other arguments.
-  */
+
   #ifndef MULTIPLE_THREADS
   if (dtoa_result)
     freedtoa(dtoa_result);
@@ -6268,8 +5814,8 @@ char* dtoa(double dd, int mode, int ndigits, int* decpt, int* sign, char** rve)
   return dtoa_r(dd, mode, ndigits, decpt, sign, rve, 0, 0);
 }
 
-#endif /* DISABLE_DTOA */
+#endif
 
 #ifdef __cplusplus
-//}
+
 #endif

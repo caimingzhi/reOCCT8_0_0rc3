@@ -7,7 +7,6 @@
 class StepBasic_ApprovalStatus;
 class TCollection_HAsciiString;
 
-// resolve name collisions with X11 headers
 #ifdef Status
   #undef Status
 #endif
@@ -16,7 +15,6 @@ class StepBasic_Approval : public Standard_Transient
 {
 
 public:
-  //! Returns a Approval
   Standard_EXPORT StepBasic_Approval();
 
   Standard_EXPORT void Init(const occ::handle<StepBasic_ApprovalStatus>& aStatus,

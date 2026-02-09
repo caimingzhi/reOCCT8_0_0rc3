@@ -25,7 +25,6 @@ void IGESDimen_ToolDiameterDimension::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&     IR,
   IGESData_ParamReader&                           PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   occ::handle<IGESDimen_GeneralNote> note;
   occ::handle<IGESDimen_LeaderArrow> firstLeader;
@@ -36,22 +35,23 @@ void IGESDimen_ToolDiameterDimension::ReadOwnParams(
                 PR.Current(),
                 "General Note Entity",
                 STANDARD_TYPE(IGESDimen_GeneralNote),
-                note); // szv#4:S4163:12Mar99 `st=` not needed
+                note);
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "First Leader Entity",
                 STANDARD_TYPE(IGESDimen_LeaderArrow),
-                firstLeader); // szv#4:S4163:12Mar99 `st=` not needed
+                firstLeader);
 
   PR.ReadEntity(IR,
                 PR.Current(),
                 "Second Leader Entity",
-                // clang-format off
-		 STANDARD_TYPE(IGESDimen_LeaderArrow), secondLeader, true); //szv#4:S4163:12Mar99 `st=` not needed
 
-  PR.ReadXY(PR.CurrentList(1, 2), "Arc Center Co-ords", center); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+                STANDARD_TYPE(IGESDimen_LeaderArrow),
+                secondLeader,
+                true);
+
+  PR.ReadXY(PR.CurrentList(1, 2), "Arc Center Co-ords", center);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(note, firstLeader, secondLeader, center);
@@ -90,7 +90,7 @@ void IGESDimen_ToolDiameterDimension::OwnCopy(
 }
 
 IGESData_DirChecker IGESDimen_ToolDiameterDimension::DirChecker(
-  const occ::handle<IGESDimen_DiameterDimension>& /* ent */) const
+  const occ::handle<IGESDimen_DiameterDimension>&) const
 {
   IGESData_DirChecker DC(206, 0);
   DC.Structure(IGESData_DefVoid);
@@ -101,10 +101,9 @@ IGESData_DirChecker IGESDimen_ToolDiameterDimension::DirChecker(
   return DC;
 }
 
-void IGESDimen_ToolDiameterDimension::OwnCheck(
-  const occ::handle<IGESDimen_DiameterDimension>& /* ent */,
-  const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /* ach */) const
+void IGESDimen_ToolDiameterDimension::OwnCheck(const occ::handle<IGESDimen_DiameterDimension>&,
+                                               const Interface_ShareTool&,
+                                               occ::handle<Interface_Check>&) const
 {
 }
 

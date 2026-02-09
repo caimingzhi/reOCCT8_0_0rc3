@@ -3,7 +3,6 @@
 #include <Standard_NoSuchObject.hpp>
 #include <StdObjMgt_Persistent.hpp>
 
-// NOLINTBEGIN(modernize-use-override)
 class StdObjMgt_SharedObject
 {
 public:
@@ -18,13 +17,11 @@ public:
   class SharedBase : public Base
   {
   public:
-    //! Changes transient object
     inline void Transient(const occ::handle<TransientT>& theTransient)
     {
       myTransient = theTransient;
     }
 
-    //! Import transient object from the persistent data.
     inline const occ::handle<TransientT>& Import() { return myTransient; }
 
   protected:
@@ -38,7 +35,6 @@ public:
     typedef Transient  TransientBase;
     typedef Persistent PersistentBase;
 
-    //! Import transient object from the persistent data.
     virtual occ::handle<Transient> Import() { return myTransient; }
 
   public:
@@ -49,25 +45,20 @@ public:
   class IgnoreData : public Base
   {
   public:
-    //! Read persistent data from a file.
     virtual void Read(StdObjMgt_ReadData& theReadData) { PersistentData().Read(theReadData); }
 
-    //! Write persistent data to a file.
     virtual void Write(StdObjMgt_WriteData& theWriteData) const
     {
       PersistentData().Write(theWriteData);
     }
 
-    //! Gets persistent child objects
     virtual void PChildren(StdObjMgt_Persistent::SequenceOfPersistent& theChildren) const
     {
       PersistentData().PChildren(theChildren);
     }
 
-    //! Returns persistent type name
     virtual const char* PName() const { return PersistentData().PName(); }
 
-    //! Import transient object from the persistent data.
     virtual occ::handle<Transient> Import() { return nullptr; }
   };
 
@@ -76,7 +67,6 @@ private:
   class delayedSubBase : public Base
   {
   public:
-    //! Import transient object from the persistent data.
     virtual Handle(typename Base::TransientBase) Import()
     {
       if (Base::myTransient.IsNull() && !myPersistent.IsNull())
@@ -113,7 +103,6 @@ public:
     };
 
   public:
-    //! Read persistent data from a file.
     virtual void Read(StdObjMgt_ReadData& theReadData)
     {
       occ::handle<Persistent> aPersistent = new Persistent;
@@ -121,7 +110,6 @@ public:
       this->myPersistent = aPersistent;
     }
 
-    //! Write persistent data to a file.
     virtual void Write(StdObjMgt_WriteData& theWriteData) const
     {
       occ::handle<Persistent> aPersistent =
@@ -132,7 +120,6 @@ public:
       aPersistent->Write(theWriteData);
     }
 
-    //! Gets persistent child objects
     virtual void PChildren(StdObjMgt_Persistent::SequenceOfPersistent& theChildren) const
     {
       occ::handle<Persistent> aPersistent =
@@ -143,7 +130,6 @@ public:
       aPersistent->PChildren(theChildren);
     }
 
-    //! Returns persistent type name
     virtual const char* PName() const
     {
       occ::handle<Persistent> aPersistent =
@@ -155,5 +141,3 @@ public:
     }
   };
 };
-
-// NOLINTEND(modernize-use-override)

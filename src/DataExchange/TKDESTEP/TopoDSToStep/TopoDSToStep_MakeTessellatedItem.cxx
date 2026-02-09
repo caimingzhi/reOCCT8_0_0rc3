@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRep_Tool.hpp>
 #include <TopoDS_Shape.hpp>
@@ -33,11 +22,6 @@
 #include <Transfer_FinderProcess.hpp>
 #include <TransferBRep_ShapeMapper.hpp>
 
-//=============================================================================
-// Method  : InitTriangulation
-// Purpose : Get parameters from a TriangulatedFace or TriangulatedSurfaceSet
-// Poly_Triangulation
-//=============================================================================
 static void InitTriangulation(const occ::handle<Poly_Triangulation>&       theMesh,
                               const occ::handle<TCollection_HAsciiString>& theName,
                               occ::handle<StepVisual_CoordinatesList>&     theCoordinates,
@@ -77,13 +61,9 @@ static void InitTriangulation(const occ::handle<Poly_Triangulation>&       theMe
   }
 }
 
-//=================================================================================================
-
 TopoDSToStep_MakeTessellatedItem::TopoDSToStep_MakeTessellatedItem()
 
   = default;
-
-//=================================================================================================
 
 TopoDSToStep_MakeTessellatedItem::TopoDSToStep_MakeTessellatedItem(
   const TopoDS_Face&                         theFace,
@@ -97,8 +77,6 @@ TopoDSToStep_MakeTessellatedItem::TopoDSToStep_MakeTessellatedItem(
   Init(theFace, theTool, theFP, theToPreferSurfaceSet, theLocalFactors, theProgress);
 }
 
-//=================================================================================================
-
 TopoDSToStep_MakeTessellatedItem::TopoDSToStep_MakeTessellatedItem(
   const TopoDS_Shell&                        theShell,
   TopoDSToStep_Tool&                         theTool,
@@ -110,11 +88,6 @@ TopoDSToStep_MakeTessellatedItem::TopoDSToStep_MakeTessellatedItem(
   Init(theShell, theTool, theFP, theLocalFactors, theProgress);
 }
 
-//=============================================================================
-// Method  : Init
-// Purpose : Create a TriangulatedFace or TriangulatedSurfaceSet of StepVisual
-// from a Face of TopoDS
-//=============================================================================
 void TopoDSToStep_MakeTessellatedItem::Init(const TopoDS_Face&                         theFace,
                                             TopoDSToStep_Tool&                         theTool,
                                             const occ::handle<Transfer_FinderProcess>& theFP,
@@ -192,10 +165,6 @@ void TopoDSToStep_MakeTessellatedItem::Init(const TopoDS_Face&                  
   done = true;
 }
 
-//=============================================================================
-// Method  : Init
-// Purpose : Create a TesselatedShell of StepVisual from a Shell of TopoDS
-//=============================================================================
 void TopoDSToStep_MakeTessellatedItem::Init(const TopoDS_Shell&                        theShell,
                                             TopoDSToStep_Tool&                         theTool,
                                             const occ::handle<Transfer_FinderProcess>& theFP,
@@ -262,14 +231,9 @@ void TopoDSToStep_MakeTessellatedItem::Init(const TopoDS_Shell&                 
 
   theTessellatedItem = aTessShell;
 
-  // TopoDSToStep::AddResult(theFP, theShell, theTessellatedItem);
   done = true;
 }
 
-// ============================================================================
-// Method  : Value
-// Purpose : Returns TessellatedItem as the result
-// ============================================================================
 const occ::handle<StepVisual_TessellatedItem>& TopoDSToStep_MakeTessellatedItem::Value() const
 {
   StdFail_NotDone_Raise_if(!done, "TopoDSToStep_MakeTessellatedItem::Value() - no result");

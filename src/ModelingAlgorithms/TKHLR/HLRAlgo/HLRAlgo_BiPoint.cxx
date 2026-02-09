@@ -4,8 +4,6 @@
 
 #include <HLRAlgo_BiPoint.hpp>
 
-//=================================================================================================
-
 HLRAlgo_BiPoint::HLRAlgo_BiPoint(const double X1,
                                  const double Y1,
                                  const double Z1,
@@ -39,8 +37,6 @@ HLRAlgo_BiPoint::HLRAlgo_BiPoint(const double X1,
   Hidden(false);
 }
 
-//=================================================================================================
-
 HLRAlgo_BiPoint::HLRAlgo_BiPoint(const double X1,
                                  const double Y1,
                                  const double Z1,
@@ -66,8 +62,6 @@ HLRAlgo_BiPoint::HLRAlgo_BiPoint(const double X1,
   myIndices.SegFlags                        = flag;
   Hidden(false);
 }
-
-//=================================================================================================
 
 HLRAlgo_BiPoint::HLRAlgo_BiPoint(const double X1,
                                  const double Y1,
@@ -107,8 +101,6 @@ HLRAlgo_BiPoint::HLRAlgo_BiPoint(const double X1,
   Hidden(false);
 }
 
-//=================================================================================================
-
 HLRAlgo_BiPoint::HLRAlgo_BiPoint(const double X1,
                                  const double Y1,
                                  const double Z1,
@@ -139,8 +131,6 @@ HLRAlgo_BiPoint::HLRAlgo_BiPoint(const double X1,
   myIndices.SegFlags                                             = flag;
   Hidden(false);
 }
-
-//=================================================================================================
 
 HLRAlgo_BiPoint::HLRAlgo_BiPoint(const double X1,
                                  const double Y1,
@@ -184,8 +174,6 @@ HLRAlgo_BiPoint::HLRAlgo_BiPoint(const double X1,
   IntLine(intl);
   Hidden(false);
 }
-
-//=================================================================================================
 
 HLRAlgo_BiPoint::HLRAlgo_BiPoint(const double X1,
                                  const double Y1,

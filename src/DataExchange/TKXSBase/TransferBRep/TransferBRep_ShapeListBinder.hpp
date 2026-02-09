@@ -19,10 +19,6 @@ class TopoDS_Solid;
 class TopoDS_CompSolid;
 class TopoDS_Compound;
 
-//! This binder binds several (a list of) shapes with a starting
-//! entity, when this entity itself corresponds to a simple list
-//! of shapes. Each part is not seen as a sub-result of an
-//! independent component, but as an item of a built-in list
 class TransferBRep_ShapeListBinder : public Transfer_Binder
 {
 
@@ -38,12 +34,10 @@ public:
 
   Standard_EXPORT const char* ResultTypeName() const override;
 
-  //! Adds an item to the result list
   Standard_EXPORT void AddResult(const TopoDS_Shape& res);
 
   Standard_EXPORT occ::handle<NCollection_HSequence<TopoDS_Shape>> Result() const;
 
-  //! Changes an already defined sub-result
   Standard_EXPORT void SetResult(const int num, const TopoDS_Shape& res);
 
   Standard_EXPORT int NbShapes() const;

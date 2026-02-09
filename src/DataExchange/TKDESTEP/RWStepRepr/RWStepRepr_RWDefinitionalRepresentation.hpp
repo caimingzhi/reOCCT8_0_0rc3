@@ -11,7 +11,6 @@ class StepRepr_DefinitionalRepresentation;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for DefinitionalRepresentation
 class RWStepRepr_RWDefinitionalRepresentation
 {
 public:

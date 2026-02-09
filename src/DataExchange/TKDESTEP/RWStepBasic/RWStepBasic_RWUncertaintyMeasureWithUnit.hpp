@@ -11,7 +11,6 @@ class StepBasic_UncertaintyMeasureWithUnit;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for UncertaintyMeasureWithUnit
 class RWStepBasic_RWUncertaintyMeasureWithUnit
 {
 public:

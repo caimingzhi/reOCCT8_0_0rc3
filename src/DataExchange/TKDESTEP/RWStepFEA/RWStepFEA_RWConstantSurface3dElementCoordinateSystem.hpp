@@ -11,28 +11,23 @@ class StepFEA_ConstantSurface3dElementCoordinateSystem;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write tool for ConstantSurface3dElementCoordinateSystem
 class RWStepFEA_RWConstantSurface3dElementCoordinateSystem
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepFEA_RWConstantSurface3dElementCoordinateSystem();
 
-  //! Reads ConstantSurface3dElementCoordinateSystem
   Standard_HIDDEN void ReadStep(
     const occ::handle<StepData_StepReaderData>&                          data,
     const int                                                            num,
     occ::handle<Interface_Check>&                                        ach,
     const occ::handle<StepFEA_ConstantSurface3dElementCoordinateSystem>& ent) const;
 
-  //! Writes ConstantSurface3dElementCoordinateSystem
   Standard_HIDDEN void WriteStep(
     StepData_StepWriter&                                                 SW,
     const occ::handle<StepFEA_ConstantSurface3dElementCoordinateSystem>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(
     const occ::handle<StepFEA_ConstantSurface3dElementCoordinateSystem>& ent,
     Interface_EntityIterator&                                            iter) const;

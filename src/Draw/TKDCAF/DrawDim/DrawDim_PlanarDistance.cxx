@@ -16,8 +16,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_PlanarDistance, DrawDim_PlanarDimension)
 
-//=================================================================================================
-
 void DrawDim_PlanarDistance::Draw(const gp_Pnt&      point,
                                   const TopoDS_Edge& edge,
                                   Draw_Display&      dis) const
@@ -36,8 +34,6 @@ void DrawDim_PlanarDistance::Draw(const gp_Pnt&      point,
   }
 }
 
-//=================================================================================================
-
 DrawDim_PlanarDistance::DrawDim_PlanarDistance(const TopoDS_Face&  face,
                                                const TopoDS_Shape& geom1,
                                                const TopoDS_Shape& geom2)
@@ -47,15 +43,11 @@ DrawDim_PlanarDistance::DrawDim_PlanarDistance(const TopoDS_Face&  face,
   myGeom2 = geom2;
 }
 
-//=================================================================================================
-
 DrawDim_PlanarDistance::DrawDim_PlanarDistance(const TopoDS_Shape& geom1, const TopoDS_Shape& geom2)
 {
   myGeom1 = geom1;
   myGeom2 = geom2;
 }
-
-//=================================================================================================
 
 void DrawDim_PlanarDistance::DrawOn(Draw_Display& dis) const
 {

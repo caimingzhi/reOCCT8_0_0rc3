@@ -18,25 +18,11 @@ class BRepTools_Modifier;
 class ShapeBuild_ReShape;
 class ShapeCustom_RestrictionParameters;
 
-//! This package is intended to
-//! convert geometrical objects and topological. The
-//! modifications of one geometrical object to another
-//! (one) geometrical object are provided. The supported
-//! modifications are the following:
-//! conversion of BSpline and Bezier surfaces to analytical form,
-//! conversion of indirect elementary surfaces (with left-handed
-//! coordinate systems) into direct ones,
-//! conversion of elementary surfaces to surfaces of revolution,
-//! conversion of surface of linear extrusion, revolution, offset
-//! surface to bspline,
-//! modification of parameterization, degree, number of segments of bspline
-//! surfaces, scale the shape.
 class ShapeCustom
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Applies modifier to shape and checks sharing in the case assemblies.
   Standard_EXPORT static TopoDS_Shape ApplyModifier(
     const TopoDS_Shape&                                                       S,
     const occ::handle<BRepTools_Modification>&                                M,
@@ -45,28 +31,10 @@ public:
     const Message_ProgressRange&           theProgress = Message_ProgressRange(),
     const occ::handle<ShapeBuild_ReShape>& aReShape    = nullptr);
 
-  //! Returns a new shape without indirect surfaces.
   Standard_EXPORT static TopoDS_Shape DirectFaces(const TopoDS_Shape& S);
 
-  //! Returns a new shape which is scaled original
   Standard_EXPORT static TopoDS_Shape ScaleShape(const TopoDS_Shape& S, const double scale);
 
-  //! Returns a new shape with all surfaces, curves and pcurves
-  //! which type is BSpline/Bezier or based on them converted
-  //! having Degree less than <MaxDegree> or number of spans less
-  //! than <NbMaxSegment> in dependence on parameter priority <Degree>.
-  //! <GmaxDegree> and <GMaxSegments> are maximum possible degree
-  //! and number of spans correspondingly.
-  //! These values will be used in those cases when approximation with
-  //! specified parameters is impossible and one of GmaxDegree or
-  //! GMaxSegments is selected in dependence on priority.
-  //! Note that even if approximation is impossible with <GMaxDegree>
-  //! then number of spans can exceed specified <GMaxSegment>
-  //! <Rational> specifies if to convert Rational BSpline/Bezier into
-  //! polynomial B-Spline.
-  //! If flags ConvOffSurf,ConvOffCurve3d,ConvOffCurve2d are true there are means
-  //! that Offset surfaces , Offset curves 3d and Offset curves 2d are converted to BSPline
-  //! correspondingly.
   Standard_EXPORT static TopoDS_Shape BSplineRestriction(
     const TopoDS_Shape&                                   S,
     const double                                          Tol3d,
@@ -79,17 +47,10 @@ public:
     const bool                                            Rational,
     const occ::handle<ShapeCustom_RestrictionParameters>& aParameters);
 
-  //! Returns a new shape with all elementary periodic surfaces converted
-  //! to Geom_SurfaceOfRevolution
   Standard_EXPORT static TopoDS_Shape ConvertToRevolution(const TopoDS_Shape& S);
 
-  //! Returns a new shape with all surfaces of revolution and linear extrusion
-  //! convert to elementary periodic surfaces
   Standard_EXPORT static TopoDS_Shape SweptToElementary(const TopoDS_Shape& S);
 
-  //! Returns a new shape with all surfaces of linear extrusion, revolution,
-  //! offset, and planar surfaces converted according to flags to
-  //! Geom_BSplineSurface (with same parameterisation).
   Standard_EXPORT static TopoDS_Shape ConvertToBSpline(const TopoDS_Shape& S,
                                                        const bool          extrMode,
                                                        const bool          revolMode,

@@ -3,22 +3,16 @@
 #include <gp_Vec.hpp>
 #include <math_Vector.hpp>
 
-//=================================================================================================
-
 GeomConvert_FuncSphereLSDist::GeomConvert_FuncSphereLSDist(
   const occ::handle<NCollection_HArray1<gp_XYZ>>& thePoints)
     : myPoints(thePoints)
 {
 }
 
-//=================================================================================================
-
 int GeomConvert_FuncSphereLSDist::NbVariables() const
 {
   return 4;
 }
-
-//=================================================================================================
 
 bool GeomConvert_FuncSphereLSDist::Value(const math_Vector& X, double& F)
 {
@@ -35,8 +29,6 @@ bool GeomConvert_FuncSphereLSDist::Value(const math_Vector& X, double& F)
 
   return true;
 }
-
-//=================================================================================================
 
 bool GeomConvert_FuncSphereLSDist::Gradient(const math_Vector& X, math_Vector& G)
 
@@ -60,8 +52,6 @@ bool GeomConvert_FuncSphereLSDist::Gradient(const math_Vector& X, math_Vector& G
 
   return true;
 }
-
-//=================================================================================================
 
 bool GeomConvert_FuncSphereLSDist::Values(const math_Vector& X, double& F, math_Vector& G)
 {

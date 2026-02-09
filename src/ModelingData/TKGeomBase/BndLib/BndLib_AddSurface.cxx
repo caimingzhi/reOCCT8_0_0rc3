@@ -17,11 +17,11 @@
 #include <NCollection_Array1.hpp>
 #include <math_PSO.hpp>
 #include <math_Powell.hpp>
-//
+
 static int NbUSamples(const Adaptor3d_Surface& S, const double Umin, const double Umax);
-//
+
 static int NbVSamples(const Adaptor3d_Surface& S, const double Vmin, const double Vmax);
-//
+
 static double AdjustExtr(const Adaptor3d_Surface& S,
                          const double             UMin,
                          const double             UMax,
@@ -42,8 +42,6 @@ static void ComputePolesIndexes(const NCollection_Array1<double>& theKnots,
                                 int&                              theOutMinIdx,
                                 int&                              theOutMaxIdx);
 
-//=================================================================================================
-
 void BndLib_AddSurface::Add(const Adaptor3d_Surface& S, const double Tol, Bnd_Box& B)
 {
 
@@ -55,8 +53,6 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S, const double Tol, Bnd_Bo
                          Tol,
                          B);
 }
-
-//=================================================================================================
 
 static int NbUSamples(const Adaptor3d_Surface& S)
 {
@@ -81,8 +77,6 @@ static int NbUSamples(const Adaptor3d_Surface& S)
   return std::min(50, N);
 }
 
-//=================================================================================================
-
 static int NbVSamples(const Adaptor3d_Surface& S)
 {
   int                 N;
@@ -106,7 +100,6 @@ static int NbVSamples(const Adaptor3d_Surface& S)
   return std::min(50, N);
 }
 
-//  Modified by skv - Fri Aug 27 12:29:04 2004 OCC6503 Begin
 static gp_Pnt BaryCenter(const gp_Pln& aPlane,
                          const double  aUMin,
                          const double  aUMax,
@@ -150,11 +143,10 @@ static void TreatInfinitePlane(const gp_Pln& aPlane,
                                const double  aTol,
                                Bnd_Box&      aB)
 {
-  // Get 3 coordinate axes of the plane.
+
   const gp_Dir&    aNorm        = aPlane.Axis().Direction();
   constexpr double anAngularTol = RealEpsilon();
 
-  // Get location of the plane as its barycenter
   gp_Pnt aLocation = BaryCenter(aPlane, aUMin, aUMax, aVMin, aVMax);
 
   if (aNorm.IsParallel(gp::DX(), anAngularTol))
@@ -190,13 +182,6 @@ static void TreatInfinitePlane(const gp_Pln& aPlane,
   aB.Enlarge(aTol);
 }
 
-// Compute start and finish indexes used in convex hull.
-// theMinIdx - minimum poles index, that can be used.
-// theMaxIdx - maximum poles index, that can be used.
-// theShiftCoeff - shift between flatknots array and poles array.
-// This value should be equal to 1 in case of non periodic BSpline,
-// and (degree + 1) - mults(the lowest index).
-
 void ComputePolesIndexes(const NCollection_Array1<double>& theKnots,
                          const NCollection_Array1<int>&    theMults,
                          const int                         theDegree,
@@ -223,9 +208,6 @@ void ComputePolesIndexes(const NCollection_Array1<double>& theKnots,
     theOutMaxIdx = std::min(theOutMaxIdx, theMaxPoleIdx);
 }
 
-//  Modified by skv - Fri Aug 27 12:29:04 2004 OCC6503 End
-//=================================================================================================
-
 void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
                             const double             UMin,
                             const double             UMax,
@@ -234,14 +216,12 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
                             const double             Tol,
                             Bnd_Box&                 B)
 {
-  GeomAbs_SurfaceType Type = S.GetType(); // skv OCC6503
+  GeomAbs_SurfaceType Type = S.GetType();
 
   if (Precision::IsInfinite(VMin) || Precision::IsInfinite(VMax) || Precision::IsInfinite(UMin)
       || Precision::IsInfinite(UMax))
   {
-    //  Modified by skv - Fri Aug 27 12:29:04 2004 OCC6503 Begin
-    //     B.SetWhole();
-    //     return;
+
     switch (Type)
     {
       case GeomAbs_Plane:
@@ -255,10 +235,7 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
         return;
       }
     }
-    //  Modified by skv - Fri Aug 27 12:29:04 2004 OCC6503 End
   }
-
-  //   GeomAbs_SurfaceType Type = S.GetType(); // skv OCC6503
 
   switch (Type)
   {
@@ -292,7 +269,7 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
     {
       if (std::abs(UMin) < Precision::Angular() && std::abs(UMax - 2. * M_PI) < Precision::Angular()
           && std::abs(VMin + M_PI / 2.) < Precision::Angular()
-          && std::abs(VMax - M_PI / 2.) < Precision::Angular()) // a whole sphere
+          && std::abs(VMax - M_PI / 2.) < Precision::Angular())
         BndLib::Add(S.Sphere(), Tol, B);
       else
         BndLib::Add(S.Sphere(), UMin, UMax, VMin, VMax, Tol, B);
@@ -311,38 +288,30 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
     {
       bool   isUseConvexHullAlgorithm = true;
       double PTol                     = Precision::Parametric(Precision::Confusion());
-      // Borders of underlying geometry.
-      double anUMinParam = UMin, anUMaxParam = UMax, // BSpline case.
-        aVMinParam = VMin, aVMaxParam = VMax;
+
+      double anUMinParam = UMin, anUMaxParam = UMax, aVMinParam = VMin, aVMaxParam = VMax;
       occ::handle<Geom_BSplineSurface> aBS;
       if (Type == GeomAbs_BezierSurface)
       {
-        // Bezier surface:
-        // All of poles used for any parameter,
-        // that's why in case of trimmed parameters handled by grid algorithm.
 
         if (std::abs(UMin - S.FirstUParameter()) > PTol
             || std::abs(VMin - S.FirstVParameter()) > PTol
             || std::abs(UMax - S.LastUParameter()) > PTol
             || std::abs(VMax - S.LastVParameter()) > PTol)
         {
-          // Borders not equal to topology borders.
+
           isUseConvexHullAlgorithm = false;
         }
       }
       else
       {
-        // BSpline:
-        // If Umin, Vmin, Umax, Vmax lies inside geometry bounds then:
-        // use convex hull algorithm,
-        // if Umin, VMin, Umax, Vmax lies outside then:
-        // use grid algorithm on analytic continuation (default case).
+
         aBS = S.BSpline();
         aBS->Bounds(anUMinParam, anUMaxParam, aVMinParam, aVMaxParam);
         if ((UMin - anUMinParam) < -PTol || (VMin - aVMinParam) < -PTol
             || (UMax - anUMaxParam) > PTol || (VMax - aVMaxParam) > PTol)
         {
-          // Out of geometry borders.
+
           isUseConvexHullAlgorithm = false;
         }
       }
@@ -386,7 +355,7 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
                                 aNbUPoles,
                                 isUPeriodic,
                                 UMinIdx,
-                                UMaxIdx); // the Output indexes
+                                UMaxIdx);
           }
 
           if (VMin > aVMinParam || VMax < aVMaxParam)
@@ -404,11 +373,10 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
                                 aNbVPoles,
                                 isVPeriodic,
                                 VMinIdx,
-                                VMaxIdx); // the Output indexes
+                                VMaxIdx);
           }
         }
 
-        // Use poles to build convex hull.
         int ip, jp;
         for (int i = UMinIdx; i <= UMaxIdx; i++)
         {
@@ -435,7 +403,7 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
       [[fallthrough]];
     default:
     {
-      // Use batch grid evaluation for optimized surface point computation
+
       const int Nu = NbUSamples(S);
       const int Nv = NbVSamples(S);
 
@@ -467,10 +435,6 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
   }
 }
 
-//----- Methods for AddOptimal ---------------------------------------
-
-//=================================================================================================
-
 void BndLib_AddSurface::AddOptimal(const Adaptor3d_Surface& S, const double Tol, Bnd_Box& B)
 {
 
@@ -482,8 +446,6 @@ void BndLib_AddSurface::AddOptimal(const Adaptor3d_Surface& S, const double Tol,
                                 Tol,
                                 B);
 }
-
-//=================================================================================================
 
 void BndLib_AddSurface::AddOptimal(const Adaptor3d_Surface& S,
                                    const double             UMin,
@@ -548,8 +510,6 @@ void BndLib_AddSurface::AddOptimal(const Adaptor3d_Surface& S,
   }
 }
 
-//=================================================================================================
-
 void BndLib_AddSurface::AddGenSurf(const Adaptor3d_Surface& S,
                                    const double             UMin,
                                    const double             UMax,
@@ -560,15 +520,14 @@ void BndLib_AddSurface::AddGenSurf(const Adaptor3d_Surface& S,
 {
   const int Nu = NbUSamples(S, UMin, UMax);
   const int Nv = NbVSamples(S, VMin, VMax);
-  //
+
   double CoordMin[3] = {RealLast(), RealLast(), RealLast()};
   double CoordMax[3] = {-RealLast(), -RealLast(), -RealLast()};
   double DeflMax[3]  = {-RealLast(), -RealLast(), -RealLast()};
-  //
+
   const double du = (UMax - UMin) / (Nu - 1), du2 = du / 2.;
   const double dv = (VMax - VMin) / (Nv - 1), dv2 = dv / 2.;
 
-  // Use batch grid evaluation with finer grid (2*Nu-1) x (2*Nv-1) to include midpoints
   const int NuFine = 2 * Nu - 1;
   const int NvFine = 2 * Nv - 1;
 
@@ -589,8 +548,6 @@ void BndLib_AddSurface::AddGenSurf(const Adaptor3d_Surface& S,
 
   const NCollection_Array2<gp_Pnt> aFineGrid = anEvaluator.EvaluateGrid(aUParams, aVParams);
 
-  // Extract main grid points (at even indices in fine grid: 1, 3, 5, ...)
-  // Main grid indices in fine grid: iFine = 2*i - 1, jFine = 2*j - 1
   NCollection_Array2<gp_XYZ> aPnts(1, Nu, 1, Nv);
 
   int i, j, k;
@@ -602,7 +559,7 @@ void BndLib_AddSurface::AddGenSurf(const Adaptor3d_Surface& S,
       const int     jFine = 2 * j - 1;
       const gp_Pnt& P     = aFineGrid.Value(iFine, jFine);
       aPnts(i, j)         = P.XYZ();
-      //
+
       for (k = 0; k < 3; ++k)
       {
         if (CoordMin[k] > P.Coord(k + 1))
@@ -614,9 +571,7 @@ void BndLib_AddSurface::AddGenSurf(const Adaptor3d_Surface& S,
           CoordMax[k] = P.Coord(k + 1);
         }
       }
-      //
-      // U-midpoint: between (i-1, j) and (i, j) in main grid
-      // Fine grid index: (2*i - 2, 2*j - 1) = (iFine - 1, jFine)
+
       if (i > 1)
       {
         const gp_XYZ  aPm = 0.5 * (aPnts(i - 1, j) + aPnts(i, j));
@@ -639,8 +594,7 @@ void BndLib_AddSurface::AddGenSurf(const Adaptor3d_Surface& S,
           }
         }
       }
-      // V-midpoint: between (i, j-1) and (i, j) in main grid
-      // Fine grid index: (2*i - 1, 2*j - 2) = (iFine, jFine - 1)
+
       if (j > 1)
       {
         const gp_XYZ  aPm = 0.5 * (aPnts(i, j - 1) + aPnts(i, j));
@@ -665,8 +619,7 @@ void BndLib_AddSurface::AddGenSurf(const Adaptor3d_Surface& S,
       }
     }
   }
-  //
-  // Adjusting minmax
+
   double eps = std::max(Tol, Precision::Confusion());
   for (k = 0; k < 3; ++k)
   {
@@ -719,9 +672,6 @@ void BndLib_AddSurface::AddGenSurf(const Adaptor3d_Surface& S,
   B.Enlarge(eps);
 }
 
-//
-
-//
 class SurfMaxMinCoord : public math_MultipleVarFunction
 {
 public:
@@ -783,7 +733,7 @@ public:
       {
         u0 = X(1);
       }
-      //
+
       if (X(2) < myVMin)
       {
         VPen = myPenalty * (myVMin - X(2));
@@ -798,7 +748,7 @@ public:
       {
         v0 = X(2);
       }
-      //
+
       gp_Pnt aP = mySurf.Value(u0, v0);
       F         = mySign * aP.Coord(myCoordIndx) + UPen + VPen;
     }
@@ -827,8 +777,6 @@ private:
   double                   myPenalty;
 };
 
-//=================================================================================================
-
 double AdjustExtr(const Adaptor3d_Surface& S,
                   const double             UMin,
                   const double             UMax,
@@ -848,7 +796,7 @@ double AdjustExtr(const Adaptor3d_Surface& S,
   }
   double Du = (S.LastUParameter() - S.FirstUParameter());
   double Dv = (S.LastVParameter() - S.FirstVParameter());
-  //
+
   math_Vector aT(1, 2);
   math_Vector aLowBorder(1, 2);
   math_Vector aUppBorder(1, 2);
@@ -870,7 +818,6 @@ double AdjustExtr(const Adaptor3d_Surface& S,
   math_PSO        aFinder(&aFunc, aLowBorder, aUppBorder, aSteps, aNbParticles);
   aFinder.Perform(aSteps, extr, aT);
 
-  // Refinement of extremal value
   math_Matrix aDir(1, 2, 1, 2, 0.0);
   aDir(1, 1) = 1.;
   aDir(2, 1) = 0.;
@@ -890,8 +837,6 @@ double AdjustExtr(const Adaptor3d_Surface& S,
   return aSign * extr;
 }
 
-//=================================================================================================
-
 int NbUSamples(const Adaptor3d_Surface& S, const double Umin, const double Umax)
 {
   int                 N;
@@ -901,7 +846,7 @@ int NbUSamples(const Adaptor3d_Surface& S, const double Umin, const double Umax)
     case GeomAbs_BezierSurface:
     {
       N = 2 * S.NbUPoles();
-      // By default parametric range of Bezier surf is [0, 1] [0, 1]
+
       double du = Umax - Umin;
       if (du < .9)
       {
@@ -930,8 +875,6 @@ int NbUSamples(const Adaptor3d_Surface& S, const double Umin, const double Umax)
   return std::min(50, N);
 }
 
-//=================================================================================================
-
 int NbVSamples(const Adaptor3d_Surface& S, const double Vmin, const double Vmax)
 {
   int                 N;
@@ -941,7 +884,7 @@ int NbVSamples(const Adaptor3d_Surface& S, const double Vmin, const double Vmax)
     case GeomAbs_BezierSurface:
     {
       N = 2 * S.NbVPoles();
-      // By default parametric range of Bezier surf is [0, 1] [0, 1]
+
       double dv = Vmax - Vmin;
       if (dv < .9)
       {

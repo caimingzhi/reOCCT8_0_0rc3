@@ -38,7 +38,6 @@ public:
                                          math_Vector&                      BornSup,
                                          math_Vector&                      Tolerance);
 
-  //! returns somme des fi*fi
   double Root() const;
 
   gp_Pnt Point() const;

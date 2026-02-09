@@ -28,10 +28,6 @@
 #include <TopExp.hpp>
 #include <TopOpeBRepDS_DataStructure.hpp>
 
-// #include <BRepAdaptor_Curve2d.hpp>
-// #include <BRepAdaptor_Curve2d.hpp>
-//=================================================================================================
-
 bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                     occ::handle<ChFiDS_SurfData>&         Data,
                                     const occ::handle<Adaptor3d_Surface>& S1,
@@ -55,7 +51,6 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
   else
     ctyp = CSpine->CurrentElementarySpine(Iedge).GetType();
 
-  // Return orientations.
   TopAbs_Orientation               OrFace1 = TopAbs_FORWARD, OrFace2 = TopAbs_FORWARD;
   occ::handle<BRepAdaptor_Surface> HS = occ::down_cast<BRepAdaptor_Surface>(S1);
   if (!HS.IsNull())
@@ -580,8 +575,6 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
   return surfok;
 }
 
-//=================================================================================================
-
 bool ChFiKPart_ComputeData::ComputeCorner(TopOpeBRepDS_DataStructure&           DStr,
                                           const occ::handle<ChFiDS_SurfData>&   Data,
                                           const occ::handle<Adaptor3d_Surface>& S1,
@@ -604,8 +597,6 @@ bool ChFiKPart_ComputeData::ComputeCorner(TopOpeBRepDS_DataStructure&           
   {
     throw Standard_ConstructionError("la face du conge torique doit etre plane");
   }
-  // The guideline is the circle corresponding
-  // to the section of S2, and other construction elements.
 
   gp_Cylinder cyl;
   gp_Circ     circ;
@@ -655,8 +646,6 @@ bool ChFiKPart_ComputeData::ComputeCorner(TopOpeBRepDS_DataStructure&           
   return false;
 }
 
-//=================================================================================================
-
 bool ChFiKPart_ComputeData::ComputeCorner(TopOpeBRepDS_DataStructure&           DStr,
                                           const occ::handle<ChFiDS_SurfData>&   Data,
                                           const occ::handle<Adaptor3d_Surface>& S1,
@@ -672,8 +661,6 @@ bool ChFiKPart_ComputeData::ComputeCorner(TopOpeBRepDS_DataStructure&           
 {
   return ChFiKPart_Sphere(DStr, Data, S1, S2, OrFace1, OrFace2, Or1, Or2, Rad, PS1, P1S2, P2S2);
 }
-
-//=================================================================================================
 
 bool ChFiKPart_ComputeData::ComputeCorner(TopOpeBRepDS_DataStructure&           DStr,
                                           const occ::handle<ChFiDS_SurfData>&   Data,

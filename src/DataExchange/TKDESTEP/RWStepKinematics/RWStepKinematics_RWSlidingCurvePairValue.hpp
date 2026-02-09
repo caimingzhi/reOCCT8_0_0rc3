@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_SlidingCurvePairValue;
 
-//! Read & Write tool for SlidingCurvePairValue
 class RWStepKinematics_RWSlidingCurvePairValue
 {
 public:

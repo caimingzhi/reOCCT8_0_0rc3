@@ -15,8 +15,6 @@
 
 static const int Pourcent3[9] = {0, 1, 2, 0, 1, 2, 0, 1, 2};
 
-//=================================================================================================
-
 IntPatch_InterferencePolyhedron::IntPatch_InterferencePolyhedron()
     : Intf_Interference(false),
       Incidence(0)
@@ -27,8 +25,6 @@ IntPatch_InterferencePolyhedron::IntPatch_InterferencePolyhedron()
   memset(dpOpT, 0, sizeof(dpOpT));
   memset(deOpT, 0, sizeof(deOpT));
 }
-
-//=================================================================================================
 
 IntPatch_InterferencePolyhedron::IntPatch_InterferencePolyhedron(
   const IntPatch_Polyhedron& FirstPol,
@@ -52,8 +48,6 @@ IntPatch_InterferencePolyhedron::IntPatch_InterferencePolyhedron(
   }
 }
 
-//=================================================================================================
-
 IntPatch_InterferencePolyhedron::IntPatch_InterferencePolyhedron(const IntPatch_Polyhedron& Objet)
     : Intf_Interference(true),
       Incidence(0)
@@ -66,10 +60,8 @@ IntPatch_InterferencePolyhedron::IntPatch_InterferencePolyhedron(const IntPatch_
   Tolerance = IntPatch_PolyhedronTool::DeflectionOverEstimation(Objet) * 2;
   if (Tolerance == 0.)
     Tolerance = Epsilon(1000.);
-  Interference(Objet, Objet); //-- lbr le 5 juillet 96
+  Interference(Objet, Objet);
 }
-
-//=================================================================================================
 
 void IntPatch_InterferencePolyhedron::Perform(const IntPatch_Polyhedron& FirstPol,
                                               const IntPatch_Polyhedron& SeconPol)
@@ -86,8 +78,6 @@ void IntPatch_InterferencePolyhedron::Perform(const IntPatch_Polyhedron& FirstPo
   }
 }
 
-//=================================================================================================
-
 void IntPatch_InterferencePolyhedron::Perform(const IntPatch_Polyhedron& Objet)
 {
   SelfInterference(true);
@@ -96,8 +86,6 @@ void IntPatch_InterferencePolyhedron::Perform(const IntPatch_Polyhedron& Objet)
     Tolerance = Epsilon(1000.);
   Interference(Objet);
 }
-
-//=================================================================================================
 
 void IntPatch_InterferencePolyhedron::Interference(const IntPatch_Polyhedron&) {}
 
@@ -108,15 +96,6 @@ void IntPatch_InterferencePolyhedron::Interference(const IntPatch_Polyhedron& Fi
   int  NbTrianglesFirstPol  = IntPatch_PolyhedronTool::NbTriangles(FirstPol);
   int  NbTrianglesSecondPol = IntPatch_PolyhedronTool::NbTriangles(SeconPol);
   int  iFirst, iSecon;
-
-  //------------------------------------------------------------------------------------------
-  //-- the same number of triangles it is necessary to test better on
-  //-- the size of boxes.
-  //--
-  //-- the second is chosen if nbTri1 > 2*nbTri2   or   if VolBoit1 > 2*VolBoit2
-  //--
-  //--if (!SelfIntf && NbTrianglesFirstPol>NbTrianglesSecondPol)
-  //--  gridOnFirst=false;
 
   if (!SelfIntf)
   {
@@ -187,11 +166,6 @@ void IntPatch_InterferencePolyhedron::Interference(const IntPatch_Polyhedron& Fi
   }
 }
 
-//=======================================================================
-// function : Intersect
-// purpose  : Intersection of two triangles issue from two Polyhedron.
-//=======================================================================
-
 void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
                                                 const IntPatch_Polyhedron& FirstPol,
                                                 const int                  Tri2,
@@ -200,10 +174,6 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
   IntPatch_PolyhedronTool::Triangle(FirstPol, Tri1, OI[0], OI[1], OI[2]);
   IntPatch_PolyhedronTool::Triangle(SeconPol, Tri2, TI[0], TI[1], TI[2]);
 
-  // If there is an intersection of a polyhedron with itself, the
-  // intersections are excluded
-  // from a triangle with connected triangles :
-
   if (SelfIntf)
   {
     if (OI[0] == TI[0] || OI[0] == TI[1] || OI[0] == TI[2] || OI[1] == TI[0] || OI[1] == TI[1]
@@ -211,57 +181,37 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
       return;
   }
 
-  // The precision of intersections includes two values ;
+  double floatGap = 1e-13;
 
-  // - Tolerance :This value allows detecting potential
-  //              intersections in all cases.  The value should be the
-  //            sum of upper bounds of tops pof two polyhedrons.
-
-  // - floatGap : This value is the actual precision of calculation
-  //              of line of section.Its value is very small, it
-  //              allows having the same behaviour for
-  //              geometry tests as for the values used.
-
-  double floatGap = 1e-13; //-- Epsilon(1000.);
-
-  // Equation of the triangle plane of the objet
-  gp_XYZ ONor; // Normal vector.
-  double Odp;  // Polar Distance.
+  gp_XYZ ONor;
+  double Odp;
   Intf::PlaneEquation(IntPatch_PolyhedronTool::Point(FirstPol, OI[0]),
                       IntPatch_PolyhedronTool::Point(FirstPol, OI[1]),
                       IntPatch_PolyhedronTool::Point(FirstPol, OI[2]),
                       ONor,
                       Odp);
 
-  // Equation of the triangle plane of the tool
-  gp_XYZ TNor; // Normal vector.
-  double Tdp;  // Polar distance.
+  gp_XYZ TNor;
+  double Tdp;
   Intf::PlaneEquation(IntPatch_PolyhedronTool::Point(SeconPol, TI[0]),
                       IntPatch_PolyhedronTool::Point(SeconPol, TI[1]),
                       IntPatch_PolyhedronTool::Point(SeconPol, TI[2]),
                       TNor,
                       Tdp);
 
-  // Scalar product of two normalized vectors -> cosinus of the angle
   Incidence = std::abs(TNor * ONor);
 
-  // Distance of the plane of the triangle from the object by three points of SeconPol
   double dfOpT[3];
   dfOpT[0] = ONor * (IntPatch_PolyhedronTool::Point(SeconPol, TI[0]).XYZ()) - Odp;
   dfOpT[1] = ONor * (IntPatch_PolyhedronTool::Point(SeconPol, TI[1]).XYZ()) - Odp;
   dfOpT[2] = ONor * (IntPatch_PolyhedronTool::Point(SeconPol, TI[2]).XYZ()) - Odp;
 
-  // Distance of the plane of the triangle from the tool by three points of FirstPol
   double dpOfT[3];
   dpOfT[0] = TNor * (IntPatch_PolyhedronTool::Point(FirstPol, OI[0]).XYZ()) - Tdp;
   dpOfT[1] = TNor * (IntPatch_PolyhedronTool::Point(FirstPol, OI[1]).XYZ()) - Tdp;
   dpOfT[2] = TNor * (IntPatch_PolyhedronTool::Point(FirstPol, OI[2]).XYZ()) - Tdp;
 
-  // Values defining the couple of triangle dpOpT, dpOeT, deOpT
   CoupleCharacteristics(FirstPol, SeconPol);
-
-  // If three  points  of the triangle of <SeconPol> are in the plane of the
-  // triangle of <Obje> within <Tolerance> the eventual tangency zone is found.
 
   Intf_TangentZone TheTZ;
   if ((std::abs(dfOpT[0]) <= Tolerance && std::abs(dfOpT[1]) <= Tolerance
@@ -281,12 +231,10 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
     }
   }
 
-  // Otherwise line of section is calculated:
   else
   {
     int iObj, iToo;
 
-    // Zone de stockage des resultats :
     int                                     nbpiOT = 0;
     int                                     nbpiO  = 0;
     int                                     nbpiT  = 0;
@@ -294,35 +242,12 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
     double                                  parO[3];
     double                                  parT[3];
 
-    // Indicateurs d arete touchee
     int edOT[3];
     int edTT[3];
 
-    // Initializations
-    //--for (iObj=0; iObj<3; iObj++) {
-    //  parO[iObj]=parT[iObj]=-1.;
-    //  edOT[iObj]=edTT[iObj]=1;
-    //--}
     parO[0] = parT[0] = parO[1] = parT[1] = parO[2] = parT[2] = -1.0;
     edOT[0] = edTT[0] = edOT[1] = edTT[1] = edOT[2] = edTT[2] = 1;
 
-    // Singularite VERTEX VERTEX
-    // for (iObj=0; iObj<3; iObj++) {
-    //  for (iToo=0; iToo<3; iToo++) {
-    //	if (dpOpT[iObj][iToo] <= floatGap) {
-    //	  piOT.Append(Intf_SectionPoint(IntPatch_PolyhedronTool::Point(FirstPol, OI[iObj]),
-    //					Intf_VERTEX, OI[iObj], 0, 0.,
-    //					Intf_VERTEX, TI[iToo], 0, 0.,
-    //					Incidence));
-    //	  parO[iObj]=0.;
-    //	  parT[iToo]=0.;
-    //	  edOT[Pourcent3[iObj+2]]=0; edOT[iObj]=0;
-    //	  edTT[Pourcent3[iToo+2]]=0; edTT[iToo]=0;
-    //	  nbpiOT++; nbpiO++; nbpiT++;
-    //	}
-    // }
-    //}
-    //---------------------------->
     for (iObj = 0; iObj < 3; iObj++)
     {
       for (iToo = 0; iToo < 3; iToo++)
@@ -348,7 +273,6 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
       }
     }
 
-    // Singularite VERTEX EDGE
     int inext, jnext;
     for (iObj = 0; iObj < 3; iObj++)
     {
@@ -390,7 +314,6 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
       }
     }
 
-    // Singularite EDGE VERTEX
     for (iToo = 0; iToo < 3; iToo++)
     {
       if (parT[iToo] == -1.)
@@ -429,7 +352,6 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
       }
     }
 
-    // Singularite FACE VERTEX
     for (iToo = 0; iToo < 3; iToo++)
     {
       if (parT[iToo] != 0.)
@@ -454,7 +376,6 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
       }
     }
 
-    // Singularite VERTEX FACE
     for (iObj = 0; iObj < 3; iObj++)
     {
       if (parO[iObj] != 0.)
@@ -479,7 +400,6 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
       }
     }
 
-    // Singularite EDGE EDGE
     gp_Pnt piO;
     gp_XYZ piT;
     double lg;
@@ -577,7 +497,6 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
       }
     }
 
-    // Intersection EDGE FACE
     for (iObj = 0; iObj < 3; iObj++)
     {
       inext = Pourcent3[iObj + 1];
@@ -607,7 +526,6 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
       }
     }
 
-    // Intersection FACE EDGE
     for (iToo = 0; iToo < 3; iToo++)
     {
       jnext = Pourcent3[iToo + 1];
@@ -645,9 +563,6 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
     if (nbpiOT > 1)
     {
 
-      // Sort the <nbpiOT> sections points along the intersection between the
-      // two triangles :
-
       gp_XYZ                         dir = ONor ^ TNor;
       NCollection_LocalArray<double> d(nbpiOT);
       int                            iPi, iPs;
@@ -675,16 +590,9 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
       }
     }
 
-    // Possibility of line of section :
-
     if (nbpiO == 2 && nbpiT == 2)
     {
 
-      // In the case when an edge is in the plane of the other triangle
-      // it is necessary to check if it has not been already processed
-      // on a connected triangle :
-
-      // Pour l objet :
       int pivo = -1;
       int pedg = -1;
       if (parO[0] == 0.)
@@ -707,12 +615,11 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
         if (pivo > Tri1)
         {
           nbpiOT = 0;
-          ideb   = -1; // On a deja trouve celle ci
+          ideb   = -1;
           ifin   = -2;
         }
       }
 
-      // For the tool :
       pivo = -1;
       pedg = -1;
       if (parT[0] == 0.)
@@ -735,7 +642,7 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
         if (pivo > Tri2)
         {
           nbpiOT = 0;
-          ideb   = -1; // It has been already found
+          ideb   = -1;
           ifin   = -2;
         }
       }
@@ -743,29 +650,26 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
       if (nbpiOT > 0)
       {
 
-        // If there is a covering up : insert the section  line in  the existent
-        // list or create a new section line :
-
         if (piOT(id[0] + 1).TypeOnFirst() == Intf_FACE)
         {
           if (piOT(id[1] + 1).TypeOnFirst() == Intf_FACE)
           {
-            ideb = -id[0] - 1; // No line of section possible
-            ifin = -id[1] - 1; //
+            ideb = -id[0] - 1;
+            ifin = -id[1] - 1;
           }
           else if (piOT(id[1] + 1).TypeOnSecond() != Intf_FACE)
           {
-            ideb = id[1]; // No line of section possible
-            ifin = id[1]; // only a pointersec
+            ideb = id[1];
+            ifin = id[1];
           }
           else if (nbpiOT >= 3)
           {
-            ideb = id[1]; // Retrieve 2 segments of section
-            ifin = id[2]; //
+            ideb = id[1];
+            ifin = id[2];
           }
           else
           {
-            ideb = -999; // No line of section possible
+            ideb = -999;
             ifin = -999;
           }
         }
@@ -773,34 +677,32 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
         {
           if (piOT(id[1] + 1).TypeOnSecond() == Intf_FACE)
           {
-            ideb = -id[0] - 1; // No line of section possible
-            ifin = -id[1] - 1; //
+            ideb = -id[0] - 1;
+            ifin = -id[1] - 1;
           }
           else if (piOT(id[1] + 1).TypeOnFirst() != Intf_FACE)
           {
-            ideb = id[1]; // No line of section possible
-            ifin = id[1]; // only a pointersec
+            ideb = id[1];
+            ifin = id[1];
           }
           else if (nbpiOT >= 3)
           {
-            ideb = id[1]; // Recouvrement des 2 segments de section
-            ifin = id[2]; //
+            ideb = id[1];
+            ifin = id[2];
           }
           else
           {
-            ideb = -999; // No line of section possible
+            ideb = -999;
             ifin = -999;
           }
         }
 
         else
-        {               // Singularity on the first point there is only two or
-          ideb = id[0]; // three pointersec, so the first is a solution
-          ifin = id[1]; // and the second too.
+        {
+          ideb = id[0];
+          ifin = id[1];
         }
       }
-
-      // Insertion of the segment found in the existing section lines :
 
       if (ideb < 0)
       {
@@ -808,21 +710,14 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
         {
           if (ideb != -999)
           {
-            // static unsigned nisp=0;
+
             double d = piOT(-ideb).Pnt().Distance(piOT(-ifin).Pnt());
             if (d < Tolerance)
             {
               Insert(piOT(-ideb), piOT(-ifin));
-              //-- std::cout<<"Insertion Point IntPatch_InterferencePolyhedron 1,2 d="<<d<<"
-              // Tol="<<Tolerance<<" num:"<<++nisp<<std::endl;
-              //-- piOT(-ideb).Dump(1);  piOT(-ifin).Dump(0);
-              //-- std::cout<<"point p"<<++nisp<<" "<<piOT(-ideb).Pnt().X()<<"
-              //"<<piOT(-ideb).Pnt().Y()<<" "<<piOT(-ideb).Pnt().Z()<<std::endl;
             }
             else
             {
-              //-- std::cout<<"Insertion Point IntPatch_InterferencePolyhedron 1,2 d="<<d<<"
-              // Tol="<<Tolerance<<" NON INSERE "<<std::endl;
             }
           }
         }
@@ -832,20 +727,11 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
         if (ideb != ifin)
         {
           Insert(piOT(ideb + 1), piOT(ifin + 1));
-
-          //	else
-          //	 un pointersec : It is necessary to check if it has not been already found
-          //                       and if not insert it in the list.
-          //                       Attention! It is necessary to check
-          //                       for each new segment if a point is in the list
-          //                       and in this case remove it from the list.
         }
       }
     }
   }
 }
-
-//=================================================================================================
 
 bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&          TheTZ,
                                                        const IntPatch_Polyhedron& FirstPol,
@@ -853,8 +739,6 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
                                                        const IntPatch_Polyhedron& SeconPol,
                                                        const int                  Tri2) const
 {
-  // Potential tangent Zone !
-  // ------------------------
 
   bool   finished = false;
   int    nob, nou, nob2, nou2;
@@ -871,7 +755,6 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
   int                                     nbpInt = 0;
   NCollection_Sequence<Intf_SectionPoint> Tpi;
 
-  // Compute the positions of the points of <Tri1> in the triangle <Tri2>.
   for (nob = 0; nob <= 2; nob++)
   {
     nob2 = Pourcent3[nob + 1];
@@ -941,9 +824,6 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
     }
   }
 
-  // If the three points of <Tri1> are in <Tri2> the triangle Tri1 is
-  // itself the tangent zone else compute the positions of the points
-  // of <Tri2> in <Tri1>.
   if (nbpInt < 3)
   {
     for (nou = 0; nou <= 2; nou++)
@@ -1006,29 +886,24 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
   else
     finished = true;
 
-  // Insertion of the points of intersection in the zone of tangency :
   for (nob = 1; nob <= nbpInt; nob++)
     TheTZ.Append(Tpi(nob));
 
   if (!finished)
   {
-    // If one of the triangles is not in the zone of tangency, it is necessary to find
-    // the points of intersection edge/edge :
 
-    // Last indexes are not used.
-    // Arrays are increased to eliminate gcc warning.
     double parO[10], parT[10];
     int    nbNoInserted = 0;
-    int    piToInsert[17]; // for GCC 4.9
+    int    piToInsert[17];
 
     for (nob = 0; nob < 3; nob++)
     {
-      // processing of the object segment P[nob], P[nob+1]
+
       nob2 = Pourcent3[nob + 1];
 
       for (nou = 0; nou < 3; nou++)
       {
-        // processing of the segment of the tool P[nou], P[nou+1]
+
         nou2 = Pourcent3[nou + 1];
 
         if (dpOeT[nob][nou] * dpOeT[nob2][nou] < 0. && deOpT[nob][nou] * deOpT[nob][nou2] < 0.)
@@ -1068,7 +943,7 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
         }
       }
       if (nbpInt >= 5)
-        break; // Number of pi passed in TZ !
+        break;
     }
     nob = nbNoInserted - 1;
     while (nob >= 0)
@@ -1104,8 +979,6 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
   return nbpInt > 0;
 }
 
-//=================================================================================================
-
 void IntPatch_InterferencePolyhedron::CoupleCharacteristics(const IntPatch_Polyhedron& FirstPol,
                                                             const IntPatch_Polyhedron& SeconPol)
 {
@@ -1138,7 +1011,7 @@ void IntPatch_InterferencePolyhedron::CoupleCharacteristics(const IntPatch_Polyh
 
       lg = vtt[n2].Modulus();
       if (lg > 1e-16)
-      { //-- RealEpsilon()
+      {
         gp_XYZ vv     = vto ^ vtt[n2];
         lg            = (vvec * vv) > 0.0 ? lg : -lg;
         dpOeT[n1][n2] = vv.Modulus() / lg;
@@ -1148,7 +1021,7 @@ void IntPatch_InterferencePolyhedron::CoupleCharacteristics(const IntPatch_Polyh
 
       lg = voo[n1].Modulus();
       if (lg > 1e-16)
-      { //-- RealEpsilon())
+      {
         gp_XYZ vv     = vto ^ voo[n1];
         lg            = (vvec * vv) > 0.0 ? -lg : lg;
         deOpT[n1][n2] = vv.Modulus() / lg;

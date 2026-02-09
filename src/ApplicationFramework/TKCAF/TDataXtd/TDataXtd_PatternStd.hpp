@@ -17,16 +17,12 @@ class TDF_Attribute;
 class TDF_RelocationTable;
 class TDF_DataSet;
 
-//! to create a PatternStd
-//! (LinearPattern, CircularPattern, RectangularPattern,
-//! RadialCircularPattern, MirrorPattern)
 class TDataXtd_PatternStd : public TDataXtd_Pattern
 {
 
 public:
   Standard_EXPORT static const Standard_GUID& GetPatternID();
 
-  //! Find, or create, a PatternStd attribute
   Standard_EXPORT static occ::handle<TDataXtd_PatternStd> Set(const TDF_Label& label);
 
   Standard_EXPORT TDataXtd_PatternStd();
@@ -108,63 +104,45 @@ inline int TDataXtd_PatternStd::Signature() const
   return mySignature;
 }
 
-//=================================================================================================
-
 inline occ::handle<TNaming_NamedShape> TDataXtd_PatternStd::Axis1() const
 {
   return myAxis1;
 }
-
-//=================================================================================================
 
 inline occ::handle<TNaming_NamedShape> TDataXtd_PatternStd::Axis2() const
 {
   return myAxis2;
 }
 
-//=================================================================================================
-
 inline bool TDataXtd_PatternStd::Axis1Reversed() const
 {
   return myAxis1Reversed;
 }
-
-//=================================================================================================
 
 inline bool TDataXtd_PatternStd::Axis2Reversed() const
 {
   return myAxis2Reversed;
 }
 
-//=================================================================================================
-
 inline occ::handle<TDataStd_Real> TDataXtd_PatternStd::Value1() const
 {
   return myValue1;
 }
-
-//=================================================================================================
 
 inline occ::handle<TDataStd_Real> TDataXtd_PatternStd::Value2() const
 {
   return myValue2;
 }
 
-//=================================================================================================
-
 inline occ::handle<TDataStd_Integer> TDataXtd_PatternStd::NbInstances1() const
 {
   return myNb1;
 }
 
-//=================================================================================================
-
 inline occ::handle<TDataStd_Integer> TDataXtd_PatternStd::NbInstances2() const
 {
   return myNb2;
 }
-
-//=================================================================================================
 
 inline occ::handle<TNaming_NamedShape> TDataXtd_PatternStd::Mirror() const
 {

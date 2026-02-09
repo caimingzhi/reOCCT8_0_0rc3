@@ -1,32 +1,18 @@
-/*
- Copyright (c) 1999-2020 OPEN CASCADE SAS
 
- This file is part of Open CASCADE Technology software library.
-
- This library is free software; you can redistribute it and/or modify it under
- the terms of the GNU Lesser General Public License version 2.1 as published
- by the Free Software Foundation, with special exception defined in the file
- OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
- distribution for complete text of the license and disclaimer of any warranty.
-
- Alternatively, this file may be used under the terms of Open CASCADE
- commercial license or contractual agreement.
-*/
 
 #include <StepFile_ReadData.hpp>
 
 #include <Interface_Check.hpp>
 #include <TCollection_AsciiString.hpp>
 
-// Constant litterales
 namespace TextValue
 {
   static char SubList[]  = "/* (SUB) */";
   static char Scope[]    = "SCOPE";
   static char Nil[]      = " ";
-  static char Sub1[]     = "$1"; /* optimisation ... */
+  static char Sub1[]     = "$1";
   static char Sub2[]     = "$2";
-  static char ArgType1[] = "(IF#TnEHBx"; /* types arguments (2 1es lettres) */
+  static char ArgType1[] = "(IF#TnEHBx";
   static char ArgType2[] = ")nlIxdnxix";
   static char IdZero[]   = "#0";
 } // namespace TextValue
@@ -44,9 +30,9 @@ public:
   ~Argument() = default;
 
 public:
-  Argument*           myNext;  //!< Next argument in the list for this record
-  char*               myValue; //!< Character value of the argument
-  Interface_ParamType myType;  //!< Type of the argument
+  Argument*           myNext;
+  char*               myValue;
+  Interface_ParamType myType;
 };
 
 class StepFile_ReadData::Record
@@ -64,17 +50,16 @@ public:
   ~Record() = default;
 
 public:
-  Record*   myNext;  //!< Next record in the list
-  Argument* myFirst; //!< First argument in the record
-  Argument* myLast;  //!< Last argument in the record
-  char*     myIdent; //!< Record identifier (Example: "#12345") or scope-end
-  char*     myType;  //!< Type of the record
+  Record*   myNext;
+  Argument* myFirst;
+  Argument* myLast;
+  char*     myIdent;
+  char*     myType;
 };
 
 class StepFile_ReadData::Scope
 {
 public:
-  // Standard OCCT memory allocation stuff
   DEFINE_STANDARD_ALLOC
 
 public:
@@ -93,8 +78,8 @@ public:
   }
 
 public:
-  Scope*  myPrevious; //!< Previous scope, to which it will be necessary to return
-  Record* myRecord;   //!< Record interrupted by the scope (to resume)
+  Scope*  myPrevious;
+  Record* myRecord;
 };
 
 class StepFile_ReadData::ErrorsPage
@@ -106,22 +91,17 @@ public:
   {
   }
 
-  //! Returns point to the next ErrorsPage
   ErrorsPage* NextErrorPage() const { return myNext; }
 
-  //! Sets the next ErrorPage
   void SetNextErrorPage(ErrorsPage* theNextErrorsPage) { myNext = theNextErrorsPage; }
 
-  //! Returns an error message
   const char* ErrorMessage() const { return myError.ToCString(); }
 
   DEFINE_STANDARD_ALLOC
 private:
-  ErrorsPage*             myNext;  //!< Chaining of records pages
-  TCollection_AsciiString myError; //!< Own error message
+  ErrorsPage*             myNext;
+  TCollection_AsciiString myError;
 };
-
-//=================================================================================================
 
 StepFile_ReadData::StepFile_ReadData()
     : myModePrint(0),
@@ -143,26 +123,22 @@ StepFile_ReadData::StepFile_ReadData()
       myFirstError(nullptr),
       myCurError(nullptr) {};
 
-//=================================================================================================
-
 void StepFile_ReadData::CreateNewText(const char* theNewText, int theLenText)
 {
-  // Optimization for most frequent entity, CARTESIAN_POINT
+
   static char aTextOfCarPnt[] = "CARTESIAN_POINT";
   if (strcmp(theNewText, aTextOfCarPnt) == 0)
   {
     myResText = aTextOfCarPnt;
     return;
   }
-  //  If error argument exists - prepare size to new text value and old result text
+
   const int aLength = (myErrorArg) ? theLenText + (int)strlen(myResText) : theLenText;
 
   char* anOldResText = myResText;
 
   myResText = static_cast<char*>(myTextAlloc.AllocateOptimal(aLength + 1));
 
-  // If error argument exists - append new text to old result text
-  // Else create new result text
   if (myErrorArg)
   {
     strcpy(myResText, anOldResText);
@@ -172,19 +148,15 @@ void StepFile_ReadData::CreateNewText(const char* theNewText, int theLenText)
   strcpy(myResText, theNewText);
 }
 
-//=================================================================================================
-
 void StepFile_ReadData::RecordNewEntity()
 {
-  myErrorArg = false; // Reset error argument mod
+  myErrorArg = false;
   AddNewRecord(myCurRec);
   SetTypeArg(Interface_ParamSub);
   mySubArg          = myCurRec->myIdent;
   myCurRec          = myCurRec->myNext;
   myLastRec->myNext = nullptr;
 }
-
-//=================================================================================================
 
 void StepFile_ReadData::RecordIdent()
 {
@@ -195,8 +167,6 @@ void StepFile_ReadData::RecordIdent()
   myCurRec->myLast  = nullptr;
   myYaRec           = 1;
 }
-
-//=================================================================================================
 
 void StepFile_ReadData::RecordType()
 {
@@ -211,8 +181,6 @@ void StepFile_ReadData::RecordType()
   GetResultText(&myCurRec->myType);
   myYaRec = myNumSub = 0;
 }
-
-//=================================================================================================
 
 void StepFile_ReadData::RecordListStart()
 {
@@ -249,11 +217,9 @@ void StepFile_ReadData::RecordListStart()
     aSubRec->myLast  = nullptr;
     myCurRec         = aSubRec;
   }
-  myErrorArg = false; // Reset error arguments mode
+  myErrorArg = false;
   myNumSub++;
 }
-
-//=================================================================================================
 
 void StepFile_ReadData::CreateNewArg()
 {
@@ -287,12 +253,9 @@ void StepFile_ReadData::CreateNewArg()
   aNewArg->myNext = nullptr;
 }
 
-//=================================================================================================
-
 void StepFile_ReadData::CreateErrorArg()
 {
 
-  // If already exists - update text value
   if (!myErrorArg)
   {
     SetTypeArg(Interface_ParamMisc);
@@ -304,8 +267,6 @@ void StepFile_ReadData::CreateErrorArg()
   Argument* aCurrArg = myCurRec->myLast;
   GetResultText(&aCurrArg->myValue);
 }
-
-//=================================================================================================
 
 void StepFile_ReadData::AddNewScope()
 {
@@ -322,8 +283,6 @@ void StepFile_ReadData::AddNewScope()
   aRecord->myLast       = nullptr;
   AddNewRecord(aRecord);
 }
-
-//=================================================================================================
 
 void StepFile_ReadData::FinalOfScope()
 {
@@ -358,8 +317,6 @@ void StepFile_ReadData::FinalOfScope()
   myCurScope = anOldScope->myPrevious;
 }
 
-//=================================================================================================
-
 void StepFile_ReadData::ClearRecorder(const int theMode)
 {
   if (theMode & 1)
@@ -380,8 +337,6 @@ void StepFile_ReadData::ClearRecorder(const int theMode)
   }
 }
 
-//=================================================================================================
-
 bool StepFile_ReadData::GetArgDescription(Interface_ParamType* theType, char** theValue)
 {
   if (myCurrArg == nullptr)
@@ -392,8 +347,6 @@ bool StepFile_ReadData::GetArgDescription(Interface_ParamType* theType, char** t
   return true;
 }
 
-//=================================================================================================
-
 void StepFile_ReadData::GetFileNbR(int* theNbHead, int* theNbRec, int* theNbPage)
 {
   myCurRec   = myFirstRec;
@@ -401,8 +354,6 @@ void StepFile_ReadData::GetFileNbR(int* theNbHead, int* theNbRec, int* theNbPage
   *theNbRec  = myNbRec;
   *theNbPage = myNbPar;
 }
-
-//=================================================================================================
 
 bool StepFile_ReadData::GetRecordDescription(char** theIdent, char** theType, int* theNbArg)
 {
@@ -415,70 +366,50 @@ bool StepFile_ReadData::GetRecordDescription(char** theIdent, char** theType, in
   return true;
 }
 
-//=================================================================================================
-
 void StepFile_ReadData::RecordTypeText()
 {
   GetResultText(&myCurrType);
 }
-
-//=================================================================================================
 
 void StepFile_ReadData::NextRecord()
 {
   myCurRec = myCurRec->myNext;
 }
 
-//=================================================================================================
-
 void StepFile_ReadData::PrintCurrentRecord()
 {
   PrintRecord(myCurRec);
 }
-
-//=================================================================================================
 
 void StepFile_ReadData::PrepareNewArg()
 {
   myErrorArg = false;
 }
 
-//=================================================================================================
-
 void StepFile_ReadData::FinalOfHead()
 {
   myNbHead = myNbRec;
 }
-
-//=================================================================================================
 
 void StepFile_ReadData::SetTypeArg(const Interface_ParamType theArgType)
 {
   myTypeArg = theArgType;
 }
 
-//=================================================================================================
-
 void StepFile_ReadData::SetModePrint(const int theMode)
 {
   myModePrint = theMode;
 }
-
-//=================================================================================================
 
 int StepFile_ReadData::GetModePrint() const
 {
   return myModePrint;
 }
 
-//=================================================================================================
-
 int StepFile_ReadData::GetNbRecord() const
 {
   return myNbRec;
 }
-
-//=================================================================================================
 
 void StepFile_ReadData::AddError(const char* theErrorMessage)
 {
@@ -496,8 +427,6 @@ void StepFile_ReadData::AddError(const char* theErrorMessage)
   }
 }
 
-//=================================================================================================
-
 bool StepFile_ReadData::ErrorHandle(const occ::handle<Interface_Check>& theCheck) const
 {
   if (myFirstError != nullptr)
@@ -512,14 +441,10 @@ bool StepFile_ReadData::ErrorHandle(const occ::handle<Interface_Check>& theCheck
   return myFirstError == nullptr;
 }
 
-//=================================================================================================
-
 const char* StepFile_ReadData::GetLastError() const
 {
   return myCurError != nullptr ? myCurError->ErrorMessage() : nullptr;
 }
-
-//=================================================================================================
 
 char* StepFile_ReadData::RecordNewText(char* theText)
 {
@@ -532,14 +457,10 @@ char* StepFile_ReadData::RecordNewText(char* theText)
   return aNewText;
 }
 
-//=================================================================================================
-
 void StepFile_ReadData::GetResultText(char** theText)
 {
   *theText = myResText;
 }
-
-//=================================================================================================
 
 void StepFile_ReadData::AddNewRecord(Record* theNewRecord)
 {
@@ -551,14 +472,10 @@ void StepFile_ReadData::AddNewRecord(Record* theNewRecord)
   myLastRec = theNewRecord;
 }
 
-//=================================================================================================
-
 StepFile_ReadData::Record* StepFile_ReadData::CreateNewRecord()
 {
   return static_cast<Record*>(myOtherAlloc.AllocateOptimal(sizeof(Record)));
 }
-
-//=================================================================================================
 
 void StepFile_ReadData::PrintRecord(Record* theRecord)
 {

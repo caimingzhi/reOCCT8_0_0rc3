@@ -1,15 +1,11 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_PointOnPlanarCurvePair.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_PointOnPlanarCurvePair,
                            StepKinematics_HighOrderKinematicPair)
 
-//=================================================================================================
-
 StepKinematics_PointOnPlanarCurvePair::StepKinematics_PointOnPlanarCurvePair() = default;
-
-//=================================================================================================
 
 void StepKinematics_PointOnPlanarCurvePair::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -35,14 +31,10 @@ void StepKinematics_PointOnPlanarCurvePair::Init(
   myOrientation = theOrientation;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_Curve> StepKinematics_PointOnPlanarCurvePair::PairCurve() const
 {
   return myPairCurve;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnPlanarCurvePair::SetPairCurve(
   const occ::handle<StepGeom_Curve>& thePairCurve)
@@ -50,14 +42,10 @@ void StepKinematics_PointOnPlanarCurvePair::SetPairCurve(
   myPairCurve = thePairCurve;
 }
 
-//=================================================================================================
-
 bool StepKinematics_PointOnPlanarCurvePair::Orientation() const
 {
   return myOrientation;
 }
-
-//=================================================================================================
 
 void StepKinematics_PointOnPlanarCurvePair::SetOrientation(const bool theOrientation)
 {

@@ -1,16 +1,12 @@
 #include <IntRes2d_IntersectionSegment.hpp>
 #include <IntRes2d_IntersectionPoint.hpp>
 
-//=================================================================================================
-
 TopClass_FaceClassifier::TopClass_FaceClassifier()
     : myEdgeParameter(0.0),
       rejected(false),
       nowires(true)
 {
 }
-
-//=================================================================================================
 
 TopClass_FaceClassifier::TopClass_FaceClassifier(TheFaceExplorer& FExp,
                                                  const gp_Pnt2d&  P,
@@ -22,8 +18,6 @@ TopClass_FaceClassifier::TopClass_FaceClassifier(TheFaceExplorer& FExp,
   Perform(FExp, P, Tol);
 }
 
-//=================================================================================================
-
 void TopClass_FaceClassifier::Perform(TheFaceExplorer& Fexp, const gp_Pnt2d& P, const double Tol)
 {
   gp_Pnt2d aPoint(P);
@@ -33,7 +27,6 @@ void TopClass_FaceClassifier::Perform(TheFaceExplorer& Fexp, const gp_Pnt2d& P, 
     aResOfPointCheck = Fexp.CheckPoint(aPoint);
   }
 
-  // Test for rejection.
   rejected = Fexp.Reject(aPoint);
 
   if (rejected)
@@ -63,14 +56,14 @@ void TopClass_FaceClassifier::Perform(TheFaceExplorer& Fexp, const gp_Pnt2d& P, 
 
       if (!IsWReject)
       {
-        // test this wire
+
         for (Fexp.InitEdges(); Fexp.MoreEdges(); Fexp.NextEdge())
         {
           IsEReject = Fexp.RejectEdge(aLine, myClassifier.Parameter());
 
           if (!IsEReject)
           {
-            // test this edge
+
             Fexp.CurrentEdge(anEdge, anEdgeOri);
 
             if (anEdgeOri == TopAbs_FORWARD || anEdgeOri == TopAbs_REVERSED)
@@ -80,7 +73,7 @@ void TopClass_FaceClassifier::Perform(TheFaceExplorer& Fexp, const gp_Pnt2d& P, 
 
               if (aClosestInd != 0)
               {
-                // save the closest edge
+
                 TheIntersection2d& anIntersector = myClassifier.Intersector();
                 int                aNbPnts       = anIntersector.NbPoints();
 
@@ -107,7 +100,7 @@ void TopClass_FaceClassifier::Perform(TheFaceExplorer& Fexp, const gp_Pnt2d& P, 
                 myPosition      = aPInter.TransitionOfSecond().PositionOnCurve();
                 myEdgeParameter = aPInter.ParamOnSecond();
               }
-              // if we are ON, we stop
+
               aState = myClassifier.State();
 
               if (aState == TopAbs_ON)
@@ -116,7 +109,6 @@ void TopClass_FaceClassifier::Perform(TheFaceExplorer& Fexp, const gp_Pnt2d& P, 
           }
         }
 
-        // if we are out of the wire we stop
         aState = myClassifier.State();
 
         if (aState == TopAbs_OUT)
@@ -127,12 +119,9 @@ void TopClass_FaceClassifier::Perform(TheFaceExplorer& Fexp, const gp_Pnt2d& P, 
     if (!myClassifier.IsHeadOrEnd() && aState != TopAbs_UNKNOWN)
       break;
 
-    // Bad case for classification. Trying to get another segment.
     IsValidSegment = Fexp.OtherSegment(aPoint, aLine, aParam);
   }
 }
-
-//=================================================================================================
 
 TopAbs_State TopClass_FaceClassifier::State() const
 {
@@ -144,15 +133,11 @@ TopAbs_State TopClass_FaceClassifier::State() const
     return myClassifier.State();
 }
 
-//=================================================================================================
-
 const TheEdge& TopClass_FaceClassifier::Edge() const
 {
   Standard_DomainError_Raise_if(rejected, "TopClass_FaceClassifier::Edge:rejected");
   return myEdge;
 }
-
-//=================================================================================================
 
 double TopClass_FaceClassifier::EdgeParameter() const
 {

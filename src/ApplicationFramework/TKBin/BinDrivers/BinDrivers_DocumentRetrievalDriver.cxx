@@ -15,11 +15,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinDrivers_DocumentRetrievalDriver, BinLDrivers_DocumentRetrievalDriver)
 
-//=================================================================================================
-
 BinDrivers_DocumentRetrievalDriver::BinDrivers_DocumentRetrievalDriver() = default;
-
-//=================================================================================================
 
 occ::handle<BinMDF_ADriverTable> BinDrivers_DocumentRetrievalDriver::AttributeDrivers(
   const occ::handle<Message_Messenger>& theMessageDriver)
@@ -27,16 +23,13 @@ occ::handle<BinMDF_ADriverTable> BinDrivers_DocumentRetrievalDriver::AttributeDr
   return BinDrivers::AttributeDrivers(theMessageDriver);
 }
 
-//=================================================================================================
-
-void BinDrivers_DocumentRetrievalDriver::ReadShapeSection(
-  BinLDrivers_DocumentSection& /*theSection*/,
-  Standard_IStream& theIS,
-  const bool /*isMess*/,
-  const Message_ProgressRange& theRange)
+void BinDrivers_DocumentRetrievalDriver::ReadShapeSection(BinLDrivers_DocumentSection&,
+                                                          Standard_IStream& theIS,
+                                                          const bool,
+                                                          const Message_ProgressRange& theRange)
 
 {
-  // Read Shapes
+
   occ::handle<BinMDF_ADriver> aDriver;
   if (myDrivers->GetDriver(STANDARD_TYPE(TNaming_NamedShape), aDriver))
   {
@@ -55,19 +48,14 @@ void BinDrivers_DocumentRetrievalDriver::ReadShapeSection(
   }
 }
 
-//=================================================================================================
-
-void BinDrivers_DocumentRetrievalDriver::CheckShapeSection(
-  const Storage_Position& /*ShapeSectionPos*/,
-  Standard_IStream& /*IS*/)
+void BinDrivers_DocumentRetrievalDriver::CheckShapeSection(const Storage_Position&,
+                                                           Standard_IStream&)
 {
 }
 
-//=================================================================================================
-
 void BinDrivers_DocumentRetrievalDriver::Clear()
 {
-  // Clear NamedShape driver
+
   occ::handle<BinMDF_ADriver> aDriver;
   if (myDrivers->GetDriver(STANDARD_TYPE(TNaming_NamedShape), aDriver))
   {
@@ -77,8 +65,6 @@ void BinDrivers_DocumentRetrievalDriver::Clear()
   }
   BinLDrivers_DocumentRetrievalDriver::Clear();
 }
-
-//=================================================================================================
 
 void BinDrivers_DocumentRetrievalDriver::EnableQuickPartReading(
   const occ::handle<Message_Messenger>& theMessageDriver,

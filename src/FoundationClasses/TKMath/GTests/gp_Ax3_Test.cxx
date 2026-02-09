@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gp_Ax3.hpp>
 #include <gp_Ax1.hpp>
@@ -21,9 +10,9 @@
 
 TEST(gp_Ax3_Test, OCC29406_SetDirectionPreservesOrientation)
 {
-  // Test Main (Z) direction
+
   {
-    // gp_Ax3::SetDirection() test
+
     gp_Ax3 anAx1, anAx2, anAx3, anAx4;
     anAx3.ZReverse();
     anAx4.ZReverse();
@@ -48,7 +37,6 @@ TEST(gp_Ax3_Test, OCC29406_SetDirectionPreservesOrientation)
     EXPECT_EQ(bDirect4, anAx4.Direct());
     EXPECT_TRUE((-gp::DX()).IsEqual(anAx4.Direction(), Precision::Angular()));
 
-    // gp_Ax3::SetAxis() test
     gp_Ax3 anAx5, anAx6;
     gp_Ax1 anAx0_1(gp::Origin(), gp::DX());
     gp_Ax1 anAx0_2(gp::Origin(), -gp::DX());
@@ -64,7 +52,6 @@ TEST(gp_Ax3_Test, OCC29406_SetDirectionPreservesOrientation)
     EXPECT_TRUE(anAx0_2.Direction().IsEqual(anAx6.Direction(), Precision::Angular()));
   }
 
-  // Test X direction
   {
     gp_Ax3 anAx1, anAx2, anAx3, anAx4;
     anAx3.XReverse();
@@ -96,7 +83,6 @@ TEST(gp_Ax3_Test, OCC29406_SetDirectionPreservesOrientation)
     EXPECT_EQ(bDirect4, anAx4.Direct());
   }
 
-  // Test Y direction
   {
     gp_Ax3 anAx1, anAx2, anAx3, anAx4;
     anAx3.YReverse();

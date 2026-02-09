@@ -9,17 +9,6 @@
 #include <IntAna2d_AnaIntersection.hpp>
 #include <IntAna2d_IntPoint.hpp>
 
-//=========================================================================
-//   Creation of a circle passing by : 2 points Point1 and Point2.        +
-//                        Centered on  : 1 straight line OnLine.                  +
-//   with a Tolerance of precision  : Tolerance.                        +
-//                                                                        +
-//   Create L1 straight line of points equidistant from Point1 and Point2.     +
-//   Then create solutions cirsol such as :                        +
-//   cirsol is all circle with center at the intersections of  +
-//   L1 with OnLine and the radius the distance between Point1 and the point   +
-//   calculated above.                                                   +
-//=========================================================================
 GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const gp_Pnt2d& Point1,
                                          const gp_Pnt2d& Point2,
                                          const gp_Lin2d& OnLine,
@@ -63,7 +52,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const gp_Pnt2d& Point1,
           NbrSol++;
           gp_Ax2d axe(Intp.Point(i).Value(), dirx);
           cirsol(NbrSol) = gp_Circ2d(axe, Point1.Distance(Intp.Point(i).Value()));
-          //        ====================================================================
+
           qualifier1(NbrSol) = GccEnt_noqualifier;
           qualifier2(NbrSol) = GccEnt_noqualifier;
           pnttg1sol(NbrSol)  = Point1;

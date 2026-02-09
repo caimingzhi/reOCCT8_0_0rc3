@@ -11,7 +11,6 @@ class StepShape_Torus : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a Torus
   Standard_EXPORT StepShape_Torus();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

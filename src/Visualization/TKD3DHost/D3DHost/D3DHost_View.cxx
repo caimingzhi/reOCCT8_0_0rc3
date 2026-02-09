@@ -20,8 +20,6 @@ namespace
   };
 } // namespace
 
-//=================================================================================================
-
 TCollection_AsciiString D3DHost_View::d3dFormatError(const long theErrCode)
 {
   switch (theErrCode)
@@ -42,8 +40,6 @@ TCollection_AsciiString D3DHost_View::d3dFormatError(const long theErrCode)
       return TCollection_AsciiString("Error #") + int(theErrCode) + ")";
   }
 }
-
-//=================================================================================================
 
 D3DHost_View::D3DHost_View(const occ::handle<Graphic3d_StructureManager>& theMgr,
                            const occ::handle<D3DHost_GraphicDriver>&      theDriver,
@@ -70,8 +66,6 @@ D3DHost_View::D3DHost_View(const occ::handle<Graphic3d_StructureManager>& theMgr
   myD3dParams->PresentationInterval       = D3DPRESENT_INTERVAL_DEFAULT;
 }
 
-//=================================================================================================
-
 D3DHost_View::~D3DHost_View()
 {
   ReleaseGlResources(NULL);
@@ -87,8 +81,6 @@ D3DHost_View::~D3DHost_View()
   }
 }
 
-//=================================================================================================
-
 void D3DHost_View::ReleaseGlResources(const occ::handle<OpenGl_Context>& theCtx)
 {
   if (!myD3dWglFbo.IsNull())
@@ -99,14 +91,10 @@ void D3DHost_View::ReleaseGlResources(const occ::handle<OpenGl_Context>& theCtx)
   OpenGl_View::ReleaseGlResources(theCtx);
 }
 
-//=================================================================================================
-
 IDirect3DSurface9* D3DHost_View::D3dColorSurface() const
 {
   return myD3dWglFbo->D3dColorSurface();
 }
-
-//=================================================================================================
 
 void D3DHost_View::SetWindow(const occ::handle<Graphic3d_CView>& theParentVIew,
                              const occ::handle<Aspect_Window>&   theWindow,
@@ -131,8 +119,6 @@ void D3DHost_View::SetWindow(const occ::handle<Graphic3d_CView>& theParentVIew,
     d3dCreateRenderTarget();
   }
 }
-
-//=================================================================================================
 
 void D3DHost_View::DiagnosticInformation(
   NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theDict,
@@ -182,18 +168,16 @@ void D3DHost_View::DiagnosticInformation(
                                                                  : "WGL_NV_DX_interop");
 }
 
-//=================================================================================================
-
 bool D3DHost_View::d3dInitLib()
 {
   if (myD3dLib == NULL)
   {
     IDirect3D9Ex* aD3dLibEx = NULL;
-    // we link against d3d (using Direct3DCreate9 symbol), thus it should be already loaded
+
     HMODULE aLib = GetModuleHandleW(L"d3d9");
     if (aLib != NULL)
     {
-      // retrieve D3D9Ex function dynamically (available only since Vista+)
+
       typedef HRESULT(WINAPI * Direct3DCreate9Ex_t)(UINT, IDirect3D9Ex**);
       Direct3DCreate9Ex_t Direct3DCreate9ExProc =
         (Direct3DCreate9Ex_t)GetProcAddress(aLib, "Direct3DCreate9Ex");
@@ -212,8 +196,6 @@ bool D3DHost_View::d3dInitLib()
   return myD3dLib != NULL;
 }
 
-//=================================================================================================
-
 bool D3DHost_View::d3dInit()
 {
   if (!d3dInitLib())
@@ -228,7 +210,6 @@ bool D3DHost_View::d3dInit()
 
   UINT anAdapterId = D3DADAPTER_DEFAULT;
 
-  // setup the present parameters
   D3DDISPLAYMODE aCurrMode;
   memset(&aCurrMode, 0, sizeof(aCurrMode));
   if (myD3dLib->GetAdapterDisplayMode(anAdapterId, &aCurrMode) == D3D_OK)
@@ -241,7 +222,6 @@ bool D3DHost_View::d3dInit()
   myD3dParams->BackBufferHeight = myWindow->Height();
   myD3dParams->hDeviceWindow    = (HWND)myWindow->PlatformWindow()->NativeHandle();
 
-  // create the Video Device
   HRESULT isOK = myD3dLib->CreateDevice(anAdapterId,
                                         D3DDEVTYPE_HAL,
                                         (HWND)myWindow->PlatformWindow()->NativeHandle(),
@@ -256,8 +236,6 @@ bool D3DHost_View::d3dInit()
 
   return myD3dDevice != NULL;
 }
-
-//=================================================================================================
 
 bool D3DHost_View::d3dReset()
 {
@@ -276,8 +254,6 @@ bool D3DHost_View::d3dReset()
   return isOK == D3D_OK;
 }
 
-//=================================================================================================
-
 bool D3DHost_View::d3dCreateRenderTarget()
 {
   bool toD3dFallback = false;
@@ -292,15 +268,13 @@ bool D3DHost_View::d3dCreateRenderTarget()
 
   if (!toD3dFallback)
   {
-    toD3dFallback =
-      !myD3dWglFbo->InitD3dInterop(myWorkspace->GetGlContext(),
-                                   myD3dDevice,
-                                   myIsD3dEx,
-                                   myWindow->Width(),
-                                   myWindow->Height(),
-                                   // clang-format off
-                                                  0); // do not request depth-stencil attachment since buffer will be flipped using addition FBO (myToFlipOutput)
-    // clang-format on
+    toD3dFallback = !myD3dWglFbo->InitD3dInterop(myWorkspace->GetGlContext(),
+                                                 myD3dDevice,
+                                                 myIsD3dEx,
+                                                 myWindow->Width(),
+                                                 myWindow->Height(),
+
+                                                 0);
   }
   if (toD3dFallback)
   {
@@ -319,8 +293,6 @@ bool D3DHost_View::d3dCreateRenderTarget()
   return true;
 }
 
-//=================================================================================================
-
 void D3DHost_View::d3dBeginRender()
 {
   if (myD3dDevice == NULL)
@@ -328,12 +300,9 @@ void D3DHost_View::d3dBeginRender()
     return;
   }
 
-  // clear the back buffer
   myD3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
   myD3dDevice->BeginScene();
 }
-
-//=================================================================================================
 
 void D3DHost_View::d3dEndRender()
 {
@@ -342,8 +311,6 @@ void D3DHost_View::d3dEndRender()
     myD3dDevice->EndScene();
   }
 }
-
-//=================================================================================================
 
 bool D3DHost_View::d3dSwap()
 {
@@ -365,8 +332,6 @@ bool D3DHost_View::d3dSwap()
   return isOK == D3D_OK;
 }
 
-//=================================================================================================
-
 void D3DHost_View::Redraw()
 {
   if (!myWorkspace->Activate() || myD3dDevice == NULL)
@@ -382,8 +347,7 @@ void D3DHost_View::Redraw()
   occ::handle<OpenGl_Context> aCtx = myWorkspace->GetGlContext();
   if (myWindow->PlatformWindow()->IsVirtual() && aCtx->arbFBO == NULL)
   {
-    // do a dirty hack in extreme fallback mode with OpenGL driver not supporting FBO,
-    // the back buffer of hidden window is used for rendering as offscreen buffer
+
     myTransientDrawToFront = false;
     int aWinSizeX = 0, aWinSizeY = 0;
     myWindow->PlatformWindow()->Size(aWinSizeX, aWinSizeY);
@@ -414,7 +378,6 @@ void D3DHost_View::Redraw()
     return;
   }
 
-  // blit result to the D3D back buffer and swap
   d3dBeginRender();
 
   IDirect3DSurface9* aBackbuffer = NULL;
@@ -425,8 +388,6 @@ void D3DHost_View::Redraw()
   d3dEndRender();
   d3dSwap();
 }
-
-//=================================================================================================
 
 void D3DHost_View::RedrawImmediate()
 {
@@ -462,7 +423,6 @@ void D3DHost_View::RedrawImmediate()
     return;
   }
 
-  // blit result to the D3D back buffer and swap
   d3dBeginRender();
 
   IDirect3DSurface9* aBackbuffer = NULL;
@@ -473,8 +433,6 @@ void D3DHost_View::RedrawImmediate()
   d3dEndRender();
   d3dSwap();
 }
-
-//=================================================================================================
 
 void D3DHost_View::Resized()
 {

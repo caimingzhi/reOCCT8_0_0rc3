@@ -14,7 +14,6 @@ class StepAP214_AutoDesignApprovalAssignment : public StepBasic_ApprovalAssignme
 {
 
 public:
-  //! Returns a AutoDesignApprovalAssignment
   Standard_EXPORT StepAP214_AutoDesignApprovalAssignment();
 
   Standard_EXPORT void Init(

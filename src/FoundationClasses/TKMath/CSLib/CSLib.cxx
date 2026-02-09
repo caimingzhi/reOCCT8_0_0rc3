@@ -14,17 +14,13 @@
 
 namespace
 {
-  //! Angular tolerance for parallel/opposite vector detection (radians).
+
   constexpr double THE_PARALLEL_ANGULAR_TOL = 1e-6;
 
-  //! Maximum number of iterations for root finding algorithm.
   constexpr int THE_MAX_ROOT_ITERATIONS = 200;
 
-  //! Tolerance for root finding algorithm.
   constexpr double THE_ROOT_FINDING_TOL = 1e-5;
 } // namespace
-
-//=================================================================================================
 
 void CSLib::Normal(const gp_Vec&           theD1U,
                    const gp_Vec&           theD1V,
@@ -63,8 +59,6 @@ void CSLib::Normal(const gp_Vec&           theD1U,
   }
 }
 
-//=================================================================================================
-
 void CSLib::Normal(const gp_Vec&       theD1U,
                    const gp_Vec&       theD1V,
                    const gp_Vec&       theD2U,
@@ -75,10 +69,6 @@ void CSLib::Normal(const gp_Vec&       theD1U,
                    CSLib_NormalStatus& theStatus,
                    gp_Dir&             theNormal)
 {
-  // Compute approximate normal using Taylor expansion:
-  // N(u0+du, v0+dv) = N0 + dN/du * du + dN/dv * dv + O(du^2, dv^2)
-  // where N = D1U ^ D1V, so dN/du = D2U ^ D1V + D1U ^ D2UV
-  // and dN/dv = D2UV ^ D1V + D1U ^ D2V
 
   gp_Vec aD1Nu = theD2U.Crossed(theD1V);
   aD1Nu.Add(theD1U.Crossed(theD2UV));
@@ -135,8 +125,6 @@ void CSLib::Normal(const gp_Vec&       theD1U,
   }
 }
 
-//=================================================================================================
-
 void CSLib::Normal(const gp_Vec&       theD1U,
                    const gp_Vec&       theD1V,
                    const double        theMagTol,
@@ -154,15 +142,13 @@ void CSLib::Normal(const gp_Vec&       theD1U,
   }
   else
   {
-    // Normalize tangent vectors first for better numerical stability.
+
     const gp_Dir aD1UDir(theD1U);
     const gp_Dir aD1VDir(theD1V);
     theNormal = gp_Dir(aD1UDir.Crossed(aD1VDir));
     theStatus = CSLib_Defined;
   }
 }
-
-//=================================================================================================
 
 void CSLib::Normal(const int                         theMaxOrder,
                    const NCollection_Array2<gp_Vec>& theDerNUV,
@@ -184,7 +170,6 @@ void CSLib::Normal(const int                         theMaxOrder,
   double aNorme     = 0.0;
   gp_Vec aD;
 
-  // Find k0 such that all derivatives N = dS/du ^ dS/dv are null till order k0-1.
   while (!aFound && anOrder < theMaxOrder)
   {
     ++anOrder;
@@ -202,7 +187,6 @@ void CSLib::Normal(const int                         theMaxOrder,
   theOrderU = aFoundUIdx + 1;
   theOrderV = anOrder - theOrderU;
 
-  // Vk0 is the first non-null derivative of N: the reference vector.
   if (!aFound)
   {
     theStatus = CSLib_Singular;
@@ -219,7 +203,6 @@ void CSLib::Normal(const int                         theMaxOrder,
   const gp_Vec               aVk0 = theDerNUV(theOrderU, theOrderV);
   NCollection_Array1<double> aRatio(0, anOrder);
 
-  // Calculate lambda_i ratios for each derivative at this order.
   int  aRatioIdx = 0;
   bool isDefined = false;
   while (aRatioIdx <= anOrder && !isDefined)
@@ -252,11 +235,9 @@ void CSLib::Normal(const int                         theMaxOrder,
     return;
   }
 
-  // All lambda_i exist - analyze the polynomial sign.
   double aInf = -M_PI;
   double aSup = M_PI;
 
-  // Determine domain based on position (interior, edge, corner).
   const bool isFU = (std::abs(theU - theUmin) < Precision::PConfusion());
   const bool isLU = (std::abs(theU - theUmax) < Precision::PConfusion());
   const bool isFV = (std::abs(theV - theVmin) < Precision::PConfusion());
@@ -303,7 +284,6 @@ void CSLib::Normal(const int                         theMaxOrder,
   double aVprec       = 0.0;
   double aVsuiv       = 0.0;
 
-  // Create polynomial and find its roots.
   CSLib_NormalPolyDef aPoly(anOrder, aRatio);
   math_FunctionRoots  aFindRoots(aPoly,
                                 aInf,
@@ -315,7 +295,7 @@ void CSLib::Normal(const int                         theMaxOrder,
 
   if (aFindRoots.IsDone() && aFindRoots.NbSolutions() > 0)
   {
-    // Sort roots in ascending order.
+
     const int                  aNbSol = aFindRoots.NbSolutions();
     NCollection_Array1<double> aSol(0, aNbSol + 1);
 
@@ -325,11 +305,9 @@ void CSLib::Normal(const int                         theMaxOrder,
     }
     std::sort(&aSol(1), &aSol(aNbSol) + 1);
 
-    // Add domain limits.
     aSol(0)          = aInf;
     aSol(aNbSol + 1) = aSup;
 
-    // Check for sign changes between consecutive roots.
     int aFirst = 0;
     for (int aIntervalIdx = 0; aIntervalIdx <= aNbSol; ++aIntervalIdx)
     {
@@ -352,12 +330,11 @@ void CSLib::Normal(const int                         theMaxOrder,
   }
   else
   {
-    // No roots found, polynomial doesn't change sign.
+
     aChangesSign = false;
     aPoly.Value(aInf, aVsuiv);
   }
 
-  // Determine status based on polynomial sign.
   if (aChangesSign)
   {
     theStatus = CSLib_InfinityOfSolutions;
@@ -369,8 +346,6 @@ void CSLib::Normal(const int                         theMaxOrder,
     theNormal       = aSign * aVk0.Normalized();
   }
 }
-
-//=================================================================================================
 
 gp_Vec CSLib::DNNUV(const int theNu, const int theNv, const NCollection_Array2<gp_Vec>& theDerSurf)
 {
@@ -390,8 +365,6 @@ gp_Vec CSLib::DNNUV(const int theNu, const int theNv, const NCollection_Array2<g
 
   return aResult;
 }
-
-//=================================================================================================
 
 gp_Vec CSLib::DNNUV(const int                         theNu,
                     const int                         theNv,
@@ -414,8 +387,6 @@ gp_Vec CSLib::DNNUV(const int                         theNu,
 
   return aResult;
 }
-
-//=================================================================================================
 
 gp_Vec CSLib::DNNormal(const int                         theNu,
                        const int                         theNv,
@@ -446,7 +417,6 @@ gp_Vec CSLib::DNNormal(const int                         theNu,
         continue;
       }
 
-      // Compute n . derivative(p,q) of n
       double aScal = 0.0;
       if (aPderiv > aQderiv)
       {
@@ -498,7 +468,6 @@ gp_Vec CSLib::DNNormal(const int                         theNu,
       }
       aTabScal.SetValue(aPderiv, aQderiv, aScal / 2.0);
 
-      // Compute the derivative (n,p) of NUV Length.
       double aDnorm =
         theDerNUV.Value(aPderiv + theIduref, aQderiv + theIdvref).Dot(aDerVecNor.Value(0, 0));
 
@@ -520,7 +489,6 @@ gp_Vec CSLib::DNNormal(const int                         theNu,
       }
       aTabNorm.SetValue(aPderiv, aQderiv, aDnorm);
 
-      // Compute derivative (p,q) of n.
       aDerNor = theDerNUV.Value(aPderiv + theIduref, aQderiv + theIdvref);
 
       for (int aJderiv = 1; aJderiv <= aQderiv; ++aJderiv)

@@ -6,15 +6,6 @@
 
 #include <Standard_Boolean.hpp>
 
-//! Root class for all commands in BRepLib.
-//!
-//! Provides :
-//!
-//! * Managements of the notDone flag.
-//!
-//! * Catching of exceptions (not implemented).
-//!
-//! * Logging (not implemented).
 class BRepLib_Command
 {
 public:
@@ -24,17 +15,13 @@ public:
 
   Standard_EXPORT bool IsDone() const;
 
-  //! Raises NotDone if done is false.
   Standard_EXPORT void Check() const;
 
 protected:
-  //! Set done to False.
   Standard_EXPORT BRepLib_Command();
 
-  //! Set done to true.
   Standard_EXPORT void Done();
 
-  //! Set done to false.
   Standard_EXPORT void NotDone();
 
 private:

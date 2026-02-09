@@ -13,7 +13,6 @@ class StepVisual_PointStyle : public Standard_Transient
 {
 
 public:
-  //! Returns a PointStyle
   Standard_EXPORT StepVisual_PointStyle();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

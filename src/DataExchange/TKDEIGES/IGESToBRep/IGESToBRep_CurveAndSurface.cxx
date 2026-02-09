@@ -1,21 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// 22.12.98 dce S3767
-// 21.12.98 rln, gka S4054
-// #74 rln,pdn 11.03.99 S4135: Setting minimum and maximum tolerances according to static parameters
-// sln 13.06.2002 OCC448 : Correction in  method TransferGeometry to avoid transferring invisible
-// sub entities
 
 #include <BRep_Builder.hpp>
 #include <BRepLib.hpp>
@@ -52,8 +35,6 @@
 
 #include <cstdio>
 
-//=================================================================================================
-
 IGESToBRep_CurveAndSurface::IGESToBRep_CurveAndSurface()
     : myEps(1.e-04),
       myEpsCoeff(1.e-06),
@@ -72,8 +53,6 @@ IGESToBRep_CurveAndSurface::IGESToBRep_CurveAndSurface()
 {
   UpdateMinMaxTol();
 }
-
-//=================================================================================================
 
 IGESToBRep_CurveAndSurface::IGESToBRep_CurveAndSurface(const double eps,
                                                        const double epsCoeff,
@@ -99,8 +78,6 @@ IGESToBRep_CurveAndSurface::IGESToBRep_CurveAndSurface(const double eps,
   UpdateMinMaxTol();
 }
 
-//=================================================================================================
-
 void IGESToBRep_CurveAndSurface::Init()
 {
   myEps          = 1.E-04;
@@ -120,25 +97,18 @@ void IGESToBRep_CurveAndSurface::Init()
   UpdateMinMaxTol();
 }
 
-//=================================================================================================
-
 void IGESToBRep_CurveAndSurface::SetEpsGeom(const double eps)
 {
   myEpsGeom = eps;
   UpdateMinMaxTol();
 }
 
-//=================================================================================================
-
 void IGESToBRep_CurveAndSurface::UpdateMinMaxTol()
 {
-  // #74 rln 11.03.99 S4135: Setting maximum tolerances according to
-  // static parameter
+
   myMaxTol = std::max(Interface_Static::RVal("read.maxprecision.val"), myEpsGeom * myUnitFactor);
   myMinTol = Precision::Confusion();
 }
-
-//=================================================================================================
 
 void IGESToBRep_CurveAndSurface::SetModel(const occ::handle<IGESData_IGESModel>& model)
 {
@@ -153,8 +123,6 @@ void IGESToBRep_CurveAndSurface::SetModel(const occ::handle<IGESData_IGESModel>&
   UpdateMinMaxTol();
 }
 
-//=================================================================================================
-
 TopoDS_Shape IGESToBRep_CurveAndSurface::TransferCurveAndSurface(
   const occ::handle<IGESData_IGESEntity>& start,
   const Message_ProgressRange&            theProgress)
@@ -167,7 +135,6 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferCurveAndSurface(
     return res;
   }
   occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(start);
-  //  int typeNumber = start->TypeNumber();
 
   if (IGESToBRep::IsTopoCurve(start))
   {
@@ -188,55 +155,27 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferCurveAndSurface(
   {
     Message_Msg msg1015("IGES_1015");
     SendFail(start, msg1015);
-    // AddFail(start, "The IGESEntity is not a curve a Surface or a BRep Entity.");
   }
-  // mjm le 12/09/96
-  /*
-    if (!res.IsNull()) {
-      try {
-        OCC_CATCH_SIGNALS
-        double Eps = GetEpsGeom()*GetUnitFactor();
-        BRepLib::SameParameter(res,Eps);
-      }
-      catch(Standard_Failure) {
-      Message_Msg msg1010("IGES_1010");
-        SendWarning (start,msg1010);
-      }
-    }
-  */
+
   return res;
 }
-
-//=================================================================================================
 
 TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
   const occ::handle<IGESData_IGESEntity>& start,
   const Message_ProgressRange&            theProgress)
 {
-  // Declaration of messages//
-  // DCE 22/12/98
-  // Message_Msg msg1005("IGES_1005");  //  Software error :  start IsNull.
-  // Message_Msg msg1015("IGES_1015");  //  invalid type or exception raising (software error).
-  // Message_Msg msg1010("IGES_1010");  //  Not sameparameter.
-  //  Message_Msg msg1015("IGES_1015");
-  // Message_Msg msg210 ("XSTEP_210");
-  // Message_Msg msg202 ("XSTEP_202");
-  ////////////////////////////
+
   TopoDS_Shape res;
   gp_Trsf      T408;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005"); //  Software error :  start IsNull.
+    Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
 
-  // Read of the DE number and the type number of the entity
   occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(start);
-  // int typeNumber = start->TypeNumber();
 
-  // sln 13.06.2002 OCC448: Avoid transferring invisible sub entities which
-  // logically depend on the one
   int onlyvisible = Interface_Static::IVal("read.iges.onlyvisible");
 
   if (IGESToBRep::IsCurveAndSurface(start))
@@ -256,7 +195,6 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
     return res;
   }
 
-  // 408 : SingularSubfigure
   if (start->IsKind(STANDARD_TYPE(IGESBasic_SingularSubfigure)))
   {
     if (onlyvisible && start->BlankStatus() == 1)
@@ -298,7 +236,6 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
     }
   }
 
-  // 308 : SubfigureDefinition
   else if (start->IsKind(STANDARD_TYPE(IGESBasic_SubfigureDef)))
   {
     DeclareAndCast(IGESBasic_SubfigureDef, st308, start);
@@ -411,10 +348,7 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
       }
       if (item.IsNull())
       {
-        // Message_Msg msg1030("IGES_1030");
-        // msg1030.Arg(st402f1->FormNumber());
-        // msg1030.Arg(i);
-        // SendWarning (st402f1,msg1030);
+
         ProblemInGroup = true;
       }
       else
@@ -439,7 +373,7 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
 
     DeclareAndCast(IGESBasic_GroupWithoutBackP, st402f7, start);
     TopoDS_Compound group;
-    // unused    occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(st402f7);
+
     BRep_Builder B;
     B.MakeCompound(group);
     if (st402f7->NbEntities() < 1)
@@ -486,10 +420,7 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
       }
       if (item.IsNull())
       {
-        // Message_Msg msg1030("IGES_1030");
-        // msg1030.Arg(st402f7->FormNumber());
-        // msg1030.Arg(i);
-        // SendWarning (st402f7,msg1030);
+
         ProblemInGroup = true;
       }
       else
@@ -554,8 +485,6 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
   return res;
 }
 
-//=================================================================================================
-
 bool IGESToBRep_CurveAndSurface::HasShapeResult(const occ::handle<IGESData_IGESEntity>& start) const
 {
   DeclareAndCast(TransferBRep_ShapeBinder, binder, myTP->Find(start));
@@ -563,8 +492,6 @@ bool IGESToBRep_CurveAndSurface::HasShapeResult(const occ::handle<IGESData_IGESE
     return false;
   return binder->HasResult();
 }
-
-//=================================================================================================
 
 TopoDS_Shape IGESToBRep_CurveAndSurface::GetShapeResult(
   const occ::handle<IGESData_IGESEntity>& start) const
@@ -579,8 +506,6 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::GetShapeResult(
   return res;
 }
 
-//=================================================================================================
-
 void IGESToBRep_CurveAndSurface::SetShapeResult(const occ::handle<IGESData_IGESEntity>& start,
                                                 const TopoDS_Shape&                     result)
 {
@@ -588,8 +513,6 @@ void IGESToBRep_CurveAndSurface::SetShapeResult(const occ::handle<IGESData_IGESE
   myTP->Bind(start, binder);
   binder->SetResult(result);
 }
-
-//=================================================================================================
 
 int IGESToBRep_CurveAndSurface::NbShapeResult(const occ::handle<IGESData_IGESEntity>& start) const
 {
@@ -600,8 +523,6 @@ int IGESToBRep_CurveAndSurface::NbShapeResult(const occ::handle<IGESData_IGESEnt
   nbres = binder->NbShapes();
   return nbres;
 }
-
-//=================================================================================================
 
 TopoDS_Shape IGESToBRep_CurveAndSurface::GetShapeResult(
   const occ::handle<IGESData_IGESEntity>& start,
@@ -617,8 +538,6 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::GetShapeResult(
     res = binder->Shape(num);
   return res;
 }
-
-//=================================================================================================
 
 void IGESToBRep_CurveAndSurface::AddShapeResult(const occ::handle<IGESData_IGESEntity>& start,
                                                 const TopoDS_Shape&                     result)

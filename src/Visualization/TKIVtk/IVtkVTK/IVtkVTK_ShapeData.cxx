@@ -1,6 +1,5 @@
 #include <IVtkVTK_ShapeData.hpp>
 
-// prevent disabling some MSVC warning messages by VTK headers
 #include <Standard_WarningsDisable.hpp>
 #include <vtkCellData.h>
 #include <vtkDoubleArray.h>
@@ -12,8 +11,6 @@
 #include <Standard_WarningsRestore.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(IVtkVTK_ShapeData, IVtk_IShapeData)
-
-//=================================================================================================
 
 IVtkVTK_ShapeData::IVtkVTK_ShapeData()
 {
@@ -37,11 +34,7 @@ IVtkVTK_ShapeData::IVtkVTK_ShapeData()
   myPolyData->GetCellData()->AddArray(myMeshTypes);
 }
 
-//=================================================================================================
-
 IVtkVTK_ShapeData::~IVtkVTK_ShapeData() = default;
-
-//=================================================================================================
 
 IVtk_PointId IVtkVTK_ShapeData::InsertPoint(const gp_Pnt&                  thePnt,
                                             const NCollection_Vec3<float>& theNorm)
@@ -55,8 +48,6 @@ IVtk_PointId IVtkVTK_ShapeData::InsertPoint(const gp_Pnt&                  thePn
   return aPointId;
 }
 
-//=================================================================================================
-
 void IVtkVTK_ShapeData::InsertVertex(const IVtk_IdType   theShapeID,
                                      const IVtk_PointId  thePointId,
                                      const IVtk_MeshType theMeshType)
@@ -65,8 +56,6 @@ void IVtkVTK_ShapeData::InsertVertex(const IVtk_IdType   theShapeID,
   myPolyData->InsertNextCell(VTK_VERTEX, 1, &aPointIdVTK);
   insertNextSubShapeId(theShapeID, theMeshType);
 }
-
-//=================================================================================================
 
 void IVtkVTK_ShapeData::InsertLine(const IVtk_IdType   theShapeID,
                                    const IVtk_PointId  thePointId1,
@@ -78,8 +67,6 @@ void IVtkVTK_ShapeData::InsertLine(const IVtk_IdType   theShapeID,
   insertNextSubShapeId(theShapeID, theMeshType);
 }
 
-//=================================================================================================
-
 void IVtkVTK_ShapeData::InsertLine(const IVtk_IdType                     theShapeID,
                                    const NCollection_List<IVtk_PointId>* thePointIds,
                                    const IVtk_MeshType                   theMeshType)
@@ -87,7 +74,7 @@ void IVtkVTK_ShapeData::InsertLine(const IVtk_IdType                     theShap
   if (!thePointIds->IsEmpty())
   {
     vtkSmartPointer<vtkIdList> anIdList = vtkSmartPointer<vtkIdList>::New();
-    // Fill the vtk id list by ids from NCollection_List<IVtk_PointId>.
+
     NCollection_List<IVtk_PointId>::Iterator anIterOfIds =
       NCollection_List<IVtk_PointId>::Iterator(*thePointIds);
     anIdList->Allocate(thePointIds->Extent());
@@ -100,8 +87,6 @@ void IVtkVTK_ShapeData::InsertLine(const IVtk_IdType                     theShap
     insertNextSubShapeId(theShapeID, theMeshType);
   }
 }
-
-//=================================================================================================
 
 void IVtkVTK_ShapeData::InsertTriangle(const IVtk_IdType   theShapeID,
                                        const IVtk_PointId  thePointId1,

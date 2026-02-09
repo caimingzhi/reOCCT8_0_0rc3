@@ -10,14 +10,14 @@ IMPLEMENT_STANDARD_RTTIEXT(IGESGeom_CopiousData, IGESData_IGESEntity)
 
 IGESGeom_CopiousData::IGESGeom_CopiousData()
 {
-  theDataType = 0; // to allow Setting Form Number before Init
+  theDataType = 0;
 }
 
 void IGESGeom_CopiousData::Init(const int                                       aDataType,
                                 const double                                    aZPlane,
                                 const occ::handle<NCollection_HArray1<double>>& allData)
 {
-  // PTV OCC386 crash application while reading So5771b.igs
+
   if (allData.IsNull())
     throw Standard_NullObject("IGESGeom_CopiousData : Init with null data");
 
@@ -26,8 +26,7 @@ void IGESGeom_CopiousData::Init(const int                                       
   theDataType = aDataType;
   theZPlane   = aZPlane;
   theData     = allData;
-  // FormNumber = DataType + <N>  N=0 -> Set of Points. N=10 : PolyLine
-  //    or N=62 (DataType=1 only, gives FormNumber=63) : 2D closed path
+
   InitTypeAndForm(106, FormNumber());
 }
 
@@ -41,7 +40,7 @@ void IGESGeom_CopiousData::SetPolyline(const bool F)
 
 void IGESGeom_CopiousData::SetClosedPath2D()
 {
-  InitTypeAndForm(106, 63); // and verify DataType !
+  InitTypeAndForm(106, 63);
 }
 
 bool IGESGeom_CopiousData::IsPointSet() const
@@ -67,7 +66,7 @@ int IGESGeom_CopiousData::DataType() const
 int IGESGeom_CopiousData::NbPoints() const
 {
   int nbtuples;
-  // PTV OCC386
+
   if (theData.IsNull())
     nbtuples = 0;
   else
@@ -85,11 +84,11 @@ double IGESGeom_CopiousData::Data(const int nump, const int numdata) const
 {
   int numd = 0;
   if (theDataType == 1)
-    numd = 2 * (nump - 1) + numdata; // 1-2
+    numd = 2 * (nump - 1) + numdata;
   else if (theDataType == 2)
-    numd = 3 * (nump - 1) + numdata; // 1-2-3
+    numd = 3 * (nump - 1) + numdata;
   else if (theDataType == 3)
-    numd = 6 * (nump - 1) + numdata; // 1-2-3-4-5-6
+    numd = 6 * (nump - 1) + numdata;
   return theData->Value(numd);
 }
 

@@ -11,25 +11,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_ExtStringListDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_ExtStringListDriver::BinMDataStd_ExtStringListDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_ExtStringList)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_ExtStringListDriver::NewEmpty() const
 {
   return new TDataStd_ExtStringList();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool BinMDataStd_ExtStringListDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                             const occ::handle<TDF_Attribute>& theTarget,
                                             BinObjMgt_RRelocationTable&       theRelocTable) const
@@ -62,10 +54,6 @@ bool BinMDataStd_ExtStringListDriver::Paste(const BinObjMgt_Persistent&       th
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void BinMDataStd_ExtStringListDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
   BinObjMgt_Persistent&             theTarget,
@@ -82,7 +70,6 @@ void BinMDataStd_ExtStringListDriver::Paste(
     theTarget << itr.Value();
   }
 
-  // process user defined guid
   if (anAtt->ID() != TDataStd_ExtStringList::GetID())
     theTarget << anAtt->ID();
 }

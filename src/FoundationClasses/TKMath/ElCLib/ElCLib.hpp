@@ -29,56 +29,19 @@ class gp_Ax22d;
 class gp_Dir;
 class gp_Dir2d;
 
-//! Provides functions for basic geometric computations on
-//! elementary curves such as conics and lines in 2D and 3D space.
-//! This includes:
-//! -   calculation of a point or derived vector on a 2D or
-//! 3D curve where:
-//! -   the curve is provided by the gp package, or
-//! defined in reference form (as in the gp package),
-//! and
-//! -   the point is defined by a parameter,
-//! -   evaluation of the parameter corresponding to a point
-//! on a 2D or 3D curve from gp,
-//! -   various elementary computations which allow you to
-//! position parameterized values within the period of a curve.
-//! Notes:
-//! -   ElCLib stands for Elementary Curves Library.
-//! -   If the curves provided by the gp package are not
-//! explicitly parameterized, they still have an implicit
-//! parameterization, analogous to that which they infer
-//! for the equivalent Geom or Geom2d curves.
 class ElCLib
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Return a value in the range <UFirst, ULast> by
-  //! adding or removing the period <ULast - UFirst> to
-  //! <U>.
-  //! ATTENTION!!!
-  //!   It is expected but not checked that (ULast > UFirst)
   Standard_EXPORT static double InPeriod(const double U, const double UFirst, const double ULast);
 
-  //! Adjust U1 and U2 in the parametric range UFirst
-  //! Ulast of a periodic curve, where ULast -
-  //! UFirst is its period. To do this, this function:
-  //! -   sets U1 in the range [ UFirst, ULast ] by
-  //! adding/removing the period to/from the value U1, then
-  //! -   sets U2 in the range [ U1, U1 + period ] by
-  //! adding/removing the period to/from the value U2.
-  //! Precision is used to test the equalities.
   Standard_EXPORT static void AdjustPeriodic(const double UFirst,
                                              const double ULast,
                                              const double Precision,
                                              double&      U1,
                                              double&      U2);
 
-  //! For elementary curves (lines, circles and conics) from
-  //! the gp package, computes the point of parameter U.
-  //! The result is either:
-  //! -   a gp_Pnt point for a curve in 3D space, or
-  //! -   a gp_Pnt2d point for a curve in 2D space.
   static gp_Pnt Value(const double U, const gp_Lin& L);
 
   static gp_Pnt Value(const double U, const gp_Circ& C);
@@ -89,13 +52,6 @@ public:
 
   static gp_Pnt Value(const double U, const gp_Parab& Prb);
 
-  //! For elementary curves (lines, circles and conics) from the
-  //! gp package, computes:
-  //! -   the point P of parameter U, and
-  //! -   the first derivative vector V1 at this point.
-  //! The results P and V1 are either:
-  //! -   a gp_Pnt point and a gp_Vec vector, for a curve in 3D space, or
-  //! -   a gp_Pnt2d point and a gp_Vec2d vector, for a curve in 2D space.
   static void D1(const double U, const gp_Lin& L, gp_Pnt& P, gp_Vec& V1);
 
   static void D1(const double U, const gp_Circ& C, gp_Pnt& P, gp_Vec& V1);
@@ -106,13 +62,6 @@ public:
 
   static void D1(const double U, const gp_Parab& Prb, gp_Pnt& P, gp_Vec& V1);
 
-  //! For elementary curves (circles and conics) from the gp
-  //! package, computes:
-  //! - the point P of parameter U, and
-  //! - the first and second derivative vectors V1 and V2 at this point.
-  //! The results, P, V1 and V2, are either:
-  //! -   a gp_Pnt point and two gp_Vec vectors, for a curve in 3D space, or
-  //! -   a gp_Pnt2d point and two gp_Vec2d vectors, for a curve in 2D space.
   static void D2(const double U, const gp_Circ& C, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2);
 
   static void D2(const double U, const gp_Elips& E, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2);
@@ -121,27 +70,12 @@ public:
 
   static void D2(const double U, const gp_Parab& Prb, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2);
 
-  //! For elementary curves (circles, ellipses and hyperbolae)
-  //! from the gp package, computes:
-  //! -   the point P of parameter U, and
-  //! -   the first, second and third derivative vectors V1, V2
-  //! and V3 at this point.
-  //! The results, P, V1, V2 and V3, are either:
-  //! -   a gp_Pnt point and three gp_Vec vectors, for a curve in 3D space, or
-  //! -   a gp_Pnt2d point and three gp_Vec2d vectors, for a curve in 2D space.
   static void D3(const double U, const gp_Circ& C, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2, gp_Vec& V3);
 
   static void D3(const double U, const gp_Elips& E, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2, gp_Vec& V3);
 
   static void D3(const double U, const gp_Hypr& H, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2, gp_Vec& V3);
 
-  //! For elementary curves (lines, circles and conics) from
-  //! the gp package, computes the vector corresponding to
-  //! the Nth derivative at the point of parameter U. The result is either:
-  //! -   a gp_Vec vector for a curve in 3D space, or
-  //! -   a gp_Vec2d vector for a curve in 2D space.
-  //! In the following functions N is the order of derivation
-  //! and should be greater than 0
   static gp_Vec DN(const double U, const gp_Lin& L, const int N);
 
   static gp_Vec DN(const double U, const gp_Circ& C, const int N);
@@ -194,8 +128,6 @@ public:
                  gp_Vec2d&         V2,
                  gp_Vec2d&         V3);
 
-  //! In the following functions N is the order of derivation
-  //! and should be greater than 0
   static void D3(const double     U,
                  const gp_Hypr2d& H,
                  gp_Pnt2d&        P,
@@ -213,13 +145,6 @@ public:
 
   static gp_Vec2d DN(const double U, const gp_Parab2d& Prb, const int N);
 
-  //! Curve evaluation
-  //! The following basis functions compute the derivatives on
-  //! elementary curves defined by their geometric characteristics.
-  //! These functions can be called without constructing a conic
-  //! from package gp. They are called by the previous functions.
-  //! Example :
-  //! A circle is defined by its position and its radius.
   Standard_EXPORT static gp_Pnt LineValue(const double U, const gp_Ax1& Pos);
 
   Standard_EXPORT static gp_Pnt CircleValue(const double U, const gp_Ax2& Pos, const double Radius);
@@ -322,8 +247,6 @@ public:
                                           gp_Vec&       V2,
                                           gp_Vec&       V3);
 
-  //! In the following functions N is the order of derivation
-  //! and should be greater than 0
   Standard_EXPORT static gp_Vec LineDN(const double U, const gp_Ax1& Pos, const int N);
 
   Standard_EXPORT static gp_Vec CircleDN(const double  U,
@@ -443,8 +366,6 @@ public:
                                         gp_Vec2d&       V2,
                                         gp_Vec2d&       V3);
 
-  //! In the following functions N is the order of derivation
-  //! and should be greater than 0
   Standard_EXPORT static void HyperbolaD3(const double    U,
                                           const gp_Ax22d& Pos,
                                           const double    MajorRadius,
@@ -473,81 +394,37 @@ public:
                                               const double    MinorRadius,
                                               const int       N);
 
-  //! The following functions compute the parametric value corresponding
-  //! to a given point on a elementary curve. The point should be on the
-  //! curve.
   Standard_EXPORT static gp_Vec2d ParabolaDN(const double    U,
                                              const gp_Ax22d& Pos,
                                              const double    Focal,
                                              const int       N);
 
-  //! Computes the parameter value of the point P on the given curve.
-  //! Note: In its local coordinate system, the parametric
-  //! equation of the curve is given by the following:
-  //! -   for the line L: P(U) = Po + U*Vo
-  //! where Po is the origin and Vo the unit vector of its positioning axis.
-  //! -   for the circle C: X(U) = Radius*std::cos(U), Y(U) = Radius*Sin(U)
-  //! -   for the ellipse E: X(U) = MajorRadius*std::cos(U). Y(U) = MinorRadius*Sin(U)
-  //! -   for the hyperbola H: X(U) = MajorRadius*Ch(U), Y(U) = MinorRadius*Sh(U)
-  //! -   for the parabola Prb:
-  //! X(U) = U**2 / (2*p)
-  //! Y(U) = U
-  //! where p is the distance between the focus and the directrix.
-  //! Warning
-  //! The point P must be on the curve. These functions are
-  //! not protected, however, and if point P is not on the
-  //! curve, an exception may be raised.
   static double Parameter(const gp_Lin& L, const gp_Pnt& P);
 
-  //! parametrization
-  //! P (U) = L.Location() + U * L.Direction()
   static double Parameter(const gp_Lin2d& L, const gp_Pnt2d& P);
 
   static double Parameter(const gp_Circ& C, const gp_Pnt& P);
 
-  //! parametrization
-  //! In the local coordinate system of the circle
-  //! X (U) = Radius * Cos (U)
-  //! Y (U) = Radius * Sin (U)
   static double Parameter(const gp_Circ2d& C, const gp_Pnt2d& P);
 
   static double Parameter(const gp_Elips& E, const gp_Pnt& P);
 
-  //! parametrization
-  //! In the local coordinate system of the Ellipse
-  //! X (U) = MajorRadius * Cos (U)
-  //! Y (U) = MinorRadius * Sin (U)
   static double Parameter(const gp_Elips2d& E, const gp_Pnt2d& P);
 
   static double Parameter(const gp_Hypr& H, const gp_Pnt& P);
 
-  //! parametrization
-  //! In the local coordinate system of the Hyperbola
-  //! X (U) = MajorRadius * Ch (U)
-  //! Y (U) = MinorRadius * Sh (U)
   static double Parameter(const gp_Hypr2d& H, const gp_Pnt2d& P);
 
   static double Parameter(const gp_Parab& Prb, const gp_Pnt& P);
 
-  //! parametrization
-  //! In the local coordinate system of the parabola
-  //! Y**2 = (2*P) * X where P is the distance between the focus
-  //! and the directrix.
   static double Parameter(const gp_Parab2d& Prb, const gp_Pnt2d& P);
 
   Standard_EXPORT static double LineParameter(const gp_Ax1& Pos, const gp_Pnt& P);
 
-  //! parametrization
-  //! P (U) = L.Location() + U * L.Direction()
   Standard_EXPORT static double LineParameter(const gp_Ax2d& Pos, const gp_Pnt2d& P);
 
   Standard_EXPORT static double CircleParameter(const gp_Ax2& Pos, const gp_Pnt& P);
 
-  //! Pos is the Axis of the Circle
-  //! parametrization
-  //! In the local coordinate system of the circle
-  //! X (U) = Radius * Cos (U)
-  //! Y (U) = Radius * Sin (U)
   Standard_EXPORT static double CircleParameter(const gp_Ax22d& Pos, const gp_Pnt2d& P);
 
   Standard_EXPORT static double EllipseParameter(const gp_Ax2& Pos,
@@ -555,11 +432,6 @@ public:
                                                  const double  MinorRadius,
                                                  const gp_Pnt& P);
 
-  //! Pos is the Axis of the Ellipse
-  //! parametrization
-  //! In the local coordinate system of the Ellipse
-  //! X (U) = MajorRadius * Cos (U)
-  //! Y (U) = MinorRadius * Sin (U)
   Standard_EXPORT static double EllipseParameter(const gp_Ax22d& Pos,
                                                  const double    MajorRadius,
                                                  const double    MinorRadius,
@@ -570,11 +442,6 @@ public:
                                                    const double  MinorRadius,
                                                    const gp_Pnt& P);
 
-  //! Pos is the Axis of the Hyperbola
-  //! parametrization
-  //! In the local coordinate system of the Hyperbola
-  //! X (U) = MajorRadius * Ch (U)
-  //! Y (U) = MinorRadius * Sh (U)
   Standard_EXPORT static double HyperbolaParameter(const gp_Ax22d& Pos,
                                                    const double    MajorRadius,
                                                    const double    MinorRadius,
@@ -582,13 +449,6 @@ public:
 
   Standard_EXPORT static double ParabolaParameter(const gp_Ax2& Pos, const gp_Pnt& P);
 
-  //! Pos is the mirror axis of the parabola
-  //! parametrization
-  //! In the local coordinate system of the parabola
-  //! Y**2 = (2*P) * X where P is the distance between the focus
-  //! and the directrix.
-  //! The following functions build a 3d curve from a
-  //! 2d curve at a given position defined with an Ax2.
   Standard_EXPORT static double ParabolaParameter(const gp_Ax22d& Pos, const gp_Pnt2d& P);
 
   Standard_EXPORT static gp_Pnt To3d(const gp_Ax2& Pos, const gp_Pnt2d& P);
@@ -609,10 +469,6 @@ public:
 
   Standard_EXPORT static gp_Hypr To3d(const gp_Ax2& Pos, const gp_Hypr2d& H);
 
-  //! These functions build a 3D geometric entity from a 2D geometric entity.
-  //! The "X Axis" and the "Y Axis" of the global coordinate
-  //! system (i.e. 2D space) are lined up respectively with the
-  //! "X Axis" and "Y Axis" of the 3D coordinate system, Pos.
   Standard_EXPORT static gp_Parab To3d(const gp_Ax2& Pos, const gp_Parab2d& Prb);
 };
 

@@ -16,8 +16,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Point, AIS_InteractiveObject)
 
-//=================================================================================================
-
 AIS_Point::AIS_Point(const occ::handle<Geom_Point>& aComponent)
     : myComponent(aComponent),
       myHasTOM(false),
@@ -36,21 +34,15 @@ AIS_Point::AIS_Point(const occ::handle<Geom_Point>& aComponent)
   myDynHilightDrawer->SetZLayer(Graphic3d_ZLayerId_Top);
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Point> AIS_Point::Component()
 {
   return myComponent;
 }
 
-//=================================================================================================
-
 void AIS_Point::SetComponent(const occ::handle<Geom_Point>& aComponent)
 {
   myComponent = aComponent;
 }
-
-//=================================================================================================
 
 void AIS_Point::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                         const occ::handle<Prs3d_Presentation>& thePrs,
@@ -71,17 +63,12 @@ void AIS_Point::Compute(const occ::handle<PrsMgr_PresentationManager>&,
   }
 }
 
-//=================================================================================================
-
-void AIS_Point::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSelection,
-                                 const int /*aMode*/)
+void AIS_Point::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSelection, const int)
 {
   occ::handle<SelectMgr_EntityOwner>   eown = new SelectMgr_EntityOwner(this, 10);
   occ::handle<Select3D_SensitivePoint> sp   = new Select3D_SensitivePoint(eown, myComponent->Pnt());
   aSelection->Add(sp);
 }
-
-//=================================================================================================
 
 void AIS_Point::SetColor(const Quantity_Color& theCol)
 {
@@ -90,23 +77,17 @@ void AIS_Point::SetColor(const Quantity_Color& theCol)
   UpdatePointValues();
 }
 
-//=================================================================================================
-
 void AIS_Point::UnsetColor()
 {
   hasOwnColor = false;
   UpdatePointValues();
 }
 
-//=================================================================================================
-
 TopoDS_Vertex AIS_Point::Vertex() const
 {
   gp_Pnt P = myComponent->Pnt();
   return BRepBuilderAPI_MakeVertex(P);
 }
-
-//=================================================================================================
 
 void AIS_Point::SetMarker(const Aspect_TypeOfMarker aTOM)
 {
@@ -115,22 +96,16 @@ void AIS_Point::SetMarker(const Aspect_TypeOfMarker aTOM)
   UpdatePointValues();
 }
 
-//=================================================================================================
-
 void AIS_Point::UnsetMarker()
 {
   myHasTOM = false;
   UpdatePointValues();
 }
 
-//=================================================================================================
-
 bool AIS_Point::AcceptDisplayMode(const int theMode) const
 {
   return theMode == 0 || theMode == -99;
 }
-
-//=================================================================================================
 
 void AIS_Point::replaceWithNewPointAspect(const occ::handle<Prs3d_PointAspect>& theAspect)
 {
@@ -151,8 +126,6 @@ void AIS_Point::replaceWithNewPointAspect(const occ::handle<Prs3d_PointAspect>& 
     replaceAspects(aReplaceMap);
   }
 }
-
-//=================================================================================================
 
 void AIS_Point::UpdatePointValues()
 {

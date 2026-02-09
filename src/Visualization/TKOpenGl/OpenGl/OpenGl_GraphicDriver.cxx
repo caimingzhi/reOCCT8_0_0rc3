@@ -1,5 +1,5 @@
 #if defined(_WIN32)
-  #include <windows.h> // for UWP
+  #include <windows.h>
 #endif
 
 #include <OpenGl_GraphicDriver.hpp>
@@ -27,7 +27,7 @@ IMPLEMENT_STANDARD_RTTIEXT(OpenGl_GraphicDriver, Graphic3d_GraphicDriver)
 
 #if !defined(_WIN32) && !defined(__ANDROID__) && !defined(__QNX__)                                 \
   && (!defined(__APPLE__) || defined(HAVE_XLIB))
-  #include <X11/Xlib.h> // XOpenDisplay()
+  #include <X11/Xlib.h>
   #include <X11/Xutil.h>
   #if !defined(__EMSCRIPTEN__)
     #include <GL/glx.h>
@@ -38,7 +38,7 @@ IMPLEMENT_STANDARD_RTTIEXT(OpenGl_GraphicDriver, Graphic3d_GraphicDriver)
   #if defined(__ANDROID__) || defined(__QNX__) || defined(__EMSCRIPTEN__) || defined(HAVE_GLES2)   \
     || defined(OCCT_UWP)
     #if !defined(__APPLE__)
-      #define HAVE_EGL // EAGL is used instead of EGL
+      #define HAVE_EGL
     #endif
   #elif !defined(_WIN32) && !defined(__APPLE__) && !defined(HAVE_XLIB)
     #define HAVE_EGL
@@ -62,7 +62,7 @@ namespace
   static const occ::handle<OpenGl_Context> TheNullGlCtx;
 
 #if defined(HAVE_EGL)
-  //! Wrapper over eglChooseConfig() called with preferred defaults.
+
   static EGLConfig chooseEglSurfConfig(EGLDisplay                      theDisplay,
                                        const occ::handle<OpenGl_Caps>& theCaps)
   {
@@ -110,7 +110,7 @@ namespace
 
       if (isDeepColor)
       {
-        // try config with smaller color buffer
+
         aConfigAttribs[0 * 2 + 1] = 8;
         aConfigAttribs[1 * 2 + 1] = 8;
         aConfigAttribs[2 * 2 + 1] = 8;
@@ -123,7 +123,7 @@ namespace
       }
 
       {
-        // try config with smaller depth buffer
+
         aConfigAttribs[4 * 2 + 1] = 16;
         if (eglChooseConfig(theDisplay, aConfigAttribs, &aCfg, 1, &aNbConfigs) == EGL_TRUE
             && aCfg != NULL)
@@ -136,11 +136,10 @@ namespace
     return aCfg;
   }
 #elif defined(HAVE_XLIB)
-  //! Search for RGBA double-buffered visual with stencil buffer.
+
   static int TheDoubleBuffVisual[] =
     {GLX_RGBA, GLX_DEPTH_SIZE, 16, GLX_STENCIL_SIZE, 1, GLX_DOUBLEBUFFER, None};
 
-  //! Search for RGBA double-buffered visual with stencil buffer.
   static int TheDoubleBuffFBConfig[] = {GLX_X_RENDERABLE,
                                         True,
                                         GLX_DRAWABLE_TYPE,
@@ -159,8 +158,6 @@ namespace
 #endif
 
 } // namespace
-
-//=================================================================================================
 
 OpenGl_GraphicDriver::OpenGl_GraphicDriver(const occ::handle<Aspect_DisplayConnection>& theDisp,
                                            const bool theToInitialize)
@@ -184,8 +181,7 @@ OpenGl_GraphicDriver::OpenGl_GraphicDriver(const occ::handle<Aspect_DisplayConne
 #if defined(HAVE_XLIB)
   if (myDisplayConnection.IsNull())
   {
-    // throw Aspect_GraphicDeviceDefinitionError("OpenGl_GraphicDriver: cannot connect to X
-    // server!");
+
     return;
   }
 
@@ -200,14 +196,10 @@ OpenGl_GraphicDriver::OpenGl_GraphicDriver(const occ::handle<Aspect_DisplayConne
   }
 }
 
-//=================================================================================================
-
 OpenGl_GraphicDriver::~OpenGl_GraphicDriver()
 {
   ReleaseContext();
 }
-
-//=================================================================================================
 
 void OpenGl_GraphicDriver::ReleaseContext()
 {
@@ -296,8 +288,6 @@ void OpenGl_GraphicDriver::ReleaseContext()
   myIsOwnContext = false;
 }
 
-//=================================================================================================
-
 bool OpenGl_GraphicDriver::InitContext()
 {
   ReleaseContext();
@@ -368,20 +358,12 @@ bool OpenGl_GraphicDriver::InitContext()
     ::Message::SendFail("Error: EGL is unable to create OpenGL context");
     return false;
   }
-  // eglMakeCurrent() fails or even crash with EGL_NO_SURFACE on some implementations
-  // if (eglMakeCurrent ((EGLDisplay )myEglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, (EGLContext
-  // )myEglContext) != EGL_TRUE)
-  //{
-  //  ::Message::SendFail ("Error: EGL is unable bind OpenGL context");
-  //  return false;
-  //}
+
 #endif
   chooseVisualInfo();
   myIsOwnContext = true;
   return true;
 }
-
-//=================================================================================================
 
 bool OpenGl_GraphicDriver::InitEglContext(Aspect_Display          theEglDisplay,
                                           Aspect_RenderingContext theEglContext,
@@ -422,8 +404,6 @@ bool OpenGl_GraphicDriver::InitEglContext(Aspect_Display          theEglDisplay,
 #endif
 }
 
-//=================================================================================================
-
 void OpenGl_GraphicDriver::chooseVisualInfo()
 {
   if (myDisplayConnection.IsNull())
@@ -459,7 +439,6 @@ void OpenGl_GraphicDriver::chooseVisualInfo()
     Message::SendFail("Error: OpenGl_GraphicDriver, GLX extension is unavailable");
   }
 
-  // FBConfigs were added in GLX version 1.3
   int        aGlxMajor = 0, aGlxMinor = 0;
   const bool hasFBCfg = glXQueryVersion(aDisp, &aGlxMajor, &aGlxMinor)
                         && ((aGlxMajor == 1 && aGlxMinor >= 3) || (aGlxMajor > 1));
@@ -475,13 +454,6 @@ void OpenGl_GraphicDriver::chooseVisualInfo()
     {
       anFBConfig = aFBCfgList[0];
       aVisInfo   = glXGetVisualFromFBConfig(aDisp, anFBConfig);
-
-      /*int aDepthSize = 0, aStencilSize = 0;
-      glXGetFBConfigAttrib (aDisp, anFBConfig, GLX_DEPTH_SIZE, &aDepthSize);
-      glXGetFBConfigAttrib (aDisp, anFBConfig, GLX_STENCIL_SIZE, &aStencilSize);
-      Message::SendInfo() << "GLX FBConfig:"
-                          << "\n  DepthSize= " << aDepthSize
-                          << "\n  StencilSize= " << aStencilSize;*/
     }
     XFree(aFBCfgList);
   }
@@ -502,8 +474,6 @@ void OpenGl_GraphicDriver::chooseVisualInfo()
   }
 #endif
 }
-
-//=================================================================================================
 
 int OpenGl_GraphicDriver::InquireLimit(const Graphic3d_TypeOfLimit theType) const
 {
@@ -561,35 +531,25 @@ int OpenGl_GraphicDriver::InquireLimit(const Graphic3d_TypeOfLimit theType) cons
   return 0;
 }
 
-//=================================================================================================
-
 float OpenGl_GraphicDriver::DefaultTextHeight() const
 {
   return 16.;
 }
-
-//=================================================================================================
 
 void OpenGl_GraphicDriver::EnableVBO(const bool theToTurnOn)
 {
   myCaps->vboDisable = !theToTurnOn;
 }
 
-//=================================================================================================
-
 bool OpenGl_GraphicDriver::IsVerticalSync() const
 {
   return myCaps->swapInterval == 1;
 }
 
-//=================================================================================================
-
 void OpenGl_GraphicDriver::SetVerticalSync(bool theToEnable)
 {
   myCaps->swapInterval = theToEnable ? 1 : 0;
 }
-
-//=================================================================================================
 
 const occ::handle<OpenGl_Context>& OpenGl_GraphicDriver::GetSharedContext(bool theBound) const
 {
@@ -617,11 +577,9 @@ const occ::handle<OpenGl_Context>& OpenGl_GraphicDriver::GetSharedContext(bool t
   return TheNullGlCtx;
 }
 
-//=================================================================================================
-
 bool OpenGl_GraphicDriver::MemoryInfo(size_t& theFreeBytes, TCollection_AsciiString& theInfo) const
 {
-  // this is extra work (for OpenGl_Context initialization)...
+
   OpenGl_Context aGlCtx;
   if (!aGlCtx.Init())
   {
@@ -632,14 +590,10 @@ bool OpenGl_GraphicDriver::MemoryInfo(size_t& theFreeBytes, TCollection_AsciiStr
   return !theInfo.IsEmpty();
 }
 
-//=================================================================================================
-
 void OpenGl_GraphicDriver::SetBuffersNoSwap(const bool theIsNoSwap)
 {
   myCaps->buffersNoSwap = theIsNoSwap;
 }
-
-//=================================================================================================
 
 void OpenGl_GraphicDriver::TextSize(const occ::handle<Graphic3d_CView>& theView,
                                     const char*                         theText,
@@ -669,15 +623,12 @@ void OpenGl_GraphicDriver::TextSize(const occ::handle<Graphic3d_CView>& theView,
                           theDescent);
 }
 
-//=================================================================================================
-
 void OpenGl_GraphicDriver::InsertLayerBefore(const Graphic3d_ZLayerId        theLayerId,
                                              const Graphic3d_ZLayerSettings& theSettings,
                                              const Graphic3d_ZLayerId        theLayerAfter)
 {
   base_type::InsertLayerBefore(theLayerId, theSettings, theLayerAfter);
 
-  // Add layer to all views
   for (NCollection_Map<occ::handle<OpenGl_View>>::Iterator aViewIt(myMapOfView); aViewIt.More();
        aViewIt.Next())
   {
@@ -685,15 +636,12 @@ void OpenGl_GraphicDriver::InsertLayerBefore(const Graphic3d_ZLayerId        the
   }
 }
 
-//=================================================================================================
-
 void OpenGl_GraphicDriver::InsertLayerAfter(const Graphic3d_ZLayerId        theNewLayerId,
                                             const Graphic3d_ZLayerSettings& theSettings,
                                             const Graphic3d_ZLayerId        theLayerBefore)
 {
   base_type::InsertLayerAfter(theNewLayerId, theSettings, theLayerBefore);
 
-  // Add layer to all views
   for (NCollection_Map<occ::handle<OpenGl_View>>::Iterator aViewIt(myMapOfView); aViewIt.More();
        aViewIt.Next())
   {
@@ -701,20 +649,16 @@ void OpenGl_GraphicDriver::InsertLayerAfter(const Graphic3d_ZLayerId        theN
   }
 }
 
-//=================================================================================================
-
 void OpenGl_GraphicDriver::RemoveZLayer(const Graphic3d_ZLayerId theLayerId)
 {
   base_type::RemoveZLayer(theLayerId);
 
-  // Remove layer from all of the views
   for (NCollection_Map<occ::handle<OpenGl_View>>::Iterator aViewIt(myMapOfView); aViewIt.More();
        aViewIt.Next())
   {
     aViewIt.Value()->RemoveZLayer(theLayerId);
   }
 
-  // Unset Z layer for all of the structures.
   for (NCollection_DataMap<int, OpenGl_Structure*>::Iterator aStructIt(myMapOfStructure);
        aStructIt.More();
        aStructIt.Next())
@@ -725,22 +669,17 @@ void OpenGl_GraphicDriver::RemoveZLayer(const Graphic3d_ZLayerId theLayerId)
   }
 }
 
-//=================================================================================================
-
 void OpenGl_GraphicDriver::SetZLayerSettings(const Graphic3d_ZLayerId        theLayerId,
                                              const Graphic3d_ZLayerSettings& theSettings)
 {
   base_type::SetZLayerSettings(theLayerId, theSettings);
 
-  // Change Z layer settings in all managed views
   for (NCollection_Map<occ::handle<OpenGl_View>>::Iterator aViewIt(myMapOfView); aViewIt.More();
        aViewIt.Next())
   {
     aViewIt.Value()->SetZLayerSettings(theLayerId, theSettings);
   }
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_CStructure> OpenGl_GraphicDriver::CreateStructure(
   const occ::handle<Graphic3d_StructureManager>& theManager)
@@ -749,8 +688,6 @@ occ::handle<Graphic3d_CStructure> OpenGl_GraphicDriver::CreateStructure(
   myMapOfStructure.Bind(aStructure->Identification(), aStructure.operator->());
   return aStructure;
 }
-
-//=================================================================================================
 
 void OpenGl_GraphicDriver::RemoveStructure(occ::handle<Graphic3d_CStructure>& theCStructure)
 {
@@ -764,8 +701,6 @@ void OpenGl_GraphicDriver::RemoveStructure(occ::handle<Graphic3d_CStructure>& th
   aStructure->Release(GetSharedContext());
   theCStructure.Nullify();
 }
-
-//=================================================================================================
 
 occ::handle<Graphic3d_CView> OpenGl_GraphicDriver::CreateView(
   const occ::handle<Graphic3d_StructureManager>& theMgr)
@@ -781,8 +716,6 @@ occ::handle<Graphic3d_CView> OpenGl_GraphicDriver::CreateView(
   }
   return aView;
 }
-
-//=================================================================================================
 
 void OpenGl_GraphicDriver::RemoveView(const occ::handle<Graphic3d_CView>& theView)
 {
@@ -805,7 +738,7 @@ void OpenGl_GraphicDriver::RemoveView(const occ::handle<Graphic3d_CView>& theVie
   }
   else
   {
-    // try to hijack another context if any
+
     const occ::handle<OpenGl_Context>& anOtherCtx = GetSharedContext();
     if (!anOtherCtx.IsNull() && anOtherCtx != aWindow->GetGlContext())
     {
@@ -817,8 +750,7 @@ void OpenGl_GraphicDriver::RemoveView(const occ::handle<Graphic3d_CView>& theVie
   aView->ReleaseGlResources(aCtx);
   if (myMapOfView.IsEmpty())
   {
-    // The last view removed but some objects still present.
-    // Release GL resources now without object destruction.
+
     for (NCollection_DataMap<int, OpenGl_Structure*>::Iterator aStructIt(myMapOfStructure);
          aStructIt.More();
          aStructIt.Next())
@@ -834,8 +766,6 @@ void OpenGl_GraphicDriver::RemoveView(const occ::handle<Graphic3d_CView>& theVie
   }
 }
 
-//=================================================================================================
-
 occ::handle<OpenGl_Window> OpenGl_GraphicDriver::CreateRenderWindow(
   const occ::handle<Aspect_Window>& theNativeWindow,
   const occ::handle<Aspect_Window>& theSizeWindow,
@@ -847,12 +777,10 @@ occ::handle<OpenGl_Window> OpenGl_GraphicDriver::CreateRenderWindow(
   return aWindow;
 }
 
-//=================================================================================================
-
 bool OpenGl_GraphicDriver::ViewExists(const occ::handle<Aspect_Window>& theWindow,
                                       occ::handle<Graphic3d_CView>&     theView)
 {
-  // Parse the list of views to find a view with the specified window
+
   const Aspect_Drawable aNativeHandle = theWindow->NativeHandle();
   for (NCollection_Map<occ::handle<OpenGl_View>>::Iterator aViewIt(myMapOfView); aViewIt.More();
        aViewIt.Next())
@@ -874,8 +802,6 @@ bool OpenGl_GraphicDriver::ViewExists(const occ::handle<Aspect_Window>& theWindo
 
   return false;
 }
-
-//=================================================================================================
 
 void OpenGl_GraphicDriver::setDeviceLost()
 {

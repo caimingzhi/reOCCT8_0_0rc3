@@ -21,7 +21,6 @@ BRepBlend_AppSurface::BRepBlend_AppSurface(const occ::handle<Approx_SweepFunctio
   int           NbPolSect, NbKnotSect, udeg;
   GeomAbs_Shape continuity = Continuity;
 
-  // (1) Verification de la possibilite de derivation
   if (continuity != GeomAbs_C0)
   {
     if (Nb2d == 0)
@@ -51,7 +50,6 @@ BRepBlend_AppSurface::BRepBlend_AppSurface(const occ::handle<Approx_SweepFunctio
     }
   }
 
-  // (2) Approximation
   approx.Perform(First, Last, Tol3d, Tol3d, Tol2d, TolAngular, continuity, Degmax, Segmax);
 }
 

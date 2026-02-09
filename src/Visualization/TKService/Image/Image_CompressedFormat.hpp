@@ -2,8 +2,6 @@
 
 #include <Image_Format.hpp>
 
-//! List of compressed pixel formats natively supported by various graphics hardware (e.g. for
-//! efficient decoding on-the-fly). It is defined as extension of Image_Format.
 enum Image_CompressedFormat
 {
   Image_CompressedFormat_UNKNOWN       = Image_Format_UNKNOWN,

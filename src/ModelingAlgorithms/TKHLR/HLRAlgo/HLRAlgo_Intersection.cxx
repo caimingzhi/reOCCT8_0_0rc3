@@ -1,7 +1,5 @@
 #include <HLRAlgo_Intersection.hpp>
 
-//=================================================================================================
-
 HLRAlgo_Intersection::HLRAlgo_Intersection()
     : mySegIndex(0),
       myIndex(0),
@@ -10,8 +8,6 @@ HLRAlgo_Intersection::HLRAlgo_Intersection()
       myToler(0.0)
 {
 }
-
-//=================================================================================================
 
 HLRAlgo_Intersection::HLRAlgo_Intersection(const TopAbs_Orientation Ori,
                                            const int                Lev,

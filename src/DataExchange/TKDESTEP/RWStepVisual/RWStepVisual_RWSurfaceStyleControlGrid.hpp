@@ -11,7 +11,6 @@ class StepVisual_SurfaceStyleControlGrid;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for SurfaceStyleControlGrid
 class RWStepVisual_RWSurfaceStyleControlGrid
 {
 public:

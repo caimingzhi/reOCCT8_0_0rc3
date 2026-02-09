@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MAT_Arc, Standard_Transient)
 
-//=================================================================================================
-
 MAT_Arc::MAT_Arc(const int                        ArcIndex,
                  const int                        GeomIndex,
                  const occ::handle<MAT_BasicElt>& FirstElement,
@@ -22,49 +20,35 @@ MAT_Arc::MAT_Arc(const int                        ArcIndex,
   secondElement = SecondElement;
 }
 
-//=================================================================================================
-
 int MAT_Arc::Index() const
 {
   return arcIndex;
 }
-
-//=================================================================================================
 
 int MAT_Arc::GeomIndex() const
 {
   return geomIndex;
 }
 
-//=================================================================================================
-
 occ::handle<MAT_BasicElt> MAT_Arc::FirstElement() const
 {
   return firstElement;
 }
-
-//=================================================================================================
 
 occ::handle<MAT_BasicElt> MAT_Arc::SecondElement() const
 {
   return secondElement;
 }
 
-//=================================================================================================
-
 occ::handle<MAT_Node> MAT_Arc::FirstNode() const
 {
   return firstNode;
 }
 
-//=================================================================================================
-
 occ::handle<MAT_Node> MAT_Arc::SecondNode() const
 {
   return secondNode;
 }
-
-//=================================================================================================
 
 occ::handle<MAT_Node> MAT_Arc::TheOtherNode(const occ::handle<MAT_Node>& aNode) const
 {
@@ -78,32 +62,28 @@ occ::handle<MAT_Node> MAT_Arc::TheOtherNode(const occ::handle<MAT_Node>& aNode) 
   }
 }
 
-//=================================================================================================
-
 bool MAT_Arc::HasNeighbour(const occ::handle<MAT_Node>& aNode, const MAT_Side aSide) const
 {
   if (aSide == MAT_Left)
   {
-    //    if (aNode == FirstNode())  return (!firstArcLeft  == NULL);
+
     if (aNode == FirstNode())
       return (firstArcLeft != nullptr);
-    //    if (aNode == SecondNode()) return (!secondArcLeft == NULL);
+
     if (aNode == SecondNode())
       return (secondArcLeft != nullptr);
   }
   else
   {
-    //    if (aNode == FirstNode())  return (!firstArcRight  == NULL);
+
     if (aNode == FirstNode())
       return (firstArcRight != nullptr);
-    //    if (aNode == SecondNode()) return (!secondArcRight == NULL);
+
     if (aNode == SecondNode())
       return (secondArcRight != nullptr);
   }
   throw Standard_DomainError("MAT_Arc::HasNeighbour");
 }
-
-//=================================================================================================
 
 occ::handle<MAT_Arc> MAT_Arc::Neighbour(const occ::handle<MAT_Node>& aNode,
                                         const MAT_Side               aSide) const
@@ -126,49 +106,35 @@ occ::handle<MAT_Arc> MAT_Arc::Neighbour(const occ::handle<MAT_Node>& aNode,
   throw Standard_DomainError("MAT_Arc::Neighbour");
 }
 
-//=================================================================================================
-
 void MAT_Arc::SetIndex(const int anInteger)
 {
   arcIndex = anInteger;
 }
-
-//=================================================================================================
 
 void MAT_Arc::SetGeomIndex(const int anInteger)
 {
   geomIndex = anInteger;
 }
 
-//=================================================================================================
-
 void MAT_Arc::SetFirstElement(const occ::handle<MAT_BasicElt>& aBasicElt)
 {
   firstElement = aBasicElt;
 }
-
-//=================================================================================================
 
 void MAT_Arc::SetSecondElement(const occ::handle<MAT_BasicElt>& aBasicElt)
 {
   secondElement = aBasicElt;
 }
 
-//=================================================================================================
-
 void MAT_Arc::SetFirstNode(const occ::handle<MAT_Node>& aNode)
 {
   firstNode = aNode;
 }
 
-//=================================================================================================
-
 void MAT_Arc::SetSecondNode(const occ::handle<MAT_Node>& aNode)
 {
   secondNode = aNode;
 }
-
-//=================================================================================================
 
 void MAT_Arc::SetFirstArc(const MAT_Side aSide, const occ::handle<MAT_Arc>& anArc)
 {
@@ -178,8 +144,6 @@ void MAT_Arc::SetFirstArc(const MAT_Side aSide, const occ::handle<MAT_Arc>& anAr
     firstArcRight = anArc.get();
 }
 
-//=================================================================================================
-
 void MAT_Arc::SetSecondArc(const MAT_Side aSide, const occ::handle<MAT_Arc>& anArc)
 {
   if (aSide == MAT_Left)
@@ -187,8 +151,6 @@ void MAT_Arc::SetSecondArc(const MAT_Side aSide, const occ::handle<MAT_Arc>& anA
   else
     secondArcRight = anArc.get();
 }
-
-//=================================================================================================
 
 void MAT_Arc::SetNeighbour(const MAT_Side               aSide,
                            const occ::handle<MAT_Node>& aNode,

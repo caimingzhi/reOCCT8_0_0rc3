@@ -17,8 +17,6 @@
 
 #include <cstdio>
 
-//=================================================================================================
-
 void DsgPrs_FilletRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                           const occ::handle<Prs3d_Drawer>&       aDrawer,
                                           const double                           theval,
@@ -43,7 +41,7 @@ void DsgPrs_FilletRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>&
   bool    SpecCase;
   gp_Dir  DirOfArrow;
   gp_Circ FilletCirc;
-  //  gp_Pnt NewPosition, EndOfArrow;
+
   occ::handle<Prs3d_DimensionAspect> LA = aDrawer->DimensionAspect();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
@@ -63,9 +61,8 @@ void DsgPrs_FilletRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>&
                                           LastParCirc,
                                           EndOfArrow,
                                           DirOfArrow,
-                                          DrawPosition // NewPosition
-  );
-  // Creating the fillet's arc
+                                          DrawPosition);
+
   if (!SpecCase)
   {
     const double Alpha      = std::abs(LastParCirc - FirstParCirc);
@@ -81,21 +78,18 @@ void DsgPrs_FilletRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>&
     occ::handle<Geom_Circle> Circle = new Geom_Circle(FilletCirc);
     TrimCurve                       = new Geom_TrimmedCurve(Circle, FirstParCirc, LastParCirc);
   }
-  else // null or PI anle or Radius = 0
+  else
   {
     HasCircle = false;
   }
 
-  // Line from position to intersection point on fillet's circle (EndOfArrow)
   occ::handle<Graphic3d_ArrayOfSegments> aPrims = new Graphic3d_ArrayOfSegments(2);
   aPrims->AddVertex(DrawPosition);
   aPrims->AddVertex(EndOfArrow);
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // Drawing the text
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, DrawPosition);
 
-  // Add presentation of arrows
   DsgPrs::ComputeSymbol(aPresentation,
                         LA,
                         EndOfArrow,

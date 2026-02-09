@@ -33,8 +33,6 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 Select3D_SensitiveTriangulation::Select3D_SensitiveTriangulation(
   const occ::handle<SelectMgr_EntityOwner>& theOwnerId,
   const occ::handle<Poly_Triangulation>&    theTrg,
@@ -131,8 +129,6 @@ Select3D_SensitiveTriangulation::Select3D_SensitiveTriangulation(
   computeBoundingBox();
 }
 
-//=================================================================================================
-
 Select3D_SensitiveTriangulation::Select3D_SensitiveTriangulation(
   const occ::handle<SelectMgr_EntityOwner>&    theOwnerId,
   const occ::handle<Poly_Triangulation>&       theTrg,
@@ -173,19 +169,11 @@ Select3D_SensitiveTriangulation::Select3D_SensitiveTriangulation(
   }
 }
 
-//=======================================================================
-// function : Size
-// purpose  : Returns the length of array of triangles or edges
-//=======================================================================
 int Select3D_SensitiveTriangulation::Size() const
 {
   return myPrimitivesNb;
 }
 
-//=======================================================================
-// function : Box
-// purpose  : Returns bounding box of triangle/edge with index theIdx
-//=======================================================================
 Select3D_BndBox3d Select3D_SensitiveTriangulation::Box(const int theIdx) const
 {
   int                      aPrimIdx = myBVHPrimIndexes->Value(theIdx);
@@ -226,8 +214,6 @@ Select3D_BndBox3d Select3D_SensitiveTriangulation::Box(const int theIdx) const
   return Select3D_BndBox3d(aMinPnt, aMaxPnt);
 }
 
-//=================================================================================================
-
 bool Select3D_SensitiveTriangulation::Matches(SelectBasics_SelectingVolumeManager& theMgr,
                                               SelectBasics_PickResult&             thePickResult)
 {
@@ -242,14 +228,12 @@ bool Select3D_SensitiveTriangulation::Matches(SelectBasics_SelectingVolumeManage
     return false;
   }
 
-  if (!theMgr.IsOverlapAllowed()) // check for inclusion
+  if (!theMgr.IsOverlapAllowed())
   {
     bool isInside = true;
     return theMgr.OverlapsBox(aBndBox.CornerMin(), aBndBox.CornerMax(), &isInside) && isInside;
   }
-  if (!theMgr.OverlapsBox(aBndBox.CornerMin(),
-                          aBndBox.CornerMax(),
-                          thePickResult)) // check for overlap
+  if (!theMgr.OverlapsBox(aBndBox.CornerMin(), aBndBox.CornerMax(), thePickResult))
   {
     return false;
   }
@@ -257,11 +241,6 @@ bool Select3D_SensitiveTriangulation::Matches(SelectBasics_SelectingVolumeManage
   return true;
 }
 
-//=======================================================================
-// function : Center
-// purpose  : Returns geometry center of triangle/edge with index theIdx
-//            in array along the given axis theAxis
-//=======================================================================
 double Select3D_SensitiveTriangulation::Center(const int theIdx, const int theAxis) const
 {
   const Select3D_BndBox3d&       aBox    = Box(theIdx);
@@ -269,10 +248,6 @@ double Select3D_SensitiveTriangulation::Center(const int theIdx, const int theAx
   return aCenter[theAxis];
 }
 
-//=======================================================================
-// function : Swap
-// purpose  : Swaps items with indexes theIdx1 and theIdx2 in array
-//=======================================================================
 void Select3D_SensitiveTriangulation::Swap(const int theIdx1, const int theIdx2)
 {
   int anElemIdx1 = myBVHPrimIndexes->Value(theIdx1);
@@ -281,8 +256,6 @@ void Select3D_SensitiveTriangulation::Swap(const int theIdx1, const int theIdx2)
   myBVHPrimIndexes->ChangeValue(theIdx1) = anElemIdx2;
   myBVHPrimIndexes->ChangeValue(theIdx2) = anElemIdx1;
 }
-
-//=================================================================================================
 
 bool Select3D_SensitiveTriangulation::LastDetectedTriangle(Poly_Triangle& theTriangle) const
 {
@@ -294,8 +267,6 @@ bool Select3D_SensitiveTriangulation::LastDetectedTriangle(Poly_Triangle& theTri
   }
   return false;
 }
-
-//=================================================================================================
 
 bool Select3D_SensitiveTriangulation::LastDetectedTriangle(Poly_Triangle& theTriangle,
                                                            gp_Pnt         theTriNodes[3]) const
@@ -317,11 +288,6 @@ bool Select3D_SensitiveTriangulation::LastDetectedTriangle(Poly_Triangle& theTri
   return true;
 }
 
-//=======================================================================
-// function : overlapsElement
-// purpose  : Checks whether the element with index theIdx overlaps the
-//            current selecting volume
-//=======================================================================
 bool Select3D_SensitiveTriangulation::overlapsElement(SelectBasics_PickResult& thePickResult,
                                                       SelectBasics_SelectingVolumeManager& theMgr,
                                                       int  theElemIdx,
@@ -353,8 +319,6 @@ bool Select3D_SensitiveTriangulation::overlapsElement(SelectBasics_PickResult& t
     return theMgr.OverlapsTriangle(aPnt1, aPnt2, aPnt3, Select3D_TOS_INTERIOR, thePickResult);
   }
 }
-
-//=================================================================================================
 
 bool Select3D_SensitiveTriangulation::elementIsInside(SelectBasics_SelectingVolumeManager& theMgr,
                                                       int  theElemIdx,
@@ -395,17 +359,10 @@ bool Select3D_SensitiveTriangulation::elementIsInside(SelectBasics_SelectingVolu
   }
 }
 
-//=======================================================================
-// function : distanceToCOG
-// purpose  : Calculates distance from the 3d projection of used-picked
-//            screen point to center of the geometry
-//=======================================================================
 double Select3D_SensitiveTriangulation::distanceToCOG(SelectBasics_SelectingVolumeManager& theMgr)
 {
   return theMgr.DistToGeometryCenter(myCDG3D);
 }
-
-//=================================================================================================
 
 occ::handle<Select3D_SensitiveEntity> Select3D_SensitiveTriangulation::GetConnected()
 {
@@ -421,11 +378,6 @@ occ::handle<Select3D_SensitiveEntity> Select3D_SensitiveTriangulation::GetConnec
   return aNewEntity;
 }
 
-//=======================================================================
-// function : applyTransformation
-// purpose  : Inner function for transformation application to bounding
-//            box of the triangulation
-//=======================================================================
 Select3D_BndBox3d Select3D_SensitiveTriangulation::applyTransformation()
 {
   if (!HasInitLocation())
@@ -450,11 +402,6 @@ Select3D_BndBox3d Select3D_SensitiveTriangulation::applyTransformation()
   return aBndBox;
 }
 
-//=======================================================================
-// function : BoundingBox
-// purpose  : Returns bounding box of the triangulation. If location
-//            transformation is set, it will be applied
-//=======================================================================
 Select3D_BndBox3d Select3D_SensitiveTriangulation::BoundingBox()
 {
   if (!myBndBox.IsValid())
@@ -464,15 +411,13 @@ Select3D_BndBox3d Select3D_SensitiveTriangulation::BoundingBox()
   return applyTransformation();
 }
 
-//=================================================================================================
-
 void Select3D_SensitiveTriangulation::computeBoundingBox()
 {
   myBndBox.Clear();
 
   if (myTriangul->HasCachedMinMax())
   {
-    // Use cached MeshData_Data bounding box if it exists
+
     Bnd_Box aCachedBox = myTriangul->CachedMinMax();
     myBndBox.Add(NCollection_Vec3<double>(aCachedBox.CornerMin().X(),
                                           aCachedBox.CornerMin().Y(),
@@ -492,40 +437,25 @@ void Select3D_SensitiveTriangulation::computeBoundingBox()
   }
 }
 
-//=======================================================================
-// function : CenterOfGeometry
-// purpose  : Returns center of triangulation. If location transformation
-//            is set, it will be applied
-//=======================================================================
 gp_Pnt Select3D_SensitiveTriangulation::CenterOfGeometry() const
 {
   return myCDG3D;
 }
 
-//=======================================================================
-// function : NbSubElements
-// purpose  : Returns the amount of nodes in triangulation
-//=======================================================================
 int Select3D_SensitiveTriangulation::NbSubElements() const
 {
   return myTriangul->NbNodes();
 }
-
-//=================================================================================================
 
 bool Select3D_SensitiveTriangulation::HasInitLocation() const
 {
   return !myInitLocation.IsIdentity();
 }
 
-//=================================================================================================
-
 gp_GTrsf Select3D_SensitiveTriangulation::InvInitLocation() const
 {
   return myInvInitLocation;
 }
-
-//=================================================================================================
 
 void Select3D_SensitiveTriangulation::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

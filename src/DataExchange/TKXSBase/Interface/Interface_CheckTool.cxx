@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_CheckFailure.hpp>
@@ -55,12 +44,6 @@ static void raisecheck(Standard_Failure& theException, occ::handle<Interface_Che
   }
 }
 
-//  thestat : avoids CheckSuccess redoing a previously done calculation :
-//  bit value 1 : Verify done, value 4 : and there are errors
-//  bit value 2 : Analysis done, value 8 : and there are errors
-
-//=================================================================================================
-
 Interface_CheckTool::Interface_CheckTool(const occ::handle<Interface_InterfaceModel>& model,
                                          const occ::handle<Interface_Protocol>&       protocol)
     : thegtool(new Interface_GTool(protocol, model->NbEntities())),
@@ -68,8 +51,6 @@ Interface_CheckTool::Interface_CheckTool(const occ::handle<Interface_InterfaceMo
 {
   thestat = 0;
 }
-
-//=================================================================================================
 
 Interface_CheckTool::Interface_CheckTool(const occ::handle<Interface_InterfaceModel>& model)
     : thegtool(model->GTool()),
@@ -79,23 +60,17 @@ Interface_CheckTool::Interface_CheckTool(const occ::handle<Interface_InterfaceMo
   thegtool->Reservate(model->NbEntities());
 }
 
-//=================================================================================================
-
 Interface_CheckTool::Interface_CheckTool(const Interface_Graph& graph)
     : thegtool(graph.Model()->GTool()),
       theshare(graph)
 {
 }
 
-//=================================================================================================
-
 Interface_CheckTool::Interface_CheckTool(const occ::handle<Interface_HGraph>& hgraph)
     : thegtool(hgraph->Graph().Model()->GTool()),
       theshare(hgraph)
 {
 }
-
-//=================================================================================================
 
 void Interface_CheckTool::FillCheck(const occ::handle<Standard_Transient>& ent,
                                     const Interface_ShareTool&             sh,
@@ -105,13 +80,13 @@ void Interface_CheckTool::FillCheck(const occ::handle<Standard_Transient>& ent,
   int                                  CN;
   if (thegtool->Select(ent, module, CN))
   {
-    //    Without try/catch (done by caller, avoids try/catch in loop)
+
     if (!errh)
     {
       module->CheckCase(CN, ent, sh, ach);
       return;
     }
-    //    With try/catch
+
     try
     {
       OCC_CATCH_SIGNALS
@@ -133,8 +108,6 @@ void Interface_CheckTool::FillCheck(const occ::handle<Standard_Transient>& ent,
     ach->AddFail("** Shared Items unknown from the containing Model");
 }
 
-//=================================================================================================
-
 void Interface_CheckTool::Print(const occ::handle<Interface_Check>& ach, Standard_OStream& S) const
 {
   int i, nb;
@@ -154,41 +127,28 @@ void Interface_CheckTool::Print(const occ::handle<Interface_Check>& ach, Standar
   }
 }
 
-//=================================================================================================
-
 void Interface_CheckTool::Print(const Interface_CheckIterator& list, Standard_OStream& S) const
 {
   occ::handle<Interface_InterfaceModel> model = theshare.Model();
   list.Print(S, model, false);
 }
 
-//  ....                General Check on a Model                ....
-
-// Check: An Entity of a Model, designated by its rank
-
-//=================================================================================================
-
 occ::handle<Interface_Check> Interface_CheckTool::Check(const int num)
 {
   occ::handle<Interface_InterfaceModel> model = theshare.Model();
   occ::handle<Standard_Transient>       ent   = model->Value(num);
-  occ::handle<Interface_Check> ach = new Interface_Check(ent); // not filtered by "Warning": as is
-  errh                             = 1;
+  occ::handle<Interface_Check>          ach   = new Interface_Check(ent);
+  errh                                        = 1;
   FillCheck(ent, theshare, ach);
   return ach;
 }
-
-//  CheckSuccess: test passes-doesn't pass, on CheckList(Fail) of Entities
-
-//=================================================================================================
 
 void Interface_CheckTool::CheckSuccess(const bool reset)
 {
   if (reset)
     thestat = 0;
   if (thestat > 3)
-    throw Interface_CheckFailure // already tested with error
-      ("Interface Model : Global Check");
+    throw Interface_CheckFailure("Interface Model : Global Check");
   occ::handle<Interface_InterfaceModel> model = theshare.Model();
   if (model->GlobalCheck()->NbFails() > 0)
     throw Interface_CheckFailure("Interface Model : Global Check");
@@ -199,9 +159,9 @@ void Interface_CheckTool::CheckSuccess(const bool reset)
   if (modchk->HasFailed())
     throw Interface_CheckFailure("Interface Model : Verify Check");
   if (thestat == 3)
-    return; // everything tested and it passes
+    return;
 
-  errh   = 0; // No try/catch, because we precisely raise
+  errh   = 0;
   int nb = model->NbEntities();
   for (int i = 1; i <= nb; i++)
   {
@@ -211,12 +171,12 @@ void Interface_CheckTool::CheckSuccess(const bool reset)
     if (thestat & 1)
     {
       if (!model->IsErrorEntity(i))
-        continue; // already verify, remains analyse
+        continue;
     }
     if (thestat & 2)
     {
       if (model->IsErrorEntity(i))
-        continue; // already analyse, remains verify
+        continue;
     }
 
     occ::handle<Interface_Check> ach = new Interface_Check(ent);
@@ -226,21 +186,16 @@ void Interface_CheckTool::CheckSuccess(const bool reset)
   }
 }
 
-//  CompleteCheckList: All Tests: GlobalCheck, Analyse-Verify in Fail or in
-//  Warning; plus the Unknown Entities (by empty Check)
-
-//=================================================================================================
-
 Interface_CheckIterator Interface_CheckTool::CompleteCheckList()
 {
   thestat                                     = 3;
   occ::handle<Interface_InterfaceModel> model = theshare.Model();
   Interface_CheckIterator               res;
   res.SetModel(model);
-  occ::handle<Interface_Check> globch = model->GlobalCheck(); // GlobalCheck Statique
+  occ::handle<Interface_Check> globch = model->GlobalCheck();
   if (!model->Protocol().IsNull())
     model->Protocol()->GlobalCheck(theshare.Graph(), globch);
-  model->VerifyCheck(globch); // GlobalCheck Dynamique
+  model->VerifyCheck(globch);
   if (globch->HasFailed() || globch->HasWarnings())
     res.Add(globch, 0);
   if (globch->HasFailed())
@@ -262,8 +217,8 @@ Interface_CheckIterator Interface_CheckTool::CompleteCheckList()
         ach->SetEntity(ent);
         if (model->IsReportEntity(i))
         {
-          ach = model->ReportEntity(i)->Check(); // INCLUT Unknown
-          if (ach->HasFailed())                  // FAIL : no semantic Check
+          ach = model->ReportEntity(i)->Check();
+          if (ach->HasFailed())
           {
             res.Add(ach, i);
             ach = new Interface_Check;
@@ -295,10 +250,6 @@ Interface_CheckIterator Interface_CheckTool::CompleteCheckList()
   }
   return res;
 }
-
-//  CheckList: Check Fail on Entities, in Analysis (Read time) or Verify
-
-//=================================================================================================
 
 Interface_CheckIterator Interface_CheckTool::CheckList()
 {
@@ -365,10 +316,6 @@ Interface_CheckIterator Interface_CheckTool::CheckList()
   return res;
 }
 
-//  AnalyseCheckList: Fail during loading of Entities (Read time)
-
-//=================================================================================================
-
 Interface_CheckIterator Interface_CheckTool::AnalyseCheckList()
 {
   thestat                                     = 2;
@@ -408,10 +355,6 @@ Interface_CheckIterator Interface_CheckTool::AnalyseCheckList()
   }
   return res;
 }
-
-//  VerifyCheckList: Fail/Warning on Analysis (Entities loaded OK. Valid?)
-
-//=================================================================================================
 
 Interface_CheckIterator Interface_CheckTool::VerifyCheckList()
 {
@@ -458,10 +401,6 @@ Interface_CheckIterator Interface_CheckTool::VerifyCheckList()
   }
   return res;
 }
-
-//  Warnings on Entities (Read time or after)
-
-//=================================================================================================
 
 Interface_CheckIterator Interface_CheckTool::WarningCheckList()
 {
@@ -516,8 +455,6 @@ Interface_CheckIterator Interface_CheckTool::WarningCheckList()
 
   return res;
 }
-
-//=================================================================================================
 
 Interface_EntityIterator Interface_CheckTool::UnknownEntities()
 {

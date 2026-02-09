@@ -1,16 +1,4 @@
-// Author: Ilya Khramov
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Graphic3d_PBRMaterial.hpp>
 
@@ -18,24 +6,20 @@
 
 #include <limits>
 
-//=================================================================================================
-
 float Graphic3d_PBRMaterial::RoughnessFromSpecular(const Quantity_Color& theSpecular,
                                                    const double          theShiness)
 {
   double aRoughnessFactor = 1.0 - theShiness;
-  // double aSpecIntens = theSpecular.Light() * theSpecular;
+
   const double aSpecIntens =
     theSpecular.Red() * 0.2125 + theSpecular.Green() * 0.7154 + theSpecular.Blue() * 0.0721;
   if (aSpecIntens < 0.1)
   {
-    // low specular intensity should produce a rough material even if shininess is high
+
     aRoughnessFactor *= (1.0 - aSpecIntens);
   }
   return (float)aRoughnessFactor;
 }
-
-//=================================================================================================
 
 Graphic3d_PBRMaterial::Graphic3d_PBRMaterial()
     : myColor(0.f, 0.f, 0.f, 1.f),
@@ -46,14 +30,10 @@ Graphic3d_PBRMaterial::Graphic3d_PBRMaterial()
 {
 }
 
-//=================================================================================================
-
 Graphic3d_PBRMaterial::Graphic3d_PBRMaterial(const Graphic3d_BSDF& theBSDF)
 {
   SetBSDF(theBSDF);
 }
-
-//=================================================================================================
 
 void Graphic3d_PBRMaterial::SetMetallic(float theMetallic)
 {
@@ -62,14 +42,10 @@ void Graphic3d_PBRMaterial::SetMetallic(float theMetallic)
     "'metallic' parameter of PBR material must be in range [0, 1]") myMetallic = theMetallic;
 }
 
-//=================================================================================================
-
 float Graphic3d_PBRMaterial::Roughness(float theNormalizedRoughness)
 {
   return theNormalizedRoughness * (1.f - MinRoughness()) + MinRoughness();
 }
-
-//=================================================================================================
 
 void Graphic3d_PBRMaterial::SetRoughness(float theRoughness)
 {
@@ -78,8 +54,6 @@ void Graphic3d_PBRMaterial::SetRoughness(float theRoughness)
     "'roughness' parameter of PBR material must be in range [0, 1]") myRoughness = theRoughness;
 }
 
-//=================================================================================================
-
 void Graphic3d_PBRMaterial::SetIOR(float theIOR)
 {
   Graphic3d_MaterialDefinitionError_Raise_if(
@@ -87,22 +61,16 @@ void Graphic3d_PBRMaterial::SetIOR(float theIOR)
     "'IOR' parameter of PBR material must be in range [1, 3]") myIOR = theIOR;
 }
 
-//=================================================================================================
-
 void Graphic3d_PBRMaterial::SetColor(const Quantity_ColorRGBA& theColor)
 {
   myColor.SetRGB(theColor.GetRGB());
   SetAlpha(theColor.Alpha());
 }
 
-//=================================================================================================
-
 void Graphic3d_PBRMaterial::SetColor(const Quantity_Color& theColor)
 {
   myColor.SetRGB(theColor);
 }
-
-//=================================================================================================
 
 void Graphic3d_PBRMaterial::SetAlpha(float theAlpha)
 {
@@ -111,8 +79,6 @@ void Graphic3d_PBRMaterial::SetAlpha(float theAlpha)
     "'alpha' parameter of PBR material must be in range [0, 1]") myColor.SetAlpha(theAlpha);
 }
 
-//=================================================================================================
-
 void Graphic3d_PBRMaterial::SetEmission(const NCollection_Vec3<float>& theEmission)
 {
   Graphic3d_MaterialDefinitionError_Raise_if(
@@ -120,8 +86,6 @@ void Graphic3d_PBRMaterial::SetEmission(const NCollection_Vec3<float>& theEmissi
     "all components of 'emission' parameter of PBR material must be greater than 0") myEmission =
     theEmission;
 }
-
-//=================================================================================================
 
 void Graphic3d_PBRMaterial::SetBSDF(const Graphic3d_BSDF& theBSDF)
 {
@@ -171,8 +135,6 @@ void Graphic3d_PBRMaterial::SetBSDF(const Graphic3d_BSDF& theBSDF)
   }
 }
 
-//=================================================================================================
-
 void Graphic3d_PBRMaterial::GenerateEnvLUT(const occ::handle<Image_PixMap>& theLUT,
                                            unsigned int                     theNbIntegralSamples)
 {
@@ -216,14 +178,10 @@ void Graphic3d_PBRMaterial::GenerateEnvLUT(const occ::handle<Image_PixMap>& theL
   }
 }
 
-//=================================================================================================
-
 float Graphic3d_PBRMaterial::SpecIBLMapSamplesFactor(float theProbability, float theRoughness)
 {
   return acosf(lutGenImportanceSampleCosTheta(theProbability, theRoughness)) * 2.f / float(M_PI);
 }
-
-//=================================================================================================
 
 float Graphic3d_PBRMaterial::lutGenGeometryFactor(float theCosL, float theCosV, float theRoughness)
 {
@@ -235,8 +193,6 @@ float Graphic3d_PBRMaterial::lutGenGeometryFactor(float theCosL, float theCosV, 
 
   return aGeometryFactor;
 }
-
-//=================================================================================================
 
 NCollection_Vec2<float> Graphic3d_PBRMaterial::lutGenHammersley(unsigned int theNumber,
                                                                 unsigned int theCount)
@@ -253,8 +209,6 @@ NCollection_Vec2<float> Graphic3d_PBRMaterial::lutGenHammersley(unsigned int the
 
   return NCollection_Vec2<float>(theNumber / float(theCount), aPhi2);
 }
-
-//=================================================================================================
 
 float Graphic3d_PBRMaterial::lutGenImportanceSampleCosTheta(float theHammersleyPointComponent,
                                                             float theRoughness)
@@ -274,8 +228,6 @@ float Graphic3d_PBRMaterial::lutGenImportanceSampleCosTheta(float theHammersleyP
   }
 }
 
-//=================================================================================================
-
 NCollection_Vec3<float> Graphic3d_PBRMaterial::lutGenImportanceSample(
   const NCollection_Vec2<float>& theHammerslayPoint,
   float                          theRoughness)
@@ -288,14 +240,10 @@ NCollection_Vec3<float> Graphic3d_PBRMaterial::lutGenImportanceSample(
   return NCollection_Vec3<float>(aSinTheta * cosf(aPhi), aSinTheta * sinf(aPhi), aCosTheta);
 }
 
-//=================================================================================================
-
 NCollection_Vec3<float> Graphic3d_PBRMaterial::lutGenView(float theCosV)
 {
   return NCollection_Vec3<float>(0.f, sqrtf(1.f - theCosV * theCosV), theCosV);
 }
-
-//=================================================================================================
 
 NCollection_Vec3<float> Graphic3d_PBRMaterial::lutGenReflect(
   const NCollection_Vec3<float>& theVector,
@@ -303,8 +251,6 @@ NCollection_Vec3<float> Graphic3d_PBRMaterial::lutGenReflect(
 {
   return theAxis * theAxis.Dot(theVector) * 2.f - theVector;
 }
-
-//=================================================================================================
 
 void Graphic3d_PBRMaterial::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

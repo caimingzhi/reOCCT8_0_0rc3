@@ -10,11 +10,6 @@
 #include <XCAFDoc_DocumentTool.hpp>
 #include <XCAFDoc_ShapeTool.hpp>
 
-// =======================================================================
-// function : XCAFDoc_AssemblyIterator constructor
-// purpose  : Starts from free shapes
-// =======================================================================
-
 XCAFDoc_AssemblyIterator::XCAFDoc_AssemblyIterator(const occ::handle<TDocStd_Document>& theDoc,
                                                    const int                            theLevel)
     : myMaxLevel(theLevel),
@@ -38,11 +33,6 @@ XCAFDoc_AssemblyIterator::XCAFDoc_AssemblyIterator(const occ::handle<TDocStd_Doc
     myFringe.Append(anAuxItem);
   }
 }
-
-// =======================================================================
-// function : XCAFDoc_AssemblyIterator constructor
-// purpose  : Starts from the specified root
-// =======================================================================
 
 XCAFDoc_AssemblyIterator::XCAFDoc_AssemblyIterator(const occ::handle<TDocStd_Document>& theDoc,
                                                    const XCAFDoc_AssemblyItemId&        theRoot,
@@ -88,37 +78,24 @@ XCAFDoc_AssemblyIterator::XCAFDoc_AssemblyIterator(const occ::handle<TDocStd_Doc
   myFringe.Append(aSeed);
 }
 
-// =======================================================================
-// function : More
-// purpose  : Checks possibility to continue iteration
-// =======================================================================
-
 bool XCAFDoc_AssemblyIterator::More() const
 {
   return !myFringe.IsEmpty();
 }
 
-// =======================================================================
-// function : Next
-// purpose  : Moves to the next position
-// =======================================================================
-
 void XCAFDoc_AssemblyIterator::Next()
 {
   if (!More())
-    return; // No next item.
+    return;
 
-  // Pop item
   AuxAssemblyItem aCurrent = myFringe.Last();
   myFringe.Remove(myFringe.Size());
 
-  // Check current depth of iteration (root level is 0-level by convention)
   const int aCurrentDepth = aCurrent.myItem.GetPath().Size() - mySeedLevel;
 
   if (aCurrentDepth < myMaxLevel)
   {
-    // If current item is an assembly, then the next items to iterate in
-    // depth-first order are the components of this assembly
+
     NCollection_Sequence<TDF_Label> aComponents;
     if (myShapeTool->IsAssembly(aCurrent.myLabel))
     {
@@ -129,33 +106,21 @@ void XCAFDoc_AssemblyIterator::Next()
       aComponents.Append(aCurrent.myLabel);
     }
 
-    // Put all labels pending for iteration to the fringe
     AuxAssemblyItem anAuxItem;
     for (int l = aComponents.Length(); l >= 1; --l)
     {
-      TDF_Label aLabel = aComponents(l); // Insertion-level label
+      TDF_Label aLabel = aComponents(l);
       createItem(aLabel, aCurrent.myItem.GetPath(), anAuxItem);
 
-      // Set item to iterate
       myFringe.Append(anAuxItem);
     }
   }
 }
 
-// =======================================================================
-// function : Current
-// purpose  : Returns current assembly item
-// =======================================================================
-
 XCAFDoc_AssemblyItemId XCAFDoc_AssemblyIterator::Current() const
 {
   return myFringe.Last().myItem;
 }
-
-// =======================================================================
-// function : createItem
-// purpose  : Makes an assembly item id from the specified label
-// =======================================================================
 
 void XCAFDoc_AssemblyIterator::createItem(
   const TDF_Label&                                 theLabel,

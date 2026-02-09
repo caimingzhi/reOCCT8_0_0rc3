@@ -6,8 +6,6 @@
 
 #include "../SHMessage/SHMessage_SHAPE_us.hpp"
 
-//=================================================================================================
-
 void ShapeExtend::Init()
 {
   static bool init = false;
@@ -16,7 +14,6 @@ void ShapeExtend::Init()
 
   init = true;
 
-  // load Message File for Shape Healing
   if (!Message_MsgFile::HasMsg("ShapeFix.FixSmallSolid.MSG0"))
   {
     if (!Message_MsgFile::LoadFromEnv("CSF_SHMessage", "SHAPE"))
@@ -30,8 +27,6 @@ void ShapeExtend::Init()
     }
   }
 }
-
-//=================================================================================================
 
 int ShapeExtend::EncodeStatus(const ShapeExtend_Status status)
 {
@@ -78,8 +73,6 @@ int ShapeExtend::EncodeStatus(const ShapeExtend_Status status)
   }
   return 0;
 }
-
-//=================================================================================================
 
 bool ShapeExtend::DecodeStatus(const int flag, const ShapeExtend_Status status)
 {

@@ -20,17 +20,14 @@ void IGESDraw_ToolViewsVisible::ReadOwnParams(const occ::handle<IGESDraw_ViewsVi
                                               const occ::handle<IGESData_IGESReaderData>& IR,
                                               IGESData_ParamReader&                       PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   int tempNbViewsVisible, tempNbDisplayedEntities;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_ViewKindEntity>>> tempViewEntities;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>     tempDisplayEntity;
 
-  // st = PR.ReadInteger(PR.Current(), "Number Of Views Visible",
-  // tempNbViewsVisible); //szv#4:S4163:12Mar99 moved in if
   if (PR.ReadInteger(PR.Current(), "Number Of Views Visible", tempNbViewsVisible))
   {
-    // Initialise HArray1 only if there is no error reading its Length
+
     if (tempNbViewsVisible <= 0)
       PR.AddFail("Number Of Views Visible : Not Positive");
     else
@@ -39,28 +36,24 @@ void IGESDraw_ToolViewsVisible::ReadOwnParams(const occ::handle<IGESDraw_ViewsVi
   }
 
   if (PR.DefinedElseSkip())
-    PR.ReadInteger(PR.Current(),
-                   "Number of Entities Displayed",
-                   tempNbDisplayedEntities); // szv#4:S4163:12Mar99 `st=` not needed
+    PR.ReadInteger(PR.Current(), "Number of Entities Displayed", tempNbDisplayedEntities);
   else
   {
     tempNbDisplayedEntities = 0;
     PR.AddWarning("Number of Entities Displayed : undefined, set to Zero");
   }
-  // Initialise HArray1 only if there is no error reading its Length
+
   if (tempNbDisplayedEntities < 0)
     PR.AddFail("Number Of Entities Displayed : Less than Zero");
-  //  else if (tempNbDisplayedEntities > 0) {
 
   if (!tempViewEntities.IsNull())
   {
-    // Read the HArray1 only if its Length was read without any Error
+
     int I;
     for (I = 1; I <= tempNbViewsVisible; I++)
     {
       occ::handle<IGESData_ViewKindEntity> tempViewEntity1;
-      // st = PR.ReadEntity(IR, PR.Current(), "View Entity",
-      // STANDARD_TYPE(IGESData_ViewKindEntity), tempViewEntity1); //szv#4:S4163:12Mar99 moved in if
+
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "View Entity",
@@ -70,25 +63,12 @@ void IGESDraw_ToolViewsVisible::ReadOwnParams(const occ::handle<IGESDraw_ViewsVi
     }
   }
 
-  // Read the HArray1 only if its Length was read without any Error
   if (tempNbDisplayedEntities > 0)
   {
     PR.ReadEnts(IR,
                 PR.CurrentList(tempNbDisplayedEntities),
                 "Displayed Entities",
-                tempDisplayEntity); // szv#4:S4163:12Mar99 `st=` not needed
-    /*
-        tempDisplayEntity =
-          new NCollection_HArray1<occ::handle<IGESData_IGESEntity>> (1, tempNbDisplayedEntities);
-
-        occ::handle<IGESData_IGESEntity> tempEntity2;
-        int I;
-        for (I = 1; I <= tempNbDisplayedEntities; I++) {
-          st = PR.ReadEntity(IR, PR.Current(), "Displayed Entity",
-                 tempEntity2);
-          if (st) tempDisplayEntity->SetValue(I, tempEntity2);
-        }
-    */
+                tempDisplayEntity);
   }
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
@@ -117,7 +97,6 @@ void IGESDraw_ToolViewsVisible::OwnShared(const occ::handle<IGESDraw_ViewsVisibl
   up = ent->NbViews();
   for (I = 1; I <= up; I++)
     iter.GetOneItem(ent->ViewItem(I));
-  //  Displayed -> Implied
 }
 
 void IGESDraw_ToolViewsVisible::OwnImplied(const occ::handle<IGESDraw_ViewsVisible>& ent,
@@ -142,7 +121,7 @@ void IGESDraw_ToolViewsVisible::OwnCopy(const occ::handle<IGESDraw_ViewsVisible>
     DeclareAndCast(IGESData_ViewKindEntity, tempView, TC.Transferred(another->ViewItem(I)));
     tempViewEntities->SetValue(I, tempView);
   }
-  //  Displayed -> Implied : set an empty list by default
+
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> tempDisplayEntities;
   ent->Init(tempViewEntities, tempDisplayEntities);
 }
@@ -178,7 +157,7 @@ void IGESDraw_ToolViewsVisible::OwnRenew(const occ::handle<IGESDraw_ViewsVisible
 }
 
 IGESData_DirChecker IGESDraw_ToolViewsVisible::DirChecker(
-  const occ::handle<IGESDraw_ViewsVisible>& /*ent*/) const
+  const occ::handle<IGESDraw_ViewsVisible>&) const
 {
   IGESData_DirChecker DC(402, 3);
   DC.Structure(IGESData_DefVoid);
@@ -235,7 +214,7 @@ void IGESDraw_ToolViewsVisible::OwnDump(const occ::handle<IGESDraw_ViewsVisible>
 
 bool IGESDraw_ToolViewsVisible::OwnCorrect(const occ::handle<IGESDraw_ViewsVisible>& ent) const
 {
-  //  The displayed entities must reference <ent>. They have priority.
+
   bool                                        res     = false;
   int                                         nb      = ent->NbDisplayedEntities();
   const occ::handle<IGESData_ViewKindEntity>& entcomp = ent;

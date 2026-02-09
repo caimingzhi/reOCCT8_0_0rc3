@@ -18,8 +18,6 @@
 #include <XmlMXCAFDoc_NoteBinDataDriver.hpp>
 #include <XmlMXCAFDoc_VisMaterialToolDriver.hpp>
 
-//=================================================================================================
-
 void XmlMXCAFDoc::AddDrivers(const occ::handle<XmlMDF_ADriverTable>& aDriverTable,
                              const occ::handle<Message_Messenger>&   anMsgDrv)
 {
@@ -27,7 +25,6 @@ void XmlMXCAFDoc::AddDrivers(const occ::handle<XmlMDF_ADriverTable>& aDriverTabl
   aDriverTable->AddDriver(new XmlMXCAFDoc_ColorDriver(anMsgDrv));
   aDriverTable->AddDriver(new XmlMXCAFDoc_GraphNodeDriver(anMsgDrv));
 
-  // oan: changes for sharing locations map
   occ::handle<XmlMDF_ADriver> aDriver;
   aDriverTable->GetDriver(STANDARD_TYPE(TNaming_NamedShape), aDriver);
   occ::handle<XmlMNaming_NamedShapeDriver> aNamedShapeDriver =

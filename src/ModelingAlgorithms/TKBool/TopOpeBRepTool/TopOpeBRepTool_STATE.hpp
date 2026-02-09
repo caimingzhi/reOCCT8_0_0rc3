@@ -5,10 +5,6 @@
   #include <Standard_Type.hpp>
   #include <TopAbs_State.hpp>
 
-// -----------------------------------------------------------------------
-// TopOpeBRepTool_STATE : class of 4 booleans matching TopAbs_State values
-// -----------------------------------------------------------------------
-
 class TopOpeBRepTool_STATE
 {
 
@@ -29,4 +25,4 @@ private:
   char myname[100];
 };
 
-#endif /* OCCT_DEBUG */
+#endif

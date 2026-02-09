@@ -7,8 +7,6 @@
 #include <TDF_Label.hpp>
 #include <TDF_Tool.hpp>
 
-//=================================================================================================
-
 bool DDF::AddLabel
 
   (const occ::handle<TDF_Data>& DF, const char* Entry, TDF_Label& Label)
@@ -16,8 +14,6 @@ bool DDF::AddLabel
   TDF_Tool::Label(DF, Entry, Label, true);
   return true;
 }
-
-//=================================================================================================
 
 bool DDF::FindLabel(const occ::handle<TDF_Data>& DF,
                     const char*                  Entry,
@@ -31,13 +27,11 @@ bool DDF::FindLabel(const occ::handle<TDF_Data>& DF,
   return !Label.IsNull();
 }
 
-//=================================================================================================
-
 bool DDF::GetDF(const char*& Name, occ::handle<TDF_Data>& DF, const bool Complain)
 {
   occ::handle<Standard_Transient> t   = Draw::Get(Name);
   occ::handle<DDF_Data>           DDF = occ::down_cast<DDF_Data>(t);
-  // occ::handle<DDF_Data> DDF = Handle(DDF_Data)::DownCast (Draw::Get(Name, Complain));
+
   if (!DDF.IsNull())
   {
     DF = DDF->DataFramework();
@@ -47,8 +41,6 @@ bool DDF::GetDF(const char*& Name, occ::handle<TDF_Data>& DF, const bool Complai
     std::cout << "framework " << Name << " not found " << std::endl;
   return false;
 }
-
-//=================================================================================================
 
 bool DDF::Find(const occ::handle<TDF_Data>& DF,
                const char*                  Entry,
@@ -67,8 +59,6 @@ bool DDF::Find(const occ::handle<TDF_Data>& DF,
   return false;
 }
 
-//=================================================================================================
-
 Draw_Interpretor& DDF::ReturnLabel(Draw_Interpretor& di, const TDF_Label& L)
 {
   TCollection_AsciiString S;
@@ -76,8 +66,6 @@ Draw_Interpretor& DDF::ReturnLabel(Draw_Interpretor& di, const TDF_Label& L)
   di << S.ToCString();
   return di;
 }
-
-//=================================================================================================
 
 void DDF::AllCommands(Draw_Interpretor& theCommands)
 {
@@ -90,7 +78,7 @@ void DDF::AllCommands(Draw_Interpretor& theCommands)
   DDF::DataCommands(theCommands);
   DDF::TransactionCommands(theCommands);
   DDF::BrowserCommands(theCommands);
-  // define the TCL variable DDF
+
   const char* com = "set DDF";
   theCommands.Eval(com);
 }

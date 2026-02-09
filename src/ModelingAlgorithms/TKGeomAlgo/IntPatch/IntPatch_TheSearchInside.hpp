@@ -33,16 +33,8 @@ public:
 
   bool IsDone() const;
 
-  //! Returns the number of points.
-  //! The exception NotDone if raised if IsDone
-  //! returns False.
   int NbPoints() const;
 
-  //! Returns the point of range Index.
-  //! The exception NotDone if raised if IsDone
-  //! returns False.
-  //! The exception OutOfRange if raised if
-  //! Index <= 0 or Index > NbPoints.
   const IntSurf_InteriorPoint& Value(const int Index) const;
 
 private:

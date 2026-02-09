@@ -24,19 +24,15 @@ class StepBasic_ProductDefinition;
 class StepData_StepModel;
 class StepRepr_ProductDefinitionShape;
 
-//! Basic tool for working with AP209 model
 class StepAP209_Construct : public STEPConstruct_Tool
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates an empty tool
   Standard_EXPORT StepAP209_Construct();
 
-  //! Creates a tool and initializes it
   Standard_EXPORT StepAP209_Construct(const occ::handle<XSControl_WorkSession>& WS);
 
-  //! Initializes tool; returns True if succeeded
   Standard_EXPORT bool Init(const occ::handle<XSControl_WorkSession>& WS);
 
   Standard_EXPORT bool IsDesing(const occ::handle<StepBasic_ProductDefinitionFormation>& PD) const;
@@ -80,8 +76,6 @@ public:
   Standard_EXPORT occ::handle<NCollection_HSequence<occ::handle<StepFEA_ElementRepresentation>>>
                   GetElements3D(const occ::handle<StepFEA_FeaModel>& theFEAModel) const;
 
-  //! Getting list of curve_element_section_definitions
-  //! for given element_representation
   Standard_EXPORT occ::handle<
     NCollection_HSequence<occ::handle<StepElement_CurveElementSectionDefinition>>>
     GetCurElemSection(const occ::handle<StepFEA_Curve3dElementRepresentation>& ElemRepr) const;
@@ -89,26 +83,17 @@ public:
   Standard_EXPORT occ::handle<StepShape_ShapeRepresentation> GetShReprForElem(
     const occ::handle<StepFEA_ElementRepresentation>& ElemRepr) const;
 
-  //! Create empty structure for idealized_analysis_shape
   Standard_EXPORT bool CreateAnalysStructure(const occ::handle<StepBasic_Product>& Prod) const;
 
-  //! Create fea structure
   Standard_EXPORT bool CreateFeaStructure(const occ::handle<StepBasic_Product>& Prod) const;
 
-  //! Put into model entities Applied... for AP209 instead of
-  //! entities CcDesing... from AP203.
   Standard_EXPORT bool ReplaceCcDesingToApplied() const;
 
-  //! Create approval.. , date.. , time.. , person.. and
-  //! organization.. entities for analysis structure
   Standard_EXPORT bool CreateAddingEntities(
     const occ::handle<StepBasic_ProductDefinition>& AnaPD) const;
 
-  //! Create AP203 structure from existing AP209 structure
   Standard_EXPORT occ::handle<StepData_StepModel> CreateAP203Structure() const;
 
-  //! Create approval.. , date.. , time.. , person.. and
-  //! organization.. entities for 203 structure
   Standard_EXPORT bool CreateAdding203Entities(const occ::handle<StepBasic_ProductDefinition>& PD,
                                                occ::handle<StepData_StepModel>& aModel) const;
 

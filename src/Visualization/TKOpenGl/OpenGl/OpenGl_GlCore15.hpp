@@ -2,13 +2,12 @@
 
 #include <OpenGl_GlCore13.hpp>
 
-//! OpenGL 1.4 core based on 1.3 version.
 struct OpenGl_GlCore14 : public OpenGl_GlCore13
 {
 private:
   typedef OpenGl_GlCore13 theBaseClass_t;
 
-public: //! @name OpenGL 1.4 additives to 1.3
+public:
   using theBaseClass_t::glBlendFuncSeparate;
   using theBaseClass_t::glMultiDrawElements;
 
@@ -21,13 +20,12 @@ public: //! @name OpenGL 1.4 additives to 1.3
 #endif
 };
 
-//! OpenGL 1.5 core based on 1.4 version.
 struct OpenGl_GlCore15 : public OpenGl_GlCore14
 {
 private:
   typedef OpenGl_GlCore14 theBaseClass_t;
 
-public: //! @name OpenGL 1.5 additives to 1.4
+public:
 #if !defined(GL_ES_VERSION_2_0)
   using theBaseClass_t::glBeginQuery;
   using theBaseClass_t::glDeleteQueries;

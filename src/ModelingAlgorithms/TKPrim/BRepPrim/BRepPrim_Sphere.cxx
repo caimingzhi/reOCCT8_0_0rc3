@@ -9,11 +9,8 @@
 #include <Precision.hpp>
 #include <TopoDS_Face.hpp>
 
-// parameters on the meridian
 #define PMIN (-0.5 * M_PI)
 #define PMAX (0.5 * M_PI)
-
-//=================================================================================================
 
 BRepPrim_Sphere::BRepPrim_Sphere(const double Radius)
     : BRepPrim_Revolution(gp::XOY(), PMIN, PMAX),
@@ -22,8 +19,6 @@ BRepPrim_Sphere::BRepPrim_Sphere(const double Radius)
   SetMeridian();
 }
 
-//=================================================================================================
-
 BRepPrim_Sphere::BRepPrim_Sphere(const gp_Pnt& Center, const double Radius)
     : BRepPrim_Revolution(gp_Ax2(Center, gp_Dir(gp_Dir::D::Z), gp_Dir(gp_Dir::D::X)), PMIN, PMAX),
       myRadius(Radius)
@@ -31,16 +26,12 @@ BRepPrim_Sphere::BRepPrim_Sphere(const gp_Pnt& Center, const double Radius)
   SetMeridian();
 }
 
-//=================================================================================================
-
 BRepPrim_Sphere::BRepPrim_Sphere(const gp_Ax2& Axes, const double Radius)
     : BRepPrim_Revolution(Axes, PMIN, PMAX),
       myRadius(Radius)
 {
   SetMeridian();
 }
-
-//=================================================================================================
 
 TopoDS_Face BRepPrim_Sphere::MakeEmptyLateralFace() const
 {
@@ -50,12 +41,8 @@ TopoDS_Face BRepPrim_Sphere::MakeEmptyLateralFace() const
   return F;
 }
 
-//=================================================================================================
-
 void BRepPrim_Sphere::SetMeridian()
 {
-  // Offset the parameters on the meridian
-  // to trim the edge in 3pi/2, 5pi/2
 
   SetMeridianOffset(2 * M_PI);
 

@@ -19,11 +19,6 @@
 
 #include <cstdio>
 
-//=======================================================================
-// Section: General commands
-//=======================================================================
-
-//! simple model with redefined pure virtual method
 class TObjDRAW_Model : public TObj_Model
 {
 public:
@@ -34,15 +29,12 @@ public:
   Standard_EXPORT occ::handle<TObj_Model> NewEmpty() override { return new TObjDRAW_Model(); }
 
 public:
-  //! CASCADE RTTI
   DEFINE_STANDARD_RTTI_INLINE(TObjDRAW_Model, TObj_Model)
 };
 
-//! simple object to check API and features of TObj_Object
 class TObjDRAW_Object : public TObj_Object
 {
 protected:
-  //! enumeration for the ranks of label under Data section.
   enum DataTag
   {
     DataTag_First = TObj_Object::DataTag_Last,
@@ -51,19 +43,17 @@ protected:
     DataTag_Last = DataTag_First + 100
   };
 
-  // enumeration for the ranks of label under Reference section.
   enum RefTag
   {
     RefTag_First = TObj_Object::RefTag_Last,
-    RefTag_Other, //!< here we test only one reference to other
+    RefTag_Other,
     RefTag_Last = RefTag_First + 100
   };
 
-  //! enumeration for the ranks of label under Children section.
   enum ChildTag
   {
     ChildTag_First = TObj_Object::ChildTag_Last,
-    ChildTag_Child, //!< here we test only one child (or one branch of children)
+    ChildTag_Child,
     ChildTag_Last = ChildTag_First + 100
   };
 
@@ -73,34 +63,27 @@ public:
   {
   }
 
-  //! sets int value
   Standard_EXPORT void SetInt(const int theVal) { setInteger(theVal, DataTag_IntVal); }
 
-  //! returns int value
   Standard_EXPORT int GetInt() const { return getInteger(DataTag_IntVal); }
 
-  //! sets array of real
   Standard_EXPORT void SetRealArr(const occ::handle<NCollection_HArray1<double>>& theHArr)
   {
     setArray(theHArr, DataTag_RealArr);
   }
 
-  //! returns array of real
   Standard_EXPORT occ::handle<NCollection_HArray1<double>> GetRealArr() const
   {
     return getRealArray(0, DataTag_RealArr);
   }
 
-  //! set reference to other object
   Standard_EXPORT void SetRef(const occ::handle<TObj_Object>& theOther)
   {
     setReference(theOther, RefTag_Other);
   }
 
-  //! return reference
   Standard_EXPORT occ::handle<TObj_Object> GetRef() const { return getReference(RefTag_Other); }
 
-  //! add child object
   Standard_EXPORT occ::handle<TObj_Object> AddChild()
   {
     TDF_Label aChL = getChildLabel(ChildTag_Child).NewChild();
@@ -108,18 +91,13 @@ public:
   }
 
 protected:
-  // Persistence of TObj object
   DECLARE_TOBJOCAF_PERSISTENCE(TObjDRAW_Object, TObj_Object)
 
 public:
-  // Declaration of CASCADE RTTI
   DEFINE_STANDARD_RTTI_INLINE(TObjDRAW_Object, TObj_Object)
 };
 
-// Definition of HANDLE object using Standard_DefineHandle.hpp
 IMPLEMENT_TOBJOCAF_PERSISTENCE(TObjDRAW_Object)
-
-//=================================================================================================
 
 static int newModel(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -135,7 +113,7 @@ static int newModel(Draw_Interpretor& di, int argc, const char** argv)
   if (!DDocStd::GetDocument(argv[1], D, false))
   {
     occ::handle<TObjDRAW_Model> aModel = new TObjDRAW_Model();
-    // initializes the new model: filename is empty
+
     aModel->Load("");
     D  = aModel->GetDocument();
     DD = new DDocStd_DrawDocument(D);
@@ -162,8 +140,6 @@ static occ::handle<TObj_Model> getModelByName(const char* theName)
     aModel = aModelAttr->Model();
   return aModel;
 }
-
-//=================================================================================================
 
 static int saveModel(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -209,8 +185,6 @@ static int saveModel(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int loadModel(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -234,7 +208,7 @@ static int loadModel(Draw_Interpretor& di, int argc, const char** argv)
   TCollection_ExtendedString aPath(argv[2], true);
   if (aModel.IsNull())
   {
-    // create new
+
     aModel = new TObjDRAW_Model();
     if (anUseStream)
     {
@@ -268,8 +242,6 @@ static int loadModel(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int closeModel(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 2)
@@ -285,8 +257,6 @@ static int closeModel(Draw_Interpretor& di, int argc, const char** argv)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int addObj(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -321,8 +291,6 @@ static occ::handle<TObjDRAW_Object> getObjByName(const char* modelName, const ch
   return tObj;
 }
 
-//=================================================================================================
-
 static int setVal(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 4)
@@ -349,8 +317,6 @@ static int setVal(Draw_Interpretor& di, int argc, const char** argv)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int getVal(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -383,8 +349,6 @@ static int getVal(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int setRef(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 4)
@@ -404,8 +368,6 @@ static int setRef(Draw_Interpretor& di, int argc, const char** argv)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int getRef(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -434,8 +396,6 @@ static int getRef(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int addChild(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 4)
@@ -460,8 +420,6 @@ static int addChild(Draw_Interpretor& di, int argc, const char** argv)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int getChildren(Draw_Interpretor& di, int argc, const char** argv)
 {
@@ -498,8 +456,6 @@ static int getChildren(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 static int hasModifications(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
@@ -519,8 +475,6 @@ static int hasModifications(Draw_Interpretor& di, int argc, const char** argv)
   return 0;
 }
 
-//=================================================================================================
-
 void TObjDRAW::Init(Draw_Interpretor& di)
 {
   static bool initactor = false;
@@ -529,10 +483,6 @@ void TObjDRAW::Init(Draw_Interpretor& di)
     return;
   }
   initactor = true;
-
-  //=====================================
-  // General commands
-  //=====================================
 
   const char* g = "TObj general commands";
 
@@ -598,19 +548,13 @@ void TObjDRAW::Init(Draw_Interpretor& di)
          g);
 }
 
-//==============================================================================
-// TObjDRAW::Factory
-
-//==============================================================================
 void TObjDRAW::Factory(Draw_Interpretor& theDI)
 {
-  // Initialize TObj OCAF formats
-  occ::handle<TDocStd_Application> anApp =
-    TObj_Application::GetInstance(); // DDocStd::GetApplication();
+
+  occ::handle<TDocStd_Application> anApp = TObj_Application::GetInstance();
   BinTObjDrivers::DefineFormat(anApp);
   XmlTObjDrivers::DefineFormat(anApp);
 
-  // define formats for TObj specific application
   BinTObjDrivers::DefineFormat(anApp);
   XmlTObjDrivers::DefineFormat(anApp);
 
@@ -621,5 +565,4 @@ void TObjDRAW::Factory(Draw_Interpretor& theDI)
 #endif
 }
 
-// Declare entry point PLUGINFACTORY
 DPLUGIN(TObjDRAW)

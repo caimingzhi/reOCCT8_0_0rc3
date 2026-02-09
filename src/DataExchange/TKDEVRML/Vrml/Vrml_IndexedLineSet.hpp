@@ -9,19 +9,6 @@
 #include <Standard_Transient.hpp>
 #include <Standard_OStream.hpp>
 
-//! defines a IndexedLineSet node of VRML specifying geometry shapes.
-//! This node represents a 3D shape formed by constructing polylines from vertices
-//! located at the current coordinates. IndexedLineSet uses the indices in its coordIndex
-//! field to specify the polylines. An index of -1 separates one polyline from the next
-//! (thus, a final -1 is optional). the current polyline has ended and the next one begins.
-//! Treatment of the current material and normal binding is as follows: The PER_PART binding
-//! specifies a material or normal for each segment of the line. The PER_FACE binding
-//! specifies a material or normal for each polyline. PER_VERTEX specifies a material or
-//! normal for each vertex. The corresponding _INDEXED bindings are the same, but use
-//! the materialIndex or normalIndex indices. The DEFAULT material binding is equal
-//! to OVERALL. The DEFAULT normal binding is equal to PER_VERTEX_INDEXED;
-//! if insufficient normals exist in the state, the lines will be drawn unlit. The same
-//! rules for texture coordinate generation as IndexedFaceSet are used.
 class Vrml_IndexedLineSet : public Standard_Transient
 {
 

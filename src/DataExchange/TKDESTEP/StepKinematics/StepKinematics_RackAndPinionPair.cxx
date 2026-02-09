@@ -1,15 +1,11 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_RackAndPinionPair.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_RackAndPinionPair,
                            StepKinematics_LowOrderKinematicPairWithMotionCoupling)
 
-//=================================================================================================
-
 StepKinematics_RackAndPinionPair::StepKinematics_RackAndPinionPair() = default;
-
-//=================================================================================================
 
 void StepKinematics_RackAndPinionPair::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -33,14 +29,10 @@ void StepKinematics_RackAndPinionPair::Init(
   myPinionRadius = thePinionRadius;
 }
 
-//=================================================================================================
-
 double StepKinematics_RackAndPinionPair::PinionRadius() const
 {
   return myPinionRadius;
 }
-
-//=================================================================================================
 
 void StepKinematics_RackAndPinionPair::SetPinionRadius(const double thePinionRadius)
 {

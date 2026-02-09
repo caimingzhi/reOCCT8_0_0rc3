@@ -19,27 +19,23 @@
 #include <TopoDS_Vertex.hpp>
 #include <TopoDS_Wire.hpp>
 
-//=================================================================================================
-
 ShapeUpgrade_ShapeDivide::ShapeUpgrade_ShapeDivide()
     : myStatus(0)
 {
   myPrecision = myMinTol = Precision::Confusion();
-  myMaxTol               = 1; // Precision::Infinite() ?? pdn
+  myMaxTol               = 1;
   mySplitFaceTool        = new ShapeUpgrade_FaceDivide;
   myContext              = new ShapeBuild_ReShape;
-  // myMsgReg = new ShapeExtend_BasicMsgRegistrator;
+
   mySegmentMode = true;
   myEdgeMode    = 2;
 }
-
-//=================================================================================================
 
 ShapeUpgrade_ShapeDivide::ShapeUpgrade_ShapeDivide(const TopoDS_Shape& S)
     : myStatus(0)
 {
   myPrecision = myMinTol = Precision::Confusion();
-  myMaxTol               = 1; // Precision::Infinite() ?? pdn
+  myMaxTol               = 1;
   mySplitFaceTool        = new ShapeUpgrade_FaceDivide;
   myContext              = new ShapeBuild_ReShape;
   mySegmentMode          = true;
@@ -47,46 +43,32 @@ ShapeUpgrade_ShapeDivide::ShapeUpgrade_ShapeDivide(const TopoDS_Shape& S)
   Init(S);
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_ShapeDivide::Init(const TopoDS_Shape& S)
 {
   myShape = S;
 }
 
-//=================================================================================================
-
 ShapeUpgrade_ShapeDivide::~ShapeUpgrade_ShapeDivide() = default;
-
-//=================================================================================================
 
 void ShapeUpgrade_ShapeDivide::SetPrecision(const double Prec)
 {
   myPrecision = Prec;
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_ShapeDivide::SetMaxTolerance(const double maxtol)
 {
   myMaxTol = maxtol;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_ShapeDivide::SetMinTolerance(const double mintol)
 {
   myMinTol = mintol;
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_ShapeDivide::SetSurfaceSegmentMode(const bool Segment)
 {
   mySegmentMode = Segment;
 }
-
-//=================================================================================================
 
 bool ShapeUpgrade_ShapeDivide::Perform(const bool newContext)
 {
@@ -100,8 +82,6 @@ bool ShapeUpgrade_ShapeDivide::Perform(const bool newContext)
   if (newContext || myContext.IsNull())
     myContext = new ShapeBuild_ReShape;
 
-  // Process COMPOUNDs separately in order to handle sharing in assemblies
-  // NOTE: not optimized: subshape can be processed twice (second time - no modif)
   if (myShape.ShapeType() == TopAbs_COMPOUND)
   {
     int             locStatus = myStatus;
@@ -139,7 +119,6 @@ bool ShapeUpgrade_ShapeDivide::Perform(const bool newContext)
     return false;
   }
 
-  // Process FACEs
   occ::handle<ShapeUpgrade_FaceDivide> SplitFace = GetSplitFaceTool();
   if (!SplitFace.IsNull())
   {
@@ -157,7 +136,7 @@ bool ShapeUpgrade_ShapeDivide::Perform(const bool newContext)
     for (TopExp_Explorer exp(myShape, TopAbs_FACE); exp.More(); exp.Next())
     {
       TopoDS_Shape tmpF = exp.Current().Oriented(TopAbs_FORWARD);
-      TopoDS_Face  F    = TopoDS::Face(tmpF); // protection against INTERNAL shapes: cts20105a.rle
+      TopoDS_Face  F    = TopoDS::Face(tmpF);
       TopoDS_Shape sh   = myContext->Apply(F, TopAbs_SHAPE);
       for (TopExp_Explorer exp2(sh, TopAbs_FACE); exp2.More(); exp2.Next())
       {
@@ -208,7 +187,6 @@ bool ShapeUpgrade_ShapeDivide::Perform(const bool newContext)
     }
   }
 
-  // Process free WIREs
   occ::handle<ShapeUpgrade_WireDivide> SplitWire = SplitFace->GetWireDivideTool();
   if (!SplitWire.IsNull())
   {
@@ -219,12 +197,12 @@ bool ShapeUpgrade_ShapeDivide::Perform(const bool newContext)
     SplitWire->SetEdgeMode(myEdgeMode);
     Message_Msg doneMsg = GetWireMsg();
 
-    TopExp_Explorer exp; // svv Jan 10 2000 : porting on DEC
+    TopExp_Explorer exp;
     for (exp.Init(myShape, TopAbs_WIRE, TopAbs_FACE); exp.More(); exp.Next())
     {
-      // smh#8
+
       TopoDS_Shape tmpW = exp.Current().Oriented(TopAbs_FORWARD);
-      TopoDS_Wire  W    = TopoDS::Wire(tmpW); // protection against INTERNAL shapes
+      TopoDS_Wire  W    = TopoDS::Wire(tmpW);
       TopoDS_Shape sh   = myContext->Apply(W, TopAbs_SHAPE);
       for (TopExp_Explorer exp2(sh, TopAbs_WIRE); exp2.More(); exp2.Next())
       {
@@ -245,19 +223,18 @@ bool ShapeUpgrade_ShapeDivide::Perform(const bool newContext)
       }
     }
 
-    // Process free EDGEs
     Message_Msg edgeDoneMsg = GetEdgeMsg();
     for (exp.Init(myShape, TopAbs_EDGE, TopAbs_WIRE); exp.More(); exp.Next())
     {
-      // smh#8
+
       TopoDS_Shape tmpE = exp.Current().Oriented(TopAbs_FORWARD);
-      // clang-format off
-      TopoDS_Edge E = TopoDS::Edge (tmpE );                                       // protection against INTERNAL shapes
-      // clang-format on
+
+      TopoDS_Edge E = TopoDS::Edge(tmpE);
+
       TopoDS_Vertex V1, V2;
       TopExp::Vertices(E, V2, V1);
       if (V1.IsNull() && V2.IsNull())
-        continue; // skl 27.10.2004 for OCC5624
+        continue;
       TopoDS_Shape sh = myContext->Apply(E, TopAbs_SHAPE);
       for (TopExp_Explorer exp2(sh, TopAbs_EDGE); exp2.More(); exp2.Next())
       {
@@ -282,29 +259,21 @@ bool ShapeUpgrade_ShapeDivide::Perform(const bool newContext)
   return !myResult.IsSame(myShape);
 }
 
-//=================================================================================================
-
 TopoDS_Shape ShapeUpgrade_ShapeDivide::Result() const
 {
   return myResult;
 }
 
-//=================================================================================================
-
 occ::handle<ShapeBuild_ReShape> ShapeUpgrade_ShapeDivide::GetContext() const
 {
-  // if ( myContext.IsNull() ) myContext = new ShapeBuild_ReShape;
+
   return myContext;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_ShapeDivide::SetContext(const occ::handle<ShapeBuild_ReShape>& context)
 {
   myContext = context;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_ShapeDivide::SetSplitFaceTool(
   const occ::handle<ShapeUpgrade_FaceDivide>& splitFaceTool)
@@ -312,28 +281,20 @@ void ShapeUpgrade_ShapeDivide::SetSplitFaceTool(
   mySplitFaceTool = splitFaceTool;
 }
 
-//=================================================================================================
-
 occ::handle<ShapeUpgrade_FaceDivide> ShapeUpgrade_ShapeDivide::GetSplitFaceTool() const
 {
   return mySplitFaceTool;
 }
-
-//=================================================================================================
 
 bool ShapeUpgrade_ShapeDivide::Status(const ShapeExtend_Status status) const
 {
   return ShapeExtend::DecodeStatus(myStatus, status);
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_ShapeDivide::SetEdgeMode(const int aEdgeMode)
 {
   myEdgeMode = aEdgeMode;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_ShapeDivide::SetMsgRegistrator(
   const occ::handle<ShapeExtend_BasicMsgRegistrator>& msgreg)
@@ -341,14 +302,10 @@ void ShapeUpgrade_ShapeDivide::SetMsgRegistrator(
   myMsgReg = msgreg;
 }
 
-//=================================================================================================
-
 occ::handle<ShapeExtend_BasicMsgRegistrator> ShapeUpgrade_ShapeDivide::MsgRegistrator() const
 {
   return myMsgReg;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_ShapeDivide::SendMsg(const TopoDS_Shape&   shape,
                                        const Message_Msg&    message,

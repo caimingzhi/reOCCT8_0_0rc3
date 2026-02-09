@@ -14,7 +14,6 @@ class StepShape_FaceSurface : public StepShape_Face
 {
 
 public:
-  //! Returns a FaceSurface
   Standard_EXPORT StepShape_FaceSurface();
 
   Standard_EXPORT void Init(

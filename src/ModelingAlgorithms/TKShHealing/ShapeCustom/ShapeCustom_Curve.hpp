@@ -6,7 +6,6 @@
 
 class Geom_Curve;
 
-//! Converts BSpline curve to periodic
 class ShapeCustom_Curve
 {
 public:
@@ -18,11 +17,6 @@ public:
 
   Standard_EXPORT void Init(const occ::handle<Geom_Curve>& C);
 
-  //! Tries to convert the Curve to the Periodic form
-  //! Returns the resulting curve
-  //! Works only if the Curve is BSpline and is closed with
-  //! Precision::Confusion()
-  //! Else, or in case of failure, returns a Null Handle
   Standard_EXPORT occ::handle<Geom_Curve> ConvertToPeriodic(const bool   substitute,
                                                             const double preci = -1);
 

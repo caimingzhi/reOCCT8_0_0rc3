@@ -28,15 +28,13 @@
 #include <TopoDS_Shape.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//=================================================================================================
-
 ShapeUpgrade_ShapeConvertToBezier::ShapeUpgrade_ShapeConvertToBezier()
 {
   myLevel       = 0;
   my2dMode      = false;
   my3dMode      = false;
   mySurfaceMode = false;
-  // set spesial flags to true
+
   my3dLineMode     = true;
   my3dCircleMode   = true;
   my3dConicMode    = true;
@@ -45,8 +43,6 @@ ShapeUpgrade_ShapeConvertToBezier::ShapeUpgrade_ShapeConvertToBezier()
   myExtrusionMode  = true;
   myBSplineMode    = true;
 }
-
-//=================================================================================================
 
 ShapeUpgrade_ShapeConvertToBezier::ShapeUpgrade_ShapeConvertToBezier(const TopoDS_Shape& S)
     : ShapeUpgrade_ShapeDivide(S)
@@ -55,7 +51,7 @@ ShapeUpgrade_ShapeConvertToBezier::ShapeUpgrade_ShapeConvertToBezier(const TopoD
   my2dMode      = false;
   my3dMode      = false;
   mySurfaceMode = false;
-  // set spesial flags to true
+
   my3dLineMode     = true;
   my3dCircleMode   = true;
   my3dConicMode    = true;
@@ -64,8 +60,6 @@ ShapeUpgrade_ShapeConvertToBezier::ShapeUpgrade_ShapeConvertToBezier(const TopoD
   myExtrusionMode  = true;
   myBSplineMode    = true;
 }
-
-//=================================================================================================
 
 bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
 {
@@ -95,12 +89,7 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
   }
   else
     res = ShapeUpgrade_ShapeDivide::Perform(newContext);
-  // pdn Hereafter the fix on GeomLib:SameParameter.
-  // In order to fix this bug all edges that are based on
-  // bezier curves (2d or 3d) and have range not equal to [0,1]
-  // are performed the following sequence:
-  //  1. Segment on bezier curve
-  //  2. Changing rande of edge to [0,1]
+
   if (myLevel == 1)
   {
     BRep_Builder       B;
@@ -116,12 +105,12 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
         TopoDS_Wire                wire = TopoDS::Wire(exp1.Current());
         occ::handle<ShapeFix_Wire> sfw  = new ShapeFix_Wire(wire, face, myPrecision);
         sfw->FixReorder();
-        sfw->FixShifted(); // for cylinders.brep
+        sfw->FixShifted();
         occ::handle<ShapeExtend_WireData> sewd = sfw->WireData();
         for (int i = 1; i <= sewd->NbEdges(); i++)
         {
           TopoDS_Edge edge = sewd->Edge(i);
-          // TopoDS_Edge edge = TopoDS::Edge(exp1.Current());
+
           occ::handle<Geom_Curve> c3d;
           double                  first, last;
           TopoDS_Vertex           V1, V2;
@@ -130,7 +119,7 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
           {
             if (c3d->IsKind(STANDARD_TYPE(Geom_BezierCurve)))
             {
-              // B.SameRange(edge, false);
+
               occ::handle<Geom_BezierCurve> bezier = occ::down_cast<Geom_BezierCurve>(c3d);
               if (first != 0 || last != 1)
               {
@@ -142,7 +131,7 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
                 sbe.SetRange3d(edge, 0, 1);
               }
               if (!bezier.IsNull())
-              { // gka fix against small edges ; merging ends of 3d curves
+              {
                 gp_Pnt p1  = bezier->Value(first);
                 gp_Pnt p2  = bezier->Value(last);
                 gp_Pnt p1v = BRep_Tool::Pnt(V1);
@@ -170,7 +159,7 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
           {
             TopoDS_Shape aLocalShape = edge.Reversed();
             TopoDS_Edge  tmpedge     = TopoDS::Edge(aLocalShape);
-            //	   TopoDS_Edge tmpedge = TopoDS::Edge(edge.Reversed());
+
             if (sae.PCurve(tmpedge, face, c2drev, first, last, false))
             {
               if (c2drev->IsKind(STANDARD_TYPE(Geom2d_BezierCurve)))
@@ -217,12 +206,12 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
           if (!c2dnext->IsKind(STANDARD_TYPE(Geom2d_BezierCurve)))
             continue;
           beziernext = occ::down_cast<Geom2d_BezierCurve>(c2dnext);
-          // occ::handle<Geom2d_Curve> newRevCurve;
+
           if (isSeam)
           {
             TopoDS_Shape aLocalShape = edgenext.Reversed();
             TopoDS_Edge  tmpedge     = TopoDS::Edge(aLocalShape);
-            //	    TopoDS_Edge tmpedge = TopoDS::Edge(edgenext.Reversed());
+
             if (sae.PCurve(tmpedge, face, c2drevnext, first, last, false))
             {
               if (c2drevnext->IsKind(STANDARD_TYPE(Geom2d_BezierCurve)))
@@ -260,9 +249,9 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
             B.Range(edgenext, face, 0, 1);
           }
 
-          // clang-format off
-	  if(bezier.IsNull()  || beziernext.IsNull() ) continue; //gka fix against small edges ; merging ends of pcurves
-          // clang-format on
+          if (bezier.IsNull() || beziernext.IsNull())
+            continue;
+
           double f1, l1, f2, l2;
           f1                = bezier->FirstParameter();
           l1                = bezier->LastParameter();
@@ -277,8 +266,7 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
             if (p2d2.Distance(p2d1next) > Precision::PConfusion())
             {
               gp_Pnt2d pmid = 0.5 * (p2d2.XY() + p2d1next.XY());
-              //	      gp_Pnt2d p1 =  bezier->Pole(bezier->NbPoles());
-              //	      gp_Pnt2d p2 =  beziernext->Pole(1);
+
               bezier->SetPole(bezier->NbPoles(), pmid);
               beziernext->SetPole(1, pmid);
             }
@@ -288,8 +276,7 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
             if (p2d2.Distance(p2d2next) > Precision::PConfusion())
             {
               gp_Pnt2d pmid = 0.5 * (p2d2.XY() + p2d2next.XY());
-              //	      gp_Pnt2d p1 =  bezier->Pole(bezier->NbPoles());
-              //	      gp_Pnt2d p2 =  beziernext->Pole(beziernext->NbPoles());
+
               bezier->SetPole(bezier->NbPoles(), pmid);
               beziernext->SetPole(beziernext->NbPoles(), pmid);
             }
@@ -299,8 +286,7 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
             if (p2d1.Distance(p2d1next) > Precision::PConfusion())
             {
               gp_Pnt2d pmid = 0.5 * (p2d1.XY() + p2d1next.XY());
-              //	      gp_Pnt2d p1 =  bezier->Pole(1);
-              //	      gp_Pnt2d p2 =  beziernext->Pole(1);
+
               bezier->SetPole(1, pmid);
               beziernext->SetPole(1, pmid);
             }
@@ -310,8 +296,7 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
             if (p2d1.Distance(p2d2next) > Precision::PConfusion())
             {
               gp_Pnt2d pmid = 0.5 * (p2d1.XY() + p2d2next.XY());
-              //	      gp_Pnt2d p1 =  bezier->Pole(1);
-              //	      gp_Pnt2d p2 =  beziernext->Pole(beziernext->NbPoles());
+
               bezier->SetPole(1, pmid);
               beziernext->SetPole(beziernext->NbPoles(), pmid);
             }
@@ -326,8 +311,6 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
 
   return res;
 }
-
-//=================================================================================================
 
 occ::handle<ShapeUpgrade_FaceDivide> ShapeUpgrade_ShapeConvertToBezier::GetSplitFaceTool() const
 {

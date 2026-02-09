@@ -2,65 +2,15 @@
 
 #include <Standard_ProgramError.hpp>
 
-//!@file
-//! This header file defines a set of ASSERT macros intended for use
-//! in algorithms for debugging purposes and as a tool to organise
-//! checks for abnormal situations in the uniform way.
-//!
-//! In contrast to C assert() function that terminates the process, these
-//! macros provide choice of the action to be performed if assert failed,
-//! thus allowing execution to continue when possible.
-//! Except for the message for developer that appears only in Debug mode,
-//! the macros behave in the same way in both Release and Debug modes.
-//!
-//!
-//! The ASSERT macros differ in the way they react on a wrong situation:
-//! - Standard_ASSERT_RAISE:  raises exception Standard_ProgramError
-//! - Standard_ASSERT_RETURN: returns specified value (last argument may
-//!                           be left empty to return void)
-//! - Standard_ASSERT_SKIP:   does nothing
-//! - Standard_ASSERT_VOID:   does nothing; even does not evaluate first arg
-//!                           when in Release mode
-//! - Standard_ASSERT_INVOKE: causes unconditional assert
-//! - Standard_ASSERT:        base macro (used by other macros);
-//!                           does operation indicated in argument "todo"
-//!
-//! The assertion is assumed to fail if the first argument is
-//! evaluated to zero (false).
-//! The first argument is evaluated by all macros except Standard_ASSERT_VOID
-//! which does not evaluate first argument when in Release mode.
-//! The mode is triggered by preprocessor macro _DEBUG: if it is defined,
-//! Debug mode is assumed, Release otherwise.
-//!
-//! In debug mode, if condition is not satisfied the macros call
-//! Standard_ASSERT_INVOKE_ which:
-//! - on Windows (under VC++), stops code execution and prompts to attach
-//!   debugger to the process immediately.
-//! - on POSIX systems, prints message to cerr and raises signal SIGTRAP to stop
-//!   execution when under debugger (may terminate the process if not under debugger).
-//!
-//! The second argument (message) should be string constant ("...").
-//!
-//! The Standard_STATIC_ASSERT macro is to be used for compile time checks.
-//! To use this macro, write:
-//!
-//!   Standard_STATIC_ASSERT(const_expression);
-//!
-//! If const_expression is false, a compiler error occurs.
-//!
-//! The macros are formed as functions and require semicolon at the end.
-
-// Stub function used to make macros complete C++ operator
 inline void Standard_ASSERT_DO_NOTHING() {}
 
-// User messages are activated in debug mode only
 #ifdef _DEBUG
   #if (defined(_WIN32) || defined(__WIN32__))
     #if defined(_MSC_VER) || defined(__MINGW64__)
-      // VS-specific intrinsic
+
       #define Standard_ASSERT_DBGBREAK_() __debugbreak()
     #else
-      // WinAPI function
+
       #include <windows.h>
       #define Standard_ASSERT_DBGBREAK_() DebugBreak()
     #endif
@@ -68,7 +18,7 @@ inline void Standard_ASSERT_DO_NOTHING() {}
     #include <emscripten.h>
     #define Standard_ASSERT_DBGBREAK_() emscripten_debugger()
   #else
-    // POSIX systems
+
     #include <signal.h>
     #define Standard_ASSERT_DBGBREAK_() raise(SIGTRAP)
   #endif
@@ -76,14 +26,12 @@ inline void Standard_ASSERT_DO_NOTHING() {}
   #if defined(_MSC_VER)
     #include <crtdbg.h>
 
-// use debug CRT built-in function that show up message box to user
-// with formatted assert description and 3 possible actions
 inline bool Standard_ASSERT_REPORT_(const char* theFile,
                                     const int   theLine,
                                     const char* theExpr,
                                     const char* theDesc)
 {
-  // 1 means user pressed Retry button
+
   return _CrtDbgReport(_CRT_ASSERT,
                        theFile,
                        theLine,
@@ -94,7 +42,7 @@ inline bool Standard_ASSERT_REPORT_(const char* theFile,
          == 1;
 }
   #else
-// just log assertion description into standard error stream
+
 inline bool Standard_ASSERT_REPORT_(const char* theFile,
                                     const int   theLine,
                                     const char* theExpr,
@@ -111,7 +59,6 @@ inline bool Standard_ASSERT_REPORT_(const char* theFile,
 }
   #endif
 
-  // report issue and add debug breakpoint or abort execution
   #define Standard_ASSERT_INVOKE_(theExpr, theDesc)                                                \
     if (Standard_ASSERT_REPORT_(__FILE__, __LINE__, #theExpr, theDesc))                            \
     {                                                                                              \
@@ -120,7 +67,6 @@ inline bool Standard_ASSERT_REPORT_(const char* theFile,
     else                                                                                           \
       Standard_ASSERT_DO_NOTHING()
 
-  // Basic ASSERT macros
   #define Standard_ASSERT(theExpr, theDesc, theAction)                                             \
     if (!(theExpr))                                                                                \
     {                                                                                              \
@@ -135,10 +81,8 @@ inline bool Standard_ASSERT_REPORT_(const char* theFile,
     Standard_ASSERT(theExpr, theDesc, Standard_VOID_RETURN)
 #else
 
-  // dummy block
   #define Standard_ASSERT_INVOKE_(theExpr, theDesc) Standard_ASSERT_DO_NOTHING()
 
-  // Basic ASSERT macros
   #define Standard_ASSERT(theExpr, theDesc, theAction)                                             \
     if (!(theExpr))                                                                                \
     {                                                                                              \
@@ -151,43 +95,30 @@ inline bool Standard_ASSERT_REPORT_(const char* theFile,
 
 #endif
 
-//! Raise exception (Standard_ProgramError) with the provided message
 #define Standard_ASSERT_RAISE(theExpr, theDesc)                                                    \
   Standard_ASSERT(theExpr,                                                                         \
                   theDesc,                                                                         \
                   throw Standard_ProgramError("*** ERROR: ASSERT in file '" __FILE__               \
                                               "': \n" theDesc " (" #theExpr ")"))
 
-//! Empty return value for use with Standard_ASSERT_RETURN in void functions.
-//! Using this macro instead of empty argument prevents clang-tidy from corrupting the code.
-// NOLINTBEGIN(modernize-use-nullptr)
 #define Standard_VOID_RETURN
-// NOLINTEND(modernize-use-nullptr)
 
-//! Return from the current function with specified value.
-//! Use Standard_VOID_RETURN as theReturnValue for void functions.
 #define Standard_ASSERT_RETURN(theExpr, theDesc, theReturnValue)                                   \
   Standard_ASSERT(theExpr, theDesc, return theReturnValue)
 
-//! Raise debug message
 #define Standard_ASSERT_INVOKE(theDesc) Standard_ASSERT_INVOKE_(always, theDesc)
 
-//! Static assert --
-//! empty default template
 template <bool condition>
 struct Standard_Static_Assert
 {
 };
 
-//! Static assert -- specialization for condition being true
 template <>
 struct Standard_Static_Assert<true>
 {
   static void assert_ok() {}
 };
 
-//! Cause compiler error if argument is not constant expression or
-//! evaluates to false
 #define Standard_STATIC_ASSERT(theExpr) Standard_Static_Assert<theExpr>::assert_ok();
 
 #ifdef _MSC_VER

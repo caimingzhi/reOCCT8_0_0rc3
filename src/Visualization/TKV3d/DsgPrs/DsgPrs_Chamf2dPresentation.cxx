@@ -35,11 +35,6 @@ void DsgPrs_Chamf2dPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, aPntEnd);
 }
 
-//==========================================================================
-// function : DsgPrs_Chamf2dPresentation::Add
-// purpose  : it is possible to choose the symbol of extremities of the face (arrow, point ...)
-//==========================================================================
-
 void DsgPrs_Chamf2dPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                      const occ::handle<Prs3d_Drawer>&       aDrawer,
                                      const gp_Pnt&                          aPntAttach,

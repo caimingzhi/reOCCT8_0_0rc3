@@ -29,15 +29,12 @@
 #include <NCollection_List.hpp>
 #include <TopTools_ShapeMapHasher.hpp>
 #include <algorithm>
-//
 
 static void TotalShapes(const TopoDS_Shape&                                     aS,
                         int&                                                    aNbS,
                         NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& aMS);
 
 static double ComputeParameter(const TopoDS_Vertex& aV, const TopoDS_Edge& aE);
-
-//=================================================================================================
 
 BOPDS_DS::BOPDS_DS()
     : myAllocator(NCollection_BaseAllocator::CommonBaseAllocator()),
@@ -67,8 +64,6 @@ BOPDS_DS::BOPDS_DS()
   myNbSourceShapes = 0;
 }
 
-//=================================================================================================
-
 BOPDS_DS::BOPDS_DS(const occ::handle<NCollection_BaseAllocator>& theAllocator)
     : myAllocator(theAllocator),
       myArguments(myAllocator),
@@ -97,20 +92,16 @@ BOPDS_DS::BOPDS_DS(const occ::handle<NCollection_BaseAllocator>& theAllocator)
   myNbSourceShapes = 0;
 }
 
-//=================================================================================================
-
 BOPDS_DS::~BOPDS_DS()
 {
   Clear();
 }
 
-//=================================================================================================
-
 void BOPDS_DS::Clear()
 {
   myNbShapes       = 0;
   myNbSourceShapes = 0;
-  //
+
   myArguments.Clear();
   myRanges.Clear();
   myLines.Clear();
@@ -134,61 +125,45 @@ void BOPDS_DS::Clear()
   myInterfered.Clear();
 }
 
-//=================================================================================================
-
 void BOPDS_DS::SetArguments(const NCollection_List<TopoDS_Shape>& theLS)
 {
   myArguments = theLS;
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BOPDS_DS::Arguments() const
 {
   return myArguments;
 }
 
-//=================================================================================================
-
 const occ::handle<NCollection_BaseAllocator>& BOPDS_DS::Allocator() const
 {
   return myAllocator;
 }
-
-//=================================================================================================
 
 int BOPDS_DS::NbShapes() const
 {
   return myLines.Size();
 }
 
-//=================================================================================================
-
 int BOPDS_DS::NbSourceShapes() const
 {
   return myNbSourceShapes;
 }
-
-//=================================================================================================
 
 int BOPDS_DS::NbRanges() const
 {
   return myRanges.Size();
 }
 
-//=================================================================================================
-
 const BOPDS_IndexRange& BOPDS_DS::Range(const int theI) const
 {
   return myRanges(theI);
 }
 
-//=================================================================================================
-
 int BOPDS_DS::Rank(const int theI) const
 {
   int i, aNb, iErr;
-  //
+
   iErr = -1;
   aNb  = NbRanges();
   for (i = 0; i < aNb; ++i)
@@ -202,57 +177,45 @@ int BOPDS_DS::Rank(const int theI) const
   return iErr;
 }
 
-//=================================================================================================
-
 bool BOPDS_DS::IsNewShape(const int theI) const
 {
   return theI >= NbSourceShapes();
 }
 
-//=================================================================================================
-
 int BOPDS_DS::Append(const BOPDS_ShapeInfo& theSI)
 {
   int iX;
-  //
+
   myLines.Appended() = theSI;
   iX                 = myLines.Length() - 1;
   myMapShapeIndex.Bind(theSI.Shape(), iX);
-  //
+
   return iX;
 }
-
-//=================================================================================================
 
 int BOPDS_DS::Append(const TopoDS_Shape& theS)
 {
   int iX;
-  //
+
   myLines.Appended().SetShape(theS);
   iX = myLines.Length() - 1;
   myMapShapeIndex.Bind(theS, iX);
   return iX;
 }
 
-//=================================================================================================
-
 const BOPDS_ShapeInfo& BOPDS_DS::ShapeInfo(const int theI) const
 {
   return myLines(theI);
 }
 
-//=================================================================================================
-
 BOPDS_ShapeInfo& BOPDS_DS::ChangeShapeInfo(const int theI)
 {
   BOPDS_ShapeInfo* pSI;
-  //
+
   const BOPDS_ShapeInfo& aSI = ShapeInfo(theI);
   pSI                        = (BOPDS_ShapeInfo*)&aSI;
   return *pSI;
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& BOPDS_DS::Shape(const int theI) const
 {
@@ -261,16 +224,12 @@ const TopoDS_Shape& BOPDS_DS::Shape(const int theI) const
   return aS;
 }
 
-//=================================================================================================
-
 int BOPDS_DS::Index(const TopoDS_Shape& theS) const
 {
   int anIndex = -1;
   myMapShapeIndex.Find(theS, anIndex);
   return anIndex;
 }
-
-//=================================================================================================
 
 void BOPDS_DS::Init(const double theFuzz)
 {
@@ -284,34 +243,32 @@ void BOPDS_DS::Init(const double theFuzz)
   BOPDS_IndexRange                                       aR;
   occ::handle<NCollection_BaseAllocator>                 aAllocator;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMS;
-  //
-  // 1 Append Source Shapes
+
   aNb = myArguments.Extent();
   if (!aNb)
   {
     return;
   }
-  //
+
   myRanges.SetIncrement(aNb);
-  //
+
   aNbS = 0;
   aIt.Initialize(myArguments);
   for (; aIt.More(); aIt.Next())
   {
     const TopoDS_Shape& aSx = aIt.Value();
-    //
+
     aNbSx = 0;
     TotalShapes(aSx, aNbSx, aMS);
-    //
+
     aNbS = aNbS + aNbSx;
   }
   aMS.Clear();
-  //
+
   myLines.SetIncrement(2 * aNbS);
-  //-----------------------------------------------------scope_1 f
+
   aAllocator = NCollection_BaseAllocator::CommonBaseAllocator();
-  //
-  //
+
   i1 = 0;
   i2 = 0;
   aIt.Initialize(myArguments);
@@ -323,29 +280,26 @@ void BOPDS_DS::Init(const double theFuzz)
       continue;
     }
     aI = Append(aS);
-    //
+
     InitShape(aI, aS);
-    //
+
     i2 = NbShapes() - 1;
     aR.SetIndices(i1, i2);
     myRanges.Append(aR);
     i1 = i2 + 1;
   }
-  //
+
   aTolAdd          = std::max(theFuzz, Precision::Confusion()) * 0.5;
   myNbSourceShapes = NbShapes();
-  //
-  // 2 Bounding Boxes
-  //
-  // 2.1 Vertex
+
   for (j = 0; j < myNbSourceShapes; ++j)
   {
     BOPDS_ShapeInfo& aSI = ChangeShapeInfo(j);
-    //
+
     const TopoDS_Shape& aS = aSI.Shape();
-    //
+
     aTS = aSI.ShapeType();
-    //
+
     if (aTS == TopAbs_VERTEX)
     {
       Bnd_Box&             aBox = aSI.ChangeBox();
@@ -356,19 +310,19 @@ void BOPDS_DS::Init(const double theFuzz)
       aBox.Add(aP);
     }
   }
-  // 2.2 Edge
+
   aNbE = 0;
   for (j = 0; j < myNbSourceShapes; ++j)
   {
     BOPDS_ShapeInfo& aSI = ChangeShapeInfo(j);
-    //
+
     aTS = aSI.ShapeType();
     if (aTS == TopAbs_EDGE)
     {
       const TopoDS_Shape& aS = aSI.Shape();
       const TopoDS_Edge&  aE = *((TopoDS_Edge*)&aS);
       aTol                   = BRep_Tool::Tolerance(aE);
-      //
+
       if (!BRep_Tool::Degenerated(aE))
       {
         bool                    bInf1, bInf2;
@@ -380,26 +334,26 @@ void BOPDS_DS::Init(const double theFuzz)
         TopoDS_Edge             aEx;
         BRep_Builder            aBB;
         BOPDS_ShapeInfo         aSIx;
-        //
+
         NCollection_List<int>& aLI = aSI.ChangeSubShapes();
-        //
+
         aEx = aE;
         aEx.Orientation(TopAbs_FORWARD);
-        //
+
         aC3D  = BRep_Tool::Curve(aEx, aT1, aT2);
         bInf1 = Precision::IsNegativeInfinite(aT1);
         bInf2 = Precision::IsPositiveInfinite(aT2);
-        //
+
         if (bInf1)
         {
           aC3D->D0(aT1, aPx);
           aBB.MakeVertex(aVx, aPx, aTol);
           aVx.Orientation(TopAbs_FORWARD);
-          //
+
           aSIx.SetShape(aVx);
           aSIx.SetShapeType(TopAbs_VERTEX);
-          aSIx.SetFlag(1); // infinite flag
-          //
+          aSIx.SetFlag(1);
+
           aIx = Append(aSIx);
           aLI.Append(aIx);
         }
@@ -408,11 +362,11 @@ void BOPDS_DS::Init(const double theFuzz)
           aC3D->D0(aT2, aPx);
           aBB.MakeVertex(aVx, aPx, aTol);
           aVx.Orientation(TopAbs_REVERSED);
-          //
+
           aSIx.SetShape(aVx);
           aSIx.SetShapeType(TopAbs_VERTEX);
-          aSIx.SetFlag(1); // infinite flag
-          //
+          aSIx.SetFlag(1);
+
           aIx = Append(aSIx);
           aLI.Append(aIx);
         }
@@ -421,10 +375,10 @@ void BOPDS_DS::Init(const double theFuzz)
       {
         aSI.SetFlag(j);
       }
-      //
+
       Bnd_Box& aBox = aSI.ChangeBox();
       BRepBndLib::Add(aE, aBox);
-      //
+
       const NCollection_List<int>& aLV = aSI.SubShapes();
       aIt1.Initialize(aLV);
       for (; aIt1.More(); aIt1.Next())
@@ -438,30 +392,30 @@ void BOPDS_DS::Init(const double theFuzz)
       ++aNbE;
     }
   }
-  // 2.3 Face
+
   NCollection_Map<int>           aMI(100, aAllocator);
   NCollection_Map<int>::Iterator aItMI;
-  //
+
   aNbF = 0;
   for (j = 0; j < myNbSourceShapes; ++j)
   {
     BOPDS_ShapeInfo& aSI = ChangeShapeInfo(j);
-    //
+
     aTS = aSI.ShapeType();
     if (aTS == TopAbs_FACE)
     {
       const TopoDS_Shape& aS = aSI.Shape();
-      //
+
       Bnd_Box& aBox = aSI.ChangeBox();
       BRepBndLib::Add(aS, aBox);
-      //
+
       NCollection_List<int>& aLW = aSI.ChangeSubShapes();
       aIt1.Initialize(aLW);
       for (; aIt1.More(); aIt1.Next())
       {
         nW                    = aIt1.Value();
         BOPDS_ShapeInfo& aSIW = ChangeShapeInfo(nW);
-        //
+
         const NCollection_List<int>& aLE = aSIW.SubShapes();
         aIt2.Initialize(aLE);
         for (; aIt2.More(); aIt2.Next())
@@ -471,13 +425,13 @@ void BOPDS_DS::Init(const double theFuzz)
           Bnd_Box&         aBx  = aSIE.ChangeBox();
           aBox.Add(aBx);
           aMI.Add(nE);
-          //
+
           const TopoDS_Edge& aE = *(TopoDS_Edge*)(&aSIE.Shape());
           if (BRep_Tool::Degenerated(aE))
           {
             aSIE.SetFlag(j);
           }
-          //
+
           const NCollection_List<int>& aLV = aSIE.SubShapes();
           aIt3.Initialize(aLV);
           for (; aIt3.More(); aIt3.Next())
@@ -486,9 +440,8 @@ void BOPDS_DS::Init(const double theFuzz)
             aMI.Add(nV);
           }
         }
-      } // for (; aIt1.More(); aIt1.Next()) {
-      //
-      // pure internal vertices on the face
+      }
+
       aItS.Initialize(aS);
       for (; aItS.More(); aItS.Next())
       {
@@ -499,9 +452,7 @@ void BOPDS_DS::Init(const double theFuzz)
           aMI.Add(nV);
         }
       }
-      //
-      //
-      // For a Face: change wires for BRep sub-shapes
+
       aLW.Clear();
       aItMI.Initialize(aMI);
       for (; aItMI.More(); aItMI.Next())
@@ -512,19 +463,17 @@ void BOPDS_DS::Init(const double theFuzz)
       aMI.Clear();
       aBox.SetGap(aBox.GetGap() + aTolAdd);
       ++aNbF;
-    } // if (aTS==TopAbs_FACE) {
-  } // for (j=0; j<myNbSourceShapes; ++j) {
-  //
-  // For the check mode we need to compute the bounding box for solid.
-  // Otherwise, it will be computed on the building stage
+    }
+  }
+
   bool bCheckMode = (myArguments.Extent() == 1);
   if (bCheckMode)
   {
-    // 2.4 Solids
+
     for (j = 0; j < myNbSourceShapes; ++j)
     {
       BOPDS_ShapeInfo& aSI = ChangeShapeInfo(j);
-      //
+
       aTS = aSI.ShapeType();
       if (aTS != TopAbs_SOLID)
       {
@@ -532,12 +481,10 @@ void BOPDS_DS::Init(const double theFuzz)
       }
       Bnd_Box& aBox = aSI.ChangeBox();
       BuildBndBoxSolid(j, aBox);
-      //
-      //
-      // update sub-shapes by BRep comprising ones
+
       aMI.Clear();
       NCollection_List<int>& aLI1 = aSI.ChangeSubShapes();
-      //
+
       aIt1.Initialize(aLI1);
       for (; aIt1.More(); aIt1.Next())
       {
@@ -547,7 +494,7 @@ void BOPDS_DS::Init(const double theFuzz)
         {
           continue;
         }
-        //
+
         const NCollection_List<int>& aLI2 = aSI1.SubShapes();
         aIt2.Initialize(aLI2);
         for (; aIt2.More(); aIt2.Next())
@@ -558,9 +505,9 @@ void BOPDS_DS::Init(const double theFuzz)
           {
             continue;
           }
-          //
+
           aMI.Add(n2);
-          //
+
           const NCollection_List<int>& aLI3 = aSI2.SubShapes();
           aIt3.Initialize(aLI3);
           for (; aIt3.More(); aIt3.Next())
@@ -570,7 +517,7 @@ void BOPDS_DS::Init(const double theFuzz)
           }
         }
       }
-      //
+
       aLI1.Clear();
       aItMI.Initialize(aMI);
       for (; aItMI.More(); aItMI.Next())
@@ -579,13 +526,11 @@ void BOPDS_DS::Init(const double theFuzz)
         aLI1.Append(n1);
       }
       aMI.Clear();
-    } // for (j=0; j<myNbSourceShapes; ++j) {
+    }
   }
-  //
+
   aMI.Clear();
-  //-----------------------------------------------------
-  //
-  // Prepare Vertex-Edge connection map
+
   for (nE = 0; nE < myNbSourceShapes; ++nE)
   {
     BOPDS_ShapeInfo& aSI = ChangeShapeInfo(nE);
@@ -605,7 +550,7 @@ void BOPDS_DS::Init(const double theFuzz)
       }
       else
       {
-        // provide uniqueness of the edges in the list
+
         for (aIt2.Initialize(*pLE); aIt2.More(); aIt2.Next())
         {
           if (aIt2.Value() == nE)
@@ -616,42 +561,38 @@ void BOPDS_DS::Init(const double theFuzz)
       }
     }
   }
-  //-----------------------------------------------------scope_1 t
-  // 3 myPaveBlocksPool
-  // 4. myFaceInfoPool
+
   myPaveBlocksPool.SetIncrement(aNbE);
   myFaceInfoPool.SetIncrement(aNbF);
 }
-
-//=================================================================================================
 
 void BOPDS_DS::InitShape(const int aI, const TopoDS_Shape& aS)
 {
   int                             aIx;
   TopoDS_Iterator                 aIt;
   NCollection_List<int>::Iterator aIt1;
-  //
+
   BOPDS_ShapeInfo& aSI = ChangeShapeInfo(aI);
   aSI.SetShapeType(aS.ShapeType());
   NCollection_List<int>& aLI = aSI.ChangeSubShapes();
-  //
+
   NCollection_Map<int> aM;
-  //
+
   aIt1.Initialize(aLI);
   for (; aIt1.More(); aIt1.Next())
   {
     aM.Add(aIt1.Value());
   }
-  //
+
   aIt.Initialize(aS);
   for (; aIt.More(); aIt.Next())
   {
     const TopoDS_Shape& aSx = aIt.Value();
     const int*          pIx = myMapShapeIndex.Seek(aSx);
     aIx                     = (pIx ? *pIx : Append(aSx));
-    //
+
     InitShape(aIx, aSx);
-    //
+
     if (aM.Add(aIx))
     {
       aLI.Append(aIx);
@@ -659,15 +600,13 @@ void BOPDS_DS::InitShape(const int aI, const TopoDS_Shape& aS)
   }
 }
 
-//=================================================================================================
-
 bool BOPDS_DS::HasInterfShapeSubShapes(const int theI1, const int theI2, const bool theFlag) const
 {
   bool                            bRet;
   int                             n2;
   NCollection_List<int>::Iterator aIt;
   bRet = false;
-  //
+
   const BOPDS_ShapeInfo&       aSI = ShapeInfo(theI2);
   const NCollection_List<int>& aLI = aSI.SubShapes();
   aIt.Initialize(aLI);
@@ -693,15 +632,13 @@ bool BOPDS_DS::HasInterfShapeSubShapes(const int theI1, const int theI2, const b
   return bRet;
 }
 
-//=================================================================================================
-
 bool BOPDS_DS::HasInterfSubShapes(const int theI1, const int theI2) const
 {
   bool                            bRet;
   int                             n1;
   NCollection_List<int>::Iterator aIt;
   bRet = false;
-  //
+
   const BOPDS_ShapeInfo&       aSI = ShapeInfo(theI1);
   const NCollection_List<int>& aLI = aSI.SubShapes();
   aIt.Initialize(aLI);
@@ -717,37 +654,27 @@ bool BOPDS_DS::HasInterfSubShapes(const int theI1, const int theI2) const
   return bRet;
 }
 
-//
-// PaveBlocks
-//=================================================================================================
-
 const NCollection_Vector<NCollection_List<occ::handle<BOPDS_PaveBlock>>>& BOPDS_DS::PaveBlocksPool()
   const
 {
   return myPaveBlocksPool;
 }
 
-//=================================================================================================
-
 NCollection_Vector<NCollection_List<occ::handle<BOPDS_PaveBlock>>>& BOPDS_DS::ChangePaveBlocksPool()
 {
   return myPaveBlocksPool;
 }
-
-//=================================================================================================
 
 bool BOPDS_DS::HasPaveBlocks(const int theI) const
 {
   return ShapeInfo(theI).HasReference();
 }
 
-//=================================================================================================
-
 const NCollection_List<occ::handle<BOPDS_PaveBlock>>& BOPDS_DS::PaveBlocks(const int theI) const
 {
   static NCollection_List<occ::handle<BOPDS_PaveBlock>> sLPB;
   int                                                   aRef;
-  //
+
   if (HasPaveBlocks(theI))
   {
     aRef                                                       = ShapeInfo(theI).Reference();
@@ -757,25 +684,21 @@ const NCollection_List<occ::handle<BOPDS_PaveBlock>>& BOPDS_DS::PaveBlocks(const
   return sLPB;
 }
 
-//=================================================================================================
-
 NCollection_List<occ::handle<BOPDS_PaveBlock>>& BOPDS_DS::ChangePaveBlocks(const int theI)
 {
   bool bHasReference;
   int  aRef;
-  //
+
   BOPDS_ShapeInfo& aSI = ChangeShapeInfo(theI);
   bHasReference        = aSI.HasReference();
   if (!bHasReference)
   {
     InitPaveBlocks(theI);
   }
-  //
+
   aRef = aSI.Reference();
   return myPaveBlocksPool(aRef);
 }
-
-//=================================================================================================
 
 void BOPDS_DS::InitPaveBlocks(const int theI)
 {
@@ -786,28 +709,28 @@ void BOPDS_DS::InitPaveBlocks(const int theI)
   NCollection_List<int>::Iterator aIt;
   BOPDS_Pave                      aPave;
   occ::handle<BOPDS_PaveBlock>    aPB;
-  //
+
   BOPDS_ShapeInfo&   aSI = ChangeShapeInfo(theI);
   const TopoDS_Edge& aE  = *(TopoDS_Edge*)(&aSI.Shape());
   aOrE                   = aE.Orientation();
-  //
+
   const NCollection_List<int>& aLV = aSI.SubShapes();
   aNbV                             = aLV.Extent();
   if (!aNbV)
   {
     return;
   }
-  //
+
   aPB = new BOPDS_PaveBlock;
   aPB->SetOriginalEdge(theI);
-  //
+
   if (aOrE != TopAbs_INTERNAL)
   {
     aIt.Initialize(aLV);
     for (; aIt.More(); aIt.Next())
     {
       nV = aIt.Value();
-      //
+
       const BOPDS_ShapeInfo& aSIV = ShapeInfo(nV);
       aV                          = *(TopoDS_Vertex*)(&aSIV.Shape());
       if (aSIV.HasFlag())
@@ -818,7 +741,7 @@ void BOPDS_DS::InitPaveBlocks(const int theI)
       {
         aT = BRep_Tool::Parameter(aV, aE);
       }
-      //
+
       if (HasShapeSD(nV, nVSD))
       {
         nV = nVSD;
@@ -826,12 +749,12 @@ void BOPDS_DS::InitPaveBlocks(const int theI)
       aPave.SetIndex(nV);
       aPave.SetParameter(aT);
       if (aSI.HasFlag())
-        // for a degenerated edge append pave unconditionally
+
         aPB->AppendExtPave1(aPave);
       else
         aPB->AppendExtPave(aPave);
     }
-    //
+
     if (aNbV == 1)
     {
       aV.Reverse();
@@ -841,17 +764,17 @@ void BOPDS_DS::InitPaveBlocks(const int theI)
       aPB->AppendExtPave1(aPave);
     }
   }
-  //
+
   else
   {
     TopoDS_Iterator aItE;
-    //
+
     aItE.Initialize(aE, false, true);
     for (; aItE.More(); aItE.Next())
     {
       aV = *((TopoDS_Vertex*)&aItE.Value());
       nV = Index(aV);
-      //
+
       const BOPDS_ShapeInfo& aSIV = ShapeInfo(nV);
       if (aSIV.HasFlag())
       {
@@ -861,7 +784,7 @@ void BOPDS_DS::InitPaveBlocks(const int theI)
       {
         aT = BRep_Tool::Parameter(aV, aE);
       }
-      //
+
       if (HasShapeSD(nV, nVSD))
       {
         nV = nVSD;
@@ -871,51 +794,47 @@ void BOPDS_DS::InitPaveBlocks(const int theI)
       aPB->AppendExtPave1(aPave);
     }
   }
-  //
+
   NCollection_List<occ::handle<BOPDS_PaveBlock>>& aLPB = myPaveBlocksPool.Appended();
   iRef                                                 = myPaveBlocksPool.Length() - 1;
-  //
+
   aPB->Update(aLPB, false);
   aSI.SetReference(iRef);
 }
-
-//=================================================================================================
 
 void BOPDS_DS::UpdatePaveBlocks()
 {
   int                                                      i, aNbPBP;
   NCollection_List<occ::handle<BOPDS_PaveBlock>>           aLPBN(myAllocator);
   NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator aItPB;
-  //
+
   NCollection_Vector<NCollection_List<occ::handle<BOPDS_PaveBlock>>>& aPBP = myPaveBlocksPool;
-  //
+
   aNbPBP = aPBP.Size();
   for (i = 0; i < aNbPBP; ++i)
   {
     NCollection_List<occ::handle<BOPDS_PaveBlock>>& aLPB = aPBP(i);
-    //
+
     aItPB.Initialize(aLPB);
     for (; aItPB.More();)
     {
       occ::handle<BOPDS_PaveBlock>& aPB = aItPB.ChangeValue();
-      //
+
       if (!aPB->IsToUpdate())
       {
         aItPB.Next();
         continue;
       }
-      //
+
       aLPBN.Clear();
       aPB->Update(aLPBN);
-      //
-      aLPB.Remove(aItPB);
-      //
-      aLPB.Append(aLPBN);
-    } // for (; aItPB.More(); aItPB.Next()) {
-  } // for (i=0; i<aNbPBP; ++i) {
-}
 
-//=================================================================================================
+      aLPB.Remove(aItPB);
+
+      aLPB.Append(aLPBN);
+    }
+  }
+}
 
 void BOPDS_DS::UpdatePaveBlock(const occ::handle<BOPDS_PaveBlock>& thePB)
 {
@@ -923,19 +842,19 @@ void BOPDS_DS::UpdatePaveBlock(const occ::handle<BOPDS_PaveBlock>& thePB)
   {
     return;
   }
-  //
+
   int                                                      nE, iRef;
   NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator aItPB, aItPBN;
   NCollection_List<occ::handle<BOPDS_PaveBlock>>           aLPBN(myAllocator);
   occ::handle<BOPDS_PaveBlock>                             aPB;
-  //
+
   NCollection_Vector<NCollection_List<occ::handle<BOPDS_PaveBlock>>>& aPBP = myPaveBlocksPool;
-  //
+
   nE                                                   = thePB->OriginalEdge();
   BOPDS_ShapeInfo& aSI                                 = ChangeShapeInfo(nE);
   iRef                                                 = aSI.Reference();
   NCollection_List<occ::handle<BOPDS_PaveBlock>>& aLPB = aPBP(iRef);
-  //
+
   aItPB.Initialize(aLPB);
   for (; aItPB.More(); aItPB.Next())
   {
@@ -950,8 +869,6 @@ void BOPDS_DS::UpdatePaveBlock(const occ::handle<BOPDS_PaveBlock>& thePB)
   }
 }
 
-//=================================================================================================
-
 void BOPDS_DS::UpdateCommonBlock(const occ::handle<BOPDS_CommonBlock>& theCB, const double theFuzz)
 {
   int                                                      nE, iRef, n1, n2;
@@ -963,42 +880,42 @@ void BOPDS_DS::UpdateCommonBlock(const occ::handle<BOPDS_CommonBlock>& theCB, co
   occ::handle<BOPDS_PaveBlock>   aPB;
   occ::handle<BOPDS_CommonBlock> aCBx;
   BOPDS_Pair                     aPK;
-  //
+
   const NCollection_List<occ::handle<BOPDS_PaveBlock>>& aLPBCB = theCB->PaveBlocks();
   if (!aLPBCB.First()->IsToUpdate())
   {
     return;
   }
-  //
+
   const NCollection_List<int>& aLF = theCB->Faces();
-  //
+
   NCollection_Vector<NCollection_List<occ::handle<BOPDS_PaveBlock>>>& aPBP = myPaveBlocksPool;
-  //
+
   aItPBCB.Initialize(aLPBCB);
   for (; aItPBCB.More(); aItPBCB.Next())
   {
     const occ::handle<BOPDS_PaveBlock>& aPBCB = aItPBCB.ChangeValue();
-    //
+
     nE                                                   = aPBCB->OriginalEdge();
     iRef                                                 = ChangeShapeInfo(nE).Reference();
     NCollection_List<occ::handle<BOPDS_PaveBlock>>& aLPB = aPBP(iRef);
-    //
+
     aItPB.Initialize(aLPB);
     for (; aItPB.More(); aItPB.Next())
     {
       aPB = aItPB.ChangeValue();
       if (aPB == aPBCB)
       {
-        //
+
         aLPBN.Clear();
         aPB->Update(aLPBN);
-        //
+
         aItPBN.Initialize(aLPBN);
         for (; aItPBN.More(); aItPBN.Next())
         {
           occ::handle<BOPDS_PaveBlock>& aPBN = aItPBN.ChangeValue();
           aLPB.Append(aPBN);
-          //
+
           aPBN->Indices(n1, n2);
           aPK.SetIndices(n1, n2);
           if (aMPKLPB.IsBound(aPK))
@@ -1018,17 +935,17 @@ void BOPDS_DS::UpdateCommonBlock(const occ::handle<BOPDS_CommonBlock>& theCB, co
       }
     }
   }
-  //
+
   aItMPKLPB.Initialize(aMPKLPB);
   for (; aItMPKLPB.More(); aItMPKLPB.Next())
   {
     NCollection_List<occ::handle<BOPDS_PaveBlock>>& aLPBx = aItMPKLPB.ChangeValue();
-    //
+
     while (aLPBx.Extent())
     {
       bool                                           bCoinside;
       NCollection_List<occ::handle<BOPDS_PaveBlock>> aLPBxN;
-      //
+
       aItPB.Initialize(aLPBx);
       for (; aItPB.More();)
       {
@@ -1042,8 +959,8 @@ void BOPDS_DS::UpdateCommonBlock(const occ::handle<BOPDS_CommonBlock>& theCB, co
             aLPBxN.Append(aPBx);
             aLPBx.Remove(aItPB);
             continue;
-          } // if (bCoinside) {
-        } // if (aLPBxN.Extent()) {
+          }
+        }
         else
         {
           aLPBxN.Append(aPBx);
@@ -1051,12 +968,12 @@ void BOPDS_DS::UpdateCommonBlock(const occ::handle<BOPDS_CommonBlock>& theCB, co
           continue;
         }
         aItPB.Next();
-      } // for(; aItPB.More(); ) {
-      //
+      }
+
       aCBx = new BOPDS_CommonBlock;
       aCBx->SetPaveBlocks(aLPBxN);
       aCBx->SetFaces(aLF);
-      //
+
       aItPB.Initialize(aLPBxN);
       for (; aItPB.More(); aItPB.Next())
       {
@@ -1066,8 +983,6 @@ void BOPDS_DS::UpdateCommonBlock(const occ::handle<BOPDS_CommonBlock>& theCB, co
     }
   }
 }
-
-//=================================================================================================
 
 occ::handle<BOPDS_PaveBlock> BOPDS_DS::RealPaveBlock(
   const occ::handle<BOPDS_PaveBlock>& thePB) const
@@ -1081,8 +996,6 @@ occ::handle<BOPDS_PaveBlock> BOPDS_DS::RealPaveBlock(
   return thePB;
 }
 
-//=================================================================================================
-
 bool BOPDS_DS::IsCommonBlockOnEdge(const occ::handle<BOPDS_PaveBlock>& thePB) const
 {
   if (IsCommonBlock(thePB))
@@ -1093,22 +1006,16 @@ bool BOPDS_DS::IsCommonBlockOnEdge(const occ::handle<BOPDS_PaveBlock>& thePB) co
   return false;
 }
 
-//=================================================================================================
-
 bool BOPDS_DS::IsCommonBlock(const occ::handle<BOPDS_PaveBlock>& thePB) const
 {
   return myMapPBCB.IsBound(thePB);
 }
-
-//=================================================================================================
 
 occ::handle<BOPDS_CommonBlock> BOPDS_DS::CommonBlock(
   const occ::handle<BOPDS_PaveBlock>& thePB) const
 {
   return (IsCommonBlock(thePB) ? myMapPBCB.Find(thePB) : nullptr);
 }
-
-//=================================================================================================
 
 void BOPDS_DS::SetCommonBlock(const occ::handle<BOPDS_PaveBlock>&   thePB,
                               const occ::handle<BOPDS_CommonBlock>& theCB)
@@ -1124,31 +1031,21 @@ void BOPDS_DS::SetCommonBlock(const occ::handle<BOPDS_PaveBlock>&   thePB,
   }
 }
 
-//
-// FaceInfo
-//
-
-//=================================================================================================
-
 const NCollection_Vector<BOPDS_FaceInfo>& BOPDS_DS::FaceInfoPool() const
 {
   return myFaceInfoPool;
 }
-
-//=================================================================================================
 
 bool BOPDS_DS::HasFaceInfo(const int theI) const
 {
   return ShapeInfo(theI).HasReference();
 }
 
-//=================================================================================================
-
 const BOPDS_FaceInfo& BOPDS_DS::FaceInfo(const int theI) const
 {
   static BOPDS_FaceInfo sFI;
   int                   aRef;
-  //
+
   if (HasFaceInfo(theI))
   {
     aRef                      = ShapeInfo(theI).Reference();
@@ -1158,44 +1055,38 @@ const BOPDS_FaceInfo& BOPDS_DS::FaceInfo(const int theI) const
   return sFI;
 }
 
-//=================================================================================================
-
 BOPDS_FaceInfo& BOPDS_DS::ChangeFaceInfo(const int theI)
 {
   bool            bHasReference;
   int             aRef;
   BOPDS_FaceInfo* pFI;
-  //
+
   BOPDS_ShapeInfo& aSI = ChangeShapeInfo(theI);
   bHasReference        = aSI.HasReference();
   if (!bHasReference)
   {
     InitFaceInfo(theI);
   }
-  //
+
   aRef                      = aSI.Reference();
   const BOPDS_FaceInfo& aFI = myFaceInfoPool(aRef);
   pFI                       = (BOPDS_FaceInfo*)&aFI;
   return *pFI;
 }
 
-//=================================================================================================
-
 void BOPDS_DS::InitFaceInfo(const int theI)
 {
   int iRef;
-  //
+
   BOPDS_ShapeInfo& aSI = ChangeShapeInfo(theI);
   BOPDS_FaceInfo&  aFI = myFaceInfoPool.Appended();
   iRef                 = myFaceInfoPool.Length() - 1;
   aSI.SetReference(iRef);
-  //
+
   aFI.SetIndex(theI);
   InitFaceInfoIn(theI);
   UpdateFaceInfoOn(theI);
 }
-
-//=================================================================================================
 
 void BOPDS_DS::InitFaceInfoIn(const int theI)
 {
@@ -1217,18 +1108,16 @@ void BOPDS_DS::InitFaceInfoIn(const int theI)
   }
 }
 
-//=================================================================================================
-
 void BOPDS_DS::UpdateFaceInfoIn(const int theI)
 {
   int iRef;
-  //
+
   BOPDS_ShapeInfo& aSI = ChangeShapeInfo(theI);
   if (aSI.HasReference())
   {
     iRef                = aSI.Reference();
     BOPDS_FaceInfo& aFI = myFaceInfoPool(iRef);
-    //
+
     NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& aMPBIn = aFI.ChangePaveBlocksIn();
     NCollection_Map<int>&                                 aMVIn  = aFI.ChangeVerticesIn();
     aMPBIn.Clear();
@@ -1237,18 +1126,16 @@ void BOPDS_DS::UpdateFaceInfoIn(const int theI)
   }
 }
 
-//=================================================================================================
-
 void BOPDS_DS::UpdateFaceInfoOn(const int theI)
 {
   int iRef;
-  //
+
   BOPDS_ShapeInfo& aSI = ChangeShapeInfo(theI);
   if (aSI.HasReference())
   {
     iRef                = aSI.Reference();
     BOPDS_FaceInfo& aFI = myFaceInfoPool(iRef);
-    //
+
     NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& aMPBOn = aFI.ChangePaveBlocksOn();
     NCollection_Map<int>&                                 aMVOn  = aFI.ChangeVerticesOn();
     aMPBOn.Clear();
@@ -1257,8 +1144,6 @@ void BOPDS_DS::UpdateFaceInfoOn(const int theI)
   }
 }
 
-//=================================================================================================
-
 void BOPDS_DS::FaceInfoOn(const int                                             theF,
                           NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& theMPB,
                           NCollection_Map<int>&                                 theMI)
@@ -1266,7 +1151,7 @@ void BOPDS_DS::FaceInfoOn(const int                                             
   int                                                      nS, nSD, nV1, nV2;
   NCollection_List<int>::Iterator                          aIt;
   NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator aItPB;
-  //
+
   const BOPDS_ShapeInfo&       aSI = ShapeInfo(theF);
   const NCollection_List<int>& aLI = aSI.SubShapes();
   aIt.Initialize(aLI);
@@ -1287,10 +1172,10 @@ void BOPDS_DS::FaceInfoOn(const int                                             
         occ::handle<BOPDS_PaveBlock> aPBR = RealPaveBlock(aPB);
         theMPB.Add(aPBR);
       }
-    } // if (aSIE.ShapeType()==TopAbs_EDGE)
+    }
     else
     {
-      // nE is TopAbs_VERTEX
+
       if (HasShapeSD(nS, nSD))
       {
         nS = nSD;
@@ -1300,8 +1185,6 @@ void BOPDS_DS::FaceInfoOn(const int                                             
   }
 }
 
-//=================================================================================================
-
 void BOPDS_DS::FaceInfoIn(const int                                             theF,
                           NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& theMPB,
                           NCollection_Map<int>&                                 theMI)
@@ -1309,8 +1192,7 @@ void BOPDS_DS::FaceInfoIn(const int                                             
   int                                                      i, aNbVF, aNbEF, nV, nE, nVSD;
   TopoDS_Iterator                                          aItS;
   NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator aItPB;
-  //
-  // 1. Pure internal vertices on the face
+
   const TopoDS_Shape& aF = Shape(theF);
   aItS.Initialize(aF);
   for (; aItS.More(); aItS.Next())
@@ -1326,8 +1208,7 @@ void BOPDS_DS::FaceInfoIn(const int                                             
       theMI.Add(nV);
     }
   }
-  //
-  // 2. aVFs
+
   NCollection_Vector<BOPDS_InterfVF>& aVFs = InterfVF();
   aNbVF                                    = aVFs.Length();
   for (i = 0; i < aNbVF; ++i)
@@ -1343,8 +1224,7 @@ void BOPDS_DS::FaceInfoIn(const int                                             
       theMI.Add(nV);
     }
   }
-  //
-  // 3. aEFs
+
   NCollection_Vector<BOPDS_InterfEF>& aEFs = InterfEF();
   aNbEF                                    = aEFs.Length();
   for (i = 0; i < aNbEF; ++i)
@@ -1377,13 +1257,11 @@ void BOPDS_DS::FaceInfoIn(const int                                             
               theMPB.Add(aPB1);
             }
           }
-        } // for (; aItPB.More(); aItPB.Next()) {
-      } // else {
-    } // if(aEF.Contains(theF)) {
-  } // for (i=0; i<aNbEF; ++i) {
+        }
+      }
+    }
+  }
 }
-
-//=================================================================================================
 
 void BOPDS_DS::UpdateFaceInfoIn(const NCollection_Map<int>& theFaces)
 {
@@ -1400,11 +1278,9 @@ void BOPDS_DS::UpdateFaceInfoIn(const NCollection_Map<int>& theFaces)
     aFI.ChangePaveBlocksIn().Clear();
     aFI.ChangeVerticesIn().Clear();
 
-    // 1. Add pure internal vertices on the face
     InitFaceInfoIn(nF);
   }
 
-  // 2. Analyze Vertex-Face interferences
   NCollection_Vector<BOPDS_InterfVF>& aVFs  = InterfVF();
   const int                           aNbVF = aVFs.Length();
   for (int iVF = 0; iVF < aNbVF; ++iVF)
@@ -1418,8 +1294,7 @@ void BOPDS_DS::UpdateFaceInfoIn(const NCollection_Map<int>& theFaces)
       myFaceInfoPool(ShapeInfo(nF).Reference()).ChangeVerticesIn().Add(nV);
     }
   }
-  //
-  // 3. Analyze Edge-Face interferences
+
   NCollection_Vector<BOPDS_InterfEF>& aEFs  = InterfEF();
   const int                           aNbEF = aEFs.Length();
   for (int iEF = 0; iEF < aNbEF; ++iEF)
@@ -1458,8 +1333,6 @@ void BOPDS_DS::UpdateFaceInfoIn(const NCollection_Map<int>& theFaces)
   }
 }
 
-//=================================================================================================
-
 void BOPDS_DS::UpdateFaceInfoOn(const NCollection_Map<int>& theFaces)
 {
   for (NCollection_Map<int>::Iterator itM(theFaces); itM.More(); itM.Next())
@@ -1479,13 +1352,11 @@ void BOPDS_DS::UpdateFaceInfoOn(const NCollection_Map<int>& theFaces)
   }
 }
 
-//=================================================================================================
-
 void BOPDS_DS::RefineFaceInfoOn()
 {
   int                                                  i, aNb, nF, aNbPB, j;
   NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>> aMPB;
-  //
+
   aNb = myFaceInfoPool.Length();
   for (i = 0; i < aNb; ++i)
   {
@@ -1493,11 +1364,11 @@ void BOPDS_DS::RefineFaceInfoOn()
     nF                  = aFI.Index();
     UpdateFaceInfoOn(nF);
     NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& aMPBOn = aFI.ChangePaveBlocksOn();
-    //
+
     aMPB.Clear();
     aMPB.Assign(aMPBOn);
     aMPBOn.Clear();
-    //
+
     aNbPB = aMPB.Extent();
     for (j = 1; j <= aNbPB; ++j)
     {
@@ -1509,8 +1380,6 @@ void BOPDS_DS::RefineFaceInfoOn()
     }
   }
 }
-
-//=================================================================================================
 
 void BOPDS_DS::RefineFaceInfoIn()
 {
@@ -1545,20 +1414,18 @@ void BOPDS_DS::RefineFaceInfoIn()
   }
 }
 
-//=================================================================================================
-
 void BOPDS_DS::AloneVertices(const int theI, NCollection_List<int>& theLI) const
 {
   if (HasFaceInfo(theI))
   {
-    //
+
     int                            i, j, nV1, nV2, nV, aNbPB;
     NCollection_Map<int>::Iterator aItMI;
-    //
+
     NCollection_Map<int> aMI(100, myAllocator);
-    //
+
     const BOPDS_FaceInfo& aFI = FaceInfo(theI);
-    //
+
     for (i = 0; i < 2; ++i)
     {
       const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& aMPB =
@@ -1572,7 +1439,7 @@ void BOPDS_DS::AloneVertices(const int theI, NCollection_List<int>& theLI) const
         aMI.Add(nV2);
       }
     }
-    //
+
     for (i = 0; i < 2; ++i)
     {
       const NCollection_Map<int>& aMIV = (!i) ? aFI.VerticesIn() : aFI.VerticesSc();
@@ -1592,8 +1459,6 @@ void BOPDS_DS::AloneVertices(const int theI, NCollection_List<int>& theLI) const
   }
 }
 
-//=================================================================================================
-
 void BOPDS_DS::SubShapesOnIn(const int                                             theNF1,
                              const int                                             theNF2,
                              NCollection_Map<int>&                                 theMVOnIn,
@@ -1604,15 +1469,15 @@ void BOPDS_DS::SubShapesOnIn(const int                                          
   int                                                  i, j, nV, nV1, nV2, aNbPB;
   NCollection_Map<int>::Iterator                       aIt;
   NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>> pMPB[4];
-  //
+
   const BOPDS_FaceInfo& aFI1 = FaceInfo(theNF1);
   const BOPDS_FaceInfo& aFI2 = FaceInfo(theNF2);
-  //
+
   pMPB[0] = aFI1.PaveBlocksOn();
   pMPB[1] = aFI1.PaveBlocksIn();
   pMPB[2] = aFI2.PaveBlocksOn();
   pMPB[3] = aFI2.PaveBlocksIn();
-  //
+
   for (i = 0; i < 4; ++i)
   {
     aNbPB = pMPB[i].Extent();
@@ -1636,12 +1501,12 @@ void BOPDS_DS::SubShapesOnIn(const int                                          
       }
     }
   }
-  //
+
   const NCollection_Map<int>& aMVOn1 = aFI1.VerticesOn();
   const NCollection_Map<int>& aMVIn1 = aFI1.VerticesIn();
   const NCollection_Map<int>& aMVOn2 = aFI2.VerticesOn();
   const NCollection_Map<int>& aMVIn2 = aFI2.VerticesIn();
-  //
+
   for (i = 0; i < 2; ++i)
   {
     const NCollection_Map<int>& aMV1 = (!i) ? aMVOn1 : aMVIn1;
@@ -1653,14 +1518,11 @@ void BOPDS_DS::SubShapesOnIn(const int                                          
       {
         theMVOnIn.Add(nV);
 
-        // Vertex taken from the 1st face is in the 2nd one.
         theMVCommon.Add(nV);
       }
     }
   }
 }
-
-//=================================================================================================
 
 void BOPDS_DS::SharedEdges(const int                                     nF1,
                            const int                                     nF2,
@@ -1671,7 +1533,7 @@ void BOPDS_DS::SharedEdges(const int                                     nF1,
   NCollection_List<int>::Iterator                          aItLI;
   NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator aItLPB;
   NCollection_Map<int>                                     aMI(100, aAllocator);
-  //
+
   const BOPDS_ShapeInfo&       aSI1 = ShapeInfo(nF1);
   const NCollection_List<int>& aLI1 = aSI1.SubShapes();
   aItLI.Initialize(aLI1);
@@ -1698,7 +1560,7 @@ void BOPDS_DS::SharedEdges(const int                                     nF1,
       }
     }
   }
-  //
+
   const BOPDS_ShapeInfo&       aSI2 = ShapeInfo(nF2);
   const NCollection_List<int>& aLI2 = aSI2.SubShapes();
   aItLI.Initialize(aLI2);
@@ -1733,26 +1595,16 @@ void BOPDS_DS::SharedEdges(const int                                     nF1,
   }
 }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-// same domain shapes
-//
-//=================================================================================================
-
 NCollection_DataMap<int, int>& BOPDS_DS::ShapesSD()
 {
   return myShapesSD;
 }
-
-//=================================================================================================
 
 void BOPDS_DS::AddShapeSD(const int theIndex, const int theIndexSD)
 {
   if (theIndex != theIndexSD)
     myShapesSD.Bind(theIndex, theIndexSD);
 }
-
-//=================================================================================================
 
 bool BOPDS_DS::HasShapeSD(const int theIndex, int& theIndexSD) const
 {
@@ -1767,12 +1619,10 @@ bool BOPDS_DS::HasShapeSD(const int theIndex, int& theIndexSD) const
   return bHasSD;
 }
 
-//=================================================================================================
-
 void BOPDS_DS::Dump() const
 {
   int i, aNb, aNbSS;
-  //
+
   printf(" *** DS ***\n");
   aNb = NbRanges();
   printf(" Ranges:%d\n", aNb);
@@ -1782,7 +1632,7 @@ void BOPDS_DS::Dump() const
     aR.Dump();
     printf("\n");
   }
-  //
+
   aNbSS = NbSourceShapes();
   printf(" Shapes:%d\n", aNbSS);
   aNb = NbShapes();
@@ -1800,8 +1650,6 @@ void BOPDS_DS::Dump() const
   printf(" ******\n");
 }
 
-//=================================================================================================
-
 bool BOPDS_DS::CheckCoincidence(const occ::handle<BOPDS_PaveBlock>& aPB1,
                                 const occ::handle<BOPDS_PaveBlock>& aPB2,
                                 const double                        theFuzz)
@@ -1810,19 +1658,19 @@ bool BOPDS_DS::CheckCoincidence(const occ::handle<BOPDS_PaveBlock>& aPB1,
   int    nE1, nE2, aNbPoints;
   double aT11, aT12, aT21, aT22, aT1m, aD, aTol, aT2x;
   gp_Pnt aP1m;
-  //
+
   bRet = false;
-  //
+
   aPB1->Range(aT11, aT12);
   aT1m                   = IntTools_Tools::IntermediatePoint(aT11, aT12);
   nE1                    = aPB1->OriginalEdge();
   const TopoDS_Edge& aE1 = (*(TopoDS_Edge*)(&Shape(nE1)));
   BOPTools_AlgoTools::PointOnEdge(aE1, aT1m, aP1m);
-  //
+
   aPB2->Range(aT21, aT22);
   nE2                    = aPB2->OriginalEdge();
   const TopoDS_Edge& aE2 = (*(TopoDS_Edge*)(&Shape(nE2)));
-  //
+
   double                      f, l;
   occ::handle<Geom_Curve>     aC2 = BRep_Tool::Curve(aE2, f, l);
   GeomAPI_ProjectPointOnCurve aPPC;
@@ -1832,7 +1680,7 @@ bool BOPDS_DS::CheckCoincidence(const occ::handle<BOPDS_PaveBlock>& aPB1,
   if (aNbPoints)
   {
     aD = aPPC.LowerDistance();
-    //
+
     aTol = BRep_Tool::MaxTolerance(aE1, TopAbs_VERTEX);
     aTol = aTol + BRep_Tool::MaxTolerance(aE2, TopAbs_VERTEX)
            + std::max(theFuzz, Precision::Confusion());
@@ -1848,16 +1696,14 @@ bool BOPDS_DS::CheckCoincidence(const occ::handle<BOPDS_PaveBlock>& aPB1,
   return bRet;
 }
 
-//=================================================================================================
-
 bool BOPDS_DS::IsSubShape(const int theI1, const int theI2)
 {
   bool bRet;
   int  nS;
   bRet = false;
-  //
+
   NCollection_List<int>::Iterator aItLI;
-  //
+
   const BOPDS_ShapeInfo&       aSI = ShapeInfo(theI2);
   const NCollection_List<int>& aLI = aSI.SubShapes();
   aItLI.Initialize(aLI);
@@ -1874,23 +1720,21 @@ bool BOPDS_DS::IsSubShape(const int theI1, const int theI2)
   return bRet;
 }
 
-//=================================================================================================
-
 void BOPDS_DS::Paves(const int theEdge, NCollection_List<BOPDS_Pave>& theLP)
 {
   int                                                      aNb, i;
   NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator aIt;
   NCollection_Map<BOPDS_Pave>                              aMP;
-  //
+
   const NCollection_List<occ::handle<BOPDS_PaveBlock>>& aLPB = PaveBlocks(theEdge);
   aNb                                                        = aLPB.Extent() + 1;
   if (aNb == 1)
   {
     return;
   }
-  //
+
   NCollection_Array1<BOPDS_Pave> pPaves(1, aNb);
-  //
+
   i = 1;
   aIt.Initialize(aLPB);
   for (; aIt.More(); aIt.Next())
@@ -1898,31 +1742,29 @@ void BOPDS_DS::Paves(const int theEdge, NCollection_List<BOPDS_Pave>& theLP)
     const occ::handle<BOPDS_PaveBlock>& aPB    = aIt.Value();
     const BOPDS_Pave&                   aPave1 = aPB->Pave1();
     const BOPDS_Pave&                   aPave2 = aPB->Pave2();
-    //
+
     if (aMP.Add(aPave1))
     {
       pPaves(i) = aPave1;
       ++i;
     }
-    //
+
     if (aMP.Add(aPave2))
     {
       pPaves(i) = aPave2;
       ++i;
     }
   }
-  //
+
   Standard_ASSERT_VOID(aNb == aMP.Extent(), "Abnormal number of paves");
-  //
+
   std::sort(pPaves.begin(), pPaves.end());
-  //
+
   for (i = 1; i <= aNb; ++i)
   {
     theLP.Append(pPaves(i));
   }
 }
-
-//=================================================================================================
 
 void TotalShapes(const TopoDS_Shape&                                     aS,
                  int&                                                    aNbS,
@@ -1941,45 +1783,41 @@ void TotalShapes(const TopoDS_Shape&                                     aS,
   }
 }
 
-//=================================================================================================
-
 double ComputeParameter(const TopoDS_Vertex& aV, const TopoDS_Edge& aE)
 {
   double                  aT1, aT2, aTRet, aTolE2, aD2;
   gp_Pnt                  aPC, aPV;
   occ::handle<Geom_Curve> aC3D;
   TopoDS_Edge             aEE;
-  //
+
   aEE = aE;
   aEE.Orientation(TopAbs_FORWARD);
-  //
+
   aTRet = 0.;
-  //
+
   aTolE2 = BRep_Tool::Tolerance(aE);
   aTolE2 = aTolE2 * aTolE2;
-  //
+
   aPV = BRep_Tool::Pnt(aV);
-  //
+
   aC3D = BRep_Tool::Curve(aEE, aT1, aT2);
-  //
+
   aC3D->D0(aT1, aPC);
   aD2 = aPC.SquareDistance(aPV);
   if (aD2 < aTolE2)
   {
     aTRet = aT1;
   }
-  //
+
   aC3D->D0(aT2, aPC);
   aD2 = aPC.SquareDistance(aPV);
   if (aD2 < aTolE2)
   {
     aTRet = aT2;
   }
-  //
+
   return aTRet;
 }
-
-//=================================================================================================
 
 void BOPDS_DS::BuildBndBoxSolid(const int theIndex, Bnd_Box& aBoxS, const bool theCheckInverted)
 {
@@ -1987,13 +1825,13 @@ void BOPDS_DS::BuildBndBoxSolid(const int theIndex, Bnd_Box& aBoxS, const bool t
   int                             nSh, nFc;
   double                          aTolS, aTolFc;
   NCollection_List<int>::Iterator aItLI, aItLI1;
-  //
+
   const BOPDS_ShapeInfo& aSI    = ShapeInfo(theIndex);
   const TopoDS_Shape&    aS     = aSI.Shape();
   const TopoDS_Solid&    aSolid = (*(TopoDS_Solid*)(&aS));
-  //
+
   bIsOpenBox = false;
-  //
+
   aTolS                              = 0.;
   const NCollection_List<int>& aLISh = aSI.SubShapes();
   aItLI.Initialize(aLISh);
@@ -2005,7 +1843,7 @@ void BOPDS_DS::BuildBndBoxSolid(const int theIndex, Bnd_Box& aBoxS, const bool t
     {
       continue;
     }
-    //
+
     const NCollection_List<int>& aLIFc = aSISh.SubShapes();
     aItLI1.Initialize(aLIFc);
     for (; aItLI1.More(); aItLI1.Next())
@@ -2016,10 +1854,10 @@ void BOPDS_DS::BuildBndBoxSolid(const int theIndex, Bnd_Box& aBoxS, const bool t
       {
         continue;
       }
-      //
+
       const Bnd_Box& aBFc = aSIFc.Box();
       aBoxS.Add(aBFc);
-      //
+
       if (!bIsOpenBox)
       {
         bIsOpenBox = (aBFc.IsOpenXmin() || aBFc.IsOpenXmax() || aBFc.IsOpenYmin()
@@ -2029,27 +1867,27 @@ void BOPDS_DS::BuildBndBoxSolid(const int theIndex, Bnd_Box& aBoxS, const bool t
           break;
         }
       }
-      //
+
       const TopoDS_Face& aFc = *((TopoDS_Face*)&aSIFc.Shape());
       aTolFc                 = BRep_Tool::Tolerance(aFc);
       if (aTolFc > aTolS)
       {
         aTolS = aTolFc;
       }
-    } // for (; aItLI1.More(); aItLI1.Next()) {
+    }
     if (bIsOpenBox)
     {
       break;
     }
-    //
+
     const TopoDS_Shell& aSh = *((TopoDS_Shell*)&aSISh.Shape());
     bIsOpenBox              = BOPTools_AlgoTools::IsOpenShell(aSh);
     if (bIsOpenBox)
     {
       break;
     }
-  } // for (; aItLI.More(); aItLI.Next()) {
-  //
+  }
+
   if (bIsOpenBox)
   {
     aBoxS.SetWhole();
@@ -2064,56 +1902,50 @@ void BOPDS_DS::BuildBndBoxSolid(const int theIndex, Bnd_Box& aBoxS, const bool t
   }
 }
 
-//=================================================================================================
-
 void BOPDS_DS::UpdatePaveBlocksWithSDVertices()
 {
   int                                                      i, aNbPBP;
   NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator aItPB;
-  //
+
   NCollection_Vector<NCollection_List<occ::handle<BOPDS_PaveBlock>>>& aPBP = myPaveBlocksPool;
-  //
+
   aNbPBP = aPBP.Size();
   for (i = 0; i < aNbPBP; ++i)
   {
     NCollection_List<occ::handle<BOPDS_PaveBlock>>& aLPB = aPBP(i);
-    //
+
     aItPB.Initialize(aLPB);
     for (; aItPB.More(); aItPB.Next())
     {
       occ::handle<BOPDS_PaveBlock>& aPB = aItPB.ChangeValue();
       UpdatePaveBlockWithSDVertices(aPB);
-    } // for (; aItPB.More(); aItPB.Next()) {
-  } // for (i = 0; i < aNbPBP; ++i) {
+    }
+  }
 }
-
-//=================================================================================================
 
 void BOPDS_DS::UpdatePaveBlockWithSDVertices(const occ::handle<BOPDS_PaveBlock>& thePB)
 {
   int        nV1, nV2;
   BOPDS_Pave aPave1, aPave2;
-  //
+
   aPave1 = thePB->Pave1();
   aPave2 = thePB->Pave2();
-  //
+
   nV1 = aPave1.Index();
   nV2 = aPave2.Index();
-  //
+
   if (HasShapeSD(nV1, nV1))
   {
     aPave1.SetIndex(nV1);
     thePB->SetPave1(aPave1);
   }
-  //
+
   if (HasShapeSD(nV2, nV2))
   {
     aPave2.SetIndex(nV2);
     thePB->SetPave2(aPave2);
   }
 }
-
-//=================================================================================================
 
 void BOPDS_DS::UpdateCommonBlockWithSDVertices(const occ::handle<BOPDS_CommonBlock>& theCB)
 {
@@ -2126,8 +1958,6 @@ void BOPDS_DS::UpdateCommonBlockWithSDVertices(const occ::handle<BOPDS_CommonBlo
   }
 }
 
-//=================================================================================================
-
 void BOPDS_DS::InitPaveBlocksForVertex(const int theNV)
 {
   const NCollection_List<int>* pLE = myMapVE.Seek(theNV);
@@ -2139,19 +1969,8 @@ void BOPDS_DS::InitPaveBlocksForVertex(const int theNV)
     ChangePaveBlocks(aItLE.Value());
 }
 
-//=================================================================================================
-
 void BOPDS_DS::ReleasePaveBlocks()
 {
-  // It is necessary to remove the reference to PaveBlocks for the untouched
-  // edges to avoid creation of the same images for them.
-  // Pave blocks for this reference should be cleared.
-  // This will allow to differ the small edges, for which it is
-  // impossible to even build a pave block from the normal edges for which the
-  // pave block have been created, but stayed untouched.
-  // The small edge, for which no pave blocks have been created,
-  // should be avoided in the result, thus the reference to empty list
-  // of pave blocks will stay to mark the edge as Deleted.
 
   NCollection_Vector<NCollection_List<occ::handle<BOPDS_PaveBlock>>>& aPBP = ChangePaveBlocksPool();
   int                                                                 aNbPBP = aPBP.Length();
@@ -2159,7 +1978,7 @@ void BOPDS_DS::ReleasePaveBlocks()
   {
     return;
   }
-  //
+
   for (int i = 0; i < aNbPBP; ++i)
   {
     NCollection_List<occ::handle<BOPDS_PaveBlock>>& aLPB = aPBP(i);
@@ -2172,14 +1991,13 @@ void BOPDS_DS::ReleasePaveBlocks()
         aPB->Indices(nV1, nV2);
         if (!IsNewShape(nV1) && !IsNewShape(nV2))
         {
-          // Both vertices are original, thus the PB is untouched.
-          // Remove reference for the original edge
+
           int nE = aPB->OriginalEdge();
           if (nE >= 0)
           {
             ChangeShapeInfo(nE).SetReference(-1);
           }
-          // Clear contents of the list
+
           aLPB.Clear();
         }
       }
@@ -2187,42 +2005,34 @@ void BOPDS_DS::ReleasePaveBlocks()
   }
 }
 
-//=================================================================================================
-
 bool BOPDS_DS::IsValidShrunkData(const occ::handle<BOPDS_PaveBlock>& thePB)
 {
   if (!thePB->HasShrunkData())
     return false;
 
-  // Compare the distances from the bounds of the shrunk range to the vertices
-  // with the tolerance values of vertices
-
-  // Shrunk range
   double  aTS[2];
   Bnd_Box aBox;
   bool    bIsSplit;
-  //
+
   thePB->ShrunkData(aTS[0], aTS[1], aBox, bIsSplit);
-  //
-  // Vertices
+
   int nV[2];
   thePB->Indices(nV[0], nV[1]);
-  //
+
   const TopoDS_Edge& aE = TopoDS::Edge(Shape(thePB->OriginalEdge()));
   BRepAdaptor_Curve  aBAC(aE);
-  //
+
   double anEps = BRep_Tool::Tolerance(aE) * 0.01;
-  //
+
   for (int i = 0; i < 2; ++i)
   {
     const TopoDS_Vertex& aV   = TopoDS::Vertex(Shape(nV[i]));
     double               aTol = BRep_Tool::Tolerance(aV) + Precision::Confusion();
-    // Bounding point
+
     gp_Pnt aP = BRep_Tool::Pnt(aV);
-    //
-    // Point on the end of shrunk range
+
     gp_Pnt aPS = aBAC.Value(aTS[i]);
-    //
+
     double aDist = aP.Distance(aPS);
     if (aTol - aDist > anEps)
     {

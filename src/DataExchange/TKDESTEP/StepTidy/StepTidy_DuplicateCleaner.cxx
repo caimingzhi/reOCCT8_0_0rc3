@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <StepTidy_DuplicateCleaner.hpp>
 
@@ -25,14 +14,10 @@
 #include <StepData_StepModel.hpp>
 #include <utility>
 
-//==================================================================================================
-
 StepTidy_DuplicateCleaner::StepTidy_DuplicateCleaner(occ::handle<XSControl_WorkSession> theWS)
     : myWS(std::move(theWS))
 {
 }
-
-//==================================================================================================
 
 void StepTidy_DuplicateCleaner::Perform()
 {
@@ -42,7 +27,6 @@ void StepTidy_DuplicateCleaner::Perform()
     return;
   }
 
-  //! Initialize Reducers.
   StepTidy_CartesianPointReducer   aCartesianPointReducer(myWS);
   StepTidy_DirectionReducer        aDirectionReducer(myWS);
   StepTidy_Axis2Placement3dReducer aAxis2Placement3dReducer(myWS);
@@ -51,7 +35,6 @@ void StepTidy_DuplicateCleaner::Perform()
   StepTidy_PlaneReducer            aPlaneReducer(myWS);
   StepTidy_CircleReducer           aCircleReducer(myWS);
 
-  // Process all entities.
   for (int anIndex = 1; anIndex <= aModel->NbEntities(); ++anIndex)
   {
     const occ::handle<Standard_Transient> anEntity = aModel->Value(anIndex);
@@ -64,7 +47,6 @@ void StepTidy_DuplicateCleaner::Perform()
     aCircleReducer.ProcessEntity(anEntity);
   }
 
-  // Perform replacement of duplicate entities.
   NCollection_Map<occ::handle<Standard_Transient>> aReplacedEntities;
   aCartesianPointReducer.Perform(aReplacedEntities);
   aDirectionReducer.Perform(aReplacedEntities);
@@ -74,11 +56,8 @@ void StepTidy_DuplicateCleaner::Perform()
   aPlaneReducer.Perform(aReplacedEntities);
   aCircleReducer.Perform(aReplacedEntities);
 
-  // Remove duplicate entities.
   removeEntities(aReplacedEntities);
 }
-
-//==================================================================================================
 
 void StepTidy_DuplicateCleaner::removeEntities(
   const NCollection_Map<occ::handle<Standard_Transient>>& theToRemove)
@@ -87,7 +66,7 @@ void StepTidy_DuplicateCleaner::removeEntities(
   {
     return;
   }
-  // Remove entities.
+
   occ::handle<StepData_StepModel> anIntermediateModel = new StepData_StepModel();
   occ::handle<StepData_StepModel> aReadModel = occ::down_cast<StepData_StepModel>(myWS->Model());
   anIntermediateModel->SetProtocol(aReadModel->Protocol());
@@ -105,7 +84,6 @@ void StepTidy_DuplicateCleaner::removeEntities(
   myWS->SetModel(anIntermediateModel);
   myWS->ComputeGraph();
 
-  // Clean hanged entities.
   occ::handle<StepData_StepModel> aNewModel = new StepData_StepModel();
   aNewModel->SetProtocol(anIntermediateModel->Protocol());
   aNewModel->SetGTool(anIntermediateModel->GTool());

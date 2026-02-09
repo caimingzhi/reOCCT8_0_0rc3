@@ -10,8 +10,6 @@
 
 IMPLEMENT_DERIVED_ATTRIBUTE(TDataStd_NoteBook, TDataStd_GenericEmpty)
 
-//=================================================================================================
-
 bool TDataStd_NoteBook::Find(const TDF_Label& current, occ::handle<TDataStd_NoteBook>& N)
 {
   TDF_Label                      L = current;
@@ -36,8 +34,6 @@ bool TDataStd_NoteBook::Find(const TDF_Label& current, occ::handle<TDataStd_Note
   return false;
 }
 
-//=================================================================================================
-
 occ::handle<TDataStd_NoteBook> TDataStd_NoteBook::New(const TDF_Label& label)
 {
   if (label.HasAttribute())
@@ -46,11 +42,9 @@ occ::handle<TDataStd_NoteBook> TDataStd_NoteBook::New(const TDF_Label& label)
   }
   occ::handle<TDataStd_NoteBook> NB = new TDataStd_NoteBook();
   label.AddAttribute(NB);
-  TDF_TagSource::Set(label); // distributeur de sous label
+  TDF_TagSource::Set(label);
   return NB;
 }
-
-//=================================================================================================
 
 const Standard_GUID& TDataStd_NoteBook::GetID()
 {
@@ -58,11 +52,7 @@ const Standard_GUID& TDataStd_NoteBook::GetID()
   return TDataStd_NoteBookID;
 }
 
-//=================================================================================================
-
 TDataStd_NoteBook::TDataStd_NoteBook() = default;
-
-//=================================================================================================
 
 occ::handle<TDataStd_Real> TDataStd_NoteBook::Append(const double value, const bool)
 {
@@ -71,8 +61,6 @@ occ::handle<TDataStd_Real> TDataStd_NoteBook::Append(const double value, const b
   return variable;
 }
 
-//=================================================================================================
-
 occ::handle<TDataStd_Integer> TDataStd_NoteBook::Append(const int value, const bool)
 {
   TDF_Label                     newlabel = TDF_TagSource::NewChild(Label());
@@ -80,14 +68,10 @@ occ::handle<TDataStd_Integer> TDataStd_NoteBook::Append(const int value, const b
   return variable;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_NoteBook::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 Standard_OStream& TDataStd_NoteBook::Dump(Standard_OStream& anOS) const
 {

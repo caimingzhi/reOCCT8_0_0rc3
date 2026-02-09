@@ -1,10 +1,8 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_CylindricalPairWithRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_CylindricalPairWithRange, StepKinematics_CylindricalPair)
-
-//=================================================================================================
 
 StepKinematics_CylindricalPairWithRange::StepKinematics_CylindricalPairWithRange()
 {
@@ -13,8 +11,6 @@ StepKinematics_CylindricalPairWithRange::StepKinematics_CylindricalPairWithRange
   defLowerLimitActualRotation    = false;
   defUpperLimitActualRotation    = false;
 }
-
-//=================================================================================================
 
 void StepKinematics_CylindricalPairWithRange::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -86,14 +82,10 @@ void StepKinematics_CylindricalPairWithRange::Init(
     myUpperLimitActualRotation = 0;
 }
 
-//=================================================================================================
-
 double StepKinematics_CylindricalPairWithRange::LowerLimitActualTranslation() const
 {
   return myLowerLimitActualTranslation;
 }
-
-//=================================================================================================
 
 void StepKinematics_CylindricalPairWithRange::SetLowerLimitActualTranslation(
   const double theLowerLimitActualTranslation)
@@ -101,21 +93,15 @@ void StepKinematics_CylindricalPairWithRange::SetLowerLimitActualTranslation(
   myLowerLimitActualTranslation = theLowerLimitActualTranslation;
 }
 
-//=================================================================================================
-
 bool StepKinematics_CylindricalPairWithRange::HasLowerLimitActualTranslation() const
 {
   return defLowerLimitActualTranslation;
 }
 
-//=================================================================================================
-
 double StepKinematics_CylindricalPairWithRange::UpperLimitActualTranslation() const
 {
   return myUpperLimitActualTranslation;
 }
-
-//=================================================================================================
 
 void StepKinematics_CylindricalPairWithRange::SetUpperLimitActualTranslation(
   const double theUpperLimitActualTranslation)
@@ -123,21 +109,15 @@ void StepKinematics_CylindricalPairWithRange::SetUpperLimitActualTranslation(
   myUpperLimitActualTranslation = theUpperLimitActualTranslation;
 }
 
-//=================================================================================================
-
 bool StepKinematics_CylindricalPairWithRange::HasUpperLimitActualTranslation() const
 {
   return defUpperLimitActualTranslation;
 }
 
-//=================================================================================================
-
 double StepKinematics_CylindricalPairWithRange::LowerLimitActualRotation() const
 {
   return myLowerLimitActualRotation;
 }
-
-//=================================================================================================
 
 void StepKinematics_CylindricalPairWithRange::SetLowerLimitActualRotation(
   const double theLowerLimitActualRotation)
@@ -145,29 +125,21 @@ void StepKinematics_CylindricalPairWithRange::SetLowerLimitActualRotation(
   myLowerLimitActualRotation = theLowerLimitActualRotation;
 }
 
-//=================================================================================================
-
 bool StepKinematics_CylindricalPairWithRange::HasLowerLimitActualRotation() const
 {
   return defLowerLimitActualRotation;
 }
-
-//=================================================================================================
 
 double StepKinematics_CylindricalPairWithRange::UpperLimitActualRotation() const
 {
   return myUpperLimitActualRotation;
 }
 
-//=================================================================================================
-
 void StepKinematics_CylindricalPairWithRange::SetUpperLimitActualRotation(
   const double theUpperLimitActualRotation)
 {
   myUpperLimitActualRotation = theUpperLimitActualRotation;
 }
-
-//=================================================================================================
 
 bool StepKinematics_CylindricalPairWithRange::HasUpperLimitActualRotation() const
 {

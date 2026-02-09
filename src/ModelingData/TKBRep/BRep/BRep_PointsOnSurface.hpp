@@ -7,7 +7,6 @@
 class Geom_Surface;
 class TopLoc_Location;
 
-//! Root for points on surface.
 class BRep_PointsOnSurface : public BRep_PointRepresentation
 {
 
@@ -16,7 +15,6 @@ public:
 
   Standard_EXPORT void Surface(const occ::handle<Geom_Surface>& S) override;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(BRep_PointsOnSurface, BRep_PointRepresentation)

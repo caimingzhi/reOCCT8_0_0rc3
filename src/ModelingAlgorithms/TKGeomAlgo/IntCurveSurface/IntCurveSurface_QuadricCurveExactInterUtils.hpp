@@ -10,23 +10,10 @@
 namespace IntCurveSurface_QuadricCurveExactInterUtils
 {
 
-  //! Tolerance values for root finding
   constexpr double EPSX    = 0.00000000000001;
   constexpr double EPSDIST = 0.00000001;
   constexpr double EPSNUL  = 0.00000001;
 
-  //! Performs intersection of a curve with a quadric surface.
-  //! @tparam SurfaceType The surface type (occ::handle<Adaptor3d_Surface> or void*)
-  //! @tparam SurfaceTool The surface tool class
-  //! @tparam CurveType The curve type (occ::handle<Adaptor3d_Curve> or gp_Lin)
-  //! @tparam CurveTool The curve tool class
-  //! @tparam QuadCurvFuncType The quadric curve function class
-  //! @param theSurface [in] The quadric surface
-  //! @param theCurve [in] The curve to intersect
-  //! @param thePnts [out] Sequence of intersection parameter values (roots)
-  //! @param theIntv [out] Sequence of interval boundaries (pairs of start/end)
-  //! @param theNbPnts [out] Number of intersection points (-1 if failed)
-  //! @param theNbIntv [out] Number of intersection intervals (-1 if failed)
   template <typename SurfaceType,
             typename SurfaceTool,
             typename CurveType,

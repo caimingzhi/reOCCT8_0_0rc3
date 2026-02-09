@@ -3,11 +3,7 @@
 #include <StepBasic_ProductDefinition.hpp>
 #include <StepRepr_ShapeAspect.hpp>
 
-//=================================================================================================
-
 StepAP203_SpecifiedItem::StepAP203_SpecifiedItem() = default;
-
-//=================================================================================================
 
 int StepAP203_SpecifiedItem::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -20,14 +16,10 @@ int StepAP203_SpecifiedItem::CaseNum(const occ::handle<Standard_Transient>& ent)
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ProductDefinition> StepAP203_SpecifiedItem::ProductDefinition() const
 {
   return occ::down_cast<StepBasic_ProductDefinition>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepRepr_ShapeAspect> StepAP203_SpecifiedItem::ShapeAspect() const
 {

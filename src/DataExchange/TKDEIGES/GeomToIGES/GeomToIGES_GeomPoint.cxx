@@ -1,19 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// modif du 14/09/95 mjm
-// taking into account the unit chosen by the user
-// for writing the IGES file.
 
 #include <Geom_CartesianPoint.hpp>
 #include <Geom_Point.hpp>
@@ -22,26 +7,14 @@
 #include <gp_XYZ.hpp>
 #include <IGESGeom_Point.hpp>
 
-//=============================================================================
-// GeomToIGES_GeomPoint
-//=============================================================================
 GeomToIGES_GeomPoint::GeomToIGES_GeomPoint(const GeomToIGES_GeomEntity& GE)
     : GeomToIGES_GeomEntity(GE)
 {
 }
 
-//=============================================================================
-// GeomToIGES_GeomPoint
-//=============================================================================
-
 GeomToIGES_GeomPoint::GeomToIGES_GeomPoint()
 
   = default;
-
-//=============================================================================
-// Transfer of Point from Geom to IGES
-// TranferPoint
-//=============================================================================
 
 occ::handle<IGESGeom_Point> GeomToIGES_GeomPoint::TransferPoint(const occ::handle<Geom_Point>& P)
 {
@@ -57,11 +30,6 @@ occ::handle<IGESGeom_Point> GeomToIGES_GeomPoint::TransferPoint(const occ::handl
   Piges->Init(gp_XYZ(X / GetUnit(), Y / GetUnit(), Z / GetUnit()), voidsubdef);
   return Piges;
 }
-
-//=============================================================================
-// Transfer of Point from Geom to IGES
-// TranferPoint
-//=============================================================================
 
 occ::handle<IGESGeom_Point> GeomToIGES_GeomPoint::TransferPoint(
   const occ::handle<Geom_CartesianPoint>& P)

@@ -11,7 +11,6 @@ class StepBasic_CoordinatedUniversalTimeOffset : public Standard_Transient
 {
 
 public:
-  //! Returns a CoordinatedUniversalTimeOffset
   Standard_EXPORT StepBasic_CoordinatedUniversalTimeOffset();
 
   Standard_EXPORT void Init(const int                     aHourOffset,

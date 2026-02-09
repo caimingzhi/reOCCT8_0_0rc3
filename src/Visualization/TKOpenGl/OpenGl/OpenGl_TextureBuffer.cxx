@@ -7,35 +7,27 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(OpenGl_TextureBuffer, OpenGl_Buffer)
 
-//=================================================================================================
-
 OpenGl_TextureBuffer::OpenGl_TextureBuffer()
     : myTextureId(NO_TEXTURE),
       myTexFormat(GL_RGBA32F)
 {
 }
 
-//=================================================================================================
-
 OpenGl_TextureBuffer::~OpenGl_TextureBuffer()
 {
   Release(nullptr);
 }
 
-//=================================================================================================
-
 unsigned int OpenGl_TextureBuffer::GetTarget() const
 {
-  return GL_TEXTURE_BUFFER; // GL_TEXTURE_BUFFER for OpenGL 3.1+, OpenGL ES 3.2
+  return GL_TEXTURE_BUFFER;
 }
-
-//=================================================================================================
 
 void OpenGl_TextureBuffer::Release(OpenGl_Context* theGlCtx)
 {
   if (myTextureId != NO_TEXTURE)
   {
-    // application can not handle this case by exception - this is bug in code
+
     Standard_ASSERT_RETURN(
       theGlCtx != nullptr,
       "OpenGl_TextureBuffer destroyed without GL context! Possible GPU memory leakage...",
@@ -49,8 +41,6 @@ void OpenGl_TextureBuffer::Release(OpenGl_Context* theGlCtx)
   }
   base_type::Release(theGlCtx);
 }
-
-//=================================================================================================
 
 bool OpenGl_TextureBuffer::Create(const occ::handle<OpenGl_Context>& theGlCtx)
 {
@@ -66,8 +56,6 @@ bool OpenGl_TextureBuffer::Create(const occ::handle<OpenGl_Context>& theGlCtx)
   return myTextureId != NO_TEXTURE;
 }
 
-//=================================================================================================
-
 bool OpenGl_TextureBuffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
                                 const unsigned int                 theComponentsNb,
                                 const int                          theElemsNb,
@@ -79,7 +67,7 @@ bool OpenGl_TextureBuffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
   }
   else if (theComponentsNb < 1 || theComponentsNb > 4)
   {
-    // unsupported format
+
     return false;
   }
   else if (theComponentsNb == 3 && !theGlCtx->arbTboRGB32)
@@ -101,7 +89,7 @@ bool OpenGl_TextureBuffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
       break;
     case 3:
       myTexFormat = GL_RGB32F;
-      break; // GL_ARB_texture_buffer_object_rgb32
+      break;
     case 4:
       myTexFormat = GL_RGBA32F;
       break;
@@ -115,8 +103,6 @@ bool OpenGl_TextureBuffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_TextureBuffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
                                 const unsigned int                 theComponentsNb,
                                 const int                          theElemsNb,
@@ -128,7 +114,7 @@ bool OpenGl_TextureBuffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
   }
   else if (theComponentsNb < 1 || theComponentsNb > 4)
   {
-    // unsupported format
+
     return false;
   }
   else if (theComponentsNb == 3 && !theGlCtx->arbTboRGB32)
@@ -164,8 +150,6 @@ bool OpenGl_TextureBuffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_TextureBuffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
                                 const unsigned int                 theComponentsNb,
                                 const int                          theElemsNb,
@@ -177,7 +161,7 @@ bool OpenGl_TextureBuffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
   }
   else if (theComponentsNb < 1 || theComponentsNb > 4)
   {
-    // unsupported format
+
     return false;
   }
   else if (!Create(theGlCtx) || !base_type::Init(theGlCtx, theComponentsNb, theElemsNb, theData))
@@ -209,8 +193,6 @@ bool OpenGl_TextureBuffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
   return true;
 }
 
-//=================================================================================================
-
 bool OpenGl_TextureBuffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
                                 const unsigned int                 theComponentsNb,
                                 const int                          theElemsNb,
@@ -222,7 +204,7 @@ bool OpenGl_TextureBuffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
   }
   else if (theComponentsNb < 1 || theComponentsNb > 4)
   {
-    // unsupported format
+
     return false;
   }
   else if (!Create(theGlCtx) || !base_type::Init(theGlCtx, theComponentsNb, theElemsNb, theData))
@@ -254,16 +236,12 @@ bool OpenGl_TextureBuffer::Init(const occ::handle<OpenGl_Context>& theGlCtx,
   return true;
 }
 
-//=================================================================================================
-
 void OpenGl_TextureBuffer::BindTexture(const occ::handle<OpenGl_Context>& theGlCtx,
                                        const Graphic3d_TextureUnit        theTextureUnit) const
 {
   theGlCtx->core20fwd->glActiveTexture(GL_TEXTURE0 + theTextureUnit);
   theGlCtx->core20fwd->glBindTexture(GetTarget(), myTextureId);
 }
-
-//=================================================================================================
 
 void OpenGl_TextureBuffer::UnbindTexture(const occ::handle<OpenGl_Context>& theGlCtx,
                                          const Graphic3d_TextureUnit        theTextureUnit) const

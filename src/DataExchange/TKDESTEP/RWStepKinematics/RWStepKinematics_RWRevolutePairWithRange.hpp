@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_RevolutePairWithRange;
 
-//! Read & Write tool for RevolutePairWithRange
 class RWStepKinematics_RWRevolutePairWithRange
 {
 public:

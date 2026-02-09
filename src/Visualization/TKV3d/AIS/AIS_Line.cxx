@@ -20,16 +20,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_Line, AIS_InteractiveObject)
 
-//=================================================================================================
-
 AIS_Line::AIS_Line(const occ::handle<Geom_Line>& aComponent)
     : myComponent(aComponent),
       myLineIsSegment(false)
 {
   SetInfiniteState();
 }
-
-//=================================================================================================
 
 AIS_Line::AIS_Line(const occ::handle<Geom_Point>& aStartPoint,
                    const occ::handle<Geom_Point>& aEndPoint)
@@ -38,8 +34,6 @@ AIS_Line::AIS_Line(const occ::handle<Geom_Point>& aStartPoint,
       myLineIsSegment(true)
 {
 }
-
-//=================================================================================================
 
 void AIS_Line::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                        const occ::handle<Prs3d_Presentation>& thePrs,
@@ -55,12 +49,10 @@ void AIS_Line::Compute(const occ::handle<PrsMgr_PresentationManager>&,
   }
 }
 
-//=================================================================================================
-
 void AIS_Line::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection,
                                 const int                               theMode)
 {
-  // Do not support selection modes different from 0 currently
+
   if (theMode)
     return;
 
@@ -73,8 +65,6 @@ void AIS_Line::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelec
     ComputeSegmentLineSelection(theSelection);
   }
 }
-
-//=================================================================================================
 
 void AIS_Line::replaceWithNewLineAspect(const occ::handle<Prs3d_LineAspect>& theAspect)
 {
@@ -96,8 +86,6 @@ void AIS_Line::replaceWithNewLineAspect(const occ::handle<Prs3d_LineAspect>& the
   }
 }
 
-//=================================================================================================
-
 void AIS_Line::SetColor(const Quantity_Color& aCol)
 {
   hasOwnColor = true;
@@ -117,8 +105,6 @@ void AIS_Line::SetColor(const Quantity_Color& aCol)
     SynchronizeAspects();
   }
 }
-
-//=================================================================================================
 
 void AIS_Line::UnsetColor()
 {
@@ -141,8 +127,6 @@ void AIS_Line::UnsetColor()
   }
 }
 
-//=================================================================================================
-
 void AIS_Line::SetWidth(const double aValue)
 {
   myOwnWidth = (float)aValue;
@@ -163,8 +147,6 @@ void AIS_Line::SetWidth(const double aValue)
   }
 }
 
-//=================================================================================================
-
 void AIS_Line::UnsetWidth()
 {
   if (!HasColor())
@@ -182,18 +164,13 @@ void AIS_Line::UnsetWidth()
   }
 }
 
-//=================================================================================================
-
 void AIS_Line::ComputeInfiniteLine(const occ::handle<Prs3d_Presentation>& aPresentation)
 {
   GeomAdaptor_Curve curv(myComponent);
   StdPrs_Curve::Add(aPresentation, curv, myDrawer);
 
-  // pas de prise en compte lors du FITALL
   aPresentation->SetInfiniteState(true);
 }
-
-//=================================================================================================
 
 void AIS_Line::ComputeSegmentLine(const occ::handle<Prs3d_Presentation>& aPresentation)
 {
@@ -207,21 +184,14 @@ void AIS_Line::ComputeSegmentLine(const occ::handle<Prs3d_Presentation>& aPresen
   StdPrs_Curve::Add(aPresentation, curv, myDrawer);
 }
 
-//=================================================================================================
-
 void AIS_Line::ComputeInfiniteLineSelection(const occ::handle<SelectMgr_Selection>& aSelection)
 {
 
-  /*  // on calcule les points min max a partir desquels on cree un segment sensible...
-    GeomAdaptor_Curve curv(myComponent);
-    gp_Pnt P1,P2;
-    FindLimits(curv,myDrawer->MaximalParameterValue(),P1,P2);
-  */
   const gp_Dir& thedir  = myComponent->Position().Direction();
   const gp_Pnt& loc     = myComponent->Position().Location();
   const gp_XYZ& dir_xyz = thedir.XYZ();
   const gp_XYZ& loc_xyz = loc.XYZ();
-  // POP  double aLength = UnitsAPI::CurrentToLS (250000. ,"LENGTH");
+
   double                                 aLength = UnitsAPI::AnyToLS(250000., "mm");
   gp_Pnt                                 P1      = loc_xyz + aLength * dir_xyz;
   gp_Pnt                                 P2      = loc_xyz - aLength * dir_xyz;
@@ -229,8 +199,6 @@ void AIS_Line::ComputeInfiniteLineSelection(const occ::handle<SelectMgr_Selectio
   occ::handle<Select3D_SensitiveSegment> seg     = new Select3D_SensitiveSegment(eown, P1, P2);
   aSelection->Add(seg);
 }
-
-//=================================================================================================
 
 void AIS_Line::ComputeSegmentLineSelection(const occ::handle<SelectMgr_Selection>& aSelection)
 {

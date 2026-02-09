@@ -11,9 +11,6 @@ class TopoDS_Edge;
 class TopoDSToStep_Tool;
 class Transfer_FinderProcess;
 
-//! This class implements the mapping between classes
-//! Edge from TopoDS and TopologicalRepresentationItem from
-//! StepShape.
 class TopoDSToStep_MakeStepEdge : public TopoDSToStep_Root
 {
 public:

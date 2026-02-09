@@ -10,45 +10,21 @@
 #include <AIS_KindOfInteractive.hpp>
 class SelectMgr_EntityOwner;
 
-//! A framework to reject or to accept only objects of
-//! given types and/or signatures.
-//! Objects are stored, and the stored objects - along
-//! with the flag settings - are used to define the filter.
-//! Objects to be filtered are compared with the stored
-//! objects added to the filter, and are accepted or
-//! rejected according to the exclusion flag setting.
-//! -   Exclusion flag on
-//! -   the function IsOk answers true for all objects,
-//! except those of the types and signatures stored
-//! in the filter framework
-//! -   Exclusion flag off
-//! -   the function IsOk answers true for all objects
-//! which have the same type and signature as the stored ones.
 class AIS_ExclusionFilter : public SelectMgr_Filter
 {
 
 public:
-  //! Constructs an empty exclusion filter object defined by
-  //! the flag setting ExclusionFlagOn.
-  //! By default, the flag is set to true.
   Standard_EXPORT AIS_ExclusionFilter(const bool ExclusionFlagOn = true);
 
-  //! All the AIS objects of <TypeToExclude>
-  //! Will be rejected by the IsOk Method.
   Standard_EXPORT AIS_ExclusionFilter(const AIS_KindOfInteractive TypeToExclude,
                                       const bool                  ExclusionFlagOn = true);
 
-  //! Constructs an exclusion filter object defined by the
-  //! enumeration value TypeToExclude, the signature
-  //! SignatureInType, and the flag setting ExclusionFlagOn.
-  //! By default, the flag is set to true.
   Standard_EXPORT AIS_ExclusionFilter(const AIS_KindOfInteractive TypeToExclude,
                                       const int                   SignatureInType,
                                       const bool                  ExclusionFlagOn = true);
 
   Standard_EXPORT bool IsOk(const occ::handle<SelectMgr_EntityOwner>& anObj) const override;
 
-  //! Adds the type TypeToExclude to the list of types.
   Standard_EXPORT bool Add(const AIS_KindOfInteractive TypeToExclude);
 
   Standard_EXPORT bool Add(const AIS_KindOfInteractive TypeToExclude, const int SignatureInType);

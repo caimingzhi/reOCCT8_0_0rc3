@@ -11,7 +11,6 @@ class StepRepr_AssemblyComponentUsageSubstitute;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AssemblyComponentUsageSubstitute
 class RWStepRepr_RWAssemblyComponentUsageSubstitute
 {
 public:

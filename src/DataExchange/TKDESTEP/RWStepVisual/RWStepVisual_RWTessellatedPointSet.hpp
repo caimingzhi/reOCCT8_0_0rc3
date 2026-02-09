@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_TessellatedPointSet;
 
-//! Read & Write tool for TessellatedPointSet
 class RWStepVisual_RWTessellatedPointSet
 {
 

@@ -12,17 +12,6 @@
 #include <Standard_NegativeValue.hpp>
 #include <NCollection_Array1.hpp>
 
-// circular tangent to two lines of given radius
-//===============================================
-//========================================================================
-// Initialize WellDone to false.                                       +
-// Return two lines L1 and L2.                                 +
-// Leave with error if the construction is impossible.     +
-// Create parallel lines to L1 and L2 in the proper direction.                   +
-// Intersect parallels ==> The center point of the solution.   +
-// Create the solution to be added to the already found solutions.         +
-// Fill the fields.                                                +
-//========================================================================
 GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1,
                                            const GccEnt_QualifiedLin& Qualified2,
                                            const double               Radius,
@@ -81,7 +70,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
     {
       if (Qualified1.IsEnclosed() && Qualified2.IsEnclosed())
       {
-        //    =======================================================
+
         nbrcote1 = 1;
         nbrcote2 = 1;
         cote1(1) = 1.0;
@@ -89,7 +78,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
       }
       else if (Qualified1.IsEnclosed() && Qualified2.IsOutside())
       {
-        //    ==========================================================
+
         nbrcote1 = 1;
         nbrcote2 = 1;
         cote1(1) = 1.0;
@@ -97,7 +86,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
       }
       else if (Qualified1.IsOutside() && Qualified2.IsEnclosed())
       {
-        //    ===========================================================
+
         nbrcote1 = 1;
         nbrcote2 = 1;
         cote1(1) = -1.0;
@@ -105,7 +94,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
       }
       else if (Qualified1.IsOutside() && Qualified2.IsOutside())
       {
-        //    =========================================================
+
         nbrcote1 = 1;
         nbrcote2 = 1;
         cote1(1) = -1.0;
@@ -113,7 +102,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
       }
       if (Qualified1.IsEnclosed() && Qualified2.IsUnqualified())
       {
-        //    =========================================================
+
         nbrcote1 = 1;
         nbrcote2 = 2;
         cote1(1) = 1.0;
@@ -122,7 +111,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
       }
       if (Qualified1.IsUnqualified() && Qualified2.IsEnclosed())
       {
-        //    =========================================================
+
         nbrcote1 = 2;
         nbrcote2 = 1;
         cote1(1) = 1.0;
@@ -131,7 +120,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
       }
       else if (Qualified1.IsOutside() && Qualified2.IsUnqualified())
       {
-        //    =============================================================
+
         nbrcote1 = 1;
         nbrcote2 = 2;
         cote1(1) = -1.0;
@@ -140,7 +129,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
       }
       if (Qualified1.IsUnqualified() && Qualified2.IsOutside())
       {
-        //    ========================================================
+
         nbrcote1 = 2;
         nbrcote2 = 1;
         cote1(1) = 1.0;
@@ -149,7 +138,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
       }
       else if (Qualified1.IsUnqualified() && Qualified2.IsUnqualified())
       {
-        //    =================================================================
+
         nbrcote1 = 2;
         nbrcote2 = 2;
         cote1(1) = 1.0;
@@ -177,7 +166,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
                 NbrSol++;
                 gp_Pnt2d Center(Intp.Point(i).Value());
                 cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius);
-                //              =======================================================
+
                 gp_Dir2d dc1(origin1.XY() - Center.XY());
                 gp_Dir2d dc2(origin2.XY() - Center.XY());
                 if (!Qualified1.IsUnqualified())

@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include "RWStepKinematics_RWPointOnSurfacePairWithRange.hpp"
 
@@ -14,12 +14,8 @@
 #include <StepGeom_RectangularTrimmedSurface.hpp>
 #include <Standard_Real.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWPointOnSurfacePairWithRange::RWStepKinematics_RWPointOnSurfacePairWithRange() =
   default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWPointOnSurfacePairWithRange::ReadStep(
   const occ::handle<StepData_StepReaderData>&                    theData,
@@ -27,16 +23,12 @@ void RWStepKinematics_RWPointOnSurfacePairWithRange::ReadStep(
   occ::handle<Interface_Check>&                                  theArch,
   const occ::handle<StepKinematics_PointOnSurfacePairWithRange>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 14, theArch, "point_on_surface_pair_with_range"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
-
-  // Inherited fields of ItemDefinedTransformation
 
   occ::handle<TCollection_HAsciiString> aItemDefinedTransformation_Name;
   theData->ReadString(theNum,
@@ -77,8 +69,6 @@ void RWStepKinematics_RWPointOnSurfacePairWithRange::ReadStep(
                       STANDARD_TYPE(StepRepr_RepresentationItem),
                       aItemDefinedTransformation_TransformItem2);
 
-  // Inherited fields of KinematicPair
-
   occ::handle<StepKinematics_KinematicJoint> aKinematicPair_Joint;
   theData->ReadEntity(theNum,
                       6,
@@ -87,8 +77,6 @@ void RWStepKinematics_RWPointOnSurfacePairWithRange::ReadStep(
                       STANDARD_TYPE(StepKinematics_KinematicJoint),
                       aKinematicPair_Joint);
 
-  // Inherited fields of PointOnSurfacePair
-
   occ::handle<StepGeom_Surface> aPointOnSurfacePair_PairSurface;
   theData->ReadEntity(theNum,
                       7,
@@ -96,8 +84,6 @@ void RWStepKinematics_RWPointOnSurfacePairWithRange::ReadStep(
                       theArch,
                       STANDARD_TYPE(StepGeom_Surface),
                       aPointOnSurfacePair_PairSurface);
-
-  // Own fields of PointOnSurfacePairWithRange
 
   occ::handle<StepGeom_RectangularTrimmedSurface> aRangeOnPairSurface;
   theData->ReadEntity(theNum,
@@ -179,7 +165,6 @@ void RWStepKinematics_RWPointOnSurfacePairWithRange::ReadStep(
     aUpperLimitRoll   = 0;
   }
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aItemDefinedTransformation_Name,
                hasItemDefinedTransformation_Description,
@@ -203,18 +188,12 @@ void RWStepKinematics_RWPointOnSurfacePairWithRange::ReadStep(
                aUpperLimitRoll);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWPointOnSurfacePairWithRange::WriteStep(
   StepData_StepWriter&                                           theSW,
   const occ::handle<StepKinematics_PointOnSurfacePairWithRange>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Inherited fields of ItemDefinedTransformation
 
   theSW.Send(theEnt->ItemDefinedTransformation()->Name());
 
@@ -229,15 +208,9 @@ void RWStepKinematics_RWPointOnSurfacePairWithRange::WriteStep(
 
   theSW.Send(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Own fields of KinematicPair
-
   theSW.Send(theEnt->Joint());
 
-  // Own fields of PointOnSurfacePair
-
   theSW.Send(theEnt->PairSurface());
-
-  // Own fields of PointOnSurfacePairWithRange
 
   theSW.Send(theEnt->RangeOnPairSurface());
 
@@ -284,30 +257,18 @@ void RWStepKinematics_RWPointOnSurfacePairWithRange::WriteStep(
     theSW.SendUndef();
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWPointOnSurfacePairWithRange::Share(
   const occ::handle<StepKinematics_PointOnSurfacePairWithRange>& theEnt,
   Interface_EntityIterator&                                      iter) const
 {
 
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of ItemDefinedTransformation
-
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem1());
 
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Inherited fields of KinematicPair
-
   iter.AddItem(theEnt->StepKinematics_KinematicPair::Joint());
 
-  // Inherited fields of PointOnSurfacePair
-
   iter.AddItem(theEnt->StepKinematics_PointOnSurfacePair::PairSurface());
-
-  // Own fields of PointOnSurfacePairWithRange
 
   iter.AddItem(theEnt->RangeOnPairSurface());
 }

@@ -12,8 +12,6 @@ enum TopoDSToStep_FacetedError
 
 class TopoDS_Shape;
 
-//! This Tool Class provides Information about Faceted Shapes
-//! to be mapped to STEP.
 class TopoDSToStep_FacetedTool
 {
 public:

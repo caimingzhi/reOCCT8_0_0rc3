@@ -15,20 +15,6 @@
 #include <IntAna2d_IntPoint.hpp>
 #include <NCollection_Array1.hpp>
 
-//=========================================================================
-//  Circles tangent to circle C1, passing by point Point2 and centers     +
-//  on a straight line OnLine.                                            +
-//  We start by making difference with boundary cases that will be        +
-//  processed separately.                                                 +
-//  For the general case:                                                 +
-//  ====================                                                  +
-//  We calculate bissectrices to C1 and Point2 that give us all           +
-//  possible locations of centers of all circles                          +
-//  tangent to C1 and passing by Point2.                                  +
-//  We intersect these bissectrices with the straight line OnLine which   +
-//  gives us the points among which we'll choose the solutions.           +
-//  The choices are made using Qualifiers of C1 and C2.                   +
-//=========================================================================
 GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
                                          const gp_Pnt2d&             Point2,
                                          const gp_Lin2d&             OnLine,
@@ -64,10 +50,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
   double                     R1 = C1.Radius();
   gp_Pnt2d                   center1(C1.Location());
 
-  //=========================================================================
-  //   Processing of boundary cases.                                        +
-  //=========================================================================
-
   double   dp2l = OnLine.Distance(Point2);
   gp_Dir2d donline(OnLine.Direction());
   gp_Pnt2d pinterm(Point2.XY() + dp2l * gp_XY(-donline.Y(), donline.X()));
@@ -98,7 +80,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
   {
     NbrSol++;
     cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(pinterm, dirx), dp2l);
-    //  ======================================================
+
     gp_Dir2d dc1(center1.XY() - pinterm.XY());
     double   distcc1 = pinterm.Distance(center1);
     if (!Qualified1.IsUnqualified())
@@ -127,10 +109,6 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
     parcen3(NbrSol)    = ElCLib::Parameter(OnLine, pntcen(NbrSol));
     return;
   }
-
-  //=========================================================================
-  //   General case.                                                       +
-  //=========================================================================
 
   GccAna_CircPnt2dBisec Bis(C1, Point2);
   if (Bis.IsDone())
@@ -188,13 +166,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
               ok        = true;
               Radius(1) = C1.Radius() + dist1;
             }
-            /*	    else if (Qualified1.IsUnqualified() && ok) {
-                      ok = true;
-                      nbsol = 2;
-                      Radius(1) = std::abs(C1.Radius()-dist1);
-                      Radius(2) = C1.Radius()+dist1;
-                    }
-            */
+
             else if (Qualified1.IsUnqualified())
             {
               double popradius = Center.Distance(Point2);
@@ -211,7 +183,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
               {
                 NbrSol++;
                 cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), Radius(k));
-                //              ==========================================================
+
                 double distcc1 = Center.Distance(center1);
                 if (!Qualified1.IsUnqualified())
                 {

@@ -16,17 +16,14 @@ static int edgestowire(Draw_Interpretor&, int, const char**);
 static int edgestofaces(Draw_Interpretor&, int, const char**);
 static int BuildPcurvesOnPlane(Draw_Interpretor&, int, const char**);
 
-//=================================================================================================
-
 void BOPTest::UtilityCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
   if (done)
     return;
   done = true;
-  // Chapter's name
+
   const char* group = "BOPTest commands";
-  // Commands
 
   theCommands.Add("attachpcurve", "attachpcurve eold enew face", __FILE__, attachpcurve, group);
   theCommands.Add("edgestowire", "edgestowire wire edges", __FILE__, edgestowire, group);
@@ -42,10 +39,6 @@ void BOPTest::UtilityCommands(Draw_Interpretor& theCommands)
                   group);
 }
 
-//=======================================================================
-// function : BOPCommands
-// purpose  : Attaches p-curve of the given edge to the given face.
-//=======================================================================
 static int attachpcurve(Draw_Interpretor& theDI, int theNArg, const char** theArgVal)
 {
   if (theNArg != 4)
@@ -95,7 +88,6 @@ static int attachpcurve(Draw_Interpretor& theDI, int theNArg, const char** theAr
   TopoDS_Edge aENew = TopoDS::Edge(aShENew);
   TopoDS_Face aFace = TopoDS::Face(aShFace);
 
-  // Try to copy PCurve from old edge to the new one.
   occ::handle<IntTools_Context> aCtx = new IntTools_Context;
   const int iRet = BOPTools_AlgoTools2D::AttachExistingPCurve(aEOld, aENew, aFace, aCtx);
 
@@ -111,10 +103,6 @@ static int attachpcurve(Draw_Interpretor& theDI, int theNArg, const char** theAr
   return 0;
 }
 
-//=======================================================================
-// function : edgestowire
-// purpose  : Orients the edges to make wire
-//=======================================================================
 static int edgestowire(Draw_Interpretor& theDI, int theNArg, const char** theArgVal)
 {
   if (theNArg != 3)
@@ -122,23 +110,19 @@ static int edgestowire(Draw_Interpretor& theDI, int theNArg, const char** theArg
     theDI << "Use: edgestowire wire edges\n";
     return 1;
   }
-  //
+
   TopoDS_Shape anEdges = DBRep::Get(theArgVal[2]);
   if (anEdges.IsNull())
   {
     theDI << "no edges\n";
     return 1;
   }
-  //
+
   BOPTools_AlgoTools::OrientEdgesOnWire(anEdges);
   DBRep::Set(theArgVal[1], anEdges);
   return 0;
 }
 
-//=======================================================================
-// function : edgestofaces
-// purpose  : Creates planar faces from linear edges
-//=======================================================================
 static int edgestofaces(Draw_Interpretor& theDI, int theNArg, const char** theArgVal)
 {
   if (theNArg < 3)
@@ -149,17 +133,17 @@ static int edgestofaces(Draw_Interpretor& theDI, int theNArg, const char** theAr
     theDI << "          edges are already shared or have to be intersected.\n";
     return 1;
   }
-  //
+
   TopoDS_Shape anEdges = DBRep::Get(theArgVal[2]);
   if (anEdges.IsNull())
   {
     theDI << "no edges\n";
     return 1;
   }
-  //
+
   double anAngTol = 1.e-8;
   bool   bShared  = false;
-  //
+
   for (int i = 3; i < theNArg; ++i)
   {
     if (!strcmp(theArgVal[i], "-a") && (i + 1 < theNArg))
@@ -171,7 +155,7 @@ static int edgestofaces(Draw_Interpretor& theDI, int theNArg, const char** theAr
       bShared = (Draw::Atoi(theArgVal[i + 1]) == 1);
     }
   }
-  //
+
   TopoDS_Shape aWires;
   int          iErr = BOPAlgo_Tools::EdgesToWires(anEdges, aWires, bShared, anAngTol);
   if (iErr)
@@ -179,7 +163,7 @@ static int edgestofaces(Draw_Interpretor& theDI, int theNArg, const char** theAr
     theDI << "Unable to build wires from given edges\n";
     return 0;
   }
-  //
+
   TopoDS_Shape aFaces;
   bool         bDone = BOPAlgo_Tools::WiresToFaces(aWires, aFaces, anAngTol);
   if (!bDone)
@@ -187,15 +171,11 @@ static int edgestofaces(Draw_Interpretor& theDI, int theNArg, const char** theAr
     theDI << "Unable to build faces from wires\n";
     return 0;
   }
-  //
+
   DBRep::Set(theArgVal[1], aFaces);
   return 0;
 }
 
-//=======================================================================
-// function : BuildPcurvesOnPlane
-// purpose  : Build and store pcurves of edges on planes
-//=======================================================================
 static int BuildPcurvesOnPlane(Draw_Interpretor& theDI, int theNArg, const char** theArgVal)
 {
   if (theNArg != 2)

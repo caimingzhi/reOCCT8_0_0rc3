@@ -9,7 +9,6 @@ Standard_EXPORT int Draw_Main(int                   argc,
                               Standard_PCharacter   argv[],
                               const FDraw_InitAppli Draw_InitAppli);
 
-// Declarations of macros DRAW_MAIN to be used in executables instead of explicit main/WinMain
 #ifdef _WIN32
 
   #include <windows.h>
@@ -20,7 +19,6 @@ Standard_EXPORT int Draw_WinMain(HINSTANCE             hInstance,
                                  int                   nCmdShow,
                                  const FDraw_InitAppli Draw_InitAppli);
 
-  // WinMain() and main()
   #define DRAW_MAIN                                                                                \
     int PASCAL WinMain(HINSTANCE hInstance,                                                        \
                        HINSTANCE hPrevinstance,                                                    \
@@ -37,7 +35,6 @@ Standard_EXPORT int Draw_WinMain(HINSTANCE             hInstance,
 
 #else
 
-  // main()
   #define DRAW_MAIN                                                                                \
     int main(int argc, char* argv[])                                                               \
     {                                                                                              \

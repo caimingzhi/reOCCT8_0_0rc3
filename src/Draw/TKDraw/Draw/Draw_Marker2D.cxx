@@ -5,8 +5,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Marker2D, Draw_Drawable2D)
 
-//=================================================================================================
-
 Draw_Marker2D::Draw_Marker2D(const gp_Pnt2d&        P,
                              const Draw_MarkerShape T,
                              const Draw_Color&      C,
@@ -18,12 +16,10 @@ Draw_Marker2D::Draw_Marker2D(const gp_Pnt2d&        P,
 {
 }
 
-//=================================================================================================
-
 Draw_Marker2D::Draw_Marker2D(const gp_Pnt2d&        P,
                              const Draw_MarkerShape T,
                              const Draw_Color&      C,
-                             const double /*RSize*/)
+                             const double)
     : myPos(P),
       myCol(C),
       myTyp(T),
@@ -31,22 +27,16 @@ Draw_Marker2D::Draw_Marker2D(const gp_Pnt2d&        P,
 {
 }
 
-//=================================================================================================
-
 void Draw_Marker2D::DrawOn(Draw_Display& D) const
 {
   D.SetColor(myCol);
   D.DrawMarker(myPos, myTyp, mySiz);
 }
 
-//=================================================================================================
-
 gp_Pnt2d& Draw_Marker2D::ChangePos()
 {
   return myPos;
 }
-
-//=================================================================================================
 
 bool Draw_Marker2D::PickReject(const double, const double, const double) const
 {

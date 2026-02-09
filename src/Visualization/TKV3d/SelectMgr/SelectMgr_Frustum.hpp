@@ -2,33 +2,6 @@
 
 #include <SelectMgr_BaseFrustum.hpp>
 
-//! This is an internal class containing representation of rectangular selecting frustum, created in
-//! case of point and box selection, and algorithms for overlap detection between selecting frustum
-//! and sensitive entities. The principle of frustum calculation:
-//! - for point selection: on a near view frustum plane rectangular neighborhood of
-//!                        user-picked point is created according to the pixel tolerance
-//!                        given and then this rectangle is projected onto far view frustum
-//!                        plane. This rectangles define the parallel bases of selecting frustum;
-//! - for box selection: box points are projected onto near and far view frustum planes.
-//!                      These 2 projected rectangles define parallel bases of selecting frustum.
-//! Overlap detection tests are implemented according to the terms of separating axis
-//! theorem (SAT).
-//! Vertex order:
-//! - for triangular frustum: V0_Near, V1_Near, V2_Near,
-//!                           V0_Far, V1_Far, V2_Far;
-//! - for rectangular frustum: LeftTopNear, LeftTopFar,
-//!                            LeftBottomNear,LeftBottomFar,
-//!                            RightTopNear, RightTopFar,
-//!                            RightBottomNear, RightBottomFar.
-//! Plane order in array:
-//! - for triangular frustum: V0V1, V1V2, V0V2, Near, Far;
-//! - for rectangular frustum: Top, Bottom, Left, Right, Near, Far.
-//! Uncollinear edge directions order:
-//! - for rectangular frustum: Horizontal, Vertical,
-//!                            LeftLower, RightLower,
-//!                            LeftUpper, RightUpper;
-//! - for triangular frustum: V0_Near - V0_Far, V1_Near - V1_Far, V2_Near - V2_Far,
-//!                           V1_Near - V0_Near, V2_Near - V1_Near, V2_Near - V0_Near.
 template <int N>
 class SelectMgr_Frustum : public SelectMgr_BaseFrustum
 {
@@ -42,40 +15,28 @@ public:
     memset(myMinVertsProjections, 0, sizeof(myMinVertsProjections));
   }
 
-  //! Dumps the content of me into the stream
   inline void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
 protected:
-  // SAT Tests for different objects
-
-  //! Returns true if selecting volume is overlapped by axis-aligned bounding box
-  //! with minimum corner at point theMinPt and maximum at point theMaxPt
   bool hasBoxOverlap(const NCollection_Vec3<double>& theBoxMin,
                      const NCollection_Vec3<double>& theBoxMax,
                      bool*                           theInside = nullptr) const;
 
-  //! SAT intersection test between defined volume and given point
   bool hasPointOverlap(const gp_Pnt& thePnt) const;
 
-  //! SAT intersection test between defined volume and given segment
   bool hasSegmentOverlap(const gp_Pnt& thePnt1, const gp_Pnt& thePnt2) const;
 
-  //! SAT intersection test between frustum given and planar convex polygon represented as ordered
-  //! point set
   bool hasPolygonOverlap(const NCollection_Array1<gp_Pnt>& theArrayOfPnts, gp_Vec& theNormal) const;
 
-  //! SAT intersection test between defined volume and given triangle
   bool hasTriangleOverlap(const gp_Pnt& thePnt1,
                           const gp_Pnt& thePnt2,
                           const gp_Pnt& thePnt3,
                           gp_Vec&       theNormal) const;
 
-  //! Intersection test between defined volume and given sphere
   bool hasSphereOverlap(const gp_Pnt& thePnt1,
                         const double  theRadius,
                         bool*         theInside = nullptr) const;
 
-  //! Intersection test between defined volume and given cylinder (or cone).
   bool hasCylinderOverlap(const double   theBottomRad,
                           const double   theTopRad,
                           const double   theHeight,
@@ -83,63 +44,50 @@ protected:
                           const bool     theIsHollow,
                           bool*          theInside = nullptr) const;
 
-  //! Intersection test between defined volume and given circle.
   bool hasCircleOverlap(const double   theRadius,
                         const gp_Trsf& theTrsf,
                         const bool     theIsFilled,
                         bool*          theInside = nullptr) const;
 
-  //! Returns True if all vertices (theVertices) are inside the top and bottom sides of the
-  //! cylinder.
   bool isInsideCylinderEndFace(const double                      theBottomRad,
                                const double                      theTopRad,
                                const double                      theHeight,
                                const gp_Trsf&                    theTrsf,
                                const NCollection_Array1<gp_Pnt>& theVertices) const;
 
-  //! Checking whether the point thePnt is inside the shape with borders theVertices.
-  //! thePnt and theVertices lie in the same plane.
   bool isDotInside(const gp_Pnt& thePnt, const NCollection_Array1<gp_Pnt>& theVertices) const;
 
 private:
-  //! Return true if one segment enclosed between the points thePnt1Seg1 and thePnt2Seg1
-  //! intersects another segment that enclosed between thePnt1Seg2 and thePnt2Seg2.
   bool isSegmentsIntersect(const gp_Pnt& thePnt1Seg1,
                            const gp_Pnt& thePnt2Seg1,
                            const gp_Pnt& thePnt1Seg2,
                            const gp_Pnt& thePnt2Seg2) const;
 
-  //! Checking whether the borders theVertices of the shape intersect
-  //! the cylinder (or cone) end face with the center theCenter and radius theRadius
   bool isIntersectCircle(const double                      theRadius,
                          const gp_Pnt&                     theCenter,
                          const gp_Trsf&                    theTrsf,
                          const NCollection_Array1<gp_Pnt>& theVertices) const;
 
-  //! Checks if AABB and frustum are separated along the given axis
   bool isSeparated(const NCollection_Vec3<double>& theBoxMin,
                    const NCollection_Vec3<double>& theBoxMax,
                    const gp_XYZ&                   theDirect,
                    bool*                           theInside) const;
 
-  //! Checks if triangle and frustum are separated along the given axis
   bool isSeparated(const gp_Pnt& thePnt1,
                    const gp_Pnt& thePnt2,
                    const gp_Pnt& thePnt3,
                    const gp_XYZ& theAxis) const;
 
 protected:
-  gp_Vec myPlanes[N + 2];   //!< Plane equations
-  gp_Pnt myVertices[N * 2]; //!< Vertices coordinates
+  gp_Vec myPlanes[N + 2];
+  gp_Pnt myVertices[N * 2];
 
-  // clang-format off
-  double myMaxVertsProjections[N + 2];      //!< Cached projections of vertices onto frustum plane directions
-  double myMinVertsProjections[N + 2];      //!< Cached projections of vertices onto frustum plane directions
-  double myMaxOrthoVertsProjections[3];     //!< Cached projections of vertices onto directions of ortho unit vectors
-  double myMinOrthoVertsProjections[3];     //!< Cached projections of vertices onto directions of ortho unit vectors
-  // clang-format on
+  double myMaxVertsProjections[N + 2];
+  double myMinVertsProjections[N + 2];
+  double myMaxOrthoVertsProjections[3];
+  double myMinOrthoVertsProjections[3];
 
-  gp_Vec myEdgeDirs[6]; //!< Cached edge directions
+  gp_Vec myEdgeDirs[6];
 };
 
 #include <gp_Pln.hpp>
@@ -149,10 +97,6 @@ protected:
 #include <Standard_Assert.hpp>
 #include <SelectMgr_FrustumBuilder.hpp>
 
-// =======================================================================
-// function : isSeparated
-// purpose  : Checks if AABB and frustum are separated along the given axis.
-// =======================================================================
 template <int N>
 bool SelectMgr_Frustum<N>::isSeparated(const NCollection_Vec3<double>& theBoxMin,
                                        const NCollection_Vec3<double>& theBoxMax,
@@ -169,7 +113,6 @@ bool SelectMgr_Frustum<N>::isSeparated(const NCollection_Vec3<double>& theBoxMin
 
   Standard_ASSERT_RAISE(aMaxB >= aMinB, "Error! Failed to project box");
 
-  // frustum projection
   double aMinF = DBL_MAX;
   double aMaxF = -DBL_MAX;
 
@@ -182,7 +125,7 @@ bool SelectMgr_Frustum<N>::isSeparated(const NCollection_Vec3<double>& theBoxMin
 
     if (aMinF <= aMaxB && aMaxF >= aMinB)
     {
-      if (theInside == nullptr || !(*theInside)) // only overlap test
+      if (theInside == nullptr || !(*theInside))
       {
         return false;
       }
@@ -191,9 +134,9 @@ bool SelectMgr_Frustum<N>::isSeparated(const NCollection_Vec3<double>& theBoxMin
 
   if (aMinF > aMaxB || aMaxF < aMinB)
   {
-    return true; // fully separated
+    return true;
   }
-  else if (theInside != nullptr) // to check for inclusion?
+  else if (theInside != nullptr)
   {
     *theInside &= aMinB >= aMinF && aMaxB <= aMaxF;
   }
@@ -201,22 +144,16 @@ bool SelectMgr_Frustum<N>::isSeparated(const NCollection_Vec3<double>& theBoxMin
   return false;
 }
 
-// =======================================================================
-// function : isSeparated
-// purpose  : Checks if triangle and frustum are separated along the
-//            given axis
-// =======================================================================
 template <int N>
 bool SelectMgr_Frustum<N>::isSeparated(const gp_Pnt& thePnt1,
                                        const gp_Pnt& thePnt2,
                                        const gp_Pnt& thePnt3,
                                        const gp_XYZ& theAxis) const
 {
-  // frustum projection
+
   double aMinF = RealLast();
   double aMaxF = RealFirst();
 
-  // triangle projection
   double aMinTr = RealLast();
   double aMaxTr = RealFirst();
 
@@ -250,12 +187,6 @@ bool SelectMgr_Frustum<N>::isSeparated(const gp_Pnt& thePnt1,
   return aMinF > aMaxTr || aMaxF < aMinTr;
 }
 
-// =======================================================================
-// function : hasBoxOverlap
-// purpose  : Returns true if selecting volume is overlapped by
-//            axis-aligned bounding box with minimum corner at point
-//            theMinPnt and maximum at point theMaxPnt
-// =======================================================================
 template <int N>
 bool SelectMgr_Frustum<N>::hasBoxOverlap(const NCollection_Vec3<double>& theMinPnt,
                                          const NCollection_Vec3<double>& theMaxPnt,
@@ -266,9 +197,9 @@ bool SelectMgr_Frustum<N>::hasBoxOverlap(const NCollection_Vec3<double>& theMinP
     if (theMinPnt[anAxis] > myMaxOrthoVertsProjections[anAxis]
         || theMaxPnt[anAxis] < myMinOrthoVertsProjections[anAxis])
     {
-      return false; // fully separated
+      return false;
     }
-    else if (theInside != nullptr) // to check for inclusion?
+    else if (theInside != nullptr)
     {
       *theInside &= theMinPnt[anAxis] >= myMinOrthoVertsProjections[anAxis]
                     && theMaxPnt[anAxis] <= myMaxOrthoVertsProjections[anAxis];
@@ -293,9 +224,9 @@ bool SelectMgr_Frustum<N>::hasBoxOverlap(const NCollection_Vec3<double>& theMinP
     if (aBoxProjMin > myMaxVertsProjections[aPlaneIdx]
         || aBoxProjMax < myMinVertsProjections[aPlaneIdx])
     {
-      return false; // fully separated
+      return false;
     }
-    else if (theInside != nullptr) // to check for inclusion?
+    else if (theInside != nullptr)
     {
       *theInside &= aBoxProjMin >= myMinVertsProjections[aPlaneIdx]
                     && aBoxProjMax <= myMaxVertsProjections[aPlaneIdx];
@@ -304,8 +235,7 @@ bool SelectMgr_Frustum<N>::hasBoxOverlap(const NCollection_Vec3<double>& theMinP
 
   for (int aDim = 0; aDim < 3; ++aDim)
   {
-    // the following code performs a speedup of cross-product
-    // of vector with 1.0 at the position aDim and myEdgeDirs[aVolDir]
+
     const int aNext     = (aDim + 1) % 3;
     const int aNextNext = (aDim + 2) % 3;
     for (int aVolDir = 0, aDirectionsNb = Camera()->IsOrthographic() ? 4 : 6;
@@ -327,10 +257,6 @@ bool SelectMgr_Frustum<N>::hasBoxOverlap(const NCollection_Vec3<double>& theMinP
   return true;
 }
 
-// =======================================================================
-// function : hasPointOverlap
-// purpose  : SAT intersection test between defined volume and given point
-// =======================================================================
 template <int N>
 bool SelectMgr_Frustum<N>::hasPointOverlap(const gp_Pnt& thePnt) const
 {
@@ -349,10 +275,6 @@ bool SelectMgr_Frustum<N>::hasPointOverlap(const gp_Pnt& thePnt) const
   return true;
 }
 
-// =======================================================================
-// function : hasSegmentOverlap
-// purpose  : SAT intersection test between defined volume and given segment
-// =======================================================================
 template <int N>
 bool SelectMgr_Frustum<N>::hasSegmentOverlap(const gp_Pnt& theStartPnt,
                                              const gp_Pnt& theEndPnt) const
@@ -427,11 +349,6 @@ bool SelectMgr_Frustum<N>::hasSegmentOverlap(const gp_Pnt& theStartPnt,
   return true;
 }
 
-// =======================================================================
-// function : hasPolygonOverlap
-// purpose  : SAT intersection test between frustum given and planar convex
-//            polygon represented as ordered point set
-// =======================================================================
 template <int N>
 bool SelectMgr_Frustum<N>::hasPolygonOverlap(const NCollection_Array1<gp_Pnt>& theArrayOfPnts,
                                              gp_Vec&                           theNormal) const
@@ -522,10 +439,6 @@ bool SelectMgr_Frustum<N>::hasPolygonOverlap(const NCollection_Array1<gp_Pnt>& t
   return true;
 }
 
-// =======================================================================
-// function : hasTriangleOverlap
-// purpose  : SAT intersection test between defined volume and given triangle
-// =======================================================================
 template <int N>
 bool SelectMgr_Frustum<N>::hasTriangleOverlap(const gp_Pnt& thePnt1,
                                               const gp_Pnt& thePnt2,
@@ -584,8 +497,6 @@ bool SelectMgr_Frustum<N>::hasTriangleOverlap(const gp_Pnt& thePnt1,
   return true;
 }
 
-//=================================================================================================
-
 template <int N>
 bool SelectMgr_Frustum<N>::hasSphereOverlap(const gp_Pnt& thePnt,
                                             const double  theRadius,
@@ -602,7 +513,7 @@ bool SelectMgr_Frustum<N>::hasSphereOverlap(const gp_Pnt& thePnt,
     const double  aMinDist    = myMinVertsProjections[aPlaneIdx] / aNormVecLen;
     if (aCenterProj > (aMaxDist + theRadius) || aCenterProj < (aMinDist - theRadius))
     {
-      return false; // fully separated
+      return false;
     }
     else if (theInside)
     {
@@ -627,14 +538,11 @@ bool SelectMgr_Frustum<N>::hasSphereOverlap(const gp_Pnt& thePnt,
   {
     aBoundaries.SetValue(anIdx / 2, myVertices[anIdx]);
   }
-  // distance from point(x,y,z) to plane(A,B,C,D) d = | Ax + By + Cz + D | / sqrt (A^2 + B^2 + C^2)
-  // = aPnt.Dot (Norm) / 1
+
   const gp_Pnt aCenterProj      = thePnt.XYZ() - aNorm.XYZ() * thePnt.XYZ().Dot(aNorm.XYZ());
   bool         isBoundaryInside = false;
   return IsBoundaryIntersectSphere(aCenterProj, theRadius, aNorm, aBoundaries, isBoundaryInside);
 }
-
-//=================================================================================================
 
 template <int N>
 bool SelectMgr_Frustum<N>::isDotInside(const gp_Pnt&                     thePnt,
@@ -652,8 +560,6 @@ bool SelectMgr_Frustum<N>::isDotInside(const gp_Pnt&                     thePnt,
   }
   return std::abs(anAngle - 2.0 * M_PI) < Precision::Angular();
 }
-
-//=================================================================================================
 
 template <int N>
 bool SelectMgr_Frustum<N>::isSegmentsIntersect(const gp_Pnt& thePnt1Seg1,
@@ -709,8 +615,6 @@ bool SelectMgr_Frustum<N>::isSegmentsIntersect(const gp_Pnt& thePnt1Seg1,
   return anU >= 0.0 && anU <= 1.0 && aV >= 0.0 && aV <= 1.0;
 }
 
-//=================================================================================================
-
 template <int N>
 bool SelectMgr_Frustum<N>::isIntersectCircle(const double                      theRadius,
                                              const gp_Pnt&                     theCenter,
@@ -731,7 +635,6 @@ bool SelectMgr_Frustum<N>::isIntersectCircle(const double                      t
                                 ? theVertices.Value(theVertices.Lower()).Transformed(aTrsfInv)
                                 : theVertices.Value(anIdx + 1).Transformed(aTrsfInv);
 
-    // Project points on the end face plane
     const double aParam1 = (theCenter.Z() - aPntStart.Z()) / aRayDir.Z();
     const double aX1     = aPntStart.X() + aRayDir.X() * aParam1;
     const double anY1    = aPntStart.Y() + aRayDir.Y() * aParam1;
@@ -740,7 +643,6 @@ bool SelectMgr_Frustum<N>::isIntersectCircle(const double                      t
     const double aX2     = aPntFinish.X() + aRayDir.X() * aParam2;
     const double anY2    = aPntFinish.Y() + aRayDir.Y() * aParam2;
 
-    // Solving quadratic equation anA * T^2 + 2 * aK * T + aC = 0
     const double anA = (aX1 - aX2) * (aX1 - aX2) + (anY1 - anY2) * (anY1 - anY2);
     const double aK  = aX1 * (aX2 - aX1) + anY1 * (anY2 - anY1);
     const double aC  = aX1 * aX1 + anY1 * anY1 - theRadius * theRadius;
@@ -758,8 +660,6 @@ bool SelectMgr_Frustum<N>::isIntersectCircle(const double                      t
   }
   return false;
 }
-
-//=================================================================================================
 
 template <int N>
 bool SelectMgr_Frustum<N>::isInsideCylinderEndFace(
@@ -798,8 +698,6 @@ bool SelectMgr_Frustum<N>::isInsideCylinderEndFace(
   }
   return true;
 }
-
-//=================================================================================================
 
 template <int N>
 bool SelectMgr_Frustum<N>::hasCylinderOverlap(const double   theBottomRad,
@@ -932,8 +830,6 @@ bool SelectMgr_Frustum<N>::hasCylinderOverlap(const double   theBottomRad,
   return isCylInsideRec;
 }
 
-//=================================================================================================
-
 template <int N>
 bool SelectMgr_Frustum<N>::hasCircleOverlap(const double   theRadius,
                                             const gp_Trsf& theTrsf,
@@ -968,7 +864,7 @@ bool SelectMgr_Frustum<N>::hasCircleOverlap(const double   theRadius,
     return true;
   }
 
-  gp_Pnt       aCircCenter = gp::Origin(); //.Transformed (theTrsf);
+  gp_Pnt       aCircCenter = gp::Origin();
   const gp_Dir aViewRayDir = gp_Dir(myEdgeDirs[N == 4 ? 4 : 0]);
   const gp_Pln aPln(myVertices[0], aViewRayDir);
   double       aCoefA, aCoefB, aCoefC, aCoefD;
@@ -996,8 +892,6 @@ bool SelectMgr_Frustum<N>::hasCircleOverlap(const double   theRadius,
 
   return theIsFilled ? !isInside || (isCenterInside && isInside) : isInside && isCenterInside;
 }
-
-//=================================================================================================
 
 template <int N>
 void SelectMgr_Frustum<N>::DumpJson(Standard_OStream& theOStream, int theDepth) const

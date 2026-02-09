@@ -24,7 +24,7 @@
 #include <algorithm>
 #include <functional>
 #include <vector>
-//
+
 static void MakeShapeForFullOutput(const TCollection_AsciiString&,
                                    const int,
                                    const NCollection_List<TopoDS_Shape>&,
@@ -33,14 +33,12 @@ static void MakeShapeForFullOutput(const TCollection_AsciiString&,
                                    bool   bCurveOnSurf  = false,
                                    double aMaxDist      = 0.,
                                    double aMaxParameter = 0.);
-//
+
 static int bopcheck(Draw_Interpretor&, int, const char**);
 static int bopargcheck(Draw_Interpretor&, int, const char**);
 static int bopapicheck(Draw_Interpretor&, int, const char**);
 static int xdistef(Draw_Interpretor&, int, const char**);
 static int checkcurveonsurf(Draw_Interpretor&, int, const char**);
-
-//=================================================================================================
 
 void BOPTest::CheckCommands(Draw_Interpretor& theCommands)
 {
@@ -49,9 +47,9 @@ void BOPTest::CheckCommands(Draw_Interpretor& theCommands)
     return;
 
   done = true;
-  // Chapter's name
+
   const char* g = "BOPTest commands";
-  //
+
   theCommands.Add("bopcheck",
                   "use bopcheck Shape [level of check: 0 - 9] [-t]",
                   __FILE__,
@@ -79,8 +77,6 @@ void BOPTest::CheckCommands(Draw_Interpretor& theCommands)
                   g);
 }
 
-//=================================================================================================
-
 class BOPTest_Interf
 {
 public:
@@ -91,34 +87,28 @@ public:
   {
   }
 
-  //
   ~BOPTest_Interf() = default;
 
-  //
   void SetIndices(const int theIndex1, const int theIndex2)
   {
     myIndex1 = theIndex1;
     myIndex2 = theIndex2;
   }
 
-  //
   void Indices(int& theIndex1, int& theIndex2) const
   {
     theIndex1 = myIndex1;
     theIndex2 = myIndex2;
   }
 
-  //
   void SetType(const int theType) { myType = theType; }
 
-  //
   int Type() const { return myType; }
 
-  //
   bool operator<(const BOPTest_Interf& aOther) const
   {
     bool bFlag;
-    //
+
     if (myType == aOther.myType)
     {
       if (myIndex1 == aOther.myIndex1)
@@ -134,18 +124,15 @@ public:
     {
       bFlag = (myType < aOther.myType);
     }
-    //
+
     return bFlag;
   }
 
-  //
 protected:
   int myIndex1;
   int myIndex2;
   int myType;
 };
-
-//=================================================================================================
 
 int bopcheck(Draw_Interpretor& di, int n, const char** a)
 {
@@ -167,22 +154,22 @@ int bopcheck(Draw_Interpretor& di, int n, const char** a)
     di << " Default level is 9\n";
     return 1;
   }
-  //
+
   TopoDS_Shape aS = DBRep::Get(a[1]);
   if (aS.IsNull())
   {
     di << "null shapes are not allowed here!";
     return 1;
   }
-  //
+
   bool   bRunParallel, bShowTime;
   int    i, aLevel, aNbInterfTypes;
   double aTol;
-  //
+
   aNbInterfTypes = BOPDS_DS::NbInterfTypes();
-  //
+
   aLevel = aNbInterfTypes - 1;
-  //
+
   if (n > 2)
   {
     if (a[2][0] != '-')
@@ -190,17 +177,17 @@ int bopcheck(Draw_Interpretor& di, int n, const char** a)
       aLevel = Draw::Atoi(a[2]);
     }
   }
-  //
+
   if (aLevel < 0 || aLevel > aNbInterfTypes - 1)
   {
     di << "Invalid level";
     return 1;
   }
-  //
+
   bShowTime    = false;
   aTol         = BOPTest_Objects::FuzzyValue();
   bRunParallel = BOPTest_Objects::RunParallel();
-  //
+
   for (i = 2; i < n; ++i)
   {
     if (!strcmp(a[i], "-t"))
@@ -208,18 +195,16 @@ int bopcheck(Draw_Interpretor& di, int n, const char** a)
       bShowTime = true;
     }
   }
-  //
-  // aLevel = (n==3) ? Draw::Atoi(a[2]) : aNbInterfTypes-1;
-  //-------------------------------------------------------------------
+
   char buf[256], aName1[32], aName2[32];
   char aInterfTypes[10][4] = {"V/V", "V/E", "E/E", "V/F", "E/F", "F/F", "V/Z", "E/Z", "F/Z", "Z/Z"};
-  //
+
   int                                   iErr, iCnt, n1, n2, iT;
   TopAbs_ShapeEnum                      aType1, aType2;
   BOPAlgo_CheckerSI                     aChecker;
   NCollection_List<TopoDS_Shape>        aLS;
   NCollection_Map<BOPDS_Pair>::Iterator aItMPK;
-  //
+
   if (aLevel < (aNbInterfTypes - 1))
   {
     di << "Info:\nThe level of check is set to " << aInterfTypes[aLevel]
@@ -235,33 +220,33 @@ int bopcheck(Draw_Interpretor& di, int n, const char** a)
     }
     di << " will not be checked.\n\n";
   }
-  //
+
   aLS.Append(aS);
   aChecker.SetArguments(aLS);
   aChecker.SetLevelOfCheck(aLevel);
   aChecker.SetRunParallel(bRunParallel);
   aChecker.SetFuzzyValue(aTol);
-  //
+
   OSD_Timer aTimer;
   aTimer.Start();
-  //
+
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
   aChecker.Perform(aProgress->Start());
-  //
+
   aTimer.Stop();
-  //
+
   BOPTest::ReportAlerts(aChecker.GetReport());
-  //
+
   iErr = aChecker.HasErrors();
-  //
+
   const BOPDS_DS& aDS = *(aChecker.PDS());
-  //
+
   const NCollection_Map<BOPDS_Pair>& aMPK = aDS.Interferences();
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
   std::vector<BOPTest_Interf>           aVec;
   std::vector<BOPTest_Interf>::iterator aIt;
   BOPTest_Interf                        aBInterf;
-  //
+
   aItMPK.Initialize(aMPK);
   for (; aItMPK.More(); aItMPK.Next())
   {
@@ -271,59 +256,59 @@ int bopcheck(Draw_Interpretor& di, int n, const char** a)
     {
       continue;
     }
-    //
+
     const BOPDS_ShapeInfo& aSI1 = aDS.ShapeInfo(n1);
     const BOPDS_ShapeInfo& aSI2 = aDS.ShapeInfo(n2);
     aType1                      = aSI1.ShapeType();
     aType2                      = aSI2.ShapeType();
-    //
+
     iT = BOPDS_Tools::TypeToInteger(aType1, aType2);
-    //
+
     aBInterf.SetIndices(n1, n2);
     aBInterf.SetType(iT);
-    //
+
     aVec.push_back(aBInterf);
   }
-  //
+
   sort(aVec.begin(), aVec.end(), std::less<BOPTest_Interf>());
-  //
+
   iCnt = 0;
   for (aIt = aVec.begin(); aIt != aVec.end(); aIt++)
   {
     const BOPTest_Interf& aBI = *aIt;
-    //
+
     aBI.Indices(n1, n2);
     if (aDS.IsNewShape(n1) || aDS.IsNewShape(n2))
     {
       continue;
     }
-    //
+
     const TopoDS_Shape& aS1 = aDS.Shape(n1);
     const TopoDS_Shape& aS2 = aDS.Shape(n2);
-    //
+
     iT = aBI.Type();
     di << aInterfTypes[iT] << ": ";
-    //
+
     Sprintf(aName1, "x%d", n1);
-    // Sprintf(aName1, "x%d", iCnt);
+
     DBRep::Set(aName1, aS1);
-    //
+
     ++iCnt;
     Sprintf(aName2, "x%d", n2);
-    // Sprintf(aName2, "x%d", iCnt);
+
     DBRep::Set(aName2, aS2);
     ++iCnt;
-    //
+
     Sprintf(buf, "%s %s \n", aName1, aName2);
     di << buf;
   }
-  //
+
   if (iErr)
   {
     di << "There were errors during the operation, ";
     di << "so the list may be incomplete.\n";
   }
-  //
+
   if (!iCnt)
   {
     di << " This shape seems to be OK.\n";
@@ -335,8 +320,6 @@ int bopcheck(Draw_Interpretor& di, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 int bopargcheck(Draw_Interpretor& di, int n, const char** a)
 {
@@ -401,7 +384,7 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
   int    indxS2     = 0;
   double aTolerance = 0;
   bool   bRunParallel;
-  //
+
   bRunParallel = BOPTest_Objects::RunParallel();
   aTolerance   = BOPTest_Objects::FuzzyValue();
 
@@ -433,7 +416,6 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
     }
   }
 
-  // set & test second shape
   TopoDS_Shape aS22, aS2;
   if (isS2)
   {
@@ -455,13 +437,11 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
     }
   }
 
-  // init checker
   BOPAlgo_ArgumentAnalyzer aChecker;
   aChecker.SetRunParallel(bRunParallel);
   aChecker.SetFuzzyValue(aTolerance);
   aChecker.SetShape1(aS1);
 
-  // set default options (always tested!) for single and couple shapes
   aChecker.ArgumentTypeMode()   = true;
   aChecker.SelfInterMode()      = true;
   aChecker.SmallEdgeMode()      = true;
@@ -469,12 +449,11 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
   aChecker.ContinuityMode()     = true;
   aChecker.CurveOnSurfaceMode() = true;
 
-  // test & set options and operation for two shapes
   if (!aS22.IsNull())
   {
     aS2 = BRepBuilderAPI_Copy(aS22).Shape();
     aChecker.SetShape2(aS2);
-    // set operation (default - Section)
+
     if (isBO)
     {
       if (a[indxBO][1] == 'F' || a[indxBO][1] == 'f')
@@ -516,7 +495,6 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
     aChecker.MergeEdgeMode()   = true;
   }
 
-  // set options (default - all ON)
   if (isOP)
   {
     int ind = 1;
@@ -568,7 +546,6 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
     }
   }
 
-  // set additional options
   bool fullOutput = false;
   if (isAD)
   {
@@ -594,9 +571,9 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
   }
 
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
-  // run checker
+
   aChecker.Perform(aProgress->Start());
-  // process result of checking
+
   if (!aChecker.HasFaulty())
   {
     di << "Shape(s) seem(s) to be valid for BOP." << "\n";
@@ -746,7 +723,6 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
           break;
           case BOPAlgo_IncompatibilityOfFace:
           {
-            // not yet implemented
           }
           break;
           case BOPAlgo_GeomAbs_C0:
@@ -821,15 +797,14 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             hasUnknown = true;
           }
           break;
-        } // switch
-      } // faulties
+        }
+      }
 
       int FS1 = S1_SelfInt + S1_SmalE + S1_BadF + S1_BadV + S1_BadE + S1_OpAb + S1_C0 + S1_COnS;
       FS1 += (S1_BadType != 0) ? 1 : 0;
       int FS2 = S2_SelfInt + S2_SmalE + S2_BadF + S2_BadV + S2_BadE + S2_OpAb + S2_C0 + S2_COnS;
       FS2 += (S2_BadType != 0) ? 1 : 0;
 
-      // output for first shape
       di << "Faulties for FIRST  shape found : " << FS1 << "\n";
       if (FS1 != 0)
       {
@@ -919,7 +894,6 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
           di << "\n";
       }
 
-      // output for second shape
       di << "\n";
       di << "Faulties for SECOND  shape found : " << FS2 << "\n";
       if (FS2 != 0)
@@ -1010,19 +984,17 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
         else
           di << "\n";
       }
-      // warning
+
       if (hasUnknown)
       {
         di << "\n";
         di << "WARNING: The unexpected test break occurs!\n";
       }
-    } // full output
-  } // has faulties
+    }
+  }
 
   return 0;
 }
-
-//=================================================================================================
 
 int bopapicheck(Draw_Interpretor& di, int n, const char** a)
 {
@@ -1036,7 +1008,7 @@ int bopapicheck(Draw_Interpretor& di, int n, const char** a)
   TopoDS_Shape aS2;
   if (n > 2)
   {
-    // Try to get the second shape
+
     aS2 = DBRep::Get(a[2]);
   }
 
@@ -1048,7 +1020,7 @@ int bopapicheck(Draw_Interpretor& di, int n, const char** a)
   {
     if (!strcmp(a[i], "-op"))
     {
-      // Get the operation type
+
       ++i;
       if (!strcmp(a[i], "common"))
         anOp = BOPAlgo_COMMON;
@@ -1084,9 +1056,6 @@ int bopapicheck(Draw_Interpretor& di, int n, const char** a)
       di << "The shapes seem to be valid\n";
     return 0;
   }
-
-  // Shapes seem to be invalid.
-  // Analyze the invalidity.
 
   bool                                            isInv1 = false, isInv2 = false;
   bool                                            isBadOp = false;
@@ -1135,8 +1104,6 @@ int bopapicheck(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 int xdistef(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
@@ -1144,39 +1111,37 @@ int xdistef(Draw_Interpretor& di, int n, const char** a)
     di << "use xdistef edge face\n";
     return 1;
   }
-  //
+
   const TopoDS_Shape aS1 = DBRep::Get(a[1]);
   const TopoDS_Shape aS2 = DBRep::Get(a[2]);
-  //
+
   if (aS1.IsNull() || aS2.IsNull())
   {
     di << "null shapes\n";
     return 1;
   }
-  //
+
   if (aS1.ShapeType() != TopAbs_EDGE || aS2.ShapeType() != TopAbs_FACE)
   {
     di << "type mismatch\n";
     return 1;
   }
-  //
+
   double aMaxDist = 0.0, aMaxPar = 0.0;
-  //
+
   const TopoDS_Edge& anEdge = *(TopoDS_Edge*)&aS1;
   const TopoDS_Face& aFace  = *(TopoDS_Face*)&aS2;
-  //
+
   if (!BOPTools_AlgoTools::ComputeTolerance(aFace, anEdge, aMaxDist, aMaxPar))
   {
     di << "Tolerance cannot be computed\n";
     return 1;
   }
-  //
+
   di << "Max Distance = " << aMaxDist << "; Parameter on curve = " << aMaxPar << "\n";
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 int checkcurveonsurf(Draw_Interpretor& di, int n, const char** a)
 {
@@ -1185,45 +1150,45 @@ int checkcurveonsurf(Draw_Interpretor& di, int n, const char** a)
     di << "use checkcurveonsurf shape\n";
     return 1;
   }
-  //
+
   TopoDS_Shape aS = DBRep::Get(a[1]);
   if (aS.IsNull())
   {
     di << "null shape\n";
     return 1;
   }
-  //
+
   int             nE, nF, anECounter, aFCounter;
   double          aT, aTolE, aDMax;
   TopExp_Explorer aExpF, aExpE;
   char            buf[200], aFName[10], anEName[10];
   NCollection_DataMap<TopoDS_Shape, double, TopTools_ShapeMapHasher> aDMETol;
   NCollection_DataMap<TopoDS_Shape, int, TopTools_ShapeMapHasher>    aMSI;
-  //
+
   anECounter = 0;
   aFCounter  = 0;
-  //
+
   aExpF.Init(aS, TopAbs_FACE);
   for (; aExpF.More(); aExpF.Next())
   {
     const TopoDS_Face& aF = *(TopoDS_Face*)&aExpF.Current();
-    //
+
     aExpE.Init(aF, TopAbs_EDGE);
     for (; aExpE.More(); aExpE.Next())
     {
       const TopoDS_Edge& aE = *(TopoDS_Edge*)&aExpE.Current();
-      //
+
       if (!BOPTools_AlgoTools::ComputeTolerance(aF, aE, aDMax, aT))
       {
         continue;
       }
-      //
+
       aTolE = BRep_Tool::Tolerance(aE);
       if (!(aDMax > aTolE))
       {
         continue;
       }
-      //
+
       if (aDMETol.IsBound(aE))
       {
         double& aD = aDMETol.ChangeFind(aE);
@@ -1236,12 +1201,12 @@ int checkcurveonsurf(Draw_Interpretor& di, int n, const char** a)
       {
         aDMETol.Bind(aE, aDMax);
       }
-      //
+
       if (anECounter == 0)
       {
         di << "Invalid curves on surface:\n";
       }
-      //
+
       if (aMSI.IsBound(aE))
       {
         nE = aMSI.Find(aE);
@@ -1252,7 +1217,7 @@ int checkcurveonsurf(Draw_Interpretor& di, int n, const char** a)
         aMSI.Bind(aE, nE);
         ++anECounter;
       }
-      //
+
       if (aMSI.IsBound(aF))
       {
         nF = aMSI.Find(aF);
@@ -1263,7 +1228,7 @@ int checkcurveonsurf(Draw_Interpretor& di, int n, const char** a)
         aMSI.Bind(aF, nF);
         ++aFCounter;
       }
-      //
+
       Sprintf(anEName, "e_%d", nE);
       Sprintf(aFName, "f_%d", nF);
       Sprintf(buf,
@@ -1273,17 +1238,17 @@ int checkcurveonsurf(Draw_Interpretor& di, int n, const char** a)
               aDMax,
               aT);
       di << buf;
-      //
+
       DBRep::Set(anEName, aE);
       DBRep::Set(aFName, aF);
     }
   }
-  //
+
   if (anECounter > 0)
   {
     di << "\n\nSugestions to fix the shape:\n";
     di << "explode " << a[1] << " e;\n";
-    //
+
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> M;
     aExpE.Init(aS, TopAbs_EDGE);
     for (anECounter = 0; aExpE.More(); aExpE.Next())
@@ -1294,12 +1259,12 @@ int checkcurveonsurf(Draw_Interpretor& di, int n, const char** a)
         continue;
       }
       ++anECounter;
-      //
+
       if (!aDMETol.IsBound(aE))
       {
         continue;
       }
-      //
+
       aTolE = aDMETol.Find(aE);
       aTolE *= 1.001;
       Sprintf(buf, "settolerance %s_%d %3.16f;\n", a[1], anECounter, aTolE);
@@ -1310,11 +1275,9 @@ int checkcurveonsurf(Draw_Interpretor& di, int n, const char** a)
   {
     di << "This shape seems to be OK.\n";
   }
-  //
+
   return 0;
 }
-
-//=================================================================================================
 
 void MakeShapeForFullOutput(const TCollection_AsciiString&        aBaseName,
                             const int                             aIndex,
@@ -1341,13 +1304,13 @@ void MakeShapeForFullOutput(const TCollection_AsciiString&        aBaseName,
     aCount++;
   }
   di << "Made faulty shape: " << name;
-  //
+
   if (bCurveOnSurf)
   {
     di << " (MaxDist = " << aMaxDist << ", MaxPar = " << aMaxParameter << ")";
   }
-  //
+
   di << "\n";
-  //
+
   DBRep::Set(name, cmp);
 }

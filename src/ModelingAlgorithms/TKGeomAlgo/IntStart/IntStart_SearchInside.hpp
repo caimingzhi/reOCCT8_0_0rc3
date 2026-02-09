@@ -23,11 +23,6 @@ IntStart_SearchInside::IntStart_SearchInside(TheFunction&                     Fu
   Perform(Func, PS, T, Epsilon);
 }
 
-//=======================================================================
-// function : Perform
-// purpose  : Search all inside points
-//=======================================================================
-
 void IntStart_SearchInside::Perform(TheFunction&                     Func,
                                     const ThePSurface&               PS,
                                     const occ::handle<TheTopolTool>& T,
@@ -63,8 +58,6 @@ void IntStart_SearchInside::Perform(TheFunction&                     Func,
   if (toler2 > Maxtoler1toler2)
     Maxtoler1toler2 = toler2;
 
-  //-- lbr le 15 mai 97
-  //-- on interdit aux points d'etre trop prets des restrictions
   Maxtoler1toler2 *= 1000;
   if (Maxtoler1toler2 > du * 0.001)
     Maxtoler1toler2 = du * 0.001;
@@ -76,32 +69,10 @@ void IntStart_SearchInside::Perform(TheFunction&                     Func,
 
   math_FunctionSetRoot Rsnld(Func, toler);
 
-  //-- lbr le 15 mai 97
   umin += du * 0.01;
   vmin += dv * 0.01;
   umax -= du * 0.01;
   vmax -= dv * 0.01;
-
-  //-- lbr le 30 octobre 97 :
-  //-- Si une surface vient tangenter 2 edges proche d un coin
-  //-- il faut faire attention qu un point de depart soit trouve au
-  //-- voisinage du coin. Car ds le cas contraire, le cheminement ne
-  //-- pourra pas passer au travers des frontieres :
-  //--
-  //-- typiquement I est un cylindre (conge)
-  //--
-  //--                 PPPPPPPPPPPPPPPPPPPP*PPPPPPPPPPPPPPPP
-  //--                 P               I     I
-  //--                 P           I           I
-  //--                 P        I
-  //--                 P      #  il faut trouver un point ici
-  //--                 P    I
-  //--                 P  I
-  //--                 PI
-  //--                 *                    I
-  //--                 PI                 I
-  //--                 P  I I I I I I I I
-  //--
 
   for (i = 1; i <= Nbsample + 12; i++)
   {
@@ -120,7 +91,6 @@ void IntStart_SearchInside::Perform(TheFunction&                     Func,
       u2 = Bsup(1) = std::min(umax, UVap(1) + du);
       v2 = Bsup(2) = std::min(vmax, UVap(2) + dv);
 
-      //-- gp_Pnt Pmilieu = ThePSurfaceTool::Value(PS,0.5*(u1+u2),0.5*(v1+v2));
       gp_Pnt      Pextrm1 = ThePSurfaceTool::Value(PS, u1, v1);
       gp_Pnt      Pextrm2 = ThePSurfaceTool::Value(PS, u2, v2);
       double      aValf[1];
@@ -206,7 +176,7 @@ void IntStart_SearchInside::Perform(TheFunction&                     Func,
           {
             psol = Func.Point();
             Rsnld.Root(UVap);
-            // On regarde si le point trouve est bien un nouveau point.
+
             j       = 1;
             nbpt    = list.Length();
             testpnt = (j <= nbpt);
@@ -231,10 +201,8 @@ void IntStart_SearchInside::Perform(TheFunction&                     Func,
             }
             if (j > nbpt)
             {
-              //	    situ = TheSITool::Classify(PS,UVap(1),UVap(2));
-              situ = T->Classify(gp_Pnt2d(UVap(1), UVap(2)),
-                                 Maxtoler1toler2,
-                                 false); //-- ,false pour ne pas recadrer on Periodic
+
+              situ = T->Classify(gp_Pnt2d(UVap(1), UVap(2)), Maxtoler1toler2, false);
               if (situ == TopAbs_IN)
               {
                 list.Append(IntSurf_InteriorPoint(psol,
@@ -249,15 +217,9 @@ void IntStart_SearchInside::Perform(TheFunction&                     Func,
       }
     }
   }
-  //-- printf("\n Total : %d    Rejet : %d   RatioPointCalc : %g   nbpt
-  //=%d\n",REJET_OK+REJET_KO,REJET_OK,(double)(REJET_KO)/(double)(REJET_OK+REJET_KO),list.Length());
+
   done = true;
 }
-
-//=======================================================================
-// function : Perform
-// purpose  : Test the given inside point
-//=======================================================================
 
 void IntStart_SearchInside::Perform(TheFunction&       Func,
                                     const ThePSurface& PS,

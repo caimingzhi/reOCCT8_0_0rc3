@@ -35,8 +35,6 @@ static occ::handle<Geom2d_BezierCurve> MakeBezier2d(const occ::handle<Geom2d_Cur
   return bezier;
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
 {
   mySegments->Clear();
@@ -45,11 +43,10 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
   double           First     = mySplitValues->Value(1);
   double           Last      = mySplitValues->Value(mySplitValues->Length());
 
-  // PTV Try to create line2d from myCurve
   if (myCurve->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve))
       || myCurve->IsKind(STANDARD_TYPE(Geom2d_BezierCurve)))
   {
-    // static function`s code getted from ShapeConvert
+
     double                   tmpF, tmpL, aDeviation;
     occ::handle<Geom2d_Line> aTmpLine2d =
       ShapeCustom_Curve2d::ConvertToLine2d(myCurve,
@@ -76,8 +73,7 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
     occ::handle<Geom2d_TrimmedCurve>    tmp      = occ::down_cast<Geom2d_TrimmedCurve>(myCurve);
     occ::handle<Geom2d_Curve>           BasCurve = tmp->BasisCurve();
     ShapeUpgrade_ConvertCurve2dToBezier converter;
-    // converter.Init(BasCurve,Max(First,BasCurve->FirstParameter()),Min(Last,BasCurve->LastParameter()));
-    // //???
+
     converter.Init(BasCurve, First, Last);
     converter.SetSplitValues(mySplitValues);
     converter.Compute();
@@ -126,9 +122,9 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
     double                           Shift = 0.;
     if (myCurve->IsKind(STANDARD_TYPE(Geom2d_Conic)))
     {
-      // clang-format off
-      occ::handle<Geom2d_Curve> tcurve = new Geom2d_TrimmedCurve(myCurve,First,Last); //protection against parabols ets
-      // clang-format on
+
+      occ::handle<Geom2d_Curve> tcurve = new Geom2d_TrimmedCurve(myCurve, First, Last);
+
       Geom2dConvert_ApproxCurve approx(tcurve, Precision::Approximation(), GeomAbs_C1, 100, 6);
       if (approx.HasResult())
         aBSpline2d = approx.Curve();
@@ -169,7 +165,6 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
       mySplitValues->SetValue(mySplitValues->Length(), Last);
     }
 
-    // PTV 20.12.2001 Try to simplify BSpline Curve
     ShapeCustom_Curve2d::SimplifyBSpline2d(aBSpline2d, Precision::Approximation());
 
     Geom2dConvert_BSplineCurveToBezierCurve tool(aBSpline2d, First, Last, precision);
@@ -177,7 +172,7 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
     NCollection_Array1<double>              knots(1, nbArcs + 1);
     tool.Knots(knots);
     mySplitParams->Append(First + Shift);
-    int j; // svv Jan 10 2000 : porting on DEC
+    int j;
 
     double newFirst = First + Shift;
     double newLast  = First + Shift;
@@ -234,9 +229,7 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
   myStatus = ShapeExtend::EncodeStatus(ShapeExtend_DONE1);
 }
 
-//=================================================================================================
-
-void ShapeUpgrade_ConvertCurve2dToBezier::Build(const bool /*Segment*/)
+void ShapeUpgrade_ConvertCurve2dToBezier::Build(const bool)
 {
   constexpr double prec = Precision::PConfusion();
   int              nb   = mySplitValues->Length();
@@ -263,15 +256,11 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Build(const bool /*Segment*/)
   }
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<occ::handle<Geom2d_Curve>>> ShapeUpgrade_ConvertCurve2dToBezier::
   Segments() const
 {
   return mySegments;
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HSequence<double>> ShapeUpgrade_ConvertCurve2dToBezier::SplitParams() const
 {

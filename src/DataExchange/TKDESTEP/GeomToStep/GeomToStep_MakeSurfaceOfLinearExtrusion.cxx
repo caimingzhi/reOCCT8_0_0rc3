@@ -10,10 +10,6 @@
 #include <StepGeom_Vector.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=============================================================================
-// Creation d' une surface_of_linear_extrusion de prostep a partir d' une
-// SurfaceOfLinearExtrusion de Geom
-//=============================================================================
 GeomToStep_MakeSurfaceOfLinearExtrusion::GeomToStep_MakeSurfaceOfLinearExtrusion(
   const occ::handle<Geom_SurfaceOfLinearExtrusion>& S,
   const StepData_Factors&                           theLocalFactors)
@@ -34,10 +30,6 @@ GeomToStep_MakeSurfaceOfLinearExtrusion::GeomToStep_MakeSurfaceOfLinearExtrusion
   theSurfaceOfLinearExtrusion = Surf;
   done                        = true;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_SurfaceOfLinearExtrusion>& GeomToStep_MakeSurfaceOfLinearExtrusion::
   Value() const

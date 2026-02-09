@@ -24,7 +24,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlLDrivers_DocumentRetrievalDriver, PCDM_RetrievalDr
 
 #ifdef _MSC_VER
   #include <tchar.h>
-#endif // _MSC_VER
+#endif
 
 #include <Standard_Failure.hpp>
 #include <Standard_ErrorHandler.hpp>
@@ -35,7 +35,6 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlLDrivers_DocumentRetrievalDriver, PCDM_RetrievalDr
 #define MODIFICATION_COUNTER "MODIFICATION_COUNTER: "
 #define REFERENCE_COUNTER "REFERENCE_COUNTER: "
 
-// #define TAKE_TIMES
 static void take_time(const int, const char*, const occ::handle<Message_Messenger>&)
 #ifdef TAKE_TIMES
   ;
@@ -51,7 +50,7 @@ static int RemoveExtraSeparator(TCollection_AsciiString& aString)
 
   len = aString.Length();
 #ifdef _WIN32
-  // Case of network path, such as \\MACHINE\dir
+
   for (i = j = 2; j <= len; i++, j++)
   {
 #else
@@ -77,7 +76,7 @@ static TCollection_AsciiString GetDirFromFile(const TCollection_ExtendedString& 
   TCollection_AsciiString theDirectory;
   int                     i = theCFile.SearchFromEnd("/");
 #ifdef _WIN32
-  //    if(i==-1) i=theCFile.SearchFromEnd("\\");
+
   if (theCFile.SearchFromEnd("\\") > i)
     i = theCFile.SearchFromEnd("\\");
 #endif
@@ -136,14 +135,10 @@ static TCollection_AsciiString AbsolutePath(const TCollection_AsciiString& aDirP
   return retx;
 }
 
-//=================================================================================================
-
 XmlLDrivers_DocumentRetrievalDriver::XmlLDrivers_DocumentRetrievalDriver()
 {
   myReaderStatus = PCDM_RS_OK;
 }
-
-//=================================================================================================
 
 void XmlLDrivers_DocumentRetrievalDriver::Read(const TCollection_ExtendedString&     theFileName,
                                                const occ::handle<CDM_Document>&      theNewDocument,
@@ -173,23 +168,18 @@ void XmlLDrivers_DocumentRetrievalDriver::Read(const TCollection_ExtendedString&
   }
 }
 
-//=================================================================================================
-
 void XmlLDrivers_DocumentRetrievalDriver::Read(Standard_IStream& theIStream,
-                                               const occ::handle<Storage_Data>& /*theStorageData*/,
+                                               const occ::handle<Storage_Data>&,
                                                const occ::handle<CDM_Document>&    theNewDocument,
                                                const occ::handle<CDM_Application>& theApplication,
-                                               const occ::handle<PCDM_ReaderFilter>& /*theFilter*/,
+                                               const occ::handle<PCDM_ReaderFilter>&,
                                                const Message_ProgressRange& theRange)
 {
   occ::handle<Message_Messenger> aMessageDriver = theApplication->MessageDriver();
   ::take_time(~0, " +++++ Start RETRIEVE procedures ++++++", aMessageDriver);
 
-  // 1. Read DOM_Document from file
   LDOMParser aParser;
 
-  // if myFileName is not empty, "document" tag is required to be read
-  // from the received document
   bool aWithoutRoot = myFileName.IsEmpty();
 
   if (aParser.parse(theIStream, false, aWithoutRoot))
@@ -205,13 +195,6 @@ void XmlLDrivers_DocumentRetrievalDriver::Read(Standard_IStream& theIStream,
   ReadFromDomDocument(anElement, theNewDocument, theApplication, theRange);
 }
 
-//=======================================================================
-// function : ReadFromDomDocument
-// purpose  : management of the macro-structure of XML document data
-// remark   : If the application needs to use myRelocTable to retrieve additional
-//           data from LDOM, this method should be reimplemented
-//=======================================================================
-
 void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
   const XmlObjMgt_Element&            theElement,
   const occ::handle<CDM_Document>&    theNewDocument,
@@ -219,9 +202,9 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
   const Message_ProgressRange&        theRange)
 {
   const occ::handle<Message_Messenger> aMsgDriver = theApplication->MessageDriver();
-  // 1. Read info // to be done
-  TCollection_AsciiString anAbsoluteDirectory = GetDirFromFile(myFileName);
-  int aCurDocVersion = TDocStd_FormatVersion_VERSION_2; // minimum supported version
+
+  TCollection_AsciiString    anAbsoluteDirectory = GetDirFromFile(myFileName);
+  int                        aCurDocVersion      = TDocStd_FormatVersion_VERSION_2;
   TCollection_ExtendedString anInfo;
   const XmlObjMgt_Element    anInfoElem = theElement.GetChildByTagName("info");
   if (anInfoElem != nullptr)
@@ -247,8 +230,6 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
       }
     }
 
-    // oan: OCC22305 - check a document version and if it's greater than
-    // current version of storage driver set an error status and return
     if (aCurDocVersion > TDocStd_Document::CurrentStorageFormatVersion())
     {
       TCollection_ExtendedString aMsg = TCollection_ExtendedString("error: wrong file version: ")
@@ -269,7 +250,6 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
         if (XmlObjMgt::GetExtendedString((LDOM_Element&)aNode, anInfo))
         {
 
-          // Read ref counter
           if (anInfo.Search(REFERENCE_COUNTER) != -1)
           {
             try
@@ -281,8 +261,7 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
             }
             catch (Standard_Failure const&)
             {
-              //    std::cout << "warning: could not read the reference counter in " << aFileName <<
-              //    std::endl;
+
               TCollection_ExtendedString aMsg("Warning: ");
               aMsg = aMsg.Cat("could not read the reference counter").Cat("\0");
               if (!aMsgDriver.IsNull())
@@ -310,12 +289,12 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
           if (anInfo == END_REF)
             isRef = false;
           if (isRef)
-          { // Process References
+          {
 
             int pos = anInfo.Search(" ");
             if (pos != -1)
             {
-              // Parce RefId, DocumentVersion and FileName
+
               int                        aRefId;
               TCollection_ExtendedString aFileName;
               int                        aDocumentVersion;
@@ -338,9 +317,7 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
               }
               if (!aMsgDriver.IsNull())
               {
-                //      std::cout << "reference found; ReferenceIdentifier: " <<
-                //      theReferenceIdentifier << "; File:" << thePath << ", version:" <<
-                //      theDocumentVersion;
+
                 TCollection_ExtendedString aMsg("Warning: ");
                 aMsg = aMsg.Cat("reference found; ReferenceIdentifier:  ")
                          .Cat(aRefId)
@@ -351,10 +328,9 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
                          .Cat("\0");
                 aMsgDriver->Send(aMsg.ToExtString(), Message_Warning);
               }
-              // Add new ref!
-              /////////////
+
               TCollection_ExtendedString theFolder, theName;
-              // TCollection_ExtendedString theFile=myReferences(myIterator).FileName();
+
               TCollection_ExtendedString f(aPath);
 #ifndef _WIN32
 
@@ -395,7 +371,7 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
               theFolder = dirRet;
               theName   = UTL::Name(p);
               theName += UTL::Extension(p);
-#endif // _WIN32
+#endif
 
               occ::handle<CDM_MetaData> aMetaData =
                 CDM_MetaData::LookUp(theApplication->MetaDataLookUpTable(),
@@ -404,7 +380,7 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
                                      aPath,
                                      aPath,
                                      UTL::IsReadOnly(aFileName));
-              ////////////
+
               theNewDocument->CreateReference(aMetaData,
                                               aRefId,
                                               theApplication,
@@ -419,7 +395,6 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
     }
   }
 
-  // 2. Read comments
   TCollection_ExtendedString aComment;
   const XmlObjMgt_Element    aCommentsElem = theElement.GetChildByTagName("comments");
   if (aCommentsElem != nullptr)
@@ -437,7 +412,7 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
     }
   }
   Message_ProgressScope aPS(theRange, "Reading document", 2);
-  // 2. Read Shapes section
+
   if (myDrivers.IsNull())
     myDrivers = AttributeDrivers(aMsgDriver);
   const occ::handle<XmlMDF_ADriver> aNSDriver =
@@ -451,13 +426,11 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
     return;
   }
 
-  // 2.1. Keep document format version in RT
   occ::handle<Storage_HeaderData> aHeaderData = new Storage_HeaderData();
   aHeaderData->SetStorageVersion(aCurDocVersion);
   myRelocTable.Clear();
   myRelocTable.SetHeaderData(aHeaderData);
 
-  // 5. Read document contents
   try
   {
     OCC_CATCH_SIGNALS
@@ -481,17 +454,11 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
     return;
   }
 
-  //    Wipe off the shapes written to the <shapes> section
   ShapeSetCleaning(aNSDriver);
 
-  //    Clean the relocation table.
-  //    If the application needs to use myRelocTable to retrieve additional
-  //    data from LDOM, this method should be reimplemented avoiding this step
   myRelocTable.Clear();
   ::take_time(0, " +++++ Fin reading data OCAF : ", aMsgDriver);
 }
-
-//=================================================================================================
 
 bool XmlLDrivers_DocumentRetrievalDriver::MakeDocument(const XmlObjMgt_Element&         theElement,
                                                        const occ::handle<CDM_Document>& theTDoc,
@@ -512,19 +479,12 @@ bool XmlLDrivers_DocumentRetrievalDriver::MakeDocument(const XmlObjMgt_Element& 
   return aResult;
 }
 
-//=================================================================================================
-
 occ::handle<XmlMDF_ADriverTable> XmlLDrivers_DocumentRetrievalDriver::AttributeDrivers(
   const occ::handle<Message_Messenger>& theMessageDriver)
 {
   return XmlLDrivers::AttributeDrivers(theMessageDriver);
 }
 
-//=======================================================================
-// function : take_time
-// class    : static
-// purpose  : output astronomical time elapsed
-//=======================================================================
 #ifdef TAKE_TIMES
   #include <time.h>
   #include <sys/timeb.h>
@@ -556,25 +516,14 @@ static void take_time(const int                             isReset,
 }
 #endif
 
-//=======================================================================
-// function : ReadShapeSection
-// purpose  : definition of ReadShapeSection
-//=======================================================================
 occ::handle<XmlMDF_ADriver> XmlLDrivers_DocumentRetrievalDriver::ReadShapeSection(
-  const XmlObjMgt_Element& /*theElement*/,
-  const occ::handle<Message_Messenger>& /*aMsgDriver*/,
-  const Message_ProgressRange& /*theRange*/)
+  const XmlObjMgt_Element&,
+  const occ::handle<Message_Messenger>&,
+  const Message_ProgressRange&)
 {
   occ::handle<XmlMDF_ADriver> aDriver;
-  // empty; to be redefined
+
   return aDriver;
 }
 
-//=======================================================================
-// function : ShapeSetCleaning
-// purpose  : definition of ShapeSetCleaning
-//=======================================================================
-void XmlLDrivers_DocumentRetrievalDriver::ShapeSetCleaning(
-  const occ::handle<XmlMDF_ADriver>& /*theDriver*/)
-{
-}
+void XmlLDrivers_DocumentRetrievalDriver::ShapeSetCleaning(const occ::handle<XmlMDF_ADriver>&) {}

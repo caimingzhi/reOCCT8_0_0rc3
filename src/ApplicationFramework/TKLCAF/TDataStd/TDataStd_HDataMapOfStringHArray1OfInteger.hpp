@@ -9,8 +9,6 @@
 #include <NCollection_DataMap.hpp>
 #include <Standard_Transient.hpp>
 
-//! Extension of NCollection_DataMap<TCollection_ExtendedString,
-//! occ::handle<NCollection_HArray1<int>>> class to be manipulated by handle.
 class TDataStd_HDataMapOfStringHArray1OfInteger : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(TDataStd_HDataMapOfStringHArray1OfInteger, Standard_Transient)

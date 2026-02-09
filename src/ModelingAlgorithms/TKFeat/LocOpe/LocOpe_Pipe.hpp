@@ -15,8 +15,6 @@
 class TopoDS_Wire;
 class Geom_Curve;
 
-//! Defines a pipe (near from Pipe from BRepFill),
-//! with modifications provided for the Pipe feature.
 class LocOpe_Pipe
 {
 public:
@@ -56,21 +54,15 @@ inline const TopoDS_Shape& LocOpe_Pipe::Spine() const
   return myPipe.Spine();
 }
 
-//=================================================================================================
-
 inline const TopoDS_Shape& LocOpe_Pipe::Profile() const
 {
   return myPipe.Profile();
 }
 
-//=================================================================================================
-
 inline const TopoDS_Shape& LocOpe_Pipe::FirstShape() const
 {
   return myPipe.FirstShape();
 }
-
-//=================================================================================================
 
 inline const TopoDS_Shape& LocOpe_Pipe::LastShape() const
 {

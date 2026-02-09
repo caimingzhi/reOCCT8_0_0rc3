@@ -5,22 +5,16 @@
 #include <Transfer_DataInfo.hpp>
 #include <Transfer_Finder.hpp>
 
-//=================================================================================================
-
 Transfer_TransientMapper::Transfer_TransientMapper(const occ::handle<Standard_Transient>& akey)
     : theval(akey)
 {
   SetHashCode(std::hash<occ::handle<Standard_Transient>>{}(akey));
 }
 
-//=================================================================================================
-
 const occ::handle<Standard_Transient>& Transfer_TransientMapper::Value() const
 {
   return theval;
 }
-
-//=================================================================================================
 
 bool Transfer_TransientMapper::Equates(const occ::handle<Transfer_Finder>& other) const
 {
@@ -34,14 +28,10 @@ bool Transfer_TransientMapper::Equates(const occ::handle<Transfer_Finder>& other
   return theval == another->Value();
 }
 
-//=================================================================================================
-
 occ::handle<Standard_Type> Transfer_TransientMapper::ValueType() const
 {
   return Transfer_DataInfo::Type(theval);
 }
-
-//=================================================================================================
 
 const char* Transfer_TransientMapper::ValueTypeName() const
 {

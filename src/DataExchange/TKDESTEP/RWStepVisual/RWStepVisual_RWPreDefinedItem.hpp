@@ -10,7 +10,6 @@ class Interface_Check;
 class StepVisual_PreDefinedItem;
 class StepData_StepWriter;
 
-//! Read & Write Module for PreDefinedItem
 class RWStepVisual_RWPreDefinedItem
 {
 public:

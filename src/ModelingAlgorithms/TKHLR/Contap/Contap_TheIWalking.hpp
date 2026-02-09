@@ -31,65 +31,32 @@ class Contap_TheIWalking
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Deflection is the maximum deflection admitted between two
-  //! consecutive points on a resulting polyline.
-  //! Step is the maximum increment admitted between two
-  //! consecutive points (in 2d space).
-  //! Epsilon is the tolerance beyond which 2 points
-  //! are confused.
-  //! theToFillHoles is the flag defining whether possible holes
-  //! between resulting curves are filled or not
-  //! in case of Contap walking theToFillHoles is True
   Standard_EXPORT Contap_TheIWalking(const double Epsilon,
                                      const double Deflection,
                                      const double Step,
                                      const bool   theToFillHoles = false);
 
-  //! Deflection is the maximum deflection admitted between two
-  //! consecutive points on a resulting polyline.
-  //! Step is the maximum increment admitted between two
-  //! consecutive points (in 2d space).
-  //! Epsilon is the tolerance beyond which 2 points
-  //! are confused
   void SetTolerance(const double Epsilon, const double Deflection, const double Step);
 
-  //! Searches a set of polylines starting on a point of Pnts1
-  //! or Pnts2.
-  //! Each point on a resulting polyline verifies F(u,v)=0
   Standard_EXPORT void Perform(const NCollection_Sequence<IntSurf_PathPoint>&     Pnts1,
                                const NCollection_Sequence<IntSurf_InteriorPoint>& Pnts2,
                                Contap_SurfFunction&                               Func,
                                const occ::handle<Adaptor3d_Surface>&              S,
                                const bool                                         Reversed = false);
 
-  //! Searches a set of polylines starting on a point of Pnts1.
-  //! Each point on a resulting polyline verifies F(u,v)=0
   Standard_EXPORT void Perform(const NCollection_Sequence<IntSurf_PathPoint>& Pnts1,
                                Contap_SurfFunction&                           Func,
                                const occ::handle<Adaptor3d_Surface>&          S,
                                const bool                                     Reversed = false);
 
-  //! Returns true if the calculus was successful.
   bool IsDone() const;
 
-  //! Returns the number of resulting polylines.
-  //! An exception is raised if IsDone returns False.
   int NbLines() const;
 
-  //! Returns the polyline of range Index.
-  //! An exception is raised if IsDone is False.
-  //! An exception is raised if Index<=0 or Index>NbLines.
   const occ::handle<Contap_TheIWLineOfTheIWalking>& Value(const int Index) const;
 
-  //! Returns the number of points belonging to Pnts on which no
-  //! line starts or ends.
-  //! An exception is raised if IsDone returns False.
   int NbSinglePnts() const;
 
-  //! Returns the point of range Index .
-  //! An exception is raised if IsDone returns False.
-  //! An exception is raised if Index<=0 or
-  //! Index > NbSinglePnts.
   const IntSurf_PathPoint& SinglePnt(const int Index) const;
 
 protected:
@@ -172,10 +139,8 @@ protected:
                                         Contap_SurfFunction& Section,
                                         IntSurf_PntOn2S&     Psol);
 
-  //! Clears up internal containers
   Standard_EXPORT void Clear();
 
-  //! Returns TRUE if thePOn2S is in one of existing lines.
   Standard_EXPORT bool IsPointOnLine(const IntSurf_PntOn2S& thePOn2S,
                                      const math_Vector&     theInfBounds,
                                      const math_Vector&     theSupBounds,
@@ -183,28 +148,28 @@ protected:
                                      Contap_SurfFunction&   theFunc);
 
 private:
-  bool                                            done;
-  NCollection_Sequence<IntSurf_PathPoint>         seqSingle;
-  double                                          fleche;
-  double                                          pas;
-  math_Vector                                     tolerance;
-  double                                          epsilon;
-  bool                                            reversed;
-  IntWalk_VectorOfWalkingData                     wd1;
-  IntWalk_VectorOfWalkingData                     wd2;
-  IntWalk_VectorOfInteger                         nbMultiplicities;
-  Bnd_Range                                       mySRangeU; // Estimated U-range for section curve
-  Bnd_Range                                       mySRangeV; // Estimated V-range for section curve
-  double                                          Um;
-  double                                          UM;
-  double                                          Vm;
-  double                                          VM;
-  IntSurf_PntOn2S                                 previousPoint;
-  gp_Vec                                          previousd3d;
-  gp_Dir2d                                        previousd2d;
-  NCollection_Sequence<int>                       seqAjout;
-  NCollection_Sequence<int>                       seqAlone;
-  NCollection_DataMap<int, NCollection_List<int>> PointLineLine;
+  bool                                                             done;
+  NCollection_Sequence<IntSurf_PathPoint>                          seqSingle;
+  double                                                           fleche;
+  double                                                           pas;
+  math_Vector                                                      tolerance;
+  double                                                           epsilon;
+  bool                                                             reversed;
+  IntWalk_VectorOfWalkingData                                      wd1;
+  IntWalk_VectorOfWalkingData                                      wd2;
+  IntWalk_VectorOfInteger                                          nbMultiplicities;
+  Bnd_Range                                                        mySRangeU;
+  Bnd_Range                                                        mySRangeV;
+  double                                                           Um;
+  double                                                           UM;
+  double                                                           Vm;
+  double                                                           VM;
+  IntSurf_PntOn2S                                                  previousPoint;
+  gp_Vec                                                           previousd3d;
+  gp_Dir2d                                                         previousd2d;
+  NCollection_Sequence<int>                                        seqAjout;
+  NCollection_Sequence<int>                                        seqAlone;
+  NCollection_DataMap<int, NCollection_List<int>>                  PointLineLine;
   NCollection_Sequence<occ::handle<Contap_TheIWLineOfTheIWalking>> lines;
   bool                                                             ToFillHoles;
 };

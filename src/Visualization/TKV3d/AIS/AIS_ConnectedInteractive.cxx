@@ -17,15 +17,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_ConnectedInteractive, AIS_InteractiveObject)
 
-//=================================================================================================
-
 AIS_ConnectedInteractive::AIS_ConnectedInteractive(
   const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d)
     : AIS_InteractiveObject(aTypeOfPresentation3d)
 {
 }
-
-//=================================================================================================
 
 void AIS_ConnectedInteractive::connect(const occ::handle<AIS_InteractiveObject>& theAnotherObj,
                                        const occ::handle<TopLoc_Datum3D>&        theLocation)
@@ -66,8 +62,6 @@ void AIS_ConnectedInteractive::connect(const occ::handle<AIS_InteractiveObject>&
   setLocalTransformation(theLocation);
 }
 
-//=================================================================================================
-
 void AIS_ConnectedInteractive::Disconnect()
 {
   for (NCollection_Sequence<occ::handle<PrsMgr_Presentation>>::Iterator aPrsIter(myPresentations);
@@ -81,8 +75,6 @@ void AIS_ConnectedInteractive::Disconnect()
     }
   }
 }
-
-//=================================================================================================
 
 void AIS_ConnectedInteractive::Compute(const occ::handle<PrsMgr_PresentationManager>& thePrsMgr,
                                        const occ::handle<Prs3d_Presentation>&         thePrs,
@@ -110,8 +102,6 @@ void AIS_ConnectedInteractive::Compute(const occ::handle<PrsMgr_PresentationMana
   }
 }
 
-//=================================================================================================
-
 void AIS_ConnectedInteractive::computeHLR(const occ::handle<Graphic3d_Camera>&   theProjector,
                                           const occ::handle<TopLoc_Datum3D>&     theTransformation,
                                           const occ::handle<Prs3d_Presentation>& thePresentation)
@@ -133,8 +123,6 @@ void AIS_ConnectedInteractive::computeHLR(const occ::handle<Graphic3d_Camera>&  
     AIS_Shape::computeHlrPresentation(theProjector, thePresentation, myShape, myDrawer);
   }
 }
-
-//=================================================================================================
 
 void AIS_ConnectedInteractive::updateShape(const bool isWithLocation)
 {
@@ -159,8 +147,6 @@ void AIS_ConnectedInteractive::updateShape(const bool isWithLocation)
     myShape = aShape.Moved(TopLoc_Location(Transformation()));
   }
 }
-
-//=================================================================================================
 
 void AIS_ConnectedInteractive::ComputeSelection(
   const occ::handle<SelectMgr_Selection>& theSelection,
@@ -201,7 +187,7 @@ void AIS_ConnectedInteractive::ComputeSelection(
     if (const occ::handle<Select3D_SensitiveEntity>& aSensitive =
           aSelEntIter.Value()->BaseSensitive())
     {
-      // Get the copy of SE3D
+
       if (occ::handle<Select3D_SensitiveEntity> aNewSensitive = aSensitive->GetConnected())
       {
         aNewSensitive->Set(anOwner);
@@ -210,8 +196,6 @@ void AIS_ConnectedInteractive::ComputeSelection(
     }
   }
 }
-
-//=================================================================================================
 
 void AIS_ConnectedInteractive::computeSubShapeSelection(
   const occ::handle<SelectMgr_Selection>& theSelection,
@@ -231,7 +215,6 @@ void AIS_ConnectedInteractive::computeSubShapeSelection(
     myReference->RecomputePrimitives(theMode);
   }
 
-  // Fill in the map of subshapes and corresponding sensitive entities associated with aMode
   Shapes2EntitiesMap aShapes2EntitiesMap;
   for (NCollection_Vector<occ::handle<SelectMgr_SensitiveEntity>>::Iterator aSelEntIter(
          aRefSel->Entities());
@@ -253,7 +236,6 @@ void AIS_ConnectedInteractive::computeSubShapeSelection(
     }
   }
 
-  // Fill in selection from aShapes2EntitiesMap
   for (Shapes2EntitiesMap::Iterator aMapIt(aShapes2EntitiesMap); aMapIt.More(); aMapIt.Next())
   {
     const SensitiveList&             aSEList = aMapIt.Value();

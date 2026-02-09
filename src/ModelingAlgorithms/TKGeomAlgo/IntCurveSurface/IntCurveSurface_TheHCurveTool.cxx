@@ -1,16 +1,4 @@
-// Copyright (c) 1993-1999 Matra Datavision
-// Copyright (c) 1999-2024 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IntCurveSurface_TheHCurveTool.hpp>
 
@@ -130,7 +118,7 @@ void IntCurveSurface_TheHCurveTool::SamplePars(const occ::handle<Adaptor3d_Curve
 
   NCollection_Array1<double> aPars(1, nbsu);
   NCollection_Array1<bool>   aFlg(1, nbsu);
-  // Filling of sample parameters
+
   if (bUniform)
   {
     t1          = U0;
@@ -171,7 +159,6 @@ void IntCurveSurface_TheHCurveTool::SamplePars(const occ::handle<Adaptor3d_Curve
     ++k;
     aPars(k) = t1;
   }
-  // Analysis of deflection
 
   double aDefl2 = std::max(Defl * Defl, 1.e-9);
   double tol    = std::max(0.01 * aDefl2, 1.e-9);
@@ -242,7 +229,7 @@ void IntCurveSurface_TheHCurveTool::SamplePars(const occ::handle<Adaptor3d_Curve
 
   if (NbSamples < myMinPnts)
   {
-    // uniform distribution
+
     NbSamples = myMinPnts;
     Pars      = new NCollection_HArray1<double>(1, NbSamples);
     t1        = U0;

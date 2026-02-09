@@ -3,11 +3,7 @@
 #include <TopoDS_Vertex.hpp>
 #include <TopoDS_Wire.hpp>
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeWire::BRepBuilderAPI_MakeWire() = default;
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeWire::BRepBuilderAPI_MakeWire(const TopoDS_Edge& E)
     : myMakeWire(E)
@@ -19,8 +15,6 @@ BRepBuilderAPI_MakeWire::BRepBuilderAPI_MakeWire(const TopoDS_Edge& E)
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeWire::BRepBuilderAPI_MakeWire(const TopoDS_Edge& E1, const TopoDS_Edge& E2)
     : myMakeWire(E1, E2)
 {
@@ -30,8 +24,6 @@ BRepBuilderAPI_MakeWire::BRepBuilderAPI_MakeWire(const TopoDS_Edge& E1, const To
     myShape = myMakeWire.Wire();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeWire::BRepBuilderAPI_MakeWire(const TopoDS_Edge& E1,
                                                  const TopoDS_Edge& E2,
@@ -44,8 +36,6 @@ BRepBuilderAPI_MakeWire::BRepBuilderAPI_MakeWire(const TopoDS_Edge& E1,
     myShape = myMakeWire.Wire();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeWire::BRepBuilderAPI_MakeWire(const TopoDS_Edge& E1,
                                                  const TopoDS_Edge& E2,
@@ -60,8 +50,6 @@ BRepBuilderAPI_MakeWire::BRepBuilderAPI_MakeWire(const TopoDS_Edge& E1,
   }
 }
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeWire::BRepBuilderAPI_MakeWire(const TopoDS_Wire& W)
     : myMakeWire(W)
 {
@@ -71,8 +59,6 @@ BRepBuilderAPI_MakeWire::BRepBuilderAPI_MakeWire(const TopoDS_Wire& W)
     myShape = myMakeWire.Wire();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeWire::BRepBuilderAPI_MakeWire(const TopoDS_Wire& W, const TopoDS_Edge& E)
     : myMakeWire(W, E)
@@ -84,8 +70,6 @@ BRepBuilderAPI_MakeWire::BRepBuilderAPI_MakeWire(const TopoDS_Wire& W, const Top
   }
 }
 
-//=================================================================================================
-
 void BRepBuilderAPI_MakeWire::Add(const TopoDS_Wire& W)
 {
   myMakeWire.Add(W);
@@ -95,8 +79,6 @@ void BRepBuilderAPI_MakeWire::Add(const TopoDS_Wire& W)
     myShape = myMakeWire.Wire();
   }
 }
-
-//=================================================================================================
 
 void BRepBuilderAPI_MakeWire::Add(const TopoDS_Edge& E)
 {
@@ -108,8 +90,6 @@ void BRepBuilderAPI_MakeWire::Add(const TopoDS_Edge& E)
   }
 }
 
-//=================================================================================================
-
 void BRepBuilderAPI_MakeWire::Add(const NCollection_List<TopoDS_Shape>& L)
 {
   myMakeWire.Add(L);
@@ -120,42 +100,30 @@ void BRepBuilderAPI_MakeWire::Add(const NCollection_List<TopoDS_Shape>& L)
   }
 }
 
-//=================================================================================================
-
 const TopoDS_Wire& BRepBuilderAPI_MakeWire::Wire()
 {
   return myMakeWire.Wire();
 }
-
-//=================================================================================================
 
 const TopoDS_Edge& BRepBuilderAPI_MakeWire::Edge() const
 {
   return myMakeWire.Edge();
 }
 
-//=================================================================================================
-
 const TopoDS_Vertex& BRepBuilderAPI_MakeWire::Vertex() const
 {
   return myMakeWire.Vertex();
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeWire::operator TopoDS_Wire()
 {
   return Wire();
 }
 
-//=================================================================================================
-
 bool BRepBuilderAPI_MakeWire::IsDone() const
 {
   return myMakeWire.IsDone();
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_WireError BRepBuilderAPI_MakeWire::Error() const
 {
@@ -175,6 +143,5 @@ BRepBuilderAPI_WireError BRepBuilderAPI_MakeWire::Error() const
       return BRepBuilderAPI_NonManifoldWire;
   }
 
-  // portage WNT
   return BRepBuilderAPI_WireDone;
 }

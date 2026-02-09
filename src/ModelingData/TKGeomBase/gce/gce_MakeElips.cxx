@@ -6,10 +6,6 @@
 #include <gp_Pnt.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   Creation d une Ellipse 3d de gp a partir de son Ax2 et de son        +
-//   grand rayon <MajorRadius> et son petit rayon <MinorRadius>.          +
-//=========================================================================
 gce_MakeElips::gce_MakeElips(const gp_Ax2& A2, const double MajorRadius, const double MinorRadius)
 {
   if (MajorRadius < MinorRadius)
@@ -26,12 +22,6 @@ gce_MakeElips::gce_MakeElips(const gp_Ax2& A2, const double MajorRadius, const d
     TheError = gce_Done;
   }
 }
-
-//=========================================================================
-//   Creation d une Ellipse 3d de gp de centre <Center> et de sommets     +
-//   <S1> et <S2>.                                                        +
-//   <S1> donne le grand rayon et <S2> le petit rayon.                    +
-//=========================================================================
 
 gce_MakeElips::gce_MakeElips(const gp_Pnt& S1, const gp_Pnt& S2, const gp_Pnt& Center)
 {

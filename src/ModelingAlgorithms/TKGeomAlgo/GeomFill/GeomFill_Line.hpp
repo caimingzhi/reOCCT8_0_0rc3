@@ -6,7 +6,6 @@
 #include <Standard_Integer.hpp>
 #include <Standard_Transient.hpp>
 
-//! class for instantiation of AppBlend
 class GeomFill_Line : public Standard_Transient
 {
 
@@ -29,8 +28,6 @@ inline int GeomFill_Line::NbPoints() const
 {
   return myNbPoints;
 }
-
-//=================================================================================================
 
 inline int GeomFill_Line::Point(const int Index) const
 {

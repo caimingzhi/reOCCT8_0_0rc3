@@ -25,24 +25,16 @@
 #include <NCollection_IndexedMap.hpp>
 #include <NCollection_Map.hpp>
 
-// define parameter division number as 10*e^(-PI) = 0.43213918
 const double PAR_T = 0.43213918;
 
 static TopAbs_State ClassifyEdgeToSolidByOnePoint(const TopoDS_Edge&              E,
                                                   TopOpeBRepTool_ShapeClassifier& SC);
-
-//=======================================================================
-//         : Definition the States of Shape's Entities for an Object
-//         : and a Tool.                    Thu Oct  7 09:38:29 1999
-//=======================================================================
 
 static NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> processedEdges;
 static NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> theUsedVertexMap;
 static NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>        theUnkStateVer;
 
 extern bool GLOBAL_faces2d;
-
-//=================================================================================================
 
 TopOpeBRepBuild_Builder1::~TopOpeBRepBuild_Builder1()
 {
@@ -51,127 +43,13 @@ TopOpeBRepBuild_Builder1::~TopOpeBRepBuild_Builder1()
   theUnkStateVer.Clear();
 }
 
-/*
-namespace {
-
-void DumpMapOfShapeWithState (const int iP,
-                              const NCollection_IndexedDataMap<TopoDS_Shape,
-TopOpeBRepDS_ShapeWithState, TopTools_ShapeMapHasher>& aMapOfShapeWithState)
-{
-  static int cnt=0;
-  TCollection_AsciiString aFName1 ("/DEBUG/TOPOPE/"), postfix;
-
-  const char* ShapeType [9] = {"COMPO", "COMPS", "SOLID", "SHELL", "FACE ", "WIRE ", "EDGE ",
-"VERTX"}; const char* ShapeState[4] = {"IN ", "OUT", "ON ", "UNKNOWN"};
-
-  printf("\n\n********************************\n");
-  printf("*                              *\n");
-  int i, n=aMapOfShapeWithState.Extent();
-  if (!iP) {
-    printf("*  Object comparing with TOOL  *\n");
-    postfix=TCollection_AsciiString("Obj");
-  }
-
-  else {
-    printf("*  Tool comparing with Object  *\n");
-    postfix=TCollection_AsciiString("Tool");
-  }
-
-  printf("*                              *\n");
-  printf("********************************\n");
-  printf("***       aMapOfShapeWithState.Extent()=%d\n", n);
-  printf("                 C O N T E N T S\n");
-
-  TCollection_AsciiString aFName;
-  aFName+=aFName1;
-  aFName+=postfix;
-
-  for (i=1; i<=n; i++) {
-    TCollection_AsciiString aI(i), aName;
-    aName+=aFName; aName+=aI;
-
-    const TopoDS_Shape& aShape=aMapOfShapeWithState.FindKey(i);
-    const TopOpeBRepDS_ShapeWithState& aShapeWithState=
-      aMapOfShapeWithState.FindFromIndex(i);
-
-    BRepTools::Write (aShape, aName.ToCString());
-
-    TCollection_AsciiString ann;
-    ann+=postfix; ann+=aI;
-
-    printf("Key: %-8s , " , ann.ToCString());
-    printf("%s, ", ShapeType[aShape.ShapeType()]);
-    if (!iP)
-      printf("State comp.with Tool=%s\n",  ShapeState[aShapeWithState.State()]);
-
-    else
-      printf("State comp.with Obj =%s\n",  ShapeState[aShapeWithState.State()]);
-
-    if (aShapeWithState.IsSplitted()) {
-
-      const NCollection_List<TopoDS_Shape>& aListOfShape=aShapeWithState.Part(TopAbs_IN);
-      NCollection_List<TopoDS_Shape>::Iterator anIt(aListOfShape);
-      for (;anIt.More(); anIt.Next()) {
-    const TopoDS_Shape& aS=anIt.Value();
-
-    TCollection_AsciiString cn(cnt), prefix("_S_"), sn;
-    sn+=aFName; sn+=prefix; sn+=cn;
-    BRepTools::Write (aS, sn.ToCString());
-
-    TCollection_AsciiString an;//=postfix+prefix+cn;
-    an+=postfix; an+=prefix; an+=cn;
-    printf("  -> Split Part IN : %s\n",  an.ToCString());
-    cnt++;
-      }
-
-      const NCollection_List<TopoDS_Shape>& aListOfShapeOut=aShapeWithState.Part(TopAbs_OUT);
-      anIt.Initialize (aListOfShapeOut);
-      for (;anIt.More(); anIt.Next()) {
-    const TopoDS_Shape& aS=anIt.Value();
-
-    TCollection_AsciiString cn(cnt), prefix("_S_"), sn;//=aFName+prefix+cn;
-    sn+=aFName; sn+=prefix; sn+=cn;
-    BRepTools::Write (aS, sn.ToCString());
-
-    TCollection_AsciiString an;//=postfix+prefix+cn;
-    an+=postfix; an+=prefix; an+=cn;
-    printf("  -> Split Part OUT: %-s\n",  an.ToCString());
-    cnt++;
-      }
-
-      const NCollection_List<TopoDS_Shape>& aListOfShapeOn=aShapeWithState.Part(TopAbs_ON);
-      anIt.Initialize (aListOfShapeOn);
-      for (;anIt.More(); anIt.Next()) {
-    const TopoDS_Shape& aS=anIt.Value();
-
-    TCollection_AsciiString cn(cnt), prefix("_S_"), sn;//=aFName+prefix+cn;
-    sn+=aFName; sn+=prefix; sn+=cn;
-    BRepTools::Write (aS, sn.ToCString());
-
-    TCollection_AsciiString an;//=postfix+prefix+cn;
-    an+=postfix; an+=prefix; an+=cn;
-    printf("  -> Split Part ON : %s\n",  an.ToCString());
-    cnt++;
-      }
-    }
-
-  }
-  cnt=0;
-}
-
-} // anonymous namespace
-*/
-
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder1::PerformShapeWithStates()
 {
   theUsedVertexMap.Clear();
   theUnkStateVer.Clear();
   myDataStructure->ChangeDS().ChangeMapOfShapeWithStateObj().Clear();
   myDataStructure->ChangeDS().ChangeMapOfShapeWithStateTool().Clear();
-  // modified by NIZHNY-MZV  Mon Feb 21 13:30:05 2000
-  // process section curves
+
   int i, nbC = myDataStructure->DS().NbCurves();
   for (i = 1; i <= nbC; i++)
   {
@@ -187,7 +65,6 @@ void TopOpeBRepBuild_Builder1::PerformShapeWithStates()
     }
   }
 
-  // process section edges
   const TopOpeBRepDS_DataStructure& BDS = myDataStructure->DS();
   int                               n   = BDS.NbSectionEdges();
   for (i = 1; i <= n; i++)
@@ -208,7 +85,6 @@ void TopOpeBRepBuild_Builder1::PerformShapeWithStates()
       theUsedVertexMap.Add(Vl);
     }
 
-    // IN
     const NCollection_List<TopoDS_Shape>& SplitsIN = Splits(E, TopAbs_IN);
     anIt.Initialize(SplitsIN);
     for (; anIt.More(); anIt.Next())
@@ -220,7 +96,6 @@ void TopOpeBRepBuild_Builder1::PerformShapeWithStates()
       theUsedVertexMap.Add(Vl);
     }
 
-    // OUT
     const NCollection_List<TopoDS_Shape>& SplitsOUT = Splits(E, TopAbs_OUT);
     anIt.Initialize(SplitsOUT);
     for (; anIt.More(); anIt.Next())
@@ -233,8 +108,6 @@ void TopOpeBRepBuild_Builder1::PerformShapeWithStates()
     }
   }
 
-  // modified by NIZHNY-MZV  Tue Apr 11 17:32:05 2000
-  // 1) Add both arguments to facilitate the search
   TopOpeBRepDS_ShapeWithState aShapeWithState;
   TopOpeBRepDS_DataStructure& aDataStructure = myDataStructure->ChangeDS();
 
@@ -245,8 +118,6 @@ void TopOpeBRepBuild_Builder1::PerformShapeWithStates()
 
   aMapOfShapeWithStateObj.Add(myShape1, aShapeWithState);
   aMapOfShapeWithStateTool.Add(myShape2, aShapeWithState);
-
-  // 2) Add all rejected shapes as OUT
 
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMapOfRejectedShapesObj =
     aDataStructure.ChangeMapOfRejectedShapesObj();
@@ -271,22 +142,22 @@ void TopOpeBRepBuild_Builder1::PerformShapeWithStates()
     for (iW = 1; iW <= nW; iW++)
     {
       const TopoDS_Shape& aWire = aWiresMap(iW);
-      //
+
       NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> anEdgesMap;
       TopExp::MapShapes(aWire, TopAbs_EDGE, anEdgesMap);
       nE = anEdgesMap.Extent();
       for (j = 1; j <= nE; j++)
-        aMapOfShapeWithStateObj.Add(anEdgesMap(j), aShapeWithState); // add edge
+        aMapOfShapeWithStateObj.Add(anEdgesMap(j), aShapeWithState);
 
-      aMapOfShapeWithStateObj.Add(aWire, aShapeWithState); // add wire
+      aMapOfShapeWithStateObj.Add(aWire, aShapeWithState);
     }
-    aMapOfShapeWithStateObj.Add(aFace, aShapeWithState); // add face
+    aMapOfShapeWithStateObj.Add(aFace, aShapeWithState);
   }
 
   for (i = 1; i <= nRSTool; i++)
   {
     const TopoDS_Shape& aFace = aMapOfRejectedShapesTool(i);
-    // modified by NIZHNY-MZV  Wed Apr  5 10:27:18 2000
+
     if (aFace.ShapeType() != TopAbs_FACE)
       continue;
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aWiresMap;
@@ -295,57 +166,36 @@ void TopOpeBRepBuild_Builder1::PerformShapeWithStates()
     for (iW = 1; iW <= nW; iW++)
     {
       const TopoDS_Shape& aWire = aWiresMap(iW);
-      //
+
       NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> anEdgesMap;
       TopExp::MapShapes(aWire, TopAbs_EDGE, anEdgesMap);
       nE = anEdgesMap.Extent();
       for (j = 1; j <= nE; j++)
-        aMapOfShapeWithStateTool.Add(anEdgesMap(j), aShapeWithState); // add edge
+        aMapOfShapeWithStateTool.Add(anEdgesMap(j), aShapeWithState);
 
-      aMapOfShapeWithStateTool.Add(aWire, aShapeWithState); // add wire
+      aMapOfShapeWithStateTool.Add(aWire, aShapeWithState);
     }
-    aMapOfShapeWithStateTool.Add(aFace, aShapeWithState); // add face
+    aMapOfShapeWithStateTool.Add(aFace, aShapeWithState);
   }
 
   PerformShapeWithStates(myShape1, myShape2);
   processedEdges.Clear();
   PerformShapeWithStates(myShape2, myShape1);
   processedEdges.Clear();
-  // Print Block
-  //  printf(" ..::PerformShapeWithStates() [Dump is off]\n");
-
-  /*  printf(" ..::PerformShapeWithStates() [Dump is on]\n");
-
-    TopOpeBRepDS_DataStructure& aDS= myDataStructure-> ChangeDS();
-
-    NCollection_IndexedDataMap<TopoDS_Shape, TopOpeBRepDS_ShapeWithState, TopTools_ShapeMapHasher>&
-    aMapOfShapeWithStateObj= aDS.ChangeMapOfShapeWithStateObj();
-
-    NCollection_IndexedDataMap<TopoDS_Shape, TopOpeBRepDS_ShapeWithState, TopTools_ShapeMapHasher>&
-    aMapOfShapeWithStateTool= aDS.ChangeMapOfShapeWithStateTool();
-
-    DumpMapOfShapeWithState(0, aMapOfShapeWithStateObj);
-    DumpMapOfShapeWithState(1, aMapOfShapeWithStateTool);
-  */
-
-  // Phase#2 Phase ON
-  //  PerformOn2D ();
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder1::PerformShapeWithStates(const TopoDS_Shape& anObj,
                                                       const TopoDS_Shape& aReference)
 {
   myShapeClassifier.SetReference(aReference);
   TopOpeBRepDS_DataStructure& aDS = myDataStructure->ChangeDS();
-  // Get aMapOfShapeWithState for Obj
+
   bool aFlag;
   NCollection_IndexedDataMap<TopoDS_Shape, TopOpeBRepDS_ShapeWithState, TopTools_ShapeMapHasher>&
     aMapOfShapeWithState = aDS.ChangeMapOfShapeWithState(anObj, aFlag);
   if (!aFlag)
     return;
-  //
+
   int i, j, k, nS, nF, nE;
 
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aFacesMap,
@@ -365,8 +215,7 @@ void TopOpeBRepBuild_Builder1::PerformShapeWithStates(const TopoDS_Shape& anObj,
 
     else if (!myDataStructure->HasShape(aShell))
     {
-      // Shell has no interference.
-      // So, define its state and push into the Map as is.// A.1
+
       TopOpeBRepBuild_Tools::FindStateThroughVertex(aShell,
                                                     myShapeClassifier,
                                                     aMapOfShapeWithState,
@@ -375,8 +224,8 @@ void TopOpeBRepBuild_Builder1::PerformShapeWithStates(const TopoDS_Shape& anObj,
     }
 
     else
-    { // A.2
-      // Shell has interference. Try to separate it into FacesToRest and InterferredFace
+    {
+
       aFacesMap.Clear();
       aFacesWithInterferencesMap.Clear();
       aFacesToRestMap.Clear();
@@ -391,9 +240,6 @@ void TopOpeBRepBuild_Builder1::PerformShapeWithStates(const TopoDS_Shape& anObj,
         if (aMapOfShapeWithState.Contains(aFace))
         {
 
-          // if the face is known, its edges are also known.
-          // We just insert this info. into aSplFacesState in order to
-          // propagate the state for faces with unknown states.
           NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> anEdgesMap;
           TopExp::MapShapes(aFace, TopAbs_EDGE, anEdgesMap);
           nE = anEdgesMap.Extent();
@@ -412,11 +258,10 @@ void TopOpeBRepBuild_Builder1::PerformShapeWithStates(const TopoDS_Shape& anObj,
         {
           aFacesToRestMap.Add(aFace);
         }
-      } // ... next Face
-      // work with aFacesWithInterferencesMap
+      }
+
       PerformFacesWithStates(anObj, aFacesWithInterferencesMap, aSplFacesState);
 
-      // Propagate the States  for all unknown faces from aFacesToRestMap
       NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> anUnkStateEdge;
       TopOpeBRepBuild_Tools::PropagateState(aSplFacesState,
                                             aFacesToRestMap,
@@ -425,13 +270,11 @@ void TopOpeBRepBuild_Builder1::PerformShapeWithStates(const TopoDS_Shape& anObj,
                                             myShapeClassifier,
                                             aMapOfShapeWithState,
                                             anUnkStateEdge);
-      ///// Propagate on WIres from aFacesToRestMap
-      TopOpeBRepBuild_Tools::PropagateStateForWires(aFacesToRestMap, aMapOfShapeWithState);
-    } // end of else A.2
-  } // next Shell
-}
 
-//=================================================================================================
+      TopOpeBRepBuild_Tools::PropagateStateForWires(aFacesToRestMap, aMapOfShapeWithState);
+    }
+  }
+}
 
 void TopOpeBRepBuild_Builder1::PerformFacesWithStates(
   const TopoDS_Shape&                                                  anObj,
@@ -439,13 +282,12 @@ void TopOpeBRepBuild_Builder1::PerformFacesWithStates(
   NCollection_DataMap<TopoDS_Shape, TopAbs_State, TopTools_ShapeMapHasher>& aSplFacesState)
 {
   TopOpeBRepDS_DataStructure& aDS = myDataStructure->ChangeDS();
-  // Get aMapOfShapeWithState for Obj
+
   bool aFlag;
   NCollection_IndexedDataMap<TopoDS_Shape, TopOpeBRepDS_ShapeWithState, TopTools_ShapeMapHasher>&
     aMapOfShapeWithState = aDS.ChangeMapOfShapeWithState(anObj, aFlag);
   if (!aFlag)
     return;
-  //
 
   int i, j, k, nF, nW, nE;
 
@@ -467,8 +309,7 @@ void TopOpeBRepBuild_Builder1::PerformFacesWithStates(
 
       if (!myDataStructure->HasShape(aWire))
       {
-        // Wire has no interference.
-        // So, define its state and push into the Map as is.
+
         TopOpeBRepBuild_Tools::FindStateThroughVertex(aWire,
                                                       myShapeClassifier,
                                                       aMapOfShapeWithState,
@@ -478,7 +319,7 @@ void TopOpeBRepBuild_Builder1::PerformFacesWithStates(
 
       else
       {
-        // Wire has an interferences
+
         NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> anEdgeMap;
         TopExp::MapShapes(aWire, TopAbs_EDGE, anEdgeMap);
         nE = anEdgeMap.Extent();
@@ -496,12 +337,8 @@ void TopOpeBRepBuild_Builder1::PerformFacesWithStates(
           }
         }
 
-        // split edges and define the states for all edges and parts of edges
         StatusEdgesToSplit(anObj, anEdgesToSplitMap, anEdgesToRestMap);
 
-        ////// After StatusEdgesToSplit we can find  the status of each Rest Edge
-        ////// in aMapOfShapeWithState. So we can insert this info. into
-        ////// aSplFacesState in order to propagate the state for faces.
         nE = anEdgesToRestMap.Extent();
         for (k = 1; k <= nE; k++)
         {
@@ -513,12 +350,10 @@ void TopOpeBRepBuild_Builder1::PerformFacesWithStates(
             aSplFacesState.Bind(anEdge, aState);
           }
         }
-      } // end of else {// Wire has an interferences
-    } // next Wire
-  } // next interfered Face ... for (i=1; i<=nF; i++) ...
+      }
+    }
+  }
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
   const TopoDS_Shape&                                                  anObj,
@@ -527,13 +362,12 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
 {
 
   TopOpeBRepDS_DataStructure& aDS = myDataStructure->ChangeDS();
-  // Get aMapOfShapeWithState for Obj
+
   bool aFlag;
   NCollection_IndexedDataMap<TopoDS_Shape, TopOpeBRepDS_ShapeWithState, TopTools_ShapeMapHasher>&
     aMapOfShapeWithState = aDS.ChangeMapOfShapeWithState(anObj, aFlag);
   if (!aFlag)
     return;
-  //
 
   int i, nE = anEdgesToSplitMap.Extent();
   if (!nE)
@@ -578,11 +412,10 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
 
     TopOpeBRepDS_ShapeWithState aShapeWithState;
 
-    //  if IsSplit - it is the case of edges from SameDomain faces
     bool IsSplitON = IsSplit(anEdge, TopAbs_ON);
     if (IsSplitON)
     {
-      // ON
+
       const NCollection_List<TopoDS_Shape>& SplitsON = Splits(anEdge, TopAbs_ON);
       anIt.Initialize(SplitsON);
       for (; anIt.More(); anIt.Next())
@@ -593,7 +426,6 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
         aSplEdgesState.Bind(anIt.Value(), TopAbs_ON);
       }
 
-      // IN
       const NCollection_List<TopoDS_Shape>& SplitsIN = Splits(anEdge, TopAbs_IN);
       anIt.Initialize(SplitsIN);
       for (; anIt.More(); anIt.Next())
@@ -604,7 +436,6 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
         aSplEdgesState.Bind(anIt.Value(), TopAbs_IN);
       }
 
-      // OUT
       const NCollection_List<TopoDS_Shape>& SplitsOUT = Splits(anEdge, TopAbs_OUT);
       anIt.Initialize(SplitsOUT);
       for (; anIt.More(); anIt.Next())
@@ -620,7 +451,6 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
       continue;
     }
 
-    //  Attempt to split the Edge (for all other edges (from non SameDomain Faces))
     NCollection_DataMap<TopoDS_Shape, TopAbs_State, TopTools_ShapeMapHasher> aDataMapOfShapeState;
     NCollection_List<TopoDS_Shape>                                           aLNew;
 
@@ -630,14 +460,9 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
     SplitEdge(anEdge, aLNew, aDataMapOfShapeState);
     GLOBAL_faces2d = oldState;
 
-    //
     if (!aLNew.Extent())
     {
-      // * It means that whole Edge is IN (see SplitEdge(...) at line
-      // G1=TopOpeBRepBuild_GTool::GFusSame(tf,tf); Operation  Fuse
-      // loses all parts of the Edge with IN  state, but  we  need
-      // to have all parts. So, we have to rest the Edge as is ...
-      // ** But the edge itself will have UNKNOWN state and one split Part with state =IN.
+
       TopoDS_Vertex Vf, Vl;
       TopExp::Vertices(TopoDS::Edge(anEdge), Vf, Vl);
 
@@ -646,14 +471,12 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
 
       TopoDS_Edge aNewEdge = TopoDS::Edge(anEdge);
 
-      // if edge has SD edges , it is error because it must be processed in SplitSectionEdges
-      // but if we here we don't do anything with it
       if (myDataStructure->HasSameDomain(aNewEdge))
       {
         HasSDV1 = false;
         HasSDV2 = false;
       }
-      // if vertices has SD we must update edge, so we copy it
+
       if (HasSDV1 || HasSDV2)
       {
         TopoDS_Shape EOR = anEdge;
@@ -664,14 +487,14 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
         myBuildTool.CopyEdge(EOR, aNewEdge);
 
         if (HasSDV1)
-        { // on prend le vertex reference de V
+        {
           int iref = myDataStructure->SameDomainReference(Vf);
           Vf       = TopoDS::Vertex(myDataStructure->Shape(iref));
           Vf.Orientation(TopAbs_FORWARD);
         }
 
         if (HasSDV2)
-        { // on prend le vertex reference de V
+        {
           int iref = myDataStructure->SameDomainReference(Vl);
           Vl       = TopoDS::Vertex(myDataStructure->Shape(iref));
           Vl.Orientation(TopAbs_REVERSED);
@@ -697,9 +520,7 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
       theUsedVertexMap.Add(Vl);
       if (!BRep_Tool::Degenerated(TopoDS::Edge(aNewEdge)))
       {
-        // MSV: it may be the case when an edge has one state but its vertex
-        //      has another state. We should clarify this to avoid incorrect
-        //      propagation of state.
+
         myShapeClassifier.StateP3DReference(BRep_Tool::Pnt(Vf));
         if (myShapeClassifier.State() != aState && myShapeClassifier.State() != TopAbs_ON)
           theUnkStateVer.Add(Vf);
@@ -713,24 +534,18 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
     }
     else
     {
-      // Usual case. The Edge was split onto several parts:
+
       NCollection_List<TopoDS_Shape>::Iterator aLIt(aLNew);
       for (; aLIt.More(); aLIt.Next())
       {
         const TopoDS_Shape& aS = aLIt.Value();
         aState                 = aDataMapOfShapeState(aS);
-        ////////////////////////////////////////////////////////////////////////////
-        // **  When aState==TopAbs_IN it is not evidence that it is really so.
-        // There are some cases when JYL does not define ON parts completely.
-        // So,  as we want to have right states,  we have to do it ourselves.
-        // PKV Mon 25 Oct 1999
+
         bool isdegen = BRep_Tool::Degenerated(TopoDS::Edge(aS));
-        // if edge is degenerated we trust that it have IN state without classify
 
         if (aState == TopAbs_IN && !isdegen)
           aState = ClassifyEdgeToSolidByOnePoint(TopoDS::Edge(aS), myShapeClassifier);
 
-        ////////////////////////////////////////////////////////////////////////////
         aShapeWithState.AddPart(aS, aState);
         aShapeWithState.SetIsSplitted(true);
 
@@ -741,7 +556,7 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
         theUsedVertexMap.Add(Vl);
         if (!isdegen)
         {
-          // MSV: clarify state of vertices (see my above comment)
+
           myShapeClassifier.StateP3DReference(BRep_Tool::Pnt(Vf));
           if (myShapeClassifier.State() != aState && myShapeClassifier.State() != TopAbs_ON)
             theUnkStateVer.Add(Vf);
@@ -769,7 +584,7 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
     }
 
     aMapOfShapeWithState.Add(anEdge, aShapeWithState);
-  } // end  for (i=1; i<=nE; i++)
+  }
 
   nE = anEdgesToRestMap.Extent();
   for (i = 1; i <= nE; i++)
@@ -780,7 +595,7 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
       const TopOpeBRepDS_ShapeWithState& aSWS = aMapOfShapeWithState.FindFromKey(anEdge);
       if (!aSWS.IsSplitted())
       {
-        // just in case
+
         aState = aSWS.State();
         aSplEdgesState.Bind(anEdge, aState);
         continue;
@@ -789,7 +604,7 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
   }
 
   if (nE)
-    //  Propagate the status for anEdgesToRestMap edges
+
     TopOpeBRepBuild_Tools::PropagateState(aSplEdgesState,
                                           anEdgesToRestMap,
                                           TopAbs_VERTEX,
@@ -799,8 +614,6 @@ void TopOpeBRepBuild_Builder1::StatusEdgesToSplit(
                                           theUnkStateVer);
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder1::SplitEdge(
   const TopoDS_Shape&                                                       anEdge,
   NCollection_List<TopoDS_Shape>&                                           aLNew,
@@ -809,12 +622,9 @@ void TopOpeBRepBuild_Builder1::SplitEdge(
   double             aPar1, aPar2;
   TopAbs_Orientation anOr1, anOr2;
 
-  // Attention! If you didn't do the orientation of the Edge =FORWARD,
-  // the GFillPointTopologyPVS() method will give you a garbage!
   TopoDS_Shape EdgeF = anEdge;
   EdgeF.Orientation(TopAbs_FORWARD);
 
-  // Make a PaveSet PVS on edge EF
   TopOpeBRepBuild_PaveSet PVS(EdgeF);
   TopOpeBRepBuild_GTopo   G1;
   TopAbs_ShapeEnum        tf = TopAbs_FACE;
@@ -824,15 +634,6 @@ void TopOpeBRepBuild_Builder1::SplitEdge(
   GFillPointTopologyPVS(EdgeF, G1, PVS);
 
   PVS.InitLoop();
-
-  // firstly we detect paves with equal params
-
-  // MSV Oct 23, 2001:
-  //  Add Paves to a standard list rather than to a PaveSet to avoid
-  //  possible sequence disturbance in InitLoop.
-  //  Check points for equality in both 3d and 1d spaces using maximum
-  //  of tolerances of the edge and compared vertices, in 1d using resolution
-  //  on edge from that value
 
   NCollection_List<occ::handle<TopOpeBRepBuild_Pave>>                               aPVSlist;
   NCollection_DataMap<TopoDS_Shape, NCollection_List<int>, TopTools_ShapeMapHasher> aVerOriMap;
@@ -909,14 +710,14 @@ void TopOpeBRepBuild_Builder1::SplitEdge(
 
         if (aV1.Orientation() != aV2.Orientation())
         {
-          // MSV: save orientation of removed vertex
+
           NCollection_List<int> thelist;
           if (!aVerOriMap.IsBound(aVer))
             aVerOriMap.Bind(aVer, thelist);
           NCollection_List<int>& anOriList = aVerOriMap(aVer);
           anOriList.Append(takeFirst);
           anOriList.Append(anOriOpp);
-          // mark this vertex as having unknown state
+
           if (HasSDV)
           {
             int iref = myDataStructure->SameDomainReference(aVer);
@@ -942,7 +743,7 @@ void TopOpeBRepBuild_Builder1::SplitEdge(
     anOr1 = (aPave1->Vertex()).Orientation();
     if (aVerOriMap.IsBound(aV1))
     {
-      // MSV: restore orientation of removed vertex
+
       NCollection_List<int>& anOriList = aVerOriMap(aV1);
       if (!anOriList.IsEmpty())
       {
@@ -981,27 +782,25 @@ void TopOpeBRepBuild_Builder1::SplitEdge(
       }
     }
 
-    // MSV: avoid creation of an edge with invalid range
     if (aPar1 > aPar2)
       continue;
 
     bool HasSDV1 = myDataStructure->HasSameDomain(aV1);
     bool HasSDV2 = myDataStructure->HasSameDomain(aV2);
     if (HasSDV1)
-    { // on prend le vertex reference de V
+    {
       int iref = myDataStructure->SameDomainReference(aV1);
       aV1      = myDataStructure->Shape(iref);
       aV1.Orientation(TopAbs_FORWARD);
     }
 
     if (HasSDV2)
-    { // on prend le vertex reference de V
+    {
       int iref = myDataStructure->SameDomainReference(aV2);
       aV2      = myDataStructure->Shape(iref);
       aV2.Orientation(TopAbs_REVERSED);
     }
 
-    // Make new edge from EdgeF
     TopoDS_Edge aNewEdge;
     myBuildTool.CopyEdge(EdgeF, aNewEdge);
 
@@ -1010,7 +809,6 @@ void TopOpeBRepBuild_Builder1::SplitEdge(
 
     myBuildTool.AddEdgeVertex(aNewEdge, aV2);
     myBuildTool.Parameter(aNewEdge, aV2, aPar2);
-    // State of piece
 
     TopAbs_State aState = TopAbs_IN;
 
@@ -1020,17 +818,14 @@ void TopOpeBRepBuild_Builder1::SplitEdge(
       aState = TopAbs_OUT;
     if (anOr1 == TopAbs_INTERNAL && anOr2 == TopAbs_REVERSED)
       aState = TopAbs_OUT;
-    ///* Added
+
     if (anOr1 == TopAbs_INTERNAL && anOr2 == TopAbs_INTERNAL)
       aState = TopAbs_OUT;
-    // printf(" anOr1=%d, anOr2=%d\n", anOr1, anOr2);
 
-    // set old orientation to new edge;
     aNewEdge.Orientation(anEdge.Orientation());
     aLNew.Append(aNewEdge);
     aDataMapOfShapeState.Bind(aNewEdge, aState);
   }
-  // GEDBUMakeEdges(EdgeF,EDBU,aListOfShape);
 }
 
 static TopAbs_State ClassifyEdgeToSolidByOnePoint(const TopoDS_Edge&              E,
@@ -1043,14 +838,14 @@ static TopAbs_State ClassifyEdgeToSolidByOnePoint(const TopoDS_Edge&            
 
   if (C3D.IsNull())
   {
-    // it means that we are in degenerated edge
+
     const TopoDS_Vertex& fv = TopExp::FirstVertex(E);
     if (fv.IsNull())
       return TopAbs_UNKNOWN;
     aP3d = BRep_Tool::Pnt(fv);
   }
   else
-  { // usual case
+  {
     par = f2 * PAR_T + (1 - PAR_T) * l2;
     C3D->D0(par, aP3d);
   }

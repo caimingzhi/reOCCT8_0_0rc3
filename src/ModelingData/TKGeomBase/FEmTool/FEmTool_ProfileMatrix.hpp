@@ -10,8 +10,6 @@
 #include <Standard_Real.hpp>
 #include <math_Vector.hpp>
 
-//! Symmetric Sparse ProfileMatrix useful for 1D Finite
-//! Element methods
 class FEmTool_ProfileMatrix : public FEmTool_SparseMatrix
 {
 
@@ -22,16 +20,12 @@ public:
 
   Standard_EXPORT double& ChangeValue(const int I, const int J) override;
 
-  //! To make a Factorization of <me>
   Standard_EXPORT bool Decompose() override;
 
-  //! Direct Solve of AX = B
   Standard_EXPORT void Solve(const math_Vector& B, math_Vector& X) const override;
 
-  //! Make Preparation to iterative solve
   Standard_EXPORT bool Prepare() override;
 
-  //! Iterative solve of AX = B
   Standard_EXPORT void Solve(const math_Vector& B,
                              const math_Vector& Init,
                              math_Vector&       X,
@@ -39,14 +33,10 @@ public:
                              const double       Tolerance    = 1.0e-8,
                              const int          NbIterations = 50) const override;
 
-  //! returns the product of a SparseMatrix by a vector.
-  //! An exception is raised if the dimensions are different
   Standard_EXPORT void Multiplied(const math_Vector& X, math_Vector& MX) const override;
 
-  //! returns the row range of a matrix.
   Standard_EXPORT int RowNumber() const override;
 
-  //! returns the column range of the matrix.
   Standard_EXPORT int ColNumber() const override;
 
   Standard_EXPORT bool IsInProfile(const int i, const int j) const;

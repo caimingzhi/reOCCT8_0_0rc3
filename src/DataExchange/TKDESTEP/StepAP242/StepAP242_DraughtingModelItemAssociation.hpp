@@ -4,7 +4,6 @@
 
 #include <StepAP242_ItemIdentifiedRepresentationUsage.hpp>
 
-//! Added for Dimensional Tolerances
 class StepAP242_DraughtingModelItemAssociation : public StepAP242_ItemIdentifiedRepresentationUsage
 {
 

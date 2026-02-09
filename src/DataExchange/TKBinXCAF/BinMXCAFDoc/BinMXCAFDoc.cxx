@@ -17,8 +17,6 @@
 #include <Message_Messenger.hpp>
 #include <TNaming_NamedShape.hpp>
 
-//=================================================================================================
-
 void BinMXCAFDoc::AddDrivers(const occ::handle<BinMDF_ADriverTable>& theDriverTable,
                              const occ::handle<Message_Messenger>&   theMsgDrv)
 {
@@ -26,7 +24,6 @@ void BinMXCAFDoc::AddDrivers(const occ::handle<BinMDF_ADriverTable>& theDriverTa
   theDriverTable->AddDriver(new BinMXCAFDoc_ColorDriver(theMsgDrv));
   theDriverTable->AddDriver(new BinMXCAFDoc_GraphNodeDriver(theMsgDrv));
 
-  // oan: changes for sharing locations map
   occ::handle<BinMDF_ADriver> aNSDriver;
   theDriverTable->GetDriver(STANDARD_TYPE(TNaming_NamedShape), aNSDriver);
   occ::handle<BinMNaming_NamedShapeDriver> aNamedShapeDriver =

@@ -7,7 +7,6 @@
 #include <Standard_Integer.hpp>
 class IntTools_Range;
 
-//! class for range index management of surface
 class IntTools_SurfaceRangeSample
 {
 public:
@@ -206,7 +205,7 @@ namespace std
   {
     size_t operator()(const IntTools_SurfaceRangeSample& theSurfaceRangeSample) const noexcept
     {
-      // Combine two int values into a single hash value.
+
       size_t aCombination[2]{
         std::hash<IntTools_CurveRangeSample>{}(theSurfaceRangeSample.GetSampleRangeU()),
         std::hash<IntTools_CurveRangeSample>{}(theSurfaceRangeSample.GetSampleRangeV())};

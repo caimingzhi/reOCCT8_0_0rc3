@@ -5,14 +5,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(DrawDim_PlanarDimension, DrawDim_Dimension)
 
-//=================================================================================================
-
 void DrawDim_PlanarDimension::SetPlane(const TopoDS_Face& plane)
 {
   myPlane = plane;
 }
-
-//=================================================================================================
 
 TopoDS_Face DrawDim_PlanarDimension::GetPlane() const
 {

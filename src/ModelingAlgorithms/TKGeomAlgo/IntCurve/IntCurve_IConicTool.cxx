@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ElCLib.hpp>
 #include <gp.hpp>
@@ -24,7 +12,7 @@
 #include <IntCurve_IConicTool.hpp>
 
 #define Object_To_Abs Abs_To_Object.Inverted()
-//======================================================================
+
 #define Elips_a prm1
 #define Elips_b prm2
 #define Elips_c prm3
@@ -33,31 +21,29 @@
 #define Elips_bb (Elips_b * Elips_b)
 #define Elips_x0 (Axis.Location().X())
 #define Elips_y0 (Axis.Location().Y())
-//======================================================================
+
 #define Hypr_a prm1
 #define Hypr_b prm2
 #define Hypr_aa (Hypr_a * Hypr_a)
 #define Hypr_bb (Hypr_b * Hypr_b)
-//======================================================================
+
 #define Line_a prm1
 #define Line_b prm2
 #define Line_c prm3
-//======================================================================
+
 #define Circle_r prm1
 #define Circle_x0 prm2
 #define Circle_y0 prm3
-//======================================================================
+
 #define Parab_f prm1
 #define Parab_2p prm2
 
-//======================================================================
 IntCurve_IConicTool::IntCurve_IConicTool()
     : prm1(0.0),
       prm2(0.0),
       prm3(0.0),
       type(GeomAbs_OtherCurve)
 {
-  // ###### PLACER LE TYPE NON DEFINI ######
 }
 
 IntCurve_IConicTool::IntCurve_IConicTool(const IntCurve_IConicTool& ITool)
@@ -70,8 +56,6 @@ IntCurve_IConicTool::IntCurve_IConicTool(const IntCurve_IConicTool& ITool)
   type          = ITool.type;
 }
 
-//======================================================================
-//======================================================================
 IntCurve_IConicTool::IntCurve_IConicTool(const gp_Lin2d& Line)
     : prm1(0.0),
       prm2(0.0),
@@ -82,7 +66,6 @@ IntCurve_IConicTool::IntCurve_IConicTool(const gp_Lin2d& Line)
   type = GeomAbs_Line;
 }
 
-//======================================================================
 IntCurve_IConicTool::IntCurve_IConicTool(const gp_Elips2d& Elips)
     : prm1(0.0),
       prm2(0.0),
@@ -96,7 +79,6 @@ IntCurve_IConicTool::IntCurve_IConicTool(const gp_Elips2d& Elips)
   type = GeomAbs_Ellipse;
 }
 
-//======================================================================
 IntCurve_IConicTool::IntCurve_IConicTool(const gp_Circ2d& C)
     : prm1(0.0),
       prm2(0.0),
@@ -110,7 +92,6 @@ IntCurve_IConicTool::IntCurve_IConicTool(const gp_Circ2d& C)
   type = GeomAbs_Circle;
 }
 
-//======================================================================
 IntCurve_IConicTool::IntCurve_IConicTool(const gp_Parab2d& P)
     : prm1(0.0),
       prm2(0.0),
@@ -123,7 +104,6 @@ IntCurve_IConicTool::IntCurve_IConicTool(const gp_Parab2d& P)
   type = GeomAbs_Parabola;
 }
 
-//======================================================================
 IntCurve_IConicTool::IntCurve_IConicTool(const gp_Hypr2d& H)
     : prm1(0.0),
       prm2(0.0),
@@ -136,7 +116,6 @@ IntCurve_IConicTool::IntCurve_IConicTool(const gp_Hypr2d& H)
   type = GeomAbs_Hyperbola;
 }
 
-//----------------------------------------------------------------------
 gp_Pnt2d IntCurve_IConicTool::Value(const double X) const
 {
   switch (type)
@@ -159,7 +138,6 @@ gp_Pnt2d IntCurve_IConicTool::Value(const double X) const
   }
 }
 
-//----------------------------------------------------------------------
 void IntCurve_IConicTool::D1(const double X, gp_Pnt2d& Pt, gp_Vec2d& Tan) const
 {
 
@@ -187,7 +165,6 @@ void IntCurve_IConicTool::D1(const double X, gp_Pnt2d& Pt, gp_Vec2d& Tan) const
   }
 }
 
-//----------------------------------------------------------------------
 void IntCurve_IConicTool::D2(const double X, gp_Pnt2d& Pt, gp_Vec2d& Tan, gp_Vec2d& Norm) const
 {
 
@@ -216,10 +193,8 @@ void IntCurve_IConicTool::D2(const double X, gp_Pnt2d& Pt, gp_Vec2d& Tan, gp_Vec
   }
 }
 
-//----------------------------------------------------------------------
 #define AN_ELIPS 0
 
-//----------------------------------------------------------------------
 double IntCurve_IConicTool::Distance(const gp_Pnt2d& ThePoint) const
 {
 
@@ -257,17 +232,15 @@ double IntCurve_IConicTool::Distance(const gp_Pnt2d& ThePoint) const
     }
 
     case GeomAbs_Parabola:
-    { //-- Distance(X,Y) = Y**2 - 2 P X
+    {
       gp_Pnt2d P = ThePoint;
       P.Transform(Abs_To_Object);
       return (P.Y() * P.Y() - Parab_2p * P.X());
     }
 
     case GeomAbs_Hyperbola:
-    { //-- Distance(X,Y) = (X/a)**2 - (Y/b)**2 -1
-      //--                 pour x>0
-      //--     -(Y/b)**2 - 1  sinon ??
-      //--     avec un gradient avec x -> std::abs(x)
+    {
+
       gp_Pnt2d P = ThePoint;
       P.Transform(Abs_To_Object);
       if (P.X() > 0.0)
@@ -355,7 +328,7 @@ gp_Vec2d IntCurve_IConicTool::GradDistance(const gp_Pnt2d& ThePoint) const
     }
 
     case GeomAbs_Parabola:
-    { //-- Distance(X,Y) = Y**2 - 2 P X
+    {
       gp_Pnt2d P = ThePoint;
       P.Transform(Abs_To_Object);
       gp_Vec2d Gradient(-Parab_2p, P.Y() + P.Y());
@@ -363,10 +336,10 @@ gp_Vec2d IntCurve_IConicTool::GradDistance(const gp_Pnt2d& ThePoint) const
       return (Gradient);
     }
     case GeomAbs_Hyperbola:
-    { //-- Distance(X,Y) = (X/a)**2 - (Y/b)**2 -1
+    {
       gp_Pnt2d P = ThePoint;
       P.Transform(Abs_To_Object);
-      //--### la Branche a X negatif doit ramener vers les X positifs
+
       gp_Vec2d Gradient(2.0 * std::abs(P.X()) / Hypr_aa, -2.0 * P.Y() / Hypr_bb);
       Gradient.Transform(Object_To_Abs);
       return (Gradient);

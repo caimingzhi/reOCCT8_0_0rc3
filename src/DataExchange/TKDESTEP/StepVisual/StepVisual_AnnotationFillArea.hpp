@@ -9,7 +9,6 @@ class StepVisual_AnnotationFillArea : public StepShape_GeometricCurveSet
 {
 
 public:
-  //! Returns a AnnotationFillArea
   Standard_EXPORT StepVisual_AnnotationFillArea();
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_AnnotationFillArea, StepShape_GeometricCurveSet)

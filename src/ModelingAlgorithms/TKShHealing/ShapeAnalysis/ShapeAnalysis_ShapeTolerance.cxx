@@ -1,18 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// #76 rln 11.03.99 S4135: compute average without weights according to tolerances
-// szv#4 S4163
 
 #include <BRep_Tool.hpp>
 #include <ShapeAnalysis_ShapeTolerance.hpp>
@@ -21,8 +7,6 @@
 #include <TopoDS_Shape.hpp>
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_Map.hpp>
-
-//=================================================================================================
 
 ShapeAnalysis_ShapeTolerance::ShapeAnalysis_ShapeTolerance()
     : myNbTol(0)
@@ -40,25 +24,13 @@ static void AddTol(const double tol, int& nbt, double& cmin, double& cmoy, doubl
       cmin = tol;
     if (cmax < tol)
       cmax = tol;
-    //    cmoy += tol;
-    //  Calcul en moyenne geometrique  entre 1 et 1e-7
+
     int mult = 1;
-    // #76 rln 11.03.99 S4135: compute average without weights according to tolerances
-    /*    if      (tol < 1.e-07) mult = 10000;
-        else if (tol < 1.e-06) mult =  3000;
-        else if (tol < 1.e-05) mult =  1000;
-        else if (tol < 1.e-04) mult =   300;
-        else if (tol < 1.e-03) mult =   100;
-        else if (tol < 1.e-02) mult =    30;
-        else if (tol < 1.e-01) mult =    10;
-        else if (tol < 1.    ) mult =     3;
-    */
+
     nbt += (mult - 1);
     cmoy += (tol * mult);
   }
 }
-
-//=================================================================================================
 
 double ShapeAnalysis_ShapeTolerance::Tolerance(const TopoDS_Shape&    shape,
                                                const int              mode,
@@ -68,8 +40,6 @@ double ShapeAnalysis_ShapeTolerance::Tolerance(const TopoDS_Shape&    shape,
   AddTolerance(shape, type);
   return GlobalTolerance(mode);
 }
-
-//=================================================================================================
 
 occ::handle<NCollection_HSequence<TopoDS_Shape>> ShapeAnalysis_ShapeTolerance::OverTolerance(
   const TopoDS_Shape&    shape,
@@ -82,8 +52,6 @@ occ::handle<NCollection_HSequence<TopoDS_Shape>> ShapeAnalysis_ShapeTolerance::O
     return InTolerance(shape, 0., value, type);
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HSequence<TopoDS_Shape>> ShapeAnalysis_ShapeTolerance::InTolerance(
   const TopoDS_Shape&    shape,
   const double           valmin,
@@ -91,12 +59,10 @@ occ::handle<NCollection_HSequence<TopoDS_Shape>> ShapeAnalysis_ShapeTolerance::I
   const TopAbs_ShapeEnum type) const
 {
   double                                           tol;
-  bool                                             over = (valmax < valmin); // pas de liminite max
+  bool                                             over = (valmax < valmin);
   occ::handle<NCollection_HSequence<TopoDS_Shape>> sl   = new NCollection_HSequence<TopoDS_Shape>();
 
   TopExp_Explorer myExp;
-
-  // Iteration sur les Faces
 
   if (type == TopAbs_FACE || type == TopAbs_SHAPE)
   {
@@ -110,8 +76,6 @@ occ::handle<NCollection_HSequence<TopoDS_Shape>> ShapeAnalysis_ShapeTolerance::I
     }
   }
 
-  // Iteration sur les Edges
-
   if (type == TopAbs_EDGE || type == TopAbs_SHAPE)
   {
     myExp.Init(shape, TopAbs_EDGE);
@@ -123,8 +87,6 @@ occ::handle<NCollection_HSequence<TopoDS_Shape>> ShapeAnalysis_ShapeTolerance::I
       myExp.Next();
     }
   }
-
-  // Iteration sur les Vertex
 
   if (type == TopAbs_VERTEX || type == TopAbs_SHAPE)
   {
@@ -138,11 +100,9 @@ occ::handle<NCollection_HSequence<TopoDS_Shape>> ShapeAnalysis_ShapeTolerance::I
     }
   }
 
-  // Iteration combinee (cumul) SHELL+FACE+EDGE+VERTEX, on retourne SHELL+FACE
-
   if (type == TopAbs_SHELL)
   {
-    //  Exploration des shells
+
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> mapface;
     myExp.Init(shape, TopAbs_SHELL);
     while (myExp.More())
@@ -165,7 +125,6 @@ occ::handle<NCollection_HSequence<TopoDS_Shape>> ShapeAnalysis_ShapeTolerance::I
       myExp.Next();
     }
 
-    //  Les faces (libres ou sous shell)
     myExp.Init(shape, TopAbs_FACE);
     for (; myExp.More(); myExp.Next())
     {
@@ -177,7 +136,7 @@ occ::handle<NCollection_HSequence<TopoDS_Shape>> ShapeAnalysis_ShapeTolerance::I
         iaface = true;
       else
       {
-        // les edges contenues ?
+
         occ::handle<NCollection_HSequence<TopoDS_Shape>> fl =
           InTolerance(myExp.Current(), valmin, valmax, TopAbs_EDGE);
         if (fl->Length() > 0)
@@ -197,15 +156,11 @@ occ::handle<NCollection_HSequence<TopoDS_Shape>> ShapeAnalysis_ShapeTolerance::I
   return sl;
 }
 
-//=================================================================================================
-
 void ShapeAnalysis_ShapeTolerance::InitTolerance()
 {
   myNbTol   = 0;
   myTols[1] = 0;
 }
-
-//=================================================================================================
 
 void ShapeAnalysis_ShapeTolerance::AddTolerance(const TopoDS_Shape&    shape,
                                                 const TopAbs_ShapeEnum type)
@@ -214,8 +169,6 @@ void ShapeAnalysis_ShapeTolerance::AddTolerance(const TopoDS_Shape&    shape,
   double tol, cmin = 0., cmoy = 0., cmax = 0.;
 
   TopExp_Explorer myExp;
-
-  // Iteration sur les Faces
 
   if (type == TopAbs_FACE || type == TopAbs_SHAPE)
   {
@@ -228,8 +181,6 @@ void ShapeAnalysis_ShapeTolerance::AddTolerance(const TopoDS_Shape&    shape,
     }
   }
 
-  // Iteration sur les Edges
-
   if (type == TopAbs_EDGE || type == TopAbs_SHAPE)
   {
     myExp.Init(shape, TopAbs_EDGE);
@@ -240,8 +191,6 @@ void ShapeAnalysis_ShapeTolerance::AddTolerance(const TopoDS_Shape&    shape,
       myExp.Next();
     }
   }
-
-  // Iteration sur les Vertices
 
   if (type == TopAbs_VERTEX || type == TopAbs_SHAPE)
   {
@@ -254,7 +203,6 @@ void ShapeAnalysis_ShapeTolerance::AddTolerance(const TopoDS_Shape&    shape,
     }
   }
 
-  //  Resultat : attention en mode cumul
   if (nbt == 0)
     return;
   if (myNbTol == 0 || myTols[0] > cmin)
@@ -265,11 +213,9 @@ void ShapeAnalysis_ShapeTolerance::AddTolerance(const TopoDS_Shape&    shape,
   myNbTol += nbt;
 }
 
-//=================================================================================================
-
 double ShapeAnalysis_ShapeTolerance::GlobalTolerance(const int mode) const
 {
-  // szv#4:S4163:12Mar99 optimized
+
   double result = 0.;
   if (myNbTol != 0.)
   {

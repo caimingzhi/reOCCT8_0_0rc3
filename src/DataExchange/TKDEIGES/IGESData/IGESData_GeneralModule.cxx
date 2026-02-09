@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IGESData.hpp>
 #include <IGESData_ColorEntity.hpp>
@@ -39,7 +28,7 @@ void IGESData_GeneralModule::FillSharedCase(const int                           
   DeclareAndCast(IGESData_IGESEntity, anent, ent);
   if (anent.IsNull())
     return;
-  //  .... Directory Part
+
   iter.AddItem(anent->DirFieldEntity(3));
   iter.AddItem(anent->DirFieldEntity(4));
   iter.AddItem(anent->DirFieldEntity(5));
@@ -48,10 +37,8 @@ void IGESData_GeneralModule::FillSharedCase(const int                           
   iter.AddItem(anent->DirFieldEntity(8));
   iter.AddItem(anent->DirFieldEntity(13));
 
-  //  .... Own Parameters
   OwnSharedCase(CN, anent, iter);
 
-  //  .... Properties
   Interface_EntityIterator assocs = anent->Properties();
   for (; assocs.More(); assocs.Next())
     iter.AddItem(assocs.Value());
@@ -74,7 +61,7 @@ void IGESData_GeneralModule::OwnImpliedCase(const int,
                                             const occ::handle<IGESData_IGESEntity>&,
                                             Interface_EntityIterator&) const
 {
-} // by default, nothing (redefinable)
+}
 
 void IGESData_GeneralModule::CheckCase(const int                              CN,
                                        const occ::handle<Standard_Transient>& ent,
@@ -88,8 +75,7 @@ void IGESData_GeneralModule::CheckCase(const int                              CN
   OwnCheckCase(CN, anent, shares, ach);
 }
 
-bool IGESData_GeneralModule::CanCopy(const int /*CN*/,
-                                     const occ::handle<Standard_Transient>& /*ent*/) const
+bool IGESData_GeneralModule::CanCopy(const int, const occ::handle<Standard_Transient>&) const
 {
   return true;
 }
@@ -101,10 +87,6 @@ void IGESData_GeneralModule::CopyCase(const int                              CN,
 {
   DeclareAndCast(IGESData_IGESEntity, ento, entto);
   DeclareAndCast(IGESData_IGESEntity, enfr, entfrom);
-  ////  ento->Clear();
-
-  // ...                Resume header                ...
-  //?  ento->InitTypeAndForm (enfr->TypeNumber(), enfr->FormNumber());ShallowCopy
 
   if (enfr->DefLineFont() == IGESData_DefReference)
     ento->InitLineFont(GetCasted(IGESData_LineFontEntity, TC.Transferred(enfr->LineFont())));
@@ -137,7 +119,6 @@ void IGESData_GeneralModule::CopyCase(const int                              CN,
   else
     ento->SetLabel(enfr->ShortLabel(), enfr->SubScriptNumber());
 
-  //  Directory Part : Miscellaneous
   occ::handle<IGESData_IGESEntity> Structure;
   if (enfr->HasStructure())
     Structure = GetCasted(IGESData_IGESEntity, TC.Transferred(enfr->Structure()));
@@ -148,11 +129,8 @@ void IGESData_GeneralModule::CopyCase(const int                              CN,
   else
     ento->InitMisc(Structure, enfr->LabelDisplay(), enfr->LineWeightNumber());
 
-  //  LineWeightValue, Res1, Res2 : through action of ShallowCopy ?
-
   OwnCopyCase(CN, enfr, ento, TC);
 
-  //  ..  Properties
   if (enfr->NbProperties() != 0)
   {
     for (Interface_EntityIterator iter = enfr->Properties(); iter.More(); iter.Next())
@@ -172,7 +150,6 @@ void IGESData_GeneralModule::RenewImpliedCase(const int                         
 
   OwnRenewCase(CN, enfr, ento, TC);
 
-  //  .. Associativities
   if (enfr->NbAssociativities() != 0)
   {
     for (Interface_EntityIterator iter = enfr->Associativities(); iter.More(); iter.Next())
@@ -194,7 +171,7 @@ void IGESData_GeneralModule::OwnRenewCase(const int,
 
 void IGESData_GeneralModule::WhenDeleteCase(const int                              CN,
                                             const occ::handle<Standard_Transient>& ent,
-                                            const bool) const // dispatched : ignored
+                                            const bool) const
 {
   DeclareAndCast(IGESData_IGESEntity, anent, ent);
   if (anent.IsNull())
@@ -205,7 +182,7 @@ void IGESData_GeneralModule::WhenDeleteCase(const int                           
 
 void IGESData_GeneralModule::OwnDeleteCase(const int, const occ::handle<IGESData_IGESEntity>&) const
 {
-} // by default, nothing (redefinable)
+}
 
 occ::handle<TCollection_HAsciiString> IGESData_GeneralModule::Name(
   const int,

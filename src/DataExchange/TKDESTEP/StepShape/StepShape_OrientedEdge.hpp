@@ -12,7 +12,6 @@ class StepShape_OrientedEdge : public StepShape_Edge
 {
 
 public:
-  //! Returns a OrientedEdge
   Standard_EXPORT StepShape_OrientedEdge();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

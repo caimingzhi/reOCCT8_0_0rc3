@@ -10,33 +10,27 @@
 #include <TDF_RelocationTable.hpp>
 #include <Standard_TypeMismatch.hpp>
 
-//=================================================================================================
-
 void TDF_CopyTool::Copy(const occ::handle<TDF_DataSet>&         aSourceDataSet,
                         const occ::handle<TDF_RelocationTable>& aRelocationTable)
 {
-  TDF_IDFilter privilegeFilter; // Ignore the target attribute's privilege!
-  TDF_IDFilter refFilter;       // Will not be used.
+  TDF_IDFilter privilegeFilter;
+  TDF_IDFilter refFilter;
   TDF_CopyTool::Copy(aSourceDataSet, aRelocationTable, privilegeFilter, refFilter, false);
 }
-
-//=================================================================================================
 
 void TDF_CopyTool::Copy(const occ::handle<TDF_DataSet>&         aSourceDataSet,
                         const occ::handle<TDF_RelocationTable>& aRelocationTable,
                         const TDF_IDFilter&                     aPrivilegeFilter)
 {
-  TDF_IDFilter refFilter; // Will not be used.
+  TDF_IDFilter refFilter;
   TDF_CopyTool::Copy(aSourceDataSet, aRelocationTable, aPrivilegeFilter, refFilter, false);
 }
-
-//=================================================================================================
 
 void TDF_CopyTool::Copy(const occ::handle<TDF_DataSet>&         aSourceDataSet,
                         const occ::handle<TDF_RelocationTable>& aRelocationTable,
                         const TDF_IDFilter&                     aPrivilegeFilter,
-                        const TDF_IDFilter& /* aRefFilter */,
-                        const bool /* setSelfContained */)
+                        const TDF_IDFilter&,
+                        const bool)
 {
   if (aSourceDataSet->IsEmpty())
     return;
@@ -49,15 +43,6 @@ void TDF_CopyTool::Copy(const occ::handle<TDF_DataSet>&         aSourceDataSet,
   NCollection_DataMap<occ::handle<TDF_Attribute>, occ::handle<TDF_Attribute>>& theAttMap =
     aRelocationTable->AttributeTable();
 
-  // Parallel exploration of the root label structures:
-  // * builds the target labels not found;
-  // * binds the source attributes with the target ones;
-  // * binds the source attributes with new target ones if there is none.
-
-  // Label pre-binding is tested before paste.
-  // For it is possible to copy the roots at another place with OTHER TAGS,
-  // we first ask <theLabMap> if each source root label is already bound.
-
   for (NCollection_List<TDF_Label>::Iterator labLItr(rootLst); labLItr.More(); labLItr.Next())
   {
     const TDF_Label& sLab = labLItr.Value();
@@ -66,35 +51,22 @@ void TDF_CopyTool::Copy(const occ::handle<TDF_DataSet>&         aSourceDataSet,
       TDF_Label tIns(theLabMap.Find(sLab));
       TDF_CopyTool::CopyLabels(sLab, tIns, theLabMap, theAttMap, srcLabs, srcAtts);
     }
-    // if not bound : do nothing!
   }
 
-  // The relocation attribute table is now ready,
-  // except for the label unattached attributes,
-  // but everybody can update the relocation table...
-
-  // Now: the paste phase!
   NCollection_DataMap<occ::handle<TDF_Attribute>, occ::handle<TDF_Attribute>>::Iterator attItr2(
     theAttMap);
   for (; attItr2.More(); attItr2.Next())
   {
     const occ::handle<TDF_Attribute>& sAtt = attItr2.Key();
     if (!sAtt.IsNull())
-    { // This condition looks superfluous; and below also.
+    {
       const occ::handle<TDF_Attribute>& tAtt = attItr2.Value();
-      // 1 - No copy on itself.
-      // 2 - The target attribute is present BUT its privilege over the
-      // source one must be ignored. The source attribute can be copied.
+
       if ((sAtt != tAtt) && aPrivilegeFilter.IsIgnored(tAtt->ID()))
         sAtt->Paste(tAtt, aRelocationTable);
     }
   }
 }
-
-//=======================================================================
-// function : CopyLabels
-// purpose  : Internal root label copy recursive method.
-//=======================================================================
 
 void TDF_CopyTool::CopyLabels(
   const TDF_Label&                                                             aSLabel,
@@ -106,7 +78,6 @@ void TDF_CopyTool::CopyLabels(
 {
   TDF_CopyTool::CopyAttributes(aSLabel, aTargetLabel, aAttMap, aSrcAttributeMap);
 
-  // Does the same for the children.
   for (TDF_ChildIterator childItr(aSLabel); childItr.More(); childItr.Next())
   {
     const TDF_Label& childSLab = childItr.Value();
@@ -133,11 +104,6 @@ void TDF_CopyTool::CopyLabels(
   }
 }
 
-//=======================================================================
-// function : CopyAttributes
-// purpose  : Internal attribute copy method.
-//=======================================================================
-
 void TDF_CopyTool::CopyAttributes(
   const TDF_Label&                                                             aSLabel,
   TDF_Label&                                                                   aTargetLabel,
@@ -146,7 +112,6 @@ void TDF_CopyTool::CopyAttributes(
 {
   occ::handle<TDF_Attribute> tAtt;
 
-  // Finds the target attributes or creates them empty.
   for (TDF_AttributeIterator attItr(aSLabel); attItr.More(); attItr.Next())
   {
     const occ::handle<TDF_Attribute> sAtt = attItr.Value();
@@ -157,14 +122,13 @@ void TDF_CopyTool::CopyAttributes(
       {
         tAtt = sAtt->NewEmpty();
         if (tAtt->ID() != id)
-          tAtt->SetID(id); //
+          tAtt->SetID(id);
         aTargetLabel.AddAttribute(tAtt, true);
         aAttMap.Bind(sAtt, tAtt);
       }
       else
       {
-        // Some attributes have the same ID, but are different and
-        // exclusive. This obliged to test the dynamic type identity.
+
         if (tAtt->IsInstance(sAtt->DynamicType()))
           aAttMap.Bind(sAtt, tAtt);
         else

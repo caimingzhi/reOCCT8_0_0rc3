@@ -1,16 +1,4 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_ErrorHandler.hpp>
 #include <Standard_Type.hpp>
@@ -48,8 +36,6 @@ typedef NCollection_DataMap<TCollection_AsciiString, TCollection_AsciiString>
 
 #endif
 
-// IMPLEMENTATION BucketOfPersistent
-//
 Storage_Bucket::~Storage_Bucket()
 {
   Standard::Free(mySpace);
@@ -58,14 +44,10 @@ Storage_Bucket::~Storage_Bucket()
   Clear();
 }
 
-//=================================================================================================
-
 void Storage_Bucket::Clear()
 {
   myCurrentSpace = -1;
 }
-
-//=================================================================================================
 
 void Storage_Bucket::Append(Standard_Persistent* sp)
 {
@@ -73,14 +55,10 @@ void Storage_Bucket::Append(Standard_Persistent* sp)
   mySpace[myCurrentSpace] = sp;
 }
 
-//=================================================================================================
-
 Standard_Persistent* Storage_Bucket::Value(const int theIndex) const
 {
   return mySpace[theIndex];
 }
-
-//=================================================================================================
 
 Storage_BucketOfPersistent::Storage_BucketOfPersistent(const int theBucketSize,
                                                        const int theBucketNumber)
@@ -94,8 +72,6 @@ Storage_BucketOfPersistent::Storage_BucketOfPersistent(const int theBucketSize,
   myLength        = 0;
   myCurrentBucketNumber = 0;
 }
-
-//=================================================================================================
 
 void Storage_BucketOfPersistent::Clear()
 {
@@ -121,8 +97,6 @@ Storage_BucketOfPersistent::~Storage_BucketOfPersistent()
   myBuckets = nullptr;
 }
 
-//=================================================================================================
-
 Standard_Persistent* Storage_BucketOfPersistent::Value(const int theIndex)
 {
   int theInd, theCurrentBucketNumber, tecurrentind = theIndex - 1;
@@ -131,8 +105,6 @@ Standard_Persistent* Storage_BucketOfPersistent::Value(const int theIndex)
 
   return myBuckets[theCurrentBucketNumber]->mySpace[theInd];
 }
-
-//=================================================================================================
 
 void Storage_BucketOfPersistent::Append(const occ::handle<Standard_Persistent>& sp)
 {
@@ -163,8 +135,6 @@ void Storage_BucketOfPersistent::Append(const occ::handle<Standard_Persistent>& 
   myCurrentBucket->mySpace[myCurrentBucket->myCurrentSpace] = sp.get();
 }
 
-//=================================================================================================
-
 Storage_BucketIterator::Storage_BucketIterator(Storage_BucketOfPersistent* aBucketManager)
     : myBucket(nullptr),
       myCurrentBucket(nullptr),
@@ -184,8 +154,6 @@ Storage_BucketIterator::Storage_BucketIterator(Storage_BucketOfPersistent* aBuck
   }
 }
 
-//=================================================================================================
-
 void Storage_BucketIterator::Reset()
 {
   if (myBucket)
@@ -199,8 +167,6 @@ void Storage_BucketIterator::Reset()
   else
     myMoreObject = false;
 }
-
-//=================================================================================================
 
 void Storage_BucketIterator::Init(Storage_BucketOfPersistent* aBucketManager)
 {
@@ -216,8 +182,6 @@ void Storage_BucketIterator::Init(Storage_BucketOfPersistent* aBucketManager)
   else
     myMoreObject = false;
 }
-
-//=================================================================================================
 
 void Storage_BucketIterator::Next()
 {
@@ -243,12 +207,6 @@ void Storage_BucketIterator::Next()
   }
 }
 
-//=======================================================================
-// function : Storage_Schema
-// purpose  : USER API -- --------------------------------------------------------------
-//           IMPLEMENTATION BucketOfPersistent
-//=======================================================================
-
 Storage_Schema::Storage_Schema()
 {
   Clear();
@@ -256,54 +214,25 @@ Storage_Schema::Storage_Schema()
   myCallBackState = false;
 }
 
-//=======================================================================
-// function : SetVersion
-// purpose  : returns version of the schema
-//=======================================================================
-
 void Storage_Schema::SetVersion(const TCollection_AsciiString& aVersion)
 {
   myVersion = aVersion;
 }
-
-//=======================================================================
-// function : Version
-// purpose  : returns the version of the schema
-//=======================================================================
 
 TCollection_AsciiString Storage_Schema::Version() const
 {
   return myVersion;
 }
 
-//=======================================================================
-// function : SetName
-// purpose  : set the schema's name
-//=======================================================================
-
 void Storage_Schema::SetName(const TCollection_AsciiString& aSchemaName)
 {
   myName = aSchemaName;
 }
 
-//=======================================================================
-// function : Name
-// purpose  : returns the schema's name
-//=======================================================================
-
 TCollection_AsciiString Storage_Schema::Name() const
 {
   return myName;
 }
-
-//=======================================================================
-// function : Write
-// purpose  : write
-// Arguments:
-//           s: driver to write
-//           raises  if  the  stream  is  not  opened  in  VSWrite  or
-//           VSReadWrite
-//=======================================================================
 
 void Storage_Schema::Write(const occ::handle<Storage_BaseDriver>& theDriver,
                            const occ::handle<Storage_Data>&       aData) const
@@ -311,8 +240,6 @@ void Storage_Schema::Write(const occ::handle<Storage_BaseDriver>& theDriver,
   if (aData.IsNull())
     return;
 
-  // add all the persistent to write...
-  //
   int                                                           posfrom, posto;
   occ::handle<Standard_Persistent>                              p;
   occ::handle<NCollection_HSequence<occ::handle<Storage_Root>>> plist;
@@ -333,16 +260,12 @@ void Storage_Schema::Write(const occ::handle<Storage_BaseDriver>& theDriver,
 
   for (posto = 1; posto <= plist->Length(); posto++)
   {
-    //    AddTypeSelection(plist->Value(posto)->Object());
   }
 
   for (posfrom = plist->Length() + 1; posfrom <= iData->myPtoA.Length(); posfrom++)
   {
-    //    AddTypeSelection(iData->myPtoA.Value(posfrom));
   }
 
-  // ...and now we write
-  //
   int i, len;
 
   aData->HeaderData()->SetCreationDate(ICreationDate());
@@ -480,11 +403,6 @@ void Storage_Schema::Write(const occ::handle<Storage_BaseDriver>& theDriver,
   Clear();
 }
 
-//=======================================================================
-// function : AddReadUnknownTypeCallBack
-// purpose  : add two functions to the callback list
-//=======================================================================
-
 void Storage_Schema::AddReadUnknownTypeCallBack(const TCollection_AsciiString&       aTypeName,
                                                 const occ::handle<Storage_CallBack>& aCallBack)
 {
@@ -496,11 +414,6 @@ void Storage_Schema::AddReadUnknownTypeCallBack(const TCollection_AsciiString&  
   }
 }
 
-//=======================================================================
-// function : RemoveReadUnknownTypeCallBack
-// purpose  : remove a callback for a type
-//=======================================================================
-
 void Storage_Schema::RemoveReadUnknownTypeCallBack(const TCollection_AsciiString& aTypeName)
 {
   if (myCallBack.IsBound(aTypeName))
@@ -508,12 +421,6 @@ void Storage_Schema::RemoveReadUnknownTypeCallBack(const TCollection_AsciiString
     myCallBack.UnBind(aTypeName);
   }
 }
-
-//=======================================================================
-// function : InstalledCallBackList
-// purpose  : returns  a  list  of   type  name  with  installed
-//           callback.
-//=======================================================================
 
 occ::handle<NCollection_HSequence<TCollection_AsciiString>> Storage_Schema::InstalledCallBackList()
   const
@@ -531,83 +438,40 @@ occ::handle<NCollection_HSequence<TCollection_AsciiString>> Storage_Schema::Inst
   return result;
 }
 
-//=======================================================================
-// function : ClearCallBackList
-// purpose  : clear all callback from schema instance.
-//=======================================================================
-
 void Storage_Schema::ClearCallBackList()
 {
   myCallBack.Clear();
 }
-
-//=======================================================================
-// function : UseDefaultCallBack
-// purpose  : install  a  callback  for  all  unknown  type. the
-//           objects with unknown types  will be skipped. (look
-//           SkipObject method in BaseDriver)
-//=======================================================================
 
 void Storage_Schema::UseDefaultCallBack()
 {
   myCallBackState = true;
 }
 
-//=======================================================================
-// function : DontUseDefaultCallBack
-// purpose  : tells schema to uninstall the default callback.
-//=======================================================================
-
 void Storage_Schema::DontUseDefaultCallBack()
 {
   myCallBackState = false;
 }
-
-//=======================================================================
-// function : IsUsingDefaultCallBack
-// purpose  : ask if the schema is using the default callback.
-//=======================================================================
 
 bool Storage_Schema::IsUsingDefaultCallBack() const
 {
   return myCallBackState;
 }
 
-//=======================================================================
-// function : SetDefaultCallBack
-// purpose  : overload the  default  function  for build.(use to
-//           set an  error  message  or  skip  an  object while
-//           reading an unknown type).
-//=======================================================================
-
 void Storage_Schema::SetDefaultCallBack(const occ::handle<Storage_CallBack>& f)
 {
   myDefaultCallBack = f;
 }
-
-//=======================================================================
-// function : ResetDefaultCallBack
-// purpose  : reset  the  default  function  defined  by Storage
-//           package.
-//=======================================================================
 
 void Storage_Schema::ResetDefaultCallBack()
 {
   myDefaultCallBack = new Storage_DefaultCallBack;
 }
 
-//=======================================================================
-// function : DefaultCallBack
-// purpose  : returns   the   read   function   used   when  the
-//           UseDefaultCallBack() is set.
-//=======================================================================
-
 occ::handle<Storage_CallBack> Storage_Schema::DefaultCallBack() const
 {
   return myDefaultCallBack;
 }
-
-//=================================================================================================
 
 void Storage_Schema::BindType(const TCollection_AsciiString&       aTypeName,
                               const occ::handle<Storage_CallBack>& aCallBack) const
@@ -624,8 +488,6 @@ void Storage_Schema::BindType(const TCollection_AsciiString&       aTypeName,
   }
 }
 
-//=================================================================================================
-
 occ::handle<Storage_CallBack> Storage_Schema::TypeBinding(
   const TCollection_AsciiString& aTypeName) const
 {
@@ -640,8 +502,6 @@ occ::handle<Storage_CallBack> Storage_Schema::TypeBinding(
 
   return result;
 }
-
-//=================================================================================================
 
 bool Storage_Schema::AddPersistent(const occ::handle<Standard_Persistent>& sp,
                                    const char*                             tName) const
@@ -671,8 +531,6 @@ bool Storage_Schema::AddPersistent(const occ::handle<Standard_Persistent>& sp,
   return result;
 }
 
-//=================================================================================================
-
 bool Storage_Schema::PersistentToAdd(const occ::handle<Standard_Persistent>& sp) const
 {
   bool result = false;
@@ -692,18 +550,13 @@ bool Storage_Schema::PersistentToAdd(const occ::handle<Standard_Persistent>& sp)
   return result;
 }
 
-//=================================================================================================
-
 void Storage_Schema::Clear() const
 {
   Storage_Schema::ICurrentData().Nullify();
 }
 
 #ifdef DATATYPE_MIGRATION
-//=======================================================================
-// environment variable CSF_MIGRATION_TYPES should define full path of a file
-// containing migration types table: oldtype - newtype
-//=======================================================================
+
 bool Storage_Schema::CheckTypeMigration(const TCollection_AsciiString& oldName,
                                         TCollection_AsciiString&       newName)
 {
@@ -714,7 +567,7 @@ bool Storage_Schema::CheckTypeMigration(const TCollection_AsciiString& oldName,
   if (!isChecked)
   {
     isChecked = true;
-    //    TCollection_AsciiString aFileName = getenv("CSF_MIGRATION_TYPES");
+
     OSD_Environment         csf(TCollection_AsciiString("CSF_MIGRATION_TYPES"));
     TCollection_AsciiString aFileName = csf.Value();
     OSD_File                aFile;
@@ -748,7 +601,7 @@ bool Storage_Schema::CheckTypeMigration(const TCollection_AsciiString& oldName,
     }
     else
     {
-      // hard-code migration table for known types
+
       aDMap.Bind("TDataStd_Shape", "TDataXtd_Shape");
       aDMap.Bind("TDataStd_Constraint", "TDataXtd_Constraint");
       aDMap.Bind("TDataStd_Geometry", "TDataXtd_Geometry");
@@ -790,14 +643,10 @@ bool Storage_Schema::CheckTypeMigration(const TCollection_AsciiString& oldName,
 }
 #endif
 
-//=================================================================================================
-
 void Storage_Schema::ISetCurrentData(const occ::handle<Storage_Data>& dData)
 {
   Storage_Schema::ICurrentData() = dData;
 }
-
-//=================================================================================================
 
 occ::handle<Storage_Data>& Storage_Schema::ICurrentData()
 {
@@ -806,8 +655,6 @@ occ::handle<Storage_Data>& Storage_Schema::ICurrentData()
 }
 
 #define SLENGTH 80
-
-//=================================================================================================
 
 TCollection_AsciiString Storage_Schema::ICreationDate()
 {

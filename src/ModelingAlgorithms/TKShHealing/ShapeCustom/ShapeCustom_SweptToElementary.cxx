@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GeomAdaptor_SurfaceOfLinearExtrusion.hpp>
 #include <GeomAdaptor_SurfaceOfRevolution.hpp>
@@ -44,14 +33,8 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeCustom_SweptToElementary, ShapeCustom_Modification)
 
-//=================================================================================================
-
 ShapeCustom_SweptToElementary::ShapeCustom_SweptToElementary() = default;
 
-//=======================================================================
-// function : IsToConvert
-// purpose  : auxiliary (Analyze surface: is it to be converted?)
-//=======================================================================
 static bool IsToConvert(const occ::handle<Geom_Surface>& S, occ::handle<Geom_SweptSurface>& SS)
 {
   occ::handle<Geom_Surface> Stmp;
@@ -82,8 +65,6 @@ static bool IsToConvert(const occ::handle<Geom_Surface>& S, occ::handle<Geom_Swe
   return false;
 }
 
-//=================================================================================================
-
 bool ShapeCustom_SweptToElementary::NewSurface(const TopoDS_Face&         F,
                                                occ::handle<Geom_Surface>& S,
                                                TopLoc_Location&           L,
@@ -96,7 +77,6 @@ bool ShapeCustom_SweptToElementary::NewSurface(const TopoDS_Face&         F,
   if (!IsToConvert(S, SS))
     return false;
 
-  // case SurfaceOfRevolution
   if (SS->IsKind(STANDARD_TYPE(Geom_SurfaceOfRevolution)))
   {
     occ::handle<Geom_SurfaceOfRevolution> SR  = occ::down_cast<Geom_SurfaceOfRevolution>(SS);
@@ -107,11 +87,7 @@ bool ShapeCustom_SweptToElementary::NewSurface(const TopoDS_Face&         F,
     GeomAdaptor_SurfaceOfRevolution AS(HC, ax1);
     switch (AS.GetType())
     {
-      // skl 18.12.2003 - plane not used, problems in PRO14665.igs
-      // case GeomAbs_Plane : {
-      //  occ::handle<Geom_Plane> Pl = new Geom_Plane(AS.Plane());
-      //  S = Pl;
-      //} break;
+
       case GeomAbs_Cylinder:
       {
         occ::handle<Geom_CylindricalSurface> Cy = new Geom_CylindricalSurface(AS.Cylinder());
@@ -141,7 +117,7 @@ bool ShapeCustom_SweptToElementary::NewSurface(const TopoDS_Face&         F,
         break;
     }
   }
-  // case SurfaceOfLinearExtrusion
+
   else if (SS->IsKind(STANDARD_TYPE(Geom_SurfaceOfLinearExtrusion)))
   {
     occ::handle<Geom_SurfaceOfLinearExtrusion> SLE =
@@ -153,11 +129,7 @@ bool ShapeCustom_SweptToElementary::NewSurface(const TopoDS_Face&         F,
     GeomAdaptor_SurfaceOfLinearExtrusion AS(HC, dir);
     switch (AS.GetType())
     {
-      // skl 18.12.2003 - plane not used, problems in ims013.igs
-      // case GeomAbs_Plane : {
-      //  occ::handle<Geom_Plane> Pl = new Geom_Plane(AS.Plane());
-      //  S = Pl;
-      //} break;
+
       case GeomAbs_Cylinder:
       {
         occ::handle<Geom_CylindricalSurface> Cy = new Geom_CylindricalSurface(AS.Cylinder());
@@ -178,17 +150,14 @@ bool ShapeCustom_SweptToElementary::NewSurface(const TopoDS_Face&         F,
   return true;
 }
 
-//=================================================================================================
-
 bool ShapeCustom_SweptToElementary::NewCurve(const TopoDS_Edge&       E,
                                              occ::handle<Geom_Curve>& C,
                                              TopLoc_Location&         L,
                                              double&                  Tol)
 {
-  //: p5 abv 26 Feb 99: force copying of edge if any its pcurve will be replaced
+
   occ::handle<BRep_TEdge>& TE = *((occ::handle<BRep_TEdge>*)&E.TShape());
 
-  // iterate on pcurves
   NCollection_List<occ::handle<BRep_CurveRepresentation>>::Iterator itcr(TE->Curves());
   for (; itcr.More(); itcr.Next())
   {
@@ -209,17 +178,11 @@ bool ShapeCustom_SweptToElementary::NewCurve(const TopoDS_Edge&       E,
   return false;
 }
 
-//=================================================================================================
-
-bool ShapeCustom_SweptToElementary::NewPoint(const TopoDS_Vertex& /*V*/,
-                                             gp_Pnt& /*P*/,
-                                             double& /*Tol*/)
+bool ShapeCustom_SweptToElementary::NewPoint(const TopoDS_Vertex&, gp_Pnt&, double&)
 {
-  // 3d points are never modified
+
   return false;
 }
-
-//=================================================================================================
 
 bool ShapeCustom_SweptToElementary::NewCurve2d(const TopoDS_Edge&         E,
                                                const TopoDS_Face&         F,
@@ -232,7 +195,6 @@ bool ShapeCustom_SweptToElementary::NewCurve2d(const TopoDS_Edge&         E,
   occ::handle<Geom_Surface>      S = BRep_Tool::Surface(F, L);
   occ::handle<Geom_SweptSurface> SS;
 
-  // just copy pcurve if either its surface is changing or edge was copied
   if (!IsToConvert(S, SS) && E.IsSame(NewE))
     return false;
 
@@ -284,24 +246,20 @@ bool ShapeCustom_SweptToElementary::NewCurve2d(const TopoDS_Edge&         E,
   return true;
 }
 
-//=================================================================================================
-
-bool ShapeCustom_SweptToElementary::NewParameter(const TopoDS_Vertex& /*V*/,
-                                                 const TopoDS_Edge& /*E*/,
-                                                 double& /*P*/,
-                                                 double& /*Tol*/)
+bool ShapeCustom_SweptToElementary::NewParameter(const TopoDS_Vertex&,
+                                                 const TopoDS_Edge&,
+                                                 double&,
+                                                 double&)
 {
   return false;
 }
 
-//=================================================================================================
-
 GeomAbs_Shape ShapeCustom_SweptToElementary::Continuity(const TopoDS_Edge& E,
                                                         const TopoDS_Face& F1,
                                                         const TopoDS_Face& F2,
-                                                        const TopoDS_Edge& /*NewE*/,
-                                                        const TopoDS_Face& /*NewF1*/,
-                                                        const TopoDS_Face& /*NewF2*/)
+                                                        const TopoDS_Edge&,
+                                                        const TopoDS_Face&,
+                                                        const TopoDS_Face&)
 {
   return BRep_Tool::Continuity(E, F1, F2);
 }

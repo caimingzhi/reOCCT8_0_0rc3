@@ -102,13 +102,11 @@ static int BUC60814(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  // TRIHEDRON
   occ::handle<AIS_InteractiveObject> aTrihedron;
   occ::handle<Geom_Axis2Placement>   aTrihedronAxis = new Geom_Axis2Placement(gp::XOY());
   aTrihedron                                        = new AIS_Trihedron(aTrihedronAxis);
   myAISContext->Display(aTrihedron, false);
 
-  // Circle
   gp_Pnt P(10, 10, 10);
   gp_Dir V(gp_Dir::D::X);
   gp_Ax2 aAx2(P, V);
@@ -125,8 +123,6 @@ static int BUC60814(Draw_Interpretor& di, int argc, const char** argv)
 
   return 0;
 }
-
-//=================================================================================================
 
 static int BUC60774(Draw_Interpretor& theDi, int theArgNb, const char** theArgv)
 {
@@ -212,8 +208,7 @@ static int BUC60972(Draw_Interpretor& di, int argc, const char** argv)
   di << aPlane->Pln().SquareDistance(gp_Pnt(0, 0, 0)) << "\n";
 
   TCollection_ExtendedString aText(argv[5]);
-  // const char16_t* ExtString_aText = aText.ToExtString();
-  // di << ExtString_aText << " " << Draw::Atof(argv[4]) << "\n";
+
   di << argv[5] << " " << Draw::Atof(argv[4]) << "\n";
 
   occ::handle<PrsDim_AngleDimension> aDim = new PrsDim_AngleDimension(aFirst, aSecond);
@@ -248,20 +243,17 @@ static int OCC218bug(Draw_Interpretor& di, int argc, const char** argv)
   TCollection_AsciiString Xlabel(argv[3]);
   TCollection_AsciiString Ylabel(argv[4]);
 
-  // Construction de l'AIS_PlaneTrihedron
   occ::handle<AIS_PlaneTrihedron> theAISPlaneTri;
 
   bool IsBound = GetMapOfAIS().IsBound2(name);
   if (IsBound)
   {
-    // on recupere la shape dans la map des objets displayes
+
     occ::handle<AIS_InteractiveObject> aShape = GetMapOfAIS().Find2(name);
 
-    // On verifie que l'AIS InteraciveObject est bien
-    // un AIS_PlaneTrihedron
     if (aShape->Type() == AIS_KindOfInteractive_Datum && aShape->Signature() == 4)
     {
-      // On downcast aShape de AIS_InteractiveObject a AIS_PlaneTrihedron
+
       theAISPlaneTri = occ::down_cast<AIS_PlaneTrihedron>(aShape);
 
       theAISPlaneTri->SetXLabel(Xlabel);
@@ -275,15 +267,12 @@ static int OCC218bug(Draw_Interpretor& di, int argc, const char** argv)
   {
     TopoDS_Face FaceB = TopoDS::Face(S);
 
-    // Construction du Plane
-    // recuperation des edges des faces.
     TopExp_Explorer FaceExpB(FaceB, TopAbs_EDGE);
 
     TopoDS_Edge EdgeB = TopoDS::Edge(FaceExpB.Current());
-    // declarations
+
     gp_Pnt A, B, C;
 
-    // si il y a plusieurs edges
     if (FaceExpB.More())
     {
       FaceExpB.Next();
@@ -296,17 +285,16 @@ static int OCC218bug(Draw_Interpretor& di, int argc, const char** argv)
     }
     else
     {
-      // FaceB a 1 unique edge courbe
+
       BRepAdaptor_Curve theCurveB(EdgeB);
       A = theCurveB.Value(0.1);
       B = theCurveB.Value(0.9);
       C = theCurveB.Value(0.5);
     }
-    // Construction du Geom_Plane
+
     GC_MakePlane                   MkPlane(A, B, C);
     const occ::handle<Geom_Plane>& theGeomPlane = MkPlane.Value();
 
-    // on le display & bind
     theAISPlaneTri = new AIS_PlaneTrihedron(theGeomPlane);
 
     theAISPlaneTri->SetXLabel(Xlabel);
@@ -463,8 +451,7 @@ static int OCC395(Draw_Interpretor& di, int argc, const char** argv)
     di << "Usage : " << argv[0] << " edge_result edge1 edge2\n";
     return 1;
   }
-  // TCollection_AsciiString fnom(a[1]);
-  // bool modfic = XSDRAW::FileAndVar(a[1],a[2],a[3],"IGES",fnom,rnom,resnom);
+
   TopoDS_Shape Sh1 = DBRep::Get(argv[2]);
   TopoDS_Shape Sh2 = DBRep::Get(argv[3]);
   if (Sh1.IsNull() || Sh2.IsNull())
@@ -479,16 +466,12 @@ static int OCC395(Draw_Interpretor& di, int argc, const char** argv)
   occ::handle<Geom_Curve> ac2   = BRep_Tool::Curve(e2, f2, l2);
   if (e1.Orientation() == TopAbs_REVERSED)
   {
-    // double cf = cf1;
-    // cf1 = ac1->ReversedParameter ( cl1 );
-    // cl1 = ac1->ReversedParameter ( cf );
+
     ac1 = ac1->Reversed();
   }
   if (e2.Orientation() == TopAbs_REVERSED)
   {
-    // double cf = cf2;
-    // ac2 = ac2->ReversedParameter ( cl2 );
-    // ac2 = ac2->ReversedParameter ( cf );
+
     ac2 = ac2->Reversed();
   }
   occ::handle<Geom_BSplineCurve> bsplc1 = occ::down_cast<Geom_BSplineCurve>(ac1);
@@ -553,7 +536,7 @@ static int OCC394(Draw_Interpretor& di, int argc, const char** argv)
                          theMultyEdges,
                          aModeDrop,
                          tolang);
-  // aSfwr->FixSmallEdges();
+
   TopoDS_Shape resShape = aSfwr->Shape();
   DBRep::Set(argv[1], resShape);
   return 0;
@@ -599,7 +582,7 @@ static int OCC301(Draw_Interpretor& di, int argc, const char** argv)
   anAspect->SetTextHorizontalPosition(Prs3d_DTHP_Right);
   anAspect->TextAspect()->SetColor(Quantity_NOC_YELLOW);
   anAngleDimension->SetDimensionAspect(anAspect);
-  // Another position of dimension
+
   anAngleDimension->SetFlyout(aRadius);
   context->Display(anAngleDimension, false);
   return 0;

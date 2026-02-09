@@ -11,7 +11,6 @@ class StepVisual_PresentationStyleByContext;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for PresentationStyleByContext
 class RWStepVisual_RWPresentationStyleByContext
 {
 public:

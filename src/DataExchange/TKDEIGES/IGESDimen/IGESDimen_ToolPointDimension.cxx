@@ -22,24 +22,14 @@ void IGESDimen_ToolPointDimension::ReadOwnParams(const occ::handle<IGESDimen_Poi
   occ::handle<IGESDimen_GeneralNote> tempNote;
   occ::handle<IGESDimen_LeaderArrow> leadArr;
   occ::handle<IGESData_IGESEntity>   tempGeom;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  PR.ReadEntity(IR,
-                PR.Current(),
-                "General Note",
-                STANDARD_TYPE(IGESDimen_GeneralNote),
-                tempNote); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR, PR.Current(), "General Note", STANDARD_TYPE(IGESDimen_GeneralNote), tempNote);
 
-  PR.ReadEntity(IR,
-                PR.Current(),
-                "Leader",
-                STANDARD_TYPE(IGESDimen_LeaderArrow),
-                leadArr); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR, PR.Current(), "Leader", STANDARD_TYPE(IGESDimen_LeaderArrow), leadArr);
 
   if (PR.IsParamEntity(PR.CurrentNumber()))
-    // clang-format off
-    PR.ReadEntity(IR, PR.Current(), "Enclosing entity", tempGeom); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+
+    PR.ReadEntity(IR, PR.Current(), "Enclosing entity", tempGeom);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempNote, leadArr, tempGeom);
@@ -72,7 +62,7 @@ void IGESDimen_ToolPointDimension::OwnCopy(const occ::handle<IGESDimen_PointDime
 }
 
 IGESData_DirChecker IGESDimen_ToolPointDimension::DirChecker(
-  const occ::handle<IGESDimen_PointDimension>& /*ent*/) const
+  const occ::handle<IGESDimen_PointDimension>&) const
 {
   IGESData_DirChecker DC(220, 0);
   DC.Structure(IGESData_DefVoid);
@@ -85,9 +75,9 @@ IGESData_DirChecker IGESDimen_ToolPointDimension::DirChecker(
   return DC;
 }
 
-void IGESDimen_ToolPointDimension::OwnCheck(const occ::handle<IGESDimen_PointDimension>& /*ent*/,
+void IGESDimen_ToolPointDimension::OwnCheck(const occ::handle<IGESDimen_PointDimension>&,
                                             const Interface_ShareTool&,
-                                            occ::handle<Interface_Check>& /*ach*/) const
+                                            occ::handle<Interface_Check>&) const
 {
 }
 

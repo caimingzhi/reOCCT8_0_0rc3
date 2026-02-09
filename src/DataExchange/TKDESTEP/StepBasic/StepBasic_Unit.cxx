@@ -4,11 +4,7 @@
 #include <StepBasic_NamedUnit.hpp>
 #include <StepBasic_Unit.hpp>
 
-//=================================================================================================
-
 StepBasic_Unit::StepBasic_Unit() = default;
-
-//=================================================================================================
 
 int StepBasic_Unit::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -21,14 +17,10 @@ int StepBasic_Unit::CaseNum(const occ::handle<Standard_Transient>& ent) const
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_NamedUnit> StepBasic_Unit::NamedUnit() const
 {
   return GetCasted(StepBasic_NamedUnit, Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_DerivedUnit> StepBasic_Unit::DerivedUnit() const
 {

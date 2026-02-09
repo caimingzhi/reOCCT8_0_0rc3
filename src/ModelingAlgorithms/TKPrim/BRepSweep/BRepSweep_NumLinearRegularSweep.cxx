@@ -11,10 +11,6 @@
 #include <TopoDS_Shape.hpp>
 #include <NCollection_Sequence.hpp>
 
-//=======================================================================
-// function : BRepSweep_NumLinearRegularSweep
-// purpose  : Create a Regular Sweep.
-//=======================================================================
 BRepSweep_NumLinearRegularSweep::BRepSweep_NumLinearRegularSweep(const BRepSweep_Builder& aBuilder,
                                                                  const TopoDS_Shape&      aGenShape,
                                                                  const Sweep_NumShape&    aDirShape)
@@ -27,10 +23,6 @@ BRepSweep_NumLinearRegularSweep::BRepSweep_NumLinearRegularSweep(const BRepSweep
       myGenShapeTool(aGenShape),
       myDirShapeTool(aDirShape),
 
-      // *****************************************************************
-      // Les Tableaux
-      // *****************************************************************
-
       myShapes(1, myGenShapeTool.NbShapes(), 1, myDirShapeTool.NbShapes()),
       myBuiltShapes(1, myGenShapeTool.NbShapes(), 1, myDirShapeTool.NbShapes()),
       myUsedShapes(1, myGenShapeTool.NbShapes(), 1, myDirShapeTool.NbShapes())
@@ -39,14 +31,7 @@ BRepSweep_NumLinearRegularSweep::BRepSweep_NumLinearRegularSweep(const BRepSweep
   myUsedShapes.Init(false);
 }
 
-//=================================================================================================
-
 BRepSweep_NumLinearRegularSweep::~BRepSweep_NumLinearRegularSweep() = default;
-
-//=======================================================================
-// function : Shape
-// purpose  : Returns the global Shape.
-//=======================================================================
 
 TopoDS_Shape BRepSweep_NumLinearRegularSweep::Shape()
 {
@@ -59,11 +44,6 @@ TopoDS_Shape BRepSweep_NumLinearRegularSweep::Shape()
   }
 }
 
-//=======================================================================
-// function : Shape
-// purpose  : Returns the Shape generated with aGenS.
-//=======================================================================
-
 TopoDS_Shape BRepSweep_NumLinearRegularSweep::Shape(const TopoDS_Shape& aGenS)
 {
   if (myGenShapeTool.Index(aGenS) != 0 && HasShape(aGenS, myDirWire))
@@ -74,11 +54,6 @@ TopoDS_Shape BRepSweep_NumLinearRegularSweep::Shape(const TopoDS_Shape& aGenS)
     return bidon;
   }
 }
-
-//=======================================================================
-// function : Shape
-// purpose  : Returns the Shape indexed by the arguments.
-//=======================================================================
 
 TopoDS_Shape BRepSweep_NumLinearRegularSweep::Shape(const TopoDS_Shape&   aGenS,
                                                     const Sweep_NumShape& aDirS)
@@ -96,7 +71,7 @@ TopoDS_Shape BRepSweep_NumLinearRegularSweep::Shape(const TopoDS_Shape&   aGenS,
     TopAbs_Orientation     Or, Pr;
     if (myDirShapeTool.Type(aDirS) == TopAbs_VERTEX)
     {
-      // Ici on construit les "planchers" du Shape.
+
       TopAbs_ShapeEnum aGenSType = myGenShapeTool.Type(aGenS);
       switch (aGenSType)
       {
@@ -141,11 +116,6 @@ TopoDS_Shape BRepSweep_NumLinearRegularSweep::Shape(const TopoDS_Shape&   aGenS,
           int iNewDirS = iDirS;
           if (GGDShapeIsToAdd(myShapes(iGenS, iDirS), newShape, aGenS, subGenS, aDirS))
           {
-            // Les "planchers" doivent etre construits par les
-            // fonctions de construcion geometrique identiquement
-            // au shape generateur.
-            // On leur recolle juste une orientation pour etre bien
-            // sur.
 
             myBuilder.Add(myShapes(iGenS, iDirS), newShape, Or);
             myUsedShapes(iNewGenS, iNewDirS) = true;
@@ -187,7 +157,7 @@ TopoDS_Shape BRepSweep_NumLinearRegularSweep::Shape(const TopoDS_Shape&   aGenS,
     }
     else if (myDirShapeTool.Type(aDirS) == TopAbs_EDGE)
     {
-      // Ici on construit les murs du Shape.
+
       TopAbs_ShapeEnum                   aGenSType = myGenShapeTool.Type(aGenS);
       TopoDS_Shape                       newWire, newShell;
       NCollection_Sequence<TopoDS_Shape> WireSeq;
@@ -198,10 +168,7 @@ TopoDS_Shape BRepSweep_NumLinearRegularSweep::Shape(const TopoDS_Shape&   aGenS,
           myShapes(iGenS, iDirS) = MakeEmptyDirectingEdge(aGenS, aDirS);
           break;
         case TopAbs_EDGE:
-          // On cree un wire intermediaire qui contient tous les edges
-          // du montant (face) du Shape pour le cas standard, et une
-          // sequence de wires pour les cas merdiques necessitant des
-          // wires independants.
+
           myBuilder.MakeWire(newWire);
           myShapes(iGenS, iDirS) = MakeEmptyFace(aGenS, aDirS);
           break;
@@ -209,9 +176,7 @@ TopoDS_Shape BRepSweep_NumLinearRegularSweep::Shape(const TopoDS_Shape&   aGenS,
           myBuilder.MakeShell(myShapes(iGenS, iDirS));
           break;
         case TopAbs_FACE:
-          // On cree un shell intermediaire dans lequel on jette toutes
-          // les faces en direct, pour eviter les empilages compliques
-          // de shells et sous shells dans la structure du solide.
+
           myBuilder.MakeShell(newShell);
           myBuilder.MakeSolid(myShapes(iGenS, iDirS));
           break;
@@ -431,17 +396,12 @@ TopoDS_Shape BRepSweep_NumLinearRegularSweep::Shape(const TopoDS_Shape&   aGenS,
     }
     myBuiltShapes(iGenS, iDirS) = true;
   }
-  // Change the "Closed" flag only for Wires and Shells
+
   if (myShapes(iGenS, iDirS).ShapeType() == TopAbs_WIRE
       || myShapes(iGenS, iDirS).ShapeType() == TopAbs_SHELL)
     myShapes(iGenS, iDirS).Closed(BRep_Tool::IsClosed(myShapes(iGenS, iDirS)));
   return myShapes(iGenS, iDirS);
 }
-
-//=======================================================================
-// function : FirstShape
-// purpose  : Returns the Shape indexed by the arguments.
-//=======================================================================
 
 TopoDS_Shape BRepSweep_NumLinearRegularSweep::FirstShape()
 {
@@ -454,11 +414,6 @@ TopoDS_Shape BRepSweep_NumLinearRegularSweep::FirstShape()
   return result;
 }
 
-//=======================================================================
-// function : LastShape
-// purpose  : Returns the Shape indexed by the arguments.
-//=======================================================================
-
 TopoDS_Shape BRepSweep_NumLinearRegularSweep::LastShape()
 {
   TopoDS_Shape result;
@@ -469,11 +424,6 @@ TopoDS_Shape BRepSweep_NumLinearRegularSweep::LastShape()
   }
   return result;
 }
-
-//=======================================================================
-// function : FirstShape
-// purpose  : Returns the Shape indexed by the arguments.
-//=======================================================================
 
 TopoDS_Shape BRepSweep_NumLinearRegularSweep::FirstShape(const TopoDS_Shape& aGenS)
 {
@@ -486,11 +436,6 @@ TopoDS_Shape BRepSweep_NumLinearRegularSweep::FirstShape(const TopoDS_Shape& aGe
   return result;
 }
 
-//=======================================================================
-// function : LastShape
-// purpose  : Returns the Shape indexed by the arguments.
-//=======================================================================
-
 TopoDS_Shape BRepSweep_NumLinearRegularSweep::LastShape(const TopoDS_Shape& aGenS)
 {
   TopoDS_Shape result;
@@ -502,14 +447,10 @@ TopoDS_Shape BRepSweep_NumLinearRegularSweep::LastShape(const TopoDS_Shape& aGen
   return result;
 }
 
-//=================================================================================================
-
 bool BRepSweep_NumLinearRegularSweep::Closed() const
 {
   return myDirWire.Closed();
 }
-
-//=================================================================================================
 
 TopoDS_Shape BRepSweep_NumLinearRegularSweep::SplitShell(const TopoDS_Shape& aNewShape) const
 {
@@ -518,8 +459,6 @@ TopoDS_Shape BRepSweep_NumLinearRegularSweep::SplitShell(const TopoDS_Shape& aNe
   myBuilder.Add(comp, aNewShape);
   return comp;
 }
-
-//=================================================================================================
 
 bool BRepSweep_NumLinearRegularSweep::IsUsed(const TopoDS_Shape& aGenS) const
 {
@@ -554,8 +493,8 @@ bool BRepSweep_NumLinearRegularSweep::IsUsed(const TopoDS_Shape& aGenS) const
       return isUsed;
     }
   }
-  //
-  if (isBuilt) //&& !IsUsed
+
+  if (isBuilt)
   {
     if (!HasShape(aGenS, myDirWire) && !Closed())
     {
@@ -571,8 +510,6 @@ bool BRepSweep_NumLinearRegularSweep::IsUsed(const TopoDS_Shape& aGenS) const
   }
   return isUsed;
 }
-
-//=================================================================================================
 
 bool BRepSweep_NumLinearRegularSweep::GenIsUsed(const TopoDS_Shape& aGenS) const
 {

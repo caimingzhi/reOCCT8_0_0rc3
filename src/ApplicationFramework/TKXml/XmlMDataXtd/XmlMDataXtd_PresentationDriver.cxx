@@ -19,25 +19,17 @@ IMPLEMENT_DOMSTRING(ModeString, "mode")
 
 IMPLEMENT_DOMSTRING(DisplayedString, "true")
 
-//=================================================================================================
-
 XmlMDataXtd_PresentationDriver::XmlMDataXtd_PresentationDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataXtd_PresentationDriver::NewEmpty() const
 {
   return (new TDataXtd_Presentation());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDataXtd_PresentationDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                            const occ::handle<TDF_Attribute>& theTarget,
                                            XmlObjMgt_RRelocationTable&) const
@@ -48,7 +40,6 @@ bool XmlMDataXtd_PresentationDriver::Paste(const XmlObjMgt_Persistent&       the
   occ::handle<TDataXtd_Presentation> aTPrs  = occ::down_cast<TDataXtd_Presentation>(theTarget);
   const XmlObjMgt_Element&           anElem = theSource;
 
-  // convert attribute value into GUID
   aDOMStr = anElem.getAttribute(::GuidString());
   if (aDOMStr == nullptr)
   {
@@ -58,13 +49,11 @@ bool XmlMDataXtd_PresentationDriver::Paste(const XmlObjMgt_Persistent&       the
   const char* aGuidStr = (const char*)aDOMStr.GetString();
   aTPrs->SetDriverGUID(aGuidStr);
 
-  // is displayed
   aDOMStr = anElem.getAttribute(::IsDisplayedString());
   aTPrs->SetDisplayed(aDOMStr != nullptr);
 
   int anIValue;
 
-  // color
   aDOMStr = anElem.getAttribute(::ColorString());
   if (aDOMStr != nullptr)
   {
@@ -85,7 +74,6 @@ bool XmlMDataXtd_PresentationDriver::Paste(const XmlObjMgt_Persistent&       the
     aTPrs->UnsetColor();
   }
 
-  // material
   aDOMStr = anElem.getAttribute(::MaterialString());
   if (aDOMStr != nullptr)
   {
@@ -105,7 +93,6 @@ bool XmlMDataXtd_PresentationDriver::Paste(const XmlObjMgt_Persistent&       the
 
   double aValue;
 
-  // transparency
   aDOMStr = anElem.getAttribute(::TransparencyString());
   if (aDOMStr != nullptr)
   {
@@ -123,7 +110,6 @@ bool XmlMDataXtd_PresentationDriver::Paste(const XmlObjMgt_Persistent&       the
     aTPrs->UnsetTransparency();
   }
 
-  // width
   aDOMStr = anElem.getAttribute(::WidthString());
   if (aDOMStr != nullptr)
   {
@@ -141,7 +127,6 @@ bool XmlMDataXtd_PresentationDriver::Paste(const XmlObjMgt_Persistent&       the
     aTPrs->UnsetWidth();
   }
 
-  // mode
   aDOMStr = anElem.getAttribute(::ModeString());
   if (aDOMStr != nullptr)
   {
@@ -162,10 +147,6 @@ bool XmlMDataXtd_PresentationDriver::Paste(const XmlObjMgt_Persistent&       the
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMDataXtd_PresentationDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                            XmlObjMgt_Persistent&             theTarget,
                                            XmlObjMgt_SRelocationTable&) const
@@ -174,48 +155,41 @@ void XmlMDataXtd_PresentationDriver::Paste(const occ::handle<TDF_Attribute>& the
   if (aTPrs.IsNull())
     return;
 
-  // convert GUID into attribute value
   char                aGuidStr[40];
   Standard_PCharacter pGuidStr;
   pGuidStr = aGuidStr;
   aTPrs->GetDriverGUID().ToCString(pGuidStr);
   theTarget.Element().setAttribute(::GuidString(), aGuidStr);
 
-  // is displayed
   if (aTPrs->IsDisplayed())
     theTarget.Element().setAttribute(::IsDisplayedString(), ::DisplayedString());
 
   int aNb;
 
-  // color
   if (aTPrs->HasOwnColor())
   {
     aNb = TDataXtd_Presentation::getOldColorNameFromNewEnum(aTPrs->Color());
     theTarget.Element().setAttribute(::ColorString(), aNb);
   }
 
-  // material
   if (aTPrs->HasOwnMaterial())
   {
     aNb = aTPrs->MaterialIndex();
     theTarget.Element().setAttribute(::MaterialString(), aNb);
   }
 
-  // transparency
   if (aTPrs->HasOwnTransparency())
   {
     TCollection_AsciiString aRNbStr(aTPrs->Transparency());
     theTarget.Element().setAttribute(::TransparencyString(), aRNbStr.ToCString());
   }
 
-  // width
   if (aTPrs->HasOwnWidth())
   {
     TCollection_AsciiString aRNbStr(aTPrs->Width());
     theTarget.Element().setAttribute(::WidthString(), aRNbStr.ToCString());
   }
 
-  // mode
   if (aTPrs->HasOwnMode())
   {
     aNb = aTPrs->Mode();

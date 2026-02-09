@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// szv#4 S4163
 
 #include <BRepBuilderAPI_Sewing.hpp>
 #include <BRepClass3d_SolidClassifier.hpp>
@@ -24,14 +11,10 @@
 #include <TopoDS_Shell.hpp>
 #include <TopoDS_Solid.hpp>
 
-//=================================================================================================
-
 ShapeUpgrade_ShellSewing::ShapeUpgrade_ShellSewing()
 {
   myReShape = new ShapeBuild_ReShape;
 }
-
-//=================================================================================================
 
 void ShapeUpgrade_ShellSewing::Init(const TopoDS_Shape& shape)
 {
@@ -47,8 +30,6 @@ void ShapeUpgrade_ShellSewing::Init(const TopoDS_Shape& shape)
     }
   }
 }
-
-//=================================================================================================
 
 int ShapeUpgrade_ShellSewing::Prepare(const double tol)
 {
@@ -71,8 +52,6 @@ int ShapeUpgrade_ShellSewing::Prepare(const double tol)
   return ns;
 }
 
-//=================================================================================================
-
 TopoDS_Shape ShapeUpgrade_ShellSewing::Apply(const TopoDS_Shape& shape, const double tol)
 {
   if (shape.IsNull() || myShells.Extent() == 0)
@@ -80,7 +59,6 @@ TopoDS_Shape ShapeUpgrade_ShellSewing::Apply(const TopoDS_Shape& shape, const do
 
   TopoDS_Shape res = myReShape->Apply(shape, TopAbs_FACE, 2);
 
-  //  A present orienter les solides correctement
   myReShape->Clear();
   int ns = 0;
   for (TopExp_Explorer exd(shape, TopAbs_SOLID); exd.More(); exd.Next())
@@ -95,14 +73,11 @@ TopoDS_Shape ShapeUpgrade_ShellSewing::Apply(const TopoDS_Shape& shape, const do
     }
   }
 
-  // szv#4:S4163:12Mar99 optimized
   if (ns != 0)
     res = myReShape->Apply(res, TopAbs_SHELL, 2);
 
   return res;
 }
-
-//=================================================================================================
 
 TopoDS_Shape ShapeUpgrade_ShellSewing::ApplySewing(const TopoDS_Shape& shape, const double tol)
 {
@@ -113,7 +88,7 @@ TopoDS_Shape ShapeUpgrade_ShellSewing::ApplySewing(const TopoDS_Shape& shape, co
   if (t <= 0.)
   {
     ShapeAnalysis_ShapeTolerance stu;
-    t = stu.Tolerance(shape, 0); // tolerance moyenne
+    t = stu.Tolerance(shape, 0);
   }
 
   Init(shape);

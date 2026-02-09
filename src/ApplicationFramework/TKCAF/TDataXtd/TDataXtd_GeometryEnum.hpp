@@ -1,6 +1,5 @@
 #pragma once
 
-//! The terms of this enumeration define the types of geometric shapes available.
 enum TDataXtd_GeometryEnum
 {
   TDataXtd_ANY_GEOM,

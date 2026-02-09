@@ -21,7 +21,7 @@ IMPLEMENT_STANDARD_RTTIEXT(AIS_ColorScale, AIS_InteractiveObject)
 
 namespace
 {
-  //! Method to add colored quad into array of triangles.
+
   static void addColoredQuad(const occ::handle<Graphic3d_ArrayOfTriangles>& theTris,
                              const int                                      theXLeft,
                              const int                                      theYBottom,
@@ -39,7 +39,6 @@ namespace
     theTris->AddEdges(aVertIndex + 1, aVertIndex + 2, aVertIndex + 3);
   }
 
-  //! Compute hue angle from specified value.
   static Quantity_Color colorFromValueEx(const double                    theValue,
                                          const double                    theMin,
                                          const double                    theMax,
@@ -62,15 +61,6 @@ namespace
                           Quantity_TOC_HLS);
   }
 
-  //! Return the index of discrete interval for specified value.
-  //! Note that when value lies exactly on the border between two intervals,
-  //! determining which interval to return is undefined operation;
-  //! Current implementation returns the following interval in this case.
-  //! @param theValue [in] value to map
-  //! @param theMin   [in] values range, lower value
-  //! @param theMax   [in] values range, upper value
-  //! @param theNbIntervals [in] number of discrete intervals
-  //! @return index of interval within [1, theNbIntervals] range
   static int colorDiscreteInterval(double theValue,
                                    double theMin,
                                    double theMax,
@@ -83,13 +73,11 @@ namespace
 
     int anInterval =
       1 + (int)std::floor(double(theNbIntervals) * (theValue - theMin) / (theMax - theMin));
-    // map the very upper value (theValue==theMax) to the largest color interval
+
     anInterval = std::min(anInterval, theNbIntervals);
     return anInterval;
   }
 } // namespace
-
-//=================================================================================================
 
 AIS_ColorScale::AIS_ColorScale()
     : myMin(0.0),
@@ -120,8 +108,6 @@ AIS_ColorScale::AIS_ColorScale()
   myDrawer->ShadingAspect()->Aspect()->SetInteriorColor(Quantity_NOC_WHITE);
 }
 
-//=================================================================================================
-
 TCollection_ExtendedString AIS_ColorScale::GetLabel(const int theIndex) const
 {
   if (myLabelType == Aspect_TOCSD_USER)
@@ -134,7 +120,6 @@ TCollection_ExtendedString AIS_ColorScale::GetLabel(const int theIndex) const
     return TCollection_ExtendedString();
   }
 
-  // value to be shown depends on label position
   const double aVal = myIsLabelAtBorder
                         ? GetIntervalValue(theIndex - 1)
                         : (0.5 * (GetIntervalValue(theIndex - 1) + GetIntervalValue(theIndex)));
@@ -143,8 +128,6 @@ TCollection_ExtendedString AIS_ColorScale::GetLabel(const int theIndex) const
   Sprintf(aBuf, myFormat.ToCString(), aVal);
   return TCollection_ExtendedString(aBuf);
 }
-
-//=================================================================================================
 
 Quantity_Color AIS_ColorScale::GetIntervalColor(const int theIndex) const
 {
@@ -160,8 +143,6 @@ Quantity_Color AIS_ColorScale::GetIntervalColor(const int theIndex) const
   return colorFromValue(theIndex - 1, 0, myNbIntervals - 1);
 }
 
-//=================================================================================================
-
 void AIS_ColorScale::GetLabels(NCollection_Sequence<TCollection_ExtendedString>& theLabels) const
 {
   theLabels.Clear();
@@ -173,8 +154,6 @@ void AIS_ColorScale::GetLabels(NCollection_Sequence<TCollection_ExtendedString>&
   }
 }
 
-//=================================================================================================
-
 void AIS_ColorScale::GetColors(NCollection_Sequence<Quantity_Color>& theColors) const
 {
   theColors.Clear();
@@ -185,15 +164,11 @@ void AIS_ColorScale::GetColors(NCollection_Sequence<Quantity_Color>& theColors) 
   }
 }
 
-//=================================================================================================
-
 void AIS_ColorScale::SetRange(const double theMin, const double theMax)
 {
   myMin = std::min(theMin, theMax);
   myMax = std::max(theMin, theMax);
 }
-
-//=================================================================================================
 
 void AIS_ColorScale::SetNumberOfIntervals(const int theNum)
 {
@@ -205,8 +180,6 @@ void AIS_ColorScale::SetNumberOfIntervals(const int theNum)
   myNbIntervals = theNum;
 }
 
-//=================================================================================================
-
 void AIS_ColorScale::SetLabel(const TCollection_ExtendedString& theLabel, const int theIndex)
 {
   const int aLabIndex = (theIndex <= 0 ? myLabels.Length() + 1 : theIndex);
@@ -216,8 +189,6 @@ void AIS_ColorScale::SetLabel(const TCollection_ExtendedString& theLabel, const 
   }
   myLabels.SetValue(aLabIndex, theLabel);
 }
-
-//=================================================================================================
 
 void AIS_ColorScale::SetIntervalColor(const Quantity_Color& theColor, const int theIndex)
 {
@@ -229,8 +200,6 @@ void AIS_ColorScale::SetIntervalColor(const Quantity_Color& theColor, const int 
   myColors.SetValue(aColorIndex, theColor);
 }
 
-//=================================================================================================
-
 void AIS_ColorScale::SetLabels(const NCollection_Sequence<TCollection_ExtendedString>& theSeq)
 {
   myLabels.Clear();
@@ -240,8 +209,6 @@ void AIS_ColorScale::SetLabels(const NCollection_Sequence<TCollection_ExtendedSt
     myLabels.Append(aLabIter.Value());
   }
 }
-
-//=================================================================================================
 
 void AIS_ColorScale::SetColors(const NCollection_Sequence<Quantity_Color>& theSeq)
 {
@@ -253,8 +220,6 @@ void AIS_ColorScale::SetColors(const NCollection_Sequence<Quantity_Color>& theSe
   }
 }
 
-//=================================================================================================
-
 NCollection_Sequence<Quantity_Color> AIS_ColorScale::MakeUniformColors(int    theNbColors,
                                                                        double theLightness,
                                                                        double theHueFrom,
@@ -262,7 +227,6 @@ NCollection_Sequence<Quantity_Color> AIS_ColorScale::MakeUniformColors(int    th
 {
   NCollection_Sequence<Quantity_Color> aResult;
 
-  // adjust range to be within (0, 360], with sign according to theHueFrom and theHueTo
   double           aHueRange = std::fmod(theHueTo - theHueFrom, 360.);
   constexpr double aHueEps   = Precision::Angular() * 180. / M_PI;
   if (std::abs(aHueRange) <= aHueEps)
@@ -270,7 +234,6 @@ NCollection_Sequence<Quantity_Color> AIS_ColorScale::MakeUniformColors(int    th
     aHueRange = (aHueRange < 0 ? -360. : 360.);
   }
 
-  // treat limit cases
   if (theNbColors < 1)
   {
     return aResult;
@@ -287,7 +250,6 @@ NCollection_Sequence<Quantity_Color> AIS_ColorScale::MakeUniformColors(int    th
     return aResult;
   }
 
-  // discretize the range with 1 degree step
   const int                          NBCOLORS = 2 + (int)std::abs(aHueRange / 1.);
   double                             aHueStep = aHueRange / (NBCOLORS - 1);
   NCollection_Array1<Quantity_Color> aGrid(0, NBCOLORS - 1);
@@ -301,7 +263,6 @@ NCollection_Sequence<Quantity_Color> AIS_ColorScale::MakeUniformColors(int    th
     aGrid(i).SetValues(theLightness, 130., aHue, Quantity_TOC_CIELch);
   }
 
-  // and compute distances between each two colors in a grid
   NCollection_Array1<double> aMetric(0, NBCOLORS - 1);
   double                     aLength = 0.;
   for (int i = 0, j = NBCOLORS - 1; i < NBCOLORS; j = i++)
@@ -309,19 +270,12 @@ NCollection_Sequence<Quantity_Color> AIS_ColorScale::MakeUniformColors(int    th
     aLength += (aMetric(i) = aGrid(i).DeltaE2000(aGrid(j)));
   }
 
-  // determine desired step by distance;
-  // normally we aim to distribute colors from start to end
-  // of the range, but if distance between first and last points of the range
-  // is less than that step (e.g. range is full 360 deg),
-  // then distribute by the whole 360 deg scope to ensure that first
-  // and last colors are sufficiently distanced
   double aDStep = (aLength - aMetric.First()) / (theNbColors - 1);
   if (aMetric.First() < aDStep)
   {
     aDStep = aLength / theNbColors;
   }
 
-  // generate sequence
   aResult.Append(aGrid(0));
   double aParam = 0., aPrev = 0., aTarget = aDStep;
   for (int i = 1; i < NBCOLORS; i++)
@@ -345,8 +299,6 @@ NCollection_Sequence<Quantity_Color> AIS_ColorScale::MakeUniformColors(int    th
                        "Failed to generate requested nb of colors");
   return aResult;
 }
-
-//=================================================================================================
 
 void AIS_ColorScale::SizeHint(int& theWidth, int& theHeight) const
 {
@@ -376,8 +328,6 @@ void AIS_ColorScale::SizeHint(int& theWidth, int& theHeight) const
   theHeight = aScaleHeight + aTitleHeight;
 }
 
-//=================================================================================================
-
 double AIS_ColorScale::GetIntervalValue(const int theIndex) const
 {
   if (myNbIntervals <= 0)
@@ -400,16 +350,12 @@ double AIS_ColorScale::GetIntervalValue(const int theIndex) const
   return aNum;
 }
 
-//=================================================================================================
-
 Quantity_Color AIS_ColorScale::colorFromValue(const double theValue,
                                               const double theMin,
                                               const double theMax) const
 {
   return colorFromValueEx(theValue, theMin, theMax, myColorHlsMin, myColorHlsMax);
 }
-
-//=================================================================================================
 
 bool AIS_ColorScale::FindColor(const double theValue, Quantity_Color& theColor) const
 {
@@ -435,8 +381,6 @@ bool AIS_ColorScale::FindColor(const double theValue, Quantity_Color& theColor) 
   return FindColor(theValue, myMin, myMax, myNbIntervals, theColor);
 }
 
-//=================================================================================================
-
 bool AIS_ColorScale::FindColor(const double                    theValue,
                                const double                    theMin,
                                const double                    theMax,
@@ -456,8 +400,6 @@ bool AIS_ColorScale::FindColor(const double                    theValue,
   return true;
 }
 
-//=================================================================================================
-
 int AIS_ColorScale::computeMaxLabelWidth(
   const NCollection_Sequence<TCollection_ExtendedString>& theLabels) const
 {
@@ -474,11 +416,9 @@ int AIS_ColorScale::computeMaxLabelWidth(
   return aWidthMax;
 }
 
-//=================================================================================================
-
 void AIS_ColorScale::updateTextAspect()
 {
-  // update text aspect
+
   const Quantity_Color aFgColor(hasOwnColor ? myDrawer->Color() : Quantity_NOC_WHITE);
   if (!myDrawer->HasOwnTextAspect())
   {
@@ -494,8 +434,6 @@ void AIS_ColorScale::updateTextAspect()
   anAspect->Aspect()->SetTextZoomable(true);
 }
 
-//=================================================================================================
-
 void AIS_ColorScale::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                              const occ::handle<Prs3d_Presentation>& thePrs,
                              const int                              theMode)
@@ -505,12 +443,11 @@ void AIS_ColorScale::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     return;
   }
 
-  // update text aspect
   updateTextAspect();
 
   const int aTitleOffset = !myTitle.IsEmpty() ? (myTextHeight + mySpacing) : 0;
 
-  const int aBarYOffset = myTextHeight / 2 + 2 * mySpacing; // a half-label offset
+  const int aBarYOffset = myTextHeight / 2 + 2 * mySpacing;
   const int aBarBottom  = myYPos + aBarYOffset;
   const int aBarTop     = myYPos + myHeight - aTitleOffset - aBarYOffset;
   const int aBarHeight  = aBarTop - aBarBottom;
@@ -543,7 +480,6 @@ void AIS_ColorScale::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     aColorBreadth += aTextWidth;
   }
 
-  // draw title
   occ::handle<Graphic3d_Group> aLabelsGroup;
   if (!myTitle.IsEmpty() || !aLabels.IsEmpty())
   {
@@ -559,14 +495,10 @@ void AIS_ColorScale::Compute(const occ::handle<PrsMgr_PresentationManager>&,
              Graphic3d_VTA_BOTTOM);
   }
 
-  // draw colors
   drawColorBar(thePrs, aBarBottom, aBarHeight, aTextWidth, aColorBreadth);
 
-  // draw Labels
   drawLabels(aLabelsGroup, aLabels, aBarBottom, aBarHeight, aTextWidth, aColorBreadth);
 }
-
-//=================================================================================================
 
 void AIS_ColorScale::drawColorBar(const occ::handle<Prs3d_Presentation>& thePrs,
                                   const int                              theBarBottom,
@@ -580,7 +512,6 @@ void AIS_ColorScale::drawColorBar(const occ::handle<Prs3d_Presentation>& thePrs,
     return;
   }
 
-  // Draw colors
   const int anXLeft =
     myLabelPos == Aspect_TOCSP_LEFT
       ? myXPos + mySpacing + theMaxLabelWidth + (theMaxLabelWidth != 0 ? 1 : 0) * mySpacing
@@ -602,14 +533,13 @@ void AIS_ColorScale::drawColorBar(const occ::handle<Prs3d_Presentation>& thePrs,
   occ::handle<Graphic3d_ArrayOfTriangles> aTriangles;
   if (myIsSmooth && myColorType == Aspect_TOCSD_USER)
   {
-    // Smooth custom intervals, so that the color in the center of interval is equal to specified
-    // one (thus the halves of first and last intervals have solid color)
-    aTriangles =
-      new Graphic3d_ArrayOfTriangles((aColors.Length() + 1) * 4,     // quads
-                                     (aColors.Length() + 1) * 2 * 3, // quads as triangles
-                                                                     // clang-format off
-                                                 false, true);                   // per-vertex colors
-                                                                     // clang-format on
+
+    aTriangles = new Graphic3d_ArrayOfTriangles((aColors.Length() + 1) * 4,
+                                                (aColors.Length() + 1) * 2 * 3,
+
+                                                false,
+                                                true);
+
     Quantity_Color aColor1(aColors.Value(1)), aColor2;
     int            aSizeY        = int(aStepY / 2);
     const int      anYBottom     = theBarBottom + aSizeY;
@@ -629,18 +559,14 @@ void AIS_ColorScale::drawColorBar(const occ::handle<Prs3d_Presentation>& thePrs,
   }
   else if (myIsSmooth)
   {
-    // smooth transition between standard colors - without solid color regions at the beginning and
-    // end of full color range
+
     const Quantity_Color aColorsFixed[5] = {colorFromValue(0, 0, 4),
                                             colorFromValue(1, 0, 4),
                                             colorFromValue(2, 0, 4),
                                             colorFromValue(3, 0, 4),
                                             colorFromValue(4, 0, 4)};
-    aTriangles                           = new Graphic3d_ArrayOfTriangles(4 * 4, // quads
-                                                4 * 2 * 3, // quads as triangles
-                                                false,
-                                                true); // per-vertex colors
-    int anYBottomIter                    = theBarBottom;
+    aTriangles        = new Graphic3d_ArrayOfTriangles(4 * 4, 4 * 2 * 3, false, true);
+    int anYBottomIter = theBarBottom;
     addColoredQuad(aTriangles,
                    anXLeft,
                    theBarBottom,
@@ -676,11 +602,9 @@ void AIS_ColorScale::drawColorBar(const occ::handle<Prs3d_Presentation>& thePrs,
   }
   else
   {
-    // no color smoothing
-    aTriangles        = new Graphic3d_ArrayOfTriangles(aColors.Length() * 4,     // quads
-                                                aColors.Length() * 2 * 3, // quads as triangles
-                                                false,
-                                                true); // per-vertex colors
+
+    aTriangles =
+      new Graphic3d_ArrayOfTriangles(aColors.Length() * 4, aColors.Length() * 2 * 3, false, true);
     int anYBottomIter = theBarBottom;
     for (int aColorIter = 0; aColorIter < myNbIntervals; ++aColorIter)
     {
@@ -698,8 +622,6 @@ void AIS_ColorScale::drawColorBar(const occ::handle<Prs3d_Presentation>& thePrs,
   const Quantity_Color aFgColor(hasOwnColor ? myDrawer->Color() : Quantity_NOC_WHITE);
   drawFrame(thePrs, anXLeft - 1, theBarBottom - 1, theColorBreadth + 2, theBarHeight + 2, aFgColor);
 }
-
-//=================================================================================================
 
 void AIS_ColorScale::drawLabels(const occ::handle<Graphic3d_Group>&                     theGroup,
                                 const NCollection_Sequence<TCollection_ExtendedString>& theLabels,
@@ -815,8 +737,6 @@ void AIS_ColorScale::drawLabels(const occ::handle<Graphic3d_Group>&             
   }
 }
 
-//=================================================================================================
-
 void AIS_ColorScale::drawFrame(const occ::handle<Prs3d_Presentation>& thePrs,
                                const int                              theX,
                                const int                              theY,
@@ -838,8 +758,6 @@ void AIS_ColorScale::drawFrame(const occ::handle<Prs3d_Presentation>& thePrs,
   aGroup->AddPrimitiveArray(aPrim);
 }
 
-//=================================================================================================
-
 void AIS_ColorScale::drawText(const occ::handle<Graphic3d_Group>&   theGroup,
                               const TCollection_ExtendedString&     theText,
                               const int                             theX,
@@ -857,8 +775,6 @@ void AIS_ColorScale::drawText(const occ::handle<Graphic3d_Group>&   theGroup,
   theGroup->AddText(aText);
 }
 
-//=================================================================================================
-
 int AIS_ColorScale::TextWidth(const TCollection_ExtendedString& theText) const
 {
   int aWidth = 0, anAscent = 0, aDescent = 0;
@@ -866,16 +782,12 @@ int AIS_ColorScale::TextWidth(const TCollection_ExtendedString& theText) const
   return aWidth;
 }
 
-//=================================================================================================
-
 int AIS_ColorScale::TextHeight(const TCollection_ExtendedString& theText) const
 {
   int aWidth = 0, anAscent = 0, aDescent = 0;
   TextSize(theText, myTextHeight, aWidth, anAscent, aDescent);
   return anAscent + aDescent;
 }
-
-//=================================================================================================
 
 void AIS_ColorScale::TextSize(const TCollection_ExtendedString& theText,
                               const int                         theHeight,

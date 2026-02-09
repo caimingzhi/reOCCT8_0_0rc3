@@ -6,8 +6,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Texture2Dplane, Graphic3d_Texture2D)
 
-//=================================================================================================
-
 Graphic3d_Texture2Dplane::Graphic3d_Texture2Dplane(const TCollection_AsciiString& theFileName)
     : Graphic3d_Texture2D(theFileName)
 {
@@ -15,8 +13,6 @@ Graphic3d_Texture2Dplane::Graphic3d_Texture2Dplane(const TCollection_AsciiString
                        NCollection_Vec4<float>(1.0f, 0.0f, 0.0f, 0.0f),
                        NCollection_Vec4<float>(0.0f, 1.0f, 0.0f, 0.0f));
 }
-
-//=================================================================================================
 
 Graphic3d_Texture2Dplane::Graphic3d_Texture2Dplane(const Graphic3d_NameOfTexture2D theNOT)
     : Graphic3d_Texture2D(theNOT)
@@ -26,8 +22,6 @@ Graphic3d_Texture2Dplane::Graphic3d_Texture2Dplane(const Graphic3d_NameOfTexture
                        NCollection_Vec4<float>(0.0f, 1.0f, 0.0f, 0.0f));
 }
 
-//=================================================================================================
-
 Graphic3d_Texture2Dplane::Graphic3d_Texture2Dplane(const occ::handle<Image_PixMap>& thePixMap)
     : Graphic3d_Texture2D(thePixMap)
 {
@@ -35,8 +29,6 @@ Graphic3d_Texture2Dplane::Graphic3d_Texture2Dplane(const occ::handle<Image_PixMa
                        NCollection_Vec4<float>(1.0f, 0.0f, 0.0f, 0.0f),
                        NCollection_Vec4<float>(0.0f, 1.0f, 0.0f, 0.0f));
 }
-
-//=================================================================================================
 
 void Graphic3d_Texture2Dplane::SetPlaneS(const float theA,
                                          const float theB,
@@ -49,8 +41,6 @@ void Graphic3d_Texture2Dplane::SetPlaneS(const float theA,
   myPlaneName = Graphic3d_NOTP_UNKNOWN;
 }
 
-//=================================================================================================
-
 void Graphic3d_Texture2Dplane::SetPlaneT(const float theA,
                                          const float theB,
                                          const float theC,
@@ -61,8 +51,6 @@ void Graphic3d_Texture2Dplane::SetPlaneT(const float theA,
   myParams->SetGenMode(Graphic3d_TOTM_OBJECT, aPlaneS, aPlaneT);
   myPlaneName = Graphic3d_NOTP_UNKNOWN;
 }
-
-//=================================================================================================
 
 void Graphic3d_Texture2Dplane::SetPlane(const Graphic3d_NameOfTexturePlane thePlane)
 {
@@ -96,16 +84,12 @@ void Graphic3d_Texture2Dplane::SetPlane(const Graphic3d_NameOfTexturePlane thePl
   myPlaneName = thePlane;
 }
 
-//=================================================================================================
-
 void Graphic3d_Texture2Dplane::SetScaleS(const float theVal)
 {
   NCollection_Vec2<float> aScale = myParams->Scale();
   aScale.x()                     = theVal;
   myParams->SetScale(aScale);
 }
-
-//=================================================================================================
 
 void Graphic3d_Texture2Dplane::SetScaleT(const float theVal)
 {
@@ -114,16 +98,12 @@ void Graphic3d_Texture2Dplane::SetScaleT(const float theVal)
   myParams->SetScale(aScale);
 }
 
-//=================================================================================================
-
 void Graphic3d_Texture2Dplane::SetTranslateS(const float theVal)
 {
   NCollection_Vec2<float> aVec = myParams->Translation();
   aVec.x()                     = theVal;
   myParams->SetTranslation(aVec);
 }
-
-//=================================================================================================
 
 void Graphic3d_Texture2Dplane::SetTranslateT(const float theVal)
 {
@@ -132,14 +112,10 @@ void Graphic3d_Texture2Dplane::SetTranslateT(const float theVal)
   myParams->SetTranslation(aVec);
 }
 
-//=================================================================================================
-
 void Graphic3d_Texture2Dplane::SetRotation(const float theAngleDegrees)
 {
   myParams->SetRotation(theAngleDegrees);
 }
-
-//=================================================================================================
 
 void Graphic3d_Texture2Dplane::PlaneS(float& theA, float& theB, float& theC, float& theD) const
 {
@@ -150,8 +126,6 @@ void Graphic3d_Texture2Dplane::PlaneS(float& theA, float& theB, float& theC, flo
   theD                                   = aPlaneS.w();
 }
 
-//=================================================================================================
-
 void Graphic3d_Texture2Dplane::PlaneT(float& theA, float& theB, float& theC, float& theD) const
 {
   const NCollection_Vec4<float>& aPlaneT = myParams->GenPlaneT();
@@ -161,42 +135,30 @@ void Graphic3d_Texture2Dplane::PlaneT(float& theA, float& theB, float& theC, flo
   theD                                   = aPlaneT.w();
 }
 
-//=================================================================================================
-
 void Graphic3d_Texture2Dplane::TranslateS(float& theVal) const
 {
   theVal = myParams->Translation().x();
 }
-
-//=================================================================================================
 
 void Graphic3d_Texture2Dplane::TranslateT(float& theVal) const
 {
   theVal = myParams->Translation().y();
 }
 
-//=================================================================================================
-
 void Graphic3d_Texture2Dplane::Rotation(float& theVal) const
 {
   theVal = myParams->Rotation();
 }
-
-//=================================================================================================
 
 Graphic3d_NameOfTexturePlane Graphic3d_Texture2Dplane::Plane() const
 {
   return myPlaneName;
 }
 
-//=================================================================================================
-
 void Graphic3d_Texture2Dplane::ScaleS(float& theVal) const
 {
   theVal = myParams->Scale().x();
 }
-
-//=================================================================================================
 
 void Graphic3d_Texture2Dplane::ScaleT(float& theVal) const
 {

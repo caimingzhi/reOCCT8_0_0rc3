@@ -7,11 +7,7 @@
 #include <StepDimTol_ToleranceZone.hpp>
 #include <StepRepr_ShapeAspect.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWProjectedZoneDefinition::RWStepDimTol_RWProjectedZoneDefinition() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWProjectedZoneDefinition::ReadStep(
   const occ::handle<StepData_StepReaderData>&            data,
@@ -19,11 +15,9 @@ void RWStepDimTol_RWProjectedZoneDefinition::ReadStep(
   occ::handle<Interface_Check>&                          ach,
   const occ::handle<StepDimTol_ProjectedZoneDefinition>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "projected_zone_definition"))
     return;
-
-  // Inherited fields from ToleranceZoneDefinition
 
   occ::handle<StepDimTol_ToleranceZone> aToleranceZone;
   data->ReadEntity(num,
@@ -64,17 +58,13 @@ void RWStepDimTol_RWProjectedZoneDefinition::ReadStep(
                    STANDARD_TYPE(StepBasic_LengthMeasureWithUnit),
                    aProjectionLength);
 
-  // Initialize entity
   ent->Init(aToleranceZone, anItems, aProjectionEnd, aProjectionLength);
 }
-
-//=================================================================================================
 
 void RWStepDimTol_RWProjectedZoneDefinition::WriteStep(
   StepData_StepWriter&                                   SW,
   const occ::handle<StepDimTol_ProjectedZoneDefinition>& ent) const
 {
-  // Inherited fields of ToleranceZoneDefinition
 
   SW.Send(ent->Zone());
 
@@ -85,21 +75,15 @@ void RWStepDimTol_RWProjectedZoneDefinition::WriteStep(
   }
   SW.CloseSub();
 
-  // Own fields of ProjectedZoneDefinition
-
   SW.Send(ent->ProjectionEnd());
 
   SW.Send(ent->ProjectionLength());
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWProjectedZoneDefinition::Share(
   const occ::handle<StepDimTol_ProjectedZoneDefinition>& ent,
   Interface_EntityIterator&                              iter) const
 {
-
-  // Inherited fields from ToleranceZoneDefinition
 
   iter.AddItem(ent->Zone());
 
@@ -107,6 +91,5 @@ void RWStepDimTol_RWProjectedZoneDefinition::Share(
   for (i = 1; i <= nb; i++)
     iter.AddItem(ent->BoundariesValue(i));
 
-  // Own field of ProjectionZoneDefinition
   iter.AddItem(ent->ProjectionEnd());
 }

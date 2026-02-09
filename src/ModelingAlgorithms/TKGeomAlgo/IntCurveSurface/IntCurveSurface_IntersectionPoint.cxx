@@ -1,6 +1,5 @@
 #include <IntCurveSurface_IntersectionPoint.hpp>
 
-//================================================================================
 IntCurveSurface_IntersectionPoint::IntCurveSurface_IntersectionPoint()
     : myUSurf(0.0),
       myVSurf(0.0),
@@ -8,7 +7,6 @@ IntCurveSurface_IntersectionPoint::IntCurveSurface_IntersectionPoint()
 {
 }
 
-//================================================================================
 IntCurveSurface_IntersectionPoint::IntCurveSurface_IntersectionPoint(
   const gp_Pnt&                           P,
   const double                            USurf,
@@ -23,7 +21,6 @@ IntCurveSurface_IntersectionPoint::IntCurveSurface_IntersectionPoint(
 {
 }
 
-//================================================================================
 void IntCurveSurface_IntersectionPoint::SetValues(const gp_Pnt&                           P,
                                                   const double                            USurf,
                                                   const double                            VSurf,
@@ -37,7 +34,6 @@ void IntCurveSurface_IntersectionPoint::SetValues(const gp_Pnt&                 
   myTrOnCurv = TrOnCurv;
 }
 
-//================================================================================
 void IntCurveSurface_IntersectionPoint::Values(gp_Pnt&                            P,
                                                double&                            USurf,
                                                double&                            VSurf,
@@ -51,7 +47,6 @@ void IntCurveSurface_IntersectionPoint::Values(gp_Pnt&                          
   TrOnCurv = myTrOnCurv;
 }
 
-//================================================================================
 void IntCurveSurface_IntersectionPoint::Dump() const
 {
   std::cout << "IntersectionPoint: P(" << myP.X() << "," << myP.Y() << "," << myP.Z() << ")"

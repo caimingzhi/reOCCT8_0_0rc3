@@ -6,14 +6,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepBasic_DocumentFile, StepBasic_Document)
 
-//=================================================================================================
-
 StepBasic_DocumentFile::StepBasic_DocumentFile()
 {
   theCharacterizedObject = new StepBasic_CharacterizedObject;
 }
-
-//=================================================================================================
 
 void StepBasic_DocumentFile::Init(
   const occ::handle<TCollection_HAsciiString>& aDocument_Id,
@@ -35,14 +31,10 @@ void StepBasic_DocumentFile::Init(
                                aCharacterizedObject_Description);
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_CharacterizedObject> StepBasic_DocumentFile::CharacterizedObject() const
 {
   return theCharacterizedObject;
 }
-
-//=================================================================================================
 
 void StepBasic_DocumentFile::SetCharacterizedObject(
   const occ::handle<StepBasic_CharacterizedObject>& aCharacterizedObject)

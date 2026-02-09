@@ -25,15 +25,12 @@
 #if defined(__EMSCRIPTEN__)
   #include <emscripten/emscripten.h>
 
-//! Returns Module.noExitRuntime flag.
 EM_JS(bool, occJSModuleNoExitRuntime, (), { return Module.noExitRuntime == = true; });
 #endif
 
 #ifdef HAVE_TK
   #if defined(__APPLE__) && !defined(HAVE_XLIB)
-    // use forward declaration for small subset of used Tk functions
-    // to workaround broken standard Tk framework installation within OS X SDKs
-    // which *HAS* X11 headers in Tk.framework but doesn't install them appropriately
+
     #define _TK
 typedef struct Tk_Window_* Tk_Window;
 typedef const char*        Tk_Uid;
@@ -62,7 +59,6 @@ extern "C" void        Tk_GeometryRequest(Tk_Window tkwin, int reqWidth, int req
   #define PENWIDTH 1
   #define CLIENTWND 0
 
-//! Creation of color stylos
 static HPEN Draw_colorPenTab[MAXCOLOR] = {CreatePen(PS_SOLID, PENWIDTH, RGB(255, 255, 255)),
                                           CreatePen(PS_SOLID, PENWIDTH, RGB(255, 0, 0)),
                                           CreatePen(PS_SOLID, PENWIDTH, RGB(0, 255, 0)),
@@ -79,7 +75,6 @@ static HPEN Draw_colorPenTab[MAXCOLOR] = {CreatePen(PS_SOLID, PENWIDTH, RGB(255,
                                           CreatePen(PS_SOLID, PENWIDTH, RGB(240, 230, 140)),
                                           CreatePen(PS_SOLID, PENWIDTH, RGB(255, 127, 80))};
 
-// Correspondence mode X11 and WINDOWS NT
 static const int Draw_modeTab[16] = {R2_BLACK,
                                      R2_MASKPEN,
                                      R2_MASKPENNOT,
@@ -102,26 +97,21 @@ extern bool Draw_Batch;
 extern bool Draw_VirtualWindows;
 bool        Draw_BlackBackGround = true;
 #if defined(_WIN32)
-// indicates SUBSYSTEM:CONSOLE linker option, to be set to True in main()
+
 Standard_EXPORT bool Draw_IsConsoleSubsystem    = false;
 HWND                 Draw_Window::hWndClientMDI = 0;
 #endif
 
-//! Return termination callbacks.
 static NCollection_List<Draw_Window::FCallbackBeforeTerminate>& TermCallbacks()
 {
   static NCollection_List<Draw_Window::FCallbackBeforeTerminate> MyCallbacks;
   return MyCallbacks;
 }
 
-//=================================================================================================
-
 void Draw_Window::AddCallbackBeforeTerminate(FCallbackBeforeTerminate theCB)
 {
   TermCallbacks().Append(theCB);
 }
-
-//=================================================================================================
 
 void Draw_Window::RemoveCallbackBeforeTerminate(FCallbackBeforeTerminate theCB)
 {
@@ -137,8 +127,6 @@ void Draw_Window::RemoveCallbackBeforeTerminate(FCallbackBeforeTerminate theCB)
   }
 }
 
-//! Issue a prompt on standard output, or invoke a script to issue the prompt.
-//! Side effects: A prompt gets output, and a Tcl script may be evaluated in interp.
 static void Prompt(Tcl_Interp* theInterp, int thePartial)
 {
   Tcl_Channel errChannel;
@@ -181,17 +169,13 @@ static void Prompt(Tcl_Interp* theInterp, int thePartial)
 
 #if !defined(_WIN32)
 
-//! Used to assemble lines of terminal input into Tcl commands.
 static Tcl_DString Draw_TclCommand;
-//! Used to read the next line from the terminal input.
+
 static Tcl_DString Draw_TclLine;
 
-//! Forward declarations for procedures defined later in this file:
 static void StdinProc(ClientData theClientData, int theMask);
 static void Prompt(Tcl_Interp* theInterp, int thePartial);
 
-//! Non-zero means standard input is a terminal-like device.
-//! Zero means it's a file.
 static bool tty;
 
   #if defined(HAVE_XLIB)
@@ -202,14 +186,12 @@ Colormap                                     Draw_WindowColorMap;
 static int                                   Draw_WindowScreen = 0;
 static occ::handle<Aspect_DisplayConnection> Draw_DisplayConnection;
 
-//! Return list of windows.
 static NCollection_List<Draw_Window*>& getDrawWindowList()
 {
   static NCollection_List<Draw_Window*> MyWindows;
   return MyWindows;
 }
 
-//! Base_Window struct definition
 struct Draw_Window::Base_Window
 {
   GC                   gc;
@@ -218,8 +200,7 @@ struct Draw_Window::Base_Window
   #endif
 #endif
 
-#if !defined(__APPLE__) || defined(HAVE_XLIB) // implementation for Apple resides in .mm file
-//=================================================================================================
+#if !defined(__APPLE__) || defined(HAVE_XLIB)
 
 Draw_Window::Draw_Window(const char*                  theTitle,
                          const NCollection_Vec2<int>& theXY,
@@ -266,12 +247,10 @@ Draw_Window::Draw_Window(const char*                  theTitle,
   SetTitle(theTitle);
 }
 
-//=================================================================================================
-
 Draw_Window::~Draw_Window()
 {
   #ifdef _WIN32
-  // Delete 'off-screen drawing'-related objects
+
   if (myMemHbm)
   {
     DeleteObject(myMemHbm);
@@ -287,8 +266,6 @@ Draw_Window::~Draw_Window()
   #endif
 }
 
-//=================================================================================================
-
 void Draw_Window::init(const NCollection_Vec2<int>& theXY, const NCollection_Vec2<int>& theSize)
 {
   #ifdef _WIN32
@@ -297,8 +274,6 @@ void Draw_Window::init(const NCollection_Vec2<int>& theXY, const NCollection_Vec
     myWindow = createDrawWindow(hWndClientMDI, 0);
   }
 
-  // include decorations in the window dimensions
-  // to reproduce same behaviour of Xlib window.
   DWORD aWinStyle   = GetWindowLongW(myWindow, GWL_STYLE);
   DWORD aWinStyleEx = GetWindowLongW(myWindow, GWL_EXSTYLE);
   HMENU aMenu       = GetMenu(myWindow);
@@ -312,20 +287,20 @@ void Draw_Window::init(const NCollection_Vec2<int>& theXY, const NCollection_Vec
 
   SetPosition(aRect.left, aRect.top);
   SetDimension(aRect.right - aRect.left, aRect.bottom - aRect.top);
-  // Save the pointer at the instance associated to the window
+
   SetWindowLongPtrW(myWindow, CLIENTWND, (LONG_PTR)this);
   HDC hDC = GetDC(myWindow);
   SetBkColor(hDC, RGB(0, 0, 0));
   myCurrPen  = 3;
   myCurrMode = 3;
-  SelectObject(hDC, Draw_colorPenTab[myCurrPen]); // Default pencil
+  SelectObject(hDC, Draw_colorPenTab[myCurrPen]);
   SelectObject(hDC, GetStockObject(BLACK_BRUSH));
   SetTextColor(hDC, RGB(0, 0, 255));
   ReleaseDC(myWindow, hDC);
 
   if (Draw_VirtualWindows)
   {
-    // create a virtual window
+
     SetUseBuffer(true);
   }
   #elif defined(HAVE_XLIB)
@@ -364,7 +339,6 @@ void Draw_Window::init(const NCollection_Vec2<int>& theXY, const NCollection_Vec
                  myWindow,
                  ButtonPressMask | ExposureMask | StructureNotifyMask);
 
-    // advise to the window manager to place it where I need
     XSetWMNormalHints(Draw_WindowDisplay, myWindow, &aWinHints);
 
     Atom aDeleteWindowAtom = Draw_DisplayConnection->GetAtom(Aspect_XA_DELETE_WINDOW);
@@ -382,7 +356,6 @@ void Draw_Window::init(const NCollection_Vec2<int>& theXY, const NCollection_Vec
   XSetPlaneMask(Draw_WindowDisplay, myBase->gc, AllPlanes);
   XSetForeground(Draw_WindowDisplay, myBase->gc, WhitePixel(Draw_WindowDisplay, Draw_WindowScreen));
   XSetBackground(Draw_WindowDisplay, myBase->gc, BlackPixel(Draw_WindowDisplay, Draw_WindowScreen));
-  // save in case of window recovery
 
   myBase->xswa.backing_store = Always;
   XChangeWindowAttributes(Draw_WindowDisplay, myWindow, CWBackingStore, &myBase->xswa);
@@ -394,8 +367,6 @@ void Draw_Window::init(const NCollection_Vec2<int>& theXY, const NCollection_Vec
   #endif
 }
 
-//=================================================================================================
-
 void Draw_Window::SetUseBuffer(bool theToUse)
 {
   myUseBuffer = theToUse;
@@ -403,7 +374,6 @@ void Draw_Window::SetUseBuffer(bool theToUse)
 }
 
   #ifdef _WIN32
-//=================================================================================================
 
 HDC Draw_Window::getMemDC(HDC theWinDC)
 {
@@ -422,8 +392,6 @@ HDC Draw_Window::getMemDC(HDC theWinDC)
   return aWorkDC;
 }
 
-//=================================================================================================
-
 void Draw_Window::releaseMemDC(HDC theMemDC)
 {
   if (!myUseBuffer || !theMemDC)
@@ -438,8 +406,6 @@ void Draw_Window::releaseMemDC(HDC theMemDC)
   DeleteDC(theMemDC);
 }
   #endif
-
-//=================================================================================================
 
 void Draw_Window::InitBuffer()
 {
@@ -494,8 +460,6 @@ void Draw_Window::InitBuffer()
   #endif
 }
 
-//=================================================================================================
-
 void Draw_Window::SetPosition(int theNewXpos, int theNewYpos)
 {
   #ifdef _WIN32
@@ -518,8 +482,6 @@ void Draw_Window::SetPosition(int theNewXpos, int theNewYpos)
   #endif
 }
 
-//=================================================================================================
-
 void Draw_Window::SetDimension(int theNewDx, int theNewDy)
 {
   #ifdef _WIN32
@@ -539,8 +501,6 @@ void Draw_Window::SetDimension(int theNewDx, int theNewDy)
   (void)theNewDy;
   #endif
 }
-
-//=================================================================================================
 
 void Draw_Window::GetPosition(int& thePosX, int& thePosY)
 {
@@ -564,8 +524,6 @@ void Draw_Window::GetPosition(int& thePosX, int& thePosY)
   #endif
 }
 
-//=================================================================================================
-
 int Draw_Window::HeightWin() const
 {
   #ifdef _WIN32
@@ -580,8 +538,6 @@ int Draw_Window::HeightWin() const
   return 1;
   #endif
 }
-
-//=================================================================================================
 
 int Draw_Window::WidthWin() const
 {
@@ -598,8 +554,6 @@ int Draw_Window::WidthWin() const
   #endif
 }
 
-//=================================================================================================
-
 void Draw_Window::SetTitle(const TCollection_AsciiString& theTitle)
 {
   #ifdef _WIN32
@@ -611,8 +565,6 @@ void Draw_Window::SetTitle(const TCollection_AsciiString& theTitle)
   (void)theTitle;
   #endif
 }
-
-//=================================================================================================
 
 TCollection_AsciiString Draw_Window::GetTitle() const
 {
@@ -628,8 +580,6 @@ TCollection_AsciiString Draw_Window::GetTitle() const
   return TCollection_AsciiString();
   #endif
 }
-
-//=================================================================================================
 
 bool Draw_Window::DefineColor(const int theIndex, const char* theColorName)
 {
@@ -652,8 +602,6 @@ bool Draw_Window::DefineColor(const int theIndex, const char* theColorName)
   #endif
 }
 
-//=================================================================================================
-
 bool Draw_Window::IsMapped() const
 {
   if (Draw_VirtualWindows || myWindow == 0)
@@ -674,8 +622,6 @@ bool Draw_Window::IsMapped() const
   #endif
 }
 
-//=================================================================================================
-
 void Draw_Window::DisplayWindow()
 {
   if (Draw_VirtualWindows)
@@ -692,8 +638,6 @@ void Draw_Window::DisplayWindow()
   #endif
 }
 
-//=================================================================================================
-
 void Draw_Window::Hide()
 {
   #ifdef _WIN32
@@ -702,8 +646,6 @@ void Draw_Window::Hide()
   XUnmapWindow(Draw_WindowDisplay, myWindow);
   #endif
 }
-
-//=================================================================================================
 
 void Draw_Window::Destroy()
 {
@@ -720,8 +662,6 @@ void Draw_Window::Destroy()
   }
   #endif
 }
-
-//=================================================================================================
 
 void Draw_Window::Clear()
 {
@@ -742,7 +682,7 @@ void Draw_Window::Clear()
   #elif defined(HAVE_XLIB)
   if (myUseBuffer)
   {
-    // XClearArea only applicable for windows
+
     XGCValues aCurrValues;
     XGetGCValues(Draw_WindowDisplay, myBase->gc, GCBackground | GCForeground, &aCurrValues);
     XSetForeground(Draw_WindowDisplay, myBase->gc, aCurrValues.background);
@@ -756,16 +696,12 @@ void Draw_Window::Clear()
   #endif
 }
 
-//=================================================================================================
-
 void Draw_Window::Flush()
 {
   #if defined(HAVE_XLIB)
   XFlush(Draw_WindowDisplay);
   #endif
 }
-
-//=================================================================================================
 
 void Draw_Window::DrawString(int theX, int theY, const char* theText)
 {
@@ -796,8 +732,6 @@ void Draw_Window::DrawString(int theX, int theY, const char* theText)
   #endif
 }
 
-//=================================================================================================
-
 void Draw_Window::DrawSegments(const Draw_XSegment* theSegments, int theNbElems)
 {
   #ifdef _WIN32
@@ -822,8 +756,6 @@ void Draw_Window::DrawSegments(const Draw_XSegment* theSegments, int theNbElems)
   (void)theNbElems;
   #endif
 }
-
-//=================================================================================================
 
 void Draw_Window::Redraw()
 {
@@ -863,8 +795,6 @@ void Draw_Window::Redraw()
   #endif
 }
 
-//=================================================================================================
-
 void Draw_Window::SetColor(int theColor)
 {
   #ifdef _WIN32
@@ -877,8 +807,6 @@ void Draw_Window::SetColor(int theColor)
   #endif
   myCurrentColor = theColor;
 }
-
-//=================================================================================================
 
 void Draw_Window::SetMode(int theMode)
 {
@@ -895,12 +823,10 @@ void Draw_Window::SetMode(int theMode)
 }
 
   #ifdef _WIN32
-/*--------------------------------------------------------*\
-|  SaveBitmap
-\*--------------------------------------------------------*/
+
 static bool SaveBitmap(HBITMAP theHBitmap, const char* theFileName)
 {
-  // Get information about the bitmap
+
   BITMAP aBitmap;
   if (GetObjectW(theHBitmap, sizeof(BITMAP), &aBitmap) == 0)
   {
@@ -908,8 +834,7 @@ static bool SaveBitmap(HBITMAP theHBitmap, const char* theFileName)
   }
 
   Image_AlienPixMap anImage;
-  const size_t      aSizeRowBytes =
-    ((size_t(aBitmap.bmWidth) * 24 + 31) / 32) * 4; // 4 bytes alignment for GetDIBits()
+  const size_t      aSizeRowBytes = ((size_t(aBitmap.bmWidth) * 24 + 31) / 32) * 4;
   if (!anImage.InitTrash(Image_Format_BGR,
                          size_t(aBitmap.bmWidth),
                          size_t(aBitmap.bmHeight),
@@ -919,32 +844,28 @@ static bool SaveBitmap(HBITMAP theHBitmap, const char* theFileName)
   }
   anImage.SetTopDown(false);
 
-  // Setup image data
   BITMAPINFOHEADER aBitmapInfo;
   memset(&aBitmapInfo, 0, sizeof(BITMAPINFOHEADER));
   aBitmapInfo.biSize        = sizeof(BITMAPINFOHEADER);
   aBitmapInfo.biWidth       = aBitmap.bmWidth;
-  aBitmapInfo.biHeight      = aBitmap.bmHeight; // positive means bottom-up!
+  aBitmapInfo.biHeight      = aBitmap.bmHeight;
   aBitmapInfo.biPlanes      = 1;
   aBitmapInfo.biBitCount    = 24;
   aBitmapInfo.biCompression = BI_RGB;
 
-  // Copy the pixels
   HDC  aDC       = GetDC(NULL);
   bool isSuccess = GetDIBits(aDC,
                              theHBitmap,
-                             0,                          // first scan line to set
-                             aBitmap.bmHeight,           // number of scan lines to copy
-                             anImage.ChangeData(),       // array for bitmap bits
-                             (LPBITMAPINFO)&aBitmapInfo, // bitmap data info
+                             0,
+                             aBitmap.bmHeight,
+                             anImage.ChangeData(),
+                             (LPBITMAPINFO)&aBitmapInfo,
                              DIB_RGB_COLORS)
                    != 0;
   ReleaseDC(NULL, aDC);
   return isSuccess && anImage.Save(theFileName);
 }
   #endif
-
-//=================================================================================================
 
 bool Draw_Window::Save(const char* theFileName) const
 {
@@ -959,34 +880,30 @@ bool Draw_Window::Save(const char* theFileName) const
   int aWidth  = aRect.right - aRect.left;
   int aHeight = aRect.bottom - aRect.top;
 
-  // Prepare the DCs
   HDC aDstDC = GetDC(NULL);
-  HDC aSrcDC = GetDC(myWindow); // we copy only client area
+  HDC aSrcDC = GetDC(myWindow);
   HDC aMemDC = CreateCompatibleDC(aDstDC);
 
-  // Copy the screen to the bitmap
   HBITMAP anHBitmapDump = CreateCompatibleBitmap(aDstDC, aWidth, aHeight);
   HBITMAP anHBitmapOld  = (HBITMAP)SelectObject(aMemDC, anHBitmapDump);
   BitBlt(aMemDC, 0, 0, aWidth, aHeight, aSrcDC, 0, 0, SRCCOPY);
 
   bool isSuccess = SaveBitmap(anHBitmapDump, theFileName);
 
-  // Free objects
   DeleteObject(SelectObject(aMemDC, anHBitmapOld));
   DeleteDC(aMemDC);
 
   return isSuccess;
   #elif defined(HAVE_XLIB)
-  // make sure all draw operations done
+
   XSync(Draw_WindowDisplay, True);
 
-  // the attributes
   XWindowAttributes aWinAttr;
   XGetWindowAttributes(Draw_WindowDisplay, myWindow, &aWinAttr);
 
   if (!myUseBuffer)
   {
-    // make sure that the whole window fit on display to prevent BadMatch error
+
     XWindowAttributes aWinAttrRoot;
     XGetWindowAttributes(Draw_WindowDisplay, XRootWindowOfScreen(aWinAttr.screen), &aWinAttrRoot);
 
@@ -1058,11 +975,9 @@ bool Draw_Window::Save(const char* theFileName) const
     return false;
   }
 
-  // destroy the image
   anXImage->data = nullptr;
   XDestroyImage(anXImage);
 
-  // save the image
   return anImage.Save(theFileName);
   #else
   (void)theFileName;
@@ -1070,10 +985,9 @@ bool Draw_Window::Save(const char* theFileName) const
   #endif
 }
 
-#endif // !__APPLE__
+#endif
 
 #if defined(HAVE_XLIB)
-//=================================================================================================
 
 void Draw_Window::Wait(bool theToWait)
 {
@@ -1086,16 +1000,14 @@ void Draw_Window::Wait(bool theToWait)
   XSelectInput(Draw_WindowDisplay, myWindow, aMask);
 }
 
-//! Process pending X events.
 static void processXEvents(ClientData, int)
 {
-  // test for X Event
+
   while (XPending(Draw_WindowDisplay))
   {
     XEvent anEvent;
     XNextEvent(Draw_WindowDisplay, &anEvent);
 
-    // search the window in the window list
     bool isFound = false;
 
     for (NCollection_List<Draw_Window*>::Iterator aWinIter(getDrawWindowList()); aWinIter.More();
@@ -1111,7 +1023,7 @@ static void processXEvents(ClientData, int)
             if (anEvent.xclient.data.l[0]
                 == (int)Draw_DisplayConnection->GetAtom(Aspect_XA_DELETE_WINDOW))
             {
-              aDrawWin->Hide(); // just hide the window
+              aDrawWin->Hide();
             }
             break;
           }
@@ -1134,8 +1046,6 @@ static void processXEvents(ClientData, int)
     }
   }
 }
-
-//=================================================================================================
 
 void Draw_Window::GetNextEvent(Draw_Window::Draw_XEvent& theEvent)
 {
@@ -1166,7 +1076,6 @@ void Draw_Window::GetNextEvent(Draw_Window::Draw_XEvent& theEvent)
 #endif
 
 #ifndef _WIN32
-//=================================================================================================
 
 static bool (*Interprete)(const char*);
 
@@ -1179,23 +1088,18 @@ void Run_Appli(bool (*interprete)(const char*))
   toWaitInput = !occJSModuleNoExitRuntime();
   #endif
 
-  // Commands will come from standard input, so set up an event handler for standard input.
-  // If the input device is aEvaluate the .rc file, if one has been specified,
-  // set up an event handler for standard input, and print a prompt if the input device is a
-  // terminal.
   Tcl_Channel anInChannel = Tcl_GetStdChannel(TCL_STDIN);
   if (anInChannel && toWaitInput)
   {
     Tcl_CreateChannelHandler(anInChannel, TCL_READABLE, StdinProc, (ClientData)anInChannel);
   }
 
-  // Create a handler for the draw display
   #if defined(HAVE_XLIB)
   Tcl_CreateFileHandler(ConnectionNumber(Draw_WindowDisplay),
                         TCL_READABLE,
                         processXEvents,
                         (ClientData) nullptr);
-  #endif // __APPLE__
+  #endif
 
   Draw_Interpretor& aCommands = Draw::GetInterpretor();
 
@@ -1215,12 +1119,10 @@ void Run_Appli(bool (*interprete)(const char*))
   #ifdef _TK
   if (Draw_VirtualWindows)
   {
-    // main window will never shown
-    // but main loop will parse all Xlib messages
+
     Tcl_Eval(aCommands.Interp(), "wm withdraw .");
   }
-  // Loop infinitely, waiting for commands to execute.
-  // When there are no windows left, Tk_MainLoop returns and we exit.
+
   Tk_MainLoop();
   #else
   if (!toWaitInput)
@@ -1230,7 +1132,7 @@ void Run_Appli(bool (*interprete)(const char*))
 
   for (;;)
   {
-    Tcl_DoOneEvent(0); // practically the same as Tk_MainLoop()
+    Tcl_DoOneEvent(0);
   }
   #endif
 
@@ -1241,8 +1143,6 @@ void Run_Appli(bool (*interprete)(const char*))
     (*anIter.Value())();
   }
 }
-
-//=================================================================================================
 
 bool Init_Appli()
 {
@@ -1301,46 +1201,32 @@ bool Init_Appli()
   {
     Draw_WindowDisplay = (Display*)Draw_DisplayConnection->GetDisplayAspect();
   }
-  //
-  // synchronize the display server : could be done within Tk_Init
-  //
+
   XSynchronize(Draw_WindowDisplay, True);
   XSetInputFocus(Draw_WindowDisplay, PointerRoot, RevertToPointerRoot, CurrentTime);
 
   Draw_WindowScreen   = DefaultScreen(Draw_WindowDisplay);
   Draw_WindowColorMap = DefaultColormap(Draw_WindowDisplay, Draw_WindowScreen);
-  #endif // __APPLE__
+  #endif
 
   tty = isatty(0);
   Tcl_SetVar(interp, "tcl_interactive", (char*)(tty ? "1" : "0"), TCL_GLOBAL_ONLY);
-  //  Tcl_SetVar(interp,"tcl_interactive",tty ? "1" : "0", TCL_GLOBAL_ONLY);
+
   return true;
 }
 
-//=================================================================================================
+void Destroy_Appli() {}
 
-void Destroy_Appli()
-{
-  // XCloseDisplay(Draw_WindowDisplay);
-}
-
-//! This procedure is invoked by the event dispatcher whenever standard input becomes readable.
-//! It grabs the next line of input characters, adds them to a command being assembled,
-//! and executes the command if it's complete.
-//! Side effects: Could be almost arbitrary, depending on the command that's typed.
 static void StdinProc(ClientData clientData, int theMask)
 {
   (void)theMask;
   static int gotPartial = 0;
-  //  int code, count;
+
   Tcl_Channel chan = (Tcl_Channel)clientData;
 
-  // MSV Nov 2, 2001: patch for TCL 8.3: initialize line to avoid exception
-  //                  when first user input is an empty string
   Tcl_DStringFree(&Draw_TclLine);
   int count = Tcl_Gets(chan, &Draw_TclLine);
 
-  // MKV 26.05.05
   #if ((TCL_MAJOR_VERSION > 8) || ((TCL_MAJOR_VERSION == 8) && (TCL_MINOR_VERSION >= 4)))
   Tcl_DString aLineTmp;
   Tcl_DStringInit(&aLineTmp);
@@ -1389,36 +1275,17 @@ static void StdinProc(ClientData clientData, int theMask)
     }
     gotPartial = 0;
 
-    /*
-     * Disable the stdin channel handler while evaluating the command;
-     * otherwise if the command re-enters the event loop we might
-     * process commands from stdin before the current command is finished.
-     * Among other things, this will trash the text of the command being evaluated.
-     */
     Tcl_CreateChannelHandler(chan, 0, StdinProc, (ClientData)chan);
 
-    /*
-     * Disable the stdin file handler while evaluating the command;
-     * otherwise if the command re-enters the event loop we might
-     * process commands from stdin before the current command is finished.
-     * Among other things, this will trash the text of the command being evaluated.
-     */
-
   #ifdef _TK
-      // Tk_CreateFileHandler (0, 0, StdinProc, (ClientData) 0);
+
   #endif
-    // xab average to avoid an output SIGBUS of DRAW
-    // to ultimately precise or remove once
-    // the problem of free on the global variable at the average
-    //
+
     Interprete(cmd);
 
     Tcl_CreateChannelHandler(chan, TCL_READABLE, StdinProc, (ClientData)chan);
     Tcl_DStringFree(&Draw_TclCommand);
 
-    /*
-     * Output a prompt.
-     */
   prompt:
     if (tty)
     {
@@ -1432,11 +1299,6 @@ static void StdinProc(ClientData clientData, int theMask)
 
 #else
 
-// Source Specifique WNT
-
-/*--------------------------------------------------------*\
-|  CREATE DRAW WINDOW PROCEDURE
-\*--------------------------------------------------------*/
 HWND Draw_Window::createDrawWindow(HWND hWndClient, int nitem)
 {
   if (Draw_IsConsoleSubsystem)
@@ -1475,9 +1337,6 @@ HWND Draw_Window::createDrawWindow(HWND hWndClient, int nitem)
   }
 }
 
-/*--------------------------------------------------------*\
-|  DRAW WINDOW PROCEDURE
-\*--------------------------------------------------------*/
 LRESULT APIENTRY Draw_Window::DrawProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
   Draw_Window* aLocWin = (Draw_Window*)GetWindowLongPtrW(hWnd, CLIENTWND);
@@ -1492,7 +1351,7 @@ LRESULT APIENTRY Draw_Window::DrawProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPAR
     case WM_CLOSE:
     {
       aLocWin->Hide();
-      return 0; // do nothing - window destruction should be performed by application
+      return 0;
     }
     case WM_PAINT:
     {
@@ -1525,9 +1384,6 @@ LRESULT APIENTRY Draw_Window::DrawProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPAR
                                  : DefMDIChildProcW(hWnd, wMsg, wParam, lParam);
 }
 
-/*--------------------------------------------------------*\
-|  SelectWait
-\*--------------------------------------------------------*/
 void Draw_Window::SelectWait(HANDLE& theWindow, int& theX, int& theY, int& theButton)
 {
   MSG aMsg;
@@ -1552,9 +1408,6 @@ void Draw_Window::SelectWait(HANDLE& theWindow, int& theX, int& theY, int& theBu
   }
 }
 
-/*--------------------------------------------------------*\
-|  SelectNoWait
-\*--------------------------------------------------------*/
 void Draw_Window::SelectNoWait(HANDLE& theWindow, int& theX, int& theY, int& theButton)
 {
   MSG aMsg;
@@ -1584,24 +1437,16 @@ void Draw_Window::SelectNoWait(HANDLE& theWindow, int& theX, int& theY, int& the
   }
 }
 
-/*--------------------------------------------------------*\
-|  Init
-\*--------------------------------------------------------*/
-
 static DWORD WINAPI tkLoop(LPVOID theThreadParameter);
   #ifdef _TK
 static Tk_Window mainWindow;
   #endif
 
-//* threads synchronization *//
 static DWORD dwMainThreadId;
 console_semaphore_value volatile console_semaphore = WAIT_CONSOLE_COMMAND;
 wchar_t console_command[DRAW_COMMAND_SIZE + 1];
 bool volatile isTkLoopStarted = false;
 
-/*--------------------------------------------------------*\
-|  Init_Appli
-\*--------------------------------------------------------*/
 bool Init_Appli(HINSTANCE hInst, HINSTANCE hPrevInst, int nShow, HWND& hWndFrame)
 {
   DWORD  IDThread;
@@ -1610,13 +1455,7 @@ bool Init_Appli(HINSTANCE hInst, HINSTANCE hPrevInst, int nShow, HWND& hWndFrame
 
   dwMainThreadId = GetCurrentThreadId();
 
-  // necessary for normal Tk operation
-  hThread = CreateThread(NULL,   // no security attributes
-                         0,      // use default stack size
-                         tkLoop, // thread function
-                         NULL,   // no thread function argument
-                         0,      // use default creation flags
-                         &IDThread);
+  hThread = CreateThread(NULL, 0, tkLoop, NULL, 0, &IDThread);
   if (!hThread)
   {
     std::cout << "Failed to create Tcl/Tk main loop thread. Switching to batch mode..."
@@ -1639,17 +1478,15 @@ bool Init_Appli(HINSTANCE hInst, HINSTANCE hPrevInst, int nShow, HWND& hWndFrame
 
     Tcl_StaticPackage(interp, "Tk", Tk_Init, (Tcl_PackageInitProc*)NULL);
   #endif
-    // since the main Tcl/Tk loop wasn't created --> switch to batch mode
+
     return false;
   }
 
-  // san - 06/08/2002 - Time for tkLoop to start; Tk fails to initialize otherwise
   while (!isTkLoopStarted)
   {
     Sleep(10);
   }
 
-  // Saving of window classes
   if (!hPrevInst)
   {
     if (!RegisterAppClass(hInst))
@@ -1658,10 +1495,6 @@ bool Init_Appli(HINSTANCE hInst, HINSTANCE hPrevInst, int nShow, HWND& hWndFrame
     }
   }
 
-  /*
-   ** Enter the application message-polling loop.  This is the anchor for
-   ** the application.
-   */
   hWndFrame = !Draw_IsConsoleSubsystem ? CreateAppWindow(hInst) : NULL;
   if (hWndFrame != NULL)
   {
@@ -1674,9 +1507,6 @@ bool Init_Appli(HINSTANCE hInst, HINSTANCE hPrevInst, int nShow, HWND& hWndFrame
 
 bool Draw_Interprete(const char*);
 
-/*--------------------------------------------------------*\
-|  readStdinThreadFunc
-\*--------------------------------------------------------*/
 static DWORD WINAPI readStdinThreadFunc(const LPVOID theThreadParameter)
 {
   (void)theThreadParameter;
@@ -1684,18 +1514,6 @@ static DWORD WINAPI readStdinThreadFunc(const LPVOID theThreadParameter)
   {
     return 1;
   }
-
-  // Console locale could be set to the system codepage .OCP (UTF-8 is not properly supported on
-  // Windows). However, to use it, we have to care using std::wcerr/fwprintf/WriteConsoleW for
-  // non-ascii strings everywhere (including Tcl itself), or otherwise we can have incomplete output
-  // issues (e.g. UNICODE string will be NOT just corrupted as in case when we don't set setlocale()
-  // but will break further normal output to console due to special characters being accidentally
-  // handled by console in the wrong way).
-  // setlocale (LC_ALL, ".OCP");
-
-  // _O_U16TEXT can be used with fgetws() to get similar result as ReadConsoleW() without affecting
-  // setlocale(), however it would break pipe input
-  //_setmode (_fileno(stdin), _O_U16TEXT);
 
   bool isConsoleInput = true;
   for (;;)
@@ -1720,15 +1538,13 @@ static DWORD WINAPI readStdinThreadFunc(const LPVOID theThreadParameter)
         const DWORD anErr = GetLastError();
         if (anErr != ERROR_SUCCESS)
         {
-          // fallback using fgetws() which would work with pipes
-          // but supports Unicode only through multi-byte encoding (which is not UTF-8)
+
           isConsoleInput = false;
           continue;
         }
       }
     }
 
-    // fgetws() works only for characters within active locale (see setlocale())
     if (fgetws(console_command, DRAW_COMMAND_SIZE, stdin))
     {
       console_semaphore = HAS_CONSOLE_COMMAND;
@@ -1736,10 +1552,7 @@ static DWORD WINAPI readStdinThreadFunc(const LPVOID theThreadParameter)
   }
 }
 
-/*--------------------------------------------------------*\
-|  exitProc: finalization handler for Tcl/Tk thread. Forces parent process to die
-\*--------------------------------------------------------*/
-void exitProc(ClientData /*dc*/)
+void exitProc(ClientData)
 {
   for (NCollection_List<Draw_Window::FCallbackBeforeTerminate>::Iterator anIter(TermCallbacks());
        anIter.More();
@@ -1751,17 +1564,13 @@ void exitProc(ClientData /*dc*/)
   TerminateProcess(proc, 0);
 }
 
-// This is fixed version of TclpGetDefaultStdChannel() defined in tclWinChan.c
-// See https://core.tcl.tk/tcl/tktview/91c9bc1c457fda269ae18595944fc3c2b54d961d
-static Tcl_Channel TclpGetDefaultStdChannel(
-  int type) // One of TCL_STDIN, TCL_STDOUT, or TCL_STDERR.
+static Tcl_Channel TclpGetDefaultStdChannel(int type)
 {
   Tcl_Channel channel;
   HANDLE      handle;
   int         mode     = -1;
   const char* bufMode  = NULL;
   DWORD       handleId = (DWORD)-1;
-  /* Standard handle to retrieve. */
 
   switch (type)
   {
@@ -1787,22 +1596,11 @@ static Tcl_Channel TclpGetDefaultStdChannel(
 
   handle = GetStdHandle(handleId);
 
-  /*
-   * Note that we need to check for 0 because Windows may return 0 if this
-   * is not a console mode application, even though this is not a valid
-   * handle.
-   */
-
   if ((handle == INVALID_HANDLE_VALUE) || (handle == 0))
   {
     return (Tcl_Channel)NULL;
   }
 
-  /*
-   * Make duplicate of the standard handle as it may be altered
-   * (closed, reopened with another type of the object etc.) by
-   * the system or a user code at any time, e.g. by call to _dup2()
-   */
   if (!DuplicateHandle(GetCurrentProcess(),
                        handle,
                        GetCurrentProcess(),
@@ -1821,10 +1619,6 @@ static Tcl_Channel TclpGetDefaultStdChannel(
     return (Tcl_Channel)NULL;
   }
 
-  /*
-   * Set up the normal channel options for stdio handles.
-   */
-
   if (Tcl_SetChannelOption(NULL, channel, "-translation", "auto") != TCL_OK
       || Tcl_SetChannelOption(NULL, channel, "-eofchar", "\032 {}") != TCL_OK
       || Tcl_SetChannelOption(NULL, channel, "-buffering", bufMode) != TCL_OK)
@@ -1835,7 +1629,6 @@ static Tcl_Channel TclpGetDefaultStdChannel(
   return channel;
 }
 
-// helper function
 static void ResetStdChannel(int type)
 {
   Tcl_Channel aChannel = TclpGetDefaultStdChannel(type);
@@ -1846,9 +1639,6 @@ static void ResetStdChannel(int type)
   }
 }
 
-/*--------------------------------------------------------*\
-|  tkLoop: implements Tk_Main()-like behaviour in a separate thread
-\*--------------------------------------------------------*/
 static DWORD WINAPI tkLoop(const LPVOID theThreadParameter)
 {
   (void)theThreadParameter;
@@ -1859,22 +1649,11 @@ static DWORD WINAPI tkLoop(const LPVOID theThreadParameter)
   Tcl_Interp* interp = aCommands.Interp();
   Tcl_Init(interp);
 
-  // Work-around against issue with Tcl standard channels on Windows.
-  // These channels by default use OS handles owned by the system which
-  // may get invalidated e.g. by dup2() (see dlog command).
-  // If this happens, output to stdout from Tcl (e.g. puts) gets broken
-  // (sympthom is error message: "error writing "stdout": bad file number").
-  // To prevent this, we set standard channels using duplicate of system handles.
-  // The effect is that Tcl channel becomes independent on C file descriptor
-  // and even if stdout/stderr are redirected using dup2(), Tcl keeps using
-  // original device.
   ResetStdChannel(TCL_STDOUT);
   ResetStdChannel(TCL_STDERR);
 
   #if (TCL_MAJOR_VERSION > 8) || ((TCL_MAJOR_VERSION == 8) && (TCL_MINOR_VERSION >= 5))
-  // Plain Tcl (8.6.4+) initializes interpreter channels automatically, but
-  // ActiveState Tcl (at least 8.6.4) does not seem to do that, so channels
-  // need to be set into interpreter explicitly
+
   {
     Tcl_Channel aChannelIn  = Tcl_GetStdChannel(TCL_STDIN);
     Tcl_Channel aChannelOut = Tcl_GetStdChannel(TCL_STDOUT);
@@ -1895,9 +1674,7 @@ static DWORD WINAPI tkLoop(const LPVOID theThreadParameter)
   #endif
 
   #ifdef _TK
-  // initialize the Tk library if not in 'virtual windows' mode
-  // (virtual windows are created by OCCT with native APIs,
-  // thus Tk will be useless)
+
   if (!Draw_VirtualWindows)
   {
     try
@@ -1933,12 +1710,10 @@ static DWORD WINAPI tkLoop(const LPVOID theThreadParameter)
     }
     Tk_Name(mainWindow) = Tk_GetUid(Tk_SetAppName(mainWindow, "Draw"));
   }
-  #endif // #ifdef _TK
+  #endif
 
-  // set signal handler in the new thread
   OSD::SetSignal(false);
 
-  // inform the others that we have started
   isTkLoopStarted = true;
 
   while (console_semaphore == STOP_CONSOLE)
@@ -1951,14 +1726,10 @@ static DWORD WINAPI tkLoop(const LPVOID theThreadParameter)
     Prompt(interp, 0);
   }
 
-  // process a command
   bool toLoop = true;
   while (toLoop)
   {
-    // The natural way is first flushing events, already put into queue, and then processing custom
-    // code in-between. Unfortunately, Tcl has no API returning the number of queued events like
-    // XPending(), and only empty state can be checked. Since events can be continuously fed from
-    // parallel threads, Tcl_DoOneEvent might never return empty state at all.
+
     const bool isTclEventQueueEmpty = Tcl_DoOneEvent(TCL_ALL_EVENTS | TCL_DONT_WAIT) == 0;
     if (console_semaphore == HAS_CONSOLE_COMMAND)
     {
@@ -1972,11 +1743,11 @@ static DWORD WINAPI tkLoop(const LPVOID theThreadParameter)
     }
     else if (isTclEventQueueEmpty)
     {
-      // release CPU while polling
+
       Sleep(1);
     }
   #ifdef _TK
-    // We should not exit until the Main Tk window is closed
+
     toLoop = (Draw_VirtualWindows || Tk_GetNumMainWindows() > 0);
   #endif
   }
@@ -1986,45 +1757,30 @@ static DWORD WINAPI tkLoop(const LPVOID theThreadParameter)
   #endif
 }
 
-/*--------------------------------------------------------*\
-|  Run_Appli
-\*--------------------------------------------------------*/
 void Run_Appli(HWND hWnd)
 {
   MSG    msg;
   HACCEL hAccel = NULL;
   msg.wParam    = 1;
 
-  //  if (!(hAccel = LoadAccelerators (hInstance, MAKEINTRESOURCE(ACCEL_ID))))
-  //        MessageBox(hWnd, "MDI: Load Accel failure!", "Error", MB_OK);
   DWORD  IDThread;
   HANDLE hThread;
   if (Draw_IsConsoleSubsystem)
   {
-    hThread = CreateThread(NULL,                // no security attributes
-                           0,                   // use default stack size
-                           readStdinThreadFunc, // thread function
-                           NULL,                // no thread function argument
-                           0,                   // use default creation flags
-                           &IDThread);          // returns thread identifier
+    hThread = CreateThread(NULL, 0, readStdinThreadFunc, NULL, 0, &IDThread);
     if (!hThread)
     {
       std::cout << "pb in creation of the thread reading stdin" << std::endl;
       Draw_IsConsoleSubsystem = false;
-      Init_Appli(GetModuleHandleW(NULL),
-                 GetModuleHandleW(NULL),
-                 1,
-                 hWnd); // reinit => create MDI client wnd
+      Init_Appli(GetModuleHandleW(NULL), GetModuleHandleW(NULL), 1, hWnd);
     }
   }
 
-  // turn on the command interpretation mechanism (regardless of the mode)
   if (console_semaphore == STOP_CONSOLE)
   {
     console_semaphore = WAIT_CONSOLE_COMMAND;
   }
 
-  // simple Win32 message loop
   while (GetMessageW(&msg, NULL, 0, 0) > 0)
   {
     if (!TranslateAcceleratorW(hWnd, hAccel, &msg))
@@ -2036,9 +1792,6 @@ void Run_Appli(HWND hWnd)
   ExitProcess(0);
 }
 
-/*--------------------------------------------------------*\
-|  Destroy_Appli
-\*--------------------------------------------------------*/
 void Destroy_Appli(HINSTANCE hInst)
 {
   UnregisterAppClass(hInst);

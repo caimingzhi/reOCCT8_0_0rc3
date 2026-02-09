@@ -12,7 +12,6 @@ class StepRepr_ShapeAspect : public Standard_Transient
 {
 
 public:
-  //! Returns a ShapeAspect
   Standard_EXPORT StepRepr_ShapeAspect();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>&        aName,

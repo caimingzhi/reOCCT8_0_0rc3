@@ -1,24 +1,9 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <math_BracketedRoot.hpp>
 #include <math_Function.hpp>
 #include <StdFail_NotDone.hpp>
 
-// reference algorithm:
-//                   Brent method
-//                   numerical recipes in C (p. 269)
 math_BracketedRoot::math_BracketedRoot(math_Function& F,
                                        const double   Bound1,
                                        const double   Bound2,
@@ -45,7 +30,7 @@ math_BracketedRoot::math_BracketedRoot(math_Function& F,
     {
       if (TheError * Fc > 0.)
       {
-        c  = a; // rename a TheRoot c and adjust bounding interval d
+        c  = a;
         Fc = Fa;
         d  = TheRoot - a;
         e  = d;
@@ -59,7 +44,7 @@ math_BracketedRoot::math_BracketedRoot(math_Function& F,
         TheError = Fc;
         Fc       = Fa;
       }
-      tol1 = 2. * ZEPS * std::abs(TheRoot) + 0.5 * Tolerance; // convergence check
+      tol1 = 2. * ZEPS * std::abs(TheRoot) + 0.5 * Tolerance;
       xm   = 0.5 * (c - TheRoot);
       if (std::abs(xm) <= tol1 || TheError == 0.)
       {
@@ -68,7 +53,7 @@ math_BracketedRoot::math_BracketedRoot(math_Function& F,
       }
       if (std::abs(e) >= tol1 && std::abs(Fa) > std::abs(TheError))
       {
-        s = TheError / Fa; // attempt inverse quadratic interpolation
+        s = TheError / Fa;
         if (a == c)
         {
           p = 2. * xm * s;
@@ -84,30 +69,30 @@ math_BracketedRoot::math_BracketedRoot(math_Function& F,
         if (p > 0.)
         {
           q = -q;
-        } // check whether in bounds
+        }
         p    = std::abs(p);
         min1 = 3. * xm * q - std::abs(tol1 * q);
         min2 = std::abs(e * q);
         if (2. * p < (min1 < min2 ? min1 : min2))
         {
-          e = d; // accept interpolation
+          e = d;
           d = p / q;
         }
         else
         {
-          d = xm; // interpolation failed,use bissection
+          d = xm;
           e = d;
         }
       }
       else
-      { // bounds decreasing too slowly ,use bissection
+      {
         d = xm;
         e = d;
       }
-      a  = TheRoot; // move last best guess to a
+      a  = TheRoot;
       Fa = TheError;
       if (std::abs(d) > tol1)
-      { // evaluate new trial root
+      {
         TheRoot += d;
       }
       else

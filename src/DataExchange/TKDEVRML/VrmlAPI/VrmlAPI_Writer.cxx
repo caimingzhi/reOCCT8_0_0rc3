@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRep_Tool.hpp>
 #include <OSD_FileSystem.hpp>
@@ -79,7 +68,7 @@ void VrmlAPI_Writer::ResetToDefaults()
     new NCollection_HArray1<double>(1, 1, myShininess);
   occ::handle<NCollection_HArray1<Quantity_Color>> Col =
     new NCollection_HArray1<Quantity_Color>(1, 1, Quantity_NOC_BLACK);
-  //
+
   myFrontMaterial->SetAmbientColor(Col);
   myFrontMaterial->SetTransparency(kik1);
   myFrontMaterial->SetShininess(kik2);
@@ -104,8 +93,7 @@ void VrmlAPI_Writer::ResetToDefaults()
   myUnfreeBoundsMaterial->SetAmbientColor(Col);
   myUnfreeBoundsMaterial->SetTransparency(kik1);
   myUnfreeBoundsMaterial->SetShininess(kik2);
-  //
-  //
+
   occ::handle<NCollection_HArray1<Quantity_Color>> Col2 =
     new NCollection_HArray1<Quantity_Color>(1,
                                             1,
@@ -119,19 +107,11 @@ void VrmlAPI_Writer::ResetToDefaults()
   myFreeBoundsMaterial->SetDiffuseColor(Col2);
   myUnfreeBoundsMaterial->SetDiffuseColor(Col2);
 
-  //
-  //  occ::handle<NCollection_HArray1<Quantity_Color>> Col3 = new
-  //  NCollection_HArray1<Quantity_Color>(1,1); color.SetValues(Quantity_NOC_GOLD);
-  //  Col3->SetValue(1,color);
   myLineMaterial->SetDiffuseColor(Col2);
   myWireMaterial->SetDiffuseColor(Col2);
-  //
-  //  occ::handle<NCollection_HArray1<Quantity_Color>> Col4 = new
-  //  NCollection_HArray1<Quantity_Color>(1,1); color.SetValues(Quantity_NOC_GOLD);
-  //  Col4->SetValue(1,color);
+
   myFrontMaterial->SetDiffuseColor(Col2);
   myPointsMaterial->SetDiffuseColor(Col2);
-  //
 
   myUisoMaterial->SetSpecularColor(Col3);
   myVisoMaterial->SetSpecularColor(Col3);
@@ -282,8 +262,6 @@ bool VrmlAPI_Writer::WriteDoc(const occ::handle<TDocStd_Document>& theDoc,
   return WriteDoc(theDoc, *anOutStream, theScale);
 }
 
-//=================================================================================================
-
 bool VrmlAPI_Writer::Write(const TopoDS_Shape& aShape,
                            Standard_OStream&   theOStream,
                            const int           aVersion) const
@@ -295,8 +273,6 @@ bool VrmlAPI_Writer::Write(const TopoDS_Shape& aShape,
 
   return false;
 }
-
-//=================================================================================================
 
 bool VrmlAPI_Writer::WriteDoc(const occ::handle<TDocStd_Document>& theDoc,
                               Standard_OStream&                    theOStream,
@@ -321,44 +297,42 @@ bool VrmlAPI_Writer::write_v1(const TopoDS_Shape& aShape, Standard_OStream& theO
   ia1->SetMaterial(myVisoMaterial);
   ia1->SetHasMaterial(true);
   myDrawer->SetVIsoAspect(ia1);
-  // default Number of iso lines is 10
-  //----  Definition of LineAspect (default - without own material)
+
   occ::handle<VrmlConverter_LineAspect> la = new VrmlConverter_LineAspect;
   la->SetMaterial(myLineMaterial);
   la->SetHasMaterial(true);
   myDrawer->SetLineAspect(la);
-  //----  Definition of Wire (without any neighbour)
+
   occ::handle<VrmlConverter_LineAspect> lw = new VrmlConverter_LineAspect;
   lw->SetMaterial(myWireMaterial);
   lw->SetHasMaterial(true);
   myDrawer->SetWireAspect(lw);
-  //----  Definition of Free boundaries
+
   occ::handle<VrmlConverter_LineAspect> lf = new VrmlConverter_LineAspect;
   lf->SetMaterial(myFreeBoundsMaterial);
   lf->SetHasMaterial(true);
   myDrawer->SetFreeBoundaryAspect(lf);
-  //----  Definition of Unfree boundaries
+
   occ::handle<VrmlConverter_LineAspect> lun = new VrmlConverter_LineAspect;
   lun->SetMaterial(myUnfreeBoundsMaterial);
   lun->SetHasMaterial(true);
   myDrawer->SetUnFreeBoundaryAspect(lun);
-  //----  Definition of Points (default - without own material)
+
   occ::handle<VrmlConverter_PointAspect> pa = new VrmlConverter_PointAspect;
   pa->SetMaterial(myPointsMaterial);
   pa->SetHasMaterial(true);
   myDrawer->SetPointAspect(pa);
-  //-----------------------------------------
+
   occ::handle<VrmlConverter_ShadingAspect> sa = new VrmlConverter_ShadingAspect;
   sa->SetFrontMaterial(myFrontMaterial);
   sa->SetHasMaterial(true);
   Vrml_ShapeHints sh;
   sa->SetShapeHints(sh);
   myDrawer->SetShadingAspect(sa);
-  //-------- Shape --------------------------
+
   NCollection_Array1<TopoDS_Shape> Shapes(1, 1);
   Shapes.SetValue(1, aShape);
 
-  // Check shape tessellation
   TopExp_Explorer anExp(aShape, TopAbs_FACE);
   TopLoc_Location aLoc;
   bool            hasTriangles = false;
@@ -375,10 +349,6 @@ bool VrmlAPI_Writer::write_v1(const TopoDS_Shape& aShape, Standard_OStream& theO
       }
     }
   }
-
-  //=========================================
-  //----  Definition of data for Projector
-  //=========================================
 
   VrmlConverter_TypeOfLight            Light  = VrmlConverter_NoLight;
   VrmlConverter_TypeOfCamera           Camera = VrmlConverter_PerspectiveCamera;

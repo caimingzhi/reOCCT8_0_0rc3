@@ -6,8 +6,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Units_Dimensions, Standard_Transient)
 
-//=================================================================================================
-
 Units_Dimensions::Units_Dimensions(const double amass,
                                    const double alength,
                                    const double atime,
@@ -28,14 +26,6 @@ Units_Dimensions::Units_Dimensions(const double amass,
   theplaneangle               = aplaneangle;
   thesolidangle               = asolidangle;
 }
-
-//=======================================================================
-// function : Quantity
-
-// purpose  : gets the string quantity from dimension parameter
-// Warning  : Bo Bo Tetete,take an aspirine !!
-//	     If you found a more simple way ,phone to GG,thanks ...
-//=======================================================================
 
 static occ::handle<NCollection_HSequence<occ::handle<Units_Quantity>>> quantitySequence;
 static TCollection_AsciiString                                         quantityName;
@@ -64,8 +54,6 @@ const char* Units_Dimensions::Quantity() const
   return nullptr;
 }
 
-//=================================================================================================
-
 occ::handle<Units_Dimensions> Units_Dimensions::Multiply(
   const occ::handle<Units_Dimensions>& adimensions) const
 {
@@ -79,8 +67,6 @@ occ::handle<Units_Dimensions> Units_Dimensions::Multiply(
                               theplaneangle + adimensions->PlaneAngle(),
                               thesolidangle + adimensions->SolidAngle());
 }
-
-//=================================================================================================
 
 occ::handle<Units_Dimensions> Units_Dimensions::Divide(
   const occ::handle<Units_Dimensions>& adimensions) const
@@ -96,8 +82,6 @@ occ::handle<Units_Dimensions> Units_Dimensions::Divide(
                               thesolidangle - adimensions->SolidAngle());
 }
 
-//=================================================================================================
-
 occ::handle<Units_Dimensions> Units_Dimensions::Power(const double anexponent) const
 {
   return new Units_Dimensions(themass * anexponent,
@@ -111,8 +95,6 @@ occ::handle<Units_Dimensions> Units_Dimensions::Power(const double anexponent) c
                               thesolidangle * anexponent);
 }
 
-//=================================================================================================
-
 bool Units_Dimensions::IsEqual(const occ::handle<Units_Dimensions>& adimensions) const
 {
   return (themass == adimensions->Mass() && thelength == adimensions->Length()
@@ -124,14 +106,10 @@ bool Units_Dimensions::IsEqual(const occ::handle<Units_Dimensions>& adimensions)
           && thesolidangle == adimensions->SolidAngle());
 }
 
-//=================================================================================================
-
 bool Units_Dimensions::IsNotEqual(const occ::handle<Units_Dimensions>& adimensions) const
 {
   return !(IsEqual(adimensions));
 }
-
-//=================================================================================================
 
 void Units_Dimensions::Dump(const int ashift) const
 {
@@ -168,21 +146,11 @@ void Units_Dimensions::Dump(const int ashift) const
   std::cout << "         solid angle               : " << thesolidangle << std::endl;
 }
 
-//=======================================================================
-// function : operator *
-// purpose  :
-//=======================================================================
-
 occ::handle<Units_Dimensions> operator*(const occ::handle<Units_Dimensions>& adimension1,
                                         const occ::handle<Units_Dimensions>& adimension2)
 {
   return adimension1->Multiply(adimension2);
 }
-
-//=======================================================================
-// function : operator /
-// purpose  :
-//=======================================================================
 
 occ::handle<Units_Dimensions> operator/(const occ::handle<Units_Dimensions>& adimension1,
                                         const occ::handle<Units_Dimensions>& adimension2)
@@ -190,35 +158,11 @@ occ::handle<Units_Dimensions> operator/(const occ::handle<Units_Dimensions>& adi
   return adimension1->Divide(adimension2);
 }
 
-//=================================================================================================
-
 occ::handle<Units_Dimensions> pow(const occ::handle<Units_Dimensions>& adimension,
                                   const double                         areal)
 {
   return adimension->Power(areal);
 }
-
-//=======================================================================
-// function : operator ==
-// purpose  :
-//=======================================================================
-
-// bool operator ==(const occ::handle<Units_Dimensions>& adimension1,
-//			     const occ::handle<Units_Dimensions>& adimension2)
-//{
-//   return adimension1->IsEqual(adimension2);
-// }
-
-//=======================================================================
-// function : operator !=
-// purpose  :
-//=======================================================================
-
-// bool operator !=(const occ::handle<Units_Dimensions>& adimension1,
-//			     const occ::handle<Units_Dimensions>& adimension2)
-//{
-//   return adimension1->IsNotEqual(adimension2);
-// }
 
 occ::handle<Units_Dimensions> Units_Dimensions::ALess()
 {

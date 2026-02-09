@@ -3,10 +3,6 @@
 #include <Standard_Failure.hpp>
 #include <TopTools_LocationSet.hpp>
 
-// This file defines global functions not declared in any public header,
-// intended for use from debugger prompt (Command Window in Visual Studio)
-
-//! Save shape to file
 const char* BRepTools_Write(const char* theFileStr, void* theShapePtr)
 {
   if (theFileStr == nullptr || theShapePtr == nullptr)
@@ -27,7 +23,6 @@ const char* BRepTools_Write(const char* theFileStr, void* theShapePtr)
   }
 }
 
-//! Dump shape to cout
 const char* BRepTools_Dump(void* theShapePtr)
 {
   if (theShapePtr == nullptr)
@@ -50,7 +45,6 @@ const char* BRepTools_Dump(void* theShapePtr)
   }
 }
 
-//! Dump shape location to cout
 const char* BRepTools_DumpLoc(void* theLocationPtr)
 {
   if (theLocationPtr == nullptr)
@@ -75,10 +69,6 @@ const char* BRepTools_DumpLoc(void* theLocationPtr)
   }
 }
 
-// MSVC debugger cannot deal correctly with functions whose argunments
-// have non-standard types. Here we define alternative to the above functions
-// with good types with the hope that GDB on Linux or other debugger could
-// work with them (DBX could, on SUN Solaris).
 #ifndef _MSC_VER
 
 const char* BRepTools_Write(const char* theFileNameStr, const TopoDS_Shape& theShape)

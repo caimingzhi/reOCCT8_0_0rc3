@@ -6,11 +6,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_GeoTolAndGeoTolWthMod, StepDimTol_GeometricTolerance)
 
-//=================================================================================================
-
 StepDimTol_GeoTolAndGeoTolWthMod::StepDimTol_GeoTolAndGeoTolWthMod() = default;
-
-//=================================================================================================
 
 void StepDimTol_GeoTolAndGeoTolWthMod::Init(
   const occ::handle<TCollection_HAsciiString>&                   theName,
@@ -27,8 +23,6 @@ void StepDimTol_GeoTolAndGeoTolWthMod::Init(
   myGeometricToleranceWithModifiers = theGTWM;
   myToleranceType                   = theType;
 }
-
-//=================================================================================================
 
 void StepDimTol_GeoTolAndGeoTolWthMod::Init(
   const occ::handle<TCollection_HAsciiString>&                   theName,

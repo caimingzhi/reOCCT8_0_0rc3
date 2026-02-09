@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRep_Builder.hpp>
 #include <Message_ProgressScope.hpp>
@@ -30,18 +19,11 @@
 #include <Transfer_TransientProcess.hpp>
 #include <TransferBRep_ShapeBinder.hpp>
 
-//=================================================================================================
-
 StepToTopoDS_TranslateSolid::StepToTopoDS_TranslateSolid()
     : myError(StepToTopoDS_TranslateSolidOther)
 {
   done = false;
 }
-
-// ============================================================================
-// Method  : Init
-// Purpose : Init with a TessellatedSolid and a Tool
-// ============================================================================
 
 void StepToTopoDS_TranslateSolid::Init(const occ::handle<StepVisual_TessellatedSolid>& theTSo,
                                        const occ::handle<Transfer_TransientProcess>&   theTP,
@@ -131,21 +113,11 @@ void StepToTopoDS_TranslateSolid::Init(const occ::handle<StepVisual_TessellatedS
   done     = true;
 }
 
-// ============================================================================
-// Method  : Value
-// Purpose : Return the mapped Shape
-// ============================================================================
-
 const TopoDS_Shape& StepToTopoDS_TranslateSolid::Value() const
 {
   StdFail_NotDone_Raise_if(!done, "StepToTopoDS_TranslateSolid::Value() - no result");
   return myResult;
 }
-
-// ============================================================================
-// Method  : Error
-// Purpose : Return the TranslateShell Error code
-// ============================================================================
 
 StepToTopoDS_TranslateSolidError StepToTopoDS_TranslateSolid::Error() const
 {

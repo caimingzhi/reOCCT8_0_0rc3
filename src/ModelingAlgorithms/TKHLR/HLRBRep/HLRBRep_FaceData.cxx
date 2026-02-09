@@ -4,16 +4,12 @@
 #include <HLRBRep_Surface.hpp>
 #include <TopoDS_Face.hpp>
 
-//=================================================================================================
-
 HLRBRep_FaceData::HLRBRep_FaceData()
     : myFlags(0),
       mySize(0)
 {
   Selected(true);
 }
-
-//=================================================================================================
 
 void HLRBRep_FaceData::Set(const TopoDS_Face&       FG,
                            const TopAbs_Orientation Or,
@@ -27,14 +23,10 @@ void HLRBRep_FaceData::Set(const TopoDS_Face&       FG,
   Wires() = new HLRAlgo_WiresBlock(NW);
 }
 
-//=================================================================================================
-
 void HLRBRep_FaceData::SetWire(const int WI, const int NE)
 {
   Wires()->Set(WI, new HLRAlgo_EdgesBlock(NE));
 }
-
-//=================================================================================================
 
 void HLRBRep_FaceData::SetWEdge(const int                WI,
                                 const int                EWI,

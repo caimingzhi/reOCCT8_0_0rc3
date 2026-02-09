@@ -1,15 +1,4 @@
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ShapePersistent_TopoDS.hpp>
 #include <ShapePersistent_BRep.hpp>
@@ -31,10 +20,6 @@ enum
   ConvexMask     = 64
 };
 
-//=======================================================================
-// function : Read
-// purpose  : Read persistent data from a file
-//=======================================================================
 void ShapePersistent_TopoDS::HShape::Read(StdObjMgt_ReadData& theReadData)
 {
   theReadData >> myEntry;
@@ -55,7 +40,7 @@ void ShapePersistent_TopoDS::HShape::PChildren(SequenceOfPersistent& theChildren
 
 void ShapePersistent_TopoDS::pTBase::setFlags(const occ::handle<TopoDS_TShape>& theTShape) const
 {
-  theTShape->Free(false); // Always frozen when coming from DB
+  theTShape->Free(false);
   theTShape->Modified((myFlags & ModifiedMask) != 0);
   theTShape->Checked((myFlags & CheckedMask) != 0);
   theTShape->Orientable((myFlags & OrientableMask) != 0);
@@ -109,10 +94,6 @@ template class ShapePersistent_TopoDS::pTSimple<TopoDS_TSolid>;
 template class ShapePersistent_TopoDS::pTSimple<TopoDS_TCompSolid>;
 template class ShapePersistent_TopoDS::pTSimple<TopoDS_TCompound>;
 
-//=======================================================================
-// function : Translate
-// purpose  : Creates a persistent object from a shape
-//=======================================================================
 Handle(ShapePersistent_TopoDS::HShape) ShapePersistent_TopoDS::Translate(
   const TopoDS_Shape&                                                                      theShape,
   NCollection_DataMap<occ::handle<Standard_Transient>, occ::handle<StdObjMgt_Persistent>>& theMap,
@@ -127,7 +108,7 @@ Handle(ShapePersistent_TopoDS::HShape) ShapePersistent_TopoDS::Translate(
 
   if (theMap.IsBound(theShape.TShape()))
   {
-    // found in the registered
+
     Handle(StdPersistent_TopoDS::TShape) aPShape =
       Handle(StdPersistent_TopoDS::TShape)::DownCast(theMap.Find(theShape.TShape()));
     pHShape->myTShape = aPShape;
@@ -210,10 +191,8 @@ Handle(ShapePersistent_TopoDS::HShape) ShapePersistent_TopoDS::Translate(
         break;
     }
 
-    // Register in the persistent map
     theMap.Bind(theShape.TShape(), pHShape->myTShape);
 
-    // Shape flags
     int aFlags = 0;
     if (theShape.Modified())
       aFlags |= ModifiedMask;
@@ -229,17 +208,16 @@ Handle(ShapePersistent_TopoDS::HShape) ShapePersistent_TopoDS::Translate(
       aFlags |= ConvexMask;
     aPTShape->myFlags = aFlags;
 
-    // Copy current Shape
     TopoDS_Shape S = theShape;
     S.Orientation(TopAbs_FORWARD);
     S.Location(TopLoc_Location());
-    // Count the number of <sub-shape> of the Shape's TShape
+
     int nbElem = S.NbChildren();
     if (nbElem > 0)
     {
       occ::handle<NCollection_HArray1<occ::handle<StdObjMgt_Persistent>>> aShapes =
         new NCollection_HArray1<occ::handle<StdObjMgt_Persistent>>(1, nbElem);
-      // translate <sub-shapes>
+
       TopoDS_Iterator anItTrans(S);
       for (int i = 1; anItTrans.More(); anItTrans.Next(), ++i)
       {

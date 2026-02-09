@@ -2,8 +2,6 @@
 
 #include <Standard_Type.hpp>
 
-//! Root of "persistent" classes, a legacy support of
-//! object oriented databases, now outdated.
 class Standard_Persistent : public Standard_Transient
 {
 public:

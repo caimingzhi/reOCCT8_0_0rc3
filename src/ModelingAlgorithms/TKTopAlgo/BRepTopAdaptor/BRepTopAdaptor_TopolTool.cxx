@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Adaptor2d_Curve2d.hpp>
 #include <BRep_Tool.hpp>
@@ -38,8 +26,6 @@ static void Analyse(const NCollection_Array2<gp_Pnt>& array2,
                     int&                              myNbSamplesU,
                     int&                              myNbSamplesV);
 
-//=================================================================================================
-
 BRepTopAdaptor_TopolTool::BRepTopAdaptor_TopolTool()
     : myFClass2d(nullptr),
       myU0(0.0),
@@ -50,23 +36,16 @@ BRepTopAdaptor_TopolTool::BRepTopAdaptor_TopolTool()
   myNbSamplesU = -1;
 }
 
-//=================================================================================================
-
 BRepTopAdaptor_TopolTool::BRepTopAdaptor_TopolTool(const occ::handle<Adaptor3d_Surface>& S)
     : myFClass2d(nullptr)
 {
   Initialize(S);
-  // myS = S;
 }
-
-//=================================================================================================
 
 void BRepTopAdaptor_TopolTool::Initialize()
 {
   throw Standard_NotImplemented("BRepTopAdaptor_TopolTool::Initialize()");
 }
-
-//=================================================================================================
 
 void BRepTopAdaptor_TopolTool::Initialize(const occ::handle<Adaptor3d_Surface>& S)
 {
@@ -96,8 +75,6 @@ void BRepTopAdaptor_TopolTool::Initialize(const occ::handle<Adaptor3d_Surface>& 
   myCIterator = NCollection_List<occ::handle<Standard_Transient>>::Iterator();
 }
 
-//=================================================================================================
-
 void BRepTopAdaptor_TopolTool::Initialize(const occ::handle<Adaptor2d_Curve2d>& C)
 {
   myCurve = occ::down_cast<BRepAdaptor_Curve2d>(C);
@@ -107,36 +84,25 @@ void BRepTopAdaptor_TopolTool::Initialize(const occ::handle<Adaptor2d_Curve2d>& 
   }
 }
 
-//=================================================================================================
-
 void BRepTopAdaptor_TopolTool::Init()
 {
   myCIterator.Initialize(myCurves);
 }
-
-//=================================================================================================
 
 bool BRepTopAdaptor_TopolTool::More()
 {
   return myCIterator.More();
 }
 
-//=================================================================================================
-
 void BRepTopAdaptor_TopolTool::Next()
 {
   myCIterator.Next();
 }
 
-//=================================================================================================
-
 occ::handle<Adaptor2d_Curve2d> BRepTopAdaptor_TopolTool::Value()
 {
   return occ::down_cast<Adaptor2d_Curve2d>(myCIterator.Value());
 }
-
-// modified by NIZNHY-PKV Tue Mar 27 14:23:40 2001 f
-//=================================================================================================
 
 void* BRepTopAdaptor_TopolTool::Edge() const
 {
@@ -145,15 +111,10 @@ void* BRepTopAdaptor_TopolTool::Edge() const
   return (void*)(&aHCurve->Edge());
 }
 
-// modified by NIZNHY-PKV Tue Mar 27 14:23:43 2001 t
-//=================================================================================================
-
 void BRepTopAdaptor_TopolTool::InitVertexIterator()
 {
   myVIterator.Init(myCurve->Edge(), TopAbs_VERTEX);
 }
-
-//=================================================================================================
 
 bool BRepTopAdaptor_TopolTool::MoreVertex()
 {
@@ -165,14 +126,10 @@ void BRepTopAdaptor_TopolTool::NextVertex()
   myVIterator.Next();
 }
 
-//=================================================================================================
-
 occ::handle<Adaptor3d_HVertex> BRepTopAdaptor_TopolTool::Vertex()
 {
   return new BRepTopAdaptor_HVertex(TopoDS::Vertex(myVIterator.Current()), myCurve);
 }
-
-//=================================================================================================
 
 TopAbs_State BRepTopAdaptor_TopolTool::Classify(const gp_Pnt2d& P,
                                                 const double    Tol,
@@ -187,8 +144,6 @@ TopAbs_State BRepTopAdaptor_TopolTool::Classify(const gp_Pnt2d& P,
   return (((BRepTopAdaptor_FClass2d*)myFClass2d)->Perform(P, RecadreOnPeriodic));
 }
 
-//=================================================================================================
-
 bool BRepTopAdaptor_TopolTool::IsThePointOn(const gp_Pnt2d& P,
                                             const double    Tol,
                                             const bool      RecadreOnPeriodic)
@@ -201,8 +156,6 @@ bool BRepTopAdaptor_TopolTool::IsThePointOn(const gp_Pnt2d& P,
           == ((BRepTopAdaptor_FClass2d*)myFClass2d)->TestOnRestriction(P, Tol, RecadreOnPeriodic));
 }
 
-//=================================================================================================
-
 void BRepTopAdaptor_TopolTool::Destroy()
 {
   if (myFClass2d != nullptr)
@@ -212,26 +165,16 @@ void BRepTopAdaptor_TopolTool::Destroy()
   }
 }
 
-//=================================================================================================
-
 TopAbs_Orientation BRepTopAdaptor_TopolTool::Orientation(const occ::handle<Adaptor2d_Curve2d>& C)
 {
   occ::handle<BRepAdaptor_Curve2d> brhc = occ::down_cast<BRepAdaptor_Curve2d>(C);
   return brhc->Edge().Orientation();
 }
 
-//=================================================================================================
-
 TopAbs_Orientation BRepTopAdaptor_TopolTool::Orientation(const occ::handle<Adaptor3d_HVertex>& C)
 {
   return Adaptor3d_TopolTool::Orientation(C);
 }
-
-//-- ============================================================
-//-- methods  used for samples
-//-- ============================================================
-
-//=================================================================================================
 
 void Analyse(const NCollection_Array2<gp_Pnt>& array2,
              const int                         nbup,
@@ -256,7 +199,7 @@ void Analyse(const NCollection_Array2<gp_Pnt>& array2,
                   C.Z() - B.Z() - B.Z() + A.Z());
       int locnbch = 0;
       for (j = 3; j < nbvp; j++)
-      { //-- test
+      {
         const gp_Pnt& Ax = array2.Value(i, j - 1);
         const gp_Pnt& Bx = array2.Value(i, j);
         const gp_Pnt& Cx = array2.Value(i, j + 1);
@@ -306,7 +249,7 @@ void Analyse(const NCollection_Array2<gp_Pnt>& array2,
                   C.Z() - B.Z() - B.Z() + A.Z());
       int locnbch = 0;
       for (i = 3; i < nbup; i++)
-      { //-- test
+      {
         const gp_Pnt& Ax = array2.Value(i - 1, j);
         const gp_Pnt& Bx = array2.Value(i, j);
         const gp_Pnt& Cx = array2.Value(i + 1, j);
@@ -341,8 +284,6 @@ void Analyse(const NCollection_Array2<gp_Pnt>& array2,
   }
   myNbSamplesU = nbch + 5;
 }
-
-//=================================================================================================
 
 void BRepTopAdaptor_TopolTool::ComputeSamplePoints()
 {
@@ -424,8 +365,7 @@ void BRepTopAdaptor_TopolTool::ComputeSamplePoints()
     case GeomAbs_Sphere:
     case GeomAbs_Torus:
     {
-      //-- Set 15 for 2pi
-      //-- Not enough ->25 for 2pi
+
       nbsu = (int)(8 * (usup - uinf));
       nbsv = (int)(7 * (vsup - vinf));
       if (nbsu < 5)
@@ -433,10 +373,9 @@ void BRepTopAdaptor_TopolTool::ComputeSamplePoints()
       if (nbsv < 5)
         nbsv = 5;
       if (nbsu > 30)
-        nbsu = 30; // modif HRT buc60462
+        nbsu = 30;
       if (nbsv > 15)
         nbsv = 15;
-      //-- printf("\n nbsu=%d nbsv=%d\n",nbsu,nbsv);
     }
     break;
     case GeomAbs_SurfaceOfRevolution:
@@ -454,10 +393,6 @@ void BRepTopAdaptor_TopolTool::ComputeSamplePoints()
     break;
   }
 
-  //-- If the number of points is too great, analyze
-  //--
-  //--
-
   if (nbsu < 10)
     nbsu = 10;
   if (nbsv < 10)
@@ -466,7 +401,6 @@ void BRepTopAdaptor_TopolTool::ComputeSamplePoints()
   myNbSamplesU = nbsu;
   myNbSamplesV = nbsv;
 
-  //-- printf("\n BRepTopAdaptor_TopolTool NbSu=%d NbSv=%d ",nbsu,nbsv);
   if (nbsu > 10 || nbsv > 10)
   {
     if (typS == GeomAbs_BSplineSurface)
@@ -479,7 +413,6 @@ void BRepTopAdaptor_TopolTool::ComputeSamplePoints()
       Analyse(array2, nbup, nbvp, myNbSamplesU, myNbSamplesV);
       nbsu = myNbSamplesU;
       nbsv = myNbSamplesV;
-      //-- printf("\n Apres analyse BSPline  NbSu=%d NbSv=%d ",myNbSamplesU,myNbSamplesV);
     }
     else if (typS == GeomAbs_BezierSurface)
     {
@@ -491,7 +424,6 @@ void BRepTopAdaptor_TopolTool::ComputeSamplePoints()
       Analyse(array2, nbup, nbvp, myNbSamplesU, myNbSamplesV);
       nbsu = myNbSamplesU;
       nbsv = myNbSamplesV;
-      //-- printf("\n Apres analyse Bezier  NbSu=%d NbSv=%d ",myNbSamplesU,myNbSamplesV);
     }
   }
 
@@ -510,8 +442,6 @@ void BRepTopAdaptor_TopolTool::ComputeSamplePoints()
   myDV = (vsup - vinf) / (myNbSamplesV + 1);
 }
 
-//=================================================================================================
-
 int BRepTopAdaptor_TopolTool::NbSamplesU()
 {
   if (myNbSamplesU < 0)
@@ -520,8 +450,6 @@ int BRepTopAdaptor_TopolTool::NbSamplesU()
   }
   return (myNbSamplesU);
 }
-
-//=================================================================================================
 
 int BRepTopAdaptor_TopolTool::NbSamplesV()
 {
@@ -532,8 +460,6 @@ int BRepTopAdaptor_TopolTool::NbSamplesV()
   return (myNbSamplesV);
 }
 
-//=================================================================================================
-
 int BRepTopAdaptor_TopolTool::NbSamples()
 {
   if (myNbSamplesU < 0)
@@ -542,8 +468,6 @@ int BRepTopAdaptor_TopolTool::NbSamples()
   }
   return (myNbSamplesU * myNbSamplesV);
 }
-
-//=================================================================================================
 
 void BRepTopAdaptor_TopolTool::SamplePoint(const int i, gp_Pnt2d& P2d, gp_Pnt& P3d)
 {
@@ -554,8 +478,6 @@ void BRepTopAdaptor_TopolTool::SamplePoint(const int i, gp_Pnt2d& P2d, gp_Pnt& P
   P2d.SetCoord(u, v);
   P3d = myS->Value(u, v);
 }
-
-//=================================================================================================
 
 bool BRepTopAdaptor_TopolTool::DomainIsInfinite()
 {
@@ -575,14 +497,10 @@ bool BRepTopAdaptor_TopolTool::DomainIsInfinite()
   return (false);
 }
 
-//=================================================================================================
-
 bool BRepTopAdaptor_TopolTool::Has3d() const
 {
   return true;
 }
-
-//=================================================================================================
 
 double BRepTopAdaptor_TopolTool::Tol3d(const occ::handle<Adaptor2d_Curve2d>& C) const
 {
@@ -598,8 +516,6 @@ double BRepTopAdaptor_TopolTool::Tol3d(const occ::handle<Adaptor2d_Curve2d>& C) 
   return BRep_Tool::Tolerance(edge);
 }
 
-//=================================================================================================
-
 double BRepTopAdaptor_TopolTool::Tol3d(const occ::handle<Adaptor3d_HVertex>& V) const
 {
   occ::handle<BRepTopAdaptor_HVertex> brhv = occ::down_cast<BRepTopAdaptor_HVertex>(V);
@@ -610,8 +526,6 @@ double BRepTopAdaptor_TopolTool::Tol3d(const occ::handle<Adaptor3d_HVertex>& V) 
     throw Standard_DomainError("BRepTopAdaptor_TopolTool: vertex has no 3d representation");
   return BRep_Tool::Tolerance(ver);
 }
-
-//=================================================================================================
 
 gp_Pnt BRepTopAdaptor_TopolTool::Pnt(const occ::handle<Adaptor3d_HVertex>& V) const
 {

@@ -10,8 +10,6 @@
 #include <Precision.hpp>
 #include <Standard_NotImplemented.hpp>
 
-//=================================================================================================
-
 BlendFunc_GenChamfer::BlendFunc_GenChamfer(const occ::handle<Adaptor3d_Surface>& S1,
                                            const occ::handle<Adaptor3d_Surface>& S2,
                                            const occ::handle<Adaptor3d_Curve>&   CG)
@@ -24,18 +22,12 @@ BlendFunc_GenChamfer::BlendFunc_GenChamfer(const occ::handle<Adaptor3d_Surface>&
 {
 }
 
-//=================================================================================================
-
 int BlendFunc_GenChamfer::NbEquations() const
 {
   return 4;
 }
 
-//=================================================================================================
-
 void BlendFunc_GenChamfer::Set(const double, const double) {}
-
-//=================================================================================================
 
 void BlendFunc_GenChamfer::GetTolerance(math_Vector& Tolerance, const double Tol) const
 {
@@ -44,8 +36,6 @@ void BlendFunc_GenChamfer::GetTolerance(math_Vector& Tolerance, const double Tol
   Tolerance(3) = surf2->UResolution(Tol);
   Tolerance(4) = surf2->VResolution(Tol);
 }
-
-//=================================================================================================
 
 void BlendFunc_GenChamfer::GetBounds(math_Vector& InfBound, math_Vector& SupBound) const
 {
@@ -69,14 +59,10 @@ void BlendFunc_GenChamfer::GetBounds(math_Vector& InfBound, math_Vector& SupBoun
   }
 }
 
-//=================================================================================================
-
 double BlendFunc_GenChamfer::GetMinimalDistance() const
 {
   return distmin;
 }
-
-//=================================================================================================
 
 bool BlendFunc_GenChamfer::Values(const math_Vector& X, math_Vector& F, math_Matrix& D)
 {
@@ -84,9 +70,7 @@ bool BlendFunc_GenChamfer::Values(const math_Vector& X, math_Vector& F, math_Mat
   return (val && Derivatives(X, D));
 }
 
-//=================================================================================================
-
-void BlendFunc_GenChamfer::Section(const double /*Param*/,
+void BlendFunc_GenChamfer::Section(const double,
                                    const double U1,
                                    const double V1,
                                    const double U2,
@@ -106,35 +90,25 @@ void BlendFunc_GenChamfer::Section(const double /*Param*/,
   Pfin = ElCLib::Parameter(C, pts2);
 }
 
-//=================================================================================================
-
 bool BlendFunc_GenChamfer::IsRational() const
 {
   return false;
 }
-
-//=================================================================================================
 
 void BlendFunc_GenChamfer::GetMinimalWeight(NCollection_Array1<double>& Weights) const
 {
   Weights.Init(1);
 }
 
-//=================================================================================================
-
 int BlendFunc_GenChamfer::NbIntervals(const GeomAbs_Shape S) const
 {
   return curv->NbIntervals(BlendFunc::NextShape(S));
 }
 
-//=================================================================================================
-
 void BlendFunc_GenChamfer::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const
 {
   curv->Intervals(T, BlendFunc::NextShape(S));
 }
-
-//=================================================================================================
 
 void BlendFunc_GenChamfer::GetShape(int& NbPoles, int& NbKnots, int& Degree, int& NbPoles2d)
 {
@@ -144,10 +118,6 @@ void BlendFunc_GenChamfer::GetShape(int& NbPoles, int& NbKnots, int& Degree, int
   Degree    = 1;
 }
 
-//=======================================================================
-// function : GetTolerance
-// purpose  : Determine les Tolerance a utiliser dans les approximations.
-//=======================================================================
 void BlendFunc_GenChamfer::GetTolerance(const double BoundTol,
                                         const double,
                                         const double,
@@ -157,15 +127,11 @@ void BlendFunc_GenChamfer::GetTolerance(const double BoundTol,
   Tol3d.Init(BoundTol);
 }
 
-//=================================================================================================
-
 void BlendFunc_GenChamfer::Knots(NCollection_Array1<double>& TKnots)
 {
   TKnots(1) = 0.;
   TKnots(2) = 1.;
 }
-
-//=================================================================================================
 
 void BlendFunc_GenChamfer::Mults(NCollection_Array1<int>& TMults)
 {
@@ -173,23 +139,19 @@ void BlendFunc_GenChamfer::Mults(NCollection_Array1<int>& TMults)
   TMults(2) = 2;
 }
 
-//=================================================================================================
-
-bool BlendFunc_GenChamfer::Section(const Blend_Point& /*P*/,
-                                   NCollection_Array1<gp_Pnt>& /*Poles*/,
-                                   NCollection_Array1<gp_Vec>& /*DPoles*/,
-                                   NCollection_Array1<gp_Vec>& /*D2Poles*/,
-                                   NCollection_Array1<gp_Pnt2d>& /*Poles2d*/,
-                                   NCollection_Array1<gp_Vec2d>& /*DPoles2d*/,
-                                   NCollection_Array1<gp_Vec2d>& /*D2Poles2d*/,
-                                   NCollection_Array1<double>& /*Weights*/,
-                                   NCollection_Array1<double>& /*DWeights*/,
-                                   NCollection_Array1<double>& /*D2Weights*/)
+bool BlendFunc_GenChamfer::Section(const Blend_Point&,
+                                   NCollection_Array1<gp_Pnt>&,
+                                   NCollection_Array1<gp_Vec>&,
+                                   NCollection_Array1<gp_Vec>&,
+                                   NCollection_Array1<gp_Pnt2d>&,
+                                   NCollection_Array1<gp_Vec2d>&,
+                                   NCollection_Array1<gp_Vec2d>&,
+                                   NCollection_Array1<double>&,
+                                   NCollection_Array1<double>&,
+                                   NCollection_Array1<double>&)
 {
   return false;
 }
-
-//=================================================================================================
 
 bool BlendFunc_GenChamfer::Section(const Blend_Point&            P,
                                    NCollection_Array1<gp_Pnt>&   Poles,
@@ -238,8 +200,6 @@ bool BlendFunc_GenChamfer::Section(const Blend_Point&            P,
 
   return (!istgt);
 }
-
-//=================================================================================================
 
 void BlendFunc_GenChamfer::Section(const Blend_Point&            P,
                                    NCollection_Array1<gp_Pnt>&   Poles,

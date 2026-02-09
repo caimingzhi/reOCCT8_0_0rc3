@@ -9,15 +9,9 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_ModelBuilder, IMeshTools_ModelBuilder)
 
-//=================================================================================================
-
 BRepMesh_ModelBuilder::BRepMesh_ModelBuilder() = default;
 
-//=================================================================================================
-
 BRepMesh_ModelBuilder::~BRepMesh_ModelBuilder() = default;
-
-//=================================================================================================
 
 occ::handle<IMeshData_Model> BRepMesh_ModelBuilder::performInternal(
   const TopoDS_Shape&          theShape,
@@ -30,7 +24,7 @@ occ::handle<IMeshData_Model> BRepMesh_ModelBuilder::performInternal(
 
   if (!aBox.IsVoid())
   {
-    // Build data model for further processing.
+
     aModel = new BRepMeshData_Model(theShape);
 
     if (theParameters.Relative)

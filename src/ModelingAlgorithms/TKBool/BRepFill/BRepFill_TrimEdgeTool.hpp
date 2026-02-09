@@ -16,7 +16,6 @@ class TopoDS_Edge;
 class TopoDS_Shape;
 class TopoDS_Vertex;
 
-//! Geometric Tool using to construct Offset Wires.
 class BRepFill_TrimEdgeTool
 {
 public:

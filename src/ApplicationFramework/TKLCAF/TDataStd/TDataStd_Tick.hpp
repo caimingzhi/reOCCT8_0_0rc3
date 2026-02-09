@@ -5,20 +5,12 @@
 class Standard_GUID;
 class TDF_Label;
 
-//! Defines a boolean attribute.
-//! If it exists at a label - true,
-//! Otherwise - false.
 class TDataStd_Tick : public TDataStd_GenericEmpty
 {
 
 public:
-  //! Static methods
-  //! ==============
   Standard_EXPORT static const Standard_GUID& GetID();
 
-  //! Find, or create, a Tick attribute.
-  //! Tick methods
-  //! ============
   Standard_EXPORT static occ::handle<TDataStd_Tick> Set(const TDF_Label& label);
 
   Standard_EXPORT TDataStd_Tick();

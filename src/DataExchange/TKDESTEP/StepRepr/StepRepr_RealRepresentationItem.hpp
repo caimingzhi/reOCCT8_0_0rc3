@@ -10,7 +10,6 @@ class StepRepr_RealRepresentationItem : public StepRepr_RepresentationItem
 {
 
 public:
-  //! Returns a RealRepresentationItem
   Standard_EXPORT StepRepr_RealRepresentationItem();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& theName,

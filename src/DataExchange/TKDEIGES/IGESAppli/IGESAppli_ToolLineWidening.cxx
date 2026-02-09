@@ -14,7 +14,7 @@
 IGESAppli_ToolLineWidening::IGESAppli_ToolLineWidening() = default;
 
 void IGESAppli_ToolLineWidening::ReadOwnParams(const occ::handle<IGESAppli_LineWidening>& ent,
-                                               const occ::handle<IGESData_IGESReaderData>& /*IR*/,
+                                               const occ::handle<IGESData_IGESReaderData>&,
                                                IGESData_ParamReader& PR) const
 {
   int    tempNbPropertyValues;
@@ -23,9 +23,7 @@ void IGESAppli_ToolLineWidening::ReadOwnParams(const occ::handle<IGESAppli_LineW
   int    tempExtensionFlag;
   int    tempJustificationFlag;
   double tempExtensionValue = 0.;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadInteger(PR.Current(), "No. of Property values", tempNbPropertyValues);
   PR.ReadReal(PR.Current(), "Width of metalization", tempWidth);
   PR.ReadInteger(PR.Current(), "Cornering code", tempCorneringCode);
@@ -56,14 +54,14 @@ void IGESAppli_ToolLineWidening::WriteOwnParams(const occ::handle<IGESAppli_Line
   IW.Send(ent->ExtensionValue());
 }
 
-void IGESAppli_ToolLineWidening::OwnShared(const occ::handle<IGESAppli_LineWidening>& /*ent*/,
-                                           Interface_EntityIterator& /*iter*/) const
+void IGESAppli_ToolLineWidening::OwnShared(const occ::handle<IGESAppli_LineWidening>&,
+                                           Interface_EntityIterator&) const
 {
 }
 
 void IGESAppli_ToolLineWidening::OwnCopy(const occ::handle<IGESAppli_LineWidening>& another,
                                          const occ::handle<IGESAppli_LineWidening>& ent,
-                                         Interface_CopyTool& /*TC*/) const
+                                         Interface_CopyTool&) const
 {
   ent->Init(5,
             another->WidthOfMetalization(),
@@ -89,13 +87,13 @@ bool IGESAppli_ToolLineWidening::OwnCorrect(const occ::handle<IGESAppli_LineWide
     ent->InitLevel(nulevel, 0);
     res = true;
   }
-  return res; // nbpropertyvalues = 5 + reset level according to subordinate
+  return res;
 }
 
 IGESData_DirChecker IGESAppli_ToolLineWidening::DirChecker(
-  const occ::handle<IGESAppli_LineWidening>& /*ent*/) const
+  const occ::handle<IGESAppli_LineWidening>&) const
 {
-  IGESData_DirChecker DC(406, 5); // Form no = 5 & Type = 406
+  IGESData_DirChecker DC(406, 5);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
@@ -122,9 +120,9 @@ void IGESAppli_ToolLineWidening::OwnCheck(const occ::handle<IGESAppli_LineWideni
 }
 
 void IGESAppli_ToolLineWidening::OwnDump(const occ::handle<IGESAppli_LineWidening>& ent,
-                                         const IGESData_IGESDumper& /*dumper*/,
+                                         const IGESData_IGESDumper&,
                                          Standard_OStream& S,
-                                         const int /*level*/) const
+                                         const int) const
 {
   S << "IGESAppli_LineWidening\n";
 

@@ -12,22 +12,15 @@ class TopoDS_Face;
 class TopoDS_Edge;
 class TopoDS_Shape;
 
-//! Provides tools to implement local topological
-//! operations on a shape.
 class LocOpe
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Returns true when the wire <W> is closed
-  //! on the face <OnF>.
   Standard_EXPORT static bool Closed(const TopoDS_Wire& W, const TopoDS_Face& OnF);
 
-  //! Returns true when the edge <E> is closed
-  //! on the face <OnF>.
   Standard_EXPORT static bool Closed(const TopoDS_Edge& E, const TopoDS_Face& OnF);
 
-  //! Returns true when the faces are tangent
   Standard_EXPORT static bool TgtFaces(const TopoDS_Edge& E,
                                        const TopoDS_Face& F1,
                                        const TopoDS_Face& F2);

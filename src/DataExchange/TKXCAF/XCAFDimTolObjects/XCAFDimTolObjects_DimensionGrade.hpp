@@ -1,6 +1,5 @@
 #pragma once
 
-//! Defines value of grade
 enum XCAFDimTolObjects_DimensionGrade
 {
   XCAFDimTolObjects_DimensionGrade_IT01,

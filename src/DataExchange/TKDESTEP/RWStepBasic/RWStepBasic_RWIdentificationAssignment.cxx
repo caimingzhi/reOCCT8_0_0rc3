@@ -5,11 +5,7 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepBasic_RWIdentificationAssignment::RWStepBasic_RWIdentificationAssignment() = default;
-
-//=================================================================================================
 
 void RWStepBasic_RWIdentificationAssignment::ReadStep(
   const occ::handle<StepData_StepReaderData>&            data,
@@ -17,11 +13,9 @@ void RWStepBasic_RWIdentificationAssignment::ReadStep(
   occ::handle<Interface_Check>&                          ach,
   const occ::handle<StepBasic_IdentificationAssignment>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "identification_assignment"))
     return;
-
-  // Own fields of IdentificationAssignment
 
   occ::handle<TCollection_HAsciiString> aAssignedId;
   data->ReadString(num, 1, "assigned_id", ach, aAssignedId);
@@ -29,32 +23,23 @@ void RWStepBasic_RWIdentificationAssignment::ReadStep(
   occ::handle<StepBasic_IdentificationRole> aRole;
   data->ReadEntity(num, 2, "role", ach, STANDARD_TYPE(StepBasic_IdentificationRole), aRole);
 
-  // Initialize entity
   ent->Init(aAssignedId, aRole);
 }
-
-//=================================================================================================
 
 void RWStepBasic_RWIdentificationAssignment::WriteStep(
   StepData_StepWriter&                                   SW,
   const occ::handle<StepBasic_IdentificationAssignment>& ent) const
 {
 
-  // Own fields of IdentificationAssignment
-
   SW.Send(ent->AssignedId());
 
   SW.Send(ent->Role());
 }
 
-//=================================================================================================
-
 void RWStepBasic_RWIdentificationAssignment::Share(
   const occ::handle<StepBasic_IdentificationAssignment>& ent,
   Interface_EntityIterator&                              iter) const
 {
-
-  // Own fields of IdentificationAssignment
 
   iter.AddItem(ent->Role());
 }

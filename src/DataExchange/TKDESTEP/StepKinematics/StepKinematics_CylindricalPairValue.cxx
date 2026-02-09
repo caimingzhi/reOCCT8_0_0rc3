@@ -1,14 +1,10 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_CylindricalPairValue.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_CylindricalPairValue, StepKinematics_PairValue)
 
-//=================================================================================================
-
 StepKinematics_CylindricalPairValue::StepKinematics_CylindricalPairValue() = default;
-
-//=================================================================================================
 
 void StepKinematics_CylindricalPairValue::Init(
   const occ::handle<TCollection_HAsciiString>&     theRepresentationItem_Name,
@@ -23,28 +19,20 @@ void StepKinematics_CylindricalPairValue::Init(
   myActualRotation = theActualRotation;
 }
 
-//=================================================================================================
-
 double StepKinematics_CylindricalPairValue::ActualTranslation() const
 {
   return myActualTranslation;
 }
-
-//=================================================================================================
 
 void StepKinematics_CylindricalPairValue::SetActualTranslation(const double theActualTranslation)
 {
   myActualTranslation = theActualTranslation;
 }
 
-//=================================================================================================
-
 double StepKinematics_CylindricalPairValue::ActualRotation() const
 {
   return myActualRotation;
 }
-
-//=================================================================================================
 
 void StepKinematics_CylindricalPairValue::SetActualRotation(const double theActualRotation)
 {

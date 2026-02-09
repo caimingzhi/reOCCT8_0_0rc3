@@ -25,8 +25,6 @@ class TopOpeBRepDS_HDataStructure;
 class Geom2d_Curve;
 class Geom_Surface;
 
-//! Provides a Tool to build topologies. Used to
-//! instantiate the Builder algorithm.
 class TopOpeBRepDS_BuildTool
 {
 public:
@@ -64,7 +62,6 @@ public:
 
   Standard_EXPORT void MakeSolid(TopoDS_Shape& S) const;
 
-  //! Make an edge <Eou> with the curve of the edge <Ein>
   Standard_EXPORT void CopyEdge(const TopoDS_Shape& Ein, TopoDS_Shape& Eou) const;
 
   Standard_EXPORT void GetOrientedEdgeVertices(TopoDS_Edge&   E,
@@ -107,7 +104,6 @@ public:
                                        int&                                            inewC,
                                        const occ::handle<TopOpeBRepDS_HDataStructure>& HDS) const;
 
-  //! Make a face <Fou> with the surface of the face <Fin>
   Standard_EXPORT void CopyFace(const TopoDS_Shape& Fin, TopoDS_Shape& Fou) const;
 
   Standard_EXPORT void AddEdgeVertex(const TopoDS_Shape& Ein,
@@ -124,34 +120,22 @@ public:
 
   Standard_EXPORT void AddSolidShell(TopoDS_Shape& S, const TopoDS_Shape& Sh) const;
 
-  //! Sets the parameter <P> for the vertex <V> on the
-  //! edge <E>.
   Standard_EXPORT void Parameter(const TopoDS_Shape& E,
                                  const TopoDS_Shape& V,
                                  const double        P) const;
 
-  //! Sets the range of edge <E>.
   Standard_EXPORT void Range(const TopoDS_Shape& E, const double first, const double last) const;
 
-  //! Sets the range of edge <Eou> from <Ein>
-  //! only when <Ein> has a closed geometry.
   Standard_EXPORT void UpdateEdge(const TopoDS_Shape& Ein, TopoDS_Shape& Eou) const;
 
-  //! Compute the parameter of the vertex <V>, supported
-  //! by the edge <E>, on the curve <C>.
   Standard_EXPORT void Parameter(const TopOpeBRepDS_Curve& C,
                                  TopoDS_Shape&             E,
                                  TopoDS_Shape&             V) const;
 
-  //! Sets the curve <C> for the edge <E>
   Standard_EXPORT void Curve3D(TopoDS_Shape&                  E,
                                const occ::handle<Geom_Curve>& C,
                                const double                   Tol) const;
 
-  //! Sets the pcurve <C> for the edge <E> on the face
-  //! <F>. If OverWrite is True the old pcurve if there
-  //! is one is overwritten, else the two pcurves are
-  //! set.
   Standard_EXPORT void PCurve(TopoDS_Shape&                    F,
                               TopoDS_Shape&                    E,
                               const occ::handle<Geom2d_Curve>& C) const;

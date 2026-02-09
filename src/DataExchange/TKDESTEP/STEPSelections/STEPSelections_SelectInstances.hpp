@@ -23,7 +23,6 @@ public:
                                const Interface_Graph&                 G,
                                Interface_EntityIterator&              explored) const override;
 
-  //! Returns a text defining the criterium : "Instances"
   Standard_EXPORT TCollection_AsciiString ExploreLabel() const override;
 
   DEFINE_STANDARD_RTTIEXT(STEPSelections_SelectInstances, IFSelect_SelectExplore)

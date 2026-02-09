@@ -2,21 +2,10 @@
 
 #include <BVH_Traverse.hpp>
 
-//! Abstract class for computation of the min distance between some
-//! Object and elements of BVH tree.
-//! To use this class it is required to define two methods:
-//! - *RejectNode* to compute distance from the object to bounding box
-//! - *Accept* to compute distance from the object to the element of tree
-//!
-//! \tparam NumType Numeric data type
-//! \tparam Dimension Vector dimension
-//! \tparam ObjectType Type of the object to which the distance is required
-//! \tparam BVHSetType Type of the set on which BVH is built
 template <class NumType, int Dimension, class ObjectType, class BVHSetType>
 class BVH_Distance : public BVH_Traverse<NumType, Dimension, BVHSetType, NumType>
 {
-public: //! @name Constructor
-  //! Constructor
+public:
   BVH_Distance()
       : BVH_Traverse<NumType, Dimension, BVHSetType, NumType>(),
         myDistance(std::numeric_limits<NumType>::max()),
@@ -24,40 +13,33 @@ public: //! @name Constructor
   {
   }
 
-public: //! @name Setting object for distance computation
-  //! Sets the object to which the distance is required
+public:
   void SetObject(const ObjectType& theObject) { myObject = theObject; }
 
-public: //! @name Compute the distance
-  //! Computes the distance between object and BVH tree
+public:
   NumType ComputeDistance()
   {
     myIsDone = this->Select() > 0;
     return myDistance;
   }
 
-public: //! @name Accessing the results
-  //! Returns IsDone flag
+public:
   bool IsDone() const { return myIsDone; }
 
-  //! Returns the computed distance
   NumType Distance() const { return myDistance; }
 
-public: //! @name Definition of the rules for tree descend
-  //! Compares the two metrics and chooses the best one
+public:
   bool IsMetricBetter(const NumType& theLeft, const NumType& theRight) const override
   {
     return theLeft < theRight;
   }
 
-  //! Rejects the branch by the metric
   bool RejectMetric(const NumType& theMetric) const override { return theMetric > myDistance; }
 
-  //! Returns the flag controlling the tree descend
   bool Stop() const override { return myDistance == static_cast<NumType>(0); }
 
-protected:               //! @name Fields
-  NumType    myDistance; //!< Distance
-  bool       myIsDone;   //!< State of the algorithm
-  ObjectType myObject;   //!< Object to compute the distance to
+protected:
+  NumType    myDistance;
+  bool       myIsDone;
+  ObjectType myObject;
 };

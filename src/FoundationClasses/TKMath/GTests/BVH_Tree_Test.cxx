@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -46,7 +35,6 @@ TEST(BVH_TreeTest, AddInnerNode)
 {
   BVH_Tree<double, 3, BVH_BinaryTree> aTree;
 
-  // Add two leaf nodes first
   BVH_Vec3d aMin1(0.0, 0.0, 0.0);
   BVH_Vec3d aMax1(1.0, 1.0, 1.0);
   int       aLeaf1 = aTree.AddLeafNode(aMin1, aMax1, 0, 5);
@@ -55,7 +43,6 @@ TEST(BVH_TreeTest, AddInnerNode)
   BVH_Vec3d aMax2(3.0, 1.0, 1.0);
   int       aLeaf2 = aTree.AddLeafNode(aMin2, aMax2, 6, 10);
 
-  // Add inner node
   BVH_Vec3d aMinRoot(0.0, 0.0, 0.0);
   BVH_Vec3d aMaxRoot(3.0, 1.0, 1.0);
   int       aRoot = aTree.AddInnerNode(aMinRoot, aMaxRoot, aLeaf1, aLeaf2);
@@ -102,10 +89,8 @@ TEST(BVH_TreeTest, Reserve)
 {
   BVH_Tree<double, 3, BVH_BinaryTree> aTree;
 
-  // Reserve should not throw
   aTree.Reserve(100);
 
-  // Can still add nodes after reserve
   aTree.AddLeafNode(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0), 0, 0);
   EXPECT_EQ(aTree.Length(), 1);
 }
@@ -114,7 +99,6 @@ TEST(BVH_TreeTest, SetOuterInner)
 {
   BVH_Tree<double, 3, BVH_BinaryTree> aTree;
 
-  // Add leaf and change to inner
   aTree.AddLeafNode(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0), 0, 0);
 
   EXPECT_TRUE(aTree.IsOuter(0));
@@ -132,10 +116,8 @@ TEST(BVH_TreeTest, Level)
 
   aTree.AddLeafNode(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0), 0, 0);
 
-  // Default level is 0
   EXPECT_EQ(aTree.Level(0), 0);
 
-  // Change level
   aTree.Level(0) = 5;
   EXPECT_EQ(aTree.Level(0), 5);
 }
@@ -175,7 +157,6 @@ TEST(BVH_TreeTest, EstimateSAH)
 {
   BVH_Tree<double, 3, BVH_BinaryTree> aTree;
 
-  // Create a simple tree with root and two leaves
   BVH_Vec3d aMin1(0.0, 0.0, 0.0);
   BVH_Vec3d aMax1(1.0, 1.0, 1.0);
   int       aLeaf1 = aTree.AddLeafNode(aMin1, aMax1, 0, 0);
@@ -190,7 +171,6 @@ TEST(BVH_TreeTest, EstimateSAH)
 
   double aSAH = aTree.EstimateSAH();
 
-  // SAH should be positive
   EXPECT_GT(aSAH, 0.0);
 }
 
@@ -200,7 +180,6 @@ TEST(BVH_TreeTest, NbPrimitives)
 
   aTree.AddLeafNode(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0), 5, 15);
 
-  // NbPrimitives = EndPrimitive - BegPrimitive + 1 = 15 - 5 + 1 = 11
   EXPECT_EQ(aTree.NbPrimitives(0), 11);
 }
 
@@ -282,7 +261,6 @@ TEST(BVH_TreeTest, DeepTree)
 {
   BVH_Tree<double, 3, BVH_BinaryTree> aTree;
 
-  // Create leaves
   BVH_Vec3d aMin1(0.0, 0.0, 0.0);
   BVH_Vec3d aMax1(1.0, 1.0, 1.0);
   int       aLeaf1 = aTree.AddLeafNode(aMin1, aMax1, 0, 0);
@@ -299,7 +277,6 @@ TEST(BVH_TreeTest, DeepTree)
   BVH_Vec3d aMax4(4.0, 1.0, 1.0);
   int       aLeaf4 = aTree.AddLeafNode(aMin4, aMax4, 3, 3);
 
-  // Create intermediate nodes
   BVH_Vec3d aMinI1(0.0, 0.0, 0.0);
   BVH_Vec3d aMaxI1(2.0, 1.0, 1.0);
   int       aInner1 = aTree.AddInnerNode(aMinI1, aMaxI1, aLeaf1, aLeaf2);
@@ -308,7 +285,6 @@ TEST(BVH_TreeTest, DeepTree)
   BVH_Vec3d aMaxI2(4.0, 1.0, 1.0);
   int       aInner2 = aTree.AddInnerNode(aMinI2, aMaxI2, aLeaf3, aLeaf4);
 
-  // Create root
   BVH_Vec3d aMinRoot(0.0, 0.0, 0.0);
   BVH_Vec3d aMaxRoot(4.0, 1.0, 1.0);
   int       aRoot = aTree.AddInnerNode(aMinRoot, aMaxRoot, aInner1, aInner2);
@@ -327,7 +303,6 @@ TEST(BVH_TreeTest, ModifyPrimitiveIndices)
 
   aTree.AddLeafNode(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0), 0, 5);
 
-  // Modify primitive indices
   aTree.BegPrimitive(0) = 10;
   aTree.EndPrimitive(0) = 20;
 
@@ -342,7 +317,6 @@ TEST(BVH_TreeTest, ModifyMinMaxPoints)
 
   aTree.AddLeafNode(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0), 0, 0);
 
-  // Modify min/max points
   aTree.MinPoint(0) = BVH_Vec3d(-1.0, -1.0, -1.0);
   aTree.MaxPoint(0) = BVH_Vec3d(2.0, 2.0, 2.0);
 
@@ -363,7 +337,6 @@ TEST(BVH_TreeTest, ChangeChild)
   EXPECT_EQ(aTree.template Child<0>(aRoot), aLeaf1);
   EXPECT_EQ(aTree.template Child<1>(aRoot), aLeaf2);
 
-  // Change children
   aTree.template ChangeChild<0>(aRoot) = aLeaf3;
 
   EXPECT_EQ(aTree.template Child<0>(aRoot), aLeaf3);
@@ -376,7 +349,6 @@ TEST(BVH_TreeTest, NodeInfoBuffer)
 
   aTree.AddLeafNode(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0), 5, 10);
 
-  // Access node info buffer
   const BVH_Array4i& aBuffer = aTree.NodeInfoBuffer();
   int                aSize   = BVH::Array<int, 4>::Size(aBuffer);
   EXPECT_EQ(aSize, 1);
@@ -388,7 +360,6 @@ TEST(BVH_TreeTest, MinMaxPointBuffers)
 
   aTree.AddLeafNode(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0), 0, 0);
 
-  // Access point buffers
   const auto& aMinBuffer = aTree.MinPointBuffer();
   const auto& aMaxBuffer = aTree.MaxPointBuffer();
 

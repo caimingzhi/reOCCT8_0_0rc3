@@ -6,21 +6,15 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_Array2.hpp>
 
-//! @brief Namespace containing result structures for grid evaluators.
-//!
-//! Provides lightweight POD structures for returning evaluation results
-//! with derivatives from curve and surface grid evaluators.
 namespace GeomGridEval
 {
 
-  //! Result structure for curve D1 evaluation (point and first derivative).
   struct CurveD1
   {
     gp_Pnt Point;
     gp_Vec D1;
   };
 
-  //! Result structure for curve D2 evaluation (point and first two derivatives).
   struct CurveD2
   {
     gp_Pnt Point;
@@ -28,7 +22,6 @@ namespace GeomGridEval
     gp_Vec D2;
   };
 
-  //! Result structure for curve D3 evaluation (point and first three derivatives).
   struct CurveD3
   {
     gp_Pnt Point;
@@ -37,7 +30,6 @@ namespace GeomGridEval
     gp_Vec D3;
   };
 
-  //! Result structure for surface D1 evaluation (point and partial derivatives).
   struct SurfD1
   {
     gp_Pnt Point;
@@ -45,7 +37,6 @@ namespace GeomGridEval
     gp_Vec D1V;
   };
 
-  //! Result structure for surface D2 evaluation (point and partial derivatives up to 2nd order).
   struct SurfD2
   {
     gp_Pnt Point;
@@ -56,7 +47,6 @@ namespace GeomGridEval
     gp_Vec D2UV;
   };
 
-  //! Result structure for surface D3 evaluation (point and partial derivatives up to 3rd order).
   struct SurfD3
   {
     gp_Pnt Point;
@@ -71,43 +61,24 @@ namespace GeomGridEval
     gp_Vec D3UVV;
   };
 
-  //! UV point with output index for unified grid/pairs handling.
-  //! Used internally by surface evaluators - both SetUVParams (grid) and SetUVPairs
-  //! convert input to this format for unified evaluation.
-  //! For grid input: OutputIdx = i * NbV + j (row-major linear index)
-  //! For pairs input: OutputIdx = original index in input array
   struct UVPoint
   {
-    double U;         //!< U parameter value
-    double V;         //!< V parameter value
-    int    OutputIdx; //!< Linear output index for result placement
+    double U;
+    double V;
+    int    OutputIdx;
   };
 
-  //! UV point with span information for BSpline/Bezier optimization.
-  //! Extends UVPoint with pre-computed span data for cache-optimal evaluation.
-  //! The sorting by (USpanIdx, VSpanIdx, U) minimizes cache rebuilds during evaluation.
   struct UVPointWithSpan
   {
-    double U;         //!< U parameter value
-    double V;         //!< V parameter value
-    double LocalU;    //!< Pre-computed local U in [-1, 1] range for cache evaluation
-    double LocalV;    //!< Pre-computed local V in [-1, 1] range for cache evaluation
-    int    USpanIdx;  //!< U flat knot index identifying the span
-    int    VSpanIdx;  //!< V flat knot index identifying the span
-    int    OutputIdx; //!< Linear output index for result placement
+    double U;
+    double V;
+    double LocalU;
+    double LocalV;
+    int    USpanIdx;
+    int    VSpanIdx;
+    int    OutputIdx;
   };
 
-  //==================================================================================================
-  // Template helpers for parametric surface evaluation.
-  // These provide the iteration pattern, while the actual computation is delegated to a functor.
-  //==================================================================================================
-
-  //! Evaluate grid points using a point evaluator functor.
-  //! @tparam Evaluator functor type with operator()(double theU, double theV) -> gp_Pnt
-  //! @param theUParams array of U parameter values
-  //! @param theVParams array of V parameter values
-  //! @param theEval evaluator functor
-  //! @return 2D array of evaluated points (1-based indexing)
   template <typename Evaluator>
   NCollection_Array2<gp_Pnt> EvaluateGridHelper(const NCollection_Array1<double>& theUParams,
                                                 const NCollection_Array1<double>& theVParams,
@@ -133,8 +104,6 @@ namespace GeomGridEval
     return aResult;
   }
 
-  //! Evaluate grid points with D1 using an evaluator functor.
-  //! @tparam Evaluator functor type with operator()(double theU, double theV) -> SurfD1
   template <typename Evaluator>
   NCollection_Array2<SurfD1> EvaluateGridD1Helper(const NCollection_Array1<double>& theUParams,
                                                   const NCollection_Array1<double>& theVParams,
@@ -160,8 +129,6 @@ namespace GeomGridEval
     return aResult;
   }
 
-  //! Evaluate grid points with D2 using an evaluator functor.
-  //! @tparam Evaluator functor type with operator()(double theU, double theV) -> SurfD2
   template <typename Evaluator>
   NCollection_Array2<SurfD2> EvaluateGridD2Helper(const NCollection_Array1<double>& theUParams,
                                                   const NCollection_Array1<double>& theVParams,
@@ -187,8 +154,6 @@ namespace GeomGridEval
     return aResult;
   }
 
-  //! Evaluate grid points with D3 using an evaluator functor.
-  //! @tparam Evaluator functor type with operator()(double theU, double theV) -> SurfD3
   template <typename Evaluator>
   NCollection_Array2<SurfD3> EvaluateGridD3Helper(const NCollection_Array1<double>& theUParams,
                                                   const NCollection_Array1<double>& theVParams,
@@ -214,8 +179,6 @@ namespace GeomGridEval
     return aResult;
   }
 
-  //! Evaluate grid DN using an evaluator functor.
-  //! @tparam Evaluator functor type with operator()(double theU, double theV) -> gp_Vec
   template <typename Evaluator>
   NCollection_Array2<gp_Vec> EvaluateGridDNHelper(const NCollection_Array1<double>& theUParams,
                                                   const NCollection_Array1<double>& theVParams,
@@ -241,11 +204,6 @@ namespace GeomGridEval
     return aResult;
   }
 
-  //! Evaluate UV pairs using a point evaluator functor.
-  //! @tparam Evaluator functor type with operator()(double theU, double theV) -> gp_Pnt
-  //! @param theUVPairs array of UV coordinate pairs (U=X(), V=Y())
-  //! @param theEval evaluator functor
-  //! @return 1D array of evaluated points (1-based indexing)
   template <typename Evaluator>
   NCollection_Array1<gp_Pnt> EvaluatePointsHelper(const NCollection_Array1<gp_Pnt2d>& theUVPairs,
                                                   Evaluator                           theEval)
@@ -265,8 +223,6 @@ namespace GeomGridEval
     return aResult;
   }
 
-  //! Evaluate UV pairs with D1 using an evaluator functor.
-  //! @tparam Evaluator functor type with operator()(double theU, double theV) -> SurfD1
   template <typename Evaluator>
   NCollection_Array1<SurfD1> EvaluatePointsD1Helper(const NCollection_Array1<gp_Pnt2d>& theUVPairs,
                                                     Evaluator                           theEval)
@@ -286,8 +242,6 @@ namespace GeomGridEval
     return aResult;
   }
 
-  //! Evaluate UV pairs with D2 using an evaluator functor.
-  //! @tparam Evaluator functor type with operator()(double theU, double theV) -> SurfD2
   template <typename Evaluator>
   NCollection_Array1<SurfD2> EvaluatePointsD2Helper(const NCollection_Array1<gp_Pnt2d>& theUVPairs,
                                                     Evaluator                           theEval)
@@ -307,8 +261,6 @@ namespace GeomGridEval
     return aResult;
   }
 
-  //! Evaluate UV pairs with D3 using an evaluator functor.
-  //! @tparam Evaluator functor type with operator()(double theU, double theV) -> SurfD3
   template <typename Evaluator>
   NCollection_Array1<SurfD3> EvaluatePointsD3Helper(const NCollection_Array1<gp_Pnt2d>& theUVPairs,
                                                     Evaluator                           theEval)
@@ -328,8 +280,6 @@ namespace GeomGridEval
     return aResult;
   }
 
-  //! Evaluate UV pairs DN using an evaluator functor.
-  //! @tparam Evaluator functor type with operator()(double theU, double theV) -> gp_Vec
   template <typename Evaluator>
   NCollection_Array1<gp_Vec> EvaluatePointsDNHelper(const NCollection_Array1<gp_Pnt2d>& theUVPairs,
                                                     Evaluator                           theEval)

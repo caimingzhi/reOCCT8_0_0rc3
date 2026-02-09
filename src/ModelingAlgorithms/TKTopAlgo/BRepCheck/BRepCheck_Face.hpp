@@ -32,7 +32,6 @@ public:
 
   Standard_EXPORT void SetUnorientable();
 
-  //! Sets status of Face;
   Standard_EXPORT void SetStatus(const BRepCheck_Status theStatus);
 
   Standard_EXPORT bool IsUnorientable() const;

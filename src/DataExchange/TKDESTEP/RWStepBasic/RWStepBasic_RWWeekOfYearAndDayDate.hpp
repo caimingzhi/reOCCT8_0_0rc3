@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_WeekOfYearAndDayDate;
 class StepData_StepWriter;
 
-//! Read & Write Module for WeekOfYearAndDayDate
 class RWStepBasic_RWWeekOfYearAndDayDate
 {
 public:

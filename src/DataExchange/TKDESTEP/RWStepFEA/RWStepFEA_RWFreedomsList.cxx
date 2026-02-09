@@ -8,22 +8,16 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWFreedomsList::RWStepFEA_RWFreedomsList() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWFreedomsList::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                         const int                                   num,
                                         occ::handle<Interface_Check>&               ach,
                                         const occ::handle<StepFEA_FreedomsList>&    ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 1, ach, "freedoms_list"))
     return;
-
-  // Own fields of FreedomsList
 
   occ::handle<NCollection_HArray1<StepFEA_DegreeOfFreedom>> aFreedoms;
   int                                                       sub1 = 0;
@@ -40,17 +34,12 @@ void RWStepFEA_RWFreedomsList::ReadStep(const occ::handle<StepData_StepReaderDat
     }
   }
 
-  // Initialize entity
   ent->Init(aFreedoms);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWFreedomsList::WriteStep(StepData_StepWriter&                     SW,
                                          const occ::handle<StepFEA_FreedomsList>& ent) const
 {
-
-  // Own fields of FreedomsList
 
   SW.OpenSub();
   for (int i0 = 1; i0 <= ent->Freedoms()->Length(); i0++)
@@ -61,13 +50,9 @@ void RWStepFEA_RWFreedomsList::WriteStep(StepData_StepWriter&                   
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWFreedomsList::Share(const occ::handle<StepFEA_FreedomsList>& ent,
                                      Interface_EntityIterator&                iter) const
 {
-
-  // Own fields of FreedomsList
 
   for (int i1 = 1; i1 <= ent->Freedoms()->Length(); i1++)
   {

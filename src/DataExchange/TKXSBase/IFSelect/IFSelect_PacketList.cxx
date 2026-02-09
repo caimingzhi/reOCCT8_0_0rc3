@@ -18,7 +18,7 @@ IFSelect_PacketList::IFSelect_PacketList(const occ::handle<Interface_InterfaceMo
 {
   themodel = model;
   thelast  = 0;
-  thebegin = false; // begin-begin
+  thebegin = false;
   thedupls.Init(0);
   theflags.Init(0);
 }

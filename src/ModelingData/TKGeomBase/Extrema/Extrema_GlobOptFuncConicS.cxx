@@ -1,24 +1,9 @@
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement
+
 
 #include <Extrema_GlobOptFuncConicS.hpp>
 
 #include <gp_Pnt.hpp>
 #include <ElCLib.hpp>
-
-// F(u, v) = Conic.SquareDistance(myS(u, v))
-
-//=================================================================================================
 
 void Extrema_GlobOptFuncConicS::value(double su, double sv, double& F)
 {
@@ -45,7 +30,7 @@ void Extrema_GlobOptFuncConicS::value(double su, double sv, double& F)
       F = Precision::Infinite();
       return;
   }
-  //
+
   if (myCType == GeomAbs_Circle || myCType == GeomAbs_Ellipse)
   {
     if (myTl > 2. * M_PI + Precision::PConfusion())
@@ -63,8 +48,6 @@ void Extrema_GlobOptFuncConicS::value(double su, double sv, double& F)
   F = std::min(F, aPS.SquareDistance(myCPl));
 }
 
-//=================================================================================================
-
 bool Extrema_GlobOptFuncConicS::checkInputData(const math_Vector& X, double& su, double& sv)
 {
   int aStartIndex = X.Lower();
@@ -73,8 +56,6 @@ bool Extrema_GlobOptFuncConicS::checkInputData(const math_Vector& X, double& su,
 
   return su >= myUf && su <= myUl && sv >= myVf && sv <= myVl;
 }
-
-//=================================================================================================
 
 Extrema_GlobOptFuncConicS::Extrema_GlobOptFuncConicS(const Adaptor3d_Surface* S,
                                                      const double             theUf,
@@ -89,8 +70,6 @@ Extrema_GlobOptFuncConicS::Extrema_GlobOptFuncConicS(const Adaptor3d_Surface* S,
 {
 }
 
-//=================================================================================================
-
 Extrema_GlobOptFuncConicS::Extrema_GlobOptFuncConicS(const Adaptor3d_Surface* S)
     : myS(S),
       myUf(S->FirstUParameter()),
@@ -99,8 +78,6 @@ Extrema_GlobOptFuncConicS::Extrema_GlobOptFuncConicS(const Adaptor3d_Surface* S)
       myVl(S->LastVParameter())
 {
 }
-
-//=================================================================================================
 
 Extrema_GlobOptFuncConicS::Extrema_GlobOptFuncConicS(const Adaptor3d_Curve*   C,
                                                      const Adaptor3d_Surface* S)
@@ -114,8 +91,6 @@ Extrema_GlobOptFuncConicS::Extrema_GlobOptFuncConicS(const Adaptor3d_Curve*   C,
   double aCTl = C->LastParameter();
   LoadConic(C, aCTf, aCTl);
 }
-
-//=================================================================================================
 
 void Extrema_GlobOptFuncConicS::LoadConic(const Adaptor3d_Curve* C,
                                           const double           theTf,
@@ -161,14 +136,10 @@ void Extrema_GlobOptFuncConicS::LoadConic(const Adaptor3d_Curve* C,
   }
 }
 
-//=================================================================================================
-
 int Extrema_GlobOptFuncConicS::NbVariables() const
 {
   return 2;
 }
-
-//=================================================================================================
 
 bool Extrema_GlobOptFuncConicS::Value(const math_Vector& X, double& F)
 {
@@ -179,8 +150,6 @@ bool Extrema_GlobOptFuncConicS::Value(const math_Vector& X, double& F)
   value(su, sv, F);
   return !Precision::IsInfinite(F);
 }
-
-//=================================================================================================
 
 double Extrema_GlobOptFuncConicS::ConicParameter(const math_Vector& theUV) const
 {
@@ -207,7 +176,7 @@ double Extrema_GlobOptFuncConicS::ConicParameter(const math_Vector& theUV) const
       ct = myTf;
       return ct;
   }
-  //
+
   if (myCType == GeomAbs_Circle || myCType == GeomAbs_Ellipse)
   {
     if (myTl > 2. * M_PI + Precision::PConfusion())

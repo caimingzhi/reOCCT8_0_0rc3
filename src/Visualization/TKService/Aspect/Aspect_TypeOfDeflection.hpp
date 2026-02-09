@@ -1,8 +1,5 @@
 #pragma once
 
-//! Defines if the maximal chordial deflection used when
-//! drawing an object is absolute or relative to the size
-//! of the object.
 enum Aspect_TypeOfDeflection
 {
   Aspect_TOD_RELATIVE,

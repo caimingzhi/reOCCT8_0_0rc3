@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -22,8 +11,6 @@ namespace
   constexpr double THE_TOLERANCE = 1.0e-7;
   constexpr double THE_PI        = 3.14159265358979323846;
 
-  //! Parabola: f(x) = (x - 3)^2 + 1
-  //! Minimum at x = 3, f(3) = 1
   class ParabolaFunc
   {
   public:
@@ -34,8 +21,6 @@ namespace
     }
   };
 
-  //! Parabola with negative minimum: f(x) = x^2 - 4x + 3
-  //! Minimum at x = 2, f(2) = -1
   class ParabolaFunc2
   {
   public:
@@ -46,8 +31,6 @@ namespace
     }
   };
 
-  //! Cosine function: f(x) = cos(x)
-  //! Local minimum at x = PI
   class CosFunc
   {
   public:
@@ -58,8 +41,6 @@ namespace
     }
   };
 
-  //! Quartic: f(x) = x^4 - 2x^2
-  //! Local minima at x = -1 and x = 1
   class QuarticFunc
   {
   public:
@@ -71,8 +52,6 @@ namespace
     }
   };
 
-  //! Exponential: f(x) = e^x + e^(-x)
-  //! Minimum at x = 0, f(0) = 2
   class CoshLikeFunc
   {
   public:
@@ -83,8 +62,6 @@ namespace
     }
   };
 
-  //! Rosenbrock-like 1D: f(x) = (1 - x)^2 + 100*(x^2 - x)^2
-  //! Minimum at x = 1
   class Rosenbrock1DFunc
   {
   public:
@@ -97,8 +74,6 @@ namespace
     }
   };
 
-  //! Absolute value shifted: f(x) = |x - 2| + 1
-  //! Minimum at x = 2, f(2) = 1 (non-smooth)
   class AbsShiftedFunc
   {
   public:
@@ -109,8 +84,6 @@ namespace
     }
   };
 
-  //! Sinusoidal with noise: f(x) = sin(x) + 0.5*sin(3x)
-  //! Multiple local minima
   class SinWithHarmonicFunc
   {
   public:
@@ -121,10 +94,6 @@ namespace
     }
   };
 } // namespace
-
-// ============================================================================
-// Brent minimization tests
-// ============================================================================
 
 TEST(MathOpt_1D_BrentTest, SimpleParabola)
 {
@@ -156,7 +125,7 @@ TEST(MathOpt_1D_BrentTest, CosineMinimum)
 TEST(MathOpt_1D_BrentTest, QuarticMinimumRight)
 {
   QuarticFunc aFunc;
-  // Search for right minimum at x = 1
+
   MathOpt::ScalarResult aResult = MathOpt::Brent(aFunc, 0.0, 2.0);
   ASSERT_TRUE(aResult.IsDone());
   EXPECT_NEAR(*aResult.Root, 1.0, THE_TOLERANCE);
@@ -166,7 +135,7 @@ TEST(MathOpt_1D_BrentTest, QuarticMinimumRight)
 TEST(MathOpt_1D_BrentTest, QuarticMinimumLeft)
 {
   QuarticFunc aFunc;
-  // Search for left minimum at x = -1
+
   MathOpt::ScalarResult aResult = MathOpt::Brent(aFunc, -2.0, 0.0);
   ASSERT_TRUE(aResult.IsDone());
   EXPECT_NEAR(*aResult.Root, -1.0, THE_TOLERANCE);
@@ -215,13 +184,9 @@ TEST(MathOpt_1D_BrentTest, NonSmoothFunction)
   AbsShiftedFunc        aFunc;
   MathOpt::ScalarResult aResult = MathOpt::Brent(aFunc, 0.0, 5.0);
   ASSERT_TRUE(aResult.IsDone());
-  EXPECT_NEAR(*aResult.Root, 2.0, 1.0e-6); // Lower tolerance for non-smooth
+  EXPECT_NEAR(*aResult.Root, 2.0, 1.0e-6);
   EXPECT_NEAR(*aResult.Value, 1.0, 1.0e-6);
 }
-
-// ============================================================================
-// Golden section tests
-// ============================================================================
 
 TEST(MathOpt_1D_GoldenTest, SimpleParabola)
 {
@@ -259,10 +224,6 @@ TEST(MathOpt_1D_GoldenTest, CoshLikeMinimum)
   EXPECT_NEAR(*aResult.Value, 2.0, THE_TOLERANCE);
 }
 
-// ============================================================================
-// Brent with automatic bracket tests
-// ============================================================================
-
 TEST(MathOpt_1D_BrentWithBracketTest, SimpleParabola)
 {
   ParabolaFunc          aFunc;
@@ -283,16 +244,11 @@ TEST(MathOpt_1D_BrentWithBracketTest, StartNearMinimum)
 TEST(MathOpt_1D_BrentWithBracketTest, CoshLike)
 {
   CoshLikeFunc aFunc;
-  // Start from a point closer to the minimum with a small step
-  // The algorithm expands to find a bracket containing the minimum
+
   MathOpt::ScalarResult aResult = MathOpt::BrentWithBracket(aFunc, 0.1, 0.2);
   ASSERT_TRUE(aResult.IsDone());
   EXPECT_NEAR(*aResult.Root, 0.0, THE_TOLERANCE);
 }
-
-// ============================================================================
-// Comparison tests
-// ============================================================================
 
 TEST(MathOpt_1D_ComparisonTest, BrentVsGoldenSameResult)
 {
@@ -320,17 +276,12 @@ TEST(MathOpt_1D_ComparisonTest, BrentFasterThanGolden)
   ASSERT_TRUE(aBrent.IsDone());
   ASSERT_TRUE(aGolden.IsDone());
 
-  // Brent typically converges faster due to parabolic interpolation
   EXPECT_LE(aBrent.NbIterations, aGolden.NbIterations);
 }
 
-// ============================================================================
-// Edge cases and robustness tests
-// ============================================================================
-
 TEST(MathOpt_1D_RobustnessTest, MinimumAtLeftBoundary)
 {
-  // f(x) = x^2 on [0, 10] - minimum at x = 0
+
   class SquareFunc
   {
   public:
@@ -349,7 +300,7 @@ TEST(MathOpt_1D_RobustnessTest, MinimumAtLeftBoundary)
 
 TEST(MathOpt_1D_RobustnessTest, MinimumAtRightBoundary)
 {
-  // f(x) = (10 - x)^2 on [0, 10] - minimum at x = 10
+
   class ShiftedSquareFunc
   {
   public:
@@ -368,7 +319,7 @@ TEST(MathOpt_1D_RobustnessTest, MinimumAtRightBoundary)
 
 TEST(MathOpt_1D_RobustnessTest, VeryFlatFunction)
 {
-  // f(x) = (x - 5)^4 - very flat near minimum
+
   class FlatQuarticFunc
   {
   public:
@@ -383,12 +334,8 @@ TEST(MathOpt_1D_RobustnessTest, VeryFlatFunction)
   FlatQuarticFunc       aFunc;
   MathOpt::ScalarResult aResult = MathOpt::Brent(aFunc, 0.0, 10.0);
   ASSERT_TRUE(aResult.IsDone());
-  EXPECT_NEAR(*aResult.Root, 5.0, 1.0e-5); // Lower tolerance for flat function
+  EXPECT_NEAR(*aResult.Root, 5.0, 1.0e-5);
 }
-
-// ============================================================================
-// Boolean conversion tests
-// ============================================================================
 
 TEST(MathOpt_1D_BoolConversionTest, SuccessfulResultIsTrue)
 {
@@ -396,10 +343,6 @@ TEST(MathOpt_1D_BoolConversionTest, SuccessfulResultIsTrue)
   MathOpt::ScalarResult aResult = MathOpt::Brent(aFunc, 0.0, 10.0);
   EXPECT_TRUE(static_cast<bool>(aResult));
 }
-
-// ============================================================================
-// Iteration count tests
-// ============================================================================
 
 TEST(MathOpt_1D_IterationTest, BrentConvergesQuickly)
 {

@@ -12,7 +12,6 @@ class StepVisual_TextLiteral : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a TextLiteral
   Standard_EXPORT StepVisual_TextLiteral();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

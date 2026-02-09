@@ -7,7 +7,6 @@
 #include <Standard_Integer.hpp>
 class TopOpeBRepDS_HDataStructure;
 
-//! EdgeInterferenceReducer
 class TopOpeBRepDS_EIR
 {
 public:

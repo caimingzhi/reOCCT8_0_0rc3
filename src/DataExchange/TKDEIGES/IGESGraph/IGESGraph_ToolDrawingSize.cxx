@@ -13,27 +13,21 @@
 IGESGraph_ToolDrawingSize::IGESGraph_ToolDrawingSize() = default;
 
 void IGESGraph_ToolDrawingSize::ReadOwnParams(const occ::handle<IGESGraph_DrawingSize>& ent,
-                                              const occ::handle<IGESData_IGESReaderData>& /*IR*/,
+                                              const occ::handle<IGESData_IGESReaderData>&,
                                               IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
   int    nbPropertyValues;
   double xSize;
   double ySize;
 
-  // Reading nbPropertyValues(Integer)
-  // clang-format off
-  PR.ReadInteger(PR.Current(), "No. of property values", nbPropertyValues); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "No. of property values", nbPropertyValues);
   if (nbPropertyValues != 2)
     PR.AddFail("No. of Property values : Value is not 2");
 
-  // Reading xSize(Real)
-  PR.ReadReal (PR.Current(), "Drawing extent along +ve XD axis", xSize); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadReal(PR.Current(), "Drawing extent along +ve XD axis", xSize);
 
-  // Reading ySize(Real)
-  PR.ReadReal (PR.Current(), "Drawing extent along +ve YD axis", ySize); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+  PR.ReadReal(PR.Current(), "Drawing extent along +ve YD axis", ySize);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(nbPropertyValues, xSize, ySize);
@@ -47,14 +41,14 @@ void IGESGraph_ToolDrawingSize::WriteOwnParams(const occ::handle<IGESGraph_Drawi
   IW.Send(ent->YSize());
 }
 
-void IGESGraph_ToolDrawingSize::OwnShared(const occ::handle<IGESGraph_DrawingSize>& /*ent*/,
-                                          Interface_EntityIterator& /*iter*/) const
+void IGESGraph_ToolDrawingSize::OwnShared(const occ::handle<IGESGraph_DrawingSize>&,
+                                          Interface_EntityIterator&) const
 {
 }
 
 void IGESGraph_ToolDrawingSize::OwnCopy(const occ::handle<IGESGraph_DrawingSize>& another,
                                         const occ::handle<IGESGraph_DrawingSize>& ent,
-                                        Interface_CopyTool& /*TC*/) const
+                                        Interface_CopyTool&) const
 {
   ent->Init(2, another->XSize(), another->YSize());
 }
@@ -63,12 +57,12 @@ bool IGESGraph_ToolDrawingSize::OwnCorrect(const occ::handle<IGESGraph_DrawingSi
 {
   bool res = (ent->NbPropertyValues() != 2);
   if (res)
-    ent->Init(2, ent->XSize(), ent->YSize()); // nbpropertyvalues=2
+    ent->Init(2, ent->XSize(), ent->YSize());
   return res;
 }
 
 IGESData_DirChecker IGESGraph_ToolDrawingSize::DirChecker(
-  const occ::handle<IGESGraph_DrawingSize>& /*ent*/) const
+  const occ::handle<IGESGraph_DrawingSize>&) const
 {
   IGESData_DirChecker DC(406, 16);
   DC.Structure(IGESData_DefVoid);
@@ -90,9 +84,9 @@ void IGESGraph_ToolDrawingSize::OwnCheck(const occ::handle<IGESGraph_DrawingSize
 }
 
 void IGESGraph_ToolDrawingSize::OwnDump(const occ::handle<IGESGraph_DrawingSize>& ent,
-                                        const IGESData_IGESDumper& /*dumper*/,
+                                        const IGESData_IGESDumper&,
                                         Standard_OStream& S,
-                                        const int /*level*/) const
+                                        const int) const
 {
   S << "IGESGraph_DrawingSize\n"
     << "No. of property values : " << ent->NbPropertyValues() << "\n"

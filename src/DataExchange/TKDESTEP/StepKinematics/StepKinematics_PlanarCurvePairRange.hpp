@@ -9,14 +9,11 @@
 #include <StepGeom_Curve.hpp>
 #include <StepGeom_TrimmedCurve.hpp>
 
-//! Representation of STEP entity PlanarCurvePairRange
 class StepKinematics_PlanarCurvePairRange : public StepKinematics_PlanarCurvePair
 {
 public:
-  //! default constructor
   Standard_EXPORT StepKinematics_PlanarCurvePairRange();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
     const occ::handle<TCollection_HAsciiString>&      theItemDefinedTransformation_Name,
@@ -31,14 +28,12 @@ public:
     const occ::handle<StepGeom_TrimmedCurve>&         theRangeOnCurve1,
     const occ::handle<StepGeom_TrimmedCurve>&         theRangeOnCurve2);
 
-  //! Returns field RangeOnCurve1
   Standard_EXPORT occ::handle<StepGeom_TrimmedCurve> RangeOnCurve1() const;
-  //! Sets field RangeOnCurve1
+
   Standard_EXPORT void SetRangeOnCurve1(const occ::handle<StepGeom_TrimmedCurve>& theRangeOnCurve1);
 
-  //! Returns field RangeOnCurve2
   Standard_EXPORT occ::handle<StepGeom_TrimmedCurve> RangeOnCurve2() const;
-  //! Sets field RangeOnCurve2
+
   Standard_EXPORT void SetRangeOnCurve2(const occ::handle<StepGeom_TrimmedCurve>& theRangeOnCurve2);
 
   DEFINE_STANDARD_RTTIEXT(StepKinematics_PlanarCurvePairRange, StepKinematics_PlanarCurvePair)

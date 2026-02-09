@@ -9,11 +9,7 @@
 
 IMPLEMENT_DERIVED_ATTRIBUTE_WITH_TYPE(XCAFDoc_Area, TDataStd_Real, "xcaf", "Area")
 
-//=================================================================================================
-
 XCAFDoc_Area::XCAFDoc_Area() = default;
-
-//=================================================================================================
 
 const Standard_GUID& XCAFDoc_Area::GetID()
 {
@@ -21,14 +17,10 @@ const Standard_GUID& XCAFDoc_Area::GetID()
   return AreaID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_Area::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_Area> XCAFDoc_Area::Set(const TDF_Label& L, const double V)
 {
@@ -42,21 +34,15 @@ occ::handle<XCAFDoc_Area> XCAFDoc_Area::Set(const TDF_Label& L, const double V)
   return A;
 }
 
-//=================================================================================================
-
 void XCAFDoc_Area::Set(const double V)
 {
   TDataStd_Real::Set(V);
 }
 
-//=================================================================================================
-
 double XCAFDoc_Area::Get() const
 {
   return TDataStd_Real::Get();
 }
-
-//=================================================================================================
 
 bool XCAFDoc_Area::Get(const TDF_Label& label, double& area)
 {
@@ -68,16 +54,12 @@ bool XCAFDoc_Area::Get(const TDF_Label& label, double& area)
   return true;
 }
 
-//=================================================================================================
-
 Standard_OStream& XCAFDoc_Area::Dump(Standard_OStream& anOS) const
 {
   anOS << "Area ";
   anOS << Get();
   return anOS;
 }
-
-//=================================================================================================
 
 void XCAFDoc_Area::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

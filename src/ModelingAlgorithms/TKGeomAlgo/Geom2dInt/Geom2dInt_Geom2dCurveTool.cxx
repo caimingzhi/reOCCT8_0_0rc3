@@ -3,7 +3,6 @@
 #include <GeomAbs_CurveType.hpp>
 #include <Precision.hpp>
 
-//============================================================
 int Geom2dInt_Geom2dCurveTool::NbSamples(const Adaptor2d_Curve2d& C,
                                          const double             U0,
                                          const double             U1)
@@ -31,12 +30,12 @@ int Geom2dInt_Geom2dCurveTool::NbSamples(const Adaptor2d_Curve2d& C,
   }
   else if (typC == GeomAbs_Circle)
   {
-    // Try to reach deflection = eps*R, eps = 0.01
-    const double minR = 1.; // eps = 0.01
+
+    const double minR = 1.;
     double       R    = C.Circle().Radius();
     if (R > minR)
     {
-      double angl = 0.283079; // 2.*std::acos(1. - eps);
+      double angl = 0.283079;
       int    n    = RealToInt(std::abs(U1 - U0) / angl);
       nbs         = std::max(n, nbs);
     }
@@ -47,19 +46,18 @@ int Geom2dInt_Geom2dCurveTool::NbSamples(const Adaptor2d_Curve2d& C,
   return nbs;
 }
 
-//============================================================
 int Geom2dInt_Geom2dCurveTool::NbSamples(const Adaptor2d_Curve2d& C)
 {
   int               nbs  = C.NbSamples();
   GeomAbs_CurveType typC = C.GetType();
   if (typC == GeomAbs_Circle)
   {
-    // Try to reach deflection = eps*R, eps = 0.01
-    const double minR = 1.; // eps = 0.01
+
+    const double minR = 1.;
     double       R    = C.Circle().Radius();
     if (R > minR)
     {
-      double angl = 0.283079; // 2.*std::acos(1. - eps);
+      double angl = 0.283079;
       int    n    = RealToInt((C.LastParameter() - C.FirstParameter()) / angl);
       nbs         = std::max(n, nbs);
     }

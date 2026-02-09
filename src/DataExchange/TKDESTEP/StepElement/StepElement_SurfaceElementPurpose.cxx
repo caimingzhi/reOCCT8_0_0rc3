@@ -4,18 +4,12 @@
 #include <StepElement_SurfaceElementPurposeMember.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=================================================================================================
-
 StepElement_SurfaceElementPurpose::StepElement_SurfaceElementPurpose() = default;
 
-//=================================================================================================
-
-int StepElement_SurfaceElementPurpose::CaseNum(const occ::handle<Standard_Transient>& /*ent*/) const
+int StepElement_SurfaceElementPurpose::CaseNum(const occ::handle<Standard_Transient>&) const
 {
   return 0;
 }
-
-//=================================================================================================
 
 int StepElement_SurfaceElementPurpose::CaseMem(const occ::handle<StepData_SelectMember>& ent) const
 {
@@ -29,14 +23,10 @@ int StepElement_SurfaceElementPurpose::CaseMem(const occ::handle<StepData_Select
     return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepData_SelectMember> StepElement_SurfaceElementPurpose::NewMember() const
 {
   return new StepElement_SurfaceElementPurposeMember;
 }
-
-//=================================================================================================
 
 void StepElement_SurfaceElementPurpose::SetEnumeratedSurfaceElementPurpose(
   const StepElement_EnumeratedSurfaceElementPurpose val)
@@ -50,8 +40,6 @@ void StepElement_SurfaceElementPurpose::SetEnumeratedSurfaceElementPurpose(
   SelMem->SetName(name->ToCString());
   SelMem->SetEnum((int)val);
 }
-
-//=================================================================================================
 
 StepElement_EnumeratedSurfaceElementPurpose StepElement_SurfaceElementPurpose::
   EnumeratedSurfaceElementPurpose() const
@@ -92,8 +80,6 @@ StepElement_EnumeratedSurfaceElementPurpose StepElement_SurfaceElementPurpose::
   return val;
 }
 
-//=================================================================================================
-
 void StepElement_SurfaceElementPurpose::SetApplicationDefinedElementPurpose(
   const occ::handle<TCollection_HAsciiString>& val)
 {
@@ -106,8 +92,6 @@ void StepElement_SurfaceElementPurpose::SetApplicationDefinedElementPurpose(
   SelMem->SetName(name->ToCString());
   SelMem->SetString(val->ToCString());
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> StepElement_SurfaceElementPurpose::
   ApplicationDefinedElementPurpose() const

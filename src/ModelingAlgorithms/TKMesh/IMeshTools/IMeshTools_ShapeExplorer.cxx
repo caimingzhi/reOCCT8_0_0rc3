@@ -13,11 +13,7 @@ IMPLEMENT_STANDARD_RTTIEXT(IMeshTools_ShapeExplorer, IMeshData_Shape)
 
 namespace
 {
-  //=======================================================================
-  // Function: visitEdges
-  // Purpose : Explodes the given shape on edges according to the specified
-  //           criteria and visits each one in order to add it to data model.
-  //=======================================================================
+
   void visitEdges(const occ::handle<IMeshTools_ShapeVisitor>& theVisitor,
                   const TopoDS_Shape&                         theShape,
                   const bool                                  isResetLocation,
@@ -38,26 +34,18 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 IMeshTools_ShapeExplorer::IMeshTools_ShapeExplorer(const TopoDS_Shape& theShape)
     : IMeshData_Shape(theShape)
 {
 }
 
-//=================================================================================================
-
 IMeshTools_ShapeExplorer::~IMeshTools_ShapeExplorer() = default;
-
-//=================================================================================================
 
 void IMeshTools_ShapeExplorer::Accept(const occ::handle<IMeshTools_ShapeVisitor>& theVisitor)
 {
-  // Explore all free edges in shape.
+
   visitEdges(theVisitor, GetShape(), true, TopAbs_EDGE, TopAbs_FACE);
 
-  // Explore all related to some face edges in shape.
-  // make array of faces suitable for processing (excluding faces without surface)
   NCollection_List<TopoDS_Shape> aFaceList;
   BRepLib::ReverseSortFaces(GetShape(), aFaceList);
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aFaceMap;
@@ -70,7 +58,7 @@ void IMeshTools_ShapeExplorer::Accept(const occ::handle<IMeshTools_ShapeVisitor>
     aFaceNoLoc.Location(aEmptyLoc);
     if (!aFaceMap.Add(aFaceNoLoc))
     {
-      continue; // already processed
+      continue;
     }
 
     const TopoDS_Face& aFace = TopoDS::Face(aFaceIter.Value());
@@ -79,10 +67,8 @@ void IMeshTools_ShapeExplorer::Accept(const occ::handle<IMeshTools_ShapeVisitor>
       continue;
     }
 
-    // Explore all edges in face.
     visitEdges(theVisitor, aFace, false, TopAbs_EDGE);
 
-    // Store only forward faces in order to prevent inverse issue.
     theVisitor->Visit(TopoDS::Face(aFace.Oriented(TopAbs_FORWARD)));
   }
 }

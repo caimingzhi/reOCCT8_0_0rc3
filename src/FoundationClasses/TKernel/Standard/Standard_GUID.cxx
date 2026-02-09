@@ -1,26 +1,10 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_GUID.hpp>
 #include <Standard_IStream.hpp>
 #include <Standard_RangeError.hpp>
 
 #include <cstdio>
-
-// Fixes incorrect treatment of GUID given as a string with invalid format
-
-//=================================================================================================
 
 int Standard_GUID_MatchChar(const char* buffer, const char aChar)
 {
@@ -34,15 +18,13 @@ int Standard_GUID_MatchChar(const char* buffer, const char aChar)
   }
 
   if (*tmpbuffer == '\0')
-    return -1; // The searched symbol wasn't found
+    return -1;
 
   if (result >= 0)
     result++;
 
   return result;
 }
-
-//=================================================================================================
 
 Standard_PCharacter Standard_GUID_GetValue32(Standard_PCharacter tmpBuffer, int& my32b)
 {
@@ -61,8 +43,6 @@ Standard_PCharacter Standard_GUID_GetValue32(Standard_PCharacter tmpBuffer, int&
   return &tmpBuffer[pos + 1];
 }
 
-//=================================================================================================
-
 Standard_PCharacter Standard_GUID_GetValue16(Standard_PCharacter tmpBuffer, char16_t& my32b)
 {
   char strtmp[Standard_GUID_SIZE_ALLOC];
@@ -77,11 +57,9 @@ Standard_PCharacter Standard_GUID_GetValue16(Standard_PCharacter tmpBuffer, char
   }
   else
     return nullptr;
-  //  std::cout << "V16 :" << hex(my32b) << std::endl;
+
   return &tmpBuffer[pos + 1];
 }
-
-//=================================================================================================
 
 Standard_PCharacter Standard_GUID_GetValue8(Standard_PCharacter tmpBuffer, uint8_t& my32b)
 {
@@ -90,11 +68,9 @@ Standard_PCharacter Standard_GUID_GetValue8(Standard_PCharacter tmpBuffer, uint8
   strncpy(strtmp, tmpBuffer, 2);
   strtmp[2] = '\0';
   my32b     = (uint8_t)strtoul(strtmp, (char**)nullptr, 16);
-  //  std::cout << "V8 :" << hex(my32b) << std::endl;
+
   return &tmpBuffer[2];
 }
-
-//=================================================================================================
 
 bool Standard_GUID::CheckGUIDFormat(const char* aGuid)
 {
@@ -164,8 +140,6 @@ bool Standard_GUID::CheckGUIDFormat(const char* aGuid)
 
   return result;
 }
-
-//=================================================================================================
 
 Standard_GUID::Standard_GUID(const char* aGuid)
     : my32b(0),
@@ -242,8 +216,6 @@ Standard_GUID::Standard_GUID(const char16_t* aGuid)
   Standard_GUID_GetValue8(tmpBuffer, my8b6);
 }
 
-//=================================================================================================
-
 void Standard_GUID::ToCString(const Standard_PCharacter aStrGuid) const
 {
   Sprintf(aStrGuid,
@@ -260,8 +232,6 @@ void Standard_GUID::ToCString(const Standard_PCharacter aStrGuid) const
           (unsigned char)my8b6);
 }
 
-//=================================================================================================
-
 void Standard_GUID::ToExtString(const Standard_PExtCharacter aStrGuid) const
 {
   char sguid[Standard_GUID_SIZE_ALLOC];
@@ -274,8 +244,6 @@ void Standard_GUID::ToExtString(const Standard_PExtCharacter aStrGuid) const
 
   aStrGuid[Standard_GUID_SIZE] = (char16_t)0;
 }
-
-//=================================================================================================
 
 void Standard_GUID::ShallowDump(Standard_OStream& aStream) const
 {

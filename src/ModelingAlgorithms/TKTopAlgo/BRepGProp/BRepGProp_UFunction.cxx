@@ -2,10 +2,6 @@
 #include <gp_Pnt.hpp>
 #include <gp_XYZ.hpp>
 
-//=======================================================================
-// function : Constructor.
-// purpose  :
-//=======================================================================
 BRepGProp_UFunction::BRepGProp_UFunction(const BRepGProp_Face& theSurface,
                                          const gp_Pnt&         theVertex,
                                          const bool            IsByPoint,
@@ -19,14 +15,9 @@ BRepGProp_UFunction::BRepGProp_UFunction(const BRepGProp_Face& theSurface,
 {
 }
 
-//=======================================================================
-// function : Value
-// purpose  : Returns a value of the function.
-//=======================================================================
-
 bool BRepGProp_UFunction::Value(const double X, double& F)
 {
-  // Volume computation
+
   if (myValueType == GProp_Mass)
   {
     gp_XYZ aPMP0;
@@ -38,12 +29,10 @@ bool BRepGProp_UFunction::Value(const double X, double& F)
     return true;
   }
 
-  // Center of mass computation
   if (myValueType == GProp_CenterMassX || myValueType == GProp_CenterMassY
       || myValueType == GProp_CenterMassZ)
     return CenterMassValue(X, F);
 
-  // Inertia computation
   if (myValueType == GProp_InertiaXX || myValueType == GProp_InertiaYY
       || myValueType == GProp_InertiaZZ || myValueType == GProp_InertiaXY
       || myValueType == GProp_InertiaXZ || myValueType == GProp_InertiaYZ)
@@ -51,11 +40,6 @@ bool BRepGProp_UFunction::Value(const double X, double& F)
 
   return false;
 }
-
-//=======================================================================
-// function : VolumeValue
-// purpose  : Returns the value for volume computation.
-//=======================================================================
 
 double BRepGProp_UFunction::VolumeValue(const double X,
                                         gp_XYZ&      thePMP0,
@@ -69,11 +53,9 @@ double BRepGProp_UFunction::VolumeValue(const double X,
 
   thePMP0 = aPnt.XYZ().Subtracted(myVertex.XYZ());
 
-  // Volume computation for ByPoint mode.
   if (myIsByPoint)
     return thePMP0.Dot(aNorm.XYZ());
 
-  // Volume and additional coefficients computation for ByPlane mode.
   const double* aCoeff = myCoeffs;
 
   theS  = aNorm.X() * aCoeff[0] + aNorm.Y() * aCoeff[1] + aNorm.Z() * aCoeff[2];
@@ -81,11 +63,6 @@ double BRepGProp_UFunction::VolumeValue(const double X,
 
   return theS * theD1;
 }
-
-//=======================================================================
-// function : CenterMassValue
-// purpose  : Returns a value for the center of mass computation.
-//=======================================================================
 
 bool BRepGProp_UFunction::CenterMassValue(const double X, double& F)
 {
@@ -95,7 +72,6 @@ bool BRepGProp_UFunction::CenterMassValue(const double X, double& F)
 
   F = VolumeValue(X, aPmP0, aS, aD1);
 
-  // Center of mass computation for ByPoint mode.
   if (myIsByPoint)
   {
     switch (myValueType)
@@ -116,7 +92,6 @@ bool BRepGProp_UFunction::CenterMassValue(const double X, double& F)
     return true;
   }
 
-  // Center of mass computation for ByPlane mode.
   const double* aCoeff = myCoeffs;
 
   switch (myValueType)
@@ -137,11 +112,6 @@ bool BRepGProp_UFunction::CenterMassValue(const double X, double& F)
   return true;
 }
 
-//=======================================================================
-// function : InertiaValue
-// purpose  : Compute the value of inertia.
-//=======================================================================
-
 bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
 {
   gp_XYZ        aPmP0;
@@ -153,7 +123,6 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
 
   F = VolumeValue(X, aPmP0, aS, aD1);
 
-  // Inertia computation for ByPoint mode.
   if (myIsByPoint)
   {
     switch (myValueType)
@@ -186,7 +155,6 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
     return true;
   }
 
-  // Inertia computation for ByPlane mode.
   double aD2 = aD1 * aD1;
   double aD3 = aD1 * aD2 / 3.;
   double aPPar1;
@@ -194,7 +162,6 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
   double aCoeff1;
   double aCoeff2;
 
-  // Inertia computation for XX, YY and ZZ.
   if (myValueType == GProp_InertiaXX || myValueType == GProp_InertiaYY
       || myValueType == GProp_InertiaZZ)
   {
@@ -214,7 +181,7 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
       aCoeff2 = aCoeffs[2];
     }
     else
-    { // myValueType == GProp_InertiaZZ
+    {
       aPPar1  = aPmP0.X();
       aPPar2  = aPmP0.Y();
       aCoeff1 = aCoeffs[0];
@@ -231,7 +198,6 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
     return true;
   }
 
-  // Inertia computation for XY, YZ and XZ.
   if (myValueType == GProp_InertiaXY || myValueType == GProp_InertiaYZ
       || myValueType == GProp_InertiaXZ)
   {
@@ -251,7 +217,7 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
       aCoeff2 = aCoeffs[2];
     }
     else
-    { // myValueType == GProp_InertiaXZ
+    {
       aPPar1  = aPmP0.X();
       aPPar2  = aPmP0.Z();
       aCoeff1 = aCoeffs[0];

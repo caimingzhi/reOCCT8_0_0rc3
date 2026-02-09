@@ -6,8 +6,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Draw_Circle2D, Draw_Drawable2D)
 
-//=================================================================================================
-
 Draw_Circle2D::Draw_Circle2D(const gp_Circ2d&  C,
                              const double      A1,
                              const double      A2,
@@ -18,8 +16,6 @@ Draw_Circle2D::Draw_Circle2D(const gp_Circ2d&  C,
       myColor(col)
 {
 }
-
-//=================================================================================================
 
 void Draw_Circle2D::DrawOn(Draw_Display& d) const
 {

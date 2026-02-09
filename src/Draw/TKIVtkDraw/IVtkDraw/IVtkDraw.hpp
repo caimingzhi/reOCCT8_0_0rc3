@@ -12,7 +12,6 @@ class IVtkDraw
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! VTK window creation parameters.
   struct IVtkWinParams
   {
     NCollection_Vec2<int> TopLeft;

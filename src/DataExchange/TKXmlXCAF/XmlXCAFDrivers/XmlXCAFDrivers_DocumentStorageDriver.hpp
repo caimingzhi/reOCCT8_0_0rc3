@@ -8,7 +8,6 @@ class TCollection_ExtendedString;
 class XmlMDF_ADriverTable;
 class Message_Messenger;
 
-//! storage driver of a XS document
 class XmlXCAFDrivers_DocumentStorageDriver : public XmlDrivers_DocumentStorageDriver
 {
 

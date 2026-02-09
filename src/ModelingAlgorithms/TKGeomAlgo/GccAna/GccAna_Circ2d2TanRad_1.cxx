@@ -12,18 +12,6 @@
 #include <Standard_NegativeValue.hpp>
 #include <NCollection_Array1.hpp>
 
-// circular tangent to a circle, a line and a given radius
-//==============================================================
-//========================================================================
-// Initialize WellDone to false.                                         +
-// Return circle C1 and straight line L2.                                +
-// Leave with error if the construction is impossible.                   +
-// Create parallel to C1 in the proper direction.                        +
-// Create parallel to L2 in the proper direction.                        +
-// Intersect parallels ==> center point of the solution.                 +
-// Create the solution and add it to already found ones.                 +
-// Fill the fields.                                                      +
-//========================================================================
 GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified1,
                                            const GccEnt_QualifiedLin&  Qualified2,
                                            const double                Radius,
@@ -91,10 +79,10 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if (Qualified1.IsEnclosed())
     {
-      //  =================================
+
       if (Qualified2.IsEnclosed())
       {
-        //    ============================
+
         if (distance - R1 > Tol)
         {
           WellDone = true;
@@ -131,7 +119,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       }
       else if (Qualified2.IsOutside())
       {
-        //    ================================
+
         if (distance > R1 + Tol)
         {
           WellDone = true;
@@ -169,7 +157,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       }
       else if (Qualified2.IsUnqualified())
       {
-        //    ====================================
+
         if ((distance - R1 > Tol) || (Radius * 2.0 - R1 - distance > Tol) || (Radius - R1 > Tol))
         {
           WellDone = true;
@@ -204,10 +192,10 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if (Qualified1.IsEnclosing())
     {
-      //  ==================================
+
       if (Qualified2.IsEnclosed())
       {
-        //    =================================
+
         if ((distance < R1 - Tol) || (Radius < R1 - Tol) || (Radius * 2 < distance + R1 - Tol)
             || (Tol < R1 - Radius) || (-ydir * (cxloc - lxloc) + xdir * (cyloc - lyloc) < 0.0))
         {
@@ -230,7 +218,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       }
       else if (Qualified2.IsOutside())
       {
-        //    ================================
+
         if ((Tol < R1 - distance) || (Tol < distance + R1 - Radius * 2.0) || (Tol < R1 - Radius)
             || (-ydir * (cxloc - lxloc) + xdir * (cyloc - lyloc) > 0.0))
         {
@@ -253,7 +241,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       }
       else if (Qualified2.IsUnqualified())
       {
-        //    ====================================
+
         if ((distance < R1 - Tol) || (Radius * 2.0 < distance + R1 - Tol) || (Radius < R1 - Tol))
         {
           WellDone = true;
@@ -286,7 +274,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if ((Qualified1.IsOutside()) && (Qualified2.IsEnclosed()))
     {
-      //  ===============================================================
+
       if (((-ydir * (cxloc - lxloc) + xdir * (cyloc - lyloc) < 0.0) && (distance > R1 + Tol))
           || (distance > R1 + Radius * 2.0 + Tol))
       {
@@ -317,7 +305,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if ((Qualified1.IsOutside()) && (Qualified2.IsOutside()))
     {
-      //  ==============================================================
+
       if (((-ydir * (cxloc - lxloc) + xdir * (cyloc - lyloc) > 0.0) && (distance > R1 + Tol))
           || (distance > R1 + Radius * 2.0 + Tol))
       {
@@ -348,7 +336,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if ((Qualified1.IsOutside()) && (Qualified2.IsUnqualified()))
     {
-      //  ==================================================================
+
       if (distance > Radius * 2.0 + R1 + Tol)
       {
         WellDone = true;
@@ -377,7 +365,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if ((Qualified1.IsUnqualified()) && (Qualified2.IsEnclosed()))
     {
-      //  ===================================================================
+
       if ((distance > R1 + Radius * 2.0 + Tol)
           || ((-ydir * (cxloc - lxloc) + xdir * (cyloc - lyloc) > 0.0) && (distance > R1 + Tol)))
       {
@@ -409,7 +397,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if ((Qualified1.IsUnqualified()) && (Qualified2.IsOutside()))
     {
-      //  ==================================================================
+
       if ((distance > R1 + Radius * 2.0 + Tol)
           || ((-ydir * (cxloc - lxloc) + xdir * (cyloc - lyloc) < 0.0) && (distance > R1 + Tol)))
       {
@@ -441,7 +429,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
     }
     else if ((Qualified1.IsUnqualified()) && (Qualified2.IsUnqualified()))
     {
-      //  ======================================================================
+
       if (distance > R1 + Radius * 2.0 + Tol)
       {
         WellDone = true;
@@ -492,7 +480,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
                 gp_Pnt2d Center(Intp.Point(i).Value());
                 gp_Ax2d  axe(Center, dirx);
                 cirsol(NbrSol) = gp_Circ2d(axe, Radius);
-//              ======================================
+
 #ifdef OCCT_DEBUG
                 gp_Dir2d dc1(center1.XY() - Center.XY());
 #endif
@@ -551,7 +539,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       gp_Pnt2d Cen(center1.XY() + cote * (R1 + Radius) * gp_XY(-ydir, xdir));
       gp_Ax2d  axe(Cen, dirx);
       cirsol(1) = gp_Circ2d(axe, Radius);
-      //    =================================
+
       WellDone      = true;
       NbrSol        = 1;
       TheSame1(1)   = 0;
@@ -567,7 +555,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       gp_Pnt2d Cen(center1.XY() + cote * (R1 - Radius) * gp_XY(ydir, -xdir));
       gp_Ax2d  axe(Cen, dirx);
       cirsol(1) = gp_Circ2d(axe, Radius);
-      //    =================================
+
       qualifier1(1) = Qualified1.Qualifier();
       qualifier2(1) = Qualified2.Qualifier();
       pnttg2sol(1)  = gp_Pnt2d(Cen.XY() + cote * Radius * gp_XY(ydir, -xdir));
@@ -585,7 +573,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
       gp_Pnt2d Cent(center1.XY() + cote * (R1 + Radius) * gp_XY(-ydir, xdir));
       gp_Ax2d  axe(Cent, dirx);
       cirsol(1) = gp_Circ2d(axe, Radius);
-      //    =================================
+
       qualifier1(1) = Qualified1.Qualifier();
       qualifier2(1) = Qualified2.Qualifier();
       WellDone      = true;

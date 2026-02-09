@@ -3,8 +3,6 @@
 
 #include <cmath>
 
-//=================================================================================================
-
 CSLib_NormalPolyDef::CSLib_NormalPolyDef(const int theK0, const NCollection_Array1<double>& theLi)
     : myK0(theK0),
       myTABli(0, theK0)
@@ -15,8 +13,6 @@ CSLib_NormalPolyDef::CSLib_NormalPolyDef(const int theK0, const NCollection_Arra
   }
 }
 
-//=================================================================================================
-
 bool CSLib_NormalPolyDef::Value(const double theX, double& theF)
 {
   theF = 0.0;
@@ -24,13 +20,11 @@ bool CSLib_NormalPolyDef::Value(const double theX, double& theF)
   const double aCos = std::cos(theX);
   const double aSin = std::sin(theX);
 
-  // At singular points (cos or sin near zero), return zero to avoid numerical instability.
   if (std::abs(aCos) <= RealSmall() || std::abs(aSin) <= RealSmall())
   {
     return true;
   }
 
-  // Evaluate the polynomial: F(X) = Sum_{i=0}^{k0} C(k0,i) * cos^i(X) * sin^(k0-i)(X) * li(i)
   for (int i = 0; i <= myK0; ++i)
   {
     theF += PLib::Bin(myK0, i) * std::pow(aCos, i) * std::pow(aSin, myK0 - i) * myTABli(i);
@@ -39,8 +33,6 @@ bool CSLib_NormalPolyDef::Value(const double theX, double& theF)
   return true;
 }
 
-//=================================================================================================
-
 bool CSLib_NormalPolyDef::Derivative(const double theX, double& theD)
 {
   theD = 0.0;
@@ -48,14 +40,11 @@ bool CSLib_NormalPolyDef::Derivative(const double theX, double& theD)
   const double aCos = std::cos(theX);
   const double aSin = std::sin(theX);
 
-  // At singular points, return zero derivative.
   if (std::abs(aCos) <= RealSmall() || std::abs(aSin) <= RealSmall())
   {
     return true;
   }
 
-  // Evaluate the derivative using the chain rule.
-  // dF/dX = Sum_{i=0}^{k0} C(k0,i) * cos^(i-1)(X) * sin^(k0-i-1)(X) * (k0*cos^2(X) - i) * li(i)
   for (int i = 0; i <= myK0; ++i)
   {
     theD += PLib::Bin(myK0, i) * std::pow(aCos, i - 1) * std::pow(aSin, myK0 - i - 1)
@@ -65,8 +54,6 @@ bool CSLib_NormalPolyDef::Derivative(const double theX, double& theD)
   return true;
 }
 
-//=================================================================================================
-
 bool CSLib_NormalPolyDef::Values(const double theX, double& theF, double& theD)
 {
   theF = 0.0;
@@ -75,13 +62,11 @@ bool CSLib_NormalPolyDef::Values(const double theX, double& theF, double& theD)
   const double aCos = std::cos(theX);
   const double aSin = std::sin(theX);
 
-  // At singular points, return zeros.
   if (std::abs(aCos) <= RealSmall() || std::abs(aSin) <= RealSmall())
   {
     return true;
   }
 
-  // Compute both function value and derivative in a single loop for efficiency.
   for (int i = 0; i <= myK0; ++i)
   {
     const double aBinCoeff = PLib::Bin(myK0, i);

@@ -11,7 +11,6 @@ class StepBasic_PersonalAddress;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for PersonalAddress
 class RWStepBasic_RWPersonalAddress
 {
 public:

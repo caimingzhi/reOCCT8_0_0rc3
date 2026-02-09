@@ -9,7 +9,6 @@ class TopOpeBRep_Point2d;
 class TopOpeBRep_FaceEdgeIntersector;
 class TopoDS_Shape;
 
-//! Provide services needed by the Fillers
 class TopOpeBRep_PointGeomTool
 {
 public:

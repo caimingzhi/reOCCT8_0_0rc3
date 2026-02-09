@@ -12,8 +12,6 @@ IMPLEMENT_STANDARD_RTTIEXT(MeshVS_MeshOwner, SelectMgr_EntityOwner)
 #ifndef MeshVS_PRSBUILDERHXX
 #endif
 
-//=================================================================================================
-
 MeshVS_MeshOwner::MeshVS_MeshOwner(const SelectMgr_SelectableObject*     theSelObj,
                                    const occ::handle<MeshVS_DataSource>& theDS,
                                    const int                             thePriority)
@@ -24,28 +22,20 @@ MeshVS_MeshOwner::MeshVS_MeshOwner(const SelectMgr_SelectableObject*     theSelO
     myDataSource = theDS;
 }
 
-//=================================================================================================
-
 const occ::handle<MeshVS_DataSource>& MeshVS_MeshOwner::GetDataSource() const
 {
   return myDataSource;
 }
-
-//=================================================================================================
 
 const occ::handle<TColStd_HPackedMapOfInteger>& MeshVS_MeshOwner::GetSelectedNodes() const
 {
   return mySelectedNodes;
 }
 
-//=================================================================================================
-
 const occ::handle<TColStd_HPackedMapOfInteger>& MeshVS_MeshOwner::GetSelectedElements() const
 {
   return mySelectedElems;
 }
-
-//=================================================================================================
 
 void MeshVS_MeshOwner::AddSelectedEntities(const occ::handle<TColStd_HPackedMapOfInteger>& Nodes,
                                            const occ::handle<TColStd_HPackedMapOfInteger>& Elems)
@@ -60,29 +50,21 @@ void MeshVS_MeshOwner::AddSelectedEntities(const occ::handle<TColStd_HPackedMapO
     mySelectedElems->ChangeMap().Unite(Elems->Map());
 }
 
-//=================================================================================================
-
 void MeshVS_MeshOwner::ClearSelectedEntities()
 {
   mySelectedNodes.Nullify();
   mySelectedElems.Nullify();
 }
 
-//=================================================================================================
-
 const occ::handle<TColStd_HPackedMapOfInteger>& MeshVS_MeshOwner::GetDetectedNodes() const
 {
   return myDetectedNodes;
 }
 
-//=================================================================================================
-
 const occ::handle<TColStd_HPackedMapOfInteger>& MeshVS_MeshOwner::GetDetectedElements() const
 {
   return myDetectedElems;
 }
-
-//=================================================================================================
 
 void MeshVS_MeshOwner::SetDetectedEntities(const occ::handle<TColStd_HPackedMapOfInteger>& Nodes,
                                            const occ::handle<TColStd_HPackedMapOfInteger>& Elems)
@@ -93,11 +75,9 @@ void MeshVS_MeshOwner::SetDetectedEntities(const occ::handle<TColStd_HPackedMapO
     SetSelected(false);
 }
 
-//=================================================================================================
-
 void MeshVS_MeshOwner::HilightWithColor(const occ::handle<PrsMgr_PresentationManager>& thePM,
                                         const occ::handle<Prs3d_Drawer>&               theStyle,
-                                        const int /*theMode*/)
+                                        const int)
 {
   occ::handle<SelectMgr_SelectableObject> aSelObj;
   if (HasSelectable())
@@ -105,7 +85,7 @@ void MeshVS_MeshOwner::HilightWithColor(const occ::handle<PrsMgr_PresentationMan
 
   if (thePM->IsImmediateModeOn() && aSelObj->IsKind(STANDARD_TYPE(MeshVS_Mesh)))
   {
-    // Update last detected entity ID
+
     occ::handle<TColStd_HPackedMapOfInteger> aNodes = GetDetectedNodes();
     occ::handle<TColStd_HPackedMapOfInteger> aElems = GetDetectedElements();
     if (!aNodes.IsNull() && aNodes->Map().Extent() == 1)
@@ -125,7 +105,6 @@ void MeshVS_MeshOwner::HilightWithColor(const occ::handle<PrsMgr_PresentationMan
       }
     }
 
-    // hilight detected entities
     occ::handle<MeshVS_Mesh> aMesh = occ::down_cast<MeshVS_Mesh>(aSelObj);
     aMesh->HilightOwnerWithColor(thePM, theStyle, this);
   }
@@ -140,7 +119,7 @@ void MeshVS_MeshOwner::Unhilight(const occ::handle<PrsMgr_PresentationManager>& 
   if ((!aNodes.IsNull() && !aNodes->Map().Contains(myLastID))
       || (!aElems.IsNull() && !aElems->Map().Contains(myLastID)))
     return;
-  // Reset last detected ID
+
   myLastID = -1;
 }
 
@@ -150,8 +129,7 @@ bool MeshVS_MeshOwner::IsForcedHilight() const
   int  aKey     = -1;
   if (myLastID > 0)
   {
-    // Check the detected entity and
-    // allow to hilight it if it differs from the last detected entity <myLastID>
+
     occ::handle<TColStd_HPackedMapOfInteger> aNodes = GetDetectedNodes();
     if (!aNodes.IsNull() && aNodes->Map().Extent() == 1)
     {

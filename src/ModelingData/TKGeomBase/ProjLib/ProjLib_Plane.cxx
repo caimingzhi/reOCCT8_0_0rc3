@@ -5,18 +5,12 @@
 #include <gp_Vec.hpp>
 #include <ProjLib_Plane.hpp>
 
-//=================================================================================================
-
 ProjLib_Plane::ProjLib_Plane() = default;
-
-//=================================================================================================
 
 ProjLib_Plane::ProjLib_Plane(const gp_Pln& Pl)
 {
   Init(Pl);
 }
-
-//=================================================================================================
 
 ProjLib_Plane::ProjLib_Plane(const gp_Pln& Pl, const gp_Lin& L)
 {
@@ -24,15 +18,11 @@ ProjLib_Plane::ProjLib_Plane(const gp_Pln& Pl, const gp_Lin& L)
   Project(L);
 }
 
-//=================================================================================================
-
 ProjLib_Plane::ProjLib_Plane(const gp_Pln& Pl, const gp_Circ& C)
 {
   Init(Pl);
   Project(C);
 }
-
-//=================================================================================================
 
 ProjLib_Plane::ProjLib_Plane(const gp_Pln& Pl, const gp_Elips& E)
 {
@@ -40,23 +30,17 @@ ProjLib_Plane::ProjLib_Plane(const gp_Pln& Pl, const gp_Elips& E)
   Project(E);
 }
 
-//=================================================================================================
-
 ProjLib_Plane::ProjLib_Plane(const gp_Pln& Pl, const gp_Parab& P)
 {
   Init(Pl);
   Project(P);
 }
 
-//=================================================================================================
-
 ProjLib_Plane::ProjLib_Plane(const gp_Pln& Pl, const gp_Hypr& H)
 {
   Init(Pl);
   Project(H);
 }
-
-//=================================================================================================
 
 void ProjLib_Plane::Init(const gp_Pln& Pl)
 {
@@ -65,12 +49,6 @@ void ProjLib_Plane::Init(const gp_Pln& Pl)
   myIsPeriodic = false;
   myPlane      = Pl;
 }
-
-//=======================================================================
-// function : EvalPnt2d / EvalDir2d
-// purpose  : returns the Projected Pnt / Dir in the parametrization range
-//           of myPlane.
-//=======================================================================
 
 static gp_Pnt2d EvalPnt2d(const gp_Pnt& P, const gp_Pln& Pl)
 {
@@ -84,16 +62,12 @@ static gp_Dir2d EvalDir2d(const gp_Dir& D, const gp_Pln& Pl)
   return gp_Dir2d(D.Dot(Pl.Position().XDirection()), D.Dot(Pl.Position().YDirection()));
 }
 
-//=================================================================================================
-
 void ProjLib_Plane::Project(const gp_Lin& L)
 {
   myType = GeomAbs_Line;
   myLin  = gp_Lin2d(EvalPnt2d(L.Location(), myPlane), EvalDir2d(L.Direction(), myPlane));
   isDone = true;
 }
-
-//=================================================================================================
 
 void ProjLib_Plane::Project(const gp_Circ& C)
 {
@@ -110,8 +84,6 @@ void ProjLib_Plane::Project(const gp_Circ& C)
   isDone       = true;
 }
 
-//=================================================================================================
-
 void ProjLib_Plane::Project(const gp_Elips& E)
 {
   myType = GeomAbs_Ellipse;
@@ -126,8 +98,6 @@ void ProjLib_Plane::Project(const gp_Elips& E)
   isDone       = true;
 }
 
-//=================================================================================================
-
 void ProjLib_Plane::Project(const gp_Parab& P)
 {
   myType = GeomAbs_Parabola;
@@ -140,8 +110,6 @@ void ProjLib_Plane::Project(const gp_Parab& P)
   myParab = gp_Parab2d(Ax, P.Focal());
   isDone  = true;
 }
-
-//=================================================================================================
 
 void ProjLib_Plane::Project(const gp_Hypr& H)
 {

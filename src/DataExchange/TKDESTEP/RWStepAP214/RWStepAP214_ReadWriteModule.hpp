@@ -15,27 +15,19 @@ class Interface_Check;
 class Standard_Transient;
 class StepData_StepWriter;
 
-//! General module to read and write StepAP214 entities
 class RWStepAP214_ReadWriteModule : public StepData_ReadWriteModule
 {
 
 public:
   Standard_HIDDEN RWStepAP214_ReadWriteModule();
 
-  //! associates a positive Case Number to each type of StepAP214 entity,
-  //! given as a String defined in the EXPRESS form
   Standard_HIDDEN int CaseStep(const TCollection_AsciiString& atype) const override;
 
-  //! associates a positive Case Number to each type of StepAP214 Complex entity,
-  //! given as a String defined in the EXPRESS form
   Standard_HIDDEN virtual int CaseStep(
     const NCollection_Sequence<TCollection_AsciiString>& types) const override;
 
-  //! returns True if the Case Number corresponds to a Complex Type
   Standard_HIDDEN virtual bool IsComplex(const int CN) const override;
 
-  //! returns a StepType (defined in EXPRESS form which belongs to a
-  //! Type of Entity, identified by its CaseNumber determined by Protocol
   Standard_HIDDEN const std::string_view& StepType(const int CN) const override;
 
   Standard_HIDDEN virtual bool ComplexType(

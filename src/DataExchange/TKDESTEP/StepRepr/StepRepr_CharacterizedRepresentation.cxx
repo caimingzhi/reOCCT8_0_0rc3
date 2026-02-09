@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepRepr_CharacterizedRepresentation, StepRepr_Representation)
 
-//=================================================================================================
-
 StepRepr_CharacterizedRepresentation::StepRepr_CharacterizedRepresentation() = default;
-
-//=================================================================================================
 
 void StepRepr_CharacterizedRepresentation::Init(
   const occ::handle<TCollection_HAsciiString>&                                      theName,

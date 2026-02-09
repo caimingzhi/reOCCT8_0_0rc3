@@ -7,12 +7,8 @@
 #include <StepData_StepWriter.hpp>
 #include <StepRepr_ReprItemAndPlaneAngleMeasureWithUnit.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWReprItemAndPlaneAngleMeasureWithUnit::
   RWStepRepr_RWReprItemAndPlaneAngleMeasureWithUnit() = default;
-
-//=================================================================================================
 
 void RWStepRepr_RWReprItemAndPlaneAngleMeasureWithUnit::ReadStep(
   const occ::handle<StepData_StepReaderData>&                       data,
@@ -20,14 +16,14 @@ void RWStepRepr_RWReprItemAndPlaneAngleMeasureWithUnit::ReadStep(
   occ::handle<Interface_Check>&                                     ach,
   const occ::handle<StepRepr_ReprItemAndPlaneAngleMeasureWithUnit>& ent) const
 {
-  int num = 0; // num0;
+  int num = 0;
   data->NamedForComplex("MEASURE_WITH_UNIT", "MSWTUN", num0, num, ach);
   if (!data->CheckNbParams(num, 2, ach, "measure_with_unit"))
     return;
-  // --- own field : valueComponent ---
+
   occ::handle<StepBasic_MeasureValueMember> mvc = new StepBasic_MeasureValueMember;
   data->ReadMember(num, 1, "value_component", ach, mvc);
-  // --- own field : unitComponent ---
+
   StepBasic_Unit aUnitComponent;
   data->ReadEntity(num, 2, "unit_component", ach, aUnitComponent);
   occ::handle<StepBasic_MeasureWithUnit> aMeasureWithUnit = new StepBasic_MeasureWithUnit;
@@ -36,17 +32,14 @@ void RWStepRepr_RWReprItemAndPlaneAngleMeasureWithUnit::ReadStep(
   data->NamedForComplex("REPRESENTATION_ITEM", "RPRITM", num0, num, ach);
   if (!data->CheckNbParams(num, 1, ach, "representation_item"))
     return;
-  // --- own field : name ---
+
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
   occ::handle<StepRepr_RepresentationItem> aReprItem = new StepRepr_RepresentationItem;
   aReprItem->Init(aName);
 
-  //--- Initialisation of the read entity ---
   ent->Init(aMeasureWithUnit, aReprItem);
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWReprItemAndPlaneAngleMeasureWithUnit::WriteStep(
   StepData_StepWriter&                                              SW,

@@ -1,15 +1,4 @@
-// Copyright (c) 2021 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GeomConvert_Units.hpp>
 #include <Geom2d_Circle.hpp>
@@ -33,8 +22,6 @@
 #include <gp_Pnt2d.hpp>
 #include <gp_Trsf2d.hpp>
 
-//=================================================================================================
-
 occ::handle<Geom2d_Curve> GeomConvert_Units::RadianToDegree(
   const occ::handle<Geom2d_Curve>& theCurve2d,
   const occ::handle<Geom_Surface>& theSurf,
@@ -45,15 +32,12 @@ occ::handle<Geom2d_Curve> GeomConvert_Units::RadianToDegree(
   double                    uFact      = 1.;
   double                    vFact      = 1.;
   double                    LengthFact = 1. / theLengthFactor;
-  double                    AngleFact  = theFactorRadianDegree; // 180./PI;  pilotable
+  double                    AngleFact  = theFactorRadianDegree;
 
   gp_Pnt2d   Pt1;
   gp_XY      pXY;
   gp_GTrsf2d tMatu, tMatv;
 
-  //  theSurf is a CylindricalSurface or a ConicalSurface or
-  //             a ToroidalSurface or a SphericalSurface or
-  //             a SurfaceOfRevolution
   if (theSurf->IsKind(STANDARD_TYPE(Geom_SphericalSurface))
       || theSurf->IsKind(STANDARD_TYPE(Geom_ToroidalSurface)))
   {
@@ -130,7 +114,6 @@ occ::handle<Geom2d_Curve> GeomConvert_Units::RadianToDegree(
     }
   }
 
-  // Compute affinity
   tMatu.SetAffinity(gp::OY2d(), uFact);
   tMatv.SetAffinity(gp::OX2d(), vFact);
   if (aCurve2d->IsKind(STANDARD_TYPE(Geom2d_BoundedCurve)))
@@ -162,14 +145,6 @@ occ::handle<Geom2d_Curve> GeomConvert_Units::RadianToDegree(
   return aCurve2d;
 }
 
-// ============================================================================
-// Method : DegreeToRadian
-// Purpose: 1. Change definition of the pcurves according to LengthFactor
-//          2. STEP cylinder, torus, cone and sphere are parametrized
-//             from 0 to 360 degree
-//             Then pcurves parameter have to be transformed
-//             from DEGREE to RADIAN
-// ============================================================================
 occ::handle<Geom2d_Curve> GeomConvert_Units::DegreeToRadian(
   const occ::handle<Geom2d_Curve>& thePcurve,
   const occ::handle<Geom_Surface>& theSurface,
@@ -180,13 +155,11 @@ occ::handle<Geom2d_Curve> GeomConvert_Units::DegreeToRadian(
   double                    uFact      = 1.;
   double                    vFact      = 1.;
   double                    LengthFact = theLengthFactor;
-  double                    AngleFact  = theFactorRadianDegree; // PI/180.;  pilotable
+  double                    AngleFact  = theFactorRadianDegree;
 
   gp_Pnt2d   Pt1;
   gp_XY      pXY;
   gp_GTrsf2d tMatu, tMatv;
-
-  // What to change ??
 
   if (theSurface->IsKind(STANDARD_TYPE(Geom_SphericalSurface))
       || theSurface->IsKind(STANDARD_TYPE(Geom_ToroidalSurface)))
@@ -252,8 +225,6 @@ occ::handle<Geom2d_Curve> GeomConvert_Units::DegreeToRadian(
     }
   }
 
-  // Compute affinity
-
   tMatu.SetAffinity(gp::OY2d(), uFact);
   tMatv.SetAffinity(gp::OX2d(), vFact);
 
@@ -279,8 +250,6 @@ occ::handle<Geom2d_Curve> GeomConvert_Units::DegreeToRadian(
   {
     occ::handle<Geom2d_BSplineCurve> aBSpline2d = occ::down_cast<Geom2d_BSplineCurve>(aPcurve);
 
-    // transform the Poles of the BSplineCurve according to AngleFact and LengthFact
-
     int nbPol = aBSpline2d->NbPoles();
     for (int i = 1; i <= nbPol; i++)
     {
@@ -301,8 +270,6 @@ occ::handle<Geom2d_Curve> GeomConvert_Units::DegreeToRadian(
   }
   return aPcurve;
 }
-
-//=================================================================================================
 
 occ::handle<Geom2d_Curve> GeomConvert_Units::MirrorPCurve(const occ::handle<Geom2d_Curve>& theCurve)
 {

@@ -1,21 +1,8 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDimTolObjects_DatumObject.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDimTolObjects_DatumObject, Standard_Transient)
-
-//=================================================================================================
 
 XCAFDimTolObjects_DatumObject::XCAFDimTolObjects_DatumObject()
 {
@@ -25,8 +12,6 @@ XCAFDimTolObjects_DatumObject::XCAFDimTolObjects_DatumObject()
   myHasPnt     = false;
   myHasPntText = false;
 }
-
-//=================================================================================================
 
 XCAFDimTolObjects_DatumObject::XCAFDimTolObjects_DatumObject(
   const occ::handle<XCAFDimTolObjects_DatumObject>& theObj)
@@ -55,22 +40,16 @@ XCAFDimTolObjects_DatumObject::XCAFDimTolObjects_DatumObject(
   myPresentationName  = theObj->myPresentationName;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> XCAFDimTolObjects_DatumObject::GetSemanticName() const
 {
   return mySemanticName;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DatumObject::SetSemanticName(
   const occ::handle<TCollection_HAsciiString>& theName)
 {
   mySemanticName = theName;
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> XCAFDimTolObjects_DatumObject::GetName() const
 {
@@ -79,14 +58,10 @@ occ::handle<TCollection_HAsciiString> XCAFDimTolObjects_DatumObject::GetName() c
   return myName;
 }
 
-//=================================================================================================
-
 void XCAFDimTolObjects_DatumObject::SetName(const occ::handle<TCollection_HAsciiString>& theName)
 {
   myName = theName;
 }
-
-//=================================================================================================
 
 NCollection_Sequence<XCAFDimTolObjects_DatumSingleModif> XCAFDimTolObjects_DatumObject::
   GetModifiers() const
@@ -94,15 +69,11 @@ NCollection_Sequence<XCAFDimTolObjects_DatumSingleModif> XCAFDimTolObjects_Datum
   return myModifiers;
 }
 
-//=================================================================================================
-
 void XCAFDimTolObjects_DatumObject::SetModifiers(
   const NCollection_Sequence<XCAFDimTolObjects_DatumSingleModif>& theModifiers)
 {
   myModifiers = theModifiers;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DatumObject::SetModifierWithValue(
   const XCAFDimTolObjects_DatumModifWithValue theModifier,
@@ -112,8 +83,6 @@ void XCAFDimTolObjects_DatumObject::SetModifierWithValue(
   myValueOfModifier   = theValue;
 }
 
-//=================================================================================================
-
 void XCAFDimTolObjects_DatumObject::GetModifierWithValue(
   XCAFDimTolObjects_DatumModifWithValue& theModifier,
   double&                                theValue) const
@@ -122,64 +91,46 @@ void XCAFDimTolObjects_DatumObject::GetModifierWithValue(
   theValue    = myValueOfModifier;
 }
 
-//=================================================================================================
-
 void XCAFDimTolObjects_DatumObject::AddModifier(
   const XCAFDimTolObjects_DatumSingleModif theModifier)
 {
   myModifiers.Append(theModifier);
 }
 
-//=================================================================================================
-
 TopoDS_Shape XCAFDimTolObjects_DatumObject::GetDatumTarget() const
 {
   return myDatumTarget;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DatumObject::SetDatumTarget(const TopoDS_Shape& theShape)
 {
   myDatumTarget = theShape;
 }
 
-//=================================================================================================
-
 int XCAFDimTolObjects_DatumObject::GetPosition() const
 {
   return myPosition;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DatumObject::SetPosition(const int thePosition)
 {
   myPosition = thePosition;
 }
 
-//=================================================================================================
-
 bool XCAFDimTolObjects_DatumObject::IsDatumTarget() const
 {
   return myIsDTarget;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DatumObject::IsDatumTarget(const bool theIsDT)
 {
   myIsDTarget = theIsDT;
 }
 
-//=================================================================================================
-
 XCAFDimTolObjects_DatumTargetType XCAFDimTolObjects_DatumObject::GetDatumTargetType() const
 {
   return myDTargetType;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DatumObject::SetDatumTargetType(
   const XCAFDimTolObjects_DatumTargetType theType)
@@ -187,14 +138,10 @@ void XCAFDimTolObjects_DatumObject::SetDatumTargetType(
   myDTargetType = theType;
 }
 
-//=================================================================================================
-
 gp_Ax2 XCAFDimTolObjects_DatumObject::GetDatumTargetAxis() const
 {
   return myAxis;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DatumObject::SetDatumTargetAxis(const gp_Ax2& theAxis)
 {
@@ -202,14 +149,10 @@ void XCAFDimTolObjects_DatumObject::SetDatumTargetAxis(const gp_Ax2& theAxis)
   myIsValidDT = true;
 }
 
-//=================================================================================================
-
 double XCAFDimTolObjects_DatumObject::GetDatumTargetLength() const
 {
   return myLength;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DatumObject::SetDatumTargetLength(const double theLength)
 {
@@ -217,14 +160,10 @@ void XCAFDimTolObjects_DatumObject::SetDatumTargetLength(const double theLength)
   myIsValidDT = true;
 }
 
-//=================================================================================================
-
 double XCAFDimTolObjects_DatumObject::GetDatumTargetWidth() const
 {
   return myWidth;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DatumObject::SetDatumTargetWidth(const double theWidth)
 {
@@ -232,21 +171,15 @@ void XCAFDimTolObjects_DatumObject::SetDatumTargetWidth(const double theWidth)
   myIsValidDT = true;
 }
 
-//=================================================================================================
-
 int XCAFDimTolObjects_DatumObject::GetDatumTargetNumber() const
 {
   return myDatumTargetNumber;
 }
 
-//=================================================================================================
-
 void XCAFDimTolObjects_DatumObject::SetDatumTargetNumber(const int theNumber)
 {
   myDatumTargetNumber = theNumber;
 }
-
-//=================================================================================================
 
 void XCAFDimTolObjects_DatumObject::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

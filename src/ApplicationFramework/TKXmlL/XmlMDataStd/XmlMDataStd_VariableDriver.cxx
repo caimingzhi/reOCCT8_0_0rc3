@@ -10,22 +10,16 @@ IMPLEMENT_DOMSTRING(IsConstString, "isconst")
 IMPLEMENT_DOMSTRING(UnitString, "unit")
 IMPLEMENT_DOMSTRING(ConstString, "true")
 
-//=================================================================================================
-
 XmlMDataStd_VariableDriver::XmlMDataStd_VariableDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataStd_VariableDriver::NewEmpty() const
 {
   return (new TDataStd_Variable());
 }
-
-//=================================================================================================
 
 bool XmlMDataStd_VariableDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                        const occ::handle<TDF_Attribute>& theTarget,
@@ -40,8 +34,6 @@ bool XmlMDataStd_VariableDriver::Paste(const XmlObjMgt_Persistent&       theSour
   aV->Unit(aStr);
   return true;
 }
-
-//=================================================================================================
 
 void XmlMDataStd_VariableDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                        XmlObjMgt_Persistent&             theTarget,

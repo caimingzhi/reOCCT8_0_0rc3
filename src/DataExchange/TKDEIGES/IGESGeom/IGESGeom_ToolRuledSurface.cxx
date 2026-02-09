@@ -13,22 +13,19 @@
 #include <Interface_ShareTool.hpp>
 #include <Message_Msg.hpp>
 
-// MGE 31/07/98
 IGESGeom_ToolRuledSurface::IGESGeom_ToolRuledSurface() = default;
 
 void IGESGeom_ToolRuledSurface::ReadOwnParams(const occ::handle<IGESGeom_RuledSurface>&   ent,
                                               const occ::handle<IGESData_IGESReaderData>& IR,
                                               IGESData_ParamReader&                       PR) const
 {
-  // MGE 31/07/98
 
-  // bool st; //szv#4:S4163:12Mar99 not needed
   int                              aDirFlag, aDevFlag;
   occ::handle<IGESData_IGESEntity> aCurve, anotherCurve;
   IGESData_Status                  aStatus;
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, aCurve))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg148("XSTEP_148");
     switch (aStatus)
     {
@@ -52,7 +49,7 @@ void IGESGeom_ToolRuledSurface::ReadOwnParams(const occ::handle<IGESGeom_RuledSu
     }
   }
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, anotherCurve))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg149("XSTEP_149");
     switch (aStatus)
     {
@@ -76,21 +73,16 @@ void IGESGeom_ToolRuledSurface::ReadOwnParams(const occ::handle<IGESGeom_RuledSu
     }
   }
   if (!PR.ReadInteger(PR.Current(), aDirFlag))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg150("XSTEP_150");
     PR.SendFail(Msg150);
   }
   if (!PR.ReadInteger(PR.Current(), aDevFlag))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg151("XSTEP_151");
     PR.SendFail(Msg151);
   }
-  /*
-    st = PR.ReadEntity(IR, PR.Current(), "First Curve", aCurve);
-    st = PR.ReadEntity(IR, PR.Current(), "Second Curve", anotherCurve);
-    st = PR.ReadInteger(PR.Current(), "DirFlag", aDirFlag);
-    st = PR.ReadInteger(PR.Current(), "DevFlag ", aDevFlag);
-  */
+
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(aCurve, anotherCurve, aDirFlag, aDevFlag);
 }
@@ -124,21 +116,21 @@ void IGESGeom_ToolRuledSurface::OwnCopy(const occ::handle<IGESGeom_RuledSurface>
 }
 
 IGESData_DirChecker IGESGeom_ToolRuledSurface::DirChecker(
-  const occ::handle<IGESGeom_RuledSurface>& /*ent*/) const
+  const occ::handle<IGESGeom_RuledSurface>&) const
 {
   IGESData_DirChecker DC(118, 0, 1);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
   DC.HierarchyStatusIgnored();
 
   return DC;
 }
 
-void IGESGeom_ToolRuledSurface::OwnCheck(const occ::handle<IGESGeom_RuledSurface>& /*ent*/,
+void IGESGeom_ToolRuledSurface::OwnCheck(const occ::handle<IGESGeom_RuledSurface>&,
                                          const Interface_ShareTool&,
-                                         occ::handle<Interface_Check>& /*ach*/) const
+                                         occ::handle<Interface_Check>&) const
 {
 }
 

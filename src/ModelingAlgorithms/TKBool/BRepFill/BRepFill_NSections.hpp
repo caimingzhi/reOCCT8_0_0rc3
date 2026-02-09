@@ -16,16 +16,13 @@ class GeomFill_SectionLaw;
 class TopoDS_Vertex;
 class TopoDS_Shape;
 
-//! Build Section Law, with N Sections
 class BRepFill_NSections : public BRepFill_SectionLaw
 {
 
 public:
-  //! Construct
   Standard_EXPORT BRepFill_NSections(const NCollection_Sequence<TopoDS_Shape>& S,
                                      const bool                                Build = true);
 
-  //! Construct
   Standard_EXPORT BRepFill_NSections(const NCollection_Sequence<TopoDS_Shape>& S,
                                      const NCollection_Sequence<gp_Trsf>&      Trsfs,
                                      const NCollection_Sequence<double>&       P,
@@ -33,13 +30,10 @@ public:
                                      const double                              VL,
                                      const bool                                Build = true);
 
-  //! Say if the input shape is a vertex.
   Standard_EXPORT bool IsVertex() const override;
 
-  //! Say if the Law is Constant.
   Standard_EXPORT bool IsConstant() const override;
 
-  //! Give the law build on a concatenated section
   Standard_EXPORT occ::handle<GeomFill_SectionLaw> ConcatenedLaw() const override;
 
   Standard_EXPORT GeomAbs_Shape Continuity(const int Index, const double TolAngular) const override;

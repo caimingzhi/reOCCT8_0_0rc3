@@ -27,12 +27,11 @@ BRepFill_EdgeOnSurfLaw::BRepFill_EdgeOnSurfLaw(const TopoDS_Wire& Path, const To
   Init(Path);
 
   bool                   Trouve;
-  int                    ipath; //  ,NbEdge;
+  int                    ipath;
   TopAbs_Orientation     Or;
   BRepTools_WireExplorer wexp;
   TopExp_Explorer        exp;
-  // Class BRep_Tool without fields and without Constructor :
-  //  BRep_Tool B;
+
   TopoDS_Edge                             E;
   occ::handle<Geom2d_Curve>               C;
   occ::handle<Geom2dAdaptor_Curve>        AC2d;
@@ -45,7 +44,7 @@ BRepFill_EdgeOnSurfLaw::BRepFill_EdgeOnSurfLaw(const TopoDS_Wire& Path, const To
   for (ipath = 0, wexp.Init(myPath); wexp.More(); wexp.Next())
   {
     E = wexp.Current();
-    //    if (!B.Degenerated(E)) {
+
     if (!BRep_Tool::Degenerated(E))
     {
       ipath++;
@@ -61,7 +60,7 @@ BRepFill_EdgeOnSurfLaw::BRepFill_EdgeOnSurfLaw(const TopoDS_Wire& Path, const To
         }
       }
       if (!Trouve)
-      { // Impossible to construct the law.
+      {
         hasresult = false;
         myLaws.Nullify();
         return;
@@ -71,7 +70,7 @@ BRepFill_EdgeOnSurfLaw::BRepFill_EdgeOnSurfLaw(const TopoDS_Wire& Path, const To
       if (Or == TopAbs_REVERSED)
       {
         occ::handle<Geom2d_TrimmedCurve> CBis = new (Geom2d_TrimmedCurve)(C, First, Last);
-        CBis->Reverse(); // To avoid spoiling the topology
+        CBis->Reverse();
         C     = CBis;
         First = C->FirstParameter();
         Last  = C->LastParameter();

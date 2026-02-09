@@ -94,7 +94,7 @@ static int VBLEND(Draw_Interpretor& di, int narg, const char** a)
     Rad                      = Draw::Atof(a[2 * ii + 1]);
     TopoDS_Shape aLocalShape = DBRep::Get(a[(2 * ii + 2)], TopAbs_EDGE);
     E                        = TopoDS::Edge(aLocalShape);
-    //    E = TopoDS::Edge(DBRep::Get(a[(2*ii+2)],TopAbs_EDGE));
+
     if (!E.IsNull())
     {
       Rakk->Add(Rad, E);
@@ -109,7 +109,6 @@ static int VBLEND(Draw_Interpretor& di, int narg, const char** a)
   TopoDS_Shape res = Rakk->Shape();
   DBRep::Set(a[1], res);
 
-  // visu resultat...
   ViewerTest::Display(a[2], occ::handle<AIS_InteractiveObject>(), false);
   ViewerTest::Display(a[1], new AIS_Shape(res), true);
   return 0;

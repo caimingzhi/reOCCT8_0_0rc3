@@ -9,7 +9,6 @@ class StepGeom_Surface : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a Surface
   Standard_EXPORT StepGeom_Surface();
 
   DEFINE_STANDARD_RTTIEXT(StepGeom_Surface, StepGeom_GeometricRepresentationItem)

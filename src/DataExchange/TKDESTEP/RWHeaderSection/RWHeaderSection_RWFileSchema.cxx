@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <HeaderSection_FileSchema.hpp>
 #include <TCollection_HAsciiString.hpp>
@@ -27,12 +16,8 @@ void RWHeaderSection_RWFileSchema::ReadStep(const occ::handle<StepData_StepReade
                                             const occ::handle<HeaderSection_FileSchema>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 1, ach, "file_schema has not 1 parameter(s)"))
     return;
-
-  // --- own field : schemaIdentifiers ---
 
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> aSchemaIdentifiers;
   occ::handle<TCollection_HAsciiString>                                   aSchemaIdentifiersItem;
@@ -54,8 +39,6 @@ void RWHeaderSection_RWFileSchema::ReadStep(const occ::handle<StepData_StepReade
     ach->AddFail("Parameter #1 (schema_identifiers) is not a LIST");
   }
 
-  //--- Initialisation of the read entity ---
-
   if (!ach->HasFailed())
     ent->Init(aSchemaIdentifiers);
 }
@@ -63,8 +46,6 @@ void RWHeaderSection_RWFileSchema::ReadStep(const occ::handle<StepData_StepReade
 void RWHeaderSection_RWFileSchema::WriteStep(StepData_StepWriter&                         SW,
                                              const occ::handle<HeaderSection_FileSchema>& ent) const
 {
-
-  // --- own field : schemaIdentifiers ---
 
   SW.OpenSub();
   for (int i1 = 1; i1 <= ent->NbSchemaIdentifiers(); i1++)

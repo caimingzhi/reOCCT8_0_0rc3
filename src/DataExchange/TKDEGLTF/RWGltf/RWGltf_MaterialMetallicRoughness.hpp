@@ -10,32 +10,17 @@
 
 #include <NCollection_Mat4.hpp>
 #include <Quantity_ColorRGBA.hpp>
-// Author: Kirill Gavrilov
-// Copyright (c) 2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
 #include <Standard_CString.hpp>
 
-//! Low-level glTF enumeration defining Alpha Mode.
 enum RWGltf_GltfAlphaMode
 {
-  RWGltf_GltfAlphaMode_Opaque, //!< alpha value is ignored and the rendered output is fully opaque
-  RWGltf_GltfAlphaMode_Mask,   //!< rendered output is either fully opaque or fully transparent
-                             //!< depending on the alpha value and the specified alpha cutoff value
-  RWGltf_GltfAlphaMode_Blend, //!< alpha value is used to composite the source and destination areas
+  RWGltf_GltfAlphaMode_Opaque,
+  RWGltf_GltfAlphaMode_Mask,
+
+  RWGltf_GltfAlphaMode_Blend,
 };
 
-//! Parse RWGltf_GltfAlphaMode from string.
 inline RWGltf_GltfAlphaMode RWGltf_GltfParseAlphaMode(const char* theType)
 {
   if (IsEqual("OPAQUE", theType))
@@ -58,26 +43,24 @@ inline RWGltf_GltfAlphaMode RWGltf_GltfParseAlphaMode(const char* theType)
 
 class Image_Texture;
 
-//! glTF 2.0 format PBR material definition.
 class RWGltf_MaterialMetallicRoughness : public Standard_Transient
 {
 public:
-  occ::handle<Image_Texture> BaseColorTexture; //!< RGB texture for the base color
-                                               // clang-format off
-  occ::handle<Image_Texture>   MetallicRoughnessTexture; //!< RG texture packing the metallic and roughness properties together
-  occ::handle<Image_Texture>   EmissiveTexture;          //!< RGB emissive map controls the color and intensity of the light being emitted by the material
-  occ::handle<Image_Texture>   OcclusionTexture;         //!< R occlusion map indicating areas of indirect lighting
-  occ::handle<Image_Texture>   NormalTexture;            //!< normal map
-  TCollection_AsciiString Id;                       //!< material identifier
-  TCollection_AsciiString Name;                     //!< material name
-  Quantity_ColorRGBA      BaseColor;                //!< base color (or scale factor to the texture); [1.0, 1.0, 1.0, 1.0] by default
-  NCollection_Vec3<float>          EmissiveFactor;           //!< emissive color; [0.0, 0.0, 0.0] by default
-  float      Metallic;                 //!< metalness (or scale factor to the texture) within range [0.0, 1.0]; 1.0 by default
-  float      Roughness;                //!< roughness (or scale factor to the texture) within range [0.0, 1.0]; 1.0 by default
-  float      AlphaCutOff;              //!< alpha cutoff value; 0.5 by default
-  RWGltf_GltfAlphaMode    AlphaMode;                //!< alpha mode; RWGltf_GltfAlphaMode_Opaque by default
-  bool        IsDoubleSided;            //!< specifies whether the material is double sided; FALSE by default
-                                               // clang-format on
+  occ::handle<Image_Texture> BaseColorTexture;
+
+  occ::handle<Image_Texture> MetallicRoughnessTexture;
+  occ::handle<Image_Texture> EmissiveTexture;
+  occ::handle<Image_Texture> OcclusionTexture;
+  occ::handle<Image_Texture> NormalTexture;
+  TCollection_AsciiString    Id;
+  TCollection_AsciiString    Name;
+  Quantity_ColorRGBA         BaseColor;
+  NCollection_Vec3<float>    EmissiveFactor;
+  float                      Metallic;
+  float                      Roughness;
+  float                      AlphaCutOff;
+  RWGltf_GltfAlphaMode       AlphaMode;
+  bool                       IsDoubleSided;
 
   RWGltf_MaterialMetallicRoughness()
       : BaseColor(1.0f, 1.0f, 1.0f, 1.0f),

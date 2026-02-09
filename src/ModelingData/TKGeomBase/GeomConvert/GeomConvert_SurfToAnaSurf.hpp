@@ -15,10 +15,6 @@ class Geom_Surface;
 class Geom_SurfaceOfRevolution;
 class Geom_Circle;
 
-//! Converts a surface to the analytical form with given
-//! precision. Conversion is done only the surface is bspline
-//! of bezier and this can be approximated by some analytical
-//! surface with that precision.
 class GeomConvert_SurfToAnaSurf
 {
 public:
@@ -37,14 +33,8 @@ public:
 
   void SetTarget(const GeomAbs_SurfaceType theSurfType = GeomAbs_Plane) { myTarget = theSurfType; }
 
-  //! Returns maximal deviation of converted surface from the original
-  //! one computed by last call to ConvertToAnalytical
   double Gap() const { return myGap; }
 
-  //! Tries to convert the Surface to an Analytic form
-  //! Returns the result
-  //! In case of failure, returns a Null Handle
-  //!
   Standard_EXPORT occ::handle<Geom_Surface> ConvertToAnalytical(const double InitialToler);
   Standard_EXPORT occ::handle<Geom_Surface> ConvertToAnalytical(const double InitialToler,
                                                                 const double Umin,
@@ -52,22 +42,17 @@ public:
                                                                 const double Vmin,
                                                                 const double Vmax);
 
-  //! Returns true if surfaces is same with the given tolerance
   Standard_EXPORT static bool IsSame(const occ::handle<Geom_Surface>& S1,
                                      const occ::handle<Geom_Surface>& S2,
                                      const double                     tol);
 
-  //! Returns true, if surface is canonical
   Standard_EXPORT static bool IsCanonical(const occ::handle<Geom_Surface>& S);
 
 private:
-  //! static method for checking surface of revolution
-  //! To avoid two-parts cone-like surface
   static void CheckVTrimForRevSurf(const occ::handle<Geom_SurfaceOfRevolution>& aRevSurf,
                                    double&                                      V1,
                                    double&                                      V2);
 
-  //! static method to try create cylindrical or conical surface
   static occ::handle<Geom_Surface> TryCylinerCone(const occ::handle<Geom_Surface>& theSurf,
                                                   const bool                       theVCase,
                                                   const occ::handle<Geom_Curve>&   theUmidiso,
@@ -78,14 +63,12 @@ private:
                                                   const double                     theV2,
                                                   const double                     theToler);
 
-  //! static method to try create cylinrical surface using least square method
   static bool GetCylByLS(const occ::handle<NCollection_HArray1<gp_XYZ>>& thePoints,
                          const double                                    theTol,
                          gp_Ax3&                                         thePos,
                          double&                                         theR,
                          double&                                         theGap);
 
-  //! static method to try create cylinrical surface based on its Gauss field
   static occ::handle<Geom_Surface> TryCylinderByGaussField(const occ::handle<Geom_Surface>& theSurf,
                                                            const double                     theU1,
                                                            const double                     theU2,
@@ -96,8 +79,6 @@ private:
                                                            const int    theNbV         = 20,
                                                            const bool   theLeastSquare = false);
 
-  //! static method to try create toroidal surface.
-  //! In case <isTryUMajor> = true try to use V isoline radius as minor radaius.
   static occ::handle<Geom_Surface> TryTorusSphere(const occ::handle<Geom_Surface>& theSurf,
                                                   const occ::handle<Geom_Circle>&  circle,
                                                   const occ::handle<Geom_Circle>&  otherCircle,

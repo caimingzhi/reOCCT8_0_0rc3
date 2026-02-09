@@ -12,18 +12,6 @@
 class Draw_Display;
 class Draw_Color;
 
-//! This class stores all the information concerning
-//! hidden lines on a view.
-//!
-//! * View number
-//! * Matrix of projection
-//! * Type of projection, focal
-//! * Arrays of 3d points
-//!
-//! A drawable shape contains a list of such objects
-//! to store the hidden lines for each view. The
-//! IsSame method is used to check if hidden lines
-//! must be recompiled.
 class DBRep_HideData
 {
 public:
@@ -31,10 +19,6 @@ public:
 
   Standard_EXPORT DBRep_HideData();
 
-  //! ViewId is the view number
-  //! TProj the projection
-  //! Focal <= 0 means parallel projection
-  //! Alg : the hidden lines
   Standard_EXPORT void Set(const int           ViewId,
                            const gp_Trsf&      TProj,
                            const double        Focal,
@@ -45,7 +29,6 @@ public:
 
   double Angle() const { return myAngle; }
 
-  //! Returns True if the projection is the same
   Standard_EXPORT bool IsSame(const gp_Trsf& TProj, const double Focla) const;
 
   Standard_EXPORT void DrawOn(Draw_Display&     D,
@@ -55,7 +38,6 @@ public:
                               const Draw_Color& VisCol,
                               const Draw_Color& HidCol);
 
-  //! Returns the subshape touched by the last pick.
   Standard_EXPORT const TopoDS_Shape& LastPick() const;
 
 private:

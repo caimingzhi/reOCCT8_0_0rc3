@@ -10,7 +10,6 @@
 #include <Draw_Interpretor.hpp>
 #include <Message.hpp>
 
-/*********************************************************************************/
 void InitEpsSurf(double& epsnl,
                  double& epsdis,
                  double& epsangk1,
@@ -28,7 +27,6 @@ void InitEpsSurf(double& epsnl,
   maxlen   = 10000;
 }
 
-/*********************************************************************************/
 void InitEpsCurv(double& epsnl,
                  double& epsdis,
                  double& epsangk1,
@@ -47,8 +45,6 @@ void InitEpsCurv(double& epsnl,
   percent  = 0.01;
   maxlen   = 10000;
 }
-
-/*********************************************************************************/
 
 static int surfaceCcontinuity(Draw_Interpretor& di, int n, const char** a)
 {
@@ -169,14 +165,12 @@ static int surfaceCcontinuity(Draw_Interpretor& di, int n, const char** a)
 
   LocalAnalysis_SurfaceContinuity
     RES(surf1, U1, V1, surf2, U2, V2, TypeCont, epsnl, epsC0, epsC1, epsC2, epsG1, perce, maxlen);
-  // LocalAnalysis::Dump(RES,std::cout);
+
   Standard_SStream aSStream;
   LocalAnalysis::Dump(RES, aSStream);
   di << aSStream;
   return 0;
 }
-
-/*********************************************************************************/
 
 static int surfaceGcontinuity(Draw_Interpretor& di, int n, const char** a)
 {
@@ -279,14 +273,12 @@ static int surfaceGcontinuity(Draw_Interpretor& di, int n, const char** a)
 
   LocalAnalysis_SurfaceContinuity
     RES(surf1, U1, V1, surf2, U2, V2, TypeCont, epsnl, epsC0, epsC1, epsC2, epsG1, perce, maxlen);
-  // LocalAnalysis::Dump(RES,std::cout);
+
   Standard_SStream aSStream;
   LocalAnalysis::Dump(RES, aSStream);
   di << aSStream;
   return 0;
 }
-
-/*********************************************************************************/
 
 static int curveGcontinuity(Draw_Interpretor& di, int n, const char** a)
 {
@@ -388,14 +380,12 @@ static int curveGcontinuity(Draw_Interpretor& di, int n, const char** a)
 
   LocalAnalysis_CurveContinuity
     RES(curv1, U1, curv2, U2, TypeCont, epsnl, epsC0, epsC1, epsC2, epsG1, epsG2, percent, maxlen);
-  // LocalAnalysis::Dump(RES,std::cout);
+
   Standard_SStream aSStream;
   LocalAnalysis::Dump(RES, aSStream);
   di << aSStream;
   return 0;
 }
-
-/*********************************************************************************/
 
 static int curveCcontinuity(Draw_Interpretor& di, int n, const char** a)
 {
@@ -512,14 +502,13 @@ static int curveCcontinuity(Draw_Interpretor& di, int n, const char** a)
 
   LocalAnalysis_CurveContinuity
     RES(curv1, U1, curv2, U2, TypeCont, epsnl, epsC0, epsC1, epsC2, epsG1, epsG2, percent, maxlen);
-  // LocalAnalysis::Dump(RES,std::cout);
+
   Standard_SStream aSStream;
   LocalAnalysis::Dump(RES, aSStream);
   di << aSStream;
   return 0;
 }
 
-/***************************************************************************/
 void GeometryTest::ContinuityCommands(Draw_Interpretor& theCommands)
 {
   static bool loaded = false;

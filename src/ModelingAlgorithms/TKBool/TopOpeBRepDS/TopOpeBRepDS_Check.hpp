@@ -16,7 +16,6 @@
 #include <TopAbs_ShapeEnum.hpp>
 class TopOpeBRepDS_HDataStructure;
 
-//! a tool verifying integrity and structure of DS
 class TopOpeBRepDS_Check : public Standard_Transient
 {
 
@@ -25,31 +24,17 @@ public:
 
   Standard_EXPORT TopOpeBRepDS_Check(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS);
 
-  //! Check integrition of DS
   Standard_EXPORT bool ChkIntg();
 
-  //! Check integrition of interferences
-  //! (les supports et les geometries de LI)
   Standard_EXPORT bool ChkIntgInterf(
     const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI);
 
-  //! Verifie que le ieme element de la DS existe, et
-  //! pour un K de type topologique, verifie qu'il est du
-  //! bon type (VERTEX, EDGE, WIRE, FACE, SHELL ou SOLID)
   Standard_EXPORT bool CheckDS(const int i, const TopOpeBRepDS_Kind K);
 
-  //! Check integrition des champs SameDomain de la DS
   Standard_EXPORT bool ChkIntgSamDom();
 
-  //! Verifie que les Shapes existent bien dans la DS
-  //! Utile pour les Shapes SameDomain
-  //! si la liste est vide, renvoie vrai
   Standard_EXPORT bool CheckShapes(const NCollection_List<TopoDS_Shape>& LS) const;
 
-  //! Verifie que les Vertex non SameDomain sont bien
-  //! nonSameDomain, que les vertex sameDomain sont bien
-  //! SameDomain, que les Points sont non confondus
-  //! ni entre eux, ni avec des Vertex.
   Standard_EXPORT bool OneVertexOnPnt();
 
   Standard_EXPORT const occ::handle<TopOpeBRepDS_HDataStructure>& HDS() const;
@@ -58,13 +43,10 @@ public:
 
   Standard_EXPORT Standard_OStream& PrintIntg(Standard_OStream& S);
 
-  //! Prints the name of CheckStatus <stat> as a String
   Standard_EXPORT Standard_OStream& Print(const TopOpeBRepDS_CheckStatus stat, Standard_OStream& S);
 
-  //! Prints the name of CheckStatus <stat> as a String
   Standard_EXPORT Standard_OStream& PrintShape(const TopAbs_ShapeEnum SE, Standard_OStream& S);
 
-  //! Prints the name of CheckStatus <stat> as a String
   Standard_EXPORT Standard_OStream& PrintShape(const int index, Standard_OStream& S);
 
   DEFINE_STANDARD_RTTIEXT(TopOpeBRepDS_Check, Standard_Transient)

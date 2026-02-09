@@ -8,7 +8,6 @@
 #include <gp_XY.hpp>
 #include <NCollection_Sequence.hpp>
 
-//! force a set of UV points to translate without deformation
 class Plate_GlobalTranslationConstraint
 {
 public:

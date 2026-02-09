@@ -11,7 +11,6 @@ class StepGeom_PointReplica : public StepGeom_Point
 {
 
 public:
-  //! Returns a PointReplica
   Standard_EXPORT StepGeom_PointReplica();
 
   Standard_EXPORT void Init(

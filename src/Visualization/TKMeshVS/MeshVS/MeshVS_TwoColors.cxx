@@ -1,7 +1,5 @@
 #include <MeshVS_TwoColors.hpp>
 
-//=================================================================================================
-
 MeshVS_TwoColors BindTwoColors(const Quantity_Color& theCol1, const Quantity_Color& theCol2)
 {
   MeshVS_TwoColors         aRes;
@@ -17,8 +15,6 @@ MeshVS_TwoColors BindTwoColors(const Quantity_Color& theCol1, const Quantity_Col
 
   return aRes;
 }
-
-//=================================================================================================
 
 Quantity_Color ExtractColor(MeshVS_TwoColors& theTwoColors, const int Index)
 {
@@ -38,8 +34,6 @@ Quantity_Color ExtractColor(MeshVS_TwoColors& theTwoColors, const int Index)
 
   return aRes;
 }
-
-//=================================================================================================
 
 void ExtractColors(MeshVS_TwoColors& theTwoColors, Quantity_Color& theCol1, Quantity_Color& theCol2)
 {

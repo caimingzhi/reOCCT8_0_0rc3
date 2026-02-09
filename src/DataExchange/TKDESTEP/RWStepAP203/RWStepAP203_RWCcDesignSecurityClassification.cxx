@@ -9,12 +9,8 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepAP203_RWCcDesignSecurityClassification::RWStepAP203_RWCcDesignSecurityClassification() =
   default;
-
-//=================================================================================================
 
 void RWStepAP203_RWCcDesignSecurityClassification::ReadStep(
   const occ::handle<StepData_StepReaderData>&                  data,
@@ -22,11 +18,9 @@ void RWStepAP203_RWCcDesignSecurityClassification::ReadStep(
   occ::handle<Interface_Check>&                                ach,
   const occ::handle<StepAP203_CcDesignSecurityClassification>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "cc_design_security_classification"))
     return;
-
-  // Inherited fields of SecurityClassificationAssignment
 
   occ::handle<StepBasic_SecurityClassification>
     aSecurityClassificationAssignment_AssignedSecurityClassification;
@@ -36,8 +30,6 @@ void RWStepAP203_RWCcDesignSecurityClassification::ReadStep(
                    ach,
                    STANDARD_TYPE(StepBasic_SecurityClassification),
                    aSecurityClassificationAssignment_AssignedSecurityClassification);
-
-  // Own fields of CcDesignSecurityClassification
 
   occ::handle<NCollection_HArray1<StepAP203_ClassifiedItem>> aItems;
   int                                                        sub2 = 0;
@@ -54,22 +46,15 @@ void RWStepAP203_RWCcDesignSecurityClassification::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aSecurityClassificationAssignment_AssignedSecurityClassification, aItems);
 }
-
-//=================================================================================================
 
 void RWStepAP203_RWCcDesignSecurityClassification::WriteStep(
   StepData_StepWriter&                                         SW,
   const occ::handle<StepAP203_CcDesignSecurityClassification>& ent) const
 {
 
-  // Inherited fields of SecurityClassificationAssignment
-
   SW.Send(ent->StepBasic_SecurityClassificationAssignment::AssignedSecurityClassification());
-
-  // Own fields of CcDesignSecurityClassification
 
   SW.OpenSub();
   for (int i1 = 1; i1 <= ent->Items()->Length(); i1++)
@@ -80,18 +65,12 @@ void RWStepAP203_RWCcDesignSecurityClassification::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepAP203_RWCcDesignSecurityClassification::Share(
   const occ::handle<StepAP203_CcDesignSecurityClassification>& ent,
   Interface_EntityIterator&                                    iter) const
 {
 
-  // Inherited fields of SecurityClassificationAssignment
-
   iter.AddItem(ent->StepBasic_SecurityClassificationAssignment::AssignedSecurityClassification());
-
-  // Own fields of CcDesignSecurityClassification
 
   for (int i2 = 1; i2 <= ent->Items()->Length(); i2++)
   {

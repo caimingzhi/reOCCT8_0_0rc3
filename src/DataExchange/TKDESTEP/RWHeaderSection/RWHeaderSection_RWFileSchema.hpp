@@ -10,7 +10,6 @@ class Interface_Check;
 class HeaderSection_FileSchema;
 class StepData_StepWriter;
 
-//! Read & Write Module for FileSchema
 class RWHeaderSection_RWFileSchema
 {
 public:

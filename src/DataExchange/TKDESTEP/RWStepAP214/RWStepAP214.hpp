@@ -9,6 +9,5 @@ class RWStepAP214
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! enforced the initialisation of the libraries
   Standard_HIDDEN static void Init();
 };

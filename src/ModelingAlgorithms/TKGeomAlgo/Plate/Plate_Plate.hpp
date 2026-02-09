@@ -28,9 +28,6 @@ class gp_XYZ;
 class gp_XY;
 class math_Matrix;
 
-//! This class implement a variational spline algorithm able
-//! to define a two variable function satisfying some constraints
-//! and minimizing an energy like criterion.
 class Plate_Plate
 {
 public:
@@ -66,15 +63,12 @@ public:
                                const double                 anisotropie = 1.0,
                                const Message_ProgressRange& theProgress = Message_ProgressRange());
 
-  //! returns True if all has been correctly done.
   Standard_EXPORT bool IsDone() const;
 
   Standard_EXPORT void destroy();
 
   ~Plate_Plate() { destroy(); }
 
-  //! reset the Plate in the initial state
-  //! ( same as after Create())
   Standard_EXPORT void Init();
 
   Standard_EXPORT gp_XYZ Evaluate(const gp_XY& point2d) const;
@@ -172,13 +166,7 @@ inline double Plate_Plate::Polm(const gp_XY& point2d,
   for (i = iv; i > degv; i--)
     value *= i;
 
-  // le produit par ddu[iu]*ddv[iv] n'est pas indispensable !! (il change
-  // les valeurs claculles pour la partie coef polynomiaux de Sol
-  // de telle facon que les methodes Evaluate et EvaluateDerivative donnent
-  // en theorie les memes valeurs. Toutefois, il nous semble que ce produit
-  // ameliore le conditionnmenet de la matrice
   return value * ddu[iu] * ddv[iv];
-  // return value;
 }
 
 inline int& Plate_Plate::Deru(const int index) const

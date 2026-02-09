@@ -51,6 +51,4 @@ int IGESGeom_TrimmedSurface::OuterBoundaryType() const
 occ::handle<IGESGeom_CurveOnSurface> IGESGeom_TrimmedSurface::InnerContour(const int anIndex) const
 {
   return (theInnerCurves->Value(anIndex));
-  // Exception OutOfRange will be raises if anIndex <= 0 or
-  //                                        anIndex > NbInnerCounters()
 }

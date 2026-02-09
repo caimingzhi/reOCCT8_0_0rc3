@@ -11,7 +11,6 @@ class StepDimTol_GeoTolAndGeoTolWthMaxTol;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for GeoTolAndGeoTolWthMaxTol
 class RWStepDimTol_RWGeoTolAndGeoTolWthMaxTol
 {
 public:

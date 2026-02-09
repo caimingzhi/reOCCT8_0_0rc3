@@ -148,8 +148,6 @@ bool CDM_Reference::IsStored() const
   return !myMetaData.IsNull();
 }
 
-//=================================================================================================
-
 void CDM_Reference::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {
   OCCT_DUMP_TRANSIENT_CLASS_BEGIN(theOStream)

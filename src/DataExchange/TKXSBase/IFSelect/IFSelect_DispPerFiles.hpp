@@ -10,40 +10,22 @@ class TCollection_AsciiString;
 class Interface_Graph;
 class IFGraph_SubPartsIterator;
 
-//! A DispPerFiles produces a determined count of Packets from the
-//! input Entities. It divides, as equally as possible, the input
-//! list into a count of files. This count is the parameter of the
-//! DispPerFiles. If the input list has less than this count, of
-//! course there will be one packet per input entity.
-//! This count is a Parameter of the DispPerFiles, given as an
-//! IntParam, thus allowing external control of its Value
 class IFSelect_DispPerFiles : public IFSelect_Dispatch
 {
 
 public:
-  //! Creates a DispPerFiles with no Count (default value 1 file)
   Standard_EXPORT IFSelect_DispPerFiles();
 
-  //! Returns the Count Parameter used for splitting
   Standard_EXPORT occ::handle<IFSelect_IntParam> Count() const;
 
-  //! Sets a new Parameter for Count
   Standard_EXPORT void SetCount(const occ::handle<IFSelect_IntParam>& count);
 
-  //! Returns the effective value of the count parameter
-  //! (if Count Parameter not Set or value not positive, returns 1)
   Standard_EXPORT int CountValue() const;
 
-  //! Returns as Label, "Maximum <count> Files"
   Standard_EXPORT TCollection_AsciiString Label() const override;
 
-  //! Returns True, maximum count is given as CountValue
   Standard_EXPORT bool LimitedMax(const int nbent, int& max) const override;
 
-  //! Computes the list of produced Packets. It defines Packets in
-  //! order to have <Count> Packets, except if the input count of
-  //! Entities is lower. Entities are given by RootResult from the
-  //! Final Selection.
   Standard_EXPORT void Packets(const Interface_Graph&    G,
                                IFGraph_SubPartsIterator& packs) const override;
 

@@ -29,19 +29,17 @@ void IGESSolid_ToolSolidOfRevolution::ReadOwnParams(
   gp_XYZ                           tempAxis;
   double                           tempFraction;
   double                           tempreal;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  // clang-format off
-  PR.ReadEntity(IR, PR.Current(), "Curve Entity", tempEntity); //szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadEntity(IR, PR.Current(), "Curve Entity", tempEntity);
 
   if (PR.DefinedElseSkip())
-    PR.ReadReal(PR.Current(), "Fraction of rotation", tempFraction); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+    PR.ReadReal(PR.Current(), "Fraction of rotation", tempFraction);
+
   else
     tempFraction = 1.0;
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Axis Point (X)", tempreal); //szv#4:S4163:12Mar99 moved in if
+
     if (PR.ReadReal(PR.Current(), "Axis Point (X)", tempreal))
       tempAxisPoint.SetX(tempreal);
   }
@@ -50,7 +48,7 @@ void IGESSolid_ToolSolidOfRevolution::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Axis Point (Y)", tempreal); //szv#4:S4163:12Mar99 moved in if
+
     if (PR.ReadReal(PR.Current(), "Axis Point (Y)", tempreal))
       tempAxisPoint.SetY(tempreal);
   }
@@ -59,7 +57,7 @@ void IGESSolid_ToolSolidOfRevolution::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Axis Point (Z)", tempreal); //szv#4:S4163:12Mar99 moved in if
+
     if (PR.ReadReal(PR.Current(), "Axis Point (Z)", tempreal))
       tempAxisPoint.SetZ(tempreal);
   }
@@ -68,8 +66,7 @@ void IGESSolid_ToolSolidOfRevolution::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Axis direction (I)", tempreal); //szv#4:S4163:12Mar99 moved
-    // in if
+
     if (PR.ReadReal(PR.Current(), "Axis direction (I)", tempreal))
       tempAxis.SetX(tempreal);
   }
@@ -78,8 +75,7 @@ void IGESSolid_ToolSolidOfRevolution::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Axis direction (J)", tempreal); //szv#4:S4163:12Mar99 moved
-    // in if
+
     if (PR.ReadReal(PR.Current(), "Axis direction (J)", tempreal))
       tempAxis.SetY(tempreal);
   }
@@ -88,8 +84,7 @@ void IGESSolid_ToolSolidOfRevolution::ReadOwnParams(
 
   if (PR.DefinedElseSkip())
   {
-    // st = PR.ReadReal(PR.Current(), "Axis direction (K)", tempreal); //szv#4:S4163:12Mar99 moved
-    // in if
+
     if (PR.ReadReal(PR.Current(), "Axis direction (K)", tempreal))
       tempAxis.SetZ(tempreal);
   }
@@ -136,7 +131,7 @@ void IGESSolid_ToolSolidOfRevolution::OwnCopy(
 }
 
 IGESData_DirChecker IGESSolid_ToolSolidOfRevolution::DirChecker(
-  const occ::handle<IGESSolid_SolidOfRevolution>& /* ent */) const
+  const occ::handle<IGESSolid_SolidOfRevolution>&) const
 {
   IGESData_DirChecker DC(162, 0, 1);
 

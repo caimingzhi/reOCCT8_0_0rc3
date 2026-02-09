@@ -65,16 +65,12 @@ private:
 
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 inline LocOpe_Gluer::LocOpe_Gluer()
     : myDone(false),
       myOri(TopAbs_INTERNAL),
       myOpe(LocOpe_INVALID)
 {
 }
-
-//=================================================================================================
 
 inline LocOpe_Gluer::LocOpe_Gluer(const TopoDS_Shape& Sbase, const TopoDS_Shape& Snew)
     : myDone(false),
@@ -85,14 +81,10 @@ inline LocOpe_Gluer::LocOpe_Gluer(const TopoDS_Shape& Sbase, const TopoDS_Shape&
 {
 }
 
-//=================================================================================================
-
 inline bool LocOpe_Gluer::IsDone() const
 {
   return myDone;
 }
-
-//=================================================================================================
 
 inline const TopoDS_Shape& LocOpe_Gluer::ResultingShape() const
 {
@@ -103,35 +95,25 @@ inline const TopoDS_Shape& LocOpe_Gluer::ResultingShape() const
   return myRes;
 }
 
-//=================================================================================================
-
 inline const TopoDS_Shape& LocOpe_Gluer::BasisShape() const
 {
   return mySb;
 }
-
-//=================================================================================================
 
 inline const TopoDS_Shape& LocOpe_Gluer::GluedShape() const
 {
   return mySn;
 }
 
-//=================================================================================================
-
 inline LocOpe_Operation LocOpe_Gluer::OpeType() const
 {
   return myOpe;
 }
 
-//=================================================================================================
-
 inline const NCollection_List<TopoDS_Shape>& LocOpe_Gluer::Edges() const
 {
   return myEdges;
 }
-
-//=================================================================================================
 
 inline const NCollection_List<TopoDS_Shape>& LocOpe_Gluer::TgtEdges() const
 {

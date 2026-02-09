@@ -9,13 +9,11 @@
 #include <GCPnts_DistFunction.hpp>
 #include <GCPnts_DistFunction2d.hpp>
 
-//! Auxiliary tool to resolve 2D/3D curve classes.
 template <class TheCurve>
 struct GCPnts_TCurveTypes
 {
 };
 
-//! Auxiliary tool to resolve 3D curve classes.
 template <>
 struct GCPnts_TCurveTypes<Adaptor3d_Curve>
 {
@@ -26,7 +24,6 @@ struct GCPnts_TCurveTypes<Adaptor3d_Curve>
   typedef GCPnts_DistFunctionMV DistFunctionMV;
 };
 
-//! Auxiliary tool to resolve 2D curve classes.
 template <>
 struct GCPnts_TCurveTypes<Adaptor2d_Curve2d>
 {

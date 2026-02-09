@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XCAFDoc_ShapeMapTool.hpp>
 
@@ -23,19 +12,13 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFDoc_ShapeMapTool, TDF_Attribute)
 
-#define AUTONAMING // automatically set names for labels
-
-// attribute methods //////////////////////////////////////////////////
-
-//=================================================================================================
+#define AUTONAMING
 
 const Standard_GUID& XCAFDoc_ShapeMapTool::GetID()
 {
   static Standard_GUID ShapeToolID("3B913F4D-4A82-44ef-A0BF-9E01E9FF317A");
   return ShapeToolID;
 }
-
-//=================================================================================================
 
 occ::handle<XCAFDoc_ShapeMapTool> XCAFDoc_ShapeMapTool::Set(const TDF_Label& L)
 {
@@ -48,43 +31,29 @@ occ::handle<XCAFDoc_ShapeMapTool> XCAFDoc_ShapeMapTool::Set(const TDF_Label& L)
   return A;
 }
 
-//=================================================================================================
-
 const Standard_GUID& XCAFDoc_ShapeMapTool::ID() const
 {
   return GetID();
 }
 
-//=================================================================================================
-
-void XCAFDoc_ShapeMapTool::Restore(const occ::handle<TDF_Attribute>& /*with*/) {}
-
-//=================================================================================================
+void XCAFDoc_ShapeMapTool::Restore(const occ::handle<TDF_Attribute>&) {}
 
 occ::handle<TDF_Attribute> XCAFDoc_ShapeMapTool::NewEmpty() const
 {
   return new XCAFDoc_ShapeMapTool;
 }
 
-//=================================================================================================
-
-void XCAFDoc_ShapeMapTool::Paste(const occ::handle<TDF_Attribute>& /*into*/,
-                                 const occ::handle<TDF_RelocationTable>& /*RT*/) const
+void XCAFDoc_ShapeMapTool::Paste(const occ::handle<TDF_Attribute>&,
+                                 const occ::handle<TDF_RelocationTable>&) const
 {
 }
 
-//=================================================================================================
-
 XCAFDoc_ShapeMapTool::XCAFDoc_ShapeMapTool() = default;
-
-//=================================================================================================
 
 bool XCAFDoc_ShapeMapTool::IsSubShape(const TopoDS_Shape& sub) const
 {
   return myMap.Contains(sub);
 }
-
-//=================================================================================================
 
 static void AddSubShape(const TopoDS_Shape&                                            S,
                         NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& myMap)
@@ -94,8 +63,6 @@ static void AddSubShape(const TopoDS_Shape&                                     
     AddSubShape(it.Value(), myMap);
 }
 
-//=================================================================================================
-
 void XCAFDoc_ShapeMapTool::SetShape(const TopoDS_Shape& S)
 {
   myMap.Clear();
@@ -103,15 +70,11 @@ void XCAFDoc_ShapeMapTool::SetShape(const TopoDS_Shape& S)
     AddSubShape(it.Value(), myMap);
 }
 
-//=================================================================================================
-
 const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& XCAFDoc_ShapeMapTool::GetMap()
   const
 {
   return myMap;
 }
-
-//=================================================================================================
 
 void XCAFDoc_ShapeMapTool::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

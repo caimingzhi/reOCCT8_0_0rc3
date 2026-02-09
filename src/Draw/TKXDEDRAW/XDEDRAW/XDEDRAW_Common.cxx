@@ -18,10 +18,6 @@
 #include <XCAFDoc_ShapeTool.hpp>
 #include <XSDRAW.hpp>
 
-//=======================================================================
-// function : SetCurWS
-// purpose  : Set current file if many files are read
-//=======================================================================
 static int SetCurWS(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs < 2)
@@ -48,10 +44,6 @@ static int SetCurWS(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   return 0;
 }
 
-//=======================================================================
-// function : GetDicWSList
-// purpose  : List all files recorded after translation
-//=======================================================================
 static int GetDicWSList(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   (void)theNbArgs;
@@ -66,10 +58,6 @@ static int GetDicWSList(Draw_Interpretor& theDI, int theNbArgs, const char** the
   return 0;
 }
 
-//=======================================================================
-// function : GetCurWS
-// purpose  : Return name of file which is current
-//=======================================================================
 static int GetCurWS(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   (void)theNbArgs;
@@ -79,10 +67,6 @@ static int GetCurWS(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   return 0;
 }
 
-//=======================================================================
-// function : FromShape
-// purpose  : Apply fromshape command to all the loaded WSs
-//=======================================================================
 static int FromShape(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs < 2)
@@ -111,8 +95,6 @@ static int FromShape(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
   XSDRAW::SetSession(aWS);
   return 0;
 }
-
-//=================================================================================================
 
 static int Expand(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -175,8 +157,6 @@ static int Expand(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec
   return 0;
 }
 
-//=================================================================================================
-
 static int Extract(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs < 4)
@@ -199,7 +179,7 @@ static int Extract(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVe
   if (aDstLabel.IsNull())
   {
     aDstLabel = aDstShapeTool->Label();
-    anArgInd  = 2; // to get Src Doc
+    anArgInd  = 2;
   }
   DDocStd::GetDocument(theArgVec[anArgInd++], aSrcDoc);
   if (aSrcDoc.IsNull())
@@ -233,8 +213,6 @@ static int Extract(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVe
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int Filter(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -276,8 +254,6 @@ static int Filter(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec
   }
   return 0;
 }
-
-//=================================================================================================
 
 void XDEDRAW_Common::InitCommands(Draw_Interpretor& theDI)
 {
@@ -330,6 +306,6 @@ void XDEDRAW_Common::InitCommands(Draw_Interpretor& theDI)
             __FILE__,
             Filter,
             aGroup);
-  // Load XSDRAW session for pilot activation
+
   XSDRAW::LoadDraw(theDI);
 }

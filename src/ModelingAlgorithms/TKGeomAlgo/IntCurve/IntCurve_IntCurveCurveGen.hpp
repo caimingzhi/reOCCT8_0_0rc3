@@ -37,12 +37,12 @@ void IntCurve_IntCurveCurveGen::Perform(const TheCurve& C, const double TolConf,
         done = false;
         return;
       }
-      //
+
       if (paraminf > -Precision::Infinite())
       {
         if (paramsup < Precision::Infinite())
         {
-          //--         paraminf-----------paramsup
+
           D1.SetValues(TheCurveTool::Value(C, paraminf),
                        paraminf,
                        TolDomain,
@@ -52,7 +52,7 @@ void IntCurve_IntCurveCurveGen::Perform(const TheCurve& C, const double TolConf,
         }
         else
         {
-          //--        paraminf------------...
+
           D1.SetValues(TheCurveTool::Value(C, paraminf), paraminf, TolDomain, true);
         }
       }
@@ -60,7 +60,7 @@ void IntCurve_IntCurveCurveGen::Perform(const TheCurve& C, const double TolConf,
       {
         if (paramsup < Precision::Infinite())
         {
-          //--    ...-----------------paramsup
+
           D1.SetValues(TheCurveTool::Value(C, paramsup), paramsup, TolDomain, false);
         }
       }
@@ -101,8 +101,6 @@ void IntCurve_IntCurveCurveGen::Perform(const TheCurve&        C,
   }
 }
 
-//=================================================================================================
-
 IntRes2d_Domain IntCurve_IntCurveCurveGen::ComputeDomain(const TheCurve& C1,
                                                          const double    TolDomain) const
 {
@@ -115,10 +113,7 @@ IntRes2d_Domain IntCurve_IntCurveCurveGen::ComputeDomain(const TheCurve& C1,
     case GeomAbs_Ellipse:
     case GeomAbs_Circle:
     {
-      //---------------------------------------------------------------
-      //-- if the curve is a trimmed curve, first and last parameters
-      //-- will be the parameters used to build the domain
-      //--
+
       double firstparameter = TheCurveTool::FirstParameter(C1);
       double lastparameter  = TheCurveTool::LastParameter(C1);
 
@@ -136,7 +131,7 @@ IntRes2d_Domain IntCurve_IntCurveCurveGen::ComputeDomain(const TheCurve& C1,
       {
         if (paramsup < Precision::Infinite())
         {
-          //--         paraminf-----------paramsup
+
           D1.SetValues(TheCurveTool::Value(C1, paraminf),
                        paraminf,
                        TolDomain,
@@ -146,7 +141,7 @@ IntRes2d_Domain IntCurve_IntCurveCurveGen::ComputeDomain(const TheCurve& C1,
         }
         else
         {
-          //--        paraminf------------...
+
           D1.SetValues(TheCurveTool::Value(C1, paraminf), paraminf, TolDomain, true);
         }
       }
@@ -154,7 +149,7 @@ IntRes2d_Domain IntCurve_IntCurveCurveGen::ComputeDomain(const TheCurve& C1,
       {
         if (paramsup < Precision::Infinite())
         {
-          //--    ...-----------------paramsup
+
           D1.SetValues(TheCurveTool::Value(C1, paramsup), paramsup, TolDomain, false);
         }
       }
@@ -164,9 +159,6 @@ IntRes2d_Domain IntCurve_IntCurveCurveGen::ComputeDomain(const TheCurve& C1,
   return (D1);
 }
 
-//----------------------------------------------------------------------
-//-- Perform : Si Une des courbes est Composite Alors decompose les appels
-//----------------------------------------------------------------------
 void IntCurve_IntCurveCurveGen::Perform(const TheCurve&        C1,
                                         const IntRes2d_Domain& D1,
                                         const TheCurve&        C2,
@@ -212,14 +204,6 @@ void IntCurve_IntCurveCurveGen::Perform(const TheCurve&        C1,
   }
 }
 
-//----------------------------------------------------------------------
-//-- InternalPerform
-//-- Suppose des Courbes Lin...Other
-//-- Si Composite == True
-//--     Les Resultats sont Ajoutes
-//-- Sinon
-//--     Les Resultats sont Copies
-//----------------------------------------------------------------------
 void IntCurve_IntCurveCurveGen::InternalPerform(const TheCurve&        C1,
                                                 const IntRes2d_Domain& D1,
                                                 const TheCurve&        C2,
@@ -860,18 +844,12 @@ void IntCurve_IntCurveCurveGen::InternalCompositePerform_noRecurs(
   IntRes2d_Domain DomainC1NumInter;
   IntRes2d_Domain DomainC2NumInter;
 
-  //----------------------------------------------------------------------
-  //-- Creation du domaine associe a la portion de C1
-  //----------------------------------------------------------------------
   bool   DomainIsOK = true;
   double ParamInf, ParamSup;
 
   if (NbInterC1 > 1)
   {
     TheCurveTool::GetInterval(C1, NumInterC1, Tab1, ParamInf, ParamSup);
-    //--------------------------------------------------------------
-    //-- Verification : Domaine Inclu dans Intervalle de Definition
-    //--------------------------------------------------------------
 
     double u;
 
@@ -906,15 +884,9 @@ void IntCurve_IntCurveCurveGen::InternalCompositePerform_noRecurs(
     DomainC1NumInter = D1;
   }
 
-  //----------------------------------------------------------------------
-  //-- Creation du domaine associe a la portion de C2
-  //----------------------------------------------------------------------
   if (NbInterC2 > 1)
   {
     TheCurveTool::GetInterval(C2, NumInterC2, Tab2, ParamInf, ParamSup);
-    //--------------------------------------------------------------
-    //-- Verification : Domaine Inclu dans Intervalle de Definition
-    //--------------------------------------------------------------
 
     double u;
 
@@ -955,9 +927,6 @@ void IntCurve_IntCurveCurveGen::InternalCompositePerform_noRecurs(
   }
 }
 
-//-- C1 ou C2 sont des courbes composites
-//--
-
 void IntCurve_IntCurveCurveGen::InternalCompositePerform(const TheCurve&        C1,
                                                          const IntRes2d_Domain& D1,
                                                          const int              XXXNumInterC1,
@@ -975,8 +944,6 @@ void IntCurve_IntCurveCurveGen::InternalCompositePerform(const TheCurve&        
 
   int NumInterC2 = XXXNumInterC2;
   int NumInterC1 = XXXNumInterC1;
-
-  //  bool Arret=false;
 
   if (NumInterC2 > NbInterC2)
     return;
@@ -1001,11 +968,6 @@ void IntCurve_IntCurveCurveGen::InternalCompositePerform(const TheCurve&        
   for (int i = NumInterC1; i <= NbInterC1; i++)
   {
     NumInterC1 = i;
-    /*
-      InternalCompositePerform(C2,D2,NumInterC2,NbInterC2,Tab2,
-            C1,D1,NumInterC1,NbInterC1,Tab1,
-            TolConf,Tol,false);
-    */
 
     InternalCompositePerform_noRecurs(NbInterC2,
                                       C2,
@@ -1042,14 +1004,10 @@ void IntCurve_IntCurveCurveGen::InternalCompositePerform(const TheCurve&        
   }
 }
 
-//=================================================================================================
-
 void IntCurve_IntCurveCurveGen::SetMinNbSamples(const int theMinNbSamples)
 {
   intcurvcurv.SetMinNbSamples(theMinNbSamples);
 }
-
-//=================================================================================================
 
 int IntCurve_IntCurveCurveGen::GetMinNbSamples() const
 {

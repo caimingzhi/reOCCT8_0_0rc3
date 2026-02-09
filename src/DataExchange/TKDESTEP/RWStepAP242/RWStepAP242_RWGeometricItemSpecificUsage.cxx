@@ -17,12 +17,8 @@ void RWStepAP242_RWGeometricItemSpecificUsage::ReadStep(
   const occ::handle<StepAP242_GeometricItemSpecificUsage>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 5, ach, "geometric_item_specific_usage"))
     return;
-
-  // Inherited fields of ItemIdentifiedRepresentationUsage
 
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "item_identified_representation_usage.name", ach, aName);
@@ -79,8 +75,6 @@ void RWStepAP242_RWGeometricItemSpecificUsage::ReadStep(
     }
   }
 
-  //--- Initialisation of the read entity ---
-
   ent->Init(aName, aDescription, aDefinition, aRepresentation, anItems);
 }
 
@@ -88,7 +82,6 @@ void RWStepAP242_RWGeometricItemSpecificUsage::WriteStep(
   StepData_StepWriter&                                     SW,
   const occ::handle<StepAP242_GeometricItemSpecificUsage>& ent) const
 {
-  // Inherited fields of ItemIdentifiedRepresentationUsage
 
   SW.Send(ent->Name());
 
@@ -115,7 +108,6 @@ void RWStepAP242_RWGeometricItemSpecificUsage::Share(
   const occ::handle<StepAP242_GeometricItemSpecificUsage>& ent,
   Interface_EntityIterator&                                iter) const
 {
-  // Inherited fields of ItemIdentifiedRepresentationUsage
 
   iter.AddItem(ent->Definition().Value());
   int i, nb = ent->NbIdentifiedItem();

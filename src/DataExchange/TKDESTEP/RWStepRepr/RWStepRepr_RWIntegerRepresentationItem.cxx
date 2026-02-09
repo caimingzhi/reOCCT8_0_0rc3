@@ -12,19 +12,16 @@ void RWStepRepr_RWIntegerRepresentationItem::ReadStep(
   occ::handle<Interface_Check>&                          ach,
   const occ::handle<StepRepr_IntegerRepresentationItem>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "integer_representation_item"))
     return;
 
-  // --- inherited field : name ---
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- own field : value ---
   int aValue;
   data->ReadInteger(num, 2, "value", ach, aValue);
 
-  //--- Initialisation of the read entity ---
   ent->Init(aName, aValue);
 }
 

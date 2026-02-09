@@ -2,12 +2,9 @@
 
 #include <OpenGl_TextureSet.hpp>
 
-//! Class for iterating pair of texture sets through each defined texture slot.
-//! Note that iterator considers texture slots being in ascending order within OpenGl_TextureSet.
 class OpenGl_TextureSetPairIterator
 {
 public:
-  //! Constructor.
   OpenGl_TextureSetPairIterator(const occ::handle<OpenGl_TextureSet>& theSet1,
                                 const occ::handle<OpenGl_TextureSet>& theSet2)
       : myIter1(theSet1),
@@ -35,19 +32,14 @@ public:
       (myIter2.More() && myIter2.Unit() == myUnitCurrent) ? myIter2.ChangeValue().get() : nullptr;
   }
 
-  //! Return TRUE if there are more texture units to pass through.
   bool More() const { return myUnitCurrent <= myUnitUpper; }
 
-  //! Return current texture unit.
   Graphic3d_TextureUnit Unit() const { return (Graphic3d_TextureUnit)myUnitCurrent; }
 
-  //! Access texture from first texture set.
   const OpenGl_Texture* Texture1() const { return myTexture1; }
 
-  //! Access texture from second texture set.
   const OpenGl_Texture* Texture2() const { return myTexture2; }
 
-  //! Move iterator position to the next pair.
   void Next()
   {
     ++myUnitCurrent;

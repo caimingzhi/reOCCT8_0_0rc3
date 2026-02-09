@@ -6,11 +6,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_ExternallyDefinedClass, StepAP214_Class)
 
-//=================================================================================================
-
 StepAP214_ExternallyDefinedClass::StepAP214_ExternallyDefinedClass() = default;
-
-//=================================================================================================
 
 void StepAP214_ExternallyDefinedClass::Init(
   const occ::handle<TCollection_HAsciiString>& aGroup_Name,
@@ -23,15 +19,11 @@ void StepAP214_ExternallyDefinedClass::Init(
   theExternallyDefinedItem->Init(aExternallyDefinedItem_ItemId, aExternallyDefinedItem_Source);
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ExternallyDefinedItem> StepAP214_ExternallyDefinedClass::
   ExternallyDefinedItem() const
 {
   return theExternallyDefinedItem;
 }
-
-//=================================================================================================
 
 void StepAP214_ExternallyDefinedClass::SetExternallyDefinedItem(
   const occ::handle<StepBasic_ExternallyDefinedItem>& aExternallyDefinedItem)

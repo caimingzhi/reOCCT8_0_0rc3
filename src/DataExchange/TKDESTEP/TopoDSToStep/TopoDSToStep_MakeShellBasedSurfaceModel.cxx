@@ -33,9 +33,6 @@
 #include <Transfer_FinderProcess.hpp>
 #include <TransferBRep_ShapeMapper.hpp>
 
-//=============================================================================
-// Create a ShellBasedSurfaceModel of StepShape from a Face of TopoDS
-//=============================================================================
 TopoDSToStep_MakeShellBasedSurfaceModel::TopoDSToStep_MakeShellBasedSurfaceModel(
   const TopoDS_Face&                         aFace,
   const occ::handle<Transfer_FinderProcess>& FP,
@@ -92,9 +89,6 @@ TopoDSToStep_MakeShellBasedSurfaceModel::TopoDSToStep_MakeShellBasedSurfaceModel
   }
 }
 
-//=============================================================================
-// Create a ShellBasedSurfaceModel of StepShape from a Shell of TopoDS
-//=============================================================================
 TopoDSToStep_MakeShellBasedSurfaceModel::TopoDSToStep_MakeShellBasedSurfaceModel(
   const TopoDS_Shell&                        aShell,
   const occ::handle<Transfer_FinderProcess>& FP,
@@ -122,7 +116,6 @@ TopoDSToStep_MakeShellBasedSurfaceModel::TopoDSToStep_MakeShellBasedSurfaceModel
   TopoDSToStep_Builder StepB(aShell, aTool, FP, aWriteTessGeom, theLocalFactors, theProgress);
   if (theProgress.UserBreak())
     return;
-  // TopoDSToStep::AddResult ( FP, aTool );
 
   if (StepB.IsDone())
   {
@@ -157,10 +150,6 @@ TopoDSToStep_MakeShellBasedSurfaceModel::TopoDSToStep_MakeShellBasedSurfaceModel
 
   TopoDSToStep::AddResult(FP, aTool);
 }
-
-//=============================================================================
-// Create a ShellBasedSurfaceModel of StepShape from a Solid of TopoDS
-//=============================================================================
 
 TopoDSToStep_MakeShellBasedSurfaceModel::TopoDSToStep_MakeShellBasedSurfaceModel(
   const TopoDS_Solid&                        aSolid,
@@ -277,21 +266,12 @@ TopoDSToStep_MakeShellBasedSurfaceModel::TopoDSToStep_MakeShellBasedSurfaceModel
   }
 }
 
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
-
 const occ::handle<StepShape_ShellBasedSurfaceModel>& TopoDSToStep_MakeShellBasedSurfaceModel::
   Value() const
 {
   StdFail_NotDone_Raise_if(!done, "TopoDSToStep_MakeShellBasedSurfaceModel::Value() - no result");
   return theShellBasedSurfaceModel;
 }
-
-// ============================================================================
-// Method  : TopoDSToStep_MakeShellBasedSurfaceModel::TessellatedValue
-// Purpose : Returns TessellatedItem as the optional result
-// ============================================================================
 
 const occ::handle<StepVisual_TessellatedItem>& TopoDSToStep_MakeShellBasedSurfaceModel::
   TessellatedValue() const

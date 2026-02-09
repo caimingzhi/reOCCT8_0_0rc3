@@ -10,11 +10,7 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepElement_RWCurve3dElementDescriptor::RWStepElement_RWCurve3dElementDescriptor() = default;
-
-//=================================================================================================
 
 void RWStepElement_RWCurve3dElementDescriptor::ReadStep(
   const occ::handle<StepData_StepReaderData>&              data,
@@ -22,11 +18,9 @@ void RWStepElement_RWCurve3dElementDescriptor::ReadStep(
   occ::handle<Interface_Check>&                            ach,
   const occ::handle<StepElement_Curve3dElementDescriptor>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "curve3d_element_descriptor"))
     return;
-
-  // Inherited fields of ElementDescriptor
 
   StepElement_ElementOrder aElementDescriptor_TopologyOrder = StepElement_Linear;
   if (data->ParamType(num, 1) == Interface_ParamEnum)
@@ -47,8 +41,6 @@ void RWStepElement_RWCurve3dElementDescriptor::ReadStep(
   occ::handle<TCollection_HAsciiString> aElementDescriptor_Description;
   data->ReadString(num, 2, "element_descriptor.description", ach, aElementDescriptor_Description);
 
-  // Own fields of Curve3dElementDescriptor
-
   occ::handle<NCollection_HArray1<
     occ::handle<NCollection_HSequence<occ::handle<StepElement_CurveElementPurposeMember>>>>>
       aPurpose;
@@ -56,7 +48,7 @@ void RWStepElement_RWCurve3dElementDescriptor::ReadStep(
   if (data->ReadSubList(num, 3, "purpose", ach, sub3))
   {
     int nb0 = data->NbParams(sub3);
-    // int nbj0 = data->NbParams(data->ParamNumber(sub3,1));
+
     aPurpose = new NCollection_HArray1<
       occ::handle<NCollection_HSequence<occ::handle<StepElement_CurveElementPurposeMember>>>>(1,
                                                                                               nb0);
@@ -74,7 +66,7 @@ void RWStepElement_RWCurve3dElementDescriptor::ReadStep(
           occ::handle<StepElement_CurveElementPurposeMember> aMember =
             new StepElement_CurveElementPurposeMember;
           data->ReadMember(num4, j0, "curve_element_purpose", ach, aMember);
-          // data->ReadEntity (num4, j0, "curve_element_purpose", ach, anIt0);
+
           HSCEPM->Append(aMember);
         }
       }
@@ -82,18 +74,13 @@ void RWStepElement_RWCurve3dElementDescriptor::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aElementDescriptor_TopologyOrder, aElementDescriptor_Description, aPurpose);
 }
-
-//=================================================================================================
 
 void RWStepElement_RWCurve3dElementDescriptor::WriteStep(
   StepData_StepWriter&                                     SW,
   const occ::handle<StepElement_Curve3dElementDescriptor>& ent) const
 {
-
-  // Inherited fields of ElementDescriptor
 
   switch (ent->StepElement_ElementDescriptor::TopologyOrder())
   {
@@ -109,8 +96,6 @@ void RWStepElement_RWCurve3dElementDescriptor::WriteStep(
   }
 
   SW.Send(ent->StepElement_ElementDescriptor::Description());
-
-  // Own fields of Curve3dElementDescriptor
 
   SW.OpenSub();
   for (int i2 = 1; i2 <= ent->Purpose()->Length(); i2++)
@@ -129,23 +114,8 @@ void RWStepElement_RWCurve3dElementDescriptor::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepElement_RWCurve3dElementDescriptor::Share(
   const occ::handle<StepElement_Curve3dElementDescriptor>&,
   Interface_EntityIterator&) const
 {
-
-  // Inherited fields of ElementDescriptor
-
-  // Own fields of Curve3dElementDescriptor
-  /* CKY  17JUN04. Content is made of strings and enums. No entity !
-    for (int i1=1; i1 <= ent->Purpose()->Length(); i1++ ) {
-      occ::handle<NCollection_HSequence<occ::handle<StepElement_CurveElementPurposeMember>>> HSCEPM
-    = ent->Purpose()->Value(i1); for (int i2=1; i2 <= HSCEPM->Length(); i2++ ) {
-        occ::handle<StepElement_CurveElementPurposeMember> Var1 = HSCEPM->Value(i2);
-        iter.AddItem (Var1);
-      }
-    }
-  */
 }

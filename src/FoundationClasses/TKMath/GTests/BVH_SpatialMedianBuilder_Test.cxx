@@ -1,22 +1,10 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
 #include <BVH_SpatialMedianBuilder.hpp>
 #include <BVH_Triangulation.hpp>
 
-// Helper function to compute bounding box for a set
 template <class T, int N>
 BVH_Box<T, N> ComputeSetBox(BVH_Set<T, N>* theSet)
 {
@@ -28,10 +16,6 @@ BVH_Box<T, N> ComputeSetBox(BVH_Set<T, N>* theSet)
   }
   return aBox;
 }
-
-// =============================================================================
-// BVH_SpatialMedianBuilder Basic Tests
-// =============================================================================
 
 TEST(BVH_SpatialMedianBuilderTest, DefaultConstructor)
 {
@@ -128,7 +112,6 @@ TEST(BVH_SpatialMedianBuilderTest, LeafNodeSizeRespected)
   BVH_Box<double, 3> aBox = ComputeSetBox(&aTriangulation);
   aBuilder.Build(&aTriangulation, &aTree, aBox);
 
-  // Check all leaf nodes respect the leaf size
   for (int i = 0; i < aTree.Length(); ++i)
   {
     if (aTree.IsOuter(i))
@@ -184,8 +167,6 @@ TEST(BVH_SpatialMedianBuilderTest, SplitsAtSpatialMedian)
   BVH_Box<double, 3> aBox = ComputeSetBox(&aTriangulation);
   aBuilder.Build(&aTriangulation, &aTree, aBox);
 
-  // For uniformly distributed data, spatial median should create balanced splits
-  // Root node should have roughly equal children
   if (aTree.Length() > 0 && !aTree.IsOuter(0))
   {
     int aLeftChild  = aTree.Child<0>(0);
@@ -196,7 +177,6 @@ TEST(BVH_SpatialMedianBuilderTest, SplitsAtSpatialMedian)
       int aLeftPrims  = aTree.NbPrimitives(aLeftChild);
       int aRightPrims = aTree.NbPrimitives(aRightChild);
 
-      // For 8 triangles, expect roughly 4-4 split (allowing some tolerance)
       EXPECT_GE(aLeftPrims, 2);
       EXPECT_LE(aLeftPrims, 6);
       EXPECT_GE(aRightPrims, 2);
@@ -235,7 +215,6 @@ TEST(BVH_SpatialMedianBuilderTest, UseMainAxisFlag)
   BVH_Triangulation<double, 3> aTriangulation;
   const int                    aNumTriangles = 20;
 
-  // Create elongated distribution along X axis
   for (int i = 0; i < aNumTriangles; ++i)
   {
     double x = static_cast<double>(i * 10);
@@ -272,17 +251,14 @@ TEST(BVH_SpatialMedianBuilderTest, CompareWithBinnedBuilder)
 
   BVH_Box<double, 3> aBox = ComputeSetBox(&aTriangulation);
 
-  // Build with SpatialMedianBuilder (uses 2 bins)
   BVH_Tree<double, 3>                 aTreeMedian;
   BVH_SpatialMedianBuilder<double, 3> aBuilderMedian;
   aBuilderMedian.Build(&aTriangulation, &aTreeMedian, aBox);
 
-  // Build with BinnedBuilder with 2 bins (should be identical)
   BVH_Tree<double, 3>             aTreeBinned;
   BVH_BinnedBuilder<double, 3, 2> aBuilderBinned;
   aBuilderBinned.Build(&aTriangulation, &aTreeBinned, aBox);
 
-  // Both should produce trees (exact structure may vary but both should be valid)
   EXPECT_EQ(aTreeMedian.Length(), aTreeBinned.Length());
   EXPECT_EQ(aTreeMedian.Depth(), aTreeBinned.Depth());
 }
@@ -292,7 +268,6 @@ TEST(BVH_SpatialMedianBuilderTest, ClusteredData)
   BVH_Triangulation<double, 3> aTriangulation;
   const int                    aNumTriangles = 30;
 
-  // Create two clusters: 15 triangles at x=0, 15 at x=100
   for (int i = 0; i < aNumTriangles; ++i)
   {
     double x = (i < 15) ? 0.0 : 100.0;
@@ -310,7 +285,6 @@ TEST(BVH_SpatialMedianBuilderTest, ClusteredData)
   BVH_Box<double, 3> aBox = ComputeSetBox(&aTriangulation);
   aBuilder.Build(&aTriangulation, &aTree, aBox);
 
-  // Spatial median should split the two clusters
   EXPECT_GT(aTree.Length(), 0);
   EXPECT_GE(aTree.Depth(), 1);
 }
@@ -346,7 +320,6 @@ TEST(BVH_SpatialMedianBuilderTest, IdenticalBoxes)
   BVH_Triangulation<double, 3> aTriangulation;
   const int                    aNumTriangles = 10;
 
-  // All triangles at the same position
   for (int i = 0; i < aNumTriangles; ++i)
   {
     BVH::Array<double, 3>::Append(aTriangulation.Vertices, BVH_Vec3d(0.0, 0.0, 0.0));
@@ -361,7 +334,6 @@ TEST(BVH_SpatialMedianBuilderTest, IdenticalBoxes)
   BVH_Box<double, 3> aBox = ComputeSetBox(&aTriangulation);
   aBuilder.Build(&aTriangulation, &aTree, aBox);
 
-  // Should create a single leaf containing all triangles
   EXPECT_GT(aTree.Length(), 0);
 }
 
@@ -370,7 +342,6 @@ TEST(BVH_SpatialMedianBuilderTest, LargeDataSet)
   BVH_Triangulation<double, 3> aTriangulation;
   const int                    aNumTriangles = 500;
 
-  // Random-ish distribution
   for (int i = 0; i < aNumTriangles; ++i)
   {
     double x = static_cast<double>((i * 7) % 100);
@@ -390,9 +361,8 @@ TEST(BVH_SpatialMedianBuilderTest, LargeDataSet)
   aBuilder.Build(&aTriangulation, &aTree, aBox);
 
   EXPECT_GT(aTree.Length(), 0);
-  EXPECT_GT(aTree.Depth(), 5); // Large dataset should produce deeper tree
+  EXPECT_GT(aTree.Depth(), 5);
 
-  // Estimate SAH quality
   double aSAH = aTree.EstimateSAH();
   EXPECT_GT(aSAH, 0.0);
 }

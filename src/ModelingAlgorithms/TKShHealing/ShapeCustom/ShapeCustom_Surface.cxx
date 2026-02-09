@@ -1,18 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// abv 06.01.99 fix of misprint
-//: p6 abv 26.02.99: make ConvertToPeriodic() return Null if nothing done
 
 #include <ShapeCustom_Surface.hpp>
 
@@ -37,14 +23,10 @@
 #include <NCollection_Array2.hpp>
 #include <Standard_Integer.hpp>
 
-//=================================================================================================
-
 ShapeCustom_Surface::ShapeCustom_Surface()
     : myGap(0)
 {
 }
-
-//=================================================================================================
 
 ShapeCustom_Surface::ShapeCustom_Surface(const occ::handle<Geom_Surface>& S)
     : myGap(0)
@@ -52,14 +34,10 @@ ShapeCustom_Surface::ShapeCustom_Surface(const occ::handle<Geom_Surface>& S)
   Init(S);
 }
 
-//=================================================================================================
-
 void ShapeCustom_Surface::Init(const occ::handle<Geom_Surface>& S)
 {
   mySurf = S;
 }
-
-//=================================================================================================
 
 occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double tol,
                                                                    const bool   substitute)
@@ -71,23 +49,22 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
   occ::handle<Geom_Curve> iso;
   bool                    uClosed = true;
 
-  // seuls cas traites : BSpline et Bezier
   occ::handle<Geom_BSplineSurface> theBSplneS = occ::down_cast<Geom_BSplineSurface>(mySurf);
   if (theBSplneS.IsNull())
   {
     occ::handle<Geom_BezierSurface> theBezierS = occ::down_cast<Geom_BezierSurface>(mySurf);
     if (!theBezierS.IsNull())
-    { // Bezier :
+    {
       nUP  = theBezierS->NbUPoles();
       nVP  = theBezierS->NbVPoles();
       UDeg = theBezierS->UDegree();
       VDeg = theBezierS->VDegree();
     }
     else
-      return newSurf; // non reconnu : terminus
+      return newSurf;
   }
   else
-  { // BSpline :
+  {
     nUP  = theBSplneS->NbUPoles();
     nVP  = theBSplneS->NbVPoles();
     UDeg = theBSplneS->UDegree();
@@ -95,7 +72,7 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
   }
 
   mySurf->Bounds(U1, U2, V1, V2);
-  //  mySurf->Bounds(U1, U2, V1, V2);
+
   NCollection_Array1<gp_Pnt> p1(1, 3), p2(1, 3), p3(1, 3);
   NCollection_Array1<double> R(1, 3);
   gp_Pnt                     origPnt, resPnt;
@@ -111,7 +88,7 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
       aPlanar = true;
   }
   else if (mySurf->IsUClosed())
-  { // VRAI IsUClosed
+  {
     if (mySurf->IsVClosed())
       aToroid = true;
     else
@@ -120,7 +97,7 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
   else
   {
     if (mySurf->IsVClosed())
-    { // VRAI IsVClosed
+    {
       aCySpCo = true;
       uClosed = false;
     }
@@ -128,23 +105,18 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
 
   if (aPlanar)
   {
-    //    NearestPlane ...
+
     NCollection_Array1<gp_Pnt> Pnts(1, 4);
     Pnts.SetValue(1, mySurf->Value(U1, V1));
     Pnts.SetValue(2, mySurf->Value(U2, V1));
     Pnts.SetValue(3, mySurf->Value(U1, V2));
     Pnts.SetValue(4, mySurf->Value(U2, V2));
-    gp_Pln aPln; // double Dmax;
-    int    It = ShapeAnalysis_Geom::NearestPlane(Pnts, aPln, myGap /*Dmax*/);
+    gp_Pln aPln;
+    int    It = ShapeAnalysis_Geom::NearestPlane(Pnts, aPln, myGap);
 
-    //  ICI, on fabrique le plan, et zou
-    if (It == 0 || myGap /*Dmax*/ > tol)
-      return newSurf; //  pas un plan
+    if (It == 0 || myGap > tol)
+      return newSurf;
 
-    //    IL RESTE a verifier l orientation ...
-    //    On regarde sur chaque surface les vecteurs P(U0->U1),P(V0->V1)
-    //    On prend la normale : les deux normales doivent etre dans le meme sens
-    //    Sinon, inverser la normale (pas le Pln entier !) et refaire la Plane
     newSurf = new Geom_Plane(aPln);
     gp_Vec uold(Pnts(1), Pnts(2));
     gp_Vec vold(Pnts(1), Pnts(3));
@@ -202,34 +174,28 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
                      0.5 * (p1(i).Y() + p2(i).Y()),
                      0.5 * (p1(i).Z() + p2(i).Z()));
       R(i) = p3(i).Distance(p1(i));
-      //	std::cout<<"sphere, i="<<i<<" V="<<V<<" R="<<R(i)<<"
-      // p1="<<p1(i).X()<<","<<p1(i).Y()<<","<<p1(i).Z()<<"
-      // p2="<<p2(i).X()<<","<<p2(i).Y()<<","<<p2(i).Z()<<"
-      // p3="<<p3(i).X()<<","<<p3(i).Y()<<","<<p3(i).Z()<<std::endl;
     }
 
     iso->D1(0., origPnt, origD1U);
     gp_Vec xVec(p3(3), p1(3));
     gp_Vec aVec(p3(1), p3(2));
-    //      gp_Dir xDir(xVec);  ne sert pas. Null si R3 = 0
+
     gp_Dir aDir(aVec);
     gp_Ax3 aAx3(p3(1), aDir, xVec);
-    //  CKY  3-FEV-1997 : verification du sens de description
-    // gp_Dir AXY = aAx3.YDirection(); // AXY not used (skl)
+
     if (aAx3.YDirection().Dot(origD1U) < 0)
     {
 #ifdef OCCT_DEBUG
       std::cout << " Surface Analytique : sens a inverser" << std::endl;
 #endif
-      aAx3.YReverse(); //  mais X reste !
+      aAx3.YReverse();
     }
 
     if (nVP > 2)
     {
       if ((std::abs(R(1)) < tol) && (std::abs(R(2)) < tol) && (std::abs(R(3)) > tol))
       {
-        // deja fait	  gp_Ax3 aAx3(p3(1), aDir, xVec);
-        // gp_Ax3 aAx3(p3(3), aDir);
+
         occ::handle<Geom_SphericalSurface> anObject = new Geom_SphericalSurface(aAx3, R(3));
         if (!uClosed)
           anObject->UReverse();
@@ -238,9 +204,6 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
     }
     else if (nVP == 2)
     {
-
-      // deja fait	gp_Ax3 aAx3(p3(1), aDir, xVec);
-      // gp_Ax3 aAx3(p3(1), aDir);
 
       if (std::abs(R(2) - R(1)) < tol)
       {
@@ -256,7 +219,7 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
         if (R(1) < R(2))
         {
           occ::handle<Geom_ConicalSurface> anObject = new Geom_ConicalSurface(aAx3, angle, R(1));
-          // if (!uClosed) anObject->UReverse();
+
           anObject->UReverse();
           newSurf = anObject;
         }
@@ -268,7 +231,7 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
           gp_Ax3                           anotherAx3(p3(2), aDir, anotherXDir);
           occ::handle<Geom_ConicalSurface> anObject =
             new Geom_ConicalSurface(anotherAx3, angle, R(2));
-          // if (!uClosed) anObject->UReverse();
+
           anObject->UReverse();
           newSurf = anObject;
         }
@@ -277,7 +240,7 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
   }
   else if (aToroid)
   {
-    // test by iso U and isoV
+
     bool isFound = false;
     for (j = 1; (j <= 2) && !isFound; j++)
     {
@@ -325,8 +288,7 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
 
         gp_Ax3 aAx3(p10, aDir);
         RR1 = p10.Distance(p3(1));
-        //          modif empirique (pourtant NON DEMONTREE) : inverser roles RR1,RR2
-        //          CKY, 24-JAN-1997
+
         if (RR1 < RR2)
         {
           RR3 = RR1;
@@ -349,15 +311,11 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
   if (newSurf.IsNull())
     return newSurf;
 
-  //---------------------------------------------------------------------
-  //                 verification
-  //---------------------------------------------------------------------
-
   occ::handle<GeomAdaptor_Surface> NHS       = new GeomAdaptor_Surface(newSurf);
   GeomAdaptor_Surface&             SurfAdapt = *NHS;
 
   const int NP = 21;
-  double    S = 0., T = 0.; // U,V deja fait
+  double    S = 0., T = 0.;
   gp_Pnt    P3d, P3d2;
   bool      onSurface = true;
 
@@ -420,7 +378,7 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
       {
         onSurface = false;
         newSurf.Nullify();
-        // The presumption is rejected
+
         break;
       }
     }
@@ -432,8 +390,6 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
   return newSurf;
 }
 
-//%pdn 30 Nov 98: converting bspline surfaces with degree+1 at ends to periodic
-// UKI60591, entity 48720
 occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToPeriodic(const bool   substitute,
                                                                  const double preci)
 {
@@ -449,12 +405,12 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToPeriodic(const bool   su
   if (!uclosed && !vclosed)
     return newSurf;
 
-  bool converted = false; //: p6
+  bool converted = false;
 
   if (uclosed && !BSpl->IsUPeriodic() && BSpl->NbUPoles() > 3)
   {
     bool set = true;
-    // if degree+1 at ends, first change it to 1 by rearranging knots
+
     if (BSpl->UMultiplicity(1) == BSpl->UDegree() + 1
         && BSpl->UMultiplicity(BSpl->NbUKnots()) == BSpl->UDegree() + 1)
     {
@@ -507,7 +463,7 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToPeriodic(const bool   su
       set = false;
     if (set)
     {
-      BSpl->SetUPeriodic(); // make periodic
+      BSpl->SetUPeriodic();
       converted = true;
     }
   }
@@ -515,7 +471,7 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToPeriodic(const bool   su
   if (vclosed && !BSpl->IsVPeriodic() && BSpl->NbVPoles() > 3)
   {
     bool set = true;
-    // if degree+1 at ends, first change it to 1 by rearranging knots
+
     if (BSpl->VMultiplicity(1) == BSpl->VDegree() + 1
         && BSpl->VMultiplicity(BSpl->NbVKnots()) == BSpl->VDegree() + 1)
     {
@@ -568,7 +524,7 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToPeriodic(const bool   su
       set = false;
     if (set)
     {
-      BSpl->SetVPeriodic(); // make periodic
+      BSpl->SetVPeriodic();
       converted = true;
     }
   }

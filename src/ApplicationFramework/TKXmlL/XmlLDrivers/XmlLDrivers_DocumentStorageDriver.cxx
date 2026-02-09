@@ -34,7 +34,6 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlLDrivers_DocumentStorageDriver, PCDM_StorageDriver
 
 #define FAILSTR "Failed to write xsi:schemaLocation : "
 
-// #define TAKE_TIMES
 static void take_time(const int, const char*, const occ::handle<Message_Messenger>&)
 #ifdef TAKE_TIMES
   ;
@@ -43,15 +42,11 @@ static void take_time(const int, const char*, const occ::handle<Message_Messenge
 }
 #endif
 
-//=================================================================================================
-
 XmlLDrivers_DocumentStorageDriver::XmlLDrivers_DocumentStorageDriver(
   const TCollection_ExtendedString& theCopyright)
     : myCopyright(theCopyright)
 {
 }
-
-//=================================================================================================
 
 void XmlLDrivers_DocumentStorageDriver::AddNamespace(const TCollection_AsciiString& thePrefix,
                                                      const TCollection_AsciiString& theURI)
@@ -61,8 +56,6 @@ void XmlLDrivers_DocumentStorageDriver::AddNamespace(const TCollection_AsciiStri
       return;
   mySeqOfNS.Append(XmlLDrivers_NamespaceDef(thePrefix, theURI));
 }
-
-//=================================================================================================
 
 void XmlLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>&  theDocument,
                                               const TCollection_ExtendedString& theFileName,
@@ -90,8 +83,6 @@ void XmlLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>&  
   }
 }
 
-//=================================================================================================
-
 void XmlLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>& theDocument,
                                               Standard_OStream&                theOStream,
                                               const Message_ProgressRange&     theRange)
@@ -99,10 +90,8 @@ void XmlLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>& t
   occ::handle<Message_Messenger> aMessageDriver = theDocument->Application()->MessageDriver();
   ::take_time(~0, " +++++ Start STORAGE procedures ++++++", aMessageDriver);
 
-  // Create new DOM_Document
   XmlObjMgt_Document aDOMDoc = XmlObjMgt_Document::createDocument("document");
 
-  // Fill the document with data
   XmlObjMgt_Element anElement = aDOMDoc.getDocumentElement();
 
   if (!WriteToDomDocument(theDocument, anElement, theRange))
@@ -131,13 +120,6 @@ void XmlLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>& t
   }
 }
 
-//=======================================================================
-// function : WriteToDomDocument
-// purpose  : management of the macro-structure of XML document data
-// remark   : If the application needs to use myRelocTable to store additional
-//           data to XML, this method should be reimplemented avoiding step 3
-//=======================================================================
-
 bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
   const occ::handle<CDM_Document>& theDocument,
   XmlObjMgt_Element&               theElement,
@@ -145,14 +127,12 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
 {
   SetIsError(false);
   occ::handle<Message_Messenger> aMessageDriver = theDocument->Application()->MessageDriver();
-  // 1. Write header information
+
   int                i;
   XmlObjMgt_Document aDOMDoc = theElement.getOwnerDocument();
 
-  // 1.a File Format
   TCollection_AsciiString aStorageFormat(theDocument->StorageFormat(), '?');
   theElement.setAttribute("format", aStorageFormat.ToCString());
-  //  theElement.setAttribute ("schema", "XSD");
 
   theElement.setAttribute("xmlns", "http://www.opencascade.org/OCAF/XML");
   for (i = 1; i <= mySeqOfNS.Length(); i++)
@@ -162,12 +142,7 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
     theElement.setAttribute(aPrefix.ToCString(), mySeqOfNS(i).URI().ToCString());
   }
   theElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-  // mkv 15.09.05 OCC10001
-  // theElement.setAttribute ("xsi:schemaLocation",
-  //                          "http://www.opencascade.org/OCAF/XML"
-  //                          " http://www.nnov.matra-dtv.fr/~agv/XmlOcaf.xsd");
-  //
-  //  the order of search : by CSF_XmlOcafResource and then by CASROOT
+
   TCollection_AsciiString anHTTP            = "http://www.opencascade.org/OCAF/XML";
   bool                    aToSetCSFVariable = false;
   const char*             aCSFVariable[2]   = {"CSF_XmlOcafResource", "CASROOT"};
@@ -175,13 +150,13 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
   TCollection_AsciiString aResourceDir = anEnv.Value();
   if (aResourceDir.IsEmpty())
   {
-    // now try by CASROOT
+
     OSD_Environment anEnv2(aCSFVariable[1]);
     aResourceDir = anEnv2.Value();
     if (!aResourceDir.IsEmpty())
     {
       aResourceDir += "/src/XmlOcafResource";
-      aToSetCSFVariable = true; // CSF variable to be set later
+      aToSetCSFVariable = true;
     }
 #ifdef OCCT_DEBUGXML
     else
@@ -195,8 +170,7 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
   if (!aResourceDir.IsEmpty())
   {
     TCollection_AsciiString aResourceFileName = aResourceDir + "/XmlOcaf.xsd";
-    // search directory name that has been constructed, now check whether
-    // it and the file exist
+
     OSD_File aResourceFile(aResourceFileName);
     if (aResourceFile.Exists())
     {
@@ -230,22 +204,18 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
   }
   theElement.setAttribute("xsi:schemaLocation", anHTTP.ToCString());
 
-  // 1.b Info section
   XmlObjMgt_Element anInfoElem = aDOMDoc.createElement("info");
   theElement.appendChild(anInfoElem);
 
   TCollection_AsciiString aCreationDate = XmlLDrivers::CreationDate();
 
-  //  anInfoElem.setAttribute("dbv", 0);
   anInfoElem.setAttribute("date", aCreationDate.ToCString());
   anInfoElem.setAttribute("schemav", 0);
-  //  anInfoElem.setAttribute("appv", anAppVersion.ToCString());
 
-  // Document version
   occ::handle<TDocStd_Document> aDoc = occ::down_cast<TDocStd_Document>(theDocument);
-  // clang-format off
-  TDocStd_FormatVersion aFormatVersion = TDocStd_Document::CurrentStorageFormatVersion(); // the last version of the format
-  // clang-format on
+
+  TDocStd_FormatVersion aFormatVersion = TDocStd_Document::CurrentStorageFormatVersion();
+
   if (TDocStd_Document::CurrentStorageFormatVersion() < aDoc->StorageFormatVersion())
   {
     TCollection_ExtendedString anErrorString(
@@ -259,13 +229,12 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
   const TCollection_AsciiString aStringFormatVersion(aFormatVersion);
   anInfoElem.setAttribute("DocVersion", aStringFormatVersion.ToCString());
 
-  // User info with Copyright
   NCollection_Sequence<TCollection_AsciiString> aUserInfo;
   if (myCopyright.Length() > 0)
     aUserInfo.Append(TCollection_AsciiString(myCopyright, '?'));
 
   occ::handle<Storage_Data> theData = new Storage_Data;
-  // PCDM_ReadWriter::WriteFileFormat( theData, theDocument );
+
   PCDM_ReadWriter::Writer()->WriteReferenceCounter(theData, theDocument);
   PCDM_ReadWriter::Writer()->WriteReferences(theData, theDocument, myFileName);
   PCDM_ReadWriter::Writer()->WriteExtensions(theData, theDocument);
@@ -275,7 +244,6 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
   for (i = 1; i <= aRefs.Length(); i++)
     aUserInfo.Append(aRefs.Value(i));
 
-  // Keep format version in Reloc. table
   occ::handle<Storage_HeaderData> aHeaderData = theData->HeaderData();
   aHeaderData->SetStorageVersion(aFormatVersion);
   myRelocTable.Clear();
@@ -289,7 +257,6 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
     aUIItem.appendChild(aUIText);
   }
 
-  // 1.c Comments section
   NCollection_Sequence<TCollection_ExtendedString> aComments;
   theDocument->Comments(aComments);
 
@@ -303,7 +270,7 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
     XmlObjMgt::SetExtendedString(aCItem, aComments(i));
   }
   Message_ProgressScope aPS(theRange, "Writing", 2);
-  // 2a. Write document contents
+
   int anObjNb = 0;
   {
     try
@@ -332,16 +299,12 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
     TCollection_ExtendedString anErrorString("error occurred");
     aMessageDriver->Send(anErrorString.ToExtString(), Message_Fail);
   }
-  // 2b. Write number of objects into the info section
+
   anInfoElem.setAttribute("objnb", anObjNb);
   ::take_time(0, " +++++ Fin DOM data for OCAF : ", aMessageDriver);
 
-  // 3. Clear relocation table
-  //    If the application needs to use myRelocTable to store additional
-  //    data to XML, this method should be reimplemented avoiding this step
   myRelocTable.Clear();
 
-  // 4. Write Shapes section
   if (WriteShapeSection(theElement, aFormatVersion, aPS.Next()))
     ::take_time(0, " +++ Fin DOM data for Shapes : ", aMessageDriver);
   if (!aPS.More())
@@ -353,8 +316,6 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
   return IsError();
 }
 
-//=================================================================================================
-
 int XmlLDrivers_DocumentStorageDriver::MakeDocument(const occ::handle<CDM_Document>& theTDoc,
                                                     XmlObjMgt_Element&               theElement,
                                                     const Message_ProgressRange&     theRange)
@@ -363,10 +324,9 @@ int XmlLDrivers_DocumentStorageDriver::MakeDocument(const occ::handle<CDM_Docume
   occ::handle<TDocStd_Document> TDOC = occ::down_cast<TDocStd_Document>(theTDoc);
   if (!TDOC.IsNull())
   {
-    //    myRelocTable.SetDocument (theElement.getOwnerDocument());
+
     occ::handle<TDF_Data> aTDF = TDOC->GetData();
 
-    //      Find MessageDriver and pass it to AttributeDrivers()
     occ::handle<CDM_Application>   anApplication = theTDoc->Application();
     occ::handle<Message_Messenger> aMessageDriver;
     if (anApplication.IsNull())
@@ -379,7 +339,6 @@ int XmlLDrivers_DocumentStorageDriver::MakeDocument(const occ::handle<CDM_Docume
     if (myDrivers.IsNull())
       myDrivers = AttributeDrivers(aMessageDriver);
 
-    //      Retrieve from DOM_Document
     XmlMDF::FromTo(aTDF, theElement, myRelocTable, myDrivers, theRange);
 #ifdef OCCT_DEBUGXML
     aMessage = "First step successful";
@@ -388,12 +347,10 @@ int XmlLDrivers_DocumentStorageDriver::MakeDocument(const occ::handle<CDM_Docume
     return myRelocTable.Extent();
   }
 #ifdef OCCT_DEBUG
-  std::cout << "First step failed" << std::endl; // No MessageDriver available
+  std::cout << "First step failed" << std::endl;
 #endif
-  return -1; // error
+  return -1;
 }
-
-//=================================================================================================
 
 occ::handle<XmlMDF_ADriverTable> XmlLDrivers_DocumentStorageDriver::AttributeDrivers(
   const occ::handle<Message_Messenger>& theMessageDriver)
@@ -401,11 +358,6 @@ occ::handle<XmlMDF_ADriverTable> XmlLDrivers_DocumentStorageDriver::AttributeDri
   return XmlLDrivers::AttributeDrivers(theMessageDriver);
 }
 
-//=======================================================================
-// function : take_time
-// class    : static
-// purpose  : output astronomical time elapsed
-//=======================================================================
 #ifdef TAKE_TIMES
   #include <time.h>
   #include <sys/timeb.h>
@@ -437,15 +389,10 @@ static void take_time(const int                             isReset,
 }
 #endif
 
-//=======================================================================
-// function : WriteShapeSection
-// purpose  : defines WriteShapeSection
-//=======================================================================
-bool XmlLDrivers_DocumentStorageDriver::WriteShapeSection(
-  XmlObjMgt_Element& /*theElement*/,
-  const TDocStd_FormatVersion /*theStorageFormatVersion*/,
-  const Message_ProgressRange& /*theRange*/)
+bool XmlLDrivers_DocumentStorageDriver::WriteShapeSection(XmlObjMgt_Element&,
+                                                          const TDocStd_FormatVersion,
+                                                          const Message_ProgressRange&)
 {
-  // empty; should be redefined in subclasses
+
   return false;
 }

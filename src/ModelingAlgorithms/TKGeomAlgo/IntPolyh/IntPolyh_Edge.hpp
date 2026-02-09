@@ -4,14 +4,11 @@
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Handle.hpp>
 
-//! The class represents the edge built between the two IntPolyh points.
-//! It is linked to two IntPolyh triangles.
 class IntPolyh_Edge
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Constructor
   IntPolyh_Edge()
       : myPoint1(-1),
         myPoint2(-1),
@@ -20,7 +17,6 @@ public:
   {
   }
 
-  //! Constructor
   IntPolyh_Edge(const int thePoint1,
                 const int thePoint2,
                 const int theTriangle1,
@@ -32,28 +28,20 @@ public:
   {
   }
 
-  //! Returns the first point
   int FirstPoint() const { return myPoint1; }
 
-  //! Returns the second point
   int SecondPoint() const { return myPoint2; }
 
-  //! Returns the first triangle
   int FirstTriangle() const { return myTriangle1; }
 
-  //! Returns the second triangle
   int SecondTriangle() const { return myTriangle2; }
 
-  //! Sets the first point
   void SetFirstPoint(const int thePoint) { myPoint1 = thePoint; }
 
-  //! Sets the second point
   void SetSecondPoint(const int thePoint) { myPoint2 = thePoint; }
 
-  //! Sets the first triangle
   void SetFirstTriangle(const int theTriangle) { myTriangle1 = theTriangle; }
 
-  //! Sets the second triangle
   void SetSecondTriangle(const int theTriangle) { myTriangle2 = theTriangle; }
 
   Standard_EXPORT void Dump(const int v) const;

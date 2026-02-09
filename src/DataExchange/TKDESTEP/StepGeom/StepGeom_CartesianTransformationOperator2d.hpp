@@ -5,7 +5,6 @@
 
 #include <StepGeom_CartesianTransformationOperator.hpp>
 
-//! Added from StepGeom Rev2 to Rev4
 class StepGeom_CartesianTransformationOperator2d : public StepGeom_CartesianTransformationOperator
 {
 

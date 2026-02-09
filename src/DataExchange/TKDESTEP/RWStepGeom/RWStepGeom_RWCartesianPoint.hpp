@@ -10,7 +10,6 @@ class Interface_Check;
 class StepGeom_CartesianPoint;
 class StepData_StepWriter;
 
-//! Read & Write Module for CartesianPoint
 class RWStepGeom_RWCartesianPoint
 {
 public:

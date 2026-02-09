@@ -1,23 +1,8 @@
-// Copyright (c) 1997-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// #ifndef OCCT_DEBUG
+
 #define No_Standard_RangeError
 #define No_Standard_OutOfRange
 #define No_Standard_DimensionError
-
-// #endif
 
 #include <math_DirectPolynomialRoots.hpp>
 #include <math_FunctionRoots.hpp>
@@ -52,7 +37,7 @@ static void AppendRoot(NCollection_Sequence<double>& Sol,
                        NCollection_Sequence<int>&    NbStateSol,
                        const double                  X,
                        math_FunctionWithDerivative&  F,
-                       //			const double K,
+
                        const double,
                        const double dX)
 {
@@ -91,7 +76,7 @@ static void AppendRoot(NCollection_Sequence<double>& Sol,
         i  = n;
       }
       i++;
-    } //-- while
+    }
     if (pl > n)
     {
       Sol.Append(X);
@@ -155,7 +140,7 @@ static void Solve(math_FunctionWithDerivative&  F,
     xm   = 0.5 * (c - b);
     if (std::abs(xm) < tol1 || fb == 0)
     {
-      //-- On tente une iteration de newton
+
       double Xp, Yp, Dp;
       int    itern = 5;
       bool   Ok;
@@ -249,10 +234,7 @@ static void Solve(math_FunctionWithDerivative&  F,
 
 #define NEWSEQ 1
 
-#define MATH_FUNCTIONROOTS_NEWCODE // Nv Traitement
-
-// #define MATH_FUNCTIONROOTS_OLDCODE // Ancien
-// #define MATH_FUNCTIONROOTS_CHECK // Check
+#define MATH_FUNCTIONROOTS_NEWCODE
 
 math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
                                        const double                 A,
@@ -282,8 +264,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
     double X0 = A;
     double XN = B;
     int    N  = NbSample;
-    //-- ------------------------------------------------------------
-    //-- Verifications de bas niveau
+
     if (B < A)
     {
       X0 = B;
@@ -294,7 +275,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
     {
       N = 20;
     }
-    //--  On teste si EpsX est trop petit (ie : U+Nn*EpsX == U )
+
     double EpsX   = _EpsX;
     double DeltaU = std::abs(X0) + std::abs(XN);
     double NEpsX  = 0.0000000001 * DeltaU;
@@ -303,9 +284,6 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
       EpsX = NEpsX;
     }
 
-    //-- recherche d un intervalle ou F(xi) et F(xj) sont de signes differents
-    //-- A .............................................................. B
-    //-- X0   X1   X2 ........................................  Xn-1      Xn
     int                        i;
     double                     X = X0;
     bool                       Ok;
@@ -320,9 +298,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
       Ok = F.Value(X, aux);
       if (Ok)
         ptrval(++Nvalid) = aux - K;
-      //      ptrval(i)-=K;
     }
-    //-- Toute la fonction est nulle ?
 
     if (Nvalid < N)
     {
@@ -331,7 +307,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
     }
 
     AllNull = true;
-    //    for(i=0;AllNull && i<=N;i++) {
+
     for (i = 0; AllNull && i <= N; i++)
     {
       if (ptrval(i) > EpsNull || ptrval(i) < -EpsNull)
@@ -341,14 +317,12 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
     }
     if (AllNull)
     {
-      //-- tous les points echantillons sont dans la tolerance
     }
     else
     {
-      //-- Il y a des points hors tolerance
-      //-- on detecte les changements de signes STRICTS
+
       int ip1;
-      //      bool chgtsign=false;
+
       double tol = EpsX;
       double X2;
       for (i = 0, ip1 = 1, X = X0; i < N; i++, ip1++, X += dx)
@@ -360,8 +334,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
         {
           if (ptrval(ip1) > 0.0)
           {
-            //-- --------------------------------------------------
-            //-- changement de signe dans Xi Xi+1
+
             Solve(F, K, X, ptrval(i), X2, ptrval(ip1), tol, NEpsX, Sol, NbStateSol);
           }
         }
@@ -369,23 +342,17 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
         {
           if (ptrval(ip1) < 0.0)
           {
-            //-- --------------------------------------------------
-            //-- changement de signe dans Xi Xi+1
+
             Solve(F, K, X, ptrval(i), X2, ptrval(ip1), tol, NEpsX, Sol, NbStateSol);
           }
         }
       }
-      //-- On detecte les cas ou la fct s annule sur des Xi et est
-      //-- non nulle au voisinage de Xi
-      //--
-      //-- On prend 2 points u0,u1 au voisinage de Xi
-      //-- Si (F(u0)-K)*(F(u1)-K) <0   on lance une recherche
-      //-- Sinon si (F(u0)-K)*(F(u1)-K) !=0 on insere le point X
+
       for (i = 0; i <= N; i++)
       {
         if (ptrval(i) == 0)
         {
-          //	  double Val,Deriv;
+
           X = X0 + i * dx;
           if (X > XN)
             X = XN;
@@ -420,8 +387,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
           }
         }
       }
-      //-- --------------------------------------------------------------------------------
-      //-- Il faut traiter differement le cas des points en bout :
+
       if (ptrval(0) <= EpsF && ptrval(0) >= -EpsF)
       {
         AppendRoot(Sol, NbStateSol, X0, F, K, NEpsX);
@@ -431,17 +397,10 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
         AppendRoot(Sol, NbStateSol, XN, F, K, NEpsX);
       }
 
-      //-- --------------------------------------------------------------------------------
-      //-- --------------------------------------------------------------------------------
-      //-- On detecte les zones ou on a sur les points echantillons un minimum avec f(x)>0
-      //--                                                          un maximum avec f(x)<0
-      //-- On reprend une discretisation plus fine au voisinage de ces extremums
-      //--
-      //-- Recherche d un minima positif
       double xm, ym, dym, xm1, xp1;
       double majdx = 5.0 * dx;
       bool   Rediscr;
-      //      double ptrvalbis[MAXBIS];
+
       int im1 = 0;
       ip1     = 2;
       for (i = 1, xm = X0 + dx; i < N; xm += dx, i++, im1++, ip1++)
@@ -453,22 +412,21 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
         {
           if ((ptrval(im1) > ptrval(i)) && (ptrval(ip1) > ptrval(i)))
           {
-            //-- Peut on traverser l axe Ox
-            //-- -------------- Estimation a partir de Xim1
+
             xm1 = xm - dx;
             if (xm1 < X0)
               xm1 = X0;
             F.Values(xm1, ym, dym);
             ym -= K;
             if (dym < -1e-10 || dym > 1e-10)
-            {                      // normalement dym < 0
-              double t = ym / dym; //-- t=xm-x* = (ym-0)/dym
+            {
+              double t = ym / dym;
               if (t < majdx && t > -majdx)
               {
                 Rediscr = true;
               }
             }
-            //-- -------------- Estimation a partir de Xip1
+
             if (!Rediscr)
             {
               xp1 = xm + dx;
@@ -477,8 +435,8 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
               F.Values(xp1, ym, dym);
               ym -= K;
               if (dym < -1e-10 || dym > 1e-10)
-              {                      // normalement dym > 0
-                double t = ym / dym; //-- t=xm-x* = (ym-0)/dym
+              {
+                double t = ym / dym;
                 if (t < majdx && t > -majdx)
                 {
                   Rediscr = true;
@@ -491,22 +449,21 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
         {
           if ((ptrval(im1) < ptrval(i)) && (ptrval(ip1) < ptrval(i)))
           {
-            //-- Peut on traverser l axe Ox
-            //-- -------------- Estimation a partir de Xim1
+
             xm1 = xm - dx;
             if (xm1 < X0)
               xm1 = X0;
             F.Values(xm1, ym, dym);
             ym -= K;
             if (dym > 1e-10 || dym < -1e-10)
-            {                      // normalement dym > 0
-              double t = ym / dym; //-- t=xm-x* = (ym-0)/dym
+            {
+              double t = ym / dym;
               if (t < majdx && t > -majdx)
               {
                 Rediscr = true;
               }
             }
-            //-- -------------- Estimation a partir de Xim1
+
             if (!Rediscr)
             {
               xm1 = xm - dx;
@@ -515,8 +472,8 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
               F.Values(xm1, ym, dym);
               ym -= K;
               if (dym > 1e-10 || dym < -1e-10)
-              {                      // normalement dym < 0
-                double t = ym / dym; //-- t=xm-x* = (ym-0)/dym
+              {
+                double t = ym / dym;
                 if (t < majdx && t > -majdx)
                 {
                   Rediscr = true;
@@ -538,9 +495,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
           double aDer1 = 0., aDer2 = 0.;
           bool   isSol1 = false;
           bool   isSol2 = false;
-          //-- ----------------------------------------------------
-          //-- Find minimum of the function |F| between x0 and x3
-          //-- by searching for the zero of the function derivative
+
           DerivFunction      aDerF(F);
           math_BracketedRoot aBR(aDerF, x0, x3, _EpsX);
           if (aBR.IsDone())
@@ -555,12 +510,6 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
             }
           }
 
-          //-- --------------------------------------------------
-          //-- On recherche un extrema entre x0 et x3
-          //-- x1 et x2 sont tels que x0<x1<x2<x3
-          //-- et |f(x0)| > |f(x1)|   et |f(x3)| > |f(x2)|
-          //--
-          //-- En entree : a=xm-dx  b=xm c=xm+dx
           double x1, x2, f0, f3;
           double R               = 0.61803399;
           double C               = 1.0 - R;
@@ -584,13 +533,12 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
           f1 -= K;
           F.Value(x2, f2);
           f2 -= K;
-          //-- printf("\n *************** RECHERCHE MINIMUM **********\n");
+
           double tolX = 0.001 * NEpsX;
           while (std::abs(x3 - x0) > tolCR * (std::abs(x1) + std::abs(x2))
                  && (std::abs(x1 - x2) > tolX))
           {
-            //-- printf("\n (%10.5g,%10.5g) (%10.5g,%10.5g) (%10.5g,%10.5g) (%10.5g,%10.5g) ",
-            //--    x0,f0,x1,f1,x2,f2,x3,f3);
+
             if (recherche_minimum)
             {
               if (f2 < f1)
@@ -637,22 +585,21 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
                 f1 -= K;
               }
             }
-            //-- On ne fait pas que chercher des extremas. Il faut verifier
-            //-- si on ne tombe pas sur une racine
+
             if (f1 * f0 < 0.0)
             {
-              //-- printf("\n Recherche entre  (%10.5g,%10.5g) (%10.5g,%10.5g) ",x0,f0,x1,f1);
+
               Solve(F, K, x0, f0, x1, f1, tol, NEpsX, Sol, NbStateSol);
             }
             if (f2 * f3 < 0.0)
             {
-              //-- printf("\n Recherche entre  (%10.5g,%10.5g) (%10.5g,%10.5g) ",x2,f2,x3,f3);
+
               Solve(F, K, x2, f2, x3, f3, tol, NEpsX, Sol, NbStateSol);
             }
           }
           if ((recherche_minimum && f1 < f2) || (!recherche_minimum && f1 > f2))
           {
-            //-- x1,f(x1) minimum
+
             if (std::abs(f1) < EpsF)
             {
               isSol2 = true;
@@ -662,7 +609,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
           }
           else
           {
-            //-- x2.f(x2) minimum
+
             if (std::abs(f2) < EpsF)
             {
               isSol2 = true;
@@ -670,7 +617,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
               aVal2  = std::abs(f2);
             }
           }
-          // Choose the best solution between aSolX1, aSolX2
+
           if (isSol1 && isSol2)
           {
             if (aVal2 - aVal1 > EpsF)
@@ -692,8 +639,8 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
             AppendRoot(Sol, NbStateSol, aSolX1, F, K, NEpsX);
           else if (isSol2)
             AppendRoot(Sol, NbStateSol, aSolX2, F, K, NEpsX);
-        } //-- Recherche d un extrema
-      } //-- for
+        }
+      }
     }
 
   #if NEWSEQ
@@ -714,19 +661,9 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
   }
 #ifdef MATH_FUNCTIONROOTS_OLDCODE
   {
-    //-- ********************************************************************************
-    //--                              ANCIEN TRAITEMENT
-    //-- ********************************************************************************
 
-    // calculate all the real roots of a function within the range
-    // A..B. without condition on A and B
-    // a solution X is found when
-    //   abs(Xi - Xi-1) <= EpsX and abs(F(Xi)-K) <= Epsf.
-    // The function is considered as null between A and B if
-    // abs(F-K) <= EpsNull within this range.
-    double EpsX = _EpsX; //-- Cas ou le parametre va de 100000000 a 1000000001
-                         //-- Il ne faut pas EpsX = 0.000...001  car dans ce cas
-                         //-- U + Nn*EpsX     ==     U
+    double EpsX = _EpsX;
+
     double Lowr, Upp;
     double Increment;
     double Null2;
@@ -743,14 +680,12 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
     int    Nn;
     double Alfa1              = 0, Alfa2;
     double OldDF              = RealLast();
-    double Standard_Underflow = 1e-32; //-- RealSmall();
+    double Standard_Underflow = 1e-32;
     bool   Ok;
 
     Done = false;
 
     StdFail_NotDone_Raise_if(NbSample <= 0, " ");
-
-    // initialisation
 
     if (A > B)
     {
@@ -766,16 +701,14 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
     Increment = (Upp - Lowr) / NbSample;
     StdFail_NotDone_Raise_if(Increment < EpsX, " ");
     Done = true;
-    //--  On teste si EpsX est trop petit (ie : U+Nn*EpsX == U )
+
     double DeltaU = std::abs(Upp) + std::abs(Lowr);
     double NEpsX  = 0.0000000001 * DeltaU;
     if (EpsX < NEpsX)
     {
       EpsX = NEpsX;
-      //-- std::cout<<" \n EpsX Init = "<<_EpsX<<" devient : (deltaU : "<<DeltaU<<" )   EpsX =
-      //"<<EpsX<<std::endl;
     }
-    //--
+
     Null2 = EpsNull * EpsNull;
 
     Ok = F.Values(Lowr, FLowr, DFLowr);
@@ -798,10 +731,8 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
 
     FUpp = FUpp - K;
 
-    // Calcul sur U
-
     U     = Lowr - EpsX;
-    Fyu   = FLowr - EpsX * DFLowr; // extrapolation lineaire
+    Fyu   = FLowr - EpsX * DFLowr;
     DFyu  = DFLowr;
     FFyu  = Fyu * Fyu;
     DFFyu = Fyu * DFyu;
@@ -842,13 +773,13 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
       }
       FFyu  = Fyu * Fyu;
       DFFyu = Fyu * DFyu;
-      DFFyu += DFFyu; //-- DFFyu = 2.*Fyu*DFyu;
+      DFFyu += DFFyu;
 
       if (!AllNull || (FFyu > Null2 && U <= Upp))
       {
 
         if (AllNull)
-        { // search for the true zeros from the beginning
+        {
 
           AllNull = false;
           Xu      = Lowr - EpsX;
@@ -856,7 +787,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
           DFxu    = DFLowr;
           FFxu    = Fxu * Fxu;
           DFFxu   = Fxu * DFxu;
-          DFFxu += DFFxu; //-- DFFxu = 2.*Fxu*DFxu;
+          DFFxu += DFFxu;
           U  = Xu + Increment;
           Ok = F.Values(U, Fyu, DFyu);
 
@@ -869,14 +800,14 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
           Fyu   = Fyu - K;
           FFyu  = Fyu * Fyu;
           DFFyu = Fyu * DFyu;
-          DFFyu += DFFyu; //-- DFFyu = 2.*Fyu*DFyu;
+          DFFyu += DFFyu;
         }
         double FxuFyu = Fxu * Fyu;
 
         if ((DFFyu > 0. && DFFxu <= 0.) || (DFFyu < 0. && FFyu >= FFxu && DFFxu <= 0.)
             || (DFFyu > 0. && FFyu <= FFxu && DFFxu >= 0.) || (FxuFyu <= 0.))
         {
-          // search for a possible minimum
+
           Finish = false;
           Ambda  = Increment;
           T      = 0.;
@@ -885,14 +816,13 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
 
           if (FxuFyu > 0.)
           {
-            // check if f can become zero to avoid
-            // unnecessary iterations
+
             if (Fxu * (Fxu + 2. * DFxu * Increment) > 0.
                 && Fyu * (Fyu - 2. * DFyu * Increment) > 0.)
             {
 
               Finish = true;
-              FFi    = std::min(FFxu, FFyu); // to avoid recalculating yu
+              FFi    = std::min(FFxu, FFyu);
             }
             else if ((DFFxu <= Standard_Underflow && -DFFxu <= Standard_Underflow)
                      || (FFxu <= Standard_Underflow && -FFxu <= Standard_Underflow))
@@ -900,7 +830,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
 
               Finish = true;
               FFxu   = 0.0;
-              FFi    = FFyu; // to recalculate yu
+              FFi    = FFyu;
             }
             else if ((DFFyu <= Standard_Underflow && -DFFyu <= Standard_Underflow)
                      || (FFyu <= Standard_Underflow && -FFyu <= Standard_Underflow))
@@ -908,7 +838,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
 
               Finish = true;
               FFyu   = 0.0;
-              FFi    = FFxu; // to recalculate U
+              FFi    = FFxu;
             }
           }
           else if (FFxu <= Standard_Underflow && -FFxu <= Standard_Underflow)
@@ -927,10 +857,6 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
           }
           while (!Finish)
           {
-
-            // calculate the 2 solutions nullifying the derivative of cubic interpolation
-            //    Ambda*t=(U-Xu)  F(t)=aa*t*t*t/3+bb*t*t+cc*t+d
-            //    df=aa*t*t+2*bb*t+cc
 
             AA = 3. * (Ambda * (DFFxu + DFFyu) + 2. * (FFxu - FFyu));
             BB = -2 * (Ambda * (DFFyu + 2. * DFFxu) + 3. * (FFxu - FFyu));
@@ -968,7 +894,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
                   }
                   if (Alfa1 > 1. || Alfa2 < 0.)
                   {
-                    // solve by bisection
+
                     if (Fxu * Fyu < 0.)
                       Alfa1 = 0.5;
                     else
@@ -976,11 +902,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
                   }
                   else if (Alfa1 < 0. || (DFFxu > 0. && DFFyu >= 0.))
                   {
-                    // if 2 derivatives > 0
-                    // (case of sign change of the signed distance without
-                    // sign change of the derivative:
-                    // case of 'almost' tangency with 2
-                    // close solutions), take the larger root
+
                     if (Alfa2 > 1.)
                     {
                       if (Fxu * Fyu < 0.)
@@ -996,13 +918,13 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
             }
             else if (Fxu * Fyu < -1e-14)
               Alfa1 = 0.5;
-            //-- else if (Fxu*Fyu < 0.) Alfa1 = 0.5;
+
             else
               Finish = true;
 
             if (!Finish)
             {
-              // small tests to reduce the number of iterations
+
               if (Alfa1 <= EpsX)
               {
                 Alfa1 += Alfa1;
@@ -1047,9 +969,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
                 T     = Alfa1;
                 if (Alfa1 > Ambda * 0.5)
                 {
-                  // note (1)
-                  // determine another bound to divide
-                  // the new interval by 2 at least
+
                   Xu = U + Alfa1 * 0.5;
                   if (Xu <= Lowr)
                   {
@@ -1087,7 +1007,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
                   }
                   else if (AA * Fyu < 0. && AA * Fxu > 0.)
                   {
-                    // changement de signe sur l intervalle u,U
+
                     Fxu   = AA;
                     DFxu  = BB;
                     FFxu  = FFi;
@@ -1115,7 +1035,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
                 DFFyu = CC;
                 if ((Ambda - Alfa1) > Ambda * 0.5)
                 {
-                  // meme remarque (1)
+
                   Xu = U - (Ambda - Alfa1) * 0.5;
                   if (Xu <= Lowr)
                   {
@@ -1174,7 +1094,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
                   Ambda = Ambda - Alfa1;
                 }
               }
-              // tests d arrets
+
               if (std::abs(FFxu) <= Standard_Underflow
                   || (std::abs(DFFxu) <= Standard_Underflow && Fxu * Fyu > 0.))
               {
@@ -1202,9 +1122,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
                   Iter >= Nbiter || (Ambda <= EpsX && (Fxu * Fyu >= 0. || FFi <= EpsF * EpsF));
               }
             }
-          } // fin interpolation cubique
-
-          // restitution du meilleur resultat
+          }
 
           if (FFxu < FFi)
           {
@@ -1222,7 +1140,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
             FFi = FFi - K;
             if (std::abs(FFi) < EpsF)
             {
-              // coherence
+
               if (std::abs(Fxu) <= Standard_Underflow)
               {
                 AA = DFxu;
@@ -1261,7 +1179,7 @@ math_FunctionRoots::math_FunctionRoots(math_FunctionWithDerivative& F,
           Nn    = 1;
           while (Nn < 1000000 && DFFyu <= 0.)
           {
-            // on repart d 1 pouyem plus loin
+
             U = U + Nn * EpsX;
             if (U <= Lowr)
             {

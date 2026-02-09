@@ -13,22 +13,19 @@
 
 namespace
 {
-  //! Auxiliary class extending sequence iterator with index.
+
   class OpenGl_IndexedLayerIterator
       : public NCollection_List<occ::handle<Graphic3d_Layer>>::Iterator
   {
   public:
-    //! Main constructor.
     OpenGl_IndexedLayerIterator(const NCollection_List<occ::handle<Graphic3d_Layer>>& theSeq)
         : NCollection_List<occ::handle<Graphic3d_Layer>>::Iterator(theSeq),
           myIndex(1)
     {
     }
 
-    //! Return index of current position.
     int Index() const { return myIndex; }
 
-    //! Move to the next position.
     void Next()
     {
       NCollection_List<occ::handle<Graphic3d_Layer>>::Iterator::Next();
@@ -39,11 +36,9 @@ namespace
     int myIndex;
   };
 
-  //! Iterator through layers with filter.
   class OpenGl_FilteredIndexedLayerIterator
   {
   public:
-    //! Main constructor.
     OpenGl_FilteredIndexedLayerIterator(
       const NCollection_List<occ::handle<Graphic3d_Layer>>& theSeq,
       bool                                                  theToDrawImmediate,
@@ -57,16 +52,12 @@ namespace
       next();
     }
 
-    //! Return true if iterator points to the valid value.
     bool More() const { return myIter.More(); }
 
-    //! Return layer at current position.
     const OpenGl_Layer& Value() const { return *myIter.Value(); }
 
-    //! Return index of current position.
     int Index() const { return myIter.Index(); }
 
-    //! Go to the next item.
     void Next()
     {
       myIter.Next();
@@ -74,7 +65,6 @@ namespace
     }
 
   private:
-    //! Look for the nearest item passing filters.
     void next()
     {
       for (; myIter.More(); myIter.Next())
@@ -154,8 +144,6 @@ struct OpenGl_GlobalLayerSettings
   GLboolean DepthMask;
 };
 
-//=================================================================================================
-
 OpenGl_LayerList::OpenGl_LayerList()
     : myBVHBuilder(new BVH_LinearBuilder<double, 3>(BVH_Constants_LeafNodeSizeSingle,
                                                     BVH_Constants_MaxTreeDepth)),
@@ -165,11 +153,7 @@ OpenGl_LayerList::OpenGl_LayerList()
 {
 }
 
-//=================================================================================================
-
 OpenGl_LayerList::~OpenGl_LayerList() = default;
-
-//=================================================================================================
 
 void OpenGl_LayerList::SetFrustumCullingBVHBuilder(const occ::handle<BVH_Builder3d>& theBuilder)
 {
@@ -181,8 +165,6 @@ void OpenGl_LayerList::SetFrustumCullingBVHBuilder(const occ::handle<BVH_Builder
     aLayerIter.ChangeValue()->SetFrustumCullingBVHBuilder(theBuilder);
   }
 }
-
-//=================================================================================================
 
 void OpenGl_LayerList::InsertLayerBefore(const Graphic3d_ZLayerId        theNewLayerId,
                                          const Graphic3d_ZLayerSettings& theSettings,
@@ -219,8 +201,6 @@ void OpenGl_LayerList::InsertLayerBefore(const Graphic3d_ZLayerId        theNewL
   myTransparentToProcess.Allocate(myLayers.Size());
 }
 
-//=================================================================================================
-
 void OpenGl_LayerList::InsertLayerAfter(const Graphic3d_ZLayerId        theNewLayerId,
                                         const Graphic3d_ZLayerSettings& theSettings,
                                         const Graphic3d_ZLayerId        theLayerBefore)
@@ -256,8 +236,6 @@ void OpenGl_LayerList::InsertLayerAfter(const Graphic3d_ZLayerId        theNewLa
   myTransparentToProcess.Allocate(myLayers.Size());
 }
 
-//=================================================================================================
-
 void OpenGl_LayerList::RemoveLayer(const Graphic3d_ZLayerId theLayerId)
 {
   occ::handle<Graphic3d_Layer> aLayerToRemove;
@@ -266,25 +244,20 @@ void OpenGl_LayerList::RemoveLayer(const Graphic3d_ZLayerId theLayerId)
     return;
   }
 
-  // move all displayed structures to first layer
   myLayerIds.Find(Graphic3d_ZLayerId_Default)->Append(*aLayerToRemove);
 
-  // remove layer
   myLayers.Remove(aLayerToRemove);
   myLayerIds.UnBind(theLayerId);
 
   myTransparentToProcess.Allocate(myLayers.Size());
 }
 
-//=================================================================================================
-
 void OpenGl_LayerList::AddStructure(const OpenGl_Structure*         theStruct,
                                     const Graphic3d_ZLayerId        theLayerId,
                                     const Graphic3d_DisplayPriority thePriority,
                                     bool                            isForChangePriority)
 {
-  // add structure to associated layer,
-  // if layer doesn't exists, display structure in default layer
+
   const occ::handle<Graphic3d_Layer>* aLayerPtr = myLayerIds.Seek(theLayerId);
   const occ::handle<Graphic3d_Layer>& aLayer =
     aLayerPtr != nullptr ? *aLayerPtr : myLayerIds.Find(Graphic3d_ZLayerId_Default);
@@ -294,13 +267,7 @@ void OpenGl_LayerList::AddStructure(const OpenGl_Structure*         theStruct,
   {
     ++myImmediateNbStructures;
   }
-
-  // Note: In ray-tracing mode we don't modify modification
-  // state here. It is redundant, because the possible changes
-  // will be handled in the loop for structures
 }
-
-//=================================================================================================
 
 void OpenGl_LayerList::RemoveStructure(const OpenGl_Structure* theStructure)
 {
@@ -311,9 +278,6 @@ void OpenGl_LayerList::RemoveStructure(const OpenGl_Structure* theStructure)
 
   Graphic3d_DisplayPriority aPriority = Graphic3d_DisplayPriority_INVALID;
 
-  // remove structure from associated list
-  // if the structure is not found there,
-  // scan through layers and remove it
   if (aLayer->Remove(theStructure, aPriority))
   {
     --myNbStructures;
@@ -330,7 +294,6 @@ void OpenGl_LayerList::RemoveStructure(const OpenGl_Structure* theStructure)
     return;
   }
 
-  // scan through layers and remove it
   for (NCollection_List<occ::handle<Graphic3d_Layer>>::Iterator aLayerIter(myLayers);
        aLayerIter.More();
        aLayerIter.Next())
@@ -358,8 +321,6 @@ void OpenGl_LayerList::RemoveStructure(const OpenGl_Structure* theStructure)
   }
 }
 
-//=================================================================================================
-
 void OpenGl_LayerList::InvalidateBVHData(const Graphic3d_ZLayerId theLayerId)
 {
   const occ::handle<Graphic3d_Layer>* aLayerPtr = myLayerIds.Seek(theLayerId);
@@ -367,8 +328,6 @@ void OpenGl_LayerList::InvalidateBVHData(const Graphic3d_ZLayerId theLayerId)
     aLayerPtr != nullptr ? *aLayerPtr : myLayerIds.Find(Graphic3d_ZLayerId_Default);
   aLayer->InvalidateBVHData();
 }
-
-//=================================================================================================
 
 void OpenGl_LayerList::ChangeLayer(const OpenGl_Structure*  theStructure,
                                    const Graphic3d_ZLayerId theOldLayerId,
@@ -380,8 +339,6 @@ void OpenGl_LayerList::ChangeLayer(const OpenGl_Structure*  theStructure,
 
   Graphic3d_DisplayPriority aPriority = Graphic3d_DisplayPriority_INVALID;
 
-  // take priority and remove structure from list found by <theOldLayerId>
-  // if the structure is not found there, scan through all other layers
   if (aLayer->Remove(theStructure, aPriority, false))
   {
     if (aLayer->LayerSettings().IsRaytracable() && !aLayer->LayerSettings().IsImmediate()
@@ -396,13 +353,10 @@ void OpenGl_LayerList::ChangeLayer(const OpenGl_Structure*  theStructure,
       --myImmediateNbStructures;
     }
 
-    // isForChangePriority should be false below, because we want
-    // the BVH tree in the target layer to be updated with theStructure
     AddStructure(theStructure, theNewLayerId, aPriority);
     return;
   }
 
-  // scan through layers and remove it
   for (NCollection_List<occ::handle<Graphic3d_Layer>>::Iterator aLayerIter(myLayers);
        aLayerIter.More();
        aLayerIter.Next())
@@ -413,7 +367,6 @@ void OpenGl_LayerList::ChangeLayer(const OpenGl_Structure*  theStructure,
       continue;
     }
 
-    // try to remove structure and get priority value from this layer
     if (aLayerEx->Remove(theStructure, aPriority, true))
     {
       if (aLayerEx->LayerSettings().IsRaytracable() && !aLayerEx->LayerSettings().IsImmediate()
@@ -428,15 +381,11 @@ void OpenGl_LayerList::ChangeLayer(const OpenGl_Structure*  theStructure,
         --myImmediateNbStructures;
       }
 
-      // isForChangePriority should be false below, because we want
-      // the BVH tree in the target layer to be updated with theStructure
       AddStructure(theStructure, theNewLayerId, aPriority);
       return;
     }
   }
 }
-
-//=================================================================================================
 
 void OpenGl_LayerList::ChangePriority(const OpenGl_Structure*         theStructure,
                                       const Graphic3d_ZLayerId        theLayerId,
@@ -483,8 +432,6 @@ void OpenGl_LayerList::ChangePriority(const OpenGl_Structure*         theStructu
   }
 }
 
-//=================================================================================================
-
 void OpenGl_LayerList::SetLayerSettings(const Graphic3d_ZLayerId        theLayerId,
                                         const Graphic3d_ZLayerSettings& theSettings)
 {
@@ -507,8 +454,6 @@ void OpenGl_LayerList::SetLayerSettings(const Graphic3d_ZLayerId        theLayer
   }
   aLayer.SetLayerSettings(theSettings);
 }
-
-//=================================================================================================
 
 void OpenGl_LayerList::UpdateCulling(const occ::handle<OpenGl_Workspace>& theWorkspace,
                                      const bool                           theToDrawImmediate)
@@ -538,8 +483,6 @@ void OpenGl_LayerList::UpdateCulling(const occ::handle<OpenGl_Workspace>& theWor
   aStats->ActiveDataFrame()[Graphic3d_FrameStatsTimer_CpuCulling] = aTimer.UserTimeCPU();
 }
 
-//=================================================================================================
-
 void OpenGl_LayerList::renderLayer(const occ::handle<OpenGl_Workspace>& theWorkspace,
                                    const OpenGl_GlobalLayerSettings&    theDefaultSettings,
                                    const Graphic3d_Layer&               theLayer) const
@@ -547,12 +490,10 @@ void OpenGl_LayerList::renderLayer(const occ::handle<OpenGl_Workspace>& theWorks
   const occ::handle<OpenGl_Context>& aCtx = theWorkspace->GetGlContext();
 
   const Graphic3d_ZLayerSettings& aLayerSettings = theLayer.LayerSettings();
-  // aLayerSettings.ToClearDepth() is handled outside
 
-  // handle depth test
   if (aLayerSettings.ToEnableDepthTest())
   {
-    // assuming depth test is enabled by default
+
     aCtx->core11fwd->glDepthFunc(theDefaultSettings.DepthFunc);
   }
   else
@@ -560,18 +501,15 @@ void OpenGl_LayerList::renderLayer(const occ::handle<OpenGl_Workspace>& theWorks
     aCtx->core11fwd->glDepthFunc(GL_ALWAYS);
   }
 
-  // save environment texture
   occ::handle<OpenGl_TextureSet> anEnvironmentTexture = theWorkspace->EnvironmentTexture();
   if (!aLayerSettings.UseEnvironmentTexture())
   {
     theWorkspace->SetEnvironmentTexture(occ::handle<OpenGl_TextureSet>());
   }
 
-  // handle depth offset
   const Graphic3d_PolygonOffset anAppliedOffsetParams =
     theWorkspace->SetDefaultPolygonOffset(aLayerSettings.PolygonOffset());
 
-  // handle depth write
   theWorkspace->UseDepthWrite() =
     aLayerSettings.ToEnableDepthWrite() && theDefaultSettings.DepthMask == GL_TRUE;
   aCtx->core11fwd->glDepthMask(theWorkspace->UseDepthWrite() ? GL_TRUE : GL_FALSE);
@@ -593,44 +531,7 @@ void OpenGl_LayerList::renderLayer(const occ::handle<OpenGl_Workspace>& theWorks
   const occ::handle<Graphic3d_Camera>& aWorldCamera = aCtx->Camera();
   if (hasLocalCS)
   {
-    // Apply local camera transformation.
-    // The vertex position is computed by the following formula in GLSL program:
-    //   gl_Position = occProjectionMatrix * occWorldViewMatrix * occModelWorldMatrix * occVertex;
-    // where:
-    //   occProjectionMatrix - matrix defining orthographic/perspective/stereographic projection
-    //   occWorldViewMatrix  - world-view  matrix defining Camera position and orientation
-    //   occModelWorldMatrix - model-world matrix defining Object transformation from local
-    //   coordinate system to the world coordinate system occVertex           - input vertex
-    //   position
-    //
-    // Since double precision is quite expensive on modern GPUs, and not available on old hardware,
-    // all these values are passed with single float precision to the shader.
-    // As result, single precision become insufficient for handling objects far from the world
-    // origin.
-    //
-    // Several approaches can be used to solve precision issues:
-    //  - [Broute force] migrate to double precision for all matrices and vertex position.
-    //    This is too expensive for most hardware.
-    //  - Store only translation part with double precision and pass it to GLSL program.
-    //    This requires modified GLSL programs for computing transformation
-    //    and extra packing mechanism for hardware not supporting double precision natively.
-    //    This solution is less expensive then previous one.
-    //  - Move translation part of occModelWorldMatrix into occWorldViewMatrix.
-    //    The main idea here is that while moving Camera towards the object,
-    //    Camera translation part and Object translation part will compensate each other
-    //    to fit into single float precision.
-    //    But this operation should be performed with double precision - this is why we are moving
-    //    translation part of occModelWorldMatrix to occWorldViewMatrix.
-    //
-    // All approaches might be useful in different scenarios, but for the moment we consider the
-    // last one as main scenario. Here we do the trick:
-    //  - OpenGl_Layer defines the Local Origin, which is expected to be the center of objects
-    //  stored within it.
-    //    This Local Origin is included into occWorldViewMatrix during rendering.
-    //  - OpenGl_Structure defines Object local transformation occModelWorldMatrix with subtracted
-    //  Local Origin of the Layer.
-    //    This means that Object itself should be defined within either Local Transformation equal
-    //    or near to Local Origin of the Layer.
+
     theWorkspace->View()->SetLocalOrigin(aLayerSettings.Origin());
 
     NCollection_Mat4<double> aWorldView = aWorldCamera->OrientationMatrix();
@@ -641,7 +542,7 @@ void OpenGl_LayerList::renderLayer(const occ::handle<OpenGl_Workspace>& theWorks
 
     if (!aManager->LightSourceState().ShadowMaps().IsNull())
     {
-      // shift shadowmap matrix
+
       for (OpenGl_ShadowMapArray::Iterator aShadowIter(*aManager->LightSourceState().ShadowMaps());
            aShadowIter.More();
            aShadowIter.Next())
@@ -657,7 +558,6 @@ void OpenGl_LayerList::renderLayer(const occ::handle<OpenGl_Workspace>& theWorks
     aCtx->ShaderManager()->UpdateLightSourceState();
   }
 
-  // render priority list
   const int aViewId = theWorkspace->View()->Identification();
   for (int aPriorityIter = Graphic3d_DisplayPriority_Bottom;
        aPriorityIter <= Graphic3d_DisplayPriority_Topmost;
@@ -688,7 +588,7 @@ void OpenGl_LayerList::renderLayer(const occ::handle<OpenGl_Workspace>& theWorks
   {
     if (!aManager->LightSourceState().ShadowMaps().IsNull())
     {
-      // restore shadowmap matrix
+
       for (OpenGl_ShadowMapArray::Iterator aShadowIter(*aManager->LightSourceState().ShadowMaps());
            aShadowIter.More();
            aShadowIter.Next())
@@ -704,17 +604,13 @@ void OpenGl_LayerList::renderLayer(const occ::handle<OpenGl_Workspace>& theWorks
     theWorkspace->View()->SetLocalOrigin(gp_XYZ(0.0, 0.0, 0.0));
   }
 
-  // always restore polygon offset between layers rendering
   theWorkspace->SetDefaultPolygonOffset(anAppliedOffsetParams);
 
-  // restore environment texture
   if (!aLayerSettings.UseEnvironmentTexture())
   {
     theWorkspace->SetEnvironmentTexture(anEnvironmentTexture);
   }
 }
-
-//=================================================================================================
 
 void OpenGl_LayerList::Render(const occ::handle<OpenGl_Workspace>& theWorkspace,
                               const bool                           theToDrawImmediate,
@@ -723,7 +619,7 @@ void OpenGl_LayerList::Render(const occ::handle<OpenGl_Workspace>& theWorkspace,
                               OpenGl_FrameBuffer*                  theReadDrawFbo,
                               OpenGl_FrameBuffer*                  theOitAccumFbo) const
 {
-  // Remember global settings for glDepth function and write mask.
+
   OpenGl_GlobalLayerSettings aPrevSettings;
 
   const occ::handle<OpenGl_Context>& aCtx = theWorkspace->GetGlContext();
@@ -732,16 +628,6 @@ void OpenGl_LayerList::Render(const occ::handle<OpenGl_Workspace>& theWorkspace,
   OpenGl_GlobalLayerSettings aDefaultSettings = aPrevSettings;
   const bool isShadowMapPass = theReadDrawFbo != nullptr && !theReadDrawFbo->HasColor();
 
-  // Two render filters are used to support transparency draw. Opaque filter accepts
-  // only non-transparent OpenGl elements of a layer and counts number of skipped
-  // transparent ones. If the counter has positive value the layer is added into
-  // transparency post-processing stack. At the end of drawing or once the depth
-  // buffer is to be cleared the layers in the stack should be drawn using
-  // blending and depth mask settings and another transparency filter which accepts
-  // only transparent OpenGl elements of a layer. The stack <myTransparentToProcess>
-  // was preallocated before going into this method and has enough space to keep
-  // maximum number of references to layers, therefore it will not increase memory
-  // fragmentation during regular rendering.
   const int aPrevFilter =
     theWorkspace->RenderFilter()
     & ~(int)(OpenGl_RenderFilter_OpaqueOnly | OpenGl_RenderFilter_TransparentOnly);
@@ -815,7 +701,6 @@ void OpenGl_LayerList::Render(const occ::handle<OpenGl_Workspace>& theWorkspace,
       {
         const OpenGl_Layer& aLayer = aLayerIter.Value();
 
-        // make sure to clear depth of previous layers even if layer has no structures
         if (aLayer.LayerSettings().ToClearDepth())
         {
           aClearDepthLayer = aLayerIter.Index();
@@ -826,10 +711,7 @@ void OpenGl_LayerList::Render(const occ::handle<OpenGl_Workspace>& theWorkspace,
         }
         else if (aClearDepthLayer > aClearDepthLayerPrev)
         {
-          // At this point the depth buffer may be set to clear by previous configuration of layers
-          // or configuration of the current layer. Additional rendering pass to handle transparent
-          // elements of recently drawn layers require use of current depth buffer so we put
-          // remaining layers for processing as one bunch before erasing the depth buffer.
+
           if (aPassIter == 2)
           {
             aLayerIterStart = aLayerIter;
@@ -850,9 +732,6 @@ void OpenGl_LayerList::Render(const occ::handle<OpenGl_Workspace>& theWorkspace,
           continue;
         }
 
-        // Render opaque OpenGl elements of a layer and count the number of skipped.
-        // If a layer has skipped (e.g. transparent) elements it should be added into
-        // the transparency post-processing stack.
         theWorkspace->ResetSkippedCounter();
 
         renderLayer(theWorkspace, aDefaultSettings, aLayer);
@@ -889,19 +768,13 @@ void OpenGl_LayerList::Render(const occ::handle<OpenGl_Workspace>& theWorkspace,
   theWorkspace->SetRenderFilter(aPrevFilter);
 }
 
-//=======================================================================
-// function : renderTransparent
-// purpose  : Render transparent objects using blending operator.
-//=======================================================================
 void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& theWorkspace,
                                          OpenGl_LayerStack::iterator&         theLayerIter,
                                          const OpenGl_GlobalLayerSettings&    theGlobalSettings,
                                          OpenGl_FrameBuffer*                  theReadDrawFbo,
                                          OpenGl_FrameBuffer*                  theOitAccumFbo) const
 {
-  // Check if current iterator has already reached the end of the stack.
-  // This should happen if no additional layers has been added to
-  // the processing stack after last transparency pass.
+
   if (theLayerIter == myTransparentToProcess.Back())
   {
     return;
@@ -928,12 +801,6 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
   const occ::handle<OpenGl_FrameBuffer>& aGlBlendBackFBO =
     aView->DepthPeelingFbos()->BlendBackFboOit();
 
-  // Blended order-independent transparency algorithm require several preconditions to be enabled.
-  // It should be requested by user, at least two outputs from fragment shader should be supported
-  // by GPU, so is the given framebuffer should contain two additional color buffers to handle
-  // accumulated color channels, blended alpha channel and weight factors - these accumulation
-  // buffers are required to implement commuting blend operator (at least OpenGl 2.0 should be
-  // available).
   if (anOitMode == Graphic3d_RTM_BLEND_OIT)
   {
     if (theOitAccumFbo == nullptr || theOitAccumFbo->NbColorBuffers() < 2
@@ -968,9 +835,9 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
       theOitAccumFbo->BindBuffer(aCtx);
 
       aCtx->SetDrawBuffers(2, THE_DRAW_BUFFERS01);
-      // clang-format off
-      aCtx->SetColorMaskRGBA (NCollection_Vec4<bool> (true)); // force writes into all components, including alpha
-      // clang-format on
+
+      aCtx->SetColorMaskRGBA(NCollection_Vec4<bool>(true));
+
       aCtx->core11fwd->glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
       aCtx->core11fwd->glClear(GL_COLOR_BUFFER_BIT);
       aCtx->core15fwd->glBlendFuncSeparate(GL_ONE, GL_ONE, GL_ZERO, GL_ONE_MINUS_SRC_ALPHA);
@@ -983,12 +850,11 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
 
       aView->DepthPeelingFbos()->AttachDepthTexture(aCtx, theReadDrawFbo->DepthStencilTexture());
 
-      // initialize min/max depth buffer
       aGlBlendBackFBO->BindDrawBuffer(aCtx);
       aCtx->SetDrawBuffers(1, THE_DRAW_BUFFERS0);
-      // clang-format off
-      aCtx->SetColorMaskRGBA (NCollection_Vec4<bool> (true)); // force writes into all components, including alpha
-      // clang-format on
+
+      aCtx->SetColorMaskRGBA(NCollection_Vec4<bool>(true));
+
       aCtx->core20fwd->glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
       aCtx->core20fwd->glClear(GL_COLOR_BUFFER_BIT);
 
@@ -1007,7 +873,6 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
       aCtx->core20fwd->glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
       aCtx->core20fwd->glClear(GL_COLOR_BUFFER_BIT);
 
-      // draw depth for first pass to peel
       aGlDepthPeelFBOs[0]->BindBuffer(aCtx);
 
       aCtx->SetDrawBuffers(1, THE_DRAW_BUFFERS0);
@@ -1023,10 +888,6 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
     }
   }
 
-  // During blended order-independent transparency pass the depth test
-  // should be enabled to discard fragments covered by opaque geometry
-  // and depth writing should be disabled, because transparent fragments
-  // overall each other with non unitary coverage factor.
   OpenGl_GlobalLayerSettings aGlobalSettings = theGlobalSettings;
   aGlobalSettings.DepthMask                  = GL_FALSE;
   aCtx->core11fwd->glDepthMask(GL_FALSE);
@@ -1044,7 +905,7 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
     }
     case Graphic3d_RTM_BLEND_OIT:
     {
-      // revert state of rendering
+
       aManager->ResetOitState();
       theOitAccumFbo->UnbindBuffer(aCtx);
       if (theReadDrawFbo)
@@ -1053,12 +914,12 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
       }
 
       aCtx->SetDrawBuffers(1, THE_DRAW_BUFFERS0);
-      aCtx->SetColorMask(true); // update writes into alpha component
+      aCtx->SetColorMask(true);
       break;
     }
     case Graphic3d_RTM_DEPTH_PEELING_OIT:
     {
-      // Dual Depth Peeling Ping-Pong
+
       const int            aNbPasses  = aView->RenderingParams().NbOitDepthPeelingLayers;
       OpenGl_VertexBuffer* aQuadVerts = aView->initBlitQuad(false);
 
@@ -1080,7 +941,6 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
         aCtx->core20fwd->glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         aCtx->core20fwd->glClear(GL_COLOR_BUFFER_BIT);
 
-        /// aGlDepthPeelFBOs[aDepthPeelingDrawId]->BindDrawBuffer (aCtx);
         aGlDepthPeelFBOs[aDepthPeelingDrawId]->BindBuffer(aCtx);
         aCtx->SetDrawBuffers(3, THE_DRAW_BUFFERS012);
         aCtx->core20fwd->glBlendEquation(GL_MAX);
@@ -1089,7 +949,6 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
         aGlDepthPeelFBOs[aReadId]->ColorTexture(1)->Bind(aCtx,
                                                          aCtx->DepthPeelingFrontColorTexUnit());
 
-        // draw geometry
         for (theLayerIter = aLayerFrom; theLayerIter != myTransparentToProcess.Back();
              ++theLayerIter)
         {
@@ -1100,7 +959,6 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
                                                            aCtx->DepthPeelingFrontColorTexUnit());
         aGlDepthPeelFBOs[aReadId]->ColorTexture(0)->Unbind(aCtx, aCtx->DepthPeelingDepthTexUnit());
 
-        // blend back color
         aGlBlendBackFBO->BindDrawBuffer(aCtx);
         aCtx->SetDrawBuffers(1, THE_DRAW_BUFFERS0);
         if (aQuadVerts->IsValid() && aManager->BindOitDepthPeelingBlendProgram(isMSAA))
@@ -1158,7 +1016,7 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
         theReadDrawFbo->BindBuffer(aCtx);
       }
       aCtx->SetDrawBuffers(1, THE_DRAW_BUFFERS0);
-      aCtx->SetColorMask(true); // update writes into alpha component
+      aCtx->SetColorMask(true);
       break;
     }
   }
@@ -1172,7 +1030,7 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
     }
     case Graphic3d_RTM_BLEND_OIT:
     {
-      // draw full screen quad with special shader to compose the buffers
+
       OpenGl_VertexBuffer* aVerts = aView->initBlitQuad(false);
       if (aVerts->IsValid() && aManager->BindOitCompositingProgram(isMSAA))
       {
@@ -1217,7 +1075,7 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
     }
     case Graphic3d_RTM_DEPTH_PEELING_OIT:
     {
-      // compose depth peeling results into destination FBO
+
       OpenGl_VertexBuffer* aVerts = aView->initBlitQuad(false);
       if (aVerts->IsValid() && aManager->BindOitDepthPeelingFlushProgram(isMSAA))
       {
@@ -1263,8 +1121,6 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
       }
       aView->DepthPeelingFbos()->DetachDepthTexture(aCtx);
 
-      // Bind the framebuffer for reading depth and writing final color
-      // after DetachDepthTexture() because after the function it's unbinded.
       if (theReadDrawFbo)
       {
         theReadDrawFbo->BindBuffer(aCtx);
@@ -1278,8 +1134,6 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
   aCtx->core11fwd->glDepthMask(theGlobalSettings.DepthMask);
   aCtx->core11fwd->glDepthFunc(theGlobalSettings.DepthFunc);
 }
-
-//=================================================================================================
 
 void OpenGl_LayerList::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

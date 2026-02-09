@@ -7,7 +7,6 @@
 #include <gp_Circ.hpp>
 #include <gp_Lin.hpp>
 
-//! A Section of fillet.
 class ChFiDS_CircSection
 {
 public:

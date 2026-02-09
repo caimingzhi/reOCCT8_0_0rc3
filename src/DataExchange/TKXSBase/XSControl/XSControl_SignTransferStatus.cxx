@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_InterfaceModel.hpp>
@@ -22,14 +11,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XSControl_SignTransferStatus, IFSelect_Signature)
 
-// #include <stdio.h>
 static TCollection_AsciiString& themes()
 {
   static TCollection_AsciiString tm;
   return tm;
 }
-
-// if result with type: to be exploited immediately!
 
 XSControl_SignTransferStatus::XSControl_SignTransferStatus()
     : IFSelect_Signature("Transfer Status")
@@ -63,11 +49,6 @@ occ::handle<XSControl_TransferReader> XSControl_SignTransferStatus::Reader() con
   return theTR;
 }
 
-// BinderStatus retourne une valeur :
-// 0 Binder Null.   1 void  2 Warning seul  3 Fail seul
-// 11 Resultat OK. 12 Resultat+Warning. 13 Resultat+Fail
-// 20 Abnormal (Interrupted)
-
 static int BinderStatus(const occ::handle<Transfer_Binder>& binder)
 {
   int stat = 0;
@@ -88,9 +69,8 @@ static int BinderStatus(const occ::handle<Transfer_Binder>& binder)
   return stat;
 }
 
-const char* XSControl_SignTransferStatus::Value(
-  const occ::handle<Standard_Transient>& ent,
-  const occ::handle<Interface_InterfaceModel>& /*model*/) const
+const char* XSControl_SignTransferStatus::Value(const occ::handle<Standard_Transient>& ent,
+                                                const occ::handle<Interface_InterfaceModel>&) const
 {
   if (ent.IsNull())
     return "";
@@ -116,7 +96,7 @@ const char* XSControl_SignTransferStatus::Value(
   themes().Clear();
   if (stat > 10)
   {
-    //  Y a un resultat : donner son type
+
     occ::handle<Transfer_Binder> bnd    = binder;
     int                          hasres = false;
     while (!bnd.IsNull())
@@ -132,7 +112,7 @@ const char* XSControl_SignTransferStatus::Value(
       }
       bnd = bnd->NextResult();
     }
-    //    if (stat == 11) Sprintf(themes,"Result:%s",binder->ResultTypeName());
+
     if (stat == 12)
       themes().AssignCat("/Warning");
     if (stat == 13)

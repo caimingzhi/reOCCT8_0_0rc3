@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <V3d_CircularGrid.hpp>
 
@@ -34,12 +23,9 @@ namespace
   constexpr double THE_MYFACTOR          = 50.0;
 } // namespace
 
-//! Dummy implementation of Graphic3d_Structure overriding ::Compute() method for handling Device
-//! Lost.
 class V3d_CircularGrid::CircularGridStructure : public Graphic3d_Structure
 {
 public:
-  //! Main constructor.
   CircularGridStructure(const occ::handle<Graphic3d_StructureManager>& theManager,
                         V3d_CircularGrid*                              theGrid)
       : Graphic3d_Structure(theManager),
@@ -47,7 +33,6 @@ public:
   {
   }
 
-  //! Override method initiating recomputing in V3d_CircularGrid.
   void Compute() override
   {
     GraphicClear(false);
@@ -59,8 +44,6 @@ public:
 private:
   V3d_CircularGrid* myGrid;
 };
-
-/*----------------------------------------------------------------------*/
 
 V3d_CircularGrid::V3d_CircularGrid(const V3d_ViewerPointer& aViewer,
                                    const Quantity_Color&    aColor,
@@ -165,12 +148,9 @@ void V3d_CircularGrid::UpdateDisplay()
     const double SinAlpha = std::sin(RotationAngle());
 
     gp_Trsf aTrsf;
-    // Translation
-    // Transformation of change of marker
+
     aTrsf.SetValues(xdx, ydx, dx, xl, xdy, ydy, dy, yl, xdz, ydz, dz, zl);
 
-    // Translation of the origin
-    // Rotation Alpha around axis -Z
     gp_Trsf aTrsf2;
     aTrsf2.SetValues(CosAlpha,
                      SinAlpha,
@@ -231,7 +211,7 @@ void V3d_CircularGrid::DefineLines()
   const int Division = (int)((aDivision >= THE_DIVISION ? aDivision : THE_DIVISION));
 
   int nbpnts = 2 * Division;
-  // diametres
+
   double alpha = M_PI / aDivision;
 
   myGroup->SetGroupPrimitivesAspect(
@@ -245,7 +225,6 @@ void V3d_CircularGrid::DefineLines()
   }
   myGroup->AddPrimitiveArray(aPrims1, false);
 
-  // circles
   nbpnts                               = 2 * Division + 1;
   alpha                                = M_PI / Division;
   int                          nblines = 0;
@@ -294,7 +273,6 @@ void V3d_CircularGrid::DefineLines()
   myGroup->SetMinMaxValues(-myRadius, -myRadius, -myOffSet, myRadius, myRadius, -myOffSet);
   myCurStep = aStep, myCurDivi = (int)aDivision;
 
-  // update bounding box
   myStructure->CalculateBoundBox();
   myViewer->StructureManager()->Update(myStructure->GetZLayer());
 }
@@ -326,7 +304,6 @@ void V3d_CircularGrid::DefinePoints()
   const int nbpnts = int(2 * aDivision);
   double    r, alpha = M_PI / aDivision;
 
-  // diameters
   NCollection_Sequence<gp_Pnt> aSeqPnts;
   aSeqPnts.Append(gp_Pnt(0.0, 0.0, -myOffSet));
   for (r = aStep; r <= myRadius; r += aStep)
@@ -351,7 +328,6 @@ void V3d_CircularGrid::DefinePoints()
 
   myCurStep = aStep, myCurDivi = (int)aDivision;
 
-  // update bounding box
   myStructure->CalculateBoundBox();
   myViewer->StructureManager()->Update(myStructure->GetZLayer());
 }
@@ -382,8 +358,6 @@ void V3d_CircularGrid::SetGraphicValues(const double theRadius, const double the
   if (!myCurAreDefined)
     UpdateDisplay();
 }
-
-//=================================================================================================
 
 void V3d_CircularGrid::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

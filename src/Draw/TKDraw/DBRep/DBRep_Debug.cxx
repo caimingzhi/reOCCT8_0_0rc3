@@ -10,10 +10,6 @@
 #include <NCollection_Vector.hpp>
 #include <BRep_Builder.hpp>
 
-// This file defines global functions not declared in any public header,
-// intended for use from debugger prompt (Command Window in Visual Studio)
-
-//! Save shape identified by pointer
 Standard_EXPORT const char* DBRep_Set(const char* theNameStr, void* theShapePtr)
 {
   if (theNameStr == nullptr || theShapePtr == nullptr)
@@ -31,10 +27,6 @@ Standard_EXPORT const char* DBRep_Set(const char* theNameStr, void* theShapePtr)
   }
 }
 
-//=======================================================================
-// function : fromContainer
-// purpose  : static function to copy shapes from container into compound
-//=======================================================================
 template <class T>
 static bool fromContainer(void* theContainer, TopoDS_Compound& theShape)
 {
@@ -53,10 +45,6 @@ static bool fromContainer(void* theContainer, TopoDS_Compound& theShape)
   }
 }
 
-//=======================================================================
-// function : DBRep_SetComp
-// purpose  : make compound from the given container of shapes
-//=======================================================================
 Standard_EXPORT const char* DBRep_SetComp(const char* theNameStr, void* theListPtr)
 {
   if (theNameStr == nullptr || theListPtr == nullptr)
@@ -84,10 +72,6 @@ Standard_EXPORT const char* DBRep_SetComp(const char* theNameStr, void* theListP
   }
 }
 
-// MSVC debugger cannot deal correctly with functions whose argunments
-// have non-standard types. Here we define alternative to the above functions
-// with good types with the hope that GDB on Linux or other debugger could
-// work with them (DBX could, on SUN Solaris).
 #ifndef _MSC_VER
 
 const char* DBRep_Set(char* theName, const TopoDS_Shape& theShape)
@@ -95,17 +79,4 @@ const char* DBRep_Set(char* theName, const TopoDS_Shape& theShape)
   return DBRep_Set(theName, (void*)&theShape);
 }
 
-#endif /* _MSC_VER */
-
-// old function, perhaps too dangerous to be used
-/*
-void DBRep_Get(char* name, TopoDS_Shape& S)
-{
-  char n[255];
-  strcpy(n,name);
-  const char* cs = (const char*)n;
-  S = DBRep::Get(cs);
-  if (*name == '.')
-    std::cout << "Name : " << n << std::endl;
-}
-*/
+#endif

@@ -8,8 +8,6 @@
 #include <HLRBRep_Surface.hpp>
 #include <TopoDS_Vertex.hpp>
 
-//=================================================================================================
-
 double HLRBRep_EdgeFaceTool::CurvatureValue(const HLRBRep_SurfacePtr F,
                                             const double             U,
                                             const double             V,
@@ -39,8 +37,6 @@ double HLRBRep_EdgeFaceTool::CurvatureValue(const HLRBRep_SurfacePtr F,
   }
   return 0.;
 }
-
-//=================================================================================================
 
 bool HLRBRep_EdgeFaceTool::UVPoint(const double             Par,
                                    const HLRBRep_CurvePtr   E,

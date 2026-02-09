@@ -3,15 +3,11 @@
 #include <gp_Trsf.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 BRepBuilderAPI_Transform::BRepBuilderAPI_Transform(const gp_Trsf& T)
     : myTrsf(T)
 {
   myModification = new BRepTools_TrsfModification(T);
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_Transform::BRepBuilderAPI_Transform(const TopoDS_Shape& theShape,
                                                    const gp_Trsf&      theTrsf,
@@ -22,8 +18,6 @@ BRepBuilderAPI_Transform::BRepBuilderAPI_Transform(const TopoDS_Shape& theShape,
   myModification = new BRepTools_TrsfModification(theTrsf);
   Perform(theShape, theCopyGeom, theCopyMesh);
 }
-
-//=================================================================================================
 
 void BRepBuilderAPI_Transform::Perform(const TopoDS_Shape& theShape,
                                        const bool          theCopyGeom,
@@ -47,8 +41,6 @@ void BRepBuilderAPI_Transform::Perform(const TopoDS_Shape& theShape,
   }
 }
 
-//=================================================================================================
-
 TopoDS_Shape BRepBuilderAPI_Transform::ModifiedShape(const TopoDS_Shape& S) const
 {
   if (myUseModif)
@@ -57,8 +49,6 @@ TopoDS_Shape BRepBuilderAPI_Transform::ModifiedShape(const TopoDS_Shape& S) cons
   }
   return S.Moved(myLocation);
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepBuilderAPI_Transform::Modified(const TopoDS_Shape& F)
 {

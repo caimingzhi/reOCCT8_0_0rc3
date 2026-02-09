@@ -1,18 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// JCV 08/01/91 Modif introduction des classes Mat2d et XY dans gp
 
 #define No_Standard_OutOfRange
 
@@ -49,7 +35,7 @@ void gp_Trsf2d::SetTransformation(const gp_Ax2d& FromA1, const gp_Ax2d& ToA2)
 {
   shape = gp_CompoundTrsf;
   scale = 1.0;
-  // matrix from XOY to A2 :
+
   const gp_XY& V1 = ToA2.Direction().XY();
   gp_XY        V2(-V1.Y(), V1.X());
   matrix.SetCol(1, V1);
@@ -58,12 +44,12 @@ void gp_Trsf2d::SetTransformation(const gp_Ax2d& FromA1, const gp_Ax2d& ToA2)
   matrix.Transpose();
   loc.Multiply(matrix);
   loc.Reverse();
-  // matrix FromA1 to XOY
+
   const gp_XY& V3 = FromA1.Direction().XY();
   gp_XY        V4(-V3.Y(), V3.X());
   gp_Mat2d     MA1(V3, V4);
   gp_XY        MA1loc = FromA1.Location().XY();
-  // matrix * MA1 => FromA1 ToA2
+
   MA1loc.Multiply(matrix);
   loc.Add(MA1loc);
   matrix.Multiply(MA1);
@@ -210,11 +196,7 @@ double gp_Trsf2d::RotationPart() const
 
 void gp_Trsf2d::Invert()
 {
-  //                                    -1
-  //  X' = scale * R * X + T  =>  X = (R  / scale)  * ( X' - T)
-  //
-  // Pour les gp_Trsf2d puisque le scale est extrait de la matrice R
-  // on a toujours determinant (R) = 1 et R-1 = R transposee.
+
   if (shape == gp_Identity)
   {
   }
@@ -627,8 +609,6 @@ void gp_Trsf2d::PreMultiply(const gp_Trsf2d& T)
   }
 }
 
-//=================================================================================================
-
 void gp_Trsf2d::SetValues(const double a11,
                           const double a12,
                           const double a13,
@@ -639,7 +619,7 @@ void gp_Trsf2d::SetValues(const double a11,
   gp_XY col1(a11, a21);
   gp_XY col2(a12, a22);
   gp_XY col3(a13, a23);
-  // compute the determinant
+
   gp_Mat2d M(col1, col2);
   double   s = M.Determinant();
   Standard_ConstructionError_Raise_if(std::abs(s) < gp::Resolution(),
@@ -661,19 +641,8 @@ void gp_Trsf2d::SetValues(const double a11,
   loc = col3;
 }
 
-//=======================================================================
-// function : Orthogonalize
-// purpose  :
-// ATTENTION!!!
-//      Orthogonalization is not equivalent transformation.Therefore, transformation with
-//        source matrix and with orthogonalized matrix can lead to different results for
-//        one shape. Consequently, source matrix must be close to orthogonalized
-//        matrix for reducing these differences.
-//=======================================================================
 void gp_Trsf2d::Orthogonalize()
 {
-  // See correspond comment in gp_Trsf::Orthogonalize() method in order to make this
-  // algorithm clear.
 
   gp_Mat2d aTM(matrix);
 

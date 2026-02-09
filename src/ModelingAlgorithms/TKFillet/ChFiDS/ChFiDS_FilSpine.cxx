@@ -20,8 +20,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ChFiDS_FilSpine, ChFiDS_Spine)
 
-//=================================================================================================
-
 ChFiDS_FilSpine::ChFiDS_FilSpine() = default;
 
 ChFiDS_FilSpine::ChFiDS_FilSpine(const double Tol)
@@ -29,15 +27,13 @@ ChFiDS_FilSpine::ChFiDS_FilSpine(const double Tol)
 {
 }
 
-//=================================================================================================
-
 void ChFiDS_FilSpine::Reset(const bool AllData)
 {
   ChFiDS_Spine::Reset(AllData);
   laws.Clear();
   if (AllData)
     parandrad.Clear();
-  else // Complete parandrad
+  else
   {
     double spinedeb = FirstParameter();
     double spinefin = LastParameter();
@@ -60,8 +56,6 @@ void ChFiDS_FilSpine::Reset(const bool AllData)
   }
 }
 
-//=================================================================================================
-
 void ChFiDS_FilSpine::SetRadius(const double Radius, const TopoDS_Edge& E)
 {
   splitdone = false;
@@ -70,8 +64,6 @@ void ChFiDS_FilSpine::SetRadius(const double Radius, const TopoDS_Edge& E)
   SetRadius(FirstUandR, IE);
   SetRadius(LastUandR, IE);
 }
-
-//=================================================================================================
 
 void ChFiDS_FilSpine::UnSetRadius(const TopoDS_Edge& E)
 {
@@ -92,16 +84,12 @@ void ChFiDS_FilSpine::UnSetRadius(const TopoDS_Edge& E)
     parandrad.Remove(ifirst, ilast);
 }
 
-//=================================================================================================
-
 void ChFiDS_FilSpine::SetRadius(const double Radius, const TopoDS_Vertex& V)
 {
   double npar = Absc(V);
   gp_XY  UandR(npar, Radius);
   SetRadius(UandR, 0);
 }
-
-//=================================================================================================
 
 void ChFiDS_FilSpine::SetRadius(const double Radius)
 {
@@ -111,8 +99,6 @@ void ChFiDS_FilSpine::SetRadius(const double Radius)
   SetRadius(FirstUandR, 0);
   SetRadius(LastUandR, 0);
 }
-
-//=================================================================================================
 
 void ChFiDS_FilSpine::SetRadius(const gp_XY& UandR, const int IinC)
 {
@@ -150,8 +136,6 @@ void ChFiDS_FilSpine::SetRadius(const gp_XY& UandR, const int IinC)
   if (i == parandrad.Length() + 1)
     parandrad.Append(pr);
 
-  // si le split est done il faut rejouer la law
-  // correspondant au parametre W
   if (splitdone)
   {
     NCollection_List<occ::handle<ChFiDS_ElSpine>>::Iterator It(elspines);
@@ -175,8 +159,6 @@ void ChFiDS_FilSpine::SetRadius(const gp_XY& UandR, const int IinC)
   }
 }
 
-//=================================================================================================
-
 void ChFiDS_FilSpine::UnSetRadius(const TopoDS_Vertex& V)
 {
   double npar = Absc(V);
@@ -190,9 +172,7 @@ void ChFiDS_FilSpine::UnSetRadius(const TopoDS_Vertex& V)
   }
 }
 
-//=================================================================================================
-
-void ChFiDS_FilSpine::SetRadius(const occ::handle<Law_Function>& C, const int /*IinC*/)
+void ChFiDS_FilSpine::SetRadius(const occ::handle<Law_Function>& C, const int)
 {
   splitdone                                          = false;
   occ::handle<Law_Composite>                   prout = new Law_Composite();
@@ -200,8 +180,6 @@ void ChFiDS_FilSpine::SetRadius(const occ::handle<Law_Function>& C, const int /*
   lst.Append(C);
   parandrad.Clear();
 }
-
-//=================================================================================================
 
 bool ChFiDS_FilSpine::IsConstant() const
 {
@@ -218,8 +196,6 @@ bool ChFiDS_FilSpine::IsConstant() const
     }
   return isconst;
 }
-
-//=================================================================================================
 
 bool ChFiDS_FilSpine::IsConstant(const int IE) const
 {
@@ -254,15 +230,11 @@ bool ChFiDS_FilSpine::IsConstant(const int IE) const
   return true;
 }
 
-//=================================================================================================
-
 double ChFiDS_FilSpine::Radius(const TopoDS_Edge& E) const
 {
   int IE = Index(E);
   return Radius(IE);
 }
-
-//=================================================================================================
 
 double ChFiDS_FilSpine::Radius(const int IE) const
 {
@@ -297,8 +269,6 @@ double ChFiDS_FilSpine::Radius(const int IE) const
   return StartRad;
 }
 
-//=================================================================================================
-
 double ChFiDS_FilSpine::Radius() const
 {
   if (!IsConstant())
@@ -306,15 +276,11 @@ double ChFiDS_FilSpine::Radius() const
   return parandrad(1).Y();
 }
 
-//=================================================================================================
-
 void ChFiDS_FilSpine::AppendElSpine(const occ::handle<ChFiDS_ElSpine>& Els)
 {
   ChFiDS_Spine::AppendElSpine(Els);
   AppendLaw(Els);
 }
-
-//=================================================================================================
 
 void ChFiDS_FilSpine::AppendLaw(const occ::handle<ChFiDS_ElSpine>& Els)
 {
@@ -396,7 +362,7 @@ static void mklaw(NCollection_List<occ::handle<Law_Function>>& res,
     if (!yaunpointsurlefin && Rfin >= 0.)
       npr.Append(gp_XY(curfin, Rfin));
     int nbp = npr.Length();
-    //    for(int i = 1; i < nbp; i++){
+
     int i;
     for (i = 1; i < nbp; i++)
     {
@@ -410,7 +376,7 @@ static void mklaw(NCollection_List<occ::handle<Law_Function>>& res,
         }
       }
     }
-    // Duplicates are removed.
+
     bool fini = (nbp <= 1);
     i         = 1;
     while (!fini)
@@ -451,8 +417,6 @@ static void mklaw(NCollection_List<occ::handle<Law_Function>>& res,
   }
 }
 
-//=================================================================================================
-
 occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_ElSpine>& Els)
 {
   double tol3d = Precision::Confusion();
@@ -462,7 +426,7 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_
   int ideb     = Index(deb, true);
   int ifin     = Index(fin, false);
   int len      = NbEdges();
-  // if the spine is periodic, attention to the index and parameters
+
   double spinedeb = FirstParameter();
   double spinefin = LastParameter();
 
@@ -494,17 +458,14 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_
 
   if (Els->IsPeriodic())
   {
-    // A pereodic composite is created at range, which is eventually
-    // offset relatively to the elspine, to avoid a single point at
-    // origin.
+
     loi->SetPeriodic();
-    // Is there a constant edge?
-    //    for(int k = 1; k <= len; k++){
+
     int k;
     for (k = 1; k <= len; k++)
     {
       if (IsConstant(k))
-      { // yes  !
+      {
         spinedeb = deb = curdeb = FirstParameter(k);
         spinefin = fin = deb + Period();
         for (int l = 1; l <= len; l++)
@@ -514,7 +475,7 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_
         Rdeb = Rfin = Radius(k);
         icur++;
         if (len == 1)
-          curfin = LastParameter(k); // because InPeriod will make 0.!!!
+          curfin = LastParameter(k);
         else
           curfin = ElCLib::InPeriod(LastParameter(k), spinedeb, spinefin);
         occ::handle<Law_Constant> curloi = new Law_Constant();
@@ -525,7 +486,7 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_
       }
     }
     if (k > len)
-    { // no !
+    {
       if (parandrad.IsEmpty())
         throw Standard_DomainError("Radius not defined");
       int nbp = parandrad.Length();
@@ -552,7 +513,7 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_
   }
   else if (IsPeriodic())
   {
-    // start radius.
+
     if (IsConstant(ind(1)))
     {
       Rdeb   = Radius(ind(1));
@@ -567,7 +528,7 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_
     }
     else
     {
-      // There is inevitably kpart right before!
+
       int iprec = (ind(1) - 1);
       if (iprec == 0)
         iprec = len;
@@ -579,12 +540,12 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_
         throw Standard_DomainError("AppendLaw : previous constant is missing!");
       lawencours = true;
     }
-    // the raduis at end.
+
     if (IsConstant(ind(nbed)))
       Rfin = Radius(ind(nbed));
     else
     {
-      // There is inevitably kpart right after!
+
       int isuiv = (ind(nbed) + 1);
       if (isuiv == len + 1)
         isuiv = 1;
@@ -598,7 +559,7 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_
   }
   else
   {
-    // the radius at start.
+
     if (IsConstant(ind(1)))
     {
       Rdeb                             = Radius(ind(1));
@@ -628,7 +589,7 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_
         Rdeb = -1.;
       lawencours = true;
     }
-    // the radius at end.
+
     if (IsConstant(ind(nbed)))
       Rfin = Radius(ind(nbed));
     else
@@ -649,8 +610,6 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_
     }
   }
 
-  // There are infos on the extremities of the elspine,
-  // all edges are parsed
   for (; icur <= nbed; icur++)
   {
     if (IsConstant(ind(icur)))
@@ -670,8 +629,7 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_
         curfin = ElCLib::InPeriod(curfin, spinedeb + tol3d, spinefin + tol3d);
         if (ind(icur) == ind(nbed))
         {
-          // Attention the curfin can be wrong if the last edge passes
-          // above the  origin periodic spline.
+
           double biddeb = FirstParameter(ind(icur));
           biddeb        = ElCLib::InPeriod(biddeb, spinedeb + tol3d, spinefin + tol3d);
           if (biddeb >= curfin)
@@ -700,8 +658,7 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_
       lawencours = true;
       if (ind(icur) == ind(nbed))
       {
-        // Attention the curfin can be wrong if the last edge passes
-        // above the  origin periodic spline.
+
         if (IsPeriodic())
         {
           double biddeb = FirstParameter(ind(icur));
@@ -713,7 +670,7 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_
           else
             curfin = std::min(fin, curfin);
         }
-        // or if it is the end of spine with extension.
+
         else if (ind(icur) == len)
           curfin = fin;
         NCollection_List<occ::handle<Law_Function>> temp;
@@ -726,8 +683,6 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::ComputeLaw(const occ::handle<ChFiDS_
     list.Append(lastloi);
   return loi;
 }
-
-//=================================================================================================
 
 occ::handle<Law_Composite> ChFiDS_FilSpine::Law(const occ::handle<ChFiDS_ElSpine>& Els) const
 {
@@ -742,8 +697,6 @@ occ::handle<Law_Composite> ChFiDS_FilSpine::Law(const occ::handle<ChFiDS_ElSpine
   }
   return occ::handle<Law_Composite>();
 }
-
-//=================================================================================================
 
 occ::handle<Law_Function>& ChFiDS_FilSpine::ChangeLaw(const TopoDS_Edge& E)
 {
@@ -761,8 +714,6 @@ occ::handle<Law_Function>& ChFiDS_FilSpine::ChangeLaw(const TopoDS_Edge& E)
   occ::handle<Law_Composite>  lc  = Law(hsp);
   return lc->ChangeElementaryLaw(w);
 }
-
-//=================================================================================================
 
 double ChFiDS_FilSpine::MaxRadFromSeqAndLaws() const
 {

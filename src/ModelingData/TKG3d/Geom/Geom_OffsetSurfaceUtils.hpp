@@ -13,56 +13,33 @@
 
 #include <cmath>
 
-//! Internal helper namespace for 3D offset surface calculations.
-//! Provides static inline functions to compute offset surface point and derivatives
-//! from basis surface derivatives.
-//!
-//! Includes both non-singular (simple cross product normal) and singular
-//! (osculating surface) case handling.
-//!
-//! Mathematical basis:
-//! P(u,v) = p(u,v) + Offset * N / ||N||
-//! where N = dP/du ^ dP/dv is the surface normal
 namespace Geom_OffsetSurfaceUtils
 {
 
-  //! Default tolerance for normal magnitude check
   constexpr double THE_D1_MAGNITUDE_TOL = 1.e-9;
 
-  //! Struct to hold osculating surface query results.
-  //! Used to abstract osculating surface handling between different classes.
   struct OsculatingInfo
   {
-    bool AlongU     = false; //!< True if osculating along U direction
-    bool AlongV     = false; //!< True if osculating along V direction
-    bool IsOpposite = false; //!< True if normal direction should be reversed
+    bool AlongU     = false;
+    bool AlongV     = false;
+    bool IsOpposite = false;
 
-    //! Returns the sign factor for offset calculation
     double Sign() const { return ((AlongU || AlongV) && IsOpposite) ? -1.0 : 1.0; }
 
-    //! Returns true if osculating surface is available
     bool HasOsculating() const { return AlongU || AlongV; }
   };
 
-  //! Checks if a vector has infinite coordinates.
-  //! @param[in] theVec vector to check
-  //! @return true if any coordinate is infinite
   inline bool IsInfiniteCoord(const gp_Vec& theVec)
   {
     return Precision::IsInfinite(theVec.X()) || Precision::IsInfinite(theVec.Y())
            || Precision::IsInfinite(theVec.Z());
   }
 
-  //! Checks if surface normal is singular (has zero magnitude).
-  //! @param[in] theD1U first derivative with respect to U
-  //! @param[in] theD1V first derivative with respect to V
-  //! @param[in] theTol tolerance for magnitude check
-  //! @return true if normal magnitude is below tolerance (singular case)
   inline bool IsSingular(const gp_Vec& theD1U,
                          const gp_Vec& theD1V,
                          double        theTol = THE_D1_MAGNITUDE_TOL)
   {
-    // Normalize derivatives before normal calculation for stability
+
     gp_Vec aD1U(theD1U);
     gp_Vec aD1V(theD1V);
     double aD1UNorm2 = aD1U.SquareMagnitude();
@@ -76,18 +53,12 @@ namespace Geom_OffsetSurfaceUtils
     return aNorm.SquareMagnitude() <= theTol * theTol;
   }
 
-  //! Calculates normalized normal vector for non-singular case.
-  //! @param[in] theD1U first derivative with respect to U
-  //! @param[in] theD1V first derivative with respect to V
-  //! @param[out] theNormal computed normalized normal (valid only if return is true)
-  //! @param[in] theTol tolerance for magnitude check
-  //! @return true if normal computed successfully, false if singular
   inline bool ComputeNormal(const gp_Vec& theD1U,
                             const gp_Vec& theD1V,
                             gp_Vec&       theNormal,
                             double        theTol = THE_D1_MAGNITUDE_TOL)
   {
-    // Normalize derivatives before normal calculation for stability
+
     gp_Vec aD1U(theD1U);
     gp_Vec aD1V(theD1V);
     double aD1UNorm2 = aD1U.SquareMagnitude();
@@ -106,13 +77,6 @@ namespace Geom_OffsetSurfaceUtils
     return true;
   }
 
-  //! Computes dN/du for non-singular offset surface.
-  //! @param[in] theD1U first derivative with respect to U
-  //! @param[in] theD1V first derivative with respect to V
-  //! @param[in] theD2U second derivative d2P/du2
-  //! @param[in] theD2UV mixed derivative d2P/dudv
-  //! @param[in] theNormal unit normal vector
-  //! @return derivative of normal with respect to U
   inline gp_Vec ComputeDNormalU(const gp_Vec& theD1U,
                                 const gp_Vec& theD1V,
                                 const gp_Vec& theD2U,
@@ -135,13 +99,6 @@ namespace Geom_OffsetSurfaceUtils
     return aN1U;
   }
 
-  //! Computes dN/dv for non-singular offset surface.
-  //! @param[in] theD1U first derivative with respect to U
-  //! @param[in] theD1V first derivative with respect to V
-  //! @param[in] theD2V second derivative d2P/dv2
-  //! @param[in] theD2UV mixed derivative d2P/dudv
-  //! @param[in] theNormal unit normal vector
-  //! @return derivative of normal with respect to V
   inline gp_Vec ComputeDNormalV(const gp_Vec& theD1U,
                                 const gp_Vec& theD1V,
                                 const gp_Vec& theD2V,
@@ -164,13 +121,6 @@ namespace Geom_OffsetSurfaceUtils
     return aN1V;
   }
 
-  //! Calculates D0 (point) for offset surface in non-singular case.
-  //! @param[in,out] theValue on input: basis surface point; on output: offset point
-  //! @param[in] theD1U first derivative with respect to U
-  //! @param[in] theD1V first derivative with respect to V
-  //! @param[in] theOffset offset distance value
-  //! @param[in] theSign sign factor (1.0 or -1.0) for offset direction
-  //! @return false if singular (normal has zero magnitude), true otherwise
   inline bool CalculateD0(gp_Pnt&       theValue,
                           const gp_Vec& theD1U,
                           const gp_Vec& theD1V,
@@ -186,16 +136,6 @@ namespace Geom_OffsetSurfaceUtils
     return true;
   }
 
-  //! Calculates D0 and D1 for offset surface in non-singular case.
-  //! @param[in,out] theValue on input: basis surface point; on output: offset point
-  //! @param[in,out] theD1U on input: basis dP/du; on output: offset surface dP/du
-  //! @param[in,out] theD1V on input: basis dP/dv; on output: offset surface dP/dv
-  //! @param[in] theD2U second derivative d2P/du2 of basis surface
-  //! @param[in] theD2V second derivative d2P/dv2 of basis surface
-  //! @param[in] theD2UV mixed derivative d2P/dudv of basis surface
-  //! @param[in] theOffset offset distance value
-  //! @param[in] theSign sign factor (1.0 or -1.0) for offset direction
-  //! @return false if singular (normal has zero magnitude), true otherwise
   inline bool CalculateD1(gp_Pnt&       theValue,
                           gp_Vec&       theD1U,
                           gp_Vec&       theD1V,
@@ -211,10 +151,8 @@ namespace Geom_OffsetSurfaceUtils
       return false;
     }
 
-    // Compute offset point
     theValue.SetXYZ(theValue.XYZ() + theOffset * theSign * aNorm.XYZ());
 
-    // Compute normal derivatives
     gp_Vec aN1U = ComputeDNormalU(theD1U, theD1V, theD2U, theD2UV, aNorm);
     gp_Vec aN1V = ComputeDNormalV(theD1U, theD1V, theD2V, theD2UV, aNorm);
 
@@ -224,22 +162,6 @@ namespace Geom_OffsetSurfaceUtils
     return true;
   }
 
-  //! Template function for computing derivatives at singular points.
-  //! Works with any surface type that provides D1, D2, D3, DN methods.
-  //! @tparam BasisSurfType type of basis surface (Handle to surface or adaptor)
-  //! @tparam OscSurfType type of osculating surface (Handle to BSpline surface)
-  //! @param[in] theMaxOrder maximum derivative order
-  //! @param[in] theMinOrder minimum derivative order
-  //! @param[in] theU U parameter
-  //! @param[in] theV V parameter
-  //! @param[in] theBasisSurf basis surface
-  //! @param[in] theNU derivative order in U for output
-  //! @param[in] theNV derivative order in V for output
-  //! @param[in] theAlongU true if osculating along U
-  //! @param[in] theAlongV true if osculating along V
-  //! @param[in] theOscSurf osculating surface (may be null)
-  //! @param[out] theDerNUV array of normal derivatives
-  //! @param[in,out] theDerSurf array of surface derivatives
   template <class BasisSurfType, class OscSurfType>
   void ComputeDerivatives(int                         theMaxOrder,
                           int                         theMinOrder,
@@ -260,8 +182,7 @@ namespace Geom_OffsetSurfaceUtils
     if (theAlongU || theAlongV)
     {
       theMaxOrder = 0;
-      // Stack buffer for DerSurfL: max size is (theNU + 2) x (theNV + 2)
-      // DN can have theNU/theNV up to 6, so max is 8x8=64
+
       const int aDerSurfLSize = (theMaxOrder + theNU + 2) * (theMaxOrder + theNV + 2);
       NCollection_LocalArray<gp_Vec, 64> aDerSurfLBuffer(aDerSurfLSize);
       NCollection_Array2<gp_Vec>         DerSurfL(aDerSurfLBuffer[0],
@@ -361,21 +282,6 @@ namespace Geom_OffsetSurfaceUtils
     }
   }
 
-  //! Attempts to replace a zero derivative by stepping away and recomputing.
-  //! This handles CSLib_InfinityOfSolutions case where one derivative is zero.
-  //!
-  //! @tparam BasisSurfType type of basis surface (must have D1 method)
-  //! @param[in] theU U parameter
-  //! @param[in] theV V parameter
-  //! @param[in] theUMin minimum U bound
-  //! @param[in] theUMax maximum U bound
-  //! @param[in] theVMin minimum V bound
-  //! @param[in] theVMax maximum V bound
-  //! @param[in,out] theDU first derivative with respect to U
-  //! @param[in,out] theDV first derivative with respect to V
-  //! @param[in] theSquareTol squared tolerance for zero check
-  //! @param[in] theBasisSurf basis surface for computing derivatives
-  //! @return true if derivative was successfully replaced
   template <class BasisSurfType>
   bool ReplaceDerivative(double               theU,
                          double               theV,
@@ -392,10 +298,9 @@ namespace Geom_OffsetSurfaceUtils
     bool isReplaceDV = theDV.SquareMagnitude() < theSquareTol;
     bool isReplaced  = false;
 
-    // Only handle case where exactly one derivative is zero
     if (isReplaceDU != isReplaceDV)
     {
-      // Calculate step along non-zero derivative
+
       double aStep;
       if (isReplaceDV)
       {
@@ -413,8 +318,6 @@ namespace Geom_OffsetSurfaceUtils
       gp_Pnt aP;
       gp_Vec aDU, aDV;
 
-      // Step away from current parametric coordinates and calculate derivatives once again.
-      // Replace zero derivative by the obtained.
       for (double aStepSign = -1.0; aStepSign <= 1.0 && !isReplaced; aStepSign += 2.0)
       {
         double aU = theU;
@@ -450,23 +353,6 @@ namespace Geom_OffsetSurfaceUtils
     return isReplaced;
   }
 
-  //! Attempts to shift the evaluation point towards the center of the parametric space.
-  //! This is used when normal calculation fails at singular points near boundaries.
-  //! The point is shifted iteratively, each time doubling the distance from the start point.
-  //!
-  //! @param[in] theUStart original U parameter (for direction calculation)
-  //! @param[in] theVStart original V parameter (for direction calculation)
-  //! @param[in,out] theU current U parameter, modified on success
-  //! @param[in,out] theV current V parameter, modified on success
-  //! @param[in] theUMin minimum U bound
-  //! @param[in] theUMax maximum U bound
-  //! @param[in] theVMin minimum V bound
-  //! @param[in] theVMax maximum V bound
-  //! @param[in] theIsUPeriodic true if surface is U-periodic
-  //! @param[in] theIsVPeriodic true if surface is V-periodic
-  //! @param[in] theD1U first derivative with respect to U (for singularity check)
-  //! @param[in] theD1V first derivative with respect to V (for singularity check)
-  //! @return true if shift was successful, false if center is reached
   inline bool ShiftPoint(double        theUStart,
                          double        theVStart,
                          double&       theU,
@@ -480,12 +366,10 @@ namespace Geom_OffsetSurfaceUtils
                          const gp_Vec& theD1U,
                          const gp_Vec& theD1V)
   {
-    // Check if either U or V is singular (normally one of them is)
+
     bool isUSingular = (theD1U.SquareMagnitude() < THE_D1_MAGNITUDE_TOL * THE_D1_MAGNITUDE_TOL);
     bool isVSingular = (theD1V.SquareMagnitude() < THE_D1_MAGNITUDE_TOL * THE_D1_MAGNITUDE_TOL);
 
-    // Compute vector to shift from start point to center of the surface;
-    // if surface is periodic or singular in some direction, take shift in that direction zero
     double aDirU =
       (theIsUPeriodic || (isUSingular && !isVSingular) ? 0.
                                                        : 0.5 * (theUMin + theUMax) - theUStart);
@@ -494,9 +378,6 @@ namespace Geom_OffsetSurfaceUtils
                                                        : 0.5 * (theVMin + theVMax) - theVStart);
     double aDist = std::sqrt(aDirU * aDirU + aDirV * aDirV);
 
-    // Shift current point from its current position towards center, by value of twice
-    // current distance from it to start (but not less than Precision::PConfusion());
-    // fail if center is overpassed.
     double aDU   = theU - theUStart;
     double aDV   = theV - theVStart;
     double aStep = std::max(2. * std::sqrt(aDU * aDU + aDV * aDV), Precision::PConfusion());
@@ -512,21 +393,6 @@ namespace Geom_OffsetSurfaceUtils
     return true;
   }
 
-  //! Template function for D0 evaluation with pre-computed basis surface D1.
-  //! When normal calculation fails at singular points, falls back to full evaluation
-  //! with retry mechanism.
-  //!
-  //! @tparam BasisSurfType type of basis surface (must have D1 method)
-  //! @tparam OscSurfQueryType type providing osculating surface query
-  //! @param[in] theU U parameter
-  //! @param[in] theV V parameter
-  //! @param[in] theBasisSurf basis surface adaptor
-  //! @param[in] theOffset offset distance
-  //! @param[in] theOscQuery osculating surface query object (may be null)
-  //! @param[in,out] theValue on input: basis surface point; on output: offset point
-  //! @param[in] theD1U pre-computed basis surface D1U (used for first iteration)
-  //! @param[in] theD1V pre-computed basis surface D1V (used for first iteration)
-  //! @return true if calculation succeeded, false if failed at singular point
   template <class BasisSurfType, class OscSurfQueryType>
   bool EvaluateD0(double                  theU,
                   double                  theV,
@@ -544,14 +410,13 @@ namespace Geom_OffsetSurfaceUtils
     const bool isUPer = theBasisSurf->IsUPeriodic();
     const bool isVPer = theBasisSurf->IsVPeriodic();
 
-    // Use pre-computed D1 for first iteration
     gp_Vec aD1U             = theD1U;
     gp_Vec aD1V             = theD1V;
     bool   isFirstIteration = true;
 
     for (;;)
     {
-      // For subsequent iterations, recompute D1 at shifted point
+
       if (!isFirstIteration)
       {
         theBasisSurf->D1(theU, theV, theValue, aD1U, aD1V);
@@ -563,13 +428,11 @@ namespace Geom_OffsetSurfaceUtils
         return false;
       }
 
-      // Try non-singular case first
       if (CalculateD0(theValue, aD1U, aD1V, theOffset))
       {
         return true;
       }
 
-      // Singular case - query osculating surface and use higher order derivatives
       constexpr int aMaxOrder = 3;
 
       OsculatingInfo                   aOscInfo;
@@ -582,8 +445,8 @@ namespace Geom_OffsetSurfaceUtils
           theOscQuery->VOsculatingSurface(theU, theV, aOscInfo.IsOpposite, aOscSurf);
       }
 
-      constexpr int aDerNUVSize  = (aMaxOrder + 1) * (aMaxOrder + 1); // 16
-      constexpr int aDerSurfSize = (aMaxOrder + 2) * (aMaxOrder + 2); // 25
+      constexpr int                                aDerNUVSize  = (aMaxOrder + 1) * (aMaxOrder + 1);
+      constexpr int                                aDerSurfSize = (aMaxOrder + 2) * (aMaxOrder + 2);
       NCollection_LocalArray<gp_Vec, aDerNUVSize>  aDerNUVBuffer(aDerNUVSize);
       NCollection_LocalArray<gp_Vec, aDerSurfSize> aDerSurfBuffer(aDerSurfSize);
       NCollection_Array2<gp_Vec> aDerNUV(aDerNUVBuffer[0], 0, aMaxOrder, 0, aMaxOrder);
@@ -592,7 +455,6 @@ namespace Geom_OffsetSurfaceUtils
       aDerSurf.SetValue(1, 0, aD1U);
       aDerSurf.SetValue(0, 1, aD1V);
 
-      // Use ComputeDerivatives which handles osculating surface properly
       if (aOscInfo.HasOsculating() && !aOscSurf.IsNull())
       {
         ComputeDerivatives(aMaxOrder,
@@ -642,7 +504,6 @@ namespace Geom_OffsetSurfaceUtils
                     OrderU,
                     OrderV);
 
-      // Handle CSLib_InfinityOfSolutions by replacing zero derivative
       if (aNStatus == CSLib_InfinityOfSolutions)
       {
         gp_Vec aNewDU = aD1U;
@@ -668,7 +529,6 @@ namespace Geom_OffsetSurfaceUtils
         return true;
       }
 
-      // Try shifting point towards center - returns false when center is overpassed
       if (!ShiftPoint(aUStart,
                       aVStart,
                       theU,
@@ -687,19 +547,6 @@ namespace Geom_OffsetSurfaceUtils
     }
   }
 
-  //! Template function for D0 evaluation with retry mechanism for singular points.
-  //! When normal calculation fails, attempts to shift the point towards the center
-  //! and retry the calculation.
-  //!
-  //! @tparam BasisSurfType type of basis surface (must have D1 method)
-  //! @tparam OscSurfQueryType type providing osculating surface query
-  //! @param[in] theU U parameter
-  //! @param[in] theV V parameter
-  //! @param[in] theBasisSurf basis surface adaptor
-  //! @param[in] theOffset offset distance
-  //! @param[in] theOscQuery osculating surface query object (may be null)
-  //! @param[out] theValue computed offset point
-  //! @return true if calculation succeeded, false if failed at singular point
   template <class BasisSurfType, class OscSurfQueryType>
   bool EvaluateD0(double                  theU,
                   double                  theV,
@@ -713,24 +560,6 @@ namespace Geom_OffsetSurfaceUtils
     return EvaluateD0(theU, theV, theBasisSurf, theOffset, theOscQuery, theValue, aD1U, aD1V);
   }
 
-  //! Template function for D1 evaluation with pre-computed basis surface D2.
-  //! When normal calculation fails at singular points, falls back to full evaluation
-  //! with retry mechanism.
-  //!
-  //! @tparam BasisSurfType type of basis surface (must have D2 method)
-  //! @tparam OscSurfQueryType type providing osculating surface query
-  //! @param[in] theU U parameter
-  //! @param[in] theV V parameter
-  //! @param[in] theBasisSurf basis surface adaptor
-  //! @param[in] theOffset offset distance
-  //! @param[in] theOscQuery osculating surface query object (may be null)
-  //! @param[in,out] theValue on input: basis surface point; on output: offset point
-  //! @param[in,out] theD1U on input: pre-computed basis D1U; on output: offset D1U
-  //! @param[in,out] theD1V on input: pre-computed basis D1V; on output: offset D1V
-  //! @param[in] theD2U pre-computed basis surface D2U (used for first iteration)
-  //! @param[in] theD2V pre-computed basis surface D2V (used for first iteration)
-  //! @param[in] theD2UV pre-computed basis surface D2UV (used for first iteration)
-  //! @return true if calculation succeeded, false if failed at singular point
   template <class BasisSurfType, class OscSurfQueryType>
   bool EvaluateD1(double                  theU,
                   double                  theV,
@@ -751,7 +580,6 @@ namespace Geom_OffsetSurfaceUtils
     const bool isUPer = theBasisSurf->IsUPeriodic();
     const bool isVPer = theBasisSurf->IsVPeriodic();
 
-    // Use pre-computed D2 for first iteration
     gp_Vec aD2U             = theD2U;
     gp_Vec aD2V             = theD2V;
     gp_Vec aD2UV            = theD2UV;
@@ -759,7 +587,7 @@ namespace Geom_OffsetSurfaceUtils
 
     for (;;)
     {
-      // For subsequent iterations, recompute D2 at shifted point
+
       if (!isFirstIteration)
       {
         theBasisSurf->D2(theU, theV, theValue, theD1U, theD1V, aD2U, aD2V, aD2UV);
@@ -771,7 +599,6 @@ namespace Geom_OffsetSurfaceUtils
         return false;
       }
 
-      // Check if singular by normalizing derivatives and computing cross product
       gp_Vec aD1U(theD1U);
       gp_Vec aD1V(theD1V);
       double aD1UNorm2 = aD1U.SquareMagnitude();
@@ -785,7 +612,6 @@ namespace Geom_OffsetSurfaceUtils
       const int aMaxOrder  = 3;
       gp_Vec    aNorm      = aD1U.Crossed(aD1V);
 
-      // Query osculating surface only if singular
       OsculatingInfo                   aOscInfo;
       occ::handle<Geom_BSplineSurface> aOscSurf;
       if (aNorm.SquareMagnitude() <= THE_D1_MAGNITUDE_TOL * THE_D1_MAGNITUDE_TOL)
@@ -800,16 +626,13 @@ namespace Geom_OffsetSurfaceUtils
         isSingular = true;
       }
 
-      // Compute sign factor
       const double aSign = aOscInfo.Sign();
 
-      // Non-singular case: use direct formulas
       if (!isSingular)
       {
         aNorm.Normalize();
         theValue.SetXYZ(theValue.XYZ() + theOffset * aSign * aNorm.XYZ());
 
-        // Compute normal derivatives using inline formulas
         gp_Vec       aN0(aNorm.XYZ()), aN1U, aN1V;
         const double aScale = (theD1U ^ theD1V).Dot(aN0);
         aN1U.SetX(aD2U.Y() * theD1V.Z() + theD1U.Y() * aD2UV.Z() - aD2U.Z() * theD1V.Y()
@@ -840,9 +663,8 @@ namespace Geom_OffsetSurfaceUtils
         return true;
       }
 
-      // Singular case - use higher order derivatives
-      constexpr int aDerNUVSize  = (aMaxOrder + 2) * (aMaxOrder + 2); // 25
-      constexpr int aDerSurfSize = (aMaxOrder + 3) * (aMaxOrder + 3); // 36
+      constexpr int                                aDerNUVSize  = (aMaxOrder + 2) * (aMaxOrder + 2);
+      constexpr int                                aDerSurfSize = (aMaxOrder + 3) * (aMaxOrder + 3);
       NCollection_LocalArray<gp_Vec, aDerNUVSize>  aDerNUVBuffer(aDerNUVSize);
       NCollection_LocalArray<gp_Vec, aDerSurfSize> aDerSurfBuffer(aDerSurfSize);
       NCollection_Array2<gp_Vec> aDerNUV(aDerNUVBuffer[0], 0, aMaxOrder + 1, 0, aMaxOrder + 1);
@@ -903,7 +725,6 @@ namespace Geom_OffsetSurfaceUtils
                     aOrderU,
                     aOrderV);
 
-      // Handle CSLib_InfinityOfSolutions by replacing zero derivative
       if (aNStatus == CSLib_InfinityOfSolutions)
       {
         gp_Vec aNewDU = theD1U;
@@ -919,7 +740,7 @@ namespace Geom_OffsetSurfaceUtils
                               THE_D1_MAGNITUDE_TOL * THE_D1_MAGNITUDE_TOL,
                               theBasisSurf))
         {
-          // Re-compute with replaced derivatives
+
           aDerSurf.SetValue(1, 0, aNewDU);
           aDerSurf.SetValue(0, 1, aNewDV);
           if (aOscInfo.HasOsculating() && !aOscSurf.IsNull())
@@ -971,9 +792,9 @@ namespace Geom_OffsetSurfaceUtils
 
       if (aNStatus == CSLib_Defined)
       {
-        // Compute offset point
+
         theValue.SetXYZ(theValue.XYZ() + theOffset * aSign * aNormal.XYZ());
-        // Compute D1 using CSLib
+
         theD1U = CSLib::DNNormal(1, 0, aDerNUV, aOrderU, aOrderV);
         theD1V = CSLib::DNNormal(0, 1, aDerNUV, aOrderU, aOrderV);
 
@@ -984,7 +805,6 @@ namespace Geom_OffsetSurfaceUtils
         return true;
       }
 
-      // Try shifting point towards center - returns false when center is overpassed
       if (!ShiftPoint(aUStart,
                       aVStart,
                       theU,
@@ -1003,20 +823,6 @@ namespace Geom_OffsetSurfaceUtils
     }
   }
 
-  //! Template function for D1 evaluation with retry mechanism for singular points.
-  //! Computes D2 internally and calls the pre-computed overload.
-  //!
-  //! @tparam BasisSurfType type of basis surface (must have D2 method)
-  //! @tparam OscSurfQueryType type providing osculating surface query
-  //! @param[in] theU U parameter
-  //! @param[in] theV V parameter
-  //! @param[in] theBasisSurf basis surface adaptor
-  //! @param[in] theOffset offset distance
-  //! @param[in] theOscQuery osculating surface query object (may be null)
-  //! @param[out] theValue computed offset point
-  //! @param[out] theD1U computed D1U derivative
-  //! @param[out] theD1V computed D1V derivative
-  //! @return true if calculation succeeded, false if failed at singular point
   template <class BasisSurfType, class OscSurfQueryType>
   bool EvaluateD1(double                  theU,
                   double                  theV,
@@ -1042,28 +848,6 @@ namespace Geom_OffsetSurfaceUtils
                       aD2UV);
   }
 
-  //! Template function for D2 evaluation with pre-computed basis surface D3.
-  //! When normal calculation fails at singular points, falls back to full evaluation
-  //! with retry mechanism.
-  //!
-  //! @tparam BasisSurfType type of basis surface (must have D3 method)
-  //! @tparam OscSurfQueryType type providing osculating surface query
-  //! @param[in] theU U parameter
-  //! @param[in] theV V parameter
-  //! @param[in] theBasisSurf basis surface adaptor
-  //! @param[in] theOffset offset distance
-  //! @param[in] theOscQuery osculating surface query object (may be null)
-  //! @param[in,out] theValue on input: basis surface point; on output: offset point
-  //! @param[in,out] theD1U on input: pre-computed basis D1U; on output: offset D1U
-  //! @param[in,out] theD1V on input: pre-computed basis D1V; on output: offset D1V
-  //! @param[in,out] theD2U on input: pre-computed basis D2U; on output: offset D2U
-  //! @param[in,out] theD2V on input: pre-computed basis D2V; on output: offset D2V
-  //! @param[in,out] theD2UV on input: pre-computed basis D2UV; on output: offset D2UV
-  //! @param[in] theD3U pre-computed basis surface D3U (used for first iteration)
-  //! @param[in] theD3V pre-computed basis surface D3V (used for first iteration)
-  //! @param[in] theD3UUV pre-computed basis surface D3UUV (used for first iteration)
-  //! @param[in] theD3UVV pre-computed basis surface D3UVV (used for first iteration)
-  //! @return true if calculation succeeded, false if failed at singular point
   template <class BasisSurfType, class OscSurfQueryType>
   bool EvaluateD2(double                  theU,
                   double                  theV,
@@ -1088,7 +872,6 @@ namespace Geom_OffsetSurfaceUtils
     const bool isUPer = theBasisSurf->IsUPeriodic();
     const bool isVPer = theBasisSurf->IsVPeriodic();
 
-    // Use pre-computed D3 for first iteration
     gp_Vec aD3U             = theD3U;
     gp_Vec aD3V             = theD3V;
     gp_Vec aD3UUV           = theD3UUV;
@@ -1097,7 +880,7 @@ namespace Geom_OffsetSurfaceUtils
 
     for (;;)
     {
-      // For subsequent iterations, recompute D3 at shifted point
+
       if (!isFirstIteration)
       {
         theBasisSurf->D3(theU,
@@ -1120,15 +903,12 @@ namespace Geom_OffsetSurfaceUtils
         return false;
       }
 
-      // Check if singular using CSLib::Normal
       gp_Dir             aNormal;
       CSLib_NormalStatus aNStatus;
       CSLib::Normal(theD1U, theD1V, THE_D1_MAGNITUDE_TOL, aNStatus, aNormal);
 
-      // MaxOrder = 0 for non-singular, 3 for singular
       const int aMaxOrder = (aNStatus == CSLib_Defined) ? 0 : 3;
 
-      // Get osculating surface info
       OsculatingInfo                   aOscInfo;
       occ::handle<Geom_BSplineSurface> aOscSurf;
       if ((aNStatus != CSLib_Defined) && theOscQuery)
@@ -1139,7 +919,6 @@ namespace Geom_OffsetSurfaceUtils
           theOscQuery->VOsculatingSurface(theU, theV, aOscInfo.IsOpposite, aOscSurf);
       }
 
-      // Setup derivative arrays
       const int                          aDerNUVSize  = (aMaxOrder + 3) * (aMaxOrder + 3);
       const int                          aDerSurfSize = (aMaxOrder + 4) * (aMaxOrder + 4);
       NCollection_LocalArray<gp_Vec, 36> aDerNUVBuffer(aDerNUVSize);
@@ -1157,7 +936,6 @@ namespace Geom_OffsetSurfaceUtils
       aDerSurf.SetValue(1, 2, aD3UVV);
       aDerSurf.SetValue(0, 3, aD3V);
 
-      // Use ComputeDerivatives to populate DerNUV
       if (aOscInfo.HasOsculating() && !aOscSurf.IsNull())
       {
         ComputeDerivatives(aMaxOrder,
@@ -1190,7 +968,6 @@ namespace Geom_OffsetSurfaceUtils
                            aDerSurf);
       }
 
-      // Compute normal using CSLib (second call with MaxOrder)
       int aOrderU, aOrderV;
       CSLib::Normal(aMaxOrder,
                     aDerNUV,
@@ -1210,28 +987,23 @@ namespace Geom_OffsetSurfaceUtils
       {
         const double aSign = theOffset * aOscInfo.Sign();
 
-        // Compute offset point
         theValue.SetXYZ(theValue.XYZ() + aSign * aNormal.XYZ());
 
-        // Compute D1 using CSLib::DNNormal
         theD1U =
           aDerSurf(1, 0).Added(CSLib::DNNormal(1, 0, aDerNUV, aOrderU, aOrderV).Multiplied(aSign));
         theD1V =
           aDerSurf(0, 1).Added(CSLib::DNNormal(0, 1, aDerNUV, aOrderU, aOrderV).Multiplied(aSign));
 
-        // For D2, re-fetch from basis surface
         theD2U  = theBasisSurf->DN(theU, theV, 2, 0);
         theD2V  = theBasisSurf->DN(theU, theV, 0, 2);
         theD2UV = theBasisSurf->DN(theU, theV, 1, 1);
 
-        // Add offset corrections using CSLib::DNNormal
         theD2U.Add(CSLib::DNNormal(2, 0, aDerNUV, aOrderU, aOrderV).Multiplied(aSign));
         theD2V.Add(CSLib::DNNormal(0, 2, aDerNUV, aOrderU, aOrderV).Multiplied(aSign));
         theD2UV.Add(CSLib::DNNormal(1, 1, aDerNUV, aOrderU, aOrderV).Multiplied(aSign));
         return true;
       }
 
-      // Try shifting point towards center - returns false when center is overpassed
       if (!ShiftPoint(aUStart,
                       aVStart,
                       theU,
@@ -1250,23 +1022,6 @@ namespace Geom_OffsetSurfaceUtils
     }
   }
 
-  //! Template function for D2 evaluation with retry mechanism for singular points.
-  //! Computes D3 internally and calls the pre-computed overload.
-  //!
-  //! @tparam BasisSurfType type of basis surface (must have D3 method)
-  //! @tparam OscSurfQueryType type providing osculating surface query
-  //! @param[in] theU U parameter
-  //! @param[in] theV V parameter
-  //! @param[in] theBasisSurf basis surface adaptor
-  //! @param[in] theOffset offset distance
-  //! @param[in] theOscQuery osculating surface query object (may be null)
-  //! @param[out] theValue computed offset point
-  //! @param[out] theD1U computed D1U derivative
-  //! @param[out] theD1V computed D1V derivative
-  //! @param[out] theD2U computed D2U derivative
-  //! @param[out] theD2V computed D2V derivative
-  //! @param[out] theD2UV computed D2UV derivative
-  //! @return true if calculation succeeded, false if failed at singular point
   template <class BasisSurfType, class OscSurfQueryType>
   bool EvaluateD2(double                  theU,
                   double                  theV,
@@ -1310,26 +1065,6 @@ namespace Geom_OffsetSurfaceUtils
                       aD3UVV);
   }
 
-  //! Template function for D3 evaluation with retry mechanism for singular points.
-  //!
-  //! @tparam BasisSurfType type of basis surface (must have D3 method)
-  //! @tparam OscSurfQueryType type providing osculating surface query
-  //! @param[in] theU U parameter
-  //! @param[in] theV V parameter
-  //! @param[in] theBasisSurf basis surface adaptor
-  //! @param[in] theOffset offset distance
-  //! @param[in] theOscQuery osculating surface query object (may be null)
-  //! @param[out] theValue computed offset point
-  //! @param[out] theD1U computed D1U derivative
-  //! @param[out] theD1V computed D1V derivative
-  //! @param[out] theD2U computed D2U derivative
-  //! @param[out] theD2V computed D2V derivative
-  //! @param[out] theD2UV computed D2UV derivative
-  //! @param[out] theD3U computed D3U derivative
-  //! @param[out] theD3V computed D3V derivative
-  //! @param[out] theD3UUV computed D3UUV derivative
-  //! @param[out] theD3UVV computed D3UVV derivative
-  //! @return true if calculation succeeded, false if failed at singular point
   template <class BasisSurfType, class OscSurfQueryType>
   bool EvaluateD3(double                  theU,
                   double                  theV,
@@ -1374,15 +1109,12 @@ namespace Geom_OffsetSurfaceUtils
         return false;
       }
 
-      // Check if singular using CSLib::Normal
       gp_Dir             aNormal;
       CSLib_NormalStatus aNStatus;
       CSLib::Normal(theD1U, theD1V, THE_D1_MAGNITUDE_TOL, aNStatus, aNormal);
 
-      // MaxOrder = 0 for non-singular, 3 for singular
       const int aMaxOrder = (aNStatus == CSLib_Defined) ? 0 : 3;
 
-      // Get osculating surface info
       OsculatingInfo                   aOscInfo;
       occ::handle<Geom_BSplineSurface> aOscSurf;
       if ((aNStatus != CSLib_Defined) && theOscQuery)
@@ -1393,8 +1125,6 @@ namespace Geom_OffsetSurfaceUtils
           theOscQuery->VOsculatingSurface(theU, theV, aOscInfo.IsOpposite, aOscSurf);
       }
 
-      // Setup derivative arrays
-      // For D3: DerNUV needs (aMaxOrder + 4), DerSurf needs (aMaxOrder + 5)
       const int                          aDerNUVSize  = (aMaxOrder + 4) * (aMaxOrder + 4);
       const int                          aDerSurfSize = (aMaxOrder + 5) * (aMaxOrder + 5);
       NCollection_LocalArray<gp_Vec, 49> aDerNUVBuffer(aDerNUVSize);
@@ -1412,7 +1142,6 @@ namespace Geom_OffsetSurfaceUtils
       aDerSurf.SetValue(1, 2, theD3UVV);
       aDerSurf.SetValue(0, 3, theD3V);
 
-      // Use ComputeDerivatives to populate DerNUV
       if (aOscInfo.HasOsculating() && !aOscSurf.IsNull())
       {
         ComputeDerivatives(aMaxOrder,
@@ -1445,7 +1174,6 @@ namespace Geom_OffsetSurfaceUtils
                            aDerSurf);
       }
 
-      // Compute normal using CSLib (second call with MaxOrder)
       int aOrderU, aOrderV;
       CSLib::Normal(aMaxOrder,
                     aDerNUV,
@@ -1465,16 +1193,13 @@ namespace Geom_OffsetSurfaceUtils
       {
         const double aSign = theOffset * aOscInfo.Sign();
 
-        // Compute offset point
         theValue.SetXYZ(theValue.XYZ() + aSign * aNormal.XYZ());
 
-        // Compute D1 using CSLib::DNNormal
         theD1U =
           aDerSurf(1, 0).Added(CSLib::DNNormal(1, 0, aDerNUV, aOrderU, aOrderV).Multiplied(aSign));
         theD1V =
           aDerSurf(0, 1).Added(CSLib::DNNormal(0, 1, aDerNUV, aOrderU, aOrderV).Multiplied(aSign));
 
-        // For D2 and D3, re-fetch from basis surface
         theD2U   = theBasisSurf->DN(theU, theV, 2, 0);
         theD2V   = theBasisSurf->DN(theU, theV, 0, 2);
         theD2UV  = theBasisSurf->DN(theU, theV, 1, 1);
@@ -1483,7 +1208,6 @@ namespace Geom_OffsetSurfaceUtils
         theD3UUV = theBasisSurf->DN(theU, theV, 2, 1);
         theD3UVV = theBasisSurf->DN(theU, theV, 1, 2);
 
-        // Add offset corrections using CSLib::DNNormal
         theD2U.Add(CSLib::DNNormal(2, 0, aDerNUV, aOrderU, aOrderV).Multiplied(aSign));
         theD2V.Add(CSLib::DNNormal(0, 2, aDerNUV, aOrderU, aOrderV).Multiplied(aSign));
         theD2UV.Add(CSLib::DNNormal(1, 1, aDerNUV, aOrderU, aOrderV).Multiplied(aSign));
@@ -1494,7 +1218,6 @@ namespace Geom_OffsetSurfaceUtils
         return true;
       }
 
-      // Try shifting point towards center - returns false when center is overpassed
       if (!ShiftPoint(aUStart,
                       aVStart,
                       theU,
@@ -1513,23 +1236,6 @@ namespace Geom_OffsetSurfaceUtils
     }
   }
 
-  //! Template function for DN evaluation with pre-computed basis surface D1.
-  //! When normal calculation fails at singular points, falls back to full evaluation
-  //! with retry mechanism.
-  //!
-  //! @tparam BasisSurfType type of basis surface (must have D1 and DN methods)
-  //! @tparam OscSurfQueryType type providing osculating surface query
-  //! @param[in] theU U parameter
-  //! @param[in] theV V parameter
-  //! @param[in] theNu derivative order in U
-  //! @param[in] theNv derivative order in V
-  //! @param[in] theBasisSurf basis surface adaptor
-  //! @param[in] theOffset offset distance
-  //! @param[in] theOscQuery osculating surface query object (may be null)
-  //! @param[out] theResult computed derivative vector
-  //! @param[in] theD1U pre-computed basis surface D1U (used for first iteration)
-  //! @param[in] theD1V pre-computed basis surface D1V (used for first iteration)
-  //! @return true if calculation succeeded, false if failed at singular point
   template <class BasisSurfType, class OscSurfQueryType>
   bool EvaluateDN(double                  theU,
                   double                  theV,
@@ -1549,7 +1255,6 @@ namespace Geom_OffsetSurfaceUtils
     const bool isUPer = theBasisSurf->IsUPeriodic();
     const bool isVPer = theBasisSurf->IsVPeriodic();
 
-    // Use pre-computed D1 for first iteration
     gp_Pnt aP;
     gp_Vec aD1U             = theD1U;
     gp_Vec aD1V             = theD1V;
@@ -1557,7 +1262,7 @@ namespace Geom_OffsetSurfaceUtils
 
     for (;;)
     {
-      // For subsequent iterations, recompute D1 at shifted point
+
       if (!isFirstIteration)
       {
         theBasisSurf->D1(theU, theV, aP, aD1U, aD1V);
@@ -1569,7 +1274,6 @@ namespace Geom_OffsetSurfaceUtils
         return false;
       }
 
-      // Check if singular to determine MaxOrder
       gp_Dir             aNormal;
       CSLib_NormalStatus aNStatus;
       CSLib::Normal(aD1U, aD1V, THE_D1_MAGNITUDE_TOL, aNStatus, aNormal);
@@ -1577,7 +1281,6 @@ namespace Geom_OffsetSurfaceUtils
       const int aMaxOrder = (aNStatus == CSLib_Defined) ? 0 : 3;
       int       aOrderU, aOrderV;
 
-      // Stack buffers: max size with aMaxOrder=3, theNu=theNv=3 is 7x7=49 and 8x8=64
       const int aDerNUVSize  = (aMaxOrder + theNu + 1) * (aMaxOrder + theNv + 1);
       const int aDerSurfSize = (aMaxOrder + theNu + 2) * (aMaxOrder + theNv + 2);
       NCollection_LocalArray<gp_Vec, 49> aDerNUVBuffer(aDerNUVSize);
@@ -1596,7 +1299,6 @@ namespace Geom_OffsetSurfaceUtils
       aDerSurf.SetValue(1, 0, aD1U);
       aDerSurf.SetValue(0, 1, aD1V);
 
-      // Check osculating surface only in singular case
       OsculatingInfo                   aOscInfo;
       occ::handle<Geom_BSplineSurface> aOscSurf;
       if ((aNStatus != CSLib_Defined) && theOscQuery)
@@ -1607,7 +1309,6 @@ namespace Geom_OffsetSurfaceUtils
           theOscQuery->VOsculatingSurface(theU, theV, aOscInfo.IsOpposite, aOscSurf);
       }
 
-      // Use ComputeDerivatives
       if (aOscInfo.HasOsculating() && !aOscSurf.IsNull())
       {
         ComputeDerivatives(aMaxOrder,
@@ -1640,7 +1341,6 @@ namespace Geom_OffsetSurfaceUtils
                            aDerSurf);
       }
 
-      // Compute normal with CSLib
       CSLib::Normal(aMaxOrder,
                     aDerNUV,
                     THE_D1_MAGNITUDE_TOL,
@@ -1659,13 +1359,11 @@ namespace Geom_OffsetSurfaceUtils
       {
         const double aSign = theOffset * aOscInfo.Sign();
 
-        // Compute DN result: basis DN + offset * DNNormal
         theResult = theBasisSurf->DN(theU, theV, theNu, theNv);
         theResult.Add(CSLib::DNNormal(theNu, theNv, aDerNUV, aOrderU, aOrderV).Multiplied(aSign));
         return true;
       }
 
-      // Try shifting point towards center - returns false when center is overpassed
       if (!ShiftPoint(aUStart,
                       aVStart,
                       theU,
@@ -1684,20 +1382,6 @@ namespace Geom_OffsetSurfaceUtils
     }
   }
 
-  //! Template function for DN evaluation with retry mechanism for singular points.
-  //! Computes D1 internally and calls the pre-computed overload.
-  //!
-  //! @tparam BasisSurfType type of basis surface (must have D1 and DN methods)
-  //! @tparam OscSurfQueryType type providing osculating surface query
-  //! @param[in] theU U parameter
-  //! @param[in] theV V parameter
-  //! @param[in] theNu derivative order in U
-  //! @param[in] theNv derivative order in V
-  //! @param[in] theBasisSurf basis surface adaptor
-  //! @param[in] theOffset offset distance
-  //! @param[in] theOscQuery osculating surface query object (may be null)
-  //! @param[out] theResult computed derivative vector
-  //! @return true if calculation succeeded, false if failed at singular point
   template <class BasisSurfType, class OscSurfQueryType>
   bool EvaluateDN(double                  theU,
                   double                  theV,

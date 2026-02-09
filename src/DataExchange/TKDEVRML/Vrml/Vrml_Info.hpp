@@ -7,11 +7,6 @@
 #include <TCollection_AsciiString.hpp>
 #include <Standard_OStream.hpp>
 
-//! defines a Info node of VRML specifying properties of geometry
-//! and its appearance.
-//! It is used to store information in the scene graph,
-//! Typically for application-specific purposes, copyright messages,
-//! or other strings.
 class Vrml_Info
 {
 public:

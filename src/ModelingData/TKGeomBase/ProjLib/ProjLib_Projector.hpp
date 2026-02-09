@@ -18,19 +18,16 @@ class gp_Elips;
 class gp_Parab;
 class gp_Hypr;
 
-//! Root class for projection algorithms, stores the result.
 class ProjLib_Projector
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Sets the type to OtherCurve
   Standard_EXPORT ProjLib_Projector();
   Standard_EXPORT virtual ~ProjLib_Projector();
 
   Standard_EXPORT bool IsDone() const;
 
-  //! Set isDone = true;
   Standard_EXPORT void Done();
 
   Standard_EXPORT GeomAbs_CurveType GetType() const;
@@ -69,17 +66,11 @@ public:
 
   Standard_EXPORT virtual void Project(const gp_Hypr& H);
 
-  //! Translates the 2d curve
-  //! to set the part of the curve [CFirst, CLast]
-  //! in the range [ UFirst, UFirst + Period [
   Standard_EXPORT void UFrame(const double CFirst,
                               const double CLast,
                               const double UFirst,
                               const double Period);
 
-  //! Translates the 2d curve
-  //! to set the part of the curve [CFirst, CLast]
-  //! in the range [ VFirst, VFirst + Period [
   Standard_EXPORT void VFrame(const double CFirst,
                               const double CLast,
                               const double VFirst,

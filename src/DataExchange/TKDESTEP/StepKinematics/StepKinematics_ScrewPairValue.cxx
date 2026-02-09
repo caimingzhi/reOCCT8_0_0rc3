@@ -1,14 +1,10 @@
-// Created on : Sat May 02 12:41:16 2020
+
 
 #include <StepKinematics_ScrewPairValue.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_ScrewPairValue, StepKinematics_PairValue)
 
-//=================================================================================================
-
 StepKinematics_ScrewPairValue::StepKinematics_ScrewPairValue() = default;
-
-//=================================================================================================
 
 void StepKinematics_ScrewPairValue::Init(
   const occ::handle<TCollection_HAsciiString>&     theRepresentationItem_Name,
@@ -20,14 +16,10 @@ void StepKinematics_ScrewPairValue::Init(
   myActualRotation = theActualRotation;
 }
 
-//=================================================================================================
-
 double StepKinematics_ScrewPairValue::ActualRotation() const
 {
   return myActualRotation;
 }
-
-//=================================================================================================
 
 void StepKinematics_ScrewPairValue::SetActualRotation(const double theActualRotation)
 {

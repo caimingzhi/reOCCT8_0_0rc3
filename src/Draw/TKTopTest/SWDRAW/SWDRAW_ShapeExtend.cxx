@@ -19,7 +19,7 @@ static int sortcompound(Draw_Interpretor& di, int argc, const char** argv)
   if (Shape.IsNull())
   {
     di << "Shape unknown : " << arg1 << "\n";
-    return 1 /* Error */;
+    return 1;
   }
 
   if (argc < 4)
@@ -29,7 +29,7 @@ static int sortcompound(Draw_Interpretor& di, int argc, const char** argv)
     {
       bool             viaCompound = (i != 0);
       TopAbs_ShapeEnum ts          = sbx.ShapeType(Shape, viaCompound);
-      // std::cout<<"   Type "<<(i ? " (via Compound) : " : "(True) : ");
+
       if (!viaCompound)
       {
         di << "   Type (True) : ";
@@ -124,10 +124,8 @@ static int sortcompound(Draw_Interpretor& di, int argc, const char** argv)
     }
     DBRep::Set(argv[2], Shape);
   }
-  return 0; // Done
+  return 0;
 }
-
-//=================================================================================================
 
 void SWDRAW_ShapeExtend::InitCommands(Draw_Interpretor& theCommands)
 {

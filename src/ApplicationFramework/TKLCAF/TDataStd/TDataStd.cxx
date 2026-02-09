@@ -11,8 +11,6 @@
 #include <TDF_Reference.hpp>
 #include <TDF_TagSource.hpp>
 
-//=================================================================================================
-
 void TDataStd::IDList(NCollection_List<Standard_GUID>& anIDList)
 {
   anIDList.Append(TDF_TagSource::GetID());
@@ -24,11 +22,6 @@ void TDataStd::IDList(NCollection_List<Standard_GUID>& anIDList)
   anIDList.Append(TDataStd_RealArray::GetID());
   anIDList.Append(TDataStd_ExtStringArray::GetID());
 }
-
-//=======================================================================
-// function :
-// purpose  : print the name of the real dimension
-//=======================================================================
 
 Standard_OStream& TDataStd::Print(const TDataStd_RealEnum C, Standard_OStream& s)
 {

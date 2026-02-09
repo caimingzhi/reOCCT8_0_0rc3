@@ -8,11 +8,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_Surface3dElementRepresentation, StepFEA_ElementRepresentation)
 
-//=================================================================================================
-
 StepFEA_Surface3dElementRepresentation::StepFEA_Surface3dElementRepresentation() = default;
-
-//=================================================================================================
 
 void StepFEA_Surface3dElementRepresentation::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentation_Name,
@@ -40,14 +36,10 @@ void StepFEA_Surface3dElementRepresentation::Init(
   theMaterial = aMaterial;
 }
 
-//=================================================================================================
-
 occ::handle<StepFEA_FeaModel3d> StepFEA_Surface3dElementRepresentation::ModelRef() const
 {
   return theModelRef;
 }
-
-//=================================================================================================
 
 void StepFEA_Surface3dElementRepresentation::SetModelRef(
   const occ::handle<StepFEA_FeaModel3d>& aModelRef)
@@ -55,15 +47,11 @@ void StepFEA_Surface3dElementRepresentation::SetModelRef(
   theModelRef = aModelRef;
 }
 
-//=================================================================================================
-
 occ::handle<StepElement_Surface3dElementDescriptor> StepFEA_Surface3dElementRepresentation::
   ElementDescriptor() const
 {
   return theElementDescriptor;
 }
-
-//=================================================================================================
 
 void StepFEA_Surface3dElementRepresentation::SetElementDescriptor(
   const occ::handle<StepElement_Surface3dElementDescriptor>& aElementDescriptor)
@@ -71,15 +59,11 @@ void StepFEA_Surface3dElementRepresentation::SetElementDescriptor(
   theElementDescriptor = aElementDescriptor;
 }
 
-//=================================================================================================
-
 occ::handle<StepElement_SurfaceElementProperty> StepFEA_Surface3dElementRepresentation::Property()
   const
 {
   return theProperty;
 }
-
-//=================================================================================================
 
 void StepFEA_Surface3dElementRepresentation::SetProperty(
   const occ::handle<StepElement_SurfaceElementProperty>& aProperty)
@@ -87,14 +71,10 @@ void StepFEA_Surface3dElementRepresentation::SetProperty(
   theProperty = aProperty;
 }
 
-//=================================================================================================
-
 occ::handle<StepElement_ElementMaterial> StepFEA_Surface3dElementRepresentation::Material() const
 {
   return theMaterial;
 }
-
-//=================================================================================================
 
 void StepFEA_Surface3dElementRepresentation::SetMaterial(
   const occ::handle<StepElement_ElementMaterial>& aMaterial)

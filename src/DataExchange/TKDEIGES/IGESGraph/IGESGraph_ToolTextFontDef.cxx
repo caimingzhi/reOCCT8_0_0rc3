@@ -27,7 +27,7 @@ void IGESGraph_ToolTextFontDef::ReadOwnParams(const occ::handle<IGESGraph_TextFo
                                               const occ::handle<IGESData_IGESReaderData>& IR,
                                               IGESData_ParamReader&                       PR) const
 {
-  // bool                            st; //szv#4:S4163:12Mar99 moved down
+
   int nbval;
 
   int                                              fontCode;
@@ -45,32 +45,27 @@ void IGESGraph_ToolTextFontDef::ReadOwnParams(const occ::handle<IGESGraph_TextFo
   int tempMotion;
   int tempFlag, tempMoveX, tempMoveY;
 
-  // Reading fontCode(Integer)
-  PR.ReadInteger(PR.Current(), "Font Code", fontCode); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadInteger(PR.Current(), "Font Code", fontCode);
 
-  // Reading fontName(String)
-  PR.ReadText(PR.Current(), "Font Name", fontName); // szv#4:S4163:12Mar99 `st=` not needed
+  PR.ReadText(PR.Current(), "Font Name", fontName);
 
   if (PR.IsParamEntity(PR.CurrentNumber()))
   {
     supersededFont = -1;
 
-    // Reading supersededEntity(TextFontDef)
     PR.ReadEntity(IR,
                   PR.Current(),
                   "Text Definition Entity",
-                  // clang-format off
-		     STANDARD_TYPE(IGESGraph_TextFontDef), supersededEntity); //szv#4:S4163:12Mar99 `st=` not needed
-    }
+
+                  STANDARD_TYPE(IGESGraph_TextFontDef),
+                  supersededEntity);
+  }
   else
-    // Reading supersededFont(Integer)
-    PR.ReadInteger(PR.Current(), "No. of superseded font", supersededFont); //szv#4:S4163:12Mar99 `st=` not needed
 
-  // Reading scale(Integer)
-  PR.ReadInteger(PR.Current(), "Grid units eqvt to one text height", scale); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+    PR.ReadInteger(PR.Current(), "No. of superseded font", supersededFont);
 
-  // Reading nbval(Integer)
+  PR.ReadInteger(PR.Current(), "Grid units eqvt to one text height", scale);
+
   bool st = PR.ReadInteger(PR.Current(), "No. of characters in this defn", nbval);
   if (st && nbval > 0)
   {
@@ -84,25 +79,17 @@ void IGESGraph_ToolTextFontDef::ReadOwnParams(const occ::handle<IGESGraph_TextFo
 
     for (int i = 1; i <= nbval; i++)
     {
-      // Reading aSCIICodes(HArray1OfInteger)
-      if (PR.ReadInteger(PR.Current(),
-                         "array aSCIICodes",
-                         tempCode)) // szv#4:S4163:12Mar99 `st=` not needed
+
+      if (PR.ReadInteger(PR.Current(), "array aSCIICodes", tempCode))
         aSCIICodes->SetValue(i, tempCode);
 
-      // Reading nextChars(HArray1OfInteger*2)
-      if (PR.ReadInteger(PR.Current(),
-                         "array nextChar X",
-                         tempNextX)) // szv#4:S4163:12Mar99 `st=` not needed
+      if (PR.ReadInteger(PR.Current(), "array nextChar X", tempNextX))
         nextCharX->SetValue(i, tempNextX);
-      if (PR.ReadInteger(PR.Current(),
-                         "array nextChar Y",
-                         tempNextY)) // szv#4:S4163:12Mar99 `st=` not needed
+      if (PR.ReadInteger(PR.Current(), "array nextChar Y", tempNextY))
         nextCharY->SetValue(i, tempNextY);
 
-      // Reading penMotions(HArray1OfInteger)
       if (PR.ReadInteger(PR.Current(), "array penMotions", tempMotion))
-      { // szv#4:S4163:12Mar99 `st=` not needed
+      {
         penMotions->SetValue(i, tempMotion);
         if (tempMotion > 0)
         {
@@ -116,23 +103,16 @@ void IGESGraph_ToolTextFontDef::ReadOwnParams(const occ::handle<IGESGraph_TextFo
           {
             if (PR.DefinedElseSkip())
             {
-              // Reading penFlags(HArray1OfHArray1OfInteger)
-              if (PR.ReadInteger(PR.Current(),
-                                 "array penFlags",
-                                 tempFlag)) // szv#4:S4163:12Mar99 `st=` not needed
+
+              if (PR.ReadInteger(PR.Current(), "array penFlags", tempFlag))
                 intarray->SetValue(j, tempFlag);
             }
             else
-              intarray->SetValue(j, 0); // Default Value
+              intarray->SetValue(j, 0);
 
-            // Reading movePenTo(HArray1OfHArray1OfInteger*2)
-            if (PR.ReadInteger(PR.Current(),
-                               "array movePenTo X",
-                               tempMoveX)) // szv#4:S4163:12Mar99 `st=` not needed
+            if (PR.ReadInteger(PR.Current(), "array movePenTo X", tempMoveX))
               xarray->SetValue(j, tempMoveX);
-            if (PR.ReadInteger(PR.Current(),
-                               "array movePenTo Y",
-                               tempMoveY)) // szv#4:S4163:12Mar99 `st=` not needed
+            if (PR.ReadInteger(PR.Current(), "array movePenTo Y", tempMoveY))
               yarray->SetValue(j, tempMoveY);
           }
           penFlags->SetValue(i, intarray);
@@ -170,7 +150,7 @@ void IGESGraph_ToolTextFontDef::WriteOwnParams(const occ::handle<IGESGraph_TextF
   IW.Send(ent->FontName());
 
   if (ent->IsSupersededFontEntity())
-    IW.Send(ent->SupersededFontEntity(), true); // negative
+    IW.Send(ent->SupersededFontEntity(), true);
   else
     IW.Send(ent->SupersededFontCode());
 
@@ -286,7 +266,7 @@ void IGESGraph_ToolTextFontDef::OwnCopy(const occ::handle<IGESGraph_TextFontDef>
 }
 
 IGESData_DirChecker IGESGraph_ToolTextFontDef::DirChecker(
-  const occ::handle<IGESGraph_TextFontDef>& /*ent*/) const
+  const occ::handle<IGESGraph_TextFontDef>&) const
 {
   IGESData_DirChecker DC(310, 0);
   DC.Structure(IGESData_DefVoid);
@@ -300,9 +280,9 @@ IGESData_DirChecker IGESGraph_ToolTextFontDef::DirChecker(
   return DC;
 }
 
-void IGESGraph_ToolTextFontDef::OwnCheck(const occ::handle<IGESGraph_TextFontDef>& /*ent*/,
+void IGESGraph_ToolTextFontDef::OwnCheck(const occ::handle<IGESGraph_TextFontDef>&,
                                          const Interface_ShareTool&,
-                                         occ::handle<Interface_Check>& /*ach*/) const
+                                         occ::handle<Interface_Check>&) const
 {
 }
 

@@ -21,14 +21,10 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_IndexedDataMap.hpp>
 
-// #include <DBRep.hpp>
 #ifdef OCCT_DEBUG
 extern bool TopOpeBRepBuild_GettraceSPS();
 #endif
-//------------
-// static int ifvNbFace = 0;
-// static char *name = "                 ";
-//-------------
+
 static void CorrectEdgeOrientation(TopoDS_Shape& aWire)
 {
 
@@ -96,7 +92,7 @@ static void CorrectEdgeOrientation(TopoDS_Shape& aWire)
     }
 
     anEdgeList.Assign(anAuxList);
-    anAuxList.Clear(); // something wrong in Assign when list contains 1 element.
+    anAuxList.Clear();
     n = anEdgeList.Extent();
     anIt.Initialize(anEdgeList);
   }
@@ -113,7 +109,7 @@ static void CorrectEdgeOrientation(TopoDS_Shape& aWire)
 
 static void CorrectUnclosedWire(TopoDS_Shape& aWire)
 {
-  //  std::cout << "-------CorrectUnclosedWire" << std::endl;
+
   BRep_Builder    BB;
   TopoDS_Iterator tdi(aWire, false, false);
   for (; tdi.More(); tdi.Next())
@@ -122,7 +118,7 @@ static void CorrectUnclosedWire(TopoDS_Shape& aWire)
     int                 nbv = ed.NbChildren();
     if (nbv <= 1)
     {
-      //      std::cout << "Remove bad edge" << std::endl;
+
       BB.Remove(aWire, ed);
     }
   }
@@ -139,13 +135,11 @@ static void CorrectUnclosedWire(TopoDS_Shape& aWire)
     if (Elist.Extent() == 1)
     {
       const TopoDS_Shape& anEdge = Elist.First();
-      //      std::cout << "Remove redundant edge" << std::endl;
+
       BB.Remove(aWire, anEdge);
     }
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder::MergeShapes(const TopoDS_Shape& S1,
                                           const TopAbs_State  ToBuild1,
@@ -175,27 +169,21 @@ void TopOpeBRepBuild_Builder::MergeShapes(const TopoDS_Shape& S1,
   MapShapes(S1, S2);
   SplitSectionEdges();
 
-  //======================== debut KPart
   if (IsKPart())
   {
     MergeKPart();
     ClearMaps();
     return;
   }
-  //======================== fin KPart
 
   bool RevOri1 = Reverse(ToBuild1, ToBuild2);
   bool RevOri2 = Reverse(ToBuild2, ToBuild1);
 
-  // Create a face set <SFS> connected by edges
-  // -----------------------------------------
   TopOpeBRepBuild_ShellFaceSet SFS;
 
 #ifdef OCCT_DEBUG
   SFS.DEBNumber(GdumpSHASETindex());
 #endif
-
-  // NYI : SplitCompound appele par SplitShape
 
   TopOpeBRepTool_ShapeExplorer ex1;
 
@@ -271,9 +259,6 @@ void TopOpeBRepBuild_Builder::MergeShapes(const TopoDS_Shape& S1,
     SplitShapes(ex2, ToBuild2, ToBuild1, SFS, RevOri2);
   }
 
-  // S1 or S2 = COMPOUND : connect them the list of merged shapes build
-  // on the first subshape.
-
   if (!S1null)
   {
     if (t1 == TopAbs_COMPOUND)
@@ -305,17 +290,12 @@ void TopOpeBRepBuild_Builder::MergeShapes(const TopoDS_Shape& S1,
   }
 
   ClearMaps();
-
-} // MergeShapes
-
-//=================================================================================================
+}
 
 bool TopOpeBRepBuild_Builder::Classify() const
 {
   return myClassifyVal;
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder::ChangeClassify(const bool classify)
 {
@@ -323,25 +303,19 @@ void TopOpeBRepBuild_Builder::ChangeClassify(const bool classify)
   myClassifyVal = classify;
 }
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::MergeSolids(const TopoDS_Shape& S1,
                                           const TopAbs_State  ToBuild1,
                                           const TopoDS_Shape& S2,
                                           const TopAbs_State  ToBuild2)
 {
   MergeShapes(S1, ToBuild1, S2, ToBuild2);
-} // MergeSolids
-
-//=================================================================================================
+}
 
 void TopOpeBRepBuild_Builder::MergeSolid(const TopoDS_Shape& S, const TopAbs_State ToBuild)
 {
   TopoDS_Shape Snull;
   MergeShapes(S, ToBuild, Snull, ToBuild);
-} // MergeSolid
-
-//=================================================================================================
+}
 
 void TopOpeBRepBuild_Builder::MakeSolids(TopOpeBRepBuild_SolidBuilder&   SOBU,
                                          NCollection_List<TopoDS_Shape>& L)
@@ -365,16 +339,14 @@ void TopOpeBRepBuild_Builder::MakeSolids(TopOpeBRepBuild_SolidBuilder&   SOBU,
           myBuildTool.AddShellFace(newShell, F);
         }
       }
-      // clang-format off
-      myBuildTool.Closed(newShell,true); // NYI : check exact du caractere closed du shell
-      // clang-format on
+
+      myBuildTool.Closed(newShell, true);
+
       myBuildTool.AddSolidShell(newSolid, newShell);
     }
     L.Append(newSolid);
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder::MakeShells(TopOpeBRepBuild_SolidBuilder&   SOBU,
                                          NCollection_List<TopoDS_Shape>& L)
@@ -397,8 +369,6 @@ void TopOpeBRepBuild_Builder::MakeShells(TopOpeBRepBuild_SolidBuilder&   SOBU,
     L.Append(newShell);
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder::MakeFaces(const TopoDS_Shape&             aFace,
                                         TopOpeBRepBuild_FaceBuilder&    FABU,
@@ -447,7 +417,7 @@ void TopOpeBRepBuild_Builder::MakeFaces(const TopoDS_Shape&             aFace,
           myBuildTool.AddWireEdge(newWire, E);
         }
       }
-      //----------- IFV
+
       if (!isold)
       {
         BRepCheck_Analyzer bca(newWire, false);
@@ -467,15 +437,13 @@ void TopOpeBRepBuild_Builder::MakeFaces(const TopoDS_Shape&             aFace,
           }
         }
       }
-      myBuildTool.Closed(newWire, true); // NYI : check exact du caractere closed du wire
+      myBuildTool.Closed(newWire, true);
       myBuildTool.AddFaceWire(newFace, newWire);
     }
 
     L.Append(newFace);
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepBuild_Builder::MakeEdges(const TopoDS_Shape&             anEdge,
                                         TopOpeBRepBuild_EdgeBuilder&    EDBU,
@@ -491,7 +459,6 @@ void TopOpeBRepBuild_Builder::MakeEdges(const TopoDS_Shape&             anEdge,
   for (EDBU.InitEdge(); EDBU.MoreEdge(); EDBU.NextEdge())
   {
 
-    // 1 vertex sur edge courante => suppression edge
     int nloop = 0;
     for (EDBU.InitVertex(); EDBU.MoreVertex(); EDBU.NextVertex())
       nloop++;
@@ -509,7 +476,7 @@ void TopOpeBRepBuild_Builder::MakeEdges(const TopoDS_Shape&             anEdge,
       bool hassd = myDataStructure->HasSameDomain(V);
       if (hassd)
       {
-        // on prend le vertex reference de V
+
         int iref = myDataStructure->SameDomainReference(V);
         V        = myDataStructure->Shape(iref);
         V.Orientation(Vori);
@@ -518,7 +485,7 @@ void TopOpeBRepBuild_Builder::MakeEdges(const TopoDS_Shape&             anEdge,
       TopAbs_Orientation oriV = V.Orientation();
       if (oriV != TopAbs_EXTERNAL)
       {
-        // betonnage
+
         bool            equafound = false;
         TopExp_Explorer exE(newEdge, TopAbs_VERTEX);
         for (; exE.More(); exE.Next())
@@ -557,7 +524,7 @@ void TopOpeBRepBuild_Builder::MakeEdges(const TopoDS_Shape&             anEdge,
           myBuildTool.Parameter(newEdge, V, parV);
         }
       }
-    } // loop on vertices of new edge newEdge
+    }
 
 #ifdef OCCT_DEBUG
     if (tSPS)
@@ -576,10 +543,8 @@ void TopOpeBRepBuild_Builder::MakeEdges(const TopoDS_Shape&             anEdge,
 
     if (hasvertex)
       L.Append(newEdge);
-  } // loop on EDBU edges
-} // MakeEdges
-
-//=================================================================================================
+  }
+}
 
 bool TopOpeBRepBuild_Builder::IsMerged(const TopoDS_Shape& S, const TopAbs_State ToBuild) const
 {
@@ -606,9 +571,7 @@ bool TopOpeBRepBuild_Builder::IsMerged(const TopoDS_Shape& S, const TopAbs_State
     bool                                  isempty = L.IsEmpty();
     return (!isempty);
   }
-} // IsMerged
-
-//=================================================================================================
+}
 
 const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_Builder::Merged(
   const TopoDS_Shape& S,
@@ -635,9 +598,7 @@ const NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_Builder::Merged(
     const NCollection_List<TopoDS_Shape>& L = (*p)(S).ListOnState();
     return L;
   }
-} // Merged
-
-//=================================================================================================
+}
 
 NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_Builder::ChangeMerged(const TopoDS_Shape& S,
                                                                       const TopAbs_State  ToBuild)
@@ -660,28 +621,24 @@ NCollection_List<TopoDS_Shape>& TopOpeBRepBuild_Builder::ChangeMerged(const Topo
   }
   NCollection_List<TopoDS_Shape>& L = (*p)(S).ChangeListOnState();
   return L;
-} // ChangeMerged
+}
 
-//=================================================================================================
-
-void TopOpeBRepBuild_Builder::MergeEdges(const NCollection_List<TopoDS_Shape>&, // L1,
-                                         const TopAbs_State,                    // ToBuild1,
-                                         const NCollection_List<TopoDS_Shape>&, // L2,
-                                         const TopAbs_State,                    // ToBuild2,
-                                         const bool,                            // Keepon1,
-                                         const bool,                            // Keepon2,
-                                         const bool)                            // Keepon12)
+void TopOpeBRepBuild_Builder::MergeEdges(const NCollection_List<TopoDS_Shape>&,
+                                         const TopAbs_State,
+                                         const NCollection_List<TopoDS_Shape>&,
+                                         const TopAbs_State,
+                                         const bool,
+                                         const bool,
+                                         const bool)
 {
-} // MergeEdges
+}
 
-//=================================================================================================
-
-void TopOpeBRepBuild_Builder::MergeFaces(const NCollection_List<TopoDS_Shape>&, // S1,
-                                         const TopAbs_State,                    // ToBuild1,
-                                         const NCollection_List<TopoDS_Shape>&, // S2,
-                                         const TopAbs_State,                    // ToBuild2
-                                         const bool,                            // onA,
-                                         const bool,                            // onB,
-                                         const bool)                            // onAB)
+void TopOpeBRepBuild_Builder::MergeFaces(const NCollection_List<TopoDS_Shape>&,
+                                         const TopAbs_State,
+                                         const NCollection_List<TopoDS_Shape>&,
+                                         const TopAbs_State,
+                                         const bool,
+                                         const bool,
+                                         const bool)
 {
 }

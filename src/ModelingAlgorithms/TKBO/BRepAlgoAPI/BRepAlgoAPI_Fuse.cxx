@@ -2,15 +2,11 @@
 #include <BRepAlgoAPI_Fuse.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=================================================================================================
-
 BRepAlgoAPI_Fuse::BRepAlgoAPI_Fuse()
 
 {
   myOperation = BOPAlgo_FUSE;
 }
-
-//=================================================================================================
 
 BRepAlgoAPI_Fuse::BRepAlgoAPI_Fuse(const BOPAlgo_PaveFiller& aPF)
     : BRepAlgoAPI_BooleanOperation(aPF)
@@ -18,11 +14,7 @@ BRepAlgoAPI_Fuse::BRepAlgoAPI_Fuse(const BOPAlgo_PaveFiller& aPF)
   myOperation = BOPAlgo_FUSE;
 }
 
-//=================================================================================================
-
 BRepAlgoAPI_Fuse::~BRepAlgoAPI_Fuse() = default;
-
-//=================================================================================================
 
 BRepAlgoAPI_Fuse::BRepAlgoAPI_Fuse(const TopoDS_Shape&          S1,
                                    const TopoDS_Shape&          S2,
@@ -31,8 +23,6 @@ BRepAlgoAPI_Fuse::BRepAlgoAPI_Fuse(const TopoDS_Shape&          S1,
 {
   Build(theRange);
 }
-
-//=================================================================================================
 
 BRepAlgoAPI_Fuse::BRepAlgoAPI_Fuse(const TopoDS_Shape&          S1,
                                    const TopoDS_Shape&          S2,

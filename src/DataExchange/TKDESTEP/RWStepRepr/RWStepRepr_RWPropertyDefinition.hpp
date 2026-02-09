@@ -11,26 +11,21 @@ class StepRepr_PropertyDefinition;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write tool for PropertyDefinition
 class RWStepRepr_RWPropertyDefinition
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepRepr_RWPropertyDefinition();
 
-  //! Reads PropertyDefinition
   Standard_HIDDEN void ReadStep(const occ::handle<StepData_StepReaderData>&     data,
                                 const int                                       num,
                                 occ::handle<Interface_Check>&                   ach,
                                 const occ::handle<StepRepr_PropertyDefinition>& ent) const;
 
-  //! Writes PropertyDefinition
   Standard_HIDDEN void WriteStep(StepData_StepWriter&                            SW,
                                  const occ::handle<StepRepr_PropertyDefinition>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(const occ::handle<StepRepr_PropertyDefinition>& ent,
                              Interface_EntityIterator&                       iter) const;
 };

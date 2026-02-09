@@ -18,7 +18,6 @@
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 
-//! Type alias for 3D point-curve extremum function (for LocateExtPC).
 using Extrema_PCFOfEPCOfELPCOfLocateExtPC =
   Extrema_GFuncExtPC<Adaptor3d_Curve,
                      Extrema_CurveTool,
@@ -30,7 +29,6 @@ using Extrema_PCFOfEPCOfELPCOfLocateExtPC =
 #include <Extrema_POnCurv.hpp>
 #include <gp_Pnt.hpp>
 
-//! Type alias for 3D curve extremum point search for LocateExtPC.
 using Extrema_EPCOfELPCOfLocateExtPC = Extrema_GGenExtPC<Adaptor3d_Curve,
                                                          Extrema_CurveTool,
                                                          Extrema_POnCurv,
@@ -44,7 +42,6 @@ using Extrema_EPCOfELPCOfLocateExtPC = Extrema_GGenExtPC<Adaptor3d_Curve,
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 
-//! Type alias for 3D point-to-curve extremum computation for LocateExtPC.
 using Extrema_ELPCOfLocateExtPC = Extrema_GGExtPC<Adaptor3d_Curve,
                                                   Extrema_CurveTool,
                                                   Extrema_ExtPElC,
@@ -68,7 +65,6 @@ using Extrema_ELPCOfLocateExtPC = Extrema_GGExtPC<Adaptor3d_Curve,
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 
-//! Type alias for 3D local point-curve extremum function.
 using Extrema_PCLocFOfLocEPCOfLocateExtPC =
   Extrema_GFuncExtPC<Adaptor3d_Curve,
                      Extrema_CurveTool,
@@ -80,7 +76,6 @@ using Extrema_PCLocFOfLocEPCOfLocateExtPC =
 #include <Extrema_POnCurv.hpp>
 #include <gp_Pnt.hpp>
 
-//! Type alias for 3D curve local extremum search.
 using Extrema_LocEPCOfLocateExtPC = Extrema_GenLocateExtPC<Adaptor3d_Curve,
                                                            Extrema_CurveTool,
                                                            Extrema_POnCurv,
@@ -91,7 +86,6 @@ using Extrema_LocEPCOfLocateExtPC = Extrema_GenLocateExtPC<Adaptor3d_Curve,
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 
-//! Type alias for 3D curve extremum locator.
 using Extrema_LocateExtPC = Extrema_GLocateExtPC<Adaptor3d_Curve,
                                                  Extrema_CurveTool,
                                                  gp_Pnt,

@@ -4,11 +4,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepElement_UniformSurfaceSection.hpp>
 
-//=================================================================================================
-
 RWStepElement_RWUniformSurfaceSection::RWStepElement_RWUniformSurfaceSection() = default;
-
-//=================================================================================================
 
 void RWStepElement_RWUniformSurfaceSection::ReadStep(
   const occ::handle<StepData_StepReaderData>&           data,
@@ -16,11 +12,9 @@ void RWStepElement_RWUniformSurfaceSection::ReadStep(
   occ::handle<Interface_Check>&                         ach,
   const occ::handle<StepElement_UniformSurfaceSection>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 6, ach, "uniform_surface_section"))
     return;
-
-  // Inherited fields of SurfaceSection
 
   StepElement_MeasureOrUnspecifiedValue aSurfaceSection_Offset;
   data->ReadEntity(num, 1, "surface_section.offset", ach, aSurfaceSection_Offset);
@@ -39,8 +33,6 @@ void RWStepElement_RWUniformSurfaceSection::ReadStep(
                    ach,
                    aSurfaceSection_NonStructuralMassOffset);
 
-  // Own fields of UniformSurfaceSection
-
   double aThickness;
   data->ReadReal(num, 4, "thickness", ach, aThickness);
 
@@ -50,7 +42,6 @@ void RWStepElement_RWUniformSurfaceSection::ReadStep(
   StepElement_MeasureOrUnspecifiedValue aShearThickness;
   data->ReadEntity(num, 6, "shear_thickness", ach, aShearThickness);
 
-  // Initialize entity
   ent->Init(aSurfaceSection_Offset,
             aSurfaceSection_NonStructuralMass,
             aSurfaceSection_NonStructuralMassOffset,
@@ -59,22 +50,16 @@ void RWStepElement_RWUniformSurfaceSection::ReadStep(
             aShearThickness);
 }
 
-//=================================================================================================
-
 void RWStepElement_RWUniformSurfaceSection::WriteStep(
   StepData_StepWriter&                                  SW,
   const occ::handle<StepElement_UniformSurfaceSection>& ent) const
 {
-
-  // Inherited fields of SurfaceSection
 
   SW.Send(ent->StepElement_SurfaceSection::Offset().Value());
 
   SW.Send(ent->StepElement_SurfaceSection::NonStructuralMass().Value());
 
   SW.Send(ent->StepElement_SurfaceSection::NonStructuralMassOffset().Value());
-
-  // Own fields of UniformSurfaceSection
 
   SW.Send(ent->Thickness());
 
@@ -83,25 +68,8 @@ void RWStepElement_RWUniformSurfaceSection::WriteStep(
   SW.Send(ent->ShearThickness().Value());
 }
 
-//=================================================================================================
-
 void RWStepElement_RWUniformSurfaceSection::Share(
   const occ::handle<StepElement_UniformSurfaceSection>&,
   Interface_EntityIterator&) const
 {
-
-  // Inherited fields of SurfaceSection
-  /*  CKY 17JUN04. Content is made of REAL and ENUM. No entity !
-    iter.AddItem (ent->StepElement_SurfaceSection::Offset().Value());
-
-    iter.AddItem (ent->StepElement_SurfaceSection::NonStructuralMass().Value());
-
-    iter.AddItem (ent->StepElement_SurfaceSection::NonStructuralMassOffset().Value());
-
-    // Own fields of UniformSurfaceSection
-
-    iter.AddItem (ent->BendingThickness().Value());
-
-    iter.AddItem (ent->ShearThickness().Value());
-  */
 }

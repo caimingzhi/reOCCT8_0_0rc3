@@ -14,7 +14,6 @@ class StepBasic_SiUnit;
 class StepData_StepWriter;
 class TCollection_AsciiString;
 
-//! Read & Write Module for SiUnit
 class RWStepBasic_RWSiUnit
 {
 public:

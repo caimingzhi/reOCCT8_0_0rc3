@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include "RWStepVisual_RWTextLiteral.hpp"
@@ -29,36 +18,24 @@ void RWStepVisual_RWTextLiteral::ReadStep(const occ::handle<StepData_StepReaderD
                                           const occ::handle<StepVisual_TextLiteral>&  ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 6, ach, "text_literal has not 6 parameter(s)"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- own field : literal ---
-
   occ::handle<TCollection_HAsciiString> aLiteral;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
   data->ReadString(num, 2, "literal", ach, aLiteral);
 
-  // --- own field : placement ---
-
   StepGeom_Axis2Placement aPlacement;
-  // szv#4:S4163:12Mar99 `bool stat3 =` not needed
+
   data->ReadEntity(num, 3, "placement", ach, aPlacement);
 
-  // --- own field : alignment ---
-
   occ::handle<TCollection_HAsciiString> aAlignment;
-  // szv#4:S4163:12Mar99 `bool stat4 =` not needed
-  data->ReadString(num, 4, "alignment", ach, aAlignment);
 
-  // --- own field : path ---
+  data->ReadString(num, 4, "alignment", ach, aAlignment);
 
   StepVisual_TextPath aPath = StepVisual_tpUp;
   if (data->ParamType(num, 5) == Interface_ParamEnum)
@@ -72,13 +49,9 @@ void RWStepVisual_RWTextLiteral::ReadStep(const occ::handle<StepData_StepReaderD
   else
     ach->AddFail("Parameter #5 (path) is not an enumeration");
 
-  // --- own field : font ---
-
   StepVisual_FontSelect aFont;
-  // szv#4:S4163:12Mar99 `bool stat6 =` not needed
-  data->ReadEntity(num, 6, "font", ach, aFont);
 
-  //--- Initialisation of the read entity ---
+  data->ReadEntity(num, 6, "font", ach, aFont);
 
   ent->Init(aName, aLiteral, aPlacement, aAlignment, aPath, aFont);
 }
@@ -87,27 +60,15 @@ void RWStepVisual_RWTextLiteral::WriteStep(StepData_StepWriter&                 
                                            const occ::handle<StepVisual_TextLiteral>& ent) const
 {
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
-
-  // --- own field : literal ---
 
   SW.Send(ent->Literal());
 
-  // --- own field : placement ---
-
   SW.Send(ent->Placement().Value());
-
-  // --- own field : alignment ---
 
   SW.Send(ent->Alignment());
 
-  // --- own field : path ---
-
   SW.SendEnum(RWStepVisual_RWTextPath::ConvertToString(ent->Path()));
-
-  // --- own field : font ---
 
   SW.Send(ent->Font().Value());
 }

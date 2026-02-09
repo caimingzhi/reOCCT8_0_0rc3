@@ -11,9 +11,6 @@
 #include <TopoDS_Edge.hpp>
 #include <TopoDS_Face.hpp>
 
-//! This class is used to send the description of an
-//! Edge to the classifier. It contains an Edge and a
-//! Face. So the PCurve of the Edge can be found.
 class BRepClass_Edge
 {
 public:
@@ -23,36 +20,25 @@ public:
 
   Standard_EXPORT BRepClass_Edge(const TopoDS_Edge& E, const TopoDS_Face& F);
 
-  //! Returns the current Edge
   TopoDS_Edge&       Edge();
   const TopoDS_Edge& Edge() const;
 
-  //! Returns the Face for the current Edge
   TopoDS_Face&       Face();
   const TopoDS_Face& Face() const;
 
-  //! Returns the next Edge
   const TopoDS_Edge& NextEdge() const { return myNextEdge; }
 
-  //! Finds and sets the next Edge for the current
   Standard_EXPORT void SetNextEdge(
     const NCollection_IndexedDataMap<TopoDS_Shape,
                                      NCollection_List<TopoDS_Shape>,
                                      TopTools_ShapeMapHasher>& theMapVE);
 
-  //! Returns the maximum tolerance
   double MaxTolerance() const { return myMaxTolerance; }
 
-  //! Sets the maximum tolerance at
-  //! which to start checking in the intersector
   void SetMaxTolerance(const double theValue) { myMaxTolerance = theValue; }
 
-  //! Returns true if we are using boxes
-  //! in the intersector
   bool UseBndBox() const { return myUseBndBox; }
 
-  //! Sets the status of whether we are
-  //! using boxes or not
   void SetUseBndBox(const bool theValue) { myUseBndBox = theValue; }
 
 private:
@@ -68,21 +54,15 @@ inline TopoDS_Edge& BRepClass_Edge::Edge()
   return myEdge;
 }
 
-//=================================================================================================
-
 inline const TopoDS_Edge& BRepClass_Edge::Edge() const
 {
   return myEdge;
 }
 
-//=================================================================================================
-
 inline TopoDS_Face& BRepClass_Edge::Face()
 {
   return myFace;
 }
-
-//=================================================================================================
 
 inline const TopoDS_Face& BRepClass_Edge::Face() const
 {

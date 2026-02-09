@@ -6,8 +6,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_SensitiveEntitySet, BVH_PrimitiveSet3d)
 
-//=================================================================================================
-
 SelectMgr_SensitiveEntitySet::SelectMgr_SensitiveEntitySet(
   const occ::handle<Select3D_BVHBuilder3d>& theBuilder)
     : BVH_PrimitiveSet3d(theBuilder)
@@ -15,10 +13,6 @@ SelectMgr_SensitiveEntitySet::SelectMgr_SensitiveEntitySet(
   myNbEntityWithPersistence = 0;
 }
 
-//=======================================================================
-// function : Append
-// purpose  : Adds new entity to the set and marks BVH tree for rebuild
-//=======================================================================
 void SelectMgr_SensitiveEntitySet::Append(const occ::handle<SelectMgr_SensitiveEntity>& theEntity)
 {
   if (!theEntity->BaseSensitive()->IsKind(STANDARD_TYPE(Select3D_SensitiveEntity)))
@@ -38,11 +32,6 @@ void SelectMgr_SensitiveEntitySet::Append(const occ::handle<SelectMgr_SensitiveE
   MarkDirty();
 }
 
-//=======================================================================
-// function : Append
-// purpose  : Adds every entity of selection theSelection to the set
-//            and marks BVH tree for rebuild
-//=======================================================================
 void SelectMgr_SensitiveEntitySet::Append(const occ::handle<SelectMgr_Selection>& theSelection)
 {
   for (NCollection_Vector<occ::handle<SelectMgr_SensitiveEntity>>::Iterator aSelEntIter(
@@ -70,11 +59,6 @@ void SelectMgr_SensitiveEntitySet::Append(const occ::handle<SelectMgr_Selection>
   MarkDirty();
 }
 
-//=======================================================================
-// function : Remove
-// purpose  : Removes every entity of selection theSelection from the set
-//            and marks BVH tree for rebuild
-//=======================================================================
 void SelectMgr_SensitiveEntitySet::Remove(const occ::handle<SelectMgr_Selection>& theSelection)
 {
   for (NCollection_Vector<occ::handle<SelectMgr_SensitiveEntity>>::Iterator aSelEntIter(
@@ -105,10 +89,6 @@ void SelectMgr_SensitiveEntitySet::Remove(const occ::handle<SelectMgr_Selection>
   MarkDirty();
 }
 
-//=======================================================================
-// function : Box
-// purpose  : Returns bounding box of entity with index theIdx
-//=======================================================================
 Select3D_BndBox3d SelectMgr_SensitiveEntitySet::Box(const int theIndex) const
 {
   const occ::handle<Select3D_SensitiveEntity>& aSensitive =
@@ -121,11 +101,6 @@ Select3D_BndBox3d SelectMgr_SensitiveEntitySet::Box(const int theIndex) const
   return aSensitive->BoundingBox();
 }
 
-//=======================================================================
-// function : Center
-// purpose  : Returns geometry center of sensitive entity index theIdx
-//            along the given axis theAxis
-//=======================================================================
 double SelectMgr_SensitiveEntitySet::Center(const int theIndex, const int theAxis) const
 {
   const occ::handle<Select3D_SensitiveEntity>& aSensitive =
@@ -137,35 +112,21 @@ double SelectMgr_SensitiveEntitySet::Center(const int theIndex, const int theAxi
   return aCenterCoord;
 }
 
-//=======================================================================
-// function : Swap
-// purpose  : Swaps items with indexes theIdx1 and theIdx2
-//=======================================================================
 void SelectMgr_SensitiveEntitySet::Swap(const int theIndex1, const int theIndex2)
 {
   mySensitives.Swap(theIndex1 + 1, theIndex2 + 1);
 }
 
-//=======================================================================
-// function : Size
-// purpose  : Returns the amount of entities
-//=======================================================================
 int SelectMgr_SensitiveEntitySet::Size() const
 {
   return mySensitives.Size();
 }
 
-//=======================================================================
-// function : GetSensitiveById
-// purpose  : Returns the entity with index theIndex in the set
-//=======================================================================
 const occ::handle<SelectMgr_SensitiveEntity>& SelectMgr_SensitiveEntitySet::GetSensitiveById(
   const int theIndex) const
 {
   return mySensitives.FindKey(theIndex + 1);
 }
-
-//=================================================================================================
 
 void SelectMgr_SensitiveEntitySet::addOwner(const occ::handle<SelectMgr_EntityOwner>& theOwner)
 {
@@ -181,8 +142,6 @@ void SelectMgr_SensitiveEntitySet::addOwner(const occ::handle<SelectMgr_EntityOw
     }
   }
 }
-
-//=================================================================================================
 
 void SelectMgr_SensitiveEntitySet::removeOwner(const occ::handle<SelectMgr_EntityOwner>& theOwner)
 {

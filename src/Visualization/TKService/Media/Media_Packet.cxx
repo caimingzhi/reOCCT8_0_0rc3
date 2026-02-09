@@ -15,8 +15,6 @@ extern "C"
 
 IMPLEMENT_STANDARD_RTTIEXT(Media_Packet, Standard_Transient)
 
-//=================================================================================================
-
 Media_Packet::Media_Packet()
     : myPacket(nullptr)
 {
@@ -25,8 +23,6 @@ Media_Packet::Media_Packet()
 #endif
 }
 
-//=================================================================================================
-
 Media_Packet::~Media_Packet()
 {
 #ifdef HAVE_FFMPEG
@@ -34,16 +30,12 @@ Media_Packet::~Media_Packet()
 #endif
 }
 
-//=================================================================================================
-
 void Media_Packet::Unref()
 {
 #ifdef HAVE_FFMPEG
   av_packet_unref(myPacket);
 #endif
 }
-
-//=================================================================================================
 
 const uint8_t* Media_Packet::Data() const
 {
@@ -54,8 +46,6 @@ const uint8_t* Media_Packet::Data() const
 #endif
 }
 
-//=================================================================================================
-
 uint8_t* Media_Packet::ChangeData()
 {
 #ifdef HAVE_FFMPEG
@@ -64,8 +54,6 @@ uint8_t* Media_Packet::ChangeData()
   return nullptr;
 #endif
 }
-
-//=================================================================================================
 
 int Media_Packet::Size() const
 {
@@ -76,8 +64,6 @@ int Media_Packet::Size() const
 #endif
 }
 
-//=================================================================================================
-
 int64_t Media_Packet::Pts() const
 {
 #ifdef HAVE_FFMPEG
@@ -86,8 +72,6 @@ int64_t Media_Packet::Pts() const
   return 0;
 #endif
 }
-
-//=================================================================================================
 
 int64_t Media_Packet::Dts() const
 {
@@ -98,8 +82,6 @@ int64_t Media_Packet::Dts() const
 #endif
 }
 
-//=================================================================================================
-
 int64_t Media_Packet::Duration() const
 {
 #ifdef HAVE_FFMPEG
@@ -108,8 +90,6 @@ int64_t Media_Packet::Duration() const
   return 0;
 #endif
 }
-
-//=================================================================================================
 
 int Media_Packet::StreamIndex() const
 {
@@ -120,8 +100,6 @@ int Media_Packet::StreamIndex() const
 #endif
 }
 
-//=================================================================================================
-
 bool Media_Packet::IsKeyFrame() const
 {
 #ifdef HAVE_FFMPEG
@@ -130,8 +108,6 @@ bool Media_Packet::IsKeyFrame() const
   return false;
 #endif
 }
-
-//=================================================================================================
 
 void Media_Packet::SetKeyFrame()
 {

@@ -11,18 +11,12 @@
 namespace
 {
 
-  //! Converts the given string to lowercase
-  //! @param theString the string to be converted
-  //! @return a converted string (a string in lowercase)
   static std::string toLowerCase(std::string theString)
   {
     std::transform(theString.begin(), theString.end(), theString.begin(), ::LowerCase);
     return theString;
   }
 
-  //! Converts the vector of std::strings to a vector of pointers to its data
-  //! @param theStringList the vector of strings to be converted
-  //! @return a vector of pointers to the data of given strings
   static std::vector<const char*> convertToRawStringList(
     const std::vector<std::string>& theStringList)
   {
@@ -42,22 +36,17 @@ const std::size_t ViewerTest_CmdParser::THE_UNNAMED_COMMAND_OPTION_KEY =
 
 const std::size_t ViewerTest_CmdParser::THE_HELP_COMMAND_OPTION_KEY = 0;
 
-//=================================================================================================
-
 ViewerTest_CmdParser::ViewerTest_CmdParser(const std::string& theDescription)
     : myDescription(theDescription)
 {
   AddOption("help|h", "Prints a short description of the command and its options.");
 }
 
-//=================================================================================================
-
 ViewerTest_CommandOptionKey ViewerTest_CmdParser::AddOption(const std::string& theOptionNames,
                                                             const std::string& theOptionDescription)
 {
   CommandOption aNewOption;
 
-  // extract option names
   std::vector<std::string> aNames;
   std::stringstream        aStream(theOptionNames);
   std::string              anItem;
@@ -94,8 +83,6 @@ ViewerTest_CommandOptionKey ViewerTest_CmdParser::AddOption(const std::string& t
   return aNewOptionKey;
 }
 
-//=================================================================================================
-
 void ViewerTest_CmdParser::PrintHelp() const
 {
   std::cout << myDescription << std::endl;
@@ -120,8 +107,6 @@ void ViewerTest_CmdParser::PrintHelp() const
   }
   std::cout << std::endl;
 }
-
-//=================================================================================================
 
 void ViewerTest_CmdParser::Parse(const int theArgsNb, const char* const* const theArgVec)
 {
@@ -155,8 +140,6 @@ void ViewerTest_CmdParser::Parse(const int theArgsNb, const char* const* const t
   }
 }
 
-//=================================================================================================
-
 std::string ViewerTest_CmdParser::GetOptionNameByKey(
   const ViewerTest_CommandOptionKey theOptionKey) const
 {
@@ -166,8 +149,6 @@ std::string ViewerTest_CmdParser::GetOptionNameByKey(
   }
   return myOptionStorage[theOptionKey].Name;
 }
-
-//=================================================================================================
 
 ViewerTest_CommandOptionKeySet ViewerTest_CmdParser::GetUsedOptions() const
 {
@@ -181,32 +162,24 @@ ViewerTest_CommandOptionKeySet ViewerTest_CmdParser::GetUsedOptions() const
   return aUsedOptions;
 }
 
-//=================================================================================================
-
 bool ViewerTest_CmdParser::HasNoOption() const
 {
   return myUsedOptionMap.empty();
 }
-
-//=================================================================================================
 
 bool ViewerTest_CmdParser::HasUnnamedOption() const
 {
   return myUsedOptionMap.find(THE_UNNAMED_COMMAND_OPTION_KEY) != myUsedOptionMap.end();
 }
 
-//=================================================================================================
-
 bool ViewerTest_CmdParser::HasOnlyUnnamedOption() const
 {
   return HasUnnamedOption() && (myUsedOptionMap.size() == 1);
 }
 
-//=================================================================================================
-
 bool ViewerTest_CmdParser::HasOption(const std::string& theOptionName,
-                                     const std::size_t  theMandatoryArgsNb /* = 0 */,
-                                     const bool         isFatal /* = false */) const
+                                     const std::size_t  theMandatoryArgsNb,
+                                     const bool         isFatal) const
 {
   ViewerTest_CommandOptionKey anOptionKey;
   if (!findOptionKey(theOptionName, anOptionKey))
@@ -216,11 +189,9 @@ bool ViewerTest_CmdParser::HasOption(const std::string& theOptionName,
   return HasOption(anOptionKey, theMandatoryArgsNb, isFatal);
 }
 
-//=================================================================================================
-
 bool ViewerTest_CmdParser::HasOption(const ViewerTest_CommandOptionKey theOptionKey,
-                                     const std::size_t                 theMandatoryArgsNb /* = 0 */,
-                                     const bool                        isFatal /* = false */) const
+                                     const std::size_t                 theMandatoryArgsNb,
+                                     const bool                        isFatal) const
 {
   std::size_t aUsedOptionIndex = 0;
   if (!findUsedOptionIndex(theOptionKey, aUsedOptionIndex))
@@ -239,8 +210,6 @@ bool ViewerTest_CmdParser::HasOption(const ViewerTest_CommandOptionKey theOption
   return aResult;
 }
 
-//=================================================================================================
-
 int ViewerTest_CmdParser::GetNumberOfOptionArguments(const std::string& theOptionName) const
 {
   ViewerTest_CommandOptionKey anOptionKey = THE_UNNAMED_COMMAND_OPTION_KEY;
@@ -250,8 +219,6 @@ int ViewerTest_CmdParser::GetNumberOfOptionArguments(const std::string& theOptio
   }
   return GetNumberOfOptionArguments(anOptionKey);
 }
-
-//=================================================================================================
 
 int ViewerTest_CmdParser::GetNumberOfOptionArguments(
   const ViewerTest_CommandOptionKey theOptionKey) const
@@ -263,8 +230,6 @@ int ViewerTest_CmdParser::GetNumberOfOptionArguments(
   }
   return static_cast<int>(myOptionArgumentStorage[aUsedOptionIndex].size());
 }
-
-//=================================================================================================
 
 bool ViewerTest_CmdParser::Arg(const std::string& theOptionName,
                                const int          theArgumentIndex,
@@ -280,8 +245,6 @@ bool ViewerTest_CmdParser::Arg(const std::string& theOptionName,
   }
   return Arg(anOptionKey, theArgumentIndex, theOptionArgument);
 }
-
-//=================================================================================================
 
 bool ViewerTest_CmdParser::Arg(const ViewerTest_CommandOptionKey theOptionKey,
                                const int                         theArgumentIndex,
@@ -304,8 +267,6 @@ bool ViewerTest_CmdParser::Arg(const ViewerTest_CommandOptionKey theOptionKey,
   return true;
 }
 
-//=================================================================================================
-
 std::string ViewerTest_CmdParser::Arg(const std::string& theOptionName,
                                       const int          theArgumentIndex) const
 {
@@ -320,8 +281,6 @@ std::string ViewerTest_CmdParser::Arg(const std::string& theOptionName,
   return anOptionArgument;
 }
 
-//=================================================================================================
-
 std::string ViewerTest_CmdParser::Arg(const ViewerTest_CommandOptionKey theOptionKey,
                                       const int                         theArgumentIndex) const
 {
@@ -333,8 +292,6 @@ std::string ViewerTest_CmdParser::Arg(const ViewerTest_CommandOptionKey theOptio
   return anOptionArgument;
 }
 
-//=================================================================================================
-
 NCollection_Vec3<float> ViewerTest_CmdParser::ArgVec3f(const std::string& theOptionName,
                                                        int                theArgumentIndex) const
 {
@@ -344,8 +301,6 @@ NCollection_Vec3<float> ViewerTest_CmdParser::ArgVec3f(const std::string& theOpt
     static_cast<float>(Draw::Atof(Arg(theOptionName, theArgumentIndex + 2).c_str())));
 }
 
-//=================================================================================================
-
 NCollection_Vec3<double> ViewerTest_CmdParser::ArgVec3d(const std::string& theOptionName,
                                                         int                theArgumentIndex) const
 {
@@ -354,16 +309,12 @@ NCollection_Vec3<double> ViewerTest_CmdParser::ArgVec3d(const std::string& theOp
                                   Draw::Atof(Arg(theOptionName, theArgumentIndex + 2).c_str()));
 }
 
-//=================================================================================================
-
 gp_Vec ViewerTest_CmdParser::ArgVec(const std::string& theOptionName, int theArgumentIndex) const
 {
   return gp_Vec(Draw::Atof(Arg(theOptionName, theArgumentIndex).c_str()),
                 Draw::Atof(Arg(theOptionName, theArgumentIndex + 1).c_str()),
                 Draw::Atof(Arg(theOptionName, theArgumentIndex + 2).c_str()));
 }
-
-//=================================================================================================
 
 gp_Pnt ViewerTest_CmdParser::ArgPnt(const std::string& theOptionName, int theArgumentIndex) const
 {
@@ -372,36 +323,26 @@ gp_Pnt ViewerTest_CmdParser::ArgPnt(const std::string& theOptionName, int theArg
                 Draw::Atof(Arg(theOptionName, theArgumentIndex + 2).c_str()));
 }
 
-//=================================================================================================
-
 double ViewerTest_CmdParser::ArgDouble(const std::string& theOptionName, int theArgumentIndex) const
 {
   return Draw::Atof(Arg(theOptionName, theArgumentIndex).c_str());
 }
-
-//=================================================================================================
 
 float ViewerTest_CmdParser::ArgFloat(const std::string& theOptionName, int theArgumentIndex) const
 {
   return static_cast<float>(Draw::Atof(Arg(theOptionName, theArgumentIndex).c_str()));
 }
 
-//=================================================================================================
-
 int ViewerTest_CmdParser::ArgInt(const std::string& theOptionName, const int theArgumentIndex) const
 {
   return static_cast<int>(Draw::Atoi(Arg(theOptionName, theArgumentIndex).c_str()));
 }
-
-//=================================================================================================
 
 bool ViewerTest_CmdParser::ArgBool(const std::string& theOptionName,
                                    const int          theArgumentIndex) const
 {
   return Draw::Atoi(Arg(theOptionName, theArgumentIndex).c_str()) != 0;
 }
-
-//=================================================================================================
 
 template <typename TheColor>
 bool ViewerTest_CmdParser::ArgColor(const std::string& theOptionName,
@@ -416,7 +357,6 @@ bool ViewerTest_CmdParser::ArgColor(const std::string& theOptionName,
   return ArgColor(anOptionKey, theArgumentIndex, theColor);
 }
 
-//! ViewerTest_CmdParser::ArgColor() explicit template instantiation definitions
 template bool ViewerTest_CmdParser::ArgColor(const std::string& theOptionName,
                                              int&               theArgumentIndex,
                                              Quantity_Color&    theColor) const;
@@ -424,8 +364,6 @@ template bool ViewerTest_CmdParser::ArgColor(const std::string& theOptionName,
 template bool ViewerTest_CmdParser::ArgColor(const std::string&  theOptionName,
                                              int&                theArgumentIndex,
                                              Quantity_ColorRGBA& theColor) const;
-
-//=================================================================================================
 
 template <typename TheColor>
 bool ViewerTest_CmdParser::ArgColor(const ViewerTest_CommandOptionKey theOptionKey,
@@ -457,7 +395,6 @@ bool ViewerTest_CmdParser::ArgColor(const ViewerTest_CommandOptionKey theOptionK
   return true;
 }
 
-//! ViewerTest_CmdParser::ArgColor() explicit template instantiation definitions
 template bool ViewerTest_CmdParser::ArgColor(ViewerTest_CommandOptionKey theOptionKey,
                                              int&                        theArgumentIndex,
                                              Quantity_Color&             theColor) const;
@@ -465,8 +402,6 @@ template bool ViewerTest_CmdParser::ArgColor(ViewerTest_CommandOptionKey theOpti
 template bool ViewerTest_CmdParser::ArgColor(ViewerTest_CommandOptionKey theOptionKey,
                                              int&                        theArgumentIndex,
                                              Quantity_ColorRGBA&         theColor) const;
-
-//=================================================================================================
 
 bool ViewerTest_CmdParser::findOptionKey(const std::string&           theOptionName,
                                          ViewerTest_CommandOptionKey& theOptionKey) const
@@ -481,8 +416,6 @@ bool ViewerTest_CmdParser::findOptionKey(const std::string&           theOptionN
   return true;
 }
 
-//=================================================================================================
-
 bool ViewerTest_CmdParser::findUsedOptionIndex(const ViewerTest_CommandOptionKey theOptionKey,
                                                std::size_t& theUsedOptionIndex) const
 {
@@ -494,8 +427,6 @@ bool ViewerTest_CmdParser::findUsedOptionIndex(const ViewerTest_CommandOptionKey
   theUsedOptionIndex = aUsedOptionIterator->second;
   return true;
 }
-
-//=================================================================================================
 
 bool ViewerTest_CmdParser::findUsedOptionIndex(const std::string& theOptionName,
                                                std::size_t&       theUsedOptionIndex) const
@@ -514,8 +445,6 @@ bool ViewerTest_CmdParser::findUsedOptionIndex(const std::string& theOptionName,
   return true;
 }
 
-//=================================================================================================
-
 std::size_t ViewerTest_CmdParser::addUsedOption(
   const ViewerTest_CommandOptionKey theNewUsedOptionKey)
 {
@@ -524,8 +453,6 @@ std::size_t ViewerTest_CmdParser::addUsedOption(
   myUsedOptionMap[theNewUsedOptionKey] = aNewUsedOptionIndex;
   return aNewUsedOptionIndex;
 }
-
-//=================================================================================================
 
 ViewerTest_CmdParser::RawStringArguments ViewerTest_CmdParser::getRawStringArguments(
   const std::size_t theUsedOptionIndex) const

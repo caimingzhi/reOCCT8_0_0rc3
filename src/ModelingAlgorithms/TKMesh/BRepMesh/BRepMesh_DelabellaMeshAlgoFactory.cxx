@@ -49,15 +49,9 @@ namespace
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_DelabellaMeshAlgoFactory, IMeshTools_MeshAlgoFactory)
 
-//=================================================================================================
-
 BRepMesh_DelabellaMeshAlgoFactory::BRepMesh_DelabellaMeshAlgoFactory() = default;
 
-//=================================================================================================
-
 BRepMesh_DelabellaMeshAlgoFactory::~BRepMesh_DelabellaMeshAlgoFactory() = default;
-
-//=================================================================================================
 
 occ::handle<IMeshTools_MeshAlgo> BRepMesh_DelabellaMeshAlgoFactory::GetAlgo(
   const GeomAbs_SurfaceType    theSurfaceType,

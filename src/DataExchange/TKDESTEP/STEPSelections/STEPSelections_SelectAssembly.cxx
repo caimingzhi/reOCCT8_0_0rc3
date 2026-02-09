@@ -19,7 +19,7 @@ STEPSelections_SelectAssembly::STEPSelections_SelectAssembly()
 {
 }
 
-bool STEPSelections_SelectAssembly::Explore(const int /*level*/,
+bool STEPSelections_SelectAssembly::Explore(const int,
                                             const occ::handle<Standard_Transient>& start,
                                             const Interface_Graph&                 G,
                                             Interface_EntityIterator&              explored) const

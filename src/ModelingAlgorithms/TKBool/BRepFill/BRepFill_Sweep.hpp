@@ -20,9 +20,6 @@ class BRepFill_LocationLaw;
 class BRepFill_SectionLaw;
 class TopoDS_Edge;
 
-//! Topological Sweep Algorithm
-//! Computes an Sweep shell using a generating
-//! wire, an SectionLaw and an LocationLaw.
 class BRepFill_Sweep
 {
 public:
@@ -34,45 +31,15 @@ public:
 
   Standard_EXPORT void SetBounds(const TopoDS_Wire& FirstShape, const TopoDS_Wire& LastShape);
 
-  //! Set Approximation Tolerance
-  //! Tol3d : Tolerance to surface approximation
-  //! Tol2d : Tolerance used to perform curve approximation
-  //! Normally the 2d curve are approximated with a
-  //! tolerance given by the resolution on support surfaces,
-  //! but if this tolerance is too large Tol2d is used.
-  //! TolAngular : Tolerance (in radian) to control the angle
-  //! between tangents on the section law and
-  //! tangent of iso-v on approximated surface
   Standard_EXPORT void SetTolerance(const double Tol3d,
                                     const double BoundTol   = 1.0,
                                     const double Tol2d      = 1.0e-5,
                                     const double TolAngular = 1.0e-2);
 
-  //! Tolerance  To controle Corner management.
-  //!
-  //! If the discontinuity is lesser than <AngleMin> in radian The
-  //! Transition Performed will be always "Modified"
   Standard_EXPORT void SetAngularControl(const double AngleMin = 0.01, const double AngleMax = 6.0);
 
-  //! Set the flag that indicates attempt to approximate
-  //! a C1-continuous surface if a swept surface proved
-  //! to be C0.
   Standard_EXPORT void SetForceApproxC1(const bool ForceApproxC1);
 
-  //! Build the Sweep Surface
-  //! Transition define Transition strategy
-  //! Approx define Approximation Strategy
-  //! - GeomFill_Section : The composed Function Location X Section
-  //! is directly approximated.
-  //! - GeomFill_Location : The location law is approximated, and the
-  //! SweepSurface builds an algebraic composition
-  //! of approximated location law and section law
-  //! This option is Ok, if Section.Surface() methode
-  //! is effective.
-  //! Continuity : The continuity in v waiting on the surface
-  //! Degmax     : The maximum degree in v required on the surface
-  //! Segmax     : The maximum number of span in v required on
-  //! the surface.
   Standard_EXPORT void Build(NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& ReversedEdges,
                              NCollection_DataMap<TopoDS_Shape,
                                                  occ::handle<NCollection_HArray2<TopoDS_Shape>>,
@@ -86,13 +53,10 @@ public:
                              const int                      Degmax     = 11,
                              const int                      Segmax     = 30);
 
-  //! Say if the Shape is Build.
   Standard_EXPORT bool IsDone() const;
 
-  //! Returns the Sweeping Shape
   Standard_EXPORT TopoDS_Shape Shape() const;
 
-  //! Get the Approximation error.
   Standard_EXPORT double ErrorOnSurface() const;
 
   Standard_EXPORT occ::handle<NCollection_HArray2<TopoDS_Shape>> SubShape() const;
@@ -101,7 +65,6 @@ public:
 
   Standard_EXPORT occ::handle<NCollection_HArray2<TopoDS_Shape>> Sections() const;
 
-  //! Returns the Tape corresponding to Index-th edge of section
   Standard_EXPORT TopoDS_Shape Tape(const int Index) const;
 
 protected:

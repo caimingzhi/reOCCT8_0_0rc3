@@ -5,11 +5,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepFEA_CurveElementEndRelease.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWCurveElementEndRelease::RWStepFEA_RWCurveElementEndRelease() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWCurveElementEndRelease::ReadStep(
   const occ::handle<StepData_StepReaderData>&        data,
@@ -17,11 +13,9 @@ void RWStepFEA_RWCurveElementEndRelease::ReadStep(
   occ::handle<Interface_Check>&                      ach,
   const occ::handle<StepFEA_CurveElementEndRelease>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "curve_element_end_release"))
     return;
-
-  // Own fields of CurveElementEndRelease
 
   StepFEA_CurveElementEndCoordinateSystem aCoordinateSystem;
   data->ReadEntity(num, 1, "coordinate_system", ach, aCoordinateSystem);
@@ -47,18 +41,13 @@ void RWStepFEA_RWCurveElementEndRelease::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aCoordinateSystem, aReleases);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWCurveElementEndRelease::WriteStep(
   StepData_StepWriter&                               SW,
   const occ::handle<StepFEA_CurveElementEndRelease>& ent) const
 {
-
-  // Own fields of CurveElementEndRelease
 
   SW.Send(ent->CoordinateSystem().Value());
 
@@ -71,14 +60,10 @@ void RWStepFEA_RWCurveElementEndRelease::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWCurveElementEndRelease::Share(
   const occ::handle<StepFEA_CurveElementEndRelease>& ent,
   Interface_EntityIterator&                          iter) const
 {
-
-  // Own fields of CurveElementEndRelease
 
   iter.AddItem(ent->CoordinateSystem().Value());
 

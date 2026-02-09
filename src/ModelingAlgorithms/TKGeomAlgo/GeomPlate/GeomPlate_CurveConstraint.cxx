@@ -14,9 +14,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomPlate_CurveConstraint, Standard_Transient)
 
-//---------------------------------------------------------
-//         Constructeur vide
-//---------------------------------------------------------
 GeomPlate_CurveConstraint ::GeomPlate_CurveConstraint()
     : myNbPoints(0),
       myOrder(0),
@@ -33,9 +30,6 @@ GeomPlate_CurveConstraint ::GeomPlate_CurveConstraint()
 {
 }
 
-//---------------------------------------------------------
-//         Constructeurs avec courbe sur surface
-//---------------------------------------------------------
 GeomPlate_CurveConstraint ::GeomPlate_CurveConstraint(const occ::handle<Adaptor3d_Curve>& Boundary,
                                                       const int                           Tang,
                                                       const int                           NPt,
@@ -73,10 +67,7 @@ GeomPlate_CurveConstraint ::GeomPlate_CurveConstraint(const occ::handle<Adaptor3
     }
     else
     {
-      //      occ::handle<BRepAdaptor_Surface> BS1;
-      //      BS1=occ::down_cast<BRepAdaptor_Surface>(myFrontiere->
-      //                                            ChangeCurve().GetSurface());
-      //      Surf = BRep_Tool::Surface(BS1->ChangeSurface().Face());
+
       throw Standard_Failure("GeomPlate_CurveConstraint : Surface must be GeomAdaptor_Surface");
     }
 
@@ -92,9 +83,6 @@ GeomPlate_CurveConstraint ::GeomPlate_CurveConstraint(const occ::handle<Adaptor3
   myG2Crit.Nullify();
 }
 
-//---------------------------------------------------------
-// Fonction : FirstParameter
-//---------------------------------------------------------
 double GeomPlate_CurveConstraint ::FirstParameter() const
 {
   if (!myHCurve2d.IsNull())
@@ -105,9 +93,6 @@ double GeomPlate_CurveConstraint ::FirstParameter() const
     return my3dCurve->FirstParameter();
 }
 
-//---------------------------------------------------------
-// Fonction : LastParameter
-//---------------------------------------------------------
 double GeomPlate_CurveConstraint ::LastParameter() const
 {
   if (!myHCurve2d.IsNull())
@@ -118,32 +103,21 @@ double GeomPlate_CurveConstraint ::LastParameter() const
     return my3dCurve->LastParameter();
 }
 
-//---------------------------------------------------------
-// Fonction : Length
-//---------------------------------------------------------
 double GeomPlate_CurveConstraint ::Length() const
 {
   GCPnts_AbscissaPoint AP;
   if (my3dCurve.IsNull())
-  { //   GCPnts_AbscissaPoint
-    //   A(myFrontiere->Curve(),AP.Length(myFrontiere->Curve())/2,myFrontiere->FirstParameter());
-    //  double toto=A.Parameter();
-    // std::cout<<toto<<std::endl;
+  {
+
     return GCPnts_AbscissaPoint::Length(*myFrontiere);
   }
   else
-  { //  GCPnts_AbscissaPoint
-    //  A(my3dCurve->Curve(),AP.Length(my3dCurve->Curve())/2,my3dCurve->FirstParameter());
-    //  double toto=A.Parameter();
-    // std::cout<<toto<<std::endl;
+  {
 
     return GCPnts_AbscissaPoint::Length(*my3dCurve);
   }
 }
 
-//---------------------------------------------------------
-// Fonction : D0
-//---------------------------------------------------------
 void GeomPlate_CurveConstraint ::D0(const double U, gp_Pnt& P) const
 {
   gp_Pnt2d P2d;
@@ -157,9 +131,6 @@ void GeomPlate_CurveConstraint ::D0(const double U, gp_Pnt& P) const
     my3dCurve->D0(U, P);
 }
 
-//---------------------------------------------------------
-// Fonction : D1
-//---------------------------------------------------------
 void GeomPlate_CurveConstraint ::D1(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2) const
 {
   gp_Pnt2d P2d;
@@ -170,9 +141,6 @@ void GeomPlate_CurveConstraint ::D1(const double U, gp_Pnt& P, gp_Vec& V1, gp_Ve
   myFrontiere->GetSurface()->D1(P2d.Coord(1), P2d.Coord(2), P, V1, V2);
 }
 
-//---------------------------------------------------------
-// Fonction : D2
-//---------------------------------------------------------
 void GeomPlate_CurveConstraint ::D2(const double U,
                                     gp_Pnt&      P,
                                     gp_Vec&      V1,
@@ -189,18 +157,12 @@ void GeomPlate_CurveConstraint ::D2(const double U,
   myFrontiere->GetSurface()->D2(P2d.Coord(1), P2d.Coord(2), P, V1, V2, V3, V4, V5);
 }
 
-//---------------------------------------------------------
-// Fonction : SetG0Criterion
-//---------------------------------------------------------
 void GeomPlate_CurveConstraint ::SetG0Criterion(const occ::handle<Law_Function>& G0Crit)
 {
   myG0Crit  = G0Crit;
   myConstG0 = false;
 }
 
-//---------------------------------------------------------
-// Fonction : SetG1Criterion
-//---------------------------------------------------------
 void GeomPlate_CurveConstraint ::SetG1Criterion(const occ::handle<Law_Function>& G1Crit)
 {
   if (!my3dCurve.IsNull())
@@ -209,9 +171,6 @@ void GeomPlate_CurveConstraint ::SetG1Criterion(const occ::handle<Law_Function>&
   myConstG1 = false;
 }
 
-//---------------------------------------------------------
-// Fonction : SetG2Criterion
-//---------------------------------------------------------
 void GeomPlate_CurveConstraint ::SetG2Criterion(const occ::handle<Law_Function>& G2Crit)
 {
   if (!my3dCurve.IsNull())
@@ -220,9 +179,6 @@ void GeomPlate_CurveConstraint ::SetG2Criterion(const occ::handle<Law_Function>&
   myConstG2 = false;
 }
 
-//---------------------------------------------------------
-// Fonction : G0Criterion
-//---------------------------------------------------------
 double GeomPlate_CurveConstraint ::G0Criterion(const double U) const
 {
   if (myConstG0)
@@ -231,9 +187,6 @@ double GeomPlate_CurveConstraint ::G0Criterion(const double U) const
     return myG0Crit->Value(U);
 }
 
-//---------------------------------------------------------
-// Fonction : G1Criterion
-//---------------------------------------------------------
 double GeomPlate_CurveConstraint ::G1Criterion(const double U) const
 {
   if (!my3dCurve.IsNull())
@@ -244,9 +197,6 @@ double GeomPlate_CurveConstraint ::G1Criterion(const double U) const
     return myG1Crit->Value(U);
 }
 
-//---------------------------------------------------------
-// Fonction : G2Criterion
-//---------------------------------------------------------
 double GeomPlate_CurveConstraint ::G2Criterion(const double U) const
 {
   if (!my3dCurve.IsNull())
@@ -257,9 +207,6 @@ double GeomPlate_CurveConstraint ::G2Criterion(const double U) const
     return myG2Crit->Value(U);
 }
 
-//---------------------------------------------------------
-// Fonction : Curve2dOnSurf
-//---------------------------------------------------------
 occ::handle<Geom2d_Curve> GeomPlate_CurveConstraint ::Curve2dOnSurf() const
 {
   if (my2dCurve.IsNull() && !myHCurve2d.IsNull())
@@ -283,25 +230,16 @@ occ::handle<Geom2d_Curve> GeomPlate_CurveConstraint ::Curve2dOnSurf() const
     return my2dCurve;
 }
 
-//---------------------------------------------------------
-// Fonction : SetCurve2dOnSurf
-//---------------------------------------------------------
 void GeomPlate_CurveConstraint ::SetCurve2dOnSurf(const occ::handle<Geom2d_Curve>& Curve)
 {
   my2dCurve = Curve;
 }
 
-//---------------------------------------------------------
-// Fonction : ProjectedCurve
-//---------------------------------------------------------
 occ::handle<Adaptor2d_Curve2d> GeomPlate_CurveConstraint ::ProjectedCurve() const
 {
   return myHCurve2d;
 }
 
-//---------------------------------------------------------
-// Fonction : SetProjectedCurve
-//---------------------------------------------------------
 void GeomPlate_CurveConstraint ::SetProjectedCurve(const occ::handle<Adaptor2d_Curve2d>& Curve,
                                                    const double                          TolU,
                                                    const double                          TolV)
@@ -311,9 +249,6 @@ void GeomPlate_CurveConstraint ::SetProjectedCurve(const occ::handle<Adaptor2d_C
   myTolV     = TolV;
 }
 
-//---------------------------------------------------------
-// Fonction : Curve3d
-//---------------------------------------------------------
 occ::handle<Adaptor3d_Curve> GeomPlate_CurveConstraint ::Curve3d() const
 {
   if (my3dCurve.IsNull())
@@ -322,41 +257,26 @@ occ::handle<Adaptor3d_Curve> GeomPlate_CurveConstraint ::Curve3d() const
     return my3dCurve;
 }
 
-//------------------------------------------------------------
-// Fonction : NbPoints
-//------------------------------------------------------------
 int GeomPlate_CurveConstraint::NbPoints() const
 {
   return myNbPoints;
 }
 
-//------------------------------------------------------------
-// Fonction : Order
-//------------------------------------------------------------
 int GeomPlate_CurveConstraint::Order() const
 {
   return myOrder;
 }
 
-//------------------------------------------------------------
-// Fonction : SetNbPoints
-//------------------------------------------------------------
 void GeomPlate_CurveConstraint::SetNbPoints(const int NewNb)
 {
   myNbPoints = NewNb;
 }
 
-//------------------------------------------------------------
-// Fonction : SetOrder
-//------------------------------------------------------------
 void GeomPlate_CurveConstraint::SetOrder(const int Order)
 {
   myOrder = Order;
 }
 
-//------------------------------------------------------------
-// Fonction : LPropSurf
-//------------------------------------------------------------
 GeomLProp_SLProps& GeomPlate_CurveConstraint::LPropSurf(const double U)
 {
   if (myFrontiere.IsNull())

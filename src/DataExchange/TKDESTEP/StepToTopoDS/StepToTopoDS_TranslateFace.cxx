@@ -60,23 +60,9 @@
 #include <StepVisual_TriangulatedSurfaceSet.hpp>
 #include <StepVisual_ComplexTriangulatedSurfaceSet.hpp>
 
-// #3 rln 16/02/98
-// #include <GeomAdaptor_Curve.hpp>
-// #include <GeomAdaptor_CurveOnSurface.hxx>
-// #3 rln 16/02/98
-// rln 28/01/98
-// rln 28/01/98
-//   Provisoire, pour VertexLoop
-//: d4
-// To proceed with I-DEAS-like STP (ssv; 15.11.2010)
-// #define DEBUG
-
 namespace
 {
-  // ============================================================================
-  // Method  : SetNodes
-  // Purpose : Set nodes to the triangulation from an array
-  // ============================================================================
+
   static void SetNodes(const occ::handle<Poly_Triangulation>&    theMesh,
                        occ::handle<NCollection_HArray1<gp_XYZ>>& theNodes,
                        const int                                 theNumPnindex,
@@ -91,10 +77,6 @@ namespace
     }
   }
 
-  // ============================================================================
-  // Method  : SetNormals
-  // Purpose : Set normals to the triangulation from an array
-  // ============================================================================
   static void SetNormals(const occ::handle<Poly_Triangulation>&          theMesh,
                          const occ::handle<NCollection_HArray2<double>>& theNormals,
                          const int                                       theNormNum,
@@ -127,10 +109,6 @@ namespace
     }
   }
 
-  // ============================================================================
-  // Method  : SetTriangles
-  // Purpose : Set triangles to the triangulation from an array
-  // ============================================================================
   static void SetTriangles(
     const occ::handle<Poly_Triangulation>&                                   theMesh,
     const occ::handle<NCollection_HArray2<int>>&                             theTriangles,
@@ -198,10 +176,6 @@ namespace
     }
   }
 
-  // ============================================================================
-  // Method  : GetSimpleFaceElements
-  // Purpose : Get elements from simple face
-  // ============================================================================
   template <class Type>
   static void GetSimpleFaceElements(const Type&                               theFace,
                                     occ::handle<NCollection_HArray1<gp_XYZ>>& theNodes,
@@ -225,10 +199,6 @@ namespace
     }
   }
 
-  // ============================================================================
-  // Method  : GetComplexFaceElements
-  // Purpose : Get elements from complex face
-  // ============================================================================
   template <class Type>
   static void GetComplexFaceElements(
     const Type&                                                        theFace,
@@ -257,10 +227,6 @@ namespace
     }
   }
 
-  // ============================================================================
-  // Method  : CreatePolyTriangulation
-  // Purpose : Create PolyTriangulation
-  // ============================================================================
   static occ::handle<Poly_Triangulation> CreatePolyTriangulation(
     const occ::handle<StepVisual_TessellatedItem>& theTI,
     const StepData_Factors&                        theLocalFactors)
@@ -400,18 +366,12 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 StepToTopoDS_TranslateFace::StepToTopoDS_TranslateFace()
     : myError(StepToTopoDS_TranslateFaceOther)
 {
   done = false;
 }
 
-// ============================================================================
-// Method  : StepToTopoDS_TranslateFace
-// Purpose : Constructor with a FaceSurface and a Tool
-// ============================================================================
 StepToTopoDS_TranslateFace::StepToTopoDS_TranslateFace(const occ::handle<StepShape_FaceSurface>& FS,
                                                        StepToTopoDS_Tool&                        T,
                                                        StepToTopoDS_NMTool&    NMTool,
@@ -420,11 +380,6 @@ StepToTopoDS_TranslateFace::StepToTopoDS_TranslateFace(const occ::handle<StepSha
   Init(FS, T, NMTool, theLocalFactors);
 }
 
-// ============================================================================
-// Method  : StepToTopoDS_TranslateFace
-// Purpose : Constructor with either TriangulatedFace or
-//           ComplexTriangulatedFace and a Tool
-// ============================================================================
 StepToTopoDS_TranslateFace::StepToTopoDS_TranslateFace(
   const occ::handle<StepVisual_TessellatedFace>& theTF,
   StepToTopoDS_Tool&                             theTool,
@@ -436,11 +391,6 @@ StepToTopoDS_TranslateFace::StepToTopoDS_TranslateFace(
   Init(theTF, theTool, theNMTool, theReadTessellatedWhenNoBRepOnly, theHasGeom, theLocalFactors);
 }
 
-// ============================================================================
-// Method  : StepToTopoDS_TranslateFace
-// Purpose : Constructor with either TriangulatedSurfaceSet or
-//           ComplexTriangulatedSurfaceSet and a Tool
-// ============================================================================
 StepToTopoDS_TranslateFace::StepToTopoDS_TranslateFace(
   const occ::handle<StepVisual_TessellatedSurfaceSet>& theTSS,
   StepToTopoDS_Tool&                                   theTool,
@@ -450,10 +400,6 @@ StepToTopoDS_TranslateFace::StepToTopoDS_TranslateFace(
   Init(theTSS, theTool, theNMTool, theLocalFactors);
 }
 
-// ============================================================================
-// Method  : Init
-// Purpose : Init with a FaceSurface and a Tool
-// ============================================================================
 static inline bool isReversed(const occ::handle<StepGeom_Surface>& theStepSurf)
 {
   if (theStepSurf->IsKind(STANDARD_TYPE(StepGeom_RectangularTrimmedSurface)))
@@ -469,10 +415,6 @@ static inline bool isReversed(const occ::handle<StepGeom_Surface>& theStepSurf)
   }
 }
 
-// ============================================================================
-// Method  : Init
-// Purpose : Init with a FaceSurface and a Tool
-// ============================================================================
 void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& theFaceSurface,
                                       StepToTopoDS_Tool&                        theTopoDSTool,
                                       StepToTopoDS_NMTool&                      theTopoDSToolNM,
@@ -487,15 +429,10 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
     return;
   }
 
-  // Within a context of this method this object is used for message handling only.
   occ::handle<Transfer_TransientProcess> aMessageHandler = theTopoDSTool.TransientProcess();
 
-  // ----------------------------------------------
-  // Map the Face Geometry and create a TopoDS_Face
-  // ----------------------------------------------
   occ::handle<StepGeom_Surface> aStepGeomSurface = theFaceSurface->FaceGeometry();
-  // sln 01.10.2001 BUC61003. If corresponding entity was read with error StepSurface may be NULL.
-  // In this case we exit from function
+
   if (aStepGeomSurface.IsNull())
   {
     aMessageHandler->AddFail(aStepGeomSurface, " Surface has not been created");
@@ -504,20 +441,18 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
     return;
   }
 
-  // [BEGIN] Added to process non-manifold topology (ssv; 14.11.2010)
   if (theTopoDSToolNM.IsActive() && theTopoDSToolNM.IsBound(aStepGeomSurface))
   {
     TopoDS_Shape anExistingShape = theTopoDSToolNM.Find(aStepGeomSurface);
-    // Reverse shape's orientation for the next shell
+
     anExistingShape.Reverse();
     myResult = anExistingShape;
     myError  = StepToTopoDS_TranslateFaceDone;
     done     = true;
     return;
   }
-  // [END] Added to process non-manifold topology (ssv; 14.11.2010)
 
-  if (aStepGeomSurface->IsKind(STANDARD_TYPE(StepGeom_OffsetSurface))) //: d4 abv 12 Mar 98
+  if (aStepGeomSurface->IsKind(STANDARD_TYPE(StepGeom_OffsetSurface)))
   {
     aMessageHandler->AddWarning(aStepGeomSurface, " Type OffsetSurface is out of scope of AP 214");
   }
@@ -532,7 +467,6 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
     return;
   }
 
-  // pdn to force bsplsurf to be periodic
   if (!occ::down_cast<StepGeom_BSplineSurface>(aStepGeomSurface).IsNull())
   {
     occ::handle<Geom_Surface> periodicSurf =
@@ -544,29 +478,15 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
     }
   }
 
-  // fix for bug 0026376 Solid Works wrote face based on toroidal surface having negative major
-  // radius seems that such case is interpreted  by "Solid Works" and "ProE" as face having reversed
-  // orientation.
   const bool aSameSense =
     isReversed(aStepGeomSurface) ? !theFaceSurface->SameSense() : theFaceSurface->SameSense();
 
-  // -- Statistics --
   theTopoDSTool.AddContinuity(aGeomSurface);
 
   TopoDS_Face  aResultFace;
   BRep_Builder aFaceBuilder;
   aFaceBuilder.MakeFace(aResultFace, aGeomSurface, Precision::Confusion());
 
-  // ----------------------------------
-  // Iterate on each FaceBounds (Wires)
-  // ----------------------------------
-  // - Simple sewing criterion (CKY, Jan97)
-  // Periodic surface (typically a cylinder)
-  // 2 face bounds, each with an edge loop from a single edge.
-  // This edge is closed, c-a-d vertex-begin = vertex-end (for the two edges)
-  // Is it sufficient (check that these are two outer-bounds... ?? How?)
-  // Then we can say: face with two edges whose seam is missing
-  // The seam is between the two vertex
   for (int aBoundIndex = 1; aBoundIndex <= theFaceSurface->NbBounds(); ++aBoundIndex)
   {
     occ::handle<StepShape_FaceBound> aFaceBound = theFaceSurface->BoundsValue(aBoundIndex);
@@ -580,30 +500,15 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
       continue;
     }
 
-    // ------------------------
-    // The Loop is a VertexLoop
-    // ------------------------
     if (aFaceLoop->IsKind(STANDARD_TYPE(StepShape_VertexLoop)))
     {
-      //: S4136      STF.Closed() = false;
-      //  PROBLEM if SPHERE or TORE
-      // It will be necessary to make a complete wire, provided that the point carries on the face
-      // In the meantime, we do nothing
 
-      // abv 10.07.00 pr1sy.stp: vertex_loop can be wrong; so just make natural bounds
       if ((aGeomSurface->IsKind(STANDARD_TYPE(Geom_SphericalSurface))
            || aGeomSurface->IsKind(STANDARD_TYPE(Geom_BSplineSurface))
            || aGeomSurface->IsKind(STANDARD_TYPE(Geom_SurfaceOfRevolution)))
           && (theFaceSurface->NbBounds() == 1))
       {
-        // Modification to create natural bounds for face based on the spherical and Bspline
-        // surface and having only one bound represented by Vertex loop was made.
-        // According to the specification of ISO - 10303 part 42:
-        // "If the face has only one bound and this is of type vertex_loop, then the interior of
-        // the face is the domain of the face_surface.face_geometry. In such a case the underlying
-        // surface shall be closed (e.g. a spherical_surface.)"
-        // - natural bounds are applied only in case if VertexLoop is only the one defined face
-        // bound.
+
         BRepBuilderAPI_MakeFace anAuxiliaryFaceBuilder(aGeomSurface, Precision());
         for (TopoDS_Iterator aFaceIt(anAuxiliaryFaceBuilder); aFaceIt.More(); aFaceIt.Next())
         {
@@ -622,11 +527,11 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
       if (aGeomSurface->IsKind(STANDARD_TYPE(Geom_Plane)))
       {
         aMessageHandler->AddWarning(aVertexLoop, "VertexLoop on plane is ignored");
-        continue; // smh : BUC60809
+        continue;
       }
 
       StepToTopoDS_TranslateVertexLoop aVertexLoopTranslator;
-      aVertexLoopTranslator.SetPrecision(Precision()); // gka
+      aVertexLoopTranslator.SetPrecision(Precision());
       aVertexLoopTranslator.SetMaxTol(MaxTol());
       aVertexLoopTranslator.Init(aVertexLoop, theTopoDSTool, theTopoDSToolNM, theLocalFactors);
       if (aVertexLoopTranslator.IsDone())
@@ -638,15 +543,13 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
         aMessageHandler->AddWarning(aVertexLoop, " a VertexLoop not mapped to TopoDS");
       }
     }
-    // ----------------------
-    // The Loop is a PolyLoop
-    // ----------------------
+
     else if (aFaceLoop->IsKind(STANDARD_TYPE(StepShape_PolyLoop)))
     {
       occ::handle<StepShape_PolyLoop> aPolyLoop = occ::down_cast<StepShape_PolyLoop>(aFaceLoop);
       aResultFace.Orientation(theFaceSurface->SameSense() ? TopAbs_FORWARD : TopAbs_REVERSED);
       StepToTopoDS_TranslatePolyLoop aPolyLoopTranslator;
-      aPolyLoopTranslator.SetPrecision(Precision()); // gka
+      aPolyLoopTranslator.SetPrecision(Precision());
       aPolyLoopTranslator.SetMaxTol(MaxTol());
       aPolyLoopTranslator.Init(aPolyLoop,
                                theTopoDSTool,
@@ -664,13 +567,11 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
         aMessageHandler->AddWarning(aPolyLoop, " a PolyLoop not mapped to TopoDS");
       }
     }
-    // -----------------------
-    // The Loop is an EdgeLoop
-    // -----------------------
+
     else if (aFaceLoop->IsKind(STANDARD_TYPE(StepShape_EdgeLoop)))
     {
       StepToTopoDS_TranslateEdgeLoop anEdgeLoopTranslator;
-      anEdgeLoopTranslator.SetPrecision(Precision()); // gka
+      anEdgeLoopTranslator.SetPrecision(Precision());
       anEdgeLoopTranslator.SetMaxTol(MaxTol());
       anEdgeLoopTranslator.Init(aFaceBound,
                                 aResultFace,
@@ -685,12 +586,6 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
       {
         TopoDS_Wire anEdgeLoopWire = TopoDS::Wire(anEdgeLoopTranslator.Value());
 
-        // STEP Face_Surface orientation :
-        // if the topological orientation is opposite to the geometric
-        // orientation of the surface => the underlying topological
-        // orientation are not implicitly reversed
-        // this is the case in CAS.CADE => If the face_surface is reversed,
-        // the wire orientation has to be explicitly reversed
         if (aFaceBound->Orientation())
         {
           anEdgeLoopWire.Orientation(aSameSense ? TopAbs_FORWARD : TopAbs_REVERSED);
@@ -699,19 +594,14 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
         {
           anEdgeLoopWire.Orientation(aSameSense ? TopAbs_REVERSED : TopAbs_FORWARD);
         }
-        // -----------------------------
-        // The Wire is added to the Face
-        // -----------------------------
+
         aFaceBuilder.Add(aResultFace, anEdgeLoopWire);
       }
       else
       {
-        // There was a problem in the mapping: We lost Face (so to speak...).
-        // No way today to recover at least all the geometries (Points, 3D Curves, Surface).
+
         aMessageHandler->AddFail(aFaceLoop, " EdgeLoop not mapped to TopoDS");
 
-        // CKY JAN-97: a Wire is missing, well we continue anyway
-        // unless OuterBound: that's still not quite normal...
         if (aFaceBound->IsKind(STANDARD_TYPE(StepShape_FaceOuterBound)))
         {
           aMessageHandler->AddWarning(theFaceSurface, "No Outer Bound : Face not done");
@@ -721,7 +611,7 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
     }
     else
     {
-      // Type not yet implemented or non sens
+
       aMessageHandler->AddFail(aFaceLoop, " Type of loop not yet implemented");
       continue;
     }
@@ -730,7 +620,6 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
   aResultFace.Orientation(theFaceSurface->SameSense() ? TopAbs_FORWARD : TopAbs_REVERSED);
   theTopoDSTool.Bind(theFaceSurface, aResultFace);
 
-  // Register face in NM tool (ssv; 14.11.2010)
   if (theTopoDSToolNM.IsActive())
   {
     theTopoDSToolNM.Bind(aStepGeomSurface, aResultFace);
@@ -741,11 +630,6 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
   done     = true;
 }
 
-// ============================================================================
-// Method  : Init
-// Purpose : Init with either StepVisual_TriangulatedFace or
-//           StepVisual_ComplexTriangulatedFace and a Tool
-// ============================================================================
 void StepToTopoDS_TranslateFace::Init(const occ::handle<StepVisual_TessellatedFace>& theTF,
                                       StepToTopoDS_Tool&                             theTool,
                                       StepToTopoDS_NMTool&                           theNMTool,
@@ -772,7 +656,7 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepVisual_TessellatedFa
     }
     if (!aF.IsNull() && !BRep_Tool::Surface(aF).IsNull() && theReadTessellatedWhenNoBRepOnly)
     {
-      // Face has BRep but OnNoBRep param is specified
+
       return;
     }
   }
@@ -816,11 +700,6 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepVisual_TessellatedFa
   done     = true;
 }
 
-// ============================================================================
-// Method  : Init
-// Purpose : Init with either StepVisual_TriangulatedSurfaceSet or
-//           StepVisual_ComplexTriangulatedSurfaceSet and a Tool
-// ============================================================================
 void StepToTopoDS_TranslateFace::Init(const occ::handle<StepVisual_TessellatedSurfaceSet>& theTSS,
                                       StepToTopoDS_Tool&                                   theTool,
                                       StepToTopoDS_NMTool&    theNMTool,
@@ -862,11 +741,6 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepVisual_TessellatedSu
   done     = true;
 }
 
-// ============================================================================
-// Method  : createMesh
-// Purpose : creates a Poly_Triangulation from simple/complex
-//           TriangulatedFace or TriangulatedSurfaceSet
-// ============================================================================
 occ::handle<Poly_Triangulation> StepToTopoDS_TranslateFace::createMesh(
   const occ::handle<StepVisual_TessellatedItem>& theTI,
   const StepData_Factors&                        theLocalFactors) const
@@ -874,20 +748,12 @@ occ::handle<Poly_Triangulation> StepToTopoDS_TranslateFace::createMesh(
   return CreatePolyTriangulation(theTI, theLocalFactors);
 }
 
-// ============================================================================
-// Method  : Value
-// Purpose : Return the mapped Shape
-// ============================================================================
 const TopoDS_Shape& StepToTopoDS_TranslateFace::Value() const
 {
   StdFail_NotDone_Raise_if(!done, "StepToTopoDS_TranslateFace::Value() - no result");
   return myResult;
 }
 
-// ============================================================================
-// Method  : Error
-// Purpose : Return the TranslateFace error
-// ============================================================================
 StepToTopoDS_TranslateFaceError StepToTopoDS_TranslateFace::Error() const
 {
   return myError;

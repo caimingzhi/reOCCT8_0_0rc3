@@ -16,15 +16,12 @@ public:
   class Datum3D : public StdObjMgt_SharedObject::SharedBase<TopLoc_Datum3D>
   {
   public:
-    //! Read persistent data from a file.
     void Read(StdObjMgt_ReadData& theReadData) override;
-    //! Write persistent data to a file.
+
     void Write(StdObjMgt_WriteData& theWriteData) const override;
 
-    //! Gets persistent child objects
     void PChildren(SequenceOfPersistent&) const override {}
 
-    //! Returns persistent type name
     const char* PName() const override { return "PTopLoc_Datum3D"; }
   };
 
@@ -33,17 +30,14 @@ public:
     friend class StdPersistent_TopLoc;
 
   public:
-    //! Read persistent data from a file.
     Standard_EXPORT void Read(StdObjMgt_ReadData& theReadData) override;
-    //! Write persistent data to a file.
+
     Standard_EXPORT void Write(StdObjMgt_WriteData& theWriteData) const override;
-    //! Gets persistent child objects
+
     Standard_EXPORT void PChildren(SequenceOfPersistent& theChildren) const override;
 
-    //! Returns persistent type name
     const char* PName() const override { return "PTopLoc_ItemLocation"; }
 
-    //! Import transient object from the persistent data.
     Standard_EXPORT TopLoc_Location Import() const;
 
   private:

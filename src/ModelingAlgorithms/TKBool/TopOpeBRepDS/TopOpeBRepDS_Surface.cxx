@@ -2,15 +2,11 @@
 
 #include <Geom_Surface.hpp>
 
-//=================================================================================================
-
 TopOpeBRepDS_Surface::TopOpeBRepDS_Surface()
     : myTolerance(0.0),
       myKeep(false)
 {
 }
-
-//=================================================================================================
 
 TopOpeBRepDS_Surface::TopOpeBRepDS_Surface(const occ::handle<Geom_Surface>& theSurface,
                                            const double                     theTolerance)
@@ -20,13 +16,9 @@ TopOpeBRepDS_Surface::TopOpeBRepDS_Surface(const occ::handle<Geom_Surface>& theS
 {
 }
 
-//=================================================================================================
-
 TopOpeBRepDS_Surface::TopOpeBRepDS_Surface(const TopOpeBRepDS_Surface& theOther)
 
   = default;
-
-//=================================================================================================
 
 void TopOpeBRepDS_Surface::Assign(const TopOpeBRepDS_Surface& Other)
 {

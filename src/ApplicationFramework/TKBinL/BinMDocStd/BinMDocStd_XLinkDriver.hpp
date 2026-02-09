@@ -11,7 +11,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! XLink attribute Driver.
 class BinMDocStd_XLinkDriver : public BinMDF_ADriver
 {
 

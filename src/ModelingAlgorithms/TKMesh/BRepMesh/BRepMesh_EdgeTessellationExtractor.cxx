@@ -9,8 +9,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_EdgeTessellationExtractor, IMeshTools_CurveTessellator)
 
-//=================================================================================================
-
 BRepMesh_EdgeTessellationExtractor::BRepMesh_EdgeTessellationExtractor(
   const IMeshData::IEdgeHandle& theEdge,
   const IMeshData::IFaceHandle& theFace)
@@ -26,18 +24,12 @@ BRepMesh_EdgeTessellationExtractor::BRepMesh_EdgeTessellationExtractor(
   myProvider.Init(theEdge, TopAbs_FORWARD, theFace, aPolygon->Parameters());
 }
 
-//=================================================================================================
-
 BRepMesh_EdgeTessellationExtractor::~BRepMesh_EdgeTessellationExtractor() = default;
-
-//=================================================================================================
 
 int BRepMesh_EdgeTessellationExtractor::PointsNb() const
 {
   return myIndices->Size();
 }
-
-//=================================================================================================
 
 bool BRepMesh_EdgeTessellationExtractor::Value(const int theIndex,
                                                gp_Pnt&   thePoint,

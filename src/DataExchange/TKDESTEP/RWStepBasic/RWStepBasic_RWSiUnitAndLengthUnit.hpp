@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_SiUnitAndLengthUnit;
 class StepData_StepWriter;
 
-//! Read & Write Module for SiUnitAndLengthUnit
 class RWStepBasic_RWSiUnitAndLengthUnit
 {
 public:

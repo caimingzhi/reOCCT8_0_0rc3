@@ -6,26 +6,18 @@
 #include <TopLoc_Location.hpp>
 #include <TopLoc_SListOfItemLocation.hpp>
 
-//=================================================================================================
-
 TopLoc_Location::TopLoc_Location() = default;
-
-//=================================================================================================
 
 TopLoc_Location::TopLoc_Location(const occ::handle<TopLoc_Datum3D>& D)
 {
   myItems.Construct(TopLoc_ItemLocation(D, 1));
 }
 
-//=================================================================================================
-
 TopLoc_Location::TopLoc_Location(const gp_Trsf& T)
 {
   occ::handle<TopLoc_Datum3D> D = new TopLoc_Datum3D(T);
   myItems.Construct(TopLoc_ItemLocation(D, 1));
 }
-
-//=================================================================================================
 
 const gp_Trsf& TopLoc_Location::Transformation() const
 {
@@ -41,14 +33,9 @@ TopLoc_Location::operator gp_Trsf() const
   return Transformation();
 }
 
-//=================================================================================================
-
 TopLoc_Location TopLoc_Location::Inverted() const
 {
-  //
-  // the inverse of a Location is a chain in revert order
-  // with opposite powers and same Local
-  //
+
   TopLoc_Location            result;
   TopLoc_SListOfItemLocation items = myItems;
   while (items.More())
@@ -59,24 +46,15 @@ TopLoc_Location TopLoc_Location::Inverted() const
   return result;
 }
 
-//=======================================================================
-// function : Multiplied
-// purpose  : operator *
-//=======================================================================
-
 TopLoc_Location TopLoc_Location::Multiplied(const TopLoc_Location& Other) const
 {
-  // prepend the chain Other in front of this
-  // cancelling null exponents
 
   if (IsIdentity())
     return Other;
   if (Other.IsIdentity())
     return *this;
 
-  // prepend the queue of Other
   TopLoc_Location result = Multiplied(Other.NextLocation());
-  // does the head of Other cancel the head of result
 
   int p = Other.FirstPower();
   if (!result.IsIdentity())
@@ -92,27 +70,15 @@ TopLoc_Location TopLoc_Location::Multiplied(const TopLoc_Location& Other) const
   return result;
 }
 
-//=======================================================================
-// function : Divided
-// purpose  : operator /   this*Other.Inverted()
-//=======================================================================
-
 TopLoc_Location TopLoc_Location::Divided(const TopLoc_Location& Other) const
 {
   return Multiplied(Other.Inverted());
 }
 
-//=======================================================================
-// function : Predivided
-// purpose  : return Other.Inverted() * this
-//=======================================================================
-
 TopLoc_Location TopLoc_Location::Predivided(const TopLoc_Location& Other) const
 {
   return Other.Inverted().Multiplied(*this);
 }
-
-//=================================================================================================
 
 TopLoc_Location TopLoc_Location::Powered(const int pwr) const
 {
@@ -123,7 +89,6 @@ TopLoc_Location TopLoc_Location::Powered(const int pwr) const
   if (pwr == 0)
     return TopLoc_Location();
 
-  // optimisation when just one element
   if (myItems.Tail().IsEmpty())
   {
     TopLoc_Location result;
@@ -136,11 +101,6 @@ TopLoc_Location TopLoc_Location::Powered(const int pwr) const
   else
     return Inverted().Powered(-pwr);
 }
-
-//=================================================================================================
-
-// two locations are Equal if the Items have the same LocalValues and Powers
-// this is a recursive function to test it
 
 bool TopLoc_Location::IsEqual(const TopLoc_Location& Other) const
 {
@@ -168,14 +128,10 @@ bool TopLoc_Location::IsEqual(const TopLoc_Location& Other) const
   }
 }
 
-//=================================================================================================
-
 bool TopLoc_Location::IsDifferent(const TopLoc_Location& Other) const
 {
   return !IsEqual(Other);
 }
-
-//=================================================================================================
 
 void TopLoc_Location::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {
@@ -184,8 +140,6 @@ void TopLoc_Location::DumpJson(Standard_OStream& theOStream, int theDepth) const
   OCCT_DUMP_FIELD_VALUES_DUMPED(theOStream, theDepth, &Transformation())
   OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, IsIdentity())
 }
-
-//=================================================================================================
 
 void TopLoc_Location::ShallowDump(Standard_OStream& S) const
 {

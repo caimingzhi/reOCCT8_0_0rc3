@@ -5,10 +5,6 @@ IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_FrustumBuilder, Standard_Transient)
 #define DOT(A, B) (A.x() * B.x() + A.y() * B.y() + A.z() * B.z())
 #define LENGTH(A) (std::sqrt(A.x() * A.x() + A.y() * A.y() + A.z() * A.z()))
 
-//=======================================================================
-// function : SelectMgr_FrustumBuilder
-// purpose  : Creates new frustum builder with empty matrices
-//=======================================================================
 SelectMgr_FrustumBuilder::SelectMgr_FrustumBuilder()
     : myWidth(INT_MAX),
       myHeight(INT_MAX),
@@ -16,27 +12,17 @@ SelectMgr_FrustumBuilder::SelectMgr_FrustumBuilder()
 {
 }
 
-//=================================================================================================
-
 void SelectMgr_FrustumBuilder::SetCamera(const occ::handle<Graphic3d_Camera>& theCamera)
 {
   myCamera = theCamera;
 }
 
-//=======================================================================
-// function : SetWindowSize
-// purpose  : Stores current window width and height
-//=======================================================================
 void SelectMgr_FrustumBuilder::SetWindowSize(const int theWidth, const int theHeight)
 {
   myWidth  = theWidth;
   myHeight = theHeight;
 }
 
-//=======================================================================
-// function : SetViewport
-// purpose  : Stores current viewport coordinates
-//=======================================================================
 void SelectMgr_FrustumBuilder::SetViewport(const double theX,
                                            const double theY,
                                            const double theWidth,
@@ -46,26 +32,17 @@ void SelectMgr_FrustumBuilder::SetViewport(const double theX,
   myIsViewportSet = true;
 }
 
-//=================================================================================================
-
 void SelectMgr_FrustumBuilder::WindowSize(int& theWidth, int& theHeight) const
 {
   theWidth  = myWidth;
   theHeight = myHeight;
 }
 
-//=================================================================================================
-
 void SelectMgr_FrustumBuilder::InvalidateViewport()
 {
   myIsViewportSet = false;
 }
 
-//=======================================================================
-// function : SignedPlanePntDist
-// purpose  : Calculates signed distance between plane with equation
-//            theEq and point thePnt
-//=======================================================================
 double SelectMgr_FrustumBuilder::SignedPlanePntDist(const NCollection_Vec3<double>& theEq,
                                                     const NCollection_Vec3<double>& thePnt) const
 {
@@ -77,12 +54,6 @@ double SelectMgr_FrustumBuilder::SignedPlanePntDist(const NCollection_Vec3<doubl
   return anA * thePnt.x() + aB * thePnt.y() + aC * thePnt.z();
 }
 
-// =======================================================================
-// function : ProjectPntOnViewPlane
-// purpose  : Projects 2d screen point onto view frustum plane:
-//            theZ = 0 - near plane,
-//            theZ = 1 - far plane
-// =======================================================================
 gp_Pnt SelectMgr_FrustumBuilder::ProjectPntOnViewPlane(const double& theX,
                                                        const double& theY,
                                                        const double& theZ) const
@@ -91,7 +62,7 @@ gp_Pnt SelectMgr_FrustumBuilder::ProjectPntOnViewPlane(const double& theX,
   {
     return gp_Pnt();
   }
-  // map coords to NDC
+
   gp_Pnt anXYZ;
   if (!myIsViewportSet)
   {

@@ -14,11 +14,10 @@ void IGESSolid_SolidOfRevolution::Init(const occ::handle<IGESData_IGESEntity>& a
                                        const gp_XYZ&                           Direction)
 {
   theCurve     = aCurve;
-  theFraction  = Fract;     // default 1.0
-  theAxisPoint = AxisPnt;   // default (0,0,0)
-  theAxis      = Direction; // default (0,0,1)
+  theFraction  = Fract;
+  theAxisPoint = AxisPnt;
+  theAxis      = Direction;
   InitTypeAndForm(162, FormNumber());
-  // Form 0 : Curve closed to Axis;   Form 1 : Curve closed to itself
 }
 
 void IGESSolid_SolidOfRevolution::SetClosedToAxis(const bool F)

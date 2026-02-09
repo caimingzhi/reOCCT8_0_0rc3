@@ -9,7 +9,6 @@ class StepVisual_PresentationView : public StepVisual_PresentationRepresentation
 {
 
 public:
-  //! Returns a PresentationView
   Standard_EXPORT StepVisual_PresentationView();
 
   DEFINE_STANDARD_RTTIEXT(StepVisual_PresentationView, StepVisual_PresentationRepresentation)

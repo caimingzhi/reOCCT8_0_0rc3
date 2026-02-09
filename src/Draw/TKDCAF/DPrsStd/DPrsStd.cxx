@@ -7,8 +7,6 @@
 #include <Draw_Interpretor.hpp>
 #include <Draw_PluginMacro.hpp>
 
-//=================================================================================================
-
 void DPrsStd::AllCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
@@ -18,12 +16,8 @@ void DPrsStd::AllCommands(Draw_Interpretor& theCommands)
 
   DPrsStd::AISPresentationCommands(theCommands);
   DPrsStd::AISViewerCommands(theCommands);
-  // DPrsStd::BasicCommands(theCommands);
 }
 
-//==============================================================================
-// DPrsStd::Factory
-//==============================================================================
 void DPrsStd::Factory(Draw_Interpretor& theDI)
 {
   static bool DPrsStdFactoryDone = false;
@@ -41,5 +35,4 @@ void DPrsStd::Factory(Draw_Interpretor& theDI)
 #endif
 }
 
-// Declare entry point PLUGINFACTORY
 DPLUGIN(DPrsStd)

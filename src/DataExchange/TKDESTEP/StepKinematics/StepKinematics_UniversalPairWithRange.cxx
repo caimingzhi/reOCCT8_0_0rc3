@@ -1,10 +1,8 @@
-// Created on : Sat May 02 12:41:16 2020
+
 
 #include <StepKinematics_UniversalPairWithRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_UniversalPairWithRange, StepKinematics_UniversalPair)
-
-//=================================================================================================
 
 StepKinematics_UniversalPairWithRange::StepKinematics_UniversalPairWithRange()
 {
@@ -13,8 +11,6 @@ StepKinematics_UniversalPairWithRange::StepKinematics_UniversalPairWithRange()
   defLowerLimitSecondRotation = false;
   defUpperLimitSecondRotation = false;
 }
-
-//=================================================================================================
 
 void StepKinematics_UniversalPairWithRange::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -90,14 +86,10 @@ void StepKinematics_UniversalPairWithRange::Init(
     myUpperLimitSecondRotation = 0;
 }
 
-//=================================================================================================
-
 double StepKinematics_UniversalPairWithRange::LowerLimitFirstRotation() const
 {
   return myLowerLimitFirstRotation;
 }
-
-//=================================================================================================
 
 void StepKinematics_UniversalPairWithRange::SetLowerLimitFirstRotation(
   const double theLowerLimitFirstRotation)
@@ -105,21 +97,15 @@ void StepKinematics_UniversalPairWithRange::SetLowerLimitFirstRotation(
   myLowerLimitFirstRotation = theLowerLimitFirstRotation;
 }
 
-//=================================================================================================
-
 bool StepKinematics_UniversalPairWithRange::HasLowerLimitFirstRotation() const
 {
   return defLowerLimitFirstRotation;
 }
 
-//=================================================================================================
-
 double StepKinematics_UniversalPairWithRange::UpperLimitFirstRotation() const
 {
   return myUpperLimitFirstRotation;
 }
-
-//=================================================================================================
 
 void StepKinematics_UniversalPairWithRange::SetUpperLimitFirstRotation(
   const double theUpperLimitFirstRotation)
@@ -127,21 +113,15 @@ void StepKinematics_UniversalPairWithRange::SetUpperLimitFirstRotation(
   myUpperLimitFirstRotation = theUpperLimitFirstRotation;
 }
 
-//=================================================================================================
-
 bool StepKinematics_UniversalPairWithRange::HasUpperLimitFirstRotation() const
 {
   return defUpperLimitFirstRotation;
 }
 
-//=================================================================================================
-
 double StepKinematics_UniversalPairWithRange::LowerLimitSecondRotation() const
 {
   return myLowerLimitSecondRotation;
 }
-
-//=================================================================================================
 
 void StepKinematics_UniversalPairWithRange::SetLowerLimitSecondRotation(
   const double theLowerLimitSecondRotation)
@@ -149,29 +129,21 @@ void StepKinematics_UniversalPairWithRange::SetLowerLimitSecondRotation(
   myLowerLimitSecondRotation = theLowerLimitSecondRotation;
 }
 
-//=================================================================================================
-
 bool StepKinematics_UniversalPairWithRange::HasLowerLimitSecondRotation() const
 {
   return defLowerLimitSecondRotation;
 }
-
-//=================================================================================================
 
 double StepKinematics_UniversalPairWithRange::UpperLimitSecondRotation() const
 {
   return myUpperLimitSecondRotation;
 }
 
-//=================================================================================================
-
 void StepKinematics_UniversalPairWithRange::SetUpperLimitSecondRotation(
   const double theUpperLimitSecondRotation)
 {
   myUpperLimitSecondRotation = theUpperLimitSecondRotation;
 }
-
-//=================================================================================================
 
 bool StepKinematics_UniversalPairWithRange::HasUpperLimitSecondRotation() const
 {

@@ -5,11 +5,7 @@
 #include <StepRepr_CompShAspAndDatumFeatAndShAsp.hpp>
 #include <StepRepr_ProductDefinitionShape.hpp>
 
-//=================================================================================================
-
 RWStepRepr_RWCompShAspAndDatumFeatAndShAsp::RWStepRepr_RWCompShAspAndDatumFeatAndShAsp() = default;
-
-//=================================================================================================
 
 void RWStepRepr_RWCompShAspAndDatumFeatAndShAsp::ReadStep(
   const occ::handle<StepData_StepReaderData>&                data,
@@ -37,11 +33,8 @@ void RWStepRepr_RWCompShAspAndDatumFeatAndShAsp::ReadStep(
   StepData_Logical aProductDefinitional;
   data->ReadLogical(num, 4, "product_definitional", ach, aProductDefinitional);
 
-  // Initialize the entity
   ent->Init(aName, aDescription, aOfShape, aProductDefinitional);
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWCompShAspAndDatumFeatAndShAsp::WriteStep(
   StepData_StepWriter&                                       SW,
@@ -55,8 +48,6 @@ void RWStepRepr_RWCompShAspAndDatumFeatAndShAsp::WriteStep(
   SW.Send(ent->OfShape());
   SW.SendLogical(ent->ProductDefinitional());
 }
-
-//=================================================================================================
 
 void RWStepRepr_RWCompShAspAndDatumFeatAndShAsp::Share(
   const occ::handle<StepRepr_CompShAspAndDatumFeatAndShAsp>& ent,

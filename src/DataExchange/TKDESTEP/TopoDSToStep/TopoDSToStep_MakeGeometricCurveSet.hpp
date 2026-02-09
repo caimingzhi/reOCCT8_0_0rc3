@@ -9,9 +9,6 @@ class StepShape_GeometricCurveSet;
 class TopoDS_Shape;
 class Transfer_FinderProcess;
 
-//! This class implements the mapping between a Shape
-//! from TopoDS and a GeometricCurveSet from StepShape in order
-//! to create a GeometricallyBoundedWireframeRepresentation.
 class TopoDSToStep_MakeGeometricCurveSet : public TopoDSToStep_Root
 {
 public:

@@ -11,7 +11,6 @@ class StepVisual_TextStyle : public Standard_Transient
 {
 
 public:
-  //! Returns a TextStyle
   Standard_EXPORT StepVisual_TextStyle();
 
   Standard_EXPORT void Init(

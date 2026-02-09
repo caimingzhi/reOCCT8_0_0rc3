@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <ElCLib.hpp>
 #include <GccAna_Circ2d3Tan.hpp>
@@ -25,18 +13,11 @@
 #include <StdFail_NotDone.hpp>
 #include <NCollection_Array1.hpp>
 
-//=========================================================================
-//   Creation of a circle tangent to three circles.                        +
-//=========================================================================
 GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                                      const GccEnt_QualifiedCirc& Qualified2,
                                      const GccEnt_QualifiedCirc& Qualified3,
                                      const double                Tolerance)
     :
-
-      //=========================================================================
-      //   Initialization of fields.                                           +
-      //=========================================================================
 
       cirsol(1, 16),
       qualifier1(1, 16),
@@ -71,10 +52,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
     return;
   }
 
-  //=========================================================================
-  //   Processing.                                                          +
-  //=========================================================================
-
   gp_Circ2d Cir1 = Qualified1.Qualified();
   gp_Circ2d Cir2 = Qualified2.Qualified();
   gp_Circ2d Cir3 = Qualified3.Qualified();
@@ -96,7 +73,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
   gp_XY dir2 = center1.XY() - center2.XY();
   gp_XY dir3 = center1.XY() - center3.XY();
 
-  //////////
   if ((std::abs(R1 - R2) <= Tolerance && center1.IsEqual(center2, Tolerance))
       || (std::abs(R1 - R3) <= Tolerance && center1.IsEqual(center3, Tolerance))
       || (std::abs(R2 - R3) <= Tolerance && center2.IsEqual(center3, Tolerance)))
@@ -136,7 +112,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
       }
     }
   }
-  /////////
+
   NCollection_Array1<double> A2(1, 8), B2(1, 8), C2(1, 8), D2(1, 8), E2(1, 8), F2(1, 8);
   NCollection_Array1<double> A3(1, 8), B3(1, 8), C3(1, 8), D3(1, 8), E3(1, 8), F3(1, 8);
   NCollection_Array1<double> Beta2(1, 8), Gamma2(1, 8), Delta2(1, 8);
@@ -164,42 +140,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
 
   int CurSol;
 
-  //*********************************************************************************************
-  //*********************************************************************************************
-
-  //   Actually we have to find solutions of eight systems of equations:
-  //         _                                          _
-  //        | (X - X1)2 + (Y - Y1)2 = (R - R1)2        | (X - X1)2 + (Y - Y1)2 = (R + R1)2
-  //   1)  <  (X - X2)2 + (Y - Y2)2 = (R - R2)2   2)  <  (X - X2)2 + (Y - Y2)2 = (R - R2)2
-  //        \_(X - X3)2 + (Y - Y3)2 = (R - R3)2        \_(X - X3)2 + (Y - Y3)2 = (R - R3)2
-  //         _                                          _
-  //        | (X - X1)2 + (Y - Y1)2 = (R - R1)2        | (X - X1)2 + (Y - Y1)2 = (R - R1)2
-  //   3)  <  (X - X2)2 + (Y - Y2)2 = (R + R2)2   4)  <  (X - X2)2 + (Y - Y2)2 = (R - R2)2
-  //        \_(X - X3)2 + (Y - Y3)2 = (R - R3)2        \_(X - X3)2 + (Y - Y3)2 = (R + R3)2
-  //         _                                          _
-  //        | (X - X1)2 + (Y - Y1)2 = (R + R1)2        | (X - X1)2 + (Y - Y1)2 = (R + R1)2
-  //   5)  <  (X - X2)2 + (Y - Y2)2 = (R + R2)2   6)  <  (X - X2)2 + (Y - Y2)2 = (R - R2)2
-  //        \_(X - X3)2 + (Y - Y3)2 = (R - R3)2        \_(X - X3)2 + (Y - Y3)2 = (R + R3)2
-  //         _                                          _
-  //        | (X - X1)2 + (Y - Y1)2 = (R - R1)2        | (X - X1)2 + (Y - Y1)2 = (R + R1)2
-  //   7)  <  (X - X2)2 + (Y - Y2)2 = (R + R2)2   8)  <  (X - X2)2 + (Y - Y2)2 = (R + R2)2
-  //        \_(X - X3)2 + (Y - Y3)2 = (R + R3)2        \_(X - X3)2 + (Y - Y3)2 = (R + R3)2
-
-  //   each equation (X - Xi)2 + (Y - Yi)2 = (R +- Ri)2 means that the circle (X,Y,R) is tangent
-  //   to the circle (Xi,Yi,Ri).
-
-  //   The number of each system is very important.
-  //   Further index i shows the number of the system.
-
-  //   Further Beta, Gamma and Delta are coefficients of the equation:
-  //                R +- Ri = Beta*X + Gamma*Y + Delta  where i=2 or i=3
-
-  //*********************************************************************************************
-  //*********************************************************************************************
-
-  //   Verification do two circles touch each other or not
-  //   if at least one circle touches other one IsTouch become Standard_Standard_True
-
   IsTouch =
     std::abs((X1 - X2) * (X1 - X2) + (Y1 - Y2) * (Y1 - Y2) - (R1 - R2) * (R1 - R2)) <= Tolerance
     || std::abs((X1 - X2) * (X1 - X2) + (Y1 - Y2) * (Y1 - Y2) - (R1 + R2) * (R1 + R2)) <= Tolerance
@@ -208,23 +148,8 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
     || std::abs((X2 - X3) * (X2 - X3) + (Y2 - Y3) * (Y2 - Y3) - (R2 - R3) * (R2 - R3)) <= Tolerance
     || std::abs((X2 - X3) * (X2 - X3) + (Y2 - Y3) * (Y2 - Y3) - (R2 + R3) * (R2 + R3)) <= Tolerance;
 
-  //   First step:
-  //     We are searching for Beta, Gamma and Delta coefficients
-  //     and also coefficients of the system of second order equations:
-  //     _
-  //    |  a2*x*x +2*b2*x*y + c2*y*y +2*d2*x + 2*e2*y + f2 = 0
-  //   <
-  //    \_ a3*x*x +2*b3*x*y + c3*y*y +2*d3*x + 2*e3*y + f3 = 0   ,
-
-  //     obtained by exclusion of R from source systems.
-
   for (i = 1; i <= 8; i++)
   {
-
-    //    _
-    //   | (X - X1)2 + (Y - Y1)2 = (R +- R1)2
-    //  <
-    //   \_(X - X2)2 + (Y - Y2)2 = (R +- R2)2
 
     if (i == 1 || i == 4 || i == 5 || i == 8)
     {
@@ -244,7 +169,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
     }
     if ((i == 1 || i == 4 || i == 5 || i == 8) && (std::abs(R1 - R2) <= Tolerance))
     {
-      //  If R1 = R2
+
       A2(i) = 0.;
       B2(i) = 0.;
       C2(i) = 0.;
@@ -261,11 +186,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
       E2(i) = Gamma2(i) * Delta2(i) + Y2;
       F2(i) = Delta2(i) * Delta2(i) - X2 * X2 - Y2 * Y2;
     }
-
-    //    _
-    //   | (X - X1)2 + (Y - Y1)2 = (R +- R1)2
-    //  <
-    //   \_(X - X3)2 + (Y - Y3)2 = (R +- R3)2
 
     if (i == 1 || i == 3 || i == 6 || i == 8)
     {
@@ -303,13 +223,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
     }
   }
 
-  //   Second step:
-  //     We are searching for the couple (X,Y) as a solution  of the system:
-  //     _
-  //    |  a2*x*x +2*b2*x*y + c2*y*y +2*d2*x + 2*e2*y + f2 = 0
-  //   <
-  //    \_ a3*x*x +2*b3*x*y + c3*y*y +2*d3*x + 2*e3*y + f3 = 0
-
   CurSol = 1;
   for (i = 1; i <= 8; i++)
   {
@@ -328,7 +241,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
 
     FirstSol(i) = CurSol;
 
-    //  In some cases we know that some systems have no solution in any case due to qualifiers
     if (((i == 2 || i == 5 || i == 6 || i == 8)
          && (Qualified1.IsEnclosed() || Qualified1.IsEnclosing()))
         || ((i == 1 || i == 3 || i == 4 || i == 7) && Qualified1.IsOutside()))
@@ -344,8 +256,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
         || ((i == 1 || i == 2 || i == 3 || i == 5) && Qualified3.IsOutside()))
       continue;
 
-    // Check is Cir1 a solution of this system or not
-    // In that case equations are equal to each other
     if (std::abs(a2 - a3) <= Tolerance && std::abs(b2 - b3) <= Tolerance
         && std::abs(c2 - c3) <= Tolerance && std::abs(d2 - d3) <= Tolerance
         && std::abs(e2 - e3) <= Tolerance && std::abs(f2 - f3) <= Tolerance)
@@ -355,12 +265,10 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
       CurSol++;
       continue;
     }
-    // 1) a2 = 0
+
     if (std::abs(a2) <= Tolerance)
     {
 
-      // 1.1) b2y + d2 = 0
-      //   Searching for solution of the equation Ay2 + By + C = 0
       A = c2;
       B = 2. * e2;
       C = f2;
@@ -368,9 +276,9 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
       if (yRoots.IsDone() && !yRoots.InfiniteRoots())
         for (k = 1; k <= yRoots.NbSolutions(); k++)
         {
-          //   for each y solution:
+
           y = yRoots.Value(k);
-          //   Searching for solution of the equation Ax2 + Bx + C = 0
+
           if ((k != 2 || std::abs(y - yRoots.Value(1)) > 10 * Tolerance)
               && std::abs(b2 * y + d2) <= b2 * Tolerance)
           {
@@ -392,7 +300,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
           }
         }
 
-      // 1.2) b2y + d2 != 0
       A = a3 * c2 * c2 - 4 * b2 * (b3 * c2 - b2 * c3);
       B = 4 * a3 * c2 * e2 - 4 * b3 * (c2 * d2 + 2 * b2 * e2)
           + 4 * b2 * (2 * c3 * d2 - c2 * d3 + 2 * b2 * e3);
@@ -402,17 +309,15 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
           + 8 * b2 * d2 * f3;
       E = a3 * f2 * f2 - 4 * d2 * d3 * f2 + 4 * d2 * d2 * f3;
 
-      //   Searching for solution of the equation Ay4 + By3 + Cy2 + Dy + E = 0
-      // Special case: one circle touches other
       if (IsTouch)
       {
-        // Derivation of the equation Ay4 + By3 + Cy2 + Dy + E
+
         math_DirectPolynomialRoots yRoots1(4 * A, 3 * B, 2 * C, D);
         if (yRoots1.IsDone() && !yRoots1.InfiniteRoots())
           for (k = 1; k <= yRoots1.NbSolutions(); k++)
           {
             y = yRoots1.Value(k);
-            // Check if this value is already caught
+
             IsSame = false;
             for (l = 1; l < k; l++)
               if (std::abs(y - yRoots1.Value(l)) <= 10 * Tolerance)
@@ -440,7 +345,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
         for (k = 1; k <= yRoots1.NbSolutions(); k++)
         {
           y = yRoots1.Value(k);
-          // Check if this value is already caught
+
           IsSame     = false;
           FirstIndex = (i == 1) ? 1 : FirstSol(i);
           for (l = FirstIndex; l < CurSol; l++)
@@ -458,8 +363,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
     }
     else
     {
-      // 2) a2 != 0
-      // Coefficients of the equation     (sy + v)std::sqrt(p2 - q) = (my2 + ny + t)
+
       m = 2 * a3 * b2 * b2 / (a2 * a2) - 2 * b2 * b3 / a2 - a3 * c2 / a2 + c3;
       n = 4 * a3 * b2 * d2 / (a2 * a2) - 2 * b3 * d2 / a2 - 2 * b2 * d3 / a2 - 2 * a3 * e2 / a2
           + 2 * e3;
@@ -467,15 +371,13 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
       s = 2 * b3 - 2 * a3 * b2 / a2;
       v = 2 * d3 - 2 * d2 * a3 / a2;
 
-      //------------------------------------------
-      // If s = v = 0
       if (std::abs(s) <= Tolerance && std::abs(v) <= Tolerance)
       {
         math_DirectPolynomialRoots yRoots(m, n, t);
         if (yRoots.IsDone() && !yRoots.InfiniteRoots())
           for (k = 1; k <= yRoots.NbSolutions(); k++)
           {
-            //   for each y solution:
+
             y = yRoots.Value(k);
 
             p       = -(b2 * y + d2) / a2;
@@ -494,7 +396,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
               if (xRoots.IsDone() && !xRoots.InfiniteRoots())
                 for (l = 1; l <= xRoots.NbSolutions(); l++)
                 {
-                  //   for each x solution:
+
                   x = xRoots.Value(l);
 
                   if (l != 2 || std::abs(x - xRoots.Value(1)) > 10 * Tolerance)
@@ -509,8 +411,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
       }
       else
       {
-        //------------------------------------------
-        // If (s*y + v) != 0
 
         A = s * s * (b2 * b2 - a2 * c2) - m * m * a2 * a2;
         B = 2 * s * v * (b2 * b2 - a2 * c2) + 2 * s * s * (b2 * d2 - a2 * e2) - 2 * m * n * a2 * a2;
@@ -519,11 +419,9 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
         D = 2 * v * v * (b2 * d2 - a2 * e2) + 2 * s * v * (d2 * d2 - a2 * f2) - 2 * n * t * a2 * a2;
         E = v * v * (d2 * d2 - a2 * f2) - t * t * a2 * a2;
 
-        //   Searching for solution of the equation Ay4 + By3 + Cy2 + Dy + E = 0
-        // Special case: one circle touches other
         if (IsTouch)
         {
-          // Derivation of the equation Ay4 + By3 + Cy2 + Dy + E
+
           math_DirectPolynomialRoots yRoots1(4 * A, 3 * B, 2 * C, D);
           if (yRoots1.IsDone() && !yRoots1.InfiniteRoots())
             for (k = 1; k <= yRoots1.NbSolutions(); k++)
@@ -533,7 +431,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
               p = -(b2 * y + d2) / a2;
               q = (c2 * (y * y) + 2 * e2 * y + f2) / a2;
 
-              // Check if this value is already caught
               IsSame     = false;
               FirstIndex = (i == 1) ? 1 : FirstSol(i);
               for (l = FirstIndex; l < CurSol; l++)
@@ -560,7 +457,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                   if (xRoots.IsDone() && !xRoots.InfiniteRoots())
                     for (l = 1; l <= xRoots.NbSolutions(); l++)
                     {
-                      //   for each x solution:
+
                       x = xRoots.Value(l);
 
                       if (l != 2 || std::abs(x - xRoots.Value(1)) > 10 * Tolerance)
@@ -579,13 +476,12 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
         if (yRoots.IsDone() && !yRoots.InfiniteRoots())
           for (k = 1; k <= yRoots.NbSolutions(); k++)
           {
-            //   for each y solution:
+
             y = yRoots.Value(k);
 
             p = -(b2 * y + d2) / a2;
             q = (c2 * (y * y) + 2 * e2 * y + f2) / a2;
 
-            // Check if this value is already caught
             IsSame = false;
             for (l = 1; l < k; l++)
               if (std::abs(y - yRoots.Value(l)) <= 10 * Tolerance)
@@ -604,7 +500,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
               if (xRoots.IsDone() && !xRoots.InfiniteRoots())
                 for (l = 1; l <= xRoots.NbSolutions(); l++)
                 {
-                  //   for each x solution:
+
                   x = xRoots.Value(l);
 
                   if (l != 2 || std::abs(x - xRoots.Value(1)) > 10 * Tolerance)
@@ -621,8 +517,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
   }
   FirstSol(9) = CurSol;
 
-  //  Third step:
-  //    Check of couples (X,Y) and searching for R. R must be great than 0
   CurSol = 1;
   for (i = 1; i <= 8; i++)
   {
@@ -631,7 +525,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
     {
       x = xSol(j);
       y = ySol(j);
-      // in some cases when R1 = R2 :
+
       if ((i == 1 || i == 4 || i == 5 || i == 8) && (std::abs(R1 - R2) <= Tolerance))
       {
         if (i == 1 || i == 4)
@@ -660,7 +554,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
         }
         else
         {
-          //	i == 5 || i == 8
+
           r = -R1 + std::sqrt((x - X1) * (x - X1) + (y - Y1) * (y - Y1));
           if (r > Tolerance)
           {
@@ -673,7 +567,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
       }
       else
       {
-        // Other cases
+
         if (i == 1 || i == 4)
         {
           r = R2 + Beta2(i) * x + Gamma2(i) * y + Delta2(i);
@@ -722,8 +616,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
     }
   }
   FirstSol1(9) = CurSol;
-  //   Fourth step
-  //     Check of triplets (X,Y,R).
+
   CurSol = 1;
   for (i = 1; i <= 8; i++)
   {
@@ -733,7 +626,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
       x = xSol1(j);
       y = ySol1(j);
       r = rSol1(j);
-      // in some cases when R1 = R3 :
+
       if ((i == 1 || i == 3 || i == 6 || i == 8) && std::abs(R1 - R3) <= Tolerance)
       {
         if (i == 1 || i == 3)
@@ -750,7 +643,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
         }
         else
         {
-          //	i == 6 || i == 8
+
           Epsilon = 10 * (2 * (r + R3) + std::abs(x - X3) + std::abs(y - Y3));
           if (std::abs((r + R3) * (r + R3) - (x - X3) * (x - X3) - (y - Y3) * (y - Y3))
               <= Epsilon * Tolerance)
@@ -764,7 +657,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
       }
       else
       {
-        // Other cases
+
         Epsilon = 10 * (std::abs(Beta3(i)) + std::abs(Gamma3(i)) + 1.);
         if (i == 1 || i == 3)
           if (std::abs(R3 + Beta3(i) * x + Gamma3(i) * y + Delta3(i) - r) <= Epsilon * Tolerance)
@@ -803,8 +696,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
   }
   FirstSol(9) = CurSol;
 
-  //  Fifth step:
-  //    We have found all solutions. We have to calculate some parameters for each one.
   for (i = 1; i <= 8; i++)
   {
     for (j = FirstSol(i); j < FirstSol(i + 1); j++)
@@ -819,7 +710,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
 
       NbrSol++;
 
-      // RLE, avoid out of range
       if (NbrSol > cirsol.Upper())
         NbrSol = cirsol.Upper();
 
@@ -827,7 +717,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
 
       cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center, dirx), rSol(j));
 
-      //   ==========================================================
       double distcc1 = Center.Distance(center1);
       if (!Qualified1.IsUnqualified())
         qualifier1(NbrSol) = Qualified1.Qualifier();
@@ -857,8 +746,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
         qualifier3(NbrSol) = GccEnt_outside;
       else
         qualifier3(NbrSol) = GccEnt_enclosing;
-
-      //   ==========================================================
 
       if (Center.Distance(Cir1.Location()) <= Tolerance)
         TheSame1(NbrSol) = 1;
@@ -908,8 +795,6 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
   }
   WellDone = true;
 }
-
-//=========================================================================
 
 bool GccAna_Circ2d3Tan::IsDone() const
 {

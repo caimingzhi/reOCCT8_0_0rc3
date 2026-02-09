@@ -11,7 +11,6 @@ class StepBasic_ConversionBasedUnitAndVolumeUnit;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ConversionBasedUnitAndVolumeUnit
 class RWStepBasic_RWConversionBasedUnitAndVolumeUnit
 {
 public:

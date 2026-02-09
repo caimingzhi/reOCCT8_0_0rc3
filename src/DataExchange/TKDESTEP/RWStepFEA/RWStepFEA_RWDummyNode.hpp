@@ -11,26 +11,21 @@ class StepFEA_DummyNode;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write tool for DummyNode
 class RWStepFEA_RWDummyNode
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_HIDDEN RWStepFEA_RWDummyNode();
 
-  //! Reads DummyNode
   Standard_HIDDEN void ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                 const int                                   num,
                                 occ::handle<Interface_Check>&               ach,
                                 const occ::handle<StepFEA_DummyNode>&       ent) const;
 
-  //! Writes DummyNode
   Standard_HIDDEN void WriteStep(StepData_StepWriter&                  SW,
                                  const occ::handle<StepFEA_DummyNode>& ent) const;
 
-  //! Fills data for graph (shared items)
   Standard_HIDDEN void Share(const occ::handle<StepFEA_DummyNode>& ent,
                              Interface_EntityIterator&             iter) const;
 };

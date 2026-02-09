@@ -5,12 +5,9 @@
 #include <math_Vector.hpp>
 #include <math_MultipleVarFunctionWithHessian.hpp>
 
-//! This class implements function which calculate square Eucluidean distance
-//! between point on curve and point on surface in case of continuity is C2.
 class Extrema_GlobOptFuncCS : public math_MultipleVarFunctionWithHessian
 {
 public:
-  //! Curve and surface should exist during all the lifetime of Extrema_GlobOptFuncCS.
   Standard_EXPORT Extrema_GlobOptFuncCS(const Adaptor3d_Curve* C, const Adaptor3d_Surface* S);
 
   Standard_EXPORT int NbVariables() const override;

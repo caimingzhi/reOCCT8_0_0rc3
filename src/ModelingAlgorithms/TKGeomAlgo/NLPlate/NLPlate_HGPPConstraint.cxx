@@ -20,15 +20,15 @@ void NLPlate_HGPPConstraint::SetUV(const gp_XY& UV)
   myUV = UV;
 }
 
-void NLPlate_HGPPConstraint::SetOrientation(const int /*Orient*/) {}
+void NLPlate_HGPPConstraint::SetOrientation(const int) {}
 
-void NLPlate_HGPPConstraint::SetG0Criterion(const double /*TolDist*/) {}
+void NLPlate_HGPPConstraint::SetG0Criterion(const double) {}
 
-void NLPlate_HGPPConstraint::SetG1Criterion(const double /*TolAng*/) {}
+void NLPlate_HGPPConstraint::SetG1Criterion(const double) {}
 
-void NLPlate_HGPPConstraint::SetG2Criterion(const double /*TolCurv*/) {}
+void NLPlate_HGPPConstraint::SetG2Criterion(const double) {}
 
-void NLPlate_HGPPConstraint::SetG3Criterion(const double /*TolG3*/) {}
+void NLPlate_HGPPConstraint::SetG3Criterion(const double) {}
 
 bool NLPlate_HGPPConstraint::UVFreeSliding() const
 {
@@ -50,7 +50,6 @@ static const gp_XYZ XYZnull(0., 0., 0.);
 const gp_XYZ& NLPlate_HGPPConstraint::G0Target() const
 {
   return XYZnull;
-  // this method should not be called
 }
 
 static const Plate_D1 D1null(XYZnull, XYZnull);
@@ -58,7 +57,6 @@ static const Plate_D1 D1null(XYZnull, XYZnull);
 const Plate_D1& NLPlate_HGPPConstraint::G1Target() const
 {
   return D1null;
-  // this method should not be called
 }
 
 static const Plate_D2 D2null(XYZnull, XYZnull, XYZnull);
@@ -66,7 +64,6 @@ static const Plate_D2 D2null(XYZnull, XYZnull, XYZnull);
 const Plate_D2& NLPlate_HGPPConstraint::G2Target() const
 {
   return D2null;
-  // this method should not be called
 }
 
 static const Plate_D3 D3null(XYZnull, XYZnull, XYZnull, XYZnull);
@@ -74,7 +71,6 @@ static const Plate_D3 D3null(XYZnull, XYZnull, XYZnull, XYZnull);
 const Plate_D3& NLPlate_HGPPConstraint::G3Target() const
 {
   return D3null;
-  // this method should not be called
 }
 
 int NLPlate_HGPPConstraint::Orientation()

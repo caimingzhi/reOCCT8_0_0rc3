@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -94,7 +83,6 @@ TEST(BVH_BoxTest, Area)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 2.0, 3.0));
 
-  // Surface area = 2 * (1*2 + 2*3 + 1*3) = 2 * (2 + 6 + 3) = 22
   double anArea = aBox.Area();
   EXPECT_NEAR(anArea, 22.0, Precision::Confusion());
 }
@@ -131,9 +119,8 @@ TEST(BVH_BoxTest, Box2D)
   EXPECT_NEAR(aBox.CornerMax().x(), 1.0, Precision::Confusion());
   EXPECT_NEAR(aBox.CornerMax().y(), 1.0, Precision::Confusion());
 
-  // Area in 2D is width * height (actual area)
   double anArea = aBox.Area();
-  EXPECT_NEAR(anArea, 1.0, Precision::Confusion()); // 1 * 1 = 1
+  EXPECT_NEAR(anArea, 1.0, Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, Box4D)
@@ -178,13 +165,11 @@ TEST(BVH_BoxTest, SinglePointBox)
   EXPECT_NEAR(aBox.CornerMin().x(), 5.0, Precision::Confusion());
   EXPECT_NEAR(aBox.CornerMax().x(), 5.0, Precision::Confusion());
 
-  // Size should be zero
   BVH_Vec3d aSize = aBox.Size();
   EXPECT_NEAR(aSize.x(), 0.0, Precision::Confusion());
   EXPECT_NEAR(aSize.y(), 0.0, Precision::Confusion());
   EXPECT_NEAR(aSize.z(), 0.0, Precision::Confusion());
 
-  // Area should be zero
   EXPECT_NEAR(aBox.Area(), 0.0, Precision::Confusion());
 }
 
@@ -221,11 +206,10 @@ TEST(BVH_BoxTest, LargeValues)
 TEST(BVH_BoxTest, CombineWithInvalid)
 {
   BVH_Box<double, 3> aBox1(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
-  BVH_Box<double, 3> aBox2; // Invalid box
+  BVH_Box<double, 3> aBox2;
 
   aBox1.Combine(aBox2);
 
-  // Box1 should remain unchanged when combining with invalid box
   EXPECT_TRUE(aBox1.IsValid());
   EXPECT_NEAR(aBox1.CornerMin().x(), 0.0, Precision::Confusion());
   EXPECT_NEAR(aBox1.CornerMax().x(), 1.0, Precision::Confusion());
@@ -233,12 +217,11 @@ TEST(BVH_BoxTest, CombineWithInvalid)
 
 TEST(BVH_BoxTest, AddToInvalid)
 {
-  BVH_Box<double, 3> aBox1; // Invalid box
+  BVH_Box<double, 3> aBox1;
   BVH_Box<double, 3> aBox2(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
 
   aBox1.Combine(aBox2);
 
-  // Box1 should now be valid and equal to aBox2
   EXPECT_TRUE(aBox1.IsValid());
   EXPECT_NEAR(aBox1.CornerMin().x(), 0.0, Precision::Confusion());
   EXPECT_NEAR(aBox1.CornerMax().x(), 1.0, Precision::Confusion());
@@ -246,31 +229,28 @@ TEST(BVH_BoxTest, AddToInvalid)
 
 TEST(BVH_BoxTest, IsOutTouchingBoxes)
 {
-  // Boxes that touch at a face
+
   BVH_Box<double, 3> aBox1(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
   BVH_Box<double, 3> aBox2(BVH_Vec3d(1.0, 0.0, 0.0), BVH_Vec3d(2.0, 1.0, 1.0));
 
-  // Touching boxes should NOT be "out"
   EXPECT_FALSE(aBox1.IsOut(aBox2));
 }
 
 TEST(BVH_BoxTest, IsOutTouchingAtEdge)
 {
-  // Boxes that touch at an edge
+
   BVH_Box<double, 3> aBox1(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
   BVH_Box<double, 3> aBox2(BVH_Vec3d(1.0, 1.0, 0.0), BVH_Vec3d(2.0, 2.0, 1.0));
 
-  // Touching at edge should NOT be "out"
   EXPECT_FALSE(aBox1.IsOut(aBox2));
 }
 
 TEST(BVH_BoxTest, IsOutTouchingAtCorner)
 {
-  // Boxes that touch at a corner
+
   BVH_Box<double, 3> aBox1(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
   BVH_Box<double, 3> aBox2(BVH_Vec3d(1.0, 1.0, 1.0), BVH_Vec3d(2.0, 2.0, 2.0));
 
-  // Touching at corner should NOT be "out"
   EXPECT_FALSE(aBox1.IsOut(aBox2));
 }
 
@@ -278,8 +258,6 @@ TEST(BVH_BoxTest, AreaUnitCube)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
 
-  // Surface area of unit cube = 6 faces * 1 = 6
-  // Formula: 2 * (xy + yz + xz) = 2 * (1 + 1 + 1) = 6
   EXPECT_NEAR(aBox.Area(), 6.0, Precision::Confusion());
 }
 
@@ -297,7 +275,6 @@ TEST(BVH_BoxTest, MultipleAdds)
 {
   BVH_Box<double, 3> aBox;
 
-  // Add points in random order
   aBox.Add(BVH_Vec3d(5.0, 3.0, 1.0));
   aBox.Add(BVH_Vec3d(-2.0, 7.0, 4.0));
   aBox.Add(BVH_Vec3d(1.0, -1.0, 8.0));
@@ -313,7 +290,7 @@ TEST(BVH_BoxTest, MultipleAdds)
 
 TEST(BVH_BoxTest, FlatBox2D)
 {
-  // Box with zero extent in Z (flat)
+
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 5.0), BVH_Vec3d(3.0, 4.0, 5.0));
 
   EXPECT_TRUE(aBox.IsValid());
@@ -323,13 +300,12 @@ TEST(BVH_BoxTest, FlatBox2D)
   EXPECT_NEAR(aSize.y(), 4.0, Precision::Confusion());
   EXPECT_NEAR(aSize.z(), 0.0, Precision::Confusion());
 
-  // Area = 2 * (3*4 + 4*0 + 3*0) = 24
   EXPECT_NEAR(aBox.Area(), 24.0, Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, FlatBox1D)
 {
-  // Box with zero extent in Y and Z (line)
+
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 5.0, 5.0), BVH_Vec3d(10.0, 5.0, 5.0));
 
   EXPECT_TRUE(aBox.IsValid());
@@ -339,9 +315,6 @@ TEST(BVH_BoxTest, FlatBox1D)
   EXPECT_NEAR(aSize.y(), 0.0, Precision::Confusion());
   EXPECT_NEAR(aSize.z(), 0.0, Precision::Confusion());
 
-  // For degenerate box (line), Area returns length of longest dimension
-  // This is an implementation detail - the surface area formula gives 0,
-  // but Area() returns the length (10) for degenerate cases
   double anArea = aBox.Area();
   EXPECT_GE(anArea, 0.0);
 }
@@ -365,7 +338,7 @@ TEST(BVH_BoxTest, CombineMultiple)
 
 TEST(BVH_BoxTest, IsOutPartialOverlap)
 {
-  // Boxes that partially overlap
+
   BVH_Box<double, 3> aBox1(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(2.0, 2.0, 2.0));
   BVH_Box<double, 3> aBox2(BVH_Vec3d(1.0, 1.0, 1.0), BVH_Vec3d(3.0, 3.0, 3.0));
 
@@ -375,7 +348,7 @@ TEST(BVH_BoxTest, IsOutPartialOverlap)
 
 TEST(BVH_BoxTest, IsOutContained)
 {
-  // One box completely inside another
+
   BVH_Box<double, 3> aBox1(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(10.0, 10.0, 10.0));
   BVH_Box<double, 3> aBox2(BVH_Vec3d(2.0, 2.0, 2.0), BVH_Vec3d(3.0, 3.0, 3.0));
 
@@ -423,7 +396,7 @@ TEST(BVH_BoxTest, Box2DSize)
 
 TEST(BVH_BoxTest, VerySmallBox)
 {
-  // Test with very small values
+
   double             aSmall = 1e-10;
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(aSmall, aSmall, aSmall));
 
@@ -452,7 +425,7 @@ TEST(BVH_BoxTest, SymmetricBox)
 
 TEST(BVH_BoxTest, NonCubicBox)
 {
-  // Box with different dimensions on each axis
+
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 10.0, 100.0));
 
   BVH_Vec3d aSize = aBox.Size();
@@ -460,7 +433,6 @@ TEST(BVH_BoxTest, NonCubicBox)
   EXPECT_NEAR(aSize.y(), 10.0, Precision::Confusion());
   EXPECT_NEAR(aSize.z(), 100.0, Precision::Confusion());
 
-  // Area = 2 * (1*10 + 10*100 + 1*100) = 2 * (10 + 1000 + 100) = 2220
   EXPECT_NEAR(aBox.Area(), 2220.0, Precision::Confusion());
 }
 
@@ -473,7 +445,6 @@ TEST(BVH_BoxTest, ClearAndReuse)
   aBox.Clear();
   EXPECT_FALSE(aBox.IsValid());
 
-  // Reuse the box
   aBox.Add(BVH_Vec3d(5.0, 5.0, 5.0));
   aBox.Add(BVH_Vec3d(10.0, 10.0, 10.0));
 
@@ -486,7 +457,6 @@ TEST(BVH_BoxTest, IsOutSameBox)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
 
-  // Box should not be "out" of itself
   EXPECT_FALSE(aBox.IsOut(aBox));
 }
 
@@ -497,14 +467,13 @@ TEST(BVH_BoxTest, CombineSameBox)
 
   aBox1.Combine(aBox2);
 
-  // Should remain unchanged
   EXPECT_NEAR(aBox1.CornerMin().x(), 0.0, Precision::Confusion());
   EXPECT_NEAR(aBox1.CornerMax().x(), 1.0, Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, IsOutNearMiss)
 {
-  // Boxes that are very close but not touching
+
   BVH_Box<double, 3> aBox1(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
   BVH_Box<double, 3> aBox2(BVH_Vec3d(1.0001, 0.0, 0.0), BVH_Vec3d(2.0, 1.0, 1.0));
 
@@ -519,15 +488,10 @@ TEST(BVH_BoxTest, AddDuplicatePoint)
   aBox.Add(BVH_Vec3d(1.0, 2.0, 3.0));
   aBox.Add(BVH_Vec3d(1.0, 2.0, 3.0));
 
-  // Should still be a single point box
   EXPECT_NEAR(aBox.CornerMin().x(), 1.0, Precision::Confusion());
   EXPECT_NEAR(aBox.CornerMax().x(), 1.0, Precision::Confusion());
   EXPECT_NEAR(aBox.Size().x(), 0.0, Precision::Confusion());
 }
-
-// =======================================================================================
-// Tests for Single-Point Constructor
-// =======================================================================================
 
 TEST(BVH_BoxTest, SinglePointConstructor)
 {
@@ -542,7 +506,6 @@ TEST(BVH_BoxTest, SinglePointConstructor)
   EXPECT_NEAR(aBox.CornerMax().y(), 10.0, Precision::Confusion());
   EXPECT_NEAR(aBox.CornerMax().z(), 15.0, Precision::Confusion());
 
-  // Size should be zero
   BVH_Vec3d aSize = aBox.Size();
   EXPECT_NEAR(aSize.x(), 0.0, Precision::Confusion());
   EXPECT_NEAR(aSize.y(), 0.0, Precision::Confusion());
@@ -572,25 +535,21 @@ TEST(BVH_BoxTest, SinglePointConstructorOrigin)
   EXPECT_NEAR(aBox.Center().z(), 0.0, Precision::Confusion());
 }
 
-// =======================================================================================
-// Tests for Center(axis) method
-// =======================================================================================
-
 TEST(BVH_BoxTest, CenterByAxis)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(10.0, 20.0, 30.0));
 
-  EXPECT_NEAR(aBox.Center(0), 5.0, Precision::Confusion());  // X axis
-  EXPECT_NEAR(aBox.Center(1), 10.0, Precision::Confusion()); // Y axis
-  EXPECT_NEAR(aBox.Center(2), 15.0, Precision::Confusion()); // Z axis
+  EXPECT_NEAR(aBox.Center(0), 5.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.Center(1), 10.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.Center(2), 15.0, Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, CenterByAxis2D)
 {
   BVH_Box<double, 2> aBox(BVH_Vec2d(2.0, 4.0), BVH_Vec2d(8.0, 12.0));
 
-  EXPECT_NEAR(aBox.Center(0), 5.0, Precision::Confusion()); // X axis
-  EXPECT_NEAR(aBox.Center(1), 8.0, Precision::Confusion()); // Y axis
+  EXPECT_NEAR(aBox.Center(0), 5.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.Center(1), 8.0, Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, CenterByAxisNegative)
@@ -611,15 +570,10 @@ TEST(BVH_BoxTest, CenterByAxis4D)
   EXPECT_NEAR(aBox.Center(2), 4.0, Precision::Confusion());
 }
 
-// =======================================================================================
-// Tests for IsOut(point) method
-// =======================================================================================
-
 TEST(BVH_BoxTest, IsOutPoint_Inside)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(10.0, 10.0, 10.0));
 
-  // Point inside
   EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(5.0, 5.0, 5.0)));
   EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(1.0, 1.0, 1.0)));
   EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(9.0, 9.0, 9.0)));
@@ -629,30 +583,28 @@ TEST(BVH_BoxTest, IsOutPoint_Outside)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(10.0, 10.0, 10.0));
 
-  // Points outside
-  EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(11.0, 5.0, 5.0)));   // Outside X
-  EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(5.0, 11.0, 5.0)));   // Outside Y
-  EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(5.0, 5.0, 11.0)));   // Outside Z
-  EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(-1.0, 5.0, 5.0)));   // Outside negative X
-  EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(15.0, 15.0, 15.0))); // Far outside
+  EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(11.0, 5.0, 5.0)));
+  EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(5.0, 11.0, 5.0)));
+  EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(5.0, 5.0, 11.0)));
+  EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(-1.0, 5.0, 5.0)));
+  EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(15.0, 15.0, 15.0)));
 }
 
 TEST(BVH_BoxTest, IsOutPoint_OnBoundary)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(10.0, 10.0, 10.0));
 
-  // Points on boundary (should be considered inside)
-  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(0.0, 5.0, 5.0)));    // On min X face
-  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(10.0, 5.0, 5.0)));   // On max X face
-  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(5.0, 0.0, 5.0)));    // On min Y face
-  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(5.0, 10.0, 5.0)));   // On max Y face
-  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(0.0, 0.0, 0.0)));    // At corner
-  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(10.0, 10.0, 10.0))); // At opposite corner
+  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(0.0, 5.0, 5.0)));
+  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(10.0, 5.0, 5.0)));
+  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(5.0, 0.0, 5.0)));
+  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(5.0, 10.0, 5.0)));
+  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(0.0, 0.0, 0.0)));
+  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(10.0, 10.0, 10.0)));
 }
 
 TEST(BVH_BoxTest, IsOutPoint_InvalidBox)
 {
-  BVH_Box<double, 3> aBox; // Invalid box
+  BVH_Box<double, 3> aBox;
 
   EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(0.0, 0.0, 0.0)));
   EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(5.0, 5.0, 5.0)));
@@ -662,24 +614,20 @@ TEST(BVH_BoxTest, IsOutPoint_2D)
 {
   BVH_Box<double, 2> aBox(BVH_Vec2d(0.0, 0.0), BVH_Vec2d(5.0, 5.0));
 
-  EXPECT_FALSE(aBox.IsOut(BVH_Vec2d(2.5, 2.5))); // Inside
-  EXPECT_TRUE(aBox.IsOut(BVH_Vec2d(6.0, 2.5)));  // Outside X
-  EXPECT_TRUE(aBox.IsOut(BVH_Vec2d(2.5, 6.0)));  // Outside Y
-  EXPECT_FALSE(aBox.IsOut(BVH_Vec2d(0.0, 0.0))); // On corner
+  EXPECT_FALSE(aBox.IsOut(BVH_Vec2d(2.5, 2.5)));
+  EXPECT_TRUE(aBox.IsOut(BVH_Vec2d(6.0, 2.5)));
+  EXPECT_TRUE(aBox.IsOut(BVH_Vec2d(2.5, 6.0)));
+  EXPECT_FALSE(aBox.IsOut(BVH_Vec2d(0.0, 0.0)));
 }
 
 TEST(BVH_BoxTest, IsOutPoint_NegativeCoords)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(-5.0, -5.0, -5.0), BVH_Vec3d(5.0, 5.0, 5.0));
 
-  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(0.0, 0.0, 0.0)));    // At center
-  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(-3.0, -3.0, -3.0))); // Inside negative
-  EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(-6.0, 0.0, 0.0)));    // Outside negative X
+  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(0.0, 0.0, 0.0)));
+  EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(-3.0, -3.0, -3.0)));
+  EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(-6.0, 0.0, 0.0)));
 }
-
-// =======================================================================================
-// Tests for Contains() methods
-// =======================================================================================
 
 TEST(BVH_BoxTest, Contains_FullyContained)
 {
@@ -702,7 +650,7 @@ TEST(BVH_BoxTest, Contains_NotContained)
   bool isContained = aBox1.Contains(aBox2, hasOverlap);
 
   EXPECT_FALSE(isContained);
-  EXPECT_TRUE(hasOverlap); // They overlap but box2 is not fully contained
+  EXPECT_TRUE(hasOverlap);
 }
 
 TEST(BVH_BoxTest, Contains_NoOverlap)
@@ -744,7 +692,7 @@ TEST(BVH_BoxTest, Contains_TouchingBoundary)
 TEST(BVH_BoxTest, Contains_InvalidBox)
 {
   BVH_Box<double, 3> aBox1(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(10.0, 10.0, 10.0));
-  BVH_Box<double, 3> aBox2; // Invalid
+  BVH_Box<double, 3> aBox2;
 
   bool hasOverlap  = false;
   bool isContained = aBox1.Contains(aBox2, hasOverlap);
@@ -755,7 +703,7 @@ TEST(BVH_BoxTest, Contains_InvalidBox)
 
 TEST(BVH_BoxTest, Contains_InvalidContainer)
 {
-  BVH_Box<double, 3> aBox1; // Invalid
+  BVH_Box<double, 3> aBox1;
   BVH_Box<double, 3> aBox2(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(10.0, 10.0, 10.0));
 
   bool hasOverlap  = false;
@@ -773,7 +721,7 @@ TEST(BVH_BoxTest, Contains_PartialOverlapOneAxis)
   bool hasOverlap  = false;
   bool isContained = aBox1.Contains(aBox2, hasOverlap);
 
-  EXPECT_FALSE(isContained); // Not fully contained (extends in X)
+  EXPECT_FALSE(isContained);
   EXPECT_TRUE(hasOverlap);
 }
 
@@ -812,10 +760,6 @@ TEST(BVH_BoxTest, ContainsByCorners_NotContained)
   EXPECT_TRUE(hasOverlap);
 }
 
-// =======================================================================================
-// Tests for Transform() and Transformed() methods
-// =======================================================================================
-
 TEST(BVH_BoxTest, Transform_Identity)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
@@ -853,9 +797,9 @@ TEST(BVH_BoxTest, Transform_Scale)
 
   NCollection_Mat4<double> aTransform;
   aTransform.InitIdentity();
-  aTransform.SetValue(0, 0, 2.0); // Scale X by 2
-  aTransform.SetValue(1, 1, 3.0); // Scale Y by 3
-  aTransform.SetValue(2, 2, 4.0); // Scale Z by 4
+  aTransform.SetValue(0, 0, 2.0);
+  aTransform.SetValue(1, 1, 3.0);
+  aTransform.SetValue(2, 2, 4.0);
 
   aBox.Transform(aTransform);
 
@@ -874,11 +818,9 @@ TEST(BVH_BoxTest, Transformed_Identity)
 
   BVH_Box<double, 3> aTransformed = aBox.Transformed(aIdentity);
 
-  // Original should be unchanged
   EXPECT_NEAR(aBox.CornerMin().x(), 0.0, Precision::Confusion());
   EXPECT_NEAR(aBox.CornerMax().x(), 1.0, Precision::Confusion());
 
-  // Transformed should be the same
   EXPECT_NEAR(aTransformed.CornerMin().x(), 0.0, Precision::Confusion());
   EXPECT_NEAR(aTransformed.CornerMax().x(), 1.0, Precision::Confusion());
 }
@@ -893,11 +835,9 @@ TEST(BVH_BoxTest, Transformed_Translation)
 
   BVH_Box<double, 3> aTransformed = aBox.Transformed(aTransform);
 
-  // Original should be unchanged
   EXPECT_NEAR(aBox.CornerMin().x(), 0.0, Precision::Confusion());
   EXPECT_NEAR(aBox.CornerMax().x(), 1.0, Precision::Confusion());
 
-  // Transformed should be translated
   EXPECT_NEAR(aTransformed.CornerMin().x(), 10.0, Precision::Confusion());
   EXPECT_NEAR(aTransformed.CornerMin().y(), 20.0, Precision::Confusion());
   EXPECT_NEAR(aTransformed.CornerMin().z(), 30.0, Precision::Confusion());
@@ -908,7 +848,7 @@ TEST(BVH_BoxTest, Transformed_Translation)
 
 TEST(BVH_BoxTest, Transform_InvalidBox)
 {
-  BVH_Box<double, 3> aBox; // Invalid box
+  BVH_Box<double, 3> aBox;
 
   NCollection_Mat4<double> aTransform;
   aTransform.InitIdentity();
@@ -916,13 +856,12 @@ TEST(BVH_BoxTest, Transform_InvalidBox)
 
   aBox.Transform(aTransform);
 
-  // Should remain invalid
   EXPECT_FALSE(aBox.IsValid());
 }
 
 TEST(BVH_BoxTest, Transformed_InvalidBox)
 {
-  BVH_Box<double, 3> aBox; // Invalid box
+  BVH_Box<double, 3> aBox;
 
   NCollection_Mat4<double> aTransform;
   aTransform.InitIdentity();
@@ -930,19 +869,13 @@ TEST(BVH_BoxTest, Transformed_InvalidBox)
 
   BVH_Box<double, 3> aTransformed = aBox.Transformed(aTransform);
 
-  // Should remain invalid
   EXPECT_FALSE(aTransformed.IsValid());
 }
-
-// =======================================================================================
-// Tests for Corner Modification
-// =======================================================================================
 
 TEST(BVH_BoxTest, ModifyCornerMin)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(10.0, 10.0, 10.0));
 
-  // Modify via non-const reference
   aBox.CornerMin() = BVH_Vec3d(-5.0, -5.0, -5.0);
 
   EXPECT_NEAR(aBox.CornerMin().x(), -5.0, Precision::Confusion());
@@ -955,7 +888,6 @@ TEST(BVH_BoxTest, ModifyCornerMax)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(10.0, 10.0, 10.0));
 
-  // Modify via non-const reference
   aBox.CornerMax() = BVH_Vec3d(20.0, 30.0, 40.0);
 
   EXPECT_NEAR(aBox.CornerMax().x(), 20.0, Precision::Confusion());
@@ -968,7 +900,6 @@ TEST(BVH_BoxTest, ModifyCornerComponents)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(10.0, 10.0, 10.0));
 
-  // Modify individual components
   aBox.CornerMin().x() = -1.0;
   aBox.CornerMin().y() = -2.0;
   aBox.CornerMax().z() = 15.0;
@@ -979,26 +910,21 @@ TEST(BVH_BoxTest, ModifyCornerComponents)
   EXPECT_NEAR(aBox.CornerMax().z(), 15.0, Precision::Confusion());
 }
 
-// =======================================================================================
-// Additional Edge Cases
-// =======================================================================================
-
 TEST(BVH_BoxTest, Area_DegenerateBox2D)
 {
-  // 2D box with zero area should return perimeter
+
   BVH_Box<double, 2> aBox(BVH_Vec2d(0.0, 0.0), BVH_Vec2d(5.0, 0.0));
 
   double anArea = aBox.Area();
-  // For degenerate case, returns sum of dimensions
+
   EXPECT_GE(anArea, 0.0);
-  EXPECT_NEAR(anArea, 5.0, Precision::Confusion()); // Width + height = 5 + 0
+  EXPECT_NEAR(anArea, 5.0, Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, IsOut_TwoCorners_Overlapping)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(10.0, 10.0, 10.0));
 
-  // Test with overlapping region
   EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(5.0, 5.0, 5.0), BVH_Vec3d(15.0, 15.0, 15.0)));
 }
 
@@ -1006,7 +932,6 @@ TEST(BVH_BoxTest, IsOut_TwoCorners_Disjoint)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(10.0, 10.0, 10.0));
 
-  // Test with disjoint region
   EXPECT_TRUE(aBox.IsOut(BVH_Vec3d(20.0, 20.0, 20.0), BVH_Vec3d(30.0, 30.0, 30.0)));
 }
 
@@ -1014,13 +939,12 @@ TEST(BVH_BoxTest, IsOut_TwoCorners_Contained)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(10.0, 10.0, 10.0));
 
-  // Test with fully contained region
   EXPECT_FALSE(aBox.IsOut(BVH_Vec3d(2.0, 2.0, 2.0), BVH_Vec3d(8.0, 8.0, 8.0)));
 }
 
 TEST(BVH_BoxTest, Constexpr_Construction)
 {
-  // Test that constexpr constructors work at compile time
+
   constexpr BVH_Vec3d          aMin(0.0, 0.0, 0.0);
   constexpr BVH_Vec3d          aMax(1.0, 1.0, 1.0);
   constexpr BVH_Box<double, 3> aBox(aMin, aMax);
@@ -1042,10 +966,6 @@ TEST(BVH_BoxTest, Constexpr_DefaultInvalid)
 
   static_assert(!aBox.IsValid(), "Default constexpr box should be invalid");
 }
-
-// =======================================================================================
-// Tests for Transform/Transformed with float precision
-// =======================================================================================
 
 TEST(BVH_BoxTest, Transform_Float_Identity)
 {
@@ -1084,9 +1004,9 @@ TEST(BVH_BoxTest, Transform_Float_Scale)
 
   NCollection_Mat4<float> aTransform;
   aTransform.InitIdentity();
-  aTransform.SetValue(0, 0, 2.0f); // Scale X by 2
-  aTransform.SetValue(1, 1, 3.0f); // Scale Y by 3
-  aTransform.SetValue(2, 2, 4.0f); // Scale Z by 4
+  aTransform.SetValue(0, 0, 2.0f);
+  aTransform.SetValue(1, 1, 3.0f);
+  aTransform.SetValue(2, 2, 4.0f);
 
   aBox.Transform(aTransform);
 
@@ -1106,11 +1026,9 @@ TEST(BVH_BoxTest, Transformed_Float_Translation)
 
   BVH_Box<float, 3> aTransformed = aBox.Transformed(aTransform);
 
-  // Original should be unchanged
   EXPECT_NEAR(aBox.CornerMin().x(), 0.0f, 1e-5f);
   EXPECT_NEAR(aBox.CornerMax().x(), 1.0f, 1e-5f);
 
-  // Transformed should be translated
   EXPECT_NEAR(aTransformed.CornerMin().x(), 10.0f, 1e-5f);
   EXPECT_NEAR(aTransformed.CornerMin().y(), 20.0f, 1e-5f);
   EXPECT_NEAR(aTransformed.CornerMin().z(), 30.0f, 1e-5f);
@@ -1121,7 +1039,7 @@ TEST(BVH_BoxTest, Transformed_Float_Translation)
 
 TEST(BVH_BoxTest, Transform_Float_InvalidBox)
 {
-  BVH_Box<float, 3> aBox; // Invalid box
+  BVH_Box<float, 3> aBox;
 
   NCollection_Mat4<float> aTransform;
   aTransform.InitIdentity();
@@ -1129,6 +1047,5 @@ TEST(BVH_BoxTest, Transform_Float_InvalidBox)
 
   aBox.Transform(aTransform);
 
-  // Should remain invalid
   EXPECT_FALSE(aBox.IsValid());
 }

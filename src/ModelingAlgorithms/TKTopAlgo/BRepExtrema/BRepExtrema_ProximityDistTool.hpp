@@ -8,16 +8,6 @@
 #include <BVH_Tools.hpp>
 #include <Poly_Triangulation.hpp>
 
-//! Tool class for computation the proximity distance from first
-//! primitive set to second one that is the maximal from minimum
-//! perpendicular distances. If no perpendicular distance is found, the
-//! minimum distance will be returned.
-//! This tool is not intended to be used independently, and is integrated
-//! in other classes, implementing algorithms based on shape tessellation
-//! (BRepExtrema_ProximityValueTool).
-//!
-//! Please note that algorithm results are approximate and depend greatly
-//! on the quality of input tessellation(s).
 class BRepExtrema_ProximityDistTool
     : public BVH_Distance<double, 3, BVH_Vec3d, BRepExtrema_TriangleSet>
 {
@@ -32,8 +22,6 @@ public:
   };
 
 public:
-  //! Struct with information about projection point state from 2nd BVH,
-  //! providing proximity point of 2nd shape
   struct PrjState
   {
     PrjState()
@@ -64,19 +52,16 @@ public:
     int GetNumberOfLastNode() const { return myNumberOfLastNode; }
 
   private:
-    int          myTrgIdx;   //!< Index of triangle on which the projection is located
-    BVH_PrjState myPrjState; //!< Position of a projection on the triangle (vertex, edge, inner)
-                             // clang-format off
-    int myNumberOfFirstNode; //!< The 1st vtx of the triangle edge on which the projection is located
-    int myNumberOfLastNode; //!< The 2nd vtx of the triangle edge on which the projection is located
-                             // clang-format on
+    int          myTrgIdx;
+    BVH_PrjState myPrjState;
+
+    int myNumberOfFirstNode;
+    int myNumberOfLastNode;
   };
 
 public:
-  //! Creates new uninitialized tool.
   Standard_EXPORT BRepExtrema_ProximityDistTool();
 
-  //! Creates new tool for the given element sets.
   Standard_EXPORT BRepExtrema_ProximityDistTool(
     const occ::handle<BRepExtrema_TriangleSet>& theSet1,
     const int                                   theNbSamples1,
@@ -87,121 +72,94 @@ public:
     const NCollection_Vector<TopoDS_Shape>&     theShapeList2);
 
 public:
-  //! Loads the given element sets into the tool.
   Standard_EXPORT void LoadTriangleSets(const occ::handle<BRepExtrema_TriangleSet>& theSet1,
                                         const occ::handle<BRepExtrema_TriangleSet>& theSet2);
 
-  //! Loads the given list of subshapes into the tool.
   Standard_EXPORT void LoadShapeLists(const NCollection_Vector<TopoDS_Shape>& theShapeList1,
                                       const NCollection_Vector<TopoDS_Shape>& theShapeList2);
 
-  //! Loads given additional vertices and their statuses.
   void LoadAdditionalPointsFirstSet(const BVH_Array3d&                        theAddVertices1,
                                     const NCollection_Vector<ProxPnt_Status>& theAddStatus1);
 
-  //! Performs searching of the proximity distance.
   Standard_EXPORT void Perform();
 
-public: //! @name Reject/Accept implementations
-  //! Defines the rules for node rejection by bounding box.
+public:
   Standard_EXPORT bool RejectNode(const BVH_Vec3d& theCornerMin,
                                   const BVH_Vec3d& theCornerMax,
                                   double&          theMetric) const override;
 
-  //! Defines the rules for leaf acceptance.
   Standard_EXPORT bool Accept(const int theSgmIdx, const double&) override;
 
 public:
-  //! Returns true if the node is on the boarder.
   Standard_EXPORT static bool IsNodeOnBorder(const int                              theNodeIdx,
                                              const occ::handle<Poly_Triangulation>& theTr);
 
-  //! Returns true if the edge is on the boarder.
   Standard_EXPORT static bool IsEdgeOnBorder(const int theTrgIdx,
                                              const int theFirstEdgeNodeIdx,
                                              const int theSecondEdgeNodeIdx,
                                              const occ::handle<Poly_Triangulation>& theTr);
 
 public:
-  //! Returns points on triangles sets, which provide the proximity distance.
   void ProximityPoints(BVH_Vec3d& thePoint1, BVH_Vec3d& thePoint2) const
   {
     thePoint1 = myPnt1;
     thePoint2 = myPnt2;
   }
 
-  //! Returns status of points on triangles sets, which provide the proximity distance.
   void ProximityPointsStatus(ProxPnt_Status& thePointStatus1, ProxPnt_Status& thePointStatus2) const
   {
     thePointStatus1 = myPntStatus1;
     thePointStatus2 = myPntStatus2;
   }
 
-  //! Returns the computed distance
   double ProximityDistance() const { return myProxDist; }
 
 protected:
-  //! Computes the distance between object and BVH tree.
   Standard_EXPORT double ComputeDistance();
 
-  //! Defines the status of proximity points.
   Standard_EXPORT void DefineStatusProxPnt();
 
 private:
-  //! Goes through vertices from the 1st set.
   void goThroughtSet1(const BVH_Array3d& aVertices1, const bool theIsAdditionalSet);
 
-  //! Defines the status of proximity point from 1st BVH.
   void defineStatusProxPnt1();
 
-  //! Defines the status of proximity point from 2nd BVH.
   void defineStatusProxPnt2();
 
 protected:
-  // clang-format off
-  double myMinDistance; //!< Minimal distance from point to BVH, could be not equal to myDistance
-  // clang-format on
-  BVH_Vec3d myMinDistPoint; //!< Point on BVH providing the minimal distance
+  double myMinDistance;
 
-  BVH_Vec3d myExtremaPoint; //!< Point on BVH providing the extrema
+  BVH_Vec3d myMinDistPoint;
 
-  double myProxDist; //!< Proximity distance
+  BVH_Vec3d myExtremaPoint;
 
-  //! Proximity points
+  double myProxDist;
+
   BVH_Vec3d myPnt1, myPnt2;
 
-  //! Proximity points' status
   ProxPnt_Status myPntStatus1, myPntStatus2;
 
 private:
-  //! Set of all mesh elements (triangles) of the 1st shape.
   occ::handle<BRepExtrema_TriangleSet> mySet1;
-  //! Set of all mesh elements (triangles) of the 2nd shape.
+
   occ::handle<BRepExtrema_TriangleSet> mySet2;
 
-  //! List of subshapes of the 1st shape.
   NCollection_Vector<TopoDS_Shape> myShapeList1;
-  //! List of subshapes of the 2nd shape.
+
   NCollection_Vector<TopoDS_Shape> myShapeList2;
 
-  int myNbSamples1; //!< Number of samples points on the first shape
+  int myNbSamples1;
 
-  //! Is vertex corresponding to proximity point of 1st shape from additional set
   int         myIsProxVtx1FromAddSet;
-  BVH_Array3d myAddVertices1; //!< Additional vertices on the 1st shape
-                              // clang-format off
-  NCollection_Vector<ProxPnt_Status> myAddStatus1; //!< Status of additional vertices on the 1st shape
-                              // clang-format on
+  BVH_Array3d myAddVertices1;
 
-  //! Vertex index from 1st BVH corresponding to proximity point of 1st shape
+  NCollection_Vector<ProxPnt_Status> myAddStatus1;
+
   int myProxVtxIdx1;
 
-  //! Information of projection point state from 2nd BVH providing proximity point of 2nd shape
   PrjState myProxPrjState;
 
-  //! Information of projection point state from 2nd BVH providing the extrema
   PrjState myExtPrjState;
 
-  //! Information of projection point state from 2nd BVH providing the minimal distance
   PrjState myMinPrjState;
 };

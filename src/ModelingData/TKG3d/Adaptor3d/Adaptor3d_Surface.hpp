@@ -17,30 +17,10 @@
 class Geom_BezierSurface;
 class Geom_BSplineSurface;
 
-//! Root class for surfaces on which geometric algorithms work.
-//! An adapted surface is an interface between the
-//! services provided by a surface and those required of
-//! the surface by algorithms which use it.
-//! A derived concrete class is provided:
-//! GeomAdaptor_Surface for a surface from the Geom package.
-//! The Surface class describes the standard behaviour
-//! of a surface for generic algorithms.
-//!
-//! The Surface can be decomposed in intervals of any
-//! continuity in U and V using the method NbIntervals.
-//! A current interval can be set.
-//! Most of the methods apply to the current interval.
-//! Warning: All the methods are virtual and implemented with a
-//! raise to allow to redefined only the methods really used.
-//!
-//! Polynomial coefficients of BSpline surfaces used for their evaluation are cached for better
-//! performance. Therefore these evaluations are not thread-safe and parallel evaluations need to be
-//! prevented.
 class Adaptor3d_Surface : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(Adaptor3d_Surface, Standard_Transient)
 public:
-  //! Shallow copy of adaptor
   Standard_EXPORT virtual occ::handle<Adaptor3d_Surface> ShallowCopy() const;
 
   Standard_EXPORT virtual double FirstUParameter() const;
@@ -55,37 +35,20 @@ public:
 
   Standard_EXPORT virtual GeomAbs_Shape VContinuity() const;
 
-  //! Returns the number of U intervals for continuity
-  //! <S>. May be one if UContinuity(me) >= <S>
   Standard_EXPORT virtual int NbUIntervals(const GeomAbs_Shape S) const;
 
-  //! Returns the number of V intervals for continuity
-  //! <S>. May be one if VContinuity(me) >= <S>
   Standard_EXPORT virtual int NbVIntervals(const GeomAbs_Shape S) const;
 
-  //! Returns the intervals with the requested continuity
-  //! in the U direction.
   Standard_EXPORT virtual void UIntervals(NCollection_Array1<double>& T,
                                           const GeomAbs_Shape         S) const;
 
-  //! Returns the intervals with the requested continuity
-  //! in the V direction.
   Standard_EXPORT virtual void VIntervals(NCollection_Array1<double>& T,
                                           const GeomAbs_Shape         S) const;
 
-  //! Returns a surface trimmed in the U direction
-  //! equivalent of <me> between
-  //! parameters <First> and <Last>. <Tol> is used to
-  //! test for 3d points confusion.
-  //! If <First> >= <Last>
   Standard_EXPORT virtual occ::handle<Adaptor3d_Surface> UTrim(const double First,
                                                                const double Last,
                                                                const double Tol) const;
 
-  //! Returns a surface trimmed in the V direction between
-  //! parameters <First> and <Last>. <Tol> is used to
-  //! test for 3d points confusion.
-  //! If <First> >= <Last>
   Standard_EXPORT virtual occ::handle<Adaptor3d_Surface> VTrim(const double First,
                                                                const double Last,
                                                                const double Tol) const;
@@ -102,27 +65,16 @@ public:
 
   Standard_EXPORT virtual double VPeriod() const;
 
-  //! Computes the point of parameters U,V on the surface.
-  //! Tip: use GeomLib::NormEstim() to calculate surface normal at specified (U, V) point.
   Standard_EXPORT virtual gp_Pnt Value(const double U, const double V) const;
 
-  //! Computes the point of parameters U,V on the surface.
   Standard_EXPORT virtual void D0(const double U, const double V, gp_Pnt& P) const;
 
-  //! Computes the point and the first derivatives on the surface.
-  //! Raised if the continuity of the current intervals is not C1.
-  //!
-  //! Tip: use GeomLib::NormEstim() to calculate surface normal at specified (U, V) point.
   Standard_EXPORT virtual void D1(const double U,
                                   const double V,
                                   gp_Pnt&      P,
                                   gp_Vec&      D1U,
                                   gp_Vec&      D1V) const;
 
-  //! Computes the point, the first and second
-  //! derivatives on the surface.
-  //! Raised if the continuity of the current
-  //! intervals is not C2.
   Standard_EXPORT virtual void D2(const double U,
                                   const double V,
                                   gp_Pnt&      P,
@@ -132,10 +84,6 @@ public:
                                   gp_Vec&      D2V,
                                   gp_Vec&      D2UV) const;
 
-  //! Computes the point, the first, second and third
-  //! derivatives on the surface.
-  //! Raised if the continuity of the current
-  //! intervals is not C3.
   Standard_EXPORT virtual void D3(const double U,
                                   const double V,
                                   gp_Pnt&      P,
@@ -149,28 +97,15 @@ public:
                                   gp_Vec&      D3UUV,
                                   gp_Vec&      D3UVV) const;
 
-  //! Computes the derivative of order Nu in the direction U and Nv
-  //! in the direction V at the point P(U, V).
-  //! Raised if the current U interval is not not CNu
-  //! and the current V interval is not CNv.
-  //! Raised if Nu + Nv < 1 or Nu < 0 or Nv < 0.
   Standard_EXPORT virtual gp_Vec DN(const double U,
                                     const double V,
                                     const int    Nu,
                                     const int    Nv) const;
 
-  //! Returns the parametric U resolution corresponding
-  //! to the real space resolution <R3d>.
   Standard_EXPORT virtual double UResolution(const double R3d) const;
 
-  //! Returns the parametric V resolution corresponding
-  //! to the real space resolution <R3d>.
   Standard_EXPORT virtual double VResolution(const double R3d) const;
 
-  //! Returns the type of the surface: Plane, Cylinder,
-  //! Cone, Sphere, Torus, BezierSurface,
-  //! BSplineSurface, SurfaceOfRevolution,
-  //! SurfaceOfExtrusion, OtherSurface
   Standard_EXPORT virtual GeomAbs_SurfaceType GetType() const;
 
   Standard_EXPORT virtual gp_Pln Plane() const;

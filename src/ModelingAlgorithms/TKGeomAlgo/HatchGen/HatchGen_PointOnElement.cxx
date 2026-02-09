@@ -5,14 +5,10 @@
 #include <iomanip>
 #include <fstream>
 
-//=================================================================================================
-
 HatchGen_PointOnElement::HatchGen_PointOnElement()
     : myType(HatchGen_UNDETERMINED)
 {
 }
-
-//=================================================================================================
 
 HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoint& Point)
     : myType(HatchGen_UNDETERMINED)
@@ -53,7 +49,7 @@ HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoin
       myType   = (myPosit == TopAbs_INTERNAL) ? HatchGen_TRUE : HatchGen_TOUCH;
       break;
     }
-      //  Modified by Sergey KHROMOV - Fri Jan  5 12:07:34 2001 Begin
+
     case IntRes2d_Touch:
     {
       switch (TrsH.Situation())
@@ -156,7 +152,7 @@ HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoin
       }
       break;
     }
-      //  Modified by Sergey KHROMOV - Fri Jan  5 12:07:46 2001 End
+
     case IntRes2d_Undecided:
     {
       myBefore = TopAbs_UNKNOWN;
@@ -170,11 +166,6 @@ HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoin
   mySegEnd = false;
 }
 
-//=======================================================================
-// Function : IsIdentical
-// Purpose  : Tests if the point is identical to an other.
-//=======================================================================
-
 bool HatchGen_PointOnElement::IsIdentical(const HatchGen_PointOnElement& Point,
                                           const double                   Confusion) const
 {
@@ -184,11 +175,6 @@ bool HatchGen_PointOnElement::IsIdentical(const HatchGen_PointOnElement& Point,
           && (mySegBeg == Point.mySegBeg) && (mySegEnd == Point.mySegEnd));
 }
 
-//=======================================================================
-// Function : IsDifferent
-// Purpose  : Tests if the point is different from an other.
-//=======================================================================
-
 bool HatchGen_PointOnElement::IsDifferent(const HatchGen_PointOnElement& Point,
                                           const double                   Confusion) const
 {
@@ -197,11 +183,6 @@ bool HatchGen_PointOnElement::IsDifferent(const HatchGen_PointOnElement& Point,
           || (myType != Point.myType) || (myBefore != Point.myBefore) || (myAfter != Point.myAfter)
           || (mySegBeg != Point.mySegBeg) || (mySegEnd != Point.mySegEnd));
 }
-
-//=======================================================================
-// Function : Dump
-// Purpose  : Dump of the point on element
-//=======================================================================
 
 void HatchGen_PointOnElement::Dump(const int Index) const
 {

@@ -10,7 +10,6 @@ class StepVisual_TextStyleForDefinedFont : public Standard_Transient
 {
 
 public:
-  //! Returns a TextStyleForDefinedFont
   Standard_EXPORT StepVisual_TextStyleForDefinedFont();
 
   Standard_EXPORT void Init(const occ::handle<StepVisual_Colour>& aTextColour);

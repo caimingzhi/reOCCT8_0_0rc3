@@ -12,25 +12,17 @@ IMPLEMENT_DOMSTRING(FirstIndexString, "first")
 IMPLEMENT_DOMSTRING(LastIndexString, "last")
 IMPLEMENT_DOMSTRING(AttributeIDString, "boolarrattguid")
 
-//=================================================================================================
-
 XmlMDataStd_BooleanArrayDriver::XmlMDataStd_BooleanArrayDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMDataStd_BooleanArrayDriver::NewEmpty() const
 {
   return new TDataStd_BooleanArray();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDataStd_BooleanArrayDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                            const occ::handle<TDF_Attribute>& theTarget,
                                            XmlObjMgt_RRelocationTable&) const
@@ -38,7 +30,6 @@ bool XmlMDataStd_BooleanArrayDriver::Paste(const XmlObjMgt_Persistent&       the
   int                      aFirstInd, aLastInd, aValue;
   const XmlObjMgt_Element& anElement = theSource;
 
-  // Read the FirstIndex; if the attribute is absent initialize to 1
   XmlObjMgt_DOMString aFirstIndex = anElement.getAttribute(::FirstIndexString());
   if (aFirstIndex == nullptr)
     aFirstInd = 1;
@@ -52,7 +43,6 @@ bool XmlMDataStd_BooleanArrayDriver::Paste(const XmlObjMgt_Persistent&       the
     return false;
   }
 
-  // Read the LastIndex; the attribute should be present
   if (!anElement.getAttribute(::LastIndexString()).GetInteger(aLastInd))
   {
     TCollection_ExtendedString aMessageString =
@@ -74,13 +64,13 @@ bool XmlMDataStd_BooleanArrayDriver::Paste(const XmlObjMgt_Persistent&       the
 
   occ::handle<TDataStd_BooleanArray> aBooleanArray =
     occ::down_cast<TDataStd_BooleanArray>(theTarget);
-  // attribute id
+
   Standard_GUID       aGUID;
   XmlObjMgt_DOMString aGUIDStr = anElement.getAttribute(::AttributeIDString());
   if (aGUIDStr.Type() == XmlObjMgt_DOMString::LDOM_NULL)
-    aGUID = TDataStd_BooleanArray::GetID(); // default case
+    aGUID = TDataStd_BooleanArray::GetID();
   else
-    aGUID = Standard_GUID(static_cast<const char*>(aGUIDStr.GetString())); // user defined case
+    aGUID = Standard_GUID(static_cast<const char*>(aGUIDStr.GetString()));
   aBooleanArray->SetID(aGUID);
 
   aBooleanArray->Init(aFirstInd, aLastInd);
@@ -109,10 +99,6 @@ bool XmlMDataStd_BooleanArrayDriver::Paste(const XmlObjMgt_Persistent&       the
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void XmlMDataStd_BooleanArrayDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                            XmlObjMgt_Persistent&             theTarget,
                                            XmlObjMgt_SRelocationTable&) const
@@ -129,7 +115,6 @@ void XmlMDataStd_BooleanArrayDriver::Paste(const occ::handle<TDF_Attribute>& the
   const occ::handle<NCollection_HArray1<uint8_t>>& hArr = aBooleanArray->InternalArray();
   const NCollection_Array1<uint8_t>&               arr  = hArr->Array1();
 
-  // Allocation of 4 chars for each byte.
   int                          iChar = 0;
   NCollection_LocalArray<char> str;
   if (!arr.IsEmpty())
@@ -137,7 +122,6 @@ void XmlMDataStd_BooleanArrayDriver::Paste(const occ::handle<TDF_Attribute>& the
     str.Allocate(4 * arr.Length() + 1);
   }
 
-  // Convert integers - compressed boolean values, to a string.
   const int upper = arr.Upper();
   for (int i = arr.Lower(); i <= upper; i++)
   {
@@ -152,7 +136,7 @@ void XmlMDataStd_BooleanArrayDriver::Paste(const occ::handle<TDF_Attribute>& the
 
   if (aBooleanArray->ID() != TDataStd_BooleanArray::GetID())
   {
-    // convert GUID
+
     char                aGuidStr[Standard_GUID_SIZE_ALLOC];
     Standard_PCharacter pGuidStr = aGuidStr;
     aBooleanArray->ID().ToCString(pGuidStr);

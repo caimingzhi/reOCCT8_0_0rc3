@@ -10,12 +10,8 @@
 #include <StepData_StepReaderData.hpp>
 #include <StepData_StepWriter.hpp>
 
-//=================================================================================================
-
 RWStepAP214_RWAppliedExternalIdentificationAssignment::
   RWStepAP214_RWAppliedExternalIdentificationAssignment() = default;
-
-//=================================================================================================
 
 void RWStepAP214_RWAppliedExternalIdentificationAssignment::ReadStep(
   const occ::handle<StepData_StepReaderData>&                           data,
@@ -23,11 +19,9 @@ void RWStepAP214_RWAppliedExternalIdentificationAssignment::ReadStep(
   occ::handle<Interface_Check>&                                         ach,
   const occ::handle<StepAP214_AppliedExternalIdentificationAssignment>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 4, ach, "applied_external_identification_assignment"))
     return;
-
-  // Inherited fields of IdentificationAssignment
 
   occ::handle<TCollection_HAsciiString> aIdentificationAssignment_AssignedId;
   data->ReadString(num,
@@ -44,8 +38,6 @@ void RWStepAP214_RWAppliedExternalIdentificationAssignment::ReadStep(
                    STANDARD_TYPE(StepBasic_IdentificationRole),
                    aIdentificationAssignment_Role);
 
-  // Inherited fields of ExternalIdentificationAssignment
-
   occ::handle<StepBasic_ExternalSource> aExternalIdentificationAssignment_Source;
   data->ReadEntity(num,
                    3,
@@ -53,8 +45,6 @@ void RWStepAP214_RWAppliedExternalIdentificationAssignment::ReadStep(
                    ach,
                    STANDARD_TYPE(StepBasic_ExternalSource),
                    aExternalIdentificationAssignment_Source);
-
-  // Own fields of AppliedExternalIdentificationAssignment
 
   occ::handle<NCollection_HArray1<StepAP214_ExternalIdentificationItem>> aItems;
   int                                                                    sub4 = 0;
@@ -71,31 +61,22 @@ void RWStepAP214_RWAppliedExternalIdentificationAssignment::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aIdentificationAssignment_AssignedId,
             aIdentificationAssignment_Role,
             aExternalIdentificationAssignment_Source,
             aItems);
 }
 
-//=================================================================================================
-
 void RWStepAP214_RWAppliedExternalIdentificationAssignment::WriteStep(
   StepData_StepWriter&                                                  SW,
   const occ::handle<StepAP214_AppliedExternalIdentificationAssignment>& ent) const
 {
 
-  // Inherited fields of IdentificationAssignment
-
   SW.Send(ent->StepBasic_IdentificationAssignment::AssignedId());
 
   SW.Send(ent->StepBasic_IdentificationAssignment::Role());
 
-  // Inherited fields of ExternalIdentificationAssignment
-
   SW.Send(ent->StepBasic_ExternalIdentificationAssignment::Source());
-
-  // Own fields of AppliedExternalIdentificationAssignment
 
   SW.OpenSub();
   for (int i3 = 1; i3 <= ent->Items()->Length(); i3++)
@@ -106,22 +87,14 @@ void RWStepAP214_RWAppliedExternalIdentificationAssignment::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepAP214_RWAppliedExternalIdentificationAssignment::Share(
   const occ::handle<StepAP214_AppliedExternalIdentificationAssignment>& ent,
   Interface_EntityIterator&                                             iter) const
 {
 
-  // Inherited fields of IdentificationAssignment
-
   iter.AddItem(ent->StepBasic_IdentificationAssignment::Role());
 
-  // Inherited fields of ExternalIdentificationAssignment
-
   iter.AddItem(ent->StepBasic_ExternalIdentificationAssignment::Source());
-
-  // Own fields of AppliedExternalIdentificationAssignment
 
   for (int i3 = 1; i3 <= ent->Items()->Length(); i3++)
   {

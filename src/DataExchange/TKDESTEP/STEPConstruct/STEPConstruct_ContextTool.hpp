@@ -17,13 +17,6 @@ class TCollection_HAsciiString;
 class STEPConstruct_Part;
 class STEPConstruct_Assembly;
 
-//! Maintains global context tool for writing.
-//! Gives access to Product Definition Context (one per Model)
-//! Maintains ApplicationProtocolDefinition entity (common for all
-//! products)
-//! Also maintains context specific for AP203 and provides set of
-//! methods to work with various STEP constructs as required
-//! by Actor
 class STEPConstruct_ContextTool
 {
 public:
@@ -33,8 +26,6 @@ public:
 
   Standard_EXPORT STEPConstruct_ContextTool(const occ::handle<StepData_StepModel>& aStepModel);
 
-  //! Initialize ApplicationProtocolDefinition by the first
-  //! entity of that type found in the model
   Standard_EXPORT void SetModel(const occ::handle<StepData_StepModel>& aStepModel);
 
   Standard_EXPORT void SetGlobalFactor(const StepData_Factors& theGlobalFactor);
@@ -43,13 +34,10 @@ public:
 
   Standard_EXPORT void AddAPD(const bool enforce = false);
 
-  //! Returns True if APD.schema_name is config_control_design
   Standard_EXPORT bool IsAP203() const;
 
-  //! Returns True if APD.schema_name is automotive_design
   Standard_EXPORT bool IsAP214() const;
 
-  //! Returns True if APD.schema_name is ap242_managed_model_based_3d_engineering
   Standard_EXPORT bool IsAP242() const;
 
   Standard_EXPORT occ::handle<TCollection_HAsciiString> GetACstatus();
@@ -68,43 +56,31 @@ public:
 
   Standard_EXPORT void SetACname(const occ::handle<TCollection_HAsciiString>& name);
 
-  //! Returns a default axis placement
   Standard_EXPORT occ::handle<StepGeom_Axis2Placement3d> GetDefaultAxis();
 
-  //! Returns tool which maintains context specific for AP203
   Standard_EXPORT STEPConstruct_AP203Context& AP203Context();
 
-  //! Returns current assembly level
   Standard_EXPORT int Level() const;
 
   Standard_EXPORT void NextLevel();
 
   Standard_EXPORT void PrevLevel();
 
-  //! Changes current assembly level
   Standard_EXPORT void SetLevel(const int lev);
 
-  //! Returns current index of assembly component on current level
   Standard_EXPORT int Index() const;
 
   Standard_EXPORT void NextIndex();
 
   Standard_EXPORT void PrevIndex();
 
-  //! Changes current index of assembly component on current level
   Standard_EXPORT void SetIndex(const int ind);
 
-  //! Generates a product name basing on write.step.product.name
-  //! parameter and current position in the assembly structure
   Standard_EXPORT occ::handle<TCollection_HAsciiString> GetProductName() const;
 
-  //! Produces and returns a full list of root entities required
-  //! for part identified by SDRTool (including SDR itself)
   Standard_EXPORT occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>
                   GetRootsForPart(const STEPConstruct_Part& SDRTool);
 
-  //! Produces and returns a full list of root entities required
-  //! for assembly link identified by assembly (including NAUO and CDSR)
   Standard_EXPORT occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>
                   GetRootsForAssemblyLink(const STEPConstruct_Assembly& assembly);
 

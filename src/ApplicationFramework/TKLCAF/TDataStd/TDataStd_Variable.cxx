@@ -14,15 +14,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_Variable, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_Variable::GetID()
 {
   static Standard_GUID TDataStd_VariableID("ce241469-8e57-11d1-8953-080009dc4425");
   return TDataStd_VariableID;
 }
-
-//=================================================================================================
 
 occ::handle<TDataStd_Variable> TDataStd_Variable::Set(const TDF_Label& L)
 {
@@ -35,22 +31,16 @@ occ::handle<TDataStd_Variable> TDataStd_Variable::Set(const TDF_Label& L)
   return A;
 }
 
-//=================================================================================================
-
 TDataStd_Variable::TDataStd_Variable()
     : isConstant(false),
       myUnit("SCALAR")
 {
 }
 
-//=================================================================================================
-
 void TDataStd_Variable::Name(const TCollection_ExtendedString& string)
 {
   TDataStd_Name::Set(Label(), string);
 }
-
-//=================================================================================================
 
 const TCollection_ExtendedString& TDataStd_Variable::Name() const
 {
@@ -62,14 +52,10 @@ const TCollection_ExtendedString& TDataStd_Variable::Name() const
   return N->Get();
 }
 
-//=================================================================================================
-
 bool TDataStd_Variable::IsValued() const
 {
   return (Label().IsAttribute(TDataStd_Real::GetID()));
 }
-
-//=================================================================================================
 
 occ::handle<TDataStd_Real> TDataStd_Variable::Real() const
 {
@@ -81,14 +67,10 @@ occ::handle<TDataStd_Real> TDataStd_Variable::Real() const
   return R;
 }
 
-//=================================================================================================
-
 void TDataStd_Variable::Set(const double value) const
 {
   occ::handle<TDataStd_Real> R = TDataStd_Real::Set(Label(), value);
 }
-
-//=================================================================================================
 
 void TDataStd_Variable::Set(const double value, const TDataStd_RealEnum dimension) const
 {
@@ -104,8 +86,6 @@ void TDataStd_Variable::Set(const double value, const TDataStd_RealEnum dimensio
   }
 }
 
-//=================================================================================================
-
 double TDataStd_Variable::Get() const
 {
   occ::handle<TDataStd_Real> R;
@@ -116,22 +96,16 @@ double TDataStd_Variable::Get() const
   return R->Get();
 }
 
-//=================================================================================================
-
 bool TDataStd_Variable::IsAssigned() const
 {
   return (Label().IsAttribute(TDataStd_Expression::GetID()));
 }
-
-//=================================================================================================
 
 occ::handle<TDataStd_Expression> TDataStd_Variable::Assign() const
 {
   occ::handle<TDataStd_Expression> E = TDataStd_Expression::Set(Label());
   return E;
 }
-
-//=================================================================================================
 
 void TDataStd_Variable::Desassign() const
 {
@@ -143,8 +117,6 @@ void TDataStd_Variable::Desassign() const
   Label().ForgetAttribute(E);
 }
 
-//=================================================================================================
-
 occ::handle<TDataStd_Expression> TDataStd_Variable::Expression() const
 {
   occ::handle<TDataStd_Expression> E;
@@ -155,25 +127,19 @@ occ::handle<TDataStd_Expression> TDataStd_Variable::Expression() const
   return E;
 }
 
-//=================================================================================================
-
 bool TDataStd_Variable::IsCaptured() const
 {
   return Real()->IsCaptured();
 }
-
-//=================================================================================================
 
 bool TDataStd_Variable::IsConstant() const
 {
   return isConstant;
 }
 
-//=================================================================================================
-
 void TDataStd_Variable::Constant(const bool status)
 {
-  // OCC2932 correction
+
   if (isConstant == status)
     return;
 
@@ -181,11 +147,9 @@ void TDataStd_Variable::Constant(const bool status)
   isConstant = status;
 }
 
-//=================================================================================================
-
 void TDataStd_Variable::Unit(const TCollection_AsciiString& unit)
 {
-  // OCC2932 correction
+
   if (myUnit == unit)
     return;
 
@@ -193,21 +157,15 @@ void TDataStd_Variable::Unit(const TCollection_AsciiString& unit)
   myUnit = unit;
 }
 
-//=================================================================================================
-
 const TCollection_AsciiString& TDataStd_Variable::Unit() const
 {
   return myUnit;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_Variable::ID() const
 {
   return GetID();
 }
-
-//=================================================================================================
 
 void TDataStd_Variable::Restore(const occ::handle<TDF_Attribute>& With)
 {
@@ -216,24 +174,18 @@ void TDataStd_Variable::Restore(const occ::handle<TDF_Attribute>& With)
   myUnit                           = V->Unit();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDataStd_Variable::NewEmpty() const
 {
   return new TDataStd_Variable();
 }
 
-//=================================================================================================
-
 void TDataStd_Variable::Paste(const occ::handle<TDF_Attribute>& Into,
-                              const occ::handle<TDF_RelocationTable>& /*RT*/) const
+                              const occ::handle<TDF_RelocationTable>&) const
 {
   occ::handle<TDataStd_Variable> V = occ::down_cast<TDataStd_Variable>(Into);
   V->Constant(isConstant);
   V->Unit(myUnit);
 }
-
-//=================================================================================================
 
 void TDataStd_Variable::References(const occ::handle<TDF_DataSet>& DS) const
 {
@@ -244,15 +196,11 @@ void TDataStd_Variable::References(const occ::handle<TDF_DataSet>& DS) const
   }
 }
 
-//=================================================================================================
-
 Standard_OStream& TDataStd_Variable::Dump(Standard_OStream& anOS) const
 {
   anOS << "Variable";
   return anOS;
 }
-
-//=================================================================================================
 
 void TDataStd_Variable::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

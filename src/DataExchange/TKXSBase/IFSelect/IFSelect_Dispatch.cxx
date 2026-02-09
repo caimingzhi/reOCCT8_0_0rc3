@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFGraph_Compare.hpp>
 #include <IFGraph_SubPartsIterator.hpp>
@@ -54,7 +43,7 @@ IFSelect_SelectionIterator IFSelect_Dispatch::Selections() const
   iter.AddItem(thefinal);
   for (; iter.More(); iter.Next())
   {
-    iter.Value()->FillIterator(iter); // Iterator that runs itself after
+    iter.Value()->FillIterator(iter);
   }
   return iter;
 }
@@ -81,7 +70,7 @@ Interface_EntityIterator IFSelect_Dispatch::Packeted(const Interface_Graph& G) c
   Interface_EntityIterator remain = Remainder(G);
   if (remain.NbEntities() == 0)
     return total;
-  //  otherwise, make the difference!
+
   IFGraph_Compare GC(G);
   GC.GetFromIter(total, true);
   GC.GetFromIter(remain, false);
@@ -92,4 +81,4 @@ Interface_EntityIterator IFSelect_Dispatch::Remainder(const Interface_Graph&) co
 {
   Interface_EntityIterator iter;
   return iter;
-} // empty by default
+}

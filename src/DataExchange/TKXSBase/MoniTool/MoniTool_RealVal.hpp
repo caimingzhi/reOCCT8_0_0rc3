@@ -6,7 +6,6 @@
 #include <Standard_Real.hpp>
 #include <Standard_Transient.hpp>
 
-//! A Real through a Handle (i.e. managed as TShared)
 class MoniTool_RealVal : public Standard_Transient
 {
 

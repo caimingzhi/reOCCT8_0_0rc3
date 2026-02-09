@@ -2,11 +2,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_ProjectedZoneDefinition, StepDimTol_ToleranceZoneDefinition)
 
-//=================================================================================================
-
 StepDimTol_ProjectedZoneDefinition::StepDimTol_ProjectedZoneDefinition() = default;
-
-//=================================================================================================
 
 void StepDimTol_ProjectedZoneDefinition::Init(
   const occ::handle<StepDimTol_ToleranceZone>&                               theZone,

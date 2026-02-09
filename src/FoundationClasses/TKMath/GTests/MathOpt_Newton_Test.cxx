@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -26,12 +15,6 @@ namespace
 {
   constexpr double THE_TOLERANCE = 1.0e-6;
 
-  // ============================================================================
-  // Test function classes for new API (with Hessian)
-  // ============================================================================
-
-  //! Quadratic function: f(x,y) = (x-1)^2 + (y-2)^2
-  //! Minimum at (1, 2) with f = 0
   struct QuadraticFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -49,7 +32,7 @@ namespace
       return true;
     }
 
-    bool Hessian(const math_Vector& /*theX*/, math_Matrix& theHess)
+    bool Hessian(const math_Vector&, math_Matrix& theHess)
     {
       theHess(1, 1) = 2.0;
       theHess(1, 2) = 0.0;
@@ -59,8 +42,6 @@ namespace
     }
   };
 
-  //! Rosenbrock function: f(x,y) = 100*(y-x^2)^2 + (1-x)^2
-  //! Minimum at (1, 1) with f = 0
   struct RosenbrockFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -94,8 +75,6 @@ namespace
     }
   };
 
-  //! Booth function: f(x,y) = (x + 2y - 7)^2 + (2x + y - 5)^2
-  //! Minimum at (1, 3) with f = 0
   struct BoothFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -119,18 +98,16 @@ namespace
       return true;
     }
 
-    bool Hessian(const math_Vector& /*theX*/, math_Matrix& theHess)
+    bool Hessian(const math_Vector&, math_Matrix& theHess)
     {
-      theHess(1, 1) = 10.0; // 2 + 8
-      theHess(1, 2) = 8.0;  // 4 + 4
+      theHess(1, 1) = 10.0;
+      theHess(1, 2) = 8.0;
       theHess(2, 1) = 8.0;
-      theHess(2, 2) = 10.0; // 8 + 2
+      theHess(2, 2) = 10.0;
       return true;
     }
   };
 
-  //! Sphere function in N dimensions: f(x) = sum(x_i^2)
-  //! Minimum at origin with f = 0
   struct SphereFunc
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -166,10 +143,6 @@ namespace
       return true;
     }
   };
-
-  // ============================================================================
-  // Old API adapter class
-  // ============================================================================
 
   class QuadraticFuncOld : public math_MultipleVarFunctionWithHessian
   {
@@ -263,10 +236,6 @@ namespace
 
 } // namespace
 
-// ============================================================================
-// Basic Newton minimization tests
-// ============================================================================
-
 TEST(MathOpt_NewtonTest, Quadratic)
 {
   QuadraticFunc aFunc;
@@ -286,7 +255,6 @@ TEST(MathOpt_NewtonTest, Quadratic)
   EXPECT_NEAR((*aResult.Solution)(2), 2.0, THE_TOLERANCE);
   EXPECT_NEAR(*aResult.Value, 0.0, THE_TOLERANCE);
 
-  // Newton should converge in very few iterations for quadratic
   EXPECT_LE(aResult.NbIterations, 5);
 }
 
@@ -315,7 +283,7 @@ TEST(MathOpt_NewtonTest, Rosenbrock)
   RosenbrockFunc aFunc;
 
   math_Vector aStart(1, 2);
-  aStart(1) = 0.5; // Start closer to solution for Newton
+  aStart(1) = 0.5;
   aStart(2) = 0.5;
 
   MathOpt::NewtonConfig aConfig;
@@ -352,13 +320,8 @@ TEST(MathOpt_NewtonTest, Sphere3D)
   }
   EXPECT_NEAR(*aResult.Value, 0.0, THE_TOLERANCE);
 
-  // Newton should converge in very few iterations for quadratic
   EXPECT_LE(aResult.NbIterations, 5);
 }
-
-// ============================================================================
-// Modified Newton tests
-// ============================================================================
 
 TEST(MathOpt_NewtonTest, ModifiedNewton_Quadratic)
 {
@@ -391,7 +354,7 @@ TEST(MathOpt_NewtonTest, ModifiedNewton_Rosenbrock)
   MathOpt::NewtonConfig aConfig;
   aConfig.MaxIterations  = 200;
   aConfig.Tolerance      = 1.0e-6;
-  aConfig.Regularization = 1.0e-4; // Higher regularization for Rosenbrock from far start
+  aConfig.Regularization = 1.0e-4;
 
   auto aResult = MathOpt::NewtonModified(aFunc, aStart, aConfig);
 
@@ -400,13 +363,9 @@ TEST(MathOpt_NewtonTest, ModifiedNewton_Rosenbrock)
   EXPECT_NEAR((*aResult.Solution)(2), 1.0, 1.0e-3);
 }
 
-// ============================================================================
-// Numerical Hessian tests
-// ============================================================================
-
 TEST(MathOpt_NewtonTest, NumericalHessian_Quadratic)
 {
-  // Function with gradient only
+
   struct QuadraticGradOnly
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -445,7 +404,7 @@ TEST(MathOpt_NewtonTest, NumericalHessian_Quadratic)
 
 TEST(MathOpt_NewtonTest, FullNumerical_Quadratic)
 {
-  // Function with value only
+
   struct QuadraticValueOnly
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -475,10 +434,6 @@ TEST(MathOpt_NewtonTest, FullNumerical_Quadratic)
   EXPECT_NEAR(*aResult.Value, 0.0, 1.0e-4);
 }
 
-// ============================================================================
-// Comparison with old API
-// ============================================================================
-
 TEST(MathOpt_NewtonTest, CompareWithOldAPI_Quadratic)
 {
   QuadraticFuncOld anOldFunc;
@@ -488,11 +443,9 @@ TEST(MathOpt_NewtonTest, CompareWithOldAPI_Quadratic)
   aStart(1) = 5.0;
   aStart(2) = 7.0;
 
-  // Old API
   math_NewtonMinimum anOldSolver(anOldFunc, 1.0e-8, 50, 1.0e-10);
   anOldSolver.Perform(anOldFunc, aStart);
 
-  // New API
   MathOpt::NewtonConfig aConfig;
   aConfig.MaxIterations = 50;
   aConfig.Tolerance     = 1.0e-10;
@@ -501,7 +454,6 @@ TEST(MathOpt_NewtonTest, CompareWithOldAPI_Quadratic)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find the same minimum
   EXPECT_NEAR(anOldSolver.Location()(1), (*aNewResult.Solution)(1), THE_TOLERANCE);
   EXPECT_NEAR(anOldSolver.Location()(2), (*aNewResult.Solution)(2), THE_TOLERANCE);
   EXPECT_NEAR(anOldSolver.Minimum(), *aNewResult.Value, THE_TOLERANCE);
@@ -516,11 +468,9 @@ TEST(MathOpt_NewtonTest, CompareWithOldAPI_Booth)
   aStart(1) = 0.0;
   aStart(2) = 0.0;
 
-  // Old API
   math_NewtonMinimum anOldSolver(anOldFunc, 1.0e-8, 50, 1.0e-10);
   anOldSolver.Perform(anOldFunc, aStart);
 
-  // New API
   MathOpt::NewtonConfig aConfig;
   aConfig.MaxIterations = 50;
   aConfig.Tolerance     = 1.0e-10;
@@ -529,21 +479,15 @@ TEST(MathOpt_NewtonTest, CompareWithOldAPI_Booth)
   ASSERT_TRUE(anOldSolver.IsDone());
   ASSERT_TRUE(aNewResult.IsDone());
 
-  // Both should find the same minimum
   EXPECT_NEAR(anOldSolver.Location()(1), (*aNewResult.Solution)(1), THE_TOLERANCE);
   EXPECT_NEAR(anOldSolver.Location()(2), (*aNewResult.Solution)(2), THE_TOLERANCE);
   EXPECT_NEAR(anOldSolver.Minimum(), *aNewResult.Value, THE_TOLERANCE);
 }
 
-// ============================================================================
-// Comparison with BFGS
-// ============================================================================
-
 TEST(MathOpt_NewtonTest, CompareWithBFGS)
 {
   QuadraticFunc aQuadFunc;
 
-  // Function that works with both Newton and BFGS
   struct QuadraticNoBFGS
   {
     bool Value(const math_Vector& theX, double& theF)
@@ -583,16 +527,10 @@ TEST(MathOpt_NewtonTest, CompareWithBFGS)
   ASSERT_TRUE(aNewtonResult.IsDone());
   ASSERT_TRUE(aBFGSResult.IsDone());
 
-  // Both should find the same minimum
   EXPECT_NEAR(*aNewtonResult.Value, *aBFGSResult.Value, THE_TOLERANCE);
 
-  // Newton should use fewer iterations for quadratic functions
   EXPECT_LE(aNewtonResult.NbIterations, aBFGSResult.NbIterations);
 }
-
-// ============================================================================
-// Convergence rate test
-// ============================================================================
 
 TEST(MathOpt_NewtonTest, QuadraticConvergence)
 {
@@ -610,8 +548,6 @@ TEST(MathOpt_NewtonTest, QuadraticConvergence)
 
   ASSERT_TRUE(aResult.IsDone());
 
-  // Pure Newton should converge in exactly 1 iteration for a quadratic
-  // (or 2 with line search)
   EXPECT_LE(aResult.NbIterations, 2);
   EXPECT_NEAR(*aResult.Value, 0.0, 1.0e-10);
 }

@@ -5,11 +5,9 @@
 #include <GeomHash_AxisPlacement.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom_ConicalSurface.
-//! Used for geometry deduplication.
 struct GeomHash_ConicalSurfaceHasher
 {
-  // Hashes the cone by its position, apex radius, and semi-angle.
+
   std::size_t operator()(const occ::handle<Geom_ConicalSurface>& theCone) const noexcept
   {
     constexpr double aTolerance = 1e-12;
@@ -23,7 +21,6 @@ struct GeomHash_ConicalSurfaceHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two cones by their positions, radii, and semi-angles.
   bool operator()(const occ::handle<Geom_ConicalSurface>& theCone1,
                   const occ::handle<Geom_ConicalSurface>& theCone2) const noexcept
   {

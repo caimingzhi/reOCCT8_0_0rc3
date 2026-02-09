@@ -6,11 +6,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepAP214_ExternallyDefinedGeneralProperty, StepBasic_GeneralProperty)
 
-//=================================================================================================
-
 StepAP214_ExternallyDefinedGeneralProperty::StepAP214_ExternallyDefinedGeneralProperty() = default;
-
-//=================================================================================================
 
 void StepAP214_ExternallyDefinedGeneralProperty::Init(
   const occ::handle<TCollection_HAsciiString>& aGeneralProperty_Id,
@@ -27,15 +23,11 @@ void StepAP214_ExternallyDefinedGeneralProperty::Init(
   theExternallyDefinedItem->Init(aExternallyDefinedItem_ItemId, aExternallyDefinedItem_Source);
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ExternallyDefinedItem> StepAP214_ExternallyDefinedGeneralProperty::
   ExternallyDefinedItem() const
 {
   return theExternallyDefinedItem;
 }
-
-//=================================================================================================
 
 void StepAP214_ExternallyDefinedGeneralProperty::SetExternallyDefinedItem(
   const occ::handle<StepBasic_ExternallyDefinedItem>& aExternallyDefinedItem)

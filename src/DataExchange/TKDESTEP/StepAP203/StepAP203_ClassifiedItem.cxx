@@ -3,11 +3,7 @@
 #include <StepBasic_ProductDefinitionFormation.hpp>
 #include <StepRepr_AssemblyComponentUsage.hpp>
 
-//=================================================================================================
-
 StepAP203_ClassifiedItem::StepAP203_ClassifiedItem() = default;
-
-//=================================================================================================
 
 int StepAP203_ClassifiedItem::CaseNum(const occ::handle<Standard_Transient>& ent) const
 {
@@ -20,15 +16,11 @@ int StepAP203_ClassifiedItem::CaseNum(const occ::handle<Standard_Transient>& ent
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ProductDefinitionFormation> StepAP203_ClassifiedItem::
   ProductDefinitionFormation() const
 {
   return occ::down_cast<StepBasic_ProductDefinitionFormation>(Value());
 }
-
-//=================================================================================================
 
 occ::handle<StepRepr_AssemblyComponentUsage> StepAP203_ClassifiedItem::AssemblyComponentUsage()
   const

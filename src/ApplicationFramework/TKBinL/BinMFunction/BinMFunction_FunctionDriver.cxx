@@ -11,25 +11,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMFunction_FunctionDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMFunction_FunctionDriver::BinMFunction_FunctionDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TFunction_Function)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMFunction_FunctionDriver::NewEmpty() const
 {
   return new TFunction_Function();
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 
 bool BinMFunction_FunctionDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                         const occ::handle<TDF_Attribute>& theTarget,
@@ -49,11 +40,6 @@ bool BinMFunction_FunctionDriver::Paste(const BinObjMgt_Persistent&       theSou
   }
   return ok;
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 
 void BinMFunction_FunctionDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,

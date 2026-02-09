@@ -9,14 +9,6 @@
 #include <Hatch_Parameter.hpp>
 #include <NCollection_Sequence.hpp>
 
-//! Stores a Line in the Hatcher. Represented by:
-//!
-//! * A Lin2d from gp, the geometry of the line.
-//!
-//! * Bounding parameters for the line.
-//!
-//! * A sorted List of Parameters, the intersections
-//! on the line.
 class Hatch_Line
 {
 public:
@@ -26,7 +18,6 @@ public:
 
   Standard_EXPORT Hatch_Line(const gp_Lin2d& L, const Hatch_LineForm T);
 
-  //! Insert a new intersection in the sorted list.
   Standard_EXPORT void AddIntersection(const double Par1,
                                        const bool   Start,
                                        const int    Index,

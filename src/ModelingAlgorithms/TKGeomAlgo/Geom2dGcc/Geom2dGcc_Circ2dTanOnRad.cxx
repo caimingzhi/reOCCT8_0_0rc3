@@ -40,10 +40,6 @@ Geom2dGcc_Circ2dTanOnRad::Geom2dGcc_Circ2dTanOnRad(const Geom2dGcc_QualifiedCurv
     const occ::handle<Geom2d_Curve>& CC1   = C1.Curve();
     const occ::handle<Geom2d_Curve>& Con   = OnCurve.Curve();
 
-    //=============================================================================
-    //                            Appel a GccAna.                                 +
-    //=============================================================================
-
     NbrSol = 0;
     if ((Type1 == GeomAbs_Line || Type1 == GeomAbs_Circle)
         && (Type2 == GeomAbs_Line || Type2 == GeomAbs_Circle))
@@ -97,10 +93,6 @@ Geom2dGcc_Circ2dTanOnRad::Geom2dGcc_Circ2dTanOnRad(const Geom2dGcc_QualifiedCurv
         }
       }
     }
-
-    //=============================================================================
-    //                            Appel a GccGeo.                                 +
-    //=============================================================================
 
     else
     {
@@ -159,10 +151,6 @@ Geom2dGcc_Circ2dTanOnRad::Geom2dGcc_Circ2dTanOnRad(const occ::handle<Geom2d_Poin
     GeomAbs_CurveType                Type2 = OnCurve.GetType();
     const occ::handle<Geom2d_Curve>& Con   = OnCurve.Curve();
 
-    //=============================================================================
-    //                            Appel a GccAna.                                 +
-    //=============================================================================
-
     NbrSol = 0;
     if (Type2 == GeomAbs_Line || Type2 == GeomAbs_Circle)
     {
@@ -185,10 +173,6 @@ Geom2dGcc_Circ2dTanOnRad::Geom2dGcc_Circ2dTanOnRad(const occ::handle<Geom2d_Poin
         Results(Circ);
       }
     }
-
-    //=============================================================================
-    //                            Appel a GccGeo.                                 +
-    //=============================================================================
 
     else
     {

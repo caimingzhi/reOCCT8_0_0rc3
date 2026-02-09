@@ -8,24 +8,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDF_ReferenceDriver, XmlMDF_ADriver)
 
-//=================================================================================================
-
 XmlMDF_ReferenceDriver::XmlMDF_ReferenceDriver(const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }
-
-//=================================================================================================
 
 occ::handle<TDF_Attribute> XmlMDF_ReferenceDriver::NewEmpty() const
 {
   return (new TDF_Reference());
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool XmlMDF_ReferenceDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                    const occ::handle<TDF_Attribute>& theTarget,
                                    XmlObjMgt_RRelocationTable&) const
@@ -49,29 +41,17 @@ bool XmlMDF_ReferenceDriver::Paste(const XmlObjMgt_Persistent&       theSource,
 
   occ::handle<TDF_Reference> aRef = occ::down_cast<TDF_Reference>(theTarget);
 
-  // find label by entry
-  TDF_Label tLab; // Null label.
+  TDF_Label tLab;
   if (anEntry.Length() > 0)
   {
     TDF_Tool::Label(aRef->Label().Data(), anEntry, tLab, true);
   }
 
-  // set referenced label
   aRef->Set(tLab);
 
   return true;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//           <label tag='1'>     <This is label entry 0:4:1>
-//           ...
-//           <label tag='8'>     <This is label entry 0:4:1:8>
-//
-//           <TDF_Reference id="621"> /document/label/label[@tag="4"]/label[@tag="1"]
-//           </TDF_Reference>    <This is reference to label 0:4:1>
-//=======================================================================
 void XmlMDF_ReferenceDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                    XmlObjMgt_Persistent&             theTarget,
                                    XmlObjMgt_SRelocationTable&) const
@@ -85,13 +65,13 @@ void XmlMDF_ReferenceDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
     {
       if (lab.IsDescendant(refLab.Root()))
       {
-        // Internal reference
+
         TCollection_AsciiString anEntry;
         TDF_Tool::Entry(refLab, anEntry);
 
         XmlObjMgt_DOMString aDOMString;
         XmlObjMgt::SetTagEntryString(aDOMString, anEntry);
-        // No occurrence of '&', '<' and other irregular XML characters
+
         XmlObjMgt::SetStringValue(theTarget, aDOMString, true);
       }
     }

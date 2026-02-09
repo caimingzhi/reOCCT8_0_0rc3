@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IGESData_IGESEntity.hpp>
 #include <IGESSelect_SignStatus.hpp>
@@ -28,9 +17,8 @@ IGESSelect_SignStatus::IGESSelect_SignStatus()
 {
 }
 
-const char* IGESSelect_SignStatus::Value(
-  const occ::handle<Standard_Transient>& ent,
-  const occ::handle<Interface_InterfaceModel>& /*model*/) const
+const char* IGESSelect_SignStatus::Value(const occ::handle<Standard_Transient>& ent,
+                                         const occ::handle<Interface_InterfaceModel>&) const
 {
   occ::handle<IGESData_IGESEntity> igesent = occ::down_cast<IGESData_IGESEntity>(ent);
   if (igesent.IsNull())
@@ -45,7 +33,7 @@ const char* IGESSelect_SignStatus::Value(
 }
 
 bool IGESSelect_SignStatus::Matches(const occ::handle<Standard_Transient>& ent,
-                                    const occ::handle<Interface_InterfaceModel>& /*model*/,
+                                    const occ::handle<Interface_InterfaceModel>&,
                                     const TCollection_AsciiString& text,
                                     const bool                     exact) const
 {
@@ -86,35 +74,35 @@ bool IGESSelect_SignStatus::Matches(const occ::handle<Standard_Transient>& ent,
       val = 2;
     if (car == 'D' && vir == 1)
       val = 3;
-    //    Matches ?
+
     if (vir == 0)
-    { // Blank
+    {
       if (i == val && !exact)
         return true;
       if (i != val && exact)
         return false;
     }
     if (vir == 1)
-    { // Subord.
+    {
       if (j == val && !exact)
         return true;
       if (j != val && exact)
         return false;
     }
     if (vir == 2)
-    { // UseFlag
+    {
       if (k == val && !exact)
         return true;
       if (k != val && exact)
         return false;
     }
     if (vir == 3)
-    { // Hierarchy
+    {
       if (l == val && !exact)
         return true;
       if (l != val && exact)
         return false;
     }
   }
-  return exact; // a bit of reflection to arrive
+  return exact;
 }

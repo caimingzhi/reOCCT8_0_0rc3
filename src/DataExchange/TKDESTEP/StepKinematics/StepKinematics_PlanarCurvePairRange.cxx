@@ -1,14 +1,10 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include <StepKinematics_PlanarCurvePairRange.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepKinematics_PlanarCurvePairRange, StepKinematics_PlanarCurvePair)
 
-//=================================================================================================
-
 StepKinematics_PlanarCurvePairRange::StepKinematics_PlanarCurvePairRange() = default;
-
-//=================================================================================================
 
 void StepKinematics_PlanarCurvePairRange::Init(
   const occ::handle<TCollection_HAsciiString>&      theRepresentationItem_Name,
@@ -40,14 +36,10 @@ void StepKinematics_PlanarCurvePairRange::Init(
   myRangeOnCurve2 = theRangeOnCurve2;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_TrimmedCurve> StepKinematics_PlanarCurvePairRange::RangeOnCurve1() const
 {
   return myRangeOnCurve1;
 }
-
-//=================================================================================================
 
 void StepKinematics_PlanarCurvePairRange::SetRangeOnCurve1(
   const occ::handle<StepGeom_TrimmedCurve>& theRangeOnCurve1)
@@ -55,14 +47,10 @@ void StepKinematics_PlanarCurvePairRange::SetRangeOnCurve1(
   myRangeOnCurve1 = theRangeOnCurve1;
 }
 
-//=================================================================================================
-
 occ::handle<StepGeom_TrimmedCurve> StepKinematics_PlanarCurvePairRange::RangeOnCurve2() const
 {
   return myRangeOnCurve2;
 }
-
-//=================================================================================================
 
 void StepKinematics_PlanarCurvePairRange::SetRangeOnCurve2(
   const occ::handle<StepGeom_TrimmedCurve>& theRangeOnCurve2)

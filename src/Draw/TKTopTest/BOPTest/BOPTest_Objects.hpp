@@ -9,7 +9,7 @@
 #include <BOPAlgo_PBuilder.hpp>
 #include <BOPAlgo_CellsBuilder.hpp>
 #include <BOPAlgo_GlueEnum.hpp>
-//
+
 class BOPAlgo_PaveFiller;
 class BOPAlgo_Builder;
 class BOPAlgo_BOP;

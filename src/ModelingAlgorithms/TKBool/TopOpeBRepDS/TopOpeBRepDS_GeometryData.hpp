@@ -8,7 +8,6 @@
 #include <NCollection_List.hpp>
 class TopOpeBRepDS_Interference;
 
-//! mother-class of SurfaceData, CurveData, PointData
 class TopOpeBRepDS_GeometryData
 {
 public:

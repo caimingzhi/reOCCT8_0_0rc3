@@ -94,10 +94,10 @@ double IGESGeom_CircularArc::Angle() const
   y1 = theStart.Y();
   x2 = theEnd.X();
   y2 = theEnd.Y();
-  gp_Dir2d dir1(x1 - xc, y1 - yc); // After shifting the centre of
-  // arc to the origin
-  gp_Dir2d dir2(x2 - xc, y2 - yc); // After shifting the centre of
-  // arc to the origin
+  gp_Dir2d dir1(x1 - xc, y1 - yc);
+
+  gp_Dir2d dir2(x2 - xc, y2 - yc);
+
   double t = dir1.Angle(dir2);
   return t + (t > 0 ? 0 : 2 * M_PI);
 }

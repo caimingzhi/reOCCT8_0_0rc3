@@ -7,12 +7,8 @@
 #include <StepKinematics_MechanismStateRepresentation.hpp>
 #include <StepKinematics_MechanismRepresentation.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWMechanismStateRepresentation::RWStepKinematics_RWMechanismStateRepresentation() =
   default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWMechanismStateRepresentation::ReadStep(
   const occ::handle<StepData_StepReaderData>&                     theData,
@@ -20,15 +16,13 @@ void RWStepKinematics_RWMechanismStateRepresentation::ReadStep(
   occ::handle<Interface_Check>&                                   theArch,
   const occ::handle<StepKinematics_MechanismStateRepresentation>& theEnt) const
 {
-  // Number of Parameter Control
+
   if (!theData->CheckNbParams(theNum, 4, theArch, "mechanism_state_representation"))
     return;
 
-  // Inherited field : name
   occ::handle<TCollection_HAsciiString> aName;
   theData->ReadString(theNum, 1, "name", theArch, aName);
 
-  // Inherited field : items
   occ::handle<NCollection_HArray1<occ::handle<StepRepr_RepresentationItem>>> aItems;
   occ::handle<StepRepr_RepresentationItem>                                   anEnt;
   int                                                                        nsub;
@@ -48,7 +42,6 @@ void RWStepKinematics_RWMechanismStateRepresentation::ReadStep(
     }
   }
 
-  // Inherited field : context_of_items
   occ::handle<StepRepr_RepresentationContext> aContextOfItems;
   theData->ReadEntity(theNum,
                       3,
@@ -57,7 +50,6 @@ void RWStepKinematics_RWMechanismStateRepresentation::ReadStep(
                       STANDARD_TYPE(StepRepr_RepresentationContext),
                       aContextOfItems);
 
-  // Inherited field : represented_mechanism
   occ::handle<StepKinematics_MechanismRepresentation> aRepresentedMechanism;
   theData->ReadEntity(theNum,
                       4,
@@ -66,20 +58,16 @@ void RWStepKinematics_RWMechanismStateRepresentation::ReadStep(
                       STANDARD_TYPE(StepKinematics_MechanismRepresentation),
                       aRepresentedMechanism);
 
-  // Initialisation of the read entity
   theEnt->Init(aName, aItems, aContextOfItems, aRepresentedMechanism);
 }
-
-//=================================================================================================
 
 void RWStepKinematics_RWMechanismStateRepresentation::WriteStep(
   StepData_StepWriter&                                            theSW,
   const occ::handle<StepKinematics_MechanismStateRepresentation>& theEnt) const
 {
-  // Inherited field : name
+
   theSW.Send(theEnt->Name());
 
-  // Inherited field : items
   theSW.OpenSub();
   for (int i = 1; i <= theEnt->NbItems(); i++)
   {
@@ -87,14 +75,10 @@ void RWStepKinematics_RWMechanismStateRepresentation::WriteStep(
   }
   theSW.CloseSub();
 
-  // Inherited field : context_of_items
   theSW.Send(theEnt->ContextOfItems());
 
-  // Inherited field : represented_mechanism
   theSW.Send(theEnt->Mechanism());
 }
-
-//=================================================================================================
 
 void RWStepKinematics_RWMechanismStateRepresentation::Share(
   const occ::handle<StepKinematics_MechanismStateRepresentation>& theEnt,

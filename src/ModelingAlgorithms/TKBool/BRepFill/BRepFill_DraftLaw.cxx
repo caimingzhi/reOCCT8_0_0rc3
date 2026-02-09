@@ -10,10 +10,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepFill_DraftLaw, BRepFill_Edge3DLaw)
 
-//=======================================================================
-// function : ToG0
-// purpose  : Calculate a transformation T tq T.M2 = M1
-//=======================================================================
 static void ToG0(const gp_Mat& M1, const gp_Mat& M2, gp_Mat& T)
 {
   T = M2.Inverted();
@@ -28,15 +24,12 @@ BRepFill_DraftLaw::BRepFill_DraftLaw(const TopoDS_Wire&                         
 
 void BRepFill_DraftLaw::CleanLaw(const double TolAngular)
 {
-  double First, Last; //, Angle;
+  double First, Last;
   int    ipath;
   gp_Mat Trsf, M1, M2;
   gp_Vec V, T1, T2, N1, N2;
-  //  gp_Dir D;
 
   myLaws->Value(1)->GetDomain(First, Last);
-  // D = occ::down_cast<GeomFill_LocationDraft>(myLaws->Value(1))->Direction();
-  //  gp_Vec Vd(D);
 
   for (ipath = 2; ipath <= myLaws->Length(); ipath++)
   {
@@ -48,7 +41,7 @@ void BRepFill_DraftLaw::CleanLaw(const double TolAngular)
     N1.SetXYZ(M1.Column(1));
     N2.SetXYZ(M2.Column(1));
     if (N1.IsParallel(N2, TolAngular))
-    { // Correction G0 des normales...
+    {
       ToG0(M1, M2, Trsf);
       myLaws->Value(ipath)->SetTrsf(Trsf);
     }

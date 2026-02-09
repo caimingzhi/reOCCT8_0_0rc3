@@ -1,7 +1,6 @@
 #include <IVtkTools_ShapeObject.hpp>
 #include <IVtkTools_ShapeDataSource.hpp>
 
-// prevent disabling some MSVC warning messages by VTK headers
 #ifdef _MSC_VER
   #pragma warning(push)
 #endif
@@ -17,11 +16,6 @@
 
 IVtkTools_ShapeObject::KeyPtr IVtkTools_ShapeObject::myKey = nullptr;
 
-//============================================================================
-//  Method: getKey
-// Purpose: Static method to get vtkInformationKey for retrieving OccShape
-//          instance from the actor.
-//============================================================================
 IVtkTools_ShapeObject::KeyPtr IVtkTools_ShapeObject::getKey()
 {
   if (!myKey)
@@ -32,11 +26,6 @@ IVtkTools_ShapeObject::KeyPtr IVtkTools_ShapeObject::getKey()
   return myKey;
 }
 
-//============================================================================
-//  Method: GetOccShape
-// Purpose: Static method to get OCC shape from VTK actor's data from
-//          information object by key.
-//============================================================================
 IVtkOCC_Shape::Handle IVtkTools_ShapeObject::GetOccShape(vtkActor* theActor)
 {
   IVtkOCC_Shape::Handle                      anOccShape;
@@ -48,11 +37,6 @@ IVtkOCC_Shape::Handle IVtkTools_ShapeObject::GetOccShape(vtkActor* theActor)
   return anOccShape;
 }
 
-//============================================================================
-//  Method: GetShapeSource
-// Purpose: Static method to get OCC shape source from VTK actor's data from
-//          information object by key.
-//============================================================================
 vtkSmartPointer<IVtkTools_ShapeDataSource> IVtkTools_ShapeObject ::GetShapeSource(
   vtkActor* theActor)
 {
@@ -71,11 +55,6 @@ vtkSmartPointer<IVtkTools_ShapeDataSource> IVtkTools_ShapeObject ::GetShapeSourc
   return anOccShapeSource;
 }
 
-//============================================================================
-//  Method: SetShapeSource
-// Purpose: Static method to set OCC shape source to VTK dataset in information
-//          object with key.
-//============================================================================
 void IVtkTools_ShapeObject::SetShapeSource(IVtkTools_ShapeDataSource* theDataSource,
                                            vtkDataSet*                theDataSet)
 {
@@ -90,11 +69,6 @@ void IVtkTools_ShapeObject::SetShapeSource(IVtkTools_ShapeDataSource* theDataSou
   aKey->Set(aDatasetInfo, aShapeObj);
 }
 
-//============================================================================
-//  Method: SetShapeSource
-// Purpose: Static method to set OCC shape source to VTK actor in information
-//          object with key.
-//============================================================================
 void IVtkTools_ShapeObject::SetShapeSource(IVtkTools_ShapeDataSource* theDataSource,
                                            vtkActor*                  theActor)
 {
@@ -110,28 +84,16 @@ void IVtkTools_ShapeObject::SetShapeSource(IVtkTools_ShapeDataSource* theDataSou
   aKey->Set(anInfo, aShapeObj);
 }
 
-//! @class IVtkTools_ShapeObject
-//! @brief VTK holder class for OCC shapes to pass them through pipelines.
 vtkStandardNewMacro(IVtkTools_ShapeObject)
 
-  //============================================================================
-  //  Method: Constructor
-  // Purpose: Protected constructor.
-  //============================================================================
   IVtkTools_ShapeObject::IVtkTools_ShapeObject() = default;
 
-//=================================================================================================
-
 IVtkTools_ShapeObject::~IVtkTools_ShapeObject() = default;
-
-//=================================================================================================
 
 void IVtkTools_ShapeObject::SetShapeSource(IVtkTools_ShapeDataSource* theDataSource)
 {
   myShapeSource = theDataSource;
 }
-
-//=================================================================================================
 
 IVtkTools_ShapeDataSource* IVtkTools_ShapeObject::GetShapeSource() const
 {

@@ -11,7 +11,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! Array of extended string attribute Driver.
 class BinMDataStd_ExtStringArrayDriver : public BinMDF_ADriver
 {
 

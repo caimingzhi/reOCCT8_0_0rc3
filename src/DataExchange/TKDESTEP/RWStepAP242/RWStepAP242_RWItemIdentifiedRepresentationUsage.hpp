@@ -12,7 +12,6 @@ class StepAP242_ItemIdentifiedRepresentationUsage;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ItemIdentifiedRepresentationUsage
 class RWStepAP242_RWItemIdentifiedRepresentationUsage
 {
 public:

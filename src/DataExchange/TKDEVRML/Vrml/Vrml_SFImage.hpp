@@ -18,7 +18,6 @@ enum Vrml_SFImageNumber
 #include <NCollection_HArray1.hpp>
 #include <Standard_Transient.hpp>
 
-//! defines SFImage type of VRML field types.
 class Vrml_SFImage : public Standard_Transient
 {
 

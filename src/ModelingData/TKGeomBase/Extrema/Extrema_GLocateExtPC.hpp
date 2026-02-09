@@ -11,18 +11,6 @@
 
 #include <cmath>
 
-//! Template class for locating extremum of distance between a point and a curve.
-//! Calculates the distance with a close point. The close point is defined by
-//! the parameter value U0. The function F(u)=distance(P,C(u)) has an extremum
-//! when g(u)=dF/du=0. The algorithm searches a zero near the close point.
-//!
-//! @tparam TheCurve    Curve type (e.g., Adaptor3d_Curve, Adaptor2d_Curve2d)
-//! @tparam TheCurveTool Tool for curve operations
-//! @tparam ThePoint    Point type (e.g., gp_Pnt, gp_Pnt2d)
-//! @tparam TheVector   Vector type (e.g., gp_Vec, gp_Vec2d)
-//! @tparam ThePOnC     Point on curve type
-//! @tparam TheELPC     Extended local projection curve type
-//! @tparam TheLocEPC   Local extremum point curve type
 template <typename TheCurve,
           typename TheCurveTool,
           typename ThePoint,
@@ -35,7 +23,6 @@ class Extrema_GLocateExtPC
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Default constructor.
   Extrema_GLocateExtPC()
       : myC(nullptr),
         mydist2(0.0),
@@ -49,10 +36,6 @@ public:
   {
   }
 
-  //! Calculates the distance with a close point.
-  //! The close point is defined by the parameter value U0.
-  //! TolF is used to decide to stop the iterations.
-  //! At the nth iteration, the criteria is: abs(Un - Un-1) < TolF.
   Extrema_GLocateExtPC(const ThePoint& theP,
                        const TheCurve& theC,
                        const double    theU0,
@@ -65,11 +48,6 @@ public:
     Perform(theP, theU0);
   }
 
-  //! Calculates the distance with a close point.
-  //! The close point is defined by the parameter value U0.
-  //! Zeros are searched between Umin and Usup.
-  //! TolF is used to decide to stop the iterations.
-  //! At the nth iteration, the criteria is: abs(Un - Un-1) < TolF.
   Extrema_GLocateExtPC(const ThePoint& theP,
                        const TheCurve& theC,
                        const double    theU0,
@@ -81,7 +59,6 @@ public:
     Perform(theP, theU0);
   }
 
-  //! Sets the fields of the algorithm.
   void Initialize(const TheCurve& theC,
                   const double    theUmin,
                   const double    theUsup,
@@ -104,7 +81,6 @@ public:
     }
   }
 
-  //! Performs the algorithm with point P and initial parameter U0.
   void Perform(const ThePoint& theP, const double theU0)
   {
     int    i, i1, i2, inter;
@@ -117,13 +93,11 @@ public:
       case GeomAbs_OffsetCurve:
       case GeomAbs_BSplineCurve:
       {
-        // Search for extremum is done interval by continuous C2 interval
+
         int                        n = TheCurveTool::NbIntervals(*myC, GeomAbs_C2);
         NCollection_Array1<double> theInter(1, n + 1);
         TheCurveTool::Intervals(*myC, theInter, GeomAbs_C2);
-        //
-        // be gentle with the caller
-        //
+
         if (local_u0 < myumin)
         {
           local_u0 = myumin;
@@ -132,7 +106,7 @@ public:
         {
           local_u0 = myusup;
         }
-        // Search for interval containing U0
+
         bool found = false;
         inter      = 1;
         while (!found && inter <= n)
@@ -145,9 +119,8 @@ public:
         }
 
         if (found)
-          inter--; // IFV 16.06.00 - inter is increased after found!
+          inter--;
 
-        // Try on found interval
         myLocExtPC.Initialize(*myC, myintuinf, myintusup, mytol);
         myLocExtPC.Perform(theP, local_u0);
         myDone = myLocExtPC.IsDone();
@@ -160,7 +133,7 @@ public:
         else
         {
           int k = 1;
-          // Try on neighboring intervals:
+
           i1 = inter;
           i2 = inter;
           double    s1inf, s2inf, s1sup, s2sup;
@@ -189,7 +162,7 @@ public:
                 }
                 if (s1sup * s2sup <= RealEpsilon())
                 {
-                  // extremum:
+
                   myDone = true;
                   mypp.SetValues(myintuinf, P1);
                   myismin = (s1sup <= 0.0);
@@ -226,7 +199,7 @@ public:
                 }
                 if (s1inf * s2inf <= RealEpsilon())
                 {
-                  // extremum:
+
                   myDone = true;
                   mypp.SetValues(myintusup, P1);
                   myismin = (s1inf <= 0.0);
@@ -291,10 +264,8 @@ public:
     }
   }
 
-  //! Returns True if the distance is found.
   bool IsDone() const { return myDone; }
 
-  //! Returns the value of the extremum square distance.
   double SquareDistance() const
   {
     if (!IsDone())
@@ -321,7 +292,6 @@ public:
     return d;
   }
 
-  //! Returns True if the extremum distance is a minimum.
   bool IsMin() const
   {
     if (!IsDone())
@@ -348,7 +318,6 @@ public:
     return b;
   }
 
-  //! Returns the point of the extremum distance.
   const ThePOnC& Point() const
   {
     if (!IsDone())

@@ -9,15 +9,10 @@
 
 class Graphic3d_CView;
 
-//! Defines the class of a graduated trihedron.
-//! It contains main style parameters for implementation of graduated trihedron
-//! @sa OpenGl_GraduatedTrihedron
 class Graphic3d_GraduatedTrihedron
 {
 
 public:
-  //! Class that stores style for one graduated trihedron axis such as colors, lengths and
-  //! customization flags. It is used in Graphic3d_GraduatedTrihedron.
   class AxisAspect
   {
   public:
@@ -65,10 +60,8 @@ public:
 
     void SetNameColor(const Quantity_Color& theColor) { myNameColor = theColor; }
 
-    //! Color of axis and values
     const Quantity_Color& Color() const { return myColor; }
 
-    //! Sets color of axis and values
     void SetColor(const Quantity_Color& theColor) { myColor = theColor; }
 
     int TickmarksNumber() const { return myTickmarksNumber; }
@@ -96,20 +89,18 @@ public:
 
     Quantity_Color myNameColor;
 
-    int            myTickmarksNumber; //!< Number of splits along axes
-    int            myTickmarksLength; //!< Length of tickmarks
-    Quantity_Color myColor;           //!< Color of axis and values
+    int            myTickmarksNumber;
+    int            myTickmarksLength;
+    Quantity_Color myColor;
 
-    int myValuesOffset; //!< Offset for drawing values
-    int myNameOffset;   //!< Offset for drawing name of axis
+    int myValuesOffset;
+    int myNameOffset;
   };
 
 public:
   typedef void (*MinMaxValuesCallback)(Graphic3d_CView*);
 
 public:
-  //! Default constructor
-  //! Constructs the default graduated trihedron with grid, X, Y, Z axes, and tickmarks
   Graphic3d_GraduatedTrihedron(const TCollection_AsciiString& theNamesFont    = "Arial",
                                const Font_FontAspect&         theNamesStyle   = Font_FA_Bold,
                                const int                      theNamesSize    = 12,
@@ -223,18 +214,17 @@ public:
   }
 
 protected:
-  // clang-format off
-  MinMaxValuesCallback myCubicAxesCallback; //!< Callback function to define boundary box of displayed objects
+  MinMaxValuesCallback myCubicAxesCallback;
 
-  TCollection_AsciiString myNamesFont;  //!< Font name of names of axes: Courier, Arial, ...
-  Font_FontAspect         myNamesStyle; //!< Style of names of axes: OSD_FA_Regular, OSD_FA_Bold,..
-  // clang-format on
-  int myNamesSize; //!< Size of names of axes: 8, 10,..
+  TCollection_AsciiString myNamesFont;
+  Font_FontAspect         myNamesStyle;
+
+  int myNamesSize;
 
 protected:
-  TCollection_AsciiString myValuesFont;  //!< Font name of values: Courier, Arial, ...
-  Font_FontAspect         myValuesStyle; //!< Style of values: OSD_FA_Regular, OSD_FA_Bold, ...
-  int                     myValuesSize;  //!< Size of values: 8, 10, 12, 14, ...
+  TCollection_AsciiString myValuesFont;
+  Font_FontAspect         myValuesStyle;
+  int                     myValuesSize;
 
 protected:
   float          myArrowsLength;
@@ -243,5 +233,5 @@ protected:
   bool myToDrawGrid;
   bool myToDrawAxes;
 
-  NCollection_Array1<AxisAspect> myAxes; //!< X, Y and Z axes parameters
+  NCollection_Array1<AxisAspect> myAxes;
 };

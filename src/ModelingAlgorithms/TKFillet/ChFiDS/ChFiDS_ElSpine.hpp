@@ -25,14 +25,12 @@ class gp_Parab;
 class Geom_BezierCurve;
 class Geom_BSplineCurve;
 
-//! Elementary Spine for cheminements and approximations.
 class ChFiDS_ElSpine : public Adaptor3d_Curve
 {
   DEFINE_STANDARD_RTTIEXT(ChFiDS_ElSpine, Adaptor3d_Curve)
 public:
   Standard_EXPORT ChFiDS_ElSpine();
 
-  //! Shallow copy of adaptor
   Standard_EXPORT occ::handle<Adaptor3d_Curve> ShallowCopy() const override;
 
   Standard_EXPORT double FirstParameter() const override;
@@ -50,9 +48,6 @@ public:
   Standard_EXPORT void Intervals(NCollection_Array1<double>& T,
                                  const GeomAbs_Shape         S) const override;
 
-  //! Returns a curve equivalent of <me> between
-  //! parameters <First> and <Last>. <Tol> is used to
-  //! test for 3d points confusion.
   Standard_EXPORT occ::handle<Adaptor3d_Curve> Trim(const double First,
                                                     const double Last,
                                                     const double Tol) const override;

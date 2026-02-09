@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include "RWStepKinematics_RWPointOnPlanarCurvePairValue.hpp"
 
@@ -11,12 +11,8 @@
 #include <StepGeom_PointOnCurve.hpp>
 #include <StepKinematics_SpatialRotation.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWPointOnPlanarCurvePairValue::RWStepKinematics_RWPointOnPlanarCurvePairValue() =
   default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWPointOnPlanarCurvePairValue::ReadStep(
   const occ::handle<StepData_StepReaderData>&                    theData,
@@ -24,16 +20,12 @@ void RWStepKinematics_RWPointOnPlanarCurvePairValue::ReadStep(
   occ::handle<Interface_Check>&                                  theArch,
   const occ::handle<StepKinematics_PointOnPlanarCurvePairValue>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 4, theArch, "point_on_planar_curve_pair_value"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
-
-  // Inherited fields of PairValue
 
   occ::handle<StepKinematics_KinematicPair> aPairValue_AppliesToPair;
   theData->ReadEntity(theNum,
@@ -42,8 +34,6 @@ void RWStepKinematics_RWPointOnPlanarCurvePairValue::ReadStep(
                       theArch,
                       STANDARD_TYPE(StepKinematics_KinematicPair),
                       aPairValue_AppliesToPair);
-
-  // Own fields of PointOnPlanarCurvePairValue
 
   occ::handle<StepGeom_PointOnCurve> aActualPointOnCurve;
   theData->ReadEntity(theNum,
@@ -75,35 +65,26 @@ void RWStepKinematics_RWPointOnPlanarCurvePairValue::ReadStep(
   else
     theData->ReadEntity(theNum, 4, "input_orientation", theArch, aInputOrientation);
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aPairValue_AppliesToPair,
                aActualPointOnCurve,
                aInputOrientation);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWPointOnPlanarCurvePairValue::WriteStep(
   StepData_StepWriter&                                           theSW,
   const occ::handle<StepKinematics_PointOnPlanarCurvePairValue>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
 
-  // Own fields of PairValue
-
   theSW.Send(theEnt->AppliesToPair());
-
-  // Own fields of PointOnPlanarCurvePairValue
 
   theSW.Send(theEnt->ActualPointOnCurve());
 
   if (!theEnt->InputOrientation().YprRotation().IsNull())
   {
-    // Inherited field : YPR
+
     theSW.OpenSub();
     for (int i = 1; i <= theEnt->InputOrientation().YprRotation()->Length(); i++)
     {
@@ -115,20 +96,12 @@ void RWStepKinematics_RWPointOnPlanarCurvePairValue::WriteStep(
     theSW.Send(theEnt->InputOrientation().Value());
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWPointOnPlanarCurvePairValue::Share(
   const occ::handle<StepKinematics_PointOnPlanarCurvePairValue>& theEnt,
   Interface_EntityIterator&                                      iter) const
 {
 
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of PairValue
-
   iter.AddItem(theEnt->StepKinematics_PairValue::AppliesToPair());
-
-  // Own fields of PointOnPlanarCurvePairValue
 
   iter.AddItem(theEnt->ActualPointOnCurve());
 

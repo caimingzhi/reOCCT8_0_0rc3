@@ -1,15 +1,4 @@
-// Copyright (c) 2015 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <StdLPersistent_HString.hpp>
 #include <StdObjMgt_ReadData.hpp>
@@ -17,10 +6,6 @@
 #include <TDF_Label.hpp>
 #include <TDF_Tool.hpp>
 
-//=======================================================================
-// function : Read
-// purpose  : Read persistent data from a file
-//=======================================================================
 template <class StringClass, typename CharType>
 void StdLPersistent_HString::instance<StringClass, CharType>::Read(StdObjMgt_ReadData& theReadData)
 {
@@ -38,10 +23,6 @@ void StdLPersistent_HString::instance<StringClass, CharType>::Read(StdObjMgt_Rea
   }
 }
 
-//=======================================================================
-// function : Write
-// purpose  : Write persistent data to a file
-//=======================================================================
 template <class StringClass, typename CharType>
 void StdLPersistent_HString::instance<StringClass, CharType>::Write(
   StdObjMgt_WriteData& theWriteData) const
@@ -58,10 +39,6 @@ void StdLPersistent_HString::instance<StringClass, CharType>::Write(
   }
 }
 
-//=======================================================================
-// function : Label
-// purpose  : Get/create a label defined by referenced string
-//=======================================================================
 template <class StringClass, typename CharType>
 TDF_Label StdLPersistent_HString::instance<StringClass, CharType>::Label(
   const occ::handle<TDF_Data>& theDF) const
@@ -74,19 +51,11 @@ TDF_Label StdLPersistent_HString::instance<StringClass, CharType>::Label(
   return aLabel;
 }
 
-//=======================================================================
-// function : AsciiString
-// purpose  : Get referenced ASCII string
-//=======================================================================
 occ::handle<TCollection_HAsciiString> StdLPersistent_HString::Ascii::AsciiString() const
 {
   return myValue;
 }
 
-//=======================================================================
-// function : ExtString
-// purpose  : Get referenced extended string
-//=======================================================================
 occ::handle<TCollection_HExtendedString> StdLPersistent_HString::Extended::ExtString() const
 {
   return myValue;

@@ -15,7 +15,6 @@ class StepAP214_AppliedDateAssignment : public StepBasic_DateAssignment
 {
 
 public:
-  //! Returns a AppliedDateAssignment
   Standard_EXPORT StepAP214_AppliedDateAssignment();
 
   Standard_EXPORT void Init(const occ::handle<StepBasic_Date>&     aAssignedDate,

@@ -15,8 +15,6 @@ enum LProp_CIType
 
 #include <Standard_Boolean.hpp>
 
-//! Stores the parameters of a curve 2d or 3d corresponding
-//! to the curvature's extremas and the Inflection's Points.
 class LProp_CurAndInf
 {
 public:
@@ -32,22 +30,10 @@ public:
 
   Standard_EXPORT bool IsEmpty() const;
 
-  //! Returns the number of points.
-  //! The Points are stored to increasing parameter.
   Standard_EXPORT int NbPoints() const;
 
-  //! Returns the parameter of the Nth point.
-  //! raises if N not in the range [1,NbPoints()]
   Standard_EXPORT double Parameter(const int N) const;
 
-  //! Returns
-  //! - MinCur if the Nth parameter corresponds to
-  //! a minimum of the radius of curvature.
-  //! - MaxCur if the Nth parameter corresponds to
-  //! a maximum of the radius of curvature.
-  //! - Inflection if the parameter corresponds to
-  //! a point of inflection.
-  //! raises if N not in the range [1,NbPoints()]
   Standard_EXPORT LProp_CIType Type(const int N) const;
 
 private:

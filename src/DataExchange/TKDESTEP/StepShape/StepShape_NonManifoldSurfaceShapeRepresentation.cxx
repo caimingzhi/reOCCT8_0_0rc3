@@ -4,7 +4,5 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_NonManifoldSurfaceShapeRepresentation,
                            StepShape_ShapeRepresentation)
 
-//=================================================================================================
-
 StepShape_NonManifoldSurfaceShapeRepresentation::StepShape_NonManifoldSurfaceShapeRepresentation() =
   default;

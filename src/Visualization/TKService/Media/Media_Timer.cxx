@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Media_Timer, Standard_Transient)
 
-//=================================================================================================
-
 void Media_Timer::Pause()
 {
   myTimer.Stop();
@@ -11,16 +9,12 @@ void Media_Timer::Pause()
   myTimer.Reset();
 }
 
-//=================================================================================================
-
 void Media_Timer::Stop()
 {
   myTimer.Stop();
   myTimer.Reset();
   myTimerFrom = 0.0;
 }
-
-//=================================================================================================
 
 void Media_Timer::SetPlaybackSpeed(const double theSpeed)
 {
@@ -36,8 +30,6 @@ void Media_Timer::SetPlaybackSpeed(const double theSpeed)
   myTimerSpeed = theSpeed;
   myTimer.Start();
 }
-
-//=================================================================================================
 
 void Media_Timer::Seek(const double theTime)
 {

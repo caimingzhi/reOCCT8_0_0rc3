@@ -7,7 +7,6 @@
 #include <Standard_Transient.hpp>
 #include <Standard_Integer.hpp>
 
-//! Extension of TColStd_PackedMapOfInteger class to be manipulated by handle.
 class TColStd_HPackedMapOfInteger : public Standard_Transient
 {
 
@@ -31,7 +30,6 @@ inline const TColStd_PackedMapOfInteger& TColStd_HPackedMapOfInteger::Map() cons
   return myMap;
 }
 
-//! Access to the map for modification
 inline TColStd_PackedMapOfInteger& TColStd_HPackedMapOfInteger::ChangeMap()
 {
   return myMap;

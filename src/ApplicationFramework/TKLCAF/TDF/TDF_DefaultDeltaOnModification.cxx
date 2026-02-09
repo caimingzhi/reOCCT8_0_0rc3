@@ -5,15 +5,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDF_DefaultDeltaOnModification, TDF_DeltaOnModification)
 
-//=================================================================================================
-
 TDF_DefaultDeltaOnModification::TDF_DefaultDeltaOnModification(
   const occ::handle<TDF_Attribute>& anAttribute)
     : TDF_DeltaOnModification(anAttribute)
 {
 }
-
-//=================================================================================================
 
 void TDF_DefaultDeltaOnModification::Apply()
 {

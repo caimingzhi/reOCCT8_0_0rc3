@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -107,7 +96,6 @@ TEST(Bnd_B2dTest, SquareExtent)
   Bnd_B2d aBox(gp_XY(0.0, 0.0), gp_XY(3.0, 4.0));
   double  aSqExtent = aBox.SquareExtent();
 
-  // Square diagonal = 4 * (3^2 + 4^2) = 4 * 25 = 100
   EXPECT_NEAR(aSqExtent, 100.0, Precision::Confusion());
 }
 
@@ -126,16 +114,13 @@ TEST(Bnd_B2dTest, Enlarge)
 
 TEST(Bnd_B2dTest, Limit)
 {
-  // Test limiting a large box by a smaller box inside it
-  // aBox1: (-5, -5) to (5, 5)
-  // aBox2: (0, 0) to (4, 4)
+
   Bnd_B2d aBox1(gp_XY(0.0, 0.0), gp_XY(5.0, 5.0));
   Bnd_B2d aBox2(gp_XY(2.0, 2.0), gp_XY(2.0, 2.0));
 
   bool isLimited = aBox1.Limit(aBox2);
   EXPECT_TRUE(isLimited);
 
-  // After limiting, aBox1's min corner should align with aBox2's min corner
   gp_XY aMin = aBox1.CornerMin();
   gp_XY aMax = aBox1.CornerMax();
   EXPECT_NEAR(aMin.X(), 0.0, Precision::Confusion());
@@ -143,7 +128,6 @@ TEST(Bnd_B2dTest, Limit)
   EXPECT_NEAR(aMax.X(), 5.0, Precision::Confusion());
   EXPECT_NEAR(aMax.Y(), 5.0, Precision::Confusion());
 
-  // Test with non-intersecting boxes
   Bnd_B2d aBox3(gp_XY(0.0, 0.0), gp_XY(1.0, 1.0));
   Bnd_B2d aBox4(gp_XY(10.0, 10.0), gp_XY(1.0, 1.0));
   bool    isLimited2 = aBox3.Limit(aBox4);
@@ -164,10 +148,8 @@ TEST(Bnd_B2dTest, IsOutCircle)
 {
   Bnd_B2d aBox(gp_XY(0.0, 0.0), gp_XY(1.0, 1.0));
 
-  // Circle at (0, 0) with small radius - should intersect
   EXPECT_FALSE(aBox.IsOut(gp_XY(0.0, 0.0), 0.5));
 
-  // Circle far away - should not intersect
   EXPECT_TRUE(aBox.IsOut(gp_XY(10.0, 10.0), 1.0));
 }
 
@@ -185,11 +167,9 @@ TEST(Bnd_B2dTest, IsOutLine)
 {
   Bnd_B2d aBox(gp_XY(0.0, 0.0), gp_XY(1.0, 1.0));
 
-  // Line passing through box
   gp_Ax2d aLine1(gp_Pnt2d(-2.0, 0.0), gp_Dir2d(1.0, 0.0));
   EXPECT_FALSE(aBox.IsOut(aLine1));
 
-  // Line not intersecting box
   gp_Ax2d aLine2(gp_Pnt2d(-2.0, 5.0), gp_Dir2d(1.0, 0.0));
   EXPECT_TRUE(aBox.IsOut(aLine2));
 }
@@ -198,10 +178,8 @@ TEST(Bnd_B2dTest, IsOutSegment)
 {
   Bnd_B2d aBox(gp_XY(0.0, 0.0), gp_XY(1.0, 1.0));
 
-  // Segment intersecting box
   EXPECT_FALSE(aBox.IsOut(gp_XY(-2.0, 0.0), gp_XY(2.0, 0.0)));
 
-  // Segment not intersecting box
   EXPECT_TRUE(aBox.IsOut(gp_XY(5.0, 5.0), gp_XY(6.0, 6.0)));
 }
 

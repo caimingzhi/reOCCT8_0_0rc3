@@ -27,10 +27,6 @@ Geom2dGcc_Circ2dTanCen::Geom2dGcc_Circ2dTanCen(const Geom2dGcc_QualifiedCurve&  
   const occ::handle<Geom2d_Curve>& CC1   = C1.Curve();
   GeomAbs_CurveType                Type1 = C1.GetType();
 
-  //=============================================================================
-  //                            Appel a GccAna.                                 +
-  //=============================================================================
-
   gp_Pnt2d pcenter(PCenter->Pnt2d());
   NbrSol = 0;
   if ((Type1 == GeomAbs_Line || Type1 == GeomAbs_Circle))
@@ -81,10 +77,6 @@ Geom2dGcc_Circ2dTanCen::Geom2dGcc_Circ2dTanCen(const Geom2dGcc_QualifiedCurve&  
       }
     }
   }
-
-  //=============================================================================
-  //                            Appel a GccGeo.                                 +
-  //=============================================================================
 
   else
   {

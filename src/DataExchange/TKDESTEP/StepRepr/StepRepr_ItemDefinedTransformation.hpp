@@ -7,7 +7,6 @@
 class TCollection_HAsciiString;
 class StepRepr_RepresentationItem;
 
-//! Added from StepRepr Rev2 to Rev4
 class StepRepr_ItemDefinedTransformation : public Standard_Transient
 {
 

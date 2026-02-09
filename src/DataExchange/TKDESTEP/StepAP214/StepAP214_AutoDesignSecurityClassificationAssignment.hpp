@@ -16,7 +16,6 @@ class StepAP214_AutoDesignSecurityClassificationAssignment
 {
 
 public:
-  //! Returns a AutoDesignSecurityClassificationAssignment
   Standard_EXPORT StepAP214_AutoDesignSecurityClassificationAssignment();
 
   Standard_EXPORT void Init(

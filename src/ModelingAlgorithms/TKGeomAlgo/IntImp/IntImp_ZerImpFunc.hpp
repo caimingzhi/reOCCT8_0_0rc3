@@ -127,7 +127,7 @@ bool IntImp_ZerImpFunc::IsTangent()
       d3d.SetLinearForm(tgdu, d1u, tgdv, d1v);
       d2d = gp_Dir2d(tgdu, tgdv);
       if (d3d.Magnitude() <= Tolpetit)
-      { // jag
+      {
         tangent = true;
       }
     }

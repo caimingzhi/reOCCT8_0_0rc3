@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_MSG.hpp>
 #include <NCollection_DataMap.hpp>
@@ -114,8 +103,6 @@ Interface_MSG::operator const char*() const
   return Value();
 }
 
-//  ###########    Lecture Ecriture Fichier    ##########
-
 int Interface_MSG::Read(Standard_IStream& S)
 {
   int  i, nb = 0;
@@ -175,8 +162,6 @@ int Interface_MSG::Write(Standard_OStream& S, const char* rootkey)
   S << std::flush;
   return nb;
 }
-
-//  ###########   EXPLOITATION   ##########
 
 bool Interface_MSG::IsKey(const char* key)
 {
@@ -272,8 +257,6 @@ void Interface_MSG::PrintTrace(Standard_OStream& S)
   }
 }
 
-//  ###########    FLOATING POINT ROUNDING    ############
-
 double Interface_MSG::Intervalled(const double val, const int order, const bool upper)
 {
   double vl = (val > 0. ? val : -val);
@@ -349,7 +332,7 @@ double Interface_MSG::Intervalled(const double val, const int order, const bool 
       rst = (upper ? 10. : 7.);
   }
   else
-  { // only makes sense up to 10 ...
+  {
     if (rst <= 1.2)
       rst = (upper ? 1.2 : 1.);
     else if (rst <= 1.5)
@@ -374,8 +357,6 @@ double Interface_MSG::Intervalled(const double val, const int order, const bool 
   return ((val < 0.) ? -(bl * rst) : (bl * rst));
 }
 
-//  ###########    DATES    ############
-
 void Interface_MSG::TDate(const char* text,
                           const int   yy,
                           const int   mm,
@@ -385,15 +366,11 @@ void Interface_MSG::TDate(const char* text,
                           const int   ss,
                           const char* format)
 {
-  //  null values : at the beginning (with at least one non-null, the last one)
-  //  -> completed with current values (system date)
-  //  all null we leave
 
-  // svv #2 int y1 , m1 , d1 , h1 , n1 , s1;
   int y2 = yy, m2 = mm, d2 = dd, h2 = hh, n2 = mn, s2 = ss;
   if (yy == 0 && ss != 0)
   {
-    //  completion
+
     OSD_Process   pourdate;
     Quantity_Date ladate = pourdate.SystemDate();
     if (yy == 0)

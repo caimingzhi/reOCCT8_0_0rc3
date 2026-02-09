@@ -29,16 +29,11 @@ public:
 
   static GeomAbs_Shape Continuity(const Adaptor3d_Curve& theC) { return theC.Continuity(); }
 
-  //! Returns the number of intervals for continuity <S>.
-  //! May be one if Continuity(me) >= <S>
   static int NbIntervals(Adaptor3d_Curve& theC, const GeomAbs_Shape theS)
   {
     return theC.NbIntervals(theS);
   }
 
-  //! Stores in <T> the parameters bounding the intervals of continuity <S>.
-  //! The array must provide enough room to accommodate for the parameters.
-  //! i.e. T.Length() > NbIntervals()
   static void Intervals(Adaptor3d_Curve&            theC,
                         NCollection_Array1<double>& theT,
                         const GeomAbs_Shape         theS)
@@ -46,8 +41,6 @@ public:
     theC.Intervals(theT, theS);
   }
 
-  //! Returns the parameters bounding the intervals of subdivision of curve
-  //! according to Curvature deflection. Value of deflection is defined in method.
   Standard_EXPORT static occ::handle<NCollection_HArray1<double>> DeflCurvIntervals(
     const Adaptor3d_Curve& theC);
 

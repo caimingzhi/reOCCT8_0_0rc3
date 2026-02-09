@@ -5,12 +5,8 @@
 #include <StepFEA_ArbitraryVolume3dElementCoordinateSystem.hpp>
 #include <StepFEA_FeaAxis2Placement3d.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWArbitraryVolume3dElementCoordinateSystem::
   RWStepFEA_RWArbitraryVolume3dElementCoordinateSystem() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWArbitraryVolume3dElementCoordinateSystem::ReadStep(
   const occ::handle<StepData_StepReaderData>&                          data,
@@ -18,16 +14,12 @@ void RWStepFEA_RWArbitraryVolume3dElementCoordinateSystem::ReadStep(
   occ::handle<Interface_Check>&                                        ach,
   const occ::handle<StepFEA_ArbitraryVolume3dElementCoordinateSystem>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "arbitrary_volume3d_element_coordinate_system"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   data->ReadString(num, 1, "representation_item.name", ach, aRepresentationItem_Name);
-
-  // Own fields of ArbitraryVolume3dElementCoordinateSystem
 
   occ::handle<StepFEA_FeaAxis2Placement3d> aCoordinateSystem;
   data->ReadEntity(num,
@@ -37,36 +29,23 @@ void RWStepFEA_RWArbitraryVolume3dElementCoordinateSystem::ReadStep(
                    STANDARD_TYPE(StepFEA_FeaAxis2Placement3d),
                    aCoordinateSystem);
 
-  // Initialize entity
   ent->Init(aRepresentationItem_Name, aCoordinateSystem);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWArbitraryVolume3dElementCoordinateSystem::WriteStep(
   StepData_StepWriter&                                                 SW,
   const occ::handle<StepFEA_ArbitraryVolume3dElementCoordinateSystem>& ent) const
 {
 
-  // Inherited fields of RepresentationItem
-
   SW.Send(ent->StepRepr_RepresentationItem::Name());
-
-  // Own fields of ArbitraryVolume3dElementCoordinateSystem
 
   SW.Send(ent->CoordinateSystem());
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWArbitraryVolume3dElementCoordinateSystem::Share(
   const occ::handle<StepFEA_ArbitraryVolume3dElementCoordinateSystem>& ent,
   Interface_EntityIterator&                                            iter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Own fields of ArbitraryVolume3dElementCoordinateSystem
 
   iter.AddItem(ent->CoordinateSystem());
 }

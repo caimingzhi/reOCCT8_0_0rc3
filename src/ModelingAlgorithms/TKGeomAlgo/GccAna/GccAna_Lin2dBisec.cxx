@@ -1,20 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//=========================================================================
-//   CREATION of the BISSECTICE between two STRAIGHT LINES.                        +
-//=========================================================================
 
 #include <ElCLib.hpp>
 #include <GccAna_Lin2dBisec.hpp>
@@ -29,13 +13,6 @@
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   The first calculated bissectrice is the interior bisectrice, the     +
-//   second is the exterior bissectrice.                                  +
-//   the direction of the first bissectrice is such that its scalar product +
-//   with direction of Lin1 is always positive.             +
-//   The second bissectrice is turned in the positive direction.             +
-//=========================================================================
 GccAna_Lin2dBisec::GccAna_Lin2dBisec(const gp_Lin2d& Lin1, const gp_Lin2d& Lin2)
     : linsol(1, 2),
       pntint1sol(1, 2),
@@ -63,9 +40,7 @@ GccAna_Lin2dBisec::GccAna_Lin2dBisec(const gp_Lin2d& Lin1, const gp_Lin2d& Lin2)
       }
       else
       {
-        // Attention : do not use dist = Lin1.Distance(Lin2);
-        // as straight lines can be concurrent for gp_Lin2d
-        // so dist = 0.0 (test of the angle too strict ?)
+
         double dist  = Lin1.Distance(Lin2.Location()) / 2.0;
         double cross = gp_Vec2d(-Lin2.Direction().Y(), Lin2.Direction().X())
                          .Dot(gp_Vec2d(Lin2.Location(), Lin1.Location()));
@@ -75,11 +50,10 @@ GccAna_Lin2dBisec::GccAna_Lin2dBisec(const gp_Lin2d& Lin1, const gp_Lin2d& Lin2)
         WellDone = true;
         linsol(NbrSol) =
           gp_Lin2d(gp_Pnt2d(Lin2.Location().XY() +
-                            //       ========================================================
+
                             gp_XY(-Lin2.Direction().Y() * dist, Lin2.Direction().X() * dist)),
-                   //               =============================================================
+
                    Lin2.Direction());
-        //               =================
       }
     }
 
@@ -91,14 +65,14 @@ GccAna_Lin2dBisec::GccAna_Lin2dBisec(const gp_Lin2d& Lin1, const gp_Lin2d& Lin2)
         {
           NbrSol++;
           linsol(NbrSol) = gp_Lin2d(Intp.Point(i).Value(),
-                                    //	   ================================================
+
                                     gp_Dir2d(Lin1.Direction().XY() + Lin2.Direction().XY()));
-          //	               ======================================================
+
           NbrSol++;
           linsol(NbrSol) = gp_Lin2d(Intp.Point(i).Value(),
-                                    //	   ===============================================
+
                                     gp_Dir2d(Lin1.Direction().XY() - Lin2.Direction().XY()));
-          //	               ======================================================
+
           if (Lin1.Angle(Lin2) >= 0.)
           {
             linsol(NbrSol).Reverse();
@@ -119,8 +93,6 @@ GccAna_Lin2dBisec::GccAna_Lin2dBisec(const gp_Lin2d& Lin1, const gp_Lin2d& Lin2)
     pararg2(i)    = ElCLib::Parameter(Lin2, pntint2sol(i));
   }
 }
-
-//=========================================================================
 
 bool GccAna_Lin2dBisec::IsDone() const
 {

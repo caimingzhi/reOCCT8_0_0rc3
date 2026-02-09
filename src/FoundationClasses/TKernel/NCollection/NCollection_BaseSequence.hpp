@@ -4,12 +4,9 @@
 #include <NCollection_BaseAllocator.hpp>
 #include <NCollection_DefineAlloc.hpp>
 
-// **************************************** Class SeqNode ********************
-
 class NCollection_SeqNode
 {
 public:
-  // define new operator for use with NCollection allocators
   DEFINE_NCOLLECTION_ALLOC
 public:
   NCollection_SeqNode() noexcept
@@ -34,14 +31,9 @@ private:
 typedef void (*NCollection_DelSeqNode)(NCollection_SeqNode*,
                                        occ::handle<NCollection_BaseAllocator>& theAl);
 
-/**
- * Purpose:     This  is  a base  class  for  the  Sequence.  It  deals with
- *              an indexed bidirectional list of NCollection_SeqNode's.
- */
 class NCollection_BaseSequence
 {
 public:
-  //! Memory allocation
   DEFINE_STANDARD_ALLOC
   DEFINE_NCOLLECTION_ALLOC
 
@@ -49,27 +41,23 @@ public:
   class Iterator
   {
   public:
-    //! Empty constructor
     Iterator() noexcept
         : myCurrent(nullptr),
           myPrevious(nullptr)
     {
     }
 
-    //! Constructor with initialisation
     Iterator(const NCollection_BaseSequence& theSeq, const bool isStart) noexcept
     {
       Init(theSeq, isStart);
     }
 
-    //! Initialisation
     void Init(const NCollection_BaseSequence& theSeq, const bool isStart = true) noexcept
     {
       myCurrent  = (isStart ? theSeq.myFirstItem : nullptr);
       myPrevious = (isStart ? nullptr : theSeq.myLastItem);
     }
 
-    //! Switch to previous element; note that it will reset
     void Previous() noexcept
     {
       myCurrent = myPrevious;
@@ -78,24 +66,19 @@ public:
     }
 
   protected:
-    NCollection_SeqNode* myCurrent;  //!< Pointer to the current node
-    NCollection_SeqNode* myPrevious; //!< Pointer to the previous node
+    NCollection_SeqNode* myCurrent;
+    NCollection_SeqNode* myPrevious;
     friend class NCollection_BaseSequence;
   };
 
 public:
-  // Methods PUBLIC
-  //
   bool IsEmpty() const noexcept { return (mySize == 0); }
 
   int Length() const noexcept { return mySize; }
 
-  //! Returns attached allocator
   const occ::handle<NCollection_BaseAllocator>& Allocator() const noexcept { return myAllocator; }
 
 protected:
-  // Methods PROTECTED
-  //
   NCollection_BaseSequence(const occ::handle<NCollection_BaseAllocator>& theAllocator)
       : myFirstItem(nullptr),
         myLastItem(nullptr),
@@ -107,7 +90,6 @@ protected:
       (theAllocator.IsNull() ? NCollection_BaseAllocator::CommonBaseAllocator() : theAllocator);
   }
 
-  //! Destructor
   virtual ~NCollection_BaseSequence() = default;
 
   Standard_EXPORT void ClearSeq(NCollection_DelSeqNode fDel);
@@ -127,8 +109,6 @@ protected:
   Standard_EXPORT NCollection_SeqNode* Find(const int) const noexcept;
 
 protected:
-  // Fields PROTECTED
-  //
   occ::handle<NCollection_BaseAllocator> myAllocator;
   NCollection_SeqNode*                   myFirstItem;
   NCollection_SeqNode*                   myLastItem;
@@ -137,8 +117,6 @@ protected:
   int                                    mySize;
 
 private:
-  // Methods PRIVATE
-  //
   NCollection_BaseSequence(const NCollection_BaseSequence& Other) = delete;
 
   void Nullify() noexcept

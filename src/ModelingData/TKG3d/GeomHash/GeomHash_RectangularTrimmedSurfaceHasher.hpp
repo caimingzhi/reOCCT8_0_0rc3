@@ -5,11 +5,9 @@
 #include <GeomHash_SurfaceHasher.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom_RectangularTrimmedSurface.
-//! Used for geometry deduplication.
 struct GeomHash_RectangularTrimmedSurfaceHasher
 {
-  // Hashes the trimmed surface by its trim bounds and basis surface.
+
   std::size_t operator()(
     const occ::handle<Geom_RectangularTrimmedSurface>& theSurface) const noexcept
   {
@@ -30,7 +28,6 @@ struct GeomHash_RectangularTrimmedSurfaceHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two trimmed surfaces by their trim bounds and basis surfaces.
   bool operator()(const occ::handle<Geom_RectangularTrimmedSurface>& theSurface1,
                   const occ::handle<Geom_RectangularTrimmedSurface>& theSurface2) const noexcept
   {
@@ -38,13 +35,11 @@ struct GeomHash_RectangularTrimmedSurfaceHasher
 
     const GeomHash_SurfaceHasher aSurfaceHasher;
 
-    // Compare basis surfaces
     if (!aSurfaceHasher(theSurface1->BasisSurface(), theSurface2->BasisSurface()))
     {
       return false;
     }
 
-    // Compare trim bounds
     double aU1_1, aU2_1, aV1_1, aV2_1;
     double aU1_2, aU2_2, aV1_2, aV2_2;
     theSurface1->Bounds(aU1_1, aU2_1, aV1_1, aV2_1);

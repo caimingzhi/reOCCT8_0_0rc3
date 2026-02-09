@@ -10,7 +10,6 @@ class StepVisual_PreDefinedItem : public Standard_Transient
 {
 
 public:
-  //! Returns a PreDefinedItem
   Standard_EXPORT StepVisual_PreDefinedItem();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName);

@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_TessellatedShapeRepresentationWithAccuracyParameters;
 
-//! Read & Write tool for TessellatedShapeRepresentationWithAccuracyParameters
 class RWStepVisual_RWTessellatedShapeRepresentationWithAccuracyParameters
 {
 

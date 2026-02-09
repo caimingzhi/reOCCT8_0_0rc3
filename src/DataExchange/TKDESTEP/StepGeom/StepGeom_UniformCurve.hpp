@@ -9,7 +9,6 @@ class StepGeom_UniformCurve : public StepGeom_BSplineCurve
 {
 
 public:
-  //! Returns a UniformCurve
   Standard_EXPORT StepGeom_UniformCurve();
 
   DEFINE_STANDARD_RTTIEXT(StepGeom_UniformCurve, StepGeom_BSplineCurve)

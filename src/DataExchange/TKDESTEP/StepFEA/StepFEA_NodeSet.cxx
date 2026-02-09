@@ -3,11 +3,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_NodeSet, StepGeom_GeometricRepresentationItem)
 
-//=================================================================================================
-
 StepFEA_NodeSet::StepFEA_NodeSet() = default;
-
-//=================================================================================================
 
 void StepFEA_NodeSet::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentationItem_Name,
@@ -18,15 +14,11 @@ void StepFEA_NodeSet::Init(
   theNodes = aNodes;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray1<occ::handle<StepFEA_NodeRepresentation>>> StepFEA_NodeSet::Nodes()
   const
 {
   return theNodes;
 }
-
-//=================================================================================================
 
 void StepFEA_NodeSet::SetNodes(
   const occ::handle<NCollection_HArray1<occ::handle<StepFEA_NodeRepresentation>>>& aNodes)

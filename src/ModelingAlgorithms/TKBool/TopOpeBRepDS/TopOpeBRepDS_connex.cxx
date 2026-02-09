@@ -4,16 +4,13 @@
 #include <TopoDS.hpp>
 
 static NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>*
-  GLOBAL_elf1 = nullptr; // NYI to CDLize as a tool of DS
+  GLOBAL_elf1 = nullptr;
 static NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>*
-  GLOBAL_elf2 = nullptr; // NYI to CDLize as a tool of DS
+  GLOBAL_elf2 = nullptr;
 static NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>*
-                                       GLOBAL_fle = nullptr; // NYI to CDLize as a tool of DS
-static NCollection_List<TopoDS_Shape>* GLOBAL_los = nullptr; // NYI to CDLize as a tool of DS
+                                       GLOBAL_fle             = nullptr;
+static NCollection_List<TopoDS_Shape>* GLOBAL_los             = nullptr;
 static bool                            GLOBAL_FDSCNX_prepared = false;
-
-// modified by NIZNHY-PKV Sun Dec 15 17:41:43 2002 f
-//=================================================================================================
 
 void FDSCNX_Close()
 {
@@ -22,29 +19,27 @@ void FDSCNX_Close()
     delete GLOBAL_elf1;
     GLOBAL_elf1 = nullptr;
   }
-  //
+
   if (GLOBAL_elf2)
   {
     delete GLOBAL_elf2;
     GLOBAL_elf2 = nullptr;
   }
-  //
+
   if (GLOBAL_fle)
   {
     delete GLOBAL_fle;
     GLOBAL_fle = nullptr;
   }
-  //
+
   if (GLOBAL_los)
   {
     delete GLOBAL_los;
     GLOBAL_los = nullptr;
   }
-  //
+
   GLOBAL_FDSCNX_prepared = false;
 }
-
-// modified by NIZNHY-PKV Sun Dec 15 17:41:40 2002 t
 
 Standard_EXPORT const NCollection_List<TopoDS_Shape>& FDSCNX_EdgeConnexityShapeIndex(
   const TopoDS_Shape&                             E,
@@ -75,8 +70,6 @@ Standard_EXPORT const NCollection_List<TopoDS_Shape>& FDSCNX_EdgeConnexityShapeI
   return lof;
 }
 
-// S = edge --> liste de faces connexes par S
-// S = face --> liste d'edges E de S qui ont au moins une autre face connexe
 Standard_EXPORT const NCollection_List<TopoDS_Shape>& FDSCNX_EdgeConnexitySameShape(
   const TopoDS_Shape&                             S,
   const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
@@ -101,8 +94,8 @@ Standard_EXPORT const NCollection_List<TopoDS_Shape>& FDSCNX_EdgeConnexitySameSh
   return *GLOBAL_los;
 }
 
-Standard_EXPORT void FDSCNX_Prepare(const TopoDS_Shape& /*S1*/,
-                                    const TopoDS_Shape& /*S2*/,
+Standard_EXPORT void FDSCNX_Prepare(const TopoDS_Shape&,
+                                    const TopoDS_Shape&,
                                     const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
 {
   if (HDS.IsNull())
@@ -148,7 +141,7 @@ Standard_EXPORT void FDSCNX_Prepare(const TopoDS_Shape& /*S1*/,
     int rf = BDS.AncestorRank(f);
     if (rf == 0)
       continue;
-    //    BDS.Shape(f);
+
     NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
       fle = *GLOBAL_fle;
     NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
@@ -156,10 +149,9 @@ Standard_EXPORT void FDSCNX_Prepare(const TopoDS_Shape& /*S1*/,
     TopExp_Explorer exe;
     for (exe.Init(f, TopAbs_EDGE); exe.More(); exe.Next())
     {
-      //    for (TopExp_Explorer exe(f,TopAbs_EDGE);exe.More();exe.Next()) {
+
       const TopoDS_Shape& e = exe.Current();
-      //               BDS.Shape(e);
-      //      bool se = BDS.IsSectionEdge(TopoDS::Edge(e)); if (!se) continue;
+
       bool hs = BDS.HasShape(TopoDS::Edge(e));
       if (!hs)
         continue;
@@ -219,7 +211,7 @@ Standard_EXPORT void FDSCNX_FaceEdgeConnexFaces(const TopoDS_Shape&             
                                                 NCollection_List<TopoDS_Shape>&                 LF)
 {
   LF.Clear();
-  // verifier que E est une arete de connexite de F
+
   bool                                  EofF = false;
   const NCollection_List<TopoDS_Shape>& loe  = FDSCNX_EdgeConnexitySameShape(F, HDS);
   if (loe.IsEmpty())
@@ -229,7 +221,7 @@ Standard_EXPORT void FDSCNX_FaceEdgeConnexFaces(const TopoDS_Shape&             
   for (NCollection_List<TopoDS_Shape>::Iterator i(loe); i.More(); i.Next())
   {
     const TopoDS_Shape& e = i.Value();
-    //             HDS->Shape(e);
+
     bool b = e.IsSame(E);
     if (b)
     {

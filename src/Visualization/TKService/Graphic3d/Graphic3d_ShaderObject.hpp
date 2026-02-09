@@ -2,76 +2,51 @@
 
 enum Graphic3d_TypeOfShaderObject
 {
-  // rendering shaders
-  Graphic3d_TOS_VERTEX          = 0x01, //!< vertex shader object, mandatory
-  Graphic3d_TOS_TESS_CONTROL    = 0x02, //!< tessellation control shader object, optional
-  Graphic3d_TOS_TESS_EVALUATION = 0x04, //!< tessellation evaluation shader object, optional
-  Graphic3d_TOS_GEOMETRY        = 0x08, //!< geometry shader object, optional
-  Graphic3d_TOS_FRAGMENT        = 0x10, //!< fragment shader object, mandatory
-  // general-purpose compute shader
-  Graphic3d_TOS_COMPUTE = 0x20 //!< compute shader object, should be used as alternative to shader
-                               //!< object types for rendering
+
+  Graphic3d_TOS_VERTEX          = 0x01,
+  Graphic3d_TOS_TESS_CONTROL    = 0x02,
+  Graphic3d_TOS_TESS_EVALUATION = 0x04,
+  Graphic3d_TOS_GEOMETRY        = 0x08,
+  Graphic3d_TOS_FRAGMENT        = 0x10,
+
+  Graphic3d_TOS_COMPUTE = 0x20
 };
 
 #include <NCollection_Sequence.hpp>
 #include <OSD_Path.hpp>
 #include <TCollection_AsciiString.hpp>
 
-//! Forward declaration
-
-//! This class is responsible for managing shader objects.
 class Graphic3d_ShaderObject : public Standard_Transient
 {
 public:
-  //! Structure defining shader uniform or in/out variable.
   struct ShaderVariable
   {
-    TCollection_AsciiString Name;   //!< variable name
-    int                     Stages; //!< active stages as Graphic3d_TypeOfShaderObject bits;
-                //!  for in/out variables, intermediate stages will be automatically filled
+    TCollection_AsciiString Name;
+    int                     Stages;
 
-    //! Create new shader variable.
     ShaderVariable(const TCollection_AsciiString& theVarName, int theShaderStageBits)
         : Name(theVarName),
           Stages(theShaderStageBits)
     {
     }
 
-    //! Empty constructor.
     ShaderVariable()
         : Stages(0)
     {
     }
   };
 
-  //! List of variable of shader program.
   typedef NCollection_Sequence<ShaderVariable> ShaderVariableList;
 
 public:
-  //! Creates new shader object from specified file.
   Standard_EXPORT static occ::handle<Graphic3d_ShaderObject> CreateFromFile(
     const Graphic3d_TypeOfShaderObject theType,
     const TCollection_AsciiString&     thePath);
 
-  //! Creates new shader object from specified source.
   Standard_EXPORT static occ::handle<Graphic3d_ShaderObject> CreateFromSource(
     const Graphic3d_TypeOfShaderObject theType,
     const TCollection_AsciiString&     theSource);
 
-  //! This is a preprocessor for Graphic3d_ShaderObject::CreateFromSource() function.
-  //! Creates a new shader object from specified source according to list of uniforms and in/out
-  //! variables.
-  //! @param theSource      shader object source code to modify
-  //! @param theType        shader object type to create
-  //! @param theUniforms    list of uniform variables
-  //! @param theStageInOuts list of stage in/out variables
-  //! @param theInName      name of input  variables block;
-  //!                       can be empty for accessing each variable without block prefix
-  //!                       (mandatory for stages accessing both inputs and outputs)
-  //! @param theOutName     name of output variables block;
-  //!                       can be empty for accessing each variable without block prefix
-  //!                       (mandatory for stages accessing both inputs and outputs)
-  //! @param theNbGeomInputVerts number of geometry shader input vertexes
   Standard_EXPORT static occ::handle<Graphic3d_ShaderObject> CreateFromSource(
     TCollection_AsciiString&       theSource,
     Graphic3d_TypeOfShaderObject   theType,
@@ -82,37 +57,29 @@ public:
     int                            theNbGeomInputVerts = 0);
 
 private:
-  //! Creates new shader object of specified type.
   Standard_EXPORT Graphic3d_ShaderObject(const Graphic3d_TypeOfShaderObject theType);
 
 public:
-  //! Releases resources of shader object.
   Standard_EXPORT ~Graphic3d_ShaderObject() override;
 
-  //! Checks if the shader object is valid or not.
   Standard_EXPORT virtual bool IsDone() const;
 
-  //! Returns the full path to the shader source.
   const OSD_Path& Path() const { return myPath; }
 
-  //! Returns the source code of the shader object.
   const TCollection_AsciiString& Source() const { return mySource; }
 
-  //! Returns type of the shader object.
   Graphic3d_TypeOfShaderObject Type() const { return myType; }
 
-  //! Returns unique ID used to manage resource in graphic driver.
   const TCollection_AsciiString& GetId() const { return myID; }
 
 public:
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ShaderObject, Standard_Transient)
 
 protected:
-  TCollection_AsciiString myID;     //!< the ID of shader object
-  TCollection_AsciiString mySource; //!< the source code of shader object
-  OSD_Path                myPath;   //!< the path to shader source (may be empty)
+  TCollection_AsciiString myID;
+  TCollection_AsciiString mySource;
+  OSD_Path                myPath;
 
 private:
-  //! The type of shader object.
   Graphic3d_TypeOfShaderObject myType;
 };

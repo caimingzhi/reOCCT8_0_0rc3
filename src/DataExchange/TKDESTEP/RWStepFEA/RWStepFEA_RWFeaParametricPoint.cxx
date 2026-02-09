@@ -8,11 +8,7 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWFeaParametricPoint::RWStepFEA_RWFeaParametricPoint() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWFeaParametricPoint::ReadStep(
   const occ::handle<StepData_StepReaderData>&    data,
@@ -20,16 +16,12 @@ void RWStepFEA_RWFeaParametricPoint::ReadStep(
   occ::handle<Interface_Check>&                  ach,
   const occ::handle<StepFEA_FeaParametricPoint>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "fea_parametric_point"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   data->ReadString(num, 1, "representation_item.name", ach, aRepresentationItem_Name);
-
-  // Own fields of FeaParametricPoint
 
   occ::handle<NCollection_HArray1<double>> aCoordinates;
   int                                      sub2 = 0;
@@ -46,22 +38,15 @@ void RWStepFEA_RWFeaParametricPoint::ReadStep(
     }
   }
 
-  // Initialize entity
   ent->Init(aRepresentationItem_Name, aCoordinates);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWFeaParametricPoint::WriteStep(
   StepData_StepWriter&                           SW,
   const occ::handle<StepFEA_FeaParametricPoint>& ent) const
 {
 
-  // Inherited fields of RepresentationItem
-
   SW.Send(ent->StepRepr_RepresentationItem::Name());
-
-  // Own fields of FeaParametricPoint
 
   SW.OpenSub();
   for (int i1 = 1; i1 <= ent->Coordinates()->Length(); i1++)
@@ -72,11 +57,7 @@ void RWStepFEA_RWFeaParametricPoint::WriteStep(
   SW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWFeaParametricPoint::Share(const occ::handle<StepFEA_FeaParametricPoint>&,
                                            Interface_EntityIterator&) const
 {
-  // Inherited fields of RepresentationItem
-  // Own fields of FeaParametricPoint
 }

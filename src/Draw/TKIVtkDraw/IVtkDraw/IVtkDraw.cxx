@@ -35,7 +35,6 @@
 #include <IVtkDraw_HighlightAndSelectionPipeline.hpp>
 #include <IVtkDraw_Interactor.hpp>
 
-// prevent disabling some MSVC warning messages by VTK headers
 #include <Standard_WarningsDisable.hpp>
 #include <vtkAlgorithmOutput.h>
 #include <vtkAppendPolyData.h>
@@ -75,9 +74,6 @@
   #define HAVE_VTK_SRGB
 #endif
 
-//================================================================
-// TYPE DEFINITIONS
-//================================================================
 namespace
 {
   struct VtkPointerHasher
@@ -100,10 +96,6 @@ typedef NCollection_DoubleMap<vtkSmartPointer<vtkActor>, TCollection_AsciiString
   DoubleMapOfActorsAndNames;
 
 typedef IVtkDraw_HighlightAndSelectionPipeline PipelinePtr;
-
-//================================================================
-// GLOBAL VARIABLES
-//================================================================
 
 Standard_IMPORT bool Draw_VirtualWindows;
 
@@ -154,21 +146,18 @@ static occ::handle<PipelinePtr> GetPipeline(const IVtk_IdType& theShapeID)
   return aPtr;
 }
 
-//! Get VTK render pipeline with shape ID got from actor.
 static occ::handle<PipelinePtr> PipelineByActor(const vtkSmartPointer<vtkActor>& theActor)
 {
   IVtk_IdType aShapeID = IVtkTools_ShapeObject::GetShapeSource(theActor)->GetShape()->GetId();
   return GetPipeline(aShapeID);
 }
 
-//! Get VTK render pipeline with actor that has the input name.
 static occ::handle<PipelinePtr> PipelineByActorName(const TCollection_AsciiString& theName)
 {
   const vtkSmartPointer<vtkActor>& anActor = GetMapOfActors().Find2(theName);
   return PipelineByActor(anActor);
 }
 
-//! Create global presentation attributes.
 static occ::handle<Prs3d_Drawer> createDefaultDrawer()
 {
   occ::handle<Prs3d_Drawer> aGlobalDrawer = new Prs3d_Drawer();
@@ -178,7 +167,6 @@ static occ::handle<Prs3d_Drawer> createDefaultDrawer()
   return aGlobalDrawer;
 }
 
-//! Get global presentation attributes (analog of AIS_InteractiveContext::DefaultDrawer()).
 static const occ::handle<Prs3d_Drawer>& GetDefaultDrawer()
 {
   static occ::handle<Prs3d_Drawer> aGlobalDrawer = createDefaultDrawer();
@@ -215,14 +203,11 @@ static vtkSmartPointer<IVtkTools_ShapePicker>& GetPicker()
   return aPicker;
 }
 
-//! Generate identical number for shape
 int GenerateId()
 {
   static unsigned int aShapesCounter = (unsigned int)-1;
   return (int)++aShapesCounter;
 }
-
-//=================================================================================================
 
 const occ::handle<WNT_WClass>& IVtkDraw::WClass()
 {
@@ -240,8 +225,6 @@ const occ::handle<WNT_WClass>& IVtkDraw::WClass()
 #endif
   return aWindowClass;
 }
-
-//=================================================================================================
 
 void IVtkDraw::ViewerInit(const IVtkWinParams& theParams)
 {
@@ -289,7 +272,7 @@ void IVtkDraw::ViewerInit(const IVtkWinParams& theParams)
       GetWindow()->SetVirtual(Draw_VirtualWindows);
     }
 #endif
-    // Init pipeline
+
     GetRenderer() = vtkSmartPointer<vtkRenderer>::New();
 
     vtkSmartPointer<vtkRenderWindow> aRenWin = vtkSmartPointer<vtkRenderWindow>::New();
@@ -316,11 +299,9 @@ void IVtkDraw::ViewerInit(const IVtkWinParams& theParams)
     Display* aDisplayId = (Display*)GetDisplayConnection()->GetDisplayAspect();
     aRenWin->SetDisplayId(aDisplayId);
 
-    // Setup XWindow
     XSynchronize(aDisplayId, 1);
     GetWindow()->Map();
 
-    // X11 : For keyboard on SUN
     XWMHints wmhints;
     wmhints.flags = InputHint;
     wmhints.input = 1;
@@ -337,7 +318,6 @@ void IVtkDraw::ViewerInit(const IVtkWinParams& theParams)
 
 #endif
 
-    // Init interactor
     GetInteractor() = vtkSmartPointer<IVtkDraw_Interactor>::New();
     GetInteractor()->SetRenderWindow(aRenWin);
     GetInteractor()->SetOCCWindow(GetWindow());
@@ -346,7 +326,6 @@ void IVtkDraw::ViewerInit(const IVtkWinParams& theParams)
       vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
     GetInteractor()->SetInteractorStyle(aStyle);
 
-    // Init picker
     GetPicker() = vtkSmartPointer<IVtkTools_ShapePicker>::New();
     GetPicker()->SetTolerance(0.025f);
     GetPicker()->SetRenderer(GetRenderer());
@@ -361,8 +340,6 @@ void IVtkDraw::ViewerInit(const IVtkWinParams& theParams)
 
   GetWindow()->Map();
 }
-
-//=================================================================================================
 
 static int VtkInit(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
@@ -403,8 +380,6 @@ static int VtkInit(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
   return 0;
 }
 
-//=================================================================================================
-
 static int VtkClose(Draw_Interpretor&, int theNbArgs, const char**)
 {
   if (theNbArgs > 1)
@@ -422,7 +397,7 @@ static int VtkClose(Draw_Interpretor&, int theNbArgs, const char**)
   if (GetInteractor())
   {
     GetInteractor()->GetRenderWindow()->Finalize();
-    // GetInteractor()->SetRenderWindow (NULL);
+
     GetInteractor()->TerminateApp();
   }
 
@@ -431,8 +406,6 @@ static int VtkClose(Draw_Interpretor&, int theNbArgs, const char**)
   GetPicker()     = nullptr;
   return 0;
 }
-
-//=================================================================================================
 
 static int VtkRenderParams(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
@@ -481,8 +454,6 @@ static int VtkRenderParams(Draw_Interpretor&, int theNbArgs, const char** theArg
   return 0;
 }
 
-//=================================================================================================
-
 vtkActor* CreateActor(const int theId, const TopoDS_Shape& theShape)
 {
   if (theShape.IsNull())
@@ -496,8 +467,6 @@ vtkActor* CreateActor(const int theId, const TopoDS_Shape& theShape)
   aPL->Actor()->GetProperty()->SetInterpolationToPhong();
   return aPL->Actor();
 }
-
-//=================================================================================================
 
 static int VtkDefaults(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
 {
@@ -575,8 +544,6 @@ static int VtkDefaults(Draw_Interpretor& theDi, int theArgsNb, const char** theA
   return 0;
 }
 
-//=================================================================================================
-
 static int VtkDisplay(Draw_Interpretor&, int theArgNum, const char** theArgs)
 {
   if (!GetInteractor() || !GetInteractor()->IsEnabled())
@@ -595,69 +562,64 @@ static int VtkDisplay(Draw_Interpretor&, int theArgNum, const char** theArgs)
   vtkSmartPointer<vtkRenderer>& aRenderer = GetRenderer();
   for (int anIndex = 1; anIndex < theArgNum; ++anIndex)
   {
-    // Get name of shape
+
     aName = theArgs[anIndex];
-    // Get shape from DRAW
+
     aNewShape = DBRep::Get(theArgs[anIndex]);
 
-    // The shape is already in the map
     if (GetMapOfShapes().IsBound2(aName))
     {
-      // Get shape from map
+
       anOldShape = GetMapOfShapes().Find2(aName);
-      // Equal shapes
+
       if (anOldShape.IsEqual(aNewShape))
       {
-        // Get actor from map and display it
+
         PipelineByActorName(aName)->AddToRenderer(aRenderer);
       }
-      // Different shapes
+
       else
       {
         if (aNewShape.IsNull())
           continue;
-        // Create actor from DRAW shape
+
         vtkActor* anActor = CreateActor(GenerateId(), aNewShape);
-        // Remove old actor from render
+
         PipelineByActorName(aName)->RemoveFromRenderer(aRenderer);
-        // Update maps
+
         GetMapOfShapes().UnBind2(aName);
         GetMapOfShapes().Bind(aNewShape, aName);
         GetMapOfActors().UnBind2(aName);
         GetMapOfActors().Bind(anActor, aName);
-        // Display new actor
+
         PipelineByActorName(aName)->AddToRenderer(aRenderer);
-        // Compute selection for displayed actors
+
         GetPicker()->SetSelectionMode(SM_Shape, true);
       }
     }
-    // There is no shape with given name in map
+
     else
     {
       if (aNewShape.IsNull())
         continue;
-      // Create actor from DRAW shape
+
       int                       anId    = GenerateId();
       vtkSmartPointer<vtkActor> anActor = CreateActor(anId, aNewShape);
-      // Update maps
+
       GetMapOfShapes().Bind(aNewShape, aName);
       GetMapOfActors().Bind(anActor, aName);
-      // Display actor
+
       GetPipeline(anId)->AddToRenderer(aRenderer);
 
-      // Compute selection for displayed actors
       GetPicker()->SetSelectionMode(SM_Shape, true);
     }
   }
 
-  // Redraw window
   aRenderer->ResetCamera();
   GetInteractor()->GetRenderWindow()->Render();
 
   return 0;
 }
-
-//=================================================================================================
 
 static int VtkErase(Draw_Interpretor&, int theArgNum, const char** theArgs)
 {
@@ -670,7 +632,7 @@ static int VtkErase(Draw_Interpretor&, int theArgNum, const char** theArgs)
   vtkSmartPointer<vtkRenderer> aRenderer = GetRenderer();
   if (theArgNum == 1)
   {
-    // Erase all objects
+
     DoubleMapOfActorsAndNames::Iterator anIterator(GetMapOfActors());
     while (anIterator.More())
     {
@@ -680,7 +642,7 @@ static int VtkErase(Draw_Interpretor&, int theArgNum, const char** theArgs)
   }
   else
   {
-    // Erase named objects
+
     for (int anIndex = 1; anIndex < theArgNum; ++anIndex)
     {
       TCollection_AsciiString   aName = theArgs[anIndex];
@@ -695,16 +657,11 @@ static int VtkErase(Draw_Interpretor&, int theArgNum, const char** theArgs)
     }
   }
 
-  // Redraw window
   aRenderer->ResetCamera();
   GetInteractor()->GetRenderWindow()->Render();
   return 0;
 }
 
-//================================================================
-// Function : VtkRemove
-// Purpose  : Remove the actor from memory.
-//================================================================
 static int VtkRemove(Draw_Interpretor&, int theArgNum, const char** theArgs)
 {
   if (!GetInteractor() || !GetInteractor()->IsEnabled())
@@ -716,7 +673,7 @@ static int VtkRemove(Draw_Interpretor&, int theArgNum, const char** theArgs)
   vtkSmartPointer<vtkRenderer> aRenderer = GetRenderer();
   if (theArgNum == 1)
   {
-    // Remove all actors from the renderer
+
     DoubleMapOfActorsAndNames::Iterator anIterator(GetMapOfActors());
     while (anIterator.More())
     {
@@ -732,19 +689,19 @@ static int VtkRemove(Draw_Interpretor&, int theArgNum, const char** theArgs)
       }
       anIterator.Next();
     }
-    // Remove all pipelines from the renderer
+
     for (ShapePipelineMap::Iterator anIt(*GetPipelines()); anIt.More(); anIt.Next())
     {
       anIt.Value()->RemoveFromRenderer(aRenderer);
     }
-    // Clear maps and remove all TopoDS_Shapes, actors and pipelines
+
     GetMapOfShapes().Clear();
     GetMapOfActors().Clear();
     GetPipelines()->Clear();
   }
   else
   {
-    // Remove named objects
+
     for (int anIndex = 1; anIndex < theArgNum; ++anIndex)
     {
       TCollection_AsciiString   aName = theArgs[anIndex];
@@ -755,7 +712,6 @@ static int VtkRemove(Draw_Interpretor&, int theArgNum, const char** theArgs)
         return 1;
       }
 
-      // Remove the actor and its pipeline (if found) from the renderer
       vtkSmartPointer<IVtkTools_ShapeDataSource> aSrc =
         IVtkTools_ShapeObject::GetShapeSource(anActor);
       if (aSrc.GetPointer() != nullptr && !aSrc->GetShape().IsNull())
@@ -763,25 +719,22 @@ static int VtkRemove(Draw_Interpretor&, int theArgNum, const char** theArgs)
         IVtk_IdType aShapeID = aSrc->GetShape()->GetId();
         GetPicker()->RemoveSelectableObject(aSrc->GetShape());
         GetPipeline(aSrc->GetShape()->GetId())->RemoveFromRenderer(aRenderer);
-        GetPipelines()->UnBind(aShapeID); // Remove a pipeline
+        GetPipelines()->UnBind(aShapeID);
       }
       else
       {
         aRenderer->RemoveActor(anActor);
       }
-      // Remove the TopoDS_Shape and the actor
-      GetMapOfShapes().UnBind2(aName); // Remove a TopoDS shape
-      GetMapOfActors().UnBind2(aName); // Remove an actor
+
+      GetMapOfShapes().UnBind2(aName);
+      GetMapOfActors().UnBind2(aName);
     }
   }
 
-  // Redraw window
   aRenderer->ResetCamera();
   GetInteractor()->GetRenderWindow()->Render();
   return 0;
 }
-
-//=================================================================================================
 
 static int VtkSetDisplayMode(Draw_Interpretor& theDI, int theArgNum, const char** theArgs)
 {
@@ -864,7 +817,7 @@ static int VtkSetDisplayMode(Draw_Interpretor& theDI, int theArgNum, const char*
 
   if (anActors.IsEmpty())
   {
-    // update all objects
+
     for (DoubleMapOfActorsAndNames::Iterator anIter(GetMapOfActors()); anIter.More(); anIter.Next())
     {
       anActors.Append(anIter.Key1());
@@ -890,7 +843,7 @@ static int VtkSetDisplayMode(Draw_Interpretor& theDI, int theArgNum, const char*
       aFilter->SetDisplayMode((IVtk_DisplayMode)aDispMode);
       if (isFaceBoundaryDraw != -1)
       {
-        // Set Red color for boundary edges
+
         vtkLookupTable* aTable = (vtkLookupTable*)anActor->GetMapper()->GetLookupTable();
         IVtkTools::SetLookupTableColor(aTable, MT_SharedEdge, 1., 0., 0., 1.);
         aFilter->SetFaceBoundaryDraw(isFaceBoundaryDraw == 1);
@@ -925,12 +878,9 @@ static int VtkSetDisplayMode(Draw_Interpretor& theDI, int theArgNum, const char*
     }
   }
 
-  // Redraw window
   GetInteractor()->Render();
   return 0;
 }
-
-//=================================================================================================
 
 static int VtkSetSelectionMode(Draw_Interpretor&, int theArgNum, const char** theArgs)
 {
@@ -947,7 +897,7 @@ static int VtkSetSelectionMode(Draw_Interpretor&, int theArgNum, const char** th
 
   if (theArgNum == 3)
   {
-    // Set sel mode for all objects
+
     const int aMode    = Draw::Atoi(theArgs[1]);
     bool      isTurnOn = true;
     if (aMode < 0 || aMode > 8 || !Draw::ParseOnOff(theArgs[2], isTurnOn))
@@ -963,7 +913,7 @@ static int VtkSetSelectionMode(Draw_Interpretor&, int theArgNum, const char** th
       {
         NCollection_List<IVtk_SelectionMode> aList = GetPicker()->GetSelectionModes(anActor);
         NCollection_List<IVtk_SelectionMode>::Iterator anIt(aList);
-        // Turn off all sel modes differed from SM_Shape
+
         while (anIt.More())
         {
           IVtk_SelectionMode aCurMode = anIt.Value();
@@ -1009,7 +959,7 @@ static int VtkSetSelectionMode(Draw_Interpretor&, int theArgNum, const char** th
 
   if (theArgNum == 4)
   {
-    // Set sel mode for named object
+
     const int aMode    = Draw::Atoi(theArgs[2]);
     bool      isTurnOn = true;
     if (aMode < 0 || aMode > 8 || !Draw::ParseOnOff(theArgs[3], isTurnOn))
@@ -1026,7 +976,7 @@ static int VtkSetSelectionMode(Draw_Interpretor&, int theArgNum, const char** th
       {
         NCollection_List<IVtk_SelectionMode> aList = GetPicker()->GetSelectionModes(anActor);
         NCollection_List<IVtk_SelectionMode>::Iterator anIt(aList);
-        // Turn off all sel modes differed from SM_Shape
+
         while (anIt.More())
         {
           IVtk_SelectionMode aCurMode = anIt.Value();
@@ -1069,12 +1019,9 @@ static int VtkSetSelectionMode(Draw_Interpretor&, int theArgNum, const char** th
     }
   }
 
-  // Redraw window
   GetInteractor()->Render();
   return 0;
 }
-
-//=================================================================================================
 
 static int VtkSetColor(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
@@ -1138,8 +1085,6 @@ static int VtkSetColor(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   return 0;
 }
 
-//=================================================================================================
-
 static int VtkSetTransparency(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
   if (!GetInteractor() || !GetInteractor()->IsEnabled())
@@ -1188,11 +1133,6 @@ static int VtkSetTransparency(Draw_Interpretor&, int theArgNb, const char** theA
   return 0;
 }
 
-//================================================================
-// Function  : VtkMoveTo
-// Purpose   :
-// Draw args : ivtkmoveto x y
-//================================================================
 static int VtkMoveTo(Draw_Interpretor& theDI, int theArgNum, const char** theArgs)
 {
   if (!GetInteractor() || !GetInteractor()->IsEnabled())
@@ -1215,8 +1155,6 @@ static int VtkMoveTo(Draw_Interpretor& theDI, int theArgNum, const char** theArg
   return 0;
 }
 
-//=================================================================================================
-
 static int VtkSelect(Draw_Interpretor&, int theArgNum, const char** theArgs)
 {
   if (!GetInteractor() || !GetInteractor()->IsEnabled())
@@ -1235,8 +1173,6 @@ static int VtkSelect(Draw_Interpretor&, int theArgNum, const char** theArgs)
   GetInteractor()->OnSelection();
   return 0;
 }
-
-//=================================================================================================
 
 static int VtkViewProj(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 {
@@ -1321,9 +1257,7 @@ static int VtkViewProj(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
   return 0;
 }
 
-//=================================================================================================
-
-static int VtkViewParams(Draw_Interpretor& theDI, int theArgsNb, const char** /*theArgVec*/)
+static int VtkViewParams(Draw_Interpretor& theDI, int theArgsNb, const char**)
 {
   if (!GetInteractor() || !GetInteractor()->IsEnabled())
   {
@@ -1351,7 +1285,7 @@ static int VtkViewParams(Draw_Interpretor& theDI, int theArgsNb, const char** /*
   vtkMatrix4x4* aProjMat =
     aCam->GetProjectionTransformMatrix(GetRenderer()->GetTiledAspectRatio(), -1, 1);
   vtkMatrix4x4* aViewMat = aCam->GetViewTransformMatrix();
-  // print all of the available view parameters
+
   char aText[4096];
   Sprintf(aText,
           "Scale: %g\n"
@@ -1418,8 +1352,6 @@ static int VtkViewParams(Draw_Interpretor& theDI, int theArgsNb, const char** /*
   return 0;
 }
 
-//=================================================================================================
-
 static int VtkCamera(Draw_Interpretor& theDI, int theArgsNb, const char** theArgVec)
 {
   if (!GetInteractor() || !GetInteractor()->IsEnabled())
@@ -1467,8 +1399,6 @@ static int VtkCamera(Draw_Interpretor& theDI, int theArgsNb, const char** theArg
   return 0;
 }
 
-//=================================================================================================
-
 static int VtkDump(Draw_Interpretor&, int theArgNum, const char** theArgs)
 {
   if (!GetInteractor() || !GetInteractor()->IsEnabled())
@@ -1485,7 +1415,7 @@ static int VtkDump(Draw_Interpretor&, int theArgNum, const char** theArgs)
   vtkSmartPointer<vtkWindowToImageFilter> anImageFilter =
     vtkSmartPointer<vtkWindowToImageFilter>::New();
   anImageFilter->SetInput(GetInteractor()->GetRenderWindow());
-  // Set custom buffer type
+
   if (theArgNum > 2)
   {
     TCollection_AsciiString aBufferType(theArgs[2]);
@@ -1505,7 +1435,6 @@ static int VtkDump(Draw_Interpretor&, int theArgNum, const char** theArgs)
   }
   anImageFilter->Update();
 
-  // Set custom stereo projection options
   if (theArgNum > 5 && GetRenderer()->GetRenderWindow()->GetStereoRender())
   {
     const char* aStereoProjStr = theArgs[5];
@@ -1532,7 +1461,6 @@ static int VtkDump(Draw_Interpretor&, int theArgNum, const char** theArgs)
     }
   }
 
-  // Set parameters for image writer
   vtkSmartPointer<vtkImageWriter> anImageWriter;
   TCollection_AsciiString         aFilename(theArgs[1]);
   int                     anExtStart = aFilename.SearchFromEnd(TCollection_AsciiString("."));
@@ -1561,7 +1489,7 @@ static int VtkDump(Draw_Interpretor&, int theArgNum, const char** theArgs)
   {
     anImageWriter = vtkSmartPointer<vtkPNMWriter>::New();
   }
-  else // aFormat is unsupported or not set.
+  else
   {
     if (aFormat.IsEmpty())
     {
@@ -1592,7 +1520,7 @@ static int VtkDump(Draw_Interpretor&, int theArgNum, const char** theArgs)
   int aHeight = (theArgNum > 4) ? atoi(theArgs[4]) : 0;
   if (aWidth >= 0 || aHeight >= 0)
   {
-    // Scale image
+
     vtkSmartPointer<vtkImageResize> anImageResize = vtkSmartPointer<vtkImageResize>::New();
 #if VTK_MAJOR_VERSION <= 5
     anImageResize->SetInput(anImageFilter->GetOutput());
@@ -1611,8 +1539,6 @@ static int VtkDump(Draw_Interpretor&, int theArgNum, const char** theArgs)
   anImageWriter->Write();
   return 0;
 }
-
-//=================================================================================================
 
 static int VtkBackgroundColor(Draw_Interpretor&, int theArgNum, const char** theArgs)
 {
@@ -1660,8 +1586,6 @@ static int VtkBackgroundColor(Draw_Interpretor&, int theArgNum, const char** the
   GetInteractor()->Render();
   return 0;
 }
-
-//=================================================================================================
 
 void IVtkDraw::Commands(Draw_Interpretor& theCommands)
 {
@@ -1862,13 +1786,10 @@ void IVtkDraw::Commands(Draw_Interpretor& theCommands)
                   group);
 }
 
-//=================================================================================================
-
 void IVtkDraw::Factory(Draw_Interpretor& theDI)
 {
-  // definition of Viewer Commands
+
   IVtkDraw::Commands(theDI);
 }
 
-// Declare entry point PLUGINFACTORY
 DPLUGIN(IVtkDraw)

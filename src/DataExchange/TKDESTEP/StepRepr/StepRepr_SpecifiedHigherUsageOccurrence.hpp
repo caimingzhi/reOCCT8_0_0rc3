@@ -8,15 +8,12 @@ class StepRepr_NextAssemblyUsageOccurrence;
 class TCollection_HAsciiString;
 class StepBasic_ProductDefinition;
 
-//! Representation of STEP entity SpecifiedHigherUsageOccurrence
 class StepRepr_SpecifiedHigherUsageOccurrence : public StepRepr_AssemblyComponentUsage
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT StepRepr_SpecifiedHigherUsageOccurrence();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Id,
     const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Name,
@@ -31,7 +28,6 @@ public:
     const occ::handle<StepRepr_AssemblyComponentUsage>& aUpperUsage,
     const occ::handle<StepRepr_NextAssemblyUsageOccurrence>& aNextUsage);
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Id,
     const occ::handle<TCollection_HAsciiString>& aProductDefinitionRelationship_Name,
@@ -46,17 +42,13 @@ public:
     const occ::handle<StepRepr_AssemblyComponentUsage>& aUpperUsage,
     const occ::handle<StepRepr_NextAssemblyUsageOccurrence>& aNextUsage);
 
-  //! Returns field UpperUsage
   Standard_EXPORT occ::handle<StepRepr_AssemblyComponentUsage> UpperUsage() const;
 
-  //! Set field UpperUsage
   Standard_EXPORT void SetUpperUsage(
     const occ::handle<StepRepr_AssemblyComponentUsage>& UpperUsage);
 
-  //! Returns field NextUsage
   Standard_EXPORT occ::handle<StepRepr_NextAssemblyUsageOccurrence> NextUsage() const;
 
-  //! Set field NextUsage
   Standard_EXPORT void SetNextUsage(
     const occ::handle<StepRepr_NextAssemblyUsageOccurrence>& NextUsage);
 

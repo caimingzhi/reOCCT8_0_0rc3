@@ -9,9 +9,6 @@
 #include <Standard_Integer.hpp>
 #include <Standard_Real.hpp>
 
-//! This select member can be of any kind, and be named
-//! But its takes more memory than some specialised ones
-//! This class allows one name for the instance
 class StepData_SelectNamed : public StepData_SelectMember
 {
 
@@ -32,12 +29,8 @@ public:
 
   Standard_EXPORT void SetKind(const int kind) override;
 
-  //! This internal method gives access to a value implemented by an
-  //! Integer (to read it)
   Standard_EXPORT int Int() const override;
 
-  //! This internal method gives access to a value implemented by an
-  //! Integer (to set it)
   Standard_EXPORT void SetInt(const int val) override;
 
   Standard_EXPORT double Real() const override;

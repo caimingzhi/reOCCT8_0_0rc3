@@ -10,8 +10,6 @@
 #include <gp_Pnt2d.hpp>
 #include <gp_XYZ.hpp>
 
-//=================================================================================================
-
 class Approx_SweepApproximation_Eval : public AdvApprox_EvaluatorFunction
 {
 public:
@@ -24,18 +22,18 @@ public:
                 double  StartEnd[2],
                 double* Parameter,
                 int*    DerivativeRequest,
-                double* Result, // [Dimension]
+                double* Result,
                 int*    ErrorCode) override;
 
 private:
   Approx_SweepApproximation& Tool;
 };
 
-void Approx_SweepApproximation_Eval::Evaluate(int*, /*Dimension*/
+void Approx_SweepApproximation_Eval::Evaluate(int*,
                                               double  StartEnd[2],
                                               double* Parameter,
                                               int*    DerivativeRequest,
-                                              double* Result, // [Dimension]
+                                              double* Result,
                                               int*    ErrorCode)
 {
   *ErrorCode = Tool.Eval(*Parameter, *DerivativeRequest, StartEnd[0], StartEnd[1], Result[0]);
@@ -44,7 +42,7 @@ void Approx_SweepApproximation_Eval::Evaluate(int*, /*Dimension*/
 Approx_SweepApproximation::Approx_SweepApproximation(const occ::handle<Approx_SweepFunction>& Func)
 {
   myFunc = Func;
-  //  Init of variables of control
+
   myParam = 0;
   myOrder = -1;
   first   = 1.e100;
@@ -66,7 +64,6 @@ void Approx_SweepApproximation::Perform(const double        First,
   double        Tol, Tol3dMin = Tol3d, The3D2DTol = 0;
   GeomAbs_Shape continuity = Continuity;
 
-  // (1) Characteristics of a section
   myFunc->SectionShape(NbPolSect, NbKnotSect, udeg);
   Num2DSS   = myFunc->Nb2dCurves();
   tabUKnots = new (NCollection_HArray1<double>)(1, NbKnotSect);
@@ -74,11 +71,9 @@ void Approx_SweepApproximation::Perform(const double        First,
   myFunc->Knots(tabUKnots->ChangeArray1());
   myFunc->Mults(tabUMults->ChangeArray1());
 
-  // (2) Decompositition into sub-spaces
   occ::handle<NCollection_HArray1<double>> OneDTol, TwoDTol, ThreeDTol;
   Num3DSS = NbPolSect;
 
-  // (2.1) Tolerance 3d and 1d
   OneDTol   = new (NCollection_HArray1<double>)(1, Num3DSS);
   ThreeDTol = new (NCollection_HArray1<double>)(1, Num3DSS);
 
@@ -98,9 +93,9 @@ void Approx_SweepApproximation::Perform(const double        First,
     Translation.SetXYZ(myFunc->BarycentreOfSurf().XYZ());
     for (ii = 1; ii <= Num3DSS; ii++)
     {
-      Tol = ThreeDTol->Value(ii) / 2; // To take account of the error on the final result.
+      Tol = ThreeDTol->Value(ii) / 2;
       OneDTol->SetValue(ii, Tol * Wmin(ii) / Size);
-      Tol *= Wmin(ii); // Factor of projection
+      Tol *= Wmin(ii);
       ThreeDTol->SetValue(ii, std::max(Tol, 1.e-20));
     }
   }
@@ -109,19 +104,17 @@ void Approx_SweepApproximation::Perform(const double        First,
     Num1DSS = 0;
   }
 
-  // (2.2) Tolerance and Transformation 2d.
   if (Num2DSS == 0)
   {
     TwoDTol.Nullify();
   }
   else
   {
-    // for 2d define affinity using resolutions, to
-    // avoid homogeneous tolerance of approximation (u/v and 2d/3d)
+
     double res, tolu, tolv;
     TwoDTol    = new (NCollection_HArray1<double>)(1, Num2DSS);
     AAffin     = new (NCollection_HArray1<gp_GTrsf2d>)(1, Num2DSS);
-    The3D2DTol = 0.9 * BoundTol; // 10% of security
+    The3D2DTol = 0.9 * BoundTol;
     for (ii = 1; ii <= Num2DSS; ii++)
     {
       myFunc->Resolution(ii, The3D2DTol, tolu, tolv);
@@ -139,9 +132,6 @@ void Approx_SweepApproximation::Perform(const double        First,
     }
   }
 
-  // (3) Approximation
-
-  // Init
   myPoles   = new (NCollection_HArray1<gp_Pnt>)(1, Num3DSS);
   myDPoles  = new (NCollection_HArray1<gp_Vec>)(1, Num3DSS);
   myD2Poles = new (NCollection_HArray1<gp_Vec>)(1, Num3DSS);
@@ -165,7 +155,6 @@ void Approx_SweepApproximation::Perform(const double        First,
     COnSurfErr  = new NCollection_HArray1<double>();
   }
 
-  // Checks if myFunc->D2 is implemented
   if (continuity >= GeomAbs_C2)
   {
     bool B;
@@ -184,7 +173,7 @@ void Approx_SweepApproximation::Perform(const double        First,
     if (!B)
       continuity = GeomAbs_C1;
   }
-  // Checks if myFunc->D1 is implemented
+
   if (continuity == GeomAbs_C1)
   {
     bool B;
@@ -201,7 +190,6 @@ void Approx_SweepApproximation::Perform(const double        First,
       continuity = GeomAbs_C0;
   }
 
-  // So that F was at least 20 times more exact than its approx
   myFunc->SetTolerance(Tol3dMin / 20, Tol2d / 20);
 
   int NbIntervalC2 = myFunc->NbIntervals(GeomAbs_C2);
@@ -209,7 +197,7 @@ void Approx_SweepApproximation::Perform(const double        First,
 
   if (NbIntervalC3 > 1)
   {
-    // (3.1) Approximation with preferential cut
+
     NCollection_Array1<double> Param_de_decoupeC2(1, NbIntervalC2 + 1);
     myFunc->Intervals(Param_de_decoupeC2, GeomAbs_C2);
     NCollection_Array1<double> Param_de_decoupeC3(1, NbIntervalC3 + 1);
@@ -232,7 +220,7 @@ void Approx_SweepApproximation::Perform(const double        First,
   }
   else
   {
-    // (3.2) Approximation without preferential cut
+
     AdvApprox_DichoCutting         Dichotomie;
     Approx_SweepApproximation_Eval ev(*this);
     Approximation(OneDTol,
@@ -248,11 +236,6 @@ void Approx_SweepApproximation::Perform(const double        First,
                   Dichotomie);
   }
 }
-
-//=================================================================================================
-// function : Approximation
-// purpose  : Call F(t) and store the results
-//=================================================================================================
 
 void Approx_SweepApproximation::Approximation(
   const occ::handle<NCollection_HArray1<double>>& OneDTol,
@@ -284,13 +267,11 @@ void Approx_SweepApproximation::Approximation(
 
   if (done)
   {
-    // --> Fill Champs of the surface ----
+
     int ii, jj;
 
     vdeg = Approx.Degree();
-    // Unfortunately Adv_Approx stores the transposition of the required
-    // so, writing tabPoles = Approx.Poles() will give an erroneous result
-    // It is only possible to allocate and recopy term by term...
+
     tabPoles   = new (NCollection_HArray2<gp_Pnt>)(1, Num3DSS, 1, Approx.NbPoles());
     tabWeights = new (NCollection_HArray2<double>)(1, Num3DSS, 1, Approx.NbPoles());
 
@@ -304,7 +285,7 @@ void Approx_SweepApproximation::Approximation(
         {
           P     = Approx.Poles()->Value(jj, ii);
           wpoid = Approx.Poles1d()->Value(jj, ii);
-          P.ChangeCoord() /= wpoid; // It is necessary to divide poles by weight
+          P.ChangeCoord() /= wpoid;
           P.Translate(Translation);
           tabPoles->SetValue(ii, jj, P);
           tabWeights->SetValue(ii, jj, wpoid);
@@ -323,11 +304,9 @@ void Approx_SweepApproximation::Approximation(
       }
     }
 
-    // this is better
     tabVKnots = Approx.Knots();
     tabVMults = Approx.Multiplicities();
 
-    // --> Filling of curves 2D  ----------
     if (Num2DSS > 0)
     {
       gp_GTrsf2d TrsfInv;
@@ -341,7 +320,7 @@ void Approx_SweepApproximation::Approximation(
         occ::handle<NCollection_HArray1<gp_Pnt2d>> P2d =
           new (NCollection_HArray1<gp_Pnt2d>)(1, Approx.NbPoles());
         Approx.Poles2d(ii, P2d->ChangeArray1());
-        // do not forget to apply inverted homothety.
+
         for (jj = 1; jj <= Approx.NbPoles(); jj++)
         {
           TrsfInv.Transforms(P2d->ChangeValue(jj).ChangeCoord());
@@ -349,7 +328,7 @@ void Approx_SweepApproximation::Approximation(
         seqPoles2d.Append(P2d);
       }
     }
-    // ---> Filling of errors
+
     MError3d = new (NCollection_HArray1<double>)(1, Num3DSS);
     AError3d = new (NCollection_HArray1<double>)(1, Num3DSS);
     for (ii = 1; ii <= Num3DSS; ii++)
@@ -416,7 +395,6 @@ bool Approx_SweepApproximation::D0(const double Param,
   bool    Ok          = true;
   double* LocalResult = &Result;
 
-  // Management of limits
   if ((first != First) || (Last != last))
   {
     myFunc->SetInterval(First, Last);
@@ -424,7 +402,7 @@ bool Approx_SweepApproximation::D0(const double Param,
 
   if ((Param != myParam) || (myOrder < 0) || (first != First) || (Last != last))
   {
-    // Positioning in case when the last operation is not repeated.
+
     Ok = myFunc->D0(Param,
                     First,
                     Last,
@@ -432,27 +410,23 @@ bool Approx_SweepApproximation::D0(const double Param,
                     myPoles2d->ChangeArray1(),
                     myWeigths->ChangeArray1());
 
-    //  poles3d are multiplied by weight after translation.
     for (ii = 1; ii <= Num1DSS; ii++)
     {
       myPoles->ChangeValue(ii).ChangeCoord() -= Translation.XYZ();
       myPoles->ChangeValue(ii).ChangeCoord() *= myWeigths->Value(ii);
     }
 
-    //  The transformation is applied to poles 2d.
     for (ii = 1; ii <= Num2DSS; ii++)
     {
       AAffin->Value(ii).Transforms(myPoles2d->ChangeValue(ii).ChangeCoord());
     }
 
-    // Update variables of control and return
     first   = First;
     last    = Last;
     myOrder = 0;
     myParam = Param;
   }
 
-  //  Extraction of results
   index = 0;
   for (ii = 1; ii <= Num1DSS; ii++)
   {
@@ -494,7 +468,6 @@ bool Approx_SweepApproximation::D1(const double Param,
   if ((Param != myParam) || (myOrder < 1) || (first != First) || (Last != last))
   {
 
-    // Positioning
     Ok = myFunc->D1(Param,
                     First,
                     Last,
@@ -505,21 +478,18 @@ bool Approx_SweepApproximation::D1(const double Param,
                     myWeigths->ChangeArray1(),
                     myDWeigths->ChangeArray1());
 
-    //  Take into account the multiplication of poles3d by weights.
-    //  and the translation.
     for (ii = 1; ii <= Num1DSS; ii++)
     {
-      // Translation on the section
+
       myPoles->ChangeValue(ii).ChangeCoord() -= Translation.XYZ();
-      // Homothety on all.
+
       const double aWeight = myWeigths->Value(ii);
       myDPoles->ChangeValue(ii) *= aWeight;
       Vaux.SetXYZ(myPoles->Value(ii).Coord());
       myDPoles->ChangeValue(ii) += myDWeigths->Value(ii) * Vaux;
-      myPoles->ChangeValue(ii).ChangeCoord() *= aWeight; // for the cash
+      myPoles->ChangeValue(ii).ChangeCoord() *= aWeight;
     }
 
-    //  Apply transformation 2d to suitable vectors
     for (ii = 1; ii <= Num2DSS; ii++)
     {
       Vcoord = myDPoles2d->Value(ii).XY();
@@ -528,14 +498,12 @@ bool Approx_SweepApproximation::D1(const double Param,
       AAffin->Value(ii).Transforms(myPoles2d->ChangeValue(ii).ChangeCoord());
     }
 
-    // Update control variables and return
     first   = First;
     last    = Last;
     myOrder = 1;
     myParam = Param;
   }
 
-  //  Extraction of results
   index = 0;
   for (ii = 1; ii <= Num1DSS; ii++)
   {
@@ -568,7 +536,6 @@ bool Approx_SweepApproximation::D2(const double Param,
   bool    Ok          = true;
   double* LocalResult = &Result;
 
-  // management of limits
   if ((first != First) || (Last != last))
   {
     myFunc->SetInterval(First, Last);
@@ -576,7 +543,7 @@ bool Approx_SweepApproximation::D2(const double Param,
 
   if ((Param != myParam) || (myOrder < 2) || (first != First) || (Last != last))
   {
-    // Positioning in case when the last operation is not repeated
+
     Ok = myFunc->D2(Param,
                     First,
                     Last,
@@ -590,27 +557,23 @@ bool Approx_SweepApproximation::D2(const double Param,
                     myDWeigths->ChangeArray1(),
                     myD2Weigths->ChangeArray1());
 
-    //  Multiply poles3d by the weight after translations.
     for (ii = 1; ii <= Num1DSS; ii++)
     {
-      // First translate
+
       myPoles->ChangeValue(ii).ChangeCoord() -= Translation.XYZ();
 
-      // Calculate the second derivative
       myD2Poles->ChangeValue(ii) *= myWeigths->Value(ii);
       Vaux.SetXYZ(myDPoles->Value(ii).XYZ());
       myD2Poles->ChangeValue(ii) += (2 * myDWeigths->Value(ii)) * Vaux;
       Vaux.SetXYZ(myPoles->Value(ii).Coord());
       myD2Poles->ChangeValue(ii) += myD2Weigths->Value(ii) * Vaux;
 
-      // Then the remainder for the cash
       myDPoles->ChangeValue(ii) *= myWeigths->Value(ii);
       Vaux.SetXYZ(myPoles->Value(ii).Coord());
       myDPoles->ChangeValue(ii) += myDWeigths->Value(ii) * Vaux;
       myPoles->ChangeValue(ii).ChangeCoord() *= myWeigths->Value(ii);
     }
 
-    //  Apply transformation to poles 2d.
     for (ii = 1; ii <= Num2DSS; ii++)
     {
       Vcoord = myD2Poles2d->Value(ii).XY();
@@ -622,14 +585,12 @@ bool Approx_SweepApproximation::D2(const double Param,
       AAffin->Value(ii).Transforms(myPoles2d->ChangeValue(ii).ChangeCoord());
     }
 
-    // Update variables of control and return
     first   = First;
     last    = Last;
     myOrder = 2;
     myParam = Param;
   }
 
-  //  Extraction of results
   index = 0;
   for (ii = 1; ii <= Num1DSS; ii++)
   {

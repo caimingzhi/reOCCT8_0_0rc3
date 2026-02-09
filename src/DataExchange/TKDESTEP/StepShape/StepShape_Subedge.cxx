@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_Subedge, StepShape_Edge)
 
-//=================================================================================================
-
 StepShape_Subedge::StepShape_Subedge() = default;
-
-//=================================================================================================
 
 void StepShape_Subedge::Init(const occ::handle<TCollection_HAsciiString>& aRepresentationItem_Name,
                              const occ::handle<StepShape_Vertex>&         aEdge_EdgeStart,
@@ -20,14 +16,10 @@ void StepShape_Subedge::Init(const occ::handle<TCollection_HAsciiString>& aRepre
   theParentEdge = aParentEdge;
 }
 
-//=================================================================================================
-
 occ::handle<StepShape_Edge> StepShape_Subedge::ParentEdge() const
 {
   return theParentEdge;
 }
-
-//=================================================================================================
 
 void StepShape_Subedge::SetParentEdge(const occ::handle<StepShape_Edge>& aParentEdge)
 {

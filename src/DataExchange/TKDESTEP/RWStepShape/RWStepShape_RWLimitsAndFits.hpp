@@ -10,7 +10,6 @@ class Interface_Check;
 class StepShape_LimitsAndFits;
 class StepData_StepWriter;
 
-//! Read & Write Module for LimitsAndFits
 class RWStepShape_RWLimitsAndFits
 {
 public:

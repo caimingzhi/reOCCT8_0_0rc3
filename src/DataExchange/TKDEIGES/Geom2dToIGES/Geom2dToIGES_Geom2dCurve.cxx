@@ -8,27 +8,14 @@
 #include <gp_Pln.hpp>
 #include <IGESGeom_BSplineCurve.hpp>
 
-// #include <Geom2dConvert.hpp>
-//=============================================================================
-//  Geom2dToIGES_Geom2dCurve
-//=============================================================================
 Geom2dToIGES_Geom2dCurve::Geom2dToIGES_Geom2dCurve()
 
   = default;
-
-//=============================================================================
-// Geom2dToIGES_Geom2dCurve
-//=============================================================================
 
 Geom2dToIGES_Geom2dCurve::Geom2dToIGES_Geom2dCurve(const Geom2dToIGES_Geom2dEntity& G2dE)
     : Geom2dToIGES_Geom2dEntity(G2dE)
 {
 }
-
-//=============================================================================
-// Transfer of Curve Entities from Geom2d to IGES
-// Transfer2dCurve
-//=============================================================================
 
 occ::handle<IGESData_IGESEntity> Geom2dToIGES_Geom2dCurve::Transfer2dCurve(
   const occ::handle<Geom2d_Curve>& start,
@@ -41,9 +28,8 @@ occ::handle<IGESData_IGESEntity> Geom2dToIGES_Geom2dCurve::Transfer2dCurve(
     return res;
   }
 
-  // #57 rln 25.12.98 avoid code duplication
   GeomToIGES_GeomCurve GC;
   GC.SetModel(GetModel());
-  GC.SetUnit(1.); // not scale 2D curves
+  GC.SetUnit(1.);
   return GC.TransferCurve(GeomAPI::To3d(start, gp_Pln(0, 0, 1, 0)), Udeb, Ufin);
 }

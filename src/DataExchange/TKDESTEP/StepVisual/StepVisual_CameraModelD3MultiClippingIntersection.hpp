@@ -13,7 +13,6 @@ class StepVisual_CameraModelD3MultiClippingIntersection
     : public StepGeom_GeometricRepresentationItem
 {
 public:
-  //! Returns a StepVisual_CameraModelD3MultiClippingIntersection
   Standard_EXPORT StepVisual_CameraModelD3MultiClippingIntersection();
 
   Standard_EXPORT void Init(

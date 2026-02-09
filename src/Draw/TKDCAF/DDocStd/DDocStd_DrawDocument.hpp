@@ -10,8 +10,6 @@ class TDocStd_Document;
 class Draw_Display;
 class Draw_Drawable3D;
 
-//! draw variable for TDocStd_Document.
-//! ==================================
 class DDocStd_DrawDocument : public DDF_Data
 {
 

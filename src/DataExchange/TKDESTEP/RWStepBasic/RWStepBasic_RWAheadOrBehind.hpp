@@ -9,9 +9,6 @@ namespace RWStepBasic_RWAheadOrBehind
   static constexpr char aobExact[]  = ".EXACT.";
   static constexpr char aobBehind[] = ".BEHIND.";
 
-  //! Convert StepBasic_AheadOrBehind to string
-  //! @param theSourceEnum The StepBasic_AheadOrBehind value to convert
-  //! @return The corresponding string representation or nullptr if not found
   inline const char* ConvertToString(const StepBasic_AheadOrBehind theSourceEnum)
   {
     switch (theSourceEnum)
@@ -26,10 +23,6 @@ namespace RWStepBasic_RWAheadOrBehind
     return nullptr;
   }
 
-  //! Convert string to StepBasic_AheadOrBehind
-  //! @param theAheadOrBehindStr The string to convert
-  //! @param theResultEnum The corresponding StepBasic_AheadOrBehind value
-  //! @return true if the conversion was successful, false otherwise
   inline bool ConvertToEnum(const char* theAheadOrBehindStr, StepBasic_AheadOrBehind& theResultEnum)
   {
     if (IsEqual(theAheadOrBehindStr, aobAhead))

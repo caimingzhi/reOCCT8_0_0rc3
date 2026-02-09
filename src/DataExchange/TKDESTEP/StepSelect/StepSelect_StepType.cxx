@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_InterfaceError.hpp>
 #include <Interface_InterfaceModel.hpp>
@@ -53,18 +42,16 @@ const char* StepSelect_StepType::Value(const occ::handle<Standard_Transient>&   
   int                                   aCN;
   if (!thelib.Select(ent, aModule, aCN))
   {
-    // Build error message for unrecognized entity
+
     theLastValue = "..NOT FROM SCHEMA ";
     theLastValue += theproto->SchemaName(model);
     theLastValue += "..";
     return theLastValue.ToCString();
   }
 
-  // Handle simple (non-complex) type - return direct reference from module
   if (!aModule->IsComplex(aCN))
     return aModule->StepType(aCN).data();
 
-  // Handle complex type from module
   NCollection_Sequence<TCollection_AsciiString> aList;
   if (aModule->ComplexType(aCN, aList))
   {
@@ -87,7 +74,6 @@ const char* StepSelect_StepType::Value(const occ::handle<Standard_Transient>&   
     return theLastValue.ToCString();
   }
 
-  // Fallback: check for undefined entity
   DeclareAndCast(StepData_UndefinedEntity, anUnd, ent);
   if (anUnd.IsNull())
   {
@@ -96,9 +82,8 @@ const char* StepSelect_StepType::Value(const occ::handle<Standard_Transient>&   
   }
 
   if (!anUnd->IsComplex())
-    return anUnd->StepType(); // Direct return from entity's internal storage
+    return anUnd->StepType();
 
-  // Build complex type from undefined entity
   theLastValue = "(";
   bool isFirst = true;
   while (!anUnd.IsNull())

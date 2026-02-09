@@ -11,7 +11,6 @@ class StepGeom_CartesianTransformationOperator3d;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for CartesianTransformationOperator3d
 class RWStepGeom_RWCartesianTransformationOperator3d
 {
 public:

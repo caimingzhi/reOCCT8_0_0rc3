@@ -17,31 +17,17 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-// MGE 03/08/98
-//=================================================================================================
-
 IGESSolid_ToolVertexList::IGESSolid_ToolVertexList() = default;
 
-//=================================================================================================
-
 void IGESSolid_ToolVertexList::ReadOwnParams(const occ::handle<IGESSolid_VertexList>& ent,
-                                             const occ::handle<IGESData_IGESReaderData>& /* IR */,
+                                             const occ::handle<IGESData_IGESReaderData>&,
                                              IGESData_ParamReader& PR) const
 {
-  // MGE 03/08/98
-  // Building of messages
-  //========================================
-  //  Message_Msg Msg182("XSTEP_182");
-  //  Message_Msg Msg183("XSTEP_183");
-  //========================================
 
-  // bool st; //szv#4:S4163:12Mar99 not needed
-  int nbitems = 0; // szv#4:S4163:12Mar99 `i` moved in for
-  // gp_XYZ anXYZ; //szv#4:S4163:12Mar99 moved down
+  int nbitems = 0;
+
   occ::handle<NCollection_HArray1<gp_XYZ>> tempVertices;
 
-  // st = PR.ReadInteger(PR.Current(), Msg182, nbitems); //szv#4:S4163:12Mar99 moved in if
-  // st = PR.ReadInteger(PR.Current(), "Number of Vertices", nbitems);
   bool sb = PR.ReadInteger(PR.Current(), nbitems);
   if (sb && (nbitems > 0))
   {
@@ -53,8 +39,7 @@ void IGESSolid_ToolVertexList::ReadOwnParams(const occ::handle<IGESSolid_VertexL
     gp_XYZ anXYZ;
     for (int i = 1; i <= nbitems; i++)
     {
-      // st = PR.ReadXYZ(PR.CurrentList(1, 3), Msg183, anXYZ); //szv#4:S4163:12Mar99 moved in if
-      // st = PR.ReadXYZ(PR.CurrentList(1, 3), "Vertices", anXYZ);
+
       if (PR.ReadXYZ(PR.CurrentList(1, 3), Msg183, anXYZ))
         tempVertices->SetValue(i, anXYZ);
     }
@@ -69,8 +54,6 @@ void IGESSolid_ToolVertexList::ReadOwnParams(const occ::handle<IGESSolid_VertexL
   if (nbitems > 0)
     ent->Init(tempVertices);
 }
-
-//=================================================================================================
 
 void IGESSolid_ToolVertexList::WriteOwnParams(const occ::handle<IGESSolid_VertexList>& ent,
                                               IGESData_IGESWriter&                     IW) const
@@ -87,18 +70,14 @@ void IGESSolid_ToolVertexList::WriteOwnParams(const occ::handle<IGESSolid_Vertex
   }
 }
 
-//=================================================================================================
-
-void IGESSolid_ToolVertexList::OwnShared(const occ::handle<IGESSolid_VertexList>& /* ent */,
-                                         Interface_EntityIterator& /* iter */) const
+void IGESSolid_ToolVertexList::OwnShared(const occ::handle<IGESSolid_VertexList>&,
+                                         Interface_EntityIterator&) const
 {
 }
 
-//=================================================================================================
-
 void IGESSolid_ToolVertexList::OwnCopy(const occ::handle<IGESSolid_VertexList>& another,
                                        const occ::handle<IGESSolid_VertexList>& ent,
-                                       Interface_CopyTool& /* TC */) const
+                                       Interface_CopyTool&) const
 {
   int nbitems, i;
 
@@ -113,10 +92,8 @@ void IGESSolid_ToolVertexList::OwnCopy(const occ::handle<IGESSolid_VertexList>& 
   ent->Init(tempVertices);
 }
 
-//=================================================================================================
-
 IGESData_DirChecker IGESSolid_ToolVertexList::DirChecker(
-  const occ::handle<IGESSolid_VertexList>& /* ent */) const
+  const occ::handle<IGESSolid_VertexList>&) const
 {
   IGESData_DirChecker DC(502, 1);
 
@@ -130,17 +107,10 @@ IGESData_DirChecker IGESSolid_ToolVertexList::DirChecker(
   return DC;
 }
 
-//=================================================================================================
-
 void IGESSolid_ToolVertexList::OwnCheck(const occ::handle<IGESSolid_VertexList>& ent,
                                         const Interface_ShareTool&,
                                         occ::handle<Interface_Check>& ach) const
 {
-  // MGE 03/08/98
-  // Building of messages
-  //========================================
-  // Message_Msg Msg182("XSTEP_182");
-  //========================================
 
   if (ent->NbVertices() <= 0)
   {
@@ -149,10 +119,8 @@ void IGESSolid_ToolVertexList::OwnCheck(const occ::handle<IGESSolid_VertexList>&
   }
 }
 
-//=================================================================================================
-
 void IGESSolid_ToolVertexList::OwnDump(const occ::handle<IGESSolid_VertexList>& ent,
-                                       const IGESData_IGESDumper& /* dumper */,
+                                       const IGESData_IGESDumper&,
                                        Standard_OStream& S,
                                        const int         level) const
 {

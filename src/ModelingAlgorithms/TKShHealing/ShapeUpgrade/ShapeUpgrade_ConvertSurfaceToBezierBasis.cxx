@@ -34,8 +34,6 @@ ShapeUpgrade_ConvertSurfaceToBezierBasis::ShapeUpgrade_ConvertSurfaceToBezierBas
   myBSplineMode    = true;
 }
 
-//=================================================================================================
-
 void ShapeUpgrade_ConvertSurfaceToBezierBasis::Compute(const bool Segment)
 {
   if (!Segment)
@@ -131,12 +129,7 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Compute(const bool Segment)
     else
     {
       occ::handle<Geom_BezierSurface> besNew = occ::down_cast<Geom_BezierSurface>(bezier->Copy());
-      // pdn K4L+ (work around)
-      //  double u1 = 2*UFirst - 1;
-      //  double u2 = 2*ULast - 1;
-      //  double v1 = 2*VFirst - 1;
-      //  double v2 = 2*VLast - 1;
-      // rln C30 (direct use)
+
       double u1 = UFirst;
       double u2 = ULast;
       double v1 = VFirst;
@@ -151,12 +144,12 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Compute(const bool Segment)
   else if (mySurface->IsKind(STANDARD_TYPE(Geom_BSplineSurface)) && myBSplineMode)
   {
     occ::handle<Geom_BSplineSurface> bspline = occ::down_cast<Geom_BSplineSurface>(mySurface);
-    // pdn
+
     double u1, u2, v1, v2;
     bspline->Bounds(u1, u2, v1, v2);
-    // clang-format off
-    GeomConvert_BSplineSurfaceToBezierSurface converter(bspline);//,UFirst,ULast,VFirst,VLast,precision;
-    // clang-format on
+
+    GeomConvert_BSplineSurfaceToBezierSurface converter(bspline);
+
     int                        nbUPatches = converter.NbUPatches();
     int                        nbVPatches = converter.NbVPatches();
     NCollection_Array1<double> UJoints(1, nbUPatches + 1);
@@ -232,7 +225,7 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Compute(const bool Segment)
 
     mySegments = new ShapeExtend_CompositeSurface(srf, uj, vj);
 
-    int j; // svv #1
+    int j;
     for (j = 2; j <= myUSplitValues->Length(); j++)
     {
       ULast = myUSplitValues->Value(j);
@@ -324,7 +317,7 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Compute(const bool Segment)
       new NCollection_HArray2<occ::handle<Geom_Surface>>(1, 1, 1, nbCurves);
     double Umin, Umax, Vmin, Vmax;
     mySurface->Bounds(Umin, Umax, Vmin, Vmax);
-    int i; // svv #1
+    int i;
     for (i = 1; i <= nbCurves; i++)
     {
       occ::handle<Geom_SurfaceOfRevolution> rev =
@@ -368,7 +361,6 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Compute(const bool Segment)
     occ::handle<Geom_SurfaceOfLinearExtrusion> extr =
       occ::down_cast<Geom_SurfaceOfLinearExtrusion>(mySurface);
     occ::handle<Geom_Curve> basis = extr->BasisCurve();
-    // gp_Dir direction = extr->Direction(); // direction not used (skl)
 
     occ::handle<NCollection_HArray1<occ::handle<Geom_Curve>>> curves;
     int                                                       nbCurves;
@@ -388,7 +380,7 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Compute(const bool Segment)
     occ::handle<NCollection_HArray2<occ::handle<Geom_Surface>>> surf =
       new NCollection_HArray2<occ::handle<Geom_Surface>>(1, nbCurves, 1, 1);
 
-    int i; // svv #1
+    int i;
     for (i = 1; i <= nbCurves; i++)
     {
       occ::handle<Geom_BezierCurve> bez     = occ::down_cast<Geom_BezierCurve>(curves->Value(i));
@@ -460,8 +452,6 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Compute(const bool Segment)
   }
 }
 
-//=================================================================================================
-
 static occ::handle<Geom_Surface> GetSegment(const occ::handle<Geom_Surface>& surf,
                                             const double                     U1,
                                             const double                     U2,
@@ -474,12 +464,7 @@ static occ::handle<Geom_Surface> GetSegment(const occ::handle<Geom_Surface>& sur
     constexpr double                prec   = Precision::PConfusion();
     if (U1 < prec && U2 > 1 - prec && V1 < prec && V2 > 1 - prec)
       return bezier;
-    // pdn K4L+ (work around)
-    //  double u1 = 2*U1 - 1;
-    //  double u2 = 2*U2 - 1;
-    //  double v1 = 2*V1 - 1;
-    //  double v2 = 2*V2 - 1;
-    // rln C30 (direct use)
+
     double u1 = U1;
     double u2 = U2;
     double v1 = V1;
@@ -544,9 +529,7 @@ static occ::handle<Geom_Surface> GetSegment(const occ::handle<Geom_Surface>& sur
   }
 }
 
-//=================================================================================================
-
-void ShapeUpgrade_ConvertSurfaceToBezierBasis::Build(const bool /*Segment*/)
+void ShapeUpgrade_ConvertSurfaceToBezierBasis::Build(const bool)
 {
   bool                      isOffset    = false;
   double                    offsetValue = 0;
@@ -596,7 +579,7 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Build(const bool /*Segment*/)
       occ::handle<Geom_Surface> patch = mySegments->Patch(j1 - 1, j2 - 1);
       double                    U1, U2, V1, V2;
       patch->Bounds(U1, U2, V1, V2);
-      // linear recomputation of part:
+
       double uFirst = myUSplitParams->Value(j1 - 1);
       double uLast  = myUSplitParams->Value(j1);
       double vFirst = myVSplitParams->Value(j2 - 1);
@@ -605,7 +588,7 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Build(const bool /*Segment*/)
       double vFact  = (V2 - V1) / (vLast - vFirst);
       double ppU    = myUSplitValues->Value(i1 - 1);
       double ppV    = myVSplitValues->Value(i2 - 1);
-      // defining a part
+
       double                    uL1 = U1 + (ppU - uFirst) * uFact;
       double                    uL2 = U1 + (parU - uFirst) * uFact;
       double                    vL1 = V1 + (ppV - vFirst) * vFact;
@@ -621,7 +604,7 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Build(const bool /*Segment*/)
   }
 
   NCollection_Array1<double> UJoints(1, nbU);
-  int                        i; // svv #1
+  int                        i;
   for (i = 1; i <= nbU; i++)
     UJoints(i) = myUSplitValues->Value(i);
 
@@ -631,8 +614,6 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Build(const bool /*Segment*/)
 
   myResSurfaces = new ShapeExtend_CompositeSurface(resSurfaces, UJoints, VJoints);
 }
-
-//=================================================================================================
 
 occ::handle<ShapeExtend_CompositeSurface> ShapeUpgrade_ConvertSurfaceToBezierBasis::Segments() const
 {

@@ -4,7 +4,5 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepShape_EdgeBasedWireframeShapeRepresentation,
                            StepShape_ShapeRepresentation)
 
-//=================================================================================================
-
 StepShape_EdgeBasedWireframeShapeRepresentation::StepShape_EdgeBasedWireframeShapeRepresentation() =
   default;

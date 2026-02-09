@@ -13,24 +13,13 @@ class TDF_Label;
 class TDF_RelocationTable;
 class TDF_DeltaOnModification;
 
-//! Attribute for storing TColStd_PackedMapOfInteger
 class TDataStd_IntPackedMap : public TDF_Attribute
 {
   friend class TDataStd_DeltaOnModificationOfIntPackedMap;
   DEFINE_STANDARD_RTTIEXT(TDataStd_IntPackedMap, TDF_Attribute)
 public:
-  //! class methods
-  //! =============
-  //! Returns the GUID of the attribute.
   Standard_EXPORT static const Standard_GUID& GetID();
 
-  //! Finds or creates an integer map attribute on the given label.
-  //! If <isDelta> == False, DefaultDeltaOnModification is used.
-  //! If <isDelta> == True, DeltaOnModification of the current attribute is used.
-  //! If attribute is already set, input parameter <isDelta> is refused and the found
-  //! attribute returned.
-  //! Attribute methods
-  //! ===================
   Standard_EXPORT static occ::handle<TDataStd_IntPackedMap> Set(const TDF_Label& label,
                                                                 const bool       isDelta = false);
 
@@ -58,7 +47,6 @@ public:
 
   bool GetDelta() const { return myIsDelta; }
 
-  //! for internal use only!
   void SetDelta(const bool isDelta) { myIsDelta = isDelta; }
 
   Standard_EXPORT const Standard_GUID& ID() const override;
@@ -72,12 +60,9 @@ public:
 
   Standard_EXPORT Standard_OStream& Dump(Standard_OStream& anOS) const override;
 
-  //! Makes a DeltaOnModification between <me> and
-  //! <anOldAttribute>.
   Standard_EXPORT occ::handle<TDF_DeltaOnModification> DeltaOnModification(
     const occ::handle<TDF_Attribute>& anOldAttribute) const override;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
 private:

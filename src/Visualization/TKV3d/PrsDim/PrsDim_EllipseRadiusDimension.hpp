@@ -9,9 +9,6 @@ class TopoDS_Shape;
 class TCollection_ExtendedString;
 class Geom_Surface;
 
-//! Computes geometry (basis curve and plane of dimension)
-//! for input shape aShape from TopoDS
-//! Root class for MinRadiusDimension and MaxRadiusDimension
 class PrsDim_EllipseRadiusDimension : public PrsDim_Relation
 {
   DEFINE_STANDARD_RTTIEXT(PrsDim_EllipseRadiusDimension, PrsDim_Relation)

@@ -8,7 +8,6 @@
 #define TOLERANCE_ANGULAIRE 0.00000001
 #define DERIVEE_PREMIERE_NULLE 0.000000000001
 
-//----------------------------------------------------------------------
 double IntImpParGen::NormalizeOnDomain(double& Param, const IntRes2d_Domain& TheDomain)
 {
   double modParam = Param;
@@ -29,7 +28,6 @@ double IntImpParGen::NormalizeOnDomain(double& Param, const IntRes2d_Domain& The
   return (modParam);
 }
 
-//----------------------------------------------------------------------
 void IntImpParGen::DeterminePosition(IntRes2d_Position&     Pos1,
                                      const IntRes2d_Domain& TheDomain,
                                      const gp_Pnt2d&        Pnt1,
@@ -64,7 +62,6 @@ void IntImpParGen::DeterminePosition(IntRes2d_Position&     Pos1,
   }
 }
 
-//----------------------------------------------------------------------
 void IntImpParGen::DetermineTransition(const IntRes2d_Position Pos1,
                                        gp_Vec2d&               Tan1,
                                        const gp_Vec2d&         Norm1,
@@ -88,7 +85,7 @@ void IntImpParGen::DetermineTransition(const IntRes2d_Position Pos1,
     Tan1      = Norm1;
     courbure1 = false;
     if (Tan1.SquareMagnitude() <= DERIVEE_PREMIERE_NULLE)
-    { // transition undecided
+    {
       decide = false;
     }
   }
@@ -98,7 +95,7 @@ void IntImpParGen::DetermineTransition(const IntRes2d_Position Pos1,
     Tan2      = Norm2;
     courbure2 = false;
     if (Tan2.SquareMagnitude() <= DERIVEE_PREMIERE_NULLE)
-    { // transition undecided
+    {
       decide = false;
     }
   }
@@ -114,7 +111,7 @@ void IntImpParGen::DetermineTransition(const IntRes2d_Position Pos1,
     double norm = Tan1.Magnitude() * Tan2.Magnitude();
 
     if (std::abs(sgn) <= TOLERANCE_ANGULAIRE * norm)
-    { // Transition TOUCH #########
+    {
       bool opos = (Tan1.Dot(Tan2)) < 0;
       if (!(courbure1 || courbure2))
       {
@@ -161,7 +158,7 @@ void IntImpParGen::DetermineTransition(const IntRes2d_Position Pos1,
           }
         }
         else
-        { // Val1 > Val2
+        {
           T2.SetValue(true, Pos2, IntRes2d_Outside, opos);
           if (opos)
           {
@@ -180,14 +177,13 @@ void IntImpParGen::DetermineTransition(const IntRes2d_Position Pos1,
       T2.SetValue(false, Pos2, IntRes2d_Out);
     }
     else
-    { // sgn>0
+    {
       T1.SetValue(false, Pos1, IntRes2d_Out);
       T2.SetValue(false, Pos2, IntRes2d_In);
     }
   }
 }
 
-//----------------------------------------------------------------------
 bool IntImpParGen::DetermineTransition(const IntRes2d_Position Pos1,
                                        gp_Vec2d&               Tan1,
                                        IntRes2d_Transition&    T1,
@@ -216,7 +212,7 @@ bool IntImpParGen::DetermineTransition(const IntRes2d_Position Pos1,
   double norm = Tan1Magnitude * Tan2Magnitude;
 
   if (std::abs(sgn) <= TOLERANCE_ANGULAIRE * norm)
-  { // Transition TOUCH #########
+  {
     return (false);
   }
   else if (sgn < 0)
@@ -225,7 +221,7 @@ bool IntImpParGen::DetermineTransition(const IntRes2d_Position Pos1,
     T2.SetValue(false, Pos2, IntRes2d_Out);
   }
   else
-  { // sgn>0
+  {
     T1.SetValue(false, Pos1, IntRes2d_Out);
     T2.SetValue(false, Pos2, IntRes2d_In);
   }

@@ -13,8 +13,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_Context, IMeshTools_Context)
 
-//=================================================================================================
-
 BRepMesh_Context::BRepMesh_Context(IMeshTools_MeshAlgoType theMeshType)
 {
   if (theMeshType == IMeshTools_MeshAlgoType_DEFAULT)
@@ -59,7 +57,5 @@ BRepMesh_Context::BRepMesh_Context(IMeshTools_MeshAlgoType theMeshType)
   SetFaceDiscret(new BRepMesh_FaceDiscret(aAlgoFactory));
   SetPostProcessor(new BRepMesh_ModelPostProcessor);
 }
-
-//=================================================================================================
 
 BRepMesh_Context::~BRepMesh_Context() = default;

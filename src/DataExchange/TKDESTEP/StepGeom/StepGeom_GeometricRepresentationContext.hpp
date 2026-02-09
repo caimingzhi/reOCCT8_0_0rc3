@@ -11,7 +11,6 @@ class StepGeom_GeometricRepresentationContext : public StepRepr_RepresentationCo
 {
 
 public:
-  //! Returns a GeometricRepresentationContext
   Standard_EXPORT StepGeom_GeometricRepresentationContext();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aContextIdentifier,

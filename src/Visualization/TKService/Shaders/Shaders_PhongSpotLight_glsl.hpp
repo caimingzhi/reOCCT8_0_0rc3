@@ -52,5 +52,3 @@ static const char Shaders_PhongSpotLight_glsl[] =
   "  Diffuse  += occLight_Diffuse (theId) * aNdotL * anAtten * theShadow;\n"
   "  Specular += occLight_Specular(theId) * aSpecl * anAtten * theShadow;\n"
   "}\n";
-
-// clang-format on

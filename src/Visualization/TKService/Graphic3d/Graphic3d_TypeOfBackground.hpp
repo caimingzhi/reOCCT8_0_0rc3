@@ -1,6 +1,5 @@
 #pragma once
 
-//! Describes type of view background.
 enum Graphic3d_TypeOfBackground
 {
   Graphic3d_TOB_NONE = -1,

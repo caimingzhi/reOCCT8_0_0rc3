@@ -131,5 +131,3 @@ static const char BOPAlgo_BOPAlgo_msg[] =
   "\n"
   ".BOPAlgo_AlertUnableToMakeClosedEdgeOnFace\n"
   "Unable to make closed edge on face.\n";
-
-// clang-format on

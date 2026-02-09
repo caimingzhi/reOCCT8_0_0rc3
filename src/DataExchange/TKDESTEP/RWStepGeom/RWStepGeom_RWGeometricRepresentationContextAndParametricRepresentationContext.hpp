@@ -11,7 +11,6 @@ class StepGeom_GeometricRepresentationContextAndParametricRepresentationContext;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for GeometricRepresentationContextAndParametricRepresentationContext
 class RWStepGeom_RWGeometricRepresentationContextAndParametricRepresentationContext
 {
 public:

@@ -7,14 +7,11 @@
 #include <StepRepr_RepresentationOrRepresentationReference.hpp>
 #include <StepRepr_RepresentationRelationshipWithTransformation.hpp>
 
-//! Representation of STEP entity PairRepresentationRelationship
 class StepKinematics_PairRepresentationRelationship : public StepGeom_GeometricRepresentationItem
 {
 public:
-  //! default constructor
   Standard_EXPORT StepKinematics_PairRepresentationRelationship();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(
     const occ::handle<TCollection_HAsciiString>& theRepresentationItem_Name,
     const occ::handle<TCollection_HAsciiString>& theRepresentationRelationship_Name,
@@ -25,10 +22,9 @@ public:
     const StepRepr_Transformation&
       theRepresentationRelationshipWithTransformation_TransformationOperator);
 
-  //! Returns data for supertype RepresentationRelationshipWithTransformation
   Standard_EXPORT occ::handle<StepRepr_RepresentationRelationshipWithTransformation>
                   RepresentationRelationshipWithTransformation() const;
-  //! Sets data for supertype RepresentationRelationshipWithTransformation
+
   Standard_EXPORT void SetRepresentationRelationshipWithTransformation(
     const occ::handle<StepRepr_RepresentationRelationshipWithTransformation>&
       theRepresentationRelationshipWithTransformation);
@@ -37,7 +33,6 @@ public:
                           StepGeom_GeometricRepresentationItem)
 
 private:
-  // clang-format off
-  occ::handle<StepRepr_RepresentationRelationshipWithTransformation> myRepresentationRelationshipWithTransformation; //!< supertype
-  // clang-format on
+  occ::handle<StepRepr_RepresentationRelationshipWithTransformation>
+    myRepresentationRelationshipWithTransformation;
 };

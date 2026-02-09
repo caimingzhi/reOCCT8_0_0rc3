@@ -11,7 +11,6 @@ class StepGeom_Hyperbola : public StepGeom_Conic
 {
 
 public:
-  //! Returns a Hyperbola
   Standard_EXPORT StepGeom_Hyperbola();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

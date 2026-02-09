@@ -10,7 +10,6 @@ class Interface_Check;
 class StepGeom_Curve;
 class StepData_StepWriter;
 
-//! Read & Write Module for Curve
 class RWStepGeom_RWCurve
 {
 public:

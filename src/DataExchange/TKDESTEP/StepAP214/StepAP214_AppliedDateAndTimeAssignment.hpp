@@ -15,7 +15,6 @@ class StepAP214_AppliedDateAndTimeAssignment : public StepBasic_DateAndTimeAssig
 {
 
 public:
-  //! Returns a AppliedDateAndTimeAssignment
   Standard_EXPORT StepAP214_AppliedDateAndTimeAssignment();
 
   Standard_EXPORT void Init(

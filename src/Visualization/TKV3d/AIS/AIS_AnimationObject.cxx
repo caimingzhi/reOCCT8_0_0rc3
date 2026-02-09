@@ -2,8 +2,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_AnimationObject, AIS_BaseAnimationObject)
 
-//=================================================================================================
-
 AIS_AnimationObject::AIS_AnimationObject(const TCollection_AsciiString& theAnimationName,
                                          const occ::handle<AIS_InteractiveContext>& theContext,
                                          const occ::handle<AIS_InteractiveObject>&  theObject,
@@ -13,8 +11,6 @@ AIS_AnimationObject::AIS_AnimationObject(const TCollection_AsciiString& theAnima
       myTrsfLerp(theTrsfStart, theTrsfEnd)
 {
 }
-
-//=================================================================================================
 
 void AIS_AnimationObject::update(const AIS_AnimationProgress& theProgress)
 {

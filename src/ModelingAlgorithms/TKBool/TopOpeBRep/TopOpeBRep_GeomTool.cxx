@@ -16,13 +16,11 @@
 #include <TopOpeBRepDS_Curve.hpp>
 #include <TopOpeBRepTool_CurveTool.hpp>
 
-//=================================================================================================
-
 void TopOpeBRep_GeomTool::MakeCurves(const double                min,
                                      const double                max,
                                      const TopOpeBRep_LineInter& L,
-                                     const TopoDS_Shape& /*S1*/,
-                                     const TopoDS_Shape& /*S2*/,
+                                     const TopoDS_Shape&,
+                                     const TopoDS_Shape&,
                                      TopOpeBRepDS_Curve&        C,
                                      occ::handle<Geom2d_Curve>& PC1,
                                      occ::handle<Geom2d_Curve>& PC2)
@@ -36,7 +34,7 @@ void TopOpeBRep_GeomTool::MakeCurves(const double                min,
 
     case TopOpeBRep_WALKING:
     {
-      // make BSplines of degree 1
+
       C3D = MakeBSpline1fromWALKING3d(L);
       PC1 = MakeBSpline1fromWALKING2d(L, 1);
       PC2 = MakeBSpline1fromWALKING2d(L, 2);
@@ -57,7 +55,7 @@ void TopOpeBRep_GeomTool::MakeCurves(const double                min,
     case TopOpeBRep_PARABOLA:
     case TopOpeBRep_HYPERBOLA:
     {
-      C3D = L.Curve(min, max); // Trimmed
+      C3D = L.Curve(min, max);
       break;
     }
     case TopOpeBRep_ANALYTIC:
@@ -72,8 +70,6 @@ void TopOpeBRep_GeomTool::MakeCurves(const double                min,
   C.DefineCurve(C3D, tol, IsWalk);
   C.SetRange(min, max);
 }
-
-//=================================================================================================
 
 void TopOpeBRep_GeomTool::MakeCurve(const double                min,
                                     const double                max,
@@ -103,9 +99,9 @@ void TopOpeBRep_GeomTool::MakeCurve(const double                min,
       else if (typeline == TopOpeBRep_ELLIPSE)
         C3D = L.Curve();
       else if (typeline == TopOpeBRep_PARABOLA)
-        C3D = L.Curve(min, max); // Trimmed
+        C3D = L.Curve(min, max);
       else if (typeline == TopOpeBRep_HYPERBOLA)
-        C3D = L.Curve(min, max); // Trimmed
+        C3D = L.Curve(min, max);
 
       break;
 
@@ -118,15 +114,13 @@ void TopOpeBRep_GeomTool::MakeCurve(const double                min,
   }
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> TopOpeBRep_GeomTool::MakeBSpline1fromWALKING3d(
   const TopOpeBRep_LineInter& L)
 {
   int                            ip;
   TopOpeBRep_WPointInterIterator itW(L);
   int                            nbpoints = L.NbWPoint();
-  // Define points3d with the walking 3d points of <L>
+
   NCollection_Array1<gp_Pnt> points3d(1, nbpoints);
   for (ip = 1, itW.Init(); itW.More(); ip++, itW.Next())
   {
@@ -136,8 +130,6 @@ occ::handle<Geom_Curve> TopOpeBRep_GeomTool::MakeBSpline1fromWALKING3d(
   return C;
 }
 
-//=================================================================================================
-
 occ::handle<Geom2d_Curve> TopOpeBRep_GeomTool::MakeBSpline1fromWALKING2d(
   const TopOpeBRep_LineInter& L,
   const int                   SI)
@@ -145,7 +137,7 @@ occ::handle<Geom2d_Curve> TopOpeBRep_GeomTool::MakeBSpline1fromWALKING2d(
   int                            ip;
   TopOpeBRep_WPointInterIterator itW(L);
   int                            nbpoints = L.NbWPoint();
-  // Define points2d with the walking 2d points of <L>
+
   NCollection_Array1<gp_Pnt2d> points2d(1, nbpoints);
   for (ip = 1, itW.Init(); itW.More(); ip++, itW.Next())
   {

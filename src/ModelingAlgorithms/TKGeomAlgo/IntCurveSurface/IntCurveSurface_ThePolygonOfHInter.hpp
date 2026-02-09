@@ -26,7 +26,6 @@ public:
   Standard_EXPORT IntCurveSurface_ThePolygonOfHInter(const occ::handle<Adaptor3d_Curve>& Curve,
                                                      const NCollection_Array1<double>&   Upars);
 
-  //! Give the bounding box of the polygon.
   const Bnd_Box& Bounding() const { return TheBnd; }
 
   double DeflectionOverEstimation() const { return TheDeflection; }
@@ -39,30 +38,18 @@ public:
 
   void Closed(const bool flag) { ClosedPolygon = flag; }
 
-  // clang-format off
-  bool Closed() const { return false; } // -- Voir si le cas Closed est traitable
+  bool Closed() const { return false; }
 
-  // clang-format on
-
-  //! Give the number of Segments in the polyline.
   int NbSegments() const { return NbPntIn - 1; }
 
-  //! Give the point of range Index in the Polygon.
   const gp_Pnt& BeginOfSeg(const int theIndex) const { return ThePnts(theIndex); }
 
-  //! Give the point of range Index in the Polygon.
   const gp_Pnt& EndOfSeg(const int theIndex) const { return ThePnts(theIndex + 1); }
 
-  //! Returns the parameter (On the curve)
-  //! of the first point of the Polygon
   double InfParameter() const { return Binf; }
 
-  //! Returns the parameter (On the curve)
-  //! of the last point of the Polygon
   double SupParameter() const { return Bsup; }
 
-  //! Give an approximation of the parameter on the curve
-  //! according to the discretization of the Curve.
   Standard_EXPORT double ApproxParamOnCurve(const int Index, const double ParamOnLine) const;
 
   Standard_EXPORT void Dump() const;

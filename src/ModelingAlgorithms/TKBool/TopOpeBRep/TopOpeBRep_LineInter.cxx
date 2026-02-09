@@ -37,7 +37,6 @@ extern bool TopOpeBRep_GetcontextALWLNBP(int&);
 extern bool TopOpeBRep_GettraceCONIC();
 #endif
 
-//-----------------------------------------------------------------------
 static void FUN_ALINETOWLINE(const occ::handle<IntPatch_ALine>&                AL,
                              const occ::handle<BRepAdaptor_Surface>&           surf1,
                              const occ::handle<BRepAdaptor_Surface>&           surf2,
@@ -54,13 +53,11 @@ static void FUN_ALINETOWLINE(const occ::handle<IntPatch_ALine>&                A
   AToL.MakeWLine(AL, theLines);
 }
 
-//=================================================================================================
-
 void TopOpeBRep_LineInter::SetLine(const occ::handle<IntPatch_Line>& L,
                                    const BRepAdaptor_Surface&        S1,
                                    const BRepAdaptor_Surface&        S2)
 {
-  // load line according to its type
+
   myIL                = L;
   IntPatch_IType type = L->ArcType();
   switch (type)
@@ -106,12 +103,11 @@ void TopOpeBRep_LineInter::SetLine(const occ::handle<IntPatch_Line>& L,
     case IntPatch_Walking:
       myILW = occ::down_cast<IntPatch_WLine>(L);
       break;
-    default: //"geometric" line
+    default:
       myILG = occ::down_cast<IntPatch_GLine>(L);
       break;
   }
 
-  // transform an analytic line to a walking line
   if (myTypeLineCurve == TopOpeBRep_ANALYTIC)
   {
     NCollection_Sequence<occ::handle<IntPatch_Line>> aSLin;
@@ -123,7 +119,6 @@ void TopOpeBRep_LineInter::SetLine(const occ::handle<IntPatch_Line>& L,
     myTypeLineCurve = TopOpeBRep_WALKING;
   }
 
-  // number of points found on restriction(s)
   int n = 0;
   switch (myTypeLineCurve)
   {
@@ -157,7 +152,6 @@ void TopOpeBRep_LineInter::SetLine(const occ::handle<IntPatch_Line>& L,
   }
   myNbVPoint = n;
 
-  // prepare VPoints from intersection points
   myHAVP = new NCollection_HArray1<TopOpeBRep_VPointInter>(0, n);
   for (int i = 1; i <= n; i++)
   {
@@ -181,21 +175,15 @@ void TopOpeBRep_LineInter::SetLine(const occ::handle<IntPatch_Line>& L,
   }
 }
 
-//=================================================================================================
-
 const TopOpeBRep_VPointInter& TopOpeBRep_LineInter::VPoint(const int I) const
 {
   return myHAVP->Value(I);
 }
 
-//=================================================================================================
-
 TopOpeBRep_VPointInter& TopOpeBRep_LineInter::ChangeVPoint(const int I)
 {
   return myHAVP->ChangeValue(I);
 }
-
-//=================================================================================================
 
 void TopOpeBRep_LineInter::SetINL()
 {
@@ -224,8 +212,6 @@ void TopOpeBRep_LineInter::SetINL()
   myINL = true;
 }
 
-//=================================================================================================
-
 void TopOpeBRep_LineInter::SetIsVClosed()
 {
   if (myINL)
@@ -234,18 +220,10 @@ void TopOpeBRep_LineInter::SetIsVClosed()
     return;
   }
 
-  /*bool newV = true;
-  if (!newV) {
-    if (myTypeLineCurve != TopOpeBRep_WALKING) {
-      myIsVClosed = false;
-      return;
-    }
-  }*/
-
   TopOpeBRep_VPointInterIterator VPI(*this);
   int                            nV   = myNbVPoint;
   double                         pmin = RealLast(), pmax = RealFirst();
-  int                            imin = 0, imax = 0; // index of IsOnArc VPoints
+  int                            imin = 0, imax = 0;
   if (nV >= 2)
   {
     for (; VPI.More(); VPI.Next())
@@ -268,7 +246,7 @@ void TopOpeBRep_LineInter::SetIsVClosed()
       }
     }
     if (imax == 0)
-    { // no VPoint on restriction found
+    {
       myIsVClosed = true;
       return;
     }
@@ -292,8 +270,6 @@ void TopOpeBRep_LineInter::SetIsVClosed()
   }
 }
 
-//=================================================================================================
-
 void TopOpeBRep_LineInter::SetHasVPonR()
 {
   myHasVPonR = false;
@@ -308,8 +284,6 @@ void TopOpeBRep_LineInter::SetHasVPonR()
     }
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRep_LineInter::SetVPBounds()
 {
@@ -337,13 +311,11 @@ void TopOpeBRep_LineInter::SetVPBounds()
   myVPN = n;
 }
 
-//=================================================================================================
-
 void TopOpeBRep_LineInter::VPBounds(int& f, int& l, int& n) const
 {
   if (!myVPBDefined)
   {
-    TopOpeBRep_LineInter* p = (TopOpeBRep_LineInter*)this; // NYI deconst
+    TopOpeBRep_LineInter* p = (TopOpeBRep_LineInter*)this;
     p->SetOK(false);
     f = l = n = 0;
     return;
@@ -352,8 +324,6 @@ void TopOpeBRep_LineInter::VPBounds(int& f, int& l, int& n) const
   l = myVPL;
   n = myVPN;
 }
-
-//=================================================================================================
 
 bool TopOpeBRep_LineInter::IsPeriodic() const
 {
@@ -368,8 +338,6 @@ bool TopOpeBRep_LineInter::IsPeriodic() const
   return false;
 }
 
-//=================================================================================================
-
 double TopOpeBRep_LineInter::Period() const
 {
   double aFirst = 0.0, aLast = 0.0;
@@ -377,15 +345,13 @@ double TopOpeBRep_LineInter::Period() const
   return (aLast - aFirst);
 }
 
-//=================================================================================================
-
 void TopOpeBRep_LineInter::Bounds(double& theFirst, double& theLast) const
 {
   theFirst = 0.0;
   theLast  = 0.0;
   if (myILG.IsNull())
   {
-    TopOpeBRep_LineInter* aPtr = const_cast<TopOpeBRep_LineInter*>(this); // NYI deconst
+    TopOpeBRep_LineInter* aPtr = const_cast<TopOpeBRep_LineInter*>(this);
     aPtr->SetOK(false);
     return;
   }
@@ -406,8 +372,6 @@ void TopOpeBRep_LineInter::Bounds(double& theFirst, double& theLast) const
   }
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_LineInter::HasVInternal()
 {
   TopOpeBRep_VPointInterIterator VPI(*this);
@@ -418,8 +382,6 @@ bool TopOpeBRep_LineInter::HasVInternal()
   }
   return false;
 }
-
-//=================================================================================================
 
 int TopOpeBRep_LineInter::NbWPoint() const
 {
@@ -432,8 +394,6 @@ int TopOpeBRep_LineInter::NbWPoint() const
   }
   return 0;
 }
-
-//=================================================================================================
 
 const TopOpeBRep_WPointInter& TopOpeBRep_LineInter::WPoint(const int IW)
 {
@@ -451,11 +411,9 @@ const TopOpeBRep_WPointInter& TopOpeBRep_LineInter::WPoint(const int IW)
   return myCurrentWP;
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> TopOpeBRep_LineInter::Curve() const
 {
-  // Build the 3d curve
+
   occ::handle<Geom_Curve> C3D;
   switch (myTypeLineCurve)
   {
@@ -475,18 +433,16 @@ occ::handle<Geom_Curve> TopOpeBRep_LineInter::Curve() const
       C3D = new Geom_Hyperbola(myILG->Hyperbola());
       break;
     default:
-      TopOpeBRep_LineInter* p = (TopOpeBRep_LineInter*)this; // NYI deconst
+      TopOpeBRep_LineInter* p = (TopOpeBRep_LineInter*)this;
       p->SetOK(false);
       break;
   }
   return C3D;
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> TopOpeBRep_LineInter::Curve(const double parmin, const double parmax) const
 {
-  // Build the trimmed 3d curve
+
   occ::handle<Geom_Curve>        C3D  = Curve();
   occ::handle<Geom_TrimmedCurve> TC3D = new Geom_TrimmedCurve(C3D, parmin, parmax);
 #ifdef OCCT_DEBUG
@@ -500,8 +456,6 @@ occ::handle<Geom_Curve> TopOpeBRep_LineInter::Curve(const double parmin, const d
 #endif
   return TC3D;
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& TopOpeBRep_LineInter::Arc() const
 {
@@ -526,8 +480,6 @@ const TopoDS_Shape& TopOpeBRep_LineInter::Arc() const
     return myNullShape;
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_LineInter::ArcIsEdge(const int Index) const
 {
   if (myTypeLineCurve == TopOpeBRep_RESTRICTION)
@@ -538,16 +490,12 @@ bool TopOpeBRep_LineInter::ArcIsEdge(const int Index) const
   return false;
 }
 
-//=================================================================================================
-
 bool TopOpeBRep_LineInter::HasFirstPoint() const
 {
   if (myILG.IsNull())
     throw Standard_ProgramError("TopOpeBRep_LineInter::HasFirstPoint sur line != GLine");
   return myILG->HasFirstPoint();
 }
-
-//=================================================================================================
 
 bool TopOpeBRep_LineInter::HasLastPoint() const
 {
@@ -556,8 +504,6 @@ bool TopOpeBRep_LineInter::HasLastPoint() const
   return myILG->HasLastPoint();
 }
 
-//=================================================================================================
-
 void TopOpeBRep_LineInter::ComputeFaceFaceTransition()
 {
   TopAbs_Orientation F1ori = myF1.Orientation();
@@ -565,8 +511,6 @@ void TopOpeBRep_LineInter::ComputeFaceFaceTransition()
   myLineTonF1              = TopOpeBRep_FFTransitionTool::ProcessFaceTransition(*this, 1, F2ori);
   myLineTonF2              = TopOpeBRep_FFTransitionTool::ProcessFaceTransition(*this, 2, F1ori);
 }
-
-//=================================================================================================
 
 const TopOpeBRepDS_Transition& TopOpeBRep_LineInter::FaceFaceTransition(const int I) const
 {
@@ -577,16 +521,12 @@ const TopOpeBRepDS_Transition& TopOpeBRep_LineInter::FaceFaceTransition(const in
   throw Standard_ProgramError("TopOpeBRep_LineInter::FaceFaceTransition");
 }
 
-//=================================================================================================
-
 void TopOpeBRep_LineInter::DumpType() const
 {
 #ifdef OCCT_DEBUG
   TopOpeBRep::Print(myTypeLineCurve, std::cout);
 #endif
 }
-
-//=================================================================================================
 
 void TopOpeBRep_LineInter::DumpVPoint
 #ifndef OCCT_DEBUG
@@ -606,8 +546,6 @@ void TopOpeBRep_LineInter::DumpVPoint
 #endif
 }
 
-//=================================================================================================
-
 void TopOpeBRep_LineInter::DumpBipoint
 #ifndef OCCT_DEBUG
   (const TopOpeBRep_Bipoint&, const TCollection_AsciiString&, const TCollection_AsciiString&) const
@@ -625,14 +563,10 @@ void TopOpeBRep_LineInter::DumpBipoint
 #endif
 }
 
-//=================================================================================================
-
 void TopOpeBRep_LineInter::SetOK(const bool B)
 {
   myOK = B;
 }
-
-//=================================================================================================
 
 void TopOpeBRep_LineInter::SetTraceIndex(const int exF1, const int exF2)
 {
@@ -640,15 +574,11 @@ void TopOpeBRep_LineInter::SetTraceIndex(const int exF1, const int exF2)
   myexF2 = exF2;
 }
 
-//=================================================================================================
-
 void TopOpeBRep_LineInter::GetTraceIndex(int& exF1, int& exF2) const
 {
   exF1 = myexF1;
   exF2 = myexF2;
 }
-
-//=================================================================================================
 
 Standard_OStream& TopOpeBRep_LineInter::DumpLineTransitions(Standard_OStream& OS) const
 {

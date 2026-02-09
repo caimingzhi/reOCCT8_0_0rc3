@@ -13,27 +13,19 @@ namespace MathLin
 {
   using namespace MathUtils;
 
-  //! Result for LU decomposition.
   struct LUResult
   {
     Status                            Status = Status::NotConverged;
-    std::optional<math_Matrix>        LU;    //!< Combined L and U matrices
-    std::optional<math_IntegerVector> Pivot; //!< Pivot indices
+    std::optional<math_Matrix>        LU;
+    std::optional<math_IntegerVector> Pivot;
     std::optional<double>             Determinant;
-    int                               Sign = 1; //!< Sign from row interchanges
+    int                               Sign = 1;
 
     bool IsDone() const { return Status == Status::OK; }
 
     explicit operator bool() const { return IsDone(); }
   };
 
-  //! Perform LU decomposition of matrix A with partial pivoting.
-  //! Decomposes A into L*U where L is lower triangular with unit diagonal
-  //! and U is upper triangular. The result stores L and U in a combined matrix.
-  //!
-  //! @param theA input square matrix
-  //! @param theMinPivot minimum pivot value (smaller treated as singular)
-  //! @return LU decomposition result
   inline LUResult LU(const math_Matrix& theA, double theMinPivot = 1.0e-20)
   {
     LUResult aResult;
@@ -45,14 +37,12 @@ namespace MathLin
     const int aRowCount = aRowUpper - aRowLower + 1;
     const int aColCount = aColUpper - aColLower + 1;
 
-    // Check for square matrix
     if (aRowCount != aColCount)
     {
       aResult.Status = Status::InvalidInput;
       return aResult;
     }
 
-    // Initialize LU matrix as copy of A
     aResult.LU    = theA;
     aResult.Pivot = math_IntegerVector(aRowLower, aRowUpper);
     aResult.Sign  = 1;
@@ -60,7 +50,6 @@ namespace MathLin
     math_Matrix&        aLU    = *aResult.LU;
     math_IntegerVector& aPivot = *aResult.Pivot;
 
-    // Scaling factors for implicit pivoting
     math_Vector aScale(aRowLower, aRowUpper);
     for (int i = aRowLower; i <= aRowUpper; ++i)
     {
@@ -75,16 +64,15 @@ namespace MathLin
       }
       if (aMax < theMinPivot)
       {
-        aResult.Status = Status::NumericalError; // Singular matrix
+        aResult.Status = Status::NumericalError;
         return aResult;
       }
       aScale(i) = 1.0 / aMax;
     }
 
-    // Crout's algorithm with partial pivoting
     for (int k = aRowLower; k <= aRowUpper; ++k)
     {
-      // Find pivot
+
       double aMaxScaled = 0.0;
       int    aPivotRow  = k;
 
@@ -98,7 +86,6 @@ namespace MathLin
         }
       }
 
-      // Swap rows if needed
       if (aPivotRow != k)
       {
         for (int j = aColLower; j <= aColUpper; ++j)
@@ -110,14 +97,12 @@ namespace MathLin
       }
       aPivot(k) = aPivotRow;
 
-      // Check for singular matrix
       if (std::abs(aLU(k, k)) < theMinPivot)
       {
         aResult.Status = Status::NumericalError;
         return aResult;
       }
 
-      // Eliminate below diagonal
       for (int i = k + 1; i <= aRowUpper; ++i)
       {
         aLU(i, k) /= aLU(k, k);
@@ -129,7 +114,6 @@ namespace MathLin
       }
     }
 
-    // Compute determinant
     aResult.Determinant = static_cast<double>(aResult.Sign);
     for (int i = aRowLower; i <= aRowUpper; ++i)
     {
@@ -140,19 +124,12 @@ namespace MathLin
     return aResult;
   }
 
-  //! Solve linear system AX = B using LU decomposition.
-  //!
-  //! @param theA coefficient matrix (square)
-  //! @param theB right-hand side vector
-  //! @param theMinPivot minimum pivot value
-  //! @return result containing solution vector
   inline LinearResult Solve(const math_Matrix& theA,
                             const math_Vector& theB,
                             double             theMinPivot = 1.0e-20)
   {
     LinearResult aResult;
 
-    // Perform LU decomposition
     LUResult aLURes = LU(theA, theMinPivot);
     if (!aLURes.IsDone())
     {
@@ -163,7 +140,6 @@ namespace MathLin
     const int aRowLower = theA.LowerRow();
     const int aRowUpper = theA.UpperRow();
 
-    // Check dimensions
     if (theB.Lower() != aRowLower || theB.Upper() != aRowUpper)
     {
       aResult.Status = Status::InvalidInput;
@@ -173,16 +149,14 @@ namespace MathLin
     const math_Matrix&        aLU    = *aLURes.LU;
     const math_IntegerVector& aPivot = *aLURes.Pivot;
 
-    // Copy B to working vector (we modify it in-place like the legacy algorithm)
     math_Vector aX = theB;
 
-    // Forward substitution with in-place permutation (matches legacy LU_Solve)
     int aFirstNonZero = 0;
     for (int i = aRowLower; i <= aRowUpper; ++i)
     {
       const int aPivotIdx = aPivot(i);
       double    aSum      = aX(aPivotIdx);
-      aX(aPivotIdx)       = aX(i); // Swap elements in-place
+      aX(aPivotIdx)       = aX(i);
 
       if (aFirstNonZero != 0)
       {
@@ -198,7 +172,6 @@ namespace MathLin
       aX(i) = aSum;
     }
 
-    // Back substitution (solve Ux = y)
     for (int i = aRowUpper; i >= aRowLower; --i)
     {
       double aSum = aX(i);
@@ -215,20 +188,12 @@ namespace MathLin
     return aResult;
   }
 
-  //! Solve multiple linear systems AX = B where B is a matrix.
-  //! Each column of B is a separate right-hand side.
-  //!
-  //! @param theA coefficient matrix (square)
-  //! @param theB right-hand side matrix
-  //! @param theMinPivot minimum pivot value
-  //! @return result containing solution matrix
   inline LinearResult SolveMultiple(const math_Matrix& theA,
                                     const math_Matrix& theB,
                                     double             theMinPivot = 1.0e-20)
   {
     LinearResult aResult;
 
-    // Perform LU decomposition
     LUResult aLURes = LU(theA, theMinPivot);
     if (!aLURes.IsDone())
     {
@@ -239,7 +204,6 @@ namespace MathLin
     const int aRowLower = theA.LowerRow();
     const int aRowUpper = theA.UpperRow();
 
-    // Check dimensions
     if (theB.LowerRow() != aRowLower || theB.UpperRow() != aRowUpper)
     {
       aResult.Status = Status::InvalidInput;
@@ -249,25 +213,23 @@ namespace MathLin
     const math_Matrix&        aLU    = *aLURes.LU;
     const math_IntegerVector& aPivot = *aLURes.Pivot;
 
-    // Solve for each column of B
     math_Matrix aX(theB.LowerRow(), theB.UpperRow(), theB.LowerCol(), theB.UpperCol());
 
     for (int col = theB.LowerCol(); col <= theB.UpperCol(); ++col)
     {
-      // Extract column as working vector
+
       math_Vector aWork(aRowLower, aRowUpper);
       for (int i = aRowLower; i <= aRowUpper; ++i)
       {
         aWork(i) = theB(i, col);
       }
 
-      // Forward substitution with in-place permutation
       int aFirstNonZero = 0;
       for (int i = aRowLower; i <= aRowUpper; ++i)
       {
         const int aPivotIdx = aPivot(i);
         double    aSum      = aWork(aPivotIdx);
-        aWork(aPivotIdx)    = aWork(i); // Swap elements in-place
+        aWork(aPivotIdx)    = aWork(i);
 
         if (aFirstNonZero != 0)
         {
@@ -283,7 +245,6 @@ namespace MathLin
         aWork(i) = aSum;
       }
 
-      // Back substitution
       for (int i = aRowUpper; i >= aRowLower; --i)
       {
         double aSum = aWork(i);
@@ -294,7 +255,6 @@ namespace MathLin
         aWork(i) = aSum / aLU(i, i);
       }
 
-      // Copy result to output matrix
       for (int i = aRowLower; i <= aRowUpper; ++i)
       {
         aX(i, col) = aWork(i);
@@ -303,7 +263,7 @@ namespace MathLin
 
     aResult.Status      = Status::OK;
     aResult.Determinant = aLURes.Determinant;
-    // Store first column as solution vector for compatibility
+
     math_Vector aSol(aRowLower, aRowUpper);
     for (int i = aRowLower; i <= aRowUpper; ++i)
     {
@@ -313,11 +273,6 @@ namespace MathLin
     return aResult;
   }
 
-  //! Compute determinant of matrix A.
-  //!
-  //! @param theA input square matrix
-  //! @param theMinPivot minimum pivot value
-  //! @return result containing determinant value
   inline LinearResult Determinant(const math_Matrix& theA, double theMinPivot = 1.0e-20)
   {
     LinearResult aResult;
@@ -335,16 +290,10 @@ namespace MathLin
     return aResult;
   }
 
-  //! Compute inverse of matrix A.
-  //!
-  //! @param theA input square matrix
-  //! @param theMinPivot minimum pivot value
-  //! @return result containing inverse matrix
   inline InverseResult Invert(const math_Matrix& theA, double theMinPivot = 1.0e-20)
   {
     InverseResult aResult;
 
-    // Perform LU decomposition
     LUResult aLURes = LU(theA, theMinPivot);
     if (!aLURes.IsDone())
     {
@@ -360,26 +309,24 @@ namespace MathLin
     const math_Matrix&        aLU    = *aLURes.LU;
     const math_IntegerVector& aPivot = *aLURes.Pivot;
 
-    // Compute inverse column by column using LU_Solve approach
     math_Matrix aInv(aRowLower, aRowUpper, aColLower, aColUpper, 0.0);
     math_Vector aCol(aRowLower, aRowUpper);
 
     for (int col = aColLower; col <= aColUpper; ++col)
     {
-      // Initialize column as unit vector
+
       for (int i = aRowLower; i <= aRowUpper; ++i)
       {
         aCol(i) = 0.0;
       }
       aCol(col - aColLower + aRowLower) = 1.0;
 
-      // Forward substitution with in-place permutation
       int aFirstNonZero = 0;
       for (int i = aRowLower; i <= aRowUpper; ++i)
       {
         const int aPivotIdx = aPivot(i);
         double    aSum      = aCol(aPivotIdx);
-        aCol(aPivotIdx)     = aCol(i); // Swap elements in-place
+        aCol(aPivotIdx)     = aCol(i);
 
         if (aFirstNonZero != 0)
         {
@@ -395,7 +342,6 @@ namespace MathLin
         aCol(i) = aSum;
       }
 
-      // Back substitution
       for (int i = aRowUpper; i >= aRowLower; --i)
       {
         double aSum = aCol(i);
@@ -406,7 +352,6 @@ namespace MathLin
         aCol(i) = aSum / aLU(i, i);
       }
 
-      // Copy result to inverse matrix
       for (int i = aRowLower; i <= aRowUpper; ++i)
       {
         aInv(i, col) = aCol(i);

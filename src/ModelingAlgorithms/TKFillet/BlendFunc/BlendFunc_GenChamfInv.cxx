@@ -4,8 +4,6 @@
 #include <math_Matrix.hpp>
 #include <Precision.hpp>
 
-//=================================================================================================
-
 BlendFunc_GenChamfInv::BlendFunc_GenChamfInv(const occ::handle<Adaptor3d_Surface>& S1,
                                              const occ::handle<Adaptor3d_Surface>& S2,
                                              const occ::handle<Adaptor3d_Curve>&   C)
@@ -17,22 +15,16 @@ BlendFunc_GenChamfInv::BlendFunc_GenChamfInv(const occ::handle<Adaptor3d_Surface
 {
 }
 
-//=================================================================================================
-
 int BlendFunc_GenChamfInv::NbEquations() const
 {
   return 4;
 }
-
-//=================================================================================================
 
 void BlendFunc_GenChamfInv::Set(const bool OnFirst, const occ::handle<Adaptor2d_Curve2d>& C)
 {
   first = OnFirst;
   csurf = C;
 }
-
-//=================================================================================================
 
 void BlendFunc_GenChamfInv::GetTolerance(math_Vector& Tolerance, const double Tol) const
 {
@@ -49,8 +41,6 @@ void BlendFunc_GenChamfInv::GetTolerance(math_Vector& Tolerance, const double To
     Tolerance(4) = surf1->VResolution(Tol);
   }
 }
-
-//=================================================================================================
 
 void BlendFunc_GenChamfInv::GetBounds(math_Vector& InfBound, math_Vector& SupBound) const
 {
@@ -98,8 +88,6 @@ void BlendFunc_GenChamfInv::GetBounds(math_Vector& InfBound, math_Vector& SupBou
     }
   }
 }
-
-//=================================================================================================
 
 bool BlendFunc_GenChamfInv::Values(const math_Vector& X, math_Vector& F, math_Matrix& D)
 {

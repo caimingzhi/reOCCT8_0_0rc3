@@ -10,8 +10,6 @@ class Expr_NamedFunction;
 class Expr_NamedExpression;
 class TCollection_AsciiString;
 
-//! Implements general services for interpretation of
-//! expressions.
 class ExprIntrp_Generator : public Standard_Transient
 {
 
@@ -24,15 +22,9 @@ public:
 
   Standard_EXPORT const NCollection_Sequence<occ::handle<Expr_NamedFunction>>& GetFunctions() const;
 
-  //! Returns NamedExpression with name <name> already
-  //! interpreted if it exists. Returns a null handle if
-  //! not.
   Standard_EXPORT occ::handle<Expr_NamedExpression> GetNamed(
     const TCollection_AsciiString& name) const;
 
-  //! Returns NamedFunction with name <name> already
-  //! interpreted if it exists. Returns a null handle if
-  //! not.
   Standard_EXPORT occ::handle<Expr_NamedFunction> GetFunction(
     const TCollection_AsciiString& name) const;
 

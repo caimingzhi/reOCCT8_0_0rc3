@@ -11,7 +11,6 @@ class StepShape_MeasureQualification;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for MeasureQualification
 class RWStepShape_RWMeasureQualification
 {
 public:

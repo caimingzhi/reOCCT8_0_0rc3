@@ -1,4 +1,4 @@
-// Created on : Sat May 02 12:41:15 2020
+
 
 #include "RWStepKinematics_RWPrismaticPairWithRange.hpp"
 
@@ -12,11 +12,7 @@
 #include <StepKinematics_KinematicJoint.hpp>
 #include <Standard_Real.hpp>
 
-//=================================================================================================
-
 RWStepKinematics_RWPrismaticPairWithRange::RWStepKinematics_RWPrismaticPairWithRange() = default;
-
-//=================================================================================================
 
 void RWStepKinematics_RWPrismaticPairWithRange::ReadStep(
   const occ::handle<StepData_StepReaderData>&               theData,
@@ -24,16 +20,12 @@ void RWStepKinematics_RWPrismaticPairWithRange::ReadStep(
   occ::handle<Interface_Check>&                             theArch,
   const occ::handle<StepKinematics_PrismaticPairWithRange>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 14, theArch, "prismatic_pair_with_range"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theArch, aRepresentationItem_Name);
-
-  // Inherited fields of ItemDefinedTransformation
 
   occ::handle<TCollection_HAsciiString> aItemDefinedTransformation_Name;
   theData->ReadString(theNum,
@@ -74,8 +66,6 @@ void RWStepKinematics_RWPrismaticPairWithRange::ReadStep(
                       STANDARD_TYPE(StepRepr_RepresentationItem),
                       aItemDefinedTransformation_TransformItem2);
 
-  // Inherited fields of KinematicPair
-
   occ::handle<StepKinematics_KinematicJoint> aKinematicPair_Joint;
   theData->ReadEntity(theNum,
                       6,
@@ -83,8 +73,6 @@ void RWStepKinematics_RWPrismaticPairWithRange::ReadStep(
                       theArch,
                       STANDARD_TYPE(StepKinematics_KinematicJoint),
                       aKinematicPair_Joint);
-
-  // Inherited fields of LowOrderKinematicPair
 
   bool aLowOrderKinematicPair_TX;
   theData->ReadBoolean(theNum,
@@ -128,8 +116,6 @@ void RWStepKinematics_RWPrismaticPairWithRange::ReadStep(
                        theArch,
                        aLowOrderKinematicPair_RZ);
 
-  // Own fields of PrismaticPairWithRange
-
   double aLowerLimitActualTranslation;
   bool   hasLowerLimitActualTranslation = true;
   if (theData->IsParamDefined(theNum, 13))
@@ -162,7 +148,6 @@ void RWStepKinematics_RWPrismaticPairWithRange::ReadStep(
     aUpperLimitActualTranslation   = 0;
   }
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aItemDefinedTransformation_Name,
                hasItemDefinedTransformation_Description,
@@ -182,18 +167,12 @@ void RWStepKinematics_RWPrismaticPairWithRange::ReadStep(
                aUpperLimitActualTranslation);
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWPrismaticPairWithRange::WriteStep(
   StepData_StepWriter&                                      theSW,
   const occ::handle<StepKinematics_PrismaticPairWithRange>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Inherited fields of ItemDefinedTransformation
 
   theSW.Send(theEnt->ItemDefinedTransformation()->Name());
 
@@ -208,11 +187,7 @@ void RWStepKinematics_RWPrismaticPairWithRange::WriteStep(
 
   theSW.Send(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Own fields of KinematicPair
-
   theSW.Send(theEnt->Joint());
-
-  // Own fields of LowOrderKinematicPair
 
   theSW.SendBoolean(theEnt->TX());
 
@@ -225,8 +200,6 @@ void RWStepKinematics_RWPrismaticPairWithRange::WriteStep(
   theSW.SendBoolean(theEnt->RY());
 
   theSW.SendBoolean(theEnt->RZ());
-
-  // Own fields of PrismaticPairWithRange
 
   if (theEnt->HasLowerLimitActualTranslation())
   {
@@ -243,26 +216,14 @@ void RWStepKinematics_RWPrismaticPairWithRange::WriteStep(
     theSW.SendUndef();
 }
 
-//=================================================================================================
-
 void RWStepKinematics_RWPrismaticPairWithRange::Share(
   const occ::handle<StepKinematics_PrismaticPairWithRange>& theEnt,
   Interface_EntityIterator&                                 iter) const
 {
 
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of ItemDefinedTransformation
-
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem1());
 
   iter.AddItem(theEnt->ItemDefinedTransformation()->TransformItem2());
 
-  // Inherited fields of KinematicPair
-
   iter.AddItem(theEnt->StepKinematics_KinematicPair::Joint());
-
-  // Inherited fields of LowOrderKinematicPair
-
-  // Own fields of PrismaticPairWithRange
 }

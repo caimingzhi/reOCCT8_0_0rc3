@@ -12,7 +12,6 @@ class StepVisual_ContextDependentInvisibility : public StepVisual_Invisibility
 {
 
 public:
-  //! Returns a ContextDependentInvisibility
   Standard_EXPORT StepVisual_ContextDependentInvisibility();
 
   Standard_EXPORT void Init(

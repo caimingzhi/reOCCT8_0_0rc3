@@ -1,25 +1,6 @@
-// Copyright (c) 1998-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Standard_ErrorHandler.hpp>
-
-// During [sig]setjmp()/[sig]longjmp() K_SETJMP is non zero (try)
-// So if there is an abort request and if K_SETJMP is non zero, the abort
-// request will be ignored. If the abort request do a raise during a setjmp
-// or a longjmp, there will be a "terminating SEGV" impossible to handle.
-
-// The top of the Errors Stack
 
 static thread_local Standard_ErrorHandler* Top = nullptr;
 
@@ -29,18 +10,14 @@ Standard_ErrorHandler::Standard_ErrorHandler()
   Top        = this;
 }
 
-//=================================================================================================
-
 void Standard_ErrorHandler::Destroy()
 {
   Unlink();
 }
 
-//=================================================================================================
-
 void Standard_ErrorHandler::Unlink()
 {
-  // Unlink handlers that were created after this one (shouldn't happen in normal usage)
+
   while (Top != nullptr && Top != this)
   {
     Top->Unlink();
@@ -53,27 +30,22 @@ void Standard_ErrorHandler::Unlink()
 
   myPrevious = nullptr;
 
-  // unlink and destroy all registered callbacks
   void* aPtr    = myCallbackPtr;
   myCallbackPtr = nullptr;
   while (aPtr)
   {
     Standard_ErrorHandler::Callback* aCallback = (Standard_ErrorHandler::Callback*)aPtr;
     aPtr                                       = aCallback->myNext;
-    // Call destructor explicitly, as we know that it will not be called automatically
+
     aCallback->DestroyCallback();
   }
 }
-
-//=================================================================================================
 
 bool Standard_ErrorHandler::IsInTryBlock()
 {
   Standard_ErrorHandler* anActive = FindHandler();
   return anActive != nullptr;
 }
-
-//=================================================================================================
 
 void Standard_ErrorHandler::Raise()
 {
@@ -84,7 +56,6 @@ void Standard_ErrorHandler::Raise()
     exit(1);
   }
 
-  // Visit the variant and throw the appropriate exception type
   std::visit(
     [](auto&& theException)
     {
@@ -96,8 +67,6 @@ void Standard_ErrorHandler::Raise()
     },
     myCaughtError);
 }
-
-//=================================================================================================
 
 Standard_ErrorHandler* Standard_ErrorHandler::FindHandler()
 {
@@ -116,12 +85,10 @@ Standard_ErrorHandler::Callback::~Callback()
 void Standard_ErrorHandler::Callback::RegisterCallback()
 {
   if (myHandler)
-    return; // already registered
+    return;
 
-  // find current active exception handler
   Standard_ErrorHandler* aHandler = Standard_ErrorHandler::FindHandler();
 
-  // if found, add this callback object first to the list
   if (aHandler)
   {
     myHandler = aHandler;

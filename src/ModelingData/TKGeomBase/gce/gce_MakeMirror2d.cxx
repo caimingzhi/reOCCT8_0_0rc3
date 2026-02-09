@@ -5,36 +5,20 @@
 #include <gp_Pnt2d.hpp>
 #include <gp_Trsf2d.hpp>
 
-//=========================================================================
-//   Creation d une symetrie 2d de gp par rapport a un point.             +
-//=========================================================================
 gce_MakeMirror2d::gce_MakeMirror2d(const gp_Pnt2d& Point)
 {
   TheMirror2d.SetMirror(Point);
 }
-
-//=========================================================================
-//   Creation d une symetrie 2d de gp par rapport a une droite.           +
-//=========================================================================
 
 gce_MakeMirror2d::gce_MakeMirror2d(const gp_Ax2d& Axis)
 {
   TheMirror2d.SetMirror(Axis);
 }
 
-//=========================================================================
-//   Creation d une symetrie 2d de gp par rapport a une droite.           +
-//=========================================================================
-
 gce_MakeMirror2d::gce_MakeMirror2d(const gp_Lin2d& Line)
 {
   TheMirror2d.SetMirror(gp_Ax2d(Line.Location(), Line.Direction()));
 }
-
-//=========================================================================
-//   Creation d une symetrie 2d de gp par rapport a une droite definie    +
-//   par un point et une direction.                                       +
-//=========================================================================
 
 gce_MakeMirror2d::gce_MakeMirror2d(const gp_Pnt2d& Point, const gp_Dir2d& Direc)
 {

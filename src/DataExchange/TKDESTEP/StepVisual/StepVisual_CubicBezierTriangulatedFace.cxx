@@ -1,14 +1,10 @@
-// Created on : Thu Mar 24 18:30:11 2022
+
 
 #include <StepVisual_CubicBezierTriangulatedFace.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(StepVisual_CubicBezierTriangulatedFace, StepVisual_TessellatedFace)
 
-//=================================================================================================
-
 StepVisual_CubicBezierTriangulatedFace::StepVisual_CubicBezierTriangulatedFace() = default;
-
-//=================================================================================================
 
 void StepVisual_CubicBezierTriangulatedFace::Init(
   const occ::handle<TCollection_HAsciiString>&    theRepresentationItem_Name,
@@ -29,14 +25,10 @@ void StepVisual_CubicBezierTriangulatedFace::Init(
   myCtriangles = theCtriangles;
 }
 
-//=================================================================================================
-
 occ::handle<NCollection_HArray2<int>> StepVisual_CubicBezierTriangulatedFace::Ctriangles() const
 {
   return myCtriangles;
 }
-
-//=================================================================================================
 
 void StepVisual_CubicBezierTriangulatedFace::SetCtriangles(
   const occ::handle<NCollection_HArray2<int>>& theCtriangles)

@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_SecurityClassificationLevel;
 class StepData_StepWriter;
 
-//! Read & Write Module for SecurityClassificationLevel
 class RWStepBasic_RWSecurityClassificationLevel
 {
 public:

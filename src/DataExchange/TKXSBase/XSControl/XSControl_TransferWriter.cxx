@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_Check.hpp>
 #include <Interface_CheckIterator.hpp>
@@ -29,8 +18,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XSControl_TransferWriter, Standard_Transient)
 
-//=================================================================================================
-
 void XSControl_TransferWriter::Clear(const int mode)
 {
   if (mode < 0 || myTransferWriter.IsNull())
@@ -39,12 +26,10 @@ void XSControl_TransferWriter::Clear(const int mode)
     myTransferWriter->Clear();
 }
 
-//=================================================================================================
-
 void XSControl_TransferWriter::PrintStats(const int, const int) const
 {
   Message_Messenger::StreamBuffer sout = myTransferWriter->Messenger()->SendInfo();
-  //  A ameliorer ... !
+
   sout << "\n*******************************************************************\n";
   sout << "******        Statistics on Transfer (Write)                 ******" << std::endl;
   sout << "\n*******************************************************************\n";
@@ -54,10 +39,6 @@ void XSControl_TransferWriter::PrintStats(const int, const int) const
     sout << "  I.E.  " << modehelp;
   sout << "       ******" << std::endl;
 }
-
-//  ##########    LES ACTIONS    ##########
-
-//=================================================================================================
 
 bool XSControl_TransferWriter::RecognizeTransient(const occ::handle<Standard_Transient>& obj)
 {
@@ -69,8 +50,6 @@ bool XSControl_TransferWriter::RecognizeTransient(const occ::handle<Standard_Tra
     return RecognizeShape(sh);
   return myController->RecognizeWriteTransient(obj, myTransferMode);
 }
-
-//=================================================================================================
 
 IFSelect_ReturnStatus XSControl_TransferWriter::TransferWriteTransient(
   const occ::handle<Interface_InterfaceModel>& model,
@@ -111,8 +90,6 @@ IFSelect_ReturnStatus XSControl_TransferWriter::TransferWriteTransient(
   return status;
 }
 
-//=================================================================================================
-
 bool XSControl_TransferWriter::RecognizeShape(const TopoDS_Shape& shape)
 {
   if (myController.IsNull())
@@ -121,8 +98,6 @@ bool XSControl_TransferWriter::RecognizeShape(const TopoDS_Shape& shape)
     return false;
   return myController->RecognizeWriteShape(shape, myTransferMode);
 }
-
-//=================================================================================================
 
 IFSelect_ReturnStatus XSControl_TransferWriter::TransferWriteShape(
   const occ::handle<Interface_InterfaceModel>& theModel,
@@ -139,7 +114,7 @@ IFSelect_ReturnStatus XSControl_TransferWriter::TransferWriteShape(
 
   if (myTransferWriter.IsNull())
     myTransferWriter = new Transfer_FinderProcess;
-  //  effacer l actor : Controller s en charge
+
   occ::handle<Transfer_ActorOfFinderProcess> nulact;
   myTransferWriter->SetActor(nulact);
   occ::handle<Standard_Transient> resultat;
@@ -166,8 +141,6 @@ IFSelect_ReturnStatus XSControl_TransferWriter::TransferWriteShape(
   return status;
 }
 
-//=================================================================================================
-
 Interface_CheckIterator XSControl_TransferWriter::CheckList() const
 {
   Interface_CheckIterator chl;
@@ -191,8 +164,6 @@ Interface_CheckIterator XSControl_TransferWriter::CheckList() const
   }
   return chl;
 }
-
-//=================================================================================================
 
 Interface_CheckIterator XSControl_TransferWriter::ResultCheckList(
   const occ::handle<Interface_InterfaceModel>& model) const

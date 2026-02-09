@@ -20,8 +20,6 @@
 #include <Standard_Transient.hpp>
 #include <NCollection_List.hpp>
 
-//=================================================================================================
-
 Extrema_ExtCC::Extrema_ExtCC(const double TolC1, const double TolC2)
     : myIsFindSingleSolution(false),
       myDone(false),
@@ -35,8 +33,6 @@ Extrema_ExtCC::Extrema_ExtCC(const double TolC1, const double TolC2)
   myTol[1]            = TolC2;
   mydist11 = mydist12 = mydist21 = mydist22 = RealFirst();
 }
-
-//=================================================================================================
 
 Extrema_ExtCC::Extrema_ExtCC(const Adaptor3d_Curve& C1,
                              const Adaptor3d_Curve& C2,
@@ -58,8 +54,6 @@ Extrema_ExtCC::Extrema_ExtCC(const Adaptor3d_Curve& C1,
   Perform();
 }
 
-//=================================================================================================
-
 Extrema_ExtCC::Extrema_ExtCC(const Adaptor3d_Curve& C1,
                              const Adaptor3d_Curve& C2,
                              const double           TolC1,
@@ -76,14 +70,12 @@ Extrema_ExtCC::Extrema_ExtCC(const Adaptor3d_Curve& C1,
   Perform();
 }
 
-//=================================================================================================
-
 void Extrema_ExtCC::Initialize(const Adaptor3d_Curve& C1,
                                const Adaptor3d_Curve& C2,
                                const double           TolC1,
                                const double           TolC2)
 {
-  // myECC will be re-initialized by Perform()
+
   myDone = false;
   SetCurve(1, C1, C1.FirstParameter(), C1.LastParameter());
   SetCurve(2, C2, C2.FirstParameter(), C2.LastParameter());
@@ -91,8 +83,6 @@ void Extrema_ExtCC::Initialize(const Adaptor3d_Curve& C1,
   SetTolerance(2, TolC2);
   mydist11 = mydist12 = mydist21 = mydist22 = RealFirst();
 }
-
-//=================================================================================================
 
 void Extrema_ExtCC::Initialize(const Adaptor3d_Curve& C1,
                                const Adaptor3d_Curve& C2,
@@ -103,7 +93,7 @@ void Extrema_ExtCC::Initialize(const Adaptor3d_Curve& C1,
                                const double           TolC1,
                                const double           TolC2)
 {
-  // myECC will be re-initialized by Perform()
+
   myDone = false;
   SetCurve(1, C1, U1, U2);
   SetCurve(2, C2, V1, V2);
@@ -112,16 +102,12 @@ void Extrema_ExtCC::Initialize(const Adaptor3d_Curve& C1,
   mydist11 = mydist12 = mydist21 = mydist22 = RealFirst();
 }
 
-//=================================================================================================
-
 void Extrema_ExtCC::SetCurve(const int theRank, const Adaptor3d_Curve& C)
 {
   Standard_OutOfRange_Raise_if(theRank < 1 || theRank > 2, "Extrema_ExtCC::SetCurve()") int anInd =
     theRank - 1;
   myC[anInd] = &C;
 }
-
-//=================================================================================================
 
 void Extrema_ExtCC::SetCurve(const int              theRank,
                              const Adaptor3d_Curve& C,
@@ -132,8 +118,6 @@ void Extrema_ExtCC::SetCurve(const int              theRank,
   SetRange(theRank, Uinf, Usup);
 }
 
-//=================================================================================================
-
 void Extrema_ExtCC::SetRange(const int theRank, const double Uinf, const double Usup)
 {
   Standard_OutOfRange_Raise_if(theRank < 1 || theRank > 2, "Extrema_ExtCC::SetRange()") int anInd =
@@ -142,16 +126,12 @@ void Extrema_ExtCC::SetRange(const int theRank, const double Uinf, const double 
   mySup[anInd] = Usup;
 }
 
-//=================================================================================================
-
 void Extrema_ExtCC::SetTolerance(const int theRank, const double theTol)
 {
   Standard_OutOfRange_Raise_if(theRank < 1 || theRank > 2,
                                "Extrema_ExtCC::SetTolerance()") int anInd = theRank - 1;
   myTol[anInd]                                                            = theTol;
 }
-
-//=================================================================================================
 
 void Extrema_ExtCC::Perform()
 {
@@ -199,20 +179,16 @@ void Extrema_ExtCC::Perform()
   else
     mydist22 = myP1l.SquareDistance(myP2l);
 
-  // Depending on the types of curves, the algorithm is chosen:
-  //- _ExtElC, when one of the curves is a line and the other is elementary,
-  //    or there are two circles;
-  //- _GenExtCC, in all other cases
   if ((type1 == GeomAbs_Line && type2 <= GeomAbs_Parabola)
       || (type2 == GeomAbs_Line && type1 <= GeomAbs_Parabola))
   {
-    // analytical case - one curve is always a line
+
     int               anInd1 = 0, anInd2 = 1;
     GeomAbs_CurveType aType2    = type2;
     bool              isInverse = (type1 > type2);
     if (isInverse)
     {
-      // algorithm uses inverse order of arguments
+
       anInd1 = 1;
       anInd2 = 0;
       aType2 = type1;
@@ -255,7 +231,7 @@ void Extrema_ExtCC::Perform()
   }
   else if (type1 == GeomAbs_Circle && type2 == GeomAbs_Circle)
   {
-    // analytical case - two circles
+
     bool           bIsDone;
     Extrema_ExtElC CCXtrem(myC[0]->Circle(), myC[1]->Circle());
     bIsDone = CCXtrem.IsDone();
@@ -276,14 +252,10 @@ void Extrema_ExtCC::Perform()
   }
 }
 
-//=================================================================================================
-
 bool Extrema_ExtCC::IsDone() const
 {
   return myDone;
 }
-
-//=================================================================================================
 
 bool Extrema_ExtCC::IsParallel() const
 {
@@ -295,8 +267,6 @@ bool Extrema_ExtCC::IsParallel() const
   return myIsParallel;
 }
 
-//=================================================================================================
-
 double Extrema_ExtCC::SquareDistance(const int N) const
 {
   if ((N < 1) || (N > NbExt()))
@@ -304,16 +274,12 @@ double Extrema_ExtCC::SquareDistance(const int N) const
   return mySqDist.Value(N);
 }
 
-//=================================================================================================
-
 int Extrema_ExtCC::NbExt() const
 {
   if (!myDone)
     throw StdFail_NotDone();
   return mySqDist.Length();
 }
-
-//=================================================================================================
 
 void Extrema_ExtCC::Points(const int N, Extrema_POnCurv& P1, Extrema_POnCurv& P2) const
 {
@@ -325,8 +291,6 @@ void Extrema_ExtCC::Points(const int N, Extrema_POnCurv& P1, Extrema_POnCurv& P2
   P1 = mypoints.Value(2 * N - 1);
   P2 = mypoints.Value(2 * N);
 }
-
-//=================================================================================================
 
 void Extrema_ExtCC::TrimmedSquareDistances(double& dist11,
                                            double& dist12,
@@ -348,8 +312,6 @@ void Extrema_ExtCC::TrimmedSquareDistances(double& dist11,
   P22    = myP2l;
 }
 
-//=================================================================================================
-
 void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
                                           const double theUt12,
                                           const double theUt21,
@@ -370,11 +332,9 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
     return;
   }
 
-  // Parallel case is only for line-line, circle-circle and circle-line!!!
-  // But really for trimmed curves extremas can not exist!
   if (aType1 != aType2)
   {
-    // The projection of the circle's location to the trimmed line must exist.
+
     const bool   isReversed = (aType1 != GeomAbs_Circle);
     const gp_Pnt aPonC      = !isReversed ? Extrema_CurveTool::Value(*myC[0], theUt11)
                                           : Extrema_CurveTool::Value(*myC[1], theUt21);
@@ -400,7 +360,6 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
 
   if (aType1 == GeomAbs_Line)
   {
-    // Line - Line
 
     const double isFirstInfinite =
       (Precision::IsInfinite(theUt11) && Precision::IsInfinite(theUt12));
@@ -409,15 +368,11 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
 
     if (isFirstInfinite || isLastInfinite)
     {
-      // Infinite number of solution
 
       mySqDist.Append(theSqDist);
     }
     else
     {
-      // The range created by projection of both ends of the 1st line
-      // to the 2nd one must intersect the (native) trimmed range of
-      // the 2nd line.
 
       myIsParallel = false;
 
@@ -465,12 +420,6 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
       }
       else if (!aRange2.IsVoid())
       {
-        // Case like this:
-
-        //  **************     aLin1
-        //               o
-        //               o
-        //               ***************  aLin2
 
         ClearSolutions();
         double aPar1 = 0.0, aPar2 = 0.0;
@@ -487,14 +436,7 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
       }
       else
       {
-        // Case like this:
 
-        //  **************     aLin1
-        //                 o
-        //                  o
-        //                   ***********  aLin2
-        //
-        // Take minimal trimmed distance
         double          aDmin, aDists[4] = {mydist11, mydist12, mydist21, mydist22};
         Extrema_POnCurv aP1, aP2;
         aDmin = aDists[0];
@@ -536,15 +478,8 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
   }
   else
   {
-    // Circle - Circle
-    myIsParallel = false;
 
-    // Two arcs with ranges [U1, U2] and [V1, V2] correspondingly are
-    // considered to be parallel in the following case:
-    //   The range created by projection both points U1 and U2 of the
-    //   1st circle to the 2nd one intersects either the range [V1, V2] or
-    //   the range [V1-PI, V2-PI]. All ranges must be adjusted to correspond
-    //   periodic range before checking of intersection.
+    myIsParallel = false;
 
     const gp_Circ aWorkCirc = myC[1]->Circle();
     const double  aPeriod   = M_PI + M_PI;
@@ -556,24 +491,19 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
     const Bnd_Range aRange(theUt21, theUt22);
     Bnd_Range       aProjRng1;
 
-    // Precision of the calculation depends on circles radii
     const double aPrecision =
       std::max(Epsilon(myC[0]->Circle().Radius()), Epsilon(myC[1]->Circle().Radius()));
-
-    // Project arc of the 1st circle between points theUt11 and theUt12 to the
-    // 2nd circle. It is necessary to chose correct arc from two possible ones.
 
     double aPar1 = ElCLib::InPeriod(ElCLib::Parameter(aWorkCirc, aP11), theUt21, theUt21 + aPeriod);
     const gp_Vec aVTg2 = Extrema_CurveTool::DN(*myC[1], aPar1, 1);
 
-    // Check if circles have same/opposite directions
     const bool isOpposite(aVTg1.Dot(aVTg2) < 0.0);
 
     double aPar2 = ElCLib::InPeriod(ElCLib::Parameter(aWorkCirc, aP12), theUt21, theUt21 + aPeriod);
 
     if (isOpposite)
     {
-      // Must be aPar2 < aPar1
+
       if ((aRange.Delta() > Precision::Angular()) && ((aPar1 - aPar2) < Precision::Angular()))
       {
         aPar2 -= aPeriod;
@@ -581,15 +511,12 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
     }
     else
     {
-      // Must be aPar2 > aPar1
+
       if ((aRange.Delta() > Precision::Angular()) && ((aPar2 - aPar1) < Precision::Angular()))
       {
         aPar2 += aPeriod;
       }
     }
-
-    // Now the projection result is the range [aPar1, aPar2]
-    // if aPar1 < aPar2 or the range [aPar2, aPar1], otherwise.
 
     double aMinSquareDist = RealLast();
 
@@ -597,25 +524,9 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
     aProjRng1.Add(aPar2 - aPeriod);
     for (int i = 0; i < 3; i++)
     {
-      // Repeat computation three times, shifting the range to PI on each step,
-      // to be able to find if the concentric arcs ranges are intersected in just one parameter
-      // (lower or upper boundary).
 
       Bnd_Range aRng = aProjRng1;
       aRng.Common(aRange);
-
-      // Cases are possible and processed below:
-      // 1. Extrema does not exist. In this case all common ranges are VOID.
-      // 2. Arcs are parallel and distance between them is equal to sqrt(theSqDist).
-      //     In this case myIsParallel = TRUE definitely.
-      // 3. Arcs are parallel and distance between them is equal to (sqrt(theSqDist) + R),
-      //     where R is the least radius of the both circles. In this case myIsParallel flag
-      //     will temporary be set to TRUE but check will be continued until less
-      //     distance will be found. At that, region with the least distance can be
-      //     either a local point or continuous range. In 1st case myIsParallel = FALSE and
-      //     several (or single) extremas will be returned. In the 2nd one
-      //     myIsParallel = TRUE and only the least distance will be returned.
-      // 4. Arcs are not parallel. Then several (or single) extremas will be returned.
 
       if (aRng.Delta() > Precision::Confusion())
       {
@@ -646,32 +557,15 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
           const double aDeltaSqDist = aMinSqD - theSqDist;
           const double aSqD         = std::max(aMinSqD, theSqDist);
 
-          //  0 <= Dist1-Dist2 <= Eps
-          //  0 <= Dist1^2 - Dist2^2 < Eps*(Dist1+Dist2)
-
-          // If Dist1 ~= Dist2 ==> Dist1+Dist2 ~= 2*Dist2.
-          // Consequently,
-          //   0 <= Dist1^2 - Dist2^2 <= 2*Dist2*Eps
-
-          // Or
-          //   (Dist1^2 - Dist2^2)^2 <= 4*Dist2^2*Eps^2
-
           if (aDeltaSqDist * aDeltaSqDist < 4.0 * aSqD * Precision::SquareConfusion())
           {
-            // New solution is found
+
             break;
           }
         }
-        // Nearer solution can be found
       }
       else if (!aRng.IsVoid())
       {
-        // Check cases like this:
-
-        //  **************     aCirc1
-        //               o
-        //               o
-        //               ***************  aCirc2
 
         double aPar = 0.0;
         aRng.GetIntermediatePoint(0.5, aPar);
@@ -688,10 +582,6 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
 
         if (!isFound)
         {
-          // If the flag myIsParallel was set earlier then it does not mean that
-          // we have found the minimal distance. Here we check it. If there is
-          // a pair of points, which are in less distance then myIsParallel flag
-          // was unset and the algorithm will return these nearest points.
 
           for (int anExtID = 1; anExtID <= ExtPCir.NbExt(); anExtID++)
           {
@@ -718,14 +608,7 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
       }
       else
       {
-        // Case like this:
 
-        //  **************     Cir1
-        //                 o
-        //                  o
-        //                   ***********  Cir2
-        //
-        // Take minimal trimmed distance
         myIsParallel = false;
         double          aDmin, aDists[4] = {mydist11, mydist12, mydist21, mydist22};
         Extrema_POnCurv aP1, aP2;
@@ -773,8 +656,6 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
   }
 }
 
-//=================================================================================================
-
 void Extrema_ExtCC::PrepareResults(const Extrema_ExtElC& AlgExt,
                                    const bool            theIsInverse,
                                    const double          Ut11,
@@ -799,7 +680,7 @@ void Extrema_ExtCC::PrepareResults(const Extrema_ExtElC& AlgExt,
       NbExt = AlgExt.NbExt();
       for (i = 1; i <= NbExt; i++)
       {
-        // Verification de la validite des parametres
+
         AlgExt.Points(i, P1, P2);
         if (!theIsInverse)
         {
@@ -846,8 +727,6 @@ void Extrema_ExtCC::PrepareResults(const Extrema_ExtElC& AlgExt,
   }
 }
 
-//=================================================================================================
-
 void Extrema_ExtCC::PrepareResults(const Extrema_ECC& AlgExt,
                                    const double       Ut11,
                                    const double       Ut12,
@@ -875,7 +754,6 @@ void Extrema_ExtCC::PrepareResults(const Extrema_ECC& AlgExt,
         U  = P1.Parameter();
         U2 = P2.Parameter();
 
-        // Check points to be into param space.
         if (Extrema_CurveTool::IsPeriodic(*myC[0]))
         {
           U = ElCLib::InPeriod(U, Ut11, Ut11 + Extrema_CurveTool::Period(*myC[0]));
@@ -900,14 +778,10 @@ void Extrema_ExtCC::PrepareResults(const Extrema_ECC& AlgExt,
   }
 }
 
-//=================================================================================================
-
 void Extrema_ExtCC::SetSingleSolutionFlag(const bool theFlag)
 {
   myIsFindSingleSolution = theFlag;
 }
-
-//=================================================================================================
 
 bool Extrema_ExtCC::GetSingleSolutionFlag() const
 {

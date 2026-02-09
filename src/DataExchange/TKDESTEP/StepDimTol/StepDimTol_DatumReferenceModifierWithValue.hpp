@@ -15,31 +15,24 @@ enum StepDimTol_DatumReferenceModifierType
   StepDimTol_Spherical
 };
 
-//! Representation of STEP entity DatumReferenceModifierWithValue
 class StepDimTol_DatumReferenceModifierWithValue : public Standard_Transient
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT StepDimTol_DatumReferenceModifierWithValue();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(const StepDimTol_DatumReferenceModifierType&        theModifierType,
                             const occ::handle<StepBasic_LengthMeasureWithUnit>& theModifierValue);
 
-  //! Returns field ModifierType
   inline StepDimTol_DatumReferenceModifierType ModifierType() const { return myModifierType; }
 
-  //! Set field ModifierType
   inline void SetModifierType(const StepDimTol_DatumReferenceModifierType& theModifierType)
   {
     myModifierType = theModifierType;
   }
 
-  //! Returns field ModifierValue
   inline occ::handle<StepBasic_LengthMeasureWithUnit> ModifierValue() { return myModifierValue; }
 
-  //! Set field ModifierValue
   inline void SetModifierValue(const occ::handle<StepBasic_LengthMeasureWithUnit>& theModifierValue)
   {
     myModifierValue = theModifierValue;

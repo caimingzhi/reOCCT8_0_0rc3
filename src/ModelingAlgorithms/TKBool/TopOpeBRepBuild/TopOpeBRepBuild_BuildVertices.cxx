@@ -4,8 +4,6 @@
 #include <TopOpeBRepDS_BuildTool.hpp>
 #include <TopOpeBRepDS_HDataStructure.hpp>
 
-//=================================================================================================
-
 void TopOpeBRepBuild_Builder::BuildVertices(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
 {
   int iP, n = HDS->NbPoints();

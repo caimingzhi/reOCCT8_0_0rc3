@@ -32,11 +32,6 @@
 #include <TopoDS_Iterator.hpp>
 #include <TopoDS_Shape.hpp>
 
-//=======================================================================
-// function : ApplyModifier
-// purpose  : Applies BRepTools_Modification to a shape,
-//           taking into account sharing of components of compounds
-//=======================================================================
 TopoDS_Shape ShapeProcess_OperLibrary::ApplyModifier(
   const TopoDS_Shape&                                                       S,
   const occ::handle<ShapeProcess_ShapeContext>&                             context,
@@ -45,10 +40,9 @@ TopoDS_Shape ShapeProcess_OperLibrary::ApplyModifier(
   const occ::handle<ShapeExtend_MsgRegistrator>&                            msg,
   bool                                                                      theMutableInput)
 {
-  // protect against INTERNAL/EXTERNAL shapes
+
   TopoDS_Shape SF = S.Oriented(TopAbs_FORWARD);
 
-  // Process COMPOUNDs separately in order to handle sharing in assemblies
   if (SF.ShapeType() == TopAbs_COMPOUND)
   {
     bool            locModified = false;
@@ -81,15 +75,12 @@ TopoDS_Shape ShapeProcess_OperLibrary::ApplyModifier(
     return C.Oriented(S.Orientation());
   }
 
-  // Modify the shape
   BRepTools_Modifier MD(SF);
   MD.SetMutableInput(theMutableInput);
   MD.Perform(M);
   context->RecordModification(SF, MD, msg);
   return MD.ModifiedShape(SF).Oriented(S.Orientation());
 }
-
-//=================================================================================================
 
 static bool directfaces(const occ::handle<ShapeProcess_Context>& context,
                         const Message_ProgressRange&)
@@ -98,7 +89,6 @@ static bool directfaces(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -113,8 +103,6 @@ static bool directfaces(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-//=================================================================================================
-
 static bool sameparam(const occ::handle<ShapeProcess_Context>& context,
                       const Message_ProgressRange&)
 {
@@ -122,27 +110,24 @@ static bool sameparam(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
 
   ShapeFix::SameParameter(ctx->Result(),
                           ctx->BooleanVal("Force", false),
-                          ctx->RealVal("Tolerance3d", Precision::Confusion() /* -1 */),
+                          ctx->RealVal("Tolerance3d", Precision::Confusion()),
                           Message_ProgressRange(),
                           msg);
 
   if (!msg.IsNull())
   {
-    // WARNING: not FULL update of context yet!
+
     occ::handle<ShapeBuild_ReShape> reshape = new ShapeBuild_ReShape;
     ctx->RecordModification(reshape, msg);
   }
   return true;
 }
-
-//=================================================================================================
 
 static bool settol(const occ::handle<ShapeProcess_Context>& context, const Message_ProgressRange&)
 {
@@ -167,11 +152,8 @@ static bool settol(const occ::handle<ShapeProcess_Context>& context, const Messa
   if (ctx->GetReal("Regularity", reg))
     BRepLib::EncodeRegularity(ctx->Result(), reg);
 
-  // WARNING: no update of context yet!
   return true;
 }
-
-//=================================================================================================
 
 static bool splitangle(const occ::handle<ShapeProcess_Context>& context,
                        const Message_ProgressRange&)
@@ -180,7 +162,6 @@ static bool splitangle(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -202,8 +183,6 @@ static bool splitangle(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-//=================================================================================================
-
 static bool bsplinerestriction(const occ::handle<ShapeProcess_Context>& context,
                                const Message_ProgressRange&)
 {
@@ -211,7 +190,6 @@ static bool bsplinerestriction(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -245,9 +223,9 @@ static bool bsplinerestriction(const occ::handle<ShapeProcess_Context>& context,
   ctx->GetBoolean("ConvCurve3dMode", aParameters->ConvertCurve3d());
   ctx->GetBoolean("ConvCurve2dMode", aParameters->ConvertCurve2d());
   ctx->GetBoolean("BezierMode", aParameters->ConvertBezierSurf());
-  // modes to convert elementary surfaces
+
   ctx->GetBoolean("PlaneMode", aParameters->ConvertPlane());
-  // ctx->GetBoolean ("ElementarySurfMode", aParameters->ConvertElementarySurf());
+
   ctx->GetBoolean("ConicalSurfMode", aParameters->ConvertConicalSurf());
   ctx->GetBoolean("CylindricalSurfMode", aParameters->ConvertCylindricalSurf());
   ctx->GetBoolean("ToroidalSurfMode", aParameters->ConvertToroidalSurf());
@@ -274,15 +252,12 @@ static bool bsplinerestriction(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-//=================================================================================================
-
 static bool torevol(const occ::handle<ShapeProcess_Context>& context, const Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -297,8 +272,6 @@ static bool torevol(const occ::handle<ShapeProcess_Context>& context, const Mess
   return true;
 }
 
-//=================================================================================================
-
 static bool swepttoelem(const occ::handle<ShapeProcess_Context>& context,
                         const Message_ProgressRange&)
 {
@@ -306,7 +279,6 @@ static bool swepttoelem(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -321,8 +293,6 @@ static bool swepttoelem(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-//=================================================================================================
-
 static bool shapetobezier(const occ::handle<ShapeProcess_Context>& context,
                           const Message_ProgressRange&)
 {
@@ -330,7 +300,6 @@ static bool shapetobezier(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -380,7 +349,7 @@ static bool shapetobezier(const occ::handle<ShapeProcess_Context>& context,
   if (!SCB.Perform() && SCB.Status(ShapeExtend_FAIL))
   {
 #ifdef OCCT_DEBUG
-    std::cout << "Shape::ShapeConvertToBezier failed" << std::endl; // !!!!
+    std::cout << "Shape::ShapeConvertToBezier failed" << std::endl;
 #endif
     return false;
   }
@@ -390,8 +359,6 @@ static bool shapetobezier(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-//=================================================================================================
-
 static bool converttobspline(const occ::handle<ShapeProcess_Context>& context,
                              const Message_ProgressRange&)
 {
@@ -399,7 +366,6 @@ static bool converttobspline(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -422,8 +388,6 @@ static bool converttobspline(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-//=================================================================================================
-
 static bool splitcontinuity(const occ::handle<ShapeProcess_Context>& context,
                             const Message_ProgressRange&)
 {
@@ -431,7 +395,6 @@ static bool splitcontinuity(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -467,8 +430,6 @@ static bool splitcontinuity(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-//=================================================================================================
-
 static bool splitclosedfaces(const occ::handle<ShapeProcess_Context>& context,
                              const Message_ProgressRange&)
 {
@@ -476,7 +437,6 @@ static bool splitclosedfaces(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -511,8 +471,6 @@ static bool splitclosedfaces(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-//=================================================================================================
-
 static bool fixfacesize(const occ::handle<ShapeProcess_Context>& context,
                         const Message_ProgressRange&)
 {
@@ -520,7 +478,6 @@ static bool fixfacesize(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -547,15 +504,12 @@ static bool fixfacesize(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-//=================================================================================================
-
 static bool fixwgaps(const occ::handle<ShapeProcess_Context>& context, const Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -578,8 +532,6 @@ static bool fixwgaps(const occ::handle<ShapeProcess_Context>& context, const Mes
   return true;
 }
 
-//=================================================================================================
-
 static bool dropsmallsolids(const occ::handle<ShapeProcess_Context>& context,
                             const Message_ProgressRange&)
 {
@@ -587,7 +539,6 @@ static bool dropsmallsolids(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -624,31 +575,6 @@ static bool dropsmallsolids(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-/*
-//=================================================================================================
-
-static bool dropsmalledges (const occ::handle<ShapeProcess_Context>& context)
-{
-  occ::handle<ShapeProcess_ShapeContext> ctx = Handle(ShapeProcess_ShapeContext)::DownCast ( context
-); if ( ctx.IsNull() ) return false;
-
-  //occ::handle<ShapeBuild_ReShape> ctx = new ShapeBuild_ReShape;
-  occ::handle<MoniFrame_Element> elem = astep->Operand();
-  TopoDS_Shape Shape = MoniShape::Shape(elem);
-  double aTol3d = Precision::Confusion();
-  occ::handle<MoniFrame_TypedValue> ptol3d   = aproc->StackParam("Tolerance3d",true);
-  if (ptol3d->IsSetValue()) aTol3d = ptol3d->RealValue();
-  occ::handle<ShapeBuild_ReShape> context;
-  TopoDS_Shape result = ShapeFix::RemoveSmallEdges(Shape,aTol3d,context);
-  if (result == Shape) astep->AddTouched (aproc->Infos(),MoniShape::Element(Shape));
-  else
-    MoniShapeSW::UpdateFromReShape (aproc->Infos(), astep, Shape, context, TopAbs_FACE);
-  return 0;
-}
-*/
-
-//=================================================================================================
-
 static bool mergesmalledges(const occ::handle<ShapeProcess_Context>& context,
                             const Message_ProgressRange&)
 {
@@ -656,7 +582,6 @@ static bool mergesmalledges(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -676,8 +601,6 @@ static bool mergesmalledges(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-//=================================================================================================
-
 static bool fixshape(const occ::handle<ShapeProcess_Context>& context,
                      const Message_ProgressRange&             theProgress)
 {
@@ -685,7 +608,6 @@ static bool fixshape(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -715,7 +637,6 @@ static bool fixshape(const occ::handle<ShapeProcess_Context>& context,
   sfs->FixShellTool()->SetNonManifoldFlag(ctx->IsNonManifold());
   sfs->FixShellTool()->FixOrientationMode() = ctx->IntegerVal("FixFaceOrientationMode", -1);
 
-  // parameters for ShapeFix_Face
   sff->FixWireMode()              = ctx->IntegerVal("FixWireMode", -1);
   sff->FixOrientationMode()       = ctx->IntegerVal("FixOrientationMode", -1);
   sff->FixAddNaturalBoundMode()   = ctx->IntegerVal("FixAddNaturalBoundMode", -1);
@@ -726,7 +647,6 @@ static bool fixshape(const occ::handle<ShapeProcess_Context>& context,
   sff->FixLoopWiresMode()         = ctx->IntegerVal("FixLoopWiresMode", -1);
   sff->FixSplitFaceMode()         = ctx->IntegerVal("FixSplitFaceMode", -1);
 
-  // parameters for ShapeFix_Wire
   sfw->ModifyTopologyMode()      = ctx->BooleanVal("ModifyTopologyMode", false);
   sfw->ModifyGeometryMode()      = ctx->BooleanVal("ModifyGeometryMode", true);
   sfw->ClosedWireMode()          = ctx->BooleanVal("ClosedWireMode", true);
@@ -791,8 +711,6 @@ static bool fixshape(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-//=================================================================================================
-
 static bool spltclosededges(const occ::handle<ShapeProcess_Context>& context,
                             const Message_ProgressRange&)
 {
@@ -800,7 +718,6 @@ static bool spltclosededges(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -824,12 +741,6 @@ static bool spltclosededges(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-//=======================================================================
-// function : splitcommonvertex
-// purpose  : Two wires have common vertex - this case is valid in BRep model
-//           and isn't valid in STEP => before writing into STEP it is necessary
-//           to split this vertex (each wire must has one vertex)
-//=======================================================================
 static bool splitcommonvertex(const occ::handle<ShapeProcess_Context>& context,
                               const Message_ProgressRange&)
 {
@@ -837,7 +748,6 @@ static bool splitcommonvertex(const occ::handle<ShapeProcess_Context>& context,
   if (ctx.IsNull())
     return false;
 
-  // activate message mechanism if it is supported by context
   occ::handle<ShapeExtend_MsgRegistrator> msg;
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
@@ -860,11 +770,6 @@ static bool splitcommonvertex(const occ::handle<ShapeProcess_Context>& context,
 
   return true;
 }
-
-//=======================================================================
-// function : Init
-// purpose  : Register standard operators
-//=======================================================================
 
 void ShapeProcess_OperLibrary::Init()
 {

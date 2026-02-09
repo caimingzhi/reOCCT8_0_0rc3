@@ -20,14 +20,10 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XSAlgo_AlgoContainer, Standard_Transient)
 
-//=================================================================================================
-
 void XSAlgo_AlgoContainer::PrepareForTransfer() const
 {
   XSAlgo_ShapeProcessor::PrepareForTransfer();
 }
-
-//=================================================================================================
 
 TopoDS_Shape XSAlgo_AlgoContainer::ProcessShape(const TopoDS_Shape&              theShape,
                                                 const double                     thePrec,
@@ -52,7 +48,7 @@ TopoDS_Shape XSAlgo_AlgoContainer::ProcessShape(const TopoDS_Shape&             
     aContext             = new ShapeProcess_ShapeContext(theShape, aRscfile);
     if (!aContext->ResourceManager()->IsInitialized())
     {
-      // If resource file wasn't found, use static values instead
+
       Interface_Static::FillMap(aContext->ResourceManager()->GetMap());
     }
     aContext->SetDetalisation(theDetailingLevel);
@@ -64,14 +60,12 @@ TopoDS_Shape XSAlgo_AlgoContainer::ProcessShape(const TopoDS_Shape&             
   if (!aSeq)
     aSeq = thePseq;
 
-  // if resource file is not loaded or does not define <seq>.exec.op,
-  // do default fixes
   occ::handle<Resource_Manager> aRsc = aContext->ResourceManager();
   TCollection_AsciiString       aStr(aSeq);
   aStr += ".exec.op";
   if (!aRsc->Find(aStr.ToCString()))
   {
-    // if reading, do default ShapeFix
+
     if (!strncmp(thePseq, "read.", 5))
     {
       try
@@ -100,24 +94,21 @@ TopoDS_Shape XSAlgo_AlgoContainer::ProcessShape(const TopoDS_Shape&             
       }
       return aContext->Result();
     }
-    // for writing, define default sequence of DirectFaces
+
     else if (!strncmp(thePseq, "write.", 6))
     {
       aRsc->SetResource(aStr.ToCString(), "DirectFaces");
     }
   }
 
-  // Define runtime tolerances and do Shape Processing
   aRsc->SetResource("Runtime.Tolerance", thePrec);
   aRsc->SetResource("Runtime.MaxTolerance", theMaxTol);
 
   if (!ShapeProcess::Perform(aContext, aSeq, theProgress))
-    return theShape; // return original shape
+    return theShape;
 
   return aContext->Result();
 }
-
-//=================================================================================================
 
 bool XSAlgo_AlgoContainer::CheckPCurve(const TopoDS_Edge& theEdge,
                                        const TopoDS_Face& theFace,
@@ -126,8 +117,6 @@ bool XSAlgo_AlgoContainer::CheckPCurve(const TopoDS_Edge& theEdge,
 {
   return XSAlgo_ShapeProcessor::CheckPCurve(theEdge, theFace, thePrecision, theIsSeam);
 }
-
-//=================================================================================================
 
 void XSAlgo_AlgoContainer::MergeTransferInfo(const occ::handle<Transfer_TransientProcess>& TP,
                                              const occ::handle<Standard_Transient>&        info,
@@ -166,12 +155,11 @@ void XSAlgo_AlgoContainer::MergeTransferInfo(const occ::handle<Transfer_Transien
     }
     else
     {
-      // Some of edges may be modified.
+
       BRepTools_ReShape aReShape;
       bool              hasModifiedEdges = false;
       TopExp_Explorer   anExpSE(orig, TopAbs_EDGE);
 
-      // Remember modifications.
       for (; anExpSE.More(); anExpSE.Next())
       {
         if (map.IsBound(anExpSE.Current()))
@@ -182,7 +170,6 @@ void XSAlgo_AlgoContainer::MergeTransferInfo(const occ::handle<Transfer_Transien
         }
       }
 
-      // Apply modifications and store result in binder.
       if (hasModifiedEdges)
       {
         TopoDS_Shape aRes = aReShape.Apply(orig);
@@ -190,7 +177,6 @@ void XSAlgo_AlgoContainer::MergeTransferInfo(const occ::handle<Transfer_Transien
       }
     }
 
-    // update messages
     if (!msg.IsNull())
     {
       const NCollection_DataMap<TopoDS_Shape,
@@ -209,8 +195,6 @@ void XSAlgo_AlgoContainer::MergeTransferInfo(const occ::handle<Transfer_Transien
     }
   }
 }
-
-//=================================================================================================
 
 void XSAlgo_AlgoContainer::MergeTransferInfo(const occ::handle<Transfer_FinderProcess>& FP,
                                              const occ::handle<Standard_Transient>&     info) const
@@ -235,8 +219,7 @@ void XSAlgo_AlgoContainer::MergeTransferInfo(const occ::handle<Transfer_FinderPr
     if (resBinder.IsNull())
     {
       resBinder = new TransferBRep_ShapeBinder(res);
-      // if <orig> shape was split, put entities corresponding to new shapes
-      //  into Transfer_TransientListBinder.
+
       if (orig.ShapeType() > res.ShapeType())
       {
         TopoDS_Shape                              sub;
@@ -274,7 +257,6 @@ void XSAlgo_AlgoContainer::MergeTransferInfo(const occ::handle<Transfer_FinderPr
       origBinder->AddResult(resBinder);
     }
 
-    // update messages
     if (!msg.IsNull())
     {
       const NCollection_DataMap<TopoDS_Shape,

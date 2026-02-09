@@ -11,17 +11,16 @@
 
 namespace
 {
-  //! Structure representing mesh edge.
+
   struct Edge
   {
-    //! Constructor. Sets edge nodes.
+
     Edge(const int TheIdx1, const int TheIdx2)
         : Idx1(std::min(TheIdx1, TheIdx2)),
           Idx2(std::max(TheIdx1, TheIdx2))
     {
     }
 
-    //! Comparison operator.
     bool operator<(const Edge& other) const
     {
       return Idx1 < other.Idx1 || (Idx1 == other.Idx1 && Idx2 < other.Idx2);
@@ -32,10 +31,8 @@ namespace
       return theOther.Idx1 == Idx1 && theOther.Idx2 == Idx2;
     }
 
-    //! First index. It is lower or equal than the second.
     int Idx1;
 
-    //! Second index.
     int Idx2;
   };
 } // namespace
@@ -47,36 +44,26 @@ namespace std
   {
     size_t operator()(const Edge& theEdge) const noexcept
     {
-      // Combine two int values into a single hash value.
+
       int aCombination[2]{theEdge.Idx1, theEdge.Idx2};
       return opencascade::hashBytes(aCombination, sizeof(aCombination));
     }
   };
 } // namespace std
 
-//=================================================================================================
-
 void BRepBuilderAPI_MakeShapeOnMesh::Build(const Message_ProgressRange& theRange)
 {
-  // Generally, this method guarantees topology sharing by mapping mesh primitives
-  // into topological counterparts.
-  // mesh points -> topological vertices
-  // mesh edges  -> topological edges
 
-  // Cannot reconstruct anything from null or empty mesh.
   if (myMesh.IsNull() || myMesh->NbNodes() == 0 || myMesh->NbTriangles() == 0)
     return;
 
   const int aNbNodes     = myMesh->NbNodes();
   const int aNbTriangles = myMesh->NbTriangles();
 
-  // We are going to have three loops: iterate once over nodes and iterate twice
-  // over triangles of input mesh.
   Message_ProgressScope aPS(theRange,
                             "Per-facet shape construction",
                             double(aNbNodes + 2 * aNbTriangles));
 
-  // Build shared vertices.
   NCollection_IndexedDataMap<int, TopoDS_Vertex> aPnt2VertexMap;
 
   for (int i = 1; i <= aNbNodes; ++i)
@@ -90,7 +77,6 @@ void BRepBuilderAPI_MakeShapeOnMesh::Build(const Message_ProgressRange& theRange
     aPnt2VertexMap.Add(i, aV);
   }
 
-  // Build shared edges.
   NCollection_IndexedDataMap<Edge, TopoDS_Edge> anEdgeToTEgeMap;
   for (int i = 1; i <= aNbTriangles; ++i)
   {
@@ -102,7 +88,6 @@ void BRepBuilderAPI_MakeShapeOnMesh::Build(const Message_ProgressRange& theRange
     const Poly_Triangle& aTriangle = myMesh->Triangle(i);
     aTriangle.Get(anIdx[0], anIdx[1], anIdx[2]);
 
-    // Skip degenerated triangles.
     if (anIdx[0] == anIdx[1] || anIdx[0] == anIdx[2] || anIdx[1] == anIdx[2])
       continue;
 
@@ -117,9 +102,6 @@ void BRepBuilderAPI_MakeShapeOnMesh::Build(const Message_ProgressRange& theRange
       continue;
     }
 
-    // Edges are constructed in forward order for the existing normals orientation.
-    // In Poly_Triangulation, positive direction is defined as cross product:
-    // (aV1, aV2) x (aV1, aV3).
     const TopoDS_Vertex& aV1 = aPnt2VertexMap.FindFromKey(anIdx[0]);
     const TopoDS_Vertex& aV2 = aPnt2VertexMap.FindFromKey(anIdx[1]);
     const TopoDS_Vertex& aV3 = aPnt2VertexMap.FindFromKey(anIdx[2]);
@@ -149,7 +131,6 @@ void BRepBuilderAPI_MakeShapeOnMesh::Build(const Message_ProgressRange& theRange
     anEdgeToTEgeMap.Add(aMeshEdge3, aTE3);
   }
 
-  // Construct planar faces using shared topology.
   TopoDS_Compound aResult;
   BRep_Builder    aBB;
   aBB.MakeCompound(aResult);
@@ -170,8 +151,6 @@ void BRepBuilderAPI_MakeShapeOnMesh::Build(const Message_ProgressRange& theRange
     const bool isReversed2 = anIdx[2] < anIdx[1];
     const bool isReversed3 = anIdx[0] < anIdx[2];
 
-    // Edges can be skipped in case of mesh defects - topologically or geometrically
-    // degenerated triangles.
     const bool aHasAllEdges = anEdgeToTEgeMap.Contains(aMeshEdge1)
                               && anEdgeToTEgeMap.Contains(aMeshEdge2)
                               && anEdgeToTEgeMap.Contains(aMeshEdge3);
@@ -194,8 +173,6 @@ void BRepBuilderAPI_MakeShapeOnMesh::Build(const Message_ProgressRange& theRange
     aWireMaker.Add(aTEdge3);
     const TopoDS_Wire aWire = aWireMaker.Wire();
 
-    // Construct plane explicitly since it is faster than automatic construction
-    // within BRepBuilderAPI_MakeFace.
     BRepAdaptor_Curve aC1(aTEdge1);
     BRepAdaptor_Curve aC2(aTEdge2);
     const gp_Dir      aD1 = aC1.Line().Direction();

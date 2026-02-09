@@ -1,10 +1,8 @@
 #include <TopOpeBRepTool.hpp>
 
-//=================================================================================================
-
 Standard_OStream& TopOpeBRepTool::Print(const TopOpeBRepTool_OutCurveType t, Standard_OStream& OS)
 {
-  // #ifdef OCCT_DEBUG
+
   switch (t)
   {
     case TopOpeBRepTool_BSPLINE1:
@@ -20,6 +18,6 @@ Standard_OStream& TopOpeBRepTool::Print(const TopOpeBRepTool_OutCurveType t, Sta
       OS << "UNKNOWN";
       break;
   }
-  // #endif
+
   return OS;
 }

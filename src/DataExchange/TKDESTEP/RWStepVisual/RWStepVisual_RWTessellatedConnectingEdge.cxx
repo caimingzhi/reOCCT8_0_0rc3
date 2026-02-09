@@ -1,4 +1,4 @@
-// Created on : Thu Mar 24 18:30:12 2022
+
 
 #include "RWStepVisual_RWTessellatedConnectingEdge.hpp"
 #include <StepVisual_TessellatedConnectingEdge.hpp>
@@ -14,11 +14,7 @@
 #include <StepData_Logical.hpp>
 #include <StepVisual_TessellatedFace.hpp>
 
-//=================================================================================================
-
 RWStepVisual_RWTessellatedConnectingEdge::RWStepVisual_RWTessellatedConnectingEdge() = default;
-
-//=================================================================================================
 
 void RWStepVisual_RWTessellatedConnectingEdge::ReadStep(
   const occ::handle<StepData_StepReaderData>&              theData,
@@ -26,18 +22,14 @@ void RWStepVisual_RWTessellatedConnectingEdge::ReadStep(
   occ::handle<Interface_Check>&                            theCheck,
   const occ::handle<StepVisual_TessellatedConnectingEdge>& theEnt) const
 {
-  // Check number of parameters
+
   if (!theData->CheckNbParams(theNum, 9, theCheck, "tessellated_connecting_edge"))
   {
     return;
   }
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   theData->ReadString(theNum, 1, "representation_item.name", theCheck, aRepresentationItem_Name);
-
-  // Inherited fields of TessellatedEdge
 
   occ::handle<StepVisual_CoordinatesList> aTessellatedEdge_Coordinates;
   theData->ReadEntity(theNum,
@@ -77,8 +69,6 @@ void RWStepVisual_RWTessellatedConnectingEdge::ReadStep(
       aTessellatedEdge_LineStrip->SetValue(i0, anIt0);
     }
   }
-
-  // Own fields of TessellatedConnectingEdge
 
   StepData_Logical aSmooth;
   theData->ReadLogical(theNum, 5, "smooth", theCheck, aSmooth);
@@ -121,7 +111,6 @@ void RWStepVisual_RWTessellatedConnectingEdge::ReadStep(
     }
   }
 
-  // Initialize entity
   theEnt->Init(aRepresentationItem_Name,
                aTessellatedEdge_Coordinates,
                hasTessellatedEdge_GeometricLink,
@@ -134,18 +123,12 @@ void RWStepVisual_RWTessellatedConnectingEdge::ReadStep(
                aLineStripFace2);
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWTessellatedConnectingEdge::WriteStep(
   StepData_StepWriter&                                     theSW,
   const occ::handle<StepVisual_TessellatedConnectingEdge>& theEnt) const
 {
 
-  // Own fields of RepresentationItem
-
   theSW.Send(theEnt->Name());
-
-  // Own fields of TessellatedEdge
 
   theSW.Send(theEnt->Coordinates());
 
@@ -165,8 +148,6 @@ void RWStepVisual_RWTessellatedConnectingEdge::WriteStep(
     theSW.Send(Var0);
   }
   theSW.CloseSub();
-
-  // Own fields of TessellatedConnectingEdge
 
   theSW.SendLogical(theEnt->Smooth());
 
@@ -191,16 +172,10 @@ void RWStepVisual_RWTessellatedConnectingEdge::WriteStep(
   theSW.CloseSub();
 }
 
-//=================================================================================================
-
 void RWStepVisual_RWTessellatedConnectingEdge::Share(
   const occ::handle<StepVisual_TessellatedConnectingEdge>& theEnt,
   Interface_EntityIterator&                                theIter) const
 {
-
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of TessellatedEdge
 
   theIter.AddItem(theEnt->StepVisual_TessellatedEdge::Coordinates());
 
@@ -208,8 +183,6 @@ void RWStepVisual_RWTessellatedConnectingEdge::Share(
   {
     theIter.AddItem(theEnt->StepVisual_TessellatedEdge::GeometricLink().Value());
   }
-
-  // Own fields of TessellatedConnectingEdge
 
   theIter.AddItem(theEnt->Face1());
 

@@ -18,16 +18,13 @@ class TCollection_HAsciiString;
 class StepBasic_MeasureWithUnit;
 class StepDimTol_GeometricToleranceTarget;
 
-//! Representation of STEP entity GeometricToleranceWithDefinedAreaUnit
 class StepDimTol_GeometricToleranceWithDefinedAreaUnit
     : public StepDimTol_GeometricToleranceWithDefinedUnit
 {
 
 public:
-  //! Empty constructor
   Standard_EXPORT StepDimTol_GeometricToleranceWithDefinedAreaUnit();
 
-  //! Initialize all fields (own and inherited)
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& theName,
                             const occ::handle<TCollection_HAsciiString>& theDescription,
                             const occ::handle<Standard_Transient>&       theMagnitude,
@@ -37,26 +34,21 @@ public:
                             const bool theHasSecondUnitSize,
                             const occ::handle<StepBasic_LengthMeasureWithUnit>& theSecondUnitSize);
 
-  //! Returns field AreaType
   inline StepDimTol_AreaUnitType AreaType() const { return myAreaType; }
 
-  //! Set field AreaType
   inline void SetAreaType(const StepDimTol_AreaUnitType theAreaType) { myAreaType = theAreaType; }
 
-  //! Returns field SecondUnitSize
   inline occ::handle<StepBasic_LengthMeasureWithUnit> SecondUnitSize() const
   {
     return mySecondUnitSize;
   }
 
-  //! Set field SecondUnitSize
   inline void SetSecondUnitSize(
     const occ::handle<StepBasic_LengthMeasureWithUnit>& theSecondUnitSize)
   {
     mySecondUnitSize = theSecondUnitSize;
   }
 
-  //! Indicates if SecondUnitSize field exist
   inline bool HasSecondUnitSize() const { return mySecondUnitSize.IsNull(); }
 
   DEFINE_STANDARD_RTTIEXT(StepDimTol_GeometricToleranceWithDefinedAreaUnit,

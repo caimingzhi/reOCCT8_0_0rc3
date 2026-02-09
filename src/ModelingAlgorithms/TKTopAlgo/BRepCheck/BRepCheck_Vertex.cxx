@@ -23,20 +23,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BRepCheck_Vertex, BRepCheck_Result)
 
-//=================================================================================================
-
 BRepCheck_Vertex::BRepCheck_Vertex(const TopoDS_Vertex& V)
 {
   Init(V);
 }
 
-//=================================================================================================
-
 void BRepCheck_Vertex::Minimum()
 {
   if (!myMin)
   {
-    // checks the existence of a point 3D
+
     occ::handle<NCollection_Shared<NCollection_List<BRepCheck_Status>>> aNewList =
       new NCollection_Shared<NCollection_List<BRepCheck_Status>>();
     NCollection_List<BRepCheck_Status>& lst = **myMap.Bound(myShape, aNewList);
@@ -44,8 +40,6 @@ void BRepCheck_Vertex::Minimum()
     myMin = true;
   }
 }
-
-//=================================================================================================
 
 void BRepCheck_Vertex::InContext(const TopoDS_Shape& S)
 {
@@ -75,7 +69,7 @@ void BRepCheck_Vertex::InContext(const TopoDS_Shape& S)
   if (!exp.More())
   {
     BRepCheck::Add(lst, BRepCheck_SubshapeNotInShape);
-    return; // leaves
+    return;
   }
 
   occ::handle<BRep_TVertex>& TV   = *((occ::handle<BRep_TVertex>*)&myShape.TShape());
@@ -87,7 +81,7 @@ void BRepCheck_Vertex::InContext(const TopoDS_Shape& S)
   {
     case TopAbs_EDGE:
     {
-      // Try to find the vertex on the edge
+
       const TopoDS_Edge& E = TopoDS::Edge(S);
       TopoDS_Iterator    itv(E.Oriented(TopAbs_FORWARD));
       TopoDS_Vertex      VFind;
@@ -106,7 +100,7 @@ void BRepCheck_Vertex::InContext(const TopoDS_Shape& S)
             if ((VFind.Orientation() == TopAbs_FORWARD && VF.Orientation() == TopAbs_REVERSED)
                 || (VFind.Orientation() == TopAbs_REVERSED && VF.Orientation() == TopAbs_FORWARD))
             {
-              // the vertex on the edge is at once F and R
+
               multiple = true;
             }
             if (VFind.Orientation() != TopAbs_FORWARD && VFind.Orientation() != TopAbs_REVERSED)
@@ -121,11 +115,10 @@ void BRepCheck_Vertex::InContext(const TopoDS_Shape& S)
         itv.Next();
       }
 
-      // VFind is not null for sure
       TopAbs_Orientation orv = VFind.Orientation();
 
       double Tol = BRep_Tool::Tolerance(TopoDS::Vertex(myShape));
-      Tol        = std::max(Tol, BRep_Tool::Tolerance(E)); // to check
+      Tol        = std::max(Tol, BRep_Tool::Tolerance(E));
       Tol *= Tol;
 
       occ::handle<BRep_TEdge>& TE = *((occ::handle<BRep_TEdge>*)&E.TShape());
@@ -135,7 +128,7 @@ void BRepCheck_Vertex::InContext(const TopoDS_Shape& S)
       NCollection_List<occ::handle<BRep_PointRepresentation>>::Iterator itpr;
       while (itcr.More())
       {
-        // For each CurveRepresentation, the provided parameter is checked
+
         const occ::handle<BRep_CurveRepresentation>& cr  = itcr.Value();
         const TopLoc_Location&                       loc = cr->Location();
         TopLoc_Location L = (Eloc * loc).Predivided(myShape.Location());
@@ -143,7 +136,7 @@ void BRepCheck_Vertex::InContext(const TopoDS_Shape& S)
         if (cr->IsCurve3D())
         {
           const occ::handle<Geom_Curve>& C = cr->Curve3D();
-          if (!C.IsNull()) // edge non degenerated
+          if (!C.IsNull())
           {
             itpr.Initialize(TV->Points());
             while (itpr.More())
@@ -237,7 +230,7 @@ void BRepCheck_Vertex::InContext(const TopoDS_Shape& S)
       TopLoc_Location                  L     = (Floc * TFloc).Predivided(myShape.Location());
 
       double Tol = BRep_Tool::Tolerance(TopoDS::Vertex(myShape));
-      Tol        = std::max(Tol, BRep_Tool::Tolerance(TopoDS::Face(S))); // to check
+      Tol        = std::max(Tol, BRep_Tool::Tolerance(TopoDS::Face(S)));
       Tol *= Tol;
 
       NCollection_List<occ::handle<BRep_PointRepresentation>>::Iterator itpr(TV->Points());
@@ -268,66 +261,19 @@ void BRepCheck_Vertex::InContext(const TopoDS_Shape& S)
   }
 }
 
-//=================================================================================================
-
 void BRepCheck_Vertex::Blind()
 {
   if (myBlind)
   {
     return;
   }
-  //   modified by NIZHNY-MKK  Fri May  7 16:43:38 2004.BEGIN
-  //   The body of this function is removed because of its useless
-  //   (see specification "Substitution existing set of evaluation DRAW commands to one").
 
-  //   Check all the representations  of the vertex. (i-e checks the TVertex
-  //   NCollection_List<BRepCheck_Status>& lst = myMap(myShape);
-  //   lst.Clear(); // there was NoError...
-
-  //   occ::handle<BRep_TVertex>& TV = *((occ::handle<BRep_TVertex>*) &myShape.TShape());
-  //   const gp_Pnt& prep = TV->Pnt();
-  //   double Tol  = BRep_Tool::Tolerance(TopoDS::Vertex(myShape));
-  //   Tol *= Tol;
-
-  //   gp_Pnt Controlp;
-  //   NCollection_List<occ::handle<BRep_PointRepresentation>>::Iterator itpr(TV->Points());
-  //   BRepCheck_Status stat=BRepCheck_NoError;
-  //   while (itpr.More()) {
-  //     const occ::handle<BRep_PointRepresentation>& pr = itpr.Value();
-  //     const TopLoc_Location& loc = pr->Location();
-  //     if (pr->IsPointOnCurve()) {
-  //       Controlp = pr->Curve()->Value(pr->Parameter());
-  //       stat = BRepCheck_InvalidPointOnCurve;
-  //     }
-  //     else if (pr->IsPointOnCurveOnSurface()) {
-  //       gp_Pnt2d Puv = pr->PCurve()->Value(pr->Parameter());
-  //       Controlp = pr->Surface()->Value(Puv.X(),Puv.Y());
-  //       stat = BRepCheck_InvalidPointOnCurveOnSurface;
-  //     }
-  //     else if (pr->IsPointOnSurface()) {
-  //       Controlp = pr->Surface()->Value(pr->Parameter(),pr->Parameter2());
-  //       stat = BRepCheck_InvalidPointOnSurface;
-  //     }
-  //     Controlp.Transform(loc.Transformation());
-  //     if (prep.SquareDistance(Controlp) > Tol) {
-  //       BRepCheck::Add(lst,stat);
-  //     }
-  //     itpr.Next();
-  //   }
-
-  //   if (lst.IsEmpty()) {
-  //     lst.Append(BRepCheck_NoError);
-  //   }
-  // modified by NIZHNY-MKK  Fri May  7 16:43:45 2004.END
   myBlind = true;
 }
-
-//=================================================================================================
 
 double BRepCheck_Vertex::Tolerance()
 {
 
-  // Check all the representations  of the vertex. (i-e checks the TVertex
   occ::handle<BRep_TVertex>& TV   = *((occ::handle<BRep_TVertex>*)&myShape.TShape());
   const gp_Pnt&              prep = TV->Pnt();
   double                     Tol  = BRep_Tool::Tolerance(TopoDS::Vertex(myShape));

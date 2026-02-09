@@ -9,11 +9,6 @@
 #include <XCAFDoc_DocumentTool.hpp>
 #include <XCAFDoc_ShapeTool.hpp>
 
-// =======================================================================
-// function : XCAFDoc_AssemblyGraph constructor
-// purpose  : Builds an assembly graph from the OCAF document
-// =======================================================================
-
 XCAFDoc_AssemblyGraph::XCAFDoc_AssemblyGraph(const occ::handle<TDocStd_Document>& theDoc)
 {
   Standard_NullObject_Raise_if(theDoc.IsNull(), "Null document!");
@@ -25,11 +20,6 @@ XCAFDoc_AssemblyGraph::XCAFDoc_AssemblyGraph(const occ::handle<TDocStd_Document>
   buildGraph(aDummy);
 }
 
-// =======================================================================
-// function : XCAFDoc_AssemblyGraph constructor
-// purpose  : Builds an assembly graph from the OCAF label
-// =======================================================================
-
 XCAFDoc_AssemblyGraph::XCAFDoc_AssemblyGraph(const TDF_Label& theLabel)
 {
   Standard_NullObject_Raise_if(theLabel.IsNull(), "Null label!");
@@ -40,11 +30,6 @@ XCAFDoc_AssemblyGraph::XCAFDoc_AssemblyGraph(const TDF_Label& theLabel)
   buildGraph(theLabel);
 }
 
-// =======================================================================
-// function : IsDirectLink
-// purpose  : Checks if one node is the direct child of other one
-// =======================================================================
-
 bool XCAFDoc_AssemblyGraph::IsDirectLink(const int theNode1, const int theNode2) const
 {
   if (!HasChildren(theNode1))
@@ -52,8 +37,6 @@ bool XCAFDoc_AssemblyGraph::IsDirectLink(const int theNode1, const int theNode2)
 
   return GetChildren(theNode1).Contains(theNode2);
 }
-
-//=================================================================================================
 
 XCAFDoc_AssemblyGraph::NodeType XCAFDoc_AssemblyGraph::GetNodeType(const int theNode) const
 {
@@ -63,11 +46,6 @@ XCAFDoc_AssemblyGraph::NodeType XCAFDoc_AssemblyGraph::GetNodeType(const int the
 
   return (*typePtr);
 }
-
-// =======================================================================
-// function : NbLinks
-// purpose  : Calculates and returns the number of links
-// =======================================================================
 
 int XCAFDoc_AssemblyGraph::NbLinks() const
 {
@@ -79,8 +57,6 @@ int XCAFDoc_AssemblyGraph::NbLinks() const
   return aNumLinks;
 }
 
-//=================================================================================================
-
 int XCAFDoc_AssemblyGraph::NbOccurrences(const int theNode) const
 {
   const int* aUsageOQPtr = myUsages.Seek(theNode);
@@ -90,14 +66,9 @@ int XCAFDoc_AssemblyGraph::NbOccurrences(const int theNode) const
   return (*aUsageOQPtr);
 }
 
-// =======================================================================
-// function : buildGraph
-// purpose  : Builds an assembly graph from the OCAF document
-// =======================================================================
-
 void XCAFDoc_AssemblyGraph::buildGraph(const TDF_Label& theLabel)
 {
-  // We start from those shapes which are "free" in terms of XDE.
+
   NCollection_Sequence<TDF_Label> aRoots;
   if (theLabel.IsNull() || (myShapeTool->Label() == theLabel))
     myShapeTool->GetFreeShapes(aRoots);
@@ -129,64 +100,44 @@ void XCAFDoc_AssemblyGraph::buildGraph(const TDF_Label& theLabel)
 
     myRoots.Add(aRootId);
 
-    // Add components (the objects nested into the current one).
     if (myShapeTool->IsAssembly(anOriginal))
       addComponents(anOriginal, anIdToProceed);
   }
 }
 
-// =======================================================================
-// function : addComponents
-// purpose  : Adds components for the given parent to the graph structure
-// =======================================================================
-
 void XCAFDoc_AssemblyGraph::addComponents(const TDF_Label& theParent, const int theParentId)
 {
   if (!myShapeTool->IsShape(theParent))
   {
-    return; // We have to return here in order to prevent iterating by
-            // sub-labels. For parts, sub-labels are used to encode
-            // metadata which is out of interest in conceptual design
-            // intent represented by assembly graph.
+    return;
   }
 
-  // Loop over the children (persistent representation of "part-of" relation).
   for (TDF_ChildIterator anIt(theParent); anIt.More(); anIt.Next())
   {
     TDF_Label aComponent = anIt.Value();
 
-    // Add component
     const int aComponentId = addNode(aComponent, theParentId);
     if (aComponentId == 0)
       continue;
 
-    // Protection against deleted empty labels (after expand compounds, for example).
     occ::handle<TDataStd_TreeNode> aJumpNode;
     if (!aComponent.FindAttribute(XCAFDoc::ShapeRefGUID(), aJumpNode))
       continue;
 
-    // Jump to the referred object (the original).
     TDF_Label aChildOriginal;
     if (!aJumpNode.IsNull() && aJumpNode->HasFather())
-      aChildOriginal = aJumpNode->Father()->Label(); // Declaration-level origin.
+      aChildOriginal = aJumpNode->Father()->Label();
 
     if (aChildOriginal.IsNull())
       continue;
 
-    // Add child
     const int aChildId = addNode(aChildOriginal, aComponentId);
     if (aChildId == 0)
       continue;
 
-    // Process children: add components recursively.
     addComponents(aChildOriginal, aChildId);
   }
 }
-
-// =======================================================================
-// function : addNode
-// purpose  : Adds node into the graph
-// =======================================================================
 
 int XCAFDoc_AssemblyGraph::addNode(const TDF_Label& theLabel, const int theParentId)
 {
@@ -214,13 +165,12 @@ int XCAFDoc_AssemblyGraph::addNode(const TDF_Label& theLabel, const int theParen
   if (aNodeType == NodeType_UNDEFINED)
     return 0;
 
-  // Get ID of the insertion-level node in the abstract assembly graph.
   const int aChildId = myNodes.Add(theLabel);
   myNodeTypes.Bind(aChildId, aNodeType);
 
   if (aNodeType != NodeType_Occurrence)
   {
-    // Bind usage occurrences.
+
     int* aUsageOQPtr = myUsages.ChangeSeek(aChildId);
     if (aUsageOQPtr == nullptr)
       aUsageOQPtr = myUsages.Bound(aChildId, 1);
@@ -230,7 +180,7 @@ int XCAFDoc_AssemblyGraph::addNode(const TDF_Label& theLabel, const int theParen
 
   if (theParentId > 0)
   {
-    // Add link
+
     TColStd_PackedMapOfInteger* aMapPtr = myAdjacencyMap.ChangeSeek(theParentId);
     if (aMapPtr == nullptr)
       aMapPtr = myAdjacencyMap.Bound(theParentId, TColStd_PackedMapOfInteger());
@@ -240,11 +190,6 @@ int XCAFDoc_AssemblyGraph::addNode(const TDF_Label& theLabel, const int theParen
 
   return aChildId;
 }
-
-// =======================================================================
-// function : Iterator constructor
-// purpose  : Iteration starts from the specified node.
-// =======================================================================
 
 XCAFDoc_AssemblyGraph::Iterator::Iterator(const occ::handle<XCAFDoc_AssemblyGraph>& theGraph,
                                           const int                                 theNode)

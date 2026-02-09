@@ -37,18 +37,11 @@ public:
 
   static GeomAbs_Shape Continuity(const occ::handle<Adaptor3d_Curve>& C) { return C->Continuity(); }
 
-  //! Returns the number of intervals for continuity
-  //! <S>. May be one if Continuity(myclass) >= <S>
   static int NbIntervals(const occ::handle<Adaptor3d_Curve>& C, const GeomAbs_Shape S)
   {
     return C->NbIntervals(S);
   }
 
-  //! Stores in <T> the parameters bounding the intervals
-  //! of continuity <S>.
-  //!
-  //! The array must provide enough room to accommodate
-  //! for the parameters. i.e. T.Length() > NbIntervals()
   static void Intervals(const occ::handle<Adaptor3d_Curve>& C,
                         NCollection_Array1<double>&         T,
                         const GeomAbs_Shape                 S)
@@ -62,25 +55,15 @@ public:
 
   static double Period(const occ::handle<Adaptor3d_Curve>& C) { return C->Period(); }
 
-  //! Computes the point of parameter U on the curve.
   static gp_Pnt Value(const occ::handle<Adaptor3d_Curve>& C, const double U) { return C->Value(U); }
 
-  //! Computes the point of parameter U on the curve.
   static void D0(const occ::handle<Adaptor3d_Curve>& C, const double U, gp_Pnt& P) { C->D0(U, P); }
 
-  //! Computes the point of parameter U on the curve with its
-  //! first derivative.
-  //! Raised if the continuity of the current interval
-  //! is not C1.
   static void D1(const occ::handle<Adaptor3d_Curve>& C, const double U, gp_Pnt& P, gp_Vec& V)
   {
     C->D1(U, P, V);
   }
 
-  //! Returns the point P of parameter U, the first and second
-  //! derivatives V1 and V2.
-  //! Raised if the continuity of the current interval
-  //! is not C2.
   static void D2(const occ::handle<Adaptor3d_Curve>& C,
                  const double                        U,
                  gp_Pnt&                             P,
@@ -90,10 +73,6 @@ public:
     C->D2(U, P, V1, V2);
   }
 
-  //! Returns the point P of parameter U, the first, the second
-  //! and the third derivative.
-  //! Raised if the continuity of the current interval
-  //! is not C3.
   static void D3(const occ::handle<Adaptor3d_Curve>& C,
                  const double                        U,
                  gp_Pnt&                             P,
@@ -104,26 +83,16 @@ public:
     C->D3(U, P, V1, V2, V3);
   }
 
-  //! The returned vector gives the value of the derivative for the
-  //! order of derivation N.
-  //! Raised if the continuity of the current interval
-  //! is not CN.
-  //! Raised if N < 1.
   static gp_Vec DN(const occ::handle<Adaptor3d_Curve>& C, const double U, const int N)
   {
     return C->DN(U, N);
   }
 
-  //! Returns the parametric resolution corresponding
-  //! to the real space resolution <R3d>.
   static double Resolution(const occ::handle<Adaptor3d_Curve>& C, const double R3d)
   {
     return C->Resolution(R3d);
   }
 
-  //! Returns the type of the curve in the current
-  //! interval: Line, Circle, Ellipse, Hyperbola,
-  //! Parabola, BezierCurve, BSplineCurve, OtherCurve.
   static GeomAbs_CurveType GetType(const occ::handle<Adaptor3d_Curve>& C) { return C->GetType(); }
 
   static gp_Lin Line(const occ::handle<Adaptor3d_Curve>& C) { return C->Line(); }

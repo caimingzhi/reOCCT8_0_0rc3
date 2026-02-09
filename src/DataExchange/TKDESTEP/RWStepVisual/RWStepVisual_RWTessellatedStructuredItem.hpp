@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_TessellatedStructuredItem;
 
-//! Read & Write tool for TessellatedStructuredItem
 class RWStepVisual_RWTessellatedStructuredItem
 {
 

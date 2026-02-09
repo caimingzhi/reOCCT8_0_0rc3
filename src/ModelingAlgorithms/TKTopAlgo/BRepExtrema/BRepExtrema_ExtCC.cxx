@@ -4,20 +4,16 @@
 #include <Extrema_POnCurv.hpp>
 #include <BRepAdaptor_Curve.hpp>
 
-//=================================================================================================
-
 BRepExtrema_ExtCC::BRepExtrema_ExtCC(const TopoDS_Edge& E1, const TopoDS_Edge& E2)
 {
   Initialize(E2);
   Perform(E1);
 }
 
-//=================================================================================================
-
 void BRepExtrema_ExtCC::Initialize(const TopoDS_Edge& E2)
 {
   if (!BRep_Tool::IsGeometric(E2))
-    return; // protect against non-geometric type (e.g. polygon)
+    return;
   double            V1, V2;
   BRepAdaptor_Curve Curv(E2);
   myHC       = new BRepAdaptor_Curve(Curv);
@@ -28,12 +24,10 @@ void BRepExtrema_ExtCC::Initialize(const TopoDS_Edge& E2)
   myExtCC.SetTolerance(2, Tol);
 }
 
-//=================================================================================================
-
 void BRepExtrema_ExtCC::Perform(const TopoDS_Edge& E1)
 {
   if (!BRep_Tool::IsGeometric(E1))
-    return; // protect against non-geometric type (e.g. polygon)
+    return;
   double                         U1, U2;
   BRepAdaptor_Curve              Curv(E1);
   occ::handle<BRepAdaptor_Curve> HC  = new BRepAdaptor_Curve(Curv);
@@ -42,13 +36,9 @@ void BRepExtrema_ExtCC::Perform(const TopoDS_Edge& E1)
   BRep_Tool::Range(E1, U1, U2);
   myExtCC.SetCurve(1, *HC, U1, U2);
   myExtCC.SetTolerance(1, Tol);
-  // If we enable SetSingleSolutionFlag Extrema will run much quicker on almost parallel curves
-  // (e.g. bug 27665), however some solutions will be lost, e.g. see bug 28183.
-  // myExtCC.SetSingleSolutionFlag(true);
+
   myExtCC.Perform();
 }
-
-//=================================================================================================
 
 double BRepExtrema_ExtCC::ParameterOnE1(const int N) const
 {
@@ -57,16 +47,12 @@ double BRepExtrema_ExtCC::ParameterOnE1(const int N) const
   return POnE1.Parameter();
 }
 
-//=================================================================================================
-
 gp_Pnt BRepExtrema_ExtCC::PointOnE1(const int N) const
 {
   Extrema_POnCurv POnE1, POnE2;
   myExtCC.Points(N, POnE1, POnE2);
   return POnE1.Value();
 }
-
-//=================================================================================================
 
 double BRepExtrema_ExtCC::ParameterOnE2(const int N) const
 {
@@ -75,16 +61,12 @@ double BRepExtrema_ExtCC::ParameterOnE2(const int N) const
   return POnE2.Parameter();
 }
 
-//=================================================================================================
-
 gp_Pnt BRepExtrema_ExtCC::PointOnE2(const int N) const
 {
   Extrema_POnCurv POnE1, POnE2;
   myExtCC.Points(N, POnE1, POnE2);
   return POnE2.Value();
 }
-
-//=================================================================================================
 
 void BRepExtrema_ExtCC::TrimmedSquareDistances(double& dist11,
                                                double& dist12,

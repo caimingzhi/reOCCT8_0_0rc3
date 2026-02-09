@@ -21,7 +21,7 @@ void IGESDimen_RadiusDimension::Init(const occ::handle<IGESDimen_GeneralNote>& a
   theCenter      = arcCenter;
   theLeader2     = anotherArrow;
   if (!anotherArrow.IsNull())
-    InitTypeAndForm(222, 1); // 1 also admits Null
+    InitTypeAndForm(222, 1);
   else
     InitTypeAndForm(222, FormNumber());
 }

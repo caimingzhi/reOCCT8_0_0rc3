@@ -1,15 +1,4 @@
-// Copyright (c) 2017-2019 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <RWGltf_GltfMaterialMap.hpp>
 
@@ -23,8 +12,6 @@
 #endif
 
 IMPLEMENT_STANDARD_RTTIEXT(RWGltf_GltfMaterialMap, RWMesh_MaterialMap)
-
-//=================================================================================================
 
 const occ::handle<Image_Texture>& RWGltf_GltfMaterialMap::baseColorTexture(
   const occ::handle<XCAFDoc_VisMaterial>& theMat)
@@ -45,8 +32,6 @@ const occ::handle<Image_Texture>& RWGltf_GltfMaterialMap::baseColorTexture(
   return THE_NULL_TEXTURE;
 }
 
-//=================================================================================================
-
 RWGltf_GltfMaterialMap::RWGltf_GltfMaterialMap(const TCollection_AsciiString& theFile,
                                                const int                      theDefSamplerId)
     : RWMesh_MaterialMap(theFile),
@@ -56,11 +41,7 @@ RWGltf_GltfMaterialMap::RWGltf_GltfMaterialMap(const TCollection_AsciiString& th
   myMatNameAsKey = false;
 }
 
-//=================================================================================================
-
 RWGltf_GltfMaterialMap::~RWGltf_GltfMaterialMap() = default;
-
-//=================================================================================================
 
 void RWGltf_GltfMaterialMap::AddImages(RWGltf_GltfOStreamWriter* theWriter,
                                        const XCAFPrs_Style&      theStyle,
@@ -78,8 +59,6 @@ void RWGltf_GltfMaterialMap::AddImages(RWGltf_GltfOStreamWriter* theWriter,
   addImage(theWriter, theStyle.Material()->PbrMaterial().OcclusionTexture, theIsStarted);
 }
 
-//=================================================================================================
-
 void RWGltf_GltfMaterialMap::AddGlbImages(std::ostream& theBinFile, const XCAFPrs_Style& theStyle)
 {
   if (theStyle.Material().IsNull() || theStyle.Material()->IsEmpty())
@@ -93,8 +72,6 @@ void RWGltf_GltfMaterialMap::AddGlbImages(std::ostream& theBinFile, const XCAFPr
   addGlbImage(theBinFile, theStyle.Material()->PbrMaterial().EmissiveTexture);
   addGlbImage(theBinFile, theStyle.Material()->PbrMaterial().OcclusionTexture);
 }
-
-//=================================================================================================
 
 void RWGltf_GltfMaterialMap::addImage(RWGltf_GltfOStreamWriter*         theWriter,
                                       const occ::handle<Image_Texture>& theTexture,
@@ -135,8 +112,6 @@ void RWGltf_GltfMaterialMap::addImage(RWGltf_GltfOStreamWriter*         theWrite
 #endif
 }
 
-//=================================================================================================
-
 void RWGltf_GltfMaterialMap::addGlbImage(std::ostream&                     theBinFile,
                                          const occ::handle<Image_Texture>& theTexture)
 {
@@ -153,7 +128,6 @@ void RWGltf_GltfMaterialMap::addGlbImage(std::ostream&                     theBi
     return;
   }
 
-  // alignment by 4 bytes
   int64_t aContentLen64 = (int64_t)theBinFile.tellp();
   while (aContentLen64 % 4 != 0)
   {
@@ -161,7 +135,6 @@ void RWGltf_GltfMaterialMap::addGlbImage(std::ostream&                     theBi
     ++aContentLen64;
   }
 
-  // aBuffImage.Id = myBuffViewImages.Size(); // id will be corrected later
   aBuffImage.ByteLength = (int64_t)theBinFile.tellp() - aBuffImage.ByteOffset;
   if (aBuffImage.ByteLength <= 0)
   {
@@ -171,8 +144,6 @@ void RWGltf_GltfMaterialMap::addGlbImage(std::ostream&                     theBi
 
   myImageMap.Add(theTexture, aBuffImage);
 }
-
-//=================================================================================================
 
 void RWGltf_GltfMaterialMap::FlushGlbBufferViews(RWGltf_GltfOStreamWriter* theWriter,
                                                  const int                 theBinDataBufferId,
@@ -206,8 +177,6 @@ void RWGltf_GltfMaterialMap::FlushGlbBufferViews(RWGltf_GltfOStreamWriter* theWr
   (void)theBuffViewId;
 #endif
 }
-
-//=================================================================================================
 
 void RWGltf_GltfMaterialMap::FlushGlbImages(RWGltf_GltfOStreamWriter* theWriter)
 {
@@ -257,8 +226,6 @@ void RWGltf_GltfMaterialMap::FlushGlbImages(RWGltf_GltfOStreamWriter* theWriter)
 #endif
 }
 
-//=================================================================================================
-
 void RWGltf_GltfMaterialMap::AddMaterial(RWGltf_GltfOStreamWriter* theWriter,
                                          const XCAFPrs_Style&      theStyle,
                                          bool&                     theIsStarted)
@@ -287,8 +254,6 @@ void RWGltf_GltfMaterialMap::AddMaterial(RWGltf_GltfOStreamWriter* theWriter,
 #endif
 }
 
-//=================================================================================================
-
 void RWGltf_GltfMaterialMap::AddTextures(RWGltf_GltfOStreamWriter* theWriter,
                                          const XCAFPrs_Style&      theStyle,
                                          bool&                     theIsStarted)
@@ -305,8 +270,6 @@ void RWGltf_GltfMaterialMap::AddTextures(RWGltf_GltfOStreamWriter* theWriter,
   addTexture(theWriter, theStyle.Material()->PbrMaterial().OcclusionTexture, theIsStarted);
 }
 
-//=================================================================================================
-
 void RWGltf_GltfMaterialMap::addTexture(RWGltf_GltfOStreamWriter*         theWriter,
                                         const occ::handle<Image_Texture>& theTexture,
                                         bool&                             theIsStarted)
@@ -317,9 +280,8 @@ void RWGltf_GltfMaterialMap::addTexture(RWGltf_GltfOStreamWriter*         theWri
     return;
   }
 
-  // clang-format off
-  const int anImgKey = myImageMap.FindIndex (theTexture) - 1; // glTF indexation starts from 0
-  // clang-format on
+  const int anImgKey = myImageMap.FindIndex(theTexture) - 1;
+
   myTextureMap.Add(theTexture);
 
   if (!theIsStarted)
@@ -332,7 +294,7 @@ void RWGltf_GltfMaterialMap::addTexture(RWGltf_GltfOStreamWriter*         theWri
   theWriter->StartObject();
   {
     theWriter->Key("sampler");
-    theWriter->Int(myDefSamplerId); // mandatory field by specs
+    theWriter->Int(myDefSamplerId);
     theWriter->Key("source");
     theWriter->Int(anImgKey);
   }
@@ -344,17 +306,13 @@ void RWGltf_GltfMaterialMap::addTexture(RWGltf_GltfOStreamWriter*         theWri
 #endif
 }
 
-//=================================================================================================
-
 TCollection_AsciiString RWGltf_GltfMaterialMap::AddMaterial(const XCAFPrs_Style& theStyle)
 {
   return RWMesh_MaterialMap::AddMaterial(theStyle);
 }
 
-//=================================================================================================
-
 void RWGltf_GltfMaterialMap::DefineMaterial(const XCAFPrs_Style& theStyle,
-                                            const TCollection_AsciiString& /*theKey*/,
+                                            const TCollection_AsciiString&,
                                             const TCollection_AsciiString& theName)
 {
 #ifdef HAVE_RAPIDJSON
@@ -448,16 +406,11 @@ void RWGltf_GltfMaterialMap::DefineMaterial(const XCAFPrs_Style& theStyle,
     }
     myWriter->EndObject();
 
-    // export automatic culling as doubleSided material;
-    // extra preprocessing is necessary to automatically export
-    // Solids with singleSided material and Shells with doubleSided material,
-    // as both may share the same material having "auto" flag
     if (theStyle.Material().IsNull()
         || theStyle.Material()->FaceCulling() == Graphic3d_TypeOfBackfacingModel_Auto
         || theStyle.Material()->FaceCulling() == Graphic3d_TypeOfBackfacingModel_DoubleSided
-        || theStyle.Material()->FaceCulling()
-             == Graphic3d_TypeOfBackfacingModel_FrontCulled) // front culling flag cannot be
-                                                             // exported to glTF
+        || theStyle.Material()->FaceCulling() == Graphic3d_TypeOfBackfacingModel_FrontCulled)
+
     {
       myWriter->Key("doubleSided");
       myWriter->Bool(true);

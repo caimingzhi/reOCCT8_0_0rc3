@@ -23,22 +23,16 @@ public:
 
   Standard_EXPORT bool Read(const occ::handle<Storage_BaseDriver>& theDriver);
 
-  //! returns the number of roots.
   Standard_EXPORT int NumberOfRoots() const;
 
-  //! add a root to <me>. If a root with same name is present, it
-  //! will be replaced by <aRoot>.
   Standard_EXPORT void AddRoot(const occ::handle<Storage_Root>& aRoot);
 
   Standard_EXPORT occ::handle<NCollection_HSequence<occ::handle<Storage_Root>>> Roots() const;
 
-  //! find a root with name <aName>.
   Standard_EXPORT occ::handle<Storage_Root> Find(const TCollection_AsciiString& aName) const;
 
-  //! returns true if <me> contains a root named <aName>
   Standard_EXPORT bool IsRoot(const TCollection_AsciiString& aName) const;
 
-  //! remove the root named <aName>.
   Standard_EXPORT void RemoveRoot(const TCollection_AsciiString& aName);
 
   Standard_EXPORT Storage_Error ErrorStatus() const;

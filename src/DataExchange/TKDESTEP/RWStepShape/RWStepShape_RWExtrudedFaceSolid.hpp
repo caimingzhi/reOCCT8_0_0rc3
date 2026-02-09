@@ -11,7 +11,6 @@ class StepShape_ExtrudedFaceSolid;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ExtrudedFaceSolid
 class RWStepShape_RWExtrudedFaceSolid
 {
 public:

@@ -4,8 +4,6 @@
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 
-//=================================================================================================
-
 void Contap_SurfProps::Normale(const occ::handle<Adaptor3d_Surface>& S,
                                const double                          U,
                                const double                          V,
@@ -67,16 +65,8 @@ void Contap_SurfProps::Normale(const occ::handle<Adaptor3d_Surface>& S,
 
       double Vcalc = V;
       if (std::abs(V * Sina + Rad) <= 1e-12)
-      { // on est a l`apex
-        /*
-        double Vfi = Adaptor3d_HSurfaceTool::FirstVParameter(S);
-        if (Vfi < -Rad/Sina) { // partie valide pour V < Vapex
-        Vcalc = V - 1;
-        }
-        else {
-        Vcalc = V + 1.;
-        }
-        */
+      {
+
         Norm.SetCoord(0, 0, 0);
         return;
       }
@@ -114,8 +104,6 @@ void Contap_SurfProps::Normale(const occ::handle<Adaptor3d_Surface>& S,
     break;
   }
 }
-
-//=================================================================================================
 
 void Contap_SurfProps::DerivAndNorm(const occ::handle<Adaptor3d_Surface>& S,
                                     const double                          U,
@@ -180,10 +168,10 @@ void Contap_SurfProps::DerivAndNorm(const occ::handle<Adaptor3d_Surface>& S,
 
       double Vcalc = V;
       if (std::abs(V * Sina + Rad) <= RealEpsilon())
-      { // on est a l`apex
+      {
         double Vfi = Adaptor3d_HSurfaceTool::FirstVParameter(S);
         if (Vfi < -Rad / Sina)
-        { // partie valide pour V < Vapex
+        {
           Vcalc = V - 1;
         }
         else
@@ -224,8 +212,6 @@ void Contap_SurfProps::DerivAndNorm(const occ::handle<Adaptor3d_Surface>& S,
     break;
   }
 }
-
-//=================================================================================================
 
 void Contap_SurfProps::NormAndDn(const occ::handle<Adaptor3d_Surface>& S,
                                  const double                          U,
@@ -294,10 +280,10 @@ void Contap_SurfProps::NormAndDn(const occ::handle<Adaptor3d_Surface>& S,
       double Rad   = co.RefRadius();
       double Vcalc = V;
       if (std::abs(V * Sina + Rad) <= RealEpsilon())
-      { // on est a l`apex
+      {
         double Vfi = Adaptor3d_HSurfaceTool::FirstVParameter(S);
         if (Vfi < -Rad / Sina)
-        { // partie valide pour V < Vapex
+        {
           Vcalc = V - 1;
         }
         else

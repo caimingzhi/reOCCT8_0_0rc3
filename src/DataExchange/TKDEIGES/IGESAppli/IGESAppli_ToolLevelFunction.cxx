@@ -14,17 +14,14 @@
 
 IGESAppli_ToolLevelFunction::IGESAppli_ToolLevelFunction() = default;
 
-void IGESAppli_ToolLevelFunction::ReadOwnParams(
-  const occ::handle<IGESAppli_LevelFunction>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /* IR */,
-  IGESData_ParamReader& PR) const
+void IGESAppli_ToolLevelFunction::ReadOwnParams(const occ::handle<IGESAppli_LevelFunction>& ent,
+                                                const occ::handle<IGESData_IGESReaderData>&,
+                                                IGESData_ParamReader& PR) const
 {
   int                                   tempNbPropertyValues;
   int                                   tempFuncDescripCode;
   occ::handle<TCollection_HAsciiString> tempFuncDescrip;
-  // bool st; //szv#4:S4163:12Mar99 not needed
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadInteger(PR.Current(), "No. of Property values", tempNbPropertyValues);
 
   if (PR.DefinedElseSkip())
@@ -50,14 +47,14 @@ void IGESAppli_ToolLevelFunction::WriteOwnParams(const occ::handle<IGESAppli_Lev
     IW.Send(ent->FuncDescription());
 }
 
-void IGESAppli_ToolLevelFunction::OwnShared(const occ::handle<IGESAppli_LevelFunction>& /* ent */,
-                                            Interface_EntityIterator& /* iter */) const
+void IGESAppli_ToolLevelFunction::OwnShared(const occ::handle<IGESAppli_LevelFunction>&,
+                                            Interface_EntityIterator&) const
 {
 }
 
 void IGESAppli_ToolLevelFunction::OwnCopy(const occ::handle<IGESAppli_LevelFunction>& another,
                                           const occ::handle<IGESAppli_LevelFunction>& ent,
-                                          Interface_CopyTool& /* TC */) const
+                                          Interface_CopyTool&) const
 {
   int                                   aNbPropertyValues, code;
   occ::handle<TCollection_HAsciiString> descrip;
@@ -74,13 +71,13 @@ bool IGESAppli_ToolLevelFunction::OwnCorrect(const occ::handle<IGESAppli_LevelFu
   bool res = (ent->NbPropertyValues() != 2);
   if (res)
     ent->Init(2, ent->FuncDescriptionCode(), ent->FuncDescription());
-  return res; // nbpropertyvalues = 2
+  return res;
 }
 
 IGESData_DirChecker IGESAppli_ToolLevelFunction::DirChecker(
-  const occ::handle<IGESAppli_LevelFunction>& /* ent */) const
+  const occ::handle<IGESAppli_LevelFunction>&) const
 {
-  IGESData_DirChecker DC(406, 3); // Form no = 3 & Type = 406
+  IGESData_DirChecker DC(406, 3);
   DC.Structure(IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
@@ -99,9 +96,9 @@ void IGESAppli_ToolLevelFunction::OwnCheck(const occ::handle<IGESAppli_LevelFunc
 }
 
 void IGESAppli_ToolLevelFunction::OwnDump(const occ::handle<IGESAppli_LevelFunction>& ent,
-                                          const IGESData_IGESDumper& /* dumper */,
+                                          const IGESData_IGESDumper&,
                                           Standard_OStream& S,
-                                          const int /* level */) const
+                                          const int) const
 {
   S << "IGESAppli_LevelFunction\n";
 

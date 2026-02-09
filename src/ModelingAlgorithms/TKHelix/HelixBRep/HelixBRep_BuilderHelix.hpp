@@ -19,43 +19,26 @@ class gp_Pnt;
 class TopoDS_Wire;
 class TopoDS_Edge;
 
-//! Implementation of building helix wire
-//! Values of Error Status returned by algo:
-//! 0 - OK
-//! 1 - object is just initialized, it means that no input parameters were set
-//! 2 - approximation fails
-//!
-//! 10 - R < tolerance - starting point is too close to axis
-//! 11 - step (Pitch) < tolerance
-//! 12 - Height < tolerance
-//! 13 - TaperAngle < 0 or TaperAngle > Pi/2 - TolAng
-//! Warning Status:
-//! 0 - OK
-//! 1 - tolerance reached by approximation > requested tolerance.
 class HelixBRep_BuilderHelix
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   Standard_EXPORT HelixBRep_BuilderHelix();
   Standard_EXPORT virtual ~HelixBRep_BuilderHelix();
 
-  //! Sets parameters of general composite helix
   Standard_EXPORT void SetParameters(const gp_Ax3&                     theAxis,
                                      const NCollection_Array1<double>& theDiams,
                                      const NCollection_Array1<double>& theHeights,
                                      const NCollection_Array1<double>& thePitches,
                                      const NCollection_Array1<bool>&   theIsPitches);
 
-  //! Sets parameters of pure helix
   Standard_EXPORT void SetParameters(const gp_Ax3&                     theAxis,
                                      const double                      theDiam,
                                      const NCollection_Array1<double>& theHeights,
                                      const NCollection_Array1<double>& thePitches,
                                      const NCollection_Array1<bool>&   theIsPitches);
 
-  //! Sets parameters of pure spiral
   Standard_EXPORT void SetParameters(const gp_Ax3&                     theAxis,
                                      const double                      theDiam1,
                                      const double                      theDiam2,
@@ -63,43 +46,34 @@ public:
                                      const NCollection_Array1<double>& thePitches,
                                      const NCollection_Array1<bool>&   theIsPitches);
 
-  //! Sets parameters of general composite helix
   Standard_EXPORT void SetParameters(const gp_Ax3&                     theAxis,
                                      const NCollection_Array1<double>& theDiams,
                                      const NCollection_Array1<double>& thePitches,
                                      const NCollection_Array1<double>& theNbTurns);
 
-  //! Sets parameters of pure helix
   Standard_EXPORT void SetParameters(const gp_Ax3&                     theAxis,
                                      const double                      theDiam,
                                      const NCollection_Array1<double>& thePitches,
                                      const NCollection_Array1<double>& theNbTurns);
 
-  //! Sets parameters of pure spiral
   Standard_EXPORT void SetParameters(const gp_Ax3&                     theAxis,
                                      const double                      theDiam1,
                                      const double                      theDiam2,
                                      const NCollection_Array1<double>& thePitches,
                                      const NCollection_Array1<double>& theNbTurns);
 
-  //! Sets parameters for approximation
   Standard_EXPORT void SetApproxParameters(const double        theTolerance,
                                            const int           theMaxDegree,
                                            const GeomAbs_Shape theContinuity);
 
-  //! Performs calculations
   Standard_EXPORT void Perform();
 
-  //! Gets tolerance reached by approximation
   Standard_EXPORT double ToleranceReached() const;
 
-  //! Returns error status of algorithm
   Standard_EXPORT int ErrorStatus() const;
 
-  //! Returns warning status of algorithm
   Standard_EXPORT int WarningStatus() const;
 
-  //! Gets result of algorithm
   Standard_EXPORT const TopoDS_Shape& Shape() const;
 
 protected:

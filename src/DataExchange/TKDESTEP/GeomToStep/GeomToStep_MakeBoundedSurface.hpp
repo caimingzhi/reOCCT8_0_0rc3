@@ -9,11 +9,6 @@
 class StepGeom_BoundedSurface;
 class Geom_BoundedSurface;
 
-//! This class implements the mapping between classes
-//! BoundedSurface from Geom and the class BoundedSurface from
-//! StepGeom which describes a BoundedSurface from prostep.
-//! As BoundedSurface is an abstract BoundedSurface this class
-//! is an access to the sub-class required.
 class GeomToStep_MakeBoundedSurface : public GeomToStep_Root
 {
 public:

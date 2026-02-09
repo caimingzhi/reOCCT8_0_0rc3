@@ -44,7 +44,6 @@
 #include <cstdio>
 #include <gp_Pnt.hpp>
 
-// pour mes tests
 #ifdef OCCT_DEBUG
   #include <OSD_Chronometer.hpp>
   #include <Geom_Line.hpp>
@@ -72,10 +71,6 @@ double TolCurv     = defTolCurv;
 int    MaxDeg      = defMaxDeg;
 int    MaxSegments = defMaxSegments;
 
-////////////////////////////////////////////////////////////////////////////////
-//  commande plate : resultat face sur surface plate
-////////////////////////////////////////////////////////////////////////////////
-
 static int plate(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 8)
@@ -94,12 +89,12 @@ static int plate(Draw_Interpretor& di, int n, const char** a)
   {
     TopoDS_Shape aLocalEdge(DBRep::Get(a[3 * i + 1], TopAbs_EDGE));
     TopoDS_Edge  E = TopoDS::Edge(aLocalEdge);
-    //    TopoDS_Edge E = TopoDS::Edge(DBRep::Get(a[3*i+1],TopAbs_EDGE));
+
     if (E.IsNull())
       return 1;
     TopoDS_Shape aLocalFace(DBRep::Get(a[3 * i + 2], TopAbs_FACE));
     TopoDS_Face  F = TopoDS::Face(aLocalFace);
-    //    TopoDS_Face F = TopoDS::Face(DBRep::Get(a[3*i+2],TopAbs_FACE));
+
     if (F.IsNull())
       return 1;
     int T = Draw::Atoi(a[3 * i + 3]);
@@ -125,7 +120,7 @@ static int plate(Draw_Interpretor& di, int n, const char** a)
   }
 
   double ErrG0 = 1.1 * Henri.G0Error();
-  // std::cout<<" dist. max = "<<Henri.G0Error()<<" ; angle max = "<<Henri.G1Error()<<std::endl;
+
   di << " dist. max = " << Henri.G0Error() << " ; angle max = " << Henri.G1Error() << "\n";
 
   BRepBuilderAPI_MakeWire MW;
@@ -170,10 +165,6 @@ static int plate(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-//  commande gplate : resultat face egale a la surface approchee
-////////////////////////////////////////////////////////////////////////////////
-
 static int gplate(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 6)
@@ -185,10 +176,10 @@ static int gplate(Draw_Interpretor& di, int n, const char** a)
   int i;
   int Conti;
   int Indice = 4;
-  // Surface d'init
+
   TopoDS_Shape aLocalFace(DBRep::Get(a[Indice++], TopAbs_FACE));
   TopoDS_Face  SI = TopoDS::Face(aLocalFace);
-  //  TopoDS_Face SI = TopoDS::Face(DBRep::Get(a[Indice++],TopAbs_FACE));
+
   if (SI.IsNull())
     Indice--;
   else
@@ -201,7 +192,7 @@ static int gplate(Draw_Interpretor& di, int n, const char** a)
   {
     TopoDS_Shape aLocalShape(DBRep::Get(a[Indice++], TopAbs_EDGE));
     TopoDS_Edge  E = TopoDS::Edge(aLocalShape);
-    //    TopoDS_Edge E = TopoDS::Edge(DBRep::Get(a[Indice++],TopAbs_EDGE));
+
     if (E.IsNull())
       return 1;
     Conti = Draw::Atoi(a[Indice++]);
@@ -209,7 +200,7 @@ static int gplate(Draw_Interpretor& di, int n, const char** a)
     {
       occ::handle<BRepAdaptor_Curve> C = new BRepAdaptor_Curve();
       C->Initialize(E);
-      const occ::handle<Adaptor3d_Curve>&    aC   = C; // to avoid ambiguity
+      const occ::handle<Adaptor3d_Curve>&    aC   = C;
       occ::handle<GeomPlate_CurveConstraint> Cont = new BRepFill_CurveConstraint(aC, Conti);
       Henri.Add(Cont);
     }
@@ -217,7 +208,7 @@ static int gplate(Draw_Interpretor& di, int n, const char** a)
     {
       aLocalFace    = DBRep::Get(a[Indice++], TopAbs_FACE);
       TopoDS_Face F = TopoDS::Face(aLocalFace);
-      //	TopoDS_Face F = TopoDS::Face(DBRep::Get(a[Indice++],TopAbs_FACE));
+
       if (F.IsNull())
         return 1;
       occ::handle<BRepAdaptor_Surface> S = new BRepAdaptor_Surface();
@@ -233,9 +224,8 @@ static int gplate(Draw_Interpretor& di, int n, const char** a)
 
   for (i = 1; i <= NbPointConstraint; i++)
   {
-    //      gp_Pnt P1,P2,P3;
+
     gp_Pnt P1;
-    //      gp_Vec V1,V2,V3,V4,V5;
 
     if (DrawTrSurf::GetPoint(a[Indice], P1))
     {
@@ -251,7 +241,7 @@ static int gplate(Draw_Interpretor& di, int n, const char** a)
       Conti         = Draw::Atoi(a[Indice++]);
       aLocalFace    = DBRep::Get(a[Indice++], TopAbs_FACE);
       TopoDS_Face F = TopoDS::Face(aLocalFace);
-      //	  TopoDS_Face F = TopoDS::Face(DBRep::Get(a[Indice++],TopAbs_FACE));
+
       if (F.IsNull())
         return 1;
       occ::handle<BRepAdaptor_Surface> HF = new BRepAdaptor_Surface();
@@ -300,10 +290,6 @@ static int gplate(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-//  commande approxplate : resultat face sur surface approchee
-////////////////////////////////////////////////////////////////////////////////
-
 static int approxplate(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 9)
@@ -322,12 +308,12 @@ static int approxplate(Draw_Interpretor& di, int n, const char** a)
   {
     TopoDS_Shape aLocalShape(DBRep::Get(a[3 * i + 1], TopAbs_EDGE));
     TopoDS_Edge  E = TopoDS::Edge(aLocalShape);
-    //    TopoDS_Edge E = TopoDS::Edge(DBRep::Get(a[3*i+1],TopAbs_EDGE));
+
     if (E.IsNull())
       return 1;
     TopoDS_Shape aLocalFace(DBRep::Get(a[3 * i + 2], TopAbs_FACE));
     TopoDS_Face  F = TopoDS::Face(aLocalFace);
-    //    TopoDS_Face F = TopoDS::Face(DBRep::Get(a[3*i+2],TopAbs_FACE));
+
     if (F.IsNull())
       return 1;
     int T = Draw::Atoi(a[3 * i + 3]);
@@ -354,7 +340,7 @@ static int approxplate(Draw_Interpretor& di, int n, const char** a)
   }
 
   double dmax = Henri.G0Error(), anmax = Henri.G1Error();
-  // std::cout<<" dist. max = "<<dmax<<" ; angle max = "<<anmax<<std::endl;
+
   di << " dist. max = " << dmax << " ; angle max = " << anmax << "\n";
 
   Tol3d                                      = Draw::Atof(a[3 * NbCurFront + 4]);
@@ -440,7 +426,7 @@ static int approxplate(Draw_Interpretor& di, int n, const char** a)
 static int filling(Draw_Interpretor& di, int n, const char** a)
 {
 #ifdef OCCT_DEBUG
-  // Chronometrage
+
   OSD_Chronometer Chrono;
   Chrono.Reset();
   Chrono.Start();
@@ -504,7 +490,6 @@ static int filling(Draw_Interpretor& di, int n, const char** a)
     else
       MakeFilling.Add(E, (GeomAbs_Shape)Order);
 
-    // History
     if (!E.IsNull())
       ListForHistory.Append(E);
   }
@@ -574,7 +559,6 @@ static int filling(Draw_Interpretor& di, int n, const char** a)
   di << "Temps de calcul  : " << Tps << "\n";
 #endif
 
-  // History
   if (BRepTest_Objects::IsHistoryNeeded())
     BRepTest_Objects::SetHistory(ListForHistory, MakeFilling);
 
@@ -586,12 +570,6 @@ static int fillingparam(Draw_Interpretor& di, int n, const char** a)
   if (n == 1)
   {
 
-    // std::cout << "fillingparam : options are"  <<std::endl;
-    // std::cout << "-l : to list current values" << std::endl;
-    // std::cout << "-i : to set default values"   << std::endl;
-    // std::cout << "-r deg nbPonC nbIt anis : to set filling options" <<std::endl;
-    // std::cout << "-c t2d t3d tang tcur : to set tolerances" << std::endl;
-    // std::cout << "-a maxdeg maxseg : Approximation option" << std::endl;
     di << "fillingparam : options are" << "\n";
     di << "-l : to list current values\n";
     di << "-i : to set default values" << "\n";
@@ -606,19 +584,7 @@ static int fillingparam(Draw_Interpretor& di, int n, const char** a)
     const char* flag = AS.ToCString();
     if (strcmp(flag, "-l") == 0 && n == 2)
     {
-      // std::cout<<std::endl;
-      // std::cout<<"Degree = "<<Degree<<std::endl;
-      // std::cout<<"NbPtsOnCur = "<<NbPtsOnCur<<std::endl;
-      // std::cout<<"NbIter = "<<NbIter<<std::endl;
-      // std::cout<<"Anisotropie = "<<Anisotropie<<std::endl<<std::endl;
-      //
-      // std::cout<<"Tol2d = "<<Tol2d<<std::endl;
-      // std::cout<<"Tol3d = "<<Tol3d<<std::endl;
-      // std::cout<<"TolAng = "<<TolAng<<std::endl;
-      // std::cout<<"TolCurv = "<<TolCurv<<std::endl<<std::endl;
-      //
-      // std::cout<<"MaxDeg = "<<MaxDeg<<std::endl;
-      // std::cout<<"MaxSegments = "<<MaxSegments<<std::endl<<std::endl;
+
       di << "\n";
       di << "Degree = " << Degree << "\n";
       di << "NbPtsOnCur = " << NbPtsOnCur << "\n";
@@ -669,7 +635,7 @@ static int fillingparam(Draw_Interpretor& di, int n, const char** a)
     }
     else
     {
-      // std::cout<<"Wrong parameters"<<std::endl;
+
       di << "Wrong parameters\n";
       return 1;
     }

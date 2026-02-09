@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -46,10 +35,9 @@ namespace
 
 TEST(GeomGridEval_SurfaceOfRevolutionTest, BasicEvaluation)
 {
-  // Create a line parallel to Y axis at X=5 (meridian)
+
   occ::handle<Geom_Line> aLine = new Geom_Line(gp_Pnt(5.0, 0.0, 0.0), gp_Dir(0.0, 0.0, 1.0));
 
-  // Revolve around Z axis -> Creates a cylinder of radius 5
   gp_Ax1                                aRevAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_SurfaceOfRevolution> aRevSurf = new Geom_SurfaceOfRevolution(aLine, aRevAxis);
 
@@ -67,7 +55,6 @@ TEST(GeomGridEval_SurfaceOfRevolutionTest, BasicEvaluation)
       gp_Pnt aExpected = aRevSurf->Value(aUParams.Value(i), aVParams.Value(j));
       EXPECT_NEAR(aGrid.Value(i, j).Distance(aExpected), 0.0, THE_TOLERANCE);
 
-      // Check cylindrical radius
       double aRadius = std::sqrt(aGrid.Value(i, j).X() * aGrid.Value(i, j).X()
                                  + aGrid.Value(i, j).Y() * aGrid.Value(i, j).Y());
       EXPECT_NEAR(aRadius, 5.0, THE_TOLERANCE);
@@ -77,12 +64,10 @@ TEST(GeomGridEval_SurfaceOfRevolutionTest, BasicEvaluation)
 
 TEST(GeomGridEval_SurfaceOfRevolutionTest, CircleMeridian)
 {
-  // Create a circle in XZ plane with center at (10, 0, 0) and radius 3
-  // This creates a torus when revolved
+
   gp_Ax2                   aCircleAx(gp_Pnt(10.0, 0.0, 0.0), gp_Dir(0, 1, 0), gp_Dir(1, 0, 0));
   occ::handle<Geom_Circle> aCircle = new Geom_Circle(aCircleAx, 3.0);
 
-  // Revolve around Z axis
   gp_Ax1                                aRevAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_SurfaceOfRevolution> aRevSurf = new Geom_SurfaceOfRevolution(aCircle, aRevAxis);
 
@@ -212,7 +197,6 @@ TEST(GeomGridEval_SurfaceOfRevolutionTest, UnifiedDispatch)
   gp_Ax1                 aRevAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_SurfaceOfRevolution> aRevSurf = new Geom_SurfaceOfRevolution(aLine, aRevAxis);
 
-  // Test dispatch via unified evaluator
   GeomGridEval_Surface anEval;
   anEval.Initialize(aRevSurf);
 
@@ -240,7 +224,6 @@ TEST(GeomGridEval_SurfaceOfRevolutionTest, AdaptorDispatch)
   gp_Ax1                 aRevAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_SurfaceOfRevolution> aRevSurf = new Geom_SurfaceOfRevolution(aLine, aRevAxis);
 
-  // Test dispatch via adaptor
   GeomAdaptor_Surface  anAdaptor(aRevSurf);
   GeomGridEval_Surface anEval;
   anEval.Initialize(anAdaptor);

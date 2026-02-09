@@ -4,8 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_ShapeShapeInterference, TopOpeBRepDS_Interference)
 
-//=================================================================================================
-
 TopOpeBRepDS_ShapeShapeInterference::TopOpeBRepDS_ShapeShapeInterference(
   const TopOpeBRepDS_Transition& T,
   const TopOpeBRepDS_Kind        ST,
@@ -20,21 +18,15 @@ TopOpeBRepDS_ShapeShapeInterference::TopOpeBRepDS_ShapeShapeInterference(
 {
 }
 
-//=================================================================================================
-
 TopOpeBRepDS_Config TopOpeBRepDS_ShapeShapeInterference::Config() const
 {
   return myC;
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_ShapeShapeInterference::GBound() const
 {
   return myGBound;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_ShapeShapeInterference::SetGBound(const bool b)
 {

@@ -36,10 +36,6 @@ static void Descendants(const TopoDS_Shape&,
                         BRepFeat_Builder&,
                         NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>&);
 
-//=======================================================================
-// function : Perform
-// purpose  : topological reconstruction of the result
-//=======================================================================
 void BRepFeat_Form::GlobalPerform()
 {
 
@@ -60,7 +56,6 @@ void BRepFeat_Form::GlobalPerform()
     return;
   }
 
-  //--- Initialisation
   TopExp_Explorer                                                                    exp, exp2;
   int                                                                                theOpe = 2;
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator itm;
@@ -159,16 +154,12 @@ void BRepFeat_Form::GlobalPerform()
   NCollection_List<TopoDS_Shape> IntList;
   IntList.Clear();
 
-  //--- 1) by intersection
-
-  // Intersection Tool Shape From
   if (!mySFrom.IsNull())
   {
     ASI1.Init(mySFrom);
     ASI1.Perform(scur);
   }
 
-  // Intersection Tool Shape Until
   if (!mySUntil.IsNull())
   {
     ASI2.Init(mySUntil);
@@ -176,7 +167,7 @@ void BRepFeat_Form::GlobalPerform()
   }
 
   {
-    //  Find sens, FFrom, FUntil
+
     for (int jj = 1; jj <= scur.Length(); jj++)
     {
       if (ASI1.IsDone() && ASI2.IsDone())
@@ -197,7 +188,7 @@ void BRepFeat_Form::GlobalPerform()
         {
           int ku, kf;
           if (mu <= Mf && mf <= Mu)
-          { // overlapping intervals
+          {
             sens = 1;
             kf   = 1;
             ku   = ASI2.NbPoints(jj);
@@ -259,8 +250,6 @@ void BRepFeat_Form::GlobalPerform()
         if (ASI2.NbPoints(jj) <= 0)
           continue;
 
-        // for base case prism on mySUntil -> ambivalent direction
-        //      ->  preferable direction = 1
         if (sens != 1)
         {
           if (ASI2.Point(jj, 1).Parameter() * ASI2.Point(jj, ASI2.NbPoints(jj)).Parameter() <= 0)
@@ -304,8 +293,6 @@ void BRepFeat_Form::GlobalPerform()
 
   LocOpe_Gluer theGlue;
 
-  //--- case of gluing
-
   if (theOpe == 1)
   {
 #ifdef OCCT_DEBUG
@@ -313,7 +300,7 @@ void BRepFeat_Form::GlobalPerform()
       std::cout << " Gluer" << std::endl;
 #endif
     bool Collage = true;
-    // cut by FFrom && FUntil
+
     TopoDS_Shape Comp;
     BRep_Builder B;
     B.MakeCompound(TopoDS::Compound(Comp));
@@ -349,8 +336,8 @@ void BRepFeat_Form::GlobalPerform()
         Collage   = false;
       }
       else
-      { // else X0
-        // Only solids are preserved
+      {
+
         TopoDS_Shape theGShape;
         B.MakeCompound(TopoDS::Compound(theGShape));
         for (; exp.More(); exp.Next())
@@ -364,7 +351,7 @@ void BRepFeat_Form::GlobalPerform()
           Collage   = false;
         }
         else
-        { // else X1
+        {
           if (!mySFrom.IsNull())
           {
             TopExp_Explorer ex;
@@ -398,8 +385,8 @@ void BRepFeat_Form::GlobalPerform()
                   locmap(fac).Append(fac);
               }
             }
-          } // if(!mySFrom.IsNull())
-          //
+          }
+
           if (!mySUntil.IsNull())
           {
             TopExp_Explorer ex;
@@ -433,9 +420,9 @@ void BRepFeat_Form::GlobalPerform()
                   locmap(fac).Append(fac);
               }
             }
-          } // if(!mySUntil.IsNull())
-          //
-          UpdateDescendants(trP, theGShape, true); // skip faces
+          }
+
+          UpdateDescendants(trP, theGShape, true);
 
           theGlue.Init(mySbase, theGShape);
           for (itm.Initialize(myGluedF); itm.More(); itm.Next())
@@ -473,9 +460,9 @@ void BRepFeat_Form::GlobalPerform()
               }
             }
           }
-        } // else X1
-      } // else X0
-    } // if(expp.More() && !Comp.IsNull() && !myGShape.IsNull())
+        }
+      }
+    }
     else
     {
       theGlue.Init(mySbase, myGShape);
@@ -512,14 +499,13 @@ void BRepFeat_Form::GlobalPerform()
       }
     }
 
-    // Add gluing on start and end face if necessary !!!
     if (FromInShape && Collage)
     {
       TopExp_Explorer ex(mySFrom, TopAbs_FACE);
       for (; ex.More(); ex.Next())
       {
         const TopoDS_Face& fac2 = TopoDS::Face(ex.Current());
-        //        for (it.Initialize(myMap(fac2)); it.More(); it.Next()) {
+
         for (it.Initialize(locmap(fac2)); it.More(); it.Next())
         {
           const TopoDS_Face& fac1 = TopoDS::Face(it.Value());
@@ -530,7 +516,6 @@ void BRepFeat_Form::GlobalPerform()
             theGlue.Bind(theFE.EdgeFrom(), theFE.EdgeTo());
           }
         }
-        //        myMap.UnBind(fac2);
       }
     }
 
@@ -540,7 +525,7 @@ void BRepFeat_Form::GlobalPerform()
       for (; ex.More(); ex.Next())
       {
         const TopoDS_Face& fac2 = TopoDS::Face(ex.Current());
-        //        for (it.Initialize(myMap(fac2)); it.More(); it.Next()) {
+
         for (it.Initialize(locmap(fac2)); it.More(); it.Next())
         {
           const TopoDS_Face& fac1 = TopoDS::Face(it.Value());
@@ -551,8 +536,6 @@ void BRepFeat_Form::GlobalPerform()
             theGlue.Bind(theFE.EdgeFrom(), theFE.EdgeTo());
           }
         }
-        // myMap.UnBind(fac2); // to avoid fac2 in Map when
-        //  UpdateDescendants(theGlue) is called
       }
     }
 
@@ -565,8 +548,6 @@ void BRepFeat_Form::GlobalPerform()
     }
   }
 
-  //--- if the gluing is always applicable
-
   if (theOpe == 1)
   {
 #ifdef OCCT_DEBUG
@@ -577,7 +558,7 @@ void BRepFeat_Form::GlobalPerform()
     if (theGlue.IsDone())
     {
       const TopoDS_Shape& shshs = theGlue.ResultingShape();
-      //      if (BRepOffsetAPI::IsTopologicallyValid(shshs)) {
+
       if (BRepAlgo::IsValid(shshs))
       {
         UpdateDescendants(theGlue);
@@ -603,8 +584,6 @@ void BRepFeat_Form::GlobalPerform()
     }
   }
 
-  //--- case without gluing + Tool with proper dimensions
-
   if (theOpe == 2 && ChangeOpe && myJustGluer)
   {
 #ifdef OCCT_DEBUG
@@ -613,11 +592,7 @@ void BRepFeat_Form::GlobalPerform()
 #endif
     myJustGluer = false;
     theOpe      = 0;
-    //    Done();
-    //    return;
   }
-
-  //--- case without gluing
 
   if (theOpe == 2)
   {
@@ -671,7 +646,6 @@ void BRepFeat_Form::GlobalPerform()
       }
     }
 
-    // update type of selection
     if (myPerfSelection == BRepFeat_SelectionU && !UntilInShape)
     {
       myPerfSelection = BRepFeat_NoSelection;
@@ -692,7 +666,7 @@ void BRepFeat_Form::GlobalPerform()
     if (expp.More() && !Comp.IsNull() && !myGShape.IsNull())
     {
       BRepAlgoAPI_Cut trP(myGShape, Comp);
-      // the result is necessarily a compound.
+
       exp.Init(trP.Shape(), TopAbs_SOLID);
       if (!exp.More())
       {
@@ -700,7 +674,7 @@ void BRepFeat_Form::GlobalPerform()
         NotDone();
         return;
       }
-      // Only solids are preserved
+
       theGShape.Nullify();
       B.MakeCompound(TopoDS::Compound(theGShape));
       for (; exp.More(); exp.Next())
@@ -758,30 +732,26 @@ void BRepFeat_Form::GlobalPerform()
         }
       }
       UpdateDescendants(trP, theGShape, true);
-    } // if(expp.More() && !Comp.IsNull() && !myGShape.IsNull())  {
-    //
+    }
 
-    //--- generation of "just feature" for assembly = Parts of tool
     bool             bFlag = myPerfSelection != BRepFeat_NoSelection;
     BRepFeat_Builder theBuilder;
     theBuilder.Init(mySbase, theGShape);
     theBuilder.SetOperation(myFuse, bFlag);
     theBuilder.Perform();
-    //
+
     NCollection_List<TopoDS_Shape> lshape;
     theBuilder.PartsOfTool(lshape);
-    //
+
     double                  pbmin = RealLast(), pbmax = RealFirst();
     double                  prmin = RealLast() - 2 * Precision::Confusion();
     double                  prmax = RealFirst() + 2 * Precision::Confusion();
     bool                    flag1 = false;
     occ::handle<Geom_Curve> C;
 
-    //--- Selection of pieces of tool to be preserved
     if (!lshape.IsEmpty() && myPerfSelection != BRepFeat_NoSelection)
     {
-      //      Find ParametricMinMax depending on the constraints of Shape From and Until
-      //   -> prmin, prmax, pbmin and pbmax
+
       C = BarycCurve();
       if (C.IsNull())
       {
@@ -802,7 +772,6 @@ void BRepFeat_Form::GlobalPerform()
         BRepFeat::ParametricMinMax(mySFrom, C, prmin1, prmax1, prbmin1, prbmax1, flag1);
         BRepFeat::ParametricMinMax(mySUntil, C, prmin2, prmax2, prbmin2, prbmax2, flag1);
 
-        // case of revolutions
         if (C->IsPeriodic())
         {
           double period = C->Period();
@@ -868,7 +837,6 @@ void BRepFeat_Form::GlobalPerform()
           return;
         }
 
-        // Find parts of the tool containing descendants of Shape Until
         BRepFeat::ParametricMinMax(mySUntil, C, prmin1, prmax1, prbmin1, prbmax1, flag1);
         if (sens == 1)
         {
@@ -886,16 +854,11 @@ void BRepFeat_Form::GlobalPerform()
         }
       }
 
-      // Finer choice of ParametricMinMax in case when the tool
-      // intersects Shapes From and Until
-      //       case of several intersections (keep PartsOfTool according to the selection)
-      //       position of the face of intersection in PartsOfTool (before or after)
       constexpr double delta = Precision::Confusion();
 
       if (myPerfSelection != BRepFeat_NoSelection)
       {
-        // modif of the test for cts21181 : (prbmax2 and prnmin2) -> (prbmin1 and prbmax1)
-        // correction take into account flag2 for pro15323 and flag3 for pro16060
+
         if (!mySUntil.IsNull())
         {
           NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> mapFuntil;
@@ -1072,7 +1035,6 @@ void BRepFeat_Form::GlobalPerform()
         }
       }
 
-      // Parse PartsOfTool to preserve or not depending on ParametricMinMax
       if (!myJustFeat)
       {
         bool   KeepParts = false;
@@ -1122,7 +1084,6 @@ void BRepFeat_Form::GlobalPerform()
           }
         }
 
-        // Case when no part of the tool is preserved
         if (!KeepParts)
         {
 #ifdef OCCT_DEBUG
@@ -1136,7 +1097,7 @@ void BRepFeat_Form::GlobalPerform()
       }
       else
       {
-        // case JustFeature -> all PartsOfTool are preserved
+
         double       prmin1, prmax1, prbmin1, prbmax1;
         double       min, max, pmin, pmax;
         bool         flag2;
@@ -1171,12 +1132,9 @@ void BRepFeat_Form::GlobalPerform()
       }
     }
 
-    //--- Generation of result myShape
-
     if (!myJustFeat)
     {
-      // removal of edges of section that have no common vertices
-      // with PartsOfTool preserved
+
       if (bFlag)
       {
         theBuilder.PerformResult();
@@ -1190,15 +1148,13 @@ void BRepFeat_Form::GlobalPerform()
     }
     else
     {
-      // all is already done
+
       Done();
     }
   }
 
   myStatusError = BRepFeat_OK;
 }
-
-//=================================================================================================
 
 bool BRepFeat_Form::IsDeleted(const TopoDS_Shape& F)
 {
@@ -1208,8 +1164,6 @@ bool BRepFeat_Form::IsDeleted(const TopoDS_Shape& F)
   }
   return false;
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepFeat_Form::Modified(const TopoDS_Shape& F)
 {
@@ -1233,10 +1187,8 @@ const NCollection_List<TopoDS_Shape>& BRepFeat_Form::Modified(const TopoDS_Shape
         myGenerated.Append(sh);
     }
   }
-  return myGenerated; // empty list
+  return myGenerated;
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepFeat_Form::Generated(const TopoDS_Shape& S)
 {
@@ -1244,7 +1196,7 @@ const NCollection_List<TopoDS_Shape>& BRepFeat_Form::Generated(const TopoDS_Shap
   if (!IsDone())
     return myGenerated;
   if (myMap.IsBound(S) && S.ShapeType() != TopAbs_FACE)
-  { // check if filter on face or not
+  {
     NCollection_List<TopoDS_Shape>::Iterator ite(myMap(S));
     for (; ite.More(); ite.Next())
     {
@@ -1256,8 +1208,6 @@ const NCollection_List<TopoDS_Shape>& BRepFeat_Form::Generated(const TopoDS_Shap
   }
   return myGenerated;
 }
-
-//=================================================================================================
 
 void BRepFeat_Form::UpdateDescendants(const LocOpe_Gluer& G)
 {
@@ -1286,18 +1236,14 @@ void BRepFeat_Form::UpdateDescendants(const LocOpe_Gluer& G)
   }
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& BRepFeat_Form::FirstShape() const
 {
   if (!myFShape.IsNull())
   {
     return myMap(myFShape);
   }
-  return myGenerated; // empty list
+  return myGenerated;
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepFeat_Form::LastShape() const
 {
@@ -1305,27 +1251,18 @@ const NCollection_List<TopoDS_Shape>& BRepFeat_Form::LastShape() const
   {
     return myMap(myLShape);
   }
-  return myGenerated; // empty list
+  return myGenerated;
 }
-
-//=================================================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepFeat_Form::NewEdges() const
 {
   return myNewEdges;
 }
 
-//=================================================================================================
-
 const NCollection_List<TopoDS_Shape>& BRepFeat_Form::TgtEdges() const
 {
   return myTgtEdges;
 }
-
-//=======================================================================
-// function : TransformSUntil
-// purpose  : Limitation of the shape until the case of infinite faces
-//=======================================================================
 
 bool BRepFeat_Form::TransformShapeFU(const int flag)
 {
@@ -1344,7 +1281,7 @@ bool BRepFeat_Form::TransformShapeFU(const int flag)
 
   TopExp_Explorer exp(shapefu, TopAbs_FACE);
   if (!exp.More())
-  { // no faces... It is necessary to return an error
+  {
 #ifdef OCCT_DEBUG
     if (trc)
       std::cout << " BRepFeat_Form::TransformShapeFU : invalid Shape" << std::endl;
@@ -1354,7 +1291,7 @@ bool BRepFeat_Form::TransformShapeFU(const int flag)
 
   exp.Next();
   if (!exp.More())
-  { // the only face. Is it infinite?
+  {
     exp.ReInit();
     TopoDS_Face fac = TopoDS::Face(exp.Current());
 
@@ -1424,14 +1361,10 @@ bool BRepFeat_Form::TransformShapeFU(const int flag)
   return Trf;
 }
 
-//=================================================================================================
-
 BRepFeat_StatusError BRepFeat_Form::CurrentStatusError() const
 {
   return myStatusError;
 }
-
-//=================================================================================================
 
 static void Descendants(const TopoDS_Shape&                                     S,
                         BRepFeat_Builder&                                       theFB,
@@ -1452,8 +1385,6 @@ static void Descendants(const TopoDS_Shape&                                     
     }
   }
 }
-
-//=================================================================================================
 
 void BRepFeat_Form::UpdateDescendants(const BRepAlgoAPI_BooleanOperation& aBOP,
                                       const TopoDS_Shape&                 S,
@@ -1488,7 +1419,7 @@ void BRepFeat_Form::UpdateDescendants(const BRepAlgoAPI_BooleanOperation& aBOP,
       for (exp.Init(S, TopAbs_FACE); exp.More(); exp.Next())
       {
         if (exp.Current().IsSame(fdsc))
-        { // preserved
+        {
           newdsc.Add(fdsc);
           break;
         }
@@ -1508,12 +1439,12 @@ void BRepFeat_Form::UpdateDescendants(const BRepAlgoAPI_BooleanOperation& aBOP,
     myMap.ChangeFind(orig).Clear();
     for (itm.Initialize(newdsc); itm.More(); itm.Next())
     {
-      // check the appartenance to the shape...
+
       for (exp.Init(S, TopAbs_FACE); exp.More(); exp.Next())
       {
         if (exp.Current().IsSame(itm.Key()))
         {
-          //          const TopoDS_Shape& sh = itm.Key();
+
           myMap.ChangeFind(orig).Append(itm.Key());
           break;
         }

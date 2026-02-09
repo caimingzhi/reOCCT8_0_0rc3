@@ -13,18 +13,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_ExtStringArray, TDF_Attribute)
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_ExtStringArray::GetID()
 {
   static Standard_GUID anExtStringArrayID("2a96b624-ec8b-11d0-bee7-080009dc3333");
   return anExtStringArrayID;
 }
 
-//=======================================================================
-// function : SetAttr
-// purpose  : Implements Set functionality
-//=======================================================================
 occ::handle<TDataStd_ExtStringArray> SetAttr(const TDF_Label&     label,
                                              const int            lower,
                                              const int            upper,
@@ -47,15 +41,11 @@ occ::handle<TDataStd_ExtStringArray> SetAttr(const TDF_Label&     label,
   return A;
 }
 
-//=================================================================================================
-
 TDataStd_ExtStringArray::TDataStd_ExtStringArray()
     : myIsDelta(false),
       myID(GetID())
 {
 }
-
-//=================================================================================================
 
 void TDataStd_ExtStringArray::Init(const int lower, const int upper)
 {
@@ -63,8 +53,6 @@ void TDataStd_ExtStringArray::Init(const int lower, const int upper)
   Backup();
   myValue = new NCollection_HArray1<TCollection_ExtendedString>(lower, upper, "");
 }
-
-//=================================================================================================
 
 occ::handle<TDataStd_ExtStringArray> TDataStd_ExtStringArray::Set(const TDF_Label& label,
                                                                   const int        lower,
@@ -75,11 +63,6 @@ occ::handle<TDataStd_ExtStringArray> TDataStd_ExtStringArray::Set(const TDF_Labe
   return SetAttr(label, lower, upper, isDelta, GetID());
 }
 
-//=======================================================================
-// function : Set
-// purpose  : Set user defined attribute with specific ID
-//=======================================================================
-
 occ::handle<TDataStd_ExtStringArray> TDataStd_ExtStringArray::Set(const TDF_Label&     label,
                                                                   const Standard_GUID& theGuid,
                                                                   const int            lower,
@@ -89,8 +72,6 @@ occ::handle<TDataStd_ExtStringArray> TDataStd_ExtStringArray::Set(const TDF_Labe
 {
   return SetAttr(label, lower, upper, isDelta, theGuid);
 }
-
-//=================================================================================================
 
 void TDataStd_ExtStringArray::SetValue(const int index, const TCollection_ExtendedString& value)
 {
@@ -103,8 +84,6 @@ void TDataStd_ExtStringArray::SetValue(const int index, const TCollection_Extend
   myValue->SetValue(index, value);
 }
 
-//=================================================================================================
-
 const TCollection_ExtendedString& TDataStd_ExtStringArray::Value(const int index) const
 {
   if (myValue.IsNull())
@@ -114,16 +93,12 @@ const TCollection_ExtendedString& TDataStd_ExtStringArray::Value(const int index
   return myValue->Value(index);
 }
 
-//=================================================================================================
-
 int TDataStd_ExtStringArray::Lower() const
 {
   if (myValue.IsNull())
     return 0;
   return myValue->Lower();
 }
-
-//=================================================================================================
 
 int TDataStd_ExtStringArray::Upper() const
 {
@@ -132,21 +107,12 @@ int TDataStd_ExtStringArray::Upper() const
   return myValue->Upper();
 }
 
-//=================================================================================================
-
 int TDataStd_ExtStringArray::Length() const
 {
   if (myValue.IsNull())
     return 0;
   return myValue->Length();
 }
-
-//=======================================================================
-// function : ChangeArray
-// purpose  : If value of <newArray> differs from <myValue>, Backup
-//         : performed and myValue refers to new instance of HArray1OfExtendedString
-//         : that holds <newArray>
-//=======================================================================
 
 void TDataStd_ExtStringArray::ChangeArray(
   const occ::handle<NCollection_HArray1<TCollection_ExtendedString>>& newArray,
@@ -178,7 +144,6 @@ void TDataStd_ExtStringArray::ChangeArray(
 
   Backup();
 
-  // Handles of myValue of current and backuped attributes will be different!!!
   if (myValue.IsNull() || !aDimEqual)
     myValue = new NCollection_HArray1<TCollection_ExtendedString>(aLower, anUpper);
 
@@ -186,14 +151,10 @@ void TDataStd_ExtStringArray::ChangeArray(
     myValue->SetValue(i, newArray->Value(i));
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_ExtStringArray::ID() const
 {
   return myID;
 }
-
-//=================================================================================================
 
 void TDataStd_ExtStringArray::SetID(const Standard_GUID& theGuid)
 {
@@ -203,22 +164,16 @@ void TDataStd_ExtStringArray::SetID(const Standard_GUID& theGuid)
   myID = theGuid;
 }
 
-//=================================================================================================
-
 void TDataStd_ExtStringArray::SetID()
 {
   Backup();
   myID = GetID();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDataStd_ExtStringArray::NewEmpty() const
 {
   return new TDataStd_ExtStringArray();
 }
-
-//=================================================================================================
 
 void TDataStd_ExtStringArray::Restore(const occ::handle<TDF_Attribute>& With)
 {
@@ -238,8 +193,6 @@ void TDataStd_ExtStringArray::Restore(const occ::handle<TDF_Attribute>& With)
     myValue.Nullify();
 }
 
-//=================================================================================================
-
 void TDataStd_ExtStringArray::Paste(const occ::handle<TDF_Attribute>& Into,
                                     const occ::handle<TDF_RelocationTable>&) const
 {
@@ -254,8 +207,6 @@ void TDataStd_ExtStringArray::Paste(const occ::handle<TDF_Attribute>& Into,
     }
   }
 }
-
-//=================================================================================================
 
 Standard_OStream& TDataStd_ExtStringArray::Dump(Standard_OStream& anOS) const
 {
@@ -276,8 +227,6 @@ Standard_OStream& TDataStd_ExtStringArray::Dump(Standard_OStream& anOS) const
   return anOS;
 }
 
-//=================================================================================================
-
 occ::handle<TDF_DeltaOnModification> TDataStd_ExtStringArray::DeltaOnModification(
   const occ::handle<TDF_Attribute>& OldAttribute) const
 {
@@ -287,8 +236,6 @@ occ::handle<TDF_DeltaOnModification> TDataStd_ExtStringArray::DeltaOnModificatio
   else
     return new TDF_DefaultDeltaOnModification(OldAttribute);
 }
-
-//=================================================================================================
 
 void TDataStd_ExtStringArray::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

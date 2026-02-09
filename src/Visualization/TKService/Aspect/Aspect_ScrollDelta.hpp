@@ -3,21 +3,17 @@
 #include <Aspect_VKeyFlags.hpp>
 #include <NCollection_Vec2.hpp>
 
-//! Parameters for mouse scroll action.
 struct Aspect_ScrollDelta
 {
 
-  NCollection_Vec2<int> Point; //!< scale position
-  double                Delta; //!< delta in pixels
-  Aspect_VKeyFlags      Flags; //!< key flags
+  NCollection_Vec2<int> Point;
+  double                Delta;
+  Aspect_VKeyFlags      Flags;
 
-  //! Return true if action has point defined.
   bool HasPoint() const { return Point.x() >= 0 && Point.y() >= 0; }
 
-  //! Reset at point.
   void ResetPoint() { Point.SetValues(-1, -1); }
 
-  //! Empty constructor.
   Aspect_ScrollDelta()
       : Point(-1, -1),
         Delta(0.0),
@@ -25,7 +21,6 @@ struct Aspect_ScrollDelta
   {
   }
 
-  //! Constructor.
   Aspect_ScrollDelta(const NCollection_Vec2<int>& thePnt,
                      double                       theValue,
                      Aspect_VKeyFlags             theFlags = Aspect_VKeyFlags_NONE)
@@ -35,7 +30,6 @@ struct Aspect_ScrollDelta
   {
   }
 
-  //! Constructor with undefined point.
   Aspect_ScrollDelta(double theValue, Aspect_VKeyFlags theFlags = Aspect_VKeyFlags_NONE)
       : Point(-1, -1),
         Delta(theValue),

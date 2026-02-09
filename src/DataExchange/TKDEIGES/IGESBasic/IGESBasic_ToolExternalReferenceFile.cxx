@@ -20,10 +20,10 @@ IGESBasic_ToolExternalReferenceFile::IGESBasic_ToolExternalReferenceFile() = def
 
 void IGESBasic_ToolExternalReferenceFile::ReadOwnParams(
   const occ::handle<IGESBasic_ExternalReferenceFile>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /* IR */,
+  const occ::handle<IGESData_IGESReaderData>&,
   IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   int                                                                     num;
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> tempNames;
   bool st = PR.ReadInteger(PR.Current(), "Number of list entries", num);
@@ -32,9 +32,8 @@ void IGESBasic_ToolExternalReferenceFile::ReadOwnParams(
   else
     PR.AddFail("Number of list entries: Not Positive");
   if (!tempNames.IsNull())
-    // clang-format off
-    PR.ReadTexts(PR.CurrentList(num), "External Reference Entity", tempNames); //szv#4:S4163:12Mar99 `st=` not needed
-  // clang-format on
+
+    PR.ReadTexts(PR.CurrentList(num), "External Reference Entity", tempNames);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempNames);
@@ -51,15 +50,15 @@ void IGESBasic_ToolExternalReferenceFile::WriteOwnParams(
 }
 
 void IGESBasic_ToolExternalReferenceFile::OwnShared(
-  const occ::handle<IGESBasic_ExternalReferenceFile>& /* ent */,
-  Interface_EntityIterator& /* iter */) const
+  const occ::handle<IGESBasic_ExternalReferenceFile>&,
+  Interface_EntityIterator&) const
 {
 }
 
 void IGESBasic_ToolExternalReferenceFile::OwnCopy(
   const occ::handle<IGESBasic_ExternalReferenceFile>& another,
   const occ::handle<IGESBasic_ExternalReferenceFile>& ent,
-  Interface_CopyTool& /* TC */) const
+  Interface_CopyTool&) const
 {
   int num = another->NbListEntries();
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> tempNames =
@@ -70,7 +69,7 @@ void IGESBasic_ToolExternalReferenceFile::OwnCopy(
 }
 
 IGESData_DirChecker IGESBasic_ToolExternalReferenceFile::DirChecker(
-  const occ::handle<IGESBasic_ExternalReferenceFile>& /* ent */) const
+  const occ::handle<IGESBasic_ExternalReferenceFile>&) const
 {
   IGESData_DirChecker DC(406, 12);
   DC.Structure(IGESData_DefVoid);
@@ -85,15 +84,15 @@ IGESData_DirChecker IGESBasic_ToolExternalReferenceFile::DirChecker(
 }
 
 void IGESBasic_ToolExternalReferenceFile::OwnCheck(
-  const occ::handle<IGESBasic_ExternalReferenceFile>& /* ent */,
+  const occ::handle<IGESBasic_ExternalReferenceFile>&,
   const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /* ach */) const
+  occ::handle<Interface_Check>&) const
 {
 }
 
 void IGESBasic_ToolExternalReferenceFile::OwnDump(
   const occ::handle<IGESBasic_ExternalReferenceFile>& ent,
-  const IGESData_IGESDumper& /* dumper */,
+  const IGESData_IGESDumper&,
   Standard_OStream& S,
   const int         level) const
 {

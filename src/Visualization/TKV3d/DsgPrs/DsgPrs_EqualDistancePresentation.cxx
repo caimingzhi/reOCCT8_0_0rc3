@@ -18,9 +18,6 @@
 #include <Prs3d_Text.hpp>
 #include <TCollection_ExtendedString.hpp>
 
-//=================================================================================
-// function  : Add
-//=================================================================================
 void DsgPrs_EqualDistancePresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                            const occ::handle<Prs3d_Drawer>&       aDrawer,
                                            const gp_Pnt&                          Point1,
@@ -32,7 +29,6 @@ void DsgPrs_EqualDistancePresentation::Add(const occ::handle<Prs3d_Presentation>
   occ::handle<Prs3d_DimensionAspect> LA = aDrawer->DimensionAspect();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
-  // Line between two middles
   gp_Pnt Middle12((Point1.XYZ() + Point2.XYZ()) * 0.5),
     Middle34((Point3.XYZ() + Point4.XYZ()) * 0.5);
 
@@ -41,11 +37,9 @@ void DsgPrs_EqualDistancePresentation::Add(const occ::handle<Prs3d_Presentation>
   aPrims->AddVertex(Middle34);
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // Add presentation of arrows (points)
   gp_Dir aDir(gp_Dir::D::Z);
   DsgPrs::ComputeSymbol(aPresentation, LA, Middle12, Middle34, aDir, aDir, DsgPrs_AS_BOTHPT);
-  // ota -- begin --
-  // Two small lines in the middle of this line
+
   gp_Pnt Middle((Middle12.XYZ() + Middle34.XYZ()) * 0.5), aTextPos;
   double Dist = Middle12.Distance(Middle34);
   double SmallDist;
@@ -54,7 +48,7 @@ void DsgPrs_EqualDistancePresentation::Add(const occ::handle<Prs3d_Presentation>
 
   if (Dist > Precision::Confusion())
   {
-    SmallDist = Dist * 0.05; // 1/20.0 part
+    SmallDist = Dist * 0.05;
     if (SmallDist <= Precision::Confusion())
       SmallDist = Dist;
     LineDir = gce_MakeDir(Middle12, Middle34);
@@ -76,7 +70,7 @@ void DsgPrs_EqualDistancePresentation::Add(const occ::handle<Prs3d_Presentation>
       LineDir       = OrtDir ^ Plane->Pln().Axis().Direction();
 
       double Distance = Point1.Distance(Point2);
-      SmallDist       = Distance * 0.05; // 1/20.0
+      SmallDist       = Distance * 0.05;
       if (SmallDist <= Precision::Confusion())
         SmallDist = Distance;
 
@@ -94,15 +88,9 @@ void DsgPrs_EqualDistancePresentation::Add(const occ::handle<Prs3d_Presentation>
 
   TCollection_ExtendedString aText("==");
 
-  // Draw the text
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, aTextPos);
 }
 
-//==================================================================================
-// function  : AddInterval
-// purpose   : is used for presentation of interval between two lines or two points,
-//            or between one line and one point.
-//==================================================================================
 void DsgPrs_EqualDistancePresentation::AddInterval(
   const occ::handle<Prs3d_Presentation>& aPresentation,
   const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -129,17 +117,11 @@ void DsgPrs_EqualDistancePresentation::AddInterval(
   aPrims->AddVertex(aPoint2);
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  // add arrows presentation
   gp_Dir aDir(aProj2.XYZ() - aProj1.XYZ());
 
   DsgPrs::ComputeSymbol(aPresentation, LA, aProj1, aProj2, aDir.Reversed(), aDir, anArrowSide);
 }
 
-//========================================================================
-// function : AddIntervalBetweenTwoArcs
-// purpose  : is used for presentation of interval between two arcs. One
-//            of the arcs can have a zero radius (being a point really)
-//========================================================================
 void DsgPrs_EqualDistancePresentation::AddIntervalBetweenTwoArcs(
   const occ::handle<Prs3d_Presentation>& aPresentation,
   const occ::handle<Prs3d_Drawer>&       aDrawer,
@@ -212,7 +194,6 @@ void DsgPrs_EqualDistancePresentation::AddIntervalBetweenTwoArcs(
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
   }
 
-  // get the direction of interval
   gp_Dir DirOfArrow;
   if (aPoint4.Distance(aPoint2) > Precision::Confusion())
   {
@@ -220,14 +201,13 @@ void DsgPrs_EqualDistancePresentation::AddIntervalBetweenTwoArcs(
   }
   else
   {
-    // Let's take the radius direction
+
     gp_Pnt aCenter = aCirc1.Location();
     if (aPoint4.Distance(aCenter) < Precision::Confusion())
       return;
     DirOfArrow.SetXYZ(aPoint4.XYZ() - aCenter.XYZ());
   }
 
-  // Add presentation of arrows
   DsgPrs::ComputeSymbol(aPresentation,
                         LA,
                         aPoint2,
@@ -236,5 +216,3 @@ void DsgPrs_EqualDistancePresentation::AddIntervalBetweenTwoArcs(
                         DirOfArrow,
                         anArrowSide);
 }
-
-//-- ota -- end

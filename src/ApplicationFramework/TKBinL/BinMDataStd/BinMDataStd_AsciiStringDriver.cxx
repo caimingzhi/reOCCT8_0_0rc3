@@ -11,25 +11,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_AsciiStringDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataStd_AsciiStringDriver::BinMDataStd_AsciiStringDriver(
   const occ::handle<Message_Messenger>& theMessageDriver)
     : BinMDF_ADriver(theMessageDriver, STANDARD_TYPE(TDataStd_AsciiString)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataStd_AsciiStringDriver::NewEmpty() const
 {
   return new TDataStd_AsciiString;
 }
-
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 
 bool BinMDataStd_AsciiStringDriver::Paste(const BinObjMgt_Persistent&       Source,
                                           const occ::handle<TDF_Attribute>& Target,
@@ -42,7 +33,7 @@ bool BinMDataStd_AsciiStringDriver::Paste(const BinObjMgt_Persistent&       Sour
     aStrAtt->Set(aString);
   if (RelocTable.GetHeaderData()->StorageVersion().IntegerValue()
       >= TDocStd_FormatVersion_VERSION_9)
-  { // process user defined guid
+  {
     const int&    aPos = Source.Position();
     Standard_GUID aGuid;
     ok = Source >> aGuid;
@@ -62,19 +53,14 @@ bool BinMDataStd_AsciiStringDriver::Paste(const BinObjMgt_Persistent&       Sour
   return ok;
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
-
 void BinMDataStd_AsciiStringDriver::Paste(
   const occ::handle<TDF_Attribute>& Source,
   BinObjMgt_Persistent&             Target,
-  NCollection_IndexedMap<occ::handle<Standard_Transient>>& /*RelocTable*/) const
+  NCollection_IndexedMap<occ::handle<Standard_Transient>>&) const
 {
   occ::handle<TDataStd_AsciiString> anAtt = occ::down_cast<TDataStd_AsciiString>(Source);
   Target << anAtt->Get();
-  // process user defined guid
+
   if (anAtt->ID() != TDataStd_AsciiString::GetID())
     Target << anAtt->ID();
 }

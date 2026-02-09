@@ -11,33 +11,23 @@ class Interface_ShareTool;
 class Interface_Check;
 class Interface_CopyTool;
 
-//! DefaultGeneral defines a GeneralModule which processes
-//! Unknown Entity from StepData only
 class StepData_DefaultGeneral : public StepData_GeneralModule
 {
 
 public:
-  //! Creates a Default General Module
   Standard_EXPORT StepData_DefaultGeneral();
 
-  //! Specific filling of the list of Entities shared by an Entity
-  //! <ent>, which is an UnknownEntity from StepData.
   Standard_EXPORT void FillSharedCase(const int                              casenum,
                                       const occ::handle<Standard_Transient>& ent,
                                       Interface_EntityIterator&              iter) const override;
 
-  //! Specific Checking of an Entity <ent>
   Standard_EXPORT void CheckCase(const int                              casenum,
                                  const occ::handle<Standard_Transient>& ent,
                                  const Interface_ShareTool&             shares,
                                  occ::handle<Interface_Check>&          ach) const override;
 
-  //! Specific creation of a new void entity
   Standard_EXPORT bool NewVoid(const int CN, occ::handle<Standard_Transient>& entto) const override;
 
-  //! Specific Copy ("Deep") from <entfrom> to <entto> (same type)
-  //! by using a CopyTool which provides its working Map.
-  //! Use method Transferred from TransferControl to work
   Standard_EXPORT void CopyCase(const int                              casenum,
                                 const occ::handle<Standard_Transient>& entfrom,
                                 const occ::handle<Standard_Transient>& entto,

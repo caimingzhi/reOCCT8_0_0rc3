@@ -13,61 +13,37 @@ class TCollection_HAsciiString;
 class Units_Quantity;
 class Units_Token;
 
-//! This class defines an elementary word contained in
-//! a physical quantity.
 class Units_Unit : public Standard_Transient
 {
 
 public:
-  //! Creates and returns a unit. <aname> is the name of
-  //! the unit, <asymbol> is the usual abbreviation of the
-  //! unit, and <avalue> is the value in relation to the
-  //! International System of Units.
   Standard_EXPORT Units_Unit(const char*                        aname,
                              const char*                        asymbol,
                              const double                       avalue,
                              const occ::handle<Units_Quantity>& aquantity);
 
-  //! Creates and returns a unit. <aname> is the name of
-  //! the unit, <asymbol> is the usual abbreviation of the
-  //! unit.
   Standard_EXPORT Units_Unit(const char* aname, const char* asymbol);
 
-  //! Creates and returns a unit. <aname> is the name of
-  //! the unit.
   Standard_EXPORT Units_Unit(const char* aname);
 
-  //! Returns the name of the unit <thename>
   TCollection_AsciiString Name() const;
 
-  //! Adds a new symbol <asymbol> attached to <me>.
   Standard_EXPORT void Symbol(const char* asymbol);
 
-  //! Returns the value in relation with the International
-  //! System of Units.
   double Value() const;
 
-  //! Returns <thequantity> contained in <me>.
   occ::handle<Units_Quantity> Quantity() const;
 
-  //! Returns the sequence of symbols <thesymbolssequence>
   occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> SymbolsSequence() const;
 
-  //! Sets the value <avalue> to <me>.
   void Value(const double avalue);
 
-  //! Sets the physical Quantity <aquantity> to <me>.
   void Quantity(const occ::handle<Units_Quantity>& aquantity);
 
-  //! Starting with <me>, returns a new Token object.
   Standard_EXPORT virtual occ::handle<Units_Token> Token() const;
 
-  //! Compares all the symbols linked within <me> with the
-  //! name of <atoken>, and returns True if there is one
-  //! symbol equal to the name, False otherwise.
   Standard_EXPORT bool IsEqual(const char* astring) const;
 
-  //! Useful for debugging
   Standard_EXPORT virtual void Dump(const int ashift, const int alevel) const;
 
   DEFINE_STANDARD_RTTIEXT(Units_Unit, Standard_Transient)
@@ -90,28 +66,20 @@ private:
 #include <TCollection_HAsciiString.hpp>
 #include <TCollection_AsciiString.hpp>
 
-//=================================================================================================
-
 inline TCollection_AsciiString Units_Unit::Name() const
 {
   return thename->String();
 }
-
-//=================================================================================================
 
 inline double Units_Unit::Value() const
 {
   return thevalue;
 }
 
-//=================================================================================================
-
 inline occ::handle<Units_Quantity> Units_Unit::Quantity() const
 {
   return thequantity;
 }
-
-//=================================================================================================
 
 inline occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> Units_Unit::
   SymbolsSequence() const
@@ -119,14 +87,10 @@ inline occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>>
   return thesymbolssequence;
 }
 
-//=================================================================================================
-
 inline void Units_Unit::Value(const double avalue)
 {
   thevalue = avalue;
 }
-
-//=================================================================================================
 
 inline void Units_Unit::Quantity(const occ::handle<Units_Quantity>& aquantity)
 {

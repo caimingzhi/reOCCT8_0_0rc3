@@ -10,7 +10,6 @@ class Interface_Check;
 class StepGeom_GeometricRepresentationContext;
 class StepData_StepWriter;
 
-//! Read & Write Module for GeometricRepresentationContext
 class RWStepGeom_RWGeometricRepresentationContext
 {
 public:

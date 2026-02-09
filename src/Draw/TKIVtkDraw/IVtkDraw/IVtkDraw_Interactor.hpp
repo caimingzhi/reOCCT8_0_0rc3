@@ -13,7 +13,6 @@
   #include <tcl.h>
 #endif
 
-// prevent disabling some MSVC warning messages by VTK headers
 #include <Standard_WarningsDisable.hpp>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkSmartPointer.h>
@@ -45,10 +44,8 @@ public:
   void                              SetOCCWindow(const occ::handle<Aspect_Window>& theWindow);
   const occ::handle<Aspect_Window>& GetOCCWindow() const;
 
-  //! Process highlighting
   void MoveTo(int theX, int theY);
 
-  //! Process selection
   void OnSelection();
 
   bool IsEnabled() const;
@@ -87,7 +84,6 @@ protected:
 #endif
 
 private:
-  // copying is prohibited
   IVtkDraw_Interactor(const IVtkDraw_Interactor&) = delete;
   void operator=(const IVtkDraw_Interactor&)      = delete;
 

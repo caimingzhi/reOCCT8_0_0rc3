@@ -5,13 +5,6 @@
 #include <Poly_Polygon3D.hpp>
 #include <BRepMesh_DataStructureOfDelaun.hpp>
 
-// This file defines global functions not declared in any public header,
-// intended for use from debugger prompt (Command Window in Visual Studio)
-
-//=======================================================================
-// function : MeshTest_DrawLinks
-// purpose  : Draw links from mesh data structure of type BRepMesh_FaceAttribute
-//=======================================================================
 Standard_EXPORT const char* MeshTest_DrawLinks(const char* theNameStr, void* theDataStruct)
 {
   if (theNameStr == nullptr || theDataStruct == nullptr)
@@ -50,10 +43,6 @@ Standard_EXPORT const char* MeshTest_DrawLinks(const char* theNameStr, void* the
   }
 }
 
-//=======================================================================
-// function : MeshTest_DrawTriangles
-// purpose  : Draw triangles from mesh data structure of type BRepMesh_FaceAttribute
-//=======================================================================
 Standard_EXPORT const char* MeshTest_DrawTriangles(const char* theNameStr, void* theDataStruct)
 {
   if (theNameStr == nullptr || theDataStruct == nullptr)

@@ -6,12 +6,8 @@
 #include <StepElement_SurfaceSection.hpp>
 #include <StepFEA_FeaSurfaceSectionGeometricRelationship.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWFeaSurfaceSectionGeometricRelationship::
   RWStepFEA_RWFeaSurfaceSectionGeometricRelationship() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWFeaSurfaceSectionGeometricRelationship::ReadStep(
   const occ::handle<StepData_StepReaderData>&                        data,
@@ -19,11 +15,9 @@ void RWStepFEA_RWFeaSurfaceSectionGeometricRelationship::ReadStep(
   occ::handle<Interface_Check>&                                      ach,
   const occ::handle<StepFEA_FeaSurfaceSectionGeometricRelationship>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "fea_surface_section_geometric_relationship"))
     return;
-
-  // Own fields of FeaSurfaceSectionGeometricRelationship
 
   occ::handle<StepElement_SurfaceSection> aSectionRef;
   data->ReadEntity(num,
@@ -41,32 +35,23 @@ void RWStepFEA_RWFeaSurfaceSectionGeometricRelationship::ReadStep(
                    STANDARD_TYPE(StepElement_AnalysisItemWithinRepresentation),
                    aItem);
 
-  // Initialize entity
   ent->Init(aSectionRef, aItem);
 }
-
-//=================================================================================================
 
 void RWStepFEA_RWFeaSurfaceSectionGeometricRelationship::WriteStep(
   StepData_StepWriter&                                               SW,
   const occ::handle<StepFEA_FeaSurfaceSectionGeometricRelationship>& ent) const
 {
 
-  // Own fields of FeaSurfaceSectionGeometricRelationship
-
   SW.Send(ent->SectionRef());
 
   SW.Send(ent->Item());
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWFeaSurfaceSectionGeometricRelationship::Share(
   const occ::handle<StepFEA_FeaSurfaceSectionGeometricRelationship>& ent,
   Interface_EntityIterator&                                          iter) const
 {
-
-  // Own fields of FeaSurfaceSectionGeometricRelationship
 
   iter.AddItem(ent->SectionRef());
 

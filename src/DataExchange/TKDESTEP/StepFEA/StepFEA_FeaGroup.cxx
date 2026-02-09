@@ -4,11 +4,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaGroup, StepBasic_Group)
 
-//=================================================================================================
-
 StepFEA_FeaGroup::StepFEA_FeaGroup() = default;
-
-//=================================================================================================
 
 void StepFEA_FeaGroup::Init(const occ::handle<TCollection_HAsciiString>& aGroup_Name,
                             const occ::handle<TCollection_HAsciiString>& aGroup_Description,
@@ -19,14 +15,10 @@ void StepFEA_FeaGroup::Init(const occ::handle<TCollection_HAsciiString>& aGroup_
   theModelRef = aModelRef;
 }
 
-//=================================================================================================
-
 occ::handle<StepFEA_FeaModel> StepFEA_FeaGroup::ModelRef() const
 {
   return theModelRef;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaGroup::SetModelRef(const occ::handle<StepFEA_FeaModel>& aModelRef)
 {

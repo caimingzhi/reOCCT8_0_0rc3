@@ -5,10 +5,9 @@
 #include <Standard_TypeDef.hpp>
 #include <TCollection_AsciiString.hpp>
 
-//! Auxiliary tools for OBJ format parser.
 namespace RWObj_Tools
 {
-  //! Read 3 float values.
+
   inline bool ReadVec3(const char* thePos, char*& theNext, NCollection_Vec3<float>& theVec)
   {
     const char* aPos = thePos;
@@ -20,7 +19,6 @@ namespace RWObj_Tools
     return aPos != theNext;
   }
 
-  //! Read 3 double values.
   inline bool ReadVec3(const char* thePos, char*& theNext, gp_XYZ& theVec)
   {
     const char* aPos = thePos;
@@ -32,7 +30,6 @@ namespace RWObj_Tools
     return aPos != theNext;
   }
 
-  //! Read string.
   inline bool ReadName(const char* thePos, TCollection_AsciiString& theName)
   {
     int aFrom = 0;
@@ -47,10 +44,10 @@ namespace RWObj_Tools
     }
     for (; aTail >= 0 && IsSpace(thePos[aTail]); --aTail)
     {
-    } // RightAdjust
+    }
     for (; aFrom < aTail && IsSpace(thePos[aFrom]); ++aFrom)
     {
-    } // LeftAdjust
+    }
     if (aFrom > aTail)
     {
       theName.Clear();
@@ -60,10 +57,8 @@ namespace RWObj_Tools
     return true;
   }
 
-  //! Return true if specified char is a white space.
   inline bool isSpaceChar(const char theChar)
   {
     return theChar == ' ' || theChar == '\t';
-    // return IsSpace (theChar);
   }
 } // namespace RWObj_Tools

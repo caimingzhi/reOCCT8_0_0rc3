@@ -7,11 +7,6 @@
 #include <NCollection_Array1.hpp>
 #include <NCollection_HArray1.hpp>
 
-//! Defines IGES Dimensioned Geometry, Type <402> Form <13>,
-//! in package IGESDimen
-//! This entity has been replaced by the new form of Dimensioned
-//! Geometry Associativity Entity (Type 402, Form 21) and should no
-//! longer be used by preprocessors.
 class IGESDimen_DimensionedGeometry : public IGESData_IGESEntity
 {
 
@@ -23,17 +18,12 @@ public:
     const occ::handle<IGESData_IGESEntity>&                                   aDimension,
     const occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>& entities);
 
-  //! returns the number of dimensions
   Standard_EXPORT int NbDimensions() const;
 
-  //! returns the number of associated geometry entities
   Standard_EXPORT int NbGeometryEntities() const;
 
-  //! returns the Dimension entity
   Standard_EXPORT occ::handle<IGESData_IGESEntity> DimensionEntity() const;
 
-  //! returns the num'th Geometry entity
-  //! raises exception if Index <= 0 or Index > NbGeometryEntities()
   Standard_EXPORT occ::handle<IGESData_IGESEntity> GeometryEntity(const int Index) const;
 
   DEFINE_STANDARD_RTTIEXT(IGESDimen_DimensionedGeometry, IGESData_IGESEntity)

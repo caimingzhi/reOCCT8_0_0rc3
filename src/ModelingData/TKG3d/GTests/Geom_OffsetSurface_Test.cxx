@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -35,11 +24,10 @@ class Geom_OffsetSurface_Test : public ::testing::Test
 protected:
   void SetUp() override
   {
-    // Create a plane as basis surface
+
     gp_Pln                  aPlane(gp_Ax3(gp_Pnt(0, 0, 0), gp_Dir(gp_Dir::D::Z)));
     occ::handle<Geom_Plane> aBasisSurface = new Geom_Plane(aPlane);
 
-    // Create offset surface
     double anOffsetValue = 3.0;
 
     myOriginalSurface = new Geom_OffsetSurface(aBasisSurface, anOffsetValue);
@@ -50,10 +38,9 @@ protected:
 
 TEST_F(Geom_OffsetSurface_Test, CopyConstructorBasicProperties)
 {
-  // Test copy constructor
+
   occ::handle<Geom_OffsetSurface> aCopiedSurface = new Geom_OffsetSurface(*myOriginalSurface);
 
-  // Verify basic properties are identical
   EXPECT_DOUBLE_EQ(myOriginalSurface->Offset(), aCopiedSurface->Offset());
   EXPECT_EQ(myOriginalSurface->IsUPeriodic(), aCopiedSurface->IsUPeriodic());
   EXPECT_EQ(myOriginalSurface->IsVPeriodic(), aCopiedSurface->IsVPeriodic());
@@ -65,14 +52,11 @@ TEST_F(Geom_OffsetSurface_Test, CopyConstructorBasisSurface)
 {
   occ::handle<Geom_OffsetSurface> aCopiedSurface = new Geom_OffsetSurface(*myOriginalSurface);
 
-  // Verify basis surfaces are equivalent but independent
   occ::handle<Geom_Surface> anOrigBasis = myOriginalSurface->BasisSurface();
   occ::handle<Geom_Surface> aCopyBasis  = aCopiedSurface->BasisSurface();
 
-  // They should be different objects
   EXPECT_NE(anOrigBasis.get(), aCopyBasis.get());
 
-  // But functionally equivalent
   double anUFirst, anULast, aVFirst, aVLast;
   anOrigBasis->Bounds(anUFirst, anULast, aVFirst, aVLast);
 
@@ -87,16 +71,14 @@ TEST_F(Geom_OffsetSurface_Test, CopyConstructorBasisSurface)
 
 TEST_F(Geom_OffsetSurface_Test, CopyMethodUsesOptimizedConstructor)
 {
-  // Test that Copy() method uses the optimized copy constructor
+
   occ::handle<Geom_Geometry>      aCopiedGeom    = myOriginalSurface->Copy();
   occ::handle<Geom_OffsetSurface> aCopiedSurface = occ::down_cast<Geom_OffsetSurface>(aCopiedGeom);
 
   EXPECT_FALSE(aCopiedSurface.IsNull());
 
-  // Verify the copy is functionally identical
   EXPECT_DOUBLE_EQ(myOriginalSurface->Offset(), aCopiedSurface->Offset());
 
-  // Test evaluation at several points
   for (double u = -5.0; u <= 5.0; u += 2.5)
   {
     for (double v = -5.0; v <= 5.0; v += 2.5)
@@ -112,37 +94,29 @@ TEST_F(Geom_OffsetSurface_Test, CopyIndependence)
 {
   occ::handle<Geom_OffsetSurface> aCopiedSurface = new Geom_OffsetSurface(*myOriginalSurface);
 
-  // Store original offset value
   double anOrigOffset = aCopiedSurface->Offset();
 
-  // Modify the original surface
   myOriginalSurface->SetOffsetValue(15.0);
 
-  // Verify the copied surface is not affected
   EXPECT_DOUBLE_EQ(aCopiedSurface->Offset(), anOrigOffset);
   EXPECT_NE(aCopiedSurface->Offset(), myOriginalSurface->Offset());
 }
 
-// Tests for Surface() method - equivalent surface computation for canonical surfaces.
-
 TEST(Geom_OffsetSurface_EquivalentSurface, Plane_ReturnsTranslatedPlane)
 {
-  // Create a plane at origin with Z-normal.
+
   gp_Ax3                  anAxis(gp_Pnt(1.0, 2.0, 3.0), gp_Dir(0, 0, 1));
   occ::handle<Geom_Plane> aPlane = new Geom_Plane(anAxis);
 
   const double                    anOffset     = 5.0;
   occ::handle<Geom_OffsetSurface> anOffsetSurf = new Geom_OffsetSurface(aPlane, anOffset);
 
-  // Get equivalent surface.
   occ::handle<Geom_Surface> anEquiv = anOffsetSurf->Surface();
   ASSERT_FALSE(anEquiv.IsNull());
 
-  // Should be a plane.
   occ::handle<Geom_Plane> anEquivPlane = occ::down_cast<Geom_Plane>(anEquiv);
   ASSERT_FALSE(anEquivPlane.IsNull());
 
-  // Verify the plane is translated by offset along normal.
   gp_Pnt anOrigLoc  = aPlane->Location();
   gp_Pnt anEquivLoc = anEquivPlane->Location();
   EXPECT_NEAR(anEquivLoc.Z() - anOrigLoc.Z(), anOffset, Precision::Confusion());
@@ -152,7 +126,7 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Plane_ReturnsTranslatedPlane)
 
 TEST(Geom_OffsetSurface_EquivalentSurface, Cylinder_PositiveOffset_ReturnsLargerCylinder)
 {
-  // Create a cylinder with radius 10.
+
   gp_Ax3                               anAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_CylindricalSurface> aCyl = new Geom_CylindricalSurface(anAxis, 10.0);
 
@@ -166,7 +140,6 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Cylinder_PositiveOffset_ReturnsLarger
     occ::down_cast<Geom_CylindricalSurface>(anEquiv);
   ASSERT_FALSE(anEquivCyl.IsNull());
 
-  // Radius should increase by offset.
   EXPECT_NEAR(anEquivCyl->Radius(), 13.0, Precision::Confusion());
 }
 
@@ -190,11 +163,11 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Cylinder_NegativeOffset_ReturnsSmalle
 
 TEST(Geom_OffsetSurface_EquivalentSurface, Cylinder_NegativeRadiusFlip_ReturnsFlippedCylinder)
 {
-  // Offset that makes radius negative should flip the surface.
+
   gp_Ax3                               anAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_CylindricalSurface> aCyl = new Geom_CylindricalSurface(anAxis, 5.0);
 
-  const double                    anOffset     = -8.0; // Results in radius = -3
+  const double                    anOffset     = -8.0;
   occ::handle<Geom_OffsetSurface> anOffsetSurf = new Geom_OffsetSurface(aCyl, anOffset);
 
   occ::handle<Geom_Surface> anEquiv = anOffsetSurf->Surface();
@@ -204,7 +177,6 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Cylinder_NegativeRadiusFlip_ReturnsFl
     occ::down_cast<Geom_CylindricalSurface>(anEquiv);
   ASSERT_FALSE(anEquivCyl.IsNull());
 
-  // Radius should be absolute value.
   EXPECT_NEAR(anEquivCyl->Radius(), 3.0, Precision::Confusion());
 }
 
@@ -223,7 +195,7 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Sphere_PositiveOffset_ReturnsLargerSp
   ASSERT_FALSE(anEquivSphere.IsNull());
 
   EXPECT_NEAR(anEquivSphere->Radius(), 15.0, Precision::Confusion());
-  // Center should remain the same.
+
   EXPECT_TRUE(anEquivSphere->Location().IsEqual(aSphere->Location(), Precision::Confusion()));
 }
 
@@ -232,7 +204,7 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Sphere_NegativeRadiusFlip_ReturnsFlip
   gp_Ax3                             anAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_SphericalSurface> aSphere = new Geom_SphericalSurface(anAxis, 5.0);
 
-  const double                    anOffset     = -8.0; // Results in radius = -3
+  const double                    anOffset     = -8.0;
   occ::handle<Geom_OffsetSurface> anOffsetSurf = new Geom_OffsetSurface(aSphere, anOffset);
 
   occ::handle<Geom_Surface> anEquiv = anOffsetSurf->Surface();
@@ -247,7 +219,7 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Sphere_NegativeRadiusFlip_ReturnsFlip
 TEST(Geom_OffsetSurface_EquivalentSurface, Cone_PositiveOffset_ReturnsOffsetCone)
 {
   gp_Ax3                           anAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
-  const double                     aSemiAngle = M_PI / 6.0; // 30 degrees
+  const double                     aSemiAngle = M_PI / 6.0;
   const double                     aRefRadius = 10.0;
   occ::handle<Geom_ConicalSurface> aCone = new Geom_ConicalSurface(anAxis, aSemiAngle, aRefRadius);
 
@@ -260,10 +232,8 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Cone_PositiveOffset_ReturnsOffsetCone
   occ::handle<Geom_ConicalSurface> anEquivCone = occ::down_cast<Geom_ConicalSurface>(anEquiv);
   ASSERT_FALSE(anEquivCone.IsNull());
 
-  // Semi-angle should remain the same.
   EXPECT_NEAR(anEquivCone->SemiAngle(), aSemiAngle, Precision::Confusion());
 
-  // Reference radius should change by offset * cos(alpha).
   const double anExpectedRadius = aRefRadius + anOffset * std::cos(aSemiAngle);
   EXPECT_NEAR(anEquivCone->RefRadius(), anExpectedRadius, Precision::Confusion());
 }
@@ -285,9 +255,8 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Torus_PositiveOffset_ReturnsLargerTor
   occ::handle<Geom_ToroidalSurface> anEquivTorus = occ::down_cast<Geom_ToroidalSurface>(anEquiv);
   ASSERT_FALSE(anEquivTorus.IsNull());
 
-  // Major radius should remain the same.
   EXPECT_NEAR(anEquivTorus->MajorRadius(), aMajorRadius, Precision::Confusion());
-  // Minor radius should increase by offset.
+
   EXPECT_NEAR(anEquivTorus->MinorRadius(), aMinorRadius + anOffset, Precision::Confusion());
 }
 
@@ -320,7 +289,7 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Torus_NegativeMinorRadiusFlip_Returns
   occ::handle<Geom_ToroidalSurface> aTorus =
     new Geom_ToroidalSurface(anAxis, aMajorRadius, aMinorRadius);
 
-  const double                    anOffset     = -5.0; // Results in minor radius = -2
+  const double                    anOffset     = -5.0;
   occ::handle<Geom_OffsetSurface> anOffsetSurf = new Geom_OffsetSurface(aTorus, anOffset);
 
   occ::handle<Geom_Surface> anEquiv = anOffsetSurf->Surface();
@@ -343,10 +312,8 @@ TEST(Geom_OffsetSurface_EquivalentSurface, ZeroOffset_ReturnsBasisSurface)
   occ::handle<Geom_Surface> anEquiv = anOffsetSurf->Surface();
   ASSERT_FALSE(anEquiv.IsNull());
 
-  // Should return the internal basis surface (which is a copy of the original).
   EXPECT_EQ(anEquiv.get(), anOffsetSurf->BasisSurface().get());
 
-  // The equivalent should be geometrically identical to the original.
   occ::handle<Geom_CylindricalSurface> anEquivCyl =
     occ::down_cast<Geom_CylindricalSurface>(anEquiv);
   ASSERT_FALSE(anEquivCyl.IsNull());
@@ -358,7 +325,6 @@ TEST(Geom_OffsetSurface_EquivalentSurface, TrimmedPlane_ReturnsTrimmedTranslated
   gp_Ax3                  anAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_Plane> aPlane = new Geom_Plane(anAxis);
 
-  // Create trimmed surface.
   occ::handle<Geom_RectangularTrimmedSurface> aTrimmed =
     new Geom_RectangularTrimmedSurface(aPlane, 0.0, 10.0, 0.0, 5.0);
 
@@ -368,12 +334,10 @@ TEST(Geom_OffsetSurface_EquivalentSurface, TrimmedPlane_ReturnsTrimmedTranslated
   occ::handle<Geom_Surface> anEquiv = anOffsetSurf->Surface();
   ASSERT_FALSE(anEquiv.IsNull());
 
-  // Should be a trimmed surface.
   occ::handle<Geom_RectangularTrimmedSurface> anEquivTrimmed =
     occ::down_cast<Geom_RectangularTrimmedSurface>(anEquiv);
   ASSERT_FALSE(anEquivTrimmed.IsNull());
 
-  // Verify bounds are preserved.
   double U1, U2, V1, V2;
   anEquivTrimmed->Bounds(U1, U2, V1, V2);
   EXPECT_NEAR(U1, 0.0, Precision::Confusion());
@@ -384,22 +348,21 @@ TEST(Geom_OffsetSurface_EquivalentSurface, TrimmedPlane_ReturnsTrimmedTranslated
 
 TEST(Geom_OffsetSurface_EquivalentSurface, DegenerateCylinder_ReturnsNull)
 {
-  // Offset that makes radius too small (degenerate case).
+
   gp_Ax3                               anAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_CylindricalSurface> aCyl = new Geom_CylindricalSurface(anAxis, 1.0);
 
-  // Offset close to -1 should result in degenerate surface.
   const double                    anOffset     = -1.0 + 0.5 * Precision::Confusion();
   occ::handle<Geom_OffsetSurface> anOffsetSurf = new Geom_OffsetSurface(aCyl, anOffset);
 
   occ::handle<Geom_Surface> anEquiv = anOffsetSurf->Surface();
-  // Degenerate surface should return null.
+
   EXPECT_TRUE(anEquiv.IsNull());
 }
 
 TEST(Geom_OffsetSurface_EquivalentSurface, EquivalentSurface_EvaluationConsistency)
 {
-  // Verify that evaluation on offset surface matches evaluation on equivalent surface.
+
   gp_Ax3                               anAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_CylindricalSurface> aCyl = new Geom_CylindricalSurface(anAxis, 10.0);
 
@@ -409,7 +372,6 @@ TEST(Geom_OffsetSurface_EquivalentSurface, EquivalentSurface_EvaluationConsisten
   occ::handle<Geom_Surface> anEquiv = anOffsetSurf->Surface();
   ASSERT_FALSE(anEquiv.IsNull());
 
-  // Test evaluation at several points.
   for (double u = 0.0; u < 2.0 * M_PI; u += M_PI / 4.0)
   {
     for (double v = -5.0; v <= 5.0; v += 2.5)
@@ -422,11 +384,9 @@ TEST(Geom_OffsetSurface_EquivalentSurface, EquivalentSurface_EvaluationConsisten
   }
 }
 
-// Tests for D0, D1, D2, D3 consistency between offset surface and equivalent surface via adaptor.
-
 namespace
 {
-  //! Helper to compare vectors with tolerance.
+
   bool VectorsEqual(const gp_Vec& theV1, const gp_Vec& theV2, double theTol)
   {
     return (theV1 - theV2).Magnitude() < theTol;
@@ -441,7 +401,6 @@ TEST(Geom_OffsetSurface_Derivatives, Plane_D0D1D2D3_Consistency)
   const double                    anOffset     = 5.0;
   occ::handle<Geom_OffsetSurface> anOffsetSurf = new Geom_OffsetSurface(aPlane, anOffset);
 
-  // Create adaptors for offset surface and equivalent surface.
   GeomAdaptor_Surface       anOffsetAdaptor(anOffsetSurf);
   occ::handle<Geom_Surface> anEquiv = anOffsetSurf->Surface();
   ASSERT_FALSE(anEquiv.IsNull());
@@ -449,18 +408,16 @@ TEST(Geom_OffsetSurface_Derivatives, Plane_D0D1D2D3_Consistency)
 
   const double aTol = 1e-10;
 
-  // Test at several points.
   for (double u = -5.0; u <= 5.0; u += 2.5)
   {
     for (double v = -5.0; v <= 5.0; v += 2.5)
     {
-      // D0
+
       gp_Pnt aP1, aP2;
       anOffsetAdaptor.D0(u, v, aP1);
       anEquivAdaptor.D0(u, v, aP2);
       EXPECT_TRUE(aP1.IsEqual(aP2, aTol)) << "D0 mismatch at u=" << u << ", v=" << v;
 
-      // D1
       gp_Pnt aP1D1, aP2D1;
       gp_Vec aD1U1, aD1V1, aD1U2, aD1V2;
       anOffsetAdaptor.D1(u, v, aP1D1, aD1U1, aD1V1);
@@ -469,7 +426,6 @@ TEST(Geom_OffsetSurface_Derivatives, Plane_D0D1D2D3_Consistency)
       EXPECT_TRUE(VectorsEqual(aD1U1, aD1U2, aTol)) << "D1U mismatch at u=" << u << ", v=" << v;
       EXPECT_TRUE(VectorsEqual(aD1V1, aD1V2, aTol)) << "D1V mismatch at u=" << u << ", v=" << v;
 
-      // D2
       gp_Pnt aP1D2, aP2D2;
       gp_Vec aD1U1D2, aD1V1D2, aD2U1, aD2V1, aD2UV1;
       gp_Vec aD1U2D2, aD1V2D2, aD2U2, aD2V2, aD2UV2;
@@ -502,13 +458,12 @@ TEST(Geom_OffsetSurface_Derivatives, Cylinder_D0D1D2D3_Consistency)
   {
     for (double v = -5.0; v <= 5.0; v += 2.5)
     {
-      // D0
+
       gp_Pnt aP1, aP2;
       anOffsetAdaptor.D0(u, v, aP1);
       anEquivAdaptor.D0(u, v, aP2);
       EXPECT_TRUE(aP1.IsEqual(aP2, aTol)) << "D0 mismatch at u=" << u << ", v=" << v;
 
-      // D1
       gp_Pnt aP1D1, aP2D1;
       gp_Vec aD1U1, aD1V1, aD1U2, aD1V2;
       anOffsetAdaptor.D1(u, v, aP1D1, aD1U1, aD1V1);
@@ -517,7 +472,6 @@ TEST(Geom_OffsetSurface_Derivatives, Cylinder_D0D1D2D3_Consistency)
       EXPECT_TRUE(VectorsEqual(aD1U1, aD1U2, aTol)) << "D1U mismatch at u=" << u << ", v=" << v;
       EXPECT_TRUE(VectorsEqual(aD1V1, aD1V2, aTol)) << "D1V mismatch at u=" << u << ", v=" << v;
 
-      // D2
       gp_Pnt aP1D2, aP2D2;
       gp_Vec aD1U1D2, aD1V1D2, aD2U1, aD2V1, aD2UV1;
       gp_Vec aD1U2D2, aD1V2D2, aD2U2, aD2V2, aD2UV2;
@@ -528,7 +482,6 @@ TEST(Geom_OffsetSurface_Derivatives, Cylinder_D0D1D2D3_Consistency)
       EXPECT_TRUE(VectorsEqual(aD2V1, aD2V2, aTol)) << "D2V mismatch at u=" << u << ", v=" << v;
       EXPECT_TRUE(VectorsEqual(aD2UV1, aD2UV2, aTol)) << "D2UV mismatch at u=" << u << ", v=" << v;
 
-      // D3
       gp_Pnt aP1D3, aP2D3;
       gp_Vec aD1U1D3, aD1V1D3, aD2U1D3, aD2V1D3, aD2UV1D3, aD3U1, aD3V1, aD3UUV1, aD3UVV1;
       gp_Vec aD1U2D3, aD1V2D3, aD2U2D3, aD2V2D3, aD2UV2D3, aD3U2, aD3V2, aD3UUV2, aD3UVV2;
@@ -582,18 +535,16 @@ TEST(Geom_OffsetSurface_Derivatives, Sphere_D0D1D2D3_Consistency)
 
   const double aTol = 1e-10;
 
-  // Avoid poles at v = +/- PI/2.
   for (double u = 0.0; u < 2.0 * M_PI; u += M_PI / 4.0)
   {
     for (double v = -M_PI / 3.0; v <= M_PI / 3.0; v += M_PI / 6.0)
     {
-      // D0
+
       gp_Pnt aP1, aP2;
       anOffsetAdaptor.D0(u, v, aP1);
       anEquivAdaptor.D0(u, v, aP2);
       EXPECT_TRUE(aP1.IsEqual(aP2, aTol)) << "D0 mismatch at u=" << u << ", v=" << v;
 
-      // D1
       gp_Pnt aP1D1, aP2D1;
       gp_Vec aD1U1, aD1V1, aD1U2, aD1V2;
       anOffsetAdaptor.D1(u, v, aP1D1, aD1U1, aD1V1);
@@ -602,7 +553,6 @@ TEST(Geom_OffsetSurface_Derivatives, Sphere_D0D1D2D3_Consistency)
       EXPECT_TRUE(VectorsEqual(aD1U1, aD1U2, aTol)) << "D1U mismatch at u=" << u << ", v=" << v;
       EXPECT_TRUE(VectorsEqual(aD1V1, aD1V2, aTol)) << "D1V mismatch at u=" << u << ", v=" << v;
 
-      // D2
       gp_Pnt aP1D2, aP2D2;
       gp_Vec aD1U1D2, aD1V1D2, aD2U1, aD2V1, aD2UV1;
       gp_Vec aD1U2D2, aD1V2D2, aD2U2, aD2V2, aD2UV2;
@@ -635,15 +585,14 @@ TEST(Geom_OffsetSurface_Derivatives, Cone_D0D1D2_Consistency)
 
   for (double u = 0.0; u < 2.0 * M_PI; u += M_PI / 4.0)
   {
-    for (double v = 1.0; v <= 10.0; v += 3.0) // Avoid apex at v=0.
+    for (double v = 1.0; v <= 10.0; v += 3.0)
     {
-      // D0
+
       gp_Pnt aP1, aP2;
       anOffsetAdaptor.D0(u, v, aP1);
       anEquivAdaptor.D0(u, v, aP2);
       EXPECT_TRUE(aP1.IsEqual(aP2, aTol)) << "D0 mismatch at u=" << u << ", v=" << v;
 
-      // D1
       gp_Pnt aP1D1, aP2D1;
       gp_Vec aD1U1, aD1V1, aD1U2, aD1V2;
       anOffsetAdaptor.D1(u, v, aP1D1, aD1U1, aD1V1);
@@ -652,7 +601,6 @@ TEST(Geom_OffsetSurface_Derivatives, Cone_D0D1D2_Consistency)
       EXPECT_TRUE(VectorsEqual(aD1U1, aD1U2, aTol)) << "D1U mismatch at u=" << u << ", v=" << v;
       EXPECT_TRUE(VectorsEqual(aD1V1, aD1V2, aTol)) << "D1V mismatch at u=" << u << ", v=" << v;
 
-      // D2
       gp_Pnt aP1D2, aP2D2;
       gp_Vec aD1U1D2, aD1V1D2, aD2U1, aD2V1, aD2UV1;
       gp_Vec aD1U2D2, aD1V2D2, aD2U2, aD2V2, aD2UV2;
@@ -688,13 +636,12 @@ TEST(Geom_OffsetSurface_Derivatives, Torus_D0D1D2D3_Consistency)
   {
     for (double v = 0.0; v < 2.0 * M_PI; v += M_PI / 4.0)
     {
-      // D0
+
       gp_Pnt aP1, aP2;
       anOffsetAdaptor.D0(u, v, aP1);
       anEquivAdaptor.D0(u, v, aP2);
       EXPECT_TRUE(aP1.IsEqual(aP2, aTol)) << "D0 mismatch at u=" << u << ", v=" << v;
 
-      // D1
       gp_Pnt aP1D1, aP2D1;
       gp_Vec aD1U1, aD1V1, aD1U2, aD1V2;
       anOffsetAdaptor.D1(u, v, aP1D1, aD1U1, aD1V1);
@@ -703,7 +650,6 @@ TEST(Geom_OffsetSurface_Derivatives, Torus_D0D1D2D3_Consistency)
       EXPECT_TRUE(VectorsEqual(aD1U1, aD1U2, aTol)) << "D1U mismatch at u=" << u << ", v=" << v;
       EXPECT_TRUE(VectorsEqual(aD1V1, aD1V2, aTol)) << "D1V mismatch at u=" << u << ", v=" << v;
 
-      // D2
       gp_Pnt aP1D2, aP2D2;
       gp_Vec aD1U1D2, aD1V1D2, aD2U1, aD2V1, aD2UV1;
       gp_Vec aD1U2D2, aD1V2D2, aD2U2, aD2V2, aD2UV2;
@@ -714,7 +660,6 @@ TEST(Geom_OffsetSurface_Derivatives, Torus_D0D1D2D3_Consistency)
       EXPECT_TRUE(VectorsEqual(aD2V1, aD2V2, aTol)) << "D2V mismatch at u=" << u << ", v=" << v;
       EXPECT_TRUE(VectorsEqual(aD2UV1, aD2UV2, aTol)) << "D2UV mismatch at u=" << u << ", v=" << v;
 
-      // D3
       gp_Pnt aP1D3, aP2D3;
       gp_Vec aD1U1D3, aD1V1D3, aD2U1D3, aD2V1D3, aD2UV1D3, aD3U1, aD3V1, aD3UUV1, aD3UVV1;
       gp_Vec aD1U2D3, aD1V2D3, aD2U2D3, aD2V2D3, aD2UV2D3, aD3U2, aD3V2, aD3UUV2, aD3UVV2;
@@ -770,7 +715,6 @@ TEST(Geom_OffsetSurface_Derivatives, Cylinder_DN_Consistency)
   const double u    = M_PI / 3.0;
   const double v    = 2.5;
 
-  // Test various derivative orders.
   for (int Nu = 0; Nu <= 3; ++Nu)
   {
     for (int Nv = 0; Nv <= 3; ++Nv)
@@ -787,7 +731,7 @@ TEST(Geom_OffsetSurface_Derivatives, Cylinder_DN_Consistency)
 
 TEST(Geom_OffsetSurface_Derivatives, NegativeOffset_Cylinder_D0D1D2_Consistency)
 {
-  // Test with negative offset (smaller cylinder).
+
   gp_Ax3                               anAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_CylindricalSurface> aCyl = new Geom_CylindricalSurface(anAxis, 10.0);
 
@@ -818,11 +762,11 @@ TEST(Geom_OffsetSurface_Derivatives, NegativeOffset_Cylinder_D0D1D2_Consistency)
 
 TEST(Geom_OffsetSurface_Derivatives, FlippedCylinder_D0D1_Consistency)
 {
-  // Test with offset that causes cylinder flip (negative radius).
+
   gp_Ax3                               anAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_CylindricalSurface> aCyl = new Geom_CylindricalSurface(anAxis, 5.0);
 
-  const double                    anOffset     = -8.0; // Results in flipped cylinder with radius 3.
+  const double                    anOffset     = -8.0;
   occ::handle<Geom_OffsetSurface> anOffsetSurf = new Geom_OffsetSurface(aCyl, anOffset);
 
   GeomAdaptor_Surface       anOffsetAdaptor(anOffsetSurf);
@@ -847,19 +791,15 @@ TEST(Geom_OffsetSurface_Derivatives, FlippedCylinder_D0D1_Consistency)
   }
 }
 
-// Three-way consistency tests: Direct Geom_OffsetSurface vs OffsetAdaptor vs EquivalentAdaptor.
-
 TEST(Geom_OffsetSurface_ThreeWay, Cylinder_D0_ThreeWayConsistency)
 {
-  // Verify that direct Geom_OffsetSurface, adaptor from offset surface, and adaptor
-  // from equivalent surface all return the same values.
+
   gp_Ax3                               anAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_CylindricalSurface> aCyl = new Geom_CylindricalSurface(anAxis, 10.0);
 
   const double                    anOffset     = 3.0;
   occ::handle<Geom_OffsetSurface> anOffsetSurf = new Geom_OffsetSurface(aCyl, anOffset);
 
-  // Create adaptors.
   GeomAdaptor_Surface       anOffsetAdaptor(anOffsetSurf);
   occ::handle<Geom_Surface> anEquiv = anOffsetSurf->Surface();
   ASSERT_FALSE(anEquiv.IsNull());
@@ -871,14 +811,12 @@ TEST(Geom_OffsetSurface_ThreeWay, Cylinder_D0_ThreeWayConsistency)
   {
     for (double v = -5.0; v <= 5.0; v += 2.5)
     {
-      // 1. Direct evaluation on Geom_OffsetSurface.
+
       gp_Pnt aDirectPnt = anOffsetSurf->Value(u, v);
 
-      // 2. Evaluation via adaptor from offset surface.
       gp_Pnt aOffsetAdaptorPnt;
       anOffsetAdaptor.D0(u, v, aOffsetAdaptorPnt);
 
-      // 3. Evaluation via adaptor from equivalent surface.
       gp_Pnt aEquivAdaptorPnt;
       anEquivAdaptor.D0(u, v, aEquivAdaptorPnt);
 
@@ -911,34 +849,29 @@ TEST(Geom_OffsetSurface_ThreeWay, Cylinder_D1_ThreeWayConsistency)
   {
     for (double v = -5.0; v <= 5.0; v += 2.5)
     {
-      // 1. Direct evaluation on Geom_OffsetSurface.
+
       gp_Pnt aDirectPnt;
       gp_Vec aDirectD1U, aDirectD1V;
       anOffsetSurf->D1(u, v, aDirectPnt, aDirectD1U, aDirectD1V);
 
-      // 2. Evaluation via adaptor from offset surface.
       gp_Pnt aOffsetAdaptorPnt;
       gp_Vec aOffsetAdaptorD1U, aOffsetAdaptorD1V;
       anOffsetAdaptor.D1(u, v, aOffsetAdaptorPnt, aOffsetAdaptorD1U, aOffsetAdaptorD1V);
 
-      // 3. Evaluation via adaptor from equivalent surface.
       gp_Pnt aEquivAdaptorPnt;
       gp_Vec aEquivAdaptorD1U, aEquivAdaptorD1V;
       anEquivAdaptor.D1(u, v, aEquivAdaptorPnt, aEquivAdaptorD1U, aEquivAdaptorD1V);
 
-      // Point consistency.
       EXPECT_TRUE(aDirectPnt.IsEqual(aOffsetAdaptorPnt, aTol))
         << "Direct vs OffsetAdaptor D1 point mismatch at u=" << u << ", v=" << v;
       EXPECT_TRUE(aDirectPnt.IsEqual(aEquivAdaptorPnt, aTol))
         << "Direct vs EquivAdaptor D1 point mismatch at u=" << u << ", v=" << v;
 
-      // D1U consistency.
       EXPECT_TRUE(VectorsEqual(aDirectD1U, aOffsetAdaptorD1U, aTol))
         << "Direct vs OffsetAdaptor D1U mismatch at u=" << u << ", v=" << v;
       EXPECT_TRUE(VectorsEqual(aDirectD1U, aEquivAdaptorD1U, aTol))
         << "Direct vs EquivAdaptor D1U mismatch at u=" << u << ", v=" << v;
 
-      // D1V consistency.
       EXPECT_TRUE(VectorsEqual(aDirectD1V, aOffsetAdaptorD1V, aTol))
         << "Direct vs OffsetAdaptor D1V mismatch at u=" << u << ", v=" << v;
       EXPECT_TRUE(VectorsEqual(aDirectD1V, aEquivAdaptorD1V, aTol))
@@ -966,13 +899,12 @@ TEST(Geom_OffsetSurface_ThreeWay, Cylinder_D2_ThreeWayConsistency)
   {
     for (double v = -5.0; v <= 5.0; v += 2.5)
     {
-      // 1. Direct evaluation on Geom_OffsetSurface.
+
       gp_Pnt aDirectPnt;
       gp_Vec aDirectD1U, aDirectD1V, aDirectD2U, aDirectD2V, aDirectD2UV;
       anOffsetSurf
         ->D2(u, v, aDirectPnt, aDirectD1U, aDirectD1V, aDirectD2U, aDirectD2V, aDirectD2UV);
 
-      // 2. Evaluation via adaptor from offset surface.
       gp_Pnt aOffsetAdaptorPnt;
       gp_Vec aOffsetAdaptorD1U, aOffsetAdaptorD1V, aOffsetAdaptorD2U, aOffsetAdaptorD2V,
         aOffsetAdaptorD2UV;
@@ -985,7 +917,6 @@ TEST(Geom_OffsetSurface_ThreeWay, Cylinder_D2_ThreeWayConsistency)
                          aOffsetAdaptorD2V,
                          aOffsetAdaptorD2UV);
 
-      // 3. Evaluation via adaptor from equivalent surface.
       gp_Pnt aEquivAdaptorPnt;
       gp_Vec aEquivAdaptorD1U, aEquivAdaptorD1V, aEquivAdaptorD2U, aEquivAdaptorD2V,
         aEquivAdaptorD2UV;
@@ -998,19 +929,16 @@ TEST(Geom_OffsetSurface_ThreeWay, Cylinder_D2_ThreeWayConsistency)
                         aEquivAdaptorD2V,
                         aEquivAdaptorD2UV);
 
-      // D2U consistency.
       EXPECT_TRUE(VectorsEqual(aDirectD2U, aOffsetAdaptorD2U, aTol))
         << "Direct vs OffsetAdaptor D2U mismatch at u=" << u << ", v=" << v;
       EXPECT_TRUE(VectorsEqual(aDirectD2U, aEquivAdaptorD2U, aTol))
         << "Direct vs EquivAdaptor D2U mismatch at u=" << u << ", v=" << v;
 
-      // D2V consistency.
       EXPECT_TRUE(VectorsEqual(aDirectD2V, aOffsetAdaptorD2V, aTol))
         << "Direct vs OffsetAdaptor D2V mismatch at u=" << u << ", v=" << v;
       EXPECT_TRUE(VectorsEqual(aDirectD2V, aEquivAdaptorD2V, aTol))
         << "Direct vs EquivAdaptor D2V mismatch at u=" << u << ", v=" << v;
 
-      // D2UV consistency.
       EXPECT_TRUE(VectorsEqual(aDirectD2UV, aOffsetAdaptorD2UV, aTol))
         << "Direct vs OffsetAdaptor D2UV mismatch at u=" << u << ", v=" << v;
       EXPECT_TRUE(VectorsEqual(aDirectD2UV, aEquivAdaptorD2UV, aTol))
@@ -1034,12 +962,11 @@ TEST(Geom_OffsetSurface_ThreeWay, Sphere_D0D1D2_ThreeWayConsistency)
 
   const double aTol = 1e-10;
 
-  // Avoid poles at v = +/- PI/2.
   for (double u = 0.0; u < 2.0 * M_PI; u += M_PI / 4.0)
   {
     for (double v = -M_PI / 3.0; v <= M_PI / 3.0; v += M_PI / 6.0)
     {
-      // D0.
+
       gp_Pnt aDirectPnt = anOffsetSurf->Value(u, v);
       gp_Pnt aOffsetAdaptorPnt, aEquivAdaptorPnt;
       anOffsetAdaptor.D0(u, v, aOffsetAdaptorPnt);
@@ -1050,7 +977,6 @@ TEST(Geom_OffsetSurface_ThreeWay, Sphere_D0D1D2_ThreeWayConsistency)
       EXPECT_TRUE(aDirectPnt.IsEqual(aEquivAdaptorPnt, aTol))
         << "Sphere Direct vs EquivAdaptor D0 mismatch at u=" << u << ", v=" << v;
 
-      // D1.
       gp_Pnt aDirectD1Pnt;
       gp_Vec aDirectD1U, aDirectD1V;
       anOffsetSurf->D1(u, v, aDirectD1Pnt, aDirectD1U, aDirectD1V);
@@ -1091,7 +1017,7 @@ TEST(Geom_OffsetSurface_ThreeWay, Plane_D0D1D2_ThreeWayConsistency)
   {
     for (double v = -5.0; v <= 5.0; v += 2.5)
     {
-      // D0.
+
       gp_Pnt aDirectPnt = anOffsetSurf->Value(u, v);
       gp_Pnt aOffsetAdaptorPnt, aEquivAdaptorPnt;
       anOffsetAdaptor.D0(u, v, aOffsetAdaptorPnt);
@@ -1102,7 +1028,6 @@ TEST(Geom_OffsetSurface_ThreeWay, Plane_D0D1D2_ThreeWayConsistency)
       EXPECT_TRUE(aDirectPnt.IsEqual(aEquivAdaptorPnt, aTol))
         << "Plane Direct vs EquivAdaptor D0 mismatch at u=" << u << ", v=" << v;
 
-      // D1.
       gp_Pnt aDirectD1Pnt;
       gp_Vec aDirectD1U, aDirectD1V;
       anOffsetSurf->D1(u, v, aDirectD1Pnt, aDirectD1U, aDirectD1V);
@@ -1121,7 +1046,6 @@ TEST(Geom_OffsetSurface_ThreeWay, Plane_D0D1D2_ThreeWayConsistency)
       EXPECT_TRUE(VectorsEqual(aDirectD1V, aEquivD1V, aTol))
         << "Plane Direct vs EquivAdaptor D1V mismatch at u=" << u << ", v=" << v;
 
-      // D2.
       gp_Pnt aDirectD2Pnt;
       gp_Vec aDirectD2D1U, aDirectD2D1V, aDirectD2U, aDirectD2V, aDirectD2UV;
       anOffsetSurf
@@ -1169,7 +1093,7 @@ TEST(Geom_OffsetSurface_ThreeWay, Torus_D0D1D2_ThreeWayConsistency)
   {
     for (double v = 0.0; v < 2.0 * M_PI; v += M_PI / 4.0)
     {
-      // D0.
+
       gp_Pnt aDirectPnt = anOffsetSurf->Value(u, v);
       gp_Pnt aOffsetAdaptorPnt, aEquivAdaptorPnt;
       anOffsetAdaptor.D0(u, v, aOffsetAdaptorPnt);
@@ -1180,7 +1104,6 @@ TEST(Geom_OffsetSurface_ThreeWay, Torus_D0D1D2_ThreeWayConsistency)
       EXPECT_TRUE(aDirectPnt.IsEqual(aEquivAdaptorPnt, aTol))
         << "Torus Direct vs EquivAdaptor D0 mismatch at u=" << u << ", v=" << v;
 
-      // D1.
       gp_Pnt aDirectD1Pnt;
       gp_Vec aDirectD1U, aDirectD1V;
       anOffsetSurf->D1(u, v, aDirectD1Pnt, aDirectD1U, aDirectD1V);
@@ -1221,9 +1144,9 @@ TEST(Geom_OffsetSurface_ThreeWay, Cone_D0D1_ThreeWayConsistency)
 
   for (double u = 0.0; u < 2.0 * M_PI; u += M_PI / 4.0)
   {
-    for (double v = 1.0; v <= 10.0; v += 3.0) // Avoid apex at v=0.
+    for (double v = 1.0; v <= 10.0; v += 3.0)
     {
-      // D0.
+
       gp_Pnt aDirectPnt = anOffsetSurf->Value(u, v);
       gp_Pnt aOffsetAdaptorPnt, aEquivAdaptorPnt;
       anOffsetAdaptor.D0(u, v, aOffsetAdaptorPnt);
@@ -1234,7 +1157,6 @@ TEST(Geom_OffsetSurface_ThreeWay, Cone_D0D1_ThreeWayConsistency)
       EXPECT_TRUE(aDirectPnt.IsEqual(aEquivAdaptorPnt, aTol))
         << "Cone Direct vs EquivAdaptor D0 mismatch at u=" << u << ", v=" << v;
 
-      // D1.
       gp_Pnt aDirectD1Pnt;
       gp_Vec aDirectD1U, aDirectD1V;
       anOffsetSurf->D1(u, v, aDirectD1Pnt, aDirectD1U, aDirectD1V);

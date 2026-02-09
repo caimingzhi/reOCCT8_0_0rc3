@@ -1,17 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-//    abv 28.04.99 S4137: adding method Apply for work on all types of shapes
 
 #include <BRep_Builder.hpp>
 #include <BRep_Tool.hpp>
@@ -29,11 +16,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(ShapeBuild_ReShape, BRepTools_ReShape)
 
-//=================================================================================================
-
 ShapeBuild_ReShape::ShapeBuild_ReShape() = default;
-
-//=================================================================================================
 
 TopoDS_Shape ShapeBuild_ReShape::Apply(const TopoDS_Shape&    shape,
                                        const TopAbs_ShapeEnum until,
@@ -47,7 +30,7 @@ TopoDS_Shape ShapeBuild_ReShape::Apply(const TopoDS_Shape&    shape,
 
   TopAbs_ShapeEnum st = shape.ShapeType();
   if (st == until)
-    return newsh; // critere d arret
+    return newsh;
 
   int modif = 0;
   if (st == TopAbs_COMPOUND || st == TopAbs_COMPSOLID)
@@ -95,7 +78,7 @@ TopoDS_Shape ShapeBuild_ReShape::Apply(const TopoDS_Shape&    shape,
         }
         if (nbsub == 0)
           modif = -1;
-        B.Add(C, newsh); // c est tout
+        B.Add(C, newsh);
       }
       else
       {
@@ -138,7 +121,7 @@ TopoDS_Shape ShapeBuild_ReShape::Apply(const TopoDS_Shape&    shape,
         }
         if (nbsub == 0)
           modif = -1;
-        B.Add(C, newsh); // c est tout
+        B.Add(C, newsh);
       }
       else
       {
@@ -160,25 +143,20 @@ TopoDS_Shape ShapeBuild_ReShape::Apply(const TopoDS_Shape&    shape,
   return shape;
 }
 
-//=================================================================================================
-
 TopoDS_Shape ShapeBuild_ReShape::Apply(const TopoDS_Shape& shape, const TopAbs_ShapeEnum until)
 {
   myStatus = ShapeExtend::EncodeStatus(ShapeExtend_OK);
   if (shape.IsNull())
     return shape;
 
-  // apply direct replacement
   TopoDS_Shape newsh = Value(shape);
 
-  // if shape removed, return NULL
   if (newsh.IsNull())
   {
     myStatus = ShapeExtend::EncodeStatus(ShapeExtend_DONE2);
     return newsh;
   }
 
-  // if shape replaced, apply modifications to the result recursively
   bool aConsLoc = ModeConsiderLocation();
   if ((aConsLoc && !newsh.IsPartner(shape)) || (!aConsLoc && !newsh.IsSame(shape)))
   {
@@ -189,20 +167,18 @@ TopoDS_Shape ShapeBuild_ReShape::Apply(const TopoDS_Shape& shape, const TopAbs_S
 
   TopAbs_ShapeEnum st = shape.ShapeType();
   if (st >= until)
-    return newsh; // critere d arret
+    return newsh;
   if (st == TopAbs_VERTEX || st == TopAbs_SHAPE)
     return shape;
-  // define allowed types of components
 
   BRep_Builder B;
 
   TopoDS_Shape       result = shape.EmptyCopied();
-  TopAbs_Orientation orient = shape.Orientation(); // JR/Hp: or -> orient
-  result.Orientation(TopAbs_FORWARD);              // protect against INTERNAL or EXTERNAL shapes
+  TopAbs_Orientation orient = shape.Orientation();
+  result.Orientation(TopAbs_FORWARD);
   bool modif     = false;
   int  locStatus = myStatus;
 
-  // apply recorded modifications to subshapes
   for (TopoDS_Iterator it(shape, false); it.More(); it.Next())
   {
     const TopoDS_Shape& sh = it.Value();
@@ -220,7 +196,7 @@ TopoDS_Shape ShapeBuild_ReShape::Apply(const TopoDS_Shape& shape, const TopAbs_S
     }
     locStatus |= ShapeExtend::EncodeStatus(ShapeExtend_DONE3);
     if (st == TopAbs_COMPOUND || newsh.ShapeType() == sh.ShapeType())
-    { // fix for SAMTECH bug OCC322 about absence internal vertices after sewing.
+    {
       B.Add(result, newsh);
       continue;
     }
@@ -239,7 +215,6 @@ TopoDS_Shape ShapeBuild_ReShape::Apply(const TopoDS_Shape& shape, const TopAbs_S
   if (!modif)
     return shape;
 
-  // restore Range on edge broken by EmptyCopied()
   if (st == TopAbs_EDGE)
   {
     ShapeBuild_Edge sbe;
@@ -255,14 +230,10 @@ TopoDS_Shape ShapeBuild_ReShape::Apply(const TopoDS_Shape& shape, const TopAbs_S
   return result;
 }
 
-//=================================================================================================
-
 int ShapeBuild_ReShape::Status(const TopoDS_Shape& ashape, TopoDS_Shape& newsh, const bool last)
 {
   return BRepTools_ReShape::Status(ashape, newsh, last);
 }
-
-//=================================================================================================
 
 bool ShapeBuild_ReShape::Status(const ShapeExtend_Status status) const
 {

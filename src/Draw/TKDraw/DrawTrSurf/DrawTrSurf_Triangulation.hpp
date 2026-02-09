@@ -8,11 +8,6 @@
 
 class Poly_Triangulation;
 
-//! Used to display a triangulation.
-//!
-//! Display internal edges in blue
-//! Display boundary edges in red
-//! Optional display of triangles and nodes indices.
 class DrawTrSurf_Triangulation : public Draw_Drawable3D
 {
   DEFINE_STANDARD_RTTIEXT(DrawTrSurf_Triangulation, Draw_Drawable3D)
@@ -32,16 +27,12 @@ public:
 
   Standard_EXPORT void DrawOn(Draw_Display& dis) const override;
 
-  //! For variable copy.
   Standard_EXPORT occ::handle<Draw_Drawable3D> Copy() const override;
 
-  //! For variable dump.
   Standard_EXPORT void Dump(Standard_OStream& S) const override;
 
-  //! Save drawable into stream.
   Standard_EXPORT void Save(Standard_OStream& theStream) const override;
 
-  //! For variable whatis command. Set as a result the type of the variable.
   Standard_EXPORT void Whatis(Draw_Interpretor& I) const override;
 
 private:

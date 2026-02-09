@@ -61,66 +61,45 @@ public:
 
   Standard_EXPORT void RemoveRangeOutAll();
 
-  //! Set the grid deflection.
   void SetGridDeflection(const double theDeflection);
 
-  //! Query the grid deflection.
   double GetGridDeflection() const;
 
-  //! Set the range U of the grid of points.
   Standard_EXPORT void SetRangeUGrid(const int theNbUGrid);
 
-  //! Query the range U of the grid of points.
   int GetRangeUGrid() const;
 
-  //! Set the U parameter of the grid points at that index.
   void SetUParam(const int theIndex, const double theUParam);
 
-  //! Query the U parameter of the grid points at that index.
   double GetUParam(const int theIndex) const;
 
-  //! Set the range V of the grid of points.
   Standard_EXPORT void SetRangeVGrid(const int theNbVGrid);
 
-  //! Query the range V of the grid of points.
   int GetRangeVGrid() const;
 
-  //! Set the V parameter of the grid points at that index.
   void SetVParam(const int theIndex, const double theVParam);
 
-  //! Query the V parameter of the grid points at that index.
   double GetVParam(const int theIndex) const;
 
-  //! Set the grid point.
   void SetGridPoint(const int theUIndex, const int theVIndex, const gp_Pnt& thePoint);
 
-  //! Set the grid point.
   const gp_Pnt& GetGridPoint(const int theUIndex, const int theVIndex) const;
 
-  //! Sets the frame area. Used to work with grid points.
   Standard_EXPORT void SetFrame(const double theUMin,
                                 const double theUMax,
                                 const double theVMin,
                                 const double theVMax);
 
-  //! Returns the number of grid points on U direction in frame.
   int GetNBUPointsInFrame() const;
 
-  //! Returns the number of grid points on V direction in frame.
   int GetNBVPointsInFrame() const;
 
-  //! Returns the grid point in frame.
   Standard_EXPORT const gp_Pnt& GetPointInFrame(const int theUIndex, const int theVIndex) const;
 
-  //! Query the U parameter of the grid points
-  //! at that index in frame.
   Standard_EXPORT double GetUParamInFrame(const int theIndex) const;
 
-  //! Query the V parameter of the grid points
-  //! at that index in frame.
   Standard_EXPORT double GetVParamInFrame(const int theIndex) const;
 
-  //! Clears the grid of points.
   Standard_EXPORT void ClearGrid();
 
 private:
@@ -166,7 +145,6 @@ inline double IntTools_SurfaceRangeLocalizeData::GetMinRangeV() const
   return myMinRangeV;
 }
 
-//  Modified by skv - Thu Nov  3 09:59:43 2005 Optimization Begin
 inline void IntTools_SurfaceRangeLocalizeData::SetGridDeflection(const double theDeflection)
 {
   myDeflection = theDeflection;
@@ -229,5 +207,3 @@ inline int IntTools_SurfaceRangeLocalizeData::GetNBVPointsInFrame() const
 {
   return myVIndMax - myVIndMin + 1;
 }
-
-//  Modified by skv - Thu Nov  3 09:59:43 2005 Optimization End

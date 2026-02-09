@@ -11,22 +11,16 @@
 #include <TCollection_HAsciiString.hpp>
 #include <TCollection_AsciiString.hpp>
 
-//=================================================================================================
-
 RWStepFEA_RWFeaModel3d::RWStepFEA_RWFeaModel3d() = default;
-
-//=================================================================================================
 
 void RWStepFEA_RWFeaModel3d::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                       const int                                   num,
                                       occ::handle<Interface_Check>&               ach,
                                       const occ::handle<StepFEA_FeaModel3d>&      ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 7, ach, "fea_model3d"))
     return;
-
-  // Inherited fields of Representation
 
   occ::handle<TCollection_HAsciiString> aRepresentation_Name;
   data->ReadString(num, 1, "representation.name", ach, aRepresentation_Name);
@@ -60,8 +54,6 @@ void RWStepFEA_RWFeaModel3d::ReadStep(const occ::handle<StepData_StepReaderData>
                    STANDARD_TYPE(StepRepr_RepresentationContext),
                    aRepresentation_ContextOfItems);
 
-  // Inherited fields of FeaModel
-
   occ::handle<TCollection_HAsciiString> aFeaModel_CreatingSoftware;
   data->ReadString(num, 4, "fea_model.creating_software", ach, aFeaModel_CreatingSoftware);
 
@@ -86,7 +78,6 @@ void RWStepFEA_RWFeaModel3d::ReadStep(const occ::handle<StepData_StepReaderData>
   occ::handle<TCollection_HAsciiString> aFeaModel_AnalysisType;
   data->ReadString(num, 7, "fea_model.analysis_type", ach, aFeaModel_AnalysisType);
 
-  // Initialize entity
   ent->Init(aRepresentation_Name,
             aRepresentation_Items,
             aRepresentation_ContextOfItems,
@@ -96,13 +87,9 @@ void RWStepFEA_RWFeaModel3d::ReadStep(const occ::handle<StepData_StepReaderData>
             aFeaModel_AnalysisType);
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWFeaModel3d::WriteStep(StepData_StepWriter&                   SW,
                                        const occ::handle<StepFEA_FeaModel3d>& ent) const
 {
-
-  // Inherited fields of Representation
 
   SW.Send(ent->StepRepr_Representation::Name());
 
@@ -116,8 +103,6 @@ void RWStepFEA_RWFeaModel3d::WriteStep(StepData_StepWriter&                   SW
   SW.CloseSub();
 
   SW.Send(ent->StepRepr_Representation::ContextOfItems());
-
-  // Inherited fields of FeaModel
 
   SW.Send(ent->StepFEA_FeaModel::CreatingSoftware());
 
@@ -135,13 +120,9 @@ void RWStepFEA_RWFeaModel3d::WriteStep(StepData_StepWriter&                   SW
   SW.Send(ent->StepFEA_FeaModel::AnalysisType());
 }
 
-//=================================================================================================
-
 void RWStepFEA_RWFeaModel3d::Share(const occ::handle<StepFEA_FeaModel3d>& ent,
                                    Interface_EntityIterator&              iter) const
 {
-
-  // Inherited fields of Representation
 
   for (int i1 = 1; i1 <= ent->StepRepr_Representation::NbItems(); i1++)
   {
@@ -151,6 +132,4 @@ void RWStepFEA_RWFeaModel3d::Share(const occ::handle<StepFEA_FeaModel3d>& ent,
   }
 
   iter.AddItem(ent->StepRepr_Representation::ContextOfItems());
-
-  // Inherited fields of FeaModel
 }

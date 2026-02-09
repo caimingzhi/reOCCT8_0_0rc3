@@ -1,18 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
 
-// cky 16.01.99 Remove couts.
-// rln 28.12.98 CCI60005
 
 #include <Bnd_Box.hpp>
 #include <BndLib_Add3dCurve.hpp>
@@ -49,8 +35,6 @@
 
 #include <cerrno>
 
-//=============================================================================
-
 IGESControl_Writer::IGESControl_Writer()
     : myTP(new Transfer_FinderProcess(10000)),
       myIsComputed(false)
@@ -62,8 +46,6 @@ IGESControl_Writer::IGESControl_Writer()
   myWriteMode = Interface_Static::IVal("write.iges.brep.mode");
   myModel     = myEditor.Model();
 }
-
-//=============================================================================
 
 IGESControl_Writer::IGESControl_Writer(const char* theUnit, const int theModecr)
     : myTP(new Transfer_FinderProcess(10000)),
@@ -77,8 +59,6 @@ IGESControl_Writer::IGESControl_Writer(const char* theUnit, const int theModecr)
   myModel = myEditor.Model();
 }
 
-//=============================================================================
-
 IGESControl_Writer::IGESControl_Writer(const occ::handle<IGESData_IGESModel>& theModel,
                                        const int                              theModecr)
     : myTP(new Transfer_FinderProcess(10000)),
@@ -88,8 +68,6 @@ IGESControl_Writer::IGESControl_Writer(const occ::handle<IGESData_IGESModel>& th
       myIsComputed(false)
 {
 }
-
-//=============================================================================
 
 bool IGESControl_Writer::AddShape(const TopoDS_Shape&          theShape,
                                   const Message_ProgressRange& theProgress)
@@ -124,8 +102,6 @@ bool IGESControl_Writer::AddShape(const TopoDS_Shape&          theShape,
     return false;
   aShapeProcessor.MergeTransferInfo(myTP);
 
-  // 22.10.98 gka BUC60080
-
   int  oldnb = myModel->NbEntities();
   bool aent  = AddEntity(ent);
   int  newnb = myModel->NbEntities();
@@ -142,18 +118,18 @@ bool IGESControl_Writer::AddShape(const TopoDS_Shape&          theShape,
     double                       Tole = stu.Tolerance(Shape, tolmod, TopAbs_EDGE);
 
     if (tolmod == 0)
-    { // Average
+    {
       double Tol1 = (Tolv + Tole) / 2;
       newtol      = (oldtol * oldnb + Tol1 * (newnb - oldnb)) / newnb;
     }
     else if (tolmod < 0)
-    { // Least
+    {
       newtol = std::min(Tolv, Tole);
       if (oldnb > 0)
         newtol = std::min(oldtol, newtol);
     }
     else
-    { // Greatest
+    {
       newtol = std::max(Tolv, Tole);
       if (oldnb > 0)
         newtol = std::max(oldtol, newtol);
@@ -161,9 +137,8 @@ bool IGESControl_Writer::AddShape(const TopoDS_Shape&          theShape,
   }
 
   IGESData_GlobalSection gs = myModel->GlobalSection();
-  gs.SetResolution(newtol / gs.UnitValue()); // rln 28.12.98 CCI60005
+  gs.SetResolution(newtol / gs.UnitValue());
 
-  // #34 22.10.98 rln BUC60081
   Bnd_Box box;
   BRepBndLib::Add(Shape, box);
   if (!(box.IsVoid() || box.IsOpenXmax() || box.IsOpenYmax() || box.IsOpenZmax() || box.IsOpenXmin()
@@ -188,16 +163,11 @@ bool IGESControl_Writer::AddGeom(const occ::handle<Standard_Transient>& geom)
   DeclareAndCast(Geom_Surface, Surf, geom);
   occ::handle<IGESData_IGESEntity> ent;
 
-  //  We recognize: Curve and Surface from Geom
-  //   what about Point; Geom2d ?
-
-  //  GeomToIGES_GeomPoint GP;
   GeomToIGES_GeomCurve GC;
   GC.SetModel(myModel);
   GeomToIGES_GeomSurface GS;
   GS.SetModel(myModel);
 
-  // #34 22.10.98 rln BUC60081
   IGESData_GlobalSection gs = myModel->GlobalSection();
   Bnd_Box                box;
 
@@ -222,8 +192,6 @@ bool IGESControl_Writer::AddGeom(const occ::handle<Standard_Transient>& geom)
   return AddEntity(ent);
 }
 
-//=============================================================================
-
 bool IGESControl_Writer::AddEntity(const occ::handle<IGESData_IGESEntity>& ent)
 {
   if (ent.IsNull())
@@ -232,8 +200,6 @@ bool IGESControl_Writer::AddEntity(const occ::handle<IGESData_IGESEntity>& ent)
   myIsComputed = false;
   return true;
 }
-
-//=============================================================================
 
 void IGESControl_Writer::ComputeModel()
 {
@@ -245,8 +211,6 @@ void IGESControl_Writer::ComputeModel()
   }
 }
 
-//=============================================================================
-
 bool IGESControl_Writer::Write(Standard_OStream& S, const bool fnes)
 {
   if (!S)
@@ -256,15 +220,13 @@ bool IGESControl_Writer::Write(Standard_OStream& S, const bool fnes)
   if (!nbEnt)
     return false;
   IGESData_IGESWriter IW(myModel);
-  //  do not forget the fnes mode ... to transmit to IW
+
   IW.SendModel(IGESSelect_WorkLibrary::DefineProtocol());
   if (fnes)
     IW.WriteMode() = 10;
   bool status = IW.Print(S);
   return status;
 }
-
-//=============================================================================
 
 bool IGESControl_Writer::Write(const char* file, const bool fnes)
 {
@@ -285,22 +247,16 @@ bool IGESControl_Writer::Write(const char* file, const bool fnes)
   return res;
 }
 
-//=============================================================================
-
 void IGESControl_Writer::SetShapeFixParameters(
   const XSAlgo_ShapeProcessor::ParameterMap& theParameters)
 {
   myShapeProcParams = theParameters;
 }
 
-//=============================================================================
-
 void IGESControl_Writer::SetShapeFixParameters(XSAlgo_ShapeProcessor::ParameterMap&& theParameters)
 {
   myShapeProcParams = std::move(theParameters);
 }
-
-//=============================================================================
 
 void IGESControl_Writer::SetShapeFixParameters(
   const DE_ShapeFixParameters&               theParameters,
@@ -311,15 +267,11 @@ void IGESControl_Writer::SetShapeFixParameters(
                                                myShapeProcParams);
 }
 
-//=============================================================================
-
 void IGESControl_Writer::SetShapeProcessFlags(const ShapeProcess::OperationsFlags& theFlags)
 {
   myShapeProcFlags.first  = theFlags;
   myShapeProcFlags.second = true;
 }
-
-//=============================================================================
 
 void IGESControl_Writer::InitializeMissingParameters()
 {

@@ -17,7 +17,6 @@
 #include <Message_Msg.hpp>
 #include <Standard_DomainError.hpp>
 
-// MGE 31/07/98
 IGESGeom_ToolTabulatedCylinder::IGESGeom_ToolTabulatedCylinder() = default;
 
 void IGESGeom_ToolTabulatedCylinder::ReadOwnParams(
@@ -25,21 +24,15 @@ void IGESGeom_ToolTabulatedCylinder::ReadOwnParams(
   const occ::handle<IGESData_IGESReaderData>&    IR,
   IGESData_ParamReader&                          PR) const
 {
-  // MGE 31/07/98
-  // Building of messages
-  //========================================
+
   Message_Msg Msg157("XSTEP_157");
-  //========================================
 
   occ::handle<IGESData_IGESEntity> aDirectrix;
   gp_XYZ                           anEnd;
   IGESData_Status                  aStatus;
 
-  // bool st; //szv#4:S4163:12Mar99 not needed
-
-  // Reading the directrix curve entity
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, aDirectrix))
-  { // szv#4:S4163:12Mar99 `st=` not needed
+  {
     Message_Msg Msg156("XSTEP_156");
     switch (aStatus)
     {
@@ -62,11 +55,8 @@ void IGESGeom_ToolTabulatedCylinder::ReadOwnParams(
       }
     }
   }
-  // st = PR.ReadEntity(IR, PR.Current(), "Directrix", aDirectrix);
 
-  // Reading the terminate point of the generatrix
-  PR.ReadXYZ(PR.CurrentList(1, 3), Msg157, anEnd); // szv#4:S4163:12Mar99 `st=` not needed
-  // st = PR.ReadXYZ(PR.CurrentList(1, 3), "Terminate Point", anEnd);
+  PR.ReadXYZ(PR.CurrentList(1, 3), Msg157, anEnd);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(aDirectrix, anEnd);
@@ -100,21 +90,20 @@ void IGESGeom_ToolTabulatedCylinder::OwnCopy(const occ::handle<IGESGeom_Tabulate
 }
 
 IGESData_DirChecker IGESGeom_ToolTabulatedCylinder::DirChecker(
-  const occ::handle<IGESGeom_TabulatedCylinder>& /* ent */) const
+  const occ::handle<IGESGeom_TabulatedCylinder>&) const
 {
   IGESData_DirChecker DC(122, 0);
   DC.Structure(IGESData_DefVoid);
   DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
+
   DC.Color(IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
 }
 
-void IGESGeom_ToolTabulatedCylinder::OwnCheck(
-  const occ::handle<IGESGeom_TabulatedCylinder>& /* ent */,
-  const Interface_ShareTool&,
-  occ::handle<Interface_Check>& /* ach */) const
+void IGESGeom_ToolTabulatedCylinder::OwnCheck(const occ::handle<IGESGeom_TabulatedCylinder>&,
+                                              const Interface_ShareTool&,
+                                              occ::handle<Interface_Check>&) const
 {
 }
 

@@ -10,13 +10,11 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepVisual_TriangulatedSurfaceSet;
 
-//! Read & Write tool for TriangulatedSurfaceSet
 class RWStepVisual_RWTriangulatedSurfaceSet
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! default constructor
   Standard_HIDDEN RWStepVisual_RWTriangulatedSurfaceSet();
 
   Standard_HIDDEN void ReadStep(const occ::handle<StepData_StepReaderData>&           theData,

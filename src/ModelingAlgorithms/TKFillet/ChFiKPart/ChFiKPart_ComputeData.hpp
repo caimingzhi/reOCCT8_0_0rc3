@@ -8,21 +8,11 @@ class ChFiDS_SurfData;
 class ChFiDS_Spine;
 class gp_Pnt2d;
 
-//! Methodes de classe permettant de remplir une
-//! SurfData dans les cas particuliers de conges
-//! suivants:
-//! - cylindre entre 2 surfaces planes,
-//! - tore/sphere entre un plan et un cylindre othogonal,
-//! - tore/sphere entre un plan et un cone othogonal,
-//!
-//! - tore entre un plan et une droite orthogonale (rotule).
 class ChFiKPart_ComputeData
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Computes a simple fillet in several particular
-  //! cases.
   Standard_EXPORT static bool Compute(TopOpeBRepDS_DataStructure&           DStr,
                                       occ::handle<ChFiDS_SurfData>&         Data,
                                       const occ::handle<Adaptor3d_Surface>& S1,
@@ -32,7 +22,6 @@ public:
                                       const occ::handle<ChFiDS_Spine>&      Sp,
                                       const int                             Iedge);
 
-  //! Computes a toric or spheric corner fillet.
   Standard_EXPORT static bool ComputeCorner(TopOpeBRepDS_DataStructure&           DStr,
                                             const occ::handle<ChFiDS_SurfData>&   Data,
                                             const occ::handle<Adaptor3d_Surface>& S1,
@@ -48,7 +37,6 @@ public:
                                             const gp_Pnt2d&                       P1S2,
                                             const gp_Pnt2d&                       P2S2);
 
-  //! Computes spheric corner fillet with non iso pcurve on S2.
   Standard_EXPORT static bool ComputeCorner(TopOpeBRepDS_DataStructure&           DStr,
                                             const occ::handle<ChFiDS_SurfData>&   Data,
                                             const occ::handle<Adaptor3d_Surface>& S1,
@@ -62,7 +50,6 @@ public:
                                             const gp_Pnt2d&                       P1S2,
                                             const gp_Pnt2d&                       P2S2);
 
-  //! Computes a toric corner rotule.
   Standard_EXPORT static bool ComputeCorner(TopOpeBRepDS_DataStructure&           DStr,
                                             const occ::handle<ChFiDS_SurfData>&   Data,
                                             const occ::handle<Adaptor3d_Surface>& S,

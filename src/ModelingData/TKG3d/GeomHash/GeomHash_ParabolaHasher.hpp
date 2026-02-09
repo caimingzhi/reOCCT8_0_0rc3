@@ -5,11 +5,9 @@
 #include <GeomHash_AxisPlacement.hpp>
 #include <cmath>
 
-//! OCCT-style hasher for Geom_Parabola (3D parabola).
-//! Used for geometry deduplication.
 struct GeomHash_ParabolaHasher
 {
-  // Hashes the parabola by its position and focal length.
+
   std::size_t operator()(const occ::handle<Geom_Parabola>& theParabola) const noexcept
   {
     constexpr double aTolerance = 1e-12;
@@ -22,7 +20,6 @@ struct GeomHash_ParabolaHasher
     return opencascade::hashBytes(aHashes, sizeof(aHashes));
   }
 
-  // Compares two parabolas by their positions and focal lengths.
   bool operator()(const occ::handle<Geom_Parabola>& theParabola1,
                   const occ::handle<Geom_Parabola>& theParabola2) const noexcept
   {

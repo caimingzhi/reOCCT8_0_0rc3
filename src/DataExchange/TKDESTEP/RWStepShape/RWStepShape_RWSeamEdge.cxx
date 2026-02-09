@@ -6,35 +6,25 @@
 #include <StepShape_SeamEdge.hpp>
 #include <StepShape_Vertex.hpp>
 
-//=================================================================================================
-
 RWStepShape_RWSeamEdge::RWStepShape_RWSeamEdge() = default;
-
-//=================================================================================================
 
 void RWStepShape_RWSeamEdge::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                       const int                                   num,
                                       occ::handle<Interface_Check>&               ach,
                                       const occ::handle<StepShape_SeamEdge>&      ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 6, ach, "seam_edge"))
     return;
 
-  // Inherited fields of RepresentationItem
-
   occ::handle<TCollection_HAsciiString> aRepresentationItem_Name;
   data->ReadString(num, 1, "representation_item.name", ach, aRepresentationItem_Name);
-
-  // Inherited fields of Edge
 
   occ::handle<StepShape_Vertex> aEdge_EdgeStart;
   data->CheckDerived(num, 2, "edge.edge_start", ach, false);
 
   occ::handle<StepShape_Vertex> aEdge_EdgeEnd;
   data->CheckDerived(num, 3, "edge.edge_end", ach, false);
-
-  // Inherited fields of OrientedEdge
 
   occ::handle<StepShape_Edge> aOrientedEdge_EdgeElement;
   data->ReadEntity(num,
@@ -47,13 +37,9 @@ void RWStepShape_RWSeamEdge::ReadStep(const occ::handle<StepData_StepReaderData>
   bool aOrientedEdge_Orientation;
   data->ReadBoolean(num, 5, "oriented_edge.orientation", ach, aOrientedEdge_Orientation);
 
-  // Own fields of SeamEdge
-
   occ::handle<StepGeom_Pcurve> aPcurveReference;
   data
     ->ReadEntity(num, 6, "pcurve_reference", ach, STANDARD_TYPE(StepGeom_Pcurve), aPcurveReference);
-
-  // Initialize entity
 
   ent->Init(aRepresentationItem_Name,
             aOrientedEdge_EdgeElement,
@@ -61,52 +47,32 @@ void RWStepShape_RWSeamEdge::ReadStep(const occ::handle<StepData_StepReaderData>
             aPcurveReference);
 }
 
-//=================================================================================================
-
 void RWStepShape_RWSeamEdge::WriteStep(StepData_StepWriter&                   SW,
                                        const occ::handle<StepShape_SeamEdge>& ent) const
 {
 
-  // Inherited fields of RepresentationItem
-
   SW.Send(ent->StepRepr_RepresentationItem::Name());
-
-  // Inherited fields of Edge
 
   SW.Send(ent->StepShape_Edge::EdgeStart());
 
   SW.Send(ent->StepShape_Edge::EdgeEnd());
 
-  // Inherited fields of OrientedEdge
-
   SW.Send(ent->StepShape_OrientedEdge::EdgeElement());
 
   SW.SendBoolean(ent->StepShape_OrientedEdge::Orientation());
 
-  // Own fields of SeamEdge
-
   SW.Send(ent->PcurveReference());
 }
-
-//=================================================================================================
 
 void RWStepShape_RWSeamEdge::Share(const occ::handle<StepShape_SeamEdge>& ent,
                                    Interface_EntityIterator&              iter) const
 {
 
-  // Inherited fields of RepresentationItem
-
-  // Inherited fields of Edge
-
   iter.AddItem(ent->StepShape_Edge::EdgeStart());
 
   iter.AddItem(ent->StepShape_Edge::EdgeEnd());
 
-  // Inherited fields of OrientedEdge
-
   iter.AddItem(ent->StepShape_OrientedEdge::EdgeElement());
-
-  // Own fields of SeamEdge
 
   iter.AddItem(ent->PcurveReference());
 }

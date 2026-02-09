@@ -11,7 +11,6 @@ class StepShape_RightCircularCylinder : public StepGeom_GeometricRepresentationI
 {
 
 public:
-  //! Returns a RightCircularCylinder
   Standard_EXPORT StepShape_RightCircularCylinder();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

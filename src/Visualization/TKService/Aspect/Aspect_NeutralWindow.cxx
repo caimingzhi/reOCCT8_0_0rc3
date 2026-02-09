@@ -1,21 +1,8 @@
-// Copyright (c) 2016 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Aspect_NeutralWindow.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Aspect_NeutralWindow, Aspect_Window)
-
-//=================================================================================================
 
 Aspect_NeutralWindow::Aspect_NeutralWindow()
     : myHandle(0),
@@ -28,8 +15,6 @@ Aspect_NeutralWindow::Aspect_NeutralWindow()
       myIsMapped(true)
 {
 }
-
-//=================================================================================================
 
 bool Aspect_NeutralWindow::SetNativeHandles(Aspect_Drawable theWindow,
                                             Aspect_Drawable theParentWindow,
@@ -46,8 +31,6 @@ bool Aspect_NeutralWindow::SetNativeHandles(Aspect_Drawable theWindow,
   return true;
 }
 
-//=================================================================================================
-
 bool Aspect_NeutralWindow::SetPosition(int theX1, int theY1)
 {
   if (myPosX == theX1 && myPosY == theY1)
@@ -59,8 +42,6 @@ bool Aspect_NeutralWindow::SetPosition(int theX1, int theY1)
   myPosY = theY1;
   return true;
 }
-
-//=================================================================================================
 
 bool Aspect_NeutralWindow::SetPosition(int theX1, int theY1, int theX2, int theY2)
 {
@@ -77,8 +58,6 @@ bool Aspect_NeutralWindow::SetPosition(int theX1, int theY1, int theX2, int theY
   myHeight = aHeightNew;
   return true;
 }
-
-//=================================================================================================
 
 bool Aspect_NeutralWindow::SetSize(const int theWidth, const int theHeight)
 {

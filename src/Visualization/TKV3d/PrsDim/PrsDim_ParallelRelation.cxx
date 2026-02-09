@@ -28,8 +28,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(PrsDim_ParallelRelation, PrsDim_Relation)
 
-//=================================================================================================
-
 PrsDim_ParallelRelation::PrsDim_ParallelRelation(const TopoDS_Shape&            aFShape,
                                                  const TopoDS_Shape&            aSShape,
                                                  const occ::handle<Geom_Plane>& aPlane)
@@ -41,8 +39,6 @@ PrsDim_ParallelRelation::PrsDim_ParallelRelation(const TopoDS_Shape&            
   myArrowSize         = 0.01;
   mySymbolPrs         = DsgPrs_AS_BOTHAR;
 }
-
-//=================================================================================================
 
 PrsDim_ParallelRelation::PrsDim_ParallelRelation(const TopoDS_Shape&            aFShape,
                                                  const TopoDS_Shape&            aSShape,
@@ -60,8 +56,6 @@ PrsDim_ParallelRelation::PrsDim_ParallelRelation(const TopoDS_Shape&            
   mySymbolPrs = aSymbolPrs;
 }
 
-//=================================================================================================
-
 void PrsDim_ParallelRelation::Compute(const occ::handle<PrsMgr_PresentationManager>&,
                                       const occ::handle<Prs3d_Presentation>& aPresentation,
                                       const int)
@@ -70,13 +64,13 @@ void PrsDim_ParallelRelation::Compute(const occ::handle<PrsMgr_PresentationManag
   {
     case TopAbs_FACE:
     {
-      // parallel case between two faces
+
       ComputeTwoFacesParallel(aPresentation);
     }
     break;
     case TopAbs_EDGE:
     {
-      // parallel case between two edges
+
       ComputeTwoEdgesParallel(aPresentation);
     }
     break;
@@ -84,8 +78,6 @@ void PrsDim_ParallelRelation::Compute(const occ::handle<PrsMgr_PresentationManag
       break;
   }
 }
-
-//=================================================================================================
 
 void PrsDim_ParallelRelation::ComputeSelection(const occ::handle<SelectMgr_Selection>& aSelection,
                                                const int)
@@ -149,14 +141,10 @@ void PrsDim_ParallelRelation::ComputeSelection(const occ::handle<SelectMgr_Selec
   }
 }
 
-//=================================================================================================
-
 void PrsDim_ParallelRelation::ComputeTwoFacesParallel(const occ::handle<Prs3d_Presentation>&)
 {
   throw Standard_NotImplemented("PrsDim_ParallelRelation::ComputeTwoFacesParallel not implemented");
 }
-
-//=================================================================================================
 
 void PrsDim_ParallelRelation::ComputeTwoEdgesParallel(
   const occ::handle<Prs3d_Presentation>& aPresentation)
@@ -164,7 +152,7 @@ void PrsDim_ParallelRelation::ComputeTwoEdgesParallel(
   TopoDS_Edge E1 = TopoDS::Edge(myFShape);
   TopoDS_Edge E2 = TopoDS::Edge(mySShape);
 
-  gp_Pnt                  ptat11, ptat12, ptat21, ptat22; //,pint3d;
+  gp_Pnt                  ptat11, ptat12, ptat21, ptat22;
   occ::handle<Geom_Curve> geom1, geom2;
   bool                    isInfinite1, isInfinite2;
   occ::handle<Geom_Curve> extCurv;
@@ -194,7 +182,7 @@ void PrsDim_ParallelRelation::ComputeTwoEdgesParallel(
   if (geom1->IsInstance(STANDARD_TYPE(Geom_Ellipse)))
   {
     occ::handle<Geom_Ellipse> geom_el1(occ::down_cast<Geom_Ellipse>(geom1));
-    // construct lines through focuses
+
     gp_Ax1 elAx     = geom_el1->XAxis();
     l1              = gp_Lin(elAx);
     double focex    = geom_el1->MajorRadius() - geom_el1->Focal() / 2.0;
@@ -214,7 +202,7 @@ void PrsDim_ParallelRelation::ComputeTwoEdgesParallel(
   if (geom2->IsInstance(STANDARD_TYPE(Geom_Ellipse)))
   {
     occ::handle<Geom_Ellipse> geom_el2(occ::down_cast<Geom_Ellipse>(geom2));
-    // construct lines through focuses
+
     gp_Ax1 elAx     = geom_el2->XAxis();
     l2              = gp_Lin(elAx);
     double focex    = geom_el2->MajorRadius() - geom_el2->Focal() / 2.0;
@@ -235,7 +223,7 @@ void PrsDim_ParallelRelation::ComputeTwoEdgesParallel(
   const occ::handle<Geom_Line>& geom_lin2 = new Geom_Line(l2);
 
   myDirAttach = l1.Direction();
-  // size
+
   if (!myArrowSizeIsDefined)
   {
     double arrSize1(myArrowSize), arrSize2(myArrowSize);
@@ -244,7 +232,6 @@ void PrsDim_ParallelRelation::ComputeTwoEdgesParallel(
     if (!isInfinite2)
       arrSize2 = ptat21.Distance(ptat22) / 50.;
     myArrowSize = std::max(myArrowSize, std::max(arrSize1, arrSize2));
-    //  myArrowSize = std::min(myArrowSize,Min(arrSize1,arrSize2));
   }
 
   if (myAutomaticPosition)
@@ -264,14 +251,13 @@ void PrsDim_ParallelRelation::ComputeTwoEdgesParallel(
     {
       curpos.SetXYZ((l1.Location().XYZ() + l2.Location().XYZ()) / 2.);
     }
-    // offset pour eviter confusion Edge et Dimension
+
     gp_Vec offset(myDirAttach);
     offset = offset * myArrowSize * (-10.);
     curpos.Translate(offset);
     myPosition = curpos;
   }
 
-  // search for attachment points
   if (!isInfinite1)
   {
     if (isEl1)

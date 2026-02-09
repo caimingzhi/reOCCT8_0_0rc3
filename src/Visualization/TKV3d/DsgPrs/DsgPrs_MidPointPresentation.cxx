@@ -14,10 +14,6 @@
 #include <Prs3d_Text.hpp>
 #include <TCollection_ExtendedString.hpp>
 
-//===================================================================
-// Function:Add
-// Purpose: draws the representation of a radial symmetry between two vertices.
-//===================================================================
 void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                       const occ::handle<Prs3d_Drawer>&       aDrawer,
                                       const gp_Ax2&                          theAxe,
@@ -36,7 +32,7 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
 
   if (first)
   {
-    // center of the symmetry - circle around the MidPoint
+
     aPresentation->NewGroup();
     aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
@@ -49,16 +45,16 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
     for (int i = 1; i <= nbp; i++)
       aPrims->AddVertex(ElCLib::Value(dteta * (i - 1), aCircleM));
 
-    // segment from mid point to the text position
     aPrims->AddBound(2);
-    // clang-format off
-    aPrims->AddVertex(Position.IsEqual(MidPoint,rad)? MidPoint : ElCLib::Value(ElCLib::Parameter(aCircleM,Position),aCircleM)); // mid point
-    // clang-format on
-    aPrims->AddVertex(Position); // text position
+
+    aPrims->AddVertex(Position.IsEqual(MidPoint, rad)
+                        ? MidPoint
+                        : ElCLib::Value(ElCLib::Parameter(aCircleM, Position), aCircleM));
+
+    aPrims->AddVertex(Position);
 
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-    // texte
     TCollection_ExtendedString aText(" (+)");
     Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, Position);
   }
@@ -71,20 +67,15 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
       aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
     }
 
-    // segment from mid point to the geometry
     occ::handle<Graphic3d_ArrayOfSegments> aPrims = new Graphic3d_ArrayOfSegments(2);
-    // clang-format off
-    aPrims->AddVertex(ElCLib::Value(ElCLib::Parameter(aCircleM,AttachPoint),aCircleM)); // mid point
-    // clang-format on
-    aPrims->AddVertex(AttachPoint); // attach point to the geometry
+
+    aPrims->AddVertex(ElCLib::Value(ElCLib::Parameter(aCircleM, AttachPoint), aCircleM));
+
+    aPrims->AddVertex(AttachPoint);
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
   }
 }
 
-//===================================================================
-// Function:Add
-// Purpose: draws the representation of a radial symmetry between two linear segments.
-//===================================================================
 void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                       const occ::handle<Prs3d_Drawer>&       aDrawer,
                                       const gp_Ax2&                          theAxe,
@@ -105,7 +96,6 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
   ax.SetLocation(MidPoint);
   gp_Circ aCircleM(ax, rad);
 
-  // segment on line
   aPresentation->NewGroup();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
@@ -116,7 +106,7 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
 
   if (first)
   {
-    // center of the symmetry - circle around the MidPoint
+
     const double alpha = 2. * M_PI;
     const int    nbp   = 100;
     const double dteta = alpha / (nbp - 1);
@@ -126,34 +116,30 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
     for (int i = 1; i <= nbp; i++)
       aPrims->AddVertex(ElCLib::Value(dteta * (i - 1), aCircleM));
 
-    // segment from mid point to the text position
     aPrims->AddBound(2);
-    // clang-format off
-    aPrims->AddVertex(Position.IsEqual(MidPoint,rad)? MidPoint : ElCLib::Value(ElCLib::Parameter(aCircleM,Position),aCircleM)); // mid point
-    // clang-format on
-    aPrims->AddVertex(Position); // text position
+
+    aPrims->AddVertex(Position.IsEqual(MidPoint, rad)
+                        ? MidPoint
+                        : ElCLib::Value(ElCLib::Parameter(aCircleM, Position), aCircleM));
+
+    aPrims->AddVertex(Position);
 
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-    // texte
     TCollection_ExtendedString aText(" (+)");
     Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, Position);
   }
 
   if (!AttachPoint.IsEqual(MidPoint, Precision::Confusion()))
   {
-    // mid point
+
     aPrims = new Graphic3d_ArrayOfSegments(2);
     aPrims->AddVertex(ElCLib::Value(ElCLib::Parameter(aCircleM, AttachPoint), aCircleM));
-    aPrims->AddVertex(AttachPoint); // attach point to the geometry
+    aPrims->AddVertex(AttachPoint);
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
   }
 }
 
-//===================================================================
-// Function:Add
-// Purpose: draws the representation of a radial symmetry between two circular arcs.
-//===================================================================
 void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                       const occ::handle<Prs3d_Drawer>&       aDrawer,
                                       const gp_Circ&                         aCircle,
@@ -174,7 +160,6 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
   ax.SetLocation(MidPoint);
   gp_Circ aCircleM(ax, rad);
 
-  // segment on circle
   aPresentation->NewGroup();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
@@ -194,7 +179,7 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
 
   if (first)
   {
-    // center of the symmetry - circle around the MidPoint
+
     alpha = 2. * M_PI;
     nbp   = 100;
     dteta = alpha / (nbp - 1);
@@ -204,36 +189,32 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
     for (int i = 1; i <= nbp; i++)
       aPrims->AddVertex(ElCLib::Value(dteta * (i - 1), aCircleM));
 
-    // segment from mid point to the text position
     aPrims->AddBound(2);
-    // clang-format off
-    aPrims->AddVertex(Position.IsEqual(MidPoint,rad)? MidPoint : ElCLib::Value(ElCLib::Parameter(aCircleM,Position),aCircleM)); // mid point
-    // clang-format on
-    aPrims->AddVertex(Position); // text position
+
+    aPrims->AddVertex(Position.IsEqual(MidPoint, rad)
+                        ? MidPoint
+                        : ElCLib::Value(ElCLib::Parameter(aCircleM, Position), aCircleM));
+
+    aPrims->AddVertex(Position);
 
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-    // texte
     TCollection_ExtendedString aText(" (+)");
     Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, Position);
   }
 
   if (!AttachPoint.IsEqual(MidPoint, Precision::Confusion()))
   {
-    // segment from mid point to the geometry
+
     aPrims = new Graphic3d_ArrayOfSegments(2);
-    // clang-format off
-    aPrims->AddVertex(ElCLib::Value(ElCLib::Parameter(aCircleM,AttachPoint),aCircleM)); // mid point
-    // clang-format on
-    aPrims->AddVertex(AttachPoint); // attach point to the geometry
+
+    aPrims->AddVertex(ElCLib::Value(ElCLib::Parameter(aCircleM, AttachPoint), aCircleM));
+
+    aPrims->AddVertex(AttachPoint);
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
   }
 }
 
-//===================================================================
-// Function:Add
-// Purpose: draws the representation of a radial symmetry between two elliptic arcs.
-//===================================================================
 void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
                                       const occ::handle<Prs3d_Drawer>&       aDrawer,
                                       const gp_Elips&                        aCircle,
@@ -254,7 +235,6 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
   ax.SetLocation(MidPoint);
   gp_Circ aCircleM(ax, rad);
 
-  // segment on ellipse
   aPresentation->NewGroup();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
@@ -274,7 +254,7 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
 
   if (first)
   {
-    // center of the symmetry - circle around the MidPoint
+
     alpha = 2. * M_PI;
     nbp   = 100;
     dteta = alpha / (nbp - 1);
@@ -284,28 +264,28 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
     for (int i = 1; i <= nbp; i++)
       aPrims->AddVertex(ElCLib::Value(dteta * (i - 1), aCircleM));
 
-    // segment from mid point to the text position
     aPrims->AddBound(2);
-    // clang-format off
-	aPrims->AddVertex(Position.IsEqual(MidPoint,rad)? MidPoint : ElCLib::Value(ElCLib::Parameter(aCircleM,Position),aCircleM)); // mid point
-    // clang-format on
-    aPrims->AddVertex(Position); // text position
+
+    aPrims->AddVertex(Position.IsEqual(MidPoint, rad)
+                        ? MidPoint
+                        : ElCLib::Value(ElCLib::Parameter(aCircleM, Position), aCircleM));
+
+    aPrims->AddVertex(Position);
 
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-    // texte
     TCollection_ExtendedString aText(" (+)");
     Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, Position);
   }
 
   if (!AttachPoint.IsEqual(MidPoint, Precision::Confusion()))
   {
-    // segment from mid point to the geometry
+
     aPrims = new Graphic3d_ArrayOfSegments(2);
-    // clang-format off
-    aPrims->AddVertex(ElCLib::Value(ElCLib::Parameter(aCircleM,AttachPoint),aCircleM)); // mid point
-    // clang-format on
-    aPrims->AddVertex(AttachPoint); // attach point to the geometry
+
+    aPrims->AddVertex(ElCLib::Value(ElCLib::Parameter(aCircleM, AttachPoint), aCircleM));
+
+    aPrims->AddVertex(AttachPoint);
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
   }
 }

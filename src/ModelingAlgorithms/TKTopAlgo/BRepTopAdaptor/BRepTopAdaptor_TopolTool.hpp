@@ -51,51 +51,32 @@ public:
                                         const double    Tol,
                                         const bool      RecadreOnPeriodic = true) override;
 
-  //! see the code for specifications)
   Standard_EXPORT bool IsThePointOn(const gp_Pnt2d& P2d,
                                     const double    Tol,
                                     const bool      RecadreOnPeriodic = true) override;
 
-  //! If the function returns the orientation of the arc.
-  //! If the orientation is FORWARD or REVERSED, the arc is
-  //! a "real" limit of the surface.
-  //! If the orientation is INTERNAL or EXTERNAL, the arc is
-  //! considered as an arc on the surface.
   Standard_EXPORT TopAbs_Orientation Orientation(const occ::handle<Adaptor2d_Curve2d>& C) override;
 
-  //! If the function returns the orientation of the arc.
-  //! If the orientation is FORWARD or REVERSED, the arc is
-  //! a "real" limit of the surface.
-  //! If the orientation is INTERNAL or EXTERNAL, the arc is
-  //! considered as an arc on the surface.
   Standard_EXPORT TopAbs_Orientation Orientation(const occ::handle<Adaptor3d_HVertex>& C) override;
 
   Standard_EXPORT void Destroy();
 
   ~BRepTopAdaptor_TopolTool() override { Destroy(); }
 
-  //! answers if arcs and vertices may have 3d representations,
-  //! so that we could use Tol3d and Pnt methods.
   Standard_EXPORT bool Has3d() const override;
 
-  //! returns 3d tolerance of the arc C
   Standard_EXPORT double Tol3d(const occ::handle<Adaptor2d_Curve2d>& C) const override;
 
-  //! returns 3d tolerance of the vertex V
   Standard_EXPORT double Tol3d(const occ::handle<Adaptor3d_HVertex>& V) const override;
 
-  //! returns 3d point of the vertex V
   Standard_EXPORT gp_Pnt Pnt(const occ::handle<Adaptor3d_HVertex>& V) const override;
 
   Standard_EXPORT void ComputeSamplePoints() override;
 
-  //! compute the sample-points for the intersections algorithms
   Standard_EXPORT int NbSamplesU() override;
 
-  //! compute the sample-points for the intersections algorithms
   Standard_EXPORT int NbSamplesV() override;
 
-  //! compute the sample-points for the intersections algorithms
   Standard_EXPORT int NbSamples() override;
 
   Standard_EXPORT void SamplePoint(const int Index, gp_Pnt2d& P2d, gp_Pnt& P3d) override;

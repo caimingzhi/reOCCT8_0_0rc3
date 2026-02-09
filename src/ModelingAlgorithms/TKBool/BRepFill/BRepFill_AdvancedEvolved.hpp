@@ -14,14 +14,11 @@
 class BOPAlgo_MakerVolume;
 class TopoDS_Face;
 
-//! Constructs an evolved volume from a spine (wire or face)
-//! and a profile (wire).
 class BRepFill_AdvancedEvolved
 {
 public:
   DEFINE_STANDARD_ALLOC;
 
-  //! Constructor
   Standard_EXPORT BRepFill_AdvancedEvolved()
       : myErrorStatus(BRepFill_AdvancedEvolved_Empty),
         myFuzzyValue(0.0),
@@ -43,13 +40,10 @@ public:
     return (myErrorStatus == BRepFill_AdvancedEvolved_OK);
   }
 
-  //! returns the resulting shape.
   const TopoDS_Shape& Shape() const { return myResult; }
 
-  //! Sets directory where the debug shapes will be saved
   void SetTemporaryDirectory(const char*& thePath) { myDebugShapesPath = thePath; }
 
-  //! Sets/Unsets computation in parallel mode
   void SetParallelMode(const bool theVal) { myIsParallel = theVal; }
 
 protected:
@@ -100,7 +94,7 @@ private:
   TopoDS_Wire     mySpine;
   TopoDS_Wire     myProfile;
   TopoDS_Shape    myPipeShell;
-  TopoDS_Compound myTopBottom; // Lids can be split on several faces
+  TopoDS_Compound myTopBottom;
   TopoDS_Shape    myResult;
   double          myFuzzyValue;
   bool            myIsParallel;

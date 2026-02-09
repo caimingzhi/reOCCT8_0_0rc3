@@ -16,35 +16,6 @@ class Adaptor3d_HVertex;
 class IntSurf_Transition;
 class BRepBlend_Extremity;
 
-//! This class processes the data resulting from
-//! Blend_CSWalking but it takes in consideration the Surface
-//! supporting the curve to detect the breakpoint.
-//!
-//! As a result, the criteria of distribution of
-//! points on the line become more flexible because it
-//! should calculate values approached
-//! by an approximation of continued functions based on the
-//! Blend_RstRstFunction.
-//!
-//! Thus this pseudo path necessitates 3 criteria of
-//! regrouping:
-//!
-//! 1) exit of the domain of the curve
-//!
-//! 2) exit of the domain of the surface
-//!
-//! 3) stall as there is a solution of problem
-//! surf/surf within the domain of the surface
-//! of support of the restriction.
-//!
-//! Construction of a BRepBlend_Line between two pcurves
-//! from an approached starting solution. The output
-//! entries of this builder are of the same nature
-//! as of a traditional walking, but the requirements
-//! to the Line are not the same. If the determination of validity range is always
-//! guaranteed, the criteria of correct repartition of sections
-//! before smoothing are not respected. The resulting Line
-//! is f(t) oriented.
 class BRepBlend_RstRstLineBuilder
 {
 public:
@@ -188,14 +159,10 @@ private:
 
 #include <StdFail_NotDone.hpp>
 
-//=================================================================================================
-
 inline bool BRepBlend_RstRstLineBuilder::IsDone() const
 {
   return done;
 }
-
-//=================================================================================================
 
 inline const occ::handle<BRepBlend_Line>& BRepBlend_RstRstLineBuilder::Line() const
 {
@@ -206,28 +173,20 @@ inline const occ::handle<BRepBlend_Line>& BRepBlend_RstRstLineBuilder::Line() co
   return line;
 }
 
-//=================================================================================================
-
 inline bool BRepBlend_RstRstLineBuilder::Decroch1Start() const
 {
   return decrochdeb == Blend_DecrochRst1 || decrochdeb == Blend_DecrochBoth;
 }
-
-//=================================================================================================
 
 inline bool BRepBlend_RstRstLineBuilder::Decroch1End() const
 {
   return decrochfin == Blend_DecrochRst1 || decrochfin == Blend_DecrochBoth;
 }
 
-//=================================================================================================
-
 inline bool BRepBlend_RstRstLineBuilder::Decroch2Start() const
 {
   return decrochdeb == Blend_DecrochRst2 || decrochdeb == Blend_DecrochBoth;
 }
-
-//=================================================================================================
 
 inline bool BRepBlend_RstRstLineBuilder::Decroch2End() const
 {

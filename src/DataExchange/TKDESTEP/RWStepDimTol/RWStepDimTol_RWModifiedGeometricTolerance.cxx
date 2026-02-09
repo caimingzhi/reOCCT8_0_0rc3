@@ -5,11 +5,7 @@
 #include <StepData_StepWriter.hpp>
 #include <StepDimTol_ModifiedGeometricTolerance.hpp>
 
-//=================================================================================================
-
 RWStepDimTol_RWModifiedGeometricTolerance::RWStepDimTol_RWModifiedGeometricTolerance() = default;
-
-//=================================================================================================
 
 void RWStepDimTol_RWModifiedGeometricTolerance::ReadStep(
   const occ::handle<StepData_StepReaderData>&               data,
@@ -17,11 +13,9 @@ void RWStepDimTol_RWModifiedGeometricTolerance::ReadStep(
   occ::handle<Interface_Check>&                             ach,
   const occ::handle<StepDimTol_ModifiedGeometricTolerance>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 5, ach, "modified_geometric_tolerance"))
     return;
-
-  // Inherited fields of GeometricTolerance
 
   occ::handle<TCollection_HAsciiString> aGeometricTolerance_Name;
   data->ReadString(num, 1, "geometric_tolerance.name", ach, aGeometricTolerance_Name);
@@ -44,8 +38,6 @@ void RWStepDimTol_RWModifiedGeometricTolerance::ReadStep(
                    ach,
                    aGeometricTolerance_TolerancedShapeAspect);
 
-  // Own fields of ModifiedGeometricTolerance
-
   StepDimTol_LimitCondition aModifier = StepDimTol_MaximumMaterialCondition;
   if (data->ParamType(num, 5) == Interface_ParamEnum)
   {
@@ -62,7 +54,6 @@ void RWStepDimTol_RWModifiedGeometricTolerance::ReadStep(
   else
     ach->AddFail("Parameter #5 (modifier) is not enumeration");
 
-  // Initialize entity
   ent->Init(aGeometricTolerance_Name,
             aGeometricTolerance_Description,
             aGeometricTolerance_Magnitude,
@@ -70,14 +61,10 @@ void RWStepDimTol_RWModifiedGeometricTolerance::ReadStep(
             aModifier);
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWModifiedGeometricTolerance::WriteStep(
   StepData_StepWriter&                                      SW,
   const occ::handle<StepDimTol_ModifiedGeometricTolerance>& ent) const
 {
-
-  // Inherited fields of GeometricTolerance
 
   SW.Send(ent->StepDimTol_GeometricTolerance::Name());
 
@@ -86,8 +73,6 @@ void RWStepDimTol_RWModifiedGeometricTolerance::WriteStep(
   SW.Send(ent->StepDimTol_GeometricTolerance::Magnitude());
 
   SW.Send(ent->StepDimTol_GeometricTolerance::TolerancedShapeAspect().Value());
-
-  // Own fields of ModifiedGeometricTolerance
 
   switch (ent->Modifier())
   {
@@ -103,18 +88,12 @@ void RWStepDimTol_RWModifiedGeometricTolerance::WriteStep(
   }
 }
 
-//=================================================================================================
-
 void RWStepDimTol_RWModifiedGeometricTolerance::Share(
   const occ::handle<StepDimTol_ModifiedGeometricTolerance>& ent,
   Interface_EntityIterator&                                 iter) const
 {
 
-  // Inherited fields of GeometricTolerance
-
   iter.AddItem(ent->StepDimTol_GeometricTolerance::Magnitude());
 
   iter.AddItem(ent->StepDimTol_GeometricTolerance::TolerancedShapeAspect().Value());
-
-  // Own fields of ModifiedGeometricTolerance
 }

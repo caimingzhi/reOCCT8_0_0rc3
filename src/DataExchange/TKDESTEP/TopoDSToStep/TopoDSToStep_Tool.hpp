@@ -18,8 +18,6 @@ class StepData_StepModel;
 class TopoDS_Shape;
 class StepShape_TopologicalRepresentationItem;
 
-//! This Tool Class provides Information to build
-//! a ProSTEP Shape model from a Cas.Cad BRep.
 class TopoDSToStep_Tool
 {
 public:
@@ -79,8 +77,6 @@ public:
                                             TopTools_ShapeMapHasher>&
                         Map() const;
 
-  //! Returns mode for writing pcurves
-  //! (initialized by parameter write.surfacecurve.mode)
   Standard_EXPORT int PCurveMode() const;
 
 private:

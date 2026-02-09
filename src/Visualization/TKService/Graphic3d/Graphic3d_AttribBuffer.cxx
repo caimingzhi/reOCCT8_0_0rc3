@@ -1,21 +1,8 @@
-// Copyright (c) 2018 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Graphic3d_AttribBuffer.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_AttribBuffer, Graphic3d_Buffer)
-
-//=================================================================================================
 
 Graphic3d_AttribBuffer::Graphic3d_AttribBuffer(
   const occ::handle<NCollection_BaseAllocator>& theAlloc)
@@ -24,8 +11,6 @@ Graphic3d_AttribBuffer::Graphic3d_AttribBuffer(
       myIsMutable(false)
 {
 }
-
-//=================================================================================================
 
 bool Graphic3d_AttribBuffer::Init(const int                  theNbElems,
                                   const Graphic3d_Attribute* theAttribs,
@@ -44,8 +29,6 @@ bool Graphic3d_AttribBuffer::Init(const int                  theNbElems,
   return true;
 }
 
-//=================================================================================================
-
 void Graphic3d_AttribBuffer::SetMutable(bool theMutable)
 {
   if (mySize > (size_t)IntegerLast() && theMutable)
@@ -56,8 +39,6 @@ void Graphic3d_AttribBuffer::SetMutable(bool theMutable)
   myIsMutable = theMutable;
 }
 
-//=================================================================================================
-
 void Graphic3d_AttribBuffer::SetInterleaved(bool theIsInterleaved)
 {
   if (NbMaxElements() != 0)
@@ -67,8 +48,6 @@ void Graphic3d_AttribBuffer::SetInterleaved(bool theIsInterleaved)
   }
   myIsInterleaved = theIsInterleaved;
 }
-
-//=================================================================================================
 
 void Graphic3d_AttribBuffer::invalidate(const Graphic3d_BufferRange& theRange)
 {
@@ -81,8 +60,6 @@ void Graphic3d_AttribBuffer::invalidate(const Graphic3d_BufferRange& theRange)
   myInvalidatedRange.Unite(theRange);
 }
 
-//=================================================================================================
-
 void Graphic3d_AttribBuffer::Invalidate()
 {
   if (mySize > (size_t)IntegerLast())
@@ -93,8 +70,6 @@ void Graphic3d_AttribBuffer::Invalidate()
 
   invalidate(Graphic3d_BufferRange(0, (int)mySize));
 }
-
-//=================================================================================================
 
 void Graphic3d_AttribBuffer::Invalidate(int theAttributeIndex)
 {
@@ -122,8 +97,6 @@ void Graphic3d_AttribBuffer::Invalidate(int theAttributeIndex)
     aRange.Start += anAttribStride * aNbMaxVerts;
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_AttribBuffer::Invalidate(int theAttributeIndex,
                                         int theVertexLower,
@@ -156,8 +129,6 @@ void Graphic3d_AttribBuffer::Invalidate(int theAttributeIndex,
     aRange.Start += anAttribStride * aNbMaxVerts;
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_AttribBuffer::Invalidate(int theVertexLower, int theVertexUpper)
 {

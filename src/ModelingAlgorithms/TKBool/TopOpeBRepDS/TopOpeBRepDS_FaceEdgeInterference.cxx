@@ -4,8 +4,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TopOpeBRepDS_FaceEdgeInterference, TopOpeBRepDS_ShapeShapeInterference)
 
-//=================================================================================================
-
 TopOpeBRepDS_FaceEdgeInterference::TopOpeBRepDS_FaceEdgeInterference(
   const TopOpeBRepDS_Transition& T,
   const int                      S,

@@ -13,44 +13,34 @@
 
 class Message_Messenger;
 
-//! Auxiliary tool to generate triangulation
 class BRepMesh_Triangulator
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Performs conversion of the given list of triangles to Poly_Triangulation.
   Standard_EXPORT static occ::handle<Poly_Triangulation> ToPolyTriangulation(
     const NCollection_Array1<gp_Pnt>&      theNodes,
     const NCollection_List<Poly_Triangle>& thePolyTriangles);
 
 public:
-  //! Constructor. Initialized tool by the given parameters.
   Standard_EXPORT BRepMesh_Triangulator(const NCollection_Vector<gp_XYZ>&                  theXYZs,
                                         const NCollection_List<NCollection_Sequence<int>>& theWires,
                                         const gp_Dir&                                      theNorm);
 
-  //! Performs triangulation of source wires and stores triangles the output list.
   Standard_EXPORT bool Perform(NCollection_List<Poly_Triangle>& thePolyTriangles);
 
-  //! Set messenger for output information
-  //! without this Message::DefaultMessenger() will be used
   void SetMessenger(const occ::handle<Message_Messenger>& theMess) { myMess = theMess; }
 
   BRepMesh_Triangulator& operator=(const BRepMesh_Triangulator& theOther);
 
 private:
-  // auxiliary for makeTrianglesUsingBRepMesh
   void addTriange34(const NCollection_Sequence<int>& theW,
                     NCollection_List<Poly_Triangle>& thePolyTriangles);
 
-  // auxiliary for addTriange34
   bool checkCondition(const int (&theNodes)[4], const NCollection_Sequence<int>& theWire);
 
-  // performs initialization of mesh data structure.
   bool prepareMeshStructure();
 
-  // auxiliary for triangulation
   bool triangulate(NCollection_List<Poly_Triangle>& thePolyTriangles);
 
 private:

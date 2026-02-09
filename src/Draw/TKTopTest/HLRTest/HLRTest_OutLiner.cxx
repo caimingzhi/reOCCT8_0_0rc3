@@ -7,18 +7,12 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(HLRTest_OutLiner, Draw_Drawable3D)
 
-//=================================================================================================
-
 HLRTest_OutLiner::HLRTest_OutLiner(const TopoDS_Shape& S)
 {
   myOutLiner = new HLRTopoBRep_OutLiner(S);
 }
 
-//=================================================================================================
-
-void HLRTest_OutLiner::DrawOn(Draw_Display& /*dis*/) const {}
-
-//=================================================================================================
+void HLRTest_OutLiner::DrawOn(Draw_Display&) const {}
 
 occ::handle<Draw_Drawable3D> HLRTest_OutLiner::Copy() const
 {
@@ -26,14 +20,10 @@ occ::handle<Draw_Drawable3D> HLRTest_OutLiner::Copy() const
   return O;
 }
 
-//=================================================================================================
-
 void HLRTest_OutLiner::Dump(Standard_OStream& S) const
 {
   S << "This is an outliner" << std::endl;
 }
-
-//=================================================================================================
 
 void HLRTest_OutLiner::Whatis(Draw_Interpretor& I) const
 {

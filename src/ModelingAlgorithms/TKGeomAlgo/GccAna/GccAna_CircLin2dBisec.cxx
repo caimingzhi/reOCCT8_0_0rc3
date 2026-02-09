@@ -10,7 +10,6 @@
 #include <Standard_OutOfRange.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
 GccAna_CircLin2dBisec::GccAna_CircLin2dBisec(const gp_Circ2d& Circle, const gp_Lin2d& Line)
     :
 
@@ -18,29 +17,9 @@ GccAna_CircLin2dBisec::GccAna_CircLin2dBisec(const gp_Circ2d& Circle, const gp_L
       line(Line)
 {
 
-  //=========================================================================
-  //  Initialization of fields :                                            +
-  //            - circle                                                    +
-  //            - line     (straight line.)                                 +
-  //            - NbrSol   (number of solution.)                            +
-  //            - WellDone (Boolean showing success or failure of algorithm)+
-  //=========================================================================
-
   NbrSol   = 2;
   WellDone = true;
 }
-
-//=========================================================================
-//  Processing.                                                           +
-//  Return coordinates of origins of the straight line (xloc,yloc) and    +
-//  the circle (xcencir, ycencir).                                        +
-//  Also return the coordinates of the direction of the straight line     +
-//  (xdir, ydir) and the radius of circle R1.                             +
-//  Check at which side of the straight line is found the center of the   +
-//  circle to orientate the parabola (sign).                              +
-//  Create axis of each parabola (axeparab1, axeparb2), then              +
-//  two parabolas (biscirlin1, biscirlin1).                               +
-//=========================================================================
 
 occ::handle<GccInt_Bisec> GccAna_CircLin2dBisec::ThisSolution(const int Index) const
 {
@@ -65,7 +44,6 @@ occ::handle<GccInt_Bisec> GccAna_CircLin2dBisec::ThisSolution(const int Index) c
   {
     gp_Lin2d biscirlin1(circle.Location(), gp_Dir2d(-ydir, xdir));
     bissol = new GccInt_BLine(biscirlin1);
-    //       ==========================================================
   }
   else
   {
@@ -79,7 +57,7 @@ occ::handle<GccInt_Bisec> GccAna_CircLin2dBisec::ThisSolution(const int Index) c
       signe = -1;
     }
     gp_Ax2d axeparab1;
-    //    gp_Ax2d axeparab2;
+
     gp_Parab2d biscirlin;
     if (dist != R1)
     {
@@ -107,7 +85,6 @@ occ::handle<GccInt_Bisec> GccAna_CircLin2dBisec::ThisSolution(const int Index) c
         biscirlin = gp_Parab2d(axeparab1, std::abs(dist - R1) / 2.0);
       }
       bissol = new GccInt_BParab(biscirlin);
-      //         ==========================================================
     }
     else
     {
@@ -116,14 +93,11 @@ occ::handle<GccInt_Bisec> GccAna_CircLin2dBisec::ThisSolution(const int Index) c
                           gp_Dir2d(signe * (-ydir), signe * xdir));
       biscirlin = gp_Parab2d(axeparab1, R1);
       bissol    = new GccInt_BParab(biscirlin);
-      //         ==========================================================
     }
   }
 
   return bissol;
 }
-
-//=========================================================================
 
 bool GccAna_CircLin2dBisec::IsDone() const
 {

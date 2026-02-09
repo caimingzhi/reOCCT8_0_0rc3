@@ -19,7 +19,6 @@ class StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve : public StepGeom_BS
 {
 
 public:
-  //! Returns a BSplineCurveWithKnotsAndRationalBSplineCurve
   Standard_EXPORT StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve();
 
   Standard_EXPORT void Init(

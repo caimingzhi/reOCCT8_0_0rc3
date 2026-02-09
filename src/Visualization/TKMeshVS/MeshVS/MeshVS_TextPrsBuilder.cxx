@@ -18,8 +18,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(MeshVS_TextPrsBuilder, MeshVS_PrsBuilder)
 
-//=================================================================================================
-
 MeshVS_TextPrsBuilder::MeshVS_TextPrsBuilder(const occ::handle<MeshVS_Mesh>&       Parent,
                                              const double                          Height,
                                              const Quantity_Color&                 Color,
@@ -37,8 +35,6 @@ MeshVS_TextPrsBuilder::MeshVS_TextPrsBuilder(const occ::handle<MeshVS_Mesh>&    
   }
 }
 
-//=================================================================================================
-
 const NCollection_DataMap<int, TCollection_AsciiString>& MeshVS_TextPrsBuilder::GetTexts(
   const bool IsElements) const
 {
@@ -47,8 +43,6 @@ const NCollection_DataMap<int, TCollection_AsciiString>& MeshVS_TextPrsBuilder::
   else
     return myNodeTextMap;
 }
-
-//=================================================================================================
 
 void MeshVS_TextPrsBuilder::SetTexts(const bool IsElements,
                                      const NCollection_DataMap<int, TCollection_AsciiString>& Map)
@@ -59,8 +53,6 @@ void MeshVS_TextPrsBuilder::SetTexts(const bool IsElements,
     myNodeTextMap = Map;
 }
 
-//=================================================================================================
-
 bool MeshVS_TextPrsBuilder::HasTexts(const bool IsElement) const
 {
   bool aRes = (myNodeTextMap.Extent() > 0);
@@ -68,8 +60,6 @@ bool MeshVS_TextPrsBuilder::HasTexts(const bool IsElement) const
     aRes = (myElemTextMap.Extent() > 0);
   return aRes;
 }
-
-//=================================================================================================
 
 bool MeshVS_TextPrsBuilder::GetText(const bool               IsElement,
                                     const int                theID,
@@ -86,8 +76,6 @@ bool MeshVS_TextPrsBuilder::GetText(const bool               IsElement,
   return aRes;
 }
 
-//=================================================================================================
-
 void MeshVS_TextPrsBuilder::SetText(const bool                     IsElement,
                                     const int                      ID,
                                     const TCollection_AsciiString& Text)
@@ -102,8 +90,6 @@ void MeshVS_TextPrsBuilder::SetText(const bool                     IsElement,
   else
     aMap->Bind(ID, Text);
 }
-
-//=================================================================================================
 
 void MeshVS_TextPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
                                   const TColStd_PackedMapOfInteger&      IDs,
@@ -131,7 +117,7 @@ void MeshVS_TextPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
   double                   ASpace           = 0.0;
   Aspect_TypeOfStyleText   ATextStyle       = Aspect_TOST_ANNOTATION;
   Aspect_TypeOfDisplayText ADisplayType     = Aspect_TODT_NORMAL;
-  // Bold font is used by default for better text readability
+
   Font_FontAspect AFontAspectType = Font_FA_Bold;
 
   aDrawer->GetColor(MeshVS_DA_TextColor, AColor);
@@ -168,7 +154,6 @@ void MeshVS_TextPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
 
   double X, Y, Z;
 
-  // subtract the hidden elements and ids to exclude (to minimise allocated memory)
   TColStd_PackedMapOfInteger anIDs;
   anIDs.Assign(IDs);
   if (IsElement)

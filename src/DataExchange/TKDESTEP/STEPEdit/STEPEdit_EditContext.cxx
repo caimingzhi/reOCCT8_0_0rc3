@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_EditForm.hpp>
 #include <Interface_TypedValue.hpp>
@@ -40,14 +29,6 @@ STEPEdit_EditContext::STEPEdit_EditContext()
   SetValue(4, ac_year, "AC_Year");
   occ::handle<Interface_TypedValue> ac_name = new Interface_TypedValue("AppliContext_Name");
   SetValue(5, ac_name, "AC_Name");
-
-  //  occ::handle<Interface_TypedValue> prpc_val = new Interface_TypedValue("Product Related Product
-  //  Category",Interface_ParamIdent); SetValue(6,ac_val,"PRPC",IFSelect_EditRead);
-
-  //  occ::handle<Interface_TypedValue> prpc_name = new Interface_TypedValue("PRPC_Name");
-  //  SetValue(7,prpc_name,"PRPC_Name");
-  //  occ::handle<Interface_TypedValue> prpc_descr = new Interface_TypedValue("PRPC_Description");
-  //  SetValue(8,prpc_descr,"PRPC_Descr");
 }
 
 TCollection_AsciiString STEPEdit_EditContext::Label() const
@@ -55,14 +36,14 @@ TCollection_AsciiString STEPEdit_EditContext::Label() const
   return TCollection_AsciiString("STEP : Product Definition Context");
 }
 
-bool STEPEdit_EditContext::Recognize(const occ::handle<IFSelect_EditForm>& /*form*/) const
+bool STEPEdit_EditContext::Recognize(const occ::handle<IFSelect_EditForm>&) const
 {
-  // il faut 17 parametres
+
   return true;
 }
 
 occ::handle<TCollection_HAsciiString> STEPEdit_EditContext::StringValue(
-  const occ::handle<IFSelect_EditForm>& /*form*/,
+  const occ::handle<IFSelect_EditForm>&,
   const int num) const
 {
   occ::handle<TCollection_HAsciiString> str;
@@ -87,7 +68,7 @@ occ::handle<TCollection_HAsciiString> STEPEdit_EditContext::StringValue(
 }
 
 bool STEPEdit_EditContext::Load(const occ::handle<IFSelect_EditForm>& form,
-                                const occ::handle<Standard_Transient>& /*ent*/,
+                                const occ::handle<Standard_Transient>&,
                                 const occ::handle<Interface_InterfaceModel>& model) const
 {
   occ::handle<StepData_StepModel> modl = occ::down_cast<StepData_StepModel>(model);
@@ -105,16 +86,11 @@ bool STEPEdit_EditContext::Load(const occ::handle<IFSelect_EditForm>& form,
   form->LoadValue(4, new TCollection_HAsciiString(ctx.GetACyear()));
   form->LoadValue(5, ctx.GetACname());
 
-  //  form->LoadValue (6, modl->StringLabel(ctx.GetPRPC()) );
-
-  //  form->LoadValue (7, ctx.GetPRPCName());
-  //  form->LoadValue (8, ctx.GetPRPCDescription());
-
   return true;
 }
 
 bool STEPEdit_EditContext::Apply(const occ::handle<IFSelect_EditForm>& form,
-                                 const occ::handle<Standard_Transient>& /*ent*/,
+                                 const occ::handle<Standard_Transient>&,
                                  const occ::handle<Interface_InterfaceModel>& model) const
 {
   occ::handle<StepData_StepModel> modl = occ::down_cast<StepData_StepModel>(model);
@@ -125,8 +101,7 @@ bool STEPEdit_EditContext::Apply(const occ::handle<IFSelect_EditForm>& form,
   StepData_Factors          aLocalFactors;
   ctx.SetGlobalFactor(aLocalFactors);
 
-  ctx.AddAPD(); // on ne sait jamais
-                //  ctx.AddPRPC();
+  ctx.AddAPD();
 
   if (form->IsModified(2))
     ctx.SetACstatus(form->EditedValue(2));
@@ -136,9 +111,6 @@ bool STEPEdit_EditContext::Apply(const occ::handle<IFSelect_EditForm>& form,
     ctx.SetACyear(form->EditedValue(4)->IntegerValue());
   if (form->IsModified(5))
     ctx.SetACname(form->EditedValue(5));
-
-  //  if (form->IsModified(7)) ctx.SetPRPCName        (form->EditedValue(7));
-  //  if (form->IsModified(8)) ctx.SetPRPCDescription (form->EditedValue(8));
 
   return true;
 }

@@ -11,7 +11,6 @@ class StepGeom_PointOnCurve : public StepGeom_Point
 {
 
 public:
-  //! Returns a PointOnCurve
   Standard_EXPORT StepGeom_PointOnCurve();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

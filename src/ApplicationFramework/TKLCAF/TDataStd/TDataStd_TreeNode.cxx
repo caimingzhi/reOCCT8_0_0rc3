@@ -11,28 +11,16 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_TreeNode, TDF_Attribute)
 
-//=================================================================================================
-
 bool TDataStd_TreeNode::Find(const TDF_Label& L, occ::handle<TDataStd_TreeNode>& T)
 {
   return L.FindAttribute(TDataStd_TreeNode::GetDefaultTreeID(), T);
 }
-
-//=======================================================================
-// TreeNode : GetDefaultTreeID
-// purpose  : Static method to get the default ID of a TreeNode
-//=======================================================================
 
 const Standard_GUID& TDataStd_TreeNode::GetDefaultTreeID()
 {
   static Standard_GUID TDataStd_TreeNodeID("2a96b621-ec8b-11d0-bee7-080009dc3333");
   return TDataStd_TreeNodeID;
 }
-
-//=======================================================================
-// TreeNode : Set
-// purpose  : Finds or creates a TreeNode attribute with default ID
-//=======================================================================
 
 occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::Set(const TDF_Label& L)
 {
@@ -45,12 +33,6 @@ occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::Set(const TDF_Label& L)
   }
   return TN;
 }
-
-//=======================================================================
-// function : Set
-// purpose  : Finds or creates a TreeNode  attribute with explicit ID
-//         : a driver for it
-//=======================================================================
 
 occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::Set(const TDF_Label&     L,
                                                       const Standard_GUID& explicitID)
@@ -65,17 +47,10 @@ occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::Set(const TDF_Label&     L,
   return TN;
 }
 
-//=======================================================================
-// TreeNode : ID
-// purpose  : Returns GUID of the TreeNode
-//=======================================================================
-
 const Standard_GUID& TDataStd_TreeNode::ID() const
 {
   return myTreeID;
 }
-
-//=================================================================================================
 
 TDataStd_TreeNode::TDataStd_TreeNode()
     : myFather(nullptr),
@@ -86,24 +61,18 @@ TDataStd_TreeNode::TDataStd_TreeNode()
 {
 }
 
-//=======================================================================
-// function : Append
-// purpose  : Add <TN> as last child of me
-//=======================================================================
-
 bool TDataStd_TreeNode::Append(const occ::handle<TDataStd_TreeNode>& TN)
 {
   if (!(TN->ID() == myTreeID))
     throw Standard_DomainError("TDataStd_TreeNode::Append : uncompatible GUID");
 
   occ::handle<TDataStd_TreeNode> bid;
-  TN->SetNext(bid); // Deconnects from next.
+  TN->SetNext(bid);
 
-  // Find the last
   if (!HasFirst())
   {
     SetFirst(TN);
-    TN->SetPrevious(bid); // Deconnects from previous.
+    TN->SetPrevious(bid);
   }
   else
   {
@@ -111,16 +80,11 @@ bool TDataStd_TreeNode::Append(const occ::handle<TDataStd_TreeNode>& TN)
     L->SetNext(TN);
     TN->SetPrevious(L);
   }
-  // Set Father
+
   TN->SetFather(this);
   myLast = TN.operator->();
   return !TN.IsNull();
 }
-
-//=======================================================================
-// function : Prepend
-// purpose  : Add <TN> as first child of me
-//=======================================================================
 
 bool TDataStd_TreeNode::Prepend(const occ::handle<TDataStd_TreeNode>& TN)
 {
@@ -144,11 +108,6 @@ bool TDataStd_TreeNode::Prepend(const occ::handle<TDataStd_TreeNode>& TN)
   return !TN.IsNull();
 }
 
-//=======================================================================
-// function : InsertBefore
-// purpose  : Inserts the TreeNode  <TN> before me
-//=======================================================================
-
 bool TDataStd_TreeNode::InsertBefore(const occ::handle<TDataStd_TreeNode>& TN)
 {
   if (!(TN->ID() == myTreeID))
@@ -166,11 +125,6 @@ bool TDataStd_TreeNode::InsertBefore(const occ::handle<TDataStd_TreeNode>& TN)
   SetPrevious(TN);
   return !TN.IsNull();
 }
-
-//=======================================================================
-// function : InsertAfter
-// purpose  : Inserts the TreeNode  <TN> after me
-//=======================================================================
 
 bool TDataStd_TreeNode::InsertAfter(const occ::handle<TDataStd_TreeNode>& TN)
 {
@@ -190,11 +144,6 @@ bool TDataStd_TreeNode::InsertAfter(const occ::handle<TDataStd_TreeNode>& TN)
   SetNext(TN);
   return !TN.IsNull();
 }
-
-//=======================================================================
-// function : Remove
-// purpose  : Removes the function from the function tree
-//=======================================================================
 
 bool TDataStd_TreeNode::Remove()
 {
@@ -244,8 +193,6 @@ bool TDataStd_TreeNode::Remove()
   return true;
 }
 
-//=================================================================================================
-
 int TDataStd_TreeNode::Depth() const
 {
   int depth = 0;
@@ -260,12 +207,6 @@ int TDataStd_TreeNode::Depth() const
   return depth;
 }
 
-//=======================================================================
-// function : NbChildren
-// purpose  : Returns the number of child nodes.
-//           If <allLevels> is true, the method counts children of all levels
-//           (children of children ...)
-//=======================================================================
 int TDataStd_TreeNode::NbChildren(const bool allLevels) const
 {
   int                nb = 0;
@@ -282,25 +223,15 @@ int TDataStd_TreeNode::NbChildren(const bool allLevels) const
   return nb;
 }
 
-//=======================================================================
-// function : SetTreeID
-// purpose  : Finds or creates a TreeNode  attribute with explicit ID
-//         : a driver for it
-//=======================================================================
-
 void TDataStd_TreeNode::SetTreeID(const Standard_GUID& explicitID)
 {
   myTreeID = explicitID;
 }
 
-//=================================================================================================
-
 bool TDataStd_TreeNode::IsAscendant(const occ::handle<TDataStd_TreeNode>& ofTN) const
 {
   return ofTN->IsDescendant(this);
 }
-
-//=================================================================================================
 
 bool TDataStd_TreeNode::IsDescendant(const occ::handle<TDataStd_TreeNode>& ofTN) const
 {
@@ -314,24 +245,15 @@ bool TDataStd_TreeNode::IsDescendant(const occ::handle<TDataStd_TreeNode>& ofTN)
   return false;
 }
 
-//=================================================================================================
-
 bool TDataStd_TreeNode::IsFather(const occ::handle<TDataStd_TreeNode>& ofTN) const
 {
   return (ofTN->Father() == this);
 }
 
-//=================================================================================================
-
 bool TDataStd_TreeNode::IsChild(const occ::handle<TDataStd_TreeNode>& ofTN) const
 {
   return (myFather == ofTN.operator->());
 }
-
-//=======================================================================
-// TreeNode : Father
-// purpose  : Returns the Father of the TreeNode
-//=======================================================================
 
 occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::Father() const
 {
@@ -339,21 +261,10 @@ occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::Father() const
   return O;
 }
 
-//=======================================================================
-// TreeNode : IsRoot
-// purpose  : Returns true if the TreeNode is not attached to a
-//           TreeNode tree or hasn't an Father.
-//=======================================================================
-
 bool TDataStd_TreeNode::IsRoot() const
 {
   return myFather == nullptr && myPrevious == nullptr && myNext == nullptr;
 }
-
-//=======================================================================
-// TreeNode : Root
-// purpose  : Returns the TreeNode which has no Father
-//=======================================================================
 
 occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::Root() const
 {
@@ -365,21 +276,11 @@ occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::Root() const
   return O;
 }
 
-//=======================================================================
-// TreeNode : Next
-// purpose  : Returns next (in the TreeNode tree) TreeNode
-//=======================================================================
-
 occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::Next() const
 {
   occ::handle<TDataStd_TreeNode> O = myNext;
   return O;
 }
-
-//=======================================================================
-// TreeNode : Previous
-// purpose  : Returns previous (in the TreeNode tree) TreeNode
-//=======================================================================
 
 occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::Previous() const
 {
@@ -387,19 +288,11 @@ occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::Previous() const
   return O;
 }
 
-//=================================================================================================
-
 occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::First() const
 {
   occ::handle<TDataStd_TreeNode> O = myFirst;
   return O;
 }
-
-//=======================================================================
-// TreeNode : Last
-// purpose  : Returns last child
-//           Optimize an Append operation if it is called in a circle
-//=======================================================================
 
 occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::Last()
 {
@@ -412,11 +305,6 @@ occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::Last()
   return myLast;
 }
 
-//=======================================================================
-// TreeNode : FindLast
-// purpose  : Returns last child
-//           Optimizes an Append operation if it is called in a circle
-//=======================================================================
 occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::FindLast()
 {
   if (myFirst == nullptr)
@@ -429,11 +317,6 @@ occ::handle<TDataStd_TreeNode> TDataStd_TreeNode::FindLast()
   return L;
 }
 
-//=======================================================================
-// TreeNode : SetFather
-// purpose  : Sets the TreeNode F as Father of me
-//=======================================================================
-
 void TDataStd_TreeNode::SetFather(const occ::handle<TDataStd_TreeNode>& F)
 {
   Backup();
@@ -443,11 +326,6 @@ void TDataStd_TreeNode::SetFather(const occ::handle<TDataStd_TreeNode>& F)
     myFather = F.operator->();
   myLast = nullptr;
 }
-
-//=======================================================================
-// TreeNode : SetNext
-// purpose  : Sets the TreeNode F next to me
-//=======================================================================
 
 void TDataStd_TreeNode::SetNext(const occ::handle<TDataStd_TreeNode>& F)
 {
@@ -459,11 +337,6 @@ void TDataStd_TreeNode::SetNext(const occ::handle<TDataStd_TreeNode>& F)
   myLast = nullptr;
 }
 
-//=======================================================================
-// TreeNode : SetPrevious
-// purpose  : Sets the TreeNode F previous to me
-//=======================================================================
-
 void TDataStd_TreeNode::SetPrevious(const occ::handle<TDataStd_TreeNode>& F)
 {
   Backup();
@@ -473,11 +346,6 @@ void TDataStd_TreeNode::SetPrevious(const occ::handle<TDataStd_TreeNode>& F)
     myPrevious = F.operator->();
   myLast = nullptr;
 }
-
-//=======================================================================
-// TreeNode : SetFirst
-// purpose  : Sets the TreeNode F as first in the TreeNode tree
-//=======================================================================
 
 void TDataStd_TreeNode::SetFirst(const occ::handle<TDataStd_TreeNode>& F)
 {
@@ -489,11 +357,6 @@ void TDataStd_TreeNode::SetFirst(const occ::handle<TDataStd_TreeNode>& F)
   myLast = nullptr;
 }
 
-//=======================================================================
-// TreeNode : SetLast
-// purpose  : Sets the TreeNode F as last in the TreeNode tree
-//=======================================================================
-
 void TDataStd_TreeNode::SetLast(const occ::handle<TDataStd_TreeNode>& F)
 {
   Backup();
@@ -502,12 +365,6 @@ void TDataStd_TreeNode::SetLast(const occ::handle<TDataStd_TreeNode>& F)
   else
     myLast = F.operator->();
 }
-
-//=======================================================================
-// TreeNode : AfterAddition
-// purpose  : Connects the TreeNode to the tree.
-//           Backuped attribute must stay disconnected
-//=======================================================================
 
 void TDataStd_TreeNode::AfterAddition()
 {
@@ -522,12 +379,6 @@ void TDataStd_TreeNode::AfterAddition()
   }
 }
 
-//=======================================================================
-// TreeNode : BeforeForget
-// purpose  : Disconnect the TreeNode from the tree.
-//           Backuped attribute is normally not concerned by such an operation
-//=======================================================================
-
 void TDataStd_TreeNode::BeforeForget()
 {
   if (!IsBackuped())
@@ -538,43 +389,24 @@ void TDataStd_TreeNode::BeforeForget()
   }
 }
 
-//=======================================================================
-// TreeNode : AfterResume
-// purpose  : Connects the TreeNode to the tree
-//=======================================================================
-
 void TDataStd_TreeNode::AfterResume()
 {
   AfterAddition();
 }
 
-//=======================================================================
-// TreeNode : BeforeUndo
-// purpose  : Disconnect the TreeNode from the tree.
-//=======================================================================
-
-bool TDataStd_TreeNode::BeforeUndo(const occ::handle<TDF_AttributeDelta>& anAttDelta,
-                                   const bool /*forceIt*/)
+bool TDataStd_TreeNode::BeforeUndo(const occ::handle<TDF_AttributeDelta>& anAttDelta, const bool)
 {
   if (anAttDelta->IsKind(STANDARD_TYPE(TDF_DeltaOnAddition)))
-    BeforeForget(); // Disconnect.
+    BeforeForget();
   return true;
 }
 
-//=======================================================================
-// TreeNode : AfterUndo
-// purpose  : Connect the TreeNode from the tree.
-//=======================================================================
-
-bool TDataStd_TreeNode::AfterUndo(const occ::handle<TDF_AttributeDelta>& anAttDelta,
-                                  const bool /*forceIt*/)
+bool TDataStd_TreeNode::AfterUndo(const occ::handle<TDF_AttributeDelta>& anAttDelta, const bool)
 {
   if (anAttDelta->IsKind(STANDARD_TYPE(TDF_DeltaOnRemoval)))
-    AfterAddition(); // Reconnect.
+    AfterAddition();
   return true;
 }
-
-//=================================================================================================
 
 void TDataStd_TreeNode::Restore(const occ::handle<TDF_Attribute>& other)
 {
@@ -586,11 +418,6 @@ void TDataStd_TreeNode::Restore(const occ::handle<TDF_Attribute>& other)
   myTreeID                         = F->myTreeID;
   myLast                           = nullptr;
 }
-
-//=======================================================================
-// TreeNode : Paste
-// purpose  : Method for Copy mechanism
-//=======================================================================
 
 void TDataStd_TreeNode::Paste(const occ::handle<TDF_Attribute>&       into,
                               const occ::handle<TDF_RelocationTable>& RT) const
@@ -621,22 +448,12 @@ void TDataStd_TreeNode::Paste(const occ::handle<TDF_Attribute>&       into,
   intof->SetTreeID(myTreeID);
 }
 
-//=======================================================================
-// TreeNode : NewEmpty
-// purpose  : Returns new empty TreeNode attribute
-//=======================================================================
-
 occ::handle<TDF_Attribute> TDataStd_TreeNode::NewEmpty() const
 {
   occ::handle<TDataStd_TreeNode> T = new TDataStd_TreeNode();
   T->SetTreeID(myTreeID);
   return T;
 }
-
-//=======================================================================
-// TreeNode : References
-// purpose  : Collects the references
-//=======================================================================
 
 void TDataStd_TreeNode::References(const occ::handle<TDF_DataSet>& aDataSet) const
 {
@@ -647,8 +464,6 @@ void TDataStd_TreeNode::References(const occ::handle<TDF_DataSet>& aDataSet) con
     fct = fct->myNext;
   }
 }
-
-//=================================================================================================
 
 Standard_OStream& TDataStd_TreeNode::Dump(Standard_OStream& anOS) const
 {
@@ -686,8 +501,6 @@ Standard_OStream& TDataStd_TreeNode::Dump(Standard_OStream& anOS) const
   anOS << std::endl;
   return anOS;
 }
-
-//=================================================================================================
 
 void TDataStd_TreeNode::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

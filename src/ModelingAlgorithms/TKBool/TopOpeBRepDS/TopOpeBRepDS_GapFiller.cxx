@@ -23,8 +23,6 @@
 #include <TopOpeBRepDS_Point.hpp>
 #include <TopOpeBRepDS_CurvePointInterference.hpp>
 
-//=================================================================================================
-
 TopOpeBRepDS_GapFiller::TopOpeBRepDS_GapFiller(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
     : myHDS(HDS)
 {
@@ -32,15 +30,11 @@ TopOpeBRepDS_GapFiller::TopOpeBRepDS_GapFiller(const occ::handle<TopOpeBRepDS_HD
   myAsso    = new TopOpeBRepDS_Association();
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_GapFiller::Perform()
 {
   myGapTool->Init(myHDS);
   NCollection_Map<int> View;
-  //------------------------------------------------------------
-  // APPAIRAGE ...
-  //------------------------------------------------------------
+
   int NbCurves = myHDS->NbCurves();
   for (int i = 1; i <= NbCurves; i++)
   {
@@ -61,27 +55,21 @@ void TopOpeBRepDS_GapFiller::Perform()
       }
     }
   }
-  //--------------------------------------------------------
-  // Modification des Geometries
-  //--------------------------------------------------------
+
   BuildNewGeometries();
 }
-
-//=================================================================================================
 
 bool Contains(const TopoDS_Shape& F, const TopoDS_Shape& E)
 {
   TopExp_Explorer exp;
   for (exp.Init(F, E.ShapeType()); exp.More(); exp.Next())
   {
-    //  for (TopExp_Explorer exp(F,E.ShapeType()); exp.More(); exp.Next()){
+
     if (exp.Current().IsSame(E))
       return true;
   }
   return false;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_GapFiller::FindAssociatedPoints(
   const occ::handle<TopOpeBRepDS_Interference>&             I,
@@ -95,15 +83,6 @@ void TopOpeBRepDS_GapFiller::FindAssociatedPoints(
       return;
   }
 
-  //------------------------------------------------------------------------
-  // PREMIERE PASSE : Recherche de l association parmi les points qui sont:
-  //                  - sur la meme arete
-  //                  - sur l autre face connexe a l arete.
-  //                  - Dans la meme face coupante.
-  //------------------------------------------------------------------------
-  //----------------------------------------------
-  // LI = { ensemble des interference sur l'arete}
-  //----------------------------------------------
   TopoDS_Shape E;
   if (!myGapTool->EdgeSupport(I, E))
   {
@@ -126,11 +105,7 @@ void TopOpeBRepDS_GapFiller::FindAssociatedPoints(
   }
 
   const NCollection_List<TopoDS_Shape>& LF = FDSCNX_EdgeConnexitySameShape(E, myHDS);
-  //------------------------------------------------------------------------
-  // Si le point de I est sur deux faces connexes a E => connexite des sections
-  // => pas d association a faire.
-  //------------------------------------------------------------------------
-  //   for (NCollection_List<TopoDS_Shape>::Iterator itLF(LF); itLF.More(); itLF.Next()) {
+
   NCollection_List<TopoDS_Shape>::Iterator itLF(LF);
   for (; itLF.More(); itLF.Next())
   {
@@ -144,11 +119,6 @@ void TopOpeBRepDS_GapFiller::FindAssociatedPoints(
     }
   }
 
-  //------------------------------------------------------------------------
-  // LI = { ensemble des interference sur l'arete && sur une autre section ds
-  // la Face connexe par E}
-  //------------------------------------------------------------------------
-
   for (itLF.Initialize(LF); itLF.More(); itLF.Next())
   {
     if (!itLF.Value().IsSame(F1))
@@ -156,15 +126,10 @@ void TopOpeBRepDS_GapFiller::FindAssociatedPoints(
       FilterByFace(TopoDS::Face(itLF.Value()), LI);
     }
   }
-  //--------------------------------------------
-  // LI = LI && point dans la meme face Support2
-  //--------------------------------------------
+
   if (!LI.IsEmpty())
     FilterByFace(F2, LI);
 
-  //-------------------------------
-  // Controle et Selection metrique
-  //-------------------------------
   if (!LI.IsEmpty())
     FilterByIncidentDistance(F2, I, LI);
 
@@ -174,18 +139,11 @@ void TopOpeBRepDS_GapFiller::FindAssociatedPoints(
   }
 }
 
-//=================================================================================================
-
-// bool
-// TopOpeBRepDS_GapFiller::CheckConnexity(NCollection_List<occ::handle<TopOpeBRepDS_Interference>>&
-// LI)
 bool TopOpeBRepDS_GapFiller::CheckConnexity(
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>&)
 {
   return true;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_GapFiller::AddPointsOnShape(
   const TopoDS_Shape&                                       S,
@@ -200,26 +158,17 @@ void TopOpeBRepDS_GapFiller::AddPointsOnShape(
   }
 }
 
-//=================================================================================================
-
-// void TopOpeBRepDS_GapFiller::AddPointsOnConnexShape(const TopoDS_Shape&         //           F,
-//						    const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI)
 void TopOpeBRepDS_GapFiller::AddPointsOnConnexShape(
   const TopoDS_Shape&,
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>&)
 {
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_GapFiller::FilterByFace(
   const TopoDS_Face&                                        F,
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI)
 {
-  //------------------------------------------------------------------------
-  // il ne restera dans LI que les interference dont une des representation
-  // a ete calculee sur F .
-  //------------------------------------------------------------------------
+
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it(LI);
   while (it.More())
   {
@@ -233,8 +182,6 @@ void TopOpeBRepDS_GapFiller::FilterByFace(
     }
   }
 }
-
-//=================================================================================================
 
 bool TopOpeBRepDS_GapFiller::IsOnFace(const occ::handle<TopOpeBRepDS_Interference>& I,
                                       const TopoDS_Face&                            F) const
@@ -252,14 +199,11 @@ bool TopOpeBRepDS_GapFiller::IsOnFace(const occ::handle<TopOpeBRepDS_Interferenc
   return false;
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_GapFiller::FilterByEdge(
   const TopoDS_Edge&                                        E,
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LI)
 {
-  // il ne restera dans LI que les interference dont une des representation
-  // a pour support E
+
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it(LI);
   while (it.More())
   {
@@ -273,8 +217,6 @@ void TopOpeBRepDS_GapFiller::FilterByEdge(
     }
   }
 }
-
-//=================================================================================================
 
 bool TopOpeBRepDS_GapFiller::IsOnEdge(const occ::handle<TopOpeBRepDS_Interference>& I,
                                       const TopoDS_Edge&                            E) const
@@ -294,8 +236,6 @@ bool TopOpeBRepDS_GapFiller::IsOnEdge(const occ::handle<TopOpeBRepDS_Interferenc
   }
   return false;
 }
-
-//=================================================================================================
 
 static bool Normal(const occ::handle<TopOpeBRepDS_GapTool>&        A,
                    const occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
@@ -347,7 +287,7 @@ static bool Normal(const occ::handle<TopOpeBRepDS_GapTool>&        A,
       {
         S.D1(P2d.X(), P2d.Y(), PS, TU, TV);
         N = TU ^ TV;
-        //	if (N.SquareMagnitude() >= gp::Resolution()); { // !!
+
         if (N.SquareMagnitude() >= gp::Resolution())
         {
           D = gp_Dir(N);
@@ -359,8 +299,6 @@ static bool Normal(const occ::handle<TopOpeBRepDS_GapTool>&        A,
   }
   return false;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_GapFiller::FilterByIncidentDistance(
   const TopoDS_Face&                                        F,
@@ -375,7 +313,7 @@ void TopOpeBRepDS_GapFiller::FilterByIncidentDistance(
 
   BRepAdaptor_Surface S(F, false);
 
-  double TolDef  = 0.94; // cos(20degre);
+  double TolDef  = 0.94;
   double TolDist = 20 * PI1.Tolerance();
   gp_Dir N1, N2;
   bool   Ok1 = Normal(myGapTool, myHDS, I, F, N1);
@@ -394,21 +332,16 @@ void TopOpeBRepDS_GapFiller::FilterByIncidentDistance(
     const gp_Pnt              GP   = P.Point();
     double                    Dist = GP.Distance(GPI);
 
-    //---------------------------------------------------------------------------
-    // Test resjection
-    // Si les points sont plutot ecartes, on regarde si les Normales sur la face
-    // sont proches
-    //---------------------------------------------------------------------------
     if (Dist > TolDist)
     {
       if (Ok1 && Ok2)
       {
         if (N1.Dot(N2) < TolDef)
         {
-          continue; // Reject
+          continue;
         }
       }
-      continue; // Reject
+      continue;
     }
 
     if (Dist < DistMin)
@@ -425,8 +358,6 @@ void TopOpeBRepDS_GapFiller::FilterByIncidentDistance(
   }
 }
 
-//=================================================================================================
-
 void TopOpeBRepDS_GapFiller::ReBuildGeom(const occ::handle<TopOpeBRepDS_Interference>& I,
                                          NCollection_Map<int>&                         View)
 {
@@ -441,7 +372,6 @@ void TopOpeBRepDS_GapFiller::ReBuildGeom(const occ::handle<TopOpeBRepDS_Interfer
   TopoDS_Edge E, CE;
   myGapTool->EdgeSupport(I, E);
 
-  // Construction du nouveau point
   for (it.Initialize(LI); it.More(); it.Next())
   {
     TopOpeBRepDS_Point PP = myHDS->Point(it.Value()->Geometry());
@@ -462,7 +392,6 @@ void TopOpeBRepDS_GapFiller::ReBuildGeom(const occ::handle<TopOpeBRepDS_Interfer
   gp_Pnt             GP = C.Value(U);
   TopOpeBRepDS_Point P(GP, TolMax);
 
-  // Mise a jour.
   int IP = myHDS->ChangeDS().AddPoint(P);
   for (it.Initialize(LI); it.More(); it.Next())
   {
@@ -474,8 +403,6 @@ void TopOpeBRepDS_GapFiller::ReBuildGeom(const occ::handle<TopOpeBRepDS_Interfer
   myGapTool->SetPoint(I, IP);
   View.Add(IP);
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_GapFiller::BuildNewGeometries()
 {

@@ -7,8 +7,6 @@
 #include <gp_Pnt2d.hpp>
 #include <NCollection_Array1.hpp>
 
-//=================================================================================================
-
 class Approx_Curve2d_Eval : public AdvApprox_EvaluatorFunction
 {
 public:
@@ -23,7 +21,7 @@ public:
                 double  StartEnd[2],
                 double* Parameter,
                 int*    DerivativeRequest,
-                double* Result, // [Dimension]
+                double* Result,
                 int*    ErrorCode) override;
 
 private:
@@ -33,20 +31,19 @@ private:
 
 void Approx_Curve2d_Eval::Evaluate(int*    Dimension,
                                    double  StartEnd[2],
-                                   double* Param,  // Parameter at which evaluation
-                                   int*    Order,  // Derivative Request
-                                   double* Result, // [Dimension]
+                                   double* Param,
+                                   int*    Order,
+                                   double* Result,
                                    int*    ErrorCode)
 {
   *ErrorCode = 0;
   double par = *Param;
 
-  // Dimension is incorrect
   if (*Dimension != 2)
   {
     *ErrorCode = 1;
   }
-  // Parameter is incorrect
+
   if (par < StartEnd[0] || par > StartEnd[1])
   {
     *ErrorCode = 2;

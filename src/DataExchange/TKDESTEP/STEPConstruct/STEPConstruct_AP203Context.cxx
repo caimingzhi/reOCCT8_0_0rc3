@@ -48,14 +48,10 @@
   #include <pwd.h>
 #endif
 
-//=================================================================================================
-
 STEPConstruct_AP203Context::STEPConstruct_AP203Context()
 {
   InitRoles();
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_Approval> STEPConstruct_AP203Context::DefaultApproval()
 {
@@ -72,14 +68,10 @@ occ::handle<StepBasic_Approval> STEPConstruct_AP203Context::DefaultApproval()
   return defApproval;
 }
 
-//=================================================================================================
-
 void STEPConstruct_AP203Context::SetDefaultApproval(const occ::handle<StepBasic_Approval>& app)
 {
   defApproval = app;
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_DateAndTime> STEPConstruct_AP203Context::DefaultDateAndTime()
 {
@@ -115,25 +107,21 @@ occ::handle<StepBasic_DateAndTime> STEPConstruct_AP203Context::DefaultDateAndTim
   return defDateAndTime;
 }
 
-//=================================================================================================
-
 void STEPConstruct_AP203Context::SetDefaultDateAndTime(const occ::handle<StepBasic_DateAndTime>& dt)
 {
   defDateAndTime = dt;
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_PersonAndOrganization> STEPConstruct_AP203Context::
   DefaultPersonAndOrganization()
 {
   if (defPersonAndOrganization.IsNull())
   {
-    // get IP address as a unique id of organization
+
     occ::handle<TCollection_HAsciiString> orgId = new TCollection_HAsciiString("IP");
     OSD_Host                              aHost;
     TCollection_AsciiString               anIP = aHost.InternetAddress();
-    // cut off last number
+
     int aLastDotIndex = anIP.SearchFromEnd(".");
     if (aLastDotIndex > 0)
     {
@@ -141,13 +129,11 @@ occ::handle<StepBasic_PersonAndOrganization> STEPConstruct_AP203Context::
       orgId->AssignCat(anIP.ToCString());
     }
 
-    // create organization
     occ::handle<StepBasic_Organization>   aOrg   = new StepBasic_Organization;
     occ::handle<TCollection_HAsciiString> oName  = new TCollection_HAsciiString("Unspecified");
     occ::handle<TCollection_HAsciiString> oDescr = new TCollection_HAsciiString("");
     aOrg->Init(true, orgId, oName, oDescr);
 
-    // construct person`s name
     OSD_Process             sys;
     TCollection_AsciiString user(sys.UserName());
 #if !defined(_WIN32) && !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
@@ -168,7 +154,7 @@ occ::handle<StepBasic_PersonAndOrganization> STEPConstruct_AP203Context::
     occ::handle<TCollection_HAsciiString> lname = new TCollection_HAsciiString("");
     occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> mname;
     NCollection_Sequence<TCollection_AsciiString>                           names;
-    int i; // svv Jan11 2000 : porting on DEC
+    int                                                                     i;
     for (i = 1;; i++)
     {
       TCollection_AsciiString token = user.Token(" \t", i);
@@ -187,7 +173,6 @@ occ::handle<StepBasic_PersonAndOrganization> STEPConstruct_AP203Context::
         mname->SetValue(i - 1, new TCollection_HAsciiString(names.Value(i)));
     }
 
-    // create a person
     occ::handle<StepBasic_Person>         aPerson = new StepBasic_Person;
     occ::handle<TCollection_HAsciiString> uid     = new TCollection_HAsciiString(orgId);
     uid->AssignCat(",");
@@ -202,15 +187,11 @@ occ::handle<StepBasic_PersonAndOrganization> STEPConstruct_AP203Context::
   return defPersonAndOrganization;
 }
 
-//=================================================================================================
-
 void STEPConstruct_AP203Context::SetDefaultPersonAndOrganization(
   const occ::handle<StepBasic_PersonAndOrganization>& po)
 {
   defPersonAndOrganization = po;
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_SecurityClassificationLevel> STEPConstruct_AP203Context::
   DefaultSecurityClassificationLevel()
@@ -224,29 +205,21 @@ occ::handle<StepBasic_SecurityClassificationLevel> STEPConstruct_AP203Context::
   return defSecurityClassificationLevel;
 }
 
-//=================================================================================================
-
 void STEPConstruct_AP203Context::SetDefaultSecurityClassificationLevel(
   const occ::handle<StepBasic_SecurityClassificationLevel>& scl)
 {
   defSecurityClassificationLevel = scl;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_PersonAndOrganizationRole> STEPConstruct_AP203Context::RoleCreator() const
 {
   return roleCreator;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_PersonAndOrganizationRole> STEPConstruct_AP203Context::RoleDesignOwner() const
 {
   return roleDesignOwner;
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_PersonAndOrganizationRole> STEPConstruct_AP203Context::RoleDesignSupplier()
   const
@@ -254,36 +227,26 @@ occ::handle<StepBasic_PersonAndOrganizationRole> STEPConstruct_AP203Context::Rol
   return roleDesignSupplier;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_PersonAndOrganizationRole> STEPConstruct_AP203Context::
   RoleClassificationOfficer() const
 {
   return roleClassificationOfficer;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_DateTimeRole> STEPConstruct_AP203Context::RoleCreationDate() const
 {
   return roleCreationDate;
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_DateTimeRole> STEPConstruct_AP203Context::RoleClassificationDate() const
 {
   return roleClassificationDate;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ApprovalRole> STEPConstruct_AP203Context::RoleApprover() const
 {
   return roleApprover;
 }
-
-//=================================================================================================
 
 void STEPConstruct_AP203Context::Init(
   const occ::handle<StepShape_ShapeDefinitionRepresentation>& sdr)
@@ -294,20 +257,11 @@ void STEPConstruct_AP203Context::Init(
   InitPart(SDRTool);
 }
 
-//=================================================================================================
-
 void STEPConstruct_AP203Context::Init(const STEPConstruct_Part& SDRTool)
 {
   Clear();
   InitPart(SDRTool);
 }
-
-//=================================================================================================
-
-// void STEPConstruct_AP203Context::Init (const STEPConstruct_Part &SDRTool, const
-// occ::handle<Interface_Model> &Model) {}
-
-//=================================================================================================
 
 void STEPConstruct_AP203Context::Init(const occ::handle<StepRepr_NextAssemblyUsageOccurrence>& NAUO)
 {
@@ -315,15 +269,11 @@ void STEPConstruct_AP203Context::Init(const occ::handle<StepRepr_NextAssemblyUsa
   InitAssembly(NAUO);
 }
 
-//=================================================================================================
-
 occ::handle<StepAP203_CcDesignPersonAndOrganizationAssignment> STEPConstruct_AP203Context::
   GetCreator() const
 {
   return myCreator;
 }
-
-//=================================================================================================
 
 occ::handle<StepAP203_CcDesignPersonAndOrganizationAssignment> STEPConstruct_AP203Context::
   GetDesignOwner() const
@@ -331,15 +281,11 @@ occ::handle<StepAP203_CcDesignPersonAndOrganizationAssignment> STEPConstruct_AP2
   return myDesignOwner;
 }
 
-//=================================================================================================
-
 occ::handle<StepAP203_CcDesignPersonAndOrganizationAssignment> STEPConstruct_AP203Context::
   GetDesignSupplier() const
 {
   return myDesignSupplier;
 }
-
-//=================================================================================================
 
 occ::handle<StepAP203_CcDesignPersonAndOrganizationAssignment> STEPConstruct_AP203Context::
   GetClassificationOfficer() const
@@ -347,15 +293,11 @@ occ::handle<StepAP203_CcDesignPersonAndOrganizationAssignment> STEPConstruct_AP2
   return myClassificationOfficer;
 }
 
-//=================================================================================================
-
 occ::handle<StepAP203_CcDesignSecurityClassification> STEPConstruct_AP203Context::GetSecurity()
   const
 {
   return mySecurity;
 }
-
-//=================================================================================================
 
 occ::handle<StepAP203_CcDesignDateAndTimeAssignment> STEPConstruct_AP203Context::GetCreationDate()
   const
@@ -363,44 +305,32 @@ occ::handle<StepAP203_CcDesignDateAndTimeAssignment> STEPConstruct_AP203Context:
   return myCreationDate;
 }
 
-//=================================================================================================
-
 occ::handle<StepAP203_CcDesignDateAndTimeAssignment> STEPConstruct_AP203Context::
   GetClassificationDate() const
 {
   return myClassificationDate;
 }
 
-//=================================================================================================
-
 occ::handle<StepAP203_CcDesignApproval> STEPConstruct_AP203Context::GetApproval() const
 {
   return myApproval;
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_ApprovalPersonOrganization> STEPConstruct_AP203Context::GetApprover() const
 {
   return myApprover;
 }
 
-//=================================================================================================
-
 occ::handle<StepBasic_ApprovalDateTime> STEPConstruct_AP203Context::GetApprovalDateTime() const
 {
   return myApprovalDateTime;
 }
-
-//=================================================================================================
 
 occ::handle<StepBasic_ProductCategoryRelationship> STEPConstruct_AP203Context::
   GetProductCategoryRelationship() const
 {
   return myProductCategoryRelationship;
 }
-
-//=================================================================================================
 
 void STEPConstruct_AP203Context::Clear()
 {
@@ -413,13 +343,8 @@ void STEPConstruct_AP203Context::Clear()
   myClassificationDate.Nullify();
   myApproval.Nullify();
 
-  //  myApprover.Nullify();
-  //  myApprovalDateTime.Nullify();
-
   myProductCategoryRelationship.Nullify();
 }
-
-//=================================================================================================
 
 void STEPConstruct_AP203Context::InitRoles()
 {
@@ -439,8 +364,6 @@ void STEPConstruct_AP203Context::InitRoles()
   roleClassificationDate->Init(new TCollection_HAsciiString("classification_date"));
   roleApprover->Init(new TCollection_HAsciiString("approver"));
 }
-
-//=================================================================================================
 
 void STEPConstruct_AP203Context::InitPart(const STEPConstruct_Part& SDRTool)
 {
@@ -522,8 +445,6 @@ void STEPConstruct_AP203Context::InitPart(const STEPConstruct_Part& SDRTool)
   }
 }
 
-//=================================================================================================
-
 void STEPConstruct_AP203Context::InitAssembly(
   const occ::handle<StepRepr_NextAssemblyUsageOccurrence>& NAUO)
 {
@@ -554,8 +475,6 @@ void STEPConstruct_AP203Context::InitAssembly(
   InitApprovalRequisites();
 }
 
-//=================================================================================================
-
 void STEPConstruct_AP203Context::InitSecurityRequisites()
 {
   if (myClassificationOfficer.IsNull()
@@ -582,8 +501,6 @@ void STEPConstruct_AP203Context::InitSecurityRequisites()
     myClassificationDate->Init(DefaultDateAndTime(), RoleClassificationDate(), items);
   }
 }
-
-//=================================================================================================
 
 void STEPConstruct_AP203Context::InitApprovalRequisites()
 {

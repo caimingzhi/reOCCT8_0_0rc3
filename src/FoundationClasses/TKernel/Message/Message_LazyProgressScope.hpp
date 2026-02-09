@@ -2,23 +2,9 @@
 
 #include <Message_ProgressScope.hpp>
 
-//! Progress scope with lazy updates and abort fetches.
-//!
-//! Although Message_ProgressIndicator implementation is encouraged to spare GUI updates,
-//! even optimized implementation might show a noticeable overhead on a very small update step (e.g.
-//! per triangle).
-//!
-//! The class splits initial (displayed) number of overall steps into larger chunks specified in
-//! constructor, so that displayed progress is updated at larger steps.
 class Message_LazyProgressScope : protected Message_ProgressScope
 {
 public:
-  //! Main constructor.
-  //! @param[in] theRange  progress range to scope
-  //! @param[in] theName   name of this scope
-  //! @param[in] theMax    number of steps within this scope
-  //! @param[in] thePatchStep  number of steps to update progress
-  //! @param[in] theIsInf  infinite flag
   Message_LazyProgressScope(const Message_ProgressRange& theRange,
                             const char*                  theName,
                             const double                 theMax,
@@ -31,7 +17,6 @@ public:
   {
   }
 
-  //! Increment progress with 1.
   void Next()
   {
     if (++myPatchProgress < myPatchStep)
@@ -44,10 +29,8 @@ public:
     IsAborted();
   }
 
-  //! Return TRUE if progress has been aborted - return the cached state lazily updated.
   bool More() const { return !myIsLazyAborted; }
 
-  //! Return TRUE if progress has been aborted - fetches actual value from the Progress.
   bool IsAborted()
   {
     myIsLazyAborted = myIsLazyAborted || !Message_ProgressScope::More();

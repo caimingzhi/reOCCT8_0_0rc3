@@ -4,11 +4,7 @@
 #include <TopoDS.hpp>
 #include <TopoDS_Edge.hpp>
 
-//=================================================================================================
-
 Draft_VertexInfo::Draft_VertexInfo() = default;
-
-//=================================================================================================
 
 void Draft_VertexInfo::Add(const TopoDS_Edge& E)
 {
@@ -26,21 +22,15 @@ void Draft_VertexInfo::Add(const TopoDS_Edge& E)
   }
 }
 
-//=================================================================================================
-
 const gp_Pnt& Draft_VertexInfo::Geometry() const
 {
   return myGeom;
 }
 
-//=================================================================================================
-
 gp_Pnt& Draft_VertexInfo::ChangeGeometry()
 {
   return myGeom;
 }
-
-//=================================================================================================
 
 double Draft_VertexInfo::Parameter(const TopoDS_Edge& E)
 {
@@ -56,8 +46,6 @@ double Draft_VertexInfo::Parameter(const TopoDS_Edge& E)
   throw Standard_DomainError();
 }
 
-//=================================================================================================
-
 double& Draft_VertexInfo::ChangeParameter(const TopoDS_Edge& E)
 {
   NCollection_List<double>::Iterator itp(myParams);
@@ -72,28 +60,20 @@ double& Draft_VertexInfo::ChangeParameter(const TopoDS_Edge& E)
   throw Standard_DomainError();
 }
 
-//=================================================================================================
-
 void Draft_VertexInfo::InitEdgeIterator()
 {
   myItEd.Initialize(myEdges);
 }
-
-//=================================================================================================
 
 const TopoDS_Edge& Draft_VertexInfo::Edge() const
 {
   return TopoDS::Edge(myItEd.Value());
 }
 
-//=================================================================================================
-
 bool Draft_VertexInfo::MoreEdge() const
 {
   return myItEd.More();
 }
-
-//=================================================================================================
 
 void Draft_VertexInfo::NextEdge()
 {

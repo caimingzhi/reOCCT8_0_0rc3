@@ -6,12 +6,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepDimTol_UnequallyDisposedGeometricTolerance,
                            StepDimTol_GeometricTolerance)
 
-//=================================================================================================
-
 StepDimTol_UnequallyDisposedGeometricTolerance::StepDimTol_UnequallyDisposedGeometricTolerance() =
   default;
-
-//=================================================================================================
 
 void StepDimTol_UnequallyDisposedGeometricTolerance::Init(
   const occ::handle<TCollection_HAsciiString>&        theName,

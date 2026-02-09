@@ -3,11 +3,9 @@
 #include <BRepMesh_DefaultRangeSplitter.hpp>
 #include <IMeshData_Types.hpp>
 
-//! Intended to generate internal mesh nodes using UV parameters of boundary discrete points.
 class BRepMesh_UVParamRangeSplitter : public BRepMesh_DefaultRangeSplitter
 {
 public:
-  //! Constructor.
   BRepMesh_UVParamRangeSplitter()
       : myAllocator(new NCollection_IncAllocator(IMeshData::MEMORY_BLOCK_SIZE_HUGE)),
         myUParams(1, myAllocator),
@@ -15,10 +13,8 @@ public:
   {
   }
 
-  //! Destructor.
   ~BRepMesh_UVParamRangeSplitter() override = default;
 
-  //! Resets this splitter.
   void Reset(const IMeshData::IFaceHandle& theDFace,
              const IMeshTools_Parameters&  theParameters) override
   {
@@ -29,16 +25,12 @@ public:
   }
 
 public:
-  //! Returns U parameters.
   const IMeshData::IMapOfReal& GetParametersU() const { return myUParams; }
 
-  //! Returns U parameters.
   IMeshData::IMapOfReal& GetParametersU() { return myUParams; }
 
-  //! Returns V parameters.
   const IMeshData::IMapOfReal& GetParametersV() const { return myVParams; }
 
-  //! Returns V parameters.
   IMeshData::IMapOfReal& GetParametersV() { return myVParams; }
 
 private:

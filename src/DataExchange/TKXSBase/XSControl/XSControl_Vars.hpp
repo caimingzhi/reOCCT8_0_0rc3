@@ -14,16 +14,6 @@ class gp_Pnt;
 class gp_Pnt2d;
 class TopoDS_Shape;
 
-//! Defines a receptacle for externally defined variables, each
-//! one has a name
-//!
-//! I.E. a WorkSession for XSTEP is generally used inside a
-//! context, which brings variables, especially shapes and
-//! geometries. For instance DRAW or an application engine
-//!
-//! This class provides a common form for this. It also provides
-//! a default implementation (locally recorded variables in a
-//! dictionary), but which is aimed to be redefined
 class XSControl_Vars : public Standard_Transient
 {
 

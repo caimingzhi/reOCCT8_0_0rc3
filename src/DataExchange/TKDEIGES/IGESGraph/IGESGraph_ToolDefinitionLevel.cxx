@@ -17,25 +17,20 @@
 
 IGESGraph_ToolDefinitionLevel::IGESGraph_ToolDefinitionLevel() = default;
 
-void IGESGraph_ToolDefinitionLevel::ReadOwnParams(
-  const occ::handle<IGESGraph_DefinitionLevel>& ent,
-  const occ::handle<IGESData_IGESReaderData>& /*IR*/,
-  IGESData_ParamReader& PR) const
+void IGESGraph_ToolDefinitionLevel::ReadOwnParams(const occ::handle<IGESGraph_DefinitionLevel>& ent,
+                                                  const occ::handle<IGESData_IGESReaderData>&,
+                                                  IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   int nbval;
 
   occ::handle<NCollection_HArray1<int>> levelNumbers;
 
-  // Reading nbval(No. of Property Values)
   bool st = PR.ReadInteger(PR.Current(), "No. of Property Values", nbval);
   if (st && nbval > 0)
   {
-    // Reading levelNumbers(HArray1OfInteger)
-    //      levelNumbers = new NCollection_HArray1<int>(1, nbval);   done by :
-    // clang-format off
-      PR.ReadInts(PR.CurrentList(nbval), "array levelNumbers", levelNumbers, 1); //szv#4:S4163:12Mar99 `st=` not needed
-    // clang-format on
+
+    PR.ReadInts(PR.CurrentList(nbval), "array levelNumbers", levelNumbers, 1);
   }
   else
     PR.AddFail("No. of Property Values : Not Positive");
@@ -54,14 +49,14 @@ void IGESGraph_ToolDefinitionLevel::WriteOwnParams(
     IW.Send(ent->LevelNumber(i));
 }
 
-void IGESGraph_ToolDefinitionLevel::OwnShared(const occ::handle<IGESGraph_DefinitionLevel>& /*ent*/,
-                                              Interface_EntityIterator& /*iter*/) const
+void IGESGraph_ToolDefinitionLevel::OwnShared(const occ::handle<IGESGraph_DefinitionLevel>&,
+                                              Interface_EntityIterator&) const
 {
 }
 
 void IGESGraph_ToolDefinitionLevel::OwnCopy(const occ::handle<IGESGraph_DefinitionLevel>& another,
                                             const occ::handle<IGESGraph_DefinitionLevel>& ent,
-                                            Interface_CopyTool& /*TC*/) const
+                                            Interface_CopyTool&) const
 {
   int                                   nbval;
   occ::handle<NCollection_HArray1<int>> levelNumbers;
@@ -76,7 +71,7 @@ void IGESGraph_ToolDefinitionLevel::OwnCopy(const occ::handle<IGESGraph_Definiti
 }
 
 IGESData_DirChecker IGESGraph_ToolDefinitionLevel::DirChecker(
-  const occ::handle<IGESGraph_DefinitionLevel>& /*ent*/) const
+  const occ::handle<IGESGraph_DefinitionLevel>&) const
 {
   IGESData_DirChecker DC(406, 1);
   DC.Structure(IGESData_DefVoid);
@@ -89,14 +84,14 @@ IGESData_DirChecker IGESGraph_ToolDefinitionLevel::DirChecker(
   return DC;
 }
 
-void IGESGraph_ToolDefinitionLevel::OwnCheck(const occ::handle<IGESGraph_DefinitionLevel>& /*ent*/,
+void IGESGraph_ToolDefinitionLevel::OwnCheck(const occ::handle<IGESGraph_DefinitionLevel>&,
                                              const Interface_ShareTool&,
-                                             occ::handle<Interface_Check>& /*ach*/) const
+                                             occ::handle<Interface_Check>&) const
 {
 }
 
 void IGESGraph_ToolDefinitionLevel::OwnDump(const occ::handle<IGESGraph_DefinitionLevel>& ent,
-                                            const IGESData_IGESDumper& /*dumper*/,
+                                            const IGESData_IGESDumper&,
                                             Standard_OStream& S,
                                             const int         level) const
 {

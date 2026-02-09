@@ -2,11 +2,7 @@
 #include <Geom_Surface.hpp>
 #include <TopoDS_Shell.hpp>
 
-//=================================================================================================
-
 BRepBuilderAPI_MakeShell::BRepBuilderAPI_MakeShell() = default;
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeShell::BRepBuilderAPI_MakeShell(const occ::handle<Geom_Surface>& S,
                                                    const bool                       Segment)
@@ -18,8 +14,6 @@ BRepBuilderAPI_MakeShell::BRepBuilderAPI_MakeShell(const occ::handle<Geom_Surfac
     myShape = myMakeShell.Shape();
   }
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeShell::BRepBuilderAPI_MakeShell(const occ::handle<Geom_Surface>& S,
                                                    const double                     UMin,
@@ -36,8 +30,6 @@ BRepBuilderAPI_MakeShell::BRepBuilderAPI_MakeShell(const occ::handle<Geom_Surfac
   }
 }
 
-//=================================================================================================
-
 void BRepBuilderAPI_MakeShell::Init(const occ::handle<Geom_Surface>& S,
                                     const double                     UMin,
                                     const double                     UMax,
@@ -53,14 +45,10 @@ void BRepBuilderAPI_MakeShell::Init(const occ::handle<Geom_Surface>& S,
   }
 }
 
-//=================================================================================================
-
 bool BRepBuilderAPI_MakeShell::IsDone() const
 {
   return myMakeShell.IsDone();
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_ShellError BRepBuilderAPI_MakeShell::Error() const
 {
@@ -80,21 +68,13 @@ BRepBuilderAPI_ShellError BRepBuilderAPI_MakeShell::Error() const
       return BRepBuilderAPI_ShellParametersOutOfRange;
   }
 
-  // portage WNT
   return BRepBuilderAPI_ShellDone;
 }
-
-//=======================================================================
-// function : TopoDS_Shell&
-// purpose  :
-//=======================================================================
 
 const TopoDS_Shell& BRepBuilderAPI_MakeShell::Shell() const
 {
   return myMakeShell.Shell();
 }
-
-//=================================================================================================
 
 BRepBuilderAPI_MakeShell::operator TopoDS_Shell() const
 {

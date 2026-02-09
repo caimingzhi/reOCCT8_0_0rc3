@@ -1,5 +1,4 @@
-// File:      HLRAppli_ReflectLines.cxx
-// Created:   05.12.12 12:55:50
+
 
 #include <HLRAppli_ReflectLines.hpp>
 #include <HLRBRep_Algo.hpp>
@@ -7,14 +6,10 @@
 #include <gp_Ax3.hpp>
 #include <BRepLib.hpp>
 
-//=================================================================================================
-
 HLRAppli_ReflectLines::HLRAppli_ReflectLines(const TopoDS_Shape& aShape)
 {
   myShape = aShape;
 }
-
-//=================================================================================================
 
 void HLRAppli_ReflectLines::SetAxes(const double Nx,
                                     const double Ny,
@@ -28,8 +23,6 @@ void HLRAppli_ReflectLines::SetAxes(const double Nx,
 {
   bool   IsPerspective = false;
   double aFocus        = 1;
-  // Prs3d_Projector aPrs3dProjector(IsPerspective, aFocus, Nx, Ny, Nz, XAt, YAt, ZAt, XUp, YUp,
-  // ZUp);
 
   gp_Pnt  At(XAt, YAt, ZAt);
   gp_Dir  Zpers(Nx, Ny, Nz);
@@ -39,11 +32,8 @@ void HLRAppli_ReflectLines::SetAxes(const double Nx,
   gp_Trsf T;
   T.SetTransformation(Axe);
 
-  // myProjector = aPrs3dProjector.Projector();
   myProjector = HLRAlgo_Projector(T, IsPerspective, aFocus);
 }
-
-//=================================================================================================
 
 void HLRAppli_ReflectLines::Perform()
 {
@@ -52,17 +42,7 @@ void HLRAppli_ReflectLines::Perform()
   myHLRAlgo->Projector(myProjector);
   myHLRAlgo->Update();
   myHLRAlgo->Hide();
-
-  /*
-  HLRBRep_HLRToShape aHLRToShape( aHLRAlgo );
-
-  myCompound = aHLRToShape.OutLineVCompound3d();
-
-  BRepLib::SameParameter(myCompound,Precision::PConfusion(),false);
-  */
 }
-
-//=================================================================================================
 
 TopoDS_Shape HLRAppli_ReflectLines::GetCompoundOf3dEdges(const HLRBRep_TypeOfResultingEdge type,
                                                          const bool                        visible,
@@ -76,8 +56,6 @@ TopoDS_Shape HLRAppli_ReflectLines::GetCompoundOf3dEdges(const HLRBRep_TypeOfRes
 
   return theCompound;
 }
-
-//=================================================================================================
 
 TopoDS_Shape HLRAppli_ReflectLines::GetResult() const
 {

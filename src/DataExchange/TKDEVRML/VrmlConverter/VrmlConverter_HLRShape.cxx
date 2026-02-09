@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Bnd_Box.hpp>
 #include <BRepAdaptor_Curve.hpp>
@@ -25,8 +14,6 @@
 #include <VrmlConverter_LineAspect.hpp>
 #include <VrmlConverter_Projector.hpp>
 
-//=================================================================================================
-
 void VrmlConverter_HLRShape::Add(Standard_OStream&                           anOStream,
                                  const TopoDS_Shape&                         aShape,
                                  const occ::handle<VrmlConverter_Drawer>&    aDrawer,
@@ -40,7 +27,7 @@ void VrmlConverter_HLRShape::Add(Standard_OStream&                           anO
   BRepAdaptor_Curve TheCurve;
 
   double theRequestedDeflection;
-  if (aDrawer->TypeOfDeflection() == Aspect_TOD_RELATIVE) // TOD_RELATIVE, TOD_ABSOLUTE
+  if (aDrawer->TypeOfDeflection() == Aspect_TOD_RELATIVE)
   {
     Bnd_Box box;
     BRepBndLib::AddClose(aShape, box);
@@ -81,11 +68,10 @@ void VrmlConverter_HLRShape::Add(Standard_OStream&                           anO
   Vrml_Separator SE2;
   Vrml_Separator SE3;
 
-  bool flag = false; // to check a call of Vrml_Separator.Print(anOStream)
+  bool flag = false;
 
   SE1.Print(anOStream);
 
-  // Adds  (if  they  are  defined) Camera or/and Light and MatrixTransform.
   aProjector->Add(anOStream);
 
   if (laSL->HasMaterial())
@@ -98,25 +84,23 @@ void VrmlConverter_HLRShape::Add(Standard_OStream&                           anO
     laSL->SetHasMaterial(false);
 
     flag = true;
-    // Separator 2 {
+
     SE2.Print(anOStream);
   }
   aDrawer->SetLineAspect(laSL);
 
-  //  aDrawer->SetLineAspect(aDrawer->SeenLineAspect());
   for (i = 1; i <= NbEdge; i++)
   {
     for (Tool.InitVisible(i); Tool.MoreVisible(); Tool.NextVisible())
     {
       Tool.Visible(TheCurve, U1, U2);
       VrmlConverter_DeflectionCurve::Add(anOStream, TheCurve, U1, U2, theRequestedDeflection);
-      //	VrmlConverter_DeflectionCurve::Add(anOStream, TheCurve, U1, U2, aDrawer);
     }
   }
 
   if (flag)
   {
-    // Separator 2 }
+
     SE2.Print(anOStream);
     flag = false;
   }
@@ -134,11 +118,10 @@ void VrmlConverter_HLRShape::Add(Standard_OStream&                           anO
       laHL->SetHasMaterial(false);
 
       flag = true;
-      // Separator 3 {
+
       SE3.Print(anOStream);
     }
     aDrawer->SetLineAspect(laHL);
-    //    aDrawer->SetLineAspect(aDrawer->HiddenLineAspect());
 
     for (i = 1; i <= NbEdge; i++)
     {
@@ -146,18 +129,16 @@ void VrmlConverter_HLRShape::Add(Standard_OStream&                           anO
       {
         Tool.Hidden(TheCurve, U1, U2);
         VrmlConverter_DeflectionCurve::Add(anOStream, TheCurve, U1, U2, theRequestedDeflection);
-        //	VrmlConverter_DeflectionCurve::Add(anOStream, TheCurve, U1, U2, aDrawer);
       }
     }
     if (flag)
     {
-      // Separator 3 }
+
       SE3.Print(anOStream);
       flag = false;
     }
   }
 
-  // Separator 1 }
   SE1.Print(anOStream);
 
   aDrawer->SetLineAspect(latmp);

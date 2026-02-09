@@ -8,13 +8,11 @@
 #include <Standard_Integer.hpp>
 #include <algorithm>
 
-//! Template Selector for selection of the elements from two BVH trees.
 template <int Dimension>
 class BOPTools_PairSelector
     : public BVH_PairTraverse<double, Dimension, BVH_BoxSet<double, Dimension, int>>
 {
-public: //! @name public types
-  //! Auxiliary structure to keep the pair of indices
+public:
   struct PairIDs
   {
     PairIDs(const int theId1 = -1, const int theId2 = -1)
@@ -34,34 +32,22 @@ public: //! @name public types
 
   typedef typename BVH::VectorType<double, Dimension>::Type BVH_VecNd;
 
-public: //! @name Constructor
-  //! Empty constructor
+public:
   BOPTools_PairSelector()
       : mySameBVHs(false)
   {
   }
 
-public: //! @name public interfaces
-  //! Clears the indices
+public:
   void Clear() { myPairs.clear(); }
 
-  //! Sorts the indices
   void Sort() { std::sort(myPairs.begin(), myPairs.end()); }
 
-  //! Tells to selector that BVH trees are the same.
-  //! If the flag is set to true the resulting vector will contain
-  //! only unique pairs (mirrored pairs will be rejected,
-  //! e.g. (1, 2) will be taken, (2, 1) will be rejected) and will
-  //! not contain pairs in which IDs are the same (pair (1, 1) will be rejected).
-  //! If it is required to have a full vector of pairs even
-  //! for the same BVH trees, just keep the false value of this flag.
   void SetSame(const bool theIsSame) { mySameBVHs = theIsSame; }
 
-  //! Returns the list of accepted indices
   const std::vector<PairIDs>& Pairs() const { return myPairs; }
 
-public: //! @name Rejection/Acceptance rules
-  //! Basing on the bounding boxes of the nodes checks if the pair of nodes should be rejected.
+public:
   bool RejectNode(const BVH_VecNd& theCMin1,
                   const BVH_VecNd& theCMax1,
                   const BVH_VecNd& theCMin2,
@@ -71,14 +57,12 @@ public: //! @name Rejection/Acceptance rules
     return BVH_Box<double, 3>(theCMin1, theCMax1).IsOut(theCMin2, theCMax2);
   }
 
-  //! Checks if the pair of elements should be rejected.
   bool RejectElement(const int theID1, const int theID2)
   {
     return (mySameBVHs && theID1 >= theID2)
            || this->myBVHSet1->Box(theID1).IsOut(this->myBVHSet2->Box(theID2));
   }
 
-  //! Checks and accepts the pair of elements.
   bool Accept(const int theID1, const int theID2) override
   {
     if (!RejectElement(theID1, theID2))
@@ -90,21 +74,18 @@ public: //! @name Rejection/Acceptance rules
     return false;
   }
 
-protected:                         //! @name Fields
-  std::vector<PairIDs> myPairs;    //!< Selected pairs of indices
-  bool                 mySameBVHs; //!< Selection is performed from the same BVH trees
+protected:
+  std::vector<PairIDs> myPairs;
+  bool                 mySameBVHs;
 };
 
 #include <Standard_Integer.hpp>
 #include <BVH_LinearBuilder.hpp>
 
-//! Redefines BoxSet to use the Linear builder by default
-
 template <class NumType, int Dimension, class DataType>
 class BOPTools_BoxSet : public BVH_BoxSet<NumType, Dimension, DataType>
 {
-public: //! @name Constructors
-  //! Empty constructor for use the default BVH_Builder
+public:
   BOPTools_BoxSet(const opencascade::handle<BVH_Builder<NumType, Dimension>>& theBuilder = nullptr)
       : BVH_BoxSet<NumType, Dimension, DataType>(
           theBuilder.IsNull() ? new BVH_LinearBuilder<NumType, Dimension>() : theBuilder)
@@ -112,12 +93,10 @@ public: //! @name Constructors
   }
 };
 
-//! 2D definitions
 typedef BOPTools_BoxSet<double, 2, int> BOPTools_Box2dTree;
 typedef BOPTools_BoxSelector<2>         BOPTools_Box2dTreeSelector;
 typedef BOPTools_PairSelector<2>        BOPTools_Box2dPairSelector;
 
-//! 3D definitions
 typedef BOPTools_BoxSet<double, 3, int> BOPTools_BoxTree;
 typedef BOPTools_BoxSelector<3>         BOPTools_BoxTreeSelector;
 typedef BOPTools_PairSelector<3>        BOPTools_BoxPairSelector;

@@ -3,24 +3,18 @@
 #include <NCollection_Sequence.hpp>
 #include <TopoDS_Edge.hpp>
 
-//=================================================================================================
-
 IntTools_CommonPrt::IntTools_CommonPrt()
     : myType(TopAbs_SHAPE),
       myAllNullFlag(false)
 
 {
-  //
+
   myPnt1.SetCoord(0., 0., 0.);
   myPnt2.SetCoord(0., 0., 0.);
-  //
-  // modified by NIZHNY-MKK  Wed Jun  8 16:47:04 2005.BEGIN
+
   myVertPar1 = 0.;
   myVertPar2 = 0.;
-  // modified by NIZHNY-MKK  Wed Jun  8 16:47:07 2005.END
 }
-
-//=================================================================================================
 
 IntTools_CommonPrt::IntTools_CommonPrt(const IntTools_CommonPrt& Other)
     : myEdge1(Other.myEdge1),
@@ -30,10 +24,10 @@ IntTools_CommonPrt::IntTools_CommonPrt(const IntTools_CommonPrt& Other)
       myVertPar1(Other.myVertPar1),
       myVertPar2(Other.myVertPar2),
       myAllNullFlag(false),
-      //
+
       myPnt1(Other.myPnt1),
       myPnt2(Other.myPnt2)
-//
+
 {
   int i, aNb = Other.myRanges2.Length();
   for (i = 1; i <= aNb; i++)
@@ -41,8 +35,6 @@ IntTools_CommonPrt::IntTools_CommonPrt(const IntTools_CommonPrt& Other)
     myRanges2.Append(Other.myRanges2(i));
   }
 }
-
-//=================================================================================================
 
 IntTools_CommonPrt& IntTools_CommonPrt::Assign(const IntTools_CommonPrt& Other)
 {
@@ -52,10 +44,10 @@ IntTools_CommonPrt& IntTools_CommonPrt::Assign(const IntTools_CommonPrt& Other)
   myRange1   = Other.myRange1;
   myVertPar1 = Other.myVertPar1;
   myVertPar2 = Other.myVertPar2;
-  //
+
   myPnt1 = Other.myPnt1;
   myPnt2 = Other.myPnt2;
-  //
+
   int i, aNb = Other.myRanges2.Length();
   for (i = 1; i <= aNb; i++)
   {
@@ -65,35 +57,25 @@ IntTools_CommonPrt& IntTools_CommonPrt::Assign(const IntTools_CommonPrt& Other)
   return *this;
 }
 
-//=================================================================================================
-
 void IntTools_CommonPrt::SetEdge1(const TopoDS_Edge& anEdge)
 {
   myEdge1 = anEdge;
 }
-
-//=================================================================================================
 
 void IntTools_CommonPrt::SetEdge2(const TopoDS_Edge& anEdge)
 {
   myEdge2 = anEdge;
 }
 
-//=================================================================================================
-
 void IntTools_CommonPrt::SetType(const TopAbs_ShapeEnum aType)
 {
   myType = aType;
 }
 
-//=================================================================================================
-
 void IntTools_CommonPrt::SetRange1(const IntTools_Range& aRange)
 {
   myRange1 = aRange;
 }
-
-//=================================================================================================
 
 void IntTools_CommonPrt::SetRange1(const double tf, const double tl)
 {
@@ -101,14 +83,10 @@ void IntTools_CommonPrt::SetRange1(const double tf, const double tl)
   myRange1.SetLast(tl);
 }
 
-//=================================================================================================
-
 void IntTools_CommonPrt::AppendRange2(const IntTools_Range& aRange)
 {
   myRanges2.Append(aRange);
 }
-
-//=================================================================================================
 
 void IntTools_CommonPrt::AppendRange2(const double tf, const double tl)
 {
@@ -116,49 +94,35 @@ void IntTools_CommonPrt::AppendRange2(const double tf, const double tl)
   myRanges2.Append(aRange);
 }
 
-//=================================================================================================
-
 void IntTools_CommonPrt::SetVertexParameter1(const double tV)
 {
   myVertPar1 = tV;
 }
-
-//=================================================================================================
 
 void IntTools_CommonPrt::SetVertexParameter2(const double tV)
 {
   myVertPar2 = tV;
 }
 
-//=================================================================================================
-
 const TopoDS_Edge& IntTools_CommonPrt::Edge1() const
 {
   return myEdge1;
 }
-
-//=================================================================================================
 
 const TopoDS_Edge& IntTools_CommonPrt::Edge2() const
 {
   return myEdge2;
 }
 
-//=================================================================================================
-
 TopAbs_ShapeEnum IntTools_CommonPrt::Type() const
 {
   return myType;
 }
 
-//=================================================================================================
-
 const IntTools_Range& IntTools_CommonPrt::Range1() const
 {
   return myRange1;
 }
-
-//=================================================================================================
 
 void IntTools_CommonPrt::Range1(double& tf, double& tl) const
 {
@@ -166,35 +130,25 @@ void IntTools_CommonPrt::Range1(double& tf, double& tl) const
   tl = myRange1.Last();
 }
 
-//=================================================================================================
-
 const NCollection_Sequence<IntTools_Range>& IntTools_CommonPrt::Ranges2() const
 {
   return myRanges2;
 }
-
-//=================================================================================================
 
 NCollection_Sequence<IntTools_Range>& IntTools_CommonPrt::ChangeRanges2()
 {
   return myRanges2;
 }
 
-//=================================================================================================
-
 double IntTools_CommonPrt::VertexParameter1() const
 {
   return myVertPar1;
 }
 
-//=================================================================================================
-
 double IntTools_CommonPrt::VertexParameter2() const
 {
   return myVertPar2;
 }
-
-//=================================================================================================
 
 void IntTools_CommonPrt::Copy(IntTools_CommonPrt& aCP) const
 {
@@ -214,22 +168,15 @@ void IntTools_CommonPrt::Copy(IntTools_CommonPrt& aCP) const
   }
 }
 
-//=================================================================================================
-
 void IntTools_CommonPrt::SetAllNullFlag(const bool aFlag)
 {
   myAllNullFlag = aFlag;
 }
 
-//=================================================================================================
-
 bool IntTools_CommonPrt::AllNullFlag() const
 {
   return myAllNullFlag;
 }
-
-//
-//=================================================================================================
 
 void IntTools_CommonPrt::SetBoundingPoints(const gp_Pnt& aP1, const gp_Pnt& aP2)
 {
@@ -237,12 +184,8 @@ void IntTools_CommonPrt::SetBoundingPoints(const gp_Pnt& aP1, const gp_Pnt& aP2)
   myPnt2 = aP2;
 }
 
-//=================================================================================================
-
 void IntTools_CommonPrt::BoundingPoints(gp_Pnt& aP1, gp_Pnt& aP2) const
 {
   aP1 = myPnt1;
   aP2 = myPnt2;
 }
-
-//

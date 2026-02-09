@@ -8,9 +8,6 @@
 class Geom_Curve;
 class Geom2d_Curve;
 
-//! Evaluate the 3dCurve and the PCurves described in a MultiLine from BRepFill.
-//! The parametrization of those curves is not imposed by the Bissectrice.
-//! The parametrization is given approximately by the abscissa of the curve3d.
 class BRepFill_ApproxSeewing
 {
 public:
@@ -24,15 +21,10 @@ public:
 
   Standard_EXPORT bool IsDone() const;
 
-  //! returns the approximation of the 3d Curve
   Standard_EXPORT const occ::handle<Geom_Curve>& Curve() const;
 
-  //! returns the approximation of the PCurve on the
-  //! first face of the MultiLine
   Standard_EXPORT const occ::handle<Geom2d_Curve>& CurveOnF1() const;
 
-  //! returns the approximation of the PCurve on the
-  //! first face of the MultiLine
   Standard_EXPORT const occ::handle<Geom2d_Curve>& CurveOnF2() const;
 
 private:

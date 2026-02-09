@@ -1,7 +1,5 @@
 #include <HLRBRep_CurveTool.hpp>
 
-//=================================================================================================
-
 int HLRBRep_CurveTool::NbSamples(const HLRBRep_CurvePtr C)
 {
   GeomAbs_CurveType typC     = ((HLRBRep_Curve*)C)->GetType();
@@ -23,8 +21,6 @@ int HLRBRep_CurveTool::NbSamples(const HLRBRep_CurvePtr C)
     nbs = 50;
   return ((int)nbs);
 }
-
-//=================================================================================================
 
 int HLRBRep_CurveTool::NbSamples(const HLRBRep_CurvePtr C, const double u1, const double u2)
 {

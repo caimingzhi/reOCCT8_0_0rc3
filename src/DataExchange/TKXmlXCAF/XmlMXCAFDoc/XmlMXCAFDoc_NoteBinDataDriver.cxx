@@ -11,22 +11,16 @@ IMPLEMENT_DOMSTRING(Title, "title")
 IMPLEMENT_DOMSTRING(MIMEtype, "mime_type")
 IMPLEMENT_DOMSTRING(Size, "size")
 
-//=================================================================================================
-
 XmlMXCAFDoc_NoteBinDataDriver::XmlMXCAFDoc_NoteBinDataDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : XmlMXCAFDoc_NoteDriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_NoteBinData)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> XmlMXCAFDoc_NoteBinDataDriver::NewEmpty() const
 {
   return new XCAFDoc_NoteBinData();
 }
-
-//=================================================================================================
 
 bool XmlMXCAFDoc_NoteBinDataDriver::Paste(const XmlObjMgt_Persistent&       theSource,
                                           const occ::handle<TDF_Attribute>& theTarget,
@@ -66,8 +60,6 @@ bool XmlMXCAFDoc_NoteBinDataDriver::Paste(const XmlObjMgt_Persistent&       theS
   return true;
 }
 
-//=================================================================================================
-
 void XmlMXCAFDoc_NoteBinDataDriver::Paste(const occ::handle<TDF_Attribute>& theSource,
                                           XmlObjMgt_Persistent&             theTarget,
                                           XmlObjMgt_SRelocationTable&       theRelocTable) const
@@ -91,9 +83,9 @@ void XmlMXCAFDoc_NoteBinDataDriver::Paste(const occ::handle<TDF_Attribute>& theS
     {
       anOSS << std::hex << aData->Value(i);
     }
-    // clang-format off
-    char* dump = (char*)anOSS.str(); // copying! Don't forget to delete it.
-    // clang-format on
+
+    char* dump = (char*)anOSS.str();
+
     XmlObjMgt::SetStringValue(theTarget, dump, true);
     delete[] dump;
   }

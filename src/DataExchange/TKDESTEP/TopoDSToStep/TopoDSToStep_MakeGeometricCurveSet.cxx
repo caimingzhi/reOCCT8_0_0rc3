@@ -15,9 +15,6 @@
 #include <TopoDSToStep_WireframeBuilder.hpp>
 #include <Transfer_FinderProcess.hpp>
 
-//=============================================================================
-// Create a GeometricCurveSet of StepShape from a Shape of TopoDS
-//=============================================================================
 TopoDSToStep_MakeGeometricCurveSet::TopoDSToStep_MakeGeometricCurveSet(
   const TopoDS_Shape&                        aShape,
   const occ::handle<Transfer_FinderProcess>& FP,
@@ -61,14 +58,3 @@ const occ::handle<StepShape_GeometricCurveSet>& TopoDSToStep_MakeGeometricCurveS
   StdFail_NotDone_Raise_if(!done, "TopoDSToStep_MakeGeometricCurveSet::Value() - no result");
   return theGeometricCurveSet;
 }
-
-// const occ::handle<StepShape_GeometricCurveSet>& TopoDSToStep_MakeGeometricCurveSet::Operator()
-// const
-//{
-//   return Value();
-// }
-
-// TopoDSToStep_MakeGeometricCurveSet::operator occ::handle<StepShape_GeometricCurveSet> () const
-//{
-//   return Value();
-// }

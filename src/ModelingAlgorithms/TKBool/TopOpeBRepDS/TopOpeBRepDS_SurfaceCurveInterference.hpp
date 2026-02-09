@@ -9,7 +9,6 @@
 class Geom2d_Curve;
 class TopOpeBRepDS_Transition;
 
-//! an interference with a 2d curve
 class TopOpeBRepDS_SurfaceCurveInterference : public TopOpeBRepDS_Interference
 {
 

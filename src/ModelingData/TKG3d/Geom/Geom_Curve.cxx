@@ -10,16 +10,12 @@ IMPLEMENT_STANDARD_RTTIEXT(Geom_Curve, Geom_Geometry)
 
 typedef Geom_Curve Curve;
 
-//=================================================================================================
-
 occ::handle<Geom_Curve> Geom_Curve::Reversed() const
 {
   occ::handle<Geom_Curve> C = occ::down_cast<Geom_Curve>(Copy());
   C->Reverse();
   return C;
 }
-
-//=================================================================================================
 
 double Geom_Curve::Period() const
 {
@@ -28,8 +24,6 @@ double Geom_Curve::Period() const
   return (LastParameter() - FirstParameter());
 }
 
-//=================================================================================================
-
 gp_Pnt Geom_Curve::Value(const double U) const
 {
   gp_Pnt P;
@@ -37,21 +31,15 @@ gp_Pnt Geom_Curve::Value(const double U) const
   return P;
 }
 
-//=================================================================================================
-
 double Geom_Curve::TransformedParameter(const double U, const gp_Trsf&) const
 {
   return U;
 }
 
-//=================================================================================================
-
 double Geom_Curve::ParametricTransformation(const gp_Trsf&) const
 {
   return 1.;
 }
-
-//=================================================================================================
 
 void Geom_Curve::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

@@ -9,7 +9,6 @@ class StepGeom_BoundedSurface : public StepGeom_Surface
 {
 
 public:
-  //! Returns a BoundedSurface
   Standard_EXPORT StepGeom_BoundedSurface();
 
   DEFINE_STANDARD_RTTIEXT(StepGeom_BoundedSurface, StepGeom_Surface)

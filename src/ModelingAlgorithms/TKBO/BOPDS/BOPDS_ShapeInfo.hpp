@@ -11,97 +11,53 @@
 #include <NCollection_List.hpp>
 #include <TopoDS_Shape.hpp>
 
-//! The class BOPDS_ShapeInfo is to store
-//! handy information about shape
 class BOPDS_ShapeInfo
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor
   BOPDS_ShapeInfo();
 
   virtual ~BOPDS_ShapeInfo();
 
-  //! Constructor
-  //! @param theAllocator the allocator to manage the memory
   BOPDS_ShapeInfo(const occ::handle<NCollection_BaseAllocator>& theAllocator);
 
-  //! Modifier
-  //! Sets the shape <theS>
   void SetShape(const TopoDS_Shape& theS);
 
-  //! Selector
-  //! Returns the shape
   const TopoDS_Shape& Shape() const;
 
-  //! Modifier
-  //! Sets the type of shape theType
   void SetShapeType(const TopAbs_ShapeEnum theType);
 
-  //! Selector
-  //! Returns the type of shape
   TopAbs_ShapeEnum ShapeType() const;
 
-  //! Modifier
-  //! Sets the boundung box of the shape theBox
   void SetBox(const Bnd_Box& theBox);
 
-  //! Selector
-  //! Returns the boundung box of the shape
   const Bnd_Box& Box() const;
 
-  //! Selector/Modifier
-  //! Returns the boundung box of the shape
   Bnd_Box& ChangeBox();
 
-  //! Selector
-  //! Returns the list of indices of sub-shapes
   const NCollection_List<int>& SubShapes() const;
 
-  //! Selector/ Modifier
-  //! Returns the list of indices of sub-shapes
   NCollection_List<int>& ChangeSubShapes();
 
-  //! Query
-  //! Returns true if the shape has sub-shape with
-  //! index theI
   bool HasSubShape(const int theI) const;
 
   bool HasReference() const;
 
-  //! Modifier
-  //! Sets the index of a reference information
   void SetReference(const int theI);
 
-  //! Selector
-  //! Returns the index of a reference information
   int Reference() const;
 
-  //! Query
-  //! Returns true if the shape has boundary representation
   bool HasBRep() const;
 
-  //! Returns true if the shape can be participant of
-  //! an interference
-  //!
-  //! Flag
   bool IsInterfering() const;
 
-  //! Query
-  //! Returns true if there is flag.
   bool HasFlag() const;
 
-  //! Query
-  //! Returns true if there is flag.
-  //! Returns the flag theFlag
   bool HasFlag(int& theFlag) const;
 
-  //! Modifier
-  //! Sets the flag
   void SetFlag(const int theI);
 
-  //! Returns the flag
   int Flag() const;
 
   Standard_EXPORT void Dump() const;
@@ -117,8 +73,6 @@ protected:
 
 #include <BOPDS_Tools.hpp>
 
-//=================================================================================================
-
 inline BOPDS_ShapeInfo::BOPDS_ShapeInfo()
     :
 
@@ -128,8 +82,6 @@ inline BOPDS_ShapeInfo::BOPDS_ShapeInfo()
 {
 }
 
-//=================================================================================================
-
 inline BOPDS_ShapeInfo::BOPDS_ShapeInfo(const occ::handle<NCollection_BaseAllocator>& theAllocator)
     : myType(TopAbs_SHAPE),
       mySubShapes(theAllocator),
@@ -138,125 +90,87 @@ inline BOPDS_ShapeInfo::BOPDS_ShapeInfo(const occ::handle<NCollection_BaseAlloca
 {
 }
 
-//=======================================================================
-// function : ~
-// purpose  :
-//=======================================================================
 inline BOPDS_ShapeInfo::~BOPDS_ShapeInfo() = default;
-
-//=================================================================================================
 
 inline void BOPDS_ShapeInfo::SetShape(const TopoDS_Shape& theS)
 {
   myShape = theS;
 }
 
-//=================================================================================================
-
 inline const TopoDS_Shape& BOPDS_ShapeInfo::Shape() const
 {
   return myShape;
 }
-
-//=================================================================================================
 
 inline void BOPDS_ShapeInfo::SetShapeType(const TopAbs_ShapeEnum theType)
 {
   myType = theType;
 }
 
-//=================================================================================================
-
 inline TopAbs_ShapeEnum BOPDS_ShapeInfo::ShapeType() const
 {
   return myType;
 }
-
-//=================================================================================================
 
 inline void BOPDS_ShapeInfo::SetBox(const Bnd_Box& theBox)
 {
   myBox = theBox;
 }
 
-//=================================================================================================
-
 inline const Bnd_Box& BOPDS_ShapeInfo::Box() const
 {
   return myBox;
 }
-
-//=================================================================================================
 
 inline Bnd_Box& BOPDS_ShapeInfo::ChangeBox()
 {
   return myBox;
 }
 
-//=================================================================================================
-
 inline const NCollection_List<int>& BOPDS_ShapeInfo::SubShapes() const
 {
   return mySubShapes;
 }
-
-//=================================================================================================
 
 inline NCollection_List<int>& BOPDS_ShapeInfo::ChangeSubShapes()
 {
   return mySubShapes;
 }
 
-//=================================================================================================
-
 inline bool BOPDS_ShapeInfo::HasSubShape(const int theI) const
 {
   return mySubShapes.Contains(theI);
 }
-
-//=================================================================================================
 
 inline bool BOPDS_ShapeInfo::HasReference() const
 {
   return (myReference >= 0);
 }
 
-//=================================================================================================
-
 inline void BOPDS_ShapeInfo::SetReference(const int theI)
 {
   myReference = theI;
 }
-
-//=================================================================================================
 
 inline int BOPDS_ShapeInfo::Reference() const
 {
   return myReference;
 }
 
-//=================================================================================================
-
 inline bool BOPDS_ShapeInfo::HasBRep() const
 {
   return (BOPDS_Tools::HasBRep(myType));
 }
-
-//=================================================================================================
 
 inline bool BOPDS_ShapeInfo::IsInterfering() const
 {
   return (HasBRep() || myType == TopAbs_SOLID);
 }
 
-//=================================================================================================
-
 inline bool BOPDS_ShapeInfo::HasFlag() const
 {
   return (myFlag >= 0);
 }
-
-//=================================================================================================
 
 inline bool BOPDS_ShapeInfo::HasFlag(int& theFlag) const
 {
@@ -264,14 +178,10 @@ inline bool BOPDS_ShapeInfo::HasFlag(int& theFlag) const
   return (myFlag >= 0);
 }
 
-//=================================================================================================
-
 inline void BOPDS_ShapeInfo::SetFlag(const int theFlag)
 {
   myFlag = theFlag;
 }
-
-//=================================================================================================
 
 inline int BOPDS_ShapeInfo::Flag() const
 {

@@ -7,9 +7,6 @@
 #include <gp_Pnt2d.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   Constructions of 2d geometrical elements from Geom2d.
-//=========================================================================
 GCE2d_MakeLine::GCE2d_MakeLine(const gp_Ax2d& A)
 {
   TheError = gce_Done;

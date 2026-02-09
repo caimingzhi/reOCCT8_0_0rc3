@@ -16,46 +16,34 @@ class Interface_Check;
 class Interface_CopyTool;
 class IGESData_IGESDumper;
 
-//! Tool to work on a ExternalRefFileName. Called by various Modules
-//! (ReadWriteModule, GeneralModule, SpecificModule)
 class IGESBasic_ToolExternalRefFileName
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Returns a ToolExternalRefFileName, ready to work
   Standard_EXPORT IGESBasic_ToolExternalRefFileName();
 
-  //! Reads own parameters from file. <PR> gives access to them,
-  //! <IR> detains parameter types and values
   Standard_EXPORT void ReadOwnParams(const occ::handle<IGESBasic_ExternalRefFileName>& ent,
                                      const occ::handle<IGESData_IGESReaderData>&       IR,
                                      IGESData_ParamReader&                             PR) const;
 
-  //! Writes own parameters to IGESWriter
   Standard_EXPORT void WriteOwnParams(const occ::handle<IGESBasic_ExternalRefFileName>& ent,
                                       IGESData_IGESWriter&                              IW) const;
 
-  //! Lists the Entities shared by a ExternalRefFileName <ent>, from
-  //! its specific (own) parameters
   Standard_EXPORT void OwnShared(const occ::handle<IGESBasic_ExternalRefFileName>& ent,
                                  Interface_EntityIterator&                         iter) const;
 
-  //! Returns specific DirChecker
   Standard_EXPORT IGESData_DirChecker
     DirChecker(const occ::handle<IGESBasic_ExternalRefFileName>& ent) const;
 
-  //! Performs Specific Semantic Check
   Standard_EXPORT void OwnCheck(const occ::handle<IGESBasic_ExternalRefFileName>& ent,
                                 const Interface_ShareTool&                        shares,
                                 occ::handle<Interface_Check>&                     ach) const;
 
-  //! Copies Specific Parameters
   Standard_EXPORT void OwnCopy(const occ::handle<IGESBasic_ExternalRefFileName>& entfrom,
                                const occ::handle<IGESBasic_ExternalRefFileName>& entto,
                                Interface_CopyTool&                               TC) const;
 
-  //! Dump of Specific Parameters
   Standard_EXPORT void OwnDump(const occ::handle<IGESBasic_ExternalRefFileName>& ent,
                                const IGESData_IGESDumper&                        dumper,
                                Standard_OStream&                                 S,

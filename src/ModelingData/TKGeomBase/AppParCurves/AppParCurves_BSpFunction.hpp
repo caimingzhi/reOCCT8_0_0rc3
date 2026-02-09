@@ -174,8 +174,6 @@ bool AppParCurves_BSpFunction::Value(const math_Vector& X, double& F)
 
   myParameters = X;
 
-  // Resolution moindres carres:
-  // ===========================
   MyLeastSquare.Perform(myParameters, mylambda1, mylambda2);
   if (!(MyLeastSquare.IsDone()))
   {
@@ -188,8 +186,6 @@ bool AppParCurves_BSpFunction::Value(const math_Vector& X, double& F)
     F = FVal;
   }
 
-  // Resolution avec contraintes:
-  // ============================
   else
   {
   }
@@ -201,8 +197,7 @@ void AppParCurves_BSpFunction::Perform(const math_Vector& X)
   int j;
 
   myParameters = X;
-  // Resolution moindres carres:
-  // ===========================
+
   MyLeastSquare.Perform(myParameters, mylambda1, mylambda2);
 
   if (!(MyLeastSquare.IsDone()))
@@ -256,22 +251,6 @@ bool AppParCurves_BSpFunction::Values(const math_Vector& X, double& F, math_Vect
   F = FVal;
   G = ValGrad_F;
 
-  /*
-    math_Vector mygradient = G;
-    math_Vector myx = X;
-    double myf = FVal;
-    double F2 = FVal;
-    math_Vector G2 = ValGrad_F;
-    for (int i = 1; i <= X.Length(); i++) {
-      myx = X;
-      myx(i) = X(i) + 1.0e-10;
-      Value(myx, F2);
-      mygradient(i) = (F2 - myf)/(1.0e-10);
-    }
-
-  cout << " Gradient calcule : " << G2 << endl;
-  cout << " Gradient interpole : " <<  mygradient << endl;
-  */
   return true;
 }
 

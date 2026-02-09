@@ -4,13 +4,10 @@
 #include <BVH_Ray.hpp>
 #include <BVH_Types.hpp>
 
-//! Defines a set of static methods operating with points and bounding boxes.
-//! \tparam T Numeric data type
-//! \tparam N Vector dimension
 template <class T, int N>
 class BVH_Tools
 {
-public: //! @name public types
+public:
   typedef typename BVH::VectorType<T, N>::Type BVH_VecNt;
 
 public:
@@ -21,8 +18,7 @@ public:
     BVH_PrjStateInTriangle_INNER
   };
 
-public: //! @name Box-Box Square distance
-  //! Computes Square distance between Axis aligned bounding boxes
+public:
   static T BoxBoxSquareDistance(const BVH_Box<T, N>& theBox1, const BVH_Box<T, N>& theBox2)
   {
     if (!theBox1.IsValid() || !theBox2.IsValid())
@@ -35,7 +31,6 @@ public: //! @name Box-Box Square distance
                                 theBox2.CornerMax());
   }
 
-  //! Computes Square distance between Axis aligned bounding boxes
   static T BoxBoxSquareDistance(const BVH_VecNt& theCMin1,
                                 const BVH_VecNt& theCMax1,
                                 const BVH_VecNt& theCMin2,
@@ -58,8 +53,7 @@ public: //! @name Box-Box Square distance
     return aDist;
   }
 
-public: //! @name Point-Box Square distance
-  //! Computes square distance between point and bounding box
+public:
   static T PointBoxSquareDistance(const BVH_VecNt& thePoint, const BVH_Box<T, N>& theBox)
   {
     if (!theBox.IsValid())
@@ -69,7 +63,6 @@ public: //! @name Point-Box Square distance
     return PointBoxSquareDistance(thePoint, theBox.CornerMin(), theBox.CornerMax());
   }
 
-  //! Computes square distance between point and bounding box
   static T PointBoxSquareDistance(const BVH_VecNt& thePoint,
                                   const BVH_VecNt& theCMin,
                                   const BVH_VecNt& theCMax)
@@ -91,8 +84,7 @@ public: //! @name Point-Box Square distance
     return aDist;
   }
 
-public: //! @name Point-Box projection
-  //! Computes projection of point on bounding box
+public:
   static BVH_VecNt PointBoxProjection(const BVH_VecNt& thePoint, const BVH_Box<T, N>& theBox)
   {
     if (!theBox.IsValid())
@@ -102,7 +94,6 @@ public: //! @name Point-Box projection
     return PointBoxProjection(thePoint, theBox.CornerMin(), theBox.CornerMax());
   }
 
-  //! Computes projection of point on bounding box
   static BVH_VecNt PointBoxProjection(const BVH_VecNt& thePoint,
                                       const BVH_VecNt& theCMin,
                                       const BVH_VecNt& theCMax)
@@ -110,8 +101,7 @@ public: //! @name Point-Box projection
     return thePoint.cwiseMax(theCMin).cwiseMin(theCMax);
   }
 
-private: //! @name Internal helpers for point-triangle projection
-  //! Helper to set projection state for vertex
+private:
   static void SetVertexState(BVH_PrjStateInTriangle* thePrjState,
                              int*                    theFirstNode,
                              int*                    theLastNode,
@@ -125,7 +115,6 @@ private: //! @name Internal helpers for point-triangle projection
     }
   }
 
-  //! Helper to set projection state for edge
   static void SetEdgeState(BVH_PrjStateInTriangle* thePrjState,
                            int*                    theFirstNode,
                            int*                    theLastNode,
@@ -140,7 +129,6 @@ private: //! @name Internal helpers for point-triangle projection
     }
   }
 
-  //! Helper to compute projection onto edge
   static BVH_VecNt ProjectToEdge(const BVH_VecNt& theEdgeStart,
                                  const BVH_VecNt& theEdge,
                                  T                theDot1,
@@ -150,9 +138,7 @@ private: //! @name Internal helpers for point-triangle projection
     return theEdgeStart + theEdge * aT;
   }
 
-public: //! @name Point-Triangle Square distance
-  //! Find nearest point on a triangle for the given point.
-  //! Uses Voronoi region testing to determine closest feature (vertex, edge, or interior).
+public:
   static BVH_VecNt PointTriangleProjection(const BVH_VecNt&        thePoint,
                                            const BVH_VecNt&        theNode0,
                                            const BVH_VecNt&        theNode1,
@@ -161,21 +147,18 @@ public: //! @name Point-Triangle Square distance
                                            int*                    theNumberOfFirstNode = nullptr,
                                            int*                    theNumberOfLastNode  = nullptr)
   {
-    // Compute edge vectors
+
     const BVH_VecNt aAB = theNode1 - theNode0;
     const BVH_VecNt aAC = theNode2 - theNode0;
     const BVH_VecNt aBC = theNode2 - theNode1;
 
-    // Compute point-to-vertex vectors
     const BVH_VecNt aAP = thePoint - theNode0;
     const BVH_VecNt aBP = thePoint - theNode1;
     const BVH_VecNt aCP = thePoint - theNode2;
 
-    // Compute dot products for Voronoi region tests
     const T aABdotAP = aAB.Dot(aAP);
     const T aACdotAP = aAC.Dot(aAP);
 
-    // Check if P is in vertex region outside A
     if (aABdotAP <= T(0) && aACdotAP <= T(0))
     {
       SetVertexState(thePrjState, theNumberOfFirstNode, theNumberOfLastNode, 0);
@@ -185,7 +168,6 @@ public: //! @name Point-Triangle Square distance
     const T aBAdotBP = -aAB.Dot(aBP);
     const T aBCdotBP = aBC.Dot(aBP);
 
-    // Check if P is in vertex region outside B
     if (aBAdotBP <= T(0) && aBCdotBP <= T(0))
     {
       SetVertexState(thePrjState, theNumberOfFirstNode, theNumberOfLastNode, 1);
@@ -195,18 +177,15 @@ public: //! @name Point-Triangle Square distance
     const T aCBdotCP = -aBC.Dot(aCP);
     const T aCAdotCP = -aAC.Dot(aCP);
 
-    // Check if P is in vertex region outside C
     if (aCAdotCP <= T(0) && aCBdotCP <= T(0))
     {
       SetVertexState(thePrjState, theNumberOfFirstNode, theNumberOfLastNode, 2);
       return theNode2;
     }
 
-    // Compute barycentric coordinates for edge/interior tests
     const T aACdotBP = aAC.Dot(aBP);
     const T aVC      = aABdotAP * aACdotBP + aBAdotBP * aACdotAP;
 
-    // Check if P is in edge region of AB
     if (aVC <= T(0) && aABdotAP > T(0) && aBAdotBP > T(0))
     {
       SetEdgeState(thePrjState, theNumberOfFirstNode, theNumberOfLastNode, 0, 1);
@@ -216,7 +195,6 @@ public: //! @name Point-Triangle Square distance
     const T aABdotCP = aAB.Dot(aCP);
     const T aVA      = aBAdotBP * aCAdotCP - aABdotCP * aACdotBP;
 
-    // Check if P is in edge region of BC
     if (aVA <= T(0) && aBCdotBP > T(0) && aCBdotCP > T(0))
     {
       SetEdgeState(thePrjState, theNumberOfFirstNode, theNumberOfLastNode, 1, 2);
@@ -225,17 +203,14 @@ public: //! @name Point-Triangle Square distance
 
     const T aVB = aABdotCP * aACdotAP + aABdotAP * aCAdotCP;
 
-    // Check if P is in edge region of CA
     if (aVB <= T(0) && aACdotAP > T(0) && aCAdotCP > T(0))
     {
       SetEdgeState(thePrjState, theNumberOfFirstNode, theNumberOfLastNode, 2, 0);
       return ProjectToEdge(theNode0, aAC, aACdotAP, aCAdotCP);
     }
 
-    // P is inside triangle - compute barycentric coordinates
     const T aNorm = aVA + aVB + aVC;
 
-    // Handle degenerate triangle (zero or near-zero area)
     if (aNorm
         <= std::numeric_limits<T>::epsilon() * (std::abs(aVA) + std::abs(aVB) + std::abs(aVC)))
     {
@@ -251,7 +226,6 @@ public: //! @name Point-Triangle Square distance
     return (theNode0 * aVA + theNode1 * aVB + theNode2 * aVC) / aNorm;
   }
 
-  //! Computes square distance between point and triangle
   static T PointTriangleSquareDistance(const BVH_VecNt& thePoint,
                                        const BVH_VecNt& theNode0,
                                        const BVH_VecNt& theNode1,
@@ -262,9 +236,7 @@ public: //! @name Point-Triangle Square distance
     return aPP.Dot(aPP);
   }
 
-public: //! @name Ray-Box Intersection
-  //! Computes hit time of ray-box intersection.
-  //! Uses precomputed reciprocal direction from BVH_Ray for optimal performance.
+public:
   static bool RayBoxIntersection(const BVH_Ray<T, N>& theRay,
                                  const BVH_Box<T, N>& theBox,
                                  T&                   theTimeEnter,
@@ -281,10 +253,6 @@ public: //! @name Ray-Box Intersection
                               theTimeLeave);
   }
 
-  //! Computes hit time of ray-box intersection.
-  //! Uses precomputed reciprocal direction from BVH_Ray for optimal performance.
-  //! Handles parallel rays (infinite inverse direction) explicitly to avoid NaN from 0*inf
-  //! when ray origin is exactly on a slab boundary.
   static bool RayBoxIntersection(const BVH_Ray<T, N>& theRay,
                                  const BVH_VecNt&     theBoxCMin,
                                  const BVH_VecNt&     theBoxCMax,
@@ -296,7 +264,7 @@ public: //! @name Ray-Box Intersection
 
     for (int i = 0; i < N; ++i)
     {
-      // Handle parallel rays (infinite inverse direction) to avoid NaN from 0*inf
+
       if (std::isinf(theRay.InvDirect[i]))
       {
         if (theRay.Origin[i] < theBoxCMin[i] || theRay.Origin[i] > theBoxCMax[i])
@@ -315,7 +283,6 @@ public: //! @name Ray-Box Intersection
       }
     }
 
-    // Check if intersection is behind the ray origin
     if (aTimeLeave < T(0))
     {
       return false;
@@ -326,7 +293,6 @@ public: //! @name Ray-Box Intersection
     return true;
   }
 
-  //! Computes hit time of ray-box intersection
   static bool RayBoxIntersection(const BVH_VecNt&     theRayOrigin,
                                  const BVH_VecNt&     theRayDirection,
                                  const BVH_Box<T, N>& theBox,
@@ -345,15 +311,6 @@ public: //! @name Ray-Box Intersection
                               theTimeLeave);
   }
 
-  //! Computes hit time of ray-box intersection.
-  //! Uses optimized single-pass algorithm with early exit.
-  //! @param theRayOrigin ray origin point
-  //! @param theRayDirection ray direction vector
-  //! @param theBoxCMin minimum corner of the box
-  //! @param theBoxCMax maximum corner of the box
-  //! @param theTimeEnter time of ray entering the box
-  //! @param theTimeLeave time of ray leaving the box
-  //! @return true if ray intersects the box
   static bool RayBoxIntersection(const BVH_VecNt& theRayOrigin,
                                  const BVH_VecNt& theRayDirection,
                                  const BVH_VecNt& theBoxCMin,
@@ -368,35 +325,30 @@ public: //! @name Ray-Box Intersection
     {
       if (theRayDirection[i] == T(0))
       {
-        // Ray is parallel to this axis slab - check if origin is within bounds
+
         if (theRayOrigin[i] < theBoxCMin[i] || theRayOrigin[i] > theBoxCMax[i])
         {
-          return false; // Ray misses the slab entirely
+          return false;
         }
-        // Ray is within the slab, doesn't constrain the intersection interval
+
         continue;
       }
 
-      // Compute intersection distances for this axis
       T aT1 = (theBoxCMin[i] - theRayOrigin[i]) / theRayDirection[i];
       T aT2 = (theBoxCMax[i] - theRayOrigin[i]) / theRayDirection[i];
 
-      // Ensure aT1 <= aT2 (handle negative direction)
       T aTMin = (std::min)(aT1, aT2);
       T aTMax = (std::max)(aT1, aT2);
 
-      // Update intersection interval
       aTimeEnter = (std::max)(aTimeEnter, aTMin);
       aTimeLeave = (std::min)(aTimeLeave, aTMax);
 
-      // Early exit if no intersection
       if (aTimeEnter > aTimeLeave)
       {
         return false;
       }
     }
 
-    // Check if intersection is behind the ray origin
     if (aTimeLeave < T(0))
     {
       return false;

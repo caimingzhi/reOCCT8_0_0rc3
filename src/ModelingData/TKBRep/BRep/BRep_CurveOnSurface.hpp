@@ -11,8 +11,6 @@ class TopLoc_Location;
 class gp_Pnt;
 class BRep_CurveRepresentation;
 
-//! Representation of a curve by a curve in the
-//! parametric space of a surface.
 class BRep_CurveOnSurface : public BRep_GCurve
 {
 
@@ -25,13 +23,10 @@ public:
 
   void UVPoints(gp_Pnt2d& P1, gp_Pnt2d& P2) const;
 
-  //! Computes the point at parameter U.
   Standard_EXPORT void D0(const double U, gp_Pnt& P) const override;
 
-  //! Returns True.
   Standard_EXPORT bool IsCurveOnSurface() const override;
 
-  //! A curve in the parametric space of a surface.
   Standard_EXPORT bool IsCurveOnSurface(const occ::handle<Geom_Surface>& S,
                                         const TopLoc_Location&           L) const override;
 
@@ -41,14 +36,10 @@ public:
 
   Standard_EXPORT void PCurve(const occ::handle<Geom2d_Curve>& C) override;
 
-  //! Return a copy of this representation.
   Standard_EXPORT occ::handle<BRep_CurveRepresentation> Copy() const override;
 
-  //! Recomputes any derived data after a modification.
-  //! This is called when the range is modified.
   Standard_EXPORT void Update() override;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(BRep_CurveOnSurface, BRep_GCurve)
@@ -67,8 +58,6 @@ inline void BRep_CurveOnSurface::SetUVPoints(const gp_Pnt2d& P1, const gp_Pnt2d&
   myUV1 = P1;
   myUV2 = P2;
 }
-
-//=================================================================================================
 
 inline void BRep_CurveOnSurface::UVPoints(gp_Pnt2d& P1, gp_Pnt2d& P2) const
 {

@@ -4,7 +4,6 @@
 #include <Standard.hpp>
 #include <Standard_DefineAlloc.hpp>
 
-//! Hash tool, used for generating maps of shapes in topology.
 class TopTools_ShapeMapHasher
 {
 public:

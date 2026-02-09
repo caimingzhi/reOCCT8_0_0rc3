@@ -2,7 +2,7 @@
 #include <IntPolyh_Triangle.hpp>
 
 #include <cstdio>
-// #include <Precision.hpp>
+
 #define MyConfusionPrecision 10.0e-12
 
 IntPolyh_StartPoint::IntPolyh_StartPoint()
@@ -243,24 +243,20 @@ void IntPolyh_StartPoint::SetChainList(const int ChList)
 
 int IntPolyh_StartPoint::CheckSameSP(const IntPolyh_StartPoint& SP) const
 {
-  /// Renvoit 1 si monSP==SP
+
   int Test = 0;
   if (((e1 >= -1) && (e1 == SP.e1)) || ((e2 >= -1) && (e2 == SP.e2)))
   {
-    /// Les edges sont definis
 
     if (((lambda1 > -MyConfusionPrecision)
-         && (std::abs(lambda1 - SP.lambda1)
-             < MyConfusionPrecision)) // lambda1!=-1 && lambda1==SP.lambda2
+         && (std::abs(lambda1 - SP.lambda1) < MyConfusionPrecision))
         || ((lambda2 > -MyConfusionPrecision)
             && (std::abs(lambda2 - SP.lambda2) < MyConfusionPrecision)))
       Test = 1;
-    // if( (std::abs(u1-SP.u1)<MyConfusionPrecision)&&(std::abs(v1-SP.v1)<MyConfusionPrecision) )
-    // Test=1;
   }
   if ((Test == 0) && ((e1 == -1) || (e2 == -1)))
   {
-    /// monSP est un sommet
+
     if ((std::abs(SP.u1 - u1) < MyConfusionPrecision)
         && (std::abs(SP.v1 - v1) < MyConfusionPrecision))
       Test = 1;
@@ -271,8 +267,7 @@ int IntPolyh_StartPoint::CheckSameSP(const IntPolyh_StartPoint& SP) const
     SP.Dump(00201);
     printf("e1==-2 & e2==-2 Can't Check\n");
   }
-  /*  if( (std::abs(u1-SP.u1)<MyConfusionPrecision)&&(std::abs(v1-SP.v1)<MyConfusionPrecision) )
-      Test=1;*/
+
   return (Test);
 }
 

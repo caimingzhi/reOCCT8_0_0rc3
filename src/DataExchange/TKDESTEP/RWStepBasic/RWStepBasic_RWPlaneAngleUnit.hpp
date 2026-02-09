@@ -11,7 +11,6 @@ class StepBasic_PlaneAngleUnit;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for PlaneAngleUnit
 class RWStepBasic_RWPlaneAngleUnit
 {
 public:

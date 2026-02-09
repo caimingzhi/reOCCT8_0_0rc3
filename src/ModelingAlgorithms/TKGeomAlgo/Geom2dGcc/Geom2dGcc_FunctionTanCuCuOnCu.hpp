@@ -29,8 +29,6 @@ enum Geom2dGcc_Type2
 class gp_Vec2d;
 class math_Matrix;
 
-//! This abstract class describes a set on N Functions of
-//! M independent variables.
 class Geom2dGcc_FunctionTanCuCuOnCu : public math_FunctionSetWithDerivatives
 {
 public:
@@ -107,20 +105,14 @@ public:
                                       gp_Vec2d&          D22,
                                       gp_Vec2d&          D23);
 
-  //! Returns the number of variables of the function.
   Standard_EXPORT int NbVariables() const override;
 
-  //! Returns the number of equations of the function.
   Standard_EXPORT int NbEquations() const override;
 
-  //! Computes the values of the Functions for the variable <X>.
   Standard_EXPORT bool Value(const math_Vector& X, math_Vector& F) override;
 
-  //! Returns the values of the derivatives for the variable <X>.
   Standard_EXPORT bool Derivatives(const math_Vector& X, math_Matrix& D) override;
 
-  //! Returns the values of the functions and the derivatives
-  //! for the variable <X>.
   Standard_EXPORT bool Values(const math_Vector& X, math_Vector& F, math_Matrix& D) override;
 
 private:

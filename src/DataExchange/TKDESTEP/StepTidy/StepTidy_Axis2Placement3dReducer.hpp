@@ -5,137 +5,65 @@
 
 #include <StepGeom_Axis2Placement3d.hpp>
 
-//! Processor for merging StepGeom_Axis2Placement3d entities.
-//! This processor merges axis placements with the same location, axis, and ref direction.
 class StepTidy_Axis2Placement3dReducer
     : public StepTidy_EntityReducer<StepGeom_Axis2Placement3d, StepTidy_Axis2Placement3dHasher>
 {
 public:
-  //! Constructor. Stores the work session and registers replacer functions.
-  //! @param theWS the work session.
   Standard_EXPORT StepTidy_Axis2Placement3dReducer(const occ::handle<XSControl_WorkSession>& theWS);
 
 private:
-  //! Replaces the old axis placement with the new one in the StepGeom_Plane entity.
-  //! @param theOldEntity the old axis placement.
-  //! @param theNewEntity the new axis placement to replace the old one.
-  //! @param theSharing the StepGeom_Plane entity to update.
-  //! @return true if the axis placement was replaced, false otherwise.
   static bool replacePlane(const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
                            const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
                            const occ::handle<Standard_Transient>&        theSharing);
 
-  //! Replaces the old axis placement with the new one in the StepRepr_ItemDefinedTransformation
-  //! entity.
-  //! @param theOldEntity the old axis placement.
-  //! @param theNewEntity the new axis placement to replace the old one.
-  //! @param theSharing the StepRepr_ItemDefinedTransformation entity to update.
-  //! @return true if the axis placement was replaced, false otherwise.
   static bool replaceItemDefinedTransformation(
     const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
     const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
     const occ::handle<Standard_Transient>&        theSharing);
 
-  //! Replaces the old axis placement with the new one in the StepGeom_CylindricalSurface entity.
-  //! @param theOldEntity the old axis placement.
-  //! @param theNewEntity the new axis placement to replace the old one.
-  //! @param theSharing the StepGeom_CylindricalSurface entity to update.
-  //! @return true if the axis placement was replaced, false otherwise.
   static bool replaceCylindricalSurface(const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
                                         const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
                                         const occ::handle<Standard_Transient>&        theSharing);
 
-  //! Replaces the old axis placement with the new one in the StepShape_ShapeRepresentation entity.
-  //! @param theOldEntity the old axis placement.
-  //! @param theNewEntity the new axis placement to replace the old one.
-  //! @param theSharing the StepShape_ShapeRepresentation entity to update.
-  //! @return true if the axis placement was replaced, false otherwise.
   static bool replaceShapeRepresentation(const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
                                          const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
                                          const occ::handle<Standard_Transient>&        theSharing);
 
-  //! Replaces the old axis placement with the new one in the
-  //! StepRepr_ConstructiveGeometryRepresentation entity.
-  //! @param theOldEntity the old axis placement.
-  //! @param theNewEntity the new axis placement to replace the old one.
-  //! @param theSharing the StepRepr_ConstructiveGeometryRepresentation entity to update.
-  //! @return true if the axis placement was replaced, false otherwise.
   static bool replaceConstructiveGeometryRepresentation(
     const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
     const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
     const occ::handle<Standard_Transient>&        theSharing);
 
-  //! Replaces the old axis placement with the new one in the StepGeom_Circle entity.
-  //! @param theOldEntity the old axis placement.
-  //! @param theNewEntity the new axis placement to replace the old one.
-  //! @param theSharing the StepGeom_Circle entity to update.
-  //! @return true if the axis placement was replaced, false otherwise.
   static bool replaceCircle(const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
                             const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
                             const occ::handle<Standard_Transient>&        theSharing);
 
-  //! Replaces the old axis placement with the new one in the StepGeom_PresentationLayerAssignment
-  //! @param theOldEntity the old axis placement.
-  //! @param theNewEntity the new axis placement to replace the old one.
-  //! @param theSharing the StepGeom_PresentationLayerAssignment entity to update.
-  //! @return true if the axis placement was replaced, false otherwise.
   static bool replacePresentationLayerAssignment(
     const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
     const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
     const occ::handle<Standard_Transient>&        theSharing);
 
-  //! Replaces the old axis placement with the new one in the StepVisual_StyledItem entity.
-  //! @param theOldEntity the old axis placement.
-  //! @param theNewEntity the new axis placement to replace the old one.
-  //! @param theSharing the StepVisual_StyledItem entity to update.
-  //! @return true if the axis placement was replaced, false otherwise.
   static bool replaceStyledItem(const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
                                 const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
                                 const occ::handle<Standard_Transient>&        theSharing);
 
-  //! Replaces the old axis placement with the new one in the StepGeom_Ellipse entity.
-  //! @param theOldEntity the old axis placement.
-  //! @param theNewEntity the new axis placement to replace the old one.
-  //! @param theSharing the StepGeom_Ellipse entity to update.
-  //! @return true if the axis placement was replaced, false otherwise.
   static bool replaceEllipse(const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
                              const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
                              const occ::handle<Standard_Transient>&        theSharing);
 
-  //! Replaces the old axis placement with the new one in the StepGeom_ConicalSurface entity.
-  //! @param theOldEntity the old axis placement.
-  //! @param theNewEntity the new axis placement to replace the old one.
-  //! @param theSharing the StepGeom_ConicalSurface entity to update.
-  //! @return true if the axis placement was replaced, false otherwise.
   static bool replaceConicalSurface(const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
                                     const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
                                     const occ::handle<Standard_Transient>&        theSharing);
 
-  //! Replaces the old axis placement with the new one in the StepGeom_ToroidalSurface entity.
-  //! @param theOldEntity the old axis placement.
-  //! @param theNewEntity the new axis placement to replace the old one.
-  //! @param theSharing the StepGeom_ToroidalSurface entity to update.
-  //! @return true if the axis placement was replaced, false otherwise.
   static bool replaceToroidalSurface(const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
                                      const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
                                      const occ::handle<Standard_Transient>&        theSharing);
 
-  //! Replaces the old axis placement with the new one in the
-  //! StepShape_AdvancedBrepShapeRepresentation entity.
-  //! @param theOldEntity the old axis placement.
-  //! @param theNewEntity the new axis placement to replace the old one.
-  //! @param theSharing the StepShape_AdvancedBrepShapeRepresentation entity to update.
-  //! @return true if the axis placement was replaced, false otherwise.
   static bool replaceAdvancedBrepShapeRepresentation(
     const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
     const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
     const occ::handle<Standard_Transient>&        theSharing);
 
-  //! Replaces the old axis placement with the new one in the StepGeom_SphericalSurface entity.
-  //! @param theOldEntity the old axis placement.
-  //! @param theNewEntity the new axis placement to replace the old one.
-  //! @param theSharing the StepGeom_SphericalSurface entity to update.
-  //! @return true if the axis placement was replaced, false otherwise.
   static bool replaceSphericalSurface(const occ::handle<StepGeom_Axis2Placement3d>& theOldEntity,
                                       const occ::handle<StepGeom_Axis2Placement3d>& theNewEntity,
                                       const occ::handle<Standard_Transient>&        theSharing);

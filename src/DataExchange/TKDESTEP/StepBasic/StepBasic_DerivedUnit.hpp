@@ -10,7 +10,6 @@
 #include <Standard_Integer.hpp>
 class StepBasic_DerivedUnitElement;
 
-//! Added from StepBasic Rev2 to Rev4
 class StepBasic_DerivedUnit : public Standard_Transient
 {
 

@@ -10,7 +10,6 @@
 class gp_Pnt;
 class gp_Vec;
 
-//! To convert circular section in polynome
 class GeomFill_PolynomialConvertor
 {
 public:
@@ -18,7 +17,6 @@ public:
 
   Standard_EXPORT GeomFill_PolynomialConvertor();
 
-  //! say if <me> is Initialized
   Standard_EXPORT bool Initialized() const;
 
   Standard_EXPORT void Init();

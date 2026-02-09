@@ -15,7 +15,6 @@ class StepAP214_AutoDesignNominalDateAndTimeAssignment : public StepBasic_DateAn
 {
 
 public:
-  //! Returns a AutoDesignNominalDateAndTimeAssignment
   Standard_EXPORT StepAP214_AutoDesignNominalDateAndTimeAssignment();
 
   Standard_EXPORT void Init(

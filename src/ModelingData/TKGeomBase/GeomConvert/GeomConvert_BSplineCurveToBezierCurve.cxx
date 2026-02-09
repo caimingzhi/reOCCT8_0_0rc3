@@ -6,8 +6,6 @@
 #include <gp_Pnt.hpp>
 #include <NCollection_Array1.hpp>
 
-//=================================================================================================
-
 GeomConvert_BSplineCurveToBezierCurve::GeomConvert_BSplineCurveToBezierCurve(
   const occ::handle<Geom_BSplineCurve>& BasisCurve)
 {
@@ -19,12 +17,6 @@ GeomConvert_BSplineCurveToBezierCurve::GeomConvert_BSplineCurveToBezierCurve(
                                 myCurve->LastUKnotIndex(),
                                 myCurve->Degree());
 }
-
-//=======================================================================
-// function : GeomConvert_BSplineCurveToBezierCurve
-// purpose  :
-// 01/12/1997 PMN: On elimine d'eventuelles micro-courbe PRO11516
-//=======================================================================Real I
 
 GeomConvert_BSplineCurveToBezierCurve::GeomConvert_BSplineCurveToBezierCurve(
   const occ::handle<Geom_BSplineCurve>& BasisCurve,
@@ -43,14 +35,14 @@ GeomConvert_BSplineCurveToBezierCurve::GeomConvert_BSplineCurveToBezierCurve(
 
   myCurve->LocateU(U1, PTol, I1, I2);
   if (I1 == I2)
-  { // On est sur le noeud
+  {
     if (myCurve->Knot(I1) > U1)
       Uf = myCurve->Knot(I1);
   }
 
   myCurve->LocateU(U2, PTol, I1, I2);
   if (I1 == I2)
-  { // On est sur le noeud
+  {
     if (myCurve->Knot(I1) < U2)
       Ul = myCurve->Knot(I1);
   }
@@ -60,8 +52,6 @@ GeomConvert_BSplineCurveToBezierCurve::GeomConvert_BSplineCurveToBezierCurve(
                                 myCurve->LastUKnotIndex(),
                                 myCurve->Degree());
 }
-
-//=================================================================================================
 
 occ::handle<Geom_BezierCurve> GeomConvert_BSplineCurveToBezierCurve::Arc(const int Index)
 {
@@ -95,8 +85,6 @@ occ::handle<Geom_BezierCurve> GeomConvert_BSplineCurveToBezierCurve::Arc(const i
   return C;
 }
 
-//=================================================================================================
-
 void GeomConvert_BSplineCurveToBezierCurve::Arcs(
   NCollection_Array1<occ::handle<Geom_BezierCurve>>& Curves)
 {
@@ -107,16 +95,12 @@ void GeomConvert_BSplineCurveToBezierCurve::Arcs(
   }
 }
 
-//=================================================================================================
-
 void GeomConvert_BSplineCurveToBezierCurve::Knots(NCollection_Array1<double>& TKnots) const
 {
   int ii, kk;
   for (ii = 1, kk = TKnots.Lower(); ii <= myCurve->NbKnots(); ii++, kk++)
     TKnots(kk) = myCurve->Knot(ii);
 }
-
-//=================================================================================================
 
 int GeomConvert_BSplineCurveToBezierCurve::NbArcs() const
 {

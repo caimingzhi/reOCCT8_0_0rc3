@@ -1,15 +1,4 @@
-// Copyright (c) 2022 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DEBREP_ConfigurationNode.hpp>
 
@@ -29,13 +18,9 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 DEBREP_ConfigurationNode::DEBREP_ConfigurationNode()
 
   = default;
-
-//=================================================================================================
 
 DEBREP_ConfigurationNode::DEBREP_ConfigurationNode(
   const occ::handle<DEBREP_ConfigurationNode>& theNode)
@@ -43,8 +28,6 @@ DEBREP_ConfigurationNode::DEBREP_ConfigurationNode(
 {
   InternalParameters = theNode->InternalParameters;
 }
-
-//=================================================================================================
 
 bool DEBREP_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& theResource)
 {
@@ -67,8 +50,6 @@ bool DEBREP_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& 
     theResource->BooleanVal("write.normals", InternalParameters.WriteNormals, aScope);
   return true;
 }
-
-//=================================================================================================
 
 TCollection_AsciiString DEBREP_ConfigurationNode::Save() const
 {
@@ -117,49 +98,35 @@ TCollection_AsciiString DEBREP_ConfigurationNode::Save() const
   return aResult;
 }
 
-//=================================================================================================
-
 occ::handle<DE_ConfigurationNode> DEBREP_ConfigurationNode::Copy() const
 {
   return new DEBREP_ConfigurationNode(*this);
 }
-
-//=================================================================================================
 
 occ::handle<DE_Provider> DEBREP_ConfigurationNode::BuildProvider()
 {
   return new DEBREP_Provider(this);
 }
 
-//=================================================================================================
-
 bool DEBREP_ConfigurationNode::IsImportSupported() const
 {
   return true;
 }
-
-//=================================================================================================
 
 bool DEBREP_ConfigurationNode::IsExportSupported() const
 {
   return true;
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DEBREP_ConfigurationNode::GetFormat() const
 {
   return TCollection_AsciiString("BREP");
 }
 
-//=================================================================================================
-
 TCollection_AsciiString DEBREP_ConfigurationNode::GetVendor() const
 {
   return TCollection_AsciiString("OCC");
 }
-
-//=================================================================================================
 
 NCollection_List<TCollection_AsciiString> DEBREP_ConfigurationNode::GetExtensions() const
 {
@@ -167,8 +134,6 @@ NCollection_List<TCollection_AsciiString> DEBREP_ConfigurationNode::GetExtension
   anExt.Append("brep");
   return anExt;
 }
-
-//=================================================================================================
 
 bool DEBREP_ConfigurationNode::CheckContent(const occ::handle<NCollection_Buffer>& theBuffer) const
 {

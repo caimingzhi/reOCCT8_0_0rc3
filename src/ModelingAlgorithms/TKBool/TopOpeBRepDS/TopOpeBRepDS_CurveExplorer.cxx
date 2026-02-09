@@ -5,8 +5,6 @@
 #define MYDS (*((TopOpeBRepDS_DataStructure*)myDS))
 static TopOpeBRepDS_Curve* CEX_PEMPTY = nullptr;
 
-//=================================================================================================
-
 TopOpeBRepDS_CurveExplorer::TopOpeBRepDS_CurveExplorer()
     : myIndex(1),
       myMax(0),
@@ -16,15 +14,11 @@ TopOpeBRepDS_CurveExplorer::TopOpeBRepDS_CurveExplorer()
 {
 }
 
-//=================================================================================================
-
 TopOpeBRepDS_CurveExplorer::TopOpeBRepDS_CurveExplorer(const TopOpeBRepDS_DataStructure& DS,
                                                        const bool                        FindKeep)
 {
   Init(DS, FindKeep);
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_CurveExplorer::Init(const TopOpeBRepDS_DataStructure& DS, const bool FindKeep)
 {
@@ -34,8 +28,6 @@ void TopOpeBRepDS_CurveExplorer::Init(const TopOpeBRepDS_DataStructure& DS, cons
   myFindKeep = FindKeep;
   Find();
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_CurveExplorer::Find()
 {
@@ -57,22 +49,16 @@ void TopOpeBRepDS_CurveExplorer::Find()
   }
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_CurveExplorer::More() const
 {
   return myFound;
 }
-
-//=================================================================================================
 
 void TopOpeBRepDS_CurveExplorer::Next()
 {
   myIndex++;
   Find();
 }
-
-//=================================================================================================
 
 const TopOpeBRepDS_Curve& TopOpeBRepDS_CurveExplorer::Curve() const
 {
@@ -90,15 +76,11 @@ const TopOpeBRepDS_Curve& TopOpeBRepDS_CurveExplorer::Curve() const
   }
 }
 
-//=================================================================================================
-
 bool TopOpeBRepDS_CurveExplorer::IsCurve(const int I) const
 {
   bool b = MYDS.myCurves.IsBound(I);
   return b;
 }
-
-//=================================================================================================
 
 bool TopOpeBRepDS_CurveExplorer::IsCurveKeep(const int I) const
 {
@@ -107,8 +89,6 @@ bool TopOpeBRepDS_CurveExplorer::IsCurveKeep(const int I) const
     b = MYDS.Curve(I).Keep();
   return b;
 }
-
-//=================================================================================================
 
 const TopOpeBRepDS_Curve& TopOpeBRepDS_CurveExplorer::Curve(const int I) const
 {
@@ -125,8 +105,6 @@ const TopOpeBRepDS_Curve& TopOpeBRepDS_CurveExplorer::Curve(const int I) const
   return *CEX_PEMPTY;
 }
 
-//=================================================================================================
-
 int TopOpeBRepDS_CurveExplorer::NbCurve()
 {
   myIndex = 1;
@@ -137,8 +115,6 @@ int TopOpeBRepDS_CurveExplorer::NbCurve()
     n++;
   return n;
 }
-
-//=================================================================================================
 
 int TopOpeBRepDS_CurveExplorer::Index() const
 {

@@ -2,15 +2,10 @@
 #include <gp_Pnt.hpp>
 #include <TopOpeBRepTool_SolidClassifier.hpp>
 
-//=================================================================================================
-
 TopOpeBRepTool_SolidClassifier::TopOpeBRepTool_SolidClassifier()
 {
   Clear();
 }
-
-// modified by NIZNHY-PKV Mon Dec 16 10:39:00 2002 f
-//=================================================================================================
 
 TopOpeBRepTool_SolidClassifier::~TopOpeBRepTool_SolidClassifier()
 {
@@ -26,8 +21,6 @@ TopOpeBRepTool_SolidClassifier::~TopOpeBRepTool_SolidClassifier()
   myShapeClassifierMap.Clear();
 }
 
-//=================================================================================================
-
 void TopOpeBRepTool_SolidClassifier::LoadSolid(const TopoDS_Solid& SOL)
 {
   bool found = myShapeClassifierMap.Contains(SOL);
@@ -42,8 +35,6 @@ void TopOpeBRepTool_SolidClassifier::LoadSolid(const TopoDS_Solid& SOL)
     myPClassifier = (BRepClass3d_SolidClassifier*)myShapeClassifierMap.ChangeFromKey(SOL);
   }
 }
-
-//=================================================================================================
 
 void TopOpeBRepTool_SolidClassifier::LoadShell(const TopoDS_Shell& SHE)
 {
@@ -62,23 +53,16 @@ void TopOpeBRepTool_SolidClassifier::LoadShell(const TopoDS_Shell& SHE)
   }
 }
 
-// modified by NIZNHY-PKV Mon Dec 16 10:53:41 2002 t
-
-//=================================================================================================
-
 void TopOpeBRepTool_SolidClassifier::Clear()
 {
   myPClassifier = nullptr;
-  // modified by NIZNHY-PKV Mon Dec 16 10:46:04 2002 f
-  // myClassifierMap.Clear();
+
   myShapeClassifierMap.Clear();
-  // modified by NIZNHY-PKV Mon Dec 16 10:46:06 2002 t
+
   myState = TopAbs_UNKNOWN;
   myShell.Nullify();
   mySolid.Nullify();
 }
-
-//=================================================================================================
 
 TopAbs_State TopOpeBRepTool_SolidClassifier::Classify(const TopoDS_Solid& SOL,
                                                       const gp_Pnt&       P,
@@ -94,9 +78,7 @@ TopAbs_State TopOpeBRepTool_SolidClassifier::Classify(const TopoDS_Solid& SOL,
   const TopoDS_Shape& fres = myPClassifier->Face();
   if (fres.IsNull())
   {
-    // NYI: in case of elimination of EXTERNAL and INTERNAL faces by the
-    // BRepClass3d_SolidClassifier classifier, still handle these faces
-    // to generate ON/Solid state when the point is IN/face INTERNAL or EXTERNAL
+
     return myState;
   }
   TopAbs_Orientation ofres = fres.Orientation();
@@ -125,8 +107,6 @@ TopAbs_State TopOpeBRepTool_SolidClassifier::Classify(const TopoDS_Solid& SOL,
   return myState;
 }
 
-//=================================================================================================
-
 TopAbs_State TopOpeBRepTool_SolidClassifier::Classify(const TopoDS_Shell& SHE,
                                                       const gp_Pnt&       P,
                                                       const double        Tol)
@@ -141,52 +121,7 @@ TopAbs_State TopOpeBRepTool_SolidClassifier::Classify(const TopoDS_Shell& SHE,
   return myState;
 }
 
-//=================================================================================================
-
 TopAbs_State TopOpeBRepTool_SolidClassifier::State() const
 {
   return myState;
 }
-
-// modified by NIZNHY-PKV Mon Dec 16 10:55:47 2002 f
-/*
-//=================================================================================================
-
-void TopOpeBRepTool_SolidClassifier::LoadSolid(const TopoDS_Solid& SOL)
-{
-  bool found = myClassifierMap.Contains(SOL);
-  if ( !found ) {
-    myPClassifier = new BRepClass3d_SolidClassifier(SOL);
-    myClassifierMap.Add(SOL,*myPClassifier);
-  }
-  else {
-    myPClassifier = &myClassifierMap.ChangeFromKey(SOL);
-  }
-#ifdef OCCT_DEBUG
-  int i =
-#endif
-                       myClassifierMap.FindIndex(SOL); // DEB
-}
-
-//=================================================================================================
-
-void TopOpeBRepTool_SolidClassifier::LoadShell(const TopoDS_Shell& SHE)
-{
-  bool found = myClassifierMap.Contains(SHE);
-  if ( !found ) {
-    myBuilder.MakeSolid(mySolid);
-    myBuilder.Add(mySolid,SHE);
-    TopoDS_Shell* pshe = (TopoDS_Shell*)&SHE; (*pshe).Free(true);
-    myPClassifier = new BRepClass3d_SolidClassifier(mySolid);
-    myClassifierMap.Add(SHE,*myPClassifier);
-  }
-  else {
-    myPClassifier = &myClassifierMap.ChangeFromKey(SHE);
-  }
-#ifdef OCCT_DEBUG
-  int i =
-#endif
-                       myClassifierMap.FindIndex(SHE); // DEB
-}
-*/
-// modified by NIZNHY-PKV Mon Dec 16 10:55:56 2002 t

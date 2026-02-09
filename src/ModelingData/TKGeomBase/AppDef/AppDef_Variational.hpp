@@ -20,28 +20,11 @@ class math_Matrix;
 class FEmTool_Curve;
 class FEmTool_Assembly;
 
-//! This class is used to smooth N points with constraints
-//! by minimization of quadratic criterium but also
-//! variational criterium in order to obtain " fair Curve "
-//! Computes the approximation of a Multiline by
-//! Variational optimization.
 class AppDef_Variational
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Constructor.
-  //! Initialization of the fields.
-  //! Warning:
-  //! Nc0 : number of PassagePoint consraints
-  //! Nc2 : number of TangencyPoint constraints
-  //! Nc3 : number of CurvaturePoint constraints
-  //! if ((MaxDegree-Continuity)*MaxSegment -Nc0 - 2*Nc1 -3*Nc2)
-  //! is negative
-  //! The problem is over-constrained.
-  //!
-  //! Limitation : The MultiLine from AppDef has to be composed by
-  //! only one Line ( Dimension 2 or 3).
   Standard_EXPORT AppDef_Variational(
     const AppDef_MultiLine&                                                SSP,
     const int                                                              FirstPoint,
@@ -55,147 +38,77 @@ public:
     const double                                                           Tolerance   = 1.0,
     const int                                                              NbIterations = 2);
 
-  //! Makes the approximation with the current fields.
   Standard_EXPORT void Approximate();
 
-  //! returns True if the creation is done
-  //! and correspond to the current fields.
   Standard_EXPORT bool IsCreated() const;
 
-  //! returns True if the approximation is ok
-  //! and correspond to the current fields.
   Standard_EXPORT bool IsDone() const;
 
-  //! returns True if the problem is overconstrained
-  //! in this case, approximation cannot be done.
   Standard_EXPORT bool IsOverConstrained() const;
 
-  //! returns all the BSpline curves approximating the
-  //! MultiLine from AppDef SSP after minimization of the parameter.
   Standard_EXPORT AppParCurves_MultiBSpCurve Value() const;
 
-  //! returns the maximum of the distances between
-  //! the points of the multiline and the approximation
-  //! curves.
   Standard_EXPORT double MaxError() const;
 
-  //! returns the index of the MultiPoint of ErrorMax
   Standard_EXPORT int MaxErrorIndex() const;
 
-  //! returns the quadratic average of the distances between
-  //! the points of the multiline and the approximation
-  //! curves.
   Standard_EXPORT double QuadraticError() const;
 
-  //! returns the distances between the points of the
-  //! multiline and the approximation curves.
   Standard_EXPORT void Distance(math_Matrix& mat);
 
-  //! returns the average error between
-  //! the MultiLine from AppDef and the approximation.
   Standard_EXPORT double AverageError() const;
 
-  //! returns the parameters uses to the approximations
   Standard_EXPORT const occ::handle<NCollection_HArray1<double>>& Parameters() const;
 
-  //! returns the knots uses to the approximations
   Standard_EXPORT const occ::handle<NCollection_HArray1<double>>& Knots() const;
 
-  //! returns the values of the quality criterium.
   Standard_EXPORT void Criterium(double& VFirstOrder,
                                  double& VSecondOrder,
                                  double& VThirdOrder) const;
 
-  //! returns the Weights (as percent) associed to the criterium used in
-  //! the optimization.
   Standard_EXPORT void CriteriumWeight(double& Percent1, double& Percent2, double& Percent3) const;
 
-  //! returns the Maximum Degree used in the approximation
   Standard_EXPORT int MaxDegree() const;
 
-  //! returns the Maximum of segment used in the approximation
   Standard_EXPORT int MaxSegment() const;
 
-  //! returns the Continuity used in the approximation
   Standard_EXPORT GeomAbs_Shape Continuity() const;
 
-  //! returns if the approximation search to minimize the
-  //! maximum Error or not.
   Standard_EXPORT bool WithMinMax() const;
 
-  //! returns if the approximation can insert new Knots or not.
   Standard_EXPORT bool WithCutting() const;
 
-  //! returns the tolerance used in the approximation.
   Standard_EXPORT double Tolerance() const;
 
-  //! returns the number of iterations used in the approximation.
   Standard_EXPORT int NbIterations() const;
 
-  //! Prints on the stream o information on the current state
-  //! of the object.
-  //! MaxError,MaxErrorIndex,AverageError,QuadraticError,Criterium
-  //! Distances,Degre,Nombre de poles, parametres, noeuds
   Standard_EXPORT void Dump(Standard_OStream& o) const;
 
-  //! Define the constraints to approximate
-  //! If this value is incompatible with the others fields
-  //! this method modify nothing and returns false
   Standard_EXPORT bool SetConstraints(
     const occ::handle<NCollection_HArray1<AppParCurves_ConstraintCouple>>& aConstrainst);
 
-  //! Defines the parameters used by the approximations.
   Standard_EXPORT void SetParameters(const occ::handle<NCollection_HArray1<double>>& param);
 
-  //! Defines the knots used by the approximations
-  //! If this value is incompatible with the others fields
-  //! this method modify nothing and returns false
   Standard_EXPORT bool SetKnots(const occ::handle<NCollection_HArray1<double>>& knots);
 
-  //! Define the Maximum Degree used in the approximation
-  //! If this value is incompatible with the others fields
-  //! this method modify nothing and returns false
   Standard_EXPORT bool SetMaxDegree(const int Degree);
 
-  //! Define the maximum number of segments used in the approximation
-  //! If this value is incompatible with the others fields
-  //! this method modify nothing and returns false
   Standard_EXPORT bool SetMaxSegment(const int NbSegment);
 
-  //! Define the Continuity used in the approximation
-  //! If this value is incompatible with the others fields
-  //! this method modify nothing and returns false
   Standard_EXPORT bool SetContinuity(const GeomAbs_Shape C);
 
-  //! Define if the approximation search to minimize the
-  //! maximum Error or not.
   Standard_EXPORT void SetWithMinMax(const bool MinMax);
 
-  //! Define if the approximation can insert new Knots or not.
-  //! If this value is incompatible with the others fields
-  //! this method modify nothing and returns false
   Standard_EXPORT bool SetWithCutting(const bool Cutting);
 
-  //! define the Weights (as percent) associed to the criterium used in
-  //! the optimization.
-  //!
-  //! if Percent <= 0
   Standard_EXPORT void SetCriteriumWeight(const double Percent1,
                                           const double Percent2,
                                           const double Percent3);
 
-  //! define the Weight (as percent) associed to the
-  //! criterium Order used in the optimization : Others
-  //! weights are updated.
-  //! if Percent < 0
-  //! if Order < 1 or Order > 3
   Standard_EXPORT void SetCriteriumWeight(const int Order, const double Percent);
 
-  //! define the tolerance used in the approximation.
   Standard_EXPORT void SetTolerance(const double Tol);
 
-  //! define the number of iterations used in the approximation.
-  //! if Iter < 1
   Standard_EXPORT void SetNbIterations(const int Iter);
 
 private:

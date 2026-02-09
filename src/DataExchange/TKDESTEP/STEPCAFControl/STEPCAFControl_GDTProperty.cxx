@@ -26,12 +26,7 @@
 
 namespace
 {
-  //=======================================================================
-  // function : GenerateCoordinateList
-  // purpose  : Generates a coordinate_list by filling it with coordinates
-  //           of the nodes of theTriangulation. Each node will be
-  //           transformed with theTransformation.
-  //=======================================================================
+
   occ::handle<StepVisual_CoordinatesList> GenerateCoordinateList(
     const occ::handle<Poly_Triangulation>& theTriangulation,
     const gp_Trsf&                         theTransformation)
@@ -48,23 +43,6 @@ namespace
     return aCoordinatesList;
   }
 
-  //=======================================================================
-  // function : CountNormals
-  // purpose  : Returns a number of normals that theTriangulation contains
-  //           for the purpose of generating
-  //           StepVisual_ComplexTriangulatedSurfaceSet.
-  //           Possible outputs are:
-  //           0, if theTriangulation has no normals.
-  //           1, if all normals contained in theTriangulation are equal.
-  //             Note that Poly_Triangulation supports only 2 options:
-  //             either no normals or a normal associated with each node.
-  //             So when source complex_triangulated_surface_set has just
-  //             one normal, it will be just associated with every node in
-  //             Poly_Triangulation. Return value of one indicates that
-  //             that's what probably happen during reading.
-  //           theTriangulation->NbNodes(), if each vertex has a unique
-  //             node associated with it.
-  //=======================================================================
   int CountNormals(const occ::handle<Poly_Triangulation>& theTriangulation)
   {
     if (!theTriangulation->HasNormals())
@@ -72,10 +50,9 @@ namespace
       return 0;
     }
 
-    // Function to compare normal coordinates values.
     auto isEqual = [](const double theVal1, const double theVal2)
     { return std::abs(theVal1 - theVal2) < Precision::Confusion(); };
-    // Checking if all normals are equal.
+
     const gp_Dir aReferenceNormal = theTriangulation->Normal(1);
     for (int aNodeIndex = 1; aNodeIndex <= theTriangulation->NbNodes(); ++aNodeIndex)
     {
@@ -88,17 +65,9 @@ namespace
       }
     }
 
-    // All normals were equal, so we can use just one normal.
     return 1;
   }
 
-  //=======================================================================
-  // function : GenerateNormalsArray
-  // purpose  : Generates array of normals from theTriangulation. Normals
-  //           will be transformed with theTransformation.
-  //           IMPORTANT: Output will be nullptr if theTriangulation has
-  //           no normals.
-  //=======================================================================
   occ::handle<NCollection_HArray2<double>> GenerateNormalsArray(
     const occ::handle<Poly_Triangulation>& theTriangulation,
     const gp_Trsf&                         theTransformation)
@@ -135,13 +104,6 @@ namespace
     }
   }
 
-  //=======================================================================
-  // function : GenerateTriangleStrips
-  // purpose  : Generates an array of triangle strips from theTriangulation.
-  //           Since Poly_Triangulation doesn't support triangle strips,
-  //           all triangles from it would just be imported as tringle
-  //           strips of one triangle.
-  //=======================================================================
   occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>> GenerateTriangleStrips(
     const occ::handle<Poly_Triangulation>& theTriangulation)
   {
@@ -150,8 +112,7 @@ namespace
     for (int aTriangleIndex = 1; aTriangleIndex <= theTriangulation->NbTriangles();
          ++aTriangleIndex)
     {
-      // Since Poly_Triangulation doesn't support triangle strips or triangle fans,
-      // we just write each thriangle as triangle strip.
+
       const Poly_Triangle& aCurrentTriangle = theTriangulation->Triangle(aTriangleIndex);
       occ::handle<NCollection_HArray1<int>> aTriangleStrip = new NCollection_HArray1<int>(1, 3);
       aTriangleStrip->SetValue(1, aCurrentTriangle.Value(1));
@@ -162,11 +123,6 @@ namespace
     return aTriangleStrips;
   }
 
-  //=======================================================================
-  // function : GenerateComplexTriangulatedSurfaceSet
-  // purpose  : Generates complex_triangulated_surface_set from theFace.
-  //           Returns nullptr if face has no triangulation.
-  //=======================================================================
   occ::handle<StepVisual_ComplexTriangulatedSurfaceSet> GenerateComplexTriangulatedSurfaceSet(
     const TopoDS_Face& theFace)
   {
@@ -179,31 +135,22 @@ namespace
     }
     const gp_Trsf aFaceTransform = aFaceLoc.Transformation();
 
-    // coordinates
     occ::handle<StepVisual_CoordinatesList> aCoordinatesList =
       GenerateCoordinateList(aTriangulation, aFaceTransform);
-    // pnmax
+
     int aPnmax = aTriangulation->NbNodes();
-    // normals
+
     occ::handle<NCollection_HArray2<double>> aNormals =
       GenerateNormalsArray(aTriangulation, aFaceTransform);
-    // pnindex
-    // From "Recommended Practices Recommended Practices for 3D Tessellated Geometry", Release 1.1:
-    // "pnindex is the table of indices of the points used in the definition of the triangles.
-    //  It is an index to the coordinates_list. Its size may be:
-    //  pnmax: this is the size of normals when each point has a normal.
-    //  0: no indirection."
-    // In our case there is no indirection, so it's always empty.
+
     occ::handle<NCollection_HArray1<int>> aPnindex = new NCollection_HArray1<int>;
-    // triangle_strips
+
     occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>> aTriangleStrips =
       GenerateTriangleStrips(aTriangulation);
-    // triangle_fans
-    // All triangles were already written as triangle strips.
+
     occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>> aTriangleFans =
       new NCollection_HArray1<occ::handle<Standard_Transient>>;
 
-    // Initialization of complex_triangulated_surface_set.
     occ::handle<StepVisual_ComplexTriangulatedSurfaceSet> aCTSS =
       new StepVisual_ComplexTriangulatedSurfaceSet;
     aCTSS->Init(new TCollection_HAsciiString(),
@@ -216,24 +163,16 @@ namespace
     return aCTSS;
   }
 
-  //=======================================================================
-  // function : GenerateTessellatedCurveSet
-  // purpose  : Generates tesselated_curve_set from theShape.
-  //           If no valid curves were found, return nullptr.
-  //=======================================================================
   occ::handle<StepVisual_TessellatedCurveSet> GenerateTessellatedCurveSet(
     const TopoDS_Shape& theShape)
   {
     NCollection_Handle<NCollection_Vector<occ::handle<NCollection_HSequence<int>>>> aLineStrips =
       new NCollection_Vector<occ::handle<NCollection_HSequence<int>>>;
-    // Temporary contanier for points. We need points in NCollection_HArray1<gp_XYZ> type of
-    // container, however in order to create it we need to know it's size.
-    // Currently number of points is unknown, so we will put all the points in a
-    // temporary container and then just copy them after all edges will be processed.
+
     NCollection_Vector<gp_XYZ> aTmpPointsContainer;
     for (TopExp_Explorer aCurveIt(theShape, TopAbs_EDGE); aCurveIt.More(); aCurveIt.Next())
     {
-      // Find out type of edge curve
+
       double                        aFirstParam = 0, aLastParam = 0;
       const occ::handle<Geom_Curve> anEdgeCurve =
         BRep_Tool::Curve(TopoDS::Edge(aCurveIt.Current()), aFirstParam, aLastParam);
@@ -242,7 +181,7 @@ namespace
         continue;
       }
       occ::handle<NCollection_HSequence<int>> aCurrentCurve = new NCollection_HSequence<int>;
-      if (anEdgeCurve->IsKind(STANDARD_TYPE(Geom_Line))) // Line
+      if (anEdgeCurve->IsKind(STANDARD_TYPE(Geom_Line)))
       {
         for (TopExp_Explorer aVertIt(aCurveIt.Current(), TopAbs_VERTEX); aVertIt.More();
              aVertIt.Next())
@@ -251,7 +190,7 @@ namespace
           aCurrentCurve->Append(aTmpPointsContainer.Size());
         }
       }
-      else // BSpline
+      else
       {
         ShapeConstruct_Curve           aSCC;
         occ::handle<Geom_BSplineCurve> aBSCurve =
@@ -276,7 +215,7 @@ namespace
     {
       aPoints->SetValue(aPointIndex, aTmpPointsContainer.Value(aPointIndex - 1));
     }
-    // STEP entities
+
     occ::handle<StepVisual_CoordinatesList> aCoordinates = new StepVisual_CoordinatesList();
     aCoordinates->Init(new TCollection_HAsciiString(), aPoints);
     occ::handle<StepVisual_TessellatedCurveSet> aTCS = new StepVisual_TessellatedCurveSet();
@@ -285,11 +224,7 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 STEPCAFControl_GDTProperty::STEPCAFControl_GDTProperty() = default;
-
-//=================================================================================================
 
 void STEPCAFControl_GDTProperty::GetDimModifiers(
   const occ::handle<StepRepr_CompoundRepresentationItem>& theCRI,
@@ -424,8 +359,6 @@ void STEPCAFControl_GDTProperty::GetDimModifiers(
   }
 }
 
-//=================================================================================================
-
 void STEPCAFControl_GDTProperty::GetDimClassOfTolerance(
   const occ::handle<StepShape_LimitsAndFits>& theLAF,
   bool&                                       theHolle,
@@ -437,7 +370,7 @@ void STEPCAFControl_GDTProperty::GetDimClassOfTolerance(
   theFV                                        = XCAFDimTolObjects_DimensionFormVariance_None;
   bool aFound;
   theHolle = false;
-  // it is not verified information
+
   for (int c = 0; c <= 1 && !aFormV.IsNull(); c++)
   {
     aFound         = false;
@@ -652,8 +585,6 @@ void STEPCAFControl_GDTProperty::GetDimClassOfTolerance(
   }
 }
 
-//=================================================================================================
-
 bool STEPCAFControl_GDTProperty::GetDimType(const occ::handle<TCollection_HAsciiString>& theName,
                                             XCAFDimTolObjects_DimensionType&             theType)
 {
@@ -765,8 +696,6 @@ bool STEPCAFControl_GDTProperty::GetDimType(const occ::handle<TCollection_HAscii
   return false;
 }
 
-//=================================================================================================
-
 bool STEPCAFControl_GDTProperty::GetDatumTargetType(
   const occ::handle<TCollection_HAsciiString>& theDescription,
   XCAFDimTolObjects_DatumTargetType&           theType)
@@ -801,8 +730,6 @@ bool STEPCAFControl_GDTProperty::GetDatumTargetType(
   return false;
 }
 
-//=================================================================================================
-
 bool STEPCAFControl_GDTProperty::GetDimQualifierType(
   const occ::handle<TCollection_HAsciiString>& theDescription,
   XCAFDimTolObjects_DimensionQualifier&        theType)
@@ -829,8 +756,6 @@ bool STEPCAFControl_GDTProperty::GetDimQualifierType(
   return false;
 }
 
-//=================================================================================================
-
 bool STEPCAFControl_GDTProperty::GetTolValueType(
   const occ::handle<TCollection_HAsciiString>& theDescription,
   XCAFDimTolObjects_GeomToleranceTypeValue&    theType)
@@ -853,15 +778,13 @@ bool STEPCAFControl_GDTProperty::GetTolValueType(
   return false;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> STEPCAFControl_GDTProperty::GetDimTypeName(
   const XCAFDimTolObjects_DimensionType theType)
 {
   occ::handle<TCollection_HAsciiString> aName;
   switch (theType)
   {
-    // Dimensional_Location
+
     case XCAFDimTolObjects_DimensionType_Location_CurvedDistance:
       aName = new TCollection_HAsciiString("curved distance");
       break;
@@ -892,7 +815,7 @@ occ::handle<TCollection_HAsciiString> STEPCAFControl_GDTProperty::GetDimTypeName
     case XCAFDimTolObjects_DimensionType_Location_LinearDistance_FromInnerToInner:
       aName = new TCollection_HAsciiString("linear distance inner inner");
       break;
-    // Dimensional_Size
+
     case XCAFDimTolObjects_DimensionType_Size_CurveLength:
       aName = new TCollection_HAsciiString("curve length");
       break;
@@ -935,14 +858,12 @@ occ::handle<TCollection_HAsciiString> STEPCAFControl_GDTProperty::GetDimTypeName
     case XCAFDimTolObjects_DimensionType_Size_Thickness:
       aName = new TCollection_HAsciiString("thickness");
       break;
-    // Other entities
+
     default:
       aName = new TCollection_HAsciiString();
   }
   return aName;
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> STEPCAFControl_GDTProperty::GetDimQualifierName(
   const XCAFDimTolObjects_DimensionQualifier theQualifier)
@@ -964,8 +885,6 @@ occ::handle<TCollection_HAsciiString> STEPCAFControl_GDTProperty::GetDimQualifie
   }
   return aName;
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> STEPCAFControl_GDTProperty::GetDimModifierName(
   const XCAFDimTolObjects_DimensionModif theModifier)
@@ -1047,8 +966,6 @@ occ::handle<TCollection_HAsciiString> STEPCAFControl_GDTProperty::GetDimModifier
   }
   return aName;
 }
-
-//=================================================================================================
 
 occ::handle<StepShape_LimitsAndFits> STEPCAFControl_GDTProperty::GetLimitsAndFits(
   bool                                    theHole,
@@ -1167,8 +1084,6 @@ occ::handle<StepShape_LimitsAndFits> STEPCAFControl_GDTProperty::GetLimitsAndFit
   return aLAF;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> STEPCAFControl_GDTProperty::GetDatumTargetName(
   const XCAFDimTolObjects_DatumTargetType theDatumType)
 {
@@ -1195,8 +1110,6 @@ occ::handle<TCollection_HAsciiString> STEPCAFControl_GDTProperty::GetDatumTarget
   }
   return aName;
 }
-
-//=================================================================================================
 
 StepDimTol_GeometricToleranceType STEPCAFControl_GDTProperty::GetGeomToleranceType(
   const XCAFDimTolObjects_GeomToleranceType theType)
@@ -1238,8 +1151,6 @@ StepDimTol_GeometricToleranceType STEPCAFControl_GDTProperty::GetGeomToleranceTy
   }
 }
 
-//=================================================================================================
-
 XCAFDimTolObjects_GeomToleranceType STEPCAFControl_GDTProperty::GetGeomToleranceType(
   const StepDimTol_GeometricToleranceType theType)
 {
@@ -1280,8 +1191,6 @@ XCAFDimTolObjects_GeomToleranceType STEPCAFControl_GDTProperty::GetGeomTolerance
   }
 }
 
-//=================================================================================================
-
 occ::handle<StepDimTol_GeometricTolerance> STEPCAFControl_GDTProperty::GetGeomTolerance(
   const XCAFDimTolObjects_GeomToleranceType theType)
 {
@@ -1305,8 +1214,6 @@ occ::handle<StepDimTol_GeometricTolerance> STEPCAFControl_GDTProperty::GetGeomTo
       return nullptr;
   }
 }
-
-//=================================================================================================
 
 StepDimTol_GeometricToleranceModifier STEPCAFControl_GDTProperty::GetGeomToleranceModifier(
   const XCAFDimTolObjects_GeomToleranceModif theModifier)
@@ -1348,10 +1255,6 @@ StepDimTol_GeometricToleranceModifier STEPCAFControl_GDTProperty::GetGeomToleran
   }
 }
 
-//=======================================================================
-// function : GetDatumRefModifiers
-// purpose  : Note: this function does not add anything to model
-//=======================================================================
 occ::handle<NCollection_HArray1<StepDimTol_DatumReferenceModifier>> STEPCAFControl_GDTProperty::
   GetDatumRefModifiers(const NCollection_Sequence<XCAFDimTolObjects_DatumSingleModif>& theModifiers,
                        const XCAFDimTolObjects_DatumModifWithValue& theModifWithVal,
@@ -1367,7 +1270,6 @@ occ::handle<NCollection_HArray1<StepDimTol_DatumReferenceModifier>> STEPCAFContr
   occ::handle<NCollection_HArray1<StepDimTol_DatumReferenceModifier>> aModifiers =
     new NCollection_HArray1<StepDimTol_DatumReferenceModifier>(1, aModifNb);
 
-  // Modifier with value
   if (theModifWithVal != XCAFDimTolObjects_DatumModifWithValue_None)
   {
     StepDimTol_DatumReferenceModifierType aType;
@@ -1401,7 +1303,6 @@ occ::handle<NCollection_HArray1<StepDimTol_DatumReferenceModifier>> STEPCAFContr
     aModifiers->SetValue(aModifNb, aModif);
   }
 
-  // Simple modifiers
   for (int i = 1; i <= theModifiers.Length(); i++)
   {
     occ::handle<StepDimTol_SimpleDatumReferenceModifierMember> aSimpleModifMember =
@@ -1483,8 +1384,6 @@ occ::handle<NCollection_HArray1<StepDimTol_DatumReferenceModifier>> STEPCAFContr
   return aModifiers;
 }
 
-//=================================================================================================
-
 occ::handle<TCollection_HAsciiString> STEPCAFControl_GDTProperty::GetTolValueType(
   const XCAFDimTolObjects_GeomToleranceTypeValue& theType)
 {
@@ -1499,12 +1398,10 @@ occ::handle<TCollection_HAsciiString> STEPCAFControl_GDTProperty::GetTolValueTyp
   }
 }
 
-//=================================================================================================
-
 occ::handle<StepVisual_TessellatedGeometricSet> STEPCAFControl_GDTProperty::GetTessellation(
   const TopoDS_Shape& theShape)
 {
-  // Build complex_triangulated_surface_set.
+
   std::vector<occ::handle<StepVisual_ComplexTriangulatedSurfaceSet>> aCTSSs;
   for (TopExp_Explorer aFaceIt(theShape, TopAbs_FACE); aFaceIt.More(); aFaceIt.Next())
   {
@@ -1512,10 +1409,8 @@ occ::handle<StepVisual_TessellatedGeometricSet> STEPCAFControl_GDTProperty::GetT
     aCTSSs.emplace_back(GenerateComplexTriangulatedSurfaceSet(aFace));
   }
 
-  // Build tesselated_curve_set.
   occ::handle<StepVisual_TessellatedCurveSet> aTCS = GenerateTessellatedCurveSet(theShape);
 
-  // Fill the container of tessellated items.
   NCollection_Handle<NCollection_Array1<occ::handle<StepVisual_TessellatedItem>>> aTesselatedItems =
     new NCollection_Array1<occ::handle<StepVisual_TessellatedItem>>(1,
                                                                     static_cast<int>(aCTSSs.size())
@@ -1526,7 +1421,6 @@ occ::handle<StepVisual_TessellatedGeometricSet> STEPCAFControl_GDTProperty::GetT
     aTesselatedItems->SetValue(static_cast<int>(aCTSSIndex) + 2, aCTSSs[aCTSSIndex]);
   }
 
-  // Build tessellated_geometric_set.
   occ::handle<StepVisual_TessellatedGeometricSet> aTGS = new StepVisual_TessellatedGeometricSet();
   aTGS->Init(new TCollection_HAsciiString(), aTesselatedItems);
   return aTGS;

@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepKinematics_RackAndPinionPairValue;
 
-//! Read & Write tool for RackAndPinionPairValue
 class RWStepKinematics_RWRackAndPinionPairValue
 {
 public:

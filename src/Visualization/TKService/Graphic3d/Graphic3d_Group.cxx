@@ -15,23 +15,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Group, Standard_Transient)
 
-//=================================================================================================
-
 Graphic3d_Group::Graphic3d_Group(const occ::handle<Graphic3d_Structure>& theStruct)
     : myStructure(theStruct.operator->()),
       myIsClosed(false)
 {
 }
 
-//=================================================================================================
-
 Graphic3d_Group::~Graphic3d_Group()
 {
-  // tell graphics driver to clear internal resources of the group
+
   Clear(false);
 }
-
-//=================================================================================================
 
 void Graphic3d_Group::Clear(bool theUpdateStructureMgr)
 {
@@ -42,16 +36,11 @@ void Graphic3d_Group::Clear(bool theUpdateStructureMgr)
 
   myBounds.Clear();
 
-  // clear method could be used on Graphic3d_Structure destruction,
-  // and its structure manager could be already destroyed, in that
-  // case we don't need to update it;
   if (theUpdateStructureMgr)
   {
     Update();
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_Group::Remove()
 {
@@ -67,14 +56,10 @@ void Graphic3d_Group::Remove()
   myBounds.Clear();
 }
 
-//=================================================================================================
-
 bool Graphic3d_Group::IsDeleted() const
 {
   return myStructure == nullptr || myStructure->IsDeleted();
 }
-
-//=================================================================================================
 
 bool Graphic3d_Group::IsEmpty() const
 {
@@ -85,8 +70,6 @@ bool Graphic3d_Group::IsEmpty() const
 
   return !myStructure->IsInfinite() && !myBounds.IsValid();
 }
-
-//=================================================================================================
 
 void Graphic3d_Group::SetTransformPersistence(
   const occ::handle<Graphic3d_TransformPers>& theTrsfPers)
@@ -100,8 +83,6 @@ void Graphic3d_Group::SetTransformPersistence(
     }
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_Group::SetMinMaxValues(const double theXMin,
                                       const double theYMin,
@@ -120,14 +101,10 @@ void Graphic3d_Group::SetMinMaxValues(const double theXMin,
                                                         1.0f));
 }
 
-//=================================================================================================
-
 occ::handle<Graphic3d_Structure> Graphic3d_Group::Structure() const
 {
   return myStructure;
 }
-
-//=================================================================================================
 
 void Graphic3d_Group::MinMaxValues(double& theXMin,
                                    double& theYMin,
@@ -138,7 +115,7 @@ void Graphic3d_Group::MinMaxValues(double& theXMin,
 {
   if (IsEmpty())
   {
-    // Empty Group
+
     theXMin = theYMin = theZMin = ShortRealFirst();
     theXMax = theYMax = theZMax = ShortRealLast();
   }
@@ -155,13 +132,11 @@ void Graphic3d_Group::MinMaxValues(double& theXMin,
   }
   else
   {
-    // for consistency with old API
+
     theXMin = theYMin = theZMin = ShortRealLast();
     theXMax = theYMax = theZMax = ShortRealFirst();
   }
 }
-
-//=================================================================================================
 
 void Graphic3d_Group::Update() const
 {
@@ -172,8 +147,6 @@ void Graphic3d_Group::Update() const
 
   myStructure->StructureManager()->Update();
 }
-
-//=================================================================================================
 
 void Graphic3d_Group::AddPrimitiveArray(const occ::handle<Graphic3d_ArrayOfPrimitives>& thePrim,
                                         const bool theToEvalMinMax)
@@ -189,8 +162,6 @@ void Graphic3d_Group::AddPrimitiveArray(const occ::handle<Graphic3d_ArrayOfPrimi
                     thePrim->Bounds(),
                     theToEvalMinMax);
 }
-
-//=================================================================================================
 
 void Graphic3d_Group::AddPrimitiveArray(const Graphic3d_TypeOfPrimitiveArray theType,
                                         const occ::handle<Graphic3d_IndexBuffer>&,
@@ -250,8 +221,6 @@ void Graphic3d_Group::AddPrimitiveArray(const Graphic3d_TypeOfPrimitiveArray the
   Update();
 }
 
-//=================================================================================================
-
 void Graphic3d_Group::Marker(const Graphic3d_Vertex& thePoint, const bool theToEvalMinMax)
 {
   occ::handle<Graphic3d_ArrayOfPoints> aPoints = new Graphic3d_ArrayOfPoints(1);
@@ -259,13 +228,11 @@ void Graphic3d_Group::Marker(const Graphic3d_Vertex& thePoint, const bool theToE
   AddPrimitiveArray(aPoints, theToEvalMinMax);
 }
 
-//=================================================================================================
-
 void Graphic3d_Group::Text(const char*             theText,
                            const Graphic3d_Vertex& thePoint,
                            const double            theHeight,
-                           const double /*theAngle*/,
-                           const Graphic3d_TextPath /*theTp*/,
+                           const double,
+                           const Graphic3d_TextPath,
                            const Graphic3d_HorizontalTextAlignment theHta,
                            const Graphic3d_VerticalTextAlignment   theVta,
                            const bool                              theToEvalMinMax)
@@ -277,8 +244,6 @@ void Graphic3d_Group::Text(const char*             theText,
   aText->SetVerticalAlignment(theVta);
   AddText(aText, theToEvalMinMax);
 }
-
-//=================================================================================================
 
 void Graphic3d_Group::Text(const char*             theText,
                            const Graphic3d_Vertex& thePoint,
@@ -291,13 +256,11 @@ void Graphic3d_Group::Text(const char*             theText,
   AddText(aText, theToEvalMinMax);
 }
 
-//=================================================================================================
-
 void Graphic3d_Group::Text(const TCollection_ExtendedString& theText,
                            const Graphic3d_Vertex&           thePoint,
                            const double                      theHeight,
-                           const double /*theAngle*/,
-                           const Graphic3d_TextPath /*theTp*/,
+                           const double,
+                           const Graphic3d_TextPath,
                            const Graphic3d_HorizontalTextAlignment theHta,
                            const Graphic3d_VerticalTextAlignment   theVta,
                            const bool                              theToEvalMinMax)
@@ -310,13 +273,11 @@ void Graphic3d_Group::Text(const TCollection_ExtendedString& theText,
   AddText(aText, theToEvalMinMax);
 }
 
-//=================================================================================================
-
 void Graphic3d_Group::Text(const TCollection_ExtendedString& theText,
                            const gp_Ax2&                     theOrientation,
                            const double                      theHeight,
-                           const double /*theAngle*/,
-                           const Graphic3d_TextPath /*theTP*/,
+                           const double,
+                           const Graphic3d_TextPath,
                            const Graphic3d_HorizontalTextAlignment theHta,
                            const Graphic3d_VerticalTextAlignment   theVta,
                            const bool                              theToEvalMinMax,
@@ -331,13 +292,11 @@ void Graphic3d_Group::Text(const TCollection_ExtendedString& theText,
   AddText(aText, theToEvalMinMax);
 }
 
-//=================================================================================================
-
 void Graphic3d_Group::Text(const char*   theText,
                            const gp_Ax2& theOrientation,
                            const double  theHeight,
-                           const double /*theAngle*/,
-                           const Graphic3d_TextPath /*theTp*/,
+                           const double,
+                           const Graphic3d_TextPath,
                            const Graphic3d_HorizontalTextAlignment theHta,
                            const Graphic3d_VerticalTextAlignment   theVta,
                            const bool                              theToEvalMinMax,
@@ -352,8 +311,6 @@ void Graphic3d_Group::Text(const char*   theText,
   AddText(aText, theToEvalMinMax);
 }
 
-//=================================================================================================
-
 void Graphic3d_Group::Text(const TCollection_ExtendedString& theText,
                            const Graphic3d_Vertex&           thePoint,
                            const double                      theHeight,
@@ -364,8 +321,6 @@ void Graphic3d_Group::Text(const TCollection_ExtendedString& theText,
   aText->SetPosition(gp_Pnt(thePoint.X(), thePoint.Y(), thePoint.Z()));
   AddText(aText, theToEvalMinMax);
 }
-
-//=================================================================================================
 
 void Graphic3d_Group::AddText(const occ::handle<Graphic3d_Text>& theTextParams,
                               const bool                         theToEvalMinMax)
@@ -388,8 +343,6 @@ void Graphic3d_Group::AddText(const occ::handle<Graphic3d_Text>& theTextParams,
 
   Update();
 }
-
-//=================================================================================================
 
 void Graphic3d_Group::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

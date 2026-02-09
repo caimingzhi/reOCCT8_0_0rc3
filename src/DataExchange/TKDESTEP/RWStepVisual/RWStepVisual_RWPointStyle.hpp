@@ -11,7 +11,6 @@ class StepVisual_PointStyle;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for PointStyle
 class RWStepVisual_RWPointStyle
 {
 public:

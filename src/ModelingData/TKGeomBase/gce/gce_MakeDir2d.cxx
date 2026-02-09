@@ -6,9 +6,6 @@
 #include <gp_XY.hpp>
 #include <StdFail_NotDone.hpp>
 
-//=========================================================================
-//   Creation d une direction 2d (Dir2d) de gp a partir de 2 Pnt2d de gp. +
-//=========================================================================
 gce_MakeDir2d::gce_MakeDir2d(const gp_Pnt2d& P1, const gp_Pnt2d& P2)
 {
   if (P1.Distance(P2) <= gp::Resolution())

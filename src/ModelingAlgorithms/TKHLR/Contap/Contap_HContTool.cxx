@@ -27,7 +27,7 @@ int Contap_HContTool::NbSamplesV(const occ::handle<Adaptor3d_Surface>& S,
     break;
     case GeomAbs_BSplineSurface:
     {
-      //-- occ::handle<Geom_BSplineSurface>& HBS=S->BSpline();
+
       nbs = S->NbVKnots();
       nbs *= S->VDegree();
       if (nbs < 2)
@@ -74,7 +74,7 @@ int Contap_HContTool::NbSamplesU(const occ::handle<Adaptor3d_Surface>& S,
     break;
     case GeomAbs_BSplineSurface:
     {
-      //-- occ::handle<Geom_BSplineSurface>& HBS=S->BSpline();
+
       nbs = S->NbUKnots();
       nbs *= S->UDegree();
       if (nbs < 2)
@@ -174,16 +174,12 @@ void Contap_HContTool::SamplePoint(const occ::handle<Adaptor3d_Surface>& S,
     int nbIntV = NbSamplesV(S, vinf, vsup) / 3;
     if (nbIntU * nbIntV > 5)
     {
-      int indU = (Index - 1) / nbIntU;        //----   0 --> nbIntV
-      int indV = (Index - 1) - indU * nbIntU; //----   0 --> nbIntU
+      int indU = (Index - 1) / nbIntU;
+      int indV = (Index - 1) - indU * nbIntU;
 
       U = uinf + ((usup - uinf) / ((double)(nbIntU + 1))) * (double)(indU + 1);
       V = vinf + ((vsup - vinf) / ((double)(nbIntV + 2))) * (double)(indV + 1);
 
-      //-- std::cout<<"Index :"<<Index<<"  uinf:"<<uinf<<"  usup:"<<usup<<"  vinf:"<<vinf<<"
-      // vsup:"<<vsup<<"  ";
-      //-- std::cout<<"  ("<<indU<<"/"<<nbIntU<<" ->U:"<<U<<"  ";
-      //-- std::cout<<"  ("<<indV<<"/"<<nbIntV<<" ->V:"<<V<<std::endl;
       return;
     }
   }
@@ -191,24 +187,24 @@ void Contap_HContTool::SamplePoint(const occ::handle<Adaptor3d_Surface>& S,
   switch (Index)
   {
     case 1:
-      U = 0.75 * uinf + 0.25 * usup; // 0.25;
-      V = 0.75 * vinf + 0.25 * vsup; // 0.25;
+      U = 0.75 * uinf + 0.25 * usup;
+      V = 0.75 * vinf + 0.25 * vsup;
       break;
     case 2:
-      U = 0.75 * uinf + 0.25 * usup; // 0.25;
-      V = 0.25 * vinf + 0.75 * vsup; // 0.75;
+      U = 0.75 * uinf + 0.25 * usup;
+      V = 0.25 * vinf + 0.75 * vsup;
       break;
     case 3:
-      U = 0.25 * uinf + 0.75 * usup; // 0.75;
-      V = 0.75 * vinf + 0.25 * vsup; // 0.25;
+      U = 0.25 * uinf + 0.75 * usup;
+      V = 0.75 * vinf + 0.25 * vsup;
       break;
     case 4:
-      U = 0.25 * uinf + 0.75 * usup; // 0.75;
-      V = 0.25 * vinf + 0.75 * vsup; // 0.75;
+      U = 0.25 * uinf + 0.75 * usup;
+      V = 0.25 * vinf + 0.75 * vsup;
       break;
     default:
-      U = 0.5 * (uinf + usup); // 0.5;
-      V = 0.5 * (vinf + vsup); // 0.5;
+      U = 0.5 * (uinf + usup);
+      V = 0.5 * (vinf + vsup);
   }
 }
 
@@ -234,7 +230,7 @@ int Contap_HContTool::NbSamplesOnArc(const occ::handle<Adaptor2d_Curve2d>& A)
       break;
     case GeomAbs_BSplineCurve:
     {
-      //-- occ::handle<Geom2d_BSplineCurve>& BSC=A->BSpline();
+
       nbsOnC = 2 + A->NbKnots() * A->Degree();
       break;
     }
@@ -292,14 +288,14 @@ bool Contap_HContTool::Project(const occ::handle<Adaptor2d_Curve2d>& C,
 double Contap_HContTool::Tolerance(const occ::handle<Adaptor3d_HVertex>& V,
                                    const occ::handle<Adaptor2d_Curve2d>& C)
 {
-  //  return BRepAdaptor2d_Curve2dTool::Resolution(C,BRep_Tool::Tolerance(V));
+
   return V->Resolution(C);
 }
 
 double Contap_HContTool::Parameter(const occ::handle<Adaptor3d_HVertex>& V,
                                    const occ::handle<Adaptor2d_Curve2d>& C)
 {
-  //  return BRep_Tool::Parameter(V,C.Edge());
+
   return V->Parameter(C);
 }
 

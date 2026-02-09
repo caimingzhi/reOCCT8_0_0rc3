@@ -9,7 +9,6 @@
 namespace
 {
 
-  //! CLocalePtr - static object representing C locale
   class CLocalePtr
   {
   public:
@@ -41,19 +40,14 @@ namespace
 
 } // namespace
 
-//=================================================================================================
-
 Standard_CLocaleSentry::clocale_t Standard_CLocaleSentry::GetCLocale()
 {
   return theCLocale.myLocale;
 }
 
-//=================================================================================================
-
 Standard_CLocaleSentry::Standard_CLocaleSentry()
   #ifdef OCCT_CLOCALE_POSIX2008
-    : myPrevLocale(uselocale(
-        theCLocale.myLocale)) // switch to C locale within this thread only using xlocale API
+    : myPrevLocale(uselocale(theCLocale.myLocale))
   #else
     : myPrevLocale(setlocale(LC_ALL, 0))
     #if defined(_MSC_VER) && (_MSC_VER > 1400)
@@ -66,10 +60,10 @@ Standard_CLocaleSentry::Standard_CLocaleSentry()
   const char* aPrevLocale = (const char*)myPrevLocale;
   if (myPrevLocale == NULL || (aPrevLocale[0] == 'C' && aPrevLocale[1] == '\0'))
   {
-    myPrevLocale = NULL; // already C locale
+    myPrevLocale = NULL;
     return;
   }
-  // copy string as following setlocale calls may invalidate returned pointer
+
   size_t aLen  = std::strlen(aPrevLocale) + 1;
   myPrevLocale = new char[aLen];
   memcpy(myPrevLocale, aPrevLocale, aLen);
@@ -77,8 +71,6 @@ Standard_CLocaleSentry::Standard_CLocaleSentry()
   setlocale(LC_ALL, "C");
   #endif
 }
-
-//=================================================================================================
 
 Standard_CLocaleSentry::~Standard_CLocaleSentry()
 {
@@ -100,4 +92,4 @@ Standard_CLocaleSentry::~Standard_CLocaleSentry()
   #endif
 }
 
-#endif // __ANDROID__
+#endif

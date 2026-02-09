@@ -7,18 +7,12 @@
 #include <NCollection_List.hpp>
 #include <NCollection_Map.hpp>
 
-//=================================================================================================
-
 BRepAlgo_Image::BRepAlgo_Image() = default;
-
-//=================================================================================================
 
 void BRepAlgo_Image::SetRoot(const TopoDS_Shape& S)
 {
   roots.Append(S);
 }
-
-//=================================================================================================
 
 void BRepAlgo_Image::Bind(const TopoDS_Shape& OldS, const TopoDS_Shape& NewS)
 {
@@ -32,8 +26,6 @@ void BRepAlgo_Image::Bind(const TopoDS_Shape& OldS, const TopoDS_Shape& NewS)
   down(OldS).Append(NewS);
   up.Bind(NewS, OldS);
 }
-
-//=================================================================================================
 
 void BRepAlgo_Image::Bind(const TopoDS_Shape& OldS, const NCollection_List<TopoDS_Shape>& L)
 {
@@ -52,16 +44,12 @@ void BRepAlgo_Image::Bind(const TopoDS_Shape& OldS, const NCollection_List<TopoD
   }
 }
 
-//=================================================================================================
-
 void BRepAlgo_Image::Clear()
 {
   roots.Clear();
   up.Clear();
   down.Clear();
 }
-
-//=================================================================================================
 
 void BRepAlgo_Image::Add(const TopoDS_Shape& OldS, const TopoDS_Shape& NewS)
 {
@@ -73,8 +61,6 @@ void BRepAlgo_Image::Add(const TopoDS_Shape& OldS, const TopoDS_Shape& NewS)
   up.Bind(NewS, OldS);
 }
 
-//=================================================================================================
-
 void BRepAlgo_Image::Add(const TopoDS_Shape& OldS, const NCollection_List<TopoDS_Shape>& L)
 {
   NCollection_List<TopoDS_Shape>::Iterator it(L);
@@ -83,8 +69,6 @@ void BRepAlgo_Image::Add(const TopoDS_Shape& OldS, const NCollection_List<TopoDS
     Add(OldS, it.Value());
   }
 }
-
-//=================================================================================================
 
 void BRepAlgo_Image::Remove(const TopoDS_Shape& S)
 {
@@ -109,24 +93,15 @@ void BRepAlgo_Image::Remove(const TopoDS_Shape& S)
   up.UnBind(S);
 }
 
-//=======================================================================
-// function : NCollection_List<TopoDS_Shape>&
-// purpose  :
-//=======================================================================
-
 const NCollection_List<TopoDS_Shape>& BRepAlgo_Image::Roots() const
 {
   return roots;
 }
 
-//=================================================================================================
-
 bool BRepAlgo_Image::IsImage(const TopoDS_Shape& S) const
 {
   return up.IsBound(S);
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& BRepAlgo_Image::ImageFrom(const TopoDS_Shape& S) const
 {
@@ -136,8 +111,6 @@ const TopoDS_Shape& BRepAlgo_Image::ImageFrom(const TopoDS_Shape& S) const
   }
   return up(S);
 }
-
-//=================================================================================================
 
 const TopoDS_Shape& BRepAlgo_Image::Root(const TopoDS_Shape& S) const
 {
@@ -162,17 +135,10 @@ const TopoDS_Shape& BRepAlgo_Image::Root(const TopoDS_Shape& S) const
   return up(S2);
 }
 
-//=================================================================================================
-
 bool BRepAlgo_Image::HasImage(const TopoDS_Shape& S) const
 {
   return down.IsBound(S);
 }
-
-//=======================================================================
-// function : NCollection_List<TopoDS_Shape>&
-// purpose  :
-//=======================================================================
 
 const NCollection_List<TopoDS_Shape>& BRepAlgo_Image::Image(const TopoDS_Shape& S) const
 {
@@ -185,10 +151,6 @@ const NCollection_List<TopoDS_Shape>& BRepAlgo_Image::Image(const TopoDS_Shape& 
   return down(S);
 }
 
-//=======================================================================
-// function : NCollection_List<TopoDS_Shape>&
-// purpose  :
-//=======================================================================
 void BRepAlgo_Image::LastImage(const TopoDS_Shape& S, NCollection_List<TopoDS_Shape>& L) const
 {
   if (!down.IsBound(S))
@@ -212,8 +174,6 @@ void BRepAlgo_Image::LastImage(const TopoDS_Shape& S, NCollection_List<TopoDS_Sh
   }
 }
 
-//=================================================================================================
-
 void BRepAlgo_Image::Compact()
 {
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher> M;
@@ -236,8 +196,6 @@ void BRepAlgo_Image::Compact()
     }
   }
 }
-
-//=================================================================================================
 
 void BRepAlgo_Image::Filter(const TopoDS_Shape& S, const TopAbs_ShapeEnum T)
 
@@ -265,8 +223,6 @@ void BRepAlgo_Image::Filter(const TopoDS_Shape& S, const TopAbs_ShapeEnum T)
     }
   }
 }
-
-//=================================================================================================
 
 void BRepAlgo_Image::RemoveRoot(const TopoDS_Shape& Root)
 {
@@ -296,8 +252,6 @@ void BRepAlgo_Image::RemoveRoot(const TopoDS_Shape& Root)
     down.UnBind(Root);
   }
 }
-
-//=================================================================================================
 
 void BRepAlgo_Image::ReplaceRoot(const TopoDS_Shape& OldRoot, const TopoDS_Shape& NewRoot)
 {

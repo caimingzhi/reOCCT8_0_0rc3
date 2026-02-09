@@ -8,24 +8,18 @@
 #include <NCollection_OccAllocator.hpp>
 #include <Standard_HashUtils.hpp>
 
-/**
- * Make loops from a set of connected links. A link is represented by
- * a pair of integer indices of nodes.
- */
 class Poly_MakeLoops
 {
 public:
-  //! Orientation flags that can be attached to a link
   enum LinkFlag
   {
     LF_None     = 0,
-    LF_Fwd      = 1, // forward orientation
-    LF_Rev      = 2, // reversed orientation
-    LF_Both     = 3, // both ways oriented
-    LF_Reversed = 4  // means the link is reversed
+    LF_Fwd      = 1,
+    LF_Rev      = 2,
+    LF_Both     = 3,
+    LF_Reversed = 4
   };
 
-  //! The Link structure
   struct Link
   {
     int node1, node2;
@@ -64,7 +58,7 @@ public:
   {
     size_t operator()(const Poly_MakeLoops::Link& theLink) const noexcept
     {
-      // Combine two int values into a single hash value.
+
       int aCombination[2]{theLink.node1, theLink.node2};
       if (aCombination[0] > aCombination[1])
       {
@@ -80,24 +74,17 @@ public:
     }
   };
 
-  // Define the Loop as a list of links
   typedef NCollection_List<Link> ListOfLink;
   typedef ListOfLink             Loop;
 
-  //! The abstract helper class
   class Helper
   {
   public:
-    //! returns the links adjacent to the given node
     virtual const ListOfLink& GetAdjacentLinks(int theNode) const = 0;
 
-    //! hook function called from AddLink in _DEBUG mode
-    virtual void OnAddLink(int /*theNum*/, const Link& /*theLink*/) const {}
+    virtual void OnAddLink(int, const Link&) const {}
   };
 
-  //! This class implements a heap of integers. The most effective usage
-  //! of it is first to add there all items, and then get top item and remove
-  //! any items till it becomes empty.
   class HeapOfInteger
   {
   public:
@@ -155,30 +142,18 @@ public:
   };
 
 public:
-  // PUBLIC METHODS
-
-  //! Constructor. If helper is NULL then the algorithm will
-  //! probably return a wrong result
   Standard_EXPORT Poly_MakeLoops(const Helper*                                 theHelper,
                                  const occ::handle<NCollection_BaseAllocator>& theAlloc = nullptr);
 
-  //! It is to reset the algorithm to the initial state.
   Standard_EXPORT void Reset(const Helper*                                 theHelper,
                              const occ::handle<NCollection_BaseAllocator>& theAlloc = nullptr);
 
-  //! Adds a link to the set. theOrient defines which orientations of the link
-  //! are allowed.
   Standard_EXPORT void AddLink(const Link& theLink);
 
-  //! Replace one link with another (e.g. to change order of nodes)
   Standard_EXPORT void ReplaceLink(const Link& theLink, const Link& theNewLink);
 
-  //! Set a new value of orientation of a link already added earlier.
-  //! It can be used with LF_None to exclude the link from consideration.
-  //! Returns the old value of orientation.
   Standard_EXPORT LinkFlag SetLinkOrientation(const Link& theLink, const LinkFlag theOrient);
 
-  //! Find the link stored in algo by value
   Standard_EXPORT Link FindLink(const Link& theLink) const;
 
   enum ResultCode
@@ -188,19 +163,14 @@ public:
     RC_Failure      = 4
   };
 
-  //! Does the work. Returns the collection of result codes
   Standard_EXPORT int Perform();
 
-  //! Returns the number of loops in the result
   int GetNbLoops() const { return myLoops.Length(); }
 
-  //! Returns the loop of the given index
   const Loop& GetLoop(int theIndex) const { return myLoops.Value(theIndex); }
 
-  //! Returns the number of detected hanging chains
   int GetNbHanging() const { return myHangIndices.Extent(); }
 
-  //! Fills in the list of hanging links
   Standard_EXPORT void GetHangingLinks(ListOfLink& theLinks) const;
 
 protected:
@@ -232,7 +202,6 @@ private:
   void markHangChain(int theNode, int theIndexS);
   bool canLinkBeTaken(int theIndexS) const;
 
-  // FIELDS
   const Helper*                          myHelper;
   occ::handle<NCollection_BaseAllocator> myAlloc;
   NCollection_IndexedMap<Link, Hasher>   myMapLink;
@@ -241,33 +210,21 @@ private:
   TColStd_PackedMapOfInteger             myHangIndices;
 };
 
-/**
- * Implementation for 3D space
- */
 class gp_Dir;
 
 class Poly_MakeLoops3D : public Poly_MakeLoops
 {
 public:
-  //! The abstract helper class
   class Helper : public Poly_MakeLoops::Helper
   {
   public:
-    // all the following methods should return False if
-    // it is impossible to return a valid direction
-
-    //! returns the tangent vector at the first node of a link
     virtual bool GetFirstTangent(const Link& theLink, gp_Dir& theDir) const = 0;
 
-    //! returns the tangent vector at the last node of a link
     virtual bool GetLastTangent(const Link& theLink, gp_Dir& theDir) const = 0;
 
-    //! returns the normal to the surface at a given node
     virtual bool GetNormal(int theNode, gp_Dir& theDir) const = 0;
   };
 
-  //! Constructor. If helper is NULL then the algorithm will
-  //! probably return a wrong result
   Standard_EXPORT Poly_MakeLoops3D(const Helper*                                 theHelper,
                                    const occ::handle<NCollection_BaseAllocator>& theAlloc);
 
@@ -282,30 +239,19 @@ protected:
   }
 };
 
-/**
- * Implementation for 2D space
- */
 class gp_Dir2d;
 
 class Poly_MakeLoops2D : public Poly_MakeLoops
 {
 public:
-  //! The abstract helper class
   class Helper : public Poly_MakeLoops::Helper
   {
   public:
-    // all the following methods should return False if
-    // it is impossible to return a valid direction
-
-    //! returns the tangent vector at the first node of a link
     virtual bool GetFirstTangent(const Link& theLink, gp_Dir2d& theDir) const = 0;
 
-    //! returns the tangent vector at the last node of a link
     virtual bool GetLastTangent(const Link& theLink, gp_Dir2d& theDir) const = 0;
   };
 
-  //! Constructor. If helper is NULL then the algorithm will
-  //! probably return a wrong result
   Standard_EXPORT Poly_MakeLoops2D(const bool                                    theLeftWay,
                                    const Helper*                                 theHelper,
                                    const occ::handle<NCollection_BaseAllocator>& theAlloc);
@@ -321,7 +267,6 @@ protected:
   }
 
 private:
-  //! this flag says that chooseLeftWay must choose the right way instead
   bool myRightWay;
 };
 

@@ -16,7 +16,6 @@
 class StepTidy_BaseTestFixture : public testing::Test
 {
 protected:
-  // Initialize the work session and model.
   StepTidy_BaseTestFixture()
       : myWS()
   {
@@ -26,10 +25,6 @@ protected:
     myWS->SetModel(myWS->NormAdaptor()->NewModel());
   }
 
-  // Add a Cartesian point to the model.
-  // @param theName the name of the Cartesian point.
-  // @param thePoint the coordinates of the Cartesian point.
-  // @return the added Cartesian point.
   occ::handle<StepGeom_CartesianPoint> addCartesianPoint(const char*   theName  = nullptr,
                                                          const gp_XYZ& thePoint = gp_XYZ(0.,
                                                                                          0.,
@@ -43,10 +38,6 @@ protected:
     return aCartesianPoint;
   }
 
-  // Add a direction to the model.
-  // @param theName the name of the direction.
-  // @param theDirection the direction ratios.
-  // @return the added direction.
   occ::handle<StepGeom_Direction> addDirection(const char*   theName      = nullptr,
                                                const gp_XYZ& theDirection = gp_XYZ(0.,
                                                                                    0.,
@@ -65,11 +56,6 @@ protected:
     return aDirection;
   }
 
-  // Add a vector to the model.
-  // @param theName the name of the vector.
-  // @param theOrientation the orientation of the vector.
-  // @param aMagnitude the magnitude of the vector.
-  // @return the added vector.
   occ::handle<StepGeom_Vector> addVector(const char*   theName        = nullptr,
                                          const gp_XYZ& theOrientation = gp_XYZ(0., 0., 1.),
                                          const double  aMagnitude     = 1.) const
@@ -82,12 +68,6 @@ protected:
     return aVector;
   }
 
-  // Add an Axis2Placement3d to the model.
-  // @param theName the name of the Axis2Placement3d.
-  // @param theLocation the location of the Axis2Placement3d.
-  // @param theAxis the axis of the Axis2Placement3d.
-  // @param theRefDirection the reference direction of the Axis2Placement3d.
-  // @return the added Axis2Placement3d.
   occ::handle<StepGeom_Axis2Placement3d> addAxis2Placement3d(
     const char*   theName         = nullptr,
     const gp_XYZ& theLocation     = gp_XYZ(0., 0., 0.),
@@ -107,12 +87,6 @@ protected:
     return aAxis2Placement3d;
   }
 
-  // Add a line to the model.
-  // @param theName the name of the line.
-  // @param theLocation the location of the line.
-  // @param theOrientation the orientation of the line vector.
-  // @param theMagnitude the magnitude of the line vector.
-  // @return the added line.
   occ::handle<StepGeom_Line> addLine(const char*   theName        = nullptr,
                                      const gp_XYZ& theLocation    = gp_XYZ(0., 0., 0.),
                                      const gp_XYZ& theOrientation = gp_XYZ(0., 0., 1.),
@@ -128,13 +102,6 @@ protected:
     return aLine;
   }
 
-  // Add a circle to the model.
-  // @param theName the name of the circle.
-  // @param theLocation the location of the circle.
-  // @param theAxis the axis of the circle.
-  // @param theRefDirection the reference direction of the circle.
-  // @param theRadius the radius of the circle.
-  // @return the added circle.
   occ::handle<StepGeom_Circle> addCircle(const char*   theName         = nullptr,
                                          const gp_XYZ& theLocation     = gp_XYZ(0., 0., 0.),
                                          const gp_XYZ& theAxis         = gp_XYZ(0., 0., 1.),
@@ -151,12 +118,6 @@ protected:
     return aCircle;
   }
 
-  // Add a plane to the model.
-  // @param theName the name of the plane.
-  // @param theLocation the location of the plane.
-  // @param theAxis the axis of the plane.
-  // @param theRefDirection the reference direction of the plane.
-  // @return the added plane.
   occ::handle<StepGeom_Plane> addPlane(const char*   theName         = nullptr,
                                        const gp_XYZ& theLocation     = gp_XYZ(0., 0., 0.),
                                        const gp_XYZ& theAxis         = gp_XYZ(0., 0., 1.),
@@ -170,8 +131,6 @@ protected:
     return aPlane;
   }
 
-  // Add an entity to the model.
-  // @param theEntity the entity to add.
   void addToModel(const occ::handle<Standard_Transient>& theEntity) const
   {
     myWS->Model()->AddWithRefs(theEntity);

@@ -2,26 +2,26 @@
 
 #include <TopOpeBRepDS_EXPORT.hpp>
 Standard_EXPORT occ::handle<TopOpeBRepDS_Interference> MakeCPVInterference(
-  const TopOpeBRepDS_Transition& T, // transition
-  const int                      S, // curve/edge index
-  const int                      G, // point/vertex index
-  const double                   P, // parameter of G on S
-  const TopOpeBRepDS_Kind        GK);      // POINT/VERTEX
+  const TopOpeBRepDS_Transition& T,
+  const int                      S,
+  const int                      G,
+  const double                   P,
+  const TopOpeBRepDS_Kind        GK);
 Standard_EXPORT occ::handle<TopOpeBRepDS_Interference> MakeEPVInterference(
-  const TopOpeBRepDS_Transition& T, // transition
-  const int                      S, // curve/edge index
-  const int                      G, // point/vertex index
-  const double                   P, // parameter of G on S
+  const TopOpeBRepDS_Transition& T,
+  const int                      S,
+  const int                      G,
+  const double                   P,
   const TopOpeBRepDS_Kind        GK,
-  const bool                     B); // G is a vertex (or not) of the interference master
+  const bool                     B);
 Standard_EXPORT occ::handle<TopOpeBRepDS_Interference> MakeEPVInterference(
-  const TopOpeBRepDS_Transition& T,  // transition
-  const int                      S,  // curve/edge index
-  const int                      G,  // point/vertex index
-  const double                   P,  // parameter of G on S
-  const TopOpeBRepDS_Kind        GK, // POINT/VERTEX
+  const TopOpeBRepDS_Transition& T,
+  const int                      S,
+  const int                      G,
+  const double                   P,
+  const TopOpeBRepDS_Kind        GK,
   const TopOpeBRepDS_Kind        SK,
-  const bool                     B); // G is a vertex (or not) of the interference master
+  const bool                     B);
 Standard_EXPORT bool FUN_hasStateShape(const TopOpeBRepDS_Transition& T,
                                        const TopAbs_State             state,
                                        const TopAbs_ShapeEnum         shape);

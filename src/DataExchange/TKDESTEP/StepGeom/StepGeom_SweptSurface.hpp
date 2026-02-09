@@ -11,7 +11,6 @@ class StepGeom_SweptSurface : public StepGeom_Surface
 {
 
 public:
-  //! Returns a SweptSurface
   Standard_EXPORT StepGeom_SweptSurface();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

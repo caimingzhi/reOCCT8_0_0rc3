@@ -7,7 +7,6 @@ class gp_Lin;
 class gp_Circ;
 class gp_Elips;
 
-//! presentation of equal distance to point myMidPoint
 class PrsDim_MidPointRelation : public PrsDim_Relation
 {
   DEFINE_STANDARD_RTTIEXT(PrsDim_MidPointRelation, PrsDim_Relation)
@@ -51,18 +50,6 @@ private:
                                            const gp_Pnt&  pnt2,
                                            const bool     first);
 
-  //! ComputePointsOn... methods set myFAttach, myFirstPnt and myLastPnt
-  //! from the following initial data: curve, end points, myMidPoint.
-  //! End points (pnt1 & pnt2) and curve define the trimmed curve.
-  //! If end points are equal, curve is not trimmed (line - special case).
-  //!
-  //! .------. pnt2
-  //! /
-  //! .  circle  . myLastPnt
-  //! |          |
-  //! . pnt1     . myFAttach
-  //! \   arc  /          . myMidPoint
-  //! .______. myFirstPnt
   Standard_EXPORT void ComputePointsOnElips(const gp_Elips& anEll,
                                             const gp_Pnt&   pnt1,
                                             const gp_Pnt&   pnt2,

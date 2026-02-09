@@ -8,7 +8,6 @@
 class StepRepr_ConstructiveGeometryRepresentation : public StepRepr_Representation
 {
 public:
-  //! Returns a ConstructiveGeometryRepresentation
   Standard_EXPORT StepRepr_ConstructiveGeometryRepresentation();
 
   DEFINE_STANDARD_RTTIEXT(StepRepr_ConstructiveGeometryRepresentation, StepRepr_Representation)

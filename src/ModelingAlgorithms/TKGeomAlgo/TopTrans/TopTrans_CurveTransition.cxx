@@ -5,8 +5,6 @@
 #define SAME 0
 #define LOWER -1
 
-//=================================================================================================
-
 TopTrans_CurveTransition::TopTrans_CurveTransition()
     : myCurv(0.0),
       Init(false),
@@ -17,12 +15,6 @@ TopTrans_CurveTransition::TopTrans_CurveTransition()
   TranLast  = TopAbs_FORWARD;
 }
 
-//=======================================================================
-// function : Reset
-// purpose  : Initializer for a complex curve transition with the elements
-//           of the intersecting curve.
-//=======================================================================
-
 void TopTrans_CurveTransition::Reset(const gp_Dir& Tgt, const gp_Dir& Norm, const double Curv)
 {
   myTgt  = Tgt;
@@ -31,24 +23,12 @@ void TopTrans_CurveTransition::Reset(const gp_Dir& Tgt, const gp_Dir& Norm, cons
   Init   = true;
 }
 
-//=======================================================================
-// function : Reset
-// purpose  : Initializer for a complex curve transition with the elements
-//           of the intersecting straight line.
-//=======================================================================
-
 void TopTrans_CurveTransition::Reset(const gp_Dir& Tgt)
 {
   myTgt  = Tgt;
   myCurv = 0.;
   Init   = true;
 }
-
-//=======================================================================
-// function : Compare
-// purpose  : Compare the elements of  an interference  on  an intersected
-//           curve with the interference stored in the complex Transition.
-//=======================================================================
 
 void TopTrans_CurveTransition::Compare(const double             Tole,
                                        const gp_Dir&            T,
@@ -57,12 +37,10 @@ void TopTrans_CurveTransition::Compare(const double             Tole,
                                        const TopAbs_Orientation St,
                                        const TopAbs_Orientation Or)
 {
-  // S is the transition, how the curve cross the boundary
-  // O is the orientation, how the intersection is set on the boundary
+
   TopAbs_Orientation S = St;
   TopAbs_Orientation O = Or;
 
-  // adjustment for INTERNAL transition
   if (S == TopAbs_INTERNAL)
   {
     if (T * myTgt < 0)
@@ -71,7 +49,6 @@ void TopTrans_CurveTransition::Compare(const double             Tole,
       S = O;
   }
 
-  // It is the first comparison for this complex transition
   if (Init)
   {
     Init      = false;
@@ -85,14 +62,13 @@ void TopTrans_CurveTransition::Compare(const double             Tole,
     TranLast  = S;
     switch (O)
     {
-        // Interference en fin d'arete il faut inverser la tangente
+
       case TopAbs_REVERSED:
         TgtFirst.Reverse();
         TgtLast.Reverse();
         break;
       case TopAbs_INTERNAL:
-        // Interference en milieu d'arete il faut inverser en fonction de la
-        // position de la tangente de reference
+
         if (myTgt * T > 0)
           TgtFirst.Reverse();
         else
@@ -104,7 +80,6 @@ void TopTrans_CurveTransition::Compare(const double             Tole,
     }
   }
 
-  // Compare with the existent first and last transition :
   else
   {
     bool   FirstSet    = false;
@@ -128,7 +103,7 @@ void TopTrans_CurveTransition::Compare(const double             Tole,
     {
 
       case LOWER:
-        // If the angle is greater than the first the new become the first
+
         FirstSet = true;
         TgtFirst = T;
         switch (O)
@@ -150,7 +125,7 @@ void TopTrans_CurveTransition::Compare(const double             Tole,
         break;
 
       case SAME:
-        // If same angles we look at the Curvature
+
         if (IsBefore(Tole, cosAngWithT, N, C, NormFirst, CurvFirst))
         {
           FirstSet = true;
@@ -180,7 +155,7 @@ void TopTrans_CurveTransition::Compare(const double             Tole,
 
     if (!FirstSet || O == TopAbs_INTERNAL)
     {
-      // Dans les cas de tangence le premier peut etre aussi le dernier
+
       if (O == TopAbs_INTERNAL)
         cosAngWithT = -cosAngWithT;
       double cosAngWith2 = myTgt * TgtLast;
@@ -189,7 +164,7 @@ void TopTrans_CurveTransition::Compare(const double             Tole,
       {
 
         case GREATER:
-          // If the angle is lower than the last the new become the last
+
           TgtLast = T;
           switch (O)
           {
@@ -210,7 +185,7 @@ void TopTrans_CurveTransition::Compare(const double             Tole,
           break;
 
         case SAME:
-          // If the angle is the same we look at the curvature
+
           if (IsBefore(Tole, cosAngWithT, NormLast, CurvLast, N, C))
           {
             TgtLast = T;
@@ -236,11 +211,6 @@ void TopTrans_CurveTransition::Compare(const double             Tole,
   }
 }
 
-//=======================================================================
-// function : StateBefore
-// purpose  : Give the state of the curv before the interference.
-//=======================================================================
-
 TopAbs_State TopTrans_CurveTransition::StateBefore() const
 {
   if (Init)
@@ -256,11 +226,6 @@ TopAbs_State TopTrans_CurveTransition::StateBefore() const
   }
   return TopAbs_OUT;
 }
-
-//=======================================================================
-// function : StateAfter
-// purpose  : give the state of the curve after the interference.
-//=======================================================================
 
 TopAbs_State TopTrans_CurveTransition::StateAfter() const
 {
@@ -278,12 +243,6 @@ TopAbs_State TopTrans_CurveTransition::StateAfter() const
   return TopAbs_OUT;
 }
 
-//=======================================================================
-// function : IsBefore
-// purpose  : Compare the curvature of the two transition and return true
-//           if T1 is before T2
-//=======================================================================
-
 bool TopTrans_CurveTransition::IsBefore(const double  Tole,
                                         const double  CosAngl,
                                         const gp_Dir& N1,
@@ -297,24 +256,19 @@ bool TopTrans_CurveTransition::IsBefore(const double  Tole,
 
   if (std::abs(TN1) <= Tole || std::abs(TN2) <= Tole)
   {
-    // Tangent : The first is the interference which have the nearest curvature
-    //           from the reference.
+
     if (myCurv == 0)
     {
-      // The reference is straight
-      // The first is the interference which have the lowest curvature.
+
       if (C1 < C2)
         OneBefore = true;
-      //  Modified by Sergey KHROMOV - Wed Dec 27 17:08:49 2000 Begin
+
       if (CosAngl > 0)
         OneBefore = !OneBefore;
-      //  Modified by Sergey KHROMOV - Wed Dec 27 17:08:50 2000 End
     }
     else
     {
-      // The reference is curv
-      // The first is the interference which have the nearest curvature
-      // in the direction
+
       double deltaC1, deltaC2;
       if (C1 == 0. || myCurv == 0.)
       {
@@ -340,42 +294,37 @@ bool TopTrans_CurveTransition::IsBefore(const double  Tole,
   }
   else if (TN1 < 0)
   {
-    // Before the first interference we are in the curvature
+
     if (TN2 > 0)
     {
-      // Before the second  interference we are out the curvature
-      // The first interference is before  /* ->)( */
+
       OneBefore = true;
     }
     else
     {
-      // Before the second interference we are in the curvature
+
       if (C1 > C2)
       {
-        // We choice the greater curvature
-        // The first interference is before   /* ->)) */
+
         OneBefore = true;
       }
     }
   }
   else if (TN1 > 0)
   {
-    // Before the first interference we are out the curvature
+
     if (TN2 > 0)
     {
-      // Before the second interference we are out the curvature /* ->(( */
+
       if (C1 < C2)
       {
-        // We choice the lower curvature
-        // The first interference is before
+
         OneBefore = true;
       }
     }
   }
   return OneBefore;
 }
-
-//=================================================================================================
 
 int TopTrans_CurveTransition::Compare(const double Ang1, const double Ang2, const double Tole) const
 {

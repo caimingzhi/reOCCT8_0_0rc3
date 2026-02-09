@@ -4,11 +4,6 @@
 #include <LDOM_MemManager.hpp>
 #include <LDOM_NodeList.hpp>
 
-//=======================================================================
-// function : Create
-// purpose  : construction in the Document's data pool
-//=======================================================================
-
 LDOM_BasicElement& LDOM_BasicElement::Create(const char*                         aName,
                                              const int                           aLen,
                                              const occ::handle<LDOM_MemManager>& aDoc)
@@ -23,14 +18,12 @@ LDOM_BasicElement& LDOM_BasicElement::Create(const char*                        
   LDOM_BasicElement* aNewElem = new (aMem) LDOM_BasicElement;
 
   int aHash;
-  //  aDoc -> HashedAllocate (aString, strlen(aString), aNewElem -> myTagName);
+
   aNewElem->myTagName = aDoc->HashedAllocate(aName, aLen, aHash);
 
   aNewElem->myNodeType = LDOM_Node::ELEMENT_NODE;
   return *aNewElem;
 }
-
-//=================================================================================================
 
 void LDOM_BasicElement::RemoveNodes()
 {
@@ -68,11 +61,6 @@ void LDOM_BasicElement::RemoveNodes()
   myFirstChild = nullptr;
 }
 
-//=======================================================================
-// function : operator =
-// purpose  : Nullify
-//=======================================================================
-
 LDOM_BasicElement& LDOM_BasicElement::operator=(const LDOM_NullPtr* aNull)
 {
   myTagName = nullptr;
@@ -81,30 +69,11 @@ LDOM_BasicElement& LDOM_BasicElement::operator=(const LDOM_NullPtr* aNull)
   return *this;
 }
 
-//=================================================================================================
-
-/*
-LDOM_BasicElement::LDOM_BasicElement (const LDOM_Element& anElement)
-     : LDOM_BasicNode   (LDOM_Node::ELEMENT_NODE),
-       myAttributeMask  (0),
-       myFirstChild     (NULL)
-{
-//  LDOMString aNewTagName (anElement.getTagName(), anElement.myDocument);
-//  myTagName = aNewTagName;
-  const LDOM_BasicElement& anOther =
-    (const LDOM_BasicElement&) anElement.Origin();
-  myTagName = anOther.GetTagName();
-}
-*/
-//=================================================================================================
-
 LDOM_BasicElement::~LDOM_BasicElement()
 {
   myTagName = nullptr;
   RemoveNodes();
 }
-
-//=================================================================================================
 
 const LDOM_BasicNode* LDOM_BasicElement::GetLastChild() const
 {
@@ -123,8 +92,6 @@ const LDOM_BasicNode* LDOM_BasicElement::GetLastChild() const
   }
   return aNode;
 }
-
-//=================================================================================================
 
 const LDOM_BasicAttribute& LDOM_BasicElement::GetAttribute(const LDOMBasicString& aName,
                                                            const LDOM_BasicNode*  aLastCh) const
@@ -149,13 +116,11 @@ const LDOM_BasicAttribute& LDOM_BasicElement::GetAttribute(const LDOMBasicString
   return aNullAttribute;
 }
 
-//=================================================================================================
-
 const LDOM_BasicAttribute* LDOM_BasicElement::GetFirstAttribute(
   const LDOM_BasicNode*&  theLastCh,
   const LDOM_BasicNode**& thePrevNode) const
 {
-  //  Find the First Attribute as well as the Last Child among siblings
+
   const LDOM_BasicNode*  aFirstAttr;
   const LDOM_BasicNode** aPrevNode;
   if (theLastCh)
@@ -188,27 +153,20 @@ const LDOM_BasicAttribute* LDOM_BasicElement::GetFirstAttribute(
   return (LDOM_BasicAttribute*)aFirstAttr;
 }
 
-//=======================================================================
-// function : AddAttribute
-// purpose  : Add or replace an attribute
-//=======================================================================
-
 const LDOM_BasicNode* LDOM_BasicElement::AddAttribute(const LDOMBasicString& anAttrName,
                                                       const LDOMBasicString& anAttrValue,
                                                       const occ::handle<LDOM_MemManager>& aDocument,
                                                       const LDOM_BasicNode*               aLastCh)
 {
-  //  Create attribute
+
   int                  aHash;
   LDOM_BasicAttribute& anAttr = LDOM_BasicAttribute::Create(anAttrName, aDocument, aHash);
   anAttr.myValue              = anAttrValue;
 
-  //  Initialize the loop of attribute name search
   const LDOM_BasicNode**     aPrNode;
   const LDOM_BasicAttribute* aFirstAttr = GetFirstAttribute(aLastCh, aPrNode);
   const char*                aNameStr   = anAttrName.GetString();
 
-  //  Check attribute hash value against the current mask
   const unsigned int  anAttrMaskValue = aHash & (8 * sizeof(myAttributeMask) - 1);
   const unsigned long anAttributeMask = (1 << anAttrMaskValue);
 #ifdef OCCT_DEBUG_MASK
@@ -216,14 +174,14 @@ const LDOM_BasicNode* LDOM_BasicElement::AddAttribute(const LDOMBasicString& anA
 #endif
   if ((myAttributeMask & anAttributeMask) == 0)
   {
-    // this is new attribute, OK
+
     myAttributeMask |= anAttributeMask;
     *aPrNode = &anAttr;
     anAttr.SetSibling(aFirstAttr);
   }
   else
   {
-    // this attribute may have already been installed
+
     LDOM_BasicAttribute* aCurrentAttr = (LDOM_BasicAttribute*)aFirstAttr;
     while (aCurrentAttr)
     {
@@ -237,7 +195,7 @@ const LDOM_BasicNode* LDOM_BasicElement::AddAttribute(const LDOMBasicString& anA
     }
     if (aCurrentAttr == nullptr)
     {
-      // this is new attribute, OK
+
       *aPrNode = &anAttr;
       anAttr.SetSibling(aFirstAttr);
     }
@@ -245,15 +203,10 @@ const LDOM_BasicNode* LDOM_BasicElement::AddAttribute(const LDOMBasicString& anA
   return aLastCh;
 }
 
-//=======================================================================
-// function : RemoveAttribute
-// purpose  : Find and delete an attribute from list
-//=======================================================================
-
 const LDOM_BasicNode* LDOM_BasicElement::RemoveAttribute(const LDOMBasicString& aName,
                                                          const LDOM_BasicNode*  aLastCh) const
 {
-  //  Check attribute hash value against the current mask
+
   const char* const   aNameStr        = aName.GetString();
   const int           aHash           = LDOM_MemManager::Hash(aNameStr, (int)strlen(aNameStr));
   const unsigned int  anAttrMaskValue = aHash & (8 * sizeof(myAttributeMask) - 1);
@@ -263,11 +216,11 @@ const LDOM_BasicNode* LDOM_BasicElement::RemoveAttribute(const LDOMBasicString& 
 #endif
   if ((myAttributeMask & anAttributeMask) == 0)
   {
-    ; // maybe cause for exception
+    ;
   }
   else
   {
-    const LDOM_BasicNode**     aPrevNode; // dummy
+    const LDOM_BasicNode**     aPrevNode;
     const LDOM_BasicAttribute* anAttr = GetFirstAttribute(aLastCh, aPrevNode);
     while (anAttr)
     {
@@ -282,8 +235,6 @@ const LDOM_BasicNode* LDOM_BasicElement::RemoveAttribute(const LDOMBasicString& 
   }
   return aLastCh;
 }
-
-//=================================================================================================
 
 void LDOM_BasicElement::RemoveChild(const LDOM_BasicNode* aChild) const
 {
@@ -302,10 +253,7 @@ void LDOM_BasicElement::RemoveChild(const LDOM_BasicNode* aChild) const
     aPrevNode = (const LDOM_BasicNode**)&(aNode->mySibling);
     aNode     = aNode->GetSibling();
   }
-  // here may be the cause to throw an exception
 }
-
-//=================================================================================================
 
 void LDOM_BasicElement::AppendChild(const LDOM_BasicNode*  aChild,
                                     const LDOM_BasicNode*& aLastChild) const
@@ -334,11 +282,6 @@ void LDOM_BasicElement::AppendChild(const LDOM_BasicNode*  aChild,
   aLastChild = aChild;
 }
 
-//=======================================================================
-// function : AddElementsByTagName
-// purpose  : Add to the List all sub-elements with the given name (recursive)
-//=======================================================================
-
 void LDOM_BasicElement::AddElementsByTagName(LDOM_NodeList&         aList,
                                              const LDOMBasicString& aTagName) const
 {
@@ -351,7 +294,7 @@ void LDOM_BasicElement::AddElementsByTagName(LDOM_NodeList&         aList,
     if (aNode->getNodeType() == LDOM_Node::ELEMENT_NODE)
     {
       LDOM_BasicElement& anElement = *(LDOM_BasicElement*)aNode;
-      //      if (anElement.GetTagName().equals(aTagName))
+
       if (strcmp(anElement.GetTagName(), aTagString) == 0)
         aList.Append(anElement);
       anElement.AddElementsByTagName(aList, aTagName);
@@ -359,8 +302,6 @@ void LDOM_BasicElement::AddElementsByTagName(LDOM_NodeList&         aList,
     aNode = aNode->GetSibling();
   }
 }
-
-//=================================================================================================
 
 void LDOM_BasicElement::AddAttributes(LDOM_NodeList& aList, const LDOM_BasicNode* aLastChild) const
 {
@@ -377,12 +318,6 @@ void LDOM_BasicElement::AddAttributes(LDOM_NodeList& aList, const LDOM_BasicNode
   }
 }
 
-//=======================================================================
-// function : ReplaceElement
-// purpose  : Copy data and children into this node from another one
-//           The only preserved data is mySibling
-//=======================================================================
-
 void LDOM_BasicElement::ReplaceElement(const LDOM_BasicElement&            anOtherElem,
                                        const occ::handle<LDOM_MemManager>& aDocument)
 {
@@ -392,7 +327,6 @@ void LDOM_BasicElement::ReplaceElement(const LDOM_BasicElement&            anOth
   const LDOM_BasicNode* aBNode     = anOtherElem.GetFirstChild();
   const LDOM_BasicNode* aLastChild = nullptr;
 
-  // Loop on children (non-attributes)
   for (; aBNode != nullptr; aBNode = aBNode->GetSibling())
   {
     if (aBNode->isNull())
@@ -407,7 +341,7 @@ void LDOM_BasicElement::ReplaceElement(const LDOM_BasicElement&            anOth
         const char*              aTagString = aBNodeElem.GetTagName();
         LDOM_BasicElement&       aNewBNodeElem =
           LDOM_BasicElement::Create(aTagString, (int)strlen(aTagString), aDocument);
-        aNewBNodeElem.ReplaceElement(aBNodeElem, aDocument); // reccur
+        aNewBNodeElem.ReplaceElement(aBNodeElem, aDocument);
         aNewBNode = &aNewBNodeElem;
         break;
       }
@@ -433,7 +367,6 @@ void LDOM_BasicElement::ReplaceElement(const LDOM_BasicElement&            anOth
     (const LDOM_BasicNode*&)aLastChild = aNewBNode;
   }
 
-  // Loop on attributes (in the end of the list of children)
 loop_attr:
   LDOM_BasicNode* aLastAttr = (LDOM_BasicNode*)aLastChild;
   for (; aBNode != nullptr; aBNode = aBNode->GetSibling())

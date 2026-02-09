@@ -10,7 +10,6 @@ class StepData_StepWriter;
 class Interface_EntityIterator;
 class StepGeom_SuParameters;
 
-//! Read & Write tool for SuParameters
 class RWStepGeom_RWSuParameters
 {
 public:

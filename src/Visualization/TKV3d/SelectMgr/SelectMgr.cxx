@@ -1,15 +1,4 @@
-// Copyright (c) 2020 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <SelectMgr.hpp>
 
@@ -39,7 +28,7 @@
 
 namespace
 {
-  //! Compute polyline of shrunk triangle.
+
   static occ::handle<NCollection_HSequence<gp_Pnt>> shrunkTriangle(const gp_Pnt* thePnts,
                                                                    const gp_XYZ& theCenter)
   {
@@ -54,7 +43,6 @@ namespace
     return aPoints;
   }
 
-  //! Fill in triangulation polylines.
   static void addTriangulation(
     NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqLines,
     NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqFree,
@@ -85,7 +73,6 @@ namespace
     }
   }
 
-  //! Fill in bounding box polylines.
   static void addBoundingBox(
     NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqLines,
     const occ::handle<Select3D_SensitiveBox>&                     theSensBox,
@@ -133,7 +120,6 @@ namespace
     }
   }
 
-  //! Fill in circle polylines.
   static void addCircle(NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqLines,
                         const double                                                  theRadius,
                         const gp_Trsf&                                                theTrsf,
@@ -153,7 +139,6 @@ namespace
     theSeqLines.Append(aPoints);
   }
 
-  //! Fill in cylinder polylines.
   static void addCylinder(NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theSeqLines,
                           const occ::handle<Select3D_SensitiveCylinder>&                theSensCyl,
                           const gp_Trsf&                                                theLoc)
@@ -185,8 +170,6 @@ namespace
     theSeqLines.Append(aVertLine2);
   }
 } // namespace
-
-//=================================================================================================
 
 void SelectMgr::ComputeSensitivePrs(const occ::handle<Graphic3d_Structure>&     thePrs,
                                     const occ::handle<SelectMgr_Selection>&     theSel,

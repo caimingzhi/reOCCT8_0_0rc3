@@ -1,6 +1,5 @@
 #pragma once
 
-//! Defines types of geom tolerance
 enum XCAFDimTolObjects_GeomToleranceType
 {
   XCAFDimTolObjects_GeomToleranceType_None,

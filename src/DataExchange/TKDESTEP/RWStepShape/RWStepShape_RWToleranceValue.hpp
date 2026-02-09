@@ -11,7 +11,6 @@ class StepShape_ToleranceValue;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ToleranceValue
 class RWStepShape_RWToleranceValue
 {
 public:

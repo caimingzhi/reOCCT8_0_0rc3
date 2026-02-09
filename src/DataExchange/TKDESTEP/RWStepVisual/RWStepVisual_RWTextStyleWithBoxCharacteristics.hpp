@@ -11,7 +11,6 @@ class StepVisual_TextStyleWithBoxCharacteristics;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for TextStyleWithBoxCharacteristics
 class RWStepVisual_RWTextStyleWithBoxCharacteristics
 {
 public:

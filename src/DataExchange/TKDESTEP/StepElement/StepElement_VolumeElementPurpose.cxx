@@ -4,18 +4,12 @@
 #include <StepElement_VolumeElementPurposeMember.hpp>
 #include <TCollection_HAsciiString.hpp>
 
-//=================================================================================================
-
 StepElement_VolumeElementPurpose::StepElement_VolumeElementPurpose() = default;
 
-//=================================================================================================
-
-int StepElement_VolumeElementPurpose::CaseNum(const occ::handle<Standard_Transient>& /*ent*/) const
+int StepElement_VolumeElementPurpose::CaseNum(const occ::handle<Standard_Transient>&) const
 {
   return 0;
 }
-
-//=================================================================================================
 
 int StepElement_VolumeElementPurpose::CaseMem(const occ::handle<StepData_SelectMember>& ent) const
 {
@@ -29,14 +23,10 @@ int StepElement_VolumeElementPurpose::CaseMem(const occ::handle<StepData_SelectM
     return 0;
 }
 
-//=================================================================================================
-
 occ::handle<StepData_SelectMember> StepElement_VolumeElementPurpose::NewMember() const
 {
   return new StepElement_VolumeElementPurposeMember;
 }
-
-//=================================================================================================
 
 void StepElement_VolumeElementPurpose::SetEnumeratedVolumeElementPurpose(
   const StepElement_EnumeratedVolumeElementPurpose val)
@@ -50,8 +40,6 @@ void StepElement_VolumeElementPurpose::SetEnumeratedVolumeElementPurpose(
   SelMem->SetName(name->ToCString());
   SelMem->SetEnum((int)val);
 }
-
-//=================================================================================================
 
 StepElement_EnumeratedVolumeElementPurpose StepElement_VolumeElementPurpose::
   EnumeratedVolumeElementPurpose() const
@@ -80,8 +68,6 @@ StepElement_EnumeratedVolumeElementPurpose StepElement_VolumeElementPurpose::
   return val;
 }
 
-//=================================================================================================
-
 void StepElement_VolumeElementPurpose::SetApplicationDefinedElementPurpose(
   const occ::handle<TCollection_HAsciiString>& val)
 {
@@ -94,8 +80,6 @@ void StepElement_VolumeElementPurpose::SetApplicationDefinedElementPurpose(
   SelMem->SetName(name->ToCString());
   SelMem->SetString(val->ToCString());
 }
-
-//=================================================================================================
 
 occ::handle<TCollection_HAsciiString> StepElement_VolumeElementPurpose::
   ApplicationDefinedElementPurpose() const

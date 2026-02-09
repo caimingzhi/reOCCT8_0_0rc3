@@ -11,7 +11,6 @@ class StepRepr_MeasureRepresentationItem;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for MeasureRepresentationItem
 class RWStepRepr_RWMeasureRepresentationItem
 {
 public:

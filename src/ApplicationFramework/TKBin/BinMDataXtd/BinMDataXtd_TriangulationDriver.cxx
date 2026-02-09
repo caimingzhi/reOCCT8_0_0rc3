@@ -7,25 +7,17 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataXtd_TriangulationDriver, BinMDF_ADriver)
 
-//=================================================================================================
-
 BinMDataXtd_TriangulationDriver::BinMDataXtd_TriangulationDriver(
   const occ::handle<Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataXtd_Triangulation)->Name())
 {
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> BinMDataXtd_TriangulationDriver::NewEmpty() const
 {
   return new TDataXtd_Triangulation();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : persistent -> transient (retrieve)
-//=======================================================================
 bool BinMDataXtd_TriangulationDriver::Paste(const BinObjMgt_Persistent&       theSource,
                                             const occ::handle<TDF_Attribute>& theTarget,
                                             BinObjMgt_RRelocationTable&) const
@@ -48,13 +40,10 @@ bool BinMDataXtd_TriangulationDriver::Paste(const BinObjMgt_Persistent&       th
     return false;
   }
 
-  // allocate the mesh
   occ::handle<Poly_Triangulation> PT = new Poly_Triangulation(nbNodes, nbTriangles, hasUV);
 
-  // deflection
   PT->Deflection(deflection);
 
-  // read nodes
   for (i = 1; i <= nbNodes; i++)
   {
     theSource >> x;
@@ -63,7 +52,6 @@ bool BinMDataXtd_TriangulationDriver::Paste(const BinObjMgt_Persistent&       th
     PT->SetNode(i, gp_Pnt(x, y, z));
   }
 
-  // read 2d nodes
   if (hasUV)
   {
     for (i = 1; i <= nbNodes; i++)
@@ -74,7 +62,6 @@ bool BinMDataXtd_TriangulationDriver::Paste(const BinObjMgt_Persistent&       th
     }
   }
 
-  // read triangles
   for (i = 1; i <= nbTriangles; i++)
   {
     theSource >> n1;
@@ -83,15 +70,10 @@ bool BinMDataXtd_TriangulationDriver::Paste(const BinObjMgt_Persistent&       th
     PT->SetTriangle(i, Poly_Triangle(n1, n2, n3));
   }
 
-  // set triangulation to Ocaf attribute
   attrubute->Set(PT);
   return !PT.IsNull();
 }
 
-//=======================================================================
-// function : Paste
-// purpose  : transient -> persistent (store)
-//=======================================================================
 void BinMDataXtd_TriangulationDriver::Paste(
   const occ::handle<TDF_Attribute>& theSource,
   BinObjMgt_Persistent&             theTarget,
@@ -106,14 +88,12 @@ void BinMDataXtd_TriangulationDriver::Paste(
     int nbTriangles = PT->NbTriangles();
     int n1, n2, n3;
 
-    // write number of elements
     theTarget << nbNodes;
     theTarget << nbTriangles;
     theTarget << (PT->HasUVNodes() ? 1 : 0);
-    // write the deflection
+
     theTarget << PT->Deflection();
 
-    // write 3d nodes
     for (int i = 1; i <= nbNodes; i++)
     {
       const gp_Pnt aNode = PT->Node(i);
@@ -122,7 +102,6 @@ void BinMDataXtd_TriangulationDriver::Paste(
       theTarget << aNode.Z();
     }
 
-    // write 2d nodes
     if (PT->HasUVNodes())
     {
       for (int i = 1; i <= nbNodes; i++)
@@ -133,7 +112,6 @@ void BinMDataXtd_TriangulationDriver::Paste(
       }
     }
 
-    // Write triangles
     for (int i = 1; i <= nbTriangles; i++)
     {
       PT->Triangle(i).Get(n1, n2, n3);

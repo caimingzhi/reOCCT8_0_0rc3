@@ -17,16 +17,7 @@
 #include <TopoDS_Shape.hpp>
 #include <DBRep.hpp>
 
-// #ifdef _MSC_VER
 #include <cstdio>
-
-// #endif
-
-// POP : first Wrong Declaration : now it is correct
-//       second not used
-// extern void QADNaming_BuildMap(NCollection_Map<TDF_Label>& Updated, const TDF_Label& Lab);
-
-//=================================================================================================
 
 static int Ascendants(Draw_Interpretor& di, int n, const char** a)
 {
@@ -36,11 +27,9 @@ static int Ascendants(Draw_Interpretor& di, int n, const char** a)
   char name[100];
 
   occ::handle<TDF_Data> ND;
-  //  occ::handle<TNaming_UsedShapes> US;
 
   if (!DDF::GetDF(a[1], ND))
     return 1;
-  //  ND->Root().FindAttribute(TNaming_UsedShapes::GetID(),US);
 
   TopoDS_Shape S = DBRep::Get(a[2]);
   if (S.IsNull())
@@ -53,7 +42,6 @@ static int Ascendants(Draw_Interpretor& di, int n, const char** a)
   else
     T = ND->Transaction();
 
-  // TNaming_OldShapeIterator it (S, T, US);
   TNaming_OldShapeIterator it(S, T, ND->Root());
   int                      i = 0;
   TCollection_AsciiString  entry;
@@ -69,8 +57,6 @@ static int Ascendants(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int Descendants(Draw_Interpretor& di, int n, const char** a)
 
 {
@@ -79,10 +65,9 @@ static int Descendants(Draw_Interpretor& di, int n, const char** a)
 
   char                  name[100];
   occ::handle<TDF_Data> ND;
-  //  occ::handle<TNaming_UsedShapes> US;
+
   if (!DDF::GetDF(a[1], ND))
     return 1;
-  //  ND->Root().FindAttribute(TNaming_UsedShapes::GetID(),US);
 
   TopoDS_Shape S = DBRep::Get(a[2]);
   if (S.IsNull())
@@ -111,18 +96,14 @@ static int Descendants(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int Getentry(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
     return 1;
   occ::handle<TDF_Data> ND;
-  //  occ::handle<TNaming_UsedShapes> US;
 
   if (!DDF::GetDF(a[1], ND))
     return 1;
-  //  ND->Root().FindAttribute(TNaming_UsedShapes::GetID(),US);
 
   TopoDS_Shape S = DBRep::Get(a[2]);
   if (S.IsNull())
@@ -148,17 +129,11 @@ static int Getentry(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : NamedShape
-// purpose  : retrieve label of Primitive or a Generated shape
-//=======================================================================
-
 static int NamedShape(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
     return 1;
   occ::handle<TDF_Data> ND;
-  //  occ::handle<TNaming_UsedShapes> US;
 
   if (!DDF::GetDF(a[1], ND))
     return 1;
@@ -183,8 +158,6 @@ static int NamedShape(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int Currentshape(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4)
@@ -206,8 +179,6 @@ static int Currentshape(Draw_Interpretor&, int n, const char** a)
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int Initialshape(Draw_Interpretor& di, int n, const char** a)
 {
@@ -247,8 +218,6 @@ static int Initialshape(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 static int Exploreshape(Draw_Interpretor& di, int n, const char** a)
 {
   char name[100];
@@ -256,11 +225,9 @@ static int Exploreshape(Draw_Interpretor& di, int n, const char** a)
   if (n < 4)
     return 1;
   occ::handle<TDF_Data> ND;
-  //  occ::handle<TNaming_UsedShapes> US;
 
   if (!DDF::GetDF(a[1], ND))
     return 1;
-  //  ND->Root().FindAttribute(TNaming_UsedShapes::GetID(),US);
 
   int Trans = ND->Transaction();
   if (n == 5)
@@ -277,7 +244,6 @@ static int Exploreshape(Draw_Interpretor& di, int n, const char** a)
     return 0;
   }
 
-  // TNaming::Print(NS->Evolution(),std::cout);
   Standard_SStream aSStream;
   TNaming::Print(NS->Evolution(), aSStream);
   di << aSStream;
@@ -307,11 +273,6 @@ static int Exploreshape(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=======================================================================
-// function : GeneratedShape
-// purpose  : Generatedshape df shape Generationentry [drawname]
-//=======================================================================
-
 static int Generatedshape(Draw_Interpretor& di, int nb, const char** arg)
 {
   TopoDS_Shape                    S;
@@ -339,8 +300,6 @@ static int Generatedshape(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=================================================================================================
-
 static int Getshape(Draw_Interpretor& di, int nb, const char** arg)
 {
   TopoDS_Shape                    s;
@@ -365,8 +324,6 @@ static int Getshape(Draw_Interpretor& di, int nb, const char** arg)
   di << "DDataStd_GetShape : Error\n";
   return 1;
 }
-
-//=================================================================================================
 
 static int Collect(Draw_Interpretor& di, int nb, const char** arg)
 {
@@ -396,21 +353,14 @@ static int Collect(Draw_Interpretor& di, int nb, const char** arg)
   return 1;
 }
 
-//=======================================================================
-// function : GetCreationEntry
-// purpose  : retrieve label of Primitive or a Generated shape
-//=======================================================================
-
 static int Getcreationentry(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 3)
     return 1;
   occ::handle<TDF_Data> ND;
-  //  occ::handle<TNaming_UsedShapes> US;
 
   if (!DDF::GetDF(a[1], ND))
     return 1;
-  //  ND->Root().FindAttribute(TNaming_UsedShapes::GetID(),US);
 
   TopoDS_Shape SS = DBRep::Get(a[2]);
 
@@ -446,8 +396,6 @@ static int Getcreationentry(Draw_Interpretor& di, int n, const char** a)
   return 0;
 }
 
-//=================================================================================================
-
 void QADNaming::BasicCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
@@ -457,7 +405,6 @@ void QADNaming::BasicCommands(Draw_Interpretor& theCommands)
 
   const char* g = "Naming data commands";
 
-  // Exploration
   theCommands.Add("Ascendants", "Ascendants df shape [trans]", __FILE__, Ascendants, g);
 
   theCommands.Add("Descendants", "Descendants  df shape [trans]", __FILE__, Descendants, g);

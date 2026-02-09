@@ -41,35 +41,25 @@ inline void BRepOffset_Interval::First(const double U)
   f = U;
 }
 
-//=================================================================================================
-
 inline void BRepOffset_Interval::Last(const double U)
 {
   l = U;
 }
-
-//=================================================================================================
 
 inline void BRepOffset_Interval::Type(const ChFiDS_TypeOfConcavity T)
 {
   type = T;
 }
 
-//=================================================================================================
-
 inline double BRepOffset_Interval::First() const
 {
   return f;
 }
 
-//=================================================================================================
-
 inline double BRepOffset_Interval::Last() const
 {
   return l;
 }
-
-//=================================================================================================
 
 inline ChFiDS_TypeOfConcavity BRepOffset_Interval::Type() const
 {

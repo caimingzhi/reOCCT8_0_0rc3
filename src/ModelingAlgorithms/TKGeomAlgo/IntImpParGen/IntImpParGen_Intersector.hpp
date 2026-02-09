@@ -15,13 +15,10 @@
 #include <gp.hpp>
 #include <gp_Vec2d.hpp>
 
-//======================================================================
 #define EPSDIST Tol
 #define EPSNUL TolConf
 #define EPSX ParTool::EpsX(TheParCurve)
 #define NB_ECHANTILLONS
-
-//=================================================================================================
 
 void IntImpParGen_Intersector::And_Domaine_Objet1_Intersections(
   const ImpTool&              TheImpTool,
@@ -63,7 +60,7 @@ void IntImpParGen_Intersector::And_Domaine_Objet1_Intersections(
     bool IsOnTheImpCurveDomain1 = true;
 
     bool IsOnTheImpCurveDomain2 = true;
-    //--------------------------------------------------------------------
+
     if (TheImpCurveDomain.HasFirstPoint())
     {
       if (param1 < TheImpCurveDomain.FirstParameter())
@@ -84,7 +81,7 @@ void IntImpParGen_Intersector::And_Domaine_Objet1_Intersections(
         }
       }
     }
-    //--------------------------------------------------------------------
+
     if (TheImpCurveDomain.HasFirstPoint())
     {
       if (param2 < TheImpCurveDomain.FirstParameter())
@@ -108,12 +105,11 @@ void IntImpParGen_Intersector::And_Domaine_Objet1_Intersections(
 
     if (IsOnTheImpCurveDomain1)
     {
-      //------------------------------------------------------------------
-      //---                 la borne 1 est sur le domaine               --
+
       NbResultats++;
       Resultat1.SetValue(NbResultats, Inter1.Value(indice_1));
       Resultat2.SetValue(NbResultats, Inter2_And_Domain2.Value(indice_1));
-      //---               la borne2 est aussi sur le domaine           ---
+
       if (IsOnTheImpCurveDomain2)
       {
         NbResultats++;
@@ -122,18 +118,12 @@ void IntImpParGen_Intersector::And_Domaine_Objet1_Intersections(
       }
       else
       {
-        //---    Borne1 sur domaine et Borne 2 Hors Domaine           ---
+
         double t;
         NbResultats++;
         t = TheImpCurveDomain.LastParameter();
         Resultat1.SetValue(NbResultats, t);
-        //	double popResult = FindV(t,Pt,TheImpTool,TheParCurve,
-        //								  TheParCurveDomain,
-        //								  Inter2_And_Domain2.Value(indice_1),
-        //								  Inter2_And_Domain2.Value(indice_2),
-        //								  EpsNul);
-        //
-        //	Resultat2.SetValue(NbResultats,popResult);
+
         Resultat2.SetValue(NbResultats,
                            IntImpParGen_Intersector::FindV(t,
                                                            Pt,
@@ -146,7 +136,7 @@ void IntImpParGen_Intersector::And_Domaine_Objet1_Intersections(
       }
     }
     else
-    { //======= la borne1 n est pas sur le domaine ========
+    {
       if (IsOnTheImpCurveDomain2)
       {
         double t;
@@ -169,7 +159,7 @@ void IntImpParGen_Intersector::And_Domaine_Objet1_Intersections(
         Resultat2.SetValue(NbResultats, Inter2_And_Domain2.Value(indice_2));
       }
       else
-      { //====== la borne2 et la borne1 sont hors domaine =====
+      {
         if (param1 < TheImpCurveDomain.FirstParameter()
             && param2 > TheImpCurveDomain.LastParameter())
         {
@@ -205,15 +195,11 @@ void IntImpParGen_Intersector::And_Domaine_Objet1_Intersections(
   }
 }
 
-//======================================================================
-//--     C o n s t r u c t e u r s     e t     P e r f o r m
 IntImpParGen_Intersector::IntImpParGen_Intersector()
 {
   done = false;
 }
 
-//----------------------------------------------------------------------
-//--
 IntImpParGen_Intersector::IntImpParGen_Intersector(const ImpTool&         TheImpTool,
                                                    const IntRes2d_Domain& TheImpCurveDomain,
                                                    const ParCurve&        TheParCurve,
@@ -224,8 +210,6 @@ IntImpParGen_Intersector::IntImpParGen_Intersector(const ImpTool&         TheImp
   Perform(TheImpTool, TheImpCurveDomain, TheParCurve, TheParCurveDomain, TolConf, Tol);
 }
 
-//----------------------------------------------------------------------
-//--
 void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
                                        const IntRes2d_Domain& TheImpCurveDomain,
                                        const ParCurve&        TheParCurve,
@@ -242,10 +226,6 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
   gp_Vec2d            Tan1, Tan2, Norm1, Norm2;
   IntRes2d_Position   Pos1, Pos2;
 
-  //----------------------------------------------
-  //-- On teste apres appel aux maths si les bornes
-  //-- des domaines sont des solutions
-  //--
   bool HeadOnImp = false;
   bool HeadOnPar = false;
   bool EndOnImp  = false;
@@ -292,8 +272,6 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
   nb_segments_solution = Sol.NbIntervals();
   nb_points_solution   = Sol.NbPoints();
 
-  //--------------------------------------------------------------------
-  //--   T r a i t e m e n t    d e s   P o i n t s   S o l u t i o n s
   for (i = 1; i <= nb_points_solution; i++)
   {
     gp_Pnt2d Pt;
@@ -358,15 +336,6 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
       Insert(IP);
     }
   }
-  //-- F i n   d u   T r a i t e m e n t   d e s   P t s   S o l.
-
-  //--------------------------------------------------------------------
-  //--        T r a i t e m e n t   D e s   S e g m e n t s          ---
-  //--------------------------------------------------------------------
-  //--  On a N segments solution sur le domaine de V    soit au pire :
-  //--    --> N segments solution sur le domaine de U
-  //--    -->2N segments si la courbe en U est fermee
-  //--
 
   NCollection_Array1<double> Inter2_and_Domaine2(1, 2 + 8 * nb_segments_solution);
   NCollection_Array1<double> Inter1(1, 2 + 8 * nb_segments_solution);
@@ -382,9 +351,6 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
     Sol.GetInterval(j, param2_inf, param2_sup);
     param1_inf = FindU(param2_inf, Ptemp, TheParCurve, TheImpTool);
     param1_sup = FindU(param2_sup, Ptemp, TheParCurve, TheImpTool);
-
-    //----------------------------------------------------------------------
-    //--         C o u r b e    I m p l i c i t e    F e r m e e
 
     if (TheImpCurveDomain.IsClosed())
     {
@@ -413,32 +379,19 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
 
       if (T1.Dot(T2) >= 0.0)
       {
-        //---  param1_inf designe un point entrant (et T1 est vers la matiere)
+
         if (param1_inf >= param1_sup)
         {
           param1_sup += Periode;
         }
       }
       else
-      { //---  param1_inf : point sortant (et T1 est Hors matiere)
+      {
         if (param1_inf <= param1_sup)
         {
           param1_inf += Periode;
         }
       }
-      //--- On cree un nouveau segment decale de Periode
-      //--  Exemple de Pb : Domaine PI/4  PI/2   et intervalle 0,PI
-      //--                  Domaine 1.5PI 2.5PI  et intervalle 0,PI
-      //--        -2pi                  0                2pi
-      //--   ------|--------------------|-----------------|-----------
-      //--            [----------------------------]               Domaine
-      //--                                   [~~~~~~~~~~~~~~~~~]   Inters.
-      //--
-      //--  On cree un nouvel intervalle
-      //--   interv decale
-      //--  [a~~~~~~~~~~~~b]                 [a~~~~~~~~~~~~~~~b]  et  [a~~~]
-      //--
-      //
 
       if (TheImpCurveDomain.LastParameter()
           > ((param1_inf > param1_sup) ? (param1_sup + Periode) : (param1_inf + Periode)))
@@ -464,8 +417,6 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
         nb_segments_crees++;
       }
     }
-    //--   F i n     C o u r b e    I m p l i c i t e    F e r m e e
-    //----------------------------------------------------------------------
 
     Inter2_and_Domaine2.SetValue(j2, param2_inf);
     Inter1.SetValue(j2, param1_inf);
@@ -474,11 +425,6 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
     Inter1.SetValue(j2 + 1, param1_sup);
   }
 
-  //------------------------------------------------------------------
-  //--  INTER2_DOMAINE2 : Intersection AND CurveDomain : Function of PARAM2
-  //--    INTER1        : Intersection AND CurveDomain : Function of PARAM1
-  //------------------------------------------------------------------
-  //--
   NCollection_Array1<double> Resultat1(1, 2 + (1 + nb_segments_solution) * 2);
   NCollection_Array1<double> Resultat2(1, 2 + (1 + nb_segments_solution) * 2);
   nb_segments_solution += nb_segments_crees;
@@ -495,17 +441,6 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
                                    Resultat2,
                                    EpsNul);
 
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  // Calcule_Toutes_Transitions(NbResultats,
-  //			     Resultat1,Resultat2,
-  //			     TheImpTool,
-  //			     TheImpCurveDomain,
-  //			     TheParCurve,
-  //			     TheParCurveDomain);
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //~~~ Fonction Calcule_Toutes_Transitions Repportee ici pour cause ~~~~~
-  //~~~~~       D acces aux methodes Protected APPEND
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   {
     gp_Pnt2d Pt1_on1, Pt2_on1, Pt1_on2, Pt2_on2;
     double   Param1_on1, Param2_on1, Param1_on2, Param2_on2;
@@ -567,9 +502,6 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
                                         Trans2,
                                         ToleranceAngulaireDistMini);
 
-      //============== Detection du cas : L intersection est en bout
-      //==============  sur les 2 domaines
-
       if (Pos1 != IntRes2d_Middle && Pos2 != IntRes2d_Middle)
       {
         double m = 0.5 * (Pt1_on1.X() + Pt1_on2.X());
@@ -616,9 +548,6 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
                                           Trans2,
                                           ToleranceAngulaireDistMini);
 
-        //============== Detection du cas : L intersection est en bout
-        //==============  sur les 2 domaines
-
         if (Pos1 != IntRes2d_Middle && Pos2 != IntRes2d_Middle)
         {
           double m = 0.5 * (Pt2_on1.X() + Pt2_on2.X());
@@ -639,11 +568,8 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
         Insert(new_p1);
       }
     }
-  } //~~~~~~~~~~~~  Fin du corps de la fonction Calc...Transitions~~~~~~~~~~
+  }
 
-  //-------------------------------------------
-  //-- On teste les points en bouts solutions
-  //--
   if (!HeadOnImp && TheImpCurveDomain.HasFirstPoint())
   {
     if (!HeadOnPar)
@@ -795,9 +721,7 @@ double IntImpParGen_Intersector::FindV(const double           parameter,
       VV0 = V1;
       VV1 = V0;
     }
-    //-- ??????????????????????????????????????????????????????????????????????
-    //-- Modif le 15 Septembre 1992 : On Teste le parametre retourne
-    //--??????????????????????????????????????????????????????????????????????
+
     double X = ProjectOnPCurveTool::FindParameter(TheParCurve, point, VV0, VV1, Tolerance);
     if (X > VV1)
       X = VV1;

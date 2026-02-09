@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <DrawTrSurf_Curve2d.hpp>
 
@@ -35,8 +23,6 @@ IMPLEMENT_STANDARD_RTTIEXT(DrawTrSurf_Curve2d, DrawTrSurf_Drawable)
 static double DrawTrSurf_CurveLimit = 400;
 extern bool   Draw_Bounds;
 
-//=================================================================================================
-
 DrawTrSurf_Curve2d::DrawTrSurf_Curve2d(const occ::handle<Geom2d_Curve>& C, const bool DispOrigin)
     : DrawTrSurf_Drawable(50)
 {
@@ -47,8 +33,6 @@ DrawTrSurf_Curve2d::DrawTrSurf_Curve2d(const occ::handle<Geom2d_Curve>& C, const
   radiusmax      = 1.0e3;
   radiusratio    = 0.1;
 }
-
-//=================================================================================================
 
 DrawTrSurf_Curve2d::DrawTrSurf_Curve2d(const occ::handle<Geom2d_Curve>& C,
                                        const Draw_Color&                aColor,
@@ -66,8 +50,6 @@ DrawTrSurf_Curve2d::DrawTrSurf_Curve2d(const occ::handle<Geom2d_Curve>& C,
   radiusmax      = RadiusMax;
   radiusratio    = RadiusRatio;
 }
-
-//=================================================================================================
 
 void DrawTrSurf_Curve2d::DrawOn(Draw_Display& dis) const
 {
@@ -119,7 +101,6 @@ void DrawTrSurf_Curve2d::DrawOn(Draw_Display& dis) const
   Geom2dAdaptor_Curve C2d(curv, First, Last);
   DrawCurve2dOn(C2d, dis);
 
-  // mark the origin
   if (disporigin)
   {
     Draw_Bounds = false;
@@ -140,7 +121,6 @@ void DrawTrSurf_Curve2d::DrawOn(Draw_Display& dis) const
     Draw_Bounds = true;
   }
 
-  // Draw the curvature Radius
   if (dispcurvradius && (C2d.GetType() != GeomAbs_Line))
   {
     int                        ii;
@@ -180,8 +160,6 @@ void DrawTrSurf_Curve2d::DrawOn(Draw_Display& dis) const
   }
 }
 
-//=================================================================================================
-
 occ::handle<Draw_Drawable3D> DrawTrSurf_Curve2d::Copy() const
 {
   occ::handle<DrawTrSurf_Curve2d> DC =
@@ -190,21 +168,15 @@ occ::handle<Draw_Drawable3D> DrawTrSurf_Curve2d::Copy() const
   return DC;
 }
 
-//=================================================================================================
-
 void DrawTrSurf_Curve2d::Dump(Standard_OStream& S) const
 {
   GeomTools_Curve2dSet::PrintCurve2d(curv, S);
 }
 
-//=================================================================================================
-
 void DrawTrSurf_Curve2d::Save(Standard_OStream& theStream) const
 {
   GeomTools_Curve2dSet::PrintCurve2d(GetCurve(), theStream, true);
 }
-
-//=================================================================================================
 
 occ::handle<Draw_Drawable3D> DrawTrSurf_Curve2d::Restore(Standard_IStream& theStream)
 {
@@ -215,14 +187,10 @@ occ::handle<Draw_Drawable3D> DrawTrSurf_Curve2d::Restore(Standard_IStream& theSt
   return aDrawCurve;
 }
 
-//=================================================================================================
-
 void DrawTrSurf_Curve2d::Whatis(Draw_Interpretor& S) const
 {
   S << "2d curve";
 }
-
-//=================================================================================================
 
 bool DrawTrSurf_Curve2d::Is3D() const
 {

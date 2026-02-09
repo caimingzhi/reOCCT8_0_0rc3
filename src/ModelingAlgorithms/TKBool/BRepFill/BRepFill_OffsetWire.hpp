@@ -16,18 +16,6 @@
 class Bisector_Bisec;
 class BRepFill_TrimEdgeTool;
 
-//! Constructs a Offset Wire to a spine (wire or face).
-//! Offset direction will be to outer region in case of
-//! positive offset value and to inner region in case of
-//! negative offset value.
-//! Inner/Outer region for open wire is defined by the
-//! following rule: when we go along the wire (taking into
-//! account of edges orientation) then outer region will be
-//! on the right side, inner region will be on the left side.
-//! In case of closed wire, inner region will always be
-//! inside the wire (at that, edges orientation is not taken
-//! into account).
-//! The Wire or the Face must be planar and oriented correctly.
 class BRepFill_OffsetWire
 {
 public:
@@ -39,17 +27,12 @@ public:
                                       const GeomAbs_JoinType Join         = GeomAbs_Arc,
                                       const bool             IsOpenResult = false);
 
-  //! Initialize the evaluation of Offsetting.
   Standard_EXPORT void Init(const TopoDS_Face&     Spine,
                             const GeomAbs_JoinType Join         = GeomAbs_Arc,
                             const bool             IsOpenResult = false);
 
-  //! Performs an OffsetWire at an altitude <Alt> from
-  //! the face (According to the orientation of the
-  //! face)
   Standard_EXPORT void Perform(const double Offset, const double Alt = 0.0);
 
-  //! Performs an OffsetWire
   Standard_EXPORT void PerformWithBiLo(const TopoDS_Face&              WSP,
                                        const double                    Offset,
                                        const BRepMAT2d_BisectingLocus& Locus,
@@ -61,12 +44,8 @@ public:
 
   Standard_EXPORT const TopoDS_Face& Spine() const;
 
-  //! returns the generated shape.
   Standard_EXPORT const TopoDS_Shape& Shape() const;
 
-  //! Returns the shapes created from a subshape
-  //! <SpineShape> of the spine.
-  //! Returns the last computed Offset.
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& GeneratedShapes(
     const TopoDS_Shape& SpineShape);
 
@@ -76,12 +55,8 @@ private:
   Standard_EXPORT NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>>&
                   Generated();
 
-  //! Prepare the spine as follow
-  //! - Cut the spine-Edges at the extrema of curvature and
-  //! at the inflexion points.
   Standard_EXPORT void PrepareSpine();
 
-  //! Add the OffsetWire <Other> to <me> and update <myMap>
   Standard_EXPORT void Add(const BRepFill_OffsetWire& Other);
 
   Standard_EXPORT void UpdateDetromp(
@@ -95,10 +70,8 @@ private:
     const bool                                                         EOnE,
     const BRepFill_TrimEdgeTool&                                       Trim) const;
 
-  //! Constructs the wires with the trimmed offset edges.
   Standard_EXPORT void MakeWires();
 
-  //! Fix holes between open wires where it is possible
   Standard_EXPORT void FixHoles();
 
   TopoDS_Face                                                              mySpine;

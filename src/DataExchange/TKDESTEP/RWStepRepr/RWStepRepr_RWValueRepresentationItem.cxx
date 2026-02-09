@@ -14,19 +14,16 @@ void RWStepRepr_RWValueRepresentationItem::ReadStep(
   occ::handle<Interface_Check>&                        ach,
   const occ::handle<StepRepr_ValueRepresentationItem>& ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 2, ach, "value_representation_item"))
     return;
 
-  // --- inherited field : name ---
   occ::handle<TCollection_HAsciiString> aName;
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- own field : value_component ---
   occ::handle<StepBasic_MeasureValueMember> aMember = new StepBasic_MeasureValueMember;
   data->ReadMember(num, 2, "value_component", ach, aMember);
 
-  //--- Initialisation of the read entity ---
   ent->Init(aName, aMember);
 }
 

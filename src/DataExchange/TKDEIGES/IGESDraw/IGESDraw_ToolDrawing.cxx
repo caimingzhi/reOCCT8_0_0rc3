@@ -26,14 +26,13 @@ void IGESDraw_ToolDrawing::ReadOwnParams(const occ::handle<IGESDraw_Drawing>&   
                                          const occ::handle<IGESData_IGESReaderData>& IR,
                                          IGESData_ParamReader&                       PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
+
   int nbval;
 
   occ::handle<NCollection_HArray1<occ::handle<IGESData_ViewKindEntity>>> views;
   occ::handle<NCollection_HArray1<gp_XY>>                                viewOrigins;
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>     annotations;
 
-  // Reading nbval(No. of View pointers)
   bool st = PR.ReadInteger(PR.Current(), "Count of array of view entities", nbval);
   if (st && nbval > 0)
   {
@@ -45,10 +44,7 @@ void IGESDraw_ToolDrawing::ReadOwnParams(const occ::handle<IGESDraw_Drawing>&   
 
     for (int i = 1; i <= nbval; i++)
     {
-      // Reading views(HArray1OfView)
-      // st = PR.ReadEntity (IR, PR.Current(), "View Entity",
-      // STANDARD_TYPE(IGESData_ViewKindEntity), tempView,true); //szv#4:S4163:12Mar99
-      // moved in if
+
       if (PR.ReadEntity(IR,
                         PR.Current(),
                         "View Entity",
@@ -57,9 +53,6 @@ void IGESDraw_ToolDrawing::ReadOwnParams(const occ::handle<IGESDraw_Drawing>&   
                         true))
         views->SetValue(i, tempView);
 
-      // Reading viewOrigins(HArray1OfXY)
-      // st = PR.ReadXY(PR.CurrentList(1, 2), "array viewOrigins", tempXY); //szv#4:S4163:12Mar99
-      // moved in if
       if (PR.ReadXY(PR.CurrentList(1, 2), "array viewOrigins", tempXY))
         viewOrigins->SetValue(i, tempXY);
     }
@@ -67,28 +60,12 @@ void IGESDraw_ToolDrawing::ReadOwnParams(const occ::handle<IGESDraw_Drawing>&   
   else if (nbval < 0)
     PR.AddFail("Count of view entities : Less than zero");
 
-  // Reading nbval(No. of Annotation Entities)
-  // st = PR.ReadInteger(PR.Current(),"Count of array of Annotation entities", nbval);
-  // //szv#4:S4163:12Mar99 moved in if
   if (PR.ReadInteger(PR.Current(), "Count of array of Annotation entities", nbval))
   {
     if (nbval > 0)
-      // clang-format off
-      PR.ReadEnts (IR,PR.CurrentList(nbval), "Annotation Entities", annotations); //szv#4:S4163:12Mar99 `st=` not needed
-    // clang-format on
-    /*
-          {
-        // Reading annotations(HArray1OfIGESEntity)
-        annotations = new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, nbval);
-        occ::handle<IGESData_IGESEntity> tempAnnotation;
-        for (int i = 1; i <= nbval; i++)
-              {
-            st = PR.ReadEntity
-              (IR, PR.Current(), "annotation entity", tempAnnotation,true);
-            if (st) annotations->SetValue(i, tempAnnotation);
-              }
-          }
-    */
+
+      PR.ReadEnts(IR, PR.CurrentList(nbval), "Annotation Entities", annotations);
+
     else if (nbval < 0)
       PR.AddFail("Count of Annotation entities : Less than zero");
   }
@@ -102,7 +79,7 @@ void IGESDraw_ToolDrawing::WriteOwnParams(const occ::handle<IGESDraw_Drawing>& e
 {
   int Up = ent->NbViews();
   IW.Send(Up);
-  int i; // svv Jan 10 2000 : porting on DEC
+  int i;
   for (i = 1; i <= Up; i++)
   {
     IW.Send(ent->ViewItem(i));
@@ -120,7 +97,7 @@ void IGESDraw_ToolDrawing::OwnShared(const occ::handle<IGESDraw_Drawing>& ent,
                                      Interface_EntityIterator&            iter) const
 {
   int Up = ent->NbViews();
-  int i; // svv Jan 10 2000 : porting on DEC
+  int i;
   for (i = 1; i <= Up; i++)
     iter.GetOneItem(ent->ViewItem(i));
 
@@ -169,7 +146,7 @@ void IGESDraw_ToolDrawing::OwnCopy(const occ::handle<IGESDraw_Drawing>& another,
 
 bool IGESDraw_ToolDrawing::OwnCorrect(const occ::handle<IGESDraw_Drawing>& ent) const
 {
-  //  Empty views: remove them
+
   int i, nb = ent->NbViews();
   int nbtrue = nb;
   for (i = 1; i <= nb; i++)
@@ -202,7 +179,6 @@ bool IGESDraw_ToolDrawing::OwnCorrect(const occ::handle<IGESDraw_Drawing>& ent) 
     viewOrigins->SetValue(nbtrue, ent->ViewOrigin(i).XY());
   }
 
-  //  Don't forget the annotations ...
   int                                                                nbanot = ent->NbAnnotations();
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> annotations =
     new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, nbanot);
@@ -213,8 +189,7 @@ bool IGESDraw_ToolDrawing::OwnCorrect(const occ::handle<IGESDraw_Drawing>& ent) 
   return true;
 }
 
-IGESData_DirChecker IGESDraw_ToolDrawing::DirChecker(
-  const occ::handle<IGESDraw_Drawing>& /*ent*/) const
+IGESData_DirChecker IGESDraw_ToolDrawing::DirChecker(const occ::handle<IGESDraw_Drawing>&) const
 {
   IGESData_DirChecker DC(404, 0);
   DC.Structure(IGESData_DefVoid);
@@ -278,8 +253,8 @@ void IGESDraw_ToolDrawing::OwnDump(const occ::handle<IGESDraw_Drawing>& ent,
   {
     case 4:
       S << " [ ask level > 4 for content ]\n";
-      break; // Nothing to be dumped here
-    case 5:  // Presently level 5 and 6 have the same Dump
+      break;
+    case 5:
       S << "\n";
       [[fallthrough]];
     case 6:

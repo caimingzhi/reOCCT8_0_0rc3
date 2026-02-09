@@ -11,7 +11,6 @@ class StepVisual_ContextDependentInvisibility;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ContextDependentInvisibility
 class RWStepVisual_RWContextDependentInvisibility
 {
 public:

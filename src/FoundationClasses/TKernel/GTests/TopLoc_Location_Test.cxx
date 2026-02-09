@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <TopLoc_Location.hpp>
 #include <TopoDS_Shape.hpp>
@@ -30,7 +19,7 @@
 
 namespace
 {
-  //! Functor for testing concurrent access to TopLoc_Location::Transformation()
+
   struct TopLocTransformFunctor
   {
     TopLocTransformFunctor(const std::vector<TopoDS_Shape>& theShapeVec)
@@ -59,12 +48,7 @@ namespace
 
 TEST(TopLoc_Location_Test, OCC25545_ConcurrentTransformationAccess)
 {
-  // Bug OCC25545: TopLoc_Location::Transformation() provokes data races
-  // This test verifies that concurrent access to TopLoc_Location::Transformation()
-  // does not cause data races or incorrect geometry results
 
-  // Place vertices in a vector, giving the i-th vertex the
-  // transformation that translates it on the vector (i,0,0) from the origin
   int                          n = 1000;
   std::vector<TopoDS_Shape>    aShapeVec(n);
   std::vector<TopLoc_Location> aLocVec(n);
@@ -79,13 +63,10 @@ TEST(TopLoc_Location_Test, OCC25545_ConcurrentTransformationAccess)
     aShapeVec[i] = aShape.Moved(aLocVec[i]);
   }
 
-  // Evaluator function will access vertices geometry concurrently
   TopLocTransformFunctor aFunc(aShapeVec);
 
-  // Process concurrently
   OSD_Parallel::For(0, n, aFunc);
 
-  // Verify no data race was detected
   EXPECT_EQ(aFunc.myIsRaceDetected, 0)
     << "Data race detected in concurrent TopLoc_Location::Transformation() access";
 }

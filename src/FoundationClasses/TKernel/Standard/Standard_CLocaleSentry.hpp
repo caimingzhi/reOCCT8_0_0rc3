@@ -9,18 +9,11 @@
 #endif
 
 #ifndef OCCT_CLOCALE_POSIX2008
-  //! @def OCCT_CLOCALE_POSIX2008
-  //!
-  //! POSIX.1-2008 extends C locale API by providing methods like newlocale/freelocale/uselocale.
-  //! Presence of this extension cannot be checked in straightforward way (like (_POSIX_C_SOURCE >=
-  //! 200809L)) due to missing such declarations in standard. On macOS new functions are declared
-  //! within "xlocale.h" header (the same is for glibc, but this header has been removed since
-  //! glibc 2.26).
+
   #if defined(__APPLE__)
     #define OCCT_CLOCALE_POSIX2008
   #endif
 
-  //! We check _GNU_SOURCE for glibc extensions here and it is always defined by g++ compiler.
   #if defined(_GNU_SOURCE) && !defined(__ANDROID__)
     #define OCCT_CLOCALE_POSIX2008
   #endif
@@ -28,23 +21,11 @@
 
 #if !defined(__ANDROID__)
 
-//! This class intended to temporary switch C locale and logically equivalent to setlocale(LC_ALL,
-//! "C"). It is intended to format text regardless of user locale settings (for import/export
-//! functionality). Thus following calls to Sprintf, atoi and other functions will use "C" locale.
-//! Destructor of this class will return original locale.
-//!
-//! Notice that this functionality is platform dependent and intended only to workaround alien code
-//! that doesn't setup locale correctly.
-//!
-//! Internally you should prefer more portable C++ locale interfaces
-//! or OCCT wrappers to some C functions like Sprintf, Atof, Strtod.
 class Standard_CLocaleSentry
 {
 public:
-  //! Setup current C locale to "C".
   Standard_EXPORT Standard_CLocaleSentry();
 
-  //! Restore previous locale.
   Standard_EXPORT ~Standard_CLocaleSentry();
 
 public:
@@ -56,25 +37,21 @@ public:
   typedef void* clocale_t;
   #endif
 
-  //! @return locale "C" instance (locale_t within xlocale or _locale_t within Windows)
-  //! to be used for _l functions with locale argument.
   static Standard_EXPORT clocale_t GetCLocale();
 
 private:
-  void* myPrevLocale; //!< previous locale, platform-dependent pointer!
+  void* myPrevLocale;
   #ifdef _MSC_VER
-  int myPrevTLocaleState; //!< previous thread-locale state, MSVCRT-specific
+  int myPrevTLocaleState;
   #endif
 
 private:
-  //! Copying disallowed
   Standard_CLocaleSentry(const Standard_CLocaleSentry&)            = delete;
   Standard_CLocaleSentry& operator=(const Standard_CLocaleSentry&) = delete;
 };
 
 #else
 
-//! C/C++ runtime on Android currently supports only C-locale, no need to call anything.
 class Standard_CLocaleSentry
 {
 public:
@@ -85,4 +62,4 @@ public:
   static clocale_t GetCLocale() { return 0; }
 };
 
-#endif // __ANDROID__
+#endif

@@ -11,11 +11,6 @@
 
 static Standard_GUID StdLRetrievalDriver("bd696001-5b34-11d1-b5ba-00a0c9064368");
 
-//=======================================================================
-// function : Factory
-// purpose  : Depending from the ID, returns a list of storage
-//           or retrieval attribute drivers. Used for plugin
-//=======================================================================
 occ::handle<Standard_Transient> StdLDrivers::Factory(const Standard_GUID& aGUID)
 {
   if (aGUID == StdLRetrievalDriver)
@@ -32,8 +27,6 @@ occ::handle<Standard_Transient> StdLDrivers::Factory(const Standard_GUID& aGUID)
   throw Standard_Failure("StdLDrivers : unknown GUID");
 }
 
-//=================================================================================================
-
 void StdLDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
 {
   theApp->DefineFormat("OCC-StdLite",
@@ -43,12 +36,9 @@ void StdLDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
                        nullptr);
 }
 
-//=================================================================================================
-
 void StdLDrivers::BindTypes(StdObjMgt_MapOfInstantiators& theMap)
 {
   StdLPersistent::BindTypes(theMap);
 }
 
-// Declare entry point PLUGINFACTORY
 PLUGIN(StdLDrivers)

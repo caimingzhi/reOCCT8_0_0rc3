@@ -10,7 +10,6 @@ class Message_Messenger;
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
-//! GenericEmpty attribute driver.
 class BinMDataStd_GenericEmptyDriver : public BinMDF_ADriver
 {
 

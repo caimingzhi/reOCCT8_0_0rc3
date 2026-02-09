@@ -50,7 +50,6 @@ void IGESDimen_GeneralNote::Init(
   theStartPoints    = start;
   theTexts          = texts;
   InitTypeAndForm(212, FormNumber());
-  // FormNumber for Graphical Representation
 }
 
 void IGESDimen_GeneralNote::SetFormNumber(const int form)

@@ -1,16 +1,4 @@
-// Copyright (c) 1994-1999 Matra Datavision
-// Copyright (c) 1999-2024 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <BRepClass3d_SolidPassiveClassifier.hpp>
 
@@ -62,21 +50,20 @@ void BRepClass3d_SolidPassiveClassifier::Compare(const TopoDS_Face& Face, const 
         myFace  = myIntersector.Face();
         if (std::abs(myParam) <= myTolerance)
         {
-          //-- #########################################
+
 #ifdef OCCT_DEBUG
           std::cout << " myParam = " << myParam << " ds BRepClass3d_SolidPassiveClassifier.gxx  "
                     << std::endl;
 #endif
-          //-- #########################################
+
           myState = TopAbs_ON;
         }
         else
         {
-          //-- The intersection point between the line and a face F of the solid
-          //-- is in the face F or On a boundary of the face
+
           if (myIntersector.Transition() == IntCurveSurface_Out)
           {
-            //-- The line is going from inside the solid to outside the solid.
+
             myState = TopAbs_IN;
           }
           else if (myIntersector.Transition() == IntCurveSurface_In)
@@ -94,13 +81,10 @@ void BRepClass3d_SolidPassiveClassifier::Compare(const TopoDS_Face& Face, const 
       }
       else
       {
-        //-- No point has been found by the myIntersector.
-        //-- Or a Point has been found with a greater parameter.
       }
-    } //-- myIntersector Has a point
+    }
     else
     {
-      //-- The myIntersector failed.
     }
-  } //-- Face has not been rejected
+  }
 }

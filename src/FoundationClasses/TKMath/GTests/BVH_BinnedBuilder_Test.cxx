@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -63,7 +52,6 @@ TEST(BVH_BinnedBuilderTest, BuildMultipleElements)
     new BVH_BinnedBuilder<double, 3>(1, 32);
   BVH_BoxSet<double, 3> aBoxSet(aBuilder);
 
-  // Add boxes along X axis
   for (int i = 0; i < 10; ++i)
   {
     BVH_Box<double, 3> aBox(BVH_Vec3d(i * 2.0, 0.0, 0.0), BVH_Vec3d(i * 2.0 + 1.0, 1.0, 1.0));
@@ -83,8 +71,6 @@ TEST(BVH_BinnedBuilderTest, SAHOptimization)
     new BVH_BinnedBuilder<double, 3>(1, 32);
   BVH_BoxSet<double, 3> aBoxSet(aBuilder);
 
-  // Add boxes in a pattern where SAH should matter
-  // Two clusters: one near origin, one far away
   for (int i = 0; i < 5; ++i)
   {
     BVH_Box<double, 3> aBox(BVH_Vec3d(i * 0.1, 0.0, 0.0), BVH_Vec3d(i * 0.1 + 0.1, 0.1, 0.1));
@@ -102,7 +88,6 @@ TEST(BVH_BinnedBuilderTest, SAHOptimization)
 
   const opencascade::handle<BVH_Tree<double, 3>>& aBVH = aBoxSet.BVH();
 
-  // SAH should produce a reasonable tree
   double aSAH = aBVH->EstimateSAH();
   EXPECT_GT(aSAH, 0.0);
 }
@@ -124,7 +109,6 @@ TEST(BVH_BinnedBuilderTest, LeafNodeSizeRespected)
 
   const opencascade::handle<BVH_Tree<double, 3>>& aBVH = aBoxSet.BVH();
 
-  // Check that leaf nodes don't exceed leaf size
   for (int i = 0; i < aBVH->Length(); ++i)
   {
     if (aBVH->IsOuter(i))
@@ -137,7 +121,7 @@ TEST(BVH_BinnedBuilderTest, LeafNodeSizeRespected)
 
 TEST(BVH_BinnedBuilderTest, BuildWithDifferentBinCounts)
 {
-  // Test with different number of bins (template parameter)
+
   opencascade::handle<BVH_BinnedBuilder<double, 3, 16>> aBuilder16 =
     new BVH_BinnedBuilder<double, 3, 16>(1, 32);
   BVH_BoxSet<double, 3> aBoxSet(aBuilder16);
@@ -172,15 +156,12 @@ TEST(BVH_BinnedBuilderTest, Build2D)
   EXPECT_GT(aBVH->Length(), 1);
 }
 
-// Note: Float tests skipped due to BVH_BoxSet::Center return type issue
-
 TEST(BVH_BinnedBuilderTest, RandomDistribution)
 {
   opencascade::handle<BVH_BinnedBuilder<double, 3>> aBuilder =
     new BVH_BinnedBuilder<double, 3>(1, 32);
   BVH_BoxSet<double, 3> aBoxSet(aBuilder);
 
-  // Add boxes in a 3D grid pattern
   int aCount = 0;
   for (int x = 0; x < 5; ++x)
   {
@@ -200,7 +181,6 @@ TEST(BVH_BinnedBuilderTest, RandomDistribution)
   const opencascade::handle<BVH_Tree<double, 3>>& aBVH = aBoxSet.BVH();
   EXPECT_GT(aBVH->Length(), 1);
 
-  // Verify tree covers all primitives
   int aTotalPrims = 0;
   for (int i = 0; i < aBVH->Length(); ++i)
   {
@@ -214,7 +194,7 @@ TEST(BVH_BinnedBuilderTest, RandomDistribution)
 
 TEST(BVH_BinnedBuilderTest, CompareTreeQuality)
 {
-  // Build tree with small leaf size vs large leaf size
+
   opencascade::handle<BVH_BinnedBuilder<double, 3>> aBuilder1 =
     new BVH_BinnedBuilder<double, 3>(1, 32);
   opencascade::handle<BVH_BinnedBuilder<double, 3>> aBuilder4 =
@@ -236,7 +216,6 @@ TEST(BVH_BinnedBuilderTest, CompareTreeQuality)
   const opencascade::handle<BVH_Tree<double, 3>>& aBVH1 = aBoxSet1.BVH();
   const opencascade::handle<BVH_Tree<double, 3>>& aBVH4 = aBoxSet4.BVH();
 
-  // Tree with smaller leaf size should be deeper
   EXPECT_GE(aBVH1->Depth(), aBVH4->Depth());
 }
 
@@ -265,7 +244,6 @@ TEST(BVH_BinnedBuilderTest, OverlappingBoxes)
     new BVH_BinnedBuilder<double, 3>(1, 32);
   BVH_BoxSet<double, 3> aBoxSet(aBuilder);
 
-  // Add overlapping boxes
   for (int i = 0; i < 10; ++i)
   {
     BVH_Box<double, 3> aBox(BVH_Vec3d(i * 0.5, 0.0, 0.0), BVH_Vec3d(i * 0.5 + 2.0, 1.0, 1.0));
@@ -284,7 +262,6 @@ TEST(BVH_BinnedBuilderTest, IdenticalBoxes)
     new BVH_BinnedBuilder<double, 3>(1, 32);
   BVH_BoxSet<double, 3> aBoxSet(aBuilder);
 
-  // Add identical boxes
   for (int i = 0; i < 10; ++i)
   {
     BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));

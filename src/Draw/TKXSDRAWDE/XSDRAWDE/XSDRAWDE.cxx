@@ -1,15 +1,4 @@
-// Copyright (c) 2023 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <XSDRAWDE.hpp>
 
@@ -35,15 +24,13 @@
 
 namespace
 {
-  // Singleton to ensure DEBREP and DEXCAF plugins are registered only once
+
   void DECascadeSingleton()
   {
     static DE_MultiPluginHolder<DEBREP_ConfigurationNode, DEXCAF_ConfigurationNode> aHolder;
     (void)aHolder;
   }
 } // namespace
-
-//=================================================================================================
 
 static int DumpConfiguration(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -108,8 +95,6 @@ static int DumpConfiguration(Draw_Interpretor& theDI, int theNbArgs, const char*
   return 0;
 }
 
-//=================================================================================================
-
 static int CompareConfiguration(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs > 5)
@@ -166,8 +151,6 @@ static int CompareConfiguration(Draw_Interpretor& theDI, int theNbArgs, const ch
   return 0;
 }
 
-//=================================================================================================
-
 static int LoadConfiguration(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
   if (theNbArgs > 4)
@@ -195,8 +178,6 @@ static int LoadConfiguration(Draw_Interpretor& theDI, int theNbArgs, const char*
   }
   return 0;
 }
-
-//=================================================================================================
 
 static int ReadFile(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -275,8 +256,6 @@ static int ReadFile(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   XSDRAW::CollectActiveWorkSessions(aFilePath);
   return 0;
 }
-
-//=================================================================================================
 
 static int WriteFile(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 {
@@ -360,8 +339,6 @@ static int WriteFile(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
   return 0;
 }
 
-//=================================================================================================
-
 void XSDRAWDE::Factory(Draw_Interpretor& theDI)
 {
   static bool aIsActivated = false;
@@ -371,7 +348,6 @@ void XSDRAWDE::Factory(Draw_Interpretor& theDI)
   }
   aIsActivated = true;
 
-  //! Ensure DEBREP and DEXCAF plugins are registered
   DECascadeSingleton();
 
   const char* aGroup = "XDE translation commands";
@@ -436,9 +412,7 @@ void XSDRAWDE::Factory(Draw_Interpretor& theDI)
             WriteFile,
             aGroup);
 
-  // Load XSDRAW session for pilot activation
   XSDRAW::LoadDraw(theDI);
 }
 
-// Declare entry point PLUGINFACTORY
 DPLUGIN(XSDRAWDE)

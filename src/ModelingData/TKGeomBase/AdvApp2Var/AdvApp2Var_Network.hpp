@@ -20,8 +20,6 @@ public:
                                      const NCollection_Sequence<double>& TheU,
                                      const NCollection_Sequence<double>& TheV);
 
-  //! search the Index of the first Patch not approximated,
-  //! if all Patches are approximated false is returned
   Standard_EXPORT bool FirstNotApprox(int& Index) const;
 
   AdvApp2Var_Patch& ChangePatch(const int Index) { return *myNet.Value(Index); }

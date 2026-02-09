@@ -9,7 +9,6 @@ class StepRepr_DefinitionalRepresentation : public StepRepr_Representation
 {
 
 public:
-  //! Returns a DefinitionalRepresentation
   Standard_EXPORT StepRepr_DefinitionalRepresentation();
 
   DEFINE_STANDARD_RTTIEXT(StepRepr_DefinitionalRepresentation, StepRepr_Representation)

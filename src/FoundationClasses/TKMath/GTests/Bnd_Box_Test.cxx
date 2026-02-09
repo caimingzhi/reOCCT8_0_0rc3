@@ -1,15 +1,4 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <gtest/gtest.h>
 
@@ -23,10 +12,6 @@
 
 #include <cmath>
 #include <limits>
-
-//==================================================================================================
-// Constructor Tests
-//==================================================================================================
 
 TEST(Bnd_BoxTest, DefaultConstructor)
 {
@@ -57,10 +42,6 @@ TEST(Bnd_BoxTest, PointConstructor)
   EXPECT_DOUBLE_EQ(5.0, aYmax) << "Ymax should match constructor input";
   EXPECT_DOUBLE_EQ(6.0, aZmax) << "Zmax should match constructor input";
 }
-
-//==================================================================================================
-// Set and Update Tests
-//==================================================================================================
 
 TEST(Bnd_BoxTest, SetWithPoint)
 {
@@ -118,7 +99,6 @@ TEST(Bnd_BoxTest, UpdateWithPoint)
 {
   Bnd_Box aBox;
 
-  // First point establishes the box
   aBox.Update(1.0, 2.0, 3.0);
 
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
@@ -127,7 +107,6 @@ TEST(Bnd_BoxTest, UpdateWithPoint)
   EXPECT_DOUBLE_EQ(1.0, aXmin) << "First point should set both min and max";
   EXPECT_DOUBLE_EQ(1.0, aXmax) << "First point should set both min and max";
 
-  // Second point expands the box
   aBox.Update(0.5, 2.5, 3.5);
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
@@ -142,7 +121,6 @@ TEST(Bnd_BoxTest, UpdateExpansion)
   Bnd_Box aBox;
   aBox.Update(0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
 
-  // Update with bounds that expand the box
   aBox.Update(-1.0, -1.0, -1.0, 2.0, 2.0, 2.0);
 
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
@@ -155,10 +133,6 @@ TEST(Bnd_BoxTest, UpdateExpansion)
   EXPECT_DOUBLE_EQ(2.0, aYmax) << "Box should expand to include new bounds";
   EXPECT_DOUBLE_EQ(2.0, aZmax) << "Box should expand to include new bounds";
 }
-
-//==================================================================================================
-// Gap and Tolerance Tests
-//==================================================================================================
 
 TEST(Bnd_BoxTest, GapOperations)
 {
@@ -178,10 +152,6 @@ TEST(Bnd_BoxTest, GapOperations)
   aBox.Enlarge(-1.0);
   EXPECT_DOUBLE_EQ(1.0, aBox.GetGap()) << "Enlarge should use absolute value";
 }
-
-//==================================================================================================
-// Corner Methods Tests
-//==================================================================================================
 
 TEST(Bnd_BoxTest, CornerMethods)
 {
@@ -203,7 +173,7 @@ TEST(Bnd_BoxTest, CornerMethods)
 
 TEST(Bnd_BoxTest, CornerMethodsVoidBox)
 {
-  Bnd_Box aBox; // void box
+  Bnd_Box aBox;
 
   EXPECT_THROW((void)aBox.CornerMin(), Standard_ConstructionError)
     << "CornerMin should throw for void box";
@@ -225,10 +195,6 @@ TEST(Bnd_BoxTest, CornerMethodsOpenBox)
   EXPECT_DOUBLE_EQ(1e100, aCornerMax.X()) << "Open Xmax should return +infinite";
 }
 
-//==================================================================================================
-// Thin Methods Tests
-//==================================================================================================
-
 TEST(Bnd_BoxTest, ThinnessMethods)
 {
   Bnd_Box aBox;
@@ -238,7 +204,6 @@ TEST(Bnd_BoxTest, ThinnessMethods)
   EXPECT_TRUE(aBox.IsZThin(1.0)) << "Void box should be considered thin";
   EXPECT_TRUE(aBox.IsThin(1.0)) << "Void box should be considered thin";
 
-  // Create a thin box in X direction
   aBox.Update(1.0, 0.0, 0.0, 1.01, 2.0, 2.0);
 
   EXPECT_TRUE(aBox.IsXThin(0.1)) << "Thin X dimension should be detected";
@@ -246,7 +211,6 @@ TEST(Bnd_BoxTest, ThinnessMethods)
   EXPECT_FALSE(aBox.IsZThin(0.1)) << "Thick Z dimension should not be thin";
   EXPECT_FALSE(aBox.IsThin(0.1)) << "Box with only one thin dimension should not be overall thin";
 
-  // Create a box that is thin in all dimensions
   Bnd_Box aThinBox;
   aThinBox.Update(0.0, 0.0, 0.0, 0.01, 0.01, 0.01);
 
@@ -268,10 +232,6 @@ TEST(Bnd_BoxTest, ThinnessWithOpenBox)
   EXPECT_FALSE(aBox.IsXThin(0.1)) << "Whole box should not be considered thin";
   EXPECT_FALSE(aBox.IsThin(0.1)) << "Whole box should not be considered thin";
 }
-
-//==================================================================================================
-// Transformation Tests
-//==================================================================================================
 
 TEST(Bnd_BoxTest, TransformationIdentity)
 {
@@ -329,10 +289,6 @@ TEST(Bnd_BoxTest, TransformationVoidBox)
   EXPECT_TRUE(aTransformed.IsVoid()) << "Transformed void box should remain void";
 }
 
-//==================================================================================================
-// Add Methods Tests
-//==================================================================================================
-
 TEST(Bnd_BoxTest, AddBox)
 {
   Bnd_Box aBox1;
@@ -348,7 +304,6 @@ TEST(Bnd_BoxTest, AddBox)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox1.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  // Get() returns bounds including gap, so expect gap-adjusted values
   EXPECT_DOUBLE_EQ(-0.2, aXmin) << "Add should expand to union of boxes (with gap)";
   EXPECT_DOUBLE_EQ(-0.2, aYmin) << "Add should expand to union of boxes (with gap)";
   EXPECT_DOUBLE_EQ(-0.2, aZmin) << "Add should expand to union of boxes (with gap)";
@@ -436,10 +391,6 @@ TEST(Bnd_BoxTest, AddPointWithDirection)
   EXPECT_FALSE(aBox.IsOpenXmax()) << "Negative X direction should not open Xmax";
 }
 
-//==================================================================================================
-// IsOut Methods Tests
-//==================================================================================================
-
 TEST(Bnd_BoxTest, IsOutPoint)
 {
   Bnd_Box aBox;
@@ -509,10 +460,8 @@ TEST(Bnd_BoxTest, IsOutPlane)
   Bnd_Box aBox;
   aBox.Update(-1.0, -1.0, -1.0, 1.0, 1.0, 1.0);
 
-  // Plane that intersects the box
   gp_Pln anIntersectingPln(gp_Pnt(0, 0, 0), gp_Dir(gp_Dir::D::X));
 
-  // Plane that doesn't intersect the box
   gp_Pln aSeparatePln(gp_Pnt(2, 0, 0), gp_Dir(gp_Dir::D::X));
 
   EXPECT_FALSE(aBox.IsOut(anIntersectingPln)) << "Intersecting plane should not be out";
@@ -524,19 +473,13 @@ TEST(Bnd_BoxTest, IsOutLine)
   Bnd_Box aBox;
   aBox.Update(0.0, 0.0, 0.0, 2.0, 2.0, 2.0);
 
-  // Line that passes through the box
   gp_Lin anIntersectingLin(gp_Pnt(-1, 1, 1), gp_Dir(gp_Dir::D::X));
 
-  // Line that misses the box
   gp_Lin aSeparateLin(gp_Pnt(-1, 3, 1), gp_Dir(gp_Dir::D::X));
 
   EXPECT_FALSE(aBox.IsOut(anIntersectingLin)) << "Intersecting line should not be out";
   EXPECT_TRUE(aBox.IsOut(aSeparateLin)) << "Separate line should be out";
 }
-
-//==================================================================================================
-// Distance Method Tests
-//==================================================================================================
 
 TEST(Bnd_BoxTest, Distance)
 {
@@ -544,22 +487,17 @@ TEST(Bnd_BoxTest, Distance)
   aBox1.Update(0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
 
   Bnd_Box aBox2;
-  aBox2.Update(2.0, 0.0, 0.0, 3.0, 1.0, 1.0); // 1 unit away in X direction
+  aBox2.Update(2.0, 0.0, 0.0, 3.0, 1.0, 1.0);
 
   double aDistance = aBox1.Distance(aBox2);
   EXPECT_DOUBLE_EQ(1.0, aDistance) << "Distance between separated boxes should be 1.0";
 
-  // Overlapping boxes
   Bnd_Box anOverlappingBox;
   anOverlappingBox.Update(0.5, 0.5, 0.5, 1.5, 1.5, 1.5);
 
   double anOverlapDistance = aBox1.Distance(anOverlappingBox);
   EXPECT_DOUBLE_EQ(0.0, anOverlapDistance) << "Distance between overlapping boxes should be 0.0";
 }
-
-//==================================================================================================
-// Open/Close Methods Tests
-//==================================================================================================
 
 TEST(Bnd_BoxTest, OpenCloseMethods)
 {
@@ -586,10 +524,6 @@ TEST(Bnd_BoxTest, OpenCloseMethods)
   EXPECT_TRUE(aBox.IsWhole()) << "Box open in all directions should be whole";
 }
 
-//==================================================================================================
-// Void/Whole State Tests
-//==================================================================================================
-
 TEST(Bnd_BoxTest, VoidWholeStates)
 {
   Bnd_Box aBox;
@@ -612,21 +546,15 @@ TEST(Bnd_BoxTest, VoidWholeStates)
   EXPECT_TRUE(aBox.HasFinitePart()) << "Bounded box should have finite part";
 }
 
-//==================================================================================================
-// Edge Cases and Error Conditions
-//==================================================================================================
-
 TEST(Bnd_BoxTest, EdgeCases)
 {
   Bnd_Box aBox;
 
-  // Test with very large numbers
   const double aLargeValue = 1e10;
   aBox.Update(-aLargeValue, -aLargeValue, -aLargeValue, aLargeValue, aLargeValue, aLargeValue);
 
   EXPECT_FALSE(aBox.IsVoid()) << "Box with large values should be valid";
 
-  // Test with very small differences
   Bnd_Box aSmallBox;
   aSmallBox.Update(0.0, 0.0, 0.0, 1e-10, 1e-10, 1e-10);
 
@@ -649,18 +577,11 @@ TEST(Bnd_BoxTest, TransformationWithOpenBox)
   EXPECT_FALSE(aTransformed.IsVoid()) << "Transformed open box should have finite part";
 }
 
-//==================================================================================================
-// Additional Coverage Tests
-//==================================================================================================
-
 TEST(Bnd_BoxTest, SquareExtent)
 {
   Bnd_Box aBox;
   aBox.Update(0.0, 0.0, 0.0, 2.0, 3.0, 4.0);
 
-  // SquareExtent appears to calculate the square of the diagonal length
-  // For a box (0,0,0) to (2,3,4), diagonal = sqrt(2^2+3^2+4^2) = sqrt(29)
-  // So SquareExtent = 29
   EXPECT_DOUBLE_EQ(29.0, aBox.SquareExtent())
     << "Square extent should be square of diagonal length";
 }
@@ -685,7 +606,6 @@ TEST(Bnd_BoxTest, DirectOpenOperations)
   Bnd_Box aBox;
   aBox.Update(0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
 
-  // Test individual open operations
   aBox.OpenXmin();
   EXPECT_TRUE(aBox.IsOpenXmin()) << "OpenXmin should work";
 
@@ -716,7 +636,6 @@ TEST(Bnd_BoxTest, IsOutWithTransformation)
   gp_Trsf aTransf;
   EXPECT_TRUE(aBox1.IsOut(aBox2, aTransf)) << "Separate boxes should be out";
 
-  // Transform to overlap
   aTransf.SetTranslation(gp_Vec(-1.5, 0.0, 0.0));
   EXPECT_FALSE(aBox1.IsOut(aBox2, aTransf)) << "Overlapping transformed boxes should not be out";
 }
@@ -741,14 +660,12 @@ TEST(Bnd_BoxTest, IsOutLineSegment)
   Bnd_Box aBox;
   aBox.Update(0.0, 0.0, 0.0, 2.0, 2.0, 2.0);
 
-  // Line segment that passes through box
   gp_Pnt aP1(-1.0, 1.0, 1.0);
   gp_Pnt aP2(3.0, 1.0, 1.0);
   gp_Dir aDir(gp_Dir::D::X);
 
   EXPECT_FALSE(aBox.IsOut(aP1, aP2, aDir)) << "Line segment through box should not be out";
 
-  // Line segment that misses box
   gp_Pnt aP3(-1.0, 3.0, 1.0);
   gp_Pnt aP4(3.0, 3.0, 1.0);
 
@@ -759,7 +676,6 @@ TEST(Bnd_BoxTest, UpdateExpandsCorrectly)
 {
   Bnd_Box aBox;
 
-  // Start with a point
   aBox.Update(1.0, 1.0, 1.0);
 
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
@@ -768,7 +684,6 @@ TEST(Bnd_BoxTest, UpdateExpandsCorrectly)
   EXPECT_DOUBLE_EQ(1.0, aXmin) << "Point should create degenerate box";
   EXPECT_DOUBLE_EQ(1.0, aXmax) << "Point should create degenerate box";
 
-  // Add another point that expands in all directions
   aBox.Update(-0.5, 2.5, 0.5);
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
@@ -780,16 +695,14 @@ TEST(Bnd_BoxTest, UpdateExpandsCorrectly)
 
 TEST(Bnd_BoxTest, DumpJsonAndInitFromJson)
 {
-  // Create a bounding box with specific values
+
   Bnd_Box aBox(gp_Pnt(0, 0, 0), gp_Pnt(10, 5, 3));
   aBox.SetGap(0.1);
 
-  // Serialize to JSON
   std::ostringstream anOStream;
   aBox.DumpJson(anOStream);
   std::string aJsonStr = anOStream.str();
 
-  // Try to deserialize
   std::stringstream anIStream(aJsonStr);
   Bnd_Box           aDeserializedBox;
   int               aStreamPos = 1;
@@ -797,7 +710,6 @@ TEST(Bnd_BoxTest, DumpJsonAndInitFromJson)
   EXPECT_TRUE(aDeserializedBox.InitFromJson(anIStream, aStreamPos))
     << "Deserialization should succeed with proper JSON format";
 
-  // Verify the deserialized box matches the original
   double aXmin1, aYmin1, aZmin1, aXmax1, aYmax1, aZmax1;
   double aXmin2, aYmin2, aZmin2, aXmax2, aYmax2, aZmax2;
 
@@ -814,17 +726,9 @@ TEST(Bnd_BoxTest, DumpJsonAndInitFromJson)
     << "Deserialized gap should match original";
 }
 
-//==================================================================================================
-// Regression Tests
-//==================================================================================================
-
-// Test OCC16485: Bnd_Box tolerance issue with cumulative enlargement
-// Migrated from QABugs_14.cxx
 TEST(Bnd_BoxTest, OCC16485_CumulativeEnlargeTolerance)
 {
-  // Create points with X coordinate varying from 0 to 1000
-  // and compute cumulative bounding box by adding boxes for all the
-  // points, enlarged on tolerance
+
   const double aTol    = 1e-3;
   const int    aNbStep = 1000;
   Bnd_Box      aBox;
@@ -836,13 +740,12 @@ TEST(Bnd_BoxTest, OCC16485_CumulativeEnlargeTolerance)
     aB.Add(aP);
     aB.Enlarge(aTol);
     aB.Add(aBox);
-    aBox = aB; // This was causing XMin to grow each time (regression)
+    aBox = aB;
   }
 
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  // Verify that Xmin is approximately -tolerance (not growing with iterations)
   EXPECT_NEAR(-aTol, aXmin, 1e-10) << "Xmin should be equal to -tolerance";
   EXPECT_NEAR(aNbStep + aTol, aXmax, 1e-10) << "Xmax should be equal to nbstep + tolerance";
 }

@@ -16,8 +16,6 @@
 static const double NORMIN = 1.e-10;
 static const double COSMIN = 1.e-2;
 
-// G1 Constraints
-
 Plate_FreeGtoCConstraint::Plate_FreeGtoCConstraint(const gp_XY&    point2d,
                                                    const Plate_D1& D1S,
                                                    const Plate_D1& D1T,
@@ -56,7 +54,6 @@ Plate_FreeGtoCConstraint::Plate_FreeGtoCConstraint(const gp_XY&    point2d,
     if ((s < 1.e-2) && (c < 0.))
       return;
     double angle = atan2(c, s);
-    // if (angle < 0.) angle += M_PI;
 
     gp_XYZ d = N0 ^ N1;
     d.Normalize();
@@ -64,7 +61,7 @@ Plate_FreeGtoCConstraint::Plate_FreeGtoCConstraint(const gp_XY&    point2d,
     gp_Trsf rota;
     gp_Ax1  Axe(gp_Pnt(0, 0, 0), dir);
     rota.SetRotation(Axe, angle * (IncrementalLoad - 1.));
-    //      gp_Trsf rota = gce_MakeRotation(gp_Pnt(0,0,0), dir, angle*(IncrementalLoad-1.));
+
     rota.Transforms(normale);
   }
 
@@ -75,8 +72,6 @@ Plate_FreeGtoCConstraint::Plate_FreeGtoCConstraint(const gp_XY&    point2d,
   myLSC[1] = Plate_LinearScalarConstraint(Plate_PinpointConstraint(pnt2d, dv, 0, 1), normale);
   nb_LSConstraints = 2;
 }
-
-// G1 + G2 Constraints
 
 Plate_FreeGtoCConstraint::Plate_FreeGtoCConstraint(const gp_XY&    point2d,
                                                    const Plate_D1& D1S,
@@ -97,7 +92,6 @@ Plate_FreeGtoCConstraint::Plate_FreeGtoCConstraint(const gp_XY&    point2d,
     return;
   normale.Normalize();
 
-  // G1 Constraints
   gp_XYZ normaleS = D1S.Du ^ D1S.Dv;
   if (normaleS.Modulus() < NORMIN)
   {
@@ -140,7 +134,7 @@ Plate_FreeGtoCConstraint::Plate_FreeGtoCConstraint(const gp_XY&    point2d,
     gp_Trsf rota;
     gp_Ax1  Axe(gp_Pnt(0, 0, 0), dir);
     rota.SetRotation(Axe, angle * (IncrementalLoad - 1.));
-    //      gp_Trsf rota = gce_MakeRotation(gp_Pnt(0,0,0), dir, angle*(IncrementalLoad-1.));
+
     rota.Transforms(normale);
     rota.Transforms(D1T.Du);
     rota.Transforms(D1T.Dv);
@@ -170,7 +164,6 @@ Plate_FreeGtoCConstraint::Plate_FreeGtoCConstraint(const gp_XY&    point2d,
   myPPC[1]         = Plate_PinpointConstraint(pnt2d, dv, 0, 1);
   nb_PPConstraints = 2;
 
-  // G2 Constraints
   gp_XYZ Su = D1S.Du + du;
   gp_XYZ Sv = D1S.Dv + dv;
 
@@ -216,8 +209,6 @@ Plate_FreeGtoCConstraint::Plate_FreeGtoCConstraint(const gp_XY&    point2d,
   nb_LSConstraints = 3;
 }
 
-// G1 + G2 + G3 Constraints
-
 Plate_FreeGtoCConstraint::Plate_FreeGtoCConstraint(const gp_XY&    point2d,
                                                    const Plate_D1& D1S,
                                                    const Plate_D1& D1T0,
@@ -240,7 +231,6 @@ Plate_FreeGtoCConstraint::Plate_FreeGtoCConstraint(const gp_XY&    point2d,
     return;
   normale.Normalize();
 
-  // G1 Constraints
   gp_XYZ normaleS = D1S.Du ^ D1S.Dv;
   if (normaleS.Modulus() < NORMIN)
   {
@@ -282,7 +272,7 @@ Plate_FreeGtoCConstraint::Plate_FreeGtoCConstraint(const gp_XY&    point2d,
     gp_Trsf rota;
     gp_Ax1  Axe(gp_Pnt(0, 0, 0), dir);
     rota.SetRotation(Axe, angle * (IncrementalLoad - 1.));
-    //      gp_Trsf rota = gce_MakeRotation(gp_Pnt(0,0,0), dir, angle*(IncrementalLoad-1.));
+
     rota.Transforms(normale);
     rota.Transforms(D1T.Du);
     rota.Transforms(D1T.Dv);
@@ -316,7 +306,6 @@ Plate_FreeGtoCConstraint::Plate_FreeGtoCConstraint(const gp_XY&    point2d,
   myPPC[1]         = Plate_PinpointConstraint(pnt2d, dv, 0, 1);
   nb_PPConstraints = 2;
 
-  // G2 Constraints
   gp_XYZ Su = D1S.Du + du;
   gp_XYZ Sv = D1S.Dv + dv;
 
@@ -357,8 +346,6 @@ Plate_FreeGtoCConstraint::Plate_FreeGtoCConstraint(const gp_XY&    point2d,
   myPPC[3]         = Plate_PinpointConstraint(pnt2d, duv, 1, 1);
   myPPC[4]         = Plate_PinpointConstraint(pnt2d, dvv, 0, 2);
   nb_PPConstraints = 5;
-
-  // G3 Constraints
 
   vec(0) = (D2S.Duu + duu - Suu) * Su;
   vec(1) = (D2S.Duu + duu - Suu) * Sv;

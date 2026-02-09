@@ -19,8 +19,6 @@
 
 #include <cstdio>
 
-//=================================================================================================
-
 static int QATestExtremaSS(Draw_Interpretor& theInterpretor, int theArgNb, const char** theArgs)
 {
   if (theArgNb < 3 || theArgNb > 4)
@@ -29,7 +27,6 @@ static int QATestExtremaSS(Draw_Interpretor& theInterpretor, int theArgNb, const
     return 1;
   }
 
-  // Get target shape
   TopoDS_Shape aShape = DBRep::Get(theArgs[1]);
   if (aShape.IsNull())
   {
@@ -37,7 +34,6 @@ static int QATestExtremaSS(Draw_Interpretor& theInterpretor, int theArgNb, const
     return 1;
   }
 
-  // Get step value
   const double aStep = Draw::Atof(theArgs[2]);
   if (aStep <= 1e-5)
   {
@@ -55,7 +51,6 @@ static int QATestExtremaSS(Draw_Interpretor& theInterpretor, int theArgNb, const
     }
   }
 
-  // Get bounding box of the shape
   Bnd_Box aBounds;
   BRepBndLib::Add(aShape, aBounds);
 
@@ -109,11 +104,9 @@ static int QATestExtremaSS(Draw_Interpretor& theInterpretor, int theArgNb, const
   const int aNbPoints = aList.Length();
   theInterpretor << "Number of sampled points: " << aNbPoints << "\n";
 
-  // Perform projection of points
   OSD_Timer aTimer;
   aTimer.Start();
 
-  // Perform projection using standard method
   BRepExtrema_DistShapeShape aTool;
   aTool.SetFlag(aFlag);
   aTool.LoadS1(aShape);
@@ -128,8 +121,6 @@ static int QATestExtremaSS(Draw_Interpretor& theInterpretor, int theArgNb, const
   return 0;
 }
 
-//=================================================================================================
-
 void QADraw::CommonCommands(Draw_Interpretor& theCommands)
 {
   const char* group = "QA_Commands";
@@ -139,18 +130,11 @@ void QADraw::CommonCommands(Draw_Interpretor& theCommands)
                   __FILE__,
                   QATestExtremaSS,
                   group);
-
-  // adding commands "rename" leads to the fact that QA commands doesn't work properly OCC23410, use
-  // function "renamevar" theCommands.Add("rename","rename name1 toname1 name2 toname2
-  // ...",__FILE__,QArename,group);
 }
 
-//==============================================================================
-// QADraw::Factory
-//==============================================================================
 void QADraw::Factory(Draw_Interpretor& theCommands)
 {
-  // definition of QA Command
+
   QADraw::CommonCommands(theCommands);
   QADraw::TutorialCommands(theCommands);
 
@@ -158,5 +142,4 @@ void QADraw::Factory(Draw_Interpretor& theCommands)
   QADNaming::AllCommands(theCommands);
 }
 
-// Declare entry point PLUGINFACTORY
 DPLUGIN(QADraw)

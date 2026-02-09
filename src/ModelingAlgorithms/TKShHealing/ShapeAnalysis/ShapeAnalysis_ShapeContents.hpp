@@ -10,45 +10,29 @@
 #include <NCollection_HSequence.hpp>
 class TopoDS_Shape;
 
-//! Dumps shape contents
 class ShapeAnalysis_ShapeContents
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Initialize fields and call ClearFlags()
   Standard_EXPORT ShapeAnalysis_ShapeContents();
 
-  //! Clears all accumulated statistics
   Standard_EXPORT void Clear();
 
-  //! Clears all flags
   Standard_EXPORT void ClearFlags();
 
-  //! Counts quantities of sun-shapes in shape and
-  //! stores sub-shapes according to flags
   Standard_EXPORT void Perform(const TopoDS_Shape& shape);
 
-  //! Returns (modifiable) the flag which defines whether to store faces
-  //! with edges if its 3D curves has more than 8192 poles.
   bool& ModifyBigSplineMode() { return myBigSplineMode; }
 
-  //! Returns (modifiable) the flag which defines whether to store faces on indirect surfaces.
   bool& ModifyIndirectMode() { return myIndirectMode; }
 
-  //! Returns (modifiable) the flag which defines whether to store faces on offset surfaces.
   bool& ModifyOffsetSurfaceMode() { return myOffsetSurfaceMode; }
 
-  //! Returns (modifiable) the flag which defines whether to store faces
-  //! with edges if its 3D curves are trimmed curves
   bool& ModifyTrimmed3dMode() { return myTrimmed3dMode; }
 
-  //! Returns (modifiable) the flag which defines whether to store faces
-  //! with edges if its 3D curves and pcurves are offset curves
   bool& ModifyOffsetCurveMode() { return myOffsetCurveMode; }
 
-  //! Returns (modifiable) the flag which defines whether to store faces
-  //! with edges if its pcurves are trimmed curves
   bool& ModifyTrimmed2dMode() { return myTrimmed2dMode; }
 
   int NbSolids() const { return myNbSolids; }

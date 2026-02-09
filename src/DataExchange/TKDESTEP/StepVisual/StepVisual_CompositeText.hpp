@@ -14,7 +14,6 @@ class StepVisual_CompositeText : public StepGeom_GeometricRepresentationItem
 {
 
 public:
-  //! Returns a CompositeText
   Standard_EXPORT StepVisual_CompositeText();
 
   Standard_EXPORT void Init(

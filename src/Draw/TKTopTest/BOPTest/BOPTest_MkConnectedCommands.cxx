@@ -32,17 +32,15 @@ namespace
   }
 } // namespace
 
-//=================================================================================================
-
 void BOPTest::MkConnectedCommands(Draw_Interpretor& theCommands)
 {
   static bool done = false;
   if (done)
     return;
   done = true;
-  // Chapter's name
+
   const char* group = "BOPTest commands";
-  // Commands
+
   theCommands.Add("makeconnected",
                   "makeconnected result shape1 shape2 ...\n"
                   "\t\tMake the given shapes connected (glued).",
@@ -98,8 +96,6 @@ void BOPTest::MkConnectedCommands(Draw_Interpretor& theCommands)
                   group);
 }
 
-//=================================================================================================
-
 int MakeConnected(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
   if (theArgc < 3)
@@ -125,23 +121,18 @@ int MakeConnected(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 
   getMakeConnectedTool().Perform();
 
-  // Print Error/Warning messages
   BOPTest::ReportAlerts(getMakeConnectedTool().GetReport());
 
-  // Set the history of the operation in session
   BRepTest_Objects::SetHistory(getMakeConnectedTool().History());
 
   if (getMakeConnectedTool().HasErrors())
     return 0;
 
-  // Draw the result shape
   const TopoDS_Shape& aResult = getMakeConnectedTool().Shape();
   DBRep::Set(theArgv[1], aResult);
 
   return 0;
 }
-
-//=================================================================================================
 
 int MakePeriodic(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
@@ -193,7 +184,7 @@ int MakePeriodic(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     ++i;
     if (theArgc > i + 1)
     {
-      // Check if trimming is necessary
+
       if (!strcmp(theArgv[i], "-trim"))
       {
         if (theArgc == (i + 1))
@@ -212,23 +203,18 @@ int MakePeriodic(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 
   getMakeConnectedTool().MakePeriodic(aParams);
 
-  // Print Error/Warning messages
   BOPTest::ReportAlerts(getMakeConnectedTool().GetReport());
 
-  // Set the history of the operation in session
   BRepTest_Objects::SetHistory(getMakeConnectedTool().History());
 
   if (getMakeConnectedTool().HasErrors())
     return 0;
 
-  // Draw the result shape
   const TopoDS_Shape& aResult = getMakeConnectedTool().PeriodicShape();
   DBRep::Set(theArgv[1], aResult);
 
   return 0;
 }
-
-//=================================================================================================
 
 int RepeatShape(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
@@ -275,23 +261,18 @@ int RepeatShape(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     getMakeConnectedTool().RepeatShape(aDirID, aTimes);
   }
 
-  // Print Error/Warning messages
   BOPTest::ReportAlerts(getMakeConnectedTool().GetReport());
 
-  // Set the history of the operation in session
   BRepTest_Objects::SetHistory(getMakeConnectedTool().History());
 
   if (getMakeConnectedTool().HasErrors())
     return 0;
 
-  // Draw the result shape
   const TopoDS_Shape& aResult = getMakeConnectedTool().PeriodicShape();
   DBRep::Set(theArgv[1], aResult);
 
   return 0;
 }
-
-//=================================================================================================
 
 int MaterialsOn(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
@@ -301,7 +282,6 @@ int MaterialsOn(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     return 1;
   }
 
-  // Get the shape to get materials
   TopoDS_Shape aShape = DBRep::Get(theArgv[3]);
   if (aShape.IsNull())
   {
@@ -309,7 +289,6 @@ int MaterialsOn(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     return 1;
   }
 
-  // Get the sign of a shape
   bool bPositive;
 
   if (!strcmp("+", theArgv[2]))
@@ -343,8 +322,6 @@ int MaterialsOn(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   return 0;
 }
 
-//=================================================================================================
-
 int GetTwins(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 {
   if (theArgc != 3)
@@ -353,7 +330,6 @@ int GetTwins(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     return 1;
   }
 
-  // Get the shape to find twins
   TopoDS_Shape aShape = DBRep::Get(theArgv[2]);
   if (aShape.IsNull())
   {
@@ -381,14 +357,11 @@ int GetTwins(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   return 0;
 }
 
-//=================================================================================================
-
 int ClearRepetitions(Draw_Interpretor&, int theArgc, const char** theArgv)
 {
-  // Clear all previous repetitions
+
   getMakeConnectedTool().ClearRepetitions();
 
-  // Set the history of the operation in session
   BRepTest_Objects::SetHistory(getMakeConnectedTool().History());
 
   if (theArgc > 1)

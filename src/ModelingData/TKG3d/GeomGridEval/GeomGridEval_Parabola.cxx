@@ -1,23 +1,10 @@
-// Copyright (c) 2025 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <GeomGridEval_Parabola.hpp>
 
 #include <gp_Parab.hpp>
 
 #include <cmath>
-
-//==================================================================================================
 
 NCollection_Array1<gp_Pnt> GeomGridEval_Parabola::EvaluateGrid(
   const NCollection_Array1<double>& theParams) const
@@ -52,7 +39,6 @@ NCollection_Array1<gp_Pnt> GeomGridEval_Parabola::EvaluateGrid(
   {
     const double u = theParams.Value(i);
 
-    // P = Center + (u^2 / 4F) * XDir + u * YDir
     const double u2Term = u * u * aCoeff;
 
     aResult.SetValue(i - theParams.Lower() + 1,
@@ -62,8 +48,6 @@ NCollection_Array1<gp_Pnt> GeomGridEval_Parabola::EvaluateGrid(
   }
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_Parabola::EvaluateGridD1(
   const NCollection_Array1<double>& theParams) const
@@ -93,14 +77,11 @@ NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_Parabola::EvaluateGridD1(
   const double aYZ = aYDir.Z();
 
   const double aCoeff  = 1.0 / (4.0 * aFocal);
-  const double aCoeff2 = 1.0 / (2.0 * aFocal); // Derivative of u^2/4F is 2u/4F = u/2F
+  const double aCoeff2 = 1.0 / (2.0 * aFocal);
 
   for (int i = theParams.Lower(); i <= theParams.Upper(); ++i)
   {
     const double u = theParams.Value(i);
-
-    // P = Center + (u^2 / 4F) * XDir + u * YDir
-    // D1 = (u / 2F) * XDir + YDir
 
     const double u2Term = u * u * aCoeff;
     const double d1Term = u * aCoeff2;
@@ -113,8 +94,6 @@ NCollection_Array1<GeomGridEval::CurveD1> GeomGridEval_Parabola::EvaluateGridD1(
   }
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_Parabola::EvaluateGridD2(
   const NCollection_Array1<double>& theParams) const
@@ -145,18 +124,13 @@ NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_Parabola::EvaluateGridD2(
 
   const double aCoeff  = 1.0 / (4.0 * aFocal);
   const double aCoeff2 = 1.0 / (2.0 * aFocal);
-  const double aCoeff3 = aCoeff2; // Derivative of u/2F is 1/2F
+  const double aCoeff3 = aCoeff2;
 
-  // D2 is constant for parabola: (1/2F) * XDir
   const gp_Vec aD2(aCoeff3 * aXX, aCoeff3 * aXY, aCoeff3 * aXZ);
 
   for (int i = theParams.Lower(); i <= theParams.Upper(); ++i)
   {
     const double u = theParams.Value(i);
-
-    // P = Center + (u^2 / 4F) * XDir + u * YDir
-    // D1 = (u / 2F) * XDir + YDir
-    // D2 = (1 / 2F) * XDir
 
     const double u2Term = u * u * aCoeff;
     const double d1Term = u * aCoeff2;
@@ -170,8 +144,6 @@ NCollection_Array1<GeomGridEval::CurveD2> GeomGridEval_Parabola::EvaluateGridD2(
   }
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_Parabola::EvaluateGridD3(
   const NCollection_Array1<double>& theParams) const
@@ -205,7 +177,7 @@ NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_Parabola::EvaluateGridD3(
   const double aCoeff3 = aCoeff2;
 
   const gp_Vec aD2(aCoeff3 * aXX, aCoeff3 * aXY, aCoeff3 * aXZ);
-  const gp_Vec aD3(0.0, 0.0, 0.0); // D3 is 0
+  const gp_Vec aD3(0.0, 0.0, 0.0);
 
   for (int i = theParams.Lower(); i <= theParams.Upper(); ++i)
   {
@@ -224,8 +196,6 @@ NCollection_Array1<GeomGridEval::CurveD3> GeomGridEval_Parabola::EvaluateGridD3(
   }
   return aResult;
 }
-
-//==================================================================================================
 
 NCollection_Array1<gp_Vec> GeomGridEval_Parabola::EvaluateGridDN(
   const NCollection_Array1<double>& theParams,
@@ -255,7 +225,7 @@ NCollection_Array1<gp_Vec> GeomGridEval_Parabola::EvaluateGridDN(
 
   if (theN == 1)
   {
-    // D1 = (u/2F) * X + Y (depends on u)
+
     for (int i = theParams.Lower(); i <= theParams.Upper(); ++i)
     {
       const double u      = theParams.Value(i);
@@ -266,7 +236,7 @@ NCollection_Array1<gp_Vec> GeomGridEval_Parabola::EvaluateGridDN(
   }
   else if (theN == 2)
   {
-    // D2 = (1/2F) * X (constant)
+
     const gp_Vec aD2(aCoeff2 * aXX, aCoeff2 * aXY, aCoeff2 * aXZ);
     for (int i = 1; i <= aNb; ++i)
     {
@@ -275,7 +245,7 @@ NCollection_Array1<gp_Vec> GeomGridEval_Parabola::EvaluateGridDN(
   }
   else
   {
-    // DN = 0 for N >= 3
+
     const gp_Vec aZero(0.0, 0.0, 0.0);
     for (int i = 1; i <= aNb; ++i)
     {

@@ -2,8 +2,6 @@
 #include <gp_Pnt.hpp>
 #include <math_Matrix.hpp>
 
-//=================================================================================================
-
 BRepBlend_SurfPointConstRadInv::BRepBlend_SurfPointConstRadInv(
   const occ::handle<Adaptor3d_Surface>& S,
   const occ::handle<Adaptor3d_Curve>&   C)
@@ -13,8 +11,6 @@ BRepBlend_SurfPointConstRadInv::BRepBlend_SurfPointConstRadInv(
       choix(0)
 {
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfPointConstRadInv::Set(const double R, const int Choix)
 {
@@ -40,14 +36,10 @@ void BRepBlend_SurfPointConstRadInv::Set(const double R, const int Choix)
   }
 }
 
-//=================================================================================================
-
 int BRepBlend_SurfPointConstRadInv::NbEquations() const
 {
   return 3;
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfPointConstRadInv::Value(const math_Vector& X, math_Vector& F)
 {
@@ -57,7 +49,7 @@ bool BRepBlend_SurfPointConstRadInv::Value(const math_Vector& X, math_Vector& F)
   gp_XYZ nplan(0., 0., 0.), ns(0., 0., 0.), ref(0., 0., 0.);
   curv->D1(X(1), ptcur, d1cur);
   nplan = d1cur.Normalized().XYZ();
-  //  theD = -(nplan.Dot(ptcur.XYZ()));
+
   gp_XYZ ptcurXYZ(ptcur.XYZ());
   theD = nplan.Dot(ptcurXYZ);
   theD = theD * (-1.);
@@ -76,8 +68,6 @@ bool BRepBlend_SurfPointConstRadInv::Value(const math_Vector& X, math_Vector& F)
   return true;
 }
 
-//=================================================================================================
-
 bool BRepBlend_SurfPointConstRadInv::Derivatives(const math_Vector& X, math_Matrix& D)
 {
   gp_Pnt ptcur, pts;
@@ -88,7 +78,7 @@ bool BRepBlend_SurfPointConstRadInv::Derivatives(const math_Vector& X, math_Matr
   normd1cur      = d1cur.Magnitude();
   unsurnormd1cur = 1. / normd1cur;
   nplan          = unsurnormd1cur * d1cur;
-  //  theD = -(nplan.XYZ().Dot(ptcur.XYZ()));
+
   gp_XYZ nplanXYZ(nplan.XYZ());
   gp_XYZ ptcurXYZ(ptcur.XYZ());
   theD = nplanXYZ.Dot(ptcurXYZ);
@@ -148,8 +138,6 @@ bool BRepBlend_SurfPointConstRadInv::Derivatives(const math_Vector& X, math_Matr
   return true;
 }
 
-//=================================================================================================
-
 bool BRepBlend_SurfPointConstRadInv::Values(const math_Vector& X, math_Vector& F, math_Matrix& D)
 {
   gp_Pnt ptcur, pts;
@@ -161,7 +149,7 @@ bool BRepBlend_SurfPointConstRadInv::Values(const math_Vector& X, math_Vector& F
   normd1cur      = d1cur.Magnitude();
   unsurnormd1cur = 1. / normd1cur;
   nplan          = unsurnormd1cur * d1cur;
-  //  theD = -(nplan.XYZ().Dot(ptcur.XYZ()));
+
   gp_XYZ nplanXYZ(nplan.XYZ());
   gp_XYZ ptcurXYZ(ptcur.XYZ());
   theD = nplanXYZ.Dot(ptcurXYZ);
@@ -224,14 +212,10 @@ bool BRepBlend_SurfPointConstRadInv::Values(const math_Vector& X, math_Vector& F
   return true;
 }
 
-//=================================================================================================
-
 void BRepBlend_SurfPointConstRadInv::Set(const gp_Pnt& P)
 {
   point = P;
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfPointConstRadInv::GetTolerance(math_Vector& Tolerance, const double Tol) const
 {
@@ -239,8 +223,6 @@ void BRepBlend_SurfPointConstRadInv::GetTolerance(math_Vector& Tolerance, const 
   Tolerance(2) = surf->UResolution(Tol);
   Tolerance(3) = surf->VResolution(Tol);
 }
-
-//=================================================================================================
 
 void BRepBlend_SurfPointConstRadInv::GetBounds(math_Vector& InfBound, math_Vector& SupBound) const
 {
@@ -251,8 +233,6 @@ void BRepBlend_SurfPointConstRadInv::GetBounds(math_Vector& InfBound, math_Vecto
   InfBound(3) = surf->FirstVParameter();
   SupBound(3) = surf->LastVParameter();
 }
-
-//=================================================================================================
 
 bool BRepBlend_SurfPointConstRadInv::IsSolution(const math_Vector& Sol, const double Tol)
 {

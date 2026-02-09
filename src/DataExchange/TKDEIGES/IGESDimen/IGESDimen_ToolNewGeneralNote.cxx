@@ -27,7 +27,6 @@ void IGESDimen_ToolNewGeneralNote::ReadOwnParams(const occ::handle<IGESDimen_New
                                                  const occ::handle<IGESData_IGESReaderData>&  IR,
                                                  IGESData_ParamReader& PR) const
 {
-  // bool st; //szv#4:S4163:12Mar99 moved down
 
   int                                                                     nbval;
   double                                                                  width;
@@ -57,7 +56,6 @@ void IGESDimen_ToolNewGeneralNote::ReadOwnParams(const occ::handle<IGESDimen_New
   occ::handle<NCollection_HArray1<gp_XYZ>>                                startPoints;
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>> texts;
 
-  // szv#4:S4163:12Mar99 `st=` not needed
   PR.ReadReal(PR.Current(), "Text Width", width);
   PR.ReadReal(PR.Current(), "Text Height", height);
   PR.ReadInteger(PR.Current(), "Justification Code", justifyCode);
@@ -115,67 +113,45 @@ void IGESDimen_ToolNewGeneralNote::ReadOwnParams(const occ::handle<IGESDimen_New
       gp_XYZ                                startPoint;
       occ::handle<TCollection_HAsciiString> text;
 
-      // st = PR.ReadInteger(PR.Current(), "Character Display",charDisplay); //szv#4:S4163:12Mar99
-      // moved in if
       if (PR.ReadInteger(PR.Current(), "Character Display", charDisplay))
         charDisplays->SetValue(i, charDisplay);
 
-      // st = PR.ReadReal(PR.Current(), "Character Width", charWidth); //szv#4:S4163:12Mar99 moved
-      // in if
       if (PR.ReadReal(PR.Current(), "Character Width", charWidth))
         charWidths->SetValue(i, charWidth);
 
-      // st = PR.ReadReal(PR.Current(), "Character Height", charHeight); //szv#4:S4163:12Mar99 moved
-      // in if
       if (PR.ReadReal(PR.Current(), "Character Height", charHeight))
         charHeights->SetValue(i, charHeight);
 
-      // st = PR.ReadReal(PR.Current(), "Inter-character space", interCharSpace);
-      // //szv#4:S4163:12Mar99 moved in if
       if (PR.ReadReal(PR.Current(), "Inter-character space", interCharSpace))
         interCharSpaces->SetValue(i, interCharSpace);
 
-      // st = PR.ReadReal(PR.Current(), "Interline space", interlineSpace); //szv#4:S4163:12Mar99
-      // moved in if
       if (PR.ReadReal(PR.Current(), "Interline space", interlineSpace))
         interlineSpaces->SetValue(i, interlineSpace);
 
-      // st = PR.ReadInteger(PR.Current(), "Font Style", fontStyle); //szv#4:S4163:12Mar99 moved in
-      // if
       if (PR.ReadInteger(PR.Current(), "Font Style", fontStyle))
         fontStyles->SetValue(i, fontStyle);
 
-      // st = PR.ReadReal(PR.Current(), "Character Angle", charAngle); //szv#4:S4163:12Mar99 moved
-      // in if
       if (PR.ReadReal(PR.Current(), "Character Angle", charAngle))
         charAngles->SetValue(i, charAngle);
 
-      // st = PR.ReadText(PR.Current(),"Control Code String", controlCodeString);
-      // //szv#4:S4163:12Mar99 moved in if
       if (PR.ReadText(PR.Current(), "Control Code String", controlCodeString))
         controlCodeStrings->SetValue(i, controlCodeString);
 
-      // st = PR.ReadInteger(PR.Current(), "Number of Characters", nbChar); //szv#4:S4163:12Mar99
-      // moved in if
       if (PR.ReadInteger(PR.Current(), "Number of Characters", nbChar))
         nbChars->SetValue(i, nbChar);
 
-      // st = PR.ReadReal(PR.Current(), "Box Width", boxWidth); //szv#4:S4163:12Mar99 moved in if
       if (PR.ReadReal(PR.Current(), "Box Width", boxWidth))
         boxWidths->SetValue(i, boxWidth);
 
-      // st = PR.ReadReal(PR.Current(), "Box Height", boxHeight); //szv#4:S4163:12Mar99 moved in if
       if (PR.ReadReal(PR.Current(), "Box Height", boxHeight))
         boxHeights->SetValue(i, boxHeight);
 
       int curnum = PR.CurrentNumber();
       if (PR.DefinedElseSkip())
       {
-        // Reading fontCode(Integer, must be positive)
-        // clang-format off
-	    PR.ReadInteger(PR.Current(), "Character Set Interpretation Code",charSetCode); //szv#4:S4163:12Mar99 `st=` not needed
-	    // Reading charSetEnt
-        // clang-format on
+
+        PR.ReadInteger(PR.Current(), "Character Set Interpretation Code", charSetCode);
+
         if (charSetCode < 0)
         {
           charSetEntity = PR.ParamEntity(IR, curnum);
@@ -195,35 +171,25 @@ void IGESDimen_ToolNewGeneralNote::ReadOwnParams(const occ::handle<IGESDimen_New
 
       if (PR.DefinedElseSkip())
       {
-        // st = PR.ReadReal(PR.Current(), "Slant Angle", slantAngle); //szv#4:S4163:12Mar99 moved in
-        // if
+
         if (PR.ReadReal(PR.Current(), "Slant Angle", slantAngle))
           slantAngles->SetValue(i, slantAngle);
       }
       else
         slantAngles->SetValue(i, M_PI / 2);
 
-      // st = PR.ReadReal(PR.Current(), "Rotation Angle", rotationAngle); //szv#4:S4163:12Mar99
-      // moved in if
       if (PR.ReadReal(PR.Current(), "Rotation Angle", rotationAngle))
         rotationAngles->SetValue(i, rotationAngle);
 
-      // st = PR.ReadInteger(PR.Current(), "Mirror Flag", mirrorFlag); //szv#4:S4163:12Mar99 moved
-      // in if
       if (PR.ReadInteger(PR.Current(), "Mirror Flag", mirrorFlag))
         mirrorFlags->SetValue(i, mirrorFlag);
 
-      // st = PR.ReadInteger(PR.Current(), "Rotate Flag", rotateFlag); //szv#4:S4163:12Mar99 moved
-      // in if
       if (PR.ReadInteger(PR.Current(), "Rotate Flag", rotateFlag))
         rotateFlags->SetValue(i, rotateFlag);
 
-      // st = PR.ReadXYZ(PR.CurrentList(1, 3), "Start Point", startPoint); //szv#4:S4163:12Mar99
-      // moved in if
       if (PR.ReadXYZ(PR.CurrentList(1, 3), "Start Point", startPoint))
         startPoints->SetValue(i, startPoint);
 
-      // st = PR.ReadText(PR.Current(), "Text String", text); //szv#4:S4163:12Mar99 moved in if
       if (PR.ReadText(PR.Current(), "Text String", text))
         texts->SetValue(i, text);
     }
@@ -288,7 +254,7 @@ void IGESDimen_ToolNewGeneralNote::WriteOwnParams(const occ::handle<IGESDimen_Ne
     IW.Send(ent->BoxWidth(i));
     IW.Send(ent->BoxHeight(i));
     if (ent->IsCharSetEntity(i))
-      IW.Send(ent->CharSetEntity(i), true); // negative
+      IW.Send(ent->CharSetEntity(i), true);
     else
       IW.Send(ent->CharSetCode(i));
     IW.Send(ent->SlantAngle(i));
@@ -426,7 +392,7 @@ void IGESDimen_ToolNewGeneralNote::OwnCopy(const occ::handle<IGESDimen_NewGenera
 }
 
 IGESData_DirChecker IGESDimen_ToolNewGeneralNote::DirChecker(
-  const occ::handle<IGESDimen_NewGeneralNote>& /* ent */) const
+  const occ::handle<IGESDimen_NewGeneralNote>&) const
 {
   IGESData_DirChecker DC(213, 0);
   DC.Structure(IGESData_DefVoid);

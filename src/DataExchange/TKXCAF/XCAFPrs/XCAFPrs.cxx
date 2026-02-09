@@ -15,7 +15,6 @@
 
 static bool viewnameMode = false;
 
-//! Fill colors of XCAFPrs_Style structure.
 static void fillStyleColors(XCAFPrs_Style&                        theStyle,
                             const occ::handle<XCAFDoc_ColorTool>& theTool,
                             const TDF_Label&                      theLabel)
@@ -49,12 +48,12 @@ static bool getShapesOfSHUO(NCollection_IndexedMap<TopLoc_Location>& theaPrevLoc
     {
       TDF_Label       aSubCompL = aLabSeq.Value(i);
       TopLoc_Location compLoc   = XCAFDoc_ShapeTool::GetLocation(aSubCompL.Father());
-      // create new map of laocation (to not merge locations from different shapes)
+
       NCollection_IndexedMap<TopLoc_Location> aNewPrevLocMap;
       for (int m = 1; m <= theaPrevLocMap.Extent(); m++)
         aNewPrevLocMap.Add(theaPrevLocMap.FindKey(m));
       aNewPrevLocMap.Add(compLoc);
-      // got for the new sublocations and corresponding shape
+
       getShapesOfSHUO(aNewPrevLocMap, theSTool, aSubCompL, theSHUOShapeSeq);
     }
   else
@@ -62,13 +61,13 @@ static bool getShapesOfSHUO(NCollection_IndexedMap<TopLoc_Location>& theaPrevLoc
     TopoDS_Shape aSHUO_NUSh = theSTool->GetShape(theSHUOlab.Father());
     if (aSHUO_NUSh.IsNull())
       return false;
-    // cause got shape with location already.
+
     TopLoc_Location nullLoc;
     aSHUO_NUSh.Location(nullLoc);
-    // multiply the locations
+
     int intMapLenght = theaPrevLocMap.Extent();
     if (intMapLenght < 1)
-      return false; // should not be, but to avoid exception...?
+      return false;
     TopLoc_Location SupcompLoc;
     SupcompLoc = theaPrevLocMap.FindKey(intMapLenght);
     if (intMapLenght > 1)
@@ -86,15 +85,13 @@ static bool getShapesOfSHUO(NCollection_IndexedMap<TopLoc_Location>& theaPrevLoc
   return (theSHUOShapeSeq.Length() > 0);
 }
 
-//=================================================================================================
-
 void XCAFPrs::CollectStyleSettings(
   const TDF_Label&                                                                  theLabel,
   const TopLoc_Location&                                                            theLoc,
   NCollection_IndexedDataMap<TopoDS_Shape, XCAFPrs_Style, TopTools_ShapeMapHasher>& theSettings,
   const Quantity_ColorRGBA&                                                         theLayerColor)
 {
-  // for references, first collect colors of referred shape
+
   {
     TDF_Label aLabelRef;
     if (XCAFDoc_ShapeTool::GetReferredShape(theLabel, aLabelRef))
@@ -117,7 +114,6 @@ void XCAFPrs::CollectStyleSettings(
     }
   }
 
-  // for assemblies, first collect colors defined in components
   {
     NCollection_Sequence<TDF_Label> aComponentLabSeq;
     if (XCAFDoc_ShapeTool::GetComponents(theLabel, aComponentLabSeq) && !aComponentLabSeq.IsEmpty())
@@ -132,13 +128,12 @@ void XCAFPrs::CollectStyleSettings(
     }
   }
 
-  // collect settings on subshapes
   occ::handle<XCAFDoc_ColorTool>       aColorTool = XCAFDoc_DocumentTool::ColorTool(theLabel);
   occ::handle<XCAFDoc_VisMaterialTool> aMatTool   = XCAFDoc_DocumentTool::VisMaterialTool(theLabel);
 
   NCollection_Sequence<TDF_Label> aLabSeq;
   XCAFDoc_ShapeTool::GetSubShapes(theLabel, aLabSeq);
-  // and add the shape itself
+
   aLabSeq.Append(theLabel);
   for (NCollection_Sequence<TDF_Label>::Iterator aLabIter(aLabSeq); aLabIter.More();
        aLabIter.Next())
@@ -194,7 +189,6 @@ void XCAFPrs::CollectStyleSettings(
       fillStyleColors(aStyle, aColorTool, aLabel);
     }
 
-    // PTV try to set color from SHUO structure
     const occ::handle<XCAFDoc_ShapeTool>& aShapeTool = aColorTool->ShapeTool();
     if (aShapeTool->IsComponent(aLabel))
     {
@@ -231,34 +225,19 @@ void XCAFPrs::CollectStyleSettings(
           continue;
         }
 
-        // set style for all component from Next Usage Occurrence.
 #ifdef OCCT_DEBUG
         std::cout << "Set the style for SHUO next_usage-occurrence" << std::endl;
 #endif
-        /*
-        // may be work, but static it returns excess shapes. It is more faster to use OLD version.
-        // PTV 14.02.2003 NEW version using API of ShapeTool
-        NCollection_Sequence<TopoDS_Shape> aShuoShapeSeq;
-        aShapeTool->GetAllStyledComponents (aShuoNode, aShuoShapeSeq);
-        for (NCollection_Sequence<TopoDS_Shape>::Iterator aShuoShapeIter (aShuoShapeSeq);
-        aShuoShapeIter.More(); aShuoShapeIter.Next())
-        {
-          const TopoDS_Shape& aShuoShape = aShuoShapeIter.Value();
-          if (!aShuoShape.IsNull())
-            theSettings.Bind (aShuoShape, aShuoStyle);
-        }*/
-        // OLD version that was written before ShapeTool API, and it FASTER for presentation
-        // get TOP location of SHUO component
+
         TopLoc_Location                         compLoc = XCAFDoc_ShapeTool::GetLocation(aLabel);
         NCollection_IndexedMap<TopLoc_Location> aPrevLocMap;
-        // get previous set location
+
         if (!theLoc.IsIdentity())
         {
           aPrevLocMap.Add(theLoc);
         }
         aPrevLocMap.Add(compLoc);
 
-        // get shapes of SHUO Next_Usage components
         NCollection_Sequence<TopoDS_Shape> aShuoShapeSeq;
         getShapesOfSHUO(aPrevLocMap, aShapeTool, aShuolab, aShuoShapeSeq);
         for (NCollection_Sequence<TopoDS_Shape>::Iterator aShuoShapeIter(aShuoShapeSeq);
@@ -298,14 +277,10 @@ void XCAFPrs::CollectStyleSettings(
   }
 }
 
-//=================================================================================================
-
 void XCAFPrs::SetViewNameMode(const bool aNameMode)
 {
   viewnameMode = aNameMode;
 }
-
-//=================================================================================================
 
 bool XCAFPrs::GetViewNameMode()
 {

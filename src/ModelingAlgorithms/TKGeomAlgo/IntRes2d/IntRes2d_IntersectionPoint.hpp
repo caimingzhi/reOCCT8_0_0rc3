@@ -8,22 +8,13 @@
 #include <IntRes2d_Transition.hpp>
 #include <Standard_Boolean.hpp>
 
-//! Definition of an intersection point between two
-//! 2D curves.
 class IntRes2d_IntersectionPoint
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Empty constructor.
   Standard_EXPORT IntRes2d_IntersectionPoint();
 
-  //! Creates an IntersectionPoint.
-  //! if ReversedFlag is False, the parameter Uc1(resp. Uc2)
-  //! and the Transition Trans1 (resp. Trans2) refer to
-  //! the first curve (resp. second curve) otherwise Uc1
-  //! and Trans1 (resp. Uc2 and Trans2) refer to the
-  //! second curve (resp. the first curve).
   IntRes2d_IntersectionPoint(const gp_Pnt2d&            P,
                              const double               Uc1,
                              const double               Uc2,
@@ -31,9 +22,6 @@ public:
                              const IntRes2d_Transition& Trans2,
                              const bool                 ReversedFlag);
 
-  //! Sets the values for an existing intersection
-  //! point. The meaning of the parameters are the same
-  //! as for the Create.
   void SetValues(const gp_Pnt2d&            P,
                  const double               Uc1,
                  const double               Uc2,
@@ -41,22 +29,14 @@ public:
                  const IntRes2d_Transition& Trans2,
                  const bool                 ReversedFlag);
 
-  //! Returns the value of the coordinates of the
-  //! intersection point in the 2D space.
   const gp_Pnt2d& Value() const;
 
-  //! Returns the parameter on the first curve.
   double ParamOnFirst() const;
 
-  //! Returns the parameter on the second curve.
   double ParamOnSecond() const;
 
-  //! Returns the transition of the 1st curve compared to
-  //! the 2nd one.
   const IntRes2d_Transition& TransitionOfFirst() const;
 
-  //! returns the transition of the 2nd curve compared to
-  //! the 1st one.
   const IntRes2d_Transition& TransitionOfSecond() const;
 
 private:

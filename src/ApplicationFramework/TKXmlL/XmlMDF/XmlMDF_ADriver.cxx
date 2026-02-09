@@ -8,8 +8,6 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDF_ADriver, Standard_Transient)
 
-//=================================================================================================
-
 XmlMDF_ADriver::XmlMDF_ADriver(const occ::handle<Message_Messenger>& theMsgDriver,
                                const char*                           theNS,
                                const char*                           theName)
@@ -26,24 +24,15 @@ XmlMDF_ADriver::XmlMDF_ADriver(const occ::handle<Message_Messenger>& theMsgDrive
     myTypeName += theName;
 }
 
-//=======================================================================
-// function : VersionNumber
-// purpose  : default version number from which the driver is available
-//=======================================================================
-
 int XmlMDF_ADriver::VersionNumber() const
 {
   return 0;
 }
 
-//=================================================================================================
-
 occ::handle<Standard_Type> XmlMDF_ADriver::SourceType() const
 {
   return NewEmpty()->DynamicType();
 }
-
-//=================================================================================================
 
 const TCollection_AsciiString& XmlMDF_ADriver::TypeName() const
 {

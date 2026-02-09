@@ -10,7 +10,6 @@ class StepShape_GeometricallyBoundedWireframeShapeRepresentation
 {
 
 public:
-  //! Returns a GeometricallyBoundedWireframeShapeRepresentation
   Standard_EXPORT StepShape_GeometricallyBoundedWireframeShapeRepresentation();
 
   DEFINE_STANDARD_RTTIEXT(StepShape_GeometricallyBoundedWireframeShapeRepresentation,

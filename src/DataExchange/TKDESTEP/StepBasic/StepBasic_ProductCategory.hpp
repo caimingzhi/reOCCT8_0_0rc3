@@ -11,7 +11,6 @@ class StepBasic_ProductCategory : public Standard_Transient
 {
 
 public:
-  //! Returns a ProductCategory
   Standard_EXPORT StepBasic_ProductCategory();
 
   Standard_EXPORT void Init(const occ::handle<TCollection_HAsciiString>& aName,

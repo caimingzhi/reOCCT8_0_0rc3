@@ -28,18 +28,6 @@ static int FlatLength(const NCollection_Array1<int>& Mults)
   return sum;
 }
 
-//=======================================================================
-// function : CheckTangents
-// purpose  : Checks if theArrTg3d and theArrTg2d have direction
-//            corresponded to the direction between theArrPt1 and theArrPt2.
-//            If it is not then reverses tangent vectors.
-//              theArrPt1 (as same as theArrPt2) is sub-set of all 3D-points in
-//            one multy-point (multy-point is union of sets of 2D- and 3D-points).
-//
-// ATTENTION!!!
-//              The property of correlation between Tg3d and Tg2d is used here.
-//            Therefore, only 3D-coinciding is checked.
-//=======================================================================
 static void CheckTangents(const NCollection_Array1<gp_Pnt>& theArrPt1,
                           const NCollection_Array1<gp_Pnt>& theArrPt2,
                           NCollection_Array1<gp_Vec>&       theArrTg3d,
@@ -71,8 +59,6 @@ static void CheckTangents(const NCollection_Array1<gp_Pnt>& theArrPt1,
   if (!isToChangeDir)
     return;
 
-  // Change directions for every 2D- and 3D-tangents
-
   for (int i = theArrTg3d.Lower(); i <= theArrTg3d.Upper(); i++)
   {
     theArrTg3d(i).Reverse();
@@ -84,14 +70,6 @@ static void CheckTangents(const NCollection_Array1<gp_Pnt>& theArrPt1,
   }
 }
 
-//=======================================================================
-// function : CheckTangents
-// purpose  : Checks if theArrTg2d have direction
-//            corresponded to the direction between theArrPt1 and theArrPt2.
-//            If it is not then reverses tangent vector.
-//              theArrPt1 (as same as theArrPt2) is sub-set of all 2D-points in
-//            one multy-point (multy-point is union of sets of 2D- and 3D-points).
-//=======================================================================
 static void CheckTangents(const NCollection_Array1<gp_Pnt2d>& theArrPt1,
                           const NCollection_Array1<gp_Pnt2d>& theArrPt2,
                           NCollection_Array1<gp_Vec2d>&       theArrTg2d)
@@ -252,7 +230,7 @@ AppParCurves_LeastSquare::AppParCurves_LeastSquare(const MultiLine&             
 
 void AppParCurves_LeastSquare::Init(const MultiLine& SSP, const int FirstPoint, const int LastPoint)
 {
-  // Variable de controle
+
   iscalculated = false;
   isready      = true;
 
@@ -261,16 +239,13 @@ void AppParCurves_LeastSquare::Init(const MultiLine& SSP, const int FirstPoint, 
   FirstP   = TheFirstPoint(FirstConstraint, myfirstp);
   LastP    = TheLastPoint(LastConstraint, mylastp);
 
-  // Reperage des contraintes aux extremites:
-  // ========================================
   int i, j, k, i2;
 
   nbP2d = ToolLine::NbP2d(SSP);
   nbP   = ToolLine::NbP3d(SSP);
   gp_Pnt   Poi;
   gp_Pnt2d Poi2d;
-  //  gp_Vec V3d;
-  //  gp_Vec2d V2d;
+
   int mynbP2d = nbP2d, mynbP = nbP;
   if (nbP2d == 0)
     mynbP2d = 1;
@@ -471,7 +446,7 @@ void AppParCurves_LeastSquare::Init(const MultiLine& SSP, const int FirstPoint, 
 
   int Nincx = resfin - resinit + 1;
   if (Nincx < 1)
-  { // Impossible d'aller plus loin
+  {
     isready = false;
     return;
   }
@@ -497,11 +472,9 @@ void AppParCurves_LeastSquare::Perform(const math_Vector& Parameters)
   int    i, j, k, Ci, i2, k1, k2;
   int    nbpol1 = nbpoles - 1, Ninc1 = Ninc - 1;
   double AD1, A0;
-  //  gp_Pnt Pt;
-  //  gp_Pnt2d Pt2d;
+
   iscalculated = false;
 
-  // calcul de la matrice A et DA des fonctions d approximation:
   ComputeFunction(Parameters);
 
   if (FirstConstraint != AppParCurves_TangencyPoint && LastConstraint != AppParCurves_TangencyPoint)
@@ -560,8 +533,6 @@ void AppParCurves_LeastSquare::Perform(const math_Vector& Parameters)
       }
     }
 
-    // resolution:
-
     int Nincx = resfin - resinit + 1;
     if (Nincx < 1)
     {
@@ -597,10 +568,6 @@ void AppParCurves_LeastSquare::Perform(const math_Vector& Parameters)
     }
     done = true;
   }
-
-  // ===========================================================
-  // cas de tangence:
-  // ===========================================================
 
   int Nincx  = resfin - resinit + 1;
   int deport = 0, Nincx2 = 2 * Nincx;
@@ -655,8 +622,6 @@ void AppParCurves_LeastSquare::Perform(const math_Vector& Parameters)
   else if (LastConstraint >= AppParCurves_TangencyPoint)
     lambda2 = myTAB.Value(Ninc);
 
-  // Les resultats sont stockes dans mypoles.
-  //=========================================
   k  = 1;
   i2 = 1;
   for (Ci = 1; Ci <= nbP; Ci++)
@@ -790,8 +755,7 @@ void AppParCurves_LeastSquare::Perform(const math_Vector& Parameters,
   lambda2 = l2;
   int    i, j, k, i2;
   double AD0, AD1, AD2, A0, A1, A2;
-  //  gp_Pnt Pt, P1, P2;
-  //  gp_Pnt2d Pt2d, P12d, P22d;
+
   double l11 = deg * l1, l22 = deg * l2;
 
   ComputeFunction(Parameters);
@@ -1033,20 +997,12 @@ void AppParCurves_LeastSquare::Perform(const math_Vector& Parameters,
   done = true;
 }
 
-//=======================================================================
-// function : Affect
-// purpose  :    Index is an ID of the point in MultiLine. Every point is set of
-//            several 3D- and 2D-points. E.g. every points of Walking-line,
-//            obtained in intersection algorithm, is set of one 3D points
-//            (nbP == 1) and two 2D-points (nbP2d == 2).
-//=======================================================================
 void AppParCurves_LeastSquare::Affect(const MultiLine&         SSP,
                                       const int                Index,
                                       AppParCurves_Constraint& Cons,
                                       math_Vector&             Vt,
                                       math_Vector&             Vc)
 {
-  // Vt: vector of tangent, Vc: vector of curvature.
 
   if (Cons >= AppParCurves_TangencyPoint)
   {
@@ -1142,7 +1098,7 @@ void AppParCurves_LeastSquare::Affect(const MultiLine&         SSP,
             ToolLine::Value(SSP, Index + 1, anArrPts3d2);
           }
           else
-          { // (Index == ToolLine::LastPoint(theML))
+          {
             ToolLine::Value(SSP, Index - 1, anArrPts3d1);
             ToolLine::Value(SSP, Index, anArrPts3d2);
           }
@@ -1159,7 +1115,7 @@ void AppParCurves_LeastSquare::Affect(const MultiLine&         SSP,
             ToolLine::Value(SSP, Index + 1, anArrPts3d2, anArrPts2d2);
           }
           else
-          { // (Index == ToolLine::LastPoint(theML))
+          {
             ToolLine::Value(SSP, Index - 1, anArrPts3d1, anArrPts2d1);
             ToolLine::Value(SSP, Index, anArrPts3d2, anArrPts2d2);
           }
@@ -1269,10 +1225,10 @@ void AppParCurves_LeastSquare::ErrorGradient(math_Vector& Grad,
   }
   int    i, j, k, i2, indexdeb, indexfin;
   double AA, BB, CC, Fi, FX, FY, FZ, AIJ;
-  //  double DAIJ, DAA, DBB, DCC, Gr, gr1= 0.0, gr2= 0.0;
+
   double DAIJ, DAA, DBB, DCC, Gr;
   MaxE3d = MaxE2d = 0.0;
-  //  int i21, i22, diff = (deg-1);
+
   int i21, i22;
   F  = 0.0;
   i2 = 1;
@@ -1401,7 +1357,6 @@ const AppParCurves_MultiBSpCurve& AppParCurves_LeastSquare::BSplineValue()
   if (ifin <= nbpoles - 1)
     ifin = nbpoles - 1;
 
-  // On met le resultat dans les curves correspondantes
   for (i = ideb; i <= ifin; i++)
   {
     j2 = 1;
@@ -1578,8 +1533,6 @@ void AppParCurves_LeastSquare::MakeTAA(math_Vector& TheA, math_Vector& myTAB)
       i2 += 2;
     }
   }
-
-  // Construction de TA*A et TA*B:
 
   for (k = FirstP; k <= LastP; k++)
   {

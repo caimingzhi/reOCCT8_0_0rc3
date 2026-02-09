@@ -12,15 +12,11 @@ IMPLEMENT_STANDARD_RTTIEXT(Law_BSpFunc, Law_Function)
 
 #define PosTol Precision::PConfusion() / 2
 
-//=================================================================================================
-
 Law_BSpFunc::Law_BSpFunc()
     : first(0.0),
       last(0.0)
 {
 }
-
-//=================================================================================================
 
 Law_BSpFunc::Law_BSpFunc(const occ::handle<Law_BSpline>& C, const double First, const double Last)
     : curv(C),
@@ -29,17 +25,10 @@ Law_BSpFunc::Law_BSpFunc(const occ::handle<Law_BSpline>& C, const double First, 
 {
 }
 
-//=================================================================================================
-
 GeomAbs_Shape Law_BSpFunc::Continuity() const
 {
   return curv->Continuity();
 }
-
-//=======================================================================
-// function : NbIntervals
-// purpose  : Inspirer de GeomAdaptor_Curve
-//=======================================================================
 
 int Law_BSpFunc::NbIntervals(const GeomAbs_Shape S) const
 {
@@ -116,11 +105,6 @@ int Law_BSpFunc::NbIntervals(const GeomAbs_Shape S) const
 
   return myNbIntervals;
 }
-
-//=======================================================================
-// function : Intervals
-// purpose  : Inspirer de GeomAdaptor_Curve
-//=======================================================================
 
 void Law_BSpFunc::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const
 {
@@ -210,8 +194,6 @@ void Law_BSpFunc::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S
   T(T.Lower() + myNbIntervals) = last;
 }
 
-//=================================================================================================
-
 double Law_BSpFunc::Value(const double X)
 {
   if ((X == first) || (X == last))
@@ -240,8 +222,6 @@ double Law_BSpFunc::Value(const double X)
     return curv->Value(X);
   }
 }
-
-//=================================================================================================
 
 void Law_BSpFunc::D1(const double X, double& F, double& D)
 {
@@ -272,8 +252,6 @@ void Law_BSpFunc::D1(const double X, double& F, double& D)
   }
 }
 
-//=================================================================================================
-
 void Law_BSpFunc::D2(const double X, double& F, double& D, double& D2)
 {
   if ((X == first) || (X == last))
@@ -303,18 +281,14 @@ void Law_BSpFunc::D2(const double X, double& F, double& D, double& D2)
   }
 }
 
-//=================================================================================================
-
 occ::handle<Law_Function> Law_BSpFunc::Trim(const double PFirst,
                                             const double PLast,
-                                            //				       const double Tol) const
+
                                             const double) const
 {
   occ::handle<Law_BSpFunc> l = new (Law_BSpFunc)(curv, PFirst, PLast);
   return l;
 }
-
-//=================================================================================================
 
 void Law_BSpFunc::Bounds(double& PFirst, double& PLast)
 {
@@ -322,14 +296,10 @@ void Law_BSpFunc::Bounds(double& PFirst, double& PLast)
   PLast  = last;
 }
 
-//=================================================================================================
-
 occ::handle<Law_BSpline> Law_BSpFunc::Curve() const
 {
   return curv;
 }
-
-//=================================================================================================
 
 void Law_BSpFunc::SetCurve(const occ::handle<Law_BSpline>& C)
 {

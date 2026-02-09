@@ -11,13 +11,6 @@
 #include <TDF_RelocationTable.hpp>
 #include <TDF_Tool.hpp>
 
-// The bug concerns the COPY operation of some attributes of a non-self-contained label.
-// The attributes making the label non-self-contained are not involved by the operation.
-// Therefore, these attributes shouldn't be considered by the COPY mechanism and
-// the label should be considered as a self-contained.
-// Correction of the bug consists of ignoring the attributes not involved by the COPY operation.
-//=================================================================================================
-
 TDF_CopyLabel::TDF_CopyLabel()
     : myFilter(false),
       myIsDone(false)
@@ -25,8 +18,6 @@ TDF_CopyLabel::TDF_CopyLabel()
   mySL.Nullify();
   myTL.Nullify();
 }
-
-//=================================================================================================
 
 TDF_CopyLabel::TDF_CopyLabel(const TDF_Label& aSource, const TDF_Label& aTarget)
     : myFilter(false),
@@ -36,15 +27,11 @@ TDF_CopyLabel::TDF_CopyLabel(const TDF_Label& aSource, const TDF_Label& aTarget)
   myTL = aTarget;
 }
 
-//=================================================================================================
-
 void TDF_CopyLabel::Load(const TDF_Label& aSource, const TDF_Label& aTarget)
 {
   mySL = aSource;
   myTL = aTarget;
 }
-
-//=================================================================================================
 
 void TDF_CopyLabel::ExternalReferences(const TDF_Label&                             aRefLabel,
                                        const TDF_Label&                             aLabel,
@@ -52,22 +39,17 @@ void TDF_CopyLabel::ExternalReferences(const TDF_Label&                         
                                        const TDF_IDFilter&                          aFilter,
                                        occ::handle<TDF_DataSet>&                    ds)
 {
-  //  TCollection_AsciiString entr1,entr2; //d
+
   for (TDF_AttributeIterator itr(aLabel); itr.More(); itr.Next())
   {
     itr.Value()->References(ds);
-    const NCollection_Map<occ::handle<TDF_Attribute>>& attMap = ds->Attributes(); // attMap
-    //     TDF_Tool::Entry(itr.Value()->Label(), entr1);  //d
-    //     std::cout<<"\tSource Attribute dynamic type = "<<itr.Value()->DynamicType()<<" Label =
-    //     "<<entr1 <<std::endl;
+    const NCollection_Map<occ::handle<TDF_Attribute>>& attMap = ds->Attributes();
+
     for (NCollection_Map<occ::handle<TDF_Attribute>>::Iterator attMItr(attMap); attMItr.More();
          attMItr.Next())
     {
       const occ::handle<TDF_Attribute>& att = attMItr.Key();
 
-      //       TDF_Tool::Entry(att->Label(), entr1);
-      //       std::cout<<"\t\tReferences attribute dynamic type = "<<att->DynamicType()<<" Label =
-      //       "<<entr1 <<std::endl;
       if (!att.IsNull() && !att->Label().IsNull())
       {
         if (aFilter.IsKept(att) && att->Label().IsDifferent(aRefLabel)
@@ -78,29 +60,9 @@ void TDF_CopyLabel::ExternalReferences(const TDF_Label&                         
       }
     }
 
-    //     const NCollection_Map<TDF_Label>& labMap = ds->Labels();
-    //     for (NCollection_Map<TDF_Label>::Iterator labMItr(labMap);labMItr.More(); labMItr.Next())
-    //     {
-    //       TDF_Tool::Entry(labMItr.Key(), entr1);
-    // 	std::cout<<"\t\tLABELS from DS of Attr:: Lab = "<<entr1<<std::endl;
-    //       if (!labMItr.Key().IsDescendant(aRefLabel) && labMItr.Key().IsDifferent(aRefLabel)) {
-    // //	aExternals.Add(itr.Value()); // ??? LabelMap of Attribute has label which don't
-    // 	// belongs to source hierarchy. So, what we should do ?
-    // 	// Add this Attribute to the aExternals or add all attributes
-    // 	// from this label ?
-    // 	TCollection_AsciiString entr1, entr2;
-    // 	TDF_Tool::Entry(labMItr.Key(), entr1);
-    // 	TDF_Tool::Entry(aRefLabel, entr2);
-    // 	std::cout<<"\t\t\tNot descendant label:: Lab1 = "<<entr1<<" and RefLab =
-    // "<<entr2<<std::endl;
-    //       }
-    //     }
-
     ds->Clear();
   }
 }
-
-//=================================================================================================
 
 bool TDF_CopyLabel::ExternalReferences(const TDF_Label&                             L,
                                        NCollection_Map<occ::handle<TDF_Attribute>>& aExternals,
@@ -115,7 +77,6 @@ bool TDF_CopyLabel::ExternalReferences(const TDF_Label&                         
   return aExternals.Extent() != 0;
 }
 
-//=======================================================================
 #ifdef OCCT_DEBUG
 static void PrintEntry(const TDF_Label& label, const bool allLevels)
 {
@@ -130,21 +91,20 @@ static void PrintEntry(const TDF_Label& label, const bool allLevels)
   }
 }
 #endif
-//=================================================================================================
 
 void TDF_CopyLabel::Perform()
 {
   myIsDone = false;
-  if (mySL.Data()->Root().IsDifferent(myTL.Data()->Root()) && // TDF_Data is not the same
-                                                              // clang-format off
-     !TDF_Tool::IsSelfContained(mySL, myFilter)) return;               //source label isn't self-contained
-  // clang-format on
+  if (mySL.Data()->Root().IsDifferent(myTL.Data()->Root()) &&
+
+      !TDF_Tool::IsSelfContained(mySL, myFilter))
+    return;
 
   bool extReferers = ExternalReferences(mySL, myMapOfExt, myFilter);
 
   myRT                        = new TDF_RelocationTable(true);
   occ::handle<TDF_DataSet> ds = new TDF_DataSet();
-  TDF_ClosureMode          mode(true); // descendant plus reference
+  TDF_ClosureMode          mode(true);
   ds->AddLabel(mySL);
   myRT->SetRelocation(mySL, myTL);
   TDF_ClosureTool::Closure(ds, myFilter, mode);
@@ -165,14 +125,10 @@ void TDF_CopyLabel::Perform()
   myIsDone = true;
 }
 
-//=================================================================================================
-
 const occ::handle<TDF_RelocationTable>& TDF_CopyLabel::RelocationTable() const
 {
   return myRT;
 }
-
-//=================================================================================================
 
 void TDF_CopyLabel::UseFilter(const TDF_IDFilter& aFilter)
 {

@@ -197,7 +197,7 @@ void STEPSelections_Counter::Count(const Interface_Graph&                 graph,
         DeclareAndCast(StepShape_ShapeDefinitionRepresentation, SDR, subs.Value());
         Count(graph, SDR);
       }
-    //???
+
     return;
   }
 
@@ -247,7 +247,7 @@ void STEPSelections_Counter::AddCompositeCurve(const occ::handle<StepGeom_Compos
   int nbs = ccurve->NbSegments();
   for (int i = 1; i <= nbs; i++)
   {
-    //  #ifdef AIX   CKY : common code for all platforms: Handle() not Handle()&
+
     occ::handle<StepGeom_CompositeCurveSegment> ccs = ccurve->SegmentsValue(i);
     occ::handle<StepGeom_Curve>                 crv = ccs->ParentCurve();
 

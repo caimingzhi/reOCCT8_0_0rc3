@@ -63,7 +63,6 @@ static void ReorderFaces(TopoDS_Face&         theF1,
     return;
   }
 
-  // Loop until find <theF1> or <theF2>
   TopoDS_Edge PrevEdge = thePrevEdge;
   TopoDS_Edge CurEdge;
   TopoDS_Face PrevFace = theFirstFace;
@@ -199,12 +198,12 @@ static TopoDS_Edge MakeOffsetEdge(const TopoDS_Edge&         theEdge,
   {
     return OffsetEdge;
   }
-  // Projection of extremities onto <IntCurve>
+
   GeomAdaptor_Curve GAcurve(IntCurve);
   double            Params[2];
   for (int ind_end = 0; ind_end < 2; ind_end++)
   {
-    if (ind_end == 1 && aBAcurve.IsClosed() /*HGuide->IsPeriodic()*/ /*HGuide->IsClosed()*/)
+    if (ind_end == 1 && aBAcurve.IsClosed())
       break;
     Extrema_ExtPC Projector(Ends[ind_end], GAcurve);
     double        param[4], dist[4];
@@ -229,10 +228,10 @@ static TopoDS_Edge MakeOffsetEdge(const TopoDS_Edge&         theEdge,
       if (dist[i] < dist[imin])
         imin = i;
 
-    Params[ind_end] = param[imin]; // Projector.Point(imin).Parameter();
+    Params[ind_end] = param[imin];
   }
-  if (aBAcurve.IsClosed() /*HGuide->IsPeriodic()*/ /*HGuide->IsClosed()*/)
-    Params[1] = GAcurve.LastParameter(); // temporary
+  if (aBAcurve.IsClosed())
+    Params[1] = GAcurve.LastParameter();
   if (Params[0] > Params[1])
   {
     bool   IsClosed = false;
@@ -251,8 +250,8 @@ static TopoDS_Edge MakeOffsetEdge(const TopoDS_Edge&         theEdge,
       Params[1] = NewLastPar;
     }
   }
-  if (aBAcurve.IsClosed() /*HGuide->IsPeriodic()*/ /*HGuide->IsClosed()*/) // check the direction of
-                                                                           // closed curve
+  if (aBAcurve.IsClosed())
+
   {
     gp_Pnt aPnt, anOffsetPnt;
     gp_Vec Tangent, OffsetTangent;
@@ -261,24 +260,6 @@ static TopoDS_Edge MakeOffsetEdge(const TopoDS_Edge&         theEdge,
     if (Tangent * OffsetTangent < 0)
       IntCurve->Reverse();
   }
-
-  /*
-  double ParTol = 1.e-5;
-  double FirstDiff = aBAcurve.FirstParameter() - Params[0];
-  double LastDiff  = aBAcurve.LastParameter()  - Params[1];
-  if (std::abs(FirstDiff) > ParTol ||
-      std::abs(LastDiff)  > ParTol)
-  {
-    occ::handle<Geom_BSplineCurve> BsplCurve = occ::down_cast<Geom_BSplineCurve>(IntCurve);
-    NCollection_Array1<double> aKnots(1, BsplCurve->NbKnots());
-    BsplCurve->Knots(aKnots);
-    BSplCLib::Reparametrize(aBAcurve.FirstParameter(), aBAcurve.LastParameter(), aKnots);
-    BsplCurve->SetKnots(aKnots);
-    if (aBAcurve.IsPeriodic() && !BsplCurve->IsPeriodic())
-      BsplCurve->SetPeriodic();
-    IntCurve = BsplCurve;
-  }
-  */
 
   OffsetEdge = BRepLib_MakeEdge(IntCurve, Params[0], Params[1]);
   return OffsetEdge;
@@ -292,8 +273,6 @@ static TopOpeBRepDS_BuildTool mkbuildtool()
   BT.Translate(false);
   return BT;
 }
-
-//=================================================================================================
 
 ChFi3d_Builder::ChFi3d_Builder(const TopoDS_Shape& S, const double Ta)
     : done(false),
@@ -310,8 +289,6 @@ ChFi3d_Builder::ChFi3d_Builder(const TopoDS_Shape& S, const double Ta)
   SetContinuity(GeomAbs_C1, Ta);
 }
 
-//=================================================================================================
-
 void ChFi3d_Builder::SetParams(const double Tang,
                                const double Tesp,
                                const double T2d,
@@ -327,8 +304,6 @@ void ChFi3d_Builder::SetParams(const double Tang,
   fleche   = Fleche;
 }
 
-//=================================================================================================
-
 void ChFi3d_Builder::SetContinuity(const GeomAbs_Shape InternalContinuity,
                                    const double        AngularTolerance)
 {
@@ -336,14 +311,10 @@ void ChFi3d_Builder::SetContinuity(const GeomAbs_Shape InternalContinuity,
   tolappangle = AngularTolerance;
 }
 
-//=================================================================================================
-
 bool ChFi3d_Builder::IsDone() const
 {
   return done;
 }
-
-//=================================================================================================
 
 TopoDS_Shape ChFi3d_Builder::Shape() const
 {
@@ -351,14 +322,10 @@ TopoDS_Shape ChFi3d_Builder::Shape() const
   return myShapeResult;
 }
 
-//=================================================================================================
-
 int ChFi3d_Builder::NbFaultyContours() const
 {
   return badstripes.Extent();
 }
-
-//=================================================================================================
 
 int ChFi3d_Builder::FaultyContour(const int I) const
 {
@@ -386,8 +353,6 @@ int ChFi3d_Builder::FaultyContour(const int I) const
   return 0;
 }
 
-//=================================================================================================
-
 int ChFi3d_Builder::NbComputedSurfaces(const int IC) const
 {
   NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator itel;
@@ -412,8 +377,6 @@ int ChFi3d_Builder::NbComputedSurfaces(const int IC) const
   return hd->Length();
 }
 
-//=================================================================================================
-
 occ::handle<Geom_Surface> ChFi3d_Builder::ComputedSurface(const int IC, const int IS) const
 {
   NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator itel;
@@ -433,14 +396,10 @@ occ::handle<Geom_Surface> ChFi3d_Builder::ComputedSurface(const int IC, const in
   return myDS->Surface(isurf).Surface();
 }
 
-//=================================================================================================
-
 int ChFi3d_Builder::NbFaultyVertices() const
 {
   return badvertices.Extent();
 }
-
-//=================================================================================================
 
 TopoDS_Vertex ChFi3d_Builder::FaultyVertex(const int IV) const
 {
@@ -459,22 +418,16 @@ TopoDS_Vertex ChFi3d_Builder::FaultyVertex(const int IV) const
   return V;
 }
 
-//=================================================================================================
-
 bool ChFi3d_Builder::HasResult() const
 {
   return hasresult;
 }
-
-//=================================================================================================
 
 TopoDS_Shape ChFi3d_Builder::BadShape() const
 {
   Standard_NoSuchObject_Raise_if(!hasresult, "ChFi3d_Builder::BadShape() - no result");
   return badShape;
 }
-
-//=================================================================================================
 
 ChFiDS_ErrorStatus ChFi3d_Builder::StripeStatus(const int IC) const
 {
@@ -494,19 +447,10 @@ ChFiDS_ErrorStatus ChFi3d_Builder::StripeStatus(const int IC) const
   return stat;
 }
 
-//=================================================================================================
-
 occ::handle<TopOpeBRepBuild_HBuilder> ChFi3d_Builder::Builder() const
 {
   return myCoup;
 }
-
-//=======================================================================
-// function : ChFi3d_FaceTangency
-// purpose  : determine if the faces opposing to edges are tangent
-//           to go from opposing faces on e0 to opposing faces
-//           on e1, consider all faces starting at a common top.
-//=======================================================================
 
 bool ChFi3d_Builder::FaceTangency(const TopoDS_Edge&   E0,
                                   const TopoDS_Edge&   E1,
@@ -517,7 +461,6 @@ bool ChFi3d_Builder::FaceTangency(const TopoDS_Edge&   E0,
   int                                      Nbf;
   TopoDS_Face                              F[2];
 
-  // It is checked if the connection is not on a regular edge.
   for (It.Initialize(myEFMap(E1)), Nbf = 0; It.More(); It.Next(), Nbf++)
   {
     if (Nbf > 1)
@@ -526,11 +469,10 @@ bool ChFi3d_Builder::FaceTangency(const TopoDS_Edge&   E0,
   }
   if (Nbf < 2)
     return false;
-  //  Modified by Sergey KHROMOV - Fri Dec 21 17:44:19 2001 Begin
-  // if (BRep_Tool::Continuity(E1,F[0],F[1]) != GeomAbs_C0) {
+
   if (ChFi3d::IsTangentFaces(E1, F[0], F[1]))
   {
-    //  Modified by Sergey KHROMOV - Fri Dec 21 17:44:21 2001 End
+
     return false;
   }
 
@@ -548,11 +490,10 @@ bool ChFi3d_Builder::FaceTangency(const TopoDS_Edge&   E0,
       }
       if (Nbf < 2)
         return false;
-      //  Modified by Sergey KHROMOV - Tue Dec 18 18:10:40 2001 Begin
-      //    if (BRep_Tool::Continuity(Ec,F[0],F[1]) < GeomAbs_G1) {
+
       if (!ChFi3d::IsTangentFaces(Ec, F[0], F[1]))
       {
-        //  Modified by Sergey KHROMOV - Tue Dec 18 18:10:41 2001 End
+
         return false;
       }
     }
@@ -560,15 +501,11 @@ bool ChFi3d_Builder::FaceTangency(const TopoDS_Edge&   E0,
   return true;
 }
 
-//=======================================================================
-// function : TangentExtremity
-// purpose  : Test if 2 faces are tangent at the end of an edge
-//=======================================================================
 static bool TangentExtremity(const TopoDS_Vertex&                    V,
                              const TopoDS_Edge&                      E,
                              const occ::handle<BRepAdaptor_Surface>& hs1,
                              const occ::handle<BRepAdaptor_Surface>& hs2,
-                             //					 const double t3d,
+
                              const double tang)
 {
   TopoDS_Face        f1 = hs1->Face();
@@ -585,7 +522,7 @@ static bool TangentExtremity(const TopoDS_Vertex&                    V,
   double                    p1 = BRep_Tool::Parameter(V, e1, f1);
   double                    p2 = BRep_Tool::Parameter(V, e2, f2);
   double                    u, v, f, l, Eps = 1.e-9;
-  gp_Vec                    n1, n2; //   gp_Pnt pt1,pt2;
+  gp_Vec                    n1, n2;
   occ::handle<Geom2d_Curve> pc1 = BRep_Tool::CurveOnSurface(e1, f1, f, l);
   pc1->Value(p1).Coord(u, v);
   BRepLProp_SLProps theProp1(*hs1, u, v, 1, Eps);
@@ -596,7 +533,7 @@ static bool TangentExtremity(const TopoDS_Vertex&                    V,
       n1.Reverse();
   }
   else
-    return false; // It is not known...
+    return false;
 
   occ::handle<Geom2d_Curve> pc2 = BRep_Tool::CurveOnSurface(e2, f2, f, l);
   pc2->Value(p2).Coord(u, v);
@@ -608,15 +545,11 @@ static bool TangentExtremity(const TopoDS_Vertex&                    V,
       n2.Reverse();
   }
   else
-    return false; //  It is not known...
+    return false;
 
   return (n1.Angle(n2) < tang);
 }
 
-//=======================================================================
-// function : TangentOnVertex
-// purpose  : Test if support faces of an edge are tangent at end.
-//=======================================================================
 static bool TangentOnVertex(const TopoDS_Vertex& V,
                             const TopoDS_Edge&   E,
                             const ChFiDS_Map&    EFMap,
@@ -630,13 +563,6 @@ static bool TangentOnVertex(const TopoDS_Vertex& V,
   occ::handle<BRepAdaptor_Surface> S2 = new (BRepAdaptor_Surface)(ff2);
   return TangentExtremity(V, E, S1, S2, tang);
 }
-
-//=======================================================================
-// function : PerformExtremity
-// purpose  : In case if PerformElement returned BreakPoint at one or
-//           another extremity, it is attempted to refine
-//           depending on concavities between neighbour faces of the top.
-//=======================================================================
 
 void ChFi3d_Builder::PerformExtremity(const occ::handle<ChFiDS_Spine>& Spine)
 {
@@ -661,7 +587,7 @@ void ChFi3d_Builder::PerformExtremity(const occ::handle<ChFiDS_Spine>& Spine)
       iedge = Spine->NbEdges();
       V     = Spine->LastVertex();
     }
-    // Before all it is checked if the tangency is not dead.
+
     E[0] = Spine->Edges(iedge);
     ConexFaces(Spine, iedge, hs1, hs2);
     if (TangentExtremity(V, E[0], hs1, hs2, angular))
@@ -672,7 +598,7 @@ void ChFi3d_Builder::PerformExtremity(const occ::handle<ChFiDS_Spine>& Spine)
     if (sst == ChFiDS_BreakPoint)
     {
       int                                                    aLocNbG1Connections = 0;
-      NCollection_List<TopoDS_Shape>::Iterator               It; //,Jt;
+      NCollection_List<TopoDS_Shape>::Iterator               It;
       bool                                                   sommetpourri = false;
       NCollection_IndexedMap<TopoDS_Shape>                   EdgesOfV;
       NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> Edges;
@@ -686,7 +612,7 @@ void ChFi3d_Builder::PerformExtremity(const occ::handle<ChFiDS_Spine>& Spine)
           continue;
         TopoDS_Face F1, F2;
         ChFi3d_conexfaces(anEdge, F1, F2, myEFMap);
-        if (!F2.IsNull() && ChFi3d::IsTangentFaces(anEdge, F1, F2, GeomAbs_G2)) // smooth edge
+        if (!F2.IsNull() && ChFi3d::IsTangentFaces(anEdge, F1, F2, GeomAbs_G2))
         {
           if (!F1.IsSame(F2))
           {
@@ -709,7 +635,7 @@ void ChFi3d_Builder::PerformExtremity(const occ::handle<ChFiDS_Spine>& Spine)
         {
           TopoDS_Vertex V1, V2;
           TopExp::Vertices(anEdge, V1, V2);
-          if (V1.IsSame(V2)) // edge is closed - two ends of the edge in the vertex
+          if (V1.IsSame(V2))
           {
             int anInd = EdgesOfV.FindIndex(anEdge);
             if (anInd == 0)
@@ -786,13 +712,6 @@ void ChFi3d_Builder::PerformExtremity(const occ::handle<ChFiDS_Spine>& Spine)
   }
 }
 
-//=======================================================================
-// function : PerformElement
-// purpose  :  find all mutually tangent edges ;
-// Each edge has 2 opposing faces. For 2 adjacent tangent edges it is required that
-// the opposing faces were tangent.
-//=======================================================================
-
 bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
                                     const double                     Offset,
                                     const TopoDS_Face&               theFirstFace)
@@ -809,16 +728,14 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
   TopoDS_Edge                              Ev, Ec(Spine->Edges(1));
   if (BRep_Tool::Degenerated(Ec))
     return false;
-  // it is checked if the edge is a cut edge
+
   TopoDS_Face ff1, ff2;
   ChFi3d_conexfaces(Ec, ff1, ff2, myEFMap);
   if (ff1.IsNull() || ff2.IsNull())
     return false;
-  //  Modified by Sergey KHROMOV - Fri Dec 21 17:46:22 2001 End
-  // if(BRep_Tool::Continuity(Ec,ff1,ff2) != GeomAbs_C0) return 0;
+
   if (ChFi3d::IsTangentFaces(Ec, ff1, ff2))
     return false;
-  //  Modified by Sergey KHROMOV - Fri Dec 21 17:46:24 2001 Begin
 
   TopoDS_Face FirstFace = ff1;
   if (!theFirstFace.IsNull() && ff2.IsSame(theFirstFace))
@@ -829,7 +746,6 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
   }
   myEdgeFirstFace.Bind(Ec, FirstFace);
 
-  // Define concavity
   ChFiDS_TypeOfConcavity TypeOfConcavity = ChFi3d::DefineConnectType(Ec, ff1, ff2, 1.e-5, true);
   Spine->SetTypeOfConcavity(TypeOfConcavity);
 
@@ -851,7 +767,7 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
   int          Nb;
   ChFiDS_State CurSt = ChFiDS_Closed;
   if (VStart.IsSame(LVEc))
-  { // case if only one edge is closed
+  {
     CEc.Initialize(Ec);
     Wl = BRep_Tool::Parameter(VStart, Ec);
     CEc.D1(Wl, P2, V1);
@@ -877,7 +793,7 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
     Spine->SetFirstStatus(CurSt);
   }
   else
-  { // Downstream progression
+  {
     FVEc = VStart;
     TopAbs_Orientation Or1;
     while (!Fini)
@@ -913,22 +829,20 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
           bool   OnAjoute = false;
           if (FaceTangency(Ec, Ev, FVEv))
           {
-            // there is no need of tolerance
-            // to make a decision (PRO9486) the regularity is enough.
-            // However, the absence of turn-back is checked (PRO9810)
+
             OnAjoute = ((!rev && av1v2 < M_PI / 2) || (rev && av1v2 > M_PI / 2));
-            // mate attention to the single case (cf CTS21610_1)
+
             if (OnAjoute && (degeneOnEc || TangentOnVertex(LVEc, Ev, myEFMap, ta)))
               OnAjoute = ((!rev && av1v2 < ta) || (rev && (M_PI - av1v2) < ta));
           }
           if (OnAjoute)
           {
-            Fini = false; // If this can be useful (Cf PRO14713)
+            Fini = false;
             TopoDS_Vertex CommonVertex;
             TopExp::CommonVertex(Ec, Ev, CommonVertex);
             TopoDS_Edge PrevEdge = Ec;
             Ec                   = Ev;
-            //	    Ec = TopoDS::Edge(Ev);
+
             Ec.Orientation(Or1);
             Wl   = Wf;
             LVEc = LVEv;
@@ -980,7 +894,7 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
       Spine->SetFirstStatus(CurSt);
     }
     else
-    { // Upstream progression
+    {
       Fini      = false;
       Ec        = Spine->Edges(1);
       FirstFace = TopoDS::Face(myEdgeFirstFace(Ec));
@@ -1030,7 +944,7 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
               TopExp::CommonVertex(Ec, Ev, CommonVertex);
               TopoDS_Edge PrevEdge = Ec;
               Ec                   = Ev;
-              //	      Ec = TopoDS::Edge(Ev);
+
               Ec.Orientation(Or1);
               Wl   = Wf;
               FVEc = FVEv;
@@ -1069,8 +983,6 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
   return true;
 }
 
-//=================================================================================================
-
 void ChFi3d_Builder::Remove(const TopoDS_Edge& E)
 {
   NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator itel(myListStripe);
@@ -1089,8 +1001,6 @@ void ChFi3d_Builder::Remove(const TopoDS_Edge& E)
   }
 }
 
-//=================================================================================================
-
 occ::handle<ChFiDS_Spine> ChFi3d_Builder::Value(const int I) const
 {
   NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator itel(myListStripe);
@@ -1100,8 +1010,6 @@ occ::handle<ChFiDS_Spine> ChFi3d_Builder::Value(const int I) const
   }
   return itel.Value()->Spine();
 }
-
-//=================================================================================================
 
 int ChFi3d_Builder::NbElements() const
 {
@@ -1116,8 +1024,6 @@ int ChFi3d_Builder::NbElements() const
   }
   return i;
 }
-
-//=================================================================================================
 
 int ChFi3d_Builder::Contains(const TopoDS_Edge& E) const
 {
@@ -1136,8 +1042,6 @@ int ChFi3d_Builder::Contains(const TopoDS_Edge& E) const
   }
   return 0;
 }
-
-//=================================================================================================
 
 int ChFi3d_Builder::Contains(const TopoDS_Edge& E, int& IndexInSpine) const
 {
@@ -1161,8 +1065,6 @@ int ChFi3d_Builder::Contains(const TopoDS_Edge& E, int& IndexInSpine) const
   return 0;
 }
 
-//=================================================================================================
-
 double ChFi3d_Builder::Length(const int IC) const
 {
   if (IC <= NbElements())
@@ -1173,8 +1075,6 @@ double ChFi3d_Builder::Length(const int IC) const
   return -1;
 }
 
-//=================================================================================================
-
 TopoDS_Vertex ChFi3d_Builder::FirstVertex(const int IC) const
 {
   if (IC <= NbElements())
@@ -1183,8 +1083,6 @@ TopoDS_Vertex ChFi3d_Builder::FirstVertex(const int IC) const
   }
   return TopoDS_Vertex();
 }
-
-//=================================================================================================
 
 TopoDS_Vertex ChFi3d_Builder::LastVertex(const int IC) const
 {
@@ -1195,8 +1093,6 @@ TopoDS_Vertex ChFi3d_Builder::LastVertex(const int IC) const
   return TopoDS_Vertex();
 }
 
-//=================================================================================================
-
 double ChFi3d_Builder::Abscissa(const int IC, const TopoDS_Vertex& V) const
 {
   if (IC <= NbElements())
@@ -1205,8 +1101,6 @@ double ChFi3d_Builder::Abscissa(const int IC, const TopoDS_Vertex& V) const
   }
   return -1;
 }
-
-//=================================================================================================
 
 double ChFi3d_Builder::RelativeAbscissa(const int IC, const TopoDS_Vertex& V) const
 {
@@ -1217,8 +1111,6 @@ double ChFi3d_Builder::RelativeAbscissa(const int IC, const TopoDS_Vertex& V) co
   return -1;
 }
 
-//=================================================================================================
-
 bool ChFi3d_Builder::Closed(const int IC) const
 {
   if (IC <= NbElements())
@@ -1227,8 +1119,6 @@ bool ChFi3d_Builder::Closed(const int IC) const
   }
   return false;
 }
-
-//=================================================================================================
 
 bool ChFi3d_Builder::ClosedAndTangent(const int IC) const
 {

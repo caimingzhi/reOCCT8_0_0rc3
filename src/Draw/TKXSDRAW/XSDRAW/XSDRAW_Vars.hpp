@@ -13,7 +13,6 @@ class gp_Pnt;
 class gp_Pnt2d;
 class TopoDS_Shape;
 
-//! Vars for DRAW session (i.e. DBRep and DrawTrSurf)
 class XSDRAW_Vars : public XSControl_Vars
 {
 

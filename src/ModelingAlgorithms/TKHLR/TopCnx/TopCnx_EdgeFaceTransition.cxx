@@ -1,14 +1,10 @@
 #include <TopCnx_EdgeFaceTransition.hpp>
 
-//=================================================================================================
-
 TopCnx_EdgeFaceTransition::TopCnx_EdgeFaceTransition()
     : nbBoundForward(0),
       nbBoundReversed(0)
 {
 }
-
-//=================================================================================================
 
 void TopCnx_EdgeFaceTransition::Reset(const gp_Dir& Tgt, const gp_Dir& Norm, const double Curv)
 {
@@ -16,15 +12,11 @@ void TopCnx_EdgeFaceTransition::Reset(const gp_Dir& Tgt, const gp_Dir& Norm, con
   nbBoundForward = nbBoundReversed = 0;
 }
 
-//=================================================================================================
-
 void TopCnx_EdgeFaceTransition::Reset(const gp_Dir& Tgt)
 {
   myCurveTransition.Reset(Tgt);
   nbBoundForward = nbBoundReversed = 0;
 }
-
-//=================================================================================================
 
 void TopCnx_EdgeFaceTransition::AddInterference(const double             Tole,
                                                 const gp_Dir&            Tang,
@@ -51,8 +43,6 @@ void TopCnx_EdgeFaceTransition::AddInterference(const double             Tole,
       break;
   }
 }
-
-//=================================================================================================
 
 TopAbs_Orientation TopCnx_EdgeFaceTransition::Transition() const
 {
@@ -86,8 +76,6 @@ TopAbs_Orientation TopCnx_EdgeFaceTransition::Transition() const
 #endif
   return TopAbs_INTERNAL;
 }
-
-//=================================================================================================
 
 TopAbs_Orientation TopCnx_EdgeFaceTransition::BoundaryTransition() const
 {

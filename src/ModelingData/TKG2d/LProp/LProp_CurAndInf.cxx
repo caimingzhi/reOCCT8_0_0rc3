@@ -1,11 +1,7 @@
 #include <LProp_CurAndInf.hpp>
 #include <Standard_OutOfRange.hpp>
 
-//=================================================================================================
-
 LProp_CurAndInf::LProp_CurAndInf() = default;
-
-//=================================================================================================
 
 void LProp_CurAndInf::AddInflection(const double Param)
 {
@@ -31,8 +27,6 @@ void LProp_CurAndInf::AddInflection(const double Param)
     }
   }
 }
-
-//=================================================================================================
 
 void LProp_CurAndInf::AddExtCur(const double Param, const bool IsMin)
 {
@@ -65,29 +59,21 @@ void LProp_CurAndInf::AddExtCur(const double Param, const bool IsMin)
   }
 }
 
-//=================================================================================================
-
 void LProp_CurAndInf::Clear()
 {
   theParams.Clear();
   theTypes.Clear();
 }
 
-//=================================================================================================
-
 bool LProp_CurAndInf::IsEmpty() const
 {
   return theParams.IsEmpty();
 }
 
-//=================================================================================================
-
 int LProp_CurAndInf::NbPoints() const
 {
   return theParams.Length();
 }
-
-//=================================================================================================
 
 double LProp_CurAndInf::Parameter(const int N) const
 {
@@ -97,8 +83,6 @@ double LProp_CurAndInf::Parameter(const int N) const
   }
   return theParams.Value(N);
 }
-
-//=================================================================================================
 
 LProp_CIType LProp_CurAndInf::Type(const int N) const
 {

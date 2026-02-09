@@ -12,7 +12,6 @@ class StepVisual_ViewVolume : public Standard_Transient
 {
 
 public:
-  //! Returns a ViewVolume
   Standard_EXPORT StepVisual_ViewVolume();
 
   Standard_EXPORT void Init(const StepVisual_CentralOrParallel          aProjectionType,

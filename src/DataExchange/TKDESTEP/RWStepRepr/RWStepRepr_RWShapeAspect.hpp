@@ -11,7 +11,6 @@ class StepRepr_ShapeAspect;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for ShapeAspect
 class RWStepRepr_RWShapeAspect
 {
 public:

@@ -11,7 +11,6 @@ class StepVisual_CurveStyleFont;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for CurveStyleFont
 class RWStepVisual_RWCurveStyleFont
 {
 public:

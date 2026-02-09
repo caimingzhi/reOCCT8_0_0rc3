@@ -5,22 +5,16 @@
 #include <StepRepr_ShapeAspect.hpp>
 #include <StepShape_AngularSize.hpp>
 
-//=================================================================================================
-
 RWStepShape_RWAngularSize::RWStepShape_RWAngularSize() = default;
-
-//=================================================================================================
 
 void RWStepShape_RWAngularSize::ReadStep(const occ::handle<StepData_StepReaderData>& data,
                                          const int                                   num,
                                          occ::handle<Interface_Check>&               ach,
                                          const occ::handle<StepShape_AngularSize>&   ent) const
 {
-  // Check number of parameters
+
   if (!data->CheckNbParams(num, 3, ach, "angular_size"))
     return;
-
-  // Inherited fields of DimensionalSize
 
   occ::handle<StepRepr_ShapeAspect> aDimensionalSize_AppliesTo;
   data->ReadEntity(num,
@@ -32,12 +26,6 @@ void RWStepShape_RWAngularSize::ReadStep(const occ::handle<StepData_StepReaderDa
 
   occ::handle<TCollection_HAsciiString> aDimensionalSize_Name;
   data->ReadString(num, 2, "dimensional_size.name", ach, aDimensionalSize_Name);
-
-  // Own fields of AngularSize
-
-  // PTV 16.09.2000
-  // default value set as StepShape_Small, cause there wasn't default value, but may be situation
-  // when value will not be initialized and returned in ent->Init.
 
   StepShape_AngleRelator aAngleSelection = StepShape_Small;
   if (data->ParamType(num, 3) == Interface_ParamEnum)
@@ -55,23 +43,16 @@ void RWStepShape_RWAngularSize::ReadStep(const occ::handle<StepData_StepReaderDa
   else
     ach->AddFail("Parameter #3 (angle_selection) is not enumeration");
 
-  // Initialize entity
   ent->Init(aDimensionalSize_AppliesTo, aDimensionalSize_Name, aAngleSelection);
 }
-
-//=================================================================================================
 
 void RWStepShape_RWAngularSize::WriteStep(StepData_StepWriter&                      SW,
                                           const occ::handle<StepShape_AngularSize>& ent) const
 {
 
-  // Inherited fields of DimensionalSize
-
   SW.Send(ent->StepShape_DimensionalSize::AppliesTo());
 
   SW.Send(ent->StepShape_DimensionalSize::Name());
-
-  // Own fields of AngularSize
 
   switch (ent->AngleSelection())
   {
@@ -87,15 +68,9 @@ void RWStepShape_RWAngularSize::WriteStep(StepData_StepWriter&                  
   }
 }
 
-//=================================================================================================
-
 void RWStepShape_RWAngularSize::Share(const occ::handle<StepShape_AngularSize>& ent,
                                       Interface_EntityIterator&                 iter) const
 {
 
-  // Inherited fields of DimensionalSize
-
   iter.AddItem(ent->StepShape_DimensionalSize::AppliesTo());
-
-  // Own fields of AngularSize
 }

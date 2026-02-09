@@ -11,7 +11,6 @@ class StepGeom_OffsetCurve3d;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for OffsetCurve3d
 class RWStepGeom_RWOffsetCurve3d
 {
 public:

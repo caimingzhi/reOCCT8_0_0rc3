@@ -10,46 +10,32 @@ class gp_Ax1;
 class gp_Ax2;
 class gp_Trsf;
 
-//! Defines a non-persistent vector in 3D space.
 class gp_Vec
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  //! Creates a zero vector.
   constexpr gp_Vec() noexcept = default;
 
-  //! Creates a unitary vector from a direction theV.
   constexpr gp_Vec(const gp_Dir& theV);
 
-  //! Creates a vector with a triplet of coordinates.
   constexpr gp_Vec(const gp_XYZ& theCoord) noexcept
       : coord(theCoord)
   {
   }
 
-  //! Creates a point with its three cartesian coordinates.
   constexpr gp_Vec(const double theXv, const double theYv, const double theZv) noexcept
       : coord(theXv, theYv, theZv)
   {
   }
 
-  //! Creates a vector from two points. The length of the vector
-  //! is the distance between theP1 and theP2
   constexpr gp_Vec(const gp_Pnt& theP1, const gp_Pnt& theP2);
 
-  //! Changes the coordinate of range theIndex
-  //! theIndex = 1 => X is modified
-  //! theIndex = 2 => Y is modified
-  //! theIndex = 3 => Z is modified
-  //! Raised if theIndex != {1, 2, 3}.
   constexpr void SetCoord(const int theIndex, const double theXi)
   {
     coord.SetCoord(theIndex, theXi);
   }
 
-  //! For this vector, assigns
-  //! -   the values theXv, theYv and theZv to its three coordinates.
   constexpr void SetCoord(const double theXv, const double theYv, const double theZv) noexcept
   {
     coord.SetX(theXv);
@@ -57,26 +43,16 @@ public:
     coord.SetZ(theZv);
   }
 
-  //! Assigns the given value to the X coordinate of this vector.
   constexpr void SetX(const double theX) noexcept { coord.SetX(theX); }
 
-  //! Assigns the given value to the X coordinate of this vector.
   constexpr void SetY(const double theY) noexcept { coord.SetY(theY); }
 
-  //! Assigns the given value to the X coordinate of this vector.
   constexpr void SetZ(const double theZ) noexcept { coord.SetZ(theZ); }
 
-  //! Assigns the three coordinates of theCoord to this vector.
   constexpr void SetXYZ(const gp_XYZ& theCoord) noexcept { coord = theCoord; }
 
-  //! Returns the coordinate of range theIndex :
-  //! theIndex = 1 => X is returned
-  //! theIndex = 2 => Y is returned
-  //! theIndex = 3 => Z is returned
-  //! Raised if theIndex != {1, 2, 3}.
   constexpr double Coord(const int theIndex) const { return coord.Coord(theIndex); }
 
-  //! For this vector returns its three coordinates theXv, theYv, and theZv inline
   constexpr void Coord(double& theXv, double& theYv, double& theZv) const noexcept
   {
     theXv = coord.X();
@@ -84,87 +60,44 @@ public:
     theZv = coord.Z();
   }
 
-  //! For this vector, returns its X coordinate.
   constexpr double X() const noexcept { return coord.X(); }
 
-  //! For this vector, returns its Y coordinate.
   constexpr double Y() const noexcept { return coord.Y(); }
 
-  //! For this vector, returns its Z coordinate.
   constexpr double Z() const noexcept { return coord.Z(); }
 
-  //! For this vector, returns
-  //! -   its three coordinates as a number triple
   constexpr const gp_XYZ& XYZ() const noexcept { return coord; }
 
-  //! Returns True if the two vectors have the same magnitude value
-  //! and the same direction. The precision values are theLinearTolerance
-  //! for the magnitude and theAngularTolerance for the direction.
   Standard_EXPORT bool IsEqual(const gp_Vec& theOther,
                                const double  theLinearTolerance,
                                const double  theAngularTolerance) const;
 
-  //! Returns True if abs(<me>.Angle(theOther) - PI/2.) <= theAngularTolerance
-  //! Raises VectorWithNullMagnitude if <me>.Magnitude() <= Resolution or
-  //! theOther.Magnitude() <= Resolution from gp
   bool IsNormal(const gp_Vec& theOther, const double theAngularTolerance) const;
 
-  //! Returns True if PI - <me>.Angle(theOther) <= theAngularTolerance
-  //! Raises VectorWithNullMagnitude if <me>.Magnitude() <= Resolution or
-  //! Other.Magnitude() <= Resolution from gp
   bool IsOpposite(const gp_Vec& theOther, const double theAngularTolerance) const
   {
     const double anAng = M_PI - Angle(theOther);
     return anAng <= theAngularTolerance;
   }
 
-  //! Returns True if Angle(<me>, theOther) <= theAngularTolerance or
-  //! PI - Angle(<me>, theOther) <= theAngularTolerance
-  //! This definition means that two parallel vectors cannot define
-  //! a plane but two vectors with opposite directions are considered
-  //! as parallel. Raises VectorWithNullMagnitude if <me>.Magnitude() <= Resolution or
-  //! Other.Magnitude() <= Resolution from gp
   bool IsParallel(const gp_Vec& theOther, const double theAngularTolerance) const
   {
     const double anAng = Angle(theOther);
     return anAng <= theAngularTolerance || M_PI - anAng <= theAngularTolerance;
   }
 
-  //! Computes the angular value between <me> and <theOther>
-  //! Returns the angle value between 0 and PI in radian.
-  //! Raises VectorWithNullMagnitude if <me>.Magnitude() <= Resolution from gp or
-  //! theOther.Magnitude() <= Resolution because the angular value is
-  //! indefinite if one of the vectors has a null magnitude.
   double Angle(const gp_Vec& theOther) const;
 
-  //! Computes the angle, in radians, between this vector and
-  //! vector theOther. The result is a value between -Pi and Pi.
-  //! For this, theVRef defines the positive sense of rotation: the
-  //! angular value is positive, if the cross product this ^ theOther
-  //! has the same orientation as theVRef relative to the plane
-  //! defined by the vectors this and theOther. Otherwise, the
-  //! angular value is negative.
-  //! Exceptions
-  //! gp_VectorWithNullMagnitude if the magnitude of this
-  //! vector, the vector theOther, or the vector theVRef is less than or
-  //! equal to gp::Resolution().
-  //! Standard_DomainError if this vector, the vector theOther,
-  //! and the vector theVRef are coplanar, unless this vector and
-  //! the vector theOther are parallel.
   double AngleWithRef(const gp_Vec& theOther, const gp_Vec& theVRef) const;
 
-  //! Computes the magnitude of this vector.
   double Magnitude() const { return coord.Modulus(); }
 
-  //! Computes the square magnitude of this vector.
   constexpr double SquareMagnitude() const noexcept { return coord.SquareModulus(); }
 
-  //! Adds two vectors
   constexpr void Add(const gp_Vec& theOther) noexcept { coord.Add(theOther.coord); }
 
   constexpr void operator+=(const gp_Vec& theOther) noexcept { Add(theOther); }
 
-  //! Adds two vectors
   [[nodiscard]] constexpr gp_Vec Added(const gp_Vec& theOther) const noexcept
   {
     gp_Vec aV = *this;
@@ -177,12 +110,10 @@ public:
     return Added(theOther);
   }
 
-  //! Subtracts two vectors
   constexpr void Subtract(const gp_Vec& theRight) noexcept { coord.Subtract(theRight.coord); }
 
   constexpr void operator-=(const gp_Vec& theRight) noexcept { Subtract(theRight); }
 
-  //! Subtracts two vectors
   [[nodiscard]] constexpr gp_Vec Subtracted(const gp_Vec& theRight) const noexcept
   {
     gp_Vec aV = *this;
@@ -195,12 +126,10 @@ public:
     return Subtracted(theRight);
   }
 
-  //! Multiplies a vector by a scalar
   constexpr void Multiply(const double theScalar) noexcept { coord.Multiply(theScalar); }
 
   constexpr void operator*=(const double theScalar) noexcept { Multiply(theScalar); }
 
-  //! Multiplies a vector by a scalar
   [[nodiscard]] constexpr gp_Vec Multiplied(const double theScalar) const noexcept
   {
     gp_Vec aV = *this;
@@ -213,12 +142,10 @@ public:
     return Multiplied(theScalar);
   }
 
-  //! Divides a vector by a scalar
   constexpr void Divide(const double theScalar) { coord.Divide(theScalar); }
 
   constexpr void operator/=(const double theScalar) { Divide(theScalar); }
 
-  //! Divides a vector by a scalar
   [[nodiscard]] constexpr gp_Vec Divided(const double theScalar) const
   {
     gp_Vec aV = *this;
@@ -231,12 +158,10 @@ public:
     return Divided(theScalar);
   }
 
-  //! computes the cross product between two vectors
   constexpr void Cross(const gp_Vec& theRight) noexcept { coord.Cross(theRight.coord); }
 
   constexpr void operator^=(const gp_Vec& theRight) noexcept { Cross(theRight); }
 
-  //! computes the cross product between two vectors
   [[nodiscard]] constexpr gp_Vec Crossed(const gp_Vec& theRight) const noexcept
   {
     gp_Vec aV = *this;
@@ -249,31 +174,21 @@ public:
     return Crossed(theRight);
   }
 
-  //! Computes the magnitude of the cross
-  //! product between <me> and theRight.
-  //! Returns || <me> ^ theRight ||
   double CrossMagnitude(const gp_Vec& theRight) const
   {
     return coord.CrossMagnitude(theRight.coord);
   }
 
-  //! Computes the square magnitude of
-  //! the cross product between <me> and theRight.
-  //! Returns || <me> ^ theRight ||**2
   constexpr double CrossSquareMagnitude(const gp_Vec& theRight) const noexcept
   {
     return coord.CrossSquareMagnitude(theRight.coord);
   }
 
-  //! Computes the triple vector product.
-  //! <me> ^= (theV1 ^ theV2)
   constexpr void CrossCross(const gp_Vec& theV1, const gp_Vec& theV2) noexcept
   {
     coord.CrossCross(theV1.coord, theV2.coord);
   }
 
-  //! Computes the triple vector product.
-  //! <me> ^ (theV1 ^ theV2)
   [[nodiscard]] constexpr gp_Vec CrossCrossed(const gp_Vec& theV1,
                                               const gp_Vec& theV2) const noexcept
   {
@@ -282,20 +197,15 @@ public:
     return aV;
   }
 
-  //! computes the scalar product
   constexpr double Dot(const gp_Vec& theOther) const noexcept { return coord.Dot(theOther.coord); }
 
   constexpr double operator*(const gp_Vec& theOther) const noexcept { return Dot(theOther); }
 
-  //! Computes the triple scalar product <me> * (theV1 ^ theV2).
   constexpr double DotCross(const gp_Vec& theV1, const gp_Vec& theV2) const noexcept
   {
     return coord.DotCross(theV1.coord, theV2.coord);
   }
 
-  //! normalizes a vector
-  //! Raises an exception if the magnitude of the vector is
-  //! lower or equal to Resolution from gp.
   void Normalize()
   {
     const double aD = coord.Modulus();
@@ -304,15 +214,10 @@ public:
     coord.Divide(aD);
   }
 
-  //! normalizes a vector
-  //! Raises an exception if the magnitude of the vector is
-  //! lower or equal to Resolution from gp.
   [[nodiscard]] gp_Vec Normalized() const;
 
-  //! Reverses the direction of a vector
   constexpr void Reverse() noexcept { coord.Reverse(); }
 
-  //! Reverses the direction of a vector
   [[nodiscard]] constexpr gp_Vec Reversed() const noexcept
   {
     gp_Vec aV = *this;
@@ -322,8 +227,6 @@ public:
 
   [[nodiscard]] constexpr gp_Vec operator-() const noexcept { return Reversed(); }
 
-  //! <me> is set to the following linear form :
-  //! theA1 * theV1 + theA2 * theV2 + theA3 * theV3 + theV4
   constexpr void SetLinearForm(const double  theA1,
                                const gp_Vec& theV1,
                                const double  theA2,
@@ -335,8 +238,6 @@ public:
     coord.SetLinearForm(theA1, theV1.coord, theA2, theV2.coord, theA3, theV3.coord, theV4.coord);
   }
 
-  //! <me> is set to the following linear form :
-  //! theA1 * theV1 + theA2 * theV2 + theA3 * theV3
   constexpr void SetLinearForm(const double  theA1,
                                const gp_Vec& theV1,
                                const double  theA2,
@@ -347,8 +248,6 @@ public:
     coord.SetLinearForm(theA1, theV1.coord, theA2, theV2.coord, theA3, theV3.coord);
   }
 
-  //! <me> is set to the following linear form :
-  //! theA1 * theV1 + theA2 * theV2 + theV3
   constexpr void SetLinearForm(const double  theA1,
                                const gp_Vec& theV1,
                                const double  theA2,
@@ -358,8 +257,6 @@ public:
     coord.SetLinearForm(theA1, theV1.coord, theA2, theV2.coord, theV3.coord);
   }
 
-  //! <me> is set to the following linear form :
-  //! theA1 * theV1 + theA2 * theV2
   constexpr void SetLinearForm(const double  theA1,
                                const gp_Vec& theV1,
                                const double  theA2,
@@ -368,7 +265,6 @@ public:
     coord.SetLinearForm(theA1, theV1.coord, theA2, theV2.coord);
   }
 
-  //! <me> is set to the following linear form : theA1 * theV1 + theV2
   constexpr void SetLinearForm(const double  theA1,
                                const gp_Vec& theV1,
                                const gp_Vec& theV2) noexcept
@@ -376,7 +272,6 @@ public:
     coord.SetLinearForm(theA1, theV1.coord, theV2.coord);
   }
 
-  //! <me> is set to the following linear form : theV1 + theV2
   constexpr void SetLinearForm(const gp_Vec& theV1, const gp_Vec& theV2) noexcept
   {
     coord.SetLinearForm(theV1.coord, theV2.coord);
@@ -384,29 +279,18 @@ public:
 
   Standard_EXPORT void Mirror(const gp_Vec& theV) noexcept;
 
-  //! Performs the symmetrical transformation of a vector
-  //! with respect to the vector theV which is the center of
-  //! the symmetry.
   [[nodiscard]] Standard_EXPORT gp_Vec Mirrored(const gp_Vec& theV) const noexcept;
 
   Standard_EXPORT void Mirror(const gp_Ax1& theA1) noexcept;
 
-  //! Performs the symmetrical transformation of a vector
-  //! with respect to an axis placement which is the axis
-  //! of the symmetry.
   [[nodiscard]] Standard_EXPORT gp_Vec Mirrored(const gp_Ax1& theA1) const noexcept;
 
   Standard_EXPORT void Mirror(const gp_Ax2& theA2) noexcept;
 
-  //! Performs the symmetrical transformation of a vector
-  //! with respect to a plane. The axis placement theA2 locates
-  //! the plane of the symmetry : (Location, XDirection, YDirection).
   [[nodiscard]] Standard_EXPORT gp_Vec Mirrored(const gp_Ax2& theA2) const noexcept;
 
   void Rotate(const gp_Ax1& theA1, const double theAng);
 
-  //! Rotates a vector. theA1 is the axis of the rotation.
-  //! theAng is the angular value of the rotation in radians.
   [[nodiscard]] gp_Vec Rotated(const gp_Ax1& theA1, const double theAng) const
   {
     gp_Vec aVres = *this;
@@ -416,7 +300,6 @@ public:
 
   constexpr void Scale(const double theS) noexcept { coord.Multiply(theS); }
 
-  //! Scales a vector. theS is the scaling value.
   [[nodiscard]] constexpr gp_Vec Scaled(const double theS) const noexcept
   {
     gp_Vec aV = *this;
@@ -424,10 +307,8 @@ public:
     return aV;
   }
 
-  //! Transforms a vector with the transformation theT.
   Standard_EXPORT void Transform(const gp_Trsf& theT);
 
-  //! Transforms a vector with the transformation theT.
   [[nodiscard]] gp_Vec Transformed(const gp_Trsf& theT) const
   {
     gp_Vec aV = *this;
@@ -435,7 +316,6 @@ public:
     return aV;
   }
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const;
 
 private:
@@ -446,29 +326,21 @@ private:
 #include <gp_Pnt.hpp>
 #include <gp_Trsf.hpp>
 
-//=================================================================================================
-
 inline constexpr gp_Vec::gp_Vec(const gp_Dir& theV)
     : coord(theV.XYZ())
 {
 }
-
-//=================================================================================================
 
 inline constexpr gp_Vec::gp_Vec(const gp_Pnt& theP1, const gp_Pnt& theP2)
     : coord(theP2.XYZ().Subtracted(theP1.XYZ()))
 {
 }
 
-//=================================================================================================
-
 inline bool gp_Vec::IsNormal(const gp_Vec& theOther, const double theAngularTolerance) const
 {
   const double anAng = std::abs(M_PI_2 - Angle(theOther));
   return anAng <= theAngularTolerance;
 }
-
-//=================================================================================================
 
 inline double gp_Vec::Angle(const gp_Vec& theOther) const
 {
@@ -478,8 +350,6 @@ inline double gp_Vec::Angle(const gp_Vec& theOther) const
   return (gp_Dir(coord)).Angle(theOther);
 }
 
-//=================================================================================================
-
 inline double gp_Vec::AngleWithRef(const gp_Vec& theOther, const gp_Vec& theVRef) const
 {
   gp_VectorWithNullMagnitude_Raise_if(coord.Modulus() <= gp::Resolution()
@@ -488,8 +358,6 @@ inline double gp_Vec::AngleWithRef(const gp_Vec& theOther, const gp_Vec& theVRef
                                       " ");
   return (gp_Dir(coord)).AngleWithRef(theOther, theVRef);
 }
-
-//=================================================================================================
 
 inline gp_Vec gp_Vec::Normalized() const
 {
@@ -501,8 +369,6 @@ inline gp_Vec gp_Vec::Normalized() const
   return aV;
 }
 
-//=================================================================================================
-
 inline void gp_Vec::Rotate(const gp_Ax1& theA1, const double theAng)
 {
   gp_Trsf aT;
@@ -510,10 +376,6 @@ inline void gp_Vec::Rotate(const gp_Ax1& theA1, const double theAng)
   coord.Multiply(aT.VectorialPart());
 }
 
-//=======================================================================
-// function :  operator*
-// purpose :
-//=======================================================================
 inline constexpr gp_Vec operator*(const double theScalar, const gp_Vec& theV) noexcept
 {
   return theV.Multiplied(theScalar);

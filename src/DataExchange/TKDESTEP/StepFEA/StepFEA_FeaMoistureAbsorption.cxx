@@ -5,11 +5,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(StepFEA_FeaMoistureAbsorption,
                            StepFEA_FeaMaterialPropertyRepresentationItem)
 
-//=================================================================================================
-
 StepFEA_FeaMoistureAbsorption::StepFEA_FeaMoistureAbsorption() = default;
-
-//=================================================================================================
 
 void StepFEA_FeaMoistureAbsorption::Init(
   const occ::handle<TCollection_HAsciiString>& aRepresentationItem_Name,
@@ -20,14 +16,10 @@ void StepFEA_FeaMoistureAbsorption::Init(
   theFeaConstants = aFeaConstants;
 }
 
-//=================================================================================================
-
 StepFEA_SymmetricTensor23d StepFEA_FeaMoistureAbsorption::FeaConstants() const
 {
   return theFeaConstants;
 }
-
-//=================================================================================================
 
 void StepFEA_FeaMoistureAbsorption::SetFeaConstants(const StepFEA_SymmetricTensor23d& aFeaConstants)
 {

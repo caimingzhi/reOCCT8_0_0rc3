@@ -65,7 +65,6 @@ public:
                                             const TopoDS_Shape&                    S,
                                             NCollection_List<TopoDS_Shape>& theListOfGenerators);
 
-  //! Finds context of the shape <S>.
   Standard_EXPORT static void FindShapeContext(const occ::handle<TNaming_NamedShape>& NS,
                                                const TopoDS_Shape&                    theS,
                                                TopoDS_Shape&                          theSC);

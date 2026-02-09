@@ -23,7 +23,6 @@ class IntRes2d_IntersectionPoint;
 class TopOpeBRepDS_Transition;
 class gp_Pnt;
 
-//! Describes the intersection of two edges on the same surface
 class TopOpeBRep_EdgesIntersector
 {
 public:
@@ -44,7 +43,6 @@ public:
 
   Standard_EXPORT void Dimension(const int D);
 
-  //! set working space dimension D = 1 for E &|| W, 2 for E in F
   Standard_EXPORT int Dimension() const;
 
   Standard_EXPORT void Perform(const TopoDS_Shape& E1,
@@ -53,10 +51,8 @@ public:
 
   Standard_EXPORT bool IsEmpty();
 
-  //! true if at least one intersection segment.
   Standard_EXPORT bool HasSegment() const;
 
-  //! = mySameDomain.
   Standard_EXPORT bool SameDomain() const;
 
   Standard_EXPORT const TopoDS_Shape& Edge(const int Index) const;
@@ -104,10 +100,8 @@ public:
 private:
   Standard_EXPORT void Find();
 
-  //! process if current edges can be considered as SameDomain
   Standard_EXPORT bool ComputeSameDomain();
 
-  //! set field mySameDomain to B and return B value
   Standard_EXPORT bool SetSameDomain(const bool B);
 
   Standard_EXPORT void MakePoints2d();
@@ -141,10 +135,6 @@ private:
 
   Standard_EXPORT int Index1() const;
 
-  //! geometric configuration of E1,E2 at current intersection point :
-  //! UNSHGEOMETRY if the edges do not share geometry.
-  //! SAMEORIENTED if the edges share geometry and are same oriented.
-  //! DIFFORIENTED if the edges share geometry and are not same oriented.
   Standard_EXPORT TopOpeBRepDS_Config EdgesConfig1() const;
 
   TopoDS_Face                                        myFace1;

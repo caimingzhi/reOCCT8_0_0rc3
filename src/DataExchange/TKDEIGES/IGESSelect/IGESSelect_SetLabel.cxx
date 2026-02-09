@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <IFSelect_ContextModif.hpp>
 #include <IGESData_IGESEntity.hpp>
@@ -32,7 +21,7 @@ IGESSelect_SetLabel::IGESSelect_SetLabel(const int mode, const bool enforce)
 
 void IGESSelect_SetLabel::Performing(IFSelect_ContextModif&                 ctx,
                                      const occ::handle<IGESData_IGESModel>& target,
-                                     Interface_CopyTool& /*TC*/) const
+                                     Interface_CopyTool&) const
 {
   occ::handle<TCollection_HAsciiString> lab;
   for (ctx.Start(); ctx.More(); ctx.Next())
@@ -46,7 +35,6 @@ void IGESSelect_SetLabel::Performing(IFSelect_ContextModif&                 ctx,
       continue;
     }
 
-    // mode = 1 : mettre DEnnn , nnn est le DE Number
     lab = iges->ShortLabel();
     if (theforce)
       lab.Nullify();
@@ -58,7 +46,7 @@ void IGESSelect_SetLabel::Performing(IFSelect_ContextModif&                 ctx,
           lab.Nullify();
       }
     }
-    //    Si lab nul : le recalculer
+
     if (lab.IsNull())
     {
       lab = new TCollection_HAsciiString(target->Number(iges) * 2 - 1);

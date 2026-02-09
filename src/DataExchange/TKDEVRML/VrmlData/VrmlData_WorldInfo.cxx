@@ -9,8 +9,6 @@ IMPLEMENT_STANDARD_RTTIEXT(VrmlData_WorldInfo, VrmlData_Node)
   #pragma warning(disable : 4996)
 #endif
 
-//=================================================================================================
-
 VrmlData_WorldInfo::VrmlData_WorldInfo(const VrmlData_Scene& theScene,
                                        const char*           theName,
                                        const char*           theTitle)
@@ -19,11 +17,6 @@ VrmlData_WorldInfo::VrmlData_WorldInfo(const VrmlData_Scene& theScene,
 {
   SetTitle(theTitle);
 }
-
-//=======================================================================
-// function : SetTitle
-// purpose  : Set or modify the title.
-//=======================================================================
 
 void VrmlData_WorldInfo::SetTitle(const char* theString)
 {
@@ -42,11 +35,6 @@ void VrmlData_WorldInfo::SetTitle(const char* theString)
   }
 }
 
-//=======================================================================
-// function : AddInfo
-// purpose  : Add a string to the list of info strings.
-//=======================================================================
-
 void VrmlData_WorldInfo::AddInfo(const char* theString)
 {
   if (theString != nullptr)
@@ -58,11 +46,6 @@ void VrmlData_WorldInfo::AddInfo(const char* theString)
       myInfo.Append(aStr);
     }
 }
-
-//=======================================================================
-// function : Clone
-// purpose  : Create a copy of this node
-//=======================================================================
 
 occ::handle<VrmlData_Node> VrmlData_WorldInfo::Clone(
   const occ::handle<VrmlData_Node>& theOther) const
@@ -86,11 +69,6 @@ occ::handle<VrmlData_Node> VrmlData_WorldInfo::Clone(
   }
   return aResult;
 }
-
-//=======================================================================
-// function : Read
-// purpose  : Read the Node from input stream.
-//=======================================================================
 
 VrmlData_ErrorStatus VrmlData_WorldInfo::Read(VrmlData_InBuffer& theBuffer)
 {
@@ -118,16 +96,10 @@ VrmlData_ErrorStatus VrmlData_WorldInfo::Read(VrmlData_InBuffer& theBuffer)
       break;
   }
 
-  // Read the terminating (closing) brace
   if (OK(aStatus))
     aStatus = readBrace(theBuffer);
   return aStatus;
 }
-
-//=======================================================================
-// function : Write
-// purpose  : Write the Node to the Scene output.
-//=======================================================================
 
 VrmlData_ErrorStatus VrmlData_WorldInfo::Write(const char* thePrefix) const
 {
@@ -165,8 +137,6 @@ VrmlData_ErrorStatus VrmlData_WorldInfo::Write(const char* thePrefix) const
   }
   return aStatus;
 }
-
-//=================================================================================================
 
 bool VrmlData_WorldInfo::IsDefault() const
 {

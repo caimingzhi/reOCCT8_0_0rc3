@@ -10,11 +10,6 @@
 #include <TDF_LabelNodePtr.hpp>
 #include <TDF_Tool.hpp>
 
-// Attribute methods ++++++++++++++++++++++++++++++++++++++++++++++++++++
-//=======================================================================
-// function : Imported
-// purpose  : Sets imported and all its descendants.
-//=======================================================================
 void TDF_Label::Imported(const bool aStatus) const
 {
   if (IsNull())
@@ -27,17 +22,12 @@ void TDF_Label::Imported(const bool aStatus) const
   }
 }
 
-//=======================================================================
-// function : FindAttribute
-// purpose  : Finds an attributes according to an ID.
-//=======================================================================
-
 bool TDF_Label::FindAttribute(const Standard_GUID&        anID,
                               occ::handle<TDF_Attribute>& anAttribute) const
 {
   if (IsNull())
     throw Standard_NullObject("A null Label has no attribute.");
-  TDF_AttributeIterator itr(myLabelNode); // Without removed attributes.
+  TDF_AttributeIterator itr(myLabelNode);
   for (; itr.More(); itr.Next())
   {
     if (itr.PtrValue()->ID() == anID)
@@ -48,11 +38,6 @@ bool TDF_Label::FindAttribute(const Standard_GUID&        anID,
   }
   return false;
 }
-
-//=======================================================================
-// function : FindAttribute
-// purpose  : Finds an attributes according to an ID and a Transaction.
-//=======================================================================
 
 bool TDF_Label::FindAttribute(const Standard_GUID&        anID,
                               const int                   aTransaction,
@@ -72,14 +57,6 @@ bool TDF_Label::FindAttribute(const Standard_GUID&        anID,
   return false;
 }
 
-// Label comfort methods ++++++++++++++++++++++++++++++++++++++++++++++++
-
-//=======================================================================
-// function : Depth
-// purpose  : Returns the depth of the label in the tree.
-//           Root has depth 0. So the depth is the number of fathers.
-//=======================================================================
-
 int TDF_Label::Depth() const
 {
   if (IsNull())
@@ -87,15 +64,8 @@ int TDF_Label::Depth() const
   return myLabelNode->Depth();
 }
 
-//=======================================================================
-// function : IsDescendant
-// purpose  : Returns True if <me> is a descendant of <aLabel>.
-//=======================================================================
-
 bool TDF_Label::IsDescendant(const TDF_Label& aLabel) const
 {
-  // This algorithm goes up to the root. We can stop
-  // if the reached depth is less than that of <aLabel>.
 
   const TDF_LabelNode* lp1 = aLabel.myLabelNode;
   TDF_LabelNode*       lp2 = myLabelNode;
@@ -107,7 +77,7 @@ bool TDF_Label::IsDescendant(const TDF_Label& aLabel) const
   {
     const int d1 = lp1->Depth();
     int       d2 = lp2->Depth();
-    // Tester (d1 > d2) optimise la recherche ET dispense du test (lp2 != NULL)
+
     while ((d2 > d1) && (lp2 != lp1))
     {
       lp2 = lp2->Father();
@@ -118,19 +88,12 @@ bool TDF_Label::IsDescendant(const TDF_Label& aLabel) const
   return false;
 }
 
-//=================================================================================================
-
 const TDF_Label TDF_Label::Root() const
 {
   if (IsNull())
     throw Standard_NullObject("A null Label has no root.");
   return myLabelNode->RootNode();
 }
-
-//=======================================================================
-// function : NbChildren
-// purpose  : Returns the number of children.
-//=======================================================================
 
 int TDF_Label::NbChildren() const
 {
@@ -143,8 +106,6 @@ int TDF_Label::NbChildren() const
   return n;
 }
 
-//=================================================================================================
-
 TDF_Label TDF_Label::FindChild(const int aTag, const bool create) const
 {
   if (IsNull())
@@ -155,34 +116,11 @@ TDF_Label TDF_Label::FindChild(const int aTag, const bool create) const
   return FindOrAddChild(aTag, create);
 }
 
-// Attribute comfort methods ++++++++++++++++++++++++++++++++++++++++++++
-
-//=======================================================================
-// function : IsA
-// purpose  : Returns true if owns an attribute with <anID> as ID.
-//=======================================================================
-
-// bool TDF_Label::IsA(const Standard_GUID& anID) const
-// {
-//   occ::handle<TDF_Attribute> att;
-//   return FindAttribute(anID,att);
-// }
-
-//=======================================================================
-// function : IsAttribute
-// purpose  : Returns true if owns an attribute with <anID> as ID.
-//=======================================================================
-
 bool TDF_Label::IsAttribute(const Standard_GUID& anID) const
 {
   occ::handle<TDF_Attribute> att;
   return FindAttribute(anID, att);
 }
-
-//=======================================================================
-// function : HasAttribute
-// purpose  : Returns true if the label has at least one unremoved attribute.
-//=======================================================================
 
 bool TDF_Label::HasAttribute() const
 {
@@ -191,16 +129,11 @@ bool TDF_Label::HasAttribute() const
 
   if (!myLabelNode->FirstAttribute().IsNull())
   {
-    TDF_AttributeIterator itr(myLabelNode); // Without removed attributes.
+    TDF_AttributeIterator itr(myLabelNode);
     return itr.More();
   }
   return false;
 }
-
-//=======================================================================
-// function : NbAttributes
-// purpose  : Returns the number of attributes.
-//=======================================================================
 
 int TDF_Label::NbAttributes() const
 {
@@ -213,21 +146,12 @@ int TDF_Label::NbAttributes() const
   return n;
 }
 
-// Miscelleaneous +++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-//=================================================================================================
-
 int TDF_Label::Transaction() const
 {
   if (IsNull())
     throw Standard_NullObject("A null Label has no transaction.");
   return myLabelNode->Data()->Transaction();
 }
-
-//=======================================================================
-// function : Dump
-// purpose  : This method is equivalent to operator <<
-//=======================================================================
 
 Standard_OStream& TDF_Label::Dump(Standard_OStream& anOS) const
 {
@@ -237,16 +161,12 @@ Standard_OStream& TDF_Label::Dump(Standard_OStream& anOS) const
   return anOS;
 }
 
-//=================================================================================================
-
 void TDF_Label::ExtendedDump(Standard_OStream&                                   anOS,
                              const TDF_IDFilter&                                 aFilter,
                              NCollection_IndexedMap<occ::handle<TDF_Attribute>>& aMap) const
 {
   TDF_Label::InternalDump(anOS, aFilter, aMap, true);
 }
-
-//=================================================================================================
 
 void TDF_Label::EntryDump(Standard_OStream& anOS) const
 {
@@ -262,22 +182,13 @@ void TDF_Label::EntryDump(Standard_OStream& anOS) const
   }
 }
 
-//=======================================================================
-// function : FindOrAddChild
-// purpose  : Finds or adds a label child having <aTag> as tag.
-//=======================================================================
-
 TDF_LabelNode* TDF_Label::FindOrAddChild(const int aTag, const bool create) const
 {
   TDF_LabelNode* currentLnp     = myLabelNode->FirstChild();
   TDF_LabelNode* lastLnp        = nullptr;
-  TDF_LabelNode* lastFoundLnp   = myLabelNode->myLastFoundChild; // jfa 10.01.2003
+  TDF_LabelNode* lastFoundLnp   = myLabelNode->myLastFoundChild;
   TDF_LabelNode* childLabelNode = nullptr;
 
-  // Finds the right place.
-
-  // jfa 10.01.2003
-  //  1. Check, if we access to a child, which is after last touched upon
   if (lastFoundLnp != nullptr)
   {
     if (lastFoundLnp->Tag() == aTag)
@@ -290,9 +201,7 @@ TDF_LabelNode* TDF_Label::FindOrAddChild(const int aTag, const bool create) cons
       currentLnp = lastFoundLnp->Brother();
     }
   }
-  // jfa 10.01.2003 end
 
-  // To facilitate many tools, label brethren are stored in increasing order.
   while ((currentLnp != nullptr) && (currentLnp->Tag() < aTag))
   {
     lastLnp    = currentLnp;
@@ -301,33 +210,31 @@ TDF_LabelNode* TDF_Label::FindOrAddChild(const int aTag, const bool create) cons
 
   if ((currentLnp != nullptr) && (currentLnp->Tag() == aTag))
   {
-    // The label exists.
+
     childLabelNode = currentLnp;
   }
   else if (create)
   {
-    // Creates the label to be inserted always before currentLnp.
+
     const TDF_HAllocator& anAllocator = myLabelNode->Data()->LabelNodeAllocator();
     childLabelNode                    = new (anAllocator) TDF_LabelNode(aTag, myLabelNode);
-    childLabelNode->myBrother         = currentLnp; // May be NULL.
+    childLabelNode->myBrother         = currentLnp;
     childLabelNode->Imported(IsImported());
-    // Inserts the label:
-    if (lastLnp == nullptr) // ... at beginning.
+
+    if (lastLnp == nullptr)
       myLabelNode->myFirstChild = childLabelNode;
-    else // ... somewhere.
+    else
       lastLnp->myBrother = childLabelNode;
-    // Update table for fast access to the labels.
+
     if (myLabelNode->Data()->IsAccessByEntries())
       myLabelNode->Data()->RegisterLabel(childLabelNode);
   }
 
-  if (lastLnp)                               // agv 14.07.2010
-    myLabelNode->myLastFoundChild = lastLnp; // jfa 10.01.2003
+  if (lastLnp)
+    myLabelNode->myLastFoundChild = lastLnp;
 
   return childLabelNode;
 }
-
-//=================================================================================================
 
 void TDF_Label::InternalDump(Standard_OStream&                                   anOS,
                              const TDF_IDFilter&                                 aFilter,
@@ -367,10 +274,9 @@ void TDF_Label::InternalDump(Standard_OStream&                                  
       anOS << "." << std::endl;
       for (TDF_AttributeIterator itr(myLabelNode); itr.More(); itr.Next())
       {
-        // CLE
-        // const occ::handle<TDF_Attribute>& att = itr.Value();
+
         occ::handle<TDF_Attribute> att = itr.Value();
-        // ENDCLE
+
         if (extended && aFilter.IsKept(att))
           anOS << "\t# " << aMap.Add(att);
         att->TDF_Attribute::Dump(anOS);
@@ -393,52 +299,20 @@ bool TDF_Label::HasGreaterNode(const TDF_Label& aLabel) const
   return (myLabelNode > aLabel.myLabelNode);
 }
 
-// from insertor ////////////////////////////////////////////////////////
-
-//=================================================================================================
-
-// void TDF_Label::Add(const occ::handle<TDF_Attribute>& anAttribute)  const
-// { AddToNode(myLabelNode,anAttribute); }
-
-//=================================================================================================
-
-void TDF_Label::AddAttribute(const occ::handle<TDF_Attribute>& anAttribute,
-                             const bool                        append /* = false*/) const
+void TDF_Label::AddAttribute(const occ::handle<TDF_Attribute>& anAttribute, const bool append) const
 {
   AddToNode(myLabelNode, anAttribute, append);
 }
-
-//=================================================================================================
-
-// void TDF_Label::Forget(const occ::handle<TDF_Attribute>& anAttribute)  const
-// { ForgetFromNode(myLabelNode,anAttribute); }
-
-//=================================================================================================
 
 void TDF_Label::ForgetAttribute(const occ::handle<TDF_Attribute>& anAttribute) const
 {
   ForgetFromNode(myLabelNode, anAttribute);
 }
 
-//=================================================================================================
-
-// bool  TDF_Label::Forget (const Standard_GUID& anID) const
-// {
-//   occ::handle<TDF_Attribute> anAttribute;
-//   //if (Label().FindAttribute(anID,anAttribute)) {
-//   if (FindAttribute(anID,anAttribute)) {
-//     Forget(anAttribute);
-//     return true;
-//   }
-//   return false;
-// }
-
-//=================================================================================================
-
 bool TDF_Label::ForgetAttribute(const Standard_GUID& anID) const
 {
   occ::handle<TDF_Attribute> anAttribute;
-  // if (Label().FindAttribute(anID,anAttribute)) {
+
   if (FindAttribute(anID, anAttribute))
   {
     ForgetAttribute(anAttribute);
@@ -447,34 +321,17 @@ bool TDF_Label::ForgetAttribute(const Standard_GUID& anID) const
   return false;
 }
 
-//=================================================================================================
-
-// void TDF_Label::ForgetAll (const bool clearChildren) const
-// {
-//   for (TDF_AttributeIterator itr1(myLabelNode); itr1.More(); itr1.Next())
-//     ForgetFromNode(myLabelNode,itr1.Value());
-//   if (clearChildren)
-//     for (TDF_ChildIterator itr2(myLabelNode); itr2.More(); itr2.Next()) {
-//       itr2.Value().ForgetAll(clearChildren);
-//     }
-// }
-
-//=================================================================================================
-
 void TDF_Label::ForgetAllAttributes(const bool clearChildren) const
 {
   TDF_AttributeIterator itr1(myLabelNode);
-  // AGV-OCC5031: iterator must be incremented before removal of the attribute
+
   while (itr1.More())
   {
     const occ::handle<TDF_Attribute> anAttr = itr1.Value();
     itr1.Next();
     ForgetFromNode(myLabelNode, anAttr);
   }
-  // while (itr1.More()) {
-  //   ForgetFromNode(myLabelNode,itr1.Value());
-  //   itr1.Next();
-  // }
+
   if (clearChildren)
     for (TDF_ChildIterator itr2(myLabelNode); itr2.More(); itr2.Next())
     {
@@ -482,28 +339,16 @@ void TDF_Label::ForgetAllAttributes(const bool clearChildren) const
     }
 }
 
-//=================================================================================================
-
-// void TDF_Label::Resume (const occ::handle<TDF_Attribute>& anAttribute)  const
-// { ResumeToNode(myLabelNode,anAttribute); }
-
-//=================================================================================================
-
 void TDF_Label::ResumeAttribute(const occ::handle<TDF_Attribute>& anAttribute) const
 {
   ResumeToNode(myLabelNode, anAttribute);
 }
 
-//=======================================================================
-// function : AddToNode
-// purpose  : Private method used by Add
-//=======================================================================
-
 void TDF_Label::AddToNode(const TDF_LabelNodePtr&           toNode,
                           const occ::handle<TDF_Attribute>& anAttribute,
                           const bool                        append) const
 {
-  // check that modification is allowed
+
   if (!toNode->Data()->IsModificationAllowed())
   {
     TCollection_AsciiString aMess;
@@ -516,14 +361,13 @@ void TDF_Label::AddToNode(const TDF_LabelNodePtr&           toNode,
   if (!anAttribute->Label().IsNull())
     throw Standard_DomainError("Attribute to add is already attached to a label.");
   occ::handle<TDF_Attribute> dummyAtt;
-  // if (Find(anAttribute->ID(),dummyAtt))
+
   if (FindAttribute(anAttribute->ID(), dummyAtt))
     throw Standard_DomainError("This label has already such an attribute.");
 
-  anAttribute->myTransaction      = toNode->Data()->Transaction(); /// myData->Transaction();
+  anAttribute->myTransaction      = toNode->Data()->Transaction();
   anAttribute->mySavedTransaction = 0;
 
-  // append to the end of the attribute list
   dummyAtt.Nullify();
   if (append)
   {
@@ -533,20 +377,15 @@ void TDF_Label::AddToNode(const TDF_LabelNodePtr&           toNode,
 
   toNode->AddAttribute(dummyAtt, anAttribute);
   toNode->AttributesModified(anAttribute->myTransaction != 0);
-  // if (myData->NotUndoMode()) anAttribute->AfterAddition();
+
   if (toNode->Data()->NotUndoMode())
     anAttribute->AfterAddition();
 }
 
-//=======================================================================
-// function : ForgetFromNode
-// purpose  : Private method used by Forget
-//=======================================================================
-
 void TDF_Label::ForgetFromNode(const TDF_LabelNodePtr&           fromNode,
                                const occ::handle<TDF_Attribute>& anAttribute) const
 {
-  // check that modification is allowed
+
   if (!fromNode->Data()->IsModificationAllowed())
   {
     TCollection_AsciiString aMess;
@@ -565,16 +404,13 @@ void TDF_Label::ForgetFromNode(const TDF_LabelNodePtr&           fromNode,
     if ((curTrans == 0)
         || ((anAttribute->myTransaction == curTrans) && anAttribute->myBackup.IsNull()))
     {
-      // 1- No transaction is open;
-      // OR
-      // 2- The attribute has been created in the current transaction;
-      // ==> Complete disparition of the attribute.
+
       occ::handle<TDF_Attribute> lastAtt;
       for (TDF_AttributeIterator itr(fromNode, false); itr.More(); itr.Next())
       {
         if (itr.Value() == anAttribute)
         {
-          // if (myData->NotUndoMode()) {
+
           if (fromNode->Data()->NotUndoMode())
           {
             anAttribute->BeforeForget();
@@ -589,22 +425,13 @@ void TDF_Label::ForgetFromNode(const TDF_LabelNodePtr&           fromNode,
     }
     else
     {
-      // One case is here ignored:
-      // The attribute has been modified in the current transaction.
-      // (It has at least one backup.) We don't restore the previous
-      // version before forgetting. It may generated a strange behaviour
-      // in case of forgetting, committing, aborting...
+
       if (fromNode->Data()->NotUndoMode())
         anAttribute->BeforeForget();
       anAttribute->Forget(fromNode->Data()->Transaction());
     }
   }
 }
-
-//=======================================================================
-// function : ResumeToNode
-// purpose  : Private method used by Resume
-//=======================================================================
 
 void TDF_Label::ResumeToNode(const TDF_LabelNodePtr&           toNode,
                              const occ::handle<TDF_Attribute>& anAttribute) const
@@ -621,5 +448,3 @@ void TDF_Label::ResumeToNode(const TDF_LabelNodePtr&           toNode,
   if (toNode->Data()->NotUndoMode())
     anAttribute->AfterResume();
 }
-
-//////////////////end from insertor ///////////////////////////////////////////////////

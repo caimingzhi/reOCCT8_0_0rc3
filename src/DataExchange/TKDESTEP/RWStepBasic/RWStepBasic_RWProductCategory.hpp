@@ -10,7 +10,6 @@ class Interface_Check;
 class StepBasic_ProductCategory;
 class StepData_StepWriter;
 
-//! Read & Write Module for ProductCategory
 class RWStepBasic_RWProductCategory
 {
 public:

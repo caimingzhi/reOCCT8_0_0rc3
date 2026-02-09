@@ -7,14 +7,6 @@
 
 #include <NCollection_DefaultHasher.hpp>
 
-/**
- * Purpose:     The DoubleMap  is used to  bind  pairs (Key1,Key2)
- *              and retrieve them in linear time.
- *
- *              See Map from NCollection for a discussion about the number
- *              of buckets
- */
-
 template <class TheKey1Type,
           class TheKey2Type,
           class Hasher1 = NCollection_DefaultHasher<TheKey1Type>,
@@ -22,17 +14,14 @@ template <class TheKey1Type,
 class NCollection_DoubleMap : public NCollection_BaseMap
 {
 public:
-  //! STL-compliant typedef for key1 type
   typedef TheKey1Type key1_type;
-  //! STL-compliant typedef for key2 type
+
   typedef TheKey2Type key2_type;
 
 public:
-  // **************** Adaptation of the TListNode to the DOUBLEmap
   class DoubleMapNode : public NCollection_TListNode<TheKey2Type>
   {
   public:
-    //! Constructor with 'Next'
     DoubleMapNode(const TheKey1Type&    theKey1,
                   const TheKey2Type&    theKey2,
                   NCollection_ListNode* theNext1,
@@ -43,16 +32,12 @@ public:
     {
     }
 
-    //! Key1
     const TheKey1Type& Key1() noexcept { return myKey1; }
 
-    //! Key2
     const TheKey2Type& Key2() noexcept { return this->myValue; }
 
-    //! Next2
     DoubleMapNode*& Next2() noexcept { return myNext2; }
 
-    //! Static deleter to be passed to BaseList
     static void delNode(NCollection_ListNode*                   theNode,
                         occ::handle<NCollection_BaseAllocator>& theAl) noexcept
     {
@@ -66,40 +51,32 @@ public:
   };
 
 public:
-  // **************** Implementation of the Iterator interface.
   class Iterator : public NCollection_BaseMap::Iterator
   {
   public:
-    //! Empty constructor
     Iterator() = default;
 
-    //! Constructor
     Iterator(const NCollection_DoubleMap& theMap)
         : NCollection_BaseMap::Iterator(theMap)
     {
     }
 
-    //! Query if the end of collection is reached by iterator
     bool More() const noexcept { return PMore(); }
 
-    //! Make a step along the collection
     void Next() noexcept { PNext(); }
 
-    //! Key1 inquiry
     const TheKey1Type& Key1() const
     {
       Standard_NoSuchObject_Raise_if(!More(), "NCollection_DoubleMap::Iterator::Key1");
       return ((DoubleMapNode*)myNode)->Key1();
     }
 
-    //! Key2 inquiry
     const TheKey2Type& Key2() const
     {
       Standard_NoSuchObject_Raise_if(!More(), "NCollection_DoubleMap::Iterator::Key2");
       return ((DoubleMapNode*)myNode)->Key2();
     }
 
-    //! Value access
     const TheKey2Type& Value() const
     {
       Standard_NoSuchObject_Raise_if(!More(), "NCollection_DoubleMap::Iterator::Value");
@@ -108,15 +85,11 @@ public:
   };
 
 public:
-  // ---------- PUBLIC METHODS ------------
-
-  //! Empty constructor.
   NCollection_DoubleMap()
       : NCollection_BaseMap(1, false, occ::handle<NCollection_BaseAllocator>())
   {
   }
 
-  //! Constructor
   explicit NCollection_DoubleMap(
     const int                                     theNbBuckets,
     const occ::handle<NCollection_BaseAllocator>& theAllocator = nullptr)
@@ -124,19 +97,14 @@ public:
   {
   }
 
-  //! Copy constructor
   NCollection_DoubleMap(const NCollection_DoubleMap& theOther)
       : NCollection_BaseMap(theOther.NbBuckets(), false, theOther.myAllocator)
   {
     *this = theOther;
   }
 
-  //! Exchange the content of two maps without re-allocations.
-  //! Notice that allocators will be swapped as well!
   void Exchange(NCollection_DoubleMap& theOther) noexcept { this->exchangeMapsData(theOther); }
 
-  //! Assignment.
-  //! This method does not change the internal allocator.
   NCollection_DoubleMap& Assign(const NCollection_DoubleMap& theOther)
   {
     if (this == &theOther)
@@ -164,13 +132,11 @@ public:
     return *this;
   }
 
-  //! Assignment operator
   NCollection_DoubleMap& operator=(const NCollection_DoubleMap& theOther)
   {
     return Assign(theOther);
   }
 
-  //! ReSize
   void ReSize(const int N)
   {
     NCollection_ListNode** ppNewData1 = nullptr;
@@ -204,7 +170,6 @@ public:
     }
   }
 
-  //! Bind
   void Bind(const TheKey1Type& theKey1, const TheKey2Type& theKey2)
   {
     if (Resizable())
@@ -232,7 +197,6 @@ public:
     Increment();
   }
 
-  //!* AreBound
   bool AreBound(const TheKey1Type& theKey1, const TheKey2Type& theKey2) const
   {
     if (IsEmpty())
@@ -262,7 +226,6 @@ public:
     return (pNode1 == pNode2);
   }
 
-  //! IsBound1
   bool IsBound1(const TheKey1Type& theKey1) const
   {
     if (IsEmpty())
@@ -279,7 +242,6 @@ public:
     return false;
   }
 
-  //! IsBound2
   bool IsBound2(const TheKey2Type& theKey2) const
   {
     if (IsEmpty())
@@ -296,7 +258,6 @@ public:
     return false;
   }
 
-  //! UnBind1
   bool UnBind1(const TheKey1Type& theKey1)
   {
     if (IsEmpty())
@@ -309,7 +270,7 @@ public:
     {
       if (IsEqual1(p1->Key1(), theKey1))
       {
-        // remove from the data1
+
         if (q1)
           q1->Next() = p1->Next();
         else
@@ -320,7 +281,7 @@ public:
         {
           if (p2 == p1)
           {
-            // remove from the data2
+
             if (q2)
               q2->Next2() = p2->Next2();
             else
@@ -341,7 +302,6 @@ public:
     return false;
   }
 
-  //! UnBind2
   bool UnBind2(const TheKey2Type& theKey2)
   {
     if (IsEmpty())
@@ -354,7 +314,7 @@ public:
     {
       if (IsEqual2(p2->Key2(), theKey2))
       {
-        // remove from the data2
+
         if (q2)
         {
           q2->Next2() = p2->Next2();
@@ -367,7 +327,7 @@ public:
         {
           if (p1 == p2)
           {
-            // remove from the data1
+
             if (q1)
               q1->Next() = p1->Next();
             else
@@ -388,8 +348,6 @@ public:
     return false;
   }
 
-  //! Find the Key1 and return Key2 value.
-  //! Raises an exception if Key1 was not bound.
   const TheKey2Type& Find1(const TheKey1Type& theKey1) const
   {
     if (const TheKey2Type* aKey2 = Seek1(theKey1))
@@ -399,10 +357,6 @@ public:
     throw Standard_NoSuchObject("NCollection_DoubleMap::Find1");
   }
 
-  //! Find the Key1 and return Key2 value (by copying its value).
-  //! @param[in]   theKey1 Key1 to find
-  //! @param[out]  theKey2 Key2 to return
-  //! @return TRUE if Key1 has been found
   bool Find1(const TheKey1Type& theKey1, TheKey2Type& theKey2) const
   {
     if (const TheKey2Type* aKey2 = Seek1(theKey1))
@@ -413,9 +367,6 @@ public:
     return false;
   }
 
-  //! Find the Key1 and return pointer to Key2 or NULL if Key1 is not bound.
-  //! @param[in]   theKey1 Key1 to find
-  //! @return pointer to Key2 or NULL if Key1 is not found
   const TheKey2Type* Seek1(const TheKey1Type& theKey1) const
   {
     for (DoubleMapNode* aNode1 =
@@ -431,8 +382,6 @@ public:
     return nullptr;
   }
 
-  //! Find the Key2 and return Key1 value.
-  //! Raises an exception if Key2 was not bound.
   const TheKey1Type& Find2(const TheKey2Type& theKey2) const
   {
     if (const TheKey1Type* aVal1 = Seek2(theKey2))
@@ -442,10 +391,6 @@ public:
     throw Standard_NoSuchObject("NCollection_DoubleMap::Find2");
   }
 
-  //! Find the Key2 and return Key1 value (by copying its value).
-  //! @param[in]   theKey2 Key2 to find
-  //! @param[out]  theKey1 Key1 to return
-  //! @return TRUE if Key2 has been found
   bool Find2(const TheKey2Type& theKey2, TheKey1Type& theKey1) const
   {
     if (const TheKey1Type* aVal1 = Seek2(theKey2))
@@ -456,9 +401,6 @@ public:
     return false;
   }
 
-  //! Find the Key2 and return pointer to Key1 or NULL if not bound.
-  //! @param[in]  theKey2 Key2 to find
-  //! @return pointer to Key1 if Key2 has been found
   const TheKey1Type* Seek2(const TheKey2Type& theKey2) const
   {
     for (DoubleMapNode* aNode2 =
@@ -474,14 +416,11 @@ public:
     return nullptr;
   }
 
-  //! Clear data. If doReleaseMemory is false then the table of
-  //! buckets is not released and will be reused.
   void Clear(const bool doReleaseMemory = false)
   {
     Destroy(DoubleMapNode::delNode, doReleaseMemory);
   }
 
-  //! Clear data and reset allocator
   void Clear(const occ::handle<NCollection_BaseAllocator>& theAllocator)
   {
     Clear(true);
@@ -489,10 +428,8 @@ public:
       (!theAllocator.IsNull() ? theAllocator : NCollection_BaseAllocator::CommonBaseAllocator());
   }
 
-  //! Destructor
   ~NCollection_DoubleMap() override { Clear(true); }
 
-  //! Size
   int Size() const noexcept { return Extent(); }
 
 protected:

@@ -1,15 +1,4 @@
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Interface_EntityIterator.hpp>
 #include "RWStepGeom_RWSurfaceOfLinearExtrusion.hpp"
@@ -28,30 +17,20 @@ void RWStepGeom_RWSurfaceOfLinearExtrusion::ReadStep(
   const occ::handle<StepGeom_SurfaceOfLinearExtrusion>& ent) const
 {
 
-  // --- Number of Parameter Control ---
-
   if (!data->CheckNbParams(num, 3, ach, "surface_of_linear_extrusion"))
     return;
 
-  // --- inherited field : name ---
-
   occ::handle<TCollection_HAsciiString> aName;
-  // szv#4:S4163:12Mar99 `bool stat1 =` not needed
+
   data->ReadString(num, 1, "name", ach, aName);
 
-  // --- inherited field : sweptCurve ---
-
   occ::handle<StepGeom_Curve> aSweptCurve;
-  // szv#4:S4163:12Mar99 `bool stat2 =` not needed
+
   data->ReadEntity(num, 2, "swept_curve", ach, STANDARD_TYPE(StepGeom_Curve), aSweptCurve);
 
-  // --- own field : extrusionAxis ---
-
   occ::handle<StepGeom_Vector> aExtrusionAxis;
-  // szv#4:S4163:12Mar99 `bool stat3 =` not needed
-  data->ReadEntity(num, 3, "extrusion_axis", ach, STANDARD_TYPE(StepGeom_Vector), aExtrusionAxis);
 
-  //--- Initialisation of the read entity ---
+  data->ReadEntity(num, 3, "extrusion_axis", ach, STANDARD_TYPE(StepGeom_Vector), aExtrusionAxis);
 
   ent->Init(aName, aSweptCurve, aExtrusionAxis);
 }
@@ -61,15 +40,9 @@ void RWStepGeom_RWSurfaceOfLinearExtrusion::WriteStep(
   const occ::handle<StepGeom_SurfaceOfLinearExtrusion>& ent) const
 {
 
-  // --- inherited field name ---
-
   SW.Send(ent->Name());
 
-  // --- inherited field sweptCurve ---
-
   SW.Send(ent->SweptCurve());
-
-  // --- own field : extrusionAxis ---
 
   SW.Send(ent->ExtrusionAxis());
 }

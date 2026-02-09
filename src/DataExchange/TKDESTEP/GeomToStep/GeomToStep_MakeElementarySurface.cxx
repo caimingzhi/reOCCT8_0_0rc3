@@ -19,10 +19,6 @@
 #include <StepGeom_SphericalSurface.hpp>
 #include <StepGeom_ToroidalSurface.hpp>
 
-//=============================================================================
-// Creation d' une ElementarySurface de prostep a partir d' une
-// ElementarySurface de Geom
-//=============================================================================
 GeomToStep_MakeElementarySurface::GeomToStep_MakeElementarySurface(
   const occ::handle<Geom_ElementarySurface>& S,
   const StepData_Factors&                    theLocalFactors)
@@ -61,10 +57,6 @@ GeomToStep_MakeElementarySurface::GeomToStep_MakeElementarySurface(
   else
     done = false;
 }
-
-//=============================================================================
-// renvoi des valeurs
-//=============================================================================
 
 const occ::handle<StepGeom_ElementarySurface>& GeomToStep_MakeElementarySurface::Value() const
 {

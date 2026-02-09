@@ -13,8 +13,6 @@ class TopoDS_Face;
 class TopoDS_Shell;
 class Transfer_FinderProcess;
 
-//! This class implements the mapping between
-//! Face, Shell fromTopoDS and TriangulatedFace from StepVisual.
 class TopoDSToStep_MakeTessellatedItem : public TopoDSToStep_Root
 {
 public:

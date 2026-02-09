@@ -28,25 +28,12 @@ public:
                                     const occ::handle<Adaptor3d_Curve>&   C,
                                     const occ::handle<Law_Function>&      Law);
 
-  //! returns the number of equations of the function.
   Standard_EXPORT int NbEquations() const override;
 
-  //! computes the values <F> of the Functions for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Value(const math_Vector& X, math_Vector& F) override;
 
-  //! returns the values <D> of the derivatives for the
-  //! variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Derivatives(const math_Vector& X, math_Matrix& D) override;
 
-  //! returns the values <F> of the functions and the derivatives
-  //! <D> for the variable <X>.
-  //! Returns True if the computation was done successfully,
-  //! False otherwise.
   Standard_EXPORT bool Values(const math_Vector& X, math_Vector& F, math_Matrix& D) override;
 
   Standard_EXPORT void Set(const double Param) override;
@@ -59,8 +46,6 @@ public:
 
   Standard_EXPORT bool IsSolution(const math_Vector& Sol, const double Tol) override;
 
-  //! Returns the minimal Distance between two
-  //! extremities of calculated sections.
   Standard_EXPORT double GetMinimalDistance() const override;
 
   Standard_EXPORT const gp_Pnt& PointOnS1() const override;
@@ -77,10 +62,6 @@ public:
 
   Standard_EXPORT const gp_Vec2d& Tangent2dOnS2() const override;
 
-  //! Returns the tangent vector at the section,
-  //! at the beginning and the end of the section, and
-  //! returns the normal (of the surfaces) at
-  //! these points.
   Standard_EXPORT void Tangent(const double U1,
                                const double V1,
                                const double U2,
@@ -96,11 +77,8 @@ public:
 
   Standard_EXPORT void Set(const int Choix);
 
-  //! Sets the type of section generation for the
-  //! approximations.
   Standard_EXPORT void Set(const BlendFunc_SectionShape TypeSection);
 
-  //! Method for graphic traces
   Standard_EXPORT void Section(const double Param,
                                const double U1,
                                const double V1,
@@ -110,35 +88,19 @@ public:
                                double&      Pfin,
                                gp_Circ&     C);
 
-  //! Returns if the section is rational
   Standard_EXPORT bool IsRational() const override;
 
-  //! Returns the length of the maximum section
   Standard_EXPORT double GetSectionSize() const override;
 
-  //! Compute the minimal value of weight for each poles
-  //! of all sections.
   Standard_EXPORT void GetMinimalWeight(NCollection_Array1<double>& Weigths) const override;
 
-  //! Returns the number of intervals for continuity
-  //! <S>. May be one if Continuity(me) >= <S>
   Standard_EXPORT int NbIntervals(const GeomAbs_Shape S) const override;
 
-  //! Stores in <T> the parameters bounding the intervals
-  //! of continuity <S>.
-  //!
-  //! The array must provide enough room to accommodate
-  //! for the parameters. i.e. T.Length() > NbIntervals()
   Standard_EXPORT void Intervals(NCollection_Array1<double>& T,
                                  const GeomAbs_Shape         S) const override;
 
   Standard_EXPORT void GetShape(int& NbPoles, int& NbKnots, int& Degree, int& NbPoles2d) override;
 
-  //! Returns the tolerance to reach in approximation
-  //! to respect
-  //! BoundTol error at the Boundary
-  //! AngleTol tangent error at the Boundary
-  //! SurfTol error inside the surface.
   Standard_EXPORT void GetTolerance(const double BoundTol,
                                     const double SurfTol,
                                     const double AngleTol,
@@ -149,7 +111,6 @@ public:
 
   Standard_EXPORT void Mults(NCollection_Array1<int>& TMults) override;
 
-  //! Used for the first and last section
   Standard_EXPORT bool Section(const Blend_Point&            P,
                                NCollection_Array1<gp_Pnt>&   Poles,
                                NCollection_Array1<gp_Vec>&   DPoles,
@@ -161,7 +122,6 @@ public:
                                NCollection_Array1<double>&   DWeigths,
                                NCollection_Array1<double>&   D2Weigths) override;
 
-  //! Used for the first and last section
   Standard_EXPORT bool Section(const Blend_Point&            P,
                                NCollection_Array1<gp_Pnt>&   Poles,
                                NCollection_Array1<gp_Vec>&   DPoles,

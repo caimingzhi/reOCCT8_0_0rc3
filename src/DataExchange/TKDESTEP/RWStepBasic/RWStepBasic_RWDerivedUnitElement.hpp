@@ -11,7 +11,6 @@ class StepBasic_DerivedUnitElement;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for DerivedUnitElement
 class RWStepBasic_RWDerivedUnitElement
 {
 public:

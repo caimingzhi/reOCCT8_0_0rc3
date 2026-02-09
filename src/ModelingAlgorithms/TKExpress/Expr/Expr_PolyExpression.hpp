@@ -12,57 +12,33 @@ class Expr_PolyExpression : public Expr_GeneralExpression
 {
 
 public:
-  //! returns the number of operands contained in <me>
   Standard_EXPORT int NbOperands() const;
 
-  //! Returns the <index>-th operand used in <me>.
-  //! An exception is raised if index is out of range
   const occ::handle<Expr_GeneralExpression>& Operand(const int index) const;
 
-  //! Sets the <index>-th operand used in <me>.
-  //! An exception is raised if <index> is out of range
-  //! Raises InvalidOperand if <exp> contains <me>.
   Standard_EXPORT void SetOperand(const occ::handle<Expr_GeneralExpression>& exp, const int index);
 
-  //! returns the number of sub-expressions contained
-  //! in <me> ( >= 2)
   Standard_EXPORT int NbSubExpressions() const override;
 
-  //! Returns the sub-expression denoted by <I> in <me>
-  //! Raises OutOfRange if <I> > NbSubExpressions(me)
   Standard_EXPORT const occ::handle<Expr_GeneralExpression>& SubExpression(
     const int I) const override;
 
-  //! Does <me> contains NamedUnknown ?
   Standard_EXPORT bool ContainsUnknowns() const override;
 
-  //! Tests if <exp> is contained in <me>.
   Standard_EXPORT bool Contains(const occ::handle<Expr_GeneralExpression>& exp) const override;
 
-  //! Replaces all occurrences of <var> with <with> in <me>
-  //! Raises InvalidOperand if <with> contains <me>.
   Standard_EXPORT void Replace(const occ::handle<Expr_NamedUnknown>&      var,
                                const occ::handle<Expr_GeneralExpression>& with) override;
 
-  //! Returns a GeneralExpression after replacement of
-  //! NamedUnknowns by an associated expression and after
-  //! values computation.
   Standard_EXPORT occ::handle<Expr_GeneralExpression> Simplified() const override;
 
   DEFINE_STANDARD_RTTIEXT(Expr_PolyExpression, Expr_GeneralExpression)
 
 protected:
-  //! initialize an empty list of operands.
   Standard_EXPORT Expr_PolyExpression();
 
-  //! Adds an operand to the list of <me>.
   Standard_EXPORT void AddOperand(const occ::handle<Expr_GeneralExpression>& exp);
 
-  //! Remove the operand denoted by <index> from the list of
-  //! <me>.
-  //! Raises exception if <index> is out of range or if
-  //! removing operand intend to leave only one or no
-  //! operand.
   Standard_EXPORT void RemoveOperand(const int index);
 
 private:

@@ -6,7 +6,6 @@
 
 class StepGeom_CartesianPoint;
 
-//! Stores a pair of Points from step
 class StepToTopoDS_PointPair
 {
 public:
@@ -37,7 +36,7 @@ namespace std
   {
     size_t operator()(const StepToTopoDS_PointPair& thePointPair) const noexcept
     {
-      // Combine two int values into a single hash value.
+
       size_t aCombination[2];
       aCombination[0] = std::hash<occ::handle<StepGeom_CartesianPoint>>{}(thePointPair.GetPoint1());
       aCombination[1] = std::hash<occ::handle<StepGeom_CartesianPoint>>{}(thePointPair.GetPoint2());

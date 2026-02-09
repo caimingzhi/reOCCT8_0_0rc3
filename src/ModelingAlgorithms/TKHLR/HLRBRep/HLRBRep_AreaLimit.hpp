@@ -7,14 +7,10 @@
 #include <TopAbs_State.hpp>
 #include <Standard_Transient.hpp>
 
-//! The private nested class AreaLimit represents a
-//! vertex on the Edge with the state on the left and
-//! the right.
 class HLRBRep_AreaLimit : public Standard_Transient
 {
 
 public:
-  //! The previous and next field are set to NULL.
   Standard_EXPORT HLRBRep_AreaLimit(const HLRAlgo_Intersection& V,
                                     const bool                  Boundary,
                                     const bool                  Interference,

@@ -10,15 +10,11 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(TDataStd_AsciiString, TDF_Attribute)
 
-//=================================================================================================
-
 TDataStd_AsciiString::TDataStd_AsciiString()
     : myID(GetID())
 {
   myString.Clear();
 }
-
-//=================================================================================================
 
 const Standard_GUID& TDataStd_AsciiString::GetID()
 {
@@ -26,17 +22,11 @@ const Standard_GUID& TDataStd_AsciiString::GetID()
   return theGUID;
 }
 
-//=================================================================================================
-
 const Standard_GUID& TDataStd_AsciiString::ID() const
 {
   return myID;
 }
 
-//=======================================================================
-// function : SetAttr
-// purpose  : Implements Set functionality
-//=======================================================================
 static occ::handle<TDataStd_AsciiString> SetAttr(const TDF_Label&               label,
                                                  const TCollection_AsciiString& theString,
                                                  const Standard_GUID&           theGuid)
@@ -52,19 +42,12 @@ static occ::handle<TDataStd_AsciiString> SetAttr(const TDF_Label&               
   return A;
 }
 
-//=================================================================================================
-
 occ::handle<TDataStd_AsciiString> TDataStd_AsciiString::Set(
   const TDF_Label&               theLabel,
   const TCollection_AsciiString& theAsciiString)
 {
   return SetAttr(theLabel, theAsciiString, GetID());
 }
-
-//=======================================================================
-// function : Set
-// purpose  : Set user defined attribute
-//=======================================================================
 
 occ::handle<TDataStd_AsciiString> TDataStd_AsciiString::Set(
   const TDF_Label&               theLabel,
@@ -74,8 +57,6 @@ occ::handle<TDataStd_AsciiString> TDataStd_AsciiString::Set(
   return SetAttr(theLabel, theAsciiString, theGuid);
 }
 
-//=================================================================================================
-
 void TDataStd_AsciiString::Set(const TCollection_AsciiString& theAsciiString)
 {
   if (myString == theAsciiString)
@@ -84,14 +65,10 @@ void TDataStd_AsciiString::Set(const TCollection_AsciiString& theAsciiString)
   myString = theAsciiString;
 }
 
-//=================================================================================================
-
 const TCollection_AsciiString& TDataStd_AsciiString::Get() const
 {
   return myString;
 }
-
-//=================================================================================================
 
 void TDataStd_AsciiString::SetID(const Standard_GUID& theGuid)
 {
@@ -102,22 +79,16 @@ void TDataStd_AsciiString::SetID(const Standard_GUID& theGuid)
   myID = theGuid;
 }
 
-//=================================================================================================
-
 void TDataStd_AsciiString::SetID()
 {
   Backup();
   myID = GetID();
 }
 
-//=================================================================================================
-
 occ::handle<TDF_Attribute> TDataStd_AsciiString::NewEmpty() const
 {
   return new TDataStd_AsciiString();
 }
-
-//=================================================================================================
 
 void TDataStd_AsciiString::Restore(const occ::handle<TDF_Attribute>& theWith)
 {
@@ -126,24 +97,18 @@ void TDataStd_AsciiString::Restore(const occ::handle<TDF_Attribute>& theWith)
   myID                                = R->ID();
 }
 
-//=================================================================================================
-
 void TDataStd_AsciiString::Paste(const occ::handle<TDF_Attribute>& theInto,
-                                 const occ::handle<TDF_RelocationTable>& /* RT */) const
+                                 const occ::handle<TDF_RelocationTable>&) const
 {
   occ::handle<TDataStd_AsciiString> R = occ::down_cast<TDataStd_AsciiString>(theInto);
   R->Set(myString);
   R->SetID(myID);
 }
 
-//=================================================================================================
-
 bool TDataStd_AsciiString::IsEmpty() const
 {
   return myString.IsEmpty();
 }
-
-//=================================================================================================
 
 Standard_OStream& TDataStd_AsciiString::Dump(Standard_OStream& theOS) const
 {
@@ -155,8 +120,6 @@ Standard_OStream& TDataStd_AsciiString::Dump(Standard_OStream& theOS) const
   anOS << sguid << "|" << std::endl;
   return anOS;
 }
-
-//=================================================================================================
 
 void TDataStd_AsciiString::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {

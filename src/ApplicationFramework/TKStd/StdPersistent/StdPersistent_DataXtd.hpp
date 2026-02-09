@@ -32,14 +32,12 @@ public:
   class Geometry : public StdObjMgt_Attribute<TDataXtd_Geometry>::SingleInt
   {
   public:
-    //! Import transient attribute from the persistent data.
     Standard_EXPORT void ImportAttribute() override;
   };
 
   class Position : public StdObjMgt_Attribute<TDataXtd_Position>::Simple<gp_Pnt>
   {
   public:
-    //! Import transient attribute from the persistent data.
     Standard_EXPORT void ImportAttribute() override;
   };
 };

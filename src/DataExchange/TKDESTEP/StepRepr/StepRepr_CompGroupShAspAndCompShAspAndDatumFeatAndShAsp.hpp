@@ -5,7 +5,6 @@
 
 #include <StepRepr_CompShAspAndDatumFeatAndShAsp.hpp>
 
-//! Added for Dimensional Tolerances
 class StepRepr_CompGroupShAspAndCompShAspAndDatumFeatAndShAsp
     : public StepRepr_CompShAspAndDatumFeatAndShAsp
 {

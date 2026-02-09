@@ -15,7 +15,6 @@ class StepAP214_AutoDesignActualDateAssignment : public StepBasic_DateAssignment
 {
 
 public:
-  //! Returns a AutoDesignActualDateAssignment
   Standard_EXPORT StepAP214_AutoDesignActualDateAssignment();
 
   Standard_EXPORT void Init(

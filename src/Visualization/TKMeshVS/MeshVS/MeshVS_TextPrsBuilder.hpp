@@ -12,8 +12,6 @@ class Quantity_Color;
 class MeshVS_DataSource;
 class TCollection_AsciiString;
 
-//! This class provides methods to create text data presentation.
-//! It store map of texts assigned with nodes or elements.
 class MeshVS_TextPrsBuilder : public MeshVS_PrsBuilder
 {
 
@@ -27,30 +25,24 @@ public:
     const int                             Id       = -1,
     const MeshVS_BuilderPriority&         Priority = MeshVS_BP_Text);
 
-  //! Builds presentation of text data
   Standard_EXPORT void Build(const occ::handle<Prs3d_Presentation>& Prs,
                              const TColStd_PackedMapOfInteger&      IDs,
                              TColStd_PackedMapOfInteger&            IDsToExclude,
                              const bool                             IsElement,
                              const int                              theDisplayMode) const override;
 
-  //! Returns map of text assigned with nodes ( IsElement = False ) or elements ( IsElement = True )
   Standard_EXPORT const NCollection_DataMap<int, TCollection_AsciiString>& GetTexts(
     const bool IsElement) const;
 
-  //! Sets map of text assigned with nodes or elements
   Standard_EXPORT void SetTexts(const bool                                               IsElement,
                                 const NCollection_DataMap<int, TCollection_AsciiString>& Map);
 
-  //! Returns True if map isn't empty
   Standard_EXPORT bool HasTexts(const bool IsElement) const;
 
-  //! Returns text assigned with single node or element
   Standard_EXPORT bool GetText(const bool               IsElement,
                                const int                ID,
                                TCollection_AsciiString& Text) const;
 
-  //! Sets text assigned with single node or element
   Standard_EXPORT void SetText(const bool                     IsElement,
                                const int                      ID,
                                const TCollection_AsciiString& Text);

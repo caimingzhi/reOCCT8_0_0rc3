@@ -3,45 +3,32 @@
 #include <Standard_Integer.hpp>
 #include <NCollection_Map.hpp>
 
-//=================================================================================================
-
 BOPAlgo_Algo::BOPAlgo_Algo()
     : BOPAlgo_Options(NCollection_BaseAllocator::CommonBaseAllocator())
 {
 }
-
-//=================================================================================================
 
 BOPAlgo_Algo::BOPAlgo_Algo(const occ::handle<NCollection_BaseAllocator>& theAllocator)
     : BOPAlgo_Options(theAllocator)
 {
 }
 
-//=================================================================================================
-
 BOPAlgo_Algo::~BOPAlgo_Algo() = default;
-
-//=================================================================================================
 
 void BOPAlgo_Algo::CheckData()
 {
   GetReport()->Clear(Message_Fail);
 }
 
-//=================================================================================================
-
 void BOPAlgo_Algo::CheckResult()
 {
   GetReport()->Clear(Message_Fail);
 }
 
-//=================================================================================================
-
 void BOPAlgo_Algo::analyzeProgress(const double theWhole, BOPAlgo_PISteps& theSteps) const
 {
   double aWhole = theWhole;
 
-  // Fill progress steps for constant operations
   fillPIConstants(theWhole, theSteps);
 
   NCollection_Array1<double>& aSteps = theSteps.ChangeSteps();
@@ -55,7 +42,6 @@ void BOPAlgo_Algo::analyzeProgress(const double theWhole, BOPAlgo_PISteps& theSt
     }
   }
 
-  // Fill progress steps for other operations
   fillPISteps(theSteps);
 
   double aSum = 0.;
@@ -67,7 +53,6 @@ void BOPAlgo_Algo::analyzeProgress(const double theWhole, BOPAlgo_PISteps& theSt
     }
   }
 
-  // Normalize steps
   if (aSum > 0.)
   {
     for (int i = aSteps.Lower(); i <= aSteps.Upper(); ++i)
@@ -80,10 +65,6 @@ void BOPAlgo_Algo::analyzeProgress(const double theWhole, BOPAlgo_PISteps& theSt
   }
 }
 
-//=================================================================================================
-
 void BOPAlgo_Algo::fillPIConstants(const double, BOPAlgo_PISteps&) const {}
-
-//=================================================================================================
 
 void BOPAlgo_Algo::fillPISteps(BOPAlgo_PISteps&) const {}

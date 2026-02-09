@@ -11,7 +11,6 @@ class StepVisual_AnnotationPlane;
 class StepData_StepWriter;
 class Interface_EntityIterator;
 
-//! Read & Write Module for AnnotationPlane
 class RWStepVisual_RWAnnotationPlane
 {
 public:

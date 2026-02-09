@@ -5,7 +5,6 @@
 #include <RWGltf_GltfArrayType.hpp>
 #include <TCollection_AsciiString.hpp>
 
-//! An element within primitive array - vertex attribute or element indexes.
 class RWGltf_GltfPrimArrayData
 {
 public:

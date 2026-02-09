@@ -9,26 +9,16 @@
 class Standard_GUID;
 class TDF_RelocationTable;
 
-//! this attribute, located at root label, manage an
-//! access to a current label.
 class TDataStd_Current : public TDF_Attribute
 {
 
 public:
-  //! class methods
-  //! =============
   Standard_EXPORT static const Standard_GUID& GetID();
 
-  //! Set <L> as current of <L> Framework.
   Standard_EXPORT static void Set(const TDF_Label& L);
 
-  //! returns current of <acces> Framework. raise if (!Has)
   Standard_EXPORT static TDF_Label Get(const TDF_Label& acces);
 
-  //! returns True if a current label is managed in <acces>
-  //! Framework.
-  //! class methods
-  //! =============
   Standard_EXPORT static bool Has(const TDF_Label& acces);
 
   Standard_EXPORT TDataStd_Current();
@@ -48,7 +38,6 @@ public:
 
   Standard_EXPORT Standard_OStream& Dump(Standard_OStream& anOS) const override;
 
-  //! Dumps the content of me into the stream
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
 
   DEFINE_STANDARD_RTTIEXT(TDataStd_Current, TDF_Attribute)

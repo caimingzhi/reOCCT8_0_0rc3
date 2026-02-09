@@ -3,18 +3,12 @@
 #include <XSControl_TransferWriter.hpp>
 #include <XSControl_WorkSession.hpp>
 
-//=================================================================================================
-
 STEPConstruct_Tool::STEPConstruct_Tool() = default;
-
-//=================================================================================================
 
 STEPConstruct_Tool::STEPConstruct_Tool(const occ::handle<XSControl_WorkSession>& WS)
 {
   SetWS(WS);
 }
-
-//=================================================================================================
 
 bool STEPConstruct_Tool::SetWS(const occ::handle<XSControl_WorkSession>& WS)
 {
@@ -27,12 +21,10 @@ bool STEPConstruct_Tool::SetWS(const occ::handle<XSControl_WorkSession>& WS)
   myWS     = WS;
   myHGraph = myWS->HGraph();
 
-  // collect data on reading process
   const occ::handle<XSControl_TransferReader>& TR = WS->TransferReader();
   if (!TR.IsNull())
     myTransientProcess = TR->TransientProcess();
 
-  // collect data on writing process
   const occ::handle<XSControl_TransferWriter>& TW = myWS->TransferWriter();
   if (!TW.IsNull())
     myFinderProcess = TW->FinderProcess();

@@ -8,8 +8,6 @@
 #include <Standard_Integer.hpp>
 #include <NCollection_Array1.hpp>
 
-//=================================================================================================
-
 GeomLib_DenominatorMultiplier::GeomLib_DenominatorMultiplier(
   const occ::handle<Geom_BSplineSurface>& Surface,
   const NCollection_Array1<double>&       KnotVector)
@@ -21,16 +19,11 @@ GeomLib_DenominatorMultiplier::GeomLib_DenominatorMultiplier(
     myKnotFlatVector.SetValue(i, KnotVector(i));
 }
 
-//=======================================================================
-// function : value
-// purpose  : give the value of a(UParameter,VParameter)
-//=======================================================================
-
 double GeomLib_DenominatorMultiplier::Value(const double UParameter, const double VParameter) const
 
 {
   double Dumaxv, Duminv, dDduumaxv, dDduuminv, Dv, Buv = 0.0;
-  // gp_Pnt         HermPnt;
+
   gp_Pnt                     N;
   gp_Vec                     Nu, Nv;
   NCollection_Array2<gp_Pnt> surface_poles(1, mySurface->NbUPoles(), 1, mySurface->NbVPoles());
@@ -111,7 +104,7 @@ double GeomLib_DenominatorMultiplier::Value(const double UParameter, const doubl
   BSplCLib::EvalBsplineBasis(0, 4, myKnotFlatVector, UParameter, index, BSplineBasisValue);
 
   NCollection_Array1<double> value(0, 5);
-  NCollection_Array1<double> Polesenv(0, 5); // poles of a(u,v)
+  NCollection_Array1<double> Polesenv(0, 5);
 
   for (i = 0; i <= 5; i++)
     Polesenv(i) = 0.0;
@@ -122,7 +115,7 @@ double GeomLib_DenominatorMultiplier::Value(const double UParameter, const doubl
 
   if (myKnotFlatVector.Length() == 8)
   {
-    value(0) = BSplineBasisValue(1, 1); // values of the basic functions
+    value(0) = BSplineBasisValue(1, 1);
     value(1) = BSplineBasisValue(1, 2);
     value(2) = 0.0;
     value(3) = 0.0;

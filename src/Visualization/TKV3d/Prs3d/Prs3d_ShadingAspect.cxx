@@ -1,16 +1,4 @@
-// Copyright (c) 1995-1999 Matra Datavision
-// Copyright (c) 1999-2014 OPEN CASCADE SAS
-//
-// This file is part of Open CASCADE Technology software library.
-//
-// This library is free software; you can redistribute it and/or modify it under
-// the terms of the GNU Lesser General Public License version 2.1 as published
-// by the Free Software Foundation, with special exception defined in the file
-// OCCT_LGPL_EXCEPTION.txt. Consult the file LICENSE_LGPL_21.txt included in OCCT
-// distribution for complete text of the license and disclaimer of any warranty.
-//
-// Alternatively, this file may be used under the terms of Open CASCADE
-// commercial license or contractual agreement.
+
 
 #include <Prs3d_ShadingAspect.hpp>
 
@@ -21,8 +9,6 @@
 #include <Standard_Dump.hpp>
 
 IMPLEMENT_STANDARD_RTTIEXT(Prs3d_ShadingAspect, Prs3d_BasicAspect)
-
-//=================================================================================================
 
 Prs3d_ShadingAspect::Prs3d_ShadingAspect()
 {
@@ -36,8 +22,6 @@ Prs3d_ShadingAspect::Prs3d_ShadingAspect()
                                             aMat,
                                             aMat);
 }
-
-//=================================================================================================
 
 void Prs3d_ShadingAspect::SetColor(const Quantity_Color&          theColor,
                                    const Aspect_TypeOfFacingModel theModel)
@@ -60,8 +44,6 @@ void Prs3d_ShadingAspect::SetColor(const Quantity_Color&          theColor,
   }
 }
 
-//=================================================================================================
-
 const Quantity_Color& Prs3d_ShadingAspect::Color(const Aspect_TypeOfFacingModel theModel) const
 {
   switch (theModel)
@@ -78,8 +60,6 @@ const Quantity_Color& Prs3d_ShadingAspect::Color(const Aspect_TypeOfFacingModel 
                : myAspect->BackMaterial().Color();
   }
 }
-
-//=================================================================================================
 
 void Prs3d_ShadingAspect::SetMaterial(const Graphic3d_MaterialAspect& theMaterial,
                                       const Aspect_TypeOfFacingModel  theModel)
@@ -99,8 +79,6 @@ void Prs3d_ShadingAspect::SetMaterial(const Graphic3d_MaterialAspect& theMateria
   }
 }
 
-//=================================================================================================
-
 const Graphic3d_MaterialAspect& Prs3d_ShadingAspect::Material(
   const Aspect_TypeOfFacingModel theModel) const
 {
@@ -114,8 +92,6 @@ const Graphic3d_MaterialAspect& Prs3d_ShadingAspect::Material(
       return myAspect->BackMaterial();
   }
 }
-
-//=================================================================================================
 
 void Prs3d_ShadingAspect::SetTransparency(const double                   theValue,
                                           const Aspect_TypeOfFacingModel theModel)
@@ -140,8 +116,6 @@ void Prs3d_ShadingAspect::SetTransparency(const double                   theValu
   }
 }
 
-//=================================================================================================
-
 double Prs3d_ShadingAspect::Transparency(const Aspect_TypeOfFacingModel theModel) const
 {
   switch (theModel)
@@ -154,8 +128,6 @@ double Prs3d_ShadingAspect::Transparency(const Aspect_TypeOfFacingModel theModel
   }
   return 0.0;
 }
-
-//=================================================================================================
 
 void Prs3d_ShadingAspect::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {
